@@ -1,0 +1,150 @@
+[gd_scene format=3 uid="uid://bs7hkqmktub7l"]
+
+[ext_resource type="Script" uid="uid://jlfqu87oq1dn" path="res://levels/test.gd" id="1_ny0t1"]
+[ext_resource type="Texture2D" uid="uid://r23yquaky7lu" path="res://assets/Prototype Textures/PNG/Dark/texture_07.png" id="2_ny0t1"]
+[ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="2_pnvjf"]
+[ext_resource type="Texture2D" uid="uid://bs6ggwyw5mp2m" path="res://assets/kenney_skyboxes/Skyboxes/skybox-morning.png" id="3_qhvcx"]
+[ext_resource type="Script" uid="uid://4wgrqa57jyfo" path="res://levels/test_object.gd" id="4_r4e4k"]
+[ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="5_u45fp"]
+[ext_resource type="Script" uid="uid://bkcd7do0xdyfo" path="res://src/debug/label_prop.gd" id="6_6g8e2"]
+[ext_resource type="Script" uid="uid://boos1wd2wsju2" path="res://src/debug/camera_enabler.gd" id="6_u45fp"]
+[ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="8_2grjb"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_4uxyr"]
+panorama = ExtResource("3_qhvcx")
+
+[sub_resource type="Sky" id="Sky_ny0t1"]
+sky_material = SubResource("PanoramaSkyMaterial_4uxyr")
+
+[sub_resource type="Environment" id="Environment_r4e4k"]
+background_mode = 2
+sky = SubResource("Sky_ny0t1")
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r4e4k"]
+albedo_texture = ExtResource("2_ny0t1")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_sg7w7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sg7w7"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_sg7w7"]
+
+[node name="Test" type="Node3D" unique_id=1573264513]
+script = ExtResource("1_ny0t1")
+
+[node name="Player" parent="." unique_id=1694148988 instance=ExtResource("2_pnvjf")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=782514733]
+environment = SubResource("Environment_r4e4k")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1788324033]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=181593407]
+material_override = SubResource("StandardMaterial3D_r4e4k")
+use_collision = true
+size = Vector3(29.389648, 0.4980586, 35.463135)
+
+[node name="Caja1" type="RigidBody3D" parent="." unique_id=1036209669]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.12778854, 1, -13.370663)
+collision_layer = 9
+collision_mask = 9
+script = ExtResource("4_r4e4k")
+metadata/_custom_type_script = "uid://4wgrqa57jyfo"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Caja1" unique_id=231619225]
+mesh = SubResource("BoxMesh_sg7w7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Caja1" unique_id=112684427]
+shape = SubResource("BoxShape3D_sg7w7")
+
+[node name="Caja3" type="RigidBody3D" parent="." unique_id=117615715]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.05163, 1, -7)
+collision_layer = 9
+collision_mask = 9
+script = ExtResource("4_r4e4k")
+metadata/_custom_type_script = "uid://4wgrqa57jyfo"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Caja3" unique_id=427626355]
+mesh = SubResource("BoxMesh_sg7w7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Caja3" unique_id=635981223]
+shape = SubResource("BoxShape3D_sg7w7")
+
+[node name="Caja4" type="RigidBody3D" parent="." unique_id=907247470]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.9576674, 1, 9.964108)
+collision_layer = 9
+collision_mask = 9
+script = ExtResource("4_r4e4k")
+metadata/_custom_type_script = "uid://4wgrqa57jyfo"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Caja4" unique_id=166583485]
+mesh = SubResource("BoxMesh_sg7w7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Caja4" unique_id=21551417]
+shape = SubResource("BoxShape3D_sg7w7")
+
+[node name="Caja5" type="RigidBody3D" parent="." unique_id=572825092]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.05163, 1, 11.449627)
+collision_layer = 9
+collision_mask = 9
+script = ExtResource("4_r4e4k")
+metadata/_custom_type_script = "uid://4wgrqa57jyfo"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Caja5" unique_id=1665837407]
+mesh = SubResource("BoxMesh_sg7w7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Caja5" unique_id=91409484]
+shape = SubResource("BoxShape3D_sg7w7")
+
+[node name="Caja2" type="RigidBody3D" parent="." unique_id=1205836512]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.776516, 1, -7)
+collision_layer = 9
+collision_mask = 9
+script = ExtResource("4_r4e4k")
+metadata/_custom_type_script = "uid://4wgrqa57jyfo"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Caja2" unique_id=2063923096]
+mesh = SubResource("BoxMesh_sg7w7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Caja2" unique_id=802466592]
+shape = SubResource("BoxShape3D_sg7w7")
+
+[node name="TopDownCamera" type="Camera3D" parent="." unique_id=391367608 node_paths=PackedStringArray("target_node")]
+transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 8, 4)
+script = ExtResource("5_u45fp")
+target_node = NodePath("../Player")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1701654757]
+
+[node name="CameraSelector" type="VBoxContainer" parent="CanvasLayer" unique_id=716987621]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TopCamera" type="CheckButton" parent="CanvasLayer/CameraSelector" unique_id=1350535054 node_paths=PackedStringArray("camera")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_sg7w7")
+text = "TopCamera"
+script = ExtResource("6_u45fp")
+camera = NodePath("../../../TopDownCamera")
+metadata/_custom_type_script = "uid://boos1wd2wsju2"
+
+[node name="CurrentAnimationState" type="Label" parent="CanvasLayer/CameraSelector" unique_id=1835775858 node_paths=PackedStringArray("target")]
+layout_mode = 2
+script = ExtResource("6_6g8e2")
+target = NodePath("../../../Player")
+value_to_track = &"anim_tree:get"
+call_props = [&"parameters/Movement/current_state"]
+
+[node name="CurrentState" type="Label" parent="CanvasLayer/CameraSelector" unique_id=2059642374 node_paths=PackedStringArray("target")]
+layout_mode = 2
+script = ExtResource("6_6g8e2")
+target = NodePath("../../../Player")
+value_to_track = &"movement_state:get_active_state"
+metadata/_custom_type_script = "uid://bkcd7do0xdyfo"
+
+[node name="Enemy" parent="." unique_id=510737741 instance=ExtResource("8_2grjb")]
+transform = Transform3D(-0.9659258, 0, -0.25881913, 0, 1, 0, 0.25881913, 0, -0.9659258, 0, 0, 6.675021)

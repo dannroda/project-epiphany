@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://8nnsjbshosby"]
+
+[ext_resource type="Script" uid="uid://0pie6qdk25b0" path="res://src/tools/target_indicator.gd" id="1_c0kay"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4uxyr"]
+shading_mode = 0
+albedo_color = Color(1, 0.92947316, 0, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_4uxyr"]
+material = SubResource("StandardMaterial3D_4uxyr")
+size = Vector3(0.4, 0.5, 0.4)
+
+[node name="TargetIndicator" type="Node3D" unique_id=1615443035]
+script = ExtResource("1_c0kay")
+metadata/_custom_type_script = "uid://0pie6qdk25b0"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=886208679]
+transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("PrismMesh_4uxyr")

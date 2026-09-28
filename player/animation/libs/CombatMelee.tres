@@ -1,0 +1,50 @@
+[gd_resource type="AnimationLibrary" format=3 uid="uid://cklj6t6a64vqg"]
+
+[ext_resource type="Animation" uid="uid://bnmtdkfi373ix" path="res://player/animation/anim/combat/melee/Melee_1H_Attack_Chop.res" id="1_nfswn"]
+[ext_resource type="Animation" uid="uid://b1uanojmleqnw" path="res://player/animation/anim/combat/melee/Melee_1H_Attack_Jump_Chop.res" id="2_75p4r"]
+[ext_resource type="Animation" uid="uid://t6fevdlelols" path="res://player/animation/anim/combat/melee/Melee_1H_Attack_Slice_Diagonal.res" id="3_iwiql"]
+[ext_resource type="Animation" uid="uid://b8dnmlwe4aiwe" path="res://player/animation/anim/combat/melee/Melee_1H_Attack_Slice_Horizontal.res" id="4_pe31e"]
+[ext_resource type="Animation" uid="uid://0rvhcgy1l7a4" path="res://player/animation/anim/combat/melee/Melee_1H_Attack_Stab.res" id="5_cm1ka"]
+[ext_resource type="Animation" uid="uid://curnm157efqis" path="res://player/animation/anim/combat/melee/Melee_2H_Attack_Chop.res" id="6_ryl7l"]
+[ext_resource type="Animation" uid="uid://mn8535s5hy4v" path="res://player/animation/anim/combat/melee/Melee_2H_Attack_Slice.res" id="7_x0nd7"]
+[ext_resource type="Animation" uid="uid://bi3thpvq3qrpq" path="res://player/animation/anim/combat/melee/Melee_2H_Attack_Spin.res" id="8_o765u"]
+[ext_resource type="Animation" uid="uid://dtyixh0oa3smu" path="res://player/animation/anim/combat/melee/Melee_2H_Attack_Spinning.res" id="9_so2t0"]
+[ext_resource type="Animation" uid="uid://dswlgmgev5f31" path="res://player/animation/anim/combat/melee/Melee_2H_Attack_Stab.res" id="10_pcxsq"]
+[ext_resource type="Animation" uid="uid://bnk8y1bd6sdg1" path="res://player/animation/anim/combat/melee/Melee_2H_Idle.res" id="11_71wtq"]
+[ext_resource type="Animation" uid="uid://duwc8h77yegfy" path="res://player/animation/anim/combat/melee/Melee_Block.res" id="12_fopw8"]
+[ext_resource type="Animation" uid="uid://3uyf8mnjeb4i" path="res://player/animation/anim/combat/melee/Melee_Block_Attack.res" id="13_o5d5h"]
+[ext_resource type="Animation" uid="uid://s6ff1m207gg5" path="res://player/animation/anim/combat/melee/Melee_Block_Hit.res" id="14_0reb1"]
+[ext_resource type="Animation" uid="uid://d2s7ofep0xcdk" path="res://player/animation/anim/combat/melee/Melee_Blocking.res" id="15_736ln"]
+[ext_resource type="Animation" uid="uid://dvoge1p05rl8a" path="res://player/animation/anim/combat/melee/Melee_Dualwield_Attack_Chop.res" id="16_scpgq"]
+[ext_resource type="Animation" uid="uid://ccpug7xpp45wy" path="res://player/animation/anim/combat/melee/Melee_Dualwield_Attack_Slice.res" id="17_t0ie4"]
+[ext_resource type="Animation" uid="uid://cxq6s6l22wdx8" path="res://player/animation/anim/combat/melee/Melee_Dualwield_Attack_Stab.res" id="18_twfk1"]
+[ext_resource type="Animation" uid="uid://dg47odislcyvc" path="res://player/animation/anim/combat/melee/Melee_Unarmed_Attack_Kick.res" id="19_ip6l5"]
+[ext_resource type="Animation" uid="uid://d06jdqwtxstyh" path="res://player/animation/anim/combat/melee/Melee_Unarmed_Attack_Punch_A.res" id="20_776re"]
+[ext_resource type="Animation" uid="uid://c58fcfeyf3775" path="res://player/animation/anim/combat/melee/Melee_Unarmed_Idle.res" id="21_r5mhm"]
+[ext_resource type="Animation" uid="uid://bqeut03skudgp" path="res://player/animation/anim/combat/melee/T-Pose.res" id="22_ocu8p"]
+
+[resource]
+_data = {
+&"Melee_1H_Attack_Chop": ExtResource("1_nfswn"),
+&"Melee_1H_Attack_Jump_Chop": ExtResource("2_75p4r"),
+&"Melee_1H_Attack_Slice_Diagonal": ExtResource("3_iwiql"),
+&"Melee_1H_Attack_Slice_Horizontal": ExtResource("4_pe31e"),
+&"Melee_1H_Attack_Stab": ExtResource("5_cm1ka"),
+&"Melee_2H_Attack_Chop": ExtResource("6_ryl7l"),
+&"Melee_2H_Attack_Slice": ExtResource("7_x0nd7"),
+&"Melee_2H_Attack_Spin": ExtResource("8_o765u"),
+&"Melee_2H_Attack_Spinning": ExtResource("9_so2t0"),
+&"Melee_2H_Attack_Stab": ExtResource("10_pcxsq"),
+&"Melee_2H_Idle": ExtResource("11_71wtq"),
+&"Melee_Block": ExtResource("12_fopw8"),
+&"Melee_Block_Attack": ExtResource("13_o5d5h"),
+&"Melee_Block_Hit": ExtResource("14_0reb1"),
+&"Melee_Blocking": ExtResource("15_736ln"),
+&"Melee_Dualwield_Attack_Chop": ExtResource("16_scpgq"),
+&"Melee_Dualwield_Attack_Slice": ExtResource("17_t0ie4"),
+&"Melee_Dualwield_Attack_Stab": ExtResource("18_twfk1"),
+&"Melee_Unarmed_Attack_Kick": ExtResource("19_ip6l5"),
+&"Melee_Unarmed_Attack_Punch_A": ExtResource("20_776re"),
+&"Melee_Unarmed_Idle": ExtResource("21_r5mhm"),
+&"T-Pose": ExtResource("22_ocu8p")
+}
