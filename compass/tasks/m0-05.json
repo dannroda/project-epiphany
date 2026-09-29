@@ -1,0 +1,35 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "`src/state/dungeon_state.gd`"
+    },
+    {
+      "done": false,
+      "text": "Autoload `GameState`: inventario, equipo, `item_buttons`, `max_health`, flags, mazmorras, spawn, `give()`, `equip()`"
+    },
+    {
+      "done": false,
+      "text": "`write_to(cfg)` / `read_from(cfg)` (espejos exactos; `read_from` resetea antes de leer)"
+    },
+    {
+      "done": false,
+      "text": "Partida nueva: `sword_basic`, `shield_wood`, `tunic` equipados"
+    }
+  ],
+  "code": "0.5",
+  "created_at": "2026-09-29T18:00:00Z",
+  "milestone": "m00",
+  "notes": "",
+  "order": 5,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "estado-flags"
+    }
+  ],
+  "status": "todo",
+  "test": "",
+  "title": "GameState",
+  "updated_at": "2026-09-29T18:00:00Z"
+}

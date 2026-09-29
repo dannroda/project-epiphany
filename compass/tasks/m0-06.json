@@ -1,0 +1,43 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "`src/save/save_codec.gd` (estático): `write`, `read`, `checksum`, `is_tampered`, `validate`, `plain_saves`"
+    },
+    {
+      "done": false,
+      "text": "Autoload `SaveManager`: `save_game`, `load_game`, `load_scenario`, F5/F9, `--scenario=` y `next_scenario.txt`"
+    },
+    {
+      "done": false,
+      "text": "Guardar/restaurar la posición del player (en debug, posición exacta)"
+    },
+    {
+      "done": false,
+      "text": "Feature tag `plain_saves` en el preset de export de debug"
+    },
+    {
+      "done": false,
+      "text": "Excluir `debug/scenarios/*` del preset release"
+    },
+    {
+      "done": false,
+      "text": "`debug/scenarios/start.cfg` y `full_inventory.cfg` escritos a mano"
+    }
+  ],
+  "code": "0.6",
+  "created_at": "2026-09-29T18:00:00Z",
+  "milestone": "m00",
+  "notes": "",
+  "order": 6,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "guardado"
+    }
+  ],
+  "status": "todo",
+  "test": "Guardar, cerrar, abrir, cargar → mismo estado. Modificar a mano un `.cfg` plano → aparece el warning de `validate` y `save_tampered == true`.",
+  "title": "Guardado",
+  "updated_at": "2026-09-29T18:00:00Z"
+}

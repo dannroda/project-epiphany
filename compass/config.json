@@ -1,0 +1,12 @@
+{
+  "board_url": "https://claude.ai/artifact/DPeQdjQUUsQv7zCz7Tu5aY",
+  "docs": [
+    {
+      "alias": "gdd",
+      "path": "gdd.md"
+    }
+  ],
+  "export_md": "docs/tareas.md",
+  "port": 4711,
+  "project": "Project Epiphany"
+}

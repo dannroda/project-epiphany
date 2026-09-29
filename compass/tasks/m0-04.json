@@ -1,0 +1,27 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "`src/state/flag_definition.gd` (`id`, `description`, `default_value`) y `flag_registry.gd`"
+    },
+    {
+      "done": false,
+      "text": "`data/flag_registry.tres` con las flags conocidas hoy (p. ej. `ow_test_chest`)"
+    }
+  ],
+  "code": "0.4",
+  "created_at": "2026-09-29T18:00:00Z",
+  "milestone": "m00",
+  "notes": "",
+  "order": 4,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "estado-flags"
+    }
+  ],
+  "status": "todo",
+  "test": "",
+  "title": "Flags",
+  "updated_at": "2026-09-29T18:00:00Z"
+}

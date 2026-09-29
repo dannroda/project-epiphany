@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/dannroda/scope-compass/schema/task.schema.json",
+  "title": "Task",
+  "description": "Una tarea del tablero. El nombre del archivo (sin .json) es su id.",
+  "type": "object",
+  "required": [
+    "milestone",
+    "title",
+    "status"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "milestone": {
+      "type": "string",
+      "description": "Id del hito, p. ej. m00"
+    },
+    "code": {
+      "type": "string",
+      "description": "Código visible, p. ej. 0.3. Puede estar vacío."
+    },
+    "order": {
+      "type": "number",
+      "description": "Orden dentro de la columna"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "todo",
+        "doing",
+        "review",
+        "done"
+      ]
+    },
+    "checklist": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "text",
+          "done"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "done": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "test": {
+      "type": "string",
+      "description": "Cómo probarlo"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "refs": {
+      "type": "array",
+      "description": "Referencias a secciones de documentos: doc = ruta, section = id del comentario <!-- id: ... -->",
+      "items": {
+        "type": "object",
+        "required": [
+          "doc",
+          "section"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "doc": {
+            "type": "string"
+          },
+          "section": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

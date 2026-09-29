@@ -1,0 +1,9 @@
+{
+  "code": "M6",
+  "done_when": [
+    "Tres salas en bloques grises conectadas."
+  ],
+  "goal": "`Room` con cámara limitada y transición, puertas, llaves, bloques por grilla, interruptores, mapa y brújula con su pantalla.",
+  "order": 6,
+  "title": "Framework de mazmorra"
+}

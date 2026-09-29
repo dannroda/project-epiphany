@@ -1,0 +1,9 @@
+{
+  "code": "M1",
+  "done_when": [
+    "Pelear 1 contra 1 y poder perder."
+  ],
+  "goal": "Vida, invulnerabilidad breve, knockback, bloqueo direccional, roll, IA del esqueleto con `BTAttack`, muerte y reaparición, corazones en el HUD.",
+  "order": 1,
+  "title": "Combate real"
+}

@@ -1,0 +1,12 @@
+{
+  "code": "M0",
+  "done_when": [
+    "El player arranca con el equipo que dice `GameState` (no con espada y escudo cableados en la escena).",
+    "F5 guarda, F9 carga y el estado vuelve igual (posición, inventario, equipo, flags).",
+    "Desde el Save Inspector se abre una partida, se edita, se valida y se juega como escenario.",
+    "El enemigo recibe daño vía `Hitbox` → `Hurtbox` → `Health`."
+  ],
+  "goal": "Que ítems, estado del juego, guardado y componentes existan como base para los hitos siguientes. Diseño y snippets: `gdd.md` §11.",
+  "order": 0,
+  "title": "Refactor del player + base de datos"
+}

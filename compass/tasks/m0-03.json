@@ -1,0 +1,51 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "`src/items/item_data.gd`: `ItemData` con `Category`, `make_damage()`, `is_equipment()`"
+    },
+    {
+      "done": false,
+      "text": "`item_behavior.gd` + `melee_behavior.gd` (`combo: Array[AttackData]`); stubs de projectile, place y consumable"
+    },
+    {
+      "done": false,
+      "text": "`src/items/modifiers/item_modifier.gd` (vacío, estructura lista)"
+    },
+    {
+      "done": false,
+      "text": "`src/items/item_use_context.gd`"
+    },
+    {
+      "done": false,
+      "text": "`item_database.gd` + autoload `Items` (`src/items/items.gd`)"
+    },
+    {
+      "done": false,
+      "text": "`src/items/inventory.gd`"
+    },
+    {
+      "done": false,
+      "text": "`data/items/`: sword_basic, shield_wood, shield_mirror, tunic, bow, arrow, bomb_bag, bomb, potion, bottle_empty, small_key, boss_key, dungeon_map, compass, heart_container"
+    },
+    {
+      "done": false,
+      "text": "`data/item_database.tres` con todos"
+    }
+  ],
+  "code": "0.3",
+  "created_at": "2026-09-29T18:00:00Z",
+  "milestone": "m00",
+  "notes": "",
+  "order": 3,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "items-datos"
+    }
+  ],
+  "status": "todo",
+  "test": "`Items.get_item(&\"sword_basic\").display_name` desde un script de prueba o el debugger.",
+  "title": "Ítems: datos",
+  "updated_at": "2026-09-29T18:00:00Z"
+}

@@ -1,0 +1,39 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "`interact`, `dodge`, `item_1`, `item_2`"
+    },
+    {
+      "done": false,
+      "text": "`aim_left`, `aim_right`, `aim_up`, `aim_down` (stick derecho)"
+    },
+    {
+      "done": false,
+      "text": "`target_next`, `target_prev`"
+    },
+    {
+      "done": false,
+      "text": "`pause`, `map`, `menu_tab_left`, `menu_tab_right`"
+    },
+    {
+      "done": false,
+      "text": "`debug_quicksave` (F5), `debug_quickload` (F9)"
+    }
+  ],
+  "code": "0.2",
+  "created_at": "2026-09-29T18:00:00Z",
+  "milestone": "m00",
+  "notes": "Ver `gdd.md` §4.3. Se puede hacer en cualquier momento.",
+  "order": 2,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "input"
+    }
+  ],
+  "status": "todo",
+  "test": "",
+  "title": "Input map",
+  "updated_at": "2026-09-29T18:00:00Z"
+}

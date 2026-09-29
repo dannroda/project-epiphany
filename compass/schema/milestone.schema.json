@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/dannroda/scope-compass/schema/milestone.schema.json",
+  "title": "Milestone",
+  "description": "Un hito del roadmap. El nombre del archivo (sin .json) es su id, p. ej. m00.",
+  "type": "object",
+  "required": [
+    "code",
+    "order",
+    "title"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "type": "string",
+      "description": "Código visible, p. ej. M0"
+    },
+    "order": {
+      "type": "number",
+      "description": "Orden de las pestañas"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "goal": {
+      "type": "string"
+    },
+    "done_when": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

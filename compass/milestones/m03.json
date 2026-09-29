@@ -1,0 +1,9 @@
+{
+  "code": "M3",
+  "done_when": [
+    "Encontrar, equipar y usar un ítem."
+  ],
+  "goal": "Pantallas Equipo e Ítems, asignar a X/Y, slots en el HUD, cofres, item get, recolectables.",
+  "order": 3,
+  "title": "Inventario + UI"
+}

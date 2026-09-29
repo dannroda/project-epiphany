@@ -1,0 +1,9 @@
+{
+  "code": "M8",
+  "done_when": [
+    "La mazmorra se recorre entera."
+  ],
+  "goal": "Las 8 salas en bloques grises, el arco a mitad de camino, la llave del jefe.",
+  "order": 8,
+  "title": "Contenido de mazmorra"
+}

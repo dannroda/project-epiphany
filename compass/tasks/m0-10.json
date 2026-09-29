@@ -1,0 +1,43 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "`addons/epiphany_tools/plugin.cfg` + `plugin.gd` con un dock"
+    },
+    {
+      "done": false,
+      "text": "Lista de partidas (`user://saves/`) y escenarios (`res://debug/scenarios/`)"
+    },
+    {
+      "done": false,
+      "text": "`Tree` sección › clave › valor, editable"
+    },
+    {
+      "done": false,
+      "text": "Botón Validar (`SaveCodec.validate`) con errores resaltados"
+    },
+    {
+      "done": false,
+      "text": "Guardar, Guardar como escenario, Jugar escenario"
+    },
+    {
+      "done": false,
+      "text": "Después: autocompletado de ids de ítems y flags"
+    }
+  ],
+  "code": "0.10",
+  "created_at": "2026-09-29T18:00:00Z",
+  "milestone": "m00",
+  "notes": "Verificar la API de docks en 4.8 (cambió el sistema de pantallas del editor, ver el parche de LimboAI).",
+  "order": 10,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "save-inspector"
+    }
+  ],
+  "status": "todo",
+  "test": "Abrir una partida, agregar `bomb=3`, validar y jugarla como escenario.",
+  "title": "Save Inspector v0",
+  "updated_at": "2026-09-29T18:00:00Z"
+}

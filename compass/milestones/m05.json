@@ -1,0 +1,9 @@
+{
+  "code": "M5",
+  "done_when": [
+    "Cada ítem se usa en al menos un puzzle."
+  ],
+  "goal": "Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.",
+  "order": 5,
+  "title": "Ítems secundarios"
+}

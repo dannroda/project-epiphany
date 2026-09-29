@@ -1,0 +1,59 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "`Equipment`: escucha `GameState.equipment_changed` e instancia `equip_scene` en las manos; reemplaza `Sword1H` y `shield_badge` fijos"
+    },
+    {
+      "done": false,
+      "text": "`EquippableItem` → `EquippedItem`: solo visual, sin `HitBox`, sin `character`, sin daño fijo"
+    },
+    {
+      "done": false,
+      "text": "`Hitboxes/Front` + `AttackRunner` en el player; `damage_factory` desde la espada equipada"
+    },
+    {
+      "done": false,
+      "text": "`Attacking`: `attack_runner.start()` en `_enter`, `stop()` en `_exit`; `ShieldThrust` como `AttackData`"
+    },
+    {
+      "done": false,
+      "text": "Quitar el method track `trigger_equipped_item` y `Hand.trigger_equipped_item`"
+    },
+    {
+      "done": false,
+      "text": "`Targeting`: extraer el lock-on de `state_machine.gd`; expone `current` y `target_changed`"
+    },
+    {
+      "done": false,
+      "text": "`TargetIndicator` usa `EntityConfig.target_height`"
+    },
+    {
+      "done": false,
+      "text": "`Health` + `Hurtbox` en el player (desde `GameState.max_health`)"
+    },
+    {
+      "done": false,
+      "text": "`player.gd` como orquestador; `state_machine.gd` solo transiciones e input"
+    }
+  ],
+  "code": "0.9",
+  "created_at": "2026-09-29T18:00:00Z",
+  "milestone": "m00",
+  "notes": "",
+  "order": 9,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "player"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "ventanas-ataque"
+    }
+  ],
+  "status": "todo",
+  "test": "Cambiar `equipment[SHIELD]` a `shield_mirror` desde el Save Inspector → al cargar se ve el otro escudo. Pegarle al esqueleto → pierde vida vía `Health`, una vez por swing. Rodar o recibir un golpe a mitad del ataque → la hitbox se apaga (Visible Collision Shapes).",
+  "title": "Refactor del player",
+  "updated_at": "2026-09-29T18:00:00Z"
+}

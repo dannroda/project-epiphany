@@ -1,0 +1,9 @@
+{
+  "code": "M4",
+  "done_when": [
+    "El mundo recuerda lo que hiciste."
+  ],
+  "goal": "`Interactable` con prompt contextual, tablillas y caja de texto, vasijas y pasto, flags del mundo guardadas.",
+  "order": 4,
+  "title": "Interacción + mundo"
+}

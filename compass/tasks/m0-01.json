@@ -1,0 +1,34 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "`player/hand.gd`: `is_empty` devuelve lo contrario → `not is_instance_valid(...)`"
+    },
+    {
+      "done": false,
+      "text": "`enemy.tscn`: la `Sword1H` no tiene `character`; evitar que se active hasta 0.8"
+    },
+    {
+      "done": false,
+      "text": "Borrar `src/debug/camera_selector.gd` (vacío) o darle uso"
+    },
+    {
+      "done": false,
+      "text": "`levels/test.gd`: sacar el código comentado"
+    },
+    {
+      "done": false,
+      "text": "`print_rich` de `enemy.gd` / `equipable_item.gd` → detrás de un flag de debug o eliminar"
+    }
+  ],
+  "code": "0.1",
+  "created_at": "2026-09-29T18:00:00Z",
+  "milestone": "m00",
+  "notes": "Se puede hacer en cualquier momento.",
+  "order": 1,
+  "refs": [],
+  "status": "todo",
+  "test": "",
+  "title": "Limpieza",
+  "updated_at": "2026-09-29T07:20:35.308Z"
+}

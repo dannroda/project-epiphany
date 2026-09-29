@@ -1,0 +1,9 @@
+{
+  "code": "M7",
+  "done_when": [
+    "Ida y vuelta entre overworld y mazmorra."
+  ],
+  "goal": "Zona chica con el gating bombas → escudo espejo → sello del templo, y los secretos.",
+  "order": 7,
+  "title": "Overworld"
+}

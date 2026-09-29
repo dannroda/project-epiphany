@@ -1,0 +1,9 @@
+{
+  "code": "M2",
+  "done_when": [
+    "Elegir a quién fijar y apuntar libremente."
+  ],
+  "goal": "Cambio de objetivo (flick del stick derecho, Tab, rueda) y apuntado con stick derecho o mouse.",
+  "order": 2,
+  "title": "Targeting + Aim"
+}

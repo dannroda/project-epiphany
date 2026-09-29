@@ -1,0 +1,47 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "`Enemy` con `@export var config: EntityConfig` y `config.apply_to(self)`"
+    },
+    {
+      "done": false,
+      "text": "Nodos `Health` + `Hurtbox`; `Hurtbox.hit` → knockback (según `knockback_resistance`) y `Health.damage`"
+    },
+    {
+      "done": false,
+      "text": "`Health.died` → `is_dead` en el blackboard; `Health.damaged` → `is_hit`"
+    },
+    {
+      "done": false,
+      "text": "Eliminar `take_hit` y `select`/`deselect` con prints"
+    },
+    {
+      "done": false,
+      "text": "`Hitboxes/Front` + `AttackRunner`; daño desde `config.attack_damage`; `Sword1H` solo visual"
+    },
+    {
+      "done": false,
+      "text": "`TestObject`: sigue como `RigidBody3D`, recibe impulso por `Hitbox._on_body_entered`"
+    }
+  ],
+  "code": "0.8",
+  "created_at": "2026-09-29T18:00:00Z",
+  "milestone": "m00",
+  "notes": "La tarea `BTAttack` y la IA que ataca son M1; acá solo la estructura.",
+  "order": 8,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "entidades-componentes"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "ventanas-ataque"
+    }
+  ],
+  "status": "todo",
+  "test": "",
+  "title": "Enemigo sobre componentes",
+  "updated_at": "2026-09-29T18:00:00Z"
+}

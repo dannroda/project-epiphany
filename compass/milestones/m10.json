@@ -1,0 +1,9 @@
+{
+  "code": "M10",
+  "done_when": [
+    "MVP jugable por otra persona."
+  ],
+  "goal": "Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).",
+  "order": 10,
+  "title": "Terminación"
+}
