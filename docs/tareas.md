@@ -1,6 +1,6 @@
 # Tareas — Project Epiphany
 
-> Copia local del tablero https://claude.ai/artifact/DPeQdjQUUsQv7zCz7Tu5aY. El tablero es la fuente de verdad; este archivo se regenera desde ahí.
+> Export de `compass/`, que es la fuente de verdad. No editar: los cambios se hacen en `compass/` o con `scompass`, y este archivo se regenera.
 > Generado: 2026-09-29
 
 ## M0 — Refactor del player + base de datos  (0/10)

@@ -4,15 +4,19 @@ Estos archivos **son** las tareas de Project Epiphany, en el formato de [Scope C
 
 - `milestones/<id>.json`: un hito (`m00` = M0, …).
 - `tasks/<id>.json`: una tarea. El nombre del archivo es su id.
-- `schema/`: JSON Schema de cada tipo, para validar una edición a mano (copia de `scope-compass/schema/`).
+- `schema/`: JSON Schema de cada tipo y de `config.json`, para validar una edición a mano (copia de `scope-compass/schema/`).
 - `config.json`: nombre del proyecto, documentos referenciables, export markdown, puerto del hub.
 - `.gdignore`: hace que Godot ignore esta carpeta.
 
 ## Estado actual
 
-Mientras la app no exista, el tablero se usa desde el artifact https://claude.ai/artifact/DPeQdjQUUsQv7zCz7Tu5aY y **esta carpeta es su copia en git**. Claude la regenera después de cada cambio en el tablero, junto con `docs/tareas.md`.
+**Esta carpeta es la fuente de verdad** desde el 2026-09-29. Se edita con Scope Compass o a mano, y los cambios se commitean como cualquier otro archivo:
 
-Si editás algo acá a mano, pedile a Claude que lo suba al tablero; si no, la próxima regeneración lo pisa.
+- UI del tablero: `node ../scope-compass/hub/bin/scompass.js serve --open` desde este repo (o `scompass serve --open` después de `npm link` en `scope-compass/hub/`).
+- CLI: `scompass list`, `scompass move <id> doing`, `scompass --help`.
+- A mano: editar los JSON y correr `scompass export md` para regenerar `docs/tareas.md`. Con el hub corriendo se regenera solo.
+
+El tablero en artifact (https://claude.ai/artifact/DPeQdjQUUsQv7zCz7Tu5aY) quedó archivado: no se sincroniza y sus datos pueden estar viejos.
 
 ## Manejo sin la app
 

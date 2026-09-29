@@ -1441,7 +1441,7 @@ Escenarios iniciales sugeridos: `start`, `bombs_only`, `pre_temple`, `dungeon_no
 
 | # | Hito | Qué se puede probar al terminarlo |
 |---|---|---|
-| **0** | **Refactor del player + base de datos** (ítems, GameState, guardado v0, componentes, Save Inspector v0) — *tareas en el tablero: https://claude.ai/artifact/DPeQdjQUUsQv7zCz7Tu5aY* | Guardar, recargar y quedar igual; jugar un escenario |
+| **0** | **Refactor del player + base de datos** (ítems, GameState, guardado v0, componentes, Save Inspector v0) — *tareas en `compass/` (legible en `docs/tareas.md`)* | Guardar, recargar y quedar igual; jugar un escenario |
 | **1** | **Combate real**: vida, i-frames, knockback, bloqueo direccional, roll, IA del esqueleto (BT), muerte/respawn, corazones en HUD | Pelear 1 contra 1 y poder perder |
 | **2** | **Targeting + Aim**: cambio de objetivo, apuntado stick/mouse | Elegir a quién fijar y apuntar libre |
 | **3** | **Inventario + UI**: pantallas Equipo/Ítems, asignar X/Y, slots en HUD, cofres, *item get*, recolectables | Encontrar, equipar y usar un ítem |
