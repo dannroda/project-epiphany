@@ -6,7 +6,7 @@
       "text": "Crear `src/save/save_codec.gd`"
     },
     {
-      "detail": "F5 guarda, F9 carga, y al arrancar puede cargar un escenario de `debug/scenarios/` (con el argumento `--scenario=nombre` o con el archivo que deja el Save Inspector).",
+      "detail": "la tecla `3` guarda, la `2` carga, y al arrancar puede cargar un escenario de `debug/scenarios/` (con el argumento `--scenario=nombre` o con el archivo que deja el Save Inspector).",
       "done": false,
       "text": "Crear el autoload `SaveManager` (`src/save/save_manager.gd`)"
     },
@@ -43,7 +43,7 @@
     }
   ],
   "status": "todo",
-  "test": "Jugar, apretar F5, cerrar el juego, abrirlo y apretar F9: todo vuelve igual. Después editar a mano el archivo de `user://saves/`: al cargar aparece un aviso en la consola y `GameState.save_tampered` queda en `true`.",
+  "test": "Jugar, apretar `3`, cerrar el juego, abrirlo y apretar `2`: todo vuelve igual. Después editar a mano el archivo de `user://saves/`: al cargar aparece un aviso en la consola y `GameState.save_tampered` queda en `true`.",
   "title": "Guardado",
-  "updated_at": "2026-09-30T04:37:17.890Z"
+  "updated_at": "2026-09-30T06:29:05.996Z"
 }

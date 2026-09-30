@@ -1,35 +1,35 @@
 {
   "checklist": [
     {
-      "detail": "`interact` (B / E), `dodge` (B / Espacio), `item_1` (X / click derecho) e `item_2` (Y / R).",
-      "done": false,
+      "detail": "`interact` = B (botón 1), `dodge` = RB (botón 10), `item_1` = X (botón 2), `item_2` = Y (botón 3).",
+      "done": true,
       "text": "Acciones de juego: `interact`, `dodge`, `item_1`, `item_2`"
     },
     {
-      "detail": "Cada una con su dirección del stick derecho. El mouse no necesita acción: se lee directo por código.",
-      "done": false,
-      "text": "Apuntado: `aim_left`, `aim_right`, `aim_up`, `aim_down`"
+      "detail": "Mismo stick derecho (ejes 2 y 3), ya cargado. Cambia el nombre porque ahora sirve para dos cosas: apuntar sin objetivo fijado, y cambiar de objetivo con objetivo fijado (el mismo `look_*` leído con umbral 0.7, en M2). Un solo grupo de acciones: remapearlo mueve los dos usos.",
+      "done": true,
+      "text": "Renombrar `aim_*` a `look_left`, `look_right`, `look_up`, `look_down`"
     },
     {
-      "detail": "`target_next` (Tab y rueda abajo) y `target_prev` (Shift+Tab y rueda arriba). El flick del stick derecho se detecta por código, no es una acción.",
-      "done": false,
-      "text": "Cambio de objetivo: `target_next`, `target_prev`"
+      "detail": "El cambio de objetivo sale de `look_*`, no necesita acciones propias. Sin D-pad en el targeting: queda libre.",
+      "done": true,
+      "text": "Borrar `target_next` y `target_prev`"
     },
     {
-      "detail": "`pause` (Start / Esc o I), `map` (Select / M), `menu_tab_left` (LB / Q) y `menu_tab_right` (RB / E).",
-      "done": false,
-      "text": "Menús: `pause`, `map`, `menu_tab_left`, `menu_tab_right`"
+      "detail": "`pause` = Start (botón 6), `map` = Back (botón 4), `ui_tab_left` = LB (botón 9), `ui_tab_right` = RB (botón 10). El prefijo `ui_` marca que son del contexto de menús: por eso RB no choca con `dodge`.",
+      "done": true,
+      "text": "Menús: `pause`, `map`, `ui_tab_left`, `ui_tab_right`"
     },
     {
-      "detail": "`debug_quicksave` (F5) y `debug_quickload` (F9), solo teclado.",
-      "done": false,
-      "text": "Depuración: `debug_quicksave`, `debug_quickload`"
+      "detail": "Teclas `2` (cargar) y `3` (guardar), y `debug_overlay` en la `1`. Solo teclado: son herramientas de desarrollo, no controles del jugador. Provisorias, porque el teclado de desarrollo no tiene teclas F.",
+      "done": true,
+      "text": "Depuración: `debug_overlay`, `debug_quickload`, `debug_quicksave`"
     }
   ],
   "code": "0.2",
   "created_at": "2026-09-29T18:00:00Z",
   "milestone": "m00",
-  "notes": "Acciones nuevas que van a usar los hitos siguientes. Se agregan en *Project › Project Settings › Input Map*. La tabla completa está en el GDD (§4.3).\n\n`interact` y `dodge` comparten el botón B a propósito: el código decide cuál corresponde según haya algo para interactuar cerca.\n\nSe puede hacer en cualquier momento.",
+  "notes": "Acciones de gamepad para los hitos siguientes, en *Project › Project Settings › Input Map*. Mapeo completo, con el índice de cada botón en Godot: [[gdd#input]].\n\nSolo gamepad por ahora: teclado y mouse se definen más adelante. Las teclas que ya existen quedan como provisorias.\n\nSe puede hacer en cualquier momento.",
   "order": 2,
   "refs": [
     {
@@ -37,8 +37,8 @@
       "section": "input"
     }
   ],
-  "status": "todo",
-  "test": "Las 16 acciones nuevas aparecen en el Input Map, cada una con su botón de gamepad y su tecla (las de depuración, solo tecla).",
+  "status": "done",
+  "test": "Con un gamepad conectado, cada acción responde a su botón: Start abre la pausa, Back el mapa, X/Y quedan para los ítems y RB para la esquiva. No queda ningún input repetido dentro del mismo contexto.",
   "title": "Input map",
-  "updated_at": "2026-09-30T04:37:16.003Z"
+  "updated_at": "2026-09-30T06:31:59.177Z"
 }

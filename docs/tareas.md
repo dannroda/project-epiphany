@@ -3,13 +3,13 @@
 > Export de `compass/`, que es la fuente de verdad. No editar: los cambios se hacen en `compass/` o con `scompass`, y este archivo se regenera.
 > Generado: 2026-09-30
 
-## M0 — Refactor del player + base de datos  (1/11)
+## M0 — Refactor del player + base de datos  (2/11)
 
 Dejar armada la base sobre la que se construye todo lo demás: ítems como datos, estado de la partida, guardado, componentes de combate y un player ordenado en piezas. Casi nada de esto se ve en el juego todavía; lo que cambia es cómo está hecho. Diseño y código de ejemplo: `gdd.md` §11.
 
 **Hecho cuando:**
 - El player aparece con el equipo que dice `GameState`, no con la espada y el escudo puestos a mano en la escena.
-- F5 guarda, F9 carga, y el juego vuelve exactamente al mismo estado (posición, inventario, equipo, flags).
+- la tecla `3` guarda, la `2` carga, y el juego vuelve exactamente al mismo estado (posición, inventario, equipo, flags).
 - Desde el Save Inspector se abre una partida, se edita, se valida y se juega como escenario.
 - El esqueleto recibe daño por el camino nuevo (`Hitbox` → `Hurtbox` → `Health`).
 
@@ -31,24 +31,24 @@ Dejar armada la base sobre la que se construye todo lo demás: ítems como datos
 
 No toques `addons/scope_compass/`: es un symlink al repo de Scope Compass y los cambios van allá.
 
-### 0.2 Input map · Pendiente
+### 0.2 Input map · Hecho
 
-- [ ] Acciones de juego: `interact`, `dodge`, `item_1`, `item_2`
-  `interact` (B / E), `dodge` (B / Espacio), `item_1` (X / click derecho) e `item_2` (Y / R).
-- [ ] Apuntado: `aim_left`, `aim_right`, `aim_up`, `aim_down`
-  Cada una con su dirección del stick derecho. El mouse no necesita acción: se lee directo por código.
-- [ ] Cambio de objetivo: `target_next`, `target_prev`
-  `target_next` (Tab y rueda abajo) y `target_prev` (Shift+Tab y rueda arriba). El flick del stick derecho se detecta por código, no es una acción.
-- [ ] Menús: `pause`, `map`, `menu_tab_left`, `menu_tab_right`
-  `pause` (Start / Esc o I), `map` (Select / M), `menu_tab_left` (LB / Q) y `menu_tab_right` (RB / E).
-- [ ] Depuración: `debug_quicksave`, `debug_quickload`
-  `debug_quicksave` (F5) y `debug_quickload` (F9), solo teclado.
+- [x] Acciones de juego: `interact`, `dodge`, `item_1`, `item_2`
+  `interact` = B (botón 1), `dodge` = RB (botón 10), `item_1` = X (botón 2), `item_2` = Y (botón 3).
+- [x] Renombrar `aim_*` a `look_left`, `look_right`, `look_up`, `look_down`
+  Mismo stick derecho (ejes 2 y 3), ya cargado. Cambia el nombre porque ahora sirve para dos cosas: apuntar sin objetivo fijado, y cambiar de objetivo con objetivo fijado (el mismo `look_*` leído con umbral 0.7, en M2). Un solo grupo de acciones: remapearlo mueve los dos usos.
+- [x] Borrar `target_next` y `target_prev`
+  El cambio de objetivo sale de `look_*`, no necesita acciones propias. Sin D-pad en el targeting: queda libre.
+- [x] Menús: `pause`, `map`, `ui_tab_left`, `ui_tab_right`
+  `pause` = Start (botón 6), `map` = Back (botón 4), `ui_tab_left` = LB (botón 9), `ui_tab_right` = RB (botón 10). El prefijo `ui_` marca que son del contexto de menús: por eso RB no choca con `dodge`.
+- [x] Depuración: `debug_overlay`, `debug_quickload`, `debug_quicksave`
+  Teclas `2` (cargar) y `3` (guardar), y `debug_overlay` en la `1`. Solo teclado: son herramientas de desarrollo, no controles del jugador. Provisorias, porque el teclado de desarrollo no tiene teclas F.
 
-**Prueba:** Las 16 acciones nuevas aparecen en el Input Map, cada una con su botón de gamepad y su tecla (las de depuración, solo tecla).
+**Prueba:** Con un gamepad conectado, cada acción responde a su botón: Start abre la pausa, Back el mapa, X/Y quedan para los ítems y RB para la esquiva. No queda ningún input repetido dentro del mismo contexto.
 
-**Notas:** Acciones nuevas que van a usar los hitos siguientes. Se agregan en *Project › Project Settings › Input Map*. La tabla completa está en el GDD (§4.3).
+**Notas:** Acciones de gamepad para los hitos siguientes, en *Project › Project Settings › Input Map*. Mapeo completo, con el índice de cada botón en Godot: [[gdd#input]].
 
-`interact` y `dodge` comparten el botón B a propósito: el código decide cuál corresponde según haya algo para interactuar cerca.
+Solo gamepad por ahora: teclado y mouse se definen más adelante. Las teclas que ya existen quedan como provisorias.
 
 Se puede hacer en cualquier momento.
 
@@ -124,7 +124,7 @@ Necesita 0.3 y 0.4. Diseño en el GDD (§11.6).
 - [ ] Crear `src/save/save_codec.gd`
   Funciones estáticas para escribir, leer, calcular el checksum, detectar partidas modificadas y validarlas. Es estático para que también lo use el Save Inspector (0.10). Código en [[gdd#guardado]].
 - [ ] Crear el autoload `SaveManager` (`src/save/save_manager.gd`)
-  F5 guarda, F9 carga, y al arrancar puede cargar un escenario de `debug/scenarios/` (con el argumento `--scenario=nombre` o con el archivo que deja el Save Inspector).
+  la tecla `3` guarda, la `2` carga, y al arrancar puede cargar un escenario de `debug/scenarios/` (con el argumento `--scenario=nombre` o con el archivo que deja el Save Inspector).
 - [ ] Guardar y restaurar la posición del player
   Por ahora alcanza con la posición exacta; cuando haya salas y overworld pasa a puntos de aparición con nombre.
 - [ ] Agregar la feature `plain_saves` al preset de debug
@@ -134,7 +134,7 @@ Necesita 0.3 y 0.4. Diseño en el GDD (§11.6).
 - [ ] Escribir dos escenarios en `debug/scenarios/`
   A mano: `start.cfg` (partida nueva) y `full_inventory.cfg` (con todo el inventario).
 
-**Prueba:** Jugar, apretar F5, cerrar el juego, abrirlo y apretar F9: todo vuelve igual. Después editar a mano el archivo de `user://saves/`: al cargar aparece un aviso en la consola y `GameState.save_tampered` queda en `true`.
+**Prueba:** Jugar, apretar `3`, cerrar el juego, abrirlo y apretar `2`: todo vuelve igual. Después editar a mano el archivo de `user://saves/`: al cargar aparece un aviso en la consola y `GameState.save_tampered` queda en `true`.
 
 **Notas:** Guarda y carga partidas en `user://saves/`. Desde el editor se guarda en texto plano, para poder leerlo y editarlo; en release, encriptado, para que nadie lo edite por accidente.
 
@@ -160,12 +160,12 @@ Necesita 0.5. Diseño completo y código en el GDD (§11.7).
   Al cambiar nivel o canales, el editor le manda el filtro al juego (`EditorDebuggerSession.send_message`) y el juego lo aplica al momento (`EngineDebugger.register_message_capture`).
 - [ ] Doble clic en una línea abre el script donde se generó
   Con `EditorInterface.edit_script()`. Para errores, la ubicación sale del backtrace que da el `Logger`; para las líneas de `Log`, de `get_stack()`.
-- [ ] Crear el overlay `DebugOverlay` (F3)
-  Autoload con `watch(clave, valor)` para valores que cambian cada frame (estado, velocidad, objetivo), y la acción `debug_overlay` (F3) para mostrarlo u ocultarlo. Reemplaza a `LabelStateTracker` (`src/debug/label_prop.gd`) y sirve también en builds exportadas.
+- [ ] Crear el overlay `DebugOverlay` (tecla `1`)
+  Autoload con `watch(clave, valor)` para valores que cambian cada frame (estado, velocidad, objetivo), y la acción `debug_overlay` (tecla `1`) para mostrarlo u ocultarlo. Reemplaza a `LabelStateTracker` (`src/debug/label_prop.gd`) y sirve también en builds exportadas.
 - [ ] Para más adelante: pestaña Watches y comandos desde el editor
   Los valores del overlay en vivo en una pestaña del debugger, y botones que le mandan órdenes al juego (dar un ítem, cambiar una flag, cargar un escenario).
 
-**Prueba:** Correr `levels/test.tscn` y golpear al esqueleto: la línea aparece en la pestaña Log del debugger. Filtrar por `combat` desde la pestaña oculta el resto sin reiniciar el juego. Doble clic en la línea abre `enemy.gd` donde se generó. En *Debugger › Monitors* aparece la categoría `epiphany`. F3 muestra y oculta el overlay. Un error provocado a propósito (por ejemplo, llamar a un método que no existe) también aparece en la pestaña, con canal `engine`, y el doble clic lleva a la línea.
+**Prueba:** Correr `levels/test.tscn` y golpear al esqueleto: la línea aparece en la pestaña Log del debugger. Filtrar por `combat` desde la pestaña oculta el resto sin reiniciar el juego. Doble clic en la línea abre `enemy.gd` donde se generó. En *Debugger › Monitors* aparece la categoría `epiphany`. La tecla `1` muestra y oculta el overlay. Un error provocado a propósito (por ejemplo, llamar a un método que no existe) también aparece en la pestaña, con canal `engine`, y el doble clic lleva a la línea.
 
 **Notas:** Reemplaza los `print` y `print_rich` sueltos por un logger con niveles y canales, conectado al debugger de Godot. Es el port a GDScript del logger de godot-dojo (`include/tools/logger.hpp`), con canales agregados.
 
@@ -280,7 +280,7 @@ Vida, invulnerabilidad breve, knockback, bloqueo direccional, roll, IA del esque
 
 ## M2 — Targeting + Aim
 
-Cambio de objetivo (flick del stick derecho, Tab, rueda) y apuntado con stick derecho o mouse.
+Cambio de objetivo moviendo el stick derecho de golpe (el mismo `look_*` que apunta, leído con umbral 0.7; ver [[gdd#input]]) y apuntado con el stick derecho.
 
 **Hecho cuando:**
 - Elegir a quién fijar y apuntar libremente.

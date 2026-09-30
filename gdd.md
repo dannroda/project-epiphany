@@ -52,28 +52,28 @@ El tema *Imminent Doom* sigue siendo el tono: el fin se siente por ambientación
 
 - Movimiento libre analógico (8+ direcciones), rotación suave del modelo.
 - **Lock-on (Z-target)**: mantener o alternar (configurable, ya implementado). Con objetivo fijado el player strafea y la cámara encuadra a ambos.
-- **Cambio de objetivo** *(pendiente)*: con objetivo fijado, *flick* del analógico derecho hacia una dirección de pantalla (o Tab / rueda del mouse) salta al candidato más alineado en esa dirección.
+- **Cambio de objetivo** *(pendiente)*: con objetivo fijado, mover el stick derecho de golpe (`look_*` más allá de 0.7) salta al candidato más alineado en esa dirección de pantalla. Teclado y mouse: a definir (§4.3).
 - **Apuntado libre**: analógico derecho o mouse (rayo cámara → plano del suelo). Lo consumen arco, bombas lanzadas y cualquier ítem a distancia.
 
 ### 4.3 Mapa de input
 <!-- id: input -->
 
-| Acción (`InputMap`) | Gamepad | Teclado / mouse | Estado |
-|---|---|---|---|
-| `move_*` | Stick izq. | WASD | ✅ existe |
-| `attack` | A / Cruz | Click izq. | ✅ existe |
-| `block` | RT / R2 | Q | ✅ existe |
-| `z-lock` | LT / L2 | Shift | ✅ existe |
-| `interact` | B / Círculo | E | nuevo |
-| `dodge` | B / Círculo *(en movimiento, sin interactuable cerca)* | Espacio | nuevo |
-| `item_1` / `item_2` | X / Y | Click der. / R | nuevo |
-| `aim_*` | Stick der. | Mouse | nuevo |
-| `target_next` / `target_prev` | Flick stick der. | Tab / Shift+Tab / rueda | nuevo |
-| `pause` (inventario) | Start | Esc / I | nuevo |
-| `map` | Select | M | nuevo |
-| `menu_tab_left` / `menu_tab_right` | LB / RB | Q / E *(en menú)* | nuevo |
+| Acción (`InputMap`) | Gamepad (Xbox · índice en Godot) | Uso |
+|---|---|---|
+| `move_*` | Stick izquierdo | Moverse |
+| `attack` | A · botón 0 | Espada |
+| `interact` | B · botón 1 | Abrir, leer, empujar (acción contextual) |
+| `dodge` | RB · botón 10 | Rodar. Queda al lado de la guardia: cubrirse y esquivar con el mismo dedo |
+| `item_1` / `item_2` | X · botón 2 / Y · botón 3 | Ítems asignados |
+| `block` | RT · eje 5 | Guardia |
+| `z-lock` | LT · eje 4 | Fijar objetivo |
+| `look_left` / `look_right` / `look_up` / `look_down` | Stick derecho · ejes 2 y 3 | Una sola dirección para dos usos. Sin objetivo fijado: apuntar (zona muerta normal). Con objetivo fijado: cambiar de objetivo cuando cruza 0.7 (el mismo `look_*` leído con otro umbral). Remapear `look_*` mueve los dos usos juntos |
+| `pause` | Start · botón 6 | Menú de pausa (inventario) |
+| `map` | Back · botón 4 | Mapa |
+| `ui_tab_left` / `ui_tab_right` | LB · botón 9 / RB · botón 10 | Pestañas de los menús. Prefijo `ui_` porque son de otro contexto: con el juego pausado RB no choca con `dodge` |
+| `debug_overlay` / `debug_quickload` / `debug_quicksave` | — | Teclas `1` / `2` / `3`, solo teclado, solo en debug. Provisorias: el teclado de desarrollo no tiene teclas F |
 
-> `interact` y `dodge` comparten botón en gamepad (como el A contextual de Ocarina): si hay un interactuable enfocado, interactúa; si no y hay movimiento, rueda.
+**Teclado y mouse: se definen más adelante.** Por ahora no hay ninguna tecla de juego mapeada: el juego se prueba con gamepad. Ideas ya discutidas para cuando se retome: guardia en click derecho, ítems en `Q`/`R`, `Tab` para el inventario y la rueda para cambiar de objetivo.
 
 ## 5. Combate
 <!-- id: combate -->
@@ -180,7 +180,7 @@ Rig reutilizado de otra jam *(pendiente importarlo al repo)*.
 | **Item get** | Animación con el ítem en alto + nombre + descripción corta. |
 | **Game over** | Continuar / Guardar y salir. |
 | **Opciones** | Lock-on mantener/alternar, sensibilidad de apuntado, volumen, remapeo (post-MVP). |
-| **Debug (solo editor/debug)** | Overlay de valores en vivo (F3), guardar/cargar rápido F5/F9, pestaña Log en el debugger del editor. Ver §11.9. |
+| **Debug (solo editor/debug)** | Overlay de valores en vivo (tecla `1`), cargar/guardar rápido (teclas `2`/`3`), pestaña Log en el debugger del editor. Ver §11.9. |
 
 ---
 
@@ -907,7 +907,7 @@ func get_direction() -> Vector3:
 
 
 func _stick() -> Vector2:
-	return Input.get_vector(&"aim_left", &"aim_right", &"aim_up", &"aim_down")
+	return Input.get_vector(&"look_left", &"look_right", &"look_up", &"look_down")
 
 
 func _mouse_on_ground() -> Variant:
@@ -926,26 +926,22 @@ func _flat(v: Vector3) -> Vector3:
 
 ```gdscript
 # player/components/targeting.gd (extracto)
-const FLICK_THRESHOLD := 0.8
-const MIN_ALIGNMENT := 0.5   ## cono de ~60° hacia donde se hizo el flick
+const MIN_ALIGNMENT := 0.5   ## cono de ~60° hacia la dirección pedida
 
-var _stick_was_neutral := true
+const SWITCH_THRESHOLD := 0.7   ## umbral de "stick de golpe"; apuntar usa la zona muerta normal
+
+var _last_dir := Vector2.ZERO
 
 
+## Mismas acciones que Aim (`look_*`), leídas con otro umbral: remapear una mueve las dos.
 func _physics_process(_delta: float) -> void:
 	if current == null:
+		_last_dir = Vector2.ZERO
 		return
-	var stick := Input.get_vector(&"aim_left", &"aim_right", &"aim_up", &"aim_down")
-	if stick.length() > FLICK_THRESHOLD and _stick_was_neutral:
-		cycle(stick.normalized())
-	_stick_was_neutral = stick.length() < 0.3
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	if current and event.is_action_pressed(&"target_next"):
-		cycle(Vector2.RIGHT)
-	elif current and event.is_action_pressed(&"target_prev"):
-		cycle(Vector2.LEFT)
+	var dir := Input.get_vector(&"look_left", &"look_right", &"look_up", &"look_down", SWITCH_THRESHOLD)
+	if dir != Vector2.ZERO and _last_dir == Vector2.ZERO:   # cruzó el umbral: un salto por movimiento
+		cycle(dir.normalized())
+	_last_dir = dir
 
 
 ## Salta al candidato mejor alineado con `screen_dir` (espacio de pantalla).
@@ -969,7 +965,7 @@ func cycle(screen_dir: Vector2) -> void:
 		set_target(best)
 ```
 
-> Con mouse/teclado sin dirección clara, `Tab` usa `Vector2.RIGHT`: recorre los objetivos de izquierda a derecha en pantalla. Si no hay nadie a la derecha, se puede hacer wrap al más a la izquierda.
+> Sin objetivo fijado, el stick derecho apunta (`look_*`, en `Aim`). Con objetivo fijado apuntar no hace falta (todo apunta al objetivo), así que el mismo stick queda libre para cambiar de objetivo. Si no hay candidato en la dirección pedida, no pasa nada (o se hace wrap, a decidir jugando).
 
 ### 11.5 Mundo: interacción, salas, puertas
 <!-- id: mundo -->
@@ -1357,9 +1353,9 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not OS.is_debug_build():
 		return
-	if event.is_action_pressed(&"debug_quicksave"):   # F5
+	if event.is_action_pressed(&"debug_quicksave"):   # tecla 3
 		save_game()
-	elif event.is_action_pressed(&"debug_quickload"): # F9
+	elif event.is_action_pressed(&"debug_quickload"): # tecla 2
 		load_game()
 
 
@@ -1460,7 +1456,7 @@ Log (API: niveles y canales)  ──print_rich / push_*──▶  salida del eng
 | `LogSink` | `Logger` propio registrado con `OS.add_logger()` en el `_init` de `Log`. Recibe todo lo que imprime el proceso (juego, engine, addons) y los errores con archivo, línea y backtrace. Solo encola: puede correr en otros hilos y adentro no se puede usar `print` ni `push_error` | `src/debug/log_sink.gd` |
 | Pestaña "Log" | `EditorDebuggerPlugin`. El juego le manda cada línea (`EngineDebugger.send_message("epiphany_log:entry", …)`): nivel, canal, texto, hora y ubicación. Filtros por nivel y canal que se aplican al juego corriendo, y doble clic para abrir el script en la línea | `addons/epiphany_tools/` |
 | Monitores | `Performance.add_custom_monitor("epiphany/…", callable)`: gráficos en *Debugger › Monitors*. Cada sistema registra los suyos (enemigos vivos, hitboxes activas…). Funcionan también en builds exportadas | cada sistema |
-| `DebugOverlay` (autoload) | `watch(clave, valor)` para valores que cambian cada frame; se muestra con F3 (`debug_overlay`). Reemplaza a `LabelStateTracker`. Es lo que queda en builds exportadas | `src/debug/debug_overlay.gd` |
+| `DebugOverlay` (autoload) | `watch(clave, valor)` para valores que cambian cada frame; se muestra con la tecla `1` (`debug_overlay`). Reemplaza a `LabelStateTracker`. Es lo que queda en builds exportadas | `src/debug/debug_overlay.gd` |
 
 Uso:
 

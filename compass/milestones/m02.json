@@ -3,7 +3,7 @@
   "done_when": [
     "Elegir a quién fijar y apuntar libremente."
   ],
-  "goal": "Cambio de objetivo (flick del stick derecho, Tab, rueda) y apuntado con stick derecho o mouse.",
+  "goal": "Cambio de objetivo moviendo el stick derecho de golpe (el mismo `look_*` que apunta, leído con umbral 0.7; ver [[gdd#input]]) y apuntado con el stick derecho.",
   "order": 2,
   "title": "Targeting + Aim"
 }

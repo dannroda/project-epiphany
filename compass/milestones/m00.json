@@ -2,7 +2,7 @@
   "code": "M0",
   "done_when": [
     "El player aparece con el equipo que dice `GameState`, no con la espada y el escudo puestos a mano en la escena.",
-    "F5 guarda, F9 carga, y el juego vuelve exactamente al mismo estado (posición, inventario, equipo, flags).",
+    "la tecla `3` guarda, la `2` carga, y el juego vuelve exactamente al mismo estado (posición, inventario, equipo, flags).",
     "Desde el Save Inspector se abre una partida, se edita, se valida y se juega como escenario.",
     "El esqueleto recibe daño por el camino nuevo (`Hitbox` → `Hurtbox` → `Health`)."
   ],
