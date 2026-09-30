@@ -30,16 +30,18 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func select() -> void:
-	print_rich("[color=Green]Enemigo fijado por Z-Target:[/color] %s" % name)
+	pass
+	#print_rich("[color=Green]Enemigo fijado por Z-Target:[/color] %s" % name)
 
 func deselect() -> void:
-	print_rich("[color=Yellow]Enemigo liberado de Z-Target:[/color] %s" % name)
+	pass
+	#print_rich("[color=Yellow]Enemigo liberado de Z-Target:[/color] %s" % name)
 
 func take_hit(damage: int, knockback: Vector3) -> void:
 	if is_dead: return
 	
 	current_health -= damage
-	print_rich("[color=Red]%s recibió golpe![/color] Vida restante: %d" % [name, current_health])
+	#print_rich("[color=Red]%s recibió golpe![/color] Vida restante: %d" % [name, current_health])
 
 	velocity = knockback
 	
@@ -68,7 +70,7 @@ func _start_death() -> void:
 		
 func on_death_finished() -> void:
 	bt_player.active = false
-	printt(collision_layer, collision_mask)
+	#printt(collision_layer, collision_mask)
 	collision_layer = 4
 	#collision_mask = 1
 	#var tween := create_tween()

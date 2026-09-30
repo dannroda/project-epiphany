@@ -12,6 +12,8 @@ func _ready() -> void:
 	collision.shape = collision.shape.duplicate(true)
 
 func _on_hit_box_body_entered(body: Node3D) -> void:
+	if character == null:
+		return
 	if body == character:
 		return
 
@@ -35,7 +37,7 @@ func _on_hit_box_body_entered(body: Node3D) -> void:
 		body.apply_central_impulse(knockback_vector)
 	elif body is CharacterBody3D and body.has_method("apply_knockback"):
 		body.apply_knockback(knockback_vector)
-		print_rich("[color=Green]%s[/color] force transfered from [color=Orange]%s[/color] to [color=Yellow]%s[/color]" % [knockback_vector, name, body.name])
+		#print_rich("[color=Green]%s[/color] force transfered from [color=Orange]%s[/color] to [color=Yellow]%s[/color]" % [knockback_vector, name, body.name])
 
 func enable(_enable: bool) -> void:
 	if _enable:

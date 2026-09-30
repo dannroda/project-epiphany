@@ -9,7 +9,7 @@ var equipped_item:EquippableItem:
 
 var is_empty:bool:
 	get:
-		return is_instance_valid(equipped_item)
+		return not is_instance_valid(equipped_item)
 		
 func trigger_equipped_item(_enable:bool) -> void:
 	equipped_item.enable(_enable)
