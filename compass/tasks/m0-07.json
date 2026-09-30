@@ -1,30 +1,35 @@
 {
   "checklist": [
     {
+      "detail": "`damage_info.gd` (los datos de un golpe), `health.gd` (vida e invulnerabilidad después de un golpe), `hurtbox.gd` (la zona que recibe golpes) y `hitbox.gd` (la zona que pega; a cada objetivo le pega una sola vez por ataque). Código en [[gdd#entidades-componentes]].",
       "done": false,
-      "text": "`damage_info.gd`, `health.gd`, `hitbox.gd` (con `active_attack` y ya golpeados por swing), `hurtbox.gd`"
+      "text": "Crear los componentes en `src/components/`"
     },
     {
+      "detail": "Prende la hitbox solo durante el tramo del ataque que indica cada `AttackData`, y la apaga si el ataque se interrumpe. Código en [[gdd#ventanas-ataque]].",
       "done": false,
-      "text": "`src/combat/attack_data.gd` y `src/components/attack_runner.gd`"
+      "text": "Crear `src/components/attack_runner.gd`"
     },
     {
+      "detail": "La ficha de un tipo de entidad: equipo, vida, capacidades como \"se puede fijar\" o \"se puede empujar\", altura del indicador y daño de sus ataques.",
       "done": false,
-      "text": "`src/entities/entity_config.gd` con `Feature` como flags y `apply_to()`"
+      "text": "Crear `src/entities/entity_config.gd`"
     },
     {
+      "detail": "`player.tres`, `skeleton.tres` y `test_box.tres`.",
       "done": false,
-      "text": "`data/entities/`: player, skeleton, test_box"
+      "text": "Crear las fichas en `data/entities/`"
     },
     {
+      "detail": "`sword_slash.tres` (animación `CombatMelee/Melee_1H_Attack_Slice_Diagonal`), `shield_thrust.tres` (`CombatMelee/Melee_Block_Attack`) y `skeleton_slash.tres`. Los tramos en que pega (`active_from`, `active_to`) se ponen a ojo y se ajustan jugando.",
       "done": false,
-      "text": "`data/attacks/`: sword_slash (Slice_Diagonal), shield_thrust, skeleton_slash"
+      "text": "Crear los ataques en `data/attacks/`"
     }
   ],
   "code": "0.7",
   "created_at": "2026-09-29T18:00:00Z",
   "milestone": "m00",
-  "notes": "Ventanas de ataque: `gdd.md` §11.3.",
+  "notes": "Piezas reutilizables para todo lo que pega o recibe golpes (player, enemigos, trampas, jefe), y la ficha de datos de cada tipo de entidad. Todavía no se ven en el juego: se usan en 0.8 y 0.9.\n\nDiseño en el GDD (§11.3 y \"Ventanas de ataque\").",
   "order": 7,
   "refs": [
     {
@@ -37,7 +42,7 @@
     }
   ],
   "status": "todo",
-  "test": "",
+  "test": "Los scripts no dan errores y los `.tres` se abren en el Inspector con todos sus campos.",
   "title": "Componentes y EntityConfig",
-  "updated_at": "2026-09-29T18:00:00Z"
+  "updated_at": "2026-09-30T04:37:18.800Z"
 }

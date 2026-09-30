@@ -1,18 +1,25 @@
 {
   "checklist": [
     {
+      "detail": "Un recurso con `id`, `description` y `default_value` (una flag declarada). Si Godot no deja exportar `default_value` como `Variant`, usar `bool` por ahora: casi todas las flags son sí o no.",
       "done": false,
-      "text": "`src/state/flag_definition.gd` (`id`, `description`, `default_value`) y `flag_registry.gd`"
+      "text": "Crear `src/state/flag_definition.gd`"
     },
     {
+      "detail": "El recurso `FlagRegistry`, con la lista de definiciones y las funciones `has()` y `default_of()`. Código en [[gdd#estado-flags]].",
       "done": false,
-      "text": "`data/flag_registry.tres` con las flags conocidas hoy (p. ej. `ow_test_chest`)"
+      "text": "Crear `src/state/flag_registry.gd`"
+    },
+    {
+      "detail": "Con el nivel de prueba alcanza una de ejemplo: `ow_test_chest`.",
+      "done": false,
+      "text": "Crear `data/flag_registry.tres` con las flags de hoy"
     }
   ],
   "code": "0.4",
   "created_at": "2026-09-29T18:00:00Z",
   "milestone": "m00",
-  "notes": "",
+  "notes": "Las flags son el estado del mundo que se guarda: un cofre abierto, una puerta destrabada. Se declaran en un registro para evitar errores de tipeo y para que el Save Inspector pueda avisar cuando una partida tiene una flag que no existe. Diseño en el GDD (§11.6).",
   "order": 4,
   "refs": [
     {
@@ -21,7 +28,7 @@
     }
   ],
   "status": "todo",
-  "test": "",
+  "test": "`load(\"res://data/flag_registry.tres\").has(&\"ow_test_chest\")` devuelve `true`, y con cualquier otro id devuelve `false`.",
   "title": "Flags",
-  "updated_at": "2026-09-29T18:00:00Z"
+  "updated_at": "2026-09-30T04:37:16.945Z"
 }

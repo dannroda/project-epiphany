@@ -1,42 +1,60 @@
 {
   "checklist": [
     {
+      "detail": "Un recurso chico con la animación y el tramo en que pega un ataque. Código en [[gdd#ventanas-ataque]]. Va primero porque la espada lo necesita.",
       "done": false,
-      "text": "`src/items/item_data.gd`: `ItemData` con `Category`, `make_damage()`, `is_equipment()`"
+      "text": "Crear `src/combat/attack_data.gd`"
     },
     {
+      "detail": "Los datos de un ítem: id, nombre, ícono, categoría, cantidad máxima, modelo, comportamiento y daño. Código en [[gdd#items-datos]].",
       "done": false,
-      "text": "`item_behavior.gd` + `melee_behavior.gd` (`combo: Array[AttackData]`); stubs de projectile, place y consumable"
+      "text": "Crear la clase `ItemData` (`src/items/item_data.gd`)"
     },
     {
+      "detail": "`item_behavior.gd` (la base) y `melee_behavior.gd` (la espada, con su lista de ataques `combo`). Para proyectil, colocar y consumible, crear los archivos con la clase vacía; se completan en M5.",
       "done": false,
-      "text": "`src/items/modifiers/item_modifier.gd` (vacío, estructura lista)"
+      "text": "Crear los comportamientos en `src/items/behaviors/`"
     },
     {
+      "detail": "La base de los modificadores (fuego, rayo…). Queda vacía hasta decidir si hay espadas elementales.",
       "done": false,
-      "text": "`src/items/item_use_context.gd`"
+      "text": "Crear `src/items/modifiers/item_modifier.gd`"
     },
     {
+      "detail": "Los datos que recibe un comportamiento al usar un ítem: quién lo usa, desde dónde y hacia dónde apunta.",
       "done": false,
-      "text": "`item_database.gd` + autoload `Items` (`src/items/items.gd`)"
+      "text": "Crear `src/items/item_use_context.gd`"
     },
     {
+      "detail": "Lleva la cuenta de cuántos de cada ítem tiene el jugador. No es un nodo ni un recurso; lo usa `GameState` en 0.5.",
       "done": false,
-      "text": "`src/items/inventory.gd`"
+      "text": "Crear `src/items/inventory.gd`"
     },
     {
+      "detail": "El recurso `ItemDatabase`, que busca ítems por id.",
       "done": false,
-      "text": "`data/items/`: sword_basic, shield_wood, shield_mirror, tunic, bow, arrow, bomb_bag, bomb, potion, bottle_empty, small_key, boss_key, dungeon_map, compass, heart_container"
+      "text": "Crear `src/items/item_database.gd`"
     },
     {
+      "detail": "Clic derecho › Nuevo recurso › `ItemData`: `sword_basic`, `shield_wood`, `shield_mirror`, `tunic`, `bow`, `arrow`, `bomb_bag`, `bomb`, `potion`, `bottle_empty`, `small_key`, `boss_key`, `dungeon_map`, `compass`, `heart_container`. Alcanza con id, nombre y categoría; íconos y modelos pueden quedar vacíos.",
       "done": false,
-      "text": "`data/item_database.tres` con todos"
+      "text": "Crear los 15 ítems en `data/items/`"
+    },
+    {
+      "detail": "Un recurso `ItemDatabase`: arrastrar los 15 ítems a su lista `items`.",
+      "done": false,
+      "text": "Crear `data/item_database.tres` con los 15 ítems"
+    },
+    {
+      "detail": "Crear el script y agregarlo en *Project Settings › Globals › Autoload*. Va al final porque necesita que `data/item_database.tres` ya exista.",
+      "done": false,
+      "text": "Agregar el autoload `Items` (`src/items/items.gd`)"
     }
   ],
   "code": "0.3",
   "created_at": "2026-09-29T18:00:00Z",
   "milestone": "m00",
-  "notes": "",
+  "notes": "Crea la base de datos de ítems. Cada ítem es un recurso `.tres` con sus datos, y lo que hace al usarse es otro recurso que se le enchufa (su comportamiento). Así una espada de fuego no necesita una clase nueva.\n\nTodavía no se usa en el juego: el player empieza a usarla en 0.9. El código de ejemplo de cada clase está en el GDD (§11.2). Hacé los pasos en orden: el autoload necesita que los `.tres` ya existan.",
   "order": 3,
   "refs": [
     {
@@ -45,7 +63,7 @@
     }
   ],
   "status": "todo",
-  "test": "`Items.get_item(&\"sword_basic\").display_name` desde un script de prueba o el debugger.",
+  "test": "Con el juego corriendo, desde un script de prueba o el debugger remoto: `Items.get_item(&\"sword_basic\").display_name` devuelve el nombre de la espada.",
   "title": "Ítems: datos",
-  "updated_at": "2026-09-29T18:00:00Z"
+  "updated_at": "2026-09-30T04:37:16.464Z"
 }

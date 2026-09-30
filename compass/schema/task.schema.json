@@ -46,10 +46,15 @@
         "additionalProperties": false,
         "properties": {
           "text": {
-            "type": "string"
+            "type": "string",
+            "description": "Texto corto del paso (una línea)"
           },
           "done": {
             "type": "boolean"
+          },
+          "detail": {
+            "type": "string",
+            "description": "Detalle opcional del paso: el cómo, el porqué, archivos o código. Se muestra plegado debajo del texto."
           }
         }
       }

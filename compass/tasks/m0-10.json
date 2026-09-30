@@ -1,34 +1,39 @@
 {
   "checklist": [
     {
+      "detail": "`plugin.cfg` + `plugin.gd`, con `EditorDock` y `add_dock()` como en `addons/scope_compass/scope_compass.gd`. Carpeta normal, no symlink.",
       "done": false,
-      "text": "`addons/epiphany_tools/plugin.cfg` + `plugin.gd` con un dock"
+      "text": "Crear el plugin `addons/epiphany_tools/` con un dock"
+    },
+    {
+      "detail": "Las partidas de `user://saves/` y los escenarios de `res://debug/scenarios/`.",
+      "done": false,
+      "text": "Listar partidas y escenarios"
+    },
+    {
+      "detail": "Sección › clave › valor, con edición de sí/no, números y texto.",
+      "done": false,
+      "text": "Mostrar y editar la partida en un `Tree`"
+    },
+    {
+      "detail": "Usa `SaveCodec.validate()` y marca en rojo lo que está mal (ítems que no existen, cantidades fuera de rango, flags no declaradas). Se puede guardar igual, para forzar casos imposibles a propósito.",
+      "done": false,
+      "text": "Botón Validar"
+    },
+    {
+      "detail": "Jugar escribe `user://debug/next_scenario.txt` y lanza el juego con `EditorInterface.play_main_scene()`.",
+      "done": false,
+      "text": "Botones Guardar, Guardar como escenario y Jugar escenario"
     },
     {
       "done": false,
-      "text": "Lista de partidas (`user://saves/`) y escenarios (`res://debug/scenarios/`)"
-    },
-    {
-      "done": false,
-      "text": "`Tree` sección › clave › valor, editable"
-    },
-    {
-      "done": false,
-      "text": "Botón Validar (`SaveCodec.validate`) con errores resaltados"
-    },
-    {
-      "done": false,
-      "text": "Guardar, Guardar como escenario, Jugar escenario"
-    },
-    {
-      "done": false,
-      "text": "Después: autocompletado de ids de ítems y flags"
+      "text": "Para más adelante: autocompletar ids de ítems y flags"
     }
   ],
   "code": "0.10",
   "created_at": "2026-09-29T18:00:00Z",
   "milestone": "m00",
-  "notes": "Verificar la API de docks en 4.8 (cambió el sistema de pantallas del editor, ver el parche de LimboAI).",
+  "notes": "Un dock del editor para abrir, editar, validar y jugar partidas guardadas. Sirve para probar situaciones raras sin tener que jugar hasta ahí.\n\nVa en `addons/epiphany_tools/`, como carpeta normal (no un symlink como `addons/scope_compass/`). La API de docks de Godot 4.8 ya la resolvió Scope Compass: `addons/scope_compass/scope_compass.gd` usa `EditorDock` y `add_dock()`; copiá ese patrón.\n\nNecesita 0.6. Diseño en el GDD (§11.8).",
   "order": 10,
   "refs": [
     {
@@ -37,7 +42,7 @@
     }
   ],
   "status": "todo",
-  "test": "Abrir una partida, agregar `bomb=3`, validar y jugarla como escenario.",
+  "test": "Abrir una partida en el dock, agregar `bomb=3` en `[inventory]`, validar y apretar Jugar escenario: el juego arranca con 3 bombas.",
   "title": "Save Inspector v0",
-  "updated_at": "2026-09-29T18:00:00Z"
+  "updated_at": "2026-09-30T04:37:20.180Z"
 }

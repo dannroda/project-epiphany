@@ -1,34 +1,39 @@
 {
   "checklist": [
     {
+      "detail": "En `src/entities/enemy.gd`, agregar `@export var config: EntityConfig` y llamar `config.apply_to(self)` en `_ready`. Asignar `data/entities/skeleton.tres` en el Inspector del esqueleto.",
       "done": false,
-      "text": "`Enemy` con `@export var config: EntityConfig` y `config.apply_to(self)`"
+      "text": "Darle al esqueleto su ficha (`EntityConfig`)"
+    },
+    {
+      "detail": "El `Hurtbox` con su CollisionShape. Cuando recibe un golpe: empujar al esqueleto (menos cuanto más alta sea su `knockback_resistance`) y restarle vida.",
+      "done": false,
+      "text": "Agregar `Health` y `Hurtbox` a `enemy.tscn`"
+    },
+    {
+      "detail": "`died` pone `is_dead` en el blackboard (reemplaza `_start_death`) y `damaged` pone `is_hit`.",
+      "done": false,
+      "text": "Conectar `Health` con el árbol de comportamiento"
     },
     {
       "done": false,
-      "text": "Nodos `Health` + `Hurtbox`; `Hurtbox.hit` → knockback (según `knockback_resistance`) y `Health.damage`"
+      "text": "Borrar `take_hit`, `select` y `deselect` de `enemy.gd`"
     },
     {
+      "detail": "Bajo `ModelController`: una `Hitbox` delante del esqueleto y un nodo `AttackRunner`. El daño sale de `attack_damage` y `attack_knockback` de su ficha. La `Sword1H` queda solo como modelo.",
       "done": false,
-      "text": "`Health.died` → `is_dead` en el blackboard; `Health.damaged` → `is_hit`"
+      "text": "Agregar `Hitboxes/Front` y `AttackRunner` al esqueleto"
     },
     {
+      "detail": "`TestObject` recibe el empujón por `Hitbox._on_body_entered`, sin `Hurtbox`.",
       "done": false,
-      "text": "Eliminar `take_hit` y `select`/`deselect` con prints"
-    },
-    {
-      "done": false,
-      "text": "`Hitboxes/Front` + `AttackRunner`; daño desde `config.attack_damage`; `Sword1H` solo visual"
-    },
-    {
-      "done": false,
-      "text": "`TestObject`: sigue como `RigidBody3D`, recibe impulso por `Hitbox._on_body_entered`"
+      "text": "Las cajas de prueba siguen siendo `RigidBody3D`"
     }
   ],
   "code": "0.8",
   "created_at": "2026-09-29T18:00:00Z",
   "milestone": "m00",
-  "notes": "La tarea `BTAttack` y la IA que ataca son M1; acá solo la estructura.",
+  "notes": "El esqueleto pasa a usar los componentes de 0.7: recibe daño por `Hurtbox` y `Health` en lugar de `take_hit`. Todavía no ataca: la IA de ataque es M1.\n\nNecesita 0.7. Ojo: la espada del player sigue llamando `take_hit` hasta 0.9, así que conviene hacer 0.8 y 0.9 seguidas.",
   "order": 8,
   "refs": [
     {
@@ -41,7 +46,7 @@
     }
   ],
   "status": "todo",
-  "test": "",
+  "test": "Se prueba al terminar 0.9: pegarle al esqueleto le baja la vida y muere con su animación. Las cajas siguen saliendo despedidas.",
   "title": "Enemigo sobre componentes",
-  "updated_at": "2026-09-29T18:00:00Z"
+  "updated_at": "2026-09-30T04:37:19.266Z"
 }

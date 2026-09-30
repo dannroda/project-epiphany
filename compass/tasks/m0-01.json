@@ -1,34 +1,38 @@
 {
   "checklist": [
     {
-      "done": false,
-      "text": "`player/hand.gd`: `is_empty` devuelve lo contrario → `not is_instance_valid(...)`"
+      "detail": "Devolvía `true` cuando la mano tenía un ítem. Tiene que quedar `return not is_instance_valid(equipped_item)`.",
+      "done": true,
+      "text": "Arreglar `is_empty` en `player/hand.gd`"
     },
     {
-      "done": false,
-      "text": "`enemy.tscn`: la `Sword1H` no tiene `character`; evitar que se active hasta 0.8"
+      "detail": "En `src/items/equipable_item.gd`, al principio de `_on_hit_box_body_entered`, agregar `if character == null: return`. La `Sword1H` de `enemy.tscn` no tiene `character` asignado y fallaría si su hitbox se activara. Esa espada pasa a ser solo decorativa en 0.8.",
+      "done": true,
+      "text": "Evitar que la espada del esqueleto rompa el juego"
     },
     {
-      "done": false,
-      "text": "Borrar `src/debug/camera_selector.gd` (vacío) o darle uso"
+      "detail": "Estaba vacío.",
+      "done": true,
+      "text": "Borrar `src/debug/camera_selector.gd` y su `.uid`"
     },
     {
-      "done": false,
-      "text": "`levels/test.gd`: sacar el código comentado"
+      "done": true,
+      "text": "Sacar el código comentado de `levels/test.gd`"
     },
     {
-      "done": false,
-      "text": "`print_rich` de `enemy.gd` / `equipable_item.gd` → detrás de un flag de debug o eliminar"
+      "detail": "Los `print_rich` de `src/entities/enemy.gd` (al fijar, soltar y golpear al esqueleto), el `printt` de `on_death_finished` en ese mismo archivo, y el `print_rich` de `src/items/equipable_item.gd` (fuerza transferida). Esos scripts se reescriben en 0.7 a 0.9.",
+      "done": true,
+      "text": "Borrar los mensajes de depuración de la consola"
     }
   ],
   "code": "0.1",
   "created_at": "2026-09-29T18:00:00Z",
   "milestone": "m00",
-  "notes": "Se puede hacer en cualquier momento.",
+  "notes": "Arreglos chicos del código actual. Se puede hacer en cualquier momento.\n\nNo toques `addons/scope_compass/`: es un symlink al repo de Scope Compass y los cambios van allá.",
   "order": 1,
   "refs": [],
-  "status": "todo",
-  "test": "",
+  "status": "done",
+  "test": "Correr `levels/test.tscn`, fijar y golpear al esqueleto: no aparece nada en la consola y no hay errores.",
   "title": "Limpieza",
-  "updated_at": "2026-09-29T07:20:35.308Z"
+  "updated_at": "2026-09-30T05:17:00.697Z"
 }

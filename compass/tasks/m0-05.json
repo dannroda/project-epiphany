@@ -1,26 +1,30 @@
 {
   "checklist": [
     {
+      "detail": "El estado de una mazmorra: llaves chicas, mapa, brújula, llave del jefe y salas visitadas.",
       "done": false,
-      "text": "`src/state/dungeon_state.gd`"
+      "text": "Crear `src/state/dungeon_state.gd`"
     },
     {
+      "detail": "Incluye `give()`, el único lugar por donde entran ítems (manda las llaves a la mazmorra y las mejoras a donde van), y `equip()`. Código en [[gdd#estado-flags]].",
       "done": false,
-      "text": "Autoload `GameState`: inventario, equipo, `item_buttons`, `max_health`, flags, mazmorras, spawn, `give()`, `equip()`"
+      "text": "Crear el autoload `GameState` (`src/state/game_state.gd`)"
     },
     {
+      "detail": "Pasan el estado a un `ConfigFile` y de vuelta. `read_from` primero vuelve todo a cero y después lee, para que no queden restos de la partida anterior.",
       "done": false,
-      "text": "`write_to(cfg)` / `read_from(cfg)` (espejos exactos; `read_from` resetea antes de leer)"
+      "text": "Escribir `write_to(cfg)` y `read_from(cfg)`"
     },
     {
+      "detail": "Espada básica, escudo de madera y túnica equipados, y 3 corazones.",
       "done": false,
-      "text": "Partida nueva: `sword_basic`, `shield_wood`, `tunic` equipados"
+      "text": "Definir la partida nueva"
     }
   ],
   "code": "0.5",
   "created_at": "2026-09-29T18:00:00Z",
   "milestone": "m00",
-  "notes": "",
+  "notes": "`GameState` es la partida en memoria: inventario, equipo, flags, mazmorras y punto de aparición. Es un autoload, así sobrevive a los cambios de escena. Guardar y cargar (0.6) solo lo copia al disco y de vuelta.\n\nNecesita 0.3 y 0.4. Diseño en el GDD (§11.6).",
   "order": 5,
   "refs": [
     {
@@ -29,7 +33,7 @@
     }
   ],
   "status": "todo",
-  "test": "",
+  "test": "Llamar `write_to()` sobre un `ConfigFile` nuevo, cambiar algo del estado (por ejemplo, sumar bombas) y llamar `read_from()` con ese mismo `ConfigFile`: el estado vuelve a ser el de antes.",
   "title": "GameState",
-  "updated_at": "2026-09-29T18:00:00Z"
+  "updated_at": "2026-09-30T04:37:17.422Z"
 }

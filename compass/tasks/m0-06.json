@@ -1,34 +1,40 @@
 {
   "checklist": [
     {
+      "detail": "Funciones estáticas para escribir, leer, calcular el checksum, detectar partidas modificadas y validarlas. Es estático para que también lo use el Save Inspector (0.10). Código en [[gdd#guardado]].",
       "done": false,
-      "text": "`src/save/save_codec.gd` (estático): `write`, `read`, `checksum`, `is_tampered`, `validate`, `plain_saves`"
+      "text": "Crear `src/save/save_codec.gd`"
     },
     {
+      "detail": "F5 guarda, F9 carga, y al arrancar puede cargar un escenario de `debug/scenarios/` (con el argumento `--scenario=nombre` o con el archivo que deja el Save Inspector).",
       "done": false,
-      "text": "Autoload `SaveManager`: `save_game`, `load_game`, `load_scenario`, F5/F9, `--scenario=` y `next_scenario.txt`"
+      "text": "Crear el autoload `SaveManager` (`src/save/save_manager.gd`)"
     },
     {
+      "detail": "Por ahora alcanza con la posición exacta; cuando haya salas y overworld pasa a puntos de aparición con nombre.",
       "done": false,
-      "text": "Guardar/restaurar la posición del player (en debug, posición exacta)"
+      "text": "Guardar y restaurar la posición del player"
     },
     {
+      "detail": "En *Project › Export › Features*, para que las builds de prueba también guarden en texto plano.",
       "done": false,
-      "text": "Feature tag `plain_saves` en el preset de export de debug"
+      "text": "Agregar la feature `plain_saves` al preset de debug"
     },
     {
+      "detail": "En *Resources › Filters to exclude files*.",
       "done": false,
-      "text": "Excluir `debug/scenarios/*` del preset release"
+      "text": "Excluir `debug/scenarios/*` del preset de release"
     },
     {
+      "detail": "A mano: `start.cfg` (partida nueva) y `full_inventory.cfg` (con todo el inventario).",
       "done": false,
-      "text": "`debug/scenarios/start.cfg` y `full_inventory.cfg` escritos a mano"
+      "text": "Escribir dos escenarios en `debug/scenarios/`"
     }
   ],
   "code": "0.6",
   "created_at": "2026-09-29T18:00:00Z",
   "milestone": "m00",
-  "notes": "",
+  "notes": "Guarda y carga partidas en `user://saves/`. Desde el editor se guarda en texto plano, para poder leerlo y editarlo; en release, encriptado, para que nadie lo edite por accidente.\n\nNecesita 0.5. Diseño completo y código en el GDD (§11.7).",
   "order": 6,
   "refs": [
     {
@@ -37,7 +43,7 @@
     }
   ],
   "status": "todo",
-  "test": "Guardar, cerrar, abrir, cargar → mismo estado. Modificar a mano un `.cfg` plano → aparece el warning de `validate` y `save_tampered == true`.",
+  "test": "Jugar, apretar F5, cerrar el juego, abrirlo y apretar F9: todo vuelve igual. Después editar a mano el archivo de `user://saves/`: al cargar aparece un aviso en la consola y `GameState.save_tampered` queda en `true`.",
   "title": "Guardado",
-  "updated_at": "2026-09-29T18:00:00Z"
+  "updated_at": "2026-09-30T04:37:17.890Z"
 }

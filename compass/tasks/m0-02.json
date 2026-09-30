@@ -1,30 +1,35 @@
 {
   "checklist": [
     {
+      "detail": "`interact` (B / E), `dodge` (B / Espacio), `item_1` (X / click derecho) e `item_2` (Y / R).",
       "done": false,
-      "text": "`interact`, `dodge`, `item_1`, `item_2`"
+      "text": "Acciones de juego: `interact`, `dodge`, `item_1`, `item_2`"
     },
     {
+      "detail": "Cada una con su dirección del stick derecho. El mouse no necesita acción: se lee directo por código.",
       "done": false,
-      "text": "`aim_left`, `aim_right`, `aim_up`, `aim_down` (stick derecho)"
+      "text": "Apuntado: `aim_left`, `aim_right`, `aim_up`, `aim_down`"
     },
     {
+      "detail": "`target_next` (Tab y rueda abajo) y `target_prev` (Shift+Tab y rueda arriba). El flick del stick derecho se detecta por código, no es una acción.",
       "done": false,
-      "text": "`target_next`, `target_prev`"
+      "text": "Cambio de objetivo: `target_next`, `target_prev`"
     },
     {
+      "detail": "`pause` (Start / Esc o I), `map` (Select / M), `menu_tab_left` (LB / Q) y `menu_tab_right` (RB / E).",
       "done": false,
-      "text": "`pause`, `map`, `menu_tab_left`, `menu_tab_right`"
+      "text": "Menús: `pause`, `map`, `menu_tab_left`, `menu_tab_right`"
     },
     {
+      "detail": "`debug_quicksave` (F5) y `debug_quickload` (F9), solo teclado.",
       "done": false,
-      "text": "`debug_quicksave` (F5), `debug_quickload` (F9)"
+      "text": "Depuración: `debug_quicksave`, `debug_quickload`"
     }
   ],
   "code": "0.2",
   "created_at": "2026-09-29T18:00:00Z",
   "milestone": "m00",
-  "notes": "Ver `gdd.md` §4.3. Se puede hacer en cualquier momento.",
+  "notes": "Acciones nuevas que van a usar los hitos siguientes. Se agregan en *Project › Project Settings › Input Map*. La tabla completa está en el GDD (§4.3).\n\n`interact` y `dodge` comparten el botón B a propósito: el código decide cuál corresponde según haya algo para interactuar cerca.\n\nSe puede hacer en cualquier momento.",
   "order": 2,
   "refs": [
     {
@@ -33,7 +38,7 @@
     }
   ],
   "status": "todo",
-  "test": "",
+  "test": "Las 16 acciones nuevas aparecen en el Input Map, cada una con su botón de gamepad y su tecla (las de depuración, solo tecla).",
   "title": "Input map",
-  "updated_at": "2026-09-29T18:00:00Z"
+  "updated_at": "2026-09-30T04:37:16.003Z"
 }

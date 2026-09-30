@@ -1,12 +1,12 @@
 {
   "code": "M0",
   "done_when": [
-    "El player arranca con el equipo que dice `GameState` (no con espada y escudo cableados en la escena).",
-    "F5 guarda, F9 carga y el estado vuelve igual (posición, inventario, equipo, flags).",
+    "El player aparece con el equipo que dice `GameState`, no con la espada y el escudo puestos a mano en la escena.",
+    "F5 guarda, F9 carga, y el juego vuelve exactamente al mismo estado (posición, inventario, equipo, flags).",
     "Desde el Save Inspector se abre una partida, se edita, se valida y se juega como escenario.",
-    "El enemigo recibe daño vía `Hitbox` → `Hurtbox` → `Health`."
+    "El esqueleto recibe daño por el camino nuevo (`Hitbox` → `Hurtbox` → `Health`)."
   ],
-  "goal": "Que ítems, estado del juego, guardado y componentes existan como base para los hitos siguientes. Diseño y snippets: `gdd.md` §11.",
+  "goal": "Dejar armada la base sobre la que se construye todo lo demás: ítems como datos, estado de la partida, guardado, componentes de combate y un player ordenado en piezas. Casi nada de esto se ve en el juego todavía; lo que cambia es cómo está hecho. Diseño y código de ejemplo: `gdd.md` §11.",
   "order": 0,
   "title": "Refactor del player + base de datos"
 }
