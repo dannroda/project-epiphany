@@ -22,7 +22,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/zylann.editor_debugger/plugin.cfg")
+enabled=PackedStringArray("res://addons/scope_compass/plugin.cfg", "res://addons/zylann.editor_debugger/plugin.cfg")
 
 [file_customization]
 
