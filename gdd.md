@@ -180,7 +180,7 @@ Rig reutilizado de otra jam *(pendiente importarlo al repo)*.
 | **Item get** | Animación con el ítem en alto + nombre + descripción corta. |
 | **Game over** | Continuar / Guardar y salir. |
 | **Opciones** | Lock-on mantener/alternar, sensibilidad de apuntado, volumen, remapeo (post-MVP). |
-| **Debug (solo editor/debug)** | Overlay de estado (ya existe parcialmente), guardar/cargar rápido F5/F9. |
+| **Debug (solo editor/debug)** | Overlay de valores en vivo (F3), guardar/cargar rápido F5/F9, pestaña Log en el debugger del editor. Ver §11.9. |
 
 ---
 
@@ -208,6 +208,7 @@ src/
   world/                    room.gd, door.gd, chest.gd, push_block.gd, floor_switch.gd
   state/                    game_state.gd (autoload), dungeon_state.gd, flag_registry.gd
   save/                     save_codec.gd (estático, lo usan juego y editor), save_manager.gd (autoload)
+  debug/                    log.gd (autoload), log_sink.gd, debug_overlay.gd (autoload)
   ui/                       hud/, menus/, text_box/
 ai/tasks/                   tareas custom de LimboAI (bt_attack.gd…); carpeta por defecto de LimboAI
 addons/epiphany_tools/      Save Inspector (MVP), tabla de ítems (más adelante)
@@ -1433,6 +1434,52 @@ Plugin en `addons/epiphany_tools/` (dock). Funcionalidades:
 5. **Jugar escenario:** escribe `user://debug/next_scenario.txt` y lanza la escena principal. `SaveManager` lo consume al arrancar.
 
 Escenarios iniciales sugeridos: `start`, `bombs_only`, `pre_temple`, `dungeon_no_bow`, `pre_boss`, `full_inventory`, `boss_key_door_locked` (inconsistente a propósito).
+
+### 11.9 Depuración
+<!-- id: depuracion -->
+
+Reemplaza los `print` y `print_rich` sueltos. Es el port a GDScript del logger de godot-dojo (`include/tools/logger.hpp`), con canales agregados y conectado al debugger de Godot. Referencia: [Logging en la documentación de Godot](https://docs.godotengine.org/en/latest/tutorials/scripting/logging.html).
+
+```
+Log (API: niveles y canales)  ──print_rich / push_*──▶  salida del engine
+                                                          │
+          errores del engine, addons, prints sueltos ─────┤
+                                                          ▼
+                                   LogSink (extends Logger, OS.add_logger)
+                                      cola + Mutex (puede venir de otro hilo)
+                                                          │  Log la vacía en _process
+                          ┌───────────────────────────────┼──────────────────────┐
+                          ▼                               ▼                      ▼
+                pestaña Log del editor           overlay (errores)       archivo / reporte
+                 (EngineDebugger)                                         (más adelante)
+```
+
+| Pieza | Qué hace | Dónde |
+|---|---|---|
+| `Log` (autoload) | Niveles `DEBUG`, `INFO`, `SUCCESS`, `WARNING`, `ERROR`. Un canal por sistema: `combat`, `targeting`, `ai`, `items`, `save`, `camera`, `input`, `world`. Debug, info y success salen con `print_rich` y color; warning y error por `push_warning`/`push_error`, así caen en la pestaña Errores con el stack. Nivel y canales en `epiphany/log/level` y `epiphany/log/channels` | `src/debug/log.gd` |
+| `LogSink` | `Logger` propio registrado con `OS.add_logger()` en el `_init` de `Log`. Recibe todo lo que imprime el proceso (juego, engine, addons) y los errores con archivo, línea y backtrace. Solo encola: puede correr en otros hilos y adentro no se puede usar `print` ni `push_error` | `src/debug/log_sink.gd` |
+| Pestaña "Log" | `EditorDebuggerPlugin`. El juego le manda cada línea (`EngineDebugger.send_message("epiphany_log:entry", …)`): nivel, canal, texto, hora y ubicación. Filtros por nivel y canal que se aplican al juego corriendo, y doble clic para abrir el script en la línea | `addons/epiphany_tools/` |
+| Monitores | `Performance.add_custom_monitor("epiphany/…", callable)`: gráficos en *Debugger › Monitors*. Cada sistema registra los suyos (enemigos vivos, hitboxes activas…). Funcionan también en builds exportadas | cada sistema |
+| `DebugOverlay` (autoload) | `watch(clave, valor)` para valores que cambian cada frame; se muestra con F3 (`debug_overlay`). Reemplaza a `LabelStateTracker`. Es lo que queda en builds exportadas | `src/debug/debug_overlay.gd` |
+
+Uso:
+
+```gdscript
+Log.debug(&"targeting", "Fijado:", name)
+Log.info(&"combat", name, "recibió golpe. Vida:", current_health)
+Log.warning(&"save", "Checksum no coincide:", path)
+
+if Log.is_enabled(Log.Level.DEBUG, &"ai"):   # solo si el mensaje es caro de armar
+	Log.debug(&"ai", _describe_blackboard())
+```
+
+**Reglas:**
+- El autoload se llama `Log` porque `Logger` es una clase del engine desde Godot 4.5.
+- En release el nivel por defecto es `WARNING`. GDScript no elimina las llamadas al compilar: los argumentos se evalúan igual, de ahí `is_enabled()` para mensajes caros.
+- La pestaña y los filtros en vivo existen solo cuando el juego corre desde el editor (`EngineDebugger.is_active()`). En builds exportadas quedan la consola, el overlay y `user://logs/godot.log` (Godot guarda uno por sesión y conserva los últimos 5).
+- A verificar al implementar: que el `Logger` se llame en el mismo hilo para prints del hilo principal (de eso depende no duplicar las líneas de `Log`), qué texto recibe `_log_message` de un `print_rich`, y los métodos de `ScriptBacktrace` en 4.8.
+
+**Más adelante:** pestaña "Watches" con los valores del overlay, y comandos desde el editor (dar un ítem, cambiar una flag, cargar un escenario) por el mismo canal de mensajes.
 
 ---
 
