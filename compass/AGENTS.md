@@ -20,9 +20,12 @@ Las tareas y los hitos de este proyecto viven en `compass/`, en el formato de Sc
   - `status`: `todo` (Pendiente), `doing` (En curso), `review` (Revisión), `done` (Hecho);
   - `checklist`: pasos `{ text, done, detail? }`. `text` es una línea corta; el cómo y el porqué van en `detail`;
   - `due`: fecha límite opcional, `YYYY-MM-DD` o `YYYY-MM-DDTHH:MM` (hora local);
+  - `priority`: prioridad opcional, `high`, `medium` o `low`;
+  - `assignee`: responsable opcional, texto libre (una persona o un agente);
+  - `tags`: etiquetas opcionales, textos cortos sin comas (`["arte", "audio"]`);
   - `test`: cómo se comprueba que la tarea está terminada;
   - `notes`: notas libres;
-  - `refs`: secciones de documentos del proyecto que la tarea cita;
+  - `refs`: documentos del proyecto que la tarea cita, enteros (`{ doc }`) o una sección (`{ doc, section }`);
   - `links`: vínculos con otras tareas (ver "Vínculos entre tareas").
 - En los textos, `` `así` `` se muestra como código.
 
@@ -32,6 +35,11 @@ Las tareas y los hitos de este proyecto viven en `compass/`, en el formato de Sc
 scompass milestone list                      # hitos, en orden
 scompass list                                # todas las tareas, por hito
 scompass list --milestone m05 --status doing # filtros (se pueden combinar)
+scompass list --q "menú pausa"               # todas las palabras en código, título o id (sin tildes)
+scompass list --status todo,doing --priority high --assignee Claude
+scompass list --due overdue                  # overdue | today | week | none (las hechas no vencen)
+scompass list --tag arte,audio               # con alguna de esas etiquetas
+scompass list --blocked                      # o --unblocked; también --pending-steps y --with-refs
 scompass list --json                         # { "tasks": [ { "id", "etag", "title", "status", "checklist", … } ] }
 scompass show m5-02                          # una tarea, con los pasos numerados desde 1
 scompass show m5-02 --json
@@ -44,6 +52,7 @@ scompass add "Título de la tarea" --milestone m05 --code 5.9   # imprime el id 
 scompass move m5-02 doing                                     # todo | doing | review | done
 scompass set m5-02 --title "…" --notes "…" --test "…"          # cambia solo esos campos
 scompass set m5-02 --due 2026-10-10                           # fecha límite (--due "" la quita)
+scompass set m5-02 --priority high --assignee Claude --tags arte,nivel  # "" quita cada uno; --tags reemplaza la lista
 scompass step add m5-02 "Paso corto" --detail "Cómo y por qué"
 scompass step set m5-02 2 --text "…" --detail "…"              # --detail "" quita el detalle
 scompass step rm m5-02 2
@@ -79,6 +88,7 @@ scompass link list                         # todos; sale con 1 si hay vínculos 
 - Al empezar una tarea: `scompass move <id> doing`. A medida que avanzás, `scompass check <id> <n>`.
 - Al terminar: completá `test` si está vacío, dejá en `notes` lo que el siguiente necesite saber y pasala a `review` (o a `done` si ya se comprobó).
 - Trabajo nuevo que aparece en el camino: `scompass add` en el hito que corresponda, en lugar de dejarlo solo en el chat.
+- Si te piden "lo mío" o "lo de alta prioridad", filtrá con `--assignee` o `--priority`. Al tomar una tarea, si el proyecto usa responsables, poné tu nombre con `set --assignee`. Usá las etiquetas que ya existen (`scompass list --json` las muestra) antes de inventar otras.
 
 ## Listas
 
@@ -101,12 +111,13 @@ scompass item task assets 3 --milestone m06         # pasa el ítem a una tarea 
 
 ## Documentos y referencias
 
-Los documentos citables están en `compass/config.json` › `docs` (alias y ruta). Una referencia apunta a una sección por su id estable (`<!-- id: … -->` debajo del título).
+Los documentos citables están en `compass/config.json` › `docs` (alias y ruta). Una referencia apunta a una sección por su id estable (`<!-- id: … -->` debajo del título), o al documento entero si va sin `#<id>`. En notas, prueba y pasos, `[[alias#id]]` enlaza una sección y `[[alias]]` el documento.
 
 ```sh
 scompass doc list                  # documentos con su índice de secciones
-scompass doc show spec#godot --raw # el markdown de una sección
+scompass doc show spec#godot --raw # el markdown de una sección (sin #godot, el documento entero)
 scompass ref add m5-02 spec#godot  # la tarea cita esa sección
+scompass ref add m5-02 spec        # la tarea cita el documento entero
 scompass ref rm m5-02 spec#godot
 scompass refs check                # referencias rotas (sale con 1 si hay)
 ```

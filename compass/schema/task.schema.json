@@ -64,6 +64,30 @@
       "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])(T([01]\\d|2[0-3]):[0-5]\\d)?$",
       "description": "Fecha límite opcional: YYYY-MM-DD, o YYYY-MM-DDTHH:MM en hora local"
     },
+    "priority": {
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "description": "Prioridad opcional. Sin el campo, la tarea no tiene prioridad."
+    },
+    "assignee": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Responsable opcional: quién la tiene (una persona o un agente), texto libre"
+    },
+    "tags": {
+      "type": "array",
+      "description": "Etiquetas opcionales para filtrar (arte, audio, bug…): texto corto, sin comas ni espacios en los bordes, sin repetir",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 40,
+        "pattern": "^[^,\\s]([^,]*[^,\\s])?$"
+      }
+    },
     "test": {
       "type": "string",
       "description": "Cómo probarlo"
@@ -73,12 +97,11 @@
     },
     "refs": {
       "type": "array",
-      "description": "Referencias a secciones de documentos: doc = ruta, section = id del comentario <!-- id: ... -->",
+      "description": "Referencias a documentos: doc = ruta, section = id del comentario <!-- id: ... -->; sin section, el documento entero",
       "items": {
         "type": "object",
         "required": [
-          "doc",
-          "section"
+          "doc"
         ],
         "additionalProperties": false,
         "properties": {
