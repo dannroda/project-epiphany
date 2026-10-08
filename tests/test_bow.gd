@@ -197,3 +197,34 @@ func test_unlocked_bow_legs_rest() -> void:
 	_action(&"item_1", false)
 	await tree.create_timer(0.6).timeout
 	setup[1].reset()
+
+
+## Ángulo entre la línea de la flecha en la animación (mano de la cuerda → mano del arco) y la mira.
+func _bow_error(player: PlayerCharacter) -> float:
+	var skeleton: Skeleton3D = player.model.get_node(^"Skeleton3D")
+	var bow_hand := (skeleton.global_transform * skeleton.get_bone_global_pose(skeleton.find_bone("hand.l"))).origin
+	var string_hand := (skeleton.global_transform * skeleton.get_bone_global_pose(skeleton.find_bone("hand.r"))).origin
+	var line := bow_hand - string_hand
+	line.y = 0.0
+	return absf(rad_to_deg(player.aim.get_direction().angle_to(line.normalized())))
+
+
+func test_bow_points_where_it_aims() -> void:
+	var setup: Array = await _setup(10)
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[2]
+	_face(player, Vector3.RIGHT)
+	_action(&"item_1", true)
+	await tree.create_timer(2.0).timeout
+	assert_true(_bow_error(player) < 5.0, "sin objetivo, el arco apunta a la mira (error %.1f°)" % _bow_error(player))
+	var box := tree.current_scene.get_node(^"Caja3") as RigidBody3D
+	box.global_position = player.global_position + Vector3(-4, 0.6, 4)
+	box.freeze = true
+	await tree.physics_frame
+	player.targeting.set_target(box)
+	await tree.create_timer(0.8).timeout
+	assert_true(_bow_error(player) < 5.0, "fijado, el arco apunta al objetivo (error %.1f°)" % _bow_error(player))
+	_action(&"item_1", false)
+	await tree.create_timer(0.5).timeout
+	player.targeting.clear()
+	setup[1].reset()

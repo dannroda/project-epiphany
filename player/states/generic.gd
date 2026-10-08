@@ -17,7 +17,7 @@ var player:PlayerCharacter:
 
 
 ## Fijado a un objetivo: el cuerpo mira al objetivo y las piernas mezclan el strafe según hacia dónde camina.
-func move_locked(input: Vector2, speed: float, target: Node3D) -> void:
+func move_locked(input: Vector2, speed: float, target: Node3D, face_model := true) -> void:
 	var move_dir := Vector3(input.x, 0, input.y).normalized()
 	player.velocity.x = move_dir.x * speed
 	player.velocity.z = move_dir.z * speed
@@ -28,7 +28,8 @@ func move_locked(input: Vector2, speed: float, target: Node3D) -> void:
 		return
 	var fwd := to_target.normalized()
 	player.look_at(player.global_position + fwd, Vector3.UP)
-	player.model.rotation = Vector3(0, PI, 0)
+	if face_model:
+		player.model.rotation = Vector3(0, PI, 0)
 	var character_right := Vector3.UP.cross(-fwd)
 	player.anim_tree["parameters/Targeting/blend_position"] = Vector2(move_dir.dot(character_right), -move_dir.dot(fwd))
 

@@ -10,6 +10,8 @@ const ITEM_ACTIONS: Array[StringName] = [&"item_1", &"item_2"]
 ## Cuánto dura el estado después de disparar.
 @export var release_time := 0.4
 @export var blend_time := 0.12
+## La animación de KayKit tensa el arco 62° a la izquierda del frente del modelo: se compensa para que la flecha salga hacia la mira.
+@export var bow_yaw_offset_deg := 62.0
 
 var _button := 0
 var _item: ItemData
@@ -26,6 +28,7 @@ func _enter() -> void:
 	_released_at = -1.0
 	_draw_length = player.anim_player.get_animation(&"CombatRanged/Ranged_Bow_Draw").length
 	player.aim.aiming = true
+	player.aim.yaw_offset = deg_to_rad(bow_yaw_offset_deg)
 	player.velocity = Vector3.ZERO
 	player.anim_tree.set(&"parameters/Movement/transition_request", "Idle")
 	player.equipment.hold(_item)
@@ -47,6 +50,7 @@ func _update(delta: float) -> void:
 
 func _exit() -> void:
 	player.aim.aiming = false
+	player.aim.yaw_offset = 0.0
 	player.aim.move_aims = false
 	player.equipment.release_held()
 	_fade_to(0.0)
@@ -70,7 +74,7 @@ func _move() -> void:
 	player.aim.move_aims = not locked
 	set_locked_legs(locked)
 	if locked:
-		move_locked(blackboard.get_var("input_dir", Vector2.ZERO), LOCKED_SPEED, target)
+		move_locked(blackboard.get_var("input_dir", Vector2.ZERO), LOCKED_SPEED, target, false)
 	else:
 		player.velocity.x = 0.0
 		player.velocity.z = 0.0

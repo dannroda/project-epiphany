@@ -11,12 +11,20 @@ enum Source { FACING, STICK, MOUSE, TARGET, MOVE_STICK }
 @export var turn_speed := 14.0
 
 ## Lo prenden los ítems a distancia: el modelo gira hacia la dirección de apuntado.
-var aiming := false
+var aiming := false:
+	set(value):
+		if value and not aiming:
+			_held = _flat(player.model.global_basis.z)
+		aiming = value
 ## Al tensar (arco) el player se planta y el stick izquierdo apunta, como en Ocarina of Time.
 var move_aims := false
+## Ángulo (radianes) entre el frente del modelo y hacia donde apunta la animación (el arco de KayKit tensa de costado).
+var yaw_offset := 0.0
 var source: Source = Source.FACING
 
 var _input_source: Source = Source.FACING
+## Apuntando sin entrada, la mira queda en la última dirección (el modelo gira con yaw_offset y no puede ser la referencia).
+var _held := Vector3.ZERO
 var _reticle: MeshInstance3D
 var _arrow: MeshInstance3D
 
@@ -56,6 +64,8 @@ func get_direction() -> Vector3:
 					source = Source.MOUSE
 					return dir
 	source = Source.FACING
+	if aiming and not _held.is_zero_approx():
+		return _held
 	return _flat(player.model.global_basis.z)
 
 
@@ -72,7 +82,9 @@ func mouse_on_ground(screen_point: Variant = null) -> Variant:
 func _physics_process(delta: float) -> void:
 	var direction := get_direction()
 	if aiming and not direction.is_zero_approx():
-		var desired := player.model.global_transform.looking_at(player.model.global_position - direction, Vector3.UP).basis
+		_held = direction
+		var facing := direction.rotated(Vector3.UP, -yaw_offset)
+		var desired := player.model.global_transform.looking_at(player.model.global_position - facing, Vector3.UP).basis
 		player.model.global_basis = player.model.global_basis.slerp(desired, clampf(turn_speed * delta, 0.0, 1.0)).orthonormalized()
 	_update_debug(direction)
 
