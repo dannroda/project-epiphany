@@ -7,7 +7,7 @@ extends Node
 signal changed(value: Variant)
 
 const REGISTRY_PATH := "res://data/flag_registry.tres"
-const PREFIXES: PackedStringArray = ["ow_", "d1_", "d2_", "d3_"]
+const PREFIXES: PackedStringArray = ["ow_", "d0_", "d1_", "d2_", "d3_"]
 
 @export var flag: StringName:
 	set(value):

@@ -1131,7 +1131,7 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 **Notas:** Idea del 2026-10-08: que el escudo en la espalda proteja, y que cada escudo frene distintos tipos de daño (la madera frena flechas pero no explosiones ni fuego). El espejo refleja siempre que intercepta, porque es un espejo. Usa DamageInfo.element, que ya existe: "explosive" lo pone la bomba (5.4), "light" el haz (5.6), "fire" queda para espadas elementales post-MVP. Relacionada con 5.2 (torreta: primer enemigo que dispara), 5.4 y 5.6. Desde 2026-10-08 el escudo oculto no colisiona (Equipment.show_shield_in_hand).
 
-## M6 — Framework de mazmorra  (6/7)
+## M6 — Framework de mazmorra  (7/7)
 
 `Room` con cámara limitada y transición, puertas, llaves, bloques por grilla, interruptores, mapa y brújula con su pantalla.
 
@@ -1262,13 +1262,13 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 **Bloqueada por:** 3.1 Menú de pausa y pila de pantallas; 6.1 `Room` y cámara por sala
 
-### 6.7 Mazmorra de prueba: tres salas grises · Pendiente
+### 6.7 Mazmorra de prueba: tres salas grises · Hecho
 
-- [ ] Kit de bloques grises
+- [x] Kit de bloques grises
   `MeshLibrary` con pared, piso, columna, puerta y escalón sobre las texturas de prototipo; armar las salas con `GridMap`.
-- [ ] Tres salas conectadas
+- [x] Tres salas conectadas
   Una con bloque e interruptor, una con persiana y esqueletos, una con puerta con llave y cofre.
-- [ ] Escenario de inicio en la mazmorra
+- [x] Escenario de inicio en la mazmorra
   `debug/scenarios/dungeon_test.cfg`.
 
 **Prueba:** Recorrer las tres salas desde el escenario sin trabarse: transiciones, persiana, llave y cofre funcionan; guardar en la sala 3 y cargar deja todo igual.
@@ -1276,6 +1276,8 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 **Notas:** Cierra el hito: "tres salas en bloques grises conectadas". El kit se reutiliza en M7 y M8.
 
 Skills: `godot:godot-3d-essentials`, `disciplines:level-design`.
+
+Hecho 2026-10-08: kit `data/kits/gray_kit.tres` (lo arma `src/tools/build_gray_kit.gd`; texturas Kenney Prototype; celdas de 2 m). `levels/dungeon_test.tscn` (id `d0`, flags `d0_*`) como mini candado-y-llave según el artículo de metodología de mazmorras Zelda: la llave está en la sala lateral (guardia, con persiana y esqueletos), la puerta con llave lleva a la cámara con la brújula. Arreglo de paso: un `FloorSwitch` ONCE con flag no reabría su puerta al cargar la partida. Test: `tests/test_gray_dungeon.gd`.
 
 **Referencias:** `gdd.md#mazmorra`
 

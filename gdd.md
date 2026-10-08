@@ -158,6 +158,10 @@ Contenido mínimo: punto de inicio, pradera con enemigos, cueva de las bombas, s
 
 *El layout exacto (qué puerta conecta con cuál) es la próxima sesión de diseño de niveles.*
 
+**Kit gris y medidas (6.7):** las salas se arman con un `GridMap` sobre `data/kits/gray_kit.tres` (lo genera `src/tools/build_gray_kit.gd` con las texturas de prototipo de Kenney): Piso, Pared, Columna, Escalón y Puerta (piso + dintel; la `Door` va en el medio de esa celda). Celdas de 2 m centradas en (2i, 2k), piso en y = 0, paredes de 2.6 m y una celda de grosor; la cámara de esas escenas usa `mask_margin` = 2 para que se vean las paredes enteras. Una sala de una pantalla tiene 7 × 5 celdas de interior (14 × 10 m); las más grandes se recorren. El bloque de empuje usa la misma grilla.
+
+**Mazmorra gris de prueba** (`levels/dungeon_test.tscn`, id `d0`, flags `d0_*`, escenario `dungeon_test`): un mini candado-y-llave. Vestíbulo: bloque → interruptor abre la puerta oeste; la puerta norte tiene llave. Sala de guardia (dos pantallas de ancho, lateral): la persiana se cierra con dos esqueletos y el cofre del fondo tiene la llave chica. Cámara sellada: cofre grande con la brújula.
+
 ## 9. Jefe — El Ojo con manos
 <!-- id: jefe -->
 
@@ -1229,7 +1233,7 @@ func was_visited(room_index: int) -> bool:
 	return (visited_rooms & (1 << room_index)) != 0
 ```
 
-**Convención de nombres:** `ow_*` para el overworld y `dN_*` para la mazmorra N (`d1_chest_bow`), seguido de qué es y dónde. Todo flag vive en `data/flag_registry.tres`; `PersistentFlag` (y los objetos que exportan `flag`, como cofres y tablillas) muestran una advertencia en el editor si el flag no está registrado o no sigue la convención.
+**Convención de nombres:** `ow_*` para el overworld y `dN_*` para la mazmorra N (`d1_chest_bow`; `d0_*` es la mazmorra gris de prueba), seguido de qué es y dónde. Todo flag vive en `data/flag_registry.tres`; `PersistentFlag` (y los objetos que exportan `flag`, como cofres y tablillas) muestran una advertencia en el editor si el flag no está registrado o no sigue la convención.
 
 **Flags con nombre, no bitmask global.** Un bitmask global se rompe al reordenar bits y no se lee en el editor. El único bitmask es `visited_rooms`, acotado a una mazmorra. Las misiones son un `int` de etapa (`oracle_stage = 2`), no N booleanos.
 

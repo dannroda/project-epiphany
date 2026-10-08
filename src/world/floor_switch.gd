@@ -36,6 +36,8 @@ func _ready() -> void:
 			if value == true and not active:
 				_set_active(true, false))
 		add_child(_persistent)
+		if _persistent.value == true:
+			_set_active(true, false)
 
 
 func _get_configuration_warnings() -> PackedStringArray:
@@ -58,9 +60,8 @@ func _set_active(on: bool, announce: bool) -> void:
 	plate.position.y = _plate_y - (0.06 if on else 0.0)
 	if on and _persistent and mode == Mode.ONCE:
 		_persistent.value = true
-	if not announce:
-		return
-	Feel.sfx(&"click", global_position)
+	if announce:
+		Feel.sfx(&"click", global_position)
 	if on:
 		activated.emit()
 	else:

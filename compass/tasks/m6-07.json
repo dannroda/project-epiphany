@@ -2,17 +2,17 @@
   "checklist": [
     {
       "detail": "`MeshLibrary` con pared, piso, columna, puerta y escalón sobre las texturas de prototipo; armar las salas con `GridMap`.",
-      "done": false,
+      "done": true,
       "text": "Kit de bloques grises"
     },
     {
       "detail": "Una con bloque e interruptor, una con persiana y esqueletos, una con puerta con llave y cofre.",
-      "done": false,
+      "done": true,
       "text": "Tres salas conectadas"
     },
     {
       "detail": "`debug/scenarios/dungeon_test.cfg`.",
-      "done": false,
+      "done": true,
       "text": "Escenario de inicio en la mazmorra"
     }
   ],
@@ -29,7 +29,7 @@
     }
   ],
   "milestone": "m06",
-  "notes": "Cierra el hito: \"tres salas en bloques grises conectadas\". El kit se reutiliza en M7 y M8.\n\nSkills: `godot:godot-3d-essentials`, `disciplines:level-design`.",
+  "notes": "Cierra el hito: \"tres salas en bloques grises conectadas\". El kit se reutiliza en M7 y M8.\n\nSkills: `godot:godot-3d-essentials`, `disciplines:level-design`.\n\nHecho 2026-10-08: kit `data/kits/gray_kit.tres` (lo arma `src/tools/build_gray_kit.gd`; texturas Kenney Prototype; celdas de 2 m). `levels/dungeon_test.tscn` (id `d0`, flags `d0_*`) como mini candado-y-llave según el artículo de metodología de mazmorras Zelda: la llave está en la sala lateral (guardia, con persiana y esqueletos), la puerta con llave lleva a la cámara con la brújula. Arreglo de paso: un `FloorSwitch` ONCE con flag no reabría su puerta al cargar la partida. Test: `tests/test_gray_dungeon.gd`.",
   "order": 7,
   "refs": [
     {
@@ -37,8 +37,8 @@
       "section": "mazmorra"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Recorrer las tres salas desde el escenario sin trabarse: transiciones, persiana, llave y cofre funcionan; guardar en la sala 3 y cargar deja todo igual.",
   "title": "Mazmorra de prueba: tres salas grises",
-  "updated_at": "2026-10-08T04:45:57.599Z"
+  "updated_at": "2026-10-08T23:35:19.619Z"
 }
