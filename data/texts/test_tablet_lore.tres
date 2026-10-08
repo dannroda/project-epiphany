@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="TextData" format=3]
+
+[ext_resource type="Script" path="res://src/ui/text_box/text_data.gd" id="1_text"]
+
+[resource]
+script = ExtResource("1_text")
+title = "Tablilla antigua"
+pages = PackedStringArray("Quienes alzaron este templo no lo hicieron para adorar al Ojo.", "Lo hicieron para que nunca volviera a abrirse.")

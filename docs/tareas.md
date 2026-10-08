@@ -824,7 +824,7 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 
 **Relacionadas:** 0.3 Ítems: datos
 
-## M4 — Interacción + mundo  (1/5)
+## M4 — Interacción + mundo  (2/5)
 
 `Interactable` con prompt contextual, tablillas y caja de texto, vasijas y pasto, flags del mundo guardadas.
 
@@ -850,7 +850,7 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 
 **Bloqueada por:** 3.6 Cofres e item get
 
-### 4.2 Caja de texto · En curso
+### 4.2 Caja de texto · Hecho
 
 - [x] Crear `src/ui/text_box/`
   Texto que aparece letra por letra, varias páginas, avanzar con `interact`/`attack`, saltar la animación con el mismo botón.
@@ -871,16 +871,18 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 
 **Bloqueada por:** 3.1 Menú de pausa y pila de pantallas
 
-### 4.3 Tablillas · Pendiente
+### 4.3 Tablillas · En curso
 
-- [ ] Escena `Tablet`
+- [x] Escena `Tablet`
   `StaticBody3D` con `Interactable` ("Leer") y un `TextData` exportado.
-- [ ] Marcar como leída (opcional)
+- [x] Marcar como leída (opcional)
   Flag opcional para pistas de puzzles; el mapa de la mazmorra puede mostrar las leídas.
-- [ ] Escribir 2 tablillas de prueba
+- [x] Escribir 2 tablillas de prueba
   Una de ambientación y una pista de puzzle, para validar el tono. La historia (A o B) sigue abierta: [[gdd#decisiones-abiertas]].
 
 **Prueba:** Leer las dos tablillas del nivel de prueba; guardar y cargar conserva las leídas.
+
+**Notas:** Tablet con flag opcional (is_read() para que el mapa marque las pistas leídas). Dos de prueba en levels/test.tscn: ambientación (data/texts/test_tablet_lore.tres) y pista de bombas con flag ow_test_tablet_hint. Textos neutrales entre las historias A y B. Modelo placeholder (losa + base).
 
 **Referencias:** `gdd.md#historia`
 

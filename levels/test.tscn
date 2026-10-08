@@ -11,6 +11,9 @@
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="ui_hud"]
 [ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="w_spawn"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="w_chest"]
+[ext_resource type="PackedScene" path="res://src/world/tablet.tscn" id="w_tablet"]
+[ext_resource type="Resource" path="res://data/texts/test_tablet_lore.tres" id="t_lore"]
+[ext_resource type="Resource" path="res://data/texts/test_tablet_hint.tres" id="t_hint"]
 [ext_resource type="Resource" uid="uid://dwsn6cvxqrfpa" path="res://data/items/bomb_bag.tres" id="i_bomb_bag"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_4uxyr"]
@@ -163,5 +166,14 @@ script = ExtResource("w_spawn")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 1.5)
 item = ExtResource("i_bomb_bag")
 flag = &"ow_test_chest"
+
+[node name="TabletLore" parent="." instance=ExtResource("w_tablet")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 1.5)
+text = ExtResource("t_lore")
+
+[node name="TabletHint" parent="." instance=ExtResource("w_tablet")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 1.5)
+text = ExtResource("t_hint")
+flag = &"ow_test_tablet_hint"
 
 [node name="HUD" parent="." unique_id=1876306880 instance=ExtResource("ui_hud")]

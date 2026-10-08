@@ -8,6 +8,11 @@ script = ExtResource("1_ox7fe")
 id = &"ow_test_chest"
 description = "Cofre de prueba del nivel test abierto"
 
+[sub_resource type="Resource" id="Resource_tablethint"]
+script = ExtResource("1_ox7fe")
+id = &"ow_test_tablet_hint"
+description = "Pista de la tablilla del nivel de prueba leída"
+
 [resource]
 script = ExtResource("2_3vvdp")
-definitions = Array[ExtResource("1_ox7fe")]([SubResource("Resource_mrp87")])
+definitions = Array[ExtResource("1_ox7fe")]([SubResource("Resource_mrp87"), SubResource("Resource_tablethint")])
