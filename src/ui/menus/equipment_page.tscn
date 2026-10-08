@@ -17,16 +17,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 40
+theme_override_constants/separation = 32
 script = ExtResource("1_page")
 
 [node name="Left" type="VBoxContainer" parent="."]
-custom_minimum_size = Vector2(300, 0)
+custom_minimum_size = Vector2(280, 0)
 layout_mode = 2
 theme_override_constants/separation = 16
 
 [node name="PreviewFrame" type="PanelContainer" parent="Left"]
-custom_minimum_size = Vector2(300, 330)
+custom_minimum_size = Vector2(280, 330)
 layout_mode = 2
 theme_type_variation = &"Slot"
 
@@ -39,7 +39,7 @@ own_world_3d = true
 world_3d = SubResource("World3D_preview")
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(284, 314)
+size = Vector2i(264, 314)
 render_target_update_mode = 4
 
 [node name="Camera" type="Camera3D" parent="Left/PreviewFrame/Preview/Viewport"]
@@ -89,9 +89,10 @@ layout_mode = 2
 [node name="Rows" type="VBoxContainer" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 22
+theme_override_constants/separation = 26
 
 [node name="Detail" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(340, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"Slot"
@@ -113,12 +114,15 @@ stretch_mode = 5
 
 [node name="Names" type="VBoxContainer" parent="Detail/Layout/Header"]
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 2
 
 [node name="DetailName" type="Label" parent="Detail/Layout/Header/Names"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme_type_variation = &"Title"
+autowrap_mode = 2
 
 [node name="DetailKind" type="Label" parent="Detail/Layout/Header/Names"]
 unique_name_in_owner = true

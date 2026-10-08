@@ -1,8 +1,8 @@
-[gd_resource type="Theme" format=3]
+[gd_resource type="Theme" format=3 uid="uid://covrlpuexf2af"]
 
-[ext_resource type="FontFile" path="res://assets/fonts/AlegreyaSans-Bold.ttf" id="1_r7xqo"]
-[ext_resource type="FontFile" path="res://assets/fonts/Cinzel.ttf" id="2_lf7dv"]
-[ext_resource type="FontFile" path="res://assets/fonts/AlegreyaSans-Regular.ttf" id="3_cwe5m"]
+[ext_resource type="FontFile" uid="uid://bt13w24p0uwra" path="res://assets/fonts/AlegreyaSans-Bold.ttf" id="1_r7xqo"]
+[ext_resource type="FontFile" uid="uid://byrjjxr0lu8v3" path="res://assets/fonts/Cinzel.ttf" id="2_lf7dv"]
+[ext_resource type="FontFile" uid="uid://ikntf0mcjkt8" path="res://assets/fonts/AlegreyaSans-Regular.ttf" id="3_cwe5m"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r7xqo"]
 content_margin_left = 10.0

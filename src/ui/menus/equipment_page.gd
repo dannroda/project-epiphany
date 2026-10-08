@@ -46,6 +46,7 @@ func _process(delta: float) -> void:
 func _build_rows() -> void:
 	for row in ROWS:
 		var box := VBoxContainer.new()
+		box.add_theme_constant_override(&"separation", 10)
 		var title := Label.new()
 		title.text = row[1]
 		title.theme_type_variation = &"Caps"
@@ -104,7 +105,7 @@ func _set_badge(slot: Button, equipped: bool) -> void:
 		badge.name = "Badge"
 		badge.text = "E"
 		badge.theme_type_variation = &"KeyHint"
-		badge.position = Vector2(-8, -8)
+		badge.position = Vector2(6, 6)
 		badge.mouse_filter = MOUSE_FILTER_IGNORE
 		slot.add_child(badge)
 	badge.visible = equipped
