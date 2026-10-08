@@ -824,7 +824,7 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 
 **Relacionadas:** 0.3 Ítems: datos
 
-## M4 — Interacción + mundo  (4/5)
+## M4 — Interacción + mundo  (5/5)
 
 `Interactable` con prompt contextual, tablillas y caja de texto, vasijas y pasto, flags del mundo guardadas.
 
@@ -911,18 +911,20 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 
 **Bloqueada por:** 3.7 Recolectables y tabla de drops
 
-### 4.5 Flags del mundo persistentes · Pendiente
+### 4.5 Flags del mundo persistentes · Hecho
 
-- [ ] Componente `PersistentFlag`
+- [x] Componente `PersistentFlag`
   Nodo que, dado un `flag`, lee el estado al `_ready` y lo escribe al cambiar. Lo usan cofres, puertas, muros, interruptores y tablillas.
-- [ ] Validar flags en el editor
+- [x] Validar flags en el editor
   Advertencia de configuración si el `flag` no está en `flag_registry.tres` (`_get_configuration_warnings`).
-- [ ] Convención de nombres
+- [x] Convención de nombres
   `ow_*` overworld, `d1_*` mazmorra. Anotarla en [[gdd#estado-flags]].
-- [ ] Escenario de prueba en el Save Inspector
+- [x] Escenario de prueba en el Save Inspector
   Con flags puestas a mano: el mundo se carga igual que si se hubieran conseguido jugando.
 
 **Prueba:** Abrir un cofre, romper un muro y leer una tablilla; guardar con `3`, recargar la escena y cargar con `2`: todo sigue igual. Un flag mal escrito en un cofre muestra la advertencia en el editor.
+
+**Notas:** PersistentFlag (@tool) avisa el valor al entrar, al cambiar y al cargar; los objetos que exportan 'flag' (Chest, Tablet) muestran la misma advertencia con PersistentFlag.warnings_for(). Advierte si no está registrado o no sigue ow_*/dN_*. Escenario debug/scenarios/test_flags.cfg (cofre abierto, pista leída, bolsa con 5 bombas en X). Muros: llegan en 5.5 y usan el mismo componente.
 
 **Referencias:** `gdd.md#estado-flags`, `gdd.md#save-inspector`
 

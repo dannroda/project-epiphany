@@ -40,6 +40,8 @@ func test_sword_breaks_pot_and_it_returns_on_reload() -> void:
 	heart.heal = 4
 	always.entries.assign([heart])
 	pot.drops = always
+	for other in [^"Pot2", ^"Pot3"]:
+		tree.current_scene.get_node(other).drops = null
 	var spawned: Array = []
 	var watch := func(node: Node) -> void:
 		if node is Pickup:

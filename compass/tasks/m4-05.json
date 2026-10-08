@@ -2,22 +2,22 @@
   "checklist": [
     {
       "detail": "Nodo que, dado un `flag`, lee el estado al `_ready` y lo escribe al cambiar. Lo usan cofres, puertas, muros, interruptores y tablillas.",
-      "done": false,
+      "done": true,
       "text": "Componente `PersistentFlag`"
     },
     {
       "detail": "Advertencia de configuración si el `flag` no está en `flag_registry.tres` (`_get_configuration_warnings`).",
-      "done": false,
+      "done": true,
       "text": "Validar flags en el editor"
     },
     {
       "detail": "`ow_*` overworld, `d1_*` mazmorra. Anotarla en [[gdd#estado-flags]].",
-      "done": false,
+      "done": true,
       "text": "Convención de nombres"
     },
     {
       "detail": "Con flags puestas a mano: el mundo se carga igual que si se hubieran conseguido jugando.",
-      "done": false,
+      "done": true,
       "text": "Escenario de prueba en el Save Inspector"
     }
   ],
@@ -30,7 +30,7 @@
     }
   ],
   "milestone": "m04",
-  "notes": "",
+  "notes": "PersistentFlag (@tool) avisa el valor al entrar, al cambiar y al cargar; los objetos que exportan 'flag' (Chest, Tablet) muestran la misma advertencia con PersistentFlag.warnings_for(). Advierte si no está registrado o no sigue ow_*/dN_*. Escenario debug/scenarios/test_flags.cfg (cofre abierto, pista leída, bolsa con 5 bombas en X). Muros: llegan en 5.5 y usan el mismo componente.",
   "order": 5,
   "refs": [
     {
@@ -42,8 +42,8 @@
       "section": "save-inspector"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Abrir un cofre, romper un muro y leer una tablilla; guardar con `3`, recargar la escena y cargar con `2`: todo sigue igual. Un flag mal escrito en un cofre muestra la advertencia en el editor.",
   "title": "Flags del mundo persistentes",
-  "updated_at": "2026-10-08T04:45:47.369Z"
+  "updated_at": "2026-10-08T08:11:00.285Z"
 }

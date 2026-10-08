@@ -1218,6 +1218,8 @@ func was_visited(room_index: int) -> bool:
 	return (visited_rooms & (1 << room_index)) != 0
 ```
 
+**Convención de nombres:** `ow_*` para el overworld y `dN_*` para la mazmorra N (`d1_chest_bow`), seguido de qué es y dónde. Todo flag vive en `data/flag_registry.tres`; `PersistentFlag` (y los objetos que exportan `flag`, como cofres y tablillas) muestran una advertencia en el editor si el flag no está registrado o no sigue la convención.
+
 **Flags con nombre, no bitmask global.** Un bitmask global se rompe al reordenar bits y no se lee en el editor. El único bitmask es `visited_rooms`, acotado a una mazmorra. Las misiones son un `int` de etapa (`oracle_stage = 2`), no N booleanos.
 
 ```gdscript
