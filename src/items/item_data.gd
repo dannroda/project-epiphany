@@ -13,6 +13,9 @@ enum Category { SWORD, SHIELD, ARMOR, USABLE, AMMO, DUNGEON, UPGRADE }
 @export var equip_scene: PackedScene
 @export var behavior: ItemBehavior
 @export var modifiers: Array[ItemModifier] = []
+## Viene con munición al conseguirlo (la bolsa trae bombas, el arco flechas).
+@export var bundled: ItemData
+@export var bundled_amount: int = 0
 
 @export_group("Combate")
 @export var damage: int = 0 ## En HP (1 corazón = 4)

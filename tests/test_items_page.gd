@@ -13,6 +13,8 @@ func _open() -> Array:
 		await tree.process_frame
 	for id in [&"bow", &"bomb_bag"]:
 		state.give(Items.get_item(id))
+	state.inventory.remove(&"arrow", state.inventory.count(&"arrow"))
+	state.inventory.remove(&"bomb", state.inventory.count(&"bomb"))
 	state.give(Items.get_item(&"arrow"), 12)
 	var stack: Node = tree.root.get_node(^"MenuStack")
 	stack.push(load("res://src/ui/menus/pause_menu.tscn").instantiate())

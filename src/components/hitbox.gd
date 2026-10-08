@@ -7,6 +7,8 @@ signal landed(hurtbox: Hurtbox)
 var team: EntityConfig.Team = EntityConfig.Team.NEUTRAL
 ## () -> DamageInfo. Player: ItemData del arma equipada. Enemigo: su EntityConfig.
 var damage_factory: Callable
+## Explosiones: daña a todos los equipos, incluido el propio.
+var hits_all := false
 ## Lo setea AttackRunner al activar; null = sin multiplicadores.
 var active_attack: AttackData:
 	set(value):
@@ -33,7 +35,7 @@ func build_damage() -> DamageInfo:
 
 func _on_area_entered(area: Area3D) -> void:
 	var hurtbox := area as Hurtbox
-	if hurtbox == null or hurtbox.team == team or not damage_factory.is_valid():
+	if hurtbox == null or (hurtbox.team == team and not hits_all) or not damage_factory.is_valid():
 		return
 	if hurtbox in _already_hit:
 		return

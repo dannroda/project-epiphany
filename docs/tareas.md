@@ -953,7 +953,7 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 
 **Notas:** Decisión del 2026-10-08: el GDD no tiene NPCs con diálogo, pero se integra el plugin ya para no adaptar tablillas e item get después. Elegido sobre Dialogic porque solo maneja el contenido y deja la UI propia (mockups), es liviano y hay menos superficie para romperse con Godot 4.8-dev. Instalado Dialogue Manager v4.1.0 (para Godot 4.7) desde la release de GitHub: import, arranque y tests headless OK en 4.8-dev7; falta confirmar que el editor lo cargue sin errores. Textos en data/dialogue/*.dialogue; el personaje de la línea es el rótulo de la tablilla; item_get.dialogue tiene un cue por id de ítem (si falta, usa la descripción). Traducciones: IDs estáticos [ID:…] como claves; el plugin mantiene la lista de plantillas POT.
 
-## M5 — Ítems secundarios  (4/9)
+## M5 — Ítems secundarios  (5/9)
 
 Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
@@ -1021,20 +1021,20 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 **Bloqueada por:** 3.4 Usar los ítems asignados; 5.1 Proyectiles
 
-### 5.4 Bombas · Pendiente
+### 5.4 Bombas · Hecho
 
-- [ ] `PlaceBehavior` y `ItemData` de bombas
+- [x] `PlaceBehavior` y `ItemData` de bombas
   Coloca la bomba delante; si se está apuntando, la lanza en arco hacia `Aim`. Animación `Throw`.
-- [ ] Bomba física
+- [x] Bomba física
   `RigidBody3D` con mecha de ≈2 s y parpadeo que se acelera. Se puede empujar y patear.
-- [ ] Explosión
+- [x] Explosión
   `Hitbox` de área un instante: daña a todos (incluido el player), impulsa `RigidBody3D` y marca `DamageInfo.element = &"explosive"`.
-- [ ] Límite de bombas activas
+- [x] Límite de bombas activas
   Una o dos a la vez.
 
 **Prueba:** Una bomba junto a un esqueleto con escudo y a una caja física: el esqueleto recibe daño y la caja sale volando. El player también se lastima si queda en el radio.
 
-**Notas:** Skills: `disciplines:game-feel`, `godot:godot-physics`.
+**Notas:** Skills: disciplines:game-feel, godot:godot-physics. Apuntando (objetivo fijado, stick derecho o mouse a más de 1,5 m) la bomba se lanza en arco y cae en el punto en 0,7 s; si no, se coloca delante. Animación General/Throw; el player recupera el control al 60 % (ItemBehavior.end_at). Mecha 2 s con parpadeo que se acelera; la espada la patea. Explosión: Hitbox con hits_all (daña a todos, el player incluido), radio 2,2 m, 1 corazón, element explosive (la madera no la frena, 5.9), empuja RigidBody3D, rompe vasijas/pasto y detona otras bombas. Bola de fuego del tamaño del radio. Máximo 2 activas. La bolsa trae 10 bombas y el arco 10 flechas (ItemData.bundled).
 
 **Referencias:** `gdd.md#items-mvp`, `gdd.md#items-datos`
 

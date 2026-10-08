@@ -46,6 +46,7 @@ func test_pickup_heals_and_gives() -> void:
 	assert_eq(player.health.current, 11, "el corazón cura 4")
 	assert_eq(is_instance_valid(heart), false, "desaparece al agarrarlo")
 	state.give(Items.get_item(&"bomb_bag"))
+	state.inventory.remove(&"bomb", state.inventory.count(&"bomb"))
 	var bombs := preload("res://src/world/pickup.tscn").instantiate() as Pickup
 	bombs.item = Items.get_item(&"bomb")
 	bombs.amount = 3

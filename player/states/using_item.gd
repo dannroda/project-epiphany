@@ -31,7 +31,7 @@ func _update(delta: float) -> void:
 	player.move_and_slide()
 	if not _used and _elapsed >= _item.behavior.use_at * _duration:
 		_use()
-	if _elapsed >= _duration:
+	if _elapsed >= _duration * _item.behavior.end_at:
 		dispatch("finished")
 
 

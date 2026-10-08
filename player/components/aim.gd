@@ -9,6 +9,10 @@ enum Source { FACING, STICK, MOUSE, TARGET, MOVE_STICK }
 ## Distancia de la retícula cuando no apunta el mouse.
 @export var reticle_distance := 4.0
 @export var turn_speed := 14.0
+## Distancia de lanzamiento con el stick (sin objetivo ni mouse).
+@export var throw_distance := 6.0
+## Con el mouse más cerca que esto del player, se coloca en vez de lanzar.
+@export var min_mouse_throw := 1.5
 
 ## Lo prenden los ítems a distancia: el modelo gira hacia la dirección de apuntado.
 var aiming := false:
@@ -67,6 +71,22 @@ func get_direction() -> Vector3:
 	if aiming and not _held.is_zero_approx():
 		return _held
 	return _flat(player.model.global_basis.z)
+
+
+## Hacia dónde lanzar si se está apuntando (objetivo, stick derecho, mouse lejos); null = colocar.
+func throw_point() -> Variant:
+	var direction := get_direction()
+	match source:
+		Source.TARGET:
+			return player.targeting.current.global_position
+		Source.STICK:
+			return player.global_position + direction * throw_distance
+		Source.MOUSE:
+			var hit = mouse_on_ground()
+			var ground := Vector3(hit.x, player.global_position.y, hit.z) if hit != null else player.global_position
+			if ground.distance_to(player.global_position) >= min_mouse_throw:
+				return ground
+	return null
 
 
 ## Punto del suelo bajo el mouse (plano a la altura del player + 1), o null.

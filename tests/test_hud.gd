@@ -47,6 +47,8 @@ func test_item_slots_follow_buttons_and_ammo() -> void:
 
 	state.give(Items.get_item(&"bow"))
 	state.give(Items.get_item(&"bomb_bag"))
+	state.inventory.remove(&"arrow", state.inventory.count(&"arrow"))
+	state.inventory.remove(&"bomb", state.inventory.count(&"bomb"))
 	state.give(Items.get_item(&"arrow"), 12)
 	state.assign_button(0, &"bow")
 	assert_eq(x.get_node(^"Icon").texture, Items.get_item(&"bow").icon)

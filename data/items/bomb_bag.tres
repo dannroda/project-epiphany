@@ -5,10 +5,14 @@
 [ext_resource type="Texture2D" uid="uid://17f1xxjuf13y" path="res://assets/ui/items/bomb_bag.svg" id="2_kgno8"]
 [ext_resource type="Script" uid="uid://bn5pjgpia5grm" path="res://src/items/item_data.gd" id="3_kgno8"]
 [ext_resource type="Resource" path="res://data/items/bomb.tres" id="4_ammo"]
+[ext_resource type="PackedScene" path="res://src/items/bomb/bomb.tscn" id="5_bomb_scene"]
 
 [sub_resource type="Resource" id="Resource_fouaw"]
 script = ExtResource("1_prkf7")
 ammo = ExtResource("4_ammo")
+bomb_scene = ExtResource("5_bomb_scene")
+use_at = 0.4
+end_at = 0.6
 
 [resource]
 script = ExtResource("3_kgno8")
@@ -19,3 +23,5 @@ description = "Coloca una bomba delante tuyo. Rompe muros agrietados y empuja lo
 icon = ExtResource("2_kgno8")
 category = 3
 behavior = SubResource("Resource_fouaw")
+bundled = ExtResource("4_ammo")
+bundled_amount = 10

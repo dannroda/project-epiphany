@@ -81,6 +81,8 @@ func give(item: ItemData, amount: int = 1) -> void:
 		_:
 			inventory.add(item.id, amount)
 			_auto_place(item)
+			if item.bundled and item.bundled_amount > 0:
+				inventory.add(item.bundled.id, item.bundled_amount * amount)
 
 
 ## Primer equipo de una categoría: se equipa. Primer usable: va al primer botón libre.

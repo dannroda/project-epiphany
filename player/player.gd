@@ -75,6 +75,7 @@ func make_item_context() -> ItemUseContext:
 	ctx.origin = equipment.weapon_socket.global_position if equipment.weapon_socket else global_position + Vector3.UP
 	ctx.direction = aim.get_direction()
 	ctx.inventory = GameState.inventory
+	ctx.throw_to = aim.throw_point()
 	return ctx
 
 

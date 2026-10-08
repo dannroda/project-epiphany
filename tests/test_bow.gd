@@ -14,6 +14,7 @@ func _setup(arrows: int) -> Array:
 	for enemy in tree.get_nodes_in_group(&"enemies"):
 		enemy.free()
 	state.give(Items.get_item(&"bow"))
+	state.inventory.remove(&"arrow", state.inventory.count(&"arrow"))
 	if arrows > 0:
 		state.give(Items.get_item(&"arrow"), arrows)
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter

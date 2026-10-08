@@ -1,0 +1,41 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/items/bomb/explosion.gd" id="1_explosion"]
+
+[sub_resource type="StandardMaterial3D" id="Fire"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 0.62, 0.25, 0.85)
+
+[sub_resource type="SphereMesh" id="FireMesh"]
+material = SubResource("Fire")
+radius = 1.0
+height = 2.0
+radial_segments = 16
+rings = 8
+
+[sub_resource type="SphereShape3D" id="Blast"]
+radius = 2.2
+
+[node name="Explosion" type="Area3D"]
+collision_layer = 0
+collision_mask = 24
+monitorable = false
+script = ExtResource("1_explosion")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("Blast")
+
+[node name="Fireball" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0.6, 0)
+cast_shadow = 0
+mesh = SubResource("FireMesh")
+
+[node name="Flash" type="OmniLight3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+light_color = Color(1, 0.6, 0.25, 1)
+light_energy = 0.0
+omni_range = 5.0
