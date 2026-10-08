@@ -30,6 +30,8 @@ func _enter_tree() -> void:
 			"%d:" % TYPE_STRING)
 	_log_debugger = LogDebuggerPlugin.new()
 	add_debugger_plugin(_log_debugger)
+	if Engine.has_meta(&"editor_bridge"):
+		_log_debugger.entry_received.connect(Engine.get_meta(&"editor_bridge").record_game_entry)
 
 
 func _exit_tree() -> void:

@@ -1,6 +1,8 @@
 @tool
 extends EditorDebuggerPlugin
 
+signal entry_received(level: int, channel: String, text: String, file: String, line: int, time: String)
+
 const LogPanel := preload("log_panel.gd")
 const CAPTURE := "epiphany_log"
 
@@ -28,5 +30,6 @@ func _setup_session(session_id: int) -> void:
 func _capture(message: String, data: Array, session_id: int) -> bool:
 	if message == CAPTURE + ":entry" and _panels.has(session_id):
 		_panels[session_id].add_entry.callv(data)
+		entry_received.emit.callv(data)
 		return true
 	return false

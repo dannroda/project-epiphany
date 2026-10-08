@@ -2,33 +2,33 @@
   "checklist": [
     {
       "detail": "`addons/epiphany_tools/bridge/editor_bridge.gd`: un `TCPServer` en `127.0.0.1:4713` que atiende pedidos HTTP chicos y responde JSON. Solo escucha en localhost.",
-      "done": false,
+      "done": true,
       "text": "Servidor HTTP local en `epiphany_tools`"
     },
     {
       "detail": "`scan` espera a que termine el escaneo (clases, UIDs, imports) antes de responder.",
-      "done": false,
+      "done": true,
       "text": "Comandos `scan`, `play`, `stop` y `status`"
     },
     {
       "detail": "Errores y mensajes del editor (un `Logger` propio) y las líneas que llegan a la pestaña Log del juego, con número de secuencia para pedir solo lo nuevo.",
-      "done": false,
+      "done": true,
       "text": "Comando `log`"
     },
     {
       "detail": "Abrir un script en una línea o una escena; guardar escenas; agregar autoloads y settings desde el editor, así no se pisa `project.godot`.",
-      "done": false,
+      "done": true,
       "text": "Comandos `open`, `save`, `autoload` y `setting`"
     }
   ],
   "code": "0.13",
   "created_at": "2026-10-08T04:44:29.174Z",
   "milestone": "m00",
-  "notes": "Para que Claude pueda manejar el editor sin pedirle al usuario que le dé foco o haga clics. Cada comando usa la API de `EditorInterface`.",
+  "notes": "Para que Claude pueda manejar el editor sin pedirle al usuario que le dé foco o haga clics. Es un plugin aparte, `addons/editor_bridge/`, para que pueda recargar `epiphany_tools` (`reload_plugin`) sin apagarse. Comandos: ping, status, scan, play [scene], stop, log [since], open path [line], save, plugin name enabled, reload_plugin name, autoload name path, setting name value. Si se recarga, reintenta abrir el puerto cada segundo. `autoload` y `setting` todavía no se probaron.",
   "order": 12,
   "refs": [],
-  "status": "doing",
+  "status": "done",
   "test": "Con el editor abierto: `curl -s localhost:4713/ping` responde. Crear un script con `class_name` y `curl -s -X POST localhost:4713/scan`: la clase queda registrada sin tocar el editor. `play` corre la escena principal y `log` devuelve sus líneas.",
   "title": "Puente con el editor",
-  "updated_at": "2026-10-08T04:44:30.546Z"
+  "updated_at": "2026-10-08T04:51:17.544Z"
 }

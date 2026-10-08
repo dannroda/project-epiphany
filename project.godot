@@ -17,9 +17,9 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+Items="*uid://c3fthcnre0g0f"
 Log="*res://addons/epiphany_tools/debug/runtime/log.gd"
 DebugOverlay="*res://addons/epiphany_tools/debug/runtime/debug_overlay.gd"
-Items="*uid://c3fthcnre0g0f"
 
 [display]
 
@@ -28,7 +28,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/epiphany_tools/plugin.cfg", "res://addons/scope_compass/plugin.cfg", "res://addons/zylann.editor_debugger/plugin.cfg")
+enabled=PackedStringArray("res://addons/editor_bridge/plugin.cfg", "res://addons/epiphany_tools/plugin.cfg", "res://addons/scope_compass/plugin.cfg", "res://addons/zylann.editor_debugger/plugin.cfg")
 
 [file_customization]
 

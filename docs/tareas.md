@@ -3,7 +3,7 @@
 > Export de `compass/`, que es la fuente de verdad. No editar: los cambios se hacen en `compass/` o con `scompass`, y este archivo se regenera.
 > Generado: 2026-10-08
 
-## M0 — Refactor del player + base de datos  (4/13)
+## M0 — Refactor del player + base de datos  (5/13)
 
 Dejar armada la base sobre la que se construye todo lo demás: ítems como datos, estado de la partida, guardado, componentes de combate y un player ordenado en piezas. Casi nada de esto se ve en el juego todavía; lo que cambia es cómo está hecho. Diseño y código de ejemplo: `gdd.md` §11.
 
@@ -344,20 +344,20 @@ Necesita 0.6. Diseño en el GDD (§11.8).
 
 **Relacionadas:** 0.3 Ítems: datos; 1.1 Daño, invulnerabilidad y knockback del player
 
-### 0.13 Puente con el editor · En curso
+### 0.13 Puente con el editor · Hecho
 
-- [ ] Servidor HTTP local en `epiphany_tools`
+- [x] Servidor HTTP local en `epiphany_tools`
   `addons/epiphany_tools/bridge/editor_bridge.gd`: un `TCPServer` en `127.0.0.1:4713` que atiende pedidos HTTP chicos y responde JSON. Solo escucha en localhost.
-- [ ] Comandos `scan`, `play`, `stop` y `status`
+- [x] Comandos `scan`, `play`, `stop` y `status`
   `scan` espera a que termine el escaneo (clases, UIDs, imports) antes de responder.
-- [ ] Comando `log`
+- [x] Comando `log`
   Errores y mensajes del editor (un `Logger` propio) y las líneas que llegan a la pestaña Log del juego, con número de secuencia para pedir solo lo nuevo.
-- [ ] Comandos `open`, `save`, `autoload` y `setting`
+- [x] Comandos `open`, `save`, `autoload` y `setting`
   Abrir un script en una línea o una escena; guardar escenas; agregar autoloads y settings desde el editor, así no se pisa `project.godot`.
 
 **Prueba:** Con el editor abierto: `curl -s localhost:4713/ping` responde. Crear un script con `class_name` y `curl -s -X POST localhost:4713/scan`: la clase queda registrada sin tocar el editor. `play` corre la escena principal y `log` devuelve sus líneas.
 
-**Notas:** Para que Claude pueda manejar el editor sin pedirle al usuario que le dé foco o haga clics. Cada comando usa la API de `EditorInterface`.
+**Notas:** Para que Claude pueda manejar el editor sin pedirle al usuario que le dé foco o haga clics. Es un plugin aparte, `addons/editor_bridge/`, para que pueda recargar `epiphany_tools` (`reload_plugin`) sin apagarse. Comandos: ping, status, scan, play [scene], stop, log [since], open path [line], save, plugin name enabled, reload_plugin name, autoload name path, setting name value. Si se recarga, reintenta abrir el puerto cada segundo. `autoload` y `setting` todavía no se probaron.
 
 ## M1 — Combate real  (0/7)
 
