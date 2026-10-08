@@ -32,6 +32,13 @@ uv1_triplanar = true
 
 [sub_resource type="DrawableTexture2D" id="DrawableTexture2D_4uxyr"]
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_level"]
+vertices = PackedVector3Array(-14.194824, 0.5009707, -17.231567, -14.194824, 0.5009707, 17.268433, 14.305176, 0.5009707, 17.268433, 14.305176, 0.5009707, -17.231567)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+geometry_parsed_geometry_type = 1
+geometry_source_geometry_mode = 1
+geometry_source_group_name = &"navmesh_source"
+
 [node name="Test" type="Node3D" unique_id=1573264513]
 script = ExtResource("1_ny0t1")
 
@@ -44,7 +51,7 @@ environment = SubResource("Environment_r4e4k")
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
 
-[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=181593407]
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=181593407 groups=["navmesh_source"]]
 material_override = SubResource("StandardMaterial3D_r4e4k")
 use_collision = true
 size = Vector3(29.389648, 0.4980586, 35.463135)
@@ -141,3 +148,6 @@ transform = Transform3D(1, 0, 0, 0, 0.85272557, 0.52235913, 0, -0.52235913, 0.85
 light_energy = 2.899
 light_projector = SubResource("DrawableTexture2D_4uxyr")
 shadow_enabled = true
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_level")

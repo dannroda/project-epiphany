@@ -5,6 +5,8 @@ const KNOCKBACK_FRICTION: float = 18.0
 const KNOCKBACK_LIFT: float = 4.0
 const DEAD_COLLISION_LAYER: int = 4
 
+signal defeated(enemy: Enemy)
+
 @export var config: EntityConfig
 
 @onready var anim_player: AnimationPlayer = $ModelController/AnimationPlayer
@@ -14,6 +16,11 @@ const DEAD_COLLISION_LAYER: int = 4
 @onready var hurtbox: Hurtbox = $Hurtbox
 @onready var hitbox: Hitbox = $ModelController/Hitboxes/Front
 @onready var attack_runner: AttackRunner = $AttackRunner
+@onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
+
+## Lo que pide la IA; el empujón va aparte y se suma.
+var desired_velocity := Vector3.ZERO
+var _knockback := Vector3.ZERO
 
 var is_dead: bool:
 	get:
@@ -34,14 +41,42 @@ func _ready() -> void:
 	health.died.connect(_on_died)
 	bt_player.blackboard.set_var("is_hit", false)
 	bt_player.blackboard.set_var("is_dead", false)
+	bt_player.blackboard.set_var("stunned", false)
+	bt_player.blackboard.set_var("target", null)
 
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-	velocity.x = move_toward(velocity.x, 0.0, KNOCKBACK_FRICTION * delta)
-	velocity.z = move_toward(velocity.z, 0.0, KNOCKBACK_FRICTION * delta)
+	_knockback.x = move_toward(_knockback.x, 0.0, KNOCKBACK_FRICTION * delta)
+	_knockback.z = move_toward(_knockback.z, 0.0, KNOCKBACK_FRICTION * delta)
+	velocity.x = desired_velocity.x + _knockback.x
+	velocity.z = desired_velocity.z + _knockback.z
 	move_and_slide()
+
+
+func move_toward_point(point: Vector3, speed: float) -> void:
+	var direction := point - global_position
+	direction.y = 0.0
+	if direction.length() < 0.05:
+		stop_moving()
+		return
+	desired_velocity = direction.normalized() * speed
+	face_towards(point)
+
+
+func stop_moving() -> void:
+	desired_velocity = Vector3.ZERO
+
+
+## El modelo mira a +Z local: la raíz mira (-Z) hacia el lado opuesto al punto.
+func face_towards(point: Vector3) -> void:
+	var direction := point - global_position
+	direction.y = 0.0
+	if direction.is_zero_approx():
+		return
+	look_at(global_position - direction, Vector3.UP)
+	model.rotation = Vector3.ZERO
 
 
 func _on_hit(info: DamageInfo) -> void:
@@ -56,9 +91,9 @@ func _on_hit(info: DamageInfo) -> void:
 		return
 	direction = direction.normalized()
 	var strength := info.knockback * (1.0 - config.knockback_resistance)
-	velocity = direction * strength + Vector3.UP * KNOCKBACK_LIFT * (1.0 - config.knockback_resistance)
-	look_at(global_position + direction, Vector3.UP)
-	model.rotation = Vector3.ZERO
+	_knockback = direction * strength
+	velocity.y = KNOCKBACK_LIFT * (1.0 - config.knockback_resistance)
+	face_towards(info.source.global_position)
 
 
 func _on_damaged(_amount: int) -> void:
@@ -72,6 +107,9 @@ func _on_died() -> void:
 	Log.info(&"combat", name, "murió")
 	remove_from_group(&"targetable")
 	attack_runner.stop()
+	stop_moving()
+	hurtbox.set_deferred(&"monitorable", false)
+	defeated.emit(self)
 	bt_player.blackboard.set_var("is_dead", true)
 	bt_player.restart()
 

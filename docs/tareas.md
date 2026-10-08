@@ -372,14 +372,14 @@ Los presets de export (plain_saves en debug, excluir debug/scenarios y tests) pa
 
 **Notas:** Para que Claude pueda manejar el editor sin pedirle al usuario que le dé foco o haga clics. Es un plugin aparte, `addons/editor_bridge/`, para que pueda recargar `epiphany_tools` (`reload_plugin`) sin apagarse. Comandos: ping, status, scan, play [scene], stop, log [since], open path [line], save, plugin name enabled, reload_plugin name, autoload name path, setting name value. Si se recarga, reintenta abrir el puerto cada segundo. `autoload` y `setting` todavía no se probaron.
 
-## M1 — Combate real  (0/7)
+## M1 — Combate real  (1/7)
 
 Vida, invulnerabilidad breve, knockback, bloqueo direccional, roll, IA del esqueleto con `BTAttack`, muerte y reaparición, corazones en el HUD.
 
 **Hecho cuando:**
 - Pelear 1 contra 1 y poder perder.
 
-### 1.1 Daño, invulnerabilidad y knockback del player · En curso
+### 1.1 Daño, invulnerabilidad y knockback del player · Hecho
 
 - [x] Conectar `Hurtbox.hit` en `player.gd`
   `_on_hurtbox_hit(info)`: reduce el daño con `equipment.damage_reduction()` (mínimo 1) y llama `Health.damage()`. El bloqueo se suma en 1.2. Código en [[gdd#ventanas-ataque]].
@@ -448,19 +448,19 @@ Skills: `disciplines:input-systems`, `godot:godot-animation`.
 
 **Relacionadas:** 0.9 Refactor del player
 
-### 1.4 IA del esqueleto con `BTAttack` · Pendiente
+### 1.4 IA del esqueleto con `BTAttack` · En curso
 
-- [ ] Crear `ai/tasks/bt_attack.gd`
+- [x] Crear `ai/tasks/bt_attack.gd`
   Una sola tarea de ataque para todos los BT: toma un `AttackData` y maneja el `AttackRunner`. Código en [[gdd#ventanas-ataque]].
-- [ ] Navegación en el nivel de prueba
+- [x] Navegación en el nivel de prueba
   `NavigationRegion3D` con navmesh horneado en `levels/test.tscn` y `NavigationAgent3D` en el esqueleto. Tarea `BTMoveToTarget` en `ai/tasks/`.
-- [ ] Rehacer `enemy_bt.tres`
+- [x] Rehacer `enemy_bt.tres`
   Selector: muerto → aturdido/golpeado → atacar si está en rango → perseguir si ve al player → idle/patrulla. Datos de rango y visión en la `EntityConfig`.
-- [ ] Telegrafiar el ataque
+- [x] Telegrafiar el ataque
   Pausa corta + pose de preparación antes del golpe, para que el jugador pueda bloquear o rodar. Ajustar `active_from` del `AttackData` en vivo.
-- [ ] Consumir `stunned` e `is_hit` del blackboard
+- [x] Consumir `stunned` e `is_hit` del blackboard
   Golpeado: interrumpe el ataque (`_exit` apaga la hitbox) y reproduce `Hit_*`. Aturdido (golpe de escudo, 1.2): queda quieto un tiempo.
-- [ ] Muerte del enemigo
+- [x] Muerte del enemigo
   `Health.died` → animación `Skeletons_Death`, sale del grupo `targetable` (libera el lock-on), desactiva colisiones y se borra o queda el cuerpo. Hook para drops (3.7).
 
 **Prueba:** Con *Visible Collision Shapes*: el esqueleto ve al player, lo persigue esquivando obstáculos, telegrafía y pega; si recibe un golpe en medio del ataque, la hitbox se apaga. Muere y deja de poder fijarse.
@@ -468,6 +468,8 @@ Skills: `disciplines:input-systems`, `godot:godot-animation`.
 **Notas:** El esqueleto es el enemigo que enseña a bloquear. Usar las tareas de LimboAI que ya vienen (`BTPlayAnimation`, `BTCheckVar`, `BTWait`) y agregar solo las que falten en `ai/tasks/`.
 
 Skills: `disciplines:ai-behavior-trees-utility-ai`, `disciplines:game-ai`, `godot:godot-physics`.
+
+Tareas propias en ai/tasks/: BTFindPlayer (rango de visión + línea de visión, con histéresis), BTInAttackRange, BTMoveToTarget (NavigationAgent3D) y BTAttack (aviso: congela la pose en windup_pose durante windup_time; después arranca el AttackRunner con el tiempo ya transcurrido). move_speed, vision_range y attack_range van en EntityConfig. El esqueleto separa desired_velocity (IA) del empujón. enemy_bt.tres se regenera con un script; ramas: Muerto, Golpeado, Aturdido (consume stunned, lo setea 1.2), Atacar, Perseguir, Quieto. Muerte: Death_A (no Skeletons_Death), sale de targetable, la hurtbox deja de ser detectable y emite defeated (hook para drops de 3.7). La navmesh del nivel de prueba es solo el piso: las cajas son RigidBody y no son obstáculos. Ajustar windup_time / active_from jugando.
 
 **Referencias:** `gdd.md#combate`, `gdd.md#ventanas-ataque`
 

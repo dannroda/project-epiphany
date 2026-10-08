@@ -2,32 +2,32 @@
   "checklist": [
     {
       "detail": "Una sola tarea de ataque para todos los BT: toma un `AttackData` y maneja el `AttackRunner`. Código en [[gdd#ventanas-ataque]].",
-      "done": false,
+      "done": true,
       "text": "Crear `ai/tasks/bt_attack.gd`"
     },
     {
       "detail": "`NavigationRegion3D` con navmesh horneado en `levels/test.tscn` y `NavigationAgent3D` en el esqueleto. Tarea `BTMoveToTarget` en `ai/tasks/`.",
-      "done": false,
+      "done": true,
       "text": "Navegación en el nivel de prueba"
     },
     {
       "detail": "Selector: muerto → aturdido/golpeado → atacar si está en rango → perseguir si ve al player → idle/patrulla. Datos de rango y visión en la `EntityConfig`.",
-      "done": false,
+      "done": true,
       "text": "Rehacer `enemy_bt.tres`"
     },
     {
       "detail": "Pausa corta + pose de preparación antes del golpe, para que el jugador pueda bloquear o rodar. Ajustar `active_from` del `AttackData` en vivo.",
-      "done": false,
+      "done": true,
       "text": "Telegrafiar el ataque"
     },
     {
       "detail": "Golpeado: interrumpe el ataque (`_exit` apaga la hitbox) y reproduce `Hit_*`. Aturdido (golpe de escudo, 1.2): queda quieto un tiempo.",
-      "done": false,
+      "done": true,
       "text": "Consumir `stunned` e `is_hit` del blackboard"
     },
     {
       "detail": "`Health.died` → animación `Skeletons_Death`, sale del grupo `targetable` (libera el lock-on), desactiva colisiones y se borra o queda el cuerpo. Hook para drops (3.7).",
-      "done": false,
+      "done": true,
       "text": "Muerte del enemigo"
     }
   ],
@@ -44,7 +44,7 @@
     }
   ],
   "milestone": "m01",
-  "notes": "El esqueleto es el enemigo que enseña a bloquear. Usar las tareas de LimboAI que ya vienen (`BTPlayAnimation`, `BTCheckVar`, `BTWait`) y agregar solo las que falten en `ai/tasks/`.\n\nSkills: `disciplines:ai-behavior-trees-utility-ai`, `disciplines:game-ai`, `godot:godot-physics`.",
+  "notes": "El esqueleto es el enemigo que enseña a bloquear. Usar las tareas de LimboAI que ya vienen (`BTPlayAnimation`, `BTCheckVar`, `BTWait`) y agregar solo las que falten en `ai/tasks/`.\n\nSkills: `disciplines:ai-behavior-trees-utility-ai`, `disciplines:game-ai`, `godot:godot-physics`.\n\nTareas propias en ai/tasks/: BTFindPlayer (rango de visión + línea de visión, con histéresis), BTInAttackRange, BTMoveToTarget (NavigationAgent3D) y BTAttack (aviso: congela la pose en windup_pose durante windup_time; después arranca el AttackRunner con el tiempo ya transcurrido). move_speed, vision_range y attack_range van en EntityConfig. El esqueleto separa desired_velocity (IA) del empujón. enemy_bt.tres se regenera con un script; ramas: Muerto, Golpeado, Aturdido (consume stunned, lo setea 1.2), Atacar, Perseguir, Quieto. Muerte: Death_A (no Skeletons_Death), sale de targetable, la hurtbox deja de ser detectable y emite defeated (hook para drops de 3.7). La navmesh del nivel de prueba es solo el piso: las cajas son RigidBody y no son obstáculos. Ajustar windup_time / active_from jugando.",
   "order": 4,
   "refs": [
     {
@@ -56,8 +56,8 @@
       "section": "ventanas-ataque"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Con *Visible Collision Shapes*: el esqueleto ve al player, lo persigue esquivando obstáculos, telegrafía y pega; si recibe un golpe en medio del ataque, la hitbox se apaga. Muere y deja de poder fijarse.",
   "title": "IA del esqueleto con `BTAttack`",
-  "updated_at": "2026-10-08T04:45:57.051Z"
+  "updated_at": "2026-10-08T05:42:43.705Z"
 }

@@ -1,83 +1,165 @@
-[gd_resource type="BehaviorTree" format=3 uid="uid://b7uwj2m7bvq4m"]
+[gd_resource type="BehaviorTree" format=3]
 
-[sub_resource type="BlackboardPlan" id="BlackboardPlan_tnp0v"]
+[ext_resource type="Script" path="res://ai/tasks/bt_find_player.gd" id="1_caso1"]
+[ext_resource type="Script" path="res://ai/tasks/bt_in_attack_range.gd" id="2_0sm1c"]
+[ext_resource type="Resource" path="res://data/attacks/skeleton_slash.tres" id="3_2suu5"]
+[ext_resource type="Script" path="res://ai/tasks/bt_attack.gd" id="4_sr5dr"]
+[ext_resource type="Script" path="res://ai/tasks/bt_move_to_target.gd" id="5_orssr"]
 
-[sub_resource type="BBVariant" id="BBVariant_r483x"]
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_jgf0a"]
+
+[sub_resource type="BBVariant" id="BBVariant_jiw7p"]
 type = 1
 saved_value = true
 resource_name = "true"
 
-[sub_resource type="BTCheckVar" id="BTCheckVar_c5mbt"]
+[sub_resource type="BTCheckVar" id="BTCheckVar_km1us"]
 variable = &"is_dead"
-value = SubResource("BBVariant_r483x")
+value = SubResource("BBVariant_jiw7p")
 
-[sub_resource type="BBNode" id="BBNode_caso1"]
+[sub_resource type="BBNode" id="BBNode_76c56"]
 saved_value = NodePath("ModelController/AnimationPlayer")
 resource_name = "ModelController/AnimationPlayer"
 
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_0sm1c"]
-await_completion = 1.5
-animation_player = SubResource("BBNode_caso1")
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_sj6bb"]
+await_completion = 1.6
+animation_player = SubResource("BBNode_76c56")
 animation_name = &"General/Death_A"
+blend = 0.15
 
-[sub_resource type="BBNode" id="BBNode_2suu5"]
+[sub_resource type="BBNode" id="BBNode_oilbr"]
 saved_value = NodePath(".")
 resource_name = "."
 
-[sub_resource type="BTCallMethod" id="BTCallMethod_sr5dr"]
-node = SubResource("BBNode_2suu5")
+[sub_resource type="BTCallMethod" id="BTCallMethod_n0grs"]
+node = SubResource("BBNode_oilbr")
 method = &"on_death_finished"
 
-[sub_resource type="BTSequence" id="BTSequence_4uxyr"]
-children = [SubResource("BTCheckVar_c5mbt"), SubResource("BTPlayAnimation_0sm1c"), SubResource("BTCallMethod_sr5dr")]
+[sub_resource type="BTSequence" id="BTSequence_jc67m"]
+custom_name = "Muerto"
+children = [SubResource("BTCheckVar_km1us"), SubResource("BTPlayAnimation_sj6bb"), SubResource("BTCallMethod_n0grs")]
 
-[sub_resource type="BBVariant" id="BBVariant_87pja"]
+[sub_resource type="BBVariant" id="BBVariant_5gnj7"]
 type = 1
 saved_value = true
 resource_name = "true"
 
-[sub_resource type="BTCheckVar" id="BTCheckVar_4uxyr"]
+[sub_resource type="BTCheckVar" id="BTCheckVar_kib5i"]
 variable = &"is_hit"
-value = SubResource("BBVariant_87pja")
+value = SubResource("BBVariant_5gnj7")
 
-[sub_resource type="BBNode" id="BBNode_4uxyr"]
+[sub_resource type="BBNode" id="BBNode_3218h"]
 saved_value = NodePath("ModelController/AnimationPlayer")
 resource_name = "ModelController/AnimationPlayer"
 
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_hit"]
-await_completion = 0.6
-animation_player = SubResource("BBNode_4uxyr")
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_tv5kr"]
+await_completion = 1.0
+animation_player = SubResource("BBNode_3218h")
 animation_name = &"General/Hit_A"
+blend = 0.15
 
-[sub_resource type="BBVariant" id="BBVariant_4uxyr"]
+[sub_resource type="BBVariant" id="BBVariant_viror"]
 type = 1
 saved_value = false
 resource_name = "false"
 
-[sub_resource type="BTSetVar" id="BTSetVar_r483x"]
+[sub_resource type="BTSetVar" id="BTSetVar_fbro2"]
 variable = &"is_hit"
-value = SubResource("BBVariant_4uxyr")
+value = SubResource("BBVariant_viror")
 
-[sub_resource type="BTSequence" id="BTSequence_c5mbt"]
-children = [SubResource("BTCheckVar_4uxyr"), SubResource("BTPlayAnimation_hit"), SubResource("BTSetVar_r483x")]
+[sub_resource type="BTSequence" id="BTSequence_ea1ff"]
+custom_name = "Golpeado"
+children = [SubResource("BTCheckVar_kib5i"), SubResource("BTPlayAnimation_tv5kr"), SubResource("BTSetVar_fbro2")]
 
-[sub_resource type="BBNode" id="BBNode_gh386"]
+[sub_resource type="BBVariant" id="BBVariant_q4fk5"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_lx1b6"]
+variable = &"stunned"
+value = SubResource("BBVariant_q4fk5")
+
+[sub_resource type="BBNode" id="BBNode_b5vex"]
 saved_value = NodePath("ModelController/AnimationPlayer")
 resource_name = "ModelController/AnimationPlayer"
 
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_idle"]
-animation_player = SubResource("BBNode_gh386")
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_fqs72"]
+animation_player = SubResource("BBNode_b5vex")
+animation_name = &"General/Hit_B"
+blend = 0.15
+
+[sub_resource type="BTWait" id="BTWait_hjooy"]
+duration = 1.2
+
+[sub_resource type="BBVariant" id="BBVariant_fqfvd"]
+type = 1
+saved_value = false
+resource_name = "false"
+
+[sub_resource type="BTSetVar" id="BTSetVar_66j55"]
+variable = &"stunned"
+value = SubResource("BBVariant_fqfvd")
+
+[sub_resource type="BTSequence" id="BTSequence_m2m87"]
+custom_name = "Aturdido"
+children = [SubResource("BTCheckVar_lx1b6"), SubResource("BTPlayAnimation_fqs72"), SubResource("BTWait_hjooy"), SubResource("BTSetVar_66j55")]
+
+[sub_resource type="BTCondition" id="BTCondition_a3mfv"]
+script = ExtResource("1_caso1")
+
+[sub_resource type="BTCondition" id="BTCondition_coi5c"]
+script = ExtResource("2_0sm1c")
+
+[sub_resource type="BTAction" id="BTAction_3q1qq"]
+script = ExtResource("4_sr5dr")
+attack = ExtResource("3_2suu5")
+
+[sub_resource type="BBNode" id="BBNode_6o2u5"]
+saved_value = NodePath("ModelController/AnimationPlayer")
+resource_name = "ModelController/AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_t7kc2"]
+animation_player = SubResource("BBNode_6o2u5")
 animation_name = &"General/Idle_A"
+blend = 0.15
 
-[sub_resource type="BTWait" id="BTWait_0sm1c"]
-duration = 1.5
+[sub_resource type="BTWait" id="BTWait_r1gm3"]
+duration = 0.8
 
-[sub_resource type="BTSequence" id="BTSequence_2suu5"]
-children = [SubResource("BTPlayAnimation_idle"), SubResource("BTWait_0sm1c")]
+[sub_resource type="BTSequence" id="BTSequence_0kvci"]
+custom_name = "Atacar"
+children = [SubResource("BTCondition_a3mfv"), SubResource("BTCondition_coi5c"), SubResource("BTAction_3q1qq"), SubResource("BTPlayAnimation_t7kc2"), SubResource("BTWait_r1gm3")]
 
-[sub_resource type="BTDynamicSelector" id="BTDynamicSelector_4uxyr"]
-children = [SubResource("BTSequence_4uxyr"), SubResource("BTSequence_c5mbt"), SubResource("BTSequence_2suu5")]
+[sub_resource type="BTCondition" id="BTCondition_1uf30"]
+script = ExtResource("1_caso1")
+
+[sub_resource type="BTAction" id="BTAction_gfns8"]
+script = ExtResource("5_orssr")
+
+[sub_resource type="BTSequence" id="BTSequence_8062w"]
+custom_name = "Perseguir"
+children = [SubResource("BTCondition_1uf30"), SubResource("BTAction_gfns8")]
+
+[sub_resource type="BBNode" id="BBNode_7bplq"]
+saved_value = NodePath("ModelController/AnimationPlayer")
+resource_name = "ModelController/AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_tuwd0"]
+animation_player = SubResource("BBNode_7bplq")
+animation_name = &"General/Idle_A"
+blend = 0.15
+
+[sub_resource type="BTWait" id="BTWait_igf4x"]
+duration = 0.5
+
+[sub_resource type="BTSequence" id="BTSequence_wc2m8"]
+custom_name = "Quieto"
+children = [SubResource("BTPlayAnimation_tuwd0"), SubResource("BTWait_igf4x")]
+
+[sub_resource type="BTDynamicSelector" id="BTDynamicSelector_mitb3"]
+children = [SubResource("BTSequence_jc67m"), SubResource("BTSequence_ea1ff"), SubResource("BTSequence_m2m87"), SubResource("BTSequence_0kvci"), SubResource("BTSequence_8062w"), SubResource("BTSequence_wc2m8")]
 
 [resource]
-blackboard_plan = SubResource("BlackboardPlan_tnp0v")
-root_task = SubResource("BTDynamicSelector_4uxyr")
+blackboard_plan = SubResource("BlackboardPlan_jgf0a")
+root_task = SubResource("BTDynamicSelector_mitb3")

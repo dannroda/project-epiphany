@@ -21,6 +21,11 @@ var features: int = 0
 @export var attack_damage: int = 2 ## Daño base de sus ataques (sin arma equipada)
 @export var attack_knockback: float = 6.0
 
+@export_group("IA")
+@export var move_speed: float = 3.0
+@export var vision_range: float = 8.0
+@export var attack_range: float = 1.6
+
 
 func has(feature: Feature) -> bool:
 	return (features & feature) != 0

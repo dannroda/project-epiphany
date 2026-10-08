@@ -23,12 +23,13 @@ func _ready() -> void:
 			hitbox.set_deferred(&"monitoring", false)
 
 
-func start(attack: AttackData, length: float, speed: float = 1.0) -> void:
+## from_time: segundos ya transcurridos de la animación (si arrancó antes, como el aviso de BTAttack).
+func start(attack: AttackData, length: float, speed: float = 1.0, from_time: float = 0.0) -> void:
 	stop()
 	current = attack
 	_length = maxf(length, 0.001)
 	_speed = speed
-	_elapsed = 0.0
+	_elapsed = from_time
 	set_physics_process(true)
 
 
