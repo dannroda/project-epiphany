@@ -502,10 +502,10 @@ const _GROUPS: Dictionary[Feature, StringName] = {
 @export_flags("Targetable:1", "Pushable:2", "Burnable:4", "Reflects:8", "Grabbable:16")
 var features: int = 0
 @export var team: Team = Team.ENEMY
-@export var max_health: int = 8                 ## HP (1 corazón = 4)
-@export var target_height: float = 1.0          ## Dónde apunta el lock-on / indicador
-@export var knockback_resistance: float = 0.0   ## 0 = recibe todo, 1 = inamovible
-@export var attack_damage: int = 2              ## Daño base de sus ataques (sin arma equipada)
+@export var max_health: int = 8 ## HP (1 corazón = 4)
+@export var target_height: float = 1.0 ## Dónde apunta el lock-on / indicador
+@export var knockback_resistance: float = 0.0 ## 0 = recibe todo, 1 = inamovible
+@export var attack_damage: int = 2 ## Daño base de sus ataques (sin arma equipada)
 @export var attack_knockback: float = 6.0
 
 
@@ -517,12 +517,21 @@ func apply_to(entity: Node) -> void:
 	for feature in _GROUPS:
 		if has(feature):
 			entity.add_to_group(_GROUPS[feature])
+
+
+func make_damage(source: Node3D) -> DamageInfo:
+	var info := DamageInfo.new()
+	info.amount = attack_damage
+	info.knockback = attack_knockback
+	info.source = source
+	info.team = team
+	return info
 ```
 
 Cada tipo de enemigo tiene su `.tres` (`data/entities/skeleton.tres`) compartido por todas sus instancias. Llamar `config.apply_to(self)` en `_ready` mantiene funcionando el `TargetDetector` actual (grupo `targetable`).
 
 ```gdscript
-# src/components/damage_info.gd  (se crea en 0.3 sin `team`; 0.7 lo agrega)
+# src/components/damage_info.gd
 class_name DamageInfo
 extends RefCounted
 
@@ -698,6 +707,9 @@ var _speed := 1.0
 
 func _ready() -> void:
 	set_physics_process(false)
+	for hitbox in hitboxes.values():
+		if hitbox:
+			hitbox.set_deferred(&"monitoring", false)
 
 
 func start(attack: AttackData, length: float, speed: float = 1.0) -> void:
@@ -721,6 +733,11 @@ func is_running() -> bool:
 	return current != null
 
 
+func is_active() -> bool:
+	var hitbox: Hitbox = hitboxes.get(current.hitbox) if current else null
+	return hitbox != null and hitbox.active_attack != null
+
+
 func _physics_process(delta: float) -> void:
 	_elapsed += delta * _speed
 	var t := _elapsed / _length
@@ -731,9 +748,10 @@ func _physics_process(delta: float) -> void:
 
 func _set_active(active: bool) -> void:
 	var hitbox: Hitbox = hitboxes.get(current.hitbox)
-	if hitbox and hitbox.monitoring != active:
-		hitbox.active_attack = current if active else null
-		hitbox.set_deferred(&"monitoring", active)
+	if hitbox == null or (hitbox.active_attack != null) == active:
+		return
+	hitbox.active_attack = current if active else null
+	hitbox.set_deferred(&"monitoring", active)
 ```
 
 **Player:** el estado `Attacking` dispara el OneShot como hoy y arranca el runner. Los combos salen del `MeleeBehavior`.

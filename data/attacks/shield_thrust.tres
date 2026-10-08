@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AttackData" format=3]
+
+[ext_resource type="Script" path="res://src/combat/attack_data.gd" id="1_2351l"]
+
+[resource]
+script = ExtResource("1_2351l")
+animation = &"CombatMelee/Melee_Block_Attack"
+active_from = 0.25
+active_to = 0.5
+damage_multiplier = 0.5
+knockback_multiplier = 1.5

@@ -1,0 +1,41 @@
+class_name EntityConfig
+extends Resource
+
+enum Team { PLAYER, ENEMY, NEUTRAL }
+enum Feature { TARGETABLE = 1, PUSHABLE = 2, BURNABLE = 4, REFLECTS = 8, GRABBABLE = 16 }
+
+const _GROUPS: Dictionary[Feature, StringName] = {
+	Feature.TARGETABLE: &"targetable",
+	Feature.PUSHABLE: &"pushable",
+	Feature.BURNABLE: &"burnable",
+	Feature.REFLECTS: &"reflects",
+	Feature.GRABBABLE: &"grabbable",
+}
+
+@export_flags("Targetable:1", "Pushable:2", "Burnable:4", "Reflects:8", "Grabbable:16")
+var features: int = 0
+@export var team: Team = Team.ENEMY
+@export var max_health: int = 8 ## HP (1 corazón = 4)
+@export var target_height: float = 1.0 ## Dónde apunta el lock-on / indicador
+@export var knockback_resistance: float = 0.0 ## 0 = recibe todo, 1 = inamovible
+@export var attack_damage: int = 2 ## Daño base de sus ataques (sin arma equipada)
+@export var attack_knockback: float = 6.0
+
+
+func has(feature: Feature) -> bool:
+	return (features & feature) != 0
+
+
+func apply_to(entity: Node) -> void:
+	for feature in _GROUPS:
+		if has(feature):
+			entity.add_to_group(_GROUPS[feature])
+
+
+func make_damage(source: Node3D) -> DamageInfo:
+	var info := DamageInfo.new()
+	info.amount = attack_damage
+	info.knockback = attack_knockback
+	info.source = source
+	info.team = team
+	return info

@@ -2,32 +2,32 @@
   "checklist": [
     {
       "detail": "`damage_info.gd` (los datos de un golpe), `health.gd` (vida e invulnerabilidad después de un golpe), `hurtbox.gd` (la zona que recibe golpes) y `hitbox.gd` (la zona que pega; a cada objetivo le pega una sola vez por ataque). Código en [[gdd#entidades-componentes]].",
-      "done": false,
+      "done": true,
       "text": "Crear los componentes en `src/components/`"
     },
     {
       "detail": "Prende la hitbox solo durante el tramo del ataque que indica cada `AttackData`, y la apaga si el ataque se interrumpe. Código en [[gdd#ventanas-ataque]].",
-      "done": false,
+      "done": true,
       "text": "Crear `src/components/attack_runner.gd`"
     },
     {
       "detail": "La ficha de un tipo de entidad: equipo, vida, capacidades como \"se puede fijar\" o \"se puede empujar\", altura del indicador y daño de sus ataques.",
-      "done": false,
+      "done": true,
       "text": "Crear `src/entities/entity_config.gd`"
     },
     {
       "detail": "`player.tres`, `skeleton.tres` y `test_box.tres`.",
-      "done": false,
+      "done": true,
       "text": "Crear las fichas en `data/entities/`"
     },
     {
       "detail": "`sword_slash.tres` (animación `CombatMelee/Melee_1H_Attack_Slice_Diagonal`), `shield_thrust.tres` (`CombatMelee/Melee_Block_Attack`) y `skeleton_slash.tres`. Los tramos en que pega (`active_from`, `active_to`) se ponen a ojo y se ajustan jugando.",
-      "done": false,
+      "done": true,
       "text": "Crear los ataques en `data/attacks/`"
     },
     {
       "detail": "`DamageInfo` se creó en 0.3 sin `team` porque depende de `EntityConfig.Team`. Agregarlo cuando exista `EntityConfig`.",
-      "done": false,
+      "done": true,
       "text": "Agregar `team` a `DamageInfo`"
     }
   ],
@@ -44,7 +44,7 @@
     }
   ],
   "milestone": "m00",
-  "notes": "Piezas reutilizables para todo lo que pega o recibe golpes (player, enemigos, trampas, jefe), y la ficha de datos de cada tipo de entidad. Todavía no se ven en el juego: se usan en 0.8 y 0.9.\n\nDiseño en el GDD (§11.3 y \"Ventanas de ataque\").",
+  "notes": "Piezas reutilizables para todo lo que pega o recibe golpes (player, enemigos, trampas, jefe), y la ficha de datos de cada tipo de entidad. Todavía no se ven en el juego: se usan en 0.8 y 0.9.\n\nDiseño en el GDD (§11.3 y \"Ventanas de ataque\").\n\nEl `AttackRunner` del GDD nunca prendía la hitbox (comparaba `monitoring` sin cambiarlo); ahora usa `active_attack` como estado y prende `monitoring` con `set_deferred`. `EntityConfig.make_damage()` arma el `DamageInfo` de un enemigo sin arma. Fichas: jugador 12 HP, esqueleto 8 HP (targetable + pushable), caja de prueba. Tramos de ataque a ojo. `tests/test_components.gd` cubre vida, hitbox, ventanas y fichas.",
   "order": 7,
   "refs": [
     {
@@ -56,8 +56,8 @@
       "section": "ventanas-ataque"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Los scripts no dan errores y los `.tres` se abren en el Inspector con todos sus campos.",
   "title": "Componentes y EntityConfig",
-  "updated_at": "2026-10-08T04:37:34.399Z"
+  "updated_at": "2026-10-08T05:21:45.961Z"
 }

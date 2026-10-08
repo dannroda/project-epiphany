@@ -3,7 +3,7 @@
 > Export de `compass/`, que es la fuente de verdad. No editar: los cambios se hacen en `compass/` o con `scompass`, y este archivo se regenera.
 > Generado: 2026-10-08
 
-## M0 — Refactor del player + base de datos  (10/13)
+## M0 — Refactor del player + base de datos  (11/13)
 
 Dejar armada la base sobre la que se construye todo lo demás: ítems como datos, estado de la partida, guardado, componentes de combate y un player ordenado en piezas. Casi nada de esto se ve en el juego todavía; lo que cambia es cómo está hecho. Diseño y código de ejemplo: `gdd.md` §11.
 
@@ -205,19 +205,19 @@ Los presets de export (plain_saves en debug, excluir debug/scenarios y tests) pa
 
 **Bloqueada por:** 0.5 GameState
 
-### 0.7 Componentes y EntityConfig · Pendiente
+### 0.7 Componentes y EntityConfig · Hecho
 
-- [ ] Crear los componentes en `src/components/`
+- [x] Crear los componentes en `src/components/`
   `damage_info.gd` (los datos de un golpe), `health.gd` (vida e invulnerabilidad después de un golpe), `hurtbox.gd` (la zona que recibe golpes) y `hitbox.gd` (la zona que pega; a cada objetivo le pega una sola vez por ataque). Código en [[gdd#entidades-componentes]].
-- [ ] Crear `src/components/attack_runner.gd`
+- [x] Crear `src/components/attack_runner.gd`
   Prende la hitbox solo durante el tramo del ataque que indica cada `AttackData`, y la apaga si el ataque se interrumpe. Código en [[gdd#ventanas-ataque]].
-- [ ] Crear `src/entities/entity_config.gd`
+- [x] Crear `src/entities/entity_config.gd`
   La ficha de un tipo de entidad: equipo, vida, capacidades como "se puede fijar" o "se puede empujar", altura del indicador y daño de sus ataques.
-- [ ] Crear las fichas en `data/entities/`
+- [x] Crear las fichas en `data/entities/`
   `player.tres`, `skeleton.tres` y `test_box.tres`.
-- [ ] Crear los ataques en `data/attacks/`
+- [x] Crear los ataques en `data/attacks/`
   `sword_slash.tres` (animación `CombatMelee/Melee_1H_Attack_Slice_Diagonal`), `shield_thrust.tres` (`CombatMelee/Melee_Block_Attack`) y `skeleton_slash.tres`. Los tramos en que pega (`active_from`, `active_to`) se ponen a ojo y se ajustan jugando.
-- [ ] Agregar `team` a `DamageInfo`
+- [x] Agregar `team` a `DamageInfo`
   `DamageInfo` se creó en 0.3 sin `team` porque depende de `EntityConfig.Team`. Agregarlo cuando exista `EntityConfig`.
 
 **Prueba:** Los scripts no dan errores y los `.tres` se abren en el Inspector con todos sus campos.
@@ -225,6 +225,8 @@ Los presets de export (plain_saves en debug, excluir debug/scenarios y tests) pa
 **Notas:** Piezas reutilizables para todo lo que pega o recibe golpes (player, enemigos, trampas, jefe), y la ficha de datos de cada tipo de entidad. Todavía no se ven en el juego: se usan en 0.8 y 0.9.
 
 Diseño en el GDD (§11.3 y "Ventanas de ataque").
+
+El `AttackRunner` del GDD nunca prendía la hitbox (comparaba `monitoring` sin cambiarlo); ahora usa `active_attack` como estado y prende `monitoring` con `set_deferred`. `EntityConfig.make_damage()` arma el `DamageInfo` de un enemigo sin arma. Fichas: jugador 12 HP, esqueleto 8 HP (targetable + pushable), caja de prueba. Tramos de ataque a ojo. `tests/test_components.gd` cubre vida, hitbox, ventanas y fichas.
 
 **Referencias:** `gdd.md#entidades-componentes`, `gdd.md#ventanas-ataque`
 
