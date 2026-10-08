@@ -193,11 +193,12 @@ Rig reutilizado de otra jam *(pendiente importarlo al repo)*.
 ```
 data/
   items/*.tres              # un ItemData por ítem
+  attacks/*.tres            # un AttackData por ataque (sword_slash…)
   item_database.tres        # registro de todos los ítems
   entities/*.tres           # un EntityConfig por tipo de entidad
   flag_registry.tres        # flags válidas del mundo
 src/
-  items/                    item_data.gd, item_database.gd, inventory.gd, item_use_context.gd
+  items/                    item_data.gd, item_database.gd, inventory.gd, item_use_context.gd, items.gd (autoload)
   items/behaviors/          item_behavior.gd, melee_behavior.gd, projectile_behavior.gd,
                             place_behavior.gd, consumable_behavior.gd
   items/modifiers/          item_modifier.gd (fuego, rayo… decisión abierta)
@@ -208,10 +209,10 @@ src/
   world/                    room.gd, door.gd, chest.gd, push_block.gd, floor_switch.gd
   state/                    game_state.gd (autoload), dungeon_state.gd, flag_registry.gd
   save/                     save_codec.gd (estático, lo usan juego y editor), save_manager.gd (autoload)
-  debug/                    log.gd (autoload), log_sink.gd, debug_overlay.gd (autoload)
   ui/                       hud/, menus/, text_box/
 ai/tasks/                   tareas custom de LimboAI (bt_attack.gd…); carpeta por defecto de LimboAI
-addons/epiphany_tools/      Save Inspector (MVP), tabla de ítems (más adelante)
+addons/epiphany_tools/      Log, LogSink y DebugOverlay (§11.9), Save Inspector (MVP), tabla de ítems (más adelante)
+tests/                      run_tests.gd + test_*.gd: godot --headless --path . --script res://tests/run_tests.gd
 debug/scenarios/*.cfg       partidas preparadas (excluidas del export release)
 ```
 
@@ -292,7 +293,7 @@ var user: Node3D
 var origin: Vector3            ## Desde dónde sale un proyectil (mano / "muzzle")
 var direction: Vector3         ## De Aim: lock-on > stick/mouse > hacia donde mira
 var inventory: Inventory
-var equipped: EquippedItem     ## Nodo instanciado en la mano, si hay
+var equipped: Node3D           ## Nodo instanciado en la mano, si hay (0.9 define el tipo)
 ```
 
 Los tres (cuatro) comportamientos base:
@@ -412,11 +413,17 @@ func has_item(id: StringName) -> bool:
 # src/items/items.gd  (autoload "Items")
 extends Node
 
-const DATABASE: ItemDatabase = preload("res://data/item_database.tres")
+const DATABASE_PATH := "res://data/item_database.tres"
+
+var database: ItemDatabase
+
+
+func _ready() -> void:
+	database = load(DATABASE_PATH)   # load y no preload: el autoload compila aunque la base no exista
 
 
 func get_item(id: StringName) -> ItemData:
-	return DATABASE.get_item(id)
+	return database.get_item(id)
 ```
 
 **Inventario** (estado runtime; guarda ids y cantidades, nunca nodos):
@@ -515,7 +522,7 @@ func apply_to(entity: Node) -> void:
 Cada tipo de enemigo tiene su `.tres` (`data/entities/skeleton.tres`) compartido por todas sus instancias. Llamar `config.apply_to(self)` en `_ready` mantiene funcionando el `TargetDetector` actual (grupo `targetable`).
 
 ```gdscript
-# src/components/damage_info.gd
+# src/components/damage_info.gd  (se crea en 0.3 sin `team`; 0.7 lo agrega)
 class_name DamageInfo
 extends RefCounted
 

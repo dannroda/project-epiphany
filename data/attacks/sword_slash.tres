@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="AttackData" format=3]
+
+[ext_resource type="Script" path="res://src/combat/attack_data.gd" id="1_u6327"]
+
+[resource]
+script = ExtResource("1_u6327")
+animation = &"CombatMelee/Melee_1H_Attack_Slice_Diagonal"

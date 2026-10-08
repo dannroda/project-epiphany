@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://src/items/modifiers/item_modifier.gd" id="1_hxj5f"]
+[ext_resource type="Script" path="res://src/items/item_data.gd" id="2_iaq3g"]
+
+[resource]
+script = ExtResource("2_iaq3g")
+id = &"tunic"
+display_name = "Túnica"
+description = ""
+category = 2
+max_stack = 1
+modifiers = Array[ExtResource("1_hxj5f")]([])
+damage = 0
+knockback = 0.0
+damage_reduction = 0.0

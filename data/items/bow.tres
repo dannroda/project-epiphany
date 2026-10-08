@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://src/items/behaviors/projectile_behavior.gd" id="1_hiqf6"]
+[ext_resource type="Script" path="res://src/items/modifiers/item_modifier.gd" id="2_thjit"]
+[ext_resource type="Script" path="res://src/items/item_data.gd" id="3_ca8yi"]
+
+[sub_resource type="Resource" id="Resource_3oevh"]
+script = ExtResource("1_hiqf6")
+
+[resource]
+script = ExtResource("3_ca8yi")
+id = &"bow"
+display_name = "Arco"
+description = ""
+category = 3
+max_stack = 1
+behavior = SubResource("Resource_3oevh")
+modifiers = Array[ExtResource("2_thjit")]([])
+damage = 0
+knockback = 0.0
+damage_reduction = 0.0

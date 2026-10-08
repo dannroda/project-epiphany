@@ -3,7 +3,7 @@
 > Export de `compass/`, que es la fuente de verdad. No editar: los cambios se hacen en `compass/` o con `scompass`, y este archivo se regenera.
 > Generado: 2026-10-08
 
-## M0 — Refactor del player + base de datos  (3/12)
+## M0 — Refactor del player + base de datos  (4/12)
 
 Dejar armada la base sobre la que se construye todo lo demás: ítems como datos, estado de la partida, guardado, componentes de combate y un player ordenado en piezas. Casi nada de esto se ve en el juego todavía; lo que cambia es cómo está hecho. Diseño y código de ejemplo: `gdd.md` §11.
 
@@ -91,27 +91,29 @@ Probado en headless (4.8-dev7): `Log` filtra por nivel y canal, el sink captura 
 
 **Relacionadas:** 0.7 Componentes y EntityConfig; 0.10 Save Inspector v0; 0.8 Enemigo sobre componentes
 
-### 0.3 Ítems: datos · Pendiente
+### 0.3 Ítems: datos · Hecho
 
-- [ ] Crear `src/combat/attack_data.gd`
+- [x] Crear `src/combat/attack_data.gd`
   Un recurso chico con la animación y el tramo en que pega un ataque. Código en [[gdd#ventanas-ataque]]. Va primero porque la espada lo necesita.
-- [ ] Crear la clase `ItemData` (`src/items/item_data.gd`)
+- [x] Crear `src/components/damage_info.gd` (sin `team`)
+  `DamageInfo` es de 0.7, pero `ItemData.make_damage()` y los modificadores ya lo usan. Se crea acá sin el campo `team`, que depende de `EntityConfig`; 0.7 se lo agrega.
+- [x] Crear la clase `ItemData` (`src/items/item_data.gd`)
   Los datos de un ítem: id, nombre, ícono, categoría, cantidad máxima, modelo, comportamiento y daño. Código en [[gdd#items-datos]].
-- [ ] Crear los comportamientos en `src/items/behaviors/`
+- [x] Crear los comportamientos en `src/items/behaviors/`
   `item_behavior.gd` (la base) y `melee_behavior.gd` (la espada, con su lista de ataques `combo`). Para proyectil, colocar y consumible, crear los archivos con la clase vacía; se completan en M5.
-- [ ] Crear `src/items/modifiers/item_modifier.gd`
+- [x] Crear `src/items/modifiers/item_modifier.gd`
   La base de los modificadores (fuego, rayo…). Queda vacía hasta decidir si hay espadas elementales.
-- [ ] Crear `src/items/item_use_context.gd`
-  Los datos que recibe un comportamiento al usar un ítem: quién lo usa, desde dónde y hacia dónde apunta.
-- [ ] Crear `src/items/inventory.gd`
+- [x] Crear `src/items/item_use_context.gd`
+  Los datos que recibe un comportamiento al usar un ítem: quién lo usa, desde dónde y hacia dónde apunta. `equipped` es `Node3D` por ahora: 0.9 decide qué queda en la mano.
+- [x] Crear `src/items/inventory.gd`
   Lleva la cuenta de cuántos de cada ítem tiene el jugador. No es un nodo ni un recurso; lo usa `GameState` en 0.5.
-- [ ] Crear `src/items/item_database.gd`
+- [x] Crear `src/items/item_database.gd`
   El recurso `ItemDatabase`, que busca ítems por id.
-- [ ] Crear los 15 ítems en `data/items/`
-  Clic derecho › Nuevo recurso › `ItemData`: `sword_basic`, `shield_wood`, `shield_mirror`, `tunic`, `bow`, `arrow`, `bomb_bag`, `bomb`, `potion`, `bottle_empty`, `small_key`, `boss_key`, `dungeon_map`, `compass`, `heart_container`. Alcanza con id, nombre y categoría; íconos y modelos pueden quedar vacíos.
-- [ ] Crear `data/item_database.tres` con los 15 ítems
+- [x] Crear los 17 ítems en `data/items/`
+  `sword_basic`, `shield_wood`, `shield_mirror`, `tunic`, `armor_chainmail`, `bow`, `arrow`, `bomb_bag`, `bomb`, `potion`, `bottle_empty`, `small_key`, `boss_key`, `dungeon_map`, `compass`, `quiver_big`, `heart_container` (los de GDD §6.1). La espada lleva un `MeleeBehavior` con el ataque `data/attacks/sword_slash.tres`. Daño y cantidades máximas son provisorios.
+- [x] Crear `data/item_database.tres` con los 17 ítems
   Un recurso `ItemDatabase`: arrastrar los 15 ítems a su lista `items`.
-- [ ] Agregar el autoload `Items` (`src/items/items.gd`)
+- [x] Agregar el autoload `Items` (`src/items/items.gd`)
   Crear el script y agregarlo en *Project Settings › Globals › Autoload*. Va al final porque necesita que `data/item_database.tres` ya exista.
 
 **Prueba:** Con el juego corriendo, desde un script de prueba o el debugger remoto: `Items.get_item(&"sword_basic").display_name` devuelve el nombre de la espada.
@@ -119,6 +121,8 @@ Probado en headless (4.8-dev7): `Log` filtra por nivel y canal, el sink captura 
 **Notas:** Crea la base de datos de ítems. Cada ítem es un recurso `.tres` con sus datos, y lo que hace al usarse es otro recurso que se le enchufa (su comportamiento). Así una espada de fuego no necesita una clase nueva.
 
 Todavía no se usa en el juego: el player empieza a usarla en 0.9. El código de ejemplo de cada clase está en el GDD (§11.2). Hacé los pasos en orden: el autoload necesita que los `.tres` ya existan.
+
+Daño de la espada (2) y cantidades máximas (flechas 30, bombas 10, llaves chicas 9, contenedores 10) son provisorios: el GDD no los define. Los .tres se generaron con ResourceSaver; `tests/test_items.gd` cubre la prueba de la tarea.
 
 **Referencias:** `gdd.md#items-datos`
 
@@ -207,6 +211,8 @@ Necesita 0.5. Diseño completo y código en el GDD (§11.7).
   `player.tres`, `skeleton.tres` y `test_box.tres`.
 - [ ] Crear los ataques en `data/attacks/`
   `sword_slash.tres` (animación `CombatMelee/Melee_1H_Attack_Slice_Diagonal`), `shield_thrust.tres` (`CombatMelee/Melee_Block_Attack`) y `skeleton_slash.tres`. Los tramos en que pega (`active_from`, `active_to`) se ponen a ojo y se ajustan jugando.
+- [ ] Agregar `team` a `DamageInfo`
+  `DamageInfo` se creó en 0.3 sin `team` porque depende de `EntityConfig.Team`. Agregarlo cuando exista `EntityConfig`.
 
 **Prueba:** Los scripts no dan errores y los `.tres` se abren en el Inspector con todos sus campos.
 
@@ -311,13 +317,13 @@ Necesita 0.6. Diseño en el GDD (§11.8).
 
 ### 0.12 Tests headless · Pendiente
 
-- [ ] Crear el runner `tests/run_tests.gd`
+- [x] Crear el runner `tests/run_tests.gd`
   Script que extiende `SceneTree`: recorre `tests/test_*.gd`, corre cada método `test_*` y termina con `quit(1)` si algo falló. Usar un `assert_eq()` propio que cuente fallos: un `assert()` que falla deja el proceso colgado en lugar de terminar.
-- [ ] Correrlo por línea de comandos
+- [x] Correrlo por línea de comandos
   `godot --headless --path . --import` una vez (en un checkout limpio las clases con `class_name` todavía no están registradas) y después `godot --headless --path . --script res://tests/run_tests.gd`. Anotar el comando en el README.
 - [ ] Tests de `SaveCodec`
   Ida y vuelta (escribir y leer da lo mismo), checksum que detecta una edición a mano, migración desde una versión anterior y recuperación desde el `.bak` cuando el archivo principal está roto.
-- [ ] Tests de la base de ítems
+- [x] Tests de la base de ítems
   Que cada `.tres` de ítems cargue, tenga `id` único y que `Items.get_item()` lo encuentre.
 - [ ] Excluir `tests/` de los presets de export
   En *Resources › Filters to exclude files*, como `debug/scenarios/*`.

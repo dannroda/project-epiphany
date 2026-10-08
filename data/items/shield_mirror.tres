@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://src/items/modifiers/item_modifier.gd" id="1_cytrj"]
+[ext_resource type="Script" path="res://src/items/item_data.gd" id="2_owpql"]
+
+[resource]
+script = ExtResource("2_owpql")
+id = &"shield_mirror"
+display_name = "Escudo espejo"
+description = ""
+category = 1
+max_stack = 1
+modifiers = Array[ExtResource("1_cytrj")]([])
+damage = 0
+knockback = 0.0
+damage_reduction = 0.0

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://src/items/modifiers/item_modifier.gd" id="1_b8a2h"]
+[ext_resource type="Script" path="res://src/items/item_data.gd" id="2_nip8s"]
+
+[resource]
+script = ExtResource("2_nip8s")
+id = &"boss_key"
+display_name = "Llave del jefe"
+description = ""
+category = 5
+max_stack = 1
+modifiers = Array[ExtResource("1_b8a2h")]([])
+damage = 0
+knockback = 0.0
+damage_reduction = 0.0

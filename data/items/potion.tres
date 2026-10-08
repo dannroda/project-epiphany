@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://src/items/behaviors/consumable_behavior.gd" id="1_0bv3h"]
+[ext_resource type="Script" path="res://src/items/modifiers/item_modifier.gd" id="2_3v7vl"]
+[ext_resource type="Script" path="res://src/items/item_data.gd" id="3_53lbm"]
+
+[sub_resource type="Resource" id="Resource_3oiyh"]
+script = ExtResource("1_0bv3h")
+
+[resource]
+script = ExtResource("3_53lbm")
+id = &"potion"
+display_name = "Poción"
+description = ""
+category = 3
+max_stack = 1
+behavior = SubResource("Resource_3oiyh")
+modifiers = Array[ExtResource("2_3v7vl")]([])
+damage = 0
+knockback = 0.0
+damage_reduction = 0.0

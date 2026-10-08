@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Log="*res://addons/epiphany_tools/debug/runtime/log.gd"
 DebugOverlay="*res://addons/epiphany_tools/debug/runtime/debug_overlay.gd"
+Items="*uid://c3fthcnre0g0f"
 
 [display]
 

@@ -2,12 +2,12 @@
   "checklist": [
     {
       "detail": "Script que extiende `SceneTree`: recorre `tests/test_*.gd`, corre cada método `test_*` y termina con `quit(1)` si algo falló. Usar un `assert_eq()` propio que cuente fallos: un `assert()` que falla deja el proceso colgado en lugar de terminar.",
-      "done": false,
+      "done": true,
       "text": "Crear el runner `tests/run_tests.gd`"
     },
     {
       "detail": "`godot --headless --path . --import` una vez (en un checkout limpio las clases con `class_name` todavía no están registradas) y después `godot --headless --path . --script res://tests/run_tests.gd`. Anotar el comando en el README.",
-      "done": false,
+      "done": true,
       "text": "Correrlo por línea de comandos"
     },
     {
@@ -17,7 +17,7 @@
     },
     {
       "detail": "Que cada `.tres` de ítems cargue, tenga `id` único y que `Items.get_item()` lo encuentre.",
-      "done": false,
+      "done": true,
       "text": "Tests de la base de ítems"
     },
     {
@@ -41,5 +41,5 @@
   "status": "todo",
   "test": "Correr el comando headless: termina con código 0. Romper a propósito un test (por ejemplo, cambiar un valor esperado): termina con código 1 y dice cuál falló.",
   "title": "Tests headless",
-  "updated_at": "2026-10-08T04:17:35.371Z"
+  "updated_at": "2026-10-08T04:43:13.334Z"
 }

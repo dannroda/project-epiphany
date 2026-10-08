@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://src/items/modifiers/item_modifier.gd" id="1_f6jet"]
+[ext_resource type="Script" path="res://src/items/item_data.gd" id="2_1nikq"]
+
+[resource]
+script = ExtResource("2_1nikq")
+id = &"dungeon_map"
+display_name = "Mapa"
+description = ""
+category = 5
+max_stack = 1
+modifiers = Array[ExtResource("1_f6jet")]([])
+damage = 0
+knockback = 0.0
+damage_reduction = 0.0
