@@ -25,9 +25,12 @@ DebugOverlay="*res://addons/epiphany_tools/debug/runtime/debug_overlay.gd"
 Fader="*res://src/ui/fader.gd"
 Feel="*res://src/feel/feel.gd"
 InputDevice="*res://src/input/input_device.gd"
+MenuStack="*res://src/ui/menus/menu_stack.gd"
 
 [display]
 
+window/size/viewport_width=1280
+window/size/viewport_height=720
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
@@ -40,6 +43,10 @@ enabled=PackedStringArray("res://addons/editor_bridge/plugin.cfg", "res://addons
 folder_colors={
 "res://assets/": "orange"
 }
+
+[gui]
+
+theme/custom="res://src/ui/theme.tres"
 
 [input]
 

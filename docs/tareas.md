@@ -647,22 +647,22 @@ Con lock-on el foco va al punto medio (lock_focus_weight) pero no se aleja más 
 
 **Referencias:** `gdd.md#camara`
 
-## M3 — Inventario + UI  (1/8)
+## M3 — Inventario + UI  (2/8)
 
 Pantallas Equipo e Ítems, asignar a X/Y, slots en el HUD, cofres, item get, recolectables.
 
 **Hecho cuando:**
 - Encontrar, equipar y usar un ítem.
 
-### 3.1 Menú de pausa y pila de pantallas · Pendiente
+### 3.1 Menú de pausa y pila de pantallas · Hecho
 
-- [ ] Crear `src/ui/menus/menu_stack.gd`
+- [x] Crear `src/ui/menus/menu_stack.gd`
   Pila de pantallas: `push`/`pop`, la de arriba tiene el foco. Pausa el árbol con `get_tree().paused`; la UI con `process_mode = ALWAYS`.
-- [ ] Abrir con `pause`, cerrar con `pause` o `ui_cancel`
+- [x] Abrir con `pause`, cerrar con `pause` o `ui_cancel`
   Restaurar el foco al volver de una sub-pantalla.
-- [ ] Pestañas con `ui_tab_left` / `ui_tab_right`
+- [x] Pestañas con `ui_tab_left` / `ui_tab_right`
   Equipo, Ítems y (más adelante) Mapa. Ver los mockups del artifact "Epiphany UI Mockups".
-- [ ] Theme base del juego
+- [x] Theme base del juego
   Un `Theme` en `src/ui/theme.tres` con fuente, márgenes y estilo de foco visible para gamepad.
 
 **Prueba:** Abrir y cerrar la pausa en medio de un combate: los enemigos y las animaciones se congelan y siguen igual al cerrar. Navegar las pestañas solo con gamepad y solo con teclado.
@@ -670,6 +670,8 @@ Pantallas Equipo e Ítems, asignar a X/Y, slots en el HUD, cofres, item get, rec
 **Notas:** Base de todas las pantallas: inventario, mapa (6.6), opciones y título (M10).
 
 Skills: `disciplines:game-ui-ux`, `godot:godot-ui-control`.
+
+MenuStack (autoload, CanvasLayer 50, process ALWAYS): push/pop, pausa el árbol mientras haya pantallas, recuerda y devuelve el foco. pause abre (solo con player vivo); pause o ui_cancel cierran. Menú de pausa (src/ui/menus/pause_menu.tscn): pestañas Equipo/Ítems/Mapa con ui_tab_left/right (dan la vuelta), indicaciones LB/RB o Q/E y ayudas abajo según InputDevice. Las páginas son placeholders hasta 3.2, 3.3 y 6.6; una página puede definir focus_default(). Theme: src/ui/theme.tres (generado), predeterminado del proyecto: Alegreya Sans/Cinzel (assets/fonts, OFL), paneles, botones con foco dorado de 3 px, variaciones Title, TabLabel(Selected), Hint, Caps, KeyHint y Slot. Resolución base 1280×720 como los mockups. Falta la prueba con gamepad y la de foco cuando haya controles en las páginas.
 
 **Referencias:** `gdd.md#ui`
 

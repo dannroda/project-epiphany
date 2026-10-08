@@ -2,22 +2,22 @@
   "checklist": [
     {
       "detail": "Pila de pantallas: `push`/`pop`, la de arriba tiene el foco. Pausa el árbol con `get_tree().paused`; la UI con `process_mode = ALWAYS`.",
-      "done": false,
+      "done": true,
       "text": "Crear `src/ui/menus/menu_stack.gd`"
     },
     {
       "detail": "Restaurar el foco al volver de una sub-pantalla.",
-      "done": false,
+      "done": true,
       "text": "Abrir con `pause`, cerrar con `pause` o `ui_cancel`"
     },
     {
       "detail": "Equipo, Ítems y (más adelante) Mapa. Ver los mockups del artifact \"Epiphany UI Mockups\".",
-      "done": false,
+      "done": true,
       "text": "Pestañas con `ui_tab_left` / `ui_tab_right`"
     },
     {
       "detail": "Un `Theme` en `src/ui/theme.tres` con fuente, márgenes y estilo de foco visible para gamepad.",
-      "done": false,
+      "done": true,
       "text": "Theme base del juego"
     }
   ],
@@ -46,7 +46,7 @@
     }
   ],
   "milestone": "m03",
-  "notes": "Base de todas las pantallas: inventario, mapa (6.6), opciones y título (M10).\n\nSkills: `disciplines:game-ui-ux`, `godot:godot-ui-control`.",
+  "notes": "Base de todas las pantallas: inventario, mapa (6.6), opciones y título (M10).\n\nSkills: `disciplines:game-ui-ux`, `godot:godot-ui-control`.\n\nMenuStack (autoload, CanvasLayer 50, process ALWAYS): push/pop, pausa el árbol mientras haya pantallas, recuerda y devuelve el foco. pause abre (solo con player vivo); pause o ui_cancel cierran. Menú de pausa (src/ui/menus/pause_menu.tscn): pestañas Equipo/Ítems/Mapa con ui_tab_left/right (dan la vuelta), indicaciones LB/RB o Q/E y ayudas abajo según InputDevice. Las páginas son placeholders hasta 3.2, 3.3 y 6.6; una página puede definir focus_default(). Theme: src/ui/theme.tres (generado), predeterminado del proyecto: Alegreya Sans/Cinzel (assets/fonts, OFL), paneles, botones con foco dorado de 3 px, variaciones Title, TabLabel(Selected), Hint, Caps, KeyHint y Slot. Resolución base 1280×720 como los mockups. Falta la prueba con gamepad y la de foco cuando haya controles en las páginas.",
   "order": 1,
   "refs": [
     {
@@ -54,8 +54,8 @@
       "section": "ui"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Abrir y cerrar la pausa en medio de un combate: los enemigos y las animaciones se congelan y siguen igual al cerrar. Navegar las pestañas solo con gamepad y solo con teclado.",
   "title": "Menú de pausa y pila de pantallas",
-  "updated_at": "2026-10-08T04:46:04.057Z"
+  "updated_at": "2026-10-08T06:36:58.230Z"
 }
