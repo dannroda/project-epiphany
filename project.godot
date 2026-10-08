@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 Items="*uid://c3fthcnre0g0f"
 Log="*res://addons/epiphany_tools/debug/runtime/log.gd"
 DebugOverlay="*res://addons/epiphany_tools/debug/runtime/debug_overlay.gd"
+GameState="*res://src/state/game_state.gd"
 
 [display]
 

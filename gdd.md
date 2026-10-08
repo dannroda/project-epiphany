@@ -1123,6 +1123,7 @@ extends Node
 
 signal flag_changed(id: StringName, value: Variant)
 signal equipment_changed(category: ItemData.Category, id: StringName)
+signal loaded                                             ## Después de reset() o read_from()
 
 const FLAGS: FlagRegistry = preload("res://data/flag_registry.tres")
 
@@ -1406,11 +1407,12 @@ func write_to(cfg: ConfigFile) -> void:
 	cfg.set_value("player", "max_health", max_health)
 	cfg.set_value("player", "spawn_scene", spawn_scene)
 	cfg.set_value("player", "spawn_point", spawn_point)
+	cfg.set_value("player", "current_dungeon", current_dungeon)
 	for id in inventory.ids():
 		cfg.set_value("inventory", id, inventory.count(id))
 	for category in equipment:
 		cfg.set_value("equipment", ItemData.Category.find_key(category), equipment[category])
-	cfg.set_value("equipment", "buttons", item_buttons)
+	cfg.set_value("equipment", "buttons", item_buttons.duplicate())   # ConfigFile guarda los Array por referencia
 	for id in flags:
 		cfg.set_value("flags", id, flags[id])
 	for dungeon_id in dungeons:
@@ -1422,7 +1424,8 @@ func write_to(cfg: ConfigFile) -> void:
 		cfg.set_value(section, "has_boss_key", d.has_boss_key)
 		cfg.set_value(section, "visited_rooms", d.visited_rooms)
 
-# read_from(cfg) es el espejo: reset del estado + leer cada sección.
+# read_from(cfg) es el espejo: vacía el estado (sin reemplazar el Inventory, para no cortar sus señales),
+# lee cada sección, saltea ítems inexistentes con un aviso y emite `loaded`.
 ```
 
 ### 11.8 Herramientas de editor: Save Inspector

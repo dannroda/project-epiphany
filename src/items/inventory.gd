@@ -39,6 +39,14 @@ func remove(id: StringName, amount: int = 1) -> bool:
 	return true
 
 
+func clear() -> void:
+	var previous := ids()
+	_counts.clear()
+	_capacity_bonus.clear()
+	for id in previous:
+		changed.emit(id, 0)
+
+
 func ids() -> Array[StringName]:
 	var result: Array[StringName] = []
 	result.assign(_counts.keys())

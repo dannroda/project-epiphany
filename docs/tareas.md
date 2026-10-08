@@ -3,7 +3,7 @@
 > Export de `compass/`, que es la fuente de verdad. No editar: los cambios se hacen en `compass/` o con `scompass`, y este archivo se regenera.
 > Generado: 2026-10-08
 
-## M0 — Refactor del player + base de datos  (5/13)
+## M0 — Refactor del player + base de datos  (7/13)
 
 Dejar armada la base sobre la que se construye todo lo demás: ítems como datos, estado de la partida, guardado, componentes de combate y un player ordenado en piezas. Casi nada de esto se ve en el juego todavía; lo que cambia es cómo está hecho. Diseño y código de ejemplo: `gdd.md` §11.
 
@@ -130,7 +130,7 @@ Daño de la espada (2) y cantidades máximas (flechas 30, bombas 10, llaves chic
 
 **Relacionadas:** 0.12 Tests headless; 3.8 Íconos placeholder de los ítems
 
-### 0.4 Flags · En curso
+### 0.4 Flags · Hecho
 
 - [x] Crear `src/state/flag_definition.gd`
   Un recurso con `id`, `description` y `default_value` (una flag declarada). Si Godot no deja exportar `default_value` como `Variant`, usar `bool` por ahora: casi todas las flags son sí o no.
@@ -149,15 +149,15 @@ Daño de la espada (2) y cantidades máximas (flechas 30, bombas 10, llaves chic
 
 **Bloquea a:** 0.5 GameState; 4.5 Flags del mundo persistentes
 
-### 0.5 GameState · Pendiente
+### 0.5 GameState · Hecho
 
-- [ ] Crear `src/state/dungeon_state.gd`
+- [x] Crear `src/state/dungeon_state.gd`
   El estado de una mazmorra: llaves chicas, mapa, brújula, llave del jefe y salas visitadas.
-- [ ] Crear el autoload `GameState` (`src/state/game_state.gd`)
+- [x] Crear el autoload `GameState` (`src/state/game_state.gd`)
   Incluye `give()`, el único lugar por donde entran ítems (manda las llaves a la mazmorra y las mejoras a donde van), y `equip()`. Código en [[gdd#estado-flags]].
-- [ ] Escribir `write_to(cfg)` y `read_from(cfg)`
+- [x] Escribir `write_to(cfg)` y `read_from(cfg)`
   Pasan el estado a un `ConfigFile` y de vuelta. `read_from` primero vuelve todo a cero y después lee, para que no queden restos de la partida anterior.
-- [ ] Definir la partida nueva
+- [x] Definir la partida nueva
   Espada básica, escudo de madera y túnica equipados, y 3 corazones.
 
 **Prueba:** Llamar `write_to()` sobre un `ConfigFile` nuevo, cambiar algo del estado (por ejemplo, sumar bombas) y llamar `read_from()` con ese mismo `ConfigFile`: el estado vuelve a ser el de antes.
@@ -165,6 +165,8 @@ Daño de la espada (2) y cantidades máximas (flechas 30, bombas 10, llaves chic
 **Notas:** `GameState` es la partida en memoria: inventario, equipo, flags, mazmorras y punto de aparición. Es un autoload, así sobrevive a los cambios de escena. Guardar y cargar (0.6) solo lo copia al disco y de vuelta.
 
 Necesita 0.3 y 0.4. Diseño en el GDD (§11.6).
+
+Partida nueva: espada, escudo de madera y túnica en el inventario y equipados, 3 corazones. `read_from` vacía el `Inventory` existente (`Inventory.clear()`) en lugar de reemplazarlo, y emite `loaded`. `write_to` guarda una copia de `item_buttons`: `ConfigFile` guarda los Array por referencia. `tests/test_game_state.gd` cubre la prueba de la tarea.
 
 **Referencias:** `gdd.md#estado-flags`
 
