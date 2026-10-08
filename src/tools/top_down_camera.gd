@@ -2,7 +2,8 @@ class_name TopDownCamera
 extends Camera3D
 
 @export var target_node: PlayerCharacter
-@export var offset: Vector3 = Vector3(0, 12, 7) # Altura (Y=12) y distancia hacia atrás (Z=7)
+## Como el remake de Link's Awakening: FOV 40 y unos 60° de inclinación; una pantalla abarca ≈ 20 × 10.5 m.
+@export var offset: Vector3 = Vector3(0, 13.4, 7.7)
 @export var smooth_speed: float = 8.0
 @export var trauma_decay := 1.6
 @export var max_shake_offset := Vector2(0.35, 0.25)
@@ -37,6 +38,10 @@ var focus := Vector3.ZERO
 var _shake_time := 0.0
 var _look_ahead := Vector3.ZERO
 var _mask: Node3D
+
+
+func _init() -> void:
+	fov = 40.0
 
 
 func _ready() -> void:
