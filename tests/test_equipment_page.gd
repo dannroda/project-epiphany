@@ -3,10 +3,12 @@ extends "res://tests/test_case.gd"
 const LEVEL := "res://levels/test.tscn"
 
 
-func _open() -> Array:
+func _open(max_health := 0) -> Array:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state: Node = tree.root.get_node(^"GameState")
 	state.reset()
+	if max_health:
+		state.max_health = max_health
 	tree.change_scene_to_file(LEVEL)
 	await tree.scene_changed
 	for i in 5:
@@ -70,3 +72,14 @@ func test_unowned_slots_are_locked() -> void:
 	assert_eq(_slot_for(page, &"armor_chainmail").icon, page.LOCK)
 	stack.pop()
 	state.reset()
+
+
+func test_max_hearts_keep_the_layout() -> void:
+	var setup: Array = await _open(80)
+	var page: Control = setup[3]
+	var left: Control = page.get_node(^"Left")
+	assert_eq(page.hearts.get_child_count(), 20)
+	assert_true(left.size.x <= left.custom_minimum_size.x, "la columna no se ensancha")
+	assert_true(page.hearts.size.y < 60.0, "20 corazones en 2 filas")
+	setup[2].pop()
+	setup[1].reset()

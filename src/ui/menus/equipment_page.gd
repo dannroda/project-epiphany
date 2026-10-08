@@ -12,7 +12,7 @@ var accept_label := "Equipar"
 
 @onready var rows: VBoxContainer = %Rows
 @onready var preview_root: Node3D = %PreviewRoot
-@onready var hearts: HBoxContainer = %Hearts
+@onready var hearts: HFlowContainer = %Hearts
 @onready var damage_value: Label = %DamageValue
 @onready var reduction_value: Label = %ReductionValue
 @onready var detail_icon: TextureRect = %DetailIcon
@@ -159,6 +159,7 @@ func _refresh_stats() -> void:
 	var current: int = player.health.current if player else GameState.max_health
 	for i in ceili(GameState.max_health / float(HP_PER_HEART)):
 		var heart := HeartIcon.new()
+		heart.icon_size = HeartIcon.SIZE * 0.8
 		heart.quarters = clampi(current - i * HP_PER_HEART, 0, HP_PER_HEART)
 		hearts.add_child(heart)
 

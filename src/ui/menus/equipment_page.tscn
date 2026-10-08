@@ -55,10 +55,11 @@ environment = SubResource("Environment_preview")
 [node name="PreviewRoot" type="Node3D" parent="Left/PreviewFrame/Preview/Viewport"]
 unique_name_in_owner = true
 
-[node name="Hearts" type="HBoxContainer" parent="Left"]
+[node name="Hearts" type="HFlowContainer" parent="Left"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 4
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
 
 [node name="Damage" type="HBoxContainer" parent="Left"]
 layout_mode = 2
