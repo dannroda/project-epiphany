@@ -1,5 +1,8 @@
 extends LimboHSM
 
+## Desde qué punto del ataque (0..1) se puede cancelar rodando.
+@export_range(0.0, 1.0) var attack_cancel_from := 0.0
+
 var player: PlayerCharacter
 
 
@@ -16,6 +19,10 @@ func _setup() -> void:
 	add_transition($Attacking, $Idle, "finished")
 	add_transition(anystate(), $Hurt, "hurt")
 	add_transition($Hurt, $Idle, "finished")
+	add_transition($Idle, $Dodging, "dodge")
+	add_transition($Moving, $Dodging, "dodge")
+	add_transition($Attacking, $Dodging, "dodge", func() -> bool: return player.attack_runner.progress() >= attack_cancel_from)
+	add_transition($Dodging, $Idle, "finished")
 
 	initial_state = $Spawning
 
@@ -36,8 +43,11 @@ func _update(delta: float) -> void:
 	var input_dir := Input.get_vector(&"move_left", &"move_right", &"move_forward", &"move_backward")
 	blackboard.set_var("input_dir", input_dir)
 
-	if Input.is_action_just_pressed(&"attack"):
-		dispatch("attack")
+	var buffer := player.input_buffer
+	if buffer.has(&"dodge") and dispatch("dodge"):
+		buffer.consume(&"dodge")
+	elif buffer.has(&"attack") and dispatch("attack"):
+		buffer.consume(&"attack")
 	elif input_dir:
 		dispatch("move")
 	else:

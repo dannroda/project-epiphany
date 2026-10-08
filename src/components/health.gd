@@ -28,6 +28,11 @@ func is_full() -> bool:
 	return current >= max_health
 
 
+## Invulnerable por un tiempo sin recibir daño (i-frames del roll).
+func make_invulnerable(seconds: float) -> void:
+	_invulnerable_left = maxf(_invulnerable_left, seconds)
+
+
 func damage(amount: int) -> bool:
 	if current <= 0 or is_invulnerable():
 		return false

@@ -372,7 +372,7 @@ Los presets de export (plain_saves en debug, excluir debug/scenarios y tests) pa
 
 **Notas:** Para que Claude pueda manejar el editor sin pedirle al usuario que le dé foco o haga clics. Es un plugin aparte, `addons/editor_bridge/`, para que pueda recargar `epiphany_tools` (`reload_plugin`) sin apagarse. Comandos: ping, status, scan, play [scene], stop, log [since], open path [line], save, plugin name enabled, reload_plugin name, autoload name path, setting name value. Si se recarga, reintenta abrir el puerto cada segundo. `autoload` y `setting` todavía no se probaron.
 
-## M1 — Combate real  (3/7)
+## M1 — Combate real  (4/7)
 
 Vida, invulnerabilidad breve, knockback, bloqueo direccional, roll, IA del esqueleto con `BTAttack`, muerte y reaparición, corazones en el HUD.
 
@@ -429,15 +429,15 @@ Cono: `block_angle_deg` (60) en player.gd, contra el +Z del modelo. Bloqueado: O
 
 **Relacionadas:** 0.9 Refactor del player
 
-### 1.3 Esquiva (roll) con i-frames · Pendiente
+### 1.3 Esquiva (roll) con i-frames · Hecho
 
-- [ ] Estado `Dodging` con las animaciones `Dodge_*`
+- [x] Estado `Dodging` con las animaciones `Dodge_*`
   `Dodge_Forward`, `Dodge_Backward`, `Dodge_Left`, `Dodge_Right`. Sin objetivo fijado siempre `Dodge_Forward` en la dirección del stick; con lock-on, la que corresponde a la dirección relativa.
-- [ ] I-frames en una ventana del roll
+- [x] I-frames en una ventana del roll
   Ventana normalizada (como `AttackData`): durante ese tramo `Hurtbox.monitorable = false` o `Health` invulnerable. Exportar los valores para ajustarlos.
-- [ ] Buffer de input para `dodge` y `attack`
+- [x] Buffer de input para `dodge` y `attack`
   ≈0.15 s: si se aprieta durante el final de otra acción, se ejecuta al terminar. Un solo `InputBuffer` reutilizable.
-- [ ] Cancelar ataques y guardia al rodar
+- [x] Cancelar ataques y guardia al rodar
   Al entrar: `attack_runner.stop()` y `set_guard(false)`. Decidir jugando desde qué momento del ataque se puede cancelar.
 
 **Prueba:** Rodar a través de un ataque del esqueleto durante la ventana de i-frames: no hace daño. Apretar `dodge` al final de un ataque: el roll sale igual (buffer).
@@ -445,6 +445,8 @@ Cono: `block_angle_deg` (60) en player.gd, contra el +Z del modelo. Bloqueado: O
 **Notas:** `dodge` está en RB, al lado de la guardia (ver [[gdd#input]]).
 
 Skills: `disciplines:input-systems`, `godot:godot-animation`.
+
+Dodging: duración 0,45 s a 8 m/s; i-frames del 10 % al 75 % del roll (`Health.make_invulnerable`). Animación: OneShot `Dodge` + Transition `DodgeDir` (Forward/Backward/Left/Right) en el AnimationTree; sin objetivo siempre Forward mirando hacia donde rueda. InputBuffer (0,15 s) para `attack` y `dodge`: solo consume la acción si `dispatch` la usó. Rodar cancela el ataque (`attack_cancel_from` en state_machine.gd, hoy 0 = siempre) y la guardia. Pendiente de jugar: el sentido de Left/Right con lock-on y los valores.
 
 **Referencias:** `gdd.md#combate`, `gdd.md#input`
 

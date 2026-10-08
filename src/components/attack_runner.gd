@@ -41,6 +41,11 @@ func stop() -> void:
 	set_physics_process(false)
 
 
+## Avance del ataque en curso (0..1); 1 si no hay ataque.
+func progress() -> float:
+	return clampf(_elapsed / _length, 0.0, 1.0) if current else 1.0
+
+
 func is_running() -> bool:
 	return current != null
 

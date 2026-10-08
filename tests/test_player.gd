@@ -140,3 +140,78 @@ func test_shield_thrust_stuns() -> void:
 			break
 	assert_true(stunned, "el golpe de escudo aturde")
 	_block(player, false)
+
+
+func _press(action: StringName) -> void:
+	var press := InputEventAction.new()
+	press.action = action
+	press.pressed = true
+	Input.parse_input_event(press)
+	var release := InputEventAction.new()
+	release.action = action
+	Input.parse_input_event(release)
+
+
+func _state(player: PlayerCharacter) -> StringName:
+	return player.movement_state.get_active_state().name
+
+
+func test_roll_iframes() -> void:
+	var setup: Array = await _load_level()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	var enemy: Enemy = setup[2]
+	enemy.bt_player.active = false
+	var start := player.health.current
+	_press(&"dodge")
+	for i in 30:
+		await tree.physics_frame
+		if _state(player) == &"Dodging" and player.health.is_invulnerable():
+			break
+	assert_eq(_state(player), &"Dodging")
+	_enemy_hit(player, enemy, 2)
+	assert_eq(player.health.current, start, "i-frames")
+	for i in 60:
+		await tree.physics_frame
+	assert_eq(_state(player), &"Idle")
+	_enemy_hit(player, enemy, 2)
+	assert_eq(player.health.current, start - 2, "después del roll sí recibe")
+
+
+func test_roll_cancels_attack() -> void:
+	var setup: Array = await _load_level()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	setup[2].bt_player.active = false
+	_press(&"attack")
+	for i in 20:
+		await tree.physics_frame
+		if player.attack_runner.is_running():
+			break
+	assert_eq(_state(player), &"Attacking")
+	_press(&"dodge")
+	await tree.physics_frame
+	await tree.physics_frame
+	assert_eq(_state(player), &"Dodging")
+	assert_eq(player.attack_runner.is_running(), false)
+	assert_eq(player.hitbox.active_attack, null)
+
+
+func test_buffered_attack_after_attack() -> void:
+	var setup: Array = await _load_level()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	setup[2].bt_player.active = false
+	var entered := [0]
+	player.movement_state.get_node(^"Attacking").entered.connect(func() -> void: entered[0] += 1)
+	_press(&"attack")
+	for i in 300:
+		await tree.physics_frame
+		if _state(player) == &"Attacking" and player.attack_runner.progress() > 0.9:
+			break
+	_press(&"attack")
+	for i in 120:
+		await tree.physics_frame
+		if entered[0] >= 2:
+			break
+	assert_eq(entered[0], 2, "el segundo ataque salió por el buffer")

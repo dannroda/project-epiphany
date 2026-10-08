@@ -2,22 +2,22 @@
   "checklist": [
     {
       "detail": "`Dodge_Forward`, `Dodge_Backward`, `Dodge_Left`, `Dodge_Right`. Sin objetivo fijado siempre `Dodge_Forward` en la dirección del stick; con lock-on, la que corresponde a la dirección relativa.",
-      "done": false,
+      "done": true,
       "text": "Estado `Dodging` con las animaciones `Dodge_*`"
     },
     {
       "detail": "Ventana normalizada (como `AttackData`): durante ese tramo `Hurtbox.monitorable = false` o `Health` invulnerable. Exportar los valores para ajustarlos.",
-      "done": false,
+      "done": true,
       "text": "I-frames en una ventana del roll"
     },
     {
       "detail": "≈0.15 s: si se aprieta durante el final de otra acción, se ejecuta al terminar. Un solo `InputBuffer` reutilizable.",
-      "done": false,
+      "done": true,
       "text": "Buffer de input para `dodge` y `attack`"
     },
     {
       "detail": "Al entrar: `attack_runner.stop()` y `set_guard(false)`. Decidir jugando desde qué momento del ataque se puede cancelar.",
-      "done": false,
+      "done": true,
       "text": "Cancelar ataques y guardia al rodar"
     }
   ],
@@ -30,7 +30,7 @@
     }
   ],
   "milestone": "m01",
-  "notes": "`dodge` está en RB, al lado de la guardia (ver [[gdd#input]]).\n\nSkills: `disciplines:input-systems`, `godot:godot-animation`.",
+  "notes": "`dodge` está en RB, al lado de la guardia (ver [[gdd#input]]).\n\nSkills: `disciplines:input-systems`, `godot:godot-animation`.\n\nDodging: duración 0,45 s a 8 m/s; i-frames del 10 % al 75 % del roll (`Health.make_invulnerable`). Animación: OneShot `Dodge` + Transition `DodgeDir` (Forward/Backward/Left/Right) en el AnimationTree; sin objetivo siempre Forward mirando hacia donde rueda. InputBuffer (0,15 s) para `attack` y `dodge`: solo consume la acción si `dispatch` la usó. Rodar cancela el ataque (`attack_cancel_from` en state_machine.gd, hoy 0 = siempre) y la guardia. Pendiente de jugar: el sentido de Left/Right con lock-on y los valores.",
   "order": 3,
   "refs": [
     {
@@ -42,8 +42,8 @@
       "section": "input"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Rodar a través de un ataque del esqueleto durante la ventana de i-frames: no hace daño. Apretar `dodge` al final de un ataque: el roll sale igual (buffer).",
   "title": "Esquiva (roll) con i-frames",
-  "updated_at": "2026-10-08T04:45:39.834Z"
+  "updated_at": "2026-10-08T05:53:15.842Z"
 }

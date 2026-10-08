@@ -17,6 +17,7 @@ const SHIELD_THRUST: AttackData = preload("res://data/attacks/shield_thrust.tres
 @onready var attack_runner: AttackRunner = $AttackRunner
 @onready var equipment: Equipment = $Equipment
 @onready var targeting: Targeting = $Targeting
+@onready var input_buffer: InputBuffer = $InputBuffer
 
 var guard_tween: Tween
 var _block_cone: MeshInstance3D
