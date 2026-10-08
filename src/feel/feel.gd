@@ -18,6 +18,7 @@ func _ready() -> void:
 		&"hit": _synth(0.09, func(t: float) -> float: return (randf() * 2.0 - 1.0) * 0.6 * exp(-t * 40.0) + sin(TAU * 110.0 * t) * exp(-t * 25.0)),
 		&"hurt": _synth(0.16, func(t: float) -> float: return signf(sin(TAU * lerpf(240.0, 110.0, t / 0.16) * t)) * 0.35 * exp(-t * 14.0)),
 		&"block": _synth(0.2, func(t: float) -> float: return (sin(TAU * 1400.0 * t) + 0.6 * sin(TAU * 2150.0 * t)) * 0.4 * exp(-t * 22.0)),
+		&"click": _synth(0.04, func(t: float) -> float: return sin(TAU * 1800.0 * t) * 0.3 * exp(-t * 90.0)),
 		&"roll": _synth(0.25, func(t: float) -> float: return (randf() * 2.0 - 1.0) * 0.25 * sin(PI * t / 0.25)),
 	}
 

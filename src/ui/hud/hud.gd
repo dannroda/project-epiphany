@@ -17,6 +17,8 @@ func _ready() -> void:
 
 
 func _bind_player() -> void:
+	if not is_inside_tree():
+		return
 	var player := get_tree().get_first_node_in_group(&"player") as PlayerCharacter
 	if player == null:
 		return

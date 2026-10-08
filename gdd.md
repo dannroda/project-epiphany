@@ -52,7 +52,7 @@ El tema *Imminent Doom* sigue siendo el tono: el fin se siente por ambientación
 
 - Movimiento libre analógico (8+ direcciones), rotación suave del modelo.
 - **Lock-on (Z-target)**: mantener o alternar (configurable, ya implementado). Con objetivo fijado el player strafea y la cámara encuadra a ambos.
-- **Cambio de objetivo** *(pendiente)*: con objetivo fijado, mover el stick derecho de golpe (`look_*` más allá de 0.7) salta al candidato más alineado en esa dirección de pantalla. Teclado y mouse: a definir (§4.3).
+- **Cambio de objetivo**: con objetivo fijado, mover el stick derecho de golpe (`look_*` más allá de 0.7) salta al candidato más alineado en esa dirección de pantalla (en pantalla, en rango y a la vista; las paredes tapan, los enemigos no). Si no hay candidato en esa dirección no pasa nada; `Targeting.wrap_around` salta al otro extremo (apagado, a decidir jugando). Un objetivo que muere o sale de rango se suelta tras 0,5 s; en modo alternar salta al siguiente. Teclado y mouse: a definir (§4.3).
 - **Apuntado libre**: analógico derecho o mouse (rayo cámara → plano del suelo). Lo consumen arco, bombas lanzadas y cualquier ítem a distancia.
 
 ### 4.3 Mapa de input

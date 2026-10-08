@@ -552,24 +552,24 @@ Todo pasa por el autoload Feel (src/feel/feel.gd) y los valores están en data/f
 
 **Referencias:** `gdd.md#combate`
 
-## M2 — Targeting + Aim  (0/4)
+## M2 — Targeting + Aim  (1/4)
 
 Cambio de objetivo moviendo el stick derecho de golpe (el mismo `look_*` que apunta, leído con umbral 0.7; ver [[gdd#input]]) y apuntado con el stick derecho.
 
 **Hecho cuando:**
 - Elegir a quién fijar y apuntar libremente.
 
-### 2.1 Cambio de objetivo con el stick derecho · Pendiente
+### 2.1 Cambio de objetivo con el stick derecho · Hecho
 
-- [ ] Implementar `Targeting.cycle()`
+- [x] Implementar `Targeting.cycle()`
   Lee `look_*` con umbral 0.7; un salto por movimiento del stick. Elige el candidato más alineado en espacio de pantalla. Código en [[gdd#player]].
-- [ ] Candidatos válidos
+- [x] Candidatos válidos
   En pantalla, en rango y con línea de visión (raycast contra el mundo, sin enemigos). Reutilizar el filtro en el lock-on inicial.
-- [ ] Decidir wrap o nada jugando
+- [x] Decidir wrap o nada jugando
   Si no hay candidato en la dirección pedida. Anotar la decisión en [[gdd#movimiento-combate]].
-- [ ] Feedback del salto
+- [x] Feedback del salto
   El indicador hace tween hacia el nuevo objetivo y suena un clic.
-- [ ] Liberar al perder el objetivo
+- [x] Liberar al perder el objetivo
   Si muere o sale de rango: soltar con un margen de ≈0.5 s, o saltar al siguiente si el lock-on está en modo alternar.
 
 **Prueba:** Tres esqueletos en fila: con uno fijado, mover el stick derecho a izquierda y derecha salta entre ellos en orden. Un esqueleto detrás de una pared no se puede fijar.
@@ -577,6 +577,8 @@ Cambio de objetivo moviendo el stick derecho de golpe (el mismo `look_*` que apu
 **Notas:** Arregla el problema conocido: hoy siempre marca el más cercano.
 
 Skills: `godot:godot-physics`.
+
+Nivel de prueba nuevo: levels/test_targeting.tscn (tres esqueletos en fila y uno detrás de una pared). El wrap queda exportado y apagado (`wrap_around`); la decisión final es jugando, anotada en el GDD. El indicador ya se desliza al objetivo nuevo (lerp de TargetIndicator) y suena el clic sintetizado de Feel. Tests en tests/test_targeting.gd.
 
 **Referencias:** `gdd.md#movimiento-combate`, `gdd.md#player`
 
