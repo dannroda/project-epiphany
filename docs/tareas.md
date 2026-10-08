@@ -1294,13 +1294,13 @@ Zona chica con el gating bombas → escudo espejo → sello del templo, y los se
 
 ### 7.1 Diseño del layout del overworld · Pendiente
 
-- [ ] Diagrama de 6–8 pantallas
+- [x] Diagrama de 6–8 pantallas
   Inicio, pradera, cueva de bombas, santuario, entrada al templo y los 3 secretos. Camino crítico y atajos.
-- [ ] Verificar el gating
+- [x] Verificar el gating
   Que no se pueda llegar al santuario sin bombas ni al templo sin escudo espejo ([[gdd#progresion-gating]]).
-- [ ] Curva de ritmo
+- [x] Curva de ritmo
   Dónde hay combate, dónde descanso, dónde se descubre algo.
-- [ ] Actualizar el GDD
+- [x] Actualizar el GDD
   Sección [[gdd#overworld]] y cerrar la decisión abierta del layout del overworld.
 
 **Prueba:** El diagrama está en el GDD y responde: dónde está cada ítem, qué lo bloquea y por dónde se vuelve.
@@ -1308,6 +1308,8 @@ Zona chica con el gating bombas → escudo espejo → sello del templo, y los se
 **Notas:** Sesión de diseño antes de construir.
 
 Skills: `disciplines:level-design`.
+
+Hecho 2026-10-08: layout de 8 zonas en GDD §7.1 (diagrama, tabla por zona, verificación del gating, atajo que abre solo desde el Santuario, curva de ritmo). Aplica el artículo de metodología de mazmorras Zelda: cebo temprano (templo y ojo del risco visibles), enseñar antes de exigir (muro de práctica, puzzle de luz en el Santuario), hub con referencia visual.
 
 **Referencias:** `gdd.md#overworld`, `gdd.md#progresion-gating`, `gdd.md#decisiones-abiertas`
 

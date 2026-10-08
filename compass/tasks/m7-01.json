@@ -2,22 +2,22 @@
   "checklist": [
     {
       "detail": "Inicio, pradera, cueva de bombas, santuario, entrada al templo y los 3 secretos. Camino crítico y atajos.",
-      "done": false,
+      "done": true,
       "text": "Diagrama de 6–8 pantallas"
     },
     {
       "detail": "Que no se pueda llegar al santuario sin bombas ni al templo sin escudo espejo ([[gdd#progresion-gating]]).",
-      "done": false,
+      "done": true,
       "text": "Verificar el gating"
     },
     {
       "detail": "Dónde hay combate, dónde descanso, dónde se descubre algo.",
-      "done": false,
+      "done": true,
       "text": "Curva de ritmo"
     },
     {
       "detail": "Sección [[gdd#overworld]] y cerrar la decisión abierta del layout del overworld.",
-      "done": false,
+      "done": true,
       "text": "Actualizar el GDD"
     }
   ],
@@ -30,7 +30,7 @@
     }
   ],
   "milestone": "m07",
-  "notes": "Sesión de diseño antes de construir.\n\nSkills: `disciplines:level-design`.",
+  "notes": "Sesión de diseño antes de construir.\n\nSkills: `disciplines:level-design`.\n\nHecho 2026-10-08: layout de 8 zonas en GDD §7.1 (diagrama, tabla por zona, verificación del gating, atajo que abre solo desde el Santuario, curva de ritmo). Aplica el artículo de metodología de mazmorras Zelda: cebo temprano (templo y ojo del risco visibles), enseñar antes de exigir (muro de práctica, puzzle de luz en el Santuario), hub con referencia visual.",
   "order": 1,
   "refs": [
     {
@@ -46,8 +46,8 @@
       "section": "decisiones-abiertas"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "El diagrama está en el GDD y responde: dónde está cada ítem, qué lo bloquea y por dónde se vuelve.",
   "title": "Diseño del layout del overworld",
-  "updated_at": "2026-10-08T04:45:53.060Z"
+  "updated_at": "2026-10-08T23:39:50.071Z"
 }

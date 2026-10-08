@@ -139,6 +139,55 @@ Una zona chica (≈6–8 "pantallas" de tamaño Link's Awakening), sin transicio
 
 Contenido mínimo: punto de inicio, pradera con enemigos, cueva de las bombas, santuario del escudo espejo, entrada al templo con sello de luz, 2 secretos (poción, cota), 1 secreto post-mazmorra (carcaj). Objetos físicos (cajas, rocas) para mecánicas de empuje/explosión.
 
+### 7.1 Layout
+<!-- id: overworld-layout -->
+
+Decidido el 2026-10-08. 8 zonas de ≈ 24 × 16 m (una "pantalla" con la cámara del remake, que abarca ≈ 20 × 10.5 m) en una grilla de 3 × 3 sin la esquina sureste. La cámara sigue libre; las zonas se distinguen por el terreno y el nombre de área del HUD.
+
+```
+            OESTE                 CENTRO                  ESTE
+       ┌──────────────────┬──────────────────┬──────────────────┐
+ NORTE │ SANTUARIO        │ ENTRADA TEMPLO   │ RISCO DEL OJO    │
+       │ escudo espejo    │ sello de luz     │ ojo-interruptor  │
+       │                  │                  │ → CARCAJ         │
+       │      ══atajo══►  │                  │                  │
+       ├───▲muro agriet.──┼────────▲─────────┼────────▲─────────┤
+ MEDIO │ CUEVA            │ PRADERA (hub)    │ ARBOLEDA         │
+       │ BOMBAS           │                  │ → COTA           │
+       ├──────────────────┼────────▲─────────┼──────────────────┘
+  SUR  │ GRUTA OCULTA     │ INICIO           │
+       │ → BOTELLA        │                  │
+       └──────────────────┴──────────────────┘
+```
+
+| Zona | Contenido | Combate | Se entra | Ritmo |
+|---|---|---|---|---|
+| **Inicio** (S) | Punto de inicio, tablilla de tutorial (controles, objetivo: el templo) | — | Libre | Calma |
+| **Pradera** (C, hub) | Pasto, vasijas, tablilla de lore. **Desde acá se ve el templo sellado** (cebo y referencia del mapa mental) | Esqueletos | Libre desde Inicio | Combate |
+| **Cueva** (O) | Cofre de la **bolsa de bombas**; adentro, un muro agrietado de práctica con una vasija de corazones detrás (enseñar en un lugar seguro) | 1–2 esqueletos | Libre desde la Pradera | Combate → descubrimiento |
+| **Gruta oculta** (SO) | Muro agrietado desde el Inicio; cofre con **botella + poción**; tablilla que da una pista | — | Bombas | Recompensa |
+| **Santuario** (NO) | Muro agrietado desde la Cueva. Puzzle de luz que **enseña** a reflejar el haz con el escudo (en sala chica, sin presión); cofre grande del **escudo espejo** | — | Bombas | Descubrimiento |
+| **Entrada al templo** (N) | Fuente de luz y sello: hay que pararse donde corresponde y reflejar el haz con el escudo espejo (la **prueba** de lo aprendido) → abre la mazmorra | Torreta opcional | Libre desde la Pradera (el sello se ve antes de poder abrirlo) | Prueba |
+| **Arboleda** (E) | Puzzle de bloques por grilla → cofre de la **cota reforzada** | Esqueleto | Libre desde la Pradera | Descanso / opcional |
+| **Risco del ojo** (NE) | Ojo-interruptor alto, del otro lado de un abismo; **se ve desde el principio**, solo se activa con flechas → baja un puente o una reja al cofre del **carcaj grande** | — | Libre desde la Arboleda; el cofre, con el arco | Post-mazmorra |
+
+**Atajos:** del Santuario a la Entrada del templo hay una reja que **solo se abre desde adentro** del Santuario (palanca o interruptor), así la vuelta con el escudo es corta y no se puede saltear el muro agrietado.
+
+**Verificación del gating** (camino crítico y qué bloquea cada cosa):
+
+| Para llegar a… | Hace falta | Dónde se consigue | ¿Se consigue antes sin lo que bloquea? |
+|---|---|---|---|
+| Bombas | — | Cueva, libre | Sí |
+| Santuario / escudo espejo | Bombas (muro agrietado) | Cueva | El atajo solo abre desde adentro → no hay otra entrada |
+| Mazmorra | Escudo espejo (sello) | Santuario | El escudo de madera no refleja; no hay otro espejo |
+| Botella (opcional) | Bombas | Cueva | — |
+| Cota (opcional) | Nada (empujar bloques) | Arboleda | — |
+| Carcaj (post-mazmorra) | Arco | Mazmorra | El ojo solo reacciona a proyectiles; las bombas no llegan al otro lado del abismo |
+
+**Vuelta:** del templo a la Pradera hay camino directo (S); el Inicio y el Santuario tienen `SpawnPoint` de checkpoint.
+
+**Curva de ritmo:** calma (Inicio) → combate (Pradera) → combate y descubrimiento (Cueva: bombas) → recompensa opcional (Gruta) → descubrimiento (Santuario: escudo espejo) → prueba (sello) → mazmorra → vuelta tranquila con el arco al Risco (carcaj).
+
 ## 8. Mazmorra — El Templo
 <!-- id: mazmorra -->
 
@@ -1594,7 +1643,7 @@ Moneda y tiendas · NPCs con diálogo · piezas de corazón · gancho / telequin
 
 - [ ] Historia: opción A o B (o propia). Título del juego.
 - [ ] ¿Varias espadas o una espada con modificadores elementales?
-- [ ] Layout exacto de la mazmorra (conexiones entre salas) y del overworld.
+- [ ] Layout exacto de la mazmorra (conexiones entre salas). El del overworld quedó decidido (§7.1).
 - [ ] Ranuras de guardado: ¿1 o 3 en el MVP?
 - [ ] Arte: ¿se mantiene el look KayKit + texturas de prototipo o hay dirección de arte propia?
 - [ ] Rig del jefe: importarlo al repo y verificar compatibilidad con el AnimationTree actual.
