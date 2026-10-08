@@ -9,8 +9,8 @@
 
 [sub_resource type="Resource" id="Resource_fouaw"]
 script = ExtResource("1_prkf7")
-ammo = ExtResource("4_ammo")
 bomb_scene = ExtResource("5_bomb_scene")
+ammo = ExtResource("4_ammo")
 use_at = 0.4
 end_at = 0.6
 

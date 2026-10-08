@@ -9,15 +9,15 @@
 [ext_resource type="Script" uid="uid://boos1wd2wsju2" path="res://src/debug/camera_enabler.gd" id="6_u45fp"]
 [ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="8_2grjb"]
 [ext_resource type="Resource" uid="uid://bbgcgd3i6bnyn" path="res://data/dialogue/test_tablets.dialogue" id="d_tablets"]
+[ext_resource type="PackedScene" path="res://src/entities/turret/turret.tscn" id="e_turret"]
 [ext_resource type="Resource" uid="uid://dwsn6cvxqrfpa" path="res://data/items/bomb_bag.tres" id="i_bomb_bag"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="ui_hud"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="w_chest"]
-[ext_resource type="PackedScene" path="res://src/world/eye_switch.tscn" id="w_eye"]
-[ext_resource type="PackedScene" path="res://src/entities/turret/turret.tscn" id="e_turret"]
 [ext_resource type="PackedScene" path="res://src/world/cracked_wall.tscn" id="w_cracked"]
-[ext_resource type="PackedScene" path="res://src/world/light/light_source.tscn" id="w_light_source"]
-[ext_resource type="PackedScene" path="res://src/world/light/light_receiver.tscn" id="w_light_receiver"]
+[ext_resource type="PackedScene" path="res://src/world/eye_switch.tscn" id="w_eye"]
 [ext_resource type="Script" uid="uid://x60poi8g2tqu" path="res://src/world/grass_patch.gd" id="w_grass"]
+[ext_resource type="PackedScene" path="res://src/world/light/light_receiver.tscn" id="w_light_receiver"]
+[ext_resource type="PackedScene" path="res://src/world/light/light_source.tscn" id="w_light_source"]
 [ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="w_pot"]
 [ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="w_spawn"]
 [ext_resource type="PackedScene" path="res://src/world/tablet.tscn" id="w_tablet"]
@@ -200,17 +200,17 @@ script = ExtResource("w_grass")
 [node name="EyeSwitch" parent="." unique_id=97137799 instance=ExtResource("w_eye")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.25, -6)
 
-[node name="Turret" parent="." instance=ExtResource("e_turret")]
+[node name="Turret" parent="." unique_id=1625670051 instance=ExtResource("e_turret")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.25, 6)
 
-[node name="CrackedWall" parent="." instance=ExtResource("w_cracked")]
+[node name="CrackedWall" parent="." unique_id=1371765201 instance=ExtResource("w_cracked")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.25, 2)
 flag = &"ow_test_cracked_wall"
 
-[node name="LightSource" parent="." instance=ExtResource("w_light_source")]
+[node name="LightSource" parent="." unique_id=1700890821 instance=ExtResource("w_light_source")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 13, 0.25, -15.5)
 
-[node name="LightReceiver" parent="." instance=ExtResource("w_light_receiver")]
+[node name="LightReceiver" parent="." unique_id=1296081202 instance=ExtResource("w_light_receiver")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.25, -12)
 
 [node name="HUD" parent="." unique_id=1876306880 instance=ExtResource("ui_hud")]

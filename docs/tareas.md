@@ -1226,7 +1226,7 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 ### 6.5 Interruptores y cableado · Pendiente
 
-- [ ] Interruptor de piso
+- [x] Interruptor de piso
   `FloorSwitch`: lo activa el player, un bloque o un `RigidBody3D`. Modos: mantener / una vez.
 - [ ] Interfaz común `activated`/`deactivated`
   La comparten `FloorSwitch`, `EyeSwitch` (5.3) y `LightReceiver` (5.6).

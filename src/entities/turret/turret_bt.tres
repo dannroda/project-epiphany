@@ -1,9 +1,9 @@
-[gd_resource type="BehaviorTree" format=3]
+[gd_resource type="BehaviorTree" format=3 uid="uid://btgoknhmmjmty"]
 
-[ext_resource type="Script" path="res://ai/tasks/bt_find_player.gd" id="1_hyscm"]
-[ext_resource type="Script" path="res://ai/tasks/bt_turn_to_target.gd" id="2_3cbuu"]
-[ext_resource type="Script" path="res://ai/tasks/bt_charge_shot.gd" id="3_bseib"]
-[ext_resource type="Script" path="res://ai/tasks/bt_fire_orb.gd" id="4_2fmo2"]
+[ext_resource type="Script" uid="uid://bw6i0a7bddx8n" path="res://ai/tasks/bt_find_player.gd" id="1_hyscm"]
+[ext_resource type="Script" uid="uid://djqiwe6ijpl1e" path="res://ai/tasks/bt_turn_to_target.gd" id="2_3cbuu"]
+[ext_resource type="Script" uid="uid://bv3ts3c3murwh" path="res://ai/tasks/bt_charge_shot.gd" id="3_bseib"]
+[ext_resource type="Script" uid="uid://rtbd3x65nw6h" path="res://ai/tasks/bt_fire_orb.gd" id="4_2fmo2"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_7paco"]
 
