@@ -372,7 +372,7 @@ Los presets de export (plain_saves en debug, excluir debug/scenarios y tests) pa
 
 **Notas:** Para que Claude pueda manejar el editor sin pedirle al usuario que le dé foco o haga clics. Es un plugin aparte, `addons/editor_bridge/`, para que pueda recargar `epiphany_tools` (`reload_plugin`) sin apagarse. Comandos: ping, status, scan, play [scene], stop, log [since], open path [line], save, plugin name enabled, reload_plugin name, autoload name path, setting name value. Si se recarga, reintenta abrir el puerto cada segundo. `autoload` y `setting` todavía no se probaron.
 
-## M1 — Combate real  (1/7)
+## M1 — Combate real  (2/7)
 
 Vida, invulnerabilidad breve, knockback, bloqueo direccional, roll, IA del esqueleto con `BTAttack`, muerte y reaparición, corazones en el HUD.
 
@@ -406,20 +406,22 @@ El estado `Hurt` se alcanza desde cualquier estado (`anystate`); la animación e
 
 **Relacionadas:** 0.12 Tests headless
 
-### 1.2 Bloqueo direccional y golpe de escudo · Pendiente
+### 1.2 Bloqueo direccional y golpe de escudo · En curso
 
-- [ ] Implementar `_is_in_front()` con cono de ±60°
+- [x] Implementar `_is_in_front()` con cono de ±60°
   `block_angle_deg` exportado. El modelo KayKit mira a +Z local. Código en [[gdd#ventanas-ataque]] ("Bloqueo direccional").
-- [ ] `_on_blocked()`: chispa, retroceso leve y sonido
+- [x] `_on_blocked()`: chispa, retroceso leve y sonido
   Animación `Melee_Block_Hit`. Partículas y sonido placeholder; el pulido va en 1.7.
-- [ ] Ver el cono en debug
+- [x] Ver el cono en debug
   Con el overlay activo, dibujar el cono de bloqueo (ImmediateMesh o `DebugDraw`) para ajustarlo jugando.
-- [ ] El golpe de escudo aturde
+- [x] El golpe de escudo aturde
   `shield_thrust.tres` con poco daño y mucho knockback; al conectar setea `stunned` en el blackboard del enemigo (lo consume 1.4).
 
 **Prueba:** Bloqueando de frente el golpe del esqueleto no hace daño; desde atrás o de costado (fuera del cono) sí. El golpe de escudo deja al esqueleto aturdido un momento.
 
 **Notas:** Pilar 3: el escudo tiene doble función. El reflejo con escudo espejo llega en M5.
+
+Cono: `block_angle_deg` (60) en player.gd, contra el +Z del modelo. Bloqueado: OneShot `BlockHit` (Melee_Block_Hit) en el AnimationTree, retroceso con move_and_collide (`block_pushback`) y chispas CPUParticles3D creadas en código. Sin sonido: no hay assets de audio todavía (1.7). El cono se dibuja en el piso cuando el overlay (tecla 1) está visible, celeste si está bloqueando. Aturdir es dato del ataque: `AttackData.stun_time` → `DamageInfo.stun_time` → `stunned` en el blackboard del esqueleto; shield_thrust.tres aturde 1,2 s.
 
 **Referencias:** `gdd.md#combate`
 
@@ -448,7 +450,7 @@ Skills: `disciplines:input-systems`, `godot:godot-animation`.
 
 **Relacionadas:** 0.9 Refactor del player
 
-### 1.4 IA del esqueleto con `BTAttack` · En curso
+### 1.4 IA del esqueleto con `BTAttack` · Hecho
 
 - [x] Crear `ai/tasks/bt_attack.gd`
   Una sola tarea de ataque para todos los BT: toma un `AttackData` y maneja el `AttackRunner`. Código en [[gdd#ventanas-ataque]].

@@ -1,10 +1,10 @@
-[gd_resource type="BehaviorTree" format=3]
+[gd_resource type="BehaviorTree" format=3 uid="uid://r772okunbiuh"]
 
-[ext_resource type="Script" path="res://ai/tasks/bt_find_player.gd" id="1_caso1"]
-[ext_resource type="Script" path="res://ai/tasks/bt_in_attack_range.gd" id="2_0sm1c"]
+[ext_resource type="Script" uid="uid://bw6i0a7bddx8n" path="res://ai/tasks/bt_find_player.gd" id="1_caso1"]
+[ext_resource type="Script" uid="uid://dp1f7fgg0yk1l" path="res://ai/tasks/bt_in_attack_range.gd" id="2_0sm1c"]
 [ext_resource type="Resource" path="res://data/attacks/skeleton_slash.tres" id="3_2suu5"]
-[ext_resource type="Script" path="res://ai/tasks/bt_attack.gd" id="4_sr5dr"]
-[ext_resource type="Script" path="res://ai/tasks/bt_move_to_target.gd" id="5_orssr"]
+[ext_resource type="Script" uid="uid://clwyjhi8fl4h0" path="res://ai/tasks/bt_attack.gd" id="4_sr5dr"]
+[ext_resource type="Script" uid="uid://dgotna37ipe2c" path="res://ai/tasks/bt_move_to_target.gd" id="5_orssr"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_jgf0a"]
 

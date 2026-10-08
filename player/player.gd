@@ -5,6 +5,8 @@ const SHIELD_THRUST: AttackData = preload("res://data/attacks/shield_thrust.tres
 
 @export var config: EntityConfig
 @export var blink_rate := 15.0
+@export var block_angle_deg := 60.0
+@export var block_pushback := 0.3
 
 @onready var model: Node3D = $ModelController
 @onready var anim_player: AnimationPlayer = $ModelController/AnimationPlayer
@@ -20,6 +22,7 @@ const SHIELD_THRUST: AttackData = preload("res://data/attacks/shield_thrust.tres
 
 var guard_tween: Tween
 var _blink_time := 0.0
+var _block_cone: MeshInstance3D
 
 
 func _ready() -> void:
@@ -35,6 +38,7 @@ func _ready() -> void:
 	targeting.target_changed.connect(func(target: Node3D) -> void: movement_state.blackboard.set_var("target", target))
 	movement_state.initialize(self)
 	movement_state.set_active(true)
+	_block_cone = _make_block_cone()
 
 
 func _physics_process(delta: float) -> void:
@@ -43,6 +47,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _process(delta: float) -> void:
+	_update_block_cone()
 	if health.is_invulnerable():
 		_blink_time += delta
 		visuals.visible = fmod(_blink_time * blink_rate, 2.0) < 1.0
@@ -97,12 +102,92 @@ func _sync_health() -> void:
 
 
 func _on_hit(info: DamageInfo) -> void:
+	if is_blocking() and info.source and _is_in_front(info.source.global_position):
+		_on_blocked(info)
+		return
 	var amount := maxi(1, roundi(info.amount * (1.0 - equipment.damage_reduction())))
 	if not health.damage(amount):
 		return
 	Log.info(&"combat", "El player recibió", amount, "de daño de", info.source.name if info.source else "?", "· Vida:", health.current)
 	movement_state.blackboard.set_var("last_hit", info)
 	movement_state.dispatch("hurt")
+
+
+## El modelo KayKit mira a +Z local.
+func _is_in_front(point: Vector3) -> bool:
+	var forward := model.global_basis.z
+	forward.y = 0.0
+	var to_point := point - global_position
+	to_point.y = 0.0
+	if to_point.is_zero_approx() or forward.is_zero_approx():
+		return true
+	return rad_to_deg(forward.angle_to(to_point)) <= block_angle_deg
+
+
+func _on_blocked(info: DamageInfo) -> void:
+	Log.debug(&"combat", "Bloqueado:", info.source.name, info.amount, "de daño")
+	anim_tree.set(&"parameters/BlockHit/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	var away := global_position - info.source.global_position
+	away.y = 0.0
+	if not away.is_zero_approx():
+		move_and_collide(away.normalized() * block_pushback)
+	_spawn_sparks(global_position + model.global_basis.z * 0.6 + Vector3.UP * 1.1)
+
+
+func _spawn_sparks(at: Vector3) -> void:
+	var sparks := CPUParticles3D.new()
+	sparks.one_shot = true
+	sparks.explosiveness = 1.0
+	sparks.amount = 14
+	sparks.lifetime = 0.25
+	sparks.spread = 70.0
+	sparks.direction = model.global_basis.z
+	sparks.initial_velocity_min = 3.0
+	sparks.initial_velocity_max = 5.0
+	sparks.gravity = Vector3(0, -6, 0)
+	var mesh := SphereMesh.new()
+	mesh.radius = 0.025
+	mesh.height = 0.05
+	var material := StandardMaterial3D.new()
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	material.albedo_color = Color(1.0, 0.85, 0.4)
+	mesh.material = material
+	sparks.mesh = mesh
+	get_tree().current_scene.add_child(sparks)
+	sparks.global_position = at
+	sparks.emitting = true
+	sparks.finished.connect(sparks.queue_free)
+
+
+func _make_block_cone() -> MeshInstance3D:
+	var mesh := ImmediateMesh.new()
+	mesh.surface_begin(Mesh.PRIMITIVE_TRIANGLES)
+	var steps := 12
+	var half := deg_to_rad(block_angle_deg)
+	for i in steps:
+		var a := -half + 2.0 * half * i / steps
+		var b := -half + 2.0 * half * (i + 1) / steps
+		mesh.surface_add_vertex(Vector3(0, 0.05, 0))
+		mesh.surface_add_vertex(Vector3(sin(a), 0.05, cos(a)) * 1.5)
+		mesh.surface_add_vertex(Vector3(sin(b), 0.05, cos(b)) * 1.5)
+	mesh.surface_end()
+	var cone := MeshInstance3D.new()
+	cone.mesh = mesh
+	var material := StandardMaterial3D.new()
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.cull_mode = BaseMaterial3D.CULL_DISABLED
+	cone.material_override = material
+	cone.visible = false
+	model.add_child(cone)
+	return cone
+
+
+func _update_block_cone() -> void:
+	_block_cone.visible = DebugOverlay.visible
+	if _block_cone.visible:
+		var color := Color(0.3, 0.8, 1.0, 0.35) if is_blocking() else Color(1, 1, 1, 0.12)
+		(_block_cone.material_override as StandardMaterial3D).albedo_color = color
 
 
 func _watch_debug_values() -> void:

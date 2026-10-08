@@ -83,6 +83,9 @@ func _on_hit(info: DamageInfo) -> void:
 	if not health.damage(info.amount):
 		return
 	Log.info(&"combat", name, "recibió", info.amount, "de daño. Vida:", health.current)
+	if info.stun_time > 0.0 and not is_dead:
+		bt_player.blackboard.set_var("stunned", true)
+		Log.debug(&"combat", name, "quedó aturdido")
 	if info.source == null:
 		return
 	var direction := global_position - info.source.global_position

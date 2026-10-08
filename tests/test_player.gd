@@ -93,3 +93,50 @@ func test_armor_reduces_damage() -> void:
 	_enemy_hit(player, enemy, 4)
 	assert_eq(player.health.current, start - 3, "−25 %")
 	game_state.reset()
+
+
+func _block(player: PlayerCharacter, on: bool) -> void:
+	player.movement_state.blackboard.set_var("is_blocking", on)
+
+
+func test_block_from_front_only() -> void:
+	var setup: Array = await _load_level()
+	var player: PlayerCharacter = setup[1]
+	var enemy: Enemy = setup[2]
+	enemy.bt_player.active = false
+	player.global_position = enemy.global_position - Vector3(0, 0, 1.5)
+	player.model.rotation = Vector3.ZERO
+	_block(player, true)
+	var start := player.health.current
+	_enemy_hit(player, enemy, 2)
+	assert_eq(player.health.current, start, "de frente: bloqueado")
+	player.model.rotation = Vector3(0, PI, 0)
+	_enemy_hit(player, enemy, 2)
+	assert_eq(player.health.current, start - 2, "de espaldas: recibe el golpe")
+	_block(player, false)
+
+
+func test_shield_thrust_stuns() -> void:
+	var setup: Array = await _load_level()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	var enemy: Enemy = setup[2]
+	player.global_position = enemy.global_position - Vector3(0, 0, 1.2)
+	player.model.rotation = Vector3.ZERO
+	_block(player, true)
+	var press := InputEventAction.new()
+	press.action = &"attack"
+	press.pressed = true
+	Input.parse_input_event(press)
+	await tree.physics_frame
+	var release := InputEventAction.new()
+	release.action = &"attack"
+	Input.parse_input_event(release)
+	var stunned := false
+	for i in 90:
+		await tree.physics_frame
+		if enemy.bt_player.blackboard.get_var("stunned", false, false):
+			stunned = true
+			break
+	assert_true(stunned, "el golpe de escudo aturde")
+	_block(player, false)

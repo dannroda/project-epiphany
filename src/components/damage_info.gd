@@ -7,3 +7,4 @@ var source: Node3D
 var team: EntityConfig.Team = EntityConfig.Team.NEUTRAL
 var element: StringName = &""
 var reflectable: bool = false
+var stun_time: float = 0.0

@@ -9,3 +9,4 @@ active_from = 0.25
 active_to = 0.5
 damage_multiplier = 0.5
 knockback_multiplier = 1.5
+stun_time = 1.2

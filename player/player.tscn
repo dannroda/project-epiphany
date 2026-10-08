@@ -124,8 +124,14 @@ blend_point_4/pos = Vector2(0, -1)
 blend_point_4/name = &"MovementBasic_Walking_B"
 triangles = PackedInt32Array(0, 2, 3, 0, 1, 3, 0, 2, 4, 0, 1, 4)
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_blockhit"]
+animation = &"CombatMelee/Melee_Block_Hit"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_blockhit"]
+fadein_time = 0.05
+fadeout_time = 0.15
+
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_fss4b"]
-graph_offset = Vector2(-281.34134, 114.94114)
 nodes/output/position = Vector2(1413.3334, 400)
 nodes/Movement/node = SubResource("AnimationNodeTransition_7evp1")
 nodes/Movement/position = Vector2(-773.3333, -133.33333)
@@ -153,7 +159,11 @@ nodes/HurtAnim/node = SubResource("AnimationNodeAnimation_b8hi5")
 nodes/HurtAnim/position = Vector2(986.6667, 880)
 nodes/Hurt/node = SubResource("AnimationNodeOneShot_r7pn3")
 nodes/Hurt/position = Vector2(1413.3334, 613.3333)
-node_connections = [&"output", 0, &"Hurt", &"Movement", 0, &"Idle", &"Movement", 1, &"Running", &"Attack", 0, &"GuardBlend", &"Attack", 1, &"AttackType", &"Combat", 0, &"Movement", &"Combat", 1, &"Targeting", &"GuardBlend", 0, &"Combat", &"GuardBlend", 1, &"MeleeBlocking", &"AttackType", 0, &"SwordSlice", &"AttackType", 1, &"ShieldThrust", &"Hurt", 0, &"Attack", &"Hurt", 1, &"HurtAnim"]
+nodes/BlockHitAnim/node = SubResource("AnimationNodeAnimation_blockhit")
+nodes/BlockHitAnim/position = Vector2(1413.3334, 880)
+nodes/BlockHit/node = SubResource("AnimationNodeOneShot_blockhit")
+nodes/BlockHit/position = Vector2(1680, 613.3333)
+node_connections = [&"output", 0, &"BlockHit", &"Movement", 0, &"Idle", &"Movement", 1, &"Running", &"Attack", 0, &"GuardBlend", &"Attack", 1, &"AttackType", &"Combat", 0, &"Movement", &"Combat", 1, &"Targeting", &"GuardBlend", 0, &"Combat", &"GuardBlend", 1, &"MeleeBlocking", &"AttackType", 0, &"SwordSlice", &"AttackType", 1, &"ShieldThrust", &"Hurt", 0, &"Attack", &"Hurt", 1, &"HurtAnim", &"BlockHit", 0, &"Hurt", &"BlockHit", 1, &"BlockHitAnim"]
 
 [sub_resource type="AnimationNodeObserverOneShot" id="AnimationNodeObserverOneShot_4uxyr"]
 

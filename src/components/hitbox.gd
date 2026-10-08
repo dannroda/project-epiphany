@@ -27,6 +27,7 @@ func build_damage() -> DamageInfo:
 	if active_attack:
 		info.amount = roundi(info.amount * active_attack.damage_multiplier)
 		info.knockback *= active_attack.knockback_multiplier
+		info.stun_time = active_attack.stun_time
 	return info
 
 
