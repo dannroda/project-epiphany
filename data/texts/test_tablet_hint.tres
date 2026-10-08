@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="TextData" format=3]
-
-[ext_resource type="Script" path="res://src/ui/text_box/text_data.gd" id="1_text"]
-
-[resource]
-script = ExtResource("1_text")
-title = "Inscripción"
-pages = PackedStringArray("Donde la piedra está herida, el fuego abre paso.")
