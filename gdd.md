@@ -60,11 +60,11 @@ El tema *Imminent Doom* sigue siendo el tono: el fin se siente por ambientación
 
 | Acción (`InputMap`) | Gamepad (Xbox · índice en Godot) | Teclado y mouse | Uso |
 |---|---|---|---|
-| `move_*` | Stick izquierdo | WASD | Moverse |
+| `move_*` | Stick izquierdo | WASD | Moverse. Al tensar el arco, apuntar |
 | `attack` | A · botón 0 | Click izquierdo | Espada |
 | `interact` | B · botón 1 | E | Abrir, leer, empujar (acción contextual) |
 | `dodge` | RB · botón 10 | Espacio | Rodar. En gamepad queda al lado de la guardia: cubrirse y esquivar con el mismo dedo |
-| `item_1` / `item_2` | X · botón 2 / Y · botón 3 | Q / R | Ítems asignados |
+| `item_1` / `item_2` | X · botón 2 / Y · botón 3 | Q / R | Ítems asignados. Los que se mantienen (arco): mientras se tensa el player se planta y **el stick izquierdo apunta** (como Ocarina of Time), porque el pulgar derecho no puede mantener X/Y y mover el stick derecho a la vez. El stick derecho, el mouse y el objetivo fijado siguen apuntando con más prioridad |
 | `block` | RT · eje 5 | Click derecho | Guardia |
 | `z-lock` | LT · eje 4 | Shift izquierdo | Fijar objetivo |
 | `look_left` / `look_right` / `look_up` / `look_down` | Stick derecho · ejes 2 y 3 | Mouse (lo lee `Aim`) | Una sola dirección para dos usos. Sin objetivo fijado: apuntar (zona muerta normal). Con objetivo fijado: cambiar de objetivo cuando cruza 0.7 (el mismo `look_*` leído con otro umbral). Remapear `look_*` mueve los dos usos juntos |

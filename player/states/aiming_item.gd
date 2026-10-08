@@ -1,7 +1,6 @@
 extends PlayerState
-## Arco y similares: mantener el botón tensa y apunta (el player strafea), soltarlo dispara.
+## Arco y similares: mantener el botón tensa (el player se planta y el stick izquierdo apunta), soltarlo dispara.
 
-const AIM_SPEED := 2.5
 const ITEM_ACTIONS: Array[StringName] = [&"item_1", &"item_2"]
 
 ## Lo mínimo que hay que mantener antes de que soltar dispare.
@@ -25,6 +24,9 @@ func _enter() -> void:
 	_released_at = -1.0
 	_draw_length = player.anim_player.get_animation(&"CombatRanged/Ranged_Bow_Draw").length
 	player.aim.aiming = true
+	player.aim.move_aims = true
+	player.velocity = Vector3.ZERO
+	player.anim_tree.set(&"parameters/Movement/transition_request", "Idle")
 	player.equipment.hold(_item)
 	player.anim_tree.set(&"parameters/BowPhase/transition_request", "Draw")
 	_fade_to(1.0)
@@ -32,7 +34,7 @@ func _enter() -> void:
 
 func _update(delta: float) -> void:
 	_elapsed += delta
-	_move()
+	player.move_and_slide()
 	if _released_at < 0.0:
 		if _elapsed >= _draw_length and player.anim_tree.get(&"parameters/BowPhase/current_state") == "Draw":
 			player.anim_tree.set(&"parameters/BowPhase/transition_request", "Idle")
@@ -44,6 +46,7 @@ func _update(delta: float) -> void:
 
 func _exit() -> void:
 	player.aim.aiming = false
+	player.aim.move_aims = false
 	player.equipment.release_held()
 	_fade_to(0.0)
 
@@ -58,15 +61,6 @@ func _release() -> void:
 		Feel.sfx(&"click", player.global_position)
 	else:
 		player.deny_item(_button)
-
-
-func _move() -> void:
-	var input: Vector2 = blackboard.get_var("input_dir", Vector2.ZERO)
-	var direction := Vector3(input.x, 0.0, input.y).normalized()
-	player.velocity.x = direction.x * AIM_SPEED
-	player.velocity.z = direction.z * AIM_SPEED
-	player.move_and_slide()
-	player.anim_tree.set(&"parameters/Movement/transition_request", "Running" if not direction.is_zero_approx() else "Idle")
 
 
 func _fade_to(amount: float) -> void:

@@ -101,3 +101,27 @@ func test_big_quiver_raises_capacity() -> void:
 	state.give(Items.get_item(&"quiver_big"))
 	assert_eq(state.inventory.capacity(&"arrow"), 50, "el carcaj grande suma 20")
 	state.reset()
+
+
+func test_left_stick_aims_while_drawing() -> void:
+	var setup: Array = await _setup(10)
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[2]
+	var eye: EyeSwitch = setup[3]
+	_face(player, Vector3.RIGHT)
+	var start := player.global_position
+	_action(&"item_1", true)
+	await tree.create_timer(0.2).timeout
+	var stick := InputEventJoypadMotion.new()
+	stick.axis = JOY_AXIS_LEFT_Y
+	stick.axis_value = -1.0
+	Input.parse_input_event(stick)
+	await tree.create_timer(0.4).timeout
+	assert_true(player.global_position.distance_to(start) < 0.05, "tensando, el stick izquierdo no camina")
+	assert_eq(player.aim.source, Aim.Source.MOVE_STICK, "apunta con el stick izquierdo")
+	_action(&"item_1", false)
+	await tree.create_timer(0.8).timeout
+	stick.axis_value = 0.0
+	Input.parse_input_event(stick)
+	assert_eq(eye.active, true, "la flecha va hacia donde apunta el stick izquierdo")
+	setup[1].reset()

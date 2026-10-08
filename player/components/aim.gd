@@ -1,8 +1,8 @@
 class_name Aim
 extends Node
-## Una sola dirección de apuntado: objetivo fijado > stick derecho / mouse > hacia donde mira.
+## Una sola dirección de apuntado: objetivo fijado > stick derecho > stick izquierdo al tensar > mouse > hacia donde mira.
 
-enum Source { FACING, STICK, MOUSE, TARGET }
+enum Source { FACING, STICK, MOUSE, TARGET, MOVE_STICK }
 
 @export var player: PlayerCharacter
 @export var stick_deadzone := 0.3
@@ -12,6 +12,8 @@ enum Source { FACING, STICK, MOUSE, TARGET }
 
 ## Lo prenden los ítems a distancia: el modelo gira hacia la dirección de apuntado.
 var aiming := false
+## Al tensar (arco) el player se planta y el stick izquierdo apunta, como en Ocarina of Time.
+var move_aims := false
 var source: Source = Source.FACING
 
 var _input_source: Source = Source.FACING
@@ -36,12 +38,16 @@ func get_direction() -> Vector3:
 	if target:
 		source = Source.TARGET
 		return _flat(target.global_position - player.global_position)
+	var stick := _stick()
+	if _input_source == Source.STICK and stick.length() > stick_deadzone:
+		source = Source.STICK
+		return Vector3(stick.x, 0.0, stick.y).normalized()
+	if move_aims:
+		var move := Input.get_vector(&"move_left", &"move_right", &"move_forward", &"move_backward")
+		if move.length() > stick_deadzone:
+			source = Source.MOVE_STICK
+			return Vector3(move.x, 0.0, move.y).normalized()
 	match _input_source:
-		Source.STICK:
-			var stick := _stick()
-			if stick.length() > stick_deadzone:
-				source = Source.STICK
-				return Vector3(stick.x, 0.0, stick.y).normalized()
 		Source.MOUSE:
 			var hit = mouse_on_ground()
 			if hit != null:

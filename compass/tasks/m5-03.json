@@ -6,7 +6,7 @@
       "text": "`ItemData` de arco y flecha con `ProjectileBehavior`"
     },
     {
-      "detail": "`Ranged_Bow_Draw` → `Ranged_Bow_Aiming_Idle` → `Ranged_Bow_Release`. Mientras se mantiene, el player strafea y se ve la retícula (2.2).",
+      "detail": "Ranged_Bow_Draw → Ranged_Bow_Aiming_Idle → Ranged_Bow_Release (rama filtrada al torso). Mientras se mantiene el player se planta y el stick izquierdo apunta (OoT); el derecho, el mouse y el lock-on también. Antes strafeaba con el stick derecho: era incómodo mantener X/Y y mover el stick derecho con el mismo pulgar.",
       "done": true,
       "text": "Mantener para apuntar, soltar para disparar"
     },
@@ -57,5 +57,5 @@
   "status": "done",
   "test": "Disparar a un interruptor de ojo a distancia con stick y con mouse: se activa. Sin flechas, el arco no dispara y suena el \"no se puede\".",
   "title": "Arco y flechas",
-  "updated_at": "2026-10-08T08:40:27.663Z"
+  "updated_at": "2026-10-08T17:43:54.202Z"
 }

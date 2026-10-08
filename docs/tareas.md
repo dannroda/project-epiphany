@@ -1007,7 +1007,7 @@ Skills: `disciplines:ai-behavior-trees-utility-ai`.
 - [x] `ItemData` de arco y flecha con `ProjectileBehavior`
   Munición `arrow`, `max_stack` 30 (el carcaj grande suma con `_capacity_bonus`).
 - [x] Mantener para apuntar, soltar para disparar
-  `Ranged_Bow_Draw` → `Ranged_Bow_Aiming_Idle` → `Ranged_Bow_Release`. Mientras se mantiene, el player strafea y se ve la retícula (2.2).
+  Ranged_Bow_Draw → Ranged_Bow_Aiming_Idle → Ranged_Bow_Release (rama filtrada al torso). Mientras se mantiene el player se planta y el stick izquierdo apunta (OoT); el derecho, el mouse y el lock-on también. Antes strafeaba con el stick derecho: era incómodo mantener X/Y y mover el stick derecho con el mismo pulgar.
 - [x] Escena de flecha
   Se clava en paredes un rato y desaparece.
 - [x] Interruptor de ojo
