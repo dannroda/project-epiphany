@@ -22,25 +22,9 @@ func _update(delta: float) -> void:
 		player.anim_tree.set(&"parameters/Movement/transition_request", "Running")
 		_free_move(direction, delta)
 
-func _locked_move(input: Vector2, delta: float, target: Node3D) -> void:
+func _locked_move(input: Vector2, _delta: float, target: Node3D) -> void:
 	var is_blocking: bool = blackboard.get_var("is_blocking", false)
-	var speed := BLOCK_SPEED if is_blocking else SPEED
-	
-	var move_dir := Vector3(input.x, 0, input.y).normalized()
-	player.velocity = move_dir * speed
-	player.move_and_slide()
-	var to_target := target.global_position - player.global_position
-	to_target.y = 0
-	if to_target.is_zero_approx():
-		return
-	
-	var fwd := to_target.normalized()
-	player.look_at(player.global_position + fwd, Vector3.UP)
-	player.model.rotation = Vector3(0, PI, 0)
-	var character_right := Vector3.UP.cross(-fwd)
-	var strafe_x := move_dir.dot(character_right)
-	var strafe_forward := move_dir.dot(fwd)
-	player.anim_tree["parameters/Targeting/blend_position"] = Vector2(strafe_x, -strafe_forward)
+	move_locked(input, BLOCK_SPEED if is_blocking else SPEED, target)
 
 func _free_move(dir: Vector3, delta: float) -> void:
 	var is_blocking: bool = blackboard.get_var("is_blocking", false)

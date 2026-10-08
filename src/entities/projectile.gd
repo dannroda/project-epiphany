@@ -57,9 +57,9 @@ func _on_landed(_hurtbox: Hurtbox) -> void:
 	queue_free()
 
 
-## Contra el mundo (paredes, piso, cajas); los personajes los resuelve su Hurtbox.
+## Contra el mundo (paredes, piso, cajas).
 func _on_body_entered(body: Node3D) -> void:
-	if _stuck or body is CharacterBody3D:
+	if _stuck or _on_character(body):
 		return
 	super(body)
 	Feel.burst(burst, global_position, -velocity.normalized())
@@ -74,3 +74,13 @@ func _on_body_entered(body: Node3D) -> void:
 func _face_velocity() -> void:
 	if not velocity.is_zero_approx():
 		look_at(global_position + velocity, Vector3.UP if absf(velocity.normalized().y) < 0.99 else Vector3.RIGHT)
+
+
+## Personajes y lo que llevan encima (escudos con colisión): los resuelve su Hurtbox.
+func _on_character(body: Node) -> bool:
+	var node := body
+	while node:
+		if node is CharacterBody3D:
+			return true
+		node = node.get_parent()
+	return false

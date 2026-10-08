@@ -1,6 +1,8 @@
 extends PlayerState
-## Arco y similares: mantener el botón tensa (el player se planta y el stick izquierdo apunta), soltarlo dispara.
+## Arco y similares: mantener el botón tensa y soltarlo dispara. Sin objetivo fijado el player se planta y el stick
+## izquierdo apunta (OoT); fijado, la flecha va al objetivo y el stick izquierdo camina (strafe).
 
+const LOCKED_SPEED := 2.5
 const ITEM_ACTIONS: Array[StringName] = [&"item_1", &"item_2"]
 
 ## Lo mínimo que hay que mantener antes de que soltar dispare.
@@ -24,7 +26,6 @@ func _enter() -> void:
 	_released_at = -1.0
 	_draw_length = player.anim_player.get_animation(&"CombatRanged/Ranged_Bow_Draw").length
 	player.aim.aiming = true
-	player.aim.move_aims = true
 	player.velocity = Vector3.ZERO
 	player.anim_tree.set(&"parameters/Movement/transition_request", "Idle")
 	player.equipment.hold(_item)
@@ -34,7 +35,7 @@ func _enter() -> void:
 
 func _update(delta: float) -> void:
 	_elapsed += delta
-	player.move_and_slide()
+	_move()
 	if _released_at < 0.0:
 		if _elapsed >= _draw_length and player.anim_tree.get(&"parameters/BowPhase/current_state") == "Draw":
 			player.anim_tree.set(&"parameters/BowPhase/transition_request", "Idle")
@@ -61,6 +62,20 @@ func _release() -> void:
 		Feel.sfx(&"click", player.global_position)
 	else:
 		player.deny_item(_button)
+
+
+func _move() -> void:
+	var target: Node3D = player.targeting.current
+	var locked := target != null and is_instance_valid(target)
+	player.aim.move_aims = not locked
+	set_locked_legs(locked)
+	if locked:
+		move_locked(blackboard.get_var("input_dir", Vector2.ZERO), LOCKED_SPEED, target)
+	else:
+		player.velocity.x = 0.0
+		player.velocity.z = 0.0
+		player.move_and_slide()
+		player.anim_tree["parameters/Targeting/blend_position"] = Vector2.ZERO
 
 
 func _fade_to(amount: float) -> void:

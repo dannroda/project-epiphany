@@ -125,3 +125,75 @@ func test_left_stick_aims_while_drawing() -> void:
 	Input.parse_input_event(stick)
 	assert_eq(eye.active, true, "la flecha va hacia donde apunta el stick izquierdo")
 	setup[1].reset()
+
+
+func _arrows(tree: SceneTree) -> Array:
+	return tree.current_scene.get_children().filter(func(n: Node) -> bool: return n is Projectile and not n.is_queued_for_deletion())
+
+
+func test_arrow_ignores_own_shield_collision() -> void:
+	var setup: Array = await _setup(10)
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[2]
+	var shield_bodies := player.equipment.shield_hand_socket.find_children("*", "StaticBody3D", true, false)
+	assert_true(not shield_bodies.is_empty(), "el escudo de KayKit trae colisión propia")
+	var shield := shield_bodies[0] as Node3D
+	var arrow: Projectile = preload("res://src/items/arrow/arrow.tscn").instantiate()
+	tree.current_scene.add_child(arrow)
+	var info := Items.get_item(&"bow").make_damage(player)
+	info.team = EntityConfig.Team.PLAYER
+	arrow.launch(shield.global_position + Vector3(-0.6, 0, 0), Vector3.RIGHT * 20.0, info)
+	for i in 6:
+		await tree.physics_frame
+	assert_eq(arrow._stuck, false, "atraviesa el escudo (oculto) de la mano en vez de clavarse en el aire")
+	assert_true(arrow.global_position.distance_to(shield.global_position) > 1.0, "sigue volando")
+	setup[1].reset()
+
+
+func test_locked_bow_strafes_and_hits_target() -> void:
+	var setup: Array = await _setup(10)
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[2]
+	var eye: EyeSwitch = setup[3]
+	var box := tree.current_scene.get_node(^"Caja3") as Node3D
+	box.global_position = player.global_position + Vector3(0, 0.6, -6)
+	box.freeze = true
+	await tree.physics_frame
+	player.targeting.set_target(box)
+	var start := player.global_position
+	_action(&"item_1", true)
+	await tree.create_timer(0.2).timeout
+	var stick := InputEventJoypadMotion.new()
+	stick.axis = JOY_AXIS_LEFT_X
+	stick.axis_value = 1.0
+	Input.parse_input_event(stick)
+	await tree.create_timer(0.5).timeout
+	assert_true(player.global_position.distance_to(start) > 0.5, "fijado, el stick izquierdo camina")
+	assert_eq(player.aim.source, Aim.Source.TARGET, "apunta al objetivo")
+	assert_eq(player.anim_tree.get(&"parameters/Combat/current_state"), "Targeting", "piernas en strafe")
+	stick.axis_value = 0.0
+	Input.parse_input_event(stick)
+	_action(&"item_1", false)
+	await tree.create_timer(0.1).timeout
+	var arrows := _arrows(tree)
+	assert_eq(arrows.size(), 1)
+	if arrows.size() == 1:
+		var to_box: Vector3 = box.global_position - arrows[0].global_position
+		to_box.y = 0.0
+		assert_true(arrows[0].velocity.normalized().dot(to_box.normalized()) > 0.95, "la flecha va hacia el objetivo")
+	player.targeting.clear()
+	setup[1].reset()
+
+
+func test_unlocked_bow_legs_rest() -> void:
+	var setup: Array = await _setup(10)
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[2]
+	player.anim_tree.set(&"parameters/Combat/transition_request", "Targeting")
+	player.anim_tree["parameters/Targeting/blend_position"] = Vector2(1, 0)
+	_action(&"item_1", true)
+	await tree.create_timer(0.3).timeout
+	assert_eq(player.anim_tree.get(&"parameters/Combat/current_state"), "Normal", "sin objetivo, piernas normales")
+	_action(&"item_1", false)
+	await tree.create_timer(0.6).timeout
+	setup[1].reset()
