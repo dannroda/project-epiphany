@@ -1,0 +1,27 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Prototype Textures/PNG/Dark/texture_04.png" id="tex"]
+
+[sub_resource type="StandardMaterial3D" id="Material"]
+albedo_color = Color(1.6, 1.6, 1.6, 1)
+albedo_texture = ExtResource("tex")
+uv1_triplanar = true
+
+[sub_resource type="SphereMesh" id="Mesh"]
+material = SubResource("Material")
+radius = 0.7
+height = 1.2
+
+[sub_resource type="SphereShape3D" id="Shape"]
+radius = 0.6
+
+[node name="PhysicsRock" type="RigidBody3D"]
+collision_layer = 9
+collision_mask = 9
+mass = 8.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("Mesh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("Shape")

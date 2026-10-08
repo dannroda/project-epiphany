@@ -1285,14 +1285,14 @@ Hecho 2026-10-08: kit `data/kits/gray_kit.tres` (lo arma `src/tools/build_gray_k
 
 **Bloqueada por:** 6.2 Puertas; 6.3 Llaves de mazmorra y HUD; 6.4 Bloques por grilla; 6.5 Interruptores y cableado
 
-## M7 — Overworld  (0/8)
+## M7 — Overworld  (2/8)
 
 Zona chica con el gating bombas → escudo espejo → sello del templo, y los secretos.
 
 **Hecho cuando:**
 - Ida y vuelta entre overworld y mazmorra.
 
-### 7.1 Diseño del layout del overworld · Pendiente
+### 7.1 Diseño del layout del overworld · Hecho
 
 - [x] Diagrama de 6–8 pantallas
   Inicio, pradera, cueva de bombas, santuario, entrada al templo y los 3 secretos. Camino crítico y atajos.
@@ -1315,20 +1315,22 @@ Hecho 2026-10-08: layout de 8 zonas en GDD §7.1 (diagrama, tabla por zona, veri
 
 **Bloquea a:** 7.2 Blockout del overworld
 
-### 7.2 Blockout del overworld · Pendiente
+### 7.2 Blockout del overworld · Hecho
 
-- [ ] Crear `levels/overworld.tscn`
+- [x] Crear `levels/overworld.tscn`
   Terreno y límites en gris con el kit de 6.7; `levels/test.tscn` queda como nivel de pruebas.
-- [ ] Puntos de reaparición y nombres de zona
+- [x] Puntos de reaparición y nombres de zona
   `SpawnPoint` por zona; el HUD muestra el nombre al entrar a cada una.
-- [ ] Navmesh y enemigos de la pradera
+- [x] Navmesh y enemigos de la pradera
   Esqueletos y pasto (si 4.4 entró).
-- [ ] Objetos físicos
+- [x] Objetos físicos
   Cajas y rocas para empujar y volar con bombas.
 
 **Prueba:** Recorrer el overworld de punta a punta con el inventario completo sin caer fuera del mapa ni trabarse.
 
 **Notas:** Skills: `disciplines:level-design`, `godot:godot-3d-essentials`.
+
+Hecho 2026-10-08: `levels/overworld.tscn` con el kit gris + piezas de exterior (pasto, acantilado, cerco, árbol, abismo). 8 zonas con `AreaZone` (nombre en el HUD) y `SpawnPoint` por zona; aberturas con gating de 1 celda, abiertas hasta 7.4/7.5/7.7. Navmesh horneada desde el `GridMap`; 3 esqueletos en la pradera; cajas y rocas (`physics_box.tscn`, `physics_rock.tscn`). Test `tests/test_overworld.gd`: recorre las 8 zonas caminando con input y verifica que el abismo frena al player pero no a las flechas.
 
 **Referencias:** `gdd.md#overworld`
 

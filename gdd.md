@@ -188,6 +188,8 @@ Decidido el 2026-10-08. 8 zonas de ≈ 24 × 16 m (una "pantalla" con la cámara
 
 **Curva de ritmo:** calma (Inicio) → combate (Pradera) → combate y descubrimiento (Cueva: bombas) → recompensa opcional (Gruta) → descubrimiento (Santuario: escudo espejo) → prueba (sello) → mazmorra → vuelta tranquila con el arco al Risco (carcaj).
 
+**Blockout (7.2):** `levels/overworld.tscn`, un `GridMap` con el kit gris más sus piezas de exterior (Pasto, Acantilado, Cerco, Árbol, Abismo). Zonas de 11 × 7 celdas de interior separadas por acantilados de una celda; aberturas de 3 celdas donde el paso es libre y de 1 celda donde hay gating (ahí van el muro agrietado o la reja de 7.4, 7.5 y 7.7). Cada zona tiene un `AreaZone` (el HUD muestra su nombre al entrar desde otra zona) y un `SpawnPoint` con el id de la zona (`start` y `santuario` son checkpoints). El abismo frena al player (colisión hasta 0.6 m) pero las flechas pasan por arriba. Cajas y rocas: `src/world/physics_box.tscn` y `physics_rock.tscn`. La navmesh se hornea desde el grupo `navmesh_source` (el `GridMap`); si cambia el terreno, botón *Bake* del `NavigationRegion3D`. El mapa de pausa usa una foto cenital ortográfica (`assets/ui/maps/overworld.png`).
+
 ## 8. Mazmorra — El Templo
 <!-- id: mazmorra -->
 

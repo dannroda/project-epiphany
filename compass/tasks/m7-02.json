@@ -2,22 +2,22 @@
   "checklist": [
     {
       "detail": "Terreno y límites en gris con el kit de 6.7; `levels/test.tscn` queda como nivel de pruebas.",
-      "done": false,
+      "done": true,
       "text": "Crear `levels/overworld.tscn`"
     },
     {
       "detail": "`SpawnPoint` por zona; el HUD muestra el nombre al entrar a cada una.",
-      "done": false,
+      "done": true,
       "text": "Puntos de reaparición y nombres de zona"
     },
     {
       "detail": "Esqueletos y pasto (si 4.4 entró).",
-      "done": false,
+      "done": true,
       "text": "Navmesh y enemigos de la pradera"
     },
     {
       "detail": "Cajas y rocas para empujar y volar con bombas.",
-      "done": false,
+      "done": true,
       "text": "Objetos físicos"
     }
   ],
@@ -38,7 +38,7 @@
     }
   ],
   "milestone": "m07",
-  "notes": "Skills: `disciplines:level-design`, `godot:godot-3d-essentials`.",
+  "notes": "Skills: `disciplines:level-design`, `godot:godot-3d-essentials`.\n\nHecho 2026-10-08: `levels/overworld.tscn` con el kit gris + piezas de exterior (pasto, acantilado, cerco, árbol, abismo). 8 zonas con `AreaZone` (nombre en el HUD) y `SpawnPoint` por zona; aberturas con gating de 1 celda, abiertas hasta 7.4/7.5/7.7. Navmesh horneada desde el `GridMap`; 3 esqueletos en la pradera; cajas y rocas (`physics_box.tscn`, `physics_rock.tscn`). Test `tests/test_overworld.gd`: recorre las 8 zonas caminando con input y verifica que el abismo frena al player pero no a las flechas.",
   "order": 2,
   "refs": [
     {
@@ -46,8 +46,8 @@
       "section": "overworld"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Recorrer el overworld de punta a punta con el inventario completo sin caer fuera del mapa ni trabarse.",
   "title": "Blockout del overworld",
-  "updated_at": "2026-10-08T04:45:55.943Z"
+  "updated_at": "2026-10-08T23:49:52.967Z"
 }

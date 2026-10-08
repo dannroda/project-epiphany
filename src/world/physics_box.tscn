@@ -1,0 +1,24 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Prototype Textures/PNG/Orange/texture_04.png" id="tex"]
+
+[sub_resource type="StandardMaterial3D" id="Material"]
+albedo_color = Color(0.75, 0.55, 0.35, 1)
+albedo_texture = ExtResource("tex")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="Mesh"]
+material = SubResource("Material")
+
+[sub_resource type="BoxShape3D" id="Shape"]
+
+[node name="PhysicsBox" type="RigidBody3D"]
+collision_layer = 9
+collision_mask = 9
+mass = 2.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("Mesh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("Shape")
