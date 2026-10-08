@@ -25,8 +25,14 @@ func _assert_framed(camera: TopDownCamera, room: Room, label: String) -> void:
 		var fits := view.size[axis] <= bounds.size[axis] + 0.01
 		if fits:
 			assert_true(seen.position[axis] >= bounds.position[axis] - 0.05 and seen.end[axis] <= bounds.end[axis] + 0.05, "%s: la vista no sale de la sala (eje %d)" % [label, axis])
+		elif axis == 0:
+			assert_true(absf(camera.focus.x - bounds.get_center().x) < 0.05, "%s: sala más angosta que la vista, centrada" % label)
 		else:
-			assert_true(absf(seen.get_center()[axis] - bounds.get_center()[axis]) < 0.05, "%s: sala más chica que la vista, centrada (eje %d)" % [label, axis])
+			var floor_y := camera.target_node.global_position.y
+			var eye := camera.focus + camera.offset
+			var north := Vector3(bounds.get_center().x, floor_y + camera.wall_height, bounds.position.y)
+			var south := Vector3(bounds.get_center().x, floor_y, bounds.end.y)
+			assert_true(absf(camera._screen_height(north, eye) + camera._screen_height(south, eye)) < 0.01, "%s: sala más baja que la vista, centrada en pantalla" % label)
 
 
 func _walk(action: StringName, pressed: bool) -> void:

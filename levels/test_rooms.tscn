@@ -263,6 +263,8 @@ script = ExtResource("w_spawn")
 transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 12, 9)
 script = ExtResource("t_camera")
 target_node = NodePath("../Player")
+fov = 40.0
+offset = Vector3(0, 13.4, 7.7)
 
 
 [node name="HUD" parent="." instance=ExtResource("ui_hud")]
