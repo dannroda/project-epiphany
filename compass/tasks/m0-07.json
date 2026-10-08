@@ -28,6 +28,16 @@
   ],
   "code": "0.7",
   "created_at": "2026-09-29T18:00:00Z",
+  "links": [
+    {
+      "task": "m0-08",
+      "type": "blocks"
+    },
+    {
+      "task": "m0-09",
+      "type": "blocks"
+    }
+  ],
   "milestone": "m00",
   "notes": "Piezas reutilizables para todo lo que pega o recibe golpes (player, enemigos, trampas, jefe), y la ficha de datos de cada tipo de entidad. Todavía no se ven en el juego: se usan en 0.8 y 0.9.\n\nDiseño en el GDD (§11.3 y \"Ventanas de ataque\").",
   "order": 7,
@@ -44,5 +54,5 @@
   "status": "todo",
   "test": "Los scripts no dan errores y los `.tres` se abren en el Inspector con todos sus campos.",
   "title": "Componentes y EntityConfig",
-  "updated_at": "2026-09-30T04:37:18.800Z"
+  "updated_at": "2026-10-04T22:17:19.150Z"
 }

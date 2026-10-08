@@ -44,6 +44,11 @@
       "detail": "`player.gd` conecta los componentes (referencias, `set_guard`, `is_blocking()`); `state_machine.gd` queda con las transiciones y la lectura de movimiento y ataque. Diseño en [[gdd#player]].",
       "done": false,
       "text": "Dejar `player.gd` y `state_machine.gd` solo con lo suyo"
+    },
+    {
+      "detail": "Nodos y estados de animación en `player/player.tscn`, `src/entities/enemy.tscn` y `player/animation/new_animation_node_state_machine.tres`, y las referencias en `player/states/idle.gd` y `moving.gd`. Renombrar desde el editor (no a mano en los .tscn/.tres) y revisar que las rutas a nodos y las transiciones de la máquina de estados sigan andando.",
+      "done": false,
+      "text": "Unificar `Targetting` → `Targeting` en nodos y estados"
     }
   ],
   "code": "0.9",
@@ -64,5 +69,5 @@
   "status": "todo",
   "test": "Cambiar el escudo equipado a `shield_mirror` desde el Save Inspector y cargar: el player aparece con el otro escudo. Pegarle al esqueleto: pierde vida una sola vez por golpe. Con *Debug › Visible Collision Shapes*, rodar o recibir un golpe en medio de un ataque apaga la hitbox.",
   "title": "Refactor del player",
-  "updated_at": "2026-09-30T04:37:19.715Z"
+  "updated_at": "2026-10-04T22:23:33.704Z"
 }

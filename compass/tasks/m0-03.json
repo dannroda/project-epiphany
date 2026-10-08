@@ -53,6 +53,16 @@
   ],
   "code": "0.3",
   "created_at": "2026-09-29T18:00:00Z",
+  "links": [
+    {
+      "task": "m0-05",
+      "type": "blocks"
+    },
+    {
+      "task": "m0-09",
+      "type": "blocks"
+    }
+  ],
   "milestone": "m00",
   "notes": "Crea la base de datos de ítems. Cada ítem es un recurso `.tres` con sus datos, y lo que hace al usarse es otro recurso que se le enchufa (su comportamiento). Así una espada de fuego no necesita una clase nueva.\n\nTodavía no se usa en el juego: el player empieza a usarla en 0.9. El código de ejemplo de cada clase está en el GDD (§11.2). Hacé los pasos en orden: el autoload necesita que los `.tres` ya existan.",
   "order": 3,
@@ -65,5 +75,5 @@
   "status": "todo",
   "test": "Con el juego corriendo, desde un script de prueba o el debugger remoto: `Items.get_item(&\"sword_basic\").display_name` devuelve el nombre de la espada.",
   "title": "Ítems: datos",
-  "updated_at": "2026-09-30T04:37:16.464Z"
+  "updated_at": "2026-10-04T22:17:18.647Z"
 }

@@ -32,6 +32,12 @@
   ],
   "code": "0.8",
   "created_at": "2026-09-29T18:00:00Z",
+  "links": [
+    {
+      "task": "m0-09",
+      "type": "related"
+    }
+  ],
   "milestone": "m00",
   "notes": "El esqueleto pasa a usar los componentes de 0.7: recibe daño por `Hurtbox` y `Health` en lugar de `take_hit`. Todavía no ataca: la IA de ataque es M1.\n\nNecesita 0.7. Ojo: la espada del player sigue llamando `take_hit` hasta 0.9, así que conviene hacer 0.8 y 0.9 seguidas.",
   "order": 8,
@@ -48,5 +54,5 @@
   "status": "todo",
   "test": "Se prueba al terminar 0.9: pegarle al esqueleto le baja la vida y muere con su animación. Las cajas siguen saliendo despedidas.",
   "title": "Enemigo sobre componentes",
-  "updated_at": "2026-09-30T04:37:19.266Z"
+  "updated_at": "2026-10-04T22:17:19.403Z"
 }

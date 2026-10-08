@@ -1,9 +1,9 @@
 # Tareas — Project Epiphany
 
 > Export de `compass/`, que es la fuente de verdad. No editar: los cambios se hacen en `compass/` o con `scompass`, y este archivo se regenera.
-> Generado: 2026-09-30
+> Generado: 2026-10-08
 
-## M0 — Refactor del player + base de datos  (2/11)
+## M0 — Refactor del player + base de datos  (2/12)
 
 Dejar armada la base sobre la que se construye todo lo demás: ítems como datos, estado de la partida, guardado, componentes de combate y un player ordenado en piezas. Casi nada de esto se ve en el juego todavía; lo que cambia es cómo está hecho. Diseño y código de ejemplo: `gdd.md` §11.
 
@@ -54,6 +54,41 @@ Se puede hacer en cualquier momento.
 
 **Referencias:** `gdd.md#input`
 
+### 0.11 Sistema de depuración · En curso
+
+- [x] Crear el autoload `Log` (`src/debug/log.gd`)
+  Niveles debug, info, success, warning y error, y un canal por sistema (`combat`, `targeting`, `ai`, `items`, `save`, `camera`, `input`, `world`). Debug, info y success salen con `print_rich` y color; warning y error van por `push_warning`/`push_error`, así caen en la pestaña Errores con el stack. Hecho en `addons/epiphany_tools/debug/log.gd` y registrado como autoload `Log` en `project.godot`. La tarea decía `src/debug/`: decidir si se mueve (es código del juego, no del editor).
+- [ ] Registrar un `Logger` propio (`src/debug/log_sink.gd`)
+  Con `OS.add_logger()` en el `_init` de `Log`. Recibe todo lo que se imprime (juego, engine y addons, LimboAI incluido) y todos los errores con archivo, línea, función y backtrace. Puede llamarse desde otros hilos: guarda lo recibido en una cola protegida con `Mutex`, y `Log` la vacía en `_process`. Adentro no se puede usar `print` ni `push_error` (se llamaría a sí mismo). `log_sink.gd` existe pero es la plantilla vacía y hereda de `Node`: tiene que heredar de `Logger`.
+- [ ] Agregar `epiphany/log/level` y `epiphany/log/channels` a `project.godot`
+  Con *Advanced Settings* activado se editan desde Project Settings. Ojo: hoy el filtro de canales de `Log` no filtra. `_channels` arranca con todos en `true`, el setting solo agrega, e `is_enabled()` mira `has()` y no el valor. Al leer `epiphany/log/channels`, reemplazar la lista en lugar de sumar, o usar el `bool`. Decidir también si `warning` y `error` respetan el canal (hoy lo ignoran).
+- [ ] Reemplazar los prints comentados por llamadas a `Log`
+  Los de `src/entities/enemy.gd` y `src/items/equipable_item.gd`, y el `printt` de `on_death_finished`. Por ejemplo: `Log.info(&"combat", name, "recibió golpe. Vida:", current_health)`.
+- [ ] Registrar monitores propios
+  Con `Performance.add_custom_monitor("epiphany/…", callable)` para lo que ya se puede medir (enemigos vivos, objetivo fijado 0/1). Se ven como gráficos en *Debugger › Monitors*. Cada sistema nuevo (hitboxes en 0.7, por ejemplo) suma los suyos.
+- [ ] Crear la pestaña "Log" en el debugger del editor
+  Un `EditorDebuggerPlugin` en `addons/epiphany_tools/` (si el plugin todavía no existe por 0.10, se crea acá). El juego le manda con `EngineDebugger.send_message("epiphany_log:entry", …)` las líneas de `Log` (con nivel y canal) y lo que capturó el `Logger` que no vino de `Log`: errores y mensajes del engine y de addons, con canal `engine`.
+- [ ] Filtrar desde la pestaña con el juego corriendo
+  Al cambiar nivel o canales, el editor le manda el filtro al juego (`EditorDebuggerSession.send_message`) y el juego lo aplica al momento (`EngineDebugger.register_message_capture`).
+- [ ] Doble clic en una línea abre el script donde se generó
+  Con `EditorInterface.edit_script()`. Para errores, la ubicación sale del backtrace que da el `Logger`; para las líneas de `Log`, de `get_stack()`.
+- [ ] Crear el overlay `DebugOverlay` (tecla `1`)
+  Autoload con `watch(clave, valor)` para valores que cambian cada frame (estado, velocidad, objetivo), y la acción `debug_overlay` (tecla `1`) para mostrarlo u ocultarlo. Reemplaza a `LabelStateTracker` (`src/debug/label_prop.gd`) y sirve también en builds exportadas. La acción `debug_overlay` (tecla `1`) ya está en el Input Map. `debug_overlay.gd` existe pero es la plantilla vacía y no está registrado como autoload.
+- [ ] Para más adelante: pestaña Watches y comandos desde el editor
+  Los valores del overlay en vivo en una pestaña del debugger, y botones que le mandan órdenes al juego (dar un ítem, cambiar una flag, cargar un escenario).
+
+**Prueba:** Correr `levels/test.tscn` y golpear al esqueleto: la línea aparece en la pestaña Log del debugger. Filtrar por `combat` desde la pestaña oculta el resto sin reiniciar el juego. Doble clic en la línea abre `enemy.gd` donde se generó. En *Debugger › Monitors* aparece la categoría `epiphany`. La tecla `1` muestra y oculta el overlay. Un error provocado a propósito (por ejemplo, llamar a un método que no existe) también aparece en la pestaña, con canal `engine`, y el doble clic lleva a la línea.
+
+**Notas:** Reemplaza los `print` y `print_rich` sueltos por un logger con niveles y canales, conectado al debugger de Godot. Es el port a GDScript del logger de godot-dojo (`include/tools/logger.hpp`), con canales agregados.
+
+Conviene hacerla antes de 0.7, así los componentes nuevos ya nacen usando `Log`. El autoload no puede llamarse `Logger`: desde Godot 4.5 es una clase del engine. Los argumentos variables (`...args: Array`) son de GDScript 4.5 en adelante.
+
+Referencia: https://docs.godotengine.org/en/latest/tutorials/scripting/logging.html (clase `Logger`, `OS.add_logger()`, file logging). Godot ya guarda un archivo por sesión en `user://logs/godot.log` y conserva los últimos 5 (*Debug › File Logging*); para playtests alcanza con eso al principio.
+
+**Referencias:** `gdd.md#depuracion`
+
+**Relacionadas:** 0.7 Componentes y EntityConfig; 0.10 Save Inspector v0; 0.8 Enemigo sobre componentes
+
 ### 0.3 Ítems: datos · Pendiente
 
 - [ ] Crear `src/combat/attack_data.gd`
@@ -85,6 +120,10 @@ Todavía no se usa en el juego: el player empieza a usarla en 0.9. El código de
 
 **Referencias:** `gdd.md#items-datos`
 
+**Bloquea a:** 0.5 GameState; 0.9 Refactor del player
+
+**Relacionadas:** 0.12 Tests headless
+
 ### 0.4 Flags · Pendiente
 
 - [ ] Crear `src/state/flag_definition.gd`
@@ -99,6 +138,8 @@ Todavía no se usa en el juego: el player empieza a usarla en 0.9. El código de
 **Notas:** Las flags son el estado del mundo que se guarda: un cofre abierto, una puerta destrabada. Se declaran en un registro para evitar errores de tipeo y para que el Save Inspector pueda avisar cuando una partida tiene una flag que no existe. Diseño en el GDD (§11.6).
 
 **Referencias:** `gdd.md#estado-flags`
+
+**Bloquea a:** 0.5 GameState
 
 ### 0.5 GameState · Pendiente
 
@@ -119,10 +160,16 @@ Necesita 0.3 y 0.4. Diseño en el GDD (§11.6).
 
 **Referencias:** `gdd.md#estado-flags`
 
+**Bloquea a:** 0.6 Guardado; 0.9 Refactor del player
+
+**Bloqueada por:** 0.3 Ítems: datos; 0.4 Flags
+
 ### 0.6 Guardado · Pendiente
 
 - [ ] Crear `src/save/save_codec.gd`
   Funciones estáticas para escribir, leer, calcular el checksum, detectar partidas modificadas y validarlas. Es estático para que también lo use el Save Inspector (0.10). Código en [[gdd#guardado]].
+- [ ] Escritura atómica y copia de respaldo en `SaveCodec.write`/`read`
+  `ConfigFile.save()` escribe sobre el archivo: si el juego se cierra a mitad de camino, la partida queda corrupta. Escribir a `slot_N.cfg.tmp`, mover la partida anterior a `slot_N.cfg.bak` y renombrar el `.tmp` con `DirAccess.rename_absolute()`. Al leer, si `slot_N.cfg` no carga, probar con el `.bak` y avisar. El código del GDD (§11.7) todavía escribe directo: actualizarlo también.
 - [ ] Crear el autoload `SaveManager` (`src/save/save_manager.gd`)
   la tecla `3` guarda, la `2` carga, y al arrancar puede cargar un escenario de `debug/scenarios/` (con el argumento `--scenario=nombre` o con el archivo que deja el Save Inspector).
 - [ ] Guardar y restaurar la posición del player
@@ -142,38 +189,9 @@ Necesita 0.5. Diseño completo y código en el GDD (§11.7).
 
 **Referencias:** `gdd.md#guardado`
 
-### 0.11 Sistema de depuración · Pendiente
+**Bloquea a:** 0.10 Save Inspector v0; 0.12 Tests headless
 
-- [ ] Crear el autoload `Log` (`src/debug/log.gd`)
-  Niveles debug, info, success, warning y error, y un canal por sistema (`combat`, `targeting`, `ai`, `items`, `save`, `camera`, `input`, `world`). Debug, info y success salen con `print_rich` y color; warning y error van por `push_warning`/`push_error`, así caen en la pestaña Errores con el stack.
-- [ ] Registrar un `Logger` propio (`src/debug/log_sink.gd`)
-  Con `OS.add_logger()` en el `_init` de `Log`. Recibe todo lo que se imprime (juego, engine y addons, LimboAI incluido) y todos los errores con archivo, línea, función y backtrace. Puede llamarse desde otros hilos: guarda lo recibido en una cola protegida con `Mutex`, y `Log` la vacía en `_process`. Adentro no se puede usar `print` ni `push_error` (se llamaría a sí mismo).
-- [ ] Agregar `epiphany/log/level` y `epiphany/log/channels` a `project.godot`
-  Con *Advanced Settings* activado se editan desde Project Settings.
-- [ ] Reemplazar los prints comentados por llamadas a `Log`
-  Los de `src/entities/enemy.gd` y `src/items/equipable_item.gd`, y el `printt` de `on_death_finished`. Por ejemplo: `Log.info(&"combat", name, "recibió golpe. Vida:", current_health)`.
-- [ ] Registrar monitores propios
-  Con `Performance.add_custom_monitor("epiphany/…", callable)` para lo que ya se puede medir (enemigos vivos, objetivo fijado 0/1). Se ven como gráficos en *Debugger › Monitors*. Cada sistema nuevo (hitboxes en 0.7, por ejemplo) suma los suyos.
-- [ ] Crear la pestaña "Log" en el debugger del editor
-  Un `EditorDebuggerPlugin` en `addons/epiphany_tools/` (si el plugin todavía no existe por 0.10, se crea acá). El juego le manda con `EngineDebugger.send_message("epiphany_log:entry", …)` las líneas de `Log` (con nivel y canal) y lo que capturó el `Logger` que no vino de `Log`: errores y mensajes del engine y de addons, con canal `engine`.
-- [ ] Filtrar desde la pestaña con el juego corriendo
-  Al cambiar nivel o canales, el editor le manda el filtro al juego (`EditorDebuggerSession.send_message`) y el juego lo aplica al momento (`EngineDebugger.register_message_capture`).
-- [ ] Doble clic en una línea abre el script donde se generó
-  Con `EditorInterface.edit_script()`. Para errores, la ubicación sale del backtrace que da el `Logger`; para las líneas de `Log`, de `get_stack()`.
-- [ ] Crear el overlay `DebugOverlay` (tecla `1`)
-  Autoload con `watch(clave, valor)` para valores que cambian cada frame (estado, velocidad, objetivo), y la acción `debug_overlay` (tecla `1`) para mostrarlo u ocultarlo. Reemplaza a `LabelStateTracker` (`src/debug/label_prop.gd`) y sirve también en builds exportadas.
-- [ ] Para más adelante: pestaña Watches y comandos desde el editor
-  Los valores del overlay en vivo en una pestaña del debugger, y botones que le mandan órdenes al juego (dar un ítem, cambiar una flag, cargar un escenario).
-
-**Prueba:** Correr `levels/test.tscn` y golpear al esqueleto: la línea aparece en la pestaña Log del debugger. Filtrar por `combat` desde la pestaña oculta el resto sin reiniciar el juego. Doble clic en la línea abre `enemy.gd` donde se generó. En *Debugger › Monitors* aparece la categoría `epiphany`. La tecla `1` muestra y oculta el overlay. Un error provocado a propósito (por ejemplo, llamar a un método que no existe) también aparece en la pestaña, con canal `engine`, y el doble clic lleva a la línea.
-
-**Notas:** Reemplaza los `print` y `print_rich` sueltos por un logger con niveles y canales, conectado al debugger de Godot. Es el port a GDScript del logger de godot-dojo (`include/tools/logger.hpp`), con canales agregados.
-
-Conviene hacerla antes de 0.7, así los componentes nuevos ya nacen usando `Log`. El autoload no puede llamarse `Logger`: desde Godot 4.5 es una clase del engine. Los argumentos variables (`...args: Array`) son de GDScript 4.5 en adelante.
-
-Referencia: https://docs.godotengine.org/en/latest/tutorials/scripting/logging.html (clase `Logger`, `OS.add_logger()`, file logging). Godot ya guarda un archivo por sesión en `user://logs/godot.log` y conserva los últimos 5 (*Debug › File Logging*); para playtests alcanza con eso al principio.
-
-**Referencias:** `gdd.md#depuracion`
+**Bloqueada por:** 0.5 GameState
 
 ### 0.7 Componentes y EntityConfig · Pendiente
 
@@ -195,6 +213,10 @@ Referencia: https://docs.godotengine.org/en/latest/tutorials/scripting/logging.h
 Diseño en el GDD (§11.3 y "Ventanas de ataque").
 
 **Referencias:** `gdd.md#entidades-componentes`, `gdd.md#ventanas-ataque`
+
+**Bloquea a:** 0.8 Enemigo sobre componentes; 0.9 Refactor del player
+
+**Relacionadas:** 0.11 Sistema de depuración
 
 ### 0.8 Enemigo sobre componentes · Pendiente
 
@@ -218,6 +240,10 @@ Necesita 0.7. Ojo: la espada del player sigue llamando `take_hit` hasta 0.9, as�
 
 **Referencias:** `gdd.md#entidades-componentes`, `gdd.md#ventanas-ataque`
 
+**Bloqueada por:** 0.7 Componentes y EntityConfig
+
+**Relacionadas:** 0.9 Refactor del player; 0.11 Sistema de depuración
+
 ### 0.9 Refactor del player · Pendiente
 
 - [ ] Crear `player/components/equipment.gd`
@@ -238,6 +264,8 @@ Necesita 0.7. Ojo: la espada del player sigue llamando `take_hit` hasta 0.9, as�
   Con la vida inicial de `GameState.max_health`. Alcanza con que el daño llegue: bloquear según hacia dónde mirás es M1.
 - [ ] Dejar `player.gd` y `state_machine.gd` solo con lo suyo
   `player.gd` conecta los componentes (referencias, `set_guard`, `is_blocking()`); `state_machine.gd` queda con las transiciones y la lectura de movimiento y ataque. Diseño en [[gdd#player]].
+- [ ] Unificar `Targetting` → `Targeting` en nodos y estados
+  Nodos y estados de animación en `player/player.tscn`, `src/entities/enemy.tscn` y `player/animation/new_animation_node_state_machine.tres`, y las referencias en `player/states/idle.gd` y `moving.gd`. Renombrar desde el editor (no a mano en los .tscn/.tres) y revisar que las rutas a nodos y las transiciones de la máquina de estados sigan andando.
 
 **Prueba:** Cambiar el escudo equipado a `shield_mirror` desde el Save Inspector y cargar: el player aparece con el otro escudo. Pegarle al esqueleto: pierde vida una sola vez por golpe. Con *Debug › Visible Collision Shapes*, rodar o recibir un golpe en medio de un ataque apaga la hitbox.
 
@@ -246,6 +274,10 @@ Necesita 0.7. Ojo: la espada del player sigue llamando `take_hit` hasta 0.9, as�
 Necesita 0.3, 0.5 y 0.7. Diseño en el GDD (§11.4 y "Ventanas de ataque").
 
 **Referencias:** `gdd.md#player`, `gdd.md#ventanas-ataque`
+
+**Bloqueada por:** 0.3 Ítems: datos; 0.5 GameState; 0.7 Componentes y EntityConfig
+
+**Relacionadas:** 0.8 Enemigo sobre componentes
 
 ### 0.10 Save Inspector v0 · Pendiente
 
@@ -270,6 +302,31 @@ Va en `addons/epiphany_tools/`, como carpeta normal (no un symlink como `addons/
 Necesita 0.6. Diseño en el GDD (§11.8).
 
 **Referencias:** `gdd.md#save-inspector`
+
+**Bloqueada por:** 0.6 Guardado
+
+**Relacionadas:** 0.11 Sistema de depuración
+
+### 0.12 Tests headless · Pendiente
+
+- [ ] Crear el runner `tests/run_tests.gd`
+  Script que extiende `SceneTree`: recorre `tests/test_*.gd`, corre cada método `test_*` y termina con `quit(1)` si algo falló. Usar un `assert_eq()` propio que cuente fallos: un `assert()` que falla deja el proceso colgado en lugar de terminar.
+- [ ] Correrlo por línea de comandos
+  `godot --headless --path . --import` una vez (en un checkout limpio las clases con `class_name` todavía no están registradas) y después `godot --headless --path . --script res://tests/run_tests.gd`. Anotar el comando en el README.
+- [ ] Tests de `SaveCodec`
+  Ida y vuelta (escribir y leer da lo mismo), checksum que detecta una edición a mano, migración desde una versión anterior y recuperación desde el `.bak` cuando el archivo principal está roto.
+- [ ] Tests de la base de ítems
+  Que cada `.tres` de ítems cargue, tenga `id` único y que `Items.get_item()` lo encuentre.
+- [ ] Excluir `tests/` de los presets de export
+  En *Resources › Filters to exclude files*, como `debug/scenarios/*`.
+
+**Prueba:** Correr el comando headless: termina con código 0. Romper a propósito un test (por ejemplo, cambiar un valor esperado): termina con código 1 y dice cuál falló.
+
+**Notas:** Para lo que se puede probar sin abrir el juego: guardado, datos de ítems y flags. Los tests de SaveCodec necesitan 0.6, y los de ítems, 0.3.
+
+**Bloqueada por:** 0.6 Guardado
+
+**Relacionadas:** 0.3 Ítems: datos
 
 ## M1 — Combate real
 

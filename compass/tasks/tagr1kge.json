@@ -1,17 +1,17 @@
 {
   "checklist": [
     {
-      "detail": "Niveles debug, info, success, warning y error, y un canal por sistema (`combat`, `targeting`, `ai`, `items`, `save`, `camera`, `input`, `world`). Debug, info y success salen con `print_rich` y color; warning y error van por `push_warning`/`push_error`, así caen en la pestaña Errores con el stack.",
-      "done": false,
+      "detail": "Niveles debug, info, success, warning y error, y un canal por sistema (`combat`, `targeting`, `ai`, `items`, `save`, `camera`, `input`, `world`). Debug, info y success salen con `print_rich` y color; warning y error van por `push_warning`/`push_error`, así caen en la pestaña Errores con el stack. Hecho en `addons/epiphany_tools/debug/log.gd` y registrado como autoload `Log` en `project.godot`. La tarea decía `src/debug/`: decidir si se mueve (es código del juego, no del editor).",
+      "done": true,
       "text": "Crear el autoload `Log` (`src/debug/log.gd`)"
     },
     {
-      "detail": "Con `OS.add_logger()` en el `_init` de `Log`. Recibe todo lo que se imprime (juego, engine y addons, LimboAI incluido) y todos los errores con archivo, línea, función y backtrace. Puede llamarse desde otros hilos: guarda lo recibido en una cola protegida con `Mutex`, y `Log` la vacía en `_process`. Adentro no se puede usar `print` ni `push_error` (se llamaría a sí mismo).",
+      "detail": "Con `OS.add_logger()` en el `_init` de `Log`. Recibe todo lo que se imprime (juego, engine y addons, LimboAI incluido) y todos los errores con archivo, línea, función y backtrace. Puede llamarse desde otros hilos: guarda lo recibido en una cola protegida con `Mutex`, y `Log` la vacía en `_process`. Adentro no se puede usar `print` ni `push_error` (se llamaría a sí mismo). `log_sink.gd` existe pero es la plantilla vacía y hereda de `Node`: tiene que heredar de `Logger`.",
       "done": false,
       "text": "Registrar un `Logger` propio (`src/debug/log_sink.gd`)"
     },
     {
-      "detail": "Con *Advanced Settings* activado se editan desde Project Settings.",
+      "detail": "Con *Advanced Settings* activado se editan desde Project Settings. Ojo: hoy el filtro de canales de `Log` no filtra. `_channels` arranca con todos en `true`, el setting solo agrega, e `is_enabled()` mira `has()` y no el valor. Al leer `epiphany/log/channels`, reemplazar la lista en lugar de sumar, o usar el `bool`. Decidir también si `warning` y `error` respetan el canal (hoy lo ignoran).",
       "done": false,
       "text": "Agregar `epiphany/log/level` y `epiphany/log/channels` a `project.godot`"
     },
@@ -41,7 +41,7 @@
       "text": "Doble clic en una línea abre el script donde se generó"
     },
     {
-      "detail": "Autoload con `watch(clave, valor)` para valores que cambian cada frame (estado, velocidad, objetivo), y la acción `debug_overlay` (tecla `1`) para mostrarlo u ocultarlo. Reemplaza a `LabelStateTracker` (`src/debug/label_prop.gd`) y sirve también en builds exportadas.",
+      "detail": "Autoload con `watch(clave, valor)` para valores que cambian cada frame (estado, velocidad, objetivo), y la acción `debug_overlay` (tecla `1`) para mostrarlo u ocultarlo. Reemplaza a `LabelStateTracker` (`src/debug/label_prop.gd`) y sirve también en builds exportadas. La acción `debug_overlay` (tecla `1`) ya está en el Input Map. `debug_overlay.gd` existe pero es la plantilla vacía y no está registrado como autoload.",
       "done": false,
       "text": "Crear el overlay `DebugOverlay` (tecla `1`)"
     },
@@ -53,17 +53,31 @@
   ],
   "code": "0.11",
   "created_at": "2026-09-30T04:18:20.208Z",
+  "links": [
+    {
+      "task": "m0-07",
+      "type": "related"
+    },
+    {
+      "task": "m0-10",
+      "type": "related"
+    },
+    {
+      "task": "m0-08",
+      "type": "related"
+    }
+  ],
   "milestone": "m00",
   "notes": "Reemplaza los `print` y `print_rich` sueltos por un logger con niveles y canales, conectado al debugger de Godot. Es el port a GDScript del logger de godot-dojo (`include/tools/logger.hpp`), con canales agregados.\n\nConviene hacerla antes de 0.7, así los componentes nuevos ya nacen usando `Log`. El autoload no puede llamarse `Logger`: desde Godot 4.5 es una clase del engine. Los argumentos variables (`...args: Array`) son de GDScript 4.5 en adelante.\n\nReferencia: https://docs.godotengine.org/en/latest/tutorials/scripting/logging.html (clase `Logger`, `OS.add_logger()`, file logging). Godot ya guarda un archivo por sesión en `user://logs/godot.log` y conserva los últimos 5 (*Debug › File Logging*); para playtests alcanza con eso al principio.",
-  "order": 6.5,
+  "order": 2.5,
   "refs": [
     {
       "doc": "gdd.md",
       "section": "depuracion"
     }
   ],
-  "status": "todo",
+  "status": "doing",
   "test": "Correr `levels/test.tscn` y golpear al esqueleto: la línea aparece en la pestaña Log del debugger. Filtrar por `combat` desde la pestaña oculta el resto sin reiniciar el juego. Doble clic en la línea abre `enemy.gd` donde se generó. En *Debugger › Monitors* aparece la categoría `epiphany`. La tecla `1` muestra y oculta el overlay. Un error provocado a propósito (por ejemplo, llamar a un método que no existe) también aparece en la pestaña, con canal `engine`, y el doble clic lleva a la línea.",
   "title": "Sistema de depuración",
-  "updated_at": "2026-09-30T06:29:06.471Z"
+  "updated_at": "2026-10-04T22:24:40.413Z"
 }

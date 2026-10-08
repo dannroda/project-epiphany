@@ -6,6 +6,11 @@
       "text": "Crear `src/save/save_codec.gd`"
     },
     {
+      "detail": "`ConfigFile.save()` escribe sobre el archivo: si el juego se cierra a mitad de camino, la partida queda corrupta. Escribir a `slot_N.cfg.tmp`, mover la partida anterior a `slot_N.cfg.bak` y renombrar el `.tmp` con `DirAccess.rename_absolute()`. Al leer, si `slot_N.cfg` no carga, probar con el `.bak` y avisar. El código del GDD (§11.7) todavía escribe directo: actualizarlo también.",
+      "done": false,
+      "text": "Escritura atómica y copia de respaldo en `SaveCodec.write`/`read`"
+    },
+    {
       "detail": "la tecla `3` guarda, la `2` carga, y al arrancar puede cargar un escenario de `debug/scenarios/` (con el argumento `--scenario=nombre` o con el archivo que deja el Save Inspector).",
       "done": false,
       "text": "Crear el autoload `SaveManager` (`src/save/save_manager.gd`)"
@@ -33,6 +38,16 @@
   ],
   "code": "0.6",
   "created_at": "2026-09-29T18:00:00Z",
+  "links": [
+    {
+      "task": "m0-10",
+      "type": "blocks"
+    },
+    {
+      "task": "m0-11",
+      "type": "blocks"
+    }
+  ],
   "milestone": "m00",
   "notes": "Guarda y carga partidas en `user://saves/`. Desde el editor se guarda en texto plano, para poder leerlo y editarlo; en release, encriptado, para que nadie lo edite por accidente.\n\nNecesita 0.5. Diseño completo y código en el GDD (§11.7).",
   "order": 6,
@@ -45,5 +60,5 @@
   "status": "todo",
   "test": "Jugar, apretar `3`, cerrar el juego, abrirlo y apretar `2`: todo vuelve igual. Después editar a mano el archivo de `user://saves/`: al cargar aparece un aviso en la consola y `GameState.save_tampered` queda en `true`.",
   "title": "Guardado",
-  "updated_at": "2026-09-30T06:29:05.996Z"
+  "updated_at": "2026-10-08T04:17:35.091Z"
 }
