@@ -146,6 +146,11 @@ func _handle(request: Dictionary) -> Variant:
 			return { "ok": true, "enabled": EditorInterface.is_plugin_enabled(args.name) }
 		"/reload_plugin":
 			return _reload_plugin(args.name)
+		"/run":
+			return _run(args.get("path", ""), args)
+		"/reload_scene":
+			EditorInterface.reload_scene_from_path(args.path)
+			return { "ok": true }
 		"/setting":
 			ProjectSettings.set_setting(args.name, args.get("value"))
 			return { "ok": ProjectSettings.save() == OK }
@@ -167,6 +172,18 @@ func _scan() -> Callable:
 		if not state.classes_updated and frame - state.done_frame < 30:
 			return null
 		return { "ok": true, "classes_updated": state.classes_updated }
+
+
+## Corre `run(plugin, args)` de un script @tool (ruta res:// o absoluta) dentro del editor.
+func _run(path: String, args: Dictionary) -> Dictionary:
+	var script := ResourceLoader.load(path, "", ResourceLoader.CACHE_MODE_IGNORE) as Script
+	if script == null or not script.can_instantiate():
+		return { "ok": false, "error": "no se pudo cargar %s" % path }
+	var instance: Object = script.new()
+	if not instance.has_method(&"run"):
+		return { "ok": false, "error": "%s no tiene run(plugin, args)" % path }
+	var result: Variant = instance.call(&"run", plugin, args)
+	return { "ok": true, "result": result }
 
 
 func _reload_plugin(plugin_name: String) -> Callable:
