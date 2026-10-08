@@ -2,17 +2,17 @@
   "checklist": [
     {
       "detail": "Un solo estilo (por ejemplo, silueta plana con contorno, 128 px, paleta corta) para que se lean juntos en la grilla.",
-      "done": false,
+      "done": true,
       "text": "Definir estilo y tamaño de íconos"
     },
     {
       "detail": "Asignarlos en los `.tres` de `data/items/`.",
-      "done": false,
+      "done": true,
       "text": "Un ícono por cada `ItemData`"
     },
     {
       "detail": "Que ningún ítem visible en las pantallas tenga `icon` vacío.",
-      "done": false,
+      "done": true,
       "text": "Chequeo en los tests"
     }
   ],
@@ -25,7 +25,7 @@
     }
   ],
   "milestone": "m03",
-  "notes": "Placeholders coherentes, no arte final: la dirección de arte se decide en 10.7.\n\nSkills: `disciplines:create-game-assets`.",
+  "notes": "Placeholders coherentes, no arte final: la dirección de arte se decide en 10.7.\n\nSkills: `disciplines:create-game-assets`.\n\nEstilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/items/<id>.svg, un color base por ítem tomado de los mockups. Revisados en una hoja de contacto a 96 y 40 px sobre el fondo de la UI; se aclararon el arco y la bomba porque se perdían en el fondo oscuro. Test: test_every_item_has_an_icon.",
   "order": 8,
   "refs": [
     {
@@ -33,8 +33,8 @@
       "section": "items-mvp"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Abrir las pantallas Equipo e Ítems con `full_inventory`: todos los ítems tienen ícono y se distinguen a tamaño de HUD.",
   "title": "Íconos placeholder de los ítems",
-  "updated_at": "2026-10-08T04:45:43.472Z"
+  "updated_at": "2026-10-08T06:31:03.376Z"
 }

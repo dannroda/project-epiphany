@@ -647,7 +647,7 @@ Con lock-on el foco va al punto medio (lock_focus_weight) pero no se aleja más 
 
 **Referencias:** `gdd.md#camara`
 
-## M3 — Inventario + UI  (0/8)
+## M3 — Inventario + UI  (1/8)
 
 Pantallas Equipo e Ítems, asignar a X/Y, slots en el HUD, cofres, item get, recolectables.
 
@@ -793,13 +793,13 @@ Skills: `disciplines:procedural-gen`, `godot:godot-resources`.
 
 **Relacionadas:** 1.4 IA del esqueleto con `BTAttack`
 
-### 3.8 Íconos placeholder de los ítems · Pendiente
+### 3.8 Íconos placeholder de los ítems · Hecho
 
-- [ ] Definir estilo y tamaño de íconos
+- [x] Definir estilo y tamaño de íconos
   Un solo estilo (por ejemplo, silueta plana con contorno, 128 px, paleta corta) para que se lean juntos en la grilla.
-- [ ] Un ícono por cada `ItemData`
+- [x] Un ícono por cada `ItemData`
   Asignarlos en los `.tres` de `data/items/`.
-- [ ] Chequeo en los tests
+- [x] Chequeo en los tests
   Que ningún ítem visible en las pantallas tenga `icon` vacío.
 
 **Prueba:** Abrir las pantallas Equipo e Ítems con `full_inventory`: todos los ítems tienen ícono y se distinguen a tamaño de HUD.
@@ -807,6 +807,8 @@ Skills: `disciplines:procedural-gen`, `godot:godot-resources`.
 **Notas:** Placeholders coherentes, no arte final: la dirección de arte se decide en 10.7.
 
 Skills: `disciplines:create-game-assets`.
+
+Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/items/<id>.svg, un color base por ítem tomado de los mockups. Revisados en una hoja de contacto a 96 y 40 px sobre el fondo de la UI; se aclararon el arco y la bomba porque se perdían en el fondo oscuro. Test: test_every_item_has_an_icon.
 
 **Referencias:** `gdd.md#items-mvp`
 

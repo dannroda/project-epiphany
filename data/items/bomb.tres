@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="ItemData" format=3]
 
+[ext_resource type="Texture2D" path="res://assets/ui/items/bomb.svg" id="1_6uay4"]
 [ext_resource type="Script" path="res://src/items/modifiers/item_modifier.gd" id="1_j52ui"]
 [ext_resource type="Script" path="res://src/items/item_data.gd" id="2_6uay4"]
 
@@ -7,10 +8,6 @@
 script = ExtResource("2_6uay4")
 id = &"bomb"
 display_name = "Bomba"
-description = ""
+icon = ExtResource("1_6uay4")
 category = 4
 max_stack = 10
-modifiers = Array[ExtResource("1_j52ui")]([])
-damage = 0
-knockback = 0.0
-damage_reduction = 0.0

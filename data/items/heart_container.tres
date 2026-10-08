@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="ItemData" format=3]
 
+[ext_resource type="Texture2D" path="res://assets/ui/items/heart_container.svg" id="1_0sqo8"]
 [ext_resource type="Script" path="res://src/items/modifiers/item_modifier.gd" id="1_35knk"]
 [ext_resource type="Script" path="res://src/items/item_data.gd" id="2_0sqo8"]
 
@@ -7,10 +8,6 @@
 script = ExtResource("2_0sqo8")
 id = &"heart_container"
 display_name = "Contenedor de corazón"
-description = ""
+icon = ExtResource("1_0sqo8")
 category = 6
 max_stack = 10
-modifiers = Array[ExtResource("1_35knk")]([])
-damage = 0
-knockback = 0.0
-damage_reduction = 0.0

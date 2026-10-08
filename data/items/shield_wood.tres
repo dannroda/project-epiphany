@@ -3,10 +3,12 @@
 [ext_resource type="PackedScene" path="res://assets/items/shield/shield_badge.tscn" id="1_gul31"]
 [ext_resource type="Script" path="res://src/items/modifiers/item_modifier.gd" id="1_l2nrw"]
 [ext_resource type="Script" path="res://src/items/item_data.gd" id="2_gul31"]
+[ext_resource type="Texture2D" path="res://assets/ui/items/shield_wood.svg" id="2_qjkon"]
 
 [resource]
 script = ExtResource("2_gul31")
 id = &"shield_wood"
 display_name = "Escudo de madera"
+icon = ExtResource("2_qjkon")
 category = 1
 equip_scene = ExtResource("1_gul31")

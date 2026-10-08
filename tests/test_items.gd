@@ -62,3 +62,8 @@ func test_make_damage_applies_modifiers() -> void:
 	var info := sword.make_damage(null)
 	assert_eq(info.amount, Items.get_item(&"sword_basic").damage * 2)
 	assert_eq(info.knockback, sword.knockback)
+
+
+func test_every_item_has_an_icon() -> void:
+	for item in Items.database.items:
+		assert_true(item.icon != null, "%s sin ícono" % item.id)
