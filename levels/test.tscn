@@ -18,11 +18,11 @@
 [ext_resource type="Script" uid="uid://x60poi8g2tqu" path="res://src/world/grass_patch.gd" id="w_grass"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_receiver.tscn" id="w_light_receiver"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_source.tscn" id="w_light_source"]
+[ext_resource type="Script" uid="uid://dlv83hn042mxv" path="res://src/world/overworld_map.gd" id="w_owmap"]
+[ext_resource type="Texture2D" uid="uid://62ivaxv7fiwo" path="res://assets/ui/maps/test_level.png" id="w_owmap_tex"]
 [ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="w_pot"]
 [ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="w_spawn"]
 [ext_resource type="PackedScene" path="res://src/world/tablet.tscn" id="w_tablet"]
-[ext_resource type="Script" uid="uid://dlv83hn042mxv" path="res://src/world/overworld_map.gd" id="w_owmap"]
-[ext_resource type="Texture2D" uid="uid://62ivaxv7fiwo" path="res://assets/ui/maps/test_level.png" id="w_owmap_tex"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_4uxyr"]
 panorama = ExtResource("3_qhvcx")
@@ -217,7 +217,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.25, -12)
 
 [node name="HUD" parent="." unique_id=1876306880 instance=ExtResource("ui_hud")]
 
-[node name="OverworldMap" type="Node" parent="."]
+[node name="OverworldMap" type="Node" parent="." unique_id=1819432334]
 script = ExtResource("w_owmap")
 display_name = "Campo de pruebas"
 texture = ExtResource("w_owmap_tex")
