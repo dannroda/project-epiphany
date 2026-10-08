@@ -21,6 +21,8 @@ func _ready() -> void:
 		&"click": _synth(0.04, func(t: float) -> float: return sin(TAU * 1800.0 * t) * 0.3 * exp(-t * 90.0)),
 		&"roll": _synth(0.25, func(t: float) -> float: return (randf() * 2.0 - 1.0) * 0.25 * sin(PI * t / 0.25)),
 		&"pickup": _synth(0.14, func(t: float) -> float: return sin(TAU * (880.0 if t < 0.06 else 1320.0) * t) * 0.25 * exp(-fmod(t, 0.06) * 30.0)),
+		&"break": _synth(0.22, func(t: float) -> float: return (randf() * 2.0 - 1.0) * 0.5 * exp(-t * 18.0) + sin(TAU * 620.0 * t) * 0.2 * exp(-t * 30.0)),
+		&"cut": _synth(0.12, func(t: float) -> float: return (randf() * 2.0 - 1.0) * 0.3 * sin(PI * t / 0.12)),
 		&"deny": _synth(0.18, func(t: float) -> float: return signf(sin(TAU * (140.0 if t < 0.08 else 105.0) * t)) * 0.25 * (1.0 if fmod(t, 0.09) < 0.07 else 0.0)),
 		&"heal": _synth(0.45, func(t: float) -> float: return sin(TAU * [523.0, 659.0, 784.0][mini(int(t / 0.15), 2)] * t) * 0.3 * exp(-fmod(t, 0.15) * 12.0)),
 	}
@@ -91,6 +93,18 @@ func burst(kind: StringName, at: Vector3, direction: Vector3) -> void:
 			particles.gravity = Vector3(0, -6, 0)
 			mesh.radius = 0.025
 			material.albedo_color = Color(1.0, 0.85, 0.4)
+		&"shards", &"leaves":
+			var leaves := kind == &"leaves"
+			particles.amount = 14 if leaves else 10
+			particles.lifetime = 0.6
+			particles.spread = 80.0
+			particles.initial_velocity_min = 1.5
+			particles.initial_velocity_max = 3.0
+			particles.gravity = Vector3(0, -4 if leaves else -12, 0)
+			particles.damping_min = 2.0 if leaves else 0.0
+			particles.damping_max = 3.0 if leaves else 0.0
+			mesh.radius = 0.05 if leaves else 0.07
+			material.albedo_color = Color(0.36, 0.62, 0.27) if leaves else Color(0.62, 0.38, 0.24)
 		_:
 			particles.amount = 10
 			particles.lifetime = 0.45

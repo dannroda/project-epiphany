@@ -824,7 +824,7 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 
 **Relacionadas:** 0.3 Ítems: datos
 
-## M4 — Interacción + mundo  (2/5)
+## M4 — Interacción + mundo  (4/5)
 
 `Interactable` con prompt contextual, tablillas y caja de texto, vasijas y pasto, flags del mundo guardadas.
 
@@ -871,7 +871,7 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 
 **Bloqueada por:** 3.1 Menú de pausa y pila de pantallas
 
-### 4.3 Tablillas · En curso
+### 4.3 Tablillas · Hecho
 
 - [x] Escena `Tablet`
   `StaticBody3D` con `Interactable` ("Leer") y un `TextData` exportado.
@@ -890,22 +890,20 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 
 **Bloqueada por:** 4.2 Caja de texto
 
-### 4.4 Vasijas y pasto · Pendiente
+### 4.4 Vasijas y pasto · Hecho
 
-- [ ] Vasija rompible
+- [x] Vasija rompible
   `Hurtbox` de equipo neutral: se rompe con espada, bomba o al tirarla. Suelta según su `DropTable`.
 - [ ] Levantar y lanzar vasijas (opcional)
   Estado `Carrying` del player. Si se complica, queda solo rompible: está en la lista de recortes.
-- [ ] Pasto cortable
+- [x] Pasto cortable
   Instancias livianas (MultiMesh o escena chica) que se cortan con la espada y a veces sueltan algo.
-- [ ] Reaparecen al recargar la escena
+- [x] Reaparecen al recargar la escena
   No usan flags.
 
 **Prueba:** Cortar un campo de 50 matas de pasto sin caídas de FPS (*Debugger › Monitors*). Romper vasijas: sueltan corazones y vuelven al recargar.
 
-**Notas:** Último en la lista de recortes del GDD ("pasto/vasijas en overworld"); en la antesala de la mazmorra (sala 8) las vasijas con corazones sí hacen falta.
-
-Skills: `disciplines:performance-optimization`.
+**Notas:** Último en la lista de recortes del GDD; en la antesala (sala 8) las vasijas con corazones sí hacen falta. Paso 2 (levantar/lanzar, estado Carrying) recortado: las vasijas solo se rompen; se puede retomar más adelante. Breakable (vasija y pasto) con Hurtbox neutral en la capa 5; tablas data/drops/pot.tres y grass.tres (pesos provisorios). Medido en ventana sin vsync (1280×720): 50 matas suman ~0,05 ms y 1 draw call (Godot instancia las mallas iguales); cortando, frame medio 1,13 ms y peor 1% 3 ms. No hace falta MultiMesh.
 
 **Referencias:** `gdd.md#mazmorra`, `gdd.md#items-mvp`
 
