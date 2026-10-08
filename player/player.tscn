@@ -36,6 +36,7 @@
 [ext_resource type="Script" path="res://player/states/item_get.gd" id="st_item_get"]
 [ext_resource type="Script" path="res://player/states/aiming_item.gd" id="st_aiming_item"]
 [ext_resource type="Script" path="res://player/states/transition.gd" id="st_transition"]
+[ext_resource type="Script" path="res://player/states/pushing.gd" id="st_pushing"]
 [ext_resource type="Script" path="res://player/components/interaction_detector.gd" id="c_interaction"]
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_peicu"]
@@ -710,6 +711,9 @@ script = ExtResource("st_aiming_item")
 
 [node name="Transition" type="LimboState" parent="MovementState"]
 script = ExtResource("st_transition")
+
+[node name="Pushing" type="LimboState" parent="MovementState"]
+script = ExtResource("st_pushing")
 
 [node name="ItemGet" type="LimboState" parent="MovementState"]
 script = ExtResource("st_item_get")

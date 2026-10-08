@@ -85,6 +85,8 @@ func enter_room(new_room: Room) -> void:
 		return
 	var previous := room
 	room = new_room
+	if previous:
+		previous.player_left.emit(previous)
 	room.mark_entered()
 	if previous == null:
 		focus = room.clamp_focus(target_node.global_position, view_extents())

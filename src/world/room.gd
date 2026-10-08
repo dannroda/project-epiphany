@@ -5,6 +5,8 @@ extends Area3D
 ## o de `camera_limits` si se completa a mano. En el editor dibuja el rectángulo de la sala.
 
 signal player_entered(room: Room)
+## Cuando el player pasa a otra sala (los bloques vuelven a su lugar).
+signal player_left(room: Room)
 
 const GROUP := &"rooms"
 

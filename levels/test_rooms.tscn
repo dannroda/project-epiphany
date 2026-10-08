@@ -7,6 +7,8 @@
 [ext_resource type="Script" path="res://src/world/room.gd" id="w_room"]
 [ext_resource type="Script" path="res://src/world/dungeon.gd" id="w_dungeon"]
 [ext_resource type="PackedScene" path="res://src/world/door.tscn" id="w_door"]
+[ext_resource type="PackedScene" path="res://src/world/push_block.tscn" id="w_block"]
+[ext_resource type="PackedScene" path="res://src/world/floor_switch.tscn" id="w_floor_switch"]
 [ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="e_enemy"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="ui_hud"]
 [ext_resource type="Texture2D" uid="uid://r23yquaky7lu" path="res://assets/Prototype Textures/PNG/Dark/texture_07.png" id="tex_grid"]
@@ -207,6 +209,15 @@ navigation_mesh = SubResource("NavMesh")
 
 [node name="Skeleton" parent="." instance=ExtResource("e_enemy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.25, -26)
+
+[node name="Block" parent="." instance=ExtResource("w_block")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.25, -16)
+
+[node name="WallBlock" parent="." instance=ExtResource("w_block")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0.25, -24)
+
+[node name="BlockSwitch" parent="." instance=ExtResource("w_floor_switch")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.25, -20)
 
 [node name="Player" parent="." instance=ExtResource("p_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 2)

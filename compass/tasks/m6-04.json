@@ -2,22 +2,22 @@
   "checklist": [
     {
       "detail": "`AnimatableBody3D` que se mueve 1 celda con tween tras empujar ≈0.3 s contra él.",
-      "done": false,
+      "done": true,
       "text": "Crear `src/world/push_block.gd`"
     },
     {
       "detail": "`ShapeCast3D` o consulta al espacio: no entra en paredes, otros bloques ni enemigos.",
-      "done": false,
+      "done": true,
       "text": "Chequear la celda destino"
     },
     {
       "detail": "Animación de empujar (KayKit `Interact` o la más parecida).",
-      "done": false,
+      "done": true,
       "text": "Estado `Pushing` del player y prompt \"Empujar\""
     },
     {
       "detail": "Los bloques vuelven a su lugar al re-entrar, salvo que un flag diga que el puzzle está resuelto.",
-      "done": false,
+      "done": true,
       "text": "Reset al salir de la sala"
     }
   ],
@@ -34,7 +34,7 @@
     }
   ],
   "milestone": "m06",
-  "notes": "Skills: `godot:godot-physics`.",
+  "notes": "Skills: godot:godot-physics. PushBlock (AnimatableBody3D 1,8 m, grilla de 2 m): tras 0,3 s empujando se mueve una celda en 0,35 s y el player lo acompaña (estado Pushing, anim General/Interact: KayKit no tiene empujar). Prompt 'Empujar': interactuar también empuja una celda. Celda destino: consulta de caja para cuerpos (bloques, enemigos) + rayos para las paredes CSG (Jolt no las detecta con la caja: son mallas) + rayo de piso. Room emite player_left (lo dispara la cámara) y el bloque vuelve a su lugar, salvo solved_flag (queda en solved_position). FloorSwitch (paso 1 de 6.5) hecho acá para la prueba: HOLD/ONCE, lo pisan player, bloques y RigidBody3D. Puzzle en la sala B de levels/test_rooms.tscn.",
   "order": 4,
   "refs": [
     {
@@ -42,8 +42,8 @@
       "section": "mundo"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Empujar un bloque contra una pared no lo mueve; empujarlo sobre un interruptor de piso lo activa. Salir y volver: el bloque está en su posición inicial.",
   "title": "Bloques por grilla",
-  "updated_at": "2026-10-08T04:45:56.484Z"
+  "updated_at": "2026-10-08T21:59:07.699Z"
 }

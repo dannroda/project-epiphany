@@ -1131,7 +1131,7 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 **Notas:** Idea del 2026-10-08: que el escudo en la espalda proteja, y que cada escudo frene distintos tipos de daño (la madera frena flechas pero no explosiones ni fuego). El espejo refleja siempre que intercepta, porque es un espejo. Usa DamageInfo.element, que ya existe: "explosive" lo pone la bomba (5.4), "light" el haz (5.6), "fire" queda para espadas elementales post-MVP. Relacionada con 5.2 (torreta: primer enemigo que dispara), 5.4 y 5.6. Desde 2026-10-08 el escudo oculto no colisiona (Equipment.show_shield_in_hand).
 
-## M6 — Framework de mazmorra  (2/7)
+## M6 — Framework de mazmorra  (4/7)
 
 `Room` con cámara limitada y transición, puertas, llaves, bloques por grilla, interruptores, mapa y brújula con su pantalla.
 
@@ -1184,7 +1184,7 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 **Bloqueada por:** 4.1 Prompt de acción contextual; 6.1 `Room` y cámara por sala
 
-### 6.3 Llaves de mazmorra y HUD · En curso
+### 6.3 Llaves de mazmorra y HUD · Hecho
 
 - [x] `GameState.current_dungeon` lo setea la escena de la mazmorra
   Al salir vuelve a `&""`.
@@ -1203,20 +1203,20 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 **Bloqueada por:** 3.6 Cofres e item get; 6.2 Puertas
 
-### 6.4 Bloques por grilla · Pendiente
+### 6.4 Bloques por grilla · Hecho
 
-- [ ] Crear `src/world/push_block.gd`
+- [x] Crear `src/world/push_block.gd`
   `AnimatableBody3D` que se mueve 1 celda con tween tras empujar ≈0.3 s contra él.
-- [ ] Chequear la celda destino
+- [x] Chequear la celda destino
   `ShapeCast3D` o consulta al espacio: no entra en paredes, otros bloques ni enemigos.
-- [ ] Estado `Pushing` del player y prompt "Empujar"
+- [x] Estado `Pushing` del player y prompt "Empujar"
   Animación de empujar (KayKit `Interact` o la más parecida).
-- [ ] Reset al salir de la sala
+- [x] Reset al salir de la sala
   Los bloques vuelven a su lugar al re-entrar, salvo que un flag diga que el puzzle está resuelto.
 
 **Prueba:** Empujar un bloque contra una pared no lo mueve; empujarlo sobre un interruptor de piso lo activa. Salir y volver: el bloque está en su posición inicial.
 
-**Notas:** Skills: `godot:godot-physics`.
+**Notas:** Skills: godot:godot-physics. PushBlock (AnimatableBody3D 1,8 m, grilla de 2 m): tras 0,3 s empujando se mueve una celda en 0,35 s y el player lo acompaña (estado Pushing, anim General/Interact: KayKit no tiene empujar). Prompt 'Empujar': interactuar también empuja una celda. Celda destino: consulta de caja para cuerpos (bloques, enemigos) + rayos para las paredes CSG (Jolt no las detecta con la caja: son mallas) + rayo de piso. Room emite player_left (lo dispara la cámara) y el bloque vuelve a su lugar, salvo solved_flag (queda en solved_position). FloorSwitch (paso 1 de 6.5) hecho acá para la prueba: HOLD/ONCE, lo pisan player, bloques y RigidBody3D. Puzzle en la sala B de levels/test_rooms.tscn.
 
 **Referencias:** `gdd.md#mundo`
 

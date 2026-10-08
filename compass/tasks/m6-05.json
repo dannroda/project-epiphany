@@ -2,7 +2,7 @@
   "checklist": [
     {
       "detail": "`FloorSwitch`: lo activa el player, un bloque o un `RigidBody3D`. Modos: mantener / una vez.",
-      "done": false,
+      "done": true,
       "text": "Interruptor de piso"
     },
     {
@@ -36,5 +36,5 @@
   "status": "todo",
   "test": "Una puerta que necesita dos interruptores: pisar uno no abre; con un bloque sobre el otro, sí.",
   "title": "Interruptores y cableado",
-  "updated_at": "2026-10-08T04:45:52.747Z"
+  "updated_at": "2026-10-08T21:59:07.948Z"
 }

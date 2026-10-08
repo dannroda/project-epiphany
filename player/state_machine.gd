@@ -36,6 +36,8 @@ func _setup() -> void:
 	for state in [$Idle, $Moving, $Attacking, $Dodging, $UsingItem, $AimingItem, $Hurt]:
 		add_transition(state, $Transition, "transition")
 	add_transition($Transition, $Idle, "finished")
+	add_transition($Moving, $Pushing, "push")
+	add_transition($Pushing, $Idle, "finished")
 	add_transition($Idle, $ItemGet, "item_get")
 	add_transition($Moving, $ItemGet, "item_get")
 	add_transition($ItemGet, $Idle, "finished")

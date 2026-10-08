@@ -88,6 +88,16 @@ func begin_room_transition(direction: Vector3, duration: float) -> void:
 	movement_state.dispatch("transition")
 
 
+## El bloque contra el que camina, si lo empuja de frente.
+func block_ahead(direction: Vector3) -> PushBlock:
+	for i in get_slide_collision_count():
+		var collision := get_slide_collision(i)
+		var block := collision.get_collider() as PushBlock
+		if block and direction.dot(-collision.get_normal()) > 0.7:
+			return block
+	return null
+
+
 func can_interact() -> bool:
 	var state := movement_state.get_active_state()
 	return state != null and state.name in [&"Idle", &"Moving"]

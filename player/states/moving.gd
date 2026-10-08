@@ -33,5 +33,11 @@ func _free_move(dir: Vector3, delta: float) -> void:
 	player.velocity.x = dir.x * speed
 	player.velocity.z = dir.z * speed
 	player.move_and_slide()
+	var block := player.block_ahead(dir)
+	if block:
+		blackboard.set_var("push_block", block)
+		blackboard.set_var("push_dir", PushBlock.axis(dir))
+		dispatch("push")
+		return
 	if not player.velocity.is_zero_approx() and not player.aim.aiming:
 		player.model.look_at(player.global_position - player.velocity)
