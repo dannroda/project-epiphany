@@ -49,5 +49,5 @@ func _free_move(dir: Vector3, delta: float) -> void:
 	player.velocity.x = dir.x * speed
 	player.velocity.z = dir.z * speed
 	player.move_and_slide()
-	if not player.velocity.is_zero_approx():
+	if not player.velocity.is_zero_approx() and not player.aim.aiming:
 		player.model.look_at(player.global_position - player.velocity)

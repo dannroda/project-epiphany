@@ -18,6 +18,7 @@ const SHIELD_THRUST: AttackData = preload("res://data/attacks/shield_thrust.tres
 @onready var equipment: Equipment = $Equipment
 @onready var targeting: Targeting = $Targeting
 @onready var input_buffer: InputBuffer = $InputBuffer
+@onready var aim: Aim = $Aim
 
 var guard_tween: Tween
 

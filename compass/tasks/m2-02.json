@@ -2,22 +2,22 @@
   "checklist": [
     {
       "detail": "Fuentes FACING / STICK / MOUSE; con objetivo fijado gana el objetivo. Código en [[gdd#player]].",
-      "done": false,
+      "done": true,
       "text": "Crear `player/components/aim.gd`"
     },
     {
       "detail": "`Plane.intersects_ray` a la altura del player + 1.",
-      "done": false,
+      "done": true,
       "text": "Mouse: rayo cámara → plano del suelo"
     },
     {
       "detail": "Decal o mesh plano en el suelo, visible solo mientras se usa un ítem a distancia (y siempre en debug).",
-      "done": false,
+      "done": true,
       "text": "Retícula de apuntado"
     },
     {
       "detail": "Strafe: el player apunta hacia un lado y camina hacia otro.",
-      "done": false,
+      "done": true,
       "text": "Girar el modelo hacia `Aim` al usar un ítem"
     }
   ],
@@ -34,7 +34,7 @@
     }
   ],
   "milestone": "m02",
-  "notes": "Lo consumen arco, bombas lanzadas y cualquier ítem a distancia (M5) a través de `ItemUseContext.direction`.",
+  "notes": "Lo consumen arco, bombas lanzadas y cualquier ítem a distancia (M5) a través de `ItemUseContext.direction`.\n\nAim (player/components/aim.gd) sigue al GDD: objetivo fijado > última fuente usada (stick pasada la zona muerta, o mouse: rayo al plano a la altura del player + 1) > hacia donde mira el modelo. `aiming` lo prenderán los ítems a distancia: gira el modelo hacia la dirección (slerp, `turn_speed`) y Moving deja de girarlo hacia donde camina, así hay strafe. Retícula: anillo en el suelo (aiming o debug); en debug también una flecha y watches aim/source y aim/direction. mouse_on_ground() acepta un punto de pantalla para los tests.",
   "order": 2,
   "refs": [
     {
@@ -46,8 +46,8 @@
       "section": "movimiento-combate"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Con el overlay activo, `DebugOverlay.watch` de la dirección y la fuente: el stick derecho, el mouse y el lock-on cambian la fuente y la flecha de debug apunta bien en los tres casos.",
   "title": "Componente `Aim`",
-  "updated_at": "2026-10-08T04:45:41.765Z"
+  "updated_at": "2026-10-08T06:19:09.431Z"
 }

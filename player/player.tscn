@@ -31,6 +31,7 @@
 [ext_resource type="Script" uid="uid://2515xl1b5dkr" path="res://player/components/targeting.gd" id="c_targeting"]
 [ext_resource type="Script" uid="uid://dpgrgvvf2dmhs" path="res://player/states/dead.gd" id="st_dead"]
 [ext_resource type="Script" uid="uid://do4y7vq0jtpd1" path="res://player/states/dodging.gd" id="st_dodging"]
+[ext_resource type="Script" path="res://player/components/aim.gd" id="c_aim"]
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_peicu"]
 fadeout_time = 0.3
@@ -677,6 +678,10 @@ detector_shape = NodePath("../TargetDetector/DetectorShape")
 
 [node name="InputBuffer" type="Node" parent="." unique_id=146017449]
 script = ExtResource("c_input_buffer")
+
+[node name="Aim" type="Node" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("c_aim")
+player = NodePath("..")
 
 [connection signal="body_entered" from="TargetDetector" to="Targeting" method="_on_detector_body_entered"]
 [connection signal="body_exited" from="TargetDetector" to="Targeting" method="_on_detector_body_exited"]

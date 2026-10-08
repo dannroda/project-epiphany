@@ -552,7 +552,7 @@ Todo pasa por el autoload Feel (src/feel/feel.gd) y los valores están en data/f
 
 **Referencias:** `gdd.md#combate`
 
-## M2 — Targeting + Aim  (1/4)
+## M2 — Targeting + Aim  (2/4)
 
 Cambio de objetivo moviendo el stick derecho de golpe (el mismo `look_*` que apunta, leído con umbral 0.7; ver [[gdd#input]]) y apuntado con el stick derecho.
 
@@ -584,20 +584,22 @@ Nivel de prueba nuevo: levels/test_targeting.tscn (tres esqueletos en fila y uno
 
 **Bloqueada por:** 0.9 Refactor del player
 
-### 2.2 Componente `Aim` · Pendiente
+### 2.2 Componente `Aim` · Hecho
 
-- [ ] Crear `player/components/aim.gd`
+- [x] Crear `player/components/aim.gd`
   Fuentes FACING / STICK / MOUSE; con objetivo fijado gana el objetivo. Código en [[gdd#player]].
-- [ ] Mouse: rayo cámara → plano del suelo
+- [x] Mouse: rayo cámara → plano del suelo
   `Plane.intersects_ray` a la altura del player + 1.
-- [ ] Retícula de apuntado
+- [x] Retícula de apuntado
   Decal o mesh plano en el suelo, visible solo mientras se usa un ítem a distancia (y siempre en debug).
-- [ ] Girar el modelo hacia `Aim` al usar un ítem
+- [x] Girar el modelo hacia `Aim` al usar un ítem
   Strafe: el player apunta hacia un lado y camina hacia otro.
 
 **Prueba:** Con el overlay activo, `DebugOverlay.watch` de la dirección y la fuente: el stick derecho, el mouse y el lock-on cambian la fuente y la flecha de debug apunta bien en los tres casos.
 
 **Notas:** Lo consumen arco, bombas lanzadas y cualquier ítem a distancia (M5) a través de `ItemUseContext.direction`.
+
+Aim (player/components/aim.gd) sigue al GDD: objetivo fijado > última fuente usada (stick pasada la zona muerta, o mouse: rayo al plano a la altura del player + 1) > hacia donde mira el modelo. `aiming` lo prenderán los ítems a distancia: gira el modelo hacia la dirección (slerp, `turn_speed`) y Moving deja de girarlo hacia donde camina, así hay strafe. Retícula: anillo en el suelo (aiming o debug); en debug también una flecha y watches aim/source y aim/direction. mouse_on_ground() acepta un punto de pantalla para los tests.
 
 **Referencias:** `gdd.md#player`, `gdd.md#movimiento-combate`
 
