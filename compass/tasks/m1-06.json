@@ -2,22 +2,22 @@
   "checklist": [
     {
       "detail": "`CanvasLayer` con un `Control` anclado arriba a la izquierda y margen de zona segura. Instanciado por el nivel o por un autoload de UI.",
-      "done": false,
+      "done": true,
       "text": "Crear `src/ui/hud/hud.tscn`"
     },
     {
       "detail": "Un `TextureRect` por corazón con 5 estados (0..4 cuartos). Placeholder dibujado a mano o con formas; el arte final va en 10.7.",
-      "done": false,
+      "done": true,
       "text": "Corazones con cuartos"
     },
     {
       "detail": "Escuchar `Health.changed` del player (y `GameState` para `max_health`). Ver los mockups en el artifact \"Epiphany UI Mockups\".",
-      "done": false,
+      "done": true,
       "text": "Actualizar por señal, no por polling"
     },
     {
       "detail": "Tween de escala o sacudida en el corazón que cambió.",
-      "done": false,
+      "done": true,
       "text": "Animación al perder y ganar vida"
     }
   ],
@@ -30,7 +30,7 @@
     }
   ],
   "milestone": "m01",
-  "notes": "Primera pieza de UI del juego: dejar el `hud.tscn` preparado para sumar slots de ítems (3.5), llaves (6.3) y barra del jefe (9.2).\n\nSkills: `disciplines:game-ui-ux`, `godot:godot-ui-control`.",
+  "notes": "Primera pieza de UI del juego: dejar el `hud.tscn` preparado para sumar slots de ítems (3.5), llaves (6.3) y barra del jefe (9.2).\n\nSkills: `disciplines:game-ui-ux`, `godot:godot-ui-control`.\n\nsrc/ui/hud/hud.tscn (CanvasLayer 10 + MarginContainer de zona segura 32/28 + HBox Hearts), instanciado por test.tscn. HeartIcon dibuja el corazón vacío y recorta el lleno por cuartos (SVG en assets/ui/, colores del mockup). Escucha Health.changed; Health.reset() avisa al cargar/reaparecer. El corazón que cambia hace un pulso (pulse_scale, pulse_time). Capturas revisadas en 1280×720 y 2560×1080. Ojo: el toggle de debug TopCamera de test.tscn queda encima de los corazones.",
   "order": 6,
   "refs": [
     {
@@ -42,8 +42,8 @@
       "section": "combate"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Recibir golpes de ¼ y de 1 corazón: el HUD muestra los cuartos correctos. Cambiar `max_health` desde el Save Inspector: aparecen más corazones. Probar en 1280×720 y 2560×1080.",
   "title": "HUD de corazones",
-  "updated_at": "2026-10-08T04:45:42.316Z"
+  "updated_at": "2026-10-08T05:59:04.177Z"
 }

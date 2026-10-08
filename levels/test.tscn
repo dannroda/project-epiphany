@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://boos1wd2wsju2" path="res://src/debug/camera_enabler.gd" id="6_u45fp"]
 [ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="8_2grjb"]
 [ext_resource type="Script" path="res://src/world/spawn_point.gd" id="w_spawn"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="ui_hud"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_4uxyr"]
 panorama = ExtResource("3_qhvcx")
@@ -155,3 +156,5 @@ navigation_mesh = SubResource("NavigationMesh_level")
 
 [node name="SpawnStart" type="Marker3D" parent="."]
 script = ExtResource("w_spawn")
+
+[node name="HUD" parent="." instance=ExtResource("ui_hud")]

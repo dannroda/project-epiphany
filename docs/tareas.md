@@ -372,7 +372,7 @@ Los presets de export (plain_saves en debug, excluir debug/scenarios y tests) pa
 
 **Notas:** Para que Claude pueda manejar el editor sin pedirle al usuario que le dé foco o haga clics. Es un plugin aparte, `addons/editor_bridge/`, para que pueda recargar `epiphany_tools` (`reload_plugin`) sin apagarse. Comandos: ping, status, scan, play [scene], stop, log [since], open path [line], save, plugin name enabled, reload_plugin name, autoload name path, setting name value. Si se recarga, reintenta abrir el puerto cada segundo. `autoload` y `setting` todavía no se probaron.
 
-## M1 — Combate real  (5/7)
+## M1 — Combate real  (6/7)
 
 Vida, invulnerabilidad breve, knockback, bloqueo direccional, roll, IA del esqueleto con `BTAttack`, muerte y reaparición, corazones en el HUD.
 
@@ -506,15 +506,15 @@ Estado Dead (anystate, evento `die`): apaga el AnimationTree y deja Death_A; esp
 
 **Relacionadas:** 0.5 GameState
 
-### 1.6 HUD de corazones · Pendiente
+### 1.6 HUD de corazones · Hecho
 
-- [ ] Crear `src/ui/hud/hud.tscn`
+- [x] Crear `src/ui/hud/hud.tscn`
   `CanvasLayer` con un `Control` anclado arriba a la izquierda y margen de zona segura. Instanciado por el nivel o por un autoload de UI.
-- [ ] Corazones con cuartos
+- [x] Corazones con cuartos
   Un `TextureRect` por corazón con 5 estados (0..4 cuartos). Placeholder dibujado a mano o con formas; el arte final va en 10.7.
-- [ ] Actualizar por señal, no por polling
+- [x] Actualizar por señal, no por polling
   Escuchar `Health.changed` del player (y `GameState` para `max_health`). Ver los mockups en el artifact "Epiphany UI Mockups".
-- [ ] Animación al perder y ganar vida
+- [x] Animación al perder y ganar vida
   Tween de escala o sacudida en el corazón que cambió.
 
 **Prueba:** Recibir golpes de ¼ y de 1 corazón: el HUD muestra los cuartos correctos. Cambiar `max_health` desde el Save Inspector: aparecen más corazones. Probar en 1280×720 y 2560×1080.
@@ -522,6 +522,8 @@ Estado Dead (anystate, evento `die`): apaga el AnimationTree y deja Death_A; esp
 **Notas:** Primera pieza de UI del juego: dejar el `hud.tscn` preparado para sumar slots de ítems (3.5), llaves (6.3) y barra del jefe (9.2).
 
 Skills: `disciplines:game-ui-ux`, `godot:godot-ui-control`.
+
+src/ui/hud/hud.tscn (CanvasLayer 10 + MarginContainer de zona segura 32/28 + HBox Hearts), instanciado por test.tscn. HeartIcon dibuja el corazón vacío y recorta el lleno por cuartos (SVG en assets/ui/, colores del mockup). Escucha Health.changed; Health.reset() avisa al cargar/reaparecer. El corazón que cambia hace un pulso (pulse_scale, pulse_time). Capturas revisadas en 1280×720 y 2560×1080. Ojo: el toggle de debug TopCamera de test.tscn queda encima de los corazones.
 
 **Referencias:** `gdd.md#ui`, `gdd.md#combate`
 

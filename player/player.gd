@@ -94,8 +94,7 @@ func _make_damage() -> DamageInfo:
 
 
 func _sync_health() -> void:
-	health.max_health = GameState.max_health
-	health.current = GameState.max_health
+	health.reset(GameState.max_health)
 
 
 func _on_hit(info: DamageInfo) -> void:

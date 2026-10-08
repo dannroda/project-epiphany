@@ -29,6 +29,13 @@ func is_full() -> bool:
 
 
 ## Invulnerable por un tiempo sin recibir daño (i-frames del roll).
+## Nueva vida máxima, llena (al cargar una partida o reaparecer).
+func reset(max_value: int) -> void:
+	max_health = max_value
+	current = max_value
+	changed.emit(current, max_health)
+
+
 func make_invulnerable(seconds: float) -> void:
 	_invulnerable_left = maxf(_invulnerable_left, seconds)
 
