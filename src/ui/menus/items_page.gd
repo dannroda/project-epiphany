@@ -1,36 +1,32 @@
 extends Control
-## Pestaña Ítems: ítems secundarios para asignar a X/Y (item_1/item_2), mejoras y detalle.
+## Pestaña Ítems: ítems secundarios para asignar a X/Y (item_1/item_2), objetos de la mazmorra y detalle.
 
 const COLUMNS := 4
-const SLOT_COUNT := 8
+const SLOT_COUNT := 12
 const BUTTON_ACTIONS: Array[StringName] = [&"item_1", &"item_2"]
+const BUTTON_NAMES := ["X", "Y"]
 const LOCK := preload("res://assets/ui/lock.svg")
 
-## Los lee el menú de pausa para la barra de ayuda.
+## Lo lee el menú de pausa para la barra de ayuda.
 var accept_label := ""
-var extra_hints := [[&"item_1", ""], [&"item_2", "Asignar"]]
 
-@onready var button_row: HBoxContainer = %ButtonRow
 @onready var grid: GridContainer = %Grid
-@onready var upgrades_title: Label = %UpgradesTitle
-@onready var upgrades: HBoxContainer = %Upgrades
+@onready var dungeon_box: VBoxContainer = %Dungeon
+@onready var dungeon_title: Label = %DungeonTitle
+@onready var chips: HFlowContainer = %Chips
 @onready var detail: PanelContainer = %Detail
 
 var _slots: Dictionary[Button, ItemData] = {}
-var _button_icons: Array[TextureRect] = []
-var _button_names: Array[Label] = []
-var _button_prompts: Array[TextureRect] = []
 var _refresh_queued := false
 
 
 func _ready() -> void:
 	grid.columns = COLUMNS
-	_build_buttons()
 	_build_slots()
 	GameState.inventory.changed.connect(func(_id: StringName, _count: int) -> void: _queue_refresh())
 	GameState.item_buttons_changed.connect(_queue_refresh)
 	GameState.loaded.connect(_queue_refresh)
-	InputDevice.input_device_changed.connect(func(_d: int) -> void: _refresh())
+	InputDevice.input_device_changed.connect(func(_d: int) -> void: _queue_refresh())
 	_refresh()
 
 
@@ -46,84 +42,57 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not is_visible_in_tree():
 		return
 	for i in BUTTON_ACTIONS.size():
-		if event.is_action_pressed(BUTTON_ACTIONS[i]):
-			var item: ItemData = _slots.get(get_viewport().gui_get_focus_owner())
-			if item and _is_assignable(item):
-				GameState.assign_button(i, item.id)
-				get_viewport().set_input_as_handled()
+		if event.is_action_pressed(BUTTON_ACTIONS[i]) and _assign_focused(i):
+			get_viewport().set_input_as_handled()
 			return
 
 
-func _build_buttons() -> void:
-	for i in BUTTON_ACTIONS.size():
-		var column := VBoxContainer.new()
-		column.add_theme_constant_override(&"separation", 8)
-		column.alignment = BoxContainer.ALIGNMENT_CENTER
-		var frame := PanelContainer.new()
-		frame.theme_type_variation = &"Slot"
-		frame.custom_minimum_size = Vector2(120, 120)
-		var icon := TextureRect.new()
-		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		frame.add_child(icon)
-		var prompt := TextureRect.new()
-		prompt.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		prompt.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		prompt.custom_minimum_size = Vector2(36, 36)
-		var label := Label.new()
-		label.theme_type_variation = &"Hint"
-		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		column.add_child(prompt)
-		column.add_child(frame)
-		column.add_child(label)
-		button_row.add_child(column)
-		_button_icons.append(icon)
-		_button_prompts.append(prompt)
-		_button_names.append(label)
+func _assign_focused(button: int) -> bool:
+	var item: ItemData = _slots.get(get_viewport().gui_get_focus_owner())
+	if item == null or not _is_assignable(item):
+		return false
+	GameState.assign_button(button, item.id)
+	return true
 
 
 func _build_slots() -> void:
 	var usables := Items.database.items.filter(func(item: ItemData) -> bool: return item.category == ItemData.Category.USABLE)
 	for i in SLOT_COUNT:
-		grid.add_child(_make_slot(usables[i] if i < usables.size() else null))
-	for item in Items.database.items:
-		if item.category == ItemData.Category.UPGRADE:
-			upgrades.add_child(_make_slot(item))
-
-
-func _make_slot(item: ItemData) -> Button:
-	var slot := Button.new()
-	slot.custom_minimum_size = Vector2(96, 96)
-	slot.theme_type_variation = &"EquipSlot"
-	slot.expand_icon = true
-	slot.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	slot.focus_mode = FOCUS_ALL
-	if item:
-		_slots[slot] = item
-	else:
-		slot.disabled = true
-		slot.icon = LOCK
-	var badge := TextureRect.new()
-	badge.name = "Badge"
-	badge.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	badge.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	badge.size = Vector2(28, 28)
-	badge.position = Vector2(4, 4)
-	badge.mouse_filter = MOUSE_FILTER_IGNORE
-	badge.visible = false
-	slot.add_child(badge)
-	var count := Label.new()
-	count.name = "Count"
-	count.theme_type_variation = &"KeyHint"
-	count.mouse_filter = MOUSE_FILTER_IGNORE
-	count.visible = false
-	count.set_anchors_and_offsets_preset(PRESET_BOTTOM_RIGHT, PRESET_MODE_MINSIZE, 6)
-	count.grow_horizontal = GROW_DIRECTION_BEGIN
-	count.grow_vertical = GROW_DIRECTION_BEGIN
-	slot.add_child(count)
-	slot.focus_entered.connect(_show_detail.bind(slot))
-	slot.mouse_entered.connect(slot.grab_focus)
-	return slot
+		var item: ItemData = usables[i] if i < usables.size() else null
+		var slot := Button.new()
+		slot.custom_minimum_size = Vector2(96, 96)
+		slot.theme_type_variation = &"ItemSlot"
+		slot.expand_icon = true
+		slot.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		slot.focus_mode = FOCUS_ALL
+		if item:
+			_slots[slot] = item
+		else:
+			slot.disabled = true
+			slot.icon = LOCK
+		var badge := TextureRect.new()
+		badge.name = "Badge"
+		badge.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		badge.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		badge.size = Vector2(26, 26)
+		badge.position = Vector2(-9, -9)
+		badge.mouse_filter = MOUSE_FILTER_IGNORE
+		badge.visible = false
+		slot.add_child(badge)
+		var count := Label.new()
+		count.name = "Count"
+		count.theme_type_variation = &"Ammo"
+		count.mouse_filter = MOUSE_FILTER_IGNORE
+		count.visible = false
+		count.set_anchors_preset(PRESET_BOTTOM_RIGHT)
+		count.grow_horizontal = GROW_DIRECTION_BEGIN
+		count.grow_vertical = GROW_DIRECTION_BEGIN
+		count.offset_right = -8
+		count.offset_bottom = -2
+		slot.add_child(count)
+		slot.focus_entered.connect(_show_detail.bind(slot))
+		slot.mouse_entered.connect(slot.grab_focus)
+		grid.add_child(slot)
 
 
 func _queue_refresh() -> void:
@@ -134,7 +103,6 @@ func _queue_refresh() -> void:
 
 func _refresh() -> void:
 	_refresh_queued = false
-	var any_upgrade := false
 	for slot in _slots:
 		var item := _slots[slot]
 		var owned := GameState.inventory.has(item.id)
@@ -150,32 +118,74 @@ func _refresh() -> void:
 		count.visible = owned and ammo != null
 		if count.visible:
 			count.text = str(GameState.inventory.count(ammo.id))
-		if item.category == ItemData.Category.UPGRADE:
-			slot.visible = owned
-			any_upgrade = any_upgrade or owned
-	upgrades_title.visible = any_upgrade
-	for i in BUTTON_ACTIONS.size():
-		var item := Items.get_item(GameState.item_buttons[i]) if GameState.item_buttons[i] != &"" else null
-		_button_icons[i].texture = item.icon if item else null
-		_button_names[i].text = item.display_name if item else "Vacío"
-		_button_prompts[i].texture = InputPrompts.icon_for_current(BUTTON_ACTIONS[i])
+	_refresh_dungeon()
 	var focused := get_viewport().gui_get_focus_owner() as Button
-	if focused and focused.get_parent() in [grid, upgrades]:
+	if focused and focused.get_parent() == grid:
 		_show_detail(focused)
 
 
+func _refresh_dungeon() -> void:
+	dungeon_box.visible = GameState.current_dungeon != &""
+	if not dungeon_box.visible:
+		return
+	dungeon_title.text = String(GameState.current_dungeon).replace("_", " ").to_upper()
+	for child in chips.get_children():
+		child.queue_free()
+	var dungeon := GameState.current_dungeon_state()
+	_chip(&"small_key", "Llaves ×%d" % dungeon.small_keys, dungeon.small_keys > 0)
+	_chip(&"dungeon_map", "Mapa", dungeon.has_map)
+	_chip(&"compass", "Brújula", dungeon.has_compass)
+	_chip(&"boss_key", "Llave del jefe" if dungeon.has_boss_key else "Llave del jefe: no", dungeon.has_boss_key)
+
+
+func _chip(item_id: StringName, text: String, owned: bool) -> void:
+	var chip := PanelContainer.new()
+	chip.theme_type_variation = &"Chip"
+	chip.modulate = Color.WHITE if owned else Color(1, 1, 1, 0.55)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override(&"separation", 8)
+	var icon := TextureRect.new()
+	icon.texture = Items.get_item(item_id).icon
+	icon.custom_minimum_size = Vector2(22, 22)
+	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	row.add_child(icon)
+	var label := Label.new()
+	label.text = text
+	label.theme_type_variation = &"Value"
+	row.add_child(label)
+	chip.add_child(row)
+	chips.add_child(chip)
+
+
 func _show_detail(slot: Button) -> void:
+	for child in detail.actions.get_children():
+		child.queue_free()
 	var item: ItemData = _slots.get(slot)
 	if item == null or not GameState.inventory.has(item.id):
 		detail.show_item(LOCK, "Sin descubrir", "", "Todavía no encontraste este ítem.")
 		return
-	var kind := "Mejora" if item.category == ItemData.Category.UPGRADE else "Ítem"
-	if GameState.item_buttons.has(item.id):
-		kind += " · asignado"
-	detail.show_item(item.icon, item.display_name, kind, item.description)
+	detail.show_item(item.icon, item.display_name, "Ítem", item.description)
 	var ammo := _ammo(item)
 	if ammo:
 		detail.add_stat(ammo.display_name, "%d / %d" % [GameState.inventory.count(ammo.id), GameState.inventory.capacity(ammo.id)])
+	for i in BUTTON_ACTIONS.size():
+		detail.actions.add_child(_assign_button(i, GameState.item_buttons[i] == item.id))
+
+
+func _assign_button(index: int, assigned: bool) -> Button:
+	var button := Button.new()
+	button.text = ("Asignado a %s" if assigned else "Asignar a %s") % BUTTON_NAMES[index]
+	button.icon = InputPrompts.icon_for_current(BUTTON_ACTIONS[index])
+	button.theme_type_variation = &"AssignButtonActive" if assigned else &"AssignButton"
+	button.custom_minimum_size = Vector2(0, 48)
+	button.size_flags_horizontal = SIZE_EXPAND_FILL
+	button.alignment = HORIZONTAL_ALIGNMENT_CENTER
+	button.expand_icon = false
+	button.add_theme_constant_override(&"icon_max_width", 26)
+	button.focus_mode = FOCUS_NONE
+	button.pressed.connect(_assign_focused.bind(index))
+	return button
 
 
 func _is_assignable(item: ItemData) -> bool:

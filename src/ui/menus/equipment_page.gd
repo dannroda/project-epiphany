@@ -52,7 +52,7 @@ func _build_rows() -> void:
 		var items := Items.database.items.filter(func(item: ItemData) -> bool: return item.category == row[0])
 		for i in SLOTS_PER_ROW:
 			var slot := Button.new()
-			slot.custom_minimum_size = Vector2(96, 96)
+			slot.custom_minimum_size = Vector2(84, 84)
 			slot.theme_type_variation = &"EquipSlot"
 			slot.expand_icon = true
 			slot.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -100,8 +100,11 @@ func _set_badge(slot: Button, equipped: bool) -> void:
 		badge = Label.new()
 		badge.name = "Badge"
 		badge.text = "E"
-		badge.theme_type_variation = &"KeyHint"
-		badge.position = Vector2(6, 6)
+		badge.theme_type_variation = &"Badge"
+		badge.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		badge.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		badge.size = Vector2(22, 22)
+		badge.position = Vector2(slot.custom_minimum_size.x - 15, -7)
 		badge.mouse_filter = MOUSE_FILTER_IGNORE
 		slot.add_child(badge)
 	badge.visible = equipped
@@ -133,9 +136,10 @@ func _refresh_stats() -> void:
 		child.queue_free()
 	var player := get_tree().get_first_node_in_group(&"player") as PlayerCharacter
 	var current: int = player.health.current if player else GameState.max_health
-	for i in ceili(GameState.max_health / float(HP_PER_HEART)):
+	var count := ceili(GameState.max_health / float(HP_PER_HEART))
+	for i in count:
 		var heart := HeartIcon.new()
-		heart.icon_size = HeartIcon.SIZE * 0.8
+		heart.icon_size = HeartIcon.SIZE * (1.0 if count <= 8 else 0.8)
 		heart.quarters = clampi(current - i * HP_PER_HEART, 0, HP_PER_HEART)
 		hearts.add_child(heart)
 

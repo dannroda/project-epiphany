@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource("2_jhgp1")
 id = &"arrow"
-display_name = "Flecha"
+display_name = "Flechas"
 description = "Munición para el arco."
 icon = ExtResource("1_jhgp1")
 category = 4

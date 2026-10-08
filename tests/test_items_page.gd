@@ -67,6 +67,7 @@ func test_keys_assign_on_the_items_page() -> void:
 	var bow := _slot_for(page, &"bow")
 	assert_eq(tree.root.get_viewport().gui_get_focus_owner(), bow, "el foco arranca en el primer ítem")
 	assert_eq(bow.get_node(^"Count").text, "12", "munición en la celda")
+	assert_eq(page.dungeon_box.visible, false, "objetos de mazmorra solo dentro de una")
 
 	await _press_key(tree, KEY_Q)
 	assert_eq(state.item_buttons[0], &"bow", "Q asigna a X")
@@ -78,7 +79,8 @@ func test_keys_assign_on_the_items_page() -> void:
 	assert_eq(state.item_buttons, [&"bow", &"bomb_bag"] as Array[StringName])
 	await _press_key(tree, KEY_Q)
 	assert_eq(state.item_buttons, [&"bomb_bag", &"bow"] as Array[StringName], "se intercambian")
-	assert_eq(page._button_names[0].text, "Bolsa de bombas")
+	var actions: Array = page.detail.actions.get_children().filter(func(b: Node) -> bool: return not b.is_queued_for_deletion()).map(func(b: Button) -> String: return b.text)
+	assert_eq(actions, ["Asignado a X", "Asignar a Y"], "botones del detalle")
 
 	state.inventory.remove(&"arrow", 2)
 	await tree.process_frame

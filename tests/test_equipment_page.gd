@@ -55,7 +55,7 @@ func test_equip_from_the_screen() -> void:
 	var chainmail := _slot_for(page, &"armor_chainmail")
 	chainmail.grab_focus()
 	await tree.process_frame
-	var stats: Array = page.detail.stats.get_children().map(func(row: Node) -> String: return row.get_child(1).text)
+	var stats: Array = page.detail.stats.get_children().filter(func(row: Node) -> bool: return row is MarginContainer).map(func(row: Node) -> String: return row.get_child(0).get_child(1).text)
 	assert_eq(stats, ["25 %"], "detalle de la armadura")
 	stack.pop()
 	state.reset()

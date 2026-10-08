@@ -18,18 +18,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 32
+theme_override_constants/separation = 40
 script = ExtResource("1_page")
 
 [node name="Left" type="VBoxContainer" parent="."]
-custom_minimum_size = Vector2(280, 0)
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 theme_override_constants/separation = 16
 
 [node name="PreviewFrame" type="PanelContainer" parent="Left"]
-custom_minimum_size = Vector2(280, 330)
+custom_minimum_size = Vector2(300, 330)
 layout_mode = 2
-theme_type_variation = &"Slot"
+theme_type_variation = &"CardBare"
 
 [node name="Preview" type="SubViewportContainer" parent="Left/PreviewFrame"]
 layout_mode = 2
@@ -40,7 +40,7 @@ own_world_3d = true
 world_3d = SubResource("World3D_preview")
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(264, 314)
+size = Vector2i(298, 328)
 render_target_update_mode = 4
 
 [node name="Camera" type="Camera3D" parent="Left/PreviewFrame/Preview/Viewport"]
@@ -91,7 +91,7 @@ layout_mode = 2
 [node name="Rows" type="VBoxContainer" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 26
+theme_override_constants/separation = 22
 
 [node name="Detail" parent="." instance=ExtResource("2_detail")]
 unique_name_in_owner = true
