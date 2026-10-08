@@ -79,6 +79,15 @@ func make_item_context() -> ItemUseContext:
 	return ctx
 
 
+## Al cruzar a otra sala: camina solo hacia adentro mientras la cámara se desliza.
+func begin_room_transition(direction: Vector3, duration: float) -> void:
+	if is_dead:
+		return
+	movement_state.blackboard.set_var("transition_dir", direction)
+	movement_state.blackboard.set_var("transition_time", duration)
+	movement_state.dispatch("transition")
+
+
 func can_interact() -> bool:
 	var state := movement_state.get_active_state()
 	return state != null and state.name in [&"Idle", &"Moving"]

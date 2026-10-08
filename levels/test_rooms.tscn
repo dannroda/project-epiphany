@@ -1,0 +1,164 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://levels/test_rooms.gd" id="1_level"]
+[ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="p_player"]
+[ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="t_camera"]
+[ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="w_spawn"]
+[ext_resource type="Script" path="res://src/world/room.gd" id="w_room"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="ui_hud"]
+[ext_resource type="Texture2D" uid="uid://r23yquaky7lu" path="res://assets/Prototype Textures/PNG/Dark/texture_07.png" id="tex_grid"]
+[ext_resource type="Texture2D" uid="uid://bs6ggwyw5mp2m" path="res://assets/kenney_skyboxes/Skyboxes/skybox-morning.png" id="tex_sky"]
+
+[sub_resource type="PanoramaSkyMaterial" id="SkyMat"]
+panorama = ExtResource("tex_sky")
+
+[sub_resource type="Sky" id="Sky"]
+sky_material = SubResource("SkyMat")
+
+[sub_resource type="Environment" id="Env"]
+background_mode = 2
+sky = SubResource("Sky")
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="Floor"]
+albedo_texture = ExtResource("tex_grid")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="Wall"]
+albedo_color = Color(0.55, 0.55, 0.57, 1)
+
+[sub_resource type="BoxShape3D" id="RoomAShape"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="BoxShape3D" id="RoomBShape"]
+size = Vector3(44, 2.4, 36)
+
+[node name="TestRooms" type="Node3D"]
+script = ExtResource("1_level")
+
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Env")
+
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+
+[node name="Floor" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18)
+material_override = SubResource("Floor")
+use_collision = true
+size = Vector3(48, 0.5, 52)
+
+
+[node name="AWallS" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55, 5.15)
+material_override = SubResource("Wall")
+use_collision = true
+size = Vector3(14.6, 2.6, 0.3)
+
+
+[node name="AWallW" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.15, 1.55, 0)
+material_override = SubResource("Wall")
+use_collision = true
+size = Vector3(0.3, 2.6, 10.3)
+
+
+[node name="AWallE" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.15, 1.55, 0)
+material_override = SubResource("Wall")
+use_collision = true
+size = Vector3(0.3, 2.6, 10.3)
+
+
+[node name="DoorL" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.0, 1.55, -5.0)
+material_override = SubResource("Wall")
+use_collision = true
+size = Vector3(6.0, 2.6, 0.3)
+
+
+[node name="DoorR" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0, 1.55, -5.0)
+material_override = SubResource("Wall")
+use_collision = true
+size = Vector3(6.0, 2.6, 0.3)
+
+
+[node name="BWallN" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55, -41.15)
+material_override = SubResource("Wall")
+use_collision = true
+size = Vector3(44.6, 2.6, 0.3)
+
+
+[node name="BWallW" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.15, 1.55, -23)
+material_override = SubResource("Wall")
+use_collision = true
+size = Vector3(0.3, 2.6, 36.3)
+
+
+[node name="BWallE" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.15, 1.55, -23)
+material_override = SubResource("Wall")
+use_collision = true
+size = Vector3(0.3, 2.6, 36.3)
+
+
+[node name="BWallSL" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.5, 1.55, -5.0)
+material_override = SubResource("Wall")
+use_collision = true
+size = Vector3(15.0, 2.6, 0.3)
+
+
+[node name="BWallSR" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5, 1.55, -5.0)
+material_override = SubResource("Wall")
+use_collision = true
+size = Vector3(15.0, 2.6, 0.3)
+
+
+[node name="RoomA" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+script = ExtResource("w_room")
+room_index = 0
+display_name = "Vestíbulo"
+
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoomA"]
+shape = SubResource("RoomAShape")
+
+
+[node name="RoomB" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -23)
+script = ExtResource("w_room")
+room_index = 1
+display_name = "Galería"
+
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoomB"]
+shape = SubResource("RoomBShape")
+
+
+[node name="Player" parent="." instance=ExtResource("p_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 2)
+
+
+[node name="SpawnStart" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 2)
+script = ExtResource("w_spawn")
+
+
+[node name="TopDownCamera" type="Camera3D" parent="." node_paths=PackedStringArray("target_node")]
+transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 12, 9)
+script = ExtResource("t_camera")
+target_node = NodePath("../Player")
+
+
+[node name="HUD" parent="." instance=ExtResource("ui_hud")]
+

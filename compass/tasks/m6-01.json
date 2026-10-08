@@ -2,27 +2,27 @@
   "checklist": [
     {
       "detail": "`Area3D` con `room_index`, `camera_limits` y `display_name`. Código en [[gdd#mundo]].",
-      "done": false,
+      "done": true,
       "text": "Crear `src/world/room.gd`"
     },
     {
       "detail": "`TopDownCamera.room`: `null` = overworld. Dibujar los límites en el editor (`@tool`) para ajustarlos.",
-      "done": false,
+      "done": true,
       "text": "Cámara clampeada a la sala"
     },
     {
       "detail": "Input bloqueado, el player camina solo por la puerta (estado `Transition`) y la cámara se desliza ≈0.5 s.",
-      "done": false,
+      "done": true,
       "text": "Transición al cambiar de sala"
     },
     {
       "detail": "`DungeonState.visit()`; el HUD muestra `display_name` al entrar por primera vez.",
-      "done": false,
+      "done": true,
       "text": "Marcar sala visitada y nombre en pantalla"
     },
     {
       "detail": "Al morir en mazmorra, en lugar del spawn del nivel ([[gdd#combate]]).",
-      "done": false,
+      "done": true,
       "text": "Reaparecer en la entrada de la sala"
     }
   ],
@@ -47,7 +47,7 @@
     }
   ],
   "milestone": "m06",
-  "notes": "Skills: `disciplines:camera-systems`, `godot:godot-3d-essentials`.",
+  "notes": "Skills: disciplines:camera-systems, godot:godot-3d-essentials. Room (@tool) dibuja su rectángulo en el editor; tamaño = su CollisionShape3D (caja) o camera_limits a mano. La cámara detecta la sala por el centro del player cada cuadro (body_entered disparaba con la cápsula todavía afuera y fallaba al reaparecer). Vista medida ≈ 14,7 × 31 m (ver GDD §4.1): salas más chicas dejan la cámara centrada. Cruce: estado Transition 0,5 s caminando hacia la sala nueva; la cámara se desliza. Primera visita: DungeonState.visit + nombre en el HUD con el estilo del mockup (HUD_Overworld). Al morir en mazmorra reaparece en GameState.room_entry (donde quedó al terminar de entrar; no se guarda). Nivel de prueba: levels/test_rooms.tscn (sala A chica, sala B grande).",
   "order": 1,
   "refs": [
     {
@@ -59,8 +59,8 @@
       "section": "camara"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Dos salas pegadas: al cruzar, la cámara se desliza y queda dentro de los límites de la nueva; la cámara nunca muestra fuera de la sala.",
   "title": "`Room` y cámara por sala",
-  "updated_at": "2026-10-08T04:46:01.519Z"
+  "updated_at": "2026-10-08T21:21:20.266Z"
 }

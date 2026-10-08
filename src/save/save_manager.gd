@@ -97,10 +97,18 @@ func respawn() -> void:
 	await Fader.fade_in()
 
 
+## En mazmorra, en la entrada de la última sala; si no, en el punto de reaparición.
 func _place_at_spawn() -> void:
 	var player := get_tree().get_first_node_in_group(&"player") as CharacterBody3D
+	if player == null:
+		return
+	get_tree().call_group(&"room_camera", &"reset_room")
+	if GameState.current_dungeon != &"" and GameState.room_entry != null:
+		player.global_position = GameState.room_entry
+		player.velocity = Vector3.ZERO
+		return
 	var point := SpawnPoint.find(get_tree(), GameState.spawn_point)
-	if player and point:
+	if point:
 		player.global_position = point.global_position
 		player.velocity = Vector3.ZERO
 

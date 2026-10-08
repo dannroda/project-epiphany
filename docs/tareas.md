@@ -1131,29 +1131,29 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 **Notas:** Idea del 2026-10-08: que el escudo en la espalda proteja, y que cada escudo frene distintos tipos de daño (la madera frena flechas pero no explosiones ni fuego). El espejo refleja siempre que intercepta, porque es un espejo. Usa DamageInfo.element, que ya existe: "explosive" lo pone la bomba (5.4), "light" el haz (5.6), "fire" queda para espadas elementales post-MVP. Relacionada con 5.2 (torreta: primer enemigo que dispara), 5.4 y 5.6. Desde 2026-10-08 el escudo oculto no colisiona (Equipment.show_shield_in_hand).
 
-## M6 — Framework de mazmorra  (0/7)
+## M6 — Framework de mazmorra  (1/7)
 
 `Room` con cámara limitada y transición, puertas, llaves, bloques por grilla, interruptores, mapa y brújula con su pantalla.
 
 **Hecho cuando:**
 - Tres salas en bloques grises conectadas.
 
-### 6.1 `Room` y cámara por sala · Pendiente
+### 6.1 `Room` y cámara por sala · Hecho
 
-- [ ] Crear `src/world/room.gd`
+- [x] Crear `src/world/room.gd`
   `Area3D` con `room_index`, `camera_limits` y `display_name`. Código en [[gdd#mundo]].
-- [ ] Cámara clampeada a la sala
+- [x] Cámara clampeada a la sala
   `TopDownCamera.room`: `null` = overworld. Dibujar los límites en el editor (`@tool`) para ajustarlos.
-- [ ] Transición al cambiar de sala
+- [x] Transición al cambiar de sala
   Input bloqueado, el player camina solo por la puerta (estado `Transition`) y la cámara se desliza ≈0.5 s.
-- [ ] Marcar sala visitada y nombre en pantalla
+- [x] Marcar sala visitada y nombre en pantalla
   `DungeonState.visit()`; el HUD muestra `display_name` al entrar por primera vez.
-- [ ] Reaparecer en la entrada de la sala
+- [x] Reaparecer en la entrada de la sala
   Al morir en mazmorra, en lugar del spawn del nivel ([[gdd#combate]]).
 
 **Prueba:** Dos salas pegadas: al cruzar, la cámara se desliza y queda dentro de los límites de la nueva; la cámara nunca muestra fuera de la sala.
 
-**Notas:** Skills: `disciplines:camera-systems`, `godot:godot-3d-essentials`.
+**Notas:** Skills: disciplines:camera-systems, godot:godot-3d-essentials. Room (@tool) dibuja su rectángulo en el editor; tamaño = su CollisionShape3D (caja) o camera_limits a mano. La cámara detecta la sala por el centro del player cada cuadro (body_entered disparaba con la cápsula todavía afuera y fallaba al reaparecer). Vista medida ≈ 14,7 × 31 m (ver GDD §4.1): salas más chicas dejan la cámara centrada. Cruce: estado Transition 0,5 s caminando hacia la sala nueva; la cámara se desliza. Primera visita: DungeonState.visit + nombre en el HUD con el estilo del mockup (HUD_Overworld). Al morir en mazmorra reaparece en GameState.room_entry (donde quedó al terminar de entrar; no se guarda). Nivel de prueba: levels/test_rooms.tscn (sala A chica, sala B grande).
 
 **Referencias:** `gdd.md#mundo`, `gdd.md#camara`
 

@@ -4,6 +4,13 @@
 [ext_resource type="FontFile" uid="uid://byrjjxr0lu8v3" path="res://assets/fonts/Cinzel.ttf" id="2_lf7dv"]
 [ext_resource type="FontFile" uid="uid://ikntf0mcjkt8" path="res://assets/fonts/AlegreyaSans-Regular.ttf" id="3_cwe5m"]
 
+[sub_resource type="FontVariation" id="FontVariation_r7xqo"]
+base_font = ExtResource("2_lf7dv")
+variation_opentype = {
+2003265652: 700
+}
+spacing_glyph = 4
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r2kde"]
 content_margin_left = 12.0
 content_margin_top = 8.0
@@ -558,6 +565,14 @@ Ammo/base_type = &"Label"
 Ammo/colors/font_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
 Ammo/font_sizes/font_size = 16
 Ammo/fonts/font = ExtResource("1_r7xqo")
+AreaName/base_type = &"Label"
+AreaName/colors/font_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
+AreaName/colors/font_shadow_color = Color(0, 0, 0, 0.85)
+AreaName/constants/shadow_offset_x = 0
+AreaName/constants/shadow_offset_y = 2
+AreaName/constants/shadow_outline_size = 6
+AreaName/font_sizes/font_size = 28
+AreaName/fonts/font = SubResource("FontVariation_r7xqo")
 AssignButton/base_type = &"Button"
 AssignButton/colors/font_hover_pressed_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
 AssignButton/colors/font_pressed_color = Color(0.9372549, 0.9019608, 0.8235294, 1)

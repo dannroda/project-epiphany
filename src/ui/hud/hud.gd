@@ -11,15 +11,19 @@ const SLOT_SIZE := Vector2(76, 76)
 @onready var hearts: HFlowContainer = %Hearts
 @onready var item_slots: HBoxContainer = %ItemSlots
 @onready var prompt: PanelContainer = %Prompt
+@onready var area_name: HBoxContainer = %AreaName
+@onready var area_label: Label = %AreaLabel
 @onready var prompt_icon: TextureRect = %PromptIcon
 @onready var prompt_text: Label = %PromptText
 
 var _health: Health
 var _focus: Interactable
+var _area_tween: Tween
 var _shown_hp := -1
 
 
 func _ready() -> void:
+	add_to_group(&"hud")
 	_build_item_slots()
 	GameState.item_buttons_changed.connect(_refresh_item_slots)
 	GameState.inventory.changed.connect(func(_id: StringName, _count: int) -> void: _refresh_item_slots())
@@ -111,6 +115,17 @@ func _refresh_prompt() -> void:
 	if prompt.visible:
 		prompt_text.text = _focus.prompt
 		prompt_icon.texture = InputPrompts.icon_for_current(&"interact")
+
+
+## Nombre de la sala o la zona al entrar por primera vez: aparece, queda un rato y se va.
+func show_area_name(text: String) -> void:
+	area_label.text = text
+	if _area_tween:
+		_area_tween.kill()
+	_area_tween = create_tween()
+	_area_tween.tween_property(area_name, "modulate:a", 1.0, 0.4)
+	_area_tween.tween_interval(2.0)
+	_area_tween.tween_property(area_name, "modulate:a", 0.0, 0.6)
 
 
 func _shake_slot(button: int) -> void:

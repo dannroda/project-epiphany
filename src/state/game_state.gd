@@ -21,6 +21,8 @@ var current_dungeon: StringName = &""
 var spawn_scene: String = ""
 var spawn_point: StringName = &""
 var player_position: Variant = null ## Vector3 hasta que haya puntos de aparición con nombre
+## Mazmorra: dónde quedó el player al entrar a la sala actual; ahí reaparece al morir. No se guarda.
+var room_entry: Variant = null
 var save_tampered := false
 
 
@@ -163,6 +165,7 @@ func _clear() -> void:
 	spawn_scene = ""
 	spawn_point = &""
 	player_position = null
+	room_entry = null
 	save_tampered = false
 
 

@@ -24,3 +24,7 @@ func consume(action: StringName) -> void:
 
 func _now() -> float:
 	return Time.get_ticks_msec() / 1000.0
+
+
+func clear() -> void:
+	_pressed_at.clear()

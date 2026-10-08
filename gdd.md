@@ -47,6 +47,8 @@ El tema *Imminent Doom* sigue siendo el tono: el fin se siente por ambientación
 | **Mazmorra (salas)** | Sigue al jugador **clampeada a los límites de la sala**. Al cruzar una puerta: el input se bloquea, el player camina solo a través de la puerta y la cámara hace un **deslizamiento** hacia la sala nueva (≈0.5 s). |
 | **Jefe** | Igual que sala, con límites que encuadran toda la arena. |
 
+**Cámara por sala (6.1):** la cámara revisa en cada cuadro de física en qué `Room` está el centro del player y clampea el foco para que la vista no salga de la sala: el ancho se mide en las esquinas de abajo de la pantalla (la parte cercana del trapecio) y el fondo en el centro de los bordes de arriba y abajo, así el player nunca queda fuera de cuadro; solo pueden asomar las esquinas lejanas de arriba, detrás de las paredes. Con la cámara actual (12 m de alto, 7 m atrás, FOV 75) eso es ≈ 14,7 × 31 m: una sala más chica que eso deja la cámara fija en su centro (Zelda clásico), una más grande la recorre. Si las salas del MVP quedan chicas, se ajusta `offset`/`fov`.
+
 ### 4.2 Movimiento y combate
 <!-- id: movimiento-combate -->
 
