@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://c1dqyr008pc70" path="res://player/states/moving.gd" id="17_c35mf"]
 [ext_resource type="Script" uid="uid://bubek4m3axgwv" path="res://player/states/attacking.gd" id="18_65viv"]
 [ext_resource type="PackedScene" uid="uid://8nnsjbshosby" path="res://src/tools/target_indicator.tscn" id="22_bjvpn"]
+[ext_resource type="Script" uid="uid://bvujfesyp7f87" path="res://player/states/hurt.gd" id="22_rptt4"]
 [ext_resource type="ArrayMesh" uid="uid://ds6iwsesymtqs" path="res://assets/kaykit_charanim/Mannequin Character/characters/meshes/Mannequin_Medium_Mannequin_Medium_ArmLeft.res" id="83_4e4er"]
 [ext_resource type="ArrayMesh" uid="uid://c2gvvxmwylayd" path="res://assets/kaykit_charanim/Mannequin Character/characters/meshes/Mannequin_Medium_Mannequin_Medium_ArmRight.res" id="84_7pq27"]
 [ext_resource type="ArrayMesh" uid="uid://c1vxpc5r0w7ia" path="res://assets/kaykit_charanim/Mannequin Character/characters/meshes/Mannequin_Medium_Mannequin_Medium_Body.res" id="85_8kadx"]
@@ -21,12 +22,12 @@
 [ext_resource type="ArrayMesh" uid="uid://dqqkg4issacgo" path="res://assets/kaykit_charanim/Mannequin Character/characters/meshes/Mannequin_Medium_Mannequin_Medium_LegLeft.res" id="87_cu17e"]
 [ext_resource type="ArrayMesh" uid="uid://iu05jixj3hpw" path="res://assets/kaykit_charanim/Mannequin Character/characters/meshes/Mannequin_Medium_Mannequin_Medium_LegRight.res" id="88_qtnoe"]
 [ext_resource type="Resource" path="res://data/entities/player.tres" id="cfg_player"]
-[ext_resource type="Script" path="res://src/components/health.gd" id="c_health"]
-[ext_resource type="Script" path="res://src/components/hurtbox.gd" id="c_hurtbox"]
-[ext_resource type="Script" path="res://src/components/hitbox.gd" id="c_hitbox"]
-[ext_resource type="Script" path="res://src/components/attack_runner.gd" id="c_runner"]
-[ext_resource type="Script" path="res://player/components/equipment.gd" id="c_equipment"]
-[ext_resource type="Script" path="res://player/components/targeting.gd" id="c_targeting"]
+[ext_resource type="Script" uid="uid://c2sjy3uekm7gp" path="res://player/components/equipment.gd" id="c_equipment"]
+[ext_resource type="Script" uid="uid://bqdwet47uk4xm" path="res://src/components/health.gd" id="c_health"]
+[ext_resource type="Script" uid="uid://cllj70kv76q68" path="res://src/components/hitbox.gd" id="c_hitbox"]
+[ext_resource type="Script" uid="uid://rcd8a41l0m7" path="res://src/components/hurtbox.gd" id="c_hurtbox"]
+[ext_resource type="Script" uid="uid://bcd4b7083of6t" path="res://src/components/attack_runner.gd" id="c_runner"]
+[ext_resource type="Script" uid="uid://2515xl1b5dkr" path="res://player/components/targeting.gd" id="c_targeting"]
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_peicu"]
 fadeout_time = 0.3
@@ -56,6 +57,13 @@ input_1/reset = true
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_g4c7l"]
 filter_enabled = true
 filters = ["Skeleton3D:chest", "Skeleton3D:hand.l", "Skeleton3D:lowerarm.l", "Skeleton3D:upperarm.l", "Skeleton3D:wrist.l"]
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_r7pn3"]
+fadein_time = 0.05
+fadeout_time = 0.15
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_b8hi5"]
+animation = &"General/Hit_A"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_peicu"]
 animation = &"General/Idle_A"
@@ -141,7 +149,11 @@ nodes/AttackType/node = SubResource("AnimationNodeTransition_g4c7l")
 nodes/AttackType/position = Vector2(720, 693.3333)
 nodes/ShieldThrust/node = SubResource("AnimationNodeAnimation_knn7v")
 nodes/ShieldThrust/position = Vector2(80, 933.3333)
-node_connections = [&"output", 0, &"Attack", &"Movement", 0, &"Idle", &"Movement", 1, &"Running", &"Attack", 0, &"GuardBlend", &"Attack", 1, &"AttackType", &"Combat", 0, &"Movement", &"Combat", 1, &"Targeting", &"GuardBlend", 0, &"Combat", &"GuardBlend", 1, &"MeleeBlocking", &"AttackType", 0, &"SwordSlice", &"AttackType", 1, &"ShieldThrust"]
+nodes/HurtAnim/node = SubResource("AnimationNodeAnimation_b8hi5")
+nodes/HurtAnim/position = Vector2(1066, 760)
+nodes/Hurt/node = SubResource("AnimationNodeOneShot_r7pn3")
+nodes/Hurt/position = Vector2(1300, 453)
+node_connections = [&"output", 0, &"Hurt", &"Movement", 0, &"Idle", &"Movement", 1, &"Running", &"Attack", 0, &"GuardBlend", &"Attack", 1, &"AttackType", &"Combat", 0, &"Movement", &"Combat", 1, &"Targeting", &"GuardBlend", 0, &"Combat", &"GuardBlend", 1, &"MeleeBlocking", &"AttackType", 0, &"SwordSlice", &"AttackType", 1, &"ShieldThrust", &"Hurt", 0, &"Attack", &"Hurt", 1, &"HurtAnim"]
 
 [sub_resource type="AnimationNodeObserverOneShot" id="AnimationNodeObserverOneShot_4uxyr"]
 
@@ -224,13 +236,13 @@ shader = ExtResource("10_65viv")
 shader_parameter/albedo_texture = ExtResource("11_x7c3f")
 shader_parameter/suit_color = 1
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_front"]
+size = Vector3(1.4, 1.2, 1.2)
+
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_bjvpn"]
 radius = 16.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_32ebh"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_front"]
-size = Vector3(1.4, 1.2, 1.2)
 
 [node name="Player" type="CharacterBody3D" unique_id=1694148988]
 script = ExtResource("1_2lfai")
@@ -420,21 +432,21 @@ bones/21/skin_scale = Vector3(1, 1, 1)
 bone_name = "hand.r"
 bone_idx = 12
 
-[node name="WeaponSocket" type="Marker3D" parent="ModelController/Skeleton3D/Hand_R"]
+[node name="WeaponSocket" type="Marker3D" parent="ModelController/Skeleton3D/Hand_R" unique_id=842885157]
 transform = Transform3D(-0.12969656, -0.9911532, 0.028182058, 0.9913636, -0.12906344, 0.023234582, -0.01939179, 0.030952213, 0.9993323, -0.009263635, 0.08671972, -0.003733158)
 
 [node name="Hand_L" type="BoneAttachment3D" parent="ModelController/Skeleton3D" unique_id=632440802]
 bone_name = "hand.l"
 bone_idx = 17
 
-[node name="ShieldSocket" type="Marker3D" parent="ModelController/Skeleton3D/Hand_L"]
+[node name="ShieldSocket" type="Marker3D" parent="ModelController/Skeleton3D/Hand_L" unique_id=2124676257]
 transform = Transform3D(0.05814196, 0.9960074, 0.06774296, -0.47133523, -0.032431114, 0.8813587, 0.8800361, -0.08317359, 0.46756837, 0.034190416, 0.26870853, 0.09985852)
 
 [node name="BackShield" type="BoneAttachment3D" parent="ModelController/Skeleton3D" unique_id=1684357555]
 bone_name = "chest"
 bone_idx = 8
 
-[node name="ShieldSocket" type="Marker3D" parent="ModelController/Skeleton3D/BackShield"]
+[node name="ShieldSocket" type="Marker3D" parent="ModelController/Skeleton3D/BackShield" unique_id=1019969984]
 transform = Transform3D(-0.9999982, 0.0017344035, -1.7233193e-05, 0.0017344016, 0.99979764, -0.020037394, -1.7486513e-05, -0.020037392, -0.99979925, 0.03203572, -0.16740632, -0.37010795)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ModelController" unique_id=1064686879]
@@ -468,6 +480,10 @@ parameters/AttackType/current_state = "Slash"
 parameters/AttackType/transition_request = ""
 parameters/AttackType/current_index = 0
 parameters/AttackType/observer = null
+parameters/Hurt/active = false
+parameters/Hurt/internal_active = false
+parameters/Hurt/request = 0
+parameters/Hurt/observer = null
 
 [node name="Visuals" type="Node3D" parent="ModelController" unique_id=73006567]
 
@@ -507,6 +523,19 @@ skin = SubResource("Skin_flen4")
 skeleton = NodePath("../../Skeleton3D")
 surface_material_override/0 = SubResource("ShaderMaterial_4uxyr")
 
+[node name="Hitboxes" type="Node3D" parent="ModelController" unique_id=1971905675]
+
+[node name="Front" type="Area3D" parent="ModelController/Hitboxes" unique_id=1472290348]
+collision_layer = 0
+collision_mask = 24
+monitoring = false
+monitorable = false
+script = ExtResource("c_hitbox")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ModelController/Hitboxes/Front" unique_id=775261622]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.9)
+shape = SubResource("BoxShape3D_front")
+
 [node name="TargetDetector" type="Area3D" parent="." unique_id=1133754967]
 
 [node name="DetectorShape" type="CollisionShape3D" parent="TargetDetector" unique_id=301751612]
@@ -533,46 +562,36 @@ script = ExtResource("17_c35mf")
 [node name="Attacking" type="LimboState" parent="MovementState" unique_id=1135687087]
 script = ExtResource("18_65viv")
 
+[node name="Hurt" type="LimboState" parent="MovementState" unique_id=199458395]
+script = ExtResource("22_rptt4")
+
 [node name="TargetIndicator" parent="." unique_id=1615443035 instance=ExtResource("22_bjvpn")]
 visible = false
 
-[node name="Hitboxes" type="Node3D" parent="ModelController"]
-
-[node name="Front" type="Area3D" parent="ModelController/Hitboxes"]
-collision_layer = 0
-collision_mask = 24
-monitoring = false
-monitorable = false
-script = ExtResource("c_hitbox")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ModelController/Hitboxes/Front"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.9)
-shape = SubResource("BoxShape3D_front")
-
-[node name="Health" type="Node" parent="."]
+[node name="Health" type="Node" parent="." unique_id=871248059]
 script = ExtResource("c_health")
 
-[node name="Hurtbox" type="Area3D" parent="."]
+[node name="Hurtbox" type="Area3D" parent="." unique_id=1547325875]
 collision_layer = 16
 collision_mask = 0
 monitoring = false
 script = ExtResource("c_hurtbox")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" unique_id=2009580104]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_32ebh")
 
-[node name="AttackRunner" type="Node" parent="." node_paths=PackedStringArray("hitbox_root")]
+[node name="AttackRunner" type="Node" parent="." unique_id=701352903 node_paths=PackedStringArray("hitbox_root")]
 script = ExtResource("c_runner")
 hitbox_root = NodePath("../ModelController/Hitboxes")
 
-[node name="Equipment" type="Node" parent="." node_paths=PackedStringArray("weapon_socket", "shield_hand_socket", "shield_back_socket")]
+[node name="Equipment" type="Node" parent="." unique_id=508811436 node_paths=PackedStringArray("weapon_socket", "shield_hand_socket", "shield_back_socket")]
 script = ExtResource("c_equipment")
 weapon_socket = NodePath("../ModelController/Skeleton3D/Hand_R/WeaponSocket")
 shield_hand_socket = NodePath("../ModelController/Skeleton3D/Hand_L/ShieldSocket")
 shield_back_socket = NodePath("../ModelController/Skeleton3D/BackShield/ShieldSocket")
 
-[node name="Targeting" type="Node" parent="." node_paths=PackedStringArray("player", "target_indicator", "detector_shape")]
+[node name="Targeting" type="Node" parent="." unique_id=85013995 node_paths=PackedStringArray("player", "target_indicator", "detector_shape")]
 script = ExtResource("c_targeting")
 player = NodePath("..")
 target_indicator = NodePath("../TargetIndicator")

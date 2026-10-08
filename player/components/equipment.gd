@@ -32,6 +32,11 @@ func refresh() -> void:
 	weapon_changed.emit(weapon)
 
 
+func damage_reduction() -> float:
+	var armor := _equipped(ItemData.Category.ARMOR)
+	return armor.damage_reduction if armor else 0.0
+
+
 func _equipped(category: ItemData.Category) -> ItemData:
 	var id: StringName = GameState.equipment.get(category, &"")
 	return Items.get_item(id) if id != &"" else null

@@ -22,6 +22,19 @@ func test_health_damage_and_invulnerability() -> void:
 	health.free()
 
 
+func test_health_dies_once() -> void:
+	var health := Health.new()
+	health.max_health = 4
+	health.invulnerability_time = 0.0
+	health._ready()
+	var deaths := [0]
+	health.died.connect(func() -> void: deaths[0] += 1)
+	health.damage(4)
+	assert_eq(health.damage(4), false, "muerto no recibe daño")
+	assert_eq(deaths[0], 1)
+	health.free()
+
+
 func test_hitbox_hits_each_hurtbox_once_per_attack() -> void:
 	var hitbox := Hitbox.new()
 	hitbox.team = T.PLAYER

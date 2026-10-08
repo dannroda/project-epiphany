@@ -54,3 +54,42 @@ func test_equipment_follows_game_state() -> void:
 	assert_eq(player.equipment.shield_on_back.scene_file_path, "res://assets/items/shield/shield_mirror.tscn")
 	assert_eq(player.equipment.shield_in_hand.visible, false)
 	game_state.reset()
+
+
+func _enemy_hit(player: PlayerCharacter, enemy: Enemy, amount: int) -> void:
+	var info := enemy.config.make_damage(enemy)
+	info.amount = amount
+	player.hurtbox.receive(info)
+
+
+func test_hurt_knockback_and_invulnerability() -> void:
+	var setup: Array = await _load_level()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	var enemy: Enemy = setup[2]
+	player.global_position = enemy.global_position - Vector3(0, 0, 1.5)
+	await tree.physics_frame
+	var start := player.health.current
+	_enemy_hit(player, enemy, 2)
+	await tree.physics_frame
+	assert_eq(player.health.current, start - 2)
+	assert_eq(player.movement_state.get_active_state().name, &"Hurt")
+	assert_true(player.velocity.z < 0.0, "retrocede alejándose del esqueleto")
+	assert_true(player.health.is_invulnerable())
+	_enemy_hit(player, enemy, 2)
+	assert_eq(player.health.current, start - 2, "invulnerable")
+	for i in 30:
+		await tree.physics_frame
+	assert_eq(player.movement_state.get_active_state().name, &"Idle", "vuelve a Idle")
+
+
+func test_armor_reduces_damage() -> void:
+	var setup: Array = await _load_level()
+	var player: PlayerCharacter = setup[1]
+	var enemy: Enemy = setup[2]
+	var game_state: Node = setup[0].root.get_node(^"GameState")
+	game_state.equip(Items.get_item(&"armor_chainmail"))
+	var start := player.health.current
+	_enemy_hit(player, enemy, 4)
+	assert_eq(player.health.current, start - 3, "−25 %")
+	game_state.reset()

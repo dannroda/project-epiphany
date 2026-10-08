@@ -4,6 +4,7 @@ extends CharacterBody3D
 const SHIELD_THRUST: AttackData = preload("res://data/attacks/shield_thrust.tres")
 
 @export var config: EntityConfig
+@export var blink_rate := 15.0
 
 @onready var model: Node3D = $ModelController
 @onready var anim_player: AnimationPlayer = $ModelController/AnimationPlayer
@@ -15,8 +16,10 @@ const SHIELD_THRUST: AttackData = preload("res://data/attacks/shield_thrust.tres
 @onready var attack_runner: AttackRunner = $AttackRunner
 @onready var equipment: Equipment = $Equipment
 @onready var targeting: Targeting = $Targeting
+@onready var visuals: Node3D = $ModelController/Visuals
 
 var guard_tween: Tween
+var _blink_time := 0.0
 
 
 func _ready() -> void:
@@ -37,6 +40,15 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	movement_state.update(delta)
 	_watch_debug_values()
+
+
+func _process(delta: float) -> void:
+	if health.is_invulnerable():
+		_blink_time += delta
+		visuals.visible = fmod(_blink_time * blink_rate, 2.0) < 1.0
+	elif not visuals.visible or _blink_time > 0.0:
+		_blink_time = 0.0
+		visuals.visible = true
 
 
 func is_blocking() -> bool:
@@ -85,8 +97,12 @@ func _sync_health() -> void:
 
 
 func _on_hit(info: DamageInfo) -> void:
-	if health.damage(info.amount):
-		Log.info(&"combat", "El player recibió", info.amount, "de daño. Vida:", health.current)
+	var amount := maxi(1, roundi(info.amount * (1.0 - equipment.damage_reduction())))
+	if not health.damage(amount):
+		return
+	Log.info(&"combat", "El player recibió", amount, "de daño de", info.source.name if info.source else "?", "· Vida:", health.current)
+	movement_state.blackboard.set_var("last_hit", info)
+	movement_state.dispatch("hurt")
 
 
 func _watch_debug_values() -> void:
@@ -101,6 +117,10 @@ func _watch_debug_values() -> void:
 static func _register_monitors() -> void:
 	if Performance.has_custom_monitor("epiphany/target_locked"):
 		return
+	Performance.add_custom_monitor("epiphany/player_hp", func() -> int:
+		var tree := Engine.get_main_loop() as SceneTree
+		var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+		return player.health.current if player else 0)
 	Performance.add_custom_monitor("epiphany/target_locked", func() -> int:
 		var tree := Engine.get_main_loop() as SceneTree
 		var player := tree.get_first_node_in_group(&"player") as PlayerCharacter

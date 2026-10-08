@@ -379,17 +379,17 @@ Vida, invulnerabilidad breve, knockback, bloqueo direccional, roll, IA del esque
 **Hecho cuando:**
 - Pelear 1 contra 1 y poder perder.
 
-### 1.1 Daño, invulnerabilidad y knockback del player · Pendiente
+### 1.1 Daño, invulnerabilidad y knockback del player · En curso
 
-- [ ] Conectar `Hurtbox.hit` en `player.gd`
+- [x] Conectar `Hurtbox.hit` en `player.gd`
   `_on_hurtbox_hit(info)`: reduce el daño con `equipment.damage_reduction()` (mínimo 1) y llama `Health.damage()`. El bloqueo se suma en 1.2. Código en [[gdd#ventanas-ataque]].
-- [ ] Estado `Hurt` en el `LimboHSM`
+- [x] Estado `Hurt` en el `LimboHSM`
   Retroceso con `DamageInfo.knockback` en la dirección fuente → player, input bloqueado ≈0.25 s, animación `Hit_A`/`Hit_B`. Al entrar llama `attack_runner.stop()`.
-- [ ] Parpadeo mientras dura la invulnerabilidad
+- [x] Parpadeo mientras dura la invulnerabilidad
   Alternar la visibilidad del modelo (o un uniform del material) mientras `Health.is_invulnerable()`. Con `delta`, así la pausa no lo consume.
-- [ ] Monitor `epiphany/player_hp` y watch en el overlay
+- [x] Monitor `epiphany/player_hp` y watch en el overlay
   `Performance.add_custom_monitor` y `DebugOverlay.watch(&"hp", …)`. Ver [[gdd#depuracion]].
-- [ ] Tests headless de `Health`
+- [x] Tests headless de `Health`
   Daño, invulnerabilidad (un segundo golpe dentro de la ventana no cuenta), curar sin pasar el máximo, `died` una sola vez. En el runner de 0.12.
 
 **Prueba:** El esqueleto le pega al player: pierde vida, retrocede, parpadea ≈0.8 s y durante el parpadeo no recibe otro golpe. Los tests de `Health` pasan.
@@ -397,6 +397,8 @@ Vida, invulnerabilidad breve, knockback, bloqueo direccional, roll, IA del esque
 **Notas:** Primer paso de M1: que al player le duela. Usa `Health`, `Hurtbox` y `DamageInfo` de M0.
 
 Skills: `godot:godot-gdscript`, `godot:godot-gdscript-headless-testing`.
+
+El estado `Hurt` se alcanza desde cualquier estado (`anystate`); la animación es un OneShot `Hurt` (General/Hit_A) entre la salida del AnimationTree y `Attack`. El parpadeo alterna `ModelController/Visuals` en `_process` (la pausa lo frena). La reducción de la armadura sale de `Equipment.damage_reduction()`, con mínimo 1 de daño. Probado con tests (`test_player.gd`); la prueba con el esqueleto pegando queda para 1.4.
 
 **Referencias:** `gdd.md#combate`, `gdd.md#entidades-componentes`
 
