@@ -1452,11 +1452,11 @@ Log (API: niveles y canales)  ──print_rich / push_*──▶  salida del eng
 
 | Pieza | Qué hace | Dónde |
 |---|---|---|
-| `Log` (autoload) | Niveles `DEBUG`, `INFO`, `SUCCESS`, `WARNING`, `ERROR`. Un canal por sistema: `combat`, `targeting`, `ai`, `items`, `save`, `camera`, `input`, `world`. Debug, info y success salen con `print_rich` y color; warning y error por `push_warning`/`push_error`, así caen en la pestaña Errores con el stack. Nivel y canales en `epiphany/log/level` y `epiphany/log/channels` | `src/debug/log.gd` |
-| `LogSink` | `Logger` propio registrado con `OS.add_logger()` en el `_init` de `Log`. Recibe todo lo que imprime el proceso (juego, engine, addons) y los errores con archivo, línea y backtrace. Solo encola: puede correr en otros hilos y adentro no se puede usar `print` ni `push_error` | `src/debug/log_sink.gd` |
+| `Log` (autoload) | Niveles `DEBUG`, `INFO`, `SUCCESS`, `WARNING`, `ERROR`. Un canal por sistema: `combat`, `targeting`, `ai`, `items`, `save`, `camera`, `input`, `world`. Debug, info y success salen con `print_rich` y color; warning y error por `push_warning`/`push_error`, así caen en la pestaña Errores con el stack. Nivel y canales en `epiphany/log/level` (Auto = Debug en debug, Warning en release) y `epiphany/log/channels` (vacío = todos); el plugin los registra en Project Settings | `addons/epiphany_tools/debug/runtime/log.gd` |
+| `LogSink` | `Logger` propio registrado con `OS.add_logger()` en el `_init` de `Log`. Recibe todo lo que imprime el proceso (juego, engine, addons) y los errores con archivo, línea y backtrace. Solo encola: puede correr en otros hilos y adentro no se puede usar `print` ni `push_error` | `addons/epiphany_tools/debug/runtime/log_sink.gd` |
 | Pestaña "Log" | `EditorDebuggerPlugin`. El juego le manda cada línea (`EngineDebugger.send_message("epiphany_log:entry", …)`): nivel, canal, texto, hora y ubicación. Filtros por nivel y canal que se aplican al juego corriendo, y doble clic para abrir el script en la línea | `addons/epiphany_tools/` |
 | Monitores | `Performance.add_custom_monitor("epiphany/…", callable)`: gráficos en *Debugger › Monitors*. Cada sistema registra los suyos (enemigos vivos, hitboxes activas…). Funcionan también en builds exportadas | cada sistema |
-| `DebugOverlay` (autoload) | `watch(clave, valor)` para valores que cambian cada frame; se muestra con la tecla `1` (`debug_overlay`). Reemplaza a `LabelStateTracker`. Es lo que queda en builds exportadas | `src/debug/debug_overlay.gd` |
+| `DebugOverlay` (autoload) | `watch(clave, valor)` para valores que cambian cada frame; se muestra con la tecla `1` (`debug_overlay`). Muestra también las últimas 5 advertencias y errores. Reemplaza a `LabelStateTracker`. Es lo que queda en builds exportadas | `addons/epiphany_tools/debug/runtime/debug_overlay.gd` |
 
 Uso:
 
@@ -1472,8 +1472,9 @@ if Log.is_enabled(Log.Level.DEBUG, &"ai"):   # solo si el mensaje es caro de arm
 **Reglas:**
 - El autoload se llama `Log` porque `Logger` es una clase del engine desde Godot 4.5.
 - En release el nivel por defecto es `WARNING`. GDScript no elimina las llamadas al compilar: los argumentos se evalúan igual, de ahí `is_enabled()` para mensajes caros.
+- `Log` y `DebugOverlay` viven en el plugin `epiphany_tools`, que los registra como autoloads al activarse; la idea es que pueda separarse como plugin propio.
 - La pestaña y los filtros en vivo existen solo cuando el juego corre desde el editor (`EngineDebugger.is_active()`). En builds exportadas quedan la consola, el overlay y `user://logs/godot.log` (Godot guarda uno por sesión y conserva los últimos 5).
-- A verificar al implementar: que el `Logger` se llame en el mismo hilo para prints del hilo principal (de eso depende no duplicar las líneas de `Log`), qué texto recibe `_log_message` de un `print_rich`, y los métodos de `ScriptBacktrace` en 4.8.
+- El `Logger` se llama en el mismo hilo que imprime (verificado en 4.8-dev7): `Log` prende `skip_main_thread` mientras imprime y el sink descarta esas líneas, así no se duplican. Lo que llega de otros hilos se encola igual.
 
 **Más adelante:** pestaña "Watches" con los valores del overlay, y comandos desde el editor (dar un ítem, cambiar una flag, cargar un escenario) por el mismo canal de mensajes.
 

@@ -1,42 +1,47 @@
 @tool
 extends EditorPlugin
 
+const LogScript := preload("debug/runtime/log.gd")
+const LogDebuggerPlugin := preload("debug/editor/log_debugger_plugin.gd")
+
 const AutoLoads = {
-	"Log": "debug/runtime/log.gd"
+	"Log": "debug/runtime/log.gd",
+	"DebugOverlay": "debug/runtime/debug_overlay.gd",
 }
 
-const Classes = {
-	"LogSink": "debug/runtime/log_sink.gd"
-}
+var _log_debugger: LogDebuggerPlugin
 
-const Settings = {
-	
-}
-
-var _base_dir:String
 
 func _enable_plugin() -> void:
 	for _singleton in AutoLoads:
 		add_autoload_singleton(_singleton, AutoLoads[_singleton])
-	
-	for _class in Classes:
-		var _path = "/".join([_base_dir,Classes[_class]])
-		var _script = load(_path)
-		printt("path:", _path)
-		printt(type_string(typeof(_script.get_script())))
-		printt(_script.get_global_name(), _script.get_base_script())
-		#add_custom_type(_class, )
-	
+
 
 func _disable_plugin() -> void:
 	for _singleton in AutoLoads:
 		ProjectSettings.set_setting("autoload/" + _singleton, null) # Workaroud (https://github.com/godotengine/godot/issues/124137)
-		#remove_autoload_singleton(_singleton) 
+		#remove_autoload_singleton(_singleton)
+
 
 func _enter_tree() -> void:
-	_base_dir = get_script().resource_path.get_base_dir()
+	_add_setting(LogScript.SETTING_LEVEL, LogScript.LEVEL_AUTO, PROPERTY_HINT_ENUM,
+			"Auto (Debug en debug, Warning en release):-1,Debug:0,Info:1,Success:2,Warning:3,Error:4,None:5")
+	_add_setting(LogScript.SETTING_CHANNELS, PackedStringArray(), PROPERTY_HINT_TYPE_STRING,
+			"%d:" % TYPE_STRING)
+	_log_debugger = LogDebuggerPlugin.new()
+	add_debugger_plugin(_log_debugger)
 
 
 func _exit_tree() -> void:
-	# Clean-up of the plugin goes here.
-	pass
+	remove_debugger_plugin(_log_debugger)
+	_log_debugger = null
+
+
+func _add_setting(setting: String, default: Variant, hint: PropertyHint, hint_string: String) -> void:
+	if not ProjectSettings.has_setting(setting):
+		ProjectSettings.set_setting(setting, default)
+	ProjectSettings.set_initial_value(setting, default)
+	ProjectSettings.set_as_basic(setting, true)
+	ProjectSettings.add_property_info({
+		"name": setting, "type": typeof(default), "hint": hint, "hint_string": hint_string,
+	})

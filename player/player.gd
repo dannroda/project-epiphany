@@ -18,6 +18,8 @@ extends CharacterBody3D
 var possible_targets: Array[Node3D]
 
 func _ready() -> void:
+	add_to_group(&"player")
+	_register_monitors()
 	movement_state.initialize(self)
 	movement_state.set_active(true)
 	
@@ -28,6 +30,25 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	movement_state.update(delta)
+	_watch_debug_values()
+
+func _watch_debug_values() -> void:
+	var state := movement_state.get_active_state()
+	var target: Variant = movement_state.blackboard.get_var("target", null)
+	DebugOverlay.watch("player/state", state.name if state else &"-")
+	DebugOverlay.watch("player/animation", anim_tree.get(&"parameters/Movement/current_state"))
+	DebugOverlay.watch("player/velocity", velocity.snappedf(0.01))
+	DebugOverlay.watch("player/target", target.name if is_instance_valid(target) else &"-")
+
+static func _register_monitors() -> void:
+	if Performance.has_custom_monitor("epiphany/target_locked"):
+		return
+	Performance.add_custom_monitor("epiphany/target_locked", func() -> int:
+		var tree := Engine.get_main_loop() as SceneTree
+		var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+		if not player or not player.movement_state.blackboard:
+			return 0
+		return 1 if is_instance_valid(player.movement_state.blackboard.get_var("target", null)) else 0)
 
 func set_targeting_range(new_radius: float) -> void:
 	if not target_detector_shape or not target_detector_shape.shape:

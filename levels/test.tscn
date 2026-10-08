@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://bs6ggwyw5mp2m" path="res://assets/kenney_skyboxes/Skyboxes/skybox-morning.png" id="3_qhvcx"]
 [ext_resource type="Script" uid="uid://4wgrqa57jyfo" path="res://levels/test_object.gd" id="4_r4e4k"]
 [ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="5_u45fp"]
-[ext_resource type="Script" uid="uid://bkcd7do0xdyfo" path="res://src/debug/label_prop.gd" id="6_6g8e2"]
 [ext_resource type="Script" uid="uid://boos1wd2wsju2" path="res://src/debug/camera_enabler.gd" id="6_u45fp"]
 [ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="8_2grjb"]
 
@@ -133,20 +132,6 @@ text = "TopCamera"
 script = ExtResource("6_u45fp")
 camera = NodePath("../../../TopDownCamera")
 metadata/_custom_type_script = "uid://boos1wd2wsju2"
-
-[node name="CurrentAnimationState" type="Label" parent="CanvasLayer/CameraSelector" unique_id=1835775858 node_paths=PackedStringArray("target")]
-layout_mode = 2
-script = ExtResource("6_6g8e2")
-target = NodePath("../../../Player")
-value_to_track = &"anim_tree:get"
-call_props = [&"parameters/Movement/current_state"]
-
-[node name="CurrentState" type="Label" parent="CanvasLayer/CameraSelector" unique_id=2059642374 node_paths=PackedStringArray("target")]
-layout_mode = 2
-script = ExtResource("6_6g8e2")
-target = NodePath("../../../Player")
-value_to_track = &"movement_state:get_active_state"
-metadata/_custom_type_script = "uid://bkcd7do0xdyfo"
 
 [node name="Enemy" parent="." unique_id=510737741 instance=ExtResource("8_2grjb")]
 transform = Transform3D(-0.9659258, 0, -0.25881913, 0, 1, 0, 0.25881913, 0, -0.9659258, 0, 0, 6.675021)

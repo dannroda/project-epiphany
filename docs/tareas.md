@@ -3,7 +3,7 @@
 > Export de `compass/`, que es la fuente de verdad. No editar: los cambios se hacen en `compass/` o con `scompass`, y este archivo se regenera.
 > Generado: 2026-10-08
 
-## M0 — Refactor del player + base de datos  (2/12)
+## M0 — Refactor del player + base de datos  (3/12)
 
 Dejar armada la base sobre la que se construye todo lo demás: ítems como datos, estado de la partida, guardado, componentes de combate y un player ordenado en piezas. Casi nada de esto se ve en el juego todavía; lo que cambia es cómo está hecho. Diseño y código de ejemplo: `gdd.md` §11.
 
@@ -54,26 +54,26 @@ Se puede hacer en cualquier momento.
 
 **Referencias:** `gdd.md#input`
 
-### 0.11 Sistema de depuración · En curso
+### 0.11 Sistema de depuración · Hecho
 
-- [x] Crear el autoload `Log` (`src/debug/log.gd`)
-  Niveles debug, info, success, warning y error, y un canal por sistema (`combat`, `targeting`, `ai`, `items`, `save`, `camera`, `input`, `world`). Debug, info y success salen con `print_rich` y color; warning y error van por `push_warning`/`push_error`, así caen en la pestaña Errores con el stack. Hecho en `addons/epiphany_tools/debug/log.gd` y registrado como autoload `Log` en `project.godot`. La tarea decía `src/debug/`: decidir si se mueve (es código del juego, no del editor).
-- [ ] Registrar un `Logger` propio (`src/debug/log_sink.gd`)
-  Con `OS.add_logger()` en el `_init` de `Log`. Recibe todo lo que se imprime (juego, engine y addons, LimboAI incluido) y todos los errores con archivo, línea, función y backtrace. Puede llamarse desde otros hilos: guarda lo recibido en una cola protegida con `Mutex`, y `Log` la vacía en `_process`. Adentro no se puede usar `print` ni `push_error` (se llamaría a sí mismo). `log_sink.gd` existe pero es la plantilla vacía y hereda de `Node`: tiene que heredar de `Logger`.
-- [ ] Agregar `epiphany/log/level` y `epiphany/log/channels` a `project.godot`
-  Con *Advanced Settings* activado se editan desde Project Settings. Ojo: hoy el filtro de canales de `Log` no filtra. `_channels` arranca con todos en `true`, el setting solo agrega, e `is_enabled()` mira `has()` y no el valor. Al leer `epiphany/log/channels`, reemplazar la lista en lugar de sumar, o usar el `bool`. Decidir también si `warning` y `error` respetan el canal (hoy lo ignoran).
-- [ ] Reemplazar los prints comentados por llamadas a `Log`
+- [x] Crear el autoload `Log` (`addons/epiphany_tools/debug/runtime/log.gd`)
+  Niveles debug, info, success, warning y error, y un canal por sistema (`combat`, `targeting`, `ai`, `items`, `save`, `camera`, `input`, `world`). Debug, info y success salen con `print_rich` y color; warning y error van por `push_warning`/`push_error`, así caen en la pestaña Errores con el stack. Lo registra el plugin `epiphany_tools` al activarse.
+- [x] Registrar un `Logger` propio (`addons/epiphany_tools/debug/runtime/log_sink.gd`)
+  Con `OS.add_logger()` en el `_init` de `Log`. Recibe todo lo que se imprime (juego, engine y addons, LimboAI incluido) y todos los errores con archivo, línea, función y backtrace. Puede llamarse desde otros hilos: guarda lo recibido en una cola protegida con `Mutex`, y `Log` la vacía en `_process`. Adentro no se puede usar `print` ni `push_error` (se llamaría a sí mismo).
+- [x] Registrar `epiphany/log/level` y `epiphany/log/channels` en Project Settings
+  Los registra el plugin en `_enter_tree`. Nivel: Auto (Debug en debug, Warning en release) o uno fijo. Canales: vacío = todos.
+- [x] Reemplazar los prints comentados por llamadas a `Log`
   Los de `src/entities/enemy.gd` y `src/items/equipable_item.gd`, y el `printt` de `on_death_finished`. Por ejemplo: `Log.info(&"combat", name, "recibió golpe. Vida:", current_health)`.
-- [ ] Registrar monitores propios
+- [x] Registrar monitores propios
   Con `Performance.add_custom_monitor("epiphany/…", callable)` para lo que ya se puede medir (enemigos vivos, objetivo fijado 0/1). Se ven como gráficos en *Debugger › Monitors*. Cada sistema nuevo (hitboxes en 0.7, por ejemplo) suma los suyos.
-- [ ] Crear la pestaña "Log" en el debugger del editor
+- [x] Crear la pestaña "Log" en el debugger del editor
   Un `EditorDebuggerPlugin` en `addons/epiphany_tools/` (si el plugin todavía no existe por 0.10, se crea acá). El juego le manda con `EngineDebugger.send_message("epiphany_log:entry", …)` las líneas de `Log` (con nivel y canal) y lo que capturó el `Logger` que no vino de `Log`: errores y mensajes del engine y de addons, con canal `engine`.
-- [ ] Filtrar desde la pestaña con el juego corriendo
+- [x] Filtrar desde la pestaña con el juego corriendo
   Al cambiar nivel o canales, el editor le manda el filtro al juego (`EditorDebuggerSession.send_message`) y el juego lo aplica al momento (`EngineDebugger.register_message_capture`).
-- [ ] Doble clic en una línea abre el script donde se generó
+- [x] Doble clic en una línea abre el script donde se generó
   Con `EditorInterface.edit_script()`. Para errores, la ubicación sale del backtrace que da el `Logger`; para las líneas de `Log`, de `get_stack()`.
-- [ ] Crear el overlay `DebugOverlay` (tecla `1`)
-  Autoload con `watch(clave, valor)` para valores que cambian cada frame (estado, velocidad, objetivo), y la acción `debug_overlay` (tecla `1`) para mostrarlo u ocultarlo. Reemplaza a `LabelStateTracker` (`src/debug/label_prop.gd`) y sirve también en builds exportadas. La acción `debug_overlay` (tecla `1`) ya está en el Input Map. `debug_overlay.gd` existe pero es la plantilla vacía y no está registrado como autoload.
+- [x] Crear el overlay `DebugOverlay` (tecla `1`)
+  Autoload con `watch(clave, valor)` para valores que cambian cada frame (estado, velocidad, objetivo), y la acción `debug_overlay` (tecla `1`) para mostrarlo u ocultarlo. Reemplaza a `LabelStateTracker` (`src/debug/label_prop.gd`) y sirve también en builds exportadas. También muestra las últimas 5 advertencias y errores.
 - [ ] Para más adelante: pestaña Watches y comandos desde el editor
   Los valores del overlay en vivo en una pestaña del debugger, y botones que le mandan órdenes al juego (dar un ítem, cambiar una flag, cargar un escenario).
 
@@ -81,9 +81,11 @@ Se puede hacer en cualquier momento.
 
 **Notas:** Reemplaza los `print` y `print_rich` sueltos por un logger con niveles y canales, conectado al debugger de Godot. Es el port a GDScript del logger de godot-dojo (`include/tools/logger.hpp`), con canales agregados.
 
-Conviene hacerla antes de 0.7, así los componentes nuevos ya nacen usando `Log`. El autoload no puede llamarse `Logger`: desde Godot 4.5 es una clase del engine. Los argumentos variables (`...args: Array`) son de GDScript 4.5 en adelante.
+El autoload no puede llamarse `Logger`: desde Godot 4.5 es una clase del engine. Los argumentos variables (`...args: Array`) son de GDScript 4.5 en adelante.
 
 Referencia: https://docs.godotengine.org/en/latest/tutorials/scripting/logging.html (clase `Logger`, `OS.add_logger()`, file logging). Godot ya guarda un archivo por sesión en `user://logs/godot.log` y conserva los últimos 5 (*Debug › File Logging*); para playtests alcanza con eso al principio.
+
+Probado en headless (4.8-dev7): `Log` filtra por nivel y canal, el sink captura prints, errores y prints de otros hilos sin duplicar las líneas de `Log`, y el overlay muestra los valores y las advertencias. Probado en el editor (juego embebido): pestaña Log, filtro en vivo, doble clic, monitores y overlay.
 
 **Referencias:** `gdd.md#depuracion`
 

@@ -15,6 +15,8 @@ const KNOCKBACK_FRICTION: float = 18.0
 func _ready() -> void:
 	current_health = max_health
 	add_to_group("targetable")
+	add_to_group(&"enemies")
+	_register_monitors()
 	
 	if bt_player and bt_player.blackboard:
 		bt_player.blackboard.set_var("is_hit", false)
@@ -30,18 +32,16 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func select() -> void:
-	pass
-	#print_rich("[color=Green]Enemigo fijado por Z-Target:[/color] %s" % name)
+	Log.debug(&"targeting", "Fijado:", name)
 
 func deselect() -> void:
-	pass
-	#print_rich("[color=Yellow]Enemigo liberado de Z-Target:[/color] %s" % name)
+	Log.debug(&"targeting", "Liberado:", name)
 
 func take_hit(damage: int, knockback: Vector3) -> void:
 	if is_dead: return
 	
 	current_health -= damage
-	#print_rich("[color=Red]%s recibió golpe![/color] Vida restante: %d" % [name, current_health])
+	Log.info(&"combat", name, "recibió golpe. Vida:", current_health)
 
 	velocity = knockback
 	
@@ -70,9 +70,17 @@ func _start_death() -> void:
 		
 func on_death_finished() -> void:
 	bt_player.active = false
-	#printt(collision_layer, collision_mask)
+	Log.debug(&"combat", name, "terminó de morir")
 	collision_layer = 4
 	#collision_mask = 1
 	#var tween := create_tween()
 	#tween.tween_property(self, "scale", Vector3.ZERO, 0.5)
 	#tween.tween_callback(queue_free)
+
+
+static func _register_monitors() -> void:
+	if Performance.has_custom_monitor("epiphany/enemies_alive"):
+		return
+	Performance.add_custom_monitor("epiphany/enemies_alive", func() -> int:
+		var tree := Engine.get_main_loop() as SceneTree
+		return tree.get_nodes_in_group(&"enemies").filter(func(e: Enemy) -> bool: return not e.is_dead).size())
