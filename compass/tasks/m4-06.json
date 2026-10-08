@@ -1,0 +1,45 @@
+{
+  "checklist": [
+    {
+      "detail": "Plugin de Nathan Hoad en addons/. Probar con Godot 4.8-dev7: que el editor lo cargue sin errores y que los tests headless sigan pasando.",
+      "done": false,
+      "text": "Instalar Dialogue Manager y verificar compatibilidad"
+    },
+    {
+      "detail": "La TextBox de 4.2 (estilos STONE e ITEM de los mockups) muestra las líneas que entrega Dialogue Manager: letra por letra, páginas, guarda de input y pausa con la pila de menús.",
+      "done": false,
+      "text": "Usar nuestra TextBox como globo"
+    },
+    {
+      "detail": "Las dos tablillas de prueba y el texto del item get. El estilo y el rótulo salen de tags o del título del bloque. Reemplaza TextData; los tests de 4.2, 4.3 y 3.6 siguen pasando.",
+      "done": false,
+      "text": "Pasar tablillas e item get a archivos .dialogue"
+    },
+    {
+      "detail": "Acceso a GameState desde los .dialogue (leer y poner flags, p. ej. marcar una pista como leída), para que futuros NPCs o textos condicionales no requieran código.",
+      "done": false,
+      "text": "Condiciones y flags desde el diálogo"
+    },
+    {
+      "detail": "Dejar configurada la generación de claves/CSV o PO de Dialogue Manager, así la localización no se rehace después.",
+      "done": false,
+      "text": "Traducciones"
+    },
+    {
+      "detail": "Reemplaza 'sin Ink ni Yarn' de 4.2: se usa Dialogue Manager para tener el sistema andando antes de que haya muchos textos; UI propia, no la del plugin.",
+      "done": false,
+      "text": "Anotar la decisión en el GDD"
+    }
+  ],
+  "code": "4.6",
+  "created_at": "2026-10-08T08:17:17.448Z",
+  "milestone": "m04",
+  "notes": "Decisión del 2026-10-08: el GDD no tiene NPCs con diálogo, pero se integra el plugin ya para no adaptar tablillas e item get después. Elegido sobre Dialogic porque solo maneja el contenido y deja la UI propia (mockups), es liviano y hay menos superficie para romperse con Godot 4.8-dev.",
+  "order": 6,
+  "priority": "medium",
+  "refs": [],
+  "status": "todo",
+  "test": "Leer las dos tablillas y abrir el cofre: se ven igual que antes (estilos de los mockups), pero el texto sale de .dialogue. Un texto condicional cambia según un flag. Guardar y cargar conserva las tablillas leídas.",
+  "title": "Integrar Dialogue Manager",
+  "updated_at": "2026-10-08T08:17:29.509Z"
+}

@@ -824,7 +824,7 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 
 **Relacionadas:** 0.3 Ítems: datos
 
-## M4 — Interacción + mundo  (5/5)
+## M4 — Interacción + mundo  (5/6)
 
 `Interactable` con prompt contextual, tablillas y caja de texto, vasijas y pasto, flags del mundo guardadas.
 
@@ -931,6 +931,27 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 **Bloquea a:** 5.5 Muros agrietados
 
 **Bloqueada por:** 0.4 Flags; 0.10 Save Inspector v0
+
+### 4.6 Integrar Dialogue Manager · Pendiente
+
+**Prioridad:** media
+
+- [ ] Instalar Dialogue Manager y verificar compatibilidad
+  Plugin de Nathan Hoad en addons/. Probar con Godot 4.8-dev7: que el editor lo cargue sin errores y que los tests headless sigan pasando.
+- [ ] Usar nuestra TextBox como globo
+  La TextBox de 4.2 (estilos STONE e ITEM de los mockups) muestra las líneas que entrega Dialogue Manager: letra por letra, páginas, guarda de input y pausa con la pila de menús.
+- [ ] Pasar tablillas e item get a archivos .dialogue
+  Las dos tablillas de prueba y el texto del item get. El estilo y el rótulo salen de tags o del título del bloque. Reemplaza TextData; los tests de 4.2, 4.3 y 3.6 siguen pasando.
+- [ ] Condiciones y flags desde el diálogo
+  Acceso a GameState desde los .dialogue (leer y poner flags, p. ej. marcar una pista como leída), para que futuros NPCs o textos condicionales no requieran código.
+- [ ] Traducciones
+  Dejar configurada la generación de claves/CSV o PO de Dialogue Manager, así la localización no se rehace después.
+- [ ] Anotar la decisión en el GDD
+  Reemplaza 'sin Ink ni Yarn' de 4.2: se usa Dialogue Manager para tener el sistema andando antes de que haya muchos textos; UI propia, no la del plugin.
+
+**Prueba:** Leer las dos tablillas y abrir el cofre: se ven igual que antes (estilos de los mockups), pero el texto sale de .dialogue. Un texto condicional cambia según un flag. Guardar y cargar conserva las tablillas leídas.
+
+**Notas:** Decisión del 2026-10-08: el GDD no tiene NPCs con diálogo, pero se integra el plugin ya para no adaptar tablillas e item get después. Elegido sobre Dialogic porque solo maneja el contenido y deja la UI propia (mockups), es liviano y hay menos superficie para romperse con Godot 4.8-dev.
 
 ## M5 — Ítems secundarios  (0/8)
 
