@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemDatabase" format=3 uid="uid://6fa7hdc4os83"]
 
 [ext_resource type="Script" uid="uid://bn5pjgpia5grm" path="res://src/items/item_data.gd" id="1_p363h"]
-[ext_resource type="Resource" uid="uid://c1wc6fvne0u7v" path="res://data/items/sword_basic.tres" id="2_jn4gg"]
+[ext_resource type="Resource" uid="uid://bi2c5w2j6fqyy" path="res://data/items/sword_basic.tres" id="2_jn4gg"]
 [ext_resource type="Resource" path="res://data/items/shield_wood.tres" id="3_j1dr6"]
 [ext_resource type="Resource" path="res://data/items/shield_mirror.tres" id="4_2avqm"]
 [ext_resource type="Resource" path="res://data/items/tunic.tres" id="5_0jxo4"]

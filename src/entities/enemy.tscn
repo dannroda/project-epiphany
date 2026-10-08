@@ -15,7 +15,7 @@
 [ext_resource type="ArrayMesh" uid="uid://b4tsu2f6fvnm6" path="res://assets/kaykit_charanim/Mannequin Character/characters/meshes/Mannequin_Medium_Mannequin_Medium_Head.res" id="11_s5w61"]
 [ext_resource type="ArrayMesh" uid="uid://dqqkg4issacgo" path="res://assets/kaykit_charanim/Mannequin Character/characters/meshes/Mannequin_Medium_Mannequin_Medium_LegLeft.res" id="12_of2i0"]
 [ext_resource type="ArrayMesh" uid="uid://iu05jixj3hpw" path="res://assets/kaykit_charanim/Mannequin Character/characters/meshes/Mannequin_Medium_Mannequin_Medium_LegRight.res" id="13_on4cb"]
-[ext_resource type="BehaviorTree" uid="uid://b7uwj2m7bvq4m" path="res://src/entities/enemy_bt.tres" id="17_bkkjw"]
+[ext_resource type="BehaviorTree" uid="uid://r772okunbiuh" path="res://src/entities/enemy_bt.tres" id="17_bkkjw"]
 [ext_resource type="Script" uid="uid://cllj70kv76q68" path="res://src/components/hitbox.gd" id="17_e1gvi"]
 [ext_resource type="Script" uid="uid://bqdwet47uk4xm" path="res://src/components/health.gd" id="19_vsaqd"]
 [ext_resource type="Script" uid="uid://rcd8a41l0m7" path="res://src/components/hurtbox.gd" id="20_s5w61"]
