@@ -2,17 +2,17 @@
   "checklist": [
     {
       "detail": "En `hud.tscn`, abajo a la derecha (ver mockups). Vacío si no hay ítem asignado.",
-      "done": false,
+      "done": true,
       "text": "Dos slots con ícono y munición"
     },
     {
       "detail": "Señal nueva en `GameState` (`item_buttons_changed`).",
-      "done": false,
+      "done": true,
       "text": "Escuchar `Inventory.changed` y el cambio de asignación"
     },
     {
       "detail": "X/Y en gamepad, `Q`/`R` en teclado (señal de 2.3).",
-      "done": false,
+      "done": true,
       "text": "Ícono del botón según el dispositivo"
     }
   ],
@@ -25,7 +25,7 @@
     }
   ],
   "milestone": "m03",
-  "notes": "",
+  "notes": "Los slots van arriba a la derecha, como en los mockups HUD_Overworld/HUD_Dungeon (la tarea decía abajo). La prueba de disparar flechas queda para 5.3; el test baja la munición a mano.",
   "order": 5,
   "refs": [
     {
@@ -33,8 +33,8 @@
       "section": "ui"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Disparar flechas: la munición baja en el slot. Reasignar desde la pantalla Ítems: el slot cambia sin reabrir el HUD.",
   "title": "Slots X/Y en el HUD",
-  "updated_at": "2026-10-08T04:45:42.587Z"
+  "updated_at": "2026-10-08T07:17:57.421Z"
 }

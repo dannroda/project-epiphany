@@ -74,8 +74,8 @@ func _build_slots() -> void:
 		badge.name = "Badge"
 		badge.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		badge.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		badge.size = Vector2(26, 26)
-		badge.position = Vector2(-9, -9)
+		badge.size = Vector2(34, 34)
+		badge.position = Vector2(-13, -13)
 		badge.mouse_filter = MOUSE_FILTER_IGNORE
 		badge.visible = false
 		slot.add_child(badge)

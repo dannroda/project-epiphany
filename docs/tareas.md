@@ -649,7 +649,7 @@ Con lock-on el foco va al punto medio (lock_focus_weight) pero no se aleja más 
 
 **Referencias:** `gdd.md#camara`
 
-## M3 — Inventario + UI  (4/8)
+## M3 — Inventario + UI  (5/8)
 
 Pantallas Equipo e Ítems, asignar a X/Y, slots en el HUD, cofres, item get, recolectables.
 
@@ -711,6 +711,8 @@ Página src/ui/menus/equipment_page.tscn dentro del menú de pausa (reemplaza el
 
 **Prueba:** Asignar arco a X y bombas a Y, cerrar: el HUD muestra los dos. Guardar y cargar: siguen asignados.
 
+**Notas:** En teclado Q es item_1 y ui_tab_left: en la pantalla Ítems, con un ítem enfocado, Q/R asignan y E cambia de pestaña. La parte del HUD de la prueba la cierra 3.5. ammo pasó al ItemBehavior base (arco → flechas, bolsa → bombas).
+
 **Referencias:** `gdd.md#ui`, `gdd.md#items-mvp`
 
 **Bloquea a:** 3.4 Usar los ítems asignados
@@ -740,16 +742,18 @@ Página src/ui/menus/equipment_page.tscn dentro del menú de pausa (reemplaza el
 
 **Bloqueada por:** 2.2 Componente `Aim`; 3.3 Pantalla Ítems y asignación a X/Y
 
-### 3.5 Slots X/Y en el HUD · Pendiente
+### 3.5 Slots X/Y en el HUD · Hecho
 
-- [ ] Dos slots con ícono y munición
+- [x] Dos slots con ícono y munición
   En `hud.tscn`, abajo a la derecha (ver mockups). Vacío si no hay ítem asignado.
-- [ ] Escuchar `Inventory.changed` y el cambio de asignación
+- [x] Escuchar `Inventory.changed` y el cambio de asignación
   Señal nueva en `GameState` (`item_buttons_changed`).
-- [ ] Ícono del botón según el dispositivo
+- [x] Ícono del botón según el dispositivo
   X/Y en gamepad, `Q`/`R` en teclado (señal de 2.3).
 
 **Prueba:** Disparar flechas: la munición baja en el slot. Reasignar desde la pantalla Ítems: el slot cambia sin reabrir el HUD.
+
+**Notas:** Los slots van arriba a la derecha, como en los mockups HUD_Overworld/HUD_Dungeon (la tarea decía abajo). La prueba de disparar flechas queda para 5.3; el test baja la munición a mano.
 
 **Referencias:** `gdd.md#ui`
 
