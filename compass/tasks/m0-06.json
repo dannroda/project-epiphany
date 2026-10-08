@@ -2,37 +2,27 @@
   "checklist": [
     {
       "detail": "Funciones estáticas para escribir, leer, calcular el checksum, detectar partidas modificadas y validarlas. Es estático para que también lo use el Save Inspector (0.10). Código en [[gdd#guardado]].",
-      "done": false,
+      "done": true,
       "text": "Crear `src/save/save_codec.gd`"
     },
     {
       "detail": "`ConfigFile.save()` escribe sobre el archivo: si el juego se cierra a mitad de camino, la partida queda corrupta. Escribir a `slot_N.cfg.tmp`, mover la partida anterior a `slot_N.cfg.bak` y renombrar el `.tmp` con `DirAccess.rename_absolute()`. Al leer, si `slot_N.cfg` no carga, probar con el `.bak` y avisar. El código del GDD (§11.7) todavía escribe directo: actualizarlo también.",
-      "done": false,
+      "done": true,
       "text": "Escritura atómica y copia de respaldo en `SaveCodec.write`/`read`"
     },
     {
       "detail": "la tecla `3` guarda, la `2` carga, y al arrancar puede cargar un escenario de `debug/scenarios/` (con el argumento `--scenario=nombre` o con el archivo que deja el Save Inspector).",
-      "done": false,
+      "done": true,
       "text": "Crear el autoload `SaveManager` (`src/save/save_manager.gd`)"
     },
     {
       "detail": "Por ahora alcanza con la posición exacta; cuando haya salas y overworld pasa a puntos de aparición con nombre.",
-      "done": false,
+      "done": true,
       "text": "Guardar y restaurar la posición del player"
     },
     {
-      "detail": "En *Project › Export › Features*, para que las builds de prueba también guarden en texto plano.",
-      "done": false,
-      "text": "Agregar la feature `plain_saves` al preset de debug"
-    },
-    {
-      "detail": "En *Resources › Filters to exclude files*.",
-      "done": false,
-      "text": "Excluir `debug/scenarios/*` del preset de release"
-    },
-    {
       "detail": "A mano: `start.cfg` (partida nueva) y `full_inventory.cfg` (con todo el inventario).",
-      "done": false,
+      "done": true,
       "text": "Escribir dos escenarios en `debug/scenarios/`"
     }
   ],
@@ -49,7 +39,7 @@
     }
   ],
   "milestone": "m00",
-  "notes": "Guarda y carga partidas en `user://saves/`. Desde el editor se guarda en texto plano, para poder leerlo y editarlo; en release, encriptado, para que nadie lo edite por accidente.\n\nNecesita 0.5. Diseño completo y código en el GDD (§11.7).",
+  "notes": "Guarda y carga partidas en `user://saves/`. Desde el editor se guarda en texto plano, para poder leerlo y editarlo; en release, encriptado, para que nadie lo edite por accidente.\n\nNecesita 0.5. Diseño completo y código en el GDD (§11.7).\n\nLos presets de export (plain_saves en debug, excluir debug/scenarios y tests) pasaron a 10.9: hoy solo existe un preset de Android.\n\n`SaveCodec.read` mira los 4 primeros bytes (`GDEC`) para saber si la partida está encriptada, así no deja errores en la consola. Los escenarios se generaron con `GameState` + `SaveCodec`, así tienen checksum válido. `tests/test_save_manager.gd` guarda y carga en `levels/test.tscn` y comprueba la posición del player y el inventario. También se corrigió `give()`: el contenedor de corazón sumaba 4 sin importar la cantidad.",
   "order": 6,
   "refs": [
     {
@@ -57,8 +47,8 @@
       "section": "guardado"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Jugar, apretar `3`, cerrar el juego, abrirlo y apretar `2`: todo vuelve igual. Después editar a mano el archivo de `user://saves/`: al cargar aparece un aviso en la consola y `GameState.save_tampered` queda en `true`.",
   "title": "Guardado",
-  "updated_at": "2026-10-08T04:17:35.091Z"
+  "updated_at": "2026-10-08T05:01:19.556Z"
 }

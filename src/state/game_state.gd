@@ -19,6 +19,7 @@ var dungeons: Dictionary[StringName, DungeonState] = {}
 var current_dungeon: StringName = &""
 var spawn_scene: String = ""
 var spawn_point: StringName = &""
+var player_position: Variant = null ## Vector3 hasta que haya puntos de aparición con nombre
 var save_tampered := false
 
 
@@ -64,7 +65,7 @@ func give(item: ItemData, amount: int = 1) -> void:
 		&"boss_key": current_dungeon_state().has_boss_key = true
 		&"dungeon_map": current_dungeon_state().has_map = true
 		&"compass": current_dungeon_state().has_compass = true
-		&"heart_container": max_health += 4
+		&"heart_container": max_health += 4 * amount
 		_: inventory.add(item.id, amount)
 
 
@@ -73,6 +74,8 @@ func write_to(cfg: ConfigFile) -> void:
 	cfg.set_value("player", "spawn_scene", spawn_scene)
 	cfg.set_value("player", "spawn_point", spawn_point)
 	cfg.set_value("player", "current_dungeon", current_dungeon)
+	if player_position != null:
+		cfg.set_value("player", "position", player_position)
 	for id in inventory.ids():
 		cfg.set_value("inventory", id, inventory.count(id))
 	for category in equipment:
@@ -96,6 +99,8 @@ func read_from(cfg: ConfigFile) -> void:
 	spawn_scene = cfg.get_value("player", "spawn_scene", "")
 	spawn_point = cfg.get_value("player", "spawn_point", &"")
 	current_dungeon = cfg.get_value("player", "current_dungeon", &"")
+	if cfg.has_section_key("player", "position"):
+		player_position = cfg.get_value("player", "position")
 	for id in _keys(cfg, "inventory"):
 		if Items.get_item(id):
 			inventory.add(id, cfg.get_value("inventory", id))
@@ -131,6 +136,7 @@ func _clear() -> void:
 	current_dungeon = &""
 	spawn_scene = ""
 	spawn_point = &""
+	player_position = null
 	save_tampered = false
 
 
