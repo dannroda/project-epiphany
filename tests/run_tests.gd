@@ -11,7 +11,13 @@ func _initialize() -> void:
 	for file in DirAccess.get_files_at(DIR):
 		if not (file.begins_with("test_") and file.ends_with(".gd")) or file == "test_case.gd":
 			continue
-		var suite: RefCounted = load(DIR.path_join(file)).new()
+		var script: GDScript = load(DIR.path_join(file))
+		if script == null or not script.can_instantiate():
+			total += 1
+			failures.append("%s: no compila" % file.get_basename())
+			print("FALLA %s (no compila)" % file.get_basename())
+			continue
+		var suite: RefCounted = script.new()
 		for method in suite.get_method_list():
 			var test_name: String = method.name
 			if not test_name.begins_with("test_"):
@@ -19,7 +25,10 @@ func _initialize() -> void:
 			total += 1
 			suite.current_test = "%s › %s" % [file.get_basename(), test_name]
 			var before: int = suite.failures.size()
+			suite.assertions = 0
 			await suite.call(test_name)
+			if suite.assertions == 0:
+				suite.failures.append("%s: no llegó a verificar nada (¿se cortó por un error?)" % suite.current_test)
 			print("%s %s" % ["ok  " if suite.failures.size() == before else "FALLA", suite.current_test])
 		failures.append_array(suite.failures)
 	for failure in failures:
