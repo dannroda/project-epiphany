@@ -1147,7 +1147,7 @@ func try_unlock() -> bool:
 	return true
 ```
 
-Las puertas `SHUTTER` las abre la sala (al limpiar enemigos) y las `SWITCH` un interruptor por señal. **Bloques por grilla**: `AnimatableBody3D` que se mueve 1 celda con tween al empujar ≈0.3 s contra él; los `RigidBody3D` quedan para objetos físicos (bombas, rocas, enemigos livianos).
+Las puertas `SHUTTER` las abre la sala (al limpiar enemigos) y las `SWITCH` sus interruptores. **Interruptores:** `FloorSwitch`, `EyeSwitch` y `LightReceiver` comparten la interfaz `active` + señales `activated`/`deactivated`. Las puertas y rejas exportan `switches: Array[NodePath]` y una condición (`ALL`/`ANY`); el helper `Wiring` los escucha y avisa cuando la condición se cumple o deja de cumplirse, así que se cablea en el editor, sin código por sala. **Bloques por grilla**: `AnimatableBody3D` que se mueve 1 celda con tween al empujar ≈0.3 s contra él; los `RigidBody3D` quedan para objetos físicos (bombas, rocas, enemigos livianos).
 
 ### 11.6 Estado del juego y flags
 <!-- id: estado-flags -->

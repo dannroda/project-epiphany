@@ -1224,16 +1224,18 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 **Bloqueada por:** 6.1 `Room` y cámara por sala
 
-### 6.5 Interruptores y cableado · Pendiente
+### 6.5 Interruptores y cableado · En curso
 
 - [x] Interruptor de piso
   `FloorSwitch`: lo activa el player, un bloque o un `RigidBody3D`. Modos: mantener / una vez.
-- [ ] Interfaz común `activated`/`deactivated`
+- [x] Interfaz común `activated`/`deactivated`
   La comparten `FloorSwitch`, `EyeSwitch` (5.3) y `LightReceiver` (5.6).
-- [ ] Cablear en el editor
+- [x] Cablear en el editor
   Las puertas y aparatos exportan `Array[NodePath]` de interruptores y una condición (todos / alguno). Sin código por sala.
 
 **Prueba:** Una puerta que necesita dos interruptores: pisar uno no abre; con un bloque sobre el otro, sí.
+
+**Notas:** FloorSwitch se hizo en 6.4. Interfaz común: active + activated/deactivated (LightReceiver expone active = lit). Wiring (src/world/wiring.gd): lista de NodePath + condición ALL/ANY, avisa con changed(satisfied). Lo usan Door (reemplazó el 'switch' único) y Gate. Ejemplo en levels/test_rooms.tscn: nicho en la sala B con NicheDoor cableada a BlockSwitch y PlayerSwitch (ALL).
 
 **Referencias:** `gdd.md#mundo`
 

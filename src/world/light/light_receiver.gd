@@ -15,6 +15,10 @@ signal deactivated
 @onready var crystal: MeshInstance3D = %Crystal
 
 var lit := false
+## Interfaz común de interruptores (Wiring).
+var active: bool:
+	get:
+		return lit
 var _last_light := -10
 var _material := StandardMaterial3D.new()
 var _persistent: PersistentFlag

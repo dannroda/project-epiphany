@@ -219,6 +219,26 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0.25, -24)
 [node name="BlockSwitch" parent="." instance=ExtResource("w_floor_switch")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.25, -20)
 
+[node name="PlayerSwitch" parent="." instance=ExtResource("w_floor_switch")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.25, -20)
+
+[node name="NicheL" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.85, 1.55, -39)
+material_override = SubResource("Wall")
+use_collision = true
+size = Vector3(0.3, 2.6, 4)
+
+[node name="NicheR" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.15, 1.55, -39)
+material_override = SubResource("Wall")
+use_collision = true
+size = Vector3(0.3, 2.6, 4)
+
+[node name="NicheDoor" parent="." instance=ExtResource("w_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.25, -37)
+kind = 3
+switches = Array[NodePath]([NodePath("../BlockSwitch"), NodePath("../PlayerSwitch")])
+
 [node name="Player" parent="." instance=ExtResource("p_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 2)
 

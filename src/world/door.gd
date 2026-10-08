@@ -30,8 +30,13 @@ const TEXTS: DialogueResource = preload("res://data/dialogue/doors.dialogue")
 		update_configuration_warnings()
 ## SHUTTER: la sala que la cierra mientras tenga enemigos.
 @export var room: Room
-## SWITCH: el nodo con la señal `activated` (y `deactivated` si no se queda abierta).
-@export var switch: Node
+## SWITCH: los interruptores que la abren y si hacen falta todos o alguno.
+@export var switches: Array[NodePath] = []:
+	set(value):
+		switches = value
+		update_configuration_warnings()
+@export var condition: Wiring.Condition = Wiring.Condition.ALL
+## Si es false, se vuelve a cerrar cuando la condición deja de cumplirse.
 @export var stays_open := true
 @export var open_time := 0.5
 
@@ -43,6 +48,7 @@ var is_open := false
 var _closed_y := 0.0
 var _tween: Tween
 var _persistent: PersistentFlag
+var _wiring: Wiring
 
 
 func _ready() -> void:
@@ -76,18 +82,22 @@ func _ready() -> void:
 				open(false)
 				interactable.enabled = false
 		Kind.SWITCH:
-			if switch:
-				switch.connect(&"activated", open)
-				if not stays_open and switch.has_signal(&"deactivated"):
-					switch.connect(&"deactivated", close)
+			_wiring = Wiring.create(self, switches, condition)
+			_wiring.changed.connect(func(satisfied: bool) -> void:
+				if satisfied:
+					open()
+				elif not stays_open:
+					close())
+			if _wiring.is_satisfied():
+				open(false)
 
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings := PersistentFlag.warnings_for(flag, kind not in [Kind.LOCKED, Kind.BOSS])
 	if kind == Kind.SHUTTER and room == null:
 		warnings.append("Una persiana necesita su Room.")
-	if kind == Kind.SWITCH and switch == null:
-		warnings.append("Una puerta con interruptor necesita el nodo que emite `activated`.")
+	if kind == Kind.SWITCH and switches.is_empty():
+		warnings.append("Una puerta con interruptor necesita al menos un interruptor en `switches`.")
 	return warnings
 
 

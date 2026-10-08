@@ -6,8 +6,21 @@ signal opened
 
 @export var drop := 2.3
 @export var duration := 0.6
+## Opcional: interruptores que la abren (si no, la abre un script con open()).
+@export var switches: Array[NodePath] = []
+@export var condition: Wiring.Condition = Wiring.Condition.ALL
 
 var is_open := false
+var _wiring: Wiring
+
+
+func _ready() -> void:
+	if switches.is_empty():
+		return
+	_wiring = Wiring.create(self, switches, condition)
+	_wiring.changed.connect(func(satisfied: bool) -> void:
+		if satisfied:
+			open())
 
 
 func open() -> void:

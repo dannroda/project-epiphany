@@ -7,12 +7,12 @@
     },
     {
       "detail": "La comparten `FloorSwitch`, `EyeSwitch` (5.3) y `LightReceiver` (5.6).",
-      "done": false,
+      "done": true,
       "text": "Interfaz común `activated`/`deactivated`"
     },
     {
       "detail": "Las puertas y aparatos exportan `Array[NodePath]` de interruptores y una condición (todos / alguno). Sin código por sala.",
-      "done": false,
+      "done": true,
       "text": "Cablear en el editor"
     }
   ],
@@ -25,7 +25,7 @@
     }
   ],
   "milestone": "m06",
-  "notes": "",
+  "notes": "FloorSwitch se hizo en 6.4. Interfaz común: active + activated/deactivated (LightReceiver expone active = lit). Wiring (src/world/wiring.gd): lista de NodePath + condición ALL/ANY, avisa con changed(satisfied). Lo usan Door (reemplazó el 'switch' único) y Gate. Ejemplo en levels/test_rooms.tscn: nicho en la sala B con NicheDoor cableada a BlockSwitch y PlayerSwitch (ALL).",
   "order": 5,
   "refs": [
     {
@@ -33,8 +33,8 @@
       "section": "mundo"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Una puerta que necesita dos interruptores: pisar uno no abre; con un bloque sobre el otro, sí.",
   "title": "Interruptores y cableado",
-  "updated_at": "2026-10-08T21:59:07.948Z"
+  "updated_at": "2026-10-08T22:27:52.593Z"
 }

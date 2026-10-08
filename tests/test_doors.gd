@@ -120,21 +120,30 @@ func test_boss_door_needs_boss_key_without_spending_it() -> void:
 	state.reset()
 
 
+func _stub_switch(tree: SceneTree) -> Node:
+	var script := GDScript.new()
+	script.source_code = "extends Node\nsignal activated\nsignal deactivated\nvar active := false\n\nfunc set_on(on: bool) -> void:\n\tactive = on\n\tif on:\n\t\tactivated.emit()\n\telse:\n\t\tdeactivated.emit()\n"
+	script.reload()
+	var node := Node.new()
+	node.set_script(script)
+	tree.current_scene.add_child(node)
+	return node
+
+
 func test_switch_door_opens_and_can_close_again() -> void:
 	var setup: Array = await _setup()
 	var tree: SceneTree = setup[0]
-	var switch := Node.new()
-	switch.add_user_signal("activated")
-	switch.add_user_signal("deactivated")
-	tree.current_scene.add_child(switch)
+	var first := _stub_switch(tree)
+	var second := _stub_switch(tree)
 	var door: Door = DOOR.instantiate()
 	door.kind = Door.Kind.SWITCH
-	door.switch = switch
 	door.stays_open = false
+	door.switches.assign([NodePath("../" + first.name), NodePath("../" + second.name)])
+	door.condition = Wiring.Condition.ANY
 	tree.current_scene.add_child(door)
 	assert_eq(door.is_open, false)
-	switch.emit_signal("activated")
-	assert_eq(door.is_open, true, "el interruptor la abre")
-	switch.emit_signal("deactivated")
+	first.set_on(true)
+	assert_eq(door.is_open, true, "ANY: con uno alcanza")
+	first.set_on(false)
 	assert_eq(door.is_open, false, "y si no es permanente, se vuelve a cerrar")
 	setup[1].reset()
