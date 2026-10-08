@@ -1,0 +1,38 @@
+[gd_resource type="BehaviorTree" format=3]
+
+[ext_resource type="Script" path="res://ai/tasks/bt_find_player.gd" id="1_hyscm"]
+[ext_resource type="Script" path="res://ai/tasks/bt_turn_to_target.gd" id="2_3cbuu"]
+[ext_resource type="Script" path="res://ai/tasks/bt_charge_shot.gd" id="3_bseib"]
+[ext_resource type="Script" path="res://ai/tasks/bt_fire_orb.gd" id="4_2fmo2"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_7paco"]
+
+[sub_resource type="BTCondition" id="BTCondition_tsns2"]
+script = ExtResource("1_hyscm")
+
+[sub_resource type="BTAction" id="BTAction_p1rv5"]
+script = ExtResource("2_3cbuu")
+
+[sub_resource type="BTAction" id="BTAction_h0ht1"]
+script = ExtResource("3_bseib")
+
+[sub_resource type="BTAction" id="BTAction_1peta"]
+script = ExtResource("4_2fmo2")
+
+[sub_resource type="BTWait" id="BTWait_tdmsn"]
+duration = 1.4
+
+[sub_resource type="BTSequence" id="BTSequence_85ryk"]
+custom_name = "Disparar"
+children = [SubResource("BTCondition_tsns2"), SubResource("BTAction_p1rv5"), SubResource("BTAction_h0ht1"), SubResource("BTAction_1peta"), SubResource("BTWait_tdmsn")]
+
+[sub_resource type="BTWait" id="BTWait_4s3cb"]
+duration = 0.3
+custom_name = "Esperar"
+
+[sub_resource type="BTSelector" id="BTSelector_uutyn"]
+children = [SubResource("BTSequence_85ryk"), SubResource("BTWait_4s3cb")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_7paco")
+root_task = SubResource("BTSelector_uutyn")

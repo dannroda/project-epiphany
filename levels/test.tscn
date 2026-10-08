@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="ui_hud"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="w_chest"]
 [ext_resource type="PackedScene" path="res://src/world/eye_switch.tscn" id="w_eye"]
+[ext_resource type="PackedScene" path="res://src/entities/turret/turret.tscn" id="e_turret"]
 [ext_resource type="Script" uid="uid://x60poi8g2tqu" path="res://src/world/grass_patch.gd" id="w_grass"]
 [ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="w_pot"]
 [ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="w_spawn"]
@@ -195,5 +196,8 @@ script = ExtResource("w_grass")
 
 [node name="EyeSwitch" parent="." unique_id=97137799 instance=ExtResource("w_eye")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.25, -6)
+
+[node name="Turret" parent="." instance=ExtResource("e_turret")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.25, 6)
 
 [node name="HUD" parent="." unique_id=1876306880 instance=ExtResource("ui_hud")]

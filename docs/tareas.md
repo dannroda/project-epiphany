@@ -953,7 +953,7 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 
 **Notas:** Decisión del 2026-10-08: el GDD no tiene NPCs con diálogo, pero se integra el plugin ya para no adaptar tablillas e item get después. Elegido sobre Dialogic porque solo maneja el contenido y deja la UI propia (mockups), es liviano y hay menos superficie para romperse con Godot 4.8-dev. Instalado Dialogue Manager v4.1.0 (para Godot 4.7) desde la release de GitHub: import, arranque y tests headless OK en 4.8-dev7; falta confirmar que el editor lo cargue sin errores. Textos en data/dialogue/*.dialogue; el personaje de la línea es el rótulo de la tablilla; item_get.dialogue tiene un cue por id de ítem (si falta, usa la descripción). Traducciones: IDs estáticos [ID:…] como claves; el plugin mantiene la lista de plantillas POT.
 
-## M5 — Ítems secundarios  (2/9)
+## M5 — Ítems secundarios  (3/9)
 
 Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
@@ -981,20 +981,18 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 **Bloqueada por:** 1.2 Bloqueo direccional y golpe de escudo
 
-### 5.2 Torreta / ojo menor · Pendiente
+### 5.2 Torreta / ojo menor · Hecho
 
-- [ ] `EntityConfig` y escena de la torreta
+- [x] `EntityConfig` y escena de la torreta
   Estática, con `Health`, `Hurtbox` y un `Muzzle`.
-- [ ] BT: apuntar, telegrafiar y disparar orbes
+- [x] BT: apuntar, telegrafiar y disparar orbes
   Orbe reflejable (`reflectable = true`). Brillo creciente antes de disparar.
-- [ ] Vulnerable a su propio orbe reflejado y a flechas
+- [x] Vulnerable a su propio orbe reflejado y a flechas
   Con espada no (o poco), para que enseñe el reflejo.
 
 **Prueba:** Con escudo espejo, reflejar tres orbes destruye la torreta; con escudo de madera solo se bloquean.
 
-**Notas:** Tercer arquetipo de enemigo del MVP ([[gdd#combate]]).
-
-Skills: `disciplines:ai-behavior-trees-utility-ai`.
+**Notas:** Tercer arquetipo de enemigo del MVP. Turret (StaticBody3D, sin navegación): la cabeza gira hacia el player, carga 0,9 s (iris y luz que crecen) y dispara un orbe reflejable a 9 m/s; 1,4 s de espera entre tiros. 6 de vida: tres orbes reflejados o tres flechas. La espada rebota con chispas. Árbol en src/entities/turret/turret_bt.tres con tareas propias (bt_turn_to_target, bt_charge_shot, bt_fire_orb) y bt_find_player. Modelo placeholder (pilar + ojo). Una de prueba en levels/test.tscn en (8, 0.25, 6), con el camino libre de cajas.
 
 **Referencias:** `gdd.md#combate`
 

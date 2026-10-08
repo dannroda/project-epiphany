@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EntityConfig" format=3]
+
+[ext_resource type="Script" path="res://src/entities/entity_config.gd" id="1_config"]
+[ext_resource type="Resource" path="res://data/drops/skeleton.tres" id="2_drops"]
+
+[resource]
+script = ExtResource("1_config")
+features = 1
+max_health = 6
+target_height = 1.6
+knockback_resistance = 1.0
+attack_damage = 2
+attack_knockback = 4.0
+vision_range = 11.0
+drops = ExtResource("2_drops")

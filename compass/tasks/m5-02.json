@@ -2,17 +2,17 @@
   "checklist": [
     {
       "detail": "Estática, con `Health`, `Hurtbox` y un `Muzzle`.",
-      "done": false,
+      "done": true,
       "text": "`EntityConfig` y escena de la torreta"
     },
     {
       "detail": "Orbe reflejable (`reflectable = true`). Brillo creciente antes de disparar.",
-      "done": false,
+      "done": true,
       "text": "BT: apuntar, telegrafiar y disparar orbes"
     },
     {
       "detail": "Con espada no (o poco), para que enseñe el reflejo.",
-      "done": false,
+      "done": true,
       "text": "Vulnerable a su propio orbe reflejado y a flechas"
     }
   ],
@@ -25,7 +25,7 @@
     }
   ],
   "milestone": "m05",
-  "notes": "Tercer arquetipo de enemigo del MVP ([[gdd#combate]]).\n\nSkills: `disciplines:ai-behavior-trees-utility-ai`.",
+  "notes": "Tercer arquetipo de enemigo del MVP. Turret (StaticBody3D, sin navegación): la cabeza gira hacia el player, carga 0,9 s (iris y luz que crecen) y dispara un orbe reflejable a 9 m/s; 1,4 s de espera entre tiros. 6 de vida: tres orbes reflejados o tres flechas. La espada rebota con chispas. Árbol en src/entities/turret/turret_bt.tres con tareas propias (bt_turn_to_target, bt_charge_shot, bt_fire_orb) y bt_find_player. Modelo placeholder (pilar + ojo). Una de prueba en levels/test.tscn en (8, 0.25, 6), con el camino libre de cajas.",
   "order": 2,
   "refs": [
     {
@@ -33,8 +33,8 @@
       "section": "combate"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Con escudo espejo, reflejar tres orbes destruye la torreta; con escudo de madera solo se bloquean.",
   "title": "Torreta / ojo menor",
-  "updated_at": "2026-10-08T04:45:58.159Z"
+  "updated_at": "2026-10-08T18:48:06.153Z"
 }
