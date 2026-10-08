@@ -54,6 +54,7 @@ shape = SubResource("BodyShape")
 
 [node name="Interactable" type="Area3D" parent="."]
 script = ExtResource("2_interactable")
+prompt_priority = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Interactable"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.2)

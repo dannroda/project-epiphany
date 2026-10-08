@@ -831,16 +831,18 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 **Hecho cuando:**
 - El mundo recuerda lo que hiciste.
 
-### 4.1 Prompt de acción contextual · Pendiente
+### 4.1 Prompt de acción contextual · En curso
 
-- [ ] `InteractionDetector` elige el mejor `Interactable`
+- [x] `InteractionDetector` elige el mejor `Interactable`
   Más cercano y de frente; prioridad exportada para desempatar (cofre > tablilla).
-- [ ] HUD: botón + texto del prompt
+- [x] HUD: botón + texto del prompt
   "Abrir", "Leer", "Empujar" desde `Interactable.prompt`. Con el ícono del dispositivo activo (2.3).
-- [ ] Ocultar el prompt durante combate y menús
+- [x] Ocultar el prompt durante combate y menús
   Y mientras el player está en `Hurt`, `Dodging` o `ItemGet`.
 
 **Prueba:** Pararse entre un cofre y una tablilla y girar: el prompt cambia según hacia dónde mira el player.
+
+**Notas:** Pastilla como en HUD_Overworld/HUD_Dungeon, debajo de los slots X/Y. La prioridad se llama prompt_priority (Area3D ya tiene 'priority'); el cofre tiene 1. 'Combate' = lock-on activo: ahí no hay prompt.
 
 **Referencias:** `gdd.md#mundo`, `gdd.md#ui`
 

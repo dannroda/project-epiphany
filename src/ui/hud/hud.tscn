@@ -45,3 +45,29 @@ unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 20
+
+[node name="Prompt" type="PanelContainer" parent="SafeArea/Right"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+mouse_filter = 2
+theme_type_variation = &"HudPill"
+
+[node name="Row" type="HBoxContainer" parent="SafeArea/Right/Prompt"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="PromptIcon" type="TextureRect" parent="SafeArea/Right/Prompt/Row"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PromptText" type="Label" parent="SafeArea/Right/Prompt/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"HudPillText"

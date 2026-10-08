@@ -10,8 +10,12 @@ const SLOT_SIZE := Vector2(76, 76)
 
 @onready var hearts: HFlowContainer = %Hearts
 @onready var item_slots: HBoxContainer = %ItemSlots
+@onready var prompt: PanelContainer = %Prompt
+@onready var prompt_icon: TextureRect = %PromptIcon
+@onready var prompt_text: Label = %PromptText
 
 var _health: Health
+var _focus: Interactable
 var _shown_hp := -1
 
 
@@ -20,7 +24,10 @@ func _ready() -> void:
 	GameState.item_buttons_changed.connect(_refresh_item_slots)
 	GameState.inventory.changed.connect(func(_id: StringName, _count: int) -> void: _refresh_item_slots())
 	GameState.loaded.connect(_refresh_item_slots)
-	InputDevice.input_device_changed.connect(func(_d: int) -> void: _refresh_item_slots())
+	InputDevice.input_device_changed.connect(func(_d: int) -> void:
+		_refresh_item_slots()
+		_refresh_prompt())
+	MenuStack.changed.connect(_refresh_prompt)
 	_refresh_item_slots()
 	_bind_player.call_deferred()
 
@@ -92,8 +99,18 @@ func _bind_player() -> void:
 		return
 	_health = player.health
 	player.item_denied.connect(_shake_slot)
+	player.get_node(^"InteractionDetector").focus_changed.connect(func(target: Interactable) -> void:
+		_focus = target
+		_refresh_prompt())
 	_health.changed.connect(_on_health_changed)
 	_on_health_changed(_health.current, _health.max_health)
+
+
+func _refresh_prompt() -> void:
+	prompt.visible = _focus != null and is_instance_valid(_focus) and not MenuStack.is_open()
+	if prompt.visible:
+		prompt_text.text = _focus.prompt
+		prompt_icon.texture = InputPrompts.icon_for_current(&"interact")
 
 
 func _shake_slot(button: int) -> void:
