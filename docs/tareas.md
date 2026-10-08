@@ -649,7 +649,7 @@ Con lock-on el foco va al punto medio (lock_focus_weight) pero no se aleja más 
 
 **Referencias:** `gdd.md#camara`
 
-## M3 — Inventario + UI  (7/8)
+## M3 — Inventario + UI  (8/8)
 
 Pantallas Equipo e Ítems, asignar a X/Y, slots en el HUD, cofres, item get, recolectables.
 
@@ -784,20 +784,18 @@ Página src/ui/menus/equipment_page.tscn dentro del menú de pausa (reemplaza el
 
 **Bloqueada por:** 0.5 GameState
 
-### 3.7 Recolectables y tabla de drops · Pendiente
+### 3.7 Recolectables y tabla de drops · Hecho
 
-- [ ] Escena `Pickup`
+- [x] Escena `Pickup`
   `Area3D` con ítem y cantidad: corazón, flechas ×5, bombas ×3. Rebote al aparecer, un poco de imán hacia el player y parpadeo antes de desaparecer.
-- [ ] Tabla de drops ponderada
+- [x] Tabla de drops ponderada
   Recurso `DropTable` (entradas con peso, incluida "nada") referenciado desde la `EntityConfig`. Las flechas y bombas solo salen si el player ya tiene el ítem.
-- [ ] Soltar al morir un enemigo
+- [x] Soltar al morir un enemigo
   Desde el hook de muerte de 1.4. Lo reutilizan vasijas y pasto (4.4).
 
 **Prueba:** Matar 20 esqueletos con el inventario vacío: solo caen corazones. Con bombas en el inventario, también caen bombas.
 
-**Notas:** No hay moneda. Los drops son lo que evita quedarse sin bombas ni flechas en la mazmorra.
-
-Skills: `disciplines:procedural-gen`, `godot:godot-resources`.
+**Notas:** No hay moneda. Los drops son lo que evita quedarse sin bombas ni flechas en la mazmorra. Tabla del esqueleto (data/drops/skeleton.tres): nada 55, corazón 30, flechas ×5 10 (pide arco), bombas ×3 10 (pide bolsa); pesos provisorios. El recolectable es un Sprite3D con el ícono del ítem (placeholder). DropTable.drop_at() lo reutilizan vasijas y pasto (4.4).
 
 **Referencias:** `gdd.md#items-mvp`
 

@@ -20,6 +20,7 @@ var features: int = 0
 @export var knockback_resistance: float = 0.0 ## 0 = recibe todo, 1 = inamovible
 @export var attack_damage: int = 2 ## Daño base de sus ataques (sin arma equipada)
 @export var attack_knockback: float = 6.0
+@export var drops: DropTable
 
 @export_group("IA")
 @export var move_speed: float = 3.0

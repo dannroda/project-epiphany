@@ -121,6 +121,8 @@ func _on_died() -> void:
 func on_death_finished() -> void:
 	bt_player.active = false
 	collision_layer = DEAD_COLLISION_LAYER
+	if config.drops:
+		config.drops.drop_at.call_deferred(global_position, get_parent())
 	Log.debug(&"combat", name, "terminó de morir")
 
 
