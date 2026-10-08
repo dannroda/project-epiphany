@@ -3,6 +3,7 @@ extends EditorPlugin
 
 const LogScript := preload("debug/runtime/log.gd")
 const LogDebuggerPlugin := preload("debug/editor/log_debugger_plugin.gd")
+const SaveInspector := preload("save_inspector/save_inspector.gd")
 
 const AutoLoads = {
 	"Log": "debug/runtime/log.gd",
@@ -10,17 +11,18 @@ const AutoLoads = {
 }
 
 var _log_debugger: LogDebuggerPlugin
+var _save_dock: EditorDock
 
 
 func _enable_plugin() -> void:
 	for _singleton in AutoLoads:
-		add_autoload_singleton(_singleton, AutoLoads[_singleton])
+		if not ProjectSettings.has_setting("autoload/" + _singleton):
+			add_autoload_singleton(_singleton, AutoLoads[_singleton])
 
 
+# Los autoloads quedan: el juego usa Log y DebugOverlay, y así recargar el plugin no los reordena.
 func _disable_plugin() -> void:
-	for _singleton in AutoLoads:
-		ProjectSettings.set_setting("autoload/" + _singleton, null) # Workaroud (https://github.com/godotengine/godot/issues/124137)
-		#remove_autoload_singleton(_singleton)
+	pass
 
 
 func _enter_tree() -> void:
@@ -30,11 +32,20 @@ func _enter_tree() -> void:
 			"%d:" % TYPE_STRING)
 	_log_debugger = LogDebuggerPlugin.new()
 	add_debugger_plugin(_log_debugger)
+	_save_dock = EditorDock.new()
+	_save_dock.title = "Save Inspector"
+	_save_dock.layout_key = "epiphany_save_inspector"
+	_save_dock.default_slot = EditorDock.DOCK_SLOT_RIGHT_BL
+	_save_dock.add_child(SaveInspector.new())
+	add_dock(_save_dock)
 	if Engine.has_meta(&"editor_bridge"):
 		_log_debugger.entry_received.connect(Engine.get_meta(&"editor_bridge").record_game_entry)
 
 
 func _exit_tree() -> void:
+	remove_dock(_save_dock)
+	_save_dock.queue_free()
+	_save_dock = null
 	remove_debugger_plugin(_log_debugger)
 	_log_debugger = null
 

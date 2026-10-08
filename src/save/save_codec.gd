@@ -12,7 +12,7 @@ static func plain_saves() -> bool:
 
 
 ## Escribe a .tmp, pasa la partida anterior a .bak y renombra: un corte a mitad de camino no deja una partida rota.
-static func write(cfg: ConfigFile, path: String) -> Error:
+static func write(cfg: ConfigFile, path: String, keep_backup := true) -> Error:
 	cfg.set_value("meta", "version", VERSION)
 	cfg.set_value("meta", "timestamp", Time.get_unix_time_from_system())
 	cfg.set_value("meta", "checksum", checksum(cfg))
@@ -21,6 +21,8 @@ static func write(cfg: ConfigFile, path: String) -> Error:
 	var err := cfg.save(tmp) if plain_saves() else cfg.save_encrypted_pass(tmp, _PASS)
 	if err != OK:
 		return err
+	if FileAccess.file_exists(path) and not keep_backup:
+		DirAccess.remove_absolute(path)
 	if FileAccess.file_exists(path):
 		if FileAccess.file_exists(path + ".bak"):
 			DirAccess.remove_absolute(path + ".bak")

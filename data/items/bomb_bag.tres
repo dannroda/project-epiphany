@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="ItemData" format=3]
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dwsn6cvxqrfpa"]
 
-[ext_resource type="Script" path="res://src/items/behaviors/place_behavior.gd" id="1_prkf7"]
-[ext_resource type="Script" path="res://src/items/modifiers/item_modifier.gd" id="2_a73pg"]
-[ext_resource type="Script" path="res://src/items/item_data.gd" id="3_kgno8"]
+[ext_resource type="Script" uid="uid://cbvvk45ksagnn" path="res://src/items/behaviors/place_behavior.gd" id="1_prkf7"]
+[ext_resource type="Script" uid="uid://l3nlu6710gm3" path="res://src/items/modifiers/item_modifier.gd" id="2_a73pg"]
+[ext_resource type="Script" uid="uid://bn5pjgpia5grm" path="res://src/items/item_data.gd" id="3_kgno8"]
 
 [sub_resource type="Resource" id="Resource_fouaw"]
 script = ExtResource("1_prkf7")
@@ -11,11 +11,5 @@ script = ExtResource("1_prkf7")
 script = ExtResource("3_kgno8")
 id = &"bomb_bag"
 display_name = "Bolsa de bombas"
-description = ""
 category = 3
-max_stack = 1
 behavior = SubResource("Resource_fouaw")
-modifiers = Array[ExtResource("2_a73pg")]([])
-damage = 0
-knockback = 0.0
-damage_reduction = 0.0

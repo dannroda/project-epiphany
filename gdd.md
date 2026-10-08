@@ -1462,10 +1462,12 @@ func write_to(cfg: ConfigFile) -> void:
 Plugin en `addons/epiphany_tools/` (dock). Funcionalidades:
 
 1. **Abrir** cualquier partida (encriptada o plana) de `user://saves/` o un escenario de `debug/scenarios/`, usando `SaveCodec.read`.
-2. **Ver y editar** por secciones en un `Tree` (sección › clave › valor), con editores por tipo (bool, int, StringName con autocompletado desde `ItemDatabase` / `FlagRegistry`).
-3. **Validar** con `SaveCodec.validate`: errores marcados en rojo, pero se puede guardar igual (escenarios imposibles a propósito).
-4. **Guardar** como partida (plana o encriptada) o **como escenario**.
-5. **Jugar escenario:** escribe `user://debug/next_scenario.txt` y lanza la escena principal. `SaveManager` lo consume al arrancar.
+2. **Editar** en pestañas armadas desde los datos (mockup en el canvas de UI, fila "Herramientas de editor"): Partida (corazones, escena, posición), Equipo (desplegables por categoría, botones X/Y), Inventario (todos los ítems de `ItemDatabase` con contador o interruptor, buscador), Flags (todas las de `FlagRegistry`), Mazmorras (llaves, mapa, brújula, llave del jefe, grilla de salas visitadas) y Texto (el `.cfg` crudo).
+3. **Validar en vivo** con `SaveCodec.validate`: píldora "Válida" / "N problemas"; lo inválido en rojo con "Quitar". Se puede guardar igual (escenarios imposibles a propósito).
+4. **Guardar** la partida o **como escenario** (en `res://`, sin `.bak`).
+5. **Jugar:** escribe lo que hay en el dock en `user://debug/inspector_play.cfg`, deja esa ruta en `user://debug/next_scenario.txt` y lanza la escena principal. `SaveManager` lo consume al arrancar.
+
+Código: `addons/epiphany_tools/save_inspector/` (`save_inspector.gd` + una pestaña por script en `tabs/`).
 
 Escenarios iniciales sugeridos: `start`, `bombs_only`, `pre_temple`, `dungeon_no_bow`, `pre_boss`, `full_inventory`, `boss_key_door_locked` (inconsistente a propósito).
 

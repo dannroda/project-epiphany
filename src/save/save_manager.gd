@@ -48,8 +48,9 @@ func load_game(slot: int = 0) -> Error:
 	return await _load_path(slot_path(slot))
 
 
+## Un nombre de debug/scenarios/ o una ruta completa (la que deja el Save Inspector).
 func load_scenario(scenario: String) -> Error:
-	return await _load_path(SCENARIO_DIR + scenario + ".cfg")
+	return await _load_path(scenario if "://" in scenario else SCENARIO_DIR + scenario + ".cfg")
 
 
 func _load_path(path: String) -> Error:
@@ -67,6 +68,7 @@ func _load_path(path: String) -> Error:
 		Log.warning(&"save", "La partida fue modificada a mano:", path)
 	await _restore_player()
 	Log.success(&"save", "Partida cargada:", path)
+	Log.debug(&"save", "Inventario:", ", ".join(GameState.inventory.ids().map(func(id: StringName) -> String: return "%s=%d" % [id, GameState.inventory.count(id)])))
 	return OK
 
 

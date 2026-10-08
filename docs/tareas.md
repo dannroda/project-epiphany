@@ -3,7 +3,7 @@
 > Export de `compass/`, que es la fuente de verdad. No editar: los cambios se hacen en `compass/` o con `scompass`, y este archivo se regenera.
 > Generado: 2026-10-08
 
-## M0 — Refactor del player + base de datos  (9/13)
+## M0 — Refactor del player + base de datos  (10/13)
 
 Dejar armada la base sobre la que se construye todo lo demás: ítems como datos, estado de la partida, guardado, componentes de combate y un player ordenado en piezas. Casi nada de esto se ve en el juego todavía; lo que cambia es cómo está hecho. Diseño y código de ejemplo: `gdd.md` §11.
 
@@ -297,19 +297,20 @@ Necesita 0.3, 0.5 y 0.7. Diseño en el GDD (§11.4 y "Ventanas de ataque").
 
 **Relacionadas:** 0.8 Enemigo sobre componentes; 1.2 Bloqueo direccional y golpe de escudo; 1.3 Esquiva (roll) con i-frames; 2.2 Componente `Aim`
 
-### 0.10 Save Inspector v0 · Pendiente
+### 0.10 Save Inspector v0 · Hecho
 
-- [ ] Crear el plugin `addons/epiphany_tools/` con un dock
+- [x] Crear el plugin `addons/epiphany_tools/` con un dock
   `plugin.cfg` + `plugin.gd`, con `EditorDock` y `add_dock()` como en `addons/scope_compass/scope_compass.gd`. Carpeta normal, no symlink.
-- [ ] Listar partidas y escenarios
+- [x] Listar partidas y escenarios
   Las partidas de `user://saves/` y los escenarios de `res://debug/scenarios/`.
-- [ ] Mostrar y editar la partida en un `Tree`
-  Sección › clave › valor, con edición de sí/no, números y texto.
-- [ ] Botón Validar
-  Usa `SaveCodec.validate()` y marca en rojo lo que está mal (ítems que no existen, cantidades fuera de rango, flags no declaradas). Se puede guardar igual, para forzar casos imposibles a propósito.
-- [ ] Botones Guardar, Guardar como escenario y Jugar escenario
+- [x] Editar la partida con pestañas armadas desde los datos
+  Partida, Equipo, Inventario, Flags, Mazmorras y Texto (el .cfg crudo). Inventario y Equipo salen de `ItemDatabase` y Flags de `FlagRegistry`: no hace falta tipear ids. Diseño: canvas de mockups, fila "Herramientas de editor".
+- [x] Validación en vivo
+  `SaveCodec.validate()` corre con cada cambio: una píldora muestra "Válida" o "N problemas" (lleva a la pestaña del problema); lo inválido se ve en rojo con "Quitar". Se puede guardar igual.
+- [x] Botones Guardar, Guardar como escenario y Jugar escenario
   Jugar escribe `user://debug/next_scenario.txt` y lanza el juego con `EditorInterface.play_main_scene()`.
-- [ ] Para más adelante: autocompletar ids de ítems y flags
+- [ ] Para más adelante: tomar la posición del player del juego corriendo
+  Pedírsela al juego por el debugger (`EngineDebugger`), como hace la pestaña Log.
 
 **Prueba:** Abrir una partida en el dock, agregar `bomb=3` en `[inventory]`, validar y apretar Jugar escenario: el juego arranca con 3 bombas.
 
@@ -318,6 +319,8 @@ Necesita 0.3, 0.5 y 0.7. Diseño en el GDD (§11.4 y "Ventanas de ataque").
 Va en `addons/epiphany_tools/`, como carpeta normal (no un symlink como `addons/scope_compass/`). La API de docks de Godot 4.8 ya la resolvió Scope Compass: `addons/scope_compass/scope_compass.gd` usa `EditorDock` y `add_dock()`; copiá ese patrón.
 
 Necesita 0.6. Diseño en el GDD (§11.8).
+
+El Tree genérico de la primera versión se reemplazó por pestañas después del mockup. Jugar escribe la partida del dock en `user://debug/inspector_play.cfg` (sin guardar el archivo abierto) y `next_scenario.txt` apunta a esa ruta. Los escenarios en `res://` se guardan sin `.bak`.
 
 **Referencias:** `gdd.md#save-inspector`
 
