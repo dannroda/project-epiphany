@@ -41,6 +41,8 @@ func explode() -> void:
 		return
 	_exploded = true
 	var explosion: Node3D = EXPLOSION.instantiate()
-	get_parent().add_child(explosion)
-	explosion.global_position = global_position
+	var parent := get_parent()
+	# Antes de add_child: su _ready dispara partículas y sonido en su posición.
+	explosion.position = (parent as Node3D).to_local(global_position) if parent is Node3D else global_position
+	parent.add_child(explosion)
 	queue_free()

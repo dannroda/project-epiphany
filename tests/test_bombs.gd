@@ -140,3 +140,25 @@ func test_chain_reaction_and_pots() -> void:
 	assert_eq(is_instance_valid(pot), false, "rompe la vasija")
 	assert_eq(is_instance_valid(second), false, "detona la otra bomba en cadena")
 	setup[1].reset()
+
+
+func test_explosion_effects_spawn_at_the_bomb() -> void:
+	var setup: Array = await _setup()
+	var tree: SceneTree = setup[0]
+	var spot := Vector3(5, 0.5, -9)
+	var bursts: Array = []
+	tree.node_added.connect(func(node: Node) -> void:
+		if node is CPUParticles3D:
+			bursts.append(node))
+	var bomb: Bomb = BOMB.instantiate()
+	tree.current_scene.add_child(bomb)
+	bomb.global_position = spot
+	bomb.detonate()
+	while is_instance_valid(bomb):
+		await tree.physics_frame
+	await tree.process_frame
+	var fire := bursts.filter(func(p) -> bool: return is_instance_valid(p))
+	assert_true(not fire.is_empty(), "la explosión larga partículas")
+	for particles: CPUParticles3D in fire:
+		assert_true(particles.global_position.distance_to(spot) < 1.5, "las partículas salen donde explotó la bomba, no en el origen")
+	setup[1].reset()
