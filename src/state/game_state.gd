@@ -3,6 +3,7 @@ extends Node
 
 signal flag_changed(id: StringName, value: Variant)
 signal equipment_changed(category: ItemData.Category, id: StringName)
+signal item_buttons_changed
 signal loaded
 
 const FLAGS: FlagRegistry = preload("res://data/flag_registry.tres")
@@ -50,6 +51,17 @@ func equip(item: ItemData) -> void:
 	assert(item.is_equipment())
 	equipment[item.category] = item.id
 	equipment_changed.emit(item.category, item.id)
+
+
+## Si el ítem ya estaba en el otro botón, se intercambian.
+func assign_button(index: int, id: StringName) -> void:
+	if item_buttons[index] == id:
+		return
+	var other := 1 - index
+	if item_buttons[other] == id:
+		item_buttons[other] = item_buttons[index]
+	item_buttons[index] = id
+	item_buttons_changed.emit()
 
 
 func current_dungeon_state() -> DungeonState:

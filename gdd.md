@@ -272,6 +272,9 @@ extends Resource
 ## SIN ESTADO: el recurso es compartido por todos los que usan el ítem.
 ## Todo lo variable llega en el ItemUseContext.
 
+@export var ammo: ItemData                     ## null = munición infinita
+
+
 func get_animation(_item: ItemData) -> StringName:
 	return &""
 
@@ -327,7 +330,6 @@ extends ItemBehavior
 @export var animation: StringName = &"BowRelease"
 @export var projectile_scene: PackedScene
 @export var speed: float = 18.0
-@export var ammo: ItemData                     ## null = munición infinita
 
 
 func get_animation(_item: ItemData) -> StringName:

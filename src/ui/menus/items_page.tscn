@@ -1,0 +1,65 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/ui/menus/items_page.gd" id="1_page"]
+[ext_resource type="PackedScene" path="res://src/ui/menus/item_detail.tscn" id="2_detail"]
+
+[node name="Ítems" type="HBoxContainer"]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 32
+script = ExtResource("1_page")
+
+[node name="Left" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(280, 0)
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="ButtonsTitle" type="Label" parent="Left"]
+layout_mode = 2
+theme_type_variation = &"Caps"
+text = "BOTONES"
+
+[node name="ButtonRow" type="HBoxContainer" parent="Left"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="Rows" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ItemsTitle" type="Label" parent="Rows"]
+layout_mode = 2
+theme_type_variation = &"Caps"
+text = "ÍTEMS"
+
+[node name="Grid" type="GridContainer" parent="Rows"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 14
+theme_override_constants/v_separation = 14
+columns = 4
+
+[node name="Spacer" type="Control" parent="Rows"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+
+[node name="UpgradesTitle" type="Label" parent="Rows"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Caps"
+text = "MEJORAS"
+
+[node name="Upgrades" type="HBoxContainer" parent="Rows"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Detail" parent="." instance=ExtResource("2_detail")]
+unique_name_in_owner = true
+layout_mode = 2

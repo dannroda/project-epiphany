@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b7bgvdt4so1xg" path="res://src/ui/menus/pause_menu.gd" id="1_menu"]
 [ext_resource type="PackedScene" path="res://src/ui/menus/equipment_page.tscn" id="2_equip"]
+[ext_resource type="PackedScene" path="res://src/ui/menus/items_page.tscn" id="3_items"]
 
 [node name="PauseMenu" type="Control" unique_id=124808756]
 layout_mode = 3
@@ -76,18 +77,8 @@ size_flags_vertical = 3
 [node name="Equipo" parent="Frame/Panel/Layout/Pages" instance=ExtResource("2_equip")]
 layout_mode = 1
 
-[node name="Ítems" type="CenterContainer" parent="Frame/Panel/Layout/Pages" unique_id=1198869364]
+[node name="Ítems" parent="Frame/Panel/Layout/Pages" instance=ExtResource("3_items")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Placeholder" type="Label" parent="Frame/Panel/Layout/Pages/Ítems" unique_id=299824635]
-layout_mode = 2
-theme_type_variation = &"Hint"
-text = "Ítems: llega en 3.3"
 
 [node name="Mapa" type="CenterContainer" parent="Frame/Panel/Layout/Pages" unique_id=1162794761]
 layout_mode = 1

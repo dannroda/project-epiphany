@@ -2,17 +2,17 @@
   "checklist": [
     {
       "detail": "Ítems de categoría `USABLE`/`UPGRADE` del `Inventory`, con ícono, nombre, descripción y munición.",
-      "done": false,
+      "done": true,
       "text": "Grilla de ítems secundarios"
     },
     {
       "detail": "Con el ítem seleccionado, apretar X o Y lo asigna a ese botón (`GameState.item_buttons`). Si ya estaba en el otro, se intercambian.",
-      "done": false,
+      "done": true,
       "text": "Asignar a X o Y"
     },
     {
       "detail": "Sin reconstruir la grilla cada frame.",
-      "done": false,
+      "done": true,
       "text": "Actualizar por `Inventory.changed`"
     }
   ],
@@ -25,7 +25,7 @@
     }
   ],
   "milestone": "m03",
-  "notes": "",
+  "notes": "En teclado Q es item_1 y ui_tab_left: en la pantalla Ítems, con un ítem enfocado, Q/R asignan y E cambia de pestaña. La parte del HUD de la prueba la cierra 3.5. ammo pasó al ItemBehavior base (arco → flechas, bolsa → bombas).",
   "order": 3,
   "refs": [
     {
@@ -37,8 +37,8 @@
       "section": "items-mvp"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Asignar arco a X y bombas a Y, cerrar: el HUD muestra los dos. Guardar y cargar: siguen asignados.",
   "title": "Pantalla Ítems y asignación a X/Y",
-  "updated_at": "2026-10-08T04:45:42.044Z"
+  "updated_at": "2026-10-08T07:08:17.383Z"
 }

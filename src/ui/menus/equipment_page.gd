@@ -15,11 +15,7 @@ var accept_label := "Equipar"
 @onready var hearts: HFlowContainer = %Hearts
 @onready var damage_value: Label = %DamageValue
 @onready var reduction_value: Label = %ReductionValue
-@onready var detail_icon: TextureRect = %DetailIcon
-@onready var detail_name: Label = %DetailName
-@onready var detail_kind: Label = %DetailKind
-@onready var detail_text: Label = %DetailText
-@onready var detail_stats: VBoxContainer = %DetailStats
+@onready var detail: PanelContainer = %Detail
 
 var _slots: Dictionary[Button, ItemData] = {}
 var _preview_model: Node3D
@@ -112,40 +108,20 @@ func _set_badge(slot: Button, equipped: bool) -> void:
 
 
 func _show_detail(slot: Button) -> void:
-	for child in detail_stats.get_children():
-		child.queue_free()
 	var item: ItemData = _slots.get(slot)
 	if item == null or not GameState.inventory.has(item.id):
-		detail_icon.texture = LOCK
-		detail_name.text = "Sin descubrir"
-		detail_kind.text = ""
-		detail_text.text = "Todavía no encontraste este equipo."
+		detail.show_item(LOCK, "Sin descubrir", "", "Todavía no encontraste este equipo.")
 		return
-	detail_icon.texture = item.icon
-	detail_name.text = item.display_name
-	detail_kind.text = "%s%s" % [CATEGORY_NAMES[item.category], " · equipado" if _is_equipped(item) else ""]
-	detail_text.text = item.description
+	var kind := "%s%s" % [CATEGORY_NAMES[item.category], " · equipado" if _is_equipped(item) else ""]
+	detail.show_item(item.icon, item.display_name, kind, item.description)
 	match item.category:
 		ItemData.Category.SWORD:
-			_stat("Daño", _hearts_text(item.damage))
+			detail.add_stat("Daño", _hearts_text(item.damage))
 		ItemData.Category.SHIELD:
-			_stat("Bloqueo", "Frontal ±60°")
-			_stat("Refleja", "Proyectiles y luz" if item.reflects else "No")
+			detail.add_stat("Bloqueo", "Frontal ±60°")
+			detail.add_stat("Refleja", "Proyectiles y luz" if item.reflects else "No")
 		ItemData.Category.ARMOR:
-			_stat("Reducción de daño", "%d %%" % roundi(item.damage_reduction * 100))
-
-
-func _stat(label: String, value: String) -> void:
-	var row := HBoxContainer.new()
-	var name_label := Label.new()
-	name_label.text = label
-	name_label.theme_type_variation = &"Hint"
-	name_label.size_flags_horizontal = SIZE_EXPAND_FILL
-	row.add_child(name_label)
-	var value_label := Label.new()
-	value_label.text = value
-	row.add_child(value_label)
-	detail_stats.add_child(row)
+			detail.add_stat("Reducción de daño", "%d %%" % roundi(item.damage_reduction * 100))
 
 
 func _refresh_stats() -> void:

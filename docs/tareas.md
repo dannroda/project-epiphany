@@ -649,7 +649,7 @@ Con lock-on el foco va al punto medio (lock_focus_weight) pero no se aleja más 
 
 **Referencias:** `gdd.md#camara`
 
-## M3 — Inventario + UI  (3/8)
+## M3 — Inventario + UI  (4/8)
 
 Pantallas Equipo e Ítems, asignar a X/Y, slots en el HUD, cofres, item get, recolectables.
 
@@ -700,13 +700,13 @@ Página src/ui/menus/equipment_page.tscn dentro del menú de pausa (reemplaza el
 
 **Bloqueada por:** 3.1 Menú de pausa y pila de pantallas
 
-### 3.3 Pantalla Ítems y asignación a X/Y · Pendiente
+### 3.3 Pantalla Ítems y asignación a X/Y · Hecho
 
-- [ ] Grilla de ítems secundarios
+- [x] Grilla de ítems secundarios
   Ítems de categoría `USABLE`/`UPGRADE` del `Inventory`, con ícono, nombre, descripción y munición.
-- [ ] Asignar a X o Y
+- [x] Asignar a X o Y
   Con el ítem seleccionado, apretar X o Y lo asigna a ese botón (`GameState.item_buttons`). Si ya estaba en el otro, se intercambian.
-- [ ] Actualizar por `Inventory.changed`
+- [x] Actualizar por `Inventory.changed`
   Sin reconstruir la grilla cada frame.
 
 **Prueba:** Asignar arco a X y bombas a Y, cerrar: el HUD muestra los dos. Guardar y cargar: siguen asignados.

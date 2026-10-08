@@ -60,7 +60,11 @@ func _update_hints() -> void:
 	for child in hints.get_children():
 		hints.remove_child(child)
 		child.queue_free()
-	for hint in HINTS:
+	var page := pages.get_child(current)
+	var extra = page.get(&"extra_hints")
+	for hint in (extra if extra is Array else []) + HINTS:
+		if hint[0] == &"ui_accept" and _accept_label().is_empty():
+			continue
 		var icon := TextureRect.new()
 		icon.texture = InputPrompts.icon_for_current(hint[0])
 		icon.custom_minimum_size = Vector2(28, 28)

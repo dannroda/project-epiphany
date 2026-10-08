@@ -1,6 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://src/ui/menus/equipment_page.gd" id="1_page"]
+[ext_resource type="PackedScene" path="res://src/ui/menus/item_detail.tscn" id="2_detail"]
 
 [sub_resource type="World3D" id="World3D_preview"]
 
@@ -92,50 +93,6 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 26
 
-[node name="Detail" type="PanelContainer" parent="."]
-custom_minimum_size = Vector2(340, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"Slot"
-
-[node name="Layout" type="VBoxContainer" parent="Detail"]
-layout_mode = 2
-theme_override_constants/separation = 14
-
-[node name="Header" type="HBoxContainer" parent="Detail/Layout"]
-layout_mode = 2
-theme_override_constants/separation = 16
-
-[node name="DetailIcon" type="TextureRect" parent="Detail/Layout/Header"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(64, 64)
-layout_mode = 2
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Names" type="VBoxContainer" parent="Detail/Layout/Header"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 2
-
-[node name="DetailName" type="Label" parent="Detail/Layout/Header/Names"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-theme_type_variation = &"Title"
-autowrap_mode = 2
-
-[node name="DetailKind" type="Label" parent="Detail/Layout/Header/Names"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_type_variation = &"Hint"
-
-[node name="DetailText" type="Label" parent="Detail/Layout"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-autowrap_mode = 3
-
-[node name="DetailStats" type="VBoxContainer" parent="Detail/Layout"]
+[node name="Detail" parent="." instance=ExtResource("2_detail")]
 unique_name_in_owner = true
 layout_mode = 2
