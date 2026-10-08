@@ -8,5 +8,6 @@
 script = ExtResource("2_6btoj")
 id = &"bottle_empty"
 display_name = "Botella vacía"
+description = "Una botella vacía. Se puede volver a llenar."
 icon = ExtResource("1_6btoj")
 category = 3

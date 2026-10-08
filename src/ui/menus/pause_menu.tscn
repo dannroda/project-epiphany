@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cpayscl3kyrl6"]
 
 [ext_resource type="Script" uid="uid://b7bgvdt4so1xg" path="res://src/ui/menus/pause_menu.gd" id="1_menu"]
+[ext_resource type="PackedScene" path="res://src/ui/menus/equipment_page.tscn" id="2_equip"]
 
 [node name="PauseMenu" type="Control" unique_id=124808756]
 layout_mode = 3
@@ -72,18 +73,8 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Equipo" type="CenterContainer" parent="Frame/Panel/Layout/Pages" unique_id=2028455944]
+[node name="Equipo" parent="Frame/Panel/Layout/Pages" instance=ExtResource("2_equip")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Placeholder" type="Label" parent="Frame/Panel/Layout/Pages/Equipo" unique_id=1371827631]
-layout_mode = 2
-theme_type_variation = &"Hint"
-text = "Equipo: llega en 3.2"
 
 [node name="Ítems" type="CenterContainer" parent="Frame/Panel/Layout/Pages" unique_id=1198869364]
 layout_mode = 1

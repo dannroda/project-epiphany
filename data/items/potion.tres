@@ -12,6 +12,7 @@ script = ExtResource("1_0bv3h")
 script = ExtResource("3_53lbm")
 id = &"potion"
 display_name = "Poción"
+description = "Recupera toda la vida. Deja la botella vacía."
 icon = ExtResource("2_53lbm")
 category = 3
 behavior = SubResource("Resource_3oiyh")

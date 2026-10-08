@@ -1,0 +1,136 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/ui/menus/equipment_page.gd" id="1_page"]
+
+[sub_resource type="World3D" id="World3D_preview"]
+
+[sub_resource type="Environment" id="Environment_preview"]
+background_mode = 1
+background_color = Color(0.0588, 0.0706, 0.0863, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.55, 0.55, 0.6, 1)
+
+[node name="Equipo" type="HBoxContainer"]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 40
+script = ExtResource("1_page")
+
+[node name="Left" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="PreviewFrame" type="PanelContainer" parent="Left"]
+custom_minimum_size = Vector2(300, 330)
+layout_mode = 2
+theme_type_variation = &"Slot"
+
+[node name="Preview" type="SubViewportContainer" parent="Left/PreviewFrame"]
+layout_mode = 2
+stretch = true
+
+[node name="Viewport" type="SubViewport" parent="Left/PreviewFrame/Preview"]
+own_world_3d = true
+world_3d = SubResource("World3D_preview")
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(284, 314)
+render_target_update_mode = 4
+
+[node name="Camera" type="Camera3D" parent="Left/PreviewFrame/Preview/Viewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 5.4)
+fov = 40.0
+
+[node name="Sun" type="DirectionalLight3D" parent="Left/PreviewFrame/Preview/Viewport"]
+transform = Transform3D(0.866, -0.25, 0.433, 0, 0.866, 0.5, -0.5, -0.433, 0.75, 0, 3, 2)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Left/PreviewFrame/Preview/Viewport"]
+environment = SubResource("Environment_preview")
+
+[node name="PreviewRoot" type="Node3D" parent="Left/PreviewFrame/Preview/Viewport"]
+unique_name_in_owner = true
+
+[node name="Hearts" type="HBoxContainer" parent="Left"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Damage" type="HBoxContainer" parent="Left"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Left/Damage"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"Hint"
+text = "Daño"
+
+[node name="DamageValue" type="Label" parent="Left/Damage"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Reduction" type="HBoxContainer" parent="Left"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Left/Reduction"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"Hint"
+text = "Reducción de daño"
+
+[node name="ReductionValue" type="Label" parent="Left/Reduction"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Rows" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 22
+
+[node name="Detail" type="PanelContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"Slot"
+
+[node name="Layout" type="VBoxContainer" parent="Detail"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Header" type="HBoxContainer" parent="Detail/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="DetailIcon" type="TextureRect" parent="Detail/Layout/Header"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Names" type="VBoxContainer" parent="Detail/Layout/Header"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="DetailName" type="Label" parent="Detail/Layout/Header/Names"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Title"
+
+[node name="DetailKind" type="Label" parent="Detail/Layout/Header/Names"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Hint"
+
+[node name="DetailText" type="Label" parent="Detail/Layout"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="DetailStats" type="VBoxContainer" parent="Detail/Layout"]
+unique_name_in_owner = true
+layout_mode = 2

@@ -8,5 +8,6 @@
 script = ExtResource("2_1nikq")
 id = &"dungeon_map"
 display_name = "Mapa"
+description = "Muestra todas las salas de la mazmorra."
 icon = ExtResource("1_1nikq")
 category = 5

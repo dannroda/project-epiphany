@@ -28,6 +28,7 @@ func show_page(index: int) -> void:
 		var label := tabs.get_child(i) as Label
 		label.theme_type_variation = &"TabLabelSelected" if i == current else &"TabLabel"
 	focus_default()
+	_update_hints()
 
 
 func focus_default() -> void:
@@ -50,7 +51,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 
-const HINTS := [[&"ui_accept", "Usar"], [&"ui_cancel", "Cerrar"], [&"ui_tab_left", ""], [&"ui_tab_right", "Pestaña"]]
+const HINTS := [[&"ui_accept", ""], [&"ui_cancel", "Cerrar"], [&"ui_tab_left", ""], [&"ui_tab_right", "Pestaña"]]
 
 
 func _update_hints() -> void:
@@ -66,8 +67,15 @@ func _update_hints() -> void:
 		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		hints.add_child(icon)
-		if not String(hint[1]).is_empty():
+		var text: String = hint[1] if hint[0] != &"ui_accept" else _accept_label()
+		if not text.is_empty():
 			var label := Label.new()
-			label.text = hint[1] + "    "
+			label.text = text + "    "
 			label.theme_type_variation = &"Hint"
 			hints.add_child(label)
+
+
+func _accept_label() -> String:
+	var page := pages.get_child(current)
+	var label = page.get(&"accept_label")
+	return label if label is String else "Usar"

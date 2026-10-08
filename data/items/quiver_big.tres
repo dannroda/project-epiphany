@@ -8,5 +8,6 @@
 script = ExtResource("2_s7mbv")
 id = &"quiver_big"
 display_name = "Carcaj grande"
+description = "Permite llevar más flechas."
 icon = ExtResource("1_s7mbv")
 category = 6

@@ -12,6 +12,7 @@ script = ExtResource("1_prkf7")
 script = ExtResource("3_kgno8")
 id = &"bomb_bag"
 display_name = "Bolsa de bombas"
+description = "Coloca una bomba delante tuyo. Rompe muros agrietados y empuja lo que está cerca."
 icon = ExtResource("2_kgno8")
 category = 3
 behavior = SubResource("Resource_fouaw")

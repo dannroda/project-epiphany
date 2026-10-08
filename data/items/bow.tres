@@ -12,6 +12,7 @@ script = ExtResource("1_hiqf6")
 script = ExtResource("3_ca8yi")
 id = &"bow"
 display_name = "Arco"
+description = "Dispara flechas hacia donde apuntás: stick derecho, mouse o el objetivo fijado. Alcanza interruptores lejanos."
 icon = ExtResource("2_ca8yi")
 category = 3
 behavior = SubResource("Resource_3oevh")

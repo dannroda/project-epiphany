@@ -9,6 +9,8 @@
 script = ExtResource("2_owpql")
 id = &"shield_mirror"
 display_name = "Escudo espejo"
+description = "Bloquea los golpes de frente. Refleja proyectiles y haces de luz hacia donde mirás o hacia el objetivo fijado."
+reflects = true
 icon = ExtResource("2_26xnl")
 category = 1
 equip_scene = ExtResource("1_owpql")

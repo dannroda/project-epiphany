@@ -649,7 +649,7 @@ Con lock-on el foco va al punto medio (lock_focus_weight) pero no se aleja más 
 
 **Referencias:** `gdd.md#camara`
 
-## M3 — Inventario + UI  (2/8)
+## M3 — Inventario + UI  (3/8)
 
 Pantallas Equipo e Ítems, asignar a X/Y, slots en el HUD, cofres, item get, recolectables.
 
@@ -679,20 +679,22 @@ MenuStack (autoload, CanvasLayer 50, process ALWAYS): push/pop, pausa el árbol 
 
 **Bloquea a:** 3.2 Pantalla Equipo; 3.3 Pantalla Ítems y asignación a X/Y; 4.2 Caja de texto; 6.6 Mapa, brújula y pantalla de mapa; 10.1 Pantalla de título
 
-### 3.2 Pantalla Equipo · Pendiente
+### 3.2 Pantalla Equipo · Hecho
 
-- [ ] Ranuras de espada, escudo y armadura
+- [x] Ranuras de espada, escudo y armadura
   Una fila por categoría; las ranuras sin ítem se muestran bloqueadas.
-- [ ] Equipar con `GameState.equip()`
+- [x] Equipar con `GameState.equip()`
   El player cambia el modelo al instante por `equipment_changed` (de 0.9).
-- [ ] Stats del equipo
+- [x] Stats del equipo
   Daño de la espada, reducción de la armadura, si el escudo refleja.
-- [ ] Preview del modelo
+- [x] Preview del modelo
   `SubViewport` con una copia del modelo del player girando, con el equipo actual.
 
 **Prueba:** Desde el escenario `full_inventory`: cambiar de escudo y armadura en la pantalla, cerrar y ver el cambio en el player; guardar y cargar conserva el equipo.
 
 **Notas:** La cota reforzada (7.7) es el ítem que justifica esta pantalla en el MVP.
+
+Página src/ui/menus/equipment_page.tscn dentro del menú de pausa (reemplaza el placeholder). Columnas como el mockup: preview (SubViewport con una copia de ModelController del player, sin Hitboxes ni AnimationTree, girando), corazones y stats; filas Espada/Escudo/Armadura de 4 ranuras (EquipSlot del theme), con E en lo equipado y candado en lo que no se tiene; detalle del ítem enfocado. Equipar: A/Enter llama GameState.equip(); la pantalla y el player se actualizan por equipment_changed. ItemData tiene reflects (escudo espejo) y los 17 ítems tienen descripción. La ayuda de aceptar la define cada página (accept_label). Guardar y cargar el equipo ya lo cubren los tests de GameState.
 
 **Referencias:** `gdd.md#ui`, `gdd.md#items-mvp`
 

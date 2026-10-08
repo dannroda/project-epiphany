@@ -9,6 +9,7 @@
 script = ExtResource("2_gul31")
 id = &"shield_wood"
 display_name = "Escudo de madera"
+description = "Bloquea los golpes que vienen de frente. Con la guardia arriba, atacar da un golpe de escudo que aturde."
 icon = ExtResource("2_qjkon")
 category = 1
 equip_scene = ExtResource("1_gul31")

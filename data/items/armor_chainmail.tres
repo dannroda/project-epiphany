@@ -8,6 +8,7 @@
 script = ExtResource("2_bekmn")
 id = &"armor_chainmail"
 display_name = "Cota reforzada"
+description = "Anillos de hierro entrelazados. Reduce el daño que recibís."
 icon = ExtResource("1_bekmn")
 category = 2
 damage_reduction = 0.25

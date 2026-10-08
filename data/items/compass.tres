@@ -8,5 +8,6 @@
 script = ExtResource("2_mbg3s")
 id = &"compass"
 display_name = "Brújula"
+description = "Marca en el mapa los cofres y la sala del guardián."
 icon = ExtResource("1_mbg3s")
 category = 5

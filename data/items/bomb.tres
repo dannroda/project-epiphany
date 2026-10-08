@@ -8,6 +8,7 @@
 script = ExtResource("2_6uay4")
 id = &"bomb"
 display_name = "Bomba"
+description = "Munición para la bolsa de bombas."
 icon = ExtResource("1_6uay4")
 category = 4
 max_stack = 10

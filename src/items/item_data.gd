@@ -19,6 +19,8 @@ enum Category { SWORD, SHIELD, ARMOR, USABLE, AMMO, DUNGEON, UPGRADE }
 
 @export_group("Pasivos")
 @export var damage_reduction: float = 0.0
+## Escudos: refleja proyectiles y haces de luz.
+@export var reflects := false
 
 
 func is_equipment() -> bool:
