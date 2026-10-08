@@ -39,6 +39,9 @@ func test_keyboard_and_mouse_map() -> void:
 		assert_true(Input.is_action_pressed(pair[1]), str(pair[1]))
 		_mouse(pair[0], false)
 		await tree.process_frame
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	while stack.is_open():
+		stack.pop()
 
 
 func test_input_device_changes() -> void:

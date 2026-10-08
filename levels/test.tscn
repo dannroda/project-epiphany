@@ -21,6 +21,8 @@
 [ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="w_pot"]
 [ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="w_spawn"]
 [ext_resource type="PackedScene" path="res://src/world/tablet.tscn" id="w_tablet"]
+[ext_resource type="Script" uid="uid://dlv83hn042mxv" path="res://src/world/overworld_map.gd" id="w_owmap"]
+[ext_resource type="Texture2D" uid="uid://62ivaxv7fiwo" path="res://assets/ui/maps/test_level.png" id="w_owmap_tex"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_4uxyr"]
 panorama = ExtResource("3_qhvcx")
@@ -214,3 +216,9 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 13, 0.25, -15.5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.25, -12)
 
 [node name="HUD" parent="." unique_id=1876306880 instance=ExtResource("ui_hud")]
+
+[node name="OverworldMap" type="Node" parent="."]
+script = ExtResource("w_owmap")
+display_name = "Campo de pruebas"
+texture = ExtResource("w_owmap_tex")
+world_rect = Rect2(-14.705, -17.73, 29.41, 35.46)

@@ -5,6 +5,7 @@ extends CanvasLayer
 signal changed
 
 const PAUSE_MENU := preload("res://src/ui/menus/pause_menu.tscn")
+const MAP_PAGE := 2
 
 var _stack: Array[Control] = []
 var _focus_memory: Dictionary[Control, Control] = {}
@@ -59,7 +60,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.is_action_pressed(&"pause") and _can_pause():
 			push(PAUSE_MENU.instantiate())
 			get_viewport().set_input_as_handled()
-	elif event.is_action_pressed(&"ui_cancel") or event.is_action_pressed(&"pause"):
+		elif event.is_action_pressed(&"map") and _can_pause():
+			var menu := PAUSE_MENU.instantiate()
+			push(menu)
+			menu.show_page(MAP_PAGE)
+			get_viewport().set_input_as_handled()
+	elif event.is_action_pressed(&"ui_cancel") or event.is_action_pressed(&"pause") or event.is_action_pressed(&"map"):
 		pop()
 		get_viewport().set_input_as_handled()
 

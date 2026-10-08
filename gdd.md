@@ -180,7 +180,7 @@ Rig reutilizado de otra jam *(pendiente importarlo al repo)*.
 | **HUD** | Corazones (¼), llaves chicas + llave del jefe (solo en mazmorra), botones de ítem X/Y con munición, indicador de acción contextual (A/B: *Abrir*, *Empujar*, *Leer*), barra del jefe, nombre de la zona al entrar. |
 | **Pausa › Equipo** | Espada, escudo, armadura (con ranuras bloqueadas para lo no conseguido), stats, preview del modelo. |
 | **Pausa › Ítems** | Grilla de ítems secundarios; asignar a X/Y; descripción; munición. |
-| **Pausa › Mapa** | Mapa de la mazmorra (salas visitadas; con mapa: todas; con brújula: cofres y jefe); overworld: mapa simple. |
+| **Pausa › Mapa** | Mapa de la mazmorra (salas visitadas; con mapa: todas; con brújula: cofres y jefe); overworld: mapa simple. La grilla sale de `Room.map_cell`; título y piso, del nodo `Dungeon`. En el overworld, un nodo `OverworldMap` en la escena da la imagen (foto cenital ortográfica) y el rectángulo XZ que cubre. Abre directo con la acción `map`. |
 | **Caja de texto** | Tablillas e *item get*. El texto vive en archivos `.dialogue` de **Dialogue Manager** (Nathan Hoad); el globo es nuestra `TextBox` con los estilos de los mockups (piedra para tablillas, dorado para *item get*), no la UI del plugin. Se integró aunque no haya NPCs, para tener el sistema andando antes de que haya muchos textos (decisión del 2026-10-08, elegido sobre Dialogic por ser liviano y dejar la UI propia). |
 | **Item get** | Animación con el ítem en alto + nombre + descripción corta. |
 | **Game over** | Continuar / Guardar y salir. |
@@ -1069,6 +1069,8 @@ signal player_entered(room: Room)
 @export var room_index: int = 0          ## Bit en DungeonState.visited_rooms
 @export var camera_limits: Rect2         ## Local, en XZ: dónde puede estar el FOCO de la cámara
 @export var display_name: String = ""
+@export var map_cell: Vector2i           ## Celda en la pantalla de mapa (y crece hacia abajo)
+@export var boss_room := false           ## Con brújula, el mapa marca el ojo del jefe
 
 
 func _ready() -> void:

@@ -21,6 +21,7 @@ var persistent: PersistentFlag
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
+	add_to_group(&"chests")
 	if big:
 		scale = Vector3.ONE * 1.4
 	persistent = PersistentFlag.new()

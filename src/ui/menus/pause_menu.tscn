@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b7bgvdt4so1xg" path="res://src/ui/menus/pause_menu.gd" id="1_menu"]
 [ext_resource type="PackedScene" path="res://src/ui/menus/equipment_page.tscn" id="2_equip"]
 [ext_resource type="PackedScene" path="res://src/ui/menus/items_page.tscn" id="3_items"]
+[ext_resource type="PackedScene" path="res://src/ui/menus/map_page.tscn" id="4_map"]
 
 [node name="PauseMenu" type="Control" unique_id=124808756]
 layout_mode = 3
@@ -85,18 +86,8 @@ layout_mode = 1
 [node name="Ítems" parent="Frame/Panel/Layout/Pages" instance=ExtResource("3_items")]
 layout_mode = 1
 
-[node name="Mapa" type="CenterContainer" parent="Frame/Panel/Layout/Pages" unique_id=1162794761]
+[node name="Mapa" parent="Frame/Panel/Layout/Pages" instance=ExtResource("4_map")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Placeholder" type="Label" parent="Frame/Panel/Layout/Pages/Mapa" unique_id=1432403045]
-layout_mode = 2
-theme_type_variation = &"Hint"
-text = "Mapa: llega en 6.6"
 
 [node name="Hints" type="HBoxContainer" parent="Frame/Panel/Layout" unique_id=765857099]
 unique_name_in_owner = true

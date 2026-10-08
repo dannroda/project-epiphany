@@ -3,6 +3,8 @@ extends Node
 ## Va en la escena de cada mazmorra: mientras está en el árbol, GameState.current_dungeon es su id.
 
 @export var id: StringName = &"d1"
+@export var display_name: String = ""
+@export var floor_name: String = "Piso 1"
 
 
 func _enter_tree() -> void:

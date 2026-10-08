@@ -1131,7 +1131,7 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 **Notas:** Idea del 2026-10-08: que el escudo en la espalda proteja, y que cada escudo frene distintos tipos de daño (la madera frena flechas pero no explosiones ni fuego). El espejo refleja siempre que intercepta, porque es un espejo. Usa DamageInfo.element, que ya existe: "explosive" lo pone la bomba (5.4), "light" el haz (5.6), "fire" queda para espadas elementales post-MVP. Relacionada con 5.2 (torreta: primer enemigo que dispara), 5.4 y 5.6. Desde 2026-10-08 el escudo oculto no colisiona (Equipment.show_shield_in_hand).
 
-## M6 — Framework de mazmorra  (4/7)
+## M6 — Framework de mazmorra  (6/7)
 
 `Room` con cámara limitada y transición, puertas, llaves, bloques por grilla, interruptores, mapa y brújula con su pantalla.
 
@@ -1224,7 +1224,7 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 **Bloqueada por:** 6.1 `Room` y cámara por sala
 
-### 6.5 Interruptores y cableado · En curso
+### 6.5 Interruptores y cableado · Hecho
 
 - [x] Interruptor de piso
   `FloorSwitch`: lo activa el player, un bloque o un `RigidBody3D`. Modos: mantener / una vez.
@@ -1243,20 +1243,20 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 **Bloqueada por:** 6.2 Puertas
 
-### 6.6 Mapa, brújula y pantalla de mapa · Pendiente
+### 6.6 Mapa, brújula y pantalla de mapa · Hecho
 
-- [ ] Datos del mapa en cada `Room`
+- [x] Datos del mapa en cada `Room`
   Celda en la grilla del mapa (`map_cell`) y tamaño. El mapa se arma solo leyendo las salas.
-- [ ] Pantalla Mapa (pestaña de pausa y acción `map`)
+- [x] Pantalla Mapa (pestaña de pausa y acción `map`)
   Salas visitadas; con mapa, todas; con brújula, cofres sin abrir y el jefe. Posición del player.
-- [ ] Mapa y brújula como ítems
+- [x] Mapa y brújula como ítems
   Por `GameState.give()` a `DungeonState`.
-- [ ] Mapa simple del overworld
+- [x] Mapa simple del overworld
   Imagen fija con la posición del player; alcanza para el MVP.
 
 **Prueba:** Escenario `dungeon_no_bow` sin mapa: solo se ven las salas visitadas. Agregar el mapa desde el Save Inspector: aparecen todas.
 
-**Notas:** Skills: `disciplines:game-ui-ux`.
+**Notas:** Skills: `disciplines:game-ui-ux`. Hecho 2026-10-08: `Room.map_cell` + `boss_room` (el tamaño de celda es fijo, como en el mockup); título y piso desde el nodo `Dungeon`. Brújula: cofres sin abrir (grupo "chests") y ojo del jefe. Overworld: nodo `OverworldMap` con foto cenital ortográfica (`assets/ui/maps/test_level.png`). La tecla M abre la pausa en Mapa. Escenario `dungeon_no_bow` (test_rooms sin mapa). Tests en `tests/test_map.gd`.
 
 **Referencias:** `gdd.md#ui`, `gdd.md#estado-flags`
 

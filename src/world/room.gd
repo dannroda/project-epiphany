@@ -12,6 +12,10 @@ const GROUP := &"rooms"
 
 @export var room_index: int = 0 ## Bit en DungeonState.visited_rooms
 @export var display_name: String = ""
+## Lugar en la grilla de la pantalla de mapa (columna, fila). El mapa se arma leyendo las salas.
+@export var map_cell: Vector2i
+## La brújula marca la sala del jefe.
+@export var boss_room := false
 ## Opcional, local en XZ: dónde puede estar el FOCO de la cámara. Vacío = lo calcula la cámara para no ver fuera de la sala.
 @export var camera_limits: Rect2
 

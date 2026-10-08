@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" path="res://src/world/door.tscn" id="w_door"]
 [ext_resource type="PackedScene" path="res://src/world/push_block.tscn" id="w_block"]
 [ext_resource type="PackedScene" path="res://src/world/floor_switch.tscn" id="w_floor_switch"]
+[ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="w_chest"]
+[ext_resource type="Resource" path="res://data/items/potion.tres" id="i_potion"]
 [ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="e_enemy"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="ui_hud"]
 [ext_resource type="Texture2D" uid="uid://r23yquaky7lu" path="res://assets/Prototype Textures/PNG/Dark/texture_07.png" id="tex_grid"]
@@ -52,6 +54,7 @@ script = ExtResource("1_level")
 [node name="Dungeon" type="Node" parent="."]
 script = ExtResource("w_dungeon")
 id = &"test_rooms"
+display_name = "Salas de prueba"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Env")
@@ -166,6 +169,7 @@ size = Vector3(15.0, 2.6, 0.3)
 [node name="RoomA" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
 script = ExtResource("w_room")
+map_cell = Vector2i(0, 2)
 room_index = 0
 display_name = "Vestíbulo"
 
@@ -177,6 +181,7 @@ shape = SubResource("RoomAShape")
 [node name="RoomB" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -23)
 script = ExtResource("w_room")
+map_cell = Vector2i(0, 1)
 room_index = 1
 display_name = "Galería"
 
@@ -188,6 +193,7 @@ shape = SubResource("RoomBShape")
 [node name="RoomC" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -46)
 script = ExtResource("w_room")
+map_cell = Vector2i(0, 0)
 room_index = 2
 display_name = "Cámara sellada"
 
@@ -238,6 +244,11 @@ size = Vector3(0.3, 2.6, 4)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.25, -37)
 kind = 3
 switches = Array[NodePath]([NodePath("../BlockSwitch"), NodePath("../PlayerSwitch")])
+
+[node name="ChestC" parent="." instance=ExtResource("w_chest")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, -49)
+item = ExtResource("i_potion")
+flag = &"d1_test_chest"
 
 [node name="Player" parent="." instance=ExtResource("p_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 2)
