@@ -26,4 +26,4 @@ func _physics_process(delta: float) -> void:
 		focus_point = (target_node.global_position + locked_target.global_position) / 2.0
 
 	var desired_pos := focus_point + offset
-	global_position = global_position.lerp(desired_pos, smooth_speed * delta)
+	global_position = global_position.lerp(desired_pos, 1.0 - exp(-smooth_speed * delta))

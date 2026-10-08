@@ -18,6 +18,10 @@ func _enter() -> void:
 	#await get_tree().create_timer(0.2).timeout
 	#dispatch("finished")
 	
+
+func _update(_delta: float) -> void:
+	player.move_and_slide()
+
 #
 func _on_attack_finished():
 	dispatch("finished")

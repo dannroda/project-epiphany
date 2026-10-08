@@ -32,6 +32,6 @@ func _process(delta: float) -> void:
 	var bob := sin(time * bob_speed) * bob_amount
 	var target_pos := current_target.global_position + Vector3(0, height_offset + bob, 0)
 
-	global_position = global_position.lerp(target_pos, follow_smooth * delta)
+	global_position = global_position.lerp(target_pos, 1.0 - exp(-follow_smooth * delta))
 	
 	rotate_y(rotation_speed * delta)

@@ -103,7 +103,7 @@ func _is_in_range(_target: Node3D) -> bool:
 		player.global_position + Vector3.UP,
 		_target.global_position + Vector3.UP
 	)
-	query.exclude = [player]
+	query.exclude = [player.get_rid()]
 	query.collision_mask = 1
 	var result := _space.intersect_ray(query)
 	return result.is_empty() or result.collider == _target
@@ -120,7 +120,7 @@ func _update(delta: float) -> void:
 	var input_dir = Input.get_vector(&"move_left", &"move_right", &"move_forward", &"move_backward")
 	blackboard.set_var("input_dir", input_dir)
 	
-	if Input.is_action_pressed(&"attack"):
+	if Input.is_action_just_pressed(&"attack"):
 		dispatch("attack")
 	elif input_dir:
 		dispatch("move")
