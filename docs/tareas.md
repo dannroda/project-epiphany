@@ -953,7 +953,7 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 
 **Notas:** Decisión del 2026-10-08: el GDD no tiene NPCs con diálogo, pero se integra el plugin ya para no adaptar tablillas e item get después. Elegido sobre Dialogic porque solo maneja el contenido y deja la UI propia (mockups), es liviano y hay menos superficie para romperse con Godot 4.8-dev. Instalado Dialogue Manager v4.1.0 (para Godot 4.7) desde la release de GitHub: import, arranque y tests headless OK en 4.8-dev7; falta confirmar que el editor lo cargue sin errores. Textos en data/dialogue/*.dialogue; el personaje de la línea es el rótulo de la tablilla; item_get.dialogue tiene un cue por id de ítem (si falta, usa la descripción). Traducciones: IDs estáticos [ID:…] como claves; el plugin mantiene la lista de plantillas POT.
 
-## M5 — Ítems secundarios  (7/9)
+## M5 — Ítems secundarios  (8/9)
 
 Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
@@ -1082,7 +1082,7 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 **Bloqueada por:** 1.2 Bloqueo direccional y golpe de escudo
 
-### 5.7 Poción y botella · En curso
+### 5.7 Poción y botella · Hecho
 
 - [x] `ItemData` de botella vacía y poción
   `ConsumableBehavior` con `heal` y `leaves` = botella vacía. Código en [[gdd#items-datos]].
@@ -1097,18 +1097,16 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 **Bloqueada por:** 3.4 Usar los ítems asignados
 
-### 5.8 Sala de pruebas de ítems · Pendiente
+### 5.8 Sala de pruebas de ítems · En curso
 
-- [ ] Un puzzle por ítem en un nivel sandbox
+- [x] Un puzzle por ítem en un nivel sandbox
   `levels/sandbox_items.tscn`: muro bombable, ojo-interruptor lejano, reflejo de luz, orbe de torreta. Grises.
-- [ ] Escenario `full_inventory` apuntando al sandbox
+- [x] Escenario `full_inventory` apuntando al sandbox
   Para entrar directo desde el Save Inspector.
 
 **Prueba:** Resolver los cuatro puzzles del sandbox empezando desde el escenario.
 
-**Notas:** Cierra el hito: "cada ítem se usa en al menos un puzzle". Sirve después como banco de pruebas de regresión.
-
-Skills: `disciplines:level-design`.
+**Notas:** Cierra el hito: 'cada ítem se usa en al menos un puzzle'. Sirve después como banco de pruebas de regresión. levels/sandbox_items.tscn (greybox, CSG): cuatro cubículos con una vasija de corazones detrás de algo que se abre — BOMBAS (muro agrietado, flag ow_sb_cracked_wall), ARCO (ojo en un corral bajo: la espada no llega, las flechas pasan por arriba → Gate), LUZ (fuente que cruza el sur; con el escudo espejo se desvía al cristal latch → Gate), ORBE (torreta en un corral; reflejarle los orbes → Gate). Gate nuevo (src/world/gate.gd): reja que se hunde; base para 6.2. levels/sandbox_items.gd expone solved(). full_inventory arranca en el sandbox con el escudo espejo. test_sandbox resuelve los cuatro desde el escenario. Se arregló de paso el dibujo de los tramos del haz (LightBeam escalaba en espacio global).
 
 **Referencias:** `gdd.md#items-mvp`
 

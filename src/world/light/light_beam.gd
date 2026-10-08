@@ -100,7 +100,7 @@ func _draw() -> void:
 			continue
 		var up := (b - a) / length
 		var side := up.cross(Vector3.FORWARD if absf(up.dot(Vector3.FORWARD)) < 0.99 else Vector3.RIGHT).normalized()
-		var basis := Basis(side, up, side.cross(up)).scaled(Vector3(1.0, length, 1.0))
+		var basis := Basis(side, up * length, side.cross(up))
 		mesh.global_transform = Transform3D(basis, (a + b) * 0.5)
 	_tip.visible = not segments.is_empty()
 	if _tip.visible:

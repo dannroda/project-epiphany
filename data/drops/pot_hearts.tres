@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DropTable" format=3]
+
+[ext_resource type="Script" path="res://src/items/drop_table.gd" id="1_table"]
+[ext_resource type="Script" path="res://src/items/drop_entry.gd" id="2_entry"]
+
+[sub_resource type="Resource" id="Heart"]
+script = ExtResource("2_entry")
+heal = 4
+
+[resource]
+script = ExtResource("1_table")
+entries = Array[ExtResource("2_entry")]([SubResource("Heart")])

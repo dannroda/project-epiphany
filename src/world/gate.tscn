@@ -1,0 +1,54 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/gate.gd" id="1_gate"]
+
+[sub_resource type="StandardMaterial3D" id="Bars"]
+albedo_color = Color(0.25, 0.24, 0.26, 1)
+metallic = 0.6
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="BarMesh"]
+material = SubResource("Bars")
+size = Vector3(0.12, 2.2, 0.12)
+
+[sub_resource type="BoxMesh" id="RailMesh"]
+material = SubResource("Bars")
+size = Vector3(2.4, 0.14, 0.14)
+
+[sub_resource type="BoxShape3D" id="Shape"]
+size = Vector3(2.4, 2.2, 0.3)
+
+[node name="Gate" type="StaticBody3D"]
+script = ExtResource("1_gate")
+
+[node name="Bar0" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0, 1.1, 0)
+mesh = SubResource("BarMesh")
+
+[node name="Bar1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.1, 0)
+mesh = SubResource("BarMesh")
+
+[node name="Bar2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+mesh = SubResource("BarMesh")
+
+[node name="Bar3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.1, 0)
+mesh = SubResource("BarMesh")
+
+[node name="Bar4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0, 1.1, 0)
+mesh = SubResource("BarMesh")
+
+[node name="RailTop" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1, 0)
+mesh = SubResource("RailMesh")
+
+[node name="RailLow" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("RailMesh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+shape = SubResource("Shape")
