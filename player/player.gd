@@ -139,7 +139,10 @@ func _sync_health() -> void:
 
 func _on_hit(info: DamageInfo) -> void:
 	if is_blocking() and info.source and _is_in_front(info.source.global_position):
-		_on_blocked(info)
+		if info.reflectable and info.source is Projectile and shield_reflects():
+			_reflect(info.source)
+		else:
+			_on_blocked(info)
 		return
 	var amount := maxi(1, roundi(info.amount * (1.0 - equipment.damage_reduction())))
 	if not health.damage(amount):
@@ -174,6 +177,21 @@ func _is_in_front(point: Vector3) -> bool:
 	if to_point.is_zero_approx() or forward.is_zero_approx():
 		return true
 	return rad_to_deg(forward.angle_to(to_point)) <= block_angle_deg
+
+
+func shield_reflects() -> bool:
+	var shield := Items.get_item(GameState.equipment.get(ItemData.Category.SHIELD, &""))
+	return shield != null and shield.reflects
+
+
+## Escudo espejo: el proyectil vuelve hacia donde apunta Aim (el objetivo fijado primero) y pasa a ser del player.
+func _reflect(projectile: Projectile) -> void:
+	projectile.reflect(aim.get_direction(), config.team)
+	Log.debug(&"combat", "Reflejado:", projectile.name, "hacia", aim.get_direction())
+	anim_tree.set(&"parameters/BlockHit/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	Feel.burst(&"sparks", projectile.global_position, aim.get_direction())
+	Feel.sfx(&"reflect", global_position)
+	Feel.shake(Feel.settings.shake_block)
 
 
 func _on_blocked(info: DamageInfo) -> void:

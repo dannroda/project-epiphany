@@ -857,7 +857,9 @@ var _damage: DamageInfo
 func launch(from: Vector3, initial_velocity: Vector3, info: DamageInfo) -> void:
 	global_position = from
 	velocity = initial_velocity
+	shooter = info.source
 	_damage = info
+	_damage.source = self          # el bloqueo direccional mira de dónde viene el proyectil
 	team = info.team
 	damage_factory = func() -> DamageInfo: return _damage
 	look_at(from + velocity)
@@ -868,7 +870,6 @@ func reflect(direction: Vector3, new_team: EntityConfig.Team) -> void:
 	velocity = direction.normalized() * velocity.length()
 	team = new_team
 	_damage.team = new_team
-	_damage.source = self
 
 
 func _physics_process(delta: float) -> void:
@@ -877,6 +878,8 @@ func _physics_process(delta: float) -> void:
 	if lifetime <= 0.0:
 		queue_free()
 ```
+
+Contra el mundo (`body_entered` de estáticos; los `CharacterBody3D` se ignoran porque los resuelve su `Hurtbox`) se rompe con partículas o, si tiene `stick_time` (flechas), se clava. Velocidad tope 24 m/s: a 60 Hz son 0,4 m por paso, menos que cualquier `Hurtbox` o pared, así que no hace falta CCD. Sin pool: 30 orbes por segundo instanciados, reflejados y destruidos no pasan de 5 ms por frame.
 
 ### 11.4 Player refactorizado
 <!-- id: player -->

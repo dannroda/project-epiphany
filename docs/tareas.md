@@ -824,7 +824,7 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 
 **Relacionadas:** 0.3 Ítems: datos
 
-## M4 — Interacción + mundo  (5/6)
+## M4 — Interacción + mundo  (6/6)
 
 `Interactable` con prompt contextual, tablillas y caja de texto, vasijas y pasto, flags del mundo guardadas.
 
@@ -932,7 +932,7 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 
 **Bloqueada por:** 0.4 Flags; 0.10 Save Inspector v0
 
-### 4.6 Integrar Dialogue Manager · En curso
+### 4.6 Integrar Dialogue Manager · Hecho
 
 **Prioridad:** media
 
@@ -960,20 +960,20 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 **Hecho cuando:**
 - Cada ítem se usa en al menos un puzzle.
 
-### 5.1 Proyectiles · Pendiente
+### 5.1 Proyectiles · En curso
 
-- [ ] Crear `src/entities/projectile.gd`
+- [x] Crear `src/entities/projectile.gd`
   Extiende `Hitbox`: velocidad, vida, `reflect()`. Código en [[gdd#entidades-componentes]].
-- [ ] Chocar con el mundo
+- [x] Chocar con el mundo
   `body_entered` contra estáticos: se destruye (o se clava, para flechas) con partículas.
-- [ ] Reflejo con el escudo espejo
+- [x] Reflejo con el escudo espejo
   En `_on_hurtbox_hit`: si bloquea, el `DamageInfo` es `reflectable` y tiene escudo espejo, devuelve el proyectil hacia `Aim` o el objetivo fijado y cambia de equipo.
-- [ ] Pool de proyectiles (si hace falta)
+- [x] Pool de proyectiles (si hace falta)
   Solo si el profiler muestra picos al instanciar.
 
 **Prueba:** Un proyectil de prueba disparado contra el player: con escudo de madera se bloquea y desaparece; con escudo espejo vuelve y daña al que lo disparó.
 
-**Notas:** Skills: `godot:godot-physics`, `disciplines:physics-tuning`.
+**Notas:** Skills: godot:godot-physics, disciplines:physics-tuning. El source del DamageInfo es el proyectil (bloqueo direccional) y shooter guarda quién disparó. Ignora CharacterBody3D en body_entered (el player está en la capa 1). Pool descartado con medición: 30 orbes/s (instanciar, reflejar, destruir) en ventana sin vsync → frame medio 1,3 ms, máximo 2,6–4,8 ms. Escena de prueba: src/entities/projectile.tscn (orbe).
 
 **Referencias:** `gdd.md#entidades-componentes`, `gdd.md#combate`
 
