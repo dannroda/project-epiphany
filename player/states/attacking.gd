@@ -1,27 +1,29 @@
 extends PlayerState
 
+
 func _enter() -> void:
 	var tween := create_tween()
 	tween.tween_property(player, "velocity", Vector3.ZERO, 0.3)
-	
-	var observer:AnimationNodeObserver = player.anim_tree.get(&"parameters/Attack/observer")
+
+	var observer: AnimationNodeObserver = player.anim_tree.get(&"parameters/Attack/observer")
 	if not observer.fade_out_started.is_connected(_on_attack_finished):
 		observer.fade_out_started.connect(_on_attack_finished)
-	
-	var is_blocking: bool = blackboard.get_var("is_blocking", false)
-	if is_blocking:
-		player.anim_tree.set(&"parameters/AttackType/transition_request", "ShieldThrust")
-	else:
-		player.anim_tree.set(&"parameters/AttackType/transition_request", "Slash")
-		
+
+	var attack := player.current_attack()
+	var attack_type := "ShieldThrust" if player.is_blocking() else "Slash"
+	player.anim_tree.set(&"parameters/AttackType/transition_request", attack_type)
 	player.anim_tree.set(&"parameters/Attack/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
-	#await get_tree().create_timer(0.2).timeout
-	#dispatch("finished")
-	
+	if attack and player.anim_player.has_animation(attack.animation):
+		player.attack_runner.start(attack, player.anim_player.get_animation(attack.animation).length)
+
 
 func _update(_delta: float) -> void:
 	player.move_and_slide()
 
-#
-func _on_attack_finished():
+
+func _exit() -> void:
+	player.attack_runner.stop()
+
+
+func _on_attack_finished() -> void:
 	dispatch("finished")

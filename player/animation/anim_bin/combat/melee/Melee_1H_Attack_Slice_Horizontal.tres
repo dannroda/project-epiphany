@@ -486,20 +486,3 @@ tracks/68/path = NodePath("Skeleton3D:lowerleg.r")
 tracks/68/interp = 1
 tracks/68/loop_wrap = true
 tracks/68/keys = PackedFloat32Array(0, 1, 0.99999994, 0.99999976, 0.99999994)
-tracks/69/type = "method"
-tracks/69/imported = false
-tracks/69/enabled = true
-tracks/69/path = NodePath(".")
-tracks/69/interp = 1
-tracks/69/loop_wrap = true
-tracks/69/keys = {
-"times": PackedFloat32Array(0.23333333, 0.56666666),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [true],
-"method": &"trigger_equipped_item"
-}, {
-"args": [false],
-"method": &"trigger_equipped_item"
-}]
-}

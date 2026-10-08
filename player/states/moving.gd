@@ -14,10 +14,10 @@ func _update(delta: float) -> void:
 
 	if target and is_instance_valid(target):
 		if combat_anim_state == "Normal":
-			player.anim_tree.set(&"parameters/Combat/transition_request", "Targetting")
+			player.anim_tree.set(&"parameters/Combat/transition_request", "Targeting")
 		_locked_move(input_dir, delta, target)
 	else:
-		if combat_anim_state == "Targetting":
+		if combat_anim_state == "Targeting":
 			player.anim_tree.set(&"parameters/Combat/transition_request", "Normal")
 		player.anim_tree.set(&"parameters/Movement/transition_request", "Running")
 		_free_move(direction, delta)
@@ -40,7 +40,7 @@ func _locked_move(input: Vector2, delta: float, target: Node3D) -> void:
 	var character_right := Vector3.UP.cross(-fwd)
 	var strafe_x := move_dir.dot(character_right)
 	var strafe_forward := move_dir.dot(fwd)
-	player.anim_tree["parameters/Targetting/blend_position"] = Vector2(strafe_x, -strafe_forward)
+	player.anim_tree["parameters/Targeting/blend_position"] = Vector2(strafe_x, -strafe_forward)
 
 func _free_move(dir: Vector3, delta: float) -> void:
 	var is_blocking: bool = blackboard.get_var("is_blocking", false)

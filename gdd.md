@@ -881,13 +881,16 @@ Player (CharacterBody3D)            player.gd: orquesta, ya no contiene lógica 
 ├─ Health                           max_health <- GameState.max_health
 ├─ Hurtbox
 ├─ AttackRunner                     ventanas de golpe desde AttackData
-├─ Equipment                        instancia equip_scene de GameState.equipment en las manos
+├─ Equipment                        instancia equip_scene de GameState.equipment en los encajes
+│                                   (Marker3D WeaponSocket / ShieldSocket en Hand_R, Hand_L y BackShield)
 ├─ Targeting                        lock-on + cambio de objetivo (sale de state_machine.gd)
 ├─ Aim                              dirección de apuntado unificada
 ├─ InteractionDetector (Area3D)     elige el Interactable más cercano de frente
 └─ MovementState (LimboHSM)         Spawning, Idle, Moving, Attacking, UsingItem, Dodging,
                                     Hurt, Transition (puertas), ItemGet
 ```
+
+Los modelos en la mano son `EquippedItem` (`src/items/equipped_item.gd`): solo el modelo y su `ItemData`, sin hitbox. El daño del jugador sale del arma equipada (`ItemData.make_damage`); sin arma, de su `EntityConfig`. `Targeting` sincroniza el objetivo con la variable `target` del blackboard, que leen los estados.
 
 **Aim** — una sola dirección para todos los modos de control:
 

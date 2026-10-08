@@ -19,7 +19,7 @@ func set_target(new_target: Node3D) -> void:
 	if current_target and is_instance_valid(current_target):
 		visible = true
 		if not is_visible_in_tree():
-			global_position = current_target.global_position + Vector3(0, height_offset, 0)
+			global_position = current_target.global_position + Vector3(0, _height_of(current_target), 0)
 	else:
 		visible = false
 
@@ -30,8 +30,13 @@ func _process(delta: float) -> void:
 
 	time += delta
 	var bob := sin(time * bob_speed) * bob_amount
-	var target_pos := current_target.global_position + Vector3(0, height_offset + bob, 0)
+	var target_pos := current_target.global_position + Vector3(0, _height_of(current_target) + bob, 0)
 
 	global_position = global_position.lerp(target_pos, 1.0 - exp(-follow_smooth * delta))
 	
 	rotate_y(rotation_speed * delta)
+
+
+func _height_of(target: Node3D) -> float:
+	var config = target.get(&"config")
+	return config.target_height if config is EntityConfig else height_offset

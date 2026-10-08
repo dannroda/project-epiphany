@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/items/shield/shield_badge.tscn" id="1_badge"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mirror"]
+albedo_color = Color(0.82, 0.86, 0.9, 1)
+metallic = 1.0
+roughness = 0.08
+
+[node name="shield_mirror" instance=ExtResource("1_badge")]
+
+[node name="shield_badge" parent="." index="0"]
+material_override = SubResource("StandardMaterial3D_mirror")

@@ -2,52 +2,52 @@
   "checklist": [
     {
       "detail": "Escucha `GameState.equipment_changed` y pone el modelo de cada ítem equipado en `Hand_R`, `Hand_L` o `BackShield`. El escudo va en la mano y en la espalda a la vez (`set_guard` alterna cuál se ve). Sacar de `player.tscn` la `Sword1H` y los dos `shield_badge` puestos a mano.",
-      "done": false,
+      "done": true,
       "text": "Crear `player/components/equipment.gd`"
     },
     {
       "detail": "En `src/items/equipable_item.gd`: solo el modelo, con una referencia a su `ItemData`. Sin hitbox propia, sin `character` y sin el daño fijo de 10. La guarda que agregaste en 0.1 desaparece con esto.",
-      "done": false,
+      "done": true,
       "text": "Convertir `EquippableItem` en `EquippedItem`"
     },
     {
       "detail": "Bajo `ModelController`, un área en arco o caja delante del personaje. El daño de la hitbox sale de la espada equipada y se actualiza al cambiar de espada.",
-      "done": false,
+      "done": true,
       "text": "Agregar `Hitboxes/Front` y `AttackRunner` al player"
     },
     {
       "detail": "En `player/states/attacking.gd`, llamar `attack_runner.start()` al entrar y `stop()` al salir, con el `AttackData` que toca del `combo` de la espada. El golpe con escudo usa `shield_thrust.tres`.",
-      "done": false,
+      "done": true,
       "text": "Conectar el estado `Attacking` con el `AttackRunner`"
     },
     {
       "detail": "Es una pista de método en `Melee_1H_Attack_Slice_Horizontal` (`player/animation/anim_bin/combat/melee/`). Después borrar `Hand.trigger_equipped_item`; si `hand.gd` queda vacío, borrarlo.",
-      "done": false,
+      "done": true,
       "text": "Quitar `trigger_equipped_item` de la animación y de `hand.gd`"
     },
     {
       "detail": "Pasar ahí `_lock_best_target`, `_get_most_centered_target`, `_set_target`, `_clear_target`, `_is_in_range` y la lectura de `z-lock`, que hoy están en `state_machine.gd`. Expone el objetivo actual (`current`) y la señal `target_changed`. El cambio de objetivo es M2: acá solo se mueve lo que ya existe.",
-      "done": false,
+      "done": true,
       "text": "Mover el lock-on a `player/components/targeting.gd`"
     },
     {
       "detail": "`src/tools/target_indicator.gd` toma `target_height` de la `EntityConfig` de cada entidad en lugar del `height_offset` fijo.",
-      "done": false,
+      "done": true,
       "text": "Usar la altura de la ficha en el indicador de objetivo"
     },
     {
       "detail": "Con la vida inicial de `GameState.max_health`. Alcanza con que el daño llegue: bloquear según hacia dónde mirás es M1.",
-      "done": false,
+      "done": true,
       "text": "Agregar `Health` y `Hurtbox` al player"
     },
     {
       "detail": "`player.gd` conecta los componentes (referencias, `set_guard`, `is_blocking()`); `state_machine.gd` queda con las transiciones y la lectura de movimiento y ataque. Diseño en [[gdd#player]].",
-      "done": false,
+      "done": true,
       "text": "Dejar `player.gd` y `state_machine.gd` solo con lo suyo"
     },
     {
       "detail": "Nodos y estados de animación en `player/player.tscn`, `src/entities/enemy.tscn` y `player/animation/new_animation_node_state_machine.tres`, y las referencias en `player/states/idle.gd` y `moving.gd`. Renombrar desde el editor (no a mano en los .tscn/.tres) y revisar que las rutas a nodos y las transiciones de la máquina de estados sigan andando.",
-      "done": false,
+      "done": true,
       "text": "Unificar `Targetting` → `Targeting` en nodos y estados"
     }
   ],
@@ -68,7 +68,7 @@
     }
   ],
   "milestone": "m00",
-  "notes": "El player se arma con componentes: el equipo sale de `GameState`, las hitboxes viven en el personaje y el lock-on pasa a un nodo propio. Es la tarea más grande de M0; conviene seguir los pasos en orden.\n\nNecesita 0.3, 0.5 y 0.7. Diseño en el GDD (§11.4 y \"Ventanas de ataque\").",
+  "notes": "El player se arma con componentes: el equipo sale de `GameState`, las hitboxes viven en el personaje y el lock-on pasa a un nodo propio. Es la tarea más grande de M0; conviene seguir los pasos en orden.\n\nNecesita 0.3, 0.5 y 0.7. Diseño en el GDD (§11.4 y \"Ventanas de ataque\").\n\nHecho con el editor cerrado (escenas editadas en disco y caché regenerada con --import). Los modelos van en Marker3D de encaje que conservan las transformaciones que estaban a mano. El escudo espejo tiene su escena (shield_badge con material metálico). La pista trigger_equipped_item estaba también en los .res de player/animation/anim/ (Slice_Diagonal y Slice_Horizontal), que son los que usan las librerías. El renombre Targetting → Targeting se hizo en texto (escenas, máquina de estados y scripts) en lugar de desde el editor. tests/test_player.gd: la espada le pega al esqueleto una sola vez y el equipo sigue a GameState. Queda: probarlo jugando; el StaticBody3D de shield_badge genera un aviso de Jolt por escala cero.",
   "order": 9,
   "refs": [
     {
@@ -80,8 +80,8 @@
       "section": "ventanas-ataque"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Cambiar el escudo equipado a `shield_mirror` desde el Save Inspector y cargar: el player aparece con el otro escudo. Pegarle al esqueleto: pierde vida una sola vez por golpe. Con *Debug › Visible Collision Shapes*, rodar o recibir un golpe en medio de un ataque apaga la hitbox.",
   "title": "Refactor del player",
-  "updated_at": "2026-10-08T04:45:49.384Z"
+  "updated_at": "2026-10-08T05:33:39.593Z"
 }

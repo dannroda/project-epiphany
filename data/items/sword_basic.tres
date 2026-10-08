@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://c1wc6fvne0u7v"]
+[gd_resource type="Resource" script_class="ItemData" format=3]
 
-[ext_resource type="Script" uid="uid://b6lm5gq15rbqw" path="res://src/combat/attack_data.gd" id="1_1xjef"]
+[ext_resource type="Script" path="res://src/combat/attack_data.gd" id="1_1xjef"]
 [ext_resource type="Resource" path="res://data/attacks/sword_slash.tres" id="2_37jvb"]
-[ext_resource type="Script" uid="uid://c1ivye6mqa488" path="res://src/items/behaviors/melee_behavior.gd" id="3_rmgrr"]
-[ext_resource type="Script" uid="uid://l3nlu6710gm3" path="res://src/items/modifiers/item_modifier.gd" id="4_0m5jx"]
-[ext_resource type="Script" uid="uid://bn5pjgpia5grm" path="res://src/items/item_data.gd" id="5_inmtl"]
+[ext_resource type="Script" path="res://src/items/behaviors/melee_behavior.gd" id="3_rmgrr"]
+[ext_resource type="Script" path="res://src/items/modifiers/item_modifier.gd" id="4_0m5jx"]
+[ext_resource type="PackedScene" path="res://assets/items/sword/sword_1h.tscn" id="4_37jvb"]
+[ext_resource type="Script" path="res://src/items/item_data.gd" id="5_inmtl"]
 
 [sub_resource type="Resource" id="Resource_46co6"]
 script = ExtResource("3_rmgrr")
@@ -14,6 +15,7 @@ combo = Array[ExtResource("1_1xjef")]([ExtResource("2_37jvb")])
 script = ExtResource("5_inmtl")
 id = &"sword_basic"
 display_name = "Espada"
+equip_scene = ExtResource("4_37jvb")
 behavior = SubResource("Resource_46co6")
 damage = 2
 knockback = 10.0

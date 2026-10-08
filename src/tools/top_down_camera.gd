@@ -18,10 +18,7 @@ func _physics_process(delta: float) -> void:
 
 	var focus_point := target_node.global_position
 
-	var locked_target: Node3D = null
-	if target_node.movement_state and target_node.movement_state.blackboard:
-		locked_target = target_node.movement_state.blackboard.get_var("target", null)
-
+	var locked_target := target_node.targeting.current if target_node.targeting else null
 	if locked_target and is_instance_valid(locked_target):
 		focus_point = (target_node.global_position + locked_target.global_position) / 2.0
 

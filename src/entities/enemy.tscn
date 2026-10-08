@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://c0xawh4avsi1d"]
 
-[ext_resource type="Script" uid="uid://bo5i5a6m8xi4q" path="res://player/hand.gd" id="1_r8801"]
 [ext_resource type="Script" uid="uid://c48gjyuwv6u3x" path="res://src/entities/enemy.gd" id="1_tnp0v"]
 [ext_resource type="PackedScene" uid="uid://cl2rg4xw77j5j" path="res://assets/items/sword/sword_1h.tscn" id="2_im1oi"]
 [ext_resource type="AnimationLibrary" uid="uid://d4jgt4l578x88" path="res://player/animation/libs/CombatMelee.res" id="3_3egxo"]
@@ -33,7 +32,7 @@ input_0/name = "Normal"
 input_0/auto_advance = false
 input_0/break_loop_at_end = true
 input_0/reset = true
-input_1/name = "Targetting"
+input_1/name = "Targeting"
 input_1/auto_advance = false
 input_1/break_loop_at_end = true
 input_1/reset = true
@@ -102,13 +101,13 @@ nodes/Idle/node = SubResource("AnimationNodeAnimation_peicu")
 nodes/Idle/position = Vector2(-373.33334, 160)
 nodes/Running/node = SubResource("AnimationNodeAnimation_l7uh4")
 nodes/Running/position = Vector2(-693.3333, 400)
-nodes/Targetting/node = SubResource("AnimationNodeBlendSpace2D_7evp1")
-nodes/Targetting/position = Vector2(-266.66666, 613.3333)
+nodes/Targeting/node = SubResource("AnimationNodeBlendSpace2D_7evp1")
+nodes/Targeting/position = Vector2(-266.66666, 613.3333)
 nodes/SwordSlice/node = SubResource("AnimationNodeAnimation_185ae")
 nodes/SwordSlice/position = Vector2(106.666664, 880)
 nodes/Combat/node = SubResource("AnimationNodeTransition_peicu")
 nodes/Combat/position = Vector2(186.66667, 373.33334)
-node_connections = [&"output", 0, &"Attack", &"Movement", 0, &"Idle", &"Movement", 1, &"Running", &"Attack", 0, &"Combat", &"Attack", 1, &"SwordSlice", &"Combat", 0, &"Movement", &"Combat", 1, &"Targetting"]
+node_connections = [&"output", 0, &"Attack", &"Movement", 0, &"Idle", &"Movement", 1, &"Running", &"Attack", 0, &"Combat", &"Attack", 1, &"SwordSlice", &"Combat", 0, &"Movement", &"Combat", 1, &"Targeting"]
 
 [sub_resource type="Skin" id="Skin_eh2uo"]
 resource_name = "Skin"
@@ -379,7 +378,6 @@ bones/21/skin_scale = Vector3(1, 1, 1)
 [node name="Hand_R" type="BoneAttachment3D" parent="ModelController/Skeleton3D" unique_id=830775680]
 bone_name = "hand.r"
 bone_idx = 12
-script = ExtResource("1_r8801")
 
 [node name="Sword1H" parent="ModelController/Skeleton3D/Hand_R" unique_id=284091126 instance=ExtResource("2_im1oi")]
 transform = Transform3D(-0.12969656, -0.9911532, 0.028182058, 0.9913636, -0.12906344, 0.023234582, -0.01939179, 0.030952213, 0.9993323, -0.009263635, 0.08671972, -0.003733158)
@@ -404,8 +402,8 @@ parameters/Attack/active = false
 parameters/Attack/internal_active = false
 parameters/Attack/request = 0
 parameters/Attack/observer = null
-parameters/Targetting/blend_position = Vector2(-0.09041262, 1.0490694)
-parameters/Targetting/observer = null
+parameters/Targeting/blend_position = Vector2(-0.09041262, 1.0490694)
+parameters/Targeting/observer = null
 parameters/Combat/current_state = "Normal"
 parameters/Combat/transition_request = ""
 parameters/Combat/current_index = 0
