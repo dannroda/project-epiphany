@@ -3,9 +3,9 @@ extends Control
 
 @onready var pages: Control = %Pages
 @onready var tabs: HBoxContainer = %Tabs
-@onready var hints: Label = %Hints
-@onready var prev_key: Label = %PrevKey
-@onready var next_key: Label = %NextKey
+@onready var hints: HBoxContainer = %Hints
+@onready var prev_key: TextureRect = %PrevKey
+@onready var next_key: TextureRect = %NextKey
 
 var current := 0
 
@@ -50,12 +50,24 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 
+const HINTS := [[&"ui_accept", "Usar"], [&"ui_cancel", "Cerrar"], [&"ui_tab_left", ""], [&"ui_tab_right", "Pestaña"]]
+
+
 func _update_hints() -> void:
-	if InputDevice.current == InputDevice.Device.GAMEPAD:
-		hints.text = "A  Usar      B  Cerrar      LB / RB  Pestaña"
-		prev_key.text = "LB"
-		next_key.text = "RB"
-	else:
-		hints.text = "Enter  Usar      Esc  Cerrar      Q / E  Pestaña"
-		prev_key.text = "Q"
-		next_key.text = "E"
+	prev_key.texture = InputPrompts.icon_for_current(&"ui_tab_left")
+	next_key.texture = InputPrompts.icon_for_current(&"ui_tab_right")
+	for child in hints.get_children():
+		hints.remove_child(child)
+		child.queue_free()
+	for hint in HINTS:
+		var icon := TextureRect.new()
+		icon.texture = InputPrompts.icon_for_current(hint[0])
+		icon.custom_minimum_size = Vector2(28, 28)
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		hints.add_child(icon)
+		if not String(hint[1]).is_empty():
+			var label := Label.new()
+			label.text = hint[1] + "    "
+			label.theme_type_variation = &"Hint"
+			hints.add_child(label)

@@ -43,6 +43,8 @@ func test_pause_freezes_and_resumes() -> void:
 
 	var menu: Control = stack.top()
 	assert_eq(menu.current, 0)
+	assert_true(menu.prev_key.texture != null and menu.next_key.texture != null, "íconos de pestaña")
+	assert_true(menu.hints.get_child_count() > 0, "ayudas de botones")
 	await _key(tree, KEY_E)
 	assert_eq(menu.current, 1, "E: pestaña siguiente")
 	await _key(tree, KEY_Q)
