@@ -4,7 +4,6 @@ extends CharacterBody3D
 const SHIELD_THRUST: AttackData = preload("res://data/attacks/shield_thrust.tres")
 
 @export var config: EntityConfig
-@export var blink_rate := 15.0
 @export var block_angle_deg := 60.0
 @export var block_pushback := 0.3
 
@@ -18,10 +17,8 @@ const SHIELD_THRUST: AttackData = preload("res://data/attacks/shield_thrust.tres
 @onready var attack_runner: AttackRunner = $AttackRunner
 @onready var equipment: Equipment = $Equipment
 @onready var targeting: Targeting = $Targeting
-@onready var visuals: Node3D = $ModelController/Visuals
 
 var guard_tween: Tween
-var _blink_time := 0.0
 var _block_cone: MeshInstance3D
 
 
@@ -46,14 +43,8 @@ func _physics_process(delta: float) -> void:
 	_watch_debug_values()
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	_update_block_cone()
-	if health.is_invulnerable():
-		_blink_time += delta
-		visuals.visible = fmod(_blink_time * blink_rate, 2.0) < 1.0
-	elif not visuals.visible or _blink_time > 0.0:
-		_blink_time = 0.0
-		visuals.visible = true
 
 
 func is_blocking() -> bool:
