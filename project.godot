@@ -23,6 +23,7 @@ SaveManager="*res://src/save/save_manager.gd"
 Log="*res://addons/epiphany_tools/debug/runtime/log.gd"
 DebugOverlay="*res://addons/epiphany_tools/debug/runtime/debug_overlay.gd"
 Fader="*res://src/ui/fader.gd"
+Feel="*res://src/feel/feel.gd"
 
 [display]
 

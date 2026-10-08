@@ -37,6 +37,7 @@ func _ready() -> void:
 	hitbox.team = config.team
 	hitbox.damage_factory = config.make_damage.bind(self)
 	hurtbox.hit.connect(_on_hit)
+	HitFlash.attach($ModelController/Visuals, health)
 	health.damaged.connect(_on_damaged)
 	health.died.connect(_on_died)
 	bt_player.blackboard.set_var("is_hit", false)

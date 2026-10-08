@@ -35,6 +35,8 @@ func _ready() -> void:
 	hitbox.team = config.team
 	hitbox.damage_factory = _make_damage
 	hurtbox.hit.connect(_on_hit)
+	hitbox.landed.connect(_on_hit_landed)
+	HitFlash.attach($ModelController/Visuals, health)
 	health.died.connect(_on_died)
 	GameState.loaded.connect(_sync_health)
 	_sync_health()
@@ -106,10 +108,19 @@ func _on_hit(info: DamageInfo) -> void:
 		return
 	Log.info(&"combat", "El player recibió", amount, "de daño de", info.source.name if info.source else "?", "· Vida:", health.current)
 	movement_state.blackboard.set_var("last_hit", info)
+	Feel.shake(Feel.settings.shake_take)
+	Feel.sfx(&"hurt", global_position)
+	Feel.hit_stop([self, info.source], Feel.settings.hit_stop_take)
 	if is_dead:
 		Log.info(&"combat", "El player murió:", info.source.name if info.source else "?", "le sacó", amount, "con", health.max_health, "de vida máxima")
 		return
 	movement_state.dispatch("hurt")
+
+
+func _on_hit_landed(target: Hurtbox) -> void:
+	Feel.hit_stop([self, target.get_parent()], Feel.settings.hit_stop_give)
+	Feel.shake(Feel.settings.shake_give)
+	Feel.sfx(&"hit", target.global_position)
 
 
 func _on_died() -> void:
@@ -134,32 +145,9 @@ func _on_blocked(info: DamageInfo) -> void:
 	away.y = 0.0
 	if not away.is_zero_approx():
 		move_and_collide(away.normalized() * block_pushback)
-	_spawn_sparks(global_position + model.global_basis.z * 0.6 + Vector3.UP * 1.1)
-
-
-func _spawn_sparks(at: Vector3) -> void:
-	var sparks := CPUParticles3D.new()
-	sparks.one_shot = true
-	sparks.explosiveness = 1.0
-	sparks.amount = 14
-	sparks.lifetime = 0.25
-	sparks.spread = 70.0
-	sparks.direction = model.global_basis.z
-	sparks.initial_velocity_min = 3.0
-	sparks.initial_velocity_max = 5.0
-	sparks.gravity = Vector3(0, -6, 0)
-	var mesh := SphereMesh.new()
-	mesh.radius = 0.025
-	mesh.height = 0.05
-	var material := StandardMaterial3D.new()
-	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	material.albedo_color = Color(1.0, 0.85, 0.4)
-	mesh.material = material
-	sparks.mesh = mesh
-	get_tree().current_scene.add_child(sparks)
-	sparks.global_position = at
-	sparks.emitting = true
-	sparks.finished.connect(sparks.queue_free)
+	Feel.burst(&"sparks", global_position + model.global_basis.z * 0.6 + Vector3.UP * 1.1, model.global_basis.z)
+	Feel.sfx(&"block", global_position)
+	Feel.shake(Feel.settings.shake_block)
 
 
 func _make_block_cone() -> MeshInstance3D:

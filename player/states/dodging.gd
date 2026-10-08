@@ -26,6 +26,8 @@ func _enter() -> void:
 		_direction = _direction.normalized()
 	player.anim_tree.set(&"parameters/DodgeDir/transition_request", _animation_for(_direction))
 	player.anim_tree.set(&"parameters/Dodge/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	Feel.burst(&"dust", player.global_position + Vector3.UP * 0.1, -_direction)
+	Feel.sfx(&"roll", player.global_position)
 
 
 func _update(delta: float) -> void:

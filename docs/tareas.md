@@ -529,17 +529,17 @@ src/ui/hud/hud.tscn (CanvasLayer 10 + MarginContainer de zona segura 32/28 + HBo
 
 **Bloquea a:** 3.5 Slots X/Y en el HUD
 
-### 1.7 Feel del combate · Pendiente
+### 1.7 Feel del combate · Revisión
 
-- [ ] Hit-stop al conectar un golpe
+- [x] Hit-stop al conectar un golpe
   50–80 ms. Mejor congelar solo a los dos involucrados (`process_mode` o velocidad del AnimationTree) que tocar `Engine.time_scale`.
-- [ ] Sacudida de cámara en `TopDownCamera`
+- [x] Sacudida de cámara en `TopDownCamera`
   Modelo de trauma (decae con el tiempo, ruido). Más fuerte al recibir que al dar.
-- [ ] Flash blanco en el golpeado
+- [x] Flash blanco en el golpeado
   Uniform en un shader de overlay (`next_pass`), encendido unos frames.
-- [ ] Chispas al bloquear y polvo al rodar
+- [x] Chispas al bloquear y polvo al rodar
   `GPUParticles3D` cortos, reutilizables.
-- [ ] SFX placeholder de golpe, bloqueo y roll
+- [x] SFX placeholder de golpe, bloqueo y roll
   Con variación de pitch. Bus `SFX` (se ordena en 10.5).
 
 **Prueba:** Grabar un clip peleando contra el esqueleto y compararlo con uno antes de la tarea: cada golpe dado, recibido y bloqueado tiene respuesta visual y sonora.
@@ -547,6 +547,8 @@ src/ui/hud/hud.tscn (CanvasLayer 10 + MarginContainer de zona segura 32/28 + HBo
 **Notas:** Recién acá el combate tiene que "sentirse". Exportar todos los valores para tunearlos desde el inspector.
 
 Skills: `disciplines:game-feel`, `disciplines:camera-systems`, `godot:godot-shaders`.
+
+Todo pasa por el autoload Feel (src/feel/feel.gd) y los valores están en data/feel.tres (FeelSettings), con interruptores de sacudida y flash para accesibilidad. Hit-stop: desactiva el proceso del atacante y del golpeado (no toca Engine.time_scale). Sacudida: trauma² en TopDownCamera sobre h_offset/v_offset. Flash: shader aditivo como material_overlay (HitFlash, en player y esqueleto). Partículas: sparks (bloqueo) y dust (roll) con CPUParticles3D. Sonidos sintetizados en código (hit, hurt, block, roll) en el bus SFX creado en runtime; el bus definitivo va en 10.5. En headless el renderer dummy tira 'Parameter material is null' por el overlay: es ruido, en ventana no aparece. Falta la prueba subjetiva: jugar y ajustar.
 
 **Referencias:** `gdd.md#combate`
 

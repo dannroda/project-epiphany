@@ -2,34 +2,34 @@
   "checklist": [
     {
       "detail": "50–80 ms. Mejor congelar solo a los dos involucrados (`process_mode` o velocidad del AnimationTree) que tocar `Engine.time_scale`.",
-      "done": false,
+      "done": true,
       "text": "Hit-stop al conectar un golpe"
     },
     {
       "detail": "Modelo de trauma (decae con el tiempo, ruido). Más fuerte al recibir que al dar.",
-      "done": false,
+      "done": true,
       "text": "Sacudida de cámara en `TopDownCamera`"
     },
     {
       "detail": "Uniform en un shader de overlay (`next_pass`), encendido unos frames.",
-      "done": false,
+      "done": true,
       "text": "Flash blanco en el golpeado"
     },
     {
       "detail": "`GPUParticles3D` cortos, reutilizables.",
-      "done": false,
+      "done": true,
       "text": "Chispas al bloquear y polvo al rodar"
     },
     {
       "detail": "Con variación de pitch. Bus `SFX` (se ordena en 10.5).",
-      "done": false,
+      "done": true,
       "text": "SFX placeholder de golpe, bloqueo y roll"
     }
   ],
   "code": "1.7",
   "created_at": "2026-10-08T04:45:05.631Z",
   "milestone": "m01",
-  "notes": "Recién acá el combate tiene que \"sentirse\". Exportar todos los valores para tunearlos desde el inspector.\n\nSkills: `disciplines:game-feel`, `disciplines:camera-systems`, `godot:godot-shaders`.",
+  "notes": "Recién acá el combate tiene que \"sentirse\". Exportar todos los valores para tunearlos desde el inspector.\n\nSkills: `disciplines:game-feel`, `disciplines:camera-systems`, `godot:godot-shaders`.\n\nTodo pasa por el autoload Feel (src/feel/feel.gd) y los valores están en data/feel.tres (FeelSettings), con interruptores de sacudida y flash para accesibilidad. Hit-stop: desactiva el proceso del atacante y del golpeado (no toca Engine.time_scale). Sacudida: trauma² en TopDownCamera sobre h_offset/v_offset. Flash: shader aditivo como material_overlay (HitFlash, en player y esqueleto). Partículas: sparks (bloqueo) y dust (roll) con CPUParticles3D. Sonidos sintetizados en código (hit, hurt, block, roll) en el bus SFX creado en runtime; el bus definitivo va en 10.5. En headless el renderer dummy tira 'Parameter material is null' por el overlay: es ruido, en ventana no aparece. Falta la prueba subjetiva: jugar y ajustar.",
   "order": 7,
   "refs": [
     {
@@ -37,8 +37,8 @@
       "section": "combate"
     }
   ],
-  "status": "todo",
+  "status": "review",
   "test": "Grabar un clip peleando contra el esqueleto y compararlo con uno antes de la tarea: cada golpe dado, recibido y bloqueado tiene respuesta visual y sonora.",
   "title": "Feel del combate",
-  "updated_at": "2026-10-08T04:45:05.918Z"
+  "updated_at": "2026-10-08T06:03:16.651Z"
 }
