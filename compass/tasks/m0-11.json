@@ -12,18 +12,13 @@
     },
     {
       "detail": "Ida y vuelta (escribir y leer da lo mismo), checksum que detecta una edición a mano, migración desde una versión anterior y recuperación desde el `.bak` cuando el archivo principal está roto.",
-      "done": false,
+      "done": true,
       "text": "Tests de `SaveCodec`"
     },
     {
       "detail": "Que cada `.tres` de ítems cargue, tenga `id` único y que `Items.get_item()` lo encuentre.",
       "done": true,
       "text": "Tests de la base de ítems"
-    },
-    {
-      "detail": "En *Resources › Filters to exclude files*, como `debug/scenarios/*`.",
-      "done": false,
-      "text": "Excluir `tests/` de los presets de export"
     }
   ],
   "code": "0.12",
@@ -35,11 +30,11 @@
     }
   ],
   "milestone": "m00",
-  "notes": "Para lo que se puede probar sin abrir el juego: guardado, datos de ítems y flags. Los tests de SaveCodec necesitan 0.6, y los de ítems, 0.3.",
+  "notes": "Para lo que se puede probar sin abrir el juego: guardado, datos de ítems y flags. Los tests de SaveCodec necesitan 0.6, y los de ítems, 0.3.\n\nLos presets de export (plain_saves en debug, excluir debug/scenarios y tests) pasaron a 10.9: hoy solo existe un preset de Android.",
   "order": 11,
   "refs": [],
-  "status": "todo",
+  "status": "done",
   "test": "Correr el comando headless: termina con código 0. Romper a propósito un test (por ejemplo, cambiar un valor esperado): termina con código 1 y dice cuál falló.",
   "title": "Tests headless",
-  "updated_at": "2026-10-08T04:43:13.334Z"
+  "updated_at": "2026-10-08T05:01:25.674Z"
 }

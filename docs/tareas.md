@@ -3,7 +3,7 @@
 > Export de `compass/`, que es la fuente de verdad. No editar: los cambios se hacen en `compass/` o con `scompass`, y este archivo se regenera.
 > Generado: 2026-10-08
 
-## M0 — Refactor del player + base de datos  (7/13)
+## M0 — Refactor del player + base de datos  (9/13)
 
 Dejar armada la base sobre la que se construye todo lo demás: ítems como datos, estado de la partida, guardado, componentes de combate y un player ordenado en piezas. Casi nada de esto se ve en el juego todavía; lo que cambia es cómo está hecho. Diseño y código de ejemplo: `gdd.md` §11.
 
@@ -176,21 +176,17 @@ Partida nueva: espada, escudo de madera y túnica en el inventario y equipados, 
 
 **Relacionadas:** 1.5 Muerte y reaparición del player
 
-### 0.6 Guardado · Pendiente
+### 0.6 Guardado · Hecho
 
-- [ ] Crear `src/save/save_codec.gd`
+- [x] Crear `src/save/save_codec.gd`
   Funciones estáticas para escribir, leer, calcular el checksum, detectar partidas modificadas y validarlas. Es estático para que también lo use el Save Inspector (0.10). Código en [[gdd#guardado]].
-- [ ] Escritura atómica y copia de respaldo en `SaveCodec.write`/`read`
+- [x] Escritura atómica y copia de respaldo en `SaveCodec.write`/`read`
   `ConfigFile.save()` escribe sobre el archivo: si el juego se cierra a mitad de camino, la partida queda corrupta. Escribir a `slot_N.cfg.tmp`, mover la partida anterior a `slot_N.cfg.bak` y renombrar el `.tmp` con `DirAccess.rename_absolute()`. Al leer, si `slot_N.cfg` no carga, probar con el `.bak` y avisar. El código del GDD (§11.7) todavía escribe directo: actualizarlo también.
-- [ ] Crear el autoload `SaveManager` (`src/save/save_manager.gd`)
+- [x] Crear el autoload `SaveManager` (`src/save/save_manager.gd`)
   la tecla `3` guarda, la `2` carga, y al arrancar puede cargar un escenario de `debug/scenarios/` (con el argumento `--scenario=nombre` o con el archivo que deja el Save Inspector).
-- [ ] Guardar y restaurar la posición del player
+- [x] Guardar y restaurar la posición del player
   Por ahora alcanza con la posición exacta; cuando haya salas y overworld pasa a puntos de aparición con nombre.
-- [ ] Agregar la feature `plain_saves` al preset de debug
-  En *Project › Export › Features*, para que las builds de prueba también guarden en texto plano.
-- [ ] Excluir `debug/scenarios/*` del preset de release
-  En *Resources › Filters to exclude files*.
-- [ ] Escribir dos escenarios en `debug/scenarios/`
+- [x] Escribir dos escenarios en `debug/scenarios/`
   A mano: `start.cfg` (partida nueva) y `full_inventory.cfg` (con todo el inventario).
 
 **Prueba:** Jugar, apretar `3`, cerrar el juego, abrirlo y apretar `2`: todo vuelve igual. Después editar a mano el archivo de `user://saves/`: al cargar aparece un aviso en la consola y `GameState.save_tampered` queda en `true`.
@@ -198,6 +194,10 @@ Partida nueva: espada, escudo de madera y túnica en el inventario y equipados, 
 **Notas:** Guarda y carga partidas en `user://saves/`. Desde el editor se guarda en texto plano, para poder leerlo y editarlo; en release, encriptado, para que nadie lo edite por accidente.
 
 Necesita 0.5. Diseño completo y código en el GDD (§11.7).
+
+Los presets de export (plain_saves en debug, excluir debug/scenarios y tests) pasaron a 10.9: hoy solo existe un preset de Android.
+
+`SaveCodec.read` mira los 4 primeros bytes (`GDEC`) para saber si la partida está encriptada, así no deja errores en la consola. Los escenarios se generaron con `GameState` + `SaveCodec`, así tienen checksum válido. `tests/test_save_manager.gd` guarda y carga en `levels/test.tscn` y comprueba la posición del player y el inventario. También se corrigió `give()`: el contenedor de corazón sumaba 4 sin importar la cantidad.
 
 **Referencias:** `gdd.md#guardado`
 
@@ -327,22 +327,22 @@ Necesita 0.6. Diseño en el GDD (§11.8).
 
 **Relacionadas:** 0.11 Sistema de depuración
 
-### 0.12 Tests headless · Pendiente
+### 0.12 Tests headless · Hecho
 
 - [x] Crear el runner `tests/run_tests.gd`
   Script que extiende `SceneTree`: recorre `tests/test_*.gd`, corre cada método `test_*` y termina con `quit(1)` si algo falló. Usar un `assert_eq()` propio que cuente fallos: un `assert()` que falla deja el proceso colgado en lugar de terminar.
 - [x] Correrlo por línea de comandos
   `godot --headless --path . --import` una vez (en un checkout limpio las clases con `class_name` todavía no están registradas) y después `godot --headless --path . --script res://tests/run_tests.gd`. Anotar el comando en el README.
-- [ ] Tests de `SaveCodec`
+- [x] Tests de `SaveCodec`
   Ida y vuelta (escribir y leer da lo mismo), checksum que detecta una edición a mano, migración desde una versión anterior y recuperación desde el `.bak` cuando el archivo principal está roto.
 - [x] Tests de la base de ítems
   Que cada `.tres` de ítems cargue, tenga `id` único y que `Items.get_item()` lo encuentre.
-- [ ] Excluir `tests/` de los presets de export
-  En *Resources › Filters to exclude files*, como `debug/scenarios/*`.
 
 **Prueba:** Correr el comando headless: termina con código 0. Romper a propósito un test (por ejemplo, cambiar un valor esperado): termina con código 1 y dice cuál falló.
 
 **Notas:** Para lo que se puede probar sin abrir el juego: guardado, datos de ítems y flags. Los tests de SaveCodec necesitan 0.6, y los de ítems, 0.3.
+
+Los presets de export (plain_saves en debug, excluir debug/scenarios y tests) pasaron a 10.9: hoy solo existe un preset de Android.
 
 **Bloqueada por:** 0.6 Guardado
 
