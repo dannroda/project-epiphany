@@ -72,11 +72,9 @@ func test_solve_all_four_from_scenario() -> void:
 
 	# Luz: pararse en el haz, cubrirse mirando a la fuente y apuntar al cristal.
 	player.global_position = Vector3(-9, 0.25, 10)
-	_face(player, Vector3.LEFT)
+	_face(player, Vector3(-1, 0, -1).normalized())
 	_guard(player, true)
-	_stick(JOY_AXIS_RIGHT_Y, -1.0)
 	await _wait_for(tree, 2.0, func() -> bool: return level.gate_light.is_open)
-	_stick(JOY_AXIS_RIGHT_Y, 0.0)
 	assert_true(level.gate_light.is_open, "luz: el escudo espejo lleva el haz al cristal")
 
 	# Orbe: cubrirse frente a la torreta y devolverle sus orbes.

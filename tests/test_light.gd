@@ -48,23 +48,18 @@ func test_beam_lights_crystal_directly() -> void:
 	setup[1].reset()
 
 
+## El haz llega desde el este (viaja hacia -X); mirando a 45° entre la fuente y el sur, el espejo lo manda al sur.
 func _block_and_aim_south(tree: SceneTree, player: PlayerCharacter) -> void:
 	player.global_position = Vector3(6, 0.25, -15.5)
-	player.model.look_at(player.model.global_position - Vector3.RIGHT, Vector3.UP)
+	var facing := Vector3(1, 0, 1).normalized()
+	player.model.look_at(player.model.global_position - facing, Vector3.UP)
 	player.movement_state.blackboard.set_var("is_blocking", true)
 	player.set_guard(true)
-	var stick := InputEventJoypadMotion.new()
-	stick.axis = JOY_AXIS_RIGHT_Y
-	stick.axis_value = 1.0
-	Input.parse_input_event(stick)
 	await _frames(tree, 6)
 
 
 func _release_stick() -> void:
-	var stick := InputEventJoypadMotion.new()
-	stick.axis = JOY_AXIS_RIGHT_Y
-	stick.axis_value = 0.0
-	Input.parse_input_event(stick)
+	pass
 
 
 func test_mirror_shield_redirects_beam_to_crystal() -> void:
@@ -119,4 +114,27 @@ func test_latched_receiver_stays_lit() -> void:
 	receiver.global_position = Vector3(6, 0.25, -12)
 	await _frames(tree, 4)
 	assert_eq(receiver.lit, true, "con latch queda encendido")
+	setup[1].reset()
+
+
+func test_left_stick_turns_player_while_catching_light() -> void:
+	var setup: Array = await _setup(&"shield_mirror")
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[2]
+	var beam: LightBeam = setup[3]
+	await _block_and_aim_south(tree, player)
+	assert_eq(player.is_catching_light(), true, "el escudo recibe el haz")
+	var start := player.global_position
+	var before := player.model.global_basis.z
+	var stick := InputEventJoypadMotion.new()
+	stick.axis = JOY_AXIS_LEFT_X
+	stick.axis_value = 1.0
+	Input.parse_input_event(stick)
+	await _frames(tree, 15)
+	stick.axis_value = 0.0
+	Input.parse_input_event(stick)
+	assert_true(player.global_position.distance_to(start) < 0.05, "no camina: gira en el lugar")
+	assert_true(rad_to_deg(before.angle_to(player.model.global_basis.z)) > 5.0, "el player gira")
+	var out: Vector3 = beam.segments[1][1] - beam.segments[1][0]
+	assert_true(rad_to_deg(out.normalized().angle_to(Vector3.BACK)) > 5.0, "y el reflejo se mueve con él")
 	setup[1].reset()

@@ -11,6 +11,8 @@ signal item_denied(button: int)
 @export var block_pushback := 0.3
 ## Sin bloquear, el escudo en la espalda frena los proyectiles que llegan dentro de este cono.
 @export var back_shield_angle_deg := 45.0
+## Bloqueando con el haz en el escudo espejo, el stick izquierdo gira al player en el lugar (rad/s).
+@export var light_turn_speed := 2.2
 
 @onready var model: Node3D = $ModelController
 @onready var anim_player: AnimationPlayer = $ModelController/AnimationPlayer
@@ -31,6 +33,7 @@ var is_dead: bool:
 	get:
 		return health.current <= 0
 var _block_cone: MeshInstance3D
+var _light_frame := -10
 
 
 func _ready() -> void:
@@ -241,8 +244,8 @@ func _shield_stops(info: DamageInfo) -> bool:
 	return false
 
 
-## El haz de luz que toca al player: el escudo espejo lo devuelve (de frente bloqueando, hacia la mira;
-## en la espalda, rebota). Con otro escudo o sin cubrirse, el haz se corta acá (null).
+## El haz de luz que toca al player: el escudo espejo lo refleja como un espejo (de frente bloqueando, según
+## hacia dónde mira el player; en la espalda, rebota). Con otro escudo o sin cubrirse, el haz se corta acá (null).
 ## Devuelve la nueva dirección y el punto de salida: el escudo, delante del centro del player.
 func light_hit(direction: Vector3, point: Vector3) -> Variant:
 	if not shield_reflects():
@@ -250,7 +253,10 @@ func light_hit(direction: Vector3, point: Vector3) -> Variant:
 	var from := point - direction
 	var out: Vector3
 	if is_blocking() and _is_in_front(from):
-		out = aim.get_direction()
+		_light_frame = Engine.get_physics_frames()
+		var facing := model.global_basis.z
+		facing.y = 0.0
+		out = direction.bounce(facing.normalized()).normalized()
 	elif not is_blocking() and _is_behind(from):
 		var back := -model.global_basis.z
 		back.y = 0.0
@@ -259,6 +265,19 @@ func light_hit(direction: Vector3, point: Vector3) -> Variant:
 		return null
 	var center := Vector3(global_position.x, point.y, global_position.z)
 	return {direction = out, origin = center + out * 0.6}
+
+
+## El escudo espejo está recibiendo un haz (este cuadro o el anterior).
+func is_catching_light() -> bool:
+	return Engine.get_physics_frames() - _light_frame <= 1
+
+
+## Gira el modelo hacia `direction` a velocidad constante (para apuntar el haz con precisión).
+func turn_towards(direction: Vector3, delta: float) -> void:
+	if direction.is_zero_approx():
+		return
+	var desired := atan2(direction.x, direction.z)
+	model.global_rotation.y = rotate_toward(model.global_rotation.y, desired, light_turn_speed * delta)
 
 
 func _is_behind(point: Vector3) -> bool:
