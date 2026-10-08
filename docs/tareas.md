@@ -953,7 +953,7 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 
 **Notas:** Decisión del 2026-10-08: el GDD no tiene NPCs con diálogo, pero se integra el plugin ya para no adaptar tablillas e item get después. Elegido sobre Dialogic porque solo maneja el contenido y deja la UI propia (mockups), es liviano y hay menos superficie para romperse con Godot 4.8-dev. Instalado Dialogue Manager v4.1.0 (para Godot 4.7) desde la release de GitHub: import, arranque y tests headless OK en 4.8-dev7; falta confirmar que el editor lo cargue sin errores. Textos en data/dialogue/*.dialogue; el personaje de la línea es el rótulo de la tablilla; item_get.dialogue tiene un cue por id de ítem (si falta, usa la descripción). Traducciones: IDs estáticos [ID:…] como claves; el plugin mantiene la lista de plantillas POT.
 
-## M5 — Ítems secundarios  (3/9)
+## M5 — Ítems secundarios  (4/9)
 
 Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
@@ -1112,19 +1112,19 @@ Skills: `disciplines:level-design`.
 
 **Bloqueada por:** 5.3 Arco y flechas; 5.4 Bombas; 5.5 Muros agrietados; 5.6 Escudo espejo y haz de luz
 
-### 5.9 Protección del escudo según el tipo de daño y por la espalda · Pendiente
+### 5.9 Protección del escudo según el tipo de daño y por la espalda · Hecho
 
 **Prioridad:** media
 
-- [ ] Qué frena cada escudo, como dato
+- [x] Qué frena cada escudo, como dato
   ItemData.protects_against: Array[StringName] con los elementos de DamageInfo.element que el escudo frena ("" = físico: espadas, flechas, orbes). Madera: solo físico; no frena explosiones ("explosive", 5.4) ni fuego ("fire"). Espejo: físico, más reflects. Nada frena explosiones (a confirmar jugando).
-- [ ] Bloqueo de frente según el elemento
+- [x] Bloqueo de frente según el elemento
   Si el golpe es de un elemento que el escudo no frena, entra el daño completo aunque se bloquee de frente (con un feedback distinto: el escudo no aguanta).
-- [ ] El escudo en la espalda protege
+- [x] El escudo en la espalda protege
   Sin bloquear, los proyectiles que llegan desde atrás (cono de ±45° de la espalda, exportado) se frenan si el escudo frena su elemento. Chispas y sonido de bloqueo, sin animación ni retroceso. Los golpes cuerpo a cuerpo por la espalda no se frenan, para que la guardia de frente siga siendo la defensa principal.
-- [ ] El escudo espejo refleja siempre
+- [x] El escudo espejo refleja siempre
   Cualquier proyectil reflejable que intercepta el espejo vuelve: de frente bloqueando, hacia Aim (como en 5.1); en la espalda, de vuelta por donde vino (hacia quien lo tiró). También refleja el haz de luz de 5.6 cuando lo intercepta.
-- [ ] Tests
+- [x] Tests
   Madera: flecha por la espalda se frena, explosión/fuego entran aunque se bloquee. Espejo: orbe por la espalda vuelve al que lo tiró; de frente bloqueando vuelve hacia la mira. Golpe de espada por la espalda: daño.
 
 **Prueba:** Con escudo de madera: una flecha por la espalda se frena; una bomba o fuego lastiman aunque se bloquee de frente. Con escudo espejo: un orbe por la espalda vuelve y daña a la torreta que lo disparó.

@@ -22,6 +22,8 @@ enum Category { SWORD, SHIELD, ARMOR, USABLE, AMMO, DUNGEON, UPGRADE }
 @export var damage_reduction: float = 0.0
 ## Escudos: refleja proyectiles y haces de luz.
 @export var reflects := false
+## Escudos: tipos de daño (DamageInfo.element) que frena; un elemento vacío es "physical".
+@export var protects_against: Array[StringName] = []
 ## Mejoras de capacidad (carcaj grande): suman a la capacidad de otro ítem mientras se tengan.
 @export var capacity_for: ItemData
 @export var capacity_bonus: int = 0

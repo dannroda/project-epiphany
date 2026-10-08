@@ -83,6 +83,8 @@ Las teclas se mapean por posición física (`physical_keycode`): WASD queda en e
 - **Recibir daño:** retroceso + ≈0.8 s de invulnerabilidad con parpadeo. Al llegar a 0: game over → continuar desde la entrada de la sala / último punto de reaparición.
 - **Espada:** combo corto (hoy: slash). Stab cargado / spin attack: post-MVP.
 - **Escudo:** mientras se bloquea, el golpe se anula si viene **de frente** (cono de ±60°). Con escudo espejo, los proyectiles bloqueados se reflejan hacia donde mira el player (o hacia el objetivo fijado).
+- **Qué frena cada escudo** (`ItemData.protects_against`, contra `DamageInfo.element`; vacío = `physical`): la madera frena daño físico (espadas, flechas, orbes) pero no explosiones ni fuego, que pasan aunque se bloquee de frente. El espejo frena lo físico y **refleja siempre** los proyectiles reflejables que intercepta.
+- **Escudo en la espalda:** sin bloquear, frena los proyectiles que llegan por detrás (cono de ±45°, `back_shield_angle_deg`) si son de un tipo que protege; el espejo los devuelve a quien los tiró. Los golpes cuerpo a cuerpo por la espalda no se frenan.
 - **Golpe de escudo:** atacar mientras se bloquea (ya existe, `ShieldThrust`): aturde / empuja.
 - **Esquiva (roll):** i-frames cortos, usa las animaciones `Dodge_*` de KayKit.
 - **Enemigos (MVP):** 3 arquetipos + jefe:

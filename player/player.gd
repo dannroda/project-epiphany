@@ -9,6 +9,8 @@ signal item_denied(button: int)
 @export var config: EntityConfig
 @export var block_angle_deg := 60.0
 @export var block_pushback := 0.3
+## Sin bloquear, el escudo en la espalda frena los proyectiles que llegan dentro de este cono.
+@export var back_shield_angle_deg := 45.0
 
 @onready var model: Node3D = $ModelController
 @onready var anim_player: AnimationPlayer = $ModelController/AnimationPlayer
@@ -137,11 +139,7 @@ func _sync_health() -> void:
 
 
 func _on_hit(info: DamageInfo) -> void:
-	if is_blocking() and info.source and _is_in_front(info.source.global_position):
-		if info.reflectable and info.source is Projectile and shield_reflects():
-			_reflect(info.source)
-		else:
-			_on_blocked(info)
+	if _shield_stops(info):
 		return
 	var amount := maxi(1, roundi(info.amount * (1.0 - equipment.damage_reduction())))
 	if not health.damage(amount):
@@ -178,19 +176,70 @@ func _is_in_front(point: Vector3) -> bool:
 	return rad_to_deg(forward.angle_to(to_point)) <= block_angle_deg
 
 
+func shield() -> ItemData:
+	var id: StringName = GameState.equipment.get(ItemData.Category.SHIELD, &"")
+	return Items.get_item(id) if id != &"" else null
+
+
 func shield_reflects() -> bool:
-	var shield := Items.get_item(GameState.equipment.get(ItemData.Category.SHIELD, &""))
-	return shield != null and shield.reflects
+	var equipped := shield()
+	return equipped != null and equipped.reflects
 
 
-## Escudo espejo: el proyectil vuelve hacia donde apunta Aim (el objetivo fijado primero) y pasa a ser del player.
-func _reflect(projectile: Projectile) -> void:
-	projectile.reflect(aim.get_direction(), config.team)
-	Log.debug(&"combat", "Reflejado:", projectile.name, "hacia", aim.get_direction())
-	anim_tree.set(&"parameters/BlockHit/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
-	Feel.burst(&"sparks", projectile.global_position, aim.get_direction())
+func shield_protects(info: DamageInfo) -> bool:
+	var equipped := shield()
+	var kind := info.element if info.element != &"" else &"physical"
+	return equipped != null and kind in equipped.protects_against
+
+
+## De frente bloqueando: el espejo refleja lo reflejable y el escudo frena lo que protege; lo demás pasa.
+## En la espalda sin bloquear: solo proyectiles; el espejo los devuelve a quien los tiró.
+func _shield_stops(info: DamageInfo) -> bool:
+	if info.source == null:
+		return false
+	var projectile := info.source as Projectile
+	if is_blocking() and _is_in_front(info.source.global_position):
+		if projectile and info.reflectable and shield_reflects():
+			_reflect(projectile, aim.get_direction(), true)
+			return true
+		if shield_protects(info):
+			_on_blocked(info)
+			return true
+		Log.debug(&"combat", "El escudo no frena", info.element)
+		Feel.burst(&"shards", global_position + model.global_basis.z * 0.6 + Vector3.UP * 1.1, model.global_basis.z)
+		return false
+	if projectile and not is_blocking() and _is_behind(projectile.global_position):
+		if info.reflectable and shield_reflects():
+			var back := projectile.shooter.global_position - global_position if is_instance_valid(projectile.shooter) else -projectile.velocity
+			_reflect(projectile, back, false)
+			return true
+		if shield_protects(info):
+			Log.debug(&"combat", "Frenado por el escudo de la espalda:", projectile.name)
+			Feel.burst(&"sparks", projectile.global_position, -projectile.velocity.normalized())
+			Feel.sfx(&"block", global_position)
+			return true
+	return false
+
+
+func _is_behind(point: Vector3) -> bool:
+	var back := -model.global_basis.z
+	back.y = 0.0
+	var to_point := point - global_position
+	to_point.y = 0.0
+	if to_point.is_zero_approx() or back.is_zero_approx():
+		return false
+	return rad_to_deg(back.angle_to(to_point)) <= back_shield_angle_deg
+
+
+## Escudo espejo: el proyectil vuelve en esa dirección y pasa a ser del player.
+func _reflect(projectile: Projectile, direction: Vector3, front: bool) -> void:
+	projectile.reflect(direction, config.team)
+	Log.debug(&"combat", "Reflejado:", projectile.name, "hacia", direction)
+	if front:
+		anim_tree.set(&"parameters/BlockHit/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+		Feel.shake(Feel.settings.shake_block)
+	Feel.burst(&"sparks", projectile.global_position, direction)
 	Feel.sfx(&"reflect", global_position)
-	Feel.shake(Feel.settings.shake_block)
 
 
 func _on_blocked(info: DamageInfo) -> void:

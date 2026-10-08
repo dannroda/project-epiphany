@@ -14,4 +14,5 @@ description = "Bloquea los golpes de frente. Refleja proyectiles y haces de luz 
 reflects = true
 icon = ExtResource("2_26xnl")
 category = 1
+protects_against = Array[StringName]([&"physical"])
 equip_scene = ExtResource("1_owpql")
