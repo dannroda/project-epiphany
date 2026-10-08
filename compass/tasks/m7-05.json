@@ -1,0 +1,44 @@
+{
+  "checklist": [
+    {
+      "detail": "Sala chica con un desafío corto antes del cofre (combate o bloques).",
+      "done": false,
+      "text": "Santuario detrás del muro agrietado"
+    },
+    {
+      "detail": "Se equipa solo; *item get* explica que refleja la luz.",
+      "done": false,
+      "text": "Cofre grande con el escudo espejo"
+    },
+    {
+      "detail": "Un cristal en el santuario para enseñar el reflejo antes del sello.",
+      "done": false,
+      "text": "Haz de luz de práctica"
+    }
+  ],
+  "code": "7.5",
+  "created_at": "2026-10-08T04:45:24.262Z",
+  "links": [
+    {
+      "task": "m7-06",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m07",
+  "notes": "",
+  "order": 5,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "progresion-gating"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "items-mvp"
+    }
+  ],
+  "status": "todo",
+  "test": "Desde el escenario `bombs_only`: llegar al santuario, conseguir el escudo y activar el cristal de práctica.",
+  "title": "Santuario del escudo espejo",
+  "updated_at": "2026-10-08T04:45:55.373Z"
+}

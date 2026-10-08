@@ -1,0 +1,61 @@
+{
+  "checklist": [
+    {
+      "detail": "Pila de pantallas: `push`/`pop`, la de arriba tiene el foco. Pausa el árbol con `get_tree().paused`; la UI con `process_mode = ALWAYS`.",
+      "done": false,
+      "text": "Crear `src/ui/menus/menu_stack.gd`"
+    },
+    {
+      "detail": "Restaurar el foco al volver de una sub-pantalla.",
+      "done": false,
+      "text": "Abrir con `pause`, cerrar con `pause` o `ui_cancel`"
+    },
+    {
+      "detail": "Equipo, Ítems y (más adelante) Mapa. Ver los mockups del artifact \"Epiphany UI Mockups\".",
+      "done": false,
+      "text": "Pestañas con `ui_tab_left` / `ui_tab_right`"
+    },
+    {
+      "detail": "Un `Theme` en `src/ui/theme.tres` con fuente, márgenes y estilo de foco visible para gamepad.",
+      "done": false,
+      "text": "Theme base del juego"
+    }
+  ],
+  "code": "3.1",
+  "created_at": "2026-10-08T04:45:08.161Z",
+  "links": [
+    {
+      "task": "m3-02",
+      "type": "blocks"
+    },
+    {
+      "task": "m3-03",
+      "type": "blocks"
+    },
+    {
+      "task": "m4-02",
+      "type": "blocks"
+    },
+    {
+      "task": "m6-06",
+      "type": "blocks"
+    },
+    {
+      "task": "m10-01",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m03",
+  "notes": "Base de todas las pantallas: inventario, mapa (6.6), opciones y título (M10).\n\nSkills: `disciplines:game-ui-ux`, `godot:godot-ui-control`.",
+  "order": 1,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "ui"
+    }
+  ],
+  "status": "todo",
+  "test": "Abrir y cerrar la pausa en medio de un combate: los enemigos y las animaciones se congelan y siguen igual al cerrar. Navegar las pestañas solo con gamepad y solo con teclado.",
+  "title": "Menú de pausa y pila de pantallas",
+  "updated_at": "2026-10-08T04:46:04.057Z"
+}

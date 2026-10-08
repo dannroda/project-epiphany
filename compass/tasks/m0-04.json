@@ -22,6 +22,10 @@
     {
       "task": "m0-05",
       "type": "blocks"
+    },
+    {
+      "task": "m4-05",
+      "type": "blocks"
     }
   ],
   "milestone": "m00",
@@ -36,5 +40,5 @@
   "status": "todo",
   "test": "`load(\"res://data/flag_registry.tres\").has(&\"ow_test_chest\")` devuelve `true`, y con cualquier otro id devuelve `false`.",
   "title": "Flags",
-  "updated_at": "2026-10-04T22:17:17.654Z"
+  "updated_at": "2026-10-08T04:45:44.891Z"
 }

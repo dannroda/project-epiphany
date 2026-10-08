@@ -1,0 +1,53 @@
+{
+  "checklist": [
+    {
+      "detail": "`block_angle_deg` exportado. El modelo KayKit mira a +Z local. Código en [[gdd#ventanas-ataque]] (\"Bloqueo direccional\").",
+      "done": false,
+      "text": "Implementar `_is_in_front()` con cono de ±60°"
+    },
+    {
+      "detail": "Animación `Melee_Block_Hit`. Partículas y sonido placeholder; el pulido va en 1.7.",
+      "done": false,
+      "text": "`_on_blocked()`: chispa, retroceso leve y sonido"
+    },
+    {
+      "detail": "Con el overlay activo, dibujar el cono de bloqueo (ImmediateMesh o `DebugDraw`) para ajustarlo jugando.",
+      "done": false,
+      "text": "Ver el cono en debug"
+    },
+    {
+      "detail": "`shield_thrust.tres` con poco daño y mucho knockback; al conectar setea `stunned` en el blackboard del enemigo (lo consume 1.4).",
+      "done": false,
+      "text": "El golpe de escudo aturde"
+    }
+  ],
+  "code": "1.2",
+  "created_at": "2026-10-08T04:45:03.135Z",
+  "links": [
+    {
+      "task": "m0-09",
+      "type": "related"
+    },
+    {
+      "task": "m5-01",
+      "type": "blocks"
+    },
+    {
+      "task": "m5-06",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m01",
+  "notes": "Pilar 3: el escudo tiene doble función. El reflejo con escudo espejo llega en M5.",
+  "order": 2,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "combate"
+    }
+  ],
+  "status": "todo",
+  "test": "Bloqueando de frente el golpe del esqueleto no hace daño; desde atrás o de costado (fuera del cono) sí. El golpe de escudo deja al esqueleto aturdido un momento.",
+  "title": "Bloqueo direccional y golpe de escudo",
+  "updated_at": "2026-10-08T04:45:47.640Z"
+}

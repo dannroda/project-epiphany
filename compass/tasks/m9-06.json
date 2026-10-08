@@ -1,0 +1,44 @@
+{
+  "checklist": [
+    {
+      "detail": "Las manos caen, la sala se calma.",
+      "done": false,
+      "text": "Animación de muerte y flag `d1_boss_defeated`"
+    },
+    {
+      "detail": "Aparece en la arena; `GameState.give()` suma 4 HP al máximo.",
+      "done": false,
+      "text": "Contenedor de corazón"
+    },
+    {
+      "detail": "Al tomar el contenedor o salir, pantalla de fin y créditos placeholder.",
+      "done": false,
+      "text": "Final del MVP"
+    }
+  ],
+  "code": "9.6",
+  "created_at": "2026-10-08T04:45:32.876Z",
+  "links": [
+    {
+      "task": "m9-07",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m09",
+  "notes": "Cierra el hito: \"se puede terminar el juego\".",
+  "order": 6,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "jefe"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "items-mvp"
+    }
+  ],
+  "status": "todo",
+  "test": "Desde `pre_boss`: ganar, tomar el contenedor y llegar a los créditos. Cargar después: el jefe no reaparece.",
+  "title": "Muerte del jefe y final",
+  "updated_at": "2026-10-08T04:46:03.777Z"
+}

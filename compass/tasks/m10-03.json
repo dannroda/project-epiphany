@@ -1,0 +1,32 @@
+{
+  "checklist": [
+    {
+      "detail": "Continuar (desde la entrada de la sala / último checkpoint) o Guardar y salir.",
+      "done": false,
+      "text": "Pantalla al morir"
+    },
+    {
+      "done": false,
+      "text": "Reemplaza el fundido de 1.5"
+    }
+  ],
+  "code": "10.3",
+  "created_at": "2026-10-08T04:45:34.936Z",
+  "milestone": "m10",
+  "notes": "",
+  "order": 3,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "ui"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "combate"
+    }
+  ],
+  "status": "todo",
+  "test": "Morir en overworld, en mazmorra y contra el jefe: cada \"Continuar\" lleva al lugar correcto.",
+  "title": "Game over",
+  "updated_at": "2026-10-08T04:45:35.212Z"
+}

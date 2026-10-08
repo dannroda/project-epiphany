@@ -1,0 +1,54 @@
+{
+  "checklist": [
+    {
+      "detail": "`_on_hurtbox_hit(info)`: reduce el daño con `equipment.damage_reduction()` (mínimo 1) y llama `Health.damage()`. El bloqueo se suma en 1.2. Código en [[gdd#ventanas-ataque]].",
+      "done": false,
+      "text": "Conectar `Hurtbox.hit` en `player.gd`"
+    },
+    {
+      "detail": "Retroceso con `DamageInfo.knockback` en la dirección fuente → player, input bloqueado ≈0.25 s, animación `Hit_A`/`Hit_B`. Al entrar llama `attack_runner.stop()`.",
+      "done": false,
+      "text": "Estado `Hurt` en el `LimboHSM`"
+    },
+    {
+      "detail": "Alternar la visibilidad del modelo (o un uniform del material) mientras `Health.is_invulnerable()`. Con `delta`, así la pausa no lo consume.",
+      "done": false,
+      "text": "Parpadeo mientras dura la invulnerabilidad"
+    },
+    {
+      "detail": "`Performance.add_custom_monitor` y `DebugOverlay.watch(&\"hp\", …)`. Ver [[gdd#depuracion]].",
+      "done": false,
+      "text": "Monitor `epiphany/player_hp` y watch en el overlay"
+    },
+    {
+      "detail": "Daño, invulnerabilidad (un segundo golpe dentro de la ventana no cuenta), curar sin pasar el máximo, `died` una sola vez. En el runner de 0.12.",
+      "done": false,
+      "text": "Tests headless de `Health`"
+    }
+  ],
+  "code": "1.1",
+  "created_at": "2026-10-08T04:45:02.620Z",
+  "links": [
+    {
+      "task": "m0-11",
+      "type": "related"
+    }
+  ],
+  "milestone": "m01",
+  "notes": "Primer paso de M1: que al player le duela. Usa `Health`, `Hurtbox` y `DamageInfo` de M0.\n\nSkills: `godot:godot-gdscript`, `godot:godot-gdscript-headless-testing`.",
+  "order": 1,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "combate"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "entidades-componentes"
+    }
+  ],
+  "status": "todo",
+  "test": "El esqueleto le pega al player: pierde vida, retrocede, parpadea ≈0.8 s y durante el parpadeo no recibe otro golpe. Los tests de `Health` pasan.",
+  "title": "Daño, invulnerabilidad y knockback del player",
+  "updated_at": "2026-10-08T04:45:39.295Z"
+}

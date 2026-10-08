@@ -1,0 +1,44 @@
+{
+  "checklist": [
+    {
+      "detail": "Más cercano y de frente; prioridad exportada para desempatar (cofre > tablilla).",
+      "done": false,
+      "text": "`InteractionDetector` elige el mejor `Interactable`"
+    },
+    {
+      "detail": "\"Abrir\", \"Leer\", \"Empujar\" desde `Interactable.prompt`. Con el ícono del dispositivo activo (2.3).",
+      "done": false,
+      "text": "HUD: botón + texto del prompt"
+    },
+    {
+      "detail": "Y mientras el player está en `Hurt`, `Dodging` o `ItemGet`.",
+      "done": false,
+      "text": "Ocultar el prompt durante combate y menús"
+    }
+  ],
+  "code": "4.1",
+  "created_at": "2026-10-08T04:45:12.154Z",
+  "links": [
+    {
+      "task": "m6-02",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m04",
+  "notes": "",
+  "order": 1,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "mundo"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "ui"
+    }
+  ],
+  "status": "todo",
+  "test": "Pararse entre un cofre y una tablilla y girar: el prompt cambia según hacia dónde mira el player.",
+  "title": "Prompt de acción contextual",
+  "updated_at": "2026-10-08T04:45:49.920Z"
+}

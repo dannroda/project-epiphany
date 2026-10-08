@@ -1,0 +1,44 @@
+{
+  "checklist": [
+    {
+      "detail": "Al salir vuelve a `&\"\"`.",
+      "done": false,
+      "text": "`GameState.current_dungeon` lo setea la escena de la mazmorra"
+    },
+    {
+      "detail": "Enrutadas por `GameState.give()` al `DungeonState`.",
+      "done": false,
+      "text": "Llave chica y llave del jefe como `ItemData`"
+    },
+    {
+      "detail": "Contador de llaves chicas e ícono de llave del jefe.",
+      "done": false,
+      "text": "HUD: llaves solo en mazmorra"
+    }
+  ],
+  "code": "6.3",
+  "created_at": "2026-10-08T04:45:19.725Z",
+  "links": [
+    {
+      "task": "m6-07",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m06",
+  "notes": "",
+  "order": 3,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "estado-flags"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "ui"
+    }
+  ],
+  "status": "todo",
+  "test": "Juntar dos llaves y abrir una puerta: el contador baja a 1. Fuera de la mazmorra el contador no se ve.",
+  "title": "Llaves de mazmorra y HUD",
+  "updated_at": "2026-10-08T04:45:52.163Z"
+}

@@ -1,0 +1,49 @@
+{
+  "checklist": [
+    {
+      "detail": "Texto que aparece letra por letra, varias páginas, avanzar con `interact`/`attack`, saltar la animación con el mismo botón.",
+      "done": false,
+      "text": "Crear `src/ui/text_box/`"
+    },
+    {
+      "detail": "Usando la pila de menús de 3.1.",
+      "done": false,
+      "text": "Pausar el juego mientras está abierta"
+    },
+    {
+      "detail": "Recurso `TextData` (páginas) o claves de traducción con `tr()`, para dejar lista la localización. Sin Ink ni Yarn: no hay diálogos con opciones.",
+      "done": false,
+      "text": "Textos como datos"
+    },
+    {
+      "detail": "Reemplazar la caja simple de 3.6.",
+      "done": false,
+      "text": "Reusar la caja en *item get*"
+    }
+  ],
+  "code": "4.2",
+  "created_at": "2026-10-08T04:45:12.656Z",
+  "links": [
+    {
+      "task": "m4-03",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m04",
+  "notes": "No hay NPCs con diálogo: el texto vive en tablillas e *item get* ([[gdd#historia]]).\n\nSkills: `disciplines:dialogue-systems`, `godot:godot-ui-control`.",
+  "order": 2,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "ui"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "historia"
+    }
+  ],
+  "status": "todo",
+  "test": "Leer un texto de tres páginas con gamepad y con teclado; apretar rápido no se saltea páginas sin querer.",
+  "title": "Caja de texto",
+  "updated_at": "2026-10-08T04:45:44.322Z"
+}

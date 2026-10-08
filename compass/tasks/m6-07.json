@@ -1,0 +1,44 @@
+{
+  "checklist": [
+    {
+      "detail": "`MeshLibrary` con pared, piso, columna, puerta y escalón sobre las texturas de prototipo; armar las salas con `GridMap`.",
+      "done": false,
+      "text": "Kit de bloques grises"
+    },
+    {
+      "detail": "Una con bloque e interruptor, una con persiana y esqueletos, una con puerta con llave y cofre.",
+      "done": false,
+      "text": "Tres salas conectadas"
+    },
+    {
+      "detail": "`debug/scenarios/dungeon_test.cfg`.",
+      "done": false,
+      "text": "Escenario de inicio en la mazmorra"
+    }
+  ],
+  "code": "6.7",
+  "created_at": "2026-10-08T04:45:21.767Z",
+  "links": [
+    {
+      "task": "m7-02",
+      "type": "blocks"
+    },
+    {
+      "task": "m8-03",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m06",
+  "notes": "Cierra el hito: \"tres salas en bloques grises conectadas\". El kit se reutiliza en M7 y M8.\n\nSkills: `godot:godot-3d-essentials`, `disciplines:level-design`.",
+  "order": 7,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "mazmorra"
+    }
+  ],
+  "status": "todo",
+  "test": "Recorrer las tres salas desde el escenario sin trabarse: transiciones, persiana, llave y cofre funcionan; guardar en la sala 3 y cargar deja todo igual.",
+  "title": "Mazmorra de prueba: tres salas grises",
+  "updated_at": "2026-10-08T04:45:57.599Z"
+}

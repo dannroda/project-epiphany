@@ -1,0 +1,29 @@
+{
+  "checklist": [
+    {
+      "detail": "Da una llave chica.",
+      "done": false,
+      "text": "Sala 3: reflejar orbes de torretas a un cristal"
+    },
+    {
+      "detail": "Da el mapa.",
+      "done": false,
+      "text": "Sala 4: muro bombable y bombas que empujan bloques físicos"
+    }
+  ],
+  "code": "8.4",
+  "created_at": "2026-10-08T04:45:27.800Z",
+  "milestone": "m08",
+  "notes": "",
+  "order": 4,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "mazmorra"
+    }
+  ],
+  "status": "todo",
+  "test": "Resolver las dos salas desde `dungeon_no_bow` y salir con la llave y el mapa.",
+  "title": "Salas 3–4: galería de trampas y sala agrietada",
+  "updated_at": "2026-10-08T04:45:28.066Z"
+}

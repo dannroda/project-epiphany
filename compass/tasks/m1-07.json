@@ -1,0 +1,44 @@
+{
+  "checklist": [
+    {
+      "detail": "50–80 ms. Mejor congelar solo a los dos involucrados (`process_mode` o velocidad del AnimationTree) que tocar `Engine.time_scale`.",
+      "done": false,
+      "text": "Hit-stop al conectar un golpe"
+    },
+    {
+      "detail": "Modelo de trauma (decae con el tiempo, ruido). Más fuerte al recibir que al dar.",
+      "done": false,
+      "text": "Sacudida de cámara en `TopDownCamera`"
+    },
+    {
+      "detail": "Uniform en un shader de overlay (`next_pass`), encendido unos frames.",
+      "done": false,
+      "text": "Flash blanco en el golpeado"
+    },
+    {
+      "detail": "`GPUParticles3D` cortos, reutilizables.",
+      "done": false,
+      "text": "Chispas al bloquear y polvo al rodar"
+    },
+    {
+      "detail": "Con variación de pitch. Bus `SFX` (se ordena en 10.5).",
+      "done": false,
+      "text": "SFX placeholder de golpe, bloqueo y roll"
+    }
+  ],
+  "code": "1.7",
+  "created_at": "2026-10-08T04:45:05.631Z",
+  "milestone": "m01",
+  "notes": "Recién acá el combate tiene que \"sentirse\". Exportar todos los valores para tunearlos desde el inspector.\n\nSkills: `disciplines:game-feel`, `disciplines:camera-systems`, `godot:godot-shaders`.",
+  "order": 7,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "combate"
+    }
+  ],
+  "status": "todo",
+  "test": "Grabar un clip peleando contra el esqueleto y compararlo con uno antes de la tarea: cada golpe dado, recibido y bloqueado tiene respuesta visual y sonora.",
+  "title": "Feel del combate",
+  "updated_at": "2026-10-08T04:45:05.918Z"
+}

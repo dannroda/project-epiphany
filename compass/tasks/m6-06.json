@@ -1,0 +1,43 @@
+{
+  "checklist": [
+    {
+      "detail": "Celda en la grilla del mapa (`map_cell`) y tamaño. El mapa se arma solo leyendo las salas.",
+      "done": false,
+      "text": "Datos del mapa en cada `Room`"
+    },
+    {
+      "detail": "Salas visitadas; con mapa, todas; con brújula, cofres sin abrir y el jefe. Posición del player.",
+      "done": false,
+      "text": "Pantalla Mapa (pestaña de pausa y acción `map`)"
+    },
+    {
+      "detail": "Por `GameState.give()` a `DungeonState`.",
+      "done": false,
+      "text": "Mapa y brújula como ítems"
+    },
+    {
+      "detail": "Imagen fija con la posición del player; alcanza para el MVP.",
+      "done": false,
+      "text": "Mapa simple del overworld"
+    }
+  ],
+  "code": "6.6",
+  "created_at": "2026-10-08T04:45:21.253Z",
+  "milestone": "m06",
+  "notes": "Skills: `disciplines:game-ui-ux`.",
+  "order": 6,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "ui"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "estado-flags"
+    }
+  ],
+  "status": "todo",
+  "test": "Escenario `dungeon_no_bow` sin mapa: solo se ven las salas visitadas. Agregar el mapa desde el Save Inspector: aparecen todas.",
+  "title": "Mapa, brújula y pantalla de mapa",
+  "updated_at": "2026-10-08T04:45:21.527Z"
+}

@@ -53,6 +53,20 @@
   ],
   "code": "0.9",
   "created_at": "2026-09-29T18:00:00Z",
+  "links": [
+    {
+      "task": "m1-01",
+      "type": "blocks"
+    },
+    {
+      "task": "m2-01",
+      "type": "blocks"
+    },
+    {
+      "task": "m6-01",
+      "type": "blocks"
+    }
+  ],
   "milestone": "m00",
   "notes": "El player se arma con componentes: el equipo sale de `GameState`, las hitboxes viven en el personaje y el lock-on pasa a un nodo propio. Es la tarea más grande de M0; conviene seguir los pasos en orden.\n\nNecesita 0.3, 0.5 y 0.7. Diseño en el GDD (§11.4 y \"Ventanas de ataque\").",
   "order": 9,
@@ -69,5 +83,5 @@
   "status": "todo",
   "test": "Cambiar el escudo equipado a `shield_mirror` desde el Save Inspector y cargar: el player aparece con el otro escudo. Pegarle al esqueleto: pierde vida una sola vez por golpe. Con *Debug › Visible Collision Shapes*, rodar o recibir un golpe en medio de un ataque apaga la hitbox.",
   "title": "Refactor del player",
-  "updated_at": "2026-10-04T22:23:33.704Z"
+  "updated_at": "2026-10-08T04:45:49.384Z"
 }

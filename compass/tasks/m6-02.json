@@ -1,0 +1,58 @@
+{
+  "checklist": [
+    {
+      "detail": "Tipos `OPEN`, `LOCKED`, `SHUTTER`, `SWITCH`, `BOSS`. Código en [[gdd#mundo]].",
+      "done": false,
+      "text": "Crear `src/world/door.gd`"
+    },
+    {
+      "detail": "Tween de la hoja de la puerta; la colisión se apaga al terminar.",
+      "done": false,
+      "text": "Abrir con animación y sonido"
+    },
+    {
+      "detail": "`Room` cuenta sus enemigos vivos y abre las persianas cuando llega a cero.",
+      "done": false,
+      "text": "`SHUTTER`: la sala la cierra hasta limpiar"
+    },
+    {
+      "detail": "Se abre con la señal `activated` (6.5); algunas se vuelven a cerrar si el interruptor se suelta.",
+      "done": false,
+      "text": "`SWITCH`: conectada a un interruptor"
+    },
+    {
+      "detail": "Con su `flag`; usan la llave al interactuar (\"Abrir\").",
+      "done": false,
+      "text": "`LOCKED`/`BOSS` persistentes"
+    }
+  ],
+  "code": "6.2",
+  "created_at": "2026-10-08T04:45:19.217Z",
+  "links": [
+    {
+      "task": "m6-03",
+      "type": "blocks"
+    },
+    {
+      "task": "m6-05",
+      "type": "blocks"
+    },
+    {
+      "task": "m6-07",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m06",
+  "notes": "",
+  "order": 2,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "mundo"
+    }
+  ],
+  "status": "todo",
+  "test": "Una sala con persiana: al entrar se cierra, al matar al último esqueleto se abre. Una puerta con llave no se abre sin llave y se queda abierta tras guardar y cargar.",
+  "title": "Puertas",
+  "updated_at": "2026-10-08T04:45:51.895Z"
+}

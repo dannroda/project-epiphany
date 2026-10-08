@@ -1,0 +1,63 @@
+{
+  "checklist": [
+    {
+      "detail": "Una sola tarea de ataque para todos los BT: toma un `AttackData` y maneja el `AttackRunner`. Código en [[gdd#ventanas-ataque]].",
+      "done": false,
+      "text": "Crear `ai/tasks/bt_attack.gd`"
+    },
+    {
+      "detail": "`NavigationRegion3D` con navmesh horneado en `levels/test.tscn` y `NavigationAgent3D` en el esqueleto. Tarea `BTMoveToTarget` en `ai/tasks/`.",
+      "done": false,
+      "text": "Navegación en el nivel de prueba"
+    },
+    {
+      "detail": "Selector: muerto → aturdido/golpeado → atacar si está en rango → perseguir si ve al player → idle/patrulla. Datos de rango y visión en la `EntityConfig`.",
+      "done": false,
+      "text": "Rehacer `enemy_bt.tres`"
+    },
+    {
+      "detail": "Pausa corta + pose de preparación antes del golpe, para que el jugador pueda bloquear o rodar. Ajustar `active_from` del `AttackData` en vivo.",
+      "done": false,
+      "text": "Telegrafiar el ataque"
+    },
+    {
+      "detail": "Golpeado: interrumpe el ataque (`_exit` apaga la hitbox) y reproduce `Hit_*`. Aturdido (golpe de escudo, 1.2): queda quieto un tiempo.",
+      "done": false,
+      "text": "Consumir `stunned` e `is_hit` del blackboard"
+    },
+    {
+      "detail": "`Health.died` → animación `Skeletons_Death`, sale del grupo `targetable` (libera el lock-on), desactiva colisiones y se borra o queda el cuerpo. Hook para drops (3.7).",
+      "done": false,
+      "text": "Muerte del enemigo"
+    }
+  ],
+  "code": "1.4",
+  "created_at": "2026-10-08T04:45:04.135Z",
+  "links": [
+    {
+      "task": "m5-02",
+      "type": "blocks"
+    },
+    {
+      "task": "m8-02",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m01",
+  "notes": "El esqueleto es el enemigo que enseña a bloquear. Usar las tareas de LimboAI que ya vienen (`BTPlayAnimation`, `BTCheckVar`, `BTWait`) y agregar solo las que falten en `ai/tasks/`.\n\nSkills: `disciplines:ai-behavior-trees-utility-ai`, `disciplines:game-ai`, `godot:godot-physics`.",
+  "order": 4,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "combate"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "ventanas-ataque"
+    }
+  ],
+  "status": "todo",
+  "test": "Con *Visible Collision Shapes*: el esqueleto ve al player, lo persigue esquivando obstáculos, telegrafía y pega; si recibe un golpe en medio del ataque, la hitbox se apaga. Muere y deja de poder fijarse.",
+  "title": "IA del esqueleto con `BTAttack`",
+  "updated_at": "2026-10-08T04:45:57.051Z"
+}

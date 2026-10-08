@@ -1,0 +1,32 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Lock-on mantener/alternar, sensibilidad de apuntado, volúmenes"
+    },
+    {
+      "detail": "Separado de la partida; se aplica al arrancar.",
+      "done": false,
+      "text": "Guardar en `user://settings.cfg`"
+    },
+    {
+      "done": false,
+      "text": "Accesible desde título y pausa"
+    }
+  ],
+  "code": "10.4",
+  "created_at": "2026-10-08T04:45:35.460Z",
+  "milestone": "m10",
+  "notes": "Skills: `disciplines:game-ui-ux`, `disciplines:input-systems`.",
+  "order": 4,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "ui"
+    }
+  ],
+  "status": "todo",
+  "test": "Cambiar cada opción, reiniciar el juego: se mantienen.",
+  "title": "Opciones",
+  "updated_at": "2026-10-08T04:45:35.726Z"
+}

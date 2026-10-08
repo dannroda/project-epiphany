@@ -1,0 +1,38 @@
+{
+  "checklist": [
+    {
+      "detail": "Opcional.",
+      "done": false,
+      "text": "Botella con poción tras un muro agrietado"
+    },
+    {
+      "detail": "Cofre secreto; ejercita la pantalla Equipo.",
+      "done": false,
+      "text": "Cota reforzada en un puzzle de bloques"
+    },
+    {
+      "detail": "Ojo-interruptor alto o lejano que solo se alcanza con el arco; suma `_capacity_bonus` de flechas.",
+      "done": false,
+      "text": "Carcaj grande post-mazmorra"
+    }
+  ],
+  "code": "7.7",
+  "created_at": "2026-10-08T04:45:25.265Z",
+  "milestone": "m07",
+  "notes": "Recortables en este orden: carcaj, cota ([[gdd#roadmap]]).",
+  "order": 7,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "overworld"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "items-mvp"
+    }
+  ],
+  "status": "todo",
+  "test": "Con `full_inventory`, encontrar los tres secretos; con `start`, el carcaj no se puede conseguir.",
+  "title": "Secretos del overworld",
+  "updated_at": "2026-10-08T04:45:25.533Z"
+}

@@ -1,0 +1,35 @@
+{
+  "checklist": [
+    {
+      "detail": "La tablilla anticipa al jefe.",
+      "done": false,
+      "text": "Vasijas con corazones, tablilla y puerta del jefe"
+    },
+    {
+      "detail": "Reaparecer en la antesala al morir contra el jefe.",
+      "done": false,
+      "text": "Checkpoint antes del jefe"
+    }
+  ],
+  "code": "8.7",
+  "created_at": "2026-10-08T04:45:29.324Z",
+  "links": [
+    {
+      "task": "m8-08",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m08",
+  "notes": "",
+  "order": 7,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "mazmorra"
+    }
+  ],
+  "status": "todo",
+  "test": "Abrir la puerta del jefe con su llave; morir adentro devuelve a la antesala.",
+  "title": "Sala 8: antesala",
+  "updated_at": "2026-10-08T04:46:00.968Z"
+}

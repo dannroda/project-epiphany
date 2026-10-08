@@ -1,0 +1,53 @@
+{
+  "checklist": [
+    {
+      "detail": "Fuentes FACING / STICK / MOUSE; con objetivo fijado gana el objetivo. Código en [[gdd#player]].",
+      "done": false,
+      "text": "Crear `player/components/aim.gd`"
+    },
+    {
+      "detail": "`Plane.intersects_ray` a la altura del player + 1.",
+      "done": false,
+      "text": "Mouse: rayo cámara → plano del suelo"
+    },
+    {
+      "detail": "Decal o mesh plano en el suelo, visible solo mientras se usa un ítem a distancia (y siempre en debug).",
+      "done": false,
+      "text": "Retícula de apuntado"
+    },
+    {
+      "detail": "Strafe: el player apunta hacia un lado y camina hacia otro.",
+      "done": false,
+      "text": "Girar el modelo hacia `Aim` al usar un ítem"
+    }
+  ],
+  "code": "2.2",
+  "created_at": "2026-10-08T04:45:06.648Z",
+  "links": [
+    {
+      "task": "m0-09",
+      "type": "related"
+    },
+    {
+      "task": "m3-04",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m02",
+  "notes": "Lo consumen arco, bombas lanzadas y cualquier ítem a distancia (M5) a través de `ItemUseContext.direction`.",
+  "order": 2,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "player"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "movimiento-combate"
+    }
+  ],
+  "status": "todo",
+  "test": "Con el overlay activo, `DebugOverlay.watch` de la dirección y la fuente: el stick derecho, el mouse y el lock-on cambian la fuente y la flecha de debug apunta bien en los tres casos.",
+  "title": "Componente `Aim`",
+  "updated_at": "2026-10-08T04:45:41.765Z"
+}

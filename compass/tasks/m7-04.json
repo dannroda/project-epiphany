@@ -1,0 +1,44 @@
+{
+  "checklist": [
+    {
+      "detail": "Una o dos salas con `Room` (cámara de sala) o zona abierta, según el layout.",
+      "done": false,
+      "text": "Interior de la cueva"
+    },
+    {
+      "detail": "Flag `ow_cave_bombs_chest`; tablilla que enseña a usarlas.",
+      "done": false,
+      "text": "Cofre con la bolsa de bombas"
+    },
+    {
+      "detail": "Justo después, para que el jugador pruebe la bomba enseguida.",
+      "done": false,
+      "text": "Primer muro agrietado a la vista"
+    }
+  ],
+  "code": "7.4",
+  "created_at": "2026-10-08T04:45:23.764Z",
+  "links": [
+    {
+      "task": "m7-05",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m07",
+  "notes": "",
+  "order": 4,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "progresion-gating"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "items-mvp"
+    }
+  ],
+  "status": "todo",
+  "test": "Desde el escenario `start`: conseguir las bombas y romper el primer muro.",
+  "title": "Cueva de las bombas",
+  "updated_at": "2026-10-08T04:45:54.821Z"
+}

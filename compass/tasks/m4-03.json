@@ -1,0 +1,40 @@
+{
+  "checklist": [
+    {
+      "detail": "`StaticBody3D` con `Interactable` (\"Leer\") y un `TextData` exportado.",
+      "done": false,
+      "text": "Escena `Tablet`"
+    },
+    {
+      "detail": "Flag opcional para pistas de puzzles; el mapa de la mazmorra puede mostrar las leídas.",
+      "done": false,
+      "text": "Marcar como leída (opcional)"
+    },
+    {
+      "detail": "Una de ambientación y una pista de puzzle, para validar el tono. La historia (A o B) sigue abierta: [[gdd#decisiones-abiertas]].",
+      "done": false,
+      "text": "Escribir 2 tablillas de prueba"
+    }
+  ],
+  "code": "4.3",
+  "created_at": "2026-10-08T04:45:13.170Z",
+  "links": [
+    {
+      "task": "m8-07",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m04",
+  "notes": "",
+  "order": 3,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "historia"
+    }
+  ],
+  "status": "todo",
+  "test": "Leer las dos tablillas del nivel de prueba; guardar y cargar conserva las leídas.",
+  "title": "Tablillas",
+  "updated_at": "2026-10-08T04:46:00.673Z"
+}

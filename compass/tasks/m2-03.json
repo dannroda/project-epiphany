@@ -1,0 +1,43 @@
+{
+  "checklist": [
+    {
+      "detail": "Ideas del GDD: guardia en click derecho, ítems en `Q`/`R`, `Tab` para el inventario, rueda para cambiar de objetivo. Actualizar la tabla de [[gdd#input]].",
+      "done": false,
+      "text": "Definir el mapa de teclado y mouse"
+    },
+    {
+      "detail": "En `project.godot`, junto a los de gamepad. Las teclas de debug (`1`/`2`/`3`) no chocan.",
+      "done": false,
+      "text": "Agregar los eventos al `InputMap`"
+    },
+    {
+      "detail": "La rueda llama `Targeting.cycle()` con izquierda/derecha de pantalla.",
+      "done": false,
+      "text": "Cambio de objetivo con la rueda"
+    },
+    {
+      "detail": "Señal `input_device_changed(device)` en un autoload chico; el HUD la usa para mostrar el ícono del botón correcto (4.1).",
+      "done": false,
+      "text": "Detectar el dispositivo activo"
+    }
+  ],
+  "code": "2.3",
+  "created_at": "2026-10-08T04:45:07.157Z",
+  "milestone": "m02",
+  "notes": "Pilar 5: gamepad y teclado/mouse son ciudadanos de primera. El remapeo es post-MVP.\n\nSkills: `disciplines:input-systems`.",
+  "order": 3,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "input"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "pilares"
+    }
+  ],
+  "status": "todo",
+  "test": "Jugar el nivel de prueba sin gamepad: moverse, atacar, bloquear, rodar, fijar, cambiar de objetivo y apuntar con el mouse.",
+  "title": "Controles de teclado y mouse",
+  "updated_at": "2026-10-08T04:45:07.434Z"
+}

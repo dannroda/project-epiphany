@@ -1,0 +1,57 @@
+{
+  "checklist": [
+    {
+      "detail": "Extiende `Hitbox`: velocidad, vida, `reflect()`. Código en [[gdd#entidades-componentes]].",
+      "done": false,
+      "text": "Crear `src/entities/projectile.gd`"
+    },
+    {
+      "detail": "`body_entered` contra estáticos: se destruye (o se clava, para flechas) con partículas.",
+      "done": false,
+      "text": "Chocar con el mundo"
+    },
+    {
+      "detail": "En `_on_hurtbox_hit`: si bloquea, el `DamageInfo` es `reflectable` y tiene escudo espejo, devuelve el proyectil hacia `Aim` o el objetivo fijado y cambia de equipo.",
+      "done": false,
+      "text": "Reflejo con el escudo espejo"
+    },
+    {
+      "detail": "Solo si el profiler muestra picos al instanciar.",
+      "done": false,
+      "text": "Pool de proyectiles (si hace falta)"
+    }
+  ],
+  "code": "5.1",
+  "created_at": "2026-10-08T04:45:14.699Z",
+  "links": [
+    {
+      "task": "m5-02",
+      "type": "blocks"
+    },
+    {
+      "task": "m5-03",
+      "type": "blocks"
+    },
+    {
+      "task": "m9-05",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m05",
+  "notes": "Skills: `godot:godot-physics`, `disciplines:physics-tuning`.",
+  "order": 1,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "entidades-componentes"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "combate"
+    }
+  ],
+  "status": "todo",
+  "test": "Un proyectil de prueba disparado contra el player: con escudo de madera se bloquea y desaparece; con escudo espejo vuelve y daña al que lo disparó.",
+  "title": "Proyectiles",
+  "updated_at": "2026-10-08T04:46:03.224Z"
+}

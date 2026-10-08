@@ -1,0 +1,44 @@
+{
+  "checklist": [
+    {
+      "detail": "Área con escena destino y `spawn_point`. Actualiza `GameState.spawn_scene`, `spawn_point` y `current_dungeon`.",
+      "done": false,
+      "text": "`Portal`"
+    },
+    {
+      "detail": "`ResourceLoader.load_threaded_request` para que no se congele la imagen.",
+      "done": false,
+      "text": "Fundido y carga en segundo plano"
+    },
+    {
+      "detail": "Autosave mínimo para no perder progreso (la política completa va en 10.2).",
+      "done": false,
+      "text": "Guardado al cambiar de escena"
+    }
+  ],
+  "code": "7.3",
+  "created_at": "2026-10-08T04:45:23.257Z",
+  "links": [
+    {
+      "task": "m7-06",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m07",
+  "notes": "Skills: `godot:godot-resources`, `disciplines:save-systems`.",
+  "order": 3,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "estado-flags"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "guardado"
+    }
+  ],
+  "status": "todo",
+  "test": "Entrar y salir del templo varias veces: el player aparece en la puerta correcta, sin congelarse, y el estado de la mazmorra se conserva.",
+  "title": "Cambio de escena overworld ↔ mazmorra",
+  "updated_at": "2026-10-08T04:45:55.656Z"
+}

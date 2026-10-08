@@ -1,0 +1,43 @@
+{
+  "checklist": [
+    {
+      "detail": "Una fila por categoría; las ranuras sin ítem se muestran bloqueadas.",
+      "done": false,
+      "text": "Ranuras de espada, escudo y armadura"
+    },
+    {
+      "detail": "El player cambia el modelo al instante por `equipment_changed` (de 0.9).",
+      "done": false,
+      "text": "Equipar con `GameState.equip()`"
+    },
+    {
+      "detail": "Daño de la espada, reducción de la armadura, si el escudo refleja.",
+      "done": false,
+      "text": "Stats del equipo"
+    },
+    {
+      "detail": "`SubViewport` con una copia del modelo del player girando, con el equipo actual.",
+      "done": false,
+      "text": "Preview del modelo"
+    }
+  ],
+  "code": "3.2",
+  "created_at": "2026-10-08T04:45:08.667Z",
+  "milestone": "m03",
+  "notes": "La cota reforzada (7.7) es el ítem que justifica esta pantalla en el MVP.",
+  "order": 2,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "ui"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "items-mvp"
+    }
+  ],
+  "status": "todo",
+  "test": "Desde el escenario `full_inventory`: cambiar de escudo y armadura en la pantalla, cerrar y ver el cambio en el player; guardar y cargar conserva el equipo.",
+  "title": "Pantalla Equipo",
+  "updated_at": "2026-10-08T04:45:08.930Z"
+}

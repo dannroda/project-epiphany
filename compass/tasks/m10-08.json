@@ -1,0 +1,29 @@
+{
+  "checklist": [
+    {
+      "detail": "60 FPS en la máquina más floja de los playtesters.",
+      "done": false,
+      "text": "Presupuesto de frame"
+    },
+    {
+      "detail": "Arena con oleadas, overworld con pasto, jefe. Profiler y monitores `epiphany/*`.",
+      "done": false,
+      "text": "Perfilar las peores escenas"
+    },
+    {
+      "detail": "Pools, MultiMesh, luces con sombra, partículas.",
+      "done": false,
+      "text": "Arreglar lo que se mida"
+    }
+  ],
+  "code": "10.8",
+  "created_at": "2026-10-08T04:45:37.474Z",
+  "milestone": "m10",
+  "notes": "Skills: `disciplines:performance-optimization`.",
+  "order": 8,
+  "refs": [],
+  "status": "todo",
+  "test": "Las tres escenas se mantienen en el presupuesto en build release.",
+  "title": "Pasada de rendimiento",
+  "updated_at": "2026-10-08T04:45:37.744Z"
+}

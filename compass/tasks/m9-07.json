@@ -1,0 +1,31 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "El ojo marca el piso antes de golpes de área"
+    },
+    {
+      "done": false,
+      "text": "Combinar patrones de manos y ojo"
+    }
+  ],
+  "code": "9.7",
+  "created_at": "2026-10-08T04:45:33.373Z",
+  "milestone": "m09",
+  "notes": "Primera en la lista de recortes ([[gdd#roadmap]]). Solo si sobra tiempo.",
+  "order": 7,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "jefe"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "roadmap"
+    }
+  ],
+  "status": "todo",
+  "test": "La fase 3 se activa por debajo de cierto umbral de vida y se puede ganar sin recibir daño inevitable.",
+  "title": "Fase 3 (recortable)",
+  "updated_at": "2026-10-08T04:45:33.661Z"
+}

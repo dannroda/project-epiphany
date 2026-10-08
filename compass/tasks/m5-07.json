@@ -1,0 +1,33 @@
+{
+  "checklist": [
+    {
+      "detail": "`ConsumableBehavior` con `heal` y `leaves` = botella vacía. Código en [[gdd#items-datos]].",
+      "done": false,
+      "text": "`ItemData` de botella vacía y poción"
+    },
+    {
+      "detail": "`Use_Item`; el player queda vulnerable mientras toma (riesgo/recompensa).",
+      "done": false,
+      "text": "Animación de tomar"
+    }
+  ],
+  "code": "5.7",
+  "created_at": "2026-10-08T04:45:17.689Z",
+  "milestone": "m05",
+  "notes": "",
+  "order": 7,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "items-mvp"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "items-datos"
+    }
+  ],
+  "status": "todo",
+  "test": "Tomar la poción con 1 corazón: cura y queda la botella vacía en el inventario.",
+  "title": "Poción y botella",
+  "updated_at": "2026-10-08T04:45:17.962Z"
+}

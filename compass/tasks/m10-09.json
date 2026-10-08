@@ -1,0 +1,45 @@
+{
+  "checklist": [
+    {
+      "detail": "Linux y Windows, release y debug.",
+      "done": false,
+      "text": "Compilar las plantillas de export del LimboAI propio"
+    },
+    {
+      "detail": "Excluir `debug/scenarios/*` y `tests/`; `plain_saves` solo en el preset de debug.",
+      "done": false,
+      "text": "Presets de export"
+    },
+    {
+      "detail": "`SaveCodec._PASS` antes del primer release.",
+      "done": false,
+      "text": "Cambiar la clave de guardado"
+    },
+    {
+      "detail": "Script `tools/build.sh` con `godot --headless --export-release`.",
+      "done": false,
+      "text": "Build por línea de comandos"
+    }
+  ],
+  "code": "10.9",
+  "created_at": "2026-10-08T04:45:37.982Z",
+  "links": [
+    {
+      "task": "m10-10",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m10",
+  "notes": "Skills: `godot:godot-export`.",
+  "order": 9,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "guardado"
+    }
+  ],
+  "status": "todo",
+  "test": "Instalar el build en una máquina limpia (Linux y Windows): arranca, guarda en `user://` cifrado y no incluye escenarios ni tests.",
+  "title": "Build para playtesters",
+  "updated_at": "2026-10-08T04:46:06.019Z"
+}

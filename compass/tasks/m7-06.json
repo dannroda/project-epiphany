@@ -1,0 +1,44 @@
+{
+  "checklist": [
+    {
+      "detail": "Fuente de luz + espejos fijos + el escudo: hay que llevar el haz hasta el sello.",
+      "done": false,
+      "text": "Puzzle del sello"
+    },
+    {
+      "detail": "Flag `ow_temple_seal_open`; animación y temblor (primer momento de *doom*).",
+      "done": false,
+      "text": "Abrir la entrada"
+    },
+    {
+      "detail": "Sacudida suave de cámara y sonido grave al entrar en la zona del templo.",
+      "done": false,
+      "text": "Temblores lejanos al acercarse"
+    }
+  ],
+  "code": "7.6",
+  "created_at": "2026-10-08T04:45:24.766Z",
+  "links": [
+    {
+      "task": "m7-08",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m07",
+  "notes": "",
+  "order": 6,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "progresion-gating"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "historia"
+    }
+  ],
+  "status": "todo",
+  "test": "Desde `pre_temple`: abrir el sello y entrar a la mazmorra; al volver, la entrada sigue abierta.",
+  "title": "Sello del templo",
+  "updated_at": "2026-10-08T04:45:56.770Z"
+}

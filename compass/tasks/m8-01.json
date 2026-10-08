@@ -1,0 +1,54 @@
+{
+  "checklist": [
+    {
+      "detail": "Hub central con 4 salidas ([[gdd#mazmorra]]).",
+      "done": false,
+      "text": "Diagrama de conexiones de las 8 salas + jefe"
+    },
+    {
+      "detail": "Nunca menos llaves accesibles que puertas en cualquier orden de recorrido (evitar softlocks).",
+      "done": false,
+      "text": "Contar llaves y puertas con llave"
+    },
+    {
+      "detail": "La segunda mitad necesita el arco; el jugador vuelve por salas ya vistas con algo nuevo.",
+      "done": false,
+      "text": "Ubicar el arco a mitad de camino"
+    },
+    {
+      "detail": "Columna \"Doom\" del GDD.",
+      "done": false,
+      "text": "Curva de tensión y *doom* por sala"
+    },
+    {
+      "detail": "Cerrar la decisión abierta del layout de la mazmorra.",
+      "done": false,
+      "text": "Actualizar el GDD"
+    }
+  ],
+  "code": "8.1",
+  "created_at": "2026-10-08T04:45:26.292Z",
+  "links": [
+    {
+      "task": "m8-03",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m08",
+  "notes": "Skills: `disciplines:level-design`.",
+  "order": 1,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "mazmorra"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "decisiones-abiertas"
+    }
+  ],
+  "status": "todo",
+  "test": "El diagrama está en el GDD; recorrerlo en papel en cualquier orden posible no deja al jugador sin llaves.",
+  "title": "Layout de la mazmorra",
+  "updated_at": "2026-10-08T04:45:57.327Z"
+}

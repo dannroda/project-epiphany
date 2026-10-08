@@ -1,0 +1,57 @@
+{
+  "checklist": [
+    {
+      "detail": "`item_1`/`item_2` → busca el ítem en `GameState.item_buttons`, chequea `behavior.can_use()` y reproduce `behavior.get_animation()`.",
+      "done": false,
+      "text": "Estado `UsingItem` en el `LimboHSM`"
+    },
+    {
+      "detail": "`origin` desde la mano (o un `Muzzle`), `direction` desde `Aim`, `inventory` de `GameState`. Ver [[gdd#items-datos]].",
+      "done": false,
+      "text": "Armar el `ItemUseContext`"
+    },
+    {
+      "detail": "Con un tiempo normalizado del ítem (como `AttackData`), no con pistas de método en la animación.",
+      "done": false,
+      "text": "Llamar `behavior.use()` en el momento justo"
+    },
+    {
+      "detail": "Sin munición: sonido y sacudida del slot en el HUD.",
+      "done": false,
+      "text": "Feedback de \"no se puede\""
+    }
+  ],
+  "code": "3.4",
+  "created_at": "2026-10-08T04:45:09.671Z",
+  "links": [
+    {
+      "task": "m5-03",
+      "type": "blocks"
+    },
+    {
+      "task": "m5-04",
+      "type": "blocks"
+    },
+    {
+      "task": "m5-07",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m03",
+  "notes": "Con un ítem de prueba (por ejemplo, una poción) alcanza para cerrar la tarea; los behaviors reales son M5.",
+  "order": 4,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "items-datos"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "player"
+    }
+  ],
+  "status": "todo",
+  "test": "Con una poción asignada a X y el player herido: apretar X la toma y cura. Con la vida llena, no la gasta y suena el \"no se puede\".",
+  "title": "Usar los ítems asignados",
+  "updated_at": "2026-10-08T04:45:47.914Z"
+}

@@ -1,0 +1,48 @@
+{
+  "checklist": [
+    {
+      "detail": "Continuar / Nueva partida / Opciones / Salir. Navegable con gamepad y teclado.",
+      "done": false,
+      "text": "Logo y menú"
+    },
+    {
+      "detail": "Lista de `debug/scenarios/`.",
+      "done": false,
+      "text": "*Cargar escenario* solo en debug"
+    },
+    {
+      "detail": "El título pasa a ser `run/main_scene`; respetar `--scenario=` y `next_scenario.txt`.",
+      "done": false,
+      "text": "Escena principal del proyecto"
+    }
+  ],
+  "code": "10.1",
+  "created_at": "2026-10-08T04:45:33.912Z",
+  "links": [
+    {
+      "task": "m10-02",
+      "type": "blocks"
+    },
+    {
+      "task": "m10-03",
+      "type": "blocks"
+    },
+    {
+      "task": "m10-04",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m10",
+  "notes": "Skills: `disciplines:game-ui-ux`.",
+  "order": 1,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "ui"
+    }
+  ],
+  "status": "todo",
+  "test": "Arrancar el juego exportado: título, nueva partida, jugar, salir al título y continuar.",
+  "title": "Pantalla de título",
+  "updated_at": "2026-10-08T04:46:05.175Z"
+}

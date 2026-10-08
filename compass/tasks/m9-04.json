@@ -1,0 +1,40 @@
+{
+  "checklist": [
+    {
+      "detail": "Sombra en el suelo que se achica antes del impacto; onda de choque.",
+      "done": false,
+      "text": "Golpe al piso telegrafiado"
+    },
+    {
+      "detail": "Si atrapa al player, daño por tiempo; se escapa apretando botones o con un golpe de la otra mano.",
+      "done": false,
+      "text": "Agarre"
+    },
+    {
+      "detail": "Ventana de espadazos; aturdir las dos pasa a fase 2.",
+      "done": false,
+      "text": "Mano aturdida tras el golpe al piso"
+    }
+  ],
+  "code": "9.4",
+  "created_at": "2026-10-08T04:45:31.865Z",
+  "links": [
+    {
+      "task": "m9-05",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m09",
+  "notes": "Skills: `disciplines:game-feel`.",
+  "order": 4,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "jefe"
+    }
+  ],
+  "status": "todo",
+  "test": "Se puede ganar la fase solo con bloqueo y roll; los golpes se pueden anticipar mirando la sombra.",
+  "title": "Fase 1: manos",
+  "updated_at": "2026-10-08T04:46:02.653Z"
+}

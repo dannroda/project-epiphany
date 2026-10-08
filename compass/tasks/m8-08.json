@@ -1,0 +1,48 @@
+{
+  "checklist": [
+    {
+      "detail": "El último, inconsistente a propósito, para probar la validación.",
+      "done": false,
+      "text": "Escenarios `dungeon_no_bow`, `pre_boss` y `boss_key_door_locked`"
+    },
+    {
+      "detail": "Anotar tiempos y dónde se traba el jugador.",
+      "done": false,
+      "text": "Recorrido entero sin escenarios intermedios"
+    },
+    {
+      "detail": "Quedarse sin bombas o flechas (¿hay drops?), bloques trabados, puertas que se cierran con el player del lado equivocado.",
+      "done": false,
+      "text": "Buscar softlocks"
+    }
+  ],
+  "code": "8.8",
+  "created_at": "2026-10-08T04:45:29.837Z",
+  "links": [
+    {
+      "task": "m10-06",
+      "type": "blocks"
+    },
+    {
+      "task": "m10-08",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m08",
+  "notes": "Cierra el hito: \"la mazmorra se recorre entera\".",
+  "order": 8,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "mazmorra"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "save-inspector"
+    }
+  ],
+  "status": "todo",
+  "test": "Jugar de la entrada a la puerta del jefe con un solo guardado al principio.",
+  "title": "Recorrido completo y escenarios de la mazmorra",
+  "updated_at": "2026-10-08T04:46:05.738Z"
+}

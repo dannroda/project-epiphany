@@ -1,0 +1,42 @@
+{
+  "checklist": [
+    {
+      "detail": "Cerrar la decisión en [[gdd#decisiones-abiertas]].",
+      "done": false,
+      "text": "Decidir 1 o 3 ranuras"
+    },
+    {
+      "detail": "Corazones, ubicación y tiempo jugado (sumar `play_time` a `GameState`).",
+      "done": false,
+      "text": "Pantalla de ranuras"
+    },
+    {
+      "detail": "Al cambiar de escena, al abrir cofres grandes y al entrar a la antesala. Indicador de guardado en pantalla.",
+      "done": false,
+      "text": "Política de autosave"
+    },
+    {
+      "done": false,
+      "text": "Borrar partida con confirmación"
+    }
+  ],
+  "code": "10.2",
+  "created_at": "2026-10-08T04:45:34.423Z",
+  "milestone": "m10",
+  "notes": "Skills: `disciplines:save-systems`.",
+  "order": 2,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "guardado"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "ui"
+    }
+  ],
+  "status": "todo",
+  "test": "Jugar en dos ranuras distintas y verificar que no se pisan; cortar el proceso a mitad de un guardado no rompe la partida.",
+  "title": "Selección de partida y autosave",
+  "updated_at": "2026-10-08T04:45:34.693Z"
+}

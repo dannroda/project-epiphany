@@ -1,0 +1,38 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Sala 1: bloque por grilla → interruptor → persiana"
+    },
+    {
+      "detail": "Con llave, con persiana, la del jefe (sellada) y una libre.",
+      "done": false,
+      "text": "Sala 2: hub con 4 salidas y esqueletos"
+    }
+  ],
+  "code": "8.3",
+  "created_at": "2026-10-08T04:45:27.296Z",
+  "links": [
+    {
+      "task": "m8-04",
+      "type": "blocks"
+    },
+    {
+      "task": "m8-05",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m08",
+  "notes": "",
+  "order": 3,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "mazmorra"
+    }
+  ],
+  "status": "todo",
+  "test": "Desde la entrada de la mazmorra, llegar al hub y ver las 4 salidas en el estado que dice el GDD.",
+  "title": "Salas 1–2: vestíbulo y hub",
+  "updated_at": "2026-10-08T04:45:58.693Z"
+}

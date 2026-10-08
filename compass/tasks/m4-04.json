@@ -1,0 +1,49 @@
+{
+  "checklist": [
+    {
+      "detail": "`Hurtbox` de equipo neutral: se rompe con espada, bomba o al tirarla. Suelta según su `DropTable`.",
+      "done": false,
+      "text": "Vasija rompible"
+    },
+    {
+      "detail": "Estado `Carrying` del player. Si se complica, queda solo rompible: está en la lista de recortes.",
+      "done": false,
+      "text": "Levantar y lanzar vasijas (opcional)"
+    },
+    {
+      "detail": "Instancias livianas (MultiMesh o escena chica) que se cortan con la espada y a veces sueltan algo.",
+      "done": false,
+      "text": "Pasto cortable"
+    },
+    {
+      "detail": "No usan flags.",
+      "done": false,
+      "text": "Reaparecen al recargar la escena"
+    }
+  ],
+  "code": "4.4",
+  "created_at": "2026-10-08T04:45:13.704Z",
+  "links": [
+    {
+      "task": "m8-07",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m04",
+  "notes": "Último en la lista de recortes del GDD (\"pasto/vasijas en overworld\"); en la antesala de la mazmorra (sala 8) las vasijas con corazones sí hacen falta.\n\nSkills: `disciplines:performance-optimization`.",
+  "order": 4,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "mazmorra"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "items-mvp"
+    }
+  ],
+  "status": "todo",
+  "test": "Cortar un campo de 50 matas de pasto sin caídas de FPS (*Debugger › Monitors*). Romper vasijas: sueltan corazones y vuelven al recargar.",
+  "title": "Vasijas y pasto",
+  "updated_at": "2026-10-08T04:46:00.396Z"
+}

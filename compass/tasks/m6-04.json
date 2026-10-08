@@ -1,0 +1,49 @@
+{
+  "checklist": [
+    {
+      "detail": "`AnimatableBody3D` que se mueve 1 celda con tween tras empujar ≈0.3 s contra él.",
+      "done": false,
+      "text": "Crear `src/world/push_block.gd`"
+    },
+    {
+      "detail": "`ShapeCast3D` o consulta al espacio: no entra en paredes, otros bloques ni enemigos.",
+      "done": false,
+      "text": "Chequear la celda destino"
+    },
+    {
+      "detail": "Animación de empujar (KayKit `Interact` o la más parecida).",
+      "done": false,
+      "text": "Estado `Pushing` del player y prompt \"Empujar\""
+    },
+    {
+      "detail": "Los bloques vuelven a su lugar al re-entrar, salvo que un flag diga que el puzzle está resuelto.",
+      "done": false,
+      "text": "Reset al salir de la sala"
+    }
+  ],
+  "code": "6.4",
+  "created_at": "2026-10-08T04:45:20.237Z",
+  "links": [
+    {
+      "task": "m6-07",
+      "type": "blocks"
+    },
+    {
+      "task": "m7-07",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m06",
+  "notes": "Skills: `godot:godot-physics`.",
+  "order": 4,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "mundo"
+    }
+  ],
+  "status": "todo",
+  "test": "Empujar un bloque contra una pared no lo mueve; empujarlo sobre un interruptor de piso lo activa. Salir y volver: el bloque está en su posición inicial.",
+  "title": "Bloques por grilla",
+  "updated_at": "2026-10-08T04:45:56.484Z"
+}

@@ -1,0 +1,49 @@
+{
+  "checklist": [
+    {
+      "detail": "Animación `Death_A`, input bloqueado, los enemigos dejan de atacar (grupo `player_dead` o señal).",
+      "done": false,
+      "text": "Estado `Dead`"
+    },
+    {
+      "detail": "`SpawnPoint` (Marker3D con `id: StringName`) en el nivel. `GameState.spawn_point` dice cuál usar; al tocar uno nuevo (checkpoint) se actualiza.",
+      "done": false,
+      "text": "Puntos de reaparición"
+    },
+    {
+      "detail": "Recargar la escena actual y posicionar al player en el spawn. Sin pantalla de game over (llega en M10): un fundido a negro alcanza.",
+      "done": false,
+      "text": "Reaparecer con la vida llena"
+    },
+    {
+      "detail": "Quién mató al player y con cuánto daño, para balancear.",
+      "done": false,
+      "text": "Log en el canal `combat`"
+    }
+  ],
+  "code": "1.5",
+  "created_at": "2026-10-08T04:45:04.635Z",
+  "links": [
+    {
+      "task": "m0-05",
+      "type": "related"
+    },
+    {
+      "task": "m10-03",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m01",
+  "notes": "En mazmorra se reaparece en la entrada de la sala (6.1); acá alcanza con el spawn del nivel.",
+  "order": 5,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "combate"
+    }
+  ],
+  "status": "todo",
+  "test": "Dejarse matar: animación de muerte, fundido y reaparición en el spawn con la vida llena; los enemigos vuelven a su posición inicial.",
+  "title": "Muerte y reaparición del player",
+  "updated_at": "2026-10-08T04:46:04.885Z"
+}

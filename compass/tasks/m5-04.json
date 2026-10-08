@@ -1,0 +1,61 @@
+{
+  "checklist": [
+    {
+      "detail": "Coloca la bomba delante; si se está apuntando, la lanza en arco hacia `Aim`. Animación `Throw`.",
+      "done": false,
+      "text": "`PlaceBehavior` y `ItemData` de bombas"
+    },
+    {
+      "detail": "`RigidBody3D` con mecha de ≈2 s y parpadeo que se acelera. Se puede empujar y patear.",
+      "done": false,
+      "text": "Bomba física"
+    },
+    {
+      "detail": "`Hitbox` de área un instante: daña a todos (incluido el player), impulsa `RigidBody3D` y marca `DamageInfo.element = &\"explosive\"`.",
+      "done": false,
+      "text": "Explosión"
+    },
+    {
+      "detail": "Una o dos a la vez.",
+      "done": false,
+      "text": "Límite de bombas activas"
+    }
+  ],
+  "code": "5.4",
+  "created_at": "2026-10-08T04:45:16.184Z",
+  "links": [
+    {
+      "task": "m5-05",
+      "type": "blocks"
+    },
+    {
+      "task": "m5-08",
+      "type": "blocks"
+    },
+    {
+      "task": "m7-04",
+      "type": "blocks"
+    },
+    {
+      "task": "m8-04",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m05",
+  "notes": "Skills: `disciplines:game-feel`, `godot:godot-physics`.",
+  "order": 4,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "items-mvp"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "items-datos"
+    }
+  ],
+  "status": "todo",
+  "test": "Una bomba junto a un esqueleto con escudo y a una caja física: el esqueleto recibe daño y la caja sale volando. El player también se lastima si queda en el radio.",
+  "title": "Bombas",
+  "updated_at": "2026-10-08T04:45:58.425Z"
+}

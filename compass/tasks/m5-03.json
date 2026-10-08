@@ -1,0 +1,61 @@
+{
+  "checklist": [
+    {
+      "detail": "Munición `arrow`, `max_stack` 30 (el carcaj grande suma con `_capacity_bonus`).",
+      "done": false,
+      "text": "`ItemData` de arco y flecha con `ProjectileBehavior`"
+    },
+    {
+      "detail": "`Ranged_Bow_Draw` → `Ranged_Bow_Aiming_Idle` → `Ranged_Bow_Release`. Mientras se mantiene, el player strafea y se ve la retícula (2.2).",
+      "done": false,
+      "text": "Mantener para apuntar, soltar para disparar"
+    },
+    {
+      "detail": "Se clava en paredes un rato y desaparece.",
+      "done": false,
+      "text": "Escena de flecha"
+    },
+    {
+      "detail": "`EyeSwitch`: `Hurtbox` que solo reacciona a flechas (o a proyectiles en general) y emite `activated`. Lo usan la sala 6 y el carcaj (7.7).",
+      "done": false,
+      "text": "Interruptor de ojo"
+    }
+  ],
+  "code": "5.3",
+  "created_at": "2026-10-08T04:45:15.687Z",
+  "links": [
+    {
+      "task": "m5-08",
+      "type": "blocks"
+    },
+    {
+      "task": "m7-07",
+      "type": "blocks"
+    },
+    {
+      "task": "m8-06",
+      "type": "blocks"
+    },
+    {
+      "task": "m9-05",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m05",
+  "notes": "",
+  "order": 3,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "items-mvp"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "items-datos"
+    }
+  ],
+  "status": "todo",
+  "test": "Disparar a un interruptor de ojo a distancia con stick y con mouse: se activa. Sin flechas, el arco no dispara y suena el \"no se puede\".",
+  "title": "Arco y flechas",
+  "updated_at": "2026-10-08T04:46:02.932Z"
+}

@@ -1,0 +1,48 @@
+{
+  "checklist": [
+    {
+      "detail": "Solo reacciona a daño `explosive`. Al romperse: animación o reemplazo por escombros, polvo y sonido de secreto.",
+      "done": false,
+      "text": "Escena `CrackedWall`"
+    },
+    {
+      "detail": "Con `PersistentFlag` (4.5).",
+      "done": false,
+      "text": "Persistencia con flag"
+    },
+    {
+      "detail": "Textura de grieta distinta del resto de la pared, visible desde la cámara inclinada.",
+      "done": false,
+      "text": "Pista visual legible"
+    }
+  ],
+  "code": "5.5",
+  "created_at": "2026-10-08T04:45:16.672Z",
+  "links": [
+    {
+      "task": "m5-08",
+      "type": "blocks"
+    },
+    {
+      "task": "m7-04",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m05",
+  "notes": "",
+  "order": 5,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "items-mvp"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "progresion-gating"
+    }
+  ],
+  "status": "todo",
+  "test": "Un muro agrietado del nivel de prueba: la espada no lo rompe, una bomba sí; sigue roto después de guardar y cargar.",
+  "title": "Muros agrietados",
+  "updated_at": "2026-10-08T04:45:54.539Z"
+}

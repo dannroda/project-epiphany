@@ -1,0 +1,40 @@
+{
+  "checklist": [
+    {
+      "detail": "Un solo estilo (por ejemplo, silueta plana con contorno, 128 px, paleta corta) para que se lean juntos en la grilla.",
+      "done": false,
+      "text": "Definir estilo y tamaño de íconos"
+    },
+    {
+      "detail": "Asignarlos en los `.tres` de `data/items/`.",
+      "done": false,
+      "text": "Un ícono por cada `ItemData`"
+    },
+    {
+      "detail": "Que ningún ítem visible en las pantallas tenga `icon` vacío.",
+      "done": false,
+      "text": "Chequeo en los tests"
+    }
+  ],
+  "code": "3.8",
+  "created_at": "2026-10-08T04:45:11.674Z",
+  "links": [
+    {
+      "task": "m0-03",
+      "type": "related"
+    }
+  ],
+  "milestone": "m03",
+  "notes": "Placeholders coherentes, no arte final: la dirección de arte se decide en 10.7.\n\nSkills: `disciplines:create-game-assets`.",
+  "order": 8,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "items-mvp"
+    }
+  ],
+  "status": "todo",
+  "test": "Abrir las pantallas Equipo e Ítems con `full_inventory`: todos los ítems tienen ícono y se distinguen a tamaño de HUD.",
+  "title": "Íconos placeholder de los ítems",
+  "updated_at": "2026-10-08T04:45:43.472Z"
+}

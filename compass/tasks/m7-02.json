@@ -1,0 +1,53 @@
+{
+  "checklist": [
+    {
+      "detail": "Terreno y límites en gris con el kit de 6.7; `levels/test.tscn` queda como nivel de pruebas.",
+      "done": false,
+      "text": "Crear `levels/overworld.tscn`"
+    },
+    {
+      "detail": "`SpawnPoint` por zona; el HUD muestra el nombre al entrar a cada una.",
+      "done": false,
+      "text": "Puntos de reaparición y nombres de zona"
+    },
+    {
+      "detail": "Esqueletos y pasto (si 4.4 entró).",
+      "done": false,
+      "text": "Navmesh y enemigos de la pradera"
+    },
+    {
+      "detail": "Cajas y rocas para empujar y volar con bombas.",
+      "done": false,
+      "text": "Objetos físicos"
+    }
+  ],
+  "code": "7.2",
+  "created_at": "2026-10-08T04:45:22.768Z",
+  "links": [
+    {
+      "task": "m7-03",
+      "type": "blocks"
+    },
+    {
+      "task": "m7-04",
+      "type": "blocks"
+    },
+    {
+      "task": "m7-07",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m07",
+  "notes": "Skills: `disciplines:level-design`, `godot:godot-3d-essentials`.",
+  "order": 2,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "overworld"
+    }
+  ],
+  "status": "todo",
+  "test": "Recorrer el overworld de punta a punta con el inventario completo sin caer fuera del mapa ni trabarse.",
+  "title": "Blockout del overworld",
+  "updated_at": "2026-10-08T04:45:55.943Z"
+}

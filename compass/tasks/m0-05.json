@@ -31,6 +31,10 @@
     {
       "task": "m0-09",
       "type": "blocks"
+    },
+    {
+      "task": "m3-06",
+      "type": "blocks"
     }
   ],
   "milestone": "m00",
@@ -45,5 +49,5 @@
   "status": "todo",
   "test": "Llamar `write_to()` sobre un `ConfigFile` nuevo, cambiar algo del estado (por ejemplo, sumar bombas) y llamar `read_from()` con ese mismo `ConfigFile`: el estado vuelve a ser el de antes.",
   "title": "GameState",
-  "updated_at": "2026-10-04T22:17:18.896Z"
+  "updated_at": "2026-10-08T04:45:42.879Z"
 }

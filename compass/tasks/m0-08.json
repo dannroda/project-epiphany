@@ -36,6 +36,10 @@
     {
       "task": "m0-09",
       "type": "related"
+    },
+    {
+      "task": "m1-04",
+      "type": "blocks"
     }
   ],
   "milestone": "m00",
@@ -54,5 +58,5 @@
   "status": "todo",
   "test": "Se prueba al terminar 0.9: pegarle al esqueleto le baja la vida y muere con su animación. Las cajas siguen saliendo despedidas.",
   "title": "Enemigo sobre componentes",
-  "updated_at": "2026-10-04T22:17:19.403Z"
+  "updated_at": "2026-10-08T04:45:40.101Z"
 }

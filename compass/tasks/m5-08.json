@@ -1,0 +1,29 @@
+{
+  "checklist": [
+    {
+      "detail": "`levels/sandbox_items.tscn`: muro bombable, ojo-interruptor lejano, reflejo de luz, orbe de torreta. Grises.",
+      "done": false,
+      "text": "Un puzzle por ítem en un nivel sandbox"
+    },
+    {
+      "detail": "Para entrar directo desde el Save Inspector.",
+      "done": false,
+      "text": "Escenario `full_inventory` apuntando al sandbox"
+    }
+  ],
+  "code": "5.8",
+  "created_at": "2026-10-08T04:45:18.212Z",
+  "milestone": "m05",
+  "notes": "Cierra el hito: \"cada ítem se usa en al menos un puzzle\". Sirve después como banco de pruebas de regresión.\n\nSkills: `disciplines:level-design`.",
+  "order": 8,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "items-mvp"
+    }
+  ],
+  "status": "todo",
+  "test": "Resolver los cuatro puzzles del sandbox empezando desde el escenario.",
+  "title": "Sala de pruebas de ítems",
+  "updated_at": "2026-10-08T04:45:18.486Z"
+}

@@ -1,0 +1,44 @@
+{
+  "checklist": [
+    {
+      "detail": "Ítems de categoría `USABLE`/`UPGRADE` del `Inventory`, con ícono, nombre, descripción y munición.",
+      "done": false,
+      "text": "Grilla de ítems secundarios"
+    },
+    {
+      "detail": "Con el ítem seleccionado, apretar X o Y lo asigna a ese botón (`GameState.item_buttons`). Si ya estaba en el otro, se intercambian.",
+      "done": false,
+      "text": "Asignar a X o Y"
+    },
+    {
+      "detail": "Sin reconstruir la grilla cada frame.",
+      "done": false,
+      "text": "Actualizar por `Inventory.changed`"
+    }
+  ],
+  "code": "3.3",
+  "created_at": "2026-10-08T04:45:09.165Z",
+  "links": [
+    {
+      "task": "m3-04",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m03",
+  "notes": "",
+  "order": 3,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "ui"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "items-mvp"
+    }
+  ],
+  "status": "todo",
+  "test": "Asignar arco a X y bombas a Y, cerrar: el HUD muestra los dos. Guardar y cargar: siguen asignados.",
+  "title": "Pantalla Ítems y asignación a X/Y",
+  "updated_at": "2026-10-08T04:45:42.044Z"
+}

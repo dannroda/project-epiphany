@@ -1,0 +1,35 @@
+{
+  "checklist": [
+    {
+      "detail": "Solo con flechas. Da la brújula y una llave chica. Caer al abismo: daño y vuelta a la entrada.",
+      "done": false,
+      "text": "Sala 6: ojos-interruptor sobre un abismo"
+    },
+    {
+      "detail": "Da la llave del jefe. Recortable: fusionar con la 6 ([[gdd#roadmap]]).",
+      "done": false,
+      "text": "Sala 7: bloques + reflejo + flechas en secuencia"
+    }
+  ],
+  "code": "8.6",
+  "created_at": "2026-10-08T04:45:28.838Z",
+  "links": [
+    {
+      "task": "m8-07",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m08",
+  "notes": "",
+  "order": 6,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "mazmorra"
+    }
+  ],
+  "status": "todo",
+  "test": "Con el arco, resolver las dos salas y salir con brújula y llave del jefe.",
+  "title": "Salas 6–7: ojos y puzzle combinado",
+  "updated_at": "2026-10-08T04:46:00.102Z"
+}

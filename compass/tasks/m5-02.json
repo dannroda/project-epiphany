@@ -1,0 +1,40 @@
+{
+  "checklist": [
+    {
+      "detail": "Estática, con `Health`, `Hurtbox` y un `Muzzle`.",
+      "done": false,
+      "text": "`EntityConfig` y escena de la torreta"
+    },
+    {
+      "detail": "Orbe reflejable (`reflectable = true`). Brillo creciente antes de disparar.",
+      "done": false,
+      "text": "BT: apuntar, telegrafiar y disparar orbes"
+    },
+    {
+      "detail": "Con espada no (o poco), para que enseñe el reflejo.",
+      "done": false,
+      "text": "Vulnerable a su propio orbe reflejado y a flechas"
+    }
+  ],
+  "code": "5.2",
+  "created_at": "2026-10-08T04:45:15.188Z",
+  "links": [
+    {
+      "task": "m8-04",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m05",
+  "notes": "Tercer arquetipo de enemigo del MVP ([[gdd#combate]]).\n\nSkills: `disciplines:ai-behavior-trees-utility-ai`.",
+  "order": 2,
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "combate"
+    }
+  ],
+  "status": "todo",
+  "test": "Con escudo espejo, reflejar tres orbes destruye la torreta; con escudo de madera solo se bloquean.",
+  "title": "Torreta / ojo menor",
+  "updated_at": "2026-10-08T04:45:58.159Z"
+}
