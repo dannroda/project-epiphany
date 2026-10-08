@@ -2,19 +2,19 @@
   "checklist": [
     {
       "detail": "`ConsumableBehavior` con `heal` y `leaves` = botella vacía. Código en [[gdd#items-datos]].",
-      "done": false,
+      "done": true,
       "text": "`ItemData` de botella vacía y poción"
     },
     {
       "detail": "`Use_Item`; el player queda vulnerable mientras toma (riesgo/recompensa).",
-      "done": false,
+      "done": true,
       "text": "Animación de tomar"
     }
   ],
   "code": "5.7",
   "created_at": "2026-10-08T04:45:17.689Z",
   "milestone": "m05",
-  "notes": "",
+  "notes": "Casi todo salió en 3.4: potion con ConsumableBehavior (heal = -1, toda la vida; leaves = bottle_empty, que queda en el mismo botón) y la animación General/Use_Item. Riesgo/recompensa: la poción se toma a mitad de la animación (use_at 0,5); un golpe antes pasa a Hurt, corta el trago y no la gasta. Rellenar la botella (la descripción dice que se puede) no tiene tarea: hace falta una fuente o algo que la llene.",
   "order": 7,
   "refs": [
     {
@@ -26,8 +26,8 @@
       "section": "items-datos"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Tomar la poción con 1 corazón: cura y queda la botella vacía en el inventario.",
   "title": "Poción y botella",
-  "updated_at": "2026-10-08T04:45:17.962Z"
+  "updated_at": "2026-10-08T19:38:08.331Z"
 }

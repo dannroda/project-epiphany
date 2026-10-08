@@ -1082,14 +1082,16 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 **Bloqueada por:** 1.2 Bloqueo direccional y golpe de escudo
 
-### 5.7 Poción y botella · Pendiente
+### 5.7 Poción y botella · En curso
 
-- [ ] `ItemData` de botella vacía y poción
+- [x] `ItemData` de botella vacía y poción
   `ConsumableBehavior` con `heal` y `leaves` = botella vacía. Código en [[gdd#items-datos]].
-- [ ] Animación de tomar
+- [x] Animación de tomar
   `Use_Item`; el player queda vulnerable mientras toma (riesgo/recompensa).
 
 **Prueba:** Tomar la poción con 1 corazón: cura y queda la botella vacía en el inventario.
+
+**Notas:** Casi todo salió en 3.4: potion con ConsumableBehavior (heal = -1, toda la vida; leaves = bottle_empty, que queda en el mismo botón) y la animación General/Use_Item. Riesgo/recompensa: la poción se toma a mitad de la animación (use_at 0,5); un golpe antes pasa a Hurt, corta el trago y no la gasta. Rellenar la botella (la descripción dice que se puede) no tiene tarea: hace falta una fuente o algo que la llene.
 
 **Referencias:** `gdd.md#items-mvp`, `gdd.md#items-datos`
 
