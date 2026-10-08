@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="FeelSettings" format=3]
+[gd_resource type="Resource" script_class="FeelSettings" format=3 uid="uid://ckogas0npiotj"]
 
-[ext_resource type="Script" path="res://src/feel/feel_settings.gd" id="1_feel"]
+[ext_resource type="Script" uid="uid://chnuu3ftjrk4y" path="res://src/feel/feel_settings.gd" id="1_feel"]
 
 [resource]
 script = ExtResource("1_feel")
