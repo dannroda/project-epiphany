@@ -953,7 +953,7 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 
 **Notas:** Decisión del 2026-10-08: el GDD no tiene NPCs con diálogo, pero se integra el plugin ya para no adaptar tablillas e item get después. Elegido sobre Dialogic porque solo maneja el contenido y deja la UI propia (mockups), es liviano y hay menos superficie para romperse con Godot 4.8-dev. Instalado Dialogue Manager v4.1.0 (para Godot 4.7) desde la release de GitHub: import, arranque y tests headless OK en 4.8-dev7; falta confirmar que el editor lo cargue sin errores. Textos en data/dialogue/*.dialogue; el personaje de la línea es el rótulo de la tablilla; item_get.dialogue tiene un cue por id de ítem (si falta, usa la descripción). Traducciones: IDs estáticos [ID:…] como claves; el plugin mantiene la lista de plantillas POT.
 
-## M5 — Ítems secundarios  (6/9)
+## M5 — Ítems secundarios  (7/9)
 
 Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
@@ -1061,22 +1061,20 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 **Bloqueada por:** 4.5 Flags del mundo persistentes; 5.4 Bombas
 
-### 5.6 Escudo espejo y haz de luz · Pendiente
+### 5.6 Escudo espejo y haz de luz · Hecho
 
-- [ ] `ItemData` y modelo del escudo espejo
+- [x] `ItemData` y modelo del escudo espejo
   Categoría `SHIELD`, con `reflects`. Material reflectivo placeholder.
-- [ ] Haz de luz
+- [x] Haz de luz
   `LightBeam`: rayo (RayCast3D en cadena) con mesh visible desde una fuente fija. Rebota en espejos.
-- [ ] El escudo refleja el haz mientras se bloquea
+- [x] El escudo refleja el haz mientras se bloquea
   El haz que toca el escudo sale hacia donde mira el player.
-- [ ] Receptor de luz (cristal)
+- [x] Receptor de luz (cristal)
   `LightReceiver`: emite `activated` mientras recibe luz (o una vez, según configuración).
 
 **Prueba:** Bloquear frente a una fuente de luz y girar hasta apuntar a un cristal: el cristal se activa. Con escudo de madera, el haz se corta en el escudo.
 
-**Notas:** Mecánica central: abre el sello del templo (7.6) y los puzzles de reflejo (sala 3 y 7).
-
-Skills: `godot:godot-physics`, `godot:godot-shaders`.
+**Notas:** Mecánica central: abre el sello del templo (7.6) y los puzzles de reflejo (sala 3 y 7). LightBeam: rayos en cadena (capa 1) recalculados cada cuadro de física, dibujados con cilindros emisivos; rebota en LightMirror (grupo light_mirror, reflexión especular) y en el player con escudo espejo (Player.light_hit): bloqueando de frente sale hacia Aim desde el escudo; en la espalda rebota (el espejo refleja siempre, 5.9). Madera o sin cubrirse: el haz se corta. LightReceiver: activated/deactivated; con latch queda encendido y, con flag, entre partidas. Escenas: light_source, light_receiver, light_mirror (placeholders). Puzzle de prueba en levels/test.tscn: fuente en (13, 0.25, -15.5) hacia el oeste y cristal en (6, 0.25, -12).
 
 **Referencias:** `gdd.md#pilares`, `gdd.md#items-mvp`
 

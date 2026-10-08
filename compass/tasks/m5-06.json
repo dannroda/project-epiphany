@@ -2,22 +2,22 @@
   "checklist": [
     {
       "detail": "Categoría `SHIELD`, con `reflects`. Material reflectivo placeholder.",
-      "done": false,
+      "done": true,
       "text": "`ItemData` y modelo del escudo espejo"
     },
     {
       "detail": "`LightBeam`: rayo (RayCast3D en cadena) con mesh visible desde una fuente fija. Rebota en espejos.",
-      "done": false,
+      "done": true,
       "text": "Haz de luz"
     },
     {
       "detail": "El haz que toca el escudo sale hacia donde mira el player.",
-      "done": false,
+      "done": true,
       "text": "El escudo refleja el haz mientras se bloquea"
     },
     {
       "detail": "`LightReceiver`: emite `activated` mientras recibe luz (o una vez, según configuración).",
-      "done": false,
+      "done": true,
       "text": "Receptor de luz (cristal)"
     }
   ],
@@ -38,7 +38,7 @@
     }
   ],
   "milestone": "m05",
-  "notes": "Mecánica central: abre el sello del templo (7.6) y los puzzles de reflejo (sala 3 y 7).\n\nSkills: `godot:godot-physics`, `godot:godot-shaders`.",
+  "notes": "Mecánica central: abre el sello del templo (7.6) y los puzzles de reflejo (sala 3 y 7). LightBeam: rayos en cadena (capa 1) recalculados cada cuadro de física, dibujados con cilindros emisivos; rebota en LightMirror (grupo light_mirror, reflexión especular) y en el player con escudo espejo (Player.light_hit): bloqueando de frente sale hacia Aim desde el escudo; en la espalda rebota (el espejo refleja siempre, 5.9). Madera o sin cubrirse: el haz se corta. LightReceiver: activated/deactivated; con latch queda encendido y, con flag, entre partidas. Escenas: light_source, light_receiver, light_mirror (placeholders). Puzzle de prueba en levels/test.tscn: fuente en (13, 0.25, -15.5) hacia el oeste y cristal en (6, 0.25, -12).",
   "order": 6,
   "refs": [
     {
@@ -50,8 +50,8 @@
       "section": "items-mvp"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Bloquear frente a una fuente de luz y girar hasta apuntar a un cristal: el cristal se activa. Con escudo de madera, el haz se corta en el escudo.",
   "title": "Escudo espejo y haz de luz",
-  "updated_at": "2026-10-08T04:45:59.819Z"
+  "updated_at": "2026-10-08T19:35:01.817Z"
 }

@@ -222,6 +222,26 @@ func _shield_stops(info: DamageInfo) -> bool:
 	return false
 
 
+## El haz de luz que toca al player: el escudo espejo lo devuelve (de frente bloqueando, hacia la mira;
+## en la espalda, rebota). Con otro escudo o sin cubrirse, el haz se corta acá (null).
+## Devuelve la nueva dirección y el punto de salida: el escudo, delante del centro del player.
+func light_hit(direction: Vector3, point: Vector3) -> Variant:
+	if not shield_reflects():
+		return null
+	var from := point - direction
+	var out: Vector3
+	if is_blocking() and _is_in_front(from):
+		out = aim.get_direction()
+	elif not is_blocking() and _is_behind(from):
+		var back := -model.global_basis.z
+		back.y = 0.0
+		out = direction.bounce(back.normalized()).normalized()
+	else:
+		return null
+	var center := Vector3(global_position.x, point.y, global_position.z)
+	return {direction = out, origin = center + out * 0.6}
+
+
 func _is_behind(point: Vector3) -> bool:
 	var back := -model.global_basis.z
 	back.y = 0.0

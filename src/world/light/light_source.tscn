@@ -1,0 +1,40 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/light/light_beam.gd" id="1_beam"]
+
+[sub_resource type="StandardMaterial3D" id="Stone"]
+albedo_color = Color(0.4, 0.38, 0.35, 1)
+
+[sub_resource type="StandardMaterial3D" id="Lens"]
+shading_mode = 0
+albedo_color = Color(1, 0.92, 0.6, 1)
+
+[sub_resource type="BoxMesh" id="PillarMesh"]
+material = SubResource("Stone")
+size = Vector3(0.7, 1.4, 0.7)
+
+[sub_resource type="SphereMesh" id="LensMesh"]
+material = SubResource("Lens")
+radius = 0.2
+height = 0.4
+
+[sub_resource type="BoxShape3D" id="Shape"]
+size = Vector3(0.7, 1.4, 0.7)
+
+[node name="LightSource" type="StaticBody3D"]
+
+[node name="Pillar" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("PillarMesh")
+
+[node name="Lens" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.38)
+mesh = SubResource("LensMesh")
+
+[node name="Beam" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.45)
+script = ExtResource("1_beam")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+shape = SubResource("Shape")
