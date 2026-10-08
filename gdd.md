@@ -177,7 +177,7 @@ Rig reutilizado de otra jam *(pendiente importarlo al repo)*.
 | **Pausa › Equipo** | Espada, escudo, armadura (con ranuras bloqueadas para lo no conseguido), stats, preview del modelo. |
 | **Pausa › Ítems** | Grilla de ítems secundarios; asignar a X/Y; descripción; munición. |
 | **Pausa › Mapa** | Mapa de la mazmorra (salas visitadas; con mapa: todas; con brújula: cofres y jefe); overworld: mapa simple. |
-| **Caja de texto** | Tablillas e *item get*. |
+| **Caja de texto** | Tablillas e *item get*. El texto vive en archivos `.dialogue` de **Dialogue Manager** (Nathan Hoad); el globo es nuestra `TextBox` con los estilos de los mockups (piedra para tablillas, dorado para *item get*), no la UI del plugin. Se integró aunque no haya NPCs, para tener el sistema andando antes de que haya muchos textos (decisión del 2026-10-08, elegido sobre Dialogic por ser liviano y dejar la UI propia). |
 | **Item get** | Animación con el ítem en alto + nombre + descripción corta. |
 | **Game over** | Continuar / Guardar y salir. |
 | **Opciones** | Lock-on mantener/alternar, sensibilidad de apuntado, volumen, remapeo (post-MVP). |
@@ -198,6 +198,8 @@ data/
   item_database.tres        # registro de todos los ítems
   entities/*.tres           # un EntityConfig por tipo de entidad
   flag_registry.tres        # flags válidas del mundo
+  dialogue/*.dialogue       # textos de Dialogue Manager (tablillas, item get); claves de traducción [ID:…]
+  drops/*.tres              # un DropTable por fuente (skeleton, pot, grass)
 src/
   items/                    item_data.gd, item_database.gd, inventory.gd, item_use_context.gd, items.gd (autoload)
   items/behaviors/          item_behavior.gd, melee_behavior.gd, projectile_behavior.gd,

@@ -1,0 +1,7 @@
+~ bow
+Apuntá con el stick derecho o el mouse. Si tenés un objetivo fijado, la flecha va directo hacia él. [ID:get_bow_1]
+=> END
+
+~ bomb_bag
+Coloca una bomba delante tuyo. Rompe muros agrietados y empuja lo que está cerca. [ID:get_bomb_bag_1]
+=> END

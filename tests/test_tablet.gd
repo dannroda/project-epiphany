@@ -3,12 +3,16 @@ extends "res://tests/test_case.gd"
 const LEVEL := "res://levels/test.tscn"
 
 
-func _finish(tree: SceneTree, box: TextBox) -> void:
+## Lee hasta el final y devuelve cuántas líneas mostró.
+func _finish(tree: SceneTree, box: TextBox) -> int:
+	var shown := 0
 	while is_instance_valid(box) and not box.is_queued_for_deletion():
+		shown = box.page + 1
 		await tree.create_timer(0.3).timeout
 		if is_instance_valid(box):
 			box.advance()
 	await tree.process_frame
+	return shown
 
 
 func test_read_tablets_and_keep_read_flag() -> void:
@@ -27,10 +31,9 @@ func test_read_tablets_and_keep_read_flag() -> void:
 	lore.interactable.interact(player)
 	var box := stack.top() as TextBox
 	assert_true(box != null, "abre la caja")
-	assert_eq(box.data.style, TextData.Style.STONE)
-	assert_eq(box.title_label.text, "Tablilla antigua")
-	assert_eq(box.data.pages.size(), 2)
-	await _finish(tree, box)
+	assert_eq(box.style, TextBox.Style.STONE)
+	assert_eq(box.title_label.text, "Tablilla antigua", "el personaje del .dialogue es el rótulo")
+	assert_eq(await _finish(tree, box), 2, "sin la pista leída: dos líneas")
 	assert_eq(stack.is_open(), false)
 	assert_eq(lore.is_read(), false, "la de ambientación no tiene flag")
 
@@ -38,6 +41,8 @@ func test_read_tablets_and_keep_read_flag() -> void:
 	hint.interactable.interact(player)
 	await _finish(tree, stack.top())
 	assert_eq(hint.is_read(), true, "la pista queda leída")
+	lore.interactable.interact(player)
+	assert_eq(await _finish(tree, stack.top()), 3, "con la pista leída aparece una línea más")
 
 	var cfg := ConfigFile.new()
 	state.write_to(cfg)

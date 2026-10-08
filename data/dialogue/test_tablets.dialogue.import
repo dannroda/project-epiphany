@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=18
+type="Resource"
+uid="uid://bbgcgd3i6bnyn"
+path="res://.godot/imported/test_tablets.dialogue-d418fad0907ee12411e09f23d6b78d05.tres"
+
+[deps]
+
+source_file="res://data/dialogue/test_tablets.dialogue"
+dest_files=["res://.godot/imported/test_tablets.dialogue-d418fad0907ee12411e09f23d6b78d05.tres"]
+
+[params]
+
+defaults=true

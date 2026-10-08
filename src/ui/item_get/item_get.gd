@@ -4,6 +4,8 @@ extends Control
 signal closed
 
 const GOLD := Color("#d9a441")
+## Texto propio de item get por ítem (cue = id); si no hay, se usa la descripción.
+const TEXTS: DialogueResource = preload("res://data/dialogue/item_get.dialogue")
 
 var item: ItemData
 var amount := 1
@@ -20,7 +22,13 @@ func _ready() -> void:
 	rings.position = anchor - rings.size / 2.0
 	rings.draw.connect(_draw_rings)
 	text_box = TextBox.SCENE.instantiate()
-	text_box.data = TextData.make([item.description], title_for(item, amount), TextData.Style.ITEM)
+	text_box.style = TextBox.Style.ITEM
+	text_box.title_override = title_for(item, amount)
+	if TEXTS.cues.has(String(item.id)):
+		text_box.resource = TEXTS
+		text_box.cue = item.id
+	else:
+		text_box.lines = [item.description]
 	text_box.finished.connect(MenuStack.pop)
 	add_child(text_box)
 	move_child(text_box, 0)

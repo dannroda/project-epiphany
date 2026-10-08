@@ -1,6 +1,6 @@
 extends "res://tests/test_case.gd"
 
-const PAGES: PackedStringArray = ["Primera página de la tablilla.", "Segunda página, un poco más larga que la primera.", "Tercera y última."]
+const TEXT := "~ start\nPrimera página de la tablilla.\nSegunda página, un poco más larga que la primera.\nTercera y última.\n=> END"
 
 
 func _key(tree: SceneTree) -> void:
@@ -19,7 +19,7 @@ func _pad(tree: SceneTree) -> void:
 
 func _read_all(tree: SceneTree, press: Callable) -> void:
 	var stack: Node = tree.root.get_node(^"MenuStack")
-	var box := TextBox.open(TextData.make(PAGES))
+	var box := TextBox.open(DialogueManager.create_resource_from_text(TEXT), "start")
 	assert_true(tree.paused, "pausa mientras está abierta")
 	press.call(tree)
 	assert_eq(box.page, 0, "el primer toque, muy pronto, no hace nada")
@@ -50,3 +50,16 @@ func test_three_pages_with_keyboard() -> void:
 
 func test_three_pages_with_gamepad() -> void:
 	await _read_all(Engine.get_main_loop() as SceneTree, _pad)
+
+
+func test_dialogue_reads_and_sets_flags() -> void:
+	var state: Node = (Engine.get_main_loop() as SceneTree).root.get_node(^"GameState")
+	state.reset()
+	var text := "~ start\nif not GameState.get_flag(\"ow_test_chest\")\n\tdo GameState.set_flag(\"ow_test_chest\", true)\n\tPrimera vez.\nelse\n\tYa lo sabías.\n=> END"
+	var resource := DialogueManager.create_resource_from_text(text)
+	var line: DialogueLine = await DialogueManager.get_next_dialogue_line(resource, "start")
+	assert_eq(line.text, "Primera vez.")
+	assert_eq(state.get_flag(&"ow_test_chest"), true, "el diálogo pone el flag")
+	line = await DialogueManager.get_next_dialogue_line(resource, "start")
+	assert_eq(line.text, "Ya lo sabías.", "y lo lee la próxima vez")
+	state.reset()

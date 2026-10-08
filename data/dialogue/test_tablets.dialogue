@@ -1,0 +1,10 @@
+~ lore
+Tablilla antigua: Quienes alzaron este templo no lo hicieron para adorar al Ojo. [ID:test_lore_1]
+Tablilla antigua: Lo hicieron para que nunca volviera a abrirse. [ID:test_lore_2]
+if GameState.get_flag("ow_test_tablet_hint")
+	Tablilla antigua: Bajo las letras, alguien rayó una grieta y una llama. [ID:test_lore_3]
+=> END
+
+~ hint
+Inscripción: Donde la piedra está herida, el fuego abre paso. [ID:test_hint_1]
+=> END

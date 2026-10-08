@@ -9,8 +9,7 @@
 [ext_resource type="Script" uid="uid://boos1wd2wsju2" path="res://src/debug/camera_enabler.gd" id="6_u45fp"]
 [ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="8_2grjb"]
 [ext_resource type="Resource" uid="uid://dwsn6cvxqrfpa" path="res://data/items/bomb_bag.tres" id="i_bomb_bag"]
-[ext_resource type="Resource" path="res://data/texts/test_tablet_hint.tres" id="t_hint"]
-[ext_resource type="Resource" path="res://data/texts/test_tablet_lore.tres" id="t_lore"]
+[ext_resource type="Resource" uid="uid://bbgcgd3i6bnyn" path="res://data/dialogue/test_tablets.dialogue" id="d_tablets"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="ui_hud"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="w_chest"]
 [ext_resource type="Script" uid="uid://x60poi8g2tqu" path="res://src/world/grass_patch.gd" id="w_grass"]
@@ -171,11 +170,13 @@ flag = &"ow_test_chest"
 
 [node name="TabletLore" parent="." unique_id=1233591984 instance=ExtResource("w_tablet")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.25, 1.5)
-text = ExtResource("t_lore")
+dialogue = ExtResource("d_tablets")
+cue = "lore"
 
 [node name="TabletHint" parent="." unique_id=2059030813 instance=ExtResource("w_tablet")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.25, 1.5)
-text = ExtResource("t_hint")
+dialogue = ExtResource("d_tablets")
+cue = "hint"
 flag = &"ow_test_tablet_hint"
 
 [node name="Pot1" parent="." unique_id=1461971348 instance=ExtResource("w_pot")]
