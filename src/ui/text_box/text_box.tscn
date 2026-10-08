@@ -1,0 +1,135 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/ui/text_box/text_box.gd" id="1_box"]
+
+[node name="TextBox" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_box")
+
+[node name="Dim" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.031, 0.035, 0.047, 0.45)
+
+[node name="ItemBox" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 170)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 160.0
+offset_top = -220.0
+offset_right = -160.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_type_variation = &"ItemGetBox"
+
+[node name="Layout" type="VBoxContainer" parent="ItemBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="ItemBox/Layout"]
+layout_mode = 2
+theme_type_variation = &"ItemGetTitle"
+
+[node name="Body" type="Label" parent="ItemBox/Layout"]
+layout_mode = 2
+theme_type_variation = &"ItemGetText"
+autowrap_mode = 3
+
+[node name="NextAnchor" type="Control" parent="ItemBox"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+mouse_filter = 2
+
+[node name="Next" type="Polygon2D" parent="ItemBox/NextAnchor"]
+position = Vector2(-14, -12)
+color = Color(0.851, 0.643, 0.255, 1)
+polygon = PackedVector2Array(0, 0, 16, 0, 8, 12)
+
+[node name="StoneBox" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 190.0
+offset_top = -320.0
+offset_right = -190.0
+offset_bottom = -110.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_type_variation = &"StoneBox"
+
+[node name="Inner" type="PanelContainer" parent="StoneBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"StoneInner"
+
+[node name="Layout" type="VBoxContainer" parent="StoneBox/Inner"]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="Title" type="Label" parent="StoneBox/Inner/Layout"]
+layout_mode = 2
+theme_type_variation = &"StoneCaption"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="Body" type="Label" parent="StoneBox/Inner/Layout"]
+layout_mode = 2
+theme_type_variation = &"StoneText"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Hint" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 190.0
+offset_top = -94.0
+offset_right = -190.0
+offset_bottom = -60.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/separation = 8
+alignment = 2
+
+[node name="HintIcon" type="TextureRect" parent="Hint"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HintText" type="Label" parent="Hint"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.89, 0.84, 1)
+theme_override_font_sizes/font_size = 16
+text = "Continuar"

@@ -505,6 +505,34 @@ corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7p5mo"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.42745098, 0.41568628, 0.38039216, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.12156863, 0.11764706, 0.105882354, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0qkme"]
+content_margin_left = 38.0
+content_margin_top = 24.0
+content_margin_right = 38.0
+content_margin_bottom = 28.0
+bg_color = Color(0.23137255, 0.22745098, 0.21176471, 1)
+border_color = Color(0.23137255, 0.22745098, 0.21176471, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rfthe"]
 content_margin_left = 6.0
 content_margin_top = 8.0
 content_margin_right = 6.0
@@ -513,7 +541,7 @@ bg_color = Color(0, 0, 0, 0)
 draw_center = false
 border_color = Color(0, 0, 0, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0qkme"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lc473"]
 content_margin_left = 6.0
 content_margin_top = 8.0
 content_margin_right = 6.0
@@ -636,16 +664,29 @@ Panel/styles/panel = SubResource("StyleBoxFlat_mi2kv")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_6vga0")
 Slot/base_type = &"PanelContainer"
 Slot/styles/panel = SubResource("StyleBoxFlat_l2y6j")
+StoneBox/base_type = &"PanelContainer"
+StoneBox/styles/panel = SubResource("StyleBoxFlat_7p5mo")
+StoneCaption/base_type = &"Label"
+StoneCaption/colors/font_color = Color(0.8117647, 0.78431374, 0.7058824, 1)
+StoneCaption/font_sizes/font_size = 14
+StoneCaption/fonts/font = ExtResource("2_lf7dv")
+StoneInner/base_type = &"PanelContainer"
+StoneInner/styles/panel = SubResource("StyleBoxFlat_0qkme")
+StoneText/base_type = &"Label"
+StoneText/colors/font_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
+StoneText/constants/line_spacing = 8
+StoneText/font_sizes/font_size = 25
+StoneText/fonts/font = ExtResource("2_lf7dv")
 TabLabel/base_type = &"Label"
 TabLabel/colors/font_color = Color(0.654902, 0.62352943, 0.5568628, 1)
 TabLabel/font_sizes/font_size = 20
 TabLabel/fonts/font = SubResource("FontVariation_r2kde")
-TabLabel/styles/normal = SubResource("StyleBoxFlat_7p5mo")
+TabLabel/styles/normal = SubResource("StyleBoxFlat_rfthe")
 TabLabelSelected/base_type = &"Label"
 TabLabelSelected/colors/font_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
 TabLabelSelected/font_sizes/font_size = 20
 TabLabelSelected/fonts/font = SubResource("FontVariation_r2kde")
-TabLabelSelected/styles/normal = SubResource("StyleBoxFlat_0qkme")
+TabLabelSelected/styles/normal = SubResource("StyleBoxFlat_lc473")
 Title/base_type = &"Label"
 Title/colors/font_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
 Title/font_sizes/font_size = 26

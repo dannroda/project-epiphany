@@ -824,14 +824,14 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 
 **Relacionadas:** 0.3 Ítems: datos
 
-## M4 — Interacción + mundo  (0/5)
+## M4 — Interacción + mundo  (1/5)
 
 `Interactable` con prompt contextual, tablillas y caja de texto, vasijas y pasto, flags del mundo guardadas.
 
 **Hecho cuando:**
 - El mundo recuerda lo que hiciste.
 
-### 4.1 Prompt de acción contextual · En curso
+### 4.1 Prompt de acción contextual · Hecho
 
 - [x] `InteractionDetector` elige el mejor `Interactable`
   Más cercano y de frente; prioridad exportada para desempatar (cofre > tablilla).
@@ -850,22 +850,20 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 
 **Bloqueada por:** 3.6 Cofres e item get
 
-### 4.2 Caja de texto · Pendiente
+### 4.2 Caja de texto · En curso
 
-- [ ] Crear `src/ui/text_box/`
+- [x] Crear `src/ui/text_box/`
   Texto que aparece letra por letra, varias páginas, avanzar con `interact`/`attack`, saltar la animación con el mismo botón.
-- [ ] Pausar el juego mientras está abierta
+- [x] Pausar el juego mientras está abierta
   Usando la pila de menús de 3.1.
-- [ ] Textos como datos
+- [x] Textos como datos
   Recurso `TextData` (páginas) o claves de traducción con `tr()`, para dejar lista la localización. Sin Ink ni Yarn: no hay diálogos con opciones.
-- [ ] Reusar la caja en *item get*
+- [x] Reusar la caja en *item get*
   Reemplazar la caja simple de 3.6.
 
 **Prueba:** Leer un texto de tres páginas con gamepad y con teclado; apretar rápido no se saltea páginas sin querer.
 
-**Notas:** No hay NPCs con diálogo: el texto vive en tablillas e *item get* ([[gdd#historia]]).
-
-Skills: `disciplines:dialogue-systems`, `godot:godot-ui-control`.
+**Notas:** No hay NPCs con diálogo: el texto vive en tablillas e item get. TextBox tiene dos estilos de los mockups: STONE (Tablet: piedra, Cinzel centrado, 'A Continuar' abajo) e ITEM (ItemGet: caja oscura con borde dorado y triángulo). TextData.pages pasan por tr(). Avanzan interact/attack/aceptar; tras abrir o cambiar de página se ignora el input 0,25 s.
 
 **Referencias:** `gdd.md#ui`, `gdd.md#historia`
 

@@ -37,7 +37,7 @@ func test_chest_gives_once_and_stays_open() -> void:
 
 	await tree.create_timer(1.0).timeout
 	assert_true(stack.top() != null and stack.top().has_signal(&"closed"), "caja de item get abierta")
-	assert_eq(stack.top().title.text, "¡Conseguiste la Bolsa de bombas!")
+	assert_eq(stack.top().text_box.title_label.text, "¡Conseguiste la Bolsa de bombas!")
 	assert_true(tree.paused, "el mundo en pausa")
 	stack.pop()
 	await tree.create_timer(1.2).timeout

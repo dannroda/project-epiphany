@@ -2,22 +2,22 @@
   "checklist": [
     {
       "detail": "Texto que aparece letra por letra, varias páginas, avanzar con `interact`/`attack`, saltar la animación con el mismo botón.",
-      "done": false,
+      "done": true,
       "text": "Crear `src/ui/text_box/`"
     },
     {
       "detail": "Usando la pila de menús de 3.1.",
-      "done": false,
+      "done": true,
       "text": "Pausar el juego mientras está abierta"
     },
     {
       "detail": "Recurso `TextData` (páginas) o claves de traducción con `tr()`, para dejar lista la localización. Sin Ink ni Yarn: no hay diálogos con opciones.",
-      "done": false,
+      "done": true,
       "text": "Textos como datos"
     },
     {
       "detail": "Reemplazar la caja simple de 3.6.",
-      "done": false,
+      "done": true,
       "text": "Reusar la caja en *item get*"
     }
   ],
@@ -30,7 +30,7 @@
     }
   ],
   "milestone": "m04",
-  "notes": "No hay NPCs con diálogo: el texto vive en tablillas e *item get* ([[gdd#historia]]).\n\nSkills: `disciplines:dialogue-systems`, `godot:godot-ui-control`.",
+  "notes": "No hay NPCs con diálogo: el texto vive en tablillas e item get. TextBox tiene dos estilos de los mockups: STONE (Tablet: piedra, Cinzel centrado, 'A Continuar' abajo) e ITEM (ItemGet: caja oscura con borde dorado y triángulo). TextData.pages pasan por tr(). Avanzan interact/attack/aceptar; tras abrir o cambiar de página se ignora el input 0,25 s.",
   "order": 2,
   "refs": [
     {
@@ -42,8 +42,8 @@
       "section": "historia"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Leer un texto de tres páginas con gamepad y con teclado; apretar rápido no se saltea páginas sin querer.",
   "title": "Caja de texto",
-  "updated_at": "2026-10-08T04:45:44.322Z"
+  "updated_at": "2026-10-08T07:54:06.210Z"
 }

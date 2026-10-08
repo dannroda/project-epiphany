@@ -1,52 +1,39 @@
 extends Control
-## Item get: el ícono en anillos sobre el player y una caja con el nombre y la descripción. Pausa hasta confirmar.
+## Item get: el ícono en anillos sobre el player y la caja de texto con el nombre y la descripción. Pausa hasta confirmar.
 
 signal closed
 
 const GOLD := Color("#d9a441")
-const ICON_SIZE := 80.0
-## Evita que el mismo botón que abrió el cofre cierre la caja.
-const ACCEPT_DELAY := 0.35
 
 var item: ItemData
 var amount := 1
 ## Centro de los anillos, en pantalla.
 var anchor := Vector2(640, 215)
+var text_box: TextBox
 
 @onready var rings: Control = %Rings
 @onready var icon: TextureRect = %Icon
-@onready var title: Label = %Title
-@onready var text: Label = %Text
-
-var _opened_at := 0
 
 
 func _ready() -> void:
-	_opened_at = Time.get_ticks_msec()
 	icon.texture = item.icon
-	title.text = title_for(item, amount)
-	text.text = item.description
 	rings.position = anchor - rings.size / 2.0
 	rings.draw.connect(_draw_rings)
+	text_box = TextBox.SCENE.instantiate()
+	text_box.data = TextData.make([item.description], title_for(item, amount), TextData.Style.ITEM)
+	text_box.finished.connect(MenuStack.pop)
+	add_child(text_box)
+	move_child(text_box, 0)
 	tree_exiting.connect(closed.emit)
-	var box := $Box as Control
-	box.resized.connect(func() -> void: $Box/Next.position = box.size - Vector2(44, 32))
 
 
 static func title_for(given: ItemData, count: int) -> String:
+	var item_name := given.tr(given.display_name)
 	if count > 1:
-		return "¡Conseguiste %d %s!" % [count, given.display_name]
+		return "¡Conseguiste %d %s!" % [count, item_name]
 	if given.article.is_empty():
-		return "¡Conseguiste %s!" % given.display_name
-	return "¡Conseguiste %s %s!" % [given.article, given.display_name]
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	if Time.get_ticks_msec() - _opened_at < ACCEPT_DELAY * 1000.0:
-		return
-	if event.is_action_pressed(&"ui_accept") or event.is_action_pressed(&"interact") or event.is_action_pressed(&"attack"):
-		get_viewport().set_input_as_handled()
-		MenuStack.pop()
+		return "¡Conseguiste %s!" % item_name
+	return "¡Conseguiste %s %s!" % [given.article, item_name]
 
 
 func _draw_rings() -> void:
