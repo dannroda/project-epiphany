@@ -2,22 +2,22 @@
   "checklist": [
     {
       "detail": "Animación `Death_A`, input bloqueado, los enemigos dejan de atacar (grupo `player_dead` o señal).",
-      "done": false,
+      "done": true,
       "text": "Estado `Dead`"
     },
     {
       "detail": "`SpawnPoint` (Marker3D con `id: StringName`) en el nivel. `GameState.spawn_point` dice cuál usar; al tocar uno nuevo (checkpoint) se actualiza.",
-      "done": false,
+      "done": true,
       "text": "Puntos de reaparición"
     },
     {
       "detail": "Recargar la escena actual y posicionar al player en el spawn. Sin pantalla de game over (llega en M10): un fundido a negro alcanza.",
-      "done": false,
+      "done": true,
       "text": "Reaparecer con la vida llena"
     },
     {
       "detail": "Quién mató al player y con cuánto daño, para balancear.",
-      "done": false,
+      "done": true,
       "text": "Log en el canal `combat`"
     }
   ],
@@ -34,7 +34,7 @@
     }
   ],
   "milestone": "m01",
-  "notes": "En mazmorra se reaparece en la entrada de la sala (6.1); acá alcanza con el spawn del nivel.",
+  "notes": "En mazmorra se reaparece en la entrada de la sala (6.1); acá alcanza con el spawn del nivel.\n\nEstado Dead (anystate, evento `die`): apaga el AnimationTree y deja Death_A; espera `delay` (1,8 s) y llama `SaveManager.respawn()`, que hace el fundido (autoload `Fader`), recarga la escena y pone al player en el SpawnPoint de `GameState.spawn_point` (si no hay, el primero). La reaparición vive en SaveManager porque el player se destruye al recargar. SpawnPoint (src/world/spawn_point.gd): `id`, y si `checkpoint` está activo, al tocarlo actualiza `GameState.spawn_point`. En test.tscn hay uno, SpawnStart (id start). BTFindPlayer ignora al player muerto. Log en `combat`: quién lo mató y con cuánto daño.",
   "order": 5,
   "refs": [
     {
@@ -42,8 +42,8 @@
       "section": "combate"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Dejarse matar: animación de muerte, fundido y reaparición en el spawn con la vida llena; los enemigos vuelven a su posición inicial.",
   "title": "Muerte y reaparición del player",
-  "updated_at": "2026-10-08T04:46:04.885Z"
+  "updated_at": "2026-10-08T05:55:38.470Z"
 }

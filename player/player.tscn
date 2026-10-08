@@ -30,6 +30,7 @@
 [ext_resource type="Script" uid="uid://2515xl1b5dkr" path="res://player/components/targeting.gd" id="c_targeting"]
 [ext_resource type="Script" path="res://player/states/dodging.gd" id="st_dodging"]
 [ext_resource type="Script" path="res://player/components/input_buffer.gd" id="c_input_buffer"]
+[ext_resource type="Script" path="res://player/states/dead.gd" id="st_dead"]
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_peicu"]
 fadeout_time = 0.3
@@ -630,6 +631,9 @@ script = ExtResource("22_rptt4")
 
 [node name="Dodging" type="LimboState" parent="MovementState"]
 script = ExtResource("st_dodging")
+
+[node name="Dead" type="LimboState" parent="MovementState"]
+script = ExtResource("st_dead")
 
 [node name="TargetIndicator" parent="." unique_id=1615443035 instance=ExtResource("22_bjvpn")]
 visible = false

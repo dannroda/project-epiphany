@@ -372,7 +372,7 @@ Los presets de export (plain_saves en debug, excluir debug/scenarios y tests) pa
 
 **Notas:** Para que Claude pueda manejar el editor sin pedirle al usuario que le dé foco o haga clics. Es un plugin aparte, `addons/editor_bridge/`, para que pueda recargar `epiphany_tools` (`reload_plugin`) sin apagarse. Comandos: ping, status, scan, play [scene], stop, log [since], open path [line], save, plugin name enabled, reload_plugin name, autoload name path, setting name value. Si se recarga, reintenta abrir el puerto cada segundo. `autoload` y `setting` todavía no se probaron.
 
-## M1 — Combate real  (4/7)
+## M1 — Combate real  (5/7)
 
 Vida, invulnerabilidad breve, knockback, bloqueo direccional, roll, IA del esqueleto con `BTAttack`, muerte y reaparición, corazones en el HUD.
 
@@ -483,20 +483,22 @@ Tareas propias en ai/tasks/: BTFindPlayer (rango de visión + línea de visión,
 
 **Relacionadas:** 3.7 Recolectables y tabla de drops
 
-### 1.5 Muerte y reaparición del player · Pendiente
+### 1.5 Muerte y reaparición del player · Hecho
 
-- [ ] Estado `Dead`
+- [x] Estado `Dead`
   Animación `Death_A`, input bloqueado, los enemigos dejan de atacar (grupo `player_dead` o señal).
-- [ ] Puntos de reaparición
+- [x] Puntos de reaparición
   `SpawnPoint` (Marker3D con `id: StringName`) en el nivel. `GameState.spawn_point` dice cuál usar; al tocar uno nuevo (checkpoint) se actualiza.
-- [ ] Reaparecer con la vida llena
+- [x] Reaparecer con la vida llena
   Recargar la escena actual y posicionar al player en el spawn. Sin pantalla de game over (llega en M10): un fundido a negro alcanza.
-- [ ] Log en el canal `combat`
+- [x] Log en el canal `combat`
   Quién mató al player y con cuánto daño, para balancear.
 
 **Prueba:** Dejarse matar: animación de muerte, fundido y reaparición en el spawn con la vida llena; los enemigos vuelven a su posición inicial.
 
 **Notas:** En mazmorra se reaparece en la entrada de la sala (6.1); acá alcanza con el spawn del nivel.
+
+Estado Dead (anystate, evento `die`): apaga el AnimationTree y deja Death_A; espera `delay` (1,8 s) y llama `SaveManager.respawn()`, que hace el fundido (autoload `Fader`), recarga la escena y pone al player en el SpawnPoint de `GameState.spawn_point` (si no hay, el primero). La reaparición vive en SaveManager porque el player se destruye al recargar. SpawnPoint (src/world/spawn_point.gd): `id`, y si `checkpoint` está activo, al tocarlo actualiza `GameState.spawn_point`. En test.tscn hay uno, SpawnStart (id start). BTFindPlayer ignora al player muerto. Log en `combat`: quién lo mató y con cuánto daño.
 
 **Referencias:** `gdd.md#combate`
 

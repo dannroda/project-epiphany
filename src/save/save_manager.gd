@@ -87,6 +87,24 @@ func _capture_player() -> void:
 		GameState.player_position = player.global_position
 
 
+## Fundido, recarga la escena y pone al player en el punto de reaparición con la vida llena.
+func respawn() -> void:
+	await Fader.fade_out()
+	get_tree().reload_current_scene()
+	await get_tree().scene_changed
+	_place_at_spawn()
+	Log.info(&"combat", "Reapareció en", GameState.spawn_point if GameState.spawn_point else &"(el primero)")
+	await Fader.fade_in()
+
+
+func _place_at_spawn() -> void:
+	var player := get_tree().get_first_node_in_group(&"player") as CharacterBody3D
+	var point := SpawnPoint.find(get_tree(), GameState.spawn_point)
+	if player and point:
+		player.global_position = point.global_position
+		player.velocity = Vector3.ZERO
+
+
 func _restore_player() -> void:
 	var scene := get_tree().current_scene
 	if not GameState.spawn_scene.is_empty() and (scene == null or scene.scene_file_path != GameState.spawn_scene):
@@ -96,3 +114,5 @@ func _restore_player() -> void:
 	if player and GameState.player_position != null:
 		player.global_position = GameState.player_position
 		player.velocity = Vector3.ZERO
+	elif GameState.spawn_point != &"":
+		_place_at_spawn()

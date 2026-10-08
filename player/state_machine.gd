@@ -18,6 +18,7 @@ func _setup() -> void:
 	add_transition($Moving, $Attacking, "attack")
 	add_transition($Attacking, $Idle, "finished")
 	add_transition(anystate(), $Hurt, "hurt")
+	add_transition(anystate(), $Dead, "die")
 	add_transition($Hurt, $Idle, "finished")
 	add_transition($Idle, $Dodging, "dodge")
 	add_transition($Moving, $Dodging, "dodge")

@@ -215,3 +215,34 @@ func test_buffered_attack_after_attack() -> void:
 		if entered[0] >= 2:
 			break
 	assert_eq(entered[0], 2, "el segundo ataque salió por el buffer")
+
+
+func test_death_and_respawn() -> void:
+	var setup: Array = await _load_level()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	var enemy: Enemy = setup[2]
+	var enemy_start := enemy.global_position
+	player.global_position = enemy.global_position - Vector3(0, 0, 3)
+	await tree.physics_frame
+	_enemy_hit(player, enemy, 100)
+	await tree.physics_frame
+	assert_eq(_state(player), &"Dead")
+	for i in 20:
+		await tree.physics_frame
+	assert_eq(enemy.bt_player.blackboard.get_var("target", null, false), null, "el esqueleto deja de verlo")
+	var respawned: PlayerCharacter = null
+	for i in 400:
+		await tree.physics_frame
+		var current := tree.get_first_node_in_group(&"player") as PlayerCharacter
+		if current and current != player and is_instance_valid(current) and current.is_inside_tree():
+			respawned = current
+			break
+	assert_true(respawned != null, "reapareció")
+	if respawned:
+		await tree.physics_frame
+		var spawn := SpawnPoint.find(tree, &"start")
+		assert_true(respawned.global_position.distance_to(spawn.global_position) < 0.5, "en el spawn")
+		assert_eq(respawned.health.current, respawned.health.max_health, "con la vida llena")
+		var new_enemy := tree.get_first_node_in_group(&"enemies") as Enemy
+		assert_true(new_enemy.global_position.distance_to(enemy_start) < 0.5, "el esqueleto volvió a su lugar")

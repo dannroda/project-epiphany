@@ -20,6 +20,10 @@ const SHIELD_THRUST: AttackData = preload("res://data/attacks/shield_thrust.tres
 @onready var input_buffer: InputBuffer = $InputBuffer
 
 var guard_tween: Tween
+
+var is_dead: bool:
+	get:
+		return health.current <= 0
 var _block_cone: MeshInstance3D
 
 
@@ -31,6 +35,7 @@ func _ready() -> void:
 	hitbox.team = config.team
 	hitbox.damage_factory = _make_damage
 	hurtbox.hit.connect(_on_hit)
+	health.died.connect(_on_died)
 	GameState.loaded.connect(_sync_health)
 	_sync_health()
 	targeting.target_changed.connect(func(target: Node3D) -> void: movement_state.blackboard.set_var("target", target))
@@ -102,7 +107,14 @@ func _on_hit(info: DamageInfo) -> void:
 		return
 	Log.info(&"combat", "El player recibió", amount, "de daño de", info.source.name if info.source else "?", "· Vida:", health.current)
 	movement_state.blackboard.set_var("last_hit", info)
+	if is_dead:
+		Log.info(&"combat", "El player murió:", info.source.name if info.source else "?", "le sacó", amount, "con", health.max_health, "de vida máxima")
+		return
 	movement_state.dispatch("hurt")
+
+
+func _on_died() -> void:
+	movement_state.dispatch("die")
 
 
 ## El modelo KayKit mira a +Z local.

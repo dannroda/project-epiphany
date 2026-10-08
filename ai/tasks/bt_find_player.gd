@@ -15,7 +15,7 @@ func _tick(_delta: float) -> Status:
 	var player := agent.get_tree().get_first_node_in_group(&"player") as Node3D
 	var current: Node3D = blackboard.get_var(target_var, null, false)
 	var max_range: float = agent.config.vision_range * (lose_range_factor if current else 1.0)
-	if player and _visible(player, max_range):
+	if player and not player.get(&"is_dead") and _visible(player, max_range):
 		blackboard.set_var(target_var, player)
 		return SUCCESS
 	blackboard.set_var(target_var, null)
