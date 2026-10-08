@@ -2,31 +2,31 @@
   "checklist": [
     {
       "detail": "En `src/entities/enemy.gd`, agregar `@export var config: EntityConfig` y llamar `config.apply_to(self)` en `_ready`. Asignar `data/entities/skeleton.tres` en el Inspector del esqueleto.",
-      "done": false,
+      "done": true,
       "text": "Darle al esqueleto su ficha (`EntityConfig`)"
     },
     {
       "detail": "El `Hurtbox` con su CollisionShape. Cuando recibe un golpe: empujar al esqueleto (menos cuanto más alta sea su `knockback_resistance`) y restarle vida.",
-      "done": false,
+      "done": true,
       "text": "Agregar `Health` y `Hurtbox` a `enemy.tscn`"
     },
     {
       "detail": "`died` pone `is_dead` en el blackboard (reemplaza `_start_death`) y `damaged` pone `is_hit`.",
-      "done": false,
+      "done": true,
       "text": "Conectar `Health` con el árbol de comportamiento"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Borrar `take_hit`, `select` y `deselect` de `enemy.gd`"
     },
     {
       "detail": "Bajo `ModelController`: una `Hitbox` delante del esqueleto y un nodo `AttackRunner`. El daño sale de `attack_damage` y `attack_knockback` de su ficha. La `Sword1H` queda solo como modelo.",
-      "done": false,
+      "done": true,
       "text": "Agregar `Hitboxes/Front` y `AttackRunner` al esqueleto"
     },
     {
       "detail": "`TestObject` recibe el empujón por `Hitbox._on_body_entered`, sin `Hurtbox`.",
-      "done": false,
+      "done": true,
       "text": "Las cajas de prueba siguen siendo `RigidBody3D`"
     }
   ],
@@ -43,7 +43,7 @@
     }
   ],
   "milestone": "m00",
-  "notes": "El esqueleto pasa a usar los componentes de 0.7: recibe daño por `Hurtbox` y `Health` en lugar de `take_hit`. Todavía no ataca: la IA de ataque es M1.\n\nNecesita 0.7. Ojo: la espada del player sigue llamando `take_hit` hasta 0.9, así que conviene hacer 0.8 y 0.9 seguidas.",
+  "notes": "El esqueleto pasa a usar los componentes de 0.7: recibe daño por `Hurtbox` y `Health` en lugar de `take_hit`. Todavía no ataca: la IA de ataque es M1.\n\nNecesita 0.7. Ojo: la espada del player sigue llamando `take_hit` hasta 0.9, así que conviene hacer 0.8 y 0.9 seguidas.\n\nCapas: la 5 es `Hurtbox`. La `Hurtbox` está en esa capa; la `Hitbox` detecta las capas 4 (Object) y 5. `AttackRunner` junta las `Hitbox` hijas de `hitbox_root` por nombre (`Front` → `front`) en lugar de un Dictionary exportado. El empujón y la subida se escalan con `1 - knockback_resistance`. Hasta terminar 0.9 la espada del player no le hace nada al esqueleto (ya no existe `take_hit`).",
   "order": 8,
   "refs": [
     {
@@ -55,8 +55,8 @@
       "section": "ventanas-ataque"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Se prueba al terminar 0.9: pegarle al esqueleto le baja la vida y muere con su animación. Las cajas siguen saliendo despedidas.",
   "title": "Enemigo sobre componentes",
-  "updated_at": "2026-10-08T04:45:40.101Z"
+  "updated_at": "2026-10-08T05:25:39.836Z"
 }

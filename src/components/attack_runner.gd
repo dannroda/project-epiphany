@@ -2,7 +2,9 @@ class_name AttackRunner
 extends Node
 ## Enciende y apaga hitboxes según el progreso del ataque. Lo comparten player y enemigos.
 
-@export var hitboxes: Dictionary[StringName, Hitbox] = {}
+## Las Hitbox hijas de este nodo se registran por nombre: Front → &"front".
+@export var hitbox_root: Node
+var hitboxes: Dictionary[StringName, Hitbox] = {}
 
 var current: AttackData
 var _elapsed := 0.0
@@ -12,6 +14,10 @@ var _speed := 1.0
 
 func _ready() -> void:
 	set_physics_process(false)
+	if hitbox_root:
+		for child in hitbox_root.get_children():
+			if child is Hitbox:
+				hitboxes[StringName(String(child.name).to_snake_case())] = child
 	for hitbox in hitboxes.values():
 		if hitbox:
 			hitbox.set_deferred(&"monitoring", false)

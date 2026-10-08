@@ -234,18 +234,18 @@ El `AttackRunner` del GDD nunca prendía la hitbox (comparaba `monitoring` sin c
 
 **Relacionadas:** 0.11 Sistema de depuración
 
-### 0.8 Enemigo sobre componentes · Pendiente
+### 0.8 Enemigo sobre componentes · En curso
 
-- [ ] Darle al esqueleto su ficha (`EntityConfig`)
+- [x] Darle al esqueleto su ficha (`EntityConfig`)
   En `src/entities/enemy.gd`, agregar `@export var config: EntityConfig` y llamar `config.apply_to(self)` en `_ready`. Asignar `data/entities/skeleton.tres` en el Inspector del esqueleto.
-- [ ] Agregar `Health` y `Hurtbox` a `enemy.tscn`
+- [x] Agregar `Health` y `Hurtbox` a `enemy.tscn`
   El `Hurtbox` con su CollisionShape. Cuando recibe un golpe: empujar al esqueleto (menos cuanto más alta sea su `knockback_resistance`) y restarle vida.
-- [ ] Conectar `Health` con el árbol de comportamiento
+- [x] Conectar `Health` con el árbol de comportamiento
   `died` pone `is_dead` en el blackboard (reemplaza `_start_death`) y `damaged` pone `is_hit`.
-- [ ] Borrar `take_hit`, `select` y `deselect` de `enemy.gd`
-- [ ] Agregar `Hitboxes/Front` y `AttackRunner` al esqueleto
+- [x] Borrar `take_hit`, `select` y `deselect` de `enemy.gd`
+- [x] Agregar `Hitboxes/Front` y `AttackRunner` al esqueleto
   Bajo `ModelController`: una `Hitbox` delante del esqueleto y un nodo `AttackRunner`. El daño sale de `attack_damage` y `attack_knockback` de su ficha. La `Sword1H` queda solo como modelo.
-- [ ] Las cajas de prueba siguen siendo `RigidBody3D`
+- [x] Las cajas de prueba siguen siendo `RigidBody3D`
   `TestObject` recibe el empujón por `Hitbox._on_body_entered`, sin `Hurtbox`.
 
 **Prueba:** Se prueba al terminar 0.9: pegarle al esqueleto le baja la vida y muere con su animación. Las cajas siguen saliendo despedidas.
@@ -253,6 +253,8 @@ El `AttackRunner` del GDD nunca prendía la hitbox (comparaba `monitoring` sin c
 **Notas:** El esqueleto pasa a usar los componentes de 0.7: recibe daño por `Hurtbox` y `Health` en lugar de `take_hit`. Todavía no ataca: la IA de ataque es M1.
 
 Necesita 0.7. Ojo: la espada del player sigue llamando `take_hit` hasta 0.9, así que conviene hacer 0.8 y 0.9 seguidas.
+
+Capas: la 5 es `Hurtbox`. La `Hurtbox` está en esa capa; la `Hitbox` detecta las capas 4 (Object) y 5. `AttackRunner` junta las `Hitbox` hijas de `hitbox_root` por nombre (`Front` → `front`) en lugar de un Dictionary exportado. El empujón y la subida se escalan con `1 - knockback_resistance`. Hasta terminar 0.9 la espada del player no le hace nada al esqueleto (ya no existe `take_hit`).
 
 **Referencias:** `gdd.md#entidades-componentes`, `gdd.md#ventanas-ataque`
 

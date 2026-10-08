@@ -17,6 +17,11 @@
 [ext_resource type="ArrayMesh" uid="uid://dqqkg4issacgo" path="res://assets/kaykit_charanim/Mannequin Character/characters/meshes/Mannequin_Medium_Mannequin_Medium_LegLeft.res" id="12_of2i0"]
 [ext_resource type="ArrayMesh" uid="uid://iu05jixj3hpw" path="res://assets/kaykit_charanim/Mannequin Character/characters/meshes/Mannequin_Medium_Mannequin_Medium_LegRight.res" id="13_on4cb"]
 [ext_resource type="BehaviorTree" uid="uid://b7uwj2m7bvq4m" path="res://src/entities/enemy_bt.tres" id="17_bkkjw"]
+[ext_resource type="Script" uid="uid://cllj70kv76q68" path="res://src/components/hitbox.gd" id="17_e1gvi"]
+[ext_resource type="Script" uid="uid://bqdwet47uk4xm" path="res://src/components/health.gd" id="19_vsaqd"]
+[ext_resource type="Script" uid="uid://rcd8a41l0m7" path="res://src/components/hurtbox.gd" id="20_s5w61"]
+[ext_resource type="Script" uid="uid://bcd4b7083of6t" path="res://src/components/attack_runner.gd" id="21_of2i0"]
+[ext_resource type="Resource" path="res://data/entities/skeleton.tres" id="20_config"]
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_peicu"]
 fadeout_time = 0.3
@@ -178,6 +183,9 @@ shader = ExtResource("10_bkkjw")
 shader_parameter/albedo_texture = ExtResource("10_3egxo")
 shader_parameter/suit_color = 3
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_on4cb"]
+size = Vector3(1.4, 1.2, 1.2)
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6saxu"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_3egxo"]
@@ -186,6 +194,7 @@ shader_parameter/suit_color = 3
 collision_layer = 5
 collision_mask = 5
 script = ExtResource("1_tnp0v")
+config = ExtResource("20_config")
 
 [node name="ModelController" type="Node3D" parent="." unique_id=606487822]
 
@@ -440,6 +449,19 @@ skin = SubResource("Skin_eh2uo")
 skeleton = NodePath("../../Skeleton3D")
 surface_material_override/0 = SubResource("ShaderMaterial_4uxyr")
 
+[node name="Hitboxes" type="Node3D" parent="ModelController" unique_id=256511897]
+
+[node name="Front" type="Area3D" parent="ModelController/Hitboxes" unique_id=894769393]
+collision_layer = 0
+collision_mask = 24
+monitoring = false
+monitorable = false
+script = ExtResource("17_e1gvi")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ModelController/Hitboxes/Front" unique_id=377603921]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.9)
+shape = SubResource("BoxShape3D_on4cb")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=20342563]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_6saxu")
@@ -448,3 +470,20 @@ shape = SubResource("CapsuleShape3D_6saxu")
 behavior_tree = ExtResource("17_bkkjw")
 blackboard_plan = SubResource("BlackboardPlan_3egxo")
 monitor_performance = true
+
+[node name="Health" type="Node" parent="." unique_id=1980804669]
+script = ExtResource("19_vsaqd")
+
+[node name="Hurtbox" type="Area3D" parent="." unique_id=1163987033]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+script = ExtResource("20_s5w61")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" unique_id=612411635]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_6saxu")
+
+[node name="AttackRunner" type="Node" parent="." unique_id=87468301 node_paths=PackedStringArray("hitbox_root")]
+script = ExtResource("21_of2i0")
+hitbox_root = NodePath("../ModelController/Hitboxes")
