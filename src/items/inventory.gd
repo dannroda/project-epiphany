@@ -4,7 +4,6 @@ extends RefCounted
 signal changed(id: StringName, count: int)
 
 var _counts: Dictionary[StringName, int] = {}
-var _capacity_bonus: Dictionary[StringName, int] = {}
 
 
 func count(id: StringName) -> int:
@@ -16,7 +15,12 @@ func has(id: StringName, amount: int = 1) -> bool:
 
 
 func capacity(id: StringName) -> int:
-	return Items.get_item(id).max_stack + _capacity_bonus.get(id, 0)
+	var total := Items.get_item(id).max_stack
+	for owned in _counts:
+		var upgrade := Items.get_item(owned)
+		if upgrade and upgrade.capacity_for and upgrade.capacity_for.id == id:
+			total += upgrade.capacity_bonus
+	return total
 
 
 ## Devuelve cuánto entró realmente.
@@ -42,7 +46,6 @@ func remove(id: StringName, amount: int = 1) -> bool:
 func clear() -> void:
 	var previous := ids()
 	_counts.clear()
-	_capacity_bonus.clear()
 	for id in previous:
 		changed.emit(id, 0)
 

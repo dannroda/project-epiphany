@@ -953,14 +953,14 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 
 **Notas:** Decisión del 2026-10-08: el GDD no tiene NPCs con diálogo, pero se integra el plugin ya para no adaptar tablillas e item get después. Elegido sobre Dialogic porque solo maneja el contenido y deja la UI propia (mockups), es liviano y hay menos superficie para romperse con Godot 4.8-dev. Instalado Dialogue Manager v4.1.0 (para Godot 4.7) desde la release de GitHub: import, arranque y tests headless OK en 4.8-dev7; falta confirmar que el editor lo cargue sin errores. Textos en data/dialogue/*.dialogue; el personaje de la línea es el rótulo de la tablilla; item_get.dialogue tiene un cue por id de ítem (si falta, usa la descripción). Traducciones: IDs estáticos [ID:…] como claves; el plugin mantiene la lista de plantillas POT.
 
-## M5 — Ítems secundarios  (0/8)
+## M5 — Ítems secundarios  (2/8)
 
 Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 **Hecho cuando:**
 - Cada ítem se usa en al menos un puzzle.
 
-### 5.1 Proyectiles · En curso
+### 5.1 Proyectiles · Hecho
 
 - [x] Crear `src/entities/projectile.gd`
   Extiende `Hitbox`: velocidad, vida, `reflect()`. Código en [[gdd#entidades-componentes]].
@@ -1002,18 +1002,20 @@ Skills: `disciplines:ai-behavior-trees-utility-ai`.
 
 **Bloqueada por:** 1.4 IA del esqueleto con `BTAttack`; 5.1 Proyectiles
 
-### 5.3 Arco y flechas · Pendiente
+### 5.3 Arco y flechas · Hecho
 
-- [ ] `ItemData` de arco y flecha con `ProjectileBehavior`
+- [x] `ItemData` de arco y flecha con `ProjectileBehavior`
   Munición `arrow`, `max_stack` 30 (el carcaj grande suma con `_capacity_bonus`).
-- [ ] Mantener para apuntar, soltar para disparar
+- [x] Mantener para apuntar, soltar para disparar
   `Ranged_Bow_Draw` → `Ranged_Bow_Aiming_Idle` → `Ranged_Bow_Release`. Mientras se mantiene, el player strafea y se ve la retícula (2.2).
-- [ ] Escena de flecha
+- [x] Escena de flecha
   Se clava en paredes un rato y desaparece.
-- [ ] Interruptor de ojo
+- [x] Interruptor de ojo
   `EyeSwitch`: `Hurtbox` que solo reacciona a flechas (o a proyectiles en general) y emite `activated`. Lo usan la sala 6 y el carcaj (7.7).
 
 **Prueba:** Disparar a un interruptor de ojo a distancia con stick y con mouse: se activa. Sin flechas, el arco no dispara y suena el "no se puede".
+
+**Notas:** Mantener X/Y tensa (estado AimingItem): rama BowPhase/BowBlend en el AnimationTree filtrada al torso, así el player strafea a 2,5 m/s con las piernas animadas; Aiming_Idle en loop con timeline propio. Soltar dispara (mín. 0,15 s). Arco KayKit bow_withString en la mano del escudo mientras apunta (Equipment.hold). Carcaj grande: ItemData.capacity_for/capacity_bonus (+20 flechas) se calcula desde el inventario, sin guardar nada extra. EyeSwitch solo reacciona a proyectiles; flag opcional. Uno de prueba en levels/test.tscn. El apuntado con mouse lo cubren los tests de Aim (2.2); los de esta tarea usan el stick y la dirección del modelo.
 
 **Referencias:** `gdd.md#items-mvp`, `gdd.md#items-datos`
 

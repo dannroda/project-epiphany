@@ -2,22 +2,22 @@
   "checklist": [
     {
       "detail": "Munición `arrow`, `max_stack` 30 (el carcaj grande suma con `_capacity_bonus`).",
-      "done": false,
+      "done": true,
       "text": "`ItemData` de arco y flecha con `ProjectileBehavior`"
     },
     {
       "detail": "`Ranged_Bow_Draw` → `Ranged_Bow_Aiming_Idle` → `Ranged_Bow_Release`. Mientras se mantiene, el player strafea y se ve la retícula (2.2).",
-      "done": false,
+      "done": true,
       "text": "Mantener para apuntar, soltar para disparar"
     },
     {
       "detail": "Se clava en paredes un rato y desaparece.",
-      "done": false,
+      "done": true,
       "text": "Escena de flecha"
     },
     {
       "detail": "`EyeSwitch`: `Hurtbox` que solo reacciona a flechas (o a proyectiles en general) y emite `activated`. Lo usan la sala 6 y el carcaj (7.7).",
-      "done": false,
+      "done": true,
       "text": "Interruptor de ojo"
     }
   ],
@@ -42,7 +42,7 @@
     }
   ],
   "milestone": "m05",
-  "notes": "",
+  "notes": "Mantener X/Y tensa (estado AimingItem): rama BowPhase/BowBlend en el AnimationTree filtrada al torso, así el player strafea a 2,5 m/s con las piernas animadas; Aiming_Idle en loop con timeline propio. Soltar dispara (mín. 0,15 s). Arco KayKit bow_withString en la mano del escudo mientras apunta (Equipment.hold). Carcaj grande: ItemData.capacity_for/capacity_bonus (+20 flechas) se calcula desde el inventario, sin guardar nada extra. EyeSwitch solo reacciona a proyectiles; flag opcional. Uno de prueba en levels/test.tscn. El apuntado con mouse lo cubren los tests de Aim (2.2); los de esta tarea usan el stick y la dirección del modelo.",
   "order": 3,
   "refs": [
     {
@@ -54,8 +54,8 @@
       "section": "items-datos"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Disparar a un interruptor de ojo a distancia con stick y con mouse: se activa. Sin flechas, el arco no dispara y suena el \"no se puede\".",
   "title": "Arco y flechas",
-  "updated_at": "2026-10-08T04:46:02.932Z"
+  "updated_at": "2026-10-08T08:40:27.663Z"
 }

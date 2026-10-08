@@ -11,6 +11,8 @@ signal weapon_changed(item: ItemData)
 var weapon: ItemData
 var shield_in_hand: Node3D
 var shield_on_back: Node3D
+## Ítem a distancia que se sostiene mientras se usa (el arco), en la mano del escudo.
+var held: Node3D
 
 
 func _ready() -> void:
@@ -30,6 +32,27 @@ func refresh() -> void:
 		shield_in_hand.visible = hand_visible
 		shield_on_back.visible = not hand_visible
 	weapon_changed.emit(weapon)
+
+
+func hold(item: ItemData) -> void:
+	release_held()
+	if item.equip_scene == null:
+		return
+	held = item.equip_scene.instantiate() as Node3D
+	if held is EquippedItem:
+		held.item = item
+	shield_hand_socket.add_child(held)
+	weapon_socket.visible = false
+	if shield_in_hand:
+		shield_in_hand.visible = false
+		shield_on_back.visible = true
+
+
+func release_held() -> void:
+	if is_instance_valid(held):
+		held.queue_free()
+	held = null
+	weapon_socket.visible = true
 
 
 func damage_reduction() -> float:

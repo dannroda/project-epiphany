@@ -330,13 +330,11 @@ func get_animation(_item: ItemData) -> StringName:
 class_name ProjectileBehavior
 extends ItemBehavior
 
-@export var animation: StringName = &"BowRelease"
 @export var projectile_scene: PackedScene
-@export var speed: float = 18.0
-
-
-func get_animation(_item: ItemData) -> StringName:
-	return animation
+@export var speed: float = 20.0
+# hold_to_aim (en ItemBehavior) = true para el arco: el estado AimingItem tensa (Ranged_Bow_Draw),
+# apunta en loop (Ranged_Bow_Aiming_Idle) con el torso mientras el player strafea, y al soltar
+# (Ranged_Bow_Release) llama a use(). El arco se sostiene en la mano del escudo (Equipment.hold).
 
 
 func can_use(ctx: ItemUseContext, _item: ItemData) -> bool:
@@ -346,9 +344,11 @@ func can_use(ctx: ItemUseContext, _item: ItemData) -> bool:
 func use(ctx: ItemUseContext, item: ItemData) -> void:
 	if ammo:
 		ctx.inventory.remove(ammo.id)
+	var info := item.make_damage(ctx.user)
+	info.team = ctx.user.config.team
 	var projectile: Projectile = projectile_scene.instantiate()
 	ctx.user.get_tree().current_scene.add_child(projectile)
-	projectile.launch(ctx.origin, ctx.direction * speed, item.make_damage(ctx.user))
+	projectile.launch(ctx.origin, ctx.direction * speed, info)
 ```
 
 ```gdscript

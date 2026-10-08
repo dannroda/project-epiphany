@@ -29,6 +29,10 @@ func _setup() -> void:
 	add_transition($Idle, $UsingItem, "use_item")
 	add_transition($Moving, $UsingItem, "use_item")
 	add_transition($UsingItem, $Idle, "finished")
+	add_transition($Idle, $AimingItem, "aim_item")
+	add_transition($Moving, $AimingItem, "aim_item")
+	add_transition($AimingItem, $Idle, "finished")
+	add_transition($AimingItem, $Dodging, "dodge")
 	add_transition($Idle, $ItemGet, "item_get")
 	add_transition($Moving, $ItemGet, "item_get")
 	add_transition($ItemGet, $Idle, "finished")
@@ -75,7 +79,7 @@ func _try_item(buffer: InputBuffer) -> bool:
 			player.deny_item(i)
 			return true
 		blackboard.set_var("item_button", i)
-		if dispatch("use_item"):
+		if dispatch("aim_item" if player.usable_item(i).behavior.hold_to_aim else "use_item"):
 			buffer.consume(ITEM_ACTIONS[i])
 			return true
 	return false

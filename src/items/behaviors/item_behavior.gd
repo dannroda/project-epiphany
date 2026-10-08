@@ -5,6 +5,8 @@ extends Resource
 @export var ammo: ItemData ## null = munición infinita
 ## En qué punto de la animación (0..1) se llama a use().
 @export_range(0.0, 1.0) var use_at := 0.5
+## Mantener el botón apunta (estado AimingItem) y soltarlo lo usa, como el arco.
+@export var hold_to_aim := false
 
 
 func get_animation(_item: ItemData) -> StringName:

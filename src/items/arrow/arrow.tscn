@@ -1,0 +1,64 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/entities/projectile.gd" id="1_projectile"]
+
+[sub_resource type="StandardMaterial3D" id="Shaft"]
+albedo_color = Color(0.62, 0.45, 0.25, 1)
+
+[sub_resource type="StandardMaterial3D" id="Tip"]
+albedo_color = Color(0.75, 0.76, 0.8, 1)
+metallic = 0.7
+roughness = 0.35
+
+[sub_resource type="StandardMaterial3D" id="Fletch"]
+albedo_color = Color(0.92, 0.9, 0.84, 1)
+
+[sub_resource type="CylinderMesh" id="ShaftMesh"]
+material = SubResource("Shaft")
+top_radius = 0.02
+bottom_radius = 0.02
+height = 0.8
+radial_segments = 6
+rings = 1
+
+[sub_resource type="CylinderMesh" id="TipMesh"]
+material = SubResource("Tip")
+top_radius = 0.0
+bottom_radius = 0.05
+height = 0.12
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxMesh" id="FletchMesh"]
+material = SubResource("Fletch")
+size = Vector3(0.12, 0.01, 0.14)
+
+[sub_resource type="SphereShape3D" id="Shape"]
+radius = 0.12
+
+[node name="Arrow" type="Area3D"]
+collision_layer = 0
+collision_mask = 25
+monitorable = false
+script = ExtResource("1_projectile")
+lifetime = 2.5
+stick_time = 3.0
+
+[node name="Shaft" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
+cast_shadow = 0
+mesh = SubResource("ShaftMesh")
+
+[node name="Tip" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, -0.45)
+cast_shadow = 0
+mesh = SubResource("TipMesh")
+
+[node name="Fletch" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.36)
+cast_shadow = 0
+mesh = SubResource("FletchMesh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.35)
+shape = SubResource("Shape")

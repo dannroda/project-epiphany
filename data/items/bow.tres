@@ -5,10 +5,15 @@
 [ext_resource type="Script" uid="uid://l3nlu6710gm3" path="res://src/items/modifiers/item_modifier.gd" id="2_thjit"]
 [ext_resource type="Script" uid="uid://bn5pjgpia5grm" path="res://src/items/item_data.gd" id="3_ca8yi"]
 [ext_resource type="Resource" path="res://data/items/arrow.tres" id="4_ammo"]
+[ext_resource type="PackedScene" path="res://src/items/arrow/arrow.tscn" id="5_arrow_scene"]
+[ext_resource type="PackedScene" path="res://assets/items/bow/bow.tscn" id="6_bow_model"]
 
 [sub_resource type="Resource" id="Resource_3oevh"]
 script = ExtResource("1_hiqf6")
 ammo = ExtResource("4_ammo")
+hold_to_aim = true
+projectile_scene = ExtResource("5_arrow_scene")
+speed = 20.0
 
 [resource]
 script = ExtResource("3_ca8yi")
@@ -19,3 +24,6 @@ description = "Dispara flechas hacia donde apuntás: stick derecho, mouse o el o
 icon = ExtResource("2_ca8yi")
 category = 3
 behavior = SubResource("Resource_3oevh")
+damage = 2
+knockback = 4.0
+equip_scene = ExtResource("6_bow_model")

@@ -34,6 +34,7 @@
 [ext_resource type="Script" path="res://player/components/aim.gd" id="c_aim"]
 [ext_resource type="Script" path="res://player/states/using_item.gd" id="st_using_item"]
 [ext_resource type="Script" path="res://player/states/item_get.gd" id="st_item_get"]
+[ext_resource type="Script" path="res://player/states/aiming_item.gd" id="st_aiming_item"]
 [ext_resource type="Script" path="res://player/components/interaction_detector.gd" id="c_interaction"]
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_peicu"]
@@ -182,6 +183,38 @@ animation = &"General/Use_Item"
 fadein_time = 0.1
 fadeout_time = 0.2
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bowdraw"]
+animation = &"CombatRanged/Ranged_Bow_Draw"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bowidle"]
+animation = &"CombatRanged/Ranged_Bow_Aiming_Idle"
+use_custom_timeline = true
+timeline_length = 1.83
+stretch_time_scale = false
+loop_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bowrelease"]
+animation = &"CombatRanged/Ranged_Bow_Release"
+
+[sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_bowphase"]
+xfade_time = 0.1
+input_0/name = "Draw"
+input_0/auto_advance = false
+input_0/break_loop_at_end = false
+input_0/reset = true
+input_1/name = "Idle"
+input_1/auto_advance = false
+input_1/break_loop_at_end = false
+input_1/reset = true
+input_2/name = "Release"
+input_2/auto_advance = false
+input_2/break_loop_at_end = false
+input_2/reset = true
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_bow"]
+filter_enabled = true
+filters = ["Skeleton3D:spine", "Skeleton3D:chest", "Skeleton3D:head", "Skeleton3D:upperarm.l", "Skeleton3D:lowerarm.l", "Skeleton3D:wrist.l", "Skeleton3D:hand.l", "Skeleton3D:upperarm.r", "Skeleton3D:lowerarm.r", "Skeleton3D:wrist.r", "Skeleton3D:hand.r"]
+
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_fss4b"]
 graph_offset = Vector2(-328.57153, 346.85092)
 nodes/output/position = Vector2(3200, 666.6667)
@@ -231,7 +264,17 @@ nodes/ItemAnim/node = SubResource("AnimationNodeAnimation_useitem")
 nodes/ItemAnim/position = Vector2(1866.6666, 933.3333)
 nodes/UseItem/node = SubResource("AnimationNodeOneShot_useitem")
 nodes/UseItem/position = Vector2(2080, 613.3333)
-node_connections = [&"output", 0, &"Dodge", &"Movement", 0, &"Idle", &"Movement", 1, &"Running", &"Attack", 0, &"GuardBlend", &"Attack", 1, &"AttackType", &"Combat", 0, &"Movement", &"Combat", 1, &"Targeting", &"GuardBlend", 0, &"Combat", &"GuardBlend", 1, &"MeleeBlocking", &"AttackType", 0, &"SwordSlice", &"AttackType", 1, &"ShieldThrust", &"Hurt", 0, &"Attack", &"Hurt", 1, &"HurtAnim", &"BlockHit", 0, &"Hurt", &"BlockHit", 1, &"BlockHitAnim", &"DodgeDir", 0, &"DodgeForward", &"DodgeDir", 1, &"DodgeBackward", &"DodgeDir", 2, &"DodgeLeft", &"DodgeDir", 3, &"DodgeRight", &"UseItem", 0, &"BlockHit", &"UseItem", 1, &"ItemAnim", &"Dodge", 0, &"UseItem", &"Dodge", 1, &"DodgeDir"]
+nodes/BowDraw/node = SubResource("AnimationNodeAnimation_bowdraw")
+nodes/BowDraw/position = Vector2(1866.6666, 1100)
+nodes/BowIdle/node = SubResource("AnimationNodeAnimation_bowidle")
+nodes/BowIdle/position = Vector2(1866.6666, 1180)
+nodes/BowRelease/node = SubResource("AnimationNodeAnimation_bowrelease")
+nodes/BowRelease/position = Vector2(1866.6666, 1260)
+nodes/BowPhase/node = SubResource("AnimationNodeTransition_bowphase")
+nodes/BowPhase/position = Vector2(2080, 1100)
+nodes/BowBlend/node = SubResource("AnimationNodeBlend2_bow")
+nodes/BowBlend/position = Vector2(2200, 700)
+node_connections = [&"output", 0, &"Dodge", &"Movement", 0, &"Idle", &"Movement", 1, &"Running", &"Attack", 0, &"GuardBlend", &"Attack", 1, &"AttackType", &"Combat", 0, &"Movement", &"Combat", 1, &"Targeting", &"GuardBlend", 0, &"Combat", &"GuardBlend", 1, &"MeleeBlocking", &"AttackType", 0, &"SwordSlice", &"AttackType", 1, &"ShieldThrust", &"Hurt", 0, &"Attack", &"Hurt", 1, &"HurtAnim", &"BlockHit", 0, &"Hurt", &"BlockHit", 1, &"BlockHitAnim", &"DodgeDir", 0, &"DodgeForward", &"DodgeDir", 1, &"DodgeBackward", &"DodgeDir", 2, &"DodgeLeft", &"DodgeDir", 3, &"DodgeRight", &"UseItem", 0, &"BlockHit", &"UseItem", 1, &"ItemAnim", &"BowPhase", 0, &"BowDraw", &"BowPhase", 1, &"BowIdle", &"BowPhase", 2, &"BowRelease", &"BowBlend", 0, &"UseItem", &"BowBlend", 1, &"BowPhase", &"Dodge", 0, &"BowBlend", &"Dodge", 1, &"DodgeDir"]
 
 [sub_resource type="AnimationNodeObserverOneShot" id="AnimationNodeObserverOneShot_4uxyr"]
 
@@ -660,6 +703,9 @@ script = ExtResource("st_dodging")
 
 [node name="UsingItem" type="LimboState" parent="MovementState"]
 script = ExtResource("st_using_item")
+
+[node name="AimingItem" type="LimboState" parent="MovementState"]
+script = ExtResource("st_aiming_item")
 
 [node name="ItemGet" type="LimboState" parent="MovementState"]
 script = ExtResource("st_item_get")
