@@ -1,0 +1,7 @@
+~ locked
+Puerta: Está cerrada con llave. [ID:door_locked_1]
+=> END
+
+~ boss_locked
+Puerta: Una cerradura enorme. Hace falta una llave especial. [ID:door_boss_locked_1]
+=> END

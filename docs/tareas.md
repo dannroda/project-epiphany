@@ -1161,20 +1161,22 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 **Bloqueada por:** 0.9 Refactor del player
 
-### 6.2 Puertas · Pendiente
+### 6.2 Puertas · En curso
 
-- [ ] Crear `src/world/door.gd`
+- [x] Crear `src/world/door.gd`
   Tipos `OPEN`, `LOCKED`, `SHUTTER`, `SWITCH`, `BOSS`. Código en [[gdd#mundo]].
-- [ ] Abrir con animación y sonido
+- [x] Abrir con animación y sonido
   Tween de la hoja de la puerta; la colisión se apaga al terminar.
-- [ ] `SHUTTER`: la sala la cierra hasta limpiar
+- [x] `SHUTTER`: la sala la cierra hasta limpiar
   `Room` cuenta sus enemigos vivos y abre las persianas cuando llega a cero.
-- [ ] `SWITCH`: conectada a un interruptor
+- [x] `SWITCH`: conectada a un interruptor
   Se abre con la señal `activated` (6.5); algunas se vuelven a cerrar si el interruptor se suelta.
-- [ ] `LOCKED`/`BOSS` persistentes
+- [x] `LOCKED`/`BOSS` persistentes
   Con su `flag`; usan la llave al interactuar ("Abrir").
 
 **Prueba:** Una sala con persiana: al entrar se cierra, al matar al último esqueleto se abre. Una puerta con llave no se abre sin llave y se queda abierta tras guardar y cargar.
+
+**Notas:** Door (@tool): la hoja se hunde 2,5 m (0,5 s, sonido 'door' y polvo); la colisión se apaga al terminar; al cerrar vuelve enseguida. Colores por tipo y placa dorada en LOCKED/BOSS. LOCKED gasta una llave chica, BOSS pide la del jefe sin gastarla; sin llave: 'no se puede' y texto de data/dialogue/doors.dialogue. Persistencia con PersistentFlag (advertencia si falta). SHUTTER: Room la cierra 0,6 s después de entrar si hay enemigos vivos adentro (grupo enemies, por posición) y la abre al limpiar. SWITCH: se conecta por nombre a 'activated' (y 'deactivated' si stays_open = false), así sirve cualquier nodo. Se arregló PersistentFlag: el aviso inicial diferido usaba el valor viejo y deshacía una carga hecha al entrar a la escena. levels/test_rooms.tscn: persiana A→B (esqueleto en B), puerta con llave B→C (flag d1_test_locked_door), sala C.
 
 **Referencias:** `gdd.md#mundo`
 

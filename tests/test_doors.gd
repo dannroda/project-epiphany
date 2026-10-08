@@ -1,0 +1,140 @@
+extends "res://tests/test_case.gd"
+
+const LEVEL := "res://levels/test_rooms.tscn"
+const DOOR := preload("res://src/world/door.tscn")
+const SLOT := 9
+
+
+func _setup() -> Array:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	state.reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	for i in 4:
+		await tree.physics_frame
+	var level := tree.current_scene
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	player.health.make_invulnerable(999.0)
+	return [tree, state, player, level]
+
+
+func _walk_until(tree: SceneTree, action: StringName, done: Callable, seconds := 8.0) -> void:
+	var event := InputEventAction.new()
+	event.action = action
+	event.pressed = true
+	event.strength = 1.0
+	Input.parse_input_event(event)
+	var until := Time.get_ticks_msec() + seconds * 1000.0
+	while Time.get_ticks_msec() < until and not done.call():
+		await tree.physics_frame
+	var release := InputEventAction.new()
+	release.action = action
+	Input.parse_input_event(release)
+
+
+func test_shutter_closes_until_room_is_cleared() -> void:
+	var setup: Array = await _setup()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[2]
+	var level: Node = setup[3]
+	var shutter: Door = level.get_node(^"ShutterAB")
+	var room_b: Room = level.get_node(^"RoomB")
+	var skeleton: Enemy = level.get_node(^"Skeleton")
+	skeleton.bt_player.active = false
+	assert_eq(shutter.is_open, true, "la persiana arranca abierta")
+	await _walk_until(tree, &"move_forward", func() -> bool: return player.global_position.z < -7.5)
+	await tree.create_timer(1.0).timeout
+	assert_eq(shutter.is_open, false, "al entrar con un esqueleto vivo, se cierra")
+	assert_eq(shutter.shape.disabled, false, "y bloquea el paso")
+	assert_eq(room_b.locked, true)
+	skeleton.health.damage(999)
+	await tree.create_timer(1.0).timeout
+	assert_eq(shutter.is_open, true, "al matar al último, se abre")
+	assert_eq(shutter.shape.disabled, true)
+	setup[1].reset()
+
+
+func test_locked_door_needs_key_and_stays_open() -> void:
+	var setup: Array = await _setup()
+	var tree: SceneTree = setup[0]
+	var state: Node = setup[1]
+	var player: PlayerCharacter = setup[2]
+	var level: Node = setup[3]
+	var saves: Node = tree.root.get_node(^"SaveManager")
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	var before := ConfigFile.new()
+	state.write_to(before)
+	var door: Door = level.get_node(^"LockedBC")
+	assert_eq(door.interactable.prompt, "Abrir")
+	door.interactable.interact(player)
+	assert_eq(door.is_open, false, "sin llave no se abre")
+	assert_true(stack.top() is TextBox, "avisa que está cerrada con llave")
+	stack.pop()
+	state.give(Items.get_item(&"small_key"))
+	state.give(Items.get_item(&"small_key"))
+	assert_eq(state.current_dungeon_state().small_keys, 2)
+	door.interactable.interact(player)
+	assert_eq(door.is_open, true, "con llave se abre")
+	assert_eq(state.current_dungeon_state().small_keys, 1, "y gasta una")
+	assert_eq(state.get_flag(&"d1_test_locked_door"), true)
+	await tree.create_timer(0.8).timeout
+	assert_eq(door.shape.disabled, true, "la colisión se apaga al terminar de abrirse")
+
+	assert_eq(saves.save_game(SLOT), OK)
+	state.reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	assert_eq(await saves.load_game(SLOT), OK)
+	await tree.process_frame
+	door = tree.current_scene.get_node(^"LockedBC")
+	assert_eq(door.is_open, true, "sigue abierta tras guardar y cargar")
+	state.read_from(before)
+	await tree.process_frame
+	assert_eq(door.is_open, false, "una partida anterior la vuelve a cerrar")
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(saves.slot_path(SLOT)))
+	state.reset()
+
+
+func test_boss_door_needs_boss_key_without_spending_it() -> void:
+	var setup: Array = await _setup()
+	var tree: SceneTree = setup[0]
+	var state: Node = setup[1]
+	var player: PlayerCharacter = setup[2]
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	var door: Door = DOOR.instantiate()
+	door.kind = Door.Kind.BOSS
+	door.flag = &"d1_test_locked_door"
+	tree.current_scene.add_child(door)
+	door.interactable.interact(player)
+	assert_eq(door.is_open, false, "sin la llave del jefe no se abre")
+	stack.pop()
+	state.give(Items.get_item(&"small_key"))
+	door.interactable.interact(player)
+	assert_eq(door.is_open, false, "una llave chica no sirve")
+	stack.pop()
+	state.give(Items.get_item(&"boss_key"))
+	door.interactable.interact(player)
+	assert_eq(door.is_open, true, "con la llave del jefe se abre")
+	assert_eq(state.current_dungeon_state().has_boss_key, true, "y no se gasta")
+	state.reset()
+
+
+func test_switch_door_opens_and_can_close_again() -> void:
+	var setup: Array = await _setup()
+	var tree: SceneTree = setup[0]
+	var switch := Node.new()
+	switch.add_user_signal("activated")
+	switch.add_user_signal("deactivated")
+	tree.current_scene.add_child(switch)
+	var door: Door = DOOR.instantiate()
+	door.kind = Door.Kind.SWITCH
+	door.switch = switch
+	door.stays_open = false
+	tree.current_scene.add_child(door)
+	assert_eq(door.is_open, false)
+	switch.emit_signal("activated")
+	assert_eq(door.is_open, true, "el interruptor la abre")
+	switch.emit_signal("deactivated")
+	assert_eq(door.is_open, false, "y si no es permanente, se vuelve a cerrar")
+	setup[1].reset()

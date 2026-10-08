@@ -5,6 +5,8 @@
 [ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="t_camera"]
 [ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="w_spawn"]
 [ext_resource type="Script" path="res://src/world/room.gd" id="w_room"]
+[ext_resource type="PackedScene" path="res://src/world/door.tscn" id="w_door"]
+[ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="e_enemy"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="ui_hud"]
 [ext_resource type="Texture2D" uid="uid://r23yquaky7lu" path="res://assets/Prototype Textures/PNG/Dark/texture_07.png" id="tex_grid"]
 [ext_resource type="Texture2D" uid="uid://bs6ggwyw5mp2m" path="res://assets/kenney_skyboxes/Skyboxes/skybox-morning.png" id="tex_sky"]
@@ -33,6 +35,13 @@ size = Vector3(14, 2.4, 10)
 [sub_resource type="BoxShape3D" id="RoomBShape"]
 size = Vector3(44, 2.4, 36)
 
+[sub_resource type="BoxShape3D" id="RoomCShape"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="NavigationMesh" id="NavMesh"]
+vertices = PackedVector3Array(-22, 0.3, -41, -22, 0.3, -5, 22, 0.3, -5, 22, 0.3, -41)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
 [node name="TestRooms" type="Node3D"]
 script = ExtResource("1_level")
 
@@ -47,10 +56,10 @@ shadow_enabled = true
 
 
 [node name="Floor" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -23)
 material_override = SubResource("Floor")
 use_collision = true
-size = Vector3(48, 0.5, 52)
+size = Vector3(48, 0.5, 60)
 
 
 [node name="AWallS" type="CSGBox3D" parent="."]
@@ -88,11 +97,35 @@ use_collision = true
 size = Vector3(6.0, 2.6, 0.3)
 
 
-[node name="BWallN" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55, -41.15)
+[node name="BWallNL" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.65, 1.55, -41.15)
 material_override = SubResource("Wall")
 use_collision = true
-size = Vector3(44.6, 2.6, 0.3)
+size = Vector3(21.3, 2.6, 0.3)
+
+[node name="BWallNR" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.65, 1.55, -41.15)
+material_override = SubResource("Wall")
+use_collision = true
+size = Vector3(21.3, 2.6, 0.3)
+
+[node name="CWallN" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55, -51.15)
+material_override = SubResource("Wall")
+use_collision = true
+size = Vector3(14.6, 2.6, 0.3)
+
+[node name="CWallW" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.15, 1.55, -46.15)
+material_override = SubResource("Wall")
+use_collision = true
+size = Vector3(0.3, 2.6, 10.3)
+
+[node name="CWallE" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.15, 1.55, -46.15)
+material_override = SubResource("Wall")
+use_collision = true
+size = Vector3(0.3, 2.6, 10.3)
 
 
 [node name="BWallW" type="CSGBox3D" parent="."]
@@ -144,6 +177,31 @@ display_name = "Galería"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RoomB"]
 shape = SubResource("RoomBShape")
 
+
+[node name="RoomC" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -46)
+script = ExtResource("w_room")
+room_index = 2
+display_name = "Cámara sellada"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoomC"]
+shape = SubResource("RoomCShape")
+
+[node name="ShutterAB" parent="." node_paths=PackedStringArray("room") instance=ExtResource("w_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, -5)
+kind = 2
+room = NodePath("../RoomB")
+
+[node name="LockedBC" parent="." instance=ExtResource("w_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, -41.15)
+kind = 1
+flag = &"d1_test_locked_door"
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavMesh")
+
+[node name="Skeleton" parent="." instance=ExtResource("e_enemy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.25, -26)
 
 [node name="Player" parent="." instance=ExtResource("p_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 2)

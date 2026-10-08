@@ -29,7 +29,7 @@ func _ready() -> void:
 		if id == flag:
 			changed.emit(new_value))
 	GameState.loaded.connect(func() -> void: changed.emit(value))
-	changed.emit.call_deferred(value)
+	(func() -> void: changed.emit(value)).call_deferred()
 
 
 func _get_configuration_warnings() -> PackedStringArray:

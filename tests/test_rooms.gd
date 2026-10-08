@@ -12,6 +12,7 @@ func _setup() -> Array:
 	for i in 4:
 		await tree.physics_frame
 	var level := tree.current_scene
+	level.get_node(^"Skeleton").free()
 	return [tree, state, tree.get_first_node_in_group(&"player"), level.get_node(^"TopDownCamera"), level.get_node(^"RoomA"), level.get_node(^"RoomB"), level.get_node(^"HUD")]
 
 

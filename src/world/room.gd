@@ -15,6 +15,8 @@ const GROUP := &"rooms"
 
 var _outline: MeshInstance3D
 var _announced := false
+## Persianas cerradas hasta limpiar la sala.
+var locked := false
 
 
 func _ready() -> void:
@@ -44,6 +46,38 @@ func mark_entered() -> void:
 	if first and not display_name.is_empty():
 		get_tree().call_group(&"hud", &"show_area_name", tr(display_name))
 	player_entered.emit(self)
+	if not enemies_inside().is_empty() and not shutters().is_empty():
+		_lock_after_entering.call_deferred()
+
+
+func enemies_inside() -> Array:
+	return get_tree().get_nodes_in_group(&"enemies").filter(func(enemy: Node) -> bool:
+		return not enemy.get(&"is_dead") and contains(enemy.global_position))
+
+
+func shutters() -> Array:
+	return get_tree().get_nodes_in_group(&"doors").filter(func(door: Door) -> bool:
+		return door.kind == Door.Kind.SHUTTER and door.room == self)
+
+
+## Se cierran recién cuando el player terminó de entrar (después del deslizamiento de la cámara).
+func _lock_after_entering() -> void:
+	await get_tree().create_timer(0.6).timeout
+	if enemies_inside().is_empty():
+		return
+	locked = true
+	for door: Door in shutters():
+		door.close()
+
+
+func _physics_process(_delta: float) -> void:
+	if Engine.is_editor_hint() or not locked:
+		return
+	if enemies_inside().is_empty():
+		locked = false
+		for door: Door in shutters():
+			door.open()
+		Feel.sfx(&"secret", global_position)
 
 
 func _process(_delta: float) -> void:

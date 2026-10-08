@@ -23,6 +23,11 @@ script = ExtResource("1_ox7fe")
 id = &"ow_sb_cracked_wall"
 description = "Sala de pruebas de ítems: muro agrietado roto"
 
+[sub_resource type="Resource" id="Resource_testdoor"]
+script = ExtResource("1_ox7fe")
+id = &"d1_test_locked_door"
+description = "Salas de prueba: puerta con llave de la sala B a la C abierta"
+
 [resource]
 script = ExtResource("2_3vvdp")
-definitions = Array[ExtResource("1_ox7fe")]([SubResource("Resource_mrp87"), SubResource("Resource_tablethint"), SubResource("Resource_crackedwall"), SubResource("Resource_sbwall")])
+definitions = Array[ExtResource("1_ox7fe")]([SubResource("Resource_mrp87"), SubResource("Resource_tablethint"), SubResource("Resource_crackedwall"), SubResource("Resource_sbwall"), SubResource("Resource_testdoor")])
