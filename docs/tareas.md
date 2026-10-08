@@ -552,7 +552,7 @@ Todo pasa por el autoload Feel (src/feel/feel.gd) y los valores están en data/f
 
 **Referencias:** `gdd.md#combate`
 
-## M2 — Targeting + Aim  (2/4)
+## M2 — Targeting + Aim  (3/4)
 
 Cambio de objetivo moviendo el stick derecho de golpe (el mismo `look_*` que apunta, leído con umbral 0.7; ver [[gdd#input]]) y apuntado con el stick derecho.
 
@@ -607,15 +607,15 @@ Aim (player/components/aim.gd) sigue al GDD: objetivo fijado > última fuente us
 
 **Relacionadas:** 0.9 Refactor del player
 
-### 2.3 Controles de teclado y mouse · Pendiente
+### 2.3 Controles de teclado y mouse · Hecho
 
-- [ ] Definir el mapa de teclado y mouse
+- [x] Definir el mapa de teclado y mouse
   Ideas del GDD: guardia en click derecho, ítems en `Q`/`R`, `Tab` para el inventario, rueda para cambiar de objetivo. Actualizar la tabla de [[gdd#input]].
-- [ ] Agregar los eventos al `InputMap`
+- [x] Agregar los eventos al `InputMap`
   En `project.godot`, junto a los de gamepad. Las teclas de debug (`1`/`2`/`3`) no chocan.
-- [ ] Cambio de objetivo con la rueda
+- [x] Cambio de objetivo con la rueda
   La rueda llama `Targeting.cycle()` con izquierda/derecha de pantalla.
-- [ ] Detectar el dispositivo activo
+- [x] Detectar el dispositivo activo
   Señal `input_device_changed(device)` en un autoload chico; el HUD la usa para mostrar el ícono del botón correcto (4.1).
 
 **Prueba:** Jugar el nivel de prueba sin gamepad: moverse, atacar, bloquear, rodar, fijar, cambiar de objetivo y apuntar con el mouse.
@@ -623,6 +623,8 @@ Aim (player/components/aim.gd) sigue al GDD: objetivo fijado > última fuente us
 **Notas:** Pilar 5: gamepad y teclado/mouse son ciudadanos de primera. El remapeo es post-MVP.
 
 Skills: `disciplines:input-systems`.
+
+Mapa elegido: WASD, click izquierdo ataca, click derecho guardia, Shift izquierdo fija, rueda cambia de objetivo (acciones nuevas target_prev/target_next), Espacio rueda, E interactúa, Q/R ítems, Tab o Esc pausa, M mapa, Q/E pestañas. Teclas por posición física. Se cargó con un script headless sobre ProjectSettings (device -1, como el editor). Se corrigieron las teclas de debug: 3 guarda, 2 carga (como dice el GDD). Autoload InputDevice con input_device_changed (umbrales para ignorar drift de stick y temblor de mouse). Falta la prueba jugando sin gamepad.
 
 **Referencias:** `gdd.md#input`, `gdd.md#pilares`
 

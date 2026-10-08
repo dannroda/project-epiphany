@@ -24,6 +24,7 @@ Log="*res://addons/epiphany_tools/debug/runtime/log.gd"
 DebugOverlay="*res://addons/epiphany_tools/debug/runtime/debug_overlay.gd"
 Fader="*res://src/ui/fader.gd"
 Feel="*res://src/feel/feel.gd"
+InputDevice="*res://src/input/input_device.gd"
 
 [display]
 
@@ -51,6 +52,23 @@ move_forward={
 "axis": 1,
 "axis_value": -1.0,
 "script": null
+), Object(InputEventKey,
+"resource_local_to_scene": false,
+"resource_name": "",
+"device": -1,
+"window_id": 0,
+"alt_pressed": false,
+"shift_pressed": false,
+"ctrl_pressed": false,
+"meta_pressed": false,
+"pressed": false,
+"keycode": 0,
+"physical_keycode": 87,
+"key_label": 0,
+"unicode": 0,
+"location": 0,
+"echo": false,
+"script": null
 )]
 }
 move_backward={
@@ -61,6 +79,23 @@ move_backward={
 "device": -1,
 "axis": 1,
 "axis_value": 1.0,
+"script": null
+), Object(InputEventKey,
+"resource_local_to_scene": false,
+"resource_name": "",
+"device": -1,
+"window_id": 0,
+"alt_pressed": false,
+"shift_pressed": false,
+"ctrl_pressed": false,
+"meta_pressed": false,
+"pressed": false,
+"keycode": 0,
+"physical_keycode": 83,
+"key_label": 0,
+"unicode": 0,
+"location": 0,
+"echo": false,
 "script": null
 )]
 }
@@ -73,6 +108,23 @@ move_left={
 "axis": 0,
 "axis_value": -1.0,
 "script": null
+), Object(InputEventKey,
+"resource_local_to_scene": false,
+"resource_name": "",
+"device": -1,
+"window_id": 0,
+"alt_pressed": false,
+"shift_pressed": false,
+"ctrl_pressed": false,
+"meta_pressed": false,
+"pressed": false,
+"keycode": 0,
+"physical_keycode": 65,
+"key_label": 0,
+"unicode": 0,
+"location": 0,
+"echo": false,
+"script": null
 )]
 }
 move_right={
@@ -83,6 +135,23 @@ move_right={
 "device": -1,
 "axis": 0,
 "axis_value": 1.0,
+"script": null
+), Object(InputEventKey,
+"resource_local_to_scene": false,
+"resource_name": "",
+"device": -1,
+"window_id": 0,
+"alt_pressed": false,
+"shift_pressed": false,
+"ctrl_pressed": false,
+"meta_pressed": false,
+"pressed": false,
+"keycode": 0,
+"physical_keycode": 68,
+"key_label": 0,
+"unicode": 0,
+"location": 0,
+"echo": false,
 "script": null
 )]
 }
@@ -96,6 +165,24 @@ attack={
 "pressure": 0.0,
 "pressed": true,
 "script": null
+), Object(InputEventMouseButton,
+"resource_local_to_scene": false,
+"resource_name": "",
+"device": -1,
+"window_id": 0,
+"alt_pressed": false,
+"shift_pressed": false,
+"ctrl_pressed": false,
+"meta_pressed": false,
+"button_mask": 0,
+"position": Vector2(0, 0),
+"global_position": Vector2(0, 0),
+"factor": 1.0,
+"button_index": 1,
+"canceled": false,
+"pressed": false,
+"double_click": false,
+"script": null
 )]
 }
 interact={
@@ -107,6 +194,23 @@ interact={
 "button_index": 1,
 "pressure": 0.0,
 "pressed": true,
+"script": null
+), Object(InputEventKey,
+"resource_local_to_scene": false,
+"resource_name": "",
+"device": -1,
+"window_id": 0,
+"alt_pressed": false,
+"shift_pressed": false,
+"ctrl_pressed": false,
+"meta_pressed": false,
+"pressed": false,
+"keycode": 0,
+"physical_keycode": 69,
+"key_label": 0,
+"unicode": 0,
+"location": 0,
+"echo": false,
 "script": null
 )]
 }
@@ -120,6 +224,23 @@ dodge={
 "pressure": 0.0,
 "pressed": true,
 "script": null
+), Object(InputEventKey,
+"resource_local_to_scene": false,
+"resource_name": "",
+"device": -1,
+"window_id": 0,
+"alt_pressed": false,
+"shift_pressed": false,
+"ctrl_pressed": false,
+"meta_pressed": false,
+"pressed": false,
+"keycode": 0,
+"physical_keycode": 32,
+"key_label": 0,
+"unicode": 0,
+"location": 0,
+"echo": false,
+"script": null
 )]
 }
 item_1={
@@ -131,6 +252,23 @@ item_1={
 "button_index": 2,
 "pressure": 0.0,
 "pressed": true,
+"script": null
+), Object(InputEventKey,
+"resource_local_to_scene": false,
+"resource_name": "",
+"device": -1,
+"window_id": 0,
+"alt_pressed": false,
+"shift_pressed": false,
+"ctrl_pressed": false,
+"meta_pressed": false,
+"pressed": false,
+"keycode": 0,
+"physical_keycode": 81,
+"key_label": 0,
+"unicode": 0,
+"location": 0,
+"echo": false,
 "script": null
 )]
 }
@@ -144,6 +282,23 @@ item_2={
 "pressure": 0.0,
 "pressed": true,
 "script": null
+), Object(InputEventKey,
+"resource_local_to_scene": false,
+"resource_name": "",
+"device": -1,
+"window_id": 0,
+"alt_pressed": false,
+"shift_pressed": false,
+"ctrl_pressed": false,
+"meta_pressed": false,
+"pressed": false,
+"keycode": 0,
+"physical_keycode": 82,
+"key_label": 0,
+"unicode": 0,
+"location": 0,
+"echo": false,
+"script": null
 )]
 }
 block={
@@ -155,6 +310,24 @@ block={
 "axis": 5,
 "axis_value": 1.0,
 "script": null
+), Object(InputEventMouseButton,
+"resource_local_to_scene": false,
+"resource_name": "",
+"device": -1,
+"window_id": 0,
+"alt_pressed": false,
+"shift_pressed": false,
+"ctrl_pressed": false,
+"meta_pressed": false,
+"button_mask": 0,
+"position": Vector2(0, 0),
+"global_position": Vector2(0, 0),
+"factor": 1.0,
+"button_index": 2,
+"canceled": false,
+"pressed": false,
+"double_click": false,
+"script": null
 )]
 }
 z-lock={
@@ -165,6 +338,23 @@ z-lock={
 "device": -1,
 "axis": 4,
 "axis_value": 1.0,
+"script": null
+), Object(InputEventKey,
+"resource_local_to_scene": false,
+"resource_name": "",
+"device": -1,
+"window_id": 0,
+"alt_pressed": false,
+"shift_pressed": false,
+"ctrl_pressed": false,
+"meta_pressed": false,
+"pressed": false,
+"keycode": 0,
+"physical_keycode": 4194325,
+"key_label": 0,
+"unicode": 0,
+"location": 1,
+"echo": false,
 "script": null
 )]
 }
@@ -222,6 +412,40 @@ pause={
 "pressure": 0.0,
 "pressed": true,
 "script": null
+), Object(InputEventKey,
+"resource_local_to_scene": false,
+"resource_name": "",
+"device": -1,
+"window_id": 0,
+"alt_pressed": false,
+"shift_pressed": false,
+"ctrl_pressed": false,
+"meta_pressed": false,
+"pressed": false,
+"keycode": 0,
+"physical_keycode": 4194306,
+"key_label": 0,
+"unicode": 0,
+"location": 0,
+"echo": false,
+"script": null
+), Object(InputEventKey,
+"resource_local_to_scene": false,
+"resource_name": "",
+"device": -1,
+"window_id": 0,
+"alt_pressed": false,
+"shift_pressed": false,
+"ctrl_pressed": false,
+"meta_pressed": false,
+"pressed": false,
+"keycode": 0,
+"physical_keycode": 4194305,
+"key_label": 0,
+"unicode": 0,
+"location": 0,
+"echo": false,
+"script": null
 )]
 }
 map={
@@ -233,6 +457,23 @@ map={
 "button_index": 4,
 "pressure": 0.0,
 "pressed": true,
+"script": null
+), Object(InputEventKey,
+"resource_local_to_scene": false,
+"resource_name": "",
+"device": -1,
+"window_id": 0,
+"alt_pressed": false,
+"shift_pressed": false,
+"ctrl_pressed": false,
+"meta_pressed": false,
+"pressed": false,
+"keycode": 0,
+"physical_keycode": 77,
+"key_label": 0,
+"unicode": 0,
+"location": 0,
+"echo": false,
 "script": null
 )]
 }
@@ -246,6 +487,23 @@ ui_tab_left={
 "pressure": 0.0,
 "pressed": true,
 "script": null
+), Object(InputEventKey,
+"resource_local_to_scene": false,
+"resource_name": "",
+"device": -1,
+"window_id": 0,
+"alt_pressed": false,
+"shift_pressed": false,
+"ctrl_pressed": false,
+"meta_pressed": false,
+"pressed": false,
+"keycode": 0,
+"physical_keycode": 81,
+"key_label": 0,
+"unicode": 0,
+"location": 0,
+"echo": false,
+"script": null
 )]
 }
 ui_tab_right={
@@ -257,6 +515,23 @@ ui_tab_right={
 "button_index": 10,
 "pressure": 0.0,
 "pressed": true,
+"script": null
+), Object(InputEventKey,
+"resource_local_to_scene": false,
+"resource_name": "",
+"device": -1,
+"window_id": 0,
+"alt_pressed": false,
+"shift_pressed": false,
+"ctrl_pressed": false,
+"meta_pressed": false,
+"pressed": false,
+"keycode": 0,
+"physical_keycode": 69,
+"key_label": 0,
+"unicode": 0,
+"location": 0,
+"echo": false,
 "script": null
 )]
 }
@@ -294,9 +569,9 @@ debug_quicksave={
 "meta_pressed": false,
 "pressed": false,
 "keycode": 0,
-"physical_keycode": 50,
+"physical_keycode": 51,
 "key_label": 0,
-"unicode": 50,
+"unicode": 51,
 "location": 0,
 "echo": false,
 "script": null
@@ -315,11 +590,55 @@ debug_quickload={
 "meta_pressed": false,
 "pressed": false,
 "keycode": 0,
-"physical_keycode": 51,
+"physical_keycode": 50,
 "key_label": 0,
-"unicode": 51,
+"unicode": 50,
 "location": 0,
 "echo": false,
+"script": null
+)]
+}
+target_prev={
+"deadzone": 0.2,
+"events": [Object(InputEventMouseButton,
+"resource_local_to_scene": false,
+"resource_name": "",
+"device": -1,
+"window_id": 0,
+"alt_pressed": false,
+"shift_pressed": false,
+"ctrl_pressed": false,
+"meta_pressed": false,
+"button_mask": 0,
+"position": Vector2(0, 0),
+"global_position": Vector2(0, 0),
+"factor": 1.0,
+"button_index": 4,
+"canceled": false,
+"pressed": false,
+"double_click": false,
+"script": null
+)]
+}
+target_next={
+"deadzone": 0.2,
+"events": [Object(InputEventMouseButton,
+"resource_local_to_scene": false,
+"resource_name": "",
+"device": -1,
+"window_id": 0,
+"alt_pressed": false,
+"shift_pressed": false,
+"ctrl_pressed": false,
+"meta_pressed": false,
+"button_mask": 0,
+"position": Vector2(0, 0),
+"global_position": Vector2(0, 0),
+"factor": 1.0,
+"button_index": 5,
+"canceled": false,
+"pressed": false,
+"double_click": false,
 "script": null
 )]
 }

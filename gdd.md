@@ -58,22 +58,23 @@ El tema *Imminent Doom* sigue siendo el tono: el fin se siente por ambientación
 ### 4.3 Mapa de input
 <!-- id: input -->
 
-| Acción (`InputMap`) | Gamepad (Xbox · índice en Godot) | Uso |
-|---|---|---|
-| `move_*` | Stick izquierdo | Moverse |
-| `attack` | A · botón 0 | Espada |
-| `interact` | B · botón 1 | Abrir, leer, empujar (acción contextual) |
-| `dodge` | RB · botón 10 | Rodar. Queda al lado de la guardia: cubrirse y esquivar con el mismo dedo |
-| `item_1` / `item_2` | X · botón 2 / Y · botón 3 | Ítems asignados |
-| `block` | RT · eje 5 | Guardia |
-| `z-lock` | LT · eje 4 | Fijar objetivo |
-| `look_left` / `look_right` / `look_up` / `look_down` | Stick derecho · ejes 2 y 3 | Una sola dirección para dos usos. Sin objetivo fijado: apuntar (zona muerta normal). Con objetivo fijado: cambiar de objetivo cuando cruza 0.7 (el mismo `look_*` leído con otro umbral). Remapear `look_*` mueve los dos usos juntos |
-| `pause` | Start · botón 6 | Menú de pausa (inventario) |
-| `map` | Back · botón 4 | Mapa |
-| `ui_tab_left` / `ui_tab_right` | LB · botón 9 / RB · botón 10 | Pestañas de los menús. Prefijo `ui_` porque son de otro contexto: con el juego pausado RB no choca con `dodge` |
-| `debug_overlay` / `debug_quickload` / `debug_quicksave` | — | Teclas `1` / `2` / `3`, solo teclado, solo en debug. Provisorias: el teclado de desarrollo no tiene teclas F |
+| Acción (`InputMap`) | Gamepad (Xbox · índice en Godot) | Teclado y mouse | Uso |
+|---|---|---|---|
+| `move_*` | Stick izquierdo | WASD | Moverse |
+| `attack` | A · botón 0 | Click izquierdo | Espada |
+| `interact` | B · botón 1 | E | Abrir, leer, empujar (acción contextual) |
+| `dodge` | RB · botón 10 | Espacio | Rodar. En gamepad queda al lado de la guardia: cubrirse y esquivar con el mismo dedo |
+| `item_1` / `item_2` | X · botón 2 / Y · botón 3 | Q / R | Ítems asignados |
+| `block` | RT · eje 5 | Click derecho | Guardia |
+| `z-lock` | LT · eje 4 | Shift izquierdo | Fijar objetivo |
+| `look_left` / `look_right` / `look_up` / `look_down` | Stick derecho · ejes 2 y 3 | Mouse (lo lee `Aim`) | Una sola dirección para dos usos. Sin objetivo fijado: apuntar (zona muerta normal). Con objetivo fijado: cambiar de objetivo cuando cruza 0.7 (el mismo `look_*` leído con otro umbral). Remapear `look_*` mueve los dos usos juntos |
+| `target_prev` / `target_next` | — (el stick derecho) | Rueda arriba / abajo | Cambiar de objetivo con teclado y mouse |
+| `pause` | Start · botón 6 | Tab o Esc | Menú de pausa (inventario) |
+| `map` | Back · botón 4 | M | Mapa |
+| `ui_tab_left` / `ui_tab_right` | LB · botón 9 / RB · botón 10 | Q / E | Pestañas de los menús. Prefijo `ui_` porque son de otro contexto: con el juego pausado no chocan con `dodge`, `item_1` ni `interact` |
+| `debug_overlay` / `debug_quickload` / `debug_quicksave` | — | 1 / 2 / 3 | Solo en debug. Provisorias: el teclado de desarrollo no tiene teclas F |
 
-**Teclado y mouse: se definen más adelante.** Por ahora no hay ninguna tecla de juego mapeada: el juego se prueba con gamepad. Ideas ya discutidas para cuando se retome: guardia en click derecho, ítems en `Q`/`R`, `Tab` para el inventario y la rueda para cambiar de objetivo.
+Las teclas se mapean por posición física (`physical_keycode`): WASD queda en el mismo lugar en cualquier distribución. El autoload `InputDevice` avisa con `input_device_changed` cuando el jugador pasa de gamepad a teclado/mouse o al revés. El remapeo es post-MVP.
 
 ## 5. Combate
 <!-- id: combate -->
