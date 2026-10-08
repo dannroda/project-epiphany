@@ -123,8 +123,7 @@ func set_guard(active: bool) -> void:
 
 func _show_shield_in_hand(in_hand: bool) -> void:
 	if equipment.shield_in_hand:
-		equipment.shield_in_hand.visible = in_hand
-		equipment.shield_on_back.visible = not in_hand
+		equipment.show_shield_in_hand(in_hand)
 
 
 func _make_damage() -> DamageInfo:

@@ -228,3 +228,23 @@ func test_bow_points_where_it_aims() -> void:
 	await tree.create_timer(0.5).timeout
 	player.targeting.clear()
 	setup[1].reset()
+
+
+func test_hidden_shield_has_no_collision() -> void:
+	var setup: Array = await _setup(0)
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[2]
+	await tree.physics_frame
+	var hand_shapes := player.equipment.shield_in_hand.find_children("*", "CollisionShape3D", true, false)
+	var back_shapes := player.equipment.shield_on_back.find_children("*", "CollisionShape3D", true, false)
+	assert_true(hand_shapes.all(func(s: CollisionShape3D) -> bool: return s.disabled), "escudo de la mano oculto: sin colisión")
+	assert_true(back_shapes.all(func(s: CollisionShape3D) -> bool: return not s.disabled), "escudo en la espalda: con colisión")
+	player.movement_state.blackboard.set_var("is_blocking", true)
+	player.set_guard(true)
+	await tree.physics_frame
+	await tree.physics_frame
+	assert_true(hand_shapes.all(func(s: CollisionShape3D) -> bool: return not s.disabled), "al bloquear, el de la mano colisiona")
+	assert_true(back_shapes.all(func(s: CollisionShape3D) -> bool: return s.disabled), "y el de la espalda no")
+	player.movement_state.blackboard.set_var("is_blocking", false)
+	player.set_guard(false)
+	setup[1].reset()

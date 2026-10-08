@@ -29,8 +29,7 @@ func refresh() -> void:
 	shield_in_hand = _place(shield_hand_socket, shield)
 	shield_on_back = _place(shield_back_socket, shield)
 	if shield_in_hand:
-		shield_in_hand.visible = hand_visible
-		shield_on_back.visible = not hand_visible
+		show_shield_in_hand(hand_visible)
 	weapon_changed.emit(weapon)
 
 
@@ -43,9 +42,21 @@ func hold(item: ItemData) -> void:
 		held.item = item
 	shield_hand_socket.add_child(held)
 	weapon_socket.visible = false
-	if shield_in_hand:
-		shield_in_hand.visible = false
-		shield_on_back.visible = true
+	show_shield_in_hand(false)
+
+
+## El escudo está en la mano o en la espalda; el que no se ve tampoco colisiona.
+func show_shield_in_hand(in_hand: bool) -> void:
+	if shield_in_hand == null:
+		return
+	_set_present(shield_in_hand, in_hand)
+	_set_present(shield_on_back, not in_hand)
+
+
+func _set_present(model: Node3D, present: bool) -> void:
+	model.visible = present
+	for shape in model.find_children("*", "CollisionShape3D", true, false):
+		shape.set_deferred(&"disabled", not present)
 
 
 func release_held() -> void:
