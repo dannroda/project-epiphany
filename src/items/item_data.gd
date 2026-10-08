@@ -5,6 +5,7 @@ enum Category { SWORD, SHIELD, ARMOR, USABLE, AMMO, DUNGEON, UPGRADE }
 
 @export var id: StringName
 @export var display_name: String
+@export var article: String ## "el", "la", "una"… para "¡Conseguiste el Arco!"
 @export_multiline var description: String
 @export var icon: Texture2D
 @export var category: Category

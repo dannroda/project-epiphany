@@ -649,7 +649,7 @@ Con lock-on el foco va al punto medio (lock_focus_weight) pero no se aleja más 
 
 **Referencias:** `gdd.md#camara`
 
-## M3 — Inventario + UI  (6/8)
+## M3 — Inventario + UI  (7/8)
 
 Pantallas Equipo e Ítems, asignar a X/Y, slots en el HUD, cofres, item get, recolectables.
 
@@ -761,20 +761,22 @@ Página src/ui/menus/equipment_page.tscn dentro del menú de pausa (reemplaza el
 
 **Relacionadas:** 3.3 Pantalla Ítems y asignación a X/Y
 
-### 3.6 Cofres e item get · Pendiente
+### 3.6 Cofres e item get · Hecho
 
-- [ ] Crear `Interactable` e `InteractionDetector` mínimos
+- [x] Crear `Interactable` e `InteractionDetector` mínimos
   `src/components/interactable.gd` y un `Area3D` en el player que elige el más cercano de frente al apretar `interact`. El prompt en pantalla es 4.1.
-- [ ] Crear `src/world/chest.gd` y `chest.tscn`
+- [x] Crear `src/world/chest.gd` y `chest.tscn`
   Chico y grande; se abre una sola vez gracias a su `flag`. Código en [[gdd#mundo]].
-- [ ] `GameState.give()` como entrada única
+- [x] `GameState.give()` como entrada única
   Enruta llaves, mapa, brújula, contenedores y el resto al inventario. Ver [[gdd#estado-flags]].
-- [ ] Estado `ItemGet`
+- [x] Estado `ItemGet`
   Animación `PickUp`/`Use_Item` con el ítem en alto, nombre y descripción en una caja simple; el mundo en pausa hasta confirmar. La caja de texto completa llega en 4.2.
-- [ ] Primer equipado automático
+- [x] Primer equipado automático
   Si el ítem es equipo y la ranura está vacía, se equipa. Si es usable y hay un botón libre, se asigna.
 
 **Prueba:** Abrir un cofre con bombas: animación, texto y bombas en el inventario. Salir y volver a la escena (o guardar y cargar): el cofre sigue abierto y no da bombas de nuevo.
+
+**Notas:** Item get como el mockup ItemGet: anillos con el ícono sobre el player y caja abajo; pausa con la pose congelada (Use_Item) hasta confirmar. ItemData tiene 'article' para el título. Capa de física 6 = Interactable. Cofre placeholder (cajas); el modelo real llega con el arte. El nivel de prueba tiene un cofre con la bolsa de bombas (flag ow_test_chest).
 
 **Referencias:** `gdd.md#mundo`, `gdd.md#estado-flags`
 

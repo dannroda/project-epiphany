@@ -57,7 +57,7 @@ func test_item_slots_follow_buttons_and_ammo() -> void:
 	state.assign_button(0, &"bomb_bag")
 	assert_eq(x.get_node(^"Icon").texture, Items.get_item(&"bomb_bag").icon, "reasignar cambia el slot")
 	assert_eq(x.get_node(^"Ammo").text, "0")
-	assert_eq(y.get_node(^"Icon").texture, null)
+	assert_eq(y.get_node(^"Icon").texture, Items.get_item(&"bow").icon, "intercambio con Y")
 
 	device._switch_to(1)
 	assert_eq(x.get_node(^"Badge").texture, InputPrompts.icon(&"item_1", true), "ícono de gamepad")

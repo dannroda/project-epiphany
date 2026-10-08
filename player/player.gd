@@ -76,6 +76,18 @@ func make_item_context() -> ItemUseContext:
 	return ctx
 
 
+func can_interact() -> bool:
+	var state := movement_state.get_active_state()
+	return state != null and state.name in [&"Idle", &"Moving"]
+
+
+## Lo llaman cofres y recompensas después de GameState.give().
+func play_item_get(item: ItemData, amount: int = 1) -> void:
+	movement_state.blackboard.set_var("got_item", item)
+	movement_state.blackboard.set_var("got_amount", amount)
+	movement_state.dispatch("item_get")
+
+
 func deny_item(button: int) -> void:
 	Feel.sfx(&"deny", global_position)
 	item_denied.emit(button)

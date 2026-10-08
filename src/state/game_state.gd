@@ -78,7 +78,19 @@ func give(item: ItemData, amount: int = 1) -> void:
 		&"dungeon_map": current_dungeon_state().has_map = true
 		&"compass": current_dungeon_state().has_compass = true
 		&"heart_container": max_health += 4 * amount
-		_: inventory.add(item.id, amount)
+		_:
+			inventory.add(item.id, amount)
+			_auto_place(item)
+
+
+## Primer equipo de una categoría: se equipa. Primer usable: va al primer botón libre.
+func _auto_place(item: ItemData) -> void:
+	if item.is_equipment() and equipment.get(item.category, &"") == &"":
+		equip(item)
+	elif item.category == ItemData.Category.USABLE and not item_buttons.has(item.id):
+		var free := item_buttons.find(&"")
+		if free != -1:
+			assign_button(free, item.id)
 
 
 func write_to(cfg: ConfigFile) -> void:

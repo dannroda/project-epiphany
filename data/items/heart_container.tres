@@ -8,6 +8,7 @@
 script = ExtResource("2_0sqo8")
 id = &"heart_container"
 display_name = "Contenedor de corazón"
+article = "un"
 description = "Suma un corazón a tu vida máxima."
 icon = ExtResource("1_0sqo8")
 category = 6

@@ -1,0 +1,76 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/ui/item_get/item_get.gd" id="1_get"]
+
+[node name="ItemGet" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_get")
+
+[node name="Dim" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.031, 0.035, 0.047, 0.45)
+
+[node name="Rings" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 154.0
+offset_bottom = 154.0
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="Rings"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 37.0
+offset_top = 37.0
+offset_right = 117.0
+offset_bottom = 117.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Box" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 160.0
+offset_top = -220.0
+offset_right = -160.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_type_variation = &"ItemGetBox"
+
+[node name="Layout" type="VBoxContainer" parent="Box"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Box/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"ItemGetTitle"
+
+[node name="Text" type="Label" parent="Box/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"ItemGetText"
+autowrap_mode = 3
+
+[node name="Next" type="Polygon2D" parent="Box"]
+position = Vector2(916, 138)
+color = Color(0.851, 0.643, 0.255, 1)
+polygon = PackedVector2Array(0, 0, 16, 0, 8, 12)

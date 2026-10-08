@@ -29,6 +29,9 @@ func _setup() -> void:
 	add_transition($Idle, $UsingItem, "use_item")
 	add_transition($Moving, $UsingItem, "use_item")
 	add_transition($UsingItem, $Idle, "finished")
+	add_transition($Idle, $ItemGet, "item_get")
+	add_transition($Moving, $ItemGet, "item_get")
+	add_transition($ItemGet, $Idle, "finished")
 
 	initial_state = $Spawning
 

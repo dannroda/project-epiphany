@@ -33,6 +33,8 @@
 [ext_resource type="Script" uid="uid://do4y7vq0jtpd1" path="res://player/states/dodging.gd" id="st_dodging"]
 [ext_resource type="Script" path="res://player/components/aim.gd" id="c_aim"]
 [ext_resource type="Script" path="res://player/states/using_item.gd" id="st_using_item"]
+[ext_resource type="Script" path="res://player/states/item_get.gd" id="st_item_get"]
+[ext_resource type="Script" path="res://player/components/interaction_detector.gd" id="c_interaction"]
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_peicu"]
 fadeout_time = 0.3
@@ -169,6 +171,9 @@ blend_point_4/node = SubResource("AnimationNodeAnimation_myc18")
 blend_point_4/pos = Vector2(0, -1)
 blend_point_4/name = &"MovementBasic_Walking_B"
 triangles = PackedInt32Array(0, 2, 3, 0, 1, 3, 0, 2, 4, 0, 1, 4)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_interaction"]
+radius = 1.4
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_useitem"]
 animation = &"General/Use_Item"
@@ -656,6 +661,9 @@ script = ExtResource("st_dodging")
 [node name="UsingItem" type="LimboState" parent="MovementState"]
 script = ExtResource("st_using_item")
 
+[node name="ItemGet" type="LimboState" parent="MovementState"]
+script = ExtResource("st_item_get")
+
 [node name="Dead" type="LimboState" parent="MovementState" unique_id=1372512458]
 script = ExtResource("st_dead")
 
@@ -697,6 +705,14 @@ script = ExtResource("c_input_buffer")
 [node name="Aim" type="Node" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("c_aim")
 player = NodePath("..")
+
+[node name="InteractionDetector" type="Area3D" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("c_interaction")
+player = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionDetector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("SphereShape3D_interaction")
 
 [connection signal="body_entered" from="TargetDetector" to="Targeting" method="_on_detector_body_entered"]
 [connection signal="body_exited" from="TargetDetector" to="Targeting" method="_on_detector_body_exited"]

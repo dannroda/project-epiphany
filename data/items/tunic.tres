@@ -8,6 +8,7 @@
 script = ExtResource("2_iaq3g")
 id = &"tunic"
 display_name = "Túnica"
+article = "la"
 description = "Ropa de viaje. No protege mucho, pero es cómoda."
 icon = ExtResource("1_iaq3g")
 category = 2

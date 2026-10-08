@@ -2,27 +2,27 @@
   "checklist": [
     {
       "detail": "`src/components/interactable.gd` y un `Area3D` en el player que elige el más cercano de frente al apretar `interact`. El prompt en pantalla es 4.1.",
-      "done": false,
+      "done": true,
       "text": "Crear `Interactable` e `InteractionDetector` mínimos"
     },
     {
       "detail": "Chico y grande; se abre una sola vez gracias a su `flag`. Código en [[gdd#mundo]].",
-      "done": false,
+      "done": true,
       "text": "Crear `src/world/chest.gd` y `chest.tscn`"
     },
     {
       "detail": "Enruta llaves, mapa, brújula, contenedores y el resto al inventario. Ver [[gdd#estado-flags]].",
-      "done": false,
+      "done": true,
       "text": "`GameState.give()` como entrada única"
     },
     {
       "detail": "Animación `PickUp`/`Use_Item` con el ítem en alto, nombre y descripción en una caja simple; el mundo en pausa hasta confirmar. La caja de texto completa llega en 4.2.",
-      "done": false,
+      "done": true,
       "text": "Estado `ItemGet`"
     },
     {
       "detail": "Si el ítem es equipo y la ranura está vacía, se equipa. Si es usable y hay un botón libre, se asigna.",
-      "done": false,
+      "done": true,
       "text": "Primer equipado automático"
     }
   ],
@@ -39,7 +39,7 @@
     }
   ],
   "milestone": "m03",
-  "notes": "",
+  "notes": "Item get como el mockup ItemGet: anillos con el ícono sobre el player y caja abajo; pausa con la pose congelada (Use_Item) hasta confirmar. ItemData tiene 'article' para el título. Capa de física 6 = Interactable. Cofre placeholder (cajas); el modelo real llega con el arte. El nivel de prueba tiene un cofre con la bolsa de bombas (flag ow_test_chest).",
   "order": 6,
   "refs": [
     {
@@ -51,8 +51,8 @@
       "section": "estado-flags"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Abrir un cofre con bombas: animación, texto y bombas en el inventario. Salir y volver a la escena (o guardar y cargar): el cofre sigue abierto y no da bombas de nuevo.",
   "title": "Cofres e item get",
-  "updated_at": "2026-10-08T04:46:16.477Z"
+  "updated_at": "2026-10-08T07:28:26.940Z"
 }
