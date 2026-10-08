@@ -1,0 +1,126 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/cracked_wall.gd" id="1_wall"]
+[ext_resource type="Script" path="res://src/components/hurtbox.gd" id="2_hurtbox"]
+
+[sub_resource type="StandardMaterial3D" id="Stone"]
+albedo_color = Color(0.58, 0.55, 0.5, 1)
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="Crack"]
+shading_mode = 0
+albedo_color = Color(0.09, 0.08, 0.08, 1)
+
+[sub_resource type="BoxMesh" id="WallMesh"]
+material = SubResource("Stone")
+size = Vector3(2.4, 2.4, 0.6)
+
+[sub_resource type="BoxMesh" id="CrackMesh"]
+material = SubResource("Crack")
+size = Vector3(0.07, 0.6, 0.02)
+
+[sub_resource type="BoxMesh" id="CrackTopMesh"]
+material = SubResource("Crack")
+size = Vector3(0.6, 0.02, 0.06)
+
+[sub_resource type="BoxMesh" id="RockMesh"]
+material = SubResource("Stone")
+size = Vector3(0.35, 0.35, 0.35)
+
+[sub_resource type="BoxShape3D" id="WallShape"]
+size = Vector3(2.4, 2.4, 0.6)
+
+[sub_resource type="BoxShape3D" id="HurtShape"]
+size = Vector3(2.6, 2.4, 1.0)
+
+[node name="CrackedWall" type="StaticBody3D"]
+script = ExtResource("1_wall")
+
+[node name="Wall" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="WallMesh" type="MeshInstance3D" parent="Wall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+mesh = SubResource("WallMesh")
+
+[node name="CrackFront0" type="MeshInstance3D" parent="Wall"]
+transform = Transform3D(0.9063, 0.4226, 0, -0.4226, 0.9063, 0, 0, 0, 1, -0.55, 1.6, 0.31)
+cast_shadow = 0
+mesh = SubResource("CrackMesh")
+
+[node name="CrackFront1" type="MeshInstance3D" parent="Wall"]
+transform = Transform3D(0.8192, -0.5736, 0, 0.5736, 0.8192, 0, 0, 0, 1, -0.3, 1.05, 0.31)
+cast_shadow = 0
+mesh = SubResource("CrackMesh")
+
+[node name="CrackFront2" type="MeshInstance3D" parent="Wall"]
+transform = Transform3D(0.9397, 0.3420, 0, -0.3420, 0.9397, 0, 0, 0, 1, -0.5, 0.55, 0.31)
+cast_shadow = 0
+mesh = SubResource("CrackMesh")
+
+[node name="CrackFront3" type="MeshInstance3D" parent="Wall"]
+transform = Transform3D(0.9397, -0.3420, 0, 0.3420, 0.9397, 0, 0, 0, 1, 0.35, 1.35, 0.31)
+cast_shadow = 0
+mesh = SubResource("CrackMesh")
+
+[node name="CrackFront4" type="MeshInstance3D" parent="Wall"]
+transform = Transform3D(0.8660, 0.5000, 0, -0.5000, 0.8660, 0, 0, 0, 1, 0.55, 0.85, 0.31)
+cast_shadow = 0
+mesh = SubResource("CrackMesh")
+
+[node name="CrackTop0" type="MeshInstance3D" parent="Wall"]
+transform = Transform3D(0.8660, 0, -0.5000, 0, 1, 0, 0.5000, 0, 0.8660, -0.7, 2.21, 0.15)
+cast_shadow = 0
+mesh = SubResource("CrackTopMesh")
+
+[node name="CrackTop1" type="MeshInstance3D" parent="Wall"]
+transform = Transform3D(0.9063, 0, 0.4226, 0, 1, 0, -0.4226, 0, 0.9063, -0.1, 2.21, -0.05)
+cast_shadow = 0
+mesh = SubResource("CrackTopMesh")
+
+[node name="CrackTop2" type="MeshInstance3D" parent="Wall"]
+transform = Transform3D(0.9659, 0, -0.2588, 0, 1, 0, 0.2588, 0, 0.9659, 0.5, 2.21, 0.1)
+cast_shadow = 0
+mesh = SubResource("CrackTopMesh")
+
+[node name="Rubble" type="Node3D" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="Rock0" type="MeshInstance3D" parent="Rubble"]
+transform = Transform3D(0.9397, 0, -0.3420, 0, 1.0000, 0, 0.3420, 0, 0.9397, -0.8, 0.175, 0.3)
+mesh = SubResource("RockMesh")
+
+[node name="Rock1" type="MeshInstance3D" parent="Rubble"]
+transform = Transform3D(0.7727, 0, 0.2071, 0, 0.8000, 0, -0.2071, 0, 0.7727, -0.2, 0.140, 0.5)
+mesh = SubResource("RockMesh")
+
+[node name="Rock2" type="MeshInstance3D" parent="Rubble"]
+transform = Transform3D(0.9362, 0, -0.6555, 0, 1.1429, 0, 0.6555, 0, 0.9362, 0.4, 0.200, 0.25)
+mesh = SubResource("RockMesh")
+
+[node name="Rock3" type="MeshInstance3D" parent="Rubble"]
+transform = Transform3D(0.7034, 0, -0.1240, 0, 0.7143, 0, 0.1240, 0, 0.7034, 0.9, 0.125, 0.55)
+mesh = SubResource("RockMesh")
+
+[node name="Rock4" type="MeshInstance3D" parent="Rubble"]
+transform = Transform3D(0.7918, 0, 0.4571, 0, 0.9143, 0, -0.4571, 0, 0.7918, 0.05, 0.160, -0.1)
+mesh = SubResource("RockMesh")
+
+[node name="Rock5" type="MeshInstance3D" parent="Rubble"]
+transform = Transform3D(0.4040, 0, -0.4815, 0, 0.6286, 0, 0.4815, 0, 0.4040, -0.55, 0.110, -0.25)
+mesh = SubResource("RockMesh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = SubResource("WallShape")
+
+[node name="Hurtbox" type="Area3D" parent="."]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+script = ExtResource("2_hurtbox")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = SubResource("HurtShape")

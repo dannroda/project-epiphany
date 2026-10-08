@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="w_chest"]
 [ext_resource type="PackedScene" path="res://src/world/eye_switch.tscn" id="w_eye"]
 [ext_resource type="PackedScene" path="res://src/entities/turret/turret.tscn" id="e_turret"]
+[ext_resource type="PackedScene" path="res://src/world/cracked_wall.tscn" id="w_cracked"]
 [ext_resource type="Script" uid="uid://x60poi8g2tqu" path="res://src/world/grass_patch.gd" id="w_grass"]
 [ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="w_pot"]
 [ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="w_spawn"]
@@ -199,5 +200,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.25, -6)
 
 [node name="Turret" parent="." instance=ExtResource("e_turret")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.25, 6)
+
+[node name="CrackedWall" parent="." instance=ExtResource("w_cracked")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.25, 2)
+flag = &"ow_test_cracked_wall"
 
 [node name="HUD" parent="." unique_id=1876306880 instance=ExtResource("ui_hud")]

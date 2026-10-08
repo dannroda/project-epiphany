@@ -2,17 +2,17 @@
   "checklist": [
     {
       "detail": "Solo reacciona a daño `explosive`. Al romperse: animación o reemplazo por escombros, polvo y sonido de secreto.",
-      "done": false,
+      "done": true,
       "text": "Escena `CrackedWall`"
     },
     {
       "detail": "Con `PersistentFlag` (4.5).",
-      "done": false,
+      "done": true,
       "text": "Persistencia con flag"
     },
     {
       "detail": "Textura de grieta distinta del resto de la pared, visible desde la cámara inclinada.",
-      "done": false,
+      "done": true,
       "text": "Pista visual legible"
     }
   ],
@@ -29,7 +29,7 @@
     }
   ],
   "milestone": "m05",
-  "notes": "",
+  "notes": "CrackedWall: StaticBody3D 2,4×2,4 m con Hurtbox neutral que solo reacciona a element explosive; la espada rebota con chispas. Al romperse: pared oculta, escombros, polvo, pedazos y sonido de secreto ('secret'); emite broken. Persistencia con PersistentFlag y advertencia en el editor (flag obligatorio). Pista visual: piedra más clara con grietas oscuras en el frente y el borde superior (placeholder). Uno de prueba en levels/test.tscn en (-10, 0.25, 2) con flag ow_test_cracked_wall.",
   "order": 5,
   "refs": [
     {
@@ -41,8 +41,8 @@
       "section": "progresion-gating"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Un muro agrietado del nivel de prueba: la espada no lo rompe, una bomba sí; sigue roto después de guardar y cargar.",
   "title": "Muros agrietados",
-  "updated_at": "2026-10-08T04:45:54.539Z"
+  "updated_at": "2026-10-08T19:19:36.225Z"
 }

@@ -13,6 +13,11 @@ script = ExtResource("1_ox7fe")
 id = &"ow_test_tablet_hint"
 description = "Pista de la tablilla del nivel de prueba leída"
 
+[sub_resource type="Resource" id="Resource_crackedwall"]
+script = ExtResource("1_ox7fe")
+id = &"ow_test_cracked_wall"
+description = "Muro agrietado del nivel de prueba roto"
+
 [resource]
 script = ExtResource("2_3vvdp")
-definitions = Array[ExtResource("1_ox7fe")]([SubResource("Resource_mrp87"), SubResource("Resource_tablethint")])
+definitions = Array[ExtResource("1_ox7fe")]([SubResource("Resource_mrp87"), SubResource("Resource_tablethint"), SubResource("Resource_crackedwall")])

@@ -25,6 +25,7 @@ func _ready() -> void:
 		&"cut": _synth(0.12, func(t: float) -> float: return (randf() * 2.0 - 1.0) * 0.3 * sin(PI * t / 0.12)),
 		&"reflect": _synth(0.3, func(t: float) -> float: return (sin(TAU * 1760.0 * t) + 0.5 * sin(TAU * 2640.0 * t)) * 0.3 * exp(-t * 9.0)),
 		&"boom": _synth(0.6, func(t: float) -> float: return ((randf() * 2.0 - 1.0) * 0.7 + sin(TAU * lerpf(90.0, 40.0, t / 0.6) * t) * 0.5) * exp(-t * 6.0)),
+		&"secret": _synth(0.9, func(t: float) -> float: return sin(TAU * [392.0, 440.0, 523.0, 659.0, 784.0, 1047.0][mini(int(t / 0.15), 5)] * t) * 0.25 * exp(-fmod(t, 0.15) * 6.0)),
 		&"deny": _synth(0.18, func(t: float) -> float: return signf(sin(TAU * (140.0 if t < 0.08 else 105.0) * t)) * 0.25 * (1.0 if fmod(t, 0.09) < 0.07 else 0.0)),
 		&"heal": _synth(0.45, func(t: float) -> float: return sin(TAU * [523.0, 659.0, 784.0][mini(int(t / 0.15), 2)] * t) * 0.3 * exp(-fmod(t, 0.15) * 12.0)),
 	}
