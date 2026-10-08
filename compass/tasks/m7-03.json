@@ -2,17 +2,17 @@
   "checklist": [
     {
       "detail": "Área con escena destino y `spawn_point`. Actualiza `GameState.spawn_scene`, `spawn_point` y `current_dungeon`.",
-      "done": false,
+      "done": true,
       "text": "`Portal`"
     },
     {
       "detail": "`ResourceLoader.load_threaded_request` para que no se congele la imagen.",
-      "done": false,
+      "done": true,
       "text": "Fundido y carga en segundo plano"
     },
     {
       "detail": "Autosave mínimo para no perder progreso (la política completa va en 10.2).",
-      "done": false,
+      "done": true,
       "text": "Guardado al cambiar de escena"
     }
   ],
@@ -25,7 +25,7 @@
     }
   ],
   "milestone": "m07",
-  "notes": "Skills: `godot:godot-resources`, `disciplines:save-systems`.",
+  "notes": "Skills: `godot:godot-resources`, `disciplines:save-systems`.\n\nHecho 2026-10-08: `Portal` + `SaveManager.travel_to()` (pausa, fundido, `load_threaded_request`, spawn con cámara enganchada, autosave en `autosave_slot`). La fachada del templo del overworld lleva a la mazmorra gris (`dungeon_test`, spawn `start`); la salida sur del vestíbulo vuelve al spawn `templo`. En M8 el portal apunta al templo. Test: `tests/test_portal.gd`.",
   "order": 3,
   "refs": [
     {
@@ -37,8 +37,8 @@
       "section": "guardado"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Entrar y salir del templo varias veces: el player aparece en la puerta correcta, sin congelarse, y el estado de la mazmorra se conserva.",
   "title": "Cambio de escena overworld ↔ mazmorra",
-  "updated_at": "2026-10-08T04:45:55.656Z"
+  "updated_at": "2026-10-08T23:55:16.415Z"
 }

@@ -60,6 +60,13 @@ func reset_room() -> void:
 	_mask.hide()
 
 
+## Sin deslizarse: al aparecer en otra escena o punto, la cámara arranca sobre el player.
+func snap_to_target() -> void:
+	_look_ahead = Vector3.ZERO
+	focus = target_node.global_position
+	global_position = focus + offset
+
+
 ## La sala que contiene el centro del player; la actual tiene prioridad mientras siga adentro.
 func _update_room() -> void:
 	var at := target_node.global_position

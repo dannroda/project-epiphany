@@ -6,18 +6,14 @@
 [ext_resource type="Script" path="res://src/world/spawn_point.gd" id="4_cr2by"]
 [ext_resource type="Script" path="res://src/world/grass_patch.gd" id="5_n78bg"]
 [ext_resource type="PackedScene" path="res://src/entities/enemy.tscn" id="6_d356v"]
-[ext_resource type="Script" path="res://src/entities/enemy.gd" id="7_jc7pe"]
-[ext_resource type="Resource" path="res://data/entities/skeleton.tres" id="8_3hrjb"]
 [ext_resource type="PackedScene" path="res://src/world/physics_box.tscn" id="9_axpip"]
 [ext_resource type="PackedScene" path="res://src/world/physics_rock.tscn" id="10_vrnmo"]
 [ext_resource type="Script" path="res://src/world/overworld_map.gd" id="11_gsck2"]
 [ext_resource type="Texture2D" path="res://assets/ui/maps/overworld.png" id="12_fxxkd"]
 [ext_resource type="PackedScene" path="res://player/player.tscn" id="13_gd0nv"]
-[ext_resource type="Script" path="res://player/player.gd" id="14_uay0b"]
-[ext_resource type="Resource" path="res://data/entities/player.tres" id="15_gvf0k"]
+[ext_resource type="Script" path="res://src/world/portal.gd" id="14_5vrew"]
 [ext_resource type="Script" path="res://src/tools/top_down_camera.gd" id="16_372gu"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="17_lc5as"]
-[ext_resource type="Script" path="res://src/ui/hud/hud.gd" id="18_v1yde"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7se6l"]
 panorama = ExtResource("1_qyxw2")
@@ -60,6 +56,9 @@ polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(4, 3, 5), PackedInt32Arr
 geometry_parsed_geometry_type = 1
 geometry_source_geometry_mode = 1
 geometry_source_group_name = &"navmesh_source"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1rjbp"]
+size = Vector3(2, 2.4, 1.4)
 
 [node name="Overworld" type="Node3D" unique_id=295443412]
 
@@ -197,68 +196,35 @@ columns = 6
 rows = 3
 random_seed = 2
 
-[node name="Skeleton1" type="CharacterBody3D" parent="." unique_id=510737741 instance=ExtResource("6_d356v")]
+[node name="Skeleton1" parent="." unique_id=510737741 instance=ExtResource("6_d356v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -5)
-collision_layer = 5
-collision_mask = 5
-script = ExtResource("7_jc7pe")
-config = ExtResource("8_3hrjb")
 
-[node name="Skeleton2" type="CharacterBody3D" parent="." unique_id=1094979658 instance=ExtResource("6_d356v")]
+[node name="Skeleton2" parent="." unique_id=1094979658 instance=ExtResource("6_d356v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 5)
-collision_layer = 5
-collision_mask = 5
-script = ExtResource("7_jc7pe")
-config = ExtResource("8_3hrjb")
 
-[node name="Skeleton3" type="CharacterBody3D" parent="." unique_id=844132866 instance=ExtResource("6_d356v")]
+[node name="Skeleton3" parent="." unique_id=844132866 instance=ExtResource("6_d356v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 4)
-collision_layer = 5
-collision_mask = 5
-script = ExtResource("7_jc7pe")
-config = ExtResource("8_3hrjb")
 
-[node name="Box1" type="RigidBody3D" parent="." unique_id=1372177849 instance=ExtResource("9_axpip")]
+[node name="Box1" parent="." unique_id=1372177849 instance=ExtResource("9_axpip")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.5, -1.5)
-collision_layer = 9
-collision_mask = 9
-mass = 2.0
 
-[node name="Box2" type="RigidBody3D" parent="." unique_id=982436721 instance=ExtResource("9_axpip")]
+[node name="Box2" parent="." unique_id=982436721 instance=ExtResource("9_axpip")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.5, -1.5)
-collision_layer = 9
-collision_mask = 9
-mass = 2.0
 
-[node name="Box3" type="RigidBody3D" parent="." unique_id=1271472787 instance=ExtResource("9_axpip")]
+[node name="Box3" parent="." unique_id=1271472787 instance=ExtResource("9_axpip")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.5, 2)
-collision_layer = 9
-collision_mask = 9
-mass = 2.0
 
-[node name="Box4" type="RigidBody3D" parent="." unique_id=1381097841 instance=ExtResource("9_axpip")]
+[node name="Box4" parent="." unique_id=1381097841 instance=ExtResource("9_axpip")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0.5, -4)
-collision_layer = 9
-collision_mask = 9
-mass = 2.0
 
-[node name="Rock1" type="RigidBody3D" parent="." unique_id=2135561120 instance=ExtResource("10_vrnmo")]
+[node name="Rock1" parent="." unique_id=2135561120 instance=ExtResource("10_vrnmo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0.6, -4)
-collision_layer = 9
-collision_mask = 9
-mass = 8.0
 
-[node name="Rock2" type="RigidBody3D" parent="." unique_id=1167634406 instance=ExtResource("10_vrnmo")]
+[node name="Rock2" parent="." unique_id=1167634406 instance=ExtResource("10_vrnmo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0.6, 3)
-collision_layer = 9
-collision_mask = 9
-mass = 8.0
 
-[node name="Rock3" type="RigidBody3D" parent="." unique_id=375734465 instance=ExtResource("10_vrnmo")]
+[node name="Rock3" parent="." unique_id=375734465 instance=ExtResource("10_vrnmo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0.6, 4)
-collision_layer = 9
-collision_mask = 9
-mass = 8.0
 
 [node name="OverworldMap" type="Node" parent="." unique_id=259113020]
 script = ExtResource("11_gsck2")
@@ -266,10 +232,8 @@ display_name = "Valle del templo"
 texture = ExtResource("12_fxxkd")
 world_rect = Rect2(-37, -25, 74, 50)
 
-[node name="Player" type="CharacterBody3D" parent="." unique_id=1694148988 instance=ExtResource("13_gd0nv")]
+[node name="Player" parent="." unique_id=1694148988 instance=ExtResource("13_gd0nv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16)
-script = ExtResource("14_uay0b")
-config = ExtResource("15_gvf0k")
 
 [node name="TopDownCamera" type="Camera3D" parent="." unique_id=1181792797 node_paths=PackedStringArray("target_node")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.4, 23.7)
@@ -277,9 +241,16 @@ fov = 40.0
 script = ExtResource("16_372gu")
 target_node = NodePath("../Player")
 
-[node name="HUD" type="CanvasLayer" parent="." unique_id=1715079461 instance=ExtResource("17_lc5as")]
-layer = 10
-script = ExtResource("18_v1yde")
+[node name="HUD" parent="." unique_id=1715079461 instance=ExtResource("17_lc5as")]
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1493370091]
 navigation_mesh = SubResource("NavigationMesh_xd5ei")
+
+[node name="TempleDoor" type="Area3D" parent="." unique_id=408567560]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -21.5)
+script = ExtResource("14_5vrew")
+target_scene = "res://levels/dungeon_test.tscn"
+target_spawn = &"start"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TempleDoor" unique_id=1496600314]
+shape = SubResource("BoxShape3D_1rjbp")

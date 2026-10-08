@@ -1285,7 +1285,7 @@ Hecho 2026-10-08: kit `data/kits/gray_kit.tres` (lo arma `src/tools/build_gray_k
 
 **Bloqueada por:** 6.2 Puertas; 6.3 Llaves de mazmorra y HUD; 6.4 Bloques por grilla; 6.5 Interruptores y cableado
 
-## M7 — Overworld  (2/8)
+## M7 — Overworld  (3/8)
 
 Zona chica con el gating bombas → escudo espejo → sello del templo, y los secretos.
 
@@ -1338,18 +1338,20 @@ Hecho 2026-10-08: `levels/overworld.tscn` con el kit gris + piezas de exterior (
 
 **Bloqueada por:** 6.7 Mazmorra de prueba: tres salas grises; 7.1 Diseño del layout del overworld
 
-### 7.3 Cambio de escena overworld ↔ mazmorra · Pendiente
+### 7.3 Cambio de escena overworld ↔ mazmorra · Hecho
 
-- [ ] `Portal`
+- [x] `Portal`
   Área con escena destino y `spawn_point`. Actualiza `GameState.spawn_scene`, `spawn_point` y `current_dungeon`.
-- [ ] Fundido y carga en segundo plano
+- [x] Fundido y carga en segundo plano
   `ResourceLoader.load_threaded_request` para que no se congele la imagen.
-- [ ] Guardado al cambiar de escena
+- [x] Guardado al cambiar de escena
   Autosave mínimo para no perder progreso (la política completa va en 10.2).
 
 **Prueba:** Entrar y salir del templo varias veces: el player aparece en la puerta correcta, sin congelarse, y el estado de la mazmorra se conserva.
 
 **Notas:** Skills: `godot:godot-resources`, `disciplines:save-systems`.
+
+Hecho 2026-10-08: `Portal` + `SaveManager.travel_to()` (pausa, fundido, `load_threaded_request`, spawn con cámara enganchada, autosave en `autosave_slot`). La fachada del templo del overworld lleva a la mazmorra gris (`dungeon_test`, spawn `start`); la salida sur del vestíbulo vuelve al spawn `templo`. En M8 el portal apunta al templo. Test: `tests/test_portal.gd`.
 
 **Referencias:** `gdd.md#estado-flags`, `gdd.md#guardado`
 

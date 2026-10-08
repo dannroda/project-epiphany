@@ -190,6 +190,8 @@ Decidido el 2026-10-08. 8 zonas de ≈ 24 × 16 m (una "pantalla" con la cámara
 
 **Blockout (7.2):** `levels/overworld.tscn`, un `GridMap` con el kit gris más sus piezas de exterior (Pasto, Acantilado, Cerco, Árbol, Abismo). Zonas de 11 × 7 celdas de interior separadas por acantilados de una celda; aberturas de 3 celdas donde el paso es libre y de 1 celda donde hay gating (ahí van el muro agrietado o la reja de 7.4, 7.5 y 7.7). Cada zona tiene un `AreaZone` (el HUD muestra su nombre al entrar desde otra zona) y un `SpawnPoint` con el id de la zona (`start` y `santuario` son checkpoints). El abismo frena al player (colisión hasta 0.6 m) pero las flechas pasan por arriba. Cajas y rocas: `src/world/physics_box.tscn` y `physics_rock.tscn`. La navmesh se hornea desde el grupo `navmesh_source` (el `GridMap`); si cambia el terreno, botón *Bake* del `NavigationRegion3D`. El mapa de pausa usa una foto cenital ortográfica (`assets/ui/maps/overworld.png`).
 
+**Cambio de escena (7.3):** un `Portal` (Area3D con `target_scene` y `target_spawn`) llama a `SaveManager.travel_to()`: pausa, fundido, carga en segundo plano con `ResourceLoader.load_threaded_request` (la imagen no se congela), cambio de escena, el player en el `SpawnPoint` pedido con la cámara enganchada encima (`TopDownCamera.snap_to_target`), autosave en `SaveManager.autosave_slot` y fundido de vuelta. `current_dungeon` lo pone y lo saca el nodo `Dungeon` de cada escena; el estado de cada mazmorra vive en `GameState.dungeons`, así que entrar y salir no lo pierde. El punto de llegada va siempre afuera del portal de la otra escena. Por ahora la puerta del templo lleva a la mazmorra gris (`dungeon_test`); en M8 apunta al templo.
+
 ## 8. Mazmorra — El Templo
 <!-- id: mazmorra -->
 

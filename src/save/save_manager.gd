@@ -5,8 +5,13 @@ const SAVE_DIR := "user://saves/"
 const SCENARIO_DIR := "res://debug/scenarios/"
 const NEXT_SCENARIO_FILE := "user://debug/next_scenario.txt"
 
+## Ranura del autosave al cambiar de escena (la política completa de guardado va en 10.2).
+var autosave_slot := 0
+var traveling := false
+
 
 func _ready() -> void:
+	process_mode = PROCESS_MODE_ALWAYS
 	if not OS.is_debug_build():
 		return
 	for arg in OS.get_cmdline_user_args():
@@ -97,6 +102,36 @@ func respawn() -> void:
 	await Fader.fade_in()
 
 
+## Cambio de escena por un `Portal`: fundido, carga en segundo plano (la imagen no se congela), el player en
+## `spawn` de la escena nueva y autosave. El juego queda en pausa mientras dura.
+func travel_to(scene_path: String, spawn: StringName) -> void:
+	traveling = true
+	get_tree().paused = true
+	ResourceLoader.load_threaded_request(scene_path)
+	await Fader.fade_out(0.3)
+	while ResourceLoader.load_threaded_get_status(scene_path) == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+		await get_tree().process_frame
+	var packed := ResourceLoader.load_threaded_get(scene_path) as PackedScene
+	if packed == null:
+		Log.error(&"save", "No se pudo cargar", scene_path)
+		get_tree().paused = false
+		await Fader.fade_in(0.3)
+		traveling = false
+		return
+	get_tree().change_scene_to_packed(packed)
+	await get_tree().scene_changed
+	GameState.spawn_scene = scene_path
+	GameState.spawn_point = spawn
+	GameState.room_entry = null
+	GameState.player_position = null
+	_place_at_spawn()
+	save_game(autosave_slot)
+	Log.info(&"save", "Viaje a", scene_path, spawn)
+	get_tree().paused = false
+	await Fader.fade_in(0.3)
+	traveling = false
+
+
 ## En mazmorra, en la entrada de la última sala; si no, en el punto de reaparición.
 func _place_at_spawn() -> void:
 	var player := get_tree().get_first_node_in_group(&"player") as CharacterBody3D
@@ -106,11 +141,13 @@ func _place_at_spawn() -> void:
 	if GameState.current_dungeon != &"" and GameState.room_entry != null:
 		player.global_position = GameState.room_entry
 		player.velocity = Vector3.ZERO
+		get_tree().call_group(&"room_camera", &"snap_to_target")
 		return
 	var point := SpawnPoint.find(get_tree(), GameState.spawn_point)
 	if point:
 		player.global_position = point.global_position
 		player.velocity = Vector3.ZERO
+	get_tree().call_group(&"room_camera", &"snap_to_target")
 
 
 func _restore_player() -> void:
