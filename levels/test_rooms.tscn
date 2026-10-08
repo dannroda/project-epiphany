@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="t_camera"]
 [ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="w_spawn"]
 [ext_resource type="Script" path="res://src/world/room.gd" id="w_room"]
+[ext_resource type="Script" path="res://src/world/dungeon.gd" id="w_dungeon"]
 [ext_resource type="PackedScene" path="res://src/world/door.tscn" id="w_door"]
 [ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="e_enemy"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="ui_hud"]
@@ -45,6 +46,10 @@ polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 [node name="TestRooms" type="Node3D"]
 script = ExtResource("1_level")
 
+
+[node name="Dungeon" type="Node" parent="."]
+script = ExtResource("w_dungeon")
+id = &"test_rooms"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Env")

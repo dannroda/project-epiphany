@@ -4,6 +4,8 @@ extends Node
 signal flag_changed(id: StringName, value: Variant)
 signal equipment_changed(category: ItemData.Category, id: StringName)
 signal item_buttons_changed
+## Al entrar o salir de una mazmorra.
+signal dungeon_changed
 signal loaded
 
 const FLAGS: FlagRegistry = preload("res://data/flag_registry.tres")
@@ -17,7 +19,11 @@ var item_buttons: Array[StringName] = [&"", &""] ## X / Y
 var max_health: int = NEW_GAME_MAX_HEALTH
 var flags: Dictionary[StringName, Variant] = {}
 var dungeons: Dictionary[StringName, DungeonState] = {}
-var current_dungeon: StringName = &""
+var current_dungeon: StringName = &"":
+	set(value):
+		if value != current_dungeon:
+			current_dungeon = value
+			dungeon_changed.emit()
 var spawn_scene: String = ""
 var spawn_point: StringName = &""
 var player_position: Variant = null ## Vector3 hasta que haya puntos de aparición con nombre

@@ -9,6 +9,9 @@ const SLOT_SIZE := Vector2(76, 76)
 @export var pulse_time := 0.18
 
 @onready var hearts: HFlowContainer = %Hearts
+@onready var keys: HBoxContainer = %Keys
+@onready var small_key_count: Label = %SmallKeyCount
+@onready var boss_key: TextureRect = %BossKey
 @onready var item_slots: HBoxContainer = %ItemSlots
 @onready var prompt: PanelContainer = %Prompt
 @onready var area_name: HBoxContainer = %AreaName
@@ -19,6 +22,7 @@ const SLOT_SIZE := Vector2(76, 76)
 var _health: Health
 var _focus: Interactable
 var _area_tween: Tween
+var _dungeon: DungeonState
 var _shown_hp := -1
 
 
@@ -32,6 +36,9 @@ func _ready() -> void:
 		_refresh_item_slots()
 		_refresh_prompt())
 	MenuStack.changed.connect(_refresh_prompt)
+	GameState.dungeon_changed.connect(_bind_dungeon)
+	GameState.loaded.connect(_bind_dungeon)
+	_bind_dungeon()
 	_refresh_item_slots()
 	_bind_player.call_deferred()
 
@@ -118,6 +125,23 @@ func _refresh_prompt() -> void:
 
 
 ## Nombre de la sala o la zona al entrar por primera vez: aparece, queda un rato y se va.
+## Llaves: solo dentro de una mazmorra, siguiendo los cambios de su DungeonState.
+func _bind_dungeon() -> void:
+	if _dungeon and _dungeon.changed.is_connected(_refresh_keys):
+		_dungeon.changed.disconnect(_refresh_keys)
+	_dungeon = GameState.current_dungeon_state() if GameState.current_dungeon != &"" else null
+	if _dungeon:
+		_dungeon.changed.connect(_refresh_keys)
+	_refresh_keys()
+
+
+func _refresh_keys() -> void:
+	keys.visible = _dungeon != null
+	if _dungeon:
+		small_key_count.text = "×%d" % _dungeon.small_keys
+		boss_key.modulate.a = 1.0 if _dungeon.has_boss_key else 0.35
+
+
 func show_area_name(text: String) -> void:
 	area_label.text = text
 	if _area_tween:

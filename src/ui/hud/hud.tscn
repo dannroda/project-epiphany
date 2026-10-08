@@ -1,6 +1,8 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://src/ui/hud/hud.gd" id="1_hud"]
+[ext_resource type="Texture2D" path="res://assets/ui/items/small_key.svg" id="2_small_key"]
+[ext_resource type="Texture2D" path="res://assets/ui/items/boss_key.svg" id="3_boss_key"]
 
 [node name="HUD" type="CanvasLayer"]
 layer = 10
@@ -18,15 +20,55 @@ theme_override_constants/margin_top = 28
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 28
 
-[node name="Hearts" type="HFlowContainer" parent="SafeArea"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(336, 0)
+[node name="Left" type="VBoxContainer" parent="SafeArea"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="Hearts" type="HFlowContainer" parent="SafeArea/Left"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(336, 0)
+layout_mode = 2
+mouse_filter = 2
 theme_override_constants/h_separation = 4
 theme_override_constants/v_separation = 4
+
+[node name="Keys" type="HBoxContainer" parent="SafeArea/Left"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 18
+
+[node name="SmallKeys" type="HBoxContainer" parent="SafeArea/Left/Keys"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="SmallKeyIcon" type="TextureRect" parent="SafeArea/Left/Keys/SmallKeys"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("2_small_key")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SmallKeyCount" type="Label" parent="SafeArea/Left/Keys/SmallKeys"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"HudAmmo"
+theme_override_font_sizes/font_size = 20
+
+[node name="BossKey" type="TextureRect" parent="SafeArea/Left/Keys"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("3_boss_key")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Right" type="VBoxContainer" parent="SafeArea"]
 layout_mode = 2

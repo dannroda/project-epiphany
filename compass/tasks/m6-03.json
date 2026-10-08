@@ -2,17 +2,17 @@
   "checklist": [
     {
       "detail": "Al salir vuelve a `&\"\"`.",
-      "done": false,
+      "done": true,
       "text": "`GameState.current_dungeon` lo setea la escena de la mazmorra"
     },
     {
       "detail": "Enrutadas por `GameState.give()` al `DungeonState`.",
-      "done": false,
+      "done": true,
       "text": "Llave chica y llave del jefe como `ItemData`"
     },
     {
       "detail": "Contador de llaves chicas e ícono de llave del jefe.",
-      "done": false,
+      "done": true,
       "text": "HUD: llaves solo en mazmorra"
     }
   ],
@@ -25,7 +25,7 @@
     }
   ],
   "milestone": "m06",
-  "notes": "",
+  "notes": "Nodo Dungeon (src/world/dungeon.gd) en la escena de cada mazmorra: setea GameState.current_dungeon en _enter_tree y lo vuelve a &\"\" al salir. GameState emite dungeon_changed; DungeonState emite changed al cambiar llaves, mapa, brújula o salas: el HUD se actualiza por eventos. Las llaves ya existían como ItemData y GameState.give() las enruta al DungeonState (0.5/3.6). HUD como en HUD_Dungeon: debajo de los corazones, llave chica ×N y llave del jefe atenuada si no se tiene; solo dentro de una mazmorra.",
   "order": 3,
   "refs": [
     {
@@ -37,8 +37,8 @@
       "section": "ui"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Juntar dos llaves y abrir una puerta: el contador baja a 1. Fuera de la mazmorra el contador no se ve.",
   "title": "Llaves de mazmorra y HUD",
-  "updated_at": "2026-10-08T04:45:52.163Z"
+  "updated_at": "2026-10-08T21:41:18.166Z"
 }

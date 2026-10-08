@@ -1131,7 +1131,7 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 **Notas:** Idea del 2026-10-08: que el escudo en la espalda proteja, y que cada escudo frene distintos tipos de daño (la madera frena flechas pero no explosiones ni fuego). El espejo refleja siempre que intercepta, porque es un espejo. Usa DamageInfo.element, que ya existe: "explosive" lo pone la bomba (5.4), "light" el haz (5.6), "fire" queda para espadas elementales post-MVP. Relacionada con 5.2 (torreta: primer enemigo que dispara), 5.4 y 5.6. Desde 2026-10-08 el escudo oculto no colisiona (Equipment.show_shield_in_hand).
 
-## M6 — Framework de mazmorra  (1/7)
+## M6 — Framework de mazmorra  (2/7)
 
 `Room` con cámara limitada y transición, puertas, llaves, bloques por grilla, interruptores, mapa y brújula con su pantalla.
 
@@ -1161,7 +1161,7 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 **Bloqueada por:** 0.9 Refactor del player
 
-### 6.2 Puertas · En curso
+### 6.2 Puertas · Hecho
 
 - [x] Crear `src/world/door.gd`
   Tipos `OPEN`, `LOCKED`, `SHUTTER`, `SWITCH`, `BOSS`. Código en [[gdd#mundo]].
@@ -1184,16 +1184,18 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 **Bloqueada por:** 4.1 Prompt de acción contextual; 6.1 `Room` y cámara por sala
 
-### 6.3 Llaves de mazmorra y HUD · Pendiente
+### 6.3 Llaves de mazmorra y HUD · En curso
 
-- [ ] `GameState.current_dungeon` lo setea la escena de la mazmorra
+- [x] `GameState.current_dungeon` lo setea la escena de la mazmorra
   Al salir vuelve a `&""`.
-- [ ] Llave chica y llave del jefe como `ItemData`
+- [x] Llave chica y llave del jefe como `ItemData`
   Enrutadas por `GameState.give()` al `DungeonState`.
-- [ ] HUD: llaves solo en mazmorra
+- [x] HUD: llaves solo en mazmorra
   Contador de llaves chicas e ícono de llave del jefe.
 
 **Prueba:** Juntar dos llaves y abrir una puerta: el contador baja a 1. Fuera de la mazmorra el contador no se ve.
+
+**Notas:** Nodo Dungeon (src/world/dungeon.gd) en la escena de cada mazmorra: setea GameState.current_dungeon en _enter_tree y lo vuelve a &"" al salir. GameState emite dungeon_changed; DungeonState emite changed al cambiar llaves, mapa, brújula o salas: el HUD se actualiza por eventos. Las llaves ya existían como ItemData y GameState.give() las enruta al DungeonState (0.5/3.6). HUD como en HUD_Dungeon: debajo de los corazones, llave chica ×N y llave del jefe atenuada si no se tiene; solo dentro de una mazmorra.
 
 **Referencias:** `gdd.md#estado-flags`, `gdd.md#ui`
 
