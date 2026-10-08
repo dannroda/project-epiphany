@@ -552,7 +552,7 @@ Todo pasa por el autoload Feel (src/feel/feel.gd) y los valores están en data/f
 
 **Referencias:** `gdd.md#combate`
 
-## M2 — Targeting + Aim  (3/4)
+## M2 — Targeting + Aim  (4/4)
 
 Cambio de objetivo moviendo el stick derecho de golpe (el mismo `look_*` que apunta, leído con umbral 0.7; ver [[gdd#input]]) y apuntado con el stick derecho.
 
@@ -628,13 +628,13 @@ Mapa elegido: WASD, click izquierdo ataca, click derecho guardia, Shift izquierd
 
 **Referencias:** `gdd.md#input`, `gdd.md#pilares`
 
-### 2.4 Encuadre de cámara con lock-on y apuntado · Pendiente
+### 2.4 Encuadre de cámara con lock-on y apuntado · Hecho
 
-- [ ] Revisar el punto medio con lock-on
+- [x] Revisar el punto medio con lock-on
   Ya existe en `TopDownCamera`; limitar cuánto se aleja del player para que no salga de pantalla.
-- [ ] Look-ahead hacia la dirección de `Aim`
+- [x] Look-ahead hacia la dirección de `Aim`
   Desplazar el foco unos metros mientras se apunta un ítem a distancia, con suavizado.
-- [ ] Exportar los valores de suavizado
+- [x] Exportar los valores de suavizado
   Para ajustarlos jugando; dejar un watch en el overlay.
 
 **Prueba:** Fijar un enemigo lejano: ambos quedan en pantalla. Apuntar con el arco (o con el modo debug de la retícula): la cámara se adelanta y vuelve suave al soltar.
@@ -642,6 +642,8 @@ Mapa elegido: WASD, click izquierdo ataca, click derecho guardia, Shift izquierd
 **Notas:** La cámara de salas (clamp y transición) es M6.
 
 Skills: `disciplines:camera-systems`.
+
+Con lock-on el foco va al punto medio (lock_focus_weight) pero no se aleja más de max_lock_offset (4 m) del player. Mientras Aim.aiming, el foco se adelanta aim_look_ahead (3 m) hacia la dirección de Aim con su propio suavizado (look_ahead_speed) y vuelve igual de suave. Watch camera/focus_offset en el overlay. Tests en tests/test_camera.gd (objetivo a 10 m: ambos en cuadro; adelanto entra y sale suave). Para ver el adelanto jugando hace falta un ítem a distancia (M5) o prender Aim.aiming a mano.
 
 **Referencias:** `gdd.md#camara`
 

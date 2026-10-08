@@ -2,24 +2,24 @@
   "checklist": [
     {
       "detail": "Ya existe en `TopDownCamera`; limitar cuánto se aleja del player para que no salga de pantalla.",
-      "done": false,
+      "done": true,
       "text": "Revisar el punto medio con lock-on"
     },
     {
       "detail": "Desplazar el foco unos metros mientras se apunta un ítem a distancia, con suavizado.",
-      "done": false,
+      "done": true,
       "text": "Look-ahead hacia la dirección de `Aim`"
     },
     {
       "detail": "Para ajustarlos jugando; dejar un watch en el overlay.",
-      "done": false,
+      "done": true,
       "text": "Exportar los valores de suavizado"
     }
   ],
   "code": "2.4",
   "created_at": "2026-10-08T04:45:07.668Z",
   "milestone": "m02",
-  "notes": "La cámara de salas (clamp y transición) es M6.\n\nSkills: `disciplines:camera-systems`.",
+  "notes": "La cámara de salas (clamp y transición) es M6.\n\nSkills: `disciplines:camera-systems`.\n\nCon lock-on el foco va al punto medio (lock_focus_weight) pero no se aleja más de max_lock_offset (4 m) del player. Mientras Aim.aiming, el foco se adelanta aim_look_ahead (3 m) hacia la dirección de Aim con su propio suavizado (look_ahead_speed) y vuelve igual de suave. Watch camera/focus_offset en el overlay. Tests en tests/test_camera.gd (objetivo a 10 m: ambos en cuadro; adelanto entra y sale suave). Para ver el adelanto jugando hace falta un ítem a distancia (M5) o prender Aim.aiming a mano.",
   "order": 4,
   "refs": [
     {
@@ -27,8 +27,8 @@
       "section": "camara"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Fijar un enemigo lejano: ambos quedan en pantalla. Apuntar con el arco (o con el modo debug de la retícula): la cámara se adelanta y vuelve suave al soltar.",
   "title": "Encuadre de cámara con lock-on y apuntado",
-  "updated_at": "2026-10-08T04:45:07.932Z"
+  "updated_at": "2026-10-08T06:28:01.702Z"
 }
