@@ -42,22 +42,34 @@ func test_cycle_between_skeletons_in_a_row() -> void:
 	targeting.clear()
 
 
-func test_right_stick_jumps_once_per_flick() -> void:
+func _stick(x: float, y: float) -> void:
+	for pair in [[JOY_AXIS_RIGHT_X, x], [JOY_AXIS_RIGHT_Y, y]]:
+		var motion := InputEventJoypadMotion.new()
+		motion.axis = pair[0]
+		motion.axis_value = pair[1]
+		Input.parse_input_event(motion)
+
+
+func test_right_stick_points_at_target() -> void:
 	var setup: Array = await _load()
 	var tree: SceneTree = setup[0]
 	var targeting: Targeting = setup[1]
 	targeting.lock_best_target()
-	Input.action_press(&"look_right", 1.0)
-	for i in 5:
-		await tree.physics_frame
-	assert_eq(_name(targeting), "Right", "un salto aunque el stick siga apretado")
-	Input.action_release(&"look_right")
-	await tree.physics_frame
-	Input.action_press(&"look_left", 1.0)
-	await tree.physics_frame
-	await tree.physics_frame
-	Input.action_release(&"look_left")
 	assert_eq(_name(targeting), "Middle")
+	_stick(-0.6, -0.8)
+	for i in 3:
+		await tree.physics_frame
+	assert_eq(_name(targeting), "Left", "apunta arriba a la izquierda: el de la izquierda, aunque no sea el vecino")
+	_stick(0.6, -0.8)
+	for i in 3:
+		await tree.physics_frame
+	assert_eq(_name(targeting), "Right", "de Left a Right directo, sin pasar por Middle")
+	_stick(0.0, -1.0)
+	for i in 3:
+		await tree.physics_frame
+	assert_eq(_name(targeting), "Middle", "apunta al frente")
+	_stick(0.0, 0.0)
+	await tree.physics_frame
 	targeting.clear()
 
 

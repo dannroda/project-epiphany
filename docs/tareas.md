@@ -580,6 +580,8 @@ Skills: `godot:godot-physics`.
 
 Nivel de prueba nuevo: levels/test_targeting.tscn (tres esqueletos en fila y uno detrás de una pared). El wrap queda exportado y apagado (`wrap_around`); la decisión final es jugando, anotada en el GDD. El indicador ya se desliza al objetivo nuevo (lerp de TargetIndicator) y suena el clic sintetizado de Feel. Tests en tests/test_targeting.gd.
 
+Cambio después de jugarlo: el stick derecho ya no recorre la fila desde el objetivo actual, sino que apunta (Targeting.point_at): fija al candidato en la dirección del stick desde el player, con histéresis para no parpadear entre dos. La rueda del mouse sigue saltando al vecino (cycle).
+
 **Referencias:** `gdd.md#movimiento-combate`, `gdd.md#player`
 
 **Bloqueada por:** 0.9 Refactor del player

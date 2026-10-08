@@ -17,7 +17,9 @@ enum LockMode { HOLD, TOGGLE }
 @export var switch_threshold := 0.7
 ## Cono hacia la dirección pedida (0.5 ≈ ±60°).
 @export var min_alignment := 0.5
-## Sin candidato en esa dirección: saltar al del otro extremo.
+## Cuánto mejor alineado tiene que estar otro candidato para que el stick cambie de objetivo.
+@export var point_hysteresis := 0.1
+## Rueda del mouse sin candidato en esa dirección: saltar al del otro extremo.
 @export var wrap_around := false
 ## Cuánto se espera antes de soltar un objetivo que murió o salió de rango.
 @export var lose_grace := 0.5
@@ -56,8 +58,8 @@ func _physics_process(delta: float) -> void:
 		_last_dir = Vector2.ZERO
 		return
 	var dir := Input.get_vector(&"look_left", &"look_right", &"look_up", &"look_down", switch_threshold)
-	if dir != Vector2.ZERO and _last_dir == Vector2.ZERO:
-		cycle(dir.normalized())
+	if dir != Vector2.ZERO:
+		point_at(Vector3(dir.x, 0.0, dir.y).normalized())
 	_last_dir = dir
 
 
@@ -70,6 +72,32 @@ func lock_best_target() -> void:
 		clear()
 		return
 	set_target(_most_centered(candidates, camera))
+
+
+## Fija al candidato que está en la dirección `world_dir` desde el player (el stick derecho apunta).
+## Para cambiar, el nuevo tiene que estar claramente mejor alineado que el actual.
+func point_at(world_dir: Vector3) -> void:
+	var camera := get_viewport().get_camera_3d()
+	if camera == null:
+		return
+	var best: Node3D = null
+	var best_score := -INF
+	var current_score := -INF
+	for candidate in valid_candidates(camera):
+		var to := candidate.global_position - player.global_position
+		to.y = 0.0
+		var alignment := to.normalized().dot(world_dir)
+		var score := alignment - to.length() / 100.0
+		if candidate == current:
+			current_score = score
+		if alignment < min_alignment:
+			continue
+		if score > best_score:
+			best_score = score
+			best = candidate
+	if best and best != current and best_score > current_score + point_hysteresis:
+		set_target(best)
+		Feel.sfx(&"click", player.global_position)
 
 
 ## Salta al candidato mejor alineado con `screen_dir` (espacio de pantalla, +y hacia abajo).

@@ -29,7 +29,7 @@
   "code": "2.1",
   "created_at": "2026-10-08T04:45:06.150Z",
   "milestone": "m02",
-  "notes": "Arregla el problema conocido: hoy siempre marca el más cercano.\n\nSkills: `godot:godot-physics`.\n\nNivel de prueba nuevo: levels/test_targeting.tscn (tres esqueletos en fila y uno detrás de una pared). El wrap queda exportado y apagado (`wrap_around`); la decisión final es jugando, anotada en el GDD. El indicador ya se desliza al objetivo nuevo (lerp de TargetIndicator) y suena el clic sintetizado de Feel. Tests en tests/test_targeting.gd.",
+  "notes": "Arregla el problema conocido: hoy siempre marca el más cercano.\n\nSkills: `godot:godot-physics`.\n\nNivel de prueba nuevo: levels/test_targeting.tscn (tres esqueletos en fila y uno detrás de una pared). El wrap queda exportado y apagado (`wrap_around`); la decisión final es jugando, anotada en el GDD. El indicador ya se desliza al objetivo nuevo (lerp de TargetIndicator) y suena el clic sintetizado de Feel. Tests en tests/test_targeting.gd.\n\nCambio después de jugarlo: el stick derecho ya no recorre la fila desde el objetivo actual, sino que apunta (Targeting.point_at): fija al candidato en la dirección del stick desde el player, con histéresis para no parpadear entre dos. La rueda del mouse sigue saltando al vecino (cycle).",
   "order": 1,
   "refs": [
     {
@@ -44,5 +44,5 @@
   "status": "done",
   "test": "Tres esqueletos en fila: con uno fijado, mover el stick derecho a izquierda y derecha salta entre ellos en orden. Un esqueleto detrás de una pared no se puede fijar.",
   "title": "Cambio de objetivo con el stick derecho",
-  "updated_at": "2026-10-08T06:14:19.872Z"
+  "updated_at": "2026-10-08T06:45:50.963Z"
 }
