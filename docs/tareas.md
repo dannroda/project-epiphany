@@ -372,7 +372,7 @@ Los presets de export (plain_saves en debug, excluir debug/scenarios y tests) pa
 
 **Notas:** Para que Claude pueda manejar el editor sin pedirle al usuario que le dé foco o haga clics. Es un plugin aparte, `addons/editor_bridge/`, para que pueda recargar `epiphany_tools` (`reload_plugin`) sin apagarse. Comandos: ping, status, scan, play [scene], stop, log [since], open path [line], save, plugin name enabled, reload_plugin name, autoload name path, setting name value. Si se recarga, reintenta abrir el puerto cada segundo. `autoload` y `setting` todavía no se probaron.
 
-## M1 — Combate real  (2/7)
+## M1 — Combate real  (3/7)
 
 Vida, invulnerabilidad breve, knockback, bloqueo direccional, roll, IA del esqueleto con `BTAttack`, muerte y reaparición, corazones en el HUD.
 
@@ -406,7 +406,7 @@ El estado `Hurt` se alcanza desde cualquier estado (`anystate`); la animación e
 
 **Relacionadas:** 0.12 Tests headless
 
-### 1.2 Bloqueo direccional y golpe de escudo · En curso
+### 1.2 Bloqueo direccional y golpe de escudo · Hecho
 
 - [x] Implementar `_is_in_front()` con cono de ±60°
   `block_angle_deg` exportado. El modelo KayKit mira a +Z local. Código en [[gdd#ventanas-ataque]] ("Bloqueo direccional").
