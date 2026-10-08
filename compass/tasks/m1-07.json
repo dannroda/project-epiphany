@@ -37,8 +37,8 @@
       "section": "combate"
     }
   ],
-  "status": "review",
+  "status": "done",
   "test": "Grabar un clip peleando contra el esqueleto y compararlo con uno antes de la tarea: cada golpe dado, recibido y bloqueado tiene respuesta visual y sonora.",
   "title": "Feel del combate",
-  "updated_at": "2026-10-08T06:03:16.651Z"
+  "updated_at": "2026-10-08T06:11:03.690Z"
 }
