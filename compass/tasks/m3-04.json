@@ -2,22 +2,22 @@
   "checklist": [
     {
       "detail": "`item_1`/`item_2` → busca el ítem en `GameState.item_buttons`, chequea `behavior.can_use()` y reproduce `behavior.get_animation()`.",
-      "done": false,
+      "done": true,
       "text": "Estado `UsingItem` en el `LimboHSM`"
     },
     {
       "detail": "`origin` desde la mano (o un `Muzzle`), `direction` desde `Aim`, `inventory` de `GameState`. Ver [[gdd#items-datos]].",
-      "done": false,
+      "done": true,
       "text": "Armar el `ItemUseContext`"
     },
     {
       "detail": "Con un tiempo normalizado del ítem (como `AttackData`), no con pistas de método en la animación.",
-      "done": false,
+      "done": true,
       "text": "Llamar `behavior.use()` en el momento justo"
     },
     {
       "detail": "Sin munición: sonido y sacudida del slot en el HUD.",
-      "done": false,
+      "done": true,
       "text": "Feedback de \"no se puede\""
     }
   ],
@@ -38,7 +38,7 @@
     }
   ],
   "milestone": "m03",
-  "notes": "Con un ítem de prueba (por ejemplo, una poción) alcanza para cerrar la tarea; los behaviors reales son M5.",
+  "notes": "Todos los ítems usan General/Use_Item hasta que su behavior pida otra animación (el estado cambia ItemAnim en el AnimationTree). use() sale en behavior.use_at (0.5 por defecto). La poción cura toda la vida (heal = -1) y deja la botella vacía en el mismo botón. Botón vacío o ítem que no se puede usar: sonido 'deny' y sacudida del slot.",
   "order": 4,
   "refs": [
     {
@@ -50,8 +50,8 @@
       "section": "player"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Con una poción asignada a X y el player herido: apretar X la toma y cura. Con la vida llena, no la gasta y suena el \"no se puede\".",
   "title": "Usar los ítems asignados",
-  "updated_at": "2026-10-08T04:45:47.914Z"
+  "updated_at": "2026-10-08T07:22:19.429Z"
 }

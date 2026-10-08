@@ -1,5 +1,7 @@
 extends LimboHSM
 
+const ITEM_ACTIONS: Array[StringName] = [&"item_1", &"item_2"]
+
 ## Desde qué punto del ataque (0..1) se puede cancelar rodando.
 @export_range(0.0, 1.0) var attack_cancel_from := 0.0
 
@@ -24,6 +26,9 @@ func _setup() -> void:
 	add_transition($Moving, $Dodging, "dodge")
 	add_transition($Attacking, $Dodging, "dodge", func() -> bool: return player.attack_runner.progress() >= attack_cancel_from)
 	add_transition($Dodging, $Idle, "finished")
+	add_transition($Idle, $UsingItem, "use_item")
+	add_transition($Moving, $UsingItem, "use_item")
+	add_transition($UsingItem, $Idle, "finished")
 
 	initial_state = $Spawning
 
@@ -49,7 +54,25 @@ func _update(delta: float) -> void:
 		buffer.consume(&"dodge")
 	elif buffer.has(&"attack") and dispatch("attack"):
 		buffer.consume(&"attack")
+	elif _try_item(buffer):
+		pass
 	elif input_dir:
 		dispatch("move")
 	else:
 		dispatch("idle")
+
+
+## Si el botón no tiene nada usable, avisa enseguida; si sí, espera en el buffer a que el estado lo permita.
+func _try_item(buffer: InputBuffer) -> bool:
+	for i in ITEM_ACTIONS.size():
+		if not buffer.has(ITEM_ACTIONS[i]):
+			continue
+		if player.usable_item(i) == null:
+			buffer.consume(ITEM_ACTIONS[i])
+			player.deny_item(i)
+			return true
+		blackboard.set_var("item_button", i)
+		if dispatch("use_item"):
+			buffer.consume(ITEM_ACTIONS[i])
+			return true
+	return false

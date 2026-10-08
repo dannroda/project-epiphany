@@ -3,6 +3,9 @@ extends CharacterBody3D
 
 const SHIELD_THRUST: AttackData = preload("res://data/attacks/shield_thrust.tres")
 
+## El HUD sacude el slot del botón que no se pudo usar.
+signal item_denied(button: int)
+
 @export var config: EntityConfig
 @export var block_angle_deg := 60.0
 @export var block_pushback := 0.3
@@ -54,6 +57,28 @@ func _physics_process(delta: float) -> void:
 
 func _process(_delta: float) -> void:
 	_update_block_cone()
+
+
+## El ítem asignado al botón, si lo tiene y se puede usar ahora.
+func usable_item(button: int) -> ItemData:
+	var item := Items.get_item(GameState.item_buttons[button]) if GameState.item_buttons[button] != &"" else null
+	if item == null or item.behavior == null or not GameState.inventory.has(item.id):
+		return null
+	return item if item.behavior.can_use(make_item_context(), item) else null
+
+
+func make_item_context() -> ItemUseContext:
+	var ctx := ItemUseContext.new()
+	ctx.user = self
+	ctx.origin = equipment.weapon_socket.global_position if equipment.weapon_socket else global_position + Vector3.UP
+	ctx.direction = aim.get_direction()
+	ctx.inventory = GameState.inventory
+	return ctx
+
+
+func deny_item(button: int) -> void:
+	Feel.sfx(&"deny", global_position)
+	item_denied.emit(button)
 
 
 func is_blocking() -> bool:

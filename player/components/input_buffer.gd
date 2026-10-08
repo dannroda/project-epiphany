@@ -3,7 +3,7 @@ extends Node
 ## Recuerda una acción apretada por un rato, para que salga aunque se apriete un poco antes de tiempo.
 
 @export var window := 0.15
-@export var actions: Array[StringName] = [&"attack", &"dodge"]
+@export var actions: Array[StringName] = [&"attack", &"dodge", &"item_1", &"item_2"]
 
 var _pressed_at: Dictionary[StringName, float] = {}
 

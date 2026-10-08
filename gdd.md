@@ -273,6 +273,7 @@ extends Resource
 ## Todo lo variable llega en el ItemUseContext.
 
 @export var ammo: ItemData                     ## null = munición infinita
+@export_range(0.0, 1.0) var use_at := 0.5      ## Momento de use() en la animación, como AttackData
 
 
 func get_animation(_item: ItemData) -> StringName:
@@ -353,7 +354,7 @@ func use(ctx: ItemUseContext, item: ItemData) -> void:
 class_name ConsumableBehavior
 extends ItemBehavior
 
-@export var heal: int = 0
+@export var heal: int = 0                       ## HP; negativo = toda la vida
 @export var leaves: ItemData                   ## Botella vacía al tomar la poción
 
 
@@ -363,7 +364,8 @@ func can_use(ctx: ItemUseContext, _item: ItemData) -> bool:
 
 
 func use(ctx: ItemUseContext, item: ItemData) -> void:
-	ctx.user.get_node(^"Health").heal(heal)
+	var health: Health = ctx.user.get_node(^"Health")
+	health.heal(health.max_health if heal < 0 else heal)
 	ctx.inventory.remove(item.id)
 	if leaves:
 		ctx.inventory.add(leaves.id)

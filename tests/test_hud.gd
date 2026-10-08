@@ -40,8 +40,8 @@ func test_item_slots_follow_buttons_and_ammo() -> void:
 	await tree.scene_changed
 	await tree.process_frame
 	var hud: Node = tree.current_scene.get_node(^"HUD")
-	var x: Control = hud.item_slots.get_child(0)
-	var y: Control = hud.item_slots.get_child(1)
+	var x: Control = hud.item_slots.get_child(0).get_node(^"Body")
+	var y: Control = hud.item_slots.get_child(1).get_node(^"Body")
 	assert_eq(x.get_node(^"Icon").texture, null, "vacío sin ítem asignado")
 	assert_eq(x.get_node(^"Ammo").visible, false)
 

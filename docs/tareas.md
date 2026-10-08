@@ -649,7 +649,7 @@ Con lock-on el foco va al punto medio (lock_focus_weight) pero no se aleja más 
 
 **Referencias:** `gdd.md#camara`
 
-## M3 — Inventario + UI  (5/8)
+## M3 — Inventario + UI  (6/8)
 
 Pantallas Equipo e Ítems, asignar a X/Y, slots en el HUD, cofres, item get, recolectables.
 
@@ -721,20 +721,20 @@ Página src/ui/menus/equipment_page.tscn dentro del menú de pausa (reemplaza el
 
 **Relacionadas:** 3.5 Slots X/Y en el HUD
 
-### 3.4 Usar los ítems asignados · Pendiente
+### 3.4 Usar los ítems asignados · Hecho
 
-- [ ] Estado `UsingItem` en el `LimboHSM`
+- [x] Estado `UsingItem` en el `LimboHSM`
   `item_1`/`item_2` → busca el ítem en `GameState.item_buttons`, chequea `behavior.can_use()` y reproduce `behavior.get_animation()`.
-- [ ] Armar el `ItemUseContext`
+- [x] Armar el `ItemUseContext`
   `origin` desde la mano (o un `Muzzle`), `direction` desde `Aim`, `inventory` de `GameState`. Ver [[gdd#items-datos]].
-- [ ] Llamar `behavior.use()` en el momento justo
+- [x] Llamar `behavior.use()` en el momento justo
   Con un tiempo normalizado del ítem (como `AttackData`), no con pistas de método en la animación.
-- [ ] Feedback de "no se puede"
+- [x] Feedback de "no se puede"
   Sin munición: sonido y sacudida del slot en el HUD.
 
 **Prueba:** Con una poción asignada a X y el player herido: apretar X la toma y cura. Con la vida llena, no la gasta y suena el "no se puede".
 
-**Notas:** Con un ítem de prueba (por ejemplo, una poción) alcanza para cerrar la tarea; los behaviors reales son M5.
+**Notas:** Todos los ítems usan General/Use_Item hasta que su behavior pida otra animación (el estado cambia ItemAnim en el AnimationTree). use() sale en behavior.use_at (0.5 por defecto). La poción cura toda la vida (heal = -1) y deja la botella vacía en el mismo botón. Botón vacío o ítem que no se puede usar: sonido 'deny' y sacudida del slot.
 
 **Referencias:** `gdd.md#items-datos`, `gdd.md#player`
 

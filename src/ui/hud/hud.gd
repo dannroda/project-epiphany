@@ -30,18 +30,23 @@ func _build_item_slots() -> void:
 		var slot := Control.new()
 		slot.custom_minimum_size = SLOT_SIZE
 		slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var body := Control.new()
+		body.name = "Body"
+		body.set_anchors_preset(Control.PRESET_FULL_RECT)
+		body.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		slot.add_child(body)
 		var frame := Panel.new()
 		frame.theme_type_variation = &"HudSlot"
 		frame.set_anchors_preset(Control.PRESET_FULL_RECT)
 		frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		slot.add_child(frame)
+		body.add_child(frame)
 		var icon := TextureRect.new()
 		icon.name = "Icon"
 		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT, Control.PRESET_MODE_MINSIZE, 14)
 		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		slot.add_child(icon)
+		body.add_child(icon)
 		var badge := TextureRect.new()
 		badge.name = "Badge"
 		badge.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -49,7 +54,7 @@ func _build_item_slots() -> void:
 		badge.size = Vector2(34, 34)
 		badge.position = Vector2(-14, -14)
 		badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		slot.add_child(badge)
+		body.add_child(badge)
 		var ammo := Label.new()
 		ammo.name = "Ammo"
 		ammo.theme_type_variation = &"HudAmmo"
@@ -59,18 +64,20 @@ func _build_item_slots() -> void:
 		ammo.offset_right = -7
 		ammo.offset_bottom = -1
 		ammo.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		slot.add_child(ammo)
+		body.add_child(ammo)
 		item_slots.add_child(slot)
 
 
 func _refresh_item_slots() -> void:
 	for i in BUTTON_ACTIONS.size():
-		var slot := item_slots.get_child(i)
+		var body := item_slots.get_child(i).get_node(^"Body")
 		var id := GameState.item_buttons[i]
 		var item := Items.get_item(id) if id != &"" else null
-		(slot.get_node(^"Icon") as TextureRect).texture = item.icon if item else null
-		(slot.get_node(^"Badge") as TextureRect).texture = InputPrompts.icon_for_current(BUTTON_ACTIONS[i])
-		var ammo_label := slot.get_node(^"Ammo") as Label
+		var icon := body.get_node(^"Icon") as TextureRect
+		icon.texture = item.icon if item else null
+		icon.modulate.a = 1.0 if item and GameState.inventory.has(id) else 0.35
+		(body.get_node(^"Badge") as TextureRect).texture = InputPrompts.icon_for_current(BUTTON_ACTIONS[i])
+		var ammo_label := body.get_node(^"Ammo") as Label
 		var ammo: ItemData = item.behavior.ammo if item and item.behavior else null
 		ammo_label.visible = ammo != null
 		if ammo:
@@ -84,8 +91,16 @@ func _bind_player() -> void:
 	if player == null:
 		return
 	_health = player.health
+	player.item_denied.connect(_shake_slot)
 	_health.changed.connect(_on_health_changed)
 	_on_health_changed(_health.current, _health.max_health)
+
+
+func _shake_slot(button: int) -> void:
+	var body := item_slots.get_child(button).get_node(^"Body") as Control
+	var tween := body.create_tween()
+	for offset in [6.0, -5.0, 4.0, -2.0, 0.0]:
+		tween.tween_property(body, "position:x", offset, 0.04)
 
 
 func _on_health_changed(current: int, max_value: int) -> void:
