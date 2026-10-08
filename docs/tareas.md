@@ -130,18 +130,20 @@ Daño de la espada (2) y cantidades máximas (flechas 30, bombas 10, llaves chic
 
 **Relacionadas:** 0.12 Tests headless; 3.8 Íconos placeholder de los ítems
 
-### 0.4 Flags · Pendiente
+### 0.4 Flags · En curso
 
-- [ ] Crear `src/state/flag_definition.gd`
+- [x] Crear `src/state/flag_definition.gd`
   Un recurso con `id`, `description` y `default_value` (una flag declarada). Si Godot no deja exportar `default_value` como `Variant`, usar `bool` por ahora: casi todas las flags son sí o no.
-- [ ] Crear `src/state/flag_registry.gd`
+- [x] Crear `src/state/flag_registry.gd`
   El recurso `FlagRegistry`, con la lista de definiciones y las funciones `has()` y `default_of()`. Código en [[gdd#estado-flags]].
-- [ ] Crear `data/flag_registry.tres` con las flags de hoy
+- [x] Crear `data/flag_registry.tres` con las flags de hoy
   Con el nivel de prueba alcanza una de ejemplo: `ow_test_chest`.
 
 **Prueba:** `load("res://data/flag_registry.tres").has(&"ow_test_chest")` devuelve `true`, y con cualquier otro id devuelve `false`.
 
 **Notas:** Las flags son el estado del mundo que se guarda: un cofre abierto, una puerta destrabada. Se declaran en un registro para evitar errores de tipeo y para que el Save Inspector pueda avisar cuando una partida tiene una flag que no existe. Diseño en el GDD (§11.6).
+
+`default_value` es `Variant`: Godot 4.8 deja exportarlo. `tests/test_flags.gd` cubre la prueba de la tarea.
 
 **Referencias:** `gdd.md#estado-flags`
 
