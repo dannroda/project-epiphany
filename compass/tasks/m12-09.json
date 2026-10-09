@@ -1,0 +1,38 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Haz de luz"
+    },
+    {
+      "done": false,
+      "text": "Polvo y hojas"
+    },
+    {
+      "done": false,
+      "text": "Pedazos de vasija y escombros"
+    },
+    {
+      "done": false,
+      "text": "Explosión"
+    },
+    {
+      "done": false,
+      "text": "Anillo del portal"
+    }
+  ],
+  "code": "12.9",
+  "created_at": "2026-10-09T21:05:46.096Z",
+  "milestone": "m12",
+  "notes": "",
+  "order": 9,
+  "priority": "low",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "arte"
+  ],
+  "test": "",
+  "title": "Efectos con malla",
+  "updated_at": "2026-10-09T21:05:47.623Z"
+}

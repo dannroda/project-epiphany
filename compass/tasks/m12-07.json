@@ -1,0 +1,67 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Piso + variantes (roto, yuyos, grieta del doom)"
+    },
+    {
+      "done": false,
+      "text": "Pared a celda 2×2: recta, esquina, final, con antorcha"
+    },
+    {
+      "done": false,
+      "text": "Columna y escalón"
+    },
+    {
+      "done": false,
+      "text": "Abismo interior con borde"
+    },
+    {
+      "detail": "Normal, con cerradura, persiana, de interruptor y del jefe (grande, con el ojo). door.tscn.",
+      "done": false,
+      "text": "Pasos de puerta + puertas por tipo"
+    },
+    {
+      "detail": "Muro agrietado, reja, bloque, interruptor, ojo-interruptor, cristal, espejo, fuente de luz.",
+      "done": false,
+      "text": "Piezas de puzzle versión templo"
+    },
+    {
+      "detail": "src/entities/turret/.",
+      "done": false,
+      "text": "Torreta / ojo menor"
+    },
+    {
+      "detail": "wall_torch.tscn.",
+      "done": false,
+      "text": "Antorcha de pared y brasero"
+    },
+    {
+      "done": false,
+      "text": "Decoración: estandartes, escombros, vasijas, tablilla, ojo tallado"
+    },
+    {
+      "done": false,
+      "text": "Doom: grietas, venas rojas, polvo"
+    },
+    {
+      "done": false,
+      "text": "Sala del jefe: piso de arena y pilares"
+    }
+  ],
+  "code": "12.7",
+  "created_at": "2026-10-09T21:05:40.919Z",
+  "milestone": "m12",
+  "notes": "",
+  "order": 7,
+  "priority": "low",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "arte",
+    "mazmorra"
+  ],
+  "test": "temple_kit.tres arma el templo con las piezas nuevas y el corte de la pared sur sigue andando.",
+  "title": "Kit del templo propio",
+  "updated_at": "2026-10-09T21:05:44.264Z"
+}

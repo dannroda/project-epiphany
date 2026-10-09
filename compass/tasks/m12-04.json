@@ -1,0 +1,56 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Árbol que bloquea celda: grande, chico, grupo para bordes"
+    },
+    {
+      "detail": "grass.tscn.",
+      "done": false,
+      "text": "Pasto cortable: mata entera, cortada, hojitas"
+    },
+    {
+      "detail": "pot.tscn.",
+      "done": false,
+      "text": "Vasija: entera y en pedazos"
+    },
+    {
+      "detail": "physics_rock.tscn, physics_box.tscn.",
+      "done": false,
+      "text": "Roca física y caja física"
+    },
+    {
+      "detail": "tablet.tscn.",
+      "done": false,
+      "text": "Tablilla de piedra del overworld"
+    },
+    {
+      "done": false,
+      "text": "Rocas grandes fijas (2–3)"
+    },
+    {
+      "detail": "Opcional.",
+      "done": false,
+      "text": "Decoración: arbustos, flores, hongos, tronco caído, tocón"
+    },
+    {
+      "detail": "Hoy salen de KayKit Medieval. Opcional.",
+      "done": false,
+      "text": "Fondo: nubes y colinas lejanas"
+    }
+  ],
+  "code": "12.4",
+  "created_at": "2026-10-09T21:05:33.880Z",
+  "milestone": "m12",
+  "notes": "",
+  "order": 4,
+  "priority": "high",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "arte"
+  ],
+  "test": "Pasto, vasijas, rocas y cajas usan los modelos nuevos y se rompen o mueven como antes.",
+  "title": "Vegetación y props del overworld",
+  "updated_at": "2026-10-09T21:05:36.220Z"
+}

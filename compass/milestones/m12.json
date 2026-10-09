@@ -1,0 +1,10 @@
+{
+  "code": "M12",
+  "done_when": [
+    "El overworld no usa piezas del kit gris ni de KayKit.",
+    "Templo, interactivos, ítems y personajes comparten la misma paleta y el mismo estilo."
+  ],
+  "goal": "Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.",
+  "order": 12,
+  "title": "Assets propios (Blender)"
+}

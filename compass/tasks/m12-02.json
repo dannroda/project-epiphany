@@ -1,0 +1,76 @@
+{
+  "checklist": [
+    {
+      "detail": "Florcitas, piedritas, manchas de tierra.",
+      "done": false,
+      "text": "Pasto: base + 3–4 variantes"
+    },
+    {
+      "done": false,
+      "text": "Camino de tierra: recto, curva, T, cruce, final, borde con pasto"
+    },
+    {
+      "done": false,
+      "text": "Piso de piedra de la plaza: base + rota + musgo"
+    },
+    {
+      "done": false,
+      "text": "Acantilado: recto, esquina ext/int, final, tope con pasto"
+    },
+    {
+      "detail": "1 celda = gating (muro agrietado o reja), 3 = paso libre. Ver [[gdd#overworld-layout]].",
+      "done": false,
+      "text": "Aberturas en acantilado de 1 y 3 celdas"
+    },
+    {
+      "done": false,
+      "text": "Escalones y rampa (tierra y piedra)"
+    },
+    {
+      "done": false,
+      "text": "Abismo: borde recto, esquinas, fondo oscuro/niebla"
+    },
+    {
+      "done": false,
+      "text": "Cerco: recto, esquina, final, poste, roto"
+    },
+    {
+      "done": false,
+      "text": "Borde del mundo (árboles densos / acantilado alto)"
+    },
+    {
+      "detail": "Como build_temple_kit.gd: mismos ítems, colisiones y navegación que el kit gris, mallas nuevas.",
+      "done": false,
+      "text": "Kit del overworld para el GridMap"
+    }
+  ],
+  "code": "12.2",
+  "created_at": "2026-10-09T21:05:27.572Z",
+  "links": [
+    {
+      "task": "m12-03",
+      "type": "blocks"
+    },
+    {
+      "task": "m11-04",
+      "type": "related"
+    }
+  ],
+  "milestone": "m12",
+  "notes": "",
+  "order": 2,
+  "priority": "high",
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "overworld-layout"
+    }
+  ],
+  "status": "todo",
+  "tags": [
+    "arte"
+  ],
+  "test": "El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.",
+  "title": "Terreno del overworld",
+  "updated_at": "2026-10-09T21:05:50.906Z"
+}

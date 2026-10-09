@@ -1,0 +1,76 @@
+{
+  "checklist": [
+    {
+      "detail": "Estilo atlas KayKit, con los colores de [[gdd#arte]]: pasto #7aa86b, acantilado #947a61, piedra gris, naranja, madera, dorado, celeste de cristal, violeta del sello, rojo del doom. Un solo material compartido.",
+      "done": false,
+      "text": "Textura de paleta única con degradés"
+    },
+    {
+      "detail": "Knight, celda de 2 m, paso de 1 y de 3 celdas, alto de pared.",
+      "done": false,
+      "text": "Hoja de escala"
+    },
+    {
+      "detail": "Validar UV + paleta y que ande con cutaway.gdshader (use_uv), como kaykit_stone.tres.",
+      "done": false,
+      "text": "Pieza de prueba exportada a Godot"
+    },
+    {
+      "done": false,
+      "text": "Pipeline de export (glb, nombres, colisiones)"
+    }
+  ],
+  "code": "12.1",
+  "created_at": "2026-10-09T21:05:25.999Z",
+  "links": [
+    {
+      "task": "m12-02",
+      "type": "blocks"
+    },
+    {
+      "task": "m12-03",
+      "type": "blocks"
+    },
+    {
+      "task": "m12-04",
+      "type": "blocks"
+    },
+    {
+      "task": "m12-05",
+      "type": "blocks"
+    },
+    {
+      "task": "m12-06",
+      "type": "blocks"
+    },
+    {
+      "task": "m12-07",
+      "type": "blocks"
+    },
+    {
+      "task": "m12-08",
+      "type": "blocks"
+    },
+    {
+      "task": "m12-09",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m12",
+  "notes": "",
+  "order": 1,
+  "priority": "high",
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "arte"
+    }
+  ],
+  "status": "todo",
+  "tags": [
+    "arte"
+  ],
+  "test": "Una pieza de prueba importada en Godot se ve con la paleta, a escala del Knight, y se recorta con el shader de la pared sur.",
+  "title": "Guía de estilo: paleta, escala y pieza de prueba",
+  "updated_at": "2026-10-09T21:05:50.642Z"
+}

@@ -1,0 +1,73 @@
+{
+  "checklist": [
+    {
+      "detail": "Piedra tallada, fogata o similar.",
+      "done": false,
+      "text": "Hito del claro del inicio"
+    },
+    {
+      "detail": "Para la cueva de las bombas y la gruta oculta.",
+      "done": false,
+      "text": "Kit de cueva: boca, piso y pared de roca, estalagmitas"
+    },
+    {
+      "detail": "Ladrillo gris con musgo, que no se confunda con el acantilado. cracked_wall.tscn.",
+      "done": false,
+      "text": "Muro agrietado de exterior + escombros"
+    },
+    {
+      "done": false,
+      "text": "Kit de santuario: piso, paredes, columnas, pedestal"
+    },
+    {
+      "detail": "src/world/light/.",
+      "done": false,
+      "text": "Puzzle de luz: fuente, espejo fijo 45°, cristal receptor"
+    },
+    {
+      "detail": "gate.tscn, push_block.tscn, floor_switch.tscn.",
+      "done": false,
+      "text": "Reja, bloque empujable e interruptor de piso de exterior"
+    },
+    {
+      "detail": "La pieza más importante del overworld.",
+      "done": false,
+      "text": "Entrada del templo: fachada, escalinata, columnas"
+    },
+    {
+      "detail": "temple_seal.tscn.",
+      "done": false,
+      "text": "Sello violeta con el ojo"
+    },
+    {
+      "detail": "eye_switch.tscn, bridge.tscn.",
+      "done": false,
+      "text": "Risco del ojo: cornisa, ojo-interruptor, puente, nicho del carcaj"
+    },
+    {
+      "detail": "warp_portal.tscn. Opcional.",
+      "done": false,
+      "text": "Portal de salida del jefe: disco y anillo"
+    }
+  ],
+  "code": "12.3",
+  "created_at": "2026-10-09T21:05:30.742Z",
+  "milestone": "m12",
+  "notes": "",
+  "order": 3,
+  "priority": "high",
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "overworld-layout"
+    }
+  ],
+  "status": "todo",
+  "tags": [
+    "arte",
+    "puzzles"
+  ],
+  "test": "Cada zona de [[gdd#overworld-layout]] tiene sus piezas propias y se reconoce sin el nombre de zona.",
+  "title": "Lugares del overworld",
+  "updated_at": "2026-10-09T21:05:51.177Z"
+}
