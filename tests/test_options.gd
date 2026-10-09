@@ -56,19 +56,29 @@ func test_options_from_title_and_pause() -> void:
 	await tree.process_frame
 	var title := tree.current_scene
 	assert_eq(title.get_node(^"%Options").disabled, false, "Opciones habilitado en el título")
+	title.get_node(^"%Options").grab_focus()
 	title.get_node(^"%Options").pressed.emit()
 	await tree.process_frame
 	await tree.process_frame
-	var screen := title.get_node(^"Options") as OptionsScreen
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	var screen := stack.top() as OptionsScreen
 	assert_true(screen != null, "abre la pantalla de opciones")
+	assert_eq(title.can_process(), false, "el título de abajo no recibe input")
 	assert_true(tree.root.gui_get_focus_owner() != null and screen.is_ancestor_of(tree.root.gui_get_focus_owner()), "con foco en una opción")
 	(screen.find_child("vibration", true, false) as CheckBox).button_pressed = false
 	assert_eq(settings.get_value(&"vibration"), false, "cambiar en la pantalla guarda")
+	var back := InputEventAction.new()
+	back.action = &"ui_cancel"
+	back.pressed = true
+	tree.root.push_input(back)
+	await tree.process_frame
+	assert_eq(stack.is_open(), false, "atrás cierra las opciones")
+	assert_true(title.can_process() and title.visible, "y el título vuelve a recibir input")
+	assert_true(tree.root.gui_get_focus_owner() == title.get_node(^"%Options"), "con el foco donde estaba")
 
 	tree.root.get_node(^"GameState").reset()
 	tree.change_scene_to_file("res://levels/test.tscn")
 	await tree.scene_changed
-	var stack: Node = tree.root.get_node(^"MenuStack")
 	var menu: Control = load("res://src/ui/menus/pause_menu.tscn").instantiate()
 	stack.push(menu)
 	await tree.process_frame

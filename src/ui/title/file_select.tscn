@@ -1,0 +1,90 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/ui/title/file_select.gd" id="1_select"]
+[ext_resource type="PackedScene" path="res://src/ui/title/slot_card.tscn" id="2_card"]
+[ext_resource type="Script" path="res://src/ui/hint_bar.gd" id="3_hints"]
+
+[node name="FileSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_select")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.043137256, 0.050980393, 0.0627451, 1)
+
+[node name="Column" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 100.0
+offset_top = 56.0
+offset_right = -100.0
+offset_bottom = -56.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 28
+
+[node name="Heading" type="Label" parent="Column"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Heading"
+text = "Elegí una partida"
+
+[node name="Slots" type="VBoxContainer" parent="Column"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Slot1" parent="Column/Slots" instance=ExtResource("2_card")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Slot2" parent="Column/Slots" instance=ExtResource("2_card")]
+unique_name_in_owner = true
+layout_mode = 2
+slot = 1
+
+[node name="Slot3" parent="Column/Slots" instance=ExtResource("2_card")]
+unique_name_in_owner = true
+layout_mode = 2
+slot = 2
+
+[node name="Spacer" type="Control" parent="Column"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Bottom" type="HBoxContainer" parent="Column"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Copy" type="Button" parent="Column/Bottom"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"BarButton"
+text = "Copiar"
+
+[node name="Delete" type="Button" parent="Column/Bottom"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"BarButton"
+text = "Borrar"
+
+[node name="Gap" type="Control" parent="Column/Bottom"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Hints" type="HBoxContainer" parent="Column/Bottom"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 22
+script = ExtResource("3_hints")

@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://covrlpuexf2af" path="res://src/ui/theme.tres" id="1_theme"]
 [ext_resource type="Script" uid="uid://6pj48g1rapde" path="res://src/ui/title/title_screen.gd" id="2_script"]
 [ext_resource type="Script" uid="uid://dea03f5unluxn" path="res://src/ui/title/title_eye.gd" id="3_eye"]
-[ext_resource type="Script" uid="uid://5qj67mtlvm71" path="res://src/ui/menus/menu_item.gd" id="4_item"]
+[ext_resource type="PackedScene" path="res://src/ui/menus/menu_item.tscn" id="4_item"]
 [ext_resource type="Script" uid="uid://jou4nqurtyvf" path="res://src/ui/hint_bar.gd" id="5_hints"]
 
 [sub_resource type="StyleBoxFlat" id="DebugStyle"]
@@ -66,8 +66,7 @@ alignment = 1
 
 [node name="Title" type="Label" parent="Heading" unique_id=2097589688]
 layout_mode = 2
-theme_type_variation = &"Title"
-theme_override_font_sizes/font_size = 68
+theme_type_variation = &"DisplayTitle"
 text = "PROJECT EPIPHANY"
 horizontal_alignment = 1
 
@@ -90,28 +89,24 @@ offset_bottom = 640.0
 grow_horizontal = 2
 theme_override_constants/separation = 14
 
-[node name="Continue" type="Button" parent="Menu" unique_id=840081313]
+[node name="Continue" parent="Menu" unique_id=840081313 instance=ExtResource("4_item")]
 unique_name_in_owner = true
 layout_mode = 2
-script = ExtResource("4_item")
 label = "Continuar"
 
-[node name="NewGame" type="Button" parent="Menu" unique_id=1156117819]
+[node name="NewGame" parent="Menu" unique_id=1156117819 instance=ExtResource("4_item")]
 unique_name_in_owner = true
 layout_mode = 2
-script = ExtResource("4_item")
 label = "Nueva partida"
 
-[node name="Options" type="Button" parent="Menu" unique_id=2052812604]
+[node name="Options" parent="Menu" unique_id=2052812604 instance=ExtResource("4_item")]
 unique_name_in_owner = true
 layout_mode = 2
-script = ExtResource("4_item")
 label = "Opciones"
 
-[node name="Quit" type="Button" parent="Menu" unique_id=785654314]
+[node name="Quit" parent="Menu" unique_id=785654314 instance=ExtResource("4_item")]
 unique_name_in_owner = true
 layout_mode = 2
-script = ExtResource("4_item")
 label = "Salir"
 
 [node name="DebugScenarios" type="Button" parent="." unique_id=1257324364]
@@ -151,6 +146,7 @@ text = "v0.1-dev"
 horizontal_alignment = 1
 
 [node name="Hints" type="HBoxContainer" parent="." unique_id=331837264]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -163,5 +159,6 @@ offset_right = -32.0
 offset_bottom = -32.0
 grow_horizontal = 0
 grow_vertical = 0
+theme_override_constants/separation = 22
 alignment = 2
 script = ExtResource("5_hints")

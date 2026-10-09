@@ -1,6 +1,8 @@
 # Autoload
 extends CanvasLayer
-## Pila de pantallas: la de arriba tiene el foco; con alguna abierta el juego queda en pausa.
+## Máquina de estados de la UI: una pila de pantallas (autómata de pila). Solo la de arriba recibe input y foco;
+## las de abajo quedan desactivadas (y ocultas si la de arriba las cubre). Con alguna abierta, el juego queda en pausa.
+## Las pantallas pueden ser `UiScreen` o cualquier Control (caja de texto, item get): se leen sus propiedades si las tienen.
 
 signal changed
 
@@ -8,6 +10,8 @@ const PAUSE_MENU := preload("res://src/ui/menus/pause_menu.tscn")
 const MAP_PAGE := 2
 
 var _stack: Array[Control] = []
+## Estado raíz que no es de la pila (la pantalla de título): queda desactivado mientras haya algo encima.
+var _base: Control
 var _focus_memory: Dictionary[Control, Control] = {}
 
 
@@ -24,14 +28,29 @@ func top() -> Control:
 	return _stack.back() if is_open() else null
 
 
+## La pantalla raíz se desregistra sola al salir del árbol.
+func set_base(screen: Control) -> void:
+	_base = screen
+	screen.tree_exiting.connect(func() -> void:
+		if _base == screen:
+			_base = null)
+
+
 func push(screen: Control) -> void:
-	var previous := top()
-	if previous:
-		_focus_memory[previous] = get_viewport().gui_get_focus_owner()
-		previous.hide()
+	var covered := top() if is_open() else _base
+	if covered:
+		_focus_memory[covered] = get_viewport().gui_get_focus_owner()
+		covered.process_mode = PROCESS_MODE_DISABLED
+		if screen.get(&"hides_below") != false:
+			covered.hide()
+		if covered.has_method(&"screen_covered"):
+			covered.screen_covered()
 	_stack.append(screen)
+	screen.process_mode = PROCESS_MODE_ALWAYS
 	add_child(screen)
 	get_tree().paused = true
+	if screen.has_method(&"screen_enter"):
+		screen.screen_enter()
 	_focus(screen)
 	changed.emit()
 
@@ -41,18 +60,29 @@ func pop() -> void:
 		return
 	var screen: Control = _stack.pop_back()
 	_focus_memory.erase(screen)
+	if screen.has_method(&"screen_exit"):
+		screen.screen_exit()
 	screen.queue_free()
-	var previous := top()
-	if previous:
-		previous.show()
-		var remembered: Control = _focus_memory.get(previous)
-		if is_instance_valid(remembered):
+	if not is_open():
+		get_tree().paused = false
+	var uncovered := top() if is_open() else _base
+	if uncovered:
+		uncovered.process_mode = PROCESS_MODE_ALWAYS if is_open() else PROCESS_MODE_INHERIT
+		uncovered.show()
+		if uncovered.has_method(&"screen_uncovered"):
+			uncovered.screen_uncovered()
+		var remembered: Control = _focus_memory.get(uncovered)
+		if is_instance_valid(remembered) and uncovered.is_ancestor_of(remembered):
 			remembered.grab_focus()
 		else:
-			_focus(previous)
-	else:
-		get_tree().paused = false
+			_focus(uncovered)
 	changed.emit()
+
+
+## Cierra todas las pantallas (al salir al título o cambiar de escena).
+func clear() -> void:
+	while is_open():
+		pop()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -65,10 +95,18 @@ func _unhandled_input(event: InputEvent) -> void:
 			push(menu)
 			menu.show_page(MAP_PAGE)
 			get_viewport().set_input_as_handled()
-	elif event.is_action_pressed(&"ui_cancel") or event.is_action_pressed(&"pause") or event.is_action_pressed(&"map"):
-		if top().get(&"modal") != true:
-			pop()
+		return
+	var screen := top()
+	if event.is_action_pressed(&"ui_cancel"):
 		get_viewport().set_input_as_handled()
+		if screen.has_method(&"cancel") and screen.cancel():
+			return
+		if screen.get(&"modal") != true:
+			pop()
+	elif event.is_action_pressed(&"pause") or event.is_action_pressed(&"map"):
+		get_viewport().set_input_as_handled()
+		if screen.get(&"closes_with_pause") == true:
+			pop()
 
 
 func _focus(screen: Control) -> void:

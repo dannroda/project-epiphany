@@ -11,7 +11,7 @@ func _enter() -> void:
 	player.anim_tree.active = false
 	player.anim_player.play(animation, 0.1)
 	await player.get_tree().create_timer(delay).timeout
-	MenuStack.push(GameOver.new())
+	GameOver.open()
 
 
 func _update(delta: float) -> void:

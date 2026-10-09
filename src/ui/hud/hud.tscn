@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://src/ui/hud/hud.gd" id="1_hud"]
 [ext_resource type="Texture2D" path="res://assets/ui/items/small_key.svg" id="2_small_key"]
 [ext_resource type="Texture2D" path="res://assets/ui/items/boss_key.svg" id="3_boss_key"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/hud_item_slot.tscn" id="4_slot"]
 
 [node name="HUD" type="CanvasLayer"]
 layer = 10
@@ -88,6 +89,12 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 20
 
+[node name="Slot1" parent="SafeArea/Right/ItemSlots" instance=ExtResource("4_slot")]
+layout_mode = 2
+
+[node name="Slot2" parent="SafeArea/Right/ItemSlots" instance=ExtResource("4_slot")]
+layout_mode = 2
+
 [node name="Prompt" type="PanelContainer" parent="SafeArea/Right"]
 unique_name_in_owner = true
 visible = false
@@ -145,3 +152,21 @@ layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
 color = Color(0.937, 0.902, 0.824, 0.6)
+
+[node name="Saved" type="Label" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -112.0
+offset_top = -56.0
+offset_right = -32.0
+offset_bottom = -32.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_type_variation = &"Hint"
+text = "Guardado"
+horizontal_alignment = 2

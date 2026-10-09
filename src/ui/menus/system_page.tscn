@@ -1,6 +1,8 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://src/ui/menus/system_page.gd" id="1_page"]
+[ext_resource type="PackedScene" path="res://src/ui/menus/options_panel.tscn" id="2_panel"]
+[ext_resource type="PackedScene" path="res://src/ui/menus/menu_item_small.tscn" id="3_item"]
 
 [node name="Sistema" type="Control"]
 layout_mode = 3
@@ -10,3 +12,23 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_page")
+
+[node name="Column" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="OptionsPanel" parent="Column" instance=ExtResource("2_panel")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SaveAndQuit" parent="Column" instance=ExtResource("3_item")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+label = "Guardar y salir al título"

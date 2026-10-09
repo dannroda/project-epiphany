@@ -3,7 +3,6 @@ extends CanvasLayer
 
 const HP_PER_HEART := 4
 const BUTTON_ACTIONS: Array[StringName] = [&"item_1", &"item_2"]
-const SLOT_SIZE := Vector2(76, 76)
 
 @export var pulse_scale := 1.3
 @export var pulse_time := 0.18
@@ -18,30 +17,19 @@ const SLOT_SIZE := Vector2(76, 76)
 @onready var area_label: Label = %AreaLabel
 @onready var prompt_icon: TextureRect = %PromptIcon
 @onready var prompt_text: Label = %PromptText
+@onready var saved_label: Label = %Saved
 
 var _health: Health
 var _focus: Interactable
 var _area_tween: Tween
 var _dungeon: DungeonState
 var _shown_hp := -1
-
-
-var _saved_label: Label
 var _saved_tween: Tween
 
 
 func _ready() -> void:
 	add_to_group(&"hud")
-	_saved_label = Label.new()
-	_saved_label.text = "Guardado"
-	_saved_label.theme_type_variation = &"Hint"
-	_saved_label.modulate.a = 0.0
-	_saved_label.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT, Control.PRESET_MODE_KEEP_SIZE, 32)
-	_saved_label.grow_horizontal = Control.GROW_DIRECTION_BEGIN
-	_saved_label.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	add_child(_saved_label)
 	SaveManager.saved.connect(func(_slot: int) -> void: _flash_saved())
-	_build_item_slots()
 	GameState.item_buttons_changed.connect(_refresh_item_slots)
 	GameState.inventory.changed.connect(func(_id: StringName, _count: int) -> void: _refresh_item_slots())
 	GameState.loaded.connect(_refresh_item_slots)
@@ -54,49 +42,6 @@ func _ready() -> void:
 	_bind_dungeon()
 	_refresh_item_slots()
 	_bind_player.call_deferred()
-
-
-func _build_item_slots() -> void:
-	for i in BUTTON_ACTIONS.size():
-		var slot := Control.new()
-		slot.custom_minimum_size = SLOT_SIZE
-		slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		var body := Control.new()
-		body.name = "Body"
-		body.set_anchors_preset(Control.PRESET_FULL_RECT)
-		body.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		slot.add_child(body)
-		var frame := Panel.new()
-		frame.theme_type_variation = &"HudSlot"
-		frame.set_anchors_preset(Control.PRESET_FULL_RECT)
-		frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		body.add_child(frame)
-		var icon := TextureRect.new()
-		icon.name = "Icon"
-		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT, Control.PRESET_MODE_MINSIZE, 14)
-		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		body.add_child(icon)
-		var badge := TextureRect.new()
-		badge.name = "Badge"
-		badge.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		badge.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		badge.size = Vector2(34, 34)
-		badge.position = Vector2(-14, -14)
-		badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		body.add_child(badge)
-		var ammo := Label.new()
-		ammo.name = "Ammo"
-		ammo.theme_type_variation = &"HudAmmo"
-		ammo.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
-		ammo.grow_horizontal = Control.GROW_DIRECTION_BEGIN
-		ammo.grow_vertical = Control.GROW_DIRECTION_BEGIN
-		ammo.offset_right = -7
-		ammo.offset_bottom = -1
-		ammo.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		body.add_child(ammo)
-		item_slots.add_child(slot)
 
 
 func _refresh_item_slots() -> void:
@@ -199,7 +144,7 @@ func _flash_saved() -> void:
 	if _saved_tween:
 		_saved_tween.kill()
 	_saved_tween = create_tween()
-	_saved_tween.tween_property(_saved_label, "modulate:a", 1.0, 0.2)
+	_saved_tween.tween_property(saved_label, "modulate:a", 1.0, 0.2)
 	_saved_tween.tween_interval(1.2)
-	_saved_tween.tween_property(_saved_label, "modulate:a", 0.0, 0.5)
+	_saved_tween.tween_property(saved_label, "modulate:a", 0.0, 0.5)
 

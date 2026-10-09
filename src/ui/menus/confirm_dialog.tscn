@@ -1,0 +1,61 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/ui/menus/confirm_dialog.gd" id="1_dialog"]
+[ext_resource type="PackedScene" path="res://src/ui/menus/menu_item_small.tscn" id="2_item"]
+
+[node name="ConfirmDialog" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dialog")
+hides_below = false
+
+[node name="Dim" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5)
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="Center"]
+layout_mode = 2
+theme_type_variation = &"MenuFrame"
+
+[node name="Box" type="VBoxContainer" parent="Center/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Question" type="Label" parent="Center/Panel/Box"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "¿Borrar la partida 1? No se puede deshacer."
+horizontal_alignment = 1
+
+[node name="Row" type="HBoxContainer" parent="Center/Panel/Box"]
+layout_mode = 2
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="No" parent="Center/Panel/Box/Row" instance=ExtResource("2_item")]
+unique_name_in_owner = true
+layout_mode = 2
+label = "Cancelar"
+
+[node name="Yes" parent="Center/Panel/Box/Row" instance=ExtResource("2_item")]
+unique_name_in_owner = true
+layout_mode = 2
+label = "Borrar"

@@ -558,6 +558,102 @@ draw_center = false
 border_width_bottom = 3
 border_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
 
+[sub_resource type="FontVariation" id="FontVariation_display"]
+base_font = ExtResource("2_lf7dv")
+variation_opentype = {
+2003265652: 700
+}
+spacing_glyph = 9
+
+[sub_resource type="FontVariation" id="FontVariation_display_wide"]
+base_font = ExtResource("2_lf7dv")
+variation_opentype = {
+2003265652: 700
+}
+spacing_glyph = 15
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_menu_item"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_button"]
+content_margin_left = 22.0
+content_margin_top = 10.0
+content_margin_right = 22.0
+content_margin_bottom = 10.0
+bg_color = Color(0.08235294, 0.09803922, 0.1254902, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.22745098, 0.25882354, 0.3137255, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_button_focus"]
+content_margin_left = 22.0
+content_margin_top = 10.0
+content_margin_right = 22.0
+content_margin_bottom = 10.0
+bg_color = Color(0.08235294, 0.09803922, 0.1254902, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slot"]
+bg_color = Color(0.08235294, 0.09803922, 0.1254902, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.22745098, 0.25882354, 0.3137255, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slot_focus"]
+bg_color = Color(0.08235294, 0.09803922, 0.1254902, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slot_empty"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.22745098, 0.25882354, 0.3137255, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slot_empty_focus"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
 [resource]
 default_font = ExtResource("3_cwe5m")
 default_font_size = 18
@@ -710,3 +806,61 @@ Value/base_type = &"Label"
 Value/colors/font_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
 Value/font_sizes/font_size = 16
 Value/fonts/font = ExtResource("3_cwe5m")
+BarButton/base_type = &"Button"
+BarButton/colors/font_focus_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+BarButton/font_sizes/font_size = 18
+BarButton/styles/disabled = SubResource("StyleBoxFlat_bar_button")
+BarButton/styles/focus = SubResource("StyleBoxFlat_bar_button_focus")
+BarButton/styles/hover = SubResource("StyleBoxFlat_bar_button_focus")
+BarButton/styles/normal = SubResource("StyleBoxFlat_bar_button")
+BarButton/styles/pressed = SubResource("StyleBoxFlat_bar_button")
+Caption/base_type = &"Label"
+Caption/colors/font_color = Color(0.654902, 0.62352943, 0.5568628, 1)
+Caption/font_sizes/font_size = 15
+DisplayTitle/base_type = &"Label"
+DisplayTitle/colors/font_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
+DisplayTitle/font_sizes/font_size = 68
+DisplayTitle/fonts/font = SubResource("FontVariation_display")
+GameOverTitle/base_type = &"Label"
+GameOverTitle/colors/font_color = Color(0.8156863, 0.3137255, 0.22745098, 1)
+GameOverTitle/font_sizes/font_size = 76
+GameOverTitle/fonts/font = SubResource("FontVariation_display_wide")
+Heading/base_type = &"Title"
+Heading/font_sizes/font_size = 36
+MenuItem/base_type = &"Button"
+MenuItem/colors/font_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
+MenuItem/colors/font_disabled_color = Color(0.43529412, 0.41568628, 0.3764706, 1)
+MenuItem/colors/font_focus_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+MenuItem/colors/font_hover_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
+MenuItem/colors/font_hover_pressed_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+MenuItem/colors/font_pressed_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
+MenuItem/font_sizes/font_size = 26
+MenuItem/styles/disabled = SubResource("StyleBoxEmpty_menu_item")
+MenuItem/styles/focus = SubResource("StyleBoxEmpty_menu_item")
+MenuItem/styles/hover = SubResource("StyleBoxEmpty_menu_item")
+MenuItem/styles/normal = SubResource("StyleBoxEmpty_menu_item")
+MenuItem/styles/pressed = SubResource("StyleBoxEmpty_menu_item")
+MenuItemSmall/base_type = &"MenuItem"
+MenuItemSmall/font_sizes/font_size = 20
+OptionLabel/base_type = &"Label"
+OptionLabel/font_sizes/font_size = 19
+SectionTitle/base_type = &"Title"
+SectionTitle/colors/font_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+SectionTitle/font_sizes/font_size = 20
+SlotNumber/base_type = &"Title"
+SlotNumber/colors/font_color = Color(0.654902, 0.62352943, 0.5568628, 1)
+SlotNumber/font_sizes/font_size = 40
+SlotNumberFocused/base_type = &"SlotNumber"
+SlotNumberFocused/colors/font_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+SlotCard/base_type = &"Button"
+SlotCard/styles/disabled = SubResource("StyleBoxFlat_slot")
+SlotCard/styles/focus = SubResource("StyleBoxFlat_slot_focus")
+SlotCard/styles/hover = SubResource("StyleBoxFlat_slot")
+SlotCard/styles/normal = SubResource("StyleBoxFlat_slot")
+SlotCard/styles/pressed = SubResource("StyleBoxFlat_slot")
+SlotCardEmpty/base_type = &"Button"
+SlotCardEmpty/styles/disabled = SubResource("StyleBoxFlat_slot_empty")
+SlotCardEmpty/styles/focus = SubResource("StyleBoxFlat_slot_empty_focus")
+SlotCardEmpty/styles/hover = SubResource("StyleBoxFlat_slot_empty")
+SlotCardEmpty/styles/normal = SubResource("StyleBoxFlat_slot_empty")
+SlotCardEmpty/styles/pressed = SubResource("StyleBoxFlat_slot_empty")

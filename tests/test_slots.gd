@@ -129,11 +129,15 @@ func test_file_select_screen() -> void:
 	screen._set_mode(FileSelect.Mode.DELETE)
 	(screen.find_children("*", "SlotCard", true, false)[0] as SlotCard).pressed.emit()
 	await tree.process_frame
-	var confirm := screen.get_node_or_null(^"Confirm")
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	var confirm := stack.top() as ConfirmDialog
 	assert_true(confirm != null, "borrar pide confirmación")
+	assert_eq(screen.can_process(), false, "la selección de abajo no recibe input")
 	assert_eq(saves.has_save(0), true, "todavía no borró")
 	assert_true(tree.root.gui_get_focus_owner().name == &"No", "con el foco en Cancelar")
 	(confirm.find_child("Yes", true, false) as MenuItem).pressed.emit()
 	await tree.process_frame
 	assert_eq(saves.has_save(0), false, "confirmado, borra")
+	assert_true(stack.top() == screen and screen.can_process(), "vuelve a la selección")
+	stack.clear()
 	_teardown()
