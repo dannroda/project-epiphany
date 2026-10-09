@@ -2,18 +2,7 @@
 
 [ext_resource type="Script" path="res://src/world/door.gd" id="1_door"]
 [ext_resource type="Script" path="res://src/components/interactable.gd" id="2_interactable"]
-
-[sub_resource type="BoxMesh" id="LeafMesh"]
-size = Vector3(2.0, 2.4, 0.3)
-
-[sub_resource type="StandardMaterial3D" id="Gold"]
-albedo_color = Color(0.85, 0.65, 0.25, 1)
-metallic = 0.7
-roughness = 0.35
-
-[sub_resource type="BoxMesh" id="LockMesh"]
-material = SubResource("Gold")
-size = Vector3(0.35, 0.45, 0.1)
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo/puerta_madera.res" id="3_leaf"]
 
 [sub_resource type="BoxShape3D" id="Shape"]
 size = Vector3(2.0, 2.4, 0.3)
@@ -28,13 +17,8 @@ script = ExtResource("1_door")
 unique_name_in_owner = true
 
 [node name="LeafMesh" type="MeshInstance3D" parent="Leaf"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
-mesh = SubResource("LeafMesh")
-
-[node name="Lock" type="MeshInstance3D" parent="Leaf"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0.2)
-mesh = SubResource("LockMesh")
+mesh = ExtResource("3_leaf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)

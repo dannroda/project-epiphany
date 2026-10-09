@@ -1,7 +1,7 @@
 {
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "Piso + variantes (roto, yuyos, grieta del doom)"
     },
     {
@@ -9,7 +9,7 @@
       "text": "Pared a celda 2×2: recta, esquina, final, con antorcha"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Columna y escalón"
     },
     {
@@ -18,22 +18,22 @@
     },
     {
       "detail": "Normal, con cerradura, persiana, de interruptor y del jefe (grande, con el ojo). door.tscn.",
-      "done": false,
+      "done": true,
       "text": "Pasos de puerta + puertas por tipo"
     },
     {
       "detail": "Muro agrietado, reja, bloque, interruptor, ojo-interruptor, cristal, espejo, fuente de luz.",
-      "done": false,
+      "done": true,
       "text": "Piezas de puzzle versión templo"
     },
     {
       "detail": "src/entities/turret/.",
-      "done": false,
+      "done": true,
       "text": "Torreta / ojo menor"
     },
     {
       "detail": "wall_torch.tscn.",
-      "done": false,
+      "done": true,
       "text": "Antorcha de pared y brasero"
     },
     {
@@ -45,7 +45,7 @@
       "text": "Doom: grietas, venas rojas, polvo"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Sala del jefe: piso de arena y pilares"
     }
   ],
@@ -56,12 +56,12 @@
   "order": 7,
   "priority": "low",
   "refs": [],
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "arte",
     "mazmorra"
   ],
   "test": "temple_kit.tres arma el templo con las piezas nuevas y el corte de la pared sur sigue andando.",
   "title": "Kit del templo propio",
-  "updated_at": "2026-10-09T21:05:44.264Z"
+  "updated_at": "2026-10-09T22:28:45.327Z"
 }

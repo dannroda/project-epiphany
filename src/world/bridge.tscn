@@ -1,16 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://src/world/bridge.gd" id="1_bridge"]
-[ext_resource type="Texture2D" path="res://assets/Prototype Textures/PNG/Orange/texture_04.png" id="2_tex"]
-
-[sub_resource type="StandardMaterial3D" id="Wood"]
-albedo_color = Color(0.7, 0.5, 0.32, 1)
-albedo_texture = ExtResource("2_tex")
-uv1_triplanar = true
-
-[sub_resource type="BoxMesh" id="PlankMesh"]
-material = SubResource("Wood")
-size = Vector3(2, 0.5, 4)
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/puente.res" id="m0_puente"]
 
 [sub_resource type="BoxShape3D" id="Shape"]
 size = Vector3(2, 0.5, 4)
@@ -18,9 +9,9 @@ size = Vector3(2, 0.5, 4)
 [node name="Bridge" type="StaticBody3D"]
 script = ExtResource("1_bridge")
 
-[node name="Plank" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
-mesh = SubResource("PlankMesh")
+[node name="Model" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = ExtResource("m0_puente")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)

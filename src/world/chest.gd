@@ -3,9 +3,11 @@ class_name Chest
 extends StaticBody3D
 
 const OPEN_ANGLE := -110.0
-const MODEL := preload("res://assets/kaykit_dungeon/chest.glb")
-const BIG_MODEL := preload("res://assets/kaykit_dungeon/chest_gold.glb")
-const MODEL_SCALE := 0.6
+const MESHES := "res://assets/epiphany/meshes/objetos/%s.res"
+## Bisagra de la tapa sobre la base (la tapa tiene el origen ahí).
+const HINGE := Vector3(0.0, 0.5, -0.35)
+const BIG_HINGE := Vector3(0.0, 0.65, -0.475)
+const BIG_SCALE := 1.4
 
 @export var item: ItemData
 @export var amount: int = 1
@@ -17,7 +19,7 @@ const MODEL_SCALE := 0.6
 
 @onready var interactable: Interactable = $Interactable
 
-## La tapa del modelo de KayKit (gira sobre la bisagra de atrás).
+## La tapa (gira sobre la bisagra de atrás).
 var lid: Node3D
 var persistent: PersistentFlag
 
@@ -28,7 +30,7 @@ func _ready() -> void:
 		return
 	add_to_group(&"chests")
 	if big:
-		scale = Vector3.ONE * 1.4
+		scale = Vector3.ONE * BIG_SCALE
 	persistent = PersistentFlag.new()
 	persistent.flag = flag
 	persistent.changed.connect(func(opened: Variant) -> void: _show(opened == true))
@@ -61,11 +63,20 @@ func _show(opened: bool) -> void:
 	lid.rotation_degrees.x = OPEN_ANGLE if opened else 0.0
 
 
-## Modelo de KayKit Dungeon (el dorado para los grandes); sin owner, así no se guarda en la escena.
+## Cofre de madera, o el arca de piedra para los grandes (ya viene grande: se compensa la escala del cuerpo).
+## Sin owner, así no se guarda en la escena.
 func _build_model() -> void:
-	var model: Node3D = (BIG_MODEL if big else MODEL).instantiate()
+	var model := Node3D.new()
 	model.name = "Model"
-	model.scale = Vector3.ONE * MODEL_SCALE
+	if big and not Engine.is_editor_hint():
+		model.scale = Vector3.ONE / BIG_SCALE
+	var base := MeshInstance3D.new()
+	base.mesh = load(MESHES % ("cofre_grande" if big else "cofre"))
+	model.add_child(base)
+	var lid_mesh := MeshInstance3D.new()
+	lid_mesh.mesh = load(MESHES % ("cofre_grande_tapa" if big else "cofre_tapa"))
+	lid_mesh.position = BIG_HINGE if big else HINGE
+	model.add_child(lid_mesh)
 	add_child(model, false, INTERNAL_MODE_FRONT)
-	lid = model.find_children("*_lid", "Node3D", true, false)[0]
+	lid = lid_mesh
 

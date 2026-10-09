@@ -2144,7 +2144,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 - [x] Suite completa
 - [x] GDD §9
 
-## M12 — Assets propios (Blender)  (0/9)
+## M12 — Assets propios (Blender)  (2/9)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -2152,7 +2152,7 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 - El overworld no usa piezas del kit gris ni de KayKit.
 - Templo, interactivos, ítems y personajes comparten la misma paleta y el mismo estilo.
 
-### 12.1 Guía de estilo: paleta, escala y pieza de prueba · En curso
+### 12.1 Guía de estilo: paleta, escala y pieza de prueba · Hecho
 
 **Prioridad:** alta · **Etiquetas:** `arte`
 
@@ -2172,14 +2172,14 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 
 **Bloquea a:** 12.2 Terreno del overworld; 12.3 Lugares del overworld; 12.4 Vegetación y props del overworld; 12.5 Interactivos y pickups; 12.6 Equipo y objetos del inventario; 12.7 Kit del templo propio; 12.8 Personajes propios; 12.9 Efectos con malla
 
-### 12.2 Terreno del overworld · Pendiente
+### 12.2 Terreno del overworld · En curso
 
 **Prioridad:** alta · **Etiquetas:** `arte`
 
-- [ ] Pasto: base + 3–4 variantes
+- [x] Pasto: base + 3–4 variantes
   Florcitas, piedritas, manchas de tierra.
 - [ ] Camino de tierra: recto, curva, T, cruce, final, borde con pasto
-- [ ] Piso de piedra de la plaza: base + rota + musgo
+- [x] Piso de piedra de la plaza: base + rota + musgo
 - [ ] Acantilado: recto, esquina ext/int, final, tope con pasto
 - [ ] Aberturas en acantilado de 1 y 3 celdas
   1 celda = gating (muro agrietado o reja), 3 = paso libre. Ver [[gdd#overworld-layout]].
@@ -2187,7 +2187,7 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 - [ ] Abismo: borde recto, esquinas, fondo oscuro/niebla
 - [ ] Cerco: recto, esquina, final, poste, roto
 - [ ] Borde del mundo (árboles densos / acantilado alto)
-- [ ] Kit del overworld para el GridMap
+- [x] Kit del overworld para el GridMap
   Como build_temple_kit.gd: mismos ítems, colisiones y navegación que el kit gris, mallas nuevas.
 
 **Prueba:** El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.
@@ -2200,7 +2200,7 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 
 **Relacionadas:** 11.4 Decorar el overworld
 
-### 12.3 Lugares del overworld · Pendiente
+### 12.3 Lugares del overworld · En curso
 
 **Prioridad:** alta · **Etiquetas:** `arte`, `puzzles`
 
@@ -2208,20 +2208,20 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
   Piedra tallada, fogata o similar.
 - [ ] Kit de cueva: boca, piso y pared de roca, estalagmitas
   Para la cueva de las bombas y la gruta oculta.
-- [ ] Muro agrietado de exterior + escombros
+- [x] Muro agrietado de exterior + escombros
   Ladrillo gris con musgo, que no se confunda con el acantilado. cracked_wall.tscn.
 - [ ] Kit de santuario: piso, paredes, columnas, pedestal
-- [ ] Puzzle de luz: fuente, espejo fijo 45°, cristal receptor
+- [x] Puzzle de luz: fuente, espejo fijo 45°, cristal receptor
   src/world/light/.
-- [ ] Reja, bloque empujable e interruptor de piso de exterior
+- [x] Reja, bloque empujable e interruptor de piso de exterior
   gate.tscn, push_block.tscn, floor_switch.tscn.
 - [ ] Entrada del templo: fachada, escalinata, columnas
   La pieza más importante del overworld.
-- [ ] Sello violeta con el ojo
+- [x] Sello violeta con el ojo
   temple_seal.tscn.
 - [ ] Risco del ojo: cornisa, ojo-interruptor, puente, nicho del carcaj
   eye_switch.tscn, bridge.tscn.
-- [ ] Portal de salida del jefe: disco y anillo
+- [x] Portal de salida del jefe: disco y anillo
   warp_portal.tscn. Opcional.
 
 **Prueba:** Cada zona de [[gdd#overworld-layout]] tiene sus piezas propias y se reconoce sin el nombre de zona.
@@ -2230,20 +2230,20 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 
 **Bloqueada por:** 12.1 Guía de estilo: paleta, escala y pieza de prueba; 12.2 Terreno del overworld
 
-### 12.4 Vegetación y props del overworld · Pendiente
+### 12.4 Vegetación y props del overworld · En curso
 
 **Prioridad:** alta · **Etiquetas:** `arte`
 
-- [ ] Árbol que bloquea celda: grande, chico, grupo para bordes
-- [ ] Pasto cortable: mata entera, cortada, hojitas
+- [x] Árbol que bloquea celda: grande, chico, grupo para bordes
+- [x] Pasto cortable: mata entera, cortada, hojitas
   grass.tscn.
-- [ ] Vasija: entera y en pedazos
+- [x] Vasija: entera y en pedazos
   pot.tscn.
-- [ ] Roca física y caja física
+- [x] Roca física y caja física
   physics_rock.tscn, physics_box.tscn.
-- [ ] Tablilla de piedra del overworld
+- [x] Tablilla de piedra del overworld
   tablet.tscn.
-- [ ] Rocas grandes fijas (2–3)
+- [x] Rocas grandes fijas (2–3)
 - [ ] Decoración: arbustos, flores, hongos, tronco caído, tocón
   Opcional.
 - [ ] Fondo: nubes y colinas lejanas
@@ -2253,72 +2253,72 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 
 **Bloqueada por:** 12.1 Guía de estilo: paleta, escala y pieza de prueba
 
-### 12.5 Interactivos y pickups · Pendiente
+### 12.5 Interactivos y pickups · En curso
 
 **Prioridad:** media · **Etiquetas:** `arte`
 
-- [ ] Cofre chico de madera (tapa aparte)
-- [ ] Cofre grande dorado (tapa aparte)
+- [x] Cofre chico de madera (tapa aparte)
+- [x] Cofre grande dorado (tapa aparte)
 - [ ] Pickups: corazón, flechas ×5, bombas ×3
-- [ ] Bomba con mecha y flecha
+- [x] Bomba con mecha y flecha
 - [ ] Orbe (proyectil reflejable)
-- [ ] Llave chica, llave del jefe
-- [ ] Mapa, brújula, contenedor de corazón
+- [x] Llave chica, llave del jefe
+- [x] Mapa, brújula, contenedor de corazón
   Hoy son SVG planos; con modelo, todos los íconos salen de render_item_icons.gd.
 
 **Prueba:** Cofres, pickups, bomba, flecha y orbe usan los modelos nuevos; los íconos se regeneran con render_item_icons.gd.
 
 **Bloqueada por:** 12.1 Guía de estilo: paleta, escala y pieza de prueba
 
-### 12.6 Equipo y objetos del inventario · Pendiente
+### 12.6 Equipo y objetos del inventario · Hecho
 
 **Prioridad:** media · **Etiquetas:** `arte`
 
-- [ ] Espada(s)
+- [x] Espada(s)
   Según lo que se decida de espadas con elemento.
-- [ ] Escudo de madera y escudo espejo
-- [ ] Cota reforzada
+- [x] Escudo de madera y escudo espejo
+- [x] Cota reforzada
   Que la variante dorada siga andando con palette_remap, o modelarla aparte.
-- [ ] Arco y carcaj grande
-- [ ] Bolsa de bombas
-- [ ] Botella vacía y con poción
+- [x] Arco y carcaj grande
+- [x] Bolsa de bombas
+- [x] Botella vacía y con poción
 
 **Prueba:** Equipo e ítems se ven en la mano, en la preview de Equipo y en los íconos.
 
 **Bloqueada por:** 12.1 Guía de estilo: paleta, escala y pieza de prueba
 
-### 12.7 Kit del templo propio · Pendiente
+### 12.7 Kit del templo propio · En curso
 
 **Prioridad:** baja · **Etiquetas:** `arte`, `mazmorra`
 
-- [ ] Piso + variantes (roto, yuyos, grieta del doom)
+- [x] Piso + variantes (roto, yuyos, grieta del doom)
 - [ ] Pared a celda 2×2: recta, esquina, final, con antorcha
-- [ ] Columna y escalón
+- [x] Columna y escalón
 - [ ] Abismo interior con borde
-- [ ] Pasos de puerta + puertas por tipo
+- [x] Pasos de puerta + puertas por tipo
   Normal, con cerradura, persiana, de interruptor y del jefe (grande, con el ojo). door.tscn.
-- [ ] Piezas de puzzle versión templo
+- [x] Piezas de puzzle versión templo
   Muro agrietado, reja, bloque, interruptor, ojo-interruptor, cristal, espejo, fuente de luz.
-- [ ] Torreta / ojo menor
+- [x] Torreta / ojo menor
   src/entities/turret/.
-- [ ] Antorcha de pared y brasero
+- [x] Antorcha de pared y brasero
   wall_torch.tscn.
 - [ ] Decoración: estandartes, escombros, vasijas, tablilla, ojo tallado
 - [ ] Doom: grietas, venas rojas, polvo
-- [ ] Sala del jefe: piso de arena y pilares
+- [x] Sala del jefe: piso de arena y pilares
 
 **Prueba:** temple_kit.tres arma el templo con las piezas nuevas y el corte de la pared sur sigue andando.
 
 **Bloqueada por:** 12.1 Guía de estilo: paleta, escala y pieza de prueba
 
-### 12.8 Personajes propios · Pendiente
+### 12.8 Personajes propios · En curso
 
 **Prioridad:** baja · **Etiquetas:** `arte`, `personajes`
 
-- [ ] Player
+- [x] Player
   Mismos nombres de huesos que el Rig_Medium de KayKit, para no perder las animaciones.
-- [ ] Esqueleto
-- [ ] Esqueleto con escudo
+- [x] Esqueleto
+- [x] Esqueleto con escudo
 - [ ] Jefe: ojo + dos manos con rig propio
   El rig de la otra jam no está en el repo. Ver [[gdd#jefe]].
 

@@ -1,27 +1,11 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://src/items/bomb/bomb.gd" id="1_bomb"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/bomba.res" id="m0_bomba"]
 
 [sub_resource type="PhysicsMaterial" id="Bounce"]
 friction = 0.8
 bounce = 0.25
-
-[sub_resource type="SphereMesh" id="BodyMesh"]
-radius = 0.25
-height = 0.5
-radial_segments = 14
-rings = 7
-
-[sub_resource type="StandardMaterial3D" id="Fuse"]
-albedo_color = Color(0.75, 0.6, 0.35, 1)
-
-[sub_resource type="CylinderMesh" id="FuseMesh"]
-material = SubResource("Fuse")
-top_radius = 0.02
-bottom_radius = 0.03
-height = 0.16
-radial_segments = 6
-rings = 1
 
 [sub_resource type="SphereShape3D" id="Shape"]
 radius = 0.25
@@ -37,11 +21,8 @@ angular_damp = 1.0
 script = ExtResource("1_bomb")
 
 [node name="Body" type="MeshInstance3D" parent="."]
-mesh = SubResource("BodyMesh")
-
-[node name="Fuse" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
-mesh = SubResource("FuseMesh")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+mesh = ExtResource("m0_bomba")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("Shape")

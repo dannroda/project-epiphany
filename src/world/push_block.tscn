@@ -2,21 +2,7 @@
 
 [ext_resource type="Script" path="res://src/world/push_block.gd" id="1_block"]
 [ext_resource type="Script" path="res://src/components/interactable.gd" id="2_interactable"]
-
-[sub_resource type="StandardMaterial3D" id="Stone"]
-albedo_color = Color(0.5, 0.47, 0.42, 1)
-roughness = 0.95
-
-[sub_resource type="StandardMaterial3D" id="Trim"]
-albedo_color = Color(0.33, 0.31, 0.28, 1)
-
-[sub_resource type="BoxMesh" id="BlockMesh"]
-material = SubResource("Stone")
-size = Vector3(1.8, 1.8, 1.8)
-
-[sub_resource type="BoxMesh" id="TopMesh"]
-material = SubResource("Trim")
-size = Vector3(1.4, 0.04, 1.4)
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/bloque_empujable.res" id="m0_bloque_empujable"]
 
 [sub_resource type="BoxShape3D" id="Shape"]
 size = Vector3(1.8, 1.8, 1.8)
@@ -29,13 +15,9 @@ collision_layer = 9
 collision_mask = 0
 script = ExtResource("1_block")
 
-[node name="Mesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
-mesh = SubResource("BlockMesh")
-
-[node name="Top" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.81, 0)
-mesh = SubResource("TopMesh")
+[node name="Model" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = ExtResource("m0_bloque_empujable")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)

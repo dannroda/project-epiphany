@@ -1,9 +1,10 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://src/items/equipped_item.gd" id="1_item"]
-[ext_resource type="PackedScene" uid="uid://dxljx135eokwd" path="res://assets/kaykit_adventure/Assets/gltf/bow_withString.gltf" id="2_bow"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/equipo/arco.res" id="2_bow"]
 
 [node name="Bow" type="Node3D"]
 script = ExtResource("1_item")
 
-[node name="Model" parent="." instance=ExtResource("2_bow")]
+[node name="Model" type="MeshInstance3D" parent="."]
+mesh = ExtResource("2_bow")

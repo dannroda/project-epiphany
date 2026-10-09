@@ -2,15 +2,8 @@
 
 [ext_resource type="Script" path="res://src/world/cracked_wall.gd" id="1_wall"]
 [ext_resource type="Script" path="res://src/components/hurtbox.gd" id="2_hurtbox"]
-[ext_resource type="PackedScene" path="res://assets/kaykit_dungeon/wall_cracked.glb" id="kk_wall"]
-
-[sub_resource type="StandardMaterial3D" id="Stone"]
-albedo_color = Color(0.58, 0.55, 0.5, 1)
-roughness = 0.95
-
-[sub_resource type="BoxMesh" id="RockMesh"]
-material = SubResource("Stone")
-size = Vector3(0.35, 0.35, 0.35)
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/muro_agrietado.res" id="3_wall"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/piedra_chica_a.res" id="4_rock"]
 
 [sub_resource type="BoxShape3D" id="WallShape"]
 size = Vector3(2.4, 2.4, 0.6)
@@ -24,36 +17,36 @@ script = ExtResource("1_wall")
 [node name="Wall" type="Node3D" parent="."]
 unique_name_in_owner = true
 
-[node name="Model" parent="Wall" instance=ExtResource("kk_wall")]
-transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
+[node name="Model" type="MeshInstance3D" parent="Wall"]
+mesh = ExtResource("3_wall")
 
 [node name="Rubble" type="Node3D" parent="."]
 unique_name_in_owner = true
 visible = false
 
 [node name="Rock0" type="MeshInstance3D" parent="Rubble"]
-transform = Transform3D(0.9397, 0, -0.3420, 0, 1.0000, 0, 0.3420, 0, 0.9397, -0.8, 0.175, 0.3)
-mesh = SubResource("RockMesh")
+transform = Transform3D(0.9397, 0, -0.3420, 0, 1.0000, 0, 0.3420, 0, 0.9397, -0.8, 0, 0.3)
+mesh = ExtResource("4_rock")
 
 [node name="Rock1" type="MeshInstance3D" parent="Rubble"]
-transform = Transform3D(0.7727, 0, 0.2071, 0, 0.8000, 0, -0.2071, 0, 0.7727, -0.2, 0.140, 0.5)
-mesh = SubResource("RockMesh")
+transform = Transform3D(0.7727, 0, 0.2071, 0, 0.8000, 0, -0.2071, 0, 0.7727, -0.2, 0, 0.5)
+mesh = ExtResource("4_rock")
 
 [node name="Rock2" type="MeshInstance3D" parent="Rubble"]
-transform = Transform3D(0.9362, 0, -0.6555, 0, 1.1429, 0, 0.6555, 0, 0.9362, 0.4, 0.200, 0.25)
-mesh = SubResource("RockMesh")
+transform = Transform3D(0.9362, 0, -0.6555, 0, 1.1429, 0, 0.6555, 0, 0.9362, 0.4, 0, 0.25)
+mesh = ExtResource("4_rock")
 
 [node name="Rock3" type="MeshInstance3D" parent="Rubble"]
-transform = Transform3D(0.7034, 0, -0.1240, 0, 0.7143, 0, 0.1240, 0, 0.7034, 0.9, 0.125, 0.55)
-mesh = SubResource("RockMesh")
+transform = Transform3D(0.7034, 0, -0.1240, 0, 0.7143, 0, 0.1240, 0, 0.7034, 0.9, 0, 0.55)
+mesh = ExtResource("4_rock")
 
 [node name="Rock4" type="MeshInstance3D" parent="Rubble"]
-transform = Transform3D(0.7918, 0, 0.4571, 0, 0.9143, 0, -0.4571, 0, 0.7918, 0.05, 0.160, -0.1)
-mesh = SubResource("RockMesh")
+transform = Transform3D(0.7918, 0, 0.4571, 0, 0.9143, 0, -0.4571, 0, 0.7918, 0.05, 0, -0.1)
+mesh = ExtResource("4_rock")
 
 [node name="Rock5" type="MeshInstance3D" parent="Rubble"]
-transform = Transform3D(0.4040, 0, -0.4815, 0, 0.6286, 0, 0.4815, 0, 0.4040, -0.55, 0.110, -0.25)
-mesh = SubResource("RockMesh")
+transform = Transform3D(0.4040, 0, -0.4815, 0, 0.6286, 0, 0.4815, 0, 0.4040, -0.55, 0, -0.25)
+mesh = ExtResource("4_rock")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)

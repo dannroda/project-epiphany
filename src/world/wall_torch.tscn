@@ -1,15 +1,32 @@
 [gd_scene format=3]
 
-[ext_resource type="PackedScene" path="res://assets/kaykit_dungeon/torch_mounted.glb" id="1_torch"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo/antorcha_pared.res" id="1_torch"]
 [ext_resource type="Script" path="res://src/world/torch_flicker.gd" id="2_flicker"]
+
+[sub_resource type="StandardMaterial3D" id="Flame"]
+shading_mode = 0
+albedo_color = Color(1, 0.62, 0.22, 1)
+
+[sub_resource type="SphereMesh" id="FlameMesh"]
+material = SubResource("Flame")
+radius = 0.11
+height = 0.34
+radial_segments = 6
+rings = 3
 
 [node name="WallTorch" type="Node3D"]
 
-[node name="Model" parent="." instance=ExtResource("1_torch")]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
+[node name="Model" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+mesh = ExtResource("1_torch")
+
+[node name="Flame" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.67, 0.45)
+cast_shadow = 0
+mesh = SubResource("FlameMesh")
 
 [node name="Light" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0.45)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0.45)
 light_color = Color(1, 0.68, 0.38, 1)
 light_energy = 1.4
 omni_range = 7.0

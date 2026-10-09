@@ -2,15 +2,15 @@
   "checklist": [
     {
       "detail": "Mismos nombres de huesos que el Rig_Medium de KayKit, para no perder las animaciones.",
-      "done": false,
+      "done": true,
       "text": "Player"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Esqueleto"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Esqueleto con escudo"
     },
     {
@@ -26,12 +26,12 @@
   "order": 8,
   "priority": "low",
   "refs": [],
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "arte",
     "personajes"
   ],
   "test": "Los modelos nuevos usan las animaciones de player/animation/libs/ sin retarget.",
   "title": "Personajes propios",
-  "updated_at": "2026-10-09T21:05:45.820Z"
+  "updated_at": "2026-10-09T22:28:45.563Z"
 }

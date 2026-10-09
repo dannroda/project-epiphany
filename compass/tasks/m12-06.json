@@ -2,28 +2,28 @@
   "checklist": [
     {
       "detail": "Según lo que se decida de espadas con elemento.",
-      "done": false,
+      "done": true,
       "text": "Espada(s)"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Escudo de madera y escudo espejo"
     },
     {
       "detail": "Que la variante dorada siga andando con palette_remap, o modelarla aparte.",
-      "done": false,
+      "done": true,
       "text": "Cota reforzada"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Arco y carcaj grande"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Bolsa de bombas"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Botella vacía y con poción"
     }
   ],
@@ -34,11 +34,11 @@
   "order": 6,
   "priority": "medium",
   "refs": [],
-  "status": "todo",
+  "status": "done",
   "tags": [
     "arte"
   ],
   "test": "Equipo e ítems se ven en la mano, en la preview de Equipo y en los íconos.",
   "title": "Equipo y objetos del inventario",
-  "updated_at": "2026-10-09T21:05:40.650Z"
+  "updated_at": "2026-10-09T22:28:45.799Z"
 }

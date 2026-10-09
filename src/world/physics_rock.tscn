@@ -1,16 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Texture2D" path="res://assets/Prototype Textures/PNG/Dark/texture_04.png" id="tex"]
-
-[sub_resource type="StandardMaterial3D" id="Material"]
-albedo_color = Color(1.6, 1.6, 1.6, 1)
-albedo_texture = ExtResource("tex")
-uv1_triplanar = true
-
-[sub_resource type="SphereMesh" id="Mesh"]
-material = SubResource("Material")
-radius = 0.7
-height = 1.2
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/roca_fisica.res" id="m0_roca_fisica"]
 
 [sub_resource type="SphereShape3D" id="Shape"]
 radius = 0.6
@@ -20,8 +10,9 @@ collision_layer = 9
 collision_mask = 9
 mass = 8.0
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("Mesh")
+[node name="Model" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0.06)
+mesh = ExtResource("m0_roca_fisica")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("Shape")

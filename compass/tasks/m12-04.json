@@ -1,31 +1,31 @@
 {
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "Árbol que bloquea celda: grande, chico, grupo para bordes"
     },
     {
       "detail": "grass.tscn.",
-      "done": false,
+      "done": true,
       "text": "Pasto cortable: mata entera, cortada, hojitas"
     },
     {
       "detail": "pot.tscn.",
-      "done": false,
+      "done": true,
       "text": "Vasija: entera y en pedazos"
     },
     {
       "detail": "physics_rock.tscn, physics_box.tscn.",
-      "done": false,
+      "done": true,
       "text": "Roca física y caja física"
     },
     {
       "detail": "tablet.tscn.",
-      "done": false,
+      "done": true,
       "text": "Tablilla de piedra del overworld"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Rocas grandes fijas (2–3)"
     },
     {
@@ -46,11 +46,11 @@
   "order": 4,
   "priority": "high",
   "refs": [],
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "arte"
   ],
   "test": "Pasto, vasijas, rocas y cajas usan los modelos nuevos y se rompen o mueven como antes.",
   "title": "Vegetación y props del overworld",
-  "updated_at": "2026-10-09T21:05:36.220Z"
+  "updated_at": "2026-10-09T22:28:44.861Z"
 }

@@ -1,7 +1,6 @@
 extends SceneTree
 ## Renderiza los íconos de los ítems desde sus modelos 3D (PNG con fondo transparente y contorno oscuro).
 ## Necesita ventana (no --headless): godot --path . --script res://tools/render_item_icons.gd
-## Los ítems sin modelo (mapa, brújula, contenedor de corazón) siguen con su SVG.
 
 const OUTPUT := "res://assets/ui/items/%s.png"
 const SIZE := 256
@@ -10,37 +9,30 @@ const OUTLINE := Color("0b0d10")
 const OUTLINE_WIDTH := 6
 const PADDING := 0.04
 const VIEW := Vector3(-28.0, 35.0, 0.0)
-const ADVENTURE := "res://assets/kaykit_adventure/Assets/gltf/%s.gltf"
-const DUNGEON := "res://assets/kaykit_dungeon_remastered/%s.glb"
-const GOLD := Color(1.0, 0.78, 0.3)
+const MESH := "res://assets/epiphany/meshes/%s.res"
+## Las piezas planas (llaves, mapa, brújula, flechas) se paran de frente a la cámara.
+const FLAT := Vector3(90, 0, 0)
 
-## id: [modelo, rotación en grados (antes de la vista), tinte opcional]
+## id: [modelo (escena o malla), rotación en grados (antes de la vista)]
 const ICONS := {
 	"sword_basic": ["res://assets/items/sword/sword_1h.tscn", Vector3(0, 0, -45)],
 	"shield_wood": ["res://assets/items/shield/shield_round.tscn", Vector3(0, 0, 0)],
 	"shield_mirror": ["res://assets/items/shield/shield_mirror.tscn", Vector3(0, 0, 0)],
-	"bow": [ADVENTURE % "bow_withString", Vector3(0, 0, -45)],
-	"arrow": [ADVENTURE % "arrow_bow_bundle", Vector3(0, 0, -45)],
-	"quiver_big": [ADVENTURE % "quiver", Vector3(0, 0, -20)],
-	"bomb": [ADVENTURE % "smokebomb", Vector3(0, 0, 0)],
-	"bomb_bag": [ADVENTURE % "smokebomb", Vector3(0, 0, 0)],
-	"small_key": [DUNGEON % "key", Vector3(0, 0, -45)],
-	"boss_key": [DUNGEON % "key", Vector3(0, 0, -45), GOLD],
-	"potion": [DUNGEON % "bottle_A_labeled_green", Vector3(0, 0, 0)],
-	"bottle_empty": [DUNGEON % "bottle_B_brown", Vector3(0, 0, 0)],
-	"tunic": ["res://assets/kaykit_adventure/Characters/gltf/Knight.glb", Vector3(0, 0, 0)],
-	"armor_chainmail": ["res://assets/kaykit_adventure/Characters/gltf/Knight.glb", Vector3(0, 0, 0)],
+	"bow": [MESH % "equipo/arco", Vector3(0, 0, -45)],
+	"arrow": [MESH % "objetos/flechas_x5", FLAT + Vector3(0, 0, 45)],
+	"quiver_big": [MESH % "equipo/carcaj", Vector3(0, 0, -20)],
+	"bomb": [MESH % "objetos/bomba", Vector3(0, 0, 0)],
+	"bomb_bag": [MESH % "equipo/bolsa_bombas", Vector3(0, 0, 0)],
+	"small_key": [MESH % "objetos/llave", FLAT + Vector3(0, 0, 45)],
+	"boss_key": [MESH % "objetos/llave_jefe", FLAT + Vector3(0, 0, 45)],
+	"potion": [MESH % "equipo/botella_pocion", Vector3(0, 0, 0)],
+	"bottle_empty": [MESH % "equipo/botella", Vector3(0, 0, 0)],
+	"dungeon_map": [MESH % "objetos/mapa", FLAT],
+	"compass": [MESH % "objetos/brujula", FLAT],
+	"heart_container": [MESH % "objetos/contenedor_corazon", Vector3(0, 0, 0)],
+	"tunic": [MESH % "equipo/poncho", Vector3(0, 0, 0)],
+	"armor_chainmail": [MESH % "equipo/poncho", Vector3(0, 0, 0)],
 }
-## Modelos que acompañan al principal: [[modelo, posición, rotación en grados], ...].
-const EXTRAS := {
-	"bomb_bag": [
-		[ADVENTURE % "smokebomb", Vector3(0.4, 0.0, 0.05), Vector3(0, -30, -8)],
-		[ADVENTURE % "smokebomb", Vector3(0.2, 0.36, -0.12), Vector3(0, 20, 6)],
-	],
-}
-## De los personajes, solo el torso.
-const BODY_ONLY := ["tunic", "armor_chainmail"]
-
 
 func _initialize() -> void:
 	_run.call_deferred()
@@ -82,22 +74,13 @@ func _run() -> void:
 		var entry: Array = ICONS[id]
 		var pivot := Node3D.new()
 		viewport.add_child(pivot)
-		var model: Node3D = (load(entry[0]) as PackedScene).instantiate()
+		var model := _instance(entry[0])
 		pivot.add_child(model)
-		if id in BODY_ONLY:
-			_keep_body(model)
-		if entry.size() > 2:
-			_tint(model, entry[2])
 		var item = load("res://data/items/%s.tres" % id)
 		if item.body_material:
 			for mesh: MeshInstance3D in _meshes(model):
 				mesh.material_override = item.body_material
 		model.rotation_degrees = entry[1]
-		for extra: Array in EXTRAS.get(id, []):
-			var companion: Node3D = (load(extra[0]) as PackedScene).instantiate()
-			pivot.add_child(companion)
-			companion.position = extra[1]
-			companion.rotation_degrees = extra[2]
 		pivot.rotation_degrees = VIEW
 		_frame(camera, pivot)
 		for i in 4:
@@ -113,29 +96,18 @@ func _run() -> void:
 	quit(1 if failed else 0)
 
 
+func _instance(path: String) -> Node3D:
+	if path.ends_with(".res"):
+		var holder := Node3D.new()
+		var mesh := MeshInstance3D.new()
+		mesh.mesh = load(path)
+		holder.add_child(mesh)
+		return holder
+	return (load(path) as PackedScene).instantiate()
+
+
 func _meshes(node: Node) -> Array:
 	return node.find_children("*", "MeshInstance3D", true, false)
-
-
-func _keep_body(model: Node) -> void:
-	for mesh: MeshInstance3D in _meshes(model):
-		if not mesh.name.ends_with("Body"):
-			mesh.visible = false
-		else:
-			mesh.skeleton = NodePath()
-			mesh.skin = null
-
-
-func _tint(model: Node, color: Color) -> void:
-	for mesh: MeshInstance3D in _meshes(model):
-		for surface in mesh.mesh.get_surface_count():
-			var material := mesh.get_active_material(surface)
-			if material is StandardMaterial3D:
-				var tinted := material.duplicate() as StandardMaterial3D
-				tinted.albedo_color = color
-				tinted.metallic = 0.6
-				tinted.roughness = 0.35
-				mesh.set_surface_override_material(surface, tinted)
 
 
 ## Encuadra la caja de lo visible, vista desde la cámara, con un margen.

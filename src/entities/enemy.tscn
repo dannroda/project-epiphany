@@ -13,7 +13,7 @@
 [ext_resource type="Script" uid="uid://rcd8a41l0m7" path="res://src/components/hurtbox.gd" id="20_s5w61"]
 [ext_resource type="Script" uid="uid://bcd4b7083of6t" path="res://src/components/attack_runner.gd" id="21_of2i0"]
 [ext_resource type="Resource" path="res://data/entities/skeleton.tres" id="20_config"]
-[ext_resource type="PackedScene" path="res://src/entities/models/skeleton_minion.tscn" id="30_model"]
+[ext_resource type="PackedScene" path="res://src/entities/models/chullpa.tscn" id="30_model"]
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_peicu"]
 fadeout_time = 0.3

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemData" format=3]
 
 [ext_resource type="Script" path="res://src/items/modifiers/item_modifier.gd" id="1_2fuae"]
-[ext_resource type="Texture2D" path="res://assets/ui/items/compass.svg" id="1_mbg3s"]
+[ext_resource type="Texture2D" path="res://assets/ui/items/compass.png" id="1_mbg3s"]
 [ext_resource type="Script" path="res://src/items/item_data.gd" id="2_mbg3s"]
 
 [resource]

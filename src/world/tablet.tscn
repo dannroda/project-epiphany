@@ -2,22 +2,7 @@
 
 [ext_resource type="Script" path="res://src/world/tablet.gd" id="1_tablet"]
 [ext_resource type="Script" path="res://src/components/interactable.gd" id="2_interactable"]
-
-[sub_resource type="StandardMaterial3D" id="Stone"]
-albedo_color = Color(0.43, 0.42, 0.38, 1)
-roughness = 0.95
-
-[sub_resource type="StandardMaterial3D" id="Base"]
-albedo_color = Color(0.25, 0.24, 0.22, 1)
-roughness = 1.0
-
-[sub_resource type="BoxMesh" id="SlabMesh"]
-material = SubResource("Stone")
-size = Vector3(0.9, 1.1, 0.18)
-
-[sub_resource type="BoxMesh" id="BaseMesh"]
-material = SubResource("Base")
-size = Vector3(1.1, 0.2, 0.45)
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/estela.res" id="m0_estela"]
 
 [sub_resource type="BoxShape3D" id="BodyShape"]
 size = Vector3(1.1, 1.3, 0.45)
@@ -28,13 +13,9 @@ size = Vector3(1.4, 1.2, 1.2)
 [node name="Tablet" type="StaticBody3D"]
 script = ExtResource("1_tablet")
 
-[node name="Base" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
-mesh = SubResource("BaseMesh")
-
-[node name="Slab" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.966, 0.259, 0, -0.259, 0.966, 0, 0.72, -0.04)
-mesh = SubResource("SlabMesh")
+[node name="Model" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = ExtResource("m0_estela")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)

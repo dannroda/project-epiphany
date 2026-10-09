@@ -1,0 +1,91 @@
+extends SceneTree
+## Pasa levels/overworld.tscn al kit propio y reparte variantes de pasto, tierra, andenes, pircas y árboles
+## con un hash de la celda (siempre da lo mismo). Sólo toca celdas que todavía tienen el ítem base.
+## godot --headless --path . --script res://tools/vary_overworld.gd
+
+const LEVEL := "res://levels/overworld.tscn"
+const KIT := preload("res://data/kits/overworld_kit.tres")
+
+## id base → [[variante, probabilidad acumulada], …]; lo que sobra queda como el base.
+const RULES := {
+	0: [["Tierra piedras", 0.12]],
+	5: [["Pasto flores", 0.12], ["Pasto piedras", 0.2], ["Pasto ichu", 0.3], ["Pasto tola", 0.34]],
+	6: [["Risco", 0.3]],
+	7: [["Pirca rota", 0.3]],
+	8: [["Queñoa chica", 0.3], ["Cardón", 0.42], ["Cardón brazos", 0.5]],
+}
+## Los que pueden girar sin que se note la costura.
+const SPIN := [5, 0]
+const DIRT := 0
+const GRASS := 5
+## Lado con tierra de las piezas de borde sin girar; cada giro de 90° lo pasa al siguiente.
+const SIDES: Array[Vector3i] = [Vector3i(-1, 0, 0), Vector3i(0, 0, 1), Vector3i(1, 0, 0), Vector3i(0, 0, -1)]
+
+
+func _initialize() -> void:
+	var root := (load(LEVEL) as PackedScene).instantiate()
+	var grid := root.get_node("GridMap") as GridMap
+	grid.mesh_library = KIT
+	var ids := {}
+	for id in KIT.get_item_list():
+		ids[KIT.get_item_name(id)] = id
+	var changed := 0
+	var borders := _borders(grid, ids)
+	for cell: Vector3i in borders:
+		grid.set_cell_item(cell, borders[cell][0], _turn(grid, borders[cell][1]))
+		changed += 1
+	for cell in grid.get_used_cells():
+		var item := grid.get_cell_item(cell)
+		if not RULES.has(item) or borders.has(cell):
+			continue
+		var roll := _hash(cell / 3 if item == 6 else cell)
+		var orientation := grid.get_cell_item_orientation(cell)
+		if item in SPIN:
+			orientation = _turn(grid, _hash(cell + Vector3i(7, 0, 3)) * 4.0 as int)
+		var target := item
+		for rule: Array in RULES[item]:
+			if roll < rule[1]:
+				target = ids[rule[0]]
+				break
+		if target != item or orientation != grid.get_cell_item_orientation(cell):
+			grid.set_cell_item(cell, target, orientation)
+			changed += 1
+	var text := FileAccess.get_file_as_string(LEVEL)
+	var cells := var_to_str(grid.get("data")["cells"])
+	text = RegEx.create_from_string('"cells": PackedInt32Array\\([^)]*\\)').sub(text, '"cells": ' + cells)
+	text = text.replace('path="res://data/kits/gray_kit.tres"', 'path="%s"' % KIT.resource_path)
+	text = text.replace('uid="uid://cgeqghyjch420" path="%s"' % KIT.resource_path, 'path="%s"' % KIT.resource_path)
+	var file := FileAccess.open(LEVEL, FileAccess.WRITE)
+	file.store_string(text)
+	var err := file.get_error()
+	file.close()
+	print("vary_overworld: ", error_string(err), " · ", changed, " celdas")
+	root.free()
+	quit(0 if err == OK else 1)
+
+
+## Pasto pegado a tierra → pieza de borde (o esquina) girada hacia la tierra. Se calcula antes de tocar nada.
+func _borders(grid: GridMap, ids: Dictionary) -> Dictionary:
+	var result := {}
+	for cell in grid.get_used_cells_by_item(GRASS):
+		var dirt := []
+		for k in 4:
+			dirt.append(grid.get_cell_item(cell + SIDES[k]) == DIRT)
+		var count := dirt.count(true)
+		for k in 4:
+			var next := (k + 1) % 4
+			if count == 1 and dirt[k]:
+				result[cell] = [ids["Tierra borde"], k]
+			elif count == 2 and dirt[k] and dirt[next]:
+				result[cell] = [ids["Tierra esquina int"], k]
+			elif count == 0 and grid.get_cell_item(cell + SIDES[k] + SIDES[next]) == DIRT:
+				result[cell] = [ids["Tierra esquina"], k]
+	return result
+
+
+func _turn(grid: GridMap, quarters: int) -> int:
+	return grid.get_orthogonal_index_from_basis(Basis(Vector3.UP, PI / 2.0 * quarters))
+
+
+func _hash(cell: Vector3i) -> float:
+	return float(absi(hash(cell)) % 10000) / 10000.0

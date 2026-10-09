@@ -1,0 +1,11 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/chullpa_guardian/Body.res" id="1_t1vcw"]
+[ext_resource type="Skin" path="res://src/entities/models/meshes/chullpa_guardian/skin.tres" id="2_o18ju"]
+
+[node name="Visuals" type="Node3D" unique_id=242658917]
+
+[node name="Body" type="MeshInstance3D" parent="." unique_id=789533206]
+mesh = ExtResource("1_t1vcw")
+skin = ExtResource("2_o18ju")
+skeleton = NodePath("../../Skeleton3D")

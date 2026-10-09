@@ -1,6 +1,0 @@
-[gd_resource type="StandardMaterial3D" format=3]
-
-[ext_resource type="Texture2D" path="res://assets/kaykit_adventure/Characters/gltf/knight_texture.png" id="1_g7s0p"]
-
-[resource]
-albedo_texture = ExtResource("1_g7s0p")

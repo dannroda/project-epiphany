@@ -16,7 +16,8 @@ var _exploded := false
 func _ready() -> void:
 	add_to_group(&"bombs")
 	_left = fuse
-	_flash.albedo_color = Color(0.2, 0.2, 0.25)
+	_flash.albedo_texture = preload("res://assets/epiphany/palette.png")
+	_flash.albedo_color = Color(0.72, 0.72, 0.72)
 	_flash.emission_enabled = true
 	_flash.emission = Color(1.0, 0.2, 0.1)
 	body_mesh.material_override = _flash

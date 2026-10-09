@@ -5,41 +5,12 @@
 [ext_resource type="Script" uid="uid://bqdwet47uk4xm" path="res://src/components/health.gd" id="3_health"]
 [ext_resource type="Script" uid="uid://rcd8a41l0m7" path="res://src/components/hurtbox.gd" id="4_hurtbox"]
 [ext_resource type="BehaviorTree" path="res://src/entities/turret/turret_bt.tres" id="5_bt"]
-
-[sub_resource type="StandardMaterial3D" id="Stone"]
-albedo_color = Color(0.36, 0.34, 0.32, 1)
-roughness = 0.95
-
-[sub_resource type="StandardMaterial3D" id="EyeWhite"]
-albedo_color = Color(0.82, 0.78, 0.7, 1)
-roughness = 0.6
-
-[sub_resource type="CylinderMesh" id="PillarMesh"]
-material = SubResource("Stone")
-top_radius = 0.38
-bottom_radius = 0.48
-height = 1.0
-radial_segments = 10
-rings = 1
-
-[sub_resource type="CylinderMesh" id="CupMesh"]
-material = SubResource("Stone")
-top_radius = 0.46
-bottom_radius = 0.3
-height = 0.3
-radial_segments = 10
-rings = 1
-
-[sub_resource type="SphereMesh" id="EyeMesh"]
-material = SubResource("EyeWhite")
-radius = 0.4
-height = 0.8
-radial_segments = 16
-rings = 8
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo/torreta.res" id="m0_torreta"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/ojo_globo.res" id="6_eye"]
 
 [sub_resource type="SphereMesh" id="IrisMesh"]
-radius = 0.17
-height = 0.34
+radius = 0.1
+height = 0.2
 radial_segments = 12
 rings = 6
 
@@ -57,24 +28,21 @@ collision_layer = 5
 script = ExtResource("1_turret")
 config = ExtResource("2_config")
 
-[node name="Pillar" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-mesh = SubResource("PillarMesh")
-
-[node name="Cup" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12, 0)
-mesh = SubResource("CupMesh")
+[node name="Model" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = ExtResource("m0_torreta")
 
 [node name="Head" type="Node3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0.45)
 
 [node name="Eye" type="MeshInstance3D" parent="Head"]
-mesh = SubResource("EyeMesh")
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
+mesh = ExtResource("6_eye")
 
 [node name="Iris" type="MeshInstance3D" parent="Head"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.24)
 mesh = SubResource("IrisMesh")
 
 [node name="Glow" type="OmniLight3D" parent="Head"]
@@ -99,7 +67,7 @@ monitoring = false
 script = ExtResource("4_hurtbox")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0.3)
 shape = SubResource("HurtShape")
 
 [node name="Health" type="Node" parent="."]

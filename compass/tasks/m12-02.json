@@ -2,7 +2,7 @@
   "checklist": [
     {
       "detail": "Florcitas, piedritas, manchas de tierra.",
-      "done": false,
+      "done": true,
       "text": "Pasto: base + 3–4 variantes"
     },
     {
@@ -10,7 +10,7 @@
       "text": "Camino de tierra: recto, curva, T, cruce, final, borde con pasto"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Piso de piedra de la plaza: base + rota + musgo"
     },
     {
@@ -40,7 +40,7 @@
     },
     {
       "detail": "Como build_temple_kit.gd: mismos ítems, colisiones y navegación que el kit gris, mallas nuevas.",
-      "done": false,
+      "done": true,
       "text": "Kit del overworld para el GridMap"
     }
   ],
@@ -66,11 +66,11 @@
       "section": "overworld-layout"
     }
   ],
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "arte"
   ],
   "test": "El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.",
   "title": "Terreno del overworld",
-  "updated_at": "2026-10-09T21:05:50.906Z"
+  "updated_at": "2026-10-09T22:28:44.393Z"
 }

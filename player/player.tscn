@@ -23,7 +23,7 @@
 [ext_resource type="Script" uid="uid://oelgtwcimqnd" path="res://player/components/interaction_detector.gd" id="c_interaction"]
 [ext_resource type="Script" uid="uid://bcd4b7083of6t" path="res://src/components/attack_runner.gd" id="c_runner"]
 [ext_resource type="Script" uid="uid://2515xl1b5dkr" path="res://player/components/targeting.gd" id="c_targeting"]
-[ext_resource type="PackedScene" path="res://src/entities/models/knight.tscn" id="m_knight"]
+[ext_resource type="PackedScene" path="res://src/entities/models/jugador.tscn" id="m_knight"]
 [ext_resource type="Script" uid="uid://4r1bn36vwwk" path="res://player/states/aiming_item.gd" id="st_aiming_item"]
 [ext_resource type="Script" uid="uid://dpgrgvvf2dmhs" path="res://player/states/dead.gd" id="st_dead"]
 [ext_resource type="Script" uid="uid://do4y7vq0jtpd1" path="res://player/states/dodging.gd" id="st_dodging"]

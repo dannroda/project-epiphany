@@ -1,11 +1,11 @@
 {
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "Cofre chico de madera (tapa aparte)"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Cofre grande dorado (tapa aparte)"
     },
     {
@@ -13,7 +13,7 @@
       "text": "Pickups: corazón, flechas ×5, bombas ×3"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Bomba con mecha y flecha"
     },
     {
@@ -21,12 +21,12 @@
       "text": "Orbe (proyectil reflejable)"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Llave chica, llave del jefe"
     },
     {
       "detail": "Hoy son SVG planos; con modelo, todos los íconos salen de render_item_icons.gd.",
-      "done": false,
+      "done": true,
       "text": "Mapa, brújula, contenedor de corazón"
     }
   ],
@@ -37,11 +37,11 @@
   "order": 5,
   "priority": "medium",
   "refs": [],
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "arte"
   ],
   "test": "Cofres, pickups, bomba, flecha y orbe usan los modelos nuevos; los íconos se regeneran con render_item_icons.gd.",
   "title": "Interactivos y pickups",
-  "updated_at": "2026-10-09T21:05:38.536Z"
+  "updated_at": "2026-10-09T22:28:45.090Z"
 }

@@ -12,7 +12,7 @@
     },
     {
       "detail": "Ladrillo gris con musgo, que no se confunda con el acantilado. cracked_wall.tscn.",
-      "done": false,
+      "done": true,
       "text": "Muro agrietado de exterior + escombros"
     },
     {
@@ -21,12 +21,12 @@
     },
     {
       "detail": "src/world/light/.",
-      "done": false,
+      "done": true,
       "text": "Puzzle de luz: fuente, espejo fijo 45°, cristal receptor"
     },
     {
       "detail": "gate.tscn, push_block.tscn, floor_switch.tscn.",
-      "done": false,
+      "done": true,
       "text": "Reja, bloque empujable e interruptor de piso de exterior"
     },
     {
@@ -36,7 +36,7 @@
     },
     {
       "detail": "temple_seal.tscn.",
-      "done": false,
+      "done": true,
       "text": "Sello violeta con el ojo"
     },
     {
@@ -46,7 +46,7 @@
     },
     {
       "detail": "warp_portal.tscn. Opcional.",
-      "done": false,
+      "done": true,
       "text": "Portal de salida del jefe: disco y anillo"
     }
   ],
@@ -62,12 +62,12 @@
       "section": "overworld-layout"
     }
   ],
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "arte",
     "puzzles"
   ],
   "test": "Cada zona de [[gdd#overworld-layout]] tiene sus piezas propias y se reconoce sin el nombre de zona.",
   "title": "Lugares del overworld",
-  "updated_at": "2026-10-09T21:05:51.177Z"
+  "updated_at": "2026-10-09T22:28:44.623Z"
 }

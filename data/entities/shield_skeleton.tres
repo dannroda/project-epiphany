@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/entities/entity_config.gd" id="1_config"]
 [ext_resource type="Resource" path="res://data/drops/skeleton.tres" id="2_drops"]
-[ext_resource type="PackedScene" path="res://src/entities/models/skeleton_warrior.tscn" id="3_model"]
+[ext_resource type="PackedScene" path="res://src/entities/models/chullpa_guardian.tscn" id="3_model"]
 
 [resource]
 script = ExtResource("1_config")

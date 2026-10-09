@@ -5,7 +5,7 @@ extends StaticBody3D
 
 signal activated
 
-const CLOSED := Color(0.18, 0.16, 0.2)
+const CLOSED := Color(0.55, 0.5, 0.6)
 const OPEN := Color(1.0, 0.78, 0.3)
 
 @export var flag: StringName:
@@ -22,6 +22,8 @@ var _material := StandardMaterial3D.new()
 
 
 func _ready() -> void:
+	_material.albedo_texture = preload("res://assets/epiphany/palette.png")
+	_material.roughness = 0.4
 	_material.emission_enabled = true
 	eye.material_override = _material
 	_show(false)

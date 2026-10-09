@@ -2,31 +2,11 @@
 
 [ext_resource type="Script" path="res://src/world/eye_switch.gd" id="1_eye"]
 [ext_resource type="Script" path="res://src/components/hurtbox.gd" id="2_hurtbox"]
-
-[sub_resource type="StandardMaterial3D" id="Stone"]
-albedo_color = Color(0.43, 0.42, 0.38, 1)
-roughness = 0.95
-
-[sub_resource type="BoxMesh" id="PillarMesh"]
-material = SubResource("Stone")
-size = Vector3(0.7, 1.3, 0.5)
-
-[sub_resource type="CylinderMesh" id="RimMesh"]
-material = SubResource("Stone")
-top_radius = 0.34
-bottom_radius = 0.34
-height = 0.12
-radial_segments = 16
-rings = 1
-
-[sub_resource type="SphereMesh" id="EyeMesh"]
-radius = 0.24
-height = 0.48
-radial_segments = 16
-rings = 8
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/ojo_pilar.res" id="m0_ojo_pilar"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/ojo_globo.res" id="3_eye"]
 
 [sub_resource type="BoxShape3D" id="BodyShape"]
-size = Vector3(0.7, 1.9, 0.5)
+size = Vector3(0.7, 1.3, 0.5)
 
 [sub_resource type="SphereShape3D" id="HurtShape"]
 radius = 0.45
@@ -34,21 +14,17 @@ radius = 0.45
 [node name="EyeSwitch" type="StaticBody3D"]
 script = ExtResource("1_eye")
 
-[node name="Pillar" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
-mesh = SubResource("PillarMesh")
-
-[node name="Rim" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 1.6, 0.05)
-mesh = SubResource("RimMesh")
+[node name="Model" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = ExtResource("m0_ojo_pilar")
 
 [node name="Eye" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0.12)
-mesh = SubResource("EyeMesh")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0.25)
+mesh = ExtResource("3_eye")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
 shape = SubResource("BodyShape")
 
 [node name="Hurtbox" type="Area3D" parent="."]
@@ -58,5 +34,5 @@ monitoring = false
 script = ExtResource("2_hurtbox")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0.1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0, 0.2)
 shape = SubResource("HurtShape")

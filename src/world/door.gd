@@ -10,13 +10,14 @@ signal closed
 
 enum Kind { OPEN, LOCKED, SHUTTER, SWITCH, BOSS }
 
-const COLORS := {
-	Kind.OPEN: Color(0.5, 0.48, 0.45),
-	Kind.LOCKED: Color(0.45, 0.32, 0.2),
-	Kind.SHUTTER: Color(0.3, 0.3, 0.33),
-	Kind.SWITCH: Color(0.4, 0.42, 0.5),
-	Kind.BOSS: Color(0.45, 0.12, 0.12),
+const LEAVES := {
+	Kind.OPEN: "puerta_madera",
+	Kind.LOCKED: "puerta_llave",
+	Kind.SHUTTER: "puerta_persiana",
+	Kind.SWITCH: "puerta_interruptor",
+	Kind.BOSS: "puerta_jefe",
 }
+const LEAF_MESH := "res://assets/epiphany/meshes/templo/%s.res"
 const TEXTS: DialogueResource = preload("res://data/dialogue/doors.dialogue")
 
 @export var kind: Kind = Kind.OPEN:
@@ -59,12 +60,7 @@ func _ready() -> void:
 		return
 	add_to_group(&"doors")
 	_closed_y = leaf.position.y
-	var material := StandardMaterial3D.new()
-	material.albedo_color = COLORS[kind]
-	for mesh in leaf.find_children("*", "MeshInstance3D", true, false):
-		if mesh != %Lock:
-			(mesh as MeshInstance3D).material_override = material
-	%Lock.visible = kind in [Kind.LOCKED, Kind.BOSS]
+	%LeafMesh.mesh = load(LEAF_MESH % LEAVES[kind])
 	interactable.enabled = false
 	match kind:
 		Kind.OPEN, Kind.SHUTTER:
