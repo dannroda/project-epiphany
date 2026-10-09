@@ -1736,7 +1736,7 @@ Importar el rig del ojo con manos y armar las fases 1 y 2 con LimboAI.
 
 **Bloqueada por:** 9.6 Muerte del jefe y final
 
-## M10 — Terminación  (4/10)
+## M10 — Terminación  (5/10)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -1815,7 +1815,7 @@ Hecho 2026-10-09: autoload `Settings` + `OptionsPanel` (todo el mockup Options; 
 
 **Bloqueada por:** 10.1 Pantalla de título
 
-### 10.5 Audio · En curso
+### 10.5 Audio · Hecho
 
 - [x] Buses Master / Music / SFX / UI / Ambience
   Volúmenes en dB desde Opciones (10.4).
@@ -1834,13 +1834,13 @@ Hecho 2026-10-09: buses (vía `Settings`), SFX de Kenney CC0 con variación, son
 
 **Referencias:** `gdd.md#historia`
 
-### 10.6 Ambientación del doom · Pendiente
+### 10.6 Ambientación del doom · En curso
 
-- [ ] Nivel de *doom* por sala
+- [x] Nivel de *doom* por sala
   Valor 0..1 exportado en `Room` que mueve luz, niebla y partículas.
-- [ ] Luz que vira a rojo, polvo, grietas
+- [x] Luz que vira a rojo, polvo, grietas
   `WorldEnvironment` y luces interpoladas; decals de grietas.
-- [ ] Temblores y murmullo
+- [x] Temblores y murmullo
   Sacudidas de cámara esporádicas y audio ambiente (10.5).
 
 **Prueba:** Recorrer la mazmorra de la sala 1 a la 8: la progresión de calma a latido se nota sin leer nada.
@@ -1848,6 +1848,8 @@ Hecho 2026-10-09: buses (vía `Settings`), SFX de Kenney CC0 con variación, son
 **Notas:** Pilar 4: el *doom* se siente, no se cronometra.
 
 Skills: `godot:godot-shaders`, `godot:godot-3d-essentials`.
+
+Hecho 2026-10-09: `Room.doom` + `DoomAmbience` (luz, niebla, polvo, grietas con decals generados, temblores con retumbo); el murmullo de la música va por el bus Ambience. Test `tests/test_doom.gd` (recorre las salas 1 a 8 y verifica que todo sube). El rojo del clímax es fuerte: se ajusta con los exports de `DoomAmbience`.
 
 **Referencias:** `gdd.md#historia`, `gdd.md#pilares`, `gdd.md#mazmorra`
 

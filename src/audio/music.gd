@@ -2,7 +2,7 @@
 extends Node
 ## Música por capas: todas suenan en sincronía y cada una sube o baja según dónde está el player.
 ## Overworld: calma. Templo: la base oscura y, sala a sala según su `Room.doom`, pulso, murmullo y latido.
-## Con un menú o una caja de texto abierta, la música baja (ducking).
+## Con un menú o una caja de texto abierta, la música baja (ducking). El murmullo va por el bus Ambience.
 
 const BUS := &"Music"
 const LAYERS: Array[StringName] = [&"calm", &"dark", &"pulse", &"murmur", &"heartbeat"]
@@ -27,7 +27,7 @@ func _ready() -> void:
 		var player := AudioStreamPlayer.new()
 		player.name = String(layer)
 		player.stream = stream
-		player.bus = BUS
+		player.bus = &"Ambience" if layer == &"murmur" else BUS
 		player.volume_db = -80.0
 		add_child(player)
 		players[layer] = player

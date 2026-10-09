@@ -35,7 +35,7 @@ func test_music_layers_follow_the_doom() -> void:
 	for layer in music.LAYERS:
 		var stream := (music.players[layer] as AudioStreamPlayer).stream as AudioStreamWAV
 		assert_eq(stream.loop_mode, AudioStreamWAV.LOOP_FORWARD, "%s en loop" % layer)
-		assert_eq((music.players[layer] as AudioStreamPlayer).bus, &"Music")
+		assert_eq((music.players[layer] as AudioStreamPlayer).bus, &"Ambience" if layer == &"murmur" else &"Music", "%s en su bus" % layer)
 	await saves.load_scenario("start")
 	await tree.create_timer(0.3).timeout
 	var wanted: Dictionary = music.targets()

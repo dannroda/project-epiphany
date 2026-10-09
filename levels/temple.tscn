@@ -53,6 +53,7 @@
 [ext_resource type="Script" path="res://src/tools/top_down_camera.gd" id="51_jyaq7"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="52_mus61"]
 [ext_resource type="Script" path="res://src/ui/hud/hud.gd" id="53_h4s6m"]
+[ext_resource type="Script" path="res://src/world/doom_ambience.gd" id="doom_ambience"]
 
 [sub_resource type="Environment" id="Environment_5r1vx"]
 background_mode = 1
@@ -583,3 +584,6 @@ script = ExtResource("53_h4s6m")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=991605603]
 navigation_mesh = SubResource("NavigationMesh_v3e3k")
+
+[node name="DoomAmbience" type="Node" parent="."]
+script = ExtResource("doom_ambience")
