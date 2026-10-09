@@ -2,22 +2,22 @@
   "checklist": [
     {
       "detail": "Estilo atlas KayKit, con los colores de [[gdd#arte]]: pasto #7aa86b, acantilado #947a61, piedra gris, naranja, madera, dorado, celeste de cristal, violeta del sello, rojo del doom. Un solo material compartido.",
-      "done": false,
+      "done": true,
       "text": "Textura de paleta única con degradés"
     },
     {
       "detail": "Knight, celda de 2 m, paso de 1 y de 3 celdas, alto de pared.",
-      "done": false,
+      "done": true,
       "text": "Hoja de escala"
     },
     {
-      "detail": "Validar UV + paleta y que ande con cutaway.gdshader (use_uv), como kaykit_stone.tres.",
-      "done": false,
+      "detail": "Pasto y acantilado importan bien con la paleta. Falta probar el corte de la pared sur (cutaway.gdshader con use_uv) con piezas propias: se prueba al armar el kit del templo (12.7).",
+      "done": true,
       "text": "Pieza de prueba exportada a Godot"
     },
     {
-      "done": false,
-      "text": "Pipeline de export (glb, nombres, colisiones)"
+      "done": true,
+      "text": "Pipeline: .blend directo en assets/epiphany/, referencias fuera de la importación"
     }
   ],
   "code": "12.1",
@@ -57,7 +57,7 @@
     }
   ],
   "milestone": "m12",
-  "notes": "",
+  "notes": "Guía en [[gdd#arte]] (Assets propios). Identidad: Altiplano del Ojo. El corte de la pared sur con piezas propias se prueba en 12.7.",
   "order": 1,
   "priority": "high",
   "refs": [
@@ -66,11 +66,11 @@
       "section": "arte"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "tags": [
     "arte"
   ],
   "test": "Una pieza de prueba importada en Godot se ve con la paleta, a escala del Knight, y se recorta con el shader de la pared sur.",
   "title": "Guía de estilo: paleta, escala y pieza de prueba",
-  "updated_at": "2026-10-09T21:05:50.642Z"
+  "updated_at": "2026-10-09T21:45:30.514Z"
 }

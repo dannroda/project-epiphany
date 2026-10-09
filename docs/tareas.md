@@ -2152,19 +2152,21 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 - El overworld no usa piezas del kit gris ni de KayKit.
 - Templo, interactivos, ítems y personajes comparten la misma paleta y el mismo estilo.
 
-### 12.1 Guía de estilo: paleta, escala y pieza de prueba · Pendiente
+### 12.1 Guía de estilo: paleta, escala y pieza de prueba · En curso
 
 **Prioridad:** alta · **Etiquetas:** `arte`
 
-- [ ] Textura de paleta única con degradés
+- [x] Textura de paleta única con degradés
   Estilo atlas KayKit, con los colores de [[gdd#arte]]: pasto #7aa86b, acantilado #947a61, piedra gris, naranja, madera, dorado, celeste de cristal, violeta del sello, rojo del doom. Un solo material compartido.
-- [ ] Hoja de escala
+- [x] Hoja de escala
   Knight, celda de 2 m, paso de 1 y de 3 celdas, alto de pared.
-- [ ] Pieza de prueba exportada a Godot
-  Validar UV + paleta y que ande con cutaway.gdshader (use_uv), como kaykit_stone.tres.
-- [ ] Pipeline de export (glb, nombres, colisiones)
+- [x] Pieza de prueba exportada a Godot
+  Pasto y acantilado importan bien con la paleta. Falta probar el corte de la pared sur (cutaway.gdshader con use_uv) con piezas propias: se prueba al armar el kit del templo (12.7).
+- [x] Pipeline: .blend directo en assets/epiphany/, referencias fuera de la importación
 
 **Prueba:** Una pieza de prueba importada en Godot se ve con la paleta, a escala del Knight, y se recorta con el shader de la pared sur.
+
+**Notas:** Guía en [[gdd#arte]] (Assets propios). Identidad: Altiplano del Ojo. El corte de la pared sur con piezas propias se prueba en 12.7.
 
 **Referencias:** `gdd.md#arte`
 

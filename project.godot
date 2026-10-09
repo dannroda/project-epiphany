@@ -52,6 +52,12 @@ folder_colors={
 
 theme/custom="res://src/ui/theme.tres"
 
+[importer_defaults]
+
+scene={
+"blender/nodes/visible": 2.0
+}
+
 [input]
 
 ui_accept={
