@@ -2,28 +2,28 @@
   "checklist": [
     {
       "detail": "Cerrar la decisión en [[gdd#decisiones-abiertas]].",
-      "done": false,
+      "done": true,
       "text": "Decidir 1 o 3 ranuras"
     },
     {
       "detail": "Corazones, ubicación y tiempo jugado (sumar `play_time` a `GameState`).",
-      "done": false,
+      "done": true,
       "text": "Pantalla de ranuras"
     },
     {
       "detail": "Al cambiar de escena, al abrir cofres grandes y al entrar a la antesala. Indicador de guardado en pantalla.",
-      "done": false,
+      "done": true,
       "text": "Política de autosave"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Borrar partida con confirmación"
     }
   ],
   "code": "10.2",
   "created_at": "2026-10-08T04:45:34.423Z",
   "milestone": "m10",
-  "notes": "Skills: `disciplines:save-systems`.",
+  "notes": "Skills: `disciplines:save-systems`.\n\nHecho 2026-10-09: 3 ranuras (decisión cerrada), `FileSelect` + `SlotCard` (mockup FileSelect, con Copiar), `play_time` y `location` en la partida, autosave en escena/cofre grande/antesala con indicador en el HUD. `SaveManager.save_dir` es variable para que los tests no toquen las partidas reales. Tests `tests/test_slots.gd`.",
   "order": 2,
   "refs": [
     {
@@ -35,8 +35,8 @@
       "section": "ui"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Jugar en dos ranuras distintas y verificar que no se pisan; cortar el proceso a mitad de un guardado no rompe la partida.",
   "title": "Selección de partida y autosave",
-  "updated_at": "2026-10-08T04:45:34.693Z"
+  "updated_at": "2026-10-09T03:45:00.921Z"
 }

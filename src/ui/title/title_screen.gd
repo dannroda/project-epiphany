@@ -19,14 +19,37 @@ func _ready() -> void:
 	spaced.spacing_glyph = 9
 	title.add_theme_font_override(&"font", spaced)
 	hints.hints = [[&"ui_accept", "Aceptar"], [&"ui_cancel", "Volver"]]
-	continue_item.disabled = not SaveManager.has_save()
+	continue_item.disabled = SaveManager.latest_slot() < 0
 	options_item.disabled = true
 	debug_scenarios.visible = OS.is_debug_build()
-	continue_item.pressed.connect(func() -> void: _go(SaveManager.load_game))
-	new_game_item.pressed.connect(func() -> void: _go(SaveManager.new_game))
+	continue_item.pressed.connect(func() -> void: open_file_select(SaveManager.latest_slot()))
+	new_game_item.pressed.connect(func() -> void: open_file_select(_first_empty_slot()))
 	quit_item.pressed.connect(func() -> void: get_tree().quit())
 	debug_scenarios.pressed.connect(_show_scenarios)
 	(continue_item if not continue_item.disabled else new_game_item).grab_focus.call_deferred()
+
+
+func open_file_select(slot: int) -> FileSelect:
+	var screen := FileSelect.new()
+	screen.name = "FileSelect"
+	add_child(screen)
+	screen.focus_slot(slot)
+	menu.process_mode = PROCESS_MODE_DISABLED
+	screen.chosen.connect(func(chosen_slot: int, empty: bool) -> void:
+		_go(SaveManager.new_game.bind(chosen_slot) if empty else SaveManager.load_game.bind(chosen_slot)))
+	screen.closed.connect(func() -> void:
+		screen.queue_free()
+		menu.process_mode = PROCESS_MODE_INHERIT
+		continue_item.disabled = SaveManager.latest_slot() < 0
+		(continue_item if not continue_item.disabled else new_game_item).grab_focus())
+	return screen
+
+
+func _first_empty_slot() -> int:
+	for slot in SaveManager.SLOTS:
+		if not SaveManager.has_save(slot):
+			return slot
+	return 0
 
 
 func _go(action: Callable) -> void:

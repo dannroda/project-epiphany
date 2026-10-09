@@ -44,6 +44,8 @@ func _open(by: PlayerCharacter) -> void:
 	tween.tween_property(lid, "rotation_degrees:x", OPEN_ANGLE, 0.35)
 	Feel.sfx(&"click", global_position)
 	by.play_item_get(item, amount)
+	if big:
+		SaveManager.autosave.call_deferred()
 
 
 ## Sin animación: al entrar a la escena o al cargar una partida.

@@ -18,6 +18,16 @@ func _ready() -> void:
 				get_tree().call_group(&"hud", &"show_area_name", tr(display_name)))
 
 
+## Si el punto (en XZ) cae dentro de la zona.
+func contains(point: Vector3) -> bool:
+	var shape := get_node_or_null(^"CollisionShape3D") as CollisionShape3D
+	if shape == null or not shape.shape is BoxShape3D:
+		return false
+	var local := shape.global_transform.affine_inverse() * point
+	var half := (shape.shape as BoxShape3D).size / 2.0
+	return absf(local.x) <= half.x and absf(local.z) <= half.z
+
+
 func _exit_tree() -> void:
 	if _current == self:
 		_current = null

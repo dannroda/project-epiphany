@@ -1736,14 +1736,14 @@ Importar el rig del ojo con manos y armar las fases 1 y 2 con LimboAI.
 
 **Bloqueada por:** 9.6 Muerte del jefe y final
 
-## M10 — Terminación  (0/10)
+## M10 — Terminación  (1/10)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
 **Hecho cuando:**
 - MVP jugable por otra persona.
 
-### 10.1 Pantalla de título · En curso
+### 10.1 Pantalla de título · Hecho
 
 - [x] Logo y menú
   Continuar / Nueva partida / Opciones / Salir. Navegable con gamepad y teclado.
@@ -1764,19 +1764,21 @@ Hecho 2026-10-09: título como `run/main_scene` (mockup Main), `MenuItem` y `Hin
 
 **Bloqueada por:** 3.1 Menú de pausa y pila de pantallas
 
-### 10.2 Selección de partida y autosave · Pendiente
+### 10.2 Selección de partida y autosave · En curso
 
-- [ ] Decidir 1 o 3 ranuras
+- [x] Decidir 1 o 3 ranuras
   Cerrar la decisión en [[gdd#decisiones-abiertas]].
-- [ ] Pantalla de ranuras
+- [x] Pantalla de ranuras
   Corazones, ubicación y tiempo jugado (sumar `play_time` a `GameState`).
-- [ ] Política de autosave
+- [x] Política de autosave
   Al cambiar de escena, al abrir cofres grandes y al entrar a la antesala. Indicador de guardado en pantalla.
-- [ ] Borrar partida con confirmación
+- [x] Borrar partida con confirmación
 
 **Prueba:** Jugar en dos ranuras distintas y verificar que no se pisan; cortar el proceso a mitad de un guardado no rompe la partida.
 
 **Notas:** Skills: `disciplines:save-systems`.
+
+Hecho 2026-10-09: 3 ranuras (decisión cerrada), `FileSelect` + `SlotCard` (mockup FileSelect, con Copiar), `play_time` y `location` en la partida, autosave en escena/cofre grande/antesala con indicador en el HUD. `SaveManager.save_dir` es variable para que los tests no toquen las partidas reales. Tests `tests/test_slots.gd`.
 
 **Referencias:** `gdd.md#guardado`, `gdd.md#ui`
 

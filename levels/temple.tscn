@@ -200,6 +200,7 @@ script = ExtResource("3_b74bs")
 room_index = 7
 display_name = "Antesala"
 map_cell = Vector2i(1, 2)
+autosave_on_enter = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Antesala" unique_id=487529709]
 shape = SubResource("BoxShape3D_66c1n")

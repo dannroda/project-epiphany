@@ -1388,6 +1388,8 @@ func _find(id: StringName) -> FlagDefinition:
 ### 11.7 Guardado
 <!-- id: guardado -->
 
+**Ranuras y autosave (10.2):** 3 ranuras (`SaveManager.SLOTS`, `user://saves/slot_N.cfg`). `current_slot` es la de la partida en curso: el autosave y el guardado rápido de debug van ahí. Se guarda solo al cambiar de escena, al abrir un cofre grande y al entrar a la antesala (`Room.autosave_on_enter`); el HUD muestra "Guardado". Cada partida guarda `play_time` (segundos jugados con player en escena y sin pausa) y `location` (mazmorra · sala, o la zona del overworld) para la pantalla de ranuras. Un guardado cortado a mitad se recupera del `.bak`. Selección de partida (mockup FileSelect): Continuar abre la pantalla con la ranura más reciente elegida y Nueva partida con la primera vacía; Copiar y Borrar (con confirmación, foco en Cancelar).
+
 - **Formato:** `ConfigFile`, en `user://saves/slot_N.cfg`.
 - **Release:** encriptado (`save_encrypted_pass`). La clave está en el binario, así que es ofuscación y no seguridad, pero alcanza para el objetivo: nadie edita la partida por accidente y después reporta un "bug".
 - **Editor / builds de debug:** texto plano (feature `editor` o la feature tag custom `plain_saves` en el preset de export).
@@ -1715,6 +1717,6 @@ Moneda y tiendas · NPCs con diálogo · piezas de corazón · gancho / telequin
 - [ ] Historia: opción A o B (o propia). Título del juego.
 - [ ] ¿Varias espadas o una espada con modificadores elementales?
 - [x] Layout exacto de la mazmorra (§8.1) y del overworld (§7.1).
-- [ ] Ranuras de guardado: ¿1 o 3 en el MVP?
+- [x] Ranuras de guardado: 3 (decidido el 2026-10-09).
 - [ ] Arte: ¿se mantiene el look KayKit + texturas de prototipo o hay dirección de arte propia?
 - [ ] Rig del jefe: importarlo al repo y verificar compatibilidad con el AnimationTree actual.

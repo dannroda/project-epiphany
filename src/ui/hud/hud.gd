@@ -26,8 +26,21 @@ var _dungeon: DungeonState
 var _shown_hp := -1
 
 
+var _saved_label: Label
+var _saved_tween: Tween
+
+
 func _ready() -> void:
 	add_to_group(&"hud")
+	_saved_label = Label.new()
+	_saved_label.text = "Guardado"
+	_saved_label.theme_type_variation = &"Hint"
+	_saved_label.modulate.a = 0.0
+	_saved_label.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT, Control.PRESET_MODE_KEEP_SIZE, 32)
+	_saved_label.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	_saved_label.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	add_child(_saved_label)
+	SaveManager.saved.connect(func(_slot: int) -> void: _flash_saved())
 	_build_item_slots()
 	GameState.item_buttons_changed.connect(_refresh_item_slots)
 	GameState.inventory.changed.connect(func(_id: StringName, _count: int) -> void: _refresh_item_slots())
@@ -180,3 +193,13 @@ func _pulse(heart: Control) -> void:
 	var tween := heart.create_tween()
 	heart.scale = Vector2.ONE * pulse_scale
 	tween.tween_property(heart, "scale", Vector2.ONE, pulse_time).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+
+func _flash_saved() -> void:
+	if _saved_tween:
+		_saved_tween.kill()
+	_saved_tween = create_tween()
+	_saved_tween.tween_property(_saved_label, "modulate:a", 1.0, 0.2)
+	_saved_tween.tween_interval(1.2)
+	_saved_tween.tween_property(_saved_label, "modulate:a", 0.0, 0.5)
+

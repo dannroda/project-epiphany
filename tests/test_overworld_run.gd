@@ -106,7 +106,7 @@ func test_play_start_into_the_temple_and_back() -> void:
 	var state: Node = tree.root.get_node(^"GameState")
 	var saves: Node = tree.root.get_node(^"SaveManager")
 	state.reset()
-	saves.autosave_slot = SLOT
+	saves.current_slot = SLOT
 	assert_eq(await saves.load_scenario("start"), OK)
 	assert_eq(tree.current_scene.scene_file_path, OVERWORLD, "start arranca en el overworld")
 	_clear_enemies()
@@ -146,5 +146,5 @@ func test_play_start_into_the_temple_and_back() -> void:
 	assert_true(await _walk_into(&"move_backward", OVERWORLD), "y vuelve a salir")
 	assert_eq((tree.current_scene.get_node(^"TempleSeal") as TempleSeal).is_open, true, "el sello sigue abierto")
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(saves.slot_path(SLOT)))
-	saves.autosave_slot = 0
+	saves.current_slot = 0
 	state.reset()

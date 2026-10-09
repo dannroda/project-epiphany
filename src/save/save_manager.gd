@@ -1,14 +1,19 @@
 # Autoload
 extends Node
 
-const SAVE_DIR := "user://saves/"
+## Carpeta de las ranuras; los tests la cambian para no tocar las partidas reales.
+var save_dir := "user://saves/"
 const SCENARIO_DIR := "res://debug/scenarios/"
 const NEXT_SCENARIO_FILE := "user://debug/next_scenario.txt"
 const TITLE := "res://src/ui/title/title_screen.tscn"
 const NEW_GAME_SCENE := "res://levels/overworld.tscn"
 
-## Ranura del autosave al cambiar de escena (la política completa de guardado va en 10.2).
-var autosave_slot := 0
+signal saved(slot: int)
+
+const SLOTS := 3
+
+## Ranura de la partida en curso: el autosave y el guardado rápido van ahí.
+var current_slot := 0
 var traveling := false
 
 
@@ -36,13 +41,16 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func slot_path(slot: int) -> String:
-	return SAVE_DIR + "slot_%d.cfg" % slot
+	return save_dir + "slot_%d.cfg" % slot
 
 
-func save_game(slot: int = 0) -> Error:
+func save_game(slot: int = -1) -> Error:
+	if slot < 0:
+		slot = current_slot
 	_capture_player()
 	var cfg := ConfigFile.new()
 	GameState.write_to(cfg)
+	cfg.set_value("player", "location", location())
 	var err := SaveCodec.write(cfg, slot_path(slot))
 	if err == OK:
 		Log.success(&"save", "Partida guardada:", slot_path(slot))
@@ -51,17 +59,94 @@ func save_game(slot: int = 0) -> Error:
 	return err
 
 
+## Guarda en la ranura actual (al cambiar de escena, al abrir un cofre grande, al entrar a la antesala).
+func autosave() -> void:
+	if save_game(current_slot) == OK:
+		saved.emit(current_slot)
+
+
 func has_save(slot: int = 0) -> bool:
 	return FileAccess.file_exists(slot_path(slot))
 
 
+## Lo que muestra la pantalla de ranuras; vacío si la ranura no tiene partida.
+func slot_summary(slot: int) -> Dictionary:
+	var cfg := ConfigFile.new()
+	if not has_save(slot) or SaveCodec.read(slot_path(slot), cfg) != OK:
+		return {}
+	var items: Array[StringName] = []
+	for key in ["SWORD", "SHIELD"]:
+		var id: StringName = cfg.get_value("equipment", key, &"")
+		if id != &"":
+			items.append(id)
+	for id in [&"bow", &"bomb_bag"]:
+		if cfg.get_value("inventory", id, 0) > 0:
+			items.append(id)
+	return {
+		max_health = cfg.get_value("player", "max_health", GameState.NEW_GAME_MAX_HEALTH),
+		location = cfg.get_value("player", "location", ""),
+		play_time = cfg.get_value("player", "play_time", 0.0),
+		items = items,
+		timestamp = cfg.get_value("meta", "timestamp", 0.0),
+	}
+
+
+## La ranura guardada más recientemente; -1 si no hay ninguna.
+func latest_slot() -> int:
+	var best := -1
+	var best_time := -1.0
+	for slot in SLOTS:
+		var summary := slot_summary(slot)
+		if not summary.is_empty() and summary.timestamp > best_time:
+			best = slot
+			best_time = summary.timestamp
+	return best
+
+
+func delete_slot(slot: int) -> void:
+	for suffix in ["", ".bak", ".tmp"]:
+		if FileAccess.file_exists(slot_path(slot) + suffix):
+			DirAccess.remove_absolute(slot_path(slot) + suffix)
+
+
+func copy_slot(from: int, to: int) -> Error:
+	if not has_save(from):
+		return ERR_FILE_NOT_FOUND
+	DirAccess.make_dir_recursive_absolute(save_dir)
+	delete_slot(to)
+	return DirAccess.copy_absolute(slot_path(from), slot_path(to))
+
+
+## Dónde está el player, para la pantalla de ranuras: "Mazmorra · Sala" o la zona del overworld.
+func location() -> String:
+	var scene := get_tree().current_scene
+	if scene == null:
+		return ""
+	for child in scene.get_children():
+		if child is Dungeon:
+			var camera := get_tree().get_first_node_in_group(&"room_camera") as TopDownCamera
+			var room_name := camera.room.display_name if camera and camera.room else ""
+			return child.display_name + (" · " + room_name if not room_name.is_empty() else "")
+	var player := get_tree().get_first_node_in_group(&"player") as Node3D
+	for child in scene.get_children():
+		if child is AreaZone and player and (child as AreaZone).contains(player.global_position):
+			return child.display_name
+	for child in scene.get_children():
+		if child is OverworldMap:
+			return child.display_name
+	return ""
+
+
 ## Partida nueva: equipo inicial, en el claro del inicio del overworld.
-func new_game() -> Error:
+func new_game(slot: int = -1) -> Error:
+	if slot >= 0:
+		current_slot = slot
 	GameState.reset()
 	GameState.spawn_scene = NEW_GAME_SCENE
 	GameState.spawn_point = &"start"
 	GameState.player_position = null
 	await _restore_player()
+	autosave()
 	return OK
 
 
@@ -73,8 +158,10 @@ func quit_to_title() -> void:
 	await get_tree().scene_changed
 
 
-func load_game(slot: int = 0) -> Error:
-	return await _load_path(slot_path(slot))
+func load_game(slot: int = -1) -> Error:
+	if slot >= 0:
+		current_slot = slot
+	return await _load_path(slot_path(current_slot))
 
 
 ## Un nombre de debug/scenarios/ o una ruta completa (la que deja el Save Inspector).
@@ -149,7 +236,7 @@ func travel_to(scene_path: String, spawn: StringName) -> void:
 	GameState.room_entry = null
 	GameState.player_position = null
 	_place_at_spawn()
-	save_game(autosave_slot)
+	autosave()
 	Log.info(&"save", "Viaje a", scene_path, spawn)
 	get_tree().paused = false
 	await Fader.fade_in(0.3)

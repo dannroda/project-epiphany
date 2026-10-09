@@ -16,6 +16,8 @@ const GROUP := &"rooms"
 @export var map_cell: Vector2i
 ## La brújula marca la sala del jefe.
 @export var boss_room := false
+## Guardar al entrar (la antesala, antes del jefe).
+@export var autosave_on_enter := false
 ## Opcional, local en XZ: dónde puede estar el FOCO de la cámara. Vacío = lo calcula la cámara para no ver fuera de la sala.
 @export var camera_limits: Rect2
 
@@ -52,6 +54,8 @@ func mark_entered() -> void:
 	if first and not display_name.is_empty():
 		get_tree().call_group(&"hud", &"show_area_name", tr(display_name))
 	player_entered.emit(self)
+	if autosave_on_enter:
+		SaveManager.autosave.call_deferred()
 	if not enemies_inside().is_empty() and not shutters().is_empty():
 		_lock_after_entering.call_deferred()
 

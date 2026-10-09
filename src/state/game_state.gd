@@ -30,6 +30,8 @@ var player_position: Variant = null ## Vector3 hasta que haya puntos de aparici�
 ## Mazmorra: dónde quedó el player al entrar a la sala actual; ahí reaparece al morir. No se guarda.
 var room_entry: Variant = null
 var save_tampered := false
+## Segundos jugados (con player en escena y sin pausa).
+var play_time := 0.0
 
 
 func _ready() -> void:
@@ -105,6 +107,7 @@ func _auto_place(item: ItemData) -> void:
 
 func write_to(cfg: ConfigFile) -> void:
 	cfg.set_value("player", "max_health", max_health)
+	cfg.set_value("player", "play_time", play_time)
 	cfg.set_value("player", "spawn_scene", spawn_scene)
 	cfg.set_value("player", "spawn_point", spawn_point)
 	cfg.set_value("player", "current_dungeon", current_dungeon)
@@ -130,6 +133,7 @@ func write_to(cfg: ConfigFile) -> void:
 func read_from(cfg: ConfigFile) -> void:
 	_clear()
 	max_health = cfg.get_value("player", "max_health", NEW_GAME_MAX_HEALTH)
+	play_time = cfg.get_value("player", "play_time", 0.0)
 	spawn_scene = cfg.get_value("player", "spawn_scene", "")
 	spawn_point = cfg.get_value("player", "spawn_point", &"")
 	current_dungeon = cfg.get_value("player", "current_dungeon", &"")
@@ -165,6 +169,7 @@ func _clear() -> void:
 	equipment.clear()
 	item_buttons.assign([&"", &""])
 	max_health = NEW_GAME_MAX_HEALTH
+	play_time = 0.0
 	flags.clear()
 	dungeons.clear()
 	current_dungeon = &""
@@ -181,3 +186,8 @@ func _keys(cfg: ConfigFile, section: String) -> Array[StringName]:
 		for key in cfg.get_section_keys(section):
 			keys.append(StringName(key))
 	return keys
+
+
+func _process(delta: float) -> void:
+	if not get_tree().paused and get_tree().get_first_node_in_group(&"player") != null:
+		play_time += delta
