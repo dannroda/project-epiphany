@@ -65,5 +65,5 @@ func test_save_and_quit_keeps_the_checkpoint() -> void:
 	player = tree.get_first_node_in_group(&"player") as Node3D
 	assert_true(player.global_position.distance_to(Vector3(0, 0, 16)) < 0.6, "carga en el punto de control, no donde cayó")
 	saves.delete_slot(0)
-	saves.save_dir = "user://saves/"
+	saves.save_dir = "user://test_saves/"
 	state.reset()

@@ -20,7 +20,7 @@ func _setup() -> void:
 func _teardown() -> void:
 	for slot in 3:
 		saves.delete_slot(slot)
-	saves.save_dir = "user://saves/"
+	saves.save_dir = "user://test_saves/"
 	saves.current_slot = 0
 	state.reset()
 
@@ -70,9 +70,10 @@ func test_copy_and_delete() -> void:
 
 func test_autosave_on_big_chests_and_the_antechamber() -> void:
 	await _setup()
-	saves.current_slot = 2
 	await saves.load_scenario("pre_boss")
+	assert_eq(saves.current_slot, saves.SCENARIO_SLOT, "un escenario no guarda en las ranuras del jugador")
 	await tree.create_timer(0.5).timeout
+	saves.current_slot = 2
 	var count := [0]
 	saves.saved.connect(func(_slot: int) -> void: count[0] += 1)
 	var level := tree.current_scene

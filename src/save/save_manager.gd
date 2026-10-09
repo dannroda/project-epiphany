@@ -11,6 +11,8 @@ const NEW_GAME_SCENE := "res://levels/overworld.tscn"
 signal saved(slot: int)
 
 const SLOTS := 3
+## Ranura de los escenarios de debug: su autosave nunca pisa una partida del jugador.
+const SCENARIO_SLOT := 98
 
 ## Ranura de la partida en curso: el autosave y el guardado rápido van ahí.
 var current_slot := 0
@@ -173,6 +175,7 @@ func load_game(slot: int = -1) -> Error:
 
 ## Un nombre de debug/scenarios/ o una ruta completa (la que deja el Save Inspector).
 func load_scenario(scenario: String) -> Error:
+	current_slot = SCENARIO_SLOT
 	return await _load_path(scenario if "://" in scenario else SCENARIO_DIR + scenario + ".cfg")
 
 

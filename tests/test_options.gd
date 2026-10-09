@@ -13,7 +13,7 @@ func _settings() -> Node:
 
 func _restore(settings: Node) -> void:
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(TEST_PATH))
-	settings.path = settings.PATH
+	settings.path = "user://test_settings.cfg"
 	settings.load_settings()
 
 
