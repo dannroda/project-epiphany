@@ -1452,7 +1452,7 @@ Hecho 2026-10-08: `start` ahora arranca en el overworld (escena principal del ju
 
 **Bloqueada por:** 7.6 Sello del templo
 
-## M8 — Contenido de mazmorra  (1/8)
+## M8 — Contenido de mazmorra  (2/8)
 
 Las 8 salas en bloques grises, el arco a mitad de camino, la llave del jefe.
 
@@ -1482,7 +1482,7 @@ Hecho 2026-10-08: diagrama, tabla de puertas, conteo de llaves (2 y 2, la llave 
 
 **Bloquea a:** 8.3 Salas 1–2: vestíbulo y hub
 
-### 8.2 Esqueleto con escudo · En curso
+### 8.2 Esqueleto con escudo · Hecho
 
 - [x] `EntityConfig` y escena
   Variante del esqueleto con escudo equipado.
@@ -1505,13 +1505,15 @@ Hecho 2026-10-08: `shield_skeleton.tscn` + `data/entities/shield_skeleton.tres`.
 
 **Bloqueada por:** 1.4 IA del esqueleto con `BTAttack`
 
-### 8.3 Salas 1–2: vestíbulo y hub · Pendiente
+### 8.3 Salas 1–2: vestíbulo y hub · En curso
 
-- [ ] Sala 1: bloque por grilla → interruptor → persiana
-- [ ] Sala 2: hub con 4 salidas y esqueletos
+- [x] Sala 1: bloque por grilla → interruptor → persiana
+- [x] Sala 2: hub con 4 salidas y esqueletos
   Con llave, con persiana, la del jefe (sellada) y una libre.
 
 **Prueba:** Desde la entrada de la mazmorra, llegar al hub y ver las 4 salidas en el estado que dice el GDD.
+
+**Notas:** Hecho 2026-10-08: `levels/temple.tscn` con la geometría de las 9 salas (§8.1) y el contenido de vestíbulo y hub. La puerta del templo del overworld ahora lleva acá (antes a `dungeon_test`). Test `tests/test_temple.gd`.
 
 **Referencias:** `gdd.md#mazmorra`
 

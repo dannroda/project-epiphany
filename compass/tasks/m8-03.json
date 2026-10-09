@@ -1,12 +1,12 @@
 {
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "Sala 1: bloque por grilla → interruptor → persiana"
     },
     {
       "detail": "Con llave, con persiana, la del jefe (sellada) y una libre.",
-      "done": false,
+      "done": true,
       "text": "Sala 2: hub con 4 salidas y esqueletos"
     }
   ],
@@ -23,7 +23,7 @@
     }
   ],
   "milestone": "m08",
-  "notes": "",
+  "notes": "Hecho 2026-10-08: `levels/temple.tscn` con la geometría de las 9 salas (§8.1) y el contenido de vestíbulo y hub. La puerta del templo del overworld ahora lleva acá (antes a `dungeon_test`). Test `tests/test_temple.gd`.",
   "order": 3,
   "refs": [
     {
@@ -31,8 +31,8 @@
       "section": "mazmorra"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Desde la entrada de la mazmorra, llegar al hub y ver las 4 salidas en el estado que dice el GDD.",
   "title": "Salas 1–2: vestíbulo y hub",
-  "updated_at": "2026-10-08T04:45:58.693Z"
+  "updated_at": "2026-10-09T00:50:38.137Z"
 }

@@ -2,7 +2,7 @@ extends "res://tests/test_case.gd"
 ## La prueba de 7.8: desde `start`, todo el overworld hasta entrar al templo y volver a salir.
 
 const OVERWORLD := "res://levels/overworld.tscn"
-const DUNGEON := "res://levels/dungeon_test.tscn"
+const DUNGEON := "res://levels/temple.tscn"
 const SLOT := 9
 
 var tree: SceneTree

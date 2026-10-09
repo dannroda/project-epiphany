@@ -3,6 +3,7 @@ extends SceneTree
 ## Arma el kit de bloques grises (MeshLibrary para GridMap) con las texturas de prototipo de Kenney.
 ## Celdas de 2 m; el piso queda en y = 0 y las paredes miden WALL_HEIGHT (lo mismo que `TopDownCamera.wall_height`).
 ## El abismo no se ve como pared: su colisión llega a 0.6 m, así que frena al player pero las flechas pasan por arriba.
+## El hueco se ve igual pero no tiene colisión: se cae (un `Pit` abajo lo devuelve a la entrada de la sala).
 
 const OUT := "res://data/kits/gray_kit.tres"
 const MATERIALS := "res://data/kits/materials/"
@@ -12,7 +13,7 @@ const WALL_HEIGHT := 2.6
 const FLOOR_DEPTH := 0.5
 const DOOR_HEIGHT := 2.4
 
-enum Item { FLOOR, WALL, COLUMN, STEP, DOORWAY, GRASS, CLIFF, FENCE, TREE, ABYSS }
+enum Item { FLOOR, WALL, COLUMN, STEP, DOORWAY, GRASS, CLIFF, FENCE, TREE, ABYSS, PIT }
 
 
 func _initialize() -> void:
@@ -46,6 +47,7 @@ func _initialize() -> void:
 	var abyss_floor := _box(Vector3(CELL + 2.0, FLOOR_DEPTH, CELL + 2.0), -1.6)
 	var abyss_block := _box(Vector3(CELL, 4.6, CELL), -1.7)
 	_add(library, Item.ABYSS, "Abismo", [[abyss_floor, abyss_material]], [abyss_block])
+	_add(library, Item.PIT, "Hueco", [[abyss_floor, abyss_material]], [])
 	print(ResourceSaver.save(library, OUT))
 	quit()
 

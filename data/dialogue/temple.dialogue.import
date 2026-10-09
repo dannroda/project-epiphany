@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=18
+type="Resource"
+uid="uid://y6avu6sc2i5n"
+path="res://.godot/imported/temple.dialogue-cb8f51f72c3f5e959defc34617addd47.tres"
+
+[deps]
+
+source_file="res://data/dialogue/temple.dialogue"
+dest_files=["res://.godot/imported/temple.dialogue-cb8f51f72c3f5e959defc34617addd47.tres"]
+
+[params]
+
+defaults=true
