@@ -75,6 +75,14 @@ func autosave() -> void:
 		saved.emit(current_slot)
 
 
+## Fundido a negro, `action` (cargar, partida nueva…) y fundido de vuelta. Corre acá y no en la pantalla que la pide,
+## porque esa pantalla se libera al cambiar de escena y el fundido de vuelta nunca llegaría.
+func with_fade(action: Callable) -> void:
+	await Fader.fade_out(0.3)
+	await action.call()
+	await Fader.fade_in(0.3)
+
+
 func has_save(slot: int = 0) -> bool:
 	return FileAccess.file_exists(slot_path(slot))
 

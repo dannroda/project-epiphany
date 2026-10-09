@@ -65,9 +65,7 @@ func _first_empty_slot() -> int:
 
 func _go(action: Callable) -> void:
 	menu.process_mode = PROCESS_MODE_DISABLED
-	await Fader.fade_out(0.3)
-	await action.call()
-	await Fader.fade_in(0.3)
+	SaveManager.with_fade(action)
 
 
 func _show_scenarios() -> void:

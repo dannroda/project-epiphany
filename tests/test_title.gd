@@ -37,3 +37,23 @@ func test_new_game_quit_to_title_and_continue() -> void:
 	assert_eq(state.inventory.has(&"bomb_bag"), true, "con lo que tenía")
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(saves.slot_path(SLOT)))
 	state.reset()
+
+
+func test_loading_from_the_title_fades_back_in() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var saves: Node = tree.root.get_node(^"SaveManager")
+	var fader: Node = tree.root.get_node(^"Fader")
+	saves.save_dir = "user://test_saves/"
+	await saves.new_game(0)
+	tree.change_scene_to_file(TITLE)
+	await tree.scene_changed
+	await tree.process_frame
+	var screen: FileSelect = tree.current_scene.open_file_select(0)
+	await tree.process_frame
+	screen.chosen.emit(0, false)
+	await tree.scene_changed
+	await tree.create_timer(1.0).timeout
+	assert_eq(tree.current_scene.scene_file_path, "res://levels/overworld.tscn", "cargó la partida")
+	assert_true(fader._rect.color.a < 0.01, "el fundido vuelve a transparente (alpha %.2f)" % fader._rect.color.a)
+	saves.delete_slot(0)
+	tree.root.get_node(^"GameState").reset()
