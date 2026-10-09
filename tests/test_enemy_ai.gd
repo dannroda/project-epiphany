@@ -74,3 +74,42 @@ func test_death_releases_lock_on() -> void:
 	assert_eq(enemy.is_in_group(&"targetable"), false)
 	await _frames(tree, 150)
 	assert_eq(enemy.bt_player.active, false, "terminó de morir")
+
+
+func test_enemies_do_not_spawn_inside_walls() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	for path in ["res://levels/overworld.tscn", "res://levels/temple.tscn"]:
+		tree.root.get_node(^"GameState").reset()
+		tree.change_scene_to_file(path)
+		await tree.scene_changed
+		await tree.physics_frame
+		for enemy: CollisionObject3D in tree.get_nodes_in_group(&"enemies"):
+			var shape := enemy.get_node_or_null(^"CollisionShape3D") as CollisionShape3D
+			if shape == null:
+				continue
+			var query := PhysicsShapeQueryParameters3D.new()
+			query.shape = shape.shape
+			query.transform = shape.global_transform.translated(Vector3.UP * 0.1)
+			query.collision_mask = 1
+			query.exclude = [enemy.get_rid()]
+			var hits := enemy.get_world_3d().direct_space_state.intersect_shape(query)
+			var walls := hits.filter(func(hit: Dictionary) -> bool: return not hit.collider is CharacterBody3D)
+			assert_true(walls.is_empty(), "%s en %s está encimado con %s" % [enemy.name, path.get_file(), walls.map(func(hit: Dictionary) -> String: return str(hit.collider))])
+
+
+func test_overworld_skeletons_reach_the_player() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.root.get_node(^"GameState").reset()
+	tree.change_scene_to_file("res://levels/overworld.tscn")
+	await tree.scene_changed
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	player.health.make_invulnerable(999.0)
+	player.global_position = Vector3(0, 0.1, 2)
+	var until := Time.get_ticks_msec() + 6000
+	var enemies := tree.get_nodes_in_group(&"enemies")
+	var near := func() -> bool:
+		return enemies.all(func(enemy: Enemy) -> bool: return enemy.global_position.distance_to(player.global_position) <= enemy.config.attack_range + 0.5)
+	while Time.get_ticks_msec() < until and not near.call():
+		await tree.physics_frame
+	for enemy: Enemy in enemies:
+		assert_true(enemy.global_position.distance_to(player.global_position) <= enemy.config.attack_range + 0.5, "%s llega al player (quedó en %s)" % [enemy.name, enemy.global_position])

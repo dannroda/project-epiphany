@@ -24,7 +24,7 @@ var features: int = 0
 
 @export_group("IA")
 @export var move_speed: float = 3.0
-@export var vision_range: float = 8.0
+@export var vision_range: float = 12.0
 @export var attack_range: float = 1.6
 ## Radianes por segundo; 0 = gira de golpe. Lento: se le puede rodar a la espalda.
 @export var turn_speed: float = 0.0

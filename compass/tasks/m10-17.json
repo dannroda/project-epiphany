@@ -1,0 +1,30 @@
+{
+  "checklist": [
+    {
+      "done": true,
+      "text": "Visión 12 m por la cámara más amplia"
+    },
+    {
+      "done": true,
+      "text": "Skeleton2 fuera del cerco y test de enemigos encimados"
+    },
+    {
+      "done": true,
+      "text": "path_desired_distance 1.0 por la navmesh a 0.5 m"
+    }
+  ],
+  "code": "10.17",
+  "created_at": "2026-10-09T17:20:43.733Z",
+  "milestone": "m10",
+  "notes": "",
+  "order": 17,
+  "priority": "high",
+  "refs": [],
+  "status": "done",
+  "tags": [
+    "ia"
+  ],
+  "test": "",
+  "title": "Enemigos quietos en el overworld",
+  "updated_at": "2026-10-09T17:20:45.471Z"
+}

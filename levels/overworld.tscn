@@ -223,7 +223,7 @@ random_seed = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -5)
 
 [node name="Skeleton2" parent="." unique_id=1094979658 instance=ExtResource("6_d356v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 5)
 
 [node name="Skeleton3" parent="." unique_id=844132866 instance=ExtResource("6_d356v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 4)

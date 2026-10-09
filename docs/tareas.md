@@ -1750,7 +1750,7 @@ Importar el rig del ojo con manos y armar las fases 1 y 2 con LimboAI.
 
 **Notas:** Sin flag por ahora porque no hay jefe; 9.6 le pone d1_boss_defeated.
 
-## M10 — Terminación  (12/16)
+## M10 — Terminación  (13/17)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -2012,6 +2012,14 @@ Skills: `workflows:itch-publish`.
 - [x] TopDownCamera.reveal: pausa, se acerca, abre, vuelve
 - [x] reveal_on_open opcional en Door y Gate (solo la primera vez)
 - [x] Sin reveal al cargar partida; tests, captura y GDD
+
+### 10.17 Enemigos quietos en el overworld · Hecho
+
+**Prioridad:** alta · **Etiquetas:** `ia`
+
+- [x] Visión 12 m por la cámara más amplia
+- [x] Skeleton2 fuera del cerco y test de enemigos encimados
+- [x] path_desired_distance 1.0 por la navmesh a 0.5 m
 
 ## Listas
 
