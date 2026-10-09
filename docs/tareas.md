@@ -1,7 +1,7 @@
 # Tareas — Project Epiphany
 
 > Export de `compass/`, que es la fuente de verdad. No editar: los cambios se hacen en `compass/` o con `scompass`, y este archivo se regenera.
-> Generado: 2026-10-08
+> Generado: 2026-10-09
 
 ## M0 — Refactor del player + base de datos  (13/13)
 
@@ -1743,18 +1743,20 @@ Título, selección de partida, game over, opciones, ambientación del doom, aud
 **Hecho cuando:**
 - MVP jugable por otra persona.
 
-### 10.1 Pantalla de título · Pendiente
+### 10.1 Pantalla de título · En curso
 
-- [ ] Logo y menú
+- [x] Logo y menú
   Continuar / Nueva partida / Opciones / Salir. Navegable con gamepad y teclado.
-- [ ] *Cargar escenario* solo en debug
+- [x] *Cargar escenario* solo en debug
   Lista de `debug/scenarios/`.
-- [ ] Escena principal del proyecto
+- [x] Escena principal del proyecto
   El título pasa a ser `run/main_scene`; respetar `--scenario=` y `next_scenario.txt`.
 
 **Prueba:** Arrancar el juego exportado: título, nueva partida, jugar, salir al título y continuar.
 
 **Notas:** Skills: `disciplines:game-ui-ux`.
+
+Hecho 2026-10-09: título como `run/main_scene` (mockup Main), `MenuItem` y `HintBar` reutilizables, `SaveManager.new_game()`/`quit_to_title()`/`has_save()`, versión en `application/config/version`. Opciones queda deshabilitado hasta 10.4, que también suma "Salir al título" en la pausa. Test `tests/test_title.gd`.
 
 **Referencias:** `gdd.md#ui`
 

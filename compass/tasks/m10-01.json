@@ -2,17 +2,17 @@
   "checklist": [
     {
       "detail": "Continuar / Nueva partida / Opciones / Salir. Navegable con gamepad y teclado.",
-      "done": false,
+      "done": true,
       "text": "Logo y menú"
     },
     {
       "detail": "Lista de `debug/scenarios/`.",
-      "done": false,
+      "done": true,
       "text": "*Cargar escenario* solo en debug"
     },
     {
       "detail": "El título pasa a ser `run/main_scene`; respetar `--scenario=` y `next_scenario.txt`.",
-      "done": false,
+      "done": true,
       "text": "Escena principal del proyecto"
     }
   ],
@@ -33,7 +33,7 @@
     }
   ],
   "milestone": "m10",
-  "notes": "Skills: `disciplines:game-ui-ux`.",
+  "notes": "Skills: `disciplines:game-ui-ux`.\n\nHecho 2026-10-09: título como `run/main_scene` (mockup Main), `MenuItem` y `HintBar` reutilizables, `SaveManager.new_game()`/`quit_to_title()`/`has_save()`, versión en `application/config/version`. Opciones queda deshabilitado hasta 10.4, que también suma \"Salir al título\" en la pausa. Test `tests/test_title.gd`.",
   "order": 1,
   "refs": [
     {
@@ -41,8 +41,8 @@
       "section": "ui"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Arrancar el juego exportado: título, nueva partida, jugar, salir al título y continuar.",
   "title": "Pantalla de título",
-  "updated_at": "2026-10-08T04:46:05.175Z"
+  "updated_at": "2026-10-09T03:34:32.786Z"
 }

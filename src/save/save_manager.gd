@@ -4,6 +4,8 @@ extends Node
 const SAVE_DIR := "user://saves/"
 const SCENARIO_DIR := "res://debug/scenarios/"
 const NEXT_SCENARIO_FILE := "user://debug/next_scenario.txt"
+const TITLE := "res://src/ui/title/title_screen.tscn"
+const NEW_GAME_SCENE := "res://levels/overworld.tscn"
 
 ## Ranura del autosave al cambiar de escena (la política completa de guardado va en 10.2).
 var autosave_slot := 0
@@ -47,6 +49,28 @@ func save_game(slot: int = 0) -> Error:
 	else:
 		Log.error(&"save", "No se pudo guardar", slot_path(slot), error_string(err))
 	return err
+
+
+func has_save(slot: int = 0) -> bool:
+	return FileAccess.file_exists(slot_path(slot))
+
+
+## Partida nueva: equipo inicial, en el claro del inicio del overworld.
+func new_game() -> Error:
+	GameState.reset()
+	GameState.spawn_scene = NEW_GAME_SCENE
+	GameState.spawn_point = &"start"
+	GameState.player_position = null
+	await _restore_player()
+	return OK
+
+
+func quit_to_title() -> void:
+	while MenuStack.is_open():
+		MenuStack.pop()
+	get_tree().paused = false
+	get_tree().change_scene_to_file(TITLE)
+	await get_tree().scene_changed
 
 
 func load_game(slot: int = 0) -> Error:

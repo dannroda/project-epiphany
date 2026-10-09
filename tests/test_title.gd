@@ -1,0 +1,39 @@
+extends "res://tests/test_case.gd"
+
+const TITLE := "res://src/ui/title/title_screen.tscn"
+const SLOT := 9
+
+
+func test_new_game_quit_to_title_and_continue() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	var saves: Node = tree.root.get_node(^"SaveManager")
+	state.reset()
+	assert_eq(ProjectSettings.get_setting("application/run/main_scene"), TITLE, "el juego arranca en el título")
+	tree.change_scene_to_file(TITLE)
+	await tree.scene_changed
+	await tree.process_frame
+	var title := tree.current_scene
+	for item in ["Continue", "NewGame", "Options", "Quit"]:
+		assert_true(title.get_node("%" + item) is MenuItem, item)
+	assert_eq(title.get_node(^"%DebugScenarios").visible, OS.is_debug_build(), "cargar escenario solo en debug")
+	assert_true(tree.root.gui_get_focus_owner() is MenuItem, "una opción tiene el foco (gamepad y teclado)")
+
+	assert_eq(await saves.new_game(), OK)
+	assert_eq(tree.current_scene.scene_file_path, "res://levels/overworld.tscn", "nueva partida: overworld")
+	var player := tree.get_first_node_in_group(&"player") as Node3D
+	assert_true(player.global_position.distance_to(Vector3(0, 0, 16)) < 0.6, "en el claro del inicio")
+	assert_eq(state.inventory.has(&"sword_basic"), true, "con el equipo inicial")
+	state.give(Items.get_item(&"bomb_bag"))
+	assert_eq(saves.save_game(SLOT), OK)
+
+	await saves.quit_to_title()
+	assert_eq(tree.current_scene.scene_file_path, TITLE, "salir al título")
+	assert_eq(tree.paused, false)
+	state.reset()
+	assert_eq(saves.has_save(SLOT), true)
+	assert_eq(await saves.load_game(SLOT), OK)
+	assert_eq(tree.current_scene.scene_file_path, "res://levels/overworld.tscn", "continuar vuelve a la partida")
+	assert_eq(state.inventory.has(&"bomb_bag"), true, "con lo que tenía")
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(saves.slot_path(SLOT)))
+	state.reset()
