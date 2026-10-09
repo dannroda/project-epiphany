@@ -46,9 +46,11 @@ SWATCHES = [
 	("gris_4", "5a5a58", "363634"),
 	("gris_5", "383836", "1c1c1c"),
 	("noche", "202430", "0b0d10"),
-	("negro", "0a0a0a", "000000"),
+	("neon", "b8fdff", "18b8d8"),
 ]
 COLS, ROWS = 8, 4
+# Franjas que brillan solas (palette_emission.png).
+EMISSIVE = {"neon"}
 # Fracción de la franja que no se usa arriba y abajo, para que el filtrado no mezcle con la vecina.
 MARGIN = 0.06
 MATERIAL = "paleta"
@@ -80,6 +82,13 @@ def palette_material():
 	image = next((i for i in bpy.data.images if os.path.realpath(bpy.path.abspath(i.filepath)) == os.path.realpath(path)), None)
 	tex.image = image or bpy.data.images.load(path)
 	tree.links.new(tex.outputs["Color"], bsdf.inputs["Base Color"])
+	glow_path = os.path.join(os.path.dirname(path), "palette_emission.png")
+	if os.path.exists(glow_path):
+		glow = tree.nodes.new("ShaderNodeTexImage")
+		glow.location = (bsdf.location.x - 320, bsdf.location.y - 300)
+		glow.image = bpy.data.images.load(glow_path, check_existing=True)
+		tree.links.new(glow.outputs["Color"], bsdf.inputs["Emission Color"])
+		bsdf.inputs["Emission Strength"].default_value = 2.0
 	return mat
 
 

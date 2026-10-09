@@ -5,6 +5,8 @@ shader_type spatial;
 
 uniform sampler2D albedo_texture : source_color, filter_linear_mipmap;
 uniform vec4 tint : source_color = vec4(1.0);
+uniform sampler2D emission_texture : source_color, filter_linear_mipmap, hint_default_black;
+uniform float emission_energy = 1.5;
 uniform vec2 grid = vec2(8.0, 4.0);
 uniform ivec2 target_cell = ivec2(4, 1);
 uniform ivec2 light_cells[4];
@@ -31,6 +33,7 @@ void fragment() {
 		uv = (vec2(target_cell) + vec2(0.5, local.y)) / grid;
 	}
 	ALBEDO = texture(albedo_texture, uv).rgb * tint.rgb * shade;
+	EMISSION = texture(emission_texture, UV).rgb * emission_energy;
 	ROUGHNESS = 1.0;
 	SPECULAR = 0.3;
 }

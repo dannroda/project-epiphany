@@ -119,35 +119,109 @@ def save(name):
 
 # --- jugador ---
 
+ARMOR = "tela_roja"
+SUIT = "noche"
+TRIM = "dorado"
+NEON = "neon"
+
+
+def side_plane(p, points, x, thickness):
+	"""Prisma de una planta (y, z) con espesor en X, centrado en x."""
+	f = p.polygon(points, -thickness / 2, thickness / 2)
+	p.transform(f, Matrix.Translation((x, 0, 0)) @ Matrix.Rotation(math.pi / 2, 4, "Z") @ Matrix.Rotation(math.pi / 2, 4, "X"))
+	return f
+
+
+def jugador_head(head, hz):
+	head.paint(head.rounded_box(-0.38, 0.38, -0.36, 0.34, hz - 0.42, hz + 0.3, radius=0.14), "piel", "MID")
+	for x in (-0.15, 0.15):
+		head.paint(head.box(x - 0.055, x + 0.055, -0.38, -0.35, hz - 0.14, hz + 0.02), SUIT, "MID")
+		head.paint(head.box(x - 0.02, x + 0.02, -0.385, -0.37, hz - 0.06, hz), NEON, "MID")
+	head.paint(head.box(-0.16, 0.16, -0.38, -0.36, hz - 0.3, hz - 0.28), "piel", "DARK")
+	shell = head.rounded_box(-0.44, 0.44, -0.3, 0.42, hz - 0.05, hz + 0.44, radius=0.12)
+	head.paint(shell, ARMOR, z_range=(hz - 0.3, hz + 0.6))
+	brow = head.box(-0.43, 0.43, -0.42, -0.28, hz + 0.08, hz + 0.36, taper=0.03)
+	head.paint(brow, ARMOR, "MID")
+	for side in (-1, 1):
+		guard = head.box(side * 0.4 - 0.05, side * 0.4 + 0.05, -0.32, 0.3, hz - 0.36, hz + 0.1)
+		head.paint(guard, ARMOR, "LOW")
+		disc = head.cylinder(0.13, 0.0, 0.06, sides=8)
+		head.transform(disc, Matrix.Translation((side * 0.45, 0.0, hz - 0.1)) @ Matrix.Rotation(side * math.pi / 2, 4, "Y"))
+		head.paint(disc, "cobre_verde", "MID")
+		core = head.cylinder(0.06, 0.0, 0.08, sides=6)
+		head.transform(core, Matrix.Translation((side * 0.45, 0.0, hz - 0.1)) @ Matrix.Rotation(side * math.pi / 2, 4, "Y"))
+		head.paint(core, NEON, "MID")
+		fin = side_plane(head, [(-0.32, 0.0), (0.1, 0.0), (0.2, 0.08), (0.38, 0.08), (0.48, 0.18), (0.85, 0.3), (0.42, 0.34), (0.28, 0.26), (0.0, 0.3), (-0.2, 0.2)], side * 0.33, 0.08)
+		head.transform(fin, Matrix.Translation((0, 0, hz + 0.32)) @ Matrix.Rotation(-side * 0.18, 4, "Y"))
+		head.paint(fin, ARMOR, z_range=(hz + 0.2, hz + 1.0))
+	epi.chakana_plate(head, Vector((0, -0.43, hz + 0.22)), 0.3, TRIM)
+	gem = head.polygon([(0.0, -0.1), (0.08, 0.0), (0.0, 0.1), (-0.08, 0.0)], 0.0, 0.05)
+	head.transform(gem, Matrix.Translation((0, -0.45, hz + 0.22)) @ Matrix.Rotation(math.pi / 2, 4, "X"))
+	head.paint(gem, NEON, "MID")
+
+
+def trenza(head, hz):
+	"""Trenza larga que cae por la espalda y se abre hacia atrás, con anillos de neón y una borla."""
+	prev = None
+	for i in range(10):
+		t = i / 9
+		c = Vector((0.12 * math.sin(t * 3.0), 0.42 + 0.95 * math.sin(t * 1.5), hz + 0.2 - 0.95 * t))
+		r = 0.15 - 0.07 * t
+		head.paint(head.blob(c, r, squash=(1.0, 1.0, 1.25), subdiv=1, rough=0.05), SUIT, "MID", vary=0.05)
+		if i in (2, 6):
+			ring = head.cylinder(r * 1.1, -0.03, 0.03, sides=8)
+			head.transform(ring, Matrix.Translation(c))
+			head.paint(ring, NEON, "MID")
+		prev = c
+	tassel = head.cylinder(0.08, 0.0, 0.22, sides=6, radius_top=0.03)
+	head.transform(tassel, Matrix.Translation(prev - Vector((0, 0, 0.25))))
+	head.paint(tassel, ARMOR, "MID")
+	head.paint(head.blob(prev - Vector((0, 0, 0.04)), 0.06, subdiv=1, rough=0.0), TRIM, "MID")
+
+
 def jugador():
 	rig = start()
 	bp = bone_points(rig)
 	body = Body(rig, "jugador", 10)
 	hips = body.part("hips")
-	hips.paint(hips.box(-0.24, 0.24, -0.17, 0.17, 0.4, 0.66), "tela_azul", "LOW", vary=0.04)
+	hips.paint(hips.box(-0.24, 0.24, -0.17, 0.17, 0.4, 0.66), SUIT, "MID", vary=0.03)
+	hips.paint(hips.box(-0.26, 0.26, -0.19, 0.19, 0.58, 0.66), TRIM, "MID")
+	for y0, y1 in ((-0.22, -0.18), (0.18, 0.22)):
+		flap = hips.box(-0.17, 0.17, y0, y1, 0.28, 0.6, taper=0.0)
+		hips.paint_bands(flap, [(0.36, 0.39, NEON, "MID")], default=(0, 0, ARMOR, "MID"))
 	torso = body.part("chest")
-	torso.paint(torso.box(-0.22, 0.22, -0.16, 0.16, 0.62, 1.2, taper=0.0), "hueso", "MID")
-	poncho = torso.lathe([(0.0, 1.25), (0.3, 1.2), (0.4, 1.02), (0.43, 0.92), (0.44, 0.86), (0.45, 0.8), (0.46, 0.7)], sides=4, phase=math.pi / 4)
-	torso.transform(poncho, Matrix.Diagonal((1.05, 0.62, 1.0, 1.0)))
-	torso.paint_bands(poncho, [(0.6, 0.79, "hueso", "MID"), (0.79, 0.86, "flor_amarilla", "MID"), (0.86, 0.93, "noche", "LOW")], default=(0, 0, "tela_roja", "MID"))
-	head = body.part("head")
-	hz = 1.72
-	skull = head.rounded_box(-0.4, 0.4, -0.37, 0.37, hz - 0.42, hz + 0.38, radius=0.14)
-	head.paint(skull, "piel", "MID")
-	hair = head.rounded_box(-0.42, 0.42, -0.12, 0.4, hz - 0.12, hz + 0.32, radius=0.1)
-	head.paint(hair, "noche", "MID")
-	for x in (-0.15, 0.15):
-		head.paint(head.box(x - 0.05, x + 0.05, -0.39, -0.36, hz - 0.12, hz + 0.02), "noche", "MID")
-	head.paint(head.box(-0.2, 0.2, -0.39, -0.37, hz - 0.3, hz - 0.27), "piel", "DARK")
-	hat = head.lathe([(0.45, hz + 0.18), (0.44, hz + 0.42), (0.3, hz + 0.62), (0.08, hz + 0.75), (0.0, hz + 0.76)], sides=10)
-	head.paint_bands(hat, [(hz + 0.18, hz + 0.27, "tela_roja", "MID"), (hz + 0.27, hz + 0.33, "flor_amarilla", "MID"), (hz + 0.33, hz + 0.42, "tela_azul", "MID"), (hz + 0.42, hz + 0.48, "hueso", "MID")], default=(0, 0, "tela_roja", "DARK"))
-	for side in (-1, 1):
-		flap = head.box(side * 0.46 - 0.04, side * 0.46 + 0.04, -0.12, 0.12, hz - 0.3, hz + 0.2)
-		head.paint(flap, "tela_azul", "MID")
-		tassel = head.box(side * 0.46 - 0.02, side * 0.46 + 0.02, -0.02, 0.02, hz - 0.5, hz - 0.3)
-		head.paint(tassel, "flor_amarilla", "MID")
-	head.paint(head.blob((0, 0, hz + 0.8), 0.08, subdiv=1, rough=0.2), "flor_amarilla", "MID")
-	arms_and_legs(body, bp, "tela_roja", "piel", "tela_azul", "madera_oscura")
+	torso.paint(torso.box(-0.22, 0.22, -0.16, 0.16, 0.62, 1.2, taper=0.0), SUIT, "MID")
+	plate = torso.box(-0.26, 0.26, -0.22, 0.12, 0.84, 1.2, taper=0.03)
+	torso.paint_bands(plate, [(0.92, 0.95, NEON, "MID")], default=(0, 0, ARMOR, "MID"))
+	epi.chakana_plate(torso, Vector((0, -0.23, 1.07)), 0.16, TRIM)
+	collar = torso.lathe([(0.2, 1.17), (0.22, 1.24), (0.0, 1.24)], sides=8)
+	torso.paint(collar, TRIM, "MID")
+	jugador_head(body.part("head"), 1.72)
+	trenza(body.part("head"), 1.72)
+	for side in ("l", "r"):
+		up = body.part(f"upperarm.{side}")
+		a, b = bp[f"upperarm.{side}"]
+		up.paint(limb(up, a, b, 0.085, 0.075), SUIT, "MID")
+		up.paint(up.rounded_box(a.x - 0.17, a.x + 0.17, a.y - 0.17, a.y + 0.17, a.z - 0.1, a.z + 0.16, radius=0.07), ARMOR, "MID")
+		low = body.part(f"lowerarm.{side}")
+		a, b = bp[f"lowerarm.{side}"]
+		low.paint(limb(low, a, b, 0.1, 0.13, sides=8), ARMOR, "MID", vary=0.03)
+		low.paint(limb(low, a + (b - a) * 0.72, a + (b - a) * 0.84, 0.135, 0.135, sides=8), NEON, "MID")
+		wr = body.part(f"wrist.{side}")
+		wr.paint(limb(wr, *bp[f"wrist.{side}"], 0.07, 0.07), SUIT, "MID")
+		hand = body.part(f"hand.{side}")
+		h0, h1 = bp[f"hand.{side}"]
+		hand.paint(hand.blob((h0 + h1) / 2, 0.1, squash=(1.2, 0.9, 1.0), subdiv=1, rough=0.1), SUIT, "MID")
+		ul = body.part(f"upperleg.{side}")
+		ul.paint(limb(ul, *bp[f"upperleg.{side}"], 0.11, 0.1), SUIT, "MID", vary=0.03)
+		ll = body.part(f"lowerleg.{side}")
+		a, b = bp[f"lowerleg.{side}"]
+		ll.paint(limb(ll, a, b, 0.15, 0.13, sides=8), ARMOR, "MID", vary=0.03)
+		ll.paint(limb(ll, a - (b - a) * 0.05, a + (b - a) * 0.12, 0.17, 0.165, sides=8), TRIM, "MID")
+		foot = body.part(f"foot.{side}")
+		f0, _ = bp[f"foot.{side}"]
+		foot.paint(foot.box(f0.x - 0.13, f0.x + 0.13, f0.y - 0.24, f0.y + 0.1, 0.0, 0.16, taper=0.03), ARMOR, "LOW")
+		foot.paint(foot.box(f0.x - 0.135, f0.x + 0.135, f0.y - 0.245, f0.y + 0.105, 0.0, 0.035), NEON, "MID")
 	body.build()
 	save("jugador")
 

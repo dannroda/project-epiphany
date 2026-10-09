@@ -32,7 +32,7 @@ def espada(p):
 	blade = flat(p, blade_pts, 0.045)
 	p.paint(blade, "dorado", z_range=(-0.4, 1.8), vary=0.03)
 	ridge = flat(p, [(0.0, 0.12), (0.015, 0.2), (0.012, 1.2), (0.0, 1.3), (-0.012, 1.2), (-0.015, 0.2)], 0.06)
-	p.paint(ridge, "roca_naranja", "MID")
+	p.paint(ridge, "neon", "MID")
 	guard = []
 	for w, h, z in ((0.5, 0.07, 0.0), (0.32, 0.12, 0.0), (0.16, 0.18, 0.0)):
 		guard += p.box(-w / 2, w / 2, -0.05, 0.05, z - h / 2, z + h / 2)

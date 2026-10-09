@@ -2,10 +2,12 @@
 
 [ext_resource type="Shader" path="res://src/shaders/palette_remap.gdshader" id="1_shader"]
 [ext_resource type="Texture2D" uid="uid://duanovtf2px6i" path="res://assets/epiphany/palette.png" id="2_texture"]
+[ext_resource type="Texture2D" path="res://assets/epiphany/palette_emission.png" id="3_glow"]
 
 [resource]
 shader = ExtResource("1_shader")
 shader_parameter/albedo_texture = ExtResource("2_texture")
+shader_parameter/emission_texture = ExtResource("3_glow")
 shader_parameter/tint = Color(0.72, 0.72, 0.72, 1)
 shader_parameter/grid = Vector2(8, 4)
 shader_parameter/target_cell = Vector2i(3, 1)

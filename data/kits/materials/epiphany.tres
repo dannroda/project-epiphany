@@ -1,8 +1,14 @@
 [gd_resource type="StandardMaterial3D" format=3]
 
 [ext_resource type="Texture2D" uid="uid://duanovtf2px6i" path="res://assets/epiphany/palette.png" id="1_pal"]
+[ext_resource type="Texture2D" path="res://assets/epiphany/palette_emission.png" id="2_glow"]
 
 [resource]
-albedo_texture = ExtResource("1_pal")
 albedo_color = Color(0.72, 0.72, 0.72, 1)
+albedo_texture = ExtResource("1_pal")
 roughness = 1.0
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 1.5
+emission_operator = 1
+emission_texture = ExtResource("2_glow")
