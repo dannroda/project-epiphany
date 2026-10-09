@@ -42,7 +42,7 @@
     }
   ],
   "status": "todo",
-  "test": "La escena del jefe se abre en el editor y reproduce todas sus animaciones sin errores.",
-  "title": "Importar el rig del jefe",
-  "updated_at": "2026-10-08T04:46:01.806Z"
+  "test": "La escena del jefe se abre en el editor con el cuerpo, el párpado, la pupila y las dos manos como nodos separados, y sus sockets (salida de orbes, reposo de las manos) en su lugar.",
+  "title": "Integrar el modelo del jefe",
+  "updated_at": "2026-10-09T23:21:35.841Z"
 }

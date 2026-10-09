@@ -1615,7 +1615,7 @@ Importar el rig del ojo con manos y armar las fases 1 y 2 con LimboAI.
 **Hecho cuando:**
 - Se puede terminar el juego.
 
-### 9.1 Importar el rig del jefe · Pendiente
+### 9.1 Integrar el modelo del jefe · Pendiente
 
 - [ ] Traer el rig del ojo con manos al repo
   En `assets/boss/`, con su licencia/origen anotado.
@@ -1624,7 +1624,7 @@ Importar el rig del ojo con manos y armar las fases 1 y 2 con LimboAI.
 - [ ] Cerrar la decisión abierta del rig
   En [[gdd#decisiones-abiertas]].
 
-**Prueba:** La escena del jefe se abre en el editor y reproduce todas sus animaciones sin errores.
+**Prueba:** La escena del jefe se abre en el editor con el cuerpo, el párpado, la pupila y las dos manos como nodos separados, y sus sockets (salida de orbes, reposo de las manos) en su lugar.
 
 **Notas:** Skills: `godot:godot-animation`, `godot:godot-3d-essentials`.
 
@@ -1647,7 +1647,7 @@ Importar el rig del ojo con manos y armar las fases 1 y 2 con LimboAI.
 
 **Bloquea a:** 9.4 Fase 1: manos
 
-**Bloqueada por:** 6.1 `Room` y cámara por sala; 9.1 Importar el rig del jefe
+**Bloqueada por:** 6.1 `Room` y cámara por sala; 9.1 Integrar el modelo del jefe
 
 ### 9.3 Arquitectura del jefe · Pendiente
 
@@ -1666,7 +1666,7 @@ Importar el rig del ojo con manos y armar las fases 1 y 2 con LimboAI.
 
 **Bloquea a:** 9.4 Fase 1: manos
 
-**Bloqueada por:** 9.1 Importar el rig del jefe
+**Bloqueada por:** 9.1 Integrar el modelo del jefe
 
 ### 9.4 Fase 1: manos · Pendiente
 

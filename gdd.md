@@ -1740,7 +1740,7 @@ if Log.is_enabled(Log.Level.DEBUG, &"ai"):   # solo si el mensaje es caro de arm
 | **6** | **Framework de mazmorra**: Room + cámara clamp/transición, puertas, llaves, bloques por grilla, interruptores, mapa/brújula + pantalla de mapa | Tres salas en bloques grises conectadas |
 | **7** | **Overworld**: zona chica, gating bombas → escudo espejo → sello del templo, secretos | Ida y vuelta overworld ↔ mazmorra |
 | **8** | **Contenido de mazmorra**: 8 salas en bloques grises, arco a mitad de camino, llave del jefe | La mazmorra se recorre entera |
-| **9** | **Jefe**: importar rig, fases 1–2 con LimboAI | Se puede terminar el juego |
+| **9** | **Jefe**: integrar el modelo, fases 1–2 con LimboAI | Se puede terminar el juego |
 | **10** | **Terminación**: título, selección de partida, game over, opciones, doom ambiental, audio, build para playtesters (compilar LimboAI templates) | MVP |
 
 Recortes si hace falta, en orden: fase 3 del jefe → cota reforzada → carcaj post-mazmorra → sala 7 (fusionar con 6) → pasto/vasijas en overworld.
@@ -1760,4 +1760,4 @@ Moneda y tiendas · NPCs con diálogo · piezas de corazón · gancho / telequin
 - [x] Layout exacto de la mazmorra (§8.1) y del overworld (§7.1).
 - [x] Ranuras de guardado: 3 (decidido el 2026-10-09).
 - [x] Arte: KayKit + texturas de prototipo, pulido con paleta propia (decidido el 2026-10-09, §10.1).
-- [ ] Rig del jefe: importarlo al repo y verificar compatibilidad con el AnimationTree actual.
+- [x] Modelo del jefe: el `.blend` de la jam no tenía rig; piezas separadas que mueve el código, sin AnimationTree (decidido el 2026-10-09, §9).
