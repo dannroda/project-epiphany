@@ -93,6 +93,41 @@ script = ExtResource("1_ox7fe")
 id = &"ow_temple_seal_open"
 description = "Entrada del templo: el sello se abrió (el haz llegó al cristal)"
 
+[sub_resource type="Resource" id="Resource_grotto_wall"]
+script = ExtResource("1_ox7fe")
+id = &"ow_grotto_cracked_wall"
+description = "Muro agrietado entre el claro del inicio y la gruta oculta roto"
+
+[sub_resource type="Resource" id="Resource_grotto_chest"]
+script = ExtResource("1_ox7fe")
+id = &"ow_grotto_chest"
+description = "Gruta oculta: cofre de la poción abierto"
+
+[sub_resource type="Resource" id="Resource_grove_a"]
+script = ExtResource("1_ox7fe")
+id = &"ow_grove_switch_a"
+description = "Arboleda: primer bloque en su interruptor"
+
+[sub_resource type="Resource" id="Resource_grove_b"]
+script = ExtResource("1_ox7fe")
+id = &"ow_grove_switch_b"
+description = "Arboleda: segundo bloque en su interruptor"
+
+[sub_resource type="Resource" id="Resource_grove_chest"]
+script = ExtResource("1_ox7fe")
+id = &"ow_grove_chest"
+description = "Arboleda: cofre de la cota reforzada abierto"
+
+[sub_resource type="Resource" id="Resource_cliff_eye"]
+script = ExtResource("1_ox7fe")
+id = &"ow_cliff_eye"
+description = "Risco del ojo: el ojo de la cornisa recibió una flecha"
+
+[sub_resource type="Resource" id="Resource_cliff_chest"]
+script = ExtResource("1_ox7fe")
+id = &"ow_cliff_quiver_chest"
+description = "Risco del ojo: cofre del carcaj grande abierto"
+
 [resource]
 script = ExtResource("2_3vvdp")
-definitions = Array[ExtResource("1_ox7fe")]([SubResource("Resource_mrp87"), SubResource("Resource_tablethint"), SubResource("Resource_crackedwall"), SubResource("Resource_sbwall"), SubResource("Resource_testdoor"), SubResource("Resource_testblock"), SubResource("Resource_testchest"), SubResource("Resource_gray_switch"), SubResource("Resource_gray_key_chest"), SubResource("Resource_gray_locked"), SubResource("Resource_gray_compass_chest"), SubResource("Resource_cave_chest"), SubResource("Resource_cave_practice"), SubResource("Resource_shrine_wall"), SubResource("Resource_shrine_switch"), SubResource("Resource_shrine_chest"), SubResource("Resource_shrine_shortcut"), SubResource("Resource_temple_seal")])
+definitions = Array[ExtResource("1_ox7fe")]([SubResource("Resource_mrp87"), SubResource("Resource_tablethint"), SubResource("Resource_crackedwall"), SubResource("Resource_sbwall"), SubResource("Resource_testdoor"), SubResource("Resource_testblock"), SubResource("Resource_testchest"), SubResource("Resource_gray_switch"), SubResource("Resource_gray_key_chest"), SubResource("Resource_gray_locked"), SubResource("Resource_gray_compass_chest"), SubResource("Resource_cave_chest"), SubResource("Resource_cave_practice"), SubResource("Resource_shrine_wall"), SubResource("Resource_shrine_switch"), SubResource("Resource_shrine_chest"), SubResource("Resource_shrine_shortcut"), SubResource("Resource_temple_seal"), SubResource("Resource_grotto_wall"), SubResource("Resource_grotto_chest"), SubResource("Resource_grove_a"), SubResource("Resource_grove_b"), SubResource("Resource_grove_chest"), SubResource("Resource_cliff_eye"), SubResource("Resource_cliff_chest")])

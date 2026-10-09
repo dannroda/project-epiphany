@@ -198,6 +198,8 @@ Decidido el 2026-10-08. 8 zonas de ≈ 24 × 16 m (una "pantalla" con la cámara
 
 **Sello del templo (7.6):** la fuente del oeste apunta al sur, a un espejo fijo a 45° que manda el haz al este, cruzando la plaza. Atajándolo con el escudo espejo (bloqueo en diagonal, girando con el stick) va al norte, al cristal del sello (`ow_temple_seal_open`, con latch). `TempleSeal` (una `Gate` con el ojo) se hunde con sacudida fuerte, retumbo y polvo: el primer momento de *doom*. `TremorZone` cubre la entrada del templo: mientras el player está ahí, cada 6 s una sacudida suave con retumbo grave. Escenario `pre_temple`: todo lo del overworld hasta el escudo espejo, en la entrada del templo.
 
+**Secretos (7.7):** *Gruta oculta*: muro agrietado desde el claro del inicio (`ow_grotto_cracked_wall`), cofre con la poción en botella (`ow_grotto_chest`) y tablilla que adelanta el ojo del risco (cue `grotto_hint`). *Arboleda*: dos bloques en dos interruptores (`ow_grove_switch_a/b`) bajan la reja del recoveco noreste con la cota reforzada (`ow_grove_chest`; no se equipa sola, así se usa la pantalla Equipo). *Risco del ojo*: el `EyeSwitch` de la cornisa (`ow_cliff_eye`) solo reacciona a proyectiles y abre el nicho del carcaj grande (`ow_cliff_quiver_chest`, +20 flechas de capacidad).
+
 ## 8. Mazmorra — El Templo
 <!-- id: mazmorra -->
 

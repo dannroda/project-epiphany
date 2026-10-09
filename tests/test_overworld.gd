@@ -31,6 +31,7 @@ func test_walk_every_zone_without_falling_or_sticking() -> void:
 	state.reset()
 	state.set_flag(&"ow_shrine_cracked_wall", true)
 	state.set_flag(&"ow_shrine_shortcut", true)
+	state.set_flag(&"ow_grotto_cracked_wall", true)
 	tree.change_scene_to_file(LEVEL)
 	await tree.scene_changed
 	for enemy in tree.get_nodes_in_group(&"enemies"):

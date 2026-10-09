@@ -1285,7 +1285,7 @@ Hecho 2026-10-08: kit `data/kits/gray_kit.tres` (lo arma `src/tools/build_gray_k
 
 **Bloqueada por:** 6.2 Puertas; 6.3 Llaves de mazmorra y HUD; 6.4 Bloques por grilla; 6.5 Interruptores y cableado
 
-## M7 — Overworld  (5/8)
+## M7 — Overworld  (6/8)
 
 Zona chica con el gating bombas → escudo espejo → sello del templo, y los secretos.
 
@@ -1397,7 +1397,7 @@ Hecho 2026-10-08: `Portal` + `SaveManager.travel_to()` (pausa, fundido, `load_th
 
 **Bloqueada por:** 5.6 Escudo espejo y haz de luz; 7.4 Cueva de las bombas
 
-### 7.6 Sello del templo · En curso
+### 7.6 Sello del templo · Hecho
 
 - [x] Puzzle del sello
   Fuente de luz + espejos fijos + el escudo: hay que llevar el haz hasta el sello.
@@ -1416,18 +1416,20 @@ Hecho 2026-10-08: `Portal` + `SaveManager.travel_to()` (pausa, fundido, `load_th
 
 **Bloqueada por:** 7.3 Cambio de escena overworld ↔ mazmorra; 7.5 Santuario del escudo espejo
 
-### 7.7 Secretos del overworld · Pendiente
+### 7.7 Secretos del overworld · En curso
 
-- [ ] Botella con poción tras un muro agrietado
+- [x] Botella con poción tras un muro agrietado
   Opcional.
-- [ ] Cota reforzada en un puzzle de bloques
+- [x] Cota reforzada en un puzzle de bloques
   Cofre secreto; ejercita la pantalla Equipo.
-- [ ] Carcaj grande post-mazmorra
+- [x] Carcaj grande post-mazmorra
   Ojo-interruptor alto o lejano que solo se alcanza con el arco; suma `_capacity_bonus` de flechas.
 
 **Prueba:** Con `full_inventory`, encontrar los tres secretos; con `start`, el carcaj no se puede conseguir.
 
 **Notas:** Recortables en este orden: carcaj, cota ([[gdd#roadmap]]).
+
+Hecho 2026-10-08: gruta (muro + poción + tablilla con pista), arboleda (dos bloques → reja → cota), risco (ojo con flecha → nicho → carcaj +20). Test `tests/test_secrets.gd` (los tres con todo; sin arco el ojo no despierta).
 
 **Referencias:** `gdd.md#overworld`, `gdd.md#items-mvp`
 
