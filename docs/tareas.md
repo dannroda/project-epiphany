@@ -2021,7 +2021,7 @@ Skills: `workflows:itch-publish`.
 - [x] Skeleton2 fuera del cerco y test de enemigos encimados
 - [x] path_desired_distance 1.0 por la navmesh a 0.5 m
 
-## M11 — Pulido: assets y contenido  (3/14)
+## M11 — Pulido: assets y contenido  (4/15)
 
 Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
 
@@ -2087,9 +2087,17 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Prioridad:** baja · **Etiquetas:** `mazmorra`
 
-### 11.13 Modelos KayKit: esqueletos para los enemigos y Knight para el player · Pendiente
+### 11.13 Modelos KayKit: esqueletos para los enemigos y Knight para el player · Hecho
 
 **Prioridad:** alta · **Etiquetas:** `arte`, `personajes`
+
+- [x] Pack Skeletons reducido a assets/kaykit_skeletons (gltf/glb + textura + licencia); el Adventurers nuevo es idéntico a assets/kaykit_adventure
+- [x] tools/build_character_models.gd → escenas Visuals en src/entities/models (Minion, Warrior, Rogue, Mage, Knight)
+- [x] enemy.tscn con Minion, shield_skeleton con Warrior vía EntityConfig.model, player con Knight
+- [x] Suite completa (182, solo el fallo conocido) y capturas de cerca y en el templo
+- [x] GDD §10.1
+
+**Notas:** Las animaciones de los packs nuevos (General, MovementBasic) son idénticas a las de kaykit_charanim: no hay nada extra. Los binds handslot.l/r pasan a hand.l/r porque el rig del proyecto no tiene esos huesos.
 
 ### 11.14 Puertas con interruptor cerradas al cargar partida · Hecho
 
@@ -2100,6 +2108,10 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 - [x] Test de regresión con pre_boss (falla sin el arreglo) y suite completa: 182, solo el fallo conocido
 
 **Notas:** HubSeal está antes que PuzzleEye en temple.tscn: al cargar leía el ojo antes de que restaurara su flag y quedaba cerrado. Afectaba a cualquier puerta/reja/puente cuyo interruptor esté después en el árbol.
+
+### 11.15 Íconos de ítems y equipo renderizados desde los modelos 3D · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `ui`, `arte`
 
 ## Listas
 

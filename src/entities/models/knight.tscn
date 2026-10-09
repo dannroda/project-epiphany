@@ -1,0 +1,59 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/knight/ArmLeft.res" id="1_k2awd"]
+[ext_resource type="Skin" path="res://src/entities/models/meshes/knight/skin.tres" id="2_5hfn5"]
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/knight/ArmRight.res" id="3_rh8vv"]
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/knight/Body.res" id="4_po81b"]
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/knight/Cape.res" id="5_ykg5v"]
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/knight/Head.res" id="6_wn1jk"]
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/knight/Helmet.res" id="7_xwl4g"]
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/knight/HelmetVisor.res" id="8_08pk8"]
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/knight/LegLeft.res" id="9_2m5pp"]
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/knight/LegRight.res" id="10_nhj1q"]
+
+[node name="Visuals" type="Node3D" unique_id=1636722845]
+
+[node name="ArmLeft" type="MeshInstance3D" parent="." unique_id=499745412]
+mesh = ExtResource("1_k2awd")
+skin = ExtResource("2_5hfn5")
+skeleton = NodePath("../../Skeleton3D")
+
+[node name="ArmRight" type="MeshInstance3D" parent="." unique_id=1615897932]
+mesh = ExtResource("3_rh8vv")
+skin = ExtResource("2_5hfn5")
+skeleton = NodePath("../../Skeleton3D")
+
+[node name="Body" type="MeshInstance3D" parent="." unique_id=748476044]
+mesh = ExtResource("4_po81b")
+skin = ExtResource("2_5hfn5")
+skeleton = NodePath("../../Skeleton3D")
+
+[node name="Cape" type="MeshInstance3D" parent="." unique_id=400023280]
+mesh = ExtResource("5_ykg5v")
+skin = ExtResource("2_5hfn5")
+skeleton = NodePath("../../Skeleton3D")
+
+[node name="Head" type="MeshInstance3D" parent="." unique_id=287992695]
+mesh = ExtResource("6_wn1jk")
+skin = ExtResource("2_5hfn5")
+skeleton = NodePath("../../Skeleton3D")
+
+[node name="Helmet" type="MeshInstance3D" parent="." unique_id=232616990]
+mesh = ExtResource("7_xwl4g")
+skin = ExtResource("2_5hfn5")
+skeleton = NodePath("../../Skeleton3D")
+
+[node name="HelmetVisor" type="MeshInstance3D" parent="." unique_id=1571928812]
+mesh = ExtResource("8_08pk8")
+skin = ExtResource("2_5hfn5")
+skeleton = NodePath("../../Skeleton3D")
+
+[node name="LegLeft" type="MeshInstance3D" parent="." unique_id=1519123577]
+mesh = ExtResource("9_2m5pp")
+skin = ExtResource("2_5hfn5")
+skeleton = NodePath("../../Skeleton3D")
+
+[node name="LegRight" type="MeshInstance3D" parent="." unique_id=1882565481]
+mesh = ExtResource("10_nhj1q")
+skin = ExtResource("2_5hfn5")
+skeleton = NodePath("../../Skeleton3D")

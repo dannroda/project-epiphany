@@ -1,0 +1,73 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/skeleton_rogue/Hood.res" id="1_rbl87"]
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/skeleton_rogue/Cape.res" id="2_tfpwy"]
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/skeleton_rogue/ArmLeft.res" id="3_8kmf5"]
+[ext_resource type="Skin" path="res://src/entities/models/meshes/skeleton_rogue/skin.tres" id="4_5oj5t"]
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/skeleton_rogue/ArmRight.res" id="5_mefxj"]
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/skeleton_rogue/Body.res" id="6_33xml"]
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/skeleton_rogue/Eyes.res" id="7_nlra3"]
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/skeleton_rogue/Head.res" id="8_ltwak"]
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/skeleton_rogue/Jaw.res" id="9_b05ri"]
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/skeleton_rogue/LegLeft.res" id="10_g5itk"]
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/skeleton_rogue/LegRight.res" id="11_nei6i"]
+
+[node name="Visuals" type="Node3D" unique_id=1201132027]
+
+[node name="Head" type="BoneAttachment3D" parent="." unique_id=1778150178]
+bone_name = "head"
+use_external_skeleton = true
+external_skeleton = NodePath("../../Skeleton3D")
+
+[node name="Hood" type="MeshInstance3D" parent="Head" unique_id=676433207]
+transform = Transform3D(1, -1.4210852e-14, -4.390182e-29, 1.4210852e-14, 1, 6.178633e-15, -4.390182e-29, -6.178633e-15, 1, 1.9073486e-06, -0.02555221, -1.3783574e-07)
+mesh = ExtResource("1_rbl87")
+
+[node name="Chest" type="BoneAttachment3D" parent="." unique_id=1802824697]
+bone_name = "chest"
+use_external_skeleton = true
+external_skeleton = NodePath("../../Skeleton3D")
+
+[node name="Cape" type="MeshInstance3D" parent="Chest" unique_id=1939542381]
+transform = Transform3D(1, 1.2521356e-21, -1.4210855e-14, -1.2521356e-21, 1, 7.17e-43, 1.4210855e-14, 1.7793917e-35, 1, -1.9073486e-06, 0.24324436, -1.3411045e-07)
+mesh = ExtResource("2_tfpwy")
+
+[node name="ArmLeft" type="MeshInstance3D" parent="." unique_id=539402185]
+mesh = ExtResource("3_8kmf5")
+skin = ExtResource("4_5oj5t")
+skeleton = NodePath("../../Skeleton3D")
+
+[node name="ArmRight" type="MeshInstance3D" parent="." unique_id=459503884]
+mesh = ExtResource("5_mefxj")
+skin = ExtResource("4_5oj5t")
+skeleton = NodePath("../../Skeleton3D")
+
+[node name="Body" type="MeshInstance3D" parent="." unique_id=415048795]
+mesh = ExtResource("6_33xml")
+skin = ExtResource("4_5oj5t")
+skeleton = NodePath("../../Skeleton3D")
+
+[node name="Eyes" type="MeshInstance3D" parent="." unique_id=892888948]
+mesh = ExtResource("7_nlra3")
+skin = ExtResource("4_5oj5t")
+skeleton = NodePath("../../Skeleton3D")
+
+[node name="@MeshInstance3D@3" type="MeshInstance3D" parent="." unique_id=994839136]
+mesh = ExtResource("8_ltwak")
+skin = ExtResource("4_5oj5t")
+skeleton = NodePath("../../Skeleton3D")
+
+[node name="Jaw" type="MeshInstance3D" parent="." unique_id=1464247762]
+mesh = ExtResource("9_b05ri")
+skin = ExtResource("4_5oj5t")
+skeleton = NodePath("../../Skeleton3D")
+
+[node name="LegLeft" type="MeshInstance3D" parent="." unique_id=227189868]
+mesh = ExtResource("10_g5itk")
+skin = ExtResource("4_5oj5t")
+skeleton = NodePath("../../Skeleton3D")
+
+[node name="LegRight" type="MeshInstance3D" parent="." unique_id=2101597939]
+mesh = ExtResource("11_nei6i")
+skin = ExtResource("4_5oj5t")
+skeleton = NodePath("../../Skeleton3D")

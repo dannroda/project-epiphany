@@ -21,6 +21,8 @@ var features: int = 0
 @export var attack_damage: int = 2 ## Daño base de sus ataques (sin arma equipada)
 @export var attack_knockback: float = 6.0
 @export var drops: DropTable
+## Opcional: otro modelo (una escena "Visuals" de src/entities/models/) en lugar del de la escena.
+@export var model: PackedScene
 
 @export_group("IA")
 @export var move_speed: float = 3.0

@@ -1,9 +1,7 @@
 [gd_scene format=3 uid="uid://mgijcgun2p06"]
 
 [ext_resource type="Script" uid="uid://ckkibjv0y6axx" path="res://player/player.gd" id="1_2lfai"]
-[ext_resource type="Shader" uid="uid://cc1u6jboqm3r3" path="res://src/shaders/palette_swap.gdshader" id="10_65viv"]
 [ext_resource type="AnimationLibrary" uid="uid://d4jgt4l578x88" path="res://player/animation/libs/CombatMelee.res" id="11_e7oew"]
-[ext_resource type="Texture2D" uid="uid://ct7kstgxsglmd" path="res://assets/kaykit_charanim/Mannequin Character/characters/Mannequin_Medium_mannequin_texture.png" id="11_x7c3f"]
 [ext_resource type="AnimationLibrary" uid="uid://dxyig76crhva0" path="res://player/animation/libs/CombatRanged.res" id="12_e7oew"]
 [ext_resource type="AnimationLibrary" uid="uid://diuwm5rhy5c5t" path="res://player/animation/libs/General.res" id="13_c35mf"]
 [ext_resource type="AnimationLibrary" uid="uid://74525rcrsep8" path="res://player/animation/libs/MovementAdvanced.res" id="14_65viv"]
@@ -15,12 +13,6 @@
 [ext_resource type="Script" uid="uid://bubek4m3axgwv" path="res://player/states/attacking.gd" id="18_65viv"]
 [ext_resource type="PackedScene" uid="uid://8nnsjbshosby" path="res://src/tools/target_indicator.tscn" id="22_bjvpn"]
 [ext_resource type="Script" uid="uid://bvujfesyp7f87" path="res://player/states/hurt.gd" id="22_rptt4"]
-[ext_resource type="ArrayMesh" uid="uid://ds6iwsesymtqs" path="res://assets/kaykit_charanim/Mannequin Character/characters/meshes/Mannequin_Medium_Mannequin_Medium_ArmLeft.res" id="83_4e4er"]
-[ext_resource type="ArrayMesh" uid="uid://c2gvvxmwylayd" path="res://assets/kaykit_charanim/Mannequin Character/characters/meshes/Mannequin_Medium_Mannequin_Medium_ArmRight.res" id="84_7pq27"]
-[ext_resource type="ArrayMesh" uid="uid://c1vxpc5r0w7ia" path="res://assets/kaykit_charanim/Mannequin Character/characters/meshes/Mannequin_Medium_Mannequin_Medium_Body.res" id="85_8kadx"]
-[ext_resource type="ArrayMesh" uid="uid://b4tsu2f6fvnm6" path="res://assets/kaykit_charanim/Mannequin Character/characters/meshes/Mannequin_Medium_Mannequin_Medium_Head.res" id="86_u3imt"]
-[ext_resource type="ArrayMesh" uid="uid://dqqkg4issacgo" path="res://assets/kaykit_charanim/Mannequin Character/characters/meshes/Mannequin_Medium_Mannequin_Medium_LegLeft.res" id="87_cu17e"]
-[ext_resource type="ArrayMesh" uid="uid://iu05jixj3hpw" path="res://assets/kaykit_charanim/Mannequin Character/characters/meshes/Mannequin_Medium_Mannequin_Medium_LegRight.res" id="88_qtnoe"]
 [ext_resource type="Resource" path="res://data/entities/player.tres" id="cfg_player"]
 [ext_resource type="Script" uid="uid://c2sjy3uekm7gp" path="res://player/components/equipment.gd" id="c_equipment"]
 [ext_resource type="Script" uid="uid://bqdwet47uk4xm" path="res://src/components/health.gd" id="c_health"]
@@ -38,6 +30,7 @@
 [ext_resource type="Script" path="res://player/states/transition.gd" id="st_transition"]
 [ext_resource type="Script" path="res://player/states/pushing.gd" id="st_pushing"]
 [ext_resource type="Script" path="res://player/components/interaction_detector.gd" id="c_interaction"]
+[ext_resource type="PackedScene" path="res://src/entities/models/knight.tscn" id="m_knight"]
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_peicu"]
 fadeout_time = 0.3
@@ -279,85 +272,6 @@ nodes/BowBlend/position = Vector2(2200, 700)
 node_connections = [&"output", 0, &"Dodge", &"Movement", 0, &"Idle", &"Movement", 1, &"Running", &"Attack", 0, &"GuardBlend", &"Attack", 1, &"AttackType", &"Combat", 0, &"Movement", &"Combat", 1, &"Targeting", &"GuardBlend", 0, &"Combat", &"GuardBlend", 1, &"MeleeBlocking", &"AttackType", 0, &"SwordSlice", &"AttackType", 1, &"ShieldThrust", &"Hurt", 0, &"Attack", &"Hurt", 1, &"HurtAnim", &"BlockHit", 0, &"Hurt", &"BlockHit", 1, &"BlockHitAnim", &"DodgeDir", 0, &"DodgeForward", &"DodgeDir", 1, &"DodgeBackward", &"DodgeDir", 2, &"DodgeLeft", &"DodgeDir", 3, &"DodgeRight", &"UseItem", 0, &"BlockHit", &"UseItem", 1, &"ItemAnim", &"BowPhase", 0, &"BowDraw", &"BowPhase", 1, &"BowIdle", &"BowPhase", 2, &"BowRelease", &"BowBlend", 0, &"UseItem", &"BowBlend", 1, &"BowPhase", &"Dodge", 0, &"BowBlend", &"Dodge", 1, &"DodgeDir"]
 
 [sub_resource type="AnimationNodeObserverOneShot" id="AnimationNodeObserverOneShot_4uxyr"]
-
-[sub_resource type="Skin" id="Skin_flen4"]
-resource_name = "Skin"
-bind_count = 21
-bind/0/name = &"root"
-bind/0/bone = -1
-bind/0/pose = Transform3D(1, 0, -2.3841855e-07, 0, 1, 0, 2.3841855e-07, 0, 1, 0, 0, 0)
-bind/1/name = &"hips"
-bind/1/bone = -1
-bind/1/pose = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.40566343, 0)
-bind/2/name = &"upperleg.l"
-bind/2/bone = -1
-bind/2/pose = Transform3D(1, -1.3659287e-07, -1.5161298e-07, -1.3124304e-07, -0.99939644, 0.034742657, -1.5626405e-07, -0.034742657, -0.99939597, -0.17094499, 0.5189373, 0.018040188)
-bind/3/name = &"lowerleg.l"
-bind/3/bone = -1
-bind/3/pose = Transform3D(1, 7.3710177e-10, -4.0946952e-09, 5.785925e-13, -0.984181, -0.17716601, -4.1575006e-09, 0.17716613, -0.98418057, -0.17094503, 0.289084, -0.044022996)
-bind/4/name = &"foot.l"
-bind/4/bone = -1
-bind/4/pose = Transform3D(1, -1.6907059e-09, -1.7534683e-09, -2.102762e-12, -0.719873, 0.6941057, -2.4335713e-09, -0.694106, -0.71987265, -0.17094503, 0.11745294, 0.08743056)
-bind/5/name = &"toes.l"
-bind/5/bone = -1
-bind/5/pose = Transform3D(-1, 1.534316e-07, -6.126929e-15, -3.0532933e-12, 5.960463e-08, 0.99999976, 1.5343156e-07, 1, -2.9802315e-08, 0.17094503, -0.09639277, -0.025990315)
-bind/6/name = &"spine"
-bind/6/bone = -1
-bind/6/pose = Transform3D(1, 0, -1.4210855e-14, 0, 1, 0, 1.4210855e-14, 0, 1, 0, -0.59764093, 0)
-bind/7/name = &"chest"
-bind/7/bone = -1
-bind/7/pose = Transform3D(1, 0, -1.4210854e-14, 0, 1.0000001, 0, 1.4210854e-14, 0, 1, 0, -0.97262895, 0)
-bind/8/name = &"upperarm.r"
-bind/8/bone = -1
-bind/8/pose = Transform3D(0.05729549, 1.3410366e-07, -0.99835753, -0.99835753, 3.9647796e-09, -0.05729569, -3.3244254e-09, 1.0000002, 1.2294612e-07, 0.012147002, -0.21165913, -1.1067613)
-bind/9/name = &"lowerarm.r"
-bind/9/bone = -1
-bind/9/pose = Transform3D(-0.053297255, 9.514964e-09, -0.9985789, -0.99857897, -9.953018e-10, 0.053297054, -8.5924594e-11, 1.0000002, -1.6099023e-09, -0.038010545, -0.45212415, -1.1067613)
-bind/10/name = &"wrist.r"
-bind/10/bone = -1
-bind/10/pose = Transform3D(-3.725292e-09, 8.936492e-09, -1.0000002, -1.0000002, -4.0084122e-10, -1.9744049e-07, -1.3606717e-18, 1.0000002, -2.227898e-09, 7.313433e-08, -0.7131817, -1.1067613)
-bind/11/name = &"hand.r"
-bind/11/bone = -1
-bind/11/pose = Transform3D(-1.2159625e-26, 8.936492e-09, -1.0000002, -1.0000002, -4.008412e-10, -2.0116576e-07, 4.135905e-25, 1.0000002, -2.227898e-09, 7.606616e-08, -0.7870076, -1.1067613)
-bind/12/name = &"head"
-bind/12/bone = -1
-bind/12/pose = Transform3D(1, 0, -1.4210855e-14, 0, 1.0000001, 0, 1.4210855e-14, 0, 1, 0, -1.2414255, 0)
-bind/13/name = &"upperarm.l"
-bind/13/bone = -1
-bind/13/pose = Transform3D(0.05729549, -1.3410366e-07, 0.99835753, 0.99835753, 3.9647796e-09, -0.05729569, 3.3244254e-09, 1.0000002, 1.2294612e-07, -0.012147002, -0.21165913, -1.1067613)
-bind/14/name = &"lowerarm.l"
-bind/14/bone = -1
-bind/14/pose = Transform3D(-0.053297255, -9.514964e-09, 0.9985789, 0.99857897, -9.953018e-10, 0.053297054, 8.5924594e-11, 1.0000002, -1.6099023e-09, 0.038010545, -0.45212415, -1.1067613)
-bind/15/name = &"wrist.l"
-bind/15/bone = -1
-bind/15/pose = Transform3D(-3.725292e-09, -8.936492e-09, 1.0000002, 1.0000002, -4.0084122e-10, -1.9744049e-07, 1.3606717e-18, 1.0000002, -2.227898e-09, -7.313433e-08, -0.7131817, -1.1067613)
-bind/16/name = &"hand.l"
-bind/16/bone = -1
-bind/16/pose = Transform3D(-1.2159625e-26, -8.936492e-09, 1.0000002, 1.0000002, -4.008412e-10, -2.0116576e-07, -4.135905e-25, 1.0000002, -2.227898e-09, -7.606616e-08, -0.7870076, -1.1067613)
-bind/17/name = &"upperleg.r"
-bind/17/bone = -1
-bind/17/pose = Transform3D(1, 1.3659287e-07, 1.5161298e-07, 1.3124304e-07, -0.99939644, 0.034742657, 1.5626405e-07, -0.034742657, -0.99939597, 0.17094499, 0.5189373, 0.018040188)
-bind/18/name = &"lowerleg.r"
-bind/18/bone = -1
-bind/18/pose = Transform3D(1, -7.370968e-10, 4.0946673e-09, -5.704879e-13, -0.984181, -0.17716601, 4.15747e-09, 0.17716613, -0.98418057, 0.17094503, 0.289084, -0.044022996)
-bind/19/name = &"foot.r"
-bind/19/bone = -1
-bind/19/pose = Transform3D(1, 1.6906887e-09, 1.7534497e-09, 2.1090902e-12, -0.719873, 0.6941057, 2.4335514e-09, -0.694106, -0.71987265, 0.17094503, 0.11745294, 0.08743056)
-bind/20/name = &"toes.r"
-bind/20/bone = -1
-bind/20/pose = Transform3D(-1, -1.5343159e-07, 1.0456797e-14, 3.0532933e-12, 5.960463e-08, 0.99999976, -1.5343153e-07, 1, -2.9802315e-08, -0.17094503, -0.09639277, -0.025990315)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_x7c3f"]
-render_priority = 0
-shader = ExtResource("10_65viv")
-shader_parameter/albedo_texture = ExtResource("11_x7c3f")
-shader_parameter/suit_color = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4uxyr"]
-render_priority = 0
-shader = ExtResource("10_65viv")
-shader_parameter/albedo_texture = ExtResource("11_x7c3f")
-shader_parameter/suit_color = 1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_front"]
 size = Vector3(1.4, 1.2, 1.2)
@@ -620,43 +534,7 @@ parameters/Dodge/internal_active = false
 parameters/Dodge/request = 0
 parameters/Dodge/observer = null
 
-[node name="Visuals" type="Node3D" parent="ModelController" unique_id=73006567]
-
-[node name="Mannequin_Medium_ArmLeft" type="MeshInstance3D" parent="ModelController/Visuals" unique_id=203549761]
-mesh = ExtResource("83_4e4er")
-skin = SubResource("Skin_flen4")
-skeleton = NodePath("../../Skeleton3D")
-surface_material_override/0 = SubResource("ShaderMaterial_x7c3f")
-
-[node name="Mannequin_Medium_ArmRight" type="MeshInstance3D" parent="ModelController/Visuals" unique_id=185020909]
-mesh = ExtResource("84_7pq27")
-skin = SubResource("Skin_flen4")
-skeleton = NodePath("../../Skeleton3D")
-surface_material_override/0 = SubResource("ShaderMaterial_4uxyr")
-
-[node name="Mannequin_Medium_Body" type="MeshInstance3D" parent="ModelController/Visuals" unique_id=1860929930]
-mesh = ExtResource("85_8kadx")
-skin = SubResource("Skin_flen4")
-skeleton = NodePath("../../Skeleton3D")
-surface_material_override/0 = SubResource("ShaderMaterial_4uxyr")
-
-[node name="Mannequin_Medium_Head" type="MeshInstance3D" parent="ModelController/Visuals" unique_id=1749144766]
-mesh = ExtResource("86_u3imt")
-skin = SubResource("Skin_flen4")
-skeleton = NodePath("../../Skeleton3D")
-surface_material_override/0 = SubResource("ShaderMaterial_4uxyr")
-
-[node name="Mannequin_Medium_LegLeft" type="MeshInstance3D" parent="ModelController/Visuals" unique_id=1520012902]
-mesh = ExtResource("87_cu17e")
-skin = SubResource("Skin_flen4")
-skeleton = NodePath("../../Skeleton3D")
-surface_material_override/0 = SubResource("ShaderMaterial_4uxyr")
-
-[node name="Mannequin_Medium_LegRight" type="MeshInstance3D" parent="ModelController/Visuals" unique_id=799837069]
-mesh = ExtResource("88_qtnoe")
-skin = SubResource("Skin_flen4")
-skeleton = NodePath("../../Skeleton3D")
-surface_material_override/0 = SubResource("ShaderMaterial_4uxyr")
+[node name="Visuals" parent="ModelController" unique_id=73006567 instance=ExtResource("m_knight")]
 
 [node name="Hitboxes" type="Node3D" parent="ModelController" unique_id=1971905675]
 

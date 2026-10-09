@@ -1,18 +1,39 @@
 {
-  "checklist": [],
+  "checklist": [
+    {
+      "done": true,
+      "text": "Pack Skeletons reducido a assets/kaykit_skeletons (gltf/glb + textura + licencia); el Adventurers nuevo es idéntico a assets/kaykit_adventure"
+    },
+    {
+      "done": true,
+      "text": "tools/build_character_models.gd → escenas Visuals en src/entities/models (Minion, Warrior, Rogue, Mage, Knight)"
+    },
+    {
+      "done": true,
+      "text": "enemy.tscn con Minion, shield_skeleton con Warrior vía EntityConfig.model, player con Knight"
+    },
+    {
+      "done": true,
+      "text": "Suite completa (182, solo el fallo conocido) y capturas de cerca y en el templo"
+    },
+    {
+      "done": true,
+      "text": "GDD §10.1"
+    }
+  ],
   "code": "11.13",
   "created_at": "2026-10-09T18:01:18.158Z",
   "milestone": "m11",
-  "notes": "",
+  "notes": "Las animaciones de los packs nuevos (General, MovementBasic) son idénticas a las de kaykit_charanim: no hay nada extra. Los binds handslot.l/r pasan a hand.l/r porque el rig del proyecto no tiene esos huesos.",
   "order": 13,
   "priority": "high",
   "refs": [],
-  "status": "todo",
+  "status": "done",
   "tags": [
     "arte",
     "personajes"
   ],
   "test": "",
   "title": "Modelos KayKit: esqueletos para los enemigos y Knight para el player",
-  "updated_at": "2026-10-09T18:01:18.158Z"
+  "updated_at": "2026-10-09T18:42:06.943Z"
 }

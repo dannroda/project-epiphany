@@ -31,6 +31,8 @@ var is_dead: bool:
 
 func _ready() -> void:
 	config.apply_to(self)
+	if config.model:
+		_swap_model(config.model)
 	add_to_group(&"enemies")
 	_register_monitors()
 	health.max_health = config.max_health
@@ -49,6 +51,15 @@ func _ready() -> void:
 	for body in model.find_children("*", "StaticBody3D", true, false):
 		for shape in body.find_children("*", "CollisionShape3D", true, false):
 			(shape as CollisionShape3D).disabled = true
+
+
+func _swap_model(scene: PackedScene) -> void:
+	var old := $ModelController/Visuals
+	var visuals := scene.instantiate()
+	old.name = &"OldVisuals"
+	old.get_parent().add_child(visuals)
+	old.get_parent().move_child(visuals, old.get_index())
+	old.queue_free()
 
 
 func _physics_process(delta: float) -> void:
