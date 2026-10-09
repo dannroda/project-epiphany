@@ -26,7 +26,7 @@ func test_far_lock_keeps_both_on_screen() -> void:
 	var player: PlayerCharacter = setup[1]
 	var camera: TopDownCamera = setup[2]
 	var far := tree.current_scene.get_node(^"Middle") as Enemy
-	far.global_position = player.global_position + Vector3(0, 0, -10)
+	far.global_position = player.global_position + Vector3(0, 0, -(player.targeting.targeting_range - 0.5))
 	await tree.physics_frame
 	player.targeting.set_target(far)
 	for i in 120:
