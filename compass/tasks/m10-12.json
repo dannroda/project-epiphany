@@ -2,32 +2,32 @@
   "checklist": [
     {
       "detail": "O se edita solo Targeting.targeting_range (y la forma se oculta/regenera), o Targeting lee el radio de la forma y se borra el export.",
-      "done": false,
+      "done": true,
       "text": "Decidir la fuente única del rango"
     },
     {
       "detail": "Si queda el export: setter @tool que actualice la forma en el editor, así no hay dos números distintos.",
-      "done": false,
+      "done": true,
       "text": "Que el inspector refleje el valor real"
     },
     {
       "detail": "El radio efectivo del detector y la distancia de suelte coinciden con el valor elegido.",
-      "done": false,
+      "done": true,
       "text": "Test del rango de fijado"
     }
   ],
   "code": "10.12",
   "created_at": "2026-10-09T07:29:24.681Z",
   "milestone": "m10",
-  "notes": "Targeting.targeting_range (12 m) pisa en _ready el radio del CylinderShape3D de TargetDetector (_set_range duplica la forma y le pone el radio), así que cambiar la forma en el editor no tiene efecto.",
+  "notes": "Targeting.targeting_range (12 m) pisaba en _ready el radio del CylinderShape3D de TargetDetector, así que cambiar la forma en el editor no tenía efecto.\n\n2026-10-09: la fuente única es la forma (radio 6 m, visible como gizmo en el editor). Se borró el export y `_set_range`; `targeting_range` quedó como getter de solo lectura. Test `test_range_is_the_detector_radius`.",
   "order": 12,
   "priority": "low",
   "refs": [],
-  "status": "todo",
+  "status": "done",
   "tags": [
     "combate"
   ],
   "test": "",
   "title": "Rango de fijado: una sola fuente",
-  "updated_at": "2026-10-09T07:29:42.484Z"
+  "updated_at": "2026-10-09T23:41:06.869Z"
 }

@@ -1960,18 +1960,20 @@ Skills: `workflows:itch-publish`.
 
 **Notas:** Lo que todavía se arma por código (anterior a la regla: toda la UI son .tscn, los scripts solo llenan datos). Lo repetido es su propia escena chica, instanciada por ítem; estilos en theme.tres.
 
-### 10.12 Rango de fijado: una sola fuente · Pendiente
+### 10.12 Rango de fijado: una sola fuente · En curso
 
 **Prioridad:** baja · **Etiquetas:** `combate`
 
-- [ ] Decidir la fuente única del rango
+- [x] Decidir la fuente única del rango
   O se edita solo Targeting.targeting_range (y la forma se oculta/regenera), o Targeting lee el radio de la forma y se borra el export.
-- [ ] Que el inspector refleje el valor real
+- [x] Que el inspector refleje el valor real
   Si queda el export: setter @tool que actualice la forma en el editor, así no hay dos números distintos.
-- [ ] Test del rango de fijado
+- [x] Test del rango de fijado
   El radio efectivo del detector y la distancia de suelte coinciden con el valor elegido.
 
-**Notas:** Targeting.targeting_range (12 m) pisa en _ready el radio del CylinderShape3D de TargetDetector (_set_range duplica la forma y le pone el radio), así que cambiar la forma en el editor no tiene efecto.
+**Notas:** Targeting.targeting_range (12 m) pisaba en _ready el radio del CylinderShape3D de TargetDetector, así que cambiar la forma en el editor no tenía efecto.
+
+2026-10-09: la fuente única es la forma (radio 6 m, visible como gizmo en el editor). Se borró el export y `_set_range`; `targeting_range` quedó como getter de solo lectura. Test `test_range_is_the_detector_radius`.
 
 ### 10.13 Refactor de código de UI innecesario · Hecho
 

@@ -94,3 +94,24 @@ func test_dead_target_released_after_grace() -> void:
 	assert_true(targeting.current != null and targeting.current != second, "en modo alternar salta al siguiente")
 	targeting.lock_mode = Targeting.LockMode.HOLD
 	targeting.clear()
+
+
+func test_range_is_the_detector_radius() -> void:
+	var setup: Array = await _load()
+	var tree: SceneTree = setup[0]
+	var targeting: Targeting = setup[1]
+	var level: Node = setup[2]
+	var radius := targeting.targeting_range
+	assert_eq(radius, (targeting.detector_shape.shape as CylinderShape3D).radius)
+	var player := targeting.player
+	var middle := level.get_node(^"Middle") as Enemy
+	middle.global_position = player.global_position + Vector3(0, 0, -(radius - 0.5))
+	await tree.physics_frame
+	targeting.set_target(middle)
+	for i in 60:
+		await tree.physics_frame
+	assert_eq(_name(targeting), "Middle", "dentro del radio sigue fijado")
+	middle.global_position = player.global_position + Vector3(0, 0, -(radius + 1.0))
+	for i in 60:
+		await tree.physics_frame
+	assert_eq(_name(targeting), "-", "fuera del radio se suelta")

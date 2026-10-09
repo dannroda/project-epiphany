@@ -639,7 +639,6 @@ shield_back_socket = NodePath("../ModelController/Skeleton3D/BackShield/ShieldSo
 script = ExtResource("c_targeting")
 player = NodePath("..")
 target_indicator = NodePath("../TargetIndicator")
-targeting_range = 6.0
 detector_shape = NodePath("../TargetDetector/DetectorShape")
 
 [node name="InputBuffer" type="Node" parent="." unique_id=146017449]

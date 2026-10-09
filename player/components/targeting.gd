@@ -9,7 +9,7 @@ enum LockMode { HOLD, TOGGLE }
 @export var player: PlayerCharacter
 @export var target_indicator: TargetIndicator
 @export var lock_mode: LockMode = LockMode.HOLD
-@export var targeting_range: float = 12.0
+## El radio de esta forma es el rango de fijado.
 @export var detector_shape: CollisionShape3D
 
 @export_group("Cambio de objetivo")
@@ -25,6 +25,9 @@ enum LockMode { HOLD, TOGGLE }
 @export var lose_grace := 0.5
 
 var current: Node3D
+var targeting_range: float:
+	get:
+		return (detector_shape.shape as CylinderShape3D).radius
 var possible_targets: Array[Node3D] = []
 
 var _last_dir := Vector2.ZERO
@@ -36,7 +39,6 @@ var flick_enabled := true
 
 
 func _ready() -> void:
-	_set_range(targeting_range)
 	_sync_settings()
 	Settings.changed.connect(func(_key: StringName) -> void: _sync_settings())
 
@@ -213,16 +215,6 @@ func _in_sight(target: Node3D) -> bool:
 	query.exclude = exclude
 	query.collision_mask = 1
 	return player.get_world_3d().direct_space_state.intersect_ray(query).is_empty()
-
-
-func _set_range(radius: float) -> void:
-	if not detector_shape or not detector_shape.shape:
-		return
-	if not detector_shape.shape.resource_local_to_scene:
-		detector_shape.shape = detector_shape.shape.duplicate()
-	var cylinder := detector_shape.shape as CylinderShape3D
-	if cylinder:
-		cylinder.radius = radius
 
 
 func _on_detector_body_entered(body: Node3D) -> void:
