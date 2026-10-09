@@ -50,7 +50,7 @@ SWATCHES = [
 ]
 COLS, ROWS = 8, 4
 # Franjas que brillan solas (palette_emission.png).
-EMISSIVE = {"neon"}
+EMISSIVE = {"neon", "doom"}
 # Fracción de la franja que no se usa arriba y abajo, para que el filtrado no mezcle con la vecina.
 MARGIN = 0.06
 MATERIAL = "paleta"

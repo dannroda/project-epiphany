@@ -228,15 +228,57 @@ def jugador():
 
 # --- chullpas (enemigos) ---
 
+RUST = "hierro"
+WRAP = "tierra"
+GLOW = "doom"
+
+
+def chullpa_head(head, hz, guardian):
+	"""Calavera con casco de cobre escalonado, visor y ojos de doom; el guardián lleva aletas como el jugador."""
+	skull = head.blob((0, 0, hz), 0.4, squash=(1.0, 0.95, 1.05), subdiv=2, rough=0.05)
+	head.paint(skull, "hueso", z_range=(hz - 0.5, hz + 0.6))
+	jaw = head.box(-0.24, 0.24, -0.34, 0.1, hz - 0.5, hz - 0.3, taper=0.03)
+	head.paint(jaw, "hueso", "LOW")
+	for x in (-0.07, 0.0, 0.07):
+		head.paint(head.box(x - 0.02, x + 0.02, -0.355, -0.33, hz - 0.36, hz - 0.3), "noche", "MID")
+	shell = head.rounded_box(-0.44, 0.44, -0.28, 0.42, hz + 0.02, hz + 0.44, radius=0.1)
+	head.jitter(shell, 0.015)
+	head.paint(shell, RUST, "LOW", vary=0.08)
+	visor = head.box(-0.44, 0.44, -0.42, -0.28, hz - 0.12, hz + 0.16, taper=0.02)
+	head.paint(visor, RUST, "DARK", vary=0.06)
+	for x in (-0.16, 0.16):
+		head.paint(head.box(x - 0.09, x + 0.09, -0.435, -0.42, hz - 0.06, hz + 0.04), GLOW, "MID")
+	epi.chakana_plate(head, Vector((0, -0.43, hz + 0.28)), 0.24, "dorado" if guardian else "cobre_verde")
+	if guardian:
+		for side in (-1, 1):
+			fin = side_plane(head, [(-0.3, 0.0), (0.1, 0.0), (0.2, 0.08), (0.38, 0.08), (0.48, 0.18), (0.85, 0.3), (0.42, 0.34), (0.28, 0.26), (0.0, 0.3), (-0.2, 0.2)], side * 0.33, 0.08)
+			head.transform(fin, Matrix.Translation((0, 0, hz + 0.32)) @ Matrix.Rotation(-side * 0.18, 4, "Y"))
+			head.paint(fin, RUST, "LOW")
+			edge = side_plane(head, [(0.48, 0.18), (0.85, 0.3), (0.8, 0.31), (0.46, 0.21)], side * 0.33, 0.1)
+			head.transform(edge, Matrix.Translation((0, 0, hz + 0.32)) @ Matrix.Rotation(-side * 0.18, 4, "Y"))
+			head.paint(edge, GLOW, "MID")
+	else:
+		crest = side_plane(head, [(-0.2, 0.0), (0.3, 0.0), (0.45, 0.18), (0.2, 0.16), (0.05, 0.26), (-0.1, 0.12)], 0.0, 0.07)
+		head.transform(crest, Matrix.Translation((0, 0, hz + 0.4)))
+		head.paint(crest, RUST, "LOW", vary=0.1)
+	# jirones que cuelgan atrás, como la trenza del jugador
+	for i, x in enumerate((-0.18, 0.0, 0.18)):
+		strip = head.box(x - 0.07, x + 0.07, 0.36, 0.42, hz - 0.9 + i % 2 * 0.15, hz + 0.1, taper=0.0)
+		head.transform(strip, Matrix.Translation((0, 0.42, hz + 0.1)) @ Matrix.Rotation(-0.35, 4, "X") @ Matrix.Translation((0, -0.42, -hz - 0.1)))
+		head.jitter(strip, 0.02)
+		head.paint(strip, "tela_roja" if guardian else WRAP, "LOW", vary=0.12)
+
+
 def chullpa(name, guardian):
 	rig = start()
 	bp = bone_points(rig)
 	body = Body(rig, name, 20 if guardian else 30)
 	hips = body.part("hips")
 	hips.paint(hips.box(-0.2, 0.2, -0.13, 0.13, 0.42, 0.62), "hueso", "LOW")
-	wrap = hips.lathe([(0.27, 0.3), (0.27, 0.62), (0.0, 0.62)], sides=6)
+	wrap = hips.lathe([(0.27, 0.28), (0.27, 0.62), (0.0, 0.62)], sides=6)
 	hips.jitter(wrap, 0.04)
-	hips.paint(wrap, "tela_roja" if guardian else "tierra", "LOW", vary=0.1)
+	hips.paint_bands(wrap, [(0.5, 0.54, GLOW, "MID")] if guardian else [], default=(0, 0, "tela_roja" if guardian else WRAP, "LOW"))
+	hips.paint(hips.box(-0.29, 0.29, -0.2, 0.2, 0.56, 0.63), "madera_oscura", "MID")
 	spine = body.part("spine")
 	spine.paint(limb(spine, *bp["spine"], 0.07, 0.07), "hueso", "MID")
 	chest = body.part("chest")
@@ -245,45 +287,55 @@ def chullpa(name, guardian):
 		z = 0.82 + i * 0.1
 		ribs += chest.box(-0.2 + i * 0.01, 0.2 - i * 0.01, -0.13, 0.11, z, z + 0.06)
 	chest.paint(ribs, "hueso", "MID", vary=0.05)
+	core = chest.blob((0, -0.02, 1.0), 0.1, subdiv=1, rough=0.1)
+	chest.paint(core, GLOW, "MID")
 	if guardian:
-		plate = chest.box(-0.24, 0.24, -0.17, -0.12, 0.85, 1.15, taper=0.0)
-		chest.paint(plate, "cobre_verde", "MID")
-		chest.paint(epi.eye(chest, Vector((0, -0.17, 1.0)), 0.12, depth=0.02), "dorado", "LIGHT")
-	scarf = chest.lathe([(0.25, 1.1), (0.27, 1.2), (0.0, 1.22)], sides=6)
-	chest.jitter(scarf, 0.03)
-	chest.paint(scarf, "tierra", "DARK", vary=0.1)
-	head = body.part("head")
-	hz = 1.66
-	skull = head.blob((0, 0, hz), 0.42, squash=(1.0, 0.95, 1.05), subdiv=2, rough=0.06)
-	head.paint(skull, "hueso", z_range=(hz - 0.5, hz + 0.6))
-	jaw = head.box(-0.24, 0.24, -0.34, 0.1, hz - 0.5, hz - 0.3, taper=0.03)
-	head.paint(jaw, "hueso", "LOW")
-	for x in (-0.16, 0.16):
-		socket = head.cylinder(0.11, 0.0, 0.05, sides=8)
-		head.transform(socket, Matrix.Translation((x, -0.36, hz + 0.02)) @ Matrix.Rotation(math.pi / 2, 4, "X"))
-		head.paint(socket, "noche", "MID")
-		glow = head.cylinder(0.045, 0.0, 0.06, sides=6)
-		head.transform(glow, Matrix.Translation((x, -0.37, hz + 0.02)) @ Matrix.Rotation(math.pi / 2, 4, "X"))
-		head.paint(glow, "doom", "LIGHT")
-	head.paint(head.box(-0.05, 0.05, -0.42, -0.38, hz - 0.18, hz - 0.08), "noche", "MID")
-	if guardian:
-		band = head.lathe([(0.43, hz + 0.12), (0.44, hz + 0.24), (0.0, hz + 0.24)], sides=10)
-		head.paint(band, "dorado", "MID")
-		feathers = []
-		for i in range(5):
-			a = -0.6 + i * 0.3
-			f = head.polygon([(-0.06, 0.0), (0.06, 0.0), (0.0, 0.55)], -0.015, 0.015)
-			head.transform(f, Matrix.Translation((0, 0.1, hz + 0.2)) @ Matrix.Rotation(a, 4, "Y") @ Matrix.Rotation(math.pi / 2, 4, "X"))
-			feathers += f
-		head.paint_bands(feathers, [(hz + 0.5, hz + 0.9, "tela_roja", "MID")], default=(0, 0, "flor_amarilla", "MID"))
+		plate = chest.box(-0.26, 0.26, -0.22, 0.12, 0.84, 1.2, taper=0.03)
+		chest.paint_bands(plate, [(0.92, 0.95, GLOW, "MID")], default=(0, 0, RUST, "LOW"))
+		chest.paint(epi.eye(chest, Vector((0, -0.23, 1.07)), 0.12, depth=0.02, pupil_swatch=GLOW), "dorado", "LIGHT")
 	else:
-		hood = head.lathe([(0.47, hz - 0.05), (0.46, hz + 0.25), (0.3, hz + 0.45), (0.0, hz + 0.5)], sides=8)
-		for v in {v for f in hood for v in f.verts}:
-			if v.co.y < -0.2:
-				v.co.y = max(v.co.y, -0.15)
-		head.jitter(hood, 0.03)
-		head.paint(hood, "tierra", "LOW", vary=0.1)
-	arms_and_legs(body, bp, "tierra" if not guardian else "tela_roja", "hueso", "hueso", "hueso", arm_r=0.055, leg_r=0.065, bony=True)
+		strap = chest.box(-0.24, 0.24, -0.16, 0.14, 0.86, 0.94)
+		chest.transform(strap, Matrix.Translation((0, 0, 0.9)) @ Matrix.Rotation(0.6, 4, "Y") @ Matrix.Translation((0, 0, -0.9)))
+		chest.paint(strap, WRAP, "LOW", vary=0.1)
+	collar = chest.lathe([(0.24, 1.12), (0.27, 1.22), (0.0, 1.23)], sides=6)
+	chest.jitter(collar, 0.03)
+	chest.paint(collar, "dorado" if guardian else WRAP, "MID" if guardian else "DARK", vary=0.1)
+	chullpa_head(body.part("head"), 1.66, guardian)
+	for side in ("l", "r"):
+		armored = guardian or side == "l"
+		up = body.part(f"upperarm.{side}")
+		a, b = bp[f"upperarm.{side}"]
+		up.paint(limb(up, a, b, 0.06, 0.05), "hueso", "MID")
+		if armored:
+			pad = up.rounded_box(a.x - 0.17, a.x + 0.17, a.y - 0.17, a.y + 0.17, a.z - 0.1, a.z + 0.16, radius=0.07)
+			up.jitter(pad, 0.015)
+			up.paint(pad, RUST, "LOW", vary=0.06)
+		low = body.part(f"lowerarm.{side}")
+		a, b = bp[f"lowerarm.{side}"]
+		if armored:
+			low.paint(limb(low, a, b, 0.09, 0.12, sides=8), RUST, "LOW", vary=0.06)
+			low.paint(limb(low, a + (b - a) * 0.72, a + (b - a) * 0.84, 0.125, 0.125, sides=8), GLOW, "MID")
+		else:
+			low.paint(limb(low, a, b, 0.05, 0.045), "hueso", "MID")
+			low.paint(limb(low, a + (b - a) * 0.3, a + (b - a) * 0.8, 0.075, 0.07), WRAP, "LOW", vary=0.1)
+		wr = body.part(f"wrist.{side}")
+		wr.paint(limb(wr, *bp[f"wrist.{side}"], 0.045, 0.045), "hueso", "MID")
+		hand = body.part(f"hand.{side}")
+		h0, h1 = bp[f"hand.{side}"]
+		hand.paint(hand.blob((h0 + h1) / 2, 0.09, squash=(1.2, 0.9, 1.0), subdiv=1, rough=0.15), "hueso", "MID")
+		ul = body.part(f"upperleg.{side}")
+		ul.paint(limb(ul, *bp[f"upperleg.{side}"], 0.07, 0.06), "hueso", "MID")
+		ll = body.part(f"lowerleg.{side}")
+		a, b = bp[f"lowerleg.{side}"]
+		ll.paint(limb(ll, a, b, 0.14, 0.12, sides=8), RUST if guardian else WRAP, "LOW", vary=0.08)
+		ll.paint(limb(ll, a - (b - a) * 0.05, a + (b - a) * 0.12, 0.16, 0.155, sides=8), "madera_oscura", "MID")
+		foot = body.part(f"foot.{side}")
+		f0, _ = bp[f"foot.{side}"]
+		boot = foot.box(f0.x - 0.12, f0.x + 0.12, f0.y - 0.22, f0.y + 0.09, 0.0, 0.15, taper=0.03)
+		foot.jitter(boot, 0.01)
+		foot.paint(boot, RUST if guardian else "madera_oscura", "LOW")
+		if guardian:
+			foot.paint(foot.box(f0.x - 0.125, f0.x + 0.125, f0.y - 0.225, f0.y + 0.095, 0.0, 0.03), GLOW, "MID")
 	body.build()
 	save(name)
 
