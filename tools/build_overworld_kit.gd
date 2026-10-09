@@ -65,7 +65,10 @@ func _initialize() -> void:
 		next += 1
 	for scene: Node in _scenes.values():
 		scene.free()
+	var uid := ResourceLoader.get_resource_uid(OUTPUT)
 	var err := ResourceSaver.save(kit, OUTPUT)
+	if err == OK and uid != ResourceUID.INVALID_ID:
+		ResourceSaver.set_uid(OUTPUT, uid)
 	print("overworld_kit: ", error_string(err), " · ", kit.get_item_list().size(), " ítems")
 	quit(0 if err == OK else 1)
 

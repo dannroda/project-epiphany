@@ -49,7 +49,10 @@ func _initialize() -> void:
 		kit.set_item_navigation_mesh(next, source.get_item_navigation_mesh(variant[0]))
 		next += 1
 	_scene.free()
+	var uid := ResourceLoader.get_resource_uid(OUTPUT)
 	var err := ResourceSaver.save(kit, OUTPUT)
+	if err == OK and uid != ResourceUID.INVALID_ID:
+		ResourceSaver.set_uid(OUTPUT, uid)
 	print("temple_kit: ", error_string(err), " · ", kit.get_item_list().size(), " ítems")
 	quit(0 if err == OK else 1)
 
