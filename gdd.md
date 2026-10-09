@@ -300,7 +300,7 @@ Rig reutilizado de otra jam *(pendiente importarlo al repo)*.
 
 | Pantalla | Contenido |
 |---|---|
-| **Título** | Escena principal del juego (`src/ui/title/title_screen.tscn`, mockup Main): Continuar, Nueva partida, Opciones, Salir; en debug, "Cargar escenario" lista `debug/scenarios/`. `--scenario=` y `next_scenario.txt` se siguen respetando. Piezas reutilizables: `MenuItem` (opción con ▶ dorado al tener foco) y `HintBar` (pistas de botones del dispositivo actual). |
+| **Título** | Escena principal del juego (`src/ui/title/title_screen.tscn`, mockup Main): Continuar, Nueva partida, Opciones, Salir; en debug, "Cargar escenario" lista `debug/scenarios/`. `--scenario=` y `next_scenario.txt` se siguen respetando. Piezas reutilizables: `MenuItem` (escena sin script: el ▶ es el ícono de la variación del tema, transparente salvo con foco o hover) y `HintBar` (pistas de botones del dispositivo actual). |
 | **HUD** | Corazones (¼), llaves chicas + llave del jefe (solo en mazmorra), botones de ítem X/Y con munición, indicador de acción contextual (A/B: *Abrir*, *Empujar*, *Leer*), barra del jefe, nombre de la zona al entrar. |
 | **Caja de texto** | Tablillas e *item get*. El texto vive en archivos `.dialogue` de **Dialogue Manager** (Nathan Hoad); el globo es nuestra `TextBox` con los estilos de los mockups (piedra para tablillas, dorado para *item get*), no la UI del plugin. Se integró aunque no haya NPCs, para tener el sistema andando antes de que haya muchos textos (decisión del 2026-10-08, elegido sobre Dialogic por ser liviano y dejar la UI propia). |
 | **Item get** | Animación con el ítem en alto + nombre + descripción corta. |

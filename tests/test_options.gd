@@ -86,7 +86,7 @@ func test_options_from_title_and_pause() -> void:
 	await tree.process_frame
 	var page: Control = menu.pages.get_node(^"Sistema")
 	assert_true(page.visible, "la pausa tiene la pestaña Sistema")
-	assert_true(page.find_child("SaveAndQuit", true, false) is MenuItem, "con Guardar y salir al título")
+	assert_true(page.find_child("SaveAndQuit", true, false) is Button, "con Guardar y salir al título")
 	while stack.is_open():
 		stack.pop()
 	_restore(settings)

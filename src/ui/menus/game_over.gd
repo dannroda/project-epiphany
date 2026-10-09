@@ -4,7 +4,7 @@ extends UiScreen
 
 const SCENE_PATH := "res://src/ui/menus/game_over.tscn"
 
-@onready var _continue: MenuItem = %Continue
+@onready var _continue: Button = %Continue
 
 
 static func open() -> GameOver:

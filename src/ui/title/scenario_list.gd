@@ -20,8 +20,8 @@ func _ready() -> void:
 	for file in DirAccess.get_files_at(SaveManager.SCENARIO_DIR):
 		if not file.ends_with(".cfg"):
 			continue
-		var item: MenuItem = ITEM.instantiate()
-		item.label = file.get_basename()
+		var item: Button = ITEM.instantiate()
+		item.text = file.get_basename()
 		item.pressed.connect(func() -> void: chosen.emit(file.get_basename()))
 		list.add_child(item)
 

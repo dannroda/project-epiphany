@@ -7,8 +7,8 @@ signal answered(confirmed: bool)
 const SCENE_PATH := "res://src/ui/menus/confirm_dialog.tscn"
 
 @onready var question: Label = %Question
-@onready var yes: MenuItem = %Yes
-@onready var no: MenuItem = %No
+@onready var yes: Button = %Yes
+@onready var no: Button = %No
 
 var _question := ""
 var _confirm := ""
@@ -24,7 +24,7 @@ static func ask(text: String, confirm_label: String) -> ConfirmDialog:
 
 func _ready() -> void:
 	question.text = _question
-	yes.label = _confirm
+	yes.text = _confirm
 	yes.pressed.connect(_answer.bind(true))
 	no.pressed.connect(_answer.bind(false))
 

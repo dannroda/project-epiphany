@@ -1736,7 +1736,7 @@ Importar el rig del ojo con manos y armar las fases 1 y 2 con LimboAI.
 
 **Bloqueada por:** 9.6 Muerte del jefe y final
 
-## M10 — Terminación  (8/13)
+## M10 — Terminación  (9/13)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -1959,17 +1959,17 @@ Skills: `workflows:itch-publish`.
 
 **Notas:** Targeting.targeting_range (12 m) pisa en _ready el radio del CylinderShape3D de TargetDetector (_set_range duplica la forma y le pone el radio), así que cambiar la forma en el editor no tiene efecto.
 
-### 10.13 Refactor de código de UI innecesario · Pendiente
+### 10.13 Refactor de código de UI innecesario · Hecho
 
 **Prioridad:** media · **Etiquetas:** `ui`
 
-- [ ] MenuItem sin script: ▶ por ícono del tema
+- [x] MenuItem sin script: ▶ por ícono del tema
   MenuItem/icons/icon = textura ▶, icon_normal_color/hover alpha 0, icon_focus_color dorado. Borrar label/_refresh y usar text directo; adaptar escenas y tests que usan .label.
-- [ ] Revisar el resto de scripts de UI por lo mismo
+- [x] Revisar el resto de scripts de UI por lo mismo
   Candidatos: SlotCard._paint (variaciones según foco/vacía), pestañas de la pausa (TabLabel/TabLabelSelected), HintBar, ConfirmDialog, modulate de fichas.
-- [ ] Suite verde y capturas sin cambios visuales
+- [x] Suite verde y capturas sin cambios visuales
 
-**Notas:** Código que reemplaza algo que el tema ya resuelve. Ej.: menu_item.gd cambia el texto a '▶  label' al tomar foco; con un ícono ▶ en el tema (MenuItem/icons/icon) e icon_normal_color con alpha 0 (icon_focus_color dorado) se logra lo mismo sin script.
+**Notas:** Código que reemplaza algo que el tema ya resuelve. MenuItem quedó sin script: ▶ = MenuItem/icons/icon con icon_normal_color alpha 0 e icon_focus/hover dorados; hover se ve como foco. Revisado el resto: SlotCard (vacía/llena), pestañas y modos de FileSelect dependen de estado, no de foco; se quitó slot.text = "" en Equipo y el botón DEBUG pasó a la variación DebugButton.
 
 ## Listas
 

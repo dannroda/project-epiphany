@@ -61,7 +61,6 @@ func _refresh() -> void:
 		var owned := GameState.inventory.has(item.id)
 		slot.disabled = not owned
 		slot.icon = item.icon if owned else LOCK
-		slot.text = ""
 		_set_badge(slot, _is_equipped(item))
 	_refresh_stats()
 	_refresh_preview()

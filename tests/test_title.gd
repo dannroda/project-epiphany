@@ -15,9 +15,9 @@ func test_new_game_quit_to_title_and_continue() -> void:
 	await tree.process_frame
 	var title := tree.current_scene
 	for item in ["Continue", "NewGame", "Options", "Quit"]:
-		assert_true(title.get_node("%" + item) is MenuItem, item)
+		assert_true((title.get_node("%" + item) as Button).theme_type_variation == &"MenuItem", item)
 	assert_eq(title.get_node(^"%DebugScenarios").visible, OS.is_debug_build(), "cargar escenario solo en debug")
-	assert_true(tree.root.gui_get_focus_owner() is MenuItem, "una opción tiene el foco (gamepad y teclado)")
+	assert_true(tree.root.gui_get_focus_owner() is Button, "una opción tiene el foco (gamepad y teclado)")
 
 	assert_eq(await saves.new_game(), OK)
 	assert_eq(tree.current_scene.scene_file_path, "res://levels/overworld.tscn", "nueva partida: overworld")

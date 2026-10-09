@@ -27,6 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://ck1d2b8yg7sry" path="res://assets/ui/frames/slot_empty_focus.png" id="frame_slot_empty_focus"]
 [ext_resource type="Texture2D" uid="uid://b21bkjnh7n51t" path="res://assets/ui/frames/slot_focus.png" id="frame_slot_focus"]
 [ext_resource type="Texture2D" uid="uid://37x6yxoaffwp" path="res://assets/ui/frames/stone.png" id="frame_stone"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/menu_arrow.png" id="frame_menu_arrow"]
 
 [sub_resource type="FontVariation" id="FontVariation_r7xqo"]
 base_font = ExtResource("2_lf7dv")
@@ -702,6 +703,22 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_debug_button"]
+content_margin_left = 16.0
+content_margin_top = 10.0
+content_margin_right = 16.0
+content_margin_bottom = 10.0
+bg_color = Color(0.10980392, 0.09411765, 0.0627451, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
 [resource]
 default_font = ExtResource("3_cwe5m")
 default_font_size = 18
@@ -858,16 +875,25 @@ MenuItem/base_type = &"Button"
 MenuItem/colors/font_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
 MenuItem/colors/font_disabled_color = Color(0.43529412, 0.41568628, 0.3764706, 1)
 MenuItem/colors/font_focus_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
-MenuItem/colors/font_hover_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
+MenuItem/colors/font_hover_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
 MenuItem/colors/font_hover_pressed_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
 MenuItem/colors/font_pressed_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
+MenuItem/colors/icon_disabled_color = Color(1, 1, 1, 0)
+MenuItem/colors/icon_focus_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+MenuItem/colors/icon_hover_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+MenuItem/colors/icon_hover_pressed_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+MenuItem/colors/icon_normal_color = Color(1, 1, 1, 0)
+MenuItem/colors/icon_pressed_color = Color(1, 1, 1, 0)
+MenuItem/constants/h_separation = 10
 MenuItem/font_sizes/font_size = 26
+MenuItem/icons/icon = ExtResource("frame_menu_arrow")
 MenuItem/styles/disabled = SubResource("StyleBoxEmpty_menu_item")
 MenuItem/styles/focus = SubResource("StyleBoxEmpty_menu_item")
 MenuItem/styles/hover = SubResource("StyleBoxEmpty_menu_item")
 MenuItem/styles/normal = SubResource("StyleBoxEmpty_menu_item")
 MenuItem/styles/pressed = SubResource("StyleBoxEmpty_menu_item")
 MenuItemSmall/base_type = &"MenuItem"
+MenuItemSmall/constants/icon_max_width = 9
 MenuItemSmall/font_sizes/font_size = 20
 OptionButton/icons/arrow = ExtResource("frame_arrow_down")
 OptionLabel/base_type = &"Label"
@@ -950,3 +976,12 @@ MapRoomCell/styles/legend = SubResource("StyleBoxFlat_map_legend")
 MapRoomCell/styles/visited = SubResource("StyleBoxFlat_map_visited")
 ValueMuted/base_type = &"Value"
 ValueMuted/colors/font_color = Color(0.5411765, 0.5137255, 0.45490196, 1)
+DebugButton/base_type = &"Button"
+DebugButton/colors/font_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+DebugButton/colors/font_focus_color = Color(1, 0.85, 0.5, 1)
+DebugButton/colors/font_hover_color = Color(1, 0.85, 0.5, 1)
+DebugButton/font_sizes/font_size = 15
+DebugButton/styles/focus = SubResource("StyleBoxFlat_debug_button")
+DebugButton/styles/hover = SubResource("StyleBoxFlat_debug_button")
+DebugButton/styles/normal = SubResource("StyleBoxFlat_debug_button")
+DebugButton/styles/pressed = SubResource("StyleBoxFlat_debug_button")

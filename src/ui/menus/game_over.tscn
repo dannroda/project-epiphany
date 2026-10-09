@@ -70,7 +70,7 @@ theme_override_constants/separation = 6
 [node name="Continue" parent="Menu" instance=ExtResource("4_item")]
 unique_name_in_owner = true
 layout_mode = 2
-label = "Continuar"
+text = "Continuar"
 
 [node name="Where" type="Label" parent="Menu"]
 unique_name_in_owner = true
@@ -82,12 +82,12 @@ horizontal_alignment = 1
 [node name="SaveAndQuit" parent="Menu" instance=ExtResource("4_item")]
 unique_name_in_owner = true
 layout_mode = 2
-label = "Guardar y salir"
+text = "Guardar y salir"
 
 [node name="Quit" parent="Menu" instance=ExtResource("4_item")]
 unique_name_in_owner = true
 layout_mode = 2
-label = "Salir sin guardar"
+text = "Salir sin guardar"
 
 [node name="Hints" type="HBoxContainer" parent="."]
 unique_name_in_owner = true

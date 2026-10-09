@@ -135,7 +135,7 @@ func test_file_select_screen() -> void:
 	assert_eq(screen.can_process(), false, "la selección de abajo no recibe input")
 	assert_eq(saves.has_save(0), true, "todavía no borró")
 	assert_true(tree.root.gui_get_focus_owner().name == &"No", "con el foco en Cancelar")
-	(confirm.find_child("Yes", true, false) as MenuItem).pressed.emit()
+	(confirm.find_child("Yes", true, false) as Button).pressed.emit()
 	await tree.process_frame
 	assert_eq(saves.has_save(0), false, "confirmado, borra")
 	assert_true(stack.top() == screen and screen.can_process(), "vuelve a la selección")

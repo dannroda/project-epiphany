@@ -48,6 +48,8 @@ magick -size 16x16 xc:none "$OUT/check_off.png"
 magick -size 16x16 xc:none -fill '#d9a441' -draw 'polygon 8,1 15,8 8,15 1,8' "$OUT/radio_on.png"
 magick -size 16x16 xc:none -fill none -stroke '#6b5a3a' -strokewidth 2 -draw 'polygon 8,2 14,8 8,14 2,8' "$OUT/radio_off.png"
 magick -size 16x16 xc:none -fill '#d9a441' -draw 'polygon 2,5 14,5 8,11' "$OUT/arrow_down.png"
+# ▶ de MenuItem: blanco, el tema lo tiñe (invisible sin foco, dorado con foco).
+magick -size 12x14 xc:none -fill white -draw 'polygon 1,1 11,7 1,13' "$OUT/menu_arrow.png"
 
 cp assets/kenney_fantasy-ui-borders/License.txt "$OUT/License.txt"
 ls "$OUT"

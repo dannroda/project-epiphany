@@ -56,7 +56,7 @@ func test_save_and_quit_keeps_the_checkpoint() -> void:
 	var player := tree.get_first_node_in_group(&"player") as Node3D
 	player.global_position = Vector3(0, 0, 0)
 	var screen := await _die(tree)
-	screen.find_children("*", "MenuItem", true, false).filter(func(item: MenuItem) -> bool: return item.label == "Guardar y salir")[0].pressed.emit()
+	(screen.find_child("SaveAndQuit", true, false) as Button).pressed.emit()
 	await tree.scene_changed
 	assert_eq(tree.current_scene.scene_file_path, "res://src/ui/title/title_screen.tscn", "vuelve al título")
 	assert_eq(tree.paused, false)

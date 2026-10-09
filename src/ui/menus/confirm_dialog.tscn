@@ -53,9 +53,9 @@ alignment = 1
 [node name="No" parent="Center/Panel/Box/Row" instance=ExtResource("2_item")]
 unique_name_in_owner = true
 layout_mode = 2
-label = "Cancelar"
+text = "Cancelar"
 
 [node name="Yes" parent="Center/Panel/Box/Row" instance=ExtResource("2_item")]
 unique_name_in_owner = true
 layout_mode = 2
-label = "Borrar"
+text = "Borrar"

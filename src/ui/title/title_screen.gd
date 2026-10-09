@@ -2,10 +2,10 @@ extends Control
 ## Pantalla de título (mockup Main): Continuar, Nueva partida, Opciones, Salir; en debug, cargar un escenario.
 ## Es el estado raíz de la máquina de UI: todo lo que abre pasa por `MenuStack`.
 
-@onready var continue_item: MenuItem = %Continue
-@onready var new_game_item: MenuItem = %NewGame
-@onready var options_item: MenuItem = %Options
-@onready var quit_item: MenuItem = %Quit
+@onready var continue_item: Button = %Continue
+@onready var new_game_item: Button = %NewGame
+@onready var options_item: Button = %Options
+@onready var quit_item: Button = %Quit
 @onready var debug_scenarios: Button = %DebugScenarios
 
 
