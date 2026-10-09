@@ -1452,7 +1452,7 @@ Hecho 2026-10-08: `start` ahora arranca en el overworld (escena principal del ju
 
 **Bloqueada por:** 7.6 Sello del templo
 
-## M8 — Contenido de mazmorra  (3/8)
+## M8 — Contenido de mazmorra  (4/8)
 
 Las 8 salas en bloques grises, el arco a mitad de camino, la llave del jefe.
 
@@ -1521,7 +1521,7 @@ Hecho 2026-10-08: `shield_skeleton.tscn` + `data/entities/shield_skeleton.tres`.
 
 **Bloqueada por:** 6.7 Mazmorra de prueba: tres salas grises; 8.1 Layout de la mazmorra
 
-### 8.4 Salas 3–4: galería de trampas y sala agrietada · En curso
+### 8.4 Salas 3–4: galería de trampas y sala agrietada · Hecho
 
 - [x] Sala 3: reflejar orbes de torretas a un cristal
   Da una llave chica.
@@ -1536,14 +1536,16 @@ Hecho 2026-10-08: `shield_skeleton.tscn` + `data/entities/shield_skeleton.tres`.
 
 **Bloqueada por:** 5.2 Torreta / ojo menor; 5.4 Bombas; 8.3 Salas 1–2: vestíbulo y hub
 
-### 8.5 Sala 5: arena y arco · Pendiente
+### 8.5 Sala 5: arena y arco · En curso
 
-- [ ] Oleadas
+- [x] Oleadas
   `WaveSpawner`: las oleadas aparecen al entrar; la persiana se abre al terminar la última.
-- [ ] Cofre grande con el arco
+- [x] Cofre grande con el arco
   Flag `d1_chest_bow`; *item get* con flechas iniciales.
 
 **Prueba:** Ganar las oleadas (incluido el esqueleto con escudo) y conseguir el arco; morir a mitad de oleada y reintentar empieza de cero.
+
+**Notas:** Hecho 2026-10-08: `WaveSpawner` + `WaveSpawn` (oleadas como nodos hijos, flag `d1_arena_cleared`, hace de interruptor); `Room` no abre persianas mientras corren oleadas. Cofre grande del arco tras una reja. Tests en `tests/test_temple.gd` (oleadas + arco; morir a mitad reinicia).
 
 **Referencias:** `gdd.md#mazmorra`
 

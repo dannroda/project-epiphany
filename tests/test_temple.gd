@@ -191,3 +191,64 @@ func test_rooms_3_4_key_and_map_without_the_bow() -> void:
 	assert_eq((level.get_node(^"ArenaCrackedWall") as CrackedWall).is_broken, true, "el muro hacia la arena")
 	state.reset()
 
+
+
+func _alive_in(room_name: NodePath) -> Array:
+	return (level.get_node(room_name) as Room).enemies_inside()
+
+
+func _kill_all(enemies: Array) -> void:
+	for enemy: Enemy in enemies:
+		enemy.health.invulnerability_time = 0.0
+		enemy.health.damage(100)
+
+
+func _enter_arena() -> WaveSpawner:
+	_kill([^"HubSkeleton1", ^"HubSkeleton2"])
+	player.global_position = Vector3(48, 0, 37)
+	await tree.create_timer(1.5).timeout
+	return level.get_node(^"ArenaWaves") as WaveSpawner
+
+
+func test_room_5_arena_waves_and_the_bow() -> void:
+	await _scenario("dungeon_no_bow")
+	var waves := await _enter_arena()
+	assert_eq(waves.running, true, "las oleadas empiezan al entrar")
+	assert_eq(_door(^"ArenaShutter").is_open, false, "la persiana encierra al player")
+	assert_eq(_alive_in(^"Arena").size(), 2, "primera oleada: dos esqueletos")
+	_kill_all(_alive_in(^"Arena"))
+	await tree.create_timer(0.5).timeout
+	assert_eq(_door(^"ArenaShutter").is_open, false, "entre oleadas sigue cerrada")
+	await tree.create_timer(1.0).timeout
+	var second := _alive_in(^"Arena")
+	assert_eq(second.size(), 3, "segunda oleada")
+	assert_true(second.any(func(enemy: Enemy) -> bool: return enemy.config.guards_front), "con el esqueleto con escudo")
+	_kill_all(second)
+	await tree.create_timer(1.0).timeout
+	assert_eq(waves.active, true, "ganadas")
+	assert_eq(_door(^"ArenaShutter").is_open, true, "se abre la persiana")
+	assert_eq((level.get_node(^"BowGate") as Gate).is_open, true, "y la reja del cofre")
+	player.global_position = Vector3(48, 0, 28)
+	_face(Vector3.FORWARD)
+	await _open_chest(^"BowChest")
+	assert_eq(state.inventory.has(&"bow"), true, "el arco")
+	assert_eq(state.inventory.count(&"arrow"), 10, "con flechas iniciales")
+	assert_eq(state.get_flag(&"d1_chest_bow"), true)
+	state.reset()
+
+
+func test_dying_mid_wave_restarts_the_arena() -> void:
+	await _scenario("dungeon_no_bow")
+	var waves := await _enter_arena()
+	_kill_all(_alive_in(^"Arena"))
+	await tree.create_timer(1.5).timeout
+	assert_eq(waves.wave, 1, "va por la segunda oleada")
+	await tree.root.get_node(^"SaveManager").respawn()
+	level = tree.current_scene
+	await tree.create_timer(1.0).timeout
+	waves = level.get_node(^"ArenaWaves") as WaveSpawner
+	assert_eq(waves.running, true, "al reaparecer en la arena vuelve a empezar")
+	assert_eq(waves.wave, 0, "desde la primera oleada")
+	assert_eq(_alive_in(^"Arena").size(), 2)
+	assert_true(state.get_flag(&"d1_arena_cleared") != true, "sin ganar")
+	state.reset()

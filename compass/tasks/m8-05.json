@@ -2,12 +2,12 @@
   "checklist": [
     {
       "detail": "`WaveSpawner`: las oleadas aparecen al entrar; la persiana se abre al terminar la última.",
-      "done": false,
+      "done": true,
       "text": "Oleadas"
     },
     {
       "detail": "Flag `d1_chest_bow`; *item get* con flechas iniciales.",
-      "done": false,
+      "done": true,
       "text": "Cofre grande con el arco"
     }
   ],
@@ -20,7 +20,7 @@
     }
   ],
   "milestone": "m08",
-  "notes": "",
+  "notes": "Hecho 2026-10-08: `WaveSpawner` + `WaveSpawn` (oleadas como nodos hijos, flag `d1_arena_cleared`, hace de interruptor); `Room` no abre persianas mientras corren oleadas. Cofre grande del arco tras una reja. Tests en `tests/test_temple.gd` (oleadas + arco; morir a mitad reinicia).",
   "order": 5,
   "refs": [
     {
@@ -28,8 +28,8 @@
       "section": "mazmorra"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Ganar las oleadas (incluido el esqueleto con escudo) y conseguir el arco; morir a mitad de oleada y reintentar empieza de cero.",
   "title": "Sala 5: arena y arco",
-  "updated_at": "2026-10-08T04:45:59.252Z"
+  "updated_at": "2026-10-09T01:12:06.641Z"
 }

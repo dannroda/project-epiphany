@@ -76,10 +76,16 @@ func _lock_after_entering() -> void:
 		door.close()
 
 
+## Oleadas en curso: entre una y otra no queda nadie, pero la sala sigue cerrada.
+func waves_running() -> bool:
+	return get_tree().get_nodes_in_group(&"wave_spawners").any(func(spawner: Node) -> bool:
+		return spawner.get(&"room") == self and spawner.get(&"running") == true)
+
+
 func _physics_process(_delta: float) -> void:
 	if Engine.is_editor_hint() or not locked:
 		return
-	if enemies_inside().is_empty():
+	if enemies_inside().is_empty() and not waves_running():
 		locked = false
 		for door: Door in shutters():
 			door.open()
