@@ -3,6 +3,9 @@ class_name Chest
 extends StaticBody3D
 
 const OPEN_ANGLE := -110.0
+const MODEL := preload("res://assets/kaykit_dungeon/chest.glb")
+const BIG_MODEL := preload("res://assets/kaykit_dungeon/chest_gold.glb")
+const MODEL_SCALE := 0.6
 
 @export var item: ItemData
 @export var amount: int = 1
@@ -13,12 +16,14 @@ const OPEN_ANGLE := -110.0
 @export var big: bool = false ## Cofre grande: ítem de la mazmorra / llave del jefe
 
 @onready var interactable: Interactable = $Interactable
-@onready var lid: Node3D = %Lid
 
+## La tapa del modelo de KayKit (gira sobre la bisagra de atrás).
+var lid: Node3D
 var persistent: PersistentFlag
 
 
 func _ready() -> void:
+	_build_model()
 	if Engine.is_editor_hint():
 		return
 	add_to_group(&"chests")
@@ -54,3 +59,13 @@ func _show(opened: bool) -> void:
 		return
 	interactable.enabled = not opened
 	lid.rotation_degrees.x = OPEN_ANGLE if opened else 0.0
+
+
+## Modelo de KayKit Dungeon (el dorado para los grandes); sin owner, así no se guarda en la escena.
+func _build_model() -> void:
+	var model: Node3D = (BIG_MODEL if big else MODEL).instantiate()
+	model.name = "Model"
+	model.scale = Vector3.ONE * MODEL_SCALE
+	add_child(model, false, INTERNAL_MODE_FRONT)
+	lid = model.find_children("*_lid", "Node3D", true, false)[0]
+

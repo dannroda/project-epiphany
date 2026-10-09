@@ -1,0 +1,16 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/kaykit_dungeon/torch_mounted.glb" id="1_torch"]
+[ext_resource type="Script" path="res://src/world/torch_flicker.gd" id="2_flicker"]
+
+[node name="WallTorch" type="Node3D"]
+
+[node name="Model" parent="." instance=ExtResource("1_torch")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
+
+[node name="Light" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0.45)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 1.4
+omni_range = 7.0
+script = ExtResource("2_flicker")

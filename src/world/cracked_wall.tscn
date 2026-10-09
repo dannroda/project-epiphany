@@ -2,26 +2,11 @@
 
 [ext_resource type="Script" path="res://src/world/cracked_wall.gd" id="1_wall"]
 [ext_resource type="Script" path="res://src/components/hurtbox.gd" id="2_hurtbox"]
+[ext_resource type="PackedScene" path="res://assets/kaykit_dungeon/wall_cracked.glb" id="kk_wall"]
 
 [sub_resource type="StandardMaterial3D" id="Stone"]
 albedo_color = Color(0.58, 0.55, 0.5, 1)
 roughness = 0.95
-
-[sub_resource type="StandardMaterial3D" id="Crack"]
-shading_mode = 0
-albedo_color = Color(0.09, 0.08, 0.08, 1)
-
-[sub_resource type="BoxMesh" id="WallMesh"]
-material = SubResource("Stone")
-size = Vector3(2.4, 2.4, 0.6)
-
-[sub_resource type="BoxMesh" id="CrackMesh"]
-material = SubResource("Crack")
-size = Vector3(0.07, 0.6, 0.02)
-
-[sub_resource type="BoxMesh" id="CrackTopMesh"]
-material = SubResource("Crack")
-size = Vector3(0.6, 0.02, 0.06)
 
 [sub_resource type="BoxMesh" id="RockMesh"]
 material = SubResource("Stone")
@@ -39,49 +24,8 @@ script = ExtResource("1_wall")
 [node name="Wall" type="Node3D" parent="."]
 unique_name_in_owner = true
 
-[node name="WallMesh" type="MeshInstance3D" parent="Wall"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
-mesh = SubResource("WallMesh")
-
-[node name="CrackFront0" type="MeshInstance3D" parent="Wall"]
-transform = Transform3D(0.9063, 0.4226, 0, -0.4226, 0.9063, 0, 0, 0, 1, -0.55, 1.6, 0.31)
-cast_shadow = 0
-mesh = SubResource("CrackMesh")
-
-[node name="CrackFront1" type="MeshInstance3D" parent="Wall"]
-transform = Transform3D(0.8192, -0.5736, 0, 0.5736, 0.8192, 0, 0, 0, 1, -0.3, 1.05, 0.31)
-cast_shadow = 0
-mesh = SubResource("CrackMesh")
-
-[node name="CrackFront2" type="MeshInstance3D" parent="Wall"]
-transform = Transform3D(0.9397, 0.3420, 0, -0.3420, 0.9397, 0, 0, 0, 1, -0.5, 0.55, 0.31)
-cast_shadow = 0
-mesh = SubResource("CrackMesh")
-
-[node name="CrackFront3" type="MeshInstance3D" parent="Wall"]
-transform = Transform3D(0.9397, -0.3420, 0, 0.3420, 0.9397, 0, 0, 0, 1, 0.35, 1.35, 0.31)
-cast_shadow = 0
-mesh = SubResource("CrackMesh")
-
-[node name="CrackFront4" type="MeshInstance3D" parent="Wall"]
-transform = Transform3D(0.8660, 0.5000, 0, -0.5000, 0.8660, 0, 0, 0, 1, 0.55, 0.85, 0.31)
-cast_shadow = 0
-mesh = SubResource("CrackMesh")
-
-[node name="CrackTop0" type="MeshInstance3D" parent="Wall"]
-transform = Transform3D(0.8660, 0, -0.5000, 0, 1, 0, 0.5000, 0, 0.8660, -0.7, 2.21, 0.15)
-cast_shadow = 0
-mesh = SubResource("CrackTopMesh")
-
-[node name="CrackTop1" type="MeshInstance3D" parent="Wall"]
-transform = Transform3D(0.9063, 0, 0.4226, 0, 1, 0, -0.4226, 0, 0.9063, -0.1, 2.21, -0.05)
-cast_shadow = 0
-mesh = SubResource("CrackTopMesh")
-
-[node name="CrackTop2" type="MeshInstance3D" parent="Wall"]
-transform = Transform3D(0.9659, 0, -0.2588, 0, 1, 0, 0.2588, 0, 0.9659, 0.5, 2.21, 0.1)
-cast_shadow = 0
-mesh = SubResource("CrackTopMesh")
+[node name="Model" parent="Wall" instance=ExtResource("kk_wall")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
 
 [node name="Rubble" type="Node3D" parent="."]
 unique_name_in_owner = true

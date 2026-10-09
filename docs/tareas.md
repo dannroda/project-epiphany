@@ -1736,7 +1736,7 @@ Importar el rig del ojo con manos y armar las fases 1 y 2 con LimboAI.
 
 **Bloqueada por:** 9.6 Muerte del jefe y final
 
-## M10 — Terminación  (5/10)
+## M10 — Terminación  (7/10)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -1834,7 +1834,7 @@ Hecho 2026-10-09: buses (vía `Settings`), SFX de Kenney CC0 con variación, son
 
 **Referencias:** `gdd.md#historia`
 
-### 10.6 Ambientación del doom · En curso
+### 10.6 Ambientación del doom · Hecho
 
 - [x] Nivel de *doom* por sala
   Valor 0..1 exportado en `Room` que mueve luz, niebla y partículas.
@@ -1855,18 +1855,20 @@ Hecho 2026-10-09: `Room.doom` + `DoomAmbience` (luz, niebla, polvo, grietas con 
 
 **Bloqueada por:** 8.8 Recorrido completo y escenarios de la mazmorra
 
-### 10.7 Dirección de arte y pasada visual · Pendiente
+### 10.7 Dirección de arte y pasada visual · Hecho
 
-- [ ] Decidir: KayKit + prototipo o dirección propia
+- [x] Decidir: KayKit + prototipo o dirección propia
   Cerrar la decisión en [[gdd#decisiones-abiertas]].
-- [ ] Guía de estilo corta
+- [x] Guía de estilo corta
   Paleta, materiales, tamaño de íconos y UI.
-- [ ] Reemplazar placeholders críticos
+- [x] Reemplazar placeholders críticos
   HUD, íconos, cofres, puertas, muros agrietados (que se lean como secreto).
 
 **Prueba:** Capturas del overworld, la mazmorra y el HUD se ven como un mismo juego.
 
 **Notas:** Skills: `disciplines:create-game-assets`.
+
+Hecho 2026-10-09: decisión cerrada (KayKit + prototipo pulido) y guía de estilo en GDD §10.1. KayKit Dungeon Remastered (CC0) para cofres (normal y dorado), muros agrietados y antorchas con luz que titila en el templo. Las puertas quedan como estaban (el marco de KayKit no entra en los huecos de 2 m); HUD e íconos ya seguían los mockups. El pack `kenney_fantasy-ui-borders` que se agregó no se usó: cambiaría el look de los mockups.
 
 **Referencias:** `gdd.md#decisiones-abiertas`
 

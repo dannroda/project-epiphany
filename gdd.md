@@ -319,6 +319,23 @@ Rig reutilizado de otra jam *(pendiente importarlo al repo)*.
 
 ---
 
+### 10.1 Dirección de arte
+<!-- id: arte -->
+
+Decidido el 2026-10-09: **KayKit + prototipo, pulido.** Personajes y armas de KayKit Adventurers; props de KayKit Dungeon Remastered (CC0, `assets/kaykit_dungeon/`: cofres, muros agrietados, antorchas); el terreno es el kit gris (`GridMap` con texturas de prototipo de Kenney, teñidas).
+
+**Paleta del mundo.**
+
+| Zona | Base | Acentos |
+|---|---|---|
+| Overworld | Pasto verde apagado `#7aa86b`, acantilado arena `#947a61`, piso de piedra gris | Naranja de las columnas/rocas, madera de cofres |
+| Templo | Piedra gris fría (luz ambiente `#8c85a6`) | Antorchas cálidas `#ffad61`; con el *doom*, todo vira a rojo `#cc4d40` con niebla `#401410` |
+| Interactivos | Cofres de madera con herrajes (grandes: dorados), muros agrietados de ladrillo gris con musgo (se distinguen del acantilado), puertas de color por tipo, cristales celestes, sello violeta con el ojo | — |
+
+**Materiales.** Sin PBR fino: albedo + textura de prototipo en triplanar de mundo (una textura por celda de 2 m), rugosidad alta. Lo que se puede usar o romper tiene que leerse distinto del escenario: otro material (KayKit), otro color o un brillo.
+
+**UI.** La que fijan los mockups: fondo `#0b0d10`, paneles `#151920`, bordes `#3a4250`, dorado `#d9a441` para foco y títulos, texto `#efe6d2`, secundario `#a79f8e`, peligro `#d0503a`. Títulos en Cinzel, texto en Alegreya Sans. Íconos de ítems SVG planos con contorno oscuro, pensados para 64 px y legibles a 32 px. Botones con los prompts de Kenney según el dispositivo.
+
 ## 11. Arquitectura técnica
 <!-- id: arquitectura -->
 
@@ -1724,5 +1741,5 @@ Moneda y tiendas · NPCs con diálogo · piezas de corazón · gancho / telequin
 - [ ] ¿Varias espadas o una espada con modificadores elementales?
 - [x] Layout exacto de la mazmorra (§8.1) y del overworld (§7.1).
 - [x] Ranuras de guardado: 3 (decidido el 2026-10-09).
-- [ ] Arte: ¿se mantiene el look KayKit + texturas de prototipo o hay dirección de arte propia?
+- [x] Arte: KayKit + texturas de prototipo, pulido con paleta propia (decidido el 2026-10-09, §10.1).
 - [ ] Rig del jefe: importarlo al repo y verificar compatibilidad con el AnimationTree actual.
