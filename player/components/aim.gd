@@ -125,6 +125,19 @@ func _update_debug(direction: Vector3) -> void:
 		DebugOverlay.watch("aim/direction", direction.snappedf(0.01))
 
 
+## Lo que apunta el jugador a propósito: el stick derecho, o el mouse si el último dispositivo fue teclado y mouse.
+## Cero si no está apuntando (no cae en el frente del modelo).
+func pointed_direction() -> Vector3:
+	var stick := _stick()
+	if _input_source == Source.STICK and stick.length() > stick_deadzone:
+		return Vector3(stick.x, 0.0, stick.y).normalized()
+	if _input_source == Source.MOUSE:
+		var hit = mouse_on_ground()
+		if hit != null:
+			return _flat(hit - player.global_position)
+	return Vector3.ZERO
+
+
 func _stick() -> Vector2:
 	return Input.get_vector(&"look_left", &"look_right", &"look_up", &"look_down")
 

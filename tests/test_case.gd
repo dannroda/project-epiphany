@@ -20,3 +20,13 @@ func assert_true(condition: bool, message := "") -> void:
 
 func _fail(text: String) -> void:
 	failures.append("%s: %s" % [current_test, text])
+
+
+## Último dispositivo = gamepad, con el stick derecho quieto: la mira y el giro con el haz siguen al frente del player
+## (con teclado y mouse seguirían al mouse, que en headless queda en una esquina).
+func use_gamepad() -> void:
+	for value in [0.3, 0.0]:
+		var motion := InputEventJoypadMotion.new()
+		motion.axis = JOY_AXIS_RIGHT_X
+		motion.axis_value = value
+		Input.parse_input_event(motion)

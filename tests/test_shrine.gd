@@ -80,6 +80,7 @@ func test_reach_the_shrine_get_the_mirror_and_light_the_crystal() -> void:
 	player.global_position = Vector3(-16, 0, -14)
 	_face(player, Vector3(-1, 0, -1))
 	player.movement_state.blackboard.set_var("is_blocking", true)
+	use_gamepad()
 	player.set_guard(true)
 	await _frames(tree, 8)
 	assert_eq(crystal.lit, true, "el espejo manda el haz al cristal")

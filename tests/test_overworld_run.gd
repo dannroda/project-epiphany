@@ -87,6 +87,7 @@ func _bomb_wall(node: NodePath, stand: Vector3, facing: Vector3, retreat: Vector
 func _reflect(at: Vector3, facing: Vector3) -> void:
 	await _place(at, facing)
 	player.movement_state.blackboard.set_var("is_blocking", true)
+	use_gamepad()
 	player.set_guard(true)
 	for i in 8:
 		await tree.physics_frame

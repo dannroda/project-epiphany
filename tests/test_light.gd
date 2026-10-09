@@ -54,6 +54,7 @@ func _block_and_aim_south(tree: SceneTree, player: PlayerCharacter) -> void:
 	var facing := Vector3(1, 0, 1).normalized()
 	player.model.look_at(player.model.global_position - facing, Vector3.UP)
 	player.movement_state.blackboard.set_var("is_blocking", true)
+	use_gamepad()
 	player.set_guard(true)
 	await _frames(tree, 6)
 
@@ -117,7 +118,7 @@ func test_latched_receiver_stays_lit() -> void:
 	setup[1].reset()
 
 
-func test_left_stick_turns_player_while_catching_light() -> void:
+func test_right_stick_turns_player_while_catching_light() -> void:
 	var setup: Array = await _setup(&"shield_mirror")
 	var tree: SceneTree = setup[0]
 	var player: PlayerCharacter = setup[2]
@@ -127,14 +128,28 @@ func test_left_stick_turns_player_while_catching_light() -> void:
 	var start := player.global_position
 	var before := player.model.global_basis.z
 	var stick := InputEventJoypadMotion.new()
-	stick.axis = JOY_AXIS_LEFT_X
+	stick.axis = JOY_AXIS_RIGHT_X
 	stick.axis_value = 1.0
 	Input.parse_input_event(stick)
 	await _frames(tree, 15)
 	stick.axis_value = 0.0
 	Input.parse_input_event(stick)
-	assert_true(player.global_position.distance_to(start) < 0.05, "no camina: gira en el lugar")
-	assert_true(rad_to_deg(before.angle_to(player.model.global_basis.z)) > 5.0, "el player gira")
+	await _frames(tree, 1)
+	assert_true(player.global_position.distance_to(start) < 0.05, "el stick derecho no lo mueve")
+	assert_true(rad_to_deg(before.angle_to(player.model.global_basis.z)) > 5.0, "lo gira")
 	var out: Vector3 = beam.segments[1][1] - beam.segments[1][0]
 	assert_true(rad_to_deg(out.normalized().angle_to(Vector3.BACK)) > 5.0, "y el reflejo se mueve con él")
+
+	var facing := player.model.global_basis.z
+	var walk := InputEventJoypadMotion.new()
+	walk.axis = JOY_AXIS_LEFT_X
+	walk.axis_value = 1.0
+	Input.parse_input_event(walk)
+	await _frames(tree, 20)
+	walk.axis_value = 0.0
+	Input.parse_input_event(walk)
+	await _frames(tree, 1)
+	assert_true(player.global_position.distance_to(start) > 0.1, "el stick izquierdo lo mueve")
+	assert_true(rad_to_deg(facing.angle_to(player.model.global_basis.z)) < 2.0, "sin cambiar hacia dónde mira el escudo mientras sigue en el haz")
+	_release_stick()
 	setup[1].reset()

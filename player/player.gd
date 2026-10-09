@@ -11,7 +11,7 @@ signal item_denied(button: int)
 @export var block_pushback := 0.3
 ## Sin bloquear, el escudo en la espalda frena los proyectiles que llegan dentro de este cono.
 @export var back_shield_angle_deg := 45.0
-## Bloqueando con el haz en el escudo espejo, el stick izquierdo gira al player en el lugar (rad/s).
+## Bloqueando con el haz en el escudo espejo, el stick derecho (o el mouse) gira al player (rad/s).
 @export var light_turn_speed := 2.2
 
 @onready var model: Node3D = $ModelController
@@ -57,6 +57,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	movement_state.update(delta)
+	if is_blocking() and is_catching_light():
+		turn_towards(aim.pointed_direction(), delta)
 	_watch_debug_values()
 
 

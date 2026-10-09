@@ -68,7 +68,7 @@ func _next_wave() -> void:
 
 
 func _on_defeated(_enemy: Enemy) -> void:
-	if _alive.any(func(enemy: Enemy) -> bool: return is_instance_valid(enemy) and not enemy.is_dead):
+	if _alive.any(func(enemy: Variant) -> bool: return is_instance_valid(enemy) and not enemy.is_dead):
 		return
 	if wave + 1 < waves().size():
 		await get_tree().create_timer(wave_delay).timeout

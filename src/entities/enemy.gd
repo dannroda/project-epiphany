@@ -182,4 +182,4 @@ static func _register_monitors() -> void:
 		return
 	Performance.add_custom_monitor("epiphany/enemies_alive", func() -> int:
 		var tree := Engine.get_main_loop() as SceneTree
-		return tree.get_nodes_in_group(&"enemies").filter(func(e: Enemy) -> bool: return not e.is_dead).size())
+		return tree.get_nodes_in_group(&"enemies").filter(func(e: Node) -> bool: return e is Enemy and not e.is_dead).size())

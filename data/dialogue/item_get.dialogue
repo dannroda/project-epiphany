@@ -7,5 +7,5 @@ Coloca una bomba delante tuyo. Rompe muros agrietados y empuja lo que está cerc
 => END
 
 ~ shield_mirror
-Se equipa solo. Bloqueá dentro de un haz de luz y el espejo lo desvía hacia donde mirás; mientras lo atajás, el stick izquierdo te gira. [ID:get_shield_mirror_1]
+Se equipa solo. Bloqueá dentro de un haz de luz y el espejo lo desvía hacia donde mirás; mientras lo atajás, el stick derecho (o el mouse) te gira y el izquierdo te mueve sin perderlo. [ID:get_shield_mirror_1]
 => END

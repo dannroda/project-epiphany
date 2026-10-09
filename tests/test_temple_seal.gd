@@ -59,6 +59,7 @@ func test_reflect_the_light_into_the_seal_and_enter() -> void:
 	player.global_position = Vector3(8, 0, -11)
 	player.model.look_at(player.model.global_position - Vector3(-1, 0, -1).normalized(), Vector3.UP)
 	player.movement_state.blackboard.set_var("is_blocking", true)
+	use_gamepad()
 	player.set_guard(true)
 	await _frames(tree, 8)
 	assert_eq(crystal.lit, true, "el espejo fijo y el escudo llevan el haz al cristal del sello")
