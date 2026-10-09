@@ -1,7 +1,7 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://pyyqflynppn5"]
 
-[ext_resource type="Script" path="res://src/ui/menus/menu_item.gd" id="1_item"]
+[ext_resource type="Script" uid="uid://5qj67mtlvm71" path="res://src/ui/menus/menu_item.gd" id="1_item"]
 
-[node name="MenuItem" type="Button"]
+[node name="MenuItem" type="Button" unique_id=1197871388]
 theme_type_variation = &"MenuItem"
 script = ExtResource("1_item")
