@@ -1285,7 +1285,7 @@ Hecho 2026-10-08: kit `data/kits/gray_kit.tres` (lo arma `src/tools/build_gray_k
 
 **Bloqueada por:** 6.2 Puertas; 6.3 Llaves de mazmorra y HUD; 6.4 Bloques por grilla; 6.5 Interruptores y cableado
 
-## M7 — Overworld  (6/8)
+## M7 — Overworld  (8/8)
 
 Zona chica con el gating bombas → escudo espejo → sello del templo, y los secretos.
 
@@ -1416,7 +1416,7 @@ Hecho 2026-10-08: `Portal` + `SaveManager.travel_to()` (pausa, fundido, `load_th
 
 **Bloqueada por:** 7.3 Cambio de escena overworld ↔ mazmorra; 7.5 Santuario del escudo espejo
 
-### 7.7 Secretos del overworld · En curso
+### 7.7 Secretos del overworld · Hecho
 
 - [x] Botella con poción tras un muro agrietado
   Opcional.
@@ -1435,16 +1435,18 @@ Hecho 2026-10-08: gruta (muro + poción + tablilla con pista), arboleda (dos blo
 
 **Bloqueada por:** 5.3 Arco y flechas; 6.4 Bloques por grilla; 7.2 Blockout del overworld
 
-### 7.8 Escenarios del overworld · Pendiente
+### 7.8 Escenarios del overworld · Hecho
 
-- [ ] Crear `start`, `bombs_only` y `pre_temple`
+- [x] Crear `start`, `bombs_only` y `pre_temple`
   En `debug/scenarios/`, desde el Save Inspector.
-- [ ] Recorrido completo de ida y vuelta
+- [x] Recorrido completo de ida y vuelta
   Overworld → templo → overworld.
 
 **Prueba:** Jugar `start` hasta entrar al templo y volver a salir sin usar escenarios intermedios.
 
 **Notas:** Cierra el hito: "ida y vuelta entre overworld y mazmorra".
+
+Hecho 2026-10-08: `start` ahora arranca en el overworld (escena principal del juego); `bombs_only` y `pre_temple` ya venían de 7.5 y 7.6 (generados con SaveCodec, mismo formato que el Save Inspector). `tests/test_overworld_run.gd` juega `start` hasta el templo y vuelve.
 
 **Referencias:** `gdd.md#save-inspector`
 

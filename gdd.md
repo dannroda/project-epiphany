@@ -200,6 +200,8 @@ Decidido el 2026-10-08. 8 zonas de ≈ 24 × 16 m (una "pantalla" con la cámara
 
 **Secretos (7.7):** *Gruta oculta*: muro agrietado desde el claro del inicio (`ow_grotto_cracked_wall`), cofre con la poción en botella (`ow_grotto_chest`) y tablilla que adelanta el ojo del risco (cue `grotto_hint`). *Arboleda*: dos bloques en dos interruptores (`ow_grove_switch_a/b`) bajan la reja del recoveco noreste con la cota reforzada (`ow_grove_chest`; no se equipa sola, así se usa la pantalla Equipo). *Risco del ojo*: el `EyeSwitch` de la cornisa (`ow_cliff_eye`) solo reacciona a proyectiles y abre el nicho del carcaj grande (`ow_cliff_quiver_chest`, +20 flechas de capacidad).
 
+**Escenarios (7.8):** `start` (inventario inicial, en el claro del inicio; el overworld es la escena principal del juego), `bombs_only` (con bombas, en la cueva) y `pre_temple` (con el escudo espejo, en la entrada del templo). `tests/test_overworld_run.gd` juega `start` de corrido hasta entrar al templo y volver a salir.
+
 ## 8. Mazmorra — El Templo
 <!-- id: mazmorra -->
 
