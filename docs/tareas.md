@@ -2021,7 +2021,7 @@ Skills: `workflows:itch-publish`.
 - [x] Skeleton2 fuera del cerco y test de enemigos encimados
 - [x] path_desired_distance 1.0 por la navmesh a 0.5 m
 
-## M11 — Pulido: assets y contenido  (0/12)
+## M11 — Pulido: assets y contenido  (2/12)
 
 Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
 
@@ -2029,15 +2029,23 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 - Ninguna sala ni zona se ve de prototipo o vacía.
 - El player y lo interactivo se leen bien con el doom.
 
-### 11.1 Importar KayKit Dungeon Remastered y Medieval · Pendiente
+### 11.1 Importar KayKit Dungeon Remastered y Medieval · Hecho
 
 **Prioridad:** alta · **Etiquetas:** `arte`
 
 - [x] Bajar de GitHub e importar (modelos, texturas y licencia)
 
-### 11.2 Kit del templo con piezas KayKit · Pendiente
+### 11.2 Kit del templo con piezas KayKit · Hecho
 
 **Prioridad:** alta · **Etiquetas:** `arte`
+
+- [x] Generador tools/build_temple_kit.gd → data/kits/temple_kit.tres (mismos ítems/colisiones que gray_kit)
+- [x] Shader cutaway con use_uv + materiales kaykit_stone/kaykit_floor y atlas compartido
+- [x] Templo usa el kit nuevo con 4 variantes de piso (~15 % de celdas)
+- [x] Suite completa (181, solo falla el test conocido de player.tscn) y capturas de las 9 salas
+- [x] GDD §10.1 actualizado
+
+**Notas:** Paredes con wall_half estiradas a 3.1 m de alto; columna pillar escalada. El overworld sigue con el kit gris. Las esquinas entre la columna y la pared dejan ver el vacío (rojo con el doom); se puede tapar en 11.3.
 
 ### 11.3 Decorar las salas del templo · Pendiente
 

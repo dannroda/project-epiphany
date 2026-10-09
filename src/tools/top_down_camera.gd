@@ -41,6 +41,7 @@ extends Camera3D
 const CUTAWAY_MATERIALS: Array[ShaderMaterial] = [
 	preload("res://data/kits/materials/wall.tres"),
 	preload("res://data/kits/materials/column.tres"),
+	preload("res://data/kits/materials/kaykit_stone.tres"),
 ]
 const SOUTH_WALL_DEPTH := 2.0
 
