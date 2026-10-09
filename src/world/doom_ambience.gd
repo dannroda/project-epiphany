@@ -102,6 +102,8 @@ func _make_dust() -> void:
 
 ## Grietas en el piso: más cuanto más doom tiene la sala (siempre en los mismos lugares).
 func _make_cracks() -> void:
+	if not is_inside_tree():
+		return
 	var texture := crack_texture()
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_value
