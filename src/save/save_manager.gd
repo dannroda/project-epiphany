@@ -44,10 +44,17 @@ func slot_path(slot: int) -> String:
 	return save_dir + "slot_%d.cfg" % slot
 
 
-func save_game(slot: int = -1) -> Error:
+## Guarda en el punto de reaparición y no donde está el player (Guardar y salir del game over).
+func save_checkpoint() -> Error:
+	GameState.player_position = null
+	return save_game(current_slot, false)
+
+
+func save_game(slot: int = -1, capture_player := true) -> Error:
 	if slot < 0:
 		slot = current_slot
-	_capture_player()
+	if capture_player:
+		_capture_player()
 	var cfg := ConfigFile.new()
 	GameState.write_to(cfg)
 	cfg.set_value("player", "location", location())

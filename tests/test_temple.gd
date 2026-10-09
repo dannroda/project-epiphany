@@ -343,6 +343,13 @@ func test_room_8_boss_door_and_checkpoint() -> void:
 	await tree.create_timer(1.2).timeout
 	assert_eq(camera.room, level.get_node(^"Jefe"), "entra a la guarida")
 	player.health.damage(100)
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	for i in 400:
+		if stack.top() is GameOver:
+			break
+		await tree.process_frame
+	assert_true(stack.top() is GameOver, "game over")
+	(stack.top() as GameOver)._continue.pressed.emit()
 	var until := Time.get_ticks_msec() + 8000
 	while Time.get_ticks_msec() < until and (tree.current_scene == level or tree.get_first_node_in_group(&"player") == null or (tree.get_first_node_in_group(&"player") as PlayerCharacter).is_dead):
 		await tree.process_frame

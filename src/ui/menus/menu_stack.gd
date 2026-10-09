@@ -66,7 +66,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			menu.show_page(MAP_PAGE)
 			get_viewport().set_input_as_handled()
 	elif event.is_action_pressed(&"ui_cancel") or event.is_action_pressed(&"pause") or event.is_action_pressed(&"map"):
-		pop()
+		if top().get(&"modal") != true:
+			pop()
 		get_viewport().set_input_as_handled()
 
 

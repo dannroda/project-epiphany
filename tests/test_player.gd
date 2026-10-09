@@ -231,6 +231,14 @@ func test_death_and_respawn() -> void:
 	for i in 20:
 		await tree.physics_frame
 	assert_eq(enemy.bt_player.blackboard.get_var("target", null, false), null, "el esqueleto deja de verlo")
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	for i in 300:
+		if stack.top() is GameOver:
+			break
+		await tree.process_frame
+	assert_true(stack.top() is GameOver, "aparece el game over")
+	assert_eq(tree.paused, true, "con el mundo en pausa")
+	(stack.top() as GameOver)._continue.pressed.emit()
 	var respawned: PlayerCharacter = null
 	for i in 400:
 		await tree.physics_frame

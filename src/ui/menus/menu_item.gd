@@ -11,8 +11,6 @@ const DISABLED := Color("#6f6a60")
 		label = value
 		_refresh()
 @export var font_size := 26
-## Texto chico debajo (p. ej. "Desde la entrada de la sala").
-@export var caption := ""
 
 
 func _ready() -> void:
@@ -39,5 +37,4 @@ func _ready() -> void:
 func _refresh() -> void:
 	if not is_node_ready():
 		return
-	var main := ("▶  " + label) if has_focus() else label
-	text = main if caption.is_empty() or not has_focus() else main + "\n" + caption
+	text = ("▶  " + label) if has_focus() else label

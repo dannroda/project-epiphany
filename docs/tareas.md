@@ -1736,7 +1736,7 @@ Importar el rig del ojo con manos y armar las fases 1 y 2 con LimboAI.
 
 **Bloqueada por:** 9.6 Muerte del jefe y final
 
-## M10 — Terminación  (1/10)
+## M10 — Terminación  (2/10)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -1764,7 +1764,7 @@ Hecho 2026-10-09: título como `run/main_scene` (mockup Main), `MenuItem` y `Hin
 
 **Bloqueada por:** 3.1 Menú de pausa y pila de pantallas
 
-### 10.2 Selección de partida y autosave · En curso
+### 10.2 Selección de partida y autosave · Hecho
 
 - [x] Decidir 1 o 3 ranuras
   Cerrar la decisión en [[gdd#decisiones-abiertas]].
@@ -1784,13 +1784,15 @@ Hecho 2026-10-09: 3 ranuras (decisión cerrada), `FileSelect` + `SlotCard` (mock
 
 **Bloqueada por:** 10.1 Pantalla de título
 
-### 10.3 Game over · Pendiente
+### 10.3 Game over · En curso
 
-- [ ] Pantalla al morir
+- [x] Pantalla al morir
   Continuar (desde la entrada de la sala / último checkpoint) o Guardar y salir.
-- [ ] Reemplaza el fundido de 1.5
+- [x] Reemplaza el fundido de 1.5
 
 **Prueba:** Morir en overworld, en mazmorra y contra el jefe: cada "Continuar" lleva al lugar correcto.
+
+**Notas:** Hecho 2026-10-09: `GameOver` (mockup) reemplaza el fundido de 1.5; `SaveManager.save_checkpoint()` para Guardar y salir; `MenuStack` respeta pantallas `modal`. Morir contra el jefe vuelve a la antesala (8.7). Tests `tests/test_game_over.gd` + los de muerte actualizados.
 
 **Referencias:** `gdd.md#ui`, `gdd.md#combate`
 

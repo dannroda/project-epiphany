@@ -299,6 +299,7 @@ Rig reutilizado de otra jam *(pendiente importarlo al repo)*.
 | Pantalla | Contenido |
 |---|---|
 | **Título** | Logo, Continuar / Nueva partida / Opciones / Salir. En builds de debug: *Cargar escenario*. |
+| **Game over** | `GameOver` (mockup GameOver, "CAÍSTE"): al morir, en vez del fundido automático. Continuar (desde la entrada de la sala en mazmorra, o el último punto de control en el overworld), Guardar y salir (guarda en el punto de reaparición, no donde cayó) y Salir sin guardar. Es modal: atrás y pausa no la cierran. |
 | **Selección de partida** | 3 ranuras: corazones, ubicación, tiempo jugado. *(MVP puede usar 1 ranura.)* |
 | **HUD** | Corazones (¼), llaves chicas + llave del jefe (solo en mazmorra), botones de ítem X/Y con munición, indicador de acción contextual (A/B: *Abrir*, *Empujar*, *Leer*), barra del jefe, nombre de la zona al entrar. |
 | **Pausa › Equipo** | Espada, escudo, armadura (con ranuras bloqueadas para lo no conseguido), stats, preview del modelo. |
