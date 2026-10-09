@@ -22,8 +22,9 @@ func _ready() -> void:
 	_wiring.changed.connect(func(satisfied: bool) -> void:
 		if satisfied:
 			raise())
-	if _wiring.is_satisfied():
-		raise(false)
+	_wiring.settled.connect(func(satisfied: bool) -> void:
+		if satisfied:
+			raise(false))
 
 
 func raise(animate := true) -> void:

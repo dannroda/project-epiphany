@@ -1,0 +1,31 @@
+{
+  "checklist": [
+    {
+      "done": true,
+      "text": "Wiring emite settled al frame siguiente; Door/Gate/Bridge toman de ahí el estado inicial"
+    },
+    {
+      "done": true,
+      "text": "EyeSwitch avisa activated cuando su flag se restaura en la misma escena"
+    },
+    {
+      "done": true,
+      "text": "Test de regresión con pre_boss (falla sin el arreglo) y suite completa: 182, solo el fallo conocido"
+    }
+  ],
+  "code": "11.14",
+  "created_at": "2026-10-09T18:11:50.849Z",
+  "milestone": "m11",
+  "notes": "HubSeal está antes que PuzzleEye en temple.tscn: al cargar leía el ojo antes de que restaurara su flag y quedaba cerrado. Afectaba a cualquier puerta/reja/puente cuyo interruptor esté después en el árbol.",
+  "order": 14,
+  "priority": "high",
+  "refs": [],
+  "status": "done",
+  "tags": [
+    "bug",
+    "guardado"
+  ],
+  "test": "",
+  "title": "Puertas con interruptor cerradas al cargar partida",
+  "updated_at": "2026-10-09T18:11:53.692Z"
+}

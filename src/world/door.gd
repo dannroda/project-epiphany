@@ -94,8 +94,9 @@ func _ready() -> void:
 					open()
 				elif not stays_open:
 					close())
-			if _wiring.is_satisfied():
-				open(false)
+			_wiring.settled.connect(func(satisfied: bool) -> void:
+				if satisfied:
+					open(false))
 
 
 func _get_configuration_warnings() -> PackedStringArray:

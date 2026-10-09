@@ -2021,7 +2021,7 @@ Skills: `workflows:itch-publish`.
 - [x] Skeleton2 fuera del cerco y test de enemigos encimados
 - [x] path_desired_distance 1.0 por la navmesh a 0.5 m
 
-## M11 — Pulido: assets y contenido  (2/12)
+## M11 — Pulido: assets y contenido  (3/14)
 
 Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
 
@@ -2086,6 +2086,20 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 ### 11.12 Tamaños de sala variados · Pendiente
 
 **Prioridad:** baja · **Etiquetas:** `mazmorra`
+
+### 11.13 Modelos KayKit: esqueletos para los enemigos y Knight para el player · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `arte`, `personajes`
+
+### 11.14 Puertas con interruptor cerradas al cargar partida · Hecho
+
+**Prioridad:** alta · **Etiquetas:** `bug`, `guardado`
+
+- [x] Wiring emite settled al frame siguiente; Door/Gate/Bridge toman de ahí el estado inicial
+- [x] EyeSwitch avisa activated cuando su flag se restaura en la misma escena
+- [x] Test de regresión con pre_boss (falla sin el arreglo) y suite completa: 182, solo el fallo conocido
+
+**Notas:** HubSeal está antes que PuzzleEye en temple.tscn: al cargar leía el ojo antes de que restaurara su flag y quedaba cerrado. Afectaba a cualquier puerta/reja/puente cuyo interruptor esté después en el árbol.
 
 ## Listas
 

@@ -365,6 +365,13 @@ func test_room_8_boss_door_and_checkpoint() -> void:
 	state.reset()
 
 
+func test_loading_past_the_eye_keeps_its_doors_open() -> void:
+	await _scenario("pre_boss")
+	assert_eq(_door(^"HubSeal").is_open, true, "el sello del hub sigue abierto aunque su ojo esté después en la escena")
+	assert_eq((level.get_node(^"BossKeyGate") as Gate).is_open, true, "y la reja de la llave del jefe")
+	state.reset()
+
+
 func test_room_8_boss_door_needs_its_key() -> void:
 	await _scenario("pre_boss")
 	state.current_dungeon_state().has_boss_key = false

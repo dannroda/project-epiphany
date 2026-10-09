@@ -34,8 +34,9 @@ func _ready() -> void:
 			open()
 		elif not stays_open:
 			close())
-	if _wiring.is_satisfied():
-		open(false)
+	_wiring.settled.connect(func(satisfied: bool) -> void:
+		if satisfied:
+			open(false))
 
 
 ## Sin animación: ya estaba abierta al cargar la escena.

@@ -5,6 +5,9 @@ extends RefCounted
 
 ## true cuando la condición pasa a cumplirse; false cuando deja de cumplirse.
 signal changed(satisfied: bool)
+## Una vez, al frame siguiente de crearse: el estado inicial, cuando todos los interruptores ya leyeron su flag
+## (en la escena pueden estar después del que los escucha).
+signal settled(satisfied: bool)
 
 enum Condition { ALL, ANY }
 
@@ -26,6 +29,7 @@ static func create(owner: Node, paths: Array[NodePath], when: Condition) -> Wiri
 		if node.has_signal(&"deactivated"):
 			node.connect(&"deactivated", wiring._update)
 	wiring._satisfied = wiring.is_satisfied()
+	wiring._settle.call_deferred()
 	return wiring
 
 
@@ -34,6 +38,11 @@ func is_satisfied() -> bool:
 		return false
 	var on := switches.map(func(node: Node) -> bool: return node.get(&"active") == true)
 	return not on.has(false) if condition == Condition.ALL else on.has(true)
+
+
+func _settle() -> void:
+	_satisfied = is_satisfied()
+	settled.emit(_satisfied)
 
 
 func _update() -> void:

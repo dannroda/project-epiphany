@@ -31,7 +31,11 @@ func _ready() -> void:
 	if flag != &"":
 		_persistent = PersistentFlag.new()
 		_persistent.flag = flag
-		_persistent.changed.connect(func(value: Variant) -> void: _show(value == true))
+		_persistent.changed.connect(func(value: Variant) -> void:
+			var was := active
+			_show(value == true)
+			if active and not was:
+				activated.emit())
 		add_child(_persistent)
 		_show(_persistent.value == true)
 

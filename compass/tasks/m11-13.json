@@ -1,0 +1,18 @@
+{
+  "checklist": [],
+  "code": "11.13",
+  "created_at": "2026-10-09T18:01:18.158Z",
+  "milestone": "m11",
+  "notes": "",
+  "order": 13,
+  "priority": "high",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "arte",
+    "personajes"
+  ],
+  "test": "",
+  "title": "Modelos KayKit: esqueletos para los enemigos y Knight para el player",
+  "updated_at": "2026-10-09T18:01:18.158Z"
+}
