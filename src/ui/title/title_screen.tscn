@@ -1,12 +1,16 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://cr57ov7imkhwq"]
 
-[ext_resource type="Theme" path="res://src/ui/theme.tres" id="1_theme"]
-[ext_resource type="Script" path="res://src/ui/title/title_screen.gd" id="2_script"]
-[ext_resource type="Script" path="res://src/ui/title/title_eye.gd" id="3_eye"]
-[ext_resource type="Script" path="res://src/ui/menus/menu_item.gd" id="4_item"]
-[ext_resource type="Script" path="res://src/ui/hint_bar.gd" id="5_hints"]
+[ext_resource type="Theme" uid="uid://covrlpuexf2af" path="res://src/ui/theme.tres" id="1_theme"]
+[ext_resource type="Script" uid="uid://6pj48g1rapde" path="res://src/ui/title/title_screen.gd" id="2_script"]
+[ext_resource type="Script" uid="uid://dea03f5unluxn" path="res://src/ui/title/title_eye.gd" id="3_eye"]
+[ext_resource type="Script" uid="uid://5qj67mtlvm71" path="res://src/ui/menus/menu_item.gd" id="4_item"]
+[ext_resource type="Script" uid="uid://jou4nqurtyvf" path="res://src/ui/hint_bar.gd" id="5_hints"]
 
 [sub_resource type="StyleBoxFlat" id="DebugStyle"]
+content_margin_left = 16.0
+content_margin_top = 10.0
+content_margin_right = 16.0
+content_margin_bottom = 10.0
 bg_color = Color(0.10980392, 0.09411765, 0.0627451, 1)
 border_width_left = 1
 border_width_top = 1
@@ -17,12 +21,8 @@ corner_radius_top_left = 6
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
-content_margin_left = 16.0
-content_margin_top = 10.0
-content_margin_right = 16.0
-content_margin_bottom = 10.0
 
-[node name="TitleScreen" type="Control"]
+[node name="TitleScreen" type="Control" unique_id=24387741]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -32,7 +32,7 @@ grow_vertical = 2
 theme = ExtResource("1_theme")
 script = ExtResource("2_script")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=784339416]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -41,74 +41,80 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.043137256, 0.050980393, 0.0627451, 1)
 
-[node name="Eye" type="Control" parent="."]
+[node name="Eye" type="Control" parent="." unique_id=761762833]
 modulate = Color(1, 1, 1, 0.8)
 layout_mode = 1
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -300.0
 offset_top = 70.0
 offset_right = 300.0
 offset_bottom = 320.0
+grow_horizontal = 2
 script = ExtResource("3_eye")
 
-[node name="Heading" type="VBoxContainer" parent="."]
+[node name="Heading" type="VBoxContainer" parent="." unique_id=1419574404]
 layout_mode = 1
+anchors_preset = 10
 anchor_right = 1.0
 offset_top = 250.0
 offset_bottom = 340.0
+grow_horizontal = 2
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="Title" type="Label" parent="Heading"]
+[node name="Title" type="Label" parent="Heading" unique_id=2097589688]
 layout_mode = 2
 theme_type_variation = &"Title"
 theme_override_font_sizes/font_size = 68
 text = "PROJECT EPIPHANY"
 horizontal_alignment = 1
 
-[node name="Rule" type="ColorRect" parent="Heading"]
+[node name="Rule" type="ColorRect" parent="Heading" unique_id=1890873559]
 custom_minimum_size = Vector2(420, 1)
 layout_mode = 2
 size_flags_horizontal = 4
 color = Color(0.41960785, 0.3529412, 0.22745098, 1)
 
-[node name="Menu" type="VBoxContainer" parent="."]
+[node name="Menu" type="VBoxContainer" parent="." unique_id=1237946082]
 unique_name_in_owner = true
 layout_mode = 1
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -200.0
 offset_top = 400.0
 offset_right = 200.0
 offset_bottom = 640.0
+grow_horizontal = 2
 theme_override_constants/separation = 14
 
-[node name="Continue" type="Button" parent="Menu"]
+[node name="Continue" type="Button" parent="Menu" unique_id=840081313]
 unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("4_item")
 label = "Continuar"
 
-[node name="NewGame" type="Button" parent="Menu"]
+[node name="NewGame" type="Button" parent="Menu" unique_id=1156117819]
 unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("4_item")
 label = "Nueva partida"
 
-[node name="Options" type="Button" parent="Menu"]
+[node name="Options" type="Button" parent="Menu" unique_id=2052812604]
 unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("4_item")
 label = "Opciones"
 
-[node name="Quit" type="Button" parent="Menu"]
+[node name="Quit" type="Button" parent="Menu" unique_id=785654314]
 unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("4_item")
 label = "Salir"
 
-[node name="DebugScenarios" type="Button" parent="."]
+[node name="DebugScenarios" type="Button" parent="." unique_id=1257324364]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 2
@@ -123,26 +129,28 @@ theme_override_colors/font_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
 theme_override_colors/font_focus_color = Color(1, 0.85, 0.5, 1)
 theme_override_font_sizes/font_size = 15
 theme_override_styles/normal = SubResource("DebugStyle")
+theme_override_styles/pressed = SubResource("DebugStyle")
 theme_override_styles/hover = SubResource("DebugStyle")
 theme_override_styles/focus = SubResource("DebugStyle")
-theme_override_styles/pressed = SubResource("DebugStyle")
 text = "DEBUG · Cargar escenario…"
 
-[node name="Version" type="Label" parent="."]
+[node name="Version" type="Label" parent="." unique_id=1745091090]
 unique_name_in_owner = true
 layout_mode = 1
+anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -56.0
 offset_bottom = -34.0
+grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/font_color = Color(0.5411765, 0.5137255, 0.45490196, 1)
 theme_override_font_sizes/font_size = 14
 text = "v0.1-dev"
 horizontal_alignment = 1
 
-[node name="Hints" type="HBoxContainer" parent="."]
+[node name="Hints" type="HBoxContainer" parent="." unique_id=331837264]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0

@@ -45,7 +45,7 @@ theme_type_variation = &"MenuFrame"
 layout_mode = 2
 theme_override_constants/separation = 22
 
-[node name="Nav" type="VBoxContainer" parent="Frame/Panel/Layout"]
+[node name="Nav" type="VBoxContainer" parent="Frame/Panel/Layout" unique_id=437197098]
 layout_mode = 2
 theme_override_constants/separation = 0
 
@@ -81,16 +81,16 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Equipo" parent="Frame/Panel/Layout/Pages" instance=ExtResource("2_equip")]
+[node name="Equipo" parent="Frame/Panel/Layout/Pages" unique_id=1720913027 instance=ExtResource("2_equip")]
 layout_mode = 1
 
-[node name="Ítems" parent="Frame/Panel/Layout/Pages" instance=ExtResource("3_items")]
+[node name="Ítems" parent="Frame/Panel/Layout/Pages" unique_id=743354951 instance=ExtResource("3_items")]
 layout_mode = 1
 
-[node name="Mapa" parent="Frame/Panel/Layout/Pages" instance=ExtResource("4_map")]
+[node name="Mapa" parent="Frame/Panel/Layout/Pages" unique_id=351808888 instance=ExtResource("4_map")]
 layout_mode = 1
 
-[node name="Sistema" parent="Frame/Panel/Layout/Pages" instance=ExtResource("5_system")]
+[node name="Sistema" parent="Frame/Panel/Layout/Pages" unique_id=1587890799 instance=ExtResource("5_system")]
 visible = false
 layout_mode = 1
 
