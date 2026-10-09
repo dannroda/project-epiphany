@@ -1,11 +1,11 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://7hkv61sv2yr7"]
 
-[ext_resource type="Script" path="res://src/ui/menus/options_screen.gd" id="1_screen"]
+[ext_resource type="Script" uid="uid://cdlww7t8am447" path="res://src/ui/menus/options_screen.gd" id="1_screen"]
 [ext_resource type="Theme" uid="uid://covrlpuexf2af" path="res://src/ui/theme.tres" id="2_theme"]
 [ext_resource type="PackedScene" path="res://src/ui/menus/options_panel.tscn" id="3_panel"]
-[ext_resource type="Script" path="res://src/ui/hint_bar.gd" id="4_hints"]
+[ext_resource type="Script" uid="uid://jou4nqurtyvf" path="res://src/ui/hint_bar.gd" id="4_hints"]
 
-[node name="OptionsScreen" type="Control"]
+[node name="OptionsScreen" type="Control" unique_id=1056199921]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,7 +15,7 @@ grow_vertical = 2
 theme = ExtResource("2_theme")
 script = ExtResource("1_screen")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=857931746]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,7 +24,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.043137256, 0.050980393, 0.0627451, 1)
 
-[node name="Column" type="VBoxContainer" parent="."]
+[node name="Column" type="VBoxContainer" parent="." unique_id=1398916345]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,17 +37,17 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 26
 
-[node name="Heading" type="Label" parent="Column"]
+[node name="Heading" type="Label" parent="Column" unique_id=1573190492]
 layout_mode = 2
 theme_type_variation = &"Heading"
 text = "Opciones"
 
-[node name="OptionsPanel" parent="Column" instance=ExtResource("3_panel")]
+[node name="OptionsPanel" parent="Column" unique_id=1615626820 instance=ExtResource("3_panel")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Hints" type="HBoxContainer" parent="Column"]
+[node name="Hints" type="HBoxContainer" parent="Column" unique_id=2086599892]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 22

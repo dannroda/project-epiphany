@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" path="res://src/ui/menus/items_page.tscn" id="3_items"]
 [ext_resource type="PackedScene" path="res://src/ui/menus/map_page.tscn" id="4_map"]
 [ext_resource type="PackedScene" path="res://src/ui/menus/system_page.tscn" id="5_system"]
-[ext_resource type="Script" path="res://src/ui/hint_bar.gd" id="6_hints"]
+[ext_resource type="Script" uid="uid://jou4nqurtyvf" path="res://src/ui/hint_bar.gd" id="6_hints"]
 
 [node name="PauseMenu" type="Control" unique_id=124808756]
 layout_mode = 3
@@ -68,22 +68,22 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 36
 
-[node name="Equipo" type="Label" parent="Frame/Panel/Layout/Nav/Header/Tabs"]
+[node name="Equipo" type="Label" parent="Frame/Panel/Layout/Nav/Header/Tabs" unique_id=1984474964]
 layout_mode = 2
 theme_type_variation = &"TabLabel"
 text = "Equipo"
 
-[node name="Ítems" type="Label" parent="Frame/Panel/Layout/Nav/Header/Tabs"]
+[node name="Ítems" type="Label" parent="Frame/Panel/Layout/Nav/Header/Tabs" unique_id=1333417567]
 layout_mode = 2
 theme_type_variation = &"TabLabel"
 text = "Ítems"
 
-[node name="Mapa" type="Label" parent="Frame/Panel/Layout/Nav/Header/Tabs"]
+[node name="Mapa" type="Label" parent="Frame/Panel/Layout/Nav/Header/Tabs" unique_id=748934352]
 layout_mode = 2
 theme_type_variation = &"TabLabel"
 text = "Mapa"
 
-[node name="Sistema" type="Label" parent="Frame/Panel/Layout/Nav/Header/Tabs"]
+[node name="Sistema" type="Label" parent="Frame/Panel/Layout/Nav/Header/Tabs" unique_id=606744854]
 layout_mode = 2
 theme_type_variation = &"TabLabel"
 text = "Sistema"
