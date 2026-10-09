@@ -1736,7 +1736,7 @@ Importar el rig del ojo con manos y armar las fases 1 y 2 con LimboAI.
 
 **Bloqueada por:** 9.6 Muerte del jefe y final
 
-## M10 — Terminación  (3/10)
+## M10 — Terminación  (4/10)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -1798,7 +1798,7 @@ Hecho 2026-10-09: 3 ranuras (decisión cerrada), `FileSelect` + `SlotCard` (mock
 
 **Bloqueada por:** 1.5 Muerte y reaparición del player; 10.1 Pantalla de título
 
-### 10.4 Opciones · En curso
+### 10.4 Opciones · Hecho
 
 - [x] Lock-on mantener/alternar, sensibilidad de apuntado, volúmenes
 - [x] Guardar en `user://settings.cfg`
@@ -1815,20 +1815,22 @@ Hecho 2026-10-09: autoload `Settings` + `OptionsPanel` (todo el mockup Options; 
 
 **Bloqueada por:** 10.1 Pantalla de título
 
-### 10.5 Audio · Pendiente
+### 10.5 Audio · En curso
 
-- [ ] Buses Master / Music / SFX / UI / Ambience
+- [x] Buses Master / Music / SFX / UI / Ambience
   Volúmenes en dB desde Opciones (10.4).
-- [ ] Conseguir SFX y música
+- [x] Conseguir SFX y música
   Lista de assets a conseguir en `compass/lists/` con licencias.
-- [ ] Variación de SFX
+- [x] Variación de SFX
   Pitch y volumen aleatorio, varias muestras por evento.
-- [ ] Música por capas para el *doom*
+- [x] Música por capas para el *doom*
   Capas que se suman sala a sala en la mazmorra; ducking durante *item get* y caja de texto.
 
 **Prueba:** Recorrer el overworld y la mazmorra con auriculares: nada satura, la música cambia con el avance y los SFX repetidos no suenan idénticos.
 
 **Notas:** Skills: `disciplines:audio-design`, `godot:godot-audio`.
+
+Hecho 2026-10-09: buses (vía `Settings`), SFX de Kenney CC0 con variación, sonidos de interfaz globales, música en capas sintetizada (`render_music.gd` + autoload `Music`) que sigue `Room.doom` y hace ducking con menús. Lista `assets-de-audio` con licencias y lo que falta conseguir. Test `tests/test_audio.gd`.
 
 **Referencias:** `gdd.md#historia`
 
@@ -1918,3 +1920,14 @@ Skills: `godot:godot-shaders`, `godot:godot-3d-essentials`.
 Skills: `workflows:itch-publish`.
 
 **Bloqueada por:** 10.9 Build para playtesters
+
+## Listas
+
+### Assets de audio  (3/6)
+
+- [x] Kenney Impact Sounds (CC0) — golpes, daño, bloqueo, macetas, reflejo · assets/audio/sfx/kenney_impact-sounds
+- [x] Kenney RPG Audio (CC0) — cortes, rodada, puertas, clics · assets/audio/sfx/kenney_rpg-audio
+- [x] Kenney Interface Sounds (CC0) — rechazo, levantar, sonidos de menú · assets/audio/sfx/kenney_interface-sounds
+- [ ] Música de verdad para overworld y templo (hoy: capas sintetizadas por src/tools/render_music.gd)
+- [ ] SFX de explosión, secreto, curación y temblor (hoy sintetizados en Feel)
+- [ ] Pasos (footsteps) y ambiente del templo (Kenney Impact Sounds trae pasos; falta el evento)

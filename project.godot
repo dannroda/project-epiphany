@@ -29,6 +29,7 @@ InputDevice="*res://src/input/input_device.gd"
 MenuStack="*res://src/ui/menus/menu_stack.gd"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 Settings="*res://src/settings/settings.gd"
+Music="*res://src/audio/music.gd"
 
 [display]
 

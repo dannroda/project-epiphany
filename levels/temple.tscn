@@ -140,6 +140,7 @@ script = ExtResource("3_b74bs")
 room_index = 1
 display_name = "Hub central"
 map_cell = Vector2i(1, 3)
+doom = 0.15
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hub" unique_id=644211252]
 shape = SubResource("BoxShape3D_daydq")
@@ -150,6 +151,7 @@ script = ExtResource("3_b74bs")
 room_index = 2
 display_name = "Galería de trampas"
 map_cell = Vector2i(0, 3)
+doom = 0.3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Galeria" unique_id=1103445568]
 shape = SubResource("BoxShape3D_j188v")
@@ -160,6 +162,7 @@ script = ExtResource("3_b74bs")
 room_index = 3
 display_name = "Sala agrietada"
 map_cell = Vector2i(2, 3)
+doom = 0.4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Agrietada" unique_id=1103751397]
 shape = SubResource("BoxShape3D_h5c3c")
@@ -170,6 +173,7 @@ script = ExtResource("3_b74bs")
 room_index = 4
 display_name = "Arena"
 map_cell = Vector2i(2, 2)
+doom = 0.55
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arena" unique_id=136632036]
 shape = SubResource("BoxShape3D_lepkt")
@@ -180,6 +184,7 @@ script = ExtResource("3_b74bs")
 room_index = 5
 display_name = "Sala de ojos"
 map_cell = Vector2i(0, 2)
+doom = 0.65
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ojos" unique_id=266379268]
 shape = SubResource("BoxShape3D_xc184")
@@ -190,6 +195,7 @@ script = ExtResource("3_b74bs")
 room_index = 6
 display_name = "Sala del puzzle"
 map_cell = Vector2i(0, 1)
+doom = 0.75
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Puzzle" unique_id=1709887448]
 shape = SubResource("BoxShape3D_vimm5")
@@ -200,6 +206,7 @@ script = ExtResource("3_b74bs")
 room_index = 7
 display_name = "Antesala"
 map_cell = Vector2i(1, 2)
+doom = 0.9
 autosave_on_enter = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Antesala" unique_id=487529709]
@@ -211,6 +218,7 @@ script = ExtResource("3_b74bs")
 room_index = 8
 display_name = "Guarida del ojo"
 map_cell = Vector2i(1, 1)
+doom = 1.0
 boss_room = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Jefe" unique_id=1272074760]

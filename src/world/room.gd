@@ -18,6 +18,8 @@ const GROUP := &"rooms"
 @export var boss_room := false
 ## Guardar al entrar (la antesala, antes del jefe).
 @export var autosave_on_enter := false
+## Cuánto se siente el despertar del ojo en esta sala (0 = calma, 1 = clímax): música y ambientación.
+@export_range(0.0, 1.0, 0.05) var doom := 0.0
 ## Opcional, local en XZ: dónde puede estar el FOCO de la cámara. Vacío = lo calcula la cámara para no ver fuera de la sala.
 @export var camera_limits: Rect2
 
