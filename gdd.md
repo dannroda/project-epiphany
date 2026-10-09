@@ -300,22 +300,19 @@ Rig reutilizado de otra jam *(pendiente importarlo al repo)*.
 
 | Pantalla | Contenido |
 |---|---|
-| **Título** | Logo, Continuar / Nueva partida / Opciones / Salir. En builds de debug: *Cargar escenario*. |
-| **Game over** | `GameOver` (mockup GameOver, "CAÍSTE"): al morir, en vez del fundido automático. Continuar (desde la entrada de la sala en mazmorra, o el último punto de control en el overworld), Guardar y salir (guarda en el punto de reaparición, no donde cayó) y Salir sin guardar. Es modal: atrás y pausa no la cierran. |
-| **Opciones** | Autoload `Settings` (`user://settings.cfg`, aparte de la partida; se aplica al arrancar). Mockup Options en `OptionsPanel`: fijar objetivo mantener/alternar, apuntar con el mouse, sensibilidad del stick derecho (multiplica el giro al apuntar y con el haz), cambio de objetivo con flick, vibración (la dispara `Feel.shake`), volúmenes de Música/Efectos/Ambiente (buses Music, SFX, UI, Ambience), pantalla completa, temblor de cámara y escala de la interfaz. Desde el título (pantalla propia) y desde la pausa (pestaña Sistema, con Guardar y salir al título). |
-
-**Audio (10.5):** buses Master / Music / SFX / UI / Ambience (los crea `Settings`; volúmenes desde Opciones). *SFX:* `Feel` toma varias muestras por evento de los packs CC0 de Kenney (`assets/audio/sfx/`, con su licencia; lista en `compass/lists/assets-de-audio`) y las varía en tono y volumen; explosión, secreto, curación y temblor siguen sintetizados. La interfaz suena sola en el bus UI (moverse, aceptar, volver, abrir y cerrar menús). *Música:* placeholder en capas (`src/tools/render_music.gd` las renderiza a `assets/audio/music/`, loops exactos de 8 s) que el autoload `Music` mezcla: calma en el overworld; en el templo, la base oscura y, según `Room.doom` de la sala, pulso (≥ 0.15), murmullo (≥ 0.45) y latido (≥ 0.7). Con un menú, *item get* o caja de texto abierta, baja 8 dB.
+| **Título** | Escena principal del juego (`src/ui/title/title_screen.tscn`, mockup Main): Continuar, Nueva partida, Opciones, Salir; en debug, "Cargar escenario" lista `debug/scenarios/`. `--scenario=` y `next_scenario.txt` se siguen respetando. Piezas reutilizables: `MenuItem` (opción con ▶ dorado al tener foco) y `HintBar` (pistas de botones del dispositivo actual). |
 | **Selección de partida** | 3 ranuras: corazones, ubicación, tiempo jugado. *(MVP puede usar 1 ranura.)* |
 | **HUD** | Corazones (¼), llaves chicas + llave del jefe (solo en mazmorra), botones de ítem X/Y con munición, indicador de acción contextual (A/B: *Abrir*, *Empujar*, *Leer*), barra del jefe, nombre de la zona al entrar. |
+| **Caja de texto** | Tablillas e *item get*. El texto vive en archivos `.dialogue` de **Dialogue Manager** (Nathan Hoad); el globo es nuestra `TextBox` con los estilos de los mockups (piedra para tablillas, dorado para *item get*), no la UI del plugin. Se integró aunque no haya NPCs, para tener el sistema andando antes de que haya muchos textos (decisión del 2026-10-08, elegido sobre Dialogic por ser liviano y dejar la UI propia). |
+| **Item get** | Animación con el ítem en alto + nombre + descripción corta. |
 | **Pausa › Equipo** | Espada, escudo, armadura (con ranuras bloqueadas para lo no conseguido), stats, preview del modelo. |
 | **Pausa › Ítems** | Grilla de ítems secundarios; asignar a X/Y; descripción; munición. |
 | **Pausa › Mapa** | Mapa de la mazmorra (salas visitadas; con mapa: todas; con brújula: cofres y jefe); overworld: mapa simple. La grilla sale de `Room.map_cell`; título y piso, del nodo `Dungeon`. En el overworld, un nodo `OverworldMap` en la escena da la imagen (foto cenital ortográfica) y el rectángulo XZ que cubre. Abre directo con la acción `map`. |
-| **Título** | Escena principal del juego (`src/ui/title/title_screen.tscn`, mockup Main): Continuar, Nueva partida, Opciones, Salir; en debug, "Cargar escenario" lista `debug/scenarios/`. `--scenario=` y `next_scenario.txt` se siguen respetando. Piezas reutilizables: `MenuItem` (opción con ▶ dorado al tener foco) y `HintBar` (pistas de botones del dispositivo actual). |
-| **Caja de texto** | Tablillas e *item get*. El texto vive en archivos `.dialogue` de **Dialogue Manager** (Nathan Hoad); el globo es nuestra `TextBox` con los estilos de los mockups (piedra para tablillas, dorado para *item get*), no la UI del plugin. Se integró aunque no haya NPCs, para tener el sistema andando antes de que haya muchos textos (decisión del 2026-10-08, elegido sobre Dialogic por ser liviano y dejar la UI propia). |
-| **Item get** | Animación con el ítem en alto + nombre + descripción corta. |
-| **Game over** | Continuar / Guardar y salir. |
-| **Opciones** | Lock-on mantener/alternar, sensibilidad de apuntado, volumen, remapeo (post-MVP). |
+| **Opciones** | Autoload `Settings` (`user://settings.cfg`, aparte de la partida; se aplica al arrancar). Mockup Options en `OptionsPanel`: fijar objetivo mantener/alternar, apuntar con el mouse, sensibilidad del stick derecho (multiplica el giro al apuntar y con el haz), cambio de objetivo con flick, vibración (la dispara `Feel.shake`), volúmenes de Música/Efectos/Ambiente (buses Music, SFX, UI, Ambience), pantalla completa, temblor de cámara y escala de la interfaz. Desde el título (pantalla propia) y desde la pausa (pestaña Sistema, con Guardar y salir al título). |
+| **Game over** | `GameOver` (mockup GameOver, "CAÍSTE"): al morir, en vez del fundido automático. Continuar (desde la entrada de la sala en mazmorra, o el último punto de control en el overworld), Guardar y salir (guarda en el punto de reaparición, no donde cayó) y Salir sin guardar. Es modal: atrás y pausa no la cierran. |
 | **Debug (solo editor/debug)** | Overlay de valores en vivo (tecla `1`), cargar/guardar rápido (teclas `2`/`3`), pestaña Log en el debugger del editor. Ver §11.9. |
+
+**Audio (10.5):** buses Master / Music / SFX / UI / Ambience (los crea `Settings`; volúmenes desde Opciones). *SFX:* `Feel` toma varias muestras por evento de los packs CC0 de Kenney (`assets/audio/sfx/`, con su licencia; lista en `compass/lists/assets-de-audio`) y las varía en tono y volumen; explosión, secreto, curación y temblor siguen sintetizados. La interfaz suena sola en el bus UI (moverse, aceptar, volver, abrir y cerrar menús). *Música:* placeholder en capas (`src/tools/render_music.gd` las renderiza a `assets/audio/music/`, loops exactos de 8 s) que el autoload `Music` mezcla: calma en el overworld; en el templo, la base oscura y, según `Room.doom` de la sala, pulso (≥ 0.15), murmullo (≥ 0.45) y latido (≥ 0.7). Con un menú, *item get* o caja de texto abierta, baja 8 dB.
 
 ---
 
@@ -1712,6 +1709,11 @@ if Log.is_enabled(Log.Level.DEBUG, &"ai"):   # solo si el mensaje es caro de arm
 <!-- id: rendimiento -->
 
 **Presupuesto (10.8):** 60 FPS (16,6 ms por cuadro, p95) en la máquina más floja de los playtesters. `src/tools/profile_scenes.gd` (en ventana: `godot --path . --resolution 1280x720 --script res://src/tools/profile_scenes.gd`) mide las escenas más pesadas. El 2026-10-09, en la máquina de desarrollo (Radeon RX 580, 32 hilos) y build de editor: pradera con pasto y esqueletos ≈ 5 ms medio / 7 ms p95; arena con oleadas ≈ 5 / 8 ms (peor 10 ms); antesala con todo el *doom* ≈ 5 / 6 ms; 360–450 draw calls. Arreglo: las oleadas instancian un enemigo por cuadro (antes, un tirón de 26 ms al aparecer). Pendiente: medir en build release (10.9) y la pelea del jefe (M9). `Performance.TIME_PROCESS` es el cuadro entero, no solo los scripts.
+
+### 11.x Builds
+<!-- id: builds -->
+
+**Export (10.9):** presets Linux y Windows (release: sin `debug/scenarios/` ni `tests/`, partidas cifradas) y sus variantes `(debug)` (con escenarios y `plain_saves`: partidas en texto). `tools/build.sh` exporta los dos de release (o los de debug con `--debug`) a `builds/` (ignorado por git) y anota la versión de git. Antes de correrlo hacen falta las plantillas de export de Godot 4.8-dev7 y las bibliotecas `template_release` de LimboAI (Linux y Windows); el script avisa si falta algo. La clave de guardado (`SaveCodec._PASS`) ya no es la de ejemplo; cambiarla invalida los checksums, así que los escenarios se volvieron a firmar.
 
 ## 12. Roadmap al MVP
 <!-- id: roadmap -->

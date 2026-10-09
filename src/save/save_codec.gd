@@ -3,7 +3,7 @@ extends RefCounted
 ## Estático y sin autoloads: lo usan el juego y el Save Inspector.
 
 const VERSION := 1
-const _PASS := "epiphany::change-me-before-release"
+const _PASS := "epiphany::d5be4747ab58940b749a5bb0214c37cc"
 const _ENCRYPTED_MAGIC := "GDEC"
 
 

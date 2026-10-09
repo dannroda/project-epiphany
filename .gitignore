@@ -3,3 +3,6 @@
 /android/
 .idea/
 .vscode/
+
+# Builds exportados (tools/build.sh)
+/builds/

@@ -1872,7 +1872,7 @@ Hecho 2026-10-09: decisión cerrada (KayKit + prototipo pulido) y guía de estil
 
 **Referencias:** `gdd.md#decisiones-abiertas`
 
-### 10.8 Pasada de rendimiento · En curso
+### 10.8 Pasada de rendimiento · Revisión
 
 - [x] Presupuesto de frame
   60 FPS en la máquina más floja de los playtesters.
@@ -1889,20 +1889,22 @@ Hecho 2026-10-09: decisión cerrada (KayKit + prototipo pulido) y guía de estil
 
 **Bloqueada por:** 8.8 Recorrido completo y escenarios de la mazmorra
 
-### 10.9 Build para playtesters · Pendiente
+### 10.9 Build para playtesters · En curso
 
 - [ ] Compilar las plantillas de export del LimboAI propio
   Linux y Windows, release y debug.
-- [ ] Presets de export
+- [x] Presets de export
   Excluir `debug/scenarios/*` y `tests/`; `plain_saves` solo en el preset de debug.
-- [ ] Cambiar la clave de guardado
+- [x] Cambiar la clave de guardado
   `SaveCodec._PASS` antes del primer release.
-- [ ] Build por línea de comandos
+- [x] Build por línea de comandos
   Script `tools/build.sh` con `godot --headless --export-release`.
 
 **Prueba:** Instalar el build en una máquina limpia (Linux y Windows): arranca, guarda en `user://` cifrado y no incluye escenarios ni tests.
 
 **Notas:** Skills: `godot:godot-export`.
+
+2026-10-09: presets Linux/Windows release y debug (se sumaron al de Android que ya estaba), clave de guardado nueva (escenarios refirmados), `tools/build.sh` con chequeo de plantillas y de LimboAI release. Queda en Revisión: compilar LimboAI `template_release` (Linux y Windows), instalar las plantillas de Godot 4.8-dev7, correr el build y probarlo en una máquina limpia. Test `tests/test_export.gd`.
 
 **Referencias:** `gdd.md#guardado`
 
