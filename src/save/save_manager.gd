@@ -1,8 +1,9 @@
 # Autoload
 extends Node
 
+const SAVE_DIR := "user://saves/"
 ## Carpeta de las ranuras; los tests la cambian para no tocar las partidas reales.
-var save_dir := "user://saves/"
+var save_dir := SAVE_DIR
 const SCENARIO_DIR := "res://debug/scenarios/"
 const NEXT_SCENARIO_FILE := "user://debug/next_scenario.txt"
 const TITLE := "res://src/ui/title/title_screen.tscn"
