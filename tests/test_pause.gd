@@ -49,7 +49,7 @@ func test_pause_freezes_and_resumes() -> void:
 	assert_eq(menu.current, 1, "E: pestaña siguiente")
 	await _key(tree, KEY_Q)
 	await _key(tree, KEY_Q)
-	assert_eq(menu.current, 2, "Q da la vuelta")
+	assert_eq(menu.current, 3, "Q da la vuelta")
 
 	await _key(tree, KEY_ESCAPE)
 	assert_eq(stack.is_open(), false, "Esc cierra")

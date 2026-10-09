@@ -31,8 +31,19 @@ var _last_dir := Vector2.ZERO
 var _invalid_time := 0.0
 
 
+## Cambiar de objetivo con un flick del stick derecho (Opciones).
+var flick_enabled := true
+
+
 func _ready() -> void:
 	_set_range(targeting_range)
+	_sync_settings()
+	Settings.changed.connect(func(_key: StringName) -> void: _sync_settings())
+
+
+func _sync_settings() -> void:
+	lock_mode = LockMode.TOGGLE if Settings.get_value(&"lock_toggle") else LockMode.HOLD
+	flick_enabled = Settings.get_value(&"flick")
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -58,7 +69,7 @@ func _physics_process(delta: float) -> void:
 		_last_dir = Vector2.ZERO
 		return
 	var dir := Input.get_vector(&"look_left", &"look_right", &"look_up", &"look_down", switch_threshold)
-	if dir != Vector2.ZERO:
+	if dir != Vector2.ZERO and flick_enabled:
 		point_at(Vector3(dir.x, 0.0, dir.y).normalized())
 	_last_dir = dir
 

@@ -53,6 +53,7 @@ func hit_stop(nodes: Array, duration: float) -> void:
 
 
 func shake(amount: float) -> void:
+	rumble(amount)
 	if not settings.shake_enabled:
 		return
 	var camera := get_viewport().get_camera_3d()
@@ -156,3 +157,11 @@ func _synth(seconds: float, wave: Callable) -> AudioStreamWAV:
 	stream.mix_rate = MIX_RATE
 	stream.data = data
 	return stream
+
+
+## Vibración del gamepad, proporcional al golpe (Opciones › Vibración).
+func rumble(amount: float) -> void:
+	if not Settings.get_value(&"vibration") or Input.get_connected_joypads().is_empty():
+		return
+	var strength := clampf(amount, 0.0, 1.0)
+	Input.start_joy_vibration(Input.get_connected_joypads()[0], strength * 0.6, strength, 0.12 + strength * 0.25)

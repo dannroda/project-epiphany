@@ -40,7 +40,8 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		_input_source = Source.MOUSE
+		if Settings.get_value(&"mouse_aim"):
+			_input_source = Source.MOUSE
 	elif event is InputEventJoypadMotion and _stick().length() > stick_deadzone:
 		_input_source = Source.STICK
 
@@ -105,7 +106,7 @@ func _physics_process(delta: float) -> void:
 		_held = direction
 		var facing := direction.rotated(Vector3.UP, -yaw_offset)
 		var desired := player.model.global_transform.looking_at(player.model.global_position - facing, Vector3.UP).basis
-		player.model.global_basis = player.model.global_basis.slerp(desired, clampf(turn_speed * delta, 0.0, 1.0)).orthonormalized()
+		player.model.global_basis = player.model.global_basis.slerp(desired, clampf(turn_speed * Settings.stick_factor() * delta, 0.0, 1.0)).orthonormalized()
 	_update_debug(direction)
 
 

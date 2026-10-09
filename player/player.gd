@@ -279,7 +279,7 @@ func turn_towards(direction: Vector3, delta: float) -> void:
 	if direction.is_zero_approx():
 		return
 	var desired := atan2(direction.x, direction.z)
-	model.global_rotation.y = rotate_toward(model.global_rotation.y, desired, light_turn_speed * delta)
+	model.global_rotation.y = rotate_toward(model.global_rotation.y, desired, light_turn_speed * Settings.stick_factor() * delta)
 
 
 func _is_behind(point: Vector3) -> bool:

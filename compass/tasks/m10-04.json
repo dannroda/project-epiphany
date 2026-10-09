@@ -1,23 +1,23 @@
 {
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "Lock-on mantener/alternar, sensibilidad de apuntado, volúmenes"
     },
     {
       "detail": "Separado de la partida; se aplica al arrancar.",
-      "done": false,
+      "done": true,
       "text": "Guardar en `user://settings.cfg`"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Accesible desde título y pausa"
     }
   ],
   "code": "10.4",
   "created_at": "2026-10-08T04:45:35.460Z",
   "milestone": "m10",
-  "notes": "Skills: `disciplines:game-ui-ux`, `disciplines:input-systems`.",
+  "notes": "Skills: `disciplines:game-ui-ux`, `disciplines:input-systems`.\n\nHecho 2026-10-09: autoload `Settings` + `OptionsPanel` (todo el mockup Options; la vibración no existía y se agregó vía `Feel.shake`). Pantalla desde el título; pestaña Sistema en la pausa con Guardar y salir al título. Crea los buses Music/SFX/UI/Ambience (10.5 los usa). Tests `tests/test_options.gd`.",
   "order": 4,
   "refs": [
     {
@@ -25,8 +25,8 @@
       "section": "ui"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Cambiar cada opción, reiniciar el juego: se mantienen.",
   "title": "Opciones",
-  "updated_at": "2026-10-08T04:45:35.726Z"
+  "updated_at": "2026-10-09T04:11:25.148Z"
 }

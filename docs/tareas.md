@@ -1736,7 +1736,7 @@ Importar el rig del ojo con manos y armar las fases 1 y 2 con LimboAI.
 
 **Bloqueada por:** 9.6 Muerte del jefe y final
 
-## M10 — Terminación  (2/10)
+## M10 — Terminación  (3/10)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -1784,7 +1784,7 @@ Hecho 2026-10-09: 3 ranuras (decisión cerrada), `FileSelect` + `SlotCard` (mock
 
 **Bloqueada por:** 10.1 Pantalla de título
 
-### 10.3 Game over · En curso
+### 10.3 Game over · Hecho
 
 - [x] Pantalla al morir
   Continuar (desde la entrada de la sala / último checkpoint) o Guardar y salir.
@@ -1798,16 +1798,18 @@ Hecho 2026-10-09: 3 ranuras (decisión cerrada), `FileSelect` + `SlotCard` (mock
 
 **Bloqueada por:** 1.5 Muerte y reaparición del player; 10.1 Pantalla de título
 
-### 10.4 Opciones · Pendiente
+### 10.4 Opciones · En curso
 
-- [ ] Lock-on mantener/alternar, sensibilidad de apuntado, volúmenes
-- [ ] Guardar en `user://settings.cfg`
+- [x] Lock-on mantener/alternar, sensibilidad de apuntado, volúmenes
+- [x] Guardar en `user://settings.cfg`
   Separado de la partida; se aplica al arrancar.
-- [ ] Accesible desde título y pausa
+- [x] Accesible desde título y pausa
 
 **Prueba:** Cambiar cada opción, reiniciar el juego: se mantienen.
 
 **Notas:** Skills: `disciplines:game-ui-ux`, `disciplines:input-systems`.
+
+Hecho 2026-10-09: autoload `Settings` + `OptionsPanel` (todo el mockup Options; la vibración no existía y se agregó vía `Feel.shake`). Pantalla desde el título; pestaña Sistema en la pausa con Guardar y salir al título. Crea los buses Music/SFX/UI/Ambience (10.5 los usa). Tests `tests/test_options.gd`.
 
 **Referencias:** `gdd.md#ui`
 

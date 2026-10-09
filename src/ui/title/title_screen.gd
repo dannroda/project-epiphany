@@ -20,10 +20,10 @@ func _ready() -> void:
 	title.add_theme_font_override(&"font", spaced)
 	hints.hints = [[&"ui_accept", "Aceptar"], [&"ui_cancel", "Volver"]]
 	continue_item.disabled = SaveManager.latest_slot() < 0
-	options_item.disabled = true
 	debug_scenarios.visible = OS.is_debug_build()
 	continue_item.pressed.connect(func() -> void: open_file_select(SaveManager.latest_slot()))
 	new_game_item.pressed.connect(func() -> void: open_file_select(_first_empty_slot()))
+	options_item.pressed.connect(_open_options)
 	quit_item.pressed.connect(func() -> void: get_tree().quit())
 	debug_scenarios.pressed.connect(_show_scenarios)
 	(continue_item if not continue_item.disabled else new_game_item).grab_focus.call_deferred()
@@ -43,6 +43,17 @@ func open_file_select(slot: int) -> FileSelect:
 		continue_item.disabled = SaveManager.latest_slot() < 0
 		(continue_item if not continue_item.disabled else new_game_item).grab_focus())
 	return screen
+
+
+func _open_options() -> void:
+	var screen := OptionsScreen.new()
+	screen.name = "Options"
+	add_child(screen)
+	menu.process_mode = PROCESS_MODE_DISABLED
+	screen.closed.connect(func() -> void:
+		screen.queue_free()
+		menu.process_mode = PROCESS_MODE_INHERIT
+		options_item.grab_focus())
 
 
 func _first_empty_slot() -> int:
