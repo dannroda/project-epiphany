@@ -1,0 +1,17 @@
+{
+  "checklist": [],
+  "code": "11.12",
+  "created_at": "2026-10-09T17:40:35.449Z",
+  "milestone": "m11",
+  "notes": "",
+  "order": 12,
+  "priority": "low",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "mazmorra"
+  ],
+  "test": "",
+  "title": "Tamaños de sala variados",
+  "updated_at": "2026-10-09T17:40:35.449Z"
+}

@@ -1,0 +1,17 @@
+{
+  "checklist": [],
+  "code": "11.8",
+  "created_at": "2026-10-09T17:40:34.284Z",
+  "milestone": "m11",
+  "notes": "",
+  "order": 8,
+  "priority": "medium",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "camara"
+  ],
+  "test": "",
+  "title": "Silueta del player detrás de paredes",
+  "updated_at": "2026-10-09T17:40:34.284Z"
+}

@@ -1,0 +1,10 @@
+{
+  "code": "M11",
+  "done_when": [
+    "Ninguna sala ni zona se ve de prototipo o vacía.",
+    "El player y lo interactivo se leen bien con el doom."
+  ],
+  "goal": "Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.",
+  "order": 11,
+  "title": "Pulido: assets y contenido"
+}

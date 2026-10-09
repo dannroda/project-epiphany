@@ -321,7 +321,7 @@ Rig reutilizado de otra jam *(pendiente importarlo al repo)*.
 ### 10.1 Dirección de arte
 <!-- id: arte -->
 
-Decidido el 2026-10-09: **KayKit + prototipo, pulido.** Personajes y armas de KayKit Adventurers; props de KayKit Dungeon Remastered (CC0, `assets/kaykit_dungeon/`: cofres, muros agrietados, antorchas); el terreno es el kit gris (`GridMap` con texturas de prototipo de Kenney, teñidas).
+Decidido el 2026-10-09: **KayKit + prototipo, pulido.** Personajes y armas de KayKit Adventurers; props de KayKit Dungeon Remastered (CC0, `assets/kaykit_dungeon/`: cofres, muros agrietados, antorchas); el terreno es el kit gris (`GridMap` con texturas de prototipo de Kenney, teñidas). **Ampliado el 2026-10-09 (M11):** el pack completo de KayKit Dungeon Remastered 1.0 (CC0, 203 modelos en `assets/kaykit_dungeon_remastered/`: pisos de 2 y 4 m, paredes de 4 × 4 × 1 m, arcos, estandartes, barriles, cajas, velas, escombros, mesas, pinchos) y la decoración de KayKit Medieval Hexagon 1.0 (CC0, `assets/kaykit_medieval/nature` y `props`: árboles, rocas, colinas, cajas, carpas, banderas). Bajados de los repos públicos de KayKit-Game-Assets en GitHub; licencia junto a cada pack.
 
 **Paleta del mundo.**
 

@@ -1,0 +1,17 @@
+{
+  "checklist": [],
+  "code": "11.6",
+  "created_at": "2026-10-09T17:40:33.736Z",
+  "milestone": "m11",
+  "notes": "",
+  "order": 6,
+  "priority": "high",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "ia"
+  ],
+  "test": "",
+  "title": "Más enemigos en el overworld y el templo",
+  "updated_at": "2026-10-09T17:40:33.736Z"
+}

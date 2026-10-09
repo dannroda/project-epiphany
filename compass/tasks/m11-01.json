@@ -1,0 +1,22 @@
+{
+  "checklist": [
+    {
+      "done": true,
+      "text": "Bajar de GitHub e importar (modelos, texturas y licencia)"
+    }
+  ],
+  "code": "11.1",
+  "created_at": "2026-10-09T17:40:32.257Z",
+  "milestone": "m11",
+  "notes": "",
+  "order": 1,
+  "priority": "high",
+  "refs": [],
+  "status": "done",
+  "tags": [
+    "arte"
+  ],
+  "test": "",
+  "title": "Importar KayKit Dungeon Remastered y Medieval",
+  "updated_at": "2026-10-09T17:40:49.671Z"
+}

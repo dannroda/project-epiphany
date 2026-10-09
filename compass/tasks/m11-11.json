@@ -1,0 +1,17 @@
+{
+  "checklist": [],
+  "code": "11.11",
+  "created_at": "2026-10-09T17:40:35.146Z",
+  "milestone": "m11",
+  "notes": "",
+  "order": 11,
+  "priority": "low",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "ui"
+  ],
+  "test": "",
+  "title": "HUD sin slots vacíos y reveal dentro de la sala",
+  "updated_at": "2026-10-09T17:40:35.146Z"
+}

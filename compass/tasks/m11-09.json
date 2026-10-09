@@ -1,0 +1,17 @@
+{
+  "checklist": [],
+  "code": "11.9",
+  "created_at": "2026-10-09T17:40:34.556Z",
+  "milestone": "m11",
+  "notes": "",
+  "order": 9,
+  "priority": "low",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "ia"
+  ],
+  "test": "",
+  "title": "Navmesh sobre el piso",
+  "updated_at": "2026-10-09T17:40:34.556Z"
+}

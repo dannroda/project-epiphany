@@ -2021,6 +2021,64 @@ Skills: `workflows:itch-publish`.
 - [x] Skeleton2 fuera del cerco y test de enemigos encimados
 - [x] path_desired_distance 1.0 por la navmesh a 0.5 m
 
+## M11 — Pulido: assets y contenido  (0/12)
+
+Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
+
+**Hecho cuando:**
+- Ninguna sala ni zona se ve de prototipo o vacía.
+- El player y lo interactivo se leen bien con el doom.
+
+### 11.1 Importar KayKit Dungeon Remastered y Medieval · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `arte`
+
+- [x] Bajar de GitHub e importar (modelos, texturas y licencia)
+
+### 11.2 Kit del templo con piezas KayKit · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `arte`
+
+### 11.3 Decorar las salas del templo · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `arte`
+
+### 11.4 Decorar el overworld · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `arte`
+
+### 11.5 Galería de trampas: pinchos · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `mazmorra`
+
+### 11.6 Más enemigos en el overworld y el templo · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `ia`
+
+### 11.7 Doom legible: player y objetos sin teñir · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `arte`
+
+### 11.8 Silueta del player detrás de paredes · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `camara`
+
+### 11.9 Navmesh sobre el piso · Pendiente
+
+**Prioridad:** baja · **Etiquetas:** `ia`
+
+### 11.10 Warning de transform singular en la suite · Pendiente
+
+**Prioridad:** baja · **Etiquetas:** `tecnico`
+
+### 11.11 HUD sin slots vacíos y reveal dentro de la sala · Pendiente
+
+**Prioridad:** baja · **Etiquetas:** `ui`
+
+### 11.12 Tamaños de sala variados · Pendiente
+
+**Prioridad:** baja · **Etiquetas:** `mazmorra`
+
 ## Listas
 
 ### Assets de audio  (3/6)
