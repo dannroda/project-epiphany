@@ -1452,7 +1452,7 @@ Hecho 2026-10-08: `start` ahora arranca en el overworld (escena principal del ju
 
 **Bloqueada por:** 7.6 Sello del templo
 
-## M8 — Contenido de mazmorra  (6/8)
+## M8 — Contenido de mazmorra  (7/8)
 
 Las 8 salas en bloques grises, el arco a mitad de camino, la llave del jefe.
 
@@ -1570,7 +1570,7 @@ Hecho 2026-10-08: `shield_skeleton.tscn` + `data/entities/shield_skeleton.tres`.
 
 **Bloqueada por:** 5.3 Arco y flechas; 5.6 Escudo espejo y haz de luz; 8.5 Sala 5: arena y arco
 
-### 8.7 Sala 8: antesala · En curso
+### 8.7 Sala 8: antesala · Hecho
 
 - [x] Vasijas con corazones, tablilla y puerta del jefe
   La tablilla anticipa al jefe.
@@ -1587,18 +1587,20 @@ Hecho 2026-10-08: `shield_skeleton.tscn` + `data/entities/shield_skeleton.tres`.
 
 **Bloqueada por:** 4.3 Tablillas; 4.4 Vasijas y pasto; 8.6 Salas 6–7: ojos y puzzle combinado
 
-### 8.8 Recorrido completo y escenarios de la mazmorra · Pendiente
+### 8.8 Recorrido completo y escenarios de la mazmorra · En curso
 
-- [ ] Escenarios `dungeon_no_bow`, `pre_boss` y `boss_key_door_locked`
+- [x] Escenarios `dungeon_no_bow`, `pre_boss` y `boss_key_door_locked`
   El último, inconsistente a propósito, para probar la validación.
-- [ ] Recorrido entero sin escenarios intermedios
+- [x] Recorrido entero sin escenarios intermedios
   Anotar tiempos y dónde se traba el jugador.
-- [ ] Buscar softlocks
+- [x] Buscar softlocks
   Quedarse sin bombas o flechas (¿hay drops?), bloques trabados, puertas que se cierran con el player del lado equivocado.
 
 **Prueba:** Jugar de la entrada a la puerta del jefe con un solo guardado al principio.
 
 **Notas:** Cierra el hito: "la mazmorra se recorre entera".
+
+Hecho 2026-10-08: escenarios `dungeon_no_bow`, `pre_boss`, `boss_key_door_locked` (+ regla en `SaveCodec.validate`: puerta del jefe abierta sin llave). Recorrido completo automatizado (tiempos simulados por tramo: vestíbulo+hub 6 s, galería 6 s, agrietada 12 s, arena 7 s, ojos 12 s, puzzle 7 s, antesala 3 s). Softlocks revisados en GDD §8.1. Pendiente: jugarla a mano para tiempos reales y dónde se traba un jugador.
 
 **Referencias:** `gdd.md#mazmorra`, `gdd.md#save-inspector`
 

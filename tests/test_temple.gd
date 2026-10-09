@@ -362,3 +362,114 @@ func test_room_8_boss_door_needs_its_key() -> void:
 	while stack.is_open():
 		stack.pop()
 	state.reset()
+
+
+func _lap(laps: Array, label: String) -> void:
+	laps.append([label, Time.get_ticks_msec()])
+
+
+func test_full_run_from_the_entrance_to_the_boss_door() -> void:
+	await _start([[&"shield_mirror", 1], [&"bomb_bag", 1]])
+	state.equip(Items.get_item(&"shield_mirror"))
+	var laps := [["inicio", Time.get_ticks_msec()]]
+
+	player.global_position = Vector3(16, 0, 60)
+	await _push(^"VestibuleBlock", [Vector3.RIGHT, Vector3.RIGHT, Vector3.RIGHT, Vector3.RIGHT, Vector3.FORWARD, Vector3.FORWARD])
+	await tree.create_timer(0.8).timeout
+	player.global_position = Vector3(24, 0, 59)
+	assert_true(await _walk_until(&"move_forward", func() -> bool: return player.global_position.z <= 52.0), "vestíbulo → hub")
+	_kill([^"HubSkeleton1", ^"HubSkeleton2"])
+	await tree.create_timer(0.8).timeout
+	_lap(laps, "vestíbulo y hub")
+
+	var pad := InputEventJoypadMotion.new()
+	pad.axis = JOY_AXIS_RIGHT_X
+	Input.parse_input_event(pad)
+	player.global_position = Vector3(0, 0, 50)
+	await tree.create_timer(1.0).timeout
+	player.global_position = Vector3(0, 0, 50)
+	_face(Vector3(-1, 0, -1))
+	_block(true)
+	var eye := level.get_node(^"GalleryEye") as EyeSwitch
+	var until := Time.get_ticks_msec() + 9000
+	while Time.get_ticks_msec() < until and not eye.active:
+		await tree.physics_frame
+	_block(false)
+	level.get_node(^"GalleryTurret").free()
+	await tree.create_timer(0.8).timeout
+	player.global_position = Vector3(-8, 0, 52.6)
+	_face(Vector3.BACK)
+	await _open_chest(^"GalleryKeyChest")
+	assert_eq(state.current_dungeon_state().small_keys, 1, "galería: llave 1")
+	_lap(laps, "galería")
+
+	player.global_position = Vector3(34, 0, 48)
+	_door(^"HubLockedE").interactable.interact(player)
+	await tree.create_timer(0.8).timeout
+	player.global_position = Vector3(48, 0, 52)
+	await tree.create_timer(1.0).timeout
+	await _bomb_at(Vector3(48, 0, 48.6), Vector3.FORWARD, Vector3(48, 0, 54))
+	player.global_position = Vector3(48, 0, 50)
+	assert_true(await _walk_until(&"move_forward", func() -> bool: return player.global_position.z <= 44.0), "agrietada: pasa el hueco")
+	player.global_position = Vector3(54, 0, 43.4)
+	_face(Vector3.FORWARD)
+	await _open_chest(^"MapChest")
+	await _bomb_at(Vector3(48, 0, 41.4), Vector3.FORWARD, Vector3(52, 0, 44))
+	assert_eq(state.current_dungeon_state().has_map, true, "agrietada: mapa")
+	_lap(laps, "sala agrietada")
+
+	player.global_position = Vector3(48, 0, 37)
+	await tree.create_timer(1.5).timeout
+	for i in 2:
+		_kill_all(_alive_in(^"Arena"))
+		await tree.create_timer(1.5).timeout
+	player.global_position = Vector3(48, 0, 28)
+	_face(Vector3.FORWARD)
+	await _open_chest(^"BowChest")
+	assert_eq(state.inventory.has(&"bow"), true, "arena: arco")
+	_lap(laps, "arena")
+
+	player.global_position = Vector3(2, 0, 46)
+	await tree.create_timer(1.2).timeout
+	await _shoot(Vector3(2, 1.2, 46), ^"OjosDoorEye")
+	assert_eq(_door(^"OjosDoor").is_open, true, "con el arco se abre el norte de la galería")
+	player.global_position = Vector3(0, 0, 36)
+	await tree.create_timer(1.2).timeout
+	await _shoot(Vector3(-8, 1.2, 34), ^"OjosEyeA")
+	player.global_position = Vector3(-8, 0, 35)
+	_face(Vector3.BACK)
+	await _open_chest(^"OjosCompassChest")
+	await _shoot(Vector3(8, 1.2, 34), ^"OjosEyeB")
+	await tree.create_timer(1.0).timeout
+	player.global_position = Vector3(0, 0, 35)
+	assert_true(await _walk_until(&"move_forward", func() -> bool: return player.global_position.z <= 27.5), "ojos: cruza el puente")
+	player.global_position = Vector3(-4, 0, 27.4)
+	_face(Vector3.FORWARD)
+	await _open_chest(^"OjosKeyChest")
+	_door(^"PuzzleDoor").interactable.interact(player)
+	assert_eq(state.current_dungeon_state().has_compass, true, "ojos: brújula")
+	_lap(laps, "sala de ojos")
+
+	player.global_position = Vector3(0, 0, 20)
+	await tree.create_timer(1.2).timeout
+	player.global_position = Vector3(-6, 0, 21)
+	await _push(^"PuzzleBlock", [Vector3.FORWARD, Vector3.FORWARD])
+	await tree.create_timer(0.8).timeout
+	await _reflect_beam(Vector3(4, 0, 14), Vector3(-1, 0, -1))
+	await _shoot(Vector3(4, 1.2, 12), ^"PuzzleEye")
+	player.global_position = Vector3(0, 0, 12.4)
+	_face(Vector3.FORWARD)
+	await _open_chest(^"BossKeyChest")
+	assert_eq(state.current_dungeon_state().has_boss_key, true, "puzzle: llave del jefe")
+	_lap(laps, "puzzle")
+
+	player.global_position = Vector3(24, 0, 44)
+	await tree.create_timer(1.2).timeout
+	assert_true(await _walk_until(&"move_forward", func() -> bool: return player.global_position.z <= 36.0), "por el sello del hub a la antesala")
+	await tree.create_timer(0.8).timeout
+	_door(^"BossDoor").interactable.interact(player)
+	assert_eq(_door(^"BossDoor").is_open, true, "la puerta del jefe")
+	_lap(laps, "antesala")
+	for n in range(1, laps.size()):
+		print("  recorrido · %s: %.1f s" % [laps[n][0], (laps[n][1] - laps[n - 1][1]) / 1000.0])
+	state.reset()

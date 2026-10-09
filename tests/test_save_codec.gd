@@ -88,8 +88,17 @@ func test_validate() -> void:
 
 
 func test_scenarios_are_valid() -> void:
-	for scenario in ["start", "full_inventory", "test_rooms", "dungeon_no_bow", "dungeon_test", "bombs_only", "pre_temple"]:
+	for scenario in ["start", "full_inventory", "test_rooms", "dungeon_no_bow", "dungeon_test", "bombs_only", "pre_temple", "pre_boss"]:
 		var cfg := ConfigFile.new()
 		assert_eq(SaveCodec.read("res://debug/scenarios/%s.cfg" % scenario, cfg), OK, scenario)
 		assert_eq(SaveCodec.validate(cfg).size(), 0, scenario)
 		assert_eq(SaveCodec.is_tampered(cfg), false, scenario)
+
+
+func test_inconsistent_scenario_is_flagged() -> void:
+	var cfg := ConfigFile.new()
+	assert_eq(SaveCodec.read("res://debug/scenarios/boss_key_door_locked.cfg", cfg), OK)
+	var problems := SaveCodec.validate(cfg)
+	assert_eq(problems.size(), 1, "boss_key_door_locked es inconsistente a propósito")
+	assert_true(problems.size() == 1 and "llave del jefe" in problems[0], str(problems))
+

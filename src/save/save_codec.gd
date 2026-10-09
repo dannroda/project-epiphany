@@ -75,6 +75,10 @@ static func validate(cfg: ConfigFile) -> PackedStringArray:
 		for id in cfg.get_section_keys("flags"):
 			if not flags.has(id):
 				errors.append("flags/%s: flag no registrada" % id)
+			elif id.ends_with("_boss_door") and cfg.get_value("flags", id) == true:
+				var section := "dungeon_" + id.get_slice("_", 0)
+				if not cfg.get_value(section, "has_boss_key", false):
+					errors.append("flags/%s: la puerta del jefe está abierta pero %s no tiene la llave del jefe" % [id, section])
 	return errors
 
 
