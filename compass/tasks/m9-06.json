@@ -14,6 +14,11 @@
       "detail": "Al tomar el contenedor o salir, pantalla de fin y créditos placeholder.",
       "done": false,
       "text": "Final del MVP"
+    },
+    {
+      "detail": "El portal (9.8) ya está en la sala; con el flag aparece al vencer al jefe.",
+      "done": false,
+      "text": "Poner required_flag = d1_boss_defeated al BossExitPortal"
     }
   ],
   "code": "9.6",
@@ -40,5 +45,5 @@
   "status": "todo",
   "test": "Desde `pre_boss`: ganar, tomar el contenedor y llegar a los créditos. Cargar después: el jefe no reaparece.",
   "title": "Muerte del jefe y final",
-  "updated_at": "2026-10-08T04:46:03.777Z"
+  "updated_at": "2026-10-09T16:15:55.962Z"
 }

@@ -51,6 +51,7 @@
 [ext_resource type="Resource" path="res://data/entities/player.tres" id="49_jyaq7"]
 [ext_resource type="Script" path="res://src/world/spawn_point.gd" id="50_mus61"]
 [ext_resource type="Script" path="res://src/world/portal.gd" id="51_h4s6m"]
+[ext_resource type="PackedScene" path="res://src/world/warp_portal.tscn" id="51_warp"]
 [ext_resource type="Script" path="res://src/tools/top_down_camera.gd" id="52_5r1vx"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="53_5adsw"]
 [ext_resource type="Script" path="res://src/ui/hud/hud.gd" id="54_daydq"]
@@ -627,6 +628,11 @@ target_spawn = &"templo"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPortal" unique_id=76133986]
 shape = SubResource("BoxShape3D_3cduy")
+
+[node name="BossExitPortal" parent="." instance=ExtResource("51_warp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 16)
+target_scene = "res://levels/overworld.tscn"
+target_spawn = &"templo"
 
 [node name="TopDownCamera" type="Camera3D" parent="." unique_id=278870952 node_paths=PackedStringArray("target_node")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 13.4, 75.7)

@@ -1608,7 +1608,7 @@ Hecho 2026-10-08: escenarios `dungeon_no_bow`, `pre_boss`, `boss_key_door_locked
 
 **Bloqueada por:** 8.7 Sala 8: antesala
 
-## M9 — Jefe  (0/7)
+## M9 — Jefe  (1/8)
 
 Importar el rig del ojo con manos y armar las fases 1 y 2 con LimboAI.
 
@@ -1712,6 +1712,8 @@ Importar el rig del ojo con manos y armar las fases 1 y 2 con LimboAI.
   Aparece en la arena; `GameState.give()` suma 4 HP al máximo.
 - [ ] Final del MVP
   Al tomar el contenedor o salir, pantalla de fin y créditos placeholder.
+- [ ] Poner required_flag = d1_boss_defeated al BossExitPortal
+  El portal (9.8) ya está en la sala; con el flag aparece al vencer al jefe.
 
 **Prueba:** Desde `pre_boss`: ganar, tomar el contenedor y llegar a los créditos. Cargar después: el jefe no reaparece.
 
@@ -1735,6 +1737,18 @@ Importar el rig del ojo con manos y armar las fases 1 y 2 con LimboAI.
 **Referencias:** `gdd.md#jefe`, `gdd.md#roadmap`
 
 **Bloqueada por:** 9.6 Muerte del jefe y final
+
+### 9.8 Portal de salida en la sala del jefe · Hecho
+
+**Prioridad:** media · **Etiquetas:** `mazmorra`
+
+- [x] Portal.required_flag: oculto hasta que el flag sea verdadero
+- [x] Escena warp_portal.tscn en el centro de la sala del jefe, al overworld (Spawn_templo)
+- [x] Test, captura y GDD
+
+**Prueba:** Desde pre_boss: pararse en el portal de la sala del jefe y aparecer en la Entrada del templo.
+
+**Notas:** Sin flag por ahora porque no hay jefe; 9.6 le pone d1_boss_defeated.
 
 ## M10 — Terminación  (10/14)
 

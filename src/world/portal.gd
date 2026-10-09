@@ -5,6 +5,8 @@ extends Area3D
 
 @export_file("*.tscn") var target_scene: String
 @export var target_spawn: StringName
+## Si tiene flag, el portal aparece recién cuando el flag es verdadero (p. ej. al vencer al jefe).
+@export var required_flag: StringName
 
 
 func _ready() -> void:
@@ -14,3 +16,14 @@ func _ready() -> void:
 	body_entered.connect(func(body: Node3D) -> void:
 		if body is PlayerCharacter and not SaveManager.traveling:
 			SaveManager.travel_to(target_scene, target_spawn))
+	if required_flag != &"":
+		_set_open(false)
+		var persistent := PersistentFlag.new()
+		persistent.flag = required_flag
+		persistent.changed.connect(func(value: Variant) -> void: _set_open(value == true))
+		add_child(persistent)
+
+
+func _set_open(open: bool) -> void:
+	visible = open
+	set_deferred(&"monitoring", open)

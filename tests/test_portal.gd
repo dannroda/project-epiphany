@@ -3,6 +3,7 @@ extends "res://tests/test_case.gd"
 const OVERWORLD := "res://levels/overworld.tscn"
 const DUNGEON := "res://levels/temple.tscn"
 const SLOT := 9
+const WARP := preload("res://src/world/warp_portal.tscn")
 
 
 func _walk(action: StringName, pressed: bool) -> void:
@@ -73,3 +74,47 @@ func test_enter_and_leave_the_temple_keeping_the_dungeon() -> void:
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(saves.slot_path(SLOT)))
 	saves.current_slot = 0
 	state.reset()
+
+
+func _spawn(flag: StringName) -> Portal:
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.root.get_node(^"GameState").reset()
+	var portal: Portal = WARP.instantiate()
+	portal.required_flag = flag
+	tree.root.add_child(portal)
+	await tree.physics_frame
+	await tree.physics_frame
+	return portal
+
+
+func test_without_flag_is_always_open() -> void:
+	var portal := await _spawn(&"")
+	assert_true(portal.visible)
+	assert_true(portal.monitoring)
+	portal.free()
+
+
+func test_flag_opens_it() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var portal := await _spawn(&"d1_boss_door")
+	assert_true(not portal.visible, "cerrado hasta el flag")
+	assert_true(not portal.monitoring)
+	tree.root.get_node(^"GameState").set_flag(&"d1_boss_door", true)
+	await tree.physics_frame
+	assert_true(portal.visible, "aparece con el flag")
+	assert_true(portal.monitoring)
+	portal.free()
+
+
+func test_boss_room_has_exit_to_temple_entrance() -> void:
+	var temple: Node = load("res://levels/temple.tscn").instantiate()
+	var portal := temple.get_node(^"BossExitPortal") as Portal
+	assert_true(portal != null)
+	assert_eq(portal.target_scene, "res://levels/overworld.tscn")
+	assert_eq(portal.target_spawn, &"templo")
+	var boss_room := temple.get_node(^"Jefe") as Room
+	var shape := boss_room.get_node(^"CollisionShape3D") as CollisionShape3D
+	var size := (shape.shape as BoxShape3D).size
+	var local := portal.position - boss_room.position
+	assert_true(absf(local.x) < size.x / 2.0 and absf(local.z) < size.z / 2.0, "adentro de la sala del jefe")
+	temple.free()
