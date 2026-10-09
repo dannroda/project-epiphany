@@ -1,0 +1,34 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/ui/hud/heart_icon.gd" id="1_heart"]
+[ext_resource type="Texture2D" path="res://assets/ui/heart_empty.svg" id="2_empty"]
+[ext_resource type="Texture2D" path="res://assets/ui/heart_full.svg" id="3_full"]
+
+[node name="HeartIcon" type="Control"]
+custom_minimum_size = Vector2(30, 28)
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("1_heart")
+
+[node name="Empty" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 30.0
+offset_bottom = 28.0
+mouse_filter = 2
+texture = ExtResource("2_empty")
+expand_mode = 1
+
+[node name="Clip" type="Control" parent="."]
+clip_contents = true
+layout_mode = 0
+offset_bottom = 28.0
+mouse_filter = 2
+
+[node name="Full" type="TextureRect" parent="Clip"]
+layout_mode = 0
+offset_right = 30.0
+offset_bottom = 28.0
+mouse_filter = 2
+texture = ExtResource("3_full")
+expand_mode = 1

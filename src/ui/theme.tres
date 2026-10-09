@@ -666,6 +666,42 @@ draw_center = false
 border_width_bottom = 3
 border_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_map_visited"]
+bg_color = Color(0.22745098, 0.25882354, 0.3137255, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.3372549, 0.38431373, 0.47843137, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_map_current"]
+bg_color = Color(0.22745098, 0.25882354, 0.3137255, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_map_legend"]
+bg_color = Color(0.22745098, 0.25882354, 0.3137255, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.3372549, 0.38431373, 0.47843137, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
 [resource]
 default_font = ExtResource("3_cwe5m")
 default_font_size = 18
@@ -907,3 +943,10 @@ Value/base_type = &"Label"
 Value/colors/font_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
 Value/font_sizes/font_size = 16
 Value/fonts/font = ExtResource("3_cwe5m")
+Legend/base_type = &"Label"
+Legend/font_sizes/font_size = 15
+MapRoomCell/styles/current = SubResource("StyleBoxFlat_map_current")
+MapRoomCell/styles/legend = SubResource("StyleBoxFlat_map_legend")
+MapRoomCell/styles/visited = SubResource("StyleBoxFlat_map_visited")
+ValueMuted/base_type = &"Value"
+ValueMuted/colors/font_color = Color(0.5411765, 0.5137255, 0.45490196, 1)

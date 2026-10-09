@@ -2,27 +2,27 @@
   "checklist": [
     {
       "detail": "item_detail.gd add_stat arma HBox + Labels + MarginContainer + HSeparator con .new(). Pasar a stat_row.tscn.",
-      "done": false,
+      "done": true,
       "text": "Filas de stats de ItemDetail como escena"
     },
     {
       "detail": "equipment_page.gd crea VBox/Label/HBox por categoría, Button por ranura y el Label de la insignia E. Secciones en la escena y ranura reutilizando item_slot.tscn o una equip_slot.tscn.",
-      "done": false,
+      "done": true,
       "text": "Pestaña Equipo: grilla y ranuras como escenas"
     },
     {
       "detail": "map_page.gd crea MapRoomCell, filas de leyenda y filas de stats por código; map_room_cell.gd arma su StyleBoxFlat en código (pasar a variaciones del tema).",
-      "done": false,
+      "done": true,
       "text": "Pestaña Mapa: celdas, leyenda y stats como escenas"
     },
     {
       "detail": "HUD, tarjeta de ranura y Equipo hacen HeartIcon.new(), y heart_icon.gd arma sus TextureRect internos por código.",
-      "done": false,
+      "done": true,
       "text": "Corazones (HeartIcon) como escena"
     },
     {
       "detail": "Un test que recorra src/ui/**/*.gd y falle si encuentra Label.new(), Button.new(), *Container.new(), etc. (permitiendo Tween, Image, etc.).",
-      "done": false,
+      "done": true,
       "text": "Test: ningún script de src/ui crea Controls con .new()"
     }
   ],
@@ -33,11 +33,11 @@
   "order": 11,
   "priority": "medium",
   "refs": [],
-  "status": "todo",
+  "status": "done",
   "tags": [
     "ui"
   ],
   "test": "",
   "title": "UI restante a escenas",
-  "updated_at": "2026-10-09T07:29:41.489Z"
+  "updated_at": "2026-10-09T14:52:21.879Z"
 }

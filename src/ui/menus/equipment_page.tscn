@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://src/ui/menus/equipment_page.gd" id="1_page"]
 [ext_resource type="PackedScene" path="res://src/ui/menus/item_detail.tscn" id="2_detail"]
+[ext_resource type="PackedScene" path="res://src/ui/menus/equip_slot.tscn" id="9_slot"]
 
 [sub_resource type="World3D" id="World3D_preview"]
 
@@ -92,6 +93,81 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 22
+
+[node name="Sword" type="VBoxContainer" parent="Rows"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Rows/Sword"]
+layout_mode = 2
+theme_type_variation = &"Caps"
+text = "ESPADA"
+
+[node name="Line" type="HBoxContainer" parent="Rows/Sword"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Slot1" parent="Rows/Sword/Line" instance=ExtResource("9_slot")]
+layout_mode = 2
+
+[node name="Slot2" parent="Rows/Sword/Line" instance=ExtResource("9_slot")]
+layout_mode = 2
+
+[node name="Slot3" parent="Rows/Sword/Line" instance=ExtResource("9_slot")]
+layout_mode = 2
+
+[node name="Slot4" parent="Rows/Sword/Line" instance=ExtResource("9_slot")]
+layout_mode = 2
+
+[node name="Shield" type="VBoxContainer" parent="Rows"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Rows/Shield"]
+layout_mode = 2
+theme_type_variation = &"Caps"
+text = "ESCUDO"
+
+[node name="Line" type="HBoxContainer" parent="Rows/Shield"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Slot1" parent="Rows/Shield/Line" instance=ExtResource("9_slot")]
+layout_mode = 2
+
+[node name="Slot2" parent="Rows/Shield/Line" instance=ExtResource("9_slot")]
+layout_mode = 2
+
+[node name="Slot3" parent="Rows/Shield/Line" instance=ExtResource("9_slot")]
+layout_mode = 2
+
+[node name="Slot4" parent="Rows/Shield/Line" instance=ExtResource("9_slot")]
+layout_mode = 2
+
+[node name="Armor" type="VBoxContainer" parent="Rows"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Rows/Armor"]
+layout_mode = 2
+theme_type_variation = &"Caps"
+text = "ARMADURA"
+
+[node name="Line" type="HBoxContainer" parent="Rows/Armor"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Slot1" parent="Rows/Armor/Line" instance=ExtResource("9_slot")]
+layout_mode = 2
+
+[node name="Slot2" parent="Rows/Armor/Line" instance=ExtResource("9_slot")]
+layout_mode = 2
+
+[node name="Slot3" parent="Rows/Armor/Line" instance=ExtResource("9_slot")]
+layout_mode = 2
+
+[node name="Slot4" parent="Rows/Armor/Line" instance=ExtResource("9_slot")]
+layout_mode = 2
 
 [node name="Detail" parent="." instance=ExtResource("2_detail")]
 unique_name_in_owner = true

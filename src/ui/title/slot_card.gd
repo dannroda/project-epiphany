@@ -36,10 +36,7 @@ func show_summary(data: Dictionary) -> void:
 		child.queue_free()
 	if not data.is_empty():
 		for i in int(data.max_health) / 4:
-			var heart := HeartIcon.new()
-			heart.quarters = 4
-			heart.custom_minimum_size = HeartIcon.SIZE
-			hearts.add_child(heart)
+			hearts.add_child(HeartIcon.create(4))
 		location.text = data.location if not String(data.location).is_empty() else "—"
 		time.text = format_time(data.play_time)
 	var ids: Array = data.get("items", [])

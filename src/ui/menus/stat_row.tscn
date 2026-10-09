@@ -1,0 +1,27 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/ui/menus/stat_row.gd" id="1_row"]
+
+[node name="StatRow" type="VBoxContainer"]
+theme_override_constants/separation = 0
+script = ExtResource("1_row")
+
+[node name="Padding" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="Row" type="HBoxContainer" parent="Padding"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Padding/Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"Hint"
+
+[node name="Value" type="Label" parent="Padding/Row"]
+layout_mode = 2
+theme_type_variation = &"Value"
+
+[node name="Rule" type="HSeparator" parent="."]
+layout_mode = 2

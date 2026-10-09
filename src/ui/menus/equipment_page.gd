@@ -1,8 +1,7 @@
 extends Control
 ## Pestaña Equipo: ranuras por categoría, detalle del ítem enfocado, stats y preview del modelo.
 
-const SLOTS_PER_ROW := 4
-const ROWS := [[ItemData.Category.SWORD, "ESPADA"], [ItemData.Category.SHIELD, "ESCUDO"], [ItemData.Category.ARMOR, "ARMADURA"]]
+const SECTIONS := { ^"Sword": ItemData.Category.SWORD, ^"Shield": ItemData.Category.SHIELD, ^"Armor": ItemData.Category.ARMOR }
 const CATEGORY_NAMES := { ItemData.Category.SWORD: "Espada", ItemData.Category.SHIELD: "Escudo", ItemData.Category.ARMOR: "Armadura" }
 const LOCK := preload("res://assets/ui/lock.svg")
 const HP_PER_HEART := 4
@@ -22,7 +21,7 @@ var _preview_model: Node3D
 
 
 func _ready() -> void:
-	_build_rows()
+	_bind_slots()
 	GameState.equipment_changed.connect(func(_c: ItemData.Category, _id: StringName) -> void: _refresh.call_deferred())
 	_refresh()
 
@@ -39,25 +38,13 @@ func _process(delta: float) -> void:
 		_preview_model.rotate_y(delta * 0.8)
 
 
-func _build_rows() -> void:
-	for row in ROWS:
-		var box := VBoxContainer.new()
-		box.add_theme_constant_override(&"separation", 10)
-		var title := Label.new()
-		title.text = row[1]
-		title.theme_type_variation = &"Caps"
-		box.add_child(title)
-		var line := HBoxContainer.new()
-		line.add_theme_constant_override(&"separation", 14)
-		var items := Items.database.items.filter(func(item: ItemData) -> bool: return item.category == row[0])
-		for i in SLOTS_PER_ROW:
-			var slot := Button.new()
-			slot.custom_minimum_size = Vector2(84, 84)
-			slot.theme_type_variation = &"EquipSlot"
-			slot.expand_icon = true
-			slot.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
-			slot.focus_mode = FOCUS_ALL
-			line.add_child(slot)
+func _bind_slots() -> void:
+	for section: NodePath in SECTIONS:
+		var category: ItemData.Category = SECTIONS[section]
+		var items := Items.database.items.filter(func(item: ItemData) -> bool: return item.category == category)
+		var line := rows.get_node(section).get_node(^"Line")
+		for i in line.get_child_count():
+			var slot := line.get_child(i) as Button
 			if i < items.size():
 				_slots[slot] = items[i]
 				slot.pressed.connect(_equip.bind(items[i]))
@@ -66,8 +53,6 @@ func _build_rows() -> void:
 				slot.icon = LOCK
 			slot.focus_entered.connect(_show_detail.bind(slot))
 			slot.mouse_entered.connect(slot.grab_focus)
-		box.add_child(line)
-		rows.add_child(box)
 
 
 func _refresh() -> void:
@@ -95,19 +80,7 @@ func _equip(item: ItemData) -> void:
 
 
 func _set_badge(slot: Button, equipped: bool) -> void:
-	var badge := slot.get_node_or_null(^"Badge") as Label
-	if badge == null:
-		badge = Label.new()
-		badge.name = "Badge"
-		badge.text = "E"
-		badge.theme_type_variation = &"Badge"
-		badge.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		badge.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		badge.size = Vector2(22, 22)
-		badge.position = Vector2(slot.custom_minimum_size.x - 15, -7)
-		badge.mouse_filter = MOUSE_FILTER_IGNORE
-		slot.add_child(badge)
-	badge.visible = equipped
+	(slot.get_node(^"Badge") as Label).visible = equipped
 
 
 func _show_detail(slot: Button) -> void:
@@ -138,10 +111,8 @@ func _refresh_stats() -> void:
 	var current: int = player.health.current if player else GameState.max_health
 	var count := ceili(GameState.max_health / float(HP_PER_HEART))
 	for i in count:
-		var heart := HeartIcon.new()
-		heart.icon_size = HeartIcon.SIZE * (1.0 if count <= 8 else 0.8)
-		heart.quarters = clampi(current - i * HP_PER_HEART, 0, HP_PER_HEART)
-		hearts.add_child(heart)
+		var filled := clampi(current - i * HP_PER_HEART, 0, HP_PER_HEART)
+		hearts.add_child(HeartIcon.create(filled, HeartIcon.SIZE * (1.0 if count <= 8 else 0.8)))
 
 
 func _equipped_item(category: ItemData.Category) -> ItemData:

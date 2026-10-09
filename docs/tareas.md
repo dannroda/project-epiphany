@@ -1736,7 +1736,7 @@ Importar el rig del ojo con manos y armar las fases 1 y 2 con LimboAI.
 
 **Bloqueada por:** 9.6 Muerte del jefe y final
 
-## M10 — Terminación  (7/13)
+## M10 — Terminación  (8/13)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -1929,19 +1929,19 @@ Skills: `workflows:itch-publish`.
 
 **Bloqueada por:** 10.9 Build para playtesters
 
-### 10.11 UI restante a escenas · Pendiente
+### 10.11 UI restante a escenas · Hecho
 
 **Prioridad:** media · **Etiquetas:** `ui`
 
-- [ ] Filas de stats de ItemDetail como escena
+- [x] Filas de stats de ItemDetail como escena
   item_detail.gd add_stat arma HBox + Labels + MarginContainer + HSeparator con .new(). Pasar a stat_row.tscn.
-- [ ] Pestaña Equipo: grilla y ranuras como escenas
+- [x] Pestaña Equipo: grilla y ranuras como escenas
   equipment_page.gd crea VBox/Label/HBox por categoría, Button por ranura y el Label de la insignia E. Secciones en la escena y ranura reutilizando item_slot.tscn o una equip_slot.tscn.
-- [ ] Pestaña Mapa: celdas, leyenda y stats como escenas
+- [x] Pestaña Mapa: celdas, leyenda y stats como escenas
   map_page.gd crea MapRoomCell, filas de leyenda y filas de stats por código; map_room_cell.gd arma su StyleBoxFlat en código (pasar a variaciones del tema).
-- [ ] Corazones (HeartIcon) como escena
+- [x] Corazones (HeartIcon) como escena
   HUD, tarjeta de ranura y Equipo hacen HeartIcon.new(), y heart_icon.gd arma sus TextureRect internos por código.
-- [ ] Test: ningún script de src/ui crea Controls con .new()
+- [x] Test: ningún script de src/ui crea Controls con .new()
   Un test que recorra src/ui/**/*.gd y falle si encuentra Label.new(), Button.new(), *Container.new(), etc. (permitiendo Tween, Image, etc.).
 
 **Notas:** Lo que todavía se arma por código (anterior a la regla: toda la UI son .tscn, los scripts solo llenan datos). Lo repetido es su propia escena chica, instanciada por ítem; estilos en theme.tres.

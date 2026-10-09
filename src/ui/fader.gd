@@ -1,16 +1,7 @@
-# Autoload
+# Autoload (fader.tscn)
 extends CanvasLayer
 
-var _rect := ColorRect.new()
-
-
-func _ready() -> void:
-	layer = 100
-	process_mode = PROCESS_MODE_ALWAYS
-	_rect.color = Color(0, 0, 0, 0)
-	_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
-	add_child(_rect)
+@onready var _rect: ColorRect = $Rect
 
 
 func fade_out(seconds: float = 0.4) -> void:

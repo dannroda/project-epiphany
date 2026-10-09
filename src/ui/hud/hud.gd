@@ -120,7 +120,7 @@ func _shake_slot(button: int) -> void:
 func _on_health_changed(current: int, max_value: int) -> void:
 	var count := ceili(max_value / float(HP_PER_HEART))
 	while hearts.get_child_count() < count:
-		hearts.add_child(HeartIcon.new())
+		hearts.add_child(HeartIcon.create())
 	while hearts.get_child_count() > count:
 		var extra := hearts.get_child(hearts.get_child_count() - 1)
 		hearts.remove_child(extra)

@@ -3,7 +3,6 @@ extends Control
 ## y dónde está el player. En el overworld: el mapa simple de la zona con la posición del player.
 
 const STEP := MapRoomCell.SIZE + Vector2(12, 12)
-const MUTED := Color("#8a8374")
 
 ## Lo lee el menú de pausa: esta pestaña no usa el botón de aceptar.
 var accept_label := ""
@@ -26,7 +25,6 @@ func _ready() -> void:
 	visibility_changed.connect(func() -> void:
 		if is_visible_in_tree():
 			refresh())
-	_build_legend()
 	marker.draw.connect(func() -> void: MapRoomCell.draw_arrow(marker, Vector2.ZERO, 0.0))
 	refresh()
 
@@ -76,7 +74,7 @@ func _show_dungeon() -> void:
 		var visited := _dungeon.was_visited(room.room_index)
 		if not visited and not _dungeon.has_map and room != current:
 			continue
-		var cell := MapRoomCell.new()
+		var cell := MapRoomCell.create()
 		cell.name = "Cell_%s" % room.name
 		cell.room_name = room.display_name
 		cell.state = MapRoomCell.State.CURRENT if room == current else (MapRoomCell.State.VISITED if visited else MapRoomCell.State.MAPPED)
@@ -116,28 +114,6 @@ func _show_overworld() -> void:
 	marker.queue_redraw()
 
 
-func _build_legend() -> void:
-	var entries := [
-		[func(c: Control) -> void: MapRoomCell.draw_box(c, Rect2(0, 5, 26, 18), MapRoomCell.FILL, MapRoomCell.BORDER, 2, 4), "Visitada"],
-		[func(c: Control) -> void: MapRoomCell.draw_dashed_rect(c, Rect2(1, 6, 24, 16), MapRoomCell.BORDER), "Sin visitar (mapa)"],
-		[func(c: Control) -> void: MapRoomCell.draw_arrow(c, Vector2(13, 14), 0.0), "Estás acá"],
-		[func(c: Control) -> void: MapRoomCell.draw_chest(c, Vector2(13, 16), MapRoomCell.GOLD), "Cofre (brújula)"],
-		[func(c: Control) -> void: MapRoomCell.draw_eye(c, Vector2(13, 14)), "Jefe"],
-	]
-	for entry in entries:
-		var row := HBoxContainer.new()
-		row.add_theme_constant_override(&"separation", 10)
-		var icon := Control.new()
-		icon.custom_minimum_size = Vector2(26, 28)
-		icon.draw.connect(entry[0].bind(icon))
-		row.add_child(icon)
-		var label := Label.new()
-		label.text = entry[1]
-		label.add_theme_font_size_override(&"font_size", 15)
-		row.add_child(label)
-		legend.add_child(row)
-
-
 func _current_room() -> Room:
 	var camera := get_tree().get_first_node_in_group(&"room_camera") as TopDownCamera
 	return camera.room if camera else null
@@ -154,21 +130,4 @@ func _find(type: Variant) -> Node:
 
 
 func _stat(label: String, value: String) -> void:
-	var row := HBoxContainer.new()
-	var name_label := Label.new()
-	name_label.text = label
-	name_label.theme_type_variation = &"Hint"
-	name_label.size_flags_horizontal = SIZE_EXPAND_FILL
-	row.add_child(name_label)
-	var value_label := Label.new()
-	value_label.text = value
-	value_label.theme_type_variation = &"Value"
-	if value == "No":
-		value_label.add_theme_color_override(&"font_color", MUTED)
-	row.add_child(value_label)
-	var padding := MarginContainer.new()
-	padding.add_theme_constant_override(&"margin_top", 8)
-	padding.add_theme_constant_override(&"margin_bottom", 8)
-	padding.add_child(row)
-	stats.add_child(padding)
-	stats.add_child(HSeparator.new())
+	stats.add_child(StatRow.create(label, value, value == "No"))

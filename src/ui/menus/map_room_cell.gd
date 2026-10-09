@@ -5,12 +5,12 @@ extends Control
 enum State { VISITED, MAPPED, CURRENT }
 
 const SIZE := Vector2(124, 88)
-const FILL := Color("#3a4250")
 const BORDER := Color("#56627a")
 const GOLD := Color("#d9a441")
 const GREY := Color("#6b7280")
 const BOSS := Color("#e0786c")
 const NAME := Color("#cfd3dc")
+const SCENE_PATH := "res://src/ui/menus/map_room_cell.tscn"
 
 var state: State = State.VISITED
 var room_name := ""
@@ -22,19 +22,17 @@ var here := false
 var facing := 0.0
 
 
-func _init() -> void:
-	custom_minimum_size = SIZE
-	size = SIZE
-	mouse_filter = MOUSE_FILTER_IGNORE
+static func create() -> MapRoomCell:
+	return load(SCENE_PATH).instantiate()
 
 
 func _draw() -> void:
 	var rect := Rect2(Vector2.ZERO, size)
 	match state:
 		State.VISITED:
-			draw_box(self, rect, FILL, BORDER, 2, 8)
+			draw_style_box(get_theme_stylebox(&"visited", &"MapRoomCell"), rect)
 		State.CURRENT:
-			draw_box(self, rect, FILL, GOLD, 3, 8)
+			draw_style_box(get_theme_stylebox(&"current", &"MapRoomCell"), rect)
 		State.MAPPED:
 			draw_dashed_rect(self, rect.grow(-1), BORDER)
 	var font := get_theme_default_font()
@@ -53,15 +51,6 @@ func _draw() -> void:
 	for i in opened_chests:
 		draw_chest(self, Vector2(x - 6, y), GREY)
 		x -= 24
-
-
-static func draw_box(canvas: CanvasItem, rect: Rect2, fill: Color, border: Color, width: int, radius: int) -> void:
-	var box := StyleBoxFlat.new()
-	box.bg_color = fill
-	box.border_color = border
-	box.set_border_width_all(width)
-	box.set_corner_radius_all(radius)
-	canvas.draw_style_box(box, rect)
 
 
 static func draw_dashed_rect(canvas: CanvasItem, rect: Rect2, color: Color) -> void:
