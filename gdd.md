@@ -286,7 +286,7 @@ Decidido el 2026-10-08 con la metodología de [[gdd#overworld-layout]] (artícul
 ## 9. Jefe — El Ojo con manos
 <!-- id: jefe -->
 
-Rig reutilizado de otra jam *(pendiente importarlo al repo)*.
+Modelo propio basado en el Gigante de la jam LD56: calabaza de piedra flotante con juntas de hierro, boca de horno, un ojo enorme de iris neón entre dos párpados de hierro y dos guanteletes que flotan sueltos. Sin esqueleto: son piezas separadas (`assets/epiphany/jefe.blend`, `tools/blender/build_jefe.py`) que mueve el código; las manos tienen tres poses (abierta para el golpe, puño, garra para el agarre) y en el dorso un ojo de neón que marca dónde pegar.
 
 - **Fase 1 — Manos:** golpes y agarres telegrafiados. Bloquear o rodar. Tras un golpe al piso, la mano queda aturdida → ventana para espadazos. Aturdir ambas manos → fase 2.
 - **Fase 2 — El Ojo:** el ojo se abre. **Flecha al ojo** = cae aturdido → ventana de espadazos. El ojo dispara orbes: se pueden **reflejar con el escudo espejo** como alternativa para aturdirlo. Las manos se regeneran y siguen presionando.
