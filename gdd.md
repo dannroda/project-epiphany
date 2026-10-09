@@ -219,7 +219,57 @@ Decidido el 2026-10-08. 8 zonas de ≈ 24 × 16 m (una "pantalla" con la cámara
 | 8 | Antesala | Vasijas con corazones, tablilla, puerta del jefe | — | — | Latido constante |
 | 9 | **Jefe** | Ver §9 | — | Contenedor de corazón | Clímax |
 
-*El layout exacto (qué puerta conecta con cuál) es la próxima sesión de diseño de niveles.*
+### 8.1 Layout
+<!-- id: mazmorra-layout -->
+
+Decidido el 2026-10-08 con la metodología de [[gdd#overworld-layout]] (artículo "The Ultimate Methodology of creating Zelda-Like Dungeon Level"): hub con "lados primero, centro al final", candado y llave con ramas obligatorias, y el ítem clave (arco) a mitad de camino para volver a salas ya vistas con algo nuevo.
+
+```
+                 ┌───────────┐
+                 │ 9 JEFE    │
+                 └─────▲─────┘
+                    [JEFE]
+┌───────────┐    ┌─────┴─────┐    ┌───────────┐
+│ 7 PUZZLE  │    │ 8 ANTESALA│    │ 5 ARENA   │
+│ llave jefe│    │ vasijas,  │    │ oleadas → │
+│ + abre el │    │ tablilla  │    │ ARCO      │
+│ sello del │    └─────▲─────┘    └─────▲─────┘
+│ hub       │      [SELLO]          [GRIETA]
+└─────▲─────┘          │                │
+   [LLAVE]             │                │
+┌─────┴─────┐    ┌─────┴─────┐    ┌─────┴─────┐
+│ 6 OJOS    │    │ 2 HUB     │    │ 4 AGRIET. │
+│ brújula + │    │ esqueletos│◄───┤ bombas →  │
+│ llave 2   │    │           │LLAVE  MAPA    │
+└─────▲─────┘    └─────▲─────┘    └───────────┘
+   [OJO→flecha]        │
+┌─────┴─────┐          │
+│ 3 GALERÍA ├─[PERSIANA]┘
+│ torreta → │    ┌─────┴─────┐
+│ llave 1   │    │ 1 VESTÍB. │  ← entrada desde el overworld
+└───────────┘    │ bloque →  │
+                 │ interrup. │
+                 └───────────┘
+```
+
+| Puerta | Tipo | Se abre con |
+|---|---|---|
+| Vestíbulo → Hub | Interruptor | Bloque por grilla en el interruptor del vestíbulo |
+| Hub → Galería (O) | Persiana | Vencer a los esqueletos del hub |
+| Hub → Sala agrietada (E) | Con llave | Llave 1 (Galería) |
+| Agrietada → Arena (N) | Muro agrietado | Bomba |
+| Galería → Ojos (N) | Interruptor | Ojo sobre la puerta: **solo con flecha** (vuelta a una sala vista con el arco) |
+| Ojos → Puzzle (N) | Con llave | Llave 2 (Ojos) |
+| Hub → Antesala (N) | Sellada (interruptor) | Resolver el puzzle combinado: se ve cerrada desde el principio |
+| Antesala → Jefe (N) | Del jefe | Llave del jefe (Puzzle) |
+
+**Llaves:** 2 llaves chicas y 2 puertas con llave. La llave 1 solo puede gastarse en la puerta este del hub, porque la otra puerta con llave (Ojos → Puzzle) queda detrás del arco, que está detrás de la puerta este. La llave 2 aparece recién en Ojos. En ningún orden quedan menos llaves que puertas.
+
+**Arco a mitad de camino:** sin arco se recorren Vestíbulo, Hub, Galería, Agrietada y Arena (5 de 9). Con el arco se vuelve a la Galería, cuyo ojo sobre la puerta norte se vio desde el principio (cebo), y empieza la segunda mitad: Ojos y Puzzle giran alrededor de las flechas, combinadas con bloques y el escudo espejo.
+
+**Munición:** las vasijas sueltan flechas y bombas (solo si ya se tiene el arco o la bolsa); hay vasijas en el hub y en la antesala.
+
+**Curva de tensión y *doom*:** calma (Vestíbulo) → combate (Hub) → puzzle con presión (Galería) → puzzle (Agrietada) → clímax de la primera mitad (Arena, oleadas) → descubrimiento con el arco (Ojos) → prueba combinada (Puzzle) → respiro antes del jefe (Antesala) → Jefe. El *doom* de cada sala es la columna de la tabla de arriba.
 
 **Kit gris y medidas (6.7):** las salas se arman con un `GridMap` sobre `data/kits/gray_kit.tres` (lo genera `src/tools/build_gray_kit.gd` con las texturas de prototipo de Kenney): Piso, Pared, Columna, Escalón y Puerta (piso + dintel; la `Door` va en el medio de esa celda). Celdas de 2 m centradas en (2i, 2k), piso en y = 0, paredes de 2.6 m y una celda de grosor; la cámara de esas escenas usa `mask_margin` = 2 para que se vean las paredes enteras. Una sala de una pantalla tiene 7 × 5 celdas de interior (14 × 10 m); las más grandes se recorren. El bloque de empuje usa la misma grilla.
 
@@ -1657,7 +1707,7 @@ Moneda y tiendas · NPCs con diálogo · piezas de corazón · gancho / telequin
 
 - [ ] Historia: opción A o B (o propia). Título del juego.
 - [ ] ¿Varias espadas o una espada con modificadores elementales?
-- [ ] Layout exacto de la mazmorra (conexiones entre salas). El del overworld quedó decidido (§7.1).
+- [x] Layout exacto de la mazmorra (§8.1) y del overworld (§7.1).
 - [ ] Ranuras de guardado: ¿1 o 3 en el MVP?
 - [ ] Arte: ¿se mantiene el look KayKit + texturas de prototipo o hay dirección de arte propia?
 - [ ] Rig del jefe: importarlo al repo y verificar compatibilidad con el AnimationTree actual.

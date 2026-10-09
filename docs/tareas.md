@@ -1459,22 +1459,24 @@ Las 8 salas en bloques grises, el arco a mitad de camino, la llave del jefe.
 **Hecho cuando:**
 - La mazmorra se recorre entera.
 
-### 8.1 Layout de la mazmorra · Pendiente
+### 8.1 Layout de la mazmorra · En curso
 
-- [ ] Diagrama de conexiones de las 8 salas + jefe
+- [x] Diagrama de conexiones de las 8 salas + jefe
   Hub central con 4 salidas ([[gdd#mazmorra]]).
-- [ ] Contar llaves y puertas con llave
+- [x] Contar llaves y puertas con llave
   Nunca menos llaves accesibles que puertas en cualquier orden de recorrido (evitar softlocks).
-- [ ] Ubicar el arco a mitad de camino
+- [x] Ubicar el arco a mitad de camino
   La segunda mitad necesita el arco; el jugador vuelve por salas ya vistas con algo nuevo.
-- [ ] Curva de tensión y *doom* por sala
+- [x] Curva de tensión y *doom* por sala
   Columna "Doom" del GDD.
-- [ ] Actualizar el GDD
+- [x] Actualizar el GDD
   Cerrar la decisión abierta del layout de la mazmorra.
 
 **Prueba:** El diagrama está en el GDD; recorrerlo en papel en cualquier orden posible no deja al jugador sin llaves.
 
 **Notas:** Skills: `disciplines:level-design`.
+
+Hecho 2026-10-08: diagrama, tabla de puertas, conteo de llaves (2 y 2, la llave 1 solo sirve en el hub este), arco a mitad de camino y curva en GDD §8.1.
 
 **Referencias:** `gdd.md#mazmorra`, `gdd.md#decisiones-abiertas`
 
