@@ -57,6 +57,7 @@ theme_override_constants/separation = 36
 alignment = 1
 
 [node name="PrevKey" type="TextureRect" parent="Frame/Panel/Layout/Nav/Header" unique_id=1948537454]
+self_modulate = Color(0.8509804, 0.6431373, 0.25490198, 1)
 unique_name_in_owner = true
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
@@ -89,6 +90,7 @@ theme_type_variation = &"TabLabel"
 text = "Sistema"
 
 [node name="NextKey" type="TextureRect" parent="Frame/Panel/Layout/Nav/Header" unique_id=1245350997]
+self_modulate = Color(0.8509804, 0.6431373, 0.25490198, 1)
 unique_name_in_owner = true
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2

@@ -41,6 +41,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Badge" type="TextureRect" parent="Body"]
+self_modulate = Color(0.8509804, 0.6431373, 0.25490198, 1)
 layout_mode = 0
 offset_left = -14.0
 offset_top = -14.0

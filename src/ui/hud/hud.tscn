@@ -111,6 +111,7 @@ mouse_filter = 2
 theme_override_constants/separation = 10
 
 [node name="PromptIcon" type="TextureRect" parent="SafeArea/Right/Prompt/Row"]
+self_modulate = Color(0.8509804, 0.6431373, 0.25490198, 1)
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2

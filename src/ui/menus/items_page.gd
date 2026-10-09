@@ -6,6 +6,9 @@ const SLOT_COUNT := 12
 const BUTTON_ACTIONS: Array[StringName] = [&"item_1", &"item_2"]
 const BUTTON_NAMES := ["X", "Y"]
 const LOCK := preload("res://assets/ui/lock.svg")
+const SLOT := preload("res://src/ui/menus/item_slot.tscn")
+const CHIP := preload("res://src/ui/menus/dungeon_chip.tscn")
+const ASSIGN_BUTTON := preload("res://src/ui/menus/assign_button.tscn")
 
 ## Lo lee el menú de pausa para la barra de ayuda.
 var accept_label := ""
@@ -59,37 +62,12 @@ func _build_slots() -> void:
 	var usables := Items.database.items.filter(func(item: ItemData) -> bool: return item.category == ItemData.Category.USABLE)
 	for i in SLOT_COUNT:
 		var item: ItemData = usables[i] if i < usables.size() else null
-		var slot := Button.new()
-		slot.custom_minimum_size = Vector2(96, 96)
-		slot.theme_type_variation = &"ItemSlot"
-		slot.expand_icon = true
-		slot.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		slot.focus_mode = FOCUS_ALL
+		var slot: Button = SLOT.instantiate()
 		if item:
 			_slots[slot] = item
 		else:
 			slot.disabled = true
 			slot.icon = LOCK
-		var badge := TextureRect.new()
-		badge.name = "Badge"
-		badge.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		badge.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		badge.size = Vector2(34, 34)
-		badge.position = Vector2(-13, -13)
-		badge.mouse_filter = MOUSE_FILTER_IGNORE
-		badge.visible = false
-		slot.add_child(badge)
-		var count := Label.new()
-		count.name = "Count"
-		count.theme_type_variation = &"Ammo"
-		count.mouse_filter = MOUSE_FILTER_IGNORE
-		count.visible = false
-		count.set_anchors_preset(PRESET_BOTTOM_RIGHT)
-		count.grow_horizontal = GROW_DIRECTION_BEGIN
-		count.grow_vertical = GROW_DIRECTION_BEGIN
-		count.offset_right = -8
-		count.offset_bottom = -2
-		slot.add_child(count)
 		slot.focus_entered.connect(_show_detail.bind(slot))
 		slot.mouse_entered.connect(slot.grab_focus)
 		grid.add_child(slot)
@@ -139,22 +117,10 @@ func _refresh_dungeon() -> void:
 
 
 func _chip(item_id: StringName, text: String, owned: bool) -> void:
-	var chip := PanelContainer.new()
-	chip.theme_type_variation = &"Chip"
+	var chip: PanelContainer = CHIP.instantiate()
 	chip.modulate = Color.WHITE if owned else Color(1, 1, 1, 0.55)
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override(&"separation", 8)
-	var icon := TextureRect.new()
-	icon.texture = Items.get_item(item_id).icon
-	icon.custom_minimum_size = Vector2(22, 22)
-	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	row.add_child(icon)
-	var label := Label.new()
-	label.text = text
-	label.theme_type_variation = &"Value"
-	row.add_child(label)
-	chip.add_child(row)
+	(chip.get_node(^"Row/Icon") as TextureRect).texture = Items.get_item(item_id).icon
+	(chip.get_node(^"Row/Label") as Label).text = text
 	chips.add_child(chip)
 
 
@@ -174,16 +140,10 @@ func _show_detail(slot: Button) -> void:
 
 
 func _assign_button(index: int, assigned: bool) -> Button:
-	var button := Button.new()
+	var button: Button = ASSIGN_BUTTON.instantiate()
 	button.text = ("Asignado a %s" if assigned else "Asignar a %s") % BUTTON_NAMES[index]
 	button.icon = InputPrompts.icon_for_current(BUTTON_ACTIONS[index])
 	button.theme_type_variation = &"AssignButtonActive" if assigned else &"AssignButton"
-	button.custom_minimum_size = Vector2(0, 48)
-	button.size_flags_horizontal = SIZE_EXPAND_FILL
-	button.alignment = HORIZONTAL_ALIGNMENT_CENTER
-	button.expand_icon = false
-	button.add_theme_constant_override(&"icon_max_width", 26)
-	button.focus_mode = FOCUS_NONE
 	button.pressed.connect(_assign_focused.bind(index))
 	return button
 

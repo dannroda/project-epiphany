@@ -1,0 +1,34 @@
+[gd_scene format=3]
+
+[node name="ItemSlot" type="Button"]
+custom_minimum_size = Vector2(96, 96)
+theme_type_variation = &"ItemSlot"
+icon_alignment = 1
+expand_icon = true
+
+[node name="Badge" type="TextureRect" parent="."]
+visible = false
+self_modulate = Color(0.8509804, 0.6431373, 0.25490198, 1)
+layout_mode = 0
+offset_left = -13.0
+offset_top = -13.0
+offset_right = 21.0
+offset_bottom = 21.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Count" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -8.0
+offset_bottom = -2.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+theme_type_variation = &"Ammo"
