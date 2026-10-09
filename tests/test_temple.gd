@@ -23,6 +23,60 @@ func _start(items := []) -> void:
 	player.health.invulnerability_time = 0.0
 
 
+func _scenario(scenario: String) -> void:
+	tree = Engine.get_main_loop() as SceneTree
+	state = tree.root.get_node(^"GameState")
+	state.reset()
+	assert_eq(await tree.root.get_node(^"SaveManager").load_scenario(scenario), OK)
+	level = tree.current_scene
+	player = tree.get_first_node_in_group(&"player") as PlayerCharacter
+	while player.movement_state.get_active_state().name == &"Spawning":
+		await tree.physics_frame
+	await tree.create_timer(0.2).timeout
+	player.health.invulnerability_time = 0.0
+
+
+func _face(direction: Vector3) -> void:
+	player.look_at(player.global_position + direction.normalized(), Vector3.UP)
+	player.model.rotation = Vector3(0, PI, 0)
+
+
+func _press(action: StringName) -> void:
+	var event := InputEventAction.new()
+	event.action = action
+	event.pressed = true
+	Input.parse_input_event(event)
+	var release := InputEventAction.new()
+	release.action = action
+	Input.parse_input_event(release)
+	for i in 3:
+		await tree.physics_frame
+
+
+func _block(on: bool) -> void:
+	player.movement_state.blackboard.set_var("is_blocking", on)
+	player.set_guard(on)
+
+
+func _open_chest(chest_name: NodePath) -> void:
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	(level.get_node(chest_name) as Chest).interactable.interact(player)
+	await tree.create_timer(1.0).timeout
+	while stack.is_open():
+		stack.pop()
+	await tree.create_timer(1.2).timeout
+
+
+func _bomb_at(stand: Vector3, facing: Vector3, retreat: Vector3) -> void:
+	player.global_position = stand
+	_face(facing)
+	await tree.physics_frame
+	await _press(&"item_1")
+	await tree.create_timer(1.0).timeout
+	player.global_position = retreat
+	await tree.create_timer(2.6).timeout
+
+
 func _walk(action: StringName, pressed: bool) -> void:
 	var event := InputEventAction.new()
 	event.action = action
@@ -83,3 +137,57 @@ func test_rooms_1_2_vestibule_to_the_hub() -> void:
 	await tree.create_timer(0.8).timeout
 	assert_eq(_door(^"HubShutterW").is_open, true, "sin esqueletos se abre la persiana")
 	state.reset()
+
+
+func test_rooms_3_4_key_and_map_without_the_bow() -> void:
+	await _scenario("dungeon_no_bow")
+	assert_eq(state.inventory.has(&"bow"), false, "dungeon_no_bow: sin arco")
+	_kill([^"HubSkeleton1", ^"HubSkeleton2"])
+
+	var pad := InputEventJoypadMotion.new()
+	pad.axis = JOY_AXIS_RIGHT_X
+	pad.axis_value = 0.3
+	Input.parse_input_event(pad)
+	var still := InputEventJoypadMotion.new()
+	still.axis = JOY_AXIS_RIGHT_X
+	still.axis_value = 0.0
+	Input.parse_input_event(still)
+	player.global_position = Vector3(0, 0, 50)
+	await tree.create_timer(1.0).timeout
+	player.global_position = Vector3(0, 0, 50)
+	_face(Vector3(-1, 0, -1))
+	_block(true)
+	var eye := level.get_node(^"GalleryEye") as EyeSwitch
+	var until := Time.get_ticks_msec() + 9000
+	while Time.get_ticks_msec() < until and not eye.active:
+		await tree.physics_frame
+	_block(false)
+	assert_eq(eye.active, true, "el orbe de la torreta, reflejado con el espejo, despierta el ojo")
+	await tree.create_timer(0.8).timeout
+	assert_eq((level.get_node(^"GalleryKeyGate") as Gate).is_open, true, "y baja la reja del nicho")
+	level.get_node(^"GalleryTurret").free()
+	player.global_position = Vector3(-8, 0, 52.6)
+	_face(Vector3.BACK)
+	await _open_chest(^"GalleryKeyChest")
+	assert_eq(state.current_dungeon_state().small_keys, 1, "llave 1")
+	assert_eq(_door(^"OjosDoor").is_open, false, "la puerta norte de la galería espera una flecha")
+
+	player.global_position = Vector3(34, 0, 48)
+	_door(^"HubLockedE").interactable.interact(player)
+	assert_eq(_door(^"HubLockedE").is_open, true, "la llave abre el este del hub")
+	await tree.create_timer(0.8).timeout
+	player.global_position = Vector3(48, 0, 52)
+	await tree.create_timer(1.0).timeout
+	var box := level.get_node(^"CrackedBox") as Node3D
+	await _bomb_at(Vector3(48, 0, 48.6), Vector3.FORWARD, Vector3(48, 0, 54))
+	assert_true(box.global_position.distance_to(Vector3(48, 0.5, 46)) > 1.2, "la bomba vuela la caja del hueco (%s)" % box.global_position)
+	player.global_position = Vector3(48, 0, 50)
+	assert_true(await _walk_until(&"move_forward", func() -> bool: return player.global_position.z <= 44.0), "pasa por el hueco (player %s, caja %s)" % [player.global_position.snappedf(0.1), box.global_position.snappedf(0.1)])
+	player.global_position = Vector3(54, 0, 43.4)
+	_face(Vector3.FORWARD)
+	await _open_chest(^"MapChest")
+	assert_eq(state.current_dungeon_state().has_map, true, "el mapa")
+	await _bomb_at(Vector3(48, 0, 41.4), Vector3.FORWARD, Vector3(52, 0, 44))
+	assert_eq((level.get_node(^"ArenaCrackedWall") as CrackedWall).is_broken, true, "el muro hacia la arena")
+	state.reset()
+

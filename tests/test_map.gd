@@ -1,7 +1,7 @@
 extends "res://tests/test_case.gd"
 
 
-func _open_map(scenario := "dungeon_no_bow", level := "") -> Array:
+func _open_map(scenario := "test_rooms", level := "") -> Array:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state: Node = tree.root.get_node(^"GameState")
 	state.reset()

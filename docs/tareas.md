@@ -1452,7 +1452,7 @@ Hecho 2026-10-08: `start` ahora arranca en el overworld (escena principal del ju
 
 **Bloqueada por:** 7.6 Sello del templo
 
-## M8 — Contenido de mazmorra  (2/8)
+## M8 — Contenido de mazmorra  (3/8)
 
 Las 8 salas en bloques grises, el arco a mitad de camino, la llave del jefe.
 
@@ -1505,7 +1505,7 @@ Hecho 2026-10-08: `shield_skeleton.tscn` + `data/entities/shield_skeleton.tres`.
 
 **Bloqueada por:** 1.4 IA del esqueleto con `BTAttack`
 
-### 8.3 Salas 1–2: vestíbulo y hub · En curso
+### 8.3 Salas 1–2: vestíbulo y hub · Hecho
 
 - [x] Sala 1: bloque por grilla → interruptor → persiana
 - [x] Sala 2: hub con 4 salidas y esqueletos
@@ -1521,14 +1521,16 @@ Hecho 2026-10-08: `shield_skeleton.tscn` + `data/entities/shield_skeleton.tres`.
 
 **Bloqueada por:** 6.7 Mazmorra de prueba: tres salas grises; 8.1 Layout de la mazmorra
 
-### 8.4 Salas 3–4: galería de trampas y sala agrietada · Pendiente
+### 8.4 Salas 3–4: galería de trampas y sala agrietada · En curso
 
-- [ ] Sala 3: reflejar orbes de torretas a un cristal
+- [x] Sala 3: reflejar orbes de torretas a un cristal
   Da una llave chica.
-- [ ] Sala 4: muro bombable y bombas que empujan bloques físicos
+- [x] Sala 4: muro bombable y bombas que empujan bloques físicos
   Da el mapa.
 
 **Prueba:** Resolver las dos salas desde `dungeon_no_bow` y salir con la llave y el mapa.
+
+**Notas:** Hecho 2026-10-08: galería (torreta → reflejo → ojo → llave 1; ojo de la puerta norte solo con flecha) y sala agrietada (bomba vuela la caja del hueco → mapa; muro agrietado a la arena). Simplificación: en vez de "bombas empujan bloques a un interruptor", la bomba despeja el paso (más robusto con física). `dungeon_no_bow` ahora es del templo (en el hub); el escenario viejo de las salas de prueba se llama `test_rooms`. Test en `tests/test_temple.gd`.
 
 **Referencias:** `gdd.md#mazmorra`
 
