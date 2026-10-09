@@ -36,3 +36,36 @@ func test_door_needs_both_switches() -> void:
 	assert_eq(block_switch.active, true, "el bloque queda sobre el otro")
 	assert_eq(door.is_open, true, "con los dos, la puerta se abre")
 	state.reset()
+
+
+func test_block_mode_player_holds_and_block_solves() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	state.reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	for i in 3:
+		await tree.physics_frame
+	var level := tree.current_scene
+	level.get_node(^"Skeleton").free()
+	var switch: FloorSwitch = level.get_node(^"BlockSwitch")
+	switch.mode = FloorSwitch.Mode.BLOCK
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	var block: PushBlock = level.get_node(^"Block")
+	player.global_position = switch.global_position
+	for i in 6:
+		await tree.physics_frame
+	assert_eq(switch.active, true, "el player lo activa")
+	player.global_position = switch.global_position + Vector3(0, 0, 3)
+	for i in 6:
+		await tree.physics_frame
+	assert_eq(switch.active, false, "al bajarse se apaga")
+	block.global_position = switch.global_position
+	for i in 6:
+		await tree.physics_frame
+	assert_eq(switch.active, true, "el bloque lo activa")
+	block.global_position = switch.global_position + Vector3(4, 0, 0)
+	for i in 6:
+		await tree.physics_frame
+	assert_eq(switch.active, true, "y queda resuelto")
+	state.reset()

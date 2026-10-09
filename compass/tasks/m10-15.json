@@ -1,0 +1,30 @@
+{
+  "checklist": [
+    {
+      "done": true,
+      "text": "Modo BLOCK en FloorSwitch: el player sostiene, el bloque resuelve"
+    },
+    {
+      "done": true,
+      "text": "Gate.stays_open y close(); temple: Vestíbulo y Puzzle en BLOCK"
+    },
+    {
+      "done": true,
+      "text": "Tests, prueba en el templo y GDD"
+    }
+  ],
+  "code": "10.15",
+  "created_at": "2026-10-09T16:23:37.270Z",
+  "milestone": "m10",
+  "notes": "ONCE sigue disponible (overworld y mazmorra gris lo usan); se elige por puzzle.",
+  "order": 15,
+  "priority": "medium",
+  "refs": [],
+  "status": "done",
+  "tags": [
+    "puzzles"
+  ],
+  "test": "",
+  "title": "Interruptores de piso: solo un bloque los resuelve",
+  "updated_at": "2026-10-09T16:32:22.427Z"
+}

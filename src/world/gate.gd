@@ -9,18 +9,25 @@ signal opened
 ## Opcional: interruptores que la abren (si no, la abre un script con open()).
 @export var switches: Array[NodePath] = []
 @export var condition: Wiring.Condition = Wiring.Condition.ALL
+## Si es false, se vuelve a levantar cuando la condición deja de cumplirse.
+@export var stays_open := true
 
 var is_open := false
 var _wiring: Wiring
+var _closed_y := 0.0
+var _tween: Tween
 
 
 func _ready() -> void:
+	_closed_y = position.y
 	if switches.is_empty():
 		return
 	_wiring = Wiring.create(self, switches, condition)
 	_wiring.changed.connect(func(satisfied: bool) -> void:
 		if satisfied:
-			open())
+			open()
+		elif not stays_open:
+			close())
 	if _wiring.is_satisfied():
 		open(false)
 
@@ -31,12 +38,26 @@ func open(animate := true) -> void:
 		return
 	is_open = true
 	$CollisionShape3D.set_deferred(&"disabled", true)
+	if _tween:
+		_tween.kill()
 	if not animate:
-		position.y -= drop
+		position.y = _closed_y - drop
 		opened.emit()
 		return
-	var tween := create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-	tween.tween_property(self, "position:y", position.y - drop, duration)
+	_tween = create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	_tween.tween_property(self, "position:y", _closed_y - drop, duration)
 	Feel.sfx(&"secret", global_position)
 	Feel.burst(&"dust", global_position + Vector3.UP * 0.2, Vector3.UP)
 	opened.emit()
+
+
+func close() -> void:
+	if not is_open:
+		return
+	is_open = false
+	$CollisionShape3D.set_deferred(&"disabled", false)
+	if _tween:
+		_tween.kill()
+	_tween = create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	_tween.tween_property(self, "position:y", _closed_y, duration)
+	Feel.sfx(&"click", global_position)

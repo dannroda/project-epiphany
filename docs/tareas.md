@@ -1750,7 +1750,7 @@ Importar el rig del ojo con manos y armar las fases 1 y 2 con LimboAI.
 
 **Notas:** Sin flag por ahora porque no hay jefe; 9.6 le pone d1_boss_defeated.
 
-## M10 — Terminación  (10/14)
+## M10 — Terminación  (11/15)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -1994,6 +1994,16 @@ Skills: `workflows:itch-publish`.
 - [x] Capturas, tests y GDD
 
 **Notas:** offset (0, 17.4, 10.0): vista ≈ 26 × 14.5 m. data/kits/shaders/cutaway.gdshader en wall.tres y column.tres; la cámara pasa cut_area/cut_height al entrar a cada sala.
+
+### 10.15 Interruptores de piso: solo un bloque los resuelve · Hecho
+
+**Prioridad:** media · **Etiquetas:** `puzzles`
+
+- [x] Modo BLOCK en FloorSwitch: el player sostiene, el bloque resuelve
+- [x] Gate.stays_open y close(); temple: Vestíbulo y Puzzle en BLOCK
+- [x] Tests, prueba en el templo y GDD
+
+**Notas:** ONCE sigue disponible (overworld y mazmorra gris lo usan); se elige por puzzle.
 
 ## Listas
 

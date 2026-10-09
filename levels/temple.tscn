@@ -286,7 +286,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.6, 9)
 [node name="VestibuleSwitch" type="Area3D" parent="." unique_id=1824326411 instance=ExtResource("5_m4hxx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 62)
 script = ExtResource("6_gcnuc")
-mode = 1
+mode = 2
 flag = &"d1_vestibule_switch"
 
 [node name="VestibuleBlock" type="AnimatableBody3D" parent="." unique_id=1356705201 instance=ExtResource("7_bannu")]
@@ -302,6 +302,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 56)
 script = ExtResource("10_w7c0a")
 kind = 3
 switches = Array[NodePath]([NodePath("../VestibuleSwitch")])
+stays_open = false
 
 [node name="VestibuleTablet" type="StaticBody3D" parent="." unique_id=170676665 instance=ExtResource("11_pu13t")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 69)
@@ -525,7 +526,7 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -10,
 [node name="PuzzleSwitch" type="Area3D" parent="." unique_id=783558794 instance=ExtResource("5_m4hxx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 16)
 script = ExtResource("6_gcnuc")
-mode = 1
+mode = 2
 flag = &"d1_puzzle_switch"
 
 [node name="PuzzleBlock" type="AnimatableBody3D" parent="." unique_id=1087774045 instance=ExtResource("7_bannu")]
@@ -540,6 +541,7 @@ solved_position = Vector3(-2, 0, 16)
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6, 0, 14)
 script = ExtResource("26_f8jkx")
 switches = Array[NodePath]([NodePath("../PuzzleSwitch")])
+stays_open = false
 
 [node name="PuzzleCrystal" type="StaticBody3D" parent="." unique_id=2074486630 instance=ExtResource("43_8u32y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 10)
