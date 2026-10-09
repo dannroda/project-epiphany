@@ -173,6 +173,51 @@ script = ExtResource("1_ox7fe")
 id = &"d1_chest_bow"
 description = "Templo, arena: cofre grande del arco abierto"
 
+[sub_resource type="Resource" id="R_d1_ojos_eye_a"]
+script = ExtResource("1_ox7fe")
+id = &"d1_ojos_eye_a"
+description = "Templo, sala de ojos: ojo oeste (abre el nicho de la brújula)"
+
+[sub_resource type="Resource" id="R_d1_ojos_eye_b"]
+script = ExtResource("1_ox7fe")
+id = &"d1_ojos_eye_b"
+description = "Templo, sala de ojos: ojo este (sube el puente)"
+
+[sub_resource type="Resource" id="R_d1_ojos_compass_chest"]
+script = ExtResource("1_ox7fe")
+id = &"d1_ojos_compass_chest"
+description = "Templo, sala de ojos: cofre de la brújula abierto"
+
+[sub_resource type="Resource" id="R_d1_ojos_key_chest"]
+script = ExtResource("1_ox7fe")
+id = &"d1_ojos_key_chest"
+description = "Templo, sala de ojos: cofre de la llave chica abierto"
+
+[sub_resource type="Resource" id="R_d1_puzzle_locked_door"]
+script = ExtResource("1_ox7fe")
+id = &"d1_puzzle_locked_door"
+description = "Templo: puerta con llave de la sala de ojos a la del puzzle abierta"
+
+[sub_resource type="Resource" id="R_d1_puzzle_switch"]
+script = ExtResource("1_ox7fe")
+id = &"d1_puzzle_switch"
+description = "Templo, puzzle: bloque en el interruptor (baja la reja que corta el haz)"
+
+[sub_resource type="Resource" id="R_d1_puzzle_crystal"]
+script = ExtResource("1_ox7fe")
+id = &"d1_puzzle_crystal"
+description = "Templo, puzzle: cristal encendido (descubre el ojo)"
+
+[sub_resource type="Resource" id="R_d1_puzzle_eye"]
+script = ExtResource("1_ox7fe")
+id = &"d1_puzzle_eye"
+description = "Templo, puzzle: ojo despierto (llave del jefe y sello del hub)"
+
+[sub_resource type="Resource" id="R_d1_boss_key_chest"]
+script = ExtResource("1_ox7fe")
+id = &"d1_boss_key_chest"
+description = "Templo, puzzle: cofre de la llave del jefe abierto"
+
 [resource]
 script = ExtResource("2_3vvdp")
-definitions = Array[ExtResource("1_ox7fe")]([SubResource("Resource_mrp87"), SubResource("Resource_tablethint"), SubResource("Resource_crackedwall"), SubResource("Resource_sbwall"), SubResource("Resource_testdoor"), SubResource("Resource_testblock"), SubResource("Resource_testchest"), SubResource("Resource_gray_switch"), SubResource("Resource_gray_key_chest"), SubResource("Resource_gray_locked"), SubResource("Resource_gray_compass_chest"), SubResource("Resource_cave_chest"), SubResource("Resource_cave_practice"), SubResource("Resource_shrine_wall"), SubResource("Resource_shrine_switch"), SubResource("Resource_shrine_chest"), SubResource("Resource_shrine_shortcut"), SubResource("Resource_temple_seal"), SubResource("Resource_grotto_wall"), SubResource("Resource_grotto_chest"), SubResource("Resource_grove_a"), SubResource("Resource_grove_b"), SubResource("Resource_grove_chest"), SubResource("Resource_cliff_eye"), SubResource("Resource_cliff_chest"), SubResource("R_d1_vestibule_switch"), SubResource("R_d1_hub_locked_door"), SubResource("R_d1_gallery_eye"), SubResource("R_d1_gallery_key_chest"), SubResource("R_d1_ojos_door_eye"), SubResource("R_d1_map_chest"), SubResource("R_d1_arena_cracked_wall"), SubResource("R_d1_arena_cleared"), SubResource("R_d1_chest_bow")])
+definitions = Array[ExtResource("1_ox7fe")]([SubResource("Resource_mrp87"), SubResource("Resource_tablethint"), SubResource("Resource_crackedwall"), SubResource("Resource_sbwall"), SubResource("Resource_testdoor"), SubResource("Resource_testblock"), SubResource("Resource_testchest"), SubResource("Resource_gray_switch"), SubResource("Resource_gray_key_chest"), SubResource("Resource_gray_locked"), SubResource("Resource_gray_compass_chest"), SubResource("Resource_cave_chest"), SubResource("Resource_cave_practice"), SubResource("Resource_shrine_wall"), SubResource("Resource_shrine_switch"), SubResource("Resource_shrine_chest"), SubResource("Resource_shrine_shortcut"), SubResource("Resource_temple_seal"), SubResource("Resource_grotto_wall"), SubResource("Resource_grotto_chest"), SubResource("Resource_grove_a"), SubResource("Resource_grove_b"), SubResource("Resource_grove_chest"), SubResource("Resource_cliff_eye"), SubResource("Resource_cliff_chest"), SubResource("R_d1_vestibule_switch"), SubResource("R_d1_hub_locked_door"), SubResource("R_d1_gallery_eye"), SubResource("R_d1_gallery_key_chest"), SubResource("R_d1_ojos_door_eye"), SubResource("R_d1_map_chest"), SubResource("R_d1_arena_cracked_wall"), SubResource("R_d1_arena_cleared"), SubResource("R_d1_chest_bow"), SubResource("R_d1_ojos_eye_a"), SubResource("R_d1_ojos_eye_b"), SubResource("R_d1_ojos_compass_chest"), SubResource("R_d1_ojos_key_chest"), SubResource("R_d1_puzzle_locked_door"), SubResource("R_d1_puzzle_switch"), SubResource("R_d1_puzzle_crystal"), SubResource("R_d1_puzzle_eye"), SubResource("R_d1_boss_key_chest")])

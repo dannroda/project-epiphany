@@ -1452,7 +1452,7 @@ Hecho 2026-10-08: `start` ahora arranca en el overworld (escena principal del ju
 
 **Bloqueada por:** 7.6 Sello del templo
 
-## M8 — Contenido de mazmorra  (4/8)
+## M8 — Contenido de mazmorra  (5/8)
 
 Las 8 salas en bloques grises, el arco a mitad de camino, la llave del jefe.
 
@@ -1536,7 +1536,7 @@ Hecho 2026-10-08: `shield_skeleton.tscn` + `data/entities/shield_skeleton.tres`.
 
 **Bloqueada por:** 5.2 Torreta / ojo menor; 5.4 Bombas; 8.3 Salas 1–2: vestíbulo y hub
 
-### 8.5 Sala 5: arena y arco · En curso
+### 8.5 Sala 5: arena y arco · Hecho
 
 - [x] Oleadas
   `WaveSpawner`: las oleadas aparecen al entrar; la persiana se abre al terminar la última.
@@ -1553,14 +1553,16 @@ Hecho 2026-10-08: `shield_skeleton.tscn` + `data/entities/shield_skeleton.tres`.
 
 **Bloqueada por:** 8.2 Esqueleto con escudo; 8.3 Salas 1–2: vestíbulo y hub
 
-### 8.6 Salas 6–7: ojos y puzzle combinado · Pendiente
+### 8.6 Salas 6–7: ojos y puzzle combinado · En curso
 
-- [ ] Sala 6: ojos-interruptor sobre un abismo
+- [x] Sala 6: ojos-interruptor sobre un abismo
   Solo con flechas. Da la brújula y una llave chica. Caer al abismo: daño y vuelta a la entrada.
-- [ ] Sala 7: bloques + reflejo + flechas en secuencia
+- [x] Sala 7: bloques + reflejo + flechas en secuencia
   Da la llave del jefe. Recortable: fusionar con la 6 ([[gdd#roadmap]]).
 
 **Prueba:** Con el arco, resolver las dos salas y salir con brújula y llave del jefe.
+
+**Notas:** Hecho 2026-10-08: `Pit` (caer = daño y vuelta a la entrada de la sala), `Bridge` (sube con sus interruptores) y la pieza Hueco del kit. Ojos: dos ojos con flecha → brújula y puente → llave 2. Puzzle: bloque → reja del haz → cristal → reja del ojo → flecha → llave del jefe + sello del hub (cableado entre salas). Test en `tests/test_temple.gd`.
 
 **Referencias:** `gdd.md#mazmorra`
 

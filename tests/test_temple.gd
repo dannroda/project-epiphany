@@ -252,3 +252,76 @@ func test_dying_mid_wave_restarts_the_arena() -> void:
 	assert_eq(_alive_in(^"Arena").size(), 2)
 	assert_true(state.get_flag(&"d1_arena_cleared") != true, "sin ganar")
 	state.reset()
+
+
+func _shoot(from: Vector3, eye_name: NodePath) -> void:
+	var eye := level.get_node(eye_name) as EyeSwitch
+	var arrow: Projectile = load("res://src/items/arrow/arrow.tscn").instantiate()
+	level.add_child(arrow)
+	var info := Items.get_item(&"bow").make_damage(player)
+	info.team = EntityConfig.Team.PLAYER
+	arrow.launch(from, (eye.eye.global_position - from).normalized() * 20.0, info)
+	await tree.create_timer(1.0).timeout
+
+
+func _reflect_beam(at: Vector3, facing: Vector3) -> void:
+	player.global_position = at
+	_face(facing)
+	_block(true)
+	for i in 8:
+		await tree.physics_frame
+	_block(false)
+	await tree.create_timer(0.8).timeout
+
+
+func test_rooms_6_7_with_the_bow() -> void:
+	await _scenario("dungeon_no_bow")
+	state.give(Items.get_item(&"bow"))
+	_kill([^"HubSkeleton1", ^"HubSkeleton2"])
+	player.global_position = Vector3(0, 0, 36)
+	await tree.create_timer(1.2).timeout
+	assert_eq((level.get_node(^"TopDownCamera") as TopDownCamera).room, level.get_node(^"Ojos"), "en la sala de ojos")
+
+	await _shoot(Vector3(-8, 1.2, 34), ^"OjosEyeA")
+	assert_eq((level.get_node(^"OjosCompassGate") as Gate).is_open, true, "una flecha al ojo oeste abre el nicho")
+	player.global_position = Vector3(-8, 0, 35)
+	_face(Vector3.BACK)
+	await _open_chest(^"OjosCompassChest")
+	assert_eq(state.current_dungeon_state().has_compass, true, "la brújula")
+
+	var hp: int = player.health.current
+	player.global_position = Vector3(4, 0.2, 31)
+	await tree.create_timer(1.5).timeout
+	assert_true(player.health.current < hp, "caer al hueco lastima")
+	assert_true(player.global_position.z > 33.0 and player.global_position.y > -0.5, "y devuelve a la entrada (%s)" % player.global_position)
+
+	await _shoot(Vector3(8, 1.2, 34), ^"OjosEyeB")
+	assert_eq((level.get_node(^"OjosBridge") as Bridge).is_up, true, "el ojo este sube el puente")
+	await tree.create_timer(1.0).timeout
+	player.global_position = Vector3(0, 0, 35)
+	assert_true(await _walk_until(&"move_forward", func() -> bool: return player.global_position.z <= 27.5), "cruza el puente")
+	assert_true(player.global_position.y > -0.3, "sin caerse")
+	player.global_position = Vector3(-4, 0, 27.4)
+	_face(Vector3.FORWARD)
+	await _open_chest(^"OjosKeyChest")
+	assert_eq(state.current_dungeon_state().small_keys, 1, "llave 2")
+	_door(^"PuzzleDoor").interactable.interact(player)
+	assert_eq(_door(^"PuzzleDoor").is_open, true, "abre la puerta al puzzle")
+
+	player.global_position = Vector3(0, 0, 20)
+	await tree.create_timer(1.2).timeout
+	player.global_position = Vector3(-6, 0, 21)
+	await _push(^"PuzzleBlock", [Vector3.FORWARD, Vector3.FORWARD])
+	await tree.create_timer(0.8).timeout
+	assert_eq((level.get_node(^"PuzzleBeamGate") as Gate).is_open, true, "1) el bloque baja la reja que cortaba el haz")
+	await _reflect_beam(Vector3(4, 0, 14), Vector3(-1, 0, -1))
+	assert_eq((level.get_node(^"PuzzleCrystal") as LightReceiver).lit, true, "2) el espejo lleva el haz al cristal")
+	assert_eq((level.get_node(^"PuzzleEyeGate") as Gate).is_open, true, "que descubre el ojo")
+	await _shoot(Vector3(4, 1.2, 12), ^"PuzzleEye")
+	assert_eq((level.get_node(^"BossKeyGate") as Gate).is_open, true, "3) la flecha al ojo abre el nicho de la llave del jefe")
+	assert_eq(_door(^"HubSeal").is_open, true, "y el sello del hub")
+	player.global_position = Vector3(0, 0, 12.4)
+	_face(Vector3.FORWARD)
+	await _open_chest(^"BossKeyChest")
+	assert_eq(state.current_dungeon_state().has_boss_key, true, "la llave del jefe")
+	state.reset()

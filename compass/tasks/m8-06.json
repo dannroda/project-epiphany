@@ -2,12 +2,12 @@
   "checklist": [
     {
       "detail": "Solo con flechas. Da la brújula y una llave chica. Caer al abismo: daño y vuelta a la entrada.",
-      "done": false,
+      "done": true,
       "text": "Sala 6: ojos-interruptor sobre un abismo"
     },
     {
       "detail": "Da la llave del jefe. Recortable: fusionar con la 6 ([[gdd#roadmap]]).",
-      "done": false,
+      "done": true,
       "text": "Sala 7: bloques + reflejo + flechas en secuencia"
     }
   ],
@@ -20,7 +20,7 @@
     }
   ],
   "milestone": "m08",
-  "notes": "",
+  "notes": "Hecho 2026-10-08: `Pit` (caer = daño y vuelta a la entrada de la sala), `Bridge` (sube con sus interruptores) y la pieza Hueco del kit. Ojos: dos ojos con flecha → brújula y puente → llave 2. Puzzle: bloque → reja del haz → cristal → reja del ojo → flecha → llave del jefe + sello del hub (cableado entre salas). Test en `tests/test_temple.gd`.",
   "order": 6,
   "refs": [
     {
@@ -28,8 +28,8 @@
       "section": "mazmorra"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Con el arco, resolver las dos salas y salir con brújula y llave del jefe.",
   "title": "Salas 6–7: ojos y puzzle combinado",
-  "updated_at": "2026-10-08T04:46:00.102Z"
+  "updated_at": "2026-10-09T01:20:05.544Z"
 }
