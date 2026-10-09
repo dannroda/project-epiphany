@@ -1889,7 +1889,7 @@ Hecho 2026-10-09: decisión cerrada (KayKit + prototipo pulido) y guía de estil
 
 **Bloqueada por:** 8.8 Recorrido completo y escenarios de la mazmorra
 
-### 10.9 Build para playtesters · En curso
+### 10.9 Build para playtesters · Revisión
 
 - [ ] Compilar las plantillas de export del LimboAI propio
   Linux y Windows, release y debug.
