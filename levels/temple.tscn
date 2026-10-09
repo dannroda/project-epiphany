@@ -1,61 +1,42 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://5jpuju42ocum"]
 
-[ext_resource type="Script" path="res://src/world/dungeon.gd" id="1_b74bs"]
-[ext_resource type="MeshLibrary" path="res://data/kits/temple_kit.tres" id="2_nqskg"]
-[ext_resource type="Script" path="res://src/world/room.gd" id="3_jdr7y"]
+[ext_resource type="Script" uid="uid://c5hiaqs0y4egi" path="res://src/world/dungeon.gd" id="1_b74bs"]
+[ext_resource type="MeshLibrary" uid="uid://clcxd1r5esr8w" path="res://data/kits/temple_kit.tres" id="2_nqskg"]
+[ext_resource type="Script" uid="uid://nqxfiofg56dy" path="res://src/world/room.gd" id="3_jdr7y"]
 [ext_resource type="PackedScene" path="res://src/world/wall_torch.tscn" id="4_23w1i"]
 [ext_resource type="PackedScene" path="res://src/world/floor_switch.tscn" id="5_m4hxx"]
-[ext_resource type="Script" path="res://src/world/floor_switch.gd" id="6_gcnuc"]
 [ext_resource type="PackedScene" path="res://src/world/push_block.tscn" id="7_bannu"]
-[ext_resource type="Script" path="res://src/world/push_block.gd" id="8_ymgd5"]
 [ext_resource type="PackedScene" path="res://src/world/door.tscn" id="9_5u6gn"]
-[ext_resource type="Script" path="res://src/world/door.gd" id="10_w7c0a"]
 [ext_resource type="PackedScene" path="res://src/world/tablet.tscn" id="11_pu13t"]
-[ext_resource type="Script" path="res://src/world/tablet.gd" id="12_xk6on"]
-[ext_resource type="Resource" path="res://data/dialogue/temple.dialogue" id="13_rn0lq"]
-[ext_resource type="PackedScene" path="res://src/entities/enemy.tscn" id="14_4b6jn"]
-[ext_resource type="Script" path="res://src/entities/enemy.gd" id="15_llie6"]
-[ext_resource type="Resource" path="res://data/entities/skeleton.tres" id="16_lpsy2"]
+[ext_resource type="Resource" uid="uid://y6avu6sc2i5n" path="res://data/dialogue/temple.dialogue" id="13_rn0lq"]
+[ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="14_4b6jn"]
 [ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="17_aqlvs"]
-[ext_resource type="Script" path="res://src/world/breakable.gd" id="18_efivr"]
-[ext_resource type="Resource" path="res://data/drops/pot.tres" id="19_x8afk"]
 [ext_resource type="PackedScene" path="res://src/entities/turret/turret.tscn" id="20_2qg1k"]
-[ext_resource type="Script" path="res://src/entities/turret/turret.gd" id="21_gcv1m"]
-[ext_resource type="Resource" path="res://data/entities/turret.tres" id="22_6muoc"]
 [ext_resource type="PackedScene" path="res://src/world/eye_switch.tscn" id="23_ivr2c"]
-[ext_resource type="Script" path="res://src/world/eye_switch.gd" id="24_414r1"]
 [ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="25_g51ep"]
-[ext_resource type="Script" path="res://src/world/gate.gd" id="26_f8jkx"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="27_pwp4c"]
-[ext_resource type="Script" path="res://src/world/chest.gd" id="28_mjvoe"]
 [ext_resource type="Resource" path="res://data/items/small_key.tres" id="29_hi2ex"]
 [ext_resource type="PackedScene" path="res://src/world/physics_box.tscn" id="30_snfaj"]
 [ext_resource type="Resource" path="res://data/items/dungeon_map.tres" id="31_mjdwr"]
 [ext_resource type="PackedScene" path="res://src/world/cracked_wall.tscn" id="32_gvbwg"]
-[ext_resource type="Script" path="res://src/world/cracked_wall.gd" id="33_uqkl8"]
-[ext_resource type="Script" path="res://src/world/wave_spawner.gd" id="34_k4vax"]
-[ext_resource type="Script" path="res://src/world/wave_spawn.gd" id="35_m0m8m"]
+[ext_resource type="Script" uid="uid://cpa78s7g8p1jd" path="res://src/world/wave_spawner.gd" id="34_k4vax"]
+[ext_resource type="Script" uid="uid://osa5pl45qand" path="res://src/world/wave_spawn.gd" id="35_m0m8m"]
 [ext_resource type="PackedScene" path="res://src/entities/shield_skeleton.tscn" id="36_w6q1f"]
-[ext_resource type="Resource" path="res://data/items/bow.tres" id="37_r56pb"]
-[ext_resource type="Script" path="res://src/world/pit.gd" id="38_hjkgx"]
+[ext_resource type="Resource" uid="uid://dfoal7qxlg81s" path="res://data/items/bow.tres" id="37_r56pb"]
+[ext_resource type="Script" uid="uid://b5m7kta46hqrv" path="res://src/world/pit.gd" id="38_hjkgx"]
 [ext_resource type="PackedScene" path="res://src/world/bridge.tscn" id="39_sbovs"]
-[ext_resource type="Script" path="res://src/world/bridge.gd" id="40_nnttl"]
 [ext_resource type="Resource" path="res://data/items/compass.tres" id="41_td7j2"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_source.tscn" id="42_w4oxu"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_receiver.tscn" id="43_8u32y"]
-[ext_resource type="Script" path="res://src/world/light/light_receiver.gd" id="44_b7cgn"]
 [ext_resource type="Resource" path="res://data/items/boss_key.tres" id="45_t34kg"]
-[ext_resource type="Resource" path="res://data/drops/pot_hearts.tres" id="46_bm4ig"]
-[ext_resource type="PackedScene" path="res://player/player.tscn" id="47_tdhq3"]
-[ext_resource type="Script" path="res://player/player.gd" id="48_cibo0"]
-[ext_resource type="Resource" path="res://data/entities/player.tres" id="49_jyaq7"]
-[ext_resource type="Script" path="res://src/world/spawn_point.gd" id="50_mus61"]
-[ext_resource type="Script" path="res://src/world/portal.gd" id="51_h4s6m"]
+[ext_resource type="Resource" uid="uid://dteshjodcq26c" path="res://data/drops/pot_hearts.tres" id="46_bm4ig"]
+[ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="47_tdhq3"]
+[ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="50_mus61"]
+[ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="51_h4s6m"]
 [ext_resource type="PackedScene" path="res://src/world/warp_portal.tscn" id="51_warp"]
-[ext_resource type="Script" path="res://src/tools/top_down_camera.gd" id="52_5r1vx"]
+[ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="52_5r1vx"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="53_5adsw"]
-[ext_resource type="Script" path="res://src/ui/hud/hud.gd" id="54_daydq"]
-[ext_resource type="Script" path="res://src/world/doom_ambience.gd" id="55_j188v"]
+[ext_resource type="Script" uid="uid://cqtm1asamns1o" path="res://src/world/doom_ambience.gd" id="55_j188v"]
 
 [sub_resource type="Environment" id="Environment_h5c3c"]
 background_mode = 1
@@ -229,197 +210,155 @@ doom = 1.0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Jefe" unique_id=1572637572]
 shape = SubResource("BoxShape3D_ey2cw")
 
-[node name="Torch_Vestibulo_0" type="Node3D" parent="." unique_id=1572476204 instance=ExtResource("4_23w1i")]
+[node name="Torch_Vestibulo_0" parent="." unique_id=1572476204 instance=ExtResource("4_23w1i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.6, 57)
 
-[node name="Torch_Vestibulo_1" type="Node3D" parent="." unique_id=664061097 instance=ExtResource("4_23w1i")]
+[node name="Torch_Vestibulo_1" parent="." unique_id=664061097 instance=ExtResource("4_23w1i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.6, 57)
 
-[node name="Torch_Hub_0" type="Node3D" parent="." unique_id=1286950130 instance=ExtResource("4_23w1i")]
+[node name="Torch_Hub_0" parent="." unique_id=1286950130 instance=ExtResource("4_23w1i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.6, 41)
 
-[node name="Torch_Hub_1" type="Node3D" parent="." unique_id=1826609865 instance=ExtResource("4_23w1i")]
+[node name="Torch_Hub_1" parent="." unique_id=1826609865 instance=ExtResource("4_23w1i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.6, 41)
 
-[node name="Torch_Galeria_0" type="Node3D" parent="." unique_id=1121185199 instance=ExtResource("4_23w1i")]
+[node name="Torch_Galeria_0" parent="." unique_id=1121185199 instance=ExtResource("4_23w1i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.6, 41)
 
-[node name="Torch_Galeria_1" type="Node3D" parent="." unique_id=1374899744 instance=ExtResource("4_23w1i")]
+[node name="Torch_Galeria_1" parent="." unique_id=1374899744 instance=ExtResource("4_23w1i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.6, 41)
 
-[node name="Torch_Agrietada_0" type="Node3D" parent="." unique_id=206710759 instance=ExtResource("4_23w1i")]
+[node name="Torch_Agrietada_0" parent="." unique_id=206710759 instance=ExtResource("4_23w1i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1.6, 41)
 
-[node name="Torch_Agrietada_1" type="Node3D" parent="." unique_id=655394355 instance=ExtResource("4_23w1i")]
+[node name="Torch_Agrietada_1" parent="." unique_id=655394355 instance=ExtResource("4_23w1i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54, 1.6, 41)
 
-[node name="Torch_Arena_0" type="Node3D" parent="." unique_id=393208734 instance=ExtResource("4_23w1i")]
+[node name="Torch_Arena_0" parent="." unique_id=393208734 instance=ExtResource("4_23w1i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1.6, 25)
 
-[node name="Torch_Arena_1" type="Node3D" parent="." unique_id=1588259331 instance=ExtResource("4_23w1i")]
+[node name="Torch_Arena_1" parent="." unique_id=1588259331 instance=ExtResource("4_23w1i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54, 1.6, 25)
 
-[node name="Torch_Ojos_0" type="Node3D" parent="." unique_id=1065829493 instance=ExtResource("4_23w1i")]
+[node name="Torch_Ojos_0" parent="." unique_id=1065829493 instance=ExtResource("4_23w1i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.6, 25)
 
-[node name="Torch_Ojos_1" type="Node3D" parent="." unique_id=2122932868 instance=ExtResource("4_23w1i")]
+[node name="Torch_Ojos_1" parent="." unique_id=2122932868 instance=ExtResource("4_23w1i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.6, 25)
 
-[node name="Torch_Puzzle_0" type="Node3D" parent="." unique_id=624658568 instance=ExtResource("4_23w1i")]
+[node name="Torch_Puzzle_0" parent="." unique_id=624658568 instance=ExtResource("4_23w1i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.6, 9)
 
-[node name="Torch_Puzzle_1" type="Node3D" parent="." unique_id=834062329 instance=ExtResource("4_23w1i")]
+[node name="Torch_Puzzle_1" parent="." unique_id=834062329 instance=ExtResource("4_23w1i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.6, 9)
 
-[node name="Torch_Antesala_0" type="Node3D" parent="." unique_id=770752758 instance=ExtResource("4_23w1i")]
+[node name="Torch_Antesala_0" parent="." unique_id=770752758 instance=ExtResource("4_23w1i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.6, 25)
 
-[node name="Torch_Antesala_1" type="Node3D" parent="." unique_id=1984367241 instance=ExtResource("4_23w1i")]
+[node name="Torch_Antesala_1" parent="." unique_id=1984367241 instance=ExtResource("4_23w1i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.6, 25)
 
-[node name="Torch_Jefe_0" type="Node3D" parent="." unique_id=1781214744 instance=ExtResource("4_23w1i")]
+[node name="Torch_Jefe_0" parent="." unique_id=1781214744 instance=ExtResource("4_23w1i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.6, 9)
 
-[node name="Torch_Jefe_1" type="Node3D" parent="." unique_id=1988546873 instance=ExtResource("4_23w1i")]
+[node name="Torch_Jefe_1" parent="." unique_id=1988546873 instance=ExtResource("4_23w1i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.6, 9)
 
-[node name="VestibuleSwitch" type="Area3D" parent="." unique_id=1824326411 instance=ExtResource("5_m4hxx")]
+[node name="VestibuleSwitch" parent="." unique_id=1824326411 instance=ExtResource("5_m4hxx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 62)
-script = ExtResource("6_gcnuc")
 mode = 2
 flag = &"d1_vestibule_switch"
 
-[node name="VestibuleBlock" type="AnimatableBody3D" parent="." unique_id=1356705201 instance=ExtResource("7_bannu")]
+[node name="VestibuleBlock" parent="." unique_id=1356705201 instance=ExtResource("7_bannu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 66)
-collision_layer = 9
-collision_mask = 0
-script = ExtResource("8_ymgd5")
 solved_flag = &"d1_vestibule_switch"
 solved_position = Vector3(28, 0, 62)
 
-[node name="VestibuleDoor" type="StaticBody3D" parent="." unique_id=905285617 instance=ExtResource("9_5u6gn")]
+[node name="VestibuleDoor" parent="." unique_id=905285617 instance=ExtResource("9_5u6gn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 56)
-script = ExtResource("10_w7c0a")
 kind = 3
 switches = Array[NodePath]([NodePath("../VestibuleSwitch")])
 stays_open = false
 reveal_on_open = true
 
-[node name="VestibuleTablet" type="StaticBody3D" parent="." unique_id=170676665 instance=ExtResource("11_pu13t")]
+[node name="VestibuleTablet" parent="." unique_id=170676665 instance=ExtResource("11_pu13t")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 69)
-script = ExtResource("12_xk6on")
 dialogue = ExtResource("13_rn0lq")
 cue = "temple_entrance"
 
-[node name="HubSkeleton1" type="CharacterBody3D" parent="." unique_id=510737741 instance=ExtResource("14_4b6jn")]
+[node name="HubSkeleton1" parent="." unique_id=510737741 instance=ExtResource("14_4b6jn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 44)
-collision_layer = 5
-collision_mask = 5
-script = ExtResource("15_llie6")
-config = ExtResource("16_lpsy2")
 
-[node name="HubSkeleton2" type="CharacterBody3D" parent="." unique_id=1023770848 instance=ExtResource("14_4b6jn")]
+[node name="HubSkeleton2" parent="." unique_id=1023770848 instance=ExtResource("14_4b6jn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 44)
-collision_layer = 5
-collision_mask = 5
-script = ExtResource("15_llie6")
-config = ExtResource("16_lpsy2")
 
-[node name="HubShutterW" type="StaticBody3D" parent="." unique_id=1159337302 node_paths=PackedStringArray("room") instance=ExtResource("9_5u6gn")]
+[node name="HubShutterW" parent="." unique_id=1159337302 node_paths=PackedStringArray("room") instance=ExtResource("9_5u6gn")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 12, 0, 48)
-script = ExtResource("10_w7c0a")
 kind = 2
 room = NodePath("../Hub")
 
-[node name="HubLockedE" type="StaticBody3D" parent="." unique_id=1083297979 instance=ExtResource("9_5u6gn")]
+[node name="HubLockedE" parent="." unique_id=1083297979 instance=ExtResource("9_5u6gn")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 36, 0, 48)
-script = ExtResource("10_w7c0a")
 kind = 1
 flag = &"d1_hub_locked_door"
 
-[node name="HubSeal" type="StaticBody3D" parent="." unique_id=1529003820 instance=ExtResource("9_5u6gn")]
+[node name="HubSeal" parent="." unique_id=1529003820 instance=ExtResource("9_5u6gn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 40)
-script = ExtResource("10_w7c0a")
 kind = 3
 switches = Array[NodePath]([NodePath("../PuzzleEye")])
 
-[node name="HubPot1" type="Node3D" parent="." unique_id=121115923 instance=ExtResource("17_aqlvs")]
+[node name="HubPot1" parent="." unique_id=121115923 instance=ExtResource("17_aqlvs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 53)
-script = ExtResource("18_efivr")
-drops = ExtResource("19_x8afk")
-drop_height = 0.1
 
-[node name="HubPot2" type="Node3D" parent="." unique_id=858581427 instance=ExtResource("17_aqlvs")]
+[node name="HubPot2" parent="." unique_id=858581427 instance=ExtResource("17_aqlvs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 53)
-script = ExtResource("18_efivr")
-drops = ExtResource("19_x8afk")
-drop_height = 0.1
 
-[node name="GalleryTurret" type="StaticBody3D" parent="." unique_id=1362230516 instance=ExtResource("20_2qg1k")]
+[node name="GalleryTurret" parent="." unique_id=1362230516 instance=ExtResource("20_2qg1k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 42)
-collision_layer = 5
-script = ExtResource("21_gcv1m")
-config = ExtResource("22_6muoc")
 
-[node name="GalleryEye" type="StaticBody3D" parent="." unique_id=909564188 instance=ExtResource("23_ivr2c")]
+[node name="GalleryEye" parent="." unique_id=909564188 instance=ExtResource("23_ivr2c")]
 transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, -8, 0, 42)
-script = ExtResource("24_414r1")
 flag = &"d1_gallery_eye"
 
-[node name="GalleryKeyGate" type="StaticBody3D" parent="." unique_id=123787515 instance=ExtResource("25_g51ep")]
+[node name="GalleryKeyGate" parent="." unique_id=123787515 instance=ExtResource("25_g51ep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 52)
-script = ExtResource("26_f8jkx")
 switches = Array[NodePath]([NodePath("../GalleryEye")])
 
-[node name="GalleryKeyChest" type="StaticBody3D" parent="." unique_id=1030963809 instance=ExtResource("27_pwp4c")]
+[node name="GalleryKeyChest" parent="." unique_id=1030963809 instance=ExtResource("27_pwp4c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 54)
-script = ExtResource("28_mjvoe")
 item = ExtResource("29_hi2ex")
 flag = &"d1_gallery_key_chest"
 
-[node name="OjosDoorEye" type="StaticBody3D" parent="." unique_id=207870693 instance=ExtResource("23_ivr2c")]
+[node name="OjosDoorEye" parent="." unique_id=207870693 instance=ExtResource("23_ivr2c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 41.6)
-script = ExtResource("24_414r1")
 flag = &"d1_ojos_door_eye"
 
-[node name="OjosDoor" type="StaticBody3D" parent="." unique_id=1581707832 instance=ExtResource("9_5u6gn")]
+[node name="OjosDoor" parent="." unique_id=1581707832 instance=ExtResource("9_5u6gn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 40)
-script = ExtResource("10_w7c0a")
 kind = 3
 switches = Array[NodePath]([NodePath("../OjosDoorEye")])
 
-[node name="CrackedBox" type="RigidBody3D" parent="." unique_id=1069580757 instance=ExtResource("30_snfaj")]
+[node name="CrackedBox" parent="." unique_id=1069580757 instance=ExtResource("30_snfaj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0.5, 46)
-collision_layer = 9
-collision_mask = 9
 mass = 0.3
 
-[node name="CrackedPot1" type="Node3D" parent="." unique_id=1766019796 instance=ExtResource("17_aqlvs")]
+[node name="CrackedPot1" parent="." unique_id=1766019796 instance=ExtResource("17_aqlvs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 54)
-script = ExtResource("18_efivr")
-drops = ExtResource("19_x8afk")
-drop_height = 0.1
 
-[node name="CrackedPot2" type="Node3D" parent="." unique_id=2048979056 instance=ExtResource("17_aqlvs")]
+[node name="CrackedPot2" parent="." unique_id=2048979056 instance=ExtResource("17_aqlvs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 0, 54)
-script = ExtResource("18_efivr")
-drops = ExtResource("19_x8afk")
-drop_height = 0.1
 
-[node name="MapChest" type="StaticBody3D" parent="." unique_id=331868926 instance=ExtResource("27_pwp4c")]
+[node name="MapChest" parent="." unique_id=331868926 instance=ExtResource("27_pwp4c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54, 0, 42)
-script = ExtResource("28_mjvoe")
 item = ExtResource("31_mjdwr")
 flag = &"d1_map_chest"
 
-[node name="ArenaCrackedWall" type="StaticBody3D" parent="." unique_id=1502678505 instance=ExtResource("32_gvbwg")]
+[node name="ArenaCrackedWall" parent="." unique_id=1502678505 instance=ExtResource("32_gvbwg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 40)
-script = ExtResource("33_uqkl8")
 flag = &"d1_arena_cracked_wall"
 
-[node name="ArenaShutter" type="StaticBody3D" parent="." unique_id=405846915 node_paths=PackedStringArray("room") instance=ExtResource("9_5u6gn")]
+[node name="ArenaShutter" parent="." unique_id=405846915 node_paths=PackedStringArray("room") instance=ExtResource("9_5u6gn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 39.2)
-script = ExtResource("10_w7c0a")
 kind = 2
 room = NodePath("../Arena")
 
@@ -458,14 +397,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -2)
 script = ExtResource("35_m0m8m")
 enemy = ExtResource("14_4b6jn")
 
-[node name="BowGate" type="StaticBody3D" parent="." unique_id=1247295479 instance=ExtResource("25_g51ep")]
+[node name="BowGate" parent="." unique_id=1247295479 instance=ExtResource("25_g51ep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 27)
-script = ExtResource("26_f8jkx")
 switches = Array[NodePath]([NodePath("../ArenaWaves")])
 
-[node name="BowChest" type="StaticBody3D" parent="." unique_id=379865399 instance=ExtResource("27_pwp4c")]
+[node name="BowChest" parent="." unique_id=379865399 instance=ExtResource("27_pwp4c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 26)
-script = ExtResource("28_mjvoe")
 item = ExtResource("37_r56pb")
 flag = &"d1_chest_bow"
 big = true
@@ -477,148 +414,113 @@ script = ExtResource("38_hjkgx")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="OjosPit" unique_id=1367676421]
 shape = SubResource("BoxShape3D_1oovl")
 
-[node name="OjosEyeA" type="StaticBody3D" parent="." unique_id=1997132884 instance=ExtResource("23_ivr2c")]
+[node name="OjosEyeA" parent="." unique_id=1997132884 instance=ExtResource("23_ivr2c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 26)
-script = ExtResource("24_414r1")
 flag = &"d1_ojos_eye_a"
 
-[node name="OjosEyeB" type="StaticBody3D" parent="." unique_id=674369561 instance=ExtResource("23_ivr2c")]
+[node name="OjosEyeB" parent="." unique_id=674369561 instance=ExtResource("23_ivr2c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 26)
-script = ExtResource("24_414r1")
 flag = &"d1_ojos_eye_b"
 
-[node name="OjosBridge" type="StaticBody3D" parent="." unique_id=31553140 instance=ExtResource("39_sbovs")]
+[node name="OjosBridge" parent="." unique_id=31553140 instance=ExtResource("39_sbovs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 31)
-script = ExtResource("40_nnttl")
 switches = Array[NodePath]([NodePath("../OjosEyeB")])
 
-[node name="OjosKeyChest" type="StaticBody3D" parent="." unique_id=639652611 instance=ExtResource("27_pwp4c")]
+[node name="OjosKeyChest" parent="." unique_id=639652611 instance=ExtResource("27_pwp4c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 26)
-script = ExtResource("28_mjvoe")
 item = ExtResource("29_hi2ex")
 flag = &"d1_ojos_key_chest"
 
-[node name="OjosCompassGate" type="StaticBody3D" parent="." unique_id=1550851857 instance=ExtResource("25_g51ep")]
+[node name="OjosCompassGate" parent="." unique_id=1550851857 instance=ExtResource("25_g51ep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 36)
-script = ExtResource("26_f8jkx")
 switches = Array[NodePath]([NodePath("../OjosEyeA")])
 
-[node name="OjosCompassChest" type="StaticBody3D" parent="." unique_id=1175635869 instance=ExtResource("27_pwp4c")]
+[node name="OjosCompassChest" parent="." unique_id=1175635869 instance=ExtResource("27_pwp4c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 38)
-script = ExtResource("28_mjvoe")
 item = ExtResource("41_td7j2")
 flag = &"d1_ojos_compass_chest"
 
-[node name="OjosPot" type="Node3D" parent="." unique_id=795571220 instance=ExtResource("17_aqlvs")]
+[node name="OjosPot" parent="." unique_id=795571220 instance=ExtResource("17_aqlvs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 37)
-script = ExtResource("18_efivr")
-drops = ExtResource("19_x8afk")
-drop_height = 0.1
 
-[node name="PuzzleDoor" type="StaticBody3D" parent="." unique_id=474679938 instance=ExtResource("9_5u6gn")]
+[node name="PuzzleDoor" parent="." unique_id=474679938 instance=ExtResource("9_5u6gn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24)
-script = ExtResource("10_w7c0a")
 kind = 1
 flag = &"d1_puzzle_locked_door"
 
-[node name="PuzzleLight" type="StaticBody3D" parent="." unique_id=2147135965 instance=ExtResource("42_w4oxu")]
+[node name="PuzzleLight" parent="." unique_id=2147135965 instance=ExtResource("42_w4oxu")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -10, 0, 14)
 
-[node name="PuzzleSwitch" type="Area3D" parent="." unique_id=783558794 instance=ExtResource("5_m4hxx")]
+[node name="PuzzleSwitch" parent="." unique_id=783558794 instance=ExtResource("5_m4hxx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 16)
-script = ExtResource("6_gcnuc")
 mode = 2
 flag = &"d1_puzzle_switch"
 
-[node name="PuzzleBlock" type="AnimatableBody3D" parent="." unique_id=1087774045 instance=ExtResource("7_bannu")]
+[node name="PuzzleBlock" parent="." unique_id=1087774045 instance=ExtResource("7_bannu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 20)
-collision_layer = 9
-collision_mask = 0
-script = ExtResource("8_ymgd5")
 solved_flag = &"d1_puzzle_switch"
 solved_position = Vector3(-2, 0, 16)
 
-[node name="PuzzleBeamGate" type="StaticBody3D" parent="." unique_id=1678676766 instance=ExtResource("25_g51ep")]
+[node name="PuzzleBeamGate" parent="." unique_id=1678676766 instance=ExtResource("25_g51ep")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6, 0, 14)
-script = ExtResource("26_f8jkx")
 switches = Array[NodePath]([NodePath("../PuzzleSwitch")])
 stays_open = false
 reveal_on_open = true
 
-[node name="PuzzleCrystal" type="StaticBody3D" parent="." unique_id=2074486630 instance=ExtResource("43_8u32y")]
+[node name="PuzzleCrystal" parent="." unique_id=2074486630 instance=ExtResource("43_8u32y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 10)
-script = ExtResource("44_b7cgn")
 latch = true
 flag = &"d1_puzzle_crystal"
 
-[node name="PuzzleEye" type="StaticBody3D" parent="." unique_id=585098661 instance=ExtResource("23_ivr2c")]
+[node name="PuzzleEye" parent="." unique_id=585098661 instance=ExtResource("23_ivr2c")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 10, 0, 10)
-script = ExtResource("24_414r1")
 flag = &"d1_puzzle_eye"
 
-[node name="PuzzleEyeGate" type="StaticBody3D" parent="." unique_id=1023567815 instance=ExtResource("25_g51ep")]
+[node name="PuzzleEyeGate" parent="." unique_id=1023567815 instance=ExtResource("25_g51ep")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 9, 0, 10)
-script = ExtResource("26_f8jkx")
 switches = Array[NodePath]([NodePath("../PuzzleCrystal")])
 
-[node name="BossKeyGate" type="StaticBody3D" parent="." unique_id=1908277290 instance=ExtResource("25_g51ep")]
+[node name="BossKeyGate" parent="." unique_id=1908277290 instance=ExtResource("25_g51ep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 11)
-script = ExtResource("26_f8jkx")
 switches = Array[NodePath]([NodePath("../PuzzleEye")])
 
-[node name="BossKeyChest" type="StaticBody3D" parent="." unique_id=1091546748 instance=ExtResource("27_pwp4c")]
+[node name="BossKeyChest" parent="." unique_id=1091546748 instance=ExtResource("27_pwp4c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
-script = ExtResource("28_mjvoe")
 item = ExtResource("45_t34kg")
 flag = &"d1_boss_key_chest"
 big = true
 
-[node name="PuzzlePot" type="Node3D" parent="." unique_id=2022192830 instance=ExtResource("17_aqlvs")]
+[node name="PuzzlePot" parent="." unique_id=2022192830 instance=ExtResource("17_aqlvs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 22)
-script = ExtResource("18_efivr")
-drops = ExtResource("19_x8afk")
-drop_height = 0.1
 
-[node name="AntechamberPot1727" type="Node3D" parent="." unique_id=1842057522 instance=ExtResource("17_aqlvs")]
+[node name="AntechamberPot1727" parent="." unique_id=1842057522 instance=ExtResource("17_aqlvs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, 27)
-script = ExtResource("18_efivr")
 drops = ExtResource("46_bm4ig")
-drop_height = 0.1
 
-[node name="AntechamberPot3127" type="Node3D" parent="." unique_id=464346266 instance=ExtResource("17_aqlvs")]
+[node name="AntechamberPot3127" parent="." unique_id=464346266 instance=ExtResource("17_aqlvs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31, 0, 27)
-script = ExtResource("18_efivr")
 drops = ExtResource("46_bm4ig")
-drop_height = 0.1
 
-[node name="AntechamberPot1737" type="Node3D" parent="." unique_id=530621537 instance=ExtResource("17_aqlvs")]
+[node name="AntechamberPot1737" parent="." unique_id=530621537 instance=ExtResource("17_aqlvs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, 37)
-script = ExtResource("18_efivr")
 drops = ExtResource("46_bm4ig")
-drop_height = 0.1
 
-[node name="AntechamberPot3137" type="Node3D" parent="." unique_id=1608733051 instance=ExtResource("17_aqlvs")]
+[node name="AntechamberPot3137" parent="." unique_id=1608733051 instance=ExtResource("17_aqlvs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31, 0, 37)
-script = ExtResource("18_efivr")
 drops = ExtResource("46_bm4ig")
-drop_height = 0.1
 
-[node name="AntechamberTablet" type="StaticBody3D" parent="." unique_id=560026824 instance=ExtResource("11_pu13t")]
+[node name="AntechamberTablet" parent="." unique_id=560026824 instance=ExtResource("11_pu13t")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 27)
-script = ExtResource("12_xk6on")
 dialogue = ExtResource("13_rn0lq")
 cue = "antechamber"
 
-[node name="BossDoor" type="StaticBody3D" parent="." unique_id=1162932531 instance=ExtResource("9_5u6gn")]
+[node name="BossDoor" parent="." unique_id=1162932531 instance=ExtResource("9_5u6gn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 24)
-script = ExtResource("10_w7c0a")
 kind = 4
 flag = &"d1_boss_door"
 
-[node name="Player" type="CharacterBody3D" parent="." unique_id=1694148988 instance=ExtResource("47_tdhq3")]
+[node name="Player" parent="." unique_id=1694148988 instance=ExtResource("47_tdhq3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 68)
-script = ExtResource("48_cibo0")
-config = ExtResource("49_jyaq7")
 
 [node name="SpawnStart" type="Marker3D" parent="." unique_id=474964769]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 68)
@@ -633,7 +535,7 @@ target_spawn = &"templo"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPortal" unique_id=76133986]
 shape = SubResource("BoxShape3D_3cduy")
 
-[node name="BossExitPortal" parent="." instance=ExtResource("51_warp")]
+[node name="BossExitPortal" parent="." unique_id=1790537677 instance=ExtResource("51_warp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 16)
 target_scene = "res://levels/overworld.tscn"
 target_spawn = &"templo"
@@ -645,9 +547,7 @@ script = ExtResource("52_5r1vx")
 target_node = NodePath("../Player")
 mask_margin = 2.0
 
-[node name="HUD" type="CanvasLayer" parent="." unique_id=1198023941 instance=ExtResource("53_5adsw")]
-layer = 10
-script = ExtResource("54_daydq")
+[node name="HUD" parent="." unique_id=1198023941 instance=ExtResource("53_5adsw")]
 
 [node name="DoomAmbience" type="Node" parent="." unique_id=1762153280]
 script = ExtResource("55_j188v")

@@ -1,9 +1,9 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://dlejyrrnds2p8"]
 
-[ext_resource type="Script" path="res://src/ui/menus/items_page.gd" id="1_page"]
+[ext_resource type="Script" uid="uid://dqgbh8p0cflxi" path="res://src/ui/menus/items_page.gd" id="1_page"]
 [ext_resource type="PackedScene" path="res://src/ui/menus/item_detail.tscn" id="2_detail"]
 
-[node name="Ítems" type="HBoxContainer"]
+[node name="Ítems" type="HBoxContainer" unique_id=703800537]
 process_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,34 +13,34 @@ grow_vertical = 2
 theme_override_constants/separation = 40
 script = ExtResource("1_page")
 
-[node name="Rows" type="VBoxContainer" parent="."]
+[node name="Rows" type="VBoxContainer" parent="." unique_id=1450220760]
 layout_mode = 2
 theme_override_constants/separation = 22
 
-[node name="Grid" type="GridContainer" parent="Rows"]
+[node name="Grid" type="GridContainer" parent="Rows" unique_id=413912208]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/h_separation = 16
 theme_override_constants/v_separation = 16
 columns = 4
 
-[node name="Dungeon" type="VBoxContainer" parent="Rows"]
+[node name="Dungeon" type="VBoxContainer" parent="Rows" unique_id=1185928931]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(432, 0)
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="DungeonTitle" type="Label" parent="Rows/Dungeon"]
+[node name="DungeonTitle" type="Label" parent="Rows/Dungeon" unique_id=706284070]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"Caps"
 
-[node name="Chips" type="HFlowContainer" parent="Rows/Dungeon"]
+[node name="Chips" type="HFlowContainer" parent="Rows/Dungeon" unique_id=1459808578]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
 
-[node name="Detail" parent="." instance=ExtResource("2_detail")]
+[node name="Detail" parent="." unique_id=721312255 instance=ExtResource("2_detail")]
 unique_name_in_owner = true
 layout_mode = 2

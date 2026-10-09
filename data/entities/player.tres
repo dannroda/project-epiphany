@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="EntityConfig" format=3]
+[gd_resource type="Resource" script_class="EntityConfig" format=3 uid="uid://cooy3l0hm4jv0"]
 
-[ext_resource type="Script" path="res://src/entities/entity_config.gd" id="1_qu1ep"]
+[ext_resource type="Script" uid="uid://k0qjbq4tfmvg" path="res://src/entities/entity_config.gd" id="1_qu1ep"]
 
 [resource]
 script = ExtResource("1_qu1ep")

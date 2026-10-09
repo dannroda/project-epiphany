@@ -1,4 +1,4 @@
-[gd_resource type="MeshLibrary" format=4]
+[gd_resource type="MeshLibrary" format=4 uid="uid://clcxd1r5esr8w"]
 
 [ext_resource type="Material" path="res://data/kits/materials/kaykit_floor.tres" id="1_b7lms"]
 [ext_resource type="Material" path="res://data/kits/materials/kaykit_stone.tres" id="2_fbvka"]

@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://covrlpuexf2af" path="res://src/ui/theme.tres" id="1_theme"]
 [ext_resource type="Script" uid="uid://6pj48g1rapde" path="res://src/ui/title/title_screen.gd" id="2_script"]
 [ext_resource type="Script" uid="uid://dea03f5unluxn" path="res://src/ui/title/title_eye.gd" id="3_eye"]
-[ext_resource type="PackedScene" path="res://src/ui/menus/menu_item.tscn" id="4_item"]
+[ext_resource type="PackedScene" uid="uid://pyyqflynppn5" path="res://src/ui/menus/menu_item.tscn" id="4_item"]
 [ext_resource type="Script" uid="uid://jou4nqurtyvf" path="res://src/ui/hint_bar.gd" id="5_hints"]
 
 [node name="TitleScreen" type="Control" unique_id=24387741]
