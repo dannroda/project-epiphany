@@ -2,10 +2,12 @@
 
 [ext_resource type="Script" uid="uid://b7bgvdt4so1xg" path="res://src/ui/menus/pause_menu.gd" id="1_menu"]
 [ext_resource type="PackedScene" path="res://src/ui/menus/equipment_page.tscn" id="2_equip"]
-[ext_resource type="PackedScene" path="res://src/ui/menus/items_page.tscn" id="3_items"]
-[ext_resource type="PackedScene" path="res://src/ui/menus/map_page.tscn" id="4_map"]
+[ext_resource type="PackedScene" uid="uid://dlejyrrnds2p8" path="res://src/ui/menus/items_page.tscn" id="3_items"]
+[ext_resource type="PackedScene" uid="uid://cfclj2pyjsga" path="res://src/ui/menus/map_page.tscn" id="4_map"]
 [ext_resource type="PackedScene" path="res://src/ui/menus/system_page.tscn" id="5_system"]
 [ext_resource type="Script" uid="uid://jou4nqurtyvf" path="res://src/ui/hint_bar.gd" id="6_hints"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pages"]
 
 [node name="PauseMenu" type="Control" unique_id=124808756]
 layout_mode = 3
@@ -57,41 +59,29 @@ theme_override_constants/separation = 36
 alignment = 1
 
 [node name="PrevKey" type="TextureRect" parent="Frame/Panel/Layout/Nav/Header" unique_id=1948537454]
-self_modulate = Color(0.8509804, 0.6431373, 0.25490198, 1)
 unique_name_in_owner = true
+self_modulate = Color(0.8509804, 0.6431373, 0.25490198, 1)
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Tabs" type="HBoxContainer" parent="Frame/Panel/Layout/Nav/Header" unique_id=1615859604]
+[node name="Tabs" type="TabBar" parent="Frame/Panel/Layout/Nav/Header" unique_id=1615859604]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 36
-
-[node name="Equipo" type="Label" parent="Frame/Panel/Layout/Nav/Header/Tabs" unique_id=1984474964]
-layout_mode = 2
-theme_type_variation = &"TabLabel"
-text = "Equipo"
-
-[node name="Ítems" type="Label" parent="Frame/Panel/Layout/Nav/Header/Tabs" unique_id=1333417567]
-layout_mode = 2
-theme_type_variation = &"TabLabel"
-text = "Ítems"
-
-[node name="Mapa" type="Label" parent="Frame/Panel/Layout/Nav/Header/Tabs" unique_id=748934352]
-layout_mode = 2
-theme_type_variation = &"TabLabel"
-text = "Mapa"
-
-[node name="Sistema" type="Label" parent="Frame/Panel/Layout/Nav/Header/Tabs" unique_id=606744854]
-layout_mode = 2
-theme_type_variation = &"TabLabel"
-text = "Sistema"
+focus_mode = 0
+theme_type_variation = &"PauseTabBar"
+current_tab = 0
+clip_tabs = false
+tab_count = 4
+tab_0/title = "Equipo"
+tab_1/title = "Ítems"
+tab_2/title = "Mapa"
+tab_3/title = "Sistema"
 
 [node name="NextKey" type="TextureRect" parent="Frame/Panel/Layout/Nav/Header" unique_id=1245350997]
-self_modulate = Color(0.8509804, 0.6431373, 0.25490198, 1)
 unique_name_in_owner = true
+self_modulate = Color(0.8509804, 0.6431373, 0.25490198, 1)
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
 expand_mode = 1
@@ -101,23 +91,32 @@ stretch_mode = 5
 layout_mode = 2
 theme_type_variation = &"OrnateSeparator"
 
-[node name="Pages" type="Control" parent="Frame/Panel/Layout" unique_id=1270931902]
+[node name="Pages" type="TabContainer" parent="Frame/Panel/Layout" unique_id=1270931902]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_pages")
+current_tab = 0
+tabs_visible = false
 
 [node name="Equipo" parent="Frame/Panel/Layout/Pages" unique_id=1720913027 instance=ExtResource("2_equip")]
-layout_mode = 1
+layout_mode = 2
+metadata/_tab_index = 0
 
 [node name="Ítems" parent="Frame/Panel/Layout/Pages" unique_id=743354951 instance=ExtResource("3_items")]
-layout_mode = 1
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="Mapa" parent="Frame/Panel/Layout/Pages" unique_id=351808888 instance=ExtResource("4_map")]
-layout_mode = 1
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
 
 [node name="Sistema" parent="Frame/Panel/Layout/Pages" unique_id=1587890799 instance=ExtResource("5_system")]
 visible = false
-layout_mode = 1
+layout_mode = 2
+metadata/_tab_index = 3
 
 [node name="Hints" type="HBoxContainer" parent="Frame/Panel/Layout" unique_id=765857099]
 unique_name_in_owner = true

@@ -1,10 +1,11 @@
 extends UiScreen
-## Menú de pausa: pestañas Equipo, Ítems, Mapa y Sistema. Cada página es un hijo de %Pages con su pestaña en %Tabs.
+## Menú de pausa: pestañas Equipo, Ítems, Mapa y Sistema. %Pages (TabContainer sin barra) tiene las páginas y %Tabs
+## (TabBar, entre los prompts de Q/E) sus títulos.
 
 const HINTS := [[&"ui_cancel", "Cerrar"], [[&"ui_tab_left", &"ui_tab_right"], "Pestaña"]]
 
-@onready var pages: Control = %Pages
-@onready var tabs: HBoxContainer = %Tabs
+@onready var pages: TabContainer = %Pages
+@onready var tabs: TabBar = %Tabs
 @onready var hints: HintBar = %Hints
 @onready var prev_key: TextureRect = %PrevKey
 @onready var next_key: TextureRect = %NextKey
@@ -14,14 +15,16 @@ var current := 0
 
 func _ready() -> void:
 	InputDevice.input_device_changed.connect(func(_d: int) -> void: _update_hints())
+	tabs.tab_changed.connect(func(tab: int) -> void:
+		if tab != current:
+			show_page(tab))
 	show_page(0)
 
 
 func show_page(index: int) -> void:
-	current = wrapi(index, 0, pages.get_child_count())
-	for i in pages.get_child_count():
-		pages.get_child(i).visible = i == current
-		(tabs.get_child(i) as Label).theme_type_variation = &"TabLabelSelected" if i == current else &"TabLabel"
+	current = wrapi(index, 0, pages.get_tab_count())
+	pages.current_tab = current
+	tabs.current_tab = current
 	focus_default()
 	_update_hints()
 

@@ -298,6 +298,8 @@ Rig reutilizado de otra jam *(pendiente importarlo al repo)*.
 
 *Mockups de todas las pantallas: artifact "Epiphany UI Mockups".*
 
+Las páginas de la pausa son hijas de un `TabContainer` sin barra propia (`%Pages`); los títulos van en un `TabBar` (`%Tabs`, variación `PauseTabBar`) entre los prompts de Q/E, que también cambia de página con el mouse.
+
 | Pantalla | Contenido |
 |---|---|
 | **Título** | Escena principal del juego (`src/ui/title/title_screen.tscn`, mockup Main): Continuar, Nueva partida, Opciones, Salir; en debug, "Cargar escenario" lista `debug/scenarios/`. `--scenario=` y `next_scenario.txt` se siguen respetando. Piezas reutilizables: `MenuItem` (escena sin script: el ▶ es el ícono de la variación del tema, transparente salvo con foco o hover) y `HintBar` (pistas de botones del dispositivo actual). |

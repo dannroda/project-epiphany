@@ -77,3 +77,15 @@ func test_overworld_shows_marker_over_the_image() -> void:
 	var image_rect := Rect2(page.overworld_image.position, page.overworld_image.size)
 	assert_true(image_rect.has_point(page.marker.position), "el marcador cae sobre la imagen")
 	_close(setup[2])
+
+
+func test_clicking_a_tab_switches_the_page() -> void:
+	var opened := await _open_map()
+	var stack: Node = opened[2]
+	var menu: Control = stack.top()
+	menu.tabs.current_tab = 1
+	assert_eq(menu.current, 1, "el clic en la pestaña cambia la página")
+	assert_eq(menu.pages.get_current_tab_control().name, &"Ítems")
+	menu.show_page(menu.current + 4)
+	assert_eq(menu.tabs.current_tab, 1, "Q/E da la vuelta y la barra la sigue")
+	_close(stack)

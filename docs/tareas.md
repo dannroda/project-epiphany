@@ -2021,7 +2021,7 @@ Skills: `workflows:itch-publish`.
 - [x] Skeleton2 fuera del cerco y test de enemigos encimados
 - [x] path_desired_distance 1.0 por la navmesh a 0.5 m
 
-## M11 — Pulido: assets y contenido  (5/16)
+## M11 — Pulido: assets y contenido  (6/17)
 
 Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
 
@@ -2109,7 +2109,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Notas:** HubSeal está antes que PuzzleEye en temple.tscn: al cargar leía el ojo antes de que restaurara su flag y quedaba cerrado. Afectaba a cualquier puerta/reja/puente cuyo interruptor esté después en el árbol.
 
-### 11.15 Íconos de ítems y equipo renderizados desde los modelos 3D · Pendiente
+### 11.15 Íconos de ítems y equipo renderizados desde los modelos 3D · Hecho
 
 **Prioridad:** media · **Etiquetas:** `ui`, `arte`
 
@@ -2131,6 +2131,16 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 - [x] Capturas de HUD y pestañas de la pausa
 - [x] Suite completa
 - [x] GDD §10.1 (UI)
+
+### 11.17 Pausa: páginas en un TabContainer y títulos en un TabBar · Pendiente
+
+**Prioridad:** baja · **Etiquetas:** `ui`
+
+- [x] Pages → TabContainer sin barra; Tabs → TabBar con variación PauseTabBar (reemplaza TabLabel/TabLabelSelected)
+- [x] Clic en una pestaña cambia la página (test nuevo en test_map)
+- [x] Capturas: igual que antes
+- [x] Suite completa
+- [x] GDD §9
 
 ## Listas
 

@@ -1,0 +1,38 @@
+{
+  "checklist": [
+    {
+      "done": true,
+      "text": "Pages → TabContainer sin barra; Tabs → TabBar con variación PauseTabBar (reemplaza TabLabel/TabLabelSelected)"
+    },
+    {
+      "done": true,
+      "text": "Clic en una pestaña cambia la página (test nuevo en test_map)"
+    },
+    {
+      "done": true,
+      "text": "Capturas: igual que antes"
+    },
+    {
+      "done": true,
+      "text": "Suite completa"
+    },
+    {
+      "done": true,
+      "text": "GDD §9"
+    }
+  ],
+  "code": "11.17",
+  "created_at": "2026-10-09T19:43:10.365Z",
+  "milestone": "m11",
+  "notes": "",
+  "order": 17,
+  "priority": "low",
+  "refs": [],
+  "status": "done",
+  "tags": [
+    "ui"
+  ],
+  "test": "",
+  "title": "Pausa: páginas en un TabContainer y títulos en un TabBar",
+  "updated_at": "2026-10-09T20:02:58.520Z"
+}
