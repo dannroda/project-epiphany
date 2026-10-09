@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://eakxksxvvpj8" path="res://src/items/behaviors/consumable_behavior.gd" id="1_0bv3h"]
 [ext_resource type="Script" uid="uid://l3nlu6710gm3" path="res://src/items/modifiers/item_modifier.gd" id="2_3v7vl"]
-[ext_resource type="Texture2D" uid="uid://c6yw7ldku66t4" path="res://assets/ui/items/potion.svg" id="2_53lbm"]
+[ext_resource type="Texture2D" uid="uid://bbg7431bujw58" path="res://assets/ui/items/potion.png" id="2_53lbm"]
 [ext_resource type="Script" uid="uid://bn5pjgpia5grm" path="res://src/items/item_data.gd" id="3_53lbm"]
 [ext_resource type="Resource" path="res://data/items/bottle_empty.tres" id="4_bottle"]
 

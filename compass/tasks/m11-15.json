@@ -1,18 +1,47 @@
 {
-  "checklist": [],
+  "checklist": [
+    {
+      "done": true,
+      "text": "tools/render_item_icons.gd: PNG 256 px con contorno, 14 ítems; mapa, brújula y corazón siguen en SVG"
+    },
+    {
+      "done": true,
+      "text": "Escudos de Adventurers: madera = shield_round, espejo = shield_square cromado (también en la mano y el esqueleto)"
+    },
+    {
+      "done": true,
+      "text": "Arco de Adventurers con cuerda; bolsa de bombas = tres bombas"
+    },
+    {
+      "done": true,
+      "text": "Armaduras: shader palette_remap; la cota pasa el metal del Knight a dorado (player, preview e ícono)"
+    },
+    {
+      "done": true,
+      "text": "HUD de llaves con los PNG; SVG viejos borrados"
+    },
+    {
+      "done": true,
+      "text": "Suite completa y capturas (HUD, Equipo, Ítems, item get, escudos, cota)"
+    },
+    {
+      "done": true,
+      "text": "GDD §6 y §10.1"
+    }
+  ],
   "code": "11.15",
   "created_at": "2026-10-09T18:11:53.976Z",
   "milestone": "m11",
-  "notes": "",
+  "notes": "Los íconos se regeneran con godot --path . --script res://tools/render_item_icons.gd y después hay que importar (editor o --import con el editor cerrado). El escudo de madera también cambió en la mano y en el esqueleto.",
   "order": 15,
   "priority": "medium",
   "refs": [],
-  "status": "todo",
+  "status": "done",
   "tags": [
     "ui",
     "arte"
   ],
   "test": "",
   "title": "Íconos de ítems y equipo renderizados desde los modelos 3D",
-  "updated_at": "2026-10-09T18:11:53.976Z"
+  "updated_at": "2026-10-09T19:17:49.069Z"
 }

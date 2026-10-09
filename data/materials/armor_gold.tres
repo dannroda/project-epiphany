@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://src/shaders/palette_remap.gdshader" id="1_shader"]
+[ext_resource type="Texture2D" path="res://assets/kaykit_adventure/Characters/gltf/knight_texture.png" id="2_texture"]
+
+[resource]
+shader = ExtResource("1_shader")
+shader_parameter/albedo_texture = ExtResource("2_texture")
+shader_parameter/grid = Vector2(8, 4)
+shader_parameter/target_cell = Vector2i(4, 1)
+shader_parameter/light_cells = Array[Vector2i]([Vector2i(3, 0), Vector2i(7, 0), Vector2i(2, 1), Vector2i(3, 1)])
+shader_parameter/dark_cells = Array[Vector2i]([Vector2i(4, 0), Vector2i(7, 1), Vector2i(-1, -1), Vector2i(-1, -1)])
+shader_parameter/dark_factor = 0.6

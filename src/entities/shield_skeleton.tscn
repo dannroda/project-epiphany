@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://src/entities/enemy.tscn" id="1_enemy"]
 [ext_resource type="Resource" path="res://data/entities/shield_skeleton.tres" id="2_config"]
-[ext_resource type="PackedScene" path="res://assets/items/shield/shield_badge.tscn" id="3_shield"]
+[ext_resource type="PackedScene" path="res://assets/items/shield/shield_round.tscn" id="3_shield"]
 
 [node name="ShieldSkeleton" instance=ExtResource("1_enemy")]
 config = ExtResource("2_config")

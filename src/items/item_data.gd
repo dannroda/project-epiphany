@@ -25,6 +25,8 @@ enum Category { SWORD, SHIELD, ARMOR, USABLE, AMMO, DUNGEON, UPGRADE }
 
 @export_group("Pasivos")
 @export var damage_reduction: float = 0.0
+## Armaduras: material del cuerpo del player mientras está puesta (null = la textura del modelo).
+@export var body_material: Material
 ## Escudos: refleja proyectiles y haces de luz.
 @export var reflects := false
 ## Escudos: tipos de daño (DamageInfo.element) que frena; un elemento vacío es "physical".

@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="ItemData" format=3]
 
-[ext_resource type="PackedScene" path="res://assets/items/shield/shield_badge.tscn" id="1_gul31"]
+[ext_resource type="PackedScene" path="res://assets/items/shield/shield_round.tscn" id="1_gul31"]
 [ext_resource type="Script" path="res://src/items/modifiers/item_modifier.gd" id="1_l2nrw"]
 [ext_resource type="Script" path="res://src/items/item_data.gd" id="2_gul31"]
-[ext_resource type="Texture2D" path="res://assets/ui/items/shield_wood.svg" id="2_qjkon"]
+[ext_resource type="Texture2D" uid="uid://bwd20u2qopei0" path="res://assets/ui/items/shield_wood.png" id="2_qjkon"]
 
 [resource]
 script = ExtResource("2_gul31")

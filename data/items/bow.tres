@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dfoal7qxlg81s"]
 
 [ext_resource type="Script" uid="uid://b7uti2n5qgtbh" path="res://src/items/behaviors/projectile_behavior.gd" id="1_hiqf6"]
-[ext_resource type="Texture2D" uid="uid://ce6hgak0wntqk" path="res://assets/ui/items/bow.svg" id="2_ca8yi"]
+[ext_resource type="Texture2D" uid="uid://b3l15iyv5h8km" path="res://assets/ui/items/bow.png" id="2_ca8yi"]
 [ext_resource type="Script" uid="uid://l3nlu6710gm3" path="res://src/items/modifiers/item_modifier.gd" id="2_thjit"]
 [ext_resource type="Script" uid="uid://bn5pjgpia5grm" path="res://src/items/item_data.gd" id="3_ca8yi"]
 [ext_resource type="Resource" path="res://data/items/arrow.tres" id="4_ammo"]

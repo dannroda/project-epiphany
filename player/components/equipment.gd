@@ -30,6 +30,7 @@ func refresh() -> void:
 	shield_on_back = _place(shield_back_socket, shield)
 	if shield_in_hand:
 		show_shield_in_hand(hand_visible)
+	_dress(_equipped(ItemData.Category.ARMOR))
 	weapon_changed.emit(weapon)
 
 
@@ -51,6 +52,14 @@ func show_shield_in_hand(in_hand: bool) -> void:
 		return
 	_set_present(shield_in_hand, in_hand)
 	_set_present(shield_on_back, not in_hand)
+
+
+func _dress(armor: ItemData) -> void:
+	var visuals := owner.get_node_or_null(^"ModelController/Visuals")
+	if visuals == null:
+		return
+	for mesh: MeshInstance3D in visuals.find_children("*", "MeshInstance3D", true, false):
+		mesh.material_override = armor.body_material if armor else null
 
 
 func _set_present(model: Node3D, present: bool) -> void:

@@ -1,13 +1,26 @@
 [gd_scene format=3]
 
-[ext_resource type="PackedScene" path="res://assets/items/shield/shield_badge.tscn" id="1_badge"]
+[ext_resource type="PackedScene" path="res://assets/kaykit_adventure/Assets/gltf/shield_square.gltf" id="1_model"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mirror"]
 albedo_color = Color(0.82, 0.86, 0.9, 1)
 metallic = 1.0
 roughness = 0.08
 
-[node name="shield_mirror" instance=ExtResource("1_badge")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_square"]
+size = Vector3(0.88, 1.19, 0.2)
 
-[node name="shield_badge" parent="." index="0"]
+[node name="shield_mirror" type="Node3D"]
+
+[node name="Model" parent="." instance=ExtResource("1_model")]
+
+[node name="shield_square" parent="Model" index="0"]
 material_override = SubResource("StandardMaterial3D_mirror")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 12
+collision_mask = 12
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.02)
+shape = SubResource("BoxShape3D_square")

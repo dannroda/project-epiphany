@@ -2021,7 +2021,7 @@ Skills: `workflows:itch-publish`.
 - [x] Skeleton2 fuera del cerco y test de enemigos encimados
 - [x] path_desired_distance 1.0 por la navmesh a 0.5 m
 
-## M11 — Pulido: assets y contenido  (4/15)
+## M11 — Pulido: assets y contenido  (5/16)
 
 Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
 
@@ -2112,6 +2112,25 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 ### 11.15 Íconos de ítems y equipo renderizados desde los modelos 3D · Pendiente
 
 **Prioridad:** media · **Etiquetas:** `ui`, `arte`
+
+- [x] tools/render_item_icons.gd: PNG 256 px con contorno, 14 ítems; mapa, brújula y corazón siguen en SVG
+- [x] Escudos de Adventurers: madera = shield_round, espejo = shield_square cromado (también en la mano y el esqueleto)
+- [x] Arco de Adventurers con cuerda; bolsa de bombas = tres bombas
+- [x] Armaduras: shader palette_remap; la cota pasa el metal del Knight a dorado (player, preview e ícono)
+- [x] HUD de llaves con los PNG; SVG viejos borrados
+- [x] Suite completa y capturas (HUD, Equipo, Ítems, item get, escudos, cota)
+- [x] GDD §6 y §10.1
+
+**Notas:** Los íconos se regeneran con godot --path . --script res://tools/render_item_icons.gd y después hay que importar (editor o --import con el editor cerrado). El escudo de madera también cambió en la mano y en el esqueleto.
+
+### 11.16 Letra de los prompts de input legible sobre cualquier fondo · Hecho
+
+**Prioridad:** alta · **Etiquetas:** `ui`, `bug`
+
+- [x] InputPrompts rellena con #0b0d10 lo calado de cada SVG (flood fill desde el borde, caché por ruta)
+- [x] Capturas de HUD y pestañas de la pausa
+- [x] Suite completa
+- [x] GDD §10.1 (UI)
 
 ## Listas
 

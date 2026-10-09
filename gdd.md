@@ -105,8 +105,8 @@ Las teclas se mapean por posición física (`physical_keycode`): WASD queda en e
 | Espada básica | Equipo | Melee | Inicio | Combate, cortar pasto |
 | Escudo de madera | Equipo | Bloqueo | Inicio | Bloqueo direccional |
 | **Escudo espejo** | Equipo | Bloqueo + reflejo | Overworld: santuario tras muro agrietado | **Abre el sello del templo** reflejando un haz de luz; puzzles de reflejo; alternativa en la fase 2 del jefe |
-| Túnica | Equipo | Pasivo | Inicio | Placeholder de armadura |
-| Cota reforzada | Equipo | Pasivo (−25% daño) | Overworld: cofre secreto (puzzle de bloques) | Ejercita la pantalla de equipo |
+| Túnica | Equipo | Pasivo | Inicio | Armadura base: el Knight con su gris de siempre |
+| Cota reforzada | Equipo | Pasivo (−25% daño) | Overworld: cofre secreto (puzzle de bloques) | El metal del Knight pasa a dorado (`data/materials/armor_gold.tres`, shader `palette_remap`, que cambia celdas del atlas KayKit por otra conservando el degradé) |
 | Bolsa de bombas + bombas | Ítems | Colocar | Overworld: cueva | Muros agrietados, daño en área, empujar objetos físicos |
 | Botella (+ poción) | Ítems | Consumible | Overworld: secreto opcional | Cura; deja la botella vacía |
 | **Arco + flechas** | Ítems | Proyectil | **Mazmorra (ítem de la mazmorra)** | Interruptores de ojo lejanos, punto débil del jefe |
@@ -337,7 +337,7 @@ Decidido el 2026-10-09: **KayKit + prototipo, pulido.** Personajes y armas de Ka
 
 **Materiales.** Sin PBR fino: albedo + textura de prototipo en triplanar de mundo (una textura por celda de 2 m), rugosidad alta. Lo que se puede usar o romper tiene que leerse distinto del escenario: otro material (KayKit), otro color o un brillo.
 
-**UI.** La que fijan los mockups: fondo `#0b0d10`, paneles `#151920`, bordes `#3a4250`, dorado `#d9a441` para foco y títulos, texto `#efe6d2`, secundario `#a79f8e`, peligro `#d0503a`. Títulos en Cinzel, texto en Alegreya Sans. Íconos de ítems SVG planos con contorno oscuro, pensados para 64 px y legibles a 32 px. Botones con los prompts de Kenney según el dispositivo. **Marcos** (decidido el 2026-10-09): los de *Fantasy UI Borders* de Kenney (CC0), teñidos con esta paleta por `tools/build_ui_frames.sh` en `assets/ui/frames/` (el pack original queda en `assets/kenney_fantasy-ui-borders/`, fuera de la importación). Marco doble dorado para la pausa, los diálogos y el *item get*; doble gris para las tarjetas; piedra para las tablillas; simple bronce `#6b5a3a` para botones, casillas y ranuras, que pasan a dorado con el foco; los sliders son la doble línea del pack (bronce, dorado lo lleno) con un rombo dorado de perilla, como los radios; casillas marcadas con un cuadrado dorado; la ranura de partida vacía es solo el borde. Un único divisor ornamentado: bajo las pestañas de la pausa y a los lados del nombre de la zona.
+**UI.** La que fijan los mockups: fondo `#0b0d10`, paneles `#151920`, bordes `#3a4250`, dorado `#d9a441` para foco y títulos, texto `#efe6d2`, secundario `#a79f8e`, peligro `#d0503a`. Títulos en Cinzel, texto en Alegreya Sans. Íconos de ítems renderizados desde sus modelos 3D (decidido el 2026-10-09): `tools/render_item_icons.gd` (con ventana, no headless) saca un PNG de 256 px con fondo transparente y contorno oscuro por ítem, en una vista de tres cuartos, a `assets/ui/items/`. Los modelos son los de KayKit (Adventurers, Dungeon Remastered) y los del propio equipo; las armaduras son el torso del Knight con su `body_material`. El mapa, la brújula y el contenedor de corazón no tienen modelo y siguen con su SVG plano. Botones con los prompts de Kenney según el dispositivo; la letra viene calada en el SVG y `InputPrompts` la rellena con el fondo `#0b0d10` al cargarla, para que no se vea lo que hay detrás. **Marcos** (decidido el 2026-10-09): los de *Fantasy UI Borders* de Kenney (CC0), teñidos con esta paleta por `tools/build_ui_frames.sh` en `assets/ui/frames/` (el pack original queda en `assets/kenney_fantasy-ui-borders/`, fuera de la importación). Marco doble dorado para la pausa, los diálogos y el *item get*; doble gris para las tarjetas; piedra para las tablillas; simple bronce `#6b5a3a` para botones, casillas y ranuras, que pasan a dorado con el foco; los sliders son la doble línea del pack (bronce, dorado lo lleno) con un rombo dorado de perilla, como los radios; casillas marcadas con un cuadrado dorado; la ranura de partida vacía es solo el borde. Un único divisor ornamentado: bajo las pestañas de la pausa y a los lados del nombre de la zona.
 
 ## 11. Arquitectura técnica
 <!-- id: arquitectura -->
@@ -405,6 +405,7 @@ enum Category { SWORD, SHIELD, ARMOR, USABLE, AMMO, DUNGEON, UPGRADE }
 
 @export_group("Pasivos")
 @export var damage_reduction: float = 0.0     ## Armaduras: 0.25 = −25%
+@export var body_material: Material           ## Armaduras: material del cuerpo del player (null = el del modelo)
 
 
 func is_equipment() -> bool:
