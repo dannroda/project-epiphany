@@ -2,22 +2,22 @@
   "checklist": [
     {
       "detail": "Variante del esqueleto con escudo equipado.",
-      "done": false,
+      "done": true,
       "text": "`EntityConfig` y escena"
     },
     {
       "detail": "Reutilizar la lógica de cono de 1.2 en el `_on_hurtbox_hit` del enemigo.",
-      "done": false,
+      "done": true,
       "text": "Bloquea de frente"
     },
     {
       "detail": "El golpe de escudo le baja la guardia un momento.",
-      "done": false,
+      "done": true,
       "text": "Vulnerable de flanco, a bombas y al golpe de escudo"
     },
     {
       "detail": "Más lento que el esqueleto común; no puede girar rápido.",
-      "done": false,
+      "done": true,
       "text": "BT: avanza con guardia y gira hacia el player"
     }
   ],
@@ -30,7 +30,7 @@
     }
   ],
   "milestone": "m08",
-  "notes": "Skills: `disciplines:ai-behavior-trees-utility-ai`, `disciplines:game-ai`.",
+  "notes": "Skills: `disciplines:ai-behavior-trees-utility-ai`, `disciplines:game-ai`.\n\nHecho 2026-10-08: `shield_skeleton.tscn` + `data/entities/shield_skeleton.tres`. La guardia vive en `Enemy._guard_stops` y se configura en `EntityConfig` (grupo Escudo); el golpe de escudo es el `SHIELD_THRUST` que ya existía (atacar bloqueando, aturde). Mismo BT del esqueleto, más lento (1.8 m/s) y con `turn_speed` 2.2 rad/s. Test `tests/test_shield_skeleton.gd`.",
   "order": 2,
   "refs": [
     {
@@ -38,8 +38,8 @@
       "section": "combate"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Pegarle de frente no hace daño; rodar a su espalda, una bomba o un golpe de escudo y luego espada, sí.",
   "title": "Esqueleto con escudo",
-  "updated_at": "2026-10-08T04:45:58.978Z"
+  "updated_at": "2026-10-09T00:41:56.563Z"
 }

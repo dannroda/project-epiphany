@@ -1452,14 +1452,14 @@ Hecho 2026-10-08: `start` ahora arranca en el overworld (escena principal del ju
 
 **Bloqueada por:** 7.6 Sello del templo
 
-## M8 — Contenido de mazmorra  (0/8)
+## M8 — Contenido de mazmorra  (1/8)
 
 Las 8 salas en bloques grises, el arco a mitad de camino, la llave del jefe.
 
 **Hecho cuando:**
 - La mazmorra se recorre entera.
 
-### 8.1 Layout de la mazmorra · En curso
+### 8.1 Layout de la mazmorra · Hecho
 
 - [x] Diagrama de conexiones de las 8 salas + jefe
   Hub central con 4 salidas ([[gdd#mazmorra]]).
@@ -1482,20 +1482,22 @@ Hecho 2026-10-08: diagrama, tabla de puertas, conteo de llaves (2 y 2, la llave 
 
 **Bloquea a:** 8.3 Salas 1–2: vestíbulo y hub
 
-### 8.2 Esqueleto con escudo · Pendiente
+### 8.2 Esqueleto con escudo · En curso
 
-- [ ] `EntityConfig` y escena
+- [x] `EntityConfig` y escena
   Variante del esqueleto con escudo equipado.
-- [ ] Bloquea de frente
+- [x] Bloquea de frente
   Reutilizar la lógica de cono de 1.2 en el `_on_hurtbox_hit` del enemigo.
-- [ ] Vulnerable de flanco, a bombas y al golpe de escudo
+- [x] Vulnerable de flanco, a bombas y al golpe de escudo
   El golpe de escudo le baja la guardia un momento.
-- [ ] BT: avanza con guardia y gira hacia el player
+- [x] BT: avanza con guardia y gira hacia el player
   Más lento que el esqueleto común; no puede girar rápido.
 
 **Prueba:** Pegarle de frente no hace daño; rodar a su espalda, una bomba o un golpe de escudo y luego espada, sí.
 
 **Notas:** Skills: `disciplines:ai-behavior-trees-utility-ai`, `disciplines:game-ai`.
+
+Hecho 2026-10-08: `shield_skeleton.tscn` + `data/entities/shield_skeleton.tres`. La guardia vive en `Enemy._guard_stops` y se configura en `EntityConfig` (grupo Escudo); el golpe de escudo es el `SHIELD_THRUST` que ya existía (atacar bloqueando, aturde). Mismo BT del esqueleto, más lento (1.8 m/s) y con `turn_speed` 2.2 rad/s. Test `tests/test_shield_skeleton.gd`.
 
 **Referencias:** `gdd.md#combate`
 

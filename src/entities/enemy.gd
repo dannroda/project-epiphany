@@ -21,6 +21,8 @@ signal defeated(enemy: Enemy)
 ## Lo que pide la IA; el empujón va aparte y se suma.
 var desired_velocity := Vector3.ZERO
 var _knockback := Vector3.ZERO
+var _facing_goal := Vector3.ZERO
+var _guard_down_until := 0
 
 var is_dead: bool:
 	get:
@@ -44,6 +46,9 @@ func _ready() -> void:
 	bt_player.blackboard.set_var("is_dead", false)
 	bt_player.blackboard.set_var("stunned", false)
 	bt_player.blackboard.set_var("target", null)
+	for body in model.find_children("*", "StaticBody3D", true, false):
+		for shape in body.find_children("*", "CollisionShape3D", true, false):
+			(shape as CollisionShape3D).disabled = true
 
 
 func _physics_process(delta: float) -> void:
@@ -54,6 +59,7 @@ func _physics_process(delta: float) -> void:
 	velocity.x = desired_velocity.x + _knockback.x
 	velocity.z = desired_velocity.z + _knockback.z
 	move_and_slide()
+	_turn(delta)
 
 
 func move_toward_point(point: Vector3, speed: float) -> void:
@@ -70,17 +76,62 @@ func stop_moving() -> void:
 	desired_velocity = Vector3.ZERO
 
 
-## El modelo mira a +Z local: la raíz mira (-Z) hacia el lado opuesto al punto.
+## El modelo mira a +Z local: la raíz mira (-Z) hacia el lado opuesto al punto. Con `turn_speed`, gira de a poco.
 func face_towards(point: Vector3) -> void:
 	var direction := point - global_position
 	direction.y = 0.0
 	if direction.is_zero_approx():
 		return
+	if config.turn_speed > 0.0:
+		_facing_goal = direction.normalized()
+		return
 	look_at(global_position - direction, Vector3.UP)
 	model.rotation = Vector3.ZERO
 
 
+## Hacia dónde mira (en el plano).
+func facing() -> Vector3:
+	var forward := global_basis.z
+	forward.y = 0.0
+	return forward.normalized()
+
+
+func _turn(delta: float) -> void:
+	if _facing_goal.is_zero_approx():
+		return
+	var angle := facing().signed_angle_to(_facing_goal, Vector3.UP)
+	var step := clampf(angle, -config.turn_speed * delta, config.turn_speed * delta)
+	rotate_y(step)
+	model.rotation = Vector3.ZERO
+	if is_equal_approx(step, angle):
+		_facing_goal = Vector3.ZERO
+
+
+func is_guarding() -> bool:
+	return config.guards_front and not is_dead and Time.get_ticks_msec() >= _guard_down_until
+
+
+## Escudo de frente: frena todo salvo explosiones; un golpe que aturde le baja la guardia.
+func _guard_stops(info: DamageInfo) -> bool:
+	if not is_guarding() or info.source == null or info.element == &"explosive":
+		return false
+	var to_source := info.source.global_position - global_position
+	to_source.y = 0.0
+	if to_source.is_zero_approx() or rad_to_deg(facing().angle_to(to_source)) > config.guard_angle_deg:
+		return false
+	if info.stun_time > 0.0:
+		_guard_down_until = Time.get_ticks_msec() + int(config.guard_break_time * 1000.0)
+		Log.debug(&"combat", name, "bajó la guardia")
+		Feel.sfx(&"deny", global_position)
+	else:
+		Feel.sfx(&"block", global_position)
+	Feel.burst(&"sparks", global_position + Vector3.UP * 1.1 + to_source.normalized() * 0.5, to_source.normalized())
+	return true
+
+
 func _on_hit(info: DamageInfo) -> void:
+	if _guard_stops(info):
+		return
 	if not health.damage(info.amount):
 		return
 	Log.info(&"combat", name, "recibió", info.amount, "de daño. Vida:", health.current)

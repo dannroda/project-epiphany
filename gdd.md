@@ -91,7 +91,7 @@ Las teclas se mapean por posición física (`physical_keycode`): WASD queda en e
 - **Esquiva (roll):** i-frames cortos, usa las animaciones `Dodge_*` de KayKit.
 - **Enemigos (MVP):** 3 arquetipos + jefe:
   - *Esqueleto* — melee básico, enseña bloqueo.
-  - *Esqueleto con escudo* — bloquea de frente; obliga a flanquear, usar bombas o golpe de escudo.
+  - *Esqueleto con escudo* — bloquea de frente; obliga a flanquear, usar bombas o golpe de escudo. (`src/entities/shield_skeleton.tscn`: `EntityConfig.guards_front` frena golpes y proyectiles dentro de `guard_angle_deg`, las explosiones pasan; un golpe que aturde, como el golpe de escudo, le baja la guardia `guard_break_time`; `turn_speed` lo hace girar lento, así se le puede rodar a la espalda.)
   - *Torreta / ojo menor* — dispara orbes reflejables.
 
 ## 6. Ítems y progresión

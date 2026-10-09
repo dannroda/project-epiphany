@@ -26,6 +26,15 @@ var features: int = 0
 @export var move_speed: float = 3.0
 @export var vision_range: float = 8.0
 @export var attack_range: float = 1.6
+## Radianes por segundo; 0 = gira de golpe. Lento: se le puede rodar a la espalda.
+@export var turn_speed: float = 0.0
+
+@export_group("Escudo")
+## Frena de frente golpes y proyectiles; las explosiones pasan.
+@export var guards_front := false
+@export var guard_angle_deg := 70.0
+## Un golpe que aturde (el golpe de escudo) le baja la guardia este tiempo.
+@export var guard_break_time := 1.5
 
 
 func has(feature: Feature) -> bool:
