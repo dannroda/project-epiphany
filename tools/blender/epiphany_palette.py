@@ -51,6 +51,15 @@ SWATCHES = [
 COLS, ROWS = 8, 4
 # Franjas que brillan solas (palette_emission.png).
 EMISSIVE = {"neon", "doom"}
+# Paletas alternativas (palette_<nombre>.png): franja → (arriba, abajo). Las usan las armaduras como material del cuerpo.
+VARIANTS = {
+	"reforzada": {
+		"tela_roja": ("f5d67e", "b07a24"),
+		"dorado": ("d65a42", "7a2a20"),
+		"noche": ("4a3468", "160c26"),
+		"neon": ("ffc4f6", "c040d8"),
+	},
+}
 # Fracción de la franja que no se usa arriba y abajo, para que el filtrado no mezcle con la vecina.
 MARGIN = 0.06
 MATERIAL = "paleta"

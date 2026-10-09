@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://src/items/modifiers/item_modifier.gd" id="1_8dg5i"]
 [ext_resource type="Texture2D" uid="uid://cc0x4qrp6o6tl" path="res://assets/ui/items/armor_chainmail.png" id="1_bekmn"]
 [ext_resource type="Script" path="res://src/items/item_data.gd" id="2_bekmn"]
-[ext_resource type="Material" path="res://data/materials/armor_gold.tres" id="3_gold"]
+[ext_resource type="Material" path="res://data/materials/armor_reforzada.tres" id="3_gold"]
 
 [resource]
 script = ExtResource("2_bekmn")

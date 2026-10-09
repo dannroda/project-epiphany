@@ -140,11 +140,20 @@ def porongo(p, potion):
 	p.paint(cork, "doom" if potion else "madera", "MID")
 
 
-def poncho(p):
-	"""El poncho del jugador, suelto (para los íconos de la ropa): mismas medidas y franjas, con la base en z = 0."""
-	body = p.lathe([(0.0, 0.55), (0.3, 0.5), (0.4, 0.32), (0.43, 0.22), (0.44, 0.16), (0.45, 0.1), (0.46, 0.0)], sides=4, phase=math.pi / 4)
-	p.transform(body, Matrix.Diagonal((1.05, 0.62, 1.0, 1.0)))
-	p.paint_bands(body, [(-0.1, 0.09, "hueso", "MID"), (0.09, 0.16, "flor_amarilla", "MID"), (0.16, 0.23, "noche", "LOW")], default=(0, 0, "tela_roja", "MID"))
+def armadura(p):
+	"""La armadura del jugador suelta (para los íconos): peto con la franja de neón, hombreras y cuello, sobre el traje."""
+	p.paint(p.box(-0.22, 0.22, -0.16, 0.16, 0.0, 0.58), "noche", "MID")
+	plate = p.box(-0.26, 0.26, -0.22, 0.12, 0.22, 0.58, taper=0.03)
+	p.paint_bands(plate, [(0.3, 0.33, "neon", "MID")], default=(0, 0, "tela_roja", "MID"))
+	epi.chakana_plate(p, Vector((0, -0.23, 0.45)), 0.16, "dorado")
+	p.paint(p.lathe([(0.2, 0.55), (0.22, 0.62), (0.0, 0.62)], sides=8), "dorado", "MID")
+	for side in (-1, 1):
+		x = side * 0.36
+		p.paint(p.rounded_box(x - 0.17, x + 0.17, -0.17, 0.17, 0.38, 0.64, radius=0.07), "tela_roja", "MID")
+		p.paint(p.box(x - 0.175, x + 0.175, -0.175, 0.175, 0.42, 0.45), "neon", "MID")
+	flap = p.box(-0.17, 0.17, -0.22, -0.18, -0.3, 0.02, taper=0.0)
+	p.paint_bands(flap, [(-0.22, -0.19, "neon", "MID")], default=(0, 0, "tela_roja", "MID"))
+	p.paint(p.box(-0.26, 0.26, -0.19, 0.19, -0.04, 0.04), "dorado", "MID")
 
 
 piece("espada", 1, espada)
@@ -155,6 +164,6 @@ piece("carcaj", 5, carcaj)
 piece("bolsa_bombas", 6, bolsa_bombas)
 piece("botella", 7, lambda p: porongo(p, False))
 piece("botella_pocion", 8, lambda p: porongo(p, True))
-piece("poncho", 9, poncho)
+piece("armadura", 9, armadura)
 epi.layout(kit, columns=8, spacing=2.0)
 epi.save("equipo")
