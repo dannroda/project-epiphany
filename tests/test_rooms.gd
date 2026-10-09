@@ -105,7 +105,14 @@ func test_dying_in_dungeon_respawns_at_room_entrance() -> void:
 	player.global_position = Vector3(15, 0.25, -30)
 	player.health.invulnerability_time = 0.0
 	player.health.damage(999)
-	await tree.create_timer(4.5).timeout
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	for i in 400:
+		if stack.top() is GameOver:
+			break
+		await tree.process_frame
+	assert_true(stack.top() is GameOver, "game over")
+	(stack.top() as GameOver)._continue.pressed.emit()
+	await tree.create_timer(2.0).timeout
 	player = tree.get_first_node_in_group(&"player")
 	assert_true(player.global_position.distance_to(entry) < 0.5, "reaparece en la entrada de la sala")
 	camera = tree.current_scene.get_node(^"TopDownCamera")
