@@ -4,6 +4,8 @@
 [ext_resource type="Texture2D" path="res://assets/ui/items/small_key.svg" id="2_small_key"]
 [ext_resource type="Texture2D" path="res://assets/ui/items/boss_key.svg" id="3_boss_key"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud_item_slot.tscn" id="4_slot"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/divider.png" id="5_divider"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/divider_flipped.png" id="6_divider_flipped"]
 
 [node name="HUD" type="CanvasLayer"]
 layer = 10
@@ -133,12 +135,14 @@ mouse_filter = 2
 theme_override_constants/separation = 18
 alignment = 1
 
-[node name="LineLeft" type="ColorRect" parent="AreaName"]
-custom_minimum_size = Vector2(120, 1)
+[node name="LineLeft" type="TextureRect" parent="AreaName"]
+custom_minimum_size = Vector2(160, 30)
 layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
-color = Color(0.937, 0.902, 0.824, 0.6)
+texture = ExtResource("5_divider")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="AreaLabel" type="Label" parent="AreaName"]
 unique_name_in_owner = true
@@ -146,12 +150,14 @@ layout_mode = 2
 theme_type_variation = &"AreaName"
 uppercase = true
 
-[node name="LineRight" type="ColorRect" parent="AreaName"]
-custom_minimum_size = Vector2(120, 1)
+[node name="LineRight" type="TextureRect" parent="AreaName"]
+custom_minimum_size = Vector2(160, 30)
 layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
-color = Color(0.937, 0.902, 0.824, 0.6)
+texture = ExtResource("6_divider_flipped")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Saved" type="Label" parent="."]
 unique_name_in_owner = true

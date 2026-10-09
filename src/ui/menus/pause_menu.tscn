@@ -97,6 +97,7 @@ stretch_mode = 5
 
 [node name="Rule" type="HSeparator" parent="Frame/Panel/Layout/Nav" unique_id=1407360487]
 layout_mode = 2
+theme_type_variation = &"OrnateSeparator"
 
 [node name="Pages" type="Control" parent="Frame/Panel/Layout" unique_id=1270931902]
 unique_name_in_owner = true
