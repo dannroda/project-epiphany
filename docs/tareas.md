@@ -1610,23 +1610,23 @@ Hecho 2026-10-08: escenarios `dungeon_no_bow`, `pre_boss`, `boss_key_door_locked
 
 ## M9 — Jefe  (1/8)
 
-Importar el rig del ojo con manos y armar las fases 1 y 2 con LimboAI.
+Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 con LimboAI.
 
 **Hecho cuando:**
 - Se puede terminar el juego.
 
 ### 9.1 Integrar el modelo del jefe · Pendiente
 
-- [ ] Traer el rig del ojo con manos al repo
-  En `assets/boss/`, con su licencia/origen anotado.
-- [ ] Verificar compatibilidad con Godot 4.8 y el `AnimationTree`
-  Importar las animaciones a una `AnimationLibrary`; revisar escala y ejes respecto de KayKit.
-- [ ] Cerrar la decisión abierta del rig
-  En [[gdd#decisiones-abiertas]].
+- [ ] Traer el modelo del jefe al proyecto
+  Las mallas de `assets/epiphany/meshes/jefe/` (salen de `tools/blender/build_jefe.py`), armadas en una escena.
+- [ ] Armar la jerarquía que mueve el código
+  Pivotes para el ojo (look_at), los párpados (rotación en X) y las manos (cambio de pose entre abierta, puño y garra); sockets de orbes y de reposo.
+- [ ] Revisar escala y ejes en la sala del jefe
+  Que entre en el encuadre de la cámara del jefe (≈26 × 14,5 m) en la sala de 22 × 14 m.
 
-**Prueba:** La escena del jefe se abre en el editor con el cuerpo, el párpado, la pupila y las dos manos como nodos separados, y sus sockets (salida de orbes, reposo de las manos) en su lugar.
+**Prueba:** La escena del jefe se abre en el editor con el cuerpo, el ojo (gira entero con look_at), los dos párpados y las dos manos (tres poses cada una) como nodos separados, y sus sockets (salida de orbes, anclas y reposo de las manos) en su lugar.
 
-**Notas:** Skills: `godot:godot-animation`, `godot:godot-3d-essentials`.
+**Notas:** Skills: `godot:godot-3d-essentials`. Sin rig ni AnimationTree: el .blend de la jam no tenía; las piezas las mueve el código (decidido el 2026-10-09, gdd §9).
 
 **Referencias:** `gdd.md#jefe`, `gdd.md#decisiones-abiertas`
 

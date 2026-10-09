@@ -3,7 +3,7 @@
   "done_when": [
     "Se puede terminar el juego."
   ],
-  "goal": "Importar el rig del ojo con manos y armar las fases 1 y 2 con LimboAI.",
+  "goal": "Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 con LimboAI.",
   "order": 9,
   "title": "Jefe"
 }
