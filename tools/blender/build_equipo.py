@@ -1,0 +1,160 @@
+# Arma assets/epiphany/equipo.blend: armas, escudos y objetos del inventario, con los ejes de KayKit Adventurers:
+# espada sobre +Z con la empuñadura en el origen; escudos en el plano XZ con el frente hacia -Y; arco sobre Y.
+# blender -b -P tools/blender/build_equipo.py
+import math
+import os
+import sys
+
+from mathutils import Matrix, Vector
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import epi  # noqa: E402
+
+kit = epi.start()
+UPRIGHT = Matrix.Rotation(math.pi / 2, 4, "X")
+
+
+def piece(name, seed, fn):
+	p = epi.Piece(seed)
+	fn(p)
+	return p.build(name, kit)
+
+
+def flat(p, points, thickness):
+	"""Polígono en el plano XZ con espesor en Y."""
+	f = p.polygon(points, -thickness / 2, thickness / 2)
+	p.transform(f, UPRIGHT)
+	return f
+
+
+def espada(p):
+	blade_pts = [(0.0, 0.06), (0.07, 0.1), (0.085, 0.55), (0.1, 0.95), (0.06, 1.25), (0.0, 1.42), (-0.06, 1.25), (-0.1, 0.95), (-0.085, 0.55), (-0.07, 0.1)]
+	blade = flat(p, blade_pts, 0.045)
+	p.paint(blade, "dorado", z_range=(-0.4, 1.8), vary=0.03)
+	ridge = flat(p, [(0.0, 0.12), (0.015, 0.2), (0.012, 1.2), (0.0, 1.3), (-0.012, 1.2), (-0.015, 0.2)], 0.06)
+	p.paint(ridge, "roca_naranja", "MID")
+	guard = []
+	for w, h, z in ((0.5, 0.07, 0.0), (0.32, 0.12, 0.0), (0.16, 0.18, 0.0)):
+		guard += p.box(-w / 2, w / 2, -0.05, 0.05, z - h / 2, z + h / 2)
+	p.paint(guard, "cobre_verde", "MID", vary=0.05)
+	grip = []
+	for i in range(5):
+		z = -0.07 - i * 0.055
+		grip += p.box(-0.04, 0.04, -0.04, 0.04, z - 0.05, z)
+	p.paint_bands(grip, [(-0.13, -0.07, "tela_roja", "MID"), (-0.24, -0.18, "tela_roja", "MID"), (-0.35, -0.29, "tela_roja", "MID")], default=(0, 0, "hueso", "MID"))
+	pommel = p.box(-0.07, 0.07, -0.06, 0.06, -0.37, -0.33) + p.box(-0.04, 0.04, -0.06, 0.06, -0.41, -0.37)
+	p.paint(pommel, "cobre_verde", "LIGHT")
+
+
+def escudo_madera(p):
+	"""Redondo, de tablas verticales con borde de cuero y un rombo escalonado pintado."""
+	r = 0.44
+	boards = []
+	for i in range(5):
+		x0 = -r + i * 2 * r / 5
+		x1 = x0 + 2 * r / 5 - 0.012
+		xs = [x0 + (x1 - x0) * k / 3 for k in range(4)]
+		arc = [(x, math.sqrt(max(r * r - x * x, 0.0))) for x in xs]
+		boards += flat(p, [(x, -z) for x, z in arc] + [(x, z) for x, z in reversed(arc)], 0.06)
+	p.paint(boards, "madera", z_range=(-0.8, 0.8), vary=0.1)
+	rim = p.lathe([(r + 0.01, -0.035), (r + 0.03, 0.0), (r + 0.01, 0.035), (r - 0.03, 0.035), (r - 0.03, -0.035), (r + 0.01, -0.035)], sides=16, caps=False)
+	p.transform(rim, UPRIGHT)
+	p.paint(rim, "madera_oscura", "MID")
+	steps = []
+	for w, h in ((0.5, 0.12), (0.34, 0.28), (0.18, 0.44)):
+		steps += p.box(-w / 2, w / 2, -0.045, -0.03, -h / 2, h / 2)
+	p.paint(steps, "tela_roja", "MID")
+	core = p.box(-0.06, 0.06, -0.05, -0.03, -0.06, 0.06)
+	p.paint(core, "hueso", "LIGHT")
+
+
+def escudo_espejo(p):
+	"""Disco solar: centro espejado, aro de bronce y doce rayos."""
+	disk = p.cylinder(0.36, 0.0, 0.04, sides=16)
+	p.transform(disk, UPRIGHT)
+	p.paint(disk, "cristal", "LIGHT", vary=0.03)
+	ring = p.lathe([(0.36, -0.05), (0.44, -0.04), (0.44, 0.03), (0.36, 0.03), (0.36, -0.05)], sides=16, caps=False)
+	p.transform(ring, UPRIGHT)
+	p.paint(ring, "dorado", "MID")
+	rays = []
+	for i in range(12):
+		a = 2 * math.pi * i / 12
+		ray = flat(p, [(-0.06, 0.43), (0.06, 0.43), (0.0, 0.58 if i % 2 == 0 else 0.52)], 0.05)
+		p.transform(ray, Matrix.Rotation(a, 4, "Y"))
+		rays += ray
+	p.paint(rays, "dorado", "LIGHT", vary=0.05)
+	back = p.cylinder(0.3, -0.1, -0.02, sides=10)
+	p.transform(back, UPRIGHT)
+	p.paint(back, "madera_oscura", "MID")
+
+
+def arco(p):
+	"""Arco recurvo sobre Y, con la panza hacia -X y la cuerda en +X."""
+	limbs = []
+	for side in (-1, 1):
+		prev = Vector((0.0, 0.0, 0.0))
+		for k in range(1, 7):
+			t = k / 6
+			y = side * 0.98 * t
+			x = -0.3 * math.sin(t * math.pi * 0.75) + 0.12 * t ** 4
+			cur = Vector((x, y, 0.0))
+			seg = cur - prev
+			c = p.cylinder(0.035 - 0.015 * t, 0.0, seg.length, sides=6, radius_top=0.035 - 0.015 * (t + 1 / 6))
+			p.transform(c, Matrix.Translation(prev) @ seg.normalized().to_track_quat("Z", "Y").to_matrix().to_4x4())
+			limbs += c
+			prev = cur
+	p.paint(limbs, "madera_oscura", "MID", vary=0.08)
+	wrap = p.box(-0.05, 0.05, -0.1, 0.1, -0.045, 0.045)
+	p.paint(wrap, "tela_roja", "MID")
+	string = p.box(0.115, 0.125, -0.97, 0.97, -0.005, 0.005)
+	p.paint(string, "hueso", "LIGHT")
+
+
+def carcaj(p):
+	tube = p.cylinder(0.11, 0.0, 0.62, sides=8, radius_top=0.12)
+	p.paint_bands(tube, [(0.1, 0.18, "tela_roja", "MID"), (0.45, 0.52, "tela_roja", "MID")], default=(0, 0, "madera", "DARK"))
+	shafts = []
+	for i in range(5):
+		a = 2 * math.pi * i / 5
+		x, y = math.cos(a) * 0.05, math.sin(a) * 0.05
+		shafts += p.box(x - 0.01, x + 0.01, y - 0.01, y + 0.01, 0.55, 0.82)
+		feather = p.polygon([(x - 0.03, y), (x + 0.03, y), (x, y + 0.002)], 0.72, 0.84)
+		shafts += feather
+	p.paint(shafts, "hueso", "MID", vary=0.1)
+	strap = p.box(-0.02, 0.02, -0.13, 0.13, 0.25, 0.3)
+	p.paint(strap, "madera_oscura", "MID")
+
+
+def bolsa_bombas(p):
+	"""Bolsa tejida con franjas de aguayo y la boca atada."""
+	body = p.lathe([(0.0, 0.0), (0.18, 0.03), (0.24, 0.15), (0.22, 0.3), (0.12, 0.38), (0.06, 0.4), (0.1, 0.46), (0.0, 0.47)], sides=10)
+	p.paint_bands(body, [(0.08, 0.13, "tela_azul", "MID"), (0.13, 0.17, "flor_amarilla", "MID"), (0.17, 0.22, "tela_azul", "MID"), (0.26, 0.3, "flor_rosa", "MID"), (0.36, 0.42, "paja", "DARK")], default=(0, 0, "tela_roja", "MID"))
+
+
+def porongo(p, potion):
+	"""Calabaza seca con tapón; la de poción, con lacre rojo y una franja roja."""
+	body = p.lathe([(0.0, 0.0), (0.1, 0.01), (0.14, 0.08), (0.12, 0.16), (0.07, 0.2), (0.08, 0.27), (0.05, 0.33), (0.04, 0.36), (0.0, 0.36)], sides=10)
+	bands = [(0.12, 0.15, "tela_roja", "MID")] if potion else []
+	p.paint_bands(body, bands, default=(0, 0, "paja", "MID"))
+	cork = p.cylinder(0.035, 0.34, 0.41, sides=6, radius_top=0.04)
+	p.paint(cork, "doom" if potion else "madera", "MID")
+
+
+def poncho(p):
+	"""El poncho del jugador, suelto (para los íconos de la ropa): mismas medidas y franjas, con la base en z = 0."""
+	body = p.lathe([(0.0, 0.55), (0.3, 0.5), (0.4, 0.32), (0.43, 0.22), (0.44, 0.16), (0.45, 0.1), (0.46, 0.0)], sides=4, phase=math.pi / 4)
+	p.transform(body, Matrix.Diagonal((1.05, 0.62, 1.0, 1.0)))
+	p.paint_bands(body, [(-0.1, 0.09, "hueso", "MID"), (0.09, 0.16, "flor_amarilla", "MID"), (0.16, 0.23, "noche", "LOW")], default=(0, 0, "tela_roja", "MID"))
+
+
+piece("espada", 1, espada)
+piece("escudo_madera", 2, escudo_madera)
+piece("escudo_espejo", 3, escudo_espejo)
+piece("arco", 4, arco)
+piece("carcaj", 5, carcaj)
+piece("bolsa_bombas", 6, bolsa_bombas)
+piece("botella", 7, lambda p: porongo(p, False))
+piece("botella_pocion", 8, lambda p: porongo(p, True))
+piece("poncho", 9, poncho)
+epi.layout(kit, columns=8, spacing=2.0)
+epi.save("equipo")

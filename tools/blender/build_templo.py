@@ -1,0 +1,392 @@
+# Arma assets/epiphany/templo.blend: el kit del templo (celdas de 2 × 2 m, paredes de -0.5 a 2.6), puertas, decoración,
+# el doom, la torreta y el jefe. El frente mira a -Y.
+# blender -b -P tools/blender/build_templo.py
+import math
+import os
+import sys
+
+from mathutils import Matrix, Vector
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import epi  # noqa: E402
+
+TOP = 2.6
+STONE = "piedra_templo"
+kit = epi.start()
+UPRIGHT = Matrix.Rotation(math.pi / 2, 4, "X")
+
+
+def piece(name, seed, fn):
+	p = epi.Piece(seed)
+	extra = fn(p)
+	obj = p.build(name, kit)
+	for key, value in (extra if isinstance(extra, dict) else {}).items():
+		obj[key] = value
+	return obj
+
+
+# --- piso ---
+
+def slabs(p, skip=(), moss=False, crack=False):
+	"""Una laja grande por celda, con la junta del color de la piedra oscura; skip saca un cuarto (roto)."""
+	base = p.box(-1, 1, -1, 1, -0.5, -0.05)
+	p.paint(base, "musgo" if moss else STONE, "DARK")
+	if not skip:
+		tile = p.box(-0.975, 0.975, -0.975, 0.975, -0.06, 0.0, taper=0.02)
+		p.paint(tile, STONE, "LOW", vary=0.04)
+	else:
+		tiles = []
+		for x in (-1, 0):
+			for y in (-1, 0):
+				if (x, y) in skip:
+					continue
+				tiles += p.box(x + 0.025, x + 0.975, y + 0.025, y + 0.975, -0.06, -p.rng.random() * 0.012, taper=0.015)
+		p.paint(tiles, STONE, "LOW", vary=0.06)
+	for x, y in skip:
+		bits = []
+		for _ in range(3):
+			cx, cy = x + 0.5 + p.rng.uniform(-0.3, 0.3), y + 0.5 + p.rng.uniform(-0.3, 0.3)
+			b = p.box(cx - 0.1, cx + 0.1, cy - 0.08, cy + 0.08, -0.04, 0.04, taper=0.02)
+			p.jitter(b, 0.03)
+			bits += b
+		p.paint(bits, STONE, "DARK", vary=0.1)
+	if moss:
+		tufts = []
+		for _ in range(5):
+			tufts += p.blob((p.rng.choice((-0.97, 0.97)) if p.rng.random() < 0.5 else p.rng.uniform(-0.9, 0.9), p.rng.uniform(-0.9, 0.9), 0.0), p.rng.uniform(0.08, 0.14), squash=(1.4, 1.4, 0.35), subdiv=1, rough=0.3)
+		p.paint(tufts, "musgo", vary=0.1)
+	if crack:
+		lines = []
+		x, y = -1.0, p.rng.uniform(-0.5, 0.5)
+		while x < 1.0:
+			nx, ny = x + p.rng.uniform(0.2, 0.35), max(-0.9, min(0.9, y + p.rng.uniform(-0.3, 0.3)))
+			seg = Vector((nx - x, ny - y, 0))
+			c = p.box(0, seg.length, -0.03, 0.03, -0.02, 0.005)
+			p.transform(c, Matrix.Translation((x, y, 0)) @ Matrix.Rotation(math.atan2(seg.y, seg.x), 4, "Z"))
+			lines += c
+			x, y = nx, ny
+		p.paint(lines, "doom", "LIGHT")
+
+
+piece("piso", 1, lambda p: slabs(p))
+piece("piso_roto", 2, lambda p: slabs(p, skip={(0, -1)}))
+piece("piso_musgo", 3, lambda p: slabs(p, moss=True))
+piece("piso_grieta", 4, lambda p: slabs(p, crack=True))
+
+
+# --- paredes ---
+
+def wall_block(p):
+	epi.stone_wall(p, -0.5, TOP - 0.2, swatch=STONE, rows=(0.45, 0.12), widths=(0.6, 0.4), mortar="gris_5", depth=0.05, vary=0.07)
+	band = p.box(-1.0, 1.0, -1.0, 1.0, TOP - 0.2, TOP)
+	p.paint(band, STONE, "LIGHT", vary=0.03)
+
+
+def pared_nicho(p):
+	wall_block(p)
+	niche = p.box(-0.35, 0.35, -1.06, -1.0, 0.7, 1.9)
+	for v in {v for f in niche for v in f.verts}:
+		if v.co.z > 1.5:
+			v.co.x *= 0.7
+	p.paint(niche, "noche", "MID")
+	frame = p.box(-0.45, 0.45, -1.08, -1.0, 0.6, 0.7)
+	p.paint(frame, STONE, "LIGHT")
+
+
+def pared_ojo(p):
+	wall_block(p)
+	p.paint(epi.eye(p, Vector((0, -1.0, 1.4)), 0.42, depth=0.05), STONE, "LIGHT")
+
+
+def columna(p):
+	"""Pilar cuadrado escalonado de 0.9 m, centrado en la celda, con su piso."""
+	slabs(p)
+	base = p.box(-0.55, 0.55, -0.55, 0.55, -0.5, 0.2) + p.box(-0.48, 0.48, -0.48, 0.48, 0.2, 0.35)
+	shaft = p.box(-0.4, 0.4, -0.4, 0.4, 0.35, 2.2)
+	capital = p.box(-0.48, 0.48, -0.48, 0.48, 2.2, 2.38) + p.box(-0.56, 0.56, -0.56, 0.56, 2.38, TOP)
+	p.paint(base + capital, STONE, "LIGHT", vary=0.04)
+	p.paint(shaft, STONE, z_range=(-0.5, 3.2), vary=0.04)
+	inlay = []
+	for k in range(4):
+		f = p.box(-0.15, 0.15, -0.43, -0.4, 1.0, 1.6)
+		p.transform(f, Matrix.Rotation(math.pi / 2 * k, 4, "Z"))
+		inlay += f
+	p.paint(inlay, "gris_5", "MID")
+
+
+def paso_puerta(p):
+	"""Celda de paso: jambas y dintel; la abertura (1.8 abajo, 1.5 arriba, 2.3 de alto) cruza en Y."""
+	for side in (-1, 1):
+		jamb = p.box(0.9, 1.0, -1.0, 1.0, -0.5, TOP)
+		p.transform(jamb, Matrix.Scale(side, 4, Vector((1, 0, 0))))
+		p.paint(jamb, STONE, vary=0.05)
+		slope = p.box(0.75, 0.9, -1.0, 1.0, -0.5, 2.3)
+		for v in {v for f in slope for v in f.verts}:
+			if v.co.z < 0 and v.co.x < 0.8:
+				v.co.x = 0.9
+		p.transform(slope, Matrix.Scale(side, 4, Vector((1, 0, 0))))
+		p.paint(slope, STONE, "MID", vary=0.05)
+	lintel = p.box(-1.0, 1.0, -1.0, 1.0, 2.3, TOP)
+	p.paint(lintel, STONE, "LIGHT", vary=0.04)
+	floor = p.box(-0.9, 0.9, -1.0, 1.0, -0.5, -0.04)
+	p.paint(floor, STONE, "DARK")
+
+
+def escalon_templo(p):
+	body = p.box(-1, 1, -1, 1, -0.5, 0.56)
+	p.paint(body, STONE, z_range=(-0.5, 1.2), vary=0.05)
+	cap = p.box(-1, 1, -1, 1, 0.56, 0.6)
+	p.paint(cap, STONE, "LIGHT")
+
+
+piece("pared", 5, wall_block)
+piece("pared_nicho", 6, pared_nicho)
+piece("pared_ojo", 7, pared_ojo)
+piece("columna", 8, columna)
+piece("paso_puerta", 9, paso_puerta)
+piece("escalon", 10, escalon_templo)
+
+
+# --- puertas (hoja de 1.8 × 2.3 × 0.3, origen abajo al centro) ---
+
+def leaf(p, swatch, shade="MID"):
+	body = p.box(-0.9, 0.9, -0.15, 0.15, 0.0, 2.3)
+	for v in {v for f in body for v in f.verts}:
+		if v.co.z > 2.0:
+			v.co.x *= 0.85
+	p.paint(body, swatch, z_range=(-0.5, 3.0), vary=0.04)
+	return body
+
+
+def puerta_madera(p):
+	leaf(p, "madera")
+	planks = []
+	for i in range(5):
+		x = -0.9 + i * 0.36 + 0.33
+		planks += p.box(x, x + 0.03, -0.17, -0.15, 0.0, 2.15)
+	for z in (0.4, 1.8):
+		planks += p.box(-0.88, 0.88, -0.19, -0.15, z, z + 0.12)
+	p.paint(planks, "cobre_verde", "MID")
+
+
+def puerta_llave(p):
+	puerta_madera(p)
+	epi.chakana_plate(p, Vector((0, -0.19, 1.1)), 0.45, "dorado")
+
+
+def puerta_persiana(p):
+	"""Losa de piedra que sube y baja, con escalonados."""
+	leaf(p, STONE)
+	steps = []
+	for i in range(4):
+		w = 1.4 - i * 0.3
+		steps += p.box(-w / 2, w / 2, -0.19, -0.15, 0.3 + i * 0.25, 0.5 + i * 0.25)
+	p.paint(steps, STONE, "LIGHT")
+
+
+def puerta_interruptor(p):
+	"""Rejilla de cobre con el ojo: se abre con un interruptor."""
+	frame = p.box(-0.9, 0.9, -0.12, 0.12, 0.0, 0.15) + p.box(-0.9, 0.9, -0.12, 0.12, 2.15, 2.3)
+	bars = []
+	for i in range(6):
+		x = -0.75 + i * 0.3
+		bars += p.box(x - 0.05, x + 0.05, -0.06, 0.06, 0.15, 2.15)
+	p.paint(frame + bars, "cobre_verde", z_range=(0, 2.3), vary=0.05)
+	p.paint(epi.eye(p, Vector((0, -0.12, 1.65)), 0.3, depth=0.04), "dorado", "LIGHT")
+
+
+def puerta_jefe(p):
+	"""Losa violeta con el gran ojo y marco dorado."""
+	leaf(p, "sello")
+	frame = p.box(-0.9, 0.9, -0.19, -0.15, 0.0, 0.1) + p.box(-0.9, -0.82, -0.19, -0.15, 0.0, 2.0) + p.box(0.82, 0.9, -0.19, -0.15, 0.0, 2.0)
+	p.paint(frame, "dorado", "MID")
+	p.paint(epi.eye(p, Vector((0, -0.15, 1.35)), 0.5, depth=0.06, pupil_swatch="doom"), "hueso", "LIGHT")
+
+
+piece("puerta_madera", 11, puerta_madera)
+piece("puerta_llave", 12, puerta_llave)
+piece("puerta_persiana", 13, puerta_persiana)
+piece("puerta_interruptor", 14, puerta_interruptor)
+piece("puerta_jefe", 15, puerta_jefe)
+
+
+# --- decoración ---
+
+def antorcha_pared(p):
+	"""Soporte de cobre para la pared (el origen es el punto de la pared, la llama va a 0.45 m adelante)."""
+	plate = p.box(-0.12, 0.12, -0.04, 0.0, -0.2, 0.2)
+	arm = p.box(-0.04, 0.04, -0.4, -0.04, -0.04, 0.04)
+	bowl = p.lathe([(0.05, -0.08), (0.16, 0.0), (0.18, 0.08), (0.14, 0.08), (0.0, 0.0)], sides=8)
+	p.transform(bowl, Matrix.Translation((0, -0.45, 0.04)))
+	p.paint(plate + arm + bowl, "cobre_verde", "MID", vary=0.06)
+	coals = p.blob((0, -0.45, 0.12), 0.11, squash=(1, 1, 0.5), subdiv=1, rough=0.2)
+	p.paint(coals, "fuego", "DARK")
+	return {"llama": [0.0, 0.2, 0.45]}
+
+
+def brasero(p):
+	z = 0.0
+	parts = []
+	for w, h in ((0.8, 0.2), (0.55, 0.5), (0.7, 0.12)):
+		parts += p.box(-w / 2, w / 2, -w / 2, w / 2, z, z + h)
+		z += h
+	p.paint(parts, STONE, z_range=(0, 1.0), vary=0.05)
+	bowl = p.lathe([(0.25, z), (0.42, z + 0.18), (0.36, z + 0.2), (0.0, z + 0.1)], sides=10)
+	p.paint(bowl, "cobre_verde", "MID")
+	coals = p.blob((0, 0, z + 0.15), 0.3, squash=(1, 1, 0.35), subdiv=1, rough=0.3)
+	p.paint(coals, "fuego", "DARK", vary=0.1)
+	return {"llama": [0.0, z + 0.25, 0.0]}
+
+
+def estandarte(p):
+	"""Tela de aguayo colgada de una vara (contra la pared, mirando a -Y)."""
+	rod = p.cylinder(0.03, -0.55, 0.55, sides=6)
+	p.transform(rod, Matrix.Translation((0, -0.06, 2.2)) @ Matrix.Rotation(math.pi / 2, 4, "Y"))
+	p.paint(rod, "madera_oscura", "MID")
+	stripes = [("tela_roja", 0.32), ("flor_amarilla", 0.06), ("tela_azul", 0.12), ("hueso", 0.06), ("tela_roja", 0.38), ("hueso", 0.06), ("tela_azul", 0.12), ("flor_amarilla", 0.06), ("tela_roja", 0.32)]
+	z = 2.18
+	for swatch, h in stripes:
+		band = p.box(-0.45, 0.45, -0.05, -0.03, z - h, z)
+		p.paint(band, swatch, "MID")
+		z -= h
+	fringe = []
+	for i in range(9):
+		x = -0.4 + i * 0.1
+		fringe += p.box(x - 0.015, x + 0.015, -0.05, -0.03, z - 0.12, z)
+	p.paint(fringe, "paja", "MID")
+
+
+def tablilla(p):
+	base = p.box(-0.55, 0.55, -0.22, 0.22, 0.0, 0.2)
+	slab = p.box(-0.45, 0.45, -0.09, 0.09, 0.2, 1.3)
+	for v in {v for f in slab for v in f.verts}:
+		if v.co.z > 1.0:
+			v.co.x *= 0.82
+	p.paint(base, STONE, "DARK", vary=0.1)
+	p.paint(slab, STONE, z_range=(0.0, 1.5), vary=0.05)
+	relief = epi.eye(p, Vector((0, -0.09, 0.85)), 0.28)
+	p.paint(relief, "dorado", "MID")
+
+
+def escombros(p):
+	chunks = []
+	for _ in range(6):
+		x, y = p.rng.uniform(-0.7, 0.7), p.rng.uniform(-0.6, 0.6)
+		s = p.rng.uniform(0.1, 0.25)
+		c = p.box(x - s, x + s, y - s * 0.8, y + s * 0.8, 0.0, s, taper=0.03)
+		p.jitter(c, 0.04)
+		chunks += c
+	p.paint(chunks, STONE, vary=0.15)
+
+
+def venas_doom(p):
+	"""Raíces rojas que cruzan el piso (decoración del doom, sobre el piso)."""
+	veins = []
+	for _ in range(4):
+		pos = Vector((p.rng.uniform(-0.9, 0.9), p.rng.uniform(-0.9, 0.9), 0.0))
+		d = Vector((p.rng.uniform(-1, 1), p.rng.uniform(-1, 1), 0)).normalized()
+		for _ in range(4):
+			seg = d * p.rng.uniform(0.2, 0.35)
+			c = p.cylinder(0.04, 0.0, seg.length, sides=5, radius_top=0.025)
+			p.transform(c, Matrix.Translation(pos + Vector((0, 0, 0.02))) @ seg.normalized().to_track_quat("Z", "Y").to_matrix().to_4x4())
+			veins += c
+			pos = pos + seg
+			d = (d + Vector((p.rng.uniform(-0.6, 0.6), p.rng.uniform(-0.6, 0.6), 0))).normalized()
+	p.paint(veins, "doom", "MID", vary=0.1)
+
+
+piece("antorcha_pared", 16, antorcha_pared)
+piece("brasero", 17, brasero)
+piece("estandarte", 18, estandarte)
+piece("tablilla", 19, tablilla)
+piece("escombros", 20, escombros)
+piece("venas_doom", 21, venas_doom)
+
+
+# --- enemigos fijos y jefe ---
+
+def torreta(p):
+	"""Ojo menor: tótem de piedra con la cuenca adelante a 1.1 m (el globo es ojo_globo de lugares.blend)."""
+	z = 0.0
+	parts = []
+	for w, h in ((1.0, 0.2), (0.8, 0.6), (0.9, 0.7), (0.7, 0.15)):
+		parts += p.box(-w / 2, w / 2, -w / 2, w / 2, z, z + h)
+		z += h
+	p.paint(parts, STONE, z_range=(0, 2.0), vary=0.06)
+	brow = p.box(-0.45, 0.45, -0.52, -0.45, 1.35, 1.45)
+	p.paint(brow, "doom", "MID")
+	socket = p.lathe([(0.3, 0.0), (0.3, 0.05), (0.24, 0.05), (0.24, 0.0)], sides=12, caps=False)
+	p.transform(socket, Matrix.Translation((0, -0.45, 1.1)) @ UPRIGHT)
+	p.paint(socket, "doom", "LIGHT")
+	return {"centro_ojo": [0.0, 1.1, 0.45]}
+
+
+def jefe_ojo(p):
+	"""El Ojo: globo de 1.2 m de radio con iris violeta y pupila roja, mirando a -Y. Los párpados van aparte."""
+	ball = p.blob((0, 0, 0), 1.2, subdiv=3, rough=0.0)
+	white, iris, pupil = [], [], []
+	for f in ball:
+		c = f.calc_center_median().normalized()
+		(pupil if c.y < -0.95 else iris if c.y < -0.78 else white).append(f)
+	p.paint(white, "hueso", z_range=(-1.4, 1.4))
+	p.paint(iris, "sello", "MID", vary=0.05)
+	p.paint(pupil, "doom", "LIGHT")
+	veins = []
+	for _ in range(8):
+		a = p.rng.uniform(0, 2 * math.pi)
+		v = p.box(-0.02, 0.02, -0.02, 0.02, 0.0, p.rng.uniform(0.3, 0.6))
+		p.transform(v, Matrix.Rotation(a, 4, "Y") @ Matrix.Translation((0, -0.9, 0.0)) @ Matrix.Rotation(-math.pi / 2 + 0.6, 4, "X") @ Matrix.Translation((0, 0, 0.75)))
+		veins += v
+	p.paint(veins, "doom", "MID")
+
+
+def jefe_parpado(p):
+	"""Párpado superior de piedra (media cáscara) que se baja girando en X; el inferior es el mismo, girado 180°."""
+	shell = p.lathe([(0.0, 1.38), (0.6, 1.26), (1.05, 0.95), (1.32, 0.45), (1.38, 0.0), (1.28, 0.0), (1.22, 0.42), (0.95, 0.88), (0.55, 1.16), (0.0, 1.28)], sides=16, caps=False)
+	p.paint(shell, STONE, z_range=(0, 1.4), vary=0.05)
+	rim = p.lathe([(1.4, -0.03), (1.46, 0.0), (1.4, 0.06), (1.3, 0.0), (1.4, -0.03)], sides=16, caps=False)
+	p.paint(rim, "dorado", "MID")
+	p.transform(shell + rim, Matrix.Rotation(math.pi / 2, 4, "X") @ Matrix.Rotation(math.pi, 4, "Y"))
+
+
+def jefe_mano(p):
+	"""Mano izquierda de piedra, palma hacia abajo, los dedos hacia -Y; la derecha es la misma espejada en X."""
+	palm = p.box(-0.55, 0.55, -0.5, 0.5, 0.0, 0.35, taper=0.05)
+	p.jitter(palm, 0.03)
+	parts = palm
+	for i, x in enumerate((-0.4, -0.13, 0.13, 0.4)):
+		y = -0.5
+		length = 0.42 + (0.08 if i in (1, 2) else 0.0)
+		for k in range(3):
+			seg = p.box(x - 0.11, x + 0.11, y - length, y, 0.03, 0.28 - k * 0.03, taper=0.02)
+			p.transform(seg, Matrix.Translation((0, 0, -k * 0.06)))
+			parts += seg
+			y -= length + 0.03
+			length *= 0.8
+	thumb = p.box(-0.12, 0.12, -0.4, 0.0, 0.05, 0.28)
+	p.transform(thumb, Matrix.Translation((0.62, 0.0, 0.0)) @ Matrix.Rotation(-0.7, 4, "Z"))
+	parts += thumb
+	p.paint(parts, STONE, z_range=(-0.3, 0.6), vary=0.08)
+	glyph = epi.eye(p, Vector((0, 0, 0)), 0.25, depth=0.03)
+	p.transform(glyph, Matrix.Translation((0, 0.05, 0.35)) @ Matrix.Rotation(-math.pi / 2, 4, "X"))
+	p.paint(glyph, "doom", "LIGHT")
+
+
+def piso_arena(p):
+	"""Piso de la sala del jefe: arena con un anillo de lajas."""
+	base = p.box(-1, 1, -1, 1, -0.5, 0.0)
+	p.paint([f for f in base if f.normal.z <= 0.5], "gris_5", "MID")
+	p.paint([f for f in base if f.normal.z > 0.5], "tierra", "LIGHT")
+	for _ in range(3):
+		x, y = p.rng.uniform(-0.7, 0.7), p.rng.uniform(-0.7, 0.7)
+		p.paint(p.blob((x, y, 0.0), p.rng.uniform(0.05, 0.1), squash=(1.3, 1, 0.4), subdiv=1, rough=0.3, flat_bottom=0.0), STONE, vary=0.1)
+
+
+piece("torreta", 22, torreta)
+piece("jefe_ojo", 23, jefe_ojo)
+piece("jefe_parpado", 24, jefe_parpado)
+piece("jefe_mano", 25, jefe_mano)
+piece("piso_arena", 26, piso_arena)
+
+epi.layout(kit, columns=7, spacing=3.5)
+epi.save("templo")
