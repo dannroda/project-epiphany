@@ -1736,7 +1736,7 @@ Importar el rig del ojo con manos y armar las fases 1 y 2 con LimboAI.
 
 **Bloqueada por:** 9.6 Muerte del jefe y final
 
-## M10 — Terminación  (7/10)
+## M10 — Terminación  (7/13)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -1928,6 +1928,48 @@ Hecho 2026-10-09: decisión cerrada (KayKit + prototipo pulido) y guía de estil
 Skills: `workflows:itch-publish`.
 
 **Bloqueada por:** 10.9 Build para playtesters
+
+### 10.11 UI restante a escenas · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `ui`
+
+- [ ] Filas de stats de ItemDetail como escena
+  item_detail.gd add_stat arma HBox + Labels + MarginContainer + HSeparator con .new(). Pasar a stat_row.tscn.
+- [ ] Pestaña Equipo: grilla y ranuras como escenas
+  equipment_page.gd crea VBox/Label/HBox por categoría, Button por ranura y el Label de la insignia E. Secciones en la escena y ranura reutilizando item_slot.tscn o una equip_slot.tscn.
+- [ ] Pestaña Mapa: celdas, leyenda y stats como escenas
+  map_page.gd crea MapRoomCell, filas de leyenda y filas de stats por código; map_room_cell.gd arma su StyleBoxFlat en código (pasar a variaciones del tema).
+- [ ] Corazones (HeartIcon) como escena
+  HUD, tarjeta de ranura y Equipo hacen HeartIcon.new(), y heart_icon.gd arma sus TextureRect internos por código.
+- [ ] Test: ningún script de src/ui crea Controls con .new()
+  Un test que recorra src/ui/**/*.gd y falle si encuentra Label.new(), Button.new(), *Container.new(), etc. (permitiendo Tween, Image, etc.).
+
+**Notas:** Lo que todavía se arma por código (anterior a la regla: toda la UI son .tscn, los scripts solo llenan datos). Lo repetido es su propia escena chica, instanciada por ítem; estilos en theme.tres.
+
+### 10.12 Rango de fijado: una sola fuente · Pendiente
+
+**Prioridad:** baja · **Etiquetas:** `combate`
+
+- [ ] Decidir la fuente única del rango
+  O se edita solo Targeting.targeting_range (y la forma se oculta/regenera), o Targeting lee el radio de la forma y se borra el export.
+- [ ] Que el inspector refleje el valor real
+  Si queda el export: setter @tool que actualice la forma en el editor, así no hay dos números distintos.
+- [ ] Test del rango de fijado
+  El radio efectivo del detector y la distancia de suelte coinciden con el valor elegido.
+
+**Notas:** Targeting.targeting_range (12 m) pisa en _ready el radio del CylinderShape3D de TargetDetector (_set_range duplica la forma y le pone el radio), así que cambiar la forma en el editor no tiene efecto.
+
+### 10.13 Refactor de código de UI innecesario · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `ui`
+
+- [ ] MenuItem sin script: ▶ por ícono del tema
+  MenuItem/icons/icon = textura ▶, icon_normal_color/hover alpha 0, icon_focus_color dorado. Borrar label/_refresh y usar text directo; adaptar escenas y tests que usan .label.
+- [ ] Revisar el resto de scripts de UI por lo mismo
+  Candidatos: SlotCard._paint (variaciones según foco/vacía), pestañas de la pausa (TabLabel/TabLabelSelected), HintBar, ConfirmDialog, modulate de fichas.
+- [ ] Suite verde y capturas sin cambios visuales
+
+**Notas:** Código que reemplaza algo que el tema ya resuelve. Ej.: menu_item.gd cambia el texto a '▶  label' al tomar foco; con un ícono ▶ en el tema (MenuItem/icons/icon) e icon_normal_color con alpha 0 (icon_focus_color dorado) se logra lo mismo sin script.
 
 ## Listas
 

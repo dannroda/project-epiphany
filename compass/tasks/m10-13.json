@@ -1,0 +1,32 @@
+{
+  "checklist": [
+    {
+      "detail": "MenuItem/icons/icon = textura ▶, icon_normal_color/hover alpha 0, icon_focus_color dorado. Borrar label/_refresh y usar text directo; adaptar escenas y tests que usan .label.",
+      "done": false,
+      "text": "MenuItem sin script: ▶ por ícono del tema"
+    },
+    {
+      "detail": "Candidatos: SlotCard._paint (variaciones según foco/vacía), pestañas de la pausa (TabLabel/TabLabelSelected), HintBar, ConfirmDialog, modulate de fichas.",
+      "done": false,
+      "text": "Revisar el resto de scripts de UI por lo mismo"
+    },
+    {
+      "done": false,
+      "text": "Suite verde y capturas sin cambios visuales"
+    }
+  ],
+  "code": "10.13",
+  "created_at": "2026-10-09T07:29:24.940Z",
+  "milestone": "m10",
+  "notes": "Código que reemplaza algo que el tema ya resuelve. Ej.: menu_item.gd cambia el texto a '▶  label' al tomar foco; con un ícono ▶ en el tema (MenuItem/icons/icon) e icon_normal_color con alpha 0 (icon_focus_color dorado) se logra lo mismo sin script.",
+  "order": 13,
+  "priority": "medium",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "ui"
+  ],
+  "test": "",
+  "title": "Refactor de código de UI innecesario",
+  "updated_at": "2026-10-09T07:29:43.512Z"
+}
