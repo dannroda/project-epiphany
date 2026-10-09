@@ -3,21 +3,30 @@
 [ext_resource type="FontFile" uid="uid://bt13w24p0uwra" path="res://assets/fonts/AlegreyaSans-Bold.ttf" id="1_r7xqo"]
 [ext_resource type="FontFile" uid="uid://byrjjxr0lu8v3" path="res://assets/fonts/Cinzel.ttf" id="2_lf7dv"]
 [ext_resource type="FontFile" uid="uid://ikntf0mcjkt8" path="res://assets/fonts/AlegreyaSans-Regular.ttf" id="3_cwe5m"]
-[ext_resource type="Texture2D" path="res://assets/ui/frames/button.png" id="frame_button"]
-[ext_resource type="Texture2D" path="res://assets/ui/frames/button_disabled.png" id="frame_button_disabled"]
-[ext_resource type="Texture2D" path="res://assets/ui/frames/button_focus.png" id="frame_button_focus"]
-[ext_resource type="Texture2D" path="res://assets/ui/frames/card.png" id="frame_card"]
-[ext_resource type="Texture2D" path="res://assets/ui/frames/chip.png" id="frame_chip"]
-[ext_resource type="Texture2D" path="res://assets/ui/frames/divider_dim.png" id="frame_divider_dim"]
-[ext_resource type="Texture2D" path="res://assets/ui/frames/hud_slot.png" id="frame_hud_slot"]
-[ext_resource type="Texture2D" path="res://assets/ui/frames/item_get.png" id="frame_item_get"]
-[ext_resource type="Texture2D" path="res://assets/ui/frames/menu_frame.png" id="frame_menu_frame"]
-[ext_resource type="Texture2D" path="res://assets/ui/frames/pill.png" id="frame_pill"]
-[ext_resource type="Texture2D" path="res://assets/ui/frames/slot.png" id="frame_slot"]
-[ext_resource type="Texture2D" path="res://assets/ui/frames/slot_empty.png" id="frame_slot_empty"]
-[ext_resource type="Texture2D" path="res://assets/ui/frames/slot_empty_focus.png" id="frame_slot_empty_focus"]
-[ext_resource type="Texture2D" path="res://assets/ui/frames/slot_focus.png" id="frame_slot_focus"]
-[ext_resource type="Texture2D" path="res://assets/ui/frames/stone.png" id="frame_stone"]
+[ext_resource type="Texture2D" uid="uid://d2srx8pfi5hbm" path="res://assets/ui/frames/button.png" id="frame_button"]
+[ext_resource type="Texture2D" uid="uid://bccx0ap22shmb" path="res://assets/ui/frames/button_disabled.png" id="frame_button_disabled"]
+[ext_resource type="Texture2D" uid="uid://b8igv16w3m3ag" path="res://assets/ui/frames/button_focus.png" id="frame_button_focus"]
+[ext_resource type="Texture2D" uid="uid://d2aixlqbtxvl" path="res://assets/ui/frames/card.png" id="frame_card"]
+[ext_resource type="Texture2D" uid="uid://kt11lgva47qg" path="res://assets/ui/frames/chip.png" id="frame_chip"]
+[ext_resource type="Texture2D" uid="uid://dske6j41qmvis" path="res://assets/ui/frames/divider_dim.png" id="frame_divider_dim"]
+[ext_resource type="Texture2D" uid="uid://cgnbyhyifp8xa" path="res://assets/ui/frames/hud_slot.png" id="frame_hud_slot"]
+[ext_resource type="Texture2D" uid="uid://cxjtteqprw0nw" path="res://assets/ui/frames/item_get.png" id="frame_item_get"]
+[ext_resource type="Texture2D" uid="uid://de0i7bbmblra3" path="res://assets/ui/frames/menu_frame.png" id="frame_menu_frame"]
+[ext_resource type="Texture2D" uid="uid://b5ivdocsl3yol" path="res://assets/ui/frames/pill.png" id="frame_pill"]
+[ext_resource type="Texture2D" uid="uid://b1v4tvgg43xdc" path="res://assets/ui/frames/slot.png" id="frame_slot"]
+[ext_resource type="Texture2D" uid="uid://urmvy6gvpqal" path="res://assets/ui/frames/slot_empty.png" id="frame_slot_empty"]
+[ext_resource type="Texture2D" uid="uid://ck1d2b8yg7sry" path="res://assets/ui/frames/slot_empty_focus.png" id="frame_slot_empty_focus"]
+[ext_resource type="Texture2D" uid="uid://b21bkjnh7n51t" path="res://assets/ui/frames/slot_focus.png" id="frame_slot_focus"]
+[ext_resource type="Texture2D" uid="uid://37x6yxoaffwp" path="res://assets/ui/frames/stone.png" id="frame_stone"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/slider_track.png" id="frame_slider_track"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/slider_fill.png" id="frame_slider_fill"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/slider_grabber.png" id="frame_slider_grabber"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/slider_grabber_focus.png" id="frame_slider_grabber_focus"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/check_on.png" id="frame_check_on"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/check_off.png" id="frame_check_off"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/radio_on.png" id="frame_radio_on"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/radio_off.png" id="frame_radio_off"]
+[ext_resource type="Texture2D" path="res://assets/ui/frames/arrow_down.png" id="frame_arrow_down"]
 
 [sub_resource type="FontVariation" id="FontVariation_r7xqo"]
 base_font = ExtResource("2_lf7dv")
@@ -26,21 +35,38 @@ variation_opentype = {
 }
 spacing_glyph = 4
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b66wi"]
+[sub_resource type="StyleBoxTexture" id="Frame_AssignButton_hover"]
 content_margin_left = 12.0
-content_margin_top = 8.0
+content_margin_top = 12.0
 content_margin_right = 12.0
-content_margin_bottom = 8.0
-bg_color = Color(0.10980392, 0.12941177, 0.16078432, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+content_margin_bottom = 12.0
+texture = ExtResource("frame_button_focus")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_AssignButton_normal"]
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+texture = ExtResource("frame_button")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_AssignButton_pressed"]
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+texture = ExtResource("frame_button")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ynm0y"]
 content_margin_left = 0.0
@@ -54,14 +80,314 @@ corner_radius_top_right = 11
 corner_radius_bottom_right = 11
 corner_radius_bottom_left = 11
 
+[sub_resource type="StyleBoxTexture" id="Frame_BarButton_disabled"]
+content_margin_left = 22.0
+content_margin_top = 12.0
+content_margin_right = 22.0
+content_margin_bottom = 12.0
+texture = ExtResource("frame_button_disabled")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_BarButton_focus"]
+content_margin_left = 22.0
+content_margin_top = 12.0
+content_margin_right = 22.0
+content_margin_bottom = 12.0
+texture = ExtResource("frame_button_focus")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_BarButton_hover"]
+content_margin_left = 22.0
+content_margin_top = 12.0
+content_margin_right = 22.0
+content_margin_bottom = 12.0
+texture = ExtResource("frame_button_focus")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_BarButton_normal"]
+content_margin_left = 22.0
+content_margin_top = 12.0
+content_margin_right = 22.0
+content_margin_bottom = 12.0
+texture = ExtResource("frame_button")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_BarButton_pressed"]
+content_margin_left = 22.0
+content_margin_top = 12.0
+content_margin_right = 22.0
+content_margin_bottom = 12.0
+texture = ExtResource("frame_button")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_Button_disabled"]
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+texture = ExtResource("frame_button_disabled")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_Button_focus"]
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+texture = ExtResource("frame_button_focus")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_Button_hover"]
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+texture = ExtResource("frame_button_focus")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_Button_normal"]
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+texture = ExtResource("frame_button")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_Button_pressed"]
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+texture = ExtResource("frame_button")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
 [sub_resource type="FontVariation" id="FontVariation_r2kde"]
 base_font = ExtResource("2_lf7dv")
 variation_opentype = {
 2003265652: 700
 }
 
+[sub_resource type="StyleBoxTexture" id="Frame_Card_panel"]
+content_margin_left = 24.0
+content_margin_top = 24.0
+content_margin_right = 24.0
+content_margin_bottom = 24.0
+texture = ExtResource("frame_card")
+texture_margin_left = 24.0
+texture_margin_top = 24.0
+texture_margin_right = 24.0
+texture_margin_bottom = 24.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_CardBare_panel"]
+content_margin_left = 18.0
+content_margin_top = 18.0
+content_margin_right = 18.0
+content_margin_bottom = 18.0
+texture = ExtResource("frame_card")
+texture_margin_left = 24.0
+texture_margin_top = 24.0
+texture_margin_right = 24.0
+texture_margin_bottom = 24.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_Chip_panel"]
+content_margin_left = 14.0
+content_margin_top = 9.0
+content_margin_right = 14.0
+content_margin_bottom = 9.0
+texture = ExtResource("frame_chip")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+
+[sub_resource type="FontVariation" id="FontVariation_display"]
+base_font = ExtResource("2_lf7dv")
+variation_opentype = {
+2003265652: 700
+}
+spacing_glyph = 9
+
+[sub_resource type="StyleBoxTexture" id="Frame_EquipSlot_disabled"]
+content_margin_left = 24.0
+content_margin_top = 24.0
+content_margin_right = 24.0
+content_margin_bottom = 24.0
+texture = ExtResource("frame_slot")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_EquipSlot_focus"]
+content_margin_left = 14.0
+content_margin_top = 14.0
+content_margin_right = 14.0
+content_margin_bottom = 14.0
+texture = ExtResource("frame_slot_focus")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_EquipSlot_hover"]
+content_margin_left = 14.0
+content_margin_top = 14.0
+content_margin_right = 14.0
+content_margin_bottom = 14.0
+texture = ExtResource("frame_slot_focus")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_EquipSlot_normal"]
+content_margin_left = 14.0
+content_margin_top = 14.0
+content_margin_right = 14.0
+content_margin_bottom = 14.0
+texture = ExtResource("frame_slot")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_EquipSlot_pressed"]
+content_margin_left = 14.0
+content_margin_top = 14.0
+content_margin_right = 14.0
+content_margin_bottom = 14.0
+texture = ExtResource("frame_slot")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="FontVariation" id="FontVariation_display_wide"]
+base_font = ExtResource("2_lf7dv")
+variation_opentype = {
+2003265652: 700
+}
+spacing_glyph = 15
+
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_nqhe2"]
 color = Color(0.17254902, 0.2, 0.24313726, 1)
+
+[sub_resource type="StyleBoxTexture" id="Frame_HudPill_panel"]
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+texture = ExtResource("frame_pill")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_HudSlot_panel"]
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+texture = ExtResource("frame_hud_slot")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_ItemGetBox_panel"]
+content_margin_left = 30.0
+content_margin_top = 24.0
+content_margin_right = 30.0
+content_margin_bottom = 24.0
+texture = ExtResource("frame_item_get")
+texture_margin_left = 32.0
+texture_margin_top = 32.0
+texture_margin_right = 32.0
+texture_margin_bottom = 32.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_ItemSlot_disabled"]
+content_margin_left = 30.0
+content_margin_top = 30.0
+content_margin_right = 30.0
+content_margin_bottom = 30.0
+texture = ExtResource("frame_slot")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_ItemSlot_focus"]
+content_margin_left = 18.0
+content_margin_top = 18.0
+content_margin_right = 18.0
+content_margin_bottom = 18.0
+texture = ExtResource("frame_slot_focus")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_ItemSlot_hover"]
+content_margin_left = 18.0
+content_margin_top = 18.0
+content_margin_right = 18.0
+content_margin_bottom = 18.0
+texture = ExtResource("frame_slot_focus")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_ItemSlot_normal"]
+content_margin_left = 18.0
+content_margin_top = 18.0
+content_margin_right = 18.0
+content_margin_bottom = 18.0
+texture = ExtResource("frame_slot")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_ItemSlot_pressed"]
+content_margin_left = 18.0
+content_margin_top = 18.0
+content_margin_right = 18.0
+content_margin_bottom = 18.0
+texture = ExtResource("frame_slot")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pa2ff"]
 content_margin_left = 9.0
@@ -78,6 +404,26 @@ corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxTexture" id="Frame_MenuFrame_panel"]
+content_margin_left = 40.0
+content_margin_top = 24.0
+content_margin_right = 40.0
+content_margin_bottom = 24.0
+texture = ExtResource("frame_menu_frame")
+texture_margin_left = 32.0
+texture_margin_top = 32.0
+texture_margin_right = 32.0
+texture_margin_bottom = 32.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_menu_item"]
+
+[sub_resource type="StyleBoxTexture" id="Frame_OrnateSeparator"]
+content_margin_top = 9.0
+content_margin_bottom = 9.0
+texture = ExtResource("frame_divider_dim")
+texture_margin_left = 8.0
+texture_margin_right = 48.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mi2kv"]
 content_margin_left = 0.0
@@ -127,6 +473,127 @@ corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 
+[sub_resource type="StyleBoxTexture" id="Frame_SlotCard_disabled"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("frame_slot")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_SlotCard_focus"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("frame_slot_focus")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_SlotCard_hover"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("frame_slot")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_SlotCard_normal"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("frame_slot")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_SlotCard_pressed"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("frame_slot")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_SlotCardEmpty_disabled"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("frame_slot_empty")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_SlotCardEmpty_focus"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("frame_slot_empty_focus")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_SlotCardEmpty_hover"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("frame_slot_empty")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_SlotCardEmpty_normal"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("frame_slot_empty")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_SlotCardEmpty_pressed"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("frame_slot_empty")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Frame_StoneBox_panel"]
+content_margin_left = 24.0
+content_margin_top = 24.0
+content_margin_right = 24.0
+content_margin_bottom = 24.0
+texture = ExtResource("frame_stone")
+texture_margin_left = 32.0
+texture_margin_top = 32.0
+texture_margin_right = 32.0
+texture_margin_bottom = 32.0
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0qkme"]
 content_margin_left = 38.0
 content_margin_top = 24.0
@@ -158,243 +625,21 @@ draw_center = false
 border_width_bottom = 3
 border_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
 
-[sub_resource type="FontVariation" id="FontVariation_display"]
-base_font = ExtResource("2_lf7dv")
-variation_opentype = {
-2003265652: 700
-}
-spacing_glyph = 9
+[sub_resource type="StyleBoxTexture" id="Frame_slider_track"]
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+texture = ExtResource("frame_slider_track")
+texture_margin_left = 2.0
+texture_margin_right = 8.0
 
-[sub_resource type="FontVariation" id="FontVariation_display_wide"]
-base_font = ExtResource("2_lf7dv")
-variation_opentype = {
-2003265652: 700
-}
-spacing_glyph = 15
+[sub_resource type="StyleBoxTexture" id="Frame_slider_fill"]
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+texture = ExtResource("frame_slider_fill")
+texture_margin_left = 2.0
+texture_margin_right = 8.0
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_menu_item"]
-
-[sub_resource type="StyleBoxTexture" id="Frame_MenuFrame_panel"]
-content_margin_left = 40.0
-content_margin_top = 24.0
-content_margin_right = 40.0
-content_margin_bottom = 24.0
-texture = ExtResource("frame_menu_frame")
-texture_margin_left = 32.0
-texture_margin_top = 32.0
-texture_margin_right = 32.0
-texture_margin_bottom = 32.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_StoneBox_panel"]
-content_margin_left = 24.0
-content_margin_top = 24.0
-content_margin_right = 24.0
-content_margin_bottom = 24.0
-texture = ExtResource("frame_stone")
-texture_margin_left = 32.0
-texture_margin_top = 32.0
-texture_margin_right = 32.0
-texture_margin_bottom = 32.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_ItemGetBox_panel"]
-content_margin_left = 30.0
-content_margin_top = 24.0
-content_margin_right = 30.0
-content_margin_bottom = 24.0
-texture = ExtResource("frame_item_get")
-texture_margin_left = 32.0
-texture_margin_top = 32.0
-texture_margin_right = 32.0
-texture_margin_bottom = 32.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_Card_panel"]
-content_margin_left = 24.0
-content_margin_top = 24.0
-content_margin_right = 24.0
-content_margin_bottom = 24.0
-texture = ExtResource("frame_card")
-texture_margin_left = 24.0
-texture_margin_top = 24.0
-texture_margin_right = 24.0
-texture_margin_bottom = 24.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_CardBare_panel"]
-content_margin_left = 18.0
-content_margin_top = 18.0
-content_margin_right = 18.0
-content_margin_bottom = 18.0
-texture = ExtResource("frame_card")
-texture_margin_left = 24.0
-texture_margin_top = 24.0
-texture_margin_right = 24.0
-texture_margin_bottom = 24.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_HudSlot_panel"]
-content_margin_left = 12.0
-content_margin_top = 12.0
-content_margin_right = 12.0
-content_margin_bottom = 12.0
-texture = ExtResource("frame_hud_slot")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_HudPill_panel"]
-content_margin_left = 12.0
-content_margin_top = 12.0
-content_margin_right = 18.0
-content_margin_bottom = 12.0
-texture = ExtResource("frame_pill")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_Chip_panel"]
-content_margin_left = 14.0
-content_margin_top = 9.0
-content_margin_right = 14.0
-content_margin_bottom = 9.0
-texture = ExtResource("frame_chip")
-texture_margin_left = 12.0
-texture_margin_top = 12.0
-texture_margin_right = 12.0
-texture_margin_bottom = 12.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_ItemSlot_normal"]
-content_margin_left = 18.0
-content_margin_top = 18.0
-content_margin_right = 18.0
-content_margin_bottom = 18.0
-texture = ExtResource("frame_slot")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_ItemSlot_disabled"]
-content_margin_left = 30.0
-content_margin_top = 30.0
-content_margin_right = 30.0
-content_margin_bottom = 30.0
-texture = ExtResource("frame_slot")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_ItemSlot_pressed"]
-content_margin_left = 18.0
-content_margin_top = 18.0
-content_margin_right = 18.0
-content_margin_bottom = 18.0
-texture = ExtResource("frame_slot")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_ItemSlot_focus"]
-content_margin_left = 18.0
-content_margin_top = 18.0
-content_margin_right = 18.0
-content_margin_bottom = 18.0
-texture = ExtResource("frame_slot_focus")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_ItemSlot_hover"]
-content_margin_left = 18.0
-content_margin_top = 18.0
-content_margin_right = 18.0
-content_margin_bottom = 18.0
-texture = ExtResource("frame_slot_focus")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_EquipSlot_normal"]
-content_margin_left = 14.0
-content_margin_top = 14.0
-content_margin_right = 14.0
-content_margin_bottom = 14.0
-texture = ExtResource("frame_slot")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_EquipSlot_disabled"]
-content_margin_left = 24.0
-content_margin_top = 24.0
-content_margin_right = 24.0
-content_margin_bottom = 24.0
-texture = ExtResource("frame_slot")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_EquipSlot_pressed"]
-content_margin_left = 14.0
-content_margin_top = 14.0
-content_margin_right = 14.0
-content_margin_bottom = 14.0
-texture = ExtResource("frame_slot")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_EquipSlot_focus"]
-content_margin_left = 14.0
-content_margin_top = 14.0
-content_margin_right = 14.0
-content_margin_bottom = 14.0
-texture = ExtResource("frame_slot_focus")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_EquipSlot_hover"]
-content_margin_left = 14.0
-content_margin_top = 14.0
-content_margin_right = 14.0
-content_margin_bottom = 14.0
-texture = ExtResource("frame_slot_focus")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_Button_normal"]
-content_margin_left = 12.0
-content_margin_top = 12.0
-content_margin_right = 12.0
-content_margin_bottom = 12.0
-texture = ExtResource("frame_button")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_Button_pressed"]
-content_margin_left = 12.0
-content_margin_top = 12.0
-content_margin_right = 12.0
-content_margin_bottom = 12.0
-texture = ExtResource("frame_button")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_Button_hover"]
+[sub_resource type="StyleBoxTexture" id="Frame_AssignButtonActive"]
 content_margin_left = 12.0
 content_margin_top = 12.0
 content_margin_right = 12.0
@@ -404,233 +649,6 @@ texture_margin_left = 16.0
 texture_margin_top = 16.0
 texture_margin_right = 16.0
 texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_Button_focus"]
-content_margin_left = 12.0
-content_margin_top = 12.0
-content_margin_right = 12.0
-content_margin_bottom = 12.0
-texture = ExtResource("frame_button_focus")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_Button_disabled"]
-content_margin_left = 12.0
-content_margin_top = 12.0
-content_margin_right = 12.0
-content_margin_bottom = 12.0
-texture = ExtResource("frame_button_disabled")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_BarButton_normal"]
-content_margin_left = 22.0
-content_margin_top = 12.0
-content_margin_right = 22.0
-content_margin_bottom = 12.0
-texture = ExtResource("frame_button")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_BarButton_pressed"]
-content_margin_left = 22.0
-content_margin_top = 12.0
-content_margin_right = 22.0
-content_margin_bottom = 12.0
-texture = ExtResource("frame_button")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_BarButton_hover"]
-content_margin_left = 22.0
-content_margin_top = 12.0
-content_margin_right = 22.0
-content_margin_bottom = 12.0
-texture = ExtResource("frame_button_focus")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_BarButton_focus"]
-content_margin_left = 22.0
-content_margin_top = 12.0
-content_margin_right = 22.0
-content_margin_bottom = 12.0
-texture = ExtResource("frame_button_focus")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_BarButton_disabled"]
-content_margin_left = 22.0
-content_margin_top = 12.0
-content_margin_right = 22.0
-content_margin_bottom = 12.0
-texture = ExtResource("frame_button_disabled")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_AssignButton_normal"]
-content_margin_left = 12.0
-content_margin_top = 12.0
-content_margin_right = 12.0
-content_margin_bottom = 12.0
-texture = ExtResource("frame_button")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_AssignButton_pressed"]
-content_margin_left = 12.0
-content_margin_top = 12.0
-content_margin_right = 12.0
-content_margin_bottom = 12.0
-texture = ExtResource("frame_button")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_AssignButton_hover"]
-content_margin_left = 12.0
-content_margin_top = 12.0
-content_margin_right = 12.0
-content_margin_bottom = 12.0
-texture = ExtResource("frame_button_focus")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_SlotCard_normal"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-texture = ExtResource("frame_slot")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_SlotCard_pressed"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-texture = ExtResource("frame_slot")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_SlotCard_hover"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-texture = ExtResource("frame_slot")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_SlotCard_disabled"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-texture = ExtResource("frame_slot")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_SlotCard_focus"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-texture = ExtResource("frame_slot_focus")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_SlotCardEmpty_normal"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-texture = ExtResource("frame_slot_empty")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_SlotCardEmpty_pressed"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-texture = ExtResource("frame_slot_empty")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_SlotCardEmpty_hover"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-texture = ExtResource("frame_slot_empty")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_SlotCardEmpty_disabled"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-texture = ExtResource("frame_slot_empty")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_SlotCardEmpty_focus"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-texture = ExtResource("frame_slot_empty_focus")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxTexture" id="Frame_OrnateSeparator"]
-content_margin_top = 9.0
-content_margin_bottom = 9.0
-texture = ExtResource("frame_divider_dim")
-texture_margin_left = 8.0
-texture_margin_right = 48.0
 
 [resource]
 default_font = ExtResource("3_cwe5m")
@@ -662,14 +680,22 @@ AssignButtonActive/colors/font_pressed_color = Color(0.9372549, 0.9019608, 0.823
 AssignButtonActive/constants/h_separation = 10
 AssignButtonActive/font_sizes/font_size = 17
 AssignButtonActive/fonts/font = ExtResource("3_cwe5m")
-AssignButtonActive/styles/hover = SubResource("StyleBoxFlat_b66wi")
-AssignButtonActive/styles/normal = SubResource("StyleBoxFlat_b66wi")
-AssignButtonActive/styles/pressed = SubResource("StyleBoxFlat_b66wi")
+AssignButtonActive/styles/hover = SubResource("Frame_AssignButtonActive")
+AssignButtonActive/styles/normal = SubResource("Frame_AssignButtonActive")
+AssignButtonActive/styles/pressed = SubResource("Frame_AssignButtonActive")
 Badge/base_type = &"Label"
 Badge/colors/font_color = Color(0.043137256, 0.050980393, 0.0627451, 1)
 Badge/font_sizes/font_size = 12
 Badge/fonts/font = ExtResource("1_r7xqo")
 Badge/styles/normal = SubResource("StyleBoxFlat_ynm0y")
+BarButton/base_type = &"Button"
+BarButton/colors/font_focus_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+BarButton/font_sizes/font_size = 18
+BarButton/styles/disabled = SubResource("Frame_BarButton_disabled")
+BarButton/styles/focus = SubResource("Frame_BarButton_focus")
+BarButton/styles/hover = SubResource("Frame_BarButton_hover")
+BarButton/styles/normal = SubResource("Frame_BarButton_normal")
+BarButton/styles/pressed = SubResource("Frame_BarButton_pressed")
 Button/colors/font_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
 Button/colors/font_disabled_color = Color(0.3019608, 0.33333334, 0.3882353, 1)
 Button/colors/font_focus_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
@@ -686,12 +712,19 @@ Caps/base_type = &"Label"
 Caps/colors/font_color = Color(0.654902, 0.62352943, 0.5568628, 1)
 Caps/font_sizes/font_size = 15
 Caps/fonts/font = SubResource("FontVariation_r2kde")
+Caption/base_type = &"Label"
+Caption/colors/font_color = Color(0.654902, 0.62352943, 0.5568628, 1)
+Caption/font_sizes/font_size = 15
 Card/base_type = &"PanelContainer"
 Card/styles/panel = SubResource("Frame_Card_panel")
 CardBare/base_type = &"PanelContainer"
 CardBare/styles/panel = SubResource("Frame_CardBare_panel")
 Chip/base_type = &"PanelContainer"
 Chip/styles/panel = SubResource("Frame_Chip_panel")
+DisplayTitle/base_type = &"Label"
+DisplayTitle/colors/font_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
+DisplayTitle/font_sizes/font_size = 68
+DisplayTitle/fonts/font = SubResource("FontVariation_display")
 EquipSlot/base_type = &"Button"
 EquipSlot/colors/icon_disabled_color = Color(1, 1, 1, 0.5)
 EquipSlot/styles/disabled = SubResource("Frame_EquipSlot_disabled")
@@ -699,7 +732,13 @@ EquipSlot/styles/focus = SubResource("Frame_EquipSlot_focus")
 EquipSlot/styles/hover = SubResource("Frame_EquipSlot_hover")
 EquipSlot/styles/normal = SubResource("Frame_EquipSlot_normal")
 EquipSlot/styles/pressed = SubResource("Frame_EquipSlot_pressed")
+GameOverTitle/base_type = &"Label"
+GameOverTitle/colors/font_color = Color(0.8156863, 0.3137255, 0.22745098, 1)
+GameOverTitle/font_sizes/font_size = 76
+GameOverTitle/fonts/font = SubResource("FontVariation_display_wide")
 HSeparator/styles/separator = SubResource("StyleBoxLine_nqhe2")
+Heading/base_type = &"Title"
+Heading/font_sizes/font_size = 36
 Hint/base_type = &"Label"
 Hint/colors/font_color = Color(0.654902, 0.62352943, 0.5568628, 1)
 Hint/font_sizes/font_size = 16
@@ -749,10 +788,50 @@ KeyHint/styles/normal = SubResource("StyleBoxFlat_pa2ff")
 Label/colors/font_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
 MenuFrame/base_type = &"PanelContainer"
 MenuFrame/styles/panel = SubResource("Frame_MenuFrame_panel")
+MenuItem/base_type = &"Button"
+MenuItem/colors/font_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
+MenuItem/colors/font_disabled_color = Color(0.43529412, 0.41568628, 0.3764706, 1)
+MenuItem/colors/font_focus_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+MenuItem/colors/font_hover_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
+MenuItem/colors/font_hover_pressed_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+MenuItem/colors/font_pressed_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
+MenuItem/font_sizes/font_size = 26
+MenuItem/styles/disabled = SubResource("StyleBoxEmpty_menu_item")
+MenuItem/styles/focus = SubResource("StyleBoxEmpty_menu_item")
+MenuItem/styles/hover = SubResource("StyleBoxEmpty_menu_item")
+MenuItem/styles/normal = SubResource("StyleBoxEmpty_menu_item")
+MenuItem/styles/pressed = SubResource("StyleBoxEmpty_menu_item")
+MenuItemSmall/base_type = &"MenuItem"
+MenuItemSmall/font_sizes/font_size = 20
+OptionLabel/base_type = &"Label"
+OptionLabel/font_sizes/font_size = 19
+OrnateSeparator/base_type = &"HSeparator"
+OrnateSeparator/constants/separation = 18
+OrnateSeparator/styles/separator = SubResource("Frame_OrnateSeparator")
 Panel/styles/panel = SubResource("StyleBoxFlat_mi2kv")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_6vga0")
+SectionTitle/base_type = &"Title"
+SectionTitle/colors/font_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+SectionTitle/font_sizes/font_size = 20
 Slot/base_type = &"PanelContainer"
 Slot/styles/panel = SubResource("StyleBoxFlat_l2y6j")
+SlotCard/base_type = &"Button"
+SlotCard/styles/disabled = SubResource("Frame_SlotCard_disabled")
+SlotCard/styles/focus = SubResource("Frame_SlotCard_focus")
+SlotCard/styles/hover = SubResource("Frame_SlotCard_hover")
+SlotCard/styles/normal = SubResource("Frame_SlotCard_normal")
+SlotCard/styles/pressed = SubResource("Frame_SlotCard_pressed")
+SlotCardEmpty/base_type = &"Button"
+SlotCardEmpty/styles/disabled = SubResource("Frame_SlotCardEmpty_disabled")
+SlotCardEmpty/styles/focus = SubResource("Frame_SlotCardEmpty_focus")
+SlotCardEmpty/styles/hover = SubResource("Frame_SlotCardEmpty_hover")
+SlotCardEmpty/styles/normal = SubResource("Frame_SlotCardEmpty_normal")
+SlotCardEmpty/styles/pressed = SubResource("Frame_SlotCardEmpty_pressed")
+SlotNumber/base_type = &"Title"
+SlotNumber/colors/font_color = Color(0.654902, 0.62352943, 0.5568628, 1)
+SlotNumber/font_sizes/font_size = 40
+SlotNumberFocused/base_type = &"SlotNumber"
+SlotNumberFocused/colors/font_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
 StoneBox/base_type = &"PanelContainer"
 StoneBox/styles/panel = SubResource("Frame_StoneBox_panel")
 StoneCaption/base_type = &"Label"
@@ -784,64 +863,18 @@ Value/base_type = &"Label"
 Value/colors/font_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
 Value/font_sizes/font_size = 16
 Value/fonts/font = ExtResource("3_cwe5m")
-BarButton/base_type = &"Button"
-BarButton/colors/font_focus_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
-BarButton/font_sizes/font_size = 18
-BarButton/styles/disabled = SubResource("Frame_BarButton_disabled")
-BarButton/styles/focus = SubResource("Frame_BarButton_focus")
-BarButton/styles/hover = SubResource("Frame_BarButton_hover")
-BarButton/styles/normal = SubResource("Frame_BarButton_normal")
-BarButton/styles/pressed = SubResource("Frame_BarButton_pressed")
-Caption/base_type = &"Label"
-Caption/colors/font_color = Color(0.654902, 0.62352943, 0.5568628, 1)
-Caption/font_sizes/font_size = 15
-DisplayTitle/base_type = &"Label"
-DisplayTitle/colors/font_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
-DisplayTitle/font_sizes/font_size = 68
-DisplayTitle/fonts/font = SubResource("FontVariation_display")
-GameOverTitle/base_type = &"Label"
-GameOverTitle/colors/font_color = Color(0.8156863, 0.3137255, 0.22745098, 1)
-GameOverTitle/font_sizes/font_size = 76
-GameOverTitle/fonts/font = SubResource("FontVariation_display_wide")
-Heading/base_type = &"Title"
-Heading/font_sizes/font_size = 36
-MenuItem/base_type = &"Button"
-MenuItem/colors/font_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
-MenuItem/colors/font_disabled_color = Color(0.43529412, 0.41568628, 0.3764706, 1)
-MenuItem/colors/font_focus_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
-MenuItem/colors/font_hover_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
-MenuItem/colors/font_hover_pressed_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
-MenuItem/colors/font_pressed_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
-MenuItem/font_sizes/font_size = 26
-MenuItem/styles/disabled = SubResource("StyleBoxEmpty_menu_item")
-MenuItem/styles/focus = SubResource("StyleBoxEmpty_menu_item")
-MenuItem/styles/hover = SubResource("StyleBoxEmpty_menu_item")
-MenuItem/styles/normal = SubResource("StyleBoxEmpty_menu_item")
-MenuItem/styles/pressed = SubResource("StyleBoxEmpty_menu_item")
-MenuItemSmall/base_type = &"MenuItem"
-MenuItemSmall/font_sizes/font_size = 20
-OptionLabel/base_type = &"Label"
-OptionLabel/font_sizes/font_size = 19
-SectionTitle/base_type = &"Title"
-SectionTitle/colors/font_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
-SectionTitle/font_sizes/font_size = 20
-SlotNumber/base_type = &"Title"
-SlotNumber/colors/font_color = Color(0.654902, 0.62352943, 0.5568628, 1)
-SlotNumber/font_sizes/font_size = 40
-SlotNumberFocused/base_type = &"SlotNumber"
-SlotNumberFocused/colors/font_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
-SlotCard/base_type = &"Button"
-SlotCard/styles/disabled = SubResource("Frame_SlotCard_disabled")
-SlotCard/styles/focus = SubResource("Frame_SlotCard_focus")
-SlotCard/styles/hover = SubResource("Frame_SlotCard_hover")
-SlotCard/styles/normal = SubResource("Frame_SlotCard_normal")
-SlotCard/styles/pressed = SubResource("Frame_SlotCard_pressed")
-SlotCardEmpty/base_type = &"Button"
-SlotCardEmpty/styles/disabled = SubResource("Frame_SlotCardEmpty_disabled")
-SlotCardEmpty/styles/focus = SubResource("Frame_SlotCardEmpty_focus")
-SlotCardEmpty/styles/hover = SubResource("Frame_SlotCardEmpty_hover")
-SlotCardEmpty/styles/normal = SubResource("Frame_SlotCardEmpty_normal")
-SlotCardEmpty/styles/pressed = SubResource("Frame_SlotCardEmpty_pressed")
-OrnateSeparator/base_type = &"HSeparator"
-OrnateSeparator/constants/separation = 18
-OrnateSeparator/styles/separator = SubResource("Frame_OrnateSeparator")
+CheckBox/icons/checked = ExtResource("frame_check_on")
+CheckBox/icons/checked_disabled = ExtResource("frame_check_on")
+CheckBox/icons/radio_checked = ExtResource("frame_radio_on")
+CheckBox/icons/radio_checked_disabled = ExtResource("frame_radio_on")
+CheckBox/icons/radio_unchecked = ExtResource("frame_radio_off")
+CheckBox/icons/radio_unchecked_disabled = ExtResource("frame_radio_off")
+CheckBox/icons/unchecked = ExtResource("frame_check_off")
+CheckBox/icons/unchecked_disabled = ExtResource("frame_check_off")
+HSlider/icons/grabber = ExtResource("frame_slider_grabber")
+HSlider/icons/grabber_disabled = ExtResource("frame_slider_grabber")
+HSlider/icons/grabber_highlight = ExtResource("frame_slider_grabber_focus")
+HSlider/styles/grabber_area = SubResource("Frame_slider_fill")
+HSlider/styles/grabber_area_highlight = SubResource("Frame_slider_fill")
+HSlider/styles/slider = SubResource("Frame_slider_track")
+OptionButton/icons/arrow = ExtResource("frame_arrow_down")

@@ -36,5 +36,18 @@ outline slot_empty_focus 09 '#d9a441'
 magick "$K/Double/Divider Fade/divider-fade-003.png" -fill '#d9a441' -colorize 100 "$OUT/divider.png"
 magick "$K/Double/Divider Fade/divider-fade-003.png" -fill '#6b5a3a' -colorize 100 "$OUT/divider_dim.png"
 magick "$OUT/divider.png" -flop "$OUT/divider_flipped.png"
+# Slider: la doble línea es el riel (bronce, dorado lo lleno); la perilla, un rombo como los radios.
+magick "$K/Double/Divider/divider-002.png" -fill '#6b5a3a' -colorize 100 "$OUT/slider_track.png"
+magick "$K/Double/Divider/divider-002.png" -fill '#d9a441' -colorize 100 "$OUT/slider_fill.png"
+magick -size 22x22 xc:none -fill '#d9a441' -stroke '#0b0d10' -strokewidth 2 -draw 'polygon 11,1 21,11 11,21 1,11' "$OUT/slider_grabber.png"
+magick -size 22x22 xc:none -fill '#ffd27a' -stroke '#0b0d10' -strokewidth 2 -draw 'polygon 11,1 21,11 11,21 1,11' "$OUT/slider_grabber_focus.png"
+
+# Casillas, radios y flecha del desplegable, en pixel art como los marcos.
+magick -size 16x16 xc:none -fill '#d9a441' -draw 'rectangle 3,3 12,12' "$OUT/check_on.png"
+magick -size 16x16 xc:none "$OUT/check_off.png"
+magick -size 16x16 xc:none -fill '#d9a441' -draw 'polygon 8,1 15,8 8,15 1,8' "$OUT/radio_on.png"
+magick -size 16x16 xc:none -fill none -stroke '#6b5a3a' -strokewidth 2 -draw 'polygon 8,2 14,8 8,14 2,8' "$OUT/radio_off.png"
+magick -size 16x16 xc:none -fill '#d9a441' -draw 'polygon 2,5 14,5 8,11' "$OUT/arrow_down.png"
+
 cp assets/kenney_fantasy-ui-borders/License.txt "$OUT/License.txt"
 ls "$OUT"
