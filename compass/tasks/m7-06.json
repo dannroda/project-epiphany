@@ -2,17 +2,17 @@
   "checklist": [
     {
       "detail": "Fuente de luz + espejos fijos + el escudo: hay que llevar el haz hasta el sello.",
-      "done": false,
+      "done": true,
       "text": "Puzzle del sello"
     },
     {
       "detail": "Flag `ow_temple_seal_open`; animación y temblor (primer momento de *doom*).",
-      "done": false,
+      "done": true,
       "text": "Abrir la entrada"
     },
     {
       "detail": "Sacudida suave de cámara y sonido grave al entrar en la zona del templo.",
-      "done": false,
+      "done": true,
       "text": "Temblores lejanos al acercarse"
     }
   ],
@@ -25,7 +25,7 @@
     }
   ],
   "milestone": "m07",
-  "notes": "",
+  "notes": "Hecho 2026-10-08: fuente + espejo fijo + escudo → cristal `ow_temple_seal_open` → `TempleSeal` (Gate con sacudida, retumbo y polvo). `TremorZone` en la entrada del templo. Sonido nuevo `rumble` en Feel. Escenario `pre_temple`. Test `tests/test_temple_seal.gd`.",
   "order": 6,
   "refs": [
     {
@@ -37,8 +37,8 @@
       "section": "historia"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Desde `pre_temple`: abrir el sello y entrar a la mazmorra; al volver, la entrada sigue abierta.",
   "title": "Sello del templo",
-  "updated_at": "2026-10-08T04:45:56.770Z"
+  "updated_at": "2026-10-09T00:19:30.392Z"
 }

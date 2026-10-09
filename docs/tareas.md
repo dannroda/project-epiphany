@@ -1397,16 +1397,18 @@ Hecho 2026-10-08: `Portal` + `SaveManager.travel_to()` (pausa, fundido, `load_th
 
 **Bloqueada por:** 5.6 Escudo espejo y haz de luz; 7.4 Cueva de las bombas
 
-### 7.6 Sello del templo · Pendiente
+### 7.6 Sello del templo · En curso
 
-- [ ] Puzzle del sello
+- [x] Puzzle del sello
   Fuente de luz + espejos fijos + el escudo: hay que llevar el haz hasta el sello.
-- [ ] Abrir la entrada
+- [x] Abrir la entrada
   Flag `ow_temple_seal_open`; animación y temblor (primer momento de *doom*).
-- [ ] Temblores lejanos al acercarse
+- [x] Temblores lejanos al acercarse
   Sacudida suave de cámara y sonido grave al entrar en la zona del templo.
 
 **Prueba:** Desde `pre_temple`: abrir el sello y entrar a la mazmorra; al volver, la entrada sigue abierta.
+
+**Notas:** Hecho 2026-10-08: fuente + espejo fijo + escudo → cristal `ow_temple_seal_open` → `TempleSeal` (Gate con sacudida, retumbo y polvo). `TremorZone` en la entrada del templo. Sonido nuevo `rumble` en Feel. Escenario `pre_temple`. Test `tests/test_temple_seal.gd`.
 
 **Referencias:** `gdd.md#progresion-gating`, `gdd.md#historia`
 

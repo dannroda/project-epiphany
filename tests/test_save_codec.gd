@@ -88,7 +88,7 @@ func test_validate() -> void:
 
 
 func test_scenarios_are_valid() -> void:
-	for scenario in ["start", "full_inventory", "dungeon_no_bow", "dungeon_test", "bombs_only"]:
+	for scenario in ["start", "full_inventory", "dungeon_no_bow", "dungeon_test", "bombs_only", "pre_temple"]:
 		var cfg := ConfigFile.new()
 		assert_eq(SaveCodec.read("res://debug/scenarios/%s.cfg" % scenario, cfg), OK, scenario)
 		assert_eq(SaveCodec.validate(cfg).size(), 0, scenario)

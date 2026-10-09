@@ -14,7 +14,6 @@
 [ext_resource type="Script" path="res://src/world/portal.gd" id="14_5vrew"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="15_3hrjb"]
 [ext_resource type="Script" path="res://src/tools/top_down_camera.gd" id="16_372gu"]
-[ext_resource type="Script" path="res://src/world/chest.gd" id="16_axpip"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="17_lc5as"]
 [ext_resource type="Resource" path="res://data/items/bomb_bag.tres" id="17_vrnmo"]
 [ext_resource type="PackedScene" path="res://src/world/tablet.tscn" id="18_gsck2"]
@@ -22,16 +21,17 @@
 [ext_resource type="PackedScene" path="res://src/world/cracked_wall.tscn" id="21_uay0b"]
 [ext_resource type="PackedScene" path="res://src/world/floor_switch.tscn" id="22_gvf0k"]
 [ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="23_372gu"]
-[ext_resource type="Script" path="res://src/world/floor_switch.gd" id="23_lc5as"]
 [ext_resource type="PackedScene" path="res://src/world/push_block.tscn" id="24_v1yde"]
-[ext_resource type="Script" path="res://src/world/push_block.gd" id="25_7se6l"]
 [ext_resource type="Resource" path="res://data/drops/pot_hearts.tres" id="25_v1yde"]
 [ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="26_iip2e"]
-[ext_resource type="Script" path="res://src/world/gate.gd" id="27_0v7po"]
+[ext_resource type="PackedScene" path="res://src/world/light/light_mirror.tscn" id="28_gvf0k"]
 [ext_resource type="Resource" path="res://data/items/shield_mirror.tres" id="29_mweuj"]
+[ext_resource type="PackedScene" path="res://src/world/temple_seal.tscn" id="30_372gu"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_source.tscn" id="30_xv8lf"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_receiver.tscn" id="31_fe77v"]
+[ext_resource type="Script" path="res://src/world/temple_seal.gd" id="31_lc5as"]
 [ext_resource type="Script" path="res://src/world/light/light_receiver.gd" id="32_jqovx"]
+[ext_resource type="Script" path="res://src/world/tremor_zone.gd" id="32_v1yde"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7se6l"]
 panorama = ExtResource("1_qyxw2")
@@ -77,6 +77,9 @@ geometry_source_group_name = &"navmesh_source"
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1rjbp"]
 size = Vector3(2, 2.4, 1.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7se6l"]
+size = Vector3(22, 2.4, 14)
 
 [node name="Overworld" type="Node3D" unique_id=295443412]
 
@@ -295,42 +298,60 @@ drops = ExtResource("25_v1yde")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -8)
 flag = &"ow_shrine_cracked_wall"
 
-[node name="ShrineSwitch" type="Area3D" parent="." unique_id=361397501 instance=ExtResource("22_gvf0k")]
+[node name="ShrineSwitch" parent="." unique_id=361397501 instance=ExtResource("22_gvf0k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -16)
-script = ExtResource("23_lc5as")
 mode = 1
 flag = &"ow_shrine_switch"
 
-[node name="ShrineBlock" type="AnimatableBody3D" parent="." unique_id=2143523308 instance=ExtResource("24_v1yde")]
+[node name="ShrineBlock" parent="." unique_id=2143523308 instance=ExtResource("24_v1yde")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -12)
-collision_layer = 9
-collision_mask = 0
-script = ExtResource("25_7se6l")
 solved_flag = &"ow_shrine_switch"
 solved_position = Vector3(-30, 0, -16)
 
-[node name="ChestGate" type="StaticBody3D" parent="." unique_id=1467179515 instance=ExtResource("26_iip2e")]
+[node name="ChestGate" parent="." unique_id=1467179515 instance=ExtResource("26_iip2e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -18)
-script = ExtResource("27_0v7po")
 switches = Array[NodePath]([NodePath("../ShrineSwitch")])
 
-[node name="MirrorChest" type="StaticBody3D" parent="." unique_id=1406574529 instance=ExtResource("15_3hrjb")]
+[node name="MirrorChest" parent="." unique_id=1406574529 instance=ExtResource("15_3hrjb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -21)
-script = ExtResource("16_axpip")
 item = ExtResource("29_mweuj")
 flag = &"ow_shrine_mirror_chest"
 big = true
 
-[node name="ShrineLight" type="StaticBody3D" parent="." unique_id=1781675459 instance=ExtResource("30_xv8lf")]
+[node name="ShrineLight" parent="." unique_id=1781675459 instance=ExtResource("30_xv8lf")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -16, 0, -22)
 
-[node name="ShrineCrystal" type="StaticBody3D" parent="." unique_id=1987739052 instance=ExtResource("31_fe77v")]
+[node name="ShrineCrystal" parent="." unique_id=1987739052 instance=ExtResource("31_fe77v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -14)
-script = ExtResource("32_jqovx")
 latch = true
 flag = &"ow_shrine_shortcut"
 
-[node name="ShortcutGate" type="StaticBody3D" parent="." unique_id=294050897 instance=ExtResource("26_iip2e")]
+[node name="ShortcutGate" parent="." unique_id=294050897 instance=ExtResource("26_iip2e")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12, 0, -16)
-script = ExtResource("27_0v7po")
 switches = Array[NodePath]([NodePath("../ShrineCrystal")])
+
+[node name="TempleLight" type="StaticBody3D" parent="." unique_id=108395462 instance=ExtResource("30_xv8lf")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -10, 0, -18)
+
+[node name="TempleMirror" type="StaticBody3D" parent="." unique_id=261625808 groups=["light_mirror"] instance=ExtResource("28_gvf0k")]
+transform = Transform3D(-0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, -0.70710677, -10, 0, -11)
+
+[node name="SealCrystal" type="StaticBody3D" parent="." unique_id=1539938235 instance=ExtResource("31_fe77v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -18)
+script = ExtResource("32_jqovx")
+latch = true
+flag = &"ow_temple_seal_open"
+
+[node name="TempleSeal" type="StaticBody3D" parent="." unique_id=1380468498 instance=ExtResource("30_372gu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -19.25)
+script = ExtResource("31_lc5as")
+drop = 2.8
+duration = 1.6
+switches = Array[NodePath]([NodePath("../SealCrystal")])
+
+[node name="TempleTremors" type="Area3D" parent="." unique_id=2057226876]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -16)
+script = ExtResource("32_v1yde")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TempleTremors" unique_id=1555930064]
+shape = SubResource("BoxShape3D_7se6l")

@@ -196,6 +196,8 @@ Decidido el 2026-10-08. 8 zonas de ≈ 24 × 16 m (una "pantalla" con la cámara
 
 **Santuario (7.5):** detrás del muro agrietado. Desafío corto: un bloque al interruptor (`ow_shrine_switch`) baja la reja del recoveco norte, donde está el cofre grande del escudo espejo (`ow_shrine_mirror_chest`; `equip_on_get` hace que se equipe solo aunque haya otro escudo, y su *item get* explica el reflejo). Haz de práctica: la fuente de la esquina noreste apunta al sur; bloqueando en diagonal (girando con el stick) el espejo lo manda al oeste, al cristal (`ow_shrine_shortcut`, con latch), que abre la reja del atajo a la Entrada del templo: solo se abre desde adentro. Las rejas (`Gate`) y los cristales con flag quedan como estaban al cargar la partida. Escenario `bombs_only`: inventario inicial + bombas, en la cueva.
 
+**Sello del templo (7.6):** la fuente del oeste apunta al sur, a un espejo fijo a 45° que manda el haz al este, cruzando la plaza. Atajándolo con el escudo espejo (bloqueo en diagonal, girando con el stick) va al norte, al cristal del sello (`ow_temple_seal_open`, con latch). `TempleSeal` (una `Gate` con el ojo) se hunde con sacudida fuerte, retumbo y polvo: el primer momento de *doom*. `TremorZone` cubre la entrada del templo: mientras el player está ahí, cada 6 s una sacudida suave con retumbo grave. Escenario `pre_temple`: todo lo del overworld hasta el escudo espejo, en la entrada del templo.
+
 ## 8. Mazmorra — El Templo
 <!-- id: mazmorra -->
 

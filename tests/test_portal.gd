@@ -38,6 +38,7 @@ func test_enter_and_leave_the_temple_keeping_the_dungeon() -> void:
 	var state: Node = tree.root.get_node(^"GameState")
 	var saves: Node = tree.root.get_node(^"SaveManager")
 	state.reset()
+	state.set_flag(&"ow_temple_seal_open", true)
 	saves.autosave_slot = SLOT
 	tree.change_scene_to_file(OVERWORLD)
 	await tree.scene_changed
