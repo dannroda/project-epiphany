@@ -1872,18 +1872,20 @@ Hecho 2026-10-09: decisión cerrada (KayKit + prototipo pulido) y guía de estil
 
 **Referencias:** `gdd.md#decisiones-abiertas`
 
-### 10.8 Pasada de rendimiento · Pendiente
+### 10.8 Pasada de rendimiento · En curso
 
-- [ ] Presupuesto de frame
+- [x] Presupuesto de frame
   60 FPS en la máquina más floja de los playtesters.
 - [ ] Perfilar las peores escenas
   Arena con oleadas, overworld con pasto, jefe. Profiler y monitores `epiphany/*`.
-- [ ] Arreglar lo que se mida
+- [x] Arreglar lo que se mida
   Pools, MultiMesh, luces con sombra, partículas.
 
 **Prueba:** Las tres escenas se mantienen en el presupuesto en build release.
 
 **Notas:** Skills: `disciplines:performance-optimization`.
+
+2026-10-09: presupuesto 16,6 ms p95; `src/tools/profile_scenes.gd` mide pradera, arena y antesala (todas ≈ 5 ms medio, ≤ 8 ms p95 en RX 580). Arreglado el tirón al aparecer oleadas (un enemigo por cuadro). Queda en Revisión: falta la escena del jefe (M9) y medir en build release (10.9) en la máquina más floja.
 
 **Bloqueada por:** 8.8 Recorrido completo y escenarios de la mazmorra
 

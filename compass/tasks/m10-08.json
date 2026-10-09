@@ -2,7 +2,7 @@
   "checklist": [
     {
       "detail": "60 FPS en la máquina más floja de los playtesters.",
-      "done": false,
+      "done": true,
       "text": "Presupuesto de frame"
     },
     {
@@ -12,18 +12,18 @@
     },
     {
       "detail": "Pools, MultiMesh, luces con sombra, partículas.",
-      "done": false,
+      "done": true,
       "text": "Arreglar lo que se mida"
     }
   ],
   "code": "10.8",
   "created_at": "2026-10-08T04:45:37.474Z",
   "milestone": "m10",
-  "notes": "Skills: `disciplines:performance-optimization`.",
+  "notes": "Skills: `disciplines:performance-optimization`.\n\n2026-10-09: presupuesto 16,6 ms p95; `src/tools/profile_scenes.gd` mide pradera, arena y antesala (todas ≈ 5 ms medio, ≤ 8 ms p95 en RX 580). Arreglado el tirón al aparecer oleadas (un enemigo por cuadro). Queda en Revisión: falta la escena del jefe (M9) y medir en build release (10.9) en la máquina más floja.",
   "order": 8,
   "refs": [],
-  "status": "todo",
+  "status": "review",
   "test": "Las tres escenas se mantienen en el presupuesto en build release.",
   "title": "Pasada de rendimiento",
-  "updated_at": "2026-10-08T04:45:37.744Z"
+  "updated_at": "2026-10-09T04:50:21.859Z"
 }

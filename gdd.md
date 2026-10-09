@@ -1708,6 +1708,11 @@ if Log.is_enabled(Log.Level.DEBUG, &"ai"):   # solo si el mensaje es caro de arm
 
 ---
 
+### 11.x Rendimiento
+<!-- id: rendimiento -->
+
+**Presupuesto (10.8):** 60 FPS (16,6 ms por cuadro, p95) en la máquina más floja de los playtesters. `src/tools/profile_scenes.gd` (en ventana: `godot --path . --resolution 1280x720 --script res://src/tools/profile_scenes.gd`) mide las escenas más pesadas. El 2026-10-09, en la máquina de desarrollo (Radeon RX 580, 32 hilos) y build de editor: pradera con pasto y esqueletos ≈ 5 ms medio / 7 ms p95; arena con oleadas ≈ 5 / 8 ms (peor 10 ms); antesala con todo el *doom* ≈ 5 / 6 ms; 360–450 draw calls. Arreglo: las oleadas instancian un enemigo por cuadro (antes, un tirón de 26 ms al aparecer). Pendiente: medir en build release (10.9) y la pelea del jefe (M9). `Performance.TIME_PROCESS` es el cuadro entero, no solo los scripts.
+
 ## 12. Roadmap al MVP
 <!-- id: roadmap -->
 

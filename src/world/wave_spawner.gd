@@ -52,12 +52,15 @@ func start() -> void:
 	_next_wave()
 
 
+## Un enemigo por cuadro: instanciar varios juntos daba un tirón de ~20 ms.
 func _next_wave() -> void:
 	wave += 1
 	_alive.clear()
 	for spawn in waves()[wave].get_children():
 		if not spawn is WaveSpawn or (spawn as WaveSpawn).enemy == null:
 			continue
+		if not _alive.is_empty():
+			await get_tree().process_frame
 		var enemy := (spawn as WaveSpawn).enemy.instantiate() as Enemy
 		enemy.position = (spawn as WaveSpawn).global_position
 		get_parent().add_child(enemy)
