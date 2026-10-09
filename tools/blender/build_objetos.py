@@ -129,8 +129,17 @@ piece("fogata", 6, fogata)
 
 # --- cofres ---
 
+def hollow_top(p, w, d, top, rim, swatch, inside="noche"):
+	"""Borde de la boca (de top - 0.06 a top) y el fondo oscuro adentro, para que el cofre abierto se lea hueco."""
+	ring = p.box(-w / 2, w / 2, -d / 2, -d / 2 + rim, top - 0.06, top) + p.box(-w / 2, w / 2, d / 2 - rim, d / 2, top - 0.06, top)
+	ring += p.box(-w / 2, -w / 2 + rim, -d / 2 + rim, d / 2 - rim, top - 0.06, top) + p.box(w / 2 - rim, w / 2, -d / 2 + rim, d / 2 - rim, top - 0.06, top)
+	p.paint(ring, swatch, "MID", vary=0.05)
+	p.paint(p.box(-w / 2 + rim, w / 2 - rim, -d / 2 + rim, d / 2 - rim, top - 0.08, top - 0.06), inside, "LOW")
+
+
 def chest_base(p, w, d, h, wood, metal):
-	box = p.box(-w / 2, w / 2, -d / 2, d / 2, 0.0, h)
+	box = p.box(-w / 2, w / 2, -d / 2, d / 2, 0.0, h - 0.06)
+	hollow_top(p, w, d, h, 0.07, wood)
 	p.paint(box, wood, z_range=(0, h * 1.5), vary=0.05)
 	bands = []
 	for x in (-w / 2 + 0.1, w / 2 - 0.16):
@@ -138,6 +147,7 @@ def chest_base(p, w, d, h, wood, metal):
 	bands += p.box(-w / 2 - 0.02, w / 2 + 0.02, -d / 2 - 0.02, d / 2 + 0.02, 0.0, 0.07)
 	p.paint(bands, metal, "MID", vary=0.05)
 	epi.chakana_plate(p, Vector((0, -d / 2 - 0.02, h - 0.12)), 0.2, metal)
+	p.paint(p.box(-w / 2 + 0.1, w / 2 - 0.1, -d / 2 + 0.1, d / 2 - 0.1, h - 0.07, h - 0.02), "dorado", "LIGHT", vary=0.2)
 
 
 def chest_lid(p, w, d, h, wood, metal):
@@ -153,6 +163,7 @@ def chest_lid(p, w, d, h, wood, metal):
 		b = p.box(x, x + 0.06, -d - 0.02, 0.02, -0.005, h * 0.5)
 		bands += b
 	p.paint(bands, metal, "MID", vary=0.05)
+	p.paint(p.box(-w / 2 + 0.07, w / 2 - 0.07, -d + 0.07, -0.07, -0.01, 0.0), "madera_oscura", "DARK")
 
 
 piece("cofre", 7, lambda p: chest_base(p, 1.0, 0.7, 0.5, "madera", "cobre_verde"))
@@ -160,10 +171,12 @@ piece("cofre_tapa", 8, lambda p: (chest_lid(p, 1.0, 0.7, 0.3, "madera", "cobre_v
 def arca(p, w, d, h):
 	"""Cofre grande: arca de piedra del templo, con zócalo escalonado, guardas doradas y el ojo en el frente."""
 	plinth = p.box(-w / 2 - 0.06, w / 2 + 0.06, -d / 2 - 0.06, d / 2 + 0.06, 0.0, 0.1)
-	body = p.box(-w / 2, w / 2, -d / 2, d / 2, 0.1, h)
+	body = p.box(-w / 2, w / 2, -d / 2, d / 2, 0.1, h - 0.06)
 	p.paint(plinth, "piedra_templo", "DARK", vary=0.05)
 	p.paint(body, "piedra_templo", z_range=(0, h * 1.4), vary=0.05)
-	trim = p.box(-w / 2 - 0.02, w / 2 + 0.02, -d / 2 - 0.02, d / 2 + 0.02, h - 0.08, h)
+	hollow_top(p, w + 0.04, d + 0.04, h, 0.1, "dorado")
+	p.paint(p.box(-w / 2 + 0.2, w / 2 - 0.2, -d / 2 + 0.2, d / 2 - 0.2, h - 0.07, h - 0.01), "dorado", "LIGHT", vary=0.25)
+	trim = []
 	for x in (-w / 2 + 0.06, w / 2 - 0.14):
 		trim += p.box(x, x + 0.08, -d / 2 - 0.02, -d / 2, 0.1, h - 0.08)
 	p.paint(trim, "dorado", "MID")
@@ -175,6 +188,7 @@ def arca_tapa(p, w, d, h):
 	low = p.box(-w / 2 - 0.02, w / 2 + 0.02, -d - 0.02, 0.02, 0.0, h * 0.5)
 	high = p.box(-w / 2 + 0.12, w / 2 - 0.12, -d + 0.12, -0.12, h * 0.5, h)
 	p.paint(low + high, "piedra_templo", z_range=(-h, h * 1.4), vary=0.05)
+	p.paint(p.box(-w / 2 + 0.1, w / 2 - 0.1, -d + 0.1, -0.1, -0.01, 0.0), "piedra_templo", "DARK")
 	chakana = []
 	for cw, cd in ((0.36, 0.12), (0.24, 0.24), (0.12, 0.36)):
 		chakana += p.box(-cw / 2, cw / 2, -d / 2 - cd / 2, -d / 2 + cd / 2, h, h + 0.03)
