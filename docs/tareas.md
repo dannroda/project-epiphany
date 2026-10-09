@@ -1736,7 +1736,7 @@ Importar el rig del ojo con manos y armar las fases 1 y 2 con LimboAI.
 
 **Bloqueada por:** 9.6 Muerte del jefe y final
 
-## M10 — Terminación  (9/13)
+## M10 — Terminación  (10/14)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -1970,6 +1970,16 @@ Skills: `workflows:itch-publish`.
 - [x] Suite verde y capturas sin cambios visuales
 
 **Notas:** Código que reemplaza algo que el tema ya resuelve. MenuItem quedó sin script: ▶ = MenuItem/icons/icon con icon_normal_color alpha 0 e icon_focus/hover dorados; hover se ve como foco. Revisado el resto: SlotCard (vacía/llena), pestañas y modos de FileSelect dependen de estado, no de foco; se quitó slot.text = "" en Equipo y el botón DEBUG pasó a la variación DebugButton.
+
+### 10.14 Cámara: sala entera y pared sur recortada · Hecho
+
+**Prioridad:** alta · **Etiquetas:** `camara`
+
+- [x] Alejar la cámara para que entre una sala de 22 × 14 m
+- [x] Recortar la pared sur con un shader de corte
+- [x] Capturas, tests y GDD
+
+**Notas:** offset (0, 17.4, 10.0): vista ≈ 26 × 14.5 m. data/kits/shaders/cutaway.gdshader en wall.tres y column.tres; la cámara pasa cut_area/cut_height al entrar a cada sala.
 
 ## Listas
 

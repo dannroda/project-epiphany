@@ -1,0 +1,30 @@
+{
+  "checklist": [
+    {
+      "done": true,
+      "text": "Alejar la cámara para que entre una sala de 22 × 14 m"
+    },
+    {
+      "done": true,
+      "text": "Recortar la pared sur con un shader de corte"
+    },
+    {
+      "done": true,
+      "text": "Capturas, tests y GDD"
+    }
+  ],
+  "code": "10.14",
+  "created_at": "2026-10-09T15:46:27.438Z",
+  "milestone": "m10",
+  "notes": "offset (0, 17.4, 10.0): vista ≈ 26 × 14.5 m. data/kits/shaders/cutaway.gdshader en wall.tres y column.tres; la cámara pasa cut_area/cut_height al entrar a cada sala.",
+  "order": 14,
+  "priority": "high",
+  "refs": [],
+  "status": "done",
+  "tags": [
+    "camara"
+  ],
+  "test": "",
+  "title": "Cámara: sala entera y pared sur recortada",
+  "updated_at": "2026-10-09T15:46:29.500Z"
+}

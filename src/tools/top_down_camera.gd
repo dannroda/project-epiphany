@@ -2,8 +2,8 @@ class_name TopDownCamera
 extends Camera3D
 
 @export var target_node: PlayerCharacter
-## Como el remake de Link's Awakening: FOV 40 y unos 60° de inclinación; una pantalla abarca ≈ 20 × 10.5 m.
-@export var offset: Vector3 = Vector3(0, 13.4, 7.7)
+## FOV 40 y unos 60° de inclinación; una pantalla abarca ≈ 26 × 14.5 m, una sala entera del templo con sus puertas.
+@export var offset: Vector3 = Vector3(0, 17.4, 10.0)
 @export var smooth_speed: float = 8.0
 @export var trauma_decay := 1.6
 @export var max_shake_offset := Vector2(0.35, 0.25)
@@ -28,6 +28,14 @@ extends Camera3D
 @export var wall_height := 2.6
 ## Lo de fuera de la sala queda en negro; arranca un poco afuera para no tapar las paredes.
 @export var mask_margin := 0.5
+## La pared sur de la sala se recorta a esta altura para que no tape la puerta sur.
+@export var south_wall_cut := 0.4
+
+const CUTAWAY_MATERIALS: Array[ShaderMaterial] = [
+	preload("res://data/kits/materials/wall.tres"),
+	preload("res://data/kits/materials/column.tres"),
+]
+const SOUTH_WALL_DEPTH := 2.0
 
 var trauma := 0.0
 ## Sala actual; null = overworld (seguimiento libre).
@@ -51,6 +59,7 @@ func _ready() -> void:
 	look_at_from_position(global_position, global_position - offset, Vector3.UP)
 	add_to_group(&"room_camera")
 	_build_mask()
+	_cut_south_wall(null)
 
 
 ## Olvida la sala: la próxima se toma sin transición (al empezar o al reaparecer).
@@ -58,6 +67,7 @@ func reset_room() -> void:
 	room = null
 	transitioning = false
 	_mask.hide()
+	_cut_south_wall(null)
 
 
 ## Sin deslizarse: al aparecer en otra escena o punto, la cámara arranca sobre el player.
@@ -173,6 +183,7 @@ func enter_room(new_room: Room) -> void:
 	if previous:
 		previous.player_left.emit(previous)
 	room.mark_entered()
+	_cut_south_wall(room)
 	if previous == null:
 		_mask_around(room.bounds())
 		focus = _clamp(target_node.global_position)
@@ -191,6 +202,18 @@ func enter_room(new_room: Room) -> void:
 		transitioning = false
 		_mask_around(room.bounds())
 		_remember_entry())
+
+
+func _cut_south_wall(cut_room: Room) -> void:
+	var area := Vector4.ZERO
+	var height := 0.0
+	if cut_room:
+		var bounds := cut_room.bounds().grow(0.05)
+		area = Vector4(bounds.position.x - SOUTH_WALL_DEPTH, bounds.end.x + SOUTH_WALL_DEPTH, bounds.end.y - 0.1, bounds.end.y + SOUTH_WALL_DEPTH)
+		height = target_node.global_position.y + south_wall_cut
+	for material in CUTAWAY_MATERIALS:
+		material.set_shader_parameter(&"cut_area", area)
+		material.set_shader_parameter(&"cut_height", height)
 
 
 ## Donde se reaparece al morir. La sala del jefe no cuenta: se vuelve a la antesala.

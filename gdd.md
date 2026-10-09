@@ -47,7 +47,7 @@ El tema *Imminent Doom* sigue siendo el tono: el fin se siente por ambientación
 | **Mazmorra (salas)** | Sigue al jugador **clampeada a los límites de la sala**. Al cruzar una puerta: el input se bloquea, el player camina solo a través de la puerta y la cámara hace un **deslizamiento** hacia la sala nueva (≈0.5 s). |
 | **Jefe** | Igual que sala, con límites que encuadran toda la arena. |
 
-**Cámara por sala (6.1, corregida el 2026-10-08), como el remake de Link's Awakening:** la cámara sigue siempre al player y se frena recién cuando el borde de la pantalla llega a la pared: el ancho se mide en la fila del player, abajo hasta el piso sur y arriba hasta el tope de la pared norte (`wall_height`). Si la sala es más chica que la pantalla en un eje, queda fija y centrada en pantalla. Todo lo de fuera de la sala actual queda en negro (una máscara a la altura de las paredes, `mask_margin` afuera para no tapar las paredes), así nunca se ve qué hay detrás de las puertas; durante el deslizamiento la máscara abarca las dos salas. La cámara usa FOV 40 y `offset` (0, 13.4, 7.7) en todo el juego, overworld incluido, como el remake: una pantalla abarca ≈ 20 × 10.5 m en la fila del player, así que una sala de ≈ 14 × 10 m se ve entera con sus paredes y las más grandes se recorren.
+**Cámara por sala (6.1, corregida el 2026-10-08), como el remake de Link's Awakening:** la cámara sigue siempre al player y se frena recién cuando el borde de la pantalla llega a la pared: el ancho se mide en la fila del player, abajo hasta el piso sur y arriba hasta el tope de la pared norte (`wall_height`). Si la sala es más chica que la pantalla en un eje, queda fija y centrada en pantalla. Todo lo de fuera de la sala actual queda en negro (una máscara a la altura de las paredes, `mask_margin` afuera para no tapar las paredes), así nunca se ve qué hay detrás de las puertas; durante el deslizamiento la máscara abarca las dos salas. La cámara usa FOV 40 y `offset` (0, 17.4, 10.0) en todo el juego, overworld incluido (alejada el 2026-10-09): una pantalla abarca ≈ 26 × 14.5 m en la fila del player, así que una sala del templo (22 × 14 m) se ve entera, con las puertas laterales y la sur, y queda fija. **Pared sur recortada:** las paredes y columnas del kit usan `data/kits/shaders/cutaway.gdshader`; al entrar a una sala la cámara le pasa el rectángulo de su pared sur y todo lo que está ahí por encima de `south_wall_cut` (0.4 m) se descarta. Lo que queda se pinta de un oscuro plano (emisión, sin luz), como un zócalo, así la puerta sur se ve de frente. Las colisiones no cambian.
 
 ### 4.2 Movimiento y combate
 <!-- id: movimiento-combate -->
@@ -142,7 +142,7 @@ Contenido mínimo: punto de inicio, pradera con enemigos, cueva de las bombas, s
 ### 7.1 Layout
 <!-- id: overworld-layout -->
 
-Decidido el 2026-10-08. 8 zonas de ≈ 24 × 16 m (una "pantalla" con la cámara del remake, que abarca ≈ 20 × 10.5 m) en una grilla de 3 × 3 sin la esquina sureste. La cámara sigue libre; las zonas se distinguen por el terreno y el nombre de área del HUD.
+Decidido el 2026-10-08. 8 zonas de ≈ 24 × 16 m (una "pantalla" con la cámara, que abarca ≈ 26 × 14.5 m) en una grilla de 3 × 3 sin la esquina sureste. La cámara sigue libre; las zonas se distinguen por el terreno y el nombre de área del HUD.
 
 ```
             OESTE                 CENTRO                  ESTE
