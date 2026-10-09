@@ -2,17 +2,17 @@
   "checklist": [
     {
       "detail": "Una o dos salas con `Room` (cámara de sala) o zona abierta, según el layout.",
-      "done": false,
+      "done": true,
       "text": "Interior de la cueva"
     },
     {
       "detail": "Flag `ow_cave_bombs_chest`; tablilla que enseña a usarlas.",
-      "done": false,
+      "done": true,
       "text": "Cofre con la bolsa de bombas"
     },
     {
       "detail": "Justo después, para que el jugador pruebe la bomba enseguida.",
-      "done": false,
+      "done": true,
       "text": "Primer muro agrietado a la vista"
     }
   ],
@@ -25,7 +25,7 @@
     }
   ],
   "milestone": "m07",
-  "notes": "",
+  "notes": "Hecho 2026-10-08: zona abierta (sin `Room`). Cofre `ow_cave_bombs_chest` + tablilla (cue `cave_bombs`); muro de práctica `ow_cave_practice_wall` con vasija de corazones detrás; muro `ow_shrine_cracked_wall` en el paso al Santuario (el gating ya es real). Test `tests/test_cave.gd` (desde `start`: cofre, bomba con el botón, muro roto). Pulido pendiente: paredes del recoveco tapan al player.",
   "order": 4,
   "refs": [
     {
@@ -37,8 +37,8 @@
       "section": "items-mvp"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Desde el escenario `start`: conseguir las bombas y romper el primer muro.",
   "title": "Cueva de las bombas",
-  "updated_at": "2026-10-08T04:45:54.821Z"
+  "updated_at": "2026-10-09T00:03:11.998Z"
 }

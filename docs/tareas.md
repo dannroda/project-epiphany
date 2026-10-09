@@ -1285,7 +1285,7 @@ Hecho 2026-10-08: kit `data/kits/gray_kit.tres` (lo arma `src/tools/build_gray_k
 
 **Bloqueada por:** 6.2 Puertas; 6.3 Llaves de mazmorra y HUD; 6.4 Bloques por grilla; 6.5 Interruptores y cableado
 
-## M7 — Overworld  (3/8)
+## M7 — Overworld  (4/8)
 
 Zona chica con el gating bombas → escudo espejo → sello del templo, y los secretos.
 
@@ -1359,16 +1359,18 @@ Hecho 2026-10-08: `Portal` + `SaveManager.travel_to()` (pausa, fundido, `load_th
 
 **Bloqueada por:** 7.2 Blockout del overworld
 
-### 7.4 Cueva de las bombas · Pendiente
+### 7.4 Cueva de las bombas · Hecho
 
-- [ ] Interior de la cueva
+- [x] Interior de la cueva
   Una o dos salas con `Room` (cámara de sala) o zona abierta, según el layout.
-- [ ] Cofre con la bolsa de bombas
+- [x] Cofre con la bolsa de bombas
   Flag `ow_cave_bombs_chest`; tablilla que enseña a usarlas.
-- [ ] Primer muro agrietado a la vista
+- [x] Primer muro agrietado a la vista
   Justo después, para que el jugador pruebe la bomba enseguida.
 
 **Prueba:** Desde el escenario `start`: conseguir las bombas y romper el primer muro.
+
+**Notas:** Hecho 2026-10-08: zona abierta (sin `Room`). Cofre `ow_cave_bombs_chest` + tablilla (cue `cave_bombs`); muro de práctica `ow_cave_practice_wall` con vasija de corazones detrás; muro `ow_shrine_cracked_wall` en el paso al Santuario (el gating ya es real). Test `tests/test_cave.gd` (desde `start`: cofre, bomba con el botón, muro roto). Pulido pendiente: paredes del recoveco tapan al player.
 
 **Referencias:** `gdd.md#progresion-gating`, `gdd.md#items-mvp`
 

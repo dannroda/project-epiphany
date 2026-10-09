@@ -192,6 +192,8 @@ Decidido el 2026-10-08. 8 zonas de ≈ 24 × 16 m (una "pantalla" con la cámara
 
 **Cambio de escena (7.3):** un `Portal` (Area3D con `target_scene` y `target_spawn`) llama a `SaveManager.travel_to()`: pausa, fundido, carga en segundo plano con `ResourceLoader.load_threaded_request` (la imagen no se congela), cambio de escena, el player en el `SpawnPoint` pedido con la cámara enganchada encima (`TopDownCamera.snap_to_target`), autosave en `SaveManager.autosave_slot` y fundido de vuelta. `current_dungeon` lo pone y lo saca el nodo `Dungeon` de cada escena; el estado de cada mazmorra vive en `GameState.dungeons`, así que entrar y salir no lo pierde. El punto de llegada va siempre afuera del portal de la otra escena. Por ahora la puerta del templo lleva a la mazmorra gris (`dungeon_test`); en M8 apunta al templo.
 
+**Cueva de las bombas (7.4):** el cofre (`ow_cave_bombs_chest`) da la bolsa con bombas y la tablilla de al lado enseña a ponerlas (`data/dialogue/overworld.dialogue`, cue `cave_bombs`). En la esquina suroeste, un recoveco tapado por un muro agrietado de práctica (`ow_cave_practice_wall`) guarda una vasija de corazones: se prueba la bomba enseguida y sin riesgo. El muro del paso al Santuario (`ow_shrine_cracked_wall`) queda a la vista desde la entrada de la cueva. Pendiente de pulido: las paredes altas del recoveco tapan al player cuando pasa justo detrás.
+
 ## 8. Mazmorra — El Templo
 <!-- id: mazmorra -->
 
