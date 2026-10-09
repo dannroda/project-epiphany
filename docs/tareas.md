@@ -1452,7 +1452,7 @@ Hecho 2026-10-08: `start` ahora arranca en el overworld (escena principal del ju
 
 **Bloqueada por:** 7.6 Sello del templo
 
-## M8 — Contenido de mazmorra  (5/8)
+## M8 — Contenido de mazmorra  (6/8)
 
 Las 8 salas en bloques grises, el arco a mitad de camino, la llave del jefe.
 
@@ -1553,7 +1553,7 @@ Hecho 2026-10-08: `shield_skeleton.tscn` + `data/entities/shield_skeleton.tres`.
 
 **Bloqueada por:** 8.2 Esqueleto con escudo; 8.3 Salas 1–2: vestíbulo y hub
 
-### 8.6 Salas 6–7: ojos y puzzle combinado · En curso
+### 8.6 Salas 6–7: ojos y puzzle combinado · Hecho
 
 - [x] Sala 6: ojos-interruptor sobre un abismo
   Solo con flechas. Da la brújula y una llave chica. Caer al abismo: daño y vuelta a la entrada.
@@ -1570,14 +1570,16 @@ Hecho 2026-10-08: `shield_skeleton.tscn` + `data/entities/shield_skeleton.tres`.
 
 **Bloqueada por:** 5.3 Arco y flechas; 5.6 Escudo espejo y haz de luz; 8.5 Sala 5: arena y arco
 
-### 8.7 Sala 8: antesala · Pendiente
+### 8.7 Sala 8: antesala · En curso
 
-- [ ] Vasijas con corazones, tablilla y puerta del jefe
+- [x] Vasijas con corazones, tablilla y puerta del jefe
   La tablilla anticipa al jefe.
-- [ ] Checkpoint antes del jefe
+- [x] Checkpoint antes del jefe
   Reaparecer en la antesala al morir contra el jefe.
 
 **Prueba:** Abrir la puerta del jefe con su llave; morir adentro devuelve a la antesala.
+
+**Notas:** Hecho 2026-10-08: vasijas de corazones, tablilla (cue `antechamber`), puerta del jefe `d1_boss_door`. Checkpoint: `TopDownCamera._remember_entry` ignora la sala del jefe, así que morir ahí reaparece en la antesala. Escenarios `pre_boss` y `boss_key_door_locked` generados (8.8 los valida). Tests en `tests/test_temple.gd`.
 
 **Referencias:** `gdd.md#mazmorra`
 

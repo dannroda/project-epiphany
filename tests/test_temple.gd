@@ -325,3 +325,40 @@ func test_rooms_6_7_with_the_bow() -> void:
 	await _open_chest(^"BossKeyChest")
 	assert_eq(state.current_dungeon_state().has_boss_key, true, "la llave del jefe")
 	state.reset()
+
+
+func test_room_8_boss_door_and_checkpoint() -> void:
+	await _scenario("pre_boss")
+	var camera := level.get_node(^"TopDownCamera") as TopDownCamera
+	assert_eq(camera.room, level.get_node(^"Antesala"), "pre_boss arranca en la antesala")
+	assert_eq(state.current_dungeon_state().has_boss_key, true)
+	var door := _door(^"BossDoor")
+	door.interactable.interact(player)
+	assert_eq(door.is_open, true, "la llave del jefe abre su puerta")
+	assert_eq(state.current_dungeon_state().has_boss_key, true, "sin gastarla")
+	await tree.create_timer(0.8).timeout
+	player.global_position = Vector3(24, 0, 21)
+	await tree.create_timer(1.2).timeout
+	assert_eq(camera.room, level.get_node(^"Jefe"), "entra a la guarida")
+	player.health.damage(100)
+	var until := Time.get_ticks_msec() + 8000
+	while Time.get_ticks_msec() < until and (tree.current_scene == level or tree.get_first_node_in_group(&"player") == null or (tree.get_first_node_in_group(&"player") as PlayerCharacter).is_dead):
+		await tree.process_frame
+	await tree.create_timer(1.0).timeout
+	level = tree.current_scene
+	player = tree.get_first_node_in_group(&"player") as PlayerCharacter
+	camera = level.get_node(^"TopDownCamera") as TopDownCamera
+	assert_eq(camera.room, level.get_node(^"Antesala"), "morir contra el jefe devuelve a la antesala")
+	assert_eq(_door(^"BossDoor").is_open, true, "con la puerta del jefe abierta")
+	state.reset()
+
+
+func test_room_8_boss_door_needs_its_key() -> void:
+	await _scenario("pre_boss")
+	state.current_dungeon_state().has_boss_key = false
+	_door(^"BossDoor").interactable.interact(player)
+	assert_eq(_door(^"BossDoor").is_open, false, "sin la llave del jefe no abre")
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	while stack.is_open():
+		stack.pop()
+	state.reset()

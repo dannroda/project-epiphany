@@ -2,3 +2,8 @@
 Inscripción: Este templo no guarda a un dios. Guarda una puerta cerrada. [ID:temple_entrance_1]
 Inscripción: El sello del centro solo cede ante quien resuelve lo que el templo esconde. [ID:temple_entrance_2]
 => END
+
+~ antechamber
+Inscripción: Más allá duerme el guardián. Cuando abre su único ojo, el templo entero mira con él. [ID:temple_antechamber_1]
+Inscripción: Lo que vuela lo hace parpadear. Lo que brilla, se le puede devolver. [ID:temple_antechamber_2]
+=> END

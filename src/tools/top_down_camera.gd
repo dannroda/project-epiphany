@@ -177,7 +177,7 @@ func enter_room(new_room: Room) -> void:
 		_mask_around(room.bounds())
 		focus = _clamp(target_node.global_position)
 		global_position = focus + offset
-		GameState.room_entry = target_node.global_position
+		_remember_entry()
 		return
 	var step := room.bounds().get_center() - previous.bounds().get_center()
 	var direction := Vector3(signf(step.x), 0.0, 0.0) if absf(step.x) > absf(step.y) else Vector3(0.0, 0.0, signf(step.y))
@@ -190,7 +190,13 @@ func enter_room(new_room: Room) -> void:
 	tween.tween_callback(func() -> void:
 		transitioning = false
 		_mask_around(room.bounds())
-		GameState.room_entry = target_node.global_position)
+		_remember_entry())
+
+
+## Donde se reaparece al morir. La sala del jefe no cuenta: se vuelve a la antesala.
+func _remember_entry() -> void:
+	if not room.boss_room:
+		GameState.room_entry = target_node.global_position
 
 
 func _physics_process(delta: float) -> void:
