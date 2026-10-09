@@ -1285,7 +1285,7 @@ Hecho 2026-10-08: kit `data/kits/gray_kit.tres` (lo arma `src/tools/build_gray_k
 
 **Bloqueada por:** 6.2 Puertas; 6.3 Llaves de mazmorra y HUD; 6.4 Bloques por grilla; 6.5 Interruptores y cableado
 
-## M7 — Overworld  (4/8)
+## M7 — Overworld  (5/8)
 
 Zona chica con el gating bombas → escudo espejo → sello del templo, y los secretos.
 
@@ -1378,16 +1378,18 @@ Hecho 2026-10-08: `Portal` + `SaveManager.travel_to()` (pausa, fundido, `load_th
 
 **Bloqueada por:** 5.4 Bombas; 5.5 Muros agrietados; 7.2 Blockout del overworld
 
-### 7.5 Santuario del escudo espejo · Pendiente
+### 7.5 Santuario del escudo espejo · Hecho
 
-- [ ] Santuario detrás del muro agrietado
+- [x] Santuario detrás del muro agrietado
   Sala chica con un desafío corto antes del cofre (combate o bloques).
-- [ ] Cofre grande con el escudo espejo
+- [x] Cofre grande con el escudo espejo
   Se equipa solo; *item get* explica que refleja la luz.
-- [ ] Haz de luz de práctica
+- [x] Haz de luz de práctica
   Un cristal en el santuario para enseñar el reflejo antes del sello.
 
 **Prueba:** Desde el escenario `bombs_only`: llegar al santuario, conseguir el escudo y activar el cristal de práctica.
+
+**Notas:** Hecho 2026-10-08: bloque → interruptor `ow_shrine_switch` → reja del cofre grande (`ow_shrine_mirror_chest`, escudo espejo con `equip_on_get`). Haz de práctica: cristal `ow_shrine_shortcut` abre la reja del atajo a la entrada del templo (solo desde adentro). Escenario `bombs_only`. Arreglos de paso: `Gate` no se abría al cargar con el cableado ya satisfecho y `LightReceiver` con flag se restauraba tarde y sin avisar. Test `tests/test_shrine.gd`.
 
 **Referencias:** `gdd.md#progresion-gating`, `gdd.md#items-mvp`
 

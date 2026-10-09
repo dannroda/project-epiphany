@@ -5,3 +5,7 @@ Apuntá con el stick derecho o el mouse. Si tenés un objetivo fijado, la flecha
 ~ bomb_bag
 Coloca una bomba delante tuyo. Rompe muros agrietados y empuja lo que está cerca. [ID:get_bomb_bag_1]
 => END
+
+~ shield_mirror
+Se equipa solo. Bloqueá dentro de un haz de luz y el espejo lo desvía hacia donde mirás; mientras lo atajás, el stick izquierdo te gira. [ID:get_shield_mirror_1]
+=> END

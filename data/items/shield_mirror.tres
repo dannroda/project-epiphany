@@ -16,3 +16,4 @@ icon = ExtResource("2_26xnl")
 category = 1
 protects_against = Array[StringName]([&"physical"])
 equip_scene = ExtResource("1_owpql")
+equip_on_get = true

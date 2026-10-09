@@ -73,6 +73,21 @@ script = ExtResource("1_ox7fe")
 id = &"ow_shrine_cracked_wall"
 description = "Muro agrietado entre la Cueva y el Santuario roto"
 
+[sub_resource type="Resource" id="Resource_shrine_switch"]
+script = ExtResource("1_ox7fe")
+id = &"ow_shrine_switch"
+description = "Santuario: bloque en el interruptor (abre el recoveco del cofre)"
+
+[sub_resource type="Resource" id="Resource_shrine_chest"]
+script = ExtResource("1_ox7fe")
+id = &"ow_shrine_mirror_chest"
+description = "Santuario: cofre grande del escudo espejo abierto"
+
+[sub_resource type="Resource" id="Resource_shrine_shortcut"]
+script = ExtResource("1_ox7fe")
+id = &"ow_shrine_shortcut"
+description = "Santuario: cristal de práctica encendido (abre el atajo a la entrada del templo)"
+
 [resource]
 script = ExtResource("2_3vvdp")
-definitions = Array[ExtResource("1_ox7fe")]([SubResource("Resource_mrp87"), SubResource("Resource_tablethint"), SubResource("Resource_crackedwall"), SubResource("Resource_sbwall"), SubResource("Resource_testdoor"), SubResource("Resource_testblock"), SubResource("Resource_testchest"), SubResource("Resource_gray_switch"), SubResource("Resource_gray_key_chest"), SubResource("Resource_gray_locked"), SubResource("Resource_gray_compass_chest"), SubResource("Resource_cave_chest"), SubResource("Resource_cave_practice"), SubResource("Resource_shrine_wall")])
+definitions = Array[ExtResource("1_ox7fe")]([SubResource("Resource_mrp87"), SubResource("Resource_tablethint"), SubResource("Resource_crackedwall"), SubResource("Resource_sbwall"), SubResource("Resource_testdoor"), SubResource("Resource_testblock"), SubResource("Resource_testchest"), SubResource("Resource_gray_switch"), SubResource("Resource_gray_key_chest"), SubResource("Resource_gray_locked"), SubResource("Resource_gray_compass_chest"), SubResource("Resource_cave_chest"), SubResource("Resource_cave_practice"), SubResource("Resource_shrine_wall"), SubResource("Resource_shrine_switch"), SubResource("Resource_shrine_chest"), SubResource("Resource_shrine_shortcut")])

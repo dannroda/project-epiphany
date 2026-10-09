@@ -93,9 +93,9 @@ func give(item: ItemData, amount: int = 1) -> void:
 				inventory.add(item.bundled.id, item.bundled_amount * amount)
 
 
-## Primer equipo de una categoría: se equipa. Primer usable: va al primer botón libre.
+## Primer equipo de una categoría (o una mejora con `equip_on_get`): se equipa. Primer usable: va al primer botón libre.
 func _auto_place(item: ItemData) -> void:
-	if item.is_equipment() and equipment.get(item.category, &"") == &"":
+	if item.is_equipment() and (item.equip_on_get or equipment.get(item.category, &"") == &""):
 		equip(item)
 	elif item.category == ItemData.Category.USABLE and not item_buttons.has(item.id):
 		var free := item_buttons.find(&"")

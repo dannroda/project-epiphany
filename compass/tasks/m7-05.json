@@ -2,17 +2,17 @@
   "checklist": [
     {
       "detail": "Sala chica con un desafío corto antes del cofre (combate o bloques).",
-      "done": false,
+      "done": true,
       "text": "Santuario detrás del muro agrietado"
     },
     {
       "detail": "Se equipa solo; *item get* explica que refleja la luz.",
-      "done": false,
+      "done": true,
       "text": "Cofre grande con el escudo espejo"
     },
     {
       "detail": "Un cristal en el santuario para enseñar el reflejo antes del sello.",
-      "done": false,
+      "done": true,
       "text": "Haz de luz de práctica"
     }
   ],
@@ -25,7 +25,7 @@
     }
   ],
   "milestone": "m07",
-  "notes": "",
+  "notes": "Hecho 2026-10-08: bloque → interruptor `ow_shrine_switch` → reja del cofre grande (`ow_shrine_mirror_chest`, escudo espejo con `equip_on_get`). Haz de práctica: cristal `ow_shrine_shortcut` abre la reja del atajo a la entrada del templo (solo desde adentro). Escenario `bombs_only`. Arreglos de paso: `Gate` no se abría al cargar con el cableado ya satisfecho y `LightReceiver` con flag se restauraba tarde y sin avisar. Test `tests/test_shrine.gd`.",
   "order": 5,
   "refs": [
     {
@@ -37,8 +37,8 @@
       "section": "items-mvp"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Desde el escenario `bombs_only`: llegar al santuario, conseguir el escudo y activar el cristal de práctica.",
   "title": "Santuario del escudo espejo",
-  "updated_at": "2026-10-08T04:45:55.373Z"
+  "updated_at": "2026-10-09T00:12:12.647Z"
 }

@@ -194,6 +194,8 @@ Decidido el 2026-10-08. 8 zonas de ≈ 24 × 16 m (una "pantalla" con la cámara
 
 **Cueva de las bombas (7.4):** el cofre (`ow_cave_bombs_chest`) da la bolsa con bombas y la tablilla de al lado enseña a ponerlas (`data/dialogue/overworld.dialogue`, cue `cave_bombs`). En la esquina suroeste, un recoveco tapado por un muro agrietado de práctica (`ow_cave_practice_wall`) guarda una vasija de corazones: se prueba la bomba enseguida y sin riesgo. El muro del paso al Santuario (`ow_shrine_cracked_wall`) queda a la vista desde la entrada de la cueva. Pendiente de pulido: las paredes altas del recoveco tapan al player cuando pasa justo detrás.
 
+**Santuario (7.5):** detrás del muro agrietado. Desafío corto: un bloque al interruptor (`ow_shrine_switch`) baja la reja del recoveco norte, donde está el cofre grande del escudo espejo (`ow_shrine_mirror_chest`; `equip_on_get` hace que se equipe solo aunque haya otro escudo, y su *item get* explica el reflejo). Haz de práctica: la fuente de la esquina noreste apunta al sur; bloqueando en diagonal (girando con el stick) el espejo lo manda al oeste, al cristal (`ow_shrine_shortcut`, con latch), que abre la reja del atajo a la Entrada del templo: solo se abre desde adentro. Las rejas (`Gate`) y los cristales con flag quedan como estaban al cargar la partida. Escenario `bombs_only`: inventario inicial + bombas, en la cueva.
+
 ## 8. Mazmorra — El Templo
 <!-- id: mazmorra -->
 

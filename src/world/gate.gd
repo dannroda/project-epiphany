@@ -21,13 +21,20 @@ func _ready() -> void:
 	_wiring.changed.connect(func(satisfied: bool) -> void:
 		if satisfied:
 			open())
+	if _wiring.is_satisfied():
+		open(false)
 
 
-func open() -> void:
+## Sin animación: ya estaba abierta al cargar la escena.
+func open(animate := true) -> void:
 	if is_open:
 		return
 	is_open = true
 	$CollisionShape3D.set_deferred(&"disabled", true)
+	if not animate:
+		position.y -= drop
+		opened.emit()
+		return
 	var tween := create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	tween.tween_property(self, "position:y", position.y - drop, duration)
 	Feel.sfx(&"secret", global_position)

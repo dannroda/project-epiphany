@@ -11,6 +11,8 @@ enum Category { SWORD, SHIELD, ARMOR, USABLE, AMMO, DUNGEON, UPGRADE }
 @export var category: Category
 @export var max_stack: int = 1
 @export var equip_scene: PackedScene
+## Mejora de equipo: al conseguirla se equipa aunque la ranura ya tenga algo.
+@export var equip_on_get := false
 @export var behavior: ItemBehavior
 @export var modifiers: Array[ItemModifier] = []
 ## Viene con munición al conseguirlo (la bolsa trae bombas, el arco flechas).

@@ -39,6 +39,8 @@ func _ready() -> void:
 		if value == true and not lit:
 			_set_lit(true, false))
 	add_child(_persistent)
+	if _persistent.value == true:
+		_set_lit(true, false)
 
 
 func _get_configuration_warnings() -> PackedStringArray:
@@ -65,12 +67,12 @@ func _set_lit(on: bool, announce: bool) -> void:
 	_show(on)
 	if on and _persistent and latch:
 		_persistent.value = true
-	if announce:
-		if on:
+	if on:
+		if announce:
 			Feel.sfx(&"secret" if latch else &"reflect", global_position)
-			activated.emit()
-		else:
-			deactivated.emit()
+		activated.emit()
+	else:
+		deactivated.emit()
 
 
 func _show(on: bool) -> void:
