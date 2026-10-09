@@ -11,11 +11,14 @@ signal opened
 @export var condition: Wiring.Condition = Wiring.Condition.ALL
 ## Si es false, se vuelve a levantar cuando la condición deja de cumplirse.
 @export var stays_open := true
+## La primera vez que la abren sus interruptores, el juego se pausa y la cámara la muestra.
+@export var reveal_on_open := false
 
 var is_open := false
 var _wiring: Wiring
 var _closed_y := 0.0
 var _tween: Tween
+var _revealed := false
 
 
 func _ready() -> void:
@@ -24,7 +27,10 @@ func _ready() -> void:
 		return
 	_wiring = Wiring.create(self, switches, condition)
 	_wiring.changed.connect(func(satisfied: bool) -> void:
-		if satisfied:
+		if satisfied and reveal_on_open and not _revealed:
+			_revealed = true
+			TopDownCamera.reveal(self, open)
+		elif satisfied:
 			open()
 		elif not stays_open:
 			close())

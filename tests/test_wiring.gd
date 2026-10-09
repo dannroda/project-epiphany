@@ -69,3 +69,48 @@ func test_block_mode_player_holds_and_block_solves() -> void:
 		await tree.physics_frame
 	assert_eq(switch.active, true, "y queda resuelto")
 	state.reset()
+
+
+func test_reveal_pauses_and_shows_only_the_first_time() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	state.reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	for i in 3:
+		await tree.physics_frame
+	var level := tree.current_scene
+	level.get_node(^"Skeleton").free()
+	var camera: TopDownCamera = level.get_node(^"TopDownCamera")
+	var door: Door = level.get_node(^"NicheDoor")
+	door.reveal_on_open = true
+	door.stays_open = false
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	var block: PushBlock = level.get_node(^"Block")
+	var block_switch: FloorSwitch = level.get_node(^"BlockSwitch")
+	var player_switch: FloorSwitch = level.get_node(^"PlayerSwitch")
+	player.global_position = Vector3(-10, 0.25, -12)
+	while camera.room != level.get_node(^"RoomB") or camera.transitioning:
+		await tree.physics_frame
+	await tree.create_timer(0.2).timeout
+	block.global_position = block_switch.global_position
+	player.global_position = player_switch.global_position
+	var until := Time.get_ticks_msec() + 2000
+	while Time.get_ticks_msec() < until and not camera.revealing:
+		await tree.physics_frame
+	assert_true(camera.revealing, "la cámara muestra la puerta")
+	assert_true(tree.paused, "con el juego en pausa")
+	while camera.revealing:
+		await tree.process_frame
+	assert_eq(door.is_open, true, "la abrió")
+	assert_eq(tree.paused, false, "y sigue el juego")
+	player.global_position = player_switch.global_position + Vector3(0, 0, 3)
+	for i in 6:
+		await tree.physics_frame
+	assert_eq(door.is_open, false, "se cierra al bajarse")
+	player.global_position = player_switch.global_position
+	for i in 6:
+		await tree.physics_frame
+	assert_eq(camera.revealing, false, "la segunda vez no la muestra")
+	assert_eq(door.is_open, true)
+	state.reset()

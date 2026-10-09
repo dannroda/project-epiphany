@@ -19,6 +19,13 @@ extends Camera3D
 @export var aim_look_ahead := 3.0
 @export var look_ahead_speed := 4.0
 
+@export_group("Mostrar lo activado")
+@export var reveal_pan_time := 0.6
+## Cuánto se queda mirando después de abrir.
+@export var reveal_hold := 0.9
+## Se acerca a lo activado: fracción del `offset` normal.
+@export_range(0.3, 1.0) var reveal_zoom := 0.6
+
 @export_group("Salas")
 ## Cuánto tarda el deslizamiento al pasar de una sala a otra.
 @export var transition_time := 0.5
@@ -41,6 +48,7 @@ var trauma := 0.0
 ## Sala actual; null = overworld (seguimiento libre).
 var room: Room
 var transitioning := false
+var revealing := false
 ## Dónde mira la cámara (sin la sacudida); lo usan los tests y el overlay.
 var focus := Vector3.ZERO
 var _shake_time := 0.0
@@ -223,7 +231,7 @@ func _remember_entry() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if not target_node or transitioning:
+	if not target_node or transitioning or revealing:
 		return
 	_update_room()
 	if transitioning:
@@ -246,6 +254,47 @@ func _physics_process(delta: float) -> void:
 		focus = _clamp(focus)
 	global_position = global_position.lerp(focus + offset, 1.0 - exp(-smooth_speed * delta))
 	DebugOverlay.watch("camera/focus_offset", (focus - player_position).snappedf(0.01))
+
+
+## Pausa, lleva la cámara a `target`, corre `action` (abrir la puerta…), espera y vuelve al player. Si no hay
+## cámara o el juego ya está en pausa, solo corre `action`.
+static func reveal(target: Node3D, action: Callable) -> void:
+	var camera := target.get_tree().get_first_node_in_group(&"room_camera") as TopDownCamera
+	if camera == null or camera.revealing or camera.transitioning or target.get_tree().paused or SaveManager.loading:
+		action.call()
+		return
+	await camera._reveal(target, action)
+
+
+func _exit_tree() -> void:
+	if revealing:
+		revealing = false
+		get_tree().paused = false
+
+
+func _reveal(target: Node3D, action: Callable) -> void:
+	var tree := get_tree()
+	var target_mode := target.process_mode
+	revealing = true
+	process_mode = PROCESS_MODE_ALWAYS
+	target.process_mode = PROCESS_MODE_ALWAYS
+	tree.paused = true
+	var back := global_position
+	var point := target.global_position
+	point.y = target_node.global_position.y
+	var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(self, "global_position", point + offset * reveal_zoom, reveal_pan_time)
+	await tween.finished
+	action.call()
+	await tree.create_timer(reveal_hold, true).timeout
+	tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(self, "global_position", back, reveal_pan_time)
+	await tween.finished
+	if is_instance_valid(target):
+		target.process_mode = target_mode
+	process_mode = PROCESS_MODE_INHERIT
+	tree.paused = false
+	revealing = false
 
 
 ## Sacudida por trauma: suma, decae sola y mueve solo el encuadre (h/v offset), no la cámara.

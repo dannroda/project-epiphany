@@ -38,6 +38,8 @@ const TEXTS: DialogueResource = preload("res://data/dialogue/doors.dialogue")
 @export var condition: Wiring.Condition = Wiring.Condition.ALL
 ## Si es false, se vuelve a cerrar cuando la condición deja de cumplirse.
 @export var stays_open := true
+## La primera vez que la abre un interruptor, el juego se pausa y la cámara la muestra.
+@export var reveal_on_open := false
 @export var open_time := 0.5
 
 @onready var leaf: Node3D = %Leaf
@@ -49,6 +51,7 @@ var _closed_y := 0.0
 var _tween: Tween
 var _persistent: PersistentFlag
 var _wiring: Wiring
+var _revealed := false
 
 
 func _ready() -> void:
@@ -84,7 +87,10 @@ func _ready() -> void:
 		Kind.SWITCH:
 			_wiring = Wiring.create(self, switches, condition)
 			_wiring.changed.connect(func(satisfied: bool) -> void:
-				if satisfied:
+				if satisfied and reveal_on_open and not _revealed:
+					_revealed = true
+					TopDownCamera.reveal(self, open)
+				elif satisfied:
 					open()
 				elif not stays_open:
 					close())

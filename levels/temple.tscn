@@ -303,6 +303,7 @@ script = ExtResource("10_w7c0a")
 kind = 3
 switches = Array[NodePath]([NodePath("../VestibuleSwitch")])
 stays_open = false
+reveal_on_open = true
 
 [node name="VestibuleTablet" type="StaticBody3D" parent="." unique_id=170676665 instance=ExtResource("11_pu13t")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 69)
@@ -542,6 +543,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6, 
 script = ExtResource("26_f8jkx")
 switches = Array[NodePath]([NodePath("../PuzzleSwitch")])
 stays_open = false
+reveal_on_open = true
 
 [node name="PuzzleCrystal" type="StaticBody3D" parent="." unique_id=2074486630 instance=ExtResource("43_8u32y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 10)

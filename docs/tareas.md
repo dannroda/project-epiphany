@@ -1750,7 +1750,7 @@ Importar el rig del ojo con manos y armar las fases 1 y 2 con LimboAI.
 
 **Notas:** Sin flag por ahora porque no hay jefe; 9.6 le pone d1_boss_defeated.
 
-## M10 — Terminación  (11/15)
+## M10 — Terminación  (12/16)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -2004,6 +2004,14 @@ Skills: `workflows:itch-publish`.
 - [x] Tests, prueba en el templo y GDD
 
 **Notas:** ONCE sigue disponible (overworld y mazmorra gris lo usan); se elige por puzzle.
+
+### 10.16 Mostrar con la cámara lo que activa un interruptor · Hecho
+
+**Prioridad:** media · **Etiquetas:** `camara`, `puzzles`
+
+- [x] TopDownCamera.reveal: pausa, se acerca, abre, vuelve
+- [x] reveal_on_open opcional en Door y Gate (solo la primera vez)
+- [x] Sin reveal al cargar partida; tests, captura y GDD
 
 ## Listas
 

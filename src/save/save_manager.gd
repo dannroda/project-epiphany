@@ -18,6 +18,8 @@ const SCENARIO_SLOT := 98
 ## Ranura de la partida en curso: el autosave y el guardado rápido van ahí.
 var current_slot := 0
 var traveling := false
+## Mientras se aplica una partida: los objetos reciben sus flags pero no es algo que el jugador hizo.
+var loading := false
 
 
 func _ready() -> void:
@@ -197,11 +199,13 @@ func _load_path(path: String) -> Error:
 	for problem in SaveCodec.validate(cfg):
 		Log.warning(&"save", problem)
 	_migrate(cfg, cfg.get_value("meta", "version", 0))
+	loading = true
 	GameState.read_from(cfg)
 	GameState.save_tampered = SaveCodec.is_tampered(cfg)
 	if GameState.save_tampered:
 		Log.warning(&"save", "La partida fue modificada a mano:", path)
 	await _restore_player()
+	loading = false
 	Log.success(&"save", "Partida cargada:", path)
 	Log.debug(&"save", "Inventario:", ", ".join(GameState.inventory.ids().map(func(id: StringName) -> String: return "%s=%d" % [id, GameState.inventory.count(id)])))
 	return OK

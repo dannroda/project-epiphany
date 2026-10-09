@@ -102,6 +102,9 @@ func _push(block_name: NodePath, directions: Array) -> void:
 	for direction in directions:
 		assert_true(block.try_push(direction), "%s avanza hacia %s" % [block_name, direction])
 		await tree.create_timer(0.6).timeout
+	var camera := level.get_node(^"TopDownCamera") as TopDownCamera
+	while camera.revealing:
+		await tree.process_frame
 
 
 func _kill(names: Array) -> void:
