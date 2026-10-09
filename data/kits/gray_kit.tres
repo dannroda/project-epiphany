@@ -1,4 +1,4 @@
-[gd_resource type="MeshLibrary" format=4]
+[gd_resource type="MeshLibrary" format=4 uid="uid://cgeqghyjch420"]
 
 [ext_resource type="Material" path="res://data/kits/materials/floor.tres" id="1_w2m62"]
 [ext_resource type="Material" path="res://data/kits/materials/wall.tres" id="2_21ljt"]

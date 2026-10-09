@@ -1,45 +1,38 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://cjddyr8q6b3o0"]
 
-[ext_resource type="Texture2D" path="res://assets/kenney_skyboxes/Skyboxes/skybox-morning.png" id="1_qyxw2"]
-[ext_resource type="MeshLibrary" path="res://data/kits/gray_kit.tres" id="2_rqbxp"]
-[ext_resource type="Script" path="res://src/world/area_zone.gd" id="3_rqerd"]
-[ext_resource type="Script" path="res://src/world/spawn_point.gd" id="4_cr2by"]
-[ext_resource type="Script" path="res://src/world/grass_patch.gd" id="5_n78bg"]
-[ext_resource type="PackedScene" path="res://src/entities/enemy.tscn" id="6_d356v"]
+[ext_resource type="Texture2D" uid="uid://bs6ggwyw5mp2m" path="res://assets/kenney_skyboxes/Skyboxes/skybox-morning.png" id="1_qyxw2"]
+[ext_resource type="MeshLibrary" uid="uid://cgeqghyjch420" path="res://data/kits/gray_kit.tres" id="2_rqbxp"]
+[ext_resource type="Script" uid="uid://ch0f7xp8r0b66" path="res://src/world/area_zone.gd" id="3_rqerd"]
+[ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="4_cr2by"]
+[ext_resource type="Script" uid="uid://x60poi8g2tqu" path="res://src/world/grass_patch.gd" id="5_n78bg"]
+[ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="6_d356v"]
 [ext_resource type="PackedScene" path="res://src/world/physics_box.tscn" id="9_axpip"]
 [ext_resource type="PackedScene" path="res://src/world/physics_rock.tscn" id="10_vrnmo"]
-[ext_resource type="Script" path="res://src/world/overworld_map.gd" id="11_gsck2"]
-[ext_resource type="Texture2D" path="res://assets/ui/maps/overworld.png" id="12_fxxkd"]
-[ext_resource type="PackedScene" path="res://player/player.tscn" id="13_gd0nv"]
-[ext_resource type="Script" path="res://src/world/portal.gd" id="14_5vrew"]
+[ext_resource type="Script" uid="uid://dlv83hn042mxv" path="res://src/world/overworld_map.gd" id="11_gsck2"]
+[ext_resource type="Texture2D" uid="uid://cvlqarrqj73hn" path="res://assets/ui/maps/overworld.png" id="12_fxxkd"]
+[ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="13_gd0nv"]
+[ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="14_5vrew"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="15_3hrjb"]
-[ext_resource type="Script" path="res://src/tools/top_down_camera.gd" id="16_372gu"]
+[ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="16_372gu"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="17_lc5as"]
-[ext_resource type="Resource" path="res://data/items/bomb_bag.tres" id="17_vrnmo"]
+[ext_resource type="Resource" uid="uid://dwsn6cvxqrfpa" path="res://data/items/bomb_bag.tres" id="17_vrnmo"]
 [ext_resource type="PackedScene" path="res://src/world/tablet.tscn" id="18_gsck2"]
-[ext_resource type="Resource" path="res://data/dialogue/overworld.dialogue" id="20_gd0nv"]
+[ext_resource type="Resource" uid="uid://b353kh0linjkb" path="res://data/dialogue/overworld.dialogue" id="20_gd0nv"]
 [ext_resource type="PackedScene" path="res://src/world/cracked_wall.tscn" id="21_uay0b"]
 [ext_resource type="PackedScene" path="res://src/world/floor_switch.tscn" id="22_gvf0k"]
 [ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="23_372gu"]
 [ext_resource type="PackedScene" path="res://src/world/push_block.tscn" id="24_v1yde"]
-[ext_resource type="Resource" path="res://data/drops/pot_hearts.tres" id="25_v1yde"]
+[ext_resource type="Resource" uid="uid://dteshjodcq26c" path="res://data/drops/pot_hearts.tres" id="25_v1yde"]
 [ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="26_iip2e"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_mirror.tscn" id="28_gvf0k"]
 [ext_resource type="Resource" path="res://data/items/shield_mirror.tres" id="29_mweuj"]
 [ext_resource type="PackedScene" path="res://src/world/temple_seal.tscn" id="30_372gu"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_source.tscn" id="30_xv8lf"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_receiver.tscn" id="31_fe77v"]
-[ext_resource type="Script" path="res://src/world/cracked_wall.gd" id="31_jqovx"]
-[ext_resource type="Script" path="res://src/world/chest.gd" id="32_naip4"]
-[ext_resource type="Script" path="res://src/world/tremor_zone.gd" id="32_v1yde"]
-[ext_resource type="Resource" path="res://data/items/potion.tres" id="33_yqe63"]
-[ext_resource type="Script" path="res://src/world/tablet.gd" id="34_01rmd"]
-[ext_resource type="Script" path="res://src/world/floor_switch.gd" id="35_65jsb"]
-[ext_resource type="Script" path="res://src/world/push_block.gd" id="36_xd5ei"]
-[ext_resource type="Script" path="res://src/world/gate.gd" id="37_31mpm"]
+[ext_resource type="Script" uid="uid://0xqmp1x84umd" path="res://src/world/tremor_zone.gd" id="32_v1yde"]
+[ext_resource type="Resource" uid="uid://cvf15473ufqvp" path="res://data/items/potion.tres" id="33_yqe63"]
 [ext_resource type="Resource" path="res://data/items/armor_chainmail.tres" id="38_khlv8"]
 [ext_resource type="PackedScene" path="res://src/world/eye_switch.tscn" id="39_ailnf"]
-[ext_resource type="Script" path="res://src/world/eye_switch.gd" id="40_cgtqd"]
 [ext_resource type="Resource" path="res://data/items/quiver_big.tres" id="41_csg56"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7se6l"]
@@ -361,74 +354,58 @@ script = ExtResource("32_v1yde")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TempleTremors" unique_id=1555930064]
 shape = SubResource("BoxShape3D_7se6l")
 
-[node name="GrottoCrackedWall" type="StaticBody3D" parent="." unique_id=454893272 instance=ExtResource("21_uay0b")]
+[node name="GrottoCrackedWall" parent="." unique_id=454893272 instance=ExtResource("21_uay0b")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12, 0, 16)
-script = ExtResource("31_jqovx")
 flag = &"ow_grotto_cracked_wall"
 
-[node name="GrottoChest" type="StaticBody3D" parent="." unique_id=189653942 instance=ExtResource("15_3hrjb")]
+[node name="GrottoChest" parent="." unique_id=189653942 instance=ExtResource("15_3hrjb")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -30, 0, 16)
-script = ExtResource("32_naip4")
 item = ExtResource("33_yqe63")
 flag = &"ow_grotto_chest"
 
-[node name="GrottoTablet" type="StaticBody3D" parent="." unique_id=1626314699 instance=ExtResource("18_gsck2")]
+[node name="GrottoTablet" parent="." unique_id=1626314699 instance=ExtResource("18_gsck2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 0, 12)
-script = ExtResource("34_01rmd")
 dialogue = ExtResource("20_gd0nv")
 cue = "grotto_hint"
 
-[node name="GroveSwitchA" type="Area3D" parent="." unique_id=1746464679 instance=ExtResource("22_gvf0k")]
+[node name="GroveSwitchA" parent="." unique_id=1746464679 instance=ExtResource("22_gvf0k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 4)
-script = ExtResource("35_65jsb")
 mode = 1
 flag = &"ow_grove_switch_a"
 
-[node name="GroveBlockA" type="AnimatableBody3D" parent="." unique_id=787911620 instance=ExtResource("24_v1yde")]
+[node name="GroveBlockA" parent="." unique_id=787911620 instance=ExtResource("24_v1yde")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 0)
-collision_layer = 9
-collision_mask = 0
-script = ExtResource("36_xd5ei")
 solved_flag = &"ow_grove_switch_a"
 solved_position = Vector3(28, 0, 4)
 
-[node name="GroveSwitchB" type="Area3D" parent="." unique_id=1337594160 instance=ExtResource("22_gvf0k")]
+[node name="GroveSwitchB" parent="." unique_id=1337594160 instance=ExtResource("22_gvf0k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 4)
-script = ExtResource("35_65jsb")
 mode = 1
 flag = &"ow_grove_switch_b"
 
-[node name="GroveBlockB" type="AnimatableBody3D" parent="." unique_id=1861637916 instance=ExtResource("24_v1yde")]
+[node name="GroveBlockB" parent="." unique_id=1861637916 instance=ExtResource("24_v1yde")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 2)
-collision_layer = 9
-collision_mask = 0
-script = ExtResource("36_xd5ei")
 solved_flag = &"ow_grove_switch_b"
 solved_position = Vector3(32, 0, 4)
 
-[node name="GroveGate" type="StaticBody3D" parent="." unique_id=919868571 instance=ExtResource("26_iip2e")]
+[node name="GroveGate" parent="." unique_id=919868571 instance=ExtResource("26_iip2e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, -2)
-script = ExtResource("37_31mpm")
 switches = Array[NodePath]([NodePath("../GroveSwitchA"), NodePath("../GroveSwitchB")])
 
-[node name="GroveChest" type="StaticBody3D" parent="." unique_id=964683035 instance=ExtResource("15_3hrjb")]
+[node name="GroveChest" parent="." unique_id=964683035 instance=ExtResource("15_3hrjb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, -5)
-script = ExtResource("32_naip4")
 item = ExtResource("38_khlv8")
 flag = &"ow_grove_chest"
 
-[node name="CliffEye" type="StaticBody3D" parent="." unique_id=953284347 instance=ExtResource("39_ailnf")]
+[node name="CliffEye" parent="." unique_id=953284347 instance=ExtResource("39_ailnf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, -21)
-script = ExtResource("40_cgtqd")
 flag = &"ow_cliff_eye"
 
-[node name="CliffGate" type="StaticBody3D" parent="." unique_id=1552967466 instance=ExtResource("26_iip2e")]
+[node name="CliffGate" parent="." unique_id=1552967466 instance=ExtResource("26_iip2e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, -14)
-script = ExtResource("37_31mpm")
 switches = Array[NodePath]([NodePath("../CliffEye")])
 
-[node name="QuiverChest" type="StaticBody3D" parent="." unique_id=2108365836 instance=ExtResource("15_3hrjb")]
+[node name="QuiverChest" parent="." unique_id=2108365836 instance=ExtResource("15_3hrjb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, 0, -11)
-script = ExtResource("32_naip4")
 item = ExtResource("41_csg56")
 flag = &"ow_cliff_quiver_chest"

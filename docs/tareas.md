@@ -1452,7 +1452,7 @@ Hecho 2026-10-08: `start` ahora arranca en el overworld (escena principal del ju
 
 **Bloqueada por:** 7.6 Sello del templo
 
-## M8 — Contenido de mazmorra  (7/8)
+## M8 — Contenido de mazmorra  (8/8)
 
 Las 8 salas en bloques grises, el arco a mitad de camino, la llave del jefe.
 
@@ -1587,7 +1587,7 @@ Hecho 2026-10-08: `shield_skeleton.tscn` + `data/entities/shield_skeleton.tres`.
 
 **Bloqueada por:** 4.3 Tablillas; 4.4 Vasijas y pasto; 8.6 Salas 6–7: ojos y puzzle combinado
 
-### 8.8 Recorrido completo y escenarios de la mazmorra · En curso
+### 8.8 Recorrido completo y escenarios de la mazmorra · Hecho
 
 - [x] Escenarios `dungeon_no_bow`, `pre_boss` y `boss_key_door_locked`
   El último, inconsistente a propósito, para probar la validación.
