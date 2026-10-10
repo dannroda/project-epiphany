@@ -2589,15 +2589,15 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 - [x] Se lee el bloqueo
   Chispa y sonido en el escudo, retroceso; capturas desde la cámara del juego.
 
-### 11.39 Arco que se tensa · Pendiente
+### 11.39 Arco que se tensa · Revisión
 
 **Prioridad:** media · **Etiquetas:** `items`, `arte`
 
-- [ ] Arco con hueso o shape key de tensado (Blender, otra sesión)
+- [x] Arco con hueso o shape key de tensado (Blender, otra sesión)
   Cuerda que se estira hacia la mano derecha y palas que se doblan.
-- [ ] Tensado sigue a Ranged_Bow_Draw
+- [x] Tensado sigue a Ranged_Bow_Draw
   El tensado va de 0 a 1 mientras se mantiene; al soltar vuelve de golpe.
-- [ ] Flecha en la cuerda mientras se tensa
+- [x] Flecha en la cuerda mientras se tensa
 
 ### 11.40 Bombas: tocar coloca, mantener apunta y tira · Revisión
 

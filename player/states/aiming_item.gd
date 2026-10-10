@@ -39,6 +39,10 @@ func _enter() -> void:
 func _update(delta: float) -> void:
 	_elapsed += delta
 	_move()
+	var bow = _bow()
+	if bow and _released_at < 0.0:
+		bow.nocked = GameState.inventory.has(_item.behavior.ammo.id) if _item.behavior.ammo else true
+		bow.draw = _elapsed / _draw_length
 	if _released_at < 0.0:
 		if _elapsed >= _draw_length and player.anim_tree.get(&"parameters/BowPhase/current_state") == "Draw":
 			player.anim_tree.set(&"parameters/BowPhase/transition_request", "Idle")
@@ -58,6 +62,10 @@ func _exit() -> void:
 
 func _release() -> void:
 	_released_at = _elapsed
+	var bow = _bow()
+	if bow:
+		bow.draw = 0.0
+		bow.nocked = false
 	player.anim_tree.set(&"parameters/BowPhase/transition_request", "Release")
 	var ctx := player.make_item_context()
 	ctx.origin = player.global_position + Vector3.UP * 1.2 + ctx.direction * 0.7
@@ -87,3 +95,9 @@ func _fade_to(amount: float) -> void:
 		_blend.kill()
 	_blend = create_tween()
 	_blend.tween_property(player.anim_tree, "parameters/BowBlend/blend_amount", amount, blend_time)
+
+
+## El modelo en la mano, si se tensa (BowModel).
+func _bow() -> Node3D:
+	var held := player.equipment.held
+	return held if is_instance_valid(held) and &"draw" in held else null

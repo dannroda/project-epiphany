@@ -540,7 +540,9 @@ extends ItemBehavior
 @export var speed: float = 20.0
 # hold_to_aim (en ItemBehavior) = true para el arco: el estado AimingItem tensa (Ranged_Bow_Draw),
 # apunta en loop (Ranged_Bow_Aiming_Idle) con el torso mientras el player strafea, y al soltar
-# (Ranged_Bow_Release) llama a use(). El arco se sostiene en la mano del escudo (Equipment.hold).
+# (Ranged_Bow_Release) llama a use(). El arco se sostiene en la mano del escudo (Equipment.hold, socket
+# BowSocket: de pie, ladeado 55° y delante del puño, para que se lea desde la cámara cenital). Su modelo
+# (BowModel) se tensa con la shape key "tensado" al ritmo de Ranged_Bow_Draw y lleva la flecha en la cuerda.
 
 
 func can_use(ctx: ItemUseContext, _item: ItemData) -> bool:

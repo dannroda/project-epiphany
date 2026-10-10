@@ -2,16 +2,16 @@
   "checklist": [
     {
       "detail": "Cuerda que se estira hacia la mano derecha y palas que se doblan.",
-      "done": false,
+      "done": true,
       "text": "Arco con hueso o shape key de tensado (Blender, otra sesión)"
     },
     {
       "detail": "El tensado va de 0 a 1 mientras se mantiene; al soltar vuelve de golpe.",
-      "done": false,
+      "done": true,
       "text": "Tensado sigue a Ranged_Bow_Draw"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Flecha en la cuerda mientras se tensa"
     }
   ],
@@ -22,12 +22,12 @@
   "order": 42,
   "priority": "medium",
   "refs": [],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "items",
     "arte"
   ],
   "test": "",
   "title": "Arco que se tensa",
-  "updated_at": "2026-10-10T21:49:29.504Z"
+  "updated_at": "2026-10-10T22:46:57.714Z"
 }

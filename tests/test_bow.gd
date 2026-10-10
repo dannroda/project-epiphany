@@ -249,3 +249,23 @@ func test_hidden_shield_has_no_collision() -> void:
 	player.movement_state.blackboard.set_var("is_blocking", false)
 	player.set_guard(false)
 	setup[1].reset()
+
+
+func test_bow_draws_with_the_arrow_on_the_string() -> void:
+	var setup: Array = await _setup(10)
+	var tree: SceneTree = setup[0]
+	var state: Node = setup[1]
+	var player: PlayerCharacter = setup[2]
+	_action(&"item_1", true)
+	await tree.create_timer(0.15).timeout
+	var bow: Node3D = player.equipment.held
+	var early: float = bow.draw
+	await tree.create_timer(1.0).timeout
+	assert_true(early < bow.draw and is_equal_approx(bow.draw, 1.0), "se tensa de a poco hasta el fondo (%.2f → %.2f)" % [early, bow.draw])
+	assert_true(bow.nocked and bow.get_node(^"Arrow").visible, "con la flecha en la cuerda")
+	var model: MeshInstance3D = bow.get_node(^"Model")
+	assert_eq(model.get_blend_shape_value(0), 1.0, "la shape key tensado")
+	_action(&"item_1", false)
+	await tree.create_timer(0.1).timeout
+	assert_true(not is_instance_valid(bow) or (bow.draw == 0.0 and not bow.nocked), "al soltar la cuerda vuelve")
+	state.reset()
