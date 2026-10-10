@@ -2106,7 +2106,7 @@ Skills: `workflows:itch-publish`.
 
 **Relacionadas:** 10.2 Selección de partida y autosave
 
-## M11 — Pulido: assets y contenido  (11/37)
+## M11 — Pulido: assets y contenido  (12/37)
 
 Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
 
@@ -2258,11 +2258,11 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Prueba:** En cualquier sala del templo, la pared sur queda como un zócalo bajo, sin franjas ni sombras de ladrillos, y la puerta sur se ve.
 
-### 11.19 Pasos de puerta laterales del templo: losa del alto de la pared sin colisión · Pendiente
+### 11.19 Pasos de puerta laterales del templo: losa del alto de la pared sin colisión · Hecho
 
 **Prioridad:** alta · **Etiquetas:** `bug`, `mazmorra`
 
-**Notas:** Reportado por Daniel el 2026-10-09 (captura): en las paredes laterales (este/oeste), el paso de puerta se ve como una losa lisa del alto de la pared y el player la atraviesa. Sospecha: la pieza paso_puerta del kit propio (ítem 4 "Puerta", celdas con orientación 0 también en paredes laterales) o la cara lateral de la pared vecina. La pared sur ya se arregló en 11.18.
+**Notas:** Reportado por Daniel el 2026-10-09 (captura). Causa: las dos puertas laterales del templo, la (6, 24) y la (18, 24), tenían la pieza Puerta con orientación 0; el marco (3,1 m de alto, solo colisión de piso) quedaba cruzado en el paso. Se giraron 90° (orientación 16) y test_doorways_face_their_wall valida que cada marco siga a su pared.
 
 ### 11.20 Cueva con ojo de agua y cáusticas animadas · Pendiente
 

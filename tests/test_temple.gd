@@ -505,3 +505,15 @@ func test_south_wall_cut_covers_the_brick_relief() -> void:
 		var relief := -kit.get_item_mesh(id).get_aabb().position.z - 1.0
 		assert_true(cut.z < room_end - relief, "el corte empieza antes que los ladrillos de %s (sobresalen %.2f m)" % [kit.get_item_name(id), relief])
 	state.reset()
+
+
+func test_doorways_face_their_wall() -> void:
+	var temple: Node = load(LEVEL).instantiate()
+	var grid := temple.get_node(^"GridMap") as GridMap
+	var walls := [1, 15, 16]
+	var side := grid.get_orthogonal_index_from_basis(Basis(Vector3.UP, PI / 2.0))
+	for cell in grid.get_used_cells_by_item(4):
+		var in_side_wall: bool = grid.get_cell_item(cell + Vector3i(0, 0, -1)) in walls and grid.get_cell_item(cell + Vector3i(0, 0, 1)) in walls
+		var expected := side if in_side_wall else 0
+		assert_eq(grid.get_cell_item_orientation(cell), expected, "el marco de la puerta %s sigue a su pared" % cell)
+	temple.free()
