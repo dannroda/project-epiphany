@@ -28,6 +28,7 @@
 [ext_resource type="Script" uid="uid://dpgrgvvf2dmhs" path="res://player/states/dead.gd" id="st_dead"]
 [ext_resource type="Script" uid="uid://do4y7vq0jtpd1" path="res://player/states/dodging.gd" id="st_dodging"]
 [ext_resource type="Script" uid="uid://dvf1o4fohyli8" path="res://player/states/item_get.gd" id="st_item_get"]
+[ext_resource type="Script" path="res://player/states/grabbed.gd" id="st_grabbed"]
 [ext_resource type="Script" uid="uid://baq8rk6hfarca" path="res://player/states/pushing.gd" id="st_pushing"]
 [ext_resource type="Script" uid="uid://dkmh3vf34vltv" path="res://player/states/transition.gd" id="st_transition"]
 [ext_resource type="Script" uid="uid://cugbj78ktnuka" path="res://player/states/using_item.gd" id="st_using_item"]
@@ -605,6 +606,9 @@ script = ExtResource("st_pushing")
 
 [node name="ItemGet" type="LimboState" parent="MovementState" unique_id=686383829]
 script = ExtResource("st_item_get")
+
+[node name="Grabbed" type="LimboState" parent="MovementState"]
+script = ExtResource("st_grabbed")
 
 [node name="Dead" type="LimboState" parent="MovementState" unique_id=1372512458]
 script = ExtResource("st_dead")

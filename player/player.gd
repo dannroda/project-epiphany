@@ -5,6 +5,8 @@ const SHIELD_THRUST: AttackData = preload("res://data/attacks/shield_thrust.tres
 
 ## El HUD sacude el slot del botón que no se pudo usar.
 signal item_denied(button: int)
+## Se soltó de un agarre a fuerza de botones.
+signal escaped
 
 @export var config: EntityConfig
 @export var block_angle_deg := 60.0
@@ -118,6 +120,28 @@ func play_item_get(item: ItemData, amount: int = 1) -> void:
 func deny_item(button: int) -> void:
 	Feel.sfx(&"deny", global_position)
 	item_denied.emit(button)
+
+
+## Lo agarra `grip` (lo sigue hasta que se suelta o lo sueltan). No se puede rodando, muerto o ya agarrado.
+func grab(grip: Node3D) -> bool:
+	if is_dead or health.is_invulnerable() or is_grabbed():
+		return false
+	movement_state.blackboard.set_var("grabbed_by", grip)
+	movement_state.dispatch("grabbed")
+	return is_grabbed()
+
+
+func release() -> void:
+	movement_state.blackboard.set_var("grabbed_by", null)
+
+
+func is_grabbed() -> bool:
+	return movement_state.get_active_state() == $MovementState/Grabbed
+
+
+## Bloqueando con escudo y de frente a `point`.
+func blocks_from(point: Vector3) -> bool:
+	return is_blocking() and shield() != null and _is_in_front(point)
 
 
 func is_blocking() -> bool:

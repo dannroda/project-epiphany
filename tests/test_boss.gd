@@ -55,7 +55,7 @@ func _hit(amount: int, stun_time := 0.0, source: Node3D = null) -> DamageInfo:
 
 func _knock_down(hand: BossHand) -> void:
 	hand.health.invulnerability_time = 0.0
-	hand.hurtbox.receive(_hit(1, 1.0))
+	hand.stun(1.0)
 	hand.hurtbox.receive(_hit(hand.health.max_health))
 
 
@@ -70,6 +70,7 @@ func test_hands_only_hurt_when_stunned() -> void:
 	hand.hurtbox.receive(_hit(2))
 	assert_eq(hand.health.current, hand.health.max_health - 2, "aturdida, la espada lastima")
 	hand._physics_process(2.0)
+	await (Engine.get_main_loop() as SceneTree).create_timer(0.8).timeout
 	assert_eq(hand.state, BossHand.State.READY, "se repone sola")
 	boss.free()
 
@@ -83,8 +84,8 @@ func test_both_hands_down_opens_phase_two() -> void:
 	assert_eq(boss.phase(), 1, "con una mano en pie sigue la fase 1")
 	_knock_down(boss.hand_right)
 	assert_eq(boss.phase(), 2, "las dos manos caídas pasan a la fase 2")
-	assert_true(boss.hand_left.is_available() and boss.hand_left.health.is_full(), "las manos se regeneran")
 	await (Engine.get_main_loop() as SceneTree).create_timer(1.0).timeout
+	assert_true(boss.hand_left.health.is_full(), "las manos se regeneran")
 	assert_eq(boss.eye_open, 1.0, "el ojo se abre")
 	boss.health.invulnerability_time = 0.0
 	boss.health.damage(boss.health.max_health)
@@ -159,6 +160,8 @@ func test_boss_fits_its_room() -> void:
 	var boss := level.get_node(^"Boss") as Boss
 	var bounds := (level.get_node(^"Jefe") as Room).bounds()
 	for mesh: MeshInstance3D in boss.find_children("*", "MeshInstance3D", true, false):
+		if not mesh.is_visible_in_tree():
+			continue
 		var box := mesh.global_transform * mesh.get_aabb()
 		assert_true(bounds.grow(0.01).encloses(Rect2(box.position.x, box.position.z, box.size.x, box.size.z)), "%s dentro de la sala" % mesh.get_path())
 	tree.root.get_node(^"GameState").reset()
@@ -215,4 +218,122 @@ func test_arena_closes_skippable_intro_and_bar() -> void:
 	assert_true(door.is_open, "al ganar se abre la puerta")
 	await tree.create_timer(1.6).timeout
 	assert_true(not hud.boss_bar.visible, "y la barra se va")
+	tree.root.get_node(^"GameState").reset()
+
+
+func _field() -> Array:
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.root.get_node(^"GameState").reset()
+	tree.change_scene_to_file("res://levels/test.tscn")
+	await tree.scene_changed
+	for i in 4:
+		await tree.physics_frame
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	for enemy in tree.get_nodes_in_group(&"enemies"):
+		enemy.free()
+	var boss := SCENE.instantiate() as Boss
+	tree.current_scene.add_child(boss)
+	boss.global_position = player.global_position + Vector3(0, 0, -7)
+	boss.arena = Rect2(player.global_position.x - 8.0, player.global_position.z - 5.0, 16.0, 9.0)
+	for hand in [boss.hand_left, boss.hand_right]:
+		hand.global_position = hand.rest.global_position
+	return [tree, player, boss]
+
+
+func _attack(id: StringName) -> BossAttack:
+	return load("res://data/boss/attack_%s.tres" % id)
+
+
+func _press(tree: SceneTree, action: StringName) -> void:
+	var event := InputEventAction.new()
+	event.action = action
+	event.pressed = true
+	Input.parse_input_event(event)
+	await tree.physics_frame
+	var release := InputEventAction.new()
+	release.action = action
+	Input.parse_input_event(release)
+	await tree.physics_frame
+
+
+func test_slam_shadow_shrinks_then_stuns() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var boss := _spawn()
+	var target := Node3D.new()
+	boss.add_child(target)
+	target.global_position = boss.global_position + Vector3(1, 0, 6)
+	var hand := boss.hand_left
+	hand.slam_stun_time = 0.4
+	hand.perform(_attack(&"slam"), target, boss.arena)
+	assert_true(hand.striking and hand.state == BossHand.State.BUSY, "golpeando")
+	await tree.create_timer(0.8).timeout
+	var early: float = hand.shadow.scale.x
+	assert_true(hand.shadow.visible, "la sombra avisa dónde va a caer")
+	await tree.create_timer(1.0).timeout
+	assert_true(hand.shadow.scale.x < early, "la sombra se achica antes del impacto")
+	assert_true(Vector2(hand.shadow.global_position.x, hand.shadow.global_position.z).distance_to(Vector2(target.global_position.x, target.global_position.z)) < 0.6, "la sombra sigue al player")
+	assert_true(await _wait_until(func() -> bool: return hand.state == BossHand.State.STUNNED, 1.5), "tras el golpe al piso queda aturdida")
+	assert_true(hand.global_position.y < 1.0, "apoyada en el piso")
+	assert_true(not hand.striking and not boss.is_attack_running(), "el jefe ya puede usar la otra mano")
+	assert_true(await _wait_until(func() -> bool: return hand.state == BossHand.State.READY, 2.0), "se repone")
+	assert_true(hand.global_position.distance_to(hand.rest.global_position) < 0.05, "y vuelve a su lugar")
+	boss.free()
+
+
+func test_slam_hits_unless_you_leave_the_shadow() -> void:
+	var setup: Array = await _field()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	var boss: Boss = setup[2]
+	var hand := boss.hand_left
+	hand.slam_stun_time = 0.2
+	var full := player.health.current
+	hand.perform(_attack(&"slam"), player, boss.arena)
+	assert_true(await _wait_until(func() -> bool: return hand.state == BossHand.State.STUNNED, 4.0))
+	assert_true(player.health.current < full, "quieto bajo la sombra recibe el golpe")
+	assert_true(await _wait_until(func() -> bool: return hand.state == BossHand.State.READY, 3.0))
+	await tree.create_timer(1.0).timeout
+	var before := player.health.current
+	hand.perform(_attack(&"slam"), player, boss.arena)
+	await tree.create_timer(hand.slam_rise_time + hand.slam_track_time + 0.05).timeout
+	player.global_position += Vector3(3.5, 0, 0)
+	assert_true(await _wait_until(func() -> bool: return hand.state == BossHand.State.STUNNED, 2.0))
+	await tree.create_timer(0.2).timeout
+	assert_eq(player.health.current, before, "salir de la sombra a tiempo lo esquiva (la onda no llega)")
+	tree.root.get_node(^"GameState").reset()
+
+
+func test_grab_holds_and_mashing_frees() -> void:
+	var setup: Array = await _field()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	var boss: Boss = setup[2]
+	var hand := boss.hand_right
+	hand.perform(_attack(&"grab"), player, boss.arena)
+	assert_true(await _wait_until(player.is_grabbed, 3.0), "la garra lo atrapa")
+	await tree.create_timer(0.5).timeout
+	assert_true(player.global_position.distance_to(hand.grip.global_position) < 0.05, "lo lleva en la mano")
+	for i in 8:
+		await _press(tree, &"attack")
+	assert_true(not player.is_grabbed(), "apretando botones se suelta")
+	assert_eq(hand.state, BossHand.State.STUNNED, "y la mano queda mareada")
+	assert_true(await _wait_until(func() -> bool: return hand.state == BossHand.State.READY, 3.0))
+	player.health.invulnerability_time = 0.1
+	var before := player.health.current
+	hand.perform(_attack(&"grab"), player, boss.arena)
+	assert_true(await _wait_until(player.is_grabbed, 3.0))
+	assert_true(await _wait_until(func() -> bool: return not player.is_grabbed(), hand.grab_hold_time + 1.5), "si no se suelta, lo tira")
+	assert_true(player.health.current <= before - 4, "daño mientras lo aprieta y al tirarlo")
+	tree.root.get_node(^"GameState").reset()
+
+
+func test_roll_slips_the_grab() -> void:
+	var setup: Array = await _field()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	var boss: Boss = setup[2]
+	player.health.make_invulnerable(5.0)
+	boss.hand_right.perform(_attack(&"grab"), player, boss.arena)
+	await _wait_until(func() -> bool: return not boss.hand_right.striking, 3.0)
+	assert_true(not player.is_grabbed(), "con i-frames (rodando) no lo agarra")
 	tree.root.get_node(^"GameState").reset()

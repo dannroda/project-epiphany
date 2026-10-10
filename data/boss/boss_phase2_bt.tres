@@ -1,6 +1,7 @@
 [gd_resource type="BehaviorTree" format=3]
 
 [ext_resource type="Script" path="res://ai/tasks/bt_choose_boss_attack.gd" id="1_choose"]
+[ext_resource type="Script" path="res://ai/tasks/bt_perform_boss_attack.gd" id="2_perform"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_boss"]
 
@@ -8,13 +9,16 @@
 script = ExtResource("1_choose")
 phase = 2
 
+[sub_resource type="BTAction" id="BTAction_perform"]
+script = ExtResource("2_perform")
+
 [sub_resource type="BTWait" id="BTWait_attack"]
-duration = 1.6
-custom_name = "Atacar (9.4/9.5)"
+duration = 0.8
+custom_name = "Respiro"
 
 [sub_resource type="BTSequence" id="BTSequence_round"]
 custom_name = "Ronda"
-children = [SubResource("BTAction_choose"), SubResource("BTWait_attack")]
+children = [SubResource("BTAction_choose"), SubResource("BTAction_perform"), SubResource("BTWait_attack")]
 
 [sub_resource type="BTWait" id="BTWait_idle"]
 duration = 0.5

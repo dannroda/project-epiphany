@@ -32,6 +32,32 @@ size = Vector3(1.4, 1, 1.6)
 [sub_resource type="BoxShape3D" id="BoxShape3D_strike"]
 size = Vector3(1.8, 1.4, 2)
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_shockwave"]
+height = 1.0
+radius = 2.6
+
+[sub_resource type="Gradient" id="Gradient_shadow"]
+offsets = PackedFloat32Array(0, 0.7, 1)
+colors = PackedColorArray(0, 0, 0, 0.95, 0, 0, 0, 0.85, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_shadow"]
+gradient = SubResource("Gradient_shadow")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ring"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.85, 0.64, 0.25, 0.9)
+disable_fog = true
+
+[sub_resource type="TorusMesh" id="TorusMesh_ring"]
+material = SubResource("StandardMaterial3D_ring")
+inner_radius = 0.9
+outer_radius = 1.0
+rings = 32
+
 [node name="Boss" type="Node3D"]
 script = ExtResource("1_boss")
 attacks = [ExtResource("19_slam"), ExtResource("20_grab"), ExtResource("21_sweep"), ExtResource("22_orb")]
@@ -130,6 +156,35 @@ script = ExtResource("15_hitbox")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HandLeft/Hitboxes/Strike"]
 shape = SubResource("BoxShape3D_strike")
 
+[node name="Shockwave" type="Area3D" parent="HandLeft/Hitboxes"]
+top_level = true
+collision_layer = 0
+collision_mask = 24
+monitoring = false
+monitorable = false
+script = ExtResource("15_hitbox")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HandLeft/Hitboxes/Shockwave"]
+shape = SubResource("CylinderShape3D_shockwave")
+
+[node name="Shadow" type="Decal" parent="HandLeft"]
+top_level = true
+visible = false
+size = Vector3(1, 4, 1)
+texture_albedo = SubResource("GradientTexture2D_shadow")
+upper_fade = 0.0
+lower_fade = 0.0
+cull_mask = 1
+
+[node name="Ring" type="MeshInstance3D" parent="HandLeft"]
+top_level = true
+visible = false
+cast_shadow = 0
+mesh = SubResource("TorusMesh_ring")
+
+[node name="Grip" type="Marker3D" parent="HandLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.1, 0.2)
+
 [node name="AttackRunner" type="Node" parent="HandLeft" node_paths=PackedStringArray("hitbox_root")]
 script = ExtResource("16_runner")
 hitbox_root = NodePath("../Hitboxes")
@@ -174,6 +229,35 @@ script = ExtResource("15_hitbox")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HandRight/Hitboxes/Strike"]
 shape = SubResource("BoxShape3D_strike")
+
+[node name="Shockwave" type="Area3D" parent="HandRight/Hitboxes"]
+top_level = true
+collision_layer = 0
+collision_mask = 24
+monitoring = false
+monitorable = false
+script = ExtResource("15_hitbox")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HandRight/Hitboxes/Shockwave"]
+shape = SubResource("CylinderShape3D_shockwave")
+
+[node name="Shadow" type="Decal" parent="HandRight"]
+top_level = true
+visible = false
+size = Vector3(1, 4, 1)
+texture_albedo = SubResource("GradientTexture2D_shadow")
+upper_fade = 0.0
+lower_fade = 0.0
+cull_mask = 1
+
+[node name="Ring" type="MeshInstance3D" parent="HandRight"]
+top_level = true
+visible = false
+cast_shadow = 0
+mesh = SubResource("TorusMesh_ring")
+
+[node name="Grip" type="Marker3D" parent="HandRight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.1, 0.2)
 
 [node name="AttackRunner" type="Node" parent="HandRight" node_paths=PackedStringArray("hitbox_root")]
 script = ExtResource("16_runner")

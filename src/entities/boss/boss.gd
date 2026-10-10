@@ -27,6 +27,8 @@ const SHORTLIST := 0.75
 @export var display_name := "El Ojo Antiguo"
 
 var target: Node3D
+## Piso de la pelea (XZ global); lo pone `BossArena` con la sala. Las manos no salen de acá.
+var arena: Rect2
 var chosen_attack: BossAttack
 var attacker: Node3D
 var rng := RandomNumberGenerator.new()
@@ -46,8 +48,10 @@ func _ready() -> void:
 	_apply_lids()
 	if Engine.is_editor_hint():
 		return
+	arena = Rect2(global_position.x - 9.0, global_position.z - 3.0, 18.0, 10.0)
 	for hand in [hand_left, hand_right]:
-		hand.global_position = hand_rest(hand).global_position
+		hand.rest = hand_rest(hand)
+		hand.global_position = hand.rest.global_position
 		hand.downed.connect(_on_hand_downed)
 	eye_hurtbox.team = EntityConfig.Team.ENEMY
 	eye_hurtbox.hit.connect(_on_eye_hit)
@@ -93,6 +97,9 @@ func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint() or not phases.is_active():
 		return
 	_eye_stun_left = maxf(_eye_stun_left - delta, 0.0)
+	if is_instance_valid(target):
+		var wanted := (target.global_position + Vector3.UP - eye.global_position).normalized()
+		look_at_point(eye.global_position + eye.global_basis.z.normalized().slerp(wanted, 1.0 - exp(-4.0 * delta)))
 	var blackboard := phases.blackboard
 	blackboard.set_var(&"target", target)
 	blackboard.set_var(&"phase", phase())
@@ -142,6 +149,19 @@ func choose_attack(for_phase: int) -> bool:
 		phases.blackboard.set_var(&"attacker", attacker)
 	Log.debug(&"boss", "elige", chosen_attack.id, "con", attacker.name, "(%.2f de %.2f)" % [picked[0], best_score])
 	return true
+
+
+## Lo corre la hoja `PerformBossAttack` del BT después de elegir.
+func perform_chosen() -> void:
+	if chosen_attack == null or not is_instance_valid(target):
+		return
+	if attacker is BossHand:
+		attacker.perform(chosen_attack, target, arena)
+
+
+## El BT espera a que la mano termine de golpear (no a que se reponga): la otra puede atacar mientras.
+func is_attack_running() -> bool:
+	return attacker is BossHand and attacker.striking
 
 
 ## Producto compensado: muchos factores no hunden el puntaje solo por ser muchos (Dave Mark).

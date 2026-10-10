@@ -2,17 +2,17 @@
   "checklist": [
     {
       "detail": "Sombra en el suelo que se achica antes del impacto; onda de choque.",
-      "done": false,
+      "done": true,
       "text": "Golpe al piso telegrafiado"
     },
     {
       "detail": "Si atrapa al player, daño por tiempo; se escapa apretando botones o con un golpe de la otra mano.",
-      "done": false,
+      "done": true,
       "text": "Agarre"
     },
     {
       "detail": "Ventana de espadazos; aturdir las dos pasa a fase 2.",
-      "done": false,
+      "done": true,
       "text": "Mano aturdida tras el golpe al piso"
     }
   ],
@@ -25,7 +25,7 @@
     }
   ],
   "milestone": "m09",
-  "notes": "Skills: `disciplines:game-feel`.",
+  "notes": "Skills: `disciplines:game-feel`. Hecho 2026-10-10: el agarre se suelta solo a botones (8) o por tiempo (lo tira a los 3 s); no se implementó el escape con el golpe de la otra mano.",
   "order": 4,
   "refs": [
     {
@@ -33,8 +33,8 @@
       "section": "jefe"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Se puede ganar la fase solo con bloqueo y roll; los golpes se pueden anticipar mirando la sombra.",
   "title": "Fase 1: manos",
-  "updated_at": "2026-10-08T04:46:02.653Z"
+  "updated_at": "2026-10-10T04:12:58.025Z"
 }

@@ -21,6 +21,9 @@ var in_intro := false
 
 func _ready() -> void:
 	process_mode = PROCESS_MODE_ALWAYS
+	var bounds := room.bounds().grow(-1.5)
+	var north := boss.global_position.z - 1.0
+	boss.arena = Rect2(bounds.position.x, north, bounds.size.x, bounds.end.y - north)
 	room.player_entered.connect(func(_room: Room) -> void: _begin())
 	boss.defeated.connect(_on_defeated)
 

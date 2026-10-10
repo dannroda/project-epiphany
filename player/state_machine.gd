@@ -41,6 +41,9 @@ func _setup() -> void:
 	add_transition($Idle, $ItemGet, "item_get")
 	add_transition($Moving, $ItemGet, "item_get")
 	add_transition($ItemGet, $Idle, "finished")
+	for state in [$Idle, $Moving, $Attacking, $Dodging, $UsingItem, $AimingItem, $Hurt, $Pushing]:
+		add_transition(state, $Grabbed, "grabbed")
+	add_transition($Grabbed, $Idle, "finished")
 
 	initial_state = $Spawning
 

@@ -1608,7 +1608,7 @@ Hecho 2026-10-08: escenarios `dungeon_no_bow`, `pre_boss`, `boss_key_door_locked
 
 **Bloqueada por:** 8.7 Sala 8: antesala
 
-## M9 — Jefe  (4/8)
+## M9 — Jefe  (5/8)
 
 Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 con LimboAI.
 
@@ -1670,18 +1670,18 @@ Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 
 
 **Bloqueada por:** 9.1 Integrar el modelo del jefe
 
-### 9.4 Fase 1: manos · Pendiente
+### 9.4 Fase 1: manos · Hecho
 
-- [ ] Golpe al piso telegrafiado
+- [x] Golpe al piso telegrafiado
   Sombra en el suelo que se achica antes del impacto; onda de choque.
-- [ ] Agarre
+- [x] Agarre
   Si atrapa al player, daño por tiempo; se escapa apretando botones o con un golpe de la otra mano.
-- [ ] Mano aturdida tras el golpe al piso
+- [x] Mano aturdida tras el golpe al piso
   Ventana de espadazos; aturdir las dos pasa a fase 2.
 
 **Prueba:** Se puede ganar la fase solo con bloqueo y roll; los golpes se pueden anticipar mirando la sombra.
 
-**Notas:** Skills: `disciplines:game-feel`.
+**Notas:** Skills: `disciplines:game-feel`. Hecho 2026-10-10: el agarre se suelta solo a botones (8) o por tiempo (lo tira a los 3 s); no se implementó el escape con el golpe de la otra mano.
 
 **Referencias:** `gdd.md#jefe`
 
