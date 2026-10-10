@@ -2752,7 +2752,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Relacionadas:** 11.46 Jefe: game juice
 
-## M12 — Assets propios (Blender)  (2/12)
+## M12 — Assets propios (Blender)  (2/13)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -3003,6 +3003,31 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 **Notas:** Rumbo elegido 2026-10-10: look tipo Wind Waker HD con cel shading (no low-poly de piezas ni anime realista). Proporciones chibi, así que sirve el Rig_Medium y las animaciones de KayKit. Prueba en tools/blender/estilo_toon.py (renders de referencia en docs/estilo/): cuerpo continuo con Skin modifier + subdivisión y pesos automáticos; pelo en mechones de curvas NURBS afinadas con rulo; cara de calcomanías proyectadas (ojo, iris, pupila, brillo, párpado, cejas, rubor, boca); mangas y pollera con pliegues senoidales; cel shading de 2 tonos con sombra de color. Las tiras de la paleta ya tienen tono claro y oscuro: sirven como lit/shade del shader. El setting andino tampoco es definitivo (cyber-shinobi estilo Megaman Zero: sables de energía y pistolas). Diseño: pelo negro con rulos y rodetes con kunais, ojos rojos, capucha y mangas anchas con ribete emisivo, faja roja tipo obi, delantal crema, pollera, medias con liga roja, botas.
 
 **Relacionadas:** 12.10 Pipeline Blender→Godot: glb publicado + plugin de import
+
+### 12.13 Reajuste de estilo toon de todos los assets · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `arte`
+
+- [ ] Shader cel en el material de paleta y recorrida del mundo actual
+  Sale de 12.12 paso 2. Capturas de overworld, templo y jefe; lista de qué alcanza con shader y qué hay que remodelar.
+- [ ] Ajustar la paleta para sombras de color
+  Las tiras ya tienen tono claro y oscuro: llevar el oscuro a sombras saturadas y frías tipo WW, no grises.
+- [ ] Vegetación
+  Copas en masas redondeadas y blandas, pasto y matas (12.4).
+- [ ] Terreno y lugares
+  Suavizar bordes y siluetas donde lo pida el shader (12.2, 12.3).
+- [ ] Templo y restos de KayKit
+  Terminar el kit propio (12.7) y sacar las piezas KayKit dungeon que queden.
+- [ ] Personajes: jugador, chullpas y jefe
+  Con la técnica de estilo_toon.py, después de validar el shinobi (12.8).
+- [ ] Objetos, equipo e íconos
+  Remodelar lo que haga falta y re-renderizar los íconos del inventario (tools/render_item_icons.gd, 11.15).
+- [ ] Efectos estilo WW
+  Humo en espirales, líneas de viento, explosiones cartoon, golpes (con 12.9 y 11.49).
+- [ ] Agua toon y cáusticas
+  El shader de agua estilo Wind Waker y las cáusticas de la cueva (11.20).
+
+**Notas:** Con el estilo Wind Waker elegido (12.12), todo el juego tiene que convivir con el personaje nuevo. Primero se mide cuánto resuelve el shader: todas las piezas epi comparten el material de paleta (data/kits/materials/epiphany.tres), así que el cel shading se prueba en el mundo entero de una vez. Recién ahí se decide qué hay que remodelar. Lo que siga siendo KayKit va a desentonar más.
 
 ## M13 — Co-op local (estilo Four Swords)  (0/8)
 

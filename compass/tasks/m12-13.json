@@ -1,0 +1,63 @@
+{
+  "checklist": [
+    {
+      "detail": "Sale de 12.12 paso 2. Capturas de overworld, templo y jefe; lista de qué alcanza con shader y qué hay que remodelar.",
+      "done": false,
+      "text": "Shader cel en el material de paleta y recorrida del mundo actual"
+    },
+    {
+      "detail": "Las tiras ya tienen tono claro y oscuro: llevar el oscuro a sombras saturadas y frías tipo WW, no grises.",
+      "done": false,
+      "text": "Ajustar la paleta para sombras de color"
+    },
+    {
+      "detail": "Copas en masas redondeadas y blandas, pasto y matas (12.4).",
+      "done": false,
+      "text": "Vegetación"
+    },
+    {
+      "detail": "Suavizar bordes y siluetas donde lo pida el shader (12.2, 12.3).",
+      "done": false,
+      "text": "Terreno y lugares"
+    },
+    {
+      "detail": "Terminar el kit propio (12.7) y sacar las piezas KayKit dungeon que queden.",
+      "done": false,
+      "text": "Templo y restos de KayKit"
+    },
+    {
+      "detail": "Con la técnica de estilo_toon.py, después de validar el shinobi (12.8).",
+      "done": false,
+      "text": "Personajes: jugador, chullpas y jefe"
+    },
+    {
+      "detail": "Remodelar lo que haga falta y re-renderizar los íconos del inventario (tools/render_item_icons.gd, 11.15).",
+      "done": false,
+      "text": "Objetos, equipo e íconos"
+    },
+    {
+      "detail": "Humo en espirales, líneas de viento, explosiones cartoon, golpes (con 12.9 y 11.49).",
+      "done": false,
+      "text": "Efectos estilo WW"
+    },
+    {
+      "detail": "El shader de agua estilo Wind Waker y las cáusticas de la cueva (11.20).",
+      "done": false,
+      "text": "Agua toon y cáusticas"
+    }
+  ],
+  "code": "12.13",
+  "created_at": "2026-10-10T23:51:27.915Z",
+  "milestone": "m12",
+  "notes": "Con el estilo Wind Waker elegido (12.12), todo el juego tiene que convivir con el personaje nuevo. Primero se mide cuánto resuelve el shader: todas las piezas epi comparten el material de paleta (data/kits/materials/epiphany.tres), así que el cel shading se prueba en el mundo entero de una vez. Recién ahí se decide qué hay que remodelar. Lo que siga siendo KayKit va a desentonar más.",
+  "order": 13,
+  "priority": "medium",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "arte"
+  ],
+  "test": "",
+  "title": "Reajuste de estilo toon de todos los assets",
+  "updated_at": "2026-10-10T23:51:30.552Z"
+}
