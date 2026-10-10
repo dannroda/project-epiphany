@@ -2066,7 +2066,7 @@ Skills: `workflows:itch-publish`.
 
 **Referencias:** `gdd.md#jefe`, `gdd.md#ui`
 
-**Relacionadas:** 10.20 Intro / cutscene de apertura
+**Relacionadas:** 10.20 Intro / cutscene de apertura; 11.29 Overworld después del jefe
 
 ### 10.20 Intro / cutscene de apertura · Pendiente
 
@@ -2083,7 +2083,7 @@ Skills: `workflows:itch-publish`.
 
 **Referencias:** `gdd.md#historia`
 
-**Relacionadas:** 10.19 Final y créditos de verdad
+**Relacionadas:** 10.19 Final y créditos de verdad; 11.22 Tablillas de historia
 
 ### 10.21 Título y ranuras: Continuar, Nueva partida y ranura de autosave · Pendiente
 
@@ -2106,7 +2106,7 @@ Skills: `workflows:itch-publish`.
 
 **Relacionadas:** 10.2 Selección de partida y autosave
 
-## M11 — Pulido: assets y contenido  (11/20)
+## M11 — Pulido: assets y contenido  (11/32)
 
 Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
 
@@ -2282,6 +2282,148 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 **Prueba:** Entrar a la cueva desde el overworld: el rincón del agua muestra cáusticas que se mueven sobre el piso y las paredes, sin cortes ni parpadeos; el rendimiento no cae respecto del overworld.
 
 **Notas:** Skills: `disciplines:level-design`, `godot:godot-shaders`, `godot:godot-3d-essentials`. PR: https://github.com/godotengine/godot/pull/115653
+
+**Referencias:** `gdd.md`
+
+**Relacionadas:** 11.23 Vertiente de la cueva: agua bendita
+
+### 11.21 Piezas de corazón · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `items`, `overworld`
+
+- [ ] Ítem pieza de corazón
+  4 piezas = 1 contenedor; contador en la pantalla de equipo; item get distinto para la 4ª.
+- [ ] Esconder 4–6 en el overworld
+  Detrás de muros agrietados, arriba de andenes, en un puzzle chico, en la cueva del agua.
+
+**Prueba:** Juntar 4 piezas: suma un corazón. El contador se guarda y se ve en equipo.
+
+### 11.22 Tablillas de historia · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `historia`, `overworld`
+
+- [ ] Escribir 6–8 textos cortos
+  Cuentan 'El Ojo despierta' (GDD §3, opción A) en orden suelto; uno o dos dan pistas de secretos.
+- [ ] Repartirlas en overworld y templo
+  Con la tablilla existente; cada una con flag de leída.
+
+**Prueba:** Leer todas las tablillas cuenta la historia completa sin contradicciones; las pistas llevan a un secreto real.
+
+**Referencias:** `gdd.md#historia`
+
+**Relacionadas:** 10.20 Intro / cutscene de apertura
+
+### 11.23 Vertiente de la cueva: agua bendita · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `items`, `overworld`
+
+- [ ] Interactuar con el agua llena la botella
+  Agua bendita: cura más que la poción (o cura y quita doom un rato).
+- [ ] Recargable
+  Se puede volver a llenar; da razón para volver a la cueva.
+
+**Prueba:** Con la botella vacía, interactuar con la vertiente: se llena; usarla cura según lo definido.
+
+**Relacionadas:** 11.20 Cueva con ojo de agua y cáusticas animadas
+
+### 11.24 Más secretos en el overworld · Pendiente
+
+**Prioridad:** baja · **Etiquetas:** `overworld`, `puzzles`
+
+- [ ] Lista de 4–6 secretos chicos
+  Cuevitas con cofre, pasto que esconde algo, roca que se empuja, muro agrietado extra.
+- [ ] Armarlos
+  Recompensas: flechas, bombas, piezas de corazón.
+
+**Prueba:** Cada secreto se encuentra con las herramientas que el player tiene en ese momento y queda resuelto al cargar.
+
+### 11.25 Nuevos enemigos con los modelos existentes · Pendiente
+
+**Prioridad:** baja · **Etiquetas:** `enemigos`, `ia`
+
+- [ ] Arquero chullpa
+  Dispara de lejos; se bloquea con el escudo y se refleja con el espejo.
+- [ ] Enemigo con punto débil
+  Solo por la espalda o solo con bombas.
+
+**Prueba:** Los dos enemigos aparecen en overworld o templo, se leen sus telegraphs y tienen contra clara.
+
+### 11.26 Prueba de combate opcional · Pendiente
+
+**Prioridad:** baja · **Etiquetas:** `combate`
+
+- [ ] Sala de oleadas
+  3 oleadas mezclando enemigos; la puerta se cierra hasta terminar.
+- [ ] Recompensa
+  Cota reforzada, carcaj o pieza de corazón.
+
+**Prueba:** Entrar, sobrevivir las 3 oleadas, la puerta abre y aparece la recompensa; no se repite al cargar.
+
+### 11.27 Mini-santuario de reflejos · Pendiente
+
+**Prioridad:** baja · **Etiquetas:** `mazmorra`, `puzzles`
+
+- [ ] Diseñar 3–4 salas
+  Todo con el escudo espejo: haces de luz, ojos-interruptor, espejos que giran.
+- [ ] Recompensa al final
+
+**Prueba:** Se completa solo con el escudo espejo; cada sala enseña una variante del reflejo.
+
+### 11.28 Atajos que se abren al volver · Pendiente
+
+**Prioridad:** baja · **Etiquetas:** `overworld`
+
+- [ ] Uno o dos atajos de vuelta
+  Puente o escalera que se despliega desde el lado de adentro; flag persistente.
+
+**Prueba:** Abrir el atajo desde adentro: queda abierto y acorta el recorrido al templo.
+
+### 11.29 Overworld después del jefe · Pendiente
+
+**Prioridad:** baja · **Etiquetas:** `overworld`, `audio`
+
+- [ ] Sin doom
+  Luz, niebla y música calmas tras d1_boss_defeated.
+- [ ] Algo nuevo accesible
+  Una zona o secreto que solo aparece después.
+
+**Prueba:** Vencer al jefe y salir: el overworld se ve y suena distinto, y hay algo nuevo para encontrar.
+
+**Relacionadas:** 10.19 Final y créditos de verdad
+
+### 11.30 Ítem post-MVP: gancho o telequinesis · Pendiente
+
+**Prioridad:** baja · **Etiquetas:** `items`
+
+- [ ] Elegir el ítem
+  Gancho, o algo que mueva objetos a distancia (aprovecha la física). GDD §6.1 post-MVP.
+- [ ] Comportamiento y puzzles
+  ItemBehavior nuevo + 2–3 usos en el mundo.
+
+**Prueba:** El ítem tiene un uso en combate y abre al menos dos lugares que antes no se podían.
+
+**Referencias:** `gdd.md#items-mvp`
+
+### 11.31 Sub-jefe del templo · Pendiente
+
+**Prioridad:** baja · **Etiquetas:** `jefe`, `enemigos`
+
+- [ ] Chullpa guardián gigante
+  Custodia el arco a mitad del templo; patrón propio, una sola fase.
+- [ ] Sala y recompensa
+  Al vencerlo aparece el cofre del arco.
+
+**Prueba:** Llegar al sub-jefe, vencerlo con espada y escudo, y obtener el arco; al cargar no reaparece.
+
+### 11.32 Modo difícil o contrarreloj · Pendiente
+
+**Prioridad:** baja · **Etiquetas:** `rejugabilidad`
+
+- [ ] Elegir uno
+  Difícil: más daño y menos drops. Contrarreloj: tiempo total al final.
+- [ ] Desbloquear al terminar
+
+**Prueba:** Tras los créditos aparece la opción; una partida en ese modo cambia lo prometido.
 
 ## M12 — Assets propios (Blender)  (2/9)
 

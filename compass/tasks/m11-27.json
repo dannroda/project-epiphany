@@ -1,0 +1,28 @@
+{
+  "checklist": [
+    {
+      "detail": "Todo con el escudo espejo: haces de luz, ojos-interruptor, espejos que giran.",
+      "done": false,
+      "text": "Diseñar 3–4 salas"
+    },
+    {
+      "done": false,
+      "text": "Recompensa al final"
+    }
+  ],
+  "code": "11.27",
+  "created_at": "2026-10-10T05:29:42.499Z",
+  "milestone": "m11",
+  "notes": "",
+  "order": 27,
+  "priority": "low",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "mazmorra",
+    "puzzles"
+  ],
+  "test": "Se completa solo con el escudo espejo; cada sala enseña una variante del reflejo.",
+  "title": "Mini-santuario de reflejos",
+  "updated_at": "2026-10-10T05:29:43.309Z"
+}

@@ -1,0 +1,23 @@
+{
+  "checklist": [
+    {
+      "detail": "Puente o escalera que se despliega desde el lado de adentro; flag persistente.",
+      "done": false,
+      "text": "Uno o dos atajos de vuelta"
+    }
+  ],
+  "code": "11.28",
+  "created_at": "2026-10-10T05:29:43.553Z",
+  "milestone": "m11",
+  "notes": "",
+  "order": 28,
+  "priority": "low",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "overworld"
+  ],
+  "test": "Abrir el atajo desde adentro: queda abierto y acorta el recorrido al templo.",
+  "title": "Atajos que se abren al volver",
+  "updated_at": "2026-10-10T05:29:44.072Z"
+}

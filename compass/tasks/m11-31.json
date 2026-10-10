@@ -1,0 +1,29 @@
+{
+  "checklist": [
+    {
+      "detail": "Custodia el arco a mitad del templo; patrón propio, una sola fase.",
+      "done": false,
+      "text": "Chullpa guardián gigante"
+    },
+    {
+      "detail": "Al vencerlo aparece el cofre del arco.",
+      "done": false,
+      "text": "Sala y recompensa"
+    }
+  ],
+  "code": "11.31",
+  "created_at": "2026-10-10T05:29:46.683Z",
+  "milestone": "m11",
+  "notes": "",
+  "order": 31,
+  "priority": "low",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "jefe",
+    "enemigos"
+  ],
+  "test": "Llegar al sub-jefe, vencerlo con espada y escudo, y obtener el arco; al cargar no reaparece.",
+  "title": "Sub-jefe del templo",
+  "updated_at": "2026-10-10T05:29:47.478Z"
+}

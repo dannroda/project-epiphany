@@ -1,0 +1,33 @@
+{
+  "checklist": [
+    {
+      "detail": "Gancho, o algo que mueva objetos a distancia (aprovecha la física). GDD §6.1 post-MVP.",
+      "done": false,
+      "text": "Elegir el ítem"
+    },
+    {
+      "detail": "ItemBehavior nuevo + 2–3 usos en el mundo.",
+      "done": false,
+      "text": "Comportamiento y puzzles"
+    }
+  ],
+  "code": "11.30",
+  "created_at": "2026-10-10T05:29:45.382Z",
+  "milestone": "m11",
+  "notes": "",
+  "order": 30,
+  "priority": "low",
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "items-mvp"
+    }
+  ],
+  "status": "todo",
+  "tags": [
+    "items"
+  ],
+  "test": "El ítem tiene un uso en combate y abre al menos dos lugares que antes no se podían.",
+  "title": "Ítem post-MVP: gancho o telequinesis",
+  "updated_at": "2026-10-10T05:29:46.413Z"
+}

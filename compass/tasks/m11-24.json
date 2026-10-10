@@ -1,0 +1,29 @@
+{
+  "checklist": [
+    {
+      "detail": "Cuevitas con cofre, pasto que esconde algo, roca que se empuja, muro agrietado extra.",
+      "done": false,
+      "text": "Lista de 4–6 secretos chicos"
+    },
+    {
+      "detail": "Recompensas: flechas, bombas, piezas de corazón.",
+      "done": false,
+      "text": "Armarlos"
+    }
+  ],
+  "code": "11.24",
+  "created_at": "2026-10-10T05:29:39.385Z",
+  "milestone": "m11",
+  "notes": "",
+  "order": 24,
+  "priority": "low",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "overworld",
+    "puzzles"
+  ],
+  "test": "Cada secreto se encuentra con las herramientas que el player tiene en ese momento y queda resuelto al cargar.",
+  "title": "Más secretos en el overworld",
+  "updated_at": "2026-10-10T05:29:40.172Z"
+}
