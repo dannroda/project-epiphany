@@ -1,0 +1,39 @@
+{
+  "checklist": [
+    {
+      "detail": "Los BT de LimboAI eligen al más cercano o al último que les pegó; cambian con histéresis.",
+      "done": false,
+      "text": "Elegir objetivo"
+    },
+    {
+      "detail": "Las manos pueden ir cada una por un player; balance de vida con 2.",
+      "done": false,
+      "text": "Jefe"
+    },
+    {
+      "detail": "Un poco más de vida o enemigos con dos players.",
+      "done": false,
+      "text": "Escalado"
+    }
+  ],
+  "code": "13.7",
+  "created_at": "2026-10-10T05:37:22.090Z",
+  "milestone": "m13",
+  "notes": "Skills: `disciplines:game-ai`.",
+  "order": 7,
+  "priority": "medium",
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "fuera-mvp"
+    }
+  ],
+  "status": "todo",
+  "tags": [
+    "coop",
+    "ia"
+  ],
+  "test": "Con dos players, los enemigos se reparten y el jefe ataca a los dos; con uno, igual que siempre.",
+  "title": "Enemigos y jefe con varios objetivos",
+  "updated_at": "2026-10-10T05:37:23.403Z"
+}

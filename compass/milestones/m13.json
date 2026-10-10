@@ -1,0 +1,11 @@
+{
+  "code": "M13",
+  "done_when": [
+    "Dos controles juegan una partida de punta a punta (overworld, templo y jefe) sin bugs de cámara ni de salas.",
+    "Hay al menos tres puzzles que piden a los dos jugadores.",
+    "Un solo jugador puede seguir jugando como siempre."
+  ],
+  "goal": "Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con progreso compartido y puzzles que aprovechan a los dos.",
+  "order": 13,
+  "title": "Co-op local (estilo Four Swords)"
+}

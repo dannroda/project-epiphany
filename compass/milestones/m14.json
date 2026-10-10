@@ -1,0 +1,10 @@
+{
+  "code": "M14",
+  "done_when": [
+    "Dos máquinas juegan juntas el templo entero con 100 ms de latencia sin desincronizar puertas, cofres, puzzles ni el jefe.",
+    "El combate se siente igual que en local para el host y casi igual para el cliente."
+  ],
+  "goal": "Llevar el co-op local a la red: host autoritativo, dos jugadores en distintas máquinas, con el combate igual de preciso.",
+  "order": 14,
+  "title": "Co-op online"
+}

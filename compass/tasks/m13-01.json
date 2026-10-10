@@ -1,0 +1,69 @@
+{
+  "checklist": [
+    {
+      "detail": "Un autoload o nodo `Players` con la lista y señales (joined/left); reemplaza las ~40 referencias al grupo \"player\" y los get_first_node_in_group.",
+      "done": false,
+      "text": "Registro de players"
+    },
+    {
+      "detail": "Desde ahora ningún sistema asume un solo player (anotado en GDD §13).",
+      "done": false,
+      "text": "Regla para lo nuevo"
+    },
+    {
+      "detail": "Los tests existentes pasan con 1 player; uno nuevo instancia 2 y revisa que salas, HUD e IA no se rompan.",
+      "done": false,
+      "text": "Tests"
+    }
+  ],
+  "code": "13.1",
+  "created_at": "2026-10-10T05:37:12.860Z",
+  "links": [
+    {
+      "task": "m13-02",
+      "type": "blocks"
+    },
+    {
+      "task": "m13-03",
+      "type": "blocks"
+    },
+    {
+      "task": "m13-04",
+      "type": "blocks"
+    },
+    {
+      "task": "m13-05",
+      "type": "blocks"
+    },
+    {
+      "task": "m13-06",
+      "type": "blocks"
+    },
+    {
+      "task": "m13-07",
+      "type": "blocks"
+    },
+    {
+      "task": "m13-08",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m13",
+  "notes": "Skills: `godot:godot-nodes-scenes`, `disciplines:input-systems`, `disciplines:camera-systems`.",
+  "order": 1,
+  "priority": "high",
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "fuera-mvp"
+    }
+  ],
+  "status": "todo",
+  "tags": [
+    "coop",
+    "arquitectura"
+  ],
+  "test": "Con 1 player el juego es idéntico; instanciar un segundo player no tira errores en overworld ni templo.",
+  "title": "Código listo para varios players",
+  "updated_at": "2026-10-10T05:37:26.663Z"
+}

@@ -1,0 +1,45 @@
+{
+  "checklist": [
+    {
+      "detail": "Cada player lee su control (device id); InputBuffer, Aim y Targeting pasan a ser del player. Teclado+mouse cuenta como un dispositivo.",
+      "done": false,
+      "text": "Acciones por dispositivo"
+    },
+    {
+      "detail": "Start en un segundo control suma al P2 en cualquier momento; salir lo saca sin cortar la partida.",
+      "done": false,
+      "text": "Unirse / salir"
+    },
+    {
+      "detail": "InputPrompts muestra los botones del control de cada uno.",
+      "done": false,
+      "text": "Prompts por jugador"
+    }
+  ],
+  "code": "13.2",
+  "created_at": "2026-10-10T05:37:14.453Z",
+  "links": [
+    {
+      "task": "m14-02",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m13",
+  "notes": "Skills: `godot:godot-nodes-scenes`, `disciplines:input-systems`, `disciplines:camera-systems`.",
+  "order": 2,
+  "priority": "high",
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "fuera-mvp"
+    }
+  ],
+  "status": "todo",
+  "tags": [
+    "coop",
+    "input"
+  ],
+  "test": "Con dos controles, cada uno mueve solo a su player; el P2 entra y sale con Start sin pausar el juego.",
+  "title": "Input por jugador y unirse a la partida",
+  "updated_at": "2026-10-10T05:37:46.374Z"
+}

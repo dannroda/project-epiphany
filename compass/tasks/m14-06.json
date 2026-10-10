@@ -1,0 +1,29 @@
+{
+  "checklist": [
+    {
+      "detail": "El cliente participa en la partida del host; decidir qué se lleva el cliente (nada, o una copia).",
+      "done": false,
+      "text": "Solo el host guarda"
+    }
+  ],
+  "code": "14.6",
+  "created_at": "2026-10-10T05:37:33.464Z",
+  "milestone": "m14",
+  "notes": "Skills: `godot:godot-multiplayer`, `disciplines:physics-tuning`.",
+  "order": 6,
+  "priority": "medium",
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "fuera-mvp"
+    }
+  ],
+  "status": "todo",
+  "tags": [
+    "online",
+    "guardado"
+  ],
+  "test": "Terminar una sesión online, recargarla en el host: el progreso está y no se duplica nada.",
+  "title": "Guardado en co-op",
+  "updated_at": "2026-10-10T05:37:34.242Z"
+}

@@ -2521,6 +2521,8 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Referencias:** `gdd.md#ui`
 
+**Relacionadas:** 11.37 Minimapa en el HUD
+
 ### 11.37 Minimapa en el HUD · Pendiente
 
 **Prioridad:** media · **Etiquetas:** `ui`
@@ -2539,6 +2541,8 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 **Notas:** Skills: `disciplines:game-ui-ux`, `godot:godot-ui-control`. Escena .tscn, nada armado por código.
 
 **Referencias:** `gdd.md#ui`
+
+**Relacionadas:** 11.36 Mapa: más información y navegable
 
 ## M12 — Assets propios (Blender)  (2/9)
 
@@ -2733,6 +2737,274 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 - [ ] Anillo del portal
 
 **Bloqueada por:** 12.1 Guía de estilo: paleta, escala y pieza de prueba
+
+## M13 — Co-op local (estilo Four Swords)  (0/8)
+
+Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con progreso compartido y puzzles que aprovechan a los dos.
+
+**Hecho cuando:**
+- Dos controles juegan una partida de punta a punta (overworld, templo y jefe) sin bugs de cámara ni de salas.
+- Hay al menos tres puzzles que piden a los dos jugadores.
+- Un solo jugador puede seguir jugando como siempre.
+
+### 13.1 Código listo para varios players · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `coop`, `arquitectura`
+
+- [ ] Registro de players
+  Un autoload o nodo `Players` con la lista y señales (joined/left); reemplaza las ~40 referencias al grupo "player" y los get_first_node_in_group.
+- [ ] Regla para lo nuevo
+  Desde ahora ningún sistema asume un solo player (anotado en GDD §13).
+- [ ] Tests
+  Los tests existentes pasan con 1 player; uno nuevo instancia 2 y revisa que salas, HUD e IA no se rompan.
+
+**Prueba:** Con 1 player el juego es idéntico; instanciar un segundo player no tira errores en overworld ni templo.
+
+**Notas:** Skills: `godot:godot-nodes-scenes`, `disciplines:input-systems`, `disciplines:camera-systems`.
+
+**Referencias:** `gdd.md#fuera-mvp`
+
+**Bloquea a:** 13.2 Input por jugador y unirse a la partida; 13.3 Cámara y salas para dos; 13.4 Reglas del co-op; 13.5 HUD de dos jugadores; 13.6 Player 2 con su color; 13.7 Enemigos y jefe con varios objetivos; 13.8 Puzzles cooperativos
+
+### 13.2 Input por jugador y unirse a la partida · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `coop`, `input`
+
+- [ ] Acciones por dispositivo
+  Cada player lee su control (device id); InputBuffer, Aim y Targeting pasan a ser del player. Teclado+mouse cuenta como un dispositivo.
+- [ ] Unirse / salir
+  Start en un segundo control suma al P2 en cualquier momento; salir lo saca sin cortar la partida.
+- [ ] Prompts por jugador
+  InputPrompts muestra los botones del control de cada uno.
+
+**Prueba:** Con dos controles, cada uno mueve solo a su player; el P2 entra y sale con Start sin pausar el juego.
+
+**Notas:** Skills: `godot:godot-nodes-scenes`, `disciplines:input-systems`, `disciplines:camera-systems`.
+
+**Referencias:** `gdd.md#fuera-mvp`
+
+**Bloquea a:** 14.2 Players en red
+
+**Bloqueada por:** 13.1 Código listo para varios players
+
+### 13.3 Cámara y salas para dos · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `coop`, `camara`
+
+- [ ] Encuadre de los dos
+  Reusar el encuadre del lock-on: la cámara mantiene a ambos; si se alejan demasiado, un borde invisible los frena.
+- [ ] Cambio de sala
+  Estilo Four Swords: al cruzar uno la puerta, el otro es llevado con él (o hace falta que estén los dos). Decidir y anotar.
+- [ ] Escenas
+  Overworld ↔ templo llevan a los dos al spawn.
+
+**Prueba:** Recorrer el templo de punta a punta con dos players: nunca queda uno fuera de cuadro ni en otra sala.
+
+**Notas:** Skills: `godot:godot-nodes-scenes`, `disciplines:input-systems`, `disciplines:camera-systems`.
+
+**Referencias:** `gdd.md#fuera-mvp`
+
+**Bloquea a:** 14.3 Mundo sincronizado
+
+**Bloqueada por:** 13.1 Código listo para varios players
+
+### 13.4 Reglas del co-op · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `coop`, `diseño`
+
+- [ ] Vida, muerte y revivir
+  Cada uno con sus corazones; el caído queda como burbuja/espíritu y revive al tocarlo o en la sala siguiente. Game over solo si caen los dos.
+- [ ] Inventario y equipo
+  Progreso compartido (GameState); decidir si los ítems se comparten o cada uno equipa los suyos; munición compartida.
+- [ ] Drops
+  Corazones al que lo toca; rupias no hay.
+- [ ] Anotar en el GDD
+  Sección de co-op con las reglas.
+
+**Prueba:** Morir con uno solo no termina la partida y se puede revivir; con los dos, game over.
+
+**Notas:** Skills: `disciplines:game-ui-ux`.
+
+**Referencias:** `gdd.md#fuera-mvp`
+
+**Bloqueada por:** 13.1 Código listo para varios players
+
+### 13.5 HUD de dos jugadores · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `coop`, `ui`
+
+- [ ] Mockup
+  Corazones e ítems del P2 en la otra esquina, con su color.
+- [ ] Escenas
+  El HUD instancia un panel por player (nada armado por código).
+
+**Prueba:** Con dos players, cada uno ve sus corazones e ítems; al salir el P2 su panel desaparece.
+
+**Notas:** Skills: `disciplines:game-ui-ux`, `godot:godot-ui-control`.
+
+**Referencias:** `gdd.md#fuera-mvp`
+
+**Bloqueada por:** 13.1 Código listo para varios players
+
+### 13.6 Player 2 con su color · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `coop`, `arte`
+
+- [ ] Variante de paleta
+  Una entrada en VARIANTS (epiphany_palette.py) para el P2: otra tela y otro neón, como los Links de colores de Four Swords.
+- [ ] Combinar con las armaduras
+  Que la cota reforzada también tenga su versión P2.
+
+**Prueba:** P1 y P2 se distinguen de un vistazo con cualquier armadura.
+
+**Notas:** Skills: `disciplines:create-game-assets`.
+
+**Referencias:** `gdd.md#fuera-mvp`
+
+**Bloqueada por:** 13.1 Código listo para varios players
+
+### 13.7 Enemigos y jefe con varios objetivos · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `coop`, `ia`
+
+- [ ] Elegir objetivo
+  Los BT de LimboAI eligen al más cercano o al último que les pegó; cambian con histéresis.
+- [ ] Jefe
+  Las manos pueden ir cada una por un player; balance de vida con 2.
+- [ ] Escalado
+  Un poco más de vida o enemigos con dos players.
+
+**Prueba:** Con dos players, los enemigos se reparten y el jefe ataca a los dos; con uno, igual que siempre.
+
+**Notas:** Skills: `disciplines:game-ai`.
+
+**Referencias:** `gdd.md#fuera-mvp`
+
+**Bloqueada por:** 13.1 Código listo para varios players
+
+### 13.8 Puzzles cooperativos · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `coop`, `puzzles`
+
+- [ ] Revisar los puzzles actuales
+  Que no se rompan ni queden triviales con dos (bloques, interruptores, haces).
+- [ ] Puzzles para dos
+  Interruptores dobles, uno sostiene el escudo espejo mientras el otro tira la flecha, cajas que se empujan entre dos. En solo, una alternativa (bloque o tiempo).
+
+**Prueba:** Hay al menos tres puzzles que piden a los dos; en solo siguen siendo resolubles.
+
+**Notas:** Skills: `disciplines:level-design`.
+
+**Referencias:** `gdd.md#fuera-mvp`
+
+**Bloqueada por:** 13.1 Código listo para varios players
+
+## M14 — Co-op online  (0/6)
+
+Llevar el co-op local a la red: host autoritativo, dos jugadores en distintas máquinas, con el combate igual de preciso.
+
+**Hecho cuando:**
+- Dos máquinas juegan juntas el templo entero con 100 ms de latencia sin desincronizar puertas, cofres, puzzles ni el jefe.
+- El combate se siente igual que en local para el host y casi igual para el cliente.
+
+### 14.1 Arquitectura de red · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `online`, `arquitectura`
+
+- [ ] Decidir
+  Host autoritativo con ENet (MultiplayerAPI de Godot) y transporte Steam más adelante; el host corre IA, física, puzzles y guardado.
+- [ ] Anotar en el GDD
+
+**Prueba:** Documento corto con la arquitectura elegida, qué corre en el host y qué en el cliente.
+
+**Notas:** Skills: `godot:godot-multiplayer`, `disciplines:physics-tuning`.
+
+**Referencias:** `gdd.md#fuera-mvp`
+
+**Bloquea a:** 14.2 Players en red; 14.3 Mundo sincronizado; 14.4 Combate en red; 14.5 Lobby y conexión; 14.6 Guardado en co-op
+
+### 14.2 Players en red · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `online`
+
+- [ ] El cliente manda input
+  MultiplayerSynchronizer o RPC del input del P2; el host simula y devuelve estado.
+- [ ] Predicción del propio player
+  El cliente mueve a su player al instante y corrige con el estado del host.
+
+**Prueba:** Con 100 ms de latencia simulada, el cliente se mueve sin retraso perceptible y sin tirones.
+
+**Notas:** Skills: `godot:godot-multiplayer`, `disciplines:physics-tuning`.
+
+**Referencias:** `gdd.md#fuera-mvp`
+
+**Bloqueada por:** 13.2 Input por jugador y unirse a la partida; 14.1 Arquitectura de red
+
+### 14.3 Mundo sincronizado · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `online`
+
+- [ ] Objetos con estado
+  Puertas, cofres, interruptores, oleadas, drops, bombas y cajas físicas de Jolt (solo las simula el host).
+- [ ] Escenas
+  Cambio de escena y de sala sincronizado; el cliente carga lo mismo que el host.
+
+**Prueba:** Recorrer el templo en red: nada queda desincronizado (puertas, cofres, bloques, puente).
+
+**Notas:** Skills: `godot:godot-multiplayer`, `disciplines:physics-tuning`.
+
+**Referencias:** `gdd.md#fuera-mvp`
+
+**Bloqueada por:** 13.3 Cámara y salas para dos; 14.1 Arquitectura de red
+
+### 14.4 Combate en red · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `online`, `combate`
+
+- [ ] Golpes del cliente
+  Hitboxes validadas en el host con compensación de latencia; bloqueo y parry con margen.
+- [ ] Feedback local
+  Hit-stop y flash se muestran al instante en el cliente.
+
+**Prueba:** Pelear contra chullpas y el jefe como cliente con 100 ms: los golpes se sienten y no hay daño fantasma.
+
+**Notas:** Skills: `godot:godot-multiplayer`, `disciplines:physics-tuning`.
+
+**Referencias:** `gdd.md#fuera-mvp`
+
+**Bloqueada por:** 14.1 Arquitectura de red
+
+### 14.5 Lobby y conexión · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `online`, `ui`
+
+- [ ] Crear y unirse
+  Por IP/código en debug; invitación de Steam en release.
+- [ ] Desconexiones
+  Si cae el cliente, el host sigue solo; si cae el host, el cliente vuelve al título con aviso.
+
+**Prueba:** Crear partida, invitar, jugar y desconectar al cliente sin que el host pierda progreso.
+
+**Notas:** Skills: `godot:godot-multiplayer`, `disciplines:physics-tuning`.
+
+**Referencias:** `gdd.md#fuera-mvp`
+
+**Bloqueada por:** 14.1 Arquitectura de red
+
+### 14.6 Guardado en co-op · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `online`, `guardado`
+
+- [ ] Solo el host guarda
+  El cliente participa en la partida del host; decidir qué se lleva el cliente (nada, o una copia).
+
+**Prueba:** Terminar una sesión online, recargarla en el host: el progreso está y no se duplica nada.
+
+**Notas:** Skills: `godot:godot-multiplayer`, `disciplines:physics-tuning`.
+
+**Referencias:** `gdd.md#fuera-mvp`
+
+**Bloqueada por:** 14.1 Arquitectura de red
 
 ## Listas
 

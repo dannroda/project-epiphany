@@ -1772,6 +1772,8 @@ Recortes si hace falta, en orden: fase 3 del jefe → cota reforzada → carcaj 
 
 Moneda y tiendas · NPCs con diálogo · piezas de corazón · gancho / telequinesis · espadas múltiples o elementales (estructura lista) · spin attack · remapeo de controles · más de una mazmorra · pesca y otras actividades (hay animaciones, tentador pero no).
 
+**Co-op (después del MVP, decidido el 2026-10-10):** estilo *Four Swords*: primero **local** (dos jugadores en la misma pantalla, M13) y después **online** (host autoritativo, M14). Progreso compartido en `GameState`; cada player con su control, sus corazones y su color (variante de paleta). **Regla desde ahora:** ningún sistema nuevo asume un solo player — se pide la lista de players (o el objetivo de la IA) en vez de "el" player del grupo `player`; el refactor de lo existente es la tarea 13.1.
+
 ## 14. Decisiones abiertas
 <!-- id: decisiones-abiertas -->
 
@@ -1780,4 +1782,5 @@ Moneda y tiendas · NPCs con diálogo · piezas de corazón · gancho / telequin
 - [x] Layout exacto de la mazmorra (§8.1) y del overworld (§7.1).
 - [x] Ranuras de guardado: 3 (decidido el 2026-10-09).
 - [x] Arte: KayKit + texturas de prototipo, pulido con paleta propia (decidido el 2026-10-09, §10.1).
+- [x] Multijugador: co-op estilo Four Swords, primero local (M13) y después online (M14) (decidido el 2026-10-10, §13).
 - [x] Modelo del jefe: el `.blend` de la jam no tenía rig; piezas separadas que mueve el código, sin AnimationTree (decidido el 2026-10-09, §9).

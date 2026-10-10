@@ -1,0 +1,34 @@
+{
+  "checklist": [
+    {
+      "detail": "Hitboxes validadas en el host con compensación de latencia; bloqueo y parry con margen.",
+      "done": false,
+      "text": "Golpes del cliente"
+    },
+    {
+      "detail": "Hit-stop y flash se muestran al instante en el cliente.",
+      "done": false,
+      "text": "Feedback local"
+    }
+  ],
+  "code": "14.4",
+  "created_at": "2026-10-10T05:37:30.830Z",
+  "milestone": "m14",
+  "notes": "Skills: `godot:godot-multiplayer`, `disciplines:physics-tuning`.",
+  "order": 4,
+  "priority": "high",
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "fuera-mvp"
+    }
+  ],
+  "status": "todo",
+  "tags": [
+    "online",
+    "combate"
+  ],
+  "test": "Pelear contra chullpas y el jefe como cliente con 100 ms: los golpes se sienten y no hay daño fantasma.",
+  "title": "Combate en red",
+  "updated_at": "2026-10-10T05:37:31.904Z"
+}
