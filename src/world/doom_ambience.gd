@@ -160,8 +160,12 @@ func _mark_tree(root: Node) -> void:
 		_mark_if_legible(geometry)
 
 
-func _mark_if_legible(geometry: GeometryInstance3D) -> void:
-	if not is_instance_valid(geometry) or not geometry.is_inside_tree() or legible.has(geometry):
+## Sin tipo: puede llegar diferido un nodo que ya se liberó.
+func _mark_if_legible(maybe_geometry) -> void:
+	if not is_instance_valid(maybe_geometry):
+		return
+	var geometry := maybe_geometry as GeometryInstance3D
+	if not geometry.is_inside_tree() or legible.has(geometry):
 		return
 	var node: Node = geometry
 	while node:
