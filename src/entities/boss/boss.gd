@@ -6,6 +6,8 @@ extends Node3D
 ## Fases con LimboHSM (cada una corre su BT); el BT le pide el ataque a `choose_attack` (utilidad).
 
 signal defeated
+## Terminó la animación de muerte (el jefe ya no se ve).
+signal death_finished
 signal phase_changed(phase: int)
 ## Lo que muestra la barra del HUD cambió (`bar_fraction`).
 signal bar_changed
@@ -301,11 +303,41 @@ func _on_phase2_entered() -> void:
 			hand.regenerate()
 
 
+## Las manos caen, el ojo se cierra, el cuerpo tiembla soltando polvo y se hunde.
 func _on_defeated() -> void:
 	%Solid.remove_from_group(&"targetable")
 	_eye_stun_left = 0.0
+	%Charge.visible = false
+	eye_hurtbox.set_deferred(&"monitorable", false)
+	for hand in [hand_left, hand_right]:
+		hand.collapse()
+	Feel.sfx(&"rumble", eye.global_position)
+	Feel.shake(0.8)
+	_play_death()
 	DebugOverlay.watch("boss/phase", "derrotado")
 	defeated.emit()
+
+
+func _play_death() -> void:
+	if _body_tween:
+		_body_tween.kill()
+	var death := create_tween()
+	death.tween_property(self, ^"eye_open", 0.0, 0.6)
+	var base := body.position
+	for i in 10:
+		death.tween_property(body, ^"position", base + Vector3(0.15 * (1 if i % 2 else -1), 0, 0), 0.08)
+		if i % 3 == 0:
+			death.tween_callback(func() -> void:
+				Feel.burst(&"dust", body.global_position + Vector3(randf_range(-2, 2), -1.5, 1.5), Vector3.UP)
+				Feel.sfx(&"boom", body.global_position))
+	death.tween_property(body, ^"position", Vector3(base.x, 0.2, base.z), 1.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	death.parallel().tween_property(body, ^"scale", Vector3.ONE * 0.6, 1.2)
+	death.tween_callback(func() -> void:
+		Feel.burst(&"dust", Vector3(body.global_position.x, 0.1, body.global_position.z), Vector3.UP)
+		Feel.shake(0.5)
+		visible = false
+		%Solid.process_mode = Node.PROCESS_MODE_DISABLED
+		death_finished.emit())
 
 
 func _apply_lids() -> void:

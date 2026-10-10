@@ -2,8 +2,17 @@ class_name BossArena
 extends Node
 ## La guarida: al entrar se cierra la puerta, corre la intro (cámara al ojo, nombre, música) y arranca la pelea.
 ## La intro se salta con aceptar/atacar/interactuar. Al morir el player se recarga la escena y todo vuelve a empezar.
+## Vencido: flag `d1_boss_defeated` (abre el portal de salida), la sala se calma y aparece el contenedor de corazón;
+## al tomarlo, la pantalla de fin. Al volver a cargar el jefe ya no está.
 
 signal fight_started
+
+const DEFEATED_FLAG := &"d1_boss_defeated"
+const CONTAINER_FLAG := &"d1_heart_container"
+const PICKUP := preload("res://src/world/pickup.tscn")
+const HEART_CONTAINER := preload("res://data/items/heart_container.tres")
+## El doom de la sala con el jefe vencido.
+const CALM_DOOM := 0.2
 
 const SKIP_ACTIONS: Array[StringName] = [&"ui_accept", &"attack", &"interact"]
 
@@ -14,6 +23,8 @@ const SKIP_ACTIONS: Array[StringName] = [&"ui_accept", &"attack", &"interact"]
 @export var intro_hold := 2.6
 ## Espera a que el player termine de entrar (el deslizamiento de la cámara) antes de cerrar.
 @export var close_delay := 0.6
+## Dónde aparece el contenedor (relativo al jefe).
+@export var reward_offset := Vector3(0, 0, 3.5)
 
 var started := false
 var in_intro := false
@@ -21,11 +32,15 @@ var in_intro := false
 
 func _ready() -> void:
 	process_mode = PROCESS_MODE_ALWAYS
+	if GameState.get_flag(DEFEATED_FLAG) == true:
+		_already_won()
+		return
 	var bounds := room.bounds().grow(-1.5)
 	var north := boss.global_position.z - 1.0
 	boss.arena = Rect2(bounds.position.x, north, bounds.size.x, bounds.end.y - north)
 	room.player_entered.connect(func(_room: Room) -> void: _begin())
 	boss.defeated.connect(_on_defeated)
+	boss.death_finished.connect(_on_death_finished)
 
 
 func _begin() -> void:
@@ -68,8 +83,49 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _on_defeated() -> void:
 	Music.boss_fight = false
-	door.open()
 	get_tree().call_group(&"hud", &"hide_boss")
+
+
+func _on_death_finished() -> void:
+	GameState.set_flag(DEFEATED_FLAG, true)
+	room.doom = CALM_DOOM
+	door.open()
+	var reward_point := boss.global_position + reward_offset
+	boss.queue_free()
+	_spawn_reward(reward_point)
+	Feel.sfx(&"secret", reward_point)
+	SaveManager.autosave()
+
+
+func _already_won() -> void:
+	started = true
+	room.doom = CALM_DOOM
+	var reward_point := boss.global_position + reward_offset
+	boss.queue_free()
+	if GameState.get_flag(CONTAINER_FLAG) != true:
+		_spawn_reward(reward_point)
+
+
+func _spawn_reward(point: Vector3) -> void:
+	var pickup: Pickup = PICKUP.instantiate()
+	pickup.item = HEART_CONTAINER
+	pickup.item_get = true
+	pickup.lifetime = 0.0
+	pickup.magnet_radius = 0.0
+	pickup.world_size = 1.4
+	add_child(pickup)
+	pickup.global_position = point
+	pickup.collected.connect(_on_reward_taken)
+
+
+## Después de la caja de item get, el fin.
+func _on_reward_taken() -> void:
+	GameState.set_flag(CONTAINER_FLAG, true)
+	await get_tree().create_timer(0.3).timeout
+	var player := get_tree().get_first_node_in_group(&"player") as PlayerCharacter
+	while MenuStack.is_open() or (player and player.movement_state.get_active_state().name == &"ItemGet"):
+		await get_tree().process_frame
+	Ending.open()
 
 
 func _exit_tree() -> void:

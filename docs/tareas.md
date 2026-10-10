@@ -1608,7 +1608,7 @@ Hecho 2026-10-08: escenarios `dungeon_no_bow`, `pre_boss`, `boss_key_door_locked
 
 **Bloqueada por:** 8.7 Sala 8: antesala
 
-## M9 — Jefe  (6/8)
+## M9 — Jefe  (7/8)
 
 Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 con LimboAI.
 
@@ -1706,15 +1706,15 @@ Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 
 
 **Bloqueada por:** 5.1 Proyectiles; 5.3 Arco y flechas; 9.4 Fase 1: manos
 
-### 9.6 Muerte del jefe y final · Pendiente
+### 9.6 Muerte del jefe y final · Hecho
 
-- [ ] Animación de muerte y flag `d1_boss_defeated`
+- [x] Animación de muerte y flag `d1_boss_defeated`
   Las manos caen, la sala se calma.
-- [ ] Contenedor de corazón
+- [x] Contenedor de corazón
   Aparece en la arena; `GameState.give()` suma 4 HP al máximo.
-- [ ] Final del MVP
+- [x] Final del MVP
   Al tomar el contenedor o salir, pantalla de fin y créditos placeholder.
-- [ ] Poner required_flag = d1_boss_defeated al BossExitPortal
+- [x] Poner required_flag = d1_boss_defeated al BossExitPortal
   El portal (9.8) ya está en la sala; con el flag aparece al vencer al jefe.
 
 **Prueba:** Desde `pre_boss`: ganar, tomar el contenedor y llegar a los créditos. Cargar después: el jefe no reaparece.

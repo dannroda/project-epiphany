@@ -50,6 +50,7 @@ func _ready() -> void:
 	HitFlash.attach($ModelController/Visuals, health)
 	health.died.connect(_on_died)
 	GameState.loaded.connect(_sync_health)
+	GameState.max_health_changed.connect(func(_value: int) -> void: _sync_health())
 	_sync_health()
 	targeting.target_changed.connect(func(target: Node3D) -> void: movement_state.blackboard.set_var("target", target))
 	movement_state.initialize(self)

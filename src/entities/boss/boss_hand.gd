@@ -52,6 +52,7 @@ var striking := false
 var rest: Node3D
 var _stun_left := 0.0
 var _fall: Tween
+var _motion: Tween
 var _shockwave_data := AttackData.new()
 
 @onready var health: Health = $Health
@@ -313,9 +314,9 @@ func _recover() -> void:
 
 
 func _move(to: Vector3, seconds: float, ease_type := Tween.EASE_IN_OUT) -> void:
-	var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(ease_type)
-	tween.tween_property(self, ^"global_position", to, seconds)
-	await tween.finished
+	_motion = create_tween().set_trans(Tween.TRANS_SINE).set_ease(ease_type)
+	_motion.tween_property(self, ^"global_position", to, seconds)
+	await _motion.finished
 
 
 func _floor_point(point: Vector3, area: Rect2) -> Vector3:
@@ -363,6 +364,16 @@ func _on_hit(info: DamageInfo) -> void:
 
 
 func _on_died() -> void:
+	collapse()
+	downed.emit()
+
+
+## Cae al piso y queda ahí (sin vida, o porque murió el jefe).
+func collapse() -> void:
+	if state == State.DOWN:
+		return
+	if _motion:
+		_motion.kill()
 	striking = false
 	_hide_shadow()
 	set_state(State.DOWN)
@@ -370,7 +381,6 @@ func _on_died() -> void:
 	_fall.tween_property(self, ^"global_position:y", FLOOR_HEIGHT - 0.2, 0.4).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 	_fall.tween_property(self, ^"rotation:z", 0.5 * signf(position.x), 0.4)
 	Feel.sfx(&"boom", global_position)
-	downed.emit()
 
 
 func _show_pose() -> void:

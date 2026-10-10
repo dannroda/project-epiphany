@@ -1,6 +1,8 @@
 # Autoload
 extends Node
 
+## Contenedor de corazón: el player rellena la vida con el nuevo máximo.
+signal max_health_changed(value: int)
 signal flag_changed(id: StringName, value: Variant)
 signal equipment_changed(category: ItemData.Category, id: StringName)
 signal item_buttons_changed
@@ -87,7 +89,9 @@ func give(item: ItemData, amount: int = 1) -> void:
 		&"boss_key": current_dungeon_state().has_boss_key = true
 		&"dungeon_map": current_dungeon_state().has_map = true
 		&"compass": current_dungeon_state().has_compass = true
-		&"heart_container": max_health += 4 * amount
+		&"heart_container":
+			max_health += 4 * amount
+			max_health_changed.emit(max_health)
 		_:
 			inventory.add(item.id, amount)
 			_auto_place(item)

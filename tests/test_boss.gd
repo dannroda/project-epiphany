@@ -216,9 +216,9 @@ func test_arena_closes_skippable_intro_and_bar() -> void:
 	_knock_down(boss.hand_left)
 	_knock_down(boss.hand_right)
 	boss.health.damage(boss.health.max_health)
-	assert_true(door.is_open, "al ganar se abre la puerta")
 	await tree.create_timer(1.6).timeout
-	assert_true(not hud.boss_bar.visible, "y la barra se va")
+	assert_true(not hud.boss_bar.visible, "al ganar la barra se va")
+	assert_true(await _wait_until(func() -> bool: return door.is_open, 5.0), "y se abre la puerta")
 	tree.root.get_node(^"GameState").reset()
 
 
@@ -407,3 +407,55 @@ func test_reflected_orb_stuns_the_eye() -> void:
 	assert_true(await _wait_until(boss.is_eye_stunned, 4.0), "el orbe devuelto con el espejo aturde al ojo")
 	assert_eq(boss.health.current, boss.health.max_health, "aturdir no le saca vida")
 	tree.root.get_node(^"GameState").reset()
+
+
+func test_win_take_the_container_and_roll_credits() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	var saves: Node = tree.root.get_node(^"SaveManager")
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	assert_eq(await saves.load_scenario("pre_boss"), OK)
+	saves.current_slot = 8
+	var level := tree.current_scene
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	var boss := level.get_node(^"Boss") as Boss
+	var portal := level.get_node(^"BossExitPortal") as Portal
+	assert_true(not portal.visible, "el portal de salida no está hasta vencerlo")
+	(level.get_node(^"BossArena") as BossArena).started = true
+	player.global_position = Vector3(24, 0, 21)
+	player.health.make_invulnerable(999.0)
+	for i in 10:
+		await tree.physics_frame
+	boss.start_fight()
+	_knock_down(boss.hand_left)
+	_knock_down(boss.hand_right)
+	boss.health.invulnerability_time = 0.0
+	boss.health.damage(boss.health.max_health)
+	var max_before: int = state.max_health
+	assert_true(await _wait_until(func() -> bool: return state.get_flag(&"d1_boss_defeated") == true, 6.0), "flag d1_boss_defeated")
+	assert_true(not is_instance_valid(boss) or not boss.visible, "el jefe ya no está")
+	assert_true(portal.visible, "aparece el portal de salida")
+	var rewards := level.get_node(^"BossArena").find_children("*", "Pickup", false, false)
+	assert_eq(rewards.size(), 1, "aparece el contenedor de corazón")
+	var reward := rewards[0] as Pickup
+	await tree.create_timer(0.5).timeout
+	player.global_position = reward.global_position
+	assert_true(await _wait_until(stack.is_open, 3.0), "item get del contenedor")
+	assert_eq(state.max_health, max_before + 4, "suma un corazón")
+	assert_eq(player.health.max_health, max_before + 4, "el player lo tiene en el momento")
+	assert_true(player.health.is_full(), "con la vida llena")
+	stack.pop()
+	assert_true(await _wait_until(func() -> bool: return stack.top() is Ending, 3.0), "pantalla de fin")
+	await tree.process_frame
+	(stack.top().get_node(^"%ToTitle") as Button).pressed.emit()
+	await tree.scene_changed
+	assert_eq(tree.current_scene.scene_file_path, "res://src/ui/title/title_screen.tscn", "vuelve al título")
+	state.reset()
+	assert_eq(await saves.load_game(8), OK)
+	level = tree.current_scene
+	await tree.process_frame
+	assert_true(level.get_node_or_null(^"Boss") == null, "cargando después, el jefe no reaparece")
+	assert_true((level.get_node(^"BossExitPortal") as Portal).visible, "y el portal sigue abierto")
+	assert_eq(level.get_node(^"BossArena").find_children("*", "Pickup", false, false).size(), 0, "ni el contenedor")
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(saves.slot_path(8)))
+	state.reset()

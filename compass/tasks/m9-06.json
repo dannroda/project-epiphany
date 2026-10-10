@@ -2,22 +2,22 @@
   "checklist": [
     {
       "detail": "Las manos caen, la sala se calma.",
-      "done": false,
+      "done": true,
       "text": "Animación de muerte y flag `d1_boss_defeated`"
     },
     {
       "detail": "Aparece en la arena; `GameState.give()` suma 4 HP al máximo.",
-      "done": false,
+      "done": true,
       "text": "Contenedor de corazón"
     },
     {
       "detail": "Al tomar el contenedor o salir, pantalla de fin y créditos placeholder.",
-      "done": false,
+      "done": true,
       "text": "Final del MVP"
     },
     {
       "detail": "El portal (9.8) ya está en la sala; con el flag aparece al vencer al jefe.",
-      "done": false,
+      "done": true,
       "text": "Poner required_flag = d1_boss_defeated al BossExitPortal"
     }
   ],
@@ -42,8 +42,8 @@
       "section": "items-mvp"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Desde `pre_boss`: ganar, tomar el contenedor y llegar a los créditos. Cargar después: el jefe no reaparece.",
   "title": "Muerte del jefe y final",
-  "updated_at": "2026-10-09T16:15:55.962Z"
+  "updated_at": "2026-10-10T05:15:05.270Z"
 }

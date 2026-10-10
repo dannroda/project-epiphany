@@ -550,6 +550,7 @@ door = NodePath("../BossDoor")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 16)
 target_scene = "res://levels/overworld.tscn"
 target_spawn = &"templo"
+required_flag = &"d1_boss_defeated"
 
 [node name="TopDownCamera" type="Camera3D" parent="." unique_id=278870952 node_paths=PackedStringArray("target_node")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 13.4, 75.7)

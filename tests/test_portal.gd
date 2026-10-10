@@ -112,6 +112,7 @@ func test_boss_room_has_exit_to_temple_entrance() -> void:
 	assert_true(portal != null)
 	assert_eq(portal.target_scene, "res://levels/overworld.tscn")
 	assert_eq(portal.target_spawn, &"templo")
+	assert_eq(portal.required_flag, &"d1_boss_defeated", "aparece al vencer al jefe")
 	var boss_room := temple.get_node(^"Jefe") as Room
 	var shape := boss_room.get_node(^"CollisionShape3D") as CollisionShape3D
 	var size := (shape.shape as BoxShape3D).size
