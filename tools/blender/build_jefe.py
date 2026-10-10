@@ -198,17 +198,22 @@ def jefe_cuerpo(p):
 def jefe_ojo(p):
 	"""El globo: blanco de hueso con venas de doom, iris de neón (el código lo pulsa al cargar el orbe) y pupila de rendija, mirando a -Y."""
 	ball = p.blob((0, 0, 0), EYE, subdiv=3, rough=0.0)
-	white, iris, pupil = [], [], []
+	white, iris = [], []
 	for f in ball:
-		c = f.calc_center_median() / EYE
-		if c.y < -0.8 and abs(c.x) < 0.11 and abs(c.z) < 0.5:
-			pupil.append(f)
-		elif c.y < -0.8:
-			iris.append(f)
-		else:
-			white.append(f)
+		(iris if f.calc_center_median().y / EYE < -0.8 else white).append(f)
 	p.paint(white, "hueso", z_range=(-EYE, EYE))
 	p.paint(iris, NEON, "MID", vary=0.08)
+	slit = []
+	for i in range(9):
+		t = math.pi * i / 8
+		slit.append((math.sin(t) * 0.075, -math.cos(t) * 0.5))
+	for i in range(1, 8):
+		t = math.pi * i / 8
+		slit.append((-math.sin(t) * 0.075, math.cos(t) * 0.5))
+	pupil = p.polygon(slit, -0.03, 0.02)
+	for v in {v for f in pupil for v in f.verts}:
+		x, z, r = v.co.x, v.co.y, EYE + v.co.z
+		v.co = Vector((x, -math.sqrt(max(EYE ** 2 - x * x - z * z, 0.0)), z)).normalized() * r
 	p.paint(pupil, "noche", "DARK")
 	veins = []
 	for k in range(10):
@@ -220,9 +225,10 @@ def jefe_ojo(p):
 	p.paint(veins, GLOW, "DARK")
 
 
-def jefe_parpado(p):
+def jefe_parpado(p, hinges=True):
 	"""Párpado de arriba, cerrado: un cuarto de cáscara de hierro adelante y arriba del ojo, con el borde dorado.
-	Se abre girando en X hacia atrás; el de abajo es el mismo espejado en Z."""
+	Se abre girando en X hacia atrás; el de abajo es el mismo espejado en Z. Las bisagras de los costados (sobre el eje
+	de giro, así se ven igual abiertas o cerradas) tapan las puntas del globo; las lleva solo el de arriba."""
 	plate, edges = shell(p, LID, 0.08, (0.0, math.pi / 2), (-math.pi / 2, math.pi / 2), steps=(6, 12))
 	p.paint(plate, IRON, z_range=(0, LID), vary=0.05)
 	p.paint(edges, IRON, "DARK")
@@ -236,10 +242,22 @@ def jefe_parpado(p):
 	glyph = epi.eye(p, Vector((0, 0, 0)), 0.22, depth=0.04, pupil_swatch="noche")
 	p.transform(glyph, Matrix.Rotation(-0.75, 4, "X") @ Matrix.Translation((0, -LID - 0.08, 0)))
 	p.paint(glyph, TRIM, "LIGHT")
+	if not hinges:
+		return
+	pins, rings = [], []
+	for sx in (-1, 1):
+		pin = p.cylinder(0.34, 0.0, 0.42, sides=10, radius_top=0.3)
+		ring = p.cylinder(0.37, 0.12, 0.2, sides=10)
+		cap = p.cylinder(0.14, 0.42, 0.48, sides=8)
+		p.transform(pin + ring + cap, Matrix.Rotation(sx * math.pi / 2, 4, "Y") @ Matrix.Translation((0, 0, EYE - 0.22)))
+		pins += pin
+		rings += ring + cap
+	p.paint(pins, IRON, "MID", vary=0.04)
+	p.paint(rings, TRIM, "MID")
 
 
 def jefe_parpado_inf(p):
-	jefe_parpado(p)
+	jefe_parpado(p, hinges=False)
 	p.transform(list(p.bm.faces), Matrix.Scale(-1, 4, (0, 0, 1)))
 
 
