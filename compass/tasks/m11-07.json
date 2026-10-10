@@ -1,5 +1,21 @@
 {
-  "checklist": [],
+  "checklist": [
+    {
+      "detail": "Player y objetos en la capa 2; el sol rojo no la ilumina pero sí le deja proyectar sombra.",
+      "done": true,
+      "text": "Capa visual legible"
+    },
+    {
+      "detail": "LegibleLight: misma dirección que el sol, color calmo, solo la capa 2.",
+      "done": true,
+      "text": "Luz neutra para lo legible"
+    },
+    {
+      "detail": "Copias de material con disable_fog (también lo que viste el equipo); las grietas excluyen la capa.",
+      "done": true,
+      "text": "Sin niebla ni grietas sobre lo legible"
+    }
+  ],
   "code": "11.7",
   "created_at": "2026-10-09T17:40:34.010Z",
   "milestone": "m11",
@@ -7,11 +23,11 @@
   "order": 7,
   "priority": "medium",
   "refs": [],
-  "status": "todo",
+  "status": "done",
   "tags": [
     "arte"
   ],
-  "test": "",
+  "test": "En la antesala (doom 0.9), el player, la tablilla y las vasijas conservan sus colores sobre el piso rojo y siguen proyectando sombra.",
   "title": "Doom legible: player y objetos sin teñir",
-  "updated_at": "2026-10-09T17:40:34.010Z"
+  "updated_at": "2026-10-10T01:28:09.365Z"
 }

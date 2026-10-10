@@ -31,6 +31,14 @@ func test_doom_rises_room_by_room() -> void:
 		assert_true(ambience.dust.amount_ratio >= previous.dust - 0.001, "%s: más polvo" % entry[0])
 		previous = {red = red, fog = ambience.environment.fog_density, dust = ambience.dust.amount_ratio, doom = room.doom}
 	assert_true(previous.red > 0.3, "en la antesala la luz es claramente roja")
+	var body := player.find_children("*", "MeshInstance3D", true, false)[0] as MeshInstance3D
+	assert_eq(body.layers, DoomAmbience.LEGIBLE_LAYER, "el player va en la capa legible")
+	assert_eq(ambience.sun.light_cull_mask & DoomAmbience.LEGIBLE_LAYER, 0, "el sol rojo no lo ilumina")
+	assert_true(ambience.sun.shadow_caster_mask & DoomAmbience.LEGIBLE_LAYER != 0, "pero sigue dando sombra")
+	assert_eq(ambience.legible_light.light_cull_mask, DoomAmbience.LEGIBLE_LAYER)
+	assert_true((body.get_active_material(0) as BaseMaterial3D).disable_fog, "sin niebla encima")
+	var pot := level.find_children("*", "Breakable", true, false)[0]
+	assert_true(ambience.legible.any(func(geometry: Node) -> bool: return pot.is_ancestor_of(geometry)), "los objetos también")
 	assert_true(previous.fog > 0.02, "y hay niebla")
 	var cracks_in := func(room_name: String) -> int:
 		var bounds := (level.get_node(room_name) as Room).bounds()

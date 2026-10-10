@@ -2,6 +2,11 @@ class_name DoomAmbience
 extends Node
 ## El despertar del ojo, sala a sala: según el `Room.doom` de la sala actual (suavizado), la luz vira a rojo,
 ## sube la niebla, cae polvo, aparecen grietas en el piso y el templo tiembla cada vez más seguido.
+## El player y los objetos con los que se interactúa quedan sin teñir: van en su propia capa visual, que el sol rojo
+## no ilumina (sí proyectan sombra), los ilumina una luz neutra con la misma dirección y no les llega la niebla.
+
+## Capa visual (bit) de lo que se tiene que leer con cualquier doom.
+const LEGIBLE_LAYER := 2
 
 @export var calm_ambient := Color(0.55, 0.52, 0.65)
 @export var doom_ambient := Color(0.8, 0.3, 0.25)
@@ -21,7 +26,11 @@ var environment: Environment
 var sun: DirectionalLight3D
 var dust: GPUParticles3D
 var cracks: Array[Decal] = []
+var legible_light: DirectionalLight3D
+var legible: Array[GeometryInstance3D] = []
 var _next_tremor := 6.0
+var _fogless := {}
+var _recheck := 0.0
 
 
 func _ready() -> void:
@@ -33,6 +42,22 @@ func _ready() -> void:
 			sun = child
 	_make_dust.call_deferred()
 	_make_cracks.call_deferred()
+	if sun:
+		sun.light_cull_mask &= ~LEGIBLE_LAYER
+		legible_light = DirectionalLight3D.new()
+		legible_light.name = "LegibleLight"
+		legible_light.light_cull_mask = LEGIBLE_LAYER
+		legible_light.light_energy = sun.light_energy
+		legible_light.light_color = calm_sun
+		legible_light.transform = sun.transform
+		scene.add_child.call_deferred(legible_light)
+	get_tree().node_added.connect(_on_node_added)
+	_mark_tree.call_deferred(scene)
+
+
+static func is_legible(node: Node) -> bool:
+	return node is PlayerCharacter or node is Chest or node is Pickup or node is Breakable or node is PushBlock \
+		or node is Bomb or node is Tablet or node is EyeSwitch or node is FloorSwitch
 
 
 func current_doom() -> float:
@@ -54,6 +79,10 @@ func _process(delta: float) -> void:
 		var camera := get_tree().get_first_node_in_group(&"room_camera") as TopDownCamera
 		if camera:
 			dust.global_position = camera.focus + Vector3.UP * 4.0
+	_recheck -= delta
+	if _recheck <= 0.0:
+		_recheck = 0.5
+		_refresh_legible()
 	if level > 0.3:
 		_next_tremor -= delta
 		if _next_tremor <= 0.0:
@@ -114,10 +143,67 @@ func _make_cracks() -> void:
 			decal.texture_albedo = texture
 			decal.size = Vector3(rng.randf_range(2.0, 4.0), 1.0, rng.randf_range(2.0, 4.0))
 			decal.modulate = Color(0.12, 0.08, 0.08)
+			decal.cull_mask &= ~LEGIBLE_LAYER
 			get_parent().add_child(decal)
 			decal.global_position = Vector3(rng.randf_range(bounds.position.x + 1.5, bounds.end.x - 1.5), 0.1, rng.randf_range(bounds.position.y + 1.5, bounds.end.y - 1.5))
 			decal.rotation.y = rng.randf() * TAU
 			cracks.append(decal)
+
+
+func _on_node_added(node: Node) -> void:
+	if node is GeometryInstance3D:
+		_mark_if_legible.call_deferred(node)
+
+
+func _mark_tree(root: Node) -> void:
+	for geometry in root.find_children("*", "GeometryInstance3D", true, false):
+		_mark_if_legible(geometry)
+
+
+func _mark_if_legible(geometry: GeometryInstance3D) -> void:
+	if not is_instance_valid(geometry) or not geometry.is_inside_tree() or legible.has(geometry):
+		return
+	var node: Node = geometry
+	while node:
+		if is_legible(node):
+			geometry.layers = LEGIBLE_LAYER
+			legible.append(geometry)
+			_clear_fog(geometry)
+			return
+		node = node.get_parent()
+
+
+## Lo que cambia el material después (el equipo viste al player con `material_override`) vuelve a quedar sin niebla.
+func _refresh_legible() -> void:
+	for i in range(legible.size() - 1, -1, -1):
+		if is_instance_valid(legible[i]):
+			_clear_fog(legible[i])
+		else:
+			legible.remove_at(i)
+
+
+func _clear_fog(geometry: GeometryInstance3D) -> void:
+	if geometry.material_override is BaseMaterial3D:
+		geometry.material_override = _fogless_copy(geometry.material_override)
+	var mesh_instance := geometry as MeshInstance3D
+	if mesh_instance == null or mesh_instance.mesh == null:
+		return
+	for i in mesh_instance.mesh.get_surface_count():
+		var material := mesh_instance.get_surface_override_material(i)
+		if material == null:
+			material = mesh_instance.mesh.surface_get_material(i)
+		if material is BaseMaterial3D and not material.disable_fog:
+			mesh_instance.set_surface_override_material(i, _fogless_copy(material))
+
+
+func _fogless_copy(material: BaseMaterial3D) -> BaseMaterial3D:
+	if material.disable_fog:
+		return material
+	if not _fogless.has(material):
+		var copy := material.duplicate() as BaseMaterial3D
+		copy.disable_fog = true
+		_fogless[material] = copy
+	return _fogless[material]
 
 
 static func crack_texture() -> ImageTexture:

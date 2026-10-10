@@ -2071,6 +2071,15 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Prioridad:** media · **Etiquetas:** `arte`
 
+- [x] Capa visual legible
+  Player y objetos en la capa 2; el sol rojo no la ilumina pero sí le deja proyectar sombra.
+- [x] Luz neutra para lo legible
+  LegibleLight: misma dirección que el sol, color calmo, solo la capa 2.
+- [x] Sin niebla ni grietas sobre lo legible
+  Copias de material con disable_fog (también lo que viste el equipo); las grietas excluyen la capa.
+
+**Prueba:** En la antesala (doom 0.9), el player, la tablilla y las vasijas conservan sus colores sobre el piso rojo y siguen proyectando sombra.
+
 ### 11.8 Silueta del player detrás de paredes · Pendiente
 
 **Prioridad:** media · **Etiquetas:** `camara`
