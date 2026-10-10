@@ -1752,7 +1752,7 @@ Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 
 
 **Notas:** Sin flag por ahora porque no hay jefe; 9.6 le pone d1_boss_defeated.
 
-## M10 — Terminación  (14/20)
+## M10 — Terminación  (14/21)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -2064,6 +2064,8 @@ Skills: `workflows:itch-publish`.
 
 **Referencias:** `gdd.md#jefe`, `gdd.md#ui`
 
+**Relacionadas:** 10.20 Intro / cutscene de apertura
+
 ### 10.20 Intro / cutscene de apertura · Pendiente
 
 **Prioridad:** media · **Etiquetas:** `camara`
@@ -2078,6 +2080,21 @@ Skills: `workflows:itch-publish`.
 **Prueba:** Partida nueva: corre la intro, se puede saltear, termina dando el control al player en el overworld. Cargar la partida: no se repite.
 
 **Referencias:** `gdd.md#historia`
+
+**Relacionadas:** 10.19 Final y créditos de verdad
+
+### 10.21 Título: Continuar y Nueva partida hacen lo mismo · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `ui`
+
+- [ ] Continuar carga directo la última partida
+  Hoy los dos abren FileSelect (title_screen.gd) y solo cambia el slot preseleccionado. Continuar tiene que llamar SaveManager.load_game(latest_slot()) sin pasar por la selección.
+- [ ] Nueva partida elige dónde crearla
+  Abre FileSelect en modo nueva partida: slots vacíos crean partida; elegir uno ocupado pide confirmar que se sobrescribe (ConfirmDialog). Si no hay ninguna partida, va directo al primer slot.
+- [ ] Revisar el mockup Main/FileSelect
+  Que el flujo coincida con el canvas de UI; si el mockup no lo cubre, ajustarlo.
+
+**Prueba:** Con partidas guardadas: Continuar entra directo a la última jugada. Nueva partida: elegir un slot vacío arranca de cero; uno ocupado pide confirmación y, si se cancela, no toca la partida.
 
 ## M11 — Pulido: assets y contenido  (11/19)
 

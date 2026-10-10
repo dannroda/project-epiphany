@@ -1,0 +1,39 @@
+{
+  "checklist": [
+    {
+      "detail": "Hoy los dos abren FileSelect (title_screen.gd) y solo cambia el slot preseleccionado. Continuar tiene que llamar SaveManager.load_game(latest_slot()) sin pasar por la selección.",
+      "done": false,
+      "text": "Continuar carga directo la última partida"
+    },
+    {
+      "detail": "Abre FileSelect en modo nueva partida: slots vacíos crean partida; elegir uno ocupado pide confirmar que se sobrescribe (ConfirmDialog). Si no hay ninguna partida, va directo al primer slot.",
+      "done": false,
+      "text": "Nueva partida elige dónde crearla"
+    },
+    {
+      "detail": "Que el flujo coincida con el canvas de UI; si el mockup no lo cubre, ajustarlo.",
+      "done": false,
+      "text": "Revisar el mockup Main/FileSelect"
+    }
+  ],
+  "code": "10.21",
+  "created_at": "2026-10-10T05:25:45.155Z",
+  "links": [
+    {
+      "task": "m10-02",
+      "type": "related"
+    }
+  ],
+  "milestone": "m10",
+  "notes": "",
+  "order": 21,
+  "priority": "high",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "ui"
+  ],
+  "test": "Con partidas guardadas: Continuar entra directo a la última jugada. Nueva partida: elegir un slot vacío arranca de cero; uno ocupado pide confirmación y, si se cancela, no toca la partida.",
+  "title": "Título: Continuar y Nueva partida hacen lo mismo",
+  "updated_at": "2026-10-10T05:25:46.516Z"
+}
