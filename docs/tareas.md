@@ -1752,7 +1752,7 @@ Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 
 
 **Notas:** Sin flag por ahora porque no hay jefe; 9.6 le pone d1_boss_defeated.
 
-## M10 — Terminación  (14/18)
+## M10 — Terminación  (14/20)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -2047,6 +2047,37 @@ Skills: `workflows:itch-publish`.
 **Referencias:** `gdd.md#ui`
 
 **Bloqueada por:** 10.4 Opciones
+
+### 10.19 Final y créditos de verdad · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `ui`
+
+- [ ] Revisar el final actual
+  Pantalla Ending (src/ui/menus/ending.tscn): hoy es FIN + créditos placeholder sin mockup. Ver qué se siente al terminar el jefe y qué falta (ritmo, epílogo, cierre del doom).
+- [ ] Mockup de final y créditos en el canvas de UI
+- [ ] Créditos reales
+  Autoría, herramientas (Godot, Blender, LimboAI), assets de terceros con sus licencias (sale de compass/lists/assets-de-audio y los kits que queden), agradecimientos. Que se puedan pasar/acelerar.
+- [ ] Breve epílogo antes de los créditos
+  Cámara sobre el templo calmado o el overworld sin doom; corto y salteable.
+
+**Prueba:** Ganar desde pre_boss: epílogo, créditos completos con todas las licencias, se pueden acelerar/saltear y vuelve al flujo de siempre (seguir explorando o título).
+
+**Referencias:** `gdd.md#jefe`, `gdd.md#ui`
+
+### 10.20 Intro / cutscene de apertura · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `camara`
+
+- [ ] Guion corto de la intro
+  Según la historia del GDD (El Ojo despierta, opción A): sin diálogos, se cuenta con imagen y alguna tablilla/texto breve. Decidir duración (30–60 s) y planos.
+- [ ] Sistema simple de cutscenes
+  Secuencia de planos de cámara, esperas, textos y eventos (AnimationPlayer o una lista de pasos), reutilizable para la intro del jefe y el epílogo de 10.19. Salteable con aceptar.
+- [ ] Armar la intro
+  Al empezar partida nueva, antes de darle el control al player. Solo la primera vez (flag en la partida); opción de volver a verla no hace falta.
+
+**Prueba:** Partida nueva: corre la intro, se puede saltear, termina dando el control al player en el overworld. Cargar la partida: no se repite.
+
+**Referencias:** `gdd.md#historia`
 
 ## M11 — Pulido: assets y contenido  (11/19)
 

@@ -1,0 +1,44 @@
+{
+  "checklist": [
+    {
+      "detail": "Según la historia del GDD (El Ojo despierta, opción A): sin diálogos, se cuenta con imagen y alguna tablilla/texto breve. Decidir duración (30–60 s) y planos.",
+      "done": false,
+      "text": "Guion corto de la intro"
+    },
+    {
+      "detail": "Secuencia de planos de cámara, esperas, textos y eventos (AnimationPlayer o una lista de pasos), reutilizable para la intro del jefe y el epílogo de 10.19. Salteable con aceptar.",
+      "done": false,
+      "text": "Sistema simple de cutscenes"
+    },
+    {
+      "detail": "Al empezar partida nueva, antes de darle el control al player. Solo la primera vez (flag en la partida); opción de volver a verla no hace falta.",
+      "done": false,
+      "text": "Armar la intro"
+    }
+  ],
+  "code": "10.20",
+  "created_at": "2026-10-10T05:24:53.664Z",
+  "links": [
+    {
+      "task": "m10-19",
+      "type": "related"
+    }
+  ],
+  "milestone": "m10",
+  "notes": "",
+  "order": 20,
+  "priority": "medium",
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "historia"
+    }
+  ],
+  "status": "todo",
+  "tags": [
+    "camara"
+  ],
+  "test": "Partida nueva: corre la intro, se puede saltear, termina dando el control al player en el overworld. Cargar la partida: no se repite.",
+  "title": "Intro / cutscene de apertura",
+  "updated_at": "2026-10-10T05:24:55.253Z"
+}

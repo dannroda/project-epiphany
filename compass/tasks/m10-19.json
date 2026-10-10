@@ -1,0 +1,46 @@
+{
+  "checklist": [
+    {
+      "detail": "Pantalla Ending (src/ui/menus/ending.tscn): hoy es FIN + créditos placeholder sin mockup. Ver qué se siente al terminar el jefe y qué falta (ritmo, epílogo, cierre del doom).",
+      "done": false,
+      "text": "Revisar el final actual"
+    },
+    {
+      "done": false,
+      "text": "Mockup de final y créditos en el canvas de UI"
+    },
+    {
+      "detail": "Autoría, herramientas (Godot, Blender, LimboAI), assets de terceros con sus licencias (sale de compass/lists/assets-de-audio y los kits que queden), agradecimientos. Que se puedan pasar/acelerar.",
+      "done": false,
+      "text": "Créditos reales"
+    },
+    {
+      "detail": "Cámara sobre el templo calmado o el overworld sin doom; corto y salteable.",
+      "done": false,
+      "text": "Breve epílogo antes de los créditos"
+    }
+  ],
+  "code": "10.19",
+  "created_at": "2026-10-10T05:24:51.513Z",
+  "milestone": "m10",
+  "notes": "",
+  "order": 19,
+  "priority": "medium",
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "jefe"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "ui"
+    }
+  ],
+  "status": "todo",
+  "tags": [
+    "ui"
+  ],
+  "test": "Ganar desde pre_boss: epílogo, créditos completos con todas las licencias, se pueden acelerar/saltear y vuelve al flujo de siempre (seguir explorando o título).",
+  "title": "Final y créditos de verdad",
+  "updated_at": "2026-10-10T05:24:53.399Z"
+}
