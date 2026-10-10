@@ -2374,11 +2374,11 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Prioridad:** media · **Etiquetas:** `enemigos`, `ia`
 
-- [ ] Arquero chullpa
+- [x] Arquero chullpa
   Dispara de lejos; se bloquea con el escudo y se refleja con el espejo.
 - [ ] Enemigo con punto débil
   Solo por la espalda o solo con bombas.
-- [ ] Esqueleto arquero
+- [x] Esqueleto arquero
   Pedido: esqueletos que disparen flechas. Mantiene distancia, telegraph con el tensado, la flecha se bloquea con el escudo.
 
 **Prueba:** Los dos enemigos aparecen en overworld o templo, se leen sus telegraphs y tienen contra clara.
@@ -2959,7 +2959,7 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 - [ ] Piloto con el personaje nuevo (12.12)
   Validar el flujo completo con el blockout antes de migrar el resto.
 - [x] Sufijos de Godot
-  -noimp para helpers/cámaras, -navmesh, -occ en paredes, acciones con -loop (saca el hack de loops de build_carry_library).
+  Probado -noimp. -navmesh/-occ/-loop son nativos; aplicarlos (p. ej. Carry_Idle-loop) va en la migración 12.11.
 
 **Notas:** Basado en la doc de sufijos de import de Godot y el workflow de Blender Studio (DOGWALK). Los build_*.py guardan el .blend de trabajo y publican un .glb; Godot importa solo el .glb (no necesita Blender para builds/web). Un EditorScenePostImportPlugin reemplaza los scripts headless de extracción.
 

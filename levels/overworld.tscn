@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://x60poi8g2tqu" path="res://src/world/grass_patch.gd" id="5_n78bg"]
 [ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="6_d356v"]
 [ext_resource type="PackedScene" path="res://src/entities/shield_skeleton.tscn" id="6_shield"]
+[ext_resource type="PackedScene" path="res://src/entities/archer_skeleton.tscn" id="6_archer"]
 [ext_resource type="PackedScene" path="res://src/world/heart_piece.tscn" id="6_piece"]
 [ext_resource type="PackedScene" path="res://src/world/physics_box.tscn" id="9_axpip"]
 [ext_resource type="PackedScene" path="res://src/world/physics_rock.tscn" id="10_vrnmo"]
@@ -249,6 +250,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, -13)
 
 [node name="CliffShieldSkeleton" parent="." unique_id=1099975904 instance=ExtResource("6_shield")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, -11)
+
+[node name="TempleArcher" parent="." unique_id=1616350127 instance=ExtResource("6_archer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -15)
+
+[node name="CliffArcher" parent="." unique_id=1383502219 instance=ExtResource("6_archer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, -13)
 
 [node name="GroveSkeleton" parent="." unique_id=1070302523 instance=ExtResource("6_d356v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 1)

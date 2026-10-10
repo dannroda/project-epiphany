@@ -47,8 +47,8 @@ func _ready() -> void:
 	_guard_pose = model.find_child("GuardPose", true, false) as PoseOverlay
 	if _guard_pose:
 		_guard_pose.influence = 1.0 if config.guards_front else 0.0
-		for shield in model.find_children("*", "MeshInstance3D", true, false):
-			flash.cover(shield)
+	for held in model.find_children("*", "BoneAttachment3D", true, false):
+		flash.cover(held)
 	health.damaged.connect(_on_damaged)
 	health.died.connect(_on_died)
 	bt_player.blackboard.set_var("is_hit", false)

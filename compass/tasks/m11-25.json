@@ -2,7 +2,7 @@
   "checklist": [
     {
       "detail": "Dispara de lejos; se bloquea con el escudo y se refleja con el espejo.",
-      "done": false,
+      "done": true,
       "text": "Arquero chullpa"
     },
     {
@@ -12,7 +12,7 @@
     },
     {
       "detail": "Pedido: esqueletos que disparen flechas. Mantiene distancia, telegraph con el tensado, la flecha se bloquea con el escudo.",
-      "done": false,
+      "done": true,
       "text": "Esqueleto arquero"
     }
   ],
@@ -30,5 +30,5 @@
   ],
   "test": "Los dos enemigos aparecen en overworld o templo, se leen sus telegraphs y tienen contra clara.",
   "title": "Nuevos enemigos con los modelos existentes",
-  "updated_at": "2026-10-10T21:49:37.961Z"
+  "updated_at": "2026-10-10T23:33:38.651Z"
 }
