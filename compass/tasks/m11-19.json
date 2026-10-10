@@ -1,0 +1,18 @@
+{
+  "checklist": [],
+  "code": "11.19",
+  "created_at": "2026-10-10T02:19:34.552Z",
+  "milestone": "m11",
+  "notes": "Reportado por Daniel el 2026-10-09 (captura): en las paredes laterales (este/oeste), el paso de puerta se ve como una losa lisa del alto de la pared y el player la atraviesa. Sospecha: la pieza paso_puerta del kit propio (ítem 4 \"Puerta\", celdas con orientación 0 también en paredes laterales) o la cara lateral de la pared vecina. La pared sur ya se arregló en 11.18.",
+  "order": 19,
+  "priority": "high",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "bug",
+    "mazmorra"
+  ],
+  "test": "",
+  "title": "Pasos de puerta laterales del templo: losa del alto de la pared sin colisión",
+  "updated_at": "2026-10-10T02:19:34.820Z"
+}

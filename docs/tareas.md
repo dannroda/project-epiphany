@@ -2023,7 +2023,7 @@ Skills: `workflows:itch-publish`.
 - [x] Skeleton2 fuera del cerco y test de enemigos encimados
 - [x] path_desired_distance 1.0 por la navmesh a 0.5 m
 
-## M11 — Pulido: assets y contenido  (10/18)
+## M11 — Pulido: assets y contenido  (11/19)
 
 Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
 
@@ -2164,7 +2164,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 - [x] Suite completa
 - [x] GDD §9
 
-### 11.18 Pared sur del templo: lámina de ladrillos sin colisión tapando la puerta sur · Pendiente
+### 11.18 Pared sur del templo: lámina de ladrillos sin colisión tapando la puerta sur · Hecho
 
 **Prioridad:** alta · **Etiquetas:** `bug`, `camara`
 
@@ -2174,6 +2174,10 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
   TopDownCamera.SOUTH_WALL_RELIEF; test test_south_wall_cut_covers_the_brick_relief.
 
 **Prueba:** En cualquier sala del templo, la pared sur queda como un zócalo bajo, sin franjas ni sombras de ladrillos, y la puerta sur se ve.
+
+### 11.19 Pasos de puerta laterales del templo: losa del alto de la pared sin colisión · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `bug`, `mazmorra`
 
 ## M12 — Assets propios (Blender)  (2/9)
 
