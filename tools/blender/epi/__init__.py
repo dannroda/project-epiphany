@@ -37,6 +37,24 @@ def save(name):
 	print("guardado:", path, len(bpy.data.collections["kit"].objects), "piezas")
 
 
+def publish(name, objects=None):
+	"""Guarda el .blend de trabajo en art/blender/ (Godot no lo ve) y publica assets/epiphany/<name>.glb con las
+	custom properties; lo importa addons/epiphany_tools/import/epi_scene_import.gd. Sin objects, exporta la colección 'kit'."""
+	blend = os.path.join(ROOT, "art", "blender", name + ".blend")
+	os.makedirs(os.path.dirname(blend), exist_ok=True)
+	bpy.ops.wm.save_as_mainfile(filepath=blend)
+	bpy.ops.file.make_paths_relative()
+	bpy.ops.wm.save_mainfile()
+	if os.path.exists(blend + "1"):
+		os.remove(blend + "1")
+	objects = list(objects or bpy.data.collections["kit"].all_objects)
+	for obj in bpy.context.scene.objects:
+		obj.select_set(obj in objects)
+	glb = os.path.join(ROOT, "assets", "epiphany", name + ".glb")
+	bpy.ops.export_scene.gltf(filepath=glb, export_format="GLB", use_selection=True, export_extras=True, export_image_format="NONE", export_animation_mode="ACTIONS")
+	print("publicado:", glb, len(objects), "objetos")
+
+
 class Piece:
 	"""Una malla en construcción. Todas las funciones devuelven las caras que crean, para pintarlas."""
 

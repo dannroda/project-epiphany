@@ -2,17 +2,17 @@
   "checklist": [
     {
       "detail": "EditorScenePostImportPlugin: material de paleta por nombre (normal/emisión), guarda mallas en meshes/<fuente>/<pieza>.res (mismas rutas de hoy).",
-      "done": false,
+      "done": true,
       "text": "Plugin addons/epi_import"
     },
     {
       "detail": "col=box|sphere|capsule → colisión primitiva; socket → Marker3D; spring → cadena de SpringBoneSimulator3D.",
-      "done": false,
+      "done": true,
       "text": "Custom properties → nodos"
     },
     {
-      "detail": "epi.save() exporta además el .glb; los .blend de trabajo van a una carpeta con .gdignore.",
-      "done": false,
+      "detail": "epi.publish(name) guarda el .blend en art/blender/ (art/.gdignore) y exporta assets/epiphany/<name>.glb con extras y sin imágenes; los build_*.py viejos siguen con epi.save hasta 12.11.",
+      "done": true,
       "text": "epi publica .glb"
     },
     {
@@ -22,7 +22,7 @@
     },
     {
       "detail": "-noimp para helpers/cámaras, -navmesh, -occ en paredes, acciones con -loop (saca el hack de loops de build_carry_library).",
-      "done": false,
+      "done": true,
       "text": "Sufijos de Godot"
     }
   ],
@@ -50,5 +50,5 @@
   ],
   "test": "",
   "title": "Pipeline Blender→Godot: glb publicado + plugin de import",
-  "updated_at": "2026-10-10T23:24:51.661Z"
+  "updated_at": "2026-10-10T23:28:41.491Z"
 }

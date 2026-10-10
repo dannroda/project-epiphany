@@ -2950,15 +2950,15 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 
 **Prioridad:** alta · **Etiquetas:** `arte`, `herramientas`
 
-- [ ] Plugin addons/epi_import
+- [x] Plugin addons/epi_import
   EditorScenePostImportPlugin: material de paleta por nombre (normal/emisión), guarda mallas en meshes/<fuente>/<pieza>.res (mismas rutas de hoy).
-- [ ] Custom properties → nodos
+- [x] Custom properties → nodos
   col=box|sphere|capsule → colisión primitiva; socket → Marker3D; spring → cadena de SpringBoneSimulator3D.
 - [ ] epi publica .glb
-  epi.save() exporta además el .glb; los .blend de trabajo van a una carpeta con .gdignore.
+  epi.publish(name) guarda el .blend en art/blender/ (art/.gdignore) y exporta assets/epiphany/<name>.glb con extras y sin imágenes; los build_*.py viejos siguen con epi.save hasta 12.11.
 - [ ] Piloto con el personaje nuevo (12.12)
   Validar el flujo completo con el blockout antes de migrar el resto.
-- [ ] Sufijos de Godot
+- [x] Sufijos de Godot
   -noimp para helpers/cámaras, -navmesh, -occ en paredes, acciones con -loop (saca el hack de loops de build_carry_library).
 
 **Notas:** Basado en la doc de sufijos de import de Godot y el workflow de Blender Studio (DOGWALK). Los build_*.py guardan el .blend de trabajo y publican un .glb; Godot importa solo el .glb (no necesita Blender para builds/web). Un EditorScenePostImportPlugin reemplaza los scripts headless de extracción.

@@ -4,6 +4,7 @@ extends EditorPlugin
 const LogScript := preload("debug/runtime/log.gd")
 const LogDebuggerPlugin := preload("debug/editor/log_debugger_plugin.gd")
 const SaveInspector := preload("save_inspector/save_inspector.gd")
+const SceneImport := preload("import/epi_scene_import.gd")
 
 const AutoLoads = {
 	"Log": "debug/runtime/log.gd",
@@ -12,6 +13,7 @@ const AutoLoads = {
 
 var _log_debugger: LogDebuggerPlugin
 var _save_dock: EditorDock
+var _scene_import: SceneImport
 
 
 func _enable_plugin() -> void:
@@ -38,11 +40,15 @@ func _enter_tree() -> void:
 	_save_dock.default_slot = EditorDock.DOCK_SLOT_RIGHT_BL
 	_save_dock.add_child(SaveInspector.new())
 	add_dock(_save_dock)
+	_scene_import = SceneImport.new()
+	add_scene_post_import_plugin(_scene_import)
 	if Engine.has_meta(&"editor_bridge"):
 		_log_debugger.entry_received.connect(Engine.get_meta(&"editor_bridge").record_game_entry)
 
 
 func _exit_tree() -> void:
+	remove_scene_post_import_plugin(_scene_import)
+	_scene_import = null
 	remove_dock(_save_dock)
 	_save_dock.queue_free()
 	_save_dock = null
