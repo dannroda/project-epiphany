@@ -303,6 +303,8 @@ Modelo propio basado en el Gigante de la jam LD56: calabaza de piedra flotante c
 
 Sin flechas ni ítems la fase se gana con lo básico: esquivar mirando la sombra, rodar o bloquear lo demás y pegarle a la mano aturdida después de cada golpe al piso.
 
+**Fase 2 en juego (9.5):** al caer la segunda mano, temblor y retumbo; el cuerpo baja de 3 a 2,6 m, el ojo se abre y desde ahí se lo puede fijar con Z (su `%Solid`, la colisión esférica del cuerpo, entra al grupo `targetable`). Las manos vuelven con la vida llena 1,2 s después y siguen atacando. El ojo suma el orbe: carga 0,8 s (una bola cian crece en `%OrbMuzzle`) y dispara un `Projectile` reflejable (1 corazón). **Dónde se le pega:** las flechas y los orbes devueltos vuelan planos a la altura del player y el ojo está a casi 4 m, así que `%EyeHurtbox` es una columna delante del cuerpo, del piso hasta el ojo (2,4 × 3,8 × 1,6 m). Una flecha o un orbe devuelto con el escudo espejo lo aturde 3 s: el cuerpo cae a 1,9 m, el ojo mira al piso y el jefe no ataca; es la ventana de espadazos (24 de vida). La espada sola con el ojo sin aturdir rebota con chispas.
+
 - **Fase 1 — Manos:** golpes y agarres telegrafiados. Bloquear o rodar. Tras un golpe al piso, la mano queda aturdida → ventana para espadazos. Aturdir ambas manos → fase 2.
 - **Fase 2 — El Ojo:** el ojo se abre. **Flecha al ojo** = cae aturdido → ventana de espadazos. El ojo dispara orbes: se pueden **reflejar con el escudo espejo** como alternativa para aturdirlo. Las manos se regeneran y siguen presionando.
 - **Fase 3 (si da el tiempo):** el ojo "marca" el piso antes de golpes de área; combina patrones.

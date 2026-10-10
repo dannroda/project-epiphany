@@ -2,17 +2,17 @@
   "checklist": [
     {
       "detail": "Transición con temblor; las manos se regeneran.",
-      "done": false,
+      "done": true,
       "text": "El ojo se abre"
     },
     {
       "detail": "Ventana de espadazos.",
-      "done": false,
+      "done": true,
       "text": "Flecha al ojo → cae aturdido"
     },
     {
       "detail": "Alternativa con escudo espejo para aturdirlo.",
-      "done": false,
+      "done": true,
       "text": "Orbes reflejables"
     }
   ],
@@ -33,8 +33,8 @@
       "section": "jefe"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Se puede ganar la fase con flechas y también solo con reflejo; las manos siguen presionando.",
   "title": "Fase 2: el ojo",
-  "updated_at": "2026-10-08T04:46:03.494Z"
+  "updated_at": "2026-10-10T04:42:32.430Z"
 }

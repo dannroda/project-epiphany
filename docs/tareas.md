@@ -1608,7 +1608,7 @@ Hecho 2026-10-08: escenarios `dungeon_no_bow`, `pre_boss`, `boss_key_door_locked
 
 **Bloqueada por:** 8.7 Sala 8: antesala
 
-## M9 — Jefe  (5/8)
+## M9 — Jefe  (6/8)
 
 Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 con LimboAI.
 
@@ -1689,13 +1689,13 @@ Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 
 
 **Bloqueada por:** 9.2 Arena del jefe y barra de vida; 9.3 Arquitectura del jefe
 
-### 9.5 Fase 2: el ojo · Pendiente
+### 9.5 Fase 2: el ojo · Hecho
 
-- [ ] El ojo se abre
+- [x] El ojo se abre
   Transición con temblor; las manos se regeneran.
-- [ ] Flecha al ojo → cae aturdido
+- [x] Flecha al ojo → cae aturdido
   Ventana de espadazos.
-- [ ] Orbes reflejables
+- [x] Orbes reflejables
   Alternativa con escudo espejo para aturdirlo.
 
 **Prueba:** Se puede ganar la fase con flechas y también solo con reflejo; las manos siguen presionando.

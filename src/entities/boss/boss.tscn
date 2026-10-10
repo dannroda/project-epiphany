@@ -23,8 +23,21 @@
 [ext_resource type="Resource" path="res://data/boss/attack_sweep.tres" id="21_sweep"]
 [ext_resource type="Resource" path="res://data/boss/attack_orb.tres" id="22_orb"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_eye"]
-radius = 0.8
+[sub_resource type="BoxShape3D" id="BoxShape3D_eye"]
+size = Vector3(2.4, 3.8, 1.6)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_body"]
+radius = 2.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_charge"]
+shading_mode = 0
+albedo_color = Color(0.55, 0.95, 1, 1)
+disable_fog = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_charge"]
+material = SubResource("StandardMaterial3D_charge")
+radius = 0.35
+height = 0.7
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hand"]
 size = Vector3(1.4, 1, 1.6)
@@ -68,6 +81,12 @@ transform = Transform3D(1, 0, 0, 0, 0.906308, -0.422618, 0, 0.422618, 0.906308, 
 [node name="Mesh" type="MeshInstance3D" parent="Body"]
 mesh = ExtResource("3_body")
 
+[node name="Solid" type="StaticBody3D" parent="Body"]
+unique_name_in_owner = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body/Solid"]
+shape = SubResource("SphereShape3D_body")
+
 [node name="Eye" type="Node3D" parent="Body"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 1.38)
@@ -79,15 +98,11 @@ mesh = ExtResource("4_eye")
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.35)
 
-[node name="EyeHurtbox" type="Area3D" parent="Body/Eye"]
+[node name="Charge" type="MeshInstance3D" parent="Body/Eye/OrbMuzzle"]
 unique_name_in_owner = true
-collision_layer = 16
-collision_mask = 0
-monitoring = false
-script = ExtResource("14_hurtbox")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Body/Eye/EyeHurtbox"]
-shape = SubResource("SphereShape3D_eye")
+visible = false
+cast_shadow = 0
+mesh = SubResource("SphereMesh_charge")
 
 [node name="UpperLid" type="MeshInstance3D" parent="Body"]
 unique_name_in_owner = true
@@ -262,6 +277,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.1, 0.2)
 [node name="AttackRunner" type="Node" parent="HandRight" node_paths=PackedStringArray("hitbox_root")]
 script = ExtResource("16_runner")
 hitbox_root = NodePath("../Hitboxes")
+
+[node name="EyeHurtbox" type="Area3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1, 1.7)
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+script = ExtResource("14_hurtbox")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EyeHurtbox"]
+shape = SubResource("BoxShape3D_eye")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("13_health")

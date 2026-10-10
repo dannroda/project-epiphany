@@ -11,7 +11,13 @@ signal phase_changed(phase: int)
 signal bar_changed
 
 const LID_OPEN_ANGLE := 70.0
+const ORB := preload("res://src/entities/projectile.tscn")
 const EYE_STUN_TIME := 3.0
+## Las manos vuelven un rato después de que se abre el ojo.
+const HANDS_BACK_DELAY := 1.2
+## Alto del cuerpo en la fase 2 (más cerca para mirarte) y aturdido (caído, a tiro de espada).
+const BODY_HEIGHT_OPEN := 2.6
+const BODY_HEIGHT_STUNNED := 1.9
 const REPEAT_PENALTY := 0.25
 const SAME_HAND_PENALTY := 0.7
 ## Entran al sorteo los que tienen al menos esta fracción del mejor puntaje.
@@ -25,6 +31,9 @@ const SHORTLIST := 0.75
 			_apply_lids()
 @export var attacks: Array[BossAttack] = []
 @export var display_name := "El Ojo Antiguo"
+@export var orb_damage := 4
+@export var orb_speed := 9.0
+@export var orb_charge_time := 0.8
 
 var target: Node3D
 ## Piso de la pelea (XZ global); lo pone `BossArena` con la sala. Las manos no salen de acá.
@@ -33,6 +42,8 @@ var chosen_attack: BossAttack
 var attacker: Node3D
 var rng := RandomNumberGenerator.new()
 var _eye_stun_left := 0.0
+var _eye_attacking := false
+var _body_tween: Tween
 
 @onready var body: Node3D = $Body
 @onready var eye: Node3D = %Eye
@@ -96,8 +107,11 @@ func is_eye_stunned() -> bool:
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint() or not phases.is_active():
 		return
-	_eye_stun_left = maxf(_eye_stun_left - delta, 0.0)
-	if is_instance_valid(target):
+	if _eye_stun_left > 0.0:
+		_eye_stun_left -= delta
+		if _eye_stun_left <= 0.0:
+			_move_body(BODY_HEIGHT_OPEN, 0.6)
+	if is_instance_valid(target) and not is_eye_stunned():
 		var wanted := (target.global_position + Vector3.UP - eye.global_position).normalized()
 		look_at_point(eye.global_position + eye.global_basis.z.normalized().slerp(wanted, 1.0 - exp(-4.0 * delta)))
 	var blackboard := phases.blackboard
@@ -115,6 +129,8 @@ func _physics_process(delta: float) -> void:
 ## Puntúa cada ataque posible por cada pieza libre que lo puede hacer y sortea, por puntaje, entre los que quedan
 ## cerca del mejor: así no se vuelve un patrón fijo pero tampoco elige algo que no conviene.
 func choose_attack(for_phase: int) -> bool:
+	if is_eye_stunned():
+		return false
 	var options: Array[Array] = []
 	var best_score := 0.0
 	for attack in attacks:
@@ -157,11 +173,39 @@ func perform_chosen() -> void:
 		return
 	if attacker is BossHand:
 		attacker.perform(chosen_attack, target, arena)
+	elif attacker == eye:
+		_fire_orb()
 
 
 ## El BT espera a que la mano termine de golpear (no a que se reponga): la otra puede atacar mientras.
 func is_attack_running() -> bool:
-	return attacker is BossHand and attacker.striking
+	return _eye_attacking or (attacker is BossHand and attacker.striking)
+
+
+## El ojo carga (la bola de luz crece en la salida) y escupe un orbe que el escudo espejo puede devolver.
+func _fire_orb() -> void:
+	_eye_attacking = true
+	var charge: MeshInstance3D = %Charge
+	charge.visible = true
+	charge.scale = Vector3.ONE * 0.1
+	var grow := create_tween()
+	grow.tween_property(charge, ^"scale", Vector3.ONE, orb_charge_time).set_ease(Tween.EASE_IN)
+	await grow.finished
+	charge.visible = false
+	_eye_attacking = false
+	if is_eye_stunned() or not is_instance_valid(target) or health.current <= 0:
+		return
+	var info := DamageInfo.new()
+	info.amount = orb_damage
+	info.knockback = 6.0
+	info.source = self
+	info.team = EntityConfig.Team.ENEMY
+	info.reflectable = true
+	var orb: Projectile = ORB.instantiate()
+	get_tree().current_scene.add_child(orb)
+	var aim := target.global_position + Vector3.UP * 1.1
+	orb.launch(orb_muzzle.global_position, (aim - orb_muzzle.global_position).normalized() * orb_speed, info)
+	Feel.sfx(&"click", orb_muzzle.global_position)
 
 
 ## Producto compensado: muchos factores no hunden el puntaje solo por ser muchos (Dave Mark).
@@ -209,12 +253,31 @@ func _on_eye_hit(info: DamageInfo) -> void:
 		Feel.sfx(&"block", eye.global_position)
 		return
 	if is_eye_stunned():
-		health.damage(info.amount)
+		if health.damage(info.amount):
+			Feel.sfx(&"hit", eye.global_position)
 	elif info.source is Projectile:
-		_eye_stun_left = EYE_STUN_TIME
-		Feel.sfx(&"deny", eye.global_position)
+		_stun_eye()
 	else:
 		Feel.sfx(&"block", eye.global_position)
+		Feel.burst(&"sparks", eye.global_position, Vector3.BACK)
+
+
+## Cae aturdido: el cuerpo baja a tiro de espada, el ojo mira al piso y deja de atacar.
+func _stun_eye() -> void:
+	_eye_stun_left = EYE_STUN_TIME
+	Feel.sfx(&"deny", eye.global_position)
+	Feel.burst(&"sparks", eye.global_position, Vector3.BACK)
+	Feel.shake(0.3)
+	%Charge.visible = false
+	_move_body(BODY_HEIGHT_STUNNED, 0.35)
+	look_at_point(eye.global_position + Vector3(0, -1, 0.4))
+
+
+func _move_body(height: float, seconds: float) -> void:
+	if _body_tween:
+		_body_tween.kill()
+	_body_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_body_tween.tween_property(body, ^"position:y", height, seconds)
 
 
 func _on_hand_downed() -> void:
@@ -222,16 +285,25 @@ func _on_hand_downed() -> void:
 		phases.dispatch(&"hands_down")
 
 
+## El ojo se abre con un temblor; el cuerpo baja un poco y ya se lo puede fijar.
 func _on_phase2_entered() -> void:
 	chosen_attack = null
 	attacker = null
-	create_tween().tween_property(self, ^"eye_open", 1.0, 0.8)
-	for hand in [hand_left, hand_right]:
-		hand.regenerate()
+	Feel.sfx(&"rumble", eye.global_position)
+	Feel.shake(0.6)
+	_move_body(BODY_HEIGHT_OPEN, 0.8)
+	create_tween().tween_property(self, ^"eye_open", 1.0, 0.8).set_delay(0.3)
+	%Solid.add_to_group(&"targetable")
 	phase_changed.emit(2)
+	await get_tree().create_timer(HANDS_BACK_DELAY, false).timeout
+	if phase() == 2:
+		for hand in [hand_left, hand_right]:
+			hand.regenerate()
 
 
 func _on_defeated() -> void:
+	%Solid.remove_from_group(&"targetable")
+	_eye_stun_left = 0.0
 	DebugOverlay.watch("boss/phase", "derrotado")
 	defeated.emit()
 

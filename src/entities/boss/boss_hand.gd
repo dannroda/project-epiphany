@@ -51,6 +51,7 @@ var state := State.READY
 var striking := false
 var rest: Node3D
 var _stun_left := 0.0
+var _fall: Tween
 var _shockwave_data := AttackData.new()
 
 @onready var health: Health = $Health
@@ -112,6 +113,8 @@ func stun(seconds: float) -> void:
 
 ## Fase 2: vuelve con la vida llena.
 func regenerate() -> void:
+	if _fall:
+		_fall.kill()
 	health.reset(health.max_health)
 	rotation = Vector3.ZERO
 	set_state(State.BUSY)
@@ -363,9 +366,9 @@ func _on_died() -> void:
 	striking = false
 	_hide_shadow()
 	set_state(State.DOWN)
-	var fall := create_tween().set_parallel()
-	fall.tween_property(self, ^"global_position:y", FLOOR_HEIGHT - 0.2, 0.4).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
-	fall.tween_property(self, ^"rotation:z", 0.5 * signf(position.x), 0.4)
+	_fall = create_tween().set_parallel()
+	_fall.tween_property(self, ^"global_position:y", FLOOR_HEIGHT - 0.2, 0.4).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	_fall.tween_property(self, ^"rotation:z", 0.5 * signf(position.x), 0.4)
 	Feel.sfx(&"boom", global_position)
 	downed.emit()
 

@@ -84,7 +84,8 @@ func test_both_hands_down_opens_phase_two() -> void:
 	assert_eq(boss.phase(), 1, "con una mano en pie sigue la fase 1")
 	_knock_down(boss.hand_right)
 	assert_eq(boss.phase(), 2, "las dos manos caídas pasan a la fase 2")
-	await (Engine.get_main_loop() as SceneTree).create_timer(1.0).timeout
+	await (Engine.get_main_loop() as SceneTree).create_timer(2.0).timeout
+	assert_true(is_zero_approx(boss.hand_right.rotation.z), "vuelve derecha")
 	assert_true(boss.hand_left.health.is_full(), "las manos se regeneran")
 	assert_eq(boss.eye_open, 1.0, "el ojo se abre")
 	boss.health.invulnerability_time = 0.0
@@ -221,23 +222,23 @@ func test_arena_closes_skippable_intro_and_bar() -> void:
 	tree.root.get_node(^"GameState").reset()
 
 
-func _field() -> Array:
+## La Guarida del templo, con la intro ya vista: el player al sur del jefe, sin pelea andando.
+func _field(shield := &"") -> Array:
 	var tree := Engine.get_main_loop() as SceneTree
-	tree.root.get_node(^"GameState").reset()
-	tree.change_scene_to_file("res://levels/test.tscn")
+	var state := tree.root.get_node(^"GameState")
+	state.reset()
+	if shield != &"":
+		state.give(Items.get_item(shield))
+		state.equip(Items.get_item(shield))
+	tree.change_scene_to_file("res://levels/temple.tscn")
 	await tree.scene_changed
-	for i in 4:
-		await tree.physics_frame
+	var level := tree.current_scene
+	(level.get_node(^"BossArena") as BossArena).started = true
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
-	for enemy in tree.get_nodes_in_group(&"enemies"):
-		enemy.free()
-	var boss := SCENE.instantiate() as Boss
-	tree.current_scene.add_child(boss)
-	boss.global_position = player.global_position + Vector3(0, 0, -7)
-	boss.arena = Rect2(player.global_position.x - 8.0, player.global_position.z - 5.0, 16.0, 9.0)
-	for hand in [boss.hand_left, boss.hand_right]:
-		hand.global_position = hand.rest.global_position
-	return [tree, player, boss]
+	player.global_position = Vector3(24, 0, 21)
+	for i in 10:
+		await tree.physics_frame
+	return [tree, player, level.get_node(^"Boss") as Boss]
 
 
 func _attack(id: StringName) -> BossAttack:
@@ -336,4 +337,73 @@ func test_roll_slips_the_grab() -> void:
 	boss.hand_right.perform(_attack(&"grab"), player, boss.arena)
 	await _wait_until(func() -> bool: return not boss.hand_right.striking, 3.0)
 	assert_true(not player.is_grabbed(), "con i-frames (rodando) no lo agarra")
+	tree.root.get_node(^"GameState").reset()
+
+
+func _open_phase_two(boss: Boss) -> void:
+	boss.start_fight()
+	_knock_down(boss.hand_left)
+	_knock_down(boss.hand_right)
+	await (Engine.get_main_loop() as SceneTree).create_timer(1.3).timeout
+
+
+func test_phase_two_opens_the_eye_with_a_tremor() -> void:
+	var boss := _spawn()
+	await _open_phase_two(boss)
+	assert_eq(boss.phase(), 2)
+	assert_eq(boss.eye_open, 1.0, "el ojo se abre")
+	assert_true(is_equal_approx(boss.body.position.y, Boss.BODY_HEIGHT_OPEN), "el cuerpo baja a mirarte")
+	assert_true(boss.get_node(^"%Solid").is_in_group(&"targetable"), "se lo puede fijar con Z")
+	var arrow := Projectile.new()
+	boss.eye_hurtbox.receive(_hit(1, 0.0, arrow))
+	arrow.free()
+	assert_true(boss.is_eye_stunned(), "aturdido")
+	assert_true(not boss.choose_attack(2), "aturdido no ataca: la ventana es para pegarle")
+	await (Engine.get_main_loop() as SceneTree).create_timer(0.5).timeout
+	assert_true(is_equal_approx(boss.body.position.y, Boss.BODY_HEIGHT_STUNNED), "cae a tiro de espada")
+	boss.free()
+
+
+func test_arrow_flies_into_the_eye_and_the_sword_finishes() -> void:
+	var setup: Array = await _field()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	var boss: Boss = setup[2]
+	await _open_phase_two(boss)
+	boss.target = null
+	var arrow: Projectile = (Items.get_item(&"bow").behavior as ProjectileBehavior).projectile_scene.instantiate()
+	tree.current_scene.add_child(arrow)
+	var info := _hit(2)
+	arrow.launch(player.global_position + Vector3(0, 1.0, -0.6), Vector3.FORWARD * 20.0, info)
+	assert_true(await _wait_until(boss.is_eye_stunned, 2.0), "una flecha a la altura del player llega al ojo y lo aturde")
+	boss.health.invulnerability_time = 0.0
+	var another := Projectile.new()
+	var hits := 0
+	while boss.health.current > 0 and hits < 40:
+		if not boss.is_eye_stunned():
+			boss.eye_hurtbox.receive(_hit(1, 0.0, another))
+		boss.eye_hurtbox.receive(_hit(2))
+		hits += 1
+	another.free()
+	assert_eq(boss.phases.get_active_state().name, &"Defeated", "flecha y espada ganan la fase")
+	tree.root.get_node(^"GameState").reset()
+
+
+func test_reflected_orb_stuns_the_eye() -> void:
+	var setup: Array = await _field(&"shield_mirror")
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	var boss: Boss = setup[2]
+	await _open_phase_two(boss)
+	for hand in [boss.hand_left, boss.hand_right]:
+		hand.set_state(BossHand.State.DOWN)
+	player.model.look_at(player.model.global_position + Vector3.BACK, Vector3.UP)
+	player.health.make_invulnerable(30.0)
+	player.movement_state.blackboard.set_var("is_blocking", true)
+	use_gamepad()
+	player.set_guard(true)
+	boss.target = player
+	boss._fire_orb()
+	assert_true(await _wait_until(boss.is_eye_stunned, 4.0), "el orbe devuelto con el espejo aturde al ojo")
+	assert_eq(boss.health.current, boss.health.max_health, "aturdir no le saca vida")
 	tree.root.get_node(^"GameState").reset()
