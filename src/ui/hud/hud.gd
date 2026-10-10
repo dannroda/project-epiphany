@@ -49,6 +49,7 @@ func _refresh_item_slots() -> void:
 		var body := item_slots.get_child(i).get_node(^"Body")
 		var id := GameState.item_buttons[i]
 		var item := Items.get_item(id) if id != &"" else null
+		body.visible = item != null
 		var icon := body.get_node(^"Icon") as TextureRect
 		icon.texture = item.icon if item else null
 		icon.modulate.a = 1.0 if item and GameState.inventory.has(id) else 0.35

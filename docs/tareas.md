@@ -2023,7 +2023,7 @@ Skills: `workflows:itch-publish`.
 - [x] Skeleton2 fuera del cerco y test de enemigos encimados
 - [x] path_desired_distance 1.0 por la navmesh a 0.5 m
 
-## M11 — Pulido: assets y contenido  (7/17)
+## M11 — Pulido: assets y contenido  (9/17)
 
 Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
 
@@ -2079,15 +2079,22 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Prioridad:** baja · **Etiquetas:** `ia`
 
-### 11.10 Warning de transform singular en la suite · En curso
+### 11.10 Warning de transform singular en la suite · Hecho
 
 **Prioridad:** baja · **Etiquetas:** `tecnico`
 
 **Notas:** 2026-10-09: eran los StaticBody de los dos escudos del player. El AnimationTree arrancaba inactivo (se activaba al entrar a Idle) y, desde la segunda carga de escena, el primer cuadro fundía desde una pose con escala 0: la mano quedaba con escala cero y Jolt avisaba. Arreglo: el AnimationTree arranca activo en player.tscn. La suite quedó sin ningún aviso de transform singular.
 
-### 11.11 HUD sin slots vacíos y reveal dentro de la sala · Pendiente
+### 11.11 HUD sin slots vacíos y reveal dentro de la sala · Hecho
 
 **Prioridad:** baja · **Etiquetas:** `ui`
+
+- [x] Ocultar los slots X/Y sin ítem asignado
+  Se oculta el Body; el slot guarda su lugar para que el otro botón no se corra.
+- [x] Acotar el acercamiento del reveal a la sala
+  TopDownCamera.reveal_focus: Room.clamp_focus con la vista escalada por reveal_zoom.
+
+**Prueba:** Nueva partida: el HUD no muestra los slots X/Y hasta asignarles un ítem. Al pisar un interruptor con reveal, el acercamiento no muestra nada fuera de la sala.
 
 ### 11.12 Tamaños de sala variados · Pendiente
 

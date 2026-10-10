@@ -273,6 +273,16 @@ func _exit_tree() -> void:
 		get_tree().paused = false
 
 
+## Foco del acercamiento: el objetivo, pero con la vista acercada dentro de la sala (no se ve más allá de sus paredes).
+func reveal_focus(target: Node3D) -> Vector3:
+	var point := target.global_position
+	point.y = target_node.global_position.y
+	if room == null:
+		return point
+	var view := view_extents()
+	return room.clamp_focus(point, Rect2(view.position * reveal_zoom, view.size * reveal_zoom))
+
+
 func _reveal(target: Node3D, action: Callable) -> void:
 	var tree := get_tree()
 	var target_mode := target.process_mode
@@ -281,10 +291,8 @@ func _reveal(target: Node3D, action: Callable) -> void:
 	target.process_mode = PROCESS_MODE_ALWAYS
 	tree.paused = true
 	var back := global_position
-	var point := target.global_position
-	point.y = target_node.global_position.y
 	var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	tween.tween_property(self, "global_position", point + offset * reveal_zoom, reveal_pan_time)
+	tween.tween_property(self, "global_position", reveal_focus(target) + offset * reveal_zoom, reveal_pan_time)
 	await tween.finished
 	action.call()
 	await tree.create_timer(reveal_hold, true).timeout

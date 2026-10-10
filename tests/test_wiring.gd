@@ -99,6 +99,10 @@ func test_reveal_pauses_and_shows_only_the_first_time() -> void:
 	while Time.get_ticks_msec() < until and not camera.revealing:
 		await tree.physics_frame
 	assert_true(camera.revealing, "la cámara muestra la puerta")
+	var view := camera.view_extents()
+	var focus := camera.reveal_focus(door)
+	var shown := Rect2(Vector2(focus.x, focus.z) + view.position * camera.reveal_zoom, view.size * camera.reveal_zoom)
+	assert_true(camera.room.bounds().grow(0.01).encloses(shown), "el acercamiento no sale de la sala: %s en %s" % [shown, camera.room.bounds()])
 	assert_true(tree.paused, "con el juego en pausa")
 	while camera.revealing:
 		await tree.process_frame
