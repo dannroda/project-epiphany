@@ -1,9 +1,9 @@
 {
   "checklist": [
     {
-      "detail": "Opciones: (a) botón de salto libre; (b) salto automático al correr hacia un borde (Zelda clásico); (c) ítem tipo Pluma de Roc de Minish Cap, que se consigue y abre gating nuevo. Pesa en el diseño de niveles: andenes, huecos y pircas hoy no cuentan con que el player salte. Anotar la decisión en el GDD §4.2.",
-      "done": false,
-      "text": "Decidir el modelo de salto"
+      "detail": "Nada de salto libre ni automático: se salta con un ítem que se consigue (Minish Cap), así el gating de saltos empieza cuando lo tenés. Anotado en GDD §4.2.",
+      "done": true,
+      "text": "Decidido: ítem tipo Pluma de Roc"
     },
     {
       "detail": "Arco con altura fija, control en el aire limitado, sombra en el piso para leer dónde cae (la cámara es cenital), aterrizaje con polvo; animaciones de Rig_Medium.",
@@ -21,9 +21,14 @@
       "text": "Integración con el mundo"
     },
     {
-      "detail": "Mapa de input del GDD §4.3: botón propio o compartido con rodar (rodar en el piso, salto en un borde).",
+      "detail": "ItemData + ItemBehavior de la pluma; se asigna a un botón de ítem como el arco o las bombas (sin botón propio). Ícono renderizado desde un modelo propio (build_equipo.py).",
       "done": false,
-      "text": "Input"
+      "text": "Ítem y input"
+    },
+    {
+      "detail": "Elegir el lugar (cofre en el overworld, mini-santuario 11.27, sub-jefe 11.31…) y armar 2–3 lugares que solo se alcanzan saltando, más una pieza de corazón (11.21). Actualizar la progresión del GDD §6.2.",
+      "done": false,
+      "text": "Dónde se consigue y qué abre"
     }
   ],
   "code": "11.35",
@@ -42,6 +47,14 @@
     {
       "doc": "gdd.md",
       "section": "input"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "movimiento-combate"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "items-mvp"
     }
   ],
   "status": "todo",
@@ -49,7 +62,7 @@
     "combate",
     "movimiento"
   ],
-  "test": "Saltar un hueco de un tile y subir a un andén bajo; la sombra deja ver dónde cae. No se puede saltar una pirca ni un muro de sala. Saltar esquiva la onda de choque del golpe de las manos del jefe.",
-  "title": "Saltar",
-  "updated_at": "2026-10-10T05:32:22.043Z"
+  "test": "Sin la pluma no se puede saltar. Con la pluma asignada: saltar un hueco de un tile y subir a un andén bajo; la sombra deja ver dónde cae. No se puede saltar una pirca ni un muro de sala. Saltar esquiva la onda de choque del golpe de las manos del jefe.",
+  "title": "Saltar: ítem tipo Pluma de Roc",
+  "updated_at": "2026-10-10T05:33:05.837Z"
 }

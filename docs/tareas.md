@@ -2473,28 +2473,32 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Bloqueada por:** 11.33 Combate: sacar lo tosco
 
-**Relacionadas:** 11.22 Tablillas de historia
+**Relacionadas:** 11.22 Tablillas de historia; 11.35 Saltar: ítem tipo Pluma de Roc
 
-### 11.35 Saltar · Pendiente
+### 11.35 Saltar: ítem tipo Pluma de Roc · Pendiente
 
 **Prioridad:** media · **Etiquetas:** `combate`, `movimiento`
 
-- [ ] Decidir el modelo de salto
-  Opciones: (a) botón de salto libre; (b) salto automático al correr hacia un borde (Zelda clásico); (c) ítem tipo Pluma de Roc de Minish Cap, que se consigue y abre gating nuevo. Pesa en el diseño de niveles: andenes, huecos y pircas hoy no cuentan con que el player salte. Anotar la decisión en el GDD §4.2.
+- [x] Decidido: ítem tipo Pluma de Roc
+  Nada de salto libre ni automático: se salta con un ítem que se consigue (Minish Cap), así el gating de saltos empieza cuando lo tenés. Anotado en GDD §4.2.
 - [ ] Estado Jumping en el player
   Arco con altura fija, control en el aire limitado, sombra en el piso para leer dónde cae (la cámara es cenital), aterrizaje con polvo; animaciones de Rig_Medium.
 - [ ] Integración con combate
   Saltar esquiva golpes bajos (ondas de choque de las manos del jefe); golpe en el aire / caída con la espada (jump strike de 11.34).
 - [ ] Integración con el mundo
   Huecos de un tile, subir a andenes bajos, bajar de cualquier borde; revisar que no rompa puzzles ni salte paredes de sala (alto máximo menor que pircas y muros).
-- [ ] Input
-  Mapa de input del GDD §4.3: botón propio o compartido con rodar (rodar en el piso, salto en un borde).
+- [ ] Ítem y input
+  ItemData + ItemBehavior de la pluma; se asigna a un botón de ítem como el arco o las bombas (sin botón propio). Ícono renderizado desde un modelo propio (build_equipo.py).
+- [ ] Dónde se consigue y qué abre
+  Elegir el lugar (cofre en el overworld, mini-santuario 11.27, sub-jefe 11.31…) y armar 2–3 lugares que solo se alcanzan saltando, más una pieza de corazón (11.21). Actualizar la progresión del GDD §6.2.
 
-**Prueba:** Saltar un hueco de un tile y subir a un andén bajo; la sombra deja ver dónde cae. No se puede saltar una pirca ni un muro de sala. Saltar esquiva la onda de choque del golpe de las manos del jefe.
+**Prueba:** Sin la pluma no se puede saltar. Con la pluma asignada: saltar un hueco de un tile y subir a un andén bajo; la sombra deja ver dónde cae. No se puede saltar una pirca ni un muro de sala. Saltar esquiva la onda de choque del golpe de las manos del jefe.
 
 **Notas:** Skills: `godot:godot-physics`, `disciplines:game-feel`, `disciplines:level-design`.
 
-**Referencias:** `gdd.md#input`
+**Referencias:** `gdd.md#input`, `gdd.md#movimiento-combate`, `gdd.md#items-mvp`
+
+**Relacionadas:** 11.34 Combos y técnicas especiales (Minish Cap / Wind Waker)
 
 ## M12 — Assets propios (Blender)  (2/9)
 

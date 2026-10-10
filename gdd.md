@@ -56,6 +56,7 @@ El tema *Imminent Doom* sigue siendo el tono: el fin se siente por ambientación
 - **Lock-on (Z-target)**: mantener o alternar (configurable, ya implementado). Con objetivo fijado el player strafea y la cámara encuadra a ambos.
 - **Cambio de objetivo**: con objetivo fijado, el stick derecho **apunta**: pasado 0.7 (`look_*`), se fija el candidato que está en esa dirección desde el player (cono de ±60°; en empate, el más cercano), sin importar cuál estaba fijado. Barrer el stick va cambiando de objetivo; solo cambia si el nuevo está claramente mejor alineado (`point_hysteresis`). Candidatos: en pantalla, en rango y a la vista (las paredes tapan, los enemigos no). La rueda del mouse salta al vecino de la izquierda o la derecha; sin vecino no pasa nada, salvo con `Targeting.wrap_around` (apagado, a decidir jugando). El rango es el radio del cilindro de `TargetDetector` (6 m), la única fuente: se edita en el editor y `Targeting.targeting_range` lo lee. Un objetivo que muere o sale de rango se suelta tras 0,5 s; en modo alternar salta al siguiente. Teclado y mouse: a definir (§4.3).
 - **Apuntado libre**: analógico derecho o mouse (rayo cámara → plano del suelo). Lo consumen arco, bombas lanzadas y cualquier ítem a distancia.
+- **Salto**: no hay salto libre. Se salta con un ítem tipo **Pluma de Roc** (Minish Cap), que se usa desde la pantalla de Ítems como cualquier otro: arco fijo, sombra en el piso para leer dónde cae, esquiva golpes bajos y permite golpes en el aire. Abre gating propio (huecos de un tile, andenes bajos); nunca pasa pircas ni muros de sala. Dónde se consigue: a decidir (tarea 11.35).
 
 ### 4.3 Mapa de input
 <!-- id: input -->
@@ -116,7 +117,7 @@ Las teclas se mapean por posición física (`physical_keycode`): WASD queda en e
 
 **Recolectables** (vasijas, pasto, enemigos): corazón, flechas ×5, bombas ×3. No hay moneda.
 
-**Post-MVP:** gancho / algo que mueva objetos a distancia (aprovecha las pruebas de física), espada con elemento (fuego/rayo), spin attack.
+**Post-MVP:** pluma (salto, §4.2), gancho / algo que mueva objetos a distancia (aprovecha las pruebas de física), espada con elemento (fuego/rayo), spin attack.
 
 ### 6.2 Progresión (gating)
 <!-- id: progresion-gating -->
