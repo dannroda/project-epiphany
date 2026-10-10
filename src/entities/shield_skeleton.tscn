@@ -3,6 +3,8 @@
 [ext_resource type="PackedScene" path="res://src/entities/enemy.tscn" id="1_enemy"]
 [ext_resource type="Resource" path="res://data/entities/shield_skeleton.tres" id="2_config"]
 [ext_resource type="PackedScene" path="res://assets/items/shield/shield_round.tscn" id="3_shield"]
+[ext_resource type="Script" path="res://src/entities/guard_pose.gd" id="4_guard"]
+[ext_resource type="AnimationLibrary" path="res://player/animation/libs/CombatMelee.res" id="5_melee"]
 
 [node name="ShieldSkeleton" instance=ExtResource("1_enemy")]
 config = ExtResource("2_config")
@@ -12,4 +14,8 @@ bone_name = "hand.l"
 bone_idx = 17
 
 [node name="Shield" parent="ModelController/Skeleton3D/Hand_L" instance=ExtResource("3_shield")]
-transform = Transform3D(0.05814196, 0.9960074, 0.06774296, -0.47133523, -0.032431114, 0.8813587, 0.8800361, -0.08317359, 0.46756837, 0.034190416, 0.26870853, 0.09985852)
+transform = Transform3D(-0.013181455, 0.98799604, -0.15391952, -0.29167667, 0.14343919, 0.94570184, 0.9564264, 0.057360273, 0.2862846, -0.030828238, 0.2174542, -0.012781441)
+
+[node name="GuardPose" type="SkeletonModifier3D" parent="ModelController/Skeleton3D" index="2"]
+script = ExtResource("4_guard")
+library = ExtResource("5_melee")

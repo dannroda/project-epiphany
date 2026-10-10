@@ -9,6 +9,11 @@
       "detail": "Solo por la espalda o solo con bombas.",
       "done": false,
       "text": "Enemigo con punto débil"
+    },
+    {
+      "detail": "Pedido: esqueletos que disparen flechas. Mantiene distancia, telegraph con el tensado, la flecha se bloquea con el escudo.",
+      "done": false,
+      "text": "Esqueleto arquero"
     }
   ],
   "code": "11.25",
@@ -16,7 +21,7 @@
   "milestone": "m11",
   "notes": "",
   "order": 25,
-  "priority": "low",
+  "priority": "medium",
   "refs": [],
   "status": "todo",
   "tags": [
@@ -25,5 +30,5 @@
   ],
   "test": "Los dos enemigos aparecen en overworld o templo, se leen sus telegraphs y tienen contra clara.",
   "title": "Nuevos enemigos con los modelos existentes",
-  "updated_at": "2026-10-10T05:29:41.208Z"
+  "updated_at": "2026-10-10T21:49:37.961Z"
 }

@@ -1,0 +1,35 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Tocar: coloca la bomba a los pies como ahora"
+    },
+    {
+      "detail": "Mira/arco de tiro en el piso; soltar la tira en parábola.",
+      "done": false,
+      "text": "Mantener: levanta la bomba y apunta como el arco"
+    },
+    {
+      "done": false,
+      "text": "Mecha sigue corriendo mientras se apunta"
+    },
+    {
+      "done": false,
+      "text": "Tests y GDD"
+    }
+  ],
+  "code": "11.40",
+  "created_at": "2026-10-10T21:49:13.491Z",
+  "milestone": "m11",
+  "notes": "",
+  "order": 43,
+  "priority": "medium",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "items"
+  ],
+  "test": "",
+  "title": "Bombas: tocar coloca, mantener apunta y tira",
+  "updated_at": "2026-10-10T21:49:30.481Z"
+}

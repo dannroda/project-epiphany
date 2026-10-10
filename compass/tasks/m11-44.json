@@ -1,0 +1,39 @@
+{
+  "checklist": [
+    {
+      "detail": "Vasijas, piedras, arbustos: componente Liftable con peso.",
+      "done": false,
+      "text": "Objetos levantables"
+    },
+    {
+      "detail": "Interactuar levanta (anim KayKit), se camina más lento, se tira con el mismo botón o se apoya.",
+      "done": false,
+      "text": "Estado Carrying"
+    },
+    {
+      "detail": "Al chocar se rompe (vasija suelta su loot) y daña enemigos.",
+      "done": false,
+      "text": "Tirar: parábola, rompe y daña"
+    },
+    {
+      "detail": "Piedra sobre placa de presión, vasija para tapar un hueco.",
+      "done": false,
+      "text": "Puzzles que lo usen"
+    }
+  ],
+  "code": "11.41",
+  "created_at": "2026-10-10T21:49:13.767Z",
+  "milestone": "m11",
+  "notes": "",
+  "order": 44,
+  "priority": "high",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "items",
+    "interaccion"
+  ],
+  "test": "",
+  "title": "Levantar y tirar objetos",
+  "updated_at": "2026-10-10T21:49:31.476Z"
+}

@@ -24,6 +24,7 @@ var flash: HitFlash
 var _knockback := Vector3.ZERO
 var _facing_goal := Vector3.ZERO
 var _guard_down_until := 0
+var _guard_pose: SkeletonModifier3D
 
 var is_dead: bool:
 	get:
@@ -43,6 +44,11 @@ func _ready() -> void:
 	hitbox.damage_factory = config.make_damage.bind(self)
 	hurtbox.hit.connect(_on_hit)
 	flash = HitFlash.attach($ModelController/Visuals, health)
+	_guard_pose = model.find_child("GuardPose", true, false) as SkeletonModifier3D
+	if _guard_pose:
+		_guard_pose.influence = 1.0 if config.guards_front else 0.0
+		for shield in model.find_children("*", "MeshInstance3D", true, false):
+			flash.cover(shield)
 	health.damaged.connect(_on_damaged)
 	health.died.connect(_on_died)
 	bt_player.blackboard.set_var("is_hit", false)
@@ -72,6 +78,9 @@ func _physics_process(delta: float) -> void:
 	velocity.z = desired_velocity.z + _knockback.z
 	move_and_slide()
 	_turn(delta)
+	if _guard_pose:
+		var goal := 1.0 if is_guarding() and not _is_attacking() else 0.0
+		_guard_pose.influence = move_toward(_guard_pose.influence, goal, delta / 0.15)
 
 
 func move_toward_point(point: Vector3, speed: float) -> void:
@@ -123,9 +132,18 @@ func is_guarding() -> bool:
 	return config.guards_front and not is_dead and Time.get_ticks_msec() >= _guard_down_until
 
 
+## El escudo frena solo cuando se ve levantado (mientras ataca lo baja).
+func shield_up() -> bool:
+	return is_guarding() and (_guard_pose == null or _guard_pose.influence > 0.5)
+
+
+func _is_attacking() -> bool:
+	return String(anim_player.current_animation).contains("Attack")
+
+
 ## Escudo de frente: frena todo salvo explosiones; un golpe que aturde le baja la guardia.
 func _guard_stops(info: DamageInfo) -> bool:
-	if not is_guarding() or info.source == null or info.element == &"explosive":
+	if not shield_up() or info.source == null or info.element == &"explosive":
 		return false
 	var to_source := info.source.global_position - global_position
 	to_source.y = 0.0
@@ -137,6 +155,7 @@ func _guard_stops(info: DamageInfo) -> bool:
 		Feel.sfx(&"deny", global_position)
 	else:
 		Feel.sfx(&"block", global_position)
+		_knockback = -to_source.normalized() * info.knockback * 0.3
 	Feel.burst(&"sparks", global_position + Vector3.UP * 1.1 + to_source.normalized() * 0.5, to_source.normalized())
 	return true
 

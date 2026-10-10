@@ -2108,7 +2108,7 @@ Skills: `workflows:itch-publish`.
 
 **Relacionadas:** 10.2 Selección de partida y autosave
 
-## M11 — Pulido: assets y contenido  (20/40)
+## M11 — Pulido: assets y contenido  (20/45)
 
 Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
 
@@ -2345,12 +2345,14 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 ### 11.25 Nuevos enemigos con los modelos existentes · Pendiente
 
-**Prioridad:** baja · **Etiquetas:** `enemigos`, `ia`
+**Prioridad:** media · **Etiquetas:** `enemigos`, `ia`
 
 - [ ] Arquero chullpa
   Dispara de lejos; se bloquea con el escudo y se refleja con el espejo.
 - [ ] Enemigo con punto débil
   Solo por la espalda o solo con bombas.
+- [ ] Esqueleto arquero
+  Pedido: esqueletos que disparen flechas. Mantiene distancia, telegraph con el tensado, la flecha se bloquea con el escudo.
 
 **Prueba:** Los dos enemigos aparecen en overworld o templo, se leen sus telegraphs y tienen contra clara.
 
@@ -2575,6 +2577,62 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 - [x] Decidir con Daniel si convive con la silueta o la reemplaza
 
 **Notas:** Pedido por Daniel el 2026-10-10. Decidido: agujero contra paredes, silueta contra objetos; en el borde del mundo, silueta (el agujero mostraba el vacío). Uniform global player_hole desde TopDownCamera; player_hole.gdshaderinc en cutaway.gdshader y epiphany_wall.gdshader; variantes 'borde' del kit del overworld que OverworldMap pone al cargar.
+
+### 11.38 Esqueleto con escudo: bloquear con el escudo delante · Revisión
+
+**Prioridad:** alta · **Etiquetas:** `combate`, `enemigos`
+
+- [x] Pose del escudo al bloquear
+  Mismo socket que el player: de frente, 20° hacia afuera, delante de la mano.
+- [x] Bloquea cuando de verdad tiene el escudo arriba
+  Que el bloqueo coincida con lo que se ve: escudo levantado mirando al player; si no, el golpe entra.
+- [x] Se lee el bloqueo
+  Chispa y sonido en el escudo, retroceso; capturas desde la cámara del juego.
+
+### 11.39 Arco que se tensa · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `items`, `arte`
+
+- [ ] Arco con hueso o shape key de tensado (Blender, otra sesión)
+  Cuerda que se estira hacia la mano derecha y palas que se doblan.
+- [ ] Tensado sigue a Ranged_Bow_Draw
+  El tensado va de 0 a 1 mientras se mantiene; al soltar vuelve de golpe.
+- [ ] Flecha en la cuerda mientras se tensa
+
+### 11.40 Bombas: tocar coloca, mantener apunta y tira · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `items`
+
+- [ ] Tocar: coloca la bomba a los pies como ahora
+- [ ] Mantener: levanta la bomba y apunta como el arco
+  Mira/arco de tiro en el piso; soltar la tira en parábola.
+- [ ] Mecha sigue corriendo mientras se apunta
+- [ ] Tests y GDD
+
+### 11.41 Levantar y tirar objetos · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `items`, `interaccion`
+
+- [ ] Objetos levantables
+  Vasijas, piedras, arbustos: componente Liftable con peso.
+- [ ] Estado Carrying
+  Interactuar levanta (anim KayKit), se camina más lento, se tira con el mismo botón o se apoya.
+- [ ] Tirar: parábola, rompe y daña
+  Al chocar se rompe (vasija suelta su loot) y daña enemigos.
+- [ ] Puzzles que lo usen
+  Piedra sobre placa de presión, vasija para tapar un hueco.
+
+### 11.42 Tutorial de controles y mini puzzle por ítem · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `ui`, `puzzles`
+
+- [ ] Tutorial de controles al empezar
+  Carteles/tablitas en el claro del inicio: moverse, atacar, rodar, bloquear, fijar, interactuar; muestra el botón según el dispositivo.
+- [ ] Mini puzzle al conseguir cada ítem
+  Sala chica justo después del cofre con una tablita que da la pista: arco (ojo/diana), bombas (pared rajada), escudo espejo (rayo), levantar (placa).
+- [ ] Tablitas con el ícono del botón
+  El texto de la tablita usa los íconos de input actuales.
+- [ ] Tests y GDD
 
 ## M12 — Assets propios (Blender)  (2/9)
 
