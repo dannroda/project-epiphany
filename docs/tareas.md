@@ -2431,24 +2431,24 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Prueba:** Tras los créditos aparece la opción; una partida en ese modo cambia lo prometido.
 
-### 11.33 Combate: sacar lo tosco · Pendiente
+### 11.33 Combate: sacar lo tosco · En curso
 
 **Prioridad:** alta · **Etiquetas:** `combate`
 
 - [ ] Diagnóstico jugando
   Grabar y anotar qué se siente mal. Sospechas del código: un solo tajo (sword_slash.tres sin ventanas afinadas), el estado Attacking frena con un tween de 0.3 s y espera el fade_out entero para soltar el control (no se puede cancelar ni encadenar), sin avance en el golpe, feel.tres sin valores.
-- [ ] Respuesta y cancelación
+- [x] Respuesta y cancelación
   El tajo sale en el primer frame posible; ventana de cancelación al final (rodar, bloquear, siguiente golpe) con input buffer; giro hacia el stick o el objetivo fijado al iniciar el golpe.
-- [ ] Impacto
+- [x] Impacto
   Hit-stop corto (40–80 ms), knockback según el golpe, flash, chispas, sacudida chica, sonido por superficie; pequeño avance (lunge) al pegar.
-- [ ] Enemigos que se leen
+- [x] Enemigos que se leen
   Telegraphs más claros (pausa + brillo antes del golpe), ventanas de recuperación, reacción al golpe (stagger) consistente.
-- [ ] Afinar feel.tres y AttackData
+- [x] Afinar feel.tres y AttackData
   Valores en datos, no en código; anotar los finales en el GDD §5.
 
 **Prueba:** Pelear contra 3 chullpas en el overworld: cada golpe responde al instante, se puede rodar o bloquear al final de un tajo, los impactos se sienten, y en una sesión de playtest nadie lo describe como tosco.
 
-**Notas:** Skills: `disciplines:game-feel`, `disciplines:input-systems`, `godot:godot-animation`.
+**Notas:** Skills: `disciplines:game-feel`, `disciplines:input-systems`, `godot:godot-animation`. Hecho: cancel_from/lunge en AttackData, golpe encadenable (Attacking→Attacking), giro al objetivo o stick, chispas al pegar, aviso rojo (HitFlash.warn) y recovery_time 0,4 s en BTAttack, feel.tres con valores. Falta jugarlo (paso 1) y el sonido por superficie.
 
 **Referencias:** `gdd.md#combate`
 

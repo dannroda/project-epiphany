@@ -4,3 +4,11 @@
 
 [resource]
 script = ExtResource("1_feel")
+hit_stop_give = 0.06
+hit_stop_take = 0.08
+shake_give = 0.25
+shake_take = 0.5
+shake_block = 0.15
+flash_time = 0.12
+warn_color = Color(1, 0.25, 0.1, 1)
+warn_strength = 0.6

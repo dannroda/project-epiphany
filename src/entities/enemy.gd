@@ -20,6 +20,7 @@ signal defeated(enemy: Enemy)
 
 ## Lo que pide la IA; el empujón va aparte y se suma.
 var desired_velocity := Vector3.ZERO
+var flash: HitFlash
 var _knockback := Vector3.ZERO
 var _facing_goal := Vector3.ZERO
 var _guard_down_until := 0
@@ -41,7 +42,7 @@ func _ready() -> void:
 	hitbox.team = config.team
 	hitbox.damage_factory = config.make_damage.bind(self)
 	hurtbox.hit.connect(_on_hit)
-	HitFlash.attach($ModelController/Visuals, health)
+	flash = HitFlash.attach($ModelController/Visuals, health)
 	health.damaged.connect(_on_damaged)
 	health.died.connect(_on_died)
 	bt_player.blackboard.set_var("is_hit", false)

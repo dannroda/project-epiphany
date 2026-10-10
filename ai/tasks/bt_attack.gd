@@ -9,6 +9,8 @@ extends BTAction
 @export var windup_time := 0.45
 ## En qué punto de la animación (0..1) se congela la pose del aviso.
 @export_range(0.0, 1.0) var windup_pose := 0.15
+## Quieto después del golpe: la ventana para contraatacar.
+@export var recovery_time := 0.4
 
 var _length := 1.0
 var _striking := false
@@ -28,6 +30,8 @@ func _enter() -> void:
 	anim_player.play(attack.animation, 0.15)
 	anim_player.seek(windup_pose * _length, true)
 	anim_player.pause()
+	if agent is Enemy:
+		agent.flash.warn(windup_time)
 
 
 func _tick(_delta: float) -> Status:
@@ -37,7 +41,7 @@ func _tick(_delta: float) -> Status:
 		_striking = true
 		agent.anim_player.play()
 		agent.attack_runner.start(attack, _length, 1.0, windup_pose * _length)
-	if elapsed_time >= windup_time + _length * (1.0 - windup_pose):
+	if elapsed_time >= windup_time + _length * (1.0 - windup_pose) + recovery_time:
 		return SUCCESS
 	return RUNNING
 

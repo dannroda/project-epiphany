@@ -60,6 +60,38 @@ func test_hit_during_windup_cancels_attack() -> void:
 	assert_eq(enemy.hitbox.active_attack, null)
 
 
+func test_windup_glows_and_recovery_leaves_an_opening() -> void:
+	var setup: Array = await _load_level()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	var enemy: Enemy = setup[2]
+	player.global_position = enemy.global_position - Vector3(0, 0, 1.2)
+	player.health.make_invulnerable(10.0)
+	var glow := 0.0
+	for i in 120:
+		await tree.physics_frame
+		if enemy.anim_player.current_animation == &"CombatMelee/Melee_1H_Attack_Chop":
+			break
+	for i in 30:
+		await tree.physics_frame
+		glow = maxf(glow, enemy.flash.flash_amount())
+	assert_true(glow > 0.3, "brilla mientras carga (%.2f)" % glow)
+	var struck := false
+	for i in 120:
+		await tree.physics_frame
+		if enemy.attack_runner.is_running():
+			struck = true
+		elif struck:
+			break
+	assert_true(struck, "soltó el golpe")
+	var still := true
+	var start := enemy.global_position
+	for i in 12:
+		await tree.physics_frame
+		still = still and enemy.global_position.distance_to(start) < 0.05 and not enemy.attack_runner.is_running()
+	assert_true(still, "queda quieto un momento después del golpe")
+
+
 func test_death_releases_lock_on() -> void:
 	var setup: Array = await _load_level()
 	var tree: SceneTree = setup[0]

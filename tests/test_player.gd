@@ -192,9 +192,65 @@ func test_roll_cancels_attack() -> void:
 	_press(&"dodge")
 	await tree.physics_frame
 	await tree.physics_frame
+	assert_eq(_state(player), &"Attacking", "en plena estocada no se corta")
+	for i in 120:
+		await tree.physics_frame
+		if player.attack_runner.progress() >= player.current_attack().cancel_from:
+			break
+	_press(&"dodge")
+	await tree.physics_frame
+	await tree.physics_frame
 	assert_eq(_state(player), &"Dodging")
 	assert_eq(player.attack_runner.is_running(), false)
 	assert_eq(player.hitbox.active_attack, null)
+
+
+func test_attack_chains_in_cancel_window() -> void:
+	var setup: Array = await _load_level()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	setup[2].bt_player.active = false
+	var entered := [0]
+	player.movement_state.get_node(^"Attacking").entered.connect(func() -> void: entered[0] += 1)
+	_press(&"attack")
+	for i in 120:
+		await tree.physics_frame
+		if player.attack_runner.is_running():
+			break
+	var cancel_from := player.current_attack().cancel_from
+	for i in 120:
+		await tree.physics_frame
+		if player.attack_runner.progress() >= cancel_from:
+			break
+	var progress := player.attack_runner.progress()
+	_press(&"attack")
+	for i in 5:
+		await tree.physics_frame
+	assert_eq(entered[0], 2, "el segundo golpe sale en cuanto se puede cortar")
+	assert_true(progress < 0.75, "sin esperar el final de la animación (%.2f)" % progress)
+	assert_true(player.attack_runner.progress() < 0.2, "el golpe nuevo arrancó de cero")
+
+
+func test_attack_turns_to_target_and_steps_forward() -> void:
+	var setup: Array = await _load_level()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	var enemy: Enemy = setup[2]
+	enemy.bt_player.active = false
+	player.global_position = enemy.global_position + Vector3(2.5, 0, 0)
+	player.model.look_at(player.model.global_position + Vector3(1, 0, 0), Vector3.UP)
+	await tree.physics_frame
+	player.targeting.set_target(enemy)
+	var start := player.global_position
+	_press(&"attack")
+	for i in 3:
+		await tree.physics_frame
+	var forward := player.model.global_basis.z
+	assert_true(forward.dot(Vector3.LEFT) > 0.95, "mira al objetivo al arrancar (%s)" % forward)
+	for i in 20:
+		await tree.physics_frame
+	assert_true(player.global_position.x < start.x - 0.15, "da un paso hacia el objetivo")
+	player.targeting.clear()
 
 
 func test_buffered_attack_after_attack() -> void:

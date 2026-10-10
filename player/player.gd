@@ -212,6 +212,10 @@ func _on_hit_landed(target: Hurtbox) -> void:
 	Feel.hit_stop([self, target.get_parent()], Feel.settings.hit_stop_give)
 	Feel.shake(Feel.settings.shake_give)
 	Feel.sfx(&"hit", target.global_position)
+	if Feel.settings.sparks_on_hit:
+		var away := target.global_position - global_position
+		away.y = 0.0
+		Feel.burst(&"sparks", target.global_position + Vector3.UP * 0.8, away.normalized() + Vector3.UP * 0.3)
 
 
 func _on_died() -> void:

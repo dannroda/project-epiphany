@@ -2,9 +2,6 @@ extends LimboHSM
 
 const ITEM_ACTIONS: Array[StringName] = [&"item_1", &"item_2"]
 
-## Desde qué punto del ataque (0..1) se puede cancelar rodando.
-@export_range(0.0, 1.0) var attack_cancel_from := 0.0
-
 var player: PlayerCharacter
 
 
@@ -24,7 +21,8 @@ func _setup() -> void:
 	add_transition($Hurt, $Idle, "finished")
 	add_transition($Idle, $Dodging, "dodge")
 	add_transition($Moving, $Dodging, "dodge")
-	add_transition($Attacking, $Dodging, "dodge", func() -> bool: return player.attack_runner.progress() >= attack_cancel_from)
+	add_transition($Attacking, $Dodging, "dodge", $Attacking.can_cancel)
+	add_transition($Attacking, $Attacking, "attack", $Attacking.can_cancel)
 	add_transition($Dodging, $Idle, "finished")
 	add_transition($Idle, $UsingItem, "use_item")
 	add_transition($Moving, $UsingItem, "use_item")

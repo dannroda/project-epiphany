@@ -5,3 +5,7 @@
 [resource]
 script = ExtResource("1_u6327")
 animation = &"CombatMelee/Melee_1H_Attack_Slice_Diagonal"
+active_from = 0.22
+active_to = 0.45
+cancel_from = 0.55
+lunge = 3.5

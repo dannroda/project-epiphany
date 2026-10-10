@@ -7,22 +7,22 @@
     },
     {
       "detail": "El tajo sale en el primer frame posible; ventana de cancelación al final (rodar, bloquear, siguiente golpe) con input buffer; giro hacia el stick o el objetivo fijado al iniciar el golpe.",
-      "done": false,
+      "done": true,
       "text": "Respuesta y cancelación"
     },
     {
       "detail": "Hit-stop corto (40–80 ms), knockback según el golpe, flash, chispas, sacudida chica, sonido por superficie; pequeño avance (lunge) al pegar.",
-      "done": false,
+      "done": true,
       "text": "Impacto"
     },
     {
       "detail": "Telegraphs más claros (pausa + brillo antes del golpe), ventanas de recuperación, reacción al golpe (stagger) consistente.",
-      "done": false,
+      "done": true,
       "text": "Enemigos que se leen"
     },
     {
       "detail": "Valores en datos, no en código; anotar los finales en el GDD §5.",
-      "done": false,
+      "done": true,
       "text": "Afinar feel.tres y AttackData"
     }
   ],
@@ -35,7 +35,7 @@
     }
   ],
   "milestone": "m11",
-  "notes": "Skills: `disciplines:game-feel`, `disciplines:input-systems`, `godot:godot-animation`.",
+  "notes": "Skills: `disciplines:game-feel`, `disciplines:input-systems`, `godot:godot-animation`. Hecho: cancel_from/lunge en AttackData, golpe encadenable (Attacking→Attacking), giro al objetivo o stick, chispas al pegar, aviso rojo (HitFlash.warn) y recovery_time 0,4 s en BTAttack, feel.tres con valores. Falta jugarlo (paso 1) y el sonido por superficie.",
   "order": 33,
   "priority": "high",
   "refs": [
@@ -44,11 +44,11 @@
       "section": "combate"
     }
   ],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "combate"
   ],
   "test": "Pelear contra 3 chullpas en el overworld: cada golpe responde al instante, se puede rodar o bloquear al final de un tajo, los impactos se sienten, y en una sesión de playtest nadie lo describe como tosco.",
   "title": "Combate: sacar lo tosco",
-  "updated_at": "2026-10-10T05:30:53.671Z"
+  "updated_at": "2026-10-10T18:10:43.551Z"
 }

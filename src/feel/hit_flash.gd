@@ -36,6 +36,28 @@ func play() -> void:
 		return
 	if _tween and _tween.is_valid():
 		_tween.kill()
-	_material.set_shader_parameter(&"flash", 1.0)
+	_material.set_shader_parameter(&"color", Feel.settings.flash_color)
+	_set_flash(1.0)
 	_tween = create_tween()
-	_tween.tween_method(func(v: float) -> void: _material.set_shader_parameter(&"flash", v), 1.0, 0.0, Feel.settings.flash_time)
+	_tween.tween_method(_set_flash, 1.0, 0.0, Feel.settings.flash_time)
+
+
+## Brillo que crece mientras un enemigo carga el golpe y se apaga al soltarlo.
+func warn(duration: float) -> void:
+	if not Feel.settings.flash_enabled:
+		return
+	if _tween and _tween.is_valid():
+		_tween.kill()
+	_material.set_shader_parameter(&"color", Feel.settings.warn_color)
+	var strength := Feel.settings.warn_strength
+	_tween = create_tween()
+	_tween.tween_method(_set_flash, 0.0, strength, duration).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+	_tween.tween_method(_set_flash, strength, 0.0, 0.12)
+
+
+func flash_amount() -> float:
+	return _material.get_shader_parameter(&"flash")
+
+
+func _set_flash(value: float) -> void:
+	_material.set_shader_parameter(&"flash", value)

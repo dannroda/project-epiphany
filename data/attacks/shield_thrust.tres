@@ -10,3 +10,5 @@ active_to = 0.5
 damage_multiplier = 0.5
 knockback_multiplier = 1.5
 stun_time = 1.2
+cancel_from = 0.6
+lunge = 2.0
