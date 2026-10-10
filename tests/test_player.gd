@@ -254,3 +254,18 @@ func test_death_and_respawn() -> void:
 		assert_eq(respawned.health.current, respawned.health.max_health, "con la vida llena")
 		var new_enemy := tree.get_first_node_in_group(&"enemies") as Enemy
 		assert_true(new_enemy.global_position.distance_to(enemy_start) < 0.5, "el esqueleto volvió a su lugar")
+
+
+func test_silhouette_only_on_the_player() -> void:
+	var setup: Array = await _load_level()
+	var player: PlayerCharacter = setup[1]
+	var enemy: Enemy = setup[2]
+	var shader := preload("res://src/feel/occluded_silhouette.gdshader")
+	var player_meshes := player.get_node(^"ModelController/Visuals").find_children("*", "MeshInstance3D", true, false)
+	assert_true(not player_meshes.is_empty())
+	for mesh: MeshInstance3D in player_meshes:
+		var silhouette := mesh.material_overlay.next_pass as ShaderMaterial
+		assert_true(silhouette != null and silhouette.shader == shader, "%s tiene silueta detrás de paredes" % mesh.name)
+	for mesh: MeshInstance3D in enemy.find_children("*", "MeshInstance3D", true, false):
+		if mesh.material_overlay:
+			assert_eq(mesh.material_overlay.next_pass, null, "los enemigos no")

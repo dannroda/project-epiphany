@@ -2,6 +2,7 @@ class_name PlayerCharacter
 extends CharacterBody3D
 
 const SHIELD_THRUST: AttackData = preload("res://data/attacks/shield_thrust.tres")
+const SILHOUETTE := preload("res://src/feel/occluded_silhouette.gdshader")
 
 ## El HUD sacude el slot del botón que no se pudo usar.
 signal item_denied(button: int)
@@ -47,7 +48,9 @@ func _ready() -> void:
 	hitbox.damage_factory = _make_damage
 	hurtbox.hit.connect(_on_hit)
 	hitbox.landed.connect(_on_hit_landed)
-	HitFlash.attach($ModelController/Visuals, health)
+	var silhouette := ShaderMaterial.new()
+	silhouette.shader = SILHOUETTE
+	HitFlash.attach($ModelController/Visuals, health).add_pass(silhouette)
 	health.died.connect(_on_died)
 	GameState.loaded.connect(_sync_health)
 	GameState.max_health_changed.connect(func(_value: int) -> void: _sync_health())

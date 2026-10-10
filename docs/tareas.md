@@ -2167,6 +2167,8 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Prioridad:** media · **Etiquetas:** `camara`
 
+**Notas:** Overlay por stencil: hit_flash escribe el stencil donde el player se ve y occluded_silhouette (sin depth test) pinta en dorado solo donde no. Revisado detrás del jefe y bajo la máscara de la puerta norte del Hub. Test test_silhouette_only_on_the_player.
+
 ### 11.9 Navmesh sobre el piso · Pendiente
 
 **Prioridad:** baja · **Etiquetas:** `ia`

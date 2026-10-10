@@ -24,6 +24,11 @@ func _setup(visuals: Node3D, health: Health) -> void:
 	health.damaged.connect(func(_amount: int) -> void: play())
 
 
+## Otra pasada para todas sus mallas (la silueta del player detrás de las paredes).
+func add_pass(material: Material) -> void:
+	_material.next_pass = material
+
+
 func play() -> void:
 	if not Feel.settings.flash_enabled:
 		return
