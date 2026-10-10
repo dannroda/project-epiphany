@@ -39,7 +39,12 @@
   "priority": "low",
   "refs": [
     {
-      "doc": "gdd.md"
+      "doc": "gdd.md",
+      "section": "overworld"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "arte"
     }
   ],
   "status": "todo",
@@ -49,5 +54,5 @@
   ],
   "test": "Entrar a la cueva desde el overworld: a través del agua se ve el fondo con cáusticas que se mueven al mismo ritmo que el brillo de la superficie, hay espuma en la orilla, sin costuras, cortes ni parpadeos; el estilo combina con el resto (paleta, facetado); el rendimiento no cae respecto del overworld.",
   "title": "Cueva con ojo de agua y cáusticas animadas",
-  "updated_at": "2026-10-10T16:58:37.389Z"
+  "updated_at": "2026-10-10T16:58:48.112Z"
 }

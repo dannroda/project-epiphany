@@ -2289,7 +2289,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Notas:** Skills: `disciplines:level-design`, `godot:godot-shaders`, `godot:godot-3d-essentials`. PR: https://github.com/godotengine/godot/pull/115653
 
-**Referencias:** `gdd.md`
+**Referencias:** `gdd.md#overworld`, `gdd.md#arte`
 
 **Relacionadas:** 11.23 Vertiente de la cueva: agua bendita
 
