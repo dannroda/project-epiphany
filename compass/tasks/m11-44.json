@@ -16,12 +16,12 @@
       "text": "Tirar: parábola, rompe y daña"
     },
     {
-      "detail": "Piedra sobre placa de presión, vasija para tapar un hueco. Se hace con los mini puzzles de 11.42 (stone.tscn ya aprieta placas).",
+      "detail": "Piedra sobre placa de presión, vasija para tapar un hueco. Se hace con los mini puzzles de 11.45 (stone.tscn ya aprieta placas).",
       "done": false,
       "text": "Puzzles que lo usen"
     }
   ],
-  "code": "11.41",
+  "code": "11.44",
   "created_at": "2026-10-10T21:49:13.767Z",
   "milestone": "m11",
   "notes": "",
@@ -35,5 +35,5 @@
   ],
   "test": "",
   "title": "Levantar y tirar objetos",
-  "updated_at": "2026-10-10T23:06:23.491Z"
+  "updated_at": "2026-10-10T23:13:28.942Z"
 }

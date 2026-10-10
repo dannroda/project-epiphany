@@ -15,7 +15,7 @@
       "text": "Flecha en la cuerda mientras se tensa"
     }
   ],
-  "code": "11.39",
+  "code": "11.42",
   "created_at": "2026-10-10T21:49:13.215Z",
   "milestone": "m11",
   "notes": "",
@@ -29,5 +29,5 @@
   ],
   "test": "",
   "title": "Arco que se tensa",
-  "updated_at": "2026-10-10T22:46:57.714Z"
+  "updated_at": "2026-10-10T23:13:26.674Z"
 }

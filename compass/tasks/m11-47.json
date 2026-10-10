@@ -11,7 +11,7 @@
       "text": "Transiciones en el código"
     }
   ],
-  "code": "11.44",
+  "code": "11.47",
   "created_at": "2026-10-10T23:12:47.043Z",
   "links": [
     {
@@ -36,5 +36,5 @@
   ],
   "test": "Los dedos se cierran y abren de forma continua al pasar de una pose a otra; el ícono y la pelea siguen igual.",
   "title": "Manos del jefe con shape keys",
-  "updated_at": "2026-10-10T23:12:52.568Z"
+  "updated_at": "2026-10-10T23:13:27.924Z"
 }

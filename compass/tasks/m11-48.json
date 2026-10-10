@@ -11,7 +11,7 @@
       "text": "Integración"
     }
   ],
-  "code": "11.45",
+  "code": "11.48",
   "created_at": "2026-10-10T23:12:48.454Z",
   "milestone": "m11",
   "notes": "Skills: `godot:godot-animation`, `disciplines:game-feel`.",
@@ -25,5 +25,5 @@
   ],
   "test": "Abrir un cofre grande: el player levanta el ítem con las dos manos, se ve el objeto arriba y vuelve a su pose al cerrar la caja.",
   "title": "Pose de item get",
-  "updated_at": "2026-10-10T23:12:49.356Z"
+  "updated_at": "2026-10-10T23:13:28.159Z"
 }

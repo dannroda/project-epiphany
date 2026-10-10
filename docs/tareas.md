@@ -2483,7 +2483,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Bloquea a:** 11.34 Combos y técnicas especiales (Minish Cap / Wind Waker)
 
-**Relacionadas:** 11.46 VFX de combate
+**Relacionadas:** 11.49 VFX de combate
 
 ### 11.34 Combos y técnicas especiales (Minish Cap / Wind Waker) · Pendiente
 
@@ -2607,7 +2607,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Notas:** Pedido por Daniel el 2026-10-10. Decidido: agujero contra paredes, silueta contra objetos; en el borde del mundo, silueta (el agujero mostraba el vacío). Uniform global player_hole desde TopDownCamera; player_hole.gdshaderinc en cutaway.gdshader y epiphany_wall.gdshader; variantes 'borde' del kit del overworld que OverworldMap pone al cargar.
 
-### 11.38 Esqueleto con escudo: bloquear con el escudo delante · Revisión
+### 11.41 Esqueleto con escudo: bloquear con el escudo delante · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `combate`, `enemigos`
 
@@ -2618,7 +2618,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 - [x] Se lee el bloqueo
   Chispa y sonido en el escudo, retroceso; capturas desde la cámara del juego.
 
-### 11.39 Arco que se tensa · Revisión
+### 11.42 Arco que se tensa · Revisión
 
 **Prioridad:** media · **Etiquetas:** `items`, `arte`
 
@@ -2628,7 +2628,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
   El tensado va de 0 a 1 mientras se mantiene; al soltar vuelve de golpe.
 - [x] Flecha en la cuerda mientras se tensa
 
-### 11.40 Bombas: tocar coloca, mantener apunta y tira · Revisión
+### 11.43 Bombas: tocar coloca, mantener apunta y tira · Revisión
 
 **Prioridad:** media · **Etiquetas:** `items`
 
@@ -2638,7 +2638,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 - [x] Mecha sigue corriendo mientras se apunta
 - [x] Tests y GDD
 
-### 11.41 Levantar y tirar objetos · En curso
+### 11.44 Levantar y tirar objetos · En curso
 
 **Prioridad:** alta · **Etiquetas:** `items`, `interaccion`
 
@@ -2649,9 +2649,9 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 - [x] Tirar: parábola, rompe y daña
   Al chocar se rompe (vasija suelta su loot) y daña enemigos.
 - [ ] Puzzles que lo usen
-  Piedra sobre placa de presión, vasija para tapar un hueco. Se hace con los mini puzzles de 11.42 (stone.tscn ya aprieta placas).
+  Piedra sobre placa de presión, vasija para tapar un hueco. Se hace con los mini puzzles de 11.45 (stone.tscn ya aprieta placas).
 
-### 11.42 Tutorial de controles y mini puzzle por ítem · Pendiente
+### 11.45 Tutorial de controles y mini puzzle por ítem · Pendiente
 
 **Prioridad:** alta · **Etiquetas:** `ui`, `puzzles`
 
@@ -2663,7 +2663,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
   El texto de la tablita usa los íconos de input actuales.
 - [ ] Tests y GDD
 
-### 11.43 Jefe: game juice · Pendiente
+### 11.46 Jefe: game juice · Pendiente
 
 **Prioridad:** alta · **Etiquetas:** `jefe`, `feel`
 
@@ -2686,9 +2686,9 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Referencias:** `gdd.md#jefe`
 
-**Relacionadas:** 11.44 Manos del jefe con shape keys; 11.47 Audio del jefe
+**Relacionadas:** 11.47 Manos del jefe con shape keys; 11.50 Audio del jefe
 
-### 11.44 Manos del jefe con shape keys · Pendiente
+### 11.47 Manos del jefe con shape keys · Pendiente
 
 **Prioridad:** media · **Etiquetas:** `jefe`, `arte`
 
@@ -2703,9 +2703,9 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Referencias:** `gdd.md#jefe`
 
-**Relacionadas:** 11.43 Jefe: game juice
+**Relacionadas:** 11.46 Jefe: game juice
 
-### 11.45 Pose de item get · Pendiente
+### 11.48 Pose de item get · Pendiente
 
 **Prioridad:** media · **Etiquetas:** `personajes`, `feel`
 
@@ -2718,7 +2718,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Notas:** Skills: `godot:godot-animation`, `disciplines:game-feel`.
 
-### 11.46 VFX de combate · Pendiente
+### 11.49 VFX de combate · Pendiente
 
 **Prioridad:** media · **Etiquetas:** `feel`, `combate`
 
@@ -2735,7 +2735,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Relacionadas:** 11.33 Combate: sacar lo tosco
 
-### 11.47 Audio del jefe · Pendiente
+### 11.50 Audio del jefe · Pendiente
 
 **Prioridad:** baja · **Etiquetas:** `jefe`, `audio`
 
@@ -2750,7 +2750,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Referencias:** `gdd.md#jefe`
 
-**Relacionadas:** 11.43 Jefe: game juice
+**Relacionadas:** 11.46 Jefe: game juice
 
 ## M12 — Assets propios (Blender)  (2/9)
 

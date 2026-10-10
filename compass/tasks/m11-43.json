@@ -18,7 +18,7 @@
       "text": "Tests y GDD"
     }
   ],
-  "code": "11.40",
+  "code": "11.43",
   "created_at": "2026-10-10T21:49:13.491Z",
   "milestone": "m11",
   "notes": "",
@@ -31,5 +31,5 @@
   ],
   "test": "",
   "title": "Bombas: tocar coloca, mantener apunta y tira",
-  "updated_at": "2026-10-10T22:28:54.229Z"
+  "updated_at": "2026-10-10T23:13:26.919Z"
 }

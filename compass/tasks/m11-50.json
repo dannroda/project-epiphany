@@ -11,7 +11,7 @@
       "text": "Tema de música"
     }
   ],
-  "code": "11.47",
+  "code": "11.50",
   "created_at": "2026-10-10T23:12:51.056Z",
   "links": [
     {
@@ -36,5 +36,5 @@
   ],
   "test": "La pelea tiene sonido propio y la música cambia con las fases.",
   "title": "Audio del jefe",
-  "updated_at": "2026-10-10T23:12:53.212Z"
+  "updated_at": "2026-10-10T23:13:28.677Z"
 }
