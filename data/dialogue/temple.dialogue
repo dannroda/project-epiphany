@@ -17,3 +17,8 @@ Inscripción: Hace mucho que nadie vuelve. Las grietas lo saben antes que nosotr
 Inscripción: Sus ojos menores todavía miran por él, aunque él duerma. [ID:temple_eyes_servants_1]
 Inscripción: No los vence el acero. Cegalos desde lejos y te van a mostrar lo que custodian. [ID:temple_eyes_servants_2]
 => END
+
+~ bow_hint
+Inscripción: Mantené {item:bow} para tensar la cuerda; al soltar, la flecha vuela hacia donde apuntás. [ID:temple_bow_hint_1]
+Inscripción: Los ojos de piedra no ven venir lo que llega de lejos. [ID:temple_bow_hint_2]
+=> END

@@ -1,7 +1,21 @@
+~ start_controls
+Inscripción: Andá con {btn:move}. Con {btn:dodge} se rueda: así se esquiva lo que no se puede parar. [ID:ow_start_controls_1]
+Inscripción: Con {btn:interact} se leen las piedras como esta, se abren cofres y se habla. [ID:ow_start_controls_2]
+=> END
+
+~ start_combat
+Inscripción: Con {btn:attack} se golpea, y golpeando seguido se encadena. Mantené {btn:block} para cubrirte. [ID:ow_start_combat_1]
+Inscripción: Con {btn:target_next} fijás la vista en un enemigo y lo rodeás sin perderlo. [ID:ow_start_combat_2]
+=> END
+
+~ start_lift
+Inscripción: Las piedras chicas se levantan con {btn:interact}. Con {btn:interact} o {btn:attack} se arrojan: la placa espera su peso. [ID:ow_start_lift_1]
+=> END
+
 ~ cave_bombs
 Inscripción: La piedra herida no cede al acero. [ID:ow_cave_bombs_1]
-Inscripción: Dejá el fuego a sus pies y alejate: la grieta hace el resto. [ID:ow_cave_bombs_2]
-Inscripción: Quien lo sostiene en alto puede arrojarlo lejos. [ID:ow_cave_bombs_3]
+Inscripción: Dejá el fuego a sus pies con {item:bomb_bag} y alejate: la grieta hace el resto. [ID:ow_cave_bombs_2]
+Inscripción: Quien mantiene {item:bomb_bag} lo sostiene en alto, elige dónde y lo arroja al soltar. [ID:ow_cave_bombs_3]
 => END
 
 ~ grotto_hint
@@ -22,6 +36,7 @@ Inscripción: Lo llamamos el Ojo. Lo que miraba mucho tiempo se secaba, y miraba
 ~ shrine_mirror
 Inscripción: No pudimos cerrarle el párpado. Le dimos otra cosa para mirar: su propia luz, devuelta por un espejo. [ID:ow_shrine_mirror_1]
 Inscripción: Se quedó mirándose y se durmió. El espejo que guardamos acá es hermano de aquel. [ID:ow_shrine_mirror_2]
+Inscripción: Alzalo con {btn:block} de cara a la luz y la vas a devolver hacia donde mires. [ID:ow_shrine_mirror_3]
 => END
 
 ~ grove_last

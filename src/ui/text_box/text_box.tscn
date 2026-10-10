@@ -54,6 +54,14 @@ layout_mode = 2
 theme_type_variation = &"ItemGetText"
 autowrap_mode = 3
 
+[node name="RichBody" type="RichTextLabel" parent="ItemBox/Layout"]
+visible = false
+layout_mode = 2
+theme_type_variation = &"ItemGetText"
+fit_content = true
+scroll_active = false
+autowrap_mode = 3
+
 [node name="NextAnchor" type="Control" parent="ItemBox"]
 layout_mode = 2
 size_flags_horizontal = 8
@@ -102,6 +110,15 @@ layout_mode = 2
 theme_type_variation = &"StoneText"
 horizontal_alignment = 1
 autowrap_mode = 3
+
+[node name="RichBody" type="RichTextLabel" parent="StoneBox/Inner/Layout"]
+visible = false
+layout_mode = 2
+theme_type_variation = &"StoneText"
+fit_content = true
+scroll_active = false
+autowrap_mode = 3
+horizontal_alignment = 1
 
 [node name="Hint" type="HBoxContainer" parent="."]
 unique_name_in_owner = true

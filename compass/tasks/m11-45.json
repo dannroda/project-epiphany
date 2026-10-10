@@ -2,21 +2,21 @@
   "checklist": [
     {
       "detail": "Carteles/tablitas en el claro del inicio: moverse, atacar, rodar, bloquear, fijar, interactuar; muestra el botón según el dispositivo.",
-      "done": false,
+      "done": true,
       "text": "Tutorial de controles al empezar"
     },
     {
-      "detail": "Sala chica justo después del cofre con una tablita que da la pista: arco (ojo/diana), bombas (pared rajada), escudo espejo (rayo), levantar (placa).",
-      "done": false,
+      "detail": "Levantar: piedra, placa y reja con cofre en el claro del inicio. Bombas, espejo y arco reusan lo que ya había al lado del cofre (muro de práctica, haz del santuario, sala de ojos) con su tablita de pista.",
+      "done": true,
       "text": "Mini puzzle al conseguir cada ítem"
     },
     {
       "detail": "El texto de la tablita usa los íconos de input actuales.",
-      "done": false,
+      "done": true,
       "text": "Tablitas con el ícono del botón"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Tests y GDD"
     }
   ],
@@ -27,12 +27,12 @@
   "order": 45,
   "priority": "high",
   "refs": [],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "ui",
     "puzzles"
   ],
   "test": "",
   "title": "Tutorial de controles y mini puzzle por ítem",
-  "updated_at": "2026-10-10T23:13:27.457Z"
+  "updated_at": "2026-10-10T23:55:19.251Z"
 }

@@ -431,6 +431,12 @@ item = ExtResource("37_r56pb")
 flag = &"d1_chest_bow"
 big = true
 
+[node name="BowTablet" parent="." instance=ExtResource("11_pu13t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 29)
+dialogue = ExtResource("13_rn0lq")
+cue = "bow_hint"
+flag = &"d1_tablet_bow"
+
 [node name="OjosPit" type="Area3D" parent="." unique_id=289956540]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2, 31)
 script = ExtResource("38_hjkgx")

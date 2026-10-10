@@ -5,6 +5,8 @@ extends Node
 ## Carry_Throw lo suelta en esta fracción de la animación.
 const THROW_RELEASE := 0.45
 const BLEND_TIME := 0.12
+## Lo tirado no choca con quien lo tiró hasta que se aleja.
+const THROWER_GRACE := 0.4
 
 @export var socket: Node3D
 @export var anim_tree: AnimationTree
@@ -65,6 +67,12 @@ func throw(to: Vector3, flight_time: float) -> void:
 		return
 	var gravity := Vector3.DOWN * float(ProjectSettings.get_setting("physics/3d/default_gravity")) * body.gravity_scale
 	body.linear_velocity = (to - body.global_position) / flight_time - gravity * flight_time * 0.5
+	var thrower := get_parent() as PhysicsBody3D
+	if thrower:
+		body.add_collision_exception_with(thrower)
+		get_tree().create_timer(THROWER_GRACE, false, true).timeout.connect(func() -> void:
+			if is_instance_valid(body) and is_instance_valid(thrower):
+				body.remove_collision_exception_with(thrower))
 
 
 func drop() -> void:

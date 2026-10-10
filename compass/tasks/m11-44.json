@@ -17,7 +17,7 @@
     },
     {
       "detail": "Piedra sobre placa de presión, vasija para tapar un hueco. Se hace con los mini puzzles de 11.45 (stone.tscn ya aprieta placas).",
-      "done": false,
+      "done": true,
       "text": "Puzzles que lo usen"
     }
   ],
@@ -28,12 +28,12 @@
   "order": 44,
   "priority": "high",
   "refs": [],
-  "status": "doing",
+  "status": "review",
   "tags": [
     "items",
     "interaccion"
   ],
   "test": "",
   "title": "Levantar y tirar objetos",
-  "updated_at": "2026-10-10T23:13:28.942Z"
+  "updated_at": "2026-10-10T23:55:24.724Z"
 }

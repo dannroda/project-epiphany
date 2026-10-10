@@ -3,7 +3,7 @@ class_name FloorSwitch
 extends Area3D
 ## Interruptor de piso: lo activa el player, un bloque o un cuerpo físico encima.
 ## HOLD: activo mientras haya algo encima. ONCE: queda activado (y, con flag, entre partidas).
-## BLOCK: el player lo activa solo mientras está encima; un bloque lo deja activado como ONCE.
+## BLOCK: el player lo activa solo mientras está encima; un bloque o algo arrojado lo deja activado como ONCE.
 
 signal activated
 signal deactivated
@@ -55,7 +55,7 @@ func _physics_process(_delta: float) -> void:
 	var bodies := get_overlapping_bodies()
 	var pressed := bodies.any(func(body: Node3D) -> bool:
 		return body is PlayerCharacter or body is PushBlock or body is RigidBody3D)
-	if mode == Mode.BLOCK and not _solved and bodies.any(func(body: Node3D) -> bool: return body is PushBlock):
+	if mode == Mode.BLOCK and not _solved and bodies.any(func(body: Node3D) -> bool: return body is PushBlock or body is RigidBody3D):
 		_solved = true
 		if _persistent:
 			_persistent.value = true
