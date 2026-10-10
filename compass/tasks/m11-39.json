@@ -1,15 +1,15 @@
 {
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "Componente WindWakerLight (escena + shaders propios)"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Ordenar prioridades con la silueta del player"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Ponerla en las antorchas del templo y revisar en capturas"
     }
   ],
@@ -20,11 +20,11 @@
   "order": 39,
   "priority": "medium",
   "refs": [],
-  "status": "todo",
+  "status": "done",
   "tags": [
     "arte"
   ],
   "test": "",
   "title": "Luces estilo Wind Waker (volúmenes de stencil)",
-  "updated_at": "2026-10-10T16:59:59.135Z"
+  "updated_at": "2026-10-10T17:18:02.518Z"
 }

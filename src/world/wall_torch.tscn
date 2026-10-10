@@ -2,6 +2,7 @@
 
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo/antorcha_pared.res" id="1_torch"]
 [ext_resource type="Script" path="res://src/world/torch_flicker.gd" id="2_flicker"]
+[ext_resource type="PackedScene" path="res://src/feel/stencil_light/stencil_light.tscn" id="3_glow"]
 
 [sub_resource type="StandardMaterial3D" id="Flame"]
 shading_mode = 0
@@ -31,3 +32,8 @@ light_color = Color(1, 0.68, 0.38, 1)
 light_energy = 1.4
 omni_range = 7.0
 script = ExtResource("2_flicker")
+
+[node name="Glow" parent="." instance=ExtResource("3_glow")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0

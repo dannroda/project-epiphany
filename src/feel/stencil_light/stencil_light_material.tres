@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://src/feel/stencil_light/stencil_light_mask.gdshader" id="1_mask"]
+[ext_resource type="Shader" path="res://src/feel/stencil_light/stencil_light_color.gdshader" id="2_color"]
+[ext_resource type="Shader" path="res://src/feel/stencil_light/stencil_light_clear.gdshader" id="3_clear"]
+
+[sub_resource type="ShaderMaterial" id="Clear"]
+shader = ExtResource("3_clear")
+
+[sub_resource type="ShaderMaterial" id="Color"]
+next_pass = SubResource("Clear")
+shader = ExtResource("2_color")
+shader_parameter/color = Color(1, 1, 1, 1)
+
+[resource]
+next_pass = SubResource("Color")
+shader = ExtResource("1_mask")

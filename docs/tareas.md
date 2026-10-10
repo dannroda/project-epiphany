@@ -2108,7 +2108,7 @@ Skills: `workflows:itch-publish`.
 
 **Relacionadas:** 10.2 Selección de partida y autosave
 
-## M11 — Pulido: assets y contenido  (14/39)
+## M11 — Pulido: assets y contenido  (15/39)
 
 Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
 
@@ -2556,13 +2556,13 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Notas:** Pedido por Daniel el 2026-10-10 (godotshaders stencil-based-silhouette y el custom x-ray de apples/godot-stencil-demo): la silueta del player gana fresnel, brilla en los bordes y es más transparente en el centro.
 
-### 11.39 Luces estilo Wind Waker (volúmenes de stencil) · Pendiente
+### 11.39 Luces estilo Wind Waker (volúmenes de stencil) · Hecho
 
 **Prioridad:** media · **Etiquetas:** `arte`
 
-- [ ] Componente WindWakerLight (escena + shaders propios)
-- [ ] Ordenar prioridades con la silueta del player
-- [ ] Ponerla en las antorchas del templo y revisar en capturas
+- [x] Componente WindWakerLight (escena + shaders propios)
+- [x] Ordenar prioridades con la silueta del player
+- [x] Ponerla en las antorchas del templo y revisar en capturas
 
 **Notas:** Pedido por Daniel el 2026-10-10, como las Wind Waker lights de apples/godot-stencil-demo (el repo no tiene licencia: se reimplementa la técnica, sin copiar código). Esfera con 3 pasadas de stencil: marcar lo que queda delante, multiplicar color adentro, limpiar; prioridad propia por luz. Cuidar que no pise el stencil de la silueta del player (ref 1). Uso: antorchas del templo.
 

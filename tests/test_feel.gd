@@ -34,3 +34,24 @@ func test_camera_trauma_decays_and_flash_is_attached() -> void:
 	assert_true(not meshes.is_empty())
 	for mesh: MeshInstance3D in meshes:
 		assert_true(mesh.material_overlay != null, mesh.name)
+
+
+func test_stencil_lights_draw_before_the_player_silhouette() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var torch: Node3D = load("res://src/world/wall_torch.tscn").instantiate()
+	var other: StencilLight = load("res://src/feel/stencil_light/stencil_light.tscn").instantiate()
+	tree.root.add_child(torch)
+	tree.root.add_child(other)
+	var glow := torch.get_node(^"Glow") as StencilLight
+	assert_true(glow != null, "la antorcha tiene su luz")
+	var priorities := []
+	for light in [glow, other]:
+		var pass_material: Material = light.volume.material_override
+		while pass_material:
+			assert_true(pass_material.render_priority < 0, "antes del destello y la silueta (prioridades 0 y 1)")
+			priorities.append(pass_material.render_priority)
+			pass_material = pass_material.next_pass
+	assert_eq(priorities.size(), 6, "tres pasadas por luz")
+	assert_true(priorities[2] < priorities[3] or priorities[5] < priorities[0], "cada luz tiene sus prioridades")
+	torch.free()
+	other.free()
