@@ -1,0 +1,17 @@
+{
+  "checklist": [],
+  "code": "11.38",
+  "created_at": "2026-10-10T16:59:47.699Z",
+  "milestone": "m11",
+  "notes": "Pedido por Daniel el 2026-10-10 (godotshaders stencil-based-silhouette y el custom x-ray de apples/godot-stencil-demo): la silueta del player gana fresnel, brilla en los bordes y es más transparente en el centro.",
+  "order": 38,
+  "priority": "medium",
+  "refs": [],
+  "status": "done",
+  "tags": [
+    "camara"
+  ],
+  "test": "",
+  "title": "Silueta x-ray con fresnel",
+  "updated_at": "2026-10-10T17:08:04.060Z"
+}

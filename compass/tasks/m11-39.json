@@ -1,0 +1,30 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Componente WindWakerLight (escena + shaders propios)"
+    },
+    {
+      "done": false,
+      "text": "Ordenar prioridades con la silueta del player"
+    },
+    {
+      "done": false,
+      "text": "Ponerla en las antorchas del templo y revisar en capturas"
+    }
+  ],
+  "code": "11.39",
+  "created_at": "2026-10-10T16:59:47.954Z",
+  "milestone": "m11",
+  "notes": "Pedido por Daniel el 2026-10-10, como las Wind Waker lights de apples/godot-stencil-demo (el repo no tiene licencia: se reimplementa la técnica, sin copiar código). Esfera con 3 pasadas de stencil: marcar lo que queda delante, multiplicar color adentro, limpiar; prioridad propia por luz. Cuidar que no pise el stencil de la silueta del player (ref 1). Uso: antorchas del templo.",
+  "order": 39,
+  "priority": "medium",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "arte"
+  ],
+  "test": "",
+  "title": "Luces estilo Wind Waker (volúmenes de stencil)",
+  "updated_at": "2026-10-10T16:59:59.135Z"
+}

@@ -2108,7 +2108,7 @@ Skills: `workflows:itch-publish`.
 
 **Relacionadas:** 10.2 Selección de partida y autosave
 
-## M11 — Pulido: assets y contenido  (13/39)
+## M11 — Pulido: assets y contenido  (14/39)
 
 Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
 
@@ -2550,7 +2550,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Relacionadas:** 11.36 Mapa: más información y navegable
 
-### 11.38 Silueta x-ray con fresnel · En curso
+### 11.38 Silueta x-ray con fresnel · Hecho
 
 **Prioridad:** media · **Etiquetas:** `camara`
 
