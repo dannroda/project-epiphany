@@ -1,0 +1,55 @@
+{
+  "checklist": [
+    {
+      "detail": "Opciones: (a) botón de salto libre; (b) salto automático al correr hacia un borde (Zelda clásico); (c) ítem tipo Pluma de Roc de Minish Cap, que se consigue y abre gating nuevo. Pesa en el diseño de niveles: andenes, huecos y pircas hoy no cuentan con que el player salte. Anotar la decisión en el GDD §4.2.",
+      "done": false,
+      "text": "Decidir el modelo de salto"
+    },
+    {
+      "detail": "Arco con altura fija, control en el aire limitado, sombra en el piso para leer dónde cae (la cámara es cenital), aterrizaje con polvo; animaciones de Rig_Medium.",
+      "done": false,
+      "text": "Estado Jumping en el player"
+    },
+    {
+      "detail": "Saltar esquiva golpes bajos (ondas de choque de las manos del jefe); golpe en el aire / caída con la espada (jump strike de 11.34).",
+      "done": false,
+      "text": "Integración con combate"
+    },
+    {
+      "detail": "Huecos de un tile, subir a andenes bajos, bajar de cualquier borde; revisar que no rompa puzzles ni salte paredes de sala (alto máximo menor que pircas y muros).",
+      "done": false,
+      "text": "Integración con el mundo"
+    },
+    {
+      "detail": "Mapa de input del GDD §4.3: botón propio o compartido con rodar (rodar en el piso, salto en un borde).",
+      "done": false,
+      "text": "Input"
+    }
+  ],
+  "code": "11.35",
+  "created_at": "2026-10-10T05:32:19.931Z",
+  "links": [
+    {
+      "task": "m11-34",
+      "type": "related"
+    }
+  ],
+  "milestone": "m11",
+  "notes": "Skills: `godot:godot-physics`, `disciplines:game-feel`, `disciplines:level-design`.",
+  "order": 35,
+  "priority": "medium",
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "input"
+    }
+  ],
+  "status": "todo",
+  "tags": [
+    "combate",
+    "movimiento"
+  ],
+  "test": "Saltar un hueco de un tile y subir a un andén bajo; la sombra deja ver dónde cae. No se puede saltar una pirca ni un muro de sala. Saltar esquiva la onda de choque del golpe de las manos del jefe.",
+  "title": "Saltar",
+  "updated_at": "2026-10-10T05:32:22.043Z"
+}

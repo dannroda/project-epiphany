@@ -2106,7 +2106,7 @@ Skills: `workflows:itch-publish`.
 
 **Relacionadas:** 10.2 Selección de partida y autosave
 
-## M11 — Pulido: assets y contenido  (11/34)
+## M11 — Pulido: assets y contenido  (11/35)
 
 Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
 
@@ -2469,11 +2469,32 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Notas:** Skills: `disciplines:game-feel`, `disciplines:input-systems`, `godot:godot-animation`.
 
-**Referencias:** `gdd.md#combate`
+**Referencias:** `gdd.md#combate`, `gdd.md#input`
 
 **Bloqueada por:** 11.33 Combate: sacar lo tosco
 
 **Relacionadas:** 11.22 Tablillas de historia
+
+### 11.35 Saltar · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `combate`, `movimiento`
+
+- [ ] Decidir el modelo de salto
+  Opciones: (a) botón de salto libre; (b) salto automático al correr hacia un borde (Zelda clásico); (c) ítem tipo Pluma de Roc de Minish Cap, que se consigue y abre gating nuevo. Pesa en el diseño de niveles: andenes, huecos y pircas hoy no cuentan con que el player salte. Anotar la decisión en el GDD §4.2.
+- [ ] Estado Jumping en el player
+  Arco con altura fija, control en el aire limitado, sombra en el piso para leer dónde cae (la cámara es cenital), aterrizaje con polvo; animaciones de Rig_Medium.
+- [ ] Integración con combate
+  Saltar esquiva golpes bajos (ondas de choque de las manos del jefe); golpe en el aire / caída con la espada (jump strike de 11.34).
+- [ ] Integración con el mundo
+  Huecos de un tile, subir a andenes bajos, bajar de cualquier borde; revisar que no rompa puzzles ni salte paredes de sala (alto máximo menor que pircas y muros).
+- [ ] Input
+  Mapa de input del GDD §4.3: botón propio o compartido con rodar (rodar en el piso, salto en un borde).
+
+**Prueba:** Saltar un hueco de un tile y subir a un andén bajo; la sombra deja ver dónde cae. No se puede saltar una pirca ni un muro de sala. Saltar esquiva la onda de choque del golpe de las manos del jefe.
+
+**Notas:** Skills: `godot:godot-physics`, `disciplines:game-feel`, `disciplines:level-design`.
+
+**Referencias:** `gdd.md#input`
 
 ## M12 — Assets propios (Blender)  (2/9)
 
