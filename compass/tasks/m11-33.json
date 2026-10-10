@@ -1,0 +1,54 @@
+{
+  "checklist": [
+    {
+      "detail": "Grabar y anotar qué se siente mal. Sospechas del código: un solo tajo (sword_slash.tres sin ventanas afinadas), el estado Attacking frena con un tween de 0.3 s y espera el fade_out entero para soltar el control (no se puede cancelar ni encadenar), sin avance en el golpe, feel.tres sin valores.",
+      "done": false,
+      "text": "Diagnóstico jugando"
+    },
+    {
+      "detail": "El tajo sale en el primer frame posible; ventana de cancelación al final (rodar, bloquear, siguiente golpe) con input buffer; giro hacia el stick o el objetivo fijado al iniciar el golpe.",
+      "done": false,
+      "text": "Respuesta y cancelación"
+    },
+    {
+      "detail": "Hit-stop corto (40–80 ms), knockback según el golpe, flash, chispas, sacudida chica, sonido por superficie; pequeño avance (lunge) al pegar.",
+      "done": false,
+      "text": "Impacto"
+    },
+    {
+      "detail": "Telegraphs más claros (pausa + brillo antes del golpe), ventanas de recuperación, reacción al golpe (stagger) consistente.",
+      "done": false,
+      "text": "Enemigos que se leen"
+    },
+    {
+      "detail": "Valores en datos, no en código; anotar los finales en el GDD §5.",
+      "done": false,
+      "text": "Afinar feel.tres y AttackData"
+    }
+  ],
+  "code": "11.33",
+  "created_at": "2026-10-10T05:30:49.373Z",
+  "links": [
+    {
+      "task": "m11-34",
+      "type": "blocks"
+    }
+  ],
+  "milestone": "m11",
+  "notes": "Skills: `disciplines:game-feel`, `disciplines:input-systems`, `godot:godot-animation`.",
+  "order": 33,
+  "priority": "high",
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "combate"
+    }
+  ],
+  "status": "todo",
+  "tags": [
+    "combate"
+  ],
+  "test": "Pelear contra 3 chullpas en el overworld: cada golpe responde al instante, se puede rodar o bloquear al final de un tajo, los impactos se sienten, y en una sesión de playtest nadie lo describe como tosco.",
+  "title": "Combate: sacar lo tosco",
+  "updated_at": "2026-10-10T05:30:53.671Z"
+}

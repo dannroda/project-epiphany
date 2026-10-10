@@ -2106,7 +2106,7 @@ Skills: `workflows:itch-publish`.
 
 **Relacionadas:** 10.2 Selección de partida y autosave
 
-## M11 — Pulido: assets y contenido  (11/32)
+## M11 — Pulido: assets y contenido  (11/34)
 
 Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
 
@@ -2424,6 +2424,52 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 - [ ] Desbloquear al terminar
 
 **Prueba:** Tras los créditos aparece la opción; una partida en ese modo cambia lo prometido.
+
+### 11.33 Combate: sacar lo tosco · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `combate`
+
+- [ ] Diagnóstico jugando
+  Grabar y anotar qué se siente mal. Sospechas del código: un solo tajo (sword_slash.tres sin ventanas afinadas), el estado Attacking frena con un tween de 0.3 s y espera el fade_out entero para soltar el control (no se puede cancelar ni encadenar), sin avance en el golpe, feel.tres sin valores.
+- [ ] Respuesta y cancelación
+  El tajo sale en el primer frame posible; ventana de cancelación al final (rodar, bloquear, siguiente golpe) con input buffer; giro hacia el stick o el objetivo fijado al iniciar el golpe.
+- [ ] Impacto
+  Hit-stop corto (40–80 ms), knockback según el golpe, flash, chispas, sacudida chica, sonido por superficie; pequeño avance (lunge) al pegar.
+- [ ] Enemigos que se leen
+  Telegraphs más claros (pausa + brillo antes del golpe), ventanas de recuperación, reacción al golpe (stagger) consistente.
+- [ ] Afinar feel.tres y AttackData
+  Valores en datos, no en código; anotar los finales en el GDD §5.
+
+**Prueba:** Pelear contra 3 chullpas en el overworld: cada golpe responde al instante, se puede rodar o bloquear al final de un tajo, los impactos se sienten, y en una sesión de playtest nadie lo describe como tosco.
+
+**Notas:** Skills: `disciplines:game-feel`, `disciplines:input-systems`, `godot:godot-animation`.
+
+**Referencias:** `gdd.md#combate`
+
+**Bloquea a:** 11.34 Combos y técnicas especiales (Minish Cap / Wind Waker)
+
+### 11.34 Combos y técnicas especiales (Minish Cap / Wind Waker) · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `combate`
+
+- [ ] Combo de 3 golpes
+  Tajo, revés y estocada encadenados con el buffer; el tercero hace más daño y empuja. Animaciones de Rig_Medium (CombatMelee).
+- [ ] Ataque giratorio cargado
+  Mantener ataque: la espada brilla (neón), al soltar gira 360°. Versión grande al cargar más (Great Spin).
+- [ ] Contraataque (parry de Wind Waker)
+  Cuando un enemigo telegrafía, aparece un prompt corto: al apretarlo, el player salta por encima o rodea y pega por la espalda. Sirve también con las manos del jefe.
+- [ ] Técnicas extra a elegir
+  Estocada en carrera (dash attack), salto con golpe (jump strike), rayo de espada con la vida llena (Minish Cap). Elegir 1–2 para la demo.
+- [ ] Cómo se aprenden
+  Como los pergaminos de Minish Cap: algunas técnicas se enseñan en tablillas/santuarios del overworld (cruza con 11.22 y 11.24); el combo y el giro desde el inicio. Mostrarlas en la pantalla de equipo.
+- [ ] Input y tutorial
+  Que no choquen con lock-on, bloqueo y rodar; prompt la primera vez que se aprende cada una; anotar en el mapa de input del GDD §4.3.
+
+**Prueba:** Con el combate pulido (11.33): encadenar el combo de 3, cargar y soltar el giro, contraatacar a un chullpa en su telegraph y usar una técnica aprendida en una tablilla; ninguna se dispara sin querer al rodar, bloquear o fijar.
+
+**Notas:** Skills: `disciplines:game-feel`, `disciplines:input-systems`, `godot:godot-animation`.
+
+**Bloqueada por:** 11.33 Combate: sacar lo tosco
 
 ## M12 — Assets propios (Blender)  (2/9)
 

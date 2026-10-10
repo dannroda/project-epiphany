@@ -1,0 +1,54 @@
+{
+  "checklist": [
+    {
+      "detail": "Tajo, revés y estocada encadenados con el buffer; el tercero hace más daño y empuja. Animaciones de Rig_Medium (CombatMelee).",
+      "done": false,
+      "text": "Combo de 3 golpes"
+    },
+    {
+      "detail": "Mantener ataque: la espada brilla (neón), al soltar gira 360°. Versión grande al cargar más (Great Spin).",
+      "done": false,
+      "text": "Ataque giratorio cargado"
+    },
+    {
+      "detail": "Cuando un enemigo telegrafía, aparece un prompt corto: al apretarlo, el player salta por encima o rodea y pega por la espalda. Sirve también con las manos del jefe.",
+      "done": false,
+      "text": "Contraataque (parry de Wind Waker)"
+    },
+    {
+      "detail": "Estocada en carrera (dash attack), salto con golpe (jump strike), rayo de espada con la vida llena (Minish Cap). Elegir 1–2 para la demo.",
+      "done": false,
+      "text": "Técnicas extra a elegir"
+    },
+    {
+      "detail": "Como los pergaminos de Minish Cap: algunas técnicas se enseñan en tablillas/santuarios del overworld (cruza con 11.22 y 11.24); el combo y el giro desde el inicio. Mostrarlas en la pantalla de equipo.",
+      "done": false,
+      "text": "Cómo se aprenden"
+    },
+    {
+      "detail": "Que no choquen con lock-on, bloqueo y rodar; prompt la primera vez que se aprende cada una; anotar en el mapa de input del GDD §4.3.",
+      "done": false,
+      "text": "Input y tutorial"
+    }
+  ],
+  "code": "11.34",
+  "created_at": "2026-10-10T05:30:51.535Z",
+  "links": [
+    {
+      "task": "m11-22",
+      "type": "related"
+    }
+  ],
+  "milestone": "m11",
+  "notes": "Skills: `disciplines:game-feel`, `disciplines:input-systems`, `godot:godot-animation`.",
+  "order": 34,
+  "priority": "medium",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "combate"
+  ],
+  "test": "Con el combate pulido (11.33): encadenar el combo de 3, cargar y soltar el giro, contraatacar a un chullpa en su telegraph y usar una técnica aprendida en una tablilla; ninguna se dispara sin querer al rodar, bloquear o fijar.",
+  "title": "Combos y técnicas especiales (Minish Cap / Wind Waker)",
+  "updated_at": "2026-10-10T05:30:53.947Z"
+}
