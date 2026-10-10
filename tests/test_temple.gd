@@ -492,3 +492,16 @@ func test_full_run_from_the_entrance_to_the_boss_door() -> void:
 	for n in range(1, laps.size()):
 		print("  recorrido · %s: %.1f s" % [laps[n][0], (laps[n][1] - laps[n - 1][1]) / 1000.0])
 	state.reset()
+
+
+func test_south_wall_cut_covers_the_brick_relief() -> void:
+	await _start()
+	var camera := level.get_node(^"TopDownCamera") as TopDownCamera
+	var kit: MeshLibrary = (level.find_children("*", "GridMap", true, false)[0] as GridMap).mesh_library
+	var stone: ShaderMaterial = load("res://data/kits/materials/epiphany_stone.tres")
+	var cut: Vector4 = stone.get_shader_parameter(&"cut_area")
+	var room_end := camera.room.bounds().end.y
+	for id in [1, 15, 16]:
+		var relief := -kit.get_item_mesh(id).get_aabb().position.z - 1.0
+		assert_true(cut.z < room_end - relief, "el corte empieza antes que los ladrillos de %s (sobresalen %.2f m)" % [kit.get_item_name(id), relief])
+	state.reset()

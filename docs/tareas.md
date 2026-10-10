@@ -2023,7 +2023,7 @@ Skills: `workflows:itch-publish`.
 - [x] Skeleton2 fuera del cerco y test de enemigos encimados
 - [x] path_desired_distance 1.0 por la navmesh a 0.5 m
 
-## M11 — Pulido: assets y contenido  (9/17)
+## M11 — Pulido: assets y contenido  (10/18)
 
 Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
 
@@ -2067,7 +2067,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Prioridad:** alta · **Etiquetas:** `ia`
 
-### 11.7 Doom legible: player y objetos sin teñir · Pendiente
+### 11.7 Doom legible: player y objetos sin teñir · Hecho
 
 **Prioridad:** media · **Etiquetas:** `arte`
 
@@ -2163,6 +2163,17 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 - [x] Capturas: igual que antes
 - [x] Suite completa
 - [x] GDD §9
+
+### 11.18 Pared sur del templo: lámina de ladrillos sin colisión tapando la puerta sur · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `bug`, `camara`
+
+- [x] Encontrar qué dibuja las franjas
+  Los ladrillos de la pared propia sobresalen ~7 cm de la celda; el corte empezaba 5 cm dentro de la sala y quedaba una lámina de 2 cm a toda altura.
+- [x] Empezar el corte 0.3 m dentro de la sala
+  TopDownCamera.SOUTH_WALL_RELIEF; test test_south_wall_cut_covers_the_brick_relief.
+
+**Prueba:** En cualquier sala del templo, la pared sur queda como un zócalo bajo, sin franjas ni sombras de ladrillos, y la puerta sur se ve.
 
 ## M12 — Assets propios (Blender)  (2/9)
 

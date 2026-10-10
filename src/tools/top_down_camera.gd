@@ -44,6 +44,8 @@ const CUTAWAY_MATERIALS: Array[ShaderMaterial] = [
 	preload("res://data/kits/materials/epiphany_stone.tres"),
 ]
 const SOUTH_WALL_DEPTH := 2.0
+## El corte arranca un poco dentro de la sala: los ladrillos de la pared sobresalen de la celda.
+const SOUTH_WALL_RELIEF := 0.3
 
 var trauma := 0.0
 ## Sala actual; null = overworld (seguimiento libre).
@@ -218,7 +220,7 @@ func _cut_south_wall(cut_room: Room) -> void:
 	var height := 0.0
 	if cut_room:
 		var bounds := cut_room.bounds().grow(0.05)
-		area = Vector4(bounds.position.x - SOUTH_WALL_DEPTH, bounds.end.x + SOUTH_WALL_DEPTH, bounds.end.y - 0.1, bounds.end.y + SOUTH_WALL_DEPTH)
+		area = Vector4(bounds.position.x - SOUTH_WALL_DEPTH, bounds.end.x + SOUTH_WALL_DEPTH, bounds.end.y - SOUTH_WALL_RELIEF, bounds.end.y + SOUTH_WALL_DEPTH)
 		height = target_node.global_position.y + south_wall_cut
 	for material in CUTAWAY_MATERIALS:
 		material.set_shader_parameter(&"cut_area", area)
