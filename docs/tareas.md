@@ -2108,7 +2108,7 @@ Skills: `workflows:itch-publish`.
 
 **Relacionadas:** 10.2 Selección de partida y autosave
 
-## M11 — Pulido: assets y contenido  (13/37)
+## M11 — Pulido: assets y contenido  (13/39)
 
 Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
 
@@ -2278,16 +2278,16 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
   Cueva chica, una o dos salas; piezas propias en Blender (roca, estalactitas, cristales) en estilo Altiplano del Ojo.
 - [ ] Shader de agua propio (water.gdshader)
   Base: la idea de espuma procedural de 'Wind Waker Water' (NekotoArts, godotshaders.com, CC0, Godot 3) reescrita para 4.x y nuestro estilo: colores de la franja agua de la paleta y el tinte 0.72 de epiphany.tres; transparente con color según profundidad (depth texture), así se ve el fondo y las cáusticas; espuma en la orilla por profundidad; manchas de espuma con borde duro en coordenadas de mundo (sin costuras entre tiles); olas de vértice opcionales y apagadas en pozos chicos, con normales planas por cara para mantener el facetado.
-- [ ] Cáusticas estilizadas con Decals animados
-  Usar el PR godotengine/godot#115653 (DrawableTexture que actualiza el atlas de Decals sin reconstruirlo; mergeado el 2026-09-22, ya está en 4.8-dev7). Un DrawableTexture con un patrón de cáusticas low poly/celular que se anima con blit_rect cada frame (dos capas desplazándose), usado como textura (emisión/albedo) de un Decal que proyecta sobre el fondo y las paredes cercanas. Medir el costo del blit por frame.
+- [ ] Cáusticas: DrawableTexture2D + shader texture_blit como light_projector
+  Como en ../caustics_demo (probado en 4.8-dev7): un SpotLight3D sobre el agua con sombra (CausticsProjector) regenera cada frame una DrawableTexture2D con blit_rect usando un material shader_type texture_blit, y la usa como light_projector; el PR #115653 hace que el atlas actualice solo esa región. Es luz, no pintura: respeta sombras (columnas, el player) y se suma a la iluminación. Atenuación radial para no ver el borde del projector. Limitación de dev7: texture_blit no compila con global uniform; los parámetros se copian a mano (set_wave_param). Medir el costo del blit y de la sombra del spot.
 - [ ] Luz y ambiente de la cueva
   Penumbra, el agua como fuente de luz suave que tiñe las cáusticas; sonido de goteo.
-- [ ] Agua y cáusticas juntas
-  Los Decals no se proyectan sobre materiales transparentes, así que el agua no las tapa: el Decal de cáusticas va desde la superficie hacia abajo y pinta el fondo y las paredes sumergidas, que se ven a través del agua. Un segundo Decal más débil sobre las paredes justo arriba del agua (reflejo). El mismo DrawableTexture de las cáusticas entra como uniform del shader de agua para que el brillo de la superficie y las cáusticas se muevan sincronizados; un solo nodo (WaterPool) arma superficie + decals y expone tamaño y profundidad.
+- [ ] Agua y cáusticas del mismo patrón
+  Como la variante Wind Waker de la demo: un .gdshaderinc con el patrón (wind_waker_pattern) lo incluyen el agua (spatial) y las cáusticas (texture_blit), así la espuma de la superficie y la luz del fondo se mueven juntas. Pasar el patrón a coordenadas de mundo (la demo usa el UV del mesh, con mesh_center/mesh_size). El agua es transparente y no recibe las cáusticas (o con cast_shadow apagado como en la demo); el fondo y las paredes cercanas sí. Un nodo WaterPool arma superficie + projector y expone tamaño y profundidad. Decal animado solo si el spot resulta caro.
 
 **Prueba:** Entrar a la cueva desde el overworld: a través del agua se ve el fondo con cáusticas que se mueven al mismo ritmo que el brillo de la superficie, hay espuma en la orilla, sin costuras, cortes ni parpadeos; el estilo combina con el resto (paleta, facetado); el rendimiento no cae respecto del overworld.
 
-**Notas:** Skills: `disciplines:level-design`, `godot:godot-shaders`, `godot:godot-3d-essentials`. PR: https://github.com/godotengine/godot/pull/115653
+**Notas:** Skills: `disciplines:level-design`, `godot:godot-shaders`, `godot:godot-3d-essentials`. PR: https://github.com/godotengine/godot/pull/115653. Prototipo propio: /home/drod/Proyectos/Godot/caustics_demo (5 aguas comparadas, cada una con sus cáusticas; tecla 5 = Wind Waker).
 
 **Referencias:** `gdd.md#overworld`, `gdd.md#arte`
 
@@ -2549,6 +2549,22 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 **Referencias:** `gdd.md#ui`
 
 **Relacionadas:** 11.36 Mapa: más información y navegable
+
+### 11.38 Silueta x-ray con fresnel · En curso
+
+**Prioridad:** media · **Etiquetas:** `camara`
+
+**Notas:** Pedido por Daniel el 2026-10-10 (godotshaders stencil-based-silhouette y el custom x-ray de apples/godot-stencil-demo): la silueta del player gana fresnel, brilla en los bordes y es más transparente en el centro.
+
+### 11.39 Luces estilo Wind Waker (volúmenes de stencil) · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `arte`
+
+- [ ] Componente WindWakerLight (escena + shaders propios)
+- [ ] Ordenar prioridades con la silueta del player
+- [ ] Ponerla en las antorchas del templo y revisar en capturas
+
+**Notas:** Pedido por Daniel el 2026-10-10, como las Wind Waker lights de apples/godot-stencil-demo (el repo no tiene licencia: se reimplementa la técnica, sin copiar código). Esfera con 3 pasadas de stencil: marcar lo que queda delante, multiplicar color adentro, limpiar; prioridad propia por luz. Cuidar que no pise el stencil de la silueta del player (ref 1). Uso: antorchas del templo.
 
 ## M12 — Assets propios (Blender)  (2/9)
 
