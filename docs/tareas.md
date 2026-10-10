@@ -3002,6 +3002,8 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 
 **Notas:** Rumbo elegido 2026-10-10: look tipo Wind Waker HD con cel shading (no low-poly de piezas ni anime realista). Proporciones chibi, así que sirve el Rig_Medium y las animaciones de KayKit. Prueba en tools/blender/estilo_toon.py (renders de referencia en docs/estilo/): cuerpo continuo con Skin modifier + subdivisión y pesos automáticos; pelo en mechones de curvas NURBS afinadas con rulo; cara de calcomanías proyectadas (ojo, iris, pupila, brillo, párpado, cejas, rubor, boca); mangas y pollera con pliegues senoidales; cel shading de 2 tonos con sombra de color. Las tiras de la paleta ya tienen tono claro y oscuro: sirven como lit/shade del shader. El setting andino tampoco es definitivo (cyber-shinobi estilo Megaman Zero: sables de energía y pistolas). Diseño: pelo negro con rulos y rodetes con kunais, ojos rojos, capucha y mangas anchas con ribete emisivo, faja roja tipo obi, delantal crema, pollera, medias con liga roja, botas.
 
+**Bloquea a:** 12.13 Reajuste de estilo toon de todos los assets
+
 **Relacionadas:** 12.10 Pipeline Blender→Godot: glb publicado + plugin de import
 
 ### 12.13 Reajuste de estilo toon de todos los assets · Pendiente
@@ -3028,6 +3030,8 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
   El shader de agua estilo Wind Waker y las cáusticas de la cueva (11.20).
 
 **Notas:** Con el estilo Wind Waker elegido (12.12), todo el juego tiene que convivir con el personaje nuevo. Primero se mide cuánto resuelve el shader: todas las piezas epi comparten el material de paleta (data/kits/materials/epiphany.tres), así que el cel shading se prueba en el mundo entero de una vez. Recién ahí se decide qué hay que remodelar. Lo que siga siendo KayKit va a desentonar más.
+
+**Bloqueada por:** 12.12 Estilo toon (Wind Waker) + personaje cyber-shinobi
 
 ## M13 — Co-op local (estilo Four Swords)  (0/8)
 
