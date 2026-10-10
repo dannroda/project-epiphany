@@ -78,7 +78,7 @@ func test_lowers_the_shield_while_attacking() -> void:
 	var tree: SceneTree = setup[0]
 	var skeleton: Enemy = setup[1]
 	var attacker: Node3D = setup[2]
-	var pose: SkeletonModifier3D = skeleton.find_child("GuardPose", true, false)
+	var pose: PoseOverlay = skeleton.find_child("GuardPose", true, false)
 	assert_eq(pose.influence, 1.0, "de entrada, el escudo arriba")
 	skeleton.anim_player.play(&"CombatMelee/Melee_1H_Attack_Chop")
 	await tree.create_timer(0.25).timeout

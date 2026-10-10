@@ -1,4 +1,4 @@
-class_name GuardPose
+class_name PoseOverlay
 extends SkeletonModifier3D
 ## Pone encima de la animación los huesos de una pose fija (el brazo del escudo levantado). `influence` la mezcla.
 

@@ -25,6 +25,9 @@
 [ext_resource type="Script" uid="uid://2515xl1b5dkr" path="res://player/components/targeting.gd" id="c_targeting"]
 [ext_resource type="PackedScene" path="res://src/entities/models/jugador.tscn" id="m_knight"]
 [ext_resource type="Script" uid="uid://4r1bn36vwwk" path="res://player/states/aiming_item.gd" id="st_aiming_item"]
+[ext_resource type="Script" path="res://player/states/aiming_throw.gd" id="st_aiming_throw"]
+[ext_resource type="Script" path="res://player/components/carrier.gd" id="c_carrier"]
+[ext_resource type="AnimationLibrary" path="res://player/animation/libs/Carry.res" id="16_carry"]
 [ext_resource type="Script" uid="uid://dpgrgvvf2dmhs" path="res://player/states/dead.gd" id="st_dead"]
 [ext_resource type="Script" uid="uid://do4y7vq0jtpd1" path="res://player/states/dodging.gd" id="st_dodging"]
 [ext_resource type="Script" uid="uid://dvf1o4fohyli8" path="res://player/states/item_get.gd" id="st_item_get"]
@@ -85,6 +88,39 @@ input_2/reset = true
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bowrelease"]
 animation = &"CombatRanged/Ranged_Bow_Release"
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_carry"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_carrylift"]
+animation = &"Carry/Carry_Lift"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_carryidle"]
+animation = &"Carry/Carry_Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_carrywalk"]
+animation = &"Carry/Carry_Walk"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_carrythrow"]
+animation = &"Carry/Carry_Throw"
+
+[sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_carryphase"]
+xfade_time = 0.12
+input_0/name = "Lift"
+input_0/auto_advance = true
+input_0/break_loop_at_end = false
+input_0/reset = true
+input_1/name = "Idle"
+input_1/auto_advance = false
+input_1/break_loop_at_end = false
+input_1/reset = true
+input_2/name = "Walk"
+input_2/auto_advance = false
+input_2/break_loop_at_end = false
+input_2/reset = true
+input_3/name = "Throw"
+input_3/auto_advance = false
+input_3/break_loop_at_end = false
+input_3/reset = true
 
 [sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_peicu"]
 xfade_time = 0.3
@@ -268,7 +304,19 @@ nodes/BowPhase/node = SubResource("AnimationNodeTransition_bowphase")
 nodes/BowPhase/position = Vector2(2080, 1100)
 nodes/BowBlend/node = SubResource("AnimationNodeBlend2_bow")
 nodes/BowBlend/position = Vector2(2453.3333, 960)
-node_connections = [&"output", 0, &"Dodge", &"Movement", 0, &"Idle", &"Movement", 1, &"Running", &"Attack", 0, &"GuardBlend", &"Attack", 1, &"AttackType", &"Combat", 0, &"Movement", &"Combat", 1, &"Targeting", &"GuardBlend", 0, &"Combat", &"GuardBlend", 1, &"MeleeBlocking", &"AttackType", 0, &"SwordSlice", &"AttackType", 1, &"ShieldThrust", &"Hurt", 0, &"Attack", &"Hurt", 1, &"HurtAnim+ Engine capabi", &"BlockHit", 0, &"Hurt", &"BlockHit", 1, &"BlockHitAnim", &"DodgeDir", 0, &"DodgeForward", &"DodgeDir", 1, &"DodgeBackward", &"DodgeDir", 2, &"DodgeLeft", &"DodgeDir", 3, &"DodgeRight", &"Dodge", 0, &"BowBlend", &"Dodge", 1, &"DodgeDir", &"UseItem", 0, &"BlockHit", &"UseItem", 1, &"ItemAnim", &"BowPhase", 0, &"BowDraw", &"BowPhase", 1, &"BowIdle", &"BowPhase", 2, &"BowRelease", &"BowBlend", 0, &"UseItem", &"BowBlend", 1, &"BowPhase"]
+nodes/CarryLift/node = SubResource("AnimationNodeAnimation_carrylift")
+nodes/CarryLift/position = Vector2(2453.3333, 1300)
+nodes/CarryIdle/node = SubResource("AnimationNodeAnimation_carryidle")
+nodes/CarryIdle/position = Vector2(2453.3333, 1450)
+nodes/CarryWalk/node = SubResource("AnimationNodeAnimation_carrywalk")
+nodes/CarryWalk/position = Vector2(2453.3333, 1600)
+nodes/CarryThrow/node = SubResource("AnimationNodeAnimation_carrythrow")
+nodes/CarryThrow/position = Vector2(2453.3333, 1750)
+nodes/CarryPhase/node = SubResource("AnimationNodeTransition_carryphase")
+nodes/CarryPhase/position = Vector2(2800, 1400)
+nodes/CarryBlend/node = SubResource("AnimationNodeBlend2_carry")
+nodes/CarryBlend/position = Vector2(3100, 1000)
+node_connections = [&"output", 0, &"Dodge", &"Movement", 0, &"Idle", &"Movement", 1, &"Running", &"Attack", 0, &"GuardBlend", &"Attack", 1, &"AttackType", &"Combat", 0, &"Movement", &"Combat", 1, &"Targeting", &"GuardBlend", 0, &"Combat", &"GuardBlend", 1, &"MeleeBlocking", &"AttackType", 0, &"SwordSlice", &"AttackType", 1, &"ShieldThrust", &"Hurt", 0, &"Attack", &"Hurt", 1, &"HurtAnim+ Engine capabi", &"BlockHit", 0, &"Hurt", &"BlockHit", 1, &"BlockHitAnim", &"DodgeDir", 0, &"DodgeForward", &"DodgeDir", 1, &"DodgeBackward", &"DodgeDir", 2, &"DodgeLeft", &"DodgeDir", 3, &"DodgeRight", &"Dodge", 0, &"CarryBlend", &"Dodge", 1, &"DodgeDir", &"UseItem", 0, &"BlockHit", &"UseItem", 1, &"ItemAnim", &"BowPhase", 0, &"BowDraw", &"BowPhase", 1, &"BowIdle", &"BowPhase", 2, &"BowRelease", &"BowBlend", 0, &"UseItem", &"BowBlend", 1, &"BowPhase", &"CarryPhase", 0, &"CarryLift", &"CarryPhase", 1, &"CarryIdle", &"CarryPhase", 2, &"CarryWalk", &"CarryPhase", 3, &"CarryThrow", &"CarryBlend", 0, &"BowBlend", &"CarryBlend", 1, &"CarryPhase"]
 
 [sub_resource type="AnimationNodeObserverOneShot" id="AnimationNodeObserverOneShot_4uxyr"]
 
@@ -491,12 +539,16 @@ bone_idx = 8
 [node name="ShieldSocket" type="Marker3D" parent="ModelController/Skeleton3D/BackShield" unique_id=1019969984]
 transform = Transform3D(-0.9999982, 0.0017344035, -1.7233193e-05, 0.0017344016, 0.99979764, -0.020037394, -1.7486513e-05, -0.020037392, -0.99979925, 0.03203572, -0.16740632, -0.37010795)
 
+[node name="CarrySocket" type="Marker3D" parent="ModelController" unique_id=1729044186]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.65, 0.1)
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ModelController" unique_id=1064686879]
 libraries/CombatMelee = ExtResource("11_e7oew")
 libraries/CombatRanged = ExtResource("12_e7oew")
 libraries/General = ExtResource("13_c35mf")
 libraries/MovementAdvanced = ExtResource("14_65viv")
 libraries/MovementBasic = ExtResource("15_x7c3f")
+libraries/Carry = ExtResource("16_carry")
 autoplay = &"MovementBasic/T-Pose"
 
 [node name="AnimationTree" type="AnimationTree" parent="ModelController" unique_id=1277087337]
@@ -547,6 +599,11 @@ parameters/BowPhase/transition_request = ""
 parameters/BowPhase/current_index = -1
 parameters/BowPhase/observer = null
 parameters/BowBlend/blend_amount = 0.0
+parameters/CarryPhase/current_state = ""
+parameters/CarryPhase/transition_request = ""
+parameters/CarryPhase/current_index = -1
+parameters/CarryPhase/observer = null
+parameters/CarryBlend/blend_amount = 0.0
 
 [node name="Visuals" parent="ModelController" unique_id=73006567 instance=ExtResource("m_knight")]
 
@@ -600,6 +657,9 @@ script = ExtResource("st_using_item")
 
 [node name="AimingItem" type="LimboState" parent="MovementState" unique_id=663003740]
 script = ExtResource("st_aiming_item")
+
+[node name="AimingThrow" type="LimboState" parent="MovementState" unique_id=1840367215]
+script = ExtResource("st_aiming_throw")
 
 [node name="Transition" type="LimboState" parent="MovementState" unique_id=63803523]
 script = ExtResource("st_transition")
@@ -655,6 +715,12 @@ script = ExtResource("c_input_buffer")
 [node name="Aim" type="Node" parent="." unique_id=616678504 node_paths=PackedStringArray("player")]
 script = ExtResource("c_aim")
 player = NodePath("..")
+
+[node name="Carrier" type="Node" parent="." unique_id=1157206663 node_paths=PackedStringArray("socket", "anim_tree", "hide_while_carrying")]
+script = ExtResource("c_carrier")
+socket = NodePath("../ModelController/CarrySocket")
+anim_tree = NodePath("../ModelController/AnimationTree")
+hide_while_carrying = [NodePath("../ModelController/Skeleton3D/Hand_R/WeaponSocket"), NodePath("../ModelController/Skeleton3D/Hand_L/ShieldSocket")]
 
 [node name="InteractionDetector" type="Area3D" parent="." unique_id=142244094 node_paths=PackedStringArray("player")]
 script = ExtResource("c_interaction")

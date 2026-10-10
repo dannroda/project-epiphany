@@ -24,7 +24,7 @@ var flash: HitFlash
 var _knockback := Vector3.ZERO
 var _facing_goal := Vector3.ZERO
 var _guard_down_until := 0
-var _guard_pose: SkeletonModifier3D
+var _guard_pose: PoseOverlay
 
 var is_dead: bool:
 	get:
@@ -44,7 +44,7 @@ func _ready() -> void:
 	hitbox.damage_factory = config.make_damage.bind(self)
 	hurtbox.hit.connect(_on_hit)
 	flash = HitFlash.attach($ModelController/Visuals, health)
-	_guard_pose = model.find_child("GuardPose", true, false) as SkeletonModifier3D
+	_guard_pose = model.find_child("GuardPose", true, false) as PoseOverlay
 	if _guard_pose:
 		_guard_pose.influence = 1.0 if config.guards_front else 0.0
 		for shield in model.find_children("*", "MeshInstance3D", true, false):

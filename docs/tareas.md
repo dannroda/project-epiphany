@@ -2599,15 +2599,15 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
   El tensado va de 0 a 1 mientras se mantiene; al soltar vuelve de golpe.
 - [ ] Flecha en la cuerda mientras se tensa
 
-### 11.40 Bombas: tocar coloca, mantener apunta y tira · Pendiente
+### 11.40 Bombas: tocar coloca, mantener apunta y tira · Revisión
 
 **Prioridad:** media · **Etiquetas:** `items`
 
-- [ ] Tocar: coloca la bomba a los pies como ahora
-- [ ] Mantener: levanta la bomba y apunta como el arco
+- [x] Tocar: coloca la bomba a los pies como ahora
+- [x] Mantener: levanta la bomba y apunta como el arco
   Mira/arco de tiro en el piso; soltar la tira en parábola.
-- [ ] Mecha sigue corriendo mientras se apunta
-- [ ] Tests y GDD
+- [x] Mecha sigue corriendo mientras se apunta
+- [x] Tests y GDD
 
 ### 11.41 Levantar y tirar objetos · Pendiente
 

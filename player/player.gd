@@ -29,6 +29,7 @@ signal escaped
 @onready var targeting: Targeting = $Targeting
 @onready var input_buffer: InputBuffer = $InputBuffer
 @onready var aim: Aim = $Aim
+@onready var carrier: Carrier = $Carrier
 
 var guard_tween: Tween
 

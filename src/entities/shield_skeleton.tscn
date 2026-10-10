@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" path="res://src/entities/enemy.tscn" id="1_enemy"]
 [ext_resource type="Resource" path="res://data/entities/shield_skeleton.tres" id="2_config"]
 [ext_resource type="PackedScene" path="res://assets/items/shield/shield_round.tscn" id="3_shield"]
-[ext_resource type="Script" path="res://src/entities/guard_pose.gd" id="4_guard"]
+[ext_resource type="Script" path="res://src/feel/pose_overlay.gd" id="4_guard"]
 [ext_resource type="AnimationLibrary" path="res://player/animation/libs/CombatMelee.res" id="5_melee"]
 
 [node name="ShieldSkeleton" instance=ExtResource("1_enemy")]

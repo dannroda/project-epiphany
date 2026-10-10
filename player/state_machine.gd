@@ -27,11 +27,14 @@ func _setup() -> void:
 	add_transition($Idle, $UsingItem, "use_item")
 	add_transition($Moving, $UsingItem, "use_item")
 	add_transition($UsingItem, $Idle, "finished")
+	add_transition($UsingItem, $AimingThrow, "aim_throw")
+	add_transition($AimingThrow, $Idle, "finished")
+	add_transition($AimingThrow, $Dodging, "dodge")
 	add_transition($Idle, $AimingItem, "aim_item")
 	add_transition($Moving, $AimingItem, "aim_item")
 	add_transition($AimingItem, $Idle, "finished")
 	add_transition($AimingItem, $Dodging, "dodge")
-	for state in [$Idle, $Moving, $Attacking, $Dodging, $UsingItem, $AimingItem, $Hurt]:
+	for state in [$Idle, $Moving, $Attacking, $Dodging, $UsingItem, $AimingItem, $AimingThrow, $Hurt]:
 		add_transition(state, $Transition, "transition")
 	add_transition($Transition, $Idle, "finished")
 	add_transition($Moving, $Pushing, "push")
@@ -39,7 +42,7 @@ func _setup() -> void:
 	add_transition($Idle, $ItemGet, "item_get")
 	add_transition($Moving, $ItemGet, "item_get")
 	add_transition($ItemGet, $Idle, "finished")
-	for state in [$Idle, $Moving, $Attacking, $Dodging, $UsingItem, $AimingItem, $Hurt, $Pushing]:
+	for state in [$Idle, $Moving, $Attacking, $Dodging, $UsingItem, $AimingItem, $AimingThrow, $Hurt, $Pushing]:
 		add_transition(state, $Grabbed, "grabbed")
 	add_transition($Grabbed, $Idle, "finished")
 

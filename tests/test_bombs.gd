@@ -162,3 +162,46 @@ func test_explosion_effects_spawn_at_the_bomb() -> void:
 	for particles: CPUParticles3D in fire:
 		assert_true(particles.global_position.distance_to(spot) < 1.5, "las partículas salen donde explotó la bomba, no en el origen")
 	setup[1].reset()
+
+
+func _hold(action: StringName, pressed: bool) -> void:
+	var event := InputEventAction.new()
+	event.action = action
+	event.pressed = pressed
+	Input.parse_input_event(event)
+
+
+func test_holding_lifts_the_bomb_and_releasing_throws_it() -> void:
+	var setup: Array = await _setup()
+	var tree: SceneTree = setup[0]
+	var state: Node = setup[1]
+	var player: PlayerCharacter = setup[2]
+	player.model.look_at(player.model.global_position + Vector3.BACK, Vector3.UP)
+	_hold(&"item_1", true)
+	await tree.create_timer(0.5).timeout
+	assert_eq(player.movement_state.get_active_state().name, &"AimingThrow", "mantener la levanta")
+	assert_true(player.carrier.is_carrying(), "sobre la cabeza")
+	assert_eq(state.inventory.count(&"bomb"), 9)
+	_hold(&"item_1", false)
+	await tree.create_timer(1.4).timeout
+	assert_eq(player.carrier.is_carrying(), false, "al soltar sale")
+	assert_eq(_bombs(tree).size(), 1)
+	if _bombs(tree).size() == 1:
+		var ahead: Vector3 = _bombs(tree)[0].global_position - player.global_position
+		ahead.y = 0.0
+		assert_true(ahead.length() > 3.5 and ahead.normalized().dot(Vector3.FORWARD) > 0.8, "cae lejos, adelante (%s)" % ahead)
+	state.reset()
+
+
+func test_dodging_drops_the_held_bomb() -> void:
+	var setup: Array = await _setup()
+	var tree: SceneTree = setup[0]
+	var state: Node = setup[1]
+	var player: PlayerCharacter = setup[2]
+	_hold(&"item_1", true)
+	await tree.create_timer(0.5).timeout
+	await _press(tree, &"dodge")
+	_hold(&"item_1", false)
+	assert_eq(player.carrier.is_carrying(), false, "rodar la suelta")
+	assert_eq(_bombs(tree).size(), 1, "queda en el piso")
+	state.reset()
