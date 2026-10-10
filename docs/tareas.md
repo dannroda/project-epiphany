@@ -1752,7 +1752,7 @@ Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 
 
 **Notas:** Sin flag por ahora porque no hay jefe; 9.6 le pone d1_boss_defeated.
 
-## M10 — Terminación  (15/21)
+## M10 — Terminación  (15/22)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -1912,23 +1912,27 @@ Hecho 2026-10-09: decisión cerrada (KayKit + prototipo pulido) y guía de estil
 ### 10.9 Build para playtesters · Revisión
 
 - [ ] Compilar las plantillas de export del LimboAI propio
-  Linux y Windows, release y debug.
+  template_release para Linux, Windows, macOS y web (wasm32 nothreads). Instalar además las plantillas de Godot 4.8-dev7 (en curso, 2026-10-10).
 - [x] Presets de export
   Excluir `debug/scenarios/*` y `tests/`; `plain_saves` solo en el preset de debug.
 - [x] Cambiar la clave de guardado
   `SaveCodec._PASS` antes del primer release.
 - [x] Build por línea de comandos
   Script `tools/build.sh` con `godot --headless --export-release`.
+- [ ] Preset de macOS sin firmar
+  Universal (Intel + Apple Silicon), bundle id, ícono .icns; sin firma ni notarización por ahora (los playtesters abren con clic derecho → Abrir o xattr -dr com.apple.quarantine). Sin Mac para probar: se confía en los reportes. LimboAI necesita liblimboai.macos.template_release.framework (osxcross o una Mac).
+- [ ] Ícono y metadatos del .exe (opcional)
+  rcedit configurado en el editor (con wine en Linux); sin firma, SmartScreen avisa y se sigue con 'Ejecutar de todas formas'.
 
 **Prueba:** Instalar el build en una máquina limpia (Linux y Windows): arranca, guarda en `user://` cifrado y no incluye escenarios ni tests.
 
-**Notas:** Skills: `godot:godot-export`.
-
-2026-10-09: presets Linux/Windows release y debug (se sumaron al de Android que ya estaba), clave de guardado nueva (escenarios refirmados), `tools/build.sh` con chequeo de plantillas y de LimboAI release. Queda en Revisión: compilar LimboAI `template_release` (Linux y Windows), instalar las plantillas de Godot 4.8-dev7, correr el build y probarlo en una máquina limpia. Test `tests/test_export.gd`.
+**Notas:** Skills: `godot:godot-export`. Decidido 2026-10-10: Windows y macOS van sin firmar; macOS sin probar (no hay Mac), se arreglan los reportes.
 
 **Referencias:** `gdd.md#guardado`
 
 **Bloquea a:** 10.10 Publicar en itch.io y playtest
+
+**Relacionadas:** 10.22 Build web
 
 ### 10.10 Publicar en itch.io y playtest · Pendiente
 
@@ -1948,6 +1952,8 @@ Hecho 2026-10-09: decisión cerrada (KayKit + prototipo pulido) y guía de estil
 Skills: `workflows:itch-publish`.
 
 **Bloqueada por:** 10.9 Build para playtesters
+
+**Relacionadas:** 10.22 Build web
 
 ### 10.11 UI restante a escenas · Hecho
 
@@ -2107,6 +2113,27 @@ Skills: `workflows:itch-publish`.
 **Notas:** Implementado: Auto en la ranura 0, migración 0–2 → 1–3, Continuar directo, Cargar partida (opción nueva en el título) y Nueva partida que elige dónde. Mockups Main (Cargar partida) y FileSelect (tarjeta Auto) publicados en el canvas el 2026-10-10.
 
 **Relacionadas:** 10.2 Selección de partida y autosave
+
+### 10.22 Build web · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `build`
+
+- [ ] Preset Web
+  Exporta con el renderer Compatibility (rendering_method.web = gl_compatibility); 'Extensions Support' encendido para cargar LimboAI (GDExtension), sin threads para que corra en itch sin COOP/COEP. Agregarlo a tools/build.sh.
+- [ ] LimboAI para web
+  liblimboai.web.template_release.wasm32.nothreads.wasm compilado con emscripten (la versión que pide limboai.gdextension); probar que los BT del jefe y los enemigos corren.
+- [ ] Revisar el juego en Compatibility
+  El escritorio usa Forward+: comparar el cutaway del templo, la emisión de la paleta, tonemap, niebla/doom, sombras y las cáusticas (projector + DrawableTexture). Lo que no ande, un fallback para web.
+- [ ] Navegador
+  Guardado en user:// (IndexedDB) persiste al recargar; el audio arranca tras el primer clic; gamepad y teclado; pantalla completa; tamaño del .pck y tiempo de carga.
+- [ ] Publicar en itch
+  Proyecto HTML embebido (tamaño 1280×720, botón de pantalla completa), junto a los builds de escritorio de 10.10.
+
+**Prueba:** Abrir el build en Chrome y Firefox desde itch: carga en un tiempo razonable, se juega el overworld y el templo hasta el jefe con gamepad y teclado, el guardado sobrevive a recargar la página y se ve parecido al build de escritorio.
+
+**Notas:** Skills: `godot:godot-export`.
+
+**Relacionadas:** 10.9 Build para playtesters; 10.10 Publicar en itch.io y playtest
 
 ## M11 — Pulido: assets y contenido  (20/45)
 
@@ -2609,7 +2636,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 - [x] Mecha sigue corriendo mientras se apunta
 - [x] Tests y GDD
 
-### 11.41 Levantar y tirar objetos · Pendiente
+### 11.41 Levantar y tirar objetos · En curso
 
 **Prioridad:** alta · **Etiquetas:** `items`, `interaccion`
 

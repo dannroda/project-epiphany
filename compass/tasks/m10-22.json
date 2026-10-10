@@ -1,0 +1,49 @@
+{
+  "checklist": [
+    {
+      "detail": "Exporta con el renderer Compatibility (rendering_method.web = gl_compatibility); 'Extensions Support' encendido para cargar LimboAI (GDExtension), sin threads para que corra en itch sin COOP/COEP. Agregarlo a tools/build.sh.",
+      "done": false,
+      "text": "Preset Web"
+    },
+    {
+      "detail": "liblimboai.web.template_release.wasm32.nothreads.wasm compilado con emscripten (la versión que pide limboai.gdextension); probar que los BT del jefe y los enemigos corren.",
+      "done": false,
+      "text": "LimboAI para web"
+    },
+    {
+      "detail": "El escritorio usa Forward+: comparar el cutaway del templo, la emisión de la paleta, tonemap, niebla/doom, sombras y las cáusticas (projector + DrawableTexture). Lo que no ande, un fallback para web.",
+      "done": false,
+      "text": "Revisar el juego en Compatibility"
+    },
+    {
+      "detail": "Guardado en user:// (IndexedDB) persiste al recargar; el audio arranca tras el primer clic; gamepad y teclado; pantalla completa; tamaño del .pck y tiempo de carga.",
+      "done": false,
+      "text": "Navegador"
+    },
+    {
+      "detail": "Proyecto HTML embebido (tamaño 1280×720, botón de pantalla completa), junto a los builds de escritorio de 10.10.",
+      "done": false,
+      "text": "Publicar en itch"
+    }
+  ],
+  "code": "10.22",
+  "created_at": "2026-10-10T22:49:40.714Z",
+  "links": [
+    {
+      "task": "m10-09",
+      "type": "related"
+    }
+  ],
+  "milestone": "m10",
+  "notes": "Skills: `godot:godot-export`.",
+  "order": 22,
+  "priority": "medium",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "build"
+  ],
+  "test": "Abrir el build en Chrome y Firefox desde itch: carga en un tiempo razonable, se juega el overworld y el templo hasta el jefe con gamepad y teclado, el guardado sobrevive a recargar la página y se ve parecido al build de escritorio.",
+  "title": "Build web",
+  "updated_at": "2026-10-10T22:49:42.476Z"
+}

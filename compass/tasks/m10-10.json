@@ -23,6 +23,12 @@
   ],
   "code": "10.10",
   "created_at": "2026-10-08T04:45:38.485Z",
+  "links": [
+    {
+      "task": "m10-22",
+      "type": "related"
+    }
+  ],
   "milestone": "m10",
   "notes": "Cierra el hito y el MVP: \"jugable por otra persona\".\n\nSkills: `workflows:itch-publish`.",
   "order": 10,
@@ -30,5 +36,5 @@
   "status": "todo",
   "test": "Una persona que no vio el juego lo descarga, lo termina (o se traba) y deja feedback registrado.",
   "title": "Publicar en itch.io y playtest",
-  "updated_at": "2026-10-08T04:45:38.751Z"
+  "updated_at": "2026-10-10T22:49:42.745Z"
 }

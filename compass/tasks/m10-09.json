@@ -1,7 +1,7 @@
 {
   "checklist": [
     {
-      "detail": "Linux y Windows, release y debug.",
+      "detail": "template_release para Linux, Windows, macOS y web (wasm32 nothreads). Instalar además las plantillas de Godot 4.8-dev7 (en curso, 2026-10-10).",
       "done": false,
       "text": "Compilar las plantillas de export del LimboAI propio"
     },
@@ -19,6 +19,16 @@
       "detail": "Script `tools/build.sh` con `godot --headless --export-release`.",
       "done": true,
       "text": "Build por línea de comandos"
+    },
+    {
+      "detail": "Universal (Intel + Apple Silicon), bundle id, ícono .icns; sin firma ni notarización por ahora (los playtesters abren con clic derecho → Abrir o xattr -dr com.apple.quarantine). Sin Mac para probar: se confía en los reportes. LimboAI necesita liblimboai.macos.template_release.framework (osxcross o una Mac).",
+      "done": false,
+      "text": "Preset de macOS sin firmar"
+    },
+    {
+      "detail": "rcedit configurado en el editor (con wine en Linux); sin firma, SmartScreen avisa y se sigue con 'Ejecutar de todas formas'.",
+      "done": false,
+      "text": "Ícono y metadatos del .exe (opcional)"
     }
   ],
   "code": "10.9",
@@ -30,7 +40,7 @@
     }
   ],
   "milestone": "m10",
-  "notes": "Skills: `godot:godot-export`.\n\n2026-10-09: presets Linux/Windows release y debug (se sumaron al de Android que ya estaba), clave de guardado nueva (escenarios refirmados), `tools/build.sh` con chequeo de plantillas y de LimboAI release. Queda en Revisión: compilar LimboAI `template_release` (Linux y Windows), instalar las plantillas de Godot 4.8-dev7, correr el build y probarlo en una máquina limpia. Test `tests/test_export.gd`.",
+  "notes": "Skills: `godot:godot-export`. Decidido 2026-10-10: Windows y macOS van sin firmar; macOS sin probar (no hay Mac), se arreglan los reportes.",
   "order": 9,
   "refs": [
     {
@@ -41,5 +51,5 @@
   "status": "review",
   "test": "Instalar el build en una máquina limpia (Linux y Windows): arranca, guarda en `user://` cifrado y no incluye escenarios ni tests.",
   "title": "Build para playtesters",
-  "updated_at": "2026-10-09T05:04:50.742Z"
+  "updated_at": "2026-10-10T22:49:40.455Z"
 }
