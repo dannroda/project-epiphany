@@ -50,9 +50,9 @@ func test_save_and_quit_keeps_the_checkpoint() -> void:
 	var saves: Node = tree.root.get_node(^"SaveManager")
 	var state: Node = tree.root.get_node(^"GameState")
 	saves.save_dir = TEST_DIR
-	saves.delete_slot(0)
+	saves.delete_slot(1)
 	state.reset()
-	await saves.new_game(0)
+	await saves.new_game(1)
 	var player := tree.get_first_node_in_group(&"player") as Node3D
 	player.global_position = Vector3(0, 0, 0)
 	var screen := await _die(tree)
@@ -61,9 +61,10 @@ func test_save_and_quit_keeps_the_checkpoint() -> void:
 	assert_eq(tree.current_scene.scene_file_path, "res://src/ui/title/title_screen.tscn", "vuelve al título")
 	assert_eq(tree.paused, false)
 	state.reset()
-	await saves.load_game(0)
+	await saves.load_game(1)
 	player = tree.get_first_node_in_group(&"player") as Node3D
 	assert_true(player.global_position.distance_to(Vector3(0, 0, 16)) < 0.6, "carga en el punto de control, no donde cayó")
 	saves.delete_slot(0)
+	saves.delete_slot(1)
 	saves.save_dir = "user://test_saves/"
 	state.reset()

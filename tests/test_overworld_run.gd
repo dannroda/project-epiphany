@@ -146,5 +146,5 @@ func test_play_start_into_the_temple_and_back() -> void:
 	assert_true(await _walk_into(&"move_backward", OVERWORLD), "y vuelve a salir")
 	assert_eq((tree.current_scene.get_node(^"TempleSeal") as TempleSeal).is_open, true, "el sello sigue abierto")
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(saves.slot_path(SLOT)))
-	saves.current_slot = 0
+	saves.current_slot = 1
 	state.reset()

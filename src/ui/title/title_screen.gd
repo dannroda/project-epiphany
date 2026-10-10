@@ -1,8 +1,9 @@
 extends Control
-## Pantalla de título (mockup Main): Continuar, Nueva partida, Opciones, Salir; en debug, cargar un escenario.
+## Pantalla de título (mockup Main): Continuar, Cargar partida, Nueva partida, Opciones, Salir; en debug, cargar un escenario.
 ## Es el estado raíz de la máquina de UI: todo lo que abre pasa por `MenuStack`.
 
 @onready var continue_item: Button = %Continue
+@onready var load_item: Button = %Load
 @onready var new_game_item: Button = %NewGame
 @onready var options_item: Button = %Options
 @onready var quit_item: Button = %Quit
@@ -14,8 +15,9 @@ func _ready() -> void:
 	%Version.text = "v" + str(ProjectSettings.get_setting("application/config/version", "0.1-dev"))
 	%Hints.hints = [[&"ui_accept", "Aceptar"], [&"ui_cancel", "Volver"]]
 	debug_scenarios.visible = OS.is_debug_build()
-	continue_item.pressed.connect(func() -> void: open_file_select(SaveManager.latest_slot()))
-	new_game_item.pressed.connect(func() -> void: open_file_select(_first_empty_slot()))
+	continue_item.pressed.connect(func() -> void: _go(SaveManager.load_game.bind(SaveManager.latest_slot())))
+	load_item.pressed.connect(open_file_select.bind(FileSelect.Mode.PLAY))
+	new_game_item.pressed.connect(_new_game)
 	options_item.pressed.connect(OptionsScreen.open)
 	quit_item.pressed.connect(func() -> void: get_tree().quit())
 	debug_scenarios.pressed.connect(func() -> void:
@@ -32,22 +34,25 @@ func focus_default() -> void:
 	(continue_item if not continue_item.disabled else new_game_item).grab_focus()
 
 
-func open_file_select(slot: int) -> FileSelect:
-	var screen := FileSelect.open(slot)
-	screen.chosen.connect(func(chosen_slot: int, empty: bool) -> void:
-		_go(SaveManager.new_game.bind(chosen_slot) if empty else SaveManager.load_game.bind(chosen_slot)))
+func open_file_select(mode: FileSelect.Mode) -> FileSelect:
+	var screen := FileSelect.open(mode)
+	screen.chosen.connect(func(slot: int, fresh: bool) -> void:
+		_go(SaveManager.new_game.bind(slot) if fresh else SaveManager.load_game.bind(slot)))
 	return screen
 
 
+## Sin ninguna partida va directo a la primera ranura; si no, se elige dónde.
+func _new_game() -> void:
+	if SaveManager.latest_slot() < 0:
+		_go(SaveManager.new_game.bind(SaveManager.PLAYER_SLOTS[0]))
+	else:
+		open_file_select(FileSelect.Mode.NEW)
+
+
 func _refresh() -> void:
-	continue_item.disabled = SaveManager.latest_slot() < 0
-
-
-func _first_empty_slot() -> int:
-	for slot in SaveManager.SLOTS:
-		if not SaveManager.has_save(slot):
-			return slot
-	return 0
+	var none := SaveManager.latest_slot() < 0
+	continue_item.disabled = none
+	load_item.disabled = none
 
 
 func _go(action: Callable) -> void:

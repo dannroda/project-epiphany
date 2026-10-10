@@ -2085,28 +2085,30 @@ Skills: `workflows:itch-publish`.
 
 **Relacionadas:** 10.19 Final y créditos de verdad; 11.22 Tablillas de historia
 
-### 10.21 Título y ranuras: Continuar, Nueva partida y ranura de autosave · Pendiente
+### 10.21 Título y ranuras: Continuar, Nueva partida y ranura de autosave · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `ui`
 
-- [ ] Continuar carga directo la última partida
+- [x] Continuar carga directo la última partida
   Hoy los dos abren FileSelect (title_screen.gd) y solo cambia el slot preseleccionado. Continuar tiene que llamar SaveManager.load_game(latest_slot()) sin pasar por la selección.
-- [ ] Nueva partida elige dónde crearla
+- [x] Nueva partida elige dónde crearla
   Abre FileSelect en modo nueva partida: slots vacíos crean partida; elegir uno ocupado pide confirmar que se sobrescribe (ConfirmDialog). Si no hay ninguna partida, va directo al primer slot.
 - [ ] Revisar el mockup Main/FileSelect
   Que el flujo coincida con el canvas de UI; si el mockup no lo cubre, ajustarlo.
-- [ ] Ranura 0: último autosave / guardado rápido
+- [x] Ranura 0: último autosave / guardado rápido
   Hoy SLOTS = 3 (0–2) y autosave() escribe en la ranura de la partida en curso. Pasa a: ranura 0 = 'Auto', siempre la última partida guardada sola (autosave o rápido), sin importar de qué ranura venga; ranuras 1–3 = guardados del jugador (Guardar en la pausa). La 0 no se elige para Nueva partida ni se sobrescribe a mano; se puede cargar desde FileSelect y Continuar la usa si es la más reciente.
-- [ ] Migrar las partidas existentes
+- [x] Migrar las partidas existentes
   slot_0..2.cfg pasan a slot_1..3.cfg al arrancar (una sola vez), para no perder lo guardado.
-- [ ] Mostrar la ranura Auto en FileSelect
+- [x] Mostrar la ranura Auto en FileSelect
   Tarjeta propia arriba (etiqueta 'Auto' o 'Último guardado'), distinta de las otras tres; mockup en el canvas de UI.
 
 **Prueba:** Con partidas guardadas: Continuar entra directo a la última jugada (auto o manual). Nueva partida: elegir un slot vacío arranca de cero; uno ocupado pide confirmación y, si se cancela, no toca la partida. Jugar, dejar que autoguarde: la ranura Auto se actualiza y las manuales no cambian hasta guardar a mano. Partidas viejas siguen apareciendo tras la migración.
 
+**Notas:** Implementado: Auto en la ranura 0, migración 0–2 → 1–3, Continuar directo, Cargar partida (opción nueva en el título) y Nueva partida que elige dónde. Falta el paso 3: los mockups Main (Cargar partida) y FileSelect (tarjeta Auto) están editados en local pero no se publicaron en el canvas (permiso denegado); falta publicarlos.
+
 **Relacionadas:** 10.2 Selección de partida y autosave
 
-## M11 — Pulido: assets y contenido  (12/37)
+## M11 — Pulido: assets y contenido  (13/37)
 
 Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
 
@@ -2163,7 +2165,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Prueba:** En la antesala (doom 0.9), el player, la tablilla y las vasijas conservan sus colores sobre el piso rojo y siguen proyectando sombra.
 
-### 11.8 Silueta del player detrás de paredes · Pendiente
+### 11.8 Silueta del player detrás de paredes · Hecho
 
 **Prioridad:** media · **Etiquetas:** `camara`
 

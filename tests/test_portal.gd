@@ -72,7 +72,7 @@ func test_enter_and_leave_the_temple_keeping_the_dungeon() -> void:
 	assert_true(_player(tree).global_position.distance_to(Vector3(24, 0, 68)) < 0.8, "otra vez en la entrada")
 
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(saves.slot_path(SLOT)))
-	saves.current_slot = 0
+	saves.current_slot = 1
 	state.reset()
 
 

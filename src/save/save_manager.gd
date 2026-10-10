@@ -11,12 +11,17 @@ const NEW_GAME_SCENE := "res://levels/overworld.tscn"
 
 signal saved(slot: int)
 
-const SLOTS := 3
+## La última partida guardada sola (autosave o guardado rápido), venga de la ranura que venga.
+const AUTO_SLOT := 0
+## Las que guarda el jugador (Guardar en la pausa).
+const PLAYER_SLOTS: Array[int] = [1, 2, 3]
 ## Ranura de los escenarios de debug: su autosave nunca pisa una partida del jugador.
 const SCENARIO_SLOT := 98
+## Marca que las ranuras 0–2 de antes ya pasaron a 1–3.
+const MIGRATED_FILE := ".slots_v2"
 
-## Ranura de la partida en curso: el autosave y el guardado rápido van ahí.
-var current_slot := 0
+## Ranura del jugador de la partida en curso: ahí va Guardar; el autosave va a `AUTO_SLOT`.
+var current_slot := 1
 var traveling := false
 ## Mientras se aplica una partida: los objetos reciben sus flags pero no es algo que el jugador hizo.
 var loading := false
@@ -24,6 +29,7 @@ var loading := false
 
 func _ready() -> void:
 	process_mode = PROCESS_MODE_ALWAYS
+	migrate_slots()
 	if not OS.is_debug_build():
 		return
 	for arg in OS.get_cmdline_user_args():
@@ -40,9 +46,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not OS.is_debug_build():
 		return
 	if event.is_action_pressed(&"debug_quicksave"):
-		save_game()
+		autosave()
 	elif event.is_action_pressed(&"debug_quickload"):
-		load_game()
+		load_game(auto_slot())
 
 
 func slot_path(slot: int) -> String:
@@ -63,6 +69,7 @@ func save_game(slot: int = -1, capture_player := true) -> Error:
 	var cfg := ConfigFile.new()
 	GameState.write_to(cfg)
 	cfg.set_value("player", "location", location())
+	cfg.set_value("meta", "slot", current_slot)
 	var err := SaveCodec.write(cfg, slot_path(slot))
 	if err == OK:
 		Log.success(&"save", "Partida guardada:", slot_path(slot))
@@ -71,10 +78,29 @@ func save_game(slot: int = -1, capture_player := true) -> Error:
 	return err
 
 
-## Guarda en la ranura actual (al cambiar de escena, al abrir un cofre grande, al entrar a la antesala).
+## Al cambiar de escena, al abrir un cofre grande, al entrar a la antesala.
 func autosave() -> void:
-	if save_game(current_slot) == OK:
-		saved.emit(current_slot)
+	var slot := auto_slot()
+	if save_game(slot) == OK:
+		saved.emit(slot)
+
+
+## Adónde va el autosave: la ranura Auto, salvo en los escenarios y tests, que tienen la suya.
+func auto_slot() -> int:
+	return AUTO_SLOT if current_slot in PLAYER_SLOTS else current_slot
+
+
+## Las ranuras 0–2 de antes pasan a 1–3, porque la 0 es ahora la Auto. Corre una sola vez.
+func migrate_slots() -> void:
+	var marker := save_dir + MIGRATED_FILE
+	if FileAccess.file_exists(marker):
+		return
+	DirAccess.make_dir_recursive_absolute(save_dir)
+	for old in [2, 1, 0]:
+		for suffix in ["", ".bak"]:
+			if FileAccess.file_exists(slot_path(old) + suffix):
+				DirAccess.rename_absolute(slot_path(old) + suffix, slot_path(old + 1) + suffix)
+	FileAccess.open(marker, FileAccess.WRITE).store_string("1")
 
 
 ## Fundido a negro, `action` (cargar, partida nueva…) y fundido de vuelta. Corre acá y no en la pantalla que la pide,
@@ -108,6 +134,7 @@ func slot_summary(slot: int) -> Dictionary:
 		play_time = cfg.get_value("player", "play_time", 0.0),
 		items = items,
 		timestamp = cfg.get_value("meta", "timestamp", 0.0),
+		origin = cfg.get_value("meta", "slot", slot),
 	}
 
 
@@ -115,7 +142,7 @@ func slot_summary(slot: int) -> Dictionary:
 func latest_slot() -> int:
 	var best := -1
 	var best_time := -1.0
-	for slot in SLOTS:
+	for slot in [AUTO_SLOT] + PLAYER_SLOTS:
 		var summary := slot_summary(slot)
 		if not summary.is_empty() and summary.timestamp > best_time:
 			best = slot
@@ -157,7 +184,7 @@ func location() -> String:
 	return ""
 
 
-## Partida nueva: equipo inicial, en el claro del inicio del overworld.
+## Partida nueva: equipo inicial, en el claro del inicio del overworld. Ocupa su ranura enseguida.
 func new_game(slot: int = -1) -> Error:
 	if slot >= 0:
 		current_slot = slot
@@ -166,6 +193,7 @@ func new_game(slot: int = -1) -> Error:
 	GameState.spawn_point = &"start"
 	GameState.player_position = null
 	await _restore_player()
+	save_game()
 	autosave()
 	return OK
 
@@ -199,6 +227,9 @@ func _load_path(path: String) -> Error:
 	for problem in SaveCodec.validate(cfg):
 		Log.warning(&"save", problem)
 	_migrate(cfg, cfg.get_value("meta", "version", 0))
+	if current_slot == AUTO_SLOT:
+		var origin: int = cfg.get_value("meta", "slot", PLAYER_SLOTS[0])
+		current_slot = origin if origin in PLAYER_SLOTS else PLAYER_SLOTS[0]
 	loading = true
 	GameState.read_from(cfg)
 	GameState.save_tampered = SaveCodec.is_tampered(cfg)

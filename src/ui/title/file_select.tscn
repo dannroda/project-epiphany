@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://src/ui/title/file_select.gd" id="1_select"]
 [ext_resource type="PackedScene" path="res://src/ui/title/slot_card.tscn" id="2_card"]
 [ext_resource type="Script" path="res://src/ui/hint_bar.gd" id="3_hints"]
+[ext_resource type="PackedScene" path="res://src/ui/title/auto_slot_card.tscn" id="4_auto"]
 
 [node name="FileSelect" type="Control"]
 layout_mode = 3
@@ -28,12 +29,12 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 100.0
-offset_top = 56.0
+offset_top = 40.0
 offset_right = -100.0
-offset_bottom = -56.0
+offset_bottom = -40.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 28
+theme_override_constants/separation = 20
 
 [node name="Heading" type="Label" parent="Column"]
 unique_name_in_owner = true
@@ -45,6 +46,10 @@ text = "Elegí una partida"
 layout_mode = 2
 theme_override_constants/separation = 18
 
+[node name="Auto" parent="Column/Slots" instance=ExtResource("4_auto")]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="Slot1" parent="Column/Slots" instance=ExtResource("2_card")]
 unique_name_in_owner = true
 layout_mode = 2
@@ -52,12 +57,12 @@ layout_mode = 2
 [node name="Slot2" parent="Column/Slots" instance=ExtResource("2_card")]
 unique_name_in_owner = true
 layout_mode = 2
-slot = 1
+slot = 2
 
 [node name="Slot3" parent="Column/Slots" instance=ExtResource("2_card")]
 unique_name_in_owner = true
 layout_mode = 2
-slot = 2
+slot = 3
 
 [node name="Spacer" type="Control" parent="Column"]
 layout_mode = 2

@@ -67,16 +67,21 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -200.0
-offset_top = 400.0
+offset_top = 380.0
 offset_right = 200.0
-offset_bottom = 640.0
+offset_bottom = 660.0
 grow_horizontal = 2
-theme_override_constants/separation = 14
+theme_override_constants/separation = 10
 
 [node name="Continue" parent="Menu" unique_id=840081313 instance=ExtResource("4_item")]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Continuar"
+
+[node name="Load" parent="Menu" unique_id=1156117820 instance=ExtResource("4_item")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Cargar partida"
 
 [node name="NewGame" parent="Menu" unique_id=1156117819 instance=ExtResource("4_item")]
 unique_name_in_owner = true
