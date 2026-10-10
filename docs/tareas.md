@@ -1,7 +1,7 @@
 # Tareas — Project Epiphany
 
 > Export de `compass/`, que es la fuente de verdad. No editar: los cambios se hacen en `compass/` o con `scompass`, y este archivo se regenera.
-> Generado: 2026-10-09
+> Generado: 2026-10-10
 
 ## M0 — Refactor del player + base de datos  (13/13)
 
@@ -1608,14 +1608,14 @@ Hecho 2026-10-08: escenarios `dungeon_no_bow`, `pre_boss`, `boss_key_door_locked
 
 **Bloqueada por:** 8.7 Sala 8: antesala
 
-## M9 — Jefe  (1/8)
+## M9 — Jefe  (3/8)
 
 Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 con LimboAI.
 
 **Hecho cuando:**
 - Se puede terminar el juego.
 
-### 9.1 Integrar el modelo del jefe · Pendiente
+### 9.1 Integrar el modelo del jefe · Hecho
 
 - [x] Traer el modelo del jefe al proyecto
   Las mallas de `assets/epiphany/meshes/jefe/` (salen de `tools/blender/build_jefe.py`), armadas en una escena.
@@ -1651,13 +1651,13 @@ Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 
 
 **Bloqueada por:** 6.1 `Room` y cámara por sala; 9.1 Integrar el modelo del jefe
 
-### 9.3 Arquitectura del jefe · Pendiente
+### 9.3 Arquitectura del jefe · Hecho
 
-- [ ] Jefe + manos como entidades
+- [x] Jefe + manos como entidades
   Cada mano con su `Health`, `Hurtbox`, `Hitbox` y `AttackRunner`; el ojo con los suyos.
-- [ ] Fases con `LimboHSM`
+- [x] Fases con `LimboHSM`
   Estados `Phase1`, `Phase2` (y `Phase3`); cada uno corre su BT.
-- [ ] Blackboard compartido
+- [x] Blackboard compartido
   Posición del player, manos vivas/aturdidas, fase actual. Elegir el ataque con utilidad (distancia, último ataque) para que no sea predecible.
 
 **Prueba:** Con el overlay: la fase, el estado de cada mano y el ataque elegido se ven en vivo.

@@ -1,0 +1,28 @@
+[gd_resource type="BehaviorTree" format=3]
+
+[ext_resource type="Script" path="res://ai/tasks/bt_choose_boss_attack.gd" id="1_choose"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_boss"]
+
+[sub_resource type="BTAction" id="BTAction_choose"]
+script = ExtResource("1_choose")
+phase = 2
+
+[sub_resource type="BTWait" id="BTWait_attack"]
+duration = 1.6
+custom_name = "Atacar (9.4/9.5)"
+
+[sub_resource type="BTSequence" id="BTSequence_round"]
+custom_name = "Ronda"
+children = [SubResource("BTAction_choose"), SubResource("BTWait_attack")]
+
+[sub_resource type="BTWait" id="BTWait_idle"]
+duration = 0.5
+custom_name = "Esperar"
+
+[sub_resource type="BTSelector" id="BTSelector_root"]
+children = [SubResource("BTSequence_round"), SubResource("BTWait_idle")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_boss")
+root_task = SubResource("BTSelector_root")

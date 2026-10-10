@@ -2,17 +2,17 @@
   "checklist": [
     {
       "detail": "Cada mano con su `Health`, `Hurtbox`, `Hitbox` y `AttackRunner`; el ojo con los suyos.",
-      "done": false,
+      "done": true,
       "text": "Jefe + manos como entidades"
     },
     {
       "detail": "Estados `Phase1`, `Phase2` (y `Phase3`); cada uno corre su BT.",
-      "done": false,
+      "done": true,
       "text": "Fases con `LimboHSM`"
     },
     {
       "detail": "Posición del player, manos vivas/aturdidas, fase actual. Elegir el ataque con utilidad (distancia, último ataque) para que no sea predecible.",
-      "done": false,
+      "done": true,
       "text": "Blackboard compartido"
     }
   ],
@@ -33,8 +33,8 @@
       "section": "jefe"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Con el overlay: la fase, el estado de cada mano y el ataque elegido se ven en vivo.",
   "title": "Arquitectura del jefe",
-  "updated_at": "2026-10-08T04:46:02.089Z"
+  "updated_at": "2026-10-10T03:05:34.490Z"
 }
