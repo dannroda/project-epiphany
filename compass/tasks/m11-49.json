@@ -1,0 +1,40 @@
+{
+  "checklist": [
+    {
+      "detail": "Trail en el filo durante la ventana de golpe (AttackData), en la paleta (hueso/neón).",
+      "done": false,
+      "text": "Estela de la espada"
+    },
+    {
+      "detail": "Una sola fuente de partículas low poly con colores de la paleta: chispas al rebotar, polvo al rodar, anillo de carga del giro, estela de la flecha, explosión de bomba estilizada.",
+      "done": false,
+      "text": "Partículas en el estilo"
+    }
+  ],
+  "code": "11.46",
+  "created_at": "2026-10-10T23:12:49.640Z",
+  "links": [
+    {
+      "task": "m11-33",
+      "type": "related"
+    }
+  ],
+  "milestone": "m11",
+  "notes": "Skills: `disciplines:game-feel`, `godot:godot-shaders`. Va con 11.33.",
+  "order": 49,
+  "priority": "medium",
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "combate"
+    }
+  ],
+  "status": "todo",
+  "tags": [
+    "feel",
+    "combate"
+  ],
+  "test": "Pelear y usar los ítems: cada acción tiene su efecto, todos con el mismo estilo, y no bajan los FPS con varios enemigos.",
+  "title": "VFX de combate",
+  "updated_at": "2026-10-10T23:12:52.879Z"
+}

@@ -2135,7 +2135,7 @@ Skills: `workflows:itch-publish`.
 
 **Relacionadas:** 10.9 Build para playtesters; 10.10 Publicar en itch.io y playtest
 
-## M11 — Pulido: assets y contenido  (20/45)
+## M11 — Pulido: assets y contenido  (20/50)
 
 Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
 
@@ -2370,7 +2370,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Prueba:** Cada secreto se encuentra con las herramientas que el player tiene en ese momento y queda resuelto al cargar.
 
-### 11.25 Nuevos enemigos con los modelos existentes · Pendiente
+### 11.25 Nuevos enemigos con los modelos existentes · En curso
 
 **Prioridad:** media · **Etiquetas:** `enemigos`, `ia`
 
@@ -2482,6 +2482,8 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 **Referencias:** `gdd.md#combate`
 
 **Bloquea a:** 11.34 Combos y técnicas especiales (Minish Cap / Wind Waker)
+
+**Relacionadas:** 11.46 VFX de combate
 
 ### 11.34 Combos y técnicas especiales (Minish Cap / Wind Waker) · Pendiente
 
@@ -2647,7 +2649,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 - [x] Tirar: parábola, rompe y daña
   Al chocar se rompe (vasija suelta su loot) y daña enemigos.
 - [ ] Puzzles que lo usen
-  Piedra sobre placa de presión, vasija para tapar un hueco.
+  Piedra sobre placa de presión, vasija para tapar un hueco. Se hace con los mini puzzles de 11.42 (stone.tscn ya aprieta placas).
 
 ### 11.42 Tutorial de controles y mini puzzle por ítem · Pendiente
 
@@ -2660,6 +2662,95 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 - [ ] Tablitas con el ícono del botón
   El texto de la tablita usa los íconos de input actuales.
 - [ ] Tests y GDD
+
+### 11.43 Jefe: game juice · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `jefe`, `feel`
+
+- [ ] Cuerpo vivo
+  Balanceo de flotación, inclinación hacia la mano que ataca, parpadeo del propulsor; parpadeos ocasionales, párpados entrecerrados al apuntar.
+- [ ] Ojo que carga
+  La pupila se dilata y el iris pulsa la emisión (material override por instancia) mientras carga el orbe; la boca de horno respira y se enciende en cada ataque.
+- [ ] Anticipación y peso de las manos
+  Antes del golpe sube de más, cierra el puño y tiembla; cae más rápido, squash al tocar el piso y rebote chico. Mismo criterio para el agarre y el barrido.
+- [ ] Impactos
+  Hit-stop (~60 ms) en el golpe al piso y cuando el player le pega (Feel ya lo tiene); grietas que quedan en el piso y piedritas; vibración del control; sacudida direccional; la sombra crece y destella el último instante.
+- [ ] Mano aturdida
+  Tambaleo mareado, el ojo de neón del dorso titila, chispas.
+- [ ] Fases y muerte
+  Cambio de fase: párpados que se abren de golpe, destello, polvo del techo. Muerte en etapas: placas que se desprenden, neón que se apaga, explosiones chicas en las juntas, cámara lenta en el último golpe.
+
+**Prueba:** Pelear contra el jefe de punta a punta: cada ataque se anticipa y se lee, los golpes al piso pesan (hit-stop, grietas, vibración), el ojo y el cuerpo reaccionan, y la muerte se siente como un final.
+
+**Notas:** Skills: `disciplines:game-feel`, `godot:godot-animation`, `godot:godot-shaders`.
+
+**Referencias:** `gdd.md#jefe`
+
+**Relacionadas:** 11.44 Manos del jefe con shape keys; 11.47 Audio del jefe
+
+### 11.44 Manos del jefe con shape keys · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `jefe`, `arte`
+
+- [ ] Una malla por mano con blend shapes
+  En build_jefe.py, como el arco: base abierta y shape keys «puno» y «garra» (los dedos rotan por falange); reemplaza las tres mallas sueltas.
+- [ ] Transiciones en el código
+  BossHand interpola los blend shapes en vez de alternar visibilidad (Open/Fist/Claw).
+
+**Prueba:** Los dedos se cierran y abren de forma continua al pasar de una pose a otra; el ícono y la pelea siguen igual.
+
+**Notas:** Skills: `godot:godot-animation`.
+
+**Referencias:** `gdd.md#jefe`
+
+**Relacionadas:** 11.43 Jefe: game juice
+
+### 11.45 Pose de item get · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `personajes`, `feel`
+
+- [ ] Animación
+  Las dos manos en alto con el objeto (como Carry, con IK horneado en build_carry_anims.py o un script hermano); entrada y salida cortas.
+- [ ] Integración
+  La caja de item get muestra al player en la pose con el objeto arriba y un destello; sonido propio.
+
+**Prueba:** Abrir un cofre grande: el player levanta el ítem con las dos manos, se ve el objeto arriba y vuelve a su pose al cerrar la caja.
+
+**Notas:** Skills: `godot:godot-animation`, `disciplines:game-feel`.
+
+### 11.46 VFX de combate · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `feel`, `combate`
+
+- [ ] Estela de la espada
+  Trail en el filo durante la ventana de golpe (AttackData), en la paleta (hueso/neón).
+- [ ] Partículas en el estilo
+  Una sola fuente de partículas low poly con colores de la paleta: chispas al rebotar, polvo al rodar, anillo de carga del giro, estela de la flecha, explosión de bomba estilizada.
+
+**Prueba:** Pelear y usar los ítems: cada acción tiene su efecto, todos con el mismo estilo, y no bajan los FPS con varios enemigos.
+
+**Notas:** Skills: `disciplines:game-feel`, `godot:godot-shaders`. Va con 11.33.
+
+**Referencias:** `gdd.md#combate`
+
+**Relacionadas:** 11.33 Combate: sacar lo tosco
+
+### 11.47 Audio del jefe · Pendiente
+
+**Prioridad:** baja · **Etiquetas:** `jefe`, `audio`
+
+- [ ] Voz propia
+  Zumbido mecánico de fondo, chirrido de párpados, carga del orbe, rugido de fase, golpes con más grave.
+- [ ] Tema de música
+  Reemplazar el placeholder (Music.boss_fight) por un tema propio, con capas por fase.
+
+**Prueba:** La pelea tiene sonido propio y la música cambia con las fases.
+
+**Notas:** Skills: `disciplines:audio-design`, `godot:godot-audio`.
+
+**Referencias:** `gdd.md#jefe`
+
+**Relacionadas:** 11.43 Jefe: game juice
 
 ## M12 — Assets propios (Blender)  (2/9)
 

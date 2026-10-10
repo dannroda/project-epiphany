@@ -1,0 +1,40 @@
+{
+  "checklist": [
+    {
+      "detail": "En build_jefe.py, como el arco: base abierta y shape keys «puno» y «garra» (los dedos rotan por falange); reemplaza las tres mallas sueltas.",
+      "done": false,
+      "text": "Una malla por mano con blend shapes"
+    },
+    {
+      "detail": "BossHand interpola los blend shapes en vez de alternar visibilidad (Open/Fist/Claw).",
+      "done": false,
+      "text": "Transiciones en el código"
+    }
+  ],
+  "code": "11.44",
+  "created_at": "2026-10-10T23:12:47.043Z",
+  "links": [
+    {
+      "task": "m11-46",
+      "type": "related"
+    }
+  ],
+  "milestone": "m11",
+  "notes": "Skills: `godot:godot-animation`.",
+  "order": 47,
+  "priority": "medium",
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "jefe"
+    }
+  ],
+  "status": "todo",
+  "tags": [
+    "jefe",
+    "arte"
+  ],
+  "test": "Los dedos se cierran y abren de forma continua al pasar de una pose a otra; el ícono y la pelea siguen igual.",
+  "title": "Manos del jefe con shape keys",
+  "updated_at": "2026-10-10T23:12:52.568Z"
+}
