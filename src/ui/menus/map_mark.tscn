@@ -1,0 +1,12 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/ui/menus/map_mark.gd" id="1_mark"]
+
+[node name="MapMark" type="Control"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 24.0
+offset_bottom = 24.0
+mouse_filter = 2
+script = ExtResource("1_mark")

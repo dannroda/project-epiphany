@@ -2,8 +2,34 @@
 
 [ext_resource type="Script" uid="uid://c3gnoimwgfyau" path="res://src/ui/menus/map_page.gd" id="1_page"]
 [ext_resource type="Script" path="res://src/ui/menus/map_legend_icon.gd" id="2_legend"]
+[ext_resource type="Script" path="res://src/ui/menus/map_mark.gd" id="3_mark"]
+[ext_resource type="Script" path="res://src/ui/menus/map_cursor.gd" id="4_cursor"]
+[ext_resource type="Texture2D" uid="uid://cewskbxhonmxb" path="res://assets/ui/frames/map_cursor.png" id="5_focus"]
+[ext_resource type="Texture2D" uid="uid://bbh75d26628l5" path="res://assets/ui/frames/map_room.png" id="6_slot"]
+[ext_resource type="Texture2D" uid="uid://cdjnnpwyam4fr" path="res://assets/ui/frames/map_room_mapped.png" id="7_empty"]
 
-[node name="Mapa" type="HBoxContainer" unique_id=1716146706]
+[sub_resource type="StyleBoxTexture" id="CursorFrame"]
+texture = ExtResource("5_focus")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="LegendVisited"]
+texture = ExtResource("6_slot")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="LegendMapped"]
+texture = ExtResource("7_empty")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[node name="Mapa" type="HBoxContainer"]
 process_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,25 +39,136 @@ grow_vertical = 2
 theme_override_constants/separation = 40
 script = ExtResource("1_page")
 
-[node name="MapCard" type="PanelContainer" parent="." unique_id=1577981793]
+[node name="MapCard" type="PanelContainer" parent="."]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(700, 0)
 layout_mode = 2
 theme_type_variation = &"CardBare"
 
-[node name="Center" type="CenterContainer" parent="MapCard" unique_id=1304886919]
+[node name="Center" type="CenterContainer" parent="MapCard"]
 layout_mode = 2
+mouse_filter = 2
 
-[node name="Cells" type="Control" parent="MapCard/Center" unique_id=1102567987]
+[node name="Cells" type="Control" parent="MapCard/Center"]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Overworld" type="Control" parent="MapCard" unique_id=536701201]
+[node name="Rooms" type="Control" parent="MapCard/Center/Cells"]
+unique_name_in_owner = true
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="Doors" type="Control" parent="MapCard/Center/Cells"]
+unique_name_in_owner = true
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="RoomCursor" type="Control" parent="MapCard/Center/Cells"]
+unique_name_in_owner = true
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("4_cursor")
+frame_style = SubResource("CursorFrame")
+
+[node name="DoorLegendBox" type="VBoxContainer" parent="MapCard"]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
+alignment = 2
 
-[node name="OverworldImage" type="TextureRect" parent="MapCard/Overworld" unique_id=90760283]
+[node name="Margin" type="MarginContainer" parent="MapCard/DoorLegendBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_bottom = 14
+
+[node name="DoorLegend" type="HBoxContainer" parent="MapCard/DoorLegendBox/Margin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 18
+
+[node name="Door1" type="HBoxContainer" parent="MapCard/DoorLegendBox/Margin/DoorLegend"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Icon" type="Control" parent="MapCard/DoorLegendBox/Margin/DoorLegend/Door1"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("3_mark")
+kind = 4
+
+[node name="Label" type="Label" parent="MapCard/DoorLegendBox/Margin/DoorLegend/Door1"]
+layout_mode = 2
+theme_type_variation = &"HintSmall"
+text = "Puerta"
+
+[node name="Door2" type="HBoxContainer" parent="MapCard/DoorLegendBox/Margin/DoorLegend"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Icon" type="Control" parent="MapCard/DoorLegendBox/Margin/DoorLegend/Door2"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("3_mark")
+kind = 5
+
+[node name="Label" type="Label" parent="MapCard/DoorLegendBox/Margin/DoorLegend/Door2"]
+layout_mode = 2
+theme_type_variation = &"HintSmall"
+text = "Con llave"
+
+[node name="Door3" type="HBoxContainer" parent="MapCard/DoorLegendBox/Margin/DoorLegend"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Icon" type="Control" parent="MapCard/DoorLegendBox/Margin/DoorLegend/Door3"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("3_mark")
+kind = 6
+
+[node name="Label" type="Label" parent="MapCard/DoorLegendBox/Margin/DoorLegend/Door3"]
+layout_mode = 2
+theme_type_variation = &"HintSmall"
+text = "Puerta del jefe"
+
+[node name="Door4" type="HBoxContainer" parent="MapCard/DoorLegendBox/Margin/DoorLegend"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Icon" type="Control" parent="MapCard/DoorLegendBox/Margin/DoorLegend/Door4"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("3_mark")
+kind = 7
+
+[node name="Label" type="Label" parent="MapCard/DoorLegendBox/Margin/DoorLegend/Door4"]
+layout_mode = 2
+theme_type_variation = &"HintSmall"
+text = "Sellada"
+
+[node name="Overworld" type="Control" parent="MapCard"]
+unique_name_in_owner = true
+clip_contents = true
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Canvas" type="Control" parent="MapCard/Overworld"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="OverworldImage" type="TextureRect" parent="MapCard/Overworld/Canvas"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -47,36 +184,92 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Marker" type="Control" parent="MapCard/Overworld" unique_id=1467056388]
+[node name="Fog" type="Control" parent="MapCard/Overworld/Canvas"]
 unique_name_in_owner = true
 anchors_preset = 0
 mouse_filter = 2
 
-[node name="Info" type="VBoxContainer" parent="." unique_id=1436565159]
+[node name="Marks" type="Control" parent="MapCard/Overworld/Canvas"]
+unique_name_in_owner = true
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="Pins" type="Control" parent="MapCard/Overworld/Canvas"]
+unique_name_in_owner = true
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="Marker" type="Control" parent="MapCard/Overworld/Canvas"]
+unique_name_in_owner = true
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="Cursor" type="Control" parent="MapCard/Overworld/Canvas"]
+unique_name_in_owner = true
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("4_cursor")
+frame_size = Vector2(56, 56)
+frame_style = SubResource("CursorFrame")
+dot = true
+
+[node name="Info" type="VBoxContainer" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 16
 
-[node name="Names" type="VBoxContainer" parent="Info" unique_id=1292238806]
+[node name="Names" type="VBoxContainer" parent="Info"]
 layout_mode = 2
 theme_override_constants/separation = 2
 
-[node name="MapTitle" type="Label" parent="Info/Names" unique_id=1490121496]
+[node name="MapTitle" type="Label" parent="Info/Names"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"Title"
 
-[node name="MapSubtitle" type="Label" parent="Info/Names" unique_id=1174088604]
+[node name="MapSubtitle" type="Label" parent="Info/Names"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"HintSmall"
 
-[node name="MapStats" type="VBoxContainer" parent="Info" unique_id=94360358]
+[node name="Focus" type="PanelContainer" parent="Info"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"CardBare"
+
+[node name="Margin" type="MarginContainer" parent="Info/Focus"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 12
+
+[node name="Rows" type="VBoxContainer" parent="Info/Focus/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="FocusTitle" type="Label" parent="Info/Focus/Margin/Rows"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SectionTitle"
+theme_override_font_sizes/font_size = 17
+
+[node name="FocusText" type="Label" parent="Info/Focus/Margin/Rows"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="FocusStats" type="VBoxContainer" parent="Info/Focus/Margin/Rows"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Legend" type="VBoxContainer" parent="Info" unique_id=1380490727]
+[node name="MapStats" type="VBoxContainer" parent="Info"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Legend" type="VBoxContainer" parent="Info"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 10
@@ -91,6 +284,7 @@ layout_mode = 2
 mouse_filter = 2
 script = ExtResource("2_legend")
 kind = 0
+style = SubResource("LegendVisited")
 
 [node name="Label" type="Label" parent="Info/Legend/Entry1"]
 layout_mode = 2
@@ -107,6 +301,7 @@ layout_mode = 2
 mouse_filter = 2
 script = ExtResource("2_legend")
 kind = 1
+style = SubResource("LegendMapped")
 
 [node name="Label" type="Label" parent="Info/Legend/Entry2"]
 layout_mode = 2
@@ -160,3 +355,105 @@ kind = 4
 layout_mode = 2
 theme_type_variation = &"Legend"
 text = "Jefe"
+
+[node name="OverworldLegend" type="VBoxContainer" parent="Info"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Entry1" type="HBoxContainer" parent="Info/OverworldLegend"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Icon" type="Control" parent="Info/OverworldLegend/Entry1"]
+custom_minimum_size = Vector2(26, 28)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_legend")
+kind = 5
+
+[node name="Label" type="Label" parent="Info/OverworldLegend/Entry1"]
+layout_mode = 2
+theme_type_variation = &"Legend"
+text = "Sin explorar"
+
+[node name="Entry2" type="HBoxContainer" parent="Info/OverworldLegend"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Icon" type="Control" parent="Info/OverworldLegend/Entry2"]
+custom_minimum_size = Vector2(26, 28)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_legend")
+kind = 2
+
+[node name="Label" type="Label" parent="Info/OverworldLegend/Entry2"]
+layout_mode = 2
+theme_type_variation = &"Legend"
+text = "Estás acá"
+
+[node name="Entry3" type="HBoxContainer" parent="Info/OverworldLegend"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Icon" type="Control" parent="Info/OverworldLegend/Entry3"]
+custom_minimum_size = Vector2(26, 28)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_legend")
+kind = 6
+
+[node name="Label" type="Label" parent="Info/OverworldLegend/Entry3"]
+layout_mode = 2
+theme_type_variation = &"Legend"
+text = "Entrada"
+
+[node name="Entry4" type="HBoxContainer" parent="Info/OverworldLegend"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Icon" type="Control" parent="Info/OverworldLegend/Entry4"]
+custom_minimum_size = Vector2(26, 28)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_legend")
+kind = 7
+
+[node name="Label" type="Label" parent="Info/OverworldLegend/Entry4"]
+layout_mode = 2
+theme_type_variation = &"Legend"
+text = "Cofre abierto"
+
+[node name="Entry5" type="HBoxContainer" parent="Info/OverworldLegend"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Icon" type="Control" parent="Info/OverworldLegend/Entry5"]
+custom_minimum_size = Vector2(26, 28)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_legend")
+kind = 8
+
+[node name="Label" type="Label" parent="Info/OverworldLegend/Entry5"]
+layout_mode = 2
+theme_type_variation = &"Legend"
+text = "Tablilla leída"
+
+[node name="Entry6" type="HBoxContainer" parent="Info/OverworldLegend"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Icon" type="Control" parent="Info/OverworldLegend/Entry6"]
+custom_minimum_size = Vector2(26, 28)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_legend")
+kind = 9
+
+[node name="PinsLabel" type="Label" parent="Info/OverworldLegend/Entry6"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Legend"
+text = "Pin"

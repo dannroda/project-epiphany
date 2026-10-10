@@ -9,6 +9,8 @@ signal item_buttons_changed
 ## Al entrar o salir de una mazmorra.
 signal dungeon_changed
 signal loaded
+## Zonas del overworld visitadas o pines del mapa.
+signal map_changed
 
 const FLAGS: FlagRegistry = preload("res://data/flag_registry.tres")
 const NEW_GAME_EQUIPMENT: Array[StringName] = [&"sword_basic", &"shield_wood", &"tunic"]
@@ -16,6 +18,9 @@ const NEW_GAME_MAX_HEALTH := 12
 const HP_PER_HEART := 4
 const PIECES_PER_HEART := 4
 const DUNGEON_PREFIX := "dungeon_"
+const MAX_MAP_PINS := 4
+## Radio (m) dentro del cual poner un pin quita el que ya está.
+const PIN_PICK_RADIUS := 3.0
 
 var inventory := Inventory.new()
 var equipment: Dictionary[ItemData.Category, StringName] = {}
@@ -23,6 +28,9 @@ var item_buttons: Array[StringName] = [&"", &""] ## X / Y
 var max_health: int = NEW_GAME_MAX_HEALTH
 var flags: Dictionary[StringName, Variant] = {}
 var dungeons: Dictionary[StringName, DungeonState] = {}
+var visited_zones: Array[StringName] = []
+## Marcas del jugador en el mapa del overworld (XZ del mundo).
+var map_pins: Array[Vector2] = []
 var current_dungeon: StringName = &"":
 	set(value):
 		if value != current_dungeon:
@@ -76,6 +84,26 @@ func assign_button(index: int, id: StringName) -> void:
 		item_buttons[other] = item_buttons[index]
 	item_buttons[index] = id
 	item_buttons_changed.emit()
+
+
+func visit_zone(id: StringName) -> void:
+	if not visited_zones.has(id):
+		visited_zones.append(id)
+		map_changed.emit()
+
+
+## Quita el pin cercano o pone uno nuevo si queda lugar. Devuelve si cambió algo.
+func toggle_pin(point: Vector2) -> bool:
+	for pin in map_pins:
+		if pin.distance_to(point) <= PIN_PICK_RADIUS:
+			map_pins.erase(pin)
+			map_changed.emit()
+			return true
+	if map_pins.size() >= MAX_MAP_PINS:
+		return false
+	map_pins.append(point)
+	map_changed.emit()
+	return true
 
 
 func current_dungeon_state() -> DungeonState:
@@ -141,6 +169,8 @@ func write_to(cfg: ConfigFile) -> void:
 	cfg.set_value("equipment", "buttons", item_buttons.duplicate())
 	for id in flags:
 		cfg.set_value("flags", id, flags[id])
+	cfg.set_value("map", "visited_zones", visited_zones.duplicate())
+	cfg.set_value("map", "pins", map_pins.duplicate())
 	for dungeon_id in dungeons:
 		var dungeon := dungeons[dungeon_id]
 		var section := DUNGEON_PREFIX + dungeon_id
@@ -172,6 +202,8 @@ func read_from(cfg: ConfigFile) -> void:
 			equipment[ItemData.Category[key]] = cfg.get_value("equipment", key)
 	for id in _keys(cfg, "flags"):
 		flags[id] = cfg.get_value("flags", id)
+	visited_zones.assign(cfg.get_value("map", "visited_zones", []))
+	map_pins.assign(cfg.get_value("map", "pins", []))
 	for section in cfg.get_sections():
 		if not section.begins_with(DUNGEON_PREFIX):
 			continue
@@ -192,6 +224,8 @@ func _clear() -> void:
 	max_health = NEW_GAME_MAX_HEALTH
 	play_time = 0.0
 	flags.clear()
+	visited_zones.clear()
+	map_pins.clear()
 	dungeons.clear()
 	current_dungeon = &""
 	spawn_scene = ""

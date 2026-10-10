@@ -2108,7 +2108,7 @@ Skills: `workflows:itch-publish`.
 
 **Relacionadas:** 10.2 Selección de partida y autosave
 
-## M11 — Pulido: assets y contenido  (18/40)
+## M11 — Pulido: assets y contenido  (20/40)
 
 Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
 
@@ -2304,7 +2304,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Prueba:** Juntar 4 piezas: suma un corazón. El contador se guarda y se ve en equipo.
 
-### 11.22 Tablillas de historia · En curso
+### 11.22 Tablillas de historia · Hecho
 
 **Prioridad:** media · **Etiquetas:** `historia`, `overworld`
 
@@ -2506,19 +2506,19 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Relacionadas:** 11.34 Combos y técnicas especiales (Minish Cap / Wind Waker)
 
-### 11.36 Mapa: más información y navegable · Pendiente
+### 11.36 Mapa: más información y navegable · Hecho
 
 **Prioridad:** media · **Etiquetas:** `ui`
 
-- [ ] Overworld con niebla de exploración
+- [x] Overworld con niebla de exploración
   Hoy es una foto cenital fija con el marcador. Las zonas (AreaZone) se destapan al visitarlas; las no vistas quedan en sombra con su contorno.
-- [ ] Marcas en el mapa
+- [x] Marcas en el mapa
   Mazmorra: puertas (con llave, jefe, selladas), cofres abiertos/cerrados, salas sin terminar, escaleras. Overworld: entradas a cuevas/templo, santuarios, tablillas leídas, cofres encontrados. Leyenda (map_legend_icon) acorde.
-- [ ] Zoom, paneo y cursor
+- [x] Zoom, paneo y cursor
   Mover un cursor con el stick/mouse sobre el mapa; al pasar sobre una sala o zona muestra su nombre y qué falta (cofres, piezas de corazón).
-- [ ] Pines propios
+- [x] Pines propios
   Opcional: el jugador pone 2–4 marcas para acordarse de algo (muro sospechoso, lugar alto para la pluma). Se guardan en la partida.
-- [ ] Mockup de la pestaña Mapa actualizado
+- [x] Mockup de la pestaña Mapa actualizado
   En el canvas de UI, antes de construir.
 
 **Prueba:** Partida nueva: el overworld aparece tapado salvo la zona inicial y se va destapando. En el templo, con mapa y brújula, se ven puertas, cofres cerrados y el jefe; con el cursor se lee el nombre de cada sala. Los pines se mantienen al cargar.
@@ -2533,7 +2533,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Prioridad:** media · **Etiquetas:** `ui`
 
-- [ ] Mockup HUD_Minimap
+- [x] Mockup HUD_Minimap
   Esquina libre del HUD (no choca con corazones, ítems ni la barra del jefe); tamaño chico, marco simple bronce.
 - [ ] Mazmorra
   Las salas alrededor de la actual (3×3), con puertas y el player con flecha de orientación; usa los mismos datos que la pestaña Mapa (Room.map_cell, DungeonState).

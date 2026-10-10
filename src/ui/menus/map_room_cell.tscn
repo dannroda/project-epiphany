@@ -1,6 +1,30 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://src/ui/menus/map_room_cell.gd" id="1_cell"]
+[ext_resource type="Texture2D" uid="uid://bbh75d26628l5" path="res://assets/ui/frames/map_room.png" id="2_slot"]
+[ext_resource type="Texture2D" uid="uid://cdjnnpwyam4fr" path="res://assets/ui/frames/map_room_mapped.png" id="3_empty"]
+[ext_resource type="Texture2D" uid="uid://d1aqupafmga6l" path="res://assets/ui/frames/map_room_here.png" id="4_here"]
+
+[sub_resource type="StyleBoxTexture" id="Visited"]
+texture = ExtResource("2_slot")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Mapped"]
+texture = ExtResource("3_empty")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Current"]
+texture = ExtResource("4_here")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
 
 [node name="MapRoomCell" type="Control"]
 custom_minimum_size = Vector2(124, 88)
@@ -10,3 +34,6 @@ offset_right = 124.0
 offset_bottom = 88.0
 mouse_filter = 2
 script = ExtResource("1_cell")
+visited_style = SubResource("Visited")
+mapped_style = SubResource("Mapped")
+current_style = SubResource("Current")

@@ -33,6 +33,18 @@ frame button_focus Default 09 '#1c2029' '#d9a441'
 frame button_disabled Default 09 '#101318' '#3a4250'
 outline slot_empty 09 '#5a5446'
 outline slot_empty_focus 09 '#d9a441'
+# Mapa: salas con esquinas escalonadas; el cursor son escuadras.
+frame map_room Default 27 '#252a35' '#6b6555'
+frame map_room_here Default 27 '#2a303c' '#d9a441'
+outline map_room_mapped 27 '#3a4250'
+# Cursor del mapa: escuadras doradas con contorno oscuro (se leen sobre la foto).
+magick -size 48x48 xc:none -fill '#0b0d10' \
+	-draw 'rectangle 0,0 17,7' -draw 'rectangle 0,0 7,17' -draw 'rectangle 30,0 47,7' -draw 'rectangle 40,0 47,17' \
+	-draw 'rectangle 0,40 17,47' -draw 'rectangle 0,30 7,47' -draw 'rectangle 30,40 47,47' -draw 'rectangle 40,30 47,47' \
+	-fill '#d9a441' \
+	-draw 'rectangle 1,1 15,5' -draw 'rectangle 1,1 5,15' -draw 'rectangle 32,1 46,5' -draw 'rectangle 42,1 46,15' \
+	-draw 'rectangle 1,42 15,46' -draw 'rectangle 1,32 5,46' -draw 'rectangle 32,42 46,46' -draw 'rectangle 42,32 46,46' \
+	"$OUT/map_cursor.png"
 magick "$K/Double/Divider Fade/divider-fade-003.png" -fill '#d9a441' -colorize 100 "$OUT/divider.png"
 magick "$K/Double/Divider Fade/divider-fade-003.png" -fill '#6b5a3a' -colorize 100 "$OUT/divider_dim.png"
 magick "$OUT/divider.png" -flop "$OUT/divider_flipped.png"

@@ -2,7 +2,7 @@
   "checklist": [
     {
       "detail": "Esquina libre del HUD (no choca con corazones, ítems ni la barra del jefe); tamaño chico, marco simple bronce.",
-      "done": false,
+      "done": true,
       "text": "Mockup HUD_Minimap"
     },
     {
@@ -45,5 +45,5 @@
   ],
   "test": "Recorrer el templo: el minimapa sigue al player sala a sala y coincide con la pestaña Mapa. En el overworld muestra la zona y se destapa igual. Se apaga desde Opciones y no aparece durante el jefe ni en cutscenes.",
   "title": "Minimapa en el HUD",
-  "updated_at": "2026-10-10T05:33:52.513Z"
+  "updated_at": "2026-10-10T19:16:05.706Z"
 }

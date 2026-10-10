@@ -15,6 +15,9 @@ var current := 0
 
 func _ready() -> void:
 	InputDevice.input_device_changed.connect(func(_d: int) -> void: _update_hints())
+	for page in pages.get_children():
+		if page.has_signal(&"hints_changed"):
+			page.hints_changed.connect(_update_hints)
 	tabs.tab_changed.connect(func(tab: int) -> void:
 		if tab != current:
 			show_page(tab))

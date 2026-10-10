@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[sub_resource type="LabelSettings" id="ZoneName"]
+font_size = 20
+font_color = Color(0.937, 0.902, 0.824, 1)
+outline_size = 6
+outline_color = Color(0.043, 0.051, 0.063, 0.85)
+
+[node name="MapZoneName" type="Label"]
+anchors_preset = 0
+mouse_filter = 2
+text = "Pradera"
+label_settings = SubResource("ZoneName")
+horizontal_alignment = 1
+vertical_alignment = 1

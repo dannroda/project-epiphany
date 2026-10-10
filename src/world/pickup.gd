@@ -65,6 +65,10 @@ func collect(player: PlayerCharacter) -> void:
 			player.play_item_get(item, amount)
 	Feel.sfx(&"pickup", global_position)
 	collected.emit()
+	_consume()
+
+
+func _consume() -> void:
 	queue_free()
 
 

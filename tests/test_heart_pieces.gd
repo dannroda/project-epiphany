@@ -61,7 +61,8 @@ func test_piece_in_the_world_is_taken_once() -> void:
 	tree.change_scene_to_file("res://levels/overworld.tscn")
 	await tree.scene_changed
 	await tree.process_frame
-	assert_true(not tree.current_scene.has_node(^"HeartPieceGrotto"), "no vuelve a aparecer")
+	assert_true(tree.current_scene.get_node(^"HeartPieceGrotto").taken, "no vuelve a aparecer")
+	assert_eq(tree.current_scene.get_node(^"HeartPieceGrotto").visible, false)
 	assert_true(tree.current_scene.has_node(^"HeartPieceMeadow"), "las otras siguen")
 	state.reset()
 

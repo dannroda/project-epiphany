@@ -10,8 +10,7 @@
 [ext_resource type="PackedScene" path="res://src/world/heart_piece.tscn" id="6_piece"]
 [ext_resource type="PackedScene" path="res://src/world/physics_box.tscn" id="9_axpip"]
 [ext_resource type="PackedScene" path="res://src/world/physics_rock.tscn" id="10_vrnmo"]
-[ext_resource type="Script" uid="uid://dlv83hn042mxv" path="res://src/world/overworld_map.gd" id="11_gsck2"]
-[ext_resource type="Texture2D" uid="uid://cvlqarrqj73hn" path="res://assets/ui/maps/overworld.png" id="12_fxxkd"]
+[ext_resource type="PackedScene" path="res://src/world/overworld_map.tscn" id="11_gsck2"]
 [ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="13_gd0nv"]
 [ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="14_5vrew"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="15_3hrjb"]
@@ -275,10 +274,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 0.6, 4)
 [node name="Rock3" parent="." unique_id=375734465 instance=ExtResource("10_vrnmo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0.6, 4)
 
-[node name="OverworldMap" type="Node" parent="." node_paths=PackedStringArray("grid") unique_id=259113020]
-script = ExtResource("11_gsck2")
+[node name="OverworldMap" parent="." node_paths=PackedStringArray("grid") unique_id=259113020 instance=ExtResource("11_gsck2")]
 display_name = "Valle del templo"
-texture = ExtResource("12_fxxkd")
 world_rect = Rect2(-37, -25, 74, 50)
 grid = NodePath("../GridMap")
 
