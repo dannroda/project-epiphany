@@ -253,6 +253,61 @@ script = ExtResource("1_ox7fe")
 id = &"ow_heart_piece_cliff"
 description = "Overworld: pieza de corazón junto al cofre del carcaj tomada"
 
+[sub_resource type="Resource" id="R_ow_tablet_start"]
+script = ExtResource("1_ox7fe")
+id = &"ow_tablet_start"
+description = "Overworld: tablilla del inicio leída"
+
+[sub_resource type="Resource" id="R_ow_tablet_meadow"]
+script = ExtResource("1_ox7fe")
+id = &"ow_tablet_meadow"
+description = "Overworld: tablilla de la pradera (los dos soles) leída"
+
+[sub_resource type="Resource" id="R_ow_tablet_shrine"]
+script = ExtResource("1_ox7fe")
+id = &"ow_tablet_shrine"
+description = "Overworld: tablilla del santuario (el espejo) leída"
+
+[sub_resource type="Resource" id="R_ow_tablet_grove"]
+script = ExtResource("1_ox7fe")
+id = &"ow_tablet_grove"
+description = "Overworld: tablilla de la arboleda (los últimos) leída"
+
+[sub_resource type="Resource" id="R_ow_tablet_cliff"]
+script = ExtResource("1_ox7fe")
+id = &"ow_tablet_cliff"
+description = "Overworld: tablilla del risco (pista de las piezas de corazón) leída"
+
+[sub_resource type="Resource" id="R_ow_tablet_cave"]
+script = ExtResource("1_ox7fe")
+id = &"ow_tablet_cave"
+description = "Overworld: tablilla de la cueva (bombas) leída"
+
+[sub_resource type="Resource" id="R_ow_tablet_grotto"]
+script = ExtResource("1_ox7fe")
+id = &"ow_tablet_grotto"
+description = "Overworld: tablilla de la gruta (pista del ojo del risco) leída"
+
+[sub_resource type="Resource" id="R_d1_tablet_vestibule"]
+script = ExtResource("1_ox7fe")
+id = &"d1_tablet_vestibule"
+description = "Templo: tablilla del vestíbulo leída"
+
+[sub_resource type="Resource" id="R_d1_tablet_hub"]
+script = ExtResource("1_ox7fe")
+id = &"d1_tablet_hub"
+description = "Templo: tablilla del hub (la promesa) leída"
+
+[sub_resource type="Resource" id="R_d1_tablet_eyes"]
+script = ExtResource("1_ox7fe")
+id = &"d1_tablet_eyes"
+description = "Templo: tablilla de la sala de ojos leída"
+
+[sub_resource type="Resource" id="R_d1_tablet_antechamber"]
+script = ExtResource("1_ox7fe")
+id = &"d1_tablet_antechamber"
+description = "Templo: tablilla de la antesala leída"
+
 [resource]
 script = ExtResource("2_3vvdp")
-definitions = Array[ExtResource("1_ox7fe")]([SubResource("Resource_mrp87"), SubResource("Resource_tablethint"), SubResource("Resource_crackedwall"), SubResource("Resource_sbwall"), SubResource("Resource_testdoor"), SubResource("Resource_testblock"), SubResource("Resource_testchest"), SubResource("Resource_gray_switch"), SubResource("Resource_gray_key_chest"), SubResource("Resource_gray_locked"), SubResource("Resource_gray_compass_chest"), SubResource("Resource_cave_chest"), SubResource("Resource_cave_practice"), SubResource("Resource_shrine_wall"), SubResource("Resource_shrine_switch"), SubResource("Resource_shrine_chest"), SubResource("Resource_shrine_shortcut"), SubResource("Resource_temple_seal"), SubResource("Resource_grotto_wall"), SubResource("Resource_grotto_chest"), SubResource("Resource_grove_a"), SubResource("Resource_grove_b"), SubResource("Resource_grove_chest"), SubResource("Resource_cliff_eye"), SubResource("Resource_cliff_chest"), SubResource("R_d1_vestibule_switch"), SubResource("R_d1_hub_locked_door"), SubResource("R_d1_gallery_eye"), SubResource("R_d1_gallery_key_chest"), SubResource("R_d1_ojos_door_eye"), SubResource("R_d1_map_chest"), SubResource("R_d1_arena_cracked_wall"), SubResource("R_d1_arena_cleared"), SubResource("R_d1_chest_bow"), SubResource("R_d1_ojos_eye_a"), SubResource("R_d1_ojos_eye_b"), SubResource("R_d1_ojos_compass_chest"), SubResource("R_d1_ojos_key_chest"), SubResource("R_d1_puzzle_locked_door"), SubResource("R_d1_puzzle_switch"), SubResource("R_d1_puzzle_crystal"), SubResource("R_d1_puzzle_eye"), SubResource("R_d1_boss_key_chest"), SubResource("R_d1_boss_door"), SubResource("R_d1_boss_defeated"), SubResource("R_d1_heart_container"), SubResource("R_ow_heart_piece_meadow"), SubResource("R_ow_heart_piece_grotto"), SubResource("R_ow_heart_piece_shrine"), SubResource("R_ow_heart_piece_cliff")])
+definitions = Array[ExtResource("1_ox7fe")]([SubResource("Resource_mrp87"), SubResource("Resource_tablethint"), SubResource("Resource_crackedwall"), SubResource("Resource_sbwall"), SubResource("Resource_testdoor"), SubResource("Resource_testblock"), SubResource("Resource_testchest"), SubResource("Resource_gray_switch"), SubResource("Resource_gray_key_chest"), SubResource("Resource_gray_locked"), SubResource("Resource_gray_compass_chest"), SubResource("Resource_cave_chest"), SubResource("Resource_cave_practice"), SubResource("Resource_shrine_wall"), SubResource("Resource_shrine_switch"), SubResource("Resource_shrine_chest"), SubResource("Resource_shrine_shortcut"), SubResource("Resource_temple_seal"), SubResource("Resource_grotto_wall"), SubResource("Resource_grotto_chest"), SubResource("Resource_grove_a"), SubResource("Resource_grove_b"), SubResource("Resource_grove_chest"), SubResource("Resource_cliff_eye"), SubResource("Resource_cliff_chest"), SubResource("R_d1_vestibule_switch"), SubResource("R_d1_hub_locked_door"), SubResource("R_d1_gallery_eye"), SubResource("R_d1_gallery_key_chest"), SubResource("R_d1_ojos_door_eye"), SubResource("R_d1_map_chest"), SubResource("R_d1_arena_cracked_wall"), SubResource("R_d1_arena_cleared"), SubResource("R_d1_chest_bow"), SubResource("R_d1_ojos_eye_a"), SubResource("R_d1_ojos_eye_b"), SubResource("R_d1_ojos_compass_chest"), SubResource("R_d1_ojos_key_chest"), SubResource("R_d1_puzzle_locked_door"), SubResource("R_d1_puzzle_switch"), SubResource("R_d1_puzzle_crystal"), SubResource("R_d1_puzzle_eye"), SubResource("R_d1_boss_key_chest"), SubResource("R_d1_boss_door"), SubResource("R_d1_boss_defeated"), SubResource("R_d1_heart_container"), SubResource("R_ow_heart_piece_meadow"), SubResource("R_ow_heart_piece_grotto"), SubResource("R_ow_heart_piece_shrine"), SubResource("R_ow_heart_piece_cliff"), SubResource("R_ow_tablet_start"), SubResource("R_ow_tablet_meadow"), SubResource("R_ow_tablet_shrine"), SubResource("R_ow_tablet_grove"), SubResource("R_ow_tablet_cliff"), SubResource("R_ow_tablet_cave"), SubResource("R_ow_tablet_grotto"), SubResource("R_d1_tablet_vestibule"), SubResource("R_d1_tablet_hub"), SubResource("R_d1_tablet_eyes"), SubResource("R_d1_tablet_antechamber")])

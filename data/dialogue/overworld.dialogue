@@ -7,3 +7,28 @@ Inscripción: Dejá el fuego a sus pies y alejate: la grieta hace el resto. [ID:
 Inscripción: Del otro lado del abismo duerme un ojo de piedra. [ID:ow_grotto_hint_1]
 Inscripción: No lo despierta el acero ni el fuego, solo lo que vuela. [ID:ow_grotto_hint_2]
 => END
+
+~ start_temple
+Inscripción: Los que vinieron antes levantaron un templo al norte, sobre la boca de la montaña. [ID:ow_start_temple_1]
+Inscripción: Si la tierra tiembla, no huyas de él: andá hacia él. [ID:ow_start_temple_2]
+=> END
+
+~ meadow_two_suns
+Inscripción: Hubo un tiempo en que el cielo tenía dos soles. Uno se apagó; el otro bajó a mirarnos de cerca. [ID:ow_meadow_two_suns_1]
+Inscripción: Lo llamamos el Ojo. Lo que miraba mucho tiempo se secaba, y miraba todo. [ID:ow_meadow_two_suns_2]
+=> END
+
+~ shrine_mirror
+Inscripción: No pudimos cerrarle el párpado. Le dimos otra cosa para mirar: su propia luz, devuelta por un espejo. [ID:ow_shrine_mirror_1]
+Inscripción: Se quedó mirándose y se durmió. El espejo que guardamos acá es hermano de aquel. [ID:ow_shrine_mirror_2]
+=> END
+
+~ grove_last
+Inscripción: Para que siguiera dormido, cada generación subía al templo a renovar el sello. [ID:ow_grove_last_1]
+Inscripción: Nosotros fuimos los últimos. Los que vengan después ya no van a saber el camino. [ID:ow_grove_last_2]
+=> END
+
+~ cliff_heart
+Inscripción: Cuando el Ojo bajó, un corazón se partió en cuatro y sus pedazos rodaron lejos. [ID:ow_cliff_heart_1]
+Inscripción: Uno se escondió entre el pasto alto. Dos esperan detrás de la piedra herida. El último espera junto al carcaj del cazador, tras la reja que abre el ojo. [ID:ow_cliff_heart_2]
+=> END

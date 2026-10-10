@@ -33,6 +33,22 @@ El tema *Imminent Doom* sigue siendo el tono: el fin se siente por ambientación
 
 **Narrativa ambiental:** sin NPCs con diálogo. El texto vive en **tablillas/inscripciones** de piedra (overworld y mazmorra), que además resuelven pistas de puzzles.
 
+**Tablillas (11.22):** cuentan la opción A en orden suelto; cada una tiene su flag de leída (`ow_tablet_*`, `d1_tablet_*`). Textos en `data/dialogue/overworld.dialogue` y `temple.dialogue`.
+
+| Dónde | Cue | Qué cuenta |
+|---|---|---|
+| Claro del inicio | `start_temple` | Los antiguos levantaron el templo al norte; si la tierra tiembla, ir hacia él (objetivo) |
+| Pradera | `meadow_two_suns` | El cielo tenía dos soles; uno bajó a mirarnos: el Ojo, que seca lo que mira |
+| Santuario | `shrine_mirror` | No pudieron cerrarle el párpado: le devolvieron su luz con un espejo y se durmió mirándose |
+| Arboleda | `grove_last` | Cada generación renovaba el sello; los que escribieron fueron los últimos |
+| Risco del ojo | `cliff_heart` | **Pista:** el corazón partido en cuatro y dónde están las piezas |
+| Cueva | `cave_bombs` | Cómo usar las bombas |
+| Gruta | `grotto_hint` | **Pista:** el ojo de piedra del risco despierta con lo que vuela |
+| Vestíbulo | `temple_entrance` | El templo no guarda a un dios sino una puerta cerrada |
+| Hub | `hub_promise` | El sello es una promesa: mientras alguien vuelva, el Ojo duerme; hace mucho que nadie vuelve |
+| Sala de ojos | `eyes_servants` | **Pista:** sus ojos menores se ciegan desde lejos (flechas) |
+| Antesala | `antechamber` | El guardián: lo que vuela lo hace parpadear, lo que brilla se le devuelve |
+
 **Progresión del doom:** overworld tranquilo al inicio → temblores lejanos al acercarte al templo → dentro del templo, sala a sala: grietas, polvo, luz virando a rojo, murmullo del ojo → clímax en la sala del jefe.
 
 ## 4. Cámara y control

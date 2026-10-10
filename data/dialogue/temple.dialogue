@@ -7,3 +7,13 @@ Inscripción: El sello del centro solo cede ante quien resuelve lo que el templo
 Inscripción: Más allá duerme el guardián. Cuando abre su único ojo, el templo entero mira con él. [ID:temple_antechamber_1]
 Inscripción: Lo que vuela lo hace parpadear. Lo que brilla, se le puede devolver. [ID:temple_antechamber_2]
 => END
+
+~ hub_promise
+Inscripción: El sello no es una cerradura. Es una promesa: mientras alguien vuelva, el Ojo duerme. [ID:temple_hub_promise_1]
+Inscripción: Hace mucho que nadie vuelve. Las grietas lo saben antes que nosotros. [ID:temple_hub_promise_2]
+=> END
+
+~ eyes_servants
+Inscripción: Sus ojos menores todavía miran por él, aunque él duerma. [ID:temple_eyes_servants_1]
+Inscripción: No los vence el acero. Cegalos desde lejos y te van a mostrar lo que custodian. [ID:temple_eyes_servants_2]
+=> END

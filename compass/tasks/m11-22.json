@@ -2,12 +2,12 @@
   "checklist": [
     {
       "detail": "Cuentan 'El Ojo despierta' (GDD §3, opción A) en orden suelto; uno o dos dan pistas de secretos.",
-      "done": false,
+      "done": true,
       "text": "Escribir 6–8 textos cortos"
     },
     {
       "detail": "Con la tablilla existente; cada una con flag de leída.",
-      "done": false,
+      "done": true,
       "text": "Repartirlas en overworld y templo"
     }
   ],
@@ -29,12 +29,12 @@
       "section": "historia"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "tags": [
     "historia",
     "overworld"
   ],
   "test": "Leer todas las tablillas cuenta la historia completa sin contradicciones; las pistas llevan a un secreto real.",
   "title": "Tablillas de historia",
-  "updated_at": "2026-10-10T05:29:49.345Z"
+  "updated_at": "2026-10-10T19:13:13.533Z"
 }

@@ -51,3 +51,22 @@ func test_read_tablets_and_keep_read_flag() -> void:
 	state.read_from(cfg)
 	assert_eq(hint.is_read(), true, "guardar y cargar conserva las leídas")
 	state.reset()
+
+
+func test_story_tablets_have_text_and_read_flag() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	var flags := {}
+	var total := 0
+	for path in ["res://levels/overworld.tscn", "res://levels/temple.tscn"]:
+		state.reset()
+		tree.change_scene_to_file(path)
+		await tree.scene_changed
+		for tablet: Tablet in tree.current_scene.find_children("*", "Tablet", false, false):
+			total += 1
+			assert_true(tablet.dialogue.cues.has(tablet.cue), "%s: el cue %s existe" % [tablet.name, tablet.cue])
+			assert_true(state.FLAGS.has(tablet.flag), "%s tiene flag de leída registrado" % tablet.name)
+			assert_true(not flags.has(tablet.flag), "%s no comparte flag" % tablet.name)
+			flags[tablet.flag] = true
+	assert_true(total >= 10, "tablillas entre overworld y templo: %d" % total)
+	state.reset()

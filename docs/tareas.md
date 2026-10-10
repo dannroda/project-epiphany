@@ -2108,7 +2108,7 @@ Skills: `workflows:itch-publish`.
 
 **Relacionadas:** 10.2 Selección de partida y autosave
 
-## M11 — Pulido: assets y contenido  (17/40)
+## M11 — Pulido: assets y contenido  (18/40)
 
 Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
 
@@ -2293,7 +2293,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Relacionadas:** 11.23 Vertiente de la cueva: agua bendita
 
-### 11.21 Piezas de corazón · En curso
+### 11.21 Piezas de corazón · Hecho
 
 **Prioridad:** media · **Etiquetas:** `items`, `overworld`
 
@@ -2304,13 +2304,13 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Prueba:** Juntar 4 piezas: suma un corazón. El contador se guarda y se ve en equipo.
 
-### 11.22 Tablillas de historia · Pendiente
+### 11.22 Tablillas de historia · En curso
 
 **Prioridad:** media · **Etiquetas:** `historia`, `overworld`
 
-- [ ] Escribir 6–8 textos cortos
+- [x] Escribir 6–8 textos cortos
   Cuentan 'El Ojo despierta' (GDD §3, opción A) en orden suelto; uno o dos dan pistas de secretos.
-- [ ] Repartirlas en overworld y templo
+- [x] Repartirlas en overworld y templo
   Con la tablilla existente; cada una con flag de leída.
 
 **Prueba:** Leer todas las tablillas cuenta la historia completa sin contradicciones; las pistas llevan a un secreto real.

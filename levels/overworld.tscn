@@ -314,6 +314,7 @@ flag = &"ow_cave_bombs_chest"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, -5)
 dialogue = ExtResource("20_gd0nv")
 cue = "cave_bombs"
+flag = &"ow_tablet_cave"
 
 [node name="CavePracticeWall" parent="." unique_id=754652041 instance=ExtResource("21_uay0b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 0, 2)
@@ -394,6 +395,37 @@ flag = &"ow_grotto_chest"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 0, 12)
 dialogue = ExtResource("20_gd0nv")
 cue = "grotto_hint"
+flag = &"ow_tablet_grotto"
+
+[node name="StartTablet" parent="." unique_id=126367329 instance=ExtResource("18_gsck2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 13)
+dialogue = ExtResource("20_gd0nv")
+cue = "start_temple"
+flag = &"ow_tablet_start"
+
+[node name="MeadowTablet" parent="." unique_id=1108411487 instance=ExtResource("18_gsck2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -1)
+dialogue = ExtResource("20_gd0nv")
+cue = "meadow_two_suns"
+flag = &"ow_tablet_meadow"
+
+[node name="ShrineTablet" parent="." unique_id=341374706 instance=ExtResource("18_gsck2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 0, -12)
+dialogue = ExtResource("20_gd0nv")
+cue = "shrine_mirror"
+flag = &"ow_tablet_shrine"
+
+[node name="GroveTablet" parent="." unique_id=1740627847 instance=ExtResource("18_gsck2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 4)
+dialogue = ExtResource("20_gd0nv")
+cue = "grove_last"
+flag = &"ow_tablet_grove"
+
+[node name="CliffTablet" parent="." unique_id=943611813 instance=ExtResource("18_gsck2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, -15)
+dialogue = ExtResource("20_gd0nv")
+cue = "cliff_heart"
+flag = &"ow_tablet_cliff"
 
 [node name="GroveSwitchA" parent="." unique_id=1746464679 instance=ExtResource("22_gvf0k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 4)
