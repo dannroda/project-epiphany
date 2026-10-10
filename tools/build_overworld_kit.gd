@@ -10,6 +10,8 @@ const MATERIAL := preload("res://data/kits/materials/epiphany.tres")
 ## Las paredes que pueden tapar al player: se recortan alrededor de él.
 const WALL_MATERIAL := preload("res://data/kits/materials/epiphany_wall.tres")
 const WALL_IDS := [1, 6]
+## Piso que llevan esas paredes adentro: por el agujero se ve suelo y no el vacío.
+const WALL_FLOOR := "terreno_overworld/tierra"
 
 ## id del kit gris → piezas que se funden en la celda ("kit/pieza").
 const BASE := {
@@ -92,7 +94,7 @@ func _piece(path: String) -> Mesh:
 func _merge(pieces: Array, wall := false) -> ArrayMesh:
 	var tool := SurfaceTool.new()
 	tool.begin(Mesh.PRIMITIVE_TRIANGLES)
-	for path: String in pieces:
+	for path: String in pieces + ([WALL_FLOOR] if wall else []):
 		var mesh := _piece(path)
 		for surface in mesh.get_surface_count():
 			tool.append_from(mesh, surface, Transform3D.IDENTITY)
