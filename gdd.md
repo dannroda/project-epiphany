@@ -97,6 +97,7 @@ Las teclas se mapean por posición física (`physical_keycode`): WASD queda en e
   - *Esqueleto* — melee básico, enseña bloqueo.
   - *Esqueleto con escudo* — bloquea de frente; obliga a flanquear, usar bombas o golpe de escudo. (`src/entities/shield_skeleton.tscn`: `EntityConfig.guards_front` frena golpes y proyectiles dentro de `guard_angle_deg`, las explosiones pasan; un golpe que aturde, como el golpe de escudo, le baja la guardia `guard_break_time`; `turn_speed` lo hace girar lento, así se le puede rodar a la espalda.)
   - *Torreta / ojo menor* — dispara orbes reflejables.
+- **Dónde hay enemigos (11.6):** overworld — pradera 3 esqueletos; gruta 2; cueva 1; explanada del templo 1 + 1 con escudo; risco 1 + 1 con escudo; arboleda 1; el inicio queda tranquilo. Templo — hub 2 (cierran la persiana), galería 1 junto a la torreta, sala agrietada 1 con escudo (ahí hay bombas para romperle la guardia), sala de ojos 1 del lado de la entrada (un golpe lo puede tirar al hueco), arena por oleadas. `test_enemies_do_not_spawn_inside_walls` revisa que ninguno quede encimado con la grilla.
 
 ## 6. Ítems y progresión
 <!-- id: items-progresion -->

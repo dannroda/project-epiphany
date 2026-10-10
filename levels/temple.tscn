@@ -318,6 +318,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 53)
 [node name="GalleryTurret" parent="." unique_id=1362230516 instance=ExtResource("20_2qg1k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 42)
 
+[node name="GallerySkeleton" parent="." unique_id=1119132783 instance=ExtResource("14_4b6jn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 51)
+
+[node name="CrackedShieldSkeleton" parent="." unique_id=677662261 instance=ExtResource("36_w6q1f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43, 0, 53)
+
+[node name="EyesSkeleton" parent="." unique_id=1511911446 instance=ExtResource("14_4b6jn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 35)
+
 [node name="GalleryEye" parent="." unique_id=909564188 instance=ExtResource("23_ivr2c")]
 transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, -8, 0, 42)
 flag = &"d1_gallery_eye"

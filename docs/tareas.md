@@ -2108,7 +2108,7 @@ Skills: `workflows:itch-publish`.
 
 **Relacionadas:** 10.2 Selección de partida y autosave
 
-## M11 — Pulido: assets y contenido  (16/40)
+## M11 — Pulido: assets y contenido  (17/40)
 
 Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
 
@@ -2148,7 +2148,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Prioridad:** media · **Etiquetas:** `mazmorra`
 
-### 11.6 Más enemigos en el overworld y el templo · Pendiente
+### 11.6 Más enemigos en el overworld y el templo · Hecho
 
 **Prioridad:** alta · **Etiquetas:** `ia`
 
@@ -2431,7 +2431,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Prueba:** Tras los créditos aparece la opción; una partida en ese modo cambia lo prometido.
 
-### 11.33 Combate: sacar lo tosco · En curso
+### 11.33 Combate: sacar lo tosco · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `combate`
 

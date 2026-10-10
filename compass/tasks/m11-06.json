@@ -7,11 +7,11 @@
   "order": 6,
   "priority": "high",
   "refs": [],
-  "status": "todo",
+  "status": "done",
   "tags": [
     "ia"
   ],
   "test": "",
   "title": "Más enemigos en el overworld y el templo",
-  "updated_at": "2026-10-09T17:40:33.736Z"
+  "updated_at": "2026-10-10T18:37:27.055Z"
 }

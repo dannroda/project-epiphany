@@ -129,7 +129,7 @@ func test_enemies_do_not_spawn_inside_walls() -> void:
 			assert_true(walls.is_empty(), "%s en %s está encimado con %s" % [enemy.name, path.get_file(), walls.map(func(hit: Dictionary) -> String: return str(hit.collider))])
 
 
-func test_overworld_skeletons_reach_the_player() -> void:
+func test_meadow_skeletons_reach_the_player() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	tree.root.get_node(^"GameState").reset()
 	tree.change_scene_to_file("res://levels/overworld.tscn")
@@ -138,7 +138,7 @@ func test_overworld_skeletons_reach_the_player() -> void:
 	player.health.make_invulnerable(999.0)
 	player.global_position = Vector3(0, 0.1, 2)
 	var until := Time.get_ticks_msec() + 6000
-	var enemies := tree.get_nodes_in_group(&"enemies")
+	var enemies := [^"Skeleton1", ^"Skeleton2", ^"Skeleton3"].map(func(path: NodePath) -> Node: return tree.current_scene.get_node(path))
 	var near := func() -> bool:
 		return enemies.all(func(enemy: Enemy) -> bool: return enemy.global_position.distance_to(player.global_position) <= enemy.config.attack_range + 0.5)
 	while Time.get_ticks_msec() < until and not near.call():

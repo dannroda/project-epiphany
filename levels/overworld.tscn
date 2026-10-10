@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="4_cr2by"]
 [ext_resource type="Script" uid="uid://x60poi8g2tqu" path="res://src/world/grass_patch.gd" id="5_n78bg"]
 [ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="6_d356v"]
+[ext_resource type="PackedScene" path="res://src/entities/shield_skeleton.tscn" id="6_shield"]
 [ext_resource type="PackedScene" path="res://src/world/physics_box.tscn" id="9_axpip"]
 [ext_resource type="PackedScene" path="res://src/world/physics_rock.tscn" id="10_vrnmo"]
 [ext_resource type="Script" uid="uid://dlv83hn042mxv" path="res://src/world/overworld_map.gd" id="11_gsck2"]
@@ -227,6 +228,30 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 5)
 
 [node name="Skeleton3" parent="." unique_id=844132866 instance=ExtResource("6_d356v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 4)
+
+[node name="GrottoSkeleton1" parent="." unique_id=1071477686 instance=ExtResource("6_d356v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, 13)
+
+[node name="GrottoSkeleton2" parent="." unique_id=1959167398 instance=ExtResource("6_d356v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 0, 21)
+
+[node name="CaveSkeleton" parent="." unique_id=1302102035 instance=ExtResource("6_d356v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, 5)
+
+[node name="TempleSkeleton" parent="." unique_id=1940099285 instance=ExtResource("6_d356v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -11)
+
+[node name="TempleShieldSkeleton" parent="." unique_id=2084727110 instance=ExtResource("6_shield")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -11)
+
+[node name="CliffSkeleton" parent="." unique_id=1777652994 instance=ExtResource("6_d356v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, -13)
+
+[node name="CliffShieldSkeleton" parent="." unique_id=1099975904 instance=ExtResource("6_shield")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, -11)
+
+[node name="GroveSkeleton" parent="." unique_id=1070302523 instance=ExtResource("6_d356v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 1)
 
 [node name="Box1" parent="." unique_id=1372177849 instance=ExtResource("9_axpip")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.5, -1.5)
