@@ -1752,7 +1752,7 @@ Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 
 
 **Notas:** Sin flag por ahora porque no hay jefe; 9.6 le pone d1_boss_defeated.
 
-## M10 — Terminación  (14/17)
+## M10 — Terminación  (14/18)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -1828,6 +1828,8 @@ Hecho 2026-10-09: 3 ranuras (decisión cerrada), `FileSelect` + `SlotCard` (mock
 Hecho 2026-10-09: autoload `Settings` + `OptionsPanel` (todo el mockup Options; la vibración no existía y se agregó vía `Feel.shake`). Pantalla desde el título; pestaña Sistema en la pausa con Guardar y salir al título. Crea los buses Music/SFX/UI/Ambience (10.5 los usa). Tests `tests/test_options.gd`.
 
 **Referencias:** `gdd.md#ui`
+
+**Bloquea a:** 10.18 Idiomas: inglés y español
 
 **Bloqueada por:** 10.1 Pantalla de título
 
@@ -2024,6 +2026,27 @@ Skills: `workflows:itch-publish`.
 - [x] Visión 12 m por la cámara más amplia
 - [x] Skeleton2 fuera del cerco y test de enemigos encimados
 - [x] path_desired_distance 1.0 por la navmesh a 0.5 m
+
+### 10.18 Idiomas: inglés y español · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `ui`
+
+- [ ] Sistema de traducción con TranslationServer
+  Archivo de traducciones (CSV o .po) con es y en; los textos se piden por clave con tr(). Por ahora solo esos dos idiomas, pero que sumar otro sea agregar una columna o archivo.
+- [ ] Pasar todos los textos a claves
+  UI, menús, HUD, carteles, diálogos, nombres y descripciones de ítems (data/), item get, game over. Nada de texto suelto en escenas ni scripts.
+- [ ] Elegir idioma la primera vez que se abre el juego
+  Pantalla (escena .tscn en el MenuStack) antes del título, solo si settings.cfg no tiene idioma. Arranca preseleccionado el idioma del sistema (OS.get_locale_language) si es es o en. Hace falta su mockup en el canvas de UI.
+- [ ] Idioma en Opciones
+  Selector en OptionsPanel (título y pausa), guardado en user://settings.cfg con Settings; cambia en vivo sin reiniciar.
+
+**Prueba:** Borrar settings.cfg y abrir el juego: pide idioma antes del título. Elegir inglés: todo el juego (menús, HUD, ítems, diálogos) en inglés. Cambiar a español desde Opciones en la pausa: cambia al instante y se mantiene al reiniciar. Un test recorre las claves y falla si alguna falta en algún idioma.
+
+**Notas:** Skills: `disciplines:game-ui-ux`, `disciplines:dialogue-systems` (hooks de localización).
+
+**Referencias:** `gdd.md#ui`
+
+**Bloqueada por:** 10.4 Opciones
 
 ## M11 — Pulido: assets y contenido  (11/19)
 
