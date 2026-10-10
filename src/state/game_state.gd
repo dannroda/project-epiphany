@@ -13,6 +13,8 @@ signal loaded
 const FLAGS: FlagRegistry = preload("res://data/flag_registry.tres")
 const NEW_GAME_EQUIPMENT: Array[StringName] = [&"sword_basic", &"shield_wood", &"tunic"]
 const NEW_GAME_MAX_HEALTH := 12
+const HP_PER_HEART := 4
+const PIECES_PER_HEART := 4
 const DUNGEON_PREFIX := "dungeon_"
 
 var inventory := Inventory.new()
@@ -90,13 +92,28 @@ func give(item: ItemData, amount: int = 1) -> void:
 		&"dungeon_map": current_dungeon_state().has_map = true
 		&"compass": current_dungeon_state().has_compass = true
 		&"heart_container":
-			max_health += 4 * amount
-			max_health_changed.emit(max_health)
+			_add_hearts(amount)
+		&"heart_piece":
+			inventory.add(item.id, amount)
+			var hearts := heart_pieces() / PIECES_PER_HEART
+			if hearts > 0:
+				inventory.remove(item.id, hearts * PIECES_PER_HEART)
+				_add_hearts(hearts)
 		_:
 			inventory.add(item.id, amount)
 			_auto_place(item)
 			if item.bundled and item.bundled_amount > 0:
 				inventory.add(item.bundled.id, item.bundled_amount * amount)
+
+
+## Las que todavía no completan un corazón.
+func heart_pieces() -> int:
+	return inventory.count(&"heart_piece")
+
+
+func _add_hearts(count: int) -> void:
+	max_health += HP_PER_HEART * count
+	max_health_changed.emit(max_health)
 
 
 ## Primer equipo de una categoría (o una mejora con `equip_on_get`): se equipa. Primer usable: va al primer botón libre.

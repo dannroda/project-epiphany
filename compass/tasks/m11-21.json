@@ -2,12 +2,12 @@
   "checklist": [
     {
       "detail": "4 piezas = 1 contenedor; contador en la pantalla de equipo; item get distinto para la 4ª.",
-      "done": false,
+      "done": true,
       "text": "Ítem pieza de corazón"
     },
     {
       "detail": "Detrás de muros agrietados, arriba de andenes, en un puzzle chico, en la cueva del agua.",
-      "done": false,
+      "done": true,
       "text": "Esconder 4–6 en el overworld"
     }
   ],
@@ -18,12 +18,12 @@
   "order": 21,
   "priority": "medium",
   "refs": [],
-  "status": "todo",
+  "status": "done",
   "tags": [
     "items",
     "overworld"
   ],
   "test": "Juntar 4 piezas: suma un corazón. El contador se guarda y se ve en equipo.",
   "title": "Piezas de corazón",
-  "updated_at": "2026-10-10T05:29:36.800Z"
+  "updated_at": "2026-10-10T18:54:49.950Z"
 }

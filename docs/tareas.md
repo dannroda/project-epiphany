@@ -2293,13 +2293,13 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Relacionadas:** 11.23 Vertiente de la cueva: agua bendita
 
-### 11.21 Piezas de corazón · Pendiente
+### 11.21 Piezas de corazón · En curso
 
 **Prioridad:** media · **Etiquetas:** `items`, `overworld`
 
-- [ ] Ítem pieza de corazón
+- [x] Ítem pieza de corazón
   4 piezas = 1 contenedor; contador en la pantalla de equipo; item get distinto para la 4ª.
-- [ ] Esconder 4–6 en el overworld
+- [x] Esconder 4–6 en el overworld
   Detrás de muros agrietados, arriba de andenes, en un puzzle chico, en la cueva del agua.
 
 **Prueba:** Juntar 4 piezas: suma un corazón. El contador se guarda y se ve en equipo.

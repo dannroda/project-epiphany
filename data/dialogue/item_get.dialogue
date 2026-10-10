@@ -9,3 +9,19 @@ Coloca una bomba delante tuyo. Rompe muros agrietados y empuja lo que está cerc
 ~ shield_mirror
 Se equipa solo. Bloqueá dentro de un haz de luz y el espejo lo desvía hacia donde mirás; mientras lo atajás, el stick derecho (o el mouse) te gira y el izquierdo te mueve sin perderlo. [ID:get_shield_mirror_1]
 => END
+
+~ heart_piece_1
+Una de cuatro. Juntá cuatro piezas y tu vida máxima sube un corazón. [ID:get_heart_piece_1]
+=> END
+
+~ heart_piece_2
+Van dos de cuatro. [ID:get_heart_piece_2]
+=> END
+
+~ heart_piece_3
+Tres de cuatro: te falta una. [ID:get_heart_piece_3]
+=> END
+
+~ heart_piece_full
+¡Cuatro piezas! Se juntan en un corazón nuevo y tu vida máxima sube. [ID:get_heart_piece_full]
+=> END

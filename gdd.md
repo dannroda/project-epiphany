@@ -118,6 +118,9 @@ Las teclas se mapean por posición física (`physical_keycode`): WASD queda en e
 | Carcaj grande | Mejora | Pasivo (+max flechas) | Overworld, **post-mazmorra** (requiere arco) | Muestra el backtracking |
 | Llaves chicas, llave del jefe, mapa, brújula | Mazmorra | — | Mazmorra | Estructura de mazmorra |
 | Contenedor de corazón | Mejora | +1 corazón | Tras el jefe | Recompensa |
+| Pieza de corazón (×4) | Mejora | 4 piezas = +1 corazón | Overworld: entre el pasto alto de la pradera, fondo de la gruta (bombas), rincón del santuario (bombas), junto al cofre del carcaj (post-mazmorra) | Premia explorar |
+
+**Piezas de corazón (11.21):** `GameState.give` las guarda en el inventario (se guardan con la partida) y cada 4 suma un corazón y descuenta las 4. En el mundo son `HeartPiece` (`src/world/heart_piece.tscn`, un `Pickup` con item get y un flag `ow_heart_piece_*` para no volver). El item get dice cuántas lleva (cues `heart_piece_1..3` de `item_get.dialogue`) y la que completa el corazón usa `heart_piece_full` con el ícono del contenedor. La pantalla de Equipo muestra "Piezas de corazón" con un corazón en cuartos (`HeartPieceIcon`) y "n / 4".
 
 **Recolectables** (vasijas, pasto, enemigos): corazón, flechas ×5, bombas ×3. No hay moneda.
 

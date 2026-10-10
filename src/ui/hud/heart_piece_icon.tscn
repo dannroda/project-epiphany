@@ -1,0 +1,114 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/ui/hud/heart_piece_icon.gd" id="1_icon"]
+[ext_resource type="Texture2D" path="res://assets/ui/heart_empty.svg" id="2_empty"]
+[ext_resource type="Texture2D" path="res://assets/ui/heart_full.svg" id="3_full"]
+
+[node name="HeartPieceIcon" type="Control"]
+custom_minimum_size = Vector2(22, 20)
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("1_icon")
+
+[node name="Empty" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 22.0
+offset_bottom = 20.0
+mouse_filter = 2
+texture = ExtResource("2_empty")
+expand_mode = 1
+
+[node name="TopLeft" type="Control" parent="."]
+clip_contents = true
+layout_mode = 0
+offset_left = 0
+offset_top = 0
+offset_right = 11.0
+offset_bottom = 10.0
+mouse_filter = 2
+
+[node name="Full" type="TextureRect" parent="TopLeft"]
+layout_mode = 0
+offset_left = 0
+offset_top = 0
+offset_right = 22
+offset_bottom = 20
+mouse_filter = 2
+texture = ExtResource("3_full")
+expand_mode = 1
+
+[node name="TopRight" type="Control" parent="."]
+clip_contents = true
+layout_mode = 0
+offset_left = 11.0
+offset_top = 0
+offset_right = 22.0
+offset_bottom = 10.0
+mouse_filter = 2
+
+[node name="Full" type="TextureRect" parent="TopRight"]
+layout_mode = 0
+offset_left = -11.0
+offset_top = 0
+offset_right = 11.0
+offset_bottom = 20
+mouse_filter = 2
+texture = ExtResource("3_full")
+expand_mode = 1
+
+[node name="BottomRight" type="Control" parent="."]
+clip_contents = true
+layout_mode = 0
+offset_left = 11.0
+offset_top = 10.0
+offset_right = 22.0
+offset_bottom = 20.0
+mouse_filter = 2
+
+[node name="Full" type="TextureRect" parent="BottomRight"]
+layout_mode = 0
+offset_left = -11.0
+offset_top = -10.0
+offset_right = 11.0
+offset_bottom = 10.0
+mouse_filter = 2
+texture = ExtResource("3_full")
+expand_mode = 1
+
+[node name="BottomLeft" type="Control" parent="."]
+clip_contents = true
+layout_mode = 0
+offset_left = 0
+offset_top = 10.0
+offset_right = 11.0
+offset_bottom = 20.0
+mouse_filter = 2
+
+[node name="Full" type="TextureRect" parent="BottomLeft"]
+layout_mode = 0
+offset_left = 0
+offset_top = -10.0
+offset_right = 22
+offset_bottom = 10.0
+mouse_filter = 2
+texture = ExtResource("3_full")
+expand_mode = 1
+
+[node name="SplitV" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 10.5
+offset_top = 3.0
+offset_right = 11.5
+offset_bottom = 19.0
+mouse_filter = 2
+color = Color(0.231, 0.059, 0.043, 1)
+
+[node name="SplitH" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 9.5
+offset_right = 21.0
+offset_bottom = 10.5
+mouse_filter = 2
+color = Color(0.231, 0.059, 0.043, 1)

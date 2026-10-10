@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/ui/items/heart_piece.svg" id="1_icon"]
+[ext_resource type="Script" path="res://src/items/item_data.gd" id="2_item"]
+
+[resource]
+script = ExtResource("2_item")
+id = &"heart_piece"
+display_name = "Pieza de corazón"
+article = "una"
+description = "Juntá cuatro y tu vida máxima sube un corazón."
+icon = ExtResource("1_icon")
+category = 6
+max_stack = 8

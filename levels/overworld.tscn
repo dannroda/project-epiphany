@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://x60poi8g2tqu" path="res://src/world/grass_patch.gd" id="5_n78bg"]
 [ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="6_d356v"]
 [ext_resource type="PackedScene" path="res://src/entities/shield_skeleton.tscn" id="6_shield"]
+[ext_resource type="PackedScene" path="res://src/world/heart_piece.tscn" id="6_piece"]
 [ext_resource type="PackedScene" path="res://src/world/physics_box.tscn" id="9_axpip"]
 [ext_resource type="PackedScene" path="res://src/world/physics_rock.tscn" id="10_vrnmo"]
 [ext_resource type="Script" uid="uid://dlv83hn042mxv" path="res://src/world/overworld_map.gd" id="11_gsck2"]
@@ -435,3 +436,19 @@ switches = Array[NodePath]([NodePath("../CliffEye")])
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, 0, -11)
 item = ExtResource("41_csg56")
 flag = &"ow_cliff_quiver_chest"
+
+[node name="HeartPieceMeadow" parent="." unique_id=454226307 instance=ExtResource("6_piece")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -6.5)
+flag = &"ow_heart_piece_meadow"
+
+[node name="HeartPieceGrotto" parent="." unique_id=997634528 instance=ExtResource("6_piece")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 0, 22)
+flag = &"ow_heart_piece_grotto"
+
+[node name="HeartPieceShrine" parent="." unique_id=1581263196 instance=ExtResource("6_piece")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0, -21)
+flag = &"ow_heart_piece_shrine"
+
+[node name="HeartPieceCliff" parent="." unique_id=997712761 instance=ExtResource("6_piece")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, -10)
+flag = &"ow_heart_piece_cliff"

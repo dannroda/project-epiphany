@@ -14,6 +14,8 @@ var accept_label := "Equipar"
 @onready var hearts: HFlowContainer = %Hearts
 @onready var damage_value: Label = %DamageValue
 @onready var reduction_value: Label = %ReductionValue
+@onready var pieces_icon: HeartPieceIcon = %PiecesIcon
+@onready var pieces_value: Label = %PiecesValue
 @onready var detail: PanelContainer = %Detail
 
 var _slots: Dictionary[Button, ItemData] = {}
@@ -104,6 +106,8 @@ func _refresh_stats() -> void:
 	var armor := _equipped_item(ItemData.Category.ARMOR)
 	damage_value.text = _hearts_text(sword.damage if sword else 0)
 	reduction_value.text = "%d %%" % roundi((armor.damage_reduction if armor else 0.0) * 100)
+	pieces_icon.pieces = GameState.heart_pieces()
+	pieces_value.text = "%d / %d" % [GameState.heart_pieces(), GameState.PIECES_PER_HEART]
 	for child in hearts.get_children():
 		child.queue_free()
 	var player := get_tree().get_first_node_in_group(&"player") as PlayerCharacter

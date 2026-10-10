@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://src/ui/menus/equipment_page.gd" id="1_page"]
 [ext_resource type="PackedScene" path="res://src/ui/menus/item_detail.tscn" id="2_detail"]
 [ext_resource type="PackedScene" path="res://src/ui/menus/equip_slot.tscn" id="9_slot"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/heart_piece_icon.tscn" id="10_piece"]
 
 [sub_resource type="World3D" id="World3D_preview"]
 
@@ -88,6 +89,29 @@ text = "Reducción de daño"
 [node name="ReductionValue" type="Label" parent="Left/Reduction"]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="Pieces" type="HBoxContainer" parent="Left"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Left/Pieces"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"Hint"
+text = "Piezas de corazón"
+
+[node name="Count" type="HBoxContainer" parent="Left/Pieces"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PiecesIcon" parent="Left/Pieces/Count" instance=ExtResource("10_piece")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="PiecesValue" type="Label" parent="Left/Pieces/Count"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0 / 4"
 
 [node name="Rows" type="VBoxContainer" parent="."]
 unique_name_in_owner = true
