@@ -141,6 +141,8 @@ func _refresh_preview() -> void:
 		var node := _preview_model.get_node_or_null(path)
 		if node:
 			node.free()
+	for mesh in _preview_model.find_children("*", "MeshInstance3D", true, false):
+		(mesh as MeshInstance3D).material_overlay = null
 	_preview_model.transform = Transform3D.IDENTITY
 	preview_root.add_child(_preview_model)
 	var anim := _preview_model.get_node_or_null(^"AnimationPlayer") as AnimationPlayer

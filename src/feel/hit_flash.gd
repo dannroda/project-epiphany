@@ -24,8 +24,10 @@ func _setup(visuals: Node3D, health: Health) -> void:
 	health.damaged.connect(func(_amount: int) -> void: play())
 
 
-## Otra pasada para todas sus mallas (la silueta del player detrás de las paredes).
+## Otra pasada para todas sus mallas (la silueta del player detrás de las paredes). Va con más prioridad para
+## dibujarse después del destello de todas las mallas, que marca el stencil.
 func add_pass(material: Material) -> void:
+	material.render_priority = _material.render_priority + 1
 	_material.next_pass = material
 
 
