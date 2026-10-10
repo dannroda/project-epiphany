@@ -1,0 +1,48 @@
+{
+  "checklist": [
+    {
+      "detail": "Abierto: recompensa, secreto, tablilla de historia, pieza de corazón, un ítem… Definirlo antes de diseñar la sala, y anotarlo en el GDD.",
+      "done": false,
+      "text": "Decidir qué hay en la cueva"
+    },
+    {
+      "detail": "Cueva chica, una o dos salas; piezas propias en Blender (roca, estalactitas, cristales) en estilo Altiplano del Ojo.",
+      "done": false,
+      "text": "Entrada en el overworld y la sala de la cueva"
+    },
+    {
+      "detail": "Pozo o vertiente poco profunda, con superficie de agua estilizada (shader propio, swatch agua de la paleta).",
+      "done": false,
+      "text": "Rincón con agua"
+    },
+    {
+      "detail": "Usar el PR godotengine/godot#115653 (DrawableTexture que actualiza el atlas de Decals sin reconstruirlo; mergeado el 2026-09-22, ya está en 4.8-dev7). Un DrawableTexture con un patrón de cáusticas low poly/celular que se anima con blit_rect cada frame (dos capas desplazándose), usado como textura (emisión/albedo) de un Decal que proyecta sobre el fondo y las paredes cercanas. Medir el costo del blit por frame.",
+      "done": false,
+      "text": "Cáusticas estilizadas con Decals animados"
+    },
+    {
+      "detail": "Penumbra, el agua como fuente de luz suave que tiñe las cáusticas; sonido de goteo.",
+      "done": false,
+      "text": "Luz y ambiente de la cueva"
+    }
+  ],
+  "code": "11.20",
+  "created_at": "2026-10-10T05:28:27.913Z",
+  "milestone": "m11",
+  "notes": "Skills: `disciplines:level-design`, `godot:godot-shaders`, `godot:godot-3d-essentials`. PR: https://github.com/godotengine/godot/pull/115653",
+  "order": 20,
+  "priority": "low",
+  "refs": [
+    {
+      "doc": "gdd.md"
+    }
+  ],
+  "status": "todo",
+  "tags": [
+    "arte",
+    "overworld"
+  ],
+  "test": "Entrar a la cueva desde el overworld: el rincón del agua muestra cáusticas que se mueven sobre el piso y las paredes, sin cortes ni parpadeos; el rendimiento no cae respecto del overworld.",
+  "title": "Cueva con ojo de agua y cáusticas animadas",
+  "updated_at": "2026-10-10T05:28:29.831Z"
+}

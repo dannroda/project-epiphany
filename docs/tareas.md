@@ -2106,7 +2106,7 @@ Skills: `workflows:itch-publish`.
 
 **Relacionadas:** 10.2 Selección de partida y autosave
 
-## M11 — Pulido: assets y contenido  (11/19)
+## M11 — Pulido: assets y contenido  (11/20)
 
 Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
 
@@ -2263,6 +2263,25 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 **Prioridad:** alta · **Etiquetas:** `bug`, `mazmorra`
 
 **Notas:** Reportado por Daniel el 2026-10-09 (captura): en las paredes laterales (este/oeste), el paso de puerta se ve como una losa lisa del alto de la pared y el player la atraviesa. Sospecha: la pieza paso_puerta del kit propio (ítem 4 "Puerta", celdas con orientación 0 también en paredes laterales) o la cara lateral de la pared vecina. La pared sur ya se arregló en 11.18.
+
+### 11.20 Cueva con ojo de agua y cáusticas animadas · Pendiente
+
+**Prioridad:** baja · **Etiquetas:** `arte`, `overworld`
+
+- [ ] Decidir qué hay en la cueva
+  Abierto: recompensa, secreto, tablilla de historia, pieza de corazón, un ítem… Definirlo antes de diseñar la sala, y anotarlo en el GDD.
+- [ ] Entrada en el overworld y la sala de la cueva
+  Cueva chica, una o dos salas; piezas propias en Blender (roca, estalactitas, cristales) en estilo Altiplano del Ojo.
+- [ ] Rincón con agua
+  Pozo o vertiente poco profunda, con superficie de agua estilizada (shader propio, swatch agua de la paleta).
+- [ ] Cáusticas estilizadas con Decals animados
+  Usar el PR godotengine/godot#115653 (DrawableTexture que actualiza el atlas de Decals sin reconstruirlo; mergeado el 2026-09-22, ya está en 4.8-dev7). Un DrawableTexture con un patrón de cáusticas low poly/celular que se anima con blit_rect cada frame (dos capas desplazándose), usado como textura (emisión/albedo) de un Decal que proyecta sobre el fondo y las paredes cercanas. Medir el costo del blit por frame.
+- [ ] Luz y ambiente de la cueva
+  Penumbra, el agua como fuente de luz suave que tiñe las cáusticas; sonido de goteo.
+
+**Prueba:** Entrar a la cueva desde el overworld: el rincón del agua muestra cáusticas que se mueven sobre el piso y las paredes, sin cortes ni parpadeos; el rendimiento no cae respecto del overworld.
+
+**Notas:** Skills: `disciplines:level-design`, `godot:godot-shaders`, `godot:godot-3d-essentials`. PR: https://github.com/godotengine/godot/pull/115653
 
 ## M12 — Assets propios (Blender)  (2/9)
 
