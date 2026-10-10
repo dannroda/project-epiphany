@@ -1608,7 +1608,7 @@ Hecho 2026-10-08: escenarios `dungeon_no_bow`, `pre_boss`, `boss_key_door_locked
 
 **Bloqueada por:** 8.7 Sala 8: antesala
 
-## M9 — Jefe  (3/8)
+## M9 — Jefe  (4/8)
 
 Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 con LimboAI.
 
@@ -1634,13 +1634,13 @@ Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 
 
 **Bloquea a:** 9.2 Arena del jefe y barra de vida; 9.3 Arquitectura del jefe
 
-### 9.2 Arena del jefe y barra de vida · Pendiente
+### 9.2 Arena del jefe y barra de vida · Hecho
 
-- [ ] Sala del jefe con `Room`
+- [x] Sala del jefe con `Room`
   Límites de cámara que encuadran toda la arena; puerta que se cierra al entrar.
-- [ ] Intro corta
+- [x] Intro corta
   Cámara al ojo, nombre en pantalla, música (placeholder).
-- [ ] Barra de vida del jefe en el HUD
+- [x] Barra de vida del jefe en el HUD
   Escucha el `Health` del jefe; aparece en la intro y se va al morir.
 
 **Prueba:** Entrar a la arena: la puerta se cierra, la intro se puede saltar y la barra baja al pegarle.

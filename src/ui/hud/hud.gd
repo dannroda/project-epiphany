@@ -1,5 +1,5 @@
 extends CanvasLayer
-## HUD del juego: corazones y slots X/Y; después llaves (6.3) y la barra del jefe (9.2).
+## HUD del juego: corazones, slots X/Y, llaves (solo en mazmorra) y la barra del jefe (mockup HUD_Boss).
 
 const HP_PER_HEART := 4
 const BUTTON_ACTIONS: Array[StringName] = [&"item_1", &"item_2"]
@@ -18,6 +18,8 @@ const BUTTON_ACTIONS: Array[StringName] = [&"item_1", &"item_2"]
 @onready var prompt_icon: TextureRect = %PromptIcon
 @onready var prompt_text: Label = %PromptText
 @onready var saved_label: Label = %Saved
+@onready var boss_bar: VBoxContainer = %BossBar
+@onready var boss_health: ProgressBar = %BossHealth
 
 var _health: Health
 var _focus: Interactable
@@ -25,6 +27,8 @@ var _area_tween: Tween
 var _dungeon: DungeonState
 var _shown_hp := -1
 var _saved_tween: Tween
+var _boss: Boss
+var _boss_tween: Tween
 
 
 func _ready() -> void:
@@ -149,3 +153,36 @@ func _flash_saved() -> void:
 	_saved_tween.tween_interval(1.2)
 	_saved_tween.tween_property(saved_label, "modulate:a", 0.0, 0.5)
 
+
+
+func show_boss(boss: Boss) -> void:
+	_boss = boss
+	%BossName.text = tr(boss.display_name)
+	boss.bar_changed.connect(_refresh_boss)
+	boss_health.value = boss.bar_fraction()
+	_refresh_boss()
+	boss_bar.visible = true
+	boss_bar.modulate.a = 0.0
+	create_tween().tween_property(boss_bar, "modulate:a", 1.0, 0.4)
+
+
+func hide_boss() -> void:
+	if _boss and _boss.bar_changed.is_connected(_refresh_boss):
+		_boss.bar_changed.disconnect(_refresh_boss)
+	_boss = null
+	var tween := create_tween()
+	tween.tween_interval(0.8)
+	tween.tween_property(boss_bar, "modulate:a", 0.0, 0.6)
+	tween.tween_callback(boss_bar.hide)
+
+
+func _refresh_boss() -> void:
+	if _boss == null:
+		return
+	var phase := _boss.phase()
+	%BossPhase.text = "Fase %d" % phase
+	%BossPhase.visible = phase > 0
+	if _boss_tween:
+		_boss_tween.kill()
+	_boss_tween = create_tween()
+	_boss_tween.tween_property(boss_health, "value", _boss.bar_fraction(), 0.25).set_ease(Tween.EASE_OUT)

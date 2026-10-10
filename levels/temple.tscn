@@ -38,6 +38,7 @@
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="53_5adsw"]
 [ext_resource type="Script" uid="uid://cqtm1asamns1o" path="res://src/world/doom_ambience.gd" id="55_j188v"]
 [ext_resource type="PackedScene" path="res://src/entities/boss/boss.tscn" id="56_boss"]
+[ext_resource type="Script" path="res://src/entities/boss/boss_arena.gd" id="57_arena"]
 
 [sub_resource type="Environment" id="Environment_h5c3c"]
 background_mode = 1
@@ -538,6 +539,12 @@ shape = SubResource("BoxShape3D_3cduy")
 
 [node name="Boss" parent="." instance=ExtResource("56_boss")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 14.5)
+
+[node name="BossArena" type="Node" parent="." node_paths=PackedStringArray("room", "boss", "door")]
+script = ExtResource("57_arena")
+room = NodePath("../Jefe")
+boss = NodePath("../Boss")
+door = NodePath("../BossDoor")
 
 [node name="BossExitPortal" parent="." unique_id=1790537677 instance=ExtResource("51_warp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 16)

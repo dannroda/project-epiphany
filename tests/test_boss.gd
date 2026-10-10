@@ -162,3 +162,57 @@ func test_boss_fits_its_room() -> void:
 		var box := mesh.global_transform * mesh.get_aabb()
 		assert_true(bounds.grow(0.01).encloses(Rect2(box.position.x, box.position.z, box.size.x, box.size.z)), "%s dentro de la sala" % mesh.get_path())
 	tree.root.get_node(^"GameState").reset()
+
+
+func _wait_until(done: Callable, seconds: float) -> bool:
+	var tree := Engine.get_main_loop() as SceneTree
+	var until := Time.get_ticks_msec() + int(seconds * 1000.0)
+	while not done.call():
+		if Time.get_ticks_msec() > until:
+			return false
+		await tree.process_frame
+	return true
+
+
+func test_arena_closes_skippable_intro_and_bar() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.root.get_node(^"GameState").reset()
+	tree.change_scene_to_file("res://levels/temple.tscn")
+	await tree.scene_changed
+	var level := tree.current_scene
+	var player := tree.get_first_node_in_group(&"player") as Node3D
+	var door := level.get_node(^"BossDoor") as Door
+	var arena := level.get_node(^"BossArena") as BossArena
+	var boss := level.get_node(^"Boss") as Boss
+	var hud := level.get_node(^"HUD")
+	door.open(false)
+	player.global_position = Vector3(24, 0, 27)
+	for i in 10:
+		await tree.physics_frame
+	player.global_position = Vector3(24, 0, 21.5)
+	assert_true(await _wait_until(func() -> bool: return not door.is_open, 3.0), "al entrar se cierra la puerta")
+	assert_true(await _wait_until(func() -> bool: return arena.in_intro, 2.0), "arranca la intro")
+	assert_true(not boss.phases.is_active(), "durante la intro no pelea")
+	await tree.create_timer(0.8, true).timeout
+	var skip := InputEventAction.new()
+	skip.action = &"ui_accept"
+	skip.pressed = true
+	var skipped_at := Time.get_ticks_msec()
+	tree.root.push_input(skip)
+	assert_true(await _wait_until(func() -> bool: return boss.phases.is_active(), 3.0), "después de la intro empieza la pelea")
+	assert_true(Time.get_ticks_msec() - skipped_at < 500, "la intro se salta")
+	assert_true(not tree.paused, "el juego sigue")
+	assert_true(hud.boss_bar.visible and is_equal_approx(hud.boss_health.value, 1.0), "aparece la barra llena")
+	assert_eq(hud.get_node(^"%BossPhase").text, "Fase 1")
+	boss.hand_left.stun(5.0)
+	boss.hand_left.hurtbox.receive(_hit(3))
+	await tree.create_timer(0.4).timeout
+	assert_true(hud.boss_health.value < 1.0, "la barra baja al pegarle")
+	boss.health.invulnerability_time = 0.0
+	_knock_down(boss.hand_left)
+	_knock_down(boss.hand_right)
+	boss.health.damage(boss.health.max_health)
+	assert_true(door.is_open, "al ganar se abre la puerta")
+	await tree.create_timer(1.6).timeout
+	assert_true(not hud.boss_bar.visible, "y la barra se va")
+	tree.root.get_node(^"GameState").reset()

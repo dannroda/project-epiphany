@@ -294,10 +294,11 @@ Modelo propio basado en el Gigante de la jam LD56: calabaza de piedra flotante c
 
 **Elección del ataque (utilidad):** los ataques son `BossAttack` (`data/boss/attack_*.tres`: slam, grab, sweep con las manos; orb con el ojo, fase 2), con fases, pose, `AttackData`, distancia ideal y peso. La hoja `ChooseBossAttack` del BT llama a `Boss.choose_attack(fase)`: puntúa cada ataque por cada pieza libre que lo puede hacer (distancia del player a esa pieza, penalidad por repetir el ataque y por usar la misma mano), combina con producto compensado y sortea por puntaje entre los que tienen al menos el 75 % del mejor. Así no repite ni se vuelve un patrón fijo, pero tampoco elige algo que no conviene. Si no hay ninguno (manos caídas, ojo cerrado) el BT espera.
 
+**Arena (9.2):** la sala `Jefe` del templo ("Guarida del ojo") y un `BossArena` (`src/entities/boss/boss_arena.gd`) con la sala, el jefe y la `BossDoor`. Al entrar, cuando termina el deslizamiento de la cámara, la puerta se cierra detrás y corre la intro: la cámara va al ojo (`TopDownCamera.reveal` con `hold` de 2,6 s), el ojo mira al player y parpadea, retumba, aparece el nombre ("El Ojo Antiguo", `Boss.display_name`, con el mismo cartel que los nombres de sala) y la música sube todas las capas del templo (`Music.boss_fight`, placeholder hasta tener tema propio). Aceptar, atacar o interactuar la saltan (`skip_reveal` corta la espera y los paneos). Al terminar aparece la barra y arranca la pelea (`start_fight`). Al ganar se abre la puerta y la barra se va. Si el player muere se recarga la escena (vuelve a la antesala) y la intro se repite. **Barra (mockup HUD_Boss):** abajo al centro, 720 px, nombre en Cinzel a la izquierda y "Fase N" a la derecha, marcas en los tercios. Muestra `Boss.bar_fraction()`: en la fase 1 la vida que les queda a las dos manos, en la fase 2 la del ojo; se actualiza con `bar_changed`.
+
 - **Fase 1 — Manos:** golpes y agarres telegrafiados. Bloquear o rodar. Tras un golpe al piso, la mano queda aturdida → ventana para espadazos. Aturdir ambas manos → fase 2.
 - **Fase 2 — El Ojo:** el ojo se abre. **Flecha al ojo** = cae aturdido → ventana de espadazos. El ojo dispara orbes: se pueden **reflejar con el escudo espejo** como alternativa para aturdirlo. Las manos se regeneran y siguen presionando.
 - **Fase 3 (si da el tiempo):** el ojo "marca" el piso antes de golpes de área; combina patrones.
-- Barra de vida del jefe en el HUD.
 
 ## 10. UI
 <!-- id: ui -->

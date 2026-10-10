@@ -6,6 +6,9 @@ extends Node3D
 ## Fases con LimboHSM (cada una corre su BT); el BT le pide el ataque a `choose_attack` (utilidad).
 
 signal defeated
+signal phase_changed(phase: int)
+## Lo que muestra la barra del HUD cambió (`bar_fraction`).
+signal bar_changed
 
 const LID_OPEN_ANGLE := 70.0
 const EYE_STUN_TIME := 3.0
@@ -21,6 +24,7 @@ const SHORTLIST := 0.75
 		if is_inside_tree():
 			_apply_lids()
 @export var attacks: Array[BossAttack] = []
+@export var display_name := "El Ojo Antiguo"
 
 var target: Node3D
 var chosen_attack: BossAttack
@@ -51,7 +55,12 @@ func _ready() -> void:
 	HitFlash.attach(eye, health)
 	phases.add_transition($Phases/Phase1, $Phases/Phase2, &"hands_down")
 	phases.add_transition($Phases/Phase2, $Phases/Defeated, &"died")
+	$Phases/Phase1.entered.connect(func() -> void: phase_changed.emit(1))
 	$Phases/Phase2.entered.connect(_on_phase2_entered)
+	health.changed.connect(func(_c: int, _m: int) -> void: bar_changed.emit())
+	for hand in [hand_left, hand_right]:
+		hand.health.changed.connect(func(_c: int, _m: int) -> void: bar_changed.emit())
+	phase_changed.connect(func(_p: int) -> void: bar_changed.emit())
 	$Phases/Defeated.entered.connect(_on_defeated)
 
 
@@ -66,6 +75,14 @@ func phase() -> int:
 	if state == null:
 		return 0
 	return {&"Phase1": 1, &"Phase2": 2}.get(state.name, 0)
+
+
+## Barra del HUD: en la fase 1, la vida que les queda a las dos manos; después, la del ojo.
+func bar_fraction() -> float:
+	if phase() == 2 or health.current == 0:
+		return health.current / float(health.max_health)
+	var left := hand_left.health.current + hand_right.health.current
+	return left / float(hand_left.health.max_health + hand_right.health.max_health)
 
 
 func is_eye_stunned() -> bool:
@@ -191,6 +208,7 @@ func _on_phase2_entered() -> void:
 	create_tween().tween_property(self, ^"eye_open", 1.0, 0.8)
 	for hand in [hand_left, hand_right]:
 		hand.regenerate()
+	phase_changed.emit(2)
 
 
 func _on_defeated() -> void:

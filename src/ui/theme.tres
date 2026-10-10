@@ -723,6 +723,25 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boss_bar_bg"]
+bg_color = Color(0.101960786, 0.05882353, 0.050980393, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.43137255, 0.16470589, 0.11764706, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boss_bar_fill"]
+bg_color = Color(0.7607843, 0.25490198, 0.1764706, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
 [resource]
 default_font = ExtResource("3_cwe5m")
 default_font_size = 18
@@ -781,6 +800,21 @@ Button/styles/focus = SubResource("Frame_Button_focus")
 Button/styles/hover = SubResource("Frame_Button_hover")
 Button/styles/normal = SubResource("Frame_Button_normal")
 Button/styles/pressed = SubResource("Frame_Button_pressed")
+BossBar/base_type = &"ProgressBar"
+BossBar/styles/background = SubResource("StyleBoxFlat_boss_bar_bg")
+BossBar/styles/fill = SubResource("StyleBoxFlat_boss_bar_fill")
+BossName/base_type = &"Label"
+BossName/colors/font_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
+BossName/colors/font_shadow_color = Color(0, 0, 0, 1)
+BossName/constants/shadow_offset_x = 0
+BossName/constants/shadow_offset_y = 2
+BossName/constants/shadow_outline_size = 4
+BossName/font_sizes/font_size = 22
+BossName/fonts/font = SubResource("FontVariation_r7xqo")
+BossPhase/base_type = &"Label"
+BossPhase/colors/font_color = Color(0.8901961, 0.8392157, 0.8117647, 1)
+BossPhase/font_sizes/font_size = 15
+BossPhase/fonts/font = ExtResource("3_cwe5m")
 Caps/base_type = &"Label"
 Caps/colors/font_color = Color(0.654902, 0.62352943, 0.5568628, 1)
 Caps/font_sizes/font_size = 15

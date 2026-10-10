@@ -2,17 +2,17 @@
   "checklist": [
     {
       "detail": "Límites de cámara que encuadran toda la arena; puerta que se cierra al entrar.",
-      "done": false,
+      "done": true,
       "text": "Sala del jefe con `Room`"
     },
     {
       "detail": "Cámara al ojo, nombre en pantalla, música (placeholder).",
-      "done": false,
+      "done": true,
       "text": "Intro corta"
     },
     {
       "detail": "Escucha el `Health` del jefe; aparece en la intro y se va al morir.",
-      "done": false,
+      "done": true,
       "text": "Barra de vida del jefe en el HUD"
     }
   ],
@@ -37,8 +37,8 @@
       "section": "ui"
     }
   ],
-  "status": "todo",
+  "status": "done",
   "test": "Entrar a la arena: la puerta se cierra, la intro se puede saltar y la barra baja al pegarle.",
   "title": "Arena del jefe y barra de vida",
-  "updated_at": "2026-10-08T04:46:02.366Z"
+  "updated_at": "2026-10-10T03:17:32.509Z"
 }

@@ -15,6 +15,8 @@ const FADE_SPEED := 0.6
 var players: Dictionary[StringName, AudioStreamPlayer] = {}
 var levels: Dictionary[StringName, float] = {}
 var _duck := 0.0
+## Pelea con el jefe (placeholder hasta tener su tema): todas las capas del templo al máximo.
+var boss_fight := false
 
 
 func _ready() -> void:
@@ -53,6 +55,9 @@ func targets() -> Dictionary[StringName, float]:
 		wanted[&"pulse"] = clampf((doom - 0.15) / 0.3, 0.0, 1.0)
 		wanted[&"murmur"] = clampf((doom - 0.45) / 0.3, 0.0, 1.0)
 		wanted[&"heartbeat"] = clampf((doom - 0.7) / 0.2, 0.0, 1.0)
+		if boss_fight:
+			for layer in [&"pulse", &"murmur", &"heartbeat"]:
+				wanted[layer] = 1.0
 	elif get_tree().get_first_node_in_group(&"player"):
 		wanted[&"calm"] = 1.0
 	return wanted
