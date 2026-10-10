@@ -7,8 +7,17 @@ signal weapon_changed(item: ItemData)
 @export var weapon_socket: Node3D
 @export var shield_hand_socket: Node3D
 @export var shield_back_socket: Node3D
+## Donde va lo que se sostiene al usarlo (el arco), en la mano del escudo.
+@export var held_socket: Node3D
 
 var weapon: ItemData
+## El destello del player: los modelos que se ponen en las manos lo llevan también.
+var flash: HitFlash:
+	set(value):
+		flash = value
+		for socket in [weapon_socket, shield_hand_socket, shield_back_socket]:
+			if socket:
+				flash.cover(socket)
 var shield_in_hand: Node3D
 var shield_on_back: Node3D
 ## Ítem a distancia que se sostiene mientras se usa (el arco), en la mano del escudo.
@@ -41,7 +50,9 @@ func hold(item: ItemData) -> void:
 	held = item.equip_scene.instantiate() as Node3D
 	if held is EquippedItem:
 		held.item = item
-	shield_hand_socket.add_child(held)
+	(held_socket if held_socket else shield_hand_socket).add_child(held)
+	if flash:
+		flash.cover(held)
 	weapon_socket.visible = false
 	show_shield_in_hand(false)
 
@@ -95,4 +106,6 @@ func _place(socket: Node3D, item: ItemData) -> Node3D:
 	if model is EquippedItem:
 		model.item = item
 	socket.add_child(model)
+	if flash:
+		flash.cover(model)
 	return model

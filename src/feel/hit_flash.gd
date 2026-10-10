@@ -19,9 +19,15 @@ static func attach(visuals: Node3D, health: Health) -> HitFlash:
 func _setup(visuals: Node3D, health: Health) -> void:
 	_material.shader = SHADER
 	_material.set_shader_parameter(&"color", Feel.settings.flash_color)
-	for mesh in visuals.find_children("*", "MeshInstance3D", true, false):
-		(mesh as MeshInstance3D).material_overlay = _material
+	cover(visuals)
 	health.damaged.connect(func(_amount: int) -> void: play())
+
+
+## Suma las mallas de `node` (equipo que se pone después): destellan y marcan el stencil como el cuerpo, así la
+## silueta no se dibuja sobre su propio escudo.
+func cover(node: Node) -> void:
+	for mesh in node.find_children("*", "MeshInstance3D", true, false):
+		(mesh as MeshInstance3D).material_overlay = _material
 
 
 ## Otra pasada para todas sus mallas (la silueta del player detrás de las paredes). Va con más prioridad para

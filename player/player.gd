@@ -50,7 +50,9 @@ func _ready() -> void:
 	hitbox.landed.connect(_on_hit_landed)
 	var silhouette := ShaderMaterial.new()
 	silhouette.shader = SILHOUETTE
-	HitFlash.attach($ModelController/Visuals, health).add_pass(silhouette)
+	var flash := HitFlash.attach($ModelController/Visuals, health)
+	flash.add_pass(silhouette)
+	equipment.flash = flash
 	health.died.connect(_on_died)
 	GameState.loaded.connect(_sync_health)
 	GameState.max_health_changed.connect(func(_value: int) -> void: _sync_health())

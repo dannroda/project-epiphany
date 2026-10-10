@@ -479,7 +479,10 @@ bone_name = "hand.l"
 bone_idx = 17
 
 [node name="ShieldSocket" type="Marker3D" parent="ModelController/Skeleton3D/Hand_L" unique_id=2124676257]
-transform = Transform3D(0.05814196, 0.9960074, 0.06774296, -0.47133523, -0.032431114, 0.8813587, 0.8800361, -0.08317359, 0.46756837, 0.034190416, 0.26870853, 0.09985852)
+transform = Transform3D(-0.013181455, 0.98799604, -0.15391952, -0.29167667, 0.14343919, 0.94570184, 0.9564264, 0.057360273, 0.2862846, -0.030828238, 0.2174542, -0.012781441)
+
+[node name="BowSocket" type="Marker3D" parent="ModelController/Skeleton3D/Hand_L" unique_id=1406252219]
+transform = Transform3D(0.6333535, 0.5322882, 0.3543078, -0.5983371, 0.66923755, 0.064160675, -0.2255149, -0.28070202, 0.8248331, -0.17593151, 0.16620475, 0.06264305)
 
 [node name="BackShield" type="BoneAttachment3D" parent="ModelController/Skeleton3D" unique_id=1684357555]
 bone_name = "chest"
@@ -633,11 +636,12 @@ shape = SubResource("CapsuleShape3D_32ebh")
 script = ExtResource("c_runner")
 hitbox_root = NodePath("../ModelController/Hitboxes")
 
-[node name="Equipment" type="Node" parent="." unique_id=508811436 node_paths=PackedStringArray("weapon_socket", "shield_hand_socket", "shield_back_socket")]
+[node name="Equipment" type="Node" parent="." unique_id=508811436 node_paths=PackedStringArray("weapon_socket", "shield_hand_socket", "shield_back_socket", "held_socket")]
 script = ExtResource("c_equipment")
 weapon_socket = NodePath("../ModelController/Skeleton3D/Hand_R/WeaponSocket")
 shield_hand_socket = NodePath("../ModelController/Skeleton3D/Hand_L/ShieldSocket")
 shield_back_socket = NodePath("../ModelController/Skeleton3D/BackShield/ShieldSocket")
+held_socket = NodePath("../ModelController/Skeleton3D/Hand_L/BowSocket")
 
 [node name="Targeting" type="Node" parent="." unique_id=85013995 node_paths=PackedStringArray("player", "target_indicator", "detector_shape")]
 script = ExtResource("c_targeting")
