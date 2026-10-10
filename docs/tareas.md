@@ -2106,7 +2106,7 @@ Skills: `workflows:itch-publish`.
 
 **Relacionadas:** 10.2 Selección de partida y autosave
 
-## M11 — Pulido: assets y contenido  (11/35)
+## M11 — Pulido: assets y contenido  (11/37)
 
 Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
 
@@ -2499,6 +2499,46 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 **Referencias:** `gdd.md#input`, `gdd.md#movimiento-combate`, `gdd.md#items-mvp`
 
 **Relacionadas:** 11.34 Combos y técnicas especiales (Minish Cap / Wind Waker)
+
+### 11.36 Mapa: más información y navegable · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `ui`
+
+- [ ] Overworld con niebla de exploración
+  Hoy es una foto cenital fija con el marcador. Las zonas (AreaZone) se destapan al visitarlas; las no vistas quedan en sombra con su contorno.
+- [ ] Marcas en el mapa
+  Mazmorra: puertas (con llave, jefe, selladas), cofres abiertos/cerrados, salas sin terminar, escaleras. Overworld: entradas a cuevas/templo, santuarios, tablillas leídas, cofres encontrados. Leyenda (map_legend_icon) acorde.
+- [ ] Zoom, paneo y cursor
+  Mover un cursor con el stick/mouse sobre el mapa; al pasar sobre una sala o zona muestra su nombre y qué falta (cofres, piezas de corazón).
+- [ ] Pines propios
+  Opcional: el jugador pone 2–4 marcas para acordarse de algo (muro sospechoso, lugar alto para la pluma). Se guardan en la partida.
+- [ ] Mockup de la pestaña Mapa actualizado
+  En el canvas de UI, antes de construir.
+
+**Prueba:** Partida nueva: el overworld aparece tapado salvo la zona inicial y se va destapando. En el templo, con mapa y brújula, se ven puertas, cofres cerrados y el jefe; con el cursor se lee el nombre de cada sala. Los pines se mantienen al cargar.
+
+**Notas:** Skills: `disciplines:game-ui-ux`, `godot:godot-ui-control`.
+
+**Referencias:** `gdd.md#ui`
+
+### 11.37 Minimapa en el HUD · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `ui`
+
+- [ ] Mockup HUD_Minimap
+  Esquina libre del HUD (no choca con corazones, ítems ni la barra del jefe); tamaño chico, marco simple bronce.
+- [ ] Mazmorra
+  Las salas alrededor de la actual (3×3), con puertas y el player con flecha de orientación; usa los mismos datos que la pestaña Mapa (Room.map_cell, DungeonState).
+- [ ] Overworld
+  Recorte de la foto cenital alrededor del player, con la niebla de 11.36 y las marcas cercanas.
+- [ ] Cuándo se ve
+  Opción en Opciones (encendido/apagado); se oculta en cutscenes, item get, diálogos y en la sala del jefe.
+
+**Prueba:** Recorrer el templo: el minimapa sigue al player sala a sala y coincide con la pestaña Mapa. En el overworld muestra la zona y se destapa igual. Se apaga desde Opciones y no aparece durante el jefe ni en cutscenes.
+
+**Notas:** Skills: `disciplines:game-ui-ux`, `godot:godot-ui-control`. Escena .tscn, nada armado por código.
+
+**Referencias:** `gdd.md#ui`
 
 ## M12 — Assets propios (Blender)  (2/9)
 
