@@ -16,8 +16,16 @@ UPRIGHT = Matrix.Rotation(math.pi / 2, 4, "X")
 
 def piece(name, seed, fn):
 	p = epi.Piece(seed)
-	fn(p)
-	return p.build(name, kit)
+	keys = fn(p) or {}
+	obj = p.build(name, kit)
+	if keys:
+		obj.shape_key_add(name="Basis")
+	for key_name, move in keys.items():
+		key = obj.shape_key_add(name=key_name, from_mix=False)
+		key.value = 0.0
+		for i, v in enumerate(obj.data.vertices):
+			key.data[i].co = move(i, v.co.copy())
+	return obj
 
 
 def flat(p, points, thickness):
@@ -89,25 +97,48 @@ def escudo_espejo(p):
 
 
 def arco(p):
-	"""Arco recurvo sobre Y, con la panza hacia -X y la cuerda en +X."""
+	"""Arco recurvo sobre Y, el agarre en el origen, el lomo hacia +X (el blanco) y la cuerda del lado del arquero (-X).
+	Shape key «tensado»: la cuerda se va 0.38 m hacia -X en V y las palas se doblan hacia atrás y adentro."""
+	half, brace = 0.98, 0.2
+
+	def limb_x(t):
+		return -brace * t ** 1.8
+
 	limbs = []
 	for side in (-1, 1):
 		prev = Vector((0.0, 0.0, 0.0))
-		for k in range(1, 7):
-			t = k / 6
-			y = side * 0.98 * t
-			x = -0.3 * math.sin(t * math.pi * 0.75) + 0.12 * t ** 4
-			cur = Vector((x, y, 0.0))
+		for k in range(1, 9):
+			t = k / 8
+			cur = Vector((limb_x(t), side * half * t, 0.0))
 			seg = cur - prev
-			c = p.cylinder(0.035 - 0.015 * t, 0.0, seg.length, sides=6, radius_top=0.035 - 0.015 * (t + 1 / 6))
+			c = p.cylinder(0.035 - 0.017 * (t - 1 / 8), 0.0, seg.length, sides=6, radius_top=0.035 - 0.017 * t)
 			p.transform(c, Matrix.Translation(prev) @ seg.normalized().to_track_quat("Z", "Y").to_matrix().to_4x4())
 			limbs += c
 			prev = cur
 	p.paint(limbs, "madera_oscura", "MID", vary=0.08)
+	tips = []
+	for side in (-1, 1):
+		tips += p.box(-brace - 0.03, -brace + 0.03, side * half - 0.03, side * half + 0.03, -0.03, 0.03)
+	p.paint(tips, "dorado", "MID")
 	wrap = p.box(-0.05, 0.05, -0.1, 0.1, -0.045, 0.045)
 	p.paint(wrap, "tela_roja", "MID")
-	string = p.box(0.115, 0.125, -0.97, 0.97, -0.005, 0.005)
+	string = []
+	for side in (-1, 1):
+		lo, hi = sorted((0.0, side * half))
+		string += p.box(-brace - 0.006, -brace + 0.006, lo, hi, -0.006, 0.006)
 	p.paint(string, "hueso", "LIGHT")
+	p.bm.verts.index_update()
+	cord = {v.index for f in string for v in f.verts}
+	draw, bend, squeeze = 0.38, 0.1, 0.05
+
+	def tensado(i, co):
+		s = min(abs(co.y) / half, 1.0)
+		if i in cord:
+			tip = Vector((-brace - bend, math.copysign(half * (1 - squeeze), co.y), 0.0))
+			return Vector((-brace - draw, 0.0, 0.0)).lerp(tip, s) + Vector((co.x + brace, 0.0, co.z))
+		return Vector((co.x - bend * s ** 2, co.y * (1 - squeeze * s ** 2), co.z))
+
+	return {"tensado": tensado}
 
 
 def carcaj(p):
