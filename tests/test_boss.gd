@@ -459,3 +459,94 @@ func test_win_take_the_container_and_roll_credits() -> void:
 	assert_eq(level.get_node(^"BossArena").find_children("*", "Pickup", false, false).size(), 0, "ni el contenedor")
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(saves.slot_path(8)))
 	state.reset()
+
+
+func test_phase_three_below_a_third() -> void:
+	var boss := _spawn()
+	await _open_phase_two(boss)
+	boss.health.invulnerability_time = 0.0
+	var phases_seen: Array[int] = []
+	boss.phase_changed.connect(func(value: int) -> void: phases_seen.append(value))
+	boss.health.damage(boss.health.max_health - 9)
+	assert_eq(boss.phase(), 2, "con más de un tercio sigue la fase 2")
+	boss.health.damage(1)
+	assert_eq(boss.phase(), 3, "a un tercio de vida, fase 3")
+	assert_eq(phases_seen, [3] as Array[int])
+	boss.target = null
+	var seen := {}
+	for i in 20:
+		if boss.choose_attack(3):
+			seen[boss.chosen_attack.id] = true
+	assert_true(seen.has(&"mark"), "el ojo marca el piso")
+	assert_true(not seen.has(&"grab"), "el agarre es solo de la fase 1")
+	boss.health.damage(99)
+	assert_eq(boss.phases.get_active_state().name, &"Defeated", "desde la fase 3 también se lo vence")
+	boss.free()
+
+
+func test_marks_always_leave_a_way_out() -> void:
+	var boss := _spawn()
+	var target := Node3D.new()
+	boss.add_child(target)
+	boss.target = target
+	var corners := [boss.arena.position, boss.arena.end, Vector2(boss.arena.position.x, boss.arena.end.y), boss.arena.get_center()]
+	var counts := {}
+	for seed in 40:
+		boss.rng.seed = seed
+		var spot: Vector2 = corners[seed % corners.size()]
+		target.global_position = Vector3(spot.x, 0.0, spot.y)
+		var marks: Array[Vector3] = boss._mark_points()
+		counts[marks.size()] = counts.get(marks.size(), 0) + 1
+		var safe := false
+		for step in 24:
+			var angle := TAU * step / 24.0
+			var point: Vector3 = target.global_position + Vector3(cos(angle), 0.0, sin(angle)) * 2.4
+			if not boss.arena.grow(0.5).has_point(Vector2(point.x, point.z)):
+				continue
+			if marks.all(func(mark: Vector3) -> bool: return mark.distance_to(point) > Boss.MARK_RADIUS + 0.3):
+				safe = true
+				break
+		assert_true(safe, "a 2,4 m del player (menos de medio segundo corriendo) hay piso sin marcar (semilla %d)" % seed)
+	assert_true(counts.get(Boss.MARK_COUNT, 0) >= 36, "casi siempre marca las tres (%s)" % counts)
+	boss.free()
+
+
+func test_marks_blast_whoever_stays_even_blocking() -> void:
+	var setup: Array = await _field(&"shield_mirror")
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	var boss: Boss = setup[2]
+	await _open_phase_two(boss)
+	boss.health.invulnerability_time = 0.0
+	boss.health.damage(boss.health.max_health - 8)
+	assert_eq(boss.phase(), 3)
+	boss.phases.set_active(false)
+	for hand in [boss.hand_left, boss.hand_right]:
+		hand.set_state(BossHand.State.DOWN)
+	boss.target = player
+	player.health.invulnerability_time = 0.0
+	var full := player.health.current
+	boss._mark_floor()
+	var marks := boss.get_children().filter(func(node: Node) -> bool: return node is Decal and node.visible)
+	assert_eq(marks.size(), Boss.MARK_COUNT, "marca el piso")
+	assert_true(marks.any(func(mark: Decal) -> bool: return Vector2(mark.global_position.x, mark.global_position.z).distance_to(Vector2(player.global_position.x, player.global_position.z)) < 0.1), "una marca bajo el player")
+	player.movement_state.blackboard.set_var("is_blocking", true)
+	player.set_guard(true)
+	await tree.create_timer(Boss.MARK_TELEGRAPH + 0.2).timeout
+	assert_true(player.health.current < full, "quedarse en la marca lastima, aunque bloquee")
+	player.set_guard(false)
+	player.movement_state.blackboard.set_var("is_blocking", false)
+	await tree.create_timer(1.0).timeout
+	var before := player.health.current
+	boss._mark_floor()
+	var points: Array = boss.get_children().filter(func(node: Node) -> bool: return node is Decal and node.visible).map(func(mark: Decal) -> Vector3: return Vector3(mark.global_position.x, 0, mark.global_position.z))
+	var escape := player.global_position
+	for step in 24:
+		var candidate := player.global_position + Vector3(cos(TAU * step / 24.0), 0, sin(TAU * step / 24.0)) * 2.4
+		if points.all(func(p: Vector3) -> bool: return p.distance_to(Vector3(candidate.x, 0, candidate.z)) > Boss.MARK_RADIUS + 0.3) and boss.arena.has_point(Vector2(candidate.x, candidate.z)):
+			escape = candidate
+			break
+	player.global_position = escape
+	await tree.create_timer(Boss.MARK_TELEGRAPH + 0.2).timeout
+	assert_eq(player.health.current, before, "fuera de las marcas no pasa nada")
+	tree.root.get_node(^"GameState").reset()

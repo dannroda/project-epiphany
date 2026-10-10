@@ -22,6 +22,8 @@
 [ext_resource type="Resource" path="res://data/boss/attack_grab.tres" id="20_grab"]
 [ext_resource type="Resource" path="res://data/boss/attack_sweep.tres" id="21_sweep"]
 [ext_resource type="Resource" path="res://data/boss/attack_orb.tres" id="22_orb"]
+[ext_resource type="Resource" path="res://data/boss/attack_mark.tres" id="23_mark"]
+[ext_resource type="BehaviorTree" path="res://data/boss/boss_phase3_bt.tres" id="24_bt3"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_eye"]
 size = Vector3(2.4, 3.8, 1.6)
@@ -71,9 +73,36 @@ inner_radius = 0.9
 outer_radius = 1.0
 rings = 32
 
+[sub_resource type="Gradient" id="Gradient_mark"]
+offsets = PackedFloat32Array(0, 0.55, 0.75, 0.9, 1)
+colors = PackedColorArray(0.9, 0.2, 0.12, 0.25, 0.9, 0.2, 0.12, 0.3, 1, 0.3, 0.15, 1, 1, 0.3, 0.15, 1, 1, 0.3, 0.15, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mark"]
+gradient = SubResource("Gradient_mark")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_blast"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(1, 0.45, 0.25, 0.75)
+disable_fog = true
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_blast"]
+material = SubResource("StandardMaterial3D_blast")
+top_radius = 1.0
+bottom_radius = 1.0
+height = 2.4
+radial_segments = 24
+rings = 1
+cap_top = false
+cap_bottom = false
+
 [node name="Boss" type="Node3D"]
 script = ExtResource("1_boss")
-attacks = [ExtResource("19_slam"), ExtResource("20_grab"), ExtResource("21_sweep"), ExtResource("22_orb")]
+attacks = [ExtResource("19_slam"), ExtResource("20_grab"), ExtResource("21_sweep"), ExtResource("22_orb"), ExtResource("23_mark")]
 
 [node name="Body" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.906308, -0.422618, 0, 0.422618, 0.906308, 0, 3, 0)
@@ -302,4 +331,24 @@ behavior_tree = ExtResource("17_bt1")
 [node name="Phase2" type="BTState" parent="Phases"]
 behavior_tree = ExtResource("18_bt2")
 
+[node name="Phase3" type="BTState" parent="Phases"]
+behavior_tree = ExtResource("24_bt3")
+
 [node name="Defeated" type="LimboState" parent="Phases"]
+
+[node name="MarkTemplate" type="Decal" parent="."]
+unique_name_in_owner = true
+top_level = true
+visible = false
+size = Vector3(1, 4, 1)
+texture_albedo = SubResource("GradientTexture2D_mark")
+upper_fade = 0.0
+lower_fade = 0.0
+cull_mask = 1
+
+[node name="BlastTemplate" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+top_level = true
+visible = false
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_blast")

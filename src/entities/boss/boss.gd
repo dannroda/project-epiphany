@@ -15,6 +15,13 @@ signal bar_changed
 const LID_OPEN_ANGLE := 70.0
 const ORB := preload("res://src/entities/projectile.tscn")
 const EYE_STUN_TIME := 3.0
+## La fase 3 arranca con el ojo a este tanto de su vida (la última marca de la barra).
+const ENRAGE_FRACTION := 1.0 / 3.0
+const MARK_COUNT := 3
+const MARK_RADIUS := 1.6
+const MARK_SPACING := 3.2
+const MARK_TELEGRAPH := 1.4
+const MARK_DAMAGE := 4
 ## Las manos vuelven un rato después de que se abre el ojo.
 const HANDS_BACK_DELAY := 1.2
 ## Alto del cuerpo en la fase 2 (más cerca para mirarte) y aturdido (caído, a tiro de espada).
@@ -71,7 +78,13 @@ func _ready() -> void:
 	health.died.connect(func() -> void: phases.dispatch(&"died"))
 	HitFlash.attach(eye, health)
 	phases.add_transition($Phases/Phase1, $Phases/Phase2, &"hands_down")
+	phases.add_transition($Phases/Phase2, $Phases/Phase3, &"enraged")
 	phases.add_transition($Phases/Phase2, $Phases/Defeated, &"died")
+	phases.add_transition($Phases/Phase3, $Phases/Defeated, &"died")
+	$Phases/Phase3.entered.connect(_on_phase3_entered)
+	health.changed.connect(func(current: int, max_value: int) -> void:
+		if phase() == 2 and current > 0 and current <= max_value * ENRAGE_FRACTION:
+			phases.dispatch(&"enraged"))
 	$Phases/Phase1.entered.connect(func() -> void: phase_changed.emit(1))
 	$Phases/Phase2.entered.connect(_on_phase2_entered)
 	health.changed.connect(func(_c: int, _m: int) -> void: bar_changed.emit())
@@ -91,7 +104,7 @@ func phase() -> int:
 	var state := phases.get_active_state() if phases.is_active() else null
 	if state == null:
 		return 0
-	return {&"Phase1": 1, &"Phase2": 2}.get(state.name, 0)
+	return {&"Phase1": 1, &"Phase2": 2, &"Phase3": 3}.get(state.name, 0)
 
 
 ## Barra del HUD: en la fase 1, la vida que les queda a las dos manos; después, la del ojo.
@@ -175,6 +188,8 @@ func perform_chosen() -> void:
 		return
 	if attacker is BossHand:
 		attacker.perform(chosen_attack, target, arena)
+	elif attacker == eye and chosen_attack.id == &"mark":
+		_mark_floor()
 	elif attacker == eye:
 		_fire_orb()
 
@@ -185,6 +200,97 @@ func is_attack_running() -> bool:
 
 
 ## El ojo carga (la bola de luz crece en la salida) y escupe un orbe que el escudo espejo puede devolver.
+## El ojo marca el piso alrededor del player (círculos rojos que se cargan) y una mano libre golpea a la vez.
+## Las marcas estallan juntas: solo se esquivan (el escudo no frena el estallido).
+func _mark_floor() -> void:
+	_eye_attacking = true
+	var points := _mark_points()
+	var marks: Array[Decal] = []
+	for point in points:
+		var mark := %MarkTemplate.duplicate() as Decal
+		add_child(mark)
+		mark.global_position = point + Vector3.UP * 0.5
+		mark.scale = Vector3(MARK_RADIUS * 2.0, 1.0, MARK_RADIUS * 2.0)
+		mark.modulate.a = 0.3
+		mark.visible = true
+		marks.append(mark)
+		create_tween().tween_property(mark, ^"modulate:a", 1.0, MARK_TELEGRAPH).set_ease(Tween.EASE_IN)
+	Feel.sfx(&"deny", eye.global_position)
+	_combo_hand()
+	await get_tree().create_timer(0.4, false).timeout
+	_eye_attacking = false
+	await get_tree().create_timer(MARK_TELEGRAPH - 0.4, false).timeout
+	for mark in marks:
+		if is_instance_valid(mark):
+			if health.current > 0:
+				_blast(Vector3(mark.global_position.x, 0.0, mark.global_position.z))
+			mark.queue_free()
+
+
+## Una marca bajo el player y las otras alrededor; se queda con el primer reparto que deja salida a 2,4 m
+## (contra las paredes las marcas se corren hacia adentro y pueden cerrarla). Si ninguno sirve, solo la del player.
+func _mark_points() -> Array[Vector3]:
+	var center := Vector3(target.global_position.x, 0.0, target.global_position.z) if is_instance_valid(target) else Vector3(arena.get_center().x, 0.0, arena.get_center().y)
+	var first := _clamp_to_arena(center)
+	for attempt in 8:
+		var points: Array[Vector3] = [first]
+		var angle := rng.randf() * TAU
+		for i in MARK_COUNT - 1:
+			points.append(_clamp_to_arena(center + Vector3(cos(angle), 0.0, sin(angle)) * MARK_SPACING))
+			angle += TAU / float(MARK_COUNT) * rng.randf_range(0.8, 1.1)
+		if _has_way_out(points, center):
+			return points
+	return [first] as Array[Vector3]
+
+
+func _has_way_out(points: Array[Vector3], center: Vector3) -> bool:
+	for step in 24:
+		var angle := TAU * step / 24.0
+		var spot := center + Vector3(cos(angle), 0.0, sin(angle)) * 2.4
+		if not arena.grow(0.5).has_point(Vector2(spot.x, spot.z)):
+			continue
+		if points.all(func(point: Vector3) -> bool: return point.distance_to(spot) > MARK_RADIUS + 0.3):
+			return true
+	return false
+
+
+func _clamp_to_arena(point: Vector3) -> Vector3:
+	return Vector3(clampf(point.x, arena.position.x, arena.end.x), 0.0, clampf(point.z, arena.position.y, arena.end.y))
+
+
+func _combo_hand() -> void:
+	for hand in [hand_left, hand_right]:
+		if hand.is_available() and is_instance_valid(target):
+			for attack in attacks:
+				if attack.id == &"slam":
+					hand.perform(attack, target, arena)
+					return
+
+
+func _blast(point: Vector3) -> void:
+	var blast := %BlastTemplate.duplicate() as MeshInstance3D
+	add_child(blast)
+	blast.global_position = point + Vector3.UP * 1.2
+	blast.scale = Vector3(MARK_RADIUS, 1.0, MARK_RADIUS)
+	blast.visible = true
+	var fade := blast.create_tween()
+	fade.tween_property(blast, ^"transparency", 1.0, 0.4)
+	fade.tween_callback(blast.queue_free)
+	Feel.sfx(&"boom", point)
+	Feel.burst(&"dust", point, Vector3.UP)
+	Feel.shake(0.3)
+	var player := target as PlayerCharacter
+	if player == null or Vector2(player.global_position.x, player.global_position.z).distance_to(Vector2(point.x, point.z)) > MARK_RADIUS:
+		return
+	var info := DamageInfo.new()
+	info.amount = MARK_DAMAGE
+	info.knockback = 8.0
+	info.source = blast
+	info.team = EntityConfig.Team.ENEMY
+	info.element = &"blast"
+	(player.get_node(^"Hurtbox") as Hurtbox).receive(info)
+
+
 func _fire_orb() -> void:
 	_eye_attacking = true
 	var charge: MeshInstance3D = %Charge
@@ -304,6 +410,15 @@ func _on_phase2_entered() -> void:
 
 
 ## Las manos caen, el ojo se cierra, el cuerpo tiembla soltando polvo y se hunde.
+## Furia: temblor fuerte, se sacude el aturdimiento y vuelve a la altura de pelea.
+func _on_phase3_entered() -> void:
+	_eye_stun_left = 0.0
+	Feel.sfx(&"rumble", eye.global_position)
+	Feel.shake(0.7)
+	_move_body(BODY_HEIGHT_OPEN, 0.4)
+	phase_changed.emit(3)
+
+
 func _on_defeated() -> void:
 	%Solid.remove_from_group(&"targetable")
 	_eye_stun_left = 0.0

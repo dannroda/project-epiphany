@@ -1608,7 +1608,7 @@ Hecho 2026-10-08: escenarios `dungeon_no_bow`, `pre_boss`, `boss_key_door_locked
 
 **Bloqueada por:** 8.7 Sala 8: antesala
 
-## M9 — Jefe  (7/8)
+## M9 — Jefe  (8/8)
 
 Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 con LimboAI.
 
@@ -1727,10 +1727,10 @@ Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 
 
 **Bloqueada por:** 9.5 Fase 2: el ojo
 
-### 9.7 Fase 3 (recortable) · Pendiente
+### 9.7 Fase 3 (recortable) · Hecho
 
-- [ ] El ojo marca el piso antes de golpes de área
-- [ ] Combinar patrones de manos y ojo
+- [x] El ojo marca el piso antes de golpes de área
+- [x] Combinar patrones de manos y ojo
 
 **Prueba:** La fase 3 se activa por debajo de cierto umbral de vida y se puede ganar sin recibir daño inevitable.
 
