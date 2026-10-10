@@ -1,0 +1,54 @@
+{
+  "checklist": [
+    {
+      "detail": "EditorScenePostImportPlugin: material de paleta por nombre (normal/emisión), guarda mallas en meshes/<fuente>/<pieza>.res (mismas rutas de hoy).",
+      "done": false,
+      "text": "Plugin addons/epi_import"
+    },
+    {
+      "detail": "col=box|sphere|capsule → colisión primitiva; socket → Marker3D; spring → cadena de SpringBoneSimulator3D.",
+      "done": false,
+      "text": "Custom properties → nodos"
+    },
+    {
+      "detail": "epi.save() exporta además el .glb; los .blend de trabajo van a una carpeta con .gdignore.",
+      "done": false,
+      "text": "epi publica .glb"
+    },
+    {
+      "detail": "Validar el flujo completo con el blockout antes de migrar el resto.",
+      "done": false,
+      "text": "Piloto con el personaje nuevo (12.12)"
+    },
+    {
+      "detail": "-noimp para helpers/cámaras, -navmesh, -occ en paredes, acciones con -loop (saca el hack de loops de build_carry_library).",
+      "done": false,
+      "text": "Sufijos de Godot"
+    }
+  ],
+  "code": "12.10",
+  "created_at": "2026-10-10T23:24:31.058Z",
+  "links": [
+    {
+      "task": "m12-11",
+      "type": "blocks"
+    },
+    {
+      "task": "m12-12",
+      "type": "related"
+    }
+  ],
+  "milestone": "m12",
+  "notes": "Basado en la doc de sufijos de import de Godot y el workflow de Blender Studio (DOGWALK). Los build_*.py guardan el .blend de trabajo y publican un .glb; Godot importa solo el .glb (no necesita Blender para builds/web). Un EditorScenePostImportPlugin reemplaza los scripts headless de extracción.",
+  "order": 10,
+  "priority": "high",
+  "refs": [],
+  "status": "doing",
+  "tags": [
+    "arte",
+    "herramientas"
+  ],
+  "test": "",
+  "title": "Pipeline Blender→Godot: glb publicado + plugin de import",
+  "updated_at": "2026-10-10T23:24:51.661Z"
+}

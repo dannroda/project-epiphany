@@ -1,0 +1,37 @@
+{
+  "checklist": [
+    {
+      "detail": "build_personaje_shinobi.py con piezas epi; sockets de sable y pistola; huesos spring en rodetes y cintas.",
+      "done": false,
+      "text": "Blockout del personaje sobre Rig_Medium"
+    },
+    {
+      "detail": "Empuñadura low-poly + hoja emisiva con trail.",
+      "done": false,
+      "text": "Sable de energía y pistola"
+    },
+    {
+      "done": false,
+      "text": "Paleta alternativa cyber + emisión"
+    },
+    {
+      "done": false,
+      "text": "Render A/B: templo con las dos paletas y los dos personajes"
+    }
+  ],
+  "code": "12.12",
+  "created_at": "2026-10-10T23:24:31.663Z",
+  "milestone": "m12",
+  "notes": "El setting andino no es definitivo. Alternativa cyber-shinobi estilo Megaman Zero (sables de energía + pistolas). Personaje candidato: pelo negro con rulos y rodetes con kunais, ojos rojos, capucha y mangas anchas técnicas con ribete emisivo, fajín rojo tipo obi, placa con neón, medias con franja tipo circuito.",
+  "order": 12,
+  "priority": "medium",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "arte",
+    "personajes"
+  ],
+  "test": "",
+  "title": "Exploración de setting: cyber-shinobi (A/B)",
+  "updated_at": "2026-10-10T23:24:47.386Z"
+}

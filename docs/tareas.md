@@ -2752,7 +2752,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Relacionadas:** 11.46 Jefe: game juice
 
-## M12 — Assets propios (Blender)  (2/9)
+## M12 — Assets propios (Blender)  (2/12)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -2945,6 +2945,55 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 - [ ] Anillo del portal
 
 **Bloqueada por:** 12.1 Guía de estilo: paleta, escala y pieza de prueba
+
+### 12.10 Pipeline Blender→Godot: glb publicado + plugin de import · En curso
+
+**Prioridad:** alta · **Etiquetas:** `arte`, `herramientas`
+
+- [ ] Plugin addons/epi_import
+  EditorScenePostImportPlugin: material de paleta por nombre (normal/emisión), guarda mallas en meshes/<fuente>/<pieza>.res (mismas rutas de hoy).
+- [ ] Custom properties → nodos
+  col=box|sphere|capsule → colisión primitiva; socket → Marker3D; spring → cadena de SpringBoneSimulator3D.
+- [ ] epi publica .glb
+  epi.save() exporta además el .glb; los .blend de trabajo van a una carpeta con .gdignore.
+- [ ] Piloto con el personaje nuevo (12.12)
+  Validar el flujo completo con el blockout antes de migrar el resto.
+- [ ] Sufijos de Godot
+  -noimp para helpers/cámaras, -navmesh, -occ en paredes, acciones con -loop (saca el hack de loops de build_carry_library).
+
+**Notas:** Basado en la doc de sufijos de import de Godot y el workflow de Blender Studio (DOGWALK). Los build_*.py guardan el .blend de trabajo y publican un .glb; Godot importa solo el .glb (no necesita Blender para builds/web). Un EditorScenePostImportPlugin reemplaza los scripts headless de extracción.
+
+**Bloquea a:** 12.11 Migrar los .blend al pipeline glb
+
+**Relacionadas:** 12.12 Exploración de setting: cyber-shinobi (A/B)
+
+### 12.11 Migrar los .blend al pipeline glb · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `arte`, `herramientas`
+
+- [ ] Props y equipo (objetos, equipo, naturaleza, lugares, jefe)
+- [ ] Templo y kits (build_temple_kit / build_overworld_kit)
+- [ ] Personajes (jugador, chullpas) y carry
+- [ ] Retirar scripts headless viejos y verificar builds sin Blender
+
+**Notas:** Después de validar 12.10: pasar objetos, equipo, lugares, templo, naturaleza, jefe, terreno y personajes a glb; retirar extract_epiphany_meshes y build_character_models; los kits leen del glb.
+
+**Bloqueada por:** 12.10 Pipeline Blender→Godot: glb publicado + plugin de import
+
+### 12.12 Exploración de setting: cyber-shinobi (A/B) · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `arte`, `personajes`
+
+- [ ] Blockout del personaje sobre Rig_Medium
+  build_personaje_shinobi.py con piezas epi; sockets de sable y pistola; huesos spring en rodetes y cintas.
+- [ ] Sable de energía y pistola
+  Empuñadura low-poly + hoja emisiva con trail.
+- [ ] Paleta alternativa cyber + emisión
+- [ ] Render A/B: templo con las dos paletas y los dos personajes
+
+**Notas:** El setting andino no es definitivo. Alternativa cyber-shinobi estilo Megaman Zero (sables de energía + pistolas). Personaje candidato: pelo negro con rulos y rodetes con kunais, ojos rojos, capucha y mangas anchas técnicas con ribete emisivo, fajín rojo tipo obi, placa con neón, medias con franja tipo circuito.
+
+**Relacionadas:** 12.10 Pipeline Blender→Godot: glb publicado + plugin de import
 
 ## M13 — Co-op local (estilo Four Swords)  (0/8)
 
