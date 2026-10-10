@@ -43,12 +43,21 @@
   "notes": "Skills: `disciplines:game-feel`, `disciplines:input-systems`, `godot:godot-animation`.",
   "order": 34,
   "priority": "medium",
-  "refs": [],
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "combate"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "input"
+    }
+  ],
   "status": "todo",
   "tags": [
     "combate"
   ],
   "test": "Con el combate pulido (11.33): encadenar el combo de 3, cargar y soltar el giro, contraatacar a un chullpa en su telegraph y usar una técnica aprendida en una tablilla; ninguna se dispara sin querer al rodar, bloquear o fijar.",
   "title": "Combos y técnicas especiales (Minish Cap / Wind Waker)",
-  "updated_at": "2026-10-10T05:30:53.947Z"
+  "updated_at": "2026-10-10T05:30:58.443Z"
 }

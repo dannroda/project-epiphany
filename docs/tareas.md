@@ -2311,7 +2311,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Referencias:** `gdd.md#historia`
 
-**Relacionadas:** 10.20 Intro / cutscene de apertura
+**Relacionadas:** 10.20 Intro / cutscene de apertura; 11.34 Combos y técnicas especiales (Minish Cap / Wind Waker)
 
 ### 11.23 Vertiente de la cueva: agua bendita · Pendiente
 
@@ -2469,7 +2469,11 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Notas:** Skills: `disciplines:game-feel`, `disciplines:input-systems`, `godot:godot-animation`.
 
+**Referencias:** `gdd.md#combate`
+
 **Bloqueada por:** 11.33 Combate: sacar lo tosco
+
+**Relacionadas:** 11.22 Tablillas de historia
 
 ## M12 — Assets propios (Blender)  (2/9)
 
