@@ -1752,7 +1752,7 @@ Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 
 
 **Notas:** Sin flag por ahora porque no hay jefe; 9.6 le pone d1_boss_defeated.
 
-## M10 — Terminación  (14/21)
+## M10 — Terminación  (15/21)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -2085,7 +2085,7 @@ Skills: `workflows:itch-publish`.
 
 **Relacionadas:** 10.19 Final y créditos de verdad; 11.22 Tablillas de historia
 
-### 10.21 Título y ranuras: Continuar, Nueva partida y ranura de autosave · Revisión
+### 10.21 Título y ranuras: Continuar, Nueva partida y ranura de autosave · Hecho
 
 **Prioridad:** alta · **Etiquetas:** `ui`
 
@@ -2093,7 +2093,7 @@ Skills: `workflows:itch-publish`.
   Hoy los dos abren FileSelect (title_screen.gd) y solo cambia el slot preseleccionado. Continuar tiene que llamar SaveManager.load_game(latest_slot()) sin pasar por la selección.
 - [x] Nueva partida elige dónde crearla
   Abre FileSelect en modo nueva partida: slots vacíos crean partida; elegir uno ocupado pide confirmar que se sobrescribe (ConfirmDialog). Si no hay ninguna partida, va directo al primer slot.
-- [ ] Revisar el mockup Main/FileSelect
+- [x] Revisar el mockup Main/FileSelect
   Que el flujo coincida con el canvas de UI; si el mockup no lo cubre, ajustarlo.
 - [x] Ranura 0: último autosave / guardado rápido
   Hoy SLOTS = 3 (0–2) y autosave() escribe en la ranura de la partida en curso. Pasa a: ranura 0 = 'Auto', siempre la última partida guardada sola (autosave o rápido), sin importar de qué ranura venga; ranuras 1–3 = guardados del jugador (Guardar en la pausa). La 0 no se elige para Nueva partida ni se sobrescribe a mano; se puede cargar desde FileSelect y Continuar la usa si es la más reciente.
@@ -2104,11 +2104,11 @@ Skills: `workflows:itch-publish`.
 
 **Prueba:** Con partidas guardadas: Continuar entra directo a la última jugada (auto o manual). Nueva partida: elegir un slot vacío arranca de cero; uno ocupado pide confirmación y, si se cancela, no toca la partida. Jugar, dejar que autoguarde: la ranura Auto se actualiza y las manuales no cambian hasta guardar a mano. Partidas viejas siguen apareciendo tras la migración.
 
-**Notas:** Implementado: Auto en la ranura 0, migración 0–2 → 1–3, Continuar directo, Cargar partida (opción nueva en el título) y Nueva partida que elige dónde. Falta el paso 3: los mockups Main (Cargar partida) y FileSelect (tarjeta Auto) están editados en local pero no se publicaron en el canvas (permiso denegado); falta publicarlos.
+**Notas:** Implementado: Auto en la ranura 0, migración 0–2 → 1–3, Continuar directo, Cargar partida (opción nueva en el título) y Nueva partida que elige dónde. Mockups Main (Cargar partida) y FileSelect (tarjeta Auto) publicados en el canvas el 2026-10-10.
 
 **Relacionadas:** 10.2 Selección de partida y autosave
 
-## M11 — Pulido: assets y contenido  (15/39)
+## M11 — Pulido: assets y contenido  (15/40)
 
 Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
 
@@ -2565,6 +2565,16 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 - [x] Ponerla en las antorchas del templo y revisar en capturas
 
 **Notas:** Pedido por Daniel el 2026-10-10, como las Wind Waker lights de apples/godot-stencil-demo (el repo no tiene licencia: se reimplementa la técnica, sin copiar código). Esfera con 3 pasadas de stencil: marcar lo que queda delante, multiplicar color adentro, limpiar; prioridad propia por luz. Cuidar que no pise el stencil de la silueta del player (ref 1). Uso: antorchas del templo.
+
+### 11.40 Agujero en lo que tapa al player · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `camara`
+
+- [ ] Uniform global con la posición en pantalla y la profundidad del player
+- [ ] Recorte circular (con borde suave o dither) en los materiales que tapan
+- [ ] Decidir con Daniel si convive con la silueta o la reemplaza
+
+**Notas:** Pedido por Daniel el 2026-10-10 (imagen de referencia: un círculo recortado en el cubo que tapa al personaje). Lo que queda entre la cámara y el player se recorta en un círculo de pantalla alrededor de él, solo si está más cerca de la cámara que el player (el piso no se toca). Decidir si convive con la silueta x-ray (11.38) o la reemplaza. Idea: uniforms globales con la posición en pantalla y la profundidad del player, leídas por los materiales que tapan (cutaway.gdshader de paredes y columnas, epiphany.tres, el jefe).
 
 ## M12 — Assets propios (Blender)  (2/9)
 

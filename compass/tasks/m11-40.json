@@ -1,0 +1,30 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Uniform global con la posición en pantalla y la profundidad del player"
+    },
+    {
+      "done": false,
+      "text": "Recorte circular (con borde suave o dither) en los materiales que tapan"
+    },
+    {
+      "done": false,
+      "text": "Decidir con Daniel si convive con la silueta o la reemplaza"
+    }
+  ],
+  "code": "11.40",
+  "created_at": "2026-10-10T17:21:31.064Z",
+  "milestone": "m11",
+  "notes": "Pedido por Daniel el 2026-10-10 (imagen de referencia: un círculo recortado en el cubo que tapa al personaje). Lo que queda entre la cámara y el player se recorta en un círculo de pantalla alrededor de él, solo si está más cerca de la cámara que el player (el piso no se toca). Decidir si convive con la silueta x-ray (11.38) o la reemplaza. Idea: uniforms globales con la posición en pantalla y la profundidad del player, leídas por los materiales que tapan (cutaway.gdshader de paredes y columnas, epiphany.tres, el jefe).",
+  "order": 40,
+  "priority": "medium",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "camara"
+  ],
+  "test": "",
+  "title": "Agujero en lo que tapa al player",
+  "updated_at": "2026-10-10T17:21:38.352Z"
+}

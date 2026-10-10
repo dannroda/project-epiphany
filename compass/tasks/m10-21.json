@@ -12,7 +12,7 @@
     },
     {
       "detail": "Que el flujo coincida con el canvas de UI; si el mockup no lo cubre, ajustarlo.",
-      "done": false,
+      "done": true,
       "text": "Revisar el mockup Main/FileSelect"
     },
     {
@@ -40,15 +40,15 @@
     }
   ],
   "milestone": "m10",
-  "notes": "Implementado: Auto en la ranura 0, migración 0–2 → 1–3, Continuar directo, Cargar partida (opción nueva en el título) y Nueva partida que elige dónde. Falta el paso 3: los mockups Main (Cargar partida) y FileSelect (tarjeta Auto) están editados en local pero no se publicaron en el canvas (permiso denegado); falta publicarlos.",
+  "notes": "Implementado: Auto en la ranura 0, migración 0–2 → 1–3, Continuar directo, Cargar partida (opción nueva en el título) y Nueva partida que elige dónde. Mockups Main (Cargar partida) y FileSelect (tarjeta Auto) publicados en el canvas el 2026-10-10.",
   "order": 21,
   "priority": "high",
   "refs": [],
-  "status": "review",
+  "status": "done",
   "tags": [
     "ui"
   ],
   "test": "Con partidas guardadas: Continuar entra directo a la última jugada (auto o manual). Nueva partida: elegir un slot vacío arranca de cero; uno ocupado pide confirmación y, si se cancela, no toca la partida. Jugar, dejar que autoguarde: la ranura Auto se actualiza y las manuales no cambian hasta guardar a mano. Partidas viejas siguen apareciendo tras la migración.",
   "title": "Título y ranuras: Continuar, Nueva partida y ranura de autosave",
-  "updated_at": "2026-10-10T06:52:18.759Z"
+  "updated_at": "2026-10-10T17:21:30.777Z"
 }
