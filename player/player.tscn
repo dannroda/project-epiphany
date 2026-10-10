@@ -496,7 +496,7 @@ libraries/MovementBasic = ExtResource("15_x7c3f")
 autoplay = &"MovementBasic/T-Pose"
 
 [node name="AnimationTree" type="AnimationTree" parent="ModelController" unique_id=1277087337]
-active = false
+active = true
 tree_root = SubResource("AnimationNodeBlendTree_fss4b")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Movement/current_state = "Running"

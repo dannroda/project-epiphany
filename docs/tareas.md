@@ -1750,7 +1750,7 @@ Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 
 
 **Notas:** Sin flag por ahora porque no hay jefe; 9.6 le pone d1_boss_defeated.
 
-## M10 — Terminación  (13/17)
+## M10 — Terminación  (14/17)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -1960,7 +1960,7 @@ Skills: `workflows:itch-publish`.
 
 **Notas:** Lo que todavía se arma por código (anterior a la regla: toda la UI son .tscn, los scripts solo llenan datos). Lo repetido es su propia escena chica, instanciada por ítem; estilos en theme.tres.
 
-### 10.12 Rango de fijado: una sola fuente · En curso
+### 10.12 Rango de fijado: una sola fuente · Hecho
 
 **Prioridad:** baja · **Etiquetas:** `combate`
 
@@ -2079,9 +2079,11 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Prioridad:** baja · **Etiquetas:** `ia`
 
-### 11.10 Warning de transform singular en la suite · Pendiente
+### 11.10 Warning de transform singular en la suite · En curso
 
 **Prioridad:** baja · **Etiquetas:** `tecnico`
+
+**Notas:** 2026-10-09: eran los StaticBody de los dos escudos del player. El AnimationTree arrancaba inactivo (se activaba al entrar a Idle) y, desde la segunda carga de escena, el primer cuadro fundía desde una pose con escala 0: la mano quedaba con escala cero y Jolt avisaba. Arreglo: el AnimationTree arranca activo en player.tscn. La suite quedó sin ningún aviso de transform singular.
 
 ### 11.11 HUD sin slots vacíos y reveal dentro de la sala · Pendiente
 
