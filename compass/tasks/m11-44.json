@@ -2,21 +2,21 @@
   "checklist": [
     {
       "detail": "Vasijas, piedras, arbustos: componente Liftable con peso.",
-      "done": false,
+      "done": true,
       "text": "Objetos levantables"
     },
     {
       "detail": "Interactuar levanta (anim KayKit), se camina más lento, se tira con el mismo botón o se apoya.",
-      "done": false,
+      "done": true,
       "text": "Estado Carrying"
     },
     {
       "detail": "Al chocar se rompe (vasija suelta su loot) y daña enemigos.",
-      "done": false,
+      "done": true,
       "text": "Tirar: parábola, rompe y daña"
     },
     {
-      "detail": "Piedra sobre placa de presión, vasija para tapar un hueco.",
+      "detail": "Piedra sobre placa de presión, vasija para tapar un hueco. Se hace con los mini puzzles de 11.42 (stone.tscn ya aprieta placas).",
       "done": false,
       "text": "Puzzles que lo usen"
     }
@@ -28,12 +28,12 @@
   "order": 44,
   "priority": "high",
   "refs": [],
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "items",
     "interaccion"
   ],
   "test": "",
   "title": "Levantar y tirar objetos",
-  "updated_at": "2026-10-10T21:49:31.476Z"
+  "updated_at": "2026-10-10T23:06:23.491Z"
 }

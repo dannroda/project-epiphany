@@ -26,6 +26,7 @@
 [ext_resource type="PackedScene" path="res://src/entities/models/jugador.tscn" id="m_knight"]
 [ext_resource type="Script" uid="uid://4r1bn36vwwk" path="res://player/states/aiming_item.gd" id="st_aiming_item"]
 [ext_resource type="Script" path="res://player/states/aiming_throw.gd" id="st_aiming_throw"]
+[ext_resource type="Script" path="res://player/states/carrying.gd" id="st_carrying"]
 [ext_resource type="Script" path="res://player/components/carrier.gd" id="c_carrier"]
 [ext_resource type="AnimationLibrary" path="res://player/animation/libs/Carry.res" id="16_carry"]
 [ext_resource type="Script" uid="uid://dpgrgvvf2dmhs" path="res://player/states/dead.gd" id="st_dead"]
@@ -660,6 +661,9 @@ script = ExtResource("st_aiming_item")
 
 [node name="AimingThrow" type="LimboState" parent="MovementState" unique_id=1840367215]
 script = ExtResource("st_aiming_throw")
+
+[node name="Carrying" type="LimboState" parent="MovementState" unique_id=1271830552]
+script = ExtResource("st_carrying")
 
 [node name="Transition" type="LimboState" parent="MovementState" unique_id=63803523]
 script = ExtResource("st_transition")

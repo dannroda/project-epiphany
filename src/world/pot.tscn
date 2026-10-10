@@ -4,10 +4,14 @@
 [ext_resource type="Script" path="res://src/components/hurtbox.gd" id="2_hurtbox"]
 [ext_resource type="Resource" path="res://data/drops/pot.tres" id="3_drops"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/vasija.res" id="m0_vasija"]
+[ext_resource type="Script" path="res://src/world/liftable.gd" id="4_liftable"]
 
 [sub_resource type="CylinderShape3D" id="BodyShape"]
 height = 0.7
 radius = 0.27
+
+[sub_resource type="SphereShape3D" id="LiftShape"]
+radius = 0.6
 
 [sub_resource type="CylinderShape3D" id="HurtShape"]
 height = 0.8
@@ -37,3 +41,10 @@ script = ExtResource("2_hurtbox")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 shape = SubResource("HurtShape")
+
+[node name="Liftable" type="Area3D" parent="."]
+script = ExtResource("4_liftable")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Liftable"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+shape = SubResource("LiftShape")

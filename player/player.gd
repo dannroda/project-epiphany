@@ -112,6 +112,12 @@ func block_ahead(direction: Vector3) -> PushBlock:
 	return null
 
 
+## Lo llama un Liftable al interactuar: lo levanta sobre la cabeza.
+func lift(liftable: Liftable) -> void:
+	movement_state.blackboard.set_var("liftable", liftable)
+	movement_state.dispatch("lift")
+
+
 func can_interact() -> bool:
 	var state := movement_state.get_active_state()
 	return state != null and state.name in [&"Idle", &"Moving"]

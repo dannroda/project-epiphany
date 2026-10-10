@@ -2640,11 +2640,11 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Prioridad:** alta · **Etiquetas:** `items`, `interaccion`
 
-- [ ] Objetos levantables
+- [x] Objetos levantables
   Vasijas, piedras, arbustos: componente Liftable con peso.
-- [ ] Estado Carrying
+- [x] Estado Carrying
   Interactuar levanta (anim KayKit), se camina más lento, se tira con el mismo botón o se apoya.
-- [ ] Tirar: parábola, rompe y daña
+- [x] Tirar: parábola, rompe y daña
   Al chocar se rompe (vasija suelta su loot) y daña enemigos.
 - [ ] Puzzles que lo usen
   Piedra sobre placa de presión, vasija para tapar un hueco.
