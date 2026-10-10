@@ -249,11 +249,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 0.6, 4)
 [node name="Rock3" parent="." unique_id=375734465 instance=ExtResource("10_vrnmo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0.6, 4)
 
-[node name="OverworldMap" type="Node" parent="." unique_id=259113020]
+[node name="OverworldMap" type="Node" parent="." node_paths=PackedStringArray("grid") unique_id=259113020]
 script = ExtResource("11_gsck2")
 display_name = "Valle del templo"
 texture = ExtResource("12_fxxkd")
 world_rect = Rect2(-37, -25, 74, 50)
+grid = NodePath("../GridMap")
 
 [node name="Player" parent="." unique_id=1694148988 instance=ExtResource("13_gd0nv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16)

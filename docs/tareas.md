@@ -2108,7 +2108,7 @@ Skills: `workflows:itch-publish`.
 
 **Relacionadas:** 10.2 Selección de partida y autosave
 
-## M11 — Pulido: assets y contenido  (15/40)
+## M11 — Pulido: assets y contenido  (16/40)
 
 Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
 
@@ -2566,15 +2566,15 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Notas:** Pedido por Daniel el 2026-10-10, como las Wind Waker lights de apples/godot-stencil-demo (el repo no tiene licencia: se reimplementa la técnica, sin copiar código). Esfera con 3 pasadas de stencil: marcar lo que queda delante, multiplicar color adentro, limpiar; prioridad propia por luz. Cuidar que no pise el stencil de la silueta del player (ref 1). Uso: antorchas del templo.
 
-### 11.40 Agujero en lo que tapa al player · Pendiente
+### 11.40 Agujero en lo que tapa al player · Hecho
 
 **Prioridad:** media · **Etiquetas:** `camara`
 
-- [ ] Uniform global con la posición en pantalla y la profundidad del player
-- [ ] Recorte circular (con borde suave o dither) en los materiales que tapan
-- [ ] Decidir con Daniel si convive con la silueta o la reemplaza
+- [x] Uniform global con la posición en pantalla y la profundidad del player
+- [x] Recorte circular (con borde suave o dither) en los materiales que tapan
+- [x] Decidir con Daniel si convive con la silueta o la reemplaza
 
-**Notas:** Pedido por Daniel el 2026-10-10 (imagen de referencia: un círculo recortado en el cubo que tapa al personaje). Lo que queda entre la cámara y el player se recorta en un círculo de pantalla alrededor de él, solo si está más cerca de la cámara que el player (el piso no se toca). Decidir si convive con la silueta x-ray (11.38) o la reemplaza. Idea: uniforms globales con la posición en pantalla y la profundidad del player, leídas por los materiales que tapan (cutaway.gdshader de paredes y columnas, epiphany.tres, el jefe).
+**Notas:** Pedido por Daniel el 2026-10-10. Decidido: agujero contra paredes, silueta contra objetos; en el borde del mundo, silueta (el agujero mostraba el vacío). Uniform global player_hole desde TopDownCamera; player_hole.gdshaderinc en cutaway.gdshader y epiphany_wall.gdshader; variantes 'borde' del kit del overworld que OverworldMap pone al cargar.
 
 ## M12 — Assets propios (Blender)  (2/9)
 

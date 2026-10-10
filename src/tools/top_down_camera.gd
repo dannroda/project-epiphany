@@ -48,6 +48,8 @@ const SOUTH_WALL_DEPTH := 2.0
 const SOUTH_WALL_RELIEF := 0.3
 
 var trauma := 0.0
+## Lo último que se le pasó a las paredes (pies del player, w: 1 si hay player).
+var player_hole := Vector4.ZERO
 ## Sala actual; null = overworld (seguimiento libre).
 var room: Room
 var transitioning := false
@@ -228,6 +230,13 @@ func _cut_south_wall(cut_room: Room) -> void:
 		material.set_shader_parameter(&"cut_height", height)
 
 
+## Las paredes (cutaway.gdshader) recortan un agujero alrededor del player cuando lo tapan.
+func _update_player_hole() -> void:
+	var feet := target_node.global_position if target_node else Vector3.ZERO
+	player_hole = Vector4(feet.x, feet.y, feet.z, 1.0 if target_node else 0.0)
+	RenderingServer.global_shader_parameter_set(&"player_hole", player_hole)
+
+
 ## Donde se reaparece al morir. La sala del jefe no cuenta: se vuelve a la antesala.
 func _remember_entry() -> void:
 	if not room.boss_room:
@@ -277,6 +286,7 @@ func skip_reveal() -> void:
 
 
 func _exit_tree() -> void:
+	RenderingServer.global_shader_parameter_set(&"player_hole", Vector4.ZERO)
 	if revealing:
 		revealing = false
 		get_tree().paused = false
@@ -330,6 +340,7 @@ func add_trauma(amount: float) -> void:
 
 
 func _process(delta: float) -> void:
+	_update_player_hole()
 	if trauma <= 0.0:
 		h_offset = 0.0
 		v_offset = 0.0

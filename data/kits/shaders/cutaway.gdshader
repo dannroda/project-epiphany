@@ -1,6 +1,8 @@
 shader_type spatial;
 render_mode cull_disabled;
 
+#include "player_hole.gdshaderinc"
+
 uniform vec4 albedo_color : source_color = vec4(1.0);
 uniform sampler2D albedo_texture : source_color, filter_linear_mipmap, repeat_enable;
 uniform float uv_scale = 0.5;
@@ -23,6 +25,9 @@ void vertex() {
 void fragment() {
 	bool in_cut = world_pos.x > cut_area.x && world_pos.x < cut_area.y && world_pos.z > cut_area.z && world_pos.z < cut_area.w;
 	if (in_cut && world_pos.y > cut_height) {
+		discard;
+	}
+	if (in_player_hole(world_pos, VERTEX, VIEW_MATRIX, FRAGCOORD.xy)) {
 		discard;
 	}
 	vec3 tex;
