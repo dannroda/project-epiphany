@@ -1,0 +1,90 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/entities/boss/boss.gd" id="1_boss"]
+[ext_resource type="Script" path="res://src/entities/boss/boss_hand.gd" id="2_hand"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_cuerpo.res" id="3_body"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_ojo.res" id="4_eye"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_parpado.res" id="5_lid"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_parpado_inf.res" id="6_lid_low"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_mano_abierta_izq.res" id="7_open_l"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_mano_puno_izq.res" id="8_fist_l"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_mano_garra_izq.res" id="9_claw_l"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_mano_abierta_der.res" id="10_open_r"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_mano_puno_der.res" id="11_fist_r"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_mano_garra_der.res" id="12_claw_r"]
+
+[node name="Boss" type="Node3D"]
+script = ExtResource("1_boss")
+
+[node name="Body" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.906308, -0.422618, 0, 0.422618, 0.906308, 0, 3, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Body"]
+mesh = ExtResource("3_body")
+
+[node name="Eye" type="Node3D" parent="Body"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 1.38)
+
+[node name="Mesh" type="MeshInstance3D" parent="Body/Eye"]
+mesh = ExtResource("4_eye")
+
+[node name="OrbMuzzle" type="Marker3D" parent="Body/Eye"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.35)
+
+[node name="UpperLid" type="MeshInstance3D" parent="Body"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 1.38)
+mesh = ExtResource("5_lid")
+
+[node name="LowerLid" type="MeshInstance3D" parent="Body"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 1.38)
+mesh = ExtResource("6_lid_low")
+
+[node name="HandAnchorLeft" type="Marker3D" parent="Body"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.13, -0.1, -0.1)
+
+[node name="HandAnchorRight" type="Marker3D" parent="Body"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.13, -0.1, -0.1)
+
+[node name="HandRestLeft" type="Marker3D" parent="Body"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6, -2, 1.5)
+
+[node name="HandRestRight" type="Marker3D" parent="Body"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, -2, 1.5)
+
+[node name="HandLeft" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6, 1.821, 2.205)
+script = ExtResource("2_hand")
+
+[node name="Open" type="MeshInstance3D" parent="HandLeft"]
+mesh = ExtResource("7_open_l")
+
+[node name="Fist" type="MeshInstance3D" parent="HandLeft"]
+visible = false
+mesh = ExtResource("8_fist_l")
+
+[node name="Claw" type="MeshInstance3D" parent="HandLeft"]
+visible = false
+mesh = ExtResource("9_claw_l")
+
+[node name="HandRight" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 1.821, 2.205)
+script = ExtResource("2_hand")
+
+[node name="Open" type="MeshInstance3D" parent="HandRight"]
+mesh = ExtResource("10_open_r")
+
+[node name="Fist" type="MeshInstance3D" parent="HandRight"]
+visible = false
+mesh = ExtResource("11_fist_r")
+
+[node name="Claw" type="MeshInstance3D" parent="HandRight"]
+visible = false
+mesh = ExtResource("12_claw_r")

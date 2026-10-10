@@ -37,6 +37,7 @@
 [ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="52_5r1vx"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="53_5adsw"]
 [ext_resource type="Script" uid="uid://cqtm1asamns1o" path="res://src/world/doom_ambience.gd" id="55_j188v"]
+[ext_resource type="PackedScene" path="res://src/entities/boss/boss.tscn" id="56_boss"]
 
 [sub_resource type="Environment" id="Environment_h5c3c"]
 background_mode = 1
@@ -534,6 +535,9 @@ target_spawn = &"templo"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPortal" unique_id=76133986]
 shape = SubResource("BoxShape3D_3cduy")
+
+[node name="Boss" parent="." instance=ExtResource("56_boss")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 14.5)
 
 [node name="BossExitPortal" parent="." unique_id=1790537677 instance=ExtResource("51_warp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 16)

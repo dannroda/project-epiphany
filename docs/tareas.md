@@ -1617,16 +1617,18 @@ Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 
 
 ### 9.1 Integrar el modelo del jefe · Pendiente
 
-- [ ] Traer el modelo del jefe al proyecto
+- [x] Traer el modelo del jefe al proyecto
   Las mallas de `assets/epiphany/meshes/jefe/` (salen de `tools/blender/build_jefe.py`), armadas en una escena.
-- [ ] Armar la jerarquía que mueve el código
+- [x] Armar la jerarquía que mueve el código
   Pivotes para el ojo (look_at), los párpados (rotación en X) y las manos (cambio de pose entre abierta, puño y garra); sockets de orbes y de reposo.
-- [ ] Revisar escala y ejes en la sala del jefe
+- [x] Revisar escala y ejes en la sala del jefe
   Que entre en el encuadre de la cámara del jefe (≈26 × 14,5 m) en la sala de 22 × 14 m.
 
 **Prueba:** La escena del jefe se abre en el editor con el cuerpo, el ojo (gira entero con look_at), los dos párpados y las dos manos (tres poses cada una) como nodos separados, y sus sockets (salida de orbes, anclas y reposo de las manos) en su lugar.
 
 **Notas:** Skills: `godot:godot-3d-essentials`. Sin rig ni AnimationTree: el .blend de la jam no tenía; las piezas las mueve el código (decidido el 2026-10-09, gdd §9).
+
+2026-10-09: boss.tscn con Boss (eye_open, look_at_point, hand_rest) y BossHand (pose). Cuerpo a 3 m en (24, 0, 14,5) de la Guarida, entero en cuadro. tests/test_boss.gd. Pendiente para 9.6: el portal de salida está en el centro de la sala y tapa el ojo; tiene que aparecer recién al morir el jefe.
 
 **Referencias:** `gdd.md#jefe`, `gdd.md#decisiones-abiertas`
 
@@ -2178,6 +2180,8 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 ### 11.19 Pasos de puerta laterales del templo: losa del alto de la pared sin colisión · Pendiente
 
 **Prioridad:** alta · **Etiquetas:** `bug`, `mazmorra`
+
+**Notas:** Reportado por Daniel el 2026-10-09 (captura): en las paredes laterales (este/oeste), el paso de puerta se ve como una losa lisa del alto de la pared y el player la atraviesa. Sospecha: la pieza paso_puerta del kit propio (ítem 4 "Puerta", celdas con orientación 0 también en paredes laterales) o la cara lateral de la pared vecina. La pared sur ya se arregló en 11.18.
 
 ## M12 — Assets propios (Blender)  (2/9)
 
