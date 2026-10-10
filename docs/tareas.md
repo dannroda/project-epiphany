@@ -2276,14 +2276,16 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
   Abierto: recompensa, secreto, tablilla de historia, pieza de corazón, un ítem… Definirlo antes de diseñar la sala, y anotarlo en el GDD.
 - [ ] Entrada en el overworld y la sala de la cueva
   Cueva chica, una o dos salas; piezas propias en Blender (roca, estalactitas, cristales) en estilo Altiplano del Ojo.
-- [ ] Rincón con agua
-  Pozo o vertiente poco profunda, con superficie de agua estilizada (shader propio, swatch agua de la paleta).
+- [ ] Shader de agua propio (water.gdshader)
+  Base: la idea de espuma procedural de 'Wind Waker Water' (NekotoArts, godotshaders.com, CC0, Godot 3) reescrita para 4.x y nuestro estilo: colores de la franja agua de la paleta y el tinte 0.72 de epiphany.tres; transparente con color según profundidad (depth texture), así se ve el fondo y las cáusticas; espuma en la orilla por profundidad; manchas de espuma con borde duro en coordenadas de mundo (sin costuras entre tiles); olas de vértice opcionales y apagadas en pozos chicos, con normales planas por cara para mantener el facetado.
 - [ ] Cáusticas estilizadas con Decals animados
   Usar el PR godotengine/godot#115653 (DrawableTexture que actualiza el atlas de Decals sin reconstruirlo; mergeado el 2026-09-22, ya está en 4.8-dev7). Un DrawableTexture con un patrón de cáusticas low poly/celular que se anima con blit_rect cada frame (dos capas desplazándose), usado como textura (emisión/albedo) de un Decal que proyecta sobre el fondo y las paredes cercanas. Medir el costo del blit por frame.
 - [ ] Luz y ambiente de la cueva
   Penumbra, el agua como fuente de luz suave que tiñe las cáusticas; sonido de goteo.
+- [ ] Agua y cáusticas juntas
+  Los Decals no se proyectan sobre materiales transparentes, así que el agua no las tapa: el Decal de cáusticas va desde la superficie hacia abajo y pinta el fondo y las paredes sumergidas, que se ven a través del agua. Un segundo Decal más débil sobre las paredes justo arriba del agua (reflejo). El mismo DrawableTexture de las cáusticas entra como uniform del shader de agua para que el brillo de la superficie y las cáusticas se muevan sincronizados; un solo nodo (WaterPool) arma superficie + decals y expone tamaño y profundidad.
 
-**Prueba:** Entrar a la cueva desde el overworld: el rincón del agua muestra cáusticas que se mueven sobre el piso y las paredes, sin cortes ni parpadeos; el rendimiento no cae respecto del overworld.
+**Prueba:** Entrar a la cueva desde el overworld: a través del agua se ve el fondo con cáusticas que se mueven al mismo ritmo que el brillo de la superficie, hay espuma en la orilla, sin costuras, cortes ni parpadeos; el estilo combina con el resto (paleta, facetado); el rendimiento no cae respecto del overworld.
 
 **Notas:** Skills: `disciplines:level-design`, `godot:godot-shaders`, `godot:godot-3d-essentials`. PR: https://github.com/godotengine/godot/pull/115653
 
