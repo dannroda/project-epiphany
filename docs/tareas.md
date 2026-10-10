@@ -2370,7 +2370,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Prueba:** Cada secreto se encuentra con las herramientas que el player tiene en ese momento y queda resuelto al cargar.
 
-### 11.25 Nuevos enemigos con los modelos existentes · En curso
+### 11.25 Nuevos enemigos con los modelos existentes · Pendiente
 
 **Prioridad:** media · **Etiquetas:** `enemigos`, `ia`
 
@@ -2651,7 +2651,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 - [ ] Puzzles que lo usen
   Piedra sobre placa de presión, vasija para tapar un hueco. Se hace con los mini puzzles de 11.45 (stone.tscn ya aprieta placas).
 
-### 11.45 Tutorial de controles y mini puzzle por ítem · Pendiente
+### 11.45 Tutorial de controles y mini puzzle por ítem · En curso
 
 **Prioridad:** alta · **Etiquetas:** `ui`, `puzzles`
 
@@ -2946,7 +2946,7 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 
 **Bloqueada por:** 12.1 Guía de estilo: paleta, escala y pieza de prueba
 
-### 12.10 Pipeline Blender→Godot: glb publicado + plugin de import · En curso
+### 12.10 Pipeline Blender→Godot: glb publicado + plugin de import · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `arte`, `herramientas`
 
@@ -2956,8 +2956,8 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
   col=box|sphere|capsule → colisión primitiva; socket → Marker3D; spring → cadena de SpringBoneSimulator3D.
 - [x] epi publica .glb
   epi.publish(name) guarda el .blend en art/blender/ (art/.gdignore) y exporta assets/epiphany/<name>.glb con extras y sin imágenes; los build_*.py viejos siguen con epi.save hasta 12.11.
-- [ ] Piloto con el personaje nuevo (12.12)
-  Validar el flujo completo con el blockout antes de migrar el resto.
+- [x] Piloto con el personaje nuevo (12.12)
+  Hecho con un blockout skinneado: el .glb trae Skeleton3D con huesos extra, SpringBoneSimulator3D desde la property spring, Marker3D de sockets en los huesos de las manos, y anima con las libs del jugador (AnimationPlayer con root en el nodo padre del Skeleton3D).
 - [x] Sufijos de Godot
   Probado -noimp. -navmesh/-occ/-loop son nativos; aplicarlos (p. ej. Carry_Idle-loop) va en la migración 12.11.
 
@@ -2965,7 +2965,7 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 
 **Bloquea a:** 12.11 Migrar los .blend al pipeline glb
 
-**Relacionadas:** 12.12 Exploración de setting: cyber-shinobi (A/B)
+**Relacionadas:** 12.12 Estilo toon (Wind Waker) + personaje cyber-shinobi
 
 ### 12.11 Migrar los .blend al pipeline glb · Pendiente
 
@@ -2980,18 +2980,27 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 
 **Bloqueada por:** 12.10 Pipeline Blender→Godot: glb publicado + plugin de import
 
-### 12.12 Exploración de setting: cyber-shinobi (A/B) · Pendiente
+### 12.12 Estilo toon (Wind Waker) + personaje cyber-shinobi · En curso
 
 **Prioridad:** media · **Etiquetas:** `arte`, `personajes`
 
-- [ ] Blockout del personaje sobre Rig_Medium
-  build_personaje_shinobi.py con piezas epi; sockets de sable y pistola; huesos spring en rodetes y cintas.
+- [x] Prueba de estilo en Blender (estilo_toon.py)
+  Hecha: renders en docs/estilo/. El blockout de piezas epi se descartó (se veía cuadrado/viejo; suavizarlo lo volvía un globo).
+- [ ] Shader cel en Godot
+  Shader propio (light() con corte duro de 2 tonos, sombra de color de la tira oscura de la paleta, rim light opcional para el pelo negro). Probarlo también en el escenario: cambia el look del mundo.
+- [ ] Personaje al pipeline glb
+  Pasar estilo_toon.py a un build_*.py que use paleta (UV a las tiras en vez de materiales sueltos) y epi.publish; pesos automáticos del cuerpo; huesos spring para mechones laterales, cintas y colas de la faja; sockets de sable y pistola (custom property socket).
+- [ ] Cara como textura con expresiones
+  Pasar las calcomanías a una textura de cara (o atlas) para cambiar expresión y parpadear, como Wind Waker.
 - [ ] Sable de energía y pistola
-  Empuñadura low-poly + hoja emisiva con trail.
+  Empuñadura + hoja emisiva con trail; pistola simple.
 - [ ] Paleta alternativa cyber + emisión
-- [ ] Render A/B: templo con las dos paletas y los dos personajes
+- [ ] Revisar polígonos
+  Contar tris del personaje (co-op: hasta 4 en pantalla) y bajar subdivisión o resolución de curvas si hace falta.
+- [ ] Render A/B en el templo
+  El personaje toon con el shader en el templo actual, contra el jugador de ahora.
 
-**Notas:** El setting andino no es definitivo. Alternativa cyber-shinobi estilo Megaman Zero (sables de energía + pistolas). Personaje candidato: pelo negro con rulos y rodetes con kunais, ojos rojos, capucha y mangas anchas técnicas con ribete emisivo, fajín rojo tipo obi, placa con neón, medias con franja tipo circuito.
+**Notas:** Rumbo elegido 2026-10-10: look tipo Wind Waker HD con cel shading (no low-poly de piezas ni anime realista). Proporciones chibi, así que sirve el Rig_Medium y las animaciones de KayKit. Prueba en tools/blender/estilo_toon.py (renders de referencia en docs/estilo/): cuerpo continuo con Skin modifier + subdivisión y pesos automáticos; pelo en mechones de curvas NURBS afinadas con rulo; cara de calcomanías proyectadas (ojo, iris, pupila, brillo, párpado, cejas, rubor, boca); mangas y pollera con pliegues senoidales; cel shading de 2 tonos con sombra de color. Las tiras de la paleta ya tienen tono claro y oscuro: sirven como lit/shade del shader. El setting andino tampoco es definitivo (cyber-shinobi estilo Megaman Zero: sables de energía y pistolas). Diseño: pelo negro con rulos y rodetes con kunais, ojos rojos, capucha y mangas anchas con ribete emisivo, faja roja tipo obi, delantal crema, pollera, medias con liga roja, botas.
 
 **Relacionadas:** 12.10 Pipeline Blender→Godot: glb publicado + plugin de import
 

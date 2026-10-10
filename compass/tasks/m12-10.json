@@ -16,8 +16,8 @@
       "text": "epi publica .glb"
     },
     {
-      "detail": "Validar el flujo completo con el blockout antes de migrar el resto.",
-      "done": false,
+      "detail": "Hecho con un blockout skinneado: el .glb trae Skeleton3D con huesos extra, SpringBoneSimulator3D desde la property spring, Marker3D de sockets en los huesos de las manos, y anima con las libs del jugador (AnimationPlayer con root en el nodo padre del Skeleton3D).",
+      "done": true,
       "text": "Piloto con el personaje nuevo (12.12)"
     },
     {
@@ -43,12 +43,12 @@
   "order": 10,
   "priority": "high",
   "refs": [],
-  "status": "doing",
+  "status": "review",
   "tags": [
     "arte",
     "herramientas"
   ],
   "test": "",
   "title": "Pipeline Blender→Godot: glb publicado + plugin de import",
-  "updated_at": "2026-10-10T23:28:47.473Z"
+  "updated_at": "2026-10-10T23:50:31.269Z"
 }

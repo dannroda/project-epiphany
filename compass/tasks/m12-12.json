@@ -1,12 +1,27 @@
 {
   "checklist": [
     {
-      "detail": "build_personaje_shinobi.py con piezas epi; sockets de sable y pistola; huesos spring en rodetes y cintas.",
-      "done": false,
-      "text": "Blockout del personaje sobre Rig_Medium"
+      "detail": "Hecha: renders en docs/estilo/. El blockout de piezas epi se descartó (se veía cuadrado/viejo; suavizarlo lo volvía un globo).",
+      "done": true,
+      "text": "Prueba de estilo en Blender (estilo_toon.py)"
     },
     {
-      "detail": "Empuñadura low-poly + hoja emisiva con trail.",
+      "detail": "Shader propio (light() con corte duro de 2 tonos, sombra de color de la tira oscura de la paleta, rim light opcional para el pelo negro). Probarlo también en el escenario: cambia el look del mundo.",
+      "done": false,
+      "text": "Shader cel en Godot"
+    },
+    {
+      "detail": "Pasar estilo_toon.py a un build_*.py que use paleta (UV a las tiras en vez de materiales sueltos) y epi.publish; pesos automáticos del cuerpo; huesos spring para mechones laterales, cintas y colas de la faja; sockets de sable y pistola (custom property socket).",
+      "done": false,
+      "text": "Personaje al pipeline glb"
+    },
+    {
+      "detail": "Pasar las calcomanías a una textura de cara (o atlas) para cambiar expresión y parpadear, como Wind Waker.",
+      "done": false,
+      "text": "Cara como textura con expresiones"
+    },
+    {
+      "detail": "Empuñadura + hoja emisiva con trail; pistola simple.",
       "done": false,
       "text": "Sable de energía y pistola"
     },
@@ -15,23 +30,29 @@
       "text": "Paleta alternativa cyber + emisión"
     },
     {
+      "detail": "Contar tris del personaje (co-op: hasta 4 en pantalla) y bajar subdivisión o resolución de curvas si hace falta.",
       "done": false,
-      "text": "Render A/B: templo con las dos paletas y los dos personajes"
+      "text": "Revisar polígonos"
+    },
+    {
+      "detail": "El personaje toon con el shader en el templo actual, contra el jugador de ahora.",
+      "done": false,
+      "text": "Render A/B en el templo"
     }
   ],
   "code": "12.12",
   "created_at": "2026-10-10T23:24:31.663Z",
   "milestone": "m12",
-  "notes": "El setting andino no es definitivo. Alternativa cyber-shinobi estilo Megaman Zero (sables de energía + pistolas). Personaje candidato: pelo negro con rulos y rodetes con kunais, ojos rojos, capucha y mangas anchas técnicas con ribete emisivo, fajín rojo tipo obi, placa con neón, medias con franja tipo circuito.",
+  "notes": "Rumbo elegido 2026-10-10: look tipo Wind Waker HD con cel shading (no low-poly de piezas ni anime realista). Proporciones chibi, así que sirve el Rig_Medium y las animaciones de KayKit. Prueba en tools/blender/estilo_toon.py (renders de referencia en docs/estilo/): cuerpo continuo con Skin modifier + subdivisión y pesos automáticos; pelo en mechones de curvas NURBS afinadas con rulo; cara de calcomanías proyectadas (ojo, iris, pupila, brillo, párpado, cejas, rubor, boca); mangas y pollera con pliegues senoidales; cel shading de 2 tonos con sombra de color. Las tiras de la paleta ya tienen tono claro y oscuro: sirven como lit/shade del shader. El setting andino tampoco es definitivo (cyber-shinobi estilo Megaman Zero: sables de energía y pistolas). Diseño: pelo negro con rulos y rodetes con kunais, ojos rojos, capucha y mangas anchas con ribete emisivo, faja roja tipo obi, delantal crema, pollera, medias con liga roja, botas.",
   "order": 12,
   "priority": "medium",
   "refs": [],
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "arte",
     "personajes"
   ],
   "test": "",
-  "title": "Exploración de setting: cyber-shinobi (A/B)",
-  "updated_at": "2026-10-10T23:24:47.386Z"
+  "title": "Estilo toon (Wind Waker) + personaje cyber-shinobi",
+  "updated_at": "2026-10-10T23:50:30.477Z"
 }
