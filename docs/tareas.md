@@ -1800,6 +1800,8 @@ Hecho 2026-10-09: 3 ranuras (decisión cerrada), `FileSelect` + `SlotCard` (mock
 
 **Bloqueada por:** 10.1 Pantalla de título
 
+**Relacionadas:** 10.21 Título y ranuras: Continuar, Nueva partida y ranura de autosave
+
 ### 10.3 Game over · Hecho
 
 - [x] Pantalla al morir
@@ -2083,7 +2085,7 @@ Skills: `workflows:itch-publish`.
 
 **Relacionadas:** 10.19 Final y créditos de verdad
 
-### 10.21 Título: Continuar y Nueva partida hacen lo mismo · Pendiente
+### 10.21 Título y ranuras: Continuar, Nueva partida y ranura de autosave · Pendiente
 
 **Prioridad:** alta · **Etiquetas:** `ui`
 
@@ -2093,8 +2095,16 @@ Skills: `workflows:itch-publish`.
   Abre FileSelect en modo nueva partida: slots vacíos crean partida; elegir uno ocupado pide confirmar que se sobrescribe (ConfirmDialog). Si no hay ninguna partida, va directo al primer slot.
 - [ ] Revisar el mockup Main/FileSelect
   Que el flujo coincida con el canvas de UI; si el mockup no lo cubre, ajustarlo.
+- [ ] Ranura 0: último autosave / guardado rápido
+  Hoy SLOTS = 3 (0–2) y autosave() escribe en la ranura de la partida en curso. Pasa a: ranura 0 = 'Auto', siempre la última partida guardada sola (autosave o rápido), sin importar de qué ranura venga; ranuras 1–3 = guardados del jugador (Guardar en la pausa). La 0 no se elige para Nueva partida ni se sobrescribe a mano; se puede cargar desde FileSelect y Continuar la usa si es la más reciente.
+- [ ] Migrar las partidas existentes
+  slot_0..2.cfg pasan a slot_1..3.cfg al arrancar (una sola vez), para no perder lo guardado.
+- [ ] Mostrar la ranura Auto en FileSelect
+  Tarjeta propia arriba (etiqueta 'Auto' o 'Último guardado'), distinta de las otras tres; mockup en el canvas de UI.
 
-**Prueba:** Con partidas guardadas: Continuar entra directo a la última jugada. Nueva partida: elegir un slot vacío arranca de cero; uno ocupado pide confirmación y, si se cancela, no toca la partida.
+**Prueba:** Con partidas guardadas: Continuar entra directo a la última jugada (auto o manual). Nueva partida: elegir un slot vacío arranca de cero; uno ocupado pide confirmación y, si se cancela, no toca la partida. Jugar, dejar que autoguarde: la ranura Auto se actualiza y las manuales no cambian hasta guardar a mano. Partidas viejas siguen apareciendo tras la migración.
+
+**Relacionadas:** 10.2 Selección de partida y autosave
 
 ## M11 — Pulido: assets y contenido  (11/19)
 
