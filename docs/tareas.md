@@ -2950,11 +2950,11 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 
 **Prioridad:** alta · **Etiquetas:** `arte`, `herramientas`
 
-- [x] Plugin addons/epi_import
+- [x] Plugin de import en addons/epiphany_tools/import
   EditorScenePostImportPlugin: material de paleta por nombre (normal/emisión), guarda mallas en meshes/<fuente>/<pieza>.res (mismas rutas de hoy).
 - [x] Custom properties → nodos
   col=box|sphere|capsule → colisión primitiva; socket → Marker3D; spring → cadena de SpringBoneSimulator3D.
-- [ ] epi publica .glb
+- [x] epi publica .glb
   epi.publish(name) guarda el .blend en art/blender/ (art/.gdignore) y exporta assets/epiphany/<name>.glb con extras y sin imágenes; los build_*.py viejos siguen con epi.save hasta 12.11.
 - [ ] Piloto con el personaje nuevo (12.12)
   Validar el flujo completo con el blockout antes de migrar el resto.

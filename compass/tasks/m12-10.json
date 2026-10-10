@@ -3,7 +3,7 @@
     {
       "detail": "EditorScenePostImportPlugin: material de paleta por nombre (normal/emisión), guarda mallas en meshes/<fuente>/<pieza>.res (mismas rutas de hoy).",
       "done": true,
-      "text": "Plugin addons/epi_import"
+      "text": "Plugin de import en addons/epiphany_tools/import"
     },
     {
       "detail": "col=box|sphere|capsule → colisión primitiva; socket → Marker3D; spring → cadena de SpringBoneSimulator3D.",
@@ -21,7 +21,7 @@
       "text": "Piloto con el personaje nuevo (12.12)"
     },
     {
-      "detail": "-noimp para helpers/cámaras, -navmesh, -occ en paredes, acciones con -loop (saca el hack de loops de build_carry_library).",
+      "detail": "Probado -noimp. -navmesh/-occ/-loop son nativos; aplicarlos (p. ej. Carry_Idle-loop) va en la migración 12.11.",
       "done": true,
       "text": "Sufijos de Godot"
     }
@@ -50,5 +50,5 @@
   ],
   "test": "",
   "title": "Pipeline Blender→Godot: glb publicado + plugin de import",
-  "updated_at": "2026-10-10T23:28:41.491Z"
+  "updated_at": "2026-10-10T23:28:47.473Z"
 }
