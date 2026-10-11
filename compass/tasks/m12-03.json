@@ -69,12 +69,12 @@
       "section": "overworld-layout"
     }
   ],
-  "status": "doing",
+  "status": "review",
   "tags": [
     "arte",
     "puzzles"
   ],
   "test": "Cada zona de [[gdd#overworld-layout]] tiene sus piezas propias y se reconoce sin el nombre de zona.",
   "title": "Lugares del overworld",
-  "updated_at": "2026-10-11T16:45:41.543Z"
+  "updated_at": "2026-10-11T16:45:49.179Z"
 }
