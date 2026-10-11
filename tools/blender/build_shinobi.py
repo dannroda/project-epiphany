@@ -13,136 +13,10 @@ import bpy
 from mathutils import Matrix, Vector
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import build_personajes as P  # noqa: E402
-import epi  # noqa: E402
-
-C = Vector((0.0, -0.02, 1.66))
-R = Vector((0.36, 0.33, 0.34))
-
-
-# etiqueta → (tira de la paleta, posición en su degradé: 0 oscuro, 1 claro)
-PALETA = {
-	"piel": ("piel", 0.85),
-	"pelo": ("ladrillo", 0.0),
-	"tela": ("gris_4", 0.25),
-	"roja": ("tela_roja", 0.6),
-	"crema": ("hueso", 0.85),
-	"bota": ("madera_oscura", 0.35),
-	"blanco": ("blanco", 1.0),
-	"negro": ("noche", 0.0),
-	"iris": ("tela_roja", 0.75),
-	"rubor": ("flor_rosa", 0.9),
-	"hierro": ("hierro", 0.85),
-	"dorado": ("dorado", 0.5),
-	"glow": ("doom", 0.75),
-}
-
-
-def mat(key):
-	return bpy.data.materials.get(key) or bpy.data.materials.new(key)
-
-
-def palette_uv(swatch, t):
-	pal = epi.palette
-	i = epi.NAMES.index(swatch)
-	col, row = i % pal.COLS, i // pal.COLS
-	lo = (pal.ROWS - 1 - row + pal.MARGIN) / pal.ROWS
-	hi = (pal.ROWS - row - pal.MARGIN) / pal.ROWS
-	return ((col + 0.5) / pal.COLS, lo + (hi - lo) * t)
-
-
-# --- utilidades de malla ---
-
-def obj_from_bm(name, bm, material, smooth=True, subsurf=0, solidify=0.0):
-	mesh = bpy.data.meshes.new(name)
-	bm.to_mesh(mesh)
-	bm.free()
-	mesh.materials.append(mat(material))
-	ob = bpy.data.objects.new(name, mesh)
-	bpy.context.scene.collection.objects.link(ob)
-	for p in mesh.polygons:
-		p.use_smooth = smooth
-	if solidify:
-		apply_mod(ob, "SOLIDIFY", thickness=solidify, offset=0.0)
-	if subsurf:
-		apply_mod(ob, "SUBSURF", levels=subsurf)
-	return ob
-
-
-def apply_mod(ob, kind, **props):
-	mod = ob.modifiers.new(kind, kind)
-	for k, v in props.items():
-		setattr(mod, k, v)
-	bpy.context.view_layer.objects.active = ob
-	bpy.ops.object.modifier_apply(modifier=mod.name)
-
-
-def lathe(bm, profile, sides=32, folds=0, matrix=Matrix(), phase=0.0):
-	"""profile: [(radio, z, amplitud de pliegue)]; tubo abierto con pliegues senoidales."""
-	rings = []
-	for r, z, amp in profile:
-		ring = []
-		for i in range(sides):
-			a = 2 * math.pi * i / sides
-			rr = r * (1 + amp * math.sin(folds * a + phase))
-			ring.append(bm.verts.new(matrix @ Vector((rr * math.cos(a), rr * math.sin(a), z))))
-		rings.append(ring)
-	for ra, rb in zip(rings, rings[1:]):
-		for i in range(sides):
-			bm.faces.new((ra[i], ra[(i + 1) % sides], rb[(i + 1) % sides], rb[i]))
-	return rings
-
-
-def ellipsoid(bm, center, radii, segs=24):
-	res = bmesh.ops.create_uvsphere(bm, u_segments=segs, v_segments=segs // 2, radius=1.0)
-	for v in res["verts"]:
-		v.co = Vector((v.co.x * radii[0], v.co.y * radii[1], v.co.z * radii[2])) + Vector(center)
-	return res["verts"]
-
-
-def curve_obj(name, chains, bevel, material, flat=0.0, resolution=3, ring=1):
-	"""chains: [[(punto, radio)]]; tubos NURBS que se afinan según el radio de cada punto."""
-	cu = bpy.data.curves.new(name, "CURVE")
-	cu.dimensions = "3D"
-	cu.resolution_u = resolution
-	if flat:
-		cu.extrude = flat
-	else:
-		cu.bevel_depth = bevel
-		cu.bevel_resolution = ring
-		cu.use_fill_caps = True
-	for chain in chains:
-		sp = cu.splines.new("NURBS")
-		sp.points.add(len(chain) - 1)
-		for p, (co, rad) in zip(sp.points, chain):
-			p.co = (co.x, co.y, co.z, 1.0)
-			p.radius = rad
-		sp.use_endpoint_u = True
-		sp.order_u = 4
-	ob = bpy.data.objects.new(name + "_c", cu)
-	bpy.context.scene.collection.objects.link(ob)
-	bpy.context.view_layer.update()
-	mesh = bpy.data.meshes.new_from_object(ob.evaluated_get(bpy.context.evaluated_depsgraph_get()))
-	bpy.data.objects.remove(ob)
-	mesh.materials.clear()
-	mesh.materials.append(mat(material))
-	for p in mesh.polygons:
-		p.use_smooth = True
-	res = bpy.data.objects.new(name, mesh)
-	bpy.context.scene.collection.objects.link(res)
-	if flat:
-		apply_mod(res, "SOLIDIFY", thickness=0.012, offset=0.0)
-	return res
-
-
-# --- rig ---
-
-def rigid(ob, rig, bone):
-	ob.parent = rig
-	ob.matrix_parent_inverse = rig.matrix_world.inverted()
-	g = ob.vertex_groups.new(name=bone)
-	g.add(list(range(len(ob.data.vertices))), 1.0, "REPLACE")
-	ob.modifiers.new("Armature", "ARMATURE").object = rig
+from toon import (  # noqa: E402
+	CH, RH, assemble, auto_weights, add_chain, body, chain_weights, curve_obj, ellipsoid, face, head, lathe, lock,
+	mat, apply_mod, obj_from_bm, rigid, socket, start_rig,
+)
 
 
 def cinta_points(s):
@@ -159,200 +33,21 @@ CHAINS = [("cinta", "head", cinta_points, 0.5), ("faja", "hips", faja_points, 0.
 
 
 def add_chains(rig):
-	bpy.context.view_layer.objects.active = rig
-	bpy.ops.object.mode_set(mode="EDIT")
-	to_rig = rig.matrix_world.inverted()
-	for name, parent, points, _ in CHAINS:
+	for name, parent, points, stiffness in CHAINS:
 		for s, side in ((1, "l"), (-1, "r")):
 			pts = points(s)
-			prev = rig.data.edit_bones[parent]
-			for i, (a, b) in enumerate(((pts[0], pts[2]), (pts[2], pts[4]))):
-				bone = rig.data.edit_bones.new(f"{name}{i + 1}.{side}")
-				bone.head, bone.tail = to_rig @ a, to_rig @ b
-				bone.parent = prev
-				prev = bone
-	bpy.ops.object.mode_set(mode="OBJECT")
-	for name, _, _, stiffness in CHAINS:
-		for side in ("l", "r"):
-			rig.data.bones[f"{name}1.{side}"]["spring"] = stiffness
+			add_chain(rig, [f"{name}1.{side}", f"{name}2.{side}"], parent, pts[::2], stiffness)
 
 
-def chain_weights(ob, rig, name, side, points):
-	"""La cola se dobla con los dos huesos de su cadena: peso según cuánto avanzó cada vértice a lo largo de ella."""
-	ob.parent = rig
-	ob.matrix_parent_inverse = rig.matrix_world.inverted()
-	start, end = points[0], points[-1]
-	axis = end - start
-	g1 = ob.vertex_groups.new(name=f"{name}1.{side}")
-	g2 = ob.vertex_groups.new(name=f"{name}2.{side}")
-	for v in ob.data.vertices:
-		t = max(0.0, min(1.0, (v.co - start).dot(axis) / axis.length_squared))
-		w = max(0.0, min(1.0, (t - 0.35) / 0.3))
-		g1.add([v.index], 1.0 - w, "REPLACE")
-		g2.add([v.index], w, "REPLACE")
-	ob.modifiers.new("Armature", "ARMATURE").object = rig
+def chain_bones(name, side):
+	return [f"{name}1.{side}", f"{name}2.{side}"]
 
 
-# --- cuerpo ---
-
-def body():
-	"""Cuerpo continuo con skin modifier: nodos (posición, radio x, radio y)."""
-	nodes = {
-		"hips": ((0, 0, 0.56), 0.16, 0.13),
-		"waist": ((0, 0, 0.76), 0.13, 0.11),
-		"chest": ((0, 0, 1.0), 0.17, 0.13),
-		"neck": ((0, 0, 1.22), 0.06, 0.06),
-		"neck_top": ((0, 0, 1.36), 0.06, 0.06),
-	}
-	edges = [("hips", "waist"), ("waist", "chest"), ("chest", "neck"), ("neck", "neck_top")]
-	for s, side in ((1, "l"), (-1, "r")):
-		nodes.update({
-			"sh" + side: ((s * 0.2, 0, 1.11), 0.075, 0.075),
-			"el" + side: ((s * 0.45, 0, 1.11), 0.055, 0.055),
-			"wr" + side: ((s * 0.72, 0, 1.11), 0.042, 0.042),
-			"ha" + side: ((s * 0.8, 0, 1.11), 0.055, 0.035),
-			"fi" + side: ((s * 0.9, 0, 1.1), 0.045, 0.03),
-			"hp" + side: ((s * 0.11, 0, 0.5), 0.095, 0.095),
-			"kn" + side: ((s * 0.16, -0.01, 0.29), 0.065, 0.065),
-			"an" + side: ((s * 0.17, 0.02, 0.14), 0.055, 0.055),
-		})
-		edges += [("chest", "sh" + side), ("sh" + side, "el" + side), ("el" + side, "wr" + side), ("wr" + side, "ha" + side),
-			("ha" + side, "fi" + side), ("hips", "hp" + side), ("hp" + side, "kn" + side), ("kn" + side, "an" + side)]
-	names = list(nodes)
-	mesh = bpy.data.meshes.new("cuerpo")
-	mesh.from_pydata([nodes[n][0] for n in names], [(names.index(a), names.index(b)) for a, b in edges], [])
-	ob = bpy.data.objects.new("cuerpo", mesh)
-	bpy.context.scene.collection.objects.link(ob)
-	sk = ob.modifiers.new("Skin", "SKIN")
-	sk.use_smooth_shade = True
-	for i, n in enumerate(names):
-		d = ob.data.skin_vertices[0].data[i]
-		d.radius = (nodes[n][1], nodes[n][2])
-		d.use_root = n == "hips"
-	bpy.context.view_layer.objects.active = ob
-	bpy.ops.object.modifier_apply(modifier=sk.name)
-	apply_mod(ob, "SUBSURF", levels=2)
-	for m in ("tela", "piel"):
-		ob.data.materials.append(mat(m))
-	for p in ob.data.polygons:
-		c = p.center
-		skin = (c.z > 1.18) or (abs(c.x) > 0.2 and abs(c.x) < 0.42 and c.z > 1.0) or abs(c.x) > 0.74
-		p.material_index = 1 if skin else 0
-		p.use_smooth = True
-	return ob
-
-
-def head_point(x, z, off=0.0):
-	u, w = x / R.x, z / R.z
-	s = max(1 - u * u - w * w, 0.0)
-	p = Vector((C.x + x, C.y - R.y * math.sqrt(s) - off, C.z + z))
-	return chin(p)
-
-
-def chin(p):
-	rel = p - C
-	if rel.z < 0 and rel.y < 0:
-		a = (-rel.z / R.z) * (-rel.y / R.y)
-		p = p + Vector((0, -0.02 * a, -0.05 * a))
-	return p
-
-
-def head():
-	bm = bmesh.new()
-	verts = ellipsoid(bm, C, R, segs=32)
-	for v in verts:
-		v.co = chin(v.co)
-	return obj_from_bm("cabeza", bm, "piel")
-
-
-def decal(name, pts2d, off, material):
-	bm = bmesh.new()
-	cx = sum(p[0] for p in pts2d) / len(pts2d)
-	cz = sum(p[1] for p in pts2d) / len(pts2d)
-	center = bm.verts.new(head_point(cx, cz, off))
-	ring = [bm.verts.new(head_point(x, z, off)) for x, z in pts2d]
-	for i in range(len(ring)):
-		bm.faces.new((center, ring[i], ring[(i + 1) % len(ring)]))
-	return obj_from_bm(name, bm, material)
-
-
-def strip(name, outer, inner, off, material):
-	bm = bmesh.new()
-	a = [bm.verts.new(head_point(x, z, off)) for x, z in outer]
-	b = [bm.verts.new(head_point(x, z, off)) for x, z in inner]
-	for i in range(len(a) - 1):
-		bm.faces.new((a[i], a[i + 1], b[i + 1], b[i]))
-	return obj_from_bm(name, bm, material)
-
-
-def oval(cx, cz, w, h, n=24, flat_bottom=0.8):
-	pts = []
-	for i in range(n):
-		t = 2 * math.pi * i / n
-		pts.append((cx + w * math.cos(t), cz + h * math.sin(t) * (1 if math.sin(t) > 0 else flat_bottom)))
-	return pts
-
-
-def face():
-	parts = []
-	for s in (1, -1):
-		ex, ez = s * 0.135, -0.05
-		parts.append(decal("ojo", oval(ex, ez, 0.08, 0.105), 0.003, "blanco"))
-		parts.append(decal("iris", oval(ex - s * 0.012, ez - 0.012, 0.05, 0.078, flat_bottom=1.0), 0.006, "iris"))
-		parts.append(decal("pupila", oval(ex - s * 0.012, ez - 0.01, 0.024, 0.044, flat_bottom=1.0), 0.008, "negro"))
-		parts.append(decal("brillo", oval(ex - s * 0.0, ez + 0.03, 0.016, 0.016, n=10, flat_bottom=1.0), 0.010, "blanco"))
-		arc_o, arc_i = [], []
-		for i in range(13):
-			t = math.pi * (0.0 + 1.0 * i / 12)
-			wing = 0.02 if (s * math.cos(t)) > 0.6 else 0.0
-			arc_o.append((ex + 0.094 * math.cos(t) + s * wing, ez + 0.122 * math.sin(t) + wing * 0.5))
-			arc_i.append((ex + 0.08 * math.cos(t), ez + 0.1 * math.sin(t)))
-		parts.append(strip("parpado", arc_o, arc_i, 0.009, "negro"))
-		bo, bi = [], []
-		for i in range(9):
-			t = i / 8
-			x = ex + s * (-0.06 + 0.13 * t)
-			z = ez + 0.17 + 0.02 * math.sin(math.pi * t) - 0.02 * t
-			bo.append((x, z + 0.016 * (1 - 0.6 * t)))
-			bi.append((x, z - 0.012 * (1 - 0.6 * t)))
-		parts.append(strip("ceja", bo, bi, 0.004, "negro"))
-		parts.append(decal("rubor", oval(s * 0.2, -0.16, 0.045, 0.022, flat_bottom=1.0), 0.003, "rubor"))
-	mo, mi = [], []
-	for i in range(7):
-		x = -0.035 + 0.07 * i / 6
-		z = -0.205 - 0.008 * math.sin(math.pi * i / 6)
-		mo.append((x, z + 0.006))
-		mi.append((x, z - 0.006))
-	parts.append(strip("boca", mo, mi, 0.004, "negro"))
-	return parts
+def skin_at(c):
+	return (c.z > 1.18) or (abs(c.x) > 0.2 and abs(c.x) < 0.42 and c.z > 1.0) or abs(c.x) > 0.74
 
 
 # --- pelo ---
-
-CH = C + Vector((0, 0.04, 0.03))
-RH = Vector((0.39, 0.38, 0.38))
-
-
-def sph(az, el, bulge=1.0):
-	return CH + Vector((RH.x * bulge * math.cos(el) * math.sin(az), -RH.y * bulge * math.cos(el) * math.cos(az), RH.z * bulge * math.sin(el)))
-
-
-def lock(az, el0, el1, r0, curl=1.0, n=7, az_drift=0.0):
-	pts = []
-	for i in range(n):
-		t = i / (n - 1)
-		p = sph(az + az_drift * t, el0 + (el1 - el0) * t, 1.0 + 0.12 * math.sin(math.pi * t))
-		pts.append((p, r0 * (1 - 0.45 * t)))
-	end = pts[-1][0]
-	out = (end - CH)
-	out.z = 0
-	out.normalize()
-	down = Vector((0, 0, -1))
-	tip = r0 * 0.5
-	for k, (o, d) in enumerate(((0.03, 0.05), (0.075, 0.035), (0.08, -0.005), (0.055, -0.02))):
-		pts.append((end + out * o * curl + down * d * curl, tip * (1 - 0.22 * k)))
-	return pts
-
 
 def hair():
 	bm = bmesh.new()
@@ -503,47 +198,15 @@ def boot(s):
 	return ob
 
 
-# --- armado ---
-
-def to_palette(ob):
-	"""Cada cara toma el color de su material etiqueta como un punto de la paleta; después queda un solo material."""
-	mesh = ob.data
-	for uv in list(mesh.uv_layers):
-		mesh.uv_layers.remove(uv)
-	layer = mesh.uv_layers.new(name="paleta")
-	names = [m.name for m in mesh.materials]
-	for p in mesh.polygons:
-		uv = palette_uv(*PALETA[names[p.material_index].split(".")[0]])
-		for li in p.loop_indices:
-			layer.data[li].uv = uv
-		p.material_index = 0
-	mesh.materials.clear()
-	mesh.materials.append(epi.palette.palette_material())
-
-
-def socket(rig, name, bone, kind):
-	e = bpy.data.objects.new(name, None)
-	bpy.context.scene.collection.objects.link(e)
-	e["socket"] = kind
-	e.parent, e.parent_type, e.parent_bone = rig, "BONE", bone
-	bpy.context.view_layer.update()
-	e.matrix_world = Matrix.Translation(rig.matrix_world @ rig.data.bones[bone].tail_local)
-	return e
-
-
-rig = P.start()
+rig = start_rig()
 add_chains(rig)
-cuerpo = body()
-bpy.ops.object.select_all(action="DESELECT")
-cuerpo.select_set(True)
-rig.select_set(True)
-bpy.context.view_layer.objects.active = rig
-bpy.ops.object.parent_set(type="ARMATURE_AUTO")
+cuerpo = body(skin_at)
+auto_weights(rig, [cuerpo])
 parts = [cuerpo]
 for ob in [head()] + face() + hair():
 	if ob.name.startswith("cinta."):
 		side = ob.name.split(".")[1]
-		chain_weights(ob, rig, "cinta", side, cinta_points(1 if side == "l" else -1))
+		chain_weights(ob, rig, chain_bones("cinta", side), cinta_points(1 if side == "l" else -1))
 	else:
 		rigid(ob, rig, "head")
 	parts.append(ob)
@@ -552,27 +215,9 @@ for key, ob in clothes().items():
 	base = key.split(".")[0]
 	side = key.split(".")[1] if "." in key else ""
 	if base == "faja_cola":
-		chain_weights(ob, rig, "faja", side, faja_points(1 if side == "l" else -1))
+		chain_weights(ob, rig, chain_bones("faja", side), faja_points(1 if side == "l" else -1))
 	else:
 		bone = bones.get(base) or {"manga": "lowerarm", "manga_borde": "lowerarm", "manga_sup": "upperarm", "liga": "upperleg", "bota": "foot"}.get(base, "chest")
 		rigid(ob, rig, bone + ("." + side if side and bone not in ("hips", "chest") else ""))
 	parts.append(ob)
-tris = {}
-for ob in parts:
-	ob.data.calc_loop_triangles()
-	key = ob.name.split(".")[0]
-	tris[key] = tris.get(key, 0) + len(ob.data.loop_triangles)
-print("tris por parte:", sorted(tris.items(), key=lambda kv: -kv[1])[:10])
-bpy.ops.object.select_all(action="DESELECT")
-for ob in parts:
-	ob.select_set(True)
-bpy.context.view_layer.objects.active = cuerpo
-bpy.ops.object.join()
-cuerpo.name = cuerpo.data.name = "shinobi"
-for mod in list(cuerpo.modifiers)[1:]:
-	cuerpo.modifiers.remove(mod)
-to_palette(cuerpo)
-cuerpo.data.calc_loop_triangles()
-print("shinobi:", len(cuerpo.data.vertices), "vértices,", len(cuerpo.data.loop_triangles), "triángulos")
-sockets = [socket(rig, "SableSocket", "hand.r", "sable"), socket(rig, "PistolaSocket", "hand.l", "pistola")]
-epi.publish("personaje_shinobi", [rig, cuerpo] + sockets)
+assemble("shinobi", rig, parts, [socket(rig, "SableSocket", "hand.r", "sable"), socket(rig, "PistolaSocket", "hand.l", "pistola")])

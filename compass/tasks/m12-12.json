@@ -38,6 +38,11 @@
       "detail": "El personaje toon con el shader en el templo actual, contra el jugador de ahora.",
       "done": false,
       "text": "Render A/B en el templo"
+    },
+    {
+      "detail": "Hecho: tools/blender/build_jugador_toon.py publica assets/epiphany/personaje_jugador_toon.glb (~15k tris): traje negro, casco rojo con aletas hacia atrás, chakana y gema de neón, discos en las orejas, flequillo en mechas azul oscuro, trenza con 3 huesos spring, peto con banda de neón, hombreras, brazales, cinturón dorado con faldones, canilleras y botas con suela de neón; sockets SableSocket y PistolaSocket. Las herramientas comunes con el shinobi están en tools/blender/toon.py. Escena de prueba: levels/test_jugador_toon.tscn. El shinobi queda para una parte más avanzada del juego. Falta reemplazar el modelo de player.tscn (después de 13.1).",
+      "done": true,
+      "text": "Jugador (inspirado en Zero) en toon"
     }
   ],
   "code": "12.12",
@@ -60,5 +65,5 @@
   ],
   "test": "",
   "title": "Estilo toon (Wind Waker) + personaje cyber-shinobi",
-  "updated_at": "2026-10-11T01:19:39.717Z"
+  "updated_at": "2026-10-11T01:33:05.575Z"
 }
