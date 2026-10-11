@@ -73,6 +73,11 @@
       "detail": "Hecho: tierra_manchas, tierra_guijarros, tierra_huellas (pisadas de llama) y tierra_pasto (matitas que se mecen); vary_overworld.gd las reparte en la tierra junto con tierra_piedras (54 % de las celdas con algo).",
       "done": true,
       "text": "Camino con detalle"
+    },
+    {
+      "detail": "Hecho: dos capas (abyss_mist.gdshader, ruido que se corre) como segunda superficie de las celdas de abismo del kit; más espesa abajo.",
+      "done": true,
+      "text": "Niebla en el abismo"
     }
   ],
   "code": "12.2",
@@ -104,5 +109,5 @@
   ],
   "test": "El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.",
   "title": "Terreno del overworld",
-  "updated_at": "2026-10-11T09:13:26.073Z"
+  "updated_at": "2026-10-11T09:14:43.183Z"
 }

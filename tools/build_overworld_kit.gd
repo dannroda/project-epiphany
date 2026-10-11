@@ -83,6 +83,10 @@ const VARIANTS := {
 	"Tierra pasto": [0, ["terreno_overworld/tierra_pasto"]],
 }
 
+## Las celdas de abismo llevan capas de niebla (alturas en m) como segunda superficie.
+const MIST_MATERIAL := preload("res://data/kits/materials/abyss_mist.tres")
+const MIST_LAYERS := [-0.9, -1.8]
+
 var _scenes := {}
 
 
@@ -136,4 +140,19 @@ func _merge(pieces: Array, wall := false) -> ArrayMesh:
 		tool.set_material(WALL_WIND_MATERIAL if windy else WALL_MATERIAL)
 	else:
 		tool.set_material(WIND_MATERIAL if windy else MATERIAL)
-	return tool.commit()
+	var mesh := tool.commit()
+	if pieces.any(func(path: String) -> bool: return path.begins_with("terreno_overworld/abismo")):
+		_add_mist(mesh)
+	return mesh
+
+
+func _add_mist(mesh: ArrayMesh) -> void:
+	var tool := SurfaceTool.new()
+	tool.begin(Mesh.PRIMITIVE_TRIANGLES)
+	tool.set_normal(Vector3.UP)
+	for y: float in MIST_LAYERS:
+		var corners := [Vector3(-1, y, -1), Vector3(1, y, -1), Vector3(1, y, 1), Vector3(-1, y, 1)]
+		for i: int in [0, 1, 2, 0, 2, 3]:
+			tool.add_vertex(corners[i])
+	tool.set_material(MIST_MATERIAL)
+	tool.commit(mesh)
