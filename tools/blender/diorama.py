@@ -1,5 +1,5 @@
 # Arma una escena chica con piezas de los kits y la renderiza con la cámara del juego (FOV 40, offset 0/17.4/10).
-# blender -b -P tools/blender/diorama.py -- <salida.png> [escena]
+# blender -b -P tools/blender/diorama.py -- <salida.png> [escena] [kit que reemplaza al primero, p. ej. templo_chullpa]
 # blender -b -P tools/blender/diorama.py -- <salida.png> vitrina <kit> [pieza,pieza,...]   (piezas del kit en grilla, encuadradas)
 # Las escenas están en ESCENAS: cada celda es "pieza[@giro]" (giro en cuartos de vuelta), a 2 m; "+" apila un nivel (2.6 m).
 import math
@@ -38,7 +38,7 @@ ESCENAS = {
 	},
 	"templo": {
 		"kits": ["templo", "lugares", "objetos"],
-		"target": (0.0, 0.0),
+		"target": (0.0, 2.0),
 		"grid": [
 			"pared pared pared_nicho pared paso_puerta pared pared_nicho pared pared",
 			"pared piso piso piso piso piso piso piso pared",
@@ -63,12 +63,14 @@ def main():
 	argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
 	out = argv[0] if argv else os.path.join(HERE, "diorama.png")
 	showcase = len(argv) > 2 and argv[1] == "vitrina"
-	scene_def = {"kits": [argv[2]], "grid": [], "props": [], "target": (0.0, 0.0)} if showcase else ESCENAS[argv[1] if len(argv) > 1 else "overworld"]
+	scene_def = {"kits": [argv[2]], "grid": [], "props": [], "target": (0.0, 0.0)} if showcase else dict(ESCENAS[argv[1] if len(argv) > 1 else "overworld"])
+	if not showcase and len(argv) > 2:
+		scene_def["kits"] = [argv[2]] + scene_def["kits"][1:]
 	bpy.ops.wm.read_factory_settings(use_empty=True)
 	sc = bpy.context.scene
 	pieces = {}
 	for kit in scene_def["kits"]:
-		path = os.path.join(ROOT, "assets", "epiphany", kit + ".blend")
+		path = os.path.join(ROOT, "art", "blender", kit + ".blend")
 		if not os.path.exists(path):
 			continue
 		with bpy.data.libraries.load(path) as (src, dst):

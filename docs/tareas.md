@@ -1591,8 +1591,8 @@ El overworld de 3 × 3 pantallas quedó hecho para una sola mazmorra y se siente
 - [ ] Terreno orgánico, decoración y navmesh regenerados
 - [ ] Tests y escenarios al día
 - [ ] Recorrerlo (Daniel)
-- [ ] Viaje rápido: portales y mockup de la pantalla
-  6 portales que se activan al pasar (flag); se elige el destino en la pestaña Mapa o parado en un portal; viajan todos los players. Mockup en el canvas antes de construir.
+- [x] Viaje rápido: portales y mockup de la pantalla
+  6 portales que se activan al pasar (flag); se elige el destino en la pestaña Mapa o parado en un portal; viajan todos los players. Mockup: artboard 'Pausa · Mapa (overworld nuevo) con portales de viaje' (Pause_Map_Travel) en https://claude.ai/artifact/UuD7d42rAXuYTBcMd9iZJy; falta que Daniel lo apruebe.
 
 ## M8 — Contenido de mazmorra  (8/8)
 
@@ -3460,7 +3460,7 @@ El overworld es el hub: la pluma (11.35, templo) tiene que abrir ahí cosas y ca
 
 **Relacionadas:** 11.35 Saltar: ítem tipo Pluma de Roc
 
-## M12 — Assets propios (Blender)  (6/16)
+## M12 — Assets propios (Blender)  (6/17)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -3856,6 +3856,22 @@ Pasar el overworld real al estilo de la variante 6 de 12.14: bordes de andenes, 
 La variante 9 de 12.14 (volumen + marching cubes armado en Godot con tools/build_prueba_mc.gd y data/kits/shaders/terreno_mc.gdshader) gustó más que la 6, pero le faltan un par de correcciones. Retomarla cuando termine el MVP.
 
 - [ ] Preguntar al usuario qué corregir de la 9
+
+### 12.17 Estilos por mazmorra · En curso
+
+**Prioridad:** media · **Etiquetas:** `arte`, `mazmorra`
+
+Cada mazmorra con su propio estilo sobre el mismo kit (mismas piezas y colisiones): piedra, muro, remate, piso, columnas y relieve. D1 Templo (piedra lavanda, chakana, ojos), D2 Chullpa (piedra de campo con barro, cornisa, nichos con cráneos, tierra apisonada), D3 Laguna (bloques grises con musgo, ondas, charcos), D4 Cumbre (basalto, nieve y carámbanos, soles de oro, escarcha). tools/blender/build_templo.py -- <estilo> publica templo_<estilo>.glb.
+
+- [x] Prueba: la misma sala en los cuatro estilos
+  diorama.py -- <png> templo templo_<estilo>.
+- [ ] Elección y ajustes del usuario
+- [ ] Kit de cada mazmorra en Godot
+  build_temple_kit.gd por estilo (chullpa_kit.tres…) y levels/chullpa.tscn con el suyo.
+- [ ] Luz y ambiente por mazmorra
+  WorldEnvironment y luces: cálida y polvorienta (chullpa), fría y húmeda (laguna), blanca y ventosa (cumbre).
+- [ ] Props por estilo
+  Braseros, estandartes, puertas y vasijas con la piedra y los motivos de cada mazmorra.
 
 ## M13 — Co-op local (estilo Four Swords)  (0/9)
 
