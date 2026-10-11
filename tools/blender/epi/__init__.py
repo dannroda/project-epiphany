@@ -294,23 +294,29 @@ def grass_cap(p, z0, z1, half=1.0, lip=True):
 			grass_lip(p, facing, z1, half, z1 - z0 + 0.03)
 
 
-def grass_lip(p, facing, z1, half, shallow, segments=9, lean=0.25):
-	"""Una sola cara por lado (las puntas de abajo se corren hacia afuera en proporción a cuánto cuelgan, así es plana)."""
-	right = Vector((0, 0, 1)).cross(facing)
-	top = z1 - 0.004
-	points = [(-half, 0.0), (half, 0.0)]
+def grass_lip(p, facing, z1, half, shallow, segments=9):
+	points = []
 	for i in range(segments, -1, -1):
 		end = i in (0, segments)
 		drop = shallow + 0.03 if end else (shallow + p.rng.random() * 0.06 if i % 2 else shallow + 0.14 + p.rng.random() * 0.2)
 		points.append((-half + 2 * half * i / segments, drop))
+	face = hanging_face(p, facing, z1 - 0.004, half, points)
+	p.paint([face], "pasto", "DARK", z_range=(z1 - shallow - 0.4, z1))
+	return [face]
+
+
+def hanging_face(p, facing, top, half, bottom, lean=0.25):
+	"""Una sola cara del lado facing, de top hacia abajo hasta bottom ([(u, cuánto cuelga)], de +u a -u); las puntas de
+	abajo se corren hacia afuera en proporción a cuánto cuelgan, así es plana. Reemplaza el costado de una caja."""
+	right = Vector((0, 0, 1)).cross(facing)
+	points = [(-half, 0.0), (half, 0.0)] + bottom
 	verts = [p.bm.verts.new(facing * (half + lean * d) + right * u + Vector((0, 0, top - d))) for u, d in points]
 	face = p.bm.faces.new(verts)
 	face.normal_update()
 	if face.normal.dot(facing) < 0:
 		face.normal_flip()
 	p.fixed.add(face)
-	p.paint([face], "pasto", "DARK", z_range=(top - shallow - 0.4, top))
-	return [face]
+	return face
 
 
 def eye(p, center, size, depth=0.03, pupil_swatch=None):

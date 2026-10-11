@@ -5,6 +5,7 @@ import math
 import os
 import sys
 
+import bmesh
 from mathutils import Matrix, Vector
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -79,7 +80,25 @@ piece("piso_grieta", 4, lambda p: slabs(p, crack=True))
 def wall_block(p):
 	epi.stone_wall(p, -0.5, TOP - 0.2, swatch=STONE, rows=(0.45, 0.12), widths=(0.6, 0.4), mortar="gris_5", depth=0.05, vary=0.07)
 	band = p.box(-1.0, 1.0, -1.0, 1.0, TOP - 0.2, TOP)
-	p.paint(band, STONE, "LIGHT", vary=0.03)
+	p.paint([f for f in band if f.normal.z > 0.5], STONE, "LIGHT", vary=0.03)
+	# Solo el frente (-Y, hacia la cámara): los costados casi siempre quedan contra otra pared y el fondo no se ve.
+	bmesh.ops.delete(p.bm, geom=[f for f in band if f.normal.y < -0.5], context="FACES_ONLY")
+	p.paint([f for f in band if f.is_valid and abs(f.normal.z) < 0.5], STONE, "LIGHT", vary=0.03)
+	for facing in [Vector((0, -1, 0))]:
+		p.paint([epi.hanging_face(p, facing, TOP, 1.0, chakana_steps(), lean=0.15)], STONE, "LIGHT", vary=0.03)
+
+
+def chakana_steps(half=1.0, shallow=0.22, step=-0.07, run=0.13):
+	"""Borde de abajo escalonado como la chakana: dos escalones que suben hacia el centro de cada lado y dejan ver el
+	núcleo oscuro del muro (más abajo lo taparía el frente de las piedras)."""
+	points = []
+	edges = [-half, -half + 0.45, -half + 0.45 + run, -half + 0.45 + 2 * run]
+	drops = [shallow, shallow + step, shallow + 2 * step]
+	profile = [(edges[0], drops[0]), (edges[1], drops[0]), (edges[1], drops[1]), (edges[2], drops[1]), (edges[2], drops[2])]
+	mirrored = [(-u, d) for u, d in reversed(profile)]
+	for u, d in reversed(profile + mirrored):
+		points.append((u, d))
+	return points
 
 
 def pared_nicho(p):
