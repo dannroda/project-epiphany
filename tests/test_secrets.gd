@@ -58,14 +58,14 @@ func test_find_the_three_secrets_with_everything() -> void:
 	await tree.physics_frame
 	await _press(tree, &"item_1")
 	await tree.create_timer(1.0).timeout
-	player.global_position = Vector3(-4, 0, 16)
+	player.global_position = Vector3(-52, 0, 16)
 	await tree.create_timer(2.6).timeout
 	assert_eq(wall.is_broken, true, "una bomba abre la gruta")
 	await _open_chest(tree, level.get_node(^"GrottoChest"), player)
 	assert_eq(state.inventory.has(&"potion"), true, "la gruta guarda la poción")
 
 	var grove_gate := level.get_node(^"GroveGate") as Gate
-	player.global_position = Vector3(22, 0, 0)
+	player.global_position = Vector3(-26, 0, 16)
 	await tree.physics_frame
 	var block_a := level.get_node(^"GroveBlockA") as PushBlock
 	var block_b := level.get_node(^"GroveBlockB") as PushBlock
@@ -80,11 +80,11 @@ func test_find_the_three_secrets_with_everything() -> void:
 
 	var eye := level.get_node(^"CliffEye") as EyeSwitch
 	var cliff_gate := level.get_node(^"CliffGate") as Gate
-	player.global_position = Vector3(26, 0, -15)
+	player.global_position = Vector3(74, 0, -31)
 	await tree.physics_frame
 	var arrow: Projectile = ARROW.instantiate()
 	level.add_child(arrow)
-	var from := Vector3(26, 1.2, -16)
+	var from := Vector3(74, 1.2, -32)
 	var target := eye.eye.global_position
 	var info := Items.get_item(&"bow").make_damage(player)
 	info.team = EntityConfig.Team.PLAYER

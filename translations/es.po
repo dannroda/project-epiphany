@@ -646,6 +646,33 @@ msgstr "Gruta oculta"
 msgid "PLACE_FIRST_CLEARING"
 msgstr "Claro del inicio"
 
+msgid "PLACE_HILLS"
+msgstr "Cerros"
+
+msgid "PLACE_SPRING"
+msgstr "Vertiente"
+
+msgid "PLACE_RAVINE"
+msgstr "Quebrada"
+
+msgid "PLACE_SUMMIT"
+msgstr "Cumbre"
+
+msgid "PLACE_NECROPOLIS"
+msgstr "Necrópolis"
+
+msgid "PLACE_LOOKOUT"
+msgstr "Mirador"
+
+msgid "PLACE_CACTUS_FIELD"
+msgstr "Cardonal"
+
+msgid "PLACE_LAGOON"
+msgstr "Laguna"
+
+msgid "PLACE_MARSH"
+msgstr "Bañado"
+
 msgid "PLACE_TEMPLE_VALLEY"
 msgstr "Valle del templo"
 

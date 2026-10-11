@@ -52,11 +52,11 @@ func test_reflect_the_light_into_the_seal_and_enter() -> void:
 	assert_eq(state.equipment[ItemData.Category.SHIELD], &"shield_mirror", "pre_temple trae el escudo espejo")
 	assert_eq(seal.is_open, false, "el sello cierra el templo")
 
-	player.global_position = Vector3(0, 0, -17)
+	player.global_position = Vector3(-48, 0, -33)
 	await tree.create_timer(0.3).timeout
 	assert_eq(await _walk_into(tree, &"move_forward", DUNGEON), false, "con el sello cerrado no se entra")
 
-	player.global_position = Vector3(8, 0, -11)
+	player.global_position = Vector3(-40, 0, -27)
 	player.model.look_at(player.model.global_position - Vector3(-1, 0, -1).normalized(), Vector3.UP)
 	player.movement_state.blackboard.set_var("is_blocking", true)
 	use_gamepad()
@@ -71,7 +71,7 @@ func test_reflect_the_light_into_the_seal_and_enter() -> void:
 	assert_eq(state.get_flag(&"ow_temple_seal_open"), true)
 	await tree.create_timer(1.8).timeout
 
-	player.global_position = Vector3(0, 0, -17)
+	player.global_position = Vector3(-48, 0, -33)
 	await tree.create_timer(0.3).timeout
 	assert_true(await _walk_into(tree, &"move_forward", DUNGEON), "abierto, la entrada lleva a la mazmorra")
 	assert_true(await _walk_into(tree, &"move_backward", OVERWORLD), "y se vuelve al overworld")
@@ -95,7 +95,7 @@ func test_tremors_near_the_temple() -> void:
 	tremors.trembled.connect(func() -> void: count[0] += 1)
 	await tree.create_timer(2.0).timeout
 	assert_eq(count[0], 0, "lejos del templo no tiembla")
-	player.global_position = Vector3(0, 0, -12)
+	player.global_position = Vector3(-48, 0, -28)
 	await tree.create_timer(2.0).timeout
 	assert_eq(count[0], 1, "al acercarse, un temblor suave")
 	state.reset()

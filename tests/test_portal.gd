@@ -45,7 +45,7 @@ func test_enter_and_leave_the_temple_keeping_the_dungeon() -> void:
 	await tree.scene_changed
 	for enemy in tree.get_nodes_in_group(&"enemies"):
 		enemy.free()
-	_player(tree).global_position = Vector3(0, 0, -16)
+	_player(tree).global_position = Vector3(-48, 0, -32)
 	await tree.create_timer(0.3).timeout
 
 	assert_true(await _walk_into(tree, &"move_forward", DUNGEON), "la puerta del templo lleva a la mazmorra")
@@ -62,7 +62,7 @@ func test_enter_and_leave_the_temple_keeping_the_dungeon() -> void:
 
 	assert_true(await _walk_into(tree, &"move_backward", OVERWORLD), "la salida vuelve al overworld")
 	assert_eq(state.current_dungeon, &"", "fuera de la mazmorra")
-	assert_true(_player(tree).global_position.distance_to(Vector3(0, 0, -16)) < 0.8, "aparece frente al templo (%s)" % _player(tree).global_position)
+	assert_true(_player(tree).global_position.distance_to(Vector3(-48, 0, -32)) < 0.8, "aparece frente al templo (%s)" % _player(tree).global_position)
 	camera = tree.current_scene.get_node(^"TopDownCamera") as TopDownCamera
 	assert_true((camera.global_position - camera.offset).distance_to(_player(tree).global_position) < 1.0, "la cámara arranca sobre el player")
 

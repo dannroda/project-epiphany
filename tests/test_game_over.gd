@@ -52,7 +52,7 @@ func test_save_and_quit_keeps_the_checkpoint() -> void:
 	state.reset()
 	await saves.new_game(1)
 	var player := tree.get_first_node_in_group(&"player") as Node3D
-	player.global_position = Vector3(0, 0, 0)
+	player.global_position = Vector3(-48, 0, -16)
 	var screen := await _die(tree)
 	(screen.find_child("SaveAndQuit", true, false) as Button).pressed.emit()
 	await tree.scene_changed
@@ -61,7 +61,7 @@ func test_save_and_quit_keeps_the_checkpoint() -> void:
 	state.reset()
 	await saves.load_game(1)
 	player = tree.get_first_node_in_group(&"player") as Node3D
-	assert_true(player.global_position.distance_to(Vector3(0, 0, 16)) < 0.6, "carga en el punto de control, no donde cayó")
+	assert_true(player.global_position.distance_to(Vector3(-48, 0, 16)) < 0.6, "carga en el punto de control, no donde cayó")
 	saves.delete_slot(0)
 	saves.delete_slot(1)
 	saves.save_dir = saves_dir

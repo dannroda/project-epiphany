@@ -1583,16 +1583,19 @@ Hecho 2026-10-08: `start` ahora arranca en el overworld (escena principal del ju
 El overworld de 3 × 3 pantallas quedó hecho para una sola mazmorra y se siente encajonado. Rediseñarlo como hub (referencia: análisis del Light World de A Link to the Past, Overworld Overload partes 1 y 2): regiones núcleo con su mazmorra unidas por zonas de conexión, paredes de terreno y puertas de ítem que abren atajos o regiones nuevas, recorrido y ritmo revisados. Entra la Chullpa (11.60) y quedan lugares para las que vengan.
 
 - [x] Propuesta de layout (variantes) y elección
-  Propuesta en https://claude.ai/artifact/8N6Sst4jMsTDTgKLWdqm4B. Daniel (2026-10-11): el tamaño no importa, 4 mazmorras, viaje rápido ahora. Propuesta D, la mezcla: quebrada de la B, anillos de la A, terrazas de la C solo al este, 6 portales. Falta que la apruebe.
+  Propuesta en https://claude.ai/artifact/8N6Sst4jMsTDTgKLWdqm4B. Daniel (2026-10-11): el tamaño no importa, 4 mazmorras, viaje rápido ahora. Propuesta D, la mezcla: quebrada de la B, anillos de la A, terrazas de la C solo al este, 6 portales. Aprobada por Daniel.
 - [x] Diseño elegido en el GDD (§7): regiones, gating, ritmo
   GDD §7 y §7.1 (gdd#overworld-layout): mapa de la variante D, tabla de regiones, cadena de mazmorras, gating, viaje rápido y ritmo; §6.2 con D2–D4.
-- [ ] Blockout del GridMap nuevo
+- [x] Blockout del GridMap nuevo
+  debug/tmp/ow/build_layout.gd (generador de una vez): 7 × 5 pantallas de 12 × 8 celdas; lugares viejos mudados con su contenido (celdas y nodos), regiones nuevas lisas con AreaZone, quebrada y laguna de Abismo con Pit por orilla (Pit vuelve al marcador más cercano), escalones de una vía como tiras de Escalón, angostura de una celda. world_rect del mapa (−85, −41, 170, 82). Tests de overworld al día (rutas de las dos orillas, angostura). GDD §7.1 (Blockout del layout D).
 - [ ] Mudar los lugares existentes y la entrada de la Chullpa
 - [ ] Terreno orgánico, decoración y navmesh regenerados
 - [ ] Tests y escenarios al día
 - [ ] Recorrerlo (Daniel)
-- [x] Viaje rápido: portales y mockup de la pantalla
-  6 portales que se activan al pasar (flag); se elige el destino en la pestaña Mapa o parado en un portal; viajan todos los players. Mockup: artboard 'Pausa · Mapa (overworld nuevo) con portales de viaje' (Pause_Map_Travel) en https://claude.ai/artifact/UuD7d42rAXuYTBcMd9iZJy; falta que Daniel lo apruebe.
+- [x] Viaje rápido: mockup de la pantalla
+  Artboard 'Pausa · Mapa (overworld nuevo) con portales de viaje' (Pause_Map_Travel) en https://claude.ai/artifact/UuD7d42rAXuYTBcMd9iZJy. Aprobado por Daniel.
+- [ ] Viaje rápido: portales y viaje desde el Mapa
+  6 portales (Claro, Pradera, Explanada, Necrópolis, Bañado, Cumbre) que se activan al pasar (flag); se elige el destino en la pestaña Mapa o parado en un portal; viajan todos los players. Pantalla tal cual Pause_Map_Travel.
 
 ## M8 — Contenido de mazmorra  (8/8)
 

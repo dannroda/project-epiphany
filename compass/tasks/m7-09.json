@@ -1,7 +1,7 @@
 {
   "checklist": [
     {
-      "detail": "Propuesta en https://claude.ai/artifact/8N6Sst4jMsTDTgKLWdqm4B. Daniel (2026-10-11): el tamaño no importa, 4 mazmorras, viaje rápido ahora. Propuesta D, la mezcla: quebrada de la B, anillos de la A, terrazas de la C solo al este, 6 portales. Falta que la apruebe.",
+      "detail": "Propuesta en https://claude.ai/artifact/8N6Sst4jMsTDTgKLWdqm4B. Daniel (2026-10-11): el tamaño no importa, 4 mazmorras, viaje rápido ahora. Propuesta D, la mezcla: quebrada de la B, anillos de la A, terrazas de la C solo al este, 6 portales. Aprobada por Daniel.",
       "done": true,
       "text": "Propuesta de layout (variantes) y elección"
     },
@@ -11,7 +11,8 @@
       "text": "Diseño elegido en el GDD (§7): regiones, gating, ritmo"
     },
     {
-      "done": false,
+      "detail": "debug/tmp/ow/build_layout.gd (generador de una vez): 7 × 5 pantallas de 12 × 8 celdas; lugares viejos mudados con su contenido (celdas y nodos), regiones nuevas lisas con AreaZone, quebrada y laguna de Abismo con Pit por orilla (Pit vuelve al marcador más cercano), escalones de una vía como tiras de Escalón, angostura de una celda. world_rect del mapa (−85, −41, 170, 82). Tests de overworld al día (rutas de las dos orillas, angostura). GDD §7.1 (Blockout del layout D).",
+      "done": true,
       "text": "Blockout del GridMap nuevo"
     },
     {
@@ -31,9 +32,14 @@
       "text": "Recorrerlo (Daniel)"
     },
     {
-      "detail": "6 portales que se activan al pasar (flag); se elige el destino en la pestaña Mapa o parado en un portal; viajan todos los players. Mockup: artboard 'Pausa · Mapa (overworld nuevo) con portales de viaje' (Pause_Map_Travel) en https://claude.ai/artifact/UuD7d42rAXuYTBcMd9iZJy; falta que Daniel lo apruebe.",
+      "detail": "Artboard 'Pausa · Mapa (overworld nuevo) con portales de viaje' (Pause_Map_Travel) en https://claude.ai/artifact/UuD7d42rAXuYTBcMd9iZJy. Aprobado por Daniel.",
       "done": true,
-      "text": "Viaje rápido: portales y mockup de la pantalla"
+      "text": "Viaje rápido: mockup de la pantalla"
+    },
+    {
+      "detail": "6 portales (Claro, Pradera, Explanada, Necrópolis, Bañado, Cumbre) que se activan al pasar (flag); se elige el destino en la pestaña Mapa o parado en un portal; viajan todos los players. Pantalla tal cual Pause_Map_Travel.",
+      "done": false,
+      "text": "Viaje rápido: portales y viaje desde el Mapa"
     }
   ],
   "code": "7.9",
@@ -51,5 +57,5 @@
   ],
   "test": "",
   "title": "Rediseño del overworld como hub de varias mazmorras",
-  "updated_at": "2026-10-11T22:42:17.179Z"
+  "updated_at": "2026-10-11T23:31:03.338Z"
 }

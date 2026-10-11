@@ -43,25 +43,59 @@ func test_walk_every_zone_without_falling_or_sticking() -> void:
 	var at := func(axis: int, sign_: float, value: float) -> Callable:
 		return func() -> bool: return (player.global_position[axis] - value) * sign_ >= 0.0
 	var route := [
-		[&"move_forward", at.call(2, -1.0, 0.0), "PLACE_MEADOW"],
-		[&"move_left", at.call(0, -1.0, -24.0), "PLACE_CAVE"],
-		[&"move_forward", at.call(2, -1.0, -16.0), "PLACE_SANCTUARY"],
-		[&"move_right", at.call(0, 1.0, 0.0), "PLACE_TEMPLE_ENTRANCE"],
-		[&"move_backward", at.call(2, 1.0, 0.0), "PLACE_MEADOW"],
-		[&"move_right", at.call(0, 1.0, 24.0), "PLACE_GROVE"],
-		[&"move_forward", at.call(2, -1.0, -14.0), "PLACE_EYE_CRAG"],
-		[&"move_backward", at.call(2, 1.0, 0.0), "PLACE_GROVE"],
-		[&"move_left", at.call(0, -1.0, 0.0), "PLACE_MEADOW"],
-		[&"move_backward", at.call(2, 1.0, 16.0), "PLACE_FIRST_CLEARING"],
-		[&"move_left", at.call(0, -1.0, -24.0), "PLACE_HIDDEN_GROTTO"],
+		[&"move_forward", at.call(2, -1.0, -16.0), "PLACE_MEADOW"],
+		[&"move_left", at.call(0, -1.0, -72.0), "PLACE_HILLS"],
+		[&"move_forward", at.call(2, -1.0, -32.0), "PLACE_SANCTUARY"],
+		[&"move_right", at.call(0, 1.0, -48.0), "PLACE_TEMPLE_ENTRANCE"],
+		[&"move_backward", at.call(2, 1.0, -16.0), "PLACE_MEADOW"],
+		[&"move_right", at.call(0, 1.0, -24.0), "PLACE_MEADOW"],
+		[&"move_backward", at.call(2, 1.0, 16.0), "PLACE_GROVE"],
+		[&"move_left", at.call(0, -1.0, -48.0), "PLACE_FIRST_CLEARING"],
+		[&"move_backward", at.call(2, 1.0, 32.0), "PLACE_LAGOON"],
+		[&"move_forward", at.call(2, -1.0, 16.0), "PLACE_FIRST_CLEARING"],
+		[&"move_left", at.call(0, -1.0, -72.0), "PLACE_HIDDEN_GROTTO"],
+		[&"move_backward", at.call(2, 1.0, 32.0), "PLACE_SPRING"],
 	]
+	await _walk_route(tree, player, route)
+	assert_eq(tree.get_first_node_in_group(&"hud").area_label.text, tr("PLACE_SPRING"), "el cartel muestra la última zona")
+	state.reset()
+
+
+func test_walk_the_east_bank() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	state.reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	for enemy in tree.get_nodes_in_group(&"enemies"):
+		enemy.free()
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	player.global_position = Vector3(48, 0, -16)
+	await tree.create_timer(0.5).timeout
+	assert_eq(AreaZone._current.display_name, "PLACE_NECROPOLIS", "arranca en la Necrópolis")
+	var at := func(axis: int, sign_: float, value: float) -> Callable:
+		return func() -> bool: return (player.global_position[axis] - value) * sign_ >= 0.0
+	var route := [
+		[&"move_right", at.call(0, 1.0, 72.0), "PLACE_LOOKOUT"],
+		[&"move_forward", at.call(2, -1.0, -30.0), "PLACE_EYE_CRAG"],
+		[&"move_backward", at.call(2, 1.0, -16.0), "PLACE_LOOKOUT"],
+		[&"move_left", at.call(0, -1.0, 48.0), "PLACE_NECROPOLIS"],
+		[&"move_backward", at.call(2, 1.0, 16.0), "PLACE_CACTUS_FIELD"],
+		[&"move_right", at.call(0, 1.0, 72.0), "PLACE_CACTUS_FIELD"],
+		[&"move_backward", at.call(2, 1.0, 32.0), "PLACE_MARSH"],
+		[&"move_left", at.call(0, -1.0, 24.0), "PLACE_LAGOON"],
+	]
+	await _walk_route(tree, player, route)
+	state.reset()
+
+
+func _walk_route(tree: SceneTree, player: PlayerCharacter, route: Array) -> void:
 	for leg in route:
 		var result: Array = await _walk_until(tree, player, leg[0], leg[1])
 		assert_true(result[0], "llega a %s sin trabarse (quedó en %s)" % [leg[2], player.global_position.snappedf(0.1)])
 		assert_eq(result[1], false, "no cae camino a %s" % leg[2])
 		assert_eq(AreaZone._current.display_name if AreaZone._current else "", leg[2], "el HUD nombra la zona")
-	assert_eq(tree.get_first_node_in_group(&"hud").area_label.text, tr("PLACE_HIDDEN_GROTTO"), "el cartel muestra la última zona")
-	state.reset()
+
 
 
 func test_abyss_has_no_floor_but_a_pit() -> void:
@@ -71,10 +105,10 @@ func test_abyss_has_no_floor_but_a_pit() -> void:
 	await tree.scene_changed
 	await tree.physics_frame
 	var space := (tree.current_scene as Node3D).get_world_3d().direct_space_state
-	for z in [-20.0, -18.0]:
-		var down := PhysicsRayQueryParameters3D.create(Vector3(24, 2, z), Vector3(24, -0.8, z), 1)
-		assert_true(space.intersect_ray(down).is_empty(), "el abismo no tiene piso (z %.0f)" % z)
-	var high := PhysicsRayQueryParameters3D.create(Vector3(24, 1.0, -14), Vector3(24, 1.0, -21), 1)
+	for point: Vector3 in [Vector3(72, 0, -36), Vector3(72, 0, -34), Vector3(0, 0, -16), Vector3(0, 0, 0), Vector3(-30, 0, 32)]:
+		var down := PhysicsRayQueryParameters3D.create(point + Vector3.UP * 2.0, point + Vector3.DOWN * 0.8, 1)
+		assert_true(space.intersect_ray(down).is_empty(), "el abismo no tiene piso (%s)" % point)
+	var high := PhysicsRayQueryParameters3D.create(Vector3(72, 1.0, -30), Vector3(72, 1.0, -37), 1)
 	assert_true(space.intersect_ray(high).is_empty(), "a la altura de una flecha pasa por arriba")
 	assert_true(tree.current_scene.get_node(^"RiscoPit") is Pit, "abajo hay un Pit")
 	tree.root.get_node(^"GameState").reset()

@@ -38,12 +38,12 @@ func test_the_camera_follows_the_player_with_the_hole() -> void:
 	var camera := tree.current_scene.get_node(^"TopDownCamera") as TopDownCamera
 	assert_true(Vector3(camera.player_hole.x, camera.player_hole.y, camera.player_hole.z).distance_to(player.global_position) < 0.5, "sigue al player")
 	assert_eq(camera.player_hole.w, 0.0, "en el claro nada lo tapa: sin agujero")
-	player.global_position = Vector3(-6, player.global_position.y, 6.2)
+	player.global_position = Vector3(-54, player.global_position.y, 6.2)
 	await tree.create_timer(0.1).timeout
 	assert_true(camera.player_hole.w > 0.0 and camera.player_hole.w < 1.0, "detrás del muro el agujero se va abriendo (%.2f)" % camera.player_hole.w)
 	await tree.create_timer(0.3).timeout
 	assert_eq(camera.player_hole.w, 1.0, "y queda abierto")
-	player.global_position = Vector3(-6, player.global_position.y, 3.0)
+	player.global_position = Vector3(-54, player.global_position.y, 3.0)
 	await tree.create_timer(0.4).timeout
 	assert_eq(camera.player_hole.w, 0.0, "lejos del muro se cierra")
 

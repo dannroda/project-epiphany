@@ -646,6 +646,33 @@ msgstr "Hidden Grotto"
 msgid "PLACE_FIRST_CLEARING"
 msgstr "First Clearing"
 
+msgid "PLACE_HILLS"
+msgstr "Hills"
+
+msgid "PLACE_SPRING"
+msgstr "Spring"
+
+msgid "PLACE_RAVINE"
+msgstr "Ravine"
+
+msgid "PLACE_SUMMIT"
+msgstr "Summit"
+
+msgid "PLACE_NECROPOLIS"
+msgstr "Necropolis"
+
+msgid "PLACE_LOOKOUT"
+msgstr "Lookout"
+
+msgid "PLACE_CACTUS_FIELD"
+msgstr "Cactus Field"
+
+msgid "PLACE_LAGOON"
+msgstr "Lagoon"
+
+msgid "PLACE_MARSH"
+msgstr "Marsh"
+
 msgid "PLACE_TEMPLE_VALLEY"
 msgstr "Temple Valley"
 

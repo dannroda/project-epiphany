@@ -139,7 +139,7 @@ func test_meadow_skeletons_reach_the_player() -> void:
 	await tree.scene_changed
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	player.health.make_invulnerable(999.0)
-	player.global_position = Vector3(0, 0.1, 2)
+	player.global_position = Vector3(-48, 0.1, -14)
 	var until := Time.get_ticks_msec() + 6000
 	var enemies := [^"Skeleton1", ^"Skeleton2", ^"Skeleton3"].map(func(path: NodePath) -> Node: return tree.current_scene.get_node(path))
 	var near := func() -> bool:

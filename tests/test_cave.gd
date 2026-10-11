@@ -39,7 +39,7 @@ func test_get_the_bombs_and_break_the_practice_wall() -> void:
 	assert_eq(shrine_wall.is_broken, false, "el paso al santuario está cerrado")
 
 	var space := (level as Node3D).get_world_3d().direct_space_state
-	var to_shrine := PhysicsRayQueryParameters3D.create(Vector3(-24, 1, -5), Vector3(-24, 1, -12), 1)
+	var to_shrine := PhysicsRayQueryParameters3D.create(Vector3(-72, 1, -21), Vector3(-72, 1, -28), 1)
 	assert_true(not space.intersect_ray(to_shrine).is_empty(), "sin bombas no se pasa al santuario")
 
 	var chest := level.get_node(^"CaveChest") as Chest
@@ -62,7 +62,7 @@ func test_get_the_bombs_and_break_the_practice_wall() -> void:
 	await _press(tree, &"item_1")
 	await tree.create_timer(1.0).timeout
 	assert_eq(tree.get_nodes_in_group(&"bombs").size(), 1, "pone una bomba frente al muro")
-	player.global_position = Vector3(-26, 0, -2)
+	player.global_position = Vector3(-74, 0, -18)
 	await tree.create_timer(2.6).timeout
 	assert_eq(practice.is_broken, true, "la bomba rompe el muro de práctica")
 	assert_eq(state.get_flag(&"ow_cave_practice_wall"), true)
