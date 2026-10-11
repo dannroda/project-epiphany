@@ -16,6 +16,12 @@ extends Camera3D
 ## Cuánto puede alejarse el foco del player, para que no salga de cuadro.
 @export var max_lock_offset := 4.0
 
+@export_group("Mirar")
+## Metros que el stick derecho corre el foco para estudiar la zona (puzzles); sin objetivo fijado.
+@export var look_distance := 5.0
+@export var look_speed := 5.0
+@export var look_deadzone := 0.2
+
 @export_group("Apuntado")
 ## Metros que se adelanta el foco hacia donde apunta un ítem a distancia.
 @export var aim_look_ahead := 3.0
@@ -60,6 +66,7 @@ var revealing := false
 var focus := Vector3.ZERO
 var _shake_time := 0.0
 var _kick := Vector2.ZERO
+var _look := Vector3.ZERO
 var _look_ahead := Vector3.ZERO
 var _mask: Node3D
 var _skip := false
@@ -90,6 +97,7 @@ func reset_room() -> void:
 ## Sin deslizarse: al aparecer en otra escena o punto, la cámara arranca sobre el player.
 func snap_to_target() -> void:
 	_look_ahead = Vector3.ZERO
+	_look = Vector3.ZERO
 	focus = target_node.global_position
 	global_position = focus + offset
 
@@ -265,7 +273,14 @@ func _physics_process(delta: float) -> void:
 		desired_look_ahead = target_node.aim.get_direction() * aim_look_ahead
 	_look_ahead = _look_ahead.lerp(desired_look_ahead, 1.0 - exp(-look_ahead_speed * delta))
 
-	focus = player_position + desired_offset + _look_ahead
+	var desired_look := Vector3.ZERO
+	var steering_light := target_node.is_blocking() and target_node.is_catching_light()
+	if not (locked_target and is_instance_valid(locked_target)) and not steering_light:
+		var stick := Input.get_vector(&"look_left", &"look_right", &"look_up", &"look_down", look_deadzone)
+		desired_look = Vector3(stick.x, 0.0, stick.y) * look_distance
+	_look = _look.lerp(desired_look, 1.0 - exp(-look_speed * delta))
+
+	focus = player_position + desired_offset + _look_ahead + _look
 	if room:
 		focus = _clamp(focus)
 	global_position = global_position.lerp(focus + offset, 1.0 - exp(-smooth_speed * delta))

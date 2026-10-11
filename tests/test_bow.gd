@@ -62,24 +62,6 @@ func test_shoot_eye_switch_facing_it() -> void:
 	state.reset()
 
 
-func test_shoot_with_right_stick() -> void:
-	var setup: Array = await _setup(10)
-	var tree: SceneTree = setup[0]
-	var player: PlayerCharacter = setup[2]
-	var eye: EyeSwitch = setup[3]
-	_face(player, Vector3.RIGHT)
-	var stick := InputEventJoypadMotion.new()
-	stick.axis = JOY_AXIS_RIGHT_Y
-	stick.axis_value = -1.0
-	Input.parse_input_event(stick)
-	await tree.physics_frame
-	await _shoot(tree, player)
-	stick.axis_value = 0.0
-	Input.parse_input_event(stick)
-	assert_eq(eye.active, true, "el stick derecho apunta aunque el player mire a otro lado")
-	setup[1].reset()
-
-
 func test_no_arrows_denies() -> void:
 	var setup: Array = await _setup(0)
 	var tree: SceneTree = setup[0]

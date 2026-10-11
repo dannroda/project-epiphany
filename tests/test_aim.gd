@@ -35,9 +35,8 @@ func test_sources() -> void:
 
 	_stick(1.0, 0.0)
 	await tree.physics_frame
-	var stick_dir := aim.get_direction()
-	assert_eq(aim.source, Aim.Source.STICK)
-	assert_true(stick_dir.dot(Vector3.RIGHT) > 0.9, str(stick_dir))
+	aim.get_direction()
+	assert_eq(aim.source, Aim.Source.FACING, "el stick derecho ya no apunta")
 
 	player.targeting.lock_best_target()
 	var target_dir := aim.get_direction()
@@ -57,16 +56,63 @@ func test_mouse_ray_hits_ground_under_screen_point() -> void:
 	assert_true(hit.distance_to(player.global_position + Vector3(2, 1, -1)) < 0.05, str(hit))
 
 
+func _move(x: float, y: float) -> void:
+	for pair in [[JOY_AXIS_LEFT_X, x], [JOY_AXIS_LEFT_Y, y]]:
+		var motion := InputEventJoypadMotion.new()
+		motion.axis = pair[0]
+		motion.axis_value = pair[1]
+		Input.parse_input_event(motion)
+
+
 func test_aiming_turns_model() -> void:
 	var setup: Array = await _load()
 	var tree: SceneTree = setup[0]
 	var player: PlayerCharacter = setup[1]
 	player.model.rotation = Vector3.ZERO
 	player.aim.aiming = true
-	_stick(1.0, 0.0)
+	player.aim.move_aims = true
+	_move(1.0, 0.0)
 	for i in 30:
 		await tree.physics_frame
 	var forward := player.model.global_basis.z
 	assert_true(forward.dot(Vector3.RIGHT) > 0.9, "el modelo mira hacia donde apunta: %s" % forward)
 	player.aim.aiming = false
+	player.aim.move_aims = false
+	_move(0.0, 0.0)
+
+
+func test_mouse_stops_aiming_once_the_gamepad_is_used() -> void:
+	var setup: Array = await _load()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	var motion := InputEventMouseMotion.new()
+	motion.relative = Vector2(20, 0)
+	tree.root.get_node(^"InputDevice")._input(motion)
+	player.aim._input(motion)
+	assert_true(player.aim.mouse_aims(), "con el mouse apunta el mouse")
+	_stick(0.8, 0.0)
+	await tree.process_frame
 	_stick(0.0, 0.0)
+	await tree.process_frame
+	assert_eq(player.aim.mouse_aims(), false, "al tocar el gamepad deja de apuntar el mouse")
+
+
+func test_right_stick_moves_the_camera() -> void:
+	var setup: Array = await _load()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	var camera := tree.get_first_node_in_group(&"room_camera") as TopDownCamera
+	if camera == null:
+		camera = player.get_viewport().get_camera_3d() as TopDownCamera
+	player.targeting.clear()
+	for i in 30:
+		await tree.physics_frame
+	var before := camera.focus
+	_stick(0.0, -1.0)
+	for i in 60:
+		await tree.physics_frame
+	assert_true(before.z - camera.focus.z > 2.0, "el foco se corre hacia arriba (%.1f m)" % (before.z - camera.focus.z))
+	_stick(0.0, 0.0)
+	for i in 90:
+		await tree.physics_frame
+	assert_true(absf(camera.focus.z - before.z) < 0.3, "y vuelve al soltar")

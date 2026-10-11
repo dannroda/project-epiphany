@@ -1,15 +1,16 @@
 class_name Aim
 extends Node
-## Una sola dirección de apuntado: objetivo fijado > stick derecho > stick izquierdo al tensar > mouse > hacia donde mira.
+## Una sola dirección de apuntado: objetivo fijado > stick izquierdo al tensar > mouse > hacia donde mira.
+## El stick derecho no apunta: mueve la cámara (TopDownCamera). El mouse solo apunta si lo último fue teclado y mouse.
 
-enum Source { FACING, STICK, MOUSE, TARGET, MOVE_STICK }
+enum Source { FACING, MOUSE, TARGET, MOVE_STICK }
 
 @export var player: PlayerCharacter
 @export var stick_deadzone := 0.3
 ## Distancia de la retícula cuando no apunta el mouse.
 @export var reticle_distance := 4.0
 @export var turn_speed := 14.0
-## Distancia de lanzamiento con el stick (sin objetivo ni mouse).
+## Distancia de lanzamiento apuntando con el stick (sin objetivo ni mouse).
 @export var throw_distance := 6.0
 ## Con el mouse más cerca que esto del player, se coloca en vez de lanzar.
 @export var min_mouse_throw := 1.5
@@ -26,7 +27,6 @@ var move_aims := false
 var yaw_offset := 0.0
 var source: Source = Source.FACING
 
-var _input_source: Source = Source.FACING
 ## Apuntando sin entrada, la mira queda en la última dirección (el modelo gira con yaw_offset y no puede ser la referencia).
 var _held := Vector3.ZERO
 var _reticle: MeshInstance3D
@@ -38,12 +38,19 @@ func _ready() -> void:
 	_arrow = _make_arrow()
 
 
+## Se movió el mouse después del último uso del gamepad.
+var _mouse_moved := false
+
+
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		if Settings.get_value(&"mouse_aim"):
-			_input_source = Source.MOUSE
-	elif event is InputEventJoypadMotion and _stick().length() > stick_deadzone:
-		_input_source = Source.STICK
+		_mouse_moved = true
+	elif event is InputEventJoypadButton or (event is InputEventJoypadMotion and absf(event.axis_value) > stick_deadzone):
+		_mouse_moved = false
+
+
+func mouse_aims() -> bool:
+	return _mouse_moved and InputDevice.current == InputDevice.Device.KEYBOARD_MOUSE and Settings.get_value(&"mouse_aim")
 
 
 func get_direction() -> Vector3:
@@ -51,36 +58,31 @@ func get_direction() -> Vector3:
 	if target:
 		source = Source.TARGET
 		return _flat(target.global_position - player.global_position)
-	var stick := _stick()
-	if _input_source == Source.STICK and stick.length() > stick_deadzone:
-		source = Source.STICK
-		return Vector3(stick.x, 0.0, stick.y).normalized()
 	if move_aims:
 		var move := Input.get_vector(&"move_left", &"move_right", &"move_forward", &"move_backward")
 		if move.length() > stick_deadzone:
 			source = Source.MOVE_STICK
 			return Vector3(move.x, 0.0, move.y).normalized()
-	match _input_source:
-		Source.MOUSE:
-			var hit = mouse_on_ground()
-			if hit != null:
-				var dir := _flat(hit - player.global_position)
-				if not dir.is_zero_approx():
-					source = Source.MOUSE
-					return dir
+	if mouse_aims():
+		var hit = mouse_on_ground()
+		if hit != null:
+			var dir := _flat(hit - player.global_position)
+			if not dir.is_zero_approx():
+				source = Source.MOUSE
+				return dir
 	source = Source.FACING
 	if aiming and not _held.is_zero_approx():
 		return _held
 	return _flat(player.model.global_basis.z)
 
 
-## Hacia dónde lanzar si se está apuntando (objetivo, stick derecho, mouse lejos); null = colocar.
+## Hacia dónde lanzar si se está apuntando (objetivo, stick al tensar, mouse lejos); null = colocar.
 func throw_point() -> Variant:
 	var direction := get_direction()
 	match source:
 		Source.TARGET:
 			return player.targeting.current.global_position
-		Source.STICK:
+		Source.MOVE_STICK:
 			return player.global_position + direction * throw_distance
 		Source.MOUSE:
 			var hit = mouse_on_ground()
@@ -126,21 +128,17 @@ func _update_debug(direction: Vector3) -> void:
 		DebugOverlay.watch("aim/direction", direction.snappedf(0.01))
 
 
-## Lo que apunta el jugador a propósito: el stick derecho, o el mouse si el último dispositivo fue teclado y mouse.
-## Cero si no está apuntando (no cae en el frente del modelo).
+## Lo que apunta el jugador a propósito: el mouse, o el stick derecho (solo para girar el reflejo del escudo espejo; el
+## resto del tiempo mueve la cámara). Cero si no está apuntando (no cae en el frente del modelo).
 func pointed_direction() -> Vector3:
-	var stick := _stick()
-	if _input_source == Source.STICK and stick.length() > stick_deadzone:
+	var stick := Input.get_vector(&"look_left", &"look_right", &"look_up", &"look_down")
+	if stick.length() > stick_deadzone:
 		return Vector3(stick.x, 0.0, stick.y).normalized()
-	if _input_source == Source.MOUSE:
+	if mouse_aims():
 		var hit = mouse_on_ground()
 		if hit != null:
 			return _flat(hit - player.global_position)
 	return Vector3.ZERO
-
-
-func _stick() -> Vector2:
-	return Input.get_vector(&"look_left", &"look_right", &"look_up", &"look_down")
 
 
 func _flat(v: Vector3) -> Vector3:

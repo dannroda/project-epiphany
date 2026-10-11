@@ -42,7 +42,7 @@ func test_every_option_persists_and_applies() -> void:
 	var motion := InputEventMouseMotion.new()
 	motion.relative = Vector2(5, 5)
 	player.aim._input(motion)
-	assert_true(player.aim._input_source != Aim.Source.MOUSE, "sin apuntar con el mouse")
+	assert_eq(player.aim.mouse_aims(), false, "sin apuntar con el mouse")
 	assert_true(settings.stick_factor() > 1.2, "sensibilidad alta")
 	_restore(settings)
 	assert_eq(settings.get_value(&"lock_toggle"), false)
