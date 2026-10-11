@@ -13,7 +13,8 @@
       "text": "Columna y escalón"
     },
     {
-      "done": false,
+      "detail": "Hecho: hueco y hueco_borde/esquina/pasillo/punta/pozo en build_templo.py (hiladas de piedra del templo de 3 m que se oscurecen, borde claro). tools/vary_temple.gd elige pieza y giro por vecinos (tools/grid_pieces.gd, compartido con vary_overworld); test_pit_walls_face_the_ground.",
+      "done": true,
       "text": "Abismo interior con borde"
     },
     {
@@ -70,5 +71,5 @@
   ],
   "test": "temple_kit.tres arma el templo con las piezas nuevas y el corte de la pared sur sigue andando.",
   "title": "Kit del templo propio",
-  "updated_at": "2026-10-11T07:50:13.441Z"
+  "updated_at": "2026-10-11T08:23:47.244Z"
 }
