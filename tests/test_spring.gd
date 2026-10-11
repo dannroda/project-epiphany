@@ -105,12 +105,13 @@ func test_one_bottle_shows_whatever_it_holds() -> void:
 	bottle.free()
 
 
-func test_pool_projects_caustics_down_and_blocks_walking_in() -> void:
+func test_pool_reflects_the_water_on_the_walls_and_blocks_walking_in() -> void:
 	var setup: Array = await _setup()
 	var state: Node = setup[1]
 	var pool := (setup[0] as SceneTree).current_scene.get_node(^"WaterPool") as WaterPool
 	assert_true(pool.light.light_projector == pool.texture and pool.texture != null, "la luz proyecta el patrón")
-	assert_true(pool.light.global_basis.z.y > 0.99, "y apunta al fondo")
+	assert_true(pool.light.global_position.y < pool.surface.global_position.y and -pool.light.global_basis.z.y > 0.5, "desde abajo del agua hacia arriba")
+	assert_true(pool.light.shadow_enabled, "sin sombra el projector del spot no se aplica (4.8-dev7)")
 	var water := pool.surface.mesh.surface_get_material(0) as ShaderMaterial
 	assert_eq(pool.caustics_material.get_shader_parameter(&"tile"), water.get_shader_parameter(&"tile"), "mismo patrón que la espuma")
 	assert_true((pool.block.shape as BoxShape3D).size.x >= pool.size.x, "no se puede entrar al agua")

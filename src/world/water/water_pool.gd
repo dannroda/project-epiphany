@@ -1,12 +1,11 @@
 @tool
 class_name WaterPool
 extends Node3D
-## Pileta de agua: superficie (water.gdshader), fondo y paredes de piedra, un bloqueo para no meterse y una luz que
-## proyecta las cáusticas sobre el fondo y lo que haya cerca. El origen es el centro del borde, a ras del piso; va en
+## Pileta de agua: superficie (water.gdshader), fondo y paredes de piedra, un bloqueo para no meterse y una luz bajo
+## el agua que proyecta su reflejo en las paredes cercanas (caustics.gdshader). El origen es el centro del borde, a ras del piso; va en
 ## celdas del GridMap sin piso.
 
 const SURFACE_DROP := 0.12
-const LIGHT_HEIGHT := 3.0
 
 ## Medidas en XZ (m) y profundidad del fondo bajo el piso.
 @export var size := Vector2(4.0, 4.0):
@@ -42,10 +41,6 @@ func _ready() -> void:
 	var water := surface.mesh.surface_get_material(0) as ShaderMaterial
 	for param in [&"tile", &"speed"]:
 		caustics_material.set_shader_parameter(param, water.get_shader_parameter(param))
-	var center := Vector2(global_position.x, global_position.z)
-	var patch := Vector2.ONE * maxf(size.x, size.y) * 1.3
-	caustics_material.set_shader_parameter(&"world_origin", center - patch * 0.5)
-	caustics_material.set_shader_parameter(&"world_size", patch)
 	texture = DrawableTexture2D.new()
 	texture.setup(resolution, resolution, DrawableTexture2D.DRAWABLE_FORMAT_RGBA8, Color.BLACK, false)
 	var image := Image.create(1, 1, false, Image.FORMAT_RGBA8)
@@ -56,6 +51,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if texture:
+		_aim_caustics()
 		texture.blit_rect(Rect2i(0, 0, resolution, resolution), _source, Color.WHITE, 0, caustics_material)
 	if Engine.is_editor_hint() or drips.y <= 0.0:
 		return
@@ -66,6 +62,18 @@ func _process(delta: float) -> void:
 		Feel.sfx(&"drip", to_global(spot))
 
 
+## Le pasa a las cáusticas la pose de la luz y el plano del agua, así se puede mover y abrir la luz a ojo.
+func _aim_caustics() -> void:
+	var pose := light.global_transform
+	caustics_material.set_shader_parameter(&"light_basis", pose.basis.orthonormalized())
+	caustics_material.set_shader_parameter(&"light_origin", pose.origin)
+	caustics_material.set_shader_parameter(&"tan_half_angle", tan(deg_to_rad(light.spot_angle)))
+	caustics_material.set_shader_parameter(&"surface_y", surface.global_position.y)
+	var center := Vector2(global_position.x, global_position.z)
+	caustics_material.set_shader_parameter(&"pool_min", center - size * 0.5)
+	caustics_material.set_shader_parameter(&"pool_max", center + size * 0.5)
+
+
 func _build() -> void:
 	var plane := surface.mesh as PlaneMesh
 	plane.size = size
@@ -73,10 +81,7 @@ func _build() -> void:
 	basin.mesh = _basin_mesh()
 	(block.shape as BoxShape3D).size = Vector3(size.x, 1.4, size.y)
 	block.position.y = 0.7 - depth
-	light.position.y = LIGHT_HEIGHT
-	var reach := maxf(size.x, size.y) * 0.65
-	light.spot_range = LIGHT_HEIGHT + depth + 1.0
-	light.spot_angle = rad_to_deg(atan(reach / (LIGHT_HEIGHT + depth)))
+
 
 
 ## Fondo y cuatro paredes que miran hacia adentro, de la superficie al fondo.
