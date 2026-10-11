@@ -29,8 +29,8 @@
       "text": "Rocas grandes fijas (2–3)"
     },
     {
-      "detail": "Hay tronco caído, cardón chico, ichu y piedras (usados en 11.4); faltan arbustos, flores, hongos y tocón si hacen falta.",
-      "done": false,
+      "detail": "Hecho: tronco caído, cardón chico, ichu, piedras (11.4) y ahora tocón de queñoa, yareta (cojín verde de la puna, en vez de arbustos), macizo de flores y hongos, repartidos por decorate_levels.gd.",
+      "done": true,
       "text": "Decoración: arbustos, flores, hongos, tronco caído, tocón"
     },
     {
@@ -59,5 +59,5 @@
   ],
   "test": "Pasto, vasijas, rocas y cajas usan los modelos nuevos y se rompen o mueven como antes.",
   "title": "Vegetación y props del overworld",
-  "updated_at": "2026-10-11T07:50:11.980Z"
+  "updated_at": "2026-10-11T08:28:30.840Z"
 }
