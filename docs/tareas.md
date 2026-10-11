@@ -3689,8 +3689,9 @@ Pasar todos los `.blend` (props, equipo, templo, kits y personajes) al pipeline 
 - [x] Props y equipo (objetos, equipo, naturaleza, lugares)
   El jefe ya pasó al pipeline en 11.47.
 - [x] Templo y kits (build_temple_kit / build_overworld_kit)
-- [ ] Personajes (jugador, chullpas) y carry
-- [ ] Retirar scripts headless viejos y verificar builds sin Blender
+- [x] Personajes (jugador, chullpas) y carry
+  El carry ya era glb (build_carry_anims.py exporta anim/carry.glb). build_character_models.gd queda: corre en Godot sin Blender y lee el glb.
+- [x] Retirar scripts headless viejos y verificar builds sin Blender
 
 **Notas:** Después de validar 12.10: pasar objetos, equipo, lugares, templo, naturaleza, jefe, terreno y personajes a glb; retirar extract_epiphany_meshes y build_character_models; los kits leen del glb.
 

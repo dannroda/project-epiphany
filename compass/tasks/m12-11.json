@@ -10,17 +10,19 @@
       "text": "Templo y kits (build_temple_kit / build_overworld_kit)"
     },
     {
-      "done": false,
+      "detail": "El carry ya era glb (build_carry_anims.py exporta anim/carry.glb). build_character_models.gd queda: corre en Godot sin Blender y lee el glb.",
+      "done": true,
       "text": "Personajes (jugador, chullpas) y carry"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Retirar scripts headless viejos y verificar builds sin Blender"
     }
   ],
   "code": "12.11",
   "created_at": "2026-10-10T23:24:31.346Z",
   "description": "Pasar todos los `.blend` (props, equipo, templo, kits y personajes) al pipeline glb de 12.10 y retirar los scripts headless viejos, para que los builds funcionen sin Blender.",
+  "done_at": "2026-10-11T17:45:59.990Z",
   "links": [
     {
       "task": "m11-47",
@@ -32,12 +34,12 @@
   "order": 11,
   "priority": "medium",
   "refs": [],
-  "status": "doing",
+  "status": "done",
   "tags": [
     "arte",
     "herramientas"
   ],
   "test": "",
   "title": "Migrar los .blend al pipeline glb",
-  "updated_at": "2026-10-11T17:41:43.182Z"
+  "updated_at": "2026-10-11T17:45:59.990Z"
 }
