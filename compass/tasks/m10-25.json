@@ -84,6 +84,11 @@
       "detail": "Dos controles en el templo: la cámara mira a los dos y no los deja separarse más que la pantalla; al cruzar uno una puerta, el otro aparece a su lado y entran juntos; overworld ↔ templo llegan juntos.",
       "done": false,
       "text": "Co-op: cámara y salas (13.3)"
+    },
+    {
+      "detail": "Con dos controles: P1 arriba a la izquierda y P2 a la derecha, cada uno con sus corazones, sus X/Y con los botones de su control y su prompt; en mazmorra las llaves al medio; al salir el P2 vuelve el HUD de uno.",
+      "done": false,
+      "text": "Co-op: HUD de dos (13.5)"
     }
   ],
   "code": "10.28",
@@ -181,6 +186,10 @@
     {
       "task": "m13-03",
       "type": "related"
+    },
+    {
+      "task": "m13-05",
+      "type": "related"
     }
   ],
   "milestone": "m10",
@@ -194,5 +203,5 @@
   ],
   "test": "",
   "title": "Playtest de revisión (lo que está en Revisión)",
-  "updated_at": "2026-10-11T06:23:32.312Z"
+  "updated_at": "2026-10-11T06:39:31.797Z"
 }

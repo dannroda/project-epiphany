@@ -1,31 +1,36 @@
 extends CanvasLayer
-## HUD del juego: corazones, slots X/Y, llaves (solo en mazmorra) y la barra del jefe (mockup HUD_Boss).
+## HUD del juego: un panel por player (corazones, slots X/Y, prompt), llaves (solo en mazmorra) y la barra del
+## jefe (mockup HUD_Boss). Jugando solo, el panel de siempre; en co-op uno compacto por player en cada esquina de
+## arriba (mockup HUD_Coop), con las llaves compartidas al medio.
 
-const HP_PER_HEART := 4
-const BUTTON_ACTIONS: Array[StringName] = [&"item_1", &"item_2"]
+@export var solo_panel: PackedScene
+@export var coop_panel: PackedScene
+## Color de la etiqueta de cada player en co-op (P1, P2); el del modelo es de 13.6.
+@export var player_colors: Array[Color] = [Color(0.85, 0.643, 0.255), Color(0.357, 0.608, 0.878)]
 
-@export var pulse_scale := 1.3
-@export var pulse_time := 0.18
-
-@onready var hearts: HFlowContainer = %Hearts
+@onready var panels: HBoxContainer = %Panels
+@onready var coop_keys: CenterContainer = %CoopKeys
 @onready var keys: HBoxContainer = %Keys
 @onready var small_key_count: Label = %SmallKeyCount
 @onready var boss_key: TextureRect = %BossKey
-@onready var item_slots: HBoxContainer = %ItemSlots
-@onready var prompt: PanelContainer = %Prompt
 @onready var area_name: HBoxContainer = %AreaName
 @onready var area_label: Label = %AreaLabel
-@onready var prompt_icon: TextureRect = %PromptIcon
-@onready var prompt_text: Label = %PromptText
 @onready var saved_label: Label = %Saved
 @onready var boss_bar: VBoxContainer = %BossBar
 @onready var boss_health: ProgressBar = %BossHealth
 
-var _health: Health
-var _focus: Interactable
+## Los del primero (los tests y lo que sigue siendo de uno).
+var hearts: Container:
+	get: return _lead_panel().hearts
+var item_slots: HBoxContainer:
+	get: return _lead_panel().item_slots
+var prompt: PanelContainer:
+	get: return _lead_panel().prompt
+var prompt_text: Label:
+	get: return _lead_panel().prompt_text
+
 var _area_tween: Tween
 var _dungeon: DungeonState
-var _shown_hp := -1
 var _saved_tween: Tween
 var _boss: Boss
 var _boss_tween: Tween
@@ -34,57 +39,48 @@ var _boss_tween: Tween
 func _ready() -> void:
 	add_to_group(&"hud")
 	SaveManager.saved.connect(func(_slot: int) -> void: _flash_saved())
-	GameState.item_buttons_changed.connect(_refresh_item_slots)
-	GameState.inventory.changed.connect(func(_id: StringName, _count: int) -> void: _refresh_item_slots())
-	GameState.loaded.connect(_refresh_item_slots)
-	InputDevice.input_device_changed.connect(func(_d: int) -> void:
-		_refresh_item_slots()
-		_refresh_prompt())
-	MenuStack.changed.connect(_refresh_prompt)
 	GameState.dungeon_changed.connect(_bind_dungeon)
 	GameState.loaded.connect(_bind_dungeon)
+	Players.joined.connect(_on_players_changed)
+	Players.left.connect(_on_players_changed)
 	_bind_dungeon()
-	_refresh_item_slots()
-	_bind_player.call_deferred()
+	_rebuild_panels.call_deferred()
 
 
-func _refresh_item_slots() -> void:
-	for i in BUTTON_ACTIONS.size():
-		var body := item_slots.get_child(i).get_node(^"Body")
-		var id := GameState.item_buttons[i]
-		var item := Items.get_item(id) if id != &"" else null
-		body.visible = item != null
-		var icon := body.get_node(^"Icon") as TextureRect
-		icon.texture = item.icon if item else null
-		icon.modulate.a = 1.0 if item and GameState.inventory.has(id) else 0.35
-		(body.get_node(^"Badge") as TextureRect).texture = InputPrompts.icon_for(BUTTON_ACTIONS[i], Players.lead())
-		var ammo_label := body.get_node(^"Ammo") as Label
-		var ammo: ItemData = item.behavior.ammo if item and item.behavior else null
-		ammo_label.visible = ammo != null
-		if ammo:
-			ammo_label.text = str(GameState.inventory.count(ammo.id))
+func _on_players_changed(_player: PlayerCharacter) -> void:
+	_rebuild_panels.call_deferred()
 
 
-func _bind_player() -> void:
+## El panel de cada player; los que pasan de dos esperan a que haya HUD para más (por ahora el co-op es de dos).
+func panel_of(player: PlayerCharacter) -> PlayerPanel:
+	for panel: PlayerPanel in panels.get_children():
+		if panel.player == player:
+			return panel
+	return null
+
+
+func _lead_panel() -> PlayerPanel:
+	return panel_of(Players.lead()) if panels.get_child_count() > 0 else null
+
+
+func _rebuild_panels() -> void:
 	if not is_inside_tree():
 		return
-	var player := Players.lead()
-	if player == null:
-		return
-	_health = player.health
-	player.item_denied.connect(_shake_slot)
-	player.get_node(^"InteractionDetector").focus_changed.connect(func(target: Interactable) -> void:
-		_focus = target
-		_refresh_prompt())
-	_health.changed.connect(_on_health_changed)
-	_on_health_changed(_health.current, _health.max_health)
-
-
-func _refresh_prompt() -> void:
-	prompt.visible = _focus != null and is_instance_valid(_focus) and not MenuStack.is_open()
-	if prompt.visible:
-		prompt_text.text = _focus.prompt
-		prompt_icon.texture = InputPrompts.icon_for(&"interact", Players.lead())
+	var shown := Players.all.filter(func(player: PlayerCharacter) -> bool: return is_instance_valid(player) and not player.is_queued_for_deletion()).slice(0, player_colors.size())
+	var coop := shown.size() > 1
+	keys.reparent(coop_keys.get_node(^"Box"), false)
+	for panel in panels.get_children():
+		panels.remove_child(panel)
+		panel.queue_free()
+	for i in shown.size():
+		var panel: PlayerPanel = (coop_panel if coop else solo_panel).instantiate()
+		if coop and i % 2 == 1:
+			panel.layout_direction = Control.LAYOUT_DIRECTION_RTL
+		panels.add_child(panel)
+		panel.bind(shown[i], player_colors[i])
+	if not coop and panels.get_child_count() > 0:
+		keys.reparent((panels.get_child(0) as PlayerPanel).keys_spot, false)
+	coop_keys.visible = coop and _dungeon != null
 
 
 ## Nombre de la sala o la zona al entrar por primera vez: aparece, queda un rato y se va.
@@ -100,6 +96,7 @@ func _bind_dungeon() -> void:
 
 func _refresh_keys() -> void:
 	keys.visible = _dungeon != null
+	coop_keys.visible = _dungeon != null and panels.get_child_count() > 1
 	if _dungeon:
 		small_key_count.text = "×%d" % _dungeon.small_keys
 		boss_key.modulate.a = 1.0 if _dungeon.has_boss_key else 0.35
@@ -113,36 +110,6 @@ func show_area_name(text: String) -> void:
 	_area_tween.tween_property(area_name, "modulate:a", 1.0, 0.4)
 	_area_tween.tween_interval(2.0)
 	_area_tween.tween_property(area_name, "modulate:a", 0.0, 0.6)
-
-
-func _shake_slot(button: int) -> void:
-	var body := item_slots.get_child(button).get_node(^"Body") as Control
-	var tween := body.create_tween()
-	for offset in [6.0, -5.0, 4.0, -2.0, 0.0]:
-		tween.tween_property(body, "position:x", offset, 0.04)
-
-
-func _on_health_changed(current: int, max_value: int) -> void:
-	var count := ceili(max_value / float(HP_PER_HEART))
-	while hearts.get_child_count() < count:
-		hearts.add_child(HeartIcon.create())
-	while hearts.get_child_count() > count:
-		var extra := hearts.get_child(hearts.get_child_count() - 1)
-		hearts.remove_child(extra)
-		extra.queue_free()
-	for i in count:
-		var heart := hearts.get_child(i) as HeartIcon
-		var quarters := clampi(current - i * HP_PER_HEART, 0, HP_PER_HEART)
-		if heart.quarters != quarters and _shown_hp >= 0:
-			_pulse(heart)
-		heart.quarters = quarters
-	_shown_hp = current
-
-
-func _pulse(heart: Control) -> void:
-	var tween := heart.create_tween()
-	heart.scale = Vector2.ONE * pulse_scale
-	tween.tween_property(heart, "scale", Vector2.ONE, pulse_time).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 
 func _flash_saved() -> void:

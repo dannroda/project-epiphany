@@ -1,0 +1,83 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/ui/hud/player_panel.gd" id="1_panel"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/hud_item_slot.tscn" id="2_slot"]
+
+[node name="PlayerPanel" type="HBoxContainer"]
+size_flags_horizontal = 3
+size_flags_vertical = 0
+mouse_filter = 2
+script = ExtResource("1_panel")
+
+[node name="Left" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="Hearts" type="HFlowContainer" parent="Left"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(336, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
+
+[node name="KeysSpot" type="VBoxContainer" parent="Left"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+
+[node name="Right" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_constants/separation = 18
+
+[node name="Spacer" type="Control" parent="Right"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="ItemSlots" type="HBoxContainer" parent="Right"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 20
+
+[node name="Slot1" parent="Right/ItemSlots" instance=ExtResource("2_slot")]
+layout_mode = 2
+
+[node name="Slot2" parent="Right/ItemSlots" instance=ExtResource("2_slot")]
+layout_mode = 2
+
+[node name="Prompt" type="PanelContainer" parent="Right"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+mouse_filter = 2
+theme_type_variation = &"HudPill"
+
+[node name="Row" type="HBoxContainer" parent="Right/Prompt"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="PromptIcon" type="TextureRect" parent="Right/Prompt/Row"]
+unique_name_in_owner = true
+self_modulate = Color(0.8509804, 0.6431373, 0.25490198, 1)
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PromptText" type="Label" parent="Right/Prompt/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"HudPillText"

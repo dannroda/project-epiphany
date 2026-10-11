@@ -3,14 +3,28 @@
 [ext_resource type="Script" path="res://src/ui/hud/hud.gd" id="1_hud"]
 [ext_resource type="Texture2D" uid="uid://c5yv6hu8liwil" path="res://assets/ui/items/small_key.png" id="2_small_key"]
 [ext_resource type="Texture2D" uid="uid://beh1im0lmch3d" path="res://assets/ui/items/boss_key.png" id="3_boss_key"]
-[ext_resource type="PackedScene" path="res://src/ui/hud/hud_item_slot.tscn" id="4_slot"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/player_panel_solo.tscn" id="4_solo"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/player_panel.tscn" id="8_coop"]
 [ext_resource type="Texture2D" path="res://assets/ui/frames/divider.png" id="5_divider"]
 [ext_resource type="Texture2D" path="res://assets/ui/frames/divider_flipped.png" id="6_divider_flipped"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/minimap.tscn" id="7_minimap"]
 
+[sub_resource type="StyleBoxFlat" id="CoopKeysStyle"]
+content_margin_left = 16.0
+content_margin_top = 4.0
+content_margin_right = 16.0
+content_margin_bottom = 4.0
+bg_color = Color(0.039215688, 0.047058824, 0.05882353, 0.55)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+
 [node name="HUD" type="CanvasLayer"]
 layer = 10
 script = ExtResource("1_hud")
+solo_panel = ExtResource("4_solo")
+coop_panel = ExtResource("8_coop")
 
 [node name="SafeArea" type="MarginContainer" parent="."]
 anchors_preset = 15
@@ -24,34 +38,47 @@ theme_override_constants/margin_top = 28
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 28
 
-[node name="Left" type="VBoxContainer" parent="SafeArea"]
+[node name="Panels" type="HBoxContainer" parent="SafeArea"]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 0
 size_flags_vertical = 0
 mouse_filter = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 32
 
-[node name="Hearts" type="HFlowContainer" parent="SafeArea/Left"]
+[node name="Minimap" parent="SafeArea" instance=ExtResource("7_minimap")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(336, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="CoopKeys" type="CenterContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 30.0
+offset_bottom = 66.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Box" type="PanelContainer" parent="CoopKeys"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/h_separation = 4
-theme_override_constants/v_separation = 4
+theme_override_styles/panel = SubResource("CoopKeysStyle")
 
-[node name="Keys" type="HBoxContainer" parent="SafeArea/Left"]
+[node name="Keys" type="HBoxContainer" parent="CoopKeys/Box"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 18
 
-[node name="SmallKeys" type="HBoxContainer" parent="SafeArea/Left/Keys"]
+[node name="SmallKeys" type="HBoxContainer" parent="CoopKeys/Box/Keys"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="SmallKeyIcon" type="TextureRect" parent="SafeArea/Left/Keys/SmallKeys"]
+[node name="SmallKeyIcon" type="TextureRect" parent="CoopKeys/Box/Keys/SmallKeys"]
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 mouse_filter = 2
@@ -59,13 +86,13 @@ texture = ExtResource("2_small_key")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="SmallKeyCount" type="Label" parent="SafeArea/Left/Keys/SmallKeys"]
+[node name="SmallKeyCount" type="Label" parent="CoopKeys/Box/Keys/SmallKeys"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"HudAmmo"
 theme_override_font_sizes/font_size = 20
 
-[node name="BossKey" type="TextureRect" parent="SafeArea/Left/Keys"]
+[node name="BossKey" type="TextureRect" parent="CoopKeys/Box/Keys"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
@@ -73,63 +100,6 @@ mouse_filter = 2
 texture = ExtResource("3_boss_key")
 expand_mode = 1
 stretch_mode = 5
-
-[node name="Right" type="VBoxContainer" parent="SafeArea"]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 0
-mouse_filter = 2
-theme_override_constants/separation = 18
-
-[node name="Spacer" type="Control" parent="SafeArea/Right"]
-custom_minimum_size = Vector2(0, 6)
-layout_mode = 2
-mouse_filter = 2
-
-[node name="ItemSlots" type="HBoxContainer" parent="SafeArea/Right"]
-unique_name_in_owner = true
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 20
-
-[node name="Slot1" parent="SafeArea/Right/ItemSlots" instance=ExtResource("4_slot")]
-layout_mode = 2
-
-[node name="Slot2" parent="SafeArea/Right/ItemSlots" instance=ExtResource("4_slot")]
-layout_mode = 2
-
-[node name="Prompt" type="PanelContainer" parent="SafeArea/Right"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-size_flags_horizontal = 8
-mouse_filter = 2
-theme_type_variation = &"HudPill"
-
-[node name="Row" type="HBoxContainer" parent="SafeArea/Right/Prompt"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 10
-
-[node name="PromptIcon" type="TextureRect" parent="SafeArea/Right/Prompt/Row"]
-self_modulate = Color(0.8509804, 0.6431373, 0.25490198, 1)
-unique_name_in_owner = true
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-mouse_filter = 2
-expand_mode = 1
-stretch_mode = 5
-
-[node name="PromptText" type="Label" parent="SafeArea/Right/Prompt/Row"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_type_variation = &"HudPillText"
-
-[node name="Minimap" parent="SafeArea" instance=ExtResource("7_minimap")]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 8
 
 [node name="AreaName" type="HBoxContainer" parent="."]
 unique_name_in_owner = true

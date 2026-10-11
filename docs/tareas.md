@@ -2232,8 +2232,10 @@ Recorrido para revisar de a una las tareas en Revisión, en el orden de una part
   10.23 verificada (~16 s, estable). 10.8 la reemplazan 10.24–10.26.
 - [ ] Co-op: cámara y salas (13.3)
   Dos controles en el templo: la cámara mira a los dos y no los deja separarse más que la pantalla; al cruzar uno una puerta, el otro aparece a su lado y entran juntos; overworld ↔ templo llegan juntos.
+- [ ] Co-op: HUD de dos (13.5)
+  Con dos controles: P1 arriba a la izquierda y P2 a la derecha, cada uno con sus corazones, sus X/Y con los botones de su control y su prompt; en mazmorra las llaves al medio; al salir el P2 vuelve el HUD de uno.
 
-**Relacionadas:** 10.18 Idiomas: inglés y español; 11.45 Tutorial de controles y mini puzzle por ítem; 11.44 Levantar y tirar objetos; 11.53 Agujero de la cámara solo donde tiene sentido; 11.37 Minimapa en el HUD; 11.51 Pared agrietada que se integre al muro; 11.52 Zonas tapadas hasta abrirlas; 11.43 Bombas: tocar coloca, mantener apunta y tira; 11.33 Combate: sacar lo tosco; 11.49 VFX de combate; 11.25 Nuevos enemigos con los modelos existentes; 11.41 Esqueleto con escudo: bloquear con el escudo delante; 11.42 Arco que se tensa; 11.48 Pose de item get; 11.3 Decorar las salas del templo; 11.4 Decorar el overworld; 11.47 Manos del jefe animadas (shape keys); 13.1 Código listo para varios players; 13.2 Input por jugador y unirse a la partida; 10.9 Build para playtesters; 10.8 Pasada de rendimiento; 10.23 Tests en paralelo; 13.3 Cámara y salas para dos
+**Relacionadas:** 10.18 Idiomas: inglés y español; 11.45 Tutorial de controles y mini puzzle por ítem; 11.44 Levantar y tirar objetos; 11.53 Agujero de la cámara solo donde tiene sentido; 11.37 Minimapa en el HUD; 11.51 Pared agrietada que se integre al muro; 11.52 Zonas tapadas hasta abrirlas; 11.43 Bombas: tocar coloca, mantener apunta y tira; 11.33 Combate: sacar lo tosco; 11.49 VFX de combate; 11.25 Nuevos enemigos con los modelos existentes; 11.41 Esqueleto con escudo: bloquear con el escudo delante; 11.42 Arco que se tensa; 11.48 Pose de item get; 11.3 Decorar las salas del templo; 11.4 Decorar el overworld; 11.47 Manos del jefe animadas (shape keys); 13.1 Código listo para varios players; 13.2 Input por jugador y unirse a la partida; 10.9 Build para playtesters; 10.8 Pasada de rendimiento; 10.23 Tests en paralelo; 13.3 Cámara y salas para dos; 13.5 HUD de dos jugadores
 
 ## M11 — Pulido: contenido y feel  (20/54)
 
@@ -2430,25 +2432,25 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Notas:** Reportado por Daniel el 2026-10-09 (captura). Causa: las dos puertas laterales del templo, la (6, 24) y la (18, 24), tenían la pieza Puerta con orientación 0; el marco (3,1 m de alto, solo colisión de piso) quedaba cruzado en el paso. Se giraron 90° (orientación 16) y test_doorways_face_their_wall valida que cada marco siga a su pared.
 
-### 11.20 Cueva con ojo de agua y cáusticas animadas · Pendiente
+### 11.20 Cueva con ojo de agua y cáusticas animadas · Revisión
 
 **Prioridad:** media · **Etiquetas:** `arte`, `overworld`, `items`
 
-- [ ] Decidir qué hay en la cueva
+- [x] Decidir qué hay en la cueva
   Abierto: recompensa, secreto, tablilla de historia, pieza de corazón, un ítem… Definirlo antes de diseñar la sala, y anotarlo en el GDD.
-- [ ] Entrada en el overworld y la sala de la cueva
+- [x] Entrada en el overworld y la sala de la cueva
   Cueva chica, una o dos salas; piezas propias en Blender (roca, estalactitas, cristales) en estilo Altiplano del Ojo.
-- [ ] Shader de agua propio (water.gdshader)
+- [x] Shader de agua propio (water.gdshader)
   Base: la idea de espuma procedural de 'Wind Waker Water' (NekotoArts, godotshaders.com, CC0, Godot 3) reescrita para 4.x y nuestro estilo: colores de la franja agua de la paleta y el tinte 0.72 de epiphany.tres; transparente con color según profundidad (depth texture), así se ve el fondo y las cáusticas; espuma en la orilla por profundidad; manchas de espuma con borde duro en coordenadas de mundo (sin costuras entre tiles); olas de vértice opcionales y apagadas en pozos chicos, con normales planas por cara para mantener el facetado.
-- [ ] Cáusticas: DrawableTexture2D + shader texture_blit como light_projector
+- [x] Cáusticas: DrawableTexture2D + shader texture_blit como light_projector
   Como en ../caustics_demo (probado en 4.8-dev7): un SpotLight3D sobre el agua con sombra (CausticsProjector) regenera cada frame una DrawableTexture2D con blit_rect usando un material shader_type texture_blit, y la usa como light_projector; el PR #115653 hace que el atlas actualice solo esa región. Es luz, no pintura: respeta sombras (columnas, el player) y se suma a la iluminación. Atenuación radial para no ver el borde del projector. Limitación de dev7: texture_blit no compila con global uniform; los parámetros se copian a mano (set_wave_param). Medir el costo del blit y de la sombra del spot.
-- [ ] Luz y ambiente de la cueva
+- [x] Luz y ambiente de la cueva
   Penumbra, el agua como fuente de luz suave que tiñe las cáusticas; sonido de goteo.
-- [ ] Agua y cáusticas del mismo patrón
+- [x] Agua y cáusticas del mismo patrón
   Como la variante Wind Waker de la demo: un .gdshaderinc con el patrón (wind_waker_pattern) lo incluyen el agua (spatial) y las cáusticas (texture_blit), así la espuma de la superficie y la luz del fondo se mueven juntas. Pasar el patrón a coordenadas de mundo (la demo usa el UV del mesh, con mesh_center/mesh_size). El agua es transparente y no recibe las cáusticas (o con cast_shadow apagado como en la demo); el fondo y las paredes cercanas sí. Un nodo WaterPool arma superficie + projector y expone tamaño y profundidad. Decal animado solo si el spot resulta caro.
-- [ ] Interactuar con el agua llena la botella
+- [x] Interactuar con el agua llena la botella
   Agua bendita: cura más que la poción (o cura y quita doom un rato). Viene de la ex 11.23.
-- [ ] Recargable
+- [x] Recargable
   Se puede volver a llenar; da razón para volver a la cueva.
 
 **Prueba:** Entrar a la cueva desde el overworld: a través del agua se ve el fondo con cáusticas que se mueven al mismo ritmo que el brillo de la superficie, hay espuma en la orilla, sin costuras, cortes ni parpadeos; el estilo combina con el resto (paleta, facetado); el rendimiento no cae respecto del overworld. Con la botella vacía, interactuar con la vertiente: se llena; usarla cura según lo definido.
@@ -3346,13 +3348,13 @@ Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con
 
 **Bloqueada por:** 13.1 Código listo para varios players
 
-### 13.5 HUD de dos jugadores · Pendiente
+### 13.5 HUD de dos jugadores · Revisión
 
 **Prioridad:** media · **Etiquetas:** `coop`, `ui`
 
-- [ ] Mockup
+- [x] Mockup
   Corazones e ítems del P2 en la otra esquina, con su color.
-- [ ] Escenas
+- [x] Escenas
   El HUD instancia un panel por player (nada armado por código).
 
 **Prueba:** Con dos players, cada uno ve sus corazones e ítems; al salir el P2 su panel desaparece.
@@ -3362,6 +3364,8 @@ Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con
 **Referencias:** `gdd.md#fuera-mvp`
 
 **Bloqueada por:** 13.1 Código listo para varios players
+
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
 ### 13.6 Player 2 con su color · Pendiente
 
@@ -3416,7 +3420,7 @@ Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con
 
 **Bloqueada por:** 13.1 Código listo para varios players
 
-## M14 — Co-op online  (0/6)
+## M14 — Co-op online  (0/7)
 
 Llevar el co-op local a la red: host autoritativo, dos jugadores en distintas máquinas, con el combate igual de preciso.
 
@@ -3438,7 +3442,7 @@ Llevar el co-op local a la red: host autoritativo, dos jugadores en distintas m�
 
 **Referencias:** `gdd.md#fuera-mvp`
 
-**Bloquea a:** 14.2 Players en red; 14.3 Mundo sincronizado; 14.4 Combate en red; 14.5 Lobby y conexión; 14.6 Guardado en co-op
+**Bloquea a:** 14.2 Players en red; 14.3 Mundo sincronizado; 14.4 Combate en red; 14.5 Lobby y conexión; 14.6 Guardado en co-op; 14.7 Modo arena: hasta 8 jugadores peleando entre sí
 
 ### 14.2 Players en red · Pendiente
 
@@ -3489,6 +3493,8 @@ Llevar el co-op local a la red: host autoritativo, dos jugadores en distintas m�
 
 **Referencias:** `gdd.md#fuera-mvp`
 
+**Bloquea a:** 14.7 Modo arena: hasta 8 jugadores peleando entre sí
+
 **Bloqueada por:** 14.1 Arquitectura de red
 
 ### 14.5 Lobby y conexión · Pendiente
@@ -3522,6 +3528,14 @@ Llevar el co-op local a la red: host autoritativo, dos jugadores en distintas m�
 **Referencias:** `gdd.md#fuera-mvp`
 
 **Bloqueada por:** 14.1 Arquitectura de red
+
+### 14.7 Modo arena: hasta 8 jugadores peleando entre sí · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `online`, `pruebas`
+
+Decidido 2026-10-11: para probar el online, un modo arena aparte donde hasta 8 jugadores se pelean entre sí (daño entre players, una sala cerrada, reaparecer al morir). Sirve para medir hasta dónde aguanta la red (latencia, ancho de banda, sincronización del combate) con más jugadores que el co-op; la meta del co-op online sigue siendo 4 y el local, 2 por ahora.
+
+**Bloqueada por:** 14.1 Arquitectura de red; 14.4 Combate en red
 
 ## Listas
 

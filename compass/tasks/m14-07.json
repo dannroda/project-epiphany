@@ -1,0 +1,19 @@
+{
+  "checklist": [],
+  "code": "14.7",
+  "created_at": "2026-10-11T06:39:30.277Z",
+  "description": "Decidido 2026-10-11: para probar el online, un modo arena aparte donde hasta 8 jugadores se pelean entre sí (daño entre players, una sala cerrada, reaparecer al morir). Sirve para medir hasta dónde aguanta la red (latencia, ancho de banda, sincronización del combate) con más jugadores que el co-op; la meta del co-op online sigue siendo 4 y el local, 2 por ahora.",
+  "milestone": "m14",
+  "notes": "",
+  "order": 7,
+  "priority": "medium",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "online",
+    "pruebas"
+  ],
+  "test": "",
+  "title": "Modo arena: hasta 8 jugadores peleando entre sí",
+  "updated_at": "2026-10-11T06:39:30.277Z"
+}

@@ -2,12 +2,12 @@
   "checklist": [
     {
       "detail": "Corazones e ítems del P2 en la otra esquina, con su color.",
-      "done": false,
+      "done": true,
       "text": "Mockup"
     },
     {
       "detail": "El HUD instancia un panel por player (nada armado por código).",
-      "done": false,
+      "done": true,
       "text": "Escenas"
     }
   ],
@@ -23,12 +23,12 @@
       "section": "fuera-mvp"
     }
   ],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "coop",
     "ui"
   ],
   "test": "Con dos players, cada uno ve sus corazones e ítems; al salir el P2 su panel desaparece.",
   "title": "HUD de dos jugadores",
-  "updated_at": "2026-10-10T05:37:20.521Z"
+  "updated_at": "2026-10-11T06:39:30.002Z"
 }

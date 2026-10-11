@@ -10,7 +10,8 @@ signal joined(player: PlayerCharacter)
 signal left(player: PlayerCharacter)
 
 const PLAYER_SCENE := "res://player/player.tscn"
-const MAX_PLAYERS := 4
+## Por ahora el co-op es de dos (los puzzles y el HUD para 3–4 vienen después).
+const MAX_PLAYERS := 2
 ## Mantener Start este rato saca al invitado; un toque pausa, como el de cualquiera.
 const LEAVE_HOLD := 1.5
 const JOIN_SPACING := 1.2

@@ -32,6 +32,10 @@
     {
       "task": "m14-06",
       "type": "blocks"
+    },
+    {
+      "task": "m14-07",
+      "type": "blocks"
     }
   ],
   "milestone": "m14",
@@ -51,5 +55,5 @@
   ],
   "test": "Documento corto con la arquitectura elegida, qué corre en el host y qué en el cliente.",
   "title": "Arquitectura de red",
-  "updated_at": "2026-10-10T05:37:35.621Z"
+  "updated_at": "2026-10-11T06:39:30.918Z"
 }

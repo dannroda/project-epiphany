@@ -1,0 +1,109 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/ui/hud/player_panel.gd" id="1_panel"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/hud_item_slot.tscn" id="2_slot"]
+[ext_resource type="FontFile" path="res://assets/fonts/Cinzel.ttf" id="3_cinzel"]
+
+[sub_resource type="StyleBoxFlat" id="TagStyle"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="PlayerPanel" type="VBoxContainer"]
+size_flags_horizontal = 3
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_constants/separation = 12
+script = ExtResource("1_panel")
+heart_size = Vector2(26, 24)
+
+[node name="Top" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="Tag" type="PanelContainer" parent="Top"]
+unique_name_in_owner = true
+self_modulate = Color(0.8509804, 0.6431373, 0.25490198, 1)
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("TagStyle")
+
+[node name="Label" type="Label" parent="Top/Tag"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.043137256, 0.050980393, 0.0627451, 1)
+theme_override_fonts/font = ExtResource("3_cinzel")
+theme_override_font_sizes/font_size = 14
+text = "P1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Hearts" type="HFlowContainer" parent="Top"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(290, 0)
+layout_mode = 2
+layout_direction = 2
+mouse_filter = 2
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
+
+[node name="Items" type="MarginContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+
+[node name="Row" type="HBoxContainer" parent="Items"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 16
+
+[node name="ItemSlots" type="HBoxContainer" parent="Items/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+layout_direction = 2
+mouse_filter = 2
+theme_override_constants/separation = 16
+
+[node name="Slot1" parent="Items/Row/ItemSlots" instance=ExtResource("2_slot")]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+
+[node name="Slot2" parent="Items/Row/ItemSlots" instance=ExtResource("2_slot")]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+
+[node name="Prompt" type="PanelContainer" parent="Items/Row"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_type_variation = &"HudPill"
+
+[node name="PromptRow" type="HBoxContainer" parent="Items/Row/Prompt"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="PromptIcon" type="TextureRect" parent="Items/Row/Prompt/PromptRow"]
+unique_name_in_owner = true
+self_modulate = Color(0.8509804, 0.6431373, 0.25490198, 1)
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PromptText" type="Label" parent="Items/Row/Prompt/PromptRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"HudPillText"
+theme_override_font_sizes/font_size = 18
