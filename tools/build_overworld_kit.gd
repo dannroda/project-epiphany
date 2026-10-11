@@ -13,7 +13,7 @@ const WALL_IDS := [1, 6]
 ## Las celdas con alguna de estas piezas usan el material con viento.
 const WIND_MATERIAL := preload("res://data/kits/materials/epiphany_wind.tres")
 const WALL_WIND_MATERIAL := preload("res://data/kits/materials/epiphany_wall_wind.tres")
-const WINDY := ["pasto_flores", "pasto_ichu", "monte_ichu", "monte_flores", "risco_ichu", "risco_flores", "tola", "quenoa_grande", "quenoa_chica"]
+const WINDY := ["pasto_flores", "pasto_ichu", "monte_ichu", "monte_flores", "risco_ichu", "risco_flores", "tierra_pasto", "tola", "quenoa_grande", "quenoa_chica"]
 ## Piso que llevan esas paredes adentro: por el agujero se ve suelo y no el vacío.
 const WALL_FLOOR := "terreno_overworld/tierra"
 const HIDDEN_FACES := preload("res://tools/hidden_faces.gd")
@@ -77,6 +77,10 @@ const VARIANTS := {
 	"Risco ichu borde": [6, ["terreno_overworld/risco_ichu"]],
 	"Risco flores": [6, ["terreno_overworld/risco_flores"]],
 	"Risco flores borde": [6, ["terreno_overworld/risco_flores"]],
+	"Tierra manchas": [0, ["terreno_overworld/tierra_manchas"]],
+	"Tierra guijarros": [0, ["terreno_overworld/tierra_guijarros"]],
+	"Tierra huellas": [0, ["terreno_overworld/tierra_huellas"]],
+	"Tierra pasto": [0, ["terreno_overworld/tierra_pasto"]],
 }
 
 var _scenes := {}

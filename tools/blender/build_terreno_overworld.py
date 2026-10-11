@@ -150,6 +150,49 @@ def tierra_piedras(p):
 		small_rock(p, x, y, p.rng.uniform(0.1, 0.16))
 
 
+def stain(p, x, y, radius, shade, swatch="tierra", sides=8, squash=1.0):
+	"""Mancha chata e irregular sobre el piso."""
+	turn = p.rng.random() * math.pi
+	points = []
+	for i in range(sides):
+		a = 2 * math.pi * i / sides
+		r = radius * p.rng.uniform(0.65, 1.0)
+		u, v = math.cos(a) * r, math.sin(a) * r * squash
+		points.append((x + u * math.cos(turn) - v * math.sin(turn), y + u * math.sin(turn) + v * math.cos(turn)))
+	p.paint(p.polygon(points, 0.0, 0.006), swatch, shade, vary=0.04)
+
+
+def tierra_manchas(p):
+	ground(p, "tierra")
+	stain(p, -0.35, 0.3, 0.42, "DARK")
+	stain(p, 0.45, -0.4, 0.3, "LIGHT")
+	stain(p, 0.5, 0.5, 0.18, "DARK")
+
+
+def tierra_guijarros(p):
+	ground(p, "tierra")
+	stain(p, 0.1, -0.1, 0.5, "DARK", squash=0.6)
+	for _ in range(8):
+		small_rock(p, p.rng.uniform(-0.75, 0.75), p.rng.uniform(-0.75, 0.75), p.rng.uniform(0.04, 0.07))
+
+
+def tierra_huellas(p):
+	"""Pisadas de llama: pares de pezuñas en fila, cruzando la celda."""
+	ground(p, "tierra")
+	for i in range(5):
+		x = -0.8 + i * 0.4
+		y = (0.18 if i % 2 else -0.05) + p.rng.uniform(-0.04, 0.04)
+		for dx in (-0.035, 0.035):
+			stain(p, x + 0.02, y + dx, 0.045, "DARK", sides=6, squash=0.55)
+
+
+def tierra_pasto(p):
+	ground(p, "tierra")
+	stain(p, -0.3, -0.35, 0.35, "MID", swatch="pasto")
+	ichu(p, -0.35, -0.3, 0.22, blades=6, swatch="follaje")
+	ichu(p, 0.5, 0.4, 0.16, blades=5, swatch="follaje")
+
+
 def tierra_borde(p):
 	ground(p)
 	edge = jagged(p, (0.0, 1.0), (0.0, -1.0), 6, 0.12)
@@ -170,6 +213,10 @@ def tierra_esquina_int(p):
 
 piece("tierra", 5, lambda p: ground(p, "tierra"))
 piece("tierra_piedras", 20, tierra_piedras)
+piece("tierra_manchas", 22, tierra_manchas)
+piece("tierra_guijarros", 23, tierra_guijarros)
+piece("tierra_huellas", 24, tierra_huellas)
+piece("tierra_pasto", 25, tierra_pasto)
 piece("tierra_borde", 6, tierra_borde)
 piece("tierra_esquina", 7, tierra_esquina)
 piece("tierra_esquina_int", 8, tierra_esquina_int)

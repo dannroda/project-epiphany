@@ -9,7 +9,7 @@ const Pieces := preload("res://tools/grid_pieces.gd")
 
 ## id base → [[variante, probabilidad acumulada], …]; lo que sobra queda como el base.
 const RULES := {
-	0: [["Tierra piedras", 0.12]],
+	0: [["Tierra piedras", 0.12], ["Tierra manchas", 0.3], ["Tierra guijarros", 0.4], ["Tierra huellas", 0.46], ["Tierra pasto", 0.54]],
 	5: [["Pasto flores", 0.12], ["Pasto piedras", 0.2], ["Pasto ichu", 0.3], ["Pasto tola", 0.34]],
 	6: [["Risco", 0.3]],
 	8: [["Queñoa chica", 0.3], ["Cardón", 0.42], ["Cardón brazos", 0.5]],

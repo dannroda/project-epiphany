@@ -68,8 +68,8 @@
       "text": "Cara del risco y topes con detalle"
     },
     {
-      "detail": "Huellas, surcos o piedritas sueltas en la tierra.",
-      "done": false,
+      "detail": "Hecho: tierra_manchas, tierra_guijarros, tierra_huellas (pisadas de llama) y tierra_pasto (matitas que se mecen); vary_overworld.gd las reparte en la tierra junto con tierra_piedras (54 % de las celdas con algo).",
+      "done": true,
       "text": "Camino con detalle"
     }
   ],
@@ -102,5 +102,5 @@
   ],
   "test": "El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.",
   "title": "Terreno del overworld",
-  "updated_at": "2026-10-11T09:03:14.919Z"
+  "updated_at": "2026-10-11T09:06:40.485Z"
 }
