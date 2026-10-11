@@ -1,0 +1,51 @@
+{
+  "checklist": [
+    {
+      "detail": "Pistas Camera:position y Camera:rotation de la animación play (cortes a los 6, 14 y 20 s; ~25 s en total). Que los textos INTRO_1–4 alcancen a leerse.",
+      "done": false,
+      "text": "Duración y encuadre de los planos"
+    },
+    {
+      "detail": "Pista TempleGlow:light_energy (pico 16, a pleno sol se nota poco) y posición/alcance del OmniLight TempleGlow.",
+      "done": false,
+      "text": "Brillo rojo de la entrada del templo"
+    },
+    {
+      "detail": "Pista de métodos: tremor(0.6/0.35/0.5) y dust en TempleDust/ClearingDust; en Cutscene: trauma_decay y max_shake.",
+      "done": false,
+      "text": "Temblor y polvo"
+    },
+    {
+      "detail": "En el prado y la llegada al templo aparecen esqueletos del overworld, y en el primer plano el borde vacío del mapa a la izquierda: decidir si se reencuadra, se ocultan durante la intro o queda así.",
+      "done": false,
+      "text": "Qué se ve en los planos"
+    },
+    {
+      "detail": "settle_time (1,2 s) y skip_hold (0,8 s) en Cutscene.",
+      "done": false,
+      "text": "Vuelta a la cámara de juego y salteo"
+    }
+  ],
+  "code": "10.30",
+  "created_at": "2026-10-11T17:21:52.236Z",
+  "description": "Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en el editor: el sistema y la intro ya andan.",
+  "links": [
+    {
+      "task": "m10-20",
+      "type": "related"
+    }
+  ],
+  "milestone": "m10",
+  "notes": "",
+  "order": 61,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "camara"
+  ],
+  "test": "Partida nueva desde el título: la intro se lee cómoda, el templo se ve encenderse, el temblor se siente sin marear y lo que se ve en cada plano es intencional.",
+  "title": "Afinar la intro a ojo",
+  "updated_at": "2026-10-11T17:22:11.658Z"
+}

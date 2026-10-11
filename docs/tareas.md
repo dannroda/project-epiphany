@@ -1908,7 +1908,7 @@ Una salida de la sala del jefe: un portal en el centro de la arena que lleva a l
 
 **Notas:** Sin flag por ahora porque no hay jefe; 9.6 le pone d1_boss_defeated.
 
-## M10 — Terminación  (15/29)
+## M10 — Terminación  (15/30)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -2471,6 +2471,25 @@ Como la de Basic Controls de TotK: el mando dibujado con una línea a cada botó
 - [x] Tests y GDD
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
+
+### 10.30 Afinar la intro a ojo · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `camara`
+
+Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en el editor: el sistema y la intro ya andan.
+
+- [ ] Duración y encuadre de los planos
+  Pistas Camera:position y Camera:rotation de la animación play (cortes a los 6, 14 y 20 s; ~25 s en total). Que los textos INTRO_1–4 alcancen a leerse.
+- [ ] Brillo rojo de la entrada del templo
+  Pista TempleGlow:light_energy (pico 16, a pleno sol se nota poco) y posición/alcance del OmniLight TempleGlow.
+- [ ] Temblor y polvo
+  Pista de métodos: tremor(0.6/0.35/0.5) y dust en TempleDust/ClearingDust; en Cutscene: trauma_decay y max_shake.
+- [ ] Qué se ve en los planos
+  En el prado y la llegada al templo aparecen esqueletos del overworld, y en el primer plano el borde vacío del mapa a la izquierda: decidir si se reencuadra, se ocultan durante la intro o queda así.
+- [ ] Vuelta a la cámara de juego y salteo
+  settle_time (1,2 s) y skip_hold (0,8 s) en Cutscene.
+
+**Prueba:** Partida nueva desde el título: la intro se lee cómoda, el templo se ve encenderse, el temblor se siente sin marear y lo que se ve en cada plano es intencional.
 
 ## M11 — Pulido: contenido y feel  (20/56)
 
@@ -3374,7 +3393,7 @@ Segunda mazmorra con pisos (y quizás sótanos) apilados en la misma escena, en 
 - [ ] UI: selector de pisos
   Diseñar primero en el canvas de mockups (no lo tiene): pestañas de piso en el mapa de pausa con dónde estás, jefe y cofres; minimapa del piso actual.
 
-## M12 — Assets propios (Blender)  (3/13)
+## M12 — Assets propios (Blender)  (4/13)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -3625,9 +3644,9 @@ Hacer con malla los efectos que lo piden (haz de luz, polvo y hojas, explosión,
 
 **Relacionadas:** 11.49 VFX de combate; 12.13 Reajuste de estilo toon de todos los assets
 
-### 12.10 Pipeline Blender→Godot: glb publicado + plugin de import · Revisión
+### 12.10 Pipeline Blender→Godot: glb publicado + plugin de import · Hecho
 
-**Prioridad:** alta · **Etiquetas:** `arte`, `herramientas`
+**Terminada:** 2026-10-11 · **Prioridad:** alta · **Etiquetas:** `arte`, `herramientas`
 
 Cambiar el pipeline Blender→Godot a publicar `.glb` con un plugin de import que asigne el material de paleta y convierta custom properties en colisiones, sockets y spring bones, para que Godot importe solo el `.glb` y los builds no necesiten Blender.
 
@@ -3648,7 +3667,7 @@ Cambiar el pipeline Blender→Godot a publicar `.glb` con un plugin de import qu
 
 **Relacionadas:** 12.12 Estilo toon (Wind Waker) + personaje cyber-shinobi
 
-### 12.11 Migrar los .blend al pipeline glb · Pendiente
+### 12.11 Migrar los .blend al pipeline glb · En curso
 
 **Prioridad:** media · **Etiquetas:** `arte`, `herramientas`
 
