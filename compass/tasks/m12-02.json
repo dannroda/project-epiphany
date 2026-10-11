@@ -46,6 +46,31 @@
       "detail": "Como build_temple_kit.gd: mismos ítems, colisiones y navegación que el kit gris, mallas nuevas.",
       "done": true,
       "text": "Kit del overworld para el GridMap"
+    },
+    {
+      "detail": "La tapa de pasto de andenes, riscos y meseta es una caja plana: borde irregular que sobresale y cuelga, como el resto de los assets.",
+      "done": false,
+      "text": "Bordes de arriba estilizados"
+    },
+    {
+      "detail": "Vertex shader en el material de paleta: ichu, flores, copas y matas se mecen con ruido de mundo.",
+      "done": false,
+      "text": "Viento en la vegetación"
+    },
+    {
+      "detail": "Manchas que cruzan el piso despacio (en el light() toon).",
+      "done": false,
+      "text": "Sombras de nubes"
+    },
+    {
+      "detail": "Risco con más corte y vetas; ichu, piedras y flores sobre los topes.",
+      "done": false,
+      "text": "Cara del risco y topes con detalle"
+    },
+    {
+      "detail": "Huellas, surcos o piedritas sueltas en la tierra.",
+      "done": false,
+      "text": "Camino con detalle"
     }
   ],
   "code": "12.2",
@@ -77,5 +102,5 @@
   ],
   "test": "El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.",
   "title": "Terreno del overworld",
-  "updated_at": "2026-10-11T08:15:39.982Z"
+  "updated_at": "2026-10-11T08:38:22.871Z"
 }

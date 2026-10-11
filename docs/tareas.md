@@ -3426,6 +3426,14 @@ Modelar en Blender el terreno del overworld (pasto, caminos, piso de plaza, acan
   Hecho: meseta (monte, monte_ichu/piedras/flores + queñoas y cardones arriba) alrededor de la grilla, hasta donde ve la cámara; al sur solo baja. Sin colisión. +200 draw calls, mismo frame.
 - [x] Kit del overworld para el GridMap
   Como build_temple_kit.gd: mismos ítems, colisiones y navegación que el kit gris, mallas nuevas.
+- [ ] Bordes de arriba estilizados
+  La tapa de pasto de andenes, riscos y meseta es una caja plana: borde irregular que sobresale y cuelga, como el resto de los assets.
+- [ ] Viento en la vegetación
+  Vertex shader en el material de paleta: ichu, flores, copas y matas se mecen con ruido de mundo.
+- [ ] Sombras de nubes
+  Manchas que cruzan el piso despacio (en el light() toon).
+- [ ] Cara del risco y topes con detalle
+  Risco con más corte y vetas; ichu, piedras y flores sobre los topes.
 
 **Prueba:** El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.
 
