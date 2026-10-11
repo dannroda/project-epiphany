@@ -7,6 +7,8 @@ import math
 import os
 import sys
 
+import bmesh
+
 from mathutils import Matrix, Vector
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -28,6 +30,8 @@ OPEN = (0.05, 0.05, 0.08)
 CLAW = (0.55, 0.65, 0.6)
 FIST = (1.35, 1.45, 1.3)
 # shape key → curvatura de cada falange; BossHand.GRIP les da el valor de grip (abierta = 0, garra = 0,5, puño = 1)
+# Pupila: rendija cerrada al apuntar, redonda al cargar el orbe o aturdido (Boss.pupil: -1 rendija, 0 normal, 1 dilatada).
+PUPIL = {"rendija": (0.022, 0.52), "dilatada": (0.3, 0.4)}
 GRIP = {
 	"estirada": (-0.3, -0.25, -0.1),
 	"garra_media": tuple((a + b) / 2 for a, b in zip(OPEN, CLAW)),
@@ -206,8 +210,9 @@ def jefe_cuerpo(p):
 	return {"centro_ojo": list(OJO)}
 
 
-def jefe_ojo(p):
-	"""El globo: blanco de hueso con venas de doom, iris de neón (el código lo pulsa al cargar el orbe) y pupila de rendija, mirando a -Y."""
+def jefe_ojo(p, wide=0.075, tall=0.5):
+	"""El globo: blanco de hueso con venas de doom, iris de neón (el código lo pulsa al cargar el orbe) y pupila de rendija, mirando a -Y.
+	wide y tall son las medias medidas de la pupila; las shape keys de PUPIL la cierran o la dilatan."""
 	ball = p.blob((0, 0, 0), EYE, subdiv=3, rough=0.0)
 	white, iris = [], []
 	for f in ball:
@@ -217,11 +222,13 @@ def jefe_ojo(p):
 	slit = []
 	for i in range(9):
 		t = math.pi * i / 8
-		slit.append((math.sin(t) * 0.075, -math.cos(t) * 0.5))
+		slit.append((math.sin(t) * wide, -math.cos(t) * tall))
 	for i in range(1, 8):
 		t = math.pi * i / 8
-		slit.append((-math.sin(t) * 0.075, math.cos(t) * 0.5))
+		slit.append((-math.sin(t) * wide, math.cos(t) * tall))
 	pupil = p.polygon(slit, -0.03, 0.02)
+	top = pupil.pop(-2)
+	pupil += bmesh.ops.poke(p.bm, faces=[top])["faces"]
 	for v in {v for f in pupil for v in f.verts}:
 		x, z, r = v.co.x, v.co.y, EYE + v.co.z
 		v.co = Vector((x, -math.sqrt(max(EYE ** 2 - x * x - z * z, 0.0)), z)).normalized() * r
@@ -328,7 +335,16 @@ def hand(p, curl, mirror):
 
 
 piece("jefe_cuerpo", 1, jefe_cuerpo)
-piece("jefe_ojo", 2, jefe_ojo)
+eye = piece("jefe_ojo", 2, jefe_ojo)
+eye.shape_key_add(name="Basis")
+for key_name, (wide, tall) in PUPIL.items():
+	p = epi.Piece(2)
+	jefe_ojo(p, wide, tall)
+	assert len(p.bm.verts) == len(eye.data.vertices), key_name
+	key = eye.shape_key_add(name=key_name, from_mix=False)
+	for i, v in enumerate(p.bm.verts):
+		key.data[i].co = v.co
+	p.bm.free()
 piece("jefe_parpado", 3, jefe_parpado)
 piece("jefe_parpado_inf", 3, jefe_parpado_inf)
 for side, mirror in (("izq", False), ("der", True)):

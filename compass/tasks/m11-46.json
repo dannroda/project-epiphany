@@ -6,8 +6,8 @@
       "text": "Cuerpo vivo"
     },
     {
-      "detail": "El iris pulsa la emisión (material override por instancia) mientras carga el orbe; la boca de horno se enciende en cada ataque. Falta: la pupila no se dilata (es parte de la malla del ojo; necesita pieza propia o shape key).",
-      "done": false,
+      "detail": "El iris pulsa la emisión (material override por instancia) mientras carga el orbe; la boca de horno se enciende en cada ataque. La pupila (shape keys rendija/dilatada) se dilata al cargar, se cierra en rendija al disparar y queda dilatada aturdida.",
+      "done": true,
       "text": "Ojo que carga"
     },
     {
@@ -43,12 +43,12 @@
       "section": "jefe"
     }
   ],
-  "status": "doing",
+  "status": "review",
   "tags": [
     "jefe",
     "feel"
   ],
   "test": "Pelear contra el jefe de punta a punta: cada ataque se anticipa y se lee, los golpes al piso pesan (hit-stop, grietas, vibración), el ojo y el cuerpo reaccionan, y la muerte se siente como un final.",
   "title": "Jefe: game juice",
-  "updated_at": "2026-10-11T05:37:40.964Z"
+  "updated_at": "2026-10-11T05:44:06.436Z"
 }

@@ -37,6 +37,9 @@ const LEAN_ANGLE := 9.0
 const BLINK_EVERY := Vector2(2.5, 6.0)
 ## Cuánto cierra los párpados mientras apunta el orbe.
 const SQUINT := 0.45
+## Pupila: qué tan rápido sigue a su meta (-1 rendija, 0 normal, 1 dilatada) y cuánto tiembla aturdida.
+const PUPIL_SPEED := 9.0
+const PUPIL_DAZED_WOBBLE := 0.2
 ## Brillo del neón del ojo (multiplicador de emisión): en reposo, cargando el orbe y apagado.
 const EYE_GLOW := 1.0
 const EYE_GLOW_CHARGED := 4.0
@@ -68,6 +71,10 @@ var _body_height := 0.0
 var _time := 0.0
 var _blink := 0.0
 var _squint := 0.0
+## -1 rendija, 0 normal, 1 dilatada.
+var pupil := 0.0
+var _pupil_goal := 0.0
+var _pupil_keys := Vector2i(-1, -1)
 var _next_blink := 4.0
 var _alive := true
 var _eye_material: StandardMaterial3D
@@ -95,6 +102,8 @@ func _ready() -> void:
 	_body_material = _own_material($Body/Mesh)
 	_eye_base_glow = _eye_material.emission_energy_multiplier
 	_body_base_glow = _body_material.emission_energy_multiplier
+	var eye_mesh: MeshInstance3D = $Body/Eye/Mesh
+	_pupil_keys = Vector2i(eye_mesh.find_blend_shape_by_name(&"rendija"), eye_mesh.find_blend_shape_by_name(&"dilatada"))
 	arena = Rect2(global_position.x - 9.0, global_position.z - 3.0, 18.0, 10.0)
 	for hand in [hand_left, hand_right]:
 		hand.rest = hand_rest(hand)
@@ -163,6 +172,11 @@ func _process(delta: float) -> void:
 			blink.tween_property(self, ^"_blink", 1.0, 0.07)
 			blink.tween_property(self, ^"_blink", 0.0, 0.12)
 	_apply_lids()
+	var goal := _pupil_goal
+	if is_eye_stunned():
+		goal = 1.0 - PUPIL_DAZED_WOBBLE * (0.5 + 0.5 * sin(_time * 11.0))
+	pupil = lerpf(pupil, goal, 1.0 - exp(-PUPIL_SPEED * delta))
+	_apply_pupil()
 
 
 func _physics_process(delta: float) -> void:
@@ -263,6 +277,7 @@ func _mark_floor() -> void:
 		create_tween().tween_property(mark, ^"modulate:a", 1.0, MARK_TELEGRAPH).set_ease(Tween.EASE_IN)
 	Feel.sfx(&"deny", eye.global_position)
 	_flare_body()
+	_snap_pupil()
 	_combo_hand()
 	await get_tree().create_timer(0.4, false).timeout
 	_eye_attacking = false
@@ -347,10 +362,12 @@ func _fire_orb() -> void:
 	grow.tween_property(charge, ^"scale", Vector3.ONE, orb_charge_time).set_ease(Tween.EASE_IN)
 	grow.parallel().tween_property(self, ^"_squint", 1.0, 0.2)
 	grow.parallel().tween_method(_pulse_eye, 0.0, 1.0, orb_charge_time)
+	grow.parallel().tween_property(self, ^"_pupil_goal", 1.0, orb_charge_time).set_ease(Tween.EASE_IN)
 	await grow.finished
 	charge.visible = false
 	_eye_attacking = false
 	_flare_body()
+	_snap_pupil()
 	var relax := create_tween().set_parallel()
 	relax.tween_property(self, ^"_squint", 0.0, 0.3)
 	relax.tween_method(_set_eye_glow, EYE_GLOW_CHARGED, EYE_GLOW, 0.3)
@@ -431,6 +448,7 @@ func _stun_eye() -> void:
 	Feel.shake(0.3)
 	%Charge.visible = false
 	_squint = 0.0
+	_pupil_goal = 0.0
 	_set_eye_glow(EYE_GLOW)
 	_move_body(BODY_HEIGHT_STUNNED, 0.35)
 	look_at_point(eye.global_position + Vector3(0, -1, 0.4))
@@ -502,6 +520,8 @@ func _play_death() -> void:
 		_body_tween.kill()
 	_alive = false
 	_squint = 0.0
+	pupil = 1.0
+	_apply_pupil()
 	var death := create_tween()
 	death.tween_property(self, ^"eye_open", 0.0, 0.6)
 	death.parallel().tween_method(_set_eye_glow, EYE_GLOW_CHARGED, 0.0, 1.4).set_trans(Tween.TRANS_BOUNCE)
@@ -519,6 +539,23 @@ func _play_death() -> void:
 		visible = false
 		%Solid.process_mode = Node.PROCESS_MODE_DISABLED
 		death_finished.emit())
+
+
+## Al soltar un ataque la pupila se cierra de golpe en rendija y vuelve sola.
+func _snap_pupil() -> void:
+	pupil = -1.0
+	_pupil_goal = -1.0
+	var back := create_tween()
+	back.tween_interval(0.35)
+	back.tween_property(self, ^"_pupil_goal", 0.0, 0.5)
+
+
+func _apply_pupil() -> void:
+	var eye_mesh: MeshInstance3D = $Body/Eye/Mesh
+	if _pupil_keys.x >= 0:
+		eye_mesh.set_blend_shape_value(_pupil_keys.x, maxf(-pupil, 0.0))
+	if _pupil_keys.y >= 0:
+		eye_mesh.set_blend_shape_value(_pupil_keys.y, maxf(pupil, 0.0))
 
 
 func _apply_lids() -> void:

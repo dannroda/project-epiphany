@@ -55,6 +55,29 @@ func test_iris_glows_while_charging_the_orb() -> void:
 	boss.free()
 
 
+func test_pupil_dilates_charging_snaps_to_a_slit_and_dazes() -> void:
+	var boss := _spawn()
+	boss.eye_open = 1.0
+	boss.target = Node3D.new()
+	boss.add_child(boss.target)
+	boss.target.position = Vector3(0, 0, 8)
+	var mesh: MeshInstance3D = boss.get_node(^"Body/Eye/Mesh")
+	var slit := mesh.find_blend_shape_by_name(&"rendija")
+	var wide := mesh.find_blend_shape_by_name(&"dilatada")
+	assert_true(slit >= 0 and wide >= 0, "el ojo trae las dos formas de pupila")
+	boss._fire_orb()
+	await _wait(boss.orb_charge_time * 0.9)
+	assert_true(boss.pupil > 0.4 and mesh.get_blend_shape_value(wide) > 0.4, "se dilata mientras carga (%.2f)" % boss.pupil)
+	await _wait(boss.orb_charge_time * 0.1 + 0.1)
+	assert_true(boss.pupil < -0.5 and mesh.get_blend_shape_value(slit) > 0.5, "al disparar se cierra en rendija (%.2f)" % boss.pupil)
+	await _wait(1.4)
+	assert_true(absf(boss.pupil) < 0.15, "y vuelve a la normal (%.2f)" % boss.pupil)
+	boss._stun_eye()
+	await _wait(0.6)
+	assert_true(boss.pupil > 0.6, "aturdido queda dilatada (%.2f)" % boss.pupil)
+	boss.free()
+
+
 func test_slam_squashes_and_leaves_a_crack() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var boss := _spawn()
