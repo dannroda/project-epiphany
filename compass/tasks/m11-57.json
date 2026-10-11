@@ -1,0 +1,19 @@
+{
+  "checklist": [],
+  "code": "10.26",
+  "created_at": "2026-10-11T05:36:52.678Z",
+  "description": "El 80 % de los triángulos son paredes: Acantilado 1224 tri por celda (211 celdas, 258 mil) y Pared del templo 816 (252 celdas, 206 mil). Bajar el detalle en build_lugares.py sin perder el look. Las mallas del GridMap no tienen LOD (se guardan a .res sin generarlo) y el GridMap agrupa en octantes de 8 celdas (16×16 m), así que el frustum culling es por bloque: medir también cell_octant_size 4. Occlusion culling no vale la pena con cámara cenital.",
+  "milestone": "m10",
+  "notes": "Godot 4.8 trae mip-level texture streaming (dev 5, GH-113429; se activa en Project Settings con reinicio del editor, runtime vía el singleton TextureStreaming). Hoy no aporta: casi todo se pinta con la paleta y el overworld usa ~270 MB de VRAM. Considerarlo si entran texturas grandes (terreno texturizado, estilo con más detalle).",
+  "order": 57,
+  "priority": "low",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "rendimiento",
+    "arte"
+  ],
+  "test": "",
+  "title": "Paredes del GridMap más livianas",
+  "updated_at": "2026-10-11T05:42:43.946Z"
+}

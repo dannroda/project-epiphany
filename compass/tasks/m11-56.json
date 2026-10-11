@@ -1,0 +1,18 @@
+{
+  "checklist": [],
+  "code": "10.25",
+  "created_at": "2026-10-11T05:36:52.373Z",
+  "description": "El Sun de overworld y temple usa el default de Godot (PSSM de 4 cascadas hasta 100 m): la geometría se vuelve a dibujar por cada cascada y el overworld llega a ~900 mil triángulos por cuadro con 418 mil en escena. Probar 2 cascadas (u ortogonal) con distancia máxima acorde a la cámara; comparar capturas antes/después.",
+  "milestone": "m10",
+  "notes": "",
+  "order": 56,
+  "priority": "medium",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "rendimiento"
+  ],
+  "test": "",
+  "title": "Sombras del sol acordes a la cámara cenital",
+  "updated_at": "2026-10-11T05:42:43.478Z"
+}

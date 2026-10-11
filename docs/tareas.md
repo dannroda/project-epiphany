@@ -1,7 +1,7 @@
 # Tareas — Project Epiphany
 
 > Export de `compass/`, que es la fuente de verdad. No editar: los cambios se hacen en `compass/` o con `scompass`, y este archivo se regenera.
-> Generado: 2026-10-10
+> Generado: 2026-10-11
 
 ## M0 — Refactor del player + base de datos  (13/13)
 
@@ -1752,7 +1752,7 @@ Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 
 
 **Notas:** Sin flag por ahora porque no hay jefe; 9.6 le pone d1_boss_defeated.
 
-## M10 — Terminación  (15/22)
+## M10 — Terminación  (15/28)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -1896,7 +1896,7 @@ Hecho 2026-10-09: decisión cerrada (KayKit + prototipo pulido) y guía de estil
 
 - [x] Presupuesto de frame
   60 FPS en la máquina más floja de los playtesters.
-- [ ] Perfilar las peores escenas
+- [x] Perfilar las peores escenas
   Arena con oleadas, overworld con pasto, jefe. Profiler y monitores `epiphany/*`.
 - [x] Arreglar lo que se mida
   Pools, MultiMesh, luces con sombra, partículas.
@@ -1909,30 +1909,32 @@ Hecho 2026-10-09: decisión cerrada (KayKit + prototipo pulido) y guía de estil
 
 **Bloqueada por:** 8.8 Recorrido completo y escenarios de la mazmorra
 
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
+
 ### 10.9 Build para playtesters · Revisión
 
-- [ ] Compilar las plantillas de export del LimboAI propio
-  template_release para Linux, Windows, macOS y web (wasm32 nothreads). Instalar además las plantillas de Godot 4.8-dev7 (en curso, 2026-10-10).
+- [x] Plantillas de export de LimboAI (oficial 1.8.1)
+  Los template_release de Linux, Windows, macOS y web (wasm32 nothreads) salen del gdextension-4.6 oficial de LimboAI 1.8.1; el editor sigue con el build parchado (el parche es solo UI del editor). Probado 2026-10-10: export release de Linux y Windows, y el build de Linux corre el templo (LimboHSM del player, BTs de enemigos) sin errores.
 - [x] Presets de export
   Excluir `debug/scenarios/*` y `tests/`; `plain_saves` solo en el preset de debug.
 - [x] Cambiar la clave de guardado
   `SaveCodec._PASS` antes del primer release.
 - [x] Build por línea de comandos
   Script `tools/build.sh` con `godot --headless --export-release`.
-- [ ] Preset de macOS sin firmar
-  Universal (Intel + Apple Silicon), bundle id, ícono .icns; sin firma ni notarización por ahora (los playtesters abren con clic derecho → Abrir o xattr -dr com.apple.quarantine). Sin Mac para probar: se confía en los reportes. LimboAI necesita liblimboai.macos.template_release.framework (osxcross o una Mac).
-- [ ] Ícono y metadatos del .exe (opcional)
-  rcedit configurado en el editor (con wine en Linux); sin firma, SmartScreen avisa y se sigue con 'Ejecutar de todas formas'.
+- [x] Preset de macOS sin firmar
+  Preset 'macOS' en build.sh: universal (Intel + Apple Silicon), bundle id com.lonewolftechnology.epiphany, ícono .icns generado del png, firma ad-hoc (built-in) sin notarizar. Los playtesters abren con clic derecho → Abrir o xattr -dr com.apple.quarantine. Sin Mac para probar: se confía en los reportes.
+- [x] Metadatos del .exe (opcional)
+  El ícono va dentro del .exe (Godot 4.8 lo incrusta solo, sin rcedit). Versión 0.1.0.0, nombre y descripción 'Project Epiphany'; empresa vacía. Sin firma: SmartScreen avisa y se sigue con 'Ejecutar de todas formas'.
 
 **Prueba:** Instalar el build en una máquina limpia (Linux y Windows): arranca, guarda en `user://` cifrado y no incluye escenarios ni tests.
 
-**Notas:** Skills: `godot:godot-export`. Decidido 2026-10-10: Windows y macOS van sin firmar; macOS sin probar (no hay Mac), se arreglan los reportes.
+**Notas:** Skills: `godot:godot-export`. Decidido 2026-10-10: Windows y macOS van sin firmar; macOS sin probar (no hay Mac), se arreglan los reportes. 2026-10-11: build de Linux probado por el usuario (arranca, sin partidas para cargar). Falta probar Windows en una máquina limpia.
 
 **Referencias:** `gdd.md#guardado`
 
 **Bloquea a:** 10.10 Publicar en itch.io y playtest
 
-**Relacionadas:** 10.22 Build web
+**Relacionadas:** 10.22 Build web; 10.28 Playtest de revisión (lo que está en Revisión)
 
 ### 10.10 Publicar en itch.io y playtest · Pendiente
 
@@ -2035,17 +2037,17 @@ Skills: `workflows:itch-publish`.
 - [x] Skeleton2 fuera del cerco y test de enemigos encimados
 - [x] path_desired_distance 1.0 por la navmesh a 0.5 m
 
-### 10.18 Idiomas: inglés y español · Pendiente
+### 10.18 Idiomas: inglés y español · Revisión
 
 **Prioridad:** media · **Etiquetas:** `ui`
 
-- [ ] Sistema de traducción con TranslationServer
+- [x] Sistema de traducción con TranslationServer
   Archivo de traducciones (CSV o .po) con es y en; los textos se piden por clave con tr(). Por ahora solo esos dos idiomas, pero que sumar otro sea agregar una columna o archivo.
-- [ ] Pasar todos los textos a claves
+- [x] Pasar todos los textos a claves
   UI, menús, HUD, carteles, diálogos, nombres y descripciones de ítems (data/), item get, game over. Nada de texto suelto en escenas ni scripts.
-- [ ] Elegir idioma la primera vez que se abre el juego
+- [x] Elegir idioma la primera vez que se abre el juego
   Pantalla (escena .tscn en el MenuStack) antes del título, solo si settings.cfg no tiene idioma. Arranca preseleccionado el idioma del sistema (OS.get_locale_language) si es es o en. Hace falta su mockup en el canvas de UI.
-- [ ] Idioma en Opciones
+- [x] Idioma en Opciones
   Selector en OptionsPanel (título y pausa), guardado en user://settings.cfg con Settings; cambia en vivo sin reiniciar.
 
 **Prueba:** Borrar settings.cfg y abrir el juego: pide idioma antes del título. Elegir inglés: todo el juego (menús, HUD, ítems, diálogos) en inglés. Cambiar a español desde Opciones en la pausa: cambia al instante y se mantiene al reiniciar. Un test recorre las claves y falla si alguna falta en algún idioma.
@@ -2056,19 +2058,33 @@ Skills: `workflows:itch-publish`.
 
 **Bloqueada por:** 10.4 Opciones
 
-### 10.19 Final y créditos de verdad · Pendiente
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
+
+### 10.19 Fin de la demo y créditos · Pendiente
 
 **Prioridad:** media · **Etiquetas:** `ui`
 
-- [ ] Revisar el final actual
-  Pantalla Ending (src/ui/menus/ending.tscn): hoy es FIN + créditos placeholder sin mockup. Ver qué se siente al terminar el jefe y qué falta (ritmo, epílogo, cierre del doom).
-- [ ] Mockup de final y créditos en el canvas de UI
+- [ ] Quitar el final al tomar el contenedor
+  Hoy Ending.open() salta al tomar el contenedor de corazón (boss_arena.gd _on_reward_taken). Sacarlo de ahí: tomar el contenedor es solo el item get.
+- [ ] Vencer no reabre la puerta: el portal es la única salida
+  Sacar door.open() de _on_death_finished y que _already_won (cargar la partida en la arena) también la deje cerrada. No se vuelve a la sala anterior.
+- [ ] El portal del jefe dispara el fin de la demo
+  Al entrar al BossExitPortal (required_flag d1_boss_defeated) se abre la pantalla de fin en vez de viajar directo. Guardar checkpoint antes, así el progreso del jefe queda.
+- [ ] Respuestas en el TextBox: diálogos con opciones
+  Hoy TextBox ignora line.responses. Al terminar una línea con respuestas, mostrar la lista dentro del globo (nodos en text_box.tscn, no por código), navegable con gamepad/teclado, foco en la primera; elegir sigue con response.next_id. Respuestas con condición ocultas. Sirve para cualquier NPC o cartel con preguntas.
+- [ ] Diálogo de fin de demo: seguir, revancha o menú
+  data/dialogue/ending.dialogue (es/en en translations): "Fin de la demo, gracias por jugar" con respuestas Seguir jugando (cierra y completa el viaje del portal al overworld, ver 11.29), Volver a retar al jefe y Volver al menú principal (guarda y quit_to_title, vía mutation o señal). Reemplaza la pantalla Ending actual.
+- [ ] Revancha contra el jefe
+  Recarga la arena con el jefe vivo aunque d1_boss_defeated esté en true (modo revancha en BossArena, no se borra el flag ni se guarda nada a mitad). Puerta cerrada e intro como siempre; morir reinicia la revancha. Al ganar no reaparece el contenedor (d1_heart_container) y el portal vuelve a abrir el diálogo de fin.
+- [ ] Mockup del diálogo de fin de demo y créditos en el canvas de UI
 - [ ] Créditos reales
-  Autoría, herramientas (Godot, Blender, LimboAI), assets de terceros con sus licencias (sale de compass/lists/assets-de-audio y los kits que queden), agradecimientos. Que se puedan pasar/acelerar.
-- [ ] Breve epílogo antes de los créditos
-  Cámara sobre el templo calmado o el overworld sin doom; corto y salteable.
+  Autoría, herramientas (Godot, Blender, LimboAI), assets de terceros con sus licencias (sale de compass/lists/assets-de-audio y los kits que queden), agradecimientos. Accesibles desde el diálogo de fin y desde el menú principal; se pueden acelerar/saltear.
+- [ ] Breve epílogo (opcional)
+  Si entra en la demo: cámara sobre el templo calmado o el overworld sin doom antes del diálogo; corto y salteable.
 
-**Prueba:** Ganar desde pre_boss: epílogo, créditos completos con todas las licencias, se pueden acelerar/saltear y vuelve al flujo de siempre (seguir explorando o título).
+**Prueba:** Desde pre_boss: vencer al jefe y tomar el contenedor no corta el juego ni reabre la puerta; el portal es la única salida y abre el diálogo de fin de demo. Seguir jugando lleva al overworld con el progreso guardado; Volver a retar recarga la pelea completa y al ganar no da otro contenedor; Volver al menú va al título y al cargar el jefe no reaparece. Los créditos tienen todas las licencias y se pueden saltear.
+
+**Notas:** El fin ya no salta al tomar el contenedor: el jugador puede quedarse en la arena y decide cuándo terminar entrando al portal.
 
 **Referencias:** `gdd.md#jefe`, `gdd.md#ui`
 
@@ -2089,7 +2105,7 @@ Skills: `workflows:itch-publish`.
 
 **Referencias:** `gdd.md#historia`
 
-**Relacionadas:** 10.19 Final y créditos de verdad; 11.22 Tablillas de historia
+**Relacionadas:** 10.19 Fin de la demo y créditos; 11.22 Tablillas de historia
 
 ### 10.21 Título y ranuras: Continuar, Nueva partida y ranura de autosave · Hecho
 
@@ -2116,12 +2132,12 @@ Skills: `workflows:itch-publish`.
 
 ### 10.22 Build web · Pendiente
 
-**Prioridad:** media · **Etiquetas:** `build`
+**Prioridad:** baja · **Etiquetas:** `build`
 
 - [ ] Preset Web
-  Exporta con el renderer Compatibility (rendering_method.web = gl_compatibility); 'Extensions Support' encendido para cargar LimboAI (GDExtension), sin threads para que corra en itch sin COOP/COEP. Agregarlo a tools/build.sh.
+  Preset 'Web' en export_presets.cfg (2026-10-11): sin threads (corre en itch sin COOP/COEP), extensiones encendidas para LimboAI, renderer Compatibility. Falta agregarlo a tools/build.sh. Primera prueba local: anda mejor de lo esperado; se pierde lo que solo existe en Forward+.
 - [ ] LimboAI para web
-  liblimboai.web.template_release.wasm32.nothreads.wasm compilado con emscripten (la versión que pide limboai.gdextension); probar que los BT del jefe y los enemigos corren.
+  liblimboai.web.template_release.wasm32.nothreads.wasm ya está (gdextension oficial de LimboAI 1.8.1, como los de escritorio en 10.9); falta probar que los BT del jefe y los enemigos corren en el navegador.
 - [ ] Revisar el juego en Compatibility
   El escritorio usa Forward+: comparar el cutaway del templo, la emisión de la paleta, tonemap, niebla/doom, sombras y las cáusticas (projector + DrawableTexture). Lo que no ande, un fallback para web.
 - [ ] Navegador
@@ -2131,13 +2147,97 @@ Skills: `workflows:itch-publish`.
 
 **Prueba:** Abrir el build en Chrome y Firefox desde itch: carga en un tiempo razonable, se juega el overworld y el templo hasta el jefe con gamepad y teclado, el guardado sobrevive a recargar la página y se ve parecido al build de escritorio.
 
-**Notas:** Skills: `godot:godot-export`.
+**Notas:** Skills: `godot:godot-export`. Prioridad muy baja (2026-10-11): el escritorio va primero. El preset Web ya existe y la primera prueba local anduvo bien; lo pendiente es sumar la web a build.sh, reemplazos para lo que solo existe en Forward+ y publicar.
 
 **Relacionadas:** 10.9 Build para playtesters; 10.10 Publicar en itch.io y playtest
 
-## M11 — Pulido: assets y contenido  (20/50)
+### 10.23 Tests en paralelo · Revisión
 
-Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legible y los detalles técnicos de la revisión del 2026-10-09.
+**Prioridad:** media · **Etiquetas:** `herramientas`
+
+- [x] Runner en paralelo
+  run_tests.gd reparte los archivos test_*.gd en N procesos headless (por defecto, los núcleos disponibles, máx. 4), balanceados por la duración de la última corrida; junta resultados y sale con 1 si algo falla.
+- [x] Aislar user://
+  Cada proceso con su carpeta de partidas y de opciones (test_saves_<n>, test_settings_<n>.cfg) para que no se pisen.
+- [x] Medir y documentar
+  Comparar contra la corrida en serie (~9 min); README/gdd con el comando y cómo correr un solo archivo.
+
+**Prueba:** Correr la suite completa: termina en menos de la mitad del tiempo en serie, con los mismos resultados, y dos corridas seguidas dan lo mismo.
+
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
+
+### 10.24 Tope de FPS · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `rendimiento`
+
+Medido 2026-10-11: con monitor de 200 Hz y vsync sin tope el juego dibuja 200 FPS aunque cada cuadro le cueste ~1,2 ms a la GPU (RX 580: 82 W promedio, picos de 120 W, contra 68 W con tope 60). Engine.max_fps 60 por defecto y opción en el menú (30/60/120/sin límite) armada en la escena de opciones.
+
+### 10.25 Sombras del sol acordes a la cámara cenital · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `rendimiento`
+
+El Sun de overworld y temple usa el default de Godot (PSSM de 4 cascadas hasta 100 m): la geometría se vuelve a dibujar por cada cascada y el overworld llega a ~900 mil triángulos por cuadro con 418 mil en escena. Probar 2 cascadas (u ortogonal) con distancia máxima acorde a la cámara; comparar capturas antes/después.
+
+### 10.26 Paredes del GridMap más livianas · Pendiente
+
+**Prioridad:** baja · **Etiquetas:** `rendimiento`, `arte`
+
+El 80 % de los triángulos son paredes: Acantilado 1224 tri por celda (211 celdas, 258 mil) y Pared del templo 816 (252 celdas, 206 mil). Bajar el detalle en build_lugares.py sin perder el look. Las mallas del GridMap no tienen LOD (se guardan a .res sin generarlo) y el GridMap agrupa en octantes de 8 celdas (16×16 m), así que el frustum culling es por bloque: medir también cell_octant_size 4. Occlusion culling no vale la pena con cámara cenital.
+
+**Notas:** Godot 4.8 trae mip-level texture streaming (dev 5, GH-113429; se activa en Project Settings con reinicio del editor, runtime vía el singleton TextureStreaming). Hoy no aporta: casi todo se pinta con la paleta y el overworld usa ~270 MB de VRAM. Considerarlo si entran texturas grandes (terreno texturizado, estilo con más detalle).
+
+### 10.27 Nodos creados por código pasan a sus .tscn · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `arquitectura`
+
+Regla (2026-10-11): todo lo que hereda de Node va en la escena, no con X.new() + add_child, para poder retocarlo en el inspector; el código solo ajusta lo que depende del juego. Lo que spawnea en runtime se instancia desde una escena (p. ej. un proyectil con su Trail3D). Pendientes: top_down_camera (máscara de sala), aim (MeshInstance3D de la mira), player (cono de bloqueo), item_get (OmniLight3D), chest (MeshInstance3D x2, Node3D), light_beam (MeshInstance3D x2), room (MeshInstance3D), overworld_map (Node3D, MultiMeshInstance3D), spawn_point (Area3D + CollisionShape3D), enemy (CollisionShape3D de los pedazos), liftable (CollisionShape3D, ThrownObject), doom_ambience (GPUParticles3D, Decal), boss_hand (Decal), feel (CPUParticles3D, MeshInstance3D, AudioStreamPlayer/3D: pasar a escenas de efecto instanciables), music (AudioStreamPlayer), y los PersistentFlag/Wiring/HitFlash que se agregan como hijos (door, chest, cracked_wall, portal, floor_switch, eye_switch, light_receiver, wave_spawner, wiring, hit_flash). Revisar cada caso: lo que es puro dato no cambia.
+
+### 10.28 Playtest de revisión (lo que está en Revisión) · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `playtest`
+
+Recorrido para revisar de a una las tareas en Revisión, en el orden de una partida. Antes: borrar ~/.local/share/godot/app_userdata/Project Epiphany/settings.cfg y empezar partida nueva. Al confirmar un paso, la tarea vinculada pasa a Hecho.
+
+- [ ] Idiomas (10.18)
+  Pide idioma antes del título; en inglés menús, HUD, ítems y diálogos; Opciones → español cambia al instante y se mantiene al reiniciar.
+- [ ] Tutorial (11.45)
+  Tablitas del claro: moverse, atacar, rodar, bloquear, fijar, interactuar; los íconos cambian entre teclado y control.
+- [ ] Levantar y tirar (11.44)
+  Piedra → placa → reja → cofre. Vasija: caminás más lento, se rompe al tirarla y suelta loot, daña enemigos.
+- [ ] Agujero de la cámara (11.53)
+  Junto al árbol del sendero no aparece; detrás de una pared se abre suave y se cierra al salir.
+- [ ] Minimapa (11.37)
+  Se destapa al caminar, se apaga desde Opciones; en el templo sigue sala a sala y coincide con la pestaña Mapa.
+- [ ] Pared agrietada y zonas tapadas (11.51, 11.52)
+  Mismo grosor y color que el muro, solo grietas; lo de atrás tapado; al volarla se descubre sin frenarte. El borde contiguo es 11.54.
+- [ ] Bombas (11.43)
+  Toque: a los pies. Mantener: levanta y apunta, soltar tira en parábola; la mecha sigue corriendo.
+- [ ] Combate (11.33, 11.49, 11.25, 11.41)
+  3 chullpas: respuesta instantánea, rodar/bloquear al final del tajo; VFX por acción; arquero y esqueleto con armadura telegrafían; el escudo del esqueleto bloquea solo de frente y levantado, con chispa y retroceso.
+- [ ] Arco (11.42)
+  Al mantener, la cuerda se tensa con la flecha; al soltar vuelve de golpe.
+- [ ] Item get (11.48)
+  Cofre grande: levanta el ítem con las dos manos.
+- [ ] Decoración (11.3, 11.4)
+  Cada zona se reconoce sin el cartel; el templo se arruina hacia el jefe; nada tapa caminos ni interactivos.
+- [ ] Templo: puertas y rejas (11.51)
+  Puertas y rejas llenan el grosor del muro, una reja en cada borde.
+- [ ] Jefe (11.47)
+  Dedos que abren y cierran continuo; abren antes de agarrar, aprietan al sostener, caen flojas al vencerlas.
+- [ ] Co-op (13.1, 13.2)
+  Dos controles: Start en el segundo suma al P2 sin pausar, cada uno mueve el suyo; mantener Start 1,5 s lo saca.
+- [ ] Build en máquina limpia (10.9)
+  Linux y Windows: arranca, guarda cifrado en user://, sin escenarios ni tests.
+- [ ] Cerrar 10.8 y 10.23
+  10.23 verificada (~16 s, estable). 10.8 la reemplazan 10.24–10.26.
+- [ ] Co-op: cámara y salas (13.3)
+  Dos controles en el templo: la cámara mira a los dos y no los deja separarse más que la pantalla; al cruzar uno una puerta, el otro aparece a su lado y entran juntos; overworld ↔ templo llegan juntos.
+
+**Relacionadas:** 10.18 Idiomas: inglés y español; 11.45 Tutorial de controles y mini puzzle por ítem; 11.44 Levantar y tirar objetos; 11.53 Agujero de la cámara solo donde tiene sentido; 11.37 Minimapa en el HUD; 11.51 Pared agrietada que se integre al muro; 11.52 Zonas tapadas hasta abrirlas; 11.43 Bombas: tocar coloca, mantener apunta y tira; 11.33 Combate: sacar lo tosco; 11.49 VFX de combate; 11.25 Nuevos enemigos con los modelos existentes; 11.41 Esqueleto con escudo: bloquear con el escudo delante; 11.42 Arco que se tensa; 11.48 Pose de item get; 11.3 Decorar las salas del templo; 11.4 Decorar el overworld; 11.47 Manos del jefe animadas (shape keys); 13.1 Código listo para varios players; 13.2 Input por jugador y unirse a la partida; 10.9 Build para playtesters; 10.8 Pasada de rendimiento; 10.23 Tests en paralelo; 13.3 Cámara y salas para dos
+
+## M11 — Pulido: contenido y feel  (20/54)
+
+Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
 **Hecho cuando:**
 - Ninguna sala ni zona se ve de prototipo o vacía.
@@ -2161,19 +2261,54 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Notas:** Paredes con wall_half estiradas a 3.1 m de alto; columna pillar escalada. El overworld sigue con el kit gris. Las esquinas entre la columna y la pared dejan ver el vacío (rojo con el doom); se puede tapar en 11.3.
 
-### 11.3 Decorar las salas del templo · Pendiente
+### 11.3 Decorar las salas del templo · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `arte`
 
-### 11.4 Decorar el overworld · Pendiente
+- [x] Generador de decoración
+  tools/decorate_levels.gd lee el GridMap, las salas y lo jugable, y escribe levels/decor/temple_decor.tscn (determinístico, se regenera); el nivel solo lo instancia.
+- [x] Estandartes, braseros y escombros
+  Estandartes en las paredes norte y laterales (menos cuanto más doom), braseros en las esquinas de las salas grandes, escombros contra las paredes y vasijas rotas; nada en el paso, en puertas, pozos ni encima de lo jugable.
+- [x] Venas del doom
+  Venas rojas en el piso de las salas con doom alto (Arena en adelante), que suben con la tensión.
+- [x] Capturas y rendimiento
+  Fotos de las 9 salas antes y después; profile_scenes.gd sigue dentro del presupuesto.
+
+**Prueba:** Cada sala se ve habitada y distinta, la decoración crece en ruina hacia el jefe, nada tapa el camino ni lo jugable y el rendimiento sigue en presupuesto.
+
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión); 12.7 Kit del templo propio
+
+### 11.4 Decorar el overworld · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `arte`
 
-**Relacionadas:** 12.2 Terreno del overworld
+- [x] Decoración por zona
+  Con el mismo generador (levels/decor/overworld_decor.tscn): fogata y tronco en el claro de inicio, apachetas en la pradera, troncos y cardones en la arboleda, rocas altas en el risco, estalagmitas y rocas en la cueva y la gruta, piedras en el santuario.
+- [x] Fachada del templo
+  fachada_templo detrás del sello, enmarcando la entrada.
+- [x] Mapa y colisiones
+  La decoración entra en el scenery de OverworldMap (sale en la foto del mapa) y las piezas altas tienen colisión.
 
-### 11.5 Galería de trampas: pinchos · Pendiente
+**Prueba:** Cada zona se reconoce sin su nombre; nada tapa los caminos, las entradas ni lo jugable; la foto del mapa muestra la decoración.
+
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión); 12.2 Terreno del overworld; 12.3 Lugares del overworld; 12.4 Vegetación y props del overworld
+
+### 11.5 Galería de trampas: pinchos · Revisión
 
 **Prioridad:** media · **Etiquetas:** `mazmorra`
+
+Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastiman a player y enemigos (el escudo no los frena) y bajan; en ola para cruzarlos con timing.
+
+- [x] Piezas pinchos y pinchos_base
+  build_templo.py: marco de hierro con nueve agujeros apoyado sobre el piso (no lo reemplaza) y nueve púas con el origen a ras del piso.
+- [x] SpikeTrap
+  src/world/spike_trap.tscn: period, up_time, offset, warn_time; Hitbox hits_all con elemento spikes; period 0 = siempre arriba.
+- [x] Ola en la Galería
+  GallerySpikes: columnas x=2 y x=4, z 42–54, offset 0.3 s por fila; la decoración las esquiva.
+- [x] Tests y GDD
+  tests/test_spike_trap.gd; fila de la sala 3 en el GDD.
+
+**Prueba:** En la Galería, cruzar las dos columnas de pinchos: se ve venir cada fila (asoma y tintinea), siempre queda un paso, pinchan al player y al esqueleto, y el puzzle de la torreta sigue igual.
 
 ### 11.6 Más enemigos en el overworld y el templo · Hecho
 
@@ -2297,7 +2432,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 ### 11.20 Cueva con ojo de agua y cáusticas animadas · Pendiente
 
-**Prioridad:** baja · **Etiquetas:** `arte`, `overworld`
+**Prioridad:** media · **Etiquetas:** `arte`, `overworld`, `items`
 
 - [ ] Decidir qué hay en la cueva
   Abierto: recompensa, secreto, tablilla de historia, pieza de corazón, un ítem… Definirlo antes de diseñar la sala, y anotarlo en el GDD.
@@ -2311,14 +2446,18 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
   Penumbra, el agua como fuente de luz suave que tiñe las cáusticas; sonido de goteo.
 - [ ] Agua y cáusticas del mismo patrón
   Como la variante Wind Waker de la demo: un .gdshaderinc con el patrón (wind_waker_pattern) lo incluyen el agua (spatial) y las cáusticas (texture_blit), así la espuma de la superficie y la luz del fondo se mueven juntas. Pasar el patrón a coordenadas de mundo (la demo usa el UV del mesh, con mesh_center/mesh_size). El agua es transparente y no recibe las cáusticas (o con cast_shadow apagado como en la demo); el fondo y las paredes cercanas sí. Un nodo WaterPool arma superficie + projector y expone tamaño y profundidad. Decal animado solo si el spot resulta caro.
+- [ ] Interactuar con el agua llena la botella
+  Agua bendita: cura más que la poción (o cura y quita doom un rato). Viene de la ex 11.23.
+- [ ] Recargable
+  Se puede volver a llenar; da razón para volver a la cueva.
 
-**Prueba:** Entrar a la cueva desde el overworld: a través del agua se ve el fondo con cáusticas que se mueven al mismo ritmo que el brillo de la superficie, hay espuma en la orilla, sin costuras, cortes ni parpadeos; el estilo combina con el resto (paleta, facetado); el rendimiento no cae respecto del overworld.
+**Prueba:** Entrar a la cueva desde el overworld: a través del agua se ve el fondo con cáusticas que se mueven al mismo ritmo que el brillo de la superficie, hay espuma en la orilla, sin costuras, cortes ni parpadeos; el estilo combina con el resto (paleta, facetado); el rendimiento no cae respecto del overworld. Con la botella vacía, interactuar con la vertiente: se llena; usarla cura según lo definido.
 
 **Notas:** Skills: `disciplines:level-design`, `godot:godot-shaders`, `godot:godot-3d-essentials`. PR: https://github.com/godotengine/godot/pull/115653. Prototipo propio: /home/drod/Proyectos/Godot/caustics_demo (5 aguas comparadas, cada una con sus cáusticas; tecla 5 = Wind Waker).
 
 **Referencias:** `gdd.md#overworld`, `gdd.md#arte`
 
-**Relacionadas:** 11.23 Vertiente de la cueva: agua bendita
+**Relacionadas:** 12.13 Reajuste de estilo toon de todos los assets
 
 ### 11.21 Piezas de corazón · Hecho
 
@@ -2346,19 +2485,6 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura; 11.34 Combos y técnicas especiales (Minish Cap / Wind Waker)
 
-### 11.23 Vertiente de la cueva: agua bendita · Pendiente
-
-**Prioridad:** media · **Etiquetas:** `items`, `overworld`
-
-- [ ] Interactuar con el agua llena la botella
-  Agua bendita: cura más que la poción (o cura y quita doom un rato).
-- [ ] Recargable
-  Se puede volver a llenar; da razón para volver a la cueva.
-
-**Prueba:** Con la botella vacía, interactuar con la vertiente: se llena; usarla cura según lo definido.
-
-**Relacionadas:** 11.20 Cueva con ojo de agua y cáusticas animadas
-
 ### 11.24 Más secretos en el overworld · Pendiente
 
 **Prioridad:** baja · **Etiquetas:** `overworld`, `puzzles`
@@ -2382,6 +2508,8 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
   Pedido: esqueletos que disparen flechas. Mantiene distancia, telegraph con el tensado, la flecha se bloquea con el escudo.
 
 **Prueba:** Los dos enemigos aparecen en overworld o templo, se leen sus telegraphs y tienen contra clara.
+
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
 ### 11.26 Prueba de combate opcional · Pendiente
 
@@ -2424,7 +2552,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Prueba:** Vencer al jefe y salir: el overworld se ve y suena distinto, y hay algo nuevo para encontrar.
 
-**Relacionadas:** 10.19 Final y créditos de verdad
+**Relacionadas:** 10.19 Fin de la demo y créditos
 
 ### 11.30 Ítem post-MVP: gancho o telequinesis · Pendiente
 
@@ -2483,7 +2611,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Bloquea a:** 11.34 Combos y técnicas especiales (Minish Cap / Wind Waker)
 
-**Relacionadas:** 11.49 VFX de combate
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión); 11.49 VFX de combate
 
 ### 11.34 Combos y técnicas especiales (Minish Cap / Wind Waker) · Pendiente
 
@@ -2560,17 +2688,17 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Relacionadas:** 11.37 Minimapa en el HUD
 
-### 11.37 Minimapa en el HUD · Pendiente
+### 11.37 Minimapa en el HUD · Revisión
 
 **Prioridad:** media · **Etiquetas:** `ui`
 
 - [x] Mockup HUD_Minimap
   Esquina libre del HUD (no choca con corazones, ítems ni la barra del jefe); tamaño chico, marco simple bronce.
-- [ ] Mazmorra
+- [x] Mazmorra
   Las salas alrededor de la actual (3×3), con puertas y el player con flecha de orientación; usa los mismos datos que la pestaña Mapa (Room.map_cell, DungeonState).
-- [ ] Overworld
-  Recorte de la foto cenital alrededor del player, con la niebla de 11.36 y las marcas cercanas.
-- [ ] Cuándo se ve
+- [x] Overworld
+  Recorte de la foto cenital alrededor del player, con la niebla de 11.36 (zonas sin visitar en sombra) y las marcas cercanas.
+- [x] Cuándo se ve
   Opción en Opciones (encendido/apagado); se oculta en cutscenes, item get, diálogos y en la sala del jefe.
 
 **Prueba:** Recorrer el templo: el minimapa sigue al player sala a sala y coincide con la pestaña Mapa. En el overworld muestra la zona y se destapa igual. Se apaga desde Opciones y no aparece durante el jefe ni en cutscenes.
@@ -2579,7 +2707,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Referencias:** `gdd.md#ui`
 
-**Relacionadas:** 11.36 Mapa: más información y navegable
+**Relacionadas:** 11.36 Mapa: más información y navegable; 10.28 Playtest de revisión (lo que está en Revisión)
 
 ### 11.38 Silueta x-ray con fresnel · Hecho
 
@@ -2618,6 +2746,8 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 - [x] Se lee el bloqueo
   Chispa y sonido en el escudo, retroceso; capturas desde la cámara del juego.
 
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
+
 ### 11.42 Arco que se tensa · Revisión
 
 **Prioridad:** media · **Etiquetas:** `items`, `arte`
@@ -2628,6 +2758,8 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
   El tensado va de 0 a 1 mientras se mantiene; al soltar vuelve de golpe.
 - [x] Flecha en la cuerda mientras se tensa
 
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
+
 ### 11.43 Bombas: tocar coloca, mantener apunta y tira · Revisión
 
 **Prioridad:** media · **Etiquetas:** `items`
@@ -2637,6 +2769,8 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
   Mira/arco de tiro en el piso; soltar la tira en parábola.
 - [x] Mecha sigue corriendo mientras se apunta
 - [x] Tests y GDD
+
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
 ### 11.44 Levantar y tirar objetos · Revisión
 
@@ -2651,6 +2785,8 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 - [x] Puzzles que lo usen
   Piedra sobre placa de presión, vasija para tapar un hueco. Se hace con los mini puzzles de 11.45 (stone.tscn ya aprieta placas).
 
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
+
 ### 11.45 Tutorial de controles y mini puzzle por ítem · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `ui`, `puzzles`
@@ -2663,14 +2799,16 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
   El texto de la tablita usa los íconos de input actuales.
 - [x] Tests y GDD
 
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
+
 ### 11.46 Jefe: game juice · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `jefe`, `feel`
 
 - [x] Cuerpo vivo
   Balanceo de flotación, inclinación hacia la mano que ataca; parpadeos ocasionales, párpados entrecerrados al apuntar. No hay malla de propulsor: el cuerpo brilla en cada ataque.
-- [ ] Ojo que carga
-  El iris pulsa la emisión (material override por instancia) mientras carga el orbe; la boca de horno se enciende en cada ataque. Falta: la pupila no se dilata (es parte de la malla del ojo; necesita pieza propia o shape key).
+- [x] Ojo que carga
+  El iris pulsa la emisión (material override por instancia) mientras carga el orbe; la boca de horno se enciende en cada ataque. La pupila (shape keys rendija/dilatada) se dilata al cargar, se cierra en rendija al disparar y queda dilatada aturdida.
 - [x] Anticipación y peso de las manos
   Antes del golpe sube de más, cierra el puño y tiembla; cae más rápido, squash al tocar el piso y rebote chico. Mismo criterio para el agarre y el barrido.
 - [x] Impactos
@@ -2686,26 +2824,30 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Referencias:** `gdd.md#jefe`
 
-**Relacionadas:** 11.47 Manos del jefe con shape keys; 11.50 Audio del jefe
+**Relacionadas:** 11.47 Manos del jefe animadas (shape keys); 11.50 Audio del jefe
 
-### 11.47 Manos del jefe con shape keys · Pendiente
+### 11.47 Manos del jefe animadas (shape keys) · Revisión
 
 **Prioridad:** media · **Etiquetas:** `jefe`, `arte`
 
-- [ ] Una malla por mano con blend shapes
+- [x] Una malla por mano con blend shapes
   En build_jefe.py, como el arco: base abierta y shape keys «puno» y «garra» (los dedos rotan por falange); reemplaza las tres mallas sueltas.
-- [ ] Transiciones en el código
+- [x] Transiciones en el código
   BossHand interpola los blend shapes en vez de alternar visibilidad (Open/Fist/Claw).
+- [x] Gestos y movimiento propio
+  Respiración en reposo, inclinación según la velocidad, apuntar hacia el objetivo, anticipaciones y reacciones por ataque, aturdida y caída; todo sobre la malla, sin tocar hitboxes ni tiempos.
+- [x] jefe al pipeline glb
+  build_jefe.py publica jefe.glb (epi.publish) para que el import guarde las mallas con sus blend shapes; se borran jefe.blend y las seis mallas sueltas (parte de 12.11).
 
-**Prueba:** Los dedos se cierran y abren de forma continua al pasar de una pose a otra; el ícono y la pelea siguen igual.
+**Prueba:** Los dedos se cierran y abren de forma continua; las manos respiran en reposo, se inclinan al moverse, abren antes de agarrar, aprietan al sostener, se crispan aturdidas y caen flojas; la pelea sigue igual.
 
 **Notas:** Skills: `godot:godot-animation`.
 
 **Referencias:** `gdd.md#jefe`
 
-**Relacionadas:** 11.46 Jefe: game juice
+**Relacionadas:** 11.46 Jefe: game juice; 10.28 Playtest de revisión (lo que está en Revisión); 12.8 Personajes propios; 12.11 Migrar los .blend al pipeline glb
 
-### 11.48 Pose de item get · En curso
+### 11.48 Pose de item get · Revisión
 
 **Prioridad:** media · **Etiquetas:** `personajes`, `feel`
 
@@ -2717,6 +2859,8 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 **Prueba:** Abrir un cofre grande: el player levanta el ítem con las dos manos, se ve el objeto arriba y vuelve a su pose al cerrar la caja.
 
 **Notas:** Skills: `godot:godot-animation`, `disciplines:game-feel`.
+
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
 ### 11.49 VFX de combate · Revisión
 
@@ -2733,7 +2877,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Referencias:** `gdd.md#combate`
 
-**Relacionadas:** 11.33 Combate: sacar lo tosco
+**Relacionadas:** 11.33 Combate: sacar lo tosco; 10.28 Playtest de revisión (lo que está en Revisión); 12.9 Efectos con malla; 12.13 Reajuste de estilo toon de todos los assets
 
 ### 11.50 Audio del jefe · Pendiente
 
@@ -2752,7 +2896,65 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Relacionadas:** 11.46 Jefe: game juice
 
-## M12 — Assets propios (Blender)  (2/13)
+### 11.51 Pared agrietada que se integre al muro · Revisión
+
+**Prioridad:** media · **Etiquetas:** `arte`
+
+Feedback de playtest (overworld, cueva de las bombas): la pared agrietada se delata sola. Es más fina que el muro y deja ver lo que tapa, y es piedra gris en un entorno marrón/pasto. Tiene que leerse como 'pared agrietada' por las grietas, no por el tamaño ni el color. Ver src/world/cracked_wall.tscn y su instancia en levels/overworld.tscn.
+
+- [x] Mismo grosor que el muro
+  Que tape por completo lo que hay detrás: no se tiene que ver el pasillo a través.
+- [x] Mismo material que el entorno
+  Usar la tierra/roca marrón del muro que la rodea, con grietas visibles como única pista.
+- [x] Revisar las demás paredes agrietadas
+  Overworld y templo, con el mismo criterio.
+- [x] Puertas con el mismo grosor que el muro
+  Lo de la pared fina también pasa con las puertas: que ocupen todo el grosor del muro.
+- [x] Rejas en cada borde
+  En un paso con grosor, una reja en cada cara del muro en vez de una sola en el medio.
+
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
+
+### 11.52 Zonas tapadas hasta abrirlas · Revisión
+
+**Prioridad:** media · **Etiquetas:** `mundo`
+
+Feedback de playtest: en el overworld se ve lo que hay detrás de una pared rompible o puerta que todavía no se abrió, sin haber estado nunca ahí. Un velo de tinta (ZoneVeil, hijo de la AreaZone) tapa la zona mientras no se visitó y sus bloqueos siguen cerrados; al romper/abrir uno se disuelve con dither desde ahí, sin frenar al jugador. El minimapa no descubre lo tapado. Rejas no: dejar ver el cofre es el anzuelo.
+
+- [x] Velo (escena + shader con disolución)
+  src/world/zone_veil.tscn: caja de tinta del tamaño de la zona, se disuelve desde el bloqueo en ~1,2 s.
+- [x] Minimapa respeta el velo
+  No pinta lo descubierto dentro de un velo; durante la disolución acompaña la animación.
+- [x] Poner los velos en el overworld
+  Gruta oculta (GrottoCrackedWall) y santuario (ShrineCrackedWall).
+- [x] Tests
+  Velo visible al empezar, se va al romper la pared, no vuelve al recargar; minimapa no descubre a través.
+- [x] Revisión visual
+  Captura antes, durante y después de romper la pared.
+
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
+
+### 11.53 Agujero de la cámara solo donde tiene sentido · Revisión
+
+**Prioridad:** media · **Etiquetas:** `camara`
+
+Feedback de playtest: el agujero con dither alrededor del player se recorta en el follaje de los árboles al pasar por un sendero angosto del overworld, y ahí no tiene sentido. Revisar en qué materiales se aplica (player_hole.gdshaderinc) y limitarlo a paredes/acantilados que realmente tapan al player.
+
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
+
+### 11.54 El velo de zona tapa también las paredes que la rodean · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `camara`, `overworld`
+
+Feedback de playtest (seguimiento de 11.52): con la gruta tapada se ve el borde de la pared de la sala contigua, la tapa de pasto del muro entre el claro del inicio y la gruta queda entre el velo negro y el sendero, y más abajo una franja ancha de pasto sobre el acantilado sur. El velo debería llegar hasta la cara de la pared que da al lado del jugador, para que del otro lado de la pared no se vea nada.
+
+### 11.58 Los enemigos muertos desaparecen después de un rato · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `combate`, `feel`
+
+Feedback de playtest: hoy el cuerpo queda en el piso para siempre (Enemy.on_death_finished solo lo pasa a la capa de muertos y suelta el drop). Después de unos segundos tiene que irse con un efecto acorde (hundirse/desvanecerse con dither o deshacerse en polvo), sin llevarse el drop y sin romper lo que dependa de 'defeated' (salas que abren al limpiar, jefe).
+
+## M12 — Assets propios (Blender)  (3/13)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -2812,18 +3014,18 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 
 **Prioridad:** alta · **Etiquetas:** `arte`, `puzzles`
 
-- [ ] Hito del claro del inicio
+- [x] Hito del claro del inicio
   Piedra tallada, fogata o similar.
-- [ ] Kit de cueva: boca, piso y pared de roca, estalagmitas
+- [x] Kit de cueva: boca, piso y pared de roca, estalagmitas
   Para la cueva de las bombas y la gruta oculta.
 - [x] Muro agrietado de exterior + escombros
   Ladrillo gris con musgo, que no se confunda con el acantilado. cracked_wall.tscn.
-- [ ] Kit de santuario: piso, paredes, columnas, pedestal
+- [x] Kit de santuario: piso, paredes, columnas, pedestal
 - [x] Puzzle de luz: fuente, espejo fijo 45°, cristal receptor
   src/world/light/.
 - [x] Reja, bloque empujable e interruptor de piso de exterior
   gate.tscn, push_block.tscn, floor_switch.tscn.
-- [ ] Entrada del templo: fachada, escalinata, columnas
+- [x] Entrada del templo: fachada, escalinata, columnas
   La pieza más importante del overworld.
 - [x] Sello violeta con el ojo
   temple_seal.tscn.
@@ -2837,6 +3039,8 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 **Referencias:** `gdd.md#overworld-layout`
 
 **Bloqueada por:** 12.1 Guía de estilo: paleta, escala y pieza de prueba; 12.2 Terreno del overworld
+
+**Relacionadas:** 11.4 Decorar el overworld
 
 ### 12.4 Vegetación y props del overworld · En curso
 
@@ -2853,13 +3057,15 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
   tablet.tscn.
 - [x] Rocas grandes fijas (2–3)
 - [ ] Decoración: arbustos, flores, hongos, tronco caído, tocón
-  Opcional.
+  Hay tronco caído, cardón chico, ichu y piedras (usados en 11.4); faltan arbustos, flores, hongos y tocón si hacen falta.
 - [ ] Fondo: nubes y colinas lejanas
   Hoy salen de KayKit Medieval. Opcional.
 
 **Prueba:** Pasto, vasijas, rocas y cajas usan los modelos nuevos y se rompen o mueven como antes.
 
 **Bloqueada por:** 12.1 Guía de estilo: paleta, escala y pieza de prueba
+
+**Relacionadas:** 11.4 Decorar el overworld
 
 ### 12.5 Interactivos y pickups · En curso
 
@@ -2911,15 +3117,17 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
   src/entities/turret/.
 - [x] Antorcha de pared y brasero
   wall_torch.tscn.
-- [ ] Decoración: estandartes, escombros, vasijas, tablilla, ojo tallado
-- [ ] Doom: grietas, venas rojas, polvo
+- [x] Decoración: estandartes, escombros, vasijas, tablilla, ojo tallado
+- [x] Doom: grietas, venas rojas, polvo
 - [x] Sala del jefe: piso de arena y pilares
 
 **Prueba:** temple_kit.tres arma el templo con las piezas nuevas y el corte de la pared sur sigue andando.
 
 **Bloqueada por:** 12.1 Guía de estilo: paleta, escala y pieza de prueba
 
-### 12.8 Personajes propios · En curso
+**Relacionadas:** 11.3 Decorar las salas del templo
+
+### 12.8 Personajes propios · Hecho
 
 **Prioridad:** baja · **Etiquetas:** `arte`, `personajes`
 
@@ -2927,12 +3135,14 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
   Mismos nombres de huesos que el Rig_Medium de KayKit, para no perder las animaciones.
 - [x] Esqueleto
 - [x] Esqueleto con escudo
-- [ ] Jefe: ojo + dos manos con rig propio
-  El rig de la otra jam no está en el repo. Ver [[gdd#jefe]].
+- [x] Jefe: ojo + dos manos animadas
+  Hecho en 11.47: ojo + una malla por mano con shape keys de curvado (sin rig de huesos).
 
 **Prueba:** Los modelos nuevos usan las animaciones de player/animation/libs/ sin retarget.
 
 **Bloqueada por:** 12.1 Guía de estilo: paleta, escala y pieza de prueba
+
+**Relacionadas:** 11.47 Manos del jefe animadas (shape keys); 12.13 Reajuste de estilo toon de todos los assets
 
 ### 12.9 Efectos con malla · Pendiente
 
@@ -2940,11 +3150,12 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 
 - [ ] Haz de luz
 - [ ] Polvo y hojas
-- [ ] Pedazos de vasija y escombros
 - [ ] Explosión
 - [ ] Anillo del portal
 
 **Bloqueada por:** 12.1 Guía de estilo: paleta, escala y pieza de prueba
+
+**Relacionadas:** 11.49 VFX de combate; 12.13 Reajuste de estilo toon de todos los assets
 
 ### 12.10 Pipeline Blender→Godot: glb publicado + plugin de import · Revisión
 
@@ -2971,7 +3182,8 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 
 **Prioridad:** media · **Etiquetas:** `arte`, `herramientas`
 
-- [ ] Props y equipo (objetos, equipo, naturaleza, lugares, jefe)
+- [ ] Props y equipo (objetos, equipo, naturaleza, lugares)
+  El jefe ya pasó al pipeline en 11.47.
 - [ ] Templo y kits (build_temple_kit / build_overworld_kit)
 - [ ] Personajes (jugador, chullpas) y carry
 - [ ] Retirar scripts headless viejos y verificar builds sin Blender
@@ -2979,6 +3191,8 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 **Notas:** Después de validar 12.10: pasar objetos, equipo, lugares, templo, naturaleza, jefe, terreno y personajes a glb; retirar extract_epiphany_meshes y build_character_models; los kits leen del glb.
 
 **Bloqueada por:** 12.10 Pipeline Blender→Godot: glb publicado + plugin de import
+
+**Relacionadas:** 11.47 Manos del jefe animadas (shape keys)
 
 ### 12.12 Estilo toon (Wind Waker) + personaje cyber-shinobi · En curso
 
@@ -2999,6 +3213,8 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
   Contar tris del personaje (co-op: hasta 4 en pantalla) y bajar subdivisión o resolución de curvas si hace falta.
 - [ ] Render A/B en el templo
   El personaje toon con el shader en el templo actual, contra el jugador de ahora.
+- [ ] Jugador estilo ZX (en pausa)
+  Intento del 2026-10-11, sin aprobar: tools/blender/build_jugador.py arma el diseño del jugador actual (casco con chakana, discos, aletas, trenza, peto, hombreras, brazales, cinturón con faldones, botas con suela de neón) con la estética de los modelos ZX de referencia (temp/, solo referencia, no se usan): 1,55 m y ~4,5 cabezas medidas, cara calibrada al perfil de referencia, casco desplazado desde la cabeza, traje continuo por skin modifier, textura propia assets/epiphany/jugador_colores.png. Feedback: 'es un avance pero sigue sin gustarme' (antes: cara rara, casco de karting, piernas sueltas, botas de lego, ya corregidos). Pendiente: manos, hombreras y peto menos cuadrados, ~24k tris, rig humanoide y animaciones. Comparar con: blender -b -P build_jugador.py -- <salida.blend>.
 
 **Notas:** Rumbo elegido 2026-10-10: look tipo Wind Waker HD con cel shading (no low-poly de piezas ni anime realista). Proporciones chibi, así que sirve el Rig_Medium y las animaciones de KayKit. Prueba en tools/blender/estilo_toon.py, ahora build_shinobi.py (renders de referencia en docs/estilo/): cuerpo continuo con Skin modifier + subdivisión y pesos automáticos; pelo en mechones de curvas NURBS afinadas con rulo; cara de calcomanías proyectadas (ojo, iris, pupila, brillo, párpado, cejas, rubor, boca); mangas y pollera con pliegues senoidales; cel shading de 2 tonos con sombra de color. Las tiras de la paleta ya tienen tono claro y oscuro: sirven como lit/shade del shader. El setting andino tampoco es definitivo (cyber-shinobi estilo Megaman Zero: sables de energía y pistolas). Diseño: pelo negro con rulos y rodetes con kunais, ojos rojos, capucha y mangas anchas con ribete emisivo, faja roja tipo obi, delantal crema, pollera, medias con liga roja, botas.
 
@@ -3010,7 +3226,7 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 
 **Prioridad:** media · **Etiquetas:** `arte`
 
-- [ ] Shader cel en el material de paleta y recorrida del mundo actual
+- [ ] Aplicar el shader cel de 12.12 a todo el material de paleta y recorrer el mundo
   Herramienta: tools/toon_preview.gd (capturas base/toon en el jugador y cada Spawn* del overworld y el templo). Primera recorrida 2026-10-10: con el shader el mundo ya lee toon (follaje en dos tonos, sombras de color más suaves). Falta: pasar epiphany.tres al toon e incluir toon.gdshaderinc en cutaway y epiphany_wall (avisar a la otra sesión: cambia el look de todo), afinar energías por nivel y la lista de qué remodelar.
 - [ ] Ajustar la paleta para sombras de color
   Las tiras ya tienen tono claro y oscuro: llevar el oscuro a sombras saturadas y frías tipo WW, no grises.
@@ -3021,17 +3237,17 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 - [ ] Templo y restos de KayKit
   Terminar el kit propio (12.7) y sacar las piezas KayKit dungeon que queden.
 - [ ] Personajes: jugador, chullpas y jefe
-  Con la técnica de estilo_toon.py, después de validar el shinobi (12.8).
+  Acá va el restyle de personajes (12.8 queda cerrada con los modelos actuales); depende de lo que se decida en 12.12.
 - [ ] Objetos, equipo e íconos
   Remodelar lo que haga falta y re-renderizar los íconos del inventario (tools/render_item_icons.gd, 11.15).
-- [ ] Efectos estilo WW
+- [ ] Pasar al toon los efectos de 12.9 y 11.49
   Humo en espirales, líneas de viento, explosiones cartoon, golpes (con 12.9 y 11.49).
-- [ ] Agua toon y cáusticas
-  El shader de agua estilo Wind Waker y las cáusticas de la cueva (11.20) ya son toon: casi no cambian. A cuidar: las cáusticas llegan como luz del SpotLight (light_projector), así que el light() del shader cel no debe umbralizarlas junto con el resto. Sumarlas aparte o con su propio corte (bandas nítidas).
 
 **Notas:** Con el estilo Wind Waker elegido (12.12), todo el juego tiene que convivir con el personaje nuevo. Primero se mide cuánto resuelve el shader: todas las piezas epi comparten el material de paleta (data/kits/materials/epiphany.tres), así que el cel shading se prueba en el mundo entero de una vez. Recién ahí se decide qué hay que remodelar. Lo que siga siendo KayKit va a desentonar más.
 
 **Bloqueada por:** 12.12 Estilo toon (Wind Waker) + personaje cyber-shinobi
+
+**Relacionadas:** 11.20 Cueva con ojo de agua y cáusticas animadas; 12.9 Efectos con malla; 11.49 VFX de combate; 12.8 Personajes propios
 
 ## M13 — Co-op local (estilo Four Swords)  (0/8)
 
@@ -3061,6 +3277,8 @@ Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con
 
 **Bloquea a:** 13.2 Input por jugador y unirse a la partida; 13.3 Cámara y salas para dos; 13.4 Reglas del co-op; 13.5 HUD de dos jugadores; 13.6 Player 2 con su color; 13.7 Enemigos y jefe con varios objetivos; 13.8 Puzzles cooperativos
 
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
+
 ### 13.2 Input por jugador y unirse a la partida · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `coop`, `input`
@@ -3082,15 +3300,17 @@ Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con
 
 **Bloqueada por:** 13.1 Código listo para varios players
 
-### 13.3 Cámara y salas para dos · Pendiente
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
+
+### 13.3 Cámara y salas para dos · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `coop`, `camara`
 
-- [ ] Encuadre de los dos
+- [x] Encuadre de los dos
   Reusar el encuadre del lock-on: la cámara mantiene a ambos; si se alejan demasiado, un borde invisible los frena.
-- [ ] Cambio de sala
+- [x] Cambio de sala
   Estilo Four Swords: al cruzar uno la puerta, el otro es llevado con él (o hace falta que estén los dos). Decidir y anotar.
-- [ ] Escenas
+- [x] Escenas
   Overworld ↔ templo llevan a los dos al spawn.
 
 **Prueba:** Recorrer el templo de punta a punta con dos players: nunca queda uno fuera de cuadro ni en otra sala.
@@ -3102,6 +3322,8 @@ Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con
 **Bloquea a:** 14.3 Mundo sincronizado
 
 **Bloqueada por:** 13.1 Código listo para varios players
+
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
 ### 13.4 Reglas del co-op · Pendiente
 

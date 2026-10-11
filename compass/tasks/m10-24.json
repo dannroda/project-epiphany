@@ -1,0 +1,18 @@
+{
+  "checklist": [],
+  "code": "10.27",
+  "created_at": "2026-10-11T06:12:13.752Z",
+  "description": "Regla (2026-10-11): todo lo que hereda de Node va en la escena, no con X.new() + add_child, para poder retocarlo en el inspector; el código solo ajusta lo que depende del juego. Lo que spawnea en runtime se instancia desde una escena (p. ej. un proyectil con su Trail3D). Pendientes: top_down_camera (máscara de sala), aim (MeshInstance3D de la mira), player (cono de bloqueo), item_get (OmniLight3D), chest (MeshInstance3D x2, Node3D), light_beam (MeshInstance3D x2), room (MeshInstance3D), overworld_map (Node3D, MultiMeshInstance3D), spawn_point (Area3D + CollisionShape3D), enemy (CollisionShape3D de los pedazos), liftable (CollisionShape3D, ThrownObject), doom_ambience (GPUParticles3D, Decal), boss_hand (Decal), feel (CPUParticles3D, MeshInstance3D, AudioStreamPlayer/3D: pasar a escenas de efecto instanciables), music (AudioStreamPlayer), y los PersistentFlag/Wiring/HitFlash que se agregan como hijos (door, chest, cracked_wall, portal, floor_switch, eye_switch, light_receiver, wave_spawner, wiring, hit_flash). Revisar cada caso: lo que es puro dato no cambia.",
+  "milestone": "m10",
+  "notes": "",
+  "order": 58,
+  "priority": "medium",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "arquitectura"
+  ],
+  "test": "",
+  "title": "Nodos creados por código pasan a sus .tscn",
+  "updated_at": "2026-10-11T06:12:13.752Z"
+}

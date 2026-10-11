@@ -1,0 +1,19 @@
+{
+  "checklist": [],
+  "code": "11.58",
+  "created_at": "2026-10-11T05:43:54.894Z",
+  "description": "Feedback de playtest: hoy el cuerpo queda en el piso para siempre (Enemy.on_death_finished solo lo pasa a la capa de muertos y suelta el drop). Después de unos segundos tiene que irse con un efecto acorde (hundirse/desvanecerse con dither o deshacerse en polvo), sin llevarse el drop y sin romper lo que dependa de 'defeated' (salas que abren al limpiar, jefe).",
+  "milestone": "m11",
+  "notes": "",
+  "order": 55,
+  "priority": "medium",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "combate",
+    "feel"
+  ],
+  "test": "",
+  "title": "Los enemigos muertos desaparecen después de un rato",
+  "updated_at": "2026-10-11T05:43:54.894Z"
+}

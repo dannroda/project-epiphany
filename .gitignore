@@ -7,3 +7,8 @@
 # Builds exportados (tools/build.sh)
 /builds/
 /build_info.cfg
+temp/
+
+# Temporales de las sesiones (scripts de prueba, medición, capturas): siempre en debug/tmp/, fuera de git y del editor
+/debug/tmp/*
+!/debug/tmp/.gdignore
