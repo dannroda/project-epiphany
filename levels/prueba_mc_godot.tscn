@@ -1,0 +1,932 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/prueba_mc_godot/terreno.res" id="1_s81xq"]
+[ext_resource type="Shape3D" path="res://assets/epiphany/meshes/prueba_mc_godot/terreno_col.res" id="2_axk56"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/quenoa_chica.res" id="3_op81b"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/ichu_mata.res" id="4_as64b"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/quenoa_grande.res" id="5_2rrgn"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/cardon_a.res" id="6_oqwhf"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/piedra_chica_a.res" id="7_f85do"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/piedra_chica_b.res" id="8_8qke2"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/tola.res" id="9_no42g"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/flores.res" id="10_uvev1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u84hi"]
+size = Vector3(2.9, 1.6, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gejfs"]
+size = Vector3(2.9, 1.6, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cfvid"]
+size = Vector3(2.9, 1.6, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2twnu"]
+size = Vector3(2.9, 1.6, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2cc6w"]
+size = Vector3(2.9, 1.6, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y4da1"]
+size = Vector3(2.9, 1.6, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8po8h"]
+size = Vector3(2.9, 1.6, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8fi15"]
+size = Vector3(2.9, 1.6, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q858e"]
+size = Vector3(2.9, 1.6, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_glok4"]
+size = Vector3(2.9, 1.6, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qaupo"]
+size = Vector3(2.9, 1.6, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vopum"]
+size = Vector3(2.9, 1.6, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_74x8r"]
+size = Vector3(2.9, 1.6, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x3yqy"]
+size = Vector3(2.9, 1.6, 0.1)
+
+[node name="PruebaMcGodot" type="Node3D" unique_id=1190870908]
+
+[node name="Terreno" type="MeshInstance3D" parent="." unique_id=1764921996]
+mesh = ExtResource("1_s81xq")
+
+[node name="Colision" type="StaticBody3D" parent="." unique_id=371459524]
+
+[node name="Forma" type="CollisionShape3D" parent="Colision" unique_id=270149212]
+shape = ExtResource("2_axk56")
+
+[node name="Baranda" type="StaticBody3D" parent="." unique_id=1179568647]
+
+[node name="Lado0" type="CollisionShape3D" parent="Baranda" unique_id=1752343066]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 14.6, 0.6, 1)
+shape = SubResource("BoxShape3D_u84hi")
+
+[node name="Lado1" type="CollisionShape3D" parent="Baranda" unique_id=447340348]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0.6, -0.6)
+shape = SubResource("BoxShape3D_gejfs")
+
+[node name="Lado2" type="CollisionShape3D" parent="Baranda" unique_id=479083875]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 11.4, 0.6, 1)
+shape = SubResource("BoxShape3D_cfvid")
+
+[node name="Lado3" type="CollisionShape3D" parent="Baranda" unique_id=1430882845]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0.6, 1.4)
+shape = SubResource("BoxShape3D_2twnu")
+
+[node name="Lado4" type="CollisionShape3D" parent="Baranda" unique_id=244330413]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 9.4, 0.6, 3)
+shape = SubResource("BoxShape3D_2cc6w")
+
+[node name="Lado5" type="CollisionShape3D" parent="Baranda" unique_id=1234606203]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0.6, 3.4)
+shape = SubResource("BoxShape3D_y4da1")
+
+[node name="Lado6" type="CollisionShape3D" parent="Baranda" unique_id=1028274731]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 14.6, 0.6, 3)
+shape = SubResource("BoxShape3D_8po8h")
+
+[node name="Lado7" type="CollisionShape3D" parent="Baranda" unique_id=1949848632]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0.6, 6.6)
+shape = SubResource("BoxShape3D_8fi15")
+
+[node name="Lado8" type="CollisionShape3D" parent="Baranda" unique_id=1303677009]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7.4, 0.6, 5)
+shape = SubResource("BoxShape3D_q858e")
+
+[node name="Lado9" type="CollisionShape3D" parent="Baranda" unique_id=1426858855]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 9.4, 0.6, 7)
+shape = SubResource("BoxShape3D_glok4")
+
+[node name="Lado10" type="CollisionShape3D" parent="Baranda" unique_id=71512291]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0.6, 6.6)
+shape = SubResource("BoxShape3D_qaupo")
+
+[node name="Lado11" type="CollisionShape3D" parent="Baranda" unique_id=1665628496]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 14.6, 0.6, 5)
+shape = SubResource("BoxShape3D_vopum")
+
+[node name="Lado12" type="CollisionShape3D" parent="Baranda" unique_id=708380047]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 12.6, 0.6, 7)
+shape = SubResource("BoxShape3D_74x8r")
+
+[node name="Lado13" type="CollisionShape3D" parent="Baranda" unique_id=1322062015]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0.6, 8.6)
+shape = SubResource("BoxShape3D_x3yqy")
+
+[node name="Plantas" type="Node3D" parent="." unique_id=1834559175]
+
+[node name="quenoa_chica_0" type="MeshInstance3D" parent="Plantas" unique_id=602299703]
+transform = Transform3D(-0.60193545, 0, -0.7985447, 0, 1, 0, 0.7985447, 0, -0.60193545, -14.530848, 2.5989769, -14.907278)
+mesh = ExtResource("3_op81b")
+
+[node name="ichu_mata_1" type="MeshInstance3D" parent="Plantas" unique_id=448256444]
+transform = Transform3D(0.13441744, 0, 0.9909248, 0, 1, 0, -0.9909248, 0, 0.13441744, -10.597564, 2.6103446, -14.668649)
+mesh = ExtResource("4_as64b")
+
+[node name="quenoa_chica_2" type="MeshInstance3D" parent="Plantas" unique_id=22309221]
+transform = Transform3D(0.35338533, 0, -0.93547785, 0, 1, 0, 0.93547785, 0, 0.35338533, -8.6064, 2.578516, -14.816319)
+mesh = ExtResource("3_op81b")
+
+[node name="ichu_mata_3" type="MeshInstance3D" parent="Plantas" unique_id=1288201196]
+transform = Transform3D(0.8178093, 0, 0.5754893, 0, 1, 0, -0.5754893, 0, 0.8178093, -5.4543657, 2.592287, -15.14349)
+mesh = ExtResource("4_as64b")
+
+[node name="quenoa_grande_4" type="MeshInstance3D" parent="Plantas" unique_id=394559538]
+transform = Transform3D(0.75473017, 0, 0.65603536, 0, 1, 0, -0.65603536, 0, 0.75473017, 1.5813832, 2.6047277, -15.206966)
+mesh = ExtResource("5_2rrgn")
+
+[node name="quenoa_chica_5" type="MeshInstance3D" parent="Plantas" unique_id=87646546]
+transform = Transform3D(0.99929786, 0, -0.03746759, 0, 1, 0, 0.03746759, 0, 0.99929786, 1.4357475, 2.6159296, -14.610845)
+mesh = ExtResource("3_op81b")
+
+[node name="ichu_mata_6" type="MeshInstance3D" parent="Plantas" unique_id=1041309898]
+transform = Transform3D(-0.34924418, 0, 0.93703175, 0, 1, 0, -0.93703175, 0, -0.34924418, 2.6811159, 2.6118708, -15.53446)
+mesh = ExtResource("4_as64b")
+
+[node name="cardon_a_7" type="MeshInstance3D" parent="Plantas" unique_id=1012892475]
+transform = Transform3D(-0.92371905, 0, 0.3830707, 0, 1, 0, -0.3830707, 0, -0.92371905, 4.69958, 2.5954175, -15.35824)
+mesh = ExtResource("6_oqwhf")
+
+[node name="ichu_mata_8" type="MeshInstance3D" parent="Plantas" unique_id=949587643]
+transform = Transform3D(-0.6321877, 0, 0.77481526, 0, 1, 0, -0.77481526, 0, -0.6321877, 6.5187597, 2.5918262, -14.686621)
+mesh = ExtResource("4_as64b")
+
+[node name="cardon_a_9" type="MeshInstance3D" parent="Plantas" unique_id=1012593307]
+transform = Transform3D(0.70598286, 0, 0.7082289, 0, 1, 0, -0.7082289, 0, 0.70598286, 11.0123415, 2.5856748, -15.182682)
+mesh = ExtResource("6_oqwhf")
+
+[node name="quenoa_chica_10" type="MeshInstance3D" parent="Plantas" unique_id=1342031115]
+transform = Transform3D(-0.61149484, 0, 0.79124844, 0, 1, 0, -0.79124844, 0, -0.61149484, 16.89991, 2.5983248, -15.532151)
+mesh = ExtResource("3_op81b")
+
+[node name="ichu_mata_11" type="MeshInstance3D" parent="Plantas" unique_id=1031557643]
+transform = Transform3D(-0.97792363, 0, -0.20896274, 0, 1, 0, 0.20896274, 0, -0.97792363, 16.903715, 2.5973537, -15.470376)
+mesh = ExtResource("4_as64b")
+
+[node name="quenoa_grande_12" type="MeshInstance3D" parent="Plantas" unique_id=1779407947]
+transform = Transform3D(-0.97463816, 0, -0.22378656, 0, 1, 0, 0.22378656, 0, -0.97463816, 21.088963, 2.6048777, -14.872461)
+mesh = ExtResource("5_2rrgn")
+
+[node name="quenoa_grande_13" type="MeshInstance3D" parent="Plantas" unique_id=247268730]
+transform = Transform3D(-0.17726111, 0, 0.9841639, 0, 1, 0, -0.9841639, 0, -0.17726111, -19.25744, 2.601319, -12.797393)
+mesh = ExtResource("5_2rrgn")
+
+[node name="quenoa_grande_14" type="MeshInstance3D" parent="Plantas" unique_id=812533890]
+transform = Transform3D(-0.25080404, 0, 0.9680379, 0, 1, 0, -0.9680379, 0, -0.25080404, -16.512905, 2.6109827, -12.845175)
+mesh = ExtResource("5_2rrgn")
+
+[node name="cardon_a_15" type="MeshInstance3D" parent="Plantas" unique_id=152214567]
+transform = Transform3D(-0.9856099, 0, -0.16903588, 0, 1, 0, 0.16903588, 0, -0.9856099, -13.394868, 2.5914974, -12.473905)
+mesh = ExtResource("6_oqwhf")
+
+[node name="ichu_mata_16" type="MeshInstance3D" parent="Plantas" unique_id=1625997715]
+transform = Transform3D(0.64557064, 0, 0.76370054, 0, 1, 0, -0.76370054, 0, 0.64557064, -9.124164, 2.6107943, -12.424089)
+mesh = ExtResource("4_as64b")
+
+[node name="quenoa_chica_17" type="MeshInstance3D" parent="Plantas" unique_id=623630147]
+transform = Transform3D(0.5082282, 0, 0.86122245, 0, 1, 0, -0.86122245, 0, 0.5082282, -4.7738266, 2.5964868, -13.136965)
+mesh = ExtResource("3_op81b")
+
+[node name="ichu_mata_18" type="MeshInstance3D" parent="Plantas" unique_id=2072693450]
+transform = Transform3D(-0.87018776, 0, -0.4927203, 0, 1, 0, 0.4927203, 0, -0.87018776, -0.67782396, 2.5935643, -12.878548)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_19" type="MeshInstance3D" parent="Plantas" unique_id=1076356604]
+transform = Transform3D(0.97877264, 0, 0.2049491, 0, 1, 0, -0.2049491, 0, 0.97877264, 1.4647534, 2.6145196, -12.751478)
+mesh = ExtResource("4_as64b")
+
+[node name="quenoa_grande_20" type="MeshInstance3D" parent="Plantas" unique_id=222483177]
+transform = Transform3D(0.86412984, 0, 0.50326896, 0, 1, 0, -0.50326896, 0, 0.86412984, 2.6998303, 2.5893493, -12.747178)
+mesh = ExtResource("5_2rrgn")
+
+[node name="quenoa_chica_21" type="MeshInstance3D" parent="Plantas" unique_id=765062063]
+transform = Transform3D(-0.99665034, 0, -0.08178064, 0, 1, 0, 0.08178064, 0, -0.99665034, 2.9942017, 2.5917974, -13.406696)
+mesh = ExtResource("3_op81b")
+
+[node name="ichu_mata_22" type="MeshInstance3D" parent="Plantas" unique_id=762910382]
+transform = Transform3D(-0.7970327, 0, -0.60393614, 0, 1, 0, 0.60393614, 0, -0.7970327, 4.612805, 2.5909247, -12.7767725)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_23" type="MeshInstance3D" parent="Plantas" unique_id=18457236]
+transform = Transform3D(-0.5361987, 0, 0.84409183, 0, 1, 0, -0.84409183, 0, -0.5361987, 11.283797, 2.5840726, -13.415864)
+mesh = ExtResource("4_as64b")
+
+[node name="quenoa_chica_24" type="MeshInstance3D" parent="Plantas" unique_id=1972194435]
+transform = Transform3D(-0.1615998, 0, -0.9868564, 0, 1, 0, 0.9868564, 0, -0.1615998, 13.313532, 2.5776854, -13.455455)
+mesh = ExtResource("3_op81b")
+
+[node name="ichu_mata_25" type="MeshInstance3D" parent="Plantas" unique_id=1874618649]
+transform = Transform3D(-0.8617915, 0, 0.50726265, 0, 1, 0, -0.50726265, 0, -0.8617915, -18.996145, 2.587782, -11.352874)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_26" type="MeshInstance3D" parent="Plantas" unique_id=411563555]
+transform = Transform3D(-0.99968696, 0, -0.025020937, 0, 1, 0, 0.025020937, 0, -0.99968696, -17.095964, 2.6092958, -10.857002)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_27" type="MeshInstance3D" parent="Plantas" unique_id=1523687308]
+transform = Transform3D(-0.8538412, 0, 0.52053356, 0, 1, 0, -0.52053356, 0, -0.8538412, -12.635991, 2.5807598, -10.544587)
+mesh = ExtResource("4_as64b")
+
+[node name="quenoa_chica_28" type="MeshInstance3D" parent="Plantas" unique_id=77259280]
+transform = Transform3D(0.75120044, 0, 0.6600742, 0, 1, 0, -0.6600742, 0, 0.75120044, -7.3363986, 2.6181912, -11.488846)
+mesh = ExtResource("3_op81b")
+
+[node name="quenoa_grande_29" type="MeshInstance3D" parent="Plantas" unique_id=44975979]
+transform = Transform3D(-0.9199863, 0, -0.39195055, 0, 1, 0, 0.39195055, 0, -0.9199863, -1.4597244, 2.610685, -10.72377)
+mesh = ExtResource("5_2rrgn")
+
+[node name="ichu_mata_30" type="MeshInstance3D" parent="Plantas" unique_id=403254296]
+transform = Transform3D(-0.58997756, 0, -0.80741966, 0, 1, 0, 0.80741966, 0, -0.58997756, -1.0235549, 2.6087894, -10.58295)
+mesh = ExtResource("4_as64b")
+
+[node name="quenoa_grande_31" type="MeshInstance3D" parent="Plantas" unique_id=2094551425]
+transform = Transform3D(-0.06658409, 0, 0.9977808, 0, 1, 0, -0.9977808, 0, -0.06658409, 0.61354965, 2.574978, -10.727459)
+mesh = ExtResource("5_2rrgn")
+
+[node name="quenoa_chica_32" type="MeshInstance3D" parent="Plantas" unique_id=244674321]
+transform = Transform3D(0.8128996, 0, 0.5824039, 0, 1, 0, -0.5824039, 0, 0.8128996, 0.53330624, 2.5843987, -10.985708)
+mesh = ExtResource("3_op81b")
+
+[node name="ichu_mata_33" type="MeshInstance3D" parent="Plantas" unique_id=775223175]
+transform = Transform3D(-0.6655608, 0, 0.7463437, 0, 1, 0, -0.7463437, 0, -0.6655608, 3.4194329, 2.6049633, -10.4715805)
+mesh = ExtResource("4_as64b")
+
+[node name="cardon_a_34" type="MeshInstance3D" parent="Plantas" unique_id=1787603234]
+transform = Transform3D(0.6774279, 0, -0.7355892, 0, 1, 0, 0.7355892, 0, 0.6774279, 2.7901485, 2.6057637, -11.448644)
+mesh = ExtResource("6_oqwhf")
+
+[node name="ichu_mata_35" type="MeshInstance3D" parent="Plantas" unique_id=397783133]
+transform = Transform3D(0.20815791, 0, 0.97809523, 0, 1, 0, -0.97809523, 0, 0.20815791, 8.440925, 2.6015742, -10.446116)
+mesh = ExtResource("4_as64b")
+
+[node name="quenoa_grande_36" type="MeshInstance3D" parent="Plantas" unique_id=1276801025]
+transform = Transform3D(0.85435015, 0, -0.5196978, 0, 1, 0, 0.5196978, 0, 0.85435015, 12.894308, 2.6008334, -10.950258)
+mesh = ExtResource("5_2rrgn")
+
+[node name="ichu_mata_37" type="MeshInstance3D" parent="Plantas" unique_id=173104005]
+transform = Transform3D(0.84228235, 0, -0.5390366, 0, 1, 0, 0.5390366, 0, 0.84228235, 12.427127, 2.5980878, -11.354523)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_38" type="MeshInstance3D" parent="Plantas" unique_id=1610773261]
+transform = Transform3D(-0.91246986, 0, 0.40914387, 0, 1, 0, -0.40914387, 0, -0.91246986, 15.445711, 2.6117213, -11.309928)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_39" type="MeshInstance3D" parent="Plantas" unique_id=311572135]
+transform = Transform3D(0.1612017, 0, -0.9869215, 0, 1, 0, 0.9869215, 0, 0.1612017, 16.452803, 2.611509, -10.963459)
+mesh = ExtResource("4_as64b")
+
+[node name="quenoa_grande_40" type="MeshInstance3D" parent="Plantas" unique_id=539716108]
+transform = Transform3D(0.986013, 0, -0.16666834, 0, 1, 0, 0.16666834, 0, 0.986013, 19.497334, 2.616672, -10.683371)
+mesh = ExtResource("5_2rrgn")
+
+[node name="ichu_mata_41" type="MeshInstance3D" parent="Plantas" unique_id=1784774528]
+transform = Transform3D(0.8606752, 0, 0.50915444, 0, 1, 0, -0.50915444, 0, 0.8606752, 21.381298, 2.5957074, -11.548489)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_42" type="MeshInstance3D" parent="Plantas" unique_id=112055269]
+transform = Transform3D(0.85394377, 0, -0.5203653, 0, 1, 0, 0.5203653, 0, 0.85394377, -15.548767, 2.6067114, -9.172061)
+mesh = ExtResource("4_as64b")
+
+[node name="cardon_a_43" type="MeshInstance3D" parent="Plantas" unique_id=1205425691]
+transform = Transform3D(0.49885443, 0, 0.8666858, 0, 1, 0, -0.8666858, 0, 0.49885443, -14.611663, 2.6050763, -8.409038)
+mesh = ExtResource("6_oqwhf")
+
+[node name="ichu_mata_44" type="MeshInstance3D" parent="Plantas" unique_id=210082692]
+transform = Transform3D(-0.33594418, 0, -0.9418819, 0, 1, 0, 0.9418819, 0, -0.33594418, -13.205645, 2.6046321, -9.104771)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_45" type="MeshInstance3D" parent="Plantas" unique_id=471343857]
+transform = Transform3D(0.97619724, 0, -0.21688466, 0, 1, 0, 0.21688466, 0, 0.97619724, -7.0986295, 2.5960526, -9.0760765)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_46" type="MeshInstance3D" parent="Plantas" unique_id=1563910590]
+transform = Transform3D(-0.9995661, 0, 0.02945608, 0, 1, 0, -0.02945608, 0, -0.9995661, -2.917556, 2.6077082, -8.772324)
+mesh = ExtResource("4_as64b")
+
+[node name="quenoa_grande_47" type="MeshInstance3D" parent="Plantas" unique_id=1072903377]
+transform = Transform3D(-0.82861143, 0, 0.55982417, 0, 1, 0, -0.55982417, 0, -0.82861143, -1.5139093, 2.605278, -9.048261)
+mesh = ExtResource("5_2rrgn")
+
+[node name="ichu_mata_48" type="MeshInstance3D" parent="Plantas" unique_id=1892777684]
+transform = Transform3D(0.9116381, 0, 0.41099393, 0, 1, 0, -0.41099393, 0, 0.9116381, -1.1388409, 2.5945797, -8.571239)
+mesh = ExtResource("4_as64b")
+
+[node name="quenoa_grande_49" type="MeshInstance3D" parent="Plantas" unique_id=523938793]
+transform = Transform3D(0.8816126, 0, 0.47197372, 0, 1, 0, -0.47197372, 0, 0.8816126, 2.4302964, 2.6104162, -8.970897)
+mesh = ExtResource("5_2rrgn")
+
+[node name="ichu_mata_50" type="MeshInstance3D" parent="Plantas" unique_id=871115646]
+transform = Transform3D(-0.21650358, 0, -0.9762818, 0, 1, 0, 0.9762818, 0, -0.21650358, 3.336697, 2.5972912, -9.468276)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_51" type="MeshInstance3D" parent="Plantas" unique_id=1425961666]
+transform = Transform3D(-0.6527861, 0, 0.7575423, 0, 1, 0, -0.7575423, 0, -0.6527861, 5.5003304, 2.5941343, -8.686851)
+mesh = ExtResource("4_as64b")
+
+[node name="quenoa_grande_52" type="MeshInstance3D" parent="Plantas" unique_id=132588398]
+transform = Transform3D(-0.58845073, 0, -0.8085331, 0, 1, 0, 0.8085331, 0, -0.58845073, 7.508074, 2.6041968, -9.050449)
+mesh = ExtResource("5_2rrgn")
+
+[node name="cardon_a_53" type="MeshInstance3D" parent="Plantas" unique_id=1943115662]
+transform = Transform3D(-0.89835024, 0, 0.4392799, 0, 1, 0, -0.4392799, 0, -0.89835024, 6.429822, 2.6076791, -8.564493)
+mesh = ExtResource("6_oqwhf")
+
+[node name="ichu_mata_54" type="MeshInstance3D" parent="Plantas" unique_id=1818918678]
+transform = Transform3D(0.5770008, 0, -0.8167436, 0, 1, 0, 0.8167436, 0, 0.5770008, 11.57107, 2.6018057, -8.588164)
+mesh = ExtResource("4_as64b")
+
+[node name="quenoa_grande_55" type="MeshInstance3D" parent="Plantas" unique_id=1456428813]
+transform = Transform3D(-0.3764728, 0, 0.92642766, 0, 1, 0, -0.92642766, 0, -0.3764728, 19.270382, 2.6117043, -9.409631)
+mesh = ExtResource("5_2rrgn")
+
+[node name="quenoa_chica_56" type="MeshInstance3D" parent="Plantas" unique_id=676436162]
+transform = Transform3D(0.90473646, 0, -0.42597172, 0, 1, 0, 0.42597172, 0, 0.90473646, 20.685776, 2.593928, -8.69159)
+mesh = ExtResource("3_op81b")
+
+[node name="quenoa_grande_57" type="MeshInstance3D" parent="Plantas" unique_id=2096374206]
+transform = Transform3D(-0.3936122, 0, -0.9192766, 0, 1, 0, 0.9192766, 0, -0.3936122, -20.500498, 2.589398, -6.7518973)
+mesh = ExtResource("5_2rrgn")
+
+[node name="ichu_mata_58" type="MeshInstance3D" parent="Plantas" unique_id=1682653999]
+transform = Transform3D(0.23955558, 0, -0.97088265, 0, 1, 0, 0.97088265, 0, 0.23955558, -17.21588, 2.5892255, -7.253206)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_59" type="MeshInstance3D" parent="Plantas" unique_id=619246290]
+transform = Transform3D(0.8287456, 0, -0.5596255, 0, 1, 0, 0.5596255, 0, 0.8287456, -13.152443, 2.6019876, -6.94735)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_60" type="MeshInstance3D" parent="Plantas" unique_id=2043613640]
+transform = Transform3D(0.9405494, 0, -0.339657, 0, 1, 0, 0.339657, 0, 0.9405494, -10.743528, 2.6085114, -6.757679)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_61" type="MeshInstance3D" parent="Plantas" unique_id=1751277467]
+transform = Transform3D(0.90296364, 0, -0.429717, 0, 1, 0, 0.429717, 0, 0.90296364, -5.382947, 2.5834978, -7.5882964)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_62" type="MeshInstance3D" parent="Plantas" unique_id=499100619]
+transform = Transform3D(-0.98458564, 0, 0.17490314, 0, 1, 0, -0.17490314, 0, -0.98458564, 1.5222527, 0.0737731, -7.067716)
+mesh = ExtResource("4_as64b")
+
+[node name="quenoa_grande_63" type="MeshInstance3D" parent="Plantas" unique_id=657614713]
+transform = Transform3D(0.1258523, 0, 0.992049, 0, 1, 0, -0.992049, 0, 0.1258523, 5, -0.017591622, -7)
+mesh = ExtResource("5_2rrgn")
+
+[node name="piedra_chica_a_64" type="MeshInstance3D" parent="Plantas" unique_id=1824508155]
+transform = Transform3D(-0.457284, 0, 0.88932073, 0, 1, 0, -0.88932073, 0, -0.457284, 7.0858326, -0.015269057, -7.168595)
+mesh = ExtResource("7_f85do")
+
+[node name="ichu_mata_65" type="MeshInstance3D" parent="Plantas" unique_id=1505762353]
+transform = Transform3D(0.9918057, 0, -0.12775584, 0, 1, 0, 0.12775584, 0, 0.9918057, 10.639153, 0.01097885, -6.44347)
+mesh = ExtResource("4_as64b")
+
+[node name="quenoa_chica_66" type="MeshInstance3D" parent="Plantas" unique_id=1099110568]
+transform = Transform3D(0.52952445, 0, 0.8482947, 0, 1, 0, -0.8482947, 0, 0.52952445, 21.476297, 2.6105502, -6.433652)
+mesh = ExtResource("3_op81b")
+
+[node name="ichu_mata_67" type="MeshInstance3D" parent="Plantas" unique_id=1179102326]
+transform = Transform3D(-0.30507135, 0, 0.9523295, 0, 1, 0, -0.9523295, 0, -0.30507135, 21.3751, 2.6032524, -6.515837)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_68" type="MeshInstance3D" parent="Plantas" unique_id=1154001590]
+transform = Transform3D(0.99014485, 0, 0.14004718, 0, 1, 0, -0.14004718, 0, 0.99014485, -17.55529, 2.5945327, -5.0053024)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_69" type="MeshInstance3D" parent="Plantas" unique_id=791086623]
+transform = Transform3D(-0.72527647, 0, 0.6884577, 0, 1, 0, -0.6884577, 0, -0.72527647, -6.5023966, 2.614288, -5.498944)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_70" type="MeshInstance3D" parent="Plantas" unique_id=1508206951]
+transform = Transform3D(0.99692476, 0, -0.07836483, 0, 1, 0, 0.07836483, 0, 0.99692476, 0.88571537, 0.06406995, -5.3590074)
+mesh = ExtResource("4_as64b")
+
+[node name="piedra_chica_b_71" type="MeshInstance3D" parent="Plantas" unique_id=481965220]
+transform = Transform3D(-0.99995303, 0, -0.009693558, 0, 1, 0, 0.009693558, 0, -0.99995303, 1.3171047, 0.081801355, -4.7680984)
+mesh = ExtResource("8_8qke2")
+
+[node name="ichu_mata_72" type="MeshInstance3D" parent="Plantas" unique_id=168893216]
+transform = Transform3D(-0.88239694, 0, 0.47050568, 0, 1, 0, -0.47050568, 0, -0.88239694, 2.4708338, -0.055596642, -4.661503)
+mesh = ExtResource("4_as64b")
+
+[node name="piedra_chica_a_73" type="MeshInstance3D" parent="Plantas" unique_id=542915972]
+transform = Transform3D(-0.38953212, 0, 0.9210129, 0, 1, 0, -0.9210129, 0, -0.38953212, 3.3542118, -0.12665461, -5.3620152)
+mesh = ExtResource("7_f85do")
+
+[node name="tola_74" type="MeshInstance3D" parent="Plantas" unique_id=1900547616]
+transform = Transform3D(-0.5754073, 0, 0.817867, 0, 1, 0, -0.817867, 0, -0.5754073, 9.263407, 0.011555779, -5.4247246)
+mesh = ExtResource("9_no42g")
+
+[node name="quenoa_chica_75" type="MeshInstance3D" parent="Plantas" unique_id=37410521]
+transform = Transform3D(0.99985325, 0, 0.01712998, 0, 1, 0, -0.01712998, 0, 0.99985325, 14.462256, 2.603685, -4.956433)
+mesh = ExtResource("3_op81b")
+
+[node name="ichu_mata_76" type="MeshInstance3D" parent="Plantas" unique_id=1079694444]
+transform = Transform3D(0.27743623, 0, 0.9607441, 0, 1, 0, -0.9607441, 0, 0.27743623, 14.96056, 2.6087718, -4.864831)
+mesh = ExtResource("4_as64b")
+
+[node name="cardon_a_77" type="MeshInstance3D" parent="Plantas" unique_id=1265618927]
+transform = Transform3D(-0.44160601, 0, -0.89720905, 0, 1, 0, 0.89720905, 0, -0.44160601, 19.058756, 2.599428, -4.861619)
+mesh = ExtResource("6_oqwhf")
+
+[node name="quenoa_chica_78" type="MeshInstance3D" parent="Plantas" unique_id=766922046]
+transform = Transform3D(-0.99934, 0, -0.036325656, 0, 1, 0, 0.036325656, 0, -0.99934, 21.596111, 2.6128912, -4.8028326)
+mesh = ExtResource("3_op81b")
+
+[node name="ichu_mata_79" type="MeshInstance3D" parent="Plantas" unique_id=551415762]
+transform = Transform3D(-0.6953753, 0, 0.71864676, 0, 1, 0, -0.71864676, 0, -0.6953753, -20.704182, 2.614005, -2.5252604)
+mesh = ExtResource("4_as64b")
+
+[node name="flores_80" type="MeshInstance3D" parent="Plantas" unique_id=47685743]
+transform = Transform3D(-0.74711037, 0, 0.6647, 0, 1, 0, -0.6647, 0, -0.74711037, -11.593077, 2.583992, -3.1870222)
+mesh = ExtResource("10_uvev1")
+
+[node name="ichu_mata_81" type="MeshInstance3D" parent="Plantas" unique_id=613404719]
+transform = Transform3D(-0.90682936, 0, -0.421498, 0, 1, 0, 0.421498, 0, -0.90682936, 3.0302892, -0.045597214, -3.5005913)
+mesh = ExtResource("4_as64b")
+
+[node name="piedra_chica_b_82" type="MeshInstance3D" parent="Plantas" unique_id=1297788206]
+transform = Transform3D(0.99551904, 0, 0.09456129, 0, 1, 0, -0.09456129, 0, 0.99551904, 10.646146, 0.08519836, -3.441185)
+mesh = ExtResource("8_8qke2")
+
+[node name="ichu_mata_83" type="MeshInstance3D" parent="Plantas" unique_id=1828075763]
+transform = Transform3D(0.7023597, 0, -0.7118223, 0, 1, 0, 0.7118223, 0, 0.7023597, 15.386859, 2.6000524, -3.0896878)
+mesh = ExtResource("4_as64b")
+
+[node name="cardon_a_84" type="MeshInstance3D" parent="Plantas" unique_id=1133434637]
+transform = Transform3D(0.68123436, 0, 0.7320654, 0, 1, 0, -0.7320654, 0, 0.68123436, 14.906128, 2.5995197, -3.460235)
+mesh = ExtResource("6_oqwhf")
+
+[node name="ichu_mata_85" type="MeshInstance3D" parent="Plantas" unique_id=933610309]
+transform = Transform3D(0.58696944, 0, 0.80960906, 0, 1, 0, -0.80960906, 0, 0.58696944, 21.31443, 2.616113, -2.7174249)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_86" type="MeshInstance3D" parent="Plantas" unique_id=1199312883]
+transform = Transform3D(0.76822436, 0, -0.6401807, 0, 1, 0, 0.6401807, 0, 0.76822436, -17.435627, 2.5978248, -0.9888941)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_87" type="MeshInstance3D" parent="Plantas" unique_id=692056294]
+transform = Transform3D(-0.40858504, 0, 0.91272026, 0, 1, 0, -0.91272026, 0, -0.40858504, -15.370556, 2.6090682, -1.1898282)
+mesh = ExtResource("4_as64b")
+
+[node name="quenoa_grande_88" type="MeshInstance3D" parent="Plantas" unique_id=963933974]
+transform = Transform3D(0.99865675, 0, 0.051814195, 0, 1, 0, -0.051814195, 0, 0.99865675, -13, -0.0043292902, -1)
+mesh = ExtResource("5_2rrgn")
+
+[node name="piedra_chica_b_89" type="MeshInstance3D" parent="Plantas" unique_id=125963896]
+transform = Transform3D(-0.7768022, 0, 0.6297447, 0, 1, 0, -0.6297447, 0, -0.7768022, -10.472032, -0.0043181255, -1.2004168)
+mesh = ExtResource("8_8qke2")
+
+[node name="ichu_mata_90" type="MeshInstance3D" parent="Plantas" unique_id=392263174]
+transform = Transform3D(0.55252814, 0, -0.83349425, 0, 1, 0, 0.83349425, 0, 0.55252814, -6.968178, 0.15682556, -0.9426522)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_91" type="MeshInstance3D" parent="Plantas" unique_id=315169954]
+transform = Transform3D(0.94366527, 0, 0.33090153, 0, 1, 0, -0.33090153, 0, 0.94366527, -0.6622483, -0.077210456, -0.58962834)
+mesh = ExtResource("4_as64b")
+
+[node name="flores_92" type="MeshInstance3D" parent="Plantas" unique_id=1636034678]
+transform = Transform3D(-0.016487317, 0, -0.9998641, 0, 1, 0, 0.9998641, 0, -0.016487317, -0.72325593, -0.07239557, -0.55668044)
+mesh = ExtResource("10_uvev1")
+
+[node name="ichu_mata_93" type="MeshInstance3D" parent="Plantas" unique_id=35548878]
+transform = Transform3D(-0.89319545, 0, -0.4496686, 0, 1, 0, 0.4496686, 0, -0.89319545, 3.1444597, -0.059568062, -0.65647125)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_94" type="MeshInstance3D" parent="Plantas" unique_id=19847552]
+transform = Transform3D(-0.64512825, 0, 0.7640743, 0, 1, 0, -0.7640743, 0, -0.64512825, 4.5465546, -0.03347954, -1.2853609)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_95" type="MeshInstance3D" parent="Plantas" unique_id=855911504]
+transform = Transform3D(0.7634728, 0, -0.64584, 0, 1, 0, 0.64584, 0, 0.7634728, 8.470736, 2.609471, -1.2831609)
+mesh = ExtResource("4_as64b")
+
+[node name="piedra_chica_a_96" type="MeshInstance3D" parent="Plantas" unique_id=536040474]
+transform = Transform3D(-0.7865525, 0, 0.6175235, 0, 1, 0, -0.6175235, 0, -0.7865525, 12.6627655, -0.081010975, -1.3497188)
+mesh = ExtResource("7_f85do")
+
+[node name="ichu_mata_97" type="MeshInstance3D" parent="Plantas" unique_id=646738235]
+transform = Transform3D(-0.4282281, 0, -0.90367067, 0, 1, 0, 0.90367067, 0, -0.4282281, 14.723168, 2.6133492, -1.2922448)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_98" type="MeshInstance3D" parent="Plantas" unique_id=119509209]
+transform = Transform3D(-0.8859262, 0, 0.46382624, 0, 1, 0, -0.46382624, 0, -0.8859262, 19.21004, 2.5952225, -1.5166358)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_99" type="MeshInstance3D" parent="Plantas" unique_id=126915062]
+transform = Transform3D(0.84502006, 0, 0.5347346, 0, 1, 0, -0.5347346, 0, 0.84502006, -21.340347, 2.6025236, 0.7946658)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_100" type="MeshInstance3D" parent="Plantas" unique_id=1762408188]
+transform = Transform3D(-0.6645492, 0, -0.74724454, 0, 1, 0, 0.74724454, 0, -0.6645492, -10.72893, 0.08209477, 1.557323)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_101" type="MeshInstance3D" parent="Plantas" unique_id=806373959]
+transform = Transform3D(0.025235847, 0, -0.99968153, 0, 1, 0, 0.99968153, 0, 0.025235847, -5.597535, -0.13920419, 0.8002093)
+mesh = ExtResource("4_as64b")
+
+[node name="piedra_chica_a_102" type="MeshInstance3D" parent="Plantas" unique_id=654225219]
+transform = Transform3D(0.9393175, 0, 0.34304896, 0, 1, 0, -0.34304896, 0, 0.9393175, -5.4953246, -0.13847865, 1.0261452)
+mesh = ExtResource("7_f85do")
+
+[node name="ichu_mata_103" type="MeshInstance3D" parent="Plantas" unique_id=2017816938]
+transform = Transform3D(0.69725454, 0, 0.7168236, 0, 1, 0, -0.7168236, 0, 0.69725454, 0.75571924, 0.15133023, 1.4249643)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_104" type="MeshInstance3D" parent="Plantas" unique_id=271275736]
+transform = Transform3D(0.3833526, 0, 0.92360204, 0, 1, 0, -0.92360204, 0, 0.3833526, 2.9049501, 0.08206528, 1.2445498)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_105" type="MeshInstance3D" parent="Plantas" unique_id=2034145040]
+transform = Transform3D(0.7238412, 0, -0.6899666, 0, 1, 0, 0.6899666, 0, 0.7238412, 4.996926, -0.034425195, 0.54813683)
+mesh = ExtResource("4_as64b")
+
+[node name="flores_106" type="MeshInstance3D" parent="Plantas" unique_id=1121131034]
+transform = Transform3D(0.6113406, 0, -0.7913676, 0, 1, 0, 0.7913676, 0, 0.6113406, 7.167959, 0.0011078733, 1.192395)
+mesh = ExtResource("10_uvev1")
+
+[node name="ichu_mata_107" type="MeshInstance3D" parent="Plantas" unique_id=2039717975]
+transform = Transform3D(0.28458393, 0, 0.9586511, 0, 1, 0, -0.9586511, 0, 0.28458393, 8.712158, 0.054730915, 0.64554185)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_108" type="MeshInstance3D" parent="Plantas" unique_id=114382972]
+transform = Transform3D(-0.5775977, 0, -0.8163216, 0, 1, 0, 0.8163216, 0, -0.5775977, 10.804229, 0.09038342, 1.3699796)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_109" type="MeshInstance3D" parent="Plantas" unique_id=647022549]
+transform = Transform3D(0.33334473, 0, -0.942805, 0, 1, 0, 0.942805, 0, 0.33334473, 15.0872965, 2.615128, 1.3700535)
+mesh = ExtResource("4_as64b")
+
+[node name="quenoa_grande_110" type="MeshInstance3D" parent="Plantas" unique_id=1226978253]
+transform = Transform3D(-0.29013687, 0, 0.9569852, 0, 1, 0, -0.9569852, 0, -0.29013687, 20.676685, 2.600767, 0.9651859)
+mesh = ExtResource("5_2rrgn")
+
+[node name="quenoa_grande_111" type="MeshInstance3D" parent="Plantas" unique_id=2114191706]
+transform = Transform3D(0.3570551, 0, -0.93408334, 0, 1, 0, 0.93408334, 0, 0.3570551, -20.774857, 2.5842655, 2.740103)
+mesh = ExtResource("5_2rrgn")
+
+[node name="quenoa_grande_112" type="MeshInstance3D" parent="Plantas" unique_id=127147950]
+transform = Transform3D(-0.03032069, 0, 0.9995402, 0, 1, 0, -0.9995402, 0, -0.03032069, -18.997536, 2.5885327, 3.3621356)
+mesh = ExtResource("5_2rrgn")
+
+[node name="ichu_mata_113" type="MeshInstance3D" parent="Plantas" unique_id=288782297]
+transform = Transform3D(-0.053584162, 0, -0.99856335, 0, 1, 0, 0.99856335, 0, -0.053584162, -18.802876, 2.5830092, 2.5681243)
+mesh = ExtResource("4_as64b")
+
+[node name="quenoa_chica_114" type="MeshInstance3D" parent="Plantas" unique_id=729631886]
+transform = Transform3D(0.9790156, 0, -0.20378539, 0, 1, 0, 0.20378539, 0, 0.9790156, -17.473269, 2.6103716, 3.2063777)
+mesh = ExtResource("3_op81b")
+
+[node name="flores_115" type="MeshInstance3D" parent="Plantas" unique_id=859092283]
+transform = Transform3D(0.80832857, 0, -0.5887316, 0, 1, 0, 0.5887316, 0, 0.80832857, -12.49064, -0.0054384586, 2.4484954)
+mesh = ExtResource("10_uvev1")
+
+[node name="quenoa_grande_116" type="MeshInstance3D" parent="Plantas" unique_id=1591445407]
+transform = Transform3D(-0.8360411, 0, 0.5486668, 0, 1, 0, -0.5486668, 0, -0.8360411, -9, 0.050182164, 3)
+mesh = ExtResource("5_2rrgn")
+
+[node name="ichu_mata_117" type="MeshInstance3D" parent="Plantas" unique_id=1920153378]
+transform = Transform3D(0.10931585, 0, -0.99400705, 0, 1, 0, 0.99400705, 0, 0.10931585, -6.6585507, -0.04259077, 2.7117138)
+mesh = ExtResource("4_as64b")
+
+[node name="piedra_chica_b_118" type="MeshInstance3D" parent="Plantas" unique_id=1262322347]
+transform = Transform3D(-0.41102162, 0, -0.9116256, 0, 1, 0, 0.9116256, 0, -0.41102162, -2.4652228, 0.030915, 3.566259)
+mesh = ExtResource("8_8qke2")
+
+[node name="quenoa_chica_119" type="MeshInstance3D" parent="Plantas" unique_id=1630516243]
+transform = Transform3D(-0.04581318, 0, 0.99895, 0, 1, 0, -0.99895, 0, -0.04581318, 19.107271, 2.5930321, 2.7461834)
+mesh = ExtResource("3_op81b")
+
+[node name="ichu_mata_120" type="MeshInstance3D" parent="Plantas" unique_id=1477366702]
+transform = Transform3D(0.95210385, 0, 0.3057748, 0, 1, 0, -0.3057748, 0, 0.95210385, -13.30954, -9.295154e-05, 5.3826203)
+mesh = ExtResource("4_as64b")
+
+[node name="piedra_chica_a_121" type="MeshInstance3D" parent="Plantas" unique_id=1100990905]
+transform = Transform3D(-0.14694011, 0, 0.9891454, 0, 1, 0, -0.9891454, 0, -0.14694011, -12.543735, 0.024153475, 4.7385077)
+mesh = ExtResource("7_f85do")
+
+[node name="flores_122" type="MeshInstance3D" parent="Plantas" unique_id=440690170]
+transform = Transform3D(0.2746227, 0, -0.9615521, 0, 1, 0, 0.9615521, 0, 0.2746227, -11.071606, 0.071395576, 4.9251995)
+mesh = ExtResource("10_uvev1")
+
+[node name="tola_123" type="MeshInstance3D" parent="Plantas" unique_id=1796126494]
+transform = Transform3D(0.9899407, 0, 0.14148279, 0, 1, 0, -0.14148279, 0, 0.9899407, -8.76496, -0.000113714654, 4.696551)
+mesh = ExtResource("9_no42g")
+
+[node name="ichu_mata_124" type="MeshInstance3D" parent="Plantas" unique_id=1416669593]
+transform = Transform3D(0.5441579, 0, -0.8389828, 0, 1, 0, 0.8389828, 0, 0.5441579, -7.0048823, 0.01928433, 4.801384)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_125" type="MeshInstance3D" parent="Plantas" unique_id=1052727635]
+transform = Transform3D(0.9566979, 0, -0.29108283, 0, 1, 0, 0.29108283, 0, 0.9566979, 1.3230487, 0.04011241, 5.1734405)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_126" type="MeshInstance3D" parent="Plantas" unique_id=1660815575]
+transform = Transform3D(0.9373397, 0, 0.3484167, 0, 1, 0, -0.3484167, 0, 0.9373397, 2.578401, 0.09612661, 5.521901)
+mesh = ExtResource("4_as64b")
+
+[node name="tola_127" type="MeshInstance3D" parent="Plantas" unique_id=280084095]
+transform = Transform3D(-0.99999934, 0, 0.0011433678, 0, 1, 0, -0.0011433678, 0, -0.99999934, 7.2249804, 0.02032076, 5.5686045)
+mesh = ExtResource("9_no42g")
+
+[node name="ichu_mata_128" type="MeshInstance3D" parent="Plantas" unique_id=1030138349]
+transform = Transform3D(0.87503046, 0, 0.48406783, 0, 1, 0, -0.48406783, 0, 0.87503046, 17.18428, 2.6040745, 5.403914)
+mesh = ExtResource("4_as64b")
+
+[node name="cardon_a_129" type="MeshInstance3D" parent="Plantas" unique_id=949567360]
+transform = Transform3D(-0.5146855, 0, -0.857379, 0, 1, 0, 0.857379, 0, -0.5146855, -16.824211, 2.5956538, 6.858393)
+mesh = ExtResource("6_oqwhf")
+
+[node name="ichu_mata_130" type="MeshInstance3D" parent="Plantas" unique_id=114818989]
+transform = Transform3D(0.78424203, 0, -0.620455, 0, 1, 0, 0.620455, 0, 0.78424203, -13.554427, -0.06926628, 6.6774316)
+mesh = ExtResource("4_as64b")
+
+[node name="flores_131" type="MeshInstance3D" parent="Plantas" unique_id=1440464290]
+transform = Transform3D(-0.4833857, 0, 0.87540746, 0, 1, 0, -0.87540746, 0, -0.4833857, -11.348964, 0.039605767, 6.4205413)
+mesh = ExtResource("10_uvev1")
+
+[node name="ichu_mata_132" type="MeshInstance3D" parent="Plantas" unique_id=1484952742]
+transform = Transform3D(0.5262057, 0, 0.8503573, 0, 1, 0, -0.8503573, 0, 0.5262057, -8.72326, -0.15410945, 7.4774017)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_133" type="MeshInstance3D" parent="Plantas" unique_id=1910573242]
+transform = Transform3D(0.13069513, 0, 0.9914226, 0, 1, 0, -0.9914226, 0, 0.13069513, -7.336075, 0.10008363, 7.4768877)
+mesh = ExtResource("4_as64b")
+
+[node name="flores_134" type="MeshInstance3D" parent="Plantas" unique_id=1573217123]
+transform = Transform3D(-0.6445974, 0, 0.7645222, 0, 1, 0, -0.7645222, 0, -0.6445974, -4.405141, 0.028356567, 7.286129)
+mesh = ExtResource("10_uvev1")
+
+[node name="piedra_chica_b_135" type="MeshInstance3D" parent="Plantas" unique_id=843655338]
+transform = Transform3D(0.94320524, 0, -0.3322105, 0, 1, 0, 0.3322105, 0, 0.94320524, -5.234617, -0.14921747, 6.5914207)
+mesh = ExtResource("8_8qke2")
+
+[node name="piedra_chica_b_136" type="MeshInstance3D" parent="Plantas" unique_id=137070777]
+transform = Transform3D(0.6634273, 0, -0.74824077, 0, 1, 0, 0.74824077, 0, 0.6634273, -2.8633761, 0.13545592, 6.7644296)
+mesh = ExtResource("8_8qke2")
+
+[node name="quenoa_grande_137" type="MeshInstance3D" parent="Plantas" unique_id=1030922500]
+transform = Transform3D(0.6357377, 0, 0.7719051, 0, 1, 0, -0.7719051, 0, 0.6357377, 5, -0.14046028, 7)
+mesh = ExtResource("5_2rrgn")
+
+[node name="ichu_mata_138" type="MeshInstance3D" parent="Plantas" unique_id=30535976]
+transform = Transform3D(0.702864, 0, 0.7113243, 0, 1, 0, -0.7113243, 0, 0.702864, 6.8900537, 0.15593404, 6.436018)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_139" type="MeshInstance3D" parent="Plantas" unique_id=611477261]
+transform = Transform3D(-0.8443414, 0, -0.5358055, 0, 1, 0, 0.5358055, 0, -0.8443414, 8.924802, 0.03443281, 7.2852364)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_140" type="MeshInstance3D" parent="Plantas" unique_id=703647918]
+transform = Transform3D(-0.37686923, 0, 0.9262665, 0, 1, 0, -0.9262665, 0, -0.37686923, 15.0116, 2.6030805, 7.472705)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_141" type="MeshInstance3D" parent="Plantas" unique_id=2080382965]
+transform = Transform3D(-0.113407165, 0, 0.9935486, 0, 1, 0, -0.9935486, 0, -0.113407165, 20.437328, 2.593574, 7.4759054)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_142" type="MeshInstance3D" parent="Plantas" unique_id=605086151]
+transform = Transform3D(-0.99008363, 0, -0.14047909, 0, 1, 0, 0.14047909, 0, -0.99008363, -21.38036, 2.6053102, 9.139082)
+mesh = ExtResource("4_as64b")
+
+[node name="quenoa_chica_143" type="MeshInstance3D" parent="Plantas" unique_id=723099351]
+transform = Transform3D(-0.6303811, 0, -0.7762858, 0, 1, 0, 0.7762858, 0, -0.6303811, -16.645008, 2.6070569, 8.907442)
+mesh = ExtResource("3_op81b")
+
+[node name="ichu_mata_144" type="MeshInstance3D" parent="Plantas" unique_id=1990341724]
+transform = Transform3D(-0.43604827, 0, 0.89992326, 0, 1, 0, -0.89992326, 0, -0.43604827, -16.833838, 2.6195428, 8.473804)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_145" type="MeshInstance3D" parent="Plantas" unique_id=363167944]
+transform = Transform3D(0.64807373, 0, -0.7615776, 0, 1, 0, 0.7615776, 0, 0.64807373, -15.5942, 2.6064272, 8.608942)
+mesh = ExtResource("4_as64b")
+
+[node name="quenoa_grande_146" type="MeshInstance3D" parent="Plantas" unique_id=1586424012]
+transform = Transform3D(0.30632436, 0, -0.9519272, 0, 1, 0, 0.9519272, 0, 0.30632436, -9.5350485, 2.6113696, 9.004177)
+mesh = ExtResource("5_2rrgn")
+
+[node name="ichu_mata_147" type="MeshInstance3D" parent="Plantas" unique_id=1032274923]
+transform = Transform3D(-0.0757402, 0, -0.9971276, 0, 1, 0, 0.9971276, 0, -0.0757402, -7.2948346, 2.6158874, 9.317036)
+mesh = ExtResource("4_as64b")
+
+[node name="cardon_a_148" type="MeshInstance3D" parent="Plantas" unique_id=537258132]
+transform = Transform3D(0.64481014, 0, 0.7643428, 0, 1, 0, -0.7643428, 0, 0.64481014, -7.540063, 2.5937603, 9.5617895)
+mesh = ExtResource("6_oqwhf")
+
+[node name="cardon_a_149" type="MeshInstance3D" parent="Plantas" unique_id=60589286]
+transform = Transform3D(0.2099371, 0, 0.9777149, 0, 1, 0, -0.9777149, 0, 0.2099371, 4.4773817, 2.6177154, 9.2917795)
+mesh = ExtResource("6_oqwhf")
+
+[node name="quenoa_grande_150" type="MeshInstance3D" parent="Plantas" unique_id=539208390]
+transform = Transform3D(0.7944036, 0, -0.6073903, 0, 1, 0, 0.6073903, 0, 0.7944036, 6.9626007, 2.610945, 8.447099)
+mesh = ExtResource("5_2rrgn")
+
+[node name="ichu_mata_151" type="MeshInstance3D" parent="Plantas" unique_id=718506181]
+transform = Transform3D(0.5326002, 0, -0.84636694, 0, 1, 0, 0.84636694, 0, 0.5326002, 10.709557, 2.601301, 9.590139)
+mesh = ExtResource("4_as64b")
+
+[node name="quenoa_grande_152" type="MeshInstance3D" parent="Plantas" unique_id=133361835]
+transform = Transform3D(0.48726454, 0, -0.8732544, 0, 1, 0, 0.8732544, 0, 0.48726454, 13.372252, 2.6039445, 9.122909)
+mesh = ExtResource("5_2rrgn")
+
+[node name="quenoa_chica_153" type="MeshInstance3D" parent="Plantas" unique_id=1633347770]
+transform = Transform3D(-0.32560384, 0, 0.9455063, 0, 1, 0, -0.9455063, 0, -0.32560384, 13.091067, 2.5992358, 8.959803)
+mesh = ExtResource("3_op81b")
+
+[node name="ichu_mata_154" type="MeshInstance3D" parent="Plantas" unique_id=2008074391]
+transform = Transform3D(0.6074325, 0, -0.7943713, 0, 1, 0, 0.7943713, 0, 0.6074325, 21.213217, 2.607238, 8.535867)
+mesh = ExtResource("4_as64b")
+
+[node name="quenoa_chica_155" type="MeshInstance3D" parent="Plantas" unique_id=1631943190]
+transform = Transform3D(-0.97721076, 0, 0.21227123, 0, 1, 0, -0.21227123, 0, -0.97721076, -18.527634, 2.6029675, 11.545559)
+mesh = ExtResource("3_op81b")
+
+[node name="piedra_chica_a_156" type="MeshInstance3D" parent="Plantas" unique_id=298363756]
+transform = Transform3D(0.5029006, 0, -0.86434424, 0, 1, 0, 0.86434424, 0, 0.5029006, -12.933028, 0.17677714, 10.689899)
+mesh = ExtResource("7_f85do")
+
+[node name="ichu_mata_157" type="MeshInstance3D" parent="Plantas" unique_id=1637248166]
+transform = Transform3D(0.7067672, 0, 0.7074462, 0, 1, 0, -0.7074462, 0, 0.7067672, -10.815909, 0.08017457, 10.55898)
+mesh = ExtResource("4_as64b")
+
+[node name="piedra_chica_a_158" type="MeshInstance3D" parent="Plantas" unique_id=45804667]
+transform = Transform3D(0.23029412, 0, -0.97312105, 0, 1, 0, 0.97312105, 0, 0.23029412, -7.534967, -0.06237878, 10.530855)
+mesh = ExtResource("7_f85do")
+
+[node name="ichu_mata_159" type="MeshInstance3D" parent="Plantas" unique_id=1453552949]
+transform = Transform3D(0.30036443, 0, -0.9538245, 0, 1, 0, 0.9538245, 0, 0.30036443, -5.084387, 0.037397653, 10.599316)
+mesh = ExtResource("4_as64b")
+
+[node name="piedra_chica_a_160" type="MeshInstance3D" parent="Plantas" unique_id=1706440633]
+transform = Transform3D(0.28908107, 0, -0.9573046, 0, 1, 0, 0.9573046, 0, 0.28908107, -5.2112975, -0.008828218, 11.3301115)
+mesh = ExtResource("7_f85do")
+
+[node name="ichu_mata_161" type="MeshInstance3D" parent="Plantas" unique_id=1967993474]
+transform = Transform3D(-0.9152165, 0, 0.40296245, 0, 1, 0, -0.40296245, 0, -0.9152165, 4.90516, 0.04943222, 11.364436)
+mesh = ExtResource("4_as64b")
+
+[node name="flores_162" type="MeshInstance3D" parent="Plantas" unique_id=232635535]
+transform = Transform3D(0.95735276, 0, -0.28892156, 0, 1, 0, 0.28892156, 0, 0.95735276, 10.473993, 0.031436335, 10.600691)
+mesh = ExtResource("10_uvev1")
+
+[node name="piedra_chica_a_163" type="MeshInstance3D" parent="Plantas" unique_id=1367391156]
+transform = Transform3D(-0.74832654, 0, 0.6633305, 0, 1, 0, -0.6633305, 0, -0.74832654, 11.436505, -0.20472802, 11.047231)
+mesh = ExtResource("7_f85do")
+
+[node name="quenoa_grande_164" type="MeshInstance3D" parent="Plantas" unique_id=1820280139]
+transform = Transform3D(-0.53350794, 0, -0.84579504, 0, 1, 0, 0.84579504, 0, -0.53350794, 17.548487, 2.6014845, 10.94722)
+mesh = ExtResource("5_2rrgn")
+
+[node name="ichu_mata_165" type="MeshInstance3D" parent="Plantas" unique_id=1403467906]
+transform = Transform3D(0.9532181, 0, -0.30228344, 0, 1, 0, 0.30228344, 0, 0.9532181, 16.564657, 2.5957928, 10.522415)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_166" type="MeshInstance3D" parent="Plantas" unique_id=593628401]
+transform = Transform3D(0.35169014, 0, -0.93611646, 0, 1, 0, 0.93611646, 0, 0.35169014, 18.84721, 2.5991411, 10.916415)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_167" type="MeshInstance3D" parent="Plantas" unique_id=208314943]
+transform = Transform3D(0.99943656, 0, 0.03356461, 0, 1, 0, -0.03356461, 0, 0.99943656, 20.487583, 2.5733097, 11.378725)
+mesh = ExtResource("4_as64b")
+
+[node name="quenoa_grande_168" type="MeshInstance3D" parent="Plantas" unique_id=1589952338]
+transform = Transform3D(-0.3562182, 0, 0.9344028, 0, 1, 0, -0.9344028, 0, -0.3562182, -21.577845, 2.60709, 13.258736)
+mesh = ExtResource("5_2rrgn")
+
+[node name="ichu_mata_169" type="MeshInstance3D" parent="Plantas" unique_id=565267247]
+transform = Transform3D(0.43618867, 0, -0.89985526, 0, 1, 0, 0.89985526, 0, 0.43618867, -19.203157, 2.5882483, 12.752783)
+mesh = ExtResource("4_as64b")
+
+[node name="cardon_a_170" type="MeshInstance3D" parent="Plantas" unique_id=1510490764]
+transform = Transform3D(0.21669883, 0, 0.9762385, 0, 1, 0, -0.9762385, 0, 0.21669883, -16.432287, 2.614124, 13.254584)
+mesh = ExtResource("6_oqwhf")
+
+[node name="ichu_mata_171" type="MeshInstance3D" parent="Plantas" unique_id=150479927]
+transform = Transform3D(0.083527006, 0, 0.9965055, 0, 1, 0, -0.9965055, 0, 0.083527006, -11.561147, -0.051626172, 13.34677)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_172" type="MeshInstance3D" parent="Plantas" unique_id=257370997]
+transform = Transform3D(-0.30956426, 0, 0.9508785, 0, 1, 0, -0.9508785, 0, -0.30956426, -9.282904, 0.09720327, 12.86428)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_173" type="MeshInstance3D" parent="Plantas" unique_id=564898461]
+transform = Transform3D(0.8528416, 0, 0.5221697, 0, 1, 0, -0.5221697, 0, 0.8528416, -6.4194646, 0.07069833, 13.529322)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_174" type="MeshInstance3D" parent="Plantas" unique_id=332114444]
+transform = Transform3D(-0.39706123, 0, 0.91779214, 0, 1, 0, -0.91779214, 0, -0.39706123, -4.7042985, 0.030034324, 13.0276165)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_175" type="MeshInstance3D" parent="Plantas" unique_id=2088562102]
+transform = Transform3D(-0.02682011, 0, 0.9996403, 0, 1, 0, -0.9996403, 0, -0.02682011, 0.8854183, 0.12653027, 12.775403)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_176" type="MeshInstance3D" parent="Plantas" unique_id=736937057]
+transform = Transform3D(-0.6852055, 0, 0.72834975, 0, 1, 0, -0.72834975, 0, -0.6852055, 4.4764237, 0.08652807, 12.590255)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_177" type="MeshInstance3D" parent="Plantas" unique_id=951901493]
+transform = Transform3D(0.96229655, 0, 0.27200255, 0, 1, 0, -0.27200255, 0, 0.96229655, 6.510322, -0.11527085, 13.363806)
+mesh = ExtResource("4_as64b")
+
+[node name="flores_178" type="MeshInstance3D" parent="Plantas" unique_id=155827765]
+transform = Transform3D(0.24543251, 0, -0.9694137, 0, 1, 0, 0.9694137, 0, 0.24543251, 6.881675, -0.08596707, 13.170661)
+mesh = ExtResource("10_uvev1")
+
+[node name="quenoa_chica_179" type="MeshInstance3D" parent="Plantas" unique_id=1770983969]
+transform = Transform3D(-0.37235662, 0, -0.92808974, 0, 1, 0, 0.92808974, 0, -0.37235662, 18.880909, 2.6126819, 13.35897)
+mesh = ExtResource("3_op81b")
+
+[node name="ichu_mata_180" type="MeshInstance3D" parent="Plantas" unique_id=484815924]
+transform = Transform3D(-0.84021115, 0, -0.54225934, 0, 1, 0, 0.54225934, 0, -0.84021115, -21.413054, 2.6155736, 14.547492)
+mesh = ExtResource("4_as64b")
+
+[node name="quenoa_grande_181" type="MeshInstance3D" parent="Plantas" unique_id=1701370009]
+transform = Transform3D(-0.99421495, 0, -0.10740891, 0, 1, 0, 0.10740891, 0, -0.99421495, -19.434391, 2.6003056, 14.515091)
+mesh = ExtResource("5_2rrgn")
+
+[node name="ichu_mata_182" type="MeshInstance3D" parent="Plantas" unique_id=1530994444]
+transform = Transform3D(-0.5605241, 0, 0.8281381, 0, 1, 0, -0.8281381, 0, -0.5605241, -12.539407, -0.08672501, 15.154531)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_183" type="MeshInstance3D" parent="Plantas" unique_id=764131939]
+transform = Transform3D(-0.9217544, 0, -0.3877742, 0, 1, 0, 0.3877742, 0, -0.9217544, -11.506875, 0.02410112, 14.898632)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_184" type="MeshInstance3D" parent="Plantas" unique_id=1151212663]
+transform = Transform3D(0.8708234, 0, -0.491596, 0, 1, 0, 0.491596, 0, 0.8708234, -8.462373, 0.120167315, 14.889297)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_185" type="MeshInstance3D" parent="Plantas" unique_id=244316559]
+transform = Transform3D(0.77948856, 0, -0.6264165, 0, 1, 0, 0.6264165, 0, 0.77948856, -7.2073727, -0.0188687, 15.41782)
+mesh = ExtResource("4_as64b")
+
+[node name="flores_186" type="MeshInstance3D" parent="Plantas" unique_id=598133473]
+transform = Transform3D(0.98766756, 0, 0.15656549, 0, 1, 0, -0.15656549, 0, 0.98766756, 1.4924476, 0.087450385, 15.059209)
+mesh = ExtResource("10_uvev1")
+
+[node name="ichu_mata_187" type="MeshInstance3D" parent="Plantas" unique_id=25909489]
+transform = Transform3D(0.24035873, 0, -0.9706841, 0, 1, 0, 0.9706841, 0, 0.24035873, 5.335408, 0.06937718, 15.321669)
+mesh = ExtResource("4_as64b")
+
+[node name="flores_188" type="MeshInstance3D" parent="Plantas" unique_id=565697589]
+transform = Transform3D(0.99341124, 0, 0.114603944, 0, 1, 0, -0.114603944, 0, 0.99341124, 6.986846, -0.10202165, 15.049528)
+mesh = ExtResource("10_uvev1")
+
+[node name="ichu_mata_189" type="MeshInstance3D" parent="Plantas" unique_id=426627602]
+transform = Transform3D(-0.8937093, 0, -0.44864655, 0, 1, 0, 0.44864655, 0, -0.8937093, 10.922051, 0.04480183, 14.79755)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_190" type="MeshInstance3D" parent="Plantas" unique_id=105230450]
+transform = Transform3D(-0.45324868, 0, -0.8913841, 0, 1, 0, 0.8913841, 0, -0.45324868, 12.684019, 0.021548422, 15.382366)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_191" type="MeshInstance3D" parent="Plantas" unique_id=403559768]
+transform = Transform3D(0.5673179, 0, -0.82349885, 0, 1, 0, 0.82349885, 0, 0.5673179, 14.642924, 0.0014354157, 14.567156)
+mesh = ExtResource("4_as64b")
+
+[node name="cardon_a_192" type="MeshInstance3D" parent="Plantas" unique_id=96750316]
+transform = Transform3D(-0.33657244, 0, -0.9416576, 0, 1, 0, 0.9416576, 0, -0.33657244, -20.913303, 2.5882738, 16.74271)
+mesh = ExtResource("6_oqwhf")
+
+[node name="ichu_mata_193" type="MeshInstance3D" parent="Plantas" unique_id=217951762]
+transform = Transform3D(-0.9987581, 0, 0.049823064, 0, 1, 0, -0.049823064, 0, -0.9987581, -19.267284, 2.6018674, 16.888329)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_194" type="MeshInstance3D" parent="Plantas" unique_id=1293817065]
+transform = Transform3D(-0.5199354, 0, -0.8542056, 0, 1, 0, 0.8542056, 0, -0.5199354, -13.312566, 0.050941408, 17.51676)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_195" type="MeshInstance3D" parent="Plantas" unique_id=1513624744]
+transform = Transform3D(-0.07404427, 0, 0.99725497, 0, 1, 0, -0.99725497, 0, -0.07404427, -5.0959373, -0.079357, 17.50443)
+mesh = ExtResource("4_as64b")
+
+[node name="flores_196" type="MeshInstance3D" parent="Plantas" unique_id=334205062]
+transform = Transform3D(-0.052732717, 0, 0.99860865, 0, 1, 0, -0.99860865, 0, -0.052732717, -4.5387883, 0.021203076, 17.182703)
+mesh = ExtResource("10_uvev1")
+
+[node name="piedra_chica_a_197" type="MeshInstance3D" parent="Plantas" unique_id=1093497043]
+transform = Transform3D(-0.9180869, 0, 0.39637914, 0, 1, 0, -0.39637914, 0, -0.9180869, -2.9816194, -0.009192024, 16.756207)
+mesh = ExtResource("7_f85do")
+
+[node name="ichu_mata_198" type="MeshInstance3D" parent="Plantas" unique_id=1159803418]
+transform = Transform3D(0.24066797, 0, 0.9706075, 0, 1, 0, -0.9706075, 0, 0.24066797, -1.0533669, -0.072363324, 16.58151)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_199" type="MeshInstance3D" parent="Plantas" unique_id=572697359]
+transform = Transform3D(0.7970821, 0, -0.6038709, 0, 1, 0, 0.6038709, 0, 0.7970821, 13.204822, -0.08043654, 17.241602)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_200" type="MeshInstance3D" parent="Plantas" unique_id=887011330]
+transform = Transform3D(0.8357784, 0, 0.54906684, 0, 1, 0, -0.54906684, 0, 0.8357784, 16.409966, 2.5905967, 16.75359)
+mesh = ExtResource("4_as64b")
+
+[node name="ichu_mata_201" type="MeshInstance3D" parent="Plantas" unique_id=351481230]
+transform = Transform3D(0.849057, 0, -0.5283012, 0, 1, 0, 0.5283012, 0, 0.849057, 20.967894, 2.60121, 16.835262)
+mesh = ExtResource("4_as64b")

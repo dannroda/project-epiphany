@@ -13,20 +13,7 @@ from mathutils import Vector, geometry, noise
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import epi  # noqa: E402
 
-# Filas de norte a sur, celdas de 2 m. # monte (borde), H meseta/peñón, . pasto, : camino, ~ abismo, ^ escalinata
-# (sube hacia el norte, dos celdas), T árbol.
-MAP = [
-	"################",
-	"#HHHHHHH..T....#",
-	"#HHHHHHH.......#",
-	"#HHHHH^H...HH..#",
-	"#T....^....HH..#",
-	"#.....:.......~#",
-	"#..T..::::::.~~#",
-	"#.....::....~~~#",
-	"#.....::..T..~.#",
-	"######::########",
-]
+MAP = [line for line in open(os.path.join(epi.ROOT, "tools", "prueba_terreno_mapa.txt")).read().splitlines() if line and not line.startswith("# ")]
 CELL = 2.0
 PAD, PAD_SOUTH = 3, 4
 TOP = 2.6

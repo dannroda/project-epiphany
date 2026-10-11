@@ -1,0 +1,13 @@
+# Zona de prueba de 12.14 (la leen tools/blender/build_prueba_terreno.py y tools/build_prueba_mc.gd).
+# Filas de norte a sur, celdas de 2 m: # monte (borde), H meseta/peñón, . pasto, : camino, ~ abismo,
+# ^ escalinata (sube hacia el norte, dos celdas), T árbol.
+################
+#HHHHHHH..T....#
+#HHHHHHH.......#
+#HHHHH^H...HH..#
+#T....^....HH..#
+#.....:.......~#
+#..T..::::::.~~#
+#.....::....~~~#
+#.....::..T..~.#
+######::########

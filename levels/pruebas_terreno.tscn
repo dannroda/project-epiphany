@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" path="res://assets/epiphany/prueba_terreno_organico_lomas.glb" id="v5"]
 [ext_resource type="PackedScene" path="res://assets/epiphany/prueba_terreno_libre.glb" id="v6"]
 [ext_resource type="PackedScene" path="res://assets/epiphany/prueba_terreno_libre_mc.glb" id="v7"]
+[ext_resource type="PackedScene" path="res://levels/prueba_mc_godot.tscn" id="v8"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_sky"]
 panorama = ExtResource("2_sky")
@@ -67,6 +68,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 360, 0, 0)
 
 [node name="C · Marching cubes" parent="Variantes" instance=ExtResource("v7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 420, 0, 0)
+
+[node name="C · Marching cubes en Godot" parent="Variantes" instance=ExtResource("v8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 480, 0, 0)
 
 [node name="Player" parent="." instance=ExtResource("3_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.5, 1)
