@@ -4,7 +4,7 @@ extends SceneTree
 ## godot --headless --path . --script res://tools/vary_overworld.gd
 
 const LEVEL := "res://levels/overworld.tscn"
-const KIT := preload("res://data/kits/overworld_kit.tres")
+const KIT := preload("res://data/kits/overworld_organico_kit.tres")
 const Pieces := preload("res://tools/grid_pieces.gd")
 
 ## id base → [[variante, probabilidad acumulada], …]; lo que sobra queda como el base.
@@ -86,6 +86,7 @@ func _initialize() -> void:
 	var err := Pieces.save_cells(LEVEL, grid, {
 		'path="res://data/kits/gray_kit.tres"': 'path="%s"' % KIT.resource_path,
 		'uid="uid://cgeqghyjch420" path="%s"' % KIT.resource_path: 'path="%s"' % KIT.resource_path,
+		'uid="uid://dt62p0c61qjd0" path="res://data/kits/overworld_kit.tres"': 'path="%s"' % KIT.resource_path,
 	})
 	print("vary_overworld: ", error_string(err), " · ", changed, " celdas")
 	root.free()

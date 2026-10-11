@@ -3810,9 +3810,9 @@ Pasar el overworld real al estilo de la variante 6 de 12.14: bordes de andenes, 
 
 - [x] Generador desde el GridMap
   tools/export_terreno_overworld.gd → tools/terreno_overworld.json → tools/blender/build_terreno_organico.py → assets/epiphany/terreno_organico.glb (rocas, suelo con colisión, plantas juntadas por pedazo).
-- [ ] Vista previa aprobada por el usuario
+- [x] Vista previa aprobada por el usuario
   Fila ★ en https://claude.ai/artifact/DeQ6YbE2gQqyQwRMFux2KH.
-- [ ] Meterlo en el overworld
+- [x] Meterlo en el overworld
   Celdas de terreno vacías (mallas vacías, sin colisión), piezas que quedan sin su piso, terreno en navmesh_source y re-bake, terreno en scenery del mapa.
 - [ ] Decoración sobre el terreno
   decorate_levels.gd: paredes y alturas desde el terreno nuevo, no desde el GridMap.

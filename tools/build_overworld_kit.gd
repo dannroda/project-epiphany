@@ -1,10 +1,17 @@
 extends SceneTree
 ## Arma data/kits/overworld_kit.tres: los ítems y colisiones del kit gris con las piezas propias de assets/epiphany,
 ## más variantes (ids desde 11) que reparte tools/vary_overworld.gd.
+## También arma data/kits/overworld_organico_kit.tres para el overworld de terreno orgánico (12.15): los mismos ítems, pero
+## el terreno (TERRAIN) queda sin malla ni colisión, porque lo dibuja assets/epiphany/terreno_organico.glb, y las piezas que
+## quedan pierden su piso.
 ## godot --headless --path . --script res://tools/build_overworld_kit.gd
 
 const SOURCE := "res://data/kits/gray_kit.tres"
 const OUTPUT := "res://data/kits/overworld_kit.tres"
+const ORGANIC_OUTPUT := "res://data/kits/overworld_organico_kit.tres"
+const TERRAIN := ["Piso", "Pasto", "Tierra", "Lajas", "Pared", "Acantilado", "Andén", "Risco", "Abismo", "Hueco", "Monte", "Cueva"]
+## Más bajo que esto (m) es piso de la celda.
+const FLOOR_TOP := 0.01
 const GLB := "res://assets/epiphany/%s.glb"
 const MATERIAL := preload("res://data/kits/materials/epiphany_outdoor.tres")
 ## Las paredes que pueden tapar al player: se recortan alrededor de él.
@@ -112,12 +119,59 @@ func _initialize() -> void:
 		next += 1
 	for scene: Node in _scenes.values():
 		scene.free()
-	var uid := ResourceLoader.get_resource_uid(OUTPUT)
-	var err := ResourceSaver.save(kit, OUTPUT)
-	if err == OK and uid != ResourceUID.INVALID_ID:
-		ResourceSaver.set_uid(OUTPUT, uid)
+	var err := _save(kit, OUTPUT)
 	print("overworld_kit: ", error_string(err), " · ", kit.get_item_list().size(), " ítems")
-	quit(0 if err == OK else 1)
+	var organic_err := _save(_organic(kit), ORGANIC_OUTPUT)
+	print("overworld_organico_kit: ", error_string(organic_err))
+	quit(0 if err == OK and organic_err == OK else 1)
+
+
+func _save(kit: MeshLibrary, path: String) -> Error:
+	var uid := ResourceLoader.get_resource_uid(path)
+	var err := ResourceSaver.save(kit, path)
+	if err == OK and uid != ResourceUID.INVALID_ID:
+		ResourceSaver.set_uid(path, uid)
+	return err
+
+
+func _organic(kit: MeshLibrary) -> MeshLibrary:
+	var organic := MeshLibrary.new()
+	for id in kit.get_item_list():
+		var item_name := kit.get_item_name(id)
+		organic.create_item(id)
+		organic.set_item_name(id, item_name)
+		if TERRAIN.any(func(prefix: String) -> bool: return item_name.begins_with(prefix)):
+			organic.set_item_mesh(id, ArrayMesh.new())
+			continue
+		organic.set_item_mesh(id, _without_floor(kit.get_item_mesh(id)))
+		var shapes := kit.get_item_shapes(id)
+		var kept := []
+		for i in range(0, shapes.size(), 2):
+			var top: float = (shapes[i + 1] as Transform3D).origin.y + (shapes[i] as BoxShape3D).size.y / 2.0 if shapes[i] is BoxShape3D else 1.0
+			if top > FLOOR_TOP:
+				kept += [shapes[i], shapes[i + 1]]
+		organic.set_item_shapes(id, kept)
+	return organic
+
+
+func _without_floor(mesh: Mesh) -> ArrayMesh:
+	var result := ArrayMesh.new()
+	for surface in mesh.get_surface_count():
+		var tool := SurfaceTool.new()
+		tool.create_from(mesh, surface)
+		var arrays := tool.commit_to_arrays()
+		var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+		var indices: PackedInt32Array = arrays[Mesh.ARRAY_INDEX]
+		var kept := PackedInt32Array()
+		for i in range(0, indices.size(), 3):
+			if maxf(vertices[indices[i]].y, maxf(vertices[indices[i + 1]].y, vertices[indices[i + 2]].y)) > FLOOR_TOP:
+				kept.append_array([indices[i], indices[i + 1], indices[i + 2]])
+		if kept.is_empty():
+			continue
+		arrays[Mesh.ARRAY_INDEX] = kept
+		result.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+		result.surface_set_material(result.get_surface_count() - 1, mesh.surface_get_material(surface))
+	return result
 
 
 func _piece(path: String) -> Mesh:

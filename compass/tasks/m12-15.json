@@ -7,12 +7,12 @@
     },
     {
       "detail": "Fila ★ en https://claude.ai/artifact/DeQ6YbE2gQqyQwRMFux2KH.",
-      "done": false,
+      "done": true,
       "text": "Vista previa aprobada por el usuario"
     },
     {
       "detail": "Celdas de terreno vacías (mallas vacías, sin colisión), piezas que quedan sin su piso, terreno en navmesh_source y re-bake, terreno en scenery del mapa.",
-      "done": false,
+      "done": true,
       "text": "Meterlo en el overworld"
     },
     {
@@ -21,7 +21,7 @@
       "text": "Decoración sobre el terreno"
     },
     {
-      "detail": "test_player_hole, test_overworld (abismo), test_map, test_zone_veil y los que caminan el overworld.",
+      "detail": "Pasan todos menos test_player_hole (materiales de los ítems del kit) y test_pit_walls_face_the_ground (el abismo ya no es del kit): los ajusta la otra sesión.",
       "done": false,
       "text": "Tests del overworld al día"
     }
@@ -46,5 +46,5 @@
   ],
   "test": "",
   "title": "Overworld orgánico con lomas (variante 6)",
-  "updated_at": "2026-10-11T18:52:34.570Z"
+  "updated_at": "2026-10-11T19:04:08.565Z"
 }
