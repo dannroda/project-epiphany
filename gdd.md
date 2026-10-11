@@ -244,7 +244,7 @@ Decidido el 2026-10-08. 8 zonas de ≈ 24 × 16 m (una "pantalla" con la cámara
 |---|---|---|---|---|---|
 | 1 | Vestíbulo | Bloque por grilla → interruptor de piso abre persiana | — | — | Calma, luz natural |
 | 2 | Hub central | 4 salidas: con llave, con persiana, del jefe (sellada), libre | Esqueletos | — | Primeras grietas |
-| 3 | Galería de trampas | Torretas disparan orbes → reflejar con escudo espejo a un cristal | Torretas | Llave chica | Polvo cae al resolver |
+| 3 | Galería de trampas | Torretas disparan orbes → reflejar con escudo espejo a un cristal; entre la entrada y el puzzle, dos columnas de pinchos (`SpikeTrap`) que suben en ola de norte a sur y se cruzan con timing | Torretas, pinchos | Llave chica | Polvo cae al resolver |
 | 4 | Sala agrietada | Muro bombable; bombas empujan bloques físicos a un interruptor | — | Mapa | Temblor breve |
 | 5 | Arena | Puerta se cierra hasta limpiar la sala | Oleada con esqueleto con escudo | **Cofre grande: ARCO** | Rugido lejano |
 | 6 | Sala de ojos | Ojos-interruptor sobre un abismo, solo alcanzables con flechas | Torreta | Brújula + llave chica | Luz vira a rojizo |

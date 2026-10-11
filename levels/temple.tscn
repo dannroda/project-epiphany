@@ -41,6 +41,7 @@
 [ext_resource type="Script" uid="uid://biq7c248kwtba" path="res://src/entities/boss/boss_arena.gd" id="57_arena"]
 [ext_resource type="PackedScene" path="res://src/world/cracked_wall_templo.tscn" id="91_cracktemplo"]
 [ext_resource type="PackedScene" path="res://levels/decor/temple_decor.tscn" id="92_decor"]
+[ext_resource type="PackedScene" path="res://src/world/spike_trap.tscn" id="93_spikes"]
 
 [sub_resource type="Environment" id="Environment_h5c3c"]
 background_mode = 1
@@ -606,5 +607,63 @@ script = ExtResource("55_j188v")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=486303064]
 navigation_mesh = SubResource("NavigationMesh_qekgw")
+
+[node name="GallerySpikes" type="Node3D" parent="."]
+
+[node name="Spike_2_42" parent="GallerySpikes" instance=ExtResource("93_spikes")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 42)
+offset = 0.0
+
+[node name="Spike_2_44" parent="GallerySpikes" instance=ExtResource("93_spikes")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 44)
+offset = 0.3
+
+[node name="Spike_2_46" parent="GallerySpikes" instance=ExtResource("93_spikes")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 46)
+offset = 0.6
+
+[node name="Spike_2_48" parent="GallerySpikes" instance=ExtResource("93_spikes")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 48)
+offset = 0.9
+
+[node name="Spike_2_50" parent="GallerySpikes" instance=ExtResource("93_spikes")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 50)
+offset = 1.2
+
+[node name="Spike_2_52" parent="GallerySpikes" instance=ExtResource("93_spikes")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 52)
+offset = 1.5
+
+[node name="Spike_2_54" parent="GallerySpikes" instance=ExtResource("93_spikes")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 54)
+offset = 1.8
+
+[node name="Spike_4_42" parent="GallerySpikes" instance=ExtResource("93_spikes")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 42)
+offset = 0.0
+
+[node name="Spike_4_44" parent="GallerySpikes" instance=ExtResource("93_spikes")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 44)
+offset = 0.3
+
+[node name="Spike_4_46" parent="GallerySpikes" instance=ExtResource("93_spikes")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 46)
+offset = 0.6
+
+[node name="Spike_4_48" parent="GallerySpikes" instance=ExtResource("93_spikes")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 48)
+offset = 0.9
+
+[node name="Spike_4_50" parent="GallerySpikes" instance=ExtResource("93_spikes")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 50)
+offset = 1.2
+
+[node name="Spike_4_52" parent="GallerySpikes" instance=ExtResource("93_spikes")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 52)
+offset = 1.5
+
+[node name="Spike_4_54" parent="GallerySpikes" instance=ExtResource("93_spikes")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 54)
+offset = 1.8
 
 [node name="Decor" parent="." instance=ExtResource("92_decor")]

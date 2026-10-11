@@ -295,6 +295,35 @@ def venas_doom(p):
 	p.paint(veins, "doom", "MID", vary=0.1)
 
 
+SPIKE_GRID = (-0.6, 0.0, 0.6)
+
+
+def pinchos_base(p):
+	"""Marco de hierro y nueve agujeros apoyados sobre cualquier piso (la trampa de pinchos); las púas salen de pinchos."""
+	frame = []
+	for x0, x1, y0, y1 in ((-0.92, 0.92, -0.92, -0.84), (-0.92, 0.92, 0.84, 0.92), (-0.92, -0.84, -0.84, 0.84), (0.84, 0.92, -0.84, 0.84)):
+		frame += p.box(x0, x1, y0, y1, 0.0, 0.03)
+	p.paint(frame, "hierro", "MID")
+	holes = []
+	for x in SPIKE_GRID:
+		for y in SPIKE_GRID:
+			holes += p.box(x - 0.16, x + 0.16, y - 0.16, y + 0.16, 0.0, 0.008)
+	p.paint(holes, "noche", "DARK")
+
+
+def pinchos(p):
+	"""Nueve púas de hierro de 0.75 m con el origen a ras del piso; el código las sube y baja."""
+	spikes, collars = [], []
+	for x in SPIKE_GRID:
+		for y in SPIKE_GRID:
+			spikes += p.cylinder(0.12, 0.05, 0.75, sides=4, radius_top=0.006, center=(x, y), phase=math.pi / 4)
+			collars += p.box(x - 0.13, x + 0.13, y - 0.13, y + 0.13, -0.02, 0.06)
+	p.paint(spikes, "hierro", z_range=(0.0, 0.75), vary=0.05)
+	p.paint(collars, "hierro", "DARK")
+
+
+piece("pinchos_base", 22, pinchos_base)
+piece("pinchos", 23, pinchos)
 piece("antorcha_pared", 16, antorcha_pared)
 piece("brasero", 17, brasero)
 piece("estandarte", 18, estandarte)

@@ -1,17 +1,39 @@
 {
-  "checklist": [],
+  "checklist": [
+    {
+      "detail": "build_templo.py: marco de hierro con nueve agujeros apoyado sobre el piso (no lo reemplaza) y nueve púas con el origen a ras del piso.",
+      "done": true,
+      "text": "Piezas pinchos y pinchos_base"
+    },
+    {
+      "detail": "src/world/spike_trap.tscn: period, up_time, offset, warn_time; Hitbox hits_all con elemento spikes; period 0 = siempre arriba.",
+      "done": true,
+      "text": "SpikeTrap"
+    },
+    {
+      "detail": "GallerySpikes: columnas x=2 y x=4, z 42–54, offset 0.3 s por fila; la decoración las esquiva.",
+      "done": true,
+      "text": "Ola en la Galería"
+    },
+    {
+      "detail": "tests/test_spike_trap.gd; fila de la sala 3 en el GDD.",
+      "done": true,
+      "text": "Tests y GDD"
+    }
+  ],
   "code": "11.5",
   "created_at": "2026-10-09T17:40:33.453Z",
+  "description": "Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastiman a player y enemigos (el escudo no los frena) y bajan; en ola para cruzarlos con timing.",
   "milestone": "m11",
   "notes": "",
   "order": 5,
   "priority": "medium",
   "refs": [],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "mazmorra"
   ],
-  "test": "",
+  "test": "En la Galería, cruzar las dos columnas de pinchos: se ve venir cada fila (asoma y tintinea), siempre queda un paso, pinchan al player y al esqueleto, y el puzzle de la torreta sigue igual.",
   "title": "Galería de trampas: pinchos",
-  "updated_at": "2026-10-09T17:40:33.453Z"
+  "updated_at": "2026-10-11T05:49:28.573Z"
 }

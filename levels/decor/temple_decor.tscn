@@ -7,318 +7,318 @@
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/vasija_pedazos.res" id="5_b303k"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo/venas_doom.res" id="6_18bbf"]
 
-[node name="Decor" type="Node3D" unique_id=1556836413]
+[node name="Decor" type="Node3D" unique_id=662810880]
 
-[node name="Vestibulo" type="Node3D" parent="." unique_id=1465455207]
+[node name="Vestibulo" type="Node3D" parent="." unique_id=1890989058]
 
-[node name="Brazier" type="StaticBody3D" parent="Vestibulo" unique_id=622195410 instance=ExtResource("1_hacsy")]
+[node name="Brazier" type="StaticBody3D" parent="Vestibulo" unique_id=1270126631 instance=ExtResource("1_hacsy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2, 0, 59.65)
 
-[node name="Brazier2" type="StaticBody3D" parent="Vestibulo" unique_id=1777310168 instance=ExtResource("1_hacsy")]
+[node name="Brazier2" type="StaticBody3D" parent="Vestibulo" unique_id=1841710625 instance=ExtResource("1_hacsy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.8, 0, 59.65)
 
-[node name="Estandarte" type="MeshInstance3D" parent="Vestibulo" unique_id=1750836568]
+[node name="Estandarte" type="MeshInstance3D" parent="Vestibulo" unique_id=1546042788]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0.3, 57.07)
 mesh = ExtResource("1_0a8en")
 
-[node name="Estandarte2" type="MeshInstance3D" parent="Vestibulo" unique_id=942753854]
+[node name="Estandarte2" type="MeshInstance3D" parent="Vestibulo" unique_id=193570242]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0.3, 57.07)
 mesh = ExtResource("1_0a8en")
 
-[node name="Estandarte3" type="MeshInstance3D" parent="Vestibulo" unique_id=1074231385]
+[node name="Estandarte3" type="MeshInstance3D" parent="Vestibulo" unique_id=769873209]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 13.07, 0.3, 64)
 mesh = ExtResource("1_0a8en")
 
-[node name="Estandarte4" type="MeshInstance3D" parent="Vestibulo" unique_id=1473811047]
+[node name="Estandarte4" type="MeshInstance3D" parent="Vestibulo" unique_id=312608484]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 34.93, 0.3, 68)
 mesh = ExtResource("1_0a8en")
 
-[node name="EscombroA" type="MeshInstance3D" parent="Vestibulo" unique_id=1743563314]
+[node name="EscombroA" type="MeshInstance3D" parent="Vestibulo" unique_id=800400389]
 transform = Transform3D(0.49148613, 0, -0.87088543, 0, 1, 0, 0.87088543, 0, 0.49148613, 13.681802, 0, 68.3182)
 mesh = ExtResource("3_6ydvh")
 
-[node name="Hub" type="Node3D" parent="." unique_id=1924518512]
+[node name="Hub" type="Node3D" parent="." unique_id=1780612112]
 
-[node name="Brazier" type="StaticBody3D" parent="Hub" unique_id=631093780 instance=ExtResource("1_hacsy")]
+[node name="Brazier" type="StaticBody3D" parent="Hub" unique_id=942957895 instance=ExtResource("1_hacsy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2, 0, 43.65)
 
-[node name="Brazier2" type="StaticBody3D" parent="Hub" unique_id=426906911 instance=ExtResource("1_hacsy")]
+[node name="Brazier2" type="StaticBody3D" parent="Hub" unique_id=1624363317 instance=ExtResource("1_hacsy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.8, 0, 43.65)
 
-[node name="Estandarte" type="MeshInstance3D" parent="Hub" unique_id=538724762]
+[node name="Estandarte" type="MeshInstance3D" parent="Hub" unique_id=1179977001]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0.3, 41.07)
 mesh = ExtResource("1_0a8en")
 
-[node name="Estandarte2" type="MeshInstance3D" parent="Hub" unique_id=1342851846]
+[node name="Estandarte2" type="MeshInstance3D" parent="Hub" unique_id=1365061892]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0.3, 41.07)
 mesh = ExtResource("1_0a8en")
 
-[node name="Estandarte3" type="MeshInstance3D" parent="Hub" unique_id=128608181]
+[node name="Estandarte3" type="MeshInstance3D" parent="Hub" unique_id=1125460112]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 34.93, 0.3, 52)
 mesh = ExtResource("1_0a8en")
 
-[node name="Estandarte4" type="MeshInstance3D" parent="Hub" unique_id=2016307785]
+[node name="Estandarte4" type="MeshInstance3D" parent="Hub" unique_id=338894058]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 13.07, 0.3, 52)
 mesh = ExtResource("1_0a8en")
 
-[node name="Escombros" type="MeshInstance3D" parent="Hub" unique_id=1735887451]
+[node name="Escombros" type="MeshInstance3D" parent="Hub" unique_id=1634117835]
 transform = Transform3D(0.4438362, 0, -0.8961079, 0, 1, 0, 0.8961079, 0, 0.4438362, 30, 0, 54.45)
 mesh = ExtResource("4_disqs")
 
-[node name="Escombros2" type="MeshInstance3D" parent="Hub" unique_id=1293431810]
+[node name="Escombros2" type="MeshInstance3D" parent="Hub" unique_id=825132496]
 transform = Transform3D(-0.23307821, 0, -0.972458, 0, 1, 0, 0.972458, 0, -0.23307821, 20, 0, 41.55)
 mesh = ExtResource("4_disqs")
 
-[node name="Galeria" type="Node3D" parent="." unique_id=1511962339]
+[node name="Galeria" type="Node3D" parent="." unique_id=1495344859]
 
-[node name="Estandarte" type="MeshInstance3D" parent="Galeria" unique_id=713684467]
+[node name="Estandarte" type="MeshInstance3D" parent="Galeria" unique_id=1276451075]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.3, 41.07)
 mesh = ExtResource("1_0a8en")
 
-[node name="Estandarte2" type="MeshInstance3D" parent="Galeria" unique_id=775522826]
+[node name="Estandarte2" type="MeshInstance3D" parent="Galeria" unique_id=1060675124]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.3, 41.07)
 mesh = ExtResource("1_0a8en")
 
-[node name="Estandarte3" type="MeshInstance3D" parent="Galeria" unique_id=980937916]
+[node name="Estandarte3" type="MeshInstance3D" parent="Galeria" unique_id=848404996]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4.93, 0.3, 52)
 mesh = ExtResource("1_0a8en")
 
-[node name="EscombroA" type="MeshInstance3D" parent="Galeria" unique_id=839877018]
-transform = Transform3D(-0.73900694, 0, 0.6736978, 0, 1, 0, -0.6736978, 0, -0.73900694, 4, 0, 54.45)
-mesh = ExtResource("3_6ydvh")
-
-[node name="Escombros" type="MeshInstance3D" parent="Galeria" unique_id=1014756855]
+[node name="Escombros" type="MeshInstance3D" parent="Galeria" unique_id=1952309035]
 transform = Transform3D(0.17428084, 0, 0.984696, 0, 1, 0, -0.984696, 0, 0.17428084, 6, 0, 54.45)
 mesh = ExtResource("4_disqs")
 
-[node name="VasijaPedazos" type="MeshInstance3D" parent="Galeria" unique_id=756955425]
-transform = Transform3D(-0.89854777, 0, 0.4388757, 0, 1, 0, -0.4388757, 0, -0.89854777, -7.919482, 0, 46.463547)
+[node name="EscombroA" type="MeshInstance3D" parent="Galeria" unique_id=53508860]
+transform = Transform3D(-0.8720828, 0, -0.48935834, 0, 1, 0, 0.48935834, 0, -0.8720828, -10.45, 0, 48)
+mesh = ExtResource("3_6ydvh")
+
+[node name="VasijaPedazos" type="MeshInstance3D" parent="Galeria" unique_id=224487575]
+transform = Transform3D(-0.7883801, 0, 0.6151885, 0, 1, 0, -0.6151885, 0, -0.7883801, 8.161631, 0, 41.818916)
 mesh = ExtResource("5_b303k")
 
-[node name="Agrietada" type="Node3D" parent="." unique_id=1766027601]
+[node name="Agrietada" type="Node3D" parent="." unique_id=1473675482]
 
-[node name="Estandarte" type="MeshInstance3D" parent="Agrietada" unique_id=574408223]
+[node name="Estandarte" type="MeshInstance3D" parent="Agrietada" unique_id=1480843247]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0.3, 47.07)
 mesh = ExtResource("1_0a8en")
 
-[node name="Escombros" type="MeshInstance3D" parent="Agrietada" unique_id=1818890746]
+[node name="Escombros" type="MeshInstance3D" parent="Agrietada" unique_id=1147132346]
 transform = Transform3D(0.3128586, 0, 0.9497997, 0, 1, 0, -0.9497997, 0, 0.3128586, 46, 0, 44.45)
 mesh = ExtResource("4_disqs")
 
-[node name="Escombros2" type="MeshInstance3D" parent="Agrietada" unique_id=1335167723]
+[node name="Escombros2" type="MeshInstance3D" parent="Agrietada" unique_id=961204999]
 transform = Transform3D(0.8654392, 0, -0.50101405, 0, 1, 0, 0.50101405, 0, 0.8654392, 54, 0, 44.45)
 mesh = ExtResource("4_disqs")
 
-[node name="Escombros3" type="MeshInstance3D" parent="Agrietada" unique_id=825028738]
+[node name="Escombros3" type="MeshInstance3D" parent="Agrietada" unique_id=1022661365]
 transform = Transform3D(-0.9931453, 0, -0.11688664, 0, 1, 0, 0.11688664, 0, -0.9931453, 52, 0, 44.45)
 mesh = ExtResource("4_disqs")
 
-[node name="EscombroA" type="MeshInstance3D" parent="Agrietada" unique_id=542667630]
+[node name="EscombroA" type="MeshInstance3D" parent="Agrietada" unique_id=824583720]
 transform = Transform3D(-0.32701883, 0, 0.9450178, 0, 1, 0, -0.9450178, 0, -0.32701883, 42, 0, 44.45)
 mesh = ExtResource("3_6ydvh")
 
-[node name="VasijaPedazos" type="MeshInstance3D" parent="Agrietada" unique_id=643523006]
+[node name="VasijaPedazos" type="MeshInstance3D" parent="Agrietada" unique_id=1798823661]
 transform = Transform3D(-0.50767213, 0, -0.86155033, 0, 1, 0, 0.86155033, 0, -0.50767213, 53.734055, 0, 47.60646)
 mesh = ExtResource("5_b303k")
 
-[node name="VenasDoom" type="MeshInstance3D" parent="Agrietada" unique_id=678023518]
+[node name="VenasDoom" type="MeshInstance3D" parent="Agrietada" unique_id=585836817]
 transform = Transform3D(0.927891, 0, 0.3728515, 0, 1, 0, -0.3728515, 0, 0.927891, 49.975773, 0.02, 51.98417)
 mesh = ExtResource("6_18bbf")
 
-[node name="Arena" type="Node3D" parent="." unique_id=2037214891]
+[node name="Arena" type="Node3D" parent="." unique_id=1208405206]
 
-[node name="Estandarte" type="MeshInstance3D" parent="Arena" unique_id=498955956]
+[node name="Estandarte" type="MeshInstance3D" parent="Arena" unique_id=269321443]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 0.3, 27.07)
 mesh = ExtResource("1_0a8en")
 
-[node name="Estandarte2" type="MeshInstance3D" parent="Arena" unique_id=1934010558]
+[node name="Estandarte2" type="MeshInstance3D" parent="Arena" unique_id=1855702303]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.07, 0.3, 26)
 mesh = ExtResource("1_0a8en")
 
-[node name="EscombroA" type="MeshInstance3D" parent="Arena" unique_id=1253925336]
+[node name="EscombroA" type="MeshInstance3D" parent="Arena" unique_id=590961057]
 transform = Transform3D(0.9859648, 0, 0.16695353, 0, 1, 0, -0.16695353, 0, 0.9859648, 42, 0, 38.45)
 mesh = ExtResource("3_6ydvh")
 
-[node name="Escombros" type="MeshInstance3D" parent="Arena" unique_id=814300625]
+[node name="Escombros" type="MeshInstance3D" parent="Arena" unique_id=695819681]
 transform = Transform3D(0.64263886, 0, -0.76616925, 0, 1, 0, 0.76616925, 0, 0.64263886, 37.55, 0, 34)
 mesh = ExtResource("4_disqs")
 
-[node name="Escombros2" type="MeshInstance3D" parent="Arena" unique_id=371915527]
+[node name="Escombros2" type="MeshInstance3D" parent="Arena" unique_id=1624200599]
 transform = Transform3D(0.90537053, 0, 0.4246224, 0, 1, 0, -0.4246224, 0, 0.90537053, 40, 0, 38.45)
 mesh = ExtResource("4_disqs")
 
-[node name="Escombros3" type="MeshInstance3D" parent="Arena" unique_id=1049686608]
+[node name="Escombros3" type="MeshInstance3D" parent="Arena" unique_id=1228522263]
 transform = Transform3D(0.7682094, 0, -0.64019865, 0, 1, 0, 0.64019865, 0, 0.7682094, 37.55, 0, 36)
 mesh = ExtResource("4_disqs")
 
-[node name="VenasDoom" type="MeshInstance3D" parent="Arena" unique_id=32664729]
+[node name="VenasDoom" type="MeshInstance3D" parent="Arena" unique_id=249662231]
 transform = Transform3D(-0.17037241, 0, 0.98537976, 0, 1, 0, -0.98537976, 0, -0.17037241, 55.85821, 0.02, 26.114826)
 mesh = ExtResource("6_18bbf")
 
-[node name="VenasDoom2" type="MeshInstance3D" parent="Arena" unique_id=215997500]
+[node name="VenasDoom2" type="MeshInstance3D" parent="Arena" unique_id=1899894931]
 transform = Transform3D(-0.78785926, 0, 0.61585534, 0, 1, 0, -0.61585534, 0, -0.78785926, 50.229183, 0.02, 34.29359)
 mesh = ExtResource("6_18bbf")
 
-[node name="Ojos" type="Node3D" parent="." unique_id=649941957]
+[node name="Ojos" type="Node3D" parent="." unique_id=356401445]
 
-[node name="Estandarte" type="MeshInstance3D" parent="Ojos" unique_id=2137366412]
+[node name="Estandarte" type="MeshInstance3D" parent="Ojos" unique_id=584403201]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0.3, 25.07)
 mesh = ExtResource("1_0a8en")
 
-[node name="EscombroA" type="MeshInstance3D" parent="Ojos" unique_id=1896338147]
+[node name="EscombroA" type="MeshInstance3D" parent="Ojos" unique_id=1926341424]
 transform = Transform3D(-0.96324146, 0, 0.26863706, 0, 1, 0, -0.26863706, 0, -0.96324146, -4.318198, 0, 38.3182)
 mesh = ExtResource("3_6ydvh")
 
-[node name="Escombros" type="MeshInstance3D" parent="Ojos" unique_id=1125746203]
+[node name="Escombros" type="MeshInstance3D" parent="Ojos" unique_id=136476424]
 transform = Transform3D(-0.85646826, 0, -0.5161997, 0, 1, 0, 0.5161997, 0, -0.85646826, 4, 0, 38.45)
 mesh = ExtResource("4_disqs")
 
-[node name="Escombros2" type="MeshInstance3D" parent="Ojos" unique_id=621941407]
+[node name="Escombros2" type="MeshInstance3D" parent="Ojos" unique_id=225864241]
 transform = Transform3D(0.67178756, 0, 0.7407439, 0, 1, 0, -0.7407439, 0, 0.67178756, 10.45, 0, 36)
 mesh = ExtResource("4_disqs")
 
-[node name="VenasDoom" type="MeshInstance3D" parent="Ojos" unique_id=421243782]
+[node name="VenasDoom" type="MeshInstance3D" parent="Ojos" unique_id=2072634906]
 transform = Transform3D(0.98316056, 0, -0.18274395, 0, 1, 0, 0.18274395, 0, 0.98316056, -2.1528292, 0.02, 26.105997)
 mesh = ExtResource("6_18bbf")
 
-[node name="VenasDoom2" type="MeshInstance3D" parent="Ojos" unique_id=1798284156]
+[node name="VenasDoom2" type="MeshInstance3D" parent="Ojos" unique_id=501246799]
 transform = Transform3D(-0.498868, 0, -0.866678, 0, 1, 0, 0.866678, 0, -0.498868, -0.13327089, 0.02, 36.38797)
 mesh = ExtResource("6_18bbf")
 
-[node name="VenasDoom3" type="MeshInstance3D" parent="Ojos" unique_id=971971973]
+[node name="VenasDoom3" type="MeshInstance3D" parent="Ojos" unique_id=1484179525]
 transform = Transform3D(-0.6180986, 0, 0.78610057, 0, 1, 0, -0.78610057, 0, -0.6180986, 2.060185, 0.02, 25.802895)
 mesh = ExtResource("6_18bbf")
 
-[node name="Puzzle" type="Node3D" parent="." unique_id=2083551574]
+[node name="Puzzle" type="Node3D" parent="." unique_id=970140156]
 
-[node name="Estandarte" type="MeshInstance3D" parent="Puzzle" unique_id=1727972635]
+[node name="Estandarte" type="MeshInstance3D" parent="Puzzle" unique_id=123848415]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.3, 9.07)
 mesh = ExtResource("1_0a8en")
 
-[node name="Escombros" type="MeshInstance3D" parent="Puzzle" unique_id=99518876]
+[node name="Escombros" type="MeshInstance3D" parent="Puzzle" unique_id=1912156281]
 transform = Transform3D(0.97700465, 0, -0.2132179, 0, 1, 0, 0.2132179, 0, 0.97700465, -6, 0, 22.45)
 mesh = ExtResource("4_disqs")
 
-[node name="Escombros2" type="MeshInstance3D" parent="Puzzle" unique_id=1951486452]
+[node name="Escombros2" type="MeshInstance3D" parent="Puzzle" unique_id=606635398]
 transform = Transform3D(0.6366598, 0, 0.7711448, 0, 1, 0, -0.7711448, 0, 0.6366598, 10.45, 0, 20)
 mesh = ExtResource("4_disqs")
 
-[node name="Escombros3" type="MeshInstance3D" parent="Puzzle" unique_id=1520299873]
+[node name="Escombros3" type="MeshInstance3D" parent="Puzzle" unique_id=1109000602]
 transform = Transform3D(0.2809217, 0, 0.9597307, 0, 1, 0, -0.9597307, 0, 0.2809217, -2, 0, 11.55)
 mesh = ExtResource("4_disqs")
 
-[node name="Escombros4" type="MeshInstance3D" parent="Puzzle" unique_id=1835376384]
+[node name="Escombros4" type="MeshInstance3D" parent="Puzzle" unique_id=113842553]
 transform = Transform3D(0.9894504, 0, 0.14487205, 0, 1, 0, -0.14487205, 0, 0.9894504, 8.45, 0, 12)
 mesh = ExtResource("4_disqs")
 
-[node name="VasijaPedazos" type="MeshInstance3D" parent="Puzzle" unique_id=1071569740]
+[node name="VasijaPedazos" type="MeshInstance3D" parent="Puzzle" unique_id=1967958259]
 transform = Transform3D(-0.4329428, 0, -0.90142137, 0, 1, 0, 0.90142137, 0, -0.4329428, -8.149696, 0, 16.398636)
 mesh = ExtResource("5_b303k")
 
-[node name="VenasDoom" type="MeshInstance3D" parent="Puzzle" unique_id=1683512656]
+[node name="VenasDoom" type="MeshInstance3D" parent="Puzzle" unique_id=260965930]
 transform = Transform3D(-0.75895095, 0, -0.6511478, 0, 1, 0, 0.6511478, 0, -0.75895095, 3.9443007, 0.02, 20.384714)
 mesh = ExtResource("6_18bbf")
 
-[node name="VenasDoom2" type="MeshInstance3D" parent="Puzzle" unique_id=1587125253]
+[node name="VenasDoom2" type="MeshInstance3D" parent="Puzzle" unique_id=1330030582]
 transform = Transform3D(0.15685046, 0, 0.9876224, 0, 1, 0, -0.9876224, 0, 0.15685046, -0.055769175, 0.02, 16.145737)
 mesh = ExtResource("6_18bbf")
 
-[node name="VenasDoom3" type="MeshInstance3D" parent="Puzzle" unique_id=1483166021]
+[node name="VenasDoom3" type="MeshInstance3D" parent="Puzzle" unique_id=1937966041]
 transform = Transform3D(-0.9678595, 0, -0.25149158, 0, 1, 0, 0.25149158, 0, -0.9678595, 8.061729, 0.02, 15.655988)
 mesh = ExtResource("6_18bbf")
 
-[node name="Antesala" type="Node3D" parent="." unique_id=1076713192]
+[node name="Antesala" type="Node3D" parent="." unique_id=1587569890]
 
-[node name="Brazier" type="StaticBody3D" parent="Antesala" unique_id=1334783783 instance=ExtResource("1_hacsy")]
+[node name="Brazier" type="StaticBody3D" parent="Antesala" unique_id=670769193 instance=ExtResource("1_hacsy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2, 0, 27.65)
 
-[node name="Brazier2" type="StaticBody3D" parent="Antesala" unique_id=1432947269 instance=ExtResource("1_hacsy")]
+[node name="Brazier2" type="StaticBody3D" parent="Antesala" unique_id=1351414112 instance=ExtResource("1_hacsy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.8, 0, 27.65)
 
-[node name="Estandarte" type="MeshInstance3D" parent="Antesala" unique_id=29746678]
+[node name="Estandarte" type="MeshInstance3D" parent="Antesala" unique_id=1796027254]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0.3, 25.07)
 mesh = ExtResource("1_0a8en")
 
-[node name="Estandarte2" type="MeshInstance3D" parent="Antesala" unique_id=2096953858]
+[node name="Estandarte2" type="MeshInstance3D" parent="Antesala" unique_id=1836226138]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0.3, 25.07)
 mesh = ExtResource("1_0a8en")
 
-[node name="EscombroA" type="MeshInstance3D" parent="Antesala" unique_id=25290006]
+[node name="EscombroA" type="MeshInstance3D" parent="Antesala" unique_id=965502472]
 transform = Transform3D(0.9095876, 0, 0.4155121, 0, 1, 0, -0.4155121, 0, 0.9095876, 20, 0, 38.45)
 mesh = ExtResource("3_6ydvh")
 
-[node name="EscombroA2" type="MeshInstance3D" parent="Antesala" unique_id=1407494498]
+[node name="EscombroA2" type="MeshInstance3D" parent="Antesala" unique_id=2011765192]
 transform = Transform3D(0.94158155, 0, -0.3367851, 0, 1, 0, 0.3367851, 0, 0.94158155, 32.3182, 0, 25.681803)
 mesh = ExtResource("3_6ydvh")
 
-[node name="EscombroA3" type="MeshInstance3D" parent="Antesala" unique_id=114287532]
+[node name="EscombroA3" type="MeshInstance3D" parent="Antesala" unique_id=11139496]
 transform = Transform3D(0.9337052, 0, 0.35804272, 0, 1, 0, -0.35804272, 0, 0.9337052, 13.55, 0, 30)
 mesh = ExtResource("3_6ydvh")
 
-[node name="VasijaPedazos" type="MeshInstance3D" parent="Antesala" unique_id=229638065]
+[node name="VasijaPedazos" type="MeshInstance3D" parent="Antesala" unique_id=1020330660]
 transform = Transform3D(0.9681866, 0, -0.25022933, 0, 1, 0, 0.25022933, 0, 0.9681866, 16.482342, 0, 31.582348)
 mesh = ExtResource("5_b303k")
 
-[node name="VasijaPedazos2" type="MeshInstance3D" parent="Antesala" unique_id=12693405]
+[node name="VasijaPedazos2" type="MeshInstance3D" parent="Antesala" unique_id=1207292201]
 transform = Transform3D(0.30114383, 0, 0.9535787, 0, 1, 0, -0.9535787, 0, 0.30114383, 31.642181, 0, 31.872248)
 mesh = ExtResource("5_b303k")
 
-[node name="VenasDoom" type="MeshInstance3D" parent="Antesala" unique_id=1974157965]
+[node name="VenasDoom" type="MeshInstance3D" parent="Antesala" unique_id=27278447]
 transform = Transform3D(0.5002675, 0, -0.8658709, 0, 1, 0, 0.8658709, 0, 0.5002675, 23.793125, 0.02, 32.048843)
 mesh = ExtResource("6_18bbf")
 
-[node name="VenasDoom2" type="MeshInstance3D" parent="Antesala" unique_id=2005750998]
+[node name="VenasDoom2" type="MeshInstance3D" parent="Antesala" unique_id=1359472437]
 transform = Transform3D(0.42279667, 0, -0.90622455, 0, 1, 0, 0.90622455, 0, 0.42279667, 23.838028, 0.02, 28.12963)
 mesh = ExtResource("6_18bbf")
 
-[node name="VenasDoom3" type="MeshInstance3D" parent="Antesala" unique_id=2077743095]
+[node name="VenasDoom3" type="MeshInstance3D" parent="Antesala" unique_id=835646656]
 transform = Transform3D(0.58810717, 0, -0.808783, 0, 1, 0, 0.808783, 0, 0.58810717, 28.304735, 0.02, 33.947403)
 mesh = ExtResource("6_18bbf")
 
-[node name="VenasDoom4" type="MeshInstance3D" parent="Antesala" unique_id=1858303583]
+[node name="VenasDoom4" type="MeshInstance3D" parent="Antesala" unique_id=813092331]
 transform = Transform3D(0.40316242, 0, -0.91512847, 0, 1, 0, 0.91512847, 0, 0.40316242, 14.131678, 0.02, 36.148438)
 mesh = ExtResource("6_18bbf")
 
-[node name="Jefe" type="Node3D" parent="." unique_id=1913136403]
+[node name="Jefe" type="Node3D" parent="." unique_id=1044911188]
 
-[node name="Brazier" type="StaticBody3D" parent="Jefe" unique_id=227636145 instance=ExtResource("1_hacsy")]
+[node name="Brazier" type="StaticBody3D" parent="Jefe" unique_id=847976956 instance=ExtResource("1_hacsy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2, 0, 11.65)
 
-[node name="Brazier2" type="StaticBody3D" parent="Jefe" unique_id=573983700 instance=ExtResource("1_hacsy")]
+[node name="Brazier2" type="StaticBody3D" parent="Jefe" unique_id=1582738966 instance=ExtResource("1_hacsy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.8, 0, 11.65)
 
-[node name="Estandarte" type="MeshInstance3D" parent="Jefe" unique_id=1920127677]
+[node name="Estandarte" type="MeshInstance3D" parent="Jefe" unique_id=647984372]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0.3, 9.07)
 mesh = ExtResource("1_0a8en")
 
-[node name="Estandarte2" type="MeshInstance3D" parent="Jefe" unique_id=2070097738]
+[node name="Estandarte2" type="MeshInstance3D" parent="Jefe" unique_id=1637158623]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0.3, 9.07)
 mesh = ExtResource("1_0a8en")
 
-[node name="EscombroA" type="MeshInstance3D" parent="Jefe" unique_id=236954814]
+[node name="EscombroA" type="MeshInstance3D" parent="Jefe" unique_id=296552169]
 transform = Transform3D(0.8270945, 0, -0.5620629, 0, 1, 0, 0.5620629, 0, 0.8270945, 28, 0, 22.45)
 mesh = ExtResource("3_6ydvh")
 
-[node name="Escombros" type="MeshInstance3D" parent="Jefe" unique_id=1640551661]
+[node name="Escombros" type="MeshInstance3D" parent="Jefe" unique_id=1767301086]
 transform = Transform3D(-0.6487888, 0, -0.7609685, 0, 1, 0, 0.7609685, 0, -0.6487888, 13.55, 0, 16)
 mesh = ExtResource("4_disqs")
 
-[node name="VenasDoom" type="MeshInstance3D" parent="Jefe" unique_id=937763228]
+[node name="VenasDoom" type="MeshInstance3D" parent="Jefe" unique_id=655867057]
 transform = Transform3D(-0.59608597, 0, -0.80292064, 0, 1, 0, 0.80292064, 0, -0.59608597, 25.790972, 0.02, 11.989509)
 mesh = ExtResource("6_18bbf")
 
-[node name="VenasDoom2" type="MeshInstance3D" parent="Jefe" unique_id=1754614512]
+[node name="VenasDoom2" type="MeshInstance3D" parent="Jefe" unique_id=839885773]
 transform = Transform3D(-0.06264205, 0, -0.9980361, 0, 1, 0, 0.9980361, 0, -0.06264205, 25.763668, 0.02, 17.75108)
 mesh = ExtResource("6_18bbf")
 
-[node name="VenasDoom3" type="MeshInstance3D" parent="Jefe" unique_id=250336546]
+[node name="VenasDoom3" type="MeshInstance3D" parent="Jefe" unique_id=622599161]
 transform = Transform3D(0.06855829, 0, -0.9976471, 0, 1, 0, 0.9976471, 0, 0.06855829, 33.82385, 0.02, 20.18442)
 mesh = ExtResource("6_18bbf")
 
-[node name="VenasDoom4" type="MeshInstance3D" parent="Jefe" unique_id=842594921]
+[node name="VenasDoom4" type="MeshInstance3D" parent="Jefe" unique_id=1529456362]
 transform = Transform3D(-0.46608374, 0, 0.8847406, 0, 1, 0, -0.8847406, 0, -0.46608374, 22.088768, 0.02, 16.223562)
 mesh = ExtResource("6_18bbf")
 
-[node name="VenasDoom5" type="MeshInstance3D" parent="Jefe" unique_id=330498462]
+[node name="VenasDoom5" type="MeshInstance3D" parent="Jefe" unique_id=110165862]
 transform = Transform3D(-0.97157305, 0, -0.2367399, 0, 1, 0, 0.2367399, 0, -0.97157305, 29.65916, 0.02, 16.346739)
 mesh = ExtResource("6_18bbf")

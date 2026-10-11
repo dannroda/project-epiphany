@@ -1,0 +1,29 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/spike_trap.gd" id="1_trap"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo/pinchos_base.res" id="2_base"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo/pinchos.res" id="3_spikes"]
+[ext_resource type="Script" path="res://src/components/hitbox.gd" id="4_hitbox"]
+
+[sub_resource type="BoxShape3D" id="Shape"]
+size = Vector3(1.7, 0.8, 1.7)
+
+[node name="SpikeTrap" type="Node3D"]
+script = ExtResource("1_trap")
+
+[node name="Base" type="MeshInstance3D" parent="."]
+mesh = ExtResource("2_base")
+
+[node name="Spikes" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.78, 0)
+mesh = ExtResource("3_spikes")
+
+[node name="Hitbox" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 24
+monitorable = false
+script = ExtResource("4_hitbox")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+shape = SubResource("Shape")

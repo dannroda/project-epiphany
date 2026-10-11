@@ -74,6 +74,10 @@ func _decorate(level_name: String, area_script: String, recipe: Callable) -> voi
 			areas.append(child)
 		elif child is Node3D and not (child.get_class() in IGNORED or child.name in IGNORED or child is Area3D):
 			_keep_out.append((child as Node3D).position)
+			if child.get_class() == "Node3D" and child.get_script() == null and child.scene_file_path.is_empty():
+				for inner in child.get_children():
+					if inner is Node3D:
+						_keep_out.append((child as Node3D).transform * (inner as Node3D).position)
 	for cell in _grid.get_used_cells():
 		if _name(cell) == "Puerta":
 			_doors.append(_center(cell))
