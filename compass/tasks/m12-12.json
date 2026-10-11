@@ -6,8 +6,8 @@
       "text": "Prueba de estilo en Blender (estilo_toon.py)"
     },
     {
-      "detail": "Shader propio (light() con corte duro de 2 tonos, sombra de color de la tira oscura de la paleta, rim light opcional para el pelo negro). Probarlo también en el escenario: cambia el look del mundo.",
-      "done": false,
+      "detail": "Hecho: src/shaders/toon/toon.gdshaderinc (light() de 2 tonos: corte por ángulo y por sombra proyectada, energías de luz y sombra, rim opcional; luces puntuales/spot suman sin corte para no umbralizar antorchas ni cáusticas) + toon_palette.gdshader y epiphany_toon.tres. La sombra es el color por la relación oscuro/claro de su tira de paleta (sombras de color). Falta incluirlo en cutaway y epiphany_wall y aplicarlo al personaje (12.13 paso 1).",
+      "done": true,
       "text": "Shader cel en Godot"
     },
     {
@@ -42,6 +42,12 @@
   ],
   "code": "12.12",
   "created_at": "2026-10-10T23:24:31.663Z",
+  "links": [
+    {
+      "task": "m12-13",
+      "type": "blocks"
+    }
+  ],
   "milestone": "m12",
   "notes": "Rumbo elegido 2026-10-10: look tipo Wind Waker HD con cel shading (no low-poly de piezas ni anime realista). Proporciones chibi, así que sirve el Rig_Medium y las animaciones de KayKit. Prueba en tools/blender/estilo_toon.py (renders de referencia en docs/estilo/): cuerpo continuo con Skin modifier + subdivisión y pesos automáticos; pelo en mechones de curvas NURBS afinadas con rulo; cara de calcomanías proyectadas (ojo, iris, pupila, brillo, párpado, cejas, rubor, boca); mangas y pollera con pliegues senoidales; cel shading de 2 tonos con sombra de color. Las tiras de la paleta ya tienen tono claro y oscuro: sirven como lit/shade del shader. El setting andino tampoco es definitivo (cyber-shinobi estilo Megaman Zero: sables de energía y pistolas). Diseño: pelo negro con rulos y rodetes con kunais, ojos rojos, capucha y mangas anchas con ribete emisivo, faja roja tipo obi, delantal crema, pollera, medias con liga roja, botas.",
   "order": 12,
@@ -54,5 +60,5 @@
   ],
   "test": "",
   "title": "Estilo toon (Wind Waker) + personaje cyber-shinobi",
-  "updated_at": "2026-10-10T23:50:30.477Z"
+  "updated_at": "2026-10-11T00:09:21.287Z"
 }

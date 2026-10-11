@@ -1,7 +1,7 @@
 {
   "checklist": [
     {
-      "detail": "Sale de 12.12 paso 2. Capturas de overworld, templo y jefe; lista de qué alcanza con shader y qué hay que remodelar.",
+      "detail": "Herramienta: tools/toon_preview.gd (capturas base/toon en el jugador y cada Spawn* del overworld y el templo). Primera recorrida 2026-10-10: con el shader el mundo ya lee toon (follaje en dos tonos, sombras de color más suaves). Falta: pasar epiphany.tres al toon e incluir toon.gdshaderinc en cutaway y epiphany_wall (avisar a la otra sesión: cambia el look de todo), afinar energías por nivel y la lista de qué remodelar.",
       "done": false,
       "text": "Shader cel en el material de paleta y recorrida del mundo actual"
     },
@@ -59,5 +59,5 @@
   ],
   "test": "",
   "title": "Reajuste de estilo toon de todos los assets",
-  "updated_at": "2026-10-10T23:53:36.436Z"
+  "updated_at": "2026-10-11T00:09:21.556Z"
 }

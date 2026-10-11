@@ -2638,7 +2638,7 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 - [x] Mecha sigue corriendo mientras se apunta
 - [x] Tests y GDD
 
-### 11.44 Levantar y tirar objetos · En curso
+### 11.44 Levantar y tirar objetos · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `items`, `interaccion`
 
@@ -2648,22 +2648,22 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
   Interactuar levanta (anim KayKit), se camina más lento, se tira con el mismo botón o se apoya.
 - [x] Tirar: parábola, rompe y daña
   Al chocar se rompe (vasija suelta su loot) y daña enemigos.
-- [ ] Puzzles que lo usen
+- [x] Puzzles que lo usen
   Piedra sobre placa de presión, vasija para tapar un hueco. Se hace con los mini puzzles de 11.45 (stone.tscn ya aprieta placas).
 
-### 11.45 Tutorial de controles y mini puzzle por ítem · En curso
+### 11.45 Tutorial de controles y mini puzzle por ítem · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `ui`, `puzzles`
 
-- [ ] Tutorial de controles al empezar
+- [x] Tutorial de controles al empezar
   Carteles/tablitas en el claro del inicio: moverse, atacar, rodar, bloquear, fijar, interactuar; muestra el botón según el dispositivo.
-- [ ] Mini puzzle al conseguir cada ítem
-  Sala chica justo después del cofre con una tablita que da la pista: arco (ojo/diana), bombas (pared rajada), escudo espejo (rayo), levantar (placa).
-- [ ] Tablitas con el ícono del botón
+- [x] Mini puzzle al conseguir cada ítem
+  Levantar: piedra, placa y reja con cofre en el claro del inicio. Bombas, espejo y arco reusan lo que ya había al lado del cofre (muro de práctica, haz del santuario, sala de ojos) con su tablita de pista.
+- [x] Tablitas con el ícono del botón
   El texto de la tablita usa los íconos de input actuales.
-- [ ] Tests y GDD
+- [x] Tests y GDD
 
-### 11.46 Jefe: game juice · Pendiente
+### 11.46 Jefe: game juice · En curso
 
 **Prioridad:** alta · **Etiquetas:** `jefe`, `feel`
 
@@ -2986,8 +2986,8 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 
 - [x] Prueba de estilo en Blender (estilo_toon.py)
   Hecha: renders en docs/estilo/. El blockout de piezas epi se descartó (se veía cuadrado/viejo; suavizarlo lo volvía un globo).
-- [ ] Shader cel en Godot
-  Shader propio (light() con corte duro de 2 tonos, sombra de color de la tira oscura de la paleta, rim light opcional para el pelo negro). Probarlo también en el escenario: cambia el look del mundo.
+- [x] Shader cel en Godot
+  Hecho: src/shaders/toon/toon.gdshaderinc (light() de 2 tonos: corte por ángulo y por sombra proyectada, energías de luz y sombra, rim opcional; luces puntuales/spot suman sin corte para no umbralizar antorchas ni cáusticas) + toon_palette.gdshader y epiphany_toon.tres. La sombra es el color por la relación oscuro/claro de su tira de paleta (sombras de color). Falta incluirlo en cutaway y epiphany_wall y aplicarlo al personaje (12.13 paso 1).
 - [ ] Personaje al pipeline glb
   Pasar estilo_toon.py a un build_*.py que use paleta (UV a las tiras en vez de materiales sueltos) y epi.publish; pesos automáticos del cuerpo; huesos spring para mechones laterales, cintas y colas de la faja; sockets de sable y pistola (custom property socket).
 - [ ] Cara como textura con expresiones
@@ -3027,7 +3027,7 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 - [ ] Efectos estilo WW
   Humo en espirales, líneas de viento, explosiones cartoon, golpes (con 12.9 y 11.49).
 - [ ] Agua toon y cáusticas
-  El shader de agua estilo Wind Waker y las cáusticas de la cueva (11.20).
+  El shader de agua estilo Wind Waker y las cáusticas de la cueva (11.20) ya son toon: casi no cambian. A cuidar: las cáusticas llegan como luz del SpotLight (light_projector), así que el light() del shader cel no debe umbralizarlas junto con el resto. Sumarlas aparte o con su propio corte (bandas nítidas).
 
 **Notas:** Con el estilo Wind Waker elegido (12.12), todo el juego tiene que convivir con el personaje nuevo. Primero se mide cuánto resuelve el shader: todas las piezas epi comparten el material de paleta (data/kits/materials/epiphany.tres), así que el cel shading se prueba en el mundo entero de una vez. Recién ahí se decide qué hay que remodelar. Lo que siga siendo KayKit va a desentonar más.
 
