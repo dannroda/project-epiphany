@@ -49,7 +49,7 @@
     },
     {
       "detail": "La tapa de pasto de andenes, riscos y meseta es una caja plana: borde irregular que sobresale y cuelga, como el resto de los assets.",
-      "done": false,
+      "done": true,
       "text": "Bordes de arriba estilizados"
     },
     {
@@ -102,5 +102,5 @@
   ],
   "test": "El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.",
   "title": "Terreno del overworld",
-  "updated_at": "2026-10-11T08:38:22.871Z"
+  "updated_at": "2026-10-11T08:42:53.515Z"
 }
