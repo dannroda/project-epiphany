@@ -23,6 +23,7 @@
       "text": "Aberturas en acantilado de 1 y 3 celdas"
     },
     {
+      "detail": "Escalón: muro de piedra con lajas encastradas arriba (hecho). La escalinata está en el .blend pero no en el kit, y el overworld no tiene ningún desnivel que pida rampa: falta decidir si hacen falta.",
       "done": false,
       "text": "Escalones y rampa (tierra y piedra)"
     },
@@ -75,5 +76,5 @@
   ],
   "test": "El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.",
   "title": "Terreno del overworld",
-  "updated_at": "2026-10-11T08:10:05.278Z"
+  "updated_at": "2026-10-11T08:10:54.892Z"
 }
