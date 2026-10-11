@@ -1584,7 +1584,7 @@ El overworld de 3 × 3 pantallas quedó hecho para una sola mazmorra y se siente
 
 - [x] Propuesta de layout (variantes) y elección
   Propuesta en https://claude.ai/artifact/8N6Sst4jMsTDTgKLWdqm4B. Daniel (2026-10-11): el tamaño no importa, 4 mazmorras, viaje rápido ahora. Propuesta D, la mezcla: quebrada de la B, anillos de la A, terrazas de la C solo al este, 6 portales. Falta que la apruebe.
-- [ ] Diseño elegido en el GDD (§7): regiones, gating, ritmo
+- [x] Diseño elegido en el GDD (§7): regiones, gating, ritmo
   GDD §7 y §7.1 (gdd#overworld-layout): mapa de la variante D, tabla de regiones, cadena de mazmorras, gating, viaje rápido y ritmo; §6.2 con D2–D4.
 - [ ] Blockout del GridMap nuevo
 - [ ] Mudar los lugares existentes y la entrada de la Chullpa

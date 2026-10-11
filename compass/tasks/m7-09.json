@@ -31,7 +31,7 @@
       "text": "Recorrerlo (Daniel)"
     },
     {
-      "detail": "6 portales que se activan al pasar (flag); se elige el destino en la pestaña Mapa o parado en un portal; viajan todos los players. Mockup en el canvas antes de construir.",
+      "detail": "6 portales que se activan al pasar (flag); se elige el destino en la pestaña Mapa o parado en un portal; viajan todos los players. Mockup: artboard 'Pausa · Mapa (overworld nuevo) con portales de viaje' (Pause_Map_Travel) en https://claude.ai/artifact/UuD7d42rAXuYTBcMd9iZJy; falta que Daniel lo apruebe.",
       "done": false,
       "text": "Viaje rápido: portales y mockup de la pantalla"
     }
@@ -51,5 +51,5 @@
   ],
   "test": "",
   "title": "Rediseño del overworld como hub de varias mazmorras",
-  "updated_at": "2026-10-11T22:36:44.601Z"
+  "updated_at": "2026-10-11T22:39:04.785Z"
 }
