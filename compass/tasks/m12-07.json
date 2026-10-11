@@ -65,12 +65,12 @@
   "order": 7,
   "priority": "low",
   "refs": [],
-  "status": "doing",
+  "status": "review",
   "tags": [
     "arte",
     "mazmorra"
   ],
   "test": "temple_kit.tres arma el templo con las piezas nuevas y el corte de la pared sur sigue andando.",
   "title": "Kit del templo propio",
-  "updated_at": "2026-10-11T08:25:33.706Z"
+  "updated_at": "2026-10-11T08:25:42.327Z"
 }

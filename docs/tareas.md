@@ -3508,9 +3508,11 @@ Modelar el equipo y los objetos del inventario (espada, escudos, cota reforzada,
 Armar el kit propio del templo (piso, paredes, puertas por tipo, piezas de puzzle, torreta, antorchas, decoración, doom y sala del jefe) para que `temple_kit.tres` deje de usar piezas KayKit, sin romper el corte de la pared sur.
 
 - [x] Piso + variantes (roto, yuyos, grieta del doom)
-- [ ] Pared a celda 2×2: recta, esquina, final, con antorcha
+- [x] Pared a celda 2×2: recta, esquina, final, con antorcha
+  Hecho: la pared es un cubo de piedra encastrada con banda arriba, así que recta, esquina y final salen de la misma pieza; la antorcha es wall_torch.tscn. vary_temple.gd reparte pared_nicho y pared_ojo en las paredes que miran a la cámara, lejos de lo que ya cuelga.
 - [x] Columna y escalón
-- [ ] Abismo interior con borde
+- [x] Abismo interior con borde
+  Hecho: hueco y hueco_borde/esquina/pasillo/punta/pozo en build_templo.py (hiladas de piedra del templo de 3 m que se oscurecen, borde claro). tools/vary_temple.gd elige pieza y giro por vecinos (tools/grid_pieces.gd, compartido con vary_overworld); test_pit_walls_face_the_ground.
 - [x] Pasos de puerta + puertas por tipo
   Normal, con cerradura, persiana, de interruptor y del jefe (grande, con el ojo). door.tscn.
 - [x] Piezas de puzzle versión templo
