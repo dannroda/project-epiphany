@@ -26,7 +26,7 @@ const BASE := {
 	9: ["terreno_overworld/abismo"],
 	10: ["terreno_overworld/abismo"],
 }
-## Variantes: nombre → [id base de donde copia colisión y navmesh, piezas]. Las "borde" son paredes sin agujero, para
+## Variantes: nombre → [id base de donde copia colisión y navmesh, piezas ("pieza@y" la sube y metros)]. Las "borde" son paredes sin agujero, para
 ## el borde del mundo (OverworldMap las pone donde del lado de la cámara no hay nada).
 const VARIANTS := {
 	"Pasto flores": [5, ["terreno_overworld/pasto_flores"]],
@@ -59,6 +59,13 @@ const VARIANTS := {
 	"Abismo punta": [9, ["terreno_overworld/abismo_punta"]],
 	"Abismo pozo": [9, ["terreno_overworld/abismo_pozo"]],
 	"Pirca poste": [7, ["terreno_overworld/pirca_poste"]],
+	"Monte": [10, ["terreno_overworld/monte"]],
+	"Monte ichu": [10, ["terreno_overworld/monte_ichu"]],
+	"Monte piedras": [10, ["terreno_overworld/monte_piedras"]],
+	"Monte flores": [10, ["terreno_overworld/monte_flores"]],
+	"Monte queñoa": [10, ["terreno_overworld/monte", "naturaleza/quenoa_grande@2.6"]],
+	"Monte queñoa chica": [10, ["terreno_overworld/monte_ichu", "naturaleza/quenoa_chica@2.6"]],
+	"Monte cardón": [10, ["terreno_overworld/monte", "naturaleza/cardon_a@2.6"]],
 }
 
 var _scenes := {}
@@ -105,8 +112,9 @@ func _merge(pieces: Array, wall := false) -> ArrayMesh:
 	var tool := SurfaceTool.new()
 	tool.begin(Mesh.PRIMITIVE_TRIANGLES)
 	for path: String in pieces + ([WALL_FLOOR] if wall else []):
-		var mesh := _piece(path)
+		var mesh := _piece(path.get_slice("@", 0))
+		var lift := Transform3D(Basis.IDENTITY, Vector3.UP * float(path.get_slice("@", 1))) if "@" in path else Transform3D.IDENTITY
 		for surface in mesh.get_surface_count():
-			tool.append_from(mesh, surface, Transform3D.IDENTITY)
+			tool.append_from(mesh, surface, lift)
 	tool.set_material(WALL_MATERIAL if wall else MATERIAL)
 	return tool.commit()

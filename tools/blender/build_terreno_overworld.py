@@ -304,6 +304,42 @@ piece("pirca_final", 18, pirca_final)
 piece("pirca_rota", 19, pirca_rota)
 piece("pirca_poste", 21, pirca_poste)
 
+# --- borde del mundo: meseta a la altura de los topes, afuera de la grilla jugable (sin colisión) ---
+
+def monte(decorate=None):
+	def build(p):
+		p.paint(p.box(-1, 1, -1, 1, -0.5, TOP - CAP), "acantilado", z_range=(-0.5, TOP - CAP), vary=0.1)
+		epi.grass_cap(p, TOP - CAP, TOP)
+		if decorate:
+			q = epi.Piece(p.rng.randint(0, 999))
+			decorate(q)
+			q.transform(list(q.bm.faces), Matrix.Translation((0, 0, TOP)))
+			p.merge(q)
+	return build
+
+
+def monte_ichu(q):
+	ichu(q, -0.4, 0.3, 0.55)
+	ichu(q, 0.45, -0.35, 0.45, blades=7)
+	ichu(q, 0.3, 0.55, 0.35, blades=6)
+
+
+def monte_piedras(q):
+	for x, y in ((-0.45, 0.4), (0.5, 0.3), (0.0, -0.45)):
+		small_rock(q, x, y, q.rng.uniform(0.18, 0.3))
+
+
+def monte_flores(q):
+	for x, y in ((-0.5, 0.45), (0.45, 0.2), (-0.15, -0.5)):
+		flower(q, x, y, q.rng.choice(["flor_amarilla", "flor_rosa", "blanco"]))
+
+
+piece("monte", 50, monte())
+piece("monte_ichu", 51, monte(monte_ichu))
+piece("monte_piedras", 52, monte(monte_piedras))
+piece("monte_flores", 53, monte(monte_flores))
+
+
 # --- abismo (lados: 0 = -X, 1 = -Y, 2 = +X, 3 = +Y; las variantes giran en vary_overworld.gd) ---
 
 DEPTH = -3.0
@@ -344,6 +380,6 @@ piece("abismo_pasillo", 43, abismo((0, 2)))
 piece("abismo_punta", 44, abismo((0, 1, 2)))
 piece("abismo_pozo", 45, abismo((0, 1, 2, 3)))
 
-ORDER = ["pasto", "tierra", "lajas", "anden", "pirca", "abismo"]
+ORDER = ["pasto", "tierra", "lajas", "anden", "pirca", "abismo", "monte"]
 epi.layout(kit, columns=6, row_of=lambda n: next((i for i, k in enumerate(ORDER) if n.startswith(k)), 3 if n in ("risco", "escalon", "escalinata") else 9))
 epi.save("terreno_overworld")
