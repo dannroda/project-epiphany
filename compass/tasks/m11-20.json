@@ -29,6 +29,16 @@
       "detail": "Como la variante Wind Waker de la demo: un .gdshaderinc con el patrón (wind_waker_pattern) lo incluyen el agua (spatial) y las cáusticas (texture_blit), así la espuma de la superficie y la luz del fondo se mueven juntas. Pasar el patrón a coordenadas de mundo (la demo usa el UV del mesh, con mesh_center/mesh_size). El agua es transparente y no recibe las cáusticas (o con cast_shadow apagado como en la demo); el fondo y las paredes cercanas sí. Un nodo WaterPool arma superficie + projector y expone tamaño y profundidad. Decal animado solo si el spot resulta caro.",
       "done": false,
       "text": "Agua y cáusticas del mismo patrón"
+    },
+    {
+      "detail": "Agua bendita: cura más que la poción (o cura y quita doom un rato). Viene de la ex 11.23.",
+      "done": false,
+      "text": "Interactuar con el agua llena la botella"
+    },
+    {
+      "detail": "Se puede volver a llenar; da razón para volver a la cueva.",
+      "done": false,
+      "text": "Recargable"
     }
   ],
   "code": "11.20",
@@ -36,7 +46,7 @@
   "milestone": "m11",
   "notes": "Skills: `disciplines:level-design`, `godot:godot-shaders`, `godot:godot-3d-essentials`. PR: https://github.com/godotengine/godot/pull/115653. Prototipo propio: /home/drod/Proyectos/Godot/caustics_demo (5 aguas comparadas, cada una con sus cáusticas; tecla 5 = Wind Waker).",
   "order": 20,
-  "priority": "low",
+  "priority": "medium",
   "refs": [
     {
       "doc": "gdd.md",
@@ -50,9 +60,10 @@
   "status": "todo",
   "tags": [
     "arte",
-    "overworld"
+    "overworld",
+    "items"
   ],
-  "test": "Entrar a la cueva desde el overworld: a través del agua se ve el fondo con cáusticas que se mueven al mismo ritmo que el brillo de la superficie, hay espuma en la orilla, sin costuras, cortes ni parpadeos; el estilo combina con el resto (paleta, facetado); el rendimiento no cae respecto del overworld.",
+  "test": "Entrar a la cueva desde el overworld: a través del agua se ve el fondo con cáusticas que se mueven al mismo ritmo que el brillo de la superficie, hay espuma en la orilla, sin costuras, cortes ni parpadeos; el estilo combina con el resto (paleta, facetado); el rendimiento no cae respecto del overworld. Con la botella vacía, interactuar con la vertiente: se llena; usarla cura según lo definido.",
   "title": "Cueva con ojo de agua y cáusticas animadas",
-  "updated_at": "2026-10-10T17:02:09.234Z"
+  "updated_at": "2026-10-11T05:37:33.287Z"
 }

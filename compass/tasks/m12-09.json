@@ -10,10 +10,6 @@
     },
     {
       "done": false,
-      "text": "Pedazos de vasija y escombros"
-    },
-    {
-      "done": false,
       "text": "Explosión"
     },
     {
@@ -23,6 +19,12 @@
   ],
   "code": "12.9",
   "created_at": "2026-10-09T21:05:46.096Z",
+  "links": [
+    {
+      "task": "m11-49",
+      "type": "related"
+    }
+  ],
   "milestone": "m12",
   "notes": "",
   "order": 9,
@@ -34,5 +36,5 @@
   ],
   "test": "",
   "title": "Efectos con malla",
-  "updated_at": "2026-10-09T21:05:47.623Z"
+  "updated_at": "2026-10-11T05:37:36.079Z"
 }

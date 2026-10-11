@@ -14,24 +14,30 @@
       "text": "Esqueleto con escudo"
     },
     {
-      "detail": "El rig de la otra jam no está en el repo. Ver [[gdd#jefe]].",
-      "done": false,
-      "text": "Jefe: ojo + dos manos con rig propio"
+      "detail": "Hecho en 11.47: ojo + una malla por mano con shape keys de curvado (sin rig de huesos).",
+      "done": true,
+      "text": "Jefe: ojo + dos manos animadas"
     }
   ],
   "code": "12.8",
   "created_at": "2026-10-09T21:05:44.538Z",
+  "links": [
+    {
+      "task": "m11-47",
+      "type": "related"
+    }
+  ],
   "milestone": "m12",
   "notes": "",
   "order": 8,
   "priority": "low",
   "refs": [],
-  "status": "doing",
+  "status": "done",
   "tags": [
     "arte",
     "personajes"
   ],
   "test": "Los modelos nuevos usan las animaciones de player/animation/libs/ sin retarget.",
   "title": "Personajes propios",
-  "updated_at": "2026-10-09T22:28:45.563Z"
+  "updated_at": "2026-10-11T05:37:47.826Z"
 }

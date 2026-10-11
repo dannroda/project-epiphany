@@ -7,7 +7,7 @@
     },
     {
       "detail": "Arena con oleadas, overworld con pasto, jefe. Profiler y monitores `epiphany/*`.",
-      "done": false,
+      "done": true,
       "text": "Perfilar las peores escenas"
     },
     {
@@ -25,5 +25,5 @@
   "status": "review",
   "test": "Las tres escenas se mantienen en el presupuesto en build release.",
   "title": "Pasada de rendimiento",
-  "updated_at": "2026-10-09T04:50:21.859Z"
+  "updated_at": "2026-10-11T05:37:40.688Z"
 }

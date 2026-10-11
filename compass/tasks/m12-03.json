@@ -2,12 +2,12 @@
   "checklist": [
     {
       "detail": "Piedra tallada, fogata o similar.",
-      "done": false,
+      "done": true,
       "text": "Hito del claro del inicio"
     },
     {
       "detail": "Para la cueva de las bombas y la gruta oculta.",
-      "done": false,
+      "done": true,
       "text": "Kit de cueva: boca, piso y pared de roca, estalagmitas"
     },
     {
@@ -16,7 +16,7 @@
       "text": "Muro agrietado de exterior + escombros"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Kit de santuario: piso, paredes, columnas, pedestal"
     },
     {
@@ -31,7 +31,7 @@
     },
     {
       "detail": "La pieza más importante del overworld.",
-      "done": false,
+      "done": true,
       "text": "Entrada del templo: fachada, escalinata, columnas"
     },
     {
@@ -52,6 +52,12 @@
   ],
   "code": "12.3",
   "created_at": "2026-10-09T21:05:30.742Z",
+  "links": [
+    {
+      "task": "m11-04",
+      "type": "related"
+    }
+  ],
   "milestone": "m12",
   "notes": "",
   "order": 3,
@@ -69,5 +75,5 @@
   ],
   "test": "Cada zona de [[gdd#overworld-layout]] tiene sus piezas propias y se reconoce sin el nombre de zona.",
   "title": "Lugares del overworld",
-  "updated_at": "2026-10-09T22:28:44.623Z"
+  "updated_at": "2026-10-11T05:37:37.438Z"
 }

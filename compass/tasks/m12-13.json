@@ -3,7 +3,7 @@
     {
       "detail": "Herramienta: tools/toon_preview.gd (capturas base/toon en el jugador y cada Spawn* del overworld y el templo). Primera recorrida 2026-10-10: con el shader el mundo ya lee toon (follaje en dos tonos, sombras de color más suaves). Falta: pasar epiphany.tres al toon e incluir toon.gdshaderinc en cutaway y epiphany_wall (avisar a la otra sesión: cambia el look de todo), afinar energías por nivel y la lista de qué remodelar.",
       "done": false,
-      "text": "Shader cel en el material de paleta y recorrida del mundo actual"
+      "text": "Aplicar el shader cel de 12.12 a todo el material de paleta y recorrer el mundo"
     },
     {
       "detail": "Las tiras ya tienen tono claro y oscuro: llevar el oscuro a sombras saturadas y frías tipo WW, no grises.",
@@ -26,7 +26,7 @@
       "text": "Templo y restos de KayKit"
     },
     {
-      "detail": "Con la técnica de estilo_toon.py, después de validar el shinobi (12.8).",
+      "detail": "Acá va el restyle de personajes (12.8 queda cerrada con los modelos actuales); depende de lo que se decida en 12.12.",
       "done": false,
       "text": "Personajes: jugador, chullpas y jefe"
     },
@@ -38,16 +38,29 @@
     {
       "detail": "Humo en espirales, líneas de viento, explosiones cartoon, golpes (con 12.9 y 11.49).",
       "done": false,
-      "text": "Efectos estilo WW"
-    },
-    {
-      "detail": "El shader de agua estilo Wind Waker y las cáusticas de la cueva (11.20) ya son toon: casi no cambian. A cuidar: las cáusticas llegan como luz del SpotLight (light_projector), así que el light() del shader cel no debe umbralizarlas junto con el resto. Sumarlas aparte o con su propio corte (bandas nítidas).",
-      "done": false,
-      "text": "Agua toon y cáusticas"
+      "text": "Pasar al toon los efectos de 12.9 y 11.49"
     }
   ],
   "code": "12.13",
   "created_at": "2026-10-10T23:51:27.915Z",
+  "links": [
+    {
+      "task": "m11-20",
+      "type": "related"
+    },
+    {
+      "task": "m12-09",
+      "type": "related"
+    },
+    {
+      "task": "m11-49",
+      "type": "related"
+    },
+    {
+      "task": "m12-08",
+      "type": "related"
+    }
+  ],
   "milestone": "m12",
   "notes": "Con el estilo Wind Waker elegido (12.12), todo el juego tiene que convivir con el personaje nuevo. Primero se mide cuánto resuelve el shader: todas las piezas epi comparten el material de paleta (data/kits/materials/epiphany.tres), así que el cel shading se prueba en el mundo entero de una vez. Recién ahí se decide qué hay que remodelar. Lo que siga siendo KayKit va a desentonar más.",
   "order": 13,
@@ -59,5 +72,5 @@
   ],
   "test": "",
   "title": "Reajuste de estilo toon de todos los assets",
-  "updated_at": "2026-10-11T00:09:21.556Z"
+  "updated_at": "2026-10-11T05:37:35.538Z"
 }

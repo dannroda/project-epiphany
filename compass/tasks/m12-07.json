@@ -37,11 +37,11 @@
       "text": "Antorcha de pared y brasero"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Decoración: estandartes, escombros, vasijas, tablilla, ojo tallado"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Doom: grietas, venas rojas, polvo"
     },
     {
@@ -51,6 +51,12 @@
   ],
   "code": "12.7",
   "created_at": "2026-10-09T21:05:40.919Z",
+  "links": [
+    {
+      "task": "m11-03",
+      "type": "related"
+    }
+  ],
   "milestone": "m12",
   "notes": "",
   "order": 7,
@@ -63,5 +69,5 @@
   ],
   "test": "temple_kit.tres arma el templo con las piezas nuevas y el corte de la pared sur sigue andando.",
   "title": "Kit del templo propio",
-  "updated_at": "2026-10-09T22:28:45.327Z"
+  "updated_at": "2026-10-11T05:37:38.268Z"
 }

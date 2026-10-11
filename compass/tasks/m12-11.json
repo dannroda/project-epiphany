@@ -1,8 +1,9 @@
 {
   "checklist": [
     {
+      "detail": "El jefe ya pasó al pipeline en 11.47.",
       "done": false,
-      "text": "Props y equipo (objetos, equipo, naturaleza, lugares, jefe)"
+      "text": "Props y equipo (objetos, equipo, naturaleza, lugares)"
     },
     {
       "done": false,
@@ -19,6 +20,12 @@
   ],
   "code": "12.11",
   "created_at": "2026-10-10T23:24:31.346Z",
+  "links": [
+    {
+      "task": "m11-47",
+      "type": "related"
+    }
+  ],
   "milestone": "m12",
   "notes": "Después de validar 12.10: pasar objetos, equipo, lugares, templo, naturaleza, jefe, terreno y personajes a glb; retirar extract_epiphany_meshes y build_character_models; los kits leen del glb.",
   "order": 11,
@@ -31,5 +38,5 @@
   ],
   "test": "",
   "title": "Migrar los .blend al pipeline glb",
-  "updated_at": "2026-10-10T23:24:45.986Z"
+  "updated_at": "2026-10-11T05:37:40.420Z"
 }
