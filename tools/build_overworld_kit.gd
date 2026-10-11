@@ -10,6 +10,9 @@ const MATERIAL := preload("res://data/kits/materials/epiphany.tres")
 ## Las paredes que pueden tapar al player: se recortan alrededor de él.
 const WALL_MATERIAL := preload("res://data/kits/materials/epiphany_wall.tres")
 const WALL_IDS := [1, 6]
+## Las celdas con alguna de estas piezas usan el material con viento.
+const WIND_MATERIAL := preload("res://data/kits/materials/epiphany_wind.tres")
+const WINDY := ["pasto_flores", "pasto_ichu", "monte_ichu", "monte_flores", "tola", "quenoa_grande", "quenoa_chica"]
 ## Piso que llevan esas paredes adentro: por el agujero se ve suelo y no el vacío.
 const WALL_FLOOR := "terreno_overworld/tierra"
 const HIDDEN_FACES := preload("res://tools/hidden_faces.gd")
@@ -119,5 +122,6 @@ func _merge(pieces: Array, wall := false) -> ArrayMesh:
 		var lift := Transform3D(Basis.IDENTITY, Vector3.UP * float(path.get_slice("@", 1))) if "@" in path else Transform3D.IDENTITY
 		for surface in mesh.get_surface_count():
 			tool.append_from(mesh, surface, lift)
-	tool.set_material(WALL_MATERIAL if wall else MATERIAL)
+	var windy := pieces.any(func(path: String) -> bool: return path.get_slice("@", 0).get_file() in WINDY)
+	tool.set_material(WALL_MATERIAL if wall else WIND_MATERIAL if windy else MATERIAL)
 	return tool.commit()

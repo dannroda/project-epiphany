@@ -53,8 +53,8 @@
       "text": "Bordes de arriba estilizados"
     },
     {
-      "detail": "Vertex shader en el material de paleta: ichu, flores, copas y matas se mecen con ruido de mundo.",
-      "done": false,
+      "detail": "Hecho: material epiphany_wind.tres (vertex shader) en ichu, flores, tola y queñoas; se mece más arriba en el degradé de la franja, onda en el sentido del viento.",
+      "done": true,
       "text": "Viento en la vegetación"
     },
     {
@@ -102,5 +102,5 @@
   ],
   "test": "El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.",
   "title": "Terreno del overworld",
-  "updated_at": "2026-10-11T08:42:53.515Z"
+  "updated_at": "2026-10-11T08:51:21.197Z"
 }
