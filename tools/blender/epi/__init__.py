@@ -62,6 +62,7 @@ class Piece:
 		self.bm = bmesh.new()
 		self.uv = self.bm.loops.layers.uv.verify()
 		self.rng = random.Random(seed)
+		self.fixed = set()
 
 	# --- primitivas ---
 
@@ -214,7 +215,7 @@ class Piece:
 	# --- salida ---
 
 	def build(self, name, kit, location=(0.0, 0.0, 0.0)):
-		bmesh.ops.recalc_face_normals(self.bm, faces=self.bm.faces)
+		bmesh.ops.recalc_face_normals(self.bm, faces=[f for f in self.bm.faces if f not in self.fixed])
 		mesh = bpy.data.meshes.new(name)
 		self.bm.to_mesh(mesh)
 		self.bm.free()
@@ -281,10 +282,35 @@ def stone_wall(p, z0, z1, half=1.0, swatch="acantilado", depth=0.08, sides=None,
 	return stones
 
 
-def grass_cap(p, z0, z1, half=1.0):
+def grass_cap(p, z0, z1, half=1.0, lip=True):
+	"""Tapa de pasto; lip le cambia los costados por un borde inclinado que cuelga en puntas (contra una pared vecina
+	queda adentro de ella; las puntas de los extremos son fijas, así empalman)."""
 	cap = p.box(-half, half, -half, half, z0, z1)
 	p.paint([f for f in cap if f.normal.z > 0.5], "pasto", "MID")
 	p.paint([f for f in cap if f.normal.z <= 0.5], "pasto", "DARK")
+	if lip:
+		bmesh.ops.delete(p.bm, geom=[f for f in cap if abs(f.normal.z) < 0.5], context="FACES_ONLY")
+		for facing in SIDES:
+			grass_lip(p, facing, z1, half, z1 - z0 + 0.03)
+
+
+def grass_lip(p, facing, z1, half, shallow, segments=9, lean=0.25):
+	"""Una sola cara por lado (las puntas de abajo se corren hacia afuera en proporción a cuánto cuelgan, así es plana)."""
+	right = Vector((0, 0, 1)).cross(facing)
+	top = z1 - 0.004
+	points = [(-half, 0.0), (half, 0.0)]
+	for i in range(segments, -1, -1):
+		end = i in (0, segments)
+		drop = shallow + 0.03 if end else (shallow + p.rng.random() * 0.06 if i % 2 else shallow + 0.14 + p.rng.random() * 0.2)
+		points.append((-half + 2 * half * i / segments, drop))
+	verts = [p.bm.verts.new(facing * (half + lean * d) + right * u + Vector((0, 0, top - d))) for u, d in points]
+	face = p.bm.faces.new(verts)
+	face.normal_update()
+	if face.normal.dot(facing) < 0:
+		face.normal_flip()
+	p.fixed.add(face)
+	p.paint([face], "pasto", "DARK", z_range=(top - shallow - 0.4, top))
+	return [face]
 
 
 def eye(p, center, size, depth=0.03, pupil_swatch=None):
