@@ -260,7 +260,7 @@ def risco(top=None):
 		sides = [f for f in rock if -0.15 <= f.normal.z <= 0.35]
 		row = lambda f: int((f.calc_center_median().z + 0.5) / row_height)  # noqa: E731
 		p.paint([f for f in sides if row(f) < 2], "acantilado", "DARK", vary=0.12)
-		p.paint([f for f in sides if row(f) == 3], "roca_naranja", z_range=(row_height * 2.6 - 0.5, row_height * 4.4 - 0.5), vary=0.25)
+		p.paint([f for f in sides if row(f) == 3], "tierra", z_range=(row_height * 2 - 0.5, row_height * 5 - 0.5), vary=0.15)
 		p.paint([f for f in sides if row(f) not in (0, 1, 3)], "acantilado", z_range=(-0.5, z1), vary=0.12)
 		epi.grass_cap(p, z1, TOP)
 		if top:

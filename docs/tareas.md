@@ -3435,14 +3435,14 @@ Modelar en Blender el terreno del overworld (pasto, caminos, piso de plaza, acan
 - [x] Sombras de nubes
   Hecho: cloud_shadows.gdshaderinc (ruido en mundo, deriva) en los materiales de afuera (epiphany_outdoor/wind/wall: kit del overworld, lugares, naturaleza); global cloud_shadows que prende el nodo CloudShadows de overworld.tscn (fuerza, tamaño, deriva exportados). Personajes y templo sin nubes.
 - [x] Cara del risco y topes con detalle
-  Hecho: risco en seis estratos que salen y entran (repisas con musgo, abajo oscuro, una veta naranja); topes risco (piedras), risco_ichu y risco_flores, que vary_overworld.gd reparte por hash. Viento en wind.gdshaderinc, también en las paredes con agujero (epiphany_wall_wind.tres). Los andenes quedan lisos: Acantilado está en 944/950.
+  Hecho: risco en seis estratos que salen y entran (repisas con musgo, abajo oscuro, una veta sutil en tierra); topes risco (piedras), risco_ichu y risco_flores, que vary_overworld.gd reparte por hash. Viento en wind.gdshaderinc, también en las paredes con agujero (epiphany_wall_wind.tres). Los andenes quedan lisos: Acantilado está en 944/950.
 - [x] Camino con detalle
   Hecho: tierra_manchas, tierra_guijarros, tierra_huellas (pisadas de llama) y tierra_pasto (matitas que se mecen); vary_overworld.gd las reparte en la tierra junto con tierra_piedras (54 % de las celdas con algo).
 - [x] Niebla en el abismo
   Hecho: dos capas (abyss_mist.gdshader, ruido que se corre) como segunda superficie de las celdas de abismo del kit; más espesa abajo.
 - [x] Hojas que caen
   Hecho: falling_leaves.tscn (GPUParticles3D, 4 hojas que giran y el viento corre) bajo la copa de cada árbol jugable (Árbol, Queñoa chica); las pone decorate_levels.gd en Decor/Hojas.
-- [ ] Polvo en el aire
+- [x] Polvo en el aire
   Hecho: dust_motes.tscn (GPUParticles3D, 40 motas aditivas que flotan) colgado de TopDownCamera en overworld.tscn, delante de la cámara a la altura del player.
 
 **Prueba:** El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.
