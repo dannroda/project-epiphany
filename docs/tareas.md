@@ -2988,8 +2988,8 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
   Hecha: renders en docs/estilo/. El blockout de piezas epi se descartó (se veía cuadrado/viejo; suavizarlo lo volvía un globo).
 - [x] Shader cel en Godot
   Hecho: src/shaders/toon/toon.gdshaderinc (light() de 2 tonos: corte por ángulo y por sombra proyectada, energías de luz y sombra, rim opcional; luces puntuales/spot suman sin corte para no umbralizar antorchas ni cáusticas) + toon_palette.gdshader y epiphany_toon.tres. La sombra es el color por la relación oscuro/claro de su tira de paleta (sombras de color). Falta incluirlo en cutaway y epiphany_wall y aplicarlo al personaje (12.13 paso 1).
-- [ ] Personaje al pipeline glb
-  Pasar estilo_toon.py a un build_*.py que use paleta (UV a las tiras en vez de materiales sueltos) y epi.publish; pesos automáticos del cuerpo; huesos spring para mechones laterales, cintas y colas de la faja; sockets de sable y pistola (custom property socket).
+- [x] Personaje al pipeline glb
+  Hecho: tools/blender/build_shinobi.py (era estilo_toon.py) pinta con UVs de la paleta, une todo en una malla, pesos automáticos del cuerpo, huesos spring en cintas de los rodetes y colas de la faja, sockets SableSocket/PistolaSocket, y publica assets/epiphany/personaje_shinobi.glb. Escena de prueba: levels/test_shinobi.tscn (←/→ animación, ↑/↓ girar, 4 toon). ~23k tris (ver paso 7). Pendiente: springs en mechones laterales; colgarlo del jugador cuando termine 13.1.
 - [ ] Cara como textura con expresiones
   Pasar las calcomanías a una textura de cara (o atlas) para cambiar expresión y parpadear, como Wind Waker.
 - [ ] Sable de energía y pistola
@@ -3000,7 +3000,7 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 - [ ] Render A/B en el templo
   El personaje toon con el shader en el templo actual, contra el jugador de ahora.
 
-**Notas:** Rumbo elegido 2026-10-10: look tipo Wind Waker HD con cel shading (no low-poly de piezas ni anime realista). Proporciones chibi, así que sirve el Rig_Medium y las animaciones de KayKit. Prueba en tools/blender/estilo_toon.py (renders de referencia en docs/estilo/): cuerpo continuo con Skin modifier + subdivisión y pesos automáticos; pelo en mechones de curvas NURBS afinadas con rulo; cara de calcomanías proyectadas (ojo, iris, pupila, brillo, párpado, cejas, rubor, boca); mangas y pollera con pliegues senoidales; cel shading de 2 tonos con sombra de color. Las tiras de la paleta ya tienen tono claro y oscuro: sirven como lit/shade del shader. El setting andino tampoco es definitivo (cyber-shinobi estilo Megaman Zero: sables de energía y pistolas). Diseño: pelo negro con rulos y rodetes con kunais, ojos rojos, capucha y mangas anchas con ribete emisivo, faja roja tipo obi, delantal crema, pollera, medias con liga roja, botas.
+**Notas:** Rumbo elegido 2026-10-10: look tipo Wind Waker HD con cel shading (no low-poly de piezas ni anime realista). Proporciones chibi, así que sirve el Rig_Medium y las animaciones de KayKit. Prueba en tools/blender/estilo_toon.py, ahora build_shinobi.py (renders de referencia en docs/estilo/): cuerpo continuo con Skin modifier + subdivisión y pesos automáticos; pelo en mechones de curvas NURBS afinadas con rulo; cara de calcomanías proyectadas (ojo, iris, pupila, brillo, párpado, cejas, rubor, boca); mangas y pollera con pliegues senoidales; cel shading de 2 tonos con sombra de color. Las tiras de la paleta ya tienen tono claro y oscuro: sirven como lit/shade del shader. El setting andino tampoco es definitivo (cyber-shinobi estilo Megaman Zero: sables de energía y pistolas). Diseño: pelo negro con rulos y rodetes con kunais, ojos rojos, capucha y mangas anchas con ribete emisivo, faja roja tipo obi, delantal crema, pollera, medias con liga roja, botas.
 
 **Bloquea a:** 12.13 Reajuste de estilo toon de todos los assets
 

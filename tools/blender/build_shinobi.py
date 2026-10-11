@@ -1,6 +1,9 @@
-# Prueba de estilo tipo Wind Waker HD (12.12): cuerpo continuo (skin modifier), pelo en mechones de curvas, cara pintada
-# proyectada y cel shading de dos tonos, posado con Idle_A. Renderiza 5 vistas y guarda estilo.blend en <carpeta>.
-# blender -b -P tools/blender/estilo_toon.py -- <carpeta>
+# Personaje cyber-shinobi en estilo toon tipo Wind Waker (12.12): cuerpo continuo (skin modifier) con pesos automáticos,
+# pelo en mechones de curvas, cara de calcomanías proyectadas, ropa con pliegues. Cada parte se arma con un material
+# etiqueta y al final todo se une en una malla pintada con UVs de la paleta (PALETA) para el shader toon de Godot.
+# Huesos spring para las cintas de los rodetes y las colas de la faja; sockets de sable y pistola en las manos.
+# Publica assets/epiphany/personaje_shinobi.glb (epi.publish).
+# blender -b -P tools/blender/build_shinobi.py
 import math
 import os
 import sys
@@ -9,71 +12,43 @@ import bmesh
 import bpy
 from mathutils import Matrix, Vector
 
-ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-OUT = sys.argv[-1]
-RIG_SRC = os.path.join(ROOT, "assets", "kaykit_charanim", "Animations", "gltf", "Rig_Medium", "Rig_Medium_%s.glb")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import build_personajes as P  # noqa: E402
+import epi  # noqa: E402
 
 C = Vector((0.0, -0.02, 1.66))
 R = Vector((0.36, 0.33, 0.34))
 
 
-def hexc(h, mult=1.0):
-	h = h.lstrip("#")
-	c = [int(h[i:i + 2], 16) / 255 for i in (0, 2, 4)]
-	return [((x * mult) ** 2.2) for x in c] + [1.0]
-
-
-MATS = {}
-
-
-def toon(name, lit, shade, glow=0.0):
-	if name in MATS:
-		return MATS[name]
-	m = bpy.data.materials.new(name)
-	m.use_nodes = True
-	t = m.node_tree
-	t.nodes.clear()
-	out = t.nodes.new("ShaderNodeOutputMaterial")
-	if glow:
-		em = t.nodes.new("ShaderNodeEmission")
-		em.inputs["Color"].default_value = hexc(lit)
-		em.inputs["Strength"].default_value = glow
-		t.links.new(em.outputs[0], out.inputs[0])
-	else:
-		dif = t.nodes.new("ShaderNodeBsdfDiffuse")
-		s2 = t.nodes.new("ShaderNodeShaderToRGB")
-		ramp = t.nodes.new("ShaderNodeValToRGB")
-		ramp.color_ramp.interpolation = "CONSTANT"
-		ramp.color_ramp.elements[0].color = hexc(shade)
-		ramp.color_ramp.elements[1].position = 0.12
-		ramp.color_ramp.elements[1].color = hexc(lit)
-		em = t.nodes.new("ShaderNodeEmission")
-		t.links.new(dif.outputs[0], s2.inputs[0])
-		t.links.new(s2.outputs["Color"], ramp.inputs[0])
-		t.links.new(ramp.outputs[0], em.inputs["Color"])
-		t.links.new(em.outputs[0], out.inputs[0])
-	MATS[name] = m
-	return m
+# etiqueta → (tira de la paleta, posición en su degradé: 0 oscuro, 1 claro)
+PALETA = {
+	"piel": ("piel", 0.85),
+	"pelo": ("ladrillo", 0.0),
+	"tela": ("gris_4", 0.25),
+	"roja": ("tela_roja", 0.6),
+	"crema": ("hueso", 0.85),
+	"bota": ("madera_oscura", 0.35),
+	"blanco": ("blanco", 1.0),
+	"negro": ("noche", 0.0),
+	"iris": ("tela_roja", 0.75),
+	"rubor": ("flor_rosa", 0.9),
+	"hierro": ("hierro", 0.85),
+	"dorado": ("dorado", 0.5),
+	"glow": ("doom", 0.75),
+}
 
 
 def mat(key):
-	table = {
-		"piel": ("f6d2b0", "d89a7c"),
-		"pelo": ("444a66", "1c1e2c"),
-		"tela": ("3c3f52", "1a1b25"),
-		"roja": ("d8483a", "8e2430"),
-		"crema": ("f2ead6", "c4b49e"),
-		"bota": ("5a4038", "2c1e1c"),
-		"blanco": ("ffffff", "e8e8f0"),
-		"negro": ("101018", "101018"),
-		"iris": ("e0403a", "a02028"),
-		"rubor": ("f4a0a0", "e08888"),
-		"hierro": ("a8b0bc", "5a6070"),
-		"dorado": ("f5d67e", "b88a3c"),
-	}
-	if key == "glow":
-		return toon("glow", "ff5a48", "ff5a48", glow=4.0)
-	return toon(key, *table[key])
+	return bpy.data.materials.get(key) or bpy.data.materials.new(key)
+
+
+def palette_uv(swatch, t):
+	pal = epi.palette
+	i = epi.NAMES.index(swatch)
+	col, row = i % pal.COLS, i // pal.COLS
+	lo = (pal.ROWS - 1 - row + pal.MARGIN) / pal.ROWS
+	hi = (pal.ROWS - row - pal.MARGIN) / pal.ROWS
+	return ((col + 0.5) / pal.COLS, lo + (hi - lo) * t)
 
 
 # --- utilidades de malla ---
@@ -125,16 +100,16 @@ def ellipsoid(bm, center, radii, segs=24):
 	return res["verts"]
 
 
-def curve_obj(name, chains, bevel, material, flat=0.0):
+def curve_obj(name, chains, bevel, material, flat=0.0, resolution=3, ring=1):
 	"""chains: [[(punto, radio)]]; tubos NURBS que se afinan según el radio de cada punto."""
 	cu = bpy.data.curves.new(name, "CURVE")
 	cu.dimensions = "3D"
-	cu.resolution_u = 8
+	cu.resolution_u = resolution
 	if flat:
 		cu.extrude = flat
 	else:
 		cu.bevel_depth = bevel
-		cu.bevel_resolution = 3
+		cu.bevel_resolution = ring
 		cu.use_fill_caps = True
 	for chain in chains:
 		sp = cu.splines.new("NURBS")
@@ -162,21 +137,59 @@ def curve_obj(name, chains, bevel, material, flat=0.0):
 
 # --- rig ---
 
-def load_rig():
-	bpy.ops.wm.read_factory_settings(use_empty=True)
-	bpy.ops.import_scene.gltf(filepath=RIG_SRC % "General")
-	rig = next(o for o in bpy.data.objects if o.type == "ARMATURE")
-	for o in list(bpy.data.objects):
-		if o is not rig and o.type != "ARMATURE":
-			bpy.data.objects.remove(o)
-	return rig
-
-
 def rigid(ob, rig, bone):
 	ob.parent = rig
 	ob.matrix_parent_inverse = rig.matrix_world.inverted()
 	g = ob.vertex_groups.new(name=bone)
 	g.add(list(range(len(ob.data.vertices))), 1.0, "REPLACE")
+	ob.modifiers.new("Armature", "ARMATURE").object = rig
+
+
+def cinta_points(s):
+	bc = CH + Vector((s * 0.27, 0.08, 0.31))
+	return [bc + Vector((0, 0.13, -0.12)) + Vector((s * 0.03 * k, 0.04 * k, -0.08 * k)) for k in range(5)]
+
+
+def faja_points(s):
+	return [Vector((s * (0.04 + 0.03 * k), 0.19 + 0.025 * k, 0.7 - 0.09 * k)) for k in range(5)]
+
+
+# cadena: (nombre, hueso padre, puntos según el lado, rigidez)
+CHAINS = [("cinta", "head", cinta_points, 0.5), ("faja", "hips", faja_points, 0.6)]
+
+
+def add_chains(rig):
+	bpy.context.view_layer.objects.active = rig
+	bpy.ops.object.mode_set(mode="EDIT")
+	to_rig = rig.matrix_world.inverted()
+	for name, parent, points, _ in CHAINS:
+		for s, side in ((1, "l"), (-1, "r")):
+			pts = points(s)
+			prev = rig.data.edit_bones[parent]
+			for i, (a, b) in enumerate(((pts[0], pts[2]), (pts[2], pts[4]))):
+				bone = rig.data.edit_bones.new(f"{name}{i + 1}.{side}")
+				bone.head, bone.tail = to_rig @ a, to_rig @ b
+				bone.parent = prev
+				prev = bone
+	bpy.ops.object.mode_set(mode="OBJECT")
+	for name, _, _, stiffness in CHAINS:
+		for side in ("l", "r"):
+			rig.data.bones[f"{name}1.{side}"]["spring"] = stiffness
+
+
+def chain_weights(ob, rig, name, side, points):
+	"""La cola se dobla con los dos huesos de su cadena: peso según cuánto avanzó cada vértice a lo largo de ella."""
+	ob.parent = rig
+	ob.matrix_parent_inverse = rig.matrix_world.inverted()
+	start, end = points[0], points[-1]
+	axis = end - start
+	g1 = ob.vertex_groups.new(name=f"{name}1.{side}")
+	g2 = ob.vertex_groups.new(name=f"{name}2.{side}")
+	for v in ob.data.vertices:
+		t = max(0.0, min(1.0, (v.co - start).dot(axis) / axis.length_squared))
+		w = max(0.0, min(1.0, (t - 0.35) / 0.3))
+		g1.add([v.index], 1.0 - w, "REPLACE")
+		g2.add([v.index], w, "REPLACE")
 	ob.modifiers.new("Armature", "ARMATURE").object = rig
 
 
@@ -348,13 +361,13 @@ def hair():
 	cap = obj_from_bm("pelo_casco", bm, "pelo")
 	d = math.radians
 	chains = []
-	for az in range(40, 330, 22):
+	for az in range(40, 330, 29):
 		chains.append([(p, r) for p, r in lock(d(az), d(35), d(-38 - 10 * math.sin(az)), 1.0)])
-	for az in range(55, 310, 30):
+	for az in range(55, 310, 42):
 		chains.append([(p, r) for p, r in lock(d(az + 11), d(5), d(-55), 0.9, curl=1.2)])
 	for az in (-48, -32, -16, 0, 16, 32, 48):
 		chains.append([(p, r) for p, r in lock(d(az), d(80), d(16 + abs(az) * 0.15), 0.85, curl=0.5, az_drift=d(az * 0.25))])
-	locks = curve_obj("pelo_mechones", chains, 0.07, "pelo")
+	locks = curve_obj("pelo_mechones", chains, 0.08, "pelo", resolution=2)
 	bun_parts = []
 	for s in (1, -1):
 		bc = CH + Vector((s * 0.27, 0.08, 0.31))
@@ -370,15 +383,14 @@ def hair():
 			rr = math.sqrt(max(0.14 ** 2 - h * h, 0.0)) + 0.015
 			a = 7.5 * math.pi * t
 			coil.append((bc + q @ Vector((rr * math.cos(a), rr * math.sin(a), h)), 1.0 - 0.5 * t))
-		bun_parts.append(curve_obj("rodete_espiral", [coil], 0.04, "pelo"))
+		bun_parts.append(curve_obj("rodete_espiral", [coil], 0.04, "pelo", resolution=2))
 		bun_parts += kunai(bc + Vector((-s * 0.12, -0.02, 0.06)), Vector((s * 1.0, 0.25, 0.55)))
 		bun_parts += kunai(bc + Vector((-s * 0.1, 0.04, -0.02)), Vector((s * 1.0, 0.1, 0.25)))
 		for side in (-1, 1):
 			bow = bmesh.new()
 			ellipsoid(bow, bc + Vector((side * 0.06, 0.12, -0.11)), (0.06, 0.025, 0.04), segs=12)
 			bun_parts.append(obj_from_bm("lazo", bow, "roja"))
-		tail = [(bc + Vector((0, 0.13, -0.12)) + Vector((s * 0.03 * k, 0.04 * k, -0.08 * k)), 1.0) for k in range(5)]
-		bun_parts.append(curve_obj("cinta", [tail], 0.0, "roja", flat=0.03))
+		bun_parts.append(curve_obj("cinta." + ("l" if s > 0 else "r"), [[(p, 1.0) for p in cinta_points(s)]], 0.0, "roja", flat=0.03))
 	return [cap, locks] + bun_parts
 
 
@@ -403,7 +415,7 @@ def kunai(base, direction):
 	bmesh.ops.transform(bm, matrix=m, verts=r["verts"])
 	blade = obj_from_bm("kunai_hoja", bm, "hierro", smooth=False)
 	ring = [(m @ Vector((0.025 * math.cos(a), 0.0, -0.02 + 0.025 * math.sin(a))), 1.0) for a in [2 * math.pi * k / 10 for k in range(11)]]
-	return [handle, blade, curve_obj("kunai_aro", [ring], 0.006, "dorado")]
+	return [handle, blade, curve_obj("kunai_aro", [ring], 0.006, "dorado", resolution=1, ring=0)]
 
 
 # --- ropa ---
@@ -425,8 +437,7 @@ def clothes():
 		ellipsoid(bm, (s * 0.1, 0.18, 0.74), (0.08, 0.035, 0.05), segs=16)
 	out["nudo"] = obj_from_bm("nudo", bm, "roja")
 	for s, side in ((1, "l"), (-1, "r")):
-		tail = [(Vector((s * (0.04 + 0.03 * k), 0.19 + 0.025 * k, 0.7 - 0.09 * k)), 1.0) for k in range(5)]
-		out["faja_cola." + side] = curve_obj("faja_cola", [tail], 0.0, "roja", flat=0.05)
+		out["faja_cola." + side] = curve_obj("faja_cola", [[(p, 1.0) for p in faja_points(s)]], 0.0, "roja", flat=0.05)
 	bm = bmesh.new()
 	grid = []
 	for j in range(9):
@@ -442,11 +453,11 @@ def clothes():
 			bm.faces.new((grid[j][i], grid[j][i + 1], grid[j + 1][i + 1], grid[j + 1][i]))
 	out["delantal"] = obj_from_bm("delantal", bm, "crema", solidify=0.012, subsurf=1)
 	bm = bmesh.new()
-	lathe(bm, [(0.2, 1.14, 0.05), (0.24, 1.2, 0.1), (0.22, 1.28, 0.1), (0.16, 1.32, 0.05)], sides=32, folds=7, matrix=Matrix.Translation((0, 0.05, 0)))
+	lathe(bm, [(0.2, 1.14, 0.05), (0.24, 1.2, 0.1), (0.22, 1.28, 0.1), (0.16, 1.32, 0.05)], sides=21, folds=7, matrix=Matrix.Translation((0, 0.05, 0)))
 	out["capucha"] = obj_from_bm("capucha", bm, "tela", solidify=0.03, subsurf=1)
 	for x in (-0.06, 0.06):
 		cord = [(Vector((x, -0.17 + 0.0, 1.2 - 0.06 * k)) + Vector((0, -0.02 * k * 0.3, 0)), 1.0) for k in range(5)]
-		out["cordon%+.2f" % x] = curve_obj("cordon", [cord], 0.008, "crema")
+		out["cordon%+.2f" % x] = curve_obj("cordon", [cord], 0.008, "crema", resolution=2, ring=0)
 		bm = bmesh.new()
 		ellipsoid(bm, (x, -0.18, 0.95), (0.016, 0.016, 0.025), segs=8)
 		out["puntera%+.2f" % x] = obj_from_bm("cordon_punta", bm, "glow")
@@ -492,58 +503,76 @@ def boot(s):
 	return ob
 
 
-# --- escena ---
+# --- armado ---
 
-def setup_render():
-	sc = bpy.context.scene
-	sc.render.engine = "BLENDER_EEVEE"
-	sc.render.resolution_x, sc.render.resolution_y = 640, 800
-	sc.view_settings.view_transform = "Standard"
-	world = bpy.data.worlds.new("w")
-	world.use_nodes = True
-	world.node_tree.nodes["Background"].inputs[0].default_value = (0.42, 0.5, 0.62, 1)
-	world.node_tree.nodes["Background"].inputs[1].default_value = 0.25
-	sc.world = world
-	sun = bpy.data.objects.new("sol", bpy.data.lights.new("sol", "SUN"))
-	sun.data.energy = 3.0
-	sun.rotation_euler = (math.radians(55), 0, math.radians(-30))
-	sc.collection.objects.link(sun)
-	cam = bpy.data.objects.new("cam", bpy.data.cameras.new("cam"))
-	cam.data.lens = 85
-	sc.collection.objects.link(cam)
-	sc.camera = cam
-	return cam
+def to_palette(ob):
+	"""Cada cara toma el color de su material etiqueta como un punto de la paleta; después queda un solo material."""
+	mesh = ob.data
+	for uv in list(mesh.uv_layers):
+		mesh.uv_layers.remove(uv)
+	layer = mesh.uv_layers.new(name="paleta")
+	names = [m.name for m in mesh.materials]
+	for p in mesh.polygons:
+		uv = palette_uv(*PALETA[names[p.material_index].split(".")[0]])
+		for li in p.loop_indices:
+			layer.data[li].uv = uv
+		p.material_index = 0
+	mesh.materials.clear()
+	mesh.materials.append(epi.palette.palette_material())
 
 
-def shoot(cam, name, az, target, dist):
-	a = math.radians(az)
-	cam.location = target + Vector((math.sin(a) * dist, -math.cos(a) * dist, dist * 0.18))
-	cam.rotation_euler = (target - cam.location).to_track_quat("-Z", "Y").to_euler()
-	bpy.context.scene.render.filepath = os.path.join(OUT, name + ".png")
-	bpy.ops.render.render(write_still=True)
+def socket(rig, name, bone, kind):
+	e = bpy.data.objects.new(name, None)
+	bpy.context.scene.collection.objects.link(e)
+	e["socket"] = kind
+	e.parent, e.parent_type, e.parent_bone = rig, "BONE", bone
+	bpy.context.view_layer.update()
+	e.matrix_world = Matrix.Translation(rig.matrix_world @ rig.data.bones[bone].tail_local)
+	return e
 
 
-rig = load_rig()
-rig.animation_data_create()
+rig = P.start()
+add_chains(rig)
 cuerpo = body()
 bpy.ops.object.select_all(action="DESELECT")
 cuerpo.select_set(True)
 rig.select_set(True)
 bpy.context.view_layer.objects.active = rig
 bpy.ops.object.parent_set(type="ARMATURE_AUTO")
+parts = [cuerpo]
 for ob in [head()] + face() + hair():
-	rigid(ob, rig, "head")
+	if ob.name.startswith("cinta."):
+		side = ob.name.split(".")[1]
+		chain_weights(ob, rig, "cinta", side, cinta_points(1 if side == "l" else -1))
+	else:
+		rigid(ob, rig, "head")
+	parts.append(ob)
 bones = {"pollera": "hips", "ruedo": "hips", "faja": "hips", "nudo": "hips", "delantal": "chest", "capucha": "chest"}
 for key, ob in clothes().items():
 	base = key.split(".")[0]
 	side = key.split(".")[1] if "." in key else ""
-	bone = bones.get(base) or {"manga": "lowerarm", "manga_borde": "lowerarm", "manga_sup": "upperarm", "liga": "upperleg", "bota": "foot", "faja_cola": "hips"}.get(base, "chest")
-	rigid(ob, rig, bone + ("." + side if side and bone not in ("hips", "chest") else ""))
-idle = bpy.data.actions["Idle_A"]
-rig.animation_data.action = idle
-rig.animation_data.action_slot = idle.slots[0]
-bpy.context.scene.frame_set(int(idle.frame_range[0]) + 10)
-cam = setup_render()
-for name, az, tz, dist in (("frente", 0, 1.05, 7.0), ("tres_cuartos", 35, 1.05, 7.0), ("perfil", 90, 1.05, 7.0), ("espalda", 180, 1.05, 7.0), ("cara", 20, 1.62, 4.0)):
-	shoot(cam, name, az, Vector((0, 0, tz)), dist)
-bpy.ops.wm.save_as_mainfile(filepath=os.path.join(OUT, "estilo.blend"))
+	if base == "faja_cola":
+		chain_weights(ob, rig, "faja", side, faja_points(1 if side == "l" else -1))
+	else:
+		bone = bones.get(base) or {"manga": "lowerarm", "manga_borde": "lowerarm", "manga_sup": "upperarm", "liga": "upperleg", "bota": "foot"}.get(base, "chest")
+		rigid(ob, rig, bone + ("." + side if side and bone not in ("hips", "chest") else ""))
+	parts.append(ob)
+tris = {}
+for ob in parts:
+	ob.data.calc_loop_triangles()
+	key = ob.name.split(".")[0]
+	tris[key] = tris.get(key, 0) + len(ob.data.loop_triangles)
+print("tris por parte:", sorted(tris.items(), key=lambda kv: -kv[1])[:10])
+bpy.ops.object.select_all(action="DESELECT")
+for ob in parts:
+	ob.select_set(True)
+bpy.context.view_layer.objects.active = cuerpo
+bpy.ops.object.join()
+cuerpo.name = cuerpo.data.name = "shinobi"
+for mod in list(cuerpo.modifiers)[1:]:
+	cuerpo.modifiers.remove(mod)
+to_palette(cuerpo)
+cuerpo.data.calc_loop_triangles()
+print("shinobi:", len(cuerpo.data.vertices), "vértices,", len(cuerpo.data.loop_triangles), "triángulos")
+sockets = [socket(rig, "SableSocket", "hand.r", "sable"), socket(rig, "PistolaSocket", "hand.l", "pistola")]
+epi.publish("personaje_shinobi", [rig, cuerpo] + sockets)

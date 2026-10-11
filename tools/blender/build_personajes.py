@@ -340,6 +340,7 @@ def chullpa(name, guardian):
 	save(name)
 
 
-jugador()
-chullpa("chullpa", False)
-chullpa("chullpa_guardian", True)
+if __name__ == "__main__":
+	jugador()
+	chullpa("chullpa", False)
+	chullpa("chullpa_guardian", True)

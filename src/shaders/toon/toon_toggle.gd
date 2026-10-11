@@ -23,7 +23,13 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not (InputMap.has_action(ACTION) and event.is_action_pressed(ACTION)):
 		return
 	get_viewport().set_input_as_handled()
-	_on = not _on
+	set_enabled(not _on)
+
+
+func set_enabled(on: bool) -> void:
+	if on == _on or not OS.is_debug_build():
+		return
+	_on = on
 	if _on:
 		_apply_node(get_tree().root)
 		for node in get_tree().root.find_children("*", "", true, false):
