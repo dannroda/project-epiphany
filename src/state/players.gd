@@ -19,7 +19,7 @@ var all: Array[PlayerCharacter] = []
 var guests: Dictionary[int, int] = {}
 ## El control que venía usando el primero antes de que entre alguien (-1: solo teclado hasta ahora).
 var lead_pad := -1
-var _start_held: Dictionary[int, int] = {}
+var _start_held: Dictionary[int, float] = {}
 
 
 func _ready() -> void:
@@ -119,7 +119,7 @@ func _input(event: InputEvent) -> void:
 	if slot > 0:
 		get_viewport().set_input_as_handled()
 		if event.pressed:
-			_start_held[event.device] = Time.get_ticks_msec()
+			_start_held[event.device] = 0.0
 		elif _start_held.has(event.device):
 			_start_held.erase(event.device)
 			_tap_pause()
@@ -128,9 +128,10 @@ func _input(event: InputEvent) -> void:
 		join(event.device)
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	for pad in _start_held.keys():
-		if Time.get_ticks_msec() - _start_held[pad] >= LEAVE_HOLD * 1000.0:
+		_start_held[pad] += delta
+		if _start_held[pad] >= LEAVE_HOLD:
 			_start_held.erase(pad)
 			leave(slot_of_pad(pad))
 

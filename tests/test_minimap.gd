@@ -1,14 +1,12 @@
 extends "res://tests/test_case.gd"
 
-const TEST_SETTINGS := "user://test_settings.cfg"
-
 
 func _load(scenario := "", level := "") -> Array:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state: Node = tree.root.get_node(^"GameState")
 	var settings: Node = tree.root.get_node(^"Settings")
-	settings.path = TEST_SETTINGS
-	DirAccess.remove_absolute(ProjectSettings.globalize_path(TEST_SETTINGS))
+	settings.path = settings_path
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(settings_path))
 	settings.load_settings()
 	settings.set_value(&"language", "es")
 	state.reset()
@@ -45,7 +43,7 @@ func test_dungeon_shows_the_rooms_around_and_hides_with_menus_or_option() -> voi
 	settings.set_value(&"minimap", false)
 	await tree.process_frame
 	assert_true(not minimap.visible, "se apaga desde Opciones")
-	DirAccess.remove_absolute(ProjectSettings.globalize_path(TEST_SETTINGS))
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(settings_path))
 	settings.load_settings()
 	settings.set_value(&"language", "es")
 	state.reset()

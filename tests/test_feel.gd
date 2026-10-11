@@ -8,10 +8,10 @@ func test_hit_stop_freezes_and_restores() -> void:
 	var node := Node.new()
 	tree.root.add_child(node)
 	var feel: Node = tree.root.get_node(^"Feel")
-	feel.hit_stop([node, null], 0.05)
+	feel.hit_stop([node, null], 0.5)
 	await tree.process_frame
 	assert_eq(node.process_mode, Node.PROCESS_MODE_DISABLED, "congelado")
-	await tree.create_timer(0.12).timeout
+	await tree.create_timer(0.7, true, false, true).timeout
 	assert_eq(node.process_mode, Node.PROCESS_MODE_INHERIT, "restaurado")
 	assert_eq(node.has_meta(&"hit_stop"), false)
 	node.free()

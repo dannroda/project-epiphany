@@ -23,7 +23,7 @@ var desired_velocity := Vector3.ZERO
 var flash: HitFlash
 var _knockback := Vector3.ZERO
 var _facing_goal := Vector3.ZERO
-var _guard_down_until := 0
+var _guard_down_left := 0.0
 var _guard_pose: PoseOverlay
 var _armor: Node3D
 
@@ -73,6 +73,7 @@ func _swap_model(scene: PackedScene) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	_guard_down_left = maxf(_guard_down_left - delta, 0.0)
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	_knockback.x = move_toward(_knockback.x, 0.0, KNOCKBACK_FRICTION * delta)
@@ -132,7 +133,7 @@ func _turn(delta: float) -> void:
 
 
 func is_guarding() -> bool:
-	return config.guards_front and not is_dead and Time.get_ticks_msec() >= _guard_down_until
+	return config.guards_front and not is_dead and _guard_down_left <= 0.0
 
 
 ## El escudo frena solo cuando se ve levantado (mientras ataca lo baja).
@@ -153,7 +154,7 @@ func _guard_stops(info: DamageInfo) -> bool:
 	if to_source.is_zero_approx() or rad_to_deg(facing().angle_to(to_source)) > config.guard_angle_deg:
 		return false
 	if info.stun_time > 0.0:
-		_guard_down_until = Time.get_ticks_msec() + int(config.guard_break_time * 1000.0)
+		_guard_down_left = config.guard_break_time
 		Log.debug(&"combat", name, "bajó la guardia")
 		Feel.sfx(&"deny", global_position)
 	else:

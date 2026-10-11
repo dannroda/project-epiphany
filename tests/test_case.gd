@@ -5,6 +5,11 @@ var current_test := ""
 ## Cuántas verificaciones hizo el test actual: si termina en 0, se cortó por un error.
 var assertions := 0
 
+## Partidas, opciones y temporales de este proceso: run_tests.gd les da otro nombre a cada proceso en paralelo.
+static var saves_dir := "user://test_saves/"
+static var settings_path := "user://test_settings.cfg"
+static var tmp_dir := "user://tests_tmp"
+
 
 func assert_eq(actual: Variant, expected: Variant, message := "") -> void:
 	assertions += 1

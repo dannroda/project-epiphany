@@ -436,6 +436,8 @@ debug/scenarios/*.cfg       partidas preparadas (excluidas del export release)
 
 **Autoloads:** `Items` (acceso al `ItemDatabase`), `GameState` (estado runtime: inventario, equipo, flags, mazmorras), `SaveManager` (GameState ↔ disco).
 
+**Tests** (10.23): `godot --headless --path . --script res://tests/run_tests.gd` reparte los `test_*.gd` en varios procesos headless (los núcleos, hasta 4), parejos según lo que tardó cada archivo la última vez (`user://test_times.cfg`); solo muestra las líneas `ok`/`FALLA` y deja todo lo que imprime cada proceso en `user://test_logs/worker_<n>.log`. Cada proceso usa sus propias partidas, opciones y temporales (`test_saves_<n>/`, `test_settings_<n>.cfg`, `tests_tmp_<n>`; los tests los leen de `test_case.gd`, nunca con la ruta fija). `-- --jobs=1` corre todo en serie en un solo proceso; `-- --only=test_a.gd,test_b.gd` corre solo esos archivos. Los procesos corren con `--fixed-fps 60`: el tiempo de juego no depende de la carga de la máquina, así que los tests no se vuelven inestables con varios procesos y avanzan tan rápido como da la CPU. Suite completa (276 tests): ~16 s con 4 procesos y ~55 s con `--jobs=1`; antes, en serie a tiempo real, ~8,5 min. Por eso el juego no mide tiempos con el reloj (`Time.get_ticks_msec`) sino con el `delta` de los frames, que además respeta la pausa y el hit-stop.
+
 ### 11.2 Ítems: datos + comportamiento enchufable
 <!-- id: items-datos -->
 

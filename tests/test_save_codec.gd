@@ -1,13 +1,13 @@
 extends "res://tests/test_case.gd"
 
-const DIR := "user://tests_tmp"
-const PATH := DIR + "/slot.cfg"
+var _dir: String = tmp_dir
+var _path: String = _dir + "/slot.cfg"
 
 
 func _clean() -> void:
 	for suffix in ["", ".bak", ".tmp"]:
-		if FileAccess.file_exists(PATH + suffix):
-			DirAccess.remove_absolute(PATH + suffix)
+		if FileAccess.file_exists(_path + suffix):
+			DirAccess.remove_absolute(_path + suffix)
 
 
 func _cfg(bombs: int) -> ConfigFile:
@@ -19,27 +19,27 @@ func _cfg(bombs: int) -> ConfigFile:
 
 func _read() -> ConfigFile:
 	var cfg := ConfigFile.new()
-	assert_eq(SaveCodec.read(PATH, cfg), OK)
+	assert_eq(SaveCodec.read(_path, cfg), OK)
 	return cfg
 
 
 func test_round_trip() -> void:
 	_clean()
-	assert_eq(SaveCodec.write(_cfg(3), PATH), OK)
+	assert_eq(SaveCodec.write(_cfg(3), _path), OK)
 	var cfg := _read()
 	assert_eq(cfg.get_value("inventory", "bomb"), 3)
 	assert_eq(cfg.get_value("meta", "version"), SaveCodec.VERSION)
 	assert_eq(SaveCodec.is_tampered(cfg), false)
-	assert_eq(FileAccess.file_exists(PATH + ".tmp"), false)
+	assert_eq(FileAccess.file_exists(_path + ".tmp"), false)
 	_clean()
 
 
 func test_second_write_keeps_backup() -> void:
 	_clean()
-	SaveCodec.write(_cfg(3), PATH)
-	SaveCodec.write(_cfg(5), PATH)
+	SaveCodec.write(_cfg(3), _path)
+	SaveCodec.write(_cfg(5), _path)
 	var backup := ConfigFile.new()
-	assert_eq(backup.load(PATH + ".bak"), OK)
+	assert_eq(backup.load(_path + ".bak"), OK)
 	assert_eq(backup.get_value("inventory", "bomb"), 3)
 	assert_eq(_read().get_value("inventory", "bomb"), 5)
 	_clean()
@@ -47,9 +47,9 @@ func test_second_write_keeps_backup() -> void:
 
 func test_broken_save_falls_back_to_backup() -> void:
 	_clean()
-	SaveCodec.write(_cfg(3), PATH)
-	SaveCodec.write(_cfg(5), PATH)
-	var file := FileAccess.open(PATH, FileAccess.WRITE)
+	SaveCodec.write(_cfg(3), _path)
+	SaveCodec.write(_cfg(5), _path)
+	var file := FileAccess.open(_path, FileAccess.WRITE)
 	file.store_string("[inventory\nbomb=")
 	file.close()
 	assert_eq(_read().get_value("inventory", "bomb"), 3)
@@ -58,9 +58,9 @@ func test_broken_save_falls_back_to_backup() -> void:
 
 func test_hand_edit_is_detected() -> void:
 	_clean()
-	SaveCodec.write(_cfg(3), PATH)
-	var text := FileAccess.get_file_as_string(PATH).replace("bomb=3", "bomb=9")
-	var file := FileAccess.open(PATH, FileAccess.WRITE)
+	SaveCodec.write(_cfg(3), _path)
+	var text := FileAccess.get_file_as_string(_path).replace("bomb=3", "bomb=9")
+	var file := FileAccess.open(_path, FileAccess.WRITE)
 	file.store_string(text)
 	file.close()
 	var cfg := _read()
@@ -71,9 +71,9 @@ func test_hand_edit_is_detected() -> void:
 
 func test_reads_encrypted_saves() -> void:
 	_clean()
-	DirAccess.make_dir_recursive_absolute(DIR)
+	DirAccess.make_dir_recursive_absolute(_dir)
 	var cfg := _cfg(3)
-	assert_eq(cfg.save_encrypted_pass(PATH, SaveCodec._PASS), OK)
+	assert_eq(cfg.save_encrypted_pass(_path, SaveCodec._PASS), OK)
 	assert_eq(_read().get_value("inventory", "bomb"), 3)
 	_clean()
 

@@ -43,7 +43,7 @@ func test_loading_from_the_title_fades_back_in() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var saves: Node = tree.root.get_node(^"SaveManager")
 	var fader: Node = tree.root.get_node(^"Fader")
-	saves.save_dir = "user://test_saves/"
+	saves.save_dir = saves_dir
 	await saves.new_game(1)
 	tree.change_scene_to_file(TITLE)
 	await tree.scene_changed

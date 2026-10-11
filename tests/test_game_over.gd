@@ -1,7 +1,5 @@
 extends "res://tests/test_case.gd"
 
-const TEST_DIR := "user://test_saves/"
-
 
 func _die(tree: SceneTree) -> GameOver:
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
@@ -49,7 +47,7 @@ func test_save_and_quit_keeps_the_checkpoint() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var saves: Node = tree.root.get_node(^"SaveManager")
 	var state: Node = tree.root.get_node(^"GameState")
-	saves.save_dir = TEST_DIR
+	saves.save_dir = saves_dir
 	saves.delete_slot(1)
 	state.reset()
 	await saves.new_game(1)
@@ -66,5 +64,5 @@ func test_save_and_quit_keeps_the_checkpoint() -> void:
 	assert_true(player.global_position.distance_to(Vector3(0, 0, 16)) < 0.6, "carga en el punto de control, no donde cayó")
 	saves.delete_slot(0)
 	saves.delete_slot(1)
-	saves.save_dir = "user://test_saves/"
+	saves.save_dir = saves_dir
 	state.reset()

@@ -1,20 +1,18 @@
 extends "res://tests/test_case.gd"
 
-const TEST_PATH := "user://test_settings.cfg"
-
 
 func _settings() -> Node:
 	var settings: Node = (Engine.get_main_loop() as SceneTree).root.get_node(^"Settings")
-	settings.path = TEST_PATH
-	DirAccess.remove_absolute(ProjectSettings.globalize_path(TEST_PATH))
+	settings.path = settings_path
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(settings_path))
 	settings.load_settings()
 	settings.set_value(&"language", "es")
 	return settings
 
 
 func _restore(settings: Node) -> void:
-	DirAccess.remove_absolute(ProjectSettings.globalize_path(TEST_PATH))
-	settings.path = "user://test_settings.cfg"
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(settings_path))
+	settings.path = settings_path
 	settings.load_settings()
 	settings.set_value(&"language", "es")
 

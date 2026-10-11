@@ -10,6 +10,7 @@ func _key(keycode: Key, pressed: bool) -> void:
 	if keycode == KEY_SHIFT:
 		event.location = KEY_LOCATION_LEFT
 	Input.parse_input_event(event)
+	Input.flush_buffered_events()
 
 
 func _mouse(button: MouseButton, pressed: bool) -> void:
@@ -17,6 +18,7 @@ func _mouse(button: MouseButton, pressed: bool) -> void:
 	event.button_index = button
 	event.pressed = pressed
 	Input.parse_input_event(event)
+	Input.flush_buffered_events()
 
 
 func test_keyboard_and_mouse_map() -> void:

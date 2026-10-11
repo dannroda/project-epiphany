@@ -1,12 +1,10 @@
 extends "res://tests/test_case.gd"
 
-const TEST_SETTINGS := "user://test_settings.cfg"
-
 
 func _load(tree: SceneTree) -> void:
 	var settings: Node = tree.root.get_node(^"Settings")
-	settings.path = TEST_SETTINGS
-	DirAccess.remove_absolute(ProjectSettings.globalize_path(TEST_SETTINGS))
+	settings.path = settings_path
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(settings_path))
 	settings.load_settings()
 	settings.set_value(&"language", "es")
 	tree.root.get_node(^"GameState").reset()

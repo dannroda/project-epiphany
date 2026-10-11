@@ -1,6 +1,5 @@
 extends "res://tests/test_case.gd"
 
-const TEST_DIR := "user://test_saves/"
 
 var tree: SceneTree
 var saves: Node
@@ -11,7 +10,7 @@ func _setup() -> void:
 	tree = Engine.get_main_loop() as SceneTree
 	saves = tree.root.get_node(^"SaveManager")
 	state = tree.root.get_node(^"GameState")
-	saves.save_dir = TEST_DIR
+	saves.save_dir = saves_dir
 	for slot in 4:
 		saves.delete_slot(slot)
 	state.reset()
@@ -20,7 +19,7 @@ func _setup() -> void:
 func _teardown() -> void:
 	for slot in 4:
 		saves.delete_slot(slot)
-	saves.save_dir = "user://test_saves/"
+	saves.save_dir = saves_dir
 	saves.current_slot = 1
 	state.reset()
 
@@ -64,7 +63,7 @@ func test_autosave_goes_to_the_auto_slot_and_remembers_its_game() -> void:
 
 func test_old_slots_move_up_once() -> void:
 	await _setup()
-	var dir := "user://test_saves_migrate/"
+	var dir := saves_dir.trim_suffix("/") + "_migrate/"
 	saves.save_dir = dir
 	DirAccess.make_dir_recursive_absolute(dir)
 	DirAccess.remove_absolute(dir + saves.MIGRATED_FILE)

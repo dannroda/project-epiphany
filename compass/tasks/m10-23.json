@@ -2,17 +2,17 @@
   "checklist": [
     {
       "detail": "run_tests.gd reparte los archivos test_*.gd en N procesos headless (por defecto, los núcleos disponibles, máx. 4), balanceados por la duración de la última corrida; junta resultados y sale con 1 si algo falla.",
-      "done": false,
+      "done": true,
       "text": "Runner en paralelo"
     },
     {
       "detail": "Cada proceso con su carpeta de partidas y de opciones (test_saves_<n>, test_settings_<n>.cfg) para que no se pisen.",
-      "done": false,
+      "done": true,
       "text": "Aislar user://"
     },
     {
       "detail": "Comparar contra la corrida en serie (~9 min); README/gdd con el comando y cómo correr un solo archivo.",
-      "done": false,
+      "done": true,
       "text": "Medir y documentar"
     }
   ],
@@ -23,11 +23,11 @@
   "order": 23,
   "priority": "medium",
   "refs": [],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "herramientas"
   ],
   "test": "Correr la suite completa: termina en menos de la mitad del tiempo en serie, con los mismos resultados, y dos corridas seguidas dan lo mismo.",
   "title": "Tests en paralelo",
-  "updated_at": "2026-10-11T03:47:07.650Z"
+  "updated_at": "2026-10-11T05:18:18.043Z"
 }
