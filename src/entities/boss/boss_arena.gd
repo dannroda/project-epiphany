@@ -2,8 +2,9 @@ class_name BossArena
 extends Node
 ## La guarida: al entrar se cierra la puerta, corre la intro (cámara al ojo, nombre, música) y arranca la pelea.
 ## La intro se salta con aceptar/atacar/interactuar. Al morir el player se recarga la escena y todo vuelve a empezar.
-## Vencido: flag `d1_boss_defeated` (abre el portal de salida), la sala se calma y aparece el contenedor de corazón;
-## al tomarlo, la pantalla de fin. Al volver a cargar el jefe ya no está.
+## Vencido: flag `d1_boss_defeated` (abre el portal de salida), la sala se calma y aparece el contenedor de corazón.
+## La puerta queda cerrada: el portal es la única salida y entrar abre el fin de la demo. Al volver a cargar el jefe
+## ya no está, salvo en la revancha (`GameState.boss_rematch`): pelea completa, sin otro contenedor.
 
 signal fight_started
 
@@ -11,6 +12,7 @@ const DEFEATED_FLAG := &"d1_boss_defeated"
 const CONTAINER_FLAG := &"d1_heart_container"
 const PICKUP := preload("res://src/world/pickup.tscn")
 const HEART_CONTAINER := preload("res://data/items/heart_container.tres")
+const ENDING := preload("res://data/dialogue/ending.dialogue")
 ## El doom de la sala con el jefe vencido.
 const CALM_DOOM := 0.2
 
@@ -19,20 +21,26 @@ const SKIP_ACTIONS: Array[StringName] = [&"ui_accept", &"attack", &"interact"]
 @export var room: Room
 @export var boss: Boss
 @export var door: Door
+@export var exit_portal: Portal
 ## Lo que dura la intro con la cámara en el ojo.
 @export var intro_hold := 2.6
 ## Espera a que el player termine de entrar (el deslizamiento de la cámara) antes de cerrar.
 @export var close_delay := 0.6
 ## Dónde aparece el contenedor (relativo al jefe).
 @export var reward_offset := Vector3(0, 0, 3.5)
+## En la revancha, cuánto adentro de la puerta aparece el player.
+@export var rematch_entry_depth := 2.5
 
 var started := false
 var in_intro := false
+## La respuesta del diálogo de fin (la escribe ending.dialogue).
+var ending_choice := ""
 
 
 func _ready() -> void:
 	process_mode = PROCESS_MODE_ALWAYS
-	if GameState.get_flag(DEFEATED_FLAG) == true:
+	exit_portal.player_entered.connect(_on_exit)
+	if GameState.get_flag(DEFEATED_FLAG) == true and not GameState.boss_rematch:
 		_already_won()
 		return
 	var bounds := room.bounds().grow(-1.5)
@@ -41,6 +49,9 @@ func _ready() -> void:
 	room.player_entered.connect(func(_room: Room) -> void: _begin())
 	boss.defeated.connect(_on_defeated)
 	boss.death_finished.connect(_on_death_finished)
+	if GameState.boss_rematch:
+		exit_portal.held = true
+		_begin.call_deferred()
 
 
 func _begin() -> void:
@@ -89,17 +100,21 @@ func _on_defeated() -> void:
 func _on_death_finished() -> void:
 	GameState.set_flag(DEFEATED_FLAG, true)
 	room.doom = CALM_DOOM
-	door.open()
 	var reward_point := boss.global_position + reward_offset
 	boss.queue_free()
-	_spawn_reward(reward_point)
+	if GameState.get_flag(CONTAINER_FLAG) != true:
+		_spawn_reward(reward_point)
 	Feel.sfx(&"secret", reward_point)
+	if GameState.boss_rematch:
+		GameState.boss_rematch = false
+		exit_portal.held = false
 	SaveManager.autosave()
 
 
 func _already_won() -> void:
 	started = true
 	room.doom = CALM_DOOM
+	door.close(false)
 	var reward_point := boss.global_position + reward_offset
 	boss.queue_free()
 	if GameState.get_flag(CONTAINER_FLAG) != true:
@@ -118,13 +133,31 @@ func _spawn_reward(point: Vector3) -> void:
 	pickup.collected.connect(_on_reward_taken)
 
 
-## Después de la caja de item get, el fin.
 func _on_reward_taken() -> void:
 	GameState.set_flag(CONTAINER_FLAG, true)
-	await get_tree().create_timer(0.3).timeout
-	while MenuStack.is_open() or Players.all.any(func(player: PlayerCharacter) -> bool: return player.movement_state.get_active_state().name == &"ItemGet"):
-		await get_tree().process_frame
-	Ending.open()
+
+
+## Vuelve a cargar la arena con el jefe vivo; el player aparece adentro, junto a la puerta.
+func start_rematch() -> void:
+	GameState.boss_rematch = true
+	GameState.room_entry = door.global_position + Vector3.FORWARD * rematch_entry_depth
+	SaveManager.respawn()
+
+
+func _on_exit(_player: PlayerCharacter) -> void:
+	if MenuStack.is_open():
+		return
+	SaveManager.autosave(false)
+	ending_choice = ""
+	await TextBox.open(ENDING, "start", TextBox.Style.ITEM, [self]).finished
+	match ending_choice:
+		"keep_playing":
+			exit_portal.travel()
+		"rematch":
+			start_rematch()
+		"to_title":
+			SaveManager.save_checkpoint()
+			SaveManager.quit_to_title()
 
 
 func _exit_tree() -> void:

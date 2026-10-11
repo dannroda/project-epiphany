@@ -72,6 +72,9 @@ msgstr "Se puede cambiar después en Opciones."
 msgid "HINT_ACCEPT"
 msgstr "Aceptar"
 
+msgid "HINT_CHOOSE"
+msgstr "Elegir"
+
 msgid "HINT_BACK"
 msgstr "Volver"
 
@@ -188,21 +191,6 @@ msgstr "Guardar y salir"
 
 msgid "GAMEOVER_QUIT"
 msgstr "Salir sin guardar"
-
-msgid "ENDING_TITLE"
-msgstr "FIN"
-
-msgid "ENDING_SUBTITLE"
-msgstr "El Ojo Antiguo vuelve a dormir"
-
-msgid "ENDING_CREDITS"
-msgstr "Project Epiphany · un juego de Daniel Rodriguez Aires\nHecho con Godot, LimboAI y Dialogue Manager\nPersonajes y animaciones: KayKit · Sonidos: Kenney\nGracias por jugar"
-
-msgid "ENDING_KEEP_PLAYING"
-msgstr "Seguir explorando"
-
-msgid "ENDING_TO_TITLE"
-msgstr "Guardar y volver al título"
 
 msgid "SYSTEM_SAVE_QUIT"
 msgstr "Guardar y salir al título"

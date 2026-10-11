@@ -72,6 +72,9 @@ msgstr "You can change it later in Options."
 msgid "HINT_ACCEPT"
 msgstr "Accept"
 
+msgid "HINT_CHOOSE"
+msgstr "Choose"
+
 msgid "HINT_BACK"
 msgstr "Back"
 
@@ -188,21 +191,6 @@ msgstr "Save and quit"
 
 msgid "GAMEOVER_QUIT"
 msgstr "Quit without saving"
-
-msgid "ENDING_TITLE"
-msgstr "THE END"
-
-msgid "ENDING_SUBTITLE"
-msgstr "The Ancient Eye sleeps once more"
-
-msgid "ENDING_CREDITS"
-msgstr "Project Epiphany · a game by Daniel Rodriguez Aires\nMade with Godot, LimboAI and Dialogue Manager\nCharacters and animations: KayKit · Sounds: Kenney\nThanks for playing"
-
-msgid "ENDING_KEEP_PLAYING"
-msgstr "Keep exploring"
-
-msgid "ENDING_TO_TITLE"
-msgstr "Save and return to title"
 
 msgid "SYSTEM_SAVE_QUIT"
 msgstr "Save and quit to title"
@@ -1058,3 +1046,23 @@ msgstr "Frame rate cap"
 
 msgid "OPTIONS_MAX_FPS_UNLIMITED"
 msgstr "Unlimited"
+
+msgctxt "character"
+msgid "Fin de la demo"
+msgstr "End of the demo"
+
+msgctxt "ending_1"
+msgid "El Ojo Antiguo vuelve a dormir. ¡Gracias por jugar!"
+msgstr "The Ancient Eye sleeps once more. Thanks for playing!"
+
+msgctxt "ending_keep_playing"
+msgid "Seguir jugando"
+msgstr "Keep playing"
+
+msgctxt "ending_rematch"
+msgid "Volver a retar al jefe"
+msgstr "Challenge the boss again"
+
+msgctxt "ending_to_title"
+msgid "Volver al menú principal"
+msgstr "Back to the main menu"

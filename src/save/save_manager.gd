@@ -81,9 +81,12 @@ func save_game(slot: int = -1, capture_player := true) -> Error:
 
 
 ## Al cambiar de escena, al abrir un cofre grande, al entrar a la antesala.
-func autosave() -> void:
+## capture_player false guarda en el punto de reaparición (el portal del jefe: al cargar no vuelve a dispararlo).
+func autosave(capture_player := true) -> void:
 	var slot := auto_slot()
-	if save_game(slot) == OK:
+	if not capture_player:
+		GameState.player_position = null
+	if save_game(slot, capture_player) == OK:
 		saved.emit(slot)
 
 

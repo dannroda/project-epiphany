@@ -515,6 +515,23 @@ texture_margin_bottom = 32.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_menu_item"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dialogue_response"]
+content_margin_left = 14.0
+content_margin_top = 6.0
+content_margin_right = 14.0
+content_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dialogue_response_focus"]
+content_margin_left = 14.0
+content_margin_top = 6.0
+content_margin_right = 14.0
+content_margin_bottom = 6.0
+bg_color = Color(0.8509804, 0.6431373, 0.25490198, 0.1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [sub_resource type="StyleBoxTexture" id="Frame_OrnateSeparator"]
 content_margin_top = 9.0
 content_margin_bottom = 9.0
@@ -845,6 +862,25 @@ DebugButton/styles/focus = SubResource("StyleBoxFlat_debug_button")
 DebugButton/styles/hover = SubResource("StyleBoxFlat_debug_button")
 DebugButton/styles/normal = SubResource("StyleBoxFlat_debug_button")
 DebugButton/styles/pressed = SubResource("StyleBoxFlat_debug_button")
+DialogueResponse/base_type = &"Button"
+DialogueResponse/colors/font_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
+DialogueResponse/colors/font_focus_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+DialogueResponse/colors/font_hover_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+DialogueResponse/colors/font_hover_pressed_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+DialogueResponse/colors/font_pressed_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+DialogueResponse/colors/icon_focus_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+DialogueResponse/colors/icon_hover_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+DialogueResponse/colors/icon_hover_pressed_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+DialogueResponse/colors/icon_normal_color = Color(1, 1, 1, 0)
+DialogueResponse/colors/icon_pressed_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+DialogueResponse/constants/h_separation = 12
+DialogueResponse/font_sizes/font_size = 22
+DialogueResponse/fonts/font = ExtResource("3_cwe5m")
+DialogueResponse/icons/icon = ExtResource("frame_menu_arrow")
+DialogueResponse/styles/focus = SubResource("StyleBoxFlat_dialogue_response_focus")
+DialogueResponse/styles/hover = SubResource("StyleBoxFlat_dialogue_response_focus")
+DialogueResponse/styles/normal = SubResource("StyleBoxEmpty_dialogue_response")
+DialogueResponse/styles/pressed = SubResource("StyleBoxFlat_dialogue_response_focus")
 DisplayTitle/base_type = &"Label"
 DisplayTitle/colors/font_color = Color(0.9372549, 0.9019608, 0.8235294, 1)
 DisplayTitle/font_sizes/font_size = 68

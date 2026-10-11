@@ -2252,31 +2252,29 @@ El juego en inglés y español: todos los textos por clave con `tr()`, la elecci
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 10.19 Fin de la demo y créditos · Pendiente
+### 10.19 Fin de la demo · Revisión
 
 **Prioridad:** media · **Etiquetas:** `ui`
 
-Al vencer al jefe el portal es la única salida, y entrar abre un diálogo de fin de demo con opciones (seguir jugando, revancha contra el jefe o volver al menú), apoyado en respuestas nuevas en el `TextBox`. Sumar créditos reales con autoría, herramientas y licencias.
+Al vencer al jefe el portal es la única salida, y entrar abre un diálogo de fin de demo con opciones (seguir jugando, revancha contra el jefe o volver al menú), apoyado en respuestas nuevas en el `TextBox`. Sin pantalla de créditos.
 
-- [ ] Quitar el final al tomar el contenedor
+- [x] Quitar el final al tomar el contenedor
   Hoy Ending.open() salta al tomar el contenedor de corazón (boss_arena.gd _on_reward_taken). Sacarlo de ahí: tomar el contenedor es solo el item get.
-- [ ] Vencer no reabre la puerta: el portal es la única salida
+- [x] Vencer no reabre la puerta: el portal es la única salida
   Sacar door.open() de _on_death_finished y que _already_won (cargar la partida en la arena) también la deje cerrada. No se vuelve a la sala anterior.
-- [ ] El portal del jefe dispara el fin de la demo
+- [x] El portal del jefe dispara el fin de la demo
   Al entrar al BossExitPortal (required_flag d1_boss_defeated) se abre la pantalla de fin en vez de viajar directo. Guardar checkpoint antes, así el progreso del jefe queda.
-- [ ] Respuestas en el TextBox: diálogos con opciones
+- [x] Respuestas en el TextBox: diálogos con opciones
   Hoy TextBox ignora line.responses. Al terminar una línea con respuestas, mostrar la lista dentro del globo (nodos en text_box.tscn, no por código), navegable con gamepad/teclado, foco en la primera; elegir sigue con response.next_id. Respuestas con condición ocultas. Sirve para cualquier NPC o cartel con preguntas.
-- [ ] Diálogo de fin de demo: seguir, revancha o menú
+- [x] Diálogo de fin de demo: seguir, revancha o menú
   data/dialogue/ending.dialogue (es/en en translations): "Fin de la demo, gracias por jugar" con respuestas Seguir jugando (cierra y completa el viaje del portal al overworld, ver 11.29), Volver a retar al jefe y Volver al menú principal (guarda y quit_to_title, vía mutation o señal). Reemplaza la pantalla Ending actual.
-- [ ] Revancha contra el jefe
+- [x] Revancha contra el jefe
   Recarga la arena con el jefe vivo aunque d1_boss_defeated esté en true (modo revancha en BossArena, no se borra el flag ni se guarda nada a mitad). Puerta cerrada e intro como siempre; morir reinicia la revancha. Al ganar no reaparece el contenedor (d1_heart_container) y el portal vuelve a abrir el diálogo de fin.
-- [ ] Mockup del diálogo de fin de demo y créditos en el canvas de UI
-- [ ] Créditos reales
-  Autoría, herramientas (Godot, Blender, LimboAI), assets de terceros con sus licencias (sale de compass/lists/assets-de-audio y los kits que queden), agradecimientos. Accesibles desde el diálogo de fin y desde el menú principal; se pueden acelerar/saltear.
+- [x] Mockup del diálogo de fin de demo en el canvas de UI
 - [ ] Breve epílogo (opcional)
   Si entra en la demo: cámara sobre el templo calmado o el overworld sin doom antes del diálogo; corto y salteable.
 
-**Prueba:** Desde pre_boss: vencer al jefe y tomar el contenedor no corta el juego ni reabre la puerta; el portal es la única salida y abre el diálogo de fin de demo. Seguir jugando lleva al overworld con el progreso guardado; Volver a retar recarga la pelea completa y al ganar no da otro contenedor; Volver al menú va al título y al cargar el jefe no reaparece. Los créditos tienen todas las licencias y se pueden saltear.
+**Prueba:** Desde pre_boss: vencer al jefe y tomar el contenedor no corta el juego ni reabre la puerta; el portal es la única salida y abre el diálogo de fin de demo. Seguir jugando lleva al overworld con el progreso guardado; Volver a retar recarga la pelea completa y al ganar no da otro contenedor; Volver al menú va al título y al cargar el jefe no reaparece.
 
 **Notas:** El fin ya no salta al tomar el contenedor: el jugador puede quedarse en la arena y decide cuándo terminar entrando al portal.
 
@@ -2301,7 +2299,7 @@ Una intro corta y salteable al empezar partida nueva que cuente sin diálogos qu
 
 **Referencias:** `gdd.md#historia`
 
-**Relacionadas:** 10.19 Fin de la demo y créditos; 11.22 Tablillas de historia
+**Relacionadas:** 10.19 Fin de la demo; 11.22 Tablillas de historia
 
 ### 10.21 Título y ranuras: Continuar, Nueva partida y ranura de autosave · Hecho
 
@@ -2889,7 +2887,7 @@ Después de vencer al jefe, el overworld tiene que verse y sonar distinto (sin d
 
 **Prueba:** Vencer al jefe y salir: el overworld se ve y suena distinto, y hay algo nuevo para encontrar.
 
-**Relacionadas:** 10.19 Fin de la demo y créditos
+**Relacionadas:** 10.19 Fin de la demo
 
 ### 11.30 Ítem post-MVP: gancho o telequinesis · Pendiente
 
@@ -3455,7 +3453,7 @@ Modelar en Blender el terreno del overworld (pasto, caminos, piso de plaza, acan
 
 **Relacionadas:** 11.4 Decorar el overworld
 
-### 12.3 Lugares del overworld · En curso
+### 12.3 Lugares del overworld · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `arte`, `puzzles`
 
@@ -3476,8 +3474,8 @@ Modelar las piezas propias de cada lugar del overworld (claro del inicio, cuevas
   La pieza más importante del overworld.
 - [x] Sello violeta con el ojo
   temple_seal.tscn.
-- [ ] Risco del ojo: cornisa, ojo-interruptor, puente, nicho del carcaj
-  eye_switch.tscn, bridge.tscn.
+- [x] Risco del ojo: cornisa, ojo-interruptor, puente, nicho del carcaj
+  Hecho: ojo (ojo_pilar/ojo_globo) y puente ya propios; nuevos cornisa_ojo (estrado de lajas con borde escalonado y mojones bajo el pilar), nicho_carcaj (lajas del nicho) y estela_carcaj (flecha dorada en relieve detrás del cofre). Los pone decorate_levels.gd (props de Zone_risco, pegados a CliffEye y QuiverChest).
 - [x] Portal de salida del jefe: disco y anillo
   warp_portal.tscn. Opcional.
 
@@ -3489,7 +3487,7 @@ Modelar las piezas propias de cada lugar del overworld (claro del inicio, cuevas
 
 **Relacionadas:** 11.4 Decorar el overworld
 
-### 12.4 Vegetación y props del overworld · En curso
+### 12.4 Vegetación y props del overworld · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `arte`
 
@@ -3507,8 +3505,8 @@ Modelar la vegetación y los props del overworld (árboles, pasto cortable, vasi
 - [x] Rocas grandes fijas (2–3)
 - [x] Decoración: arbustos, flores, hongos, tronco caído, tocón
   Hecho: tronco caído, cardón chico, ichu, piedras (11.4) y ahora tocón de queñoa, yareta (cojín verde de la puna, en vez de arbustos), macizo de flores y hongos, repartidos por decorate_levels.gd.
-- [ ] Fondo: nubes y colinas lejanas
-  Hoy salen de KayKit Medieval. Opcional.
+- [x] Fondo: nubes y colinas lejanas
+  Cubierto sin KayKit: la cámara cenital no ve el horizonte; el fondo es la meseta del borde del mundo (12.2 paso 9) y las nubes pasan como sombras (12.2 paso 13).
 
 **Prueba:** Pasto, vasijas, rocas y cajas usan los modelos nuevos y se rompen o mueven como antes.
 
@@ -3516,7 +3514,7 @@ Modelar la vegetación y los props del overworld (árboles, pasto cortable, vasi
 
 **Relacionadas:** 11.4 Decorar el overworld
 
-### 12.5 Interactivos y pickups · En curso
+### 12.5 Interactivos y pickups · Revisión
 
 **Prioridad:** media · **Etiquetas:** `arte`
 
@@ -3524,9 +3522,11 @@ Modelar cofres, pickups, bomba, flecha, orbe, llaves, mapa, brújula y contenedo
 
 - [x] Cofre chico de madera (tapa aparte)
 - [x] Cofre grande dorado (tapa aparte)
-- [ ] Pickups: corazón, flechas ×5, bombas ×3
+- [x] Pickups: corazón, flechas ×5, bombas ×3
+  Hecho: Pickup muestra ItemData.pickup_mesh (flechas_x5, bombas_x3) o heart_mesh (corazon) girando en vez del ícono; sin malla sigue el Sprite3D (pieza de corazón). test_pickup_models.
 - [x] Bomba con mecha y flecha
-- [ ] Orbe (proyectil reflejable)
+- [x] Orbe (proyectil reflejable)
+  Hecho: projectile.tscn usa orbe.res con epiphany_glow.tres (paleta sin sombreado, núcleo doom saturado, púas de sello).
 - [x] Llave chica, llave del jefe
 - [x] Mapa, brújula, contenedor de corazón
   Hoy son SVG planos; con modelo, todos los íconos salen de render_item_icons.gd.
@@ -3603,16 +3603,20 @@ Modelar los personajes propios (player, esqueletos y jefe) con los mismos nombre
 
 **Relacionadas:** 11.47 Manos del jefe animadas (shape keys); 12.13 Reajuste de estilo toon de todos los assets
 
-### 12.9 Efectos con malla · Pendiente
+### 12.9 Efectos con malla · Revisión
 
 **Prioridad:** baja · **Etiquetas:** `arte`
 
 Hacer con malla los efectos que lo piden (haz de luz, polvo y hojas, explosión, anillo del portal), con la paleta y el estilo de los assets propios.
 
-- [ ] Haz de luz
-- [ ] Polvo y hojas
-- [ ] Explosión
-- [ ] Anillo del portal
+- [x] Haz de luz
+  Hecho: halo aditivo (light_glow.gdshader como material_overlay de cada tramo y de la punta): infla el tubo en metros de mundo, brilla al centro, se apaga en el borde y titila leve; toma el color del haz.
+- [x] Polvo y hojas
+  Hecho en 12.2 con partículas: falling_leaves.tscn bajo los árboles y dust_motes.tscn colgado de la cámara.
+- [x] Explosión
+  Hecho: objetos/explosion (núcleo facetado y 14 puntas, claro adentro y naranja en las puntas) en explosion.tscn con epiphany_fx.tres (paleta transparente sin sombreado); gira al azar cada vez.
+- [x] Anillo del portal
+  Ya estaba: warp_portal.tscn usa portal_disco y portal_anillo (12.3 paso 10).
 
 **Bloqueada por:** 12.1 Guía de estilo: paleta, escala y pieza de prueba
 

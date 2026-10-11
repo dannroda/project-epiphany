@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[node name="ResponseButton" type="Button"]
+size_flags_horizontal = 3
+theme_type_variation = &"DialogueResponse"
+alignment = 0

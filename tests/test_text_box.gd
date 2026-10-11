@@ -63,3 +63,28 @@ func test_dialogue_reads_and_sets_flags() -> void:
 	line = await DialogueManager.get_next_dialogue_line(resource, "start")
 	assert_eq(line.text, "Ya lo sabías.", "y lo lee la próxima vez")
 	state.reset()
+
+
+func test_responses_show_inside_the_box_and_follow_the_choice() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var text := "~ start\nGuardián: ¿Qué hacés?\n- Pelear\n\tGuardián: Que así sea.\n- Huir [if false /]\n\tGuardián: No.\n- Charlar\n\tGuardián: Sentate.\n=> END"
+	var box := TextBox.open(DialogueManager.create_resource_from_text(text), "start", TextBox.Style.ITEM)
+	assert_true(not box.responses.visible, "mientras escribe, sin respuestas")
+	await tree.create_timer(1.2).timeout
+	assert_true(box.responses.visible, "al terminar la línea aparecen")
+	assert_eq(box.responses.get_child_count(), 2, "las que no cumplen su condición no se muestran")
+	var first := box.responses.get_child(0) as Button
+	assert_true(first.has_focus(), "foco en la primera")
+	assert_true(not box._next.visible, "sin la flecha de seguir")
+	var down := InputEventAction.new()
+	down.action = &"ui_down"
+	down.pressed = true
+	tree.root.push_input(down)
+	await tree.process_frame
+	assert_true((box.responses.get_child(1) as Button).has_focus(), "se baja con el stick o las flechas")
+	_key(tree)
+	await tree.create_timer(0.1).timeout
+	assert_true(not box.responses.visible, "elegir las saca")
+	assert_eq(box.body.text, "Sentate.", "y sigue por la respuesta elegida")
+	MenuStack.clear()
+	tree.paused = false

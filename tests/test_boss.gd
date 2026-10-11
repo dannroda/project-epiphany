@@ -236,7 +236,9 @@ func test_arena_closes_skippable_intro_and_bar() -> void:
 	boss.health.damage(boss.health.max_health)
 	await tree.create_timer(1.6).timeout
 	assert_true(not hud.boss_bar.visible, "al ganar la barra se va")
-	assert_true(await _wait_until(func() -> bool: return door.is_open, 5.0), "y se abre la puerta")
+	assert_true(await _wait_until(func() -> bool: return tree.root.get_node(^"GameState").get_flag(&"d1_boss_defeated") == true, 5.0), "vencido")
+	await tree.create_timer(0.6).timeout
+	assert_true(not door.is_open, "la puerta queda cerrada: el portal es la única salida")
 	tree.root.get_node(^"GameState").reset()
 
 
@@ -427,7 +429,7 @@ func test_reflected_orb_stuns_the_eye() -> void:
 	tree.root.get_node(^"GameState").reset()
 
 
-func test_win_take_the_container_and_roll_credits() -> void:
+func test_win_take_the_container_then_the_portal_ends_the_demo() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state: Node = tree.root.get_node(^"GameState")
 	var saves: Node = tree.root.get_node(^"SaveManager")
@@ -463,9 +465,17 @@ func test_win_take_the_container_and_roll_credits() -> void:
 	assert_eq(player.health.max_health, max_before + 4, "el player lo tiene en el momento")
 	assert_true(player.health.is_full(), "con la vida llena")
 	stack.pop()
-	assert_true(await _wait_until(func() -> bool: return stack.top() is Ending, 3.0), "pantalla de fin")
-	await tree.process_frame
-	(stack.top().get_node(^"%ToTitle") as Button).pressed.emit()
+	await tree.create_timer(1.0).timeout
+	assert_true(not stack.is_open(), "tomar el contenedor no corta el juego")
+	assert_true(not (level.get_node(^"BossDoor") as Door).is_open, "la puerta sigue cerrada")
+	player.global_position = portal.global_position
+	assert_true(await _wait_until(func() -> bool: return stack.top() is TextBox, 3.0), "el portal abre el diálogo de fin")
+	assert_eq(tree.current_scene, level, "sin viajar")
+	var box := stack.top() as TextBox
+	assert_true(await _wait_until(func() -> bool: return box.responses.visible, 4.0), "con sus respuestas")
+	assert_eq(box.responses.get_child_count(), 3, "seguir, revancha y menú")
+	await tree.create_timer(box.input_guard + 0.05).timeout
+	(box.responses.get_child(2) as Button).pressed.emit()
 	await tree.scene_changed
 	assert_eq(tree.current_scene.scene_file_path, "res://src/ui/title/title_screen.tscn", "vuelve al título")
 	state.reset()
@@ -474,9 +484,78 @@ func test_win_take_the_container_and_roll_credits() -> void:
 	await tree.process_frame
 	assert_true(level.get_node_or_null(^"Boss") == null, "cargando después, el jefe no reaparece")
 	assert_true((level.get_node(^"BossExitPortal") as Portal).visible, "y el portal sigue abierto")
+	assert_true(not (level.get_node(^"BossDoor") as Door).is_open, "con la puerta cerrada")
 	assert_eq(level.get_node(^"BossArena").find_children("*", "Pickup", false, false).size(), 0, "ni el contenedor")
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(saves.slot_path(8)))
 	state.reset()
+
+
+func test_keep_playing_finishes_the_trip_to_the_overworld() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	var saves: Node = tree.root.get_node(^"SaveManager")
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	assert_eq(await saves.load_scenario("pre_boss"), OK)
+	state.set_flag(&"d1_boss_defeated", true)
+	tree.reload_current_scene()
+	await tree.scene_changed
+	await tree.create_timer(0.2).timeout
+	var portal := tree.current_scene.get_node(^"BossExitPortal") as Portal
+	(tree.get_first_node_in_group(&"player") as Node3D).global_position = portal.global_position
+	assert_true(await _wait_until(func() -> bool: return stack.top() is TextBox, 3.0), "el diálogo de fin")
+	var box := stack.top() as TextBox
+	assert_true(await _wait_until(func() -> bool: return box.responses.visible, 4.0))
+	await tree.create_timer(box.input_guard + 0.05).timeout
+	(box.responses.get_child(0) as Button).pressed.emit()
+	await tree.scene_changed
+	assert_eq(tree.current_scene.scene_file_path, "res://levels/overworld.tscn", "seguir jugando lleva al overworld")
+	assert_true(state.get_flag(&"d1_boss_defeated") == true, "con el progreso")
+	await tree.create_timer(0.5).timeout
+	state.reset()
+
+
+func test_rematch_brings_the_boss_back_without_another_container() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	var saves: Node = tree.root.get_node(^"SaveManager")
+	assert_eq(await saves.load_scenario("pre_boss"), OK)
+	state.set_flag(&"d1_boss_defeated", true)
+	state.set_flag(&"d1_heart_container", true)
+	tree.reload_current_scene()
+	await tree.scene_changed
+	await tree.process_frame
+	var arena := tree.current_scene.get_node(^"BossArena") as BossArena
+	assert_true(tree.current_scene.get_node_or_null(^"Boss") == null, "vencido, el jefe no está")
+	arena.start_rematch()
+	await tree.scene_changed
+	await tree.create_timer(0.2).timeout
+	var level := tree.current_scene
+	arena = level.get_node(^"BossArena") as BossArena
+	var boss := level.get_node_or_null(^"Boss") as Boss
+	var portal := level.get_node(^"BossExitPortal") as Portal
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	assert_true(boss != null, "en la revancha el jefe vuelve")
+	assert_true(not portal.visible, "sin portal mientras pelea")
+	assert_true((level.get_node(^"Jefe") as Room).contains(player.global_position), "el player aparece en la arena")
+	assert_true(await _wait_until(func() -> bool: return boss.phases.is_active() or arena.in_intro, 4.0), "arranca la pelea")
+	_skip_intro(tree)
+	assert_true(await _wait_until(func() -> bool: return boss.phases.is_active(), 6.0), "pelea")
+	player.health.make_invulnerable(999.0)
+	_knock_down(boss.hand_left)
+	_knock_down(boss.hand_right)
+	boss.health.invulnerability_time = 0.0
+	boss.health.damage(boss.health.max_health)
+	assert_true(await _wait_until(func() -> bool: return portal.visible, 8.0), "al ganar vuelve el portal")
+	assert_true(not state.boss_rematch, "termina la revancha")
+	assert_eq(arena.find_children("*", "Pickup", false, false).size(), 0, "sin otro contenedor")
+	state.reset()
+
+
+func _skip_intro(tree: SceneTree) -> void:
+	var skip := InputEventAction.new()
+	skip.action = &"ui_accept"
+	skip.pressed = true
+	tree.root.push_input(skip)
 
 
 func test_phase_three_below_a_third() -> void:

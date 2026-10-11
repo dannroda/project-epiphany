@@ -1,0 +1,9 @@
+~ start
+Fin de la demo: El Ojo Antiguo vuelve a dormir. ¡Gracias por jugar! [ID:ending_1]
+- Seguir jugando [ID:ending_keep_playing]
+	set ending_choice = "keep_playing"
+- Volver a retar al jefe [ID:ending_rematch]
+	set ending_choice = "rematch"
+- Volver al menú principal [ID:ending_to_title]
+	set ending_choice = "to_title"
+=> END

@@ -46,6 +46,8 @@ var spawn_point: StringName = &""
 var player_position: Variant = null ## Vector3 hasta que haya puntos de aparición con nombre
 ## Mazmorra: dónde quedó el player al entrar a la sala actual; ahí reaparece al morir. No se guarda.
 var room_entry: Variant = null
+## Revancha contra el jefe ya vencido (10.19): la arena lo trae de vuelta hasta ganarle. No se guarda.
+var boss_rematch := false
 var save_tampered := false
 ## Segundos jugados (con player en escena y sin pausa).
 var play_time := 0.0
@@ -305,6 +307,7 @@ func _clear() -> void:
 	spawn_point = &""
 	player_position = null
 	room_entry = null
+	boss_rematch = false
 	save_tampered = false
 
 

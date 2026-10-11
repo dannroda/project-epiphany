@@ -1,11 +1,13 @@
 class_name TextBox
 extends Control
 ## Globo de Dialogue Manager con los estilos de los mockups: cada línea es una página, letra por letra.
-## Avanza con interact/attack/aceptar; el mismo botón completa la línea.
+## Avanza con interact/attack/aceptar; el mismo botón completa la línea. Si la línea trae respuestas, al terminar de
+## escribirse aparecen en la caja (estilo ITEM) y elegir una sigue por su `next_id`.
 
 signal finished
 
 const SCENE := preload("res://src/ui/text_box/text_box.tscn")
+const RESPONSE := preload("res://src/ui/text_box/response_button.tscn")
 const ADVANCE: Array[StringName] = [&"interact", &"attack", &"ui_accept"]
 ## También se consumen para que no cierren la pila ni abran la pausa.
 const SWALLOW: Array[StringName] = [&"ui_cancel", &"pause"]
@@ -28,6 +30,9 @@ const BUTTON_ICON_SIZE := 32
 @onready var stone_box: PanelContainer = %StoneBox
 @onready var hint: HBoxContainer = %Hint
 @onready var hint_icon: TextureRect = %HintIcon
+@onready var responses_rule: ColorRect = %ResponsesRule
+@onready var responses: VBoxContainer = %Responses
+@onready var response_hints: HBoxContainer = %ResponseHints
 
 var style := Style.STONE
 var resource: DialogueResource
@@ -82,6 +87,7 @@ func _ready() -> void:
 	_next = box.find_child("Next", true, false) as Node2D
 	if _next:
 		_next.set_meta(&"base_y", _next.position.y)
+	response_hints.hints = [[&"ui_accept", "HINT_CHOOSE"]]
 	hint_icon.texture = InputPrompts.icon_for_current(&"ui_accept" if InputDevice.current == InputDevice.Device.GAMEPAD else &"interact")
 	_label.text = ""
 	_fetch(cue)
@@ -92,8 +98,10 @@ func _process(delta: float) -> void:
 	if not is_page_done():
 		_shown += chars_per_second * delta
 		body.visible_characters = int(_shown)
+	elif _has_responses() and not responses.visible:
+		_show_responses()
 	if _next:
-		_next.visible = is_page_done() and not _waiting
+		_next.visible = is_page_done() and not _waiting and not responses.visible
 		_next.position.y = _next.get_meta(&"base_y") + 3.0 * sin(Time.get_ticks_msec() / 150.0)
 
 
@@ -115,6 +123,11 @@ func is_page_done() -> bool:
 ## Completa la línea, pasa a la siguiente o termina.
 func advance() -> void:
 	if _waiting:
+		return
+	if responses.visible:
+		var focused := get_viewport().gui_get_focus_owner() as Button
+		if focused and focused.get_parent() == responses:
+			focused.pressed.emit()
 		return
 	if not is_page_done():
 		body.visible_characters = -1
@@ -149,6 +162,7 @@ func _show_text(index: int, character: String) -> void:
 
 
 func _show(text: String, character: String) -> void:
+	_hide_responses()
 	page += 1
 	var heading := title_override if not title_override.is_empty() else tr(character, &"character")
 	title_label.text = heading
@@ -189,6 +203,42 @@ func _token_actions(kind: String, value: String) -> Array[StringName]:
 	if value == "move":
 		return MOVE_ACTIONS.slice(0, 1) if InputDevice.current == InputDevice.Device.GAMEPAD else MOVE_ACTIONS
 	return [StringName(value)]
+
+
+func _has_responses() -> bool:
+	return style == Style.ITEM and line != null and not line.responses.is_empty()
+
+
+func _show_responses() -> void:
+	for response: DialogueResponse in line.responses:
+		if not response.is_allowed:
+			continue
+		var button: Button = RESPONSE.instantiate()
+		button.text = response.text
+		button.pressed.connect(_choose.bind(response))
+		responses.add_child(button)
+	responses_rule.visible = true
+	responses.visible = true
+	response_hints.visible = true
+	if responses.get_child_count() > 0:
+		(responses.get_child(0) as Button).grab_focus()
+	_guard = input_guard
+
+
+func _hide_responses() -> void:
+	responses_rule.visible = false
+	responses.visible = false
+	response_hints.visible = false
+	for child in responses.get_children():
+		responses.remove_child(child)
+		child.queue_free()
+
+
+func _choose(response: DialogueResponse) -> void:
+	if _waiting or _guard > 0.0:
+		return
+	_hide_responses()
+	_fetch(response.next_id)
 
 
 func _end() -> void:
