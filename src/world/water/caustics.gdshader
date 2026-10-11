@@ -1,7 +1,7 @@
-// El agua vista desde una CausticsLight: cada píxel del projector sigue su rayo hasta el plano del agua y lee ahí el
-// mismo patrón que water.gdshader, así las líneas de espuma caen en paredes y piso alineadas con las de la superficie.
+// El agua vista desde una CausticsLight (cada píxel del projector sigue su rayo hasta el plano del agua) o en planta para
+// un CausticsDecal, con el mismo patrón que water.gdshader, así las líneas de espuma caen en paredes y piso alineadas con las de la superficie.
 // Fuera de la pileta se apaga en outside_reach metros (0 = solo lo que pasa por el agua).
-// texture_blit no acepta global uniforms (4.8-dev7): CausticsLight copia tile y speed del agua y su propia pose.
+// texture_blit no acepta global uniforms (4.8-dev7): CausticsCanvas copia tile y speed del agua.
 shader_type texture_blit;
 render_mode blend_disabled;
 
@@ -24,14 +24,18 @@ uniform float edge_fade = 0.6;
 uniform float outside_reach = 0.0;
 // Apagado, no ilumina dentro de la pileta (la luz del piso no se encima con el agua).
 uniform bool lit_inside = true;
+// CausticsDecal: la textura cubre en planta el rectángulo plane_origin..plane_origin + plane_size.
+uniform bool planar = false;
+uniform vec2 plane_origin = vec2(-2.0);
+uniform vec2 plane_size = vec2(4.0);
 
 void blit() {
 	vec2 ndc = UV * 2.0 - 1.0;
 	vec3 dir = light_basis * normalize(vec3(ndc.x * tan_half_angle, -ndc.y * tan_half_angle, -1.0));
 	float c = 0.0;
 	float t = abs(dir.y) > 0.001 ? (surface_y - light_origin.y) / dir.y : -1.0;
-	if (t > 0.0) {
-		vec3 p = light_origin + dir * t;
+	if (planar || t > 0.0) {
+		vec3 p = planar ? vec3(plane_origin.x + UV.x * plane_size.x, surface_y, plane_origin.y + UV.y * plane_size.y) : light_origin + dir * t;
 		vec2 out_of = max(pool_min - p.xz, p.xz - pool_max);
 		float signed_edge = max(out_of.x, out_of.y) > 0.0 ? length(max(out_of, vec2(0.0))) : max(out_of.x, out_of.y);
 		float edge = 1.0 - smoothstep(-edge_fade, outside_reach, signed_edge);

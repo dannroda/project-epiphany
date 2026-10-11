@@ -4,6 +4,7 @@
 [ext_resource type="Shader" uid="uid://ch7brbhtrooc4" path="res://src/world/water/water.gdshader" id="2_water"]
 [ext_resource type="Shader" uid="uid://do8ae5kjavpjp" path="res://src/world/water/caustics.gdshader" id="3_caustics"]
 [ext_resource type="Script" path="res://src/world/water/caustics_light.gd" id="4_light"]
+[ext_resource type="Script" path="res://src/world/water/caustics_decal.gd" id="5_decal"]
 
 [sub_resource type="ShaderMaterial" id="Caustics"]
 shader = ExtResource("3_caustics")
@@ -95,13 +96,11 @@ spot_angle = 58.69721
 script = ExtResource("4_light")
 caustics_material = SubResource("Caustics")
 
-[node name="FloorCaustics" type="SpotLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 3, 0)
-light_color = Color(0.8, 0.97, 1, 1)
-light_energy = 8.0
-shadow_enabled = true
-spot_range = 6.0
-spot_attenuation = 0.5
-spot_angle = 62.0
-script = ExtResource("4_light")
+[node name="FloorCaustics" type="Decal" parent="."]
+size = Vector3(9, 0.8, 9)
+emission_energy = 0.4
+normal_fade = 0.5
+upper_fade = 0.1
+lower_fade = 0.1
+script = ExtResource("5_decal")
 caustics_material = SubResource("FloorCaustics")

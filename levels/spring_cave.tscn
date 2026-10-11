@@ -24,15 +24,6 @@ tonemap_mode = 2
 [sub_resource type="BoxShape3D" id="RoomShape"]
 size = Vector3(22, 2.4, 14)
 
-[sub_resource type="StandardMaterial3D" id="Trickle"]
-transparency = 1
-shading_mode = 0
-albedo_color = Color(0.7, 0.95, 1, 0.65)
-
-[sub_resource type="BoxMesh" id="TrickleMesh"]
-material = SubResource("Trickle")
-size = Vector3(0.5, 2.5, 0.06)
-
 [sub_resource type="BoxShape3D" id="PortalShape"]
 size = Vector3(2, 2.4, 1.4)
 
@@ -67,11 +58,6 @@ shape = SubResource("RoomShape")
 [node name="WaterPool" parent="." unique_id=1646859759 instance=ExtResource("8_pool")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
 size = Vector2(6, 4)
-
-[node name="Trickle" type="MeshInstance3D" parent="." unique_id=2107977538]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -6.92)
-cast_shadow = 0
-mesh = SubResource("TrickleMesh")
 
 [node name="Spring" parent="." unique_id=511576325 instance=ExtResource("11_spring")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5)

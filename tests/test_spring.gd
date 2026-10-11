@@ -111,14 +111,15 @@ func test_pool_reflects_the_water_on_the_walls_and_blocks_walking_in() -> void:
 	var pool := (setup[0] as SceneTree).current_scene.get_node(^"WaterPool") as WaterPool
 	var water := pool.surface.mesh.surface_get_material(0) as ShaderMaterial
 	var wall := pool.get_node(^"Caustics") as CausticsLight
-	var spill := pool.get_node(^"FloorCaustics") as CausticsLight
-	assert_eq(pool.lights().size(), 2)
-	for light in pool.lights():
-		assert_true(light.light_projector == light.texture and light.texture != null, "%s proyecta el agua" % light.name)
-		assert_true(light.shadow_enabled, "sin sombra el projector del spot no se aplica (4.8-dev7)")
-		assert_eq(light.caustics_material.get_shader_parameter(&"tile"), water.get_shader_parameter(&"tile"), "mismo patrón que la espuma")
+	var spill := pool.get_node(^"FloorCaustics") as CausticsDecal
+	assert_eq(pool.projectors().size(), 2)
+	assert_true(wall.light_projector == wall.canvas.texture and wall.shadow_enabled, "la luz proyecta el agua (sin sombra 4.8-dev7 no aplica el projector)")
+	assert_true(spill.texture_emission == spill.canvas.texture, "el decal también")
+	for material: ShaderMaterial in [wall.canvas.material, spill.canvas.material]:
+		assert_eq(material.get_shader_parameter(&"tile"), water.get_shader_parameter(&"tile"), "mismo patrón que la espuma")
 	assert_true(wall.global_position.y < pool.surface.global_position.y and -wall.global_basis.z.y > 0.5, "el reflejo sube a las paredes desde abajo del agua")
-	assert_true(-spill.global_basis.z.y < -0.5 and spill.caustics_material.get_shader_parameter(&"outside_reach") > 0.0 and not spill.caustics_material.get_shader_parameter(&"lit_inside"), "y otra luz lo derrama en el piso de alrededor, sin encimarse con el agua")
+	assert_true(spill.normal_fade > 0.0 and not spill.canvas.material.get_shader_parameter(&"lit_inside"), "el piso de alrededor sin encimarse con el agua ni con la pared")
+	assert_true(spill.size.x > pool.size.x and spill.size.z > pool.size.y, "el decal cubre la pileta y su borde")
 	assert_true((pool.block.shape as BoxShape3D).size.x >= pool.size.x, "no se puede entrar al agua")
 	state.reset()
 

@@ -1,8 +1,8 @@
 @tool
 class_name WaterPool
 extends Node3D
-## Pileta de agua: superficie (water.gdshader), fondo y paredes de piedra, un bloqueo para no meterse y luces
-## (CausticsLight) que proyectan el agua en las paredes y el piso de alrededor. El origen es el centro del borde, a ras
+## Pileta de agua: superficie (water.gdshader), fondo y paredes de piedra, un bloqueo para no meterse y proyectores del
+## agua: CausticsLight la refleja en las paredes y CausticsDecal la derrama en el piso de alrededor. El origen es el centro del borde, a ras
 ## del piso; va en celdas del GridMap sin piso.
 
 const SURFACE_DROP := 0.12
@@ -32,11 +32,11 @@ func _ready() -> void:
 	_build()
 
 
-## Las luces que proyectan el agua.
-func lights() -> Array[CausticsLight]:
-	var found: Array[CausticsLight] = []
+## Los que proyectan el agua (CausticsLight, CausticsDecal).
+func projectors() -> Array[Node3D]:
+	var found: Array[Node3D] = []
 	for child in get_children():
-		if child is CausticsLight:
+		if child is CausticsLight or child is CausticsDecal:
 			found.append(child)
 	return found
 
@@ -46,8 +46,8 @@ func _process(delta: float) -> void:
 		return
 	var water := surface.mesh.surface_get_material(0) as ShaderMaterial
 	var center := Vector2(global_position.x, global_position.z)
-	for light in lights():
-		light.draw(water, surface.global_position.y, center - size * 0.5, center + size * 0.5)
+	for projector in projectors():
+		projector.draw(water, surface.global_position.y, center - size * 0.5, center + size * 0.5)
 	if drips.y <= 0.0:
 		return
 	_next_drip -= delta
@@ -64,6 +64,9 @@ func _build() -> void:
 	basin.mesh = _basin_mesh()
 	(block.shape as BoxShape3D).size = Vector3(size.x, 1.4, size.y)
 	block.position.y = 0.7 - depth
+	for decal in find_children("*", "Decal", false):
+		var reach: float = (decal.get(&"caustics_material") as ShaderMaterial).get_shader_parameter(&"outside_reach")
+		decal.size = Vector3(size.x + reach * 2.0, decal.size.y, size.y + reach * 2.0)
 
 
 
