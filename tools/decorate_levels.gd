@@ -50,6 +50,8 @@ const OVERWORLD := {
 
 var _grid: GridMap
 var _lib: MeshLibrary
+## De dónde salen las colisiones: el kit orgánico del overworld no tiene (12.15), las mismas ids en overworld_kit.tres sí.
+var _shapes: MeshLibrary
 var _keep_out: Array[Vector3] = []
 var _doors: Array[Vector3] = []
 var _placed: Array[Vector3] = []
@@ -68,6 +70,7 @@ func _decorate(level_name: String, area_script: String, recipe: Callable) -> voi
 	var level: Node3D = (load("res://levels/%s.tscn" % level_name) as PackedScene).instantiate()
 	_grid = level.get_node("GridMap")
 	_lib = _grid.mesh_library
+	_shapes = load("res://data/kits/overworld_kit.tres") if _lib.resource_path.ends_with("overworld_organico_kit.tres") else _lib
 	_keep_out.clear()
 	_doors.clear()
 	_placed.clear()
@@ -304,8 +307,8 @@ func _is_wall(cell: Vector3i) -> bool:
 	var item := _grid.get_cell_item(cell)
 	if item == GridMap.INVALID_CELL_ITEM or _name(cell) in ["Puerta", "Escalón"] or _is_hole(cell):
 		return false
-	for k in range(0, _lib.get_item_shapes(item).size(), 2):
-		var shapes := _lib.get_item_shapes(item)
+	for k in range(0, _shapes.get_item_shapes(item).size(), 2):
+		var shapes := _shapes.get_item_shapes(item)
 		var box: AABB = (shapes[k + 1] as Transform3D) * (shapes[k] as Shape3D).get_debug_mesh().get_aabb()
 		if box.end.y > 0.8:
 			return true

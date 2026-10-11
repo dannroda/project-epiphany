@@ -4,19 +4,13 @@ const WALL := preload("res://data/kits/materials/epiphany_wall.tres")
 const PLAIN := preload("res://data/kits/materials/epiphany_outdoor.tres")
 
 
-func _material(library: MeshLibrary, item_name: String) -> Material:
-	return library.get_item_mesh(library.find_item_by_name(item_name)).surface_get_material(0)
-
-
 func test_overworld_walls_cut_a_hole_but_not_at_the_edge_of_the_world() -> void:
 	var overworld: Node = load("res://levels/overworld.tscn").instantiate()
 	var grid := overworld.get_node(^"GridMap") as GridMap
 	var library := grid.mesh_library
-	for item_name in ["Pared", "Acantilado", "Risco"]:
-		assert_eq(_material(library, item_name), WALL, "%s se recorta alrededor del player" % item_name)
-	for item_name in ["Pared borde", "Andén borde", "Risco borde"]:
-		assert_eq(_material(library, item_name), PLAIN, "%s no" % item_name)
-	assert_eq(_material(library, "Pasto"), PLAIN, "el piso no")
+	var terrain := overworld.get_node(^"Terreno")
+	assert_eq((terrain.get_node(^"riscos") as MeshInstance3D).get_active_material(0), WALL, "la roca del terreno se recorta alrededor del player")
+	assert_eq((terrain.get_node(^"suelo") as MeshInstance3D).get_active_material(0), PLAIN, "el piso no")
 	assert_true((overworld.get_node(^"OverworldMap") as OverworldMap).grid == grid)
 	OverworldMap.use_edge_walls(grid)
 	var edges := 0

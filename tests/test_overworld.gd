@@ -1,5 +1,6 @@
 extends "res://tests/test_case.gd"
 
+const SIDES: Array[Vector3i] = [Vector3i(-1, 0, 0), Vector3i(0, 0, 1), Vector3i(1, 0, 0), Vector3i(0, 0, -1)]
 const LEVEL := "res://levels/overworld.tscn"
 
 
@@ -80,29 +81,54 @@ func test_abyss_has_no_floor_but_a_pit() -> void:
 
 
 func test_pit_walls_face_the_ground() -> void:
-	for level: Array in [[LEVEL, "Abismo"], ["res://levels/temple.tscn", "Hueco"]]:
-		var root := (load(level[0]) as PackedScene).instantiate()
-		var grid := root.get_node(^"GridMap") as GridMap
-		var lib := grid.mesh_library
-		var sides: Array[Vector3i] = [Vector3i(-1, 0, 0), Vector3i(0, 0, 1), Vector3i(1, 0, 0), Vector3i(0, 0, -1)]
-		var cells := 0
-		for cell in grid.get_used_cells():
-			if not lib.get_item_name(grid.get_cell_item(cell)).begins_with(level[1]):
+	var root := (load("res://levels/temple.tscn") as PackedScene).instantiate()
+	var grid := root.get_node(^"GridMap") as GridMap
+	var lib := grid.mesh_library
+	var cells := 0
+	for cell in grid.get_used_cells():
+		if not lib.get_item_name(grid.get_cell_item(cell)).begins_with("Hueco"):
+			continue
+		cells += 1
+		var basis := grid.get_cell_item_basis(cell)
+		var faces := lib.get_item_mesh(grid.get_cell_item(cell)).get_faces()
+		for k in 4:
+			var neighbor := grid.get_cell_item(cell + SIDES[k])
+			var open := neighbor != -1 and lib.get_item_name(neighbor).begins_with("Hueco")
+			var wall := false
+			for t in range(0, faces.size(), 3):
+				var p := basis * ((faces[t] + faces[t + 1] + faces[t + 2]) / 3.0)
+				var along := Vector3(SIDES[k]) * p.dot(Vector3(SIDES[k]))
+				wall = wall or (p.y > -0.05 and along.length() > 0.8 and Vector2(p.x - along.x, p.z - along.z).length() < 0.5 and p.dot(Vector3(SIDES[k])) > 0)
+			assert_eq(wall, not open, "Hueco %s lado %d" % [cell, k])
+	assert_true(cells > 0, "el templo tiene huecos")
+	root.free()
+
+
+## En el overworld las paredes del abismo son parte del terreno (12.15): desde adentro, a 1 m de hondo, hay roca hacia cada lado que da a tierra.
+func test_abyss_walls_face_the_ground() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.root.get_node(^"GameState").reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	await tree.physics_frame
+	await tree.physics_frame
+	var grid := tree.current_scene.get_node(^"GridMap") as GridMap
+	var lib := grid.mesh_library
+	var space := (tree.current_scene as Node3D).get_world_3d().direct_space_state
+	var abyss := func(item: int) -> bool: return item != -1 and lib.get_item_name(item).begins_with("Abismo")
+	var sides := 0
+	for cell in grid.get_used_cells():
+		if not abyss.call(grid.get_cell_item(cell)):
+			continue
+		for side in SIDES:
+			if abyss.call(grid.get_cell_item(cell + side)):
 				continue
-			cells += 1
-			var basis := grid.get_cell_item_basis(cell)
-			var faces := lib.get_item_mesh(grid.get_cell_item(cell)).get_faces()
-			for k in 4:
-				var neighbor := grid.get_cell_item(cell + sides[k])
-				var open := neighbor != -1 and lib.get_item_name(neighbor).begins_with(level[1])
-				var wall := false
-				for t in range(0, faces.size(), 3):
-					var p := basis * ((faces[t] + faces[t + 1] + faces[t + 2]) / 3.0)
-					var along := Vector3(sides[k]) * p.dot(Vector3(sides[k]))
-					wall = wall or (p.y > -0.05 and along.length() > 0.8 and Vector2(p.x - along.x, p.z - along.z).length() < 0.5 and p.dot(Vector3(sides[k])) > 0)
-				assert_eq(wall, not open, "%s %s lado %d" % [level[1], cell, k])
-		assert_true(cells > 0, "%s tiene %s" % [level[0], level[1]])
-		root.free()
+			sides += 1
+			var from := grid.to_global(grid.map_to_local(cell)) * Vector3(1, 0, 1) + Vector3.DOWN
+			var ray := PhysicsRayQueryParameters3D.create(from, from + Vector3(side) * 1.6, 1)
+			assert_true(not space.intersect_ray(ray).is_empty(), "abismo %s: pared hacia %s" % [cell, side])
+	assert_true(sides > 0, "el overworld tiene abismo")
+	tree.root.get_node(^"GameState").reset()
 
 
 func test_fence_ends_have_a_post() -> void:
