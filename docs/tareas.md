@@ -2454,7 +2454,7 @@ Como la de Basic Controls de TotK: el mando dibujado con una línea a cada botó
 - [ ] Textos desde el InputMap
   Cada caja lee los eventos de su acción (InputPrompts), así si cambia una asignación la pantalla la sigue.
 - [ ] Entradas
-  Título › Opciones › Controles abre la pantalla completa, por MenuStack. En la pausa, la pestaña Sistema (mockups Pause_System y Pause_System_Keyboard): a la izquierda Guardar, Cargar, separador, Opciones y Volver al título; a la derecha los controles básicos del dispositivo en uso, con Y (T en teclado) para ver el otro.
+  Título › Opciones › Controles abre la pantalla completa, por MenuStack. En la pausa, la pestaña Sistema (mockups Pause_System y Pause_System_Keyboard): a la izquierda Guardar, Cargar, separador, Opciones y Volver al título; a la derecha los controles básicos del dispositivo en uso, con Y (T en teclado) para ver el otro. Guardar y Cargar cambian el panel derecho por la lista de partidas (Pause_System_Save: ranuras 1-3, la en curso marcada, pregunta antes de sobrescribir otra; Pause_System_Load: Auto + 1-3, la vacía apagada, pregunta antes de cargar). B vuelve a los controles.
 - [ ] Tests y GDD
 
 ## M11 — Pulido: contenido y feel  (20/55)
