@@ -9,14 +9,16 @@ const CELL := Vector2(46, 34)
 const PITCH := Vector2(53, 38)
 const GRID_ORIGIN := Vector2(10, 8)
 const ROOM_FILL := Color("#3a4250")
-const FOG_EDGE := Color("#3a4250")
 const DOOR_SIZE := 7.0
 ## Píxeles del minimapa por metro en el overworld.
 const OVERWORLD_SCALE := 5.0
 ## Cada cuánto se vuelven a leer las puertas (se abren y se cierran).
 const DOORS_REFRESH := 0.5
+## Metros por píxel de la textura de zonas exploradas que usa la niebla (más grueso = borde más suave).
+const FOG_METERS_PER_PIXEL := 2.0
 
 @onready var view: Control = %View
+@onready var fog: ShaderMaterial = view.material
 
 var _scene: Node
 var _map: OverworldMap
@@ -28,6 +30,8 @@ var _current_style := _room_box(MapRoomCell.GOLD)
 
 func _ready() -> void:
 	view.draw.connect(_draw_view)
+	fog.set_shader_parameter(&"ink", MapRoomCell.INK)
+	GameState.map_changed.connect(_update_fog)
 
 
 static func _room_box(border: Color) -> StyleBoxFlat:
@@ -61,6 +65,29 @@ func _bind(scene: Node) -> void:
 	_map = MapData.find(get_tree(), OverworldMap) as OverworldMap if scene else null
 	if _map:
 		_map.snapshot()
+	_update_fog()
+
+
+## Textura con lo explorado del overworld (1 fuera de las zonas y en las visitadas, 0 en el borde del mundo),
+## suavizada para que la niebla del shader tenga borde con dither.
+func _update_fog() -> void:
+	view.material = fog if is_instance_valid(_map) and not _in_dungeon() else null
+	if view.material == null:
+		return
+	var rect := _map.world_rect
+	var size := Vector2i((rect.size / FOG_METERS_PER_PIXEL).ceil())
+	var image := Image.create_empty(size.x, size.y, false, Image.FORMAT_L8)
+	image.fill(Color.WHITE)
+	for zone: AreaZone in _map.get_tree().current_scene.find_children("*", "AreaZone", true, false):
+		if not zone.is_visited():
+			var bounds := zone.bounds()
+			image.fill_rect(Rect2i(((bounds.position - rect.position) / FOG_METERS_PER_PIXEL).floor(), (bounds.size / FOG_METERS_PER_PIXEL).ceil()), Color.BLACK)
+	for edge in [Rect2i(0, 0, size.x, 1), Rect2i(0, size.y - 1, size.x, 1), Rect2i(0, 0, 1, size.y), Rect2i(size.x - 1, 0, 1, size.y)]:
+		image.fill_rect(edge, Color.BLACK)
+	image.resize(maxi(size.x / 2, 1), maxi(size.y / 2, 1), Image.INTERPOLATE_BILINEAR)
+	image.resize(size.x, size.y, Image.INTERPOLATE_BILINEAR)
+	fog.set_shader_parameter(&"explored", ImageTexture.create_from_image(image))
+	fog.set_shader_parameter(&"world_rect", Vector4(rect.position.x, rect.position.y, rect.size.x, rect.size.y))
 
 
 func _in_dungeon() -> bool:
@@ -172,15 +199,12 @@ func _draw_overworld() -> void:
 	var here := Vector2(player.global_position.x, player.global_position.z)
 	view.draw_rect(Rect2(Vector2.ZERO, view.size), MapRoomCell.INK)
 	var world_view := Rect2(here - center / OVERWORLD_SCALE, view.size / OVERWORLD_SCALE)
+	fog.set_shader_parameter(&"view_world", Vector4(world_view.position.x, world_view.position.y, world_view.size.x, world_view.size.y))
+	fog.set_shader_parameter(&"view_size", view.size)
 	var shown := world_view.intersection(_map.world_rect)
 	if shown.has_area():
 		var texture_scale := _map.texture.get_size() / _map.world_rect.size
 		view.draw_texture_rect_region(_map.texture, _to_view(shown, here), Rect2((shown.position - _map.world_rect.position) * texture_scale, shown.size * texture_scale))
-	for zone: AreaZone in get_tree().current_scene.find_children("*", "AreaZone", true, false):
-		if not zone.is_visited() and zone.bounds().intersects(world_view):
-			var rect := _to_view(zone.bounds(), here)
-			view.draw_rect(rect, MapRoomCell.INK)
-			MapRoomCell.draw_dashed_rect(view, rect, FOG_EDGE)
 	for portal: Portal in get_tree().current_scene.find_children("*", "Portal", true, false):
 		_draw_mark(func() -> void: MapRoomCell.draw_entrance(view, Vector2.ZERO, MapRoomCell.TEXT), portal.global_position, here, world_view)
 	for chest: Chest in get_tree().get_nodes_in_group(&"chests"):

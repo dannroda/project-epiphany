@@ -1,6 +1,11 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://src/ui/hud/minimap.gd" id="1_minimap"]
+[ext_resource type="Shader" path="res://src/ui/hud/minimap_fog.gdshader" id="2_fog"]
+
+[sub_resource type="ShaderMaterial" id="Fog"]
+shader = ExtResource("2_fog")
+shader_parameter/fade_from = 0.62
 
 [node name="Minimap" type="Control"]
 custom_minimum_size = Vector2(176, 132)
@@ -22,6 +27,7 @@ theme_type_variation = &"HudSlot"
 
 [node name="View" type="Control" parent="."]
 unique_name_in_owner = true
+material = SubResource("Fog")
 clip_contents = true
 layout_mode = 1
 anchors_preset = 15
