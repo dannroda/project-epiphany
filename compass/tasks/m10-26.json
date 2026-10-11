@@ -11,7 +11,7 @@
       "text": "Textos desde el InputMap"
     },
     {
-      "detail": "Título › Opciones › Controles y Pausa › Sistema › Controles, por MenuStack.",
+      "detail": "Título › Opciones › Controles abre la pantalla completa, por MenuStack. En la pausa, la pestaña Sistema (mockups Pause_System y Pause_System_Keyboard): a la izquierda Guardar, Cargar, separador, Opciones y Volver al título; a la derecha los controles básicos del dispositivo en uso, con Y (T en teclado) para ver el otro.",
       "done": false,
       "text": "Entradas"
     },
@@ -22,7 +22,7 @@
   ],
   "code": "10.29",
   "created_at": "2026-10-11T07:54:34.932Z",
-  "description": "Como la de Basic Controls de TotK: el mando dibujado con una línea a cada botón y lo que hace (mockups Controls_Gamepad y Controls_Keyboard). LB/RB cambia entre mando y teclado/mouse. Se abre desde el título (Opciones › Controles) y desde la pausa (Sistema › Controles).",
+  "description": "Como la de Basic Controls de TotK: el mando dibujado con una línea a cada botón y lo que hace (mockups Controls_Gamepad y Controls_Keyboard). LB/RB cambia entre mando y teclado/mouse. Se abre desde el título (Opciones › Controles); en la pausa va dentro de la pestaña Sistema, junto a Guardar/Cargar/Opciones/Volver al título (Pause_System).",
   "milestone": "m10",
   "notes": "",
   "order": 60,
@@ -35,5 +35,5 @@
   ],
   "test": "",
   "title": "Pantalla de controles",
-  "updated_at": "2026-10-11T07:54:43.763Z"
+  "updated_at": "2026-10-11T08:01:02.918Z"
 }

@@ -2447,14 +2447,14 @@ Recorrido para revisar de a una las tareas en Revisión, en el orden de una part
 
 **Prioridad:** media · **Etiquetas:** `ui`, `input`
 
-Como la de Basic Controls de TotK: el mando dibujado con una línea a cada botón y lo que hace (mockups Controls_Gamepad y Controls_Keyboard). LB/RB cambia entre mando y teclado/mouse. Se abre desde el título (Opciones › Controles) y desde la pausa (Sistema › Controles).
+Como la de Basic Controls de TotK: el mando dibujado con una línea a cada botón y lo que hace (mockups Controls_Gamepad y Controls_Keyboard). LB/RB cambia entre mando y teclado/mouse. Se abre desde el título (Opciones › Controles); en la pausa va dentro de la pestaña Sistema, junto a Guardar/Cargar/Opciones/Volver al título (Pause_System).
 
 - [ ] Escena desde el mockup
   Controls_Gamepad: mando dibujado, cajas a los costados con líneas; Controls_Keyboard: grupos Moverse, Combate, Ítems, Menús. Íconos de Kenney Input Prompts.
 - [ ] Textos desde el InputMap
   Cada caja lee los eventos de su acción (InputPrompts), así si cambia una asignación la pantalla la sigue.
 - [ ] Entradas
-  Título › Opciones › Controles y Pausa › Sistema › Controles, por MenuStack.
+  Título › Opciones › Controles abre la pantalla completa, por MenuStack. En la pausa, la pestaña Sistema (mockups Pause_System y Pause_System_Keyboard): a la izquierda Guardar, Cargar, separador, Opciones y Volver al título; a la derecha los controles básicos del dispositivo en uso, con Y (T en teclado) para ver el otro.
 - [ ] Tests y GDD
 
 ## M11 — Pulido: contenido y feel  (20/55)
