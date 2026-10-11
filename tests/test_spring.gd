@@ -118,7 +118,7 @@ func test_pool_reflects_the_water_on_the_walls_and_blocks_walking_in() -> void:
 		assert_true(light.shadow_enabled, "sin sombra el projector del spot no se aplica (4.8-dev7)")
 		assert_eq(light.caustics_material.get_shader_parameter(&"tile"), water.get_shader_parameter(&"tile"), "mismo patrón que la espuma")
 	assert_true(wall.global_position.y < pool.surface.global_position.y and -wall.global_basis.z.y > 0.5, "el reflejo sube a las paredes desde abajo del agua")
-	assert_true(-spill.global_basis.z.y < -0.5 and spill.caustics_material.get_shader_parameter(&"outside_reach") > 0.0, "y otra luz lo derrama en el piso de alrededor")
+	assert_true(-spill.global_basis.z.y < -0.5 and spill.caustics_material.get_shader_parameter(&"outside_reach") > 0.0 and not spill.caustics_material.get_shader_parameter(&"lit_inside"), "y otra luz lo derrama en el piso de alrededor, sin encimarse con el agua")
 	assert_true((pool.block.shape as BoxShape3D).size.x >= pool.size.x, "no se puede entrar al agua")
 	state.reset()
 

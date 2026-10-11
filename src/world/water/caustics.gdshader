@@ -22,6 +22,8 @@ uniform float base_brightness = 0.15;
 // Metros hacia adentro del borde en los que se apaga, y hasta dónde se derrama hacia afuera.
 uniform float edge_fade = 0.6;
 uniform float outside_reach = 0.0;
+// Apagado, no ilumina dentro de la pileta (la luz del piso no se encima con el agua).
+uniform bool lit_inside = true;
 
 void blit() {
 	vec2 ndc = UV * 2.0 - 1.0;
@@ -33,6 +35,9 @@ void blit() {
 		vec2 out_of = max(pool_min - p.xz, p.xz - pool_max);
 		float signed_edge = max(out_of.x, out_of.y) > 0.0 ? length(max(out_of, vec2(0.0))) : max(out_of.x, out_of.y);
 		float edge = 1.0 - smoothstep(-edge_fade, outside_reach, signed_edge);
+		if (!lit_inside && signed_edge < 0.0) {
+			edge = 0.0;
+		}
 		vec2 layers = water_layers(p.xz * tile, vec3(0.0, 1.0, 0.0), TIME * speed);
 		c = (base_brightness + layers.x * 0.15 + layers.y * foam_brightness) * edge;
 	}

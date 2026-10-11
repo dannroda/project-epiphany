@@ -28,6 +28,7 @@ shader_parameter/foam_brightness = 1.6
 shader_parameter/base_brightness = 0.15
 shader_parameter/edge_fade = 0.0
 shader_parameter/outside_reach = 2.5
+shader_parameter/lit_inside = false
 
 [sub_resource type="StandardMaterial3D" id="Stone"]
 cull_mode = 2
