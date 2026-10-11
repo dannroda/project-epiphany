@@ -1,7 +1,7 @@
 extends Control
 ## Minimapa del HUD (mockups HUD_Minimap_Dungeon y HUD_Minimap_Overworld). En mazmorra: las salas alrededor de la
 ## actual (3×3) con sus puertas, los cofres (con brújula) y el player. En el overworld: la foto cenital alrededor del
-## player, con las zonas sin explorar en sombra y las marcas cercanas. Se oculta con un menú, una caja de texto o el
+## player, que se va descubriendo a medida que se recorre (lo demás se funde en tinta), y las marcas cercanas. Se oculta con un menú, una caja de texto o el
 ## item get abiertos, en la sala del jefe y si se apaga en Opciones.
 
 const MapData := preload("res://src/ui/menus/map_data.gd")
@@ -14,8 +14,11 @@ const DOOR_SIZE := 7.0
 const OVERWORLD_SCALE := 5.0
 ## Cada cuánto se vuelven a leer las puertas (se abren y se cierran).
 const DOORS_REFRESH := 0.5
-## Metros por píxel de la textura de zonas exploradas que usa la niebla (más grueso = borde más suave).
-const FOG_METERS_PER_PIXEL := 2.0
+## Lo que cada player deja descubierto a su alrededor en el overworld (m); el borde se funde en REVEAL_FADE.
+const REVEAL_RADIUS := 11.0
+const REVEAL_FADE := 5.0
+## Cuánto tiene que moverse un player para volver a pintar lo descubierto (m).
+const REVEAL_STEP := 1.0
 
 @onready var view: Control = %View
 @onready var fog: ShaderMaterial = view.material
@@ -26,12 +29,14 @@ var _doors: Array = []
 var _doors_age := INF
 var _room_style := _room_box(MapRoomCell.BORDER)
 var _current_style := _room_box(MapRoomCell.GOLD)
+var _revealed: ImageTexture
+var _painted_at: Dictionary[PlayerCharacter, Vector2] = {}
 
 
 func _ready() -> void:
 	view.draw.connect(_draw_view)
 	fog.set_shader_parameter(&"ink", MapRoomCell.INK)
-	GameState.map_changed.connect(_update_fog)
+	GameState.loaded.connect(_setup_reveal)
 
 
 static func _room_box(border: Color) -> StyleBoxFlat:
@@ -50,6 +55,7 @@ func _process(delta: float) -> void:
 	var room := MapData.current_room(tree)
 	visible = Settings.get_value(&"minimap") and not MenuStack.is_open() and Players.lead() != null \
 		and (_in_dungeon() and room != null or not _in_dungeon() and _map != null) and not (room and room.boss_room)
+	_reveal()
 	if not visible:
 		return
 	_doors_age += delta
@@ -65,29 +71,48 @@ func _bind(scene: Node) -> void:
 	_map = MapData.find(get_tree(), OverworldMap) as OverworldMap if scene else null
 	if _map:
 		_map.snapshot()
-	_update_fog()
+	_setup_reveal()
 
 
-## Textura con lo explorado del overworld (1 fuera de las zonas y en las visitadas, 0 en el borde del mundo),
-## suavizada para que la niebla del shader tenga borde con dither.
-func _update_fog() -> void:
+## Lo descubierto del overworld (GameState.map_revealed, 1 px por metro): el shader funde la foto en tinta donde
+## todavía no se pasó.
+func _setup_reveal() -> void:
+	_painted_at.clear()
 	view.material = fog if is_instance_valid(_map) and not _in_dungeon() else null
 	if view.material == null:
 		return
 	var rect := _map.world_rect
-	var size := Vector2i((rect.size / FOG_METERS_PER_PIXEL).ceil())
-	var image := Image.create_empty(size.x, size.y, false, Image.FORMAT_L8)
-	image.fill(Color.WHITE)
-	for zone: AreaZone in _map.get_tree().current_scene.find_children("*", "AreaZone", true, false):
-		if not zone.is_visited():
-			var bounds := zone.bounds()
-			image.fill_rect(Rect2i(((bounds.position - rect.position) / FOG_METERS_PER_PIXEL).floor(), (bounds.size / FOG_METERS_PER_PIXEL).ceil()), Color.BLACK)
-	for edge in [Rect2i(0, 0, size.x, 1), Rect2i(0, size.y - 1, size.x, 1), Rect2i(0, 0, 1, size.y), Rect2i(size.x - 1, 0, 1, size.y)]:
-		image.fill_rect(edge, Color.BLACK)
-	image.resize(maxi(size.x / 2, 1), maxi(size.y / 2, 1), Image.INTERPOLATE_BILINEAR)
-	image.resize(size.x, size.y, Image.INTERPOLATE_BILINEAR)
-	fog.set_shader_parameter(&"explored", ImageTexture.create_from_image(image))
+	var size := Vector2i(rect.size.ceil())
+	if GameState.map_revealed == null or GameState.map_revealed.get_size() != size:
+		GameState.map_revealed = Image.create_empty(size.x, size.y, false, Image.FORMAT_L8)
+	_revealed = ImageTexture.create_from_image(GameState.map_revealed)
+	fog.set_shader_parameter(&"explored", _revealed)
 	fog.set_shader_parameter(&"world_rect", Vector4(rect.position.x, rect.position.y, rect.size.x, rect.size.y))
+
+
+func _reveal() -> void:
+	if view.material == null or GameState.map_revealed == null:
+		return
+	var changed := false
+	for player in Players.all:
+		var here := Vector2(player.global_position.x, player.global_position.z)
+		if _painted_at.has(player) and _painted_at[player].distance_to(here) < REVEAL_STEP:
+			continue
+		_painted_at[player] = here
+		_paint_reveal(GameState.map_revealed, here - _map.world_rect.position)
+		changed = true
+	if changed:
+		_revealed.update(GameState.map_revealed)
+
+
+static func _paint_reveal(image: Image, center: Vector2) -> void:
+	var low := (center - Vector2.ONE * REVEAL_RADIUS).floor().max(Vector2.ZERO)
+	var high := (center + Vector2.ONE * REVEAL_RADIUS).ceil().min(Vector2(image.get_size()) - Vector2.ONE)
+	for y in range(int(low.y), int(high.y) + 1):
+		for x in range(int(low.x), int(high.x) + 1):
+			var value := 1.0 - smoothstep(REVEAL_RADIUS - REVEAL_FADE, REVEAL_RADIUS, center.distance_to(Vector2(x + 0.5, y + 0.5)))
+			if value > image.get_pixel(x, y).r:
+				image.set_pixel(x, y, Color(value, value, value))
 
 
 func _in_dungeon() -> bool:

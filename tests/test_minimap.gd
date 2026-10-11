@@ -71,3 +71,30 @@ func test_overworld_shows_the_photo_around_the_player() -> void:
 	assert_true(minimap._map != null and minimap._map.texture != null, "con la foto cenital del overworld")
 	assert_eq(minimap.rooms_around().size(), 0, "sin salas")
 	setup[1].reset()
+
+
+func test_overworld_stays_revealed_where_the_player_went_and_saves_it() -> void:
+	var setup: Array = await _load("", "res://levels/overworld.tscn")
+	var tree: SceneTree = setup[0]
+	var state: Node = setup[1]
+	var minimap: Control = setup[3]
+	var player := tree.get_first_node_in_group(&"player") as Node3D
+	var rect: Rect2 = minimap._map.world_rect
+	var seen := func(point: Vector3) -> float:
+		return state.map_revealed.get_pixelv(Vector2i(Vector2(point.x, point.z) - rect.position)).r
+	var start := player.global_position
+	var far := start + Vector3(0, 0, -20)
+	assert_true(seen.call(start) > 0.9, "donde está el player se ve")
+	assert_true(seen.call(far) < 0.1, "lejos todavía no")
+	player.global_position = far
+	for i in 3:
+		await tree.process_frame
+	assert_true(seen.call(far) > 0.9, "al llegar se descubre")
+	assert_true(seen.call(start) > 0.9, "y lo de antes queda descubierto")
+	var cfg := ConfigFile.new()
+	state.write_to(cfg)
+	state.reset()
+	assert_true(state.map_revealed == null or seen.call(start) < 0.1, "una partida nueva empieza sin descubrir")
+	state.read_from(cfg)
+	assert_true(seen.call(far) > 0.9 and seen.call(start) > 0.9, "se guarda con la partida")
+	state.reset()

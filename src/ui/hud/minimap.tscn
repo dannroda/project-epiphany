@@ -5,7 +5,6 @@
 
 [sub_resource type="ShaderMaterial" id="Fog"]
 shader = ExtResource("2_fog")
-shader_parameter/fade_from = 0.62
 
 [node name="Minimap" type="Control"]
 custom_minimum_size = Vector2(176, 132)

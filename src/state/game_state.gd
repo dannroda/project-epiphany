@@ -31,6 +31,8 @@ var dungeons: Dictionary[StringName, DungeonState] = {}
 var visited_zones: Array[StringName] = []
 ## Marcas del jugador en el mapa del overworld (XZ del mundo).
 var map_pins: Array[Vector2] = []
+## Lo recorrido del overworld para el minimapa: imagen L8 sobre OverworldMap.world_rect (0 = sin descubrir).
+var map_revealed: Image
 var current_dungeon: StringName = &"":
 	set(value):
 		if value != current_dungeon:
@@ -171,6 +173,9 @@ func write_to(cfg: ConfigFile) -> void:
 		cfg.set_value("flags", id, flags[id])
 	cfg.set_value("map", "visited_zones", visited_zones.duplicate())
 	cfg.set_value("map", "pins", map_pins.duplicate())
+	if map_revealed:
+		cfg.set_value("map", "revealed_size", map_revealed.get_size())
+		cfg.set_value("map", "revealed", map_revealed.get_data().compress(FileAccess.COMPRESSION_ZSTD))
 	for dungeon_id in dungeons:
 		var dungeon := dungeons[dungeon_id]
 		var section := DUNGEON_PREFIX + dungeon_id
@@ -204,6 +209,11 @@ func read_from(cfg: ConfigFile) -> void:
 		flags[id] = cfg.get_value("flags", id)
 	visited_zones.assign(cfg.get_value("map", "visited_zones", []))
 	map_pins.assign(cfg.get_value("map", "pins", []))
+	if cfg.has_section_key("map", "revealed"):
+		var size: Vector2i = cfg.get_value("map", "revealed_size", Vector2i.ZERO)
+		var data: PackedByteArray = cfg.get_value("map", "revealed").decompress(size.x * size.y, FileAccess.COMPRESSION_ZSTD)
+		if size.x > 0 and data.size() == size.x * size.y:
+			map_revealed = Image.create_from_data(size.x, size.y, false, Image.FORMAT_L8, data)
 	for section in cfg.get_sections():
 		if not section.begins_with(DUNGEON_PREFIX):
 			continue
@@ -226,6 +236,7 @@ func _clear() -> void:
 	flags.clear()
 	visited_zones.clear()
 	map_pins.clear()
+	map_revealed = null
 	dungeons.clear()
 	current_dungeon = &""
 	spawn_scene = ""
