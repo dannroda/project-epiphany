@@ -1,11 +1,80 @@
 [gd_scene format=3]
 
-[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/jugador/Body.res" id="1_mi5gb"]
-[ext_resource type="Skin" path="res://src/entities/models/meshes/jugador/skin.tres" id="2_lkor0"]
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/jugador/Body.res" id="1_ikp65"]
+[ext_resource type="Skin" path="res://src/entities/models/meshes/jugador/skin.tres" id="2_wqu00"]
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/jugador/Trenza.res" id="3_wi25r"]
+[ext_resource type="Skin" path="res://src/entities/models/meshes/jugador/trenza_skin.tres" id="4_3jy67"]
 
-[node name="Visuals" type="Node3D" unique_id=470762068]
+[node name="Visuals" type="Node3D" unique_id=1248339063]
 
-[node name="Body" type="MeshInstance3D" parent="." unique_id=1524489171]
-mesh = ExtResource("1_mi5gb")
-skin = ExtResource("2_lkor0")
+[node name="Body" type="MeshInstance3D" parent="." unique_id=389552145]
+mesh = ExtResource("1_ikp65")
+skin = ExtResource("2_wqu00")
 skeleton = NodePath("../../Skeleton3D")
+
+[node name="Trenza" type="BoneAttachment3D" parent="." unique_id=1065034264]
+bone_name = "head"
+use_external_skeleton = true
+external_skeleton = NodePath("../../Skeleton3D")
+
+[node name="Skeleton3D" type="Skeleton3D" parent="Trenza" unique_id=1445525865]
+bones/0/name = "root"
+bones/0/parent = -1
+bones/0/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+bones/0/enabled = true
+bones/0/position = Vector3(0, 0, 0)
+bones/0/rotation = Quaternion(0, 0, 0, 1)
+bones/0/scale = Vector3(1, 1, 1)
+bones/0/skin_scale = Vector3(1, 1, 1)
+bones/1/name = "trenza1"
+bones/1/parent = 0
+bones/1/rest = Transform3D(0.9830931, 0.17476602, 0.054633934, 0.05463381, -0.5647472, 0.8234537, 0.17476606, -0.8065466, -0.5647473, 1.4375982e-08, 0.6785747, -0.41999993)
+bones/1/enabled = true
+bones/1/position = Vector3(1.4375982e-08, 0.6785747, -0.41999993)
+bones/1/rotation = Quaternion(0.88212633, 0.06501332, 0.06501336, -0.46195203)
+bones/1/scale = Vector3(1, 1, 1.0000001)
+bones/1/skin_scale = Vector3(1, 1, 1)
+bones/2/name = "trenza2"
+bones/2/parent = 1
+bones/2/rest = Transform3D(0.9821292, -0.16855453, -0.08373442, 0.17975855, 0.97189397, 0.15201667, 0.055757884, -0.16435203, 0.98482454, -7.450581e-09, 0.6055808, 1.07102096e-07)
+bones/2/enabled = true
+bones/2/position = Vector3(-7.450581e-09, 0.6055808, 1.07102096e-07)
+bones/2/rotation = Quaternion(-0.079703785, -0.03514275, 0.08775163, 0.99232656)
+bones/2/scale = Vector3(0.9999999, 1, 0.99999994)
+bones/2/skin_scale = Vector3(1, 1, 1)
+bones/3/name = "trenza3"
+bones/3/parent = 2
+bones/3/rest = Transform3D(0.92893565, -0.2986066, -0.21888976, 0.36726475, 0.81799686, 0.44271636, 0.04685311, -0.4916454, 0.86953425, 8.614734e-09, 0.46580765, 5.0204108e-09)
+bones/3/enabled = true
+bones/3/position = Vector3(8.614734e-09, 0.46580765, 5.0204108e-09)
+bones/3/rotation = Quaternion(-0.24566473, -0.06986978, 0.17507258, 0.9508505)
+bones/3/scale = Vector3(1, 1, 1.0000001)
+bones/3/skin_scale = Vector3(1, 1, 1)
+
+[node name="Trenza" type="MeshInstance3D" parent="Trenza/Skeleton3D" unique_id=643878024]
+mesh = ExtResource("3_wi25r")
+skin = ExtResource("4_3jy67")
+skeleton = NodePath("..")
+
+[node name="Springs" type="SpringBoneSimulator3D" parent="Trenza/Skeleton3D" unique_id=52273420]
+setting_count = 1
+settings/0/root_bone_name = "trenza1"
+settings/0/root_bone = -1
+settings/0/end_bone_name = "trenza3"
+settings/0/end_bone = -1
+settings/0/end_bone/direction = 6
+settings/0/end_bone/length = 0.0
+settings/0/center_from = 0
+settings/0/individual_config = false
+settings/0/rotation_axis = 3
+settings/0/radius/value = 0.02
+settings/0/radius/damping_curve = null
+settings/0/stiffness/value = 1.5
+settings/0/stiffness/damping_curve = null
+settings/0/drag/value = 0.4
+settings/0/drag/damping_curve = null
+settings/0/gravity/value = 0.6
+settings/0/gravity/damping_curve = null
+settings/0/gravity/direction = Vector3(0, -1, 0)
+settings/0/enable_all_child_collisions = true
+settings/0/exclude_collision_count = 0

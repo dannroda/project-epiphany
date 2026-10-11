@@ -160,28 +160,55 @@ def jugador_head(head, hz):
 	head.paint(gem, NEON, "MID")
 
 
-def trenza(head, hz):
-	"""Trenza larga que cae por la espalda y se abre hacia atrás, con anillos de neón y una borla."""
+TRENZA_BONES = ("trenza1", "trenza2", "trenza3")
+TRENZA_CUTS = (0.0, 0.36, 0.7, 1.15)
+
+
+def trenza_point(hz, t):
+	return Vector((0.12 * math.sin(t * 3.0), 0.42 + 0.95 * math.sin(t * 1.5), hz + 0.2 - 0.95 * t))
+
+
+def trenza_bones(rig, hz):
+	"""Cadena de huesos de la trenza colgada de la cabeza (en Godot la mueve un SpringBoneSimulator3D)."""
+	bpy.context.view_layer.objects.active = rig
+	bpy.ops.object.mode_set(mode="EDIT")
+	to_rig = rig.matrix_world.inverted()
+	prev = rig.data.edit_bones["head"]
+	for name, a, b in zip(TRENZA_BONES, TRENZA_CUTS, TRENZA_CUTS[1:]):
+		bone = rig.data.edit_bones.new(name)
+		bone.head, bone.tail = to_rig @ trenza_point(hz, a), to_rig @ trenza_point(hz, b)
+		bone.parent = prev
+		prev = bone
+	bpy.ops.object.mode_set(mode="OBJECT")
+
+
+def trenza(braid, hz):
+	"""Trenza larga que cae por la espalda y se abre hacia atrás, con anillos de neón y una borla; cada tramo va a su hueso."""
+	def part(t):
+		return braid.part(next(b for b, cut in zip(TRENZA_BONES, TRENZA_CUTS[1:]) if t < cut))
 	prev = None
 	for i in range(10):
 		t = i / 9
-		c = Vector((0.12 * math.sin(t * 3.0), 0.42 + 0.95 * math.sin(t * 1.5), hz + 0.2 - 0.95 * t))
+		c = trenza_point(hz, t)
 		r = 0.15 - 0.07 * t
-		head.paint(head.blob(c, r, squash=(1.0, 1.0, 1.25), subdiv=1, rough=0.05), SUIT, "MID", vary=0.05)
+		piece = part(t)
+		piece.paint(piece.blob(c, r, squash=(1.0, 1.0, 1.25), subdiv=1, rough=0.05), SUIT, "MID", vary=0.05)
 		if i in (2, 6):
-			ring = head.cylinder(r * 1.1, -0.03, 0.03, sides=8)
-			head.transform(ring, Matrix.Translation(c))
-			head.paint(ring, NEON, "MID")
+			ring = piece.cylinder(r * 1.1, -0.03, 0.03, sides=8)
+			piece.transform(ring, Matrix.Translation(c))
+			piece.paint(ring, NEON, "MID")
 		prev = c
-	tassel = head.cylinder(0.08, 0.0, 0.22, sides=6, radius_top=0.03)
-	head.transform(tassel, Matrix.Translation(prev - Vector((0, 0, 0.25))))
-	head.paint(tassel, ARMOR, "MID")
-	head.paint(head.blob(prev - Vector((0, 0, 0.04)), 0.06, subdiv=1, rough=0.0), TRIM, "MID")
+	end = braid.part(TRENZA_BONES[-1])
+	tassel = end.cylinder(0.08, 0.0, 0.22, sides=6, radius_top=0.03)
+	end.transform(tassel, Matrix.Translation(prev - Vector((0, 0, 0.25))))
+	end.paint(tassel, ARMOR, "MID")
+	end.paint(end.blob(prev - Vector((0, 0, 0.04)), 0.06, subdiv=1, rough=0.0), TRIM, "MID")
 
 
 def jugador():
 	rig = start()
 	bp = bone_points(rig)
+	trenza_bones(rig, 1.72)
 	body = Body(rig, "jugador", 10)
 	hips = body.part("hips")
 	hips.paint(hips.box(-0.24, 0.24, -0.17, 0.17, 0.4, 0.66), SUIT, "MID", vary=0.03)
@@ -197,7 +224,6 @@ def jugador():
 	collar = torso.lathe([(0.2, 1.17), (0.22, 1.24), (0.0, 1.24)], sides=8)
 	torso.paint(collar, TRIM, "MID")
 	jugador_head(body.part("head"), 1.72)
-	trenza(body.part("head"), 1.72)
 	for side in ("l", "r"):
 		up = body.part(f"upperarm.{side}")
 		a, b = bp[f"upperarm.{side}"]
@@ -223,6 +249,9 @@ def jugador():
 		foot.paint(foot.box(f0.x - 0.13, f0.x + 0.13, f0.y - 0.24, f0.y + 0.1, 0.0, 0.16, taper=0.03), ARMOR, "LOW")
 		foot.paint(foot.box(f0.x - 0.135, f0.x + 0.135, f0.y - 0.245, f0.y + 0.105, 0.0, 0.035), NEON, "MID")
 	body.build()
+	braid = Body(rig, "trenza", 40)
+	trenza(braid, 1.72)
+	braid.build()
 	save("jugador")
 
 
