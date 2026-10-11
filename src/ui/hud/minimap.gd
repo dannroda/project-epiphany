@@ -23,6 +23,8 @@ const REVEAL_STEP := 1.0
 @export var current_style: StyleBox
 
 @onready var view: Control = %View
+## Las marcas y la flecha del overworld van aparte, fuera de la niebla.
+@onready var marks: Control = %Marks
 @onready var fog: ShaderMaterial = view.material
 
 var _scene: Node
@@ -35,6 +37,7 @@ var _painted_at: Dictionary[PlayerCharacter, Vector2] = {}
 
 func _ready() -> void:
 	view.draw.connect(_draw_view)
+	marks.draw.connect(_draw_marks)
 	fog.set_shader_parameter(&"ink", MapRoomCell.INK)
 	GameState.loaded.connect(_setup_reveal)
 
@@ -54,6 +57,7 @@ func _process(delta: float) -> void:
 		_doors = MapData.doors(tree)
 		_doors_age = 0.0
 	view.queue_redraw()
+	marks.queue_redraw()
 
 
 func _bind(scene: Node) -> void:
@@ -163,7 +167,7 @@ func _draw_dungeon() -> void:
 		var at := MapData.room_grid_point(tree, player.global_position, current) - Vector2(current.map_cell)
 		var forward := player.model.global_basis.z
 		var point := (_cell_origin(at) + CELL / 2.0).clamp(_cell_origin(Vector2.ZERO) + Vector2(7, 7), _cell_origin(Vector2.ZERO) + CELL - Vector2(7, 7))
-		_draw_small(func() -> void: MapRoomCell.draw_arrow(view, Vector2.ZERO, atan2(forward.x, -forward.z)), point, 0.8)
+		_draw_small(view, func() -> void: MapRoomCell.draw_arrow(view, Vector2.ZERO, atan2(forward.x, -forward.z)), point, 0.8)
 
 
 ## Celda `apart` (relativa a la sala actual) → esquina de su rectángulo.
@@ -174,11 +178,11 @@ func _cell_origin(apart: Vector2) -> Vector2:
 func _draw_room_icons(room: Room, rect: Rect2) -> void:
 	var center := rect.get_center()
 	if room.boss_room:
-		_draw_small(func() -> void: MapRoomCell.draw_eye(view, Vector2.ZERO), center, 0.7)
+		_draw_small(view, func() -> void: MapRoomCell.draw_eye(view, Vector2.ZERO), center, 0.7)
 		return
 	var closed := MapData.chests_in(get_tree(), room).filter(func(chest: Chest) -> bool: return chest.interactable.enabled)
 	if not closed.is_empty():
-		_draw_small(func() -> void: MapRoomCell.draw_chest(view, Vector2.ZERO, MapRoomCell.GOLD), center, 0.7)
+		_draw_small(view, func() -> void: MapRoomCell.draw_chest(view, Vector2.ZERO, MapRoomCell.GOLD), center, 0.7)
 
 
 func _draw_door(point: Vector3, kind: MapMark.Kind, shown: Array[Room], current: Room) -> void:
@@ -205,10 +209,10 @@ func _draw_door(point: Vector3, kind: MapMark.Kind, shown: Array[Room], current:
 
 
 ## Los íconos de la pestaña Mapa, achicados.
-func _draw_small(draw: Callable, at: Vector2, scale_factor: float) -> void:
-	view.draw_set_transform(at, 0.0, Vector2.ONE * scale_factor)
+func _draw_small(canvas: Control, draw: Callable, at: Vector2, scale_factor: float) -> void:
+	canvas.draw_set_transform(at, 0.0, Vector2.ONE * scale_factor)
 	draw.call()
-	view.draw_set_transform(Vector2.ZERO)
+	canvas.draw_set_transform(Vector2.ZERO)
 
 
 # --- Overworld ---
@@ -227,18 +231,29 @@ func _draw_overworld() -> void:
 	if shown.has_area():
 		var texture_scale := _map.texture.get_size() / _map.world_rect.size
 		view.draw_texture_rect_region(_map.texture, _to_view(shown, here), Rect2((shown.position - _map.world_rect.position) * texture_scale, shown.size * texture_scale))
+
+
+func _draw_marks() -> void:
+	if _in_dungeon() or _map == null:
+		return
+	var player := Players.lead()
+	if player == null:
+		return
+	var center := marks.size / 2.0
+	var here := Vector2(player.global_position.x, player.global_position.z)
+	var world_view := Rect2(here - center / OVERWORLD_SCALE, marks.size / OVERWORLD_SCALE)
 	for portal: Portal in get_tree().current_scene.find_children("*", "Portal", true, false):
-		_draw_mark(func() -> void: MapRoomCell.draw_entrance(view, Vector2.ZERO, MapRoomCell.TEXT), portal.global_position, here, world_view)
+		_draw_mark(func() -> void: MapRoomCell.draw_entrance(marks, Vector2.ZERO, MapRoomCell.TEXT), portal.global_position, here, world_view)
 	for chest: Chest in get_tree().get_nodes_in_group(&"chests"):
 		if not chest.interactable.enabled:
-			_draw_mark(func() -> void: MapRoomCell.draw_chest(view, Vector2.ZERO, MapRoomCell.GREY), chest.global_position, here, world_view)
+			_draw_mark(func() -> void: MapRoomCell.draw_chest(marks, Vector2.ZERO, MapRoomCell.GREY), chest.global_position, here, world_view)
 	for tablet: Tablet in get_tree().current_scene.find_children("*", "Tablet", true, false):
 		if tablet.is_read():
-			_draw_mark(func() -> void: MapRoomCell.draw_tablet(view, Vector2.ZERO, MapRoomCell.NAME), tablet.global_position, here, world_view)
+			_draw_mark(func() -> void: MapRoomCell.draw_tablet(marks, Vector2.ZERO, MapRoomCell.NAME), tablet.global_position, here, world_view)
 	for pin: Vector2 in GameState.map_pins:
-		_draw_mark(func() -> void: MapRoomCell.draw_pin(view, Vector2.ZERO), Vector3(pin.x, 0, pin.y), here, world_view)
+		_draw_mark(func() -> void: MapRoomCell.draw_pin(marks, Vector2.ZERO), Vector3(pin.x, 0, pin.y), here, world_view)
 	var forward := player.model.global_basis.z
-	_draw_small(func() -> void: MapRoomCell.draw_arrow(view, Vector2.ZERO, atan2(forward.x, -forward.z)), center, 0.8)
+	_draw_small(marks, func() -> void: MapRoomCell.draw_arrow(marks, Vector2.ZERO, atan2(forward.x, -forward.z)), center, 0.8)
 
 
 func _to_view(rect: Rect2, here: Vector2) -> Rect2:
@@ -253,4 +268,4 @@ func _draw_mark(draw: Callable, point: Vector3, here: Vector2, world_view: Rect2
 	for zone: AreaZone in get_tree().current_scene.find_children("*", "AreaZone", true, false):
 		if not zone.is_visited() and zone.bounds().has_point(flat):
 			return
-	_draw_small(draw, view.size / 2.0 + (flat - here) * OVERWORLD_SCALE, 0.75)
+	_draw_small(marks, draw, marks.size / 2.0 + (flat - here) * OVERWORLD_SCALE, 0.75)
