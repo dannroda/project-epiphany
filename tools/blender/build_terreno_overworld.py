@@ -74,14 +74,14 @@ def dirt_patch(p, points):
 	p.paint(p.polygon(points, 0.0, 0.012), "tierra", "MID", vary=0.0)
 
 
-def flagstones(p, grid=3, z0=-0.035, z1=0.0, gap=0.035, skip=(), grass=False):
+def slabs(p, grid=3, z0=-0.035, z1=0.0, gap=0.035, skip=(), half=1.0):
 	"""Lajas irregulares: una grilla con los puntos de adentro corridos; los del borde quedan en el borde."""
 	n = grid
 	pts = [[None] * (n + 1) for _ in range(n + 1)]
 	for i in range(n + 1):
 		for j in range(n + 1):
-			x = -1 + 2 * i / n
-			y = -1 + 2 * j / n
+			x = (-1 + 2 * i / n) * half
+			y = (-1 + 2 * j / n) * half
 			if 0 < i < n:
 				x += (p.rng.random() - 0.5) * 0.3
 			if 0 < j < n:
@@ -99,6 +99,11 @@ def flagstones(p, grid=3, z0=-0.035, z1=0.0, gap=0.035, skip=(), grass=False):
 			top = z1 - p.rng.random() * 0.012
 			stones += p.polygon(shrunk, z0, top)
 	p.paint(stones, "piedra", "MID", vary=0.14)
+	return stones
+
+
+def flagstones(p, grid=3, z0=-0.035, z1=0.0, gap=0.035, skip=(), grass=False):
+	slabs(p, grid, z0, z1, gap, skip)
 	base = p.box(-1, 1, -1, 1, -0.5, z0)
 	p.paint([f for f in base if f.normal.z <= 0.5], "tierra", z_range=(-0.5, 0.0))
 	p.paint([f for f in base if f.normal.z > 0.5], "pasto" if grass else "tierra", "DARK" if not grass else "MID")
@@ -203,8 +208,8 @@ def risco(p):
 
 def escalon(p):
 	epi.stone_wall(p, -0.5, 0.6 - 0.04, depth=0.05)
-	cap = p.box(-1, 1, -1, 1, 0.56, 0.6)
-	p.paint(cap, "piedra", "MID", vary=0.05)
+	p.paint(p.box(-0.97, 0.97, -0.97, 0.97, 0.5, 0.575), "tierra", "DARK")
+	slabs(p, 2, 0.5, 0.6, gap=0.03, half=0.99)
 
 
 def escalinata(p):
