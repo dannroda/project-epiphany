@@ -1,6 +1,7 @@
 class_name PlayerCharacter
 extends CharacterBody3D
 
+const SWORD_TRAIL_FADE := preload("res://data/materials/sword_trail_fade.tres")
 const PlayerControls := preload("res://player/components/controls.gd")
 
 const SHIELD_THRUST: AttackData = preload("res://data/attacks/shield_thrust.tres")
@@ -32,6 +33,7 @@ signal escaped
 @onready var input_buffer: InputBuffer = $InputBuffer
 @onready var aim: Aim = $Aim
 @onready var carrier: Carrier = $Carrier
+var sword_trail := Trail3D.new()
 
 var guard_tween: Tween
 ## Qué controles lee (13.2); existe desde que se instancia, así `Players` le asigna el slot antes de sumarlo.
@@ -76,6 +78,13 @@ func _ready() -> void:
 	movement_state.initialize(self)
 	movement_state.set_active(true)
 	_block_cone = _make_block_cone()
+	sword_trail.name = "SwordTrail"
+	sword_trail.lifetime = 0.16
+	sword_trail.color_gradient = SWORD_TRAIL_FADE
+	sword_trail.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	equipment.weapon_socket.get_parent().add_child(sword_trail)
+	equipment.weapon_changed.connect(func(_item: ItemData) -> void: _fit_sword_trail())
+	_fit_sword_trail()
 
 
 func _physics_process(delta: float) -> void:
@@ -85,8 +94,35 @@ func _physics_process(delta: float) -> void:
 	_watch_debug_values()
 
 
+## La estela cubre la hoja del arma: del 35 % al extremo del eje más largo de sus mallas (Trail3D abre el ancho en Z local).
+func _fit_sword_trail() -> void:
+	var socket := equipment.weapon_socket
+	var box := AABB()
+	var found := false
+	var to_socket := socket.global_transform.affine_inverse()
+	for mesh: MeshInstance3D in socket.find_children("*", "MeshInstance3D", true, false):
+		var part := (to_socket * mesh.global_transform) * mesh.get_aabb()
+		box = box.merge(part) if found else part
+		found = true
+	if not found:
+		return
+	var axis := box.get_longest_axis_index()
+	var near := box.get_center()
+	var far := near
+	near[axis] = box.position[axis]
+	far[axis] = box.end[axis]
+	if absf(near[axis]) > absf(far[axis]):
+		var swap := near
+		near = far
+		far = swap
+	near = near.lerp(far, 0.35)
+	sword_trail.transform = socket.transform * Transform3D(Basis.looking_at(near - far, Vector3.UP if absf((near - far).normalized().y) < 0.9 else Vector3.RIGHT), (near + far) * 0.5)
+	sword_trail.width = near.distance_to(far)
+
+
 func _process(_delta: float) -> void:
 	_update_block_cone()
+	sword_trail.emitting = attack_runner.is_active() and attack_runner.current.trail
 
 
 ## El ítem asignado al botón, si lo tiene y se puede usar ahora.

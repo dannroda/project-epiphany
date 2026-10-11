@@ -21,3 +21,12 @@ mesh = ExtResource("m0_flecha")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.35)
 shape = SubResource("Shape")
+
+[node name="Trail" type="Trail3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.35)
+lifetime = 0.12
+width = 0.06
+color = Color(1, 0.93, 0.8, 0.7)
+mesh_alignment = 1
+cast_shadow = 0
+emitting = true

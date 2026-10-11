@@ -2718,18 +2718,18 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Notas:** Skills: `godot:godot-animation`, `disciplines:game-feel`.
 
-### 11.49 VFX de combate · Pendiente
+### 11.49 VFX de combate · En curso
 
 **Prioridad:** media · **Etiquetas:** `feel`, `combate`
 
-- [ ] Estela de la espada
+- [x] Estela de la espada
   Trail en el filo durante la ventana de golpe (AttackData), en la paleta (hueso/neón).
-- [ ] Partículas en el estilo
+- [x] Partículas en el estilo
   Una sola fuente de partículas low poly con colores de la paleta: chispas al rebotar, polvo al rodar, anillo de carga del giro, estela de la flecha, explosión de bomba estilizada.
 
 **Prueba:** Pelear y usar los ítems: cada acción tiene su efecto, todos con el mismo estilo, y no bajan los FPS con varios enemigos.
 
-**Notas:** Skills: `disciplines:game-feel`, `godot:godot-shaders`. Va con 11.33.
+**Notas:** Skills: `disciplines:game-feel`, `godot:godot-shaders`. Va con 11.33. Estelas con Trail3D nativo (4.8). El anillo de carga del giro queda para cuando exista el spin attack (post-MVP).
 
 **Referencias:** `gdd.md#combate`
 
@@ -2999,6 +2999,8 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
   Contar tris del personaje (co-op: hasta 4 en pantalla) y bajar subdivisión o resolución de curvas si hace falta.
 - [ ] Render A/B en el templo
   El personaje toon con el shader en el templo actual, contra el jugador de ahora.
+- [x] Jugador (inspirado en Zero) en toon
+  Hecho: tools/blender/build_jugador_toon.py publica assets/epiphany/personaje_jugador_toon.glb (~15k tris): traje negro, casco rojo con aletas hacia atrás, chakana y gema de neón, discos en las orejas, flequillo en mechas azul oscuro, trenza con 3 huesos spring, peto con banda de neón, hombreras, brazales, cinturón dorado con faldones, canilleras y botas con suela de neón; sockets SableSocket y PistolaSocket. Las herramientas comunes con el shinobi están en tools/blender/toon.py. Escena de prueba: levels/test_jugador_toon.tscn. El shinobi queda para una parte más avanzada del juego. Falta reemplazar el modelo de player.tscn (después de 13.1).
 
 **Notas:** Rumbo elegido 2026-10-10: look tipo Wind Waker HD con cel shading (no low-poly de piezas ni anime realista). Proporciones chibi, así que sirve el Rig_Medium y las animaciones de KayKit. Prueba en tools/blender/estilo_toon.py, ahora build_shinobi.py (renders de referencia en docs/estilo/): cuerpo continuo con Skin modifier + subdivisión y pesos automáticos; pelo en mechones de curvas NURBS afinadas con rulo; cara de calcomanías proyectadas (ojo, iris, pupila, brillo, párpado, cejas, rubor, boca); mangas y pollera con pliegues senoidales; cel shading de 2 tonos con sombra de color. Las tiras de la paleta ya tienen tono claro y oscuro: sirven como lit/shade del shader. El setting andino tampoco es definitivo (cyber-shinobi estilo Megaman Zero: sables de energía y pistolas). Diseño: pelo negro con rulos y rodetes con kunais, ojos rojos, capucha y mangas anchas con ribete emisivo, faja roja tipo obi, delantal crema, pollera, medias con liga roja, botas.
 

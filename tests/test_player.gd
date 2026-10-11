@@ -325,3 +325,23 @@ func test_silhouette_only_on_the_player() -> void:
 	for mesh: MeshInstance3D in enemy.find_children("*", "MeshInstance3D", true, false):
 		if mesh.material_overlay:
 			assert_eq(mesh.material_overlay.next_pass, null, "los enemigos no")
+
+
+func test_sword_trail_only_while_the_blade_cuts() -> void:
+	var setup: Array = await _load_level()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	assert_true(player.sword_trail.width > 0.5, "cubre la hoja de la espada")
+	assert_true(not player.sword_trail.emitting, "quieto no deja estela")
+	_press(&"attack")
+	var trailed := 0
+	var stray := 0
+	for i in 90:
+		await tree.process_frame
+		if player.sword_trail.emitting:
+			trailed += 1
+			if not player.attack_runner.is_active():
+				stray += 1
+	assert_true(trailed > 0, "el tajo deja estela")
+	assert_true(stray <= 1, "solo mientras la hitbox está activa (a lo sumo un cuadro de desfase con la física)")
+	assert_true(not player.sword_trail.emitting, "y se apaga al terminar")

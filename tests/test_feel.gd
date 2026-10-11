@@ -55,3 +55,20 @@ func test_stencil_lights_draw_before_the_player_silhouette() -> void:
 	assert_true(priorities[2] < priorities[3] or priorities[5] < priorities[0], "cada luz tiene sus prioridades")
 	torch.free()
 	other.free()
+
+
+func test_bursts_reuse_one_low_poly_template() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.root.get_node(^"GameState").reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	var feel: Node = tree.root.get_node(^"Feel")
+	for kind in [&"sparks", &"sparks", &"dust", &"explosion"]:
+		feel.burst(kind, Vector3.UP, Vector3.UP)
+	var bursts := tree.current_scene.find_children("*", "CPUParticles3D", false, false)
+	assert_eq(bursts.size(), 4)
+	assert_true(bursts[0].mesh == bursts[1].mesh, "la misma ráfaga comparte la malla")
+	assert_eq((bursts[2].mesh as SphereMesh).radial_segments, 4, "octaedros, no esferas")
+	assert_true(bursts[0].scale_amount_curve != null, "se achican al morir")
+	var rings := tree.current_scene.find_children("*", "MeshInstance3D", false, false).filter(func(n: Node) -> bool: return n.mesh is TorusMesh)
+	assert_eq(rings.size(), 1, "la explosión abre un anillo")

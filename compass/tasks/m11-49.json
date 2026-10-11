@@ -2,12 +2,12 @@
   "checklist": [
     {
       "detail": "Trail en el filo durante la ventana de golpe (AttackData), en la paleta (hueso/neón).",
-      "done": false,
+      "done": true,
       "text": "Estela de la espada"
     },
     {
       "detail": "Una sola fuente de partículas low poly con colores de la paleta: chispas al rebotar, polvo al rodar, anillo de carga del giro, estela de la flecha, explosión de bomba estilizada.",
-      "done": false,
+      "done": true,
       "text": "Partículas en el estilo"
     }
   ],
@@ -20,7 +20,7 @@
     }
   ],
   "milestone": "m11",
-  "notes": "Skills: `disciplines:game-feel`, `godot:godot-shaders`. Va con 11.33.",
+  "notes": "Skills: `disciplines:game-feel`, `godot:godot-shaders`. Va con 11.33. Estelas con Trail3D nativo (4.8). El anillo de carga del giro queda para cuando exista el spin attack (post-MVP).",
   "order": 49,
   "priority": "medium",
   "refs": [
@@ -29,12 +29,12 @@
       "section": "combate"
     }
   ],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "feel",
     "combate"
   ],
   "test": "Pelear y usar los ítems: cada acción tiene su efecto, todos con el mismo estilo, y no bajan los FPS con varios enemigos.",
   "title": "VFX de combate",
-  "updated_at": "2026-10-10T23:13:28.409Z"
+  "updated_at": "2026-10-11T01:37:12.360Z"
 }

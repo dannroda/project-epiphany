@@ -66,6 +66,9 @@ func _on_body_entered(body: Node3D) -> void:
 	if stick_time > 0.0 and not body is RigidBody3D:
 		_stuck = true
 		lifetime = stick_time
+		var trail := get_node_or_null(^"Trail")
+		if trail:
+			trail.emitting = false
 		set_deferred(&"monitoring", false)
 	else:
 		queue_free()

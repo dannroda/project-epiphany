@@ -87,3 +87,27 @@ func test_unblocked_orb_hurts_and_world_breaks_it() -> void:
 	await tree.create_timer(0.5).timeout
 	assert_eq(is_instance_valid(down), false, "se rompe contra el piso")
 	setup[1].reset()
+
+
+func test_arrow_trail_stops_when_it_sticks() -> void:
+	var setup: Array = await _setup()
+	var tree: SceneTree = setup[0]
+	var wall := StaticBody3D.new()
+	var shape := CollisionShape3D.new()
+	shape.shape = BoxShape3D.new()
+	wall.add_child(shape)
+	tree.current_scene.add_child(wall)
+	wall.global_position = Vector3(-6, 1, -6)
+	var arrow: Projectile = preload("res://src/items/arrow/arrow.tscn").instantiate()
+	tree.current_scene.add_child(arrow)
+	var info := DamageInfo.new()
+	info.amount = 1
+	info.team = EntityConfig.Team.PLAYER
+	arrow.launch(Vector3(-6, 1, -2), Vector3(0, 0, -12), info)
+	var trail: Trail3D = arrow.get_node(^"Trail")
+	await tree.physics_frame
+	assert_true(trail.emitting, "en vuelo deja estela")
+	for i in 30:
+		await tree.physics_frame
+	assert_true(is_instance_valid(arrow), "quedó clavada")
+	assert_true(not trail.emitting, "clavada ya no deja estela")
