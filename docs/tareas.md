@@ -3876,6 +3876,8 @@ Cada mazmorra con su propio estilo sobre el mismo kit (mismas piezas y colisione
   WorldEnvironment y luces: cálida y polvorienta (chullpa), fría y húmeda (laguna), blanca y ventosa (cumbre).
 - [ ] Props por estilo
   Braseros, estandartes, puertas y vasijas con la piedra y los motivos de cada mazmorra.
+- [x] Estilo del terreno del overworld por región
+  AreaZone.terrain_style (necropolis, laguna, cumbre, explanada, cardonal, quebrada); el build pinta suelo, riscos y abismo por región con borde ondulado y cambia la decoración. Puestos en overworld.tscn: Templo explanada, Quebrada, Necrópolis + Mirador, Cumbre + Risco, Laguna + Bañado, Cardonal. Falta que el usuario lo vea.
 
 ## M13 — Co-op local (estilo Four Swords)  (0/9)
 

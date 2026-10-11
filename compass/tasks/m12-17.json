@@ -24,6 +24,11 @@
       "detail": "Braseros, estandartes, puertas y vasijas con la piedra y los motivos de cada mazmorra.",
       "done": false,
       "text": "Props por estilo"
+    },
+    {
+      "detail": "AreaZone.terrain_style (necropolis, laguna, cumbre, explanada, cardonal, quebrada); el build pinta suelo, riscos y abismo por región con borde ondulado y cambia la decoración. Puestos en overworld.tscn: Templo explanada, Quebrada, Necrópolis + Mirador, Cumbre + Risco, Laguna + Bañado, Cardonal. Falta que el usuario lo vea.",
+      "done": true,
+      "text": "Estilo del terreno del overworld por región"
     }
   ],
   "code": "12.17",
@@ -41,5 +46,5 @@
   ],
   "test": "",
   "title": "Estilos por mazmorra",
-  "updated_at": "2026-10-11T22:43:56.510Z"
+  "updated_at": "2026-10-11T23:43:39.081Z"
 }
