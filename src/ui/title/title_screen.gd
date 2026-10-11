@@ -12,7 +12,7 @@ extends Control
 
 func _ready() -> void:
 	MenuStack.set_base(self)
-	%Version.text = "v" + str(ProjectSettings.get_setting("application/config/version", "0.1-dev"))
+	%Version.text = BuildInfo.label()
 	%Hints.hints = [[&"ui_accept", "Aceptar"], [&"ui_cancel", "Volver"]]
 	debug_scenarios.visible = OS.is_debug_build()
 	continue_item.pressed.connect(func() -> void: _go(SaveManager.load_game.bind(SaveManager.latest_slot())))

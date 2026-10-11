@@ -1,9 +1,9 @@
 {
   "checklist": [
     {
-      "detail": "template_release para Linux, Windows, macOS y web (wasm32 nothreads). Instalar además las plantillas de Godot 4.8-dev7 (en curso, 2026-10-10).",
-      "done": false,
-      "text": "Compilar las plantillas de export del LimboAI propio"
+      "detail": "Los template_release de Linux, Windows, macOS y web (wasm32 nothreads) salen del gdextension-4.6 oficial de LimboAI 1.8.1; el editor sigue con el build parchado (el parche es solo UI del editor). Probado 2026-10-10: export release de Linux y Windows, y el build de Linux corre el templo (LimboHSM del player, BTs de enemigos) sin errores.",
+      "done": true,
+      "text": "Plantillas de export de LimboAI (oficial 1.8.1)"
     },
     {
       "detail": "Excluir `debug/scenarios/*` y `tests/`; `plain_saves` solo en el preset de debug.",
@@ -21,14 +21,14 @@
       "text": "Build por línea de comandos"
     },
     {
-      "detail": "Universal (Intel + Apple Silicon), bundle id, ícono .icns; sin firma ni notarización por ahora (los playtesters abren con clic derecho → Abrir o xattr -dr com.apple.quarantine). Sin Mac para probar: se confía en los reportes. LimboAI necesita liblimboai.macos.template_release.framework (osxcross o una Mac).",
-      "done": false,
+      "detail": "Preset 'macOS' en build.sh: universal (Intel + Apple Silicon), bundle id com.lonewolftechnology.epiphany, ícono .icns generado del png, firma ad-hoc (built-in) sin notarizar. Los playtesters abren con clic derecho → Abrir o xattr -dr com.apple.quarantine. Sin Mac para probar: se confía en los reportes.",
+      "done": true,
       "text": "Preset de macOS sin firmar"
     },
     {
-      "detail": "rcedit configurado en el editor (con wine en Linux); sin firma, SmartScreen avisa y se sigue con 'Ejecutar de todas formas'.",
-      "done": false,
-      "text": "Ícono y metadatos del .exe (opcional)"
+      "detail": "El ícono va dentro del .exe (Godot 4.8 lo incrusta solo, sin rcedit). Versión 0.1.0.0, nombre y descripción 'Project Epiphany'; empresa vacía. Sin firma: SmartScreen avisa y se sigue con 'Ejecutar de todas formas'.",
+      "done": true,
+      "text": "Metadatos del .exe (opcional)"
     }
   ],
   "code": "10.9",
@@ -40,7 +40,7 @@
     }
   ],
   "milestone": "m10",
-  "notes": "Skills: `godot:godot-export`. Decidido 2026-10-10: Windows y macOS van sin firmar; macOS sin probar (no hay Mac), se arreglan los reportes.",
+  "notes": "Skills: `godot:godot-export`. Decidido 2026-10-10: Windows y macOS van sin firmar; macOS sin probar (no hay Mac), se arreglan los reportes. 2026-10-11: build de Linux probado por el usuario (arranca, sin partidas para cargar). Falta probar Windows en una máquina limpia.",
   "order": 9,
   "refs": [
     {
@@ -51,5 +51,5 @@
   "status": "review",
   "test": "Instalar el build en una máquina limpia (Linux y Windows): arranca, guarda en `user://` cifrado y no incluye escenarios ni tests.",
   "title": "Build para playtesters",
-  "updated_at": "2026-10-10T22:49:40.455Z"
+  "updated_at": "2026-10-11T03:10:13.362Z"
 }

@@ -6,3 +6,4 @@
 
 # Builds exportados (tools/build.sh)
 /builds/
+/build_info.cfg

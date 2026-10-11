@@ -6,7 +6,7 @@
       "text": "Preset Web"
     },
     {
-      "detail": "liblimboai.web.template_release.wasm32.nothreads.wasm compilado con emscripten (la versión que pide limboai.gdextension); probar que los BT del jefe y los enemigos corren.",
+      "detail": "liblimboai.web.template_release.wasm32.nothreads.wasm ya está (gdextension oficial de LimboAI 1.8.1, como los de escritorio en 10.9); falta probar que los BT del jefe y los enemigos corren en el navegador.",
       "done": false,
       "text": "LimboAI para web"
     },
@@ -45,5 +45,5 @@
   ],
   "test": "Abrir el build en Chrome y Firefox desde itch: carga en un tiempo razonable, se juega el overworld y el templo hasta el jefe con gamepad y teclado, el guardado sobrevive a recargar la página y se ve parecido al build de escritorio.",
   "title": "Build web",
-  "updated_at": "2026-10-10T22:49:42.476Z"
+  "updated_at": "2026-10-11T02:59:29.341Z"
 }
