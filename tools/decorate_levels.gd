@@ -8,6 +8,9 @@ extends SceneTree
 const MESH := "res://assets/epiphany/meshes/%s.res"
 const OUT := "res://levels/decor/%s_decor.tscn"
 const BRAZIER := preload("res://src/world/brazier.tscn")
+const LEAVES := preload("res://src/world/falling_leaves.tscn")
+## Árboles del kit → altura de la copa, de donde caen hojas.
+const CANOPIES := {"Árbol": 2.4, "Queñoa chica": 1.5}
 const CELL := 2.0
 ## Lo jugable más cerca que esto (m) no deja decorar.
 const CLEARANCE := 1.8
@@ -94,12 +97,26 @@ func _decorate(level_name: String, area_script: String, recipe: Callable) -> voi
 		_rng.seed = hash(level_name + area.name)
 		recipe.call(area, _cells_in(area), group)
 		count += group.get_child_count()
+	_leaves()
 	var packed := PackedScene.new()
 	packed.pack(_root)
 	ResourceSaver.save(packed, OUT % level_name)
 	print("decorate_levels: %s, %d piezas" % [level_name, count])
 	_root.free()
 	level.free()
+
+
+func _leaves() -> void:
+	var group: Node3D
+	for cell in _grid.get_used_cells():
+		if CANOPIES.has(_name(cell)):
+			if group == null:
+				group = Node3D.new()
+				group.name = "Hojas"
+				_add(_root, group)
+			var leaves := LEAVES.instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE) as Node3D
+			leaves.position = _center(cell) + Vector3.UP * CANOPIES[_name(cell)]
+			_add(group, leaves)
 
 
 func _temple_room(room: Area3D, cells: Array[Vector3i], group: Node3D) -> void:

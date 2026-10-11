@@ -78,6 +78,11 @@
       "detail": "Hecho: dos capas (abyss_mist.gdshader, ruido que se corre) como segunda superficie de las celdas de abismo del kit; más espesa abajo.",
       "done": true,
       "text": "Niebla en el abismo"
+    },
+    {
+      "detail": "Hecho: falling_leaves.tscn (GPUParticles3D, 4 hojas que giran y el viento corre) bajo la copa de cada árbol jugable (Árbol, Queñoa chica); las pone decorate_levels.gd en Decor/Hojas.",
+      "done": true,
+      "text": "Hojas que caen"
     }
   ],
   "code": "12.2",
@@ -109,5 +114,5 @@
   ],
   "test": "El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.",
   "title": "Terreno del overworld",
-  "updated_at": "2026-10-11T09:14:43.183Z"
+  "updated_at": "2026-10-11T09:18:10.232Z"
 }
