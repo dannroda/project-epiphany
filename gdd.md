@@ -1789,6 +1789,8 @@ if Log.is_enabled(Log.Level.DEBUG, &"ai"):   # solo si el mensaje es caro de arm
 
 **Presupuesto (10.8):** 60 FPS (16,6 ms por cuadro, p95) en la máquina más floja de los playtesters. `src/tools/profile_scenes.gd` (en ventana: `godot --path . --resolution 1280x720 --script res://src/tools/profile_scenes.gd`) mide las escenas más pesadas. El 2026-10-09, en la máquina de desarrollo (Radeon RX 580, 32 hilos) y build de editor: pradera con pasto y esqueletos ≈ 5 ms medio / 7 ms p95; arena con oleadas ≈ 5 / 8 ms (peor 10 ms); antesala con todo el *doom* ≈ 5 / 6 ms; 360–450 draw calls. Arreglo: las oleadas instancian un enemigo por cuadro (antes, un tirón de 26 ms al aparecer). Pendiente: medir en build release (10.9) y la pelea del jefe (M9). `Performance.TIME_PROCESS` es el cuadro entero, no solo los scripts.
 
+**Sombras del sol (10.25):** el `Sun` del overworld, el templo y la mazmorra de prueba usa 2 cascadas hasta 32 m (lo que abarca la cámara cenital) en vez del default de 4 hasta 100 m, que volvía a dibujar la geometría por cada cascada. Medido el 2026-10-11 (RX 580, 1280×720, sin tope): overworld 1,23 M → 346 mil triángulos y 765 → 228 draw calls (GPU 1,39 → 1,16 ms); templo 540 mil → 143 mil y 415 → 149. La sombra ortogonal cuesta lo mismo en geometría y más en GPU. Las capturas antes/después se ven iguales. `test_render_budget` lo controla.
+
 ### 11.x Builds
 <!-- id: builds -->
 

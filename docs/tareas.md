@@ -2374,7 +2374,7 @@ La suite de tests tarda unos 9 minutos en serie. Correrla en varios procesos hea
 
 Medido 2026-10-11: con monitor de 200 Hz y vsync sin tope el juego dibuja 200 FPS aunque cada cuadro le cueste ~1,2 ms a la GPU (RX 580: 82 W promedio, picos de 120 W, contra 68 W con tope 60). Engine.max_fps 60 por defecto y opción en el menú (30/60/120/sin límite) armada en la escena de opciones.
 
-### 10.25 Sombras del sol acordes a la cámara cenital · Pendiente
+### 10.25 Sombras del sol acordes a la cámara cenital · En curso
 
 **Prioridad:** media · **Etiquetas:** `rendimiento`
 
@@ -3303,7 +3303,7 @@ Feedback de playtest: el agujero con dither alrededor del player se recorta en e
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 11.54 El velo de zona tapa también las paredes que la rodean · En curso
+### 11.54 El velo de zona tapa también las paredes que la rodean · Revisión
 
 **Prioridad:** media · **Etiquetas:** `camara`, `overworld`
 
