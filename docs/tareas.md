@@ -2368,7 +2368,7 @@ La suite de tests tarda unos 9 minutos en serie. Correrla en varios procesos hea
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 10.24 Tope de FPS · En curso
+### 10.24 Tope de FPS · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `rendimiento`
 
@@ -3309,7 +3309,7 @@ Feedback de playtest: el agujero con dither alrededor del player se recorta en e
 
 Feedback de playtest (seguimiento de 11.52): con la gruta tapada se ve el borde de la pared de la sala contigua, la tapa de pasto del muro entre el claro del inicio y la gruta queda entre el velo negro y el sendero, y más abajo una franja ancha de pasto sobre el acantilado sur. El velo debería llegar hasta la cara de la pared que da al lado del jugador, para que del otro lado de la pared no se vea nada.
 
-### 11.58 Los enemigos muertos desaparecen después de un rato · Pendiente
+### 11.58 Los enemigos muertos desaparecen después de un rato · En curso
 
 **Prioridad:** media · **Etiquetas:** `combate`, `feel`
 
@@ -3452,8 +3452,8 @@ Modelar la vegetación y los props del overworld (árboles, pasto cortable, vasi
 - [x] Tablilla de piedra del overworld
   tablet.tscn.
 - [x] Rocas grandes fijas (2–3)
-- [ ] Decoración: arbustos, flores, hongos, tronco caído, tocón
-  Hay tronco caído, cardón chico, ichu y piedras (usados en 11.4); faltan arbustos, flores, hongos y tocón si hacen falta.
+- [x] Decoración: arbustos, flores, hongos, tronco caído, tocón
+  Hecho: tronco caído, cardón chico, ichu, piedras (11.4) y ahora tocón de queñoa, yareta (cojín verde de la puna, en vez de arbustos), macizo de flores y hongos, repartidos por decorate_levels.gd.
 - [ ] Fondo: nubes y colinas lejanas
   Hoy salen de KayKit Medieval. Opcional.
 

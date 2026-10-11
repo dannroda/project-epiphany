@@ -106,6 +106,9 @@ func test_death_releases_lock_on() -> void:
 	assert_eq(enemy.is_in_group(&"targetable"), false)
 	await _frames(tree, 150)
 	assert_eq(enemy.bt_player.active, false, "terminó de morir")
+	assert_true(is_instance_valid(enemy), "el cuerpo queda un rato")
+	await tree.create_timer(enemy.corpse_time + enemy.sink_time + 0.3).timeout
+	assert_true(not is_instance_valid(enemy), "y después se va")
 
 
 func test_enemies_do_not_spawn_inside_walls() -> void:

@@ -8,6 +8,10 @@ const DEAD_COLLISION_LAYER: int = 4
 signal defeated(enemy: Enemy)
 
 @export var config: EntityConfig
+## El cuerpo queda en el piso este rato y después se hunde en una nube de polvo (11.58); el drop queda.
+@export var corpse_time := 4.0
+@export var sink_time := 1.0
+@export var sink_depth := 0.9
 
 @onready var anim_player: AnimationPlayer = $ModelController/AnimationPlayer
 @onready var bt_player: BTPlayer = $BTPlayer
@@ -252,6 +256,18 @@ func on_death_finished() -> void:
 	if config.drops:
 		config.drops.drop_at.call_deferred(global_position, get_parent())
 	Log.debug(&"combat", name, "terminó de morir")
+	_sink_away()
+
+
+func _sink_away() -> void:
+	await get_tree().create_timer(corpse_time, false).timeout
+	if not is_inside_tree():
+		return
+	Feel.burst(&"dust", global_position + Vector3.UP * 0.1, Vector3.UP)
+	var tween := create_tween()
+	tween.tween_property(model, ^"position:y", model.position.y - sink_depth, sink_time) \
+			.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+	tween.tween_callback(queue_free)
 
 
 static func _register_monitors() -> void:
