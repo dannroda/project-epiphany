@@ -42,7 +42,22 @@ func _ready() -> void:
 
 
 func contains(point: Vector3) -> bool:
+	if DungeonFloor.of(self) and (point.y < floor_y() - DungeonFloor.BELOW or point.y >= floor_y() - DungeonFloor.BELOW + DungeonFloor.HEIGHT):
+		return false
 	return bounds().has_point(Vector2(point.x, point.z))
+
+
+func floor_level() -> int:
+	var dungeon_floor := DungeonFloor.of(self)
+	return dungeon_floor.level if dungeon_floor else 0
+
+
+## Altura del piso de la sala: la base de su caja.
+func floor_y() -> float:
+	var shape := get_node_or_null(^"CollisionShape3D") as CollisionShape3D
+	if shape == null or not shape.shape is BoxShape3D:
+		return global_position.y
+	return shape.global_position.y - (shape.shape as BoxShape3D).size.y / 2.0
 
 
 ## La llama la cámara cuando el player entra. Primera visita: se marca en DungeonState y el HUD muestra el nombre.

@@ -28,15 +28,18 @@ static func chests_in(tree: SceneTree, room: Room) -> Array:
 ## Puertas con nodo Door (con llave, jefe, persianas, interruptor) y pasos libres del kit: [[posición, MapMark.Kind], …].
 static func doors(tree: SceneTree) -> Array:
 	var found: Array = []
+	if tree.current_scene == null:
+		return found
 	for door: Door in tree.current_scene.find_children("*", "Door", true, false):
 		found.append([door.global_position, door_kind(door)])
-	var grid := find(tree, GridMap) as GridMap
-	if grid and grid.mesh_library:
+	for grid: GridMap in tree.current_scene.find_children("*", "GridMap", true, false):
+		if grid.mesh_library == null:
+			continue
 		for cell in grid.get_used_cells():
 			if grid.mesh_library.get_item_name(grid.get_cell_item(cell)) != DOORWAY_ITEM:
 				continue
 			var point := grid.to_global(grid.map_to_local(cell))
-			if found.any(func(other: Array) -> bool: return Vector2(other[0].x, other[0].z).distance_to(Vector2(point.x, point.z)) < DOOR_MERGE_DISTANCE):
+			if found.any(func(other: Array) -> bool: return (other[0] as Vector3).distance_to(point) < DOOR_MERGE_DISTANCE):
 				continue
 			found.append([point, MapMark.Kind.DOOR_OPEN])
 	return found
@@ -53,6 +56,16 @@ static func door_kind(door: Door) -> MapMark.Kind:
 		Door.Kind.SHUTTER, Door.Kind.SWITCH:
 			return MapMark.Kind.DOOR_SEALED
 	return MapMark.Kind.DOOR_OPEN
+
+
+## Las salas de un piso (en una mazmorra de un solo piso, todas).
+static func rooms_on(tree: SceneTree, level: int) -> Array:
+	return tree.get_nodes_in_group(Room.GROUP).filter(func(room: Room) -> bool: return room.floor_level() == level)
+
+
+## Si un punto (una puerta) está en el borde de la sala, en su piso.
+static func near_room(room: Room, point: Vector3) -> bool:
+	return room.bounds().grow(2.0).has_point(Vector2(point.x, point.z)) and absf(point.y - room.floor_y()) < 3.0
 
 
 ## Distancia en el mundo entre centros de salas vecinas (la sala más la pared compartida).

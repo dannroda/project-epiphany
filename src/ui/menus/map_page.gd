@@ -127,7 +127,12 @@ func _show_dungeon() -> void:
 	_stat(stats, "MAP_STAT_COMPASS", "MAP_OBTAINED_COMPASS" if _dungeon.has_compass else "COMMON_NO")
 	_stat(stats, "MAP_STAT_BOSS_KEY", "COMMON_YES" if _dungeon.has_boss_key else "COMMON_NO")
 	_stat(stats, "MAP_STAT_SMALL_KEYS", str(_dungeon.small_keys))
-	var rooms := get_tree().get_nodes_in_group(Room.GROUP)
+	var current := _current_room()
+	var level := current.floor_level() if current else 0
+	var dungeon_floor := DungeonFloor.of(current) if current else null
+	if dungeon_floor and not dungeon_floor.display_name.is_empty():
+		subtitle.text = dungeon_floor.display_name
+	var rooms := MapData.rooms_on(get_tree(), level)
 	if rooms.is_empty():
 		return
 	var low := Vector2i(1 << 20, 1 << 20)
@@ -136,7 +141,6 @@ func _show_dungeon() -> void:
 		low = low.min(room.map_cell)
 		high = high.max(room.map_cell)
 	cells.custom_minimum_size = Vector2(high - low + Vector2i.ONE) * STEP - Vector2(12, 12)
-	var current := _current_room()
 	var player := Players.lead()
 	for room: Room in rooms:
 		var visited := _dungeon.was_visited(room.room_index)
@@ -168,7 +172,7 @@ func _show_dungeon() -> void:
 func _show_doors(low: Vector2i) -> void:
 	for door: Array in MapData.doors(get_tree()):
 		var point: Vector3 = door[0]
-		var shown := _room_cells.keys().filter(func(room: Room) -> bool: return room.bounds().grow(2.0).has_point(Vector2(point.x, point.z)))
+		var shown := _room_cells.keys().filter(func(room: Room) -> bool: return MapData.near_room(room, point))
 		if shown.is_empty():
 			continue
 		var on_grid := MapData.room_grid_point(get_tree(), point, shown[0]) - Vector2(low)

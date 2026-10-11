@@ -187,7 +187,7 @@ func _clamp(point: Vector3) -> Vector3:
 	var bounds := room.bounds()
 	if room.camera_limits.has_area() or bounds.size.y >= view.size.y:
 		return point
-	var floor_y := target_node.global_position.y
+	var floor_y := _floor_y()
 	var north := Vector3(bounds.get_center().x, floor_y + wall_height, bounds.position.y)
 	var south := Vector3(bounds.get_center().x, floor_y, bounds.end.y)
 	var low := bounds.position.y - view.size.y
@@ -213,7 +213,7 @@ func _screen_height(point: Vector3, eye: Vector3) -> float:
 func _mask_around(area: Rect2) -> void:
 	const FAR := 300.0
 	area = area.grow(mask_margin)
-	var floor_y := target_node.global_position.y
+	var floor_y := _floor_y()
 	var bottom := floor_y - 2.0
 	var top := floor_y + wall_height + 0.02
 	var strips := [
@@ -242,11 +242,15 @@ func enter_room(new_room: Room, crosser: PlayerCharacter = null) -> void:
 		previous.player_left.emit(previous)
 	room.mark_entered()
 	_cut_south_wall(room)
+	DungeonFloor.show_up_to(get_tree(), room.floor_level())
 	if previous == null:
 		_mask_around(room.bounds())
 		focus = _clamp(group_center())
 		global_position = focus + offset
 		_remember_entry()
+		return
+	if previous.floor_level() != room.floor_level():
+		_change_floor(crosser)
 		return
 	var step := room.bounds().get_center() - previous.bounds().get_center()
 	var direction := Vector3(signf(step.x), 0.0, 0.0) if absf(step.x) > absf(step.y) else Vector3(0.0, 0.0, signf(step.y))
@@ -287,7 +291,7 @@ func _cut_south_wall(cut_room: Room) -> void:
 	if cut_room:
 		var bounds := cut_room.bounds().grow(0.05)
 		area = Vector4(bounds.position.x - SOUTH_WALL_DEPTH, bounds.end.x + SOUTH_WALL_DEPTH, bounds.end.y - SOUTH_WALL_RELIEF, bounds.end.y + SOUTH_WALL_DEPTH)
-		height = target_node.global_position.y + south_wall_cut
+		height = cut_room.floor_y() + south_wall_cut
 	for material in CUTAWAY_MATERIALS:
 		material.set_shader_parameter(&"cut_area", area)
 		material.set_shader_parameter(&"cut_height", height)
@@ -327,6 +331,24 @@ func _player_hidden(player: PlayerCharacter) -> bool:
 
 
 ## Donde se reaparece al morir. La sala del jefe no cuenta: se vuelve a la antesala.
+## Por un hueco o una escalera: sin deslizarse; los demás van con el que pasó y la entrada se anota al aterrizar.
+func _change_floor(crosser: PlayerCharacter) -> void:
+	_mask_around(room.bounds())
+	for player in Players.all:
+		player.revive()
+	_bring_along(crosser, Vector3.BACK)
+	focus = _clamp(group_center())
+	var landing_room := room
+	while is_inside_tree() and room == landing_room and not crosser.is_on_floor():
+		await get_tree().physics_frame
+	if room == landing_room:
+		_remember_entry()
+
+
+func _floor_y() -> float:
+	return room.floor_y() if room else target_node.global_position.y
+
+
 func _remember_entry() -> void:
 	if not room.boss_room:
 		GameState.room_entry = target_node.global_position

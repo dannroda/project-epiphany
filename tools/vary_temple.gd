@@ -1,9 +1,9 @@
 extends SceneTree
-## Pone en levels/temple.tscn la pieza de hueco que corresponde a cada celda (pared de piedra hacia donde no sigue el hueco)
+## Pone en las mazmorras (cada GridMap del nivel, uno por piso) la pieza de hueco que corresponde a cada celda (pared de piedra hacia donde no sigue el hueco)
 ## y reparte nichos y ojos tallados en las paredes que miran a la cámara, lejos de lo que ya cuelga o está delante.
 ## godot --headless --path . --script res://tools/vary_temple.gd
 
-const LEVEL := "res://levels/temple.tscn"
+const LEVELS := ["res://levels/temple.tscn", "res://levels/chullpa.tscn"]
 const Pieces := preload("res://tools/grid_pieces.gd")
 const PIT := 10
 ## Hueco según los lados que dan a algo que no es hueco (sin girar, en el orden de Pieces.SIDES).
@@ -24,19 +24,27 @@ const CLEAR := 1.6
 
 
 func _initialize() -> void:
-	var root := (load(LEVEL) as PackedScene).instantiate()
-	var grid := root.get_node("GridMap") as GridMap
-	var ids := Pieces.ids_by_name(grid.mesh_library)
-	var pits := Pieces.pits(grid, ids, PIT, PIT_PIECES)
-	for cell: Vector3i in pits:
-		grid.set_cell_item(cell, pits[cell][0], Pieces.turn(grid, pits[cell][1]))
-	var walls := _walls(root, grid, ids)
-	for cell: Vector3i in walls:
-		grid.set_cell_item(cell, walls[cell], 0)
-	var err := Pieces.save_cells(LEVEL, grid)
-	print("vary_temple: ", error_string(err), " · ", pits.size(), " huecos, ", walls.values().filter(func(id: int) -> bool: return id != WALL).size(), " paredes con nicho u ojo")
-	root.free()
-	quit(0 if err == OK else 1)
+	var failed := false
+	for level: String in LEVELS:
+		var root := (load(level) as PackedScene).instantiate()
+		var grids: Array = root.find_children("*", "GridMap", true, false)
+		var pit_count := 0
+		var carved := 0
+		for grid: GridMap in grids:
+			var ids := Pieces.ids_by_name(grid.mesh_library)
+			var pits := Pieces.pits(grid, ids, PIT, PIT_PIECES)
+			for cell: Vector3i in pits:
+				grid.set_cell_item(cell, pits[cell][0], Pieces.turn(grid, pits[cell][1]))
+			var walls := _walls(root, grid, ids)
+			for cell: Vector3i in walls:
+				grid.set_cell_item(cell, walls[cell], 0)
+			pit_count += pits.size()
+			carved += walls.values().filter(func(id: int) -> bool: return id != WALL).size()
+		var err := Pieces.save_grids(level, grids)
+		failed = failed or err != OK
+		print("vary_temple %s: %s · %d huecos, %d paredes con nicho u ojo" % [level.get_file(), error_string(err), pit_count, carved])
+		root.free()
+	quit(1 if failed else 0)
 
 
 ## Cada pared (lisa o variante) con piso al sur → su variante o la lisa.
@@ -45,7 +53,7 @@ func _walls(root: Node, grid: GridMap, ids: Dictionary) -> Dictionary:
 	for rule: Array in WALL_RULES:
 		family.append(ids[rule[0]])
 	var floors := FLOORS.map(func(item_name: String) -> int: return ids[item_name])
-	var taken := _decor(root, grid)
+	var taken := _decor(root, grid, _global(grid, root).y)
 	var result := {}
 	for cell in grid.get_used_cells():
 		if not grid.get_cell_item(cell) in family or not grid.get_cell_item(cell + Vector3i(0, 0, 1)) in floors:
@@ -64,12 +72,13 @@ func _walls(root: Node, grid: GridMap, ids: Dictionary) -> Dictionary:
 
 
 ## Dónde hay algo de la escena (en planta, coordenadas del GridMap): todo lo visible menos la grilla.
-func _decor(root: Node, grid: GridMap) -> Array:
+func _decor(root: Node, grid: GridMap, floor_y: float) -> Array:
 	var points := []
 	for node in root.find_children("*", "VisualInstance3D", true, false):
 		if node != grid and node is Node3D:
 			var p := _global(node as Node3D, root)
-			points.append(Vector2(p.x, p.z))
+			if absf(p.y - floor_y) < 4.0:
+				points.append(Vector2(p.x, p.z))
 	return points
 
 

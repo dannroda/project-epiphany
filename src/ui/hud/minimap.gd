@@ -139,7 +139,7 @@ func rooms_around() -> Array[Room]:
 	var dungeon := GameState.current_dungeon_state() if _in_dungeon() else null
 	if current == null or dungeon == null:
 		return shown
-	for room: Room in get_tree().get_nodes_in_group(Room.GROUP):
+	for room: Room in MapData.rooms_on(get_tree(), current.floor_level()):
 		var apart := room.map_cell - current.map_cell
 		if absi(apart.x) <= 1 and absi(apart.y) <= 1 and (room == current or dungeon.has_map or dungeon.was_visited(room.room_index)):
 			shown.append(room)
@@ -189,7 +189,7 @@ func _draw_room_icons(room: Room, rect: Rect2) -> void:
 
 
 func _draw_door(point: Vector3, kind: MapMark.Kind, shown: Array[Room], current: Room) -> void:
-	var near := shown.filter(func(room: Room) -> bool: return room.bounds().grow(2.0).has_point(Vector2(point.x, point.z)))
+	var near := shown.filter(func(room: Room) -> bool: return MapData.near_room(room, point))
 	if near.is_empty():
 		return
 	var at := MapData.room_grid_point(get_tree(), point, near[0]) - Vector2(current.map_cell)

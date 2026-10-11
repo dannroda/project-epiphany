@@ -57,6 +57,22 @@ static func turn(grid: GridMap, quarters: int) -> int:
 	return grid.get_orthogonal_index_from_basis(Basis(Vector3.UP, PI / 2.0 * quarters))
 
 
+## Como save_cells, para un nivel con varios GridMap (en el orden del archivo).
+static func save_grids(level: String, grids: Array) -> Error:
+	var text := FileAccess.get_file_as_string(level)
+	var found := RegEx.create_from_string('"cells": PackedInt32Array\\([^)]*\\)').search_all(text)
+	if found.size() != grids.size():
+		return ERR_INVALID_DATA
+	for i in range(found.size() - 1, -1, -1):
+		var cells := var_to_str((grids[i] as GridMap).get("data")["cells"])
+		text = text.substr(0, found[i].get_start()) + '"cells": ' + cells + text.substr(found[i].get_end())
+	var file := FileAccess.open(level, FileAccess.WRITE)
+	file.store_string(text)
+	var err := file.get_error()
+	file.close()
+	return err
+
+
 ## Reescribe las celdas del GridMap en el .tscn sin tocar el resto del archivo.
 static func save_cells(level: String, grid: GridMap, replacements: Dictionary = {}) -> Error:
 	var text := FileAccess.get_file_as_string(level)

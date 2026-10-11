@@ -682,6 +682,54 @@ msgstr "Lair of the Eye"
 msgid "PLACE_FLOOR_1"
 msgstr "Floor 1"
 
+msgid "PLACE_CHULLPA"
+msgstr "The Chullpa"
+
+msgid "PLACE_FLOOR_BASEMENT"
+msgstr "Basement"
+
+msgid "PLACE_FLOOR_GROUND"
+msgstr "Ground Floor"
+
+msgid "PLACE_FLOOR_UPPER"
+msgstr "Upper Floor"
+
+msgid "PLACE_CH_MAUSOLEUM"
+msgstr "Mausoleum"
+
+msgid "PLACE_CH_GUARDIAN"
+msgstr "Guardian's Chamber"
+
+msgid "PLACE_CH_DARK_CRYPT"
+msgstr "Dark Crypt"
+
+msgid "PLACE_CH_CRYPT"
+msgstr "Crypt"
+
+msgid "PLACE_CH_OSSUARY"
+msgstr "Ossuary"
+
+msgid "PLACE_CH_CHASM"
+msgstr "Chasm Room"
+
+msgid "PLACE_CH_ENTRANCE"
+msgstr "Entrance"
+
+msgid "PLACE_CH_CHEST_HALL"
+msgstr "Chest Hall"
+
+msgid "PLACE_CH_LEAPS"
+msgstr "Leaping Hall"
+
+msgid "PLACE_CH_LOOKOUT"
+msgstr "Lookout"
+
+msgid "PLACE_CH_LANDING"
+msgstr "Landing"
+
+msgid "PLACE_CH_CRACKED"
+msgstr "Cracked Hall"
+
 msgid "PROMPT_OPEN"
 msgstr "Open"
 

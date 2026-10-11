@@ -35,6 +35,7 @@ const SAMPLES := {
 	&"cut": ["kenney_rpg-audio/knifeSlice", "kenney_rpg-audio/chop"],
 	&"reflect": ["kenney_impact-sounds/impactBell_heavy_"],
 	&"door": ["kenney_rpg-audio/doorOpen_"],
+	&"stairs": ["kenney_rpg-audio/footstep0"],
 	&"deny": ["kenney_interface-sounds/error_"],
 	&"ui_move": ["kenney_interface-sounds/tick_"],
 	&"ui_accept": ["kenney_interface-sounds/select_"],

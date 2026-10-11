@@ -1,0 +1,43 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/cracked_wall.gd" id="1_wall"]
+[ext_resource type="Script" path="res://src/components/hurtbox.gd" id="2_hurtbox"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo/piso_grieta.res" id="3_floor"]
+[ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="pf_persistent_flag"]
+
+[sub_resource type="BoxShape3D" id="FloorShape"]
+size = Vector3(2, 0.5, 2)
+
+[sub_resource type="BoxShape3D" id="HurtShape"]
+size = Vector3(2.4, 1.2, 2.4)
+
+[node name="CrackedFloor" type="StaticBody3D"]
+script = ExtResource("1_wall")
+
+[node name="Wall" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="Model" type="MeshInstance3D" parent="Wall"]
+mesh = ExtResource("3_floor")
+
+[node name="Rubble" type="Node3D" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+shape = SubResource("FloorShape")
+
+[node name="Hurtbox" type="Area3D" parent="."]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+script = ExtResource("2_hurtbox")
+surface = "none"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+shape = SubResource("HurtShape")
+
+[node name="PersistentFlag" type="Node" parent="."]
+script = ExtResource("pf_persistent_flag")

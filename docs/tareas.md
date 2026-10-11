@@ -3406,14 +3406,18 @@ Segunda mazmorra con pisos (y quizás sótanos) apilados en la misma escena, en 
 
 - [x] Diseño: cantidad de pisos, sótanos, recorrido e ítem
   Decidido el 2026-10-11 con el usuario: 3 pisos (sótano, planta baja, alto) de 2 × 2 salas apiladas; temática chullpa (torre funeraria); ítem gancho (11.30); recorrido sala por sala en GDD §8b (gdd#mazmorra-2). Caer por un hueco lleva a la sala de abajo; el cofre del gancho se alcanza tirándose desde 2SE (Torre de Hera).
-- [ ] Pisos en la escena
-  Un GridMap por piso separados en altura; ocultar los pisos de arriba del player (y quizás atenuar el de abajo).
-- [ ] Escaleras y caídas entre pisos
-  Escalera con transición corta; un pozo deja caer al piso de abajo si existe (si no, vuelve a la entrada como hoy).
-- [ ] Salas, guardado y mapa por piso
-  Room con piso; visitado, mapa y brújula por piso.
+- [x] Pisos en la escena
+  Hecho: DungeonFloor (level, nombre) con su GridMap y sus salas, a 8 m; la cámara oculta los pisos de arriba de la sala actual. Blockout en levels/chullpa.tscn (GDD §8b).
+- [x] Escaleras y caídas entre pisos
+  Hecho: Stairs (sube/baja, fundido corto, todos los players al marcador de llegada); un hueco con sala abajo cae a esa sala (sin daño, la entrada se anota al aterrizar); donde no hay, Pit. Piso agrietado (cracked_floor.tscn) que se rompe con bomba.
+- [x] Salas, guardado y mapa por piso
+  Hecho: Room cuenta solo en la altura de su piso; visitadas, mapa y brújula de la mazmorra; mapa de pausa y minimapa muestran el piso de la sala actual y sus puertas. Tests en test_chullpa.
 - [ ] UI: selector de pisos
-  Diseñar primero en el canvas de mockups (no lo tiene): pestañas de piso en el mapa de pausa con dónde estás, jefe y cofres; minimapa del piso actual.
+  Mockup aprobado el 2026-10-11 en el canvas (Pausa · Mapa por pisos, HUD · Minimapa por pisos): columna de pisos 2P/1P/S1 a la izquierda del mapa con LT/RT, marcas de estás acá, cofres y jefe por piso; el cursor mantiene la celda al cambiar de piso; minimapa con etiqueta del piso. Falta construirlo.
+- [ ] Entrada desde el overworld
+  Falta decidir dónde está la chullpa en el overworld; el portal de salida apunta a un punto 'chullpa' que todavía no existe. Mientras, escenario de debug 'chullpa'.
+- [ ] Recorrerla (Daniel)
+  Con el escenario chullpa: escaleras, caer de 1SE a la cripta, llave en 2NO con la pluma, bomba en 2SE sobre la isla, atajo del osario. Gancho y postes quedan para 11.30.
 
 **Relacionadas:** 11.30 Ítem post-MVP: gancho o telequinesis
 

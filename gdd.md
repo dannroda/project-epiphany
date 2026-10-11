@@ -367,18 +367,19 @@ Decidido el 2026-10-11. Torre funeraria de piedra (chullpa) con sótano de enter
 | Sala | Qué pasa |
 |---|---|
 | 1SO Entrada | Llega del overworld; escalera al piso alto; puerta abierta a 1SE |
-| 1SE Sala del cofre | Cofre grande del **gancho** en una isla rodeada de huecos, visible desde la entrada (cebo). Caer lleva a B-SE |
+| 1NO Osario | Donde se cae desde los huecos de 2NO. Un interruptor abre el atajo a la entrada (la puerta, del lado de la entrada, está sellada) |
+| 1SE Sala del cofre | Cofre grande del **gancho** en una isla de 3 baldosas (cofre al norte, la del sur queda libre para caer desde 2SE) rodeada de huecos de 2 baldosas, así que la pluma no alcanza. Caer lleva a B-SE. La puerta a 1NE está en la esquina noreste |
 | B-SE | Donde se cae desde 1SE: **mapa** y una escalera de mano que solo sube a la entrada. Caer enseña que los huecos llevan a algún lado |
 | B-SO | Oscura; **brújula** |
 | 2SO | Llegada del piso alto; persiana hasta vencer a los enemigos |
 | 2NO | Huecos de una baldosa (pluma) hasta la **llave chica** |
 | 2SE | Con la llave. Piso agrietado justo encima de la isla de 1SE: una bomba lo abre y se cae sobre el cofre (el truco de la Torre de Hera) |
-| 1NE | Del otro lado de un abismo de 4 m desde 1SE: solo con el gancho (postes). Escalera al sótano |
-| B-NO | **Llave del jefe**, con un puzzle de gancho |
+| 1NE Sala del abismo | Al pasar la puerta desde 1SE, un abismo de 4 m (sin sala abajo: foso que lastima y vuelve) y un poste enfrente: solo con el gancho. Escalera al sótano, que llega a B-NO |
+| B-NO Mausoleo | Llega la escalera de 1NE. **Llave del jefe** del otro lado de un foso, junto a un poste (gancho). Puerta del jefe a B-NE, del lado de la escalera |
 | B-NE | Jefe (blockout: sala vacía; el jefe propio es otra tarea) |
 | 2NE | Opcional, con el gancho: pieza de corazón |
 
-**Ítems anteriores:** usa bombas, pluma y arco (vienen de antes; el templo no cambia, §6.2). **Overworld:** el gancho abre 2–3 lugares, entre ellos la franja del ojo del Risco. **Huecos:** cuando un hueco lleva a otra sala, el piso de abajo se ve iluminado a través; si no hay nada abajo, vuelve a la entrada como hoy. **Técnica:** un GridMap por piso separados en altura; se ocultan los pisos de arriba del player; escaleras con transición corta; mapa, brújula y salas visitadas por piso; selector de pisos en el mapa de pausa (primero en el canvas de mockups).
+**Ítems anteriores:** usa bombas, pluma y arco (vienen de antes; el templo no cambia, §6.2). **Overworld:** el gancho abre 2–3 lugares, entre ellos la franja del ojo del Risco. **Huecos:** cuando un hueco lleva a otra sala, el piso de abajo se ve iluminado a través; si no hay nada abajo, vuelve a la entrada como hoy. **Técnica (hecha):** `levels/chullpa.tscn`. Cada piso es un `DungeonFloor` (`level` −1, 0, 1; nombre del piso para el mapa) con su GridMap, sus salas y lo que hay en él, a `DungeonFloor.HEIGHT` = 8 m uno del otro. Una sala dentro de un piso cuenta solo desde 2,5 m debajo de su piso hasta el de arriba, así que el que cae por un hueco pasa a la sala de abajo: la cámara cambia de sala sin deslizarse, se lleva a los demás players y anota la entrada recién al aterrizar. La cámara oculta los pisos de arriba de la sala actual; el de abajo se ve por los huecos. Donde no hay sala abajo (1NE, B-NO) va un `Pit` como siempre. `Stairs` (`stairs.tscn` sube, `stairs_down.tscn` baja): fundido corto y todos los players aparecen en su `to`, un marcador afuera de la escalera de llegada; la escalera de mano de B-SE no tiene vuelta. El piso agrietado de 2SE es `cracked_floor.tscn` (el script del muro agrietado sobre un hueco). Visitadas, mapa y brújula siguen siendo de la mazmorra; el mapa de pausa y el minimapa muestran el piso de la sala actual (selector de pisos: mockup aprobado en el canvas, *Pausa · Mapa por pisos*; falta construirlo). `tools/vary_temple.gd` arregla los huecos y paredes de cada GridMap de las dos mazmorras, y la navmesh se hornea con `godot --headless --path . --script res://tools/bake_overworld_nav.gd -- chullpa`. Escenario de debug: `chullpa`. **Pendiente:** el cofre del gancho da flechas hasta que exista el gancho (11.30), y los postes son columnas; la entrada desde el overworld (el portal de salida apunta a un punto `chullpa` que todavía no existe).
 
 ## 9. Jefe — El Ojo con manos
 <!-- id: jefe -->

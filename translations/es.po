@@ -682,6 +682,54 @@ msgstr "Guarida del ojo"
 msgid "PLACE_FLOOR_1"
 msgstr "Piso 1"
 
+msgid "PLACE_CHULLPA"
+msgstr "La Chullpa"
+
+msgid "PLACE_FLOOR_BASEMENT"
+msgstr "Sótano"
+
+msgid "PLACE_FLOOR_GROUND"
+msgstr "Planta baja"
+
+msgid "PLACE_FLOOR_UPPER"
+msgstr "Piso alto"
+
+msgid "PLACE_CH_MAUSOLEUM"
+msgstr "Mausoleo"
+
+msgid "PLACE_CH_GUARDIAN"
+msgstr "Cámara del guardián"
+
+msgid "PLACE_CH_DARK_CRYPT"
+msgstr "Cripta oscura"
+
+msgid "PLACE_CH_CRYPT"
+msgstr "Cripta"
+
+msgid "PLACE_CH_OSSUARY"
+msgstr "Osario"
+
+msgid "PLACE_CH_CHASM"
+msgstr "Sala del abismo"
+
+msgid "PLACE_CH_ENTRANCE"
+msgstr "Entrada"
+
+msgid "PLACE_CH_CHEST_HALL"
+msgstr "Sala del cofre"
+
+msgid "PLACE_CH_LEAPS"
+msgstr "Sala de los saltos"
+
+msgid "PLACE_CH_LOOKOUT"
+msgstr "Mirador"
+
+msgid "PLACE_CH_LANDING"
+msgstr "Rellano"
+
+msgid "PLACE_CH_CRACKED"
+msgstr "Sala agrietada"
+
 msgid "PROMPT_OPEN"
 msgstr "Abrir"
 

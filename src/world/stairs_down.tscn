@@ -1,0 +1,45 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/stairs.gd" id="1_stairs"]
+[ext_resource type="Material" path="res://data/kits/materials/epiphany_stone.tres" id="2_stone"]
+
+[sub_resource type="BoxShape3D" id="Trigger"]
+size = Vector3(1.6, 1.5, 1.2)
+
+[sub_resource type="StandardMaterial3D" id="Dark"]
+albedo_color = Color(0.03, 0.03, 0.04, 1)
+
+[sub_resource type="BoxMesh" id="Opening"]
+size = Vector3(1.9, 0.02, 1.9)
+
+[sub_resource type="BoxMesh" id="Step"]
+size = Vector3(1.7, 0.03, 0.3)
+
+[node name="StairsDown" type="Area3D"]
+script = ExtResource("1_stairs")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+shape = SubResource("Trigger")
+
+[node name="Visual" type="Node3D" parent="."]
+
+[node name="Opening" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
+mesh = SubResource("Opening")
+surface_material_override/0 = SubResource("Dark")
+
+[node name="Step1" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0.6)
+mesh = SubResource("Step")
+surface_material_override/0 = ExtResource("2_stone")
+
+[node name="Step2" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(0.85, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0.1)
+mesh = SubResource("Step")
+surface_material_override/0 = ExtResource("2_stone")
+
+[node name="Step3" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(0.7, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, -0.4)
+mesh = SubResource("Step")
+surface_material_override/0 = ExtResource("2_stone")
