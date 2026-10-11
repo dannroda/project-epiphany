@@ -1,0 +1,49 @@
+{
+  "checklist": [
+    {
+      "detail": "Propuesta en https://claude.ai/artifact/8N6Sst4jMsTDTgKLWdqm4B: A Anillo, B La quebrada (recomendada), C Terrazas. Falta que Daniel elija.",
+      "done": false,
+      "text": "Propuesta de layout (variantes) y elección"
+    },
+    {
+      "done": false,
+      "text": "Diseño elegido en el GDD (§7): regiones, gating, ritmo"
+    },
+    {
+      "done": false,
+      "text": "Blockout del GridMap nuevo"
+    },
+    {
+      "done": false,
+      "text": "Mudar los lugares existentes y la entrada de la Chullpa"
+    },
+    {
+      "done": false,
+      "text": "Terreno orgánico, decoración y navmesh regenerados"
+    },
+    {
+      "done": false,
+      "text": "Tests y escenarios al día"
+    },
+    {
+      "done": false,
+      "text": "Recorrerlo (Daniel)"
+    }
+  ],
+  "code": "7.9",
+  "created_at": "2026-10-11T22:11:02.822Z",
+  "description": "El overworld de 3 × 3 pantallas quedó hecho para una sola mazmorra y se siente encajonado. Rediseñarlo como hub (referencia: análisis del Light World de A Link to the Past, Overworld Overload partes 1 y 2): regiones núcleo con su mazmorra unidas por zonas de conexión, paredes de terreno y puertas de ítem que abren atajos o regiones nuevas, recorrido y ritmo revisados. Entra la Chullpa (11.60) y quedan lugares para las que vengan.",
+  "milestone": "m07",
+  "notes": "",
+  "order": 9,
+  "priority": "high",
+  "refs": [],
+  "status": "doing",
+  "tags": [
+    "overworld",
+    "nivel"
+  ],
+  "test": "",
+  "title": "Rediseño del overworld como hub de varias mazmorras",
+  "updated_at": "2026-10-11T22:16:01.637Z"
+}

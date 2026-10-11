@@ -1393,7 +1393,7 @@ Hecho 2026-10-08: kit `data/kits/gray_kit.tres` (lo arma `src/tools/build_gray_k
 
 **Bloqueada por:** 6.2 Puertas; 6.3 Llaves de mazmorra y HUD; 6.4 Bloques por grilla; 6.5 Interruptores y cableado
 
-## M7 — Overworld  (8/8)
+## M7 — Overworld  (8/9)
 
 Zona chica con el gating bombas → escudo espejo → sello del templo, y los secretos.
 
@@ -1575,6 +1575,20 @@ Hecho 2026-10-08: `start` ahora arranca en el overworld (escena principal del ju
 **Referencias:** `gdd.md#save-inspector`
 
 **Bloqueada por:** 7.6 Sello del templo
+
+### 7.9 Rediseño del overworld como hub de varias mazmorras · En curso
+
+**Prioridad:** alta · **Etiquetas:** `overworld`, `nivel`
+
+El overworld de 3 × 3 pantallas quedó hecho para una sola mazmorra y se siente encajonado. Rediseñarlo como hub (referencia: análisis del Light World de A Link to the Past, Overworld Overload partes 1 y 2): regiones núcleo con su mazmorra unidas por zonas de conexión, paredes de terreno y puertas de ítem que abren atajos o regiones nuevas, recorrido y ritmo revisados. Entra la Chullpa (11.60) y quedan lugares para las que vengan.
+
+- [ ] Propuesta de layout (variantes) y elección
+- [ ] Diseño elegido en el GDD (§7): regiones, gating, ritmo
+- [ ] Blockout del GridMap nuevo
+- [ ] Mudar los lugares existentes y la entrada de la Chullpa
+- [ ] Terreno orgánico, decoración y navmesh regenerados
+- [ ] Tests y escenarios al día
+- [ ] Recorrerlo (Daniel)
 
 ## M8 — Contenido de mazmorra  (8/8)
 
