@@ -164,6 +164,18 @@ func sfx(sound: StringName, at: Vector3) -> void:
 	player.play()
 
 
+## Prende o apaga una estela. Trail3D no desvanece lo que queda al dejar de emitir ni lo separa del tramo siguiente:
+## se limpia al prender y cuando termina de apagarse.
+func set_trail(trail: Trail3D, on: bool) -> void:
+	if on:
+		trail.clear()
+	else:
+		get_tree().create_timer(trail.lifetime, false).timeout.connect(func() -> void:
+			if is_instance_valid(trail) and not trail.emitting:
+				trail.clear())
+	trail.emitting = on
+
+
 ## Partículas cortas, todas low poly con colores de la paleta y achicándose al morir: &"sparks" (bloqueo, rebote),
 ## &"dust" (rodar, golpes contra el piso), &"shards" (algo que se rompe), &"leaves" (pasto), &"explosion" (bomba),
 ## &"sparkle" (destello del item get).

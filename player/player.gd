@@ -122,7 +122,9 @@ func _fit_sword_trail() -> void:
 
 func _process(_delta: float) -> void:
 	_update_block_cone()
-	sword_trail.emitting = attack_runner.is_active() and attack_runner.current.trail
+	var trailing := attack_runner.is_active() and attack_runner.current.trail
+	if trailing != sword_trail.emitting:
+		Feel.set_trail(sword_trail, trailing)
 
 
 ## El ítem asignado al botón, si lo tiene y se puede usar ahora.
