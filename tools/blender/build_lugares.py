@@ -104,6 +104,79 @@ piece("cueva_piso", 3, cueva_piso)
 piece("estalagmitas", 4, estalagmitas)
 
 
+# --- vertiente: la sala de la cueva con el ojo de agua ---
+
+def vertiente_pico(p):
+	"""Piedra que asoma del muro con la canaleta de donde cae el agua; el origen es el borde de la canaleta, el muro en
+	y = 0.7 y el agua sale hacia -Y."""
+	chunk = []
+	chunk += rock(p, -0.32, 0.32, -0.05, 0.7, -0.55, 0.0, push=0.12, cuts=2, swatch="gris_2", keep_top=True, z_range=(-0.8, 0.4))
+	for x0, x1 in ((-0.9, -0.26), (0.26, 0.9)):
+		chunk += rock(p, x0, x1, 0.0, 0.7, -0.7, p.rng.uniform(0.2, 0.4), push=0.14, cuts=2, swatch="gris_2", keep_top=False, z_range=(-0.8, 0.4))
+	for v in {v for f in chunk for v in f.verts}:
+		t = min(1.0, max(0.0, (v.co.z + 0.7) / 0.7))
+		v.co.y = 0.7 + (v.co.y - 0.7) * (0.35 + 0.65 * t)
+		v.co.x *= 0.7 + 0.3 * t
+	channel = p.box(-0.2, 0.2, 0.0, 0.7, 0.0, 0.02)
+	p.paint(channel, "agua", "LIGHT")
+	moss = []
+	for x in (-0.28, 0.28):
+		moss += p.blob((x, 0.05, 0.02), 0.13, squash=(1.0, 1.5, 0.35), rough=0.3)
+	p.paint(moss, "musgo", vary=0.1)
+
+
+def orilla_piedras(p):
+	"""Tramo de 2 m de lajas chatas con musgo para el borde de una pileta; el agua del lado -Y."""
+	stones, moss = [], []
+	x = -1.0
+	while x < 1.0:
+		w = p.rng.uniform(0.3, 0.5)
+		cx = min(x + w / 2, 1.0 - w / 2)
+		stones += p.blob((cx, p.rng.uniform(-0.05, 0.08), 0.0), w / 2, squash=(1.0, 0.8, 0.35), rough=0.25, flat_bottom=-0.04)
+		if p.rng.random() < 0.4:
+			moss += p.blob((cx + p.rng.uniform(-0.08, 0.08), 0.06, 0.07), w / 4, squash=(1.0, 0.8, 0.25), rough=0.3)
+		x += w * 0.85
+	p.paint(stones, "gris_2", z_range=(-0.04, 0.12), vary=0.1)
+	p.paint(moss, "musgo", vary=0.1)
+
+
+def cristales_cueva(p):
+	"""Racimo de cristales celestes que brillan solos, sobre una base de roca."""
+	base = p.blob((0, 0, 0), 0.3, squash=(1.2, 1.0, 0.45), rough=0.3, flat_bottom=0.0)
+	p.paint(base, "gris_4", vary=0.1)
+	shards = []
+	for i in range(5):
+		a = 2 * math.pi * i / 5 + p.rng.random() * 0.6
+		d = 0.0 if i == 0 else p.rng.uniform(0.12, 0.22)
+		h = 0.9 if i == 0 else p.rng.uniform(0.35, 0.6)
+		shards += crystal(p, (math.cos(a) * d, math.sin(a) * d, 0.05), h, 0.09 if i == 0 else 0.06, tilt=0.0 if i == 0 else p.rng.uniform(0.25, 0.5), turn=a + math.pi / 2)
+	p.paint(shards, "neon", z_range=(0, 0.9))
+
+
+def rocas_rincon(p):
+	"""Montón de rocas para el rincón de una sala: el rincón en (1, 1), crece hacia -X y -Y."""
+	faces = []
+	for cx, cy, r, h in ((0.55, 0.55, 0.75, 1.5), (-0.35, 0.65, 0.5, 0.9), (0.65, -0.35, 0.5, 0.8), (-0.05, -0.05, 0.35, 0.45)):
+		faces += p.blob((cx, cy, 0.0), r, squash=(1.0, 1.0, h / r), rough=0.25, flat_bottom=0.0)
+	p.paint(faces, "gris_2", z_range=(-0.6, 1.5), vary=0.1)
+
+
+def estalactitas_borde(p):
+	"""Tramo de 2 m de estalactitas colgando del borde de arriba de un muro de cueva (el muro hacia +Y)."""
+	cones = []
+	x = -0.9
+	while x < 0.9:
+		h = p.rng.uniform(0.25, 0.7)
+		r = p.rng.uniform(0.06, 0.13)
+		c = p.cylinder(r * 0.15, TOP - h, TOP, sides=5, radius_top=r, center=(x, p.rng.uniform(-0.1, 0.05)), phase=p.rng.random())
+		p.jitter(c, 0.015)
+		cones += c
+		x += p.rng.uniform(0.18, 0.35)
+	p.paint(cones, "gris_4", z_range=(TOP - 0.7, TOP), vary=0.08)
+
+
+
+
 # --- muros agrietados: la celda de muro de cada lugar con grietas en las dos caras; solo las grietas la delatan ---
 
 CAP = 0.15
@@ -550,6 +623,12 @@ piece("sello_ojo", 23, sello_ojo)
 piece("portal_disco", 24, portal_disco)
 piece("portal_anillo", 25, portal_anillo)
 piece("monolito", 26, monolito)
+
+piece("vertiente_pico", 30, vertiente_pico)
+piece("orilla_piedras", 31, orilla_piedras)
+piece("cristales_cueva", 32, cristales_cueva)
+piece("rocas_rincon", 33, rocas_rincon)
+piece("estalactitas_borde", 34, estalactitas_borde)
 
 epi.layout(kit, columns=7, spacing=3.5)
 epi.save("lugares")
