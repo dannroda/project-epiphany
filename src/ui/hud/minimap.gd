@@ -19,7 +19,10 @@ const REVEAL_FADE := 5.0
 ## Cuánto tiene que moverse un player para volver a pintar lo descubierto (m).
 const REVEAL_STEP := 1.0
 
+## Los marcos de la pestaña Mapa, a esta escala.
+@export var frame_scale := 0.5
 @export var room_style: StyleBox
+@export var mapped_style: StyleBox
 @export var current_style: StyleBox
 
 @onready var view: Control = %View
@@ -154,10 +157,10 @@ func _draw_dungeon() -> void:
 		var apart := room.map_cell - current.map_cell
 		var visited := dungeon.was_visited(room.room_index)
 		var rect := Rect2(_cell_origin(Vector2(apart)), CELL)
-		if visited or room == current:
-			view.draw_style_box(current_style if room == current else room_style, rect)
-		else:
-			MapRoomCell.draw_dashed_rect(view, rect.grow(-1), MapRoomCell.BORDER)
+		var style := current_style if room == current else room_style if visited else mapped_style
+		view.draw_set_transform(rect.position, 0.0, Vector2.ONE * frame_scale)
+		view.draw_style_box(style, Rect2(Vector2.ZERO, rect.size / frame_scale))
+		view.draw_set_transform(Vector2.ZERO)
 		if dungeon.has_compass:
 			_draw_room_icons(room, rect)
 	for door: Array in _doors:

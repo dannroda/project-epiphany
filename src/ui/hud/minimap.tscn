@@ -2,33 +2,33 @@
 
 [ext_resource type="Script" path="res://src/ui/hud/minimap.gd" id="1_minimap"]
 [ext_resource type="Shader" path="res://src/ui/hud/minimap_fog.gdshader" id="2_fog"]
+[ext_resource type="Texture2D" uid="uid://bbh75d26628l5" path="res://assets/ui/frames/map_room.png" id="3_room"]
+[ext_resource type="Texture2D" uid="uid://cdjnnpwyam4fr" path="res://assets/ui/frames/map_room_mapped.png" id="4_mapped"]
+[ext_resource type="Texture2D" uid="uid://d1aqupafmga6l" path="res://assets/ui/frames/map_room_here.png" id="5_here"]
 
 [sub_resource type="ShaderMaterial" id="Fog"]
 shader = ExtResource("2_fog")
 
-[sub_resource type="StyleBoxFlat" id="Room"]
-bg_color = Color(0.227451, 0.25882354, 0.3137255, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.3372549, 0.38431373, 0.47843137, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
+[sub_resource type="StyleBoxTexture" id="Room"]
+texture = ExtResource("3_room")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
 
-[sub_resource type="StyleBoxFlat" id="CurrentRoom"]
-bg_color = Color(0.227451, 0.25882354, 0.3137255, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
+[sub_resource type="StyleBoxTexture" id="MappedRoom"]
+texture = ExtResource("4_mapped")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="CurrentRoom"]
+texture = ExtResource("5_here")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
 
 [node name="Minimap" type="Control"]
 custom_minimum_size = Vector2(176, 132)
@@ -38,6 +38,7 @@ process_mode = 3
 mouse_filter = 2
 script = ExtResource("1_minimap")
 room_style = SubResource("Room")
+mapped_style = SubResource("MappedRoom")
 current_style = SubResource("CurrentRoom")
 
 [node name="Frame" type="Panel" parent="."]

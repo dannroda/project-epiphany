@@ -59,12 +59,6 @@ func _draw() -> void:
 		x -= 24
 
 
-static func draw_dashed_rect(canvas: CanvasItem, rect: Rect2, color: Color) -> void:
-	var corners := [rect.position, Vector2(rect.end.x, rect.position.y), rect.end, Vector2(rect.position.x, rect.end.y)]
-	for i in 4:
-		canvas.draw_dashed_line(corners[i], corners[(i + 1) % 4], color, 2.0, 6.0)
-
-
 static func draw_chest(canvas: CanvasItem, center: Vector2, color: Color) -> void:
 	canvas.draw_rect(Rect2(center + Vector2(-9, -4), Vector2(18, 11)), color, false, 1.8)
 	canvas.draw_arc(center + Vector2(0, -4), 9.0, PI, TAU, 10, color, 1.8)
