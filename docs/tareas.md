@@ -3411,10 +3411,12 @@ Modelar en Blender el terreno del overworld (pasto, caminos, piso de plaza, acan
 
 - [x] Pasto: base + 3–4 variantes
   Florcitas, piedritas, manchas de tierra.
-- [ ] Camino de tierra: recto, curva, T, cruce, final, borde con pasto
+- [x] Camino de tierra: recto, curva, T, cruce, final, borde con pasto
+  Cubierto por tierra + tierra_borde/esquina/esquina_int (vary_overworld.gd elige pieza y giro por vecinos), más las variantes de la tierra.
 - [x] Piso de piedra de la plaza: base + rota + musgo
-- [ ] Acantilado: recto, esquina ext/int, final, tope con pasto
-- [ ] Aberturas en acantilado de 1 y 3 celdas
+- [x] Acantilado: recto, esquina ext/int, final, tope con pasto
+  Cubierto por las celdas de andén y risco (cada celda tiene las cuatro caras y su tope de pasto), con Andén/Risco borde para el borde del mundo.
+- [x] Aberturas en acantilado de 1 y 3 celdas
   1 celda = gating (muro agrietado o reja), 3 = paso libre. Ver [[gdd#overworld-layout]].
 - [ ] Escalones y rampa (tierra y piedra)
   Escalón: muro de piedra con lajas encastradas arriba (hecho). La escalinata está en el .blend pero no en el kit, y el overworld no tiene ningún desnivel que pida rampa: falta decidir si hacen falta.
@@ -3435,7 +3437,7 @@ Modelar en Blender el terreno del overworld (pasto, caminos, piso de plaza, acan
 - [x] Cara del risco y topes con detalle
   Hecho: risco en seis estratos que salen y entran (repisas con musgo, abajo oscuro, una veta naranja); topes risco (piedras), risco_ichu y risco_flores, que vary_overworld.gd reparte por hash. Viento en wind.gdshaderinc, también en las paredes con agujero (epiphany_wall_wind.tres). Los andenes quedan lisos: Acantilado está en 944/950.
 - [x] Camino con detalle
-  Huellas, surcos o piedritas sueltas en la tierra.
+  Hecho: tierra_manchas, tierra_guijarros, tierra_huellas (pisadas de llama) y tierra_pasto (matitas que se mecen); vary_overworld.gd las reparte en la tierra junto con tierra_piedras (54 % de las celdas con algo).
 
 **Prueba:** El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.
 

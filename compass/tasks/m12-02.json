@@ -6,7 +6,8 @@
       "text": "Pasto: base + 3–4 variantes"
     },
     {
-      "done": false,
+      "detail": "Cubierto por tierra + tierra_borde/esquina/esquina_int (vary_overworld.gd elige pieza y giro por vecinos), más las variantes de la tierra.",
+      "done": true,
       "text": "Camino de tierra: recto, curva, T, cruce, final, borde con pasto"
     },
     {
@@ -14,12 +15,13 @@
       "text": "Piso de piedra de la plaza: base + rota + musgo"
     },
     {
-      "done": false,
+      "detail": "Cubierto por las celdas de andén y risco (cada celda tiene las cuatro caras y su tope de pasto), con Andén/Risco borde para el borde del mundo.",
+      "done": true,
       "text": "Acantilado: recto, esquina ext/int, final, tope con pasto"
     },
     {
-      "detail": "1 celda = gating (muro agrietado o reja), 3 = paso libre. Ver [[gdd#overworld-layout]].",
-      "done": false,
+      "detail": "Cubierto: las aberturas son celdas libres en la pared; las de 1 celda llevan cracked_wall_risco o reja.",
+      "done": true,
       "text": "Aberturas en acantilado de 1 y 3 celdas"
     },
     {
@@ -102,5 +104,5 @@
   ],
   "test": "El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.",
   "title": "Terreno del overworld",
-  "updated_at": "2026-10-11T09:06:40.485Z"
+  "updated_at": "2026-10-11T09:13:26.073Z"
 }
