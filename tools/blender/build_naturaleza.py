@@ -165,5 +165,63 @@ def tronco_caido(p):
 
 
 piece("tronco_caido", 15, tronco_caido)
+
+
+def tocon(p):
+	"""Tocón de queñoa: el corte claro arriba, mellado, y tres raíces."""
+	trunk = p.cylinder(0.24, 0.0, 0.42, sides=8, radius_top=0.2)
+	for v in {v for f in trunk for v in f.verts if v.co.z > 0.4}:
+		v.co.z += (p.rng.random() - 0.5) * 0.1
+	p.paint([f for f in trunk if f.normal.z <= 0.6], "madera_oscura", "MID", vary=0.1)
+	p.paint([f for f in trunk if f.normal.z > 0.6], "madera", "LIGHT")
+	roots = []
+	for i in range(3):
+		a = 2 * math.pi * i / 3 + p.rng.random() * 0.8
+		r, _ = branch(p, (math.cos(a) * 0.15, math.sin(a) * 0.15, 0.12), (math.cos(a), math.sin(a), -0.35), 0.45, 0.09, 0.03, segments=2, bend=0.2)
+		roots += r
+	p.paint(roots, "madera_oscura", "DARK", vary=0.1)
+
+
+def yareta(p):
+	"""Yareta: cojín verde vivo, achatado y lleno de bultitos."""
+	base = p.blob((0, 0, 0.12), 0.55, squash=(1.2, 1.0, 0.45), subdiv=2, rough=0.12, flat_bottom=0.0)
+	p.paint(base, "follaje", z_range=(0.0, 0.45), vary=0.05)
+	bumps = []
+	for _ in range(9):
+		a = p.rng.random() * 2 * math.pi
+		d = p.rng.random() * 0.45
+		bumps += p.blob((math.cos(a) * d * 1.2, math.sin(a) * d, 0.28 - d * 0.25), 0.13 + p.rng.random() * 0.06, squash=(1, 1, 0.6), subdiv=1, rough=0.2)
+	p.paint(bumps, "follaje", "LIGHT", vary=0.08)
+
+
+def flores(p):
+	"""Macizo de flores silvestres sobre una mata baja."""
+	p.paint(p.blob((0, 0, 0.05), 0.38, squash=(1.3, 1.0, 0.35), subdiv=1, rough=0.3, flat_bottom=0.0), "musgo", "MID", vary=0.08)
+	stems, heads = [], []
+	color = p.rng.choice(["flor_amarilla", "flor_rosa"])
+	for _ in range(9):
+		fx, fy = p.rng.uniform(-0.38, 0.38), p.rng.uniform(-0.28, 0.28)
+		h = 0.22 + p.rng.random() * 0.18
+		stems += p.box(fx - 0.016, fx + 0.016, fy - 0.016, fy + 0.016, 0.05, h)
+		heads.append((p.blob((fx, fy, h + 0.03), 0.065, subdiv=1, rough=0.0, squash=(1, 1, 0.55)), color if p.rng.random() < 0.7 else "blanco"))
+	p.paint(stems, "follaje", "DARK")
+	for faces, swatch in heads:
+		p.paint(faces, swatch, "LIGHT", vary=0.08)
+
+
+def hongos(p):
+	"""Tres hongos de sombrero ancho, para el pie de las queñoas."""
+	parts_stem, parts_cap = [], []
+	for x, y, h, r in ((0.0, 0.0, 0.22, 0.13), (0.18, 0.1, 0.15, 0.09), (-0.12, 0.14, 0.11, 0.07)):
+		parts_stem += p.cylinder(r * 0.35, 0.0, h, sides=6, center=(x, y))
+		parts_cap += p.blob((x, y, h), r, squash=(1, 1, 0.5), subdiv=1, rough=0.05)
+	p.paint(parts_stem, "hueso", "LIGHT")
+	p.paint(parts_cap, "tela_roja", "MID", vary=0.08)
+
+
+piece("tocon", 16, tocon)
+piece("yareta", 17, yareta)
+piece("flores", 18, flores)
+piece("hongos", 19, hongos)
 epi.layout(kit, columns=6, spacing=3.5)
 epi.save("naturaleza")

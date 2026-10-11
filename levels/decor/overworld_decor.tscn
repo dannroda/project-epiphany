@@ -3,44 +3,24 @@
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/apacheta.res" id="1_0u3d4"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/piedra_chica_b.res" id="2_x8t01"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/ichu_cortado.res" id="3_3ogdt"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/flores.res" id="4_1bbho"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/fachada_templo.res" id="4_1xcut"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/escombro_a.res" id="5_1bbho"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/roca_alta.res" id="6_frau3"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/roca_grande_b.res" id="7_lp77i"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/estalagmitas.res" id="8_dt5tn"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/cardon_chico.res" id="9_drr3c"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/yareta.res" id="9_frau3"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/tronco_caido.res" id="10_o620o"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/fogata.res" id="11_4bs3v"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_0u3d4"]
-size = Vector3(0.8872224, 1.2293369, 0.65298384)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_x8t01"]
-size = Vector3(0.8872224, 1.2293369, 0.65298384)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_3ogdt"]
-size = Vector3(0.7332648, 1.7897719, 0.7563176)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_1xcut"]
-size = Vector3(0.7332648, 1.7897719, 0.7563176)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_1bbho"]
-size = Vector3(0.7332648, 1.7897719, 0.7563176)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_frau3"]
-size = Vector3(1.7785418, 0.8754817, 1.0848511)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_lp77i"]
-size = Vector3(0.5492972, 1.446419, 0.5779936)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_dt5tn"]
-size = Vector3(0.5492972, 1.446419, 0.5779936)
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/tocon.res" id="13_lp77i"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/hongos.res" id="14_dt5tn"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_drr3c"]
-size = Vector3(0.5492972, 1.446419, 0.5779936)
+size = Vector3(0.8872224, 1.2293369, 0.65298384)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_o620o"]
-size = Vector3(0.5492972, 1.446419, 0.5779936)
+size = Vector3(0.8872224, 1.2293369, 0.65298384)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4bs3v"]
 size = Vector3(0.7332648, 1.7897719, 0.7563176)
@@ -49,486 +29,576 @@ size = Vector3(0.7332648, 1.7897719, 0.7563176)
 size = Vector3(0.7332648, 1.7897719, 0.7563176)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_o8xrr"]
-size = Vector3(0.8872224, 1.2293369, 0.65298384)
+size = Vector3(0.7332648, 1.7897719, 0.7563176)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_o1qjm"]
-size = Vector3(0.384, 1.22, 0.384)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_r2mxq"]
-size = Vector3(0.384, 1.22, 0.384)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_x1py8"]
-size = Vector3(1.5906696, 0.53346574, 0.60357755)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_leor7"]
-size = Vector3(1.5906696, 0.53346574, 0.60357755)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_4x1nf"]
-size = Vector3(0.384, 1.22, 0.384)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_7o6qt"]
-size = Vector3(0.384, 1.22, 0.384)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_n26jx"]
-size = Vector3(0.384, 1.22, 0.384)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_03vqj"]
 size = Vector3(1.7785418, 0.8754817, 1.0848511)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_lvcr5"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_r2mxq"]
 size = Vector3(0.5492972, 1.446419, 0.5779936)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x1py8"]
+size = Vector3(0.5492972, 1.446419, 0.5779936)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_leor7"]
+size = Vector3(0.5492972, 1.446419, 0.5779936)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4x1nf"]
+size = Vector3(0.5492972, 1.446419, 0.5779936)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7o6qt"]
+size = Vector3(0.7332648, 1.7897719, 0.7563176)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_n26jx"]
+size = Vector3(0.7332648, 1.7897719, 0.7563176)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_03vqj"]
+size = Vector3(0.8872224, 1.2293369, 0.65298384)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lvcr5"]
+size = Vector3(0.384, 1.22, 0.384)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_il1by"]
-size = Vector3(0.5492972, 1.446419, 0.5779936)
+size = Vector3(0.384, 1.22, 0.384)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f87il"]
-size = Vector3(0.5492972, 1.446419, 0.5779936)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_5vk7c"]
-size = Vector3(0.5492972, 1.446419, 0.5779936)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ifdp4"]
-size = Vector3(0.5492972, 1.446419, 0.5779936)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_hgxdi"]
 size = Vector3(1.5906696, 0.53346574, 0.60357755)
 
-[node name="Decor" type="Node3D" unique_id=803977395]
+[sub_resource type="BoxShape3D" id="BoxShape3D_5vk7c"]
+size = Vector3(1.5906696, 0.53346574, 0.60357755)
 
-[node name="Zone_santuario" type="Node3D" parent="." unique_id=478635898]
+[sub_resource type="BoxShape3D" id="BoxShape3D_ifdp4"]
+size = Vector3(0.384, 1.22, 0.384)
 
-[node name="Apacheta" type="StaticBody3D" parent="Zone_santuario" unique_id=154071908]
+[sub_resource type="BoxShape3D" id="BoxShape3D_hgxdi"]
+size = Vector3(0.384, 1.22, 0.384)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wqfgw"]
+size = Vector3(0.384, 1.22, 0.384)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ffjp4"]
+size = Vector3(1.7785418, 0.8754817, 1.0848511)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3p05a"]
+size = Vector3(0.82294464, 0.4917641, 0.7997912)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ghvwf"]
+size = Vector3(0.82294464, 0.4917641, 0.7997912)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6nwb1"]
+size = Vector3(0.5492972, 1.446419, 0.5779936)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fqu47"]
+size = Vector3(0.5492972, 1.446419, 0.5779936)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_axjfq"]
+size = Vector3(0.5492972, 1.446419, 0.5779936)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_87dlv"]
+size = Vector3(0.5492972, 1.446419, 0.5779936)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a4ogr"]
+size = Vector3(0.5492972, 1.446419, 0.5779936)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ouauy"]
+size = Vector3(1.5906696, 0.53346574, 0.60357755)
+
+[node name="Decor" type="Node3D" unique_id=1059827588]
+
+[node name="Zone_santuario" type="Node3D" parent="." unique_id=1179139140]
+
+[node name="Apacheta" type="StaticBody3D" parent="Zone_santuario" unique_id=1089398163]
 transform = Transform3D(0.1838415, 0, -0.9829559, 0, 1, 0, 0.9829559, 0, 0.1838415, -29.951054, 0, -22.708107)
 
-[node name="Model" type="MeshInstance3D" parent="Zone_santuario/Apacheta" unique_id=235016471]
+[node name="Model" type="MeshInstance3D" parent="Zone_santuario/Apacheta" unique_id=2060236247]
 mesh = ExtResource("1_0u3d4")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_santuario/Apacheta" unique_id=1751282012]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_santuario/Apacheta" unique_id=178329720]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15967038, 0.5410811, 0.08609697)
-shape = SubResource("BoxShape3D_0u3d4")
+shape = SubResource("BoxShape3D_drr3c")
 
-[node name="Apacheta2" type="StaticBody3D" parent="Zone_santuario" unique_id=166317262]
+[node name="Apacheta2" type="StaticBody3D" parent="Zone_santuario" unique_id=532418938]
 transform = Transform3D(-0.12861952, 0, -0.99169403, 0, 1, 0, 0.99169403, 0, -0.12861952, -26.042034, 0, -9.386273)
 
-[node name="Model" type="MeshInstance3D" parent="Zone_santuario/Apacheta2" unique_id=1208972842]
+[node name="Model" type="MeshInstance3D" parent="Zone_santuario/Apacheta2" unique_id=1401901726]
 mesh = ExtResource("1_0u3d4")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_santuario/Apacheta2" unique_id=1769666757]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_santuario/Apacheta2" unique_id=1386712406]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15967038, 0.5410811, 0.08609697)
-shape = SubResource("BoxShape3D_x8t01")
+shape = SubResource("BoxShape3D_o620o")
 
-[node name="PiedraChicaB" type="MeshInstance3D" parent="Zone_santuario" unique_id=1197952257]
+[node name="PiedraChicaB" type="MeshInstance3D" parent="Zone_santuario" unique_id=1069960935]
 transform = Transform3D(0.7783015, 0, 0.62789077, 0, 1, 0, -0.62789077, 0, 0.7783015, -13.69282, 0, -19.780027)
 mesh = ExtResource("2_x8t01")
 
-[node name="PiedraChicaB2" type="MeshInstance3D" parent="Zone_santuario" unique_id=651408570]
+[node name="PiedraChicaB2" type="MeshInstance3D" parent="Zone_santuario" unique_id=433143586]
 transform = Transform3D(-0.8545601, 0, 0.51935256, 0, 1, 0, -0.51935256, 0, -0.8545601, -31.902092, 0, -11.42236)
 mesh = ExtResource("2_x8t01")
 
-[node name="PiedraChicaB3" type="MeshInstance3D" parent="Zone_santuario" unique_id=1522321541]
+[node name="PiedraChicaB3" type="MeshInstance3D" parent="Zone_santuario" unique_id=1586413149]
 transform = Transform3D(-0.12918837, 0, -0.99162006, 0, 1, 0, 0.99162006, 0, -0.12918837, -21.929531, 0, -16.467476)
 mesh = ExtResource("2_x8t01")
 
-[node name="IchuCortado" type="MeshInstance3D" parent="Zone_santuario" unique_id=2087924679]
+[node name="IchuCortado" type="MeshInstance3D" parent="Zone_santuario" unique_id=356155989]
 transform = Transform3D(-0.93744, 0, 0.3481469, 0, 1, 0, -0.3481469, 0, -0.93744, -21.496292, 0, -19.634644)
 mesh = ExtResource("3_3ogdt")
 
-[node name="IchuCortado2" type="MeshInstance3D" parent="Zone_santuario" unique_id=1514202518]
+[node name="IchuCortado2" type="MeshInstance3D" parent="Zone_santuario" unique_id=693238589]
 transform = Transform3D(-0.82939875, 0, 0.55865705, 0, 1, 0, -0.55865705, 0, -0.82939875, -17.784973, 0, -9.753956)
 mesh = ExtResource("3_3ogdt")
 
-[node name="IchuCortado3" type="MeshInstance3D" parent="Zone_santuario" unique_id=516964456]
+[node name="IchuCortado3" type="MeshInstance3D" parent="Zone_santuario" unique_id=928746896]
 transform = Transform3D(-0.64473176, 0, 0.7644089, 0, 1, 0, -0.7644089, 0, -0.64473176, -13.445594, 0, -14.193347)
 mesh = ExtResource("3_3ogdt")
 
-[node name="Zone_templo" type="Node3D" parent="." unique_id=2120329623]
+[node name="Flores" type="MeshInstance3D" parent="Zone_santuario" unique_id=599398045]
+transform = Transform3D(0.82350636, 0, 0.567307, 0, 1, 0, -0.567307, 0, 0.82350636, -34.766666, 0, -11.989071)
+mesh = ExtResource("4_1bbho")
 
-[node name="FachadaTemplo" type="MeshInstance3D" parent="Zone_templo" unique_id=1273339707]
+[node name="Zone_templo" type="Node3D" parent="." unique_id=305721205]
+
+[node name="FachadaTemplo" type="MeshInstance3D" parent="Zone_templo" unique_id=1285680552]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -19.55)
 mesh = ExtResource("4_1xcut")
 
-[node name="EscombroA" type="MeshInstance3D" parent="Zone_templo" unique_id=1987139820]
+[node name="EscombroA" type="MeshInstance3D" parent="Zone_templo" unique_id=1798053277]
 transform = Transform3D(0.2940446, 0, 0.9557917, 0, 1, 0, -0.9557917, 0, 0.2940446, 10.84022, 0, -15.929369)
 mesh = ExtResource("5_1bbho")
 
-[node name="EscombroA2" type="MeshInstance3D" parent="Zone_templo" unique_id=977099120]
+[node name="EscombroA2" type="MeshInstance3D" parent="Zone_templo" unique_id=382668388]
 transform = Transform3D(-0.99802136, 0, 0.06287612, 0, 1, 0, -0.06287612, 0, -0.99802136, -4.164448, 0, -9.541512)
 mesh = ExtResource("5_1bbho")
 
-[node name="EscombroA3" type="MeshInstance3D" parent="Zone_templo" unique_id=1344511687]
+[node name="EscombroA3" type="MeshInstance3D" parent="Zone_templo" unique_id=553548499]
 transform = Transform3D(0.3178666, 0, 0.94813544, 0, 1, 0, -0.94813544, 0, 0.3178666, -10.673761, 0, -14.106906)
 mesh = ExtResource("5_1bbho")
 
-[node name="PiedraChicaB" type="MeshInstance3D" parent="Zone_templo" unique_id=592456514]
+[node name="PiedraChicaB" type="MeshInstance3D" parent="Zone_templo" unique_id=1119066038]
 transform = Transform3D(0.67918307, 0, 0.7339689, 0, 1, 0, -0.7339689, 0, 0.67918307, -7.909549, 0, -18.254892)
 mesh = ExtResource("2_x8t01")
 
-[node name="PiedraChicaB2" type="MeshInstance3D" parent="Zone_templo" unique_id=1015407134]
+[node name="PiedraChicaB2" type="MeshInstance3D" parent="Zone_templo" unique_id=1625348842]
 transform = Transform3D(0.89710313, 0, 0.4418212, 0, 1, 0, -0.4418212, 0, 0.89710313, 10.481044, 0, -18.440136)
 mesh = ExtResource("2_x8t01")
 
-[node name="Zone_risco" type="Node3D" parent="." unique_id=985153008]
+[node name="Zone_risco" type="Node3D" parent="." unique_id=1057483209]
 
-[node name="RocaAlta" type="StaticBody3D" parent="Zone_risco" unique_id=2136553178]
+[node name="RocaAlta" type="StaticBody3D" parent="Zone_risco" unique_id=150883629]
 transform = Transform3D(0.5924122, 0, 0.80563504, 0, 1, 0, -0.80563504, 0, 0.5924122, 34.61044, 0, -22.312447)
 
-[node name="Model" type="MeshInstance3D" parent="Zone_risco/RocaAlta" unique_id=2095224780]
+[node name="Model" type="MeshInstance3D" parent="Zone_risco/RocaAlta" unique_id=1449294107]
 mesh = ExtResource("6_frau3")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_risco/RocaAlta" unique_id=355043325]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.033541083, 0.89488596, 0.011272311)
-shape = SubResource("BoxShape3D_3ogdt")
-
-[node name="RocaAlta2" type="StaticBody3D" parent="Zone_risco" unique_id=2099854885]
-transform = Transform3D(-0.72261643, 0, 0.69124925, 0, 1, 0, -0.69124925, 0, -0.72261643, 32.082447, 0, -22.324995)
-
-[node name="Model" type="MeshInstance3D" parent="Zone_risco/RocaAlta2" unique_id=1130377515]
-mesh = ExtResource("6_frau3")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_risco/RocaAlta2" unique_id=639402078]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.033541083, 0.89488596, 0.011272311)
-shape = SubResource("BoxShape3D_1xcut")
-
-[node name="RocaAlta3" type="StaticBody3D" parent="Zone_risco" unique_id=1200137121]
-transform = Transform3D(0.75957096, 0, -0.6504244, 0, 1, 0, 0.6504244, 0, 0.75957096, 24.155973, 0, -22.654964)
-
-[node name="Model" type="MeshInstance3D" parent="Zone_risco/RocaAlta3" unique_id=1209956483]
-mesh = ExtResource("6_frau3")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_risco/RocaAlta3" unique_id=333572886]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.033541083, 0.89488596, 0.011272311)
-shape = SubResource("BoxShape3D_1bbho")
-
-[node name="PiedraChicaB" type="MeshInstance3D" parent="Zone_risco" unique_id=1588659954]
-transform = Transform3D(0.7319444, 0, -0.68136436, 0, 1, 0, 0.68136436, 0, 0.7319444, 13.263982, 0, -14.064502)
-mesh = ExtResource("2_x8t01")
-
-[node name="PiedraChicaB2" type="MeshInstance3D" parent="Zone_risco" unique_id=969681174]
-transform = Transform3D(0.07588429, 0, -0.9971166, 0, 1, 0, 0.9971166, 0, 0.07588429, 21.853916, 0, -22.467422)
-mesh = ExtResource("2_x8t01")
-
-[node name="PiedraChicaB3" type="MeshInstance3D" parent="Zone_risco" unique_id=1821705321]
-transform = Transform3D(-0.10318049, 0, -0.99466264, 0, 1, 0, 0.99466264, 0, -0.10318049, 15.823658, 0, -9.411702)
-mesh = ExtResource("2_x8t01")
-
-[node name="RocaGrandeB" type="StaticBody3D" parent="Zone_risco" unique_id=1700116295]
-transform = Transform3D(0.9132445, 0, -0.40741202, 0, 1, 0, 0.40741202, 0, 0.9132445, 31.662443, 0, -9.651188)
-
-[node name="Model" type="MeshInstance3D" parent="Zone_risco/RocaGrandeB" unique_id=359616226]
-mesh = ExtResource("7_lp77i")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_risco/RocaGrandeB" unique_id=254530576]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.031236649, 0.43774086, 0.0059891343)
-shape = SubResource("BoxShape3D_frau3")
-
-[node name="Zone_cueva" type="Node3D" parent="." unique_id=2141506202]
-
-[node name="Estalagmitas" type="StaticBody3D" parent="Zone_cueva" unique_id=347685689]
-transform = Transform3D(-0.95685756, 0, 0.29055732, 0, 1, 0, -0.29055732, 0, -0.95685756, -34.193657, 0, -6.4101563)
-
-[node name="Model" type="MeshInstance3D" parent="Zone_cueva/Estalagmitas" unique_id=233803578]
-mesh = ExtResource("8_dt5tn")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_cueva/Estalagmitas" unique_id=118330653]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.021690905, 0.69652575, 0.024718434)
-shape = SubResource("BoxShape3D_lp77i")
-
-[node name="Estalagmitas2" type="StaticBody3D" parent="Zone_cueva" unique_id=810329155]
-transform = Transform3D(0.8390788, 0, 0.54400986, 0, 1, 0, -0.54400986, 0, 0.8390788, -30.18475, 0, -6.216479)
-
-[node name="Model" type="MeshInstance3D" parent="Zone_cueva/Estalagmitas2" unique_id=1907907767]
-mesh = ExtResource("8_dt5tn")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_cueva/Estalagmitas2" unique_id=1978554717]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.021690905, 0.69652575, 0.024718434)
-shape = SubResource("BoxShape3D_dt5tn")
-
-[node name="Estalagmitas3" type="StaticBody3D" parent="Zone_cueva" unique_id=452238759]
-transform = Transform3D(-0.9997799, 0, -0.020982005, 0, 1, 0, 0.020982005, 0, -0.9997799, -26.082552, 0, 6.4108973)
-
-[node name="Model" type="MeshInstance3D" parent="Zone_cueva/Estalagmitas3" unique_id=1112202391]
-mesh = ExtResource("8_dt5tn")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_cueva/Estalagmitas3" unique_id=864594680]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.021690905, 0.69652575, 0.024718434)
-shape = SubResource("BoxShape3D_drr3c")
-
-[node name="Estalagmitas4" type="StaticBody3D" parent="Zone_cueva" unique_id=1500497224]
-transform = Transform3D(-0.024578469, 0, -0.9996979, 0, 1, 0, 0.9996979, 0, -0.024578469, -22.107372, 0, -6.4350476)
-
-[node name="Model" type="MeshInstance3D" parent="Zone_cueva/Estalagmitas4" unique_id=1140069598]
-mesh = ExtResource("8_dt5tn")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_cueva/Estalagmitas4" unique_id=509084886]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.021690905, 0.69652575, 0.024718434)
-shape = SubResource("BoxShape3D_o620o")
-
-[node name="RocaAlta" type="StaticBody3D" parent="Zone_cueva" unique_id=1701277475]
-transform = Transform3D(0.11975424, 0, -0.9928036, 0, 1, 0, 0.9928036, 0, 0.11975424, -34.335648, 0, -1.8212974)
-
-[node name="Model" type="MeshInstance3D" parent="Zone_cueva/RocaAlta" unique_id=1056164649]
-mesh = ExtResource("6_frau3")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_cueva/RocaAlta" unique_id=2017470541]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_risco/RocaAlta" unique_id=1560326099]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.033541083, 0.89488596, 0.011272311)
 shape = SubResource("BoxShape3D_4bs3v")
 
-[node name="RocaAlta2" type="StaticBody3D" parent="Zone_cueva" unique_id=275514819]
-transform = Transform3D(-0.941709, 0, 0.33642867, 0, 1, 0, -0.33642867, 0, -0.941709, -13.946237, 0, 6.0718694)
+[node name="RocaAlta2" type="StaticBody3D" parent="Zone_risco" unique_id=67487328]
+transform = Transform3D(-0.72261643, 0, 0.69124925, 0, 1, 0, -0.69124925, 0, -0.72261643, 32.082447, 0, -22.324995)
 
-[node name="Model" type="MeshInstance3D" parent="Zone_cueva/RocaAlta2" unique_id=2094875881]
+[node name="Model" type="MeshInstance3D" parent="Zone_risco/RocaAlta2" unique_id=1663639704]
 mesh = ExtResource("6_frau3")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_cueva/RocaAlta2" unique_id=2097265587]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_risco/RocaAlta2" unique_id=351826800]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.033541083, 0.89488596, 0.011272311)
 shape = SubResource("BoxShape3D_lw88o")
 
-[node name="EscombroA" type="MeshInstance3D" parent="Zone_cueva" unique_id=393460938]
+[node name="RocaAlta3" type="StaticBody3D" parent="Zone_risco" unique_id=1129256227]
+transform = Transform3D(0.75957096, 0, -0.6504244, 0, 1, 0, 0.6504244, 0, 0.75957096, 24.155973, 0, -22.654964)
+
+[node name="Model" type="MeshInstance3D" parent="Zone_risco/RocaAlta3" unique_id=746460681]
+mesh = ExtResource("6_frau3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_risco/RocaAlta3" unique_id=502680020]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.033541083, 0.89488596, 0.011272311)
+shape = SubResource("BoxShape3D_o8xrr")
+
+[node name="PiedraChicaB" type="MeshInstance3D" parent="Zone_risco" unique_id=201769462]
+transform = Transform3D(0.7319444, 0, -0.68136436, 0, 1, 0, 0.68136436, 0, 0.7319444, 13.263982, 0, -14.064502)
+mesh = ExtResource("2_x8t01")
+
+[node name="PiedraChicaB2" type="MeshInstance3D" parent="Zone_risco" unique_id=1835603871]
+transform = Transform3D(0.07588429, 0, -0.9971166, 0, 1, 0, 0.9971166, 0, 0.07588429, 21.853916, 0, -22.467422)
+mesh = ExtResource("2_x8t01")
+
+[node name="PiedraChicaB3" type="MeshInstance3D" parent="Zone_risco" unique_id=212030588]
+transform = Transform3D(-0.10318049, 0, -0.99466264, 0, 1, 0, 0.99466264, 0, -0.10318049, 15.823658, 0, -9.411702)
+mesh = ExtResource("2_x8t01")
+
+[node name="RocaGrandeB" type="StaticBody3D" parent="Zone_risco" unique_id=1214751697]
+transform = Transform3D(0.9132445, 0, -0.40741202, 0, 1, 0, 0.40741202, 0, 0.9132445, 31.662443, 0, -9.651188)
+
+[node name="Model" type="MeshInstance3D" parent="Zone_risco/RocaGrandeB" unique_id=1008614785]
+mesh = ExtResource("7_lp77i")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_risco/RocaGrandeB" unique_id=1293542645]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.031236649, 0.43774086, 0.0059891343)
+shape = SubResource("BoxShape3D_o1qjm")
+
+[node name="Yareta" type="MeshInstance3D" parent="Zone_risco" unique_id=858920333]
+transform = Transform3D(0.99831855, 0, -0.05796597, 0, 1, 0, 0.05796597, 0, 0.99831855, 31.968115, 0, -15.615327)
+mesh = ExtResource("9_frau3")
+
+[node name="Zone_cueva" type="Node3D" parent="." unique_id=1693063709]
+
+[node name="Estalagmitas" type="StaticBody3D" parent="Zone_cueva" unique_id=483721854]
+transform = Transform3D(-0.95685756, 0, 0.29055732, 0, 1, 0, -0.29055732, 0, -0.95685756, -34.193657, 0, -6.4101563)
+
+[node name="Model" type="MeshInstance3D" parent="Zone_cueva/Estalagmitas" unique_id=1865197241]
+mesh = ExtResource("8_dt5tn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_cueva/Estalagmitas" unique_id=2071177735]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.021690905, 0.69652575, 0.024718434)
+shape = SubResource("BoxShape3D_r2mxq")
+
+[node name="Estalagmitas2" type="StaticBody3D" parent="Zone_cueva" unique_id=1892998867]
+transform = Transform3D(0.8390788, 0, 0.54400986, 0, 1, 0, -0.54400986, 0, 0.8390788, -30.18475, 0, -6.216479)
+
+[node name="Model" type="MeshInstance3D" parent="Zone_cueva/Estalagmitas2" unique_id=188774386]
+mesh = ExtResource("8_dt5tn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_cueva/Estalagmitas2" unique_id=532237763]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.021690905, 0.69652575, 0.024718434)
+shape = SubResource("BoxShape3D_x1py8")
+
+[node name="Estalagmitas3" type="StaticBody3D" parent="Zone_cueva" unique_id=5552601]
+transform = Transform3D(-0.9997799, 0, -0.020982005, 0, 1, 0, 0.020982005, 0, -0.9997799, -26.082552, 0, 6.4108973)
+
+[node name="Model" type="MeshInstance3D" parent="Zone_cueva/Estalagmitas3" unique_id=1601352133]
+mesh = ExtResource("8_dt5tn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_cueva/Estalagmitas3" unique_id=2000900272]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.021690905, 0.69652575, 0.024718434)
+shape = SubResource("BoxShape3D_leor7")
+
+[node name="Estalagmitas4" type="StaticBody3D" parent="Zone_cueva" unique_id=62908754]
+transform = Transform3D(-0.024578469, 0, -0.9996979, 0, 1, 0, 0.9996979, 0, -0.024578469, -22.107372, 0, -6.4350476)
+
+[node name="Model" type="MeshInstance3D" parent="Zone_cueva/Estalagmitas4" unique_id=54316626]
+mesh = ExtResource("8_dt5tn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_cueva/Estalagmitas4" unique_id=188146174]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.021690905, 0.69652575, 0.024718434)
+shape = SubResource("BoxShape3D_4x1nf")
+
+[node name="RocaAlta" type="StaticBody3D" parent="Zone_cueva" unique_id=708047706]
+transform = Transform3D(0.11975424, 0, -0.9928036, 0, 1, 0, 0.9928036, 0, 0.11975424, -34.335648, 0, -1.8212974)
+
+[node name="Model" type="MeshInstance3D" parent="Zone_cueva/RocaAlta" unique_id=1637320137]
+mesh = ExtResource("6_frau3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_cueva/RocaAlta" unique_id=46731019]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.033541083, 0.89488596, 0.011272311)
+shape = SubResource("BoxShape3D_7o6qt")
+
+[node name="RocaAlta2" type="StaticBody3D" parent="Zone_cueva" unique_id=1094987390]
+transform = Transform3D(-0.941709, 0, 0.33642867, 0, 1, 0, -0.33642867, 0, -0.941709, -13.946237, 0, 6.0718694)
+
+[node name="Model" type="MeshInstance3D" parent="Zone_cueva/RocaAlta2" unique_id=1069840899]
+mesh = ExtResource("6_frau3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_cueva/RocaAlta2" unique_id=434648282]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.033541083, 0.89488596, 0.011272311)
+shape = SubResource("BoxShape3D_n26jx")
+
+[node name="EscombroA" type="MeshInstance3D" parent="Zone_cueva" unique_id=2021737911]
 transform = Transform3D(-0.995203, 0, -0.09783124, 0, 1, 0, 0.09783124, 0, -0.995203, -15.966752, 0, 2.4419563)
 mesh = ExtResource("5_1bbho")
 
-[node name="EscombroA2" type="MeshInstance3D" parent="Zone_cueva" unique_id=1965350191]
+[node name="EscombroA2" type="MeshInstance3D" parent="Zone_cueva" unique_id=1537386459]
 transform = Transform3D(0.4567331, 0, 0.8896038, 0, 1, 0, -0.8896038, 0, 0.4567331, -29.989817, 0, 0.24489813)
 mesh = ExtResource("5_1bbho")
 
-[node name="Zone_pradera" type="Node3D" parent="." unique_id=1069525534]
+[node name="Zone_pradera" type="Node3D" parent="." unique_id=1743995789]
 
-[node name="Apacheta" type="StaticBody3D" parent="Zone_pradera" unique_id=321628803]
+[node name="Apacheta" type="StaticBody3D" parent="Zone_pradera" unique_id=444453021]
 transform = Transform3D(-0.20791769, 0, 0.9781463, 0, 1, 0, -0.9781463, 0, -0.20791769, -2.2564735, 0, -1.8274975)
 
-[node name="Model" type="MeshInstance3D" parent="Zone_pradera/Apacheta" unique_id=1765393648]
+[node name="Model" type="MeshInstance3D" parent="Zone_pradera/Apacheta" unique_id=1002001365]
 mesh = ExtResource("1_0u3d4")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_pradera/Apacheta" unique_id=571779294]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_pradera/Apacheta" unique_id=998625774]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15967038, 0.5410811, 0.08609697)
-shape = SubResource("BoxShape3D_o8xrr")
+shape = SubResource("BoxShape3D_03vqj")
 
-[node name="PiedraChicaB" type="MeshInstance3D" parent="Zone_pradera" unique_id=364910753]
+[node name="PiedraChicaB" type="MeshInstance3D" parent="Zone_pradera" unique_id=661291883]
 transform = Transform3D(-0.6837102, 0, -0.7297536, 0, 1, 0, 0.7297536, 0, -0.6837102, 4.135037, 0, -6.788637)
 mesh = ExtResource("2_x8t01")
 
-[node name="PiedraChicaB2" type="MeshInstance3D" parent="Zone_pradera" unique_id=1319783209]
+[node name="PiedraChicaB2" type="MeshInstance3D" parent="Zone_pradera" unique_id=1046831473]
 transform = Transform3D(0.8203695, 0, 0.5718338, 0, 1, 0, -0.5718338, 0, 0.8203695, -3.7884784, 0, -6.356803)
 mesh = ExtResource("2_x8t01")
 
-[node name="PiedraChicaB3" type="MeshInstance3D" parent="Zone_pradera" unique_id=634735814]
+[node name="PiedraChicaB3" type="MeshInstance3D" parent="Zone_pradera" unique_id=1625202697]
 transform = Transform3D(-0.8283066, 0, -0.5602751, 0, 1, 0, 0.5602751, 0, -0.8283066, 10.049732, 0, -4.231729)
 mesh = ExtResource("2_x8t01")
 
-[node name="CardonChico" type="StaticBody3D" parent="Zone_pradera" unique_id=1590468609]
+[node name="CardonChico" type="StaticBody3D" parent="Zone_pradera" unique_id=104295044]
 transform = Transform3D(0.9998153, 0, 0.019218367, 0, 1, 0, -0.019218367, 0, 0.9998153, -6.1453834, 0, 2.199929)
 
-[node name="Model" type="MeshInstance3D" parent="Zone_pradera/CardonChico" unique_id=1292975913]
+[node name="Model" type="MeshInstance3D" parent="Zone_pradera/CardonChico" unique_id=1385210212]
 mesh = ExtResource("9_drr3c")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_pradera/CardonChico" unique_id=2111724523]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_pradera/CardonChico" unique_id=1432510881]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.61, 0)
-shape = SubResource("BoxShape3D_o1qjm")
+shape = SubResource("BoxShape3D_lvcr5")
 
-[node name="CardonChico2" type="StaticBody3D" parent="Zone_pradera" unique_id=1665467838]
+[node name="CardonChico2" type="StaticBody3D" parent="Zone_pradera" unique_id=1256621254]
 transform = Transform3D(0.6940345, 0, -0.71994174, 0, 1, 0, 0.71994174, 0, 0.6940345, -7.4361053, 0, 4.1114297)
 
-[node name="Model" type="MeshInstance3D" parent="Zone_pradera/CardonChico2" unique_id=393939387]
+[node name="Model" type="MeshInstance3D" parent="Zone_pradera/CardonChico2" unique_id=1473594972]
 mesh = ExtResource("9_drr3c")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_pradera/CardonChico2" unique_id=261790315]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_pradera/CardonChico2" unique_id=612429361]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.61, 0)
-shape = SubResource("BoxShape3D_r2mxq")
+shape = SubResource("BoxShape3D_il1by")
 
-[node name="IchuCortado" type="MeshInstance3D" parent="Zone_pradera" unique_id=352081569]
+[node name="IchuCortado" type="MeshInstance3D" parent="Zone_pradera" unique_id=2077804929]
 transform = Transform3D(0.86636007, 0, 0.49941987, 0, 1, 0, -0.49941987, 0, 0.86636007, 5.773703, 0, 6.3499727)
 mesh = ExtResource("3_3ogdt")
 
-[node name="IchuCortado2" type="MeshInstance3D" parent="Zone_pradera" unique_id=1816074647]
+[node name="IchuCortado2" type="MeshInstance3D" parent="Zone_pradera" unique_id=1332127041]
 transform = Transform3D(0.955561, 0, -0.29479355, 0, 1, 0, 0.29479355, 0, 0.955561, 8.264357, 0, -5.876901)
 mesh = ExtResource("3_3ogdt")
 
-[node name="IchuCortado3" type="MeshInstance3D" parent="Zone_pradera" unique_id=1041126392]
+[node name="IchuCortado3" type="MeshInstance3D" parent="Zone_pradera" unique_id=2097343250]
 transform = Transform3D(0.76989615, 0, 0.6381692, 0, 1, 0, -0.6381692, 0, 0.76989615, 10.213595, 0, 4.458763)
 mesh = ExtResource("3_3ogdt")
 
-[node name="IchuCortado4" type="MeshInstance3D" parent="Zone_pradera" unique_id=1387726442]
+[node name="IchuCortado4" type="MeshInstance3D" parent="Zone_pradera" unique_id=629631110]
 transform = Transform3D(-0.013026811, 0, -0.9999151, 0, 1, 0, 0.9999151, 0, -0.013026811, 8.5205345, 0, 6.15534)
 mesh = ExtResource("3_3ogdt")
 
-[node name="Zone_arboleda" type="Node3D" parent="." unique_id=1632173645]
+[node name="Yareta" type="MeshInstance3D" parent="Zone_pradera" unique_id=852996900]
+transform = Transform3D(-0.6482941, 0, 0.76139003, 0, 1, 0, -0.76139003, 0, -0.6482941, -10.522696, 0, 4.302995)
+mesh = ExtResource("9_frau3")
 
-[node name="TroncoCaido" type="StaticBody3D" parent="Zone_arboleda" unique_id=1397009292]
+[node name="Yareta2" type="MeshInstance3D" parent="Zone_pradera" unique_id=874365871]
+transform = Transform3D(-0.70785254, 0, 0.7063602, 0, 1, 0, -0.7063602, 0, -0.70785254, -7.9344716, 0, 6.652118)
+mesh = ExtResource("9_frau3")
+
+[node name="Flores" type="MeshInstance3D" parent="Zone_pradera" unique_id=901646782]
+transform = Transform3D(-0.45428628, 0, 0.8908557, 0, 1, 0, -0.8908557, 0, -0.45428628, -9.855726, 0, -4.6834564)
+mesh = ExtResource("4_1bbho")
+
+[node name="Flores2" type="MeshInstance3D" parent="Zone_pradera" unique_id=1652068839]
+transform = Transform3D(0.9983032, 0, 0.05822989, 0, 1, 0, -0.05822989, 0, 0.9983032, 7.919017, 0, -2.4492555)
+mesh = ExtResource("4_1bbho")
+
+[node name="Zone_arboleda" type="Node3D" parent="." unique_id=64708901]
+
+[node name="TroncoCaido" type="StaticBody3D" parent="Zone_arboleda" unique_id=919078478]
 transform = Transform3D(0.6789673, 0, -0.7341685, 0, 1, 0, 0.7341685, 0, 0.6789673, 23.902767, 0, 6.4084263)
 
-[node name="Model" type="MeshInstance3D" parent="Zone_arboleda/TroncoCaido" unique_id=940986857]
+[node name="Model" type="MeshInstance3D" parent="Zone_arboleda/TroncoCaido" unique_id=647537760]
 mesh = ExtResource("10_o620o")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_arboleda/TroncoCaido" unique_id=915319710]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_arboleda/TroncoCaido" unique_id=2073099809]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.085139334, 0.2661484, -0.17790726)
-shape = SubResource("BoxShape3D_x1py8")
+shape = SubResource("BoxShape3D_f87il")
 
-[node name="TroncoCaido2" type="StaticBody3D" parent="Zone_arboleda" unique_id=240854425]
+[node name="TroncoCaido2" type="StaticBody3D" parent="Zone_arboleda" unique_id=1248700555]
 transform = Transform3D(-0.35523134, 0, -0.9347784, 0, 1, 0, 0.9347784, 0, -0.35523134, 13.756741, 0, -6.410948)
 
-[node name="Model" type="MeshInstance3D" parent="Zone_arboleda/TroncoCaido2" unique_id=1852995993]
+[node name="Model" type="MeshInstance3D" parent="Zone_arboleda/TroncoCaido2" unique_id=1462927799]
 mesh = ExtResource("10_o620o")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_arboleda/TroncoCaido2" unique_id=1975233584]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_arboleda/TroncoCaido2" unique_id=557563773]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.085139334, 0.2661484, -0.17790726)
-shape = SubResource("BoxShape3D_leor7")
+shape = SubResource("BoxShape3D_5vk7c")
 
-[node name="CardonChico" type="StaticBody3D" parent="Zone_arboleda" unique_id=1406479632]
+[node name="CardonChico" type="StaticBody3D" parent="Zone_arboleda" unique_id=1180049857]
 transform = Transform3D(0.8693827, 0, 0.49413937, 0, 1, 0, -0.49413937, 0, 0.8693827, 26.492699, 0, -6.1526027)
 
-[node name="Model" type="MeshInstance3D" parent="Zone_arboleda/CardonChico" unique_id=1559114511]
+[node name="Model" type="MeshInstance3D" parent="Zone_arboleda/CardonChico" unique_id=1561233365]
 mesh = ExtResource("9_drr3c")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_arboleda/CardonChico" unique_id=1679435875]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_arboleda/CardonChico" unique_id=96026852]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.61, 0)
-shape = SubResource("BoxShape3D_4x1nf")
+shape = SubResource("BoxShape3D_ifdp4")
 
-[node name="CardonChico2" type="StaticBody3D" parent="Zone_arboleda" unique_id=1039532633]
+[node name="CardonChico2" type="StaticBody3D" parent="Zone_arboleda" unique_id=1193722454]
 transform = Transform3D(0.9914264, 0, -0.13066617, 0, 1, 0, 0.13066617, 0, 0.9914264, 29.545416, 0, 6.0325947)
 
-[node name="Model" type="MeshInstance3D" parent="Zone_arboleda/CardonChico2" unique_id=1972405054]
+[node name="Model" type="MeshInstance3D" parent="Zone_arboleda/CardonChico2" unique_id=1268839838]
 mesh = ExtResource("9_drr3c")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_arboleda/CardonChico2" unique_id=1342060016]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_arboleda/CardonChico2" unique_id=1284335057]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.61, 0)
-shape = SubResource("BoxShape3D_7o6qt")
+shape = SubResource("BoxShape3D_hgxdi")
 
-[node name="CardonChico3" type="StaticBody3D" parent="Zone_arboleda" unique_id=2016717104]
+[node name="CardonChico3" type="StaticBody3D" parent="Zone_arboleda" unique_id=378523154]
 transform = Transform3D(0.9883765, 0, 0.15202583, 0, 1, 0, -0.15202583, 0, 0.9883765, 18.59377, 0, -6.484422)
 
-[node name="Model" type="MeshInstance3D" parent="Zone_arboleda/CardonChico3" unique_id=311474408]
+[node name="Model" type="MeshInstance3D" parent="Zone_arboleda/CardonChico3" unique_id=639396065]
 mesh = ExtResource("9_drr3c")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_arboleda/CardonChico3" unique_id=1287164286]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_arboleda/CardonChico3" unique_id=906789486]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.61, 0)
-shape = SubResource("BoxShape3D_n26jx")
+shape = SubResource("BoxShape3D_wqfgw")
 
-[node name="RocaGrandeB" type="StaticBody3D" parent="Zone_arboleda" unique_id=1234780428]
+[node name="RocaGrandeB" type="StaticBody3D" parent="Zone_arboleda" unique_id=135556205]
 transform = Transform3D(0.7190829, 0, -0.69492435, 0, 1, 0, 0.69492435, 0, 0.7190829, 26.23278, 0, 6.3708587)
 
-[node name="Model" type="MeshInstance3D" parent="Zone_arboleda/RocaGrandeB" unique_id=1926136488]
+[node name="Model" type="MeshInstance3D" parent="Zone_arboleda/RocaGrandeB" unique_id=353206101]
 mesh = ExtResource("7_lp77i")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_arboleda/RocaGrandeB" unique_id=519232224]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_arboleda/RocaGrandeB" unique_id=41898332]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.031236649, 0.43774086, 0.0059891343)
-shape = SubResource("BoxShape3D_03vqj")
+shape = SubResource("BoxShape3D_ffjp4")
 
-[node name="IchuCortado" type="MeshInstance3D" parent="Zone_arboleda" unique_id=1706350932]
+[node name="IchuCortado" type="MeshInstance3D" parent="Zone_arboleda" unique_id=621426949]
 transform = Transform3D(0.8401447, 0, 0.54236233, 0, 1, 0, -0.54236233, 0, 0.8401447, 29.844173, 0, -3.5305727)
 mesh = ExtResource("3_3ogdt")
 
-[node name="IchuCortado2" type="MeshInstance3D" parent="Zone_arboleda" unique_id=580912875]
+[node name="IchuCortado2" type="MeshInstance3D" parent="Zone_arboleda" unique_id=1582113877]
 transform = Transform3D(-0.95713246, 0, -0.28965056, 0, 1, 0, 0.28965056, 0, -0.95713246, 34.366364, 0, 6.448114)
 mesh = ExtResource("3_3ogdt")
 
-[node name="IchuCortado3" type="MeshInstance3D" parent="Zone_arboleda" unique_id=683523417]
+[node name="IchuCortado3" type="MeshInstance3D" parent="Zone_arboleda" unique_id=1164637389]
 transform = Transform3D(-0.4257757, 0, 0.9048287, 0, 1, 0, -0.9048287, 0, -0.4257757, 13.558397, 0, 4.317423)
 mesh = ExtResource("3_3ogdt")
 
-[node name="Zone_gruta" type="Node3D" parent="." unique_id=870820928]
+[node name="Tocon" type="StaticBody3D" parent="Zone_arboleda" unique_id=1549069564]
+transform = Transform3D(-0.8485007, 0, -0.52919424, 0, 1, 0, 0.52919424, 0, -0.8485007, 29.96625, 0, -0.26832885)
 
-[node name="Estalagmitas" type="StaticBody3D" parent="Zone_gruta" unique_id=641735373]
+[node name="Model" type="MeshInstance3D" parent="Zone_arboleda/Tocon" unique_id=1148570641]
+mesh = ExtResource("13_lp77i")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_arboleda/Tocon" unique_id=951263800]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.04176736, 0.18988854, 0.09978017)
+shape = SubResource("BoxShape3D_3p05a")
+
+[node name="Tocon2" type="StaticBody3D" parent="Zone_arboleda" unique_id=617635525]
+transform = Transform3D(-0.9077707, 0, -0.41946676, 0, 1, 0, 0.41946676, 0, -0.9077707, 20.012419, 0, 6.6265187)
+
+[node name="Model" type="MeshInstance3D" parent="Zone_arboleda/Tocon2" unique_id=553783163]
+mesh = ExtResource("13_lp77i")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_arboleda/Tocon2" unique_id=38645479]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.04176736, 0.18988854, 0.09978017)
+shape = SubResource("BoxShape3D_ghvwf")
+
+[node name="Hongos" type="MeshInstance3D" parent="Zone_arboleda" unique_id=852466109]
+transform = Transform3D(-0.7436234, 0, 0.6685988, 0, 1, 0, -0.6685988, 0, -0.7436234, 34.452286, 0, 3.8167527)
+mesh = ExtResource("14_dt5tn")
+
+[node name="Hongos2" type="MeshInstance3D" parent="Zone_arboleda" unique_id=639113929]
+transform = Transform3D(-0.9643335, 0, -0.26469022, 0, 1, 0, 0.26469022, 0, -0.9643335, 17.34409, 0, -4.0807323)
+mesh = ExtResource("14_dt5tn")
+
+[node name="Zone_gruta" type="Node3D" parent="." unique_id=340247331]
+
+[node name="Estalagmitas" type="StaticBody3D" parent="Zone_gruta" unique_id=203302263]
 transform = Transform3D(0.9198299, 0, 0.39231738, 0, 1, 0, -0.39231738, 0, 0.9198299, -34.110683, 0, 9.715927)
 
-[node name="Model" type="MeshInstance3D" parent="Zone_gruta/Estalagmitas" unique_id=1673057749]
+[node name="Model" type="MeshInstance3D" parent="Zone_gruta/Estalagmitas" unique_id=1279663284]
 mesh = ExtResource("8_dt5tn")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_gruta/Estalagmitas" unique_id=931769419]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_gruta/Estalagmitas" unique_id=974704403]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.021690905, 0.69652575, 0.024718434)
-shape = SubResource("BoxShape3D_lvcr5")
+shape = SubResource("BoxShape3D_6nwb1")
 
-[node name="Estalagmitas2" type="StaticBody3D" parent="Zone_gruta" unique_id=230438510]
+[node name="Estalagmitas2" type="StaticBody3D" parent="Zone_gruta" unique_id=912211418]
 transform = Transform3D(0.038052917, 0, -0.99927574, 0, 1, 0, 0.99927574, 0, 0.038052917, -13.573522, 0, 19.98044)
 
-[node name="Model" type="MeshInstance3D" parent="Zone_gruta/Estalagmitas2" unique_id=2117376939]
+[node name="Model" type="MeshInstance3D" parent="Zone_gruta/Estalagmitas2" unique_id=1621585315]
 mesh = ExtResource("8_dt5tn")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_gruta/Estalagmitas2" unique_id=1024427570]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_gruta/Estalagmitas2" unique_id=1245784462]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.021690905, 0.69652575, 0.024718434)
-shape = SubResource("BoxShape3D_il1by")
+shape = SubResource("BoxShape3D_fqu47")
 
-[node name="Estalagmitas3" type="StaticBody3D" parent="Zone_gruta" unique_id=121067962]
+[node name="Estalagmitas3" type="StaticBody3D" parent="Zone_gruta" unique_id=539041031]
 transform = Transform3D(0.2997149, 0, -0.95402884, 0, 1, 0, 0.95402884, 0, 0.2997149, -28.082552, 0, 22.721209)
 
-[node name="Model" type="MeshInstance3D" parent="Zone_gruta/Estalagmitas3" unique_id=772252405]
+[node name="Model" type="MeshInstance3D" parent="Zone_gruta/Estalagmitas3" unique_id=1529138338]
 mesh = ExtResource("8_dt5tn")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_gruta/Estalagmitas3" unique_id=1908718941]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_gruta/Estalagmitas3" unique_id=574493142]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.021690905, 0.69652575, 0.024718434)
-shape = SubResource("BoxShape3D_f87il")
+shape = SubResource("BoxShape3D_axjfq")
 
-[node name="Estalagmitas4" type="StaticBody3D" parent="Zone_gruta" unique_id=183727042]
+[node name="Estalagmitas4" type="StaticBody3D" parent="Zone_gruta" unique_id=409669471]
 transform = Transform3D(0.2642296, 0, -0.96445984, 0, 1, 0, 0.96445984, 0, 0.2642296, -34.611954, 0, 15.876728)
 
-[node name="Model" type="MeshInstance3D" parent="Zone_gruta/Estalagmitas4" unique_id=1705728891]
+[node name="Model" type="MeshInstance3D" parent="Zone_gruta/Estalagmitas4" unique_id=1664023205]
 mesh = ExtResource("8_dt5tn")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_gruta/Estalagmitas4" unique_id=1237123873]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_gruta/Estalagmitas4" unique_id=1447765912]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.021690905, 0.69652575, 0.024718434)
-shape = SubResource("BoxShape3D_5vk7c")
+shape = SubResource("BoxShape3D_87dlv")
 
-[node name="Estalagmitas5" type="StaticBody3D" parent="Zone_gruta" unique_id=599822149]
+[node name="Estalagmitas5" type="StaticBody3D" parent="Zone_gruta" unique_id=1554615567]
 transform = Transform3D(-0.64871913, 0, -0.7610279, 0, 1, 0, 0.7610279, 0, -0.64871913, -24.141924, 0, 9.641026)
 
-[node name="Model" type="MeshInstance3D" parent="Zone_gruta/Estalagmitas5" unique_id=415013010]
+[node name="Model" type="MeshInstance3D" parent="Zone_gruta/Estalagmitas5" unique_id=1337118743]
 mesh = ExtResource("8_dt5tn")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_gruta/Estalagmitas5" unique_id=1931761123]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_gruta/Estalagmitas5" unique_id=452912111]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.021690905, 0.69652575, 0.024718434)
-shape = SubResource("BoxShape3D_ifdp4")
+shape = SubResource("BoxShape3D_a4ogr")
 
-[node name="PiedraChicaB" type="MeshInstance3D" parent="Zone_gruta" unique_id=1116678656]
+[node name="PiedraChicaB" type="MeshInstance3D" parent="Zone_gruta" unique_id=2143115718]
 transform = Transform3D(0.07471253, 0, 0.99720514, 0, 1, 0, -0.99720514, 0, 0.07471253, -13.621505, 0, 14.134449)
 mesh = ExtResource("2_x8t01")
 
-[node name="PiedraChicaB2" type="MeshInstance3D" parent="Zone_gruta" unique_id=1508271340]
+[node name="PiedraChicaB2" type="MeshInstance3D" parent="Zone_gruta" unique_id=1313340781]
 transform = Transform3D(0.030697605, 0, 0.9995287, 0, 1, 0, -0.9995287, 0, 0.030697605, -28.151396, 0, 9.580252)
 mesh = ExtResource("2_x8t01")
 
-[node name="PiedraChicaB3" type="MeshInstance3D" parent="Zone_gruta" unique_id=905252313]
+[node name="PiedraChicaB3" type="MeshInstance3D" parent="Zone_gruta" unique_id=434310453]
 transform = Transform3D(-0.8815631, 0, 0.4720662, 0, 1, 0, -0.4720662, 0, -0.8815631, -15.802742, 0, 22.46881)
 mesh = ExtResource("2_x8t01")
 
-[node name="Zone_start" type="Node3D" parent="." unique_id=1771855821]
+[node name="Zone_start" type="Node3D" parent="." unique_id=1173237667]
 
-[node name="Fogata" type="MeshInstance3D" parent="Zone_start" unique_id=896471426]
+[node name="Fogata" type="MeshInstance3D" parent="Zone_start" unique_id=973543839]
 transform = Transform3D(0.8811064, 0, -0.47291818, 0, 1, 0, 0.47291818, 0, 0.8811064, 2.1599364, 0, 14.17517)
 mesh = ExtResource("11_4bs3v")
 
-[node name="TroncoCaido" type="StaticBody3D" parent="Zone_start" unique_id=625175634]
+[node name="TroncoCaido" type="StaticBody3D" parent="Zone_start" unique_id=506230176]
 transform = Transform3D(-0.75828856, 0, -0.651919, 0, 1, 0, 0.651919, 0, -0.75828856, 0.106514186, 0, 12.290758)
 
-[node name="Model" type="MeshInstance3D" parent="Zone_start/TroncoCaido" unique_id=1902850732]
+[node name="Model" type="MeshInstance3D" parent="Zone_start/TroncoCaido" unique_id=1733579232]
 mesh = ExtResource("10_o620o")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_start/TroncoCaido" unique_id=1993009719]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_start/TroncoCaido" unique_id=2068628824]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.085139334, 0.2661484, -0.17790726)
-shape = SubResource("BoxShape3D_hgxdi")
+shape = SubResource("BoxShape3D_ouauy")
 
-[node name="PiedraChicaB" type="MeshInstance3D" parent="Zone_start" unique_id=144848693]
+[node name="PiedraChicaB" type="MeshInstance3D" parent="Zone_start" unique_id=841794007]
 transform = Transform3D(0.19577879, 0, -0.9806481, 0, 1, 0, 0.9806481, 0, 0.19577879, 10.1168995, 0, 18.512115)
 mesh = ExtResource("2_x8t01")
 
-[node name="PiedraChicaB2" type="MeshInstance3D" parent="Zone_start" unique_id=320378767]
+[node name="PiedraChicaB2" type="MeshInstance3D" parent="Zone_start" unique_id=2032000731]
 transform = Transform3D(-0.47163212, 0, 0.8817954, 0, 1, 0, -0.8817954, 0, -0.47163212, 8.377284, 0, 20.21955)
 mesh = ExtResource("2_x8t01")
 
-[node name="PiedraChicaB3" type="MeshInstance3D" parent="Zone_start" unique_id=1727081799]
+[node name="PiedraChicaB3" type="MeshInstance3D" parent="Zone_start" unique_id=1769881228]
 transform = Transform3D(0.23497799, 0, 0.9720007, 0, 1, 0, -0.9720007, 0, 0.23497799, -5.8802514, 0, 22.384666)
 mesh = ExtResource("2_x8t01")
 
-[node name="IchuCortado" type="MeshInstance3D" parent="Zone_start" unique_id=41509]
+[node name="IchuCortado" type="MeshInstance3D" parent="Zone_start" unique_id=783812546]
 transform = Transform3D(0.90140146, 0, -0.43298435, 0, 1, 0, 0.43298435, 0, 0.90140146, -4.2487435, 0, 9.507309)
 mesh = ExtResource("3_3ogdt")
 
-[node name="IchuCortado2" type="MeshInstance3D" parent="Zone_start" unique_id=978825746]
+[node name="IchuCortado2" type="MeshInstance3D" parent="Zone_start" unique_id=456998559]
 transform = Transform3D(0.51898754, 0, 0.8547818, 0, 1, 0, -0.8547818, 0, 0.51898754, 4.4768076, 0, 22.482327)
 mesh = ExtResource("3_3ogdt")
 
-[node name="IchuCortado3" type="MeshInstance3D" parent="Zone_start" unique_id=40297292]
+[node name="IchuCortado3" type="MeshInstance3D" parent="Zone_start" unique_id=1354338382]
 transform = Transform3D(-0.6819548, 0, -0.73139435, 0, 1, 0, 0.73139435, 0, -0.6819548, -10.583855, 0, 14.066747)
 mesh = ExtResource("3_3ogdt")
 
-[node name="IchuCortado4" type="MeshInstance3D" parent="Zone_start" unique_id=1856920242]
+[node name="IchuCortado4" type="MeshInstance3D" parent="Zone_start" unique_id=1199552365]
 transform = Transform3D(-0.7604884, 0, -0.64935154, 0, 1, 0, 0.64935154, 0, -0.7604884, 2.1925294, 0, 22.271242)
 mesh = ExtResource("3_3ogdt")
+
+[node name="Flores" type="MeshInstance3D" parent="Zone_start" unique_id=2015160905]
+transform = Transform3D(0.6167947, 0, 0.78712404, 0, 1, 0, -0.78712404, 0, 0.6167947, 6.211175, 0, 12.108713)
+mesh = ExtResource("4_1bbho")
+
+[node name="Flores2" type="MeshInstance3D" parent="Zone_start" unique_id=675447688]
+transform = Transform3D(0.946785, 0, 0.32186672, 0, 1, 0, -0.32186672, 0, 0.946785, -10.569492, 0, 9.7297)
+mesh = ExtResource("4_1bbho")
