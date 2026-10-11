@@ -34,8 +34,8 @@
       "text": "Decoración: arbustos, flores, hongos, tronco caído, tocón"
     },
     {
-      "detail": "Hoy salen de KayKit Medieval. Opcional.",
-      "done": false,
+      "detail": "Cubierto sin KayKit: la cámara cenital no ve el horizonte; el fondo es la meseta del borde del mundo (12.2 paso 9) y las nubes pasan como sombras (12.2 paso 13).",
+      "done": true,
       "text": "Fondo: nubes y colinas lejanas"
     }
   ],
@@ -53,11 +53,11 @@
   "order": 4,
   "priority": "high",
   "refs": [],
-  "status": "doing",
+  "status": "review",
   "tags": [
     "arte"
   ],
   "test": "Pasto, vasijas, rocas y cajas usan los modelos nuevos y se rompen o mueven como antes.",
   "title": "Vegetación y props del overworld",
-  "updated_at": "2026-10-11T08:28:30.840Z"
+  "updated_at": "2026-10-11T16:50:08.361Z"
 }
