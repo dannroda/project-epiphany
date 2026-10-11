@@ -1,7 +1,8 @@
 {
   "checklist": [
     {
-      "done": false,
+      "detail": "Hecho: halo aditivo (light_glow.gdshader como material_overlay de cada tramo y de la punta): infla el tubo en metros de mundo, brilla al centro, se apaga en el borde y titila leve; toma el color del haz.",
+      "done": true,
       "text": "Haz de luz"
     },
     {
@@ -34,11 +35,11 @@
   "order": 9,
   "priority": "low",
   "refs": [],
-  "status": "doing",
+  "status": "review",
   "tags": [
     "arte"
   ],
   "test": "",
   "title": "Efectos con malla",
-  "updated_at": "2026-10-11T16:48:28.912Z"
+  "updated_at": "2026-10-11T16:49:49.113Z"
 }

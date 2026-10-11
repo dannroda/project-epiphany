@@ -4,6 +4,7 @@ extends Node3D
 ## activa los LightReceiver que toca. Se recalcula cada cuadro de física.
 
 const MIRROR_GROUP := &"light_mirror"
+const GLOW := preload("res://data/kits/materials/light_glow.tres")
 
 @export var max_length := 40.0
 @export var max_bounces := 8
@@ -14,6 +15,7 @@ const MIRROR_GROUP := &"light_mirror"
 var segments: Array[PackedVector3Array] = []
 
 var _material := StandardMaterial3D.new()
+var _glow := GLOW.duplicate() as ShaderMaterial
 var _meshes: Array[MeshInstance3D] = []
 var _tip: MeshInstance3D
 
@@ -23,6 +25,7 @@ func _ready() -> void:
 	_material.albedo_color = color
 	_material.emission_enabled = true
 	_material.emission = color
+	_glow.set_shader_parameter(&"color", color)
 	_tip = MeshInstance3D.new()
 	var sphere := SphereMesh.new()
 	sphere.radius = radius * 2.5
@@ -30,6 +33,7 @@ func _ready() -> void:
 	sphere.material = _material
 	_tip.mesh = sphere
 	_tip.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_tip.material_overlay = _glow
 	_tip.top_level = true
 	add_child(_tip)
 
@@ -84,6 +88,7 @@ func _draw() -> void:
 		cylinder.material = _material
 		mesh.mesh = cylinder
 		mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		mesh.material_overlay = _glow
 		mesh.top_level = true
 		add_child(mesh)
 		_meshes.append(mesh)
