@@ -34,13 +34,13 @@ const TEMPLE := {
 }
 ## Overworld, por zona: hitos cerca del centro y piezas contra los riscos y los muros, cada una [malla, cuántas].
 const OVERWORLD := {
-	"Zone_start": {"landmarks": ["objetos/fogata", "naturaleza/tronco_caido"], "edge": [["naturaleza/piedra_chica_b", 3], ["naturaleza/ichu_cortado", 4]]},
-	"Zone_pradera": {"landmarks": ["objetos/apacheta"], "edge": [["naturaleza/piedra_chica_b", 3], ["naturaleza/cardon_chico", 2], ["naturaleza/ichu_cortado", 4]]},
-	"Zone_arboleda": {"edge": [["naturaleza/tronco_caido", 2], ["naturaleza/cardon_chico", 3], ["naturaleza/roca_grande_b", 1], ["naturaleza/ichu_cortado", 3]]},
-	"Zone_risco": {"edge": [["naturaleza/roca_alta", 3], ["naturaleza/piedra_chica_b", 3], ["naturaleza/roca_grande_b", 1]]},
+	"Zone_start": {"landmarks": ["objetos/fogata", "naturaleza/tronco_caido"], "edge": [["naturaleza/piedra_chica_b", 3], ["naturaleza/ichu_cortado", 4], ["naturaleza/flores", 2]]},
+	"Zone_pradera": {"landmarks": ["objetos/apacheta"], "edge": [["naturaleza/piedra_chica_b", 3], ["naturaleza/cardon_chico", 2], ["naturaleza/ichu_cortado", 4], ["naturaleza/yareta", 2], ["naturaleza/flores", 2]]},
+	"Zone_arboleda": {"edge": [["naturaleza/tronco_caido", 2], ["naturaleza/cardon_chico", 3], ["naturaleza/roca_grande_b", 1], ["naturaleza/ichu_cortado", 3], ["naturaleza/tocon", 2], ["naturaleza/hongos", 2]]},
+	"Zone_risco": {"edge": [["naturaleza/roca_alta", 3], ["naturaleza/piedra_chica_b", 3], ["naturaleza/roca_grande_b", 1], ["naturaleza/yareta", 1]]},
 	"Zone_cueva": {"edge": [["lugares/estalagmitas", 4], ["naturaleza/roca_alta", 2], ["lugares/escombro_a", 2]]},
 	"Zone_gruta": {"edge": [["lugares/estalagmitas", 5], ["naturaleza/piedra_chica_b", 3]]},
-	"Zone_santuario": {"edge": [["objetos/apacheta", 2], ["naturaleza/piedra_chica_b", 3], ["naturaleza/ichu_cortado", 3]]},
+	"Zone_santuario": {"edge": [["objetos/apacheta", 2], ["naturaleza/piedra_chica_b", 3], ["naturaleza/ichu_cortado", 3], ["naturaleza/flores", 1]]},
 	"Zone_templo": {"facade": "TempleSeal", "edge": [["lugares/escombro_a", 3], ["naturaleza/piedra_chica_b", 2]]},
 }
 
@@ -281,7 +281,7 @@ func _is_ground(cell: Vector3i) -> bool:
 
 func _is_wall(cell: Vector3i) -> bool:
 	var item := _grid.get_cell_item(cell)
-	if item == GridMap.INVALID_CELL_ITEM or _name(cell) in ["Puerta", "Escalón", "Abismo", "Hueco"]:
+	if item == GridMap.INVALID_CELL_ITEM or _name(cell) in ["Puerta", "Escalón"] or _is_hole(cell):
 		return false
 	for k in range(0, _lib.get_item_shapes(item).size(), 2):
 		var shapes := _lib.get_item_shapes(item)
@@ -302,10 +302,15 @@ func _toward_walls(cell: Vector3i) -> Vector3:
 
 func _near_hole(cell: Vector3i) -> bool:
 	for dir in DIRS + [Vector2i.ZERO]:
-		var item_name := _name(cell + Vector3i(dir.x, 0, dir.y))
-		if item_name in ["Hueco", "Abismo"]:
+		if _is_hole(cell + Vector3i(dir.x, 0, dir.y)):
 			return true
 	return false
+
+
+## Hueco o abismo, con sus variantes por vecinos.
+func _is_hole(cell: Vector3i) -> bool:
+	var item_name := _name(cell)
+	return item_name.begins_with("Hueco") or item_name.begins_with("Abismo")
 
 
 func _jitter(amount: float) -> Vector3:
