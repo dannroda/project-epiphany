@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cl2rg4xw77j5j"]
 
-[ext_resource type="Script" path="res://src/items/equipped_item.gd" id="1_6jcfn"]
+[ext_resource type="Script" uid="uid://bv1cb4b8pu31r" path="res://src/items/equipped_item.gd" id="1_6jcfn"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/equipo/espada.res" id="2_sword"]
 
 [node name="Sword1H" type="Node3D" unique_id=284091126]

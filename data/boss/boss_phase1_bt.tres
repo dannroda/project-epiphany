@@ -1,13 +1,12 @@
-[gd_resource type="BehaviorTree" format=3]
+[gd_resource type="BehaviorTree" format=3 uid="uid://vjwmrsrpwtei"]
 
-[ext_resource type="Script" path="res://ai/tasks/bt_choose_boss_attack.gd" id="1_choose"]
-[ext_resource type="Script" path="res://ai/tasks/bt_perform_boss_attack.gd" id="2_perform"]
+[ext_resource type="Script" uid="uid://dsfbwhg4dw8rg" path="res://ai/tasks/bt_choose_boss_attack.gd" id="1_choose"]
+[ext_resource type="Script" uid="uid://30xx1t0kocj0" path="res://ai/tasks/bt_perform_boss_attack.gd" id="2_perform"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_boss"]
 
 [sub_resource type="BTAction" id="BTAction_choose"]
 script = ExtResource("1_choose")
-phase = 1
 
 [sub_resource type="BTAction" id="BTAction_perform"]
 script = ExtResource("2_perform")

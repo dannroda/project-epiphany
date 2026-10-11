@@ -1,10 +1,10 @@
-[gd_resource type="BehaviorTree" format=3]
+[gd_resource type="BehaviorTree" format=3 uid="uid://d2cdktwr0pq68"]
 
 [ext_resource type="Script" uid="uid://bw6i0a7bddx8n" path="res://ai/tasks/bt_find_player.gd" id="1_caso1"]
 [ext_resource type="Script" uid="uid://dp1f7fgg0yk1l" path="res://ai/tasks/bt_in_attack_range.gd" id="2_0sm1c"]
-[ext_resource type="Script" path="res://ai/tasks/bt_shoot_arrow.gd" id="4_sr5dr"]
-[ext_resource type="Script" path="res://ai/tasks/bt_keep_away.gd" id="6_keep"]
+[ext_resource type="Script" uid="uid://dqux6584c6gxs" path="res://ai/tasks/bt_shoot_arrow.gd" id="4_sr5dr"]
 [ext_resource type="Script" uid="uid://dgotna37ipe2c" path="res://ai/tasks/bt_move_to_target.gd" id="5_orssr"]
+[ext_resource type="Script" uid="uid://flw2poka5d86" path="res://ai/tasks/bt_keep_away.gd" id="6_keep"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_jgf0a"]
 
@@ -105,6 +105,16 @@ value = SubResource("BBVariant_fqfvd")
 custom_name = "Aturdido"
 children = [SubResource("BTCheckVar_lx1b6"), SubResource("BTPlayAnimation_fqs72"), SubResource("BTWait_hjooy"), SubResource("BTSetVar_66j55")]
 
+[sub_resource type="BTCondition" id="BTCondition_keepfind"]
+script = ExtResource("1_caso1")
+
+[sub_resource type="BTAction" id="BTAction_keep"]
+script = ExtResource("6_keep")
+
+[sub_resource type="BTSequence" id="BTSequence_keep"]
+custom_name = "Alejarse"
+children = [SubResource("BTCondition_keepfind"), SubResource("BTAction_keep")]
+
 [sub_resource type="BTCondition" id="BTCondition_a3mfv"]
 script = ExtResource("1_caso1")
 
@@ -155,16 +165,6 @@ duration = 0.5
 [sub_resource type="BTSequence" id="BTSequence_wc2m8"]
 custom_name = "Quieto"
 children = [SubResource("BTPlayAnimation_tuwd0"), SubResource("BTWait_igf4x")]
-
-[sub_resource type="BTCondition" id="BTCondition_keepfind"]
-script = ExtResource("1_caso1")
-
-[sub_resource type="BTAction" id="BTAction_keep"]
-script = ExtResource("6_keep")
-
-[sub_resource type="BTSequence" id="BTSequence_keep"]
-custom_name = "Alejarse"
-children = [SubResource("BTCondition_keepfind"), SubResource("BTAction_keep")]
 
 [sub_resource type="BTDynamicSelector" id="BTDynamicSelector_mitb3"]
 children = [SubResource("BTSequence_jc67m"), SubResource("BTSequence_ea1ff"), SubResource("BTSequence_m2m87"), SubResource("BTSequence_keep"), SubResource("BTSequence_0kvci"), SubResource("BTSequence_8062w"), SubResource("BTSequence_wc2m8")]

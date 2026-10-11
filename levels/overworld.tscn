@@ -1,15 +1,15 @@
 [gd_scene format=3 uid="uid://cjddyr8q6b3o0"]
 
 [ext_resource type="Texture2D" uid="uid://bs6ggwyw5mp2m" path="res://assets/kenney_skyboxes/Skyboxes/skybox-morning.png" id="1_qyxw2"]
-[ext_resource type="MeshLibrary" path="res://data/kits/overworld_kit.tres" id="2_rqbxp"]
+[ext_resource type="MeshLibrary" uid="uid://dt62p0c61qjd0" path="res://data/kits/overworld_kit.tres" id="2_rqbxp"]
 [ext_resource type="Script" uid="uid://ch0f7xp8r0b66" path="res://src/world/area_zone.gd" id="3_rqerd"]
 [ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="4_cr2by"]
 [ext_resource type="Script" uid="uid://x60poi8g2tqu" path="res://src/world/grass_patch.gd" id="5_n78bg"]
-[ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="6_d356v"]
-[ext_resource type="PackedScene" path="res://src/entities/shield_skeleton.tscn" id="6_shield"]
 [ext_resource type="PackedScene" path="res://src/entities/archer_skeleton.tscn" id="6_archer"]
 [ext_resource type="PackedScene" path="res://src/entities/armored_skeleton.tscn" id="6_armored"]
+[ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="6_d356v"]
 [ext_resource type="PackedScene" path="res://src/world/heart_piece.tscn" id="6_piece"]
+[ext_resource type="PackedScene" path="res://src/entities/shield_skeleton.tscn" id="6_shield"]
 [ext_resource type="PackedScene" path="res://src/world/physics_box.tscn" id="9_axpip"]
 [ext_resource type="PackedScene" path="res://src/world/physics_rock.tscn" id="10_vrnmo"]
 [ext_resource type="PackedScene" path="res://src/world/overworld_map.tscn" id="11_gsck2"]
@@ -36,8 +36,8 @@
 [ext_resource type="Resource" uid="uid://cvf15473ufqvp" path="res://data/items/potion.tres" id="33_yqe63"]
 [ext_resource type="Resource" path="res://data/items/armor_chainmail.tres" id="38_khlv8"]
 [ext_resource type="PackedScene" path="res://src/world/eye_switch.tscn" id="39_ailnf"]
-[ext_resource type="PackedScene" path="res://src/world/stone.tscn" id="42_stone"]
 [ext_resource type="Resource" path="res://data/items/quiver_big.tres" id="41_csg56"]
+[ext_resource type="PackedScene" path="res://src/world/stone.tscn" id="42_stone"]
 [ext_resource type="PackedScene" path="res://src/world/zone_veil.tscn" id="90_veil"]
 [ext_resource type="PackedScene" path="res://src/world/cracked_wall_risco.tscn" id="91_crackrisco"]
 [ext_resource type="PackedScene" path="res://levels/decor/overworld_decor.tscn" id="92_decor"]
@@ -124,7 +124,7 @@ display_name = "PLACE_SANCTUARY"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_santuario" unique_id=1428017056]
 shape = SubResource("BoxShape3D_mweuj")
 
-[node name="ZoneVeil" parent="Zone_santuario" instance=ExtResource("90_veil")]
+[node name="ZoneVeil" parent="Zone_santuario" unique_id=1676448301 instance=ExtResource("90_veil")]
 blockers = Array[NodePath]([NodePath("../../ShrineCrackedWall")])
 
 [node name="Spawn_santuario" type="Marker3D" parent="." unique_id=1883394303]
@@ -205,7 +205,7 @@ display_name = "PLACE_HIDDEN_GROTTO"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_gruta" unique_id=845541249]
 shape = SubResource("BoxShape3D_01rmd")
 
-[node name="ZoneVeil" parent="Zone_gruta" instance=ExtResource("90_veil")]
+[node name="ZoneVeil" parent="Zone_gruta" unique_id=1790366372 instance=ExtResource("90_veil")]
 blockers = Array[NodePath]([NodePath("../../GrottoCrackedWall")])
 
 [node name="Spawn_gruta" type="Marker3D" parent="." unique_id=151939532]
@@ -302,7 +302,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 0.6, 4)
 [node name="Rock3" parent="." unique_id=375734465 instance=ExtResource("10_vrnmo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0.6, 4)
 
-[node name="OverworldMap" parent="." node_paths=PackedStringArray("grid", "scenery") unique_id=259113020 instance=ExtResource("11_gsck2")]
+[node name="OverworldMap" parent="." unique_id=259113020 node_paths=PackedStringArray("grid", "scenery") instance=ExtResource("11_gsck2")]
 display_name = "PLACE_TEMPLE_VALLEY"
 world_rect = Rect2(-37, -25, 74, 50)
 grid = NodePath("../GridMap")
@@ -366,8 +366,8 @@ solved_position = Vector3(-30, 0, -16)
 
 [node name="ChestGate" parent="." unique_id=1467179515 instance=ExtResource("26_iip2e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -18)
-depth = 2.0
 switches = Array[NodePath]([NodePath("../ShrineSwitch")])
+depth = 2.0
 
 [node name="MirrorChest" parent="." unique_id=1406574529 instance=ExtResource("15_3hrjb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -21)
@@ -385,8 +385,8 @@ flag = &"ow_shrine_shortcut"
 
 [node name="ShortcutGate" parent="." unique_id=294050897 instance=ExtResource("26_iip2e")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12, 0, -16)
-depth = 2.0
 switches = Array[NodePath]([NodePath("../ShrineCrystal")])
+depth = 2.0
 
 [node name="TempleLight" parent="." unique_id=108395462 instance=ExtResource("30_xv8lf")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -10, 0, -18)
@@ -431,37 +431,37 @@ dialogue = ExtResource("20_gd0nv")
 cue = "start_temple"
 flag = &"ow_tablet_start"
 
-[node name="ControlsTablet" parent="." instance=ExtResource("18_gsck2")]
+[node name="ControlsTablet" parent="." unique_id=261526296 instance=ExtResource("18_gsck2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 17)
 dialogue = ExtResource("20_gd0nv")
 cue = "start_controls"
 flag = &"ow_tablet_controls"
 
-[node name="CombatTablet" parent="." instance=ExtResource("18_gsck2")]
+[node name="CombatTablet" parent="." unique_id=646033479 instance=ExtResource("18_gsck2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 11)
 dialogue = ExtResource("20_gd0nv")
 cue = "start_combat"
 flag = &"ow_tablet_combat"
 
-[node name="LiftTablet" parent="." instance=ExtResource("18_gsck2")]
+[node name="LiftTablet" parent="." unique_id=1908426765 instance=ExtResource("18_gsck2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 14.5)
 dialogue = ExtResource("20_gd0nv")
 cue = "start_lift"
 flag = &"ow_tablet_lift"
 
-[node name="LiftSwitch" parent="." instance=ExtResource("22_gvf0k")]
+[node name="LiftSwitch" parent="." unique_id=51521915 instance=ExtResource("22_gvf0k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 15.5)
 mode = 2
 flag = &"ow_start_lift_switch"
 
-[node name="LiftStone" parent="." instance=ExtResource("42_stone")]
+[node name="LiftStone" parent="." unique_id=1753049093 instance=ExtResource("42_stone")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 20)
 
-[node name="LiftGate" parent="." instance=ExtResource("26_iip2e")]
+[node name="LiftGate" parent="." unique_id=1692030268 instance=ExtResource("26_iip2e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 12)
 switches = Array[NodePath]([NodePath("../LiftSwitch")])
 
-[node name="LiftChest" parent="." instance=ExtResource("15_3hrjb")]
+[node name="LiftChest" parent="." unique_id=388282977 instance=ExtResource("15_3hrjb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 10.8)
 item = ExtResource("33_yqe63")
 flag = &"ow_start_lift_chest"
@@ -512,8 +512,8 @@ solved_position = Vector3(32, 0, 4)
 
 [node name="GroveGate" parent="." unique_id=919868571 instance=ExtResource("26_iip2e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, -2)
-depth = 2.0
 switches = Array[NodePath]([NodePath("../GroveSwitchA"), NodePath("../GroveSwitchB")])
+depth = 2.0
 
 [node name="GroveChest" parent="." unique_id=964683035 instance=ExtResource("15_3hrjb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, -5)
@@ -526,8 +526,8 @@ flag = &"ow_cliff_eye"
 
 [node name="CliffGate" parent="." unique_id=1552967466 instance=ExtResource("26_iip2e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, -14)
-depth = 2.0
 switches = Array[NodePath]([NodePath("../CliffEye")])
+depth = 2.0
 
 [node name="QuiverChest" parent="." unique_id=2108365836 instance=ExtResource("15_3hrjb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, 0, -11)
@@ -550,34 +550,34 @@ flag = &"ow_heart_piece_shrine"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, -10)
 flag = &"ow_heart_piece_cliff"
 
-[node name="SpringCaveMouth" type="Node3D" parent="."]
+[node name="SpringCaveMouth" type="Node3D" parent="." unique_id=156304344]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -36, 0, 14)
 
-[node name="Model" type="MeshInstance3D" parent="SpringCaveMouth"]
+[node name="Model" type="MeshInstance3D" parent="SpringCaveMouth" unique_id=1698459557]
 mesh = ExtResource("93_mouth")
 
-[node name="Jambs" type="StaticBody3D" parent="SpringCaveMouth"]
+[node name="Jambs" type="StaticBody3D" parent="SpringCaveMouth" unique_id=774572202]
 
-[node name="North" type="CollisionShape3D" parent="SpringCaveMouth/Jambs"]
+[node name="North" type="CollisionShape3D" parent="SpringCaveMouth/Jambs" unique_id=637098676]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 1.3, 0)
 shape = SubResource("BoxShape3D_jamb")
 
-[node name="South" type="CollisionShape3D" parent="SpringCaveMouth/Jambs"]
+[node name="South" type="CollisionShape3D" parent="SpringCaveMouth/Jambs" unique_id=1142617550]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 1.3, 0)
 shape = SubResource("BoxShape3D_jamb")
 
-[node name="SpringCaveDoor" type="Area3D" parent="."]
+[node name="SpringCaveDoor" type="Area3D" parent="." unique_id=1561675824]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.7, 1.2, 14)
 script = ExtResource("14_5vrew")
 target_scene = "res://levels/spring_cave.tscn"
 target_spawn = &"entrada"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SpringCaveDoor"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SpringCaveDoor" unique_id=668428541]
 shape = SubResource("BoxShape3D_springportal")
 
-[node name="Spawn_vertiente" type="Marker3D" parent="."]
+[node name="Spawn_vertiente" type="Marker3D" parent="." unique_id=1545311424]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.4, 0, 14)
 script = ExtResource("4_cr2by")
 id = &"vertiente"
 
-[node name="Decor" parent="." instance=ExtResource("92_decor")]
+[node name="Decor" parent="." unique_id=1521323052 instance=ExtResource("92_decor")]

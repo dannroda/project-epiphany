@@ -41,6 +41,7 @@ materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
 _subresources={}
+epiphany/mesh_dir=""
 blender/nodes/visible=2.0
 blender/nodes/active_collection_only=false
 blender/nodes/punctual_lights=true

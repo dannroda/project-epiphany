@@ -10,9 +10,9 @@
 [ext_resource type="PackedScene" uid="uid://dl3q3n8t4t58t" path="res://src/world/water/water_pool.tscn" id="8_pool"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/estalagmitas.res" id="9_stal"]
 [ext_resource type="PackedScene" path="res://src/world/spring.tscn" id="11_spring"]
-[ext_resource type="PackedScene" path="res://src/world/water/waterfall.tscn" id="14_fall"]
 [ext_resource type="PackedScene" path="res://src/world/tablet.tscn" id="12_tablet"]
 [ext_resource type="Resource" uid="uid://b353kh0linjkb" path="res://data/dialogue/overworld.dialogue" id="13_dialogue"]
+[ext_resource type="PackedScene" path="res://src/world/water/waterfall.tscn" id="14_fall"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/vertiente_pico.res" id="15_pico"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/orilla_piedras.res" id="16_orilla"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/cristales_cueva.res" id="17_cristales"]
@@ -68,7 +68,7 @@ shape = SubResource("RoomShape")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
 size = Vector2(6, 4)
 
-[node name="Waterfall" parent="." instance=ExtResource("14_fall")]
+[node name="Waterfall" parent="." unique_id=345341076 instance=ExtResource("14_fall")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.12, -6.35)
 
 [node name="Spring" parent="." unique_id=511576325 instance=ExtResource("11_spring")]
@@ -105,151 +105,151 @@ mesh = ExtResource("9_stal")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2, 0, 4.8)
 mesh = ExtResource("9_stal")
 
-[node name="Spout" type="MeshInstance3D" parent="Decor"]
+[node name="Spout" type="MeshInstance3D" parent="Decor" unique_id=2146020712]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, -6.3)
 mesh = ExtResource("15_pico")
 
-[node name="ShoreS0" type="MeshInstance3D" parent="Decor"]
+[node name="ShoreS0" type="MeshInstance3D" parent="Decor" unique_id=1484151784]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -2, 0, -3)
 mesh = ExtResource("16_orilla")
 
-[node name="ShoreS1" type="MeshInstance3D" parent="Decor"]
+[node name="ShoreS1" type="MeshInstance3D" parent="Decor" unique_id=859849757]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, -3)
 mesh = ExtResource("16_orilla")
 
-[node name="ShoreS2" type="MeshInstance3D" parent="Decor"]
+[node name="ShoreS2" type="MeshInstance3D" parent="Decor" unique_id=823086319]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 2, 0, -3)
 mesh = ExtResource("16_orilla")
 
-[node name="ShoreE0" type="MeshInstance3D" parent="Decor"]
+[node name="ShoreE0" type="MeshInstance3D" parent="Decor" unique_id=1268329703]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 3, 0, -6)
 mesh = ExtResource("16_orilla")
 
-[node name="ShoreW0" type="MeshInstance3D" parent="Decor"]
+[node name="ShoreW0" type="MeshInstance3D" parent="Decor" unique_id=995433016]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -3, 0, -6)
 mesh = ExtResource("16_orilla")
 
-[node name="ShoreE1" type="MeshInstance3D" parent="Decor"]
+[node name="ShoreE1" type="MeshInstance3D" parent="Decor" unique_id=761823687]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 3, 0, -4)
 mesh = ExtResource("16_orilla")
 
-[node name="ShoreW1" type="MeshInstance3D" parent="Decor"]
+[node name="ShoreW1" type="MeshInstance3D" parent="Decor" unique_id=1810487842]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -3, 0, -4)
 mesh = ExtResource("16_orilla")
 
-[node name="Crystals0" type="MeshInstance3D" parent="Decor"]
+[node name="Crystals0" type="MeshInstance3D" parent="Decor" unique_id=481258138]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.3, 0, 2.6)
 mesh = ExtResource("17_cristales")
 
-[node name="Crystals1" type="MeshInstance3D" parent="Decor"]
+[node name="Crystals1" type="MeshInstance3D" parent="Decor" unique_id=520044676]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -10.2, 0, -2.4)
 mesh = ExtResource("17_cristales")
 
-[node name="Crystals2" type="MeshInstance3D" parent="Decor"]
+[node name="Crystals2" type="MeshInstance3D" parent="Decor" unique_id=664275644]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 4.6, 0, -6.3)
 mesh = ExtResource("17_cristales")
 
-[node name="Crystals3" type="MeshInstance3D" parent="Decor"]
+[node name="Crystals3" type="MeshInstance3D" parent="Decor" unique_id=897157940]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 10.3, 0, -3.4)
 mesh = ExtResource("17_cristales")
 
-[node name="Crystals4" type="MeshInstance3D" parent="Decor"]
+[node name="Crystals4" type="MeshInstance3D" parent="Decor" unique_id=141875907]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2, 0, 6.3)
 mesh = ExtResource("17_cristales")
 
-[node name="StalactitesN0" type="MeshInstance3D" parent="Decor"]
+[node name="StalactitesN0" type="MeshInstance3D" parent="Decor" unique_id=559686418]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -7)
 mesh = ExtResource("19_estalactitas")
 
-[node name="StalactitesN1" type="MeshInstance3D" parent="Decor"]
+[node name="StalactitesN1" type="MeshInstance3D" parent="Decor" unique_id=1668025227]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -7)
 mesh = ExtResource("19_estalactitas")
 
-[node name="StalactitesN2" type="MeshInstance3D" parent="Decor"]
+[node name="StalactitesN2" type="MeshInstance3D" parent="Decor" unique_id=1127782742]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -7)
 mesh = ExtResource("19_estalactitas")
 
-[node name="StalactitesN3" type="MeshInstance3D" parent="Decor"]
+[node name="StalactitesN3" type="MeshInstance3D" parent="Decor" unique_id=585776846]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -7)
 mesh = ExtResource("19_estalactitas")
 
-[node name="StalactitesN4" type="MeshInstance3D" parent="Decor"]
+[node name="StalactitesN4" type="MeshInstance3D" parent="Decor" unique_id=710132581]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -7)
 mesh = ExtResource("19_estalactitas")
 
-[node name="StalactitesN5" type="MeshInstance3D" parent="Decor"]
+[node name="StalactitesN5" type="MeshInstance3D" parent="Decor" unique_id=1652173295]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -7)
 mesh = ExtResource("19_estalactitas")
 
-[node name="StalactitesW0" type="MeshInstance3D" parent="Decor"]
+[node name="StalactitesW0" type="MeshInstance3D" parent="Decor" unique_id=673601089]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -11, 0, -5)
 mesh = ExtResource("19_estalactitas")
 
-[node name="StalactitesE0" type="MeshInstance3D" parent="Decor"]
+[node name="StalactitesE0" type="MeshInstance3D" parent="Decor" unique_id=1690112503]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 11, 0, -5)
 mesh = ExtResource("19_estalactitas")
 
-[node name="StalactitesW1" type="MeshInstance3D" parent="Decor"]
+[node name="StalactitesW1" type="MeshInstance3D" parent="Decor" unique_id=78949339]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -11, 0, -3)
 mesh = ExtResource("19_estalactitas")
 
-[node name="StalactitesE1" type="MeshInstance3D" parent="Decor"]
+[node name="StalactitesE1" type="MeshInstance3D" parent="Decor" unique_id=1445379654]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 11, 0, -3)
 mesh = ExtResource("19_estalactitas")
 
-[node name="StalactitesW2" type="MeshInstance3D" parent="Decor"]
+[node name="StalactitesW2" type="MeshInstance3D" parent="Decor" unique_id=247482585]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -11, 0, 3)
 mesh = ExtResource("19_estalactitas")
 
-[node name="StalactitesE2" type="MeshInstance3D" parent="Decor"]
+[node name="StalactitesE2" type="MeshInstance3D" parent="Decor" unique_id=19118440]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 11, 0, 3)
 mesh = ExtResource("19_estalactitas")
 
-[node name="StalactitesW3" type="MeshInstance3D" parent="Decor"]
+[node name="StalactitesW3" type="MeshInstance3D" parent="Decor" unique_id=582890741]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -11, 0, 5)
 mesh = ExtResource("19_estalactitas")
 
-[node name="StalactitesE3" type="MeshInstance3D" parent="Decor"]
+[node name="StalactitesE3" type="MeshInstance3D" parent="Decor" unique_id=761450663]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 11, 0, 5)
 mesh = ExtResource("19_estalactitas")
 
-[node name="CornerNE" type="StaticBody3D" parent="Decor"]
+[node name="CornerNE" type="StaticBody3D" parent="Decor" unique_id=1226161463]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -6)
 
-[node name="Model" type="MeshInstance3D" parent="Decor/CornerNE"]
+[node name="Model" type="MeshInstance3D" parent="Decor/CornerNE" unique_id=1194407107]
 mesh = ExtResource("18_rincon")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Decor/CornerNE"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Decor/CornerNE" unique_id=1893312911]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0.8, -0.45)
 shape = SubResource("CornerShape")
 
-[node name="CornerNW" type="StaticBody3D" parent="Decor"]
+[node name="CornerNW" type="StaticBody3D" parent="Decor" unique_id=602389536]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -10, 0, -6)
 
-[node name="Model" type="MeshInstance3D" parent="Decor/CornerNW"]
+[node name="Model" type="MeshInstance3D" parent="Decor/CornerNW" unique_id=2010181700]
 mesh = ExtResource("18_rincon")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Decor/CornerNW"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Decor/CornerNW" unique_id=1795806372]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0.8, -0.45)
 shape = SubResource("CornerShape")
 
-[node name="CornerSW" type="StaticBody3D" parent="Decor"]
+[node name="CornerSW" type="StaticBody3D" parent="Decor" unique_id=594022091]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -10, 0, 6)
 
-[node name="Model" type="MeshInstance3D" parent="Decor/CornerSW"]
+[node name="Model" type="MeshInstance3D" parent="Decor/CornerSW" unique_id=821491672]
 mesh = ExtResource("18_rincon")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Decor/CornerSW"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Decor/CornerSW" unique_id=1825849221]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0.8, -0.45)
 shape = SubResource("CornerShape")
 
-[node name="CornerSE" type="StaticBody3D" parent="Decor"]
+[node name="CornerSE" type="StaticBody3D" parent="Decor" unique_id=1692309630]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 10, 0, 6)
 
-[node name="Model" type="MeshInstance3D" parent="Decor/CornerSE"]
+[node name="Model" type="MeshInstance3D" parent="Decor/CornerSE" unique_id=1866349242]
 mesh = ExtResource("18_rincon")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Decor/CornerSE"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Decor/CornerSE" unique_id=1683620134]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0.8, -0.45)
 shape = SubResource("CornerShape")
 

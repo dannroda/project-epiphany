@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="BossAttack" format=3]
+[gd_resource type="Resource" script_class="BossAttack" format=3 uid="uid://g0s0thw43rno"]
 
-[ext_resource type="Script" path="res://src/entities/boss/boss_attack.gd" id="1_attack"]
-[ext_resource type="Script" path="res://src/combat/attack_data.gd" id="2_data"]
+[ext_resource type="Script" uid="uid://byobqgwp5qte4" path="res://src/entities/boss/boss_attack.gd" id="1_attack"]
+[ext_resource type="Script" uid="uid://b6lm5gq15rbqw" path="res://src/combat/attack_data.gd" id="2_data"]
 
 [sub_resource type="Resource" id="Resource_data"]
 script = ExtResource("2_data")
@@ -12,10 +12,7 @@ hitbox = &"strike"
 [resource]
 script = ExtResource("1_attack")
 id = &"sweep"
-user = 0
 phases = Array[int]([1, 2, 3])
-pose = 0
 attack = SubResource("Resource_data")
 ideal_distance = Vector2(3, 8)
-falloff = 6.0
 weight = 0.9

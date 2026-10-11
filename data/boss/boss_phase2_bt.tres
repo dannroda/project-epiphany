@@ -1,7 +1,7 @@
-[gd_resource type="BehaviorTree" format=3]
+[gd_resource type="BehaviorTree" format=3 uid="uid://d3vjfko0rbs8b"]
 
-[ext_resource type="Script" path="res://ai/tasks/bt_choose_boss_attack.gd" id="1_choose"]
-[ext_resource type="Script" path="res://ai/tasks/bt_perform_boss_attack.gd" id="2_perform"]
+[ext_resource type="Script" uid="uid://dsfbwhg4dw8rg" path="res://ai/tasks/bt_choose_boss_attack.gd" id="1_choose"]
+[ext_resource type="Script" uid="uid://30xx1t0kocj0" path="res://ai/tasks/bt_perform_boss_attack.gd" id="2_perform"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_boss"]
 
