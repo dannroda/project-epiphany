@@ -38,7 +38,8 @@
       "text": "Cerco: recto, esquina, final, poste, roto"
     },
     {
-      "done": false,
+      "detail": "Hecho: meseta (monte, monte_ichu/piedras/flores + queñoas y cardones arriba) alrededor de la grilla, hasta donde ve la cámara; al sur solo baja. Sin colisión. +200 draw calls, mismo frame.",
+      "done": true,
       "text": "Borde del mundo (árboles densos / acantilado alto)"
     },
     {
@@ -76,5 +77,5 @@
   ],
   "test": "El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.",
   "title": "Terreno del overworld",
-  "updated_at": "2026-10-11T08:10:54.892Z"
+  "updated_at": "2026-10-11T08:15:39.982Z"
 }
