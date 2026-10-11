@@ -2239,7 +2239,7 @@ Recorrido para revisar de a una las tareas en Revisión, en el orden de una part
 
 **Relacionadas:** 10.18 Idiomas: inglés y español; 11.45 Tutorial de controles y mini puzzle por ítem; 11.44 Levantar y tirar objetos; 11.53 Agujero de la cámara solo donde tiene sentido; 11.37 Minimapa en el HUD; 11.51 Pared agrietada que se integre al muro; 11.52 Zonas tapadas hasta abrirlas; 11.43 Bombas: tocar coloca, mantener apunta y tira; 11.33 Combate: sacar lo tosco; 11.49 VFX de combate; 11.25 Nuevos enemigos con los modelos existentes; 11.41 Esqueleto con escudo: bloquear con el escudo delante; 11.42 Arco que se tensa; 11.48 Pose de item get; 11.3 Decorar las salas del templo; 11.4 Decorar el overworld; 11.47 Manos del jefe animadas (shape keys); 13.1 Código listo para varios players; 13.2 Input por jugador y unirse a la partida; 10.9 Build para playtesters; 10.8 Pasada de rendimiento; 10.23 Tests en paralelo; 13.3 Cámara y salas para dos; 13.5 HUD de dos jugadores; 13.4 Reglas del co-op
 
-## M11 — Pulido: contenido y feel  (20/54)
+## M11 — Pulido: contenido y feel  (20/55)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -2957,6 +2957,29 @@ Feedback de playtest (seguimiento de 11.52): con la gruta tapada se ve el borde 
 **Prioridad:** media · **Etiquetas:** `combate`, `feel`
 
 Feedback de playtest: hoy el cuerpo queda en el piso para siempre (Enemy.on_death_finished solo lo pasa a la capa de muertos y suelta el drop). Después de unos segundos tiene que irse con un efecto acorde (hundirse/desvanecerse con dither o deshacerse en polvo), sin llevarse el drop y sin romper lo que dependa de 'defeated' (salas que abren al limpiar, jefe).
+
+### 11.59 Limpieza de assets sin uso · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `arte`
+
+Assets propios y packs de terceros que ninguna escena, script ni builder referencia (barrido del 2026-10-11). Revisar a mano: abrir el juego y las escenas de prueba tras mover cada grupo fuera del proyecto, por si algo se carga con una ruta armada en runtime (falso positivo).
+
+- [ ] Mallas viejas del templo
+  assets/epiphany/meshes/templo/: jefe_mano, jefe_ojo, jefe_parpado (el jefe usa meshes/jefe/*) y tablilla (la tablilla usa objetos/estela). Si se borran, sacarlas también de build_templo.py, que las sigue generando.
+- [ ] Mallas sueltas de objetos, equipo y lugares
+  objetos/corazon, objetos/bombas_x3, objetos/orbe; equipo/poncho; lugares/escombro_b, lugares/pedestal, lugares/santuario_pared, lugares/santuario_piso. Sacarlas también de su build_<kit>.py.
+- [ ] Textura vieja del Knight
+  assets/epiphany/textures/knight_texture.png
+- [ ] Packs KayKit sin uso (≈42M)
+  kaykit_adventure (24M), kaykit_dungeon_remastered (14M), kaykit_skeletons (1.8M), kaykit_medieval (1.6M), kaykit_dungeon (1M): nada los referencia. Ojo: gdd.md §10 todavía los nombra (templo y personajes KayKit), corregir esos párrafos si se van.
+- [ ] kenney_development-essentials (1.3M)
+  Nada lo referencia.
+- [ ] Decidir los packs que son fuente
+  kaykit_charanim (56M): solo es la fuente de player/animation/libs/*.res (ya extraídas). kenney_fantasy-ui-borders (1.6M): original de assets/ui/frames/ (tools/build_ui_frames.sh). Sacarlos del repo o dejarlos para poder regenerar.
+- [ ] Recortar packs que se usan en parte
+  kenney_skyboxes: solo skybox-morning.png (5M el pack). Prototype Textures: solo 8 de 107 (kit gris, data/kits/materials/*.tres). kenney_input-prompts (23M) se usa por rutas armadas en src/ui/input_prompts.gd: no recortar sin revisar qué nombres pide.
+- [ ] Probar que nada se rompa
+  Abrir el editor (sin dependencias rotas), correr los tests y recorrer overworld, templo y escenas de prueba.
 
 ## M12 — Assets propios (Blender)  (3/13)
 

@@ -1,0 +1,60 @@
+{
+  "checklist": [
+    {
+      "detail": "assets/epiphany/meshes/templo/: jefe_mano, jefe_ojo, jefe_parpado (el jefe usa meshes/jefe/*) y tablilla (la tablilla usa objetos/estela). Si se borran, sacarlas también de build_templo.py, que las sigue generando.",
+      "done": false,
+      "text": "Mallas viejas del templo"
+    },
+    {
+      "detail": "objetos/corazon, objetos/bombas_x3, objetos/orbe; equipo/poncho; lugares/escombro_b, lugares/pedestal, lugares/santuario_pared, lugares/santuario_piso. Sacarlas también de su build_<kit>.py.",
+      "done": false,
+      "text": "Mallas sueltas de objetos, equipo y lugares"
+    },
+    {
+      "detail": "assets/epiphany/textures/knight_texture.png",
+      "done": false,
+      "text": "Textura vieja del Knight"
+    },
+    {
+      "detail": "kaykit_adventure (24M), kaykit_dungeon_remastered (14M), kaykit_skeletons (1.8M), kaykit_medieval (1.6M), kaykit_dungeon (1M): nada los referencia. Ojo: gdd.md §10 todavía los nombra (templo y personajes KayKit), corregir esos párrafos si se van.",
+      "done": false,
+      "text": "Packs KayKit sin uso (≈42M)"
+    },
+    {
+      "detail": "Nada lo referencia.",
+      "done": false,
+      "text": "kenney_development-essentials (1.3M)"
+    },
+    {
+      "detail": "kaykit_charanim (56M): solo es la fuente de player/animation/libs/*.res (ya extraídas). kenney_fantasy-ui-borders (1.6M): original de assets/ui/frames/ (tools/build_ui_frames.sh). Sacarlos del repo o dejarlos para poder regenerar.",
+      "done": false,
+      "text": "Decidir los packs que son fuente"
+    },
+    {
+      "detail": "kenney_skyboxes: solo skybox-morning.png (5M el pack). Prototype Textures: solo 8 de 107 (kit gris, data/kits/materials/*.tres). kenney_input-prompts (23M) se usa por rutas armadas en src/ui/input_prompts.gd: no recortar sin revisar qué nombres pide.",
+      "done": false,
+      "text": "Recortar packs que se usan en parte"
+    },
+    {
+      "detail": "Abrir el editor (sin dependencias rotas), correr los tests y recorrer overworld, templo y escenas de prueba.",
+      "done": false,
+      "text": "Probar que nada se rompa"
+    }
+  ],
+  "code": "11.59",
+  "created_at": "2026-10-11T07:34:54.888Z",
+  "description": "Assets propios y packs de terceros que ninguna escena, script ni builder referencia (barrido del 2026-10-11). Revisar a mano: abrir el juego y las escenas de prueba tras mover cada grupo fuera del proyecto, por si algo se carga con una ruta armada en runtime (falso positivo).",
+  "milestone": "m11",
+  "notes": "",
+  "order": 56,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "arte"
+  ],
+  "test": "",
+  "title": "Limpieza de assets sin uso",
+  "updated_at": "2026-10-11T07:35:06.790Z"
+}
