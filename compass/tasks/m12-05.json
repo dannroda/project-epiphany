@@ -40,11 +40,11 @@
   "order": 5,
   "priority": "medium",
   "refs": [],
-  "status": "doing",
+  "status": "review",
   "tags": [
     "arte"
   ],
   "test": "Cofres, pickups, bomba, flecha y orbe usan los modelos nuevos; los íconos se regeneran con render_item_icons.gd.",
   "title": "Interactivos y pickups",
-  "updated_at": "2026-10-11T16:42:46.469Z"
+  "updated_at": "2026-10-11T16:42:56.347Z"
 }
