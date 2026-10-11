@@ -1,0 +1,45 @@
+{
+  "checklist": [
+    {
+      "detail": "Revisar los documentos de diseño; referencia: Torre de Hera en docs/the-ultimate-methodology... (caer por un pozo al piso de abajo).",
+      "done": false,
+      "text": "Diseño: cantidad de pisos, sótanos, recorrido e ítem"
+    },
+    {
+      "detail": "Un GridMap por piso separados en altura; ocultar los pisos de arriba del player (y quizás atenuar el de abajo).",
+      "done": false,
+      "text": "Pisos en la escena"
+    },
+    {
+      "detail": "Escalera con transición corta; un pozo deja caer al piso de abajo si existe (si no, vuelve a la entrada como hoy).",
+      "done": false,
+      "text": "Escaleras y caídas entre pisos"
+    },
+    {
+      "detail": "Room con piso; visitado, mapa y brújula por piso.",
+      "done": false,
+      "text": "Salas, guardado y mapa por piso"
+    },
+    {
+      "detail": "Diseñar primero en el canvas de mockups (no lo tiene): pestañas de piso en el mapa de pausa con dónde estás, jefe y cofres; minimapa del piso actual.",
+      "done": false,
+      "text": "UI: selector de pisos"
+    }
+  ],
+  "code": "11.60",
+  "created_at": "2026-10-11T08:38:12.236Z",
+  "description": "Segunda mazmorra con pisos (y quizás sótanos) apilados en la misma escena, en vez de rehacer el templo. Decidido el 2026-10-11: mazmorra nueva; el co-op está en pausa, así que no condiciona el diseño. Cantidad de pisos por definir (Daniel revisa los documentos de diseño).",
+  "milestone": "m11",
+  "notes": "",
+  "order": 57,
+  "priority": "medium",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "mazmorra",
+    "ui"
+  ],
+  "test": "",
+  "title": "Mazmorra nueva de varios pisos",
+  "updated_at": "2026-10-11T08:38:13.629Z"
+}

@@ -2374,19 +2374,25 @@ La suite de tests tarda unos 9 minutos en serie. Correrla en varios procesos hea
 
 Medido 2026-10-11: con monitor de 200 Hz y vsync sin tope el juego dibuja 200 FPS aunque cada cuadro le cueste ~1,2 ms a la GPU (RX 580: 82 W promedio, picos de 120 W, contra 68 W con tope 60). Engine.max_fps 60 por defecto y opción en el menú (30/60/120/sin límite) armada en la escena de opciones.
 
-### 10.25 Sombras del sol acordes a la cámara cenital · En curso
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
+
+### 10.25 Sombras del sol acordes a la cámara cenital · Revisión
 
 **Prioridad:** media · **Etiquetas:** `rendimiento`
 
 El Sun de overworld y temple usa el default de Godot (PSSM de 4 cascadas hasta 100 m): la geometría se vuelve a dibujar por cada cascada y el overworld llega a ~900 mil triángulos por cuadro con 418 mil en escena. Probar 2 cascadas (u ortogonal) con distancia máxima acorde a la cámara; comparar capturas antes/después.
 
-### 10.26 Paredes del GridMap más livianas · Pendiente
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
+
+### 10.26 Paredes del GridMap más livianas · En curso
 
 **Prioridad:** baja · **Etiquetas:** `rendimiento`, `arte`
 
 El 80 % de los triángulos son paredes: Acantilado 1224 tri por celda (211 celdas, 258 mil) y Pared del templo 816 (252 celdas, 206 mil). Bajar el detalle en build_lugares.py sin perder el look. Las mallas del GridMap no tienen LOD (se guardan a .res sin generarlo) y el GridMap agrupa en octantes de 8 celdas (16×16 m), así que el frustum culling es por bloque: medir también cell_octant_size 4. Occlusion culling no vale la pena con cámara cenital.
 
 **Notas:** Godot 4.8 trae mip-level texture streaming (dev 5, GH-113429; se activa en Project Settings con reinicio del editor, runtime vía el singleton TextureStreaming). Hoy no aporta: casi todo se pinta con la paleta y el overworld usa ~270 MB de VRAM. Considerarlo si entran texturas grandes (terreno texturizado, estilo con más detalle).
+
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
 ### 10.27 Nodos creados por código pasan a sus .tscn · Pendiente
 
@@ -2410,8 +2416,8 @@ Recorrido para revisar de a una las tareas en Revisión, en el orden de una part
   Junto al árbol del sendero no aparece; detrás de una pared se abre suave y se cierra al salir.
 - [ ] Minimapa (11.37)
   Se destapa al caminar, se apaga desde Opciones; en el templo sigue sala a sala y coincide con la pestaña Mapa.
-- [ ] Pared agrietada y zonas tapadas (11.51, 11.52)
-  Mismo grosor y color que el muro, solo grietas; lo de atrás tapado; al volarla se descubre sin frenarte. El borde contiguo es 11.54.
+- [ ] Pared agrietada y zonas tapadas (11.51, 11.52, 11.54)
+  Mismo grosor y color que el muro, solo grietas; lo de atrás tapado; al volarla se descubre sin frenarte. Desde el inicio del claro no se ve el labio de pasto ni la pared de más allá (11.54).
 - [ ] Bombas (11.43)
   Toque: a los pies. Mantener: levanta y apunta, soltar tira en parábola; la mecha sigue corriendo.
 - [ ] Combate (11.33, 11.49, 11.25, 11.41)
@@ -2430,8 +2436,8 @@ Recorrido para revisar de a una las tareas en Revisión, en el orden de una part
   Dos controles: Start en el segundo suma al P2 sin pausar, cada uno mueve el suyo; mantener Start 1,5 s lo saca.
 - [ ] Build en máquina limpia (10.9)
   Linux y Windows: arranca, guarda cifrado en user://, sin escenarios ni tests.
-- [ ] Cerrar 10.8 y 10.23
-  10.23 verificada (~16 s, estable). 10.8 la reemplazan 10.24–10.26.
+- [ ] Cerrar 10.8 y 10.23; rendimiento (10.24–10.26)
+  10.23 verificada (~16 s, estable). 10.8 la reemplazan 10.24–10.26: en Opciones, Tope de FPS (30/60/120/sin tope) cambia al instante y se guarda; las sombras del sol y las paredes se ven igual que antes, sin tirones.
 - [ ] Co-op: cámara y salas (13.3)
   Dos controles en el templo: la cámara mira a los dos y no los deja separarse más que la pantalla; al cruzar uno una puerta, el otro aparece a su lado y entran juntos; overworld ↔ templo llegan juntos.
 - [ ] Co-op: HUD de dos (13.5)
@@ -2440,8 +2446,14 @@ Recorrido para revisar de a una las tareas en Revisión, en el orden de una part
   Con dos controles: que caiga uno; queda un espíritu que te sigue; parate encima un segundo y revive con un corazón (o cruzá a otra sala). Si caen los dos, game over. En la pestaña Ítems, con el control del P2, asigná X/Y: cambian solo los suyos. Un corazón cura solo al que lo agarra.
 - [ ] Co-op: elegir ítems (13.9)
   Solo: mantené LB (o F): el mundo casi se frena, elegí con el stick y poné con X/Y; al soltar sigue. Co-op: cada uno abre su anillo sin pausar; lo que lleva el otro se ve apagado con su etiqueta. Tecla 5: pasa al menú compartido; en Ítems el P2 mueve su cursor con su control y asigna con X/Y. Decidí cuál queda.
+- [ ] Cuerpos (11.58)
+  Un enemigo muerto queda 4 s, se hunde en el piso con polvo y desaparece; lo que soltó queda; las salas y oleadas siguen abriendo al morir el último.
+- [ ] Controles y pestaña Sistema (10.29)
+  Opciones → Ver controles: el diagrama del control que estés usando; Y (o T) cambia entre gamepad y teclado. Pausa → Sistema: a la derecha los controles; Guardar pisa la partida cargada (pregunta antes); Cargar te deja elegir el último checkpoint o el guardado; volver al título pregunta. Los botones tienen recuadro.
+- [ ] Co-op: colores (13.6)
+  Con dos controles: el P2 tiene otra tela y otro neón, también con la cota reforzada; los dos se distinguen de un vistazo.
 
-**Relacionadas:** 10.18 Idiomas: inglés y español; 11.45 Tutorial de controles y mini puzzle por ítem; 11.44 Levantar y tirar objetos; 11.53 Agujero de la cámara solo donde tiene sentido; 11.37 Minimapa en el HUD; 11.51 Pared agrietada que se integre al muro; 11.52 Zonas tapadas hasta abrirlas; 11.43 Bombas: tocar coloca, mantener apunta y tira; 11.33 Combate: sacar lo tosco; 11.49 VFX de combate; 11.25 Nuevos enemigos con los modelos existentes; 11.41 Esqueleto con escudo: bloquear con el escudo delante; 11.42 Arco que se tensa; 11.48 Pose de item get; 11.3 Decorar las salas del templo; 11.4 Decorar el overworld; 11.47 Manos del jefe animadas (shape keys); 13.1 Código listo para varios players; 13.2 Input por jugador y unirse a la partida; 10.9 Build para playtesters; 10.8 Pasada de rendimiento; 10.23 Tests en paralelo; 13.3 Cámara y salas para dos; 13.5 HUD de dos jugadores; 13.4 Reglas del co-op; 13.9 Anillo de ítems por player
+**Relacionadas:** 10.18 Idiomas: inglés y español; 11.45 Tutorial de controles y mini puzzle por ítem; 11.44 Levantar y tirar objetos; 11.53 Agujero de la cámara solo donde tiene sentido; 11.37 Minimapa en el HUD; 11.51 Pared agrietada que se integre al muro; 11.52 Zonas tapadas hasta abrirlas; 11.43 Bombas: tocar coloca, mantener apunta y tira; 11.33 Combate: sacar lo tosco; 11.49 VFX de combate; 11.25 Nuevos enemigos con los modelos existentes; 11.41 Esqueleto con escudo: bloquear con el escudo delante; 11.42 Arco que se tensa; 11.48 Pose de item get; 11.3 Decorar las salas del templo; 11.4 Decorar el overworld; 11.47 Manos del jefe animadas (shape keys); 13.1 Código listo para varios players; 13.2 Input por jugador y unirse a la partida; 10.9 Build para playtesters; 10.8 Pasada de rendimiento; 10.23 Tests en paralelo; 13.3 Cámara y salas para dos; 13.5 HUD de dos jugadores; 10.29 Pantalla de controles; 13.6 Player 2 con su color; 10.24 Tope de FPS; 11.58 Los enemigos muertos desaparecen después de un rato; 11.54 El velo de zona tapa también las paredes que la rodean; 10.25 Sombras del sol acordes a la cámara cenital; 10.26 Paredes del GridMap más livianas; 13.4 Reglas del co-op; 13.9 Anillo de ítems por player
 
 ### 10.29 Pantalla de controles · Revisión
 
@@ -2457,7 +2469,9 @@ Como la de Basic Controls de TotK: el mando dibujado con una línea a cada botó
   Título › Opciones › Controles abre la pantalla completa, por MenuStack. En la pausa, la pestaña Sistema (mockups Pause_System y Pause_System_Keyboard): a la izquierda Guardar, Cargar, separador, Opciones y Volver al título; a la derecha los controles básicos del dispositivo en uso, con Y (T en teclado) para ver el otro. Guardar muestra la partida cargada y pide confirmar: siempre guarda sobre esa ranura (Pause_System_Save). Cargar muestra el último checkpoint (Auto) y lo último guardado a mano de la partida cargada; se elige con el stick (checkpoint por defecto) y A confirma (Pause_System_Load). B vuelve a los controles.
 - [x] Tests y GDD
 
-## M11 — Pulido: contenido y feel  (20/55)
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
+
+## M11 — Pulido: contenido y feel  (20/56)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3309,11 +3323,15 @@ Feedback de playtest: el agujero con dither alrededor del player se recorta en e
 
 Feedback de playtest (seguimiento de 11.52): con la gruta tapada se ve el borde de la pared de la sala contigua, la tapa de pasto del muro entre el claro del inicio y la gruta queda entre el velo negro y el sendero, y más abajo una franja ancha de pasto sobre el acantilado sur. El velo debería llegar hasta la cara de la pared que da al lado del jugador, para que del otro lado de la pared no se vea nada.
 
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
+
 ### 11.58 Los enemigos muertos desaparecen después de un rato · Revisión
 
 **Prioridad:** media · **Etiquetas:** `combate`, `feel`
 
 Feedback de playtest: hoy el cuerpo queda en el piso para siempre (Enemy.on_death_finished solo lo pasa a la capa de muertos y suelta el drop). Después de unos segundos tiene que irse con un efecto acorde (hundirse/desvanecerse con dither o deshacerse en polvo), sin llevarse el drop y sin romper lo que dependa de 'defeated' (salas que abren al limpiar, jefe).
+
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
 ### 11.59 Limpieza de assets sin uso · Pendiente
 
@@ -3337,6 +3355,23 @@ Assets propios y packs de terceros que ninguna escena, script ni builder referen
   kenney_skyboxes: solo skybox-morning.png (5M el pack). Prototype Textures: solo 8 de 107 (kit gris, data/kits/materials/*.tres). kenney_input-prompts (23M) se usa por rutas armadas en src/ui/input_prompts.gd: no recortar sin revisar qué nombres pide.
 - [ ] Probar que nada se rompa
   Abrir el editor (sin dependencias rotas), correr los tests y recorrer overworld, templo y escenas de prueba.
+
+### 11.60 Mazmorra nueva de varios pisos · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `mazmorra`, `ui`
+
+Segunda mazmorra con pisos (y quizás sótanos) apilados en la misma escena, en vez de rehacer el templo. Decidido el 2026-10-11: mazmorra nueva; el co-op está en pausa, así que no condiciona el diseño. Cantidad de pisos por definir (Daniel revisa los documentos de diseño).
+
+- [ ] Diseño: cantidad de pisos, sótanos, recorrido e ítem
+  Revisar los documentos de diseño; referencia: Torre de Hera en docs/the-ultimate-methodology... (caer por un pozo al piso de abajo).
+- [ ] Pisos en la escena
+  Un GridMap por piso separados en altura; ocultar los pisos de arriba del player (y quizás atenuar el de abajo).
+- [ ] Escaleras y caídas entre pisos
+  Escalera con transición corta; un pozo deja caer al piso de abajo si existe (si no, vuelve a la entrada como hoy).
+- [ ] Salas, guardado y mapa por piso
+  Room con piso; visitado, mapa y brújula por piso.
+- [ ] UI: selector de pisos
+  Diseñar primero en el canvas de mockups (no lo tiene): pestañas de piso en el mapa de pausa con dónde estás, jefe y cofres; minimapa del piso actual.
 
 ## M12 — Assets propios (Blender)  (3/13)
 
@@ -3811,6 +3846,8 @@ Darle al P2 su propia variante de paleta (otra tela y otro neón, como los Links
 **Referencias:** `gdd.md#fuera-mvp`
 
 **Bloqueada por:** 13.1 Código listo para varios players
+
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
 ### 13.7 Enemigos y jefe con varios objetivos · Pendiente
 
