@@ -9,7 +9,8 @@
       "text": "Cofre grande dorado (tapa aparte)"
     },
     {
-      "done": false,
+      "detail": "Hecho: Pickup muestra ItemData.pickup_mesh (flechas_x5, bombas_x3) o heart_mesh (corazon) girando en vez del ícono; sin malla sigue el Sprite3D (pieza de corazón). test_pickup_models.",
+      "done": true,
       "text": "Pickups: corazón, flechas ×5, bombas ×3"
     },
     {
@@ -17,7 +18,8 @@
       "text": "Bomba con mecha y flecha"
     },
     {
-      "done": false,
+      "detail": "Hecho: projectile.tscn usa orbe.res con epiphany_glow.tres (paleta sin sombreado, núcleo doom saturado, púas de sello).",
+      "done": true,
       "text": "Orbe (proyectil reflejable)"
     },
     {
@@ -44,5 +46,5 @@
   ],
   "test": "Cofres, pickups, bomba, flecha y orbe usan los modelos nuevos; los íconos se regeneran con render_item_icons.gd.",
   "title": "Interactivos y pickups",
-  "updated_at": "2026-10-11T07:50:12.463Z"
+  "updated_at": "2026-10-11T16:42:46.469Z"
 }

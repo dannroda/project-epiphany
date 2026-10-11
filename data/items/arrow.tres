@@ -3,12 +3,14 @@
 [ext_resource type="Script" path="res://src/items/modifiers/item_modifier.gd" id="1_22fbi"]
 [ext_resource type="Texture2D" uid="uid://u60hrbk0uqh4" path="res://assets/ui/items/arrow.png" id="1_jhgp1"]
 [ext_resource type="Script" path="res://src/items/item_data.gd" id="2_jhgp1"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/flechas_x5.res" id="9_pickup"]
 
 [resource]
 script = ExtResource("2_jhgp1")
 id = &"arrow"
 display_name = "ITEM_ARROW_NAME"
 description = "ITEM_ARROW_DESC"
+pickup_mesh = ExtResource("9_pickup")
 icon = ExtResource("1_jhgp1")
 category = 4
 max_stack = 30

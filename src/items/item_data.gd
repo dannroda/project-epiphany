@@ -7,6 +7,8 @@ enum Category { SWORD, SHIELD, ARMOR, USABLE, AMMO, DUNGEON, UPGRADE }
 @export var display_name: String
 @export_multiline var description: String
 @export var icon: Texture2D
+## Lo que se ve cuando está tirado en el mundo (Pickup); sin malla, el ícono.
+@export var pickup_mesh: Mesh
 @export var category: Category
 @export var max_stack: int = 1
 @export var equip_scene: PackedScene

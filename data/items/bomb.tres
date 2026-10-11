@@ -3,12 +3,14 @@
 [ext_resource type="Texture2D" uid="uid://xawg4qbhytuv" path="res://assets/ui/items/bomb.png" id="1_6uay4"]
 [ext_resource type="Script" path="res://src/items/modifiers/item_modifier.gd" id="1_j52ui"]
 [ext_resource type="Script" path="res://src/items/item_data.gd" id="2_6uay4"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/bombas_x3.res" id="9_pickup"]
 
 [resource]
 script = ExtResource("2_6uay4")
 id = &"bomb"
 display_name = "ITEM_BOMB_NAME"
 description = "ITEM_BOMB_DESC"
+pickup_mesh = ExtResource("9_pickup")
 icon = ExtResource("1_6uay4")
 category = 4
 max_stack = 10

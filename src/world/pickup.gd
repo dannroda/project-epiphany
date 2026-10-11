@@ -21,24 +21,43 @@ const GRAVITY := 18.0
 @export var magnet_speed := 6.0
 ## Ancho en metros, sea cual sea el tamaño del ícono.
 @export var world_size := 1.1
+## Malla del corazón que cura (los que no tienen ítem).
+@export var heart_mesh: Mesh
+## Vueltas por segundo de la malla.
+@export var spin := 0.35
 
 @onready var sprite: Sprite3D = $Sprite
+@onready var model: MeshInstance3D = $Model
 
 var _age := 0.0
 var _rest_height := 0.5
 var _vertical_speed := 5.0
+var _visual: Node3D
 
 
 func _ready() -> void:
-	sprite.texture = item.icon if item else HEART_ICON
-	sprite.pixel_size = world_size / sprite.texture.get_width()
-	_rest_height = world_size * 0.6
-	sprite.position.y = _rest_height
+	var mesh := item.pickup_mesh if item else heart_mesh
+	if mesh:
+		var box := mesh.get_aabb()
+		model.mesh = mesh
+		model.scale = Vector3.ONE * world_size * 0.75 / maxf(box.size.x, maxf(box.size.y, box.size.z))
+		sprite.hide()
+		_visual = model
+		_rest_height = world_size * 0.2
+	else:
+		sprite.texture = item.icon if item else HEART_ICON
+		sprite.pixel_size = world_size / sprite.texture.get_width()
+		model.hide()
+		_visual = sprite
+		_rest_height = world_size * 0.6
+	_visual.position.y = _rest_height
 
 
 func _physics_process(delta: float) -> void:
 	_age += delta
 	_bounce(delta)
+	if _visual == model:
+		model.rotate_y(spin * TAU * delta)
 	var player := Players.nearest(global_position)
 	if player and _age >= pickup_delay:
 		var to := player.global_position - global_position
@@ -51,7 +70,7 @@ func _physics_process(delta: float) -> void:
 	if lifetime <= 0.0:
 		return
 	if _age >= lifetime - blink_time:
-		sprite.visible = fmod(_age * 10.0, 2.0) < 1.3
+		_visual.visible = fmod(_age * 10.0, 2.0) < 1.3
 	if _age >= lifetime:
 		queue_free()
 
@@ -73,10 +92,10 @@ func _consume() -> void:
 
 
 func _bounce(delta: float) -> void:
-	if is_zero_approx(_vertical_speed) and is_equal_approx(sprite.position.y, _rest_height):
+	if is_zero_approx(_vertical_speed) and is_equal_approx(_visual.position.y, _rest_height):
 		return
 	_vertical_speed -= GRAVITY * delta
-	sprite.position.y += _vertical_speed * delta
-	if sprite.position.y <= _rest_height:
-		sprite.position.y = _rest_height
+	_visual.position.y += _vertical_speed * delta
+	if _visual.position.y <= _rest_height:
+		_visual.position.y = _rest_height
 		_vertical_speed = -_vertical_speed * 0.45 if _vertical_speed < -1.5 else 0.0

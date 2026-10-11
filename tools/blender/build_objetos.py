@@ -345,7 +345,7 @@ def bombas_x3(p):
 
 def orbe(p):
 	core = p.blob((0, 0, 0), 0.22, subdiv=1, rough=0.0)
-	p.paint(core, "doom", "LIGHT")
+	p.paint(core, "doom", "MID")
 	shell = []
 	for i in range(6):
 		a = 2 * math.pi * i / 6
