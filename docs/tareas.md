@@ -2384,7 +2384,7 @@ El Sun de overworld y temple usa el default de Godot (PSSM de 4 cascadas hasta 1
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 10.26 Paredes del GridMap más livianas · En curso
+### 10.26 Paredes del GridMap más livianas · Revisión
 
 **Prioridad:** baja · **Etiquetas:** `rendimiento`, `arte`
 
