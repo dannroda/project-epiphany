@@ -40,6 +40,7 @@
 [ext_resource type="Resource" path="res://data/items/quiver_big.tres" id="41_csg56"]
 [ext_resource type="PackedScene" path="res://src/world/zone_veil.tscn" id="90_veil"]
 [ext_resource type="PackedScene" path="res://src/world/cracked_wall_risco.tscn" id="91_crackrisco"]
+[ext_resource type="PackedScene" path="res://levels/decor/overworld_decor.tscn" id="92_decor"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7se6l"]
 panorama = ExtResource("1_qyxw2")
@@ -294,10 +295,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 0.6, 4)
 [node name="Rock3" parent="." unique_id=375734465 instance=ExtResource("10_vrnmo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0.6, 4)
 
-[node name="OverworldMap" parent="." node_paths=PackedStringArray("grid") unique_id=259113020 instance=ExtResource("11_gsck2")]
+[node name="OverworldMap" parent="." node_paths=PackedStringArray("grid", "scenery") unique_id=259113020 instance=ExtResource("11_gsck2")]
 display_name = "PLACE_TEMPLE_VALLEY"
 world_rect = Rect2(-37, -25, 74, 50)
 grid = NodePath("../GridMap")
+scenery = [NodePath("../Decor")]
 
 [node name="Player" parent="." unique_id=1694148988 instance=ExtResource("13_gd0nv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16)
@@ -540,3 +542,5 @@ flag = &"ow_heart_piece_shrine"
 [node name="HeartPieceCliff" parent="." unique_id=997712761 instance=ExtResource("6_piece")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, -10)
 flag = &"ow_heart_piece_cliff"
+
+[node name="Decor" parent="." instance=ExtResource("92_decor")]

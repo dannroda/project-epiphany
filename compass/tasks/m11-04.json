@@ -1,5 +1,21 @@
 {
-  "checklist": [],
+  "checklist": [
+    {
+      "detail": "Con el mismo generador (levels/decor/overworld_decor.tscn): fogata y tronco en el claro de inicio, apachetas en la pradera, troncos y cardones en la arboleda, rocas altas en el risco, estalagmitas y rocas en la cueva y la gruta, piedras en el santuario.",
+      "done": true,
+      "text": "Decoración por zona"
+    },
+    {
+      "detail": "fachada_templo detrás del sello, enmarcando la entrada.",
+      "done": true,
+      "text": "Fachada del templo"
+    },
+    {
+      "detail": "La decoración entra en el scenery de OverworldMap (sale en la foto del mapa) y las piezas altas tienen colisión.",
+      "done": true,
+      "text": "Mapa y colisiones"
+    }
+  ],
   "code": "11.4",
   "created_at": "2026-10-09T17:40:33.154Z",
   "milestone": "m11",
@@ -7,11 +23,11 @@
   "order": 4,
   "priority": "high",
   "refs": [],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "arte"
   ],
-  "test": "",
+  "test": "Cada zona se reconoce sin su nombre; nada tapa los caminos, las entradas ni lo jugable; la foto del mapa muestra la decoración.",
   "title": "Decorar el overworld",
-  "updated_at": "2026-10-09T17:40:33.154Z"
+  "updated_at": "2026-10-11T05:28:55.227Z"
 }
