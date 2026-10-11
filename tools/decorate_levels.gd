@@ -103,9 +103,9 @@ func _temple_room(room: Area3D, cells: Array[Vector3i], group: Node3D) -> void:
 	var north := _wall_faces(floors, [NORTH])
 	var sides := _wall_faces(floors, [Vector2i(1, 0), Vector2i(-1, 0)])
 	for spot in _pick(north, recipe.get("banners", 0), 3.0, 1.4):
-		_mesh(group, "templo/estandarte", spot[0] + Vector3.UP * 0.3, spot[1], false)
+		_banner(group, spot)
 	for spot in _pick(sides, recipe.get("side_banners", 0), 3.0, 1.4):
-		_mesh(group, "templo/estandarte", spot[0] + Vector3.UP * 0.3, spot[1], false)
+		_banner(group, spot)
 	var hugging := floors.filter(func(c: Vector3i) -> bool: return _toward_walls(c) != Vector3.ZERO and not _near_hole(c))
 	for spot in _pick(hugging.map(func(c: Vector3i) -> Array: return [_center(c) + _toward_walls(c) * 0.45, _rng.randf() * TAU]), recipe.get("rubble", 0), 2.0, CLEARANCE):
 		_mesh(group, "templo/escombros" if _rng.randf() < 0.6 else "lugares/escombro_a", spot[0], spot[1], false)
@@ -114,6 +114,12 @@ func _temple_room(room: Area3D, cells: Array[Vector3i], group: Node3D) -> void:
 		_mesh(group, "objetos/vasija_pedazos", spot[0], spot[1], false)
 	for spot in _pick(open.map(func(c: Vector3i) -> Array: return [_center(c) + _jitter(0.4) + Vector3.UP * 0.02, _rng.randf() * TAU]), recipe.get("veins", 0), 3.5, 1.2):
 		_mesh(group, "templo/venas_doom", spot[0], spot[1], false)
+
+
+## Despegado de la pared lo que sobresale el relieve de los ladrillos, si no lo atraviesan.
+func _banner(group: Node3D, spot: Array) -> void:
+	var normal := Vector3(sin(spot[1]), 0, cos(spot[1]))
+	_mesh(group, "templo/estandarte", spot[0] + normal * 0.07 + Vector3.UP * 0.3, spot[1], false)
 
 
 ## Dos braseros espejados contra la pared norte, lo más afuera posible.
