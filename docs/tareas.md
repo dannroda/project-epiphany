@@ -2507,7 +2507,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (20/56)
+## M11 — Pulido: contenido y feel  (20/57)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3023,7 +3023,7 @@ Técnicas de espada al estilo Minish Cap y Wind Waker: combo de 3 golpes, giro c
 
 **Relacionadas:** 11.22 Tablillas de historia; 11.35 Saltar: ítem tipo Pluma de Roc
 
-### 11.35 Saltar: ítem tipo Pluma de Roc · En curso
+### 11.35 Saltar: ítem tipo Pluma de Roc · Revisión
 
 **Prioridad:** media · **Etiquetas:** `combate`, `movimiento`
 
@@ -3035,20 +3035,20 @@ Saltar con un ítem tipo Pluma de Roc (nada de salto libre), para que el gating 
   player/states/jumping.gd: height 0,68 (apex ≈0,71), speed 4, air_control 2; sombra %JumpShadow (Decal) que se achica al subir; Jump_Full_Short por el OneShot de ítems; polvo al saltar y al caer. Altura limitada por la cápsula: con más de ≈0,75 se apoya en el borde de una pirca.
 - [x] Integración con combate
   La onda de las manos del jefe es un Hitbox ground_only: estar en el aire cuando llega alcanza. El golpe en el aire / caída con la espada queda para 11.34.
-- [ ] Integración con el mundo
-  Huecos de un tile, subir a andenes bajos, bajar de cualquier borde; revisar que no rompa puzzles ni salte paredes de sala (alto máximo menor que pircas y muros).
+- [x] Integración con el mundo
+  Abismo sin piso: el kit saca la colisión a Abismo/Pozo (9, 10); el que cae va a un Pit y vuelve a su respawn (Pit.respawn). Abismo del Risco ensanchado a 2 celdas (4 m), solo flechas; ojo a z −22, Spawn_risco a z −14. Pirca 0,9 no se salta, escalón 0,6 sí. Tests: test_jump (incluye test_the_crag_abyss_is_too_wide_and_falling_returns), test_abyss_has_no_floor_but_a_pit. Los lugares de salto del overworld pasan a 11.61 (después de 12.14).
 - [x] Ítem y input
   data/items/feather.tres ("Pluma", JumpBehavior, USABLE), en la base de ítems; el botón despacha jump en vez de use_item. Malla e ícono de la sesión de assets: equipo/pluma.res y assets/ui/items/feather.png (pluma de cóndor). Textos ITEM_FEATHER_*.
-- [ ] Dónde se consigue y qué abre
-  Elegir el lugar (cofre en el overworld, mini-santuario 11.27, sub-jefe 11.31…) y armar 2–3 lugares que solo se alcanzan saltando, más una pieza de corazón (11.21). Actualizar la progresión del GDD §6.2.
+- [x] Dónde se consigue y qué abre
+  Templo, sala 10 'Sala de la pluma' (celda de mapa (2, 4), sale de la agrietada sin bombas): zanja de huecos que se rodea sin pluma hasta el cofre grande (d1_feather_chest) y se salta de vuelta; vasija de corazones arriba de un escalón. Se exige en la entrada del Puzzle (fila de huecos a 4 m de la puerta; el bloque ahora se empuja al oeste); escalón con vasija opcional en la antesala. Doom 0,45. Escenarios pre_boss y full_inventory con la pluma. Tests: test_room_10_feather_room, test_room_7_entrance_needs_the_feather, recorrido completo con el tramo de la pluma, test_doom. GDD §6.2 (regla: un ítem no abre nada en mazmorras anteriores; el overworld es hub) y §8. El overworld pasa a 11.61.
 
-**Prueba:** Sin la pluma no se puede saltar. Con la pluma asignada: saltar un hueco de un tile y subir a un andén bajo; la sombra deja ver dónde cae. No se puede saltar una pirca ni un muro de sala. Saltar esquiva la onda de choque del golpe de las manos del jefe.
+**Prueba:** Sin la pluma no se puede saltar. Con la pluma asignada: saltar un hueco de un tile y subir a un andén bajo; la sombra deja ver dónde cae. No se puede saltar una pirca ni un muro de sala. Saltar esquiva la onda de choque del golpe de las manos del jefe. En el templo: la pluma está en la sala 10 (debajo de la agrietada); sin ella se rodea la zanja hasta el cofre, con ella se salta de vuelta; la entrada del Puzzle pide saltar. En el Risco, el abismo (4 m) no se cruza saltando y caer devuelve al spawn.
 
 **Notas:** Skills: `godot:godot-physics`, `disciplines:game-feel`, `disciplines:level-design`.
 
 **Referencias:** `gdd.md#input`, `gdd.md#movimiento-combate`, `gdd.md#items-mvp`
 
-**Relacionadas:** 11.34 Combos y técnicas especiales (Minish Cap / Wind Waker)
+**Relacionadas:** 11.34 Combos y técnicas especiales (Minish Cap / Wind Waker); 11.61 Pluma en el overworld: lugares de salto
 
 ### 11.36 Mapa: más información y navegable · Hecho
 
@@ -3408,6 +3408,27 @@ Segunda mazmorra con pisos (y quizás sótanos) apilados en la misma escena, en 
   Room con piso; visitado, mapa y brújula por piso.
 - [ ] UI: selector de pisos
   Diseñar primero en el canvas de mockups (no lo tiene): pestañas de piso en el mapa de pausa con dónde estás, jefe y cofres; minimapa del piso actual.
+
+### 11.61 Pluma en el overworld: lugares de salto · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `movimiento`, `nivel`
+
+El overworld es el hub: la pluma (11.35, templo) tiene que abrir ahí cosas y caminos nuevos. 2–3 lugares que solo se alcanzan saltando (huecos de una baldosa, escalón de 0,6 m), sobre el terreno que elija 12.14.
+
+- [ ] Esperar el terreno de 12.14
+  No tocar levels/overworld.tscn hasta que 12.14 elija; después ubicar los lugares sobre ese terreno.
+- [ ] Pieza de corazón de la pradera en una cornisa
+  Decidido con el usuario (2026-10-11): HeartPieceMeadow deja el pasto alto y pasa a una cornisa baja de la pradera a la que se sube con la pluma; siguen siendo 4 piezas = 1 corazón. Actualizar la tabla de ítems del GDD (§6.1).
+- [ ] 1–2 atajos o recovecos más con salto
+  Huecos de una baldosa o escalones; algo que se vea antes de tener la pluma (cebo).
+- [ ] Tests y GDD
+  Test que recorra cada lugar con la pluma y que sin ella no se llegue; GDD §7 y §6.2.
+
+**Prueba:** Sin la pluma, la pieza de corazón de la pradera y los otros lugares no se alcanzan; con la pluma, sí. Ningún lugar obliga a saltar una pirca o un muro.
+
+**Bloqueada por:** 12.14 Prueba: overworld menos cuadrado
+
+**Relacionadas:** 11.35 Saltar: ítem tipo Pluma de Roc
 
 ## M12 — Assets propios (Blender)  (5/14)
 
@@ -3771,8 +3792,11 @@ Probar en una misma zona chica de prueba tres formas de que el overworld no se v
 - [x] C: terreno esculpido libre
 - [x] Combinaciones (A+B, ...)
 - [ ] Capturas lado a lado y elección del usuario
+  Página de comparación: https://claude.ai/artifact/DeQ6YbE2gQqyQwRMFux2KH. Escena: levels/pruebas_terreno.tscn (1–7).
 
 **Notas:** Pedido del usuario después de 12.2 paso 6 (rampa): elegir con pruebas antes de cambiar el overworld real. No tocar levels/overworld.tscn hasta elegir.
+
+**Bloquea a:** 11.61 Pluma en el overworld: lugares de salto
 
 ## M13 — Co-op local (estilo Four Swords)  (0/9)
 

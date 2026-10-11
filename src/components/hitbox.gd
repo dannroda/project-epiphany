@@ -4,6 +4,9 @@ extends Area3D
 
 signal landed(hurtbox: Hurtbox)
 
+## Ondas por el piso (golpe de las manos del jefe): no le pegan a quien está en el aire (salto de la pluma).
+@export var ground_only := false
+
 var team: EntityConfig.Team = EntityConfig.Team.NEUTRAL
 ## () -> DamageInfo. Player: ItemData del arma equipada. Enemigo: su EntityConfig.
 var damage_factory: Callable
@@ -38,6 +41,9 @@ func _on_area_entered(area: Area3D) -> void:
 	if hurtbox == null or (hurtbox.team == team and not hits_all) or not damage_factory.is_valid():
 		return
 	if hurtbox in _already_hit:
+		return
+	var body := hurtbox.get_parent() as CharacterBody3D
+	if ground_only and body and not body.is_on_floor():
 		return
 	_already_hit.append(hurtbox)
 	hurtbox.receive(build_damage())

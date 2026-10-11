@@ -40,6 +40,7 @@
 [ext_resource type="Script" uid="uid://cugbj78ktnuka" path="res://player/states/using_item.gd" id="st_using_item"]
 [ext_resource type="Gradient" path="res://data/materials/sword_trail_fade.tres" id="trail_fade"]
 [ext_resource type="Script" path="res://src/feel/hit_flash.gd" id="hf_hit_flash"]
+[ext_resource type="Script" path="res://player/states/jumping.gd" id="s_jumping"]
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_peicu"]
 fadeout_time = 0.3
@@ -399,6 +400,16 @@ no_depth_test = true
 shading_mode = 0
 albedo_color = Color(0.4, 0.8, 1, 0.8)
 
+[sub_resource type="Gradient" id="Gradient_jump_shadow"]
+offsets = PackedFloat32Array(0, 0.7, 1)
+colors = PackedColorArray(0, 0, 0, 0.8, 0, 0, 0, 0.6, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="JumpShadowTexture"]
+gradient = SubResource("Gradient_jump_shadow")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
 [node name="Player" type="CharacterBody3D" unique_id=1694148988]
 script = ExtResource("1_2lfai")
 config = ExtResource("cfg_player")
@@ -749,6 +760,9 @@ script = ExtResource("st_item_get")
 [node name="Grabbed" type="LimboState" parent="MovementState"]
 script = ExtResource("st_grabbed")
 
+[node name="Jumping" type="LimboState" parent="MovementState"]
+script = ExtResource("s_jumping")
+
 [node name="Dead" type="LimboState" parent="MovementState" unique_id=1372512458]
 script = ExtResource("st_dead")
 
@@ -859,3 +873,13 @@ visible = false
 light_color = Color(1, 0.92, 0.6, 1)
 light_energy = 0.0
 omni_range = 4.0
+
+[node name="JumpShadow" type="Decal" parent="."]
+unique_name_in_owner = true
+top_level = true
+visible = false
+size = Vector3(0.9, 3, 0.9)
+texture_albedo = SubResource("JumpShadowTexture")
+upper_fade = 0.0
+lower_fade = 0.0
+cull_mask = 1

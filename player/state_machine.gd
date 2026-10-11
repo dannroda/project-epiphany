@@ -40,7 +40,10 @@ func _setup() -> void:
 	add_transition($Moving, $AimingItem, "aim_item")
 	add_transition($AimingItem, $Idle, "finished")
 	add_transition($AimingItem, $Dodging, "dodge")
-	for state in [$Idle, $Moving, $Attacking, $Dodging, $UsingItem, $AimingItem, $AimingThrow, $Carrying, $Hurt]:
+	add_transition($Idle, $Jumping, "jump")
+	add_transition($Moving, $Jumping, "jump")
+	add_transition($Jumping, $Idle, "finished")
+	for state in [$Idle, $Moving, $Attacking, $Dodging, $UsingItem, $AimingItem, $AimingThrow, $Carrying, $Hurt, $Jumping]:
 		add_transition(state, $Transition, "transition")
 	add_transition($Transition, $Idle, "finished")
 	add_transition($Moving, $Pushing, "push")
@@ -48,7 +51,7 @@ func _setup() -> void:
 	add_transition($Idle, $ItemGet, "item_get")
 	add_transition($Moving, $ItemGet, "item_get")
 	add_transition($ItemGet, $Idle, "finished")
-	for state in [$Idle, $Moving, $Attacking, $Dodging, $UsingItem, $AimingItem, $AimingThrow, $Carrying, $Hurt, $Pushing]:
+	for state in [$Idle, $Moving, $Attacking, $Dodging, $UsingItem, $AimingItem, $AimingThrow, $Carrying, $Hurt, $Pushing, $Jumping]:
 		add_transition(state, $Grabbed, "grabbed")
 	add_transition($Grabbed, $Idle, "finished")
 
@@ -94,7 +97,9 @@ func _try_item(buffer: InputBuffer) -> bool:
 			player.deny_item(i)
 			return true
 		blackboard.set_var("item_button", i)
-		if dispatch("aim_item" if player.usable_item(i).behavior.hold_to_aim else "use_item"):
+		var behavior := player.usable_item(i).behavior
+		var event := "jump" if behavior is JumpBehavior else "aim_item" if behavior.hold_to_aim else "use_item"
+		if dispatch(event):
 			buffer.consume(ITEM_ACTIONS[i])
 			return true
 	return false

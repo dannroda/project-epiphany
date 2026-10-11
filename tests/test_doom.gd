@@ -1,7 +1,7 @@
 extends "res://tests/test_case.gd"
 ## La prueba de 10.6: de la sala 1 a la 8, la progresión de calma a latido se nota sin leer nada.
 
-const ROOMS := [["Vestibulo", Vector3(24, 0, 66)], ["Hub", Vector3(24, 0, 50)], ["Galeria", Vector3(0, 0, 50)], ["Agrietada", Vector3(48, 0, 52)], ["Arena", Vector3(48, 0, 34)], ["Ojos", Vector3(0, 0, 36)], ["Puzzle", Vector3(0, 0, 20)], ["Antesala", Vector3(24, 0, 34)]]
+const ROOMS := [["Vestibulo", Vector3(24, 0, 66)], ["Hub", Vector3(24, 0, 50)], ["Galeria", Vector3(0, 0, 50)], ["Agrietada", Vector3(48, 0, 52)], ["Pluma", Vector3(48, 0, 58.6)], ["Arena", Vector3(48, 0, 34)], ["Ojos", Vector3(0, 0, 36)], ["Puzzle", Vector3(0, 0, 22.4)], ["Antesala", Vector3(24, 0, 34)]]
 
 
 func test_doom_rises_room_by_room() -> void:

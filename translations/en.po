@@ -475,6 +475,15 @@ msgstr "Tap the button to set a bomb down in front of you; hold it to pick the b
 msgid "ITEM_BOMB_BAG_GOT"
 msgstr "You got the Bomb Bag!"
 
+msgid "ITEM_FEATHER_NAME"
+msgstr "Feather"
+
+msgid "ITEM_FEATHER_DESC"
+msgstr "Assign it to a button to jump: clears one-tile gaps, hops up steps and dodges whatever hits the ground. It won't clear low walls or room walls."
+
+msgid "ITEM_FEATHER_GOT"
+msgstr "You got the Feather!"
+
 msgid "ITEM_BOMB_NAME"
 msgstr "Bombs"
 
@@ -651,6 +660,9 @@ msgstr "Trap Gallery"
 
 msgid "PLACE_CRACKED_ROOM"
 msgstr "Cracked Chamber"
+
+msgid "PLACE_FEATHER_ROOM"
+msgstr "Feather Room"
 
 msgid "PLACE_ARENA"
 msgstr "Arena"

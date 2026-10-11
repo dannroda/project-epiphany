@@ -3,6 +3,8 @@ extends Area3D
 ## Debajo de un hueco: el player que cae pierde vida y vuelve a la entrada de la sala.
 
 @export var damage := 2
+## Adónde vuelve el que cae; si no hay, a la entrada de la sala o al punto de aparición.
+@export var respawn: Node3D
 
 
 func _ready() -> void:
@@ -18,7 +20,7 @@ func _fall(player: PlayerCharacter) -> void:
 	player.health.damage(damage)
 	if player.is_dead:
 		return
-	var back: Variant = GameState.room_entry
+	var back: Variant = respawn.global_position if respawn else GameState.room_entry
 	if back == null:
 		var point := SpawnPoint.find(get_tree(), GameState.spawn_point)
 		back = point.global_position if point else player.global_position + Vector3.UP * 3.0

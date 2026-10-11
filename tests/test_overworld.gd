@@ -63,17 +63,19 @@ func test_walk_every_zone_without_falling_or_sticking() -> void:
 	state.reset()
 
 
-func test_abyss_stops_the_player_but_not_arrows() -> void:
+func test_abyss_has_no_floor_but_a_pit() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	tree.root.get_node(^"GameState").reset()
 	tree.change_scene_to_file(LEVEL)
 	await tree.scene_changed
 	await tree.physics_frame
 	var space := (tree.current_scene as Node3D).get_world_3d().direct_space_state
-	var low := PhysicsRayQueryParameters3D.create(Vector3(24, 0.3, -14), Vector3(24, 0.3, -22), 1)
-	assert_true(not space.intersect_ray(low).is_empty(), "a la altura del player el abismo frena")
+	for z in [-20.0, -18.0]:
+		var down := PhysicsRayQueryParameters3D.create(Vector3(24, 2, z), Vector3(24, -0.8, z), 1)
+		assert_true(space.intersect_ray(down).is_empty(), "el abismo no tiene piso (z %.0f)" % z)
 	var high := PhysicsRayQueryParameters3D.create(Vector3(24, 1.0, -14), Vector3(24, 1.0, -21), 1)
 	assert_true(space.intersect_ray(high).is_empty(), "a la altura de una flecha pasa por arriba")
+	assert_true(tree.current_scene.get_node(^"RiscoPit") is Pit, "abajo hay un Pit")
 	tree.root.get_node(^"GameState").reset()
 
 

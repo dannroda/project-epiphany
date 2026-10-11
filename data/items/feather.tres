@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://src/items/behaviors/jump_behavior.gd" id="1_jump"]
+[ext_resource type="Texture2D" path="res://assets/ui/items/feather.png" id="2_icon"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/equipo/pluma.res" id="4_pickup"]
+[ext_resource type="Script" path="res://src/items/item_data.gd" id="3_item"]
+
+[sub_resource type="Resource" id="Resource_jump"]
+script = ExtResource("1_jump")
+
+[resource]
+script = ExtResource("3_item")
+id = &"feather"
+display_name = "ITEM_FEATHER_NAME"
+description = "ITEM_FEATHER_DESC"
+icon = ExtResource("2_icon")
+pickup_mesh = ExtResource("4_pickup")
+category = 3
+behavior = SubResource("Resource_jump")

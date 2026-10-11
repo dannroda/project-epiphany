@@ -10,6 +10,8 @@ const MATERIAL := preload("res://data/kits/materials/epiphany_outdoor.tres")
 ## Las paredes que pueden tapar al player: se recortan alrededor de él.
 const WALL_MATERIAL := preload("res://data/kits/materials/epiphany_wall.tres")
 const WALL_IDS := [1, 6]
+## Abismo y pozo no tienen piso: el que cae ahí cae (un Pit abajo lo devuelve).
+const HOLE_IDS := [9, 10]
 ## Las celdas con alguna de estas piezas usan el material con viento.
 const WIND_MATERIAL := preload("res://data/kits/materials/epiphany_wind.tres")
 const WALL_WIND_MATERIAL := preload("res://data/kits/materials/epiphany_wall_wind.tres")
@@ -97,7 +99,7 @@ func _initialize() -> void:
 		kit.create_item(id)
 		kit.set_item_name(id, source.get_item_name(id))
 		kit.set_item_mesh(id, _merge(BASE[id], id in WALL_IDS) if BASE.has(id) else source.get_item_mesh(id))
-		kit.set_item_shapes(id, source.get_item_shapes(id))
+		kit.set_item_shapes(id, [] if id in HOLE_IDS else source.get_item_shapes(id))
 		kit.set_item_navigation_mesh(id, source.get_item_navigation_mesh(id))
 	var next := source.get_last_unused_item_id()
 	for item_name: String in VARIANTS:
@@ -105,7 +107,7 @@ func _initialize() -> void:
 		kit.create_item(next)
 		kit.set_item_name(next, item_name)
 		kit.set_item_mesh(next, _merge(VARIANTS[item_name][1], base in WALL_IDS and not item_name.ends_with(" borde")))
-		kit.set_item_shapes(next, source.get_item_shapes(base))
+		kit.set_item_shapes(next, [] if base in HOLE_IDS else source.get_item_shapes(base))
 		kit.set_item_navigation_mesh(next, source.get_item_navigation_mesh(base))
 		next += 1
 	for scene: Node in _scenes.values():

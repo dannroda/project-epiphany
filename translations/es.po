@@ -475,6 +475,15 @@ msgstr "Tocá el botón para colocar una bomba delante tuyo; mantenelo para leva
 msgid "ITEM_BOMB_BAG_GOT"
 msgstr "¡Conseguiste la Bolsa de bombas!"
 
+msgid "ITEM_FEATHER_NAME"
+msgstr "Pluma"
+
+msgid "ITEM_FEATHER_DESC"
+msgstr "Asignala a un botón para saltar: cruza huecos de una baldosa, sube a escalones y esquiva lo que golpea el piso. No pasa pircas ni muros."
+
+msgid "ITEM_FEATHER_GOT"
+msgstr "¡Conseguiste la Pluma!"
+
 msgid "ITEM_BOMB_NAME"
 msgstr "Bombas"
 
@@ -651,6 +660,9 @@ msgstr "Galería de trampas"
 
 msgid "PLACE_CRACKED_ROOM"
 msgstr "Sala agrietada"
+
+msgid "PLACE_FEATHER_ROOM"
+msgstr "Sala de la pluma"
 
 msgid "PLACE_ARENA"
 msgstr "Arena"

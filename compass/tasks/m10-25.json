@@ -127,6 +127,11 @@
     {
       "done": false,
       "text": "Nodos en escena (10.27): todo se ve y suena como antes (cofres, haz de luz, puertas, interruptores, oleadas, explosiones, destello de daño, vasijas, armadura del esqueleto, mapa, música, doom); con el overlay (1), cono de bloqueo y flecha. Abrir chest.tscn, light_source.tscn, player.tscn y src/feel/bursts/ en el editor y ver que se pueden retocar"
+    },
+    {
+      "detail": "Templo: la sala de la pluma (debajo de la agrietada) se entiende sin explicación; la zanja se lee como 'rodear ahora, saltar después'. La fila de huecos del Puzzle se ve desde la puerta y no hay forma de caer al entrar. El salto (alto 0,68, velocidad 4, control en el aire 2, en player/states/jumping.gd) se siente bien y la sombra deja calcular dónde cae. Risco: el abismo de 4 m se lee como 'solo flechas'.",
+      "done": false,
+      "text": "Pluma (11.35)"
     }
   ],
   "code": "10.28",
@@ -273,5 +278,5 @@
   ],
   "test": "",
   "title": "Playtest de revisión (lo que está en Revisión)",
-  "updated_at": "2026-10-11T17:52:00.121Z"
+  "updated_at": "2026-10-11T18:42:47.599Z"
 }

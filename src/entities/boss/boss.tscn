@@ -196,6 +196,7 @@ collision_mask = 24
 monitoring = false
 monitorable = false
 script = ExtResource("15_hitbox")
+ground_only = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HandLeft/Hitboxes/Shockwave"]
 shape = SubResource("CylinderShape3D_shockwave")
@@ -262,6 +263,7 @@ collision_mask = 24
 monitoring = false
 monitorable = false
 script = ExtResource("15_hitbox")
+ground_only = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HandRight/Hitboxes/Shockwave"]
 shape = SubResource("CylinderShape3D_shockwave")

@@ -477,9 +477,6 @@ _surfaces = [{
 "vertex_data": PackedByteArray("AACAv2ZmZr8AAIC/AACAP2ZmZr8AAIC/AACAP2ZmZr8AAIA/AACAv2ZmZr8AAIC/AACAP2ZmZr8AAIA/AACAv2ZmZr8AAIA/AACAv2Zm5r8AAIC/AACAP2Zm5r8AAIC/AACAP2Zm5r8AAIA/AACAv2Zm5r8AAIC/AACAP2Zm5r8AAIA/AACAv2Zm5r8AAIA//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+/")
 }]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_xitdt"]
-size = Vector3(2, 4.6, 2)
-
 [sub_resource type="ArrayMesh" id="ArrayMesh_mh24j"]
 _surfaces = [{
 "aabb": AABB(-1.0000001, -3.1, -1.0000001, 2, 3.1, 2.0000002),
@@ -928,7 +925,6 @@ item/8/mesh = SubResource("ArrayMesh_ngswd")
 item/8/shapes = [SubResource("BoxShape3D_0o3u6"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0), SubResource("BoxShape3D_vowh4"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)]
 item/9/name = "Abismo"
 item/9/mesh = SubResource("ArrayMesh_rbpnl")
-item/9/shapes = [SubResource("BoxShape3D_xitdt"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.7, 0)]
 item/10/name = "Hueco"
 item/10/mesh = SubResource("ArrayMesh_qiu5c")
 item/11/name = "Pasto flores"
@@ -1005,19 +1001,14 @@ item/34/mesh = SubResource("ArrayMesh_u82aj")
 item/34/shapes = [SubResource("BoxShape3D_ovs7w"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)]
 item/35/name = "Abismo borde"
 item/35/mesh = SubResource("ArrayMesh_lir37")
-item/35/shapes = [SubResource("BoxShape3D_xitdt"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.7, 0)]
 item/36/name = "Abismo esquina"
 item/36/mesh = SubResource("ArrayMesh_mh24j")
-item/36/shapes = [SubResource("BoxShape3D_xitdt"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.7, 0)]
 item/37/name = "Abismo pasillo"
 item/37/mesh = SubResource("ArrayMesh_tat6q")
-item/37/shapes = [SubResource("BoxShape3D_xitdt"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.7, 0)]
 item/38/name = "Abismo punta"
 item/38/mesh = SubResource("ArrayMesh_pln12")
-item/38/shapes = [SubResource("BoxShape3D_xitdt"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.7, 0)]
 item/39/name = "Abismo pozo"
 item/39/mesh = SubResource("ArrayMesh_8boaa")
-item/39/shapes = [SubResource("BoxShape3D_xitdt"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.7, 0)]
 item/40/name = "Pirca poste"
 item/40/mesh = SubResource("ArrayMesh_nekl7")
 item/40/shapes = [SubResource("BoxShape3D_j5d8m"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0), SubResource("BoxShape3D_jml3e"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)]

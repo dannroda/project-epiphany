@@ -1,0 +1,47 @@
+{
+  "checklist": [
+    {
+      "detail": "No tocar levels/overworld.tscn hasta que 12.14 elija; después ubicar los lugares sobre ese terreno.",
+      "done": false,
+      "text": "Esperar el terreno de 12.14"
+    },
+    {
+      "detail": "Decidido con el usuario (2026-10-11): HeartPieceMeadow deja el pasto alto y pasa a una cornisa baja de la pradera a la que se sube con la pluma; siguen siendo 4 piezas = 1 corazón. Actualizar la tabla de ítems del GDD (§6.1).",
+      "done": false,
+      "text": "Pieza de corazón de la pradera en una cornisa"
+    },
+    {
+      "detail": "Huecos de una baldosa o escalones; algo que se vea antes de tener la pluma (cebo).",
+      "done": false,
+      "text": "1–2 atajos o recovecos más con salto"
+    },
+    {
+      "detail": "Test que recorra cada lugar con la pluma y que sin ella no se llegue; GDD §7 y §6.2.",
+      "done": false,
+      "text": "Tests y GDD"
+    }
+  ],
+  "code": "11.61",
+  "created_at": "2026-10-11T18:42:24.769Z",
+  "description": "El overworld es el hub: la pluma (11.35, templo) tiene que abrir ahí cosas y caminos nuevos. 2–3 lugares que solo se alcanzan saltando (huecos de una baldosa, escalón de 0,6 m), sobre el terreno que elija 12.14.",
+  "links": [
+    {
+      "task": "m11-35",
+      "type": "related"
+    }
+  ],
+  "milestone": "m11",
+  "notes": "",
+  "order": 58,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "movimiento",
+    "nivel"
+  ],
+  "test": "Sin la pluma, la pieza de corazón de la pradera y los otros lugares no se alcanzan; con la pluma, sí. Ningún lugar obliga a saltar una pirca o un muro.",
+  "title": "Pluma en el overworld: lugares de salto",
+  "updated_at": "2026-10-11T18:42:27.758Z"
+}
