@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" uid="uid://duanovtf2px6i" path="res://assets/epiphany/palette.png" id="1_pal"]
+
+[resource]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 0.78, 0.5, 0.92)
+albedo_texture = ExtResource("1_pal")

@@ -1,18 +1,8 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://src/items/bomb/explosion.gd" id="1_explosion"]
-
-[sub_resource type="StandardMaterial3D" id="Fire"]
-transparency = 1
-shading_mode = 0
-albedo_color = Color(1, 0.62, 0.25, 0.85)
-
-[sub_resource type="SphereMesh" id="FireMesh"]
-material = SubResource("Fire")
-radius = 1.0
-height = 2.0
-radial_segments = 16
-rings = 8
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/explosion.res" id="2_fire"]
+[ext_resource type="Material" path="res://data/kits/materials/epiphany_fx.tres" id="3_fx"]
 
 [sub_resource type="SphereShape3D" id="Blast"]
 radius = 2.2
@@ -31,7 +21,8 @@ shape = SubResource("Blast")
 unique_name_in_owner = true
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0.6, 0)
 cast_shadow = 0
-mesh = SubResource("FireMesh")
+material_override = ExtResource("3_fx")
+mesh = ExtResource("2_fire")
 
 [node name="Flash" type="OmniLight3D" parent="."]
 unique_name_in_owner = true

@@ -355,11 +355,29 @@ def orbe(p):
 	p.paint(shell, "sello", "LIGHT")
 
 
+def explosion(p):
+	"""Bola de fuego de radio 1: núcleo facetado y puntas en cono hacia todos lados, clara al centro y naranja en las
+	puntas (la agranda y desvanece src/items/bomb/explosion.gd)."""
+	core = p.blob((0, 0, 0), 0.62, subdiv=1, rough=0.15)
+	p.paint(core, "fuego", "LIGHT", vary=0.05)
+	golden = math.pi * (3 - math.sqrt(5))
+	count = 14
+	for i in range(count):
+		z = 1 - 2 * (i + 0.5) / count
+		r = math.sqrt(1 - z * z)
+		direction = Vector((math.cos(golden * i) * r, math.sin(golden * i) * r, z * 0.8)).normalized()
+		length = p.rng.uniform(0.75, 1.0)
+		spike = p.cylinder(0.26, 0.3, length, sides=4, radius_top=0.0, phase=p.rng.random())
+		p.paint(spike, "fuego", z_range=(length, 0.3), vary=0.06)
+		p.transform(spike, direction.to_track_quat("Z", "Y").to_matrix().to_4x4())
+
+
 piece("flecha", 17, flecha)
 piece("flechas_x5", 18, flechas_x5)
 piece("bomba", 19, lambda p: bomb(p))
 piece("bombas_x3", 20, bombas_x3)
 piece("orbe", 21, orbe)
+piece("explosion", 22, explosion)
 
 epi.layout(kit, columns=6, spacing=2.0)
 epi.save("objetos")

@@ -5,15 +5,18 @@
       "text": "Haz de luz"
     },
     {
-      "done": false,
+      "detail": "Hecho en 12.2 con partículas: falling_leaves.tscn bajo los árboles y dust_motes.tscn colgado de la cámara.",
+      "done": true,
       "text": "Polvo y hojas"
     },
     {
-      "done": false,
+      "detail": "Hecho: objetos/explosion (núcleo facetado y 14 puntas, claro adentro y naranja en las puntas) en explosion.tscn con epiphany_fx.tres (paleta transparente sin sombreado); gira al azar cada vez.",
+      "done": true,
       "text": "Explosión"
     },
     {
-      "done": false,
+      "detail": "Ya estaba: warp_portal.tscn usa portal_disco y portal_anillo (12.3 paso 10).",
+      "done": true,
       "text": "Anillo del portal"
     }
   ],
@@ -31,11 +34,11 @@
   "order": 9,
   "priority": "low",
   "refs": [],
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "arte"
   ],
   "test": "",
   "title": "Efectos con malla",
-  "updated_at": "2026-10-11T07:50:14.502Z"
+  "updated_at": "2026-10-11T16:48:28.912Z"
 }
