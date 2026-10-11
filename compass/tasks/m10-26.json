@@ -11,7 +11,7 @@
       "text": "Textos desde el InputMap"
     },
     {
-      "detail": "Título › Opciones › Controles abre la pantalla completa, por MenuStack. En la pausa, la pestaña Sistema (mockups Pause_System y Pause_System_Keyboard): a la izquierda Guardar, Cargar, separador, Opciones y Volver al título; a la derecha los controles básicos del dispositivo en uso, con Y (T en teclado) para ver el otro. Guardar muestra la partida cargada y pide confirmar: siempre guarda sobre esa ranura, no se elige otra (Pause_System_Save). Cargar cambia el panel por la lista de partidas: Auto + 1-3, la vacía apagada, pregunta antes de cargar (Pause_System_Load). B vuelve a los controles.",
+      "detail": "Título › Opciones › Controles abre la pantalla completa, por MenuStack. En la pausa, la pestaña Sistema (mockups Pause_System y Pause_System_Keyboard): a la izquierda Guardar, Cargar, separador, Opciones y Volver al título; a la derecha los controles básicos del dispositivo en uso, con Y (T en teclado) para ver el otro. Guardar muestra la partida cargada y pide confirmar: siempre guarda sobre esa ranura (Pause_System_Save). Cargar muestra el último checkpoint (Auto) y lo último guardado a mano de la partida cargada; se elige con el stick (checkpoint por defecto) y A confirma (Pause_System_Load). B vuelve a los controles.",
       "done": false,
       "text": "Entradas"
     },
@@ -35,5 +35,5 @@
   ],
   "test": "",
   "title": "Pantalla de controles",
-  "updated_at": "2026-10-11T08:05:09.384Z"
+  "updated_at": "2026-10-11T08:07:12.687Z"
 }
