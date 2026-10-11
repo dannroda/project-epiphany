@@ -1,6 +1,6 @@
 [gd_resource type="MeshLibrary" format=4 uid="uid://dt62p0c61qjd0"]
 
-[ext_resource type="Material" path="res://data/kits/materials/epiphany.tres" id="1_vcccu"]
+[ext_resource type="Material" path="res://data/kits/materials/epiphany_outdoor.tres" id="1_vcccu"]
 [ext_resource type="Material" path="res://data/kits/materials/epiphany_wall.tres" id="2_g4ggo"]
 [ext_resource type="Material" path="res://data/kits/materials/epiphany_wind.tres" id="3_ipnde"]
 [ext_resource type="Material" path="res://data/kits/materials/floor.tres" id="4_3qkd4"]

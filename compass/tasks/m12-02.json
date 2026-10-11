@@ -58,8 +58,8 @@
       "text": "Viento en la vegetación"
     },
     {
-      "detail": "Manchas que cruzan el piso despacio (en el light() toon).",
-      "done": false,
+      "detail": "Hecho: cloud_shadows.gdshaderinc (ruido en mundo, deriva) en los materiales de afuera (epiphany_outdoor/wind/wall: kit del overworld, lugares, naturaleza); global cloud_shadows que prende el nodo CloudShadows de overworld.tscn (fuerza, tamaño, deriva exportados). Personajes y templo sin nubes.",
+      "done": true,
       "text": "Sombras de nubes"
     },
     {
@@ -102,5 +102,5 @@
   ],
   "test": "El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.",
   "title": "Terreno del overworld",
-  "updated_at": "2026-10-11T08:51:21.197Z"
+  "updated_at": "2026-10-11T08:55:47.098Z"
 }

@@ -3430,7 +3430,7 @@ Modelar en Blender el terreno del overworld (pasto, caminos, piso de plaza, acan
   La tapa de pasto de andenes, riscos y meseta es una caja plana: borde irregular que sobresale y cuelga, como el resto de los assets.
 - [x] Viento en la vegetación
   Hecho: material epiphany_wind.tres (vertex shader) en ichu, flores, tola y queñoas; se mece más arriba en el degradé de la franja, onda en el sentido del viento.
-- [ ] Sombras de nubes
+- [x] Sombras de nubes
   Manchas que cruzan el piso despacio (en el light() toon).
 - [ ] Cara del risco y topes con detalle
   Risco con más corte y vetas; ichu, piedras y flores sobre los topes.

@@ -40,6 +40,7 @@
 [ext_resource type="PackedScene" path="res://src/world/stone.tscn" id="42_stone"]
 [ext_resource type="PackedScene" path="res://src/world/zone_veil.tscn" id="90_veil"]
 [ext_resource type="PackedScene" path="res://src/world/cracked_wall_risco.tscn" id="91_crackrisco"]
+[ext_resource type="Script" uid="uid://bv7heb806mclu" path="res://src/world/cloud_shadows.gd" id="92_clouds"]
 [ext_resource type="PackedScene" path="res://levels/decor/overworld_decor.tscn" id="92_decor"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/cueva_boca.res" id="93_mouth"]
 
@@ -303,6 +304,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 0.6, 4)
 
 [node name="Rock3" parent="." unique_id=375734465 instance=ExtResource("10_vrnmo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0.6, 4)
+
+[node name="CloudShadows" type="Node" parent="."]
+script = ExtResource("92_clouds")
 
 [node name="OverworldMap" parent="." unique_id=259113020 node_paths=PackedStringArray("grid", "scenery") instance=ExtResource("11_gsck2")]
 display_name = "PLACE_TEMPLE_VALLEY"

@@ -6,7 +6,7 @@ extends SceneTree
 const SOURCE := "res://data/kits/gray_kit.tres"
 const OUTPUT := "res://data/kits/overworld_kit.tres"
 const BLEND := "res://assets/epiphany/%s.blend"
-const MATERIAL := preload("res://data/kits/materials/epiphany.tres")
+const MATERIAL := preload("res://data/kits/materials/epiphany_outdoor.tres")
 ## Las paredes que pueden tapar al player: se recortan alrededor de él.
 const WALL_MATERIAL := preload("res://data/kits/materials/epiphany_wall.tres")
 const WALL_IDS := [1, 6]

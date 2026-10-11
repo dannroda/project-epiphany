@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" format=3]
 
-[ext_resource type="Shader" path="res://data/kits/shaders/epiphany_wind.gdshader" id="1_shader"]
+[ext_resource type="Shader" path="res://data/kits/shaders/epiphany_outdoor.gdshader" id="1_shader"]
 [ext_resource type="Texture2D" uid="uid://duanovtf2px6i" path="res://assets/epiphany/palette.png" id="2_pal"]
 [ext_resource type="Texture2D" path="res://assets/epiphany/palette_emission.png" id="3_glow"]
 
@@ -8,3 +8,4 @@
 shader = ExtResource("1_shader")
 shader_parameter/albedo_texture = ExtResource("2_pal")
 shader_parameter/emission_texture = ExtResource("3_glow")
+shader_parameter/wind_strength = 0.07

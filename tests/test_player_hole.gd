@@ -1,7 +1,7 @@
 extends "res://tests/test_case.gd"
 
 const WALL := preload("res://data/kits/materials/epiphany_wall.tres")
-const PLAIN := preload("res://data/kits/materials/epiphany.tres")
+const PLAIN := preload("res://data/kits/materials/epiphany_outdoor.tres")
 
 
 func _material(library: MeshLibrary, item_name: String) -> Material:
@@ -52,3 +52,15 @@ func test_the_camera_follows_the_player_with_the_hole() -> void:
 	player.global_position = Vector3(-6, player.global_position.y, 3.0)
 	await tree.create_timer(0.4).timeout
 	assert_eq(camera.player_hole.w, 0.0, "lejos del muro se cierra")
+
+
+func test_clouds_only_while_in_the_overworld() -> void:
+	assert_true(ProjectSettings.has_setting("shader_globals/cloud_shadows"), "uniform global registrada")
+	var overworld: Node = load("res://levels/overworld.tscn").instantiate()
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.root.add_child(overworld)
+	var clouds: Vector4 = RenderingServer.global_shader_parameter_get(&"cloud_shadows")
+	assert_true(clouds.x > 0.0 and clouds.y > 0.0, "las nubes pasan por el overworld")
+	tree.root.remove_child(overworld)
+	assert_eq(RenderingServer.global_shader_parameter_get(&"cloud_shadows"), Vector4.ZERO, "y no por el templo")
+	overworld.free()

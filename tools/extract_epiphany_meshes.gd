@@ -6,6 +6,9 @@ extends SceneTree
 const BLENDS := ["objetos", "equipo", "lugares", "templo", "naturaleza"]
 const DIR := "res://assets/epiphany/meshes/%s/"
 const MATERIAL := preload("res://data/kits/materials/epiphany.tres")
+## Lo de afuera: con sombras de nubes.
+const OUTDOOR_MATERIAL := preload("res://data/kits/materials/epiphany_outdoor.tres")
+const OUTDOOR := ["lugares", "naturaleza"]
 const WIND_MATERIAL := preload("res://data/kits/materials/epiphany_wind.tres")
 const WINDY := ["naturaleza/quenoa_grande", "naturaleza/quenoa_chica", "naturaleza/ichu_mata", "naturaleza/ichu_cortado", "naturaleza/tola", "naturaleza/flores"]
 
@@ -18,7 +21,7 @@ func _initialize() -> void:
 		for node: MeshInstance3D in scene.find_children("*", "MeshInstance3D", true, false):
 			var mesh := node.mesh.duplicate() as ArrayMesh
 			for surface in mesh.get_surface_count():
-				mesh.surface_set_material(surface, WIND_MATERIAL if "%s/%s" % [blend, node.name] in WINDY else MATERIAL)
+				mesh.surface_set_material(surface, WIND_MATERIAL if "%s/%s" % [blend, node.name] in WINDY else OUTDOOR_MATERIAL if blend in OUTDOOR else MATERIAL)
 			mesh.resource_name = node.name
 			var err := ResourceSaver.save(mesh, (DIR % blend) + node.name + ".res")
 			if err != OK:

@@ -860,6 +860,10 @@ rendering_device/driver.windows="d3d12"
 
 [shader_globals]
 
+cloud_shadows={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 0)
+}
 player_hole={
 "type": "vec4",
 "value": Vector4(0, 0, 0, 0)
