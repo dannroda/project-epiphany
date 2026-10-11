@@ -1,4 +1,4 @@
-# Arma assets/epiphany/equipo.blend: armas, escudos y objetos del inventario, con los ejes de KayKit Adventurers:
+# Publica assets/epiphany/equipo.glb (epi.publish; el .blend de trabajo en art/blender/): armas, escudos y objetos del inventario, con los ejes de KayKit Adventurers:
 # espada sobre +Z con la empuñadura en el origen; escudos en el plano XZ con el frente hacia -Y; arco sobre Y.
 # blender -b -P tools/blender/build_equipo.py
 import math
@@ -215,4 +215,4 @@ piece("botella_vidrio", 8, botella_vidrio)
 piece("botella_liquido", 10, botella_liquido)
 piece("armadura", 9, armadura)
 epi.layout(kit, columns=8, spacing=2.0)
-epi.save("equipo")
+epi.publish("equipo")

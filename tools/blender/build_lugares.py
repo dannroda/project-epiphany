@@ -1,4 +1,4 @@
-# Arma assets/epiphany/lugares.blend: piezas de los lugares del overworld (cueva, santuario, puzzle de luz, templo por fuera)
+# Publica assets/epiphany/lugares.glb (epi.publish; el .blend de trabajo en art/blender/): piezas de los lugares del overworld (cueva, santuario, puzzle de luz, templo por fuera)
 # y los mecanismos que comparten overworld y templo (reja, bloque, interruptores, puente, portal).
 # El frente mira a -Y. Las piezas de celda van de -1 a 1 en X e Y; las demás, con el origen en la base.
 # blender -b -P tools/blender/build_lugares.py
@@ -691,4 +691,4 @@ piece("rocas_rincon", 33, rocas_rincon)
 piece("estalactitas_borde", 34, estalactitas_borde)
 
 epi.layout(kit, columns=7, spacing=3.5)
-epi.save("lugares")
+epi.publish("lugares", material="outdoor")

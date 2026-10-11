@@ -9,6 +9,11 @@ const ROOT := "res://assets/epiphany/"
 const MESH_DIR := "epiphany/mesh_dir"
 const MESHES := "res://assets/epiphany/meshes/%s/"
 const MATERIALS := {"paleta": "res://data/kits/materials/epiphany.tres"}
+## Custom property material en el objeto: otra variante de la paleta para toda la malla (lo de afuera, con viento).
+const TAGGED := {
+	"outdoor": "res://data/kits/materials/epiphany_outdoor.tres",
+	"wind": "res://data/kits/materials/epiphany_wind.tres",
+}
 
 
 func _get_import_options(path: String) -> void:
@@ -22,7 +27,7 @@ func _post_process(scene: Node) -> void:
 		return
 	var saved := {}
 	for node: MeshInstance3D in scene.find_children("*", "MeshInstance3D", true, false):
-		_use_palette(node.mesh)
+		_use_palette(node.mesh, _extras(node).get("material", ""))
 		if not saved.has(node.mesh):
 			saved[node.mesh] = true
 			_save_mesh(node, mesh_dir)
@@ -40,11 +45,11 @@ func _extras(object: Object) -> Dictionary:
 	return object.get_meta(&"extras", {})
 
 
-func _use_palette(mesh: Mesh) -> void:
+func _use_palette(mesh: Mesh, tag: String) -> void:
 	for surface in mesh.get_surface_count():
 		var material := mesh.surface_get_material(surface)
 		if material and MATERIALS.has(material.resource_name):
-			mesh.surface_set_material(surface, load(MATERIALS[material.resource_name]))
+			mesh.surface_set_material(surface, load(TAGGED.get(tag, MATERIALS[material.resource_name])))
 
 
 func _save_mesh(node: MeshInstance3D, mesh_dir: String) -> void:

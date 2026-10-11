@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bo1vbpuc1yrvy"
-path="res://.godot/imported/templo.blend-946c83f0feea749b83b084c55eb39e5e.scn"
+uid="uid://dm1875miuensh"
+path="res://.godot/imported/templo.glb-7f4a435fe8d8b8cf20a98553b5af20fe.scn"
 
 [deps]
 
-source_file="res://assets/epiphany/templo.blend"
-dest_files=["res://.godot/imported/templo.blend-946c83f0feea749b83b084c55eb39e5e.scn"]
+source_file="res://assets/epiphany/templo.glb"
+dest_files=["res://.godot/imported/templo.glb-7f4a435fe8d8b8cf20a98553b5af20fe.scn"]
 
 [params]
 
@@ -41,25 +41,7 @@ materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
 _subresources={}
-epiphany/mesh_dir=""
-blender/nodes/visible=2.0
-blender/nodes/active_collection_only=false
-blender/nodes/punctual_lights=true
-blender/nodes/cameras=true
-blender/nodes/custom_properties=true
-blender/nodes/modifiers=1
-blender/meshes/vertex_colors=1
-blender/meshes/uvs=true
-blender/meshes/normals=true
-blender/meshes/export_geometry_nodes_instances=false
-blender/meshes/gpu_instances=false
-blender/meshes/tangents=true
-blender/meshes/skins=2
-blender/meshes/export_bones_deforming_mesh_only=false
-blender/materials/unpack_enabled=true
-blender/materials/export_materials=1
-blender/animation/limit_playback=true
-blender/animation/always_sample=true
-blender/animation/group_tracks=true
+epiphany/mesh_dir="res://assets/epiphany/meshes/templo/"
 gltf/naming_version=2
+gltf/embedded_image_handling=1
 gltf/texture_map_mode=1

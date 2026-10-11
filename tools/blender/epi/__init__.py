@@ -37,9 +37,10 @@ def save(name):
 	print("guardado:", path, len(bpy.data.collections["kit"].objects), "piezas")
 
 
-def publish(name, objects=None):
+def publish(name, objects=None, material=None, materials=None):
 	"""Guarda el .blend de trabajo en art/blender/ (Godot no lo ve) y publica assets/epiphany/<name>.glb con las
-	custom properties; lo importa addons/epiphany_tools/import/epi_scene_import.gd. Sin objects, exporta la colección 'kit'."""
+	custom properties; lo importa addons/epiphany_tools/import/epi_scene_import.gd. Sin objects, exporta la colección 'kit'.
+	material (o materials[nombre del objeto]) marca la variante de la paleta: outdoor, wind."""
 	blend = os.path.join(ROOT, "art", "blender", name + ".blend")
 	os.makedirs(os.path.dirname(blend), exist_ok=True)
 	bpy.ops.wm.save_as_mainfile(filepath=blend)
@@ -48,6 +49,10 @@ def publish(name, objects=None):
 	if os.path.exists(blend + "1"):
 		os.remove(blend + "1")
 	objects = list(objects or bpy.data.collections["kit"].all_objects)
+	for obj in objects:
+		tag = (materials or {}).get(obj.name, material)
+		if tag:
+			obj["material"] = tag
 	for obj in bpy.context.scene.objects:
 		obj.select_set(obj in objects)
 	glb = os.path.join(ROOT, "assets", "epiphany", name + ".glb")

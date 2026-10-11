@@ -1,4 +1,4 @@
-# Arma assets/epiphany/terreno_overworld.blend: piezas de una celda de 2 × 2 m para el GridMap del overworld.
+# Publica assets/epiphany/terreno_overworld.glb (epi.publish; el .blend de trabajo en art/blender/): piezas de una celda de 2 × 2 m para el GridMap del overworld.
 # blender -b -P tools/blender/build_terreno_overworld.py
 import math
 import os
@@ -464,4 +464,4 @@ piece("abismo_pozo", 45, abismo((0, 1, 2, 3)))
 
 ORDER = ["pasto", "tierra", "lajas", "anden", "pirca", "abismo", "monte"]
 epi.layout(kit, columns=6, row_of=lambda n: next((i for i, k in enumerate(ORDER) if n.startswith(k)), 3 if n.startswith("risco") or n in ("escalon", "escalinata") else 9))
-epi.save("terreno_overworld")
+epi.publish("terreno_overworld")

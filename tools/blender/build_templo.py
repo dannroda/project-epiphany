@@ -1,4 +1,4 @@
-# Arma assets/epiphany/templo.blend: el kit del templo (celdas de 2 × 2 m, paredes de -0.5 a 2.6), puertas, decoración,
+# Publica assets/epiphany/templo.glb (epi.publish; el .blend de trabajo en art/blender/): el kit del templo (celdas de 2 × 2 m, paredes de -0.5 a 2.6), puertas, decoración,
 # el doom, la torreta y el jefe. El frente mira a -Y.
 # blender -b -P tools/blender/build_templo.py
 import math
@@ -470,4 +470,4 @@ piece("hueco_punta", 31, hueco((0, 1, 2)))
 piece("hueco_pozo", 32, hueco((0, 1, 2, 3)))
 
 epi.layout(kit, columns=7, spacing=3.5)
-epi.save("templo")
+epi.publish("templo")

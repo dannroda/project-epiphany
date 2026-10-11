@@ -1,10 +1,10 @@
 extends SceneTree
-## Arma data/kits/temple_kit.tres: los mismos ítems y colisiones que el kit gris, con las piezas de assets/epiphany/templo.blend.
+## Arma data/kits/temple_kit.tres: los mismos ítems y colisiones que el kit gris, con las piezas de assets/epiphany/templo.glb.
 ## godot --headless --path . --script res://tools/build_temple_kit.gd
 
 const SOURCE := "res://data/kits/gray_kit.tres"
 const OUTPUT := "res://data/kits/temple_kit.tres"
-const BLEND := "res://assets/epiphany/templo.blend"
+const SOURCE_GLB := "res://assets/epiphany/templo.glb"
 const STONE := preload("res://data/kits/materials/epiphany_stone.tres")
 const FLOOR := preload("res://data/kits/materials/epiphany.tres")
 const HIDDEN_FACES := preload("res://tools/hidden_faces.gd")
@@ -39,7 +39,7 @@ var _scene: Node
 
 
 func _initialize() -> void:
-	_scene = (load(BLEND) as PackedScene).instantiate()
+	_scene = (load(SOURCE_GLB) as PackedScene).instantiate()
 	var source: MeshLibrary = load(SOURCE)
 	var kit := MeshLibrary.new()
 	for id in source.get_item_list():

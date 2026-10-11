@@ -1,4 +1,4 @@
-# Arma assets/epiphany/objetos.blend: props del overworld e interactivos (cofres, llaves, pickups, proyectiles).
+# Publica assets/epiphany/objetos.glb (epi.publish; el .blend de trabajo en art/blender/): props del overworld e interactivos (cofres, llaves, pickups, proyectiles).
 # El frente mira a -Y (hacia la cámara en Godot). Origen en la base, salvo las tapas de los cofres: en la bisagra.
 # blender -b -P tools/blender/build_objetos.py
 import math
@@ -380,4 +380,4 @@ piece("orbe", 21, orbe)
 piece("explosion", 22, explosion)
 
 epi.layout(kit, columns=6, spacing=2.0)
-epi.save("objetos")
+epi.publish("objetos")

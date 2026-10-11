@@ -1,4 +1,4 @@
-# Arma assets/epiphany/naturaleza.blend: vegetación y rocas del altiplano. Origen en la base, sin piso.
+# Publica assets/epiphany/naturaleza.glb (epi.publish; el .blend de trabajo en art/blender/): vegetación y rocas del altiplano. Origen en la base, sin piso.
 # blender -b -P tools/blender/build_naturaleza.py
 import math
 import os
@@ -224,4 +224,4 @@ piece("yareta", 17, yareta)
 piece("flores", 18, flores)
 piece("hongos", 19, hongos)
 epi.layout(kit, columns=6, spacing=3.5)
-epi.save("naturaleza")
+epi.publish("naturaleza", material="outdoor", materials={n: "wind" for n in ("quenoa_grande", "quenoa_chica", "ichu_mata", "ichu_cortado", "tola", "flores")})

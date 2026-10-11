@@ -5,7 +5,7 @@ extends SceneTree
 
 const SOURCE := "res://data/kits/gray_kit.tres"
 const OUTPUT := "res://data/kits/overworld_kit.tres"
-const BLEND := "res://assets/epiphany/%s.blend"
+const GLB := "res://assets/epiphany/%s.glb"
 const MATERIAL := preload("res://data/kits/materials/epiphany_outdoor.tres")
 ## Las paredes que pueden tapar al player: se recortan alrededor de él.
 const WALL_MATERIAL := preload("res://data/kits/materials/epiphany_wall.tres")
@@ -121,7 +121,7 @@ func _initialize() -> void:
 func _piece(path: String) -> Mesh:
 	var parts := path.split("/")
 	if not _scenes.has(parts[0]):
-		_scenes[parts[0]] = (load(BLEND % parts[0]) as PackedScene).instantiate()
+		_scenes[parts[0]] = (load(GLB % parts[0]) as PackedScene).instantiate()
 	var node := (_scenes[parts[0]] as Node).find_child(parts[1], true, false) as MeshInstance3D
 	assert(node != null, "falta la pieza " + path)
 	return HIDDEN_FACES.strip(node.mesh) if path in STRIPPED else node.mesh
