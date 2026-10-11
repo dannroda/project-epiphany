@@ -40,7 +40,7 @@ func test_two_slots_do_not_overwrite_each_other() -> void:
 	assert_eq(saves.current_slot, 1, "cargar elige la ranura")
 	assert_eq(state.inventory.has(&"bomb_bag"), true)
 	assert_eq(saves.latest_slot(), 2, "la más reciente")
-	assert_eq(saves.slot_summary(1).location, "Claro del inicio", "guarda la ubicación")
+	assert_eq(saves.slot_summary(1).location, "PLACE_FIRST_CLEARING", "guarda la ubicación")
 	_teardown()
 
 

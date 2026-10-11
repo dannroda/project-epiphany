@@ -42,10 +42,10 @@ func show_summary(data: Dictionary) -> void:
 	if not data.is_empty():
 		for i in int(data.max_health) / 4:
 			hearts.add_child(HeartIcon.create(4, heart_size))
-		location.text = data.location if not String(data.location).is_empty() else "—"
+		location.text = place_text(data.location)
 		time.text = format_time(data.play_time)
 		if origin:
-			origin.text = "de la partida %d" % data.origin
+			origin.text = tr("FILE_AUTO_ORIGIN").format({slot = data.origin})
 	if items == null:
 		_paint()
 		return
@@ -56,6 +56,13 @@ func show_summary(data: Dictionary) -> void:
 		icon.texture = item.icon if item else null
 		icon.visible = item != null
 	_paint()
+
+
+## La ubicación se guarda como claves PLACE_* unidas con " · "; las partidas viejas traen el texto ya armado.
+func place_text(location: String) -> String:
+	if location.is_empty():
+		return "—"
+	return " · ".join(Array(location.split(" · ")).map(func(part: String) -> String: return tr(part)))
 
 
 static func format_time(seconds: float) -> String:

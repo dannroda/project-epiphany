@@ -7,8 +7,7 @@
 [resource]
 script = ExtResource("2_nip8s")
 id = &"boss_key"
-display_name = "Llave del jefe"
-article = "la"
-description = "Abre la puerta del guardián de la mazmorra."
+display_name = "ITEM_BOSS_KEY_NAME"
+description = "ITEM_BOSS_KEY_DESC"
 icon = ExtResource("1_nip8s")
 category = 5

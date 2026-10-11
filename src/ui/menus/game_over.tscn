@@ -52,7 +52,7 @@ offset_top = 250.0
 offset_bottom = 350.0
 grow_horizontal = 2
 theme_type_variation = &"GameOverTitle"
-text = "CAÍSTE"
+text = "GAMEOVER_TITLE"
 horizontal_alignment = 1
 
 [node name="Menu" type="VBoxContainer" parent="."]
@@ -70,24 +70,24 @@ theme_override_constants/separation = 6
 [node name="Continue" parent="Menu" instance=ExtResource("4_item")]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Continuar"
+text = "COMMON_CONTINUE"
 
 [node name="Where" type="Label" parent="Menu"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"Caption"
-text = "Desde la entrada de la sala"
+text = "GAMEOVER_FROM_ROOM"
 horizontal_alignment = 1
 
 [node name="SaveAndQuit" parent="Menu" instance=ExtResource("4_item")]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Guardar y salir"
+text = "GAMEOVER_SAVE_QUIT"
 
 [node name="Quit" parent="Menu" instance=ExtResource("4_item")]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Salir sin guardar"
+text = "GAMEOVER_QUIT"
 
 [node name="Hints" type="HBoxContainer" parent="."]
 unique_name_in_owner = true

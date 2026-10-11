@@ -1,6 +1,7 @@
 extends Control
 ## Pestaña Ítems: ítems secundarios para asignar a X/Y (item_1/item_2), objetos de la mazmorra y detalle.
 
+const MapData := preload("res://src/ui/menus/map_data.gd")
 const COLUMNS := 4
 const SLOT_COUNT := 12
 const BUTTON_ACTIONS: Array[StringName] = [&"item_1", &"item_2"]
@@ -31,6 +32,11 @@ func _ready() -> void:
 	GameState.loaded.connect(_queue_refresh)
 	InputDevice.input_device_changed.connect(func(_d: int) -> void: _queue_refresh())
 	_refresh()
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
+		_queue_refresh()
 
 
 func focus_default() -> void:
@@ -106,14 +112,15 @@ func _refresh_dungeon() -> void:
 	dungeon_box.visible = GameState.current_dungeon != &""
 	if not dungeon_box.visible:
 		return
-	dungeon_title.text = String(GameState.current_dungeon).replace("_", " ").to_upper()
+	var dungeon_node := MapData.find(get_tree(), Dungeon) as Dungeon
+	dungeon_title.text = tr(dungeon_node.display_name).to_upper() if dungeon_node else ""
 	for child in chips.get_children():
 		child.queue_free()
 	var dungeon := GameState.current_dungeon_state()
-	_chip(&"small_key", "Llaves ×%d" % dungeon.small_keys, dungeon.small_keys > 0)
-	_chip(&"dungeon_map", "Mapa", dungeon.has_map)
-	_chip(&"compass", "Brújula", dungeon.has_compass)
-	_chip(&"boss_key", "Llave del jefe" if dungeon.has_boss_key else "Llave del jefe: no", dungeon.has_boss_key)
+	_chip(&"small_key", tr("ITEMS_SMALL_KEYS").format({count = dungeon.small_keys}), dungeon.small_keys > 0)
+	_chip(&"dungeon_map", "ITEMS_MAP", dungeon.has_map)
+	_chip(&"compass", "ITEMS_COMPASS", dungeon.has_compass)
+	_chip(&"boss_key", "ITEMS_BOSS_KEY" if dungeon.has_boss_key else "ITEMS_BOSS_KEY_NO", dungeon.has_boss_key)
 
 
 func _chip(item_id: StringName, text: String, owned: bool) -> void:
@@ -129,9 +136,9 @@ func _show_detail(slot: Button) -> void:
 		child.queue_free()
 	var item: ItemData = _slots.get(slot)
 	if item == null or not GameState.inventory.has(item.id):
-		detail.show_item(LOCK, "Sin descubrir", "", "Todavía no encontraste este ítem.")
+		detail.show_item(LOCK, "ITEMS_UNDISCOVERED", "", "ITEMS_UNDISCOVERED_DESC")
 		return
-	detail.show_item(item.icon, item.display_name, "Ítem", item.description)
+	detail.show_item(item.icon, item.display_name, "ITEMS_KIND", item.description)
 	var ammo := _ammo(item)
 	if ammo:
 		detail.add_stat(ammo.display_name, "%d / %d" % [GameState.inventory.count(ammo.id), GameState.inventory.capacity(ammo.id)])
@@ -141,7 +148,7 @@ func _show_detail(slot: Button) -> void:
 
 func _assign_button(index: int, assigned: bool) -> Button:
 	var button: Button = ASSIGN_BUTTON.instantiate()
-	button.text = ("Asignado a %s" if assigned else "Asignar a %s") % BUTTON_NAMES[index]
+	button.text = tr("ITEMS_ASSIGNED" if assigned else "ITEMS_ASSIGN").format({button = BUTTON_NAMES[index]})
 	button.icon = InputPrompts.icon_for_current(BUTTON_ACTIONS[index])
 	button.theme_type_variation = &"AssignButtonActive" if assigned else &"AssignButton"
 	button.pressed.connect(_assign_focused.bind(index))

@@ -1,6 +1,9 @@
 extends Control
 ## Pantalla de título (mockup Main): Continuar, Cargar partida, Nueva partida, Opciones, Salir; en debug, cargar un escenario.
+## La primera vez que se abre el juego, antes pide el idioma (mockup Language).
 ## Es el estado raíz de la máquina de UI: todo lo que abre pasa por `MenuStack`.
+
+const LANGUAGE_SELECT := preload("res://src/ui/title/language_select.gd")
 
 @onready var continue_item: Button = %Continue
 @onready var load_item: Button = %Load
@@ -13,7 +16,7 @@ extends Control
 func _ready() -> void:
 	MenuStack.set_base(self)
 	%Version.text = BuildInfo.label()
-	%Hints.hints = [[&"ui_accept", "Aceptar"], [&"ui_cancel", "Volver"]]
+	%Hints.hints = [[&"ui_accept", "HINT_ACCEPT"], [&"ui_cancel", "HINT_BACK"]]
 	debug_scenarios.visible = OS.is_debug_build()
 	continue_item.pressed.connect(func() -> void: _go(SaveManager.load_game.bind(SaveManager.latest_slot())))
 	load_item.pressed.connect(open_file_select.bind(FileSelect.Mode.PLAY))
@@ -25,7 +28,10 @@ func _ready() -> void:
 			_go(SaveManager.load_scenario.bind(scenario))))
 	visibility_changed.connect(_refresh)
 	_refresh()
-	focus_default.call_deferred()
+	if Settings.has_language():
+		focus_default.call_deferred()
+	else:
+		LANGUAGE_SELECT.open()
 
 
 func focus_default() -> void:

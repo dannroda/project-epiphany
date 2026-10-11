@@ -26,7 +26,7 @@ func test_read_tablets_and_keep_read_flag() -> void:
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	var lore: Tablet = tree.current_scene.get_node(^"TabletLore")
 	var hint: Tablet = tree.current_scene.get_node(^"TabletHint")
-	assert_eq(lore.interactable.prompt, "Leer")
+	assert_eq(lore.interactable.prompt, "PROMPT_READ")
 
 	lore.interactable.interact(player)
 	var box := stack.top() as TextBox

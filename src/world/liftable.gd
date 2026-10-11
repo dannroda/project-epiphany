@@ -15,7 +15,7 @@ var target: Node3D
 
 func _init() -> void:
 	super()
-	prompt = "Levantar"
+	prompt = "PROMPT_LIFT"
 
 
 func _ready() -> void:

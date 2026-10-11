@@ -1,7 +1,7 @@
 extends Control
 ## Pestaña Sistema de la pausa: las opciones y Guardar y salir al título.
 
-var accept_label := "Cambiar"
+var accept_label := "HINT_CHANGE"
 
 @onready var panel: OptionsPanel = %OptionsPanel
 

@@ -42,7 +42,7 @@ theme_override_constants/separation = 18
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
-text = "¿Borrar la partida 1? No se puede deshacer."
+text = ""
 horizontal_alignment = 1
 
 [node name="Row" type="HBoxContainer" parent="Center/Panel/Box"]
@@ -53,9 +53,9 @@ alignment = 1
 [node name="No" parent="Center/Panel/Box/Row" instance=ExtResource("2_item")]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Cancelar"
+text = "HINT_CANCEL"
 
 [node name="Yes" parent="Center/Panel/Box/Row" instance=ExtResource("2_item")]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Borrar"
+text = "COMMON_YES"

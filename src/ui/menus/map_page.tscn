@@ -102,7 +102,7 @@ kind = 4
 [node name="Label" type="Label" parent="MapCard/DoorLegendBox/Margin/DoorLegend/Door1"]
 layout_mode = 2
 theme_type_variation = &"HintSmall"
-text = "Puerta"
+text = "MAP_LEGEND_DOOR"
 
 [node name="Door2" type="HBoxContainer" parent="MapCard/DoorLegendBox/Margin/DoorLegend"]
 layout_mode = 2
@@ -118,7 +118,7 @@ kind = 5
 [node name="Label" type="Label" parent="MapCard/DoorLegendBox/Margin/DoorLegend/Door2"]
 layout_mode = 2
 theme_type_variation = &"HintSmall"
-text = "Con llave"
+text = "MAP_LEGEND_LOCKED"
 
 [node name="Door3" type="HBoxContainer" parent="MapCard/DoorLegendBox/Margin/DoorLegend"]
 layout_mode = 2
@@ -134,7 +134,7 @@ kind = 6
 [node name="Label" type="Label" parent="MapCard/DoorLegendBox/Margin/DoorLegend/Door3"]
 layout_mode = 2
 theme_type_variation = &"HintSmall"
-text = "Puerta del jefe"
+text = "MAP_LEGEND_BOSS_DOOR"
 
 [node name="Door4" type="HBoxContainer" parent="MapCard/DoorLegendBox/Margin/DoorLegend"]
 layout_mode = 2
@@ -150,7 +150,7 @@ kind = 7
 [node name="Label" type="Label" parent="MapCard/DoorLegendBox/Margin/DoorLegend/Door4"]
 layout_mode = 2
 theme_type_variation = &"HintSmall"
-text = "Sellada"
+text = "MAP_LEGEND_SEALED"
 
 [node name="Overworld" type="Control" parent="MapCard"]
 unique_name_in_owner = true
@@ -289,7 +289,7 @@ style = SubResource("LegendVisited")
 [node name="Label" type="Label" parent="Info/Legend/Entry1"]
 layout_mode = 2
 theme_type_variation = &"Legend"
-text = "Visitada"
+text = "MAP_LEGEND_VISITED"
 
 [node name="Entry2" type="HBoxContainer" parent="Info/Legend"]
 layout_mode = 2
@@ -306,7 +306,7 @@ style = SubResource("LegendMapped")
 [node name="Label" type="Label" parent="Info/Legend/Entry2"]
 layout_mode = 2
 theme_type_variation = &"Legend"
-text = "Sin visitar (mapa)"
+text = "MAP_LEGEND_MAPPED"
 
 [node name="Entry3" type="HBoxContainer" parent="Info/Legend"]
 layout_mode = 2
@@ -322,7 +322,7 @@ kind = 2
 [node name="Label" type="Label" parent="Info/Legend/Entry3"]
 layout_mode = 2
 theme_type_variation = &"Legend"
-text = "Estás acá"
+text = "MAP_LEGEND_HERE"
 
 [node name="Entry4" type="HBoxContainer" parent="Info/Legend"]
 layout_mode = 2
@@ -338,7 +338,7 @@ kind = 3
 [node name="Label" type="Label" parent="Info/Legend/Entry4"]
 layout_mode = 2
 theme_type_variation = &"Legend"
-text = "Cofre (brújula)"
+text = "MAP_LEGEND_CHEST_COMPASS"
 
 [node name="Entry5" type="HBoxContainer" parent="Info/Legend"]
 layout_mode = 2
@@ -354,7 +354,7 @@ kind = 4
 [node name="Label" type="Label" parent="Info/Legend/Entry5"]
 layout_mode = 2
 theme_type_variation = &"Legend"
-text = "Jefe"
+text = "MAP_LEGEND_BOSS"
 
 [node name="OverworldLegend" type="VBoxContainer" parent="Info"]
 unique_name_in_owner = true
@@ -375,7 +375,7 @@ kind = 5
 [node name="Label" type="Label" parent="Info/OverworldLegend/Entry1"]
 layout_mode = 2
 theme_type_variation = &"Legend"
-text = "Sin explorar"
+text = "MAP_UNEXPLORED"
 
 [node name="Entry2" type="HBoxContainer" parent="Info/OverworldLegend"]
 layout_mode = 2
@@ -391,7 +391,7 @@ kind = 2
 [node name="Label" type="Label" parent="Info/OverworldLegend/Entry2"]
 layout_mode = 2
 theme_type_variation = &"Legend"
-text = "Estás acá"
+text = "MAP_LEGEND_HERE"
 
 [node name="Entry3" type="HBoxContainer" parent="Info/OverworldLegend"]
 layout_mode = 2
@@ -407,7 +407,7 @@ kind = 6
 [node name="Label" type="Label" parent="Info/OverworldLegend/Entry3"]
 layout_mode = 2
 theme_type_variation = &"Legend"
-text = "Entrada"
+text = "MAP_LEGEND_ENTRANCE"
 
 [node name="Entry4" type="HBoxContainer" parent="Info/OverworldLegend"]
 layout_mode = 2
@@ -423,7 +423,7 @@ kind = 7
 [node name="Label" type="Label" parent="Info/OverworldLegend/Entry4"]
 layout_mode = 2
 theme_type_variation = &"Legend"
-text = "Cofre abierto"
+text = "MAP_LEGEND_CHEST_OPEN"
 
 [node name="Entry5" type="HBoxContainer" parent="Info/OverworldLegend"]
 layout_mode = 2
@@ -439,7 +439,7 @@ kind = 8
 [node name="Label" type="Label" parent="Info/OverworldLegend/Entry5"]
 layout_mode = 2
 theme_type_variation = &"Legend"
-text = "Tablilla leída"
+text = "MAP_LEGEND_TABLET"
 
 [node name="Entry6" type="HBoxContainer" parent="Info/OverworldLegend"]
 layout_mode = 2
@@ -456,4 +456,4 @@ kind = 9
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"Legend"
-text = "Pin"
+text = "MAP_LEGEND_PIN"

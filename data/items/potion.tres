@@ -14,9 +14,8 @@ leaves = ExtResource("4_bottle")
 [resource]
 script = ExtResource("3_53lbm")
 id = &"potion"
-display_name = "Poción"
-article = "una"
-description = "Recupera toda la vida. Deja la botella vacía."
+display_name = "ITEM_POTION_NAME"
+description = "ITEM_POTION_DESC"
 icon = ExtResource("2_53lbm")
 category = 3
 behavior = SubResource("Resource_3oiyh")

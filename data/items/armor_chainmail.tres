@@ -8,9 +8,8 @@
 [resource]
 script = ExtResource("2_bekmn")
 id = &"armor_chainmail"
-display_name = "Cota reforzada"
-article = "la"
-description = "Placas doradas sobre una cota de anillos. Reduce el daño que recibís."
+display_name = "ITEM_ARMOR_CHAINMAIL_NAME"
+description = "ITEM_ARMOR_CHAINMAIL_DESC"
 icon = ExtResource("1_bekmn")
 category = 2
 damage_reduction = 0.25

@@ -1,0 +1,851 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Project Epiphany\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# Opciones e idioma
+msgid "OPTIONS_CONTROLS"
+msgstr "Controls"
+
+msgid "OPTIONS_LOCK"
+msgstr "Target lock"
+
+msgid "OPTIONS_LOCK_HOLD"
+msgstr "Hold"
+
+msgid "OPTIONS_LOCK_TOGGLE"
+msgstr "Toggle"
+
+msgid "OPTIONS_MOUSE_AIM"
+msgstr "Aim with the mouse"
+
+msgid "OPTIONS_STICK_SENSITIVITY"
+msgstr "Right stick sensitivity"
+
+msgid "OPTIONS_FLICK"
+msgstr "Flick to switch targets"
+
+msgid "OPTIONS_VIBRATION"
+msgstr "Vibration"
+
+msgid "OPTIONS_LANGUAGE_SECTION"
+msgstr "Language"
+
+msgid "OPTIONS_LANGUAGE"
+msgstr "Game language"
+
+msgid "OPTIONS_AUDIO"
+msgstr "Audio"
+
+msgid "OPTIONS_MUSIC"
+msgstr "Music"
+
+msgid "OPTIONS_SFX"
+msgstr "Effects"
+
+msgid "OPTIONS_AMBIENCE"
+msgstr "Ambience"
+
+msgid "OPTIONS_VIDEO"
+msgstr "Video"
+
+msgid "OPTIONS_FULLSCREEN"
+msgstr "Fullscreen"
+
+msgid "OPTIONS_SHAKE"
+msgstr "Camera shake"
+
+msgid "OPTIONS_MINIMAP"
+msgstr "Minimap"
+
+msgid "OPTIONS_UI_SCALE"
+msgstr "Interface scale"
+
+msgid "LANGUAGE_NOTE"
+msgstr "You can change it later in Options."
+
+# Título, partidas, HUD, caja de texto, game over, final
+msgid "HINT_ACCEPT"
+msgstr "Accept"
+
+msgid "HINT_BACK"
+msgstr "Back"
+
+msgid "HINT_CANCEL"
+msgstr "Cancel"
+
+msgid "HINT_CLOSE"
+msgstr "Close"
+
+msgid "HINT_CHANGE"
+msgstr "Change"
+
+msgid "HINT_USE"
+msgstr "Use"
+
+msgid "COMMON_YES"
+msgstr "Yes"
+
+msgid "COMMON_NO"
+msgstr "No"
+
+msgid "COMMON_CONTINUE"
+msgstr "Continue"
+
+msgid "TITLE_LOAD"
+msgstr "Load game"
+
+msgid "TITLE_NEW_GAME"
+msgstr "New game"
+
+msgid "TITLE_OPTIONS"
+msgstr "Options"
+
+msgid "TITLE_QUIT"
+msgstr "Quit"
+
+msgid "TITLE_DEBUG_SCENARIOS"
+msgstr "DEBUG · Load scenario…"
+
+msgid "TITLE_SCENARIOS"
+msgstr "Load scenario"
+
+msgid "FILE_HEADING_PLAY"
+msgstr "Choose a file"
+
+msgid "FILE_HEADING_NEW"
+msgstr "Where do you want to start?"
+
+msgid "FILE_HEADING_COPY_FROM"
+msgstr "Which file do you want to copy?"
+
+msgid "FILE_HEADING_COPY_TO"
+msgstr "Copy it to which slot?"
+
+msgid "FILE_HEADING_DELETE"
+msgstr "Which file do you want to delete?"
+
+msgid "FILE_COPY"
+msgstr "Copy"
+
+msgid "FILE_DELETE"
+msgstr "Delete"
+
+msgid "FILE_HINT_PLAY"
+msgstr "Play"
+
+msgid "FILE_HINT_START"
+msgstr "Start"
+
+msgid "FILE_HINT_CHOOSE"
+msgstr "Choose"
+
+msgid "FILE_NEW_GAME"
+msgstr "New game"
+
+msgid "FILE_AUTO_EMPTY"
+msgstr "No autosave yet"
+
+msgid "FILE_AUTO_ORIGIN"
+msgstr "from file {slot}"
+
+msgid "FILE_CONFIRM_OVERWRITE"
+msgstr "Start over in file {slot}? Its saved progress will be lost."
+
+msgid "FILE_OVERWRITE"
+msgstr "Overwrite"
+
+msgid "FILE_CONFIRM_REPLACE"
+msgstr "Replace file {slot} with file {from}?"
+
+msgid "FILE_CONFIRM_REPLACE_AUTO"
+msgstr "Replace file {slot} with the autosave?"
+
+msgid "FILE_REPLACE"
+msgstr "Replace"
+
+msgid "FILE_CONFIRM_DELETE"
+msgstr "Delete file {slot}? This can't be undone."
+
+msgid "FILE_CONFIRM_DELETE_AUTO"
+msgstr "Delete the autosave? This can't be undone."
+
+msgid "GAMEOVER_TITLE"
+msgstr "YOU FELL"
+
+msgid "GAMEOVER_FROM_ROOM"
+msgstr "From the room entrance"
+
+msgid "GAMEOVER_FROM_CHECKPOINT"
+msgstr "From the last checkpoint"
+
+msgid "GAMEOVER_SAVE_QUIT"
+msgstr "Save and quit"
+
+msgid "GAMEOVER_QUIT"
+msgstr "Quit without saving"
+
+msgid "ENDING_TITLE"
+msgstr "THE END"
+
+msgid "ENDING_SUBTITLE"
+msgstr "The Ancient Eye sleeps once more"
+
+msgid "ENDING_CREDITS"
+msgstr "Project Epiphany · a game by Daniel Rodriguez Aires\nMade with Godot, LimboAI and Dialogue Manager\nCharacters and animations: KayKit · Sounds: Kenney\nThanks for playing"
+
+msgid "ENDING_KEEP_PLAYING"
+msgstr "Keep exploring"
+
+msgid "ENDING_TO_TITLE"
+msgstr "Save and return to title"
+
+msgid "SYSTEM_SAVE_QUIT"
+msgstr "Save and quit to title"
+
+msgid "PAUSE_HINT_TAB"
+msgstr "Tab"
+
+msgid "HUD_BOSS_PHASE"
+msgstr "Phase {phase}"
+
+msgid "HUD_SAVED"
+msgstr "Saved"
+
+# Pausa: Equipo, Ítems, Mapa
+msgid "EQUIP_CATEGORY_SWORD"
+msgstr "Sword"
+
+msgid "EQUIP_CATEGORY_SHIELD"
+msgstr "Shield"
+
+msgid "EQUIP_CATEGORY_ARMOR"
+msgstr "Armor"
+
+msgid "EQUIP_TITLE_SWORD"
+msgstr "SWORD"
+
+msgid "EQUIP_TITLE_SHIELD"
+msgstr "SHIELD"
+
+msgid "EQUIP_TITLE_ARMOR"
+msgstr "ARMOR"
+
+msgid "EQUIP_ACCEPT"
+msgstr "Equip"
+
+msgid "EQUIP_BADGE"
+msgstr "E"
+
+msgid "EQUIP_UNDISCOVERED"
+msgstr "Undiscovered"
+
+msgid "EQUIP_UNDISCOVERED_DESC"
+msgstr "You haven't found this gear yet."
+
+msgid "EQUIP_KIND_EQUIPPED"
+msgstr "{category} · equipped"
+
+msgid "EQUIP_STAT_DAMAGE"
+msgstr "Damage"
+
+msgid "EQUIP_STAT_BLOCK"
+msgstr "Block"
+
+msgid "EQUIP_BLOCK_FRONTAL"
+msgstr "Front ±60°"
+
+msgid "EQUIP_STAT_REFLECTS"
+msgstr "Reflects"
+
+msgid "EQUIP_REFLECTS_PROJECTILES"
+msgstr "Projectiles and light"
+
+msgid "EQUIP_STAT_REDUCTION"
+msgstr "Damage reduction"
+
+msgid "EQUIP_HEART_PIECES"
+msgstr "Heart pieces"
+
+msgid "EQUIP_HEARTS_ONE"
+msgstr "1 heart"
+
+msgid "EQUIP_HEARTS_QUARTER"
+msgstr "¼ heart"
+
+msgid "EQUIP_HEARTS_HALF"
+msgstr "½ heart"
+
+msgid "EQUIP_HEARTS_THREE_QUARTERS"
+msgstr "¾ heart"
+
+msgid "EQUIP_HEARTS"
+msgstr "{hearts} hearts"
+
+msgid "ITEMS_SMALL_KEYS"
+msgstr "Keys ×{count}"
+
+msgid "ITEMS_MAP"
+msgstr "Map"
+
+msgid "ITEMS_COMPASS"
+msgstr "Compass"
+
+msgid "ITEMS_BOSS_KEY"
+msgstr "Boss key"
+
+msgid "ITEMS_BOSS_KEY_NO"
+msgstr "Boss key: no"
+
+msgid "ITEMS_UNDISCOVERED"
+msgstr "Undiscovered"
+
+msgid "ITEMS_UNDISCOVERED_DESC"
+msgstr "You haven't found this item yet."
+
+msgid "ITEMS_KIND"
+msgstr "Item"
+
+msgid "ITEMS_ASSIGNED"
+msgstr "Assigned to {button}"
+
+msgid "ITEMS_ASSIGN"
+msgstr "Assign to {button}"
+
+msgid "MAP_TITLE_DUNGEON"
+msgstr "Dungeon"
+
+msgid "MAP_TITLE_OVERWORLD"
+msgstr "Overworld"
+
+msgid "MAP_STAT_MAP"
+msgstr "Map"
+
+msgid "MAP_STAT_COMPASS"
+msgstr "Compass"
+
+msgid "MAP_STAT_BOSS_KEY"
+msgstr "Boss key"
+
+msgid "MAP_STAT_SMALL_KEYS"
+msgstr "Small keys"
+
+msgid "MAP_OBTAINED_MAP"
+msgstr "Found"
+
+msgid "MAP_OBTAINED_COMPASS"
+msgstr "Found"
+
+msgid "MAP_NOT_VISITED"
+msgstr "Not visited"
+
+msgid "MAP_BOSS"
+msgstr "The boss"
+
+msgid "MAP_CHESTS_CLOSED"
+msgid_plural "MAP_CHESTS_CLOSED_PLURAL"
+msgstr[0] "{count} unopened chest"
+msgstr[1] "{count} unopened chests"
+
+msgid "MAP_NOTHING_PENDING"
+msgstr "Nothing left in sight"
+
+msgid "MAP_ZONES_EXPLORED"
+msgstr "{done} of {total} areas explored"
+
+msgid "MAP_UNEXPLORED"
+msgstr "Unexplored"
+
+msgid "MAP_CHESTS"
+msgstr "Chests"
+
+msgid "MAP_TABLETS_READ"
+msgstr "Tablets read"
+
+msgid "MAP_HEART_PIECES"
+msgstr "Heart pieces"
+
+msgid "MAP_COUNT"
+msgstr "{done} of {total}"
+
+msgid "MAP_NOTHING_HIDDEN"
+msgstr "Nothing hidden here"
+
+msgid "MAP_PINS"
+msgstr "Pins ({count} of {max})"
+
+msgid "MAP_HINT_PIN"
+msgstr "Place or remove pin"
+
+msgid "MAP_HINT_MOVE"
+msgstr "Move cursor"
+
+msgid "MAP_HINT_ZOOM_IN"
+msgstr "Zoom in"
+
+msgid "MAP_HINT_ZOOM_OUT"
+msgstr "Zoom out"
+
+msgid "MAP_LEGEND_DOOR"
+msgstr "Door"
+
+msgid "MAP_LEGEND_LOCKED"
+msgstr "Locked"
+
+msgid "MAP_LEGEND_BOSS_DOOR"
+msgstr "Boss door"
+
+msgid "MAP_LEGEND_SEALED"
+msgstr "Sealed"
+
+msgid "MAP_LEGEND_VISITED"
+msgstr "Visited"
+
+msgid "MAP_LEGEND_MAPPED"
+msgstr "Not visited (map)"
+
+msgid "MAP_LEGEND_HERE"
+msgstr "You are here"
+
+msgid "MAP_LEGEND_CHEST_COMPASS"
+msgstr "Chest (compass)"
+
+msgid "MAP_LEGEND_BOSS"
+msgstr "Boss"
+
+msgid "MAP_LEGEND_ENTRANCE"
+msgstr "Entrance"
+
+msgid "MAP_LEGEND_CHEST_OPEN"
+msgstr "Opened chest"
+
+msgid "MAP_LEGEND_TABLET"
+msgstr "Tablet read"
+
+msgid "MAP_LEGEND_PIN"
+msgstr "Pin"
+
+msgid "PAUSE_TAB_EQUIPMENT"
+msgstr "Gear"
+
+msgid "PAUSE_TAB_ITEMS"
+msgstr "Items"
+
+msgid "PAUSE_TAB_MAP"
+msgstr "Map"
+
+msgid "PAUSE_TAB_SYSTEM"
+msgstr "System"
+
+# Ítems, lugares, prompts, jefe; diálogos (msgctxt = ID de la línea; msgid = texto en español del .dialogue)
+msgid "ITEMGET_GOT_COUNT"
+msgstr "You got {count} {item}!"
+
+msgid "ITEM_ARMOR_CHAINMAIL_NAME"
+msgstr "Reinforced Mail"
+
+msgid "ITEM_ARMOR_CHAINMAIL_DESC"
+msgstr "Gilded plates over a ring-mail coat. Reduces the damage you take."
+
+msgid "ITEM_ARMOR_CHAINMAIL_GOT"
+msgstr "You got the Reinforced Mail!"
+
+msgid "ITEM_ARROW_NAME"
+msgstr "Arrows"
+
+msgid "ITEM_ARROW_DESC"
+msgstr "Ammunition for the bow."
+
+msgid "ITEM_ARROW_GOT"
+msgstr "You got Arrows!"
+
+msgid "ITEM_BOMB_BAG_NAME"
+msgstr "Bomb Bag"
+
+msgid "ITEM_BOMB_BAG_DESC"
+msgstr "Tap the button to set a bomb down in front of you; hold it to pick the bomb up, aim and throw it. Breaks cracked walls and pushes away whatever is nearby."
+
+msgid "ITEM_BOMB_BAG_GOT"
+msgstr "You got the Bomb Bag!"
+
+msgid "ITEM_BOMB_NAME"
+msgstr "Bombs"
+
+msgid "ITEM_BOMB_DESC"
+msgstr "Ammunition for the bomb bag."
+
+msgid "ITEM_BOMB_GOT"
+msgstr "You got Bombs!"
+
+msgid "ITEM_BOSS_KEY_NAME"
+msgstr "Boss Key"
+
+msgid "ITEM_BOSS_KEY_DESC"
+msgstr "Opens the door to the dungeon's guardian."
+
+msgid "ITEM_BOSS_KEY_GOT"
+msgstr "You got the Boss Key!"
+
+msgid "ITEM_BOTTLE_EMPTY_NAME"
+msgstr "Empty Bottle"
+
+msgid "ITEM_BOTTLE_EMPTY_DESC"
+msgstr "An empty bottle. It can be filled again."
+
+msgid "ITEM_BOTTLE_EMPTY_GOT"
+msgstr "You got an Empty Bottle!"
+
+msgid "ITEM_BOW_NAME"
+msgstr "Bow"
+
+msgid "ITEM_BOW_DESC"
+msgstr "Shoots arrows wherever you aim: right stick, mouse or your locked-on target. Reaches distant switches."
+
+msgid "ITEM_BOW_GOT"
+msgstr "You got the Bow!"
+
+msgid "ITEM_COMPASS_NAME"
+msgstr "Compass"
+
+msgid "ITEM_COMPASS_DESC"
+msgstr "Marks the chests and the guardian's chamber on the map."
+
+msgid "ITEM_COMPASS_GOT"
+msgstr "You got the Compass!"
+
+msgid "ITEM_DUNGEON_MAP_NAME"
+msgstr "Dungeon Map"
+
+msgid "ITEM_DUNGEON_MAP_DESC"
+msgstr "Shows every room in the dungeon."
+
+msgid "ITEM_DUNGEON_MAP_GOT"
+msgstr "You got the Dungeon Map!"
+
+msgid "ITEM_HEART_CONTAINER_NAME"
+msgstr "Heart Container"
+
+msgid "ITEM_HEART_CONTAINER_DESC"
+msgstr "Adds a heart to your maximum health."
+
+msgid "ITEM_HEART_CONTAINER_GOT"
+msgstr "You got a Heart Container!"
+
+msgid "ITEM_HEART_PIECE_NAME"
+msgstr "Piece of Heart"
+
+msgid "ITEM_HEART_PIECE_DESC"
+msgstr "Collect four and your maximum health grows by one heart."
+
+msgid "ITEM_HEART_PIECE_GOT"
+msgstr "You got a Piece of Heart!"
+
+msgid "ITEM_POTION_NAME"
+msgstr "Potion"
+
+msgid "ITEM_POTION_DESC"
+msgstr "Restores all your health. Leaves the bottle empty."
+
+msgid "ITEM_POTION_GOT"
+msgstr "You got a Potion!"
+
+msgid "ITEM_QUIVER_BIG_NAME"
+msgstr "Big Quiver"
+
+msgid "ITEM_QUIVER_BIG_DESC"
+msgstr "Lets you carry more arrows."
+
+msgid "ITEM_QUIVER_BIG_GOT"
+msgstr "You got the Big Quiver!"
+
+msgid "ITEM_SHIELD_MIRROR_NAME"
+msgstr "Mirror Shield"
+
+msgid "ITEM_SHIELD_MIRROR_DESC"
+msgstr "Blocks blows from the front. Reflects projectiles and beams of light wherever you face or at your locked-on target."
+
+msgid "ITEM_SHIELD_MIRROR_GOT"
+msgstr "You got the Mirror Shield!"
+
+msgid "ITEM_SHIELD_WOOD_NAME"
+msgstr "Wooden Shield"
+
+msgid "ITEM_SHIELD_WOOD_DESC"
+msgstr "Blocks blows coming from the front. With your guard up, attacking makes a shield bash that stuns."
+
+msgid "ITEM_SHIELD_WOOD_GOT"
+msgstr "You got the Wooden Shield!"
+
+msgid "ITEM_SMALL_KEY_NAME"
+msgstr "Small Key"
+
+msgid "ITEM_SMALL_KEY_DESC"
+msgstr "Opens a locked door in this dungeon."
+
+msgid "ITEM_SMALL_KEY_GOT"
+msgstr "You got a Small Key!"
+
+msgid "ITEM_SWORD_BASIC_NAME"
+msgstr "Sword"
+
+msgid "ITEM_SWORD_BASIC_DESC"
+msgstr "A simple, trusty one-handed sword. Strikes ahead and pushes back."
+
+msgid "ITEM_SWORD_BASIC_GOT"
+msgstr "You got the Sword!"
+
+msgid "ITEM_TUNIC_NAME"
+msgstr "Tunic"
+
+msgid "ITEM_TUNIC_DESC"
+msgstr "Travelling clothes. Not much protection, but comfortable."
+
+msgid "ITEM_TUNIC_GOT"
+msgstr "You got the Tunic!"
+
+msgid "PLACE_SANCTUARY"
+msgstr "Sanctuary"
+
+msgid "PLACE_TEMPLE_ENTRANCE"
+msgstr "Temple Entrance"
+
+msgid "PLACE_EYE_CRAG"
+msgstr "Eye Crag"
+
+msgid "PLACE_CAVE"
+msgstr "Cave"
+
+msgid "PLACE_MEADOW"
+msgstr "Meadow"
+
+msgid "PLACE_GROVE"
+msgstr "Grove"
+
+msgid "PLACE_HIDDEN_GROTTO"
+msgstr "Hidden Grotto"
+
+msgid "PLACE_FIRST_CLEARING"
+msgstr "First Clearing"
+
+msgid "PLACE_TEMPLE_VALLEY"
+msgstr "Temple Valley"
+
+msgid "PLACE_EYE_TEMPLE"
+msgstr "Temple of the Eye"
+
+msgid "PLACE_VESTIBULE"
+msgstr "Entrance Hall"
+
+msgid "PLACE_CENTRAL_HUB"
+msgstr "Central Hall"
+
+msgid "PLACE_TRAP_GALLERY"
+msgstr "Trap Gallery"
+
+msgid "PLACE_CRACKED_ROOM"
+msgstr "Cracked Chamber"
+
+msgid "PLACE_ARENA"
+msgstr "Arena"
+
+msgid "PLACE_EYES_ROOM"
+msgstr "Chamber of Eyes"
+
+msgid "PLACE_PUZZLE_ROOM"
+msgstr "Puzzle Chamber"
+
+msgid "PLACE_ANTECHAMBER"
+msgstr "Antechamber"
+
+msgid "PLACE_EYE_LAIR"
+msgstr "Lair of the Eye"
+
+msgid "PLACE_FLOOR_1"
+msgstr "Floor 1"
+
+msgid "PROMPT_OPEN"
+msgstr "Open"
+
+msgid "PROMPT_READ"
+msgstr "Read"
+
+msgid "PROMPT_PUSH"
+msgstr "Push"
+
+msgid "PROMPT_LIFT"
+msgstr "Lift"
+
+msgid "BOSS_NAME"
+msgstr "The Ancient Eye"
+
+msgctxt "door_locked_1"
+msgid "Está cerrada con llave."
+msgstr "It's locked."
+
+msgctxt "door_boss_locked_1"
+msgid "Una cerradura enorme. Hace falta una llave especial."
+msgstr "A huge lock. It needs a special key."
+
+msgctxt "get_bow_1"
+msgid "Mantené el botón para tensar y apuntá con el stick izquierdo o el mouse; al soltar, dispara. Si tenés un objetivo fijado, la flecha va directo hacia él."
+msgstr "Hold the button to draw and aim with the left stick or the mouse; let go to shoot. If you have a target locked on, the arrow flies straight at it."
+
+msgctxt "get_heart_piece_1"
+msgid "Una de cuatro. Juntá cuatro piezas y tu vida máxima sube un corazón."
+msgstr "One of four. Collect four pieces and your maximum health grows by one heart."
+
+msgctxt "get_heart_piece_2"
+msgid "Van dos de cuatro."
+msgstr "That's two of four."
+
+msgctxt "get_heart_piece_full"
+msgid "¡Cuatro piezas! Se juntan en un corazón nuevo y tu vida máxima sube."
+msgstr "Four pieces! They come together into a new heart and your maximum health grows."
+
+msgctxt "get_bomb_bag_1"
+msgid "Tocá el botón para dejar una bomba delante tuyo; mantenelo para levantarla, apuntá con el stick izquierdo o el mouse y soltá para tirarla. Rompe muros agrietados y corazas que la espada no atraviesa, y empuja lo que está cerca."
+msgstr "Tap the button to set a bomb down in front of you; hold it to pick the bomb up, aim with the left stick or the mouse and let go to throw it. Breaks cracked walls and armor the sword can't pierce, and pushes away whatever is nearby."
+
+msgctxt "get_shield_mirror_1"
+msgid "Se equipa solo. Bloqueá dentro de un haz de luz y el espejo lo desvía hacia donde mirás; mientras lo atajás, el stick derecho (o el mouse) te gira y el izquierdo te mueve sin perderlo."
+msgstr "It equips itself. Block inside a beam of light and the mirror sends it wherever you face; while you hold it, the right stick (or the mouse) turns you and the left stick moves you without losing it."
+
+msgctxt "ow_start_controls_1"
+msgid "Andá con {btn:move}. Con {btn:dodge} se rueda: así se esquiva lo que no se puede parar."
+msgstr "Walk with {btn:move}. With {btn:dodge} you roll: so is dodged what cannot be stopped."
+
+msgctxt "ow_start_lift_1"
+msgid "Las piedras chicas se levantan con {btn:interact}. Con {btn:interact} o {btn:attack} se arrojan: la placa espera su peso."
+msgstr "Small stones are lifted with {btn:interact}. With {btn:interact} or {btn:attack} they are thrown: the plate awaits their weight."
+
+msgctxt "ow_cave_bombs_1"
+msgid "La piedra herida no cede al acero, ni el hueso que viste coraza."
+msgstr "Wounded stone yields not to steel, nor does bone clad in armor."
+
+msgctxt "ow_cave_bombs_2"
+msgid "Dejá el fuego a sus pies con {item:bomb_bag} y alejate: la grieta hace el resto."
+msgstr "Lay the fire at its feet with {item:bomb_bag} and step away: the crack does the rest."
+
+msgctxt "ow_cave_bombs_3"
+msgid "Quien mantiene {item:bomb_bag} lo sostiene en alto, elige dónde y lo arroja al soltar."
+msgstr "Who holds {item:bomb_bag} raises it high, chooses where, and casts it upon release."
+
+msgctxt "ow_start_controls_2"
+msgid "Con {btn:interact} se leen las piedras como esta, se abren cofres y se habla."
+msgstr "With {btn:interact} stones like this one are read, chests are opened, and words are spoken."
+
+msgctxt "ow_grotto_hint_1"
+msgid "Del otro lado del abismo duerme un ojo de piedra."
+msgstr "Beyond the abyss sleeps an eye of stone."
+
+msgctxt "ow_grotto_hint_2"
+msgid "No lo despierta el acero ni el fuego, solo lo que vuela."
+msgstr "Neither steel nor fire wakes it, only that which flies."
+
+msgctxt "ow_start_temple_1"
+msgid "Los que vinieron antes levantaron un templo al norte, sobre la boca de la montaña."
+msgstr "Those who came before raised a temple to the north, upon the mouth of the mountain."
+
+msgctxt "ow_start_temple_2"
+msgid "Si la tierra tiembla, no huyas de él: andá hacia él."
+msgstr "Should the earth tremble, flee not from it: go toward it."
+
+msgctxt "ow_meadow_two_suns_1"
+msgid "Hubo un tiempo en que el cielo tenía dos soles. Uno se apagó; el otro bajó a mirarnos de cerca."
+msgstr "There was a time when the sky had two suns. One went dark; the other came down to watch us up close."
+
+msgctxt "ow_meadow_two_suns_2"
+msgid "Lo llamamos el Ojo. Lo que miraba mucho tiempo se secaba, y miraba todo."
+msgstr "We called it the Eye. What it watched too long withered, and it watched everything."
+
+msgctxt "ow_shrine_mirror_1"
+msgid "No pudimos cerrarle el párpado. Le dimos otra cosa para mirar: su propia luz, devuelta por un espejo."
+msgstr "We could not close its eyelid. We gave it something else to watch: its own light, returned by a mirror."
+
+msgctxt "ow_shrine_mirror_2"
+msgid "Se quedó mirándose y se durmió. El espejo que guardamos acá es hermano de aquel."
+msgstr "It stayed gazing at itself and fell asleep. The mirror we keep here is kin to that one."
+
+msgctxt "ow_shrine_mirror_3"
+msgid "Alzalo con {btn:block} de cara a la luz y la vas a devolver hacia donde mires."
+msgstr "Raise it with {btn:block} facing the light and you shall return it wherever you look."
+
+msgctxt "ow_grove_last_1"
+msgid "Para que siguiera dormido, cada generación subía al templo a renovar el sello."
+msgstr "That it might stay asleep, each generation climbed to the temple to renew the seal."
+
+msgctxt "ow_grove_last_2"
+msgid "Nosotros fuimos los últimos. Los que vengan después ya no van a saber el camino."
+msgstr "We were the last. Those who come after will no longer know the way."
+
+msgctxt "ow_cliff_heart_1"
+msgid "Cuando el Ojo bajó, un corazón se partió en cuatro y sus pedazos rodaron lejos."
+msgstr "When the Eye came down, a heart broke in four and its pieces rolled far away."
+
+msgctxt "ow_cliff_heart_2"
+msgid "Uno se escondió entre el pasto alto. Dos esperan detrás de la piedra herida. El último espera junto al carcaj del cazador, tras la reja que abre el ojo."
+msgstr "One hid among the tall grass. Two wait behind the wounded stone. The last waits beside the hunter's quiver, past the gate the eye opens."
+
+msgctxt "ow_start_combat_1"
+msgid "Con {btn:attack} se golpea, y golpeando seguido se encadena. Mantené {btn:block} para cubrirte."
+msgstr "With {btn:attack} you strike, and striking without pause, the blows are chained. Hold {btn:block} to shield yourself."
+
+msgctxt "ow_start_combat_2"
+msgid "Con {btn:target_next} fijás la vista en un enemigo y lo rodeás sin perderlo."
+msgstr "With {btn:target_next} you fix your gaze upon a foe and circle it without losing it."
+
+msgctxt "temple_entrance_1"
+msgid "Este templo no guarda a un dios. Guarda una puerta cerrada."
+msgstr "This temple guards no god. It guards a sealed door."
+
+msgctxt "temple_hub_promise_1"
+msgid "El sello no es una cerradura. Es una promesa: mientras alguien vuelva, el Ojo duerme."
+msgstr "The seal is not a lock. It is a promise: while someone returns, the Eye sleeps."
+
+msgctxt "temple_hub_promise_2"
+msgid "Hace mucho que nadie vuelve. Las grietas lo saben antes que nosotros."
+msgstr "It has been long since anyone returned. The cracks know it before we do."
+
+msgctxt "temple_eyes_servants_1"
+msgid "Sus ojos menores todavía miran por él, aunque él duerma."
+msgstr "Its lesser eyes still watch for it, though it sleeps."
+
+msgctxt "temple_eyes_servants_2"
+msgid "No los vence el acero. Cegalos desde lejos y te van a mostrar lo que custodian."
+msgstr "Steel does not defeat them. Blind them from afar and they will show you what they guard."
+
+msgctxt "temple_entrance_2"
+msgid "El sello del centro solo cede ante quien resuelve lo que el templo esconde."
+msgstr "The seal at the center yields only to one who solves what the temple hides."
+
+msgctxt "temple_bow_hint_1"
+msgid "Mantené {item:bow} para tensar la cuerda; al soltar, la flecha vuela hacia donde apuntás."
+msgstr "Hold {item:bow} to draw the string; upon release, the arrow flies where you aim."
+
+msgctxt "temple_bow_hint_2"
+msgid "Los ojos de piedra no ven venir lo que llega de lejos."
+msgstr "Eyes of stone do not see coming what arrives from afar."
+
+msgctxt "temple_antechamber_1"
+msgid "Más allá duerme el guardián. Cuando abre su único ojo, el templo entero mira con él."
+msgstr "Beyond sleeps the guardian. When it opens its single eye, the whole temple watches with it."
+
+msgctxt "temple_antechamber_2"
+msgid "Lo que vuela lo hace parpadear. Lo que brilla, se le puede devolver."
+msgstr "What flies makes it blink. What shines can be given back to it."
+
+msgctxt "get_heart_piece_3"
+msgid "Tres de cuatro: te falta una."
+msgstr "Three of four: just one more to go."
+
+msgctxt "character"
+msgid "Inscripción"
+msgstr "Inscription"
+
+msgctxt "character"
+msgid "Puerta"
+msgstr "Door"

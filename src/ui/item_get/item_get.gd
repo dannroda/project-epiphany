@@ -46,12 +46,9 @@ static func cue_for(given: ItemData) -> StringName:
 
 
 static func title_for(given: ItemData, count: int) -> String:
-	var item_name := given.tr(given.display_name)
 	if count > 1:
-		return "¡Conseguiste %d %s!" % [count, item_name]
-	if given.article.is_empty():
-		return "¡Conseguiste %s!" % item_name
-	return "¡Conseguiste %s %s!" % [given.article, item_name]
+		return given.tr("ITEMGET_GOT_COUNT").format({count = count, item = given.tr(given.display_name)})
+	return given.tr("ITEM_%s_GOT" % String(given.id).to_upper())
 
 
 func _draw_rings() -> void:

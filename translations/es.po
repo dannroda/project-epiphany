@@ -1,0 +1,683 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Project Epiphany\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# Opciones e idioma
+msgid "OPTIONS_CONTROLS"
+msgstr "Controles"
+
+msgid "OPTIONS_LOCK"
+msgstr "Fijar objetivo"
+
+msgid "OPTIONS_LOCK_HOLD"
+msgstr "Mantener"
+
+msgid "OPTIONS_LOCK_TOGGLE"
+msgstr "Alternar"
+
+msgid "OPTIONS_MOUSE_AIM"
+msgstr "Apuntar con el mouse"
+
+msgid "OPTIONS_STICK_SENSITIVITY"
+msgstr "Sensibilidad del stick derecho"
+
+msgid "OPTIONS_FLICK"
+msgstr "Cambio de objetivo con flick"
+
+msgid "OPTIONS_VIBRATION"
+msgstr "Vibración"
+
+msgid "OPTIONS_LANGUAGE_SECTION"
+msgstr "Idioma"
+
+msgid "OPTIONS_LANGUAGE"
+msgstr "Idioma del juego"
+
+msgid "OPTIONS_AUDIO"
+msgstr "Audio"
+
+msgid "OPTIONS_MUSIC"
+msgstr "Música"
+
+msgid "OPTIONS_SFX"
+msgstr "Efectos"
+
+msgid "OPTIONS_AMBIENCE"
+msgstr "Ambiente"
+
+msgid "OPTIONS_VIDEO"
+msgstr "Video"
+
+msgid "OPTIONS_FULLSCREEN"
+msgstr "Pantalla completa"
+
+msgid "OPTIONS_SHAKE"
+msgstr "Temblor de cámara"
+
+msgid "OPTIONS_MINIMAP"
+msgstr "Minimapa"
+
+msgid "OPTIONS_UI_SCALE"
+msgstr "Escala de la interfaz"
+
+msgid "LANGUAGE_NOTE"
+msgstr "Se puede cambiar después en Opciones."
+
+# Título, partidas, HUD, caja de texto, game over, final
+msgid "HINT_ACCEPT"
+msgstr "Aceptar"
+
+msgid "HINT_BACK"
+msgstr "Volver"
+
+msgid "HINT_CANCEL"
+msgstr "Cancelar"
+
+msgid "HINT_CLOSE"
+msgstr "Cerrar"
+
+msgid "HINT_CHANGE"
+msgstr "Cambiar"
+
+msgid "HINT_USE"
+msgstr "Usar"
+
+msgid "COMMON_YES"
+msgstr "Sí"
+
+msgid "COMMON_NO"
+msgstr "No"
+
+msgid "COMMON_CONTINUE"
+msgstr "Continuar"
+
+msgid "TITLE_LOAD"
+msgstr "Cargar partida"
+
+msgid "TITLE_NEW_GAME"
+msgstr "Nueva partida"
+
+msgid "TITLE_OPTIONS"
+msgstr "Opciones"
+
+msgid "TITLE_QUIT"
+msgstr "Salir"
+
+msgid "TITLE_DEBUG_SCENARIOS"
+msgstr "DEBUG · Cargar escenario…"
+
+msgid "TITLE_SCENARIOS"
+msgstr "Cargar escenario"
+
+msgid "FILE_HEADING_PLAY"
+msgstr "Elegí una partida"
+
+msgid "FILE_HEADING_NEW"
+msgstr "¿Dónde empezás la partida?"
+
+msgid "FILE_HEADING_COPY_FROM"
+msgstr "¿Qué partida copiás?"
+
+msgid "FILE_HEADING_COPY_TO"
+msgstr "¿En qué ranura la copiás?"
+
+msgid "FILE_HEADING_DELETE"
+msgstr "¿Qué partida borrás?"
+
+msgid "FILE_COPY"
+msgstr "Copiar"
+
+msgid "FILE_DELETE"
+msgstr "Borrar"
+
+msgid "FILE_HINT_PLAY"
+msgstr "Jugar"
+
+msgid "FILE_HINT_START"
+msgstr "Empezar"
+
+msgid "FILE_HINT_CHOOSE"
+msgstr "Elegir"
+
+msgid "FILE_NEW_GAME"
+msgstr "Nueva partida"
+
+msgid "FILE_AUTO_EMPTY"
+msgstr "Todavía no hay un guardado automático"
+
+msgid "FILE_AUTO_ORIGIN"
+msgstr "de la partida {slot}"
+
+msgid "FILE_CONFIRM_OVERWRITE"
+msgstr "¿Empezar de cero en la partida {slot}? Se pierde lo guardado ahí."
+
+msgid "FILE_OVERWRITE"
+msgstr "Sobrescribir"
+
+msgid "FILE_CONFIRM_REPLACE"
+msgstr "¿Reemplazar la partida {slot} con la partida {from}?"
+
+msgid "FILE_CONFIRM_REPLACE_AUTO"
+msgstr "¿Reemplazar la partida {slot} con el guardado automático?"
+
+msgid "FILE_REPLACE"
+msgstr "Reemplazar"
+
+msgid "FILE_CONFIRM_DELETE"
+msgstr "¿Borrar la partida {slot}? No se puede deshacer."
+
+msgid "FILE_CONFIRM_DELETE_AUTO"
+msgstr "¿Borrar el guardado automático? No se puede deshacer."
+
+msgid "GAMEOVER_TITLE"
+msgstr "CAÍSTE"
+
+msgid "GAMEOVER_FROM_ROOM"
+msgstr "Desde la entrada de la sala"
+
+msgid "GAMEOVER_FROM_CHECKPOINT"
+msgstr "Desde el último punto de control"
+
+msgid "GAMEOVER_SAVE_QUIT"
+msgstr "Guardar y salir"
+
+msgid "GAMEOVER_QUIT"
+msgstr "Salir sin guardar"
+
+msgid "ENDING_TITLE"
+msgstr "FIN"
+
+msgid "ENDING_SUBTITLE"
+msgstr "El Ojo Antiguo vuelve a dormir"
+
+msgid "ENDING_CREDITS"
+msgstr "Project Epiphany · un juego de Daniel Rodriguez Aires\nHecho con Godot, LimboAI y Dialogue Manager\nPersonajes y animaciones: KayKit · Sonidos: Kenney\nGracias por jugar"
+
+msgid "ENDING_KEEP_PLAYING"
+msgstr "Seguir explorando"
+
+msgid "ENDING_TO_TITLE"
+msgstr "Guardar y volver al título"
+
+msgid "SYSTEM_SAVE_QUIT"
+msgstr "Guardar y salir al título"
+
+msgid "PAUSE_HINT_TAB"
+msgstr "Pestaña"
+
+msgid "HUD_BOSS_PHASE"
+msgstr "Fase {phase}"
+
+msgid "HUD_SAVED"
+msgstr "Guardado"
+
+# Pausa: Equipo, Ítems, Mapa
+msgid "EQUIP_CATEGORY_SWORD"
+msgstr "Espada"
+
+msgid "EQUIP_CATEGORY_SHIELD"
+msgstr "Escudo"
+
+msgid "EQUIP_CATEGORY_ARMOR"
+msgstr "Armadura"
+
+msgid "EQUIP_TITLE_SWORD"
+msgstr "ESPADA"
+
+msgid "EQUIP_TITLE_SHIELD"
+msgstr "ESCUDO"
+
+msgid "EQUIP_TITLE_ARMOR"
+msgstr "ARMADURA"
+
+msgid "EQUIP_ACCEPT"
+msgstr "Equipar"
+
+msgid "EQUIP_BADGE"
+msgstr "E"
+
+msgid "EQUIP_UNDISCOVERED"
+msgstr "Sin descubrir"
+
+msgid "EQUIP_UNDISCOVERED_DESC"
+msgstr "Todavía no encontraste este equipo."
+
+msgid "EQUIP_KIND_EQUIPPED"
+msgstr "{category} · equipado"
+
+msgid "EQUIP_STAT_DAMAGE"
+msgstr "Daño"
+
+msgid "EQUIP_STAT_BLOCK"
+msgstr "Bloqueo"
+
+msgid "EQUIP_BLOCK_FRONTAL"
+msgstr "Frontal ±60°"
+
+msgid "EQUIP_STAT_REFLECTS"
+msgstr "Refleja"
+
+msgid "EQUIP_REFLECTS_PROJECTILES"
+msgstr "Proyectiles y luz"
+
+msgid "EQUIP_STAT_REDUCTION"
+msgstr "Reducción de daño"
+
+msgid "EQUIP_HEART_PIECES"
+msgstr "Piezas de corazón"
+
+msgid "EQUIP_HEARTS_ONE"
+msgstr "1 corazón"
+
+msgid "EQUIP_HEARTS_QUARTER"
+msgstr "¼ de corazón"
+
+msgid "EQUIP_HEARTS_HALF"
+msgstr "½ corazón"
+
+msgid "EQUIP_HEARTS_THREE_QUARTERS"
+msgstr "¾ de corazón"
+
+msgid "EQUIP_HEARTS"
+msgstr "{hearts} corazones"
+
+msgid "ITEMS_SMALL_KEYS"
+msgstr "Llaves ×{count}"
+
+msgid "ITEMS_MAP"
+msgstr "Mapa"
+
+msgid "ITEMS_COMPASS"
+msgstr "Brújula"
+
+msgid "ITEMS_BOSS_KEY"
+msgstr "Llave del jefe"
+
+msgid "ITEMS_BOSS_KEY_NO"
+msgstr "Llave del jefe: no"
+
+msgid "ITEMS_UNDISCOVERED"
+msgstr "Sin descubrir"
+
+msgid "ITEMS_UNDISCOVERED_DESC"
+msgstr "Todavía no encontraste este ítem."
+
+msgid "ITEMS_KIND"
+msgstr "Ítem"
+
+msgid "ITEMS_ASSIGNED"
+msgstr "Asignado a {button}"
+
+msgid "ITEMS_ASSIGN"
+msgstr "Asignar a {button}"
+
+msgid "MAP_TITLE_DUNGEON"
+msgstr "Mazmorra"
+
+msgid "MAP_TITLE_OVERWORLD"
+msgstr "Overworld"
+
+msgid "MAP_STAT_MAP"
+msgstr "Mapa"
+
+msgid "MAP_STAT_COMPASS"
+msgstr "Brújula"
+
+msgid "MAP_STAT_BOSS_KEY"
+msgstr "Llave del jefe"
+
+msgid "MAP_STAT_SMALL_KEYS"
+msgstr "Llaves chicas"
+
+msgid "MAP_OBTAINED_MAP"
+msgstr "Obtenido"
+
+msgid "MAP_OBTAINED_COMPASS"
+msgstr "Obtenida"
+
+msgid "MAP_NOT_VISITED"
+msgstr "Sin visitar"
+
+msgid "MAP_BOSS"
+msgstr "El jefe"
+
+msgid "MAP_CHESTS_CLOSED"
+msgid_plural "MAP_CHESTS_CLOSED_PLURAL"
+msgstr[0] "{count} cofre sin abrir"
+msgstr[1] "{count} cofres sin abrir"
+
+msgid "MAP_NOTHING_PENDING"
+msgstr "Nada pendiente a la vista"
+
+msgid "MAP_ZONES_EXPLORED"
+msgstr "{done} de {total} zonas exploradas"
+
+msgid "MAP_UNEXPLORED"
+msgstr "Sin explorar"
+
+msgid "MAP_CHESTS"
+msgstr "Cofres"
+
+msgid "MAP_TABLETS_READ"
+msgstr "Tablillas leídas"
+
+msgid "MAP_HEART_PIECES"
+msgstr "Piezas de corazón"
+
+msgid "MAP_COUNT"
+msgstr "{done} de {total}"
+
+msgid "MAP_NOTHING_HIDDEN"
+msgstr "Nada escondido acá"
+
+msgid "MAP_PINS"
+msgstr "Pin ({count} de {max})"
+
+msgid "MAP_HINT_PIN"
+msgstr "Poner o quitar pin"
+
+msgid "MAP_HINT_MOVE"
+msgstr "Mover cursor"
+
+msgid "MAP_HINT_ZOOM_IN"
+msgstr "Acercar"
+
+msgid "MAP_HINT_ZOOM_OUT"
+msgstr "Alejar"
+
+msgid "MAP_LEGEND_DOOR"
+msgstr "Puerta"
+
+msgid "MAP_LEGEND_LOCKED"
+msgstr "Con llave"
+
+msgid "MAP_LEGEND_BOSS_DOOR"
+msgstr "Puerta del jefe"
+
+msgid "MAP_LEGEND_SEALED"
+msgstr "Sellada"
+
+msgid "MAP_LEGEND_VISITED"
+msgstr "Visitada"
+
+msgid "MAP_LEGEND_MAPPED"
+msgstr "Sin visitar (mapa)"
+
+msgid "MAP_LEGEND_HERE"
+msgstr "Estás acá"
+
+msgid "MAP_LEGEND_CHEST_COMPASS"
+msgstr "Cofre (brújula)"
+
+msgid "MAP_LEGEND_BOSS"
+msgstr "Jefe"
+
+msgid "MAP_LEGEND_ENTRANCE"
+msgstr "Entrada"
+
+msgid "MAP_LEGEND_CHEST_OPEN"
+msgstr "Cofre abierto"
+
+msgid "MAP_LEGEND_TABLET"
+msgstr "Tablilla leída"
+
+msgid "MAP_LEGEND_PIN"
+msgstr "Pin"
+
+msgid "PAUSE_TAB_EQUIPMENT"
+msgstr "Equipo"
+
+msgid "PAUSE_TAB_ITEMS"
+msgstr "Ítems"
+
+msgid "PAUSE_TAB_MAP"
+msgstr "Mapa"
+
+msgid "PAUSE_TAB_SYSTEM"
+msgstr "Sistema"
+
+# Ítems, lugares, prompts, jefe; diálogos (msgctxt = ID de la línea; msgid = texto en español del .dialogue)
+msgid "ITEMGET_GOT_COUNT"
+msgstr "¡Conseguiste {count} {item}!"
+
+msgid "ITEM_ARMOR_CHAINMAIL_NAME"
+msgstr "Cota reforzada"
+
+msgid "ITEM_ARMOR_CHAINMAIL_DESC"
+msgstr "Placas doradas sobre una cota de anillos. Reduce el daño que recibís."
+
+msgid "ITEM_ARMOR_CHAINMAIL_GOT"
+msgstr "¡Conseguiste la Cota reforzada!"
+
+msgid "ITEM_ARROW_NAME"
+msgstr "Flechas"
+
+msgid "ITEM_ARROW_DESC"
+msgstr "Munición para el arco."
+
+msgid "ITEM_ARROW_GOT"
+msgstr "¡Conseguiste Flechas!"
+
+msgid "ITEM_BOMB_BAG_NAME"
+msgstr "Bolsa de bombas"
+
+msgid "ITEM_BOMB_BAG_DESC"
+msgstr "Tocá el botón para colocar una bomba delante tuyo; mantenelo para levantarla, apuntar y tirarla. Rompe muros agrietados y empuja lo que está cerca."
+
+msgid "ITEM_BOMB_BAG_GOT"
+msgstr "¡Conseguiste la Bolsa de bombas!"
+
+msgid "ITEM_BOMB_NAME"
+msgstr "Bombas"
+
+msgid "ITEM_BOMB_DESC"
+msgstr "Munición para la bolsa de bombas."
+
+msgid "ITEM_BOMB_GOT"
+msgstr "¡Conseguiste Bombas!"
+
+msgid "ITEM_BOSS_KEY_NAME"
+msgstr "Llave del jefe"
+
+msgid "ITEM_BOSS_KEY_DESC"
+msgstr "Abre la puerta del guardián de la mazmorra."
+
+msgid "ITEM_BOSS_KEY_GOT"
+msgstr "¡Conseguiste la Llave del jefe!"
+
+msgid "ITEM_BOTTLE_EMPTY_NAME"
+msgstr "Botella vacía"
+
+msgid "ITEM_BOTTLE_EMPTY_DESC"
+msgstr "Una botella vacía. Se puede volver a llenar."
+
+msgid "ITEM_BOTTLE_EMPTY_GOT"
+msgstr "¡Conseguiste una Botella vacía!"
+
+msgid "ITEM_BOW_NAME"
+msgstr "Arco"
+
+msgid "ITEM_BOW_DESC"
+msgstr "Dispara flechas hacia donde apuntás: stick derecho, mouse o el objetivo fijado. Alcanza interruptores lejanos."
+
+msgid "ITEM_BOW_GOT"
+msgstr "¡Conseguiste el Arco!"
+
+msgid "ITEM_COMPASS_NAME"
+msgstr "Brújula"
+
+msgid "ITEM_COMPASS_DESC"
+msgstr "Marca en el mapa los cofres y la sala del guardián."
+
+msgid "ITEM_COMPASS_GOT"
+msgstr "¡Conseguiste la Brújula!"
+
+msgid "ITEM_DUNGEON_MAP_NAME"
+msgstr "Mapa"
+
+msgid "ITEM_DUNGEON_MAP_DESC"
+msgstr "Muestra todas las salas de la mazmorra."
+
+msgid "ITEM_DUNGEON_MAP_GOT"
+msgstr "¡Conseguiste el Mapa!"
+
+msgid "ITEM_HEART_CONTAINER_NAME"
+msgstr "Contenedor de corazón"
+
+msgid "ITEM_HEART_CONTAINER_DESC"
+msgstr "Suma un corazón a tu vida máxima."
+
+msgid "ITEM_HEART_CONTAINER_GOT"
+msgstr "¡Conseguiste un Contenedor de corazón!"
+
+msgid "ITEM_HEART_PIECE_NAME"
+msgstr "Pieza de corazón"
+
+msgid "ITEM_HEART_PIECE_DESC"
+msgstr "Juntá cuatro y tu vida máxima sube un corazón."
+
+msgid "ITEM_HEART_PIECE_GOT"
+msgstr "¡Conseguiste una Pieza de corazón!"
+
+msgid "ITEM_POTION_NAME"
+msgstr "Poción"
+
+msgid "ITEM_POTION_DESC"
+msgstr "Recupera toda la vida. Deja la botella vacía."
+
+msgid "ITEM_POTION_GOT"
+msgstr "¡Conseguiste una Poción!"
+
+msgid "ITEM_QUIVER_BIG_NAME"
+msgstr "Carcaj grande"
+
+msgid "ITEM_QUIVER_BIG_DESC"
+msgstr "Permite llevar más flechas."
+
+msgid "ITEM_QUIVER_BIG_GOT"
+msgstr "¡Conseguiste el Carcaj grande!"
+
+msgid "ITEM_SHIELD_MIRROR_NAME"
+msgstr "Escudo espejo"
+
+msgid "ITEM_SHIELD_MIRROR_DESC"
+msgstr "Bloquea los golpes de frente. Refleja proyectiles y haces de luz hacia donde mirás o hacia el objetivo fijado."
+
+msgid "ITEM_SHIELD_MIRROR_GOT"
+msgstr "¡Conseguiste el Escudo espejo!"
+
+msgid "ITEM_SHIELD_WOOD_NAME"
+msgstr "Escudo de madera"
+
+msgid "ITEM_SHIELD_WOOD_DESC"
+msgstr "Bloquea los golpes que vienen de frente. Con la guardia arriba, atacar da un golpe de escudo que aturde."
+
+msgid "ITEM_SHIELD_WOOD_GOT"
+msgstr "¡Conseguiste el Escudo de madera!"
+
+msgid "ITEM_SMALL_KEY_NAME"
+msgstr "Llave chica"
+
+msgid "ITEM_SMALL_KEY_DESC"
+msgstr "Abre una puerta cerrada de esta mazmorra."
+
+msgid "ITEM_SMALL_KEY_GOT"
+msgstr "¡Conseguiste una Llave chica!"
+
+msgid "ITEM_SWORD_BASIC_NAME"
+msgstr "Espada"
+
+msgid "ITEM_SWORD_BASIC_DESC"
+msgstr "Una espada de una mano, sencilla y confiable. Pega de frente y empuja."
+
+msgid "ITEM_SWORD_BASIC_GOT"
+msgstr "¡Conseguiste la Espada!"
+
+msgid "ITEM_TUNIC_NAME"
+msgstr "Túnica"
+
+msgid "ITEM_TUNIC_DESC"
+msgstr "Ropa de viaje. No protege mucho, pero es cómoda."
+
+msgid "ITEM_TUNIC_GOT"
+msgstr "¡Conseguiste la Túnica!"
+
+msgid "PLACE_SANCTUARY"
+msgstr "Santuario"
+
+msgid "PLACE_TEMPLE_ENTRANCE"
+msgstr "Entrada del templo"
+
+msgid "PLACE_EYE_CRAG"
+msgstr "Risco del ojo"
+
+msgid "PLACE_CAVE"
+msgstr "Cueva"
+
+msgid "PLACE_MEADOW"
+msgstr "Pradera"
+
+msgid "PLACE_GROVE"
+msgstr "Arboleda"
+
+msgid "PLACE_HIDDEN_GROTTO"
+msgstr "Gruta oculta"
+
+msgid "PLACE_FIRST_CLEARING"
+msgstr "Claro del inicio"
+
+msgid "PLACE_TEMPLE_VALLEY"
+msgstr "Valle del templo"
+
+msgid "PLACE_EYE_TEMPLE"
+msgstr "Templo del Ojo"
+
+msgid "PLACE_VESTIBULE"
+msgstr "Vestíbulo"
+
+msgid "PLACE_CENTRAL_HUB"
+msgstr "Hub central"
+
+msgid "PLACE_TRAP_GALLERY"
+msgstr "Galería de trampas"
+
+msgid "PLACE_CRACKED_ROOM"
+msgstr "Sala agrietada"
+
+msgid "PLACE_ARENA"
+msgstr "Arena"
+
+msgid "PLACE_EYES_ROOM"
+msgstr "Sala de ojos"
+
+msgid "PLACE_PUZZLE_ROOM"
+msgstr "Sala del puzzle"
+
+msgid "PLACE_ANTECHAMBER"
+msgstr "Antesala"
+
+msgid "PLACE_EYE_LAIR"
+msgstr "Guarida del ojo"
+
+msgid "PLACE_FLOOR_1"
+msgstr "Piso 1"
+
+msgid "PROMPT_OPEN"
+msgstr "Abrir"
+
+msgid "PROMPT_READ"
+msgstr "Leer"
+
+msgid "PROMPT_PUSH"
+msgstr "Empujar"
+
+msgid "PROMPT_LIFT"
+msgstr "Levantar"
+
+msgid "BOSS_NAME"
+msgstr "El Ojo Antiguo"

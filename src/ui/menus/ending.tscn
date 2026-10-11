@@ -59,13 +59,13 @@ theme_override_constants/separation = 10
 [node name="Title" type="Label" parent="Content"]
 layout_mode = 2
 theme_type_variation = &"DisplayTitle"
-text = "FIN"
+text = "ENDING_TITLE"
 horizontal_alignment = 1
 
 [node name="Subtitle" type="Label" parent="Content"]
 layout_mode = 2
 theme_type_variation = &"ItemGetTitle"
-text = "El Ojo Antiguo vuelve a dormir"
+text = "ENDING_SUBTITLE"
 horizontal_alignment = 1
 
 [node name="Separator" type="HSeparator" parent="Content"]
@@ -75,10 +75,7 @@ theme_type_variation = &"OrnateSeparator"
 [node name="Credits" type="Label" parent="Content"]
 layout_mode = 2
 theme_type_variation = &"Caption"
-text = "Project Epiphany · un juego de Daniel Rodriguez Aires
-Hecho con Godot, LimboAI y Dialogue Manager
-Personajes y animaciones: KayKit · Sonidos: Kenney
-Gracias por jugar"
+text = "ENDING_CREDITS"
 horizontal_alignment = 1
 
 [node name="Menu" type="VBoxContainer" parent="Content"]
@@ -90,13 +87,13 @@ theme_override_constants/separation = 6
 unique_name_in_owner = true
 custom_minimum_size = Vector2(440, 0)
 layout_mode = 2
-text = "Seguir explorando"
+text = "ENDING_KEEP_PLAYING"
 
 [node name="ToTitle" parent="Content/Menu" instance=ExtResource("4_item")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(440, 0)
 layout_mode = 2
-text = "Guardar y volver al título"
+text = "ENDING_TO_TITLE"
 
 [node name="Hints" type="HBoxContainer" parent="."]
 unique_name_in_owner = true

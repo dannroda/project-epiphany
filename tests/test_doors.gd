@@ -66,7 +66,7 @@ func test_locked_door_needs_key_and_stays_open() -> void:
 	var before := ConfigFile.new()
 	state.write_to(before)
 	var door: Door = level.get_node(^"LockedBC")
-	assert_eq(door.interactable.prompt, "Abrir")
+	assert_eq(door.interactable.prompt, "PROMPT_OPEN")
 	door.interactable.interact(player)
 	assert_eq(door.is_open, false, "sin llave no se abre")
 	assert_true(stack.top() is TextBox, "avisa que está cerrada con llave")

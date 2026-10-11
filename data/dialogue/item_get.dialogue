@@ -19,7 +19,7 @@ Van dos de cuatro. [ID:get_heart_piece_2]
 => END
 
 ~ heart_piece_3
-Tres de cuatro: te falta una. [ID:get_heart_piece_3]
+Tres de cuatro\: te falta una. [ID:get_heart_piece_3]
 => END
 
 ~ heart_piece_full

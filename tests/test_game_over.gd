@@ -23,8 +23,8 @@ func test_continue_in_the_overworld_and_in_a_room() -> void:
 	await saves.load_scenario("start")
 	var screen := await _die(tree)
 	assert_true(screen != null, "morir abre el game over")
-	var caption := screen.find_children("*", "Label", true, false).filter(func(label: Label) -> bool: return label.text.begins_with("Desde"))
-	assert_eq(caption[0].text, "Desde el último punto de control", "en el overworld")
+	var caption := screen.find_children("*", "Label", true, false).filter(func(label: Label) -> bool: return label.text.begins_with("GAMEOVER_FROM"))
+	assert_eq(caption[0].text, "GAMEOVER_FROM_CHECKPOINT", "en el overworld")
 	tree.root.get_node(^"MenuStack").pop()
 
 	await saves.load_scenario("dungeon_no_bow")

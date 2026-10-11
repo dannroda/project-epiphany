@@ -71,7 +71,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"Hint"
-text = "Daño"
+text = "EQUIP_STAT_DAMAGE"
 
 [node name="DamageValue" type="Label" parent="Left/Damage"]
 unique_name_in_owner = true
@@ -84,7 +84,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"Hint"
-text = "Reducción de daño"
+text = "EQUIP_STAT_REDUCTION"
 
 [node name="ReductionValue" type="Label" parent="Left/Reduction"]
 unique_name_in_owner = true
@@ -97,7 +97,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"Hint"
-text = "Piezas de corazón"
+text = "EQUIP_HEART_PIECES"
 
 [node name="Count" type="HBoxContainer" parent="Left/Pieces"]
 layout_mode = 2
@@ -125,7 +125,7 @@ theme_override_constants/separation = 10
 [node name="Title" type="Label" parent="Rows/Sword"]
 layout_mode = 2
 theme_type_variation = &"Caps"
-text = "ESPADA"
+text = "EQUIP_TITLE_SWORD"
 
 [node name="Line" type="HBoxContainer" parent="Rows/Sword"]
 layout_mode = 2
@@ -150,7 +150,7 @@ theme_override_constants/separation = 10
 [node name="Title" type="Label" parent="Rows/Shield"]
 layout_mode = 2
 theme_type_variation = &"Caps"
-text = "ESCUDO"
+text = "EQUIP_TITLE_SHIELD"
 
 [node name="Line" type="HBoxContainer" parent="Rows/Shield"]
 layout_mode = 2
@@ -175,7 +175,7 @@ theme_override_constants/separation = 10
 [node name="Title" type="Label" parent="Rows/Armor"]
 layout_mode = 2
 theme_type_variation = &"Caps"
-text = "ARMADURA"
+text = "EQUIP_TITLE_ARMOR"
 
 [node name="Line" type="HBoxContainer" parent="Rows/Armor"]
 layout_mode = 2

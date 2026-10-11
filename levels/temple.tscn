@@ -93,7 +93,7 @@ geometry_source_group_name = &"navmesh_source"
 
 [node name="Dungeon" type="Node" parent="." unique_id=1108336289]
 script = ExtResource("1_b74bs")
-display_name = "Templo del Ojo"
+display_name = "PLACE_EYE_TEMPLE"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1207227538]
 environment = SubResource("Environment_h5c3c")
@@ -116,7 +116,7 @@ data = {
 [node name="Vestibulo" type="Area3D" parent="." unique_id=1996952184]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.2, 64)
 script = ExtResource("3_jdr7y")
-display_name = "Vestíbulo"
+display_name = "PLACE_VESTIBULE"
 map_cell = Vector2i(1, 4)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Vestibulo" unique_id=130135768]
@@ -126,7 +126,7 @@ shape = SubResource("BoxShape3D_lepkt")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.2, 48)
 script = ExtResource("3_jdr7y")
 room_index = 1
-display_name = "Hub central"
+display_name = "PLACE_CENTRAL_HUB"
 map_cell = Vector2i(1, 3)
 doom = 0.15
 
@@ -137,7 +137,7 @@ shape = SubResource("BoxShape3D_xc184")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 48)
 script = ExtResource("3_jdr7y")
 room_index = 2
-display_name = "Galería de trampas"
+display_name = "PLACE_TRAP_GALLERY"
 map_cell = Vector2i(0, 3)
 doom = 0.3
 
@@ -148,7 +148,7 @@ shape = SubResource("BoxShape3D_vimm5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 1.2, 48)
 script = ExtResource("3_jdr7y")
 room_index = 3
-display_name = "Sala agrietada"
+display_name = "PLACE_CRACKED_ROOM"
 map_cell = Vector2i(2, 3)
 doom = 0.4
 
@@ -159,7 +159,7 @@ shape = SubResource("BoxShape3D_66c1n")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 1.2, 32)
 script = ExtResource("3_jdr7y")
 room_index = 4
-display_name = "Arena"
+display_name = "PLACE_ARENA"
 map_cell = Vector2i(2, 2)
 doom = 0.55
 
@@ -170,7 +170,7 @@ shape = SubResource("BoxShape3D_7qbqm")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 32)
 script = ExtResource("3_jdr7y")
 room_index = 5
-display_name = "Sala de ojos"
+display_name = "PLACE_EYES_ROOM"
 map_cell = Vector2i(0, 2)
 doom = 0.65
 
@@ -181,7 +181,7 @@ shape = SubResource("BoxShape3D_rsin6")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 16)
 script = ExtResource("3_jdr7y")
 room_index = 6
-display_name = "Sala del puzzle"
+display_name = "PLACE_PUZZLE_ROOM"
 map_cell = Vector2i(0, 1)
 doom = 0.75
 
@@ -192,7 +192,7 @@ shape = SubResource("BoxShape3D_6q17e")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.2, 32)
 script = ExtResource("3_jdr7y")
 room_index = 7
-display_name = "Antesala"
+display_name = "PLACE_ANTECHAMBER"
 map_cell = Vector2i(1, 2)
 autosave_on_enter = true
 doom = 0.9
@@ -204,7 +204,7 @@ shape = SubResource("BoxShape3D_v3e3k")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.2, 16)
 script = ExtResource("3_jdr7y")
 room_index = 8
-display_name = "Guarida del ojo"
+display_name = "PLACE_EYE_LAIR"
 map_cell = Vector2i(1, 1)
 boss_room = true
 doom = 1.0

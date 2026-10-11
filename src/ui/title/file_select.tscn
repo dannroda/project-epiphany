@@ -40,7 +40,7 @@ theme_override_constants/separation = 20
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"Heading"
-text = "Elegí una partida"
+text = "FILE_HEADING_PLAY"
 
 [node name="Slots" type="VBoxContainer" parent="Column"]
 layout_mode = 2
@@ -76,13 +76,13 @@ theme_override_constants/separation = 14
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"BarButton"
-text = "Copiar"
+text = "FILE_COPY"
 
 [node name="Delete" type="Button" parent="Column/Bottom"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"BarButton"
-text = "Borrar"
+text = "FILE_DELETE"
 
 [node name="Gap" type="Control" parent="Column/Bottom"]
 layout_mode = 2

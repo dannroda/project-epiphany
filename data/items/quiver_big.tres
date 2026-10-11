@@ -8,9 +8,8 @@
 [resource]
 script = ExtResource("2_s7mbv")
 id = &"quiver_big"
-display_name = "Carcaj grande"
-article = "el"
-description = "Permite llevar más flechas."
+display_name = "ITEM_QUIVER_BIG_NAME"
+description = "ITEM_QUIVER_BIG_DESC"
 icon = ExtResource("1_s7mbv")
 category = 6
 capacity_for = ExtResource("3_arrow")

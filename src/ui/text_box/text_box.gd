@@ -150,7 +150,7 @@ func _show_text(index: int, character: String) -> void:
 
 func _show(text: String, character: String) -> void:
 	page += 1
-	var heading := title_override if not title_override.is_empty() else character
+	var heading := title_override if not title_override.is_empty() else tr(character, &"character")
 	title_label.text = heading
 	title_label.visible = not heading.is_empty()
 	_set_body(text)

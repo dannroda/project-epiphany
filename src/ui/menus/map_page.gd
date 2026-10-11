@@ -20,13 +20,13 @@ const DIRECTIONS := [
 ## Lo leen el menú de pausa (ayudas) y los tests.
 var accept_label: String:
 	get:
-		return "" if _in_dungeon() else "Poner o quitar pin"
+		return "" if _in_dungeon() else "MAP_HINT_PIN"
 var extra_hints: Array:
 	get:
-		var move := [[&"move_left", &"move_right"], "Mover cursor"]
+		var move := [[&"move_left", &"move_right"], "MAP_HINT_MOVE"]
 		if _in_dungeon():
 			return [move]
-		return [move, [&"item_2", "Alejar" if _zoomed else "Acercar"]]
+		return [move, [&"item_2", "MAP_HINT_ZOOM_OUT" if _zoomed else "MAP_HINT_ZOOM_IN"]]
 
 @onready var map_card: Control = %MapCard
 @onready var cells: Control = %Cells
@@ -70,6 +70,11 @@ func _ready() -> void:
 	marker.draw.connect(func() -> void: MapRoomCell.draw_arrow(marker, Vector2.ZERO, 0.0))
 	overworld_image.resized.connect(_place_overworld)
 	refresh()
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
+		refresh.call_deferred()
 
 
 func refresh() -> void:
@@ -116,12 +121,12 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _show_dungeon() -> void:
 	var dungeon_node := _find(Dungeon) as Dungeon
-	title.text = dungeon_node.display_name if dungeon_node and not dungeon_node.display_name.is_empty() else "Mazmorra"
+	title.text = dungeon_node.display_name if dungeon_node and not dungeon_node.display_name.is_empty() else "MAP_TITLE_DUNGEON"
 	subtitle.text = dungeon_node.floor_name if dungeon_node else ""
-	_stat(stats, "Mapa", "Obtenido" if _dungeon.has_map else "No")
-	_stat(stats, "Brújula", "Obtenida" if _dungeon.has_compass else "No")
-	_stat(stats, "Llave del jefe", "Sí" if _dungeon.has_boss_key else "No")
-	_stat(stats, "Llaves chicas", str(_dungeon.small_keys))
+	_stat(stats, "MAP_STAT_MAP", "MAP_OBTAINED_MAP" if _dungeon.has_map else "COMMON_NO")
+	_stat(stats, "MAP_STAT_COMPASS", "MAP_OBTAINED_COMPASS" if _dungeon.has_compass else "COMMON_NO")
+	_stat(stats, "MAP_STAT_BOSS_KEY", "COMMON_YES" if _dungeon.has_boss_key else "COMMON_NO")
+	_stat(stats, "MAP_STAT_SMALL_KEYS", str(_dungeon.small_keys))
 	var rooms := get_tree().get_nodes_in_group(Room.GROUP)
 	if rooms.is_empty():
 		return
@@ -222,15 +227,15 @@ func _focus_room(room: Room) -> void:
 	focus_title.text = room.display_name
 	var notes: Array[String] = []
 	if not _dungeon.was_visited(room.room_index):
-		notes.append("Sin visitar")
+		notes.append(tr("MAP_NOT_VISITED"))
 	if room.boss_room and _dungeon.has_compass:
-		notes.append("El jefe")
+		notes.append(tr("MAP_BOSS"))
 	if _dungeon.has_compass:
 		var closed := _chests_in(room).filter(func(chest: Chest) -> bool: return chest.interactable.enabled).size()
 		if closed > 0:
-			notes.append("1 cofre sin abrir" if closed == 1 else "%d cofres sin abrir" % closed)
+			notes.append(tr_n("MAP_CHESTS_CLOSED", "MAP_CHESTS_CLOSED_PLURAL", closed).format({count = closed}))
 	if notes.is_empty():
-		notes.append("Nada pendiente a la vista")
+		notes.append(tr("MAP_NOTHING_PENDING"))
 	focus_text.text = " · ".join(notes)
 
 
@@ -242,7 +247,7 @@ func _chests_in(room: Room) -> Array:
 
 func _show_overworld() -> void:
 	_map = _find(OverworldMap) as OverworldMap
-	title.text = _map.display_name if _map and not _map.display_name.is_empty() else "Overworld"
+	title.text = _map.display_name if _map and not _map.display_name.is_empty() else "MAP_TITLE_OVERWORLD"
 	overworld_image.texture = _map.texture if _map else null
 	if _map:
 		_map.snapshot()
@@ -255,7 +260,7 @@ func _show_overworld() -> void:
 		return
 	var zones := _zones()
 	var visited := zones.filter(func(zone: AreaZone) -> bool: return zone.is_visited())
-	subtitle.text = "%d de %d zonas exploradas" % [visited.size(), zones.size()]
+	subtitle.text = tr("MAP_ZONES_EXPLORED").format({done = visited.size(), total = zones.size()})
 	_place_overworld()
 
 
@@ -349,21 +354,21 @@ func _focus_zone(zone: AreaZone) -> void:
 		return
 	focus_title.text = zone.display_name
 	if not zone.is_visited():
-		focus_text.text = "Sin explorar"
+		focus_text.text = "MAP_UNEXPLORED"
 		return
 	var chests := get_tree().get_nodes_in_group(&"chests").filter(func(chest: Chest) -> bool: return zone.contains(chest.global_position))
-	_count_row("Cofres", chests.filter(func(chest: Chest) -> bool: return not chest.interactable.enabled).size(), chests.size())
+	_count_row("MAP_CHESTS", chests.filter(func(chest: Chest) -> bool: return not chest.interactable.enabled).size(), chests.size())
 	var tablets := get_tree().current_scene.find_children("*", "Tablet", true, false).filter(func(tablet: Tablet) -> bool: return zone.contains(tablet.global_position))
-	_count_row("Tablillas leídas", tablets.filter(func(tablet: Tablet) -> bool: return tablet.is_read()).size(), tablets.size())
+	_count_row("MAP_TABLETS_READ", tablets.filter(func(tablet: Tablet) -> bool: return tablet.is_read()).size(), tablets.size())
 	var pieces := get_tree().current_scene.find_children("*", "HeartPiece", true, false).filter(func(piece: HeartPiece) -> bool: return zone.contains(piece.global_position))
-	_count_row("Piezas de corazón", pieces.filter(func(piece: HeartPiece) -> bool: return piece.taken).size(), pieces.size())
+	_count_row("MAP_HEART_PIECES", pieces.filter(func(piece: HeartPiece) -> bool: return piece.taken).size(), pieces.size())
 	if focus_stats.get_child_count() == 0:
-		focus_text.text = "Nada escondido acá"
+		focus_text.text = "MAP_NOTHING_HIDDEN"
 
 
 func _count_row(label: String, done: int, total: int) -> void:
 	if total > 0:
-		_stat(focus_stats, label, "%d de %d" % [done, total], done < total)
+		_stat(focus_stats, label, tr("MAP_COUNT").format({done = done, total = total}), done < total)
 
 
 func _refresh_pins() -> void:
@@ -372,7 +377,7 @@ func _refresh_pins() -> void:
 	_clear(pins)
 	for pin in GameState.map_pins:
 		pins.add_child(MapMark.create(MapMark.Kind.PIN, world_to_map(pin)))
-	pins_label.text = "Pin (%d de %d)" % [GameState.map_pins.size(), GameState.MAX_MAP_PINS]
+	pins_label.text = tr("MAP_PINS").format({count = GameState.map_pins.size(), max = GameState.MAX_MAP_PINS})
 
 
 func _add_mark(kind: MapMark.Kind, point: Vector3) -> void:
@@ -441,4 +446,4 @@ func _clear(node: Node) -> void:
 
 
 func _stat(container: Container, label: String, value: String, muted := false) -> void:
-	container.add_child(StatRow.create(label, value, muted or value == "No"))
+	container.add_child(StatRow.create(label, value, muted or value == "COMMON_NO"))

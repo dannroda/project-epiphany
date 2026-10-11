@@ -14,8 +14,8 @@ static func open() -> GameOver:
 
 
 func _ready() -> void:
-	%Where.text = "Desde la entrada de la sala" if GameState.current_dungeon != &"" else "Desde el último punto de control"
-	%Hints.hints = [[&"ui_accept", "Aceptar"]]
+	%Where.text = "GAMEOVER_FROM_ROOM" if GameState.current_dungeon != &"" else "GAMEOVER_FROM_CHECKPOINT"
+	%Hints.hints = [[&"ui_accept", "HINT_ACCEPT"]]
 	_continue.pressed.connect(_on_continue)
 	%SaveAndQuit.pressed.connect(_on_save_and_quit)
 	%Quit.pressed.connect(SaveManager.quit_to_title)

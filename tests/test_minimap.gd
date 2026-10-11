@@ -10,6 +10,7 @@ func _load(scenario := "", level := "") -> Array:
 	settings.path = TEST_SETTINGS
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(TEST_SETTINGS))
 	settings.load_settings()
+	settings.set_value(&"language", "es")
 	state.reset()
 	if scenario.is_empty():
 		tree.change_scene_to_file(level)
@@ -46,6 +47,7 @@ func test_dungeon_shows_the_rooms_around_and_hides_with_menus_or_option() -> voi
 	assert_true(not minimap.visible, "se apaga desde Opciones")
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(TEST_SETTINGS))
 	settings.load_settings()
+	settings.set_value(&"language", "es")
 	state.reset()
 
 

@@ -1,7 +1,7 @@
 class_name OptionsPanel
 extends HBoxContainer
-## Las opciones del mockup Options en dos columnas (Controles | Audio y Video). Cada control se llama como su clave
-## en Settings y guarda al cambiar.
+## Las opciones del mockup Options en dos columnas (Controles e Idioma | Audio y Video). Cada control se llama como su
+## clave en Settings y guarda al cambiar.
 
 const TOGGLES: Array[StringName] = [&"mouse_aim", &"flick", &"vibration", &"fullscreen", &"shake", &"minimap"]
 const SLIDERS: Array[StringName] = [&"stick_sensitivity", &"music", &"sfx", &"ambience"]
@@ -25,6 +25,12 @@ func _ready() -> void:
 		radio.toggled.connect(func(on: bool) -> void:
 			if on:
 				Settings.set_value(&"lock_toggle", value))
+	for language in Settings.LANGUAGES:
+		var radio := get_node("%language_" + language) as CheckBox
+		radio.button_pressed = Settings.get_value(&"language") == language
+		radio.toggled.connect(func(on: bool) -> void:
+			if on:
+				Settings.set_value(&"language", language))
 	var picker := %ui_scale as OptionButton
 	picker.select(picker.get_item_index(Settings.get_value(&"ui_scale")))
 	picker.item_selected.connect(func(index: int) -> void: Settings.set_value(&"ui_scale", picker.get_item_id(index)))

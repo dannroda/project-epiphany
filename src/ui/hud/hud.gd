@@ -180,7 +180,7 @@ func _refresh_boss() -> void:
 	if _boss == null:
 		return
 	var phase := _boss.phase()
-	%BossPhase.text = "Fase %d" % phase
+	%BossPhase.text = tr("HUD_BOSS_PHASE").format({phase = phase})
 	%BossPhase.visible = phase > 0
 	if _boss_tween:
 		_boss_tween.kill()

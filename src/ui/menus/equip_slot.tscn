@@ -15,6 +15,6 @@ offset_right = 91.0
 offset_bottom = 15.0
 mouse_filter = 2
 theme_type_variation = &"Badge"
-text = "E"
+text = "EQUIP_BADGE"
 horizontal_alignment = 1
 vertical_alignment = 1

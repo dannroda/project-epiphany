@@ -2,12 +2,12 @@ extends Control
 ## Pestaña Equipo: ranuras por categoría, detalle del ítem enfocado, stats y preview del modelo.
 
 const SECTIONS := { ^"Sword": ItemData.Category.SWORD, ^"Shield": ItemData.Category.SHIELD, ^"Armor": ItemData.Category.ARMOR }
-const CATEGORY_NAMES := { ItemData.Category.SWORD: "Espada", ItemData.Category.SHIELD: "Escudo", ItemData.Category.ARMOR: "Armadura" }
+const CATEGORY_NAMES := { ItemData.Category.SWORD: "EQUIP_CATEGORY_SWORD", ItemData.Category.SHIELD: "EQUIP_CATEGORY_SHIELD", ItemData.Category.ARMOR: "EQUIP_CATEGORY_ARMOR" }
 const LOCK := preload("res://assets/ui/lock.svg")
 const HP_PER_HEART := 4
 
 ## Lo lee el menú de pausa para la ayuda del botón de aceptar.
-var accept_label := "Equipar"
+var accept_label := "EQUIP_ACCEPT"
 
 @onready var rows: VBoxContainer = %Rows
 @onready var preview_root: Node3D = %PreviewRoot
@@ -26,6 +26,11 @@ func _ready() -> void:
 	_bind_slots()
 	GameState.equipment_changed.connect(func(_c: ItemData.Category, _id: StringName) -> void: _refresh.call_deferred())
 	_refresh()
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
+		_refresh.call_deferred()
 
 
 func focus_default() -> void:
@@ -87,18 +92,20 @@ func _set_badge(slot: Button, equipped: bool) -> void:
 func _show_detail(slot: Button) -> void:
 	var item: ItemData = _slots.get(slot)
 	if item == null or not GameState.inventory.has(item.id):
-		detail.show_item(LOCK, "Sin descubrir", "", "Todavía no encontraste este equipo.")
+		detail.show_item(LOCK, "EQUIP_UNDISCOVERED", "", "EQUIP_UNDISCOVERED_DESC")
 		return
-	var kind := "%s%s" % [CATEGORY_NAMES[item.category], " · equipado" if _is_equipped(item) else ""]
+	var kind := tr(CATEGORY_NAMES[item.category])
+	if _is_equipped(item):
+		kind = tr("EQUIP_KIND_EQUIPPED").format({category = kind})
 	detail.show_item(item.icon, item.display_name, kind, item.description)
 	match item.category:
 		ItemData.Category.SWORD:
-			detail.add_stat("Daño", _hearts_text(item.damage))
+			detail.add_stat("EQUIP_STAT_DAMAGE", _hearts_text(item.damage))
 		ItemData.Category.SHIELD:
-			detail.add_stat("Bloqueo", "Frontal ±60°")
-			detail.add_stat("Refleja", "Proyectiles y luz" if item.reflects else "No")
+			detail.add_stat("EQUIP_STAT_BLOCK", "EQUIP_BLOCK_FRONTAL")
+			detail.add_stat("EQUIP_STAT_REFLECTS", "EQUIP_REFLECTS_PROJECTILES" if item.reflects else "COMMON_NO")
 		ItemData.Category.ARMOR:
-			detail.add_stat("Reducción de daño", "%d %%" % roundi(item.damage_reduction * 100))
+			detail.add_stat("EQUIP_STAT_REDUCTION", "%d %%" % roundi(item.damage_reduction * 100))
 
 
 func _refresh_stats() -> void:
@@ -126,10 +133,10 @@ func _equipped_item(category: ItemData.Category) -> ItemData:
 func _hearts_text(hp: int) -> String:
 	var hearts_count := hp / float(HP_PER_HEART)
 	if is_equal_approx(hearts_count, 1.0):
-		return "1 corazón"
+		return tr("EQUIP_HEARTS_ONE")
 	if hearts_count < 1.0:
-		return {0.25: "¼ de corazón", 0.5: "½ corazón", 0.75: "¾ de corazón"}.get(snappedf(hearts_count, 0.25), "—")
-	return "%s corazones" % str(snappedf(hearts_count, 0.25))
+		return tr({0.25: "EQUIP_HEARTS_QUARTER", 0.5: "EQUIP_HEARTS_HALF", 0.75: "EQUIP_HEARTS_THREE_QUARTERS"}.get(snappedf(hearts_count, 0.25), "—"))
+	return tr("EQUIP_HEARTS").format({hearts = str(snappedf(hearts_count, 0.25))})
 
 
 ## Copia del modelo del player con el equipo actual, girando en un SubViewport propio.

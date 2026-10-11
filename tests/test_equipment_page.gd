@@ -38,7 +38,7 @@ func test_equip_from_the_screen() -> void:
 	var page: Control = setup[3]
 	var focused := tree.root.get_viewport().gui_get_focus_owner()
 	assert_eq(focused, _slot_for(page, &"sword_basic"), "el foco arranca en lo equipado")
-	assert_true(stack.top().hints.find_children("*", "Label", true, false).any(func(c: Node) -> bool: return c.text.begins_with("Equipar")), "ayuda: Equipar")
+	assert_true(stack.top().hints.find_children("*", "Label", true, false).any(func(c: Node) -> bool: return c.text == "EQUIP_ACCEPT"), "ayuda: Equipar")
 
 	var mirror := _slot_for(page, &"shield_mirror")
 	assert_eq(mirror.disabled, false)

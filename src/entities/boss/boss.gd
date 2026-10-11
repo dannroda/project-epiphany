@@ -50,7 +50,7 @@ const SLOW_MOTION_TIME := 0.7
 		if is_inside_tree():
 			_apply_lids()
 @export var attacks: Array[BossAttack] = []
-@export var display_name := "El Ojo Antiguo"
+@export var display_name := "BOSS_NAME"
 @export var orb_damage := 4
 @export var orb_speed := 9.0
 @export var orb_charge_time := 0.8

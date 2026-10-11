@@ -15,9 +15,8 @@ combo = Array[ExtResource("1_1xjef")]([ExtResource("2_37jvb")])
 [resource]
 script = ExtResource("5_inmtl")
 id = &"sword_basic"
-display_name = "Espada"
-article = "la"
-description = "Una espada de una mano, sencilla y confiable. Pega de frente y empuja."
+display_name = "ITEM_SWORD_BASIC_NAME"
+description = "ITEM_SWORD_BASIC_DESC"
 icon = ExtResource("5_rmgrr")
 equip_scene = ExtResource("4_37jvb")
 behavior = SubResource("Resource_46co6")

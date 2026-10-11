@@ -7,8 +7,7 @@
 [resource]
 script = ExtResource("2_mbg3s")
 id = &"compass"
-display_name = "Brújula"
-article = "la"
-description = "Marca en el mapa los cofres y la sala del guardián."
+display_name = "ITEM_COMPASS_NAME"
+description = "ITEM_COMPASS_DESC"
 icon = ExtResource("1_mbg3s")
 category = 5

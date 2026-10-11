@@ -7,8 +7,7 @@
 [resource]
 script = ExtResource("2_6btoj")
 id = &"bottle_empty"
-display_name = "Botella vacía"
-article = "una"
-description = "Una botella vacía. Se puede volver a llenar."
+display_name = "ITEM_BOTTLE_EMPTY_NAME"
+description = "ITEM_BOTTLE_EMPTY_DESC"
 icon = ExtResource("1_6btoj")
 category = 3

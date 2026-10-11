@@ -6,4 +6,4 @@ size_flags_horizontal = 3
 focus_mode = 0
 theme_type_variation = &"AssignButton"
 theme_override_constants/icon_max_width = 26
-text = "Asignar a X"
+text = "ITEMS_ASSIGN"

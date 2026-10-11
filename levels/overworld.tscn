@@ -109,7 +109,7 @@ data = {
 [node name="Zone_santuario" type="Area3D" parent="." unique_id=1678673474]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 1.2, -16)
 script = ExtResource("3_rqerd")
-display_name = "Santuario"
+display_name = "PLACE_SANCTUARY"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_santuario" unique_id=1428017056]
 shape = SubResource("BoxShape3D_mweuj")
@@ -123,7 +123,7 @@ checkpoint = true
 [node name="Zone_templo" type="Area3D" parent="." unique_id=1263706178]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -16)
 script = ExtResource("3_rqerd")
-display_name = "Entrada del templo"
+display_name = "PLACE_TEMPLE_ENTRANCE"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_templo" unique_id=124426366]
 shape = SubResource("BoxShape3D_xv8lf")
@@ -136,7 +136,7 @@ id = &"templo"
 [node name="Zone_risco" type="Area3D" parent="." unique_id=361301439]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.2, -16)
 script = ExtResource("3_rqerd")
-display_name = "Risco del ojo"
+display_name = "PLACE_EYE_CRAG"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_risco" unique_id=11524084]
 shape = SubResource("BoxShape3D_fe77v")
@@ -149,7 +149,7 @@ id = &"risco"
 [node name="Zone_cueva" type="Area3D" parent="." unique_id=1969367872]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 1.2, 0)
 script = ExtResource("3_rqerd")
-display_name = "Cueva"
+display_name = "PLACE_CAVE"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_cueva" unique_id=1634190035]
 shape = SubResource("BoxShape3D_jqovx")
@@ -162,7 +162,7 @@ id = &"cueva"
 [node name="Zone_pradera" type="Area3D" parent="." unique_id=596717874]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
 script = ExtResource("3_rqerd")
-display_name = "Pradera"
+display_name = "PLACE_MEADOW"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_pradera" unique_id=9997703]
 shape = SubResource("BoxShape3D_naip4")
@@ -174,7 +174,7 @@ id = &"pradera"
 [node name="Zone_arboleda" type="Area3D" parent="." unique_id=308361582]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.2, 0)
 script = ExtResource("3_rqerd")
-display_name = "Arboleda"
+display_name = "PLACE_GROVE"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_arboleda" unique_id=2016310975]
 shape = SubResource("BoxShape3D_yqe63")
@@ -187,7 +187,7 @@ id = &"arboleda"
 [node name="Zone_gruta" type="Area3D" parent="." unique_id=1629919669]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 1.2, 16)
 script = ExtResource("3_rqerd")
-display_name = "Gruta oculta"
+display_name = "PLACE_HIDDEN_GROTTO"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_gruta" unique_id=845541249]
 shape = SubResource("BoxShape3D_01rmd")
@@ -200,7 +200,7 @@ id = &"gruta"
 [node name="Zone_start" type="Area3D" parent="." unique_id=406197470]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 16)
 script = ExtResource("3_rqerd")
-display_name = "Claro del inicio"
+display_name = "PLACE_FIRST_CLEARING"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_start" unique_id=1946411272]
 shape = SubResource("BoxShape3D_65jsb")
@@ -287,7 +287,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 0.6, 4)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0.6, 4)
 
 [node name="OverworldMap" parent="." node_paths=PackedStringArray("grid") unique_id=259113020 instance=ExtResource("11_gsck2")]
-display_name = "Valle del templo"
+display_name = "PLACE_TEMPLE_VALLEY"
 world_rect = Rect2(-37, -25, 74, 50)
 grid = NodePath("../GridMap")
 

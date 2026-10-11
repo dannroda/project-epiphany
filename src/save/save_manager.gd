@@ -166,7 +166,8 @@ func copy_slot(from: int, to: int) -> Error:
 	return DirAccess.copy_absolute(slot_path(from), slot_path(to))
 
 
-## Dónde está el player, para la pantalla de ranuras: "Mazmorra · Sala" o la zona del overworld.
+## Dónde está el player, para la pantalla de ranuras: "Mazmorra · Sala" o la zona del overworld, sin traducir
+## (claves PLACE_* que `SlotCard` traduce al mostrar).
 func location() -> String:
 	var scene := get_tree().current_scene
 	if scene == null:

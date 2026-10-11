@@ -4,6 +4,8 @@
 
 [sub_resource type="ButtonGroup" id="LockGroup"]
 
+[sub_resource type="ButtonGroup" id="LanguageGroup"]
+
 [node name="OptionsPanel" type="HBoxContainer" unique_id=1272413863]
 theme_override_constants/separation = 56
 script = ExtResource("1_panel")
@@ -16,7 +18,7 @@ theme_override_constants/separation = 8
 [node name="Heading" type="Label" parent="Controls" unique_id=1794175689]
 layout_mode = 2
 theme_type_variation = &"SectionTitle"
-text = "Controles"
+text = "OPTIONS_CONTROLS"
 vertical_alignment = 2
 
 [node name="Lock" type="HBoxContainer" parent="Controls" unique_id=466070803]
@@ -27,19 +29,19 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
-text = "Fijar objetivo"
+text = "OPTIONS_LOCK"
 
 [node name="lock_mantener" type="CheckBox" parent="Controls/Lock" unique_id=1848541558]
 unique_name_in_owner = true
 layout_mode = 2
 button_group = SubResource("LockGroup")
-text = "Mantener"
+text = "OPTIONS_LOCK_HOLD"
 
 [node name="lock_alternar" type="CheckBox" parent="Controls/Lock" unique_id=594731822]
 unique_name_in_owner = true
 layout_mode = 2
 button_group = SubResource("LockGroup")
-text = "Alternar"
+text = "OPTIONS_LOCK_TOGGLE"
 
 [node name="MouseAim" type="HBoxContainer" parent="Controls" unique_id=1044327897]
 custom_minimum_size = Vector2(0, 44)
@@ -49,7 +51,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
-text = "Apuntar con el mouse"
+text = "OPTIONS_MOUSE_AIM"
 
 [node name="mouse_aim" type="CheckBox" parent="Controls/MouseAim" unique_id=296210363]
 unique_name_in_owner = true
@@ -63,7 +65,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
-text = "Sensibilidad del stick derecho"
+text = "OPTIONS_STICK_SENSITIVITY"
 
 [node name="stick_sensitivity" type="HSlider" parent="Controls/Sensitivity" unique_id=1598657460]
 unique_name_in_owner = true
@@ -80,7 +82,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
-text = "Cambio de objetivo con flick"
+text = "OPTIONS_FLICK"
 
 [node name="flick" type="CheckBox" parent="Controls/Flick" unique_id=387412670]
 unique_name_in_owner = true
@@ -94,11 +96,42 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
-text = "Vibración"
+text = "OPTIONS_VIBRATION"
 
 [node name="vibration" type="CheckBox" parent="Controls/Vibration" unique_id=230248994]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="LanguageHeading" type="Label" parent="Controls"]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+theme_type_variation = &"SectionTitle"
+text = "OPTIONS_LANGUAGE_SECTION"
+vertical_alignment = 2
+
+[node name="Language" type="HBoxContainer" parent="Controls"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Controls/Language"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"OptionLabel"
+text = "OPTIONS_LANGUAGE"
+
+[node name="language_es" type="CheckBox" parent="Controls/Language"]
+unique_name_in_owner = true
+auto_translate_mode = 2
+layout_mode = 2
+button_group = SubResource("LanguageGroup")
+text = "Español"
+
+[node name="language_en" type="CheckBox" parent="Controls/Language"]
+unique_name_in_owner = true
+auto_translate_mode = 2
+layout_mode = 2
+button_group = SubResource("LanguageGroup")
+text = "English"
 
 [node name="Right" type="VBoxContainer" parent="." unique_id=1391476897]
 layout_mode = 2
@@ -108,7 +141,7 @@ theme_override_constants/separation = 8
 [node name="Audio" type="Label" parent="Right" unique_id=503812035]
 layout_mode = 2
 theme_type_variation = &"SectionTitle"
-text = "Audio"
+text = "OPTIONS_AUDIO"
 vertical_alignment = 2
 
 [node name="Music" type="HBoxContainer" parent="Right" unique_id=1743887767]
@@ -119,7 +152,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
-text = "Música"
+text = "OPTIONS_MUSIC"
 
 [node name="music" type="HSlider" parent="Right/Music" unique_id=868117741]
 unique_name_in_owner = true
@@ -136,7 +169,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
-text = "Efectos"
+text = "OPTIONS_SFX"
 
 [node name="sfx" type="HSlider" parent="Right/Sfx" unique_id=1296144079]
 unique_name_in_owner = true
@@ -153,7 +186,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
-text = "Ambiente"
+text = "OPTIONS_AMBIENCE"
 
 [node name="ambience" type="HSlider" parent="Right/Ambience" unique_id=1931790562]
 unique_name_in_owner = true
@@ -166,7 +199,7 @@ step = 5.0
 custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
 theme_type_variation = &"SectionTitle"
-text = "Video"
+text = "OPTIONS_VIDEO"
 vertical_alignment = 2
 
 [node name="Fullscreen" type="HBoxContainer" parent="Right" unique_id=12492484]
@@ -177,7 +210,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
-text = "Pantalla completa"
+text = "OPTIONS_FULLSCREEN"
 
 [node name="fullscreen" type="CheckBox" parent="Right/Fullscreen" unique_id=1078683004]
 unique_name_in_owner = true
@@ -191,7 +224,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
-text = "Temblor de cámara"
+text = "OPTIONS_SHAKE"
 
 [node name="shake" type="CheckBox" parent="Right/Shake" unique_id=278283170]
 unique_name_in_owner = true
@@ -205,7 +238,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
-text = "Minimapa"
+text = "OPTIONS_MINIMAP"
 
 [node name="minimap" type="CheckBox" parent="Right/Minimap"]
 unique_name_in_owner = true
@@ -219,7 +252,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
-text = "Escala de la interfaz"
+text = "OPTIONS_UI_SCALE"
 
 [node name="ui_scale" type="OptionButton" parent="Right/Scale" unique_id=2078707149]
 unique_name_in_owner = true

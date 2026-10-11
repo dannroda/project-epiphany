@@ -2,7 +2,7 @@ extends UiScreen
 ## Menú de pausa: pestañas Equipo, Ítems, Mapa y Sistema. %Pages (TabContainer sin barra) tiene las páginas y %Tabs
 ## (TabBar, entre los prompts de Q/E) sus títulos.
 
-const HINTS := [[&"ui_cancel", "Cerrar"], [[&"ui_tab_left", &"ui_tab_right"], "Pestaña"]]
+const HINTS := [[&"ui_cancel", "HINT_CLOSE"], [[&"ui_tab_left", &"ui_tab_right"], "PAUSE_HINT_TAB"]]
 
 @onready var pages: TabContainer = %Pages
 @onready var tabs: TabBar = %Tabs
@@ -58,7 +58,7 @@ func _update_hints() -> void:
 	var page := pages.get_child(current)
 	var extra = page.get(&"extra_hints")
 	var accept = page.get(&"accept_label")
-	var accept_label: String = accept if accept is String else "Usar"
+	var accept_label: String = accept if accept is String else "HINT_USE"
 	var all: Array = extra if extra is Array else []
 	if not accept_label.is_empty():
 		all = all + [[&"ui_accept", accept_label]]

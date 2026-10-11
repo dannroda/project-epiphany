@@ -8,6 +8,7 @@ func _initialize() -> void:
 	await process_frame
 	root.get_node(^"SaveManager").save_dir = "user://test_saves/"
 	root.get_node(^"Settings").path = "user://test_settings.cfg"
+	root.get_node(^"Settings").set_value(&"language", "es")
 	var total := 0
 	var failures: PackedStringArray = []
 	for file in DirAccess.get_files_at(DIR):

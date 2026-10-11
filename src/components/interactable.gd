@@ -5,7 +5,7 @@ signal interacted(by: PlayerCharacter)
 
 const LAYER := 1 << 5
 
-@export var prompt: String = "Abrir" ## Lo muestra el HUD en el botón contextual (4.1)
+@export var prompt: String = "PROMPT_OPEN" ## Lo muestra el HUD en el botón contextual (4.1)
 @export var enabled: bool = true
 ## Desempata entre interactuables parecidos (cofre > tablilla).
 @export var prompt_priority: int = 0

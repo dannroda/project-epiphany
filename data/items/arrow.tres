@@ -7,8 +7,8 @@
 [resource]
 script = ExtResource("2_jhgp1")
 id = &"arrow"
-display_name = "Flechas"
-description = "Munición para el arco."
+display_name = "ITEM_ARROW_NAME"
+description = "ITEM_ARROW_DESC"
 icon = ExtResource("1_jhgp1")
 category = 4
 max_stack = 30

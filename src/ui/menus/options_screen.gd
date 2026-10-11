@@ -14,7 +14,7 @@ static func open() -> OptionsScreen:
 
 
 func _ready() -> void:
-	%Hints.hints = [[&"ui_accept", "Cambiar"], [&"ui_cancel", "Volver"]]
+	%Hints.hints = [[&"ui_accept", "HINT_CHANGE"], [&"ui_cancel", "HINT_BACK"]]
 
 
 func focus_default() -> void:

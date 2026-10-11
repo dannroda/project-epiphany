@@ -82,7 +82,7 @@ func test_keys_assign_on_the_items_page() -> void:
 	await _press_key(tree, KEY_Q)
 	assert_eq(state.item_buttons, [&"bomb_bag", &"bow"] as Array[StringName], "se intercambian")
 	var actions: Array = page.detail.actions.get_children().filter(func(b: Node) -> bool: return not b.is_queued_for_deletion()).map(func(b: Button) -> String: return b.text)
-	assert_eq(actions, ["Asignado a X", "Asignar a Y"], "botones del detalle")
+	assert_eq(actions, [tr("ITEMS_ASSIGNED").format({button = "X"}), tr("ITEMS_ASSIGN").format({button = "Y"})], "botones del detalle")
 
 	state.inventory.remove(&"arrow", 2)
 	await tree.process_frame

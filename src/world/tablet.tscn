@@ -23,7 +23,7 @@ shape = SubResource("BodyShape")
 
 [node name="Interactable" type="Area3D" parent="."]
 script = ExtResource("2_interactable")
-prompt = "Leer"
+prompt = "PROMPT_READ"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Interactable"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0.45)

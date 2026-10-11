@@ -6,9 +6,8 @@
 [resource]
 script = ExtResource("2_item")
 id = &"heart_piece"
-display_name = "Pieza de corazón"
-article = "una"
-description = "Juntá cuatro y tu vida máxima sube un corazón."
+display_name = "ITEM_HEART_PIECE_NAME"
+description = "ITEM_HEART_PIECE_DESC"
 icon = ExtResource("1_icon")
 category = 6
 max_stack = 8

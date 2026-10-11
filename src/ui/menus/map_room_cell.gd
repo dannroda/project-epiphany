@@ -42,7 +42,7 @@ func _draw() -> void:
 	if style:
 		draw_style_box(style, rect)
 	var font := get_theme_default_font()
-	draw_string(font, Vector2(10, 22), room_name, HORIZONTAL_ALIGNMENT_LEFT, size.x - 16, 13, NAME)
+	draw_string(font, Vector2(10, 22), tr(room_name), HORIZONTAL_ALIGNMENT_LEFT, size.x - 16, 13, NAME)
 	var x := size.x - 14.0
 	var y := size.y - 16.0
 	if here:

@@ -14,7 +14,7 @@ static func open() -> Ending:
 
 
 func _ready() -> void:
-	%Hints.hints = [[&"ui_accept", "Aceptar"]]
+	%Hints.hints = [[&"ui_accept", "HINT_ACCEPT"]]
 	_keep_playing.pressed.connect(MenuStack.pop)
 	%ToTitle.pressed.connect(_on_to_title)
 

@@ -8,6 +8,7 @@ func _settings() -> Node:
 	settings.path = TEST_PATH
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(TEST_PATH))
 	settings.load_settings()
+	settings.set_value(&"language", "es")
 	return settings
 
 
@@ -15,12 +16,13 @@ func _restore(settings: Node) -> void:
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(TEST_PATH))
 	settings.path = "user://test_settings.cfg"
 	settings.load_settings()
+	settings.set_value(&"language", "es")
 
 
 func test_every_option_persists_and_applies() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var settings := _settings()
-	var changes := {&"lock_toggle": true, &"mouse_aim": false, &"stick_sensitivity": 80, &"flick": false, &"vibration": false, &"music": 30, &"sfx": 40, &"ambience": 0, &"shake": false, &"ui_scale": 125}
+	var changes := {&"lock_toggle": true, &"mouse_aim": false, &"stick_sensitivity": 80, &"flick": false, &"vibration": false, &"music": 30, &"sfx": 40, &"ambience": 0, &"shake": false, &"ui_scale": 125, &"language": "en"}
 	for key in changes:
 		settings.set_value(key, changes[key])
 	settings.values = settings.DEFAULTS.duplicate()
@@ -31,6 +33,7 @@ func test_every_option_persists_and_applies() -> void:
 	assert_eq(AudioServer.is_bus_mute(AudioServer.get_bus_index(&"Ambience")), true, "ambiente en 0: muteado")
 	assert_eq(tree.root.get_node(^"Feel").settings.shake_enabled, false, "sin temblor de cámara")
 	assert_true(is_equal_approx(tree.root.content_scale_factor, 1.25), "escala de la interfaz")
+	assert_eq(TranslationServer.get_locale(), "en", "idioma")
 
 	tree.root.get_node(^"GameState").reset()
 	tree.change_scene_to_file("res://levels/test.tscn")

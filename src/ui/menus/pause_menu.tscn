@@ -74,10 +74,10 @@ theme_type_variation = &"PauseTabBar"
 current_tab = 0
 clip_tabs = false
 tab_count = 4
-tab_0/title = "Equipo"
-tab_1/title = "Ítems"
-tab_2/title = "Mapa"
-tab_3/title = "Sistema"
+tab_0/title = "PAUSE_TAB_EQUIPMENT"
+tab_1/title = "PAUSE_TAB_ITEMS"
+tab_2/title = "PAUSE_TAB_MAP"
+tab_3/title = "PAUSE_TAB_SYSTEM"
 
 [node name="NextKey" type="TextureRect" parent="Frame/Panel/Layout/Nav/Header" unique_id=1245350997]
 unique_name_in_owner = true

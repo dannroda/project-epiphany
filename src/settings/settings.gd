@@ -19,7 +19,10 @@ const DEFAULTS := {
 	&"shake": true,
 	&"minimap": true,
 	&"ui_scale": 100,
+	&"language": "",
 }
+## Idiomas con traducción en translations/<código>.po. Vacío en `language` = todavía no se eligió.
+const LANGUAGES: Array[String] = ["es", "en"]
 
 var values := DEFAULTS.duplicate()
 ## Los tests la cambian para no tocar las opciones reales.
@@ -57,6 +60,19 @@ func save_settings() -> void:
 	cfg.save(path)
 
 
+## El idioma elegido o, si todavía no se eligió, el del sistema si hay traducción (si no, español).
+func language() -> String:
+	var chosen: String = get_value(&"language")
+	if chosen in LANGUAGES:
+		return chosen
+	var system := OS.get_locale_language()
+	return system if system in LANGUAGES else LANGUAGES[0]
+
+
+func has_language() -> bool:
+	return get_value(&"language") in LANGUAGES
+
+
 ## Multiplicador de giro del stick derecho (apuntar y girar con el haz): 0..100 → 0.5..1.5.
 func stick_factor() -> float:
 	return lerpf(0.5, 1.5, float(get_value(&"stick_sensitivity")) / 100.0)
@@ -74,6 +90,7 @@ func _apply() -> void:
 	_volume(&"Ambience", get_value(&"ambience"))
 	Feel.settings.shake_enabled = get_value(&"shake")
 	get_tree().root.content_scale_factor = float(get_value(&"ui_scale")) / 100.0
+	TranslationServer.set_locale(language())
 	if DisplayServer.get_name() != "headless":
 		var mode := DisplayServer.WINDOW_MODE_FULLSCREEN if get_value(&"fullscreen") else DisplayServer.WINDOW_MODE_WINDOWED
 		if DisplayServer.window_get_mode() != mode:

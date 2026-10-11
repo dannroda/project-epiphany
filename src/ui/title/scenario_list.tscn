@@ -42,7 +42,7 @@ theme_override_constants/separation = 4
 [node name="Heading" type="Label" parent="Center/Panel/Box"]
 layout_mode = 2
 theme_type_variation = &"Title"
-text = "Cargar escenario"
+text = "TITLE_SCENARIOS"
 horizontal_alignment = 1
 
 [node name="List" type="VBoxContainer" parent="Center/Panel/Box"]

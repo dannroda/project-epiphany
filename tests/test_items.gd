@@ -30,7 +30,7 @@ func test_database_has_every_item_once() -> void:
 
 
 func test_get_item() -> void:
-	assert_eq(Items.get_item(&"sword_basic").display_name, "Espada")
+	assert_eq(Items.get_item(&"sword_basic").display_name, "ITEM_SWORD_BASIC_NAME")
 	assert_eq(Items.get_item(&"no_existe"), null)
 
 

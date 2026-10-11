@@ -11,11 +11,11 @@ enum Mode { PLAY, NEW, COPY_FROM, COPY_TO, DELETE }
 
 const SCENE_PATH := "res://src/ui/title/file_select.tscn"
 const HEADINGS := {
-	Mode.PLAY: "Elegí una partida",
-	Mode.NEW: "¿Dónde empezás la partida?",
-	Mode.COPY_FROM: "¿Qué partida copiás?",
-	Mode.COPY_TO: "¿En qué ranura la copiás?",
-	Mode.DELETE: "¿Qué partida borrás?",
+	Mode.PLAY: "FILE_HEADING_PLAY",
+	Mode.NEW: "FILE_HEADING_NEW",
+	Mode.COPY_FROM: "FILE_HEADING_COPY_FROM",
+	Mode.COPY_TO: "FILE_HEADING_COPY_TO",
+	Mode.DELETE: "FILE_HEADING_DELETE",
 }
 
 var start_mode := Mode.PLAY
@@ -83,11 +83,11 @@ func _set_mode(new_mode: Mode) -> void:
 	heading.text = HEADINGS[mode]
 	match mode:
 		Mode.PLAY:
-			hints.hints = [[&"ui_accept", "Jugar"], [&"ui_cancel", "Volver"]]
+			hints.hints = [[&"ui_accept", "FILE_HINT_PLAY"], [&"ui_cancel", "HINT_BACK"]]
 		Mode.NEW:
-			hints.hints = [[&"ui_accept", "Empezar"], [&"ui_cancel", "Volver"]]
+			hints.hints = [[&"ui_accept", "FILE_HINT_START"], [&"ui_cancel", "HINT_BACK"]]
 		_:
-			hints.hints = [[&"ui_accept", "Elegir"], [&"ui_cancel", "Cancelar"]]
+			hints.hints = [[&"ui_accept", "FILE_HINT_CHOOSE"], [&"ui_cancel", "HINT_CANCEL"]]
 	copy_button.visible = mode == Mode.PLAY
 	delete_button.visible = mode == Mode.PLAY
 	refresh()
@@ -96,8 +96,11 @@ func _set_mode(new_mode: Mode) -> void:
 		focus_default()
 
 
-func _name(slot: int) -> String:
-	return "el guardado automático" if slot == SaveManager.AUTO_SLOT else "la partida %d" % slot
+## La pregunta de `key`, o su variante _AUTO si `from` es la ranura Auto.
+func _question(key: String, slot: int, from := -1) -> String:
+	if from == SaveManager.AUTO_SLOT or (from < 0 and slot == SaveManager.AUTO_SLOT):
+		key += "_AUTO"
+	return tr(key).format({slot = slot, from = from})
 
 
 func _on_card(card: SlotCard) -> void:
@@ -109,7 +112,7 @@ func _on_card(card: SlotCard) -> void:
 			if empty:
 				chosen.emit(card.slot, true)
 				return
-			ConfirmDialog.ask("¿Empezar de cero en la partida %d? Se pierde lo guardado ahí." % card.slot, "Sobrescribir").answered.connect(func(yes: bool) -> void:
+			ConfirmDialog.ask(_question("FILE_CONFIRM_OVERWRITE", card.slot), "FILE_OVERWRITE").answered.connect(func(yes: bool) -> void:
 				if yes:
 					chosen.emit(card.slot, true))
 		Mode.COPY_FROM:
@@ -126,7 +129,7 @@ func _on_card(card: SlotCard) -> void:
 				_set_mode(Mode.PLAY)
 			else:
 				var from := _copy_from
-				ConfirmDialog.ask("¿Reemplazar la partida %d con %s?" % [card.slot, _name(from)], "Reemplazar").answered.connect(func(yes: bool) -> void:
+				ConfirmDialog.ask(_question("FILE_CONFIRM_REPLACE", card.slot, from), "FILE_REPLACE").answered.connect(func(yes: bool) -> void:
 					if yes:
 						SaveManager.copy_slot(from, card.slot)
 					_set_mode(Mode.PLAY))
@@ -134,7 +137,7 @@ func _on_card(card: SlotCard) -> void:
 			if empty:
 				Feel.sfx(&"deny", Vector3.ZERO)
 				return
-			ConfirmDialog.ask("¿Borrar %s? No se puede deshacer." % _name(card.slot), "Borrar").answered.connect(func(yes: bool) -> void:
+			ConfirmDialog.ask(_question("FILE_CONFIRM_DELETE", card.slot), "FILE_DELETE").answered.connect(func(yes: bool) -> void:
 				if yes:
 					SaveManager.delete_slot(card.slot)
 				_set_mode(Mode.PLAY))

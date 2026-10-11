@@ -4,7 +4,7 @@ extends Node
 
 @export var id: StringName = &"d1"
 @export var display_name: String = ""
-@export var floor_name: String = "Piso 1"
+@export var floor_name: String = "PLACE_FLOOR_1"
 
 
 func _enter_tree() -> void:

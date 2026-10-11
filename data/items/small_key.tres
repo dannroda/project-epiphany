@@ -7,9 +7,8 @@
 [resource]
 script = ExtResource("2_5ipan")
 id = &"small_key"
-display_name = "Llave chica"
-article = "una"
-description = "Abre una puerta cerrada de esta mazmorra."
+display_name = "ITEM_SMALL_KEY_NAME"
+description = "ITEM_SMALL_KEY_DESC"
 icon = ExtResource("1_5ipan")
 category = 5
 max_stack = 9

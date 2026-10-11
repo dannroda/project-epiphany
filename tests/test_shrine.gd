@@ -70,7 +70,7 @@ func test_reach_the_shrine_get_the_mirror_and_light_the_crystal() -> void:
 	await _frames(tree, 2)
 	chest.interactable.interact(player)
 	await tree.create_timer(1.0).timeout
-	assert_true(stack.is_open() and stack.top().text_box.title_label.text.contains("Escudo espejo"), "item get del escudo espejo")
+	assert_true(stack.is_open() and stack.top().text_box.title_label.text == tr("ITEM_SHIELD_MIRROR_GOT"), "item get del escudo espejo")
 	while stack.is_open():
 		stack.pop()
 	await tree.create_timer(1.2).timeout

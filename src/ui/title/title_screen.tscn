@@ -78,35 +78,35 @@ unique_name_in_owner = true
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_right = NodePath(".")
-text = "Continuar"
+text = "COMMON_CONTINUE"
 
 [node name="Load" parent="Menu" unique_id=1156117820 instance=ExtResource("4_item")]
 unique_name_in_owner = true
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_right = NodePath(".")
-text = "Cargar partida"
+text = "TITLE_LOAD"
 
 [node name="NewGame" parent="Menu" unique_id=1156117819 instance=ExtResource("4_item")]
 unique_name_in_owner = true
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_right = NodePath(".")
-text = "Nueva partida"
+text = "TITLE_NEW_GAME"
 
 [node name="Options" parent="Menu" unique_id=2052812604 instance=ExtResource("4_item")]
 unique_name_in_owner = true
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_right = NodePath(".")
-text = "Opciones"
+text = "TITLE_OPTIONS"
 
 [node name="Quit" parent="Menu" unique_id=785654314 instance=ExtResource("4_item")]
 unique_name_in_owner = true
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_right = NodePath(".")
-text = "Salir"
+text = "TITLE_QUIT"
 
 [node name="DebugScenarios" type="Button" parent="." unique_id=1257324364]
 unique_name_in_owner = true
@@ -120,7 +120,7 @@ offset_right = 260.0
 offset_bottom = -28.0
 grow_vertical = 0
 theme_type_variation = &"DebugButton"
-text = "DEBUG · Cargar escenario…"
+text = "TITLE_DEBUG_SCENARIOS"
 
 [node name="Version" type="Label" parent="." unique_id=1745091090]
 unique_name_in_owner = true

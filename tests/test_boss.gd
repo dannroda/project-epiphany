@@ -207,7 +207,7 @@ func test_arena_closes_skippable_intro_and_bar() -> void:
 	assert_true(Time.get_ticks_msec() - skipped_at < 500, "la intro se salta")
 	assert_true(not tree.paused, "el juego sigue")
 	assert_true(hud.boss_bar.visible and is_equal_approx(hud.boss_health.value, 1.0), "aparece la barra llena")
-	assert_eq(hud.get_node(^"%BossPhase").text, "Fase 1")
+	assert_eq(hud.get_node(^"%BossPhase").text, hud.tr("HUD_BOSS_PHASE").format({phase = 1}))
 	boss.hand_left.stun(5.0)
 	boss.hand_left.hurtbox.receive(_hit(3))
 	await tree.create_timer(0.4).timeout

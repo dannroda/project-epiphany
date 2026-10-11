@@ -17,9 +17,8 @@ hold_to_aim = true
 [resource]
 script = ExtResource("3_ca8yi")
 id = &"bow"
-display_name = "Arco"
-article = "el"
-description = "Dispara flechas hacia donde apuntás: stick derecho, mouse o el objetivo fijado. Alcanza interruptores lejanos."
+display_name = "ITEM_BOW_NAME"
+description = "ITEM_BOW_DESC"
 icon = ExtResource("2_ca8yi")
 category = 3
 equip_scene = ExtResource("6_bow_model")

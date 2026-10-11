@@ -38,28 +38,28 @@ func test_walk_every_zone_without_falling_or_sticking() -> void:
 		enemy.free()
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	await tree.create_timer(0.5).timeout
-	assert_eq(AreaZone._current.display_name, "Claro del inicio", "arranca en el claro")
+	assert_eq(AreaZone._current.display_name, "PLACE_FIRST_CLEARING", "arranca en el claro")
 	var at := func(axis: int, sign_: float, value: float) -> Callable:
 		return func() -> bool: return (player.global_position[axis] - value) * sign_ >= 0.0
 	var route := [
-		[&"move_forward", at.call(2, -1.0, 0.0), "Pradera"],
-		[&"move_left", at.call(0, -1.0, -24.0), "Cueva"],
-		[&"move_forward", at.call(2, -1.0, -16.0), "Santuario"],
-		[&"move_right", at.call(0, 1.0, 0.0), "Entrada del templo"],
-		[&"move_backward", at.call(2, 1.0, 0.0), "Pradera"],
-		[&"move_right", at.call(0, 1.0, 24.0), "Arboleda"],
-		[&"move_forward", at.call(2, -1.0, -14.0), "Risco del ojo"],
-		[&"move_backward", at.call(2, 1.0, 0.0), "Arboleda"],
-		[&"move_left", at.call(0, -1.0, 0.0), "Pradera"],
-		[&"move_backward", at.call(2, 1.0, 16.0), "Claro del inicio"],
-		[&"move_left", at.call(0, -1.0, -24.0), "Gruta oculta"],
+		[&"move_forward", at.call(2, -1.0, 0.0), "PLACE_MEADOW"],
+		[&"move_left", at.call(0, -1.0, -24.0), "PLACE_CAVE"],
+		[&"move_forward", at.call(2, -1.0, -16.0), "PLACE_SANCTUARY"],
+		[&"move_right", at.call(0, 1.0, 0.0), "PLACE_TEMPLE_ENTRANCE"],
+		[&"move_backward", at.call(2, 1.0, 0.0), "PLACE_MEADOW"],
+		[&"move_right", at.call(0, 1.0, 24.0), "PLACE_GROVE"],
+		[&"move_forward", at.call(2, -1.0, -14.0), "PLACE_EYE_CRAG"],
+		[&"move_backward", at.call(2, 1.0, 0.0), "PLACE_GROVE"],
+		[&"move_left", at.call(0, -1.0, 0.0), "PLACE_MEADOW"],
+		[&"move_backward", at.call(2, 1.0, 16.0), "PLACE_FIRST_CLEARING"],
+		[&"move_left", at.call(0, -1.0, -24.0), "PLACE_HIDDEN_GROTTO"],
 	]
 	for leg in route:
 		var result: Array = await _walk_until(tree, player, leg[0], leg[1])
 		assert_true(result[0], "llega a %s sin trabarse (quedó en %s)" % [leg[2], player.global_position.snappedf(0.1)])
 		assert_eq(result[1], false, "no cae camino a %s" % leg[2])
 		assert_eq(AreaZone._current.display_name if AreaZone._current else "", leg[2], "el HUD nombra la zona")
-	assert_eq(tree.get_first_node_in_group(&"hud").area_label.text, "Gruta oculta", "el cartel muestra la última zona")
+	assert_eq(tree.get_first_node_in_group(&"hud").area_label.text, tr("PLACE_HIDDEN_GROTTO"), "el cartel muestra la última zona")
 	state.reset()
 
 
