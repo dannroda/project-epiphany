@@ -3,9 +3,9 @@
 [ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/chullpa/Body.res" id="1_eqgp0"]
 [ext_resource type="Skin" path="res://src/entities/models/meshes/chullpa/skin.tres" id="2_q738x"]
 
-[node name="Visuals" type="Node3D" unique_id=701295028]
+[node name="Visuals" type="Node3D" unique_id=138988279]
 
-[node name="Body" type="MeshInstance3D" parent="." unique_id=2012812267]
+[node name="Body" type="MeshInstance3D" parent="." unique_id=325813671]
 mesh = ExtResource("1_eqgp0")
 skin = ExtResource("2_q738x")
 skeleton = NodePath("../../Skeleton3D")

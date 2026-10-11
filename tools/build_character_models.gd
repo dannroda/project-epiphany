@@ -1,5 +1,5 @@
 extends SceneTree
-## Arma un "Visuals" por personaje (assets/epiphany/personaje_*.blend, pesados al Rig_Medium de KayKit): mallas en .res
+## Arma un "Visuals" por personaje (assets/epiphany/personaje_*.glb, pesados al Rig_Medium de KayKit): mallas en .res
 ## con el material de la paleta y una escena que se cuelga de un ModelController con su Skeleton3D al lado
 ## (el rig y las animaciones de siempre).
 ## godot --headless --path . --script res://tools/build_character_models.gd
@@ -9,9 +9,9 @@ const MESHES := "res://src/entities/models/meshes/%s/"
 const SKELETON := NodePath("../../Skeleton3D")
 const MATERIAL := preload("res://data/kits/materials/epiphany.tres")
 const CHARACTERS := {
-	"jugador": "res://assets/epiphany/personaje_jugador.blend",
-	"chullpa": "res://assets/epiphany/personaje_chullpa.blend",
-	"chullpa_guardian": "res://assets/epiphany/personaje_chullpa_guardian.blend",
+	"jugador": "res://assets/epiphany/personaje_jugador.glb",
+	"chullpa": "res://assets/epiphany/personaje_chullpa.glb",
+	"chullpa_guardian": "res://assets/epiphany/personaje_chullpa_guardian.glb",
 }
 ## El rig del proyecto no tiene los huesos de las armas; sus binds pasan a la mano (no pesan en ningún vértice).
 const BIND_RENAMES := {"handslot.l": "hand.l", "handslot.r": "hand.r"}

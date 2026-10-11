@@ -1,4 +1,4 @@
-# Arma assets/epiphany/personaje_<nombre>.blend: personajes low poly sobre el esqueleto Rig_Medium de KayKit (mismos nombres
+# Publica assets/epiphany/personaje_<nombre>.glb: personajes low poly sobre el esqueleto Rig_Medium de KayKit (mismos nombres
 # de huesos), así usan las animaciones de player/animation/libs/. Cada parte va pegada entera a un hueso (skinning rígido).
 # blender -b -P tools/blender/build_personajes.py
 import math
@@ -108,13 +108,7 @@ def arms_and_legs(body, bp, sleeve, skin, pants, shoe, arm_r=0.085, leg_r=0.1, b
 
 
 def save(name):
-	path = os.path.join(epi.ROOT, "assets", "epiphany", f"personaje_{name}.blend")
-	bpy.ops.wm.save_as_mainfile(filepath=path)
-	bpy.ops.file.make_paths_relative()
-	bpy.ops.wm.save_mainfile()
-	if os.path.exists(path + "1"):
-		os.remove(path + "1")
-	print("guardado:", path)
+	epi.publish(f"personaje_{name}", objects=bpy.context.scene.objects)
 
 
 # --- jugador ---

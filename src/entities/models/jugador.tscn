@@ -5,19 +5,19 @@
 [ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/jugador/Trenza.res" id="3_wi25r"]
 [ext_resource type="Skin" path="res://src/entities/models/meshes/jugador/trenza_skin.tres" id="4_3jy67"]
 
-[node name="Visuals" type="Node3D" unique_id=1248339063]
+[node name="Visuals" type="Node3D" unique_id=1718766492]
 
-[node name="Body" type="MeshInstance3D" parent="." unique_id=389552145]
+[node name="Body" type="MeshInstance3D" parent="." unique_id=170085487]
 mesh = ExtResource("1_ikp65")
 skin = ExtResource("2_wqu00")
 skeleton = NodePath("../../Skeleton3D")
 
-[node name="Trenza" type="BoneAttachment3D" parent="." unique_id=1065034264]
+[node name="Trenza" type="BoneAttachment3D" parent="." unique_id=1287251759]
 bone_name = "head"
 use_external_skeleton = true
 external_skeleton = NodePath("../../Skeleton3D")
 
-[node name="Skeleton3D" type="Skeleton3D" parent="Trenza" unique_id=1445525865]
+[node name="Skeleton3D" type="Skeleton3D" parent="Trenza" unique_id=716070252]
 bones/0/name = "root"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
@@ -51,12 +51,12 @@ bones/3/rotation = Quaternion(-0.24566473, -0.06986978, 0.17507258, 0.9508505)
 bones/3/scale = Vector3(1, 1, 1.0000001)
 bones/3/skin_scale = Vector3(1, 1, 1)
 
-[node name="Trenza" type="MeshInstance3D" parent="Trenza/Skeleton3D" unique_id=643878024]
+[node name="Trenza" type="MeshInstance3D" parent="Trenza/Skeleton3D" unique_id=512887169]
 mesh = ExtResource("3_wi25r")
 skin = ExtResource("4_3jy67")
 skeleton = NodePath("..")
 
-[node name="Springs" type="SpringBoneSimulator3D" parent="Trenza/Skeleton3D" unique_id=52273420]
+[node name="Springs" type="SpringBoneSimulator3D" parent="Trenza/Skeleton3D" unique_id=1431948098]
 setting_count = 1
 settings/0/root_bone_name = "trenza1"
 settings/0/root_bone = -1

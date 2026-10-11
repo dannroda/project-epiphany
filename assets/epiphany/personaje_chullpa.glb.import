@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://b7byk7tkkihf4"
-path="res://.godot/imported/personaje_chullpa.blend-78fa7db779aba91e3a0afcb4d9357c99.scn"
+uid="uid://dkl1com8hpnra"
+path="res://.godot/imported/personaje_chullpa.glb-84e8597c3f87bf29a5f46f2101c45636.scn"
 
 [deps]
 
-source_file="res://assets/epiphany/personaje_chullpa.blend"
-dest_files=["res://.godot/imported/personaje_chullpa.blend-78fa7db779aba91e3a0afcb4d9357c99.scn"]
+source_file="res://assets/epiphany/personaje_chullpa.glb"
+dest_files=["res://.godot/imported/personaje_chullpa.glb-84e8597c3f87bf29a5f46f2101c45636.scn"]
 
 [params]
 
@@ -41,24 +41,7 @@ materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
 _subresources={}
-blender/nodes/visible=2.0
-blender/nodes/active_collection_only=false
-blender/nodes/punctual_lights=true
-blender/nodes/cameras=true
-blender/nodes/custom_properties=true
-blender/nodes/modifiers=1
-blender/meshes/vertex_colors=1
-blender/meshes/uvs=true
-blender/meshes/normals=true
-blender/meshes/export_geometry_nodes_instances=false
-blender/meshes/gpu_instances=false
-blender/meshes/tangents=true
-blender/meshes/skins=2
-blender/meshes/export_bones_deforming_mesh_only=false
-blender/materials/unpack_enabled=true
-blender/materials/export_materials=1
-blender/animation/limit_playback=true
-blender/animation/always_sample=true
-blender/animation/group_tracks=true
+epiphany/mesh_dir=""
 gltf/naming_version=2
+gltf/embedded_image_handling=1
 gltf/texture_map_mode=1
