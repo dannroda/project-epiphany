@@ -1791,6 +1791,8 @@ if Log.is_enabled(Log.Level.DEBUG, &"ai"):   # solo si el mensaje es caro de arm
 
 **Sombras del sol (10.25):** el `Sun` del overworld, el templo y la mazmorra de prueba usa 2 cascadas hasta 32 m (lo que abarca la cámara cenital) en vez del default de 4 hasta 100 m, que volvía a dibujar la geometría por cada cascada. Medido el 2026-10-11 (RX 580, 1280×720, sin tope): overworld 1,23 M → 346 mil triángulos y 765 → 228 draw calls (GPU 1,39 → 1,16 ms); templo 540 mil → 143 mil y 415 → 149. La sombra ortogonal cuesta lo mismo en geometría y más en GPU. Las capturas antes/después se ven iguales. `test_render_budget` lo controla.
 
+**Paredes del GridMap (10.26):** `tools/build_overworld_kit.gd` y `build_temple_kit.gd` pasan las paredes por `tools/hidden_faces.gd`, que saca las caras que nunca se ven: la base de cada piedra (pegada al núcleo del muro) y las que miran abajo. Lo enterrado queda porque se ve junto a pozos y abismos. Acantilado 1224 → 918 triángulos por celda, Pared del templo 816 → 656. Con las sombras de 10.25: overworld 347 mil → 288 mil triángulos (GPU 1,16 → 1,12 ms), templo 143 mil → 124 mil (1,08 → 0,95 ms), mismas draw calls, capturas iguales. `cell_octant_size` 4 en vez de 8 baja otro 17 % de triángulos en el overworld pero sube las draw calls de 227 a 290 y la GPU apenas cambia (1,12 → 1,03 ms): queda en 8. `test_render_budget` controla el tope por celda.
+
 ### 11.x Builds
 <!-- id: builds -->
 

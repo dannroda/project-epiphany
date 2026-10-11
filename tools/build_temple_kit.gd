@@ -7,6 +7,9 @@ const OUTPUT := "res://data/kits/temple_kit.tres"
 const BLEND := "res://assets/epiphany/templo.blend"
 const STONE := preload("res://data/kits/materials/epiphany_stone.tres")
 const FLOOR := preload("res://data/kits/materials/epiphany.tres")
+const HIDDEN_FACES := preload("res://tools/hidden_faces.gd")
+## Piezas a las que se les sacan las caras que nunca se ven.
+const STRIPPED := ["pared", "pared_nicho", "pared_ojo"]
 
 ## id del kit gris → [pieza, material].
 const BASE := {
@@ -66,9 +69,10 @@ func _initialize() -> void:
 func _piece(piece: String, material: Material) -> ArrayMesh:
 	var node := _scene.find_child(piece, true, false) as MeshInstance3D
 	assert(node != null, "falta la pieza " + piece)
+	var mesh: Mesh = HIDDEN_FACES.strip(node.mesh) if piece in STRIPPED else node.mesh
 	var tool := SurfaceTool.new()
 	tool.begin(Mesh.PRIMITIVE_TRIANGLES)
-	for surface in node.mesh.get_surface_count():
-		tool.append_from(node.mesh, surface, Transform3D.IDENTITY)
+	for surface in mesh.get_surface_count():
+		tool.append_from(mesh, surface, Transform3D.IDENTITY)
 	tool.set_material(material)
 	return tool.commit()

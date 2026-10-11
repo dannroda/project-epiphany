@@ -8,12 +8,12 @@
   "order": 57,
   "priority": "low",
   "refs": [],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "rendimiento",
     "arte"
   ],
   "test": "",
   "title": "Paredes del GridMap más livianas",
-  "updated_at": "2026-10-11T05:42:43.946Z"
+  "updated_at": "2026-10-11T08:38:24.458Z"
 }

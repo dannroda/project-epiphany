@@ -26,9 +26,9 @@
       "text": "Minimapa (11.37)"
     },
     {
-      "detail": "Mismo grosor y color que el muro, solo grietas; lo de atrás tapado; al volarla se descubre sin frenarte. El borde contiguo es 11.54.",
+      "detail": "Mismo grosor y color que el muro, solo grietas; lo de atrás tapado; al volarla se descubre sin frenarte. Desde el inicio del claro no se ve el labio de pasto ni la pared de más allá (11.54).",
       "done": false,
-      "text": "Pared agrietada y zonas tapadas (11.51, 11.52)"
+      "text": "Pared agrietada y zonas tapadas (11.51, 11.52, 11.54)"
     },
     {
       "detail": "Toque: a los pies. Mantener: levanta y apunta, soltar tira en parábola; la mecha sigue corriendo.",
@@ -76,9 +76,9 @@
       "text": "Build en máquina limpia (10.9)"
     },
     {
-      "detail": "10.23 verificada (~16 s, estable). 10.8 la reemplazan 10.24–10.26.",
+      "detail": "10.23 verificada (~16 s, estable). 10.8 la reemplazan 10.24–10.26: en Opciones, Tope de FPS (30/60/120/sin tope) cambia al instante y se guarda; las sombras del sol y las paredes se ven igual que antes, sin tirones.",
       "done": false,
-      "text": "Cerrar 10.8 y 10.23"
+      "text": "Cerrar 10.8 y 10.23; rendimiento (10.24–10.26)"
     },
     {
       "detail": "Dos controles en el templo: la cámara mira a los dos y no los deja separarse más que la pantalla; al cruzar uno una puerta, el otro aparece a su lado y entran juntos; overworld ↔ templo llegan juntos.",
@@ -99,6 +99,21 @@
       "detail": "Solo: mantené LB (o F): el mundo casi se frena, elegí con el stick y poné con X/Y; al soltar sigue. Co-op: cada uno abre su anillo sin pausar; lo que lleva el otro se ve apagado con su etiqueta. Tecla 5: pasa al menú compartido; en Ítems el P2 mueve su cursor con su control y asigna con X/Y. Decidí cuál queda.",
       "done": false,
       "text": "Co-op: elegir ítems (13.9)"
+    },
+    {
+      "detail": "Un enemigo muerto queda 4 s, se hunde en el piso con polvo y desaparece; lo que soltó queda; las salas y oleadas siguen abriendo al morir el último.",
+      "done": false,
+      "text": "Cuerpos (11.58)"
+    },
+    {
+      "detail": "Opciones → Ver controles: el diagrama del control que estés usando; Y (o T) cambia entre gamepad y teclado. Pausa → Sistema: a la derecha los controles; Guardar pisa la partida cargada (pregunta antes); Cargar te deja elegir el último checkpoint o el guardado; volver al título pregunta. Los botones tienen recuadro.",
+      "done": false,
+      "text": "Controles y pestaña Sistema (10.29)"
+    },
+    {
+      "detail": "Con dos controles: el P2 tiene otra tela y otro neón, también con la cota reforzada; los dos se distinguen de un vistazo.",
+      "done": false,
+      "text": "Co-op: colores (13.6)"
     }
   ],
   "code": "10.28",
@@ -200,6 +215,34 @@
     {
       "task": "m13-05",
       "type": "related"
+    },
+    {
+      "task": "m10-26",
+      "type": "related"
+    },
+    {
+      "task": "m13-06",
+      "type": "related"
+    },
+    {
+      "task": "m11-55",
+      "type": "related"
+    },
+    {
+      "task": "m11-58",
+      "type": "related"
+    },
+    {
+      "task": "m11-54",
+      "type": "related"
+    },
+    {
+      "task": "m11-56",
+      "type": "related"
+    },
+    {
+      "task": "m11-57",
+      "type": "related"
     }
   ],
   "milestone": "m10",
@@ -213,5 +256,5 @@
   ],
   "test": "",
   "title": "Playtest de revisión (lo que está en Revisión)",
-  "updated_at": "2026-10-11T07:51:46.117Z"
+  "updated_at": "2026-10-11T08:38:03.376Z"
 }

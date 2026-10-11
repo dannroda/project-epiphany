@@ -12,6 +12,9 @@ const WALL_MATERIAL := preload("res://data/kits/materials/epiphany_wall.tres")
 const WALL_IDS := [1, 6]
 ## Piso que llevan esas paredes adentro: por el agujero se ve suelo y no el vacío.
 const WALL_FLOOR := "terreno_overworld/tierra"
+const HIDDEN_FACES := preload("res://tools/hidden_faces.gd")
+## Piezas a las que se les sacan las caras que nunca se ven.
+const STRIPPED := ["terreno_overworld/anden", "terreno_overworld/risco", "terreno_overworld/tierra"]
 
 ## id del kit gris → piezas que se funden en la celda ("kit/pieza").
 const BASE := {
@@ -105,7 +108,7 @@ func _piece(path: String) -> Mesh:
 		_scenes[parts[0]] = (load(BLEND % parts[0]) as PackedScene).instantiate()
 	var node := (_scenes[parts[0]] as Node).find_child(parts[1], true, false) as MeshInstance3D
 	assert(node != null, "falta la pieza " + path)
-	return node.mesh
+	return HIDDEN_FACES.strip(node.mesh) if path in STRIPPED else node.mesh
 
 
 func _merge(pieces: Array, wall := false) -> ArrayMesh:

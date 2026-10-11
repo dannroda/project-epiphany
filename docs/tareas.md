@@ -3434,6 +3434,8 @@ Modelar en Blender el terreno del overworld (pasto, caminos, piso de plaza, acan
   Manchas que cruzan el piso despacio (en el light() toon).
 - [ ] Cara del risco y topes con detalle
   Risco con más corte y vetas; ichu, piedras y flores sobre los topes.
+- [ ] Camino con detalle
+  Huellas, surcos o piedritas sueltas en la tierra.
 
 **Prueba:** El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.
 
