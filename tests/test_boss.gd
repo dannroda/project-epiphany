@@ -352,7 +352,7 @@ func test_phase_two_opens_the_eye_with_a_tremor() -> void:
 	await _open_phase_two(boss)
 	assert_eq(boss.phase(), 2)
 	assert_eq(boss.eye_open, 1.0, "el ojo se abre")
-	assert_true(is_equal_approx(boss.body.position.y, Boss.BODY_HEIGHT_OPEN), "el cuerpo baja a mirarte")
+	assert_true(absf(boss.body.position.y - Boss.BODY_HEIGHT_OPEN) <= Boss.BOB_HEIGHT + 0.01, "el cuerpo baja a mirarte (flotando)")
 	assert_true(boss.get_node(^"%Solid").is_in_group(&"targetable"), "se lo puede fijar con Z")
 	var arrow := Projectile.new()
 	boss.eye_hurtbox.receive(_hit(1, 0.0, arrow))
@@ -360,7 +360,7 @@ func test_phase_two_opens_the_eye_with_a_tremor() -> void:
 	assert_true(boss.is_eye_stunned(), "aturdido")
 	assert_true(not boss.choose_attack(2), "aturdido no ataca: la ventana es para pegarle")
 	await (Engine.get_main_loop() as SceneTree).create_timer(0.5).timeout
-	assert_true(is_equal_approx(boss.body.position.y, Boss.BODY_HEIGHT_STUNNED), "cae a tiro de espada")
+	assert_true(absf(boss.body.position.y - Boss.BODY_HEIGHT_STUNNED) <= Boss.BOB_HEIGHT + 0.01, "cae a tiro de espada")
 	boss.free()
 
 

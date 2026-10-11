@@ -127,13 +127,24 @@ func hit_stop(nodes: Array, duration: float) -> void:
 			node.remove_meta(&"hit_stop")
 
 
-func shake(amount: float) -> void:
+## Frena todo el juego un rato (golpes grandes, cámara lenta del final). A diferencia de `hit_stop`, la física sigue:
+## los golpes conectan. Vive en el autoload para volver a velocidad normal aunque se libere quien lo pidió.
+func freeze(duration: float, scale := 0.05) -> void:
+	if duration <= 0.0 or Engine.time_scale < 1.0:
+		return
+	Engine.time_scale = scale
+	await get_tree().create_timer(duration, true, false, true).timeout
+	Engine.time_scale = 1.0
+
+
+## `direction` (mundo): de dónde viene el golpe; el encuadre se empuja hacia ese lado.
+func shake(amount: float, direction := Vector3.ZERO) -> void:
 	rumble(amount)
 	if not settings.shake_enabled:
 		return
 	var camera := get_viewport().get_camera_3d()
 	if camera and camera.has_method(&"add_trauma"):
-		camera.add_trauma(amount)
+		camera.add_trauma(amount, direction)
 
 
 func sfx(sound: StringName, at: Vector3) -> void:

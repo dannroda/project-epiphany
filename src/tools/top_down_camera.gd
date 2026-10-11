@@ -7,6 +7,8 @@ extends Camera3D
 @export var smooth_speed: float = 8.0
 @export var trauma_decay := 1.6
 @export var max_shake_offset := Vector2(0.35, 0.25)
+## Metros que empuja el encuadre una sacudida con dirección, por unidad de trauma.
+@export var kick_size := 0.5
 
 @export_group("Lock-on")
 ## 0.5 = punto medio entre player y objetivo.
@@ -57,6 +59,7 @@ var revealing := false
 ## Dónde mira la cámara (sin la sacudida); lo usan los tests y el overlay.
 var focus := Vector3.ZERO
 var _shake_time := 0.0
+var _kick := Vector2.ZERO
 var _look_ahead := Vector3.ZERO
 var _mask: Node3D
 var _skip := false
@@ -335,18 +338,23 @@ func _pan(to: Vector3) -> void:
 
 
 ## Sacudida por trauma: suma, decae sola y mueve solo el encuadre (h/v offset), no la cámara.
-func add_trauma(amount: float) -> void:
+## Con `direction` (XZ del mundo) además empuja el encuadre hacia ese lado y vuelve.
+func add_trauma(amount: float, direction := Vector3.ZERO) -> void:
 	trauma = clampf(trauma + amount, 0.0, 1.0)
+	if not direction.is_zero_approx():
+		var flat := Vector2(direction.x, -direction.z).normalized()
+		_kick += flat * kick_size * amount
 
 
 func _process(delta: float) -> void:
 	_update_player_hole()
+	_kick = _kick.lerp(Vector2.ZERO, 1.0 - exp(-8.0 * delta))
 	if trauma <= 0.0:
-		h_offset = 0.0
-		v_offset = 0.0
+		h_offset = _kick.x
+		v_offset = _kick.y
 		return
 	trauma = maxf(trauma - trauma_decay * delta, 0.0)
 	var shake := trauma * trauma
 	_shake_time += delta * 30.0
-	h_offset = max_shake_offset.x * shake * sin(_shake_time * 1.7)
-	v_offset = max_shake_offset.y * shake * sin(_shake_time * 2.3)
+	h_offset = max_shake_offset.x * shake * sin(_shake_time * 1.7) + _kick.x
+	v_offset = max_shake_offset.y * shake * sin(_shake_time * 2.3) + _kick.y

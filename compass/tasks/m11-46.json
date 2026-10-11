@@ -1,33 +1,33 @@
 {
   "checklist": [
     {
-      "detail": "Balanceo de flotación, inclinación hacia la mano que ataca, parpadeo del propulsor; parpadeos ocasionales, párpados entrecerrados al apuntar.",
-      "done": false,
+      "detail": "Balanceo de flotación, inclinación hacia la mano que ataca; parpadeos ocasionales, párpados entrecerrados al apuntar. No hay malla de propulsor: el cuerpo brilla en cada ataque.",
+      "done": true,
       "text": "Cuerpo vivo"
     },
     {
-      "detail": "La pupila se dilata y el iris pulsa la emisión (material override por instancia) mientras carga el orbe; la boca de horno respira y se enciende en cada ataque.",
+      "detail": "El iris pulsa la emisión (material override por instancia) mientras carga el orbe; la boca de horno se enciende en cada ataque. Falta: la pupila no se dilata (es parte de la malla del ojo; necesita pieza propia o shape key).",
       "done": false,
       "text": "Ojo que carga"
     },
     {
       "detail": "Antes del golpe sube de más, cierra el puño y tiembla; cae más rápido, squash al tocar el piso y rebote chico. Mismo criterio para el agarre y el barrido.",
-      "done": false,
+      "done": true,
       "text": "Anticipación y peso de las manos"
     },
     {
       "detail": "Hit-stop (~60 ms) en el golpe al piso y cuando el player le pega (Feel ya lo tiene); grietas que quedan en el piso y piedritas; vibración del control; sacudida direccional; la sombra crece y destella el último instante.",
-      "done": false,
+      "done": true,
       "text": "Impactos"
     },
     {
       "detail": "Tambaleo mareado, el ojo de neón del dorso titila, chispas.",
-      "done": false,
+      "done": true,
       "text": "Mano aturdida"
     },
     {
       "detail": "Cambio de fase: párpados que se abren de golpe, destello, polvo del techo. Muerte en etapas: placas que se desprenden, neón que se apaga, explosiones chicas en las juntas, cámara lenta en el último golpe.",
-      "done": false,
+      "done": true,
       "text": "Fases y muerte"
     }
   ],
@@ -43,12 +43,12 @@
       "section": "jefe"
     }
   ],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "jefe",
     "feel"
   ],
   "test": "Pelear contra el jefe de punta a punta: cada ataque se anticipa y se lee, los golpes al piso pesan (hit-stop, grietas, vibración), el ojo y el cuerpo reaccionan, y la muerte se siente como un final.",
   "title": "Jefe: game juice",
-  "updated_at": "2026-10-10T23:13:27.686Z"
+  "updated_at": "2026-10-11T00:26:50.367Z"
 }

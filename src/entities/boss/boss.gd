@@ -31,6 +31,17 @@ const REPEAT_PENALTY := 0.25
 const SAME_HAND_PENALTY := 0.7
 ## Entran al sorteo los que tienen al menos esta fracción del mejor puntaje.
 const SHORTLIST := 0.75
+const BOB_HEIGHT := 0.12
+const BOB_SPEED := 1.3
+const LEAN_ANGLE := 9.0
+const BLINK_EVERY := Vector2(2.5, 6.0)
+## Cuánto cierra los párpados mientras apunta el orbe.
+const SQUINT := 0.45
+## Brillo del neón del ojo (multiplicador de emisión): en reposo, cargando el orbe y apagado.
+const EYE_GLOW := 1.0
+const EYE_GLOW_CHARGED := 4.0
+const SLOW_MOTION := 0.25
+const SLOW_MOTION_TIME := 0.7
 
 ## 0 cerrado, 1 abierto.
 @export_range(0.0, 1.0) var eye_open := 0.0:
@@ -53,6 +64,17 @@ var rng := RandomNumberGenerator.new()
 var _eye_stun_left := 0.0
 var _eye_attacking := false
 var _body_tween: Tween
+var _body_height := 0.0
+var _time := 0.0
+var _blink := 0.0
+var _squint := 0.0
+var _next_blink := 4.0
+var _alive := true
+var _eye_material: StandardMaterial3D
+var _body_material: StandardMaterial3D
+var _flash: HitFlash
+var _eye_base_glow := 1.0
+var _body_base_glow := 1.0
 
 @onready var body: Node3D = $Body
 @onready var eye: Node3D = %Eye
@@ -68,6 +90,11 @@ func _ready() -> void:
 	_apply_lids()
 	if Engine.is_editor_hint():
 		return
+	_body_height = body.position.y
+	_eye_material = _own_material($Body/Eye/Mesh)
+	_body_material = _own_material($Body/Mesh)
+	_eye_base_glow = _eye_material.emission_energy_multiplier
+	_body_base_glow = _body_material.emission_energy_multiplier
 	arena = Rect2(global_position.x - 9.0, global_position.z - 3.0, 18.0, 10.0)
 	for hand in [hand_left, hand_right]:
 		hand.rest = hand_rest(hand)
@@ -76,7 +103,7 @@ func _ready() -> void:
 	eye_hurtbox.team = EntityConfig.Team.ENEMY
 	eye_hurtbox.hit.connect(_on_eye_hit)
 	health.died.connect(func() -> void: phases.dispatch(&"died"))
-	HitFlash.attach(eye, health)
+	_flash = HitFlash.attach(eye, health)
 	phases.add_transition($Phases/Phase1, $Phases/Phase2, &"hands_down")
 	phases.add_transition($Phases/Phase2, $Phases/Phase3, &"enraged")
 	phases.add_transition($Phases/Phase2, $Phases/Defeated, &"died")
@@ -117,6 +144,25 @@ func bar_fraction() -> float:
 
 func is_eye_stunned() -> bool:
 	return _eye_stun_left > 0.0
+
+
+func _process(delta: float) -> void:
+	if Engine.is_editor_hint() or not _alive:
+		return
+	_time += delta
+	body.position.y = _body_height + sin(_time * BOB_SPEED * TAU) * BOB_HEIGHT
+	var lean := 0.0
+	if attacker is BossHand and attacker.striking:
+		lean = -signf(attacker.global_position.x - global_position.x) * deg_to_rad(LEAN_ANGLE)
+	body.rotation.z = lerpf(body.rotation.z, lean, 1.0 - exp(-4.0 * delta))
+	if eye_open >= 1.0 and not is_eye_stunned() and not %Charge.visible:
+		_next_blink -= delta
+		if _next_blink <= 0.0:
+			_next_blink = rng.randf_range(BLINK_EVERY.x, BLINK_EVERY.y)
+			var blink := create_tween()
+			blink.tween_property(self, ^"_blink", 1.0, 0.07)
+			blink.tween_property(self, ^"_blink", 0.0, 0.12)
+	_apply_lids()
 
 
 func _physics_process(delta: float) -> void:
@@ -216,6 +262,7 @@ func _mark_floor() -> void:
 		marks.append(mark)
 		create_tween().tween_property(mark, ^"modulate:a", 1.0, MARK_TELEGRAPH).set_ease(Tween.EASE_IN)
 	Feel.sfx(&"deny", eye.global_position)
+	_flare_body()
 	_combo_hand()
 	await get_tree().create_timer(0.4, false).timeout
 	_eye_attacking = false
@@ -298,9 +345,15 @@ func _fire_orb() -> void:
 	charge.scale = Vector3.ONE * 0.1
 	var grow := create_tween()
 	grow.tween_property(charge, ^"scale", Vector3.ONE, orb_charge_time).set_ease(Tween.EASE_IN)
+	grow.parallel().tween_property(self, ^"_squint", 1.0, 0.2)
+	grow.parallel().tween_method(_pulse_eye, 0.0, 1.0, orb_charge_time)
 	await grow.finished
 	charge.visible = false
 	_eye_attacking = false
+	_flare_body()
+	var relax := create_tween().set_parallel()
+	relax.tween_property(self, ^"_squint", 0.0, 0.3)
+	relax.tween_method(_set_eye_glow, EYE_GLOW_CHARGED, EYE_GLOW, 0.3)
 	if is_eye_stunned() or not is_instance_valid(target) or health.current <= 0:
 		return
 	var info := DamageInfo.new()
@@ -377,6 +430,8 @@ func _stun_eye() -> void:
 	Feel.burst(&"sparks", eye.global_position, Vector3.BACK)
 	Feel.shake(0.3)
 	%Charge.visible = false
+	_squint = 0.0
+	_set_eye_glow(EYE_GLOW)
 	_move_body(BODY_HEIGHT_STUNNED, 0.35)
 	look_at_point(eye.global_position + Vector3(0, -1, 0.4))
 
@@ -385,7 +440,7 @@ func _move_body(height: float, seconds: float) -> void:
 	if _body_tween:
 		_body_tween.kill()
 	_body_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	_body_tween.tween_property(body, ^"position:y", height, seconds)
+	_body_tween.tween_property(self, ^"_body_height", height, seconds)
 
 
 func _on_hand_downed() -> void:
@@ -400,7 +455,10 @@ func _on_phase2_entered() -> void:
 	Feel.sfx(&"rumble", eye.global_position)
 	Feel.shake(0.6)
 	_move_body(BODY_HEIGHT_OPEN, 0.8)
-	create_tween().tween_property(self, ^"eye_open", 1.0, 0.8).set_delay(0.3)
+	var lids := create_tween()
+	lids.tween_property(self, ^"eye_open", 0.15, 0.5).set_delay(0.3)
+	lids.tween_property(self, ^"eye_open", 1.0, 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	lids.tween_callback(_awaken_flash)
 	%Solid.add_to_group(&"targetable")
 	phase_changed.emit(2)
 	await get_tree().create_timer(HANDS_BACK_DELAY, false).timeout
@@ -416,6 +474,10 @@ func _on_phase3_entered() -> void:
 	Feel.sfx(&"rumble", eye.global_position)
 	Feel.shake(0.7)
 	_move_body(BODY_HEIGHT_OPEN, 0.4)
+	var lids := create_tween()
+	lids.tween_property(self, ^"eye_open", 0.3, 0.1)
+	lids.tween_property(self, ^"eye_open", 1.0, 0.1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	_awaken_flash()
 	phase_changed.emit(3)
 
 
@@ -428,23 +490,27 @@ func _on_defeated() -> void:
 		hand.collapse()
 	Feel.sfx(&"rumble", eye.global_position)
 	Feel.shake(0.8)
+	Feel.freeze(SLOW_MOTION_TIME, SLOW_MOTION)
 	_play_death()
 	DebugOverlay.watch("boss/phase", "derrotado")
 	defeated.emit()
 
 
+## En etapas: el neón se apaga titilando, saltan placas y explotan las juntas, y recién ahí se hunde.
 func _play_death() -> void:
 	if _body_tween:
 		_body_tween.kill()
+	_alive = false
+	_squint = 0.0
 	var death := create_tween()
 	death.tween_property(self, ^"eye_open", 0.0, 0.6)
+	death.parallel().tween_method(_set_eye_glow, EYE_GLOW_CHARGED, 0.0, 1.4).set_trans(Tween.TRANS_BOUNCE)
+	death.parallel().tween_method(_set_body_glow, 1.0, 0.0, 1.4).set_trans(Tween.TRANS_BOUNCE)
 	var base := body.position
 	for i in 10:
 		death.tween_property(body, ^"position", base + Vector3(0.15 * (1 if i % 2 else -1), 0, 0), 0.08)
-		if i % 3 == 0:
-			death.tween_callback(func() -> void:
-				Feel.burst(&"dust", body.global_position + Vector3(randf_range(-2, 2), -1.5, 1.5), Vector3.UP)
-				Feel.sfx(&"boom", body.global_position))
+		if i % 2 == 0:
+			death.tween_callback(_joint_blast)
 	death.tween_property(body, ^"position", Vector3(base.x, 0.2, base.z), 1.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	death.parallel().tween_property(body, ^"scale", Vector3.ONE * 0.6, 1.2)
 	death.tween_callback(func() -> void:
@@ -456,5 +522,60 @@ func _play_death() -> void:
 
 
 func _apply_lids() -> void:
-	%UpperLid.rotation.x = deg_to_rad(-LID_OPEN_ANGLE * eye_open)
-	%LowerLid.rotation.x = deg_to_rad(LID_OPEN_ANGLE * eye_open)
+	var open := eye_open * (1.0 - _blink) * (1.0 - SQUINT * _squint)
+	%UpperLid.rotation.x = deg_to_rad(-LID_OPEN_ANGLE * open)
+	%LowerLid.rotation.x = deg_to_rad(LID_OPEN_ANGLE * open)
+
+
+## Brillo del neón del ojo relativo al de la paleta (1 = normal).
+func eye_glow() -> float:
+	return _eye_material.emission_energy_multiplier / _eye_base_glow if _eye_material else EYE_GLOW
+
+
+func _own_material(mesh: MeshInstance3D) -> StandardMaterial3D:
+	var material := mesh.mesh.surface_get_material(0).duplicate() as StandardMaterial3D
+	mesh.material_override = material
+	return material
+
+
+func _set_eye_glow(value: float) -> void:
+	_eye_material.emission_energy_multiplier = _eye_base_glow * value
+
+
+func _set_body_glow(value: float) -> void:
+	_body_material.emission_energy_multiplier = _body_base_glow * value
+
+
+## El iris late cada vez más rápido mientras crece el orbe.
+func _pulse_eye(progress: float) -> void:
+	var beat := 0.5 + 0.5 * sin(progress * progress * 14.0 * PI)
+	_set_eye_glow(lerpf(EYE_GLOW, EYE_GLOW_CHARGED, progress * (0.6 + 0.4 * beat)))
+
+
+## La boca de horno se enciende en cada ataque.
+func _flare_body() -> void:
+	if not _alive:
+		return
+	var flare := create_tween()
+	flare.tween_method(_set_body_glow, 3.0, 1.0, 0.5).set_ease(Tween.EASE_OUT)
+
+
+## Se abren los párpados de golpe: destello del ojo y polvo que cae del techo.
+func _awaken_flash() -> void:
+	_flash.warn(0.05)
+	var glow := create_tween()
+	glow.tween_method(_set_eye_glow, EYE_GLOW_CHARGED * 1.5, EYE_GLOW, 0.6)
+	Feel.shake(0.4)
+	for i in 6:
+		var spot := Vector3(rng.randf_range(arena.position.x, arena.end.x), 6.0, rng.randf_range(arena.position.y, arena.end.y))
+		Feel.burst(&"shards", spot, Vector3.DOWN)
+		Feel.burst(&"dust", spot, Vector3.DOWN)
+
+
+func _joint_blast() -> void:
+	var spot := body.global_position + Vector3(rng.randf_range(-2.0, 2.0), rng.randf_range(-1.5, 1.0), rng.randf_range(0.5, 1.8))
+	Feel.burst(&"explosion", spot, Vector3.UP)
+	Feel.burst(&"shards", spot, (spot - body.global_position).normalized() + Vector3.UP)
+	Feel.sfx(&"boom", spot)
+	Feel.shake(0.25)
+
