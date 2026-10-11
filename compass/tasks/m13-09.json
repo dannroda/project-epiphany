@@ -1,0 +1,51 @@
+{
+  "checklist": [
+    {
+      "detail": "Escena del anillo por PlayerPanel, desde el mockup Coop_Ring; se abre manteniendo la cruceta (acción nueva por player; en teclado, una tecla a decidir).",
+      "done": false,
+      "text": "Anillo en el HUD"
+    },
+    {
+      "detail": "GameState sabe qué player lleva cada ítem en sus X/Y; asignar uno que tiene otro no se puede (apagado con su etiqueta).",
+      "done": false,
+      "text": "Ítems con dueño"
+    },
+    {
+      "detail": "Solo: Engine.time_scale casi a cero mientras está abierto (mockup Solo_Ring); co-op: sin pausa.",
+      "done": false,
+      "text": "Tiempo"
+    },
+    {
+      "detail": "Solo lectura: quién lleva qué; asignar queda para el anillo.",
+      "done": false,
+      "text": "Pestaña Ítems en co-op"
+    },
+    {
+      "done": false,
+      "text": "Tests y GDD"
+    }
+  ],
+  "code": "13.9",
+  "created_at": "2026-10-11T07:36:29.085Z",
+  "description": "Mockups D en el canvas (Coop_Ring, Solo_Ring): mantener la cruceta abre un anillo con los ítems al lado del panel de cada player; cruceta o stick elige, X/Y lo asigna, un toque ←/→ cambia rápido. Cada player conserva X e Y. Un ítem lo lleva uno solo (el que tiene otro se ve apagado con su etiqueta). En co-op no pausa; jugando solo el mundo casi se detiene. La pestaña Ítems del menú de pausa queda para jugar solo; en co-op solo muestra quién lleva qué.",
+  "links": [
+    {
+      "task": "m13-04",
+      "type": "related"
+    }
+  ],
+  "milestone": "m13",
+  "notes": "",
+  "order": 9,
+  "priority": "medium",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "coop",
+    "ui",
+    "input"
+  ],
+  "test": "",
+  "title": "Anillo de ítems por player",
+  "updated_at": "2026-10-11T07:36:32.605Z"
+}

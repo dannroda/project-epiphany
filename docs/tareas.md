@@ -3276,7 +3276,7 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 
 **Relacionadas:** 11.20 Cueva con ojo de agua y cáusticas animadas; 12.9 Efectos con malla; 11.49 VFX de combate; 12.8 Personajes propios
 
-## M13 — Co-op local (estilo Four Swords)  (0/8)
+## M13 — Co-op local (estilo Four Swords)  (0/9)
 
 Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con progreso compartido y puzzles que aprovechan a los dos.
 
@@ -3373,7 +3373,7 @@ Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con
 
 **Bloqueada por:** 13.1 Código listo para varios players
 
-**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión); 13.9 Anillo de ítems por player
 
 ### 13.5 HUD de dos jugadores · Revisión
 
@@ -3446,6 +3446,24 @@ Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con
 **Referencias:** `gdd.md#fuera-mvp`
 
 **Bloqueada por:** 13.1 Código listo para varios players
+
+### 13.9 Anillo de ítems por player · Pendiente
+
+**Prioridad:** media · **Etiquetas:** `coop`, `ui`, `input`
+
+Mockups D en el canvas (Coop_Ring, Solo_Ring): mantener la cruceta abre un anillo con los ítems al lado del panel de cada player; cruceta o stick elige, X/Y lo asigna, un toque ←/→ cambia rápido. Cada player conserva X e Y. Un ítem lo lleva uno solo (el que tiene otro se ve apagado con su etiqueta). En co-op no pausa; jugando solo el mundo casi se detiene. La pestaña Ítems del menú de pausa queda para jugar solo; en co-op solo muestra quién lleva qué.
+
+- [ ] Anillo en el HUD
+  Escena del anillo por PlayerPanel, desde el mockup Coop_Ring; se abre manteniendo la cruceta (acción nueva por player; en teclado, una tecla a decidir).
+- [ ] Ítems con dueño
+  GameState sabe qué player lleva cada ítem en sus X/Y; asignar uno que tiene otro no se puede (apagado con su etiqueta).
+- [ ] Tiempo
+  Solo: Engine.time_scale casi a cero mientras está abierto (mockup Solo_Ring); co-op: sin pausa.
+- [ ] Pestaña Ítems en co-op
+  Solo lectura: quién lleva qué; asignar queda para el anillo.
+- [ ] Tests y GDD
+
+**Relacionadas:** 13.4 Reglas del co-op
 
 ## M14 — Co-op online  (0/7)
 
