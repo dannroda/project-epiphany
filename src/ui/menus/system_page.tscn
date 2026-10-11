@@ -1,7 +1,6 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://src/ui/menus/system_page.gd" id="1_page"]
-[ext_resource type="PackedScene" path="res://src/ui/menus/menu_item_small.tscn" id="2_item"]
 [ext_resource type="PackedScene" path="res://src/ui/controls/controls_view.tscn" id="3_view"]
 [ext_resource type="PackedScene" path="res://src/ui/title/slot_card.tscn" id="4_card"]
 [ext_resource type="PackedScene" path="res://src/ui/title/auto_slot_card.tscn" id="5_auto"]
@@ -27,18 +26,26 @@ theme_override_constants/separation = 28
 [node name="Menu" type="VBoxContainer" parent="Columns"]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 10
 
-[node name="Save" parent="Columns/Menu" instance=ExtResource("2_item")]
+[node name="Save" type="Button" parent="Columns/Menu"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
-size_flags_horizontal = 0
+toggle_mode = true
+action_mode = 0
+alignment = 0
+theme_override_font_sizes/font_size = 20
 text = "SYSTEM_SAVE"
 
-[node name="Load" parent="Columns/Menu" instance=ExtResource("2_item")]
+[node name="Load" type="Button" parent="Columns/Menu"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
-size_flags_horizontal = 0
+toggle_mode = true
+action_mode = 0
+alignment = 0
+theme_override_font_sizes/font_size = 20
 text = "SYSTEM_LOAD"
 
 [node name="LastSaved" type="Label" parent="Columns/Menu"]
@@ -51,16 +58,20 @@ autowrap_mode = 3
 layout_mode = 2
 theme_override_constants/separation = 28
 
-[node name="Options" parent="Columns/Menu" instance=ExtResource("2_item")]
+[node name="Options" type="Button" parent="Columns/Menu"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
-size_flags_horizontal = 0
+alignment = 0
+theme_override_font_sizes/font_size = 20
 text = "SYSTEM_OPTIONS"
 
-[node name="ToTitle" parent="Columns/Menu" instance=ExtResource("2_item")]
+[node name="ToTitle" type="Button" parent="Columns/Menu"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
-size_flags_horizontal = 0
+alignment = 0
+theme_override_font_sizes/font_size = 20
 text = "SYSTEM_TO_TITLE"
 
 [node name="Panel" type="PanelContainer" parent="Columns"]

@@ -73,6 +73,8 @@ func _show_section(section: Section) -> void:
 	_section = section
 	for key in panels:
 		panels[key].visible = key == section
+	save_item.set_pressed_no_signal(section == Section.SAVE)
+	load_item.set_pressed_no_signal(section == Section.LOAD)
 	match section:
 		Section.SAVE:
 			var slot := SaveManager.current_slot
