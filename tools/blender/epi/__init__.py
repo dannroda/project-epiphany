@@ -8,6 +8,7 @@ import sys
 import bmesh
 import bpy
 from mathutils import Matrix, Vector, noise
+from mathutils.bvhtree import BVHTree
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT = os.path.dirname(os.path.dirname(HERE))
@@ -354,3 +355,97 @@ def chakana_plate(p, center, size, swatch):
 	p.transform(hole, Matrix.Translation(center))
 	p.paint(faces, swatch, "LIGHT", vary=0.05)
 	p.paint(hole, "noche", "MID")
+
+
+def crack_web(p, face_y, center, half_w, z_lo, z_hi, stone, gap):
+	"""Estallido de grietas en la cara de face_y (el signo dice el lado): un hueco donde pegó el golpe, rayos que salen
+	de ahí con ramas y anillos de telaraña entre rayos. Cada trazo se pega a la superficie (sigue el relieve de las
+	piedras o la roca, sin hundirse en las juntas) y lleva debajo un borde más ancho de la misma piedra en claro, para que se lea desde lejos. Las
+	grietas tienen la sombra del color de las juntas de esa pared (gap) y un núcleo fino oscuro."""
+	tree = BVHTree.FromBMesh(p.bm)
+	side = 1.0 if face_y > 0 else -1.0
+	rng = p.rng
+
+	def onto(x, z, lift):
+		hit, normal, _, _ = tree.ray_cast(Vector((x, face_y + side * 0.6, z)), Vector((0, -side, 0)), 2.0)
+		if hit is None or side * hit.y < side * face_y - 0.01:
+			return Vector((x, face_y + side * lift, z))
+		return hit + normal * lift
+
+	def inside(q):
+		return -half_w < q.x < half_w and z_lo < q.y < z_hi
+
+	strokes = []
+
+	def walk(start, heading, length, w0, depth):
+		pts, widths = [start], [w0]
+		pos, a, travelled = start, heading, 0.0
+		while travelled < length:
+			step = rng.uniform(0.09, 0.16)
+			a = heading + max(-0.55, min(0.55, a - heading + rng.uniform(-0.5, 0.5)))
+			nxt = pos + Vector((math.cos(a), math.sin(a))) * step
+			if not inside(nxt):
+				break
+			travelled += step
+			w = w0 * (1.0 - 0.75 * travelled / length)
+			pts.append(nxt)
+			widths.append(w)
+			if depth < 1 and rng.random() < 0.18:
+				walk(nxt, a + rng.choice((-1, 1)) * rng.uniform(0.5, 1.0), max(0.15, (length - travelled) * 0.5), w * 0.75, depth + 1)
+			pos = nxt
+		if len(pts) > 1:
+			strokes.append((pts, widths))
+
+	c = Vector(center)
+	rays = rng.randint(6, 8)
+	angles = sorted(2 * math.pi * (k + rng.uniform(-0.25, 0.25)) / rays for k in range(rays))
+	for ang in angles:
+		start = c + Vector((math.cos(ang), math.sin(ang))) * 0.12
+		walk(start, ang, rng.uniform(0.7, 1.3), rng.uniform(0.08, 0.11), 0)
+	for radius in (0.3, 0.6):
+		for a0, a1 in zip(angles, angles[1:] + [angles[0] + 2 * math.pi]):
+			if rng.random() > 0.5:
+				continue
+			r = radius * rng.uniform(0.85, 1.15)
+			pts = [c + Vector((math.cos(t), math.sin(t))) * (r + rng.uniform(-0.04, 0.04)) for t in (a0 + (a1 - a0) * k / 4 for k in range(5))]
+			pts = [q for q in pts if inside(q)]
+			if len(pts) > 1:
+				strokes.append((pts, [0.04] * len(pts)))
+
+	def slab(faces):
+		"""Le da espesor hacia la pared, así es un volumen cerrado y las normales quedan para afuera."""
+		new = bmesh.ops.extrude_face_region(p.bm, geom=faces, use_keep_orig=True)["geom"]
+		bmesh.ops.translate(p.bm, verts=[v for v in new if isinstance(v, bmesh.types.BMVert)], vec=Vector((0, -side * 0.012, 0)))
+		return faces + [f for f in new if isinstance(f, bmesh.types.BMFace)] + list({f for e in new if isinstance(e, bmesh.types.BMEdge) for f in e.link_faces})
+
+	def ribbon(pts, widths, grow, lift):
+		left, right = [], []
+		for i, q in enumerate(pts):
+			t = pts[min(i + 1, len(pts) - 1)] - pts[max(i - 1, 0)]
+			n = Vector((-t.y, t.x)).normalized() * (widths[i] * grow / 2 + (0.02 if grow > 1 else 0.0))
+			left.append(p.bm.verts.new(onto(q.x + n.x, q.y + n.y, lift)))
+			right.append(p.bm.verts.new(onto(q.x - n.x, q.y - n.y, lift)))
+		faces = []
+		for i in range(len(pts) - 1):
+			quad = (left[i], left[i + 1], right[i + 1], right[i])
+			faces.append(p.bm.faces.new(quad if side > 0 else quad[::-1]))
+		return slab(faces)
+
+	def blob(radius, lift, n=9):
+		ring = [p.bm.verts.new(onto(c.x + math.cos(t) * radius * rng.uniform(0.7, 1.2), c.y + math.sin(t) * radius * rng.uniform(0.7, 1.2), lift)) for t in (2 * math.pi * k / n for k in range(n))]
+		mid = p.bm.verts.new(onto(c.x, c.y, lift))
+		return slab([p.bm.faces.new((mid, ring[k], ring[(k + 1) % n]) if side < 0 else (mid, ring[(k + 1) % n], ring[k])) for k in range(n)])
+
+	rims, shade, core = blob(0.27, 0.008), blob(0.2, 0.016), blob(0.13, 0.024)
+	for pts, widths in strokes:
+		rims += ribbon(pts, widths, 2.4, 0.008)
+		shade += ribbon(pts, widths, 1.3, 0.016)
+		core += ribbon(pts, widths, 0.5, 0.024)
+	p.paint(rims, stone, "LIGHT")
+	p.paint(shade, gap, "DARK")
+	p.paint(core, "noche", "DARK")
+
+
+def cracks_both_faces(p, face, center, half_w, z_lo, z_hi, stone, gap):
+	for side in (-1, 1):
+		crack_web(p, side * face, center, half_w, z_lo, z_hi, stone, gap)
