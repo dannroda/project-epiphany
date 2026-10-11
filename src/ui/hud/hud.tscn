@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" path="res://assets/ui/frames/divider.png" id="5_divider"]
 [ext_resource type="Texture2D" path="res://assets/ui/frames/divider_flipped.png" id="6_divider_flipped"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/minimap.tscn" id="7_minimap"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/item_ring.tscn" id="9_ring"]
 
 [sub_resource type="StyleBoxFlat" id="CoopKeysStyle"]
 content_margin_left = 16.0
@@ -25,6 +26,18 @@ layer = 10
 script = ExtResource("1_hud")
 solo_panel = ExtResource("4_solo")
 coop_panel = ExtResource("8_coop")
+item_ring = ExtResource("9_ring")
+
+[node name="SlowDim" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.03137255, 0.039215688, 0.0627451, 0.5)
 
 [node name="SafeArea" type="MarginContainer" parent="."]
 anchors_preset = 15
@@ -201,6 +214,15 @@ anchor_bottom = 1.0
 offset_right = 2.0
 mouse_filter = 2
 color = Color(0.9372549, 0.9019608, 0.8235294, 0.6)
+
+[node name="Rings" type="Control" parent="."]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="Saved" type="Label" parent="."]
 unique_name_in_owner = true

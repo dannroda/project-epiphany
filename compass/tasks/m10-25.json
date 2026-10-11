@@ -94,6 +94,11 @@
       "detail": "Con dos controles: que caiga uno; queda un espíritu que te sigue; parate encima un segundo y revive con un corazón (o cruzá a otra sala). Si caen los dos, game over. En la pestaña Ítems, con el control del P2, asigná X/Y: cambian solo los suyos. Un corazón cura solo al que lo agarra.",
       "done": false,
       "text": "Co-op: reglas (13.4)"
+    },
+    {
+      "detail": "Solo: mantené LB (o F): el mundo casi se frena, elegí con el stick y poné con X/Y; al soltar sigue. Co-op: cada uno abre su anillo sin pausar; lo que lleva el otro se ve apagado con su etiqueta. Tecla 5: pasa al menú compartido; en Ítems el P2 mueve su cursor con su control y asigna con X/Y. Decidí cuál queda.",
+      "done": false,
+      "text": "Co-op: elegir ítems (13.9)"
     }
   ],
   "code": "10.28",
@@ -208,5 +213,5 @@
   ],
   "test": "",
   "title": "Playtest de revisión (lo que está en Revisión)",
-  "updated_at": "2026-10-11T06:59:11.673Z"
+  "updated_at": "2026-10-11T07:51:46.117Z"
 }

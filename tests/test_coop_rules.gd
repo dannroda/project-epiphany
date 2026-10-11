@@ -61,22 +61,25 @@ func test_each_player_assigns_their_own_buttons_from_the_shared_bag() -> void:
 	var second: PlayerCharacter = setup[3]
 	GameState.give(Items.get_item(&"bow"))
 	GameState.give(Items.get_item(&"bomb_bag"))
-	assert_eq(GameState.buttons_of(0), [&"bow", &"bomb_bag"] as Array[StringName], "se reparten como siempre")
-	assert_eq(GameState.buttons_of(1), [&"bow", &"bomb_bag"] as Array[StringName], "el P2 arranca igual que el P1")
+	assert_eq(GameState.buttons_of(0), [&"bow", &"bomb_bag"] as Array[StringName], "lo nuevo va a los botones libres del P1")
+	assert_eq(GameState.buttons_of(1), [&"", &""] as Array[StringName], "el P2 arranca con las manos vacías")
 
-	GameState.assign_button(0, &"bomb_bag", 1)
-	assert_eq(GameState.buttons_of(1), [&"bomb_bag", &"bow"] as Array[StringName], "el P2 cambia los suyos")
-	assert_eq(GameState.buttons_of(0), [&"bow", &"bomb_bag"] as Array[StringName], "los del P1 no se tocan")
+	assert_true(not GameState.assign_button(0, &"bomb_bag", 1), "un ítem lo lleva uno solo")
+	assert_eq(GameState.owner_of(&"bomb_bag"), 0)
+	GameState.assign_button(1, &"", 0)
+	assert_true(GameState.assign_button(0, &"bomb_bag", 1), "suelto por el P1, lo toma el P2")
 	assert_eq(second.usable_item(0).id, &"bomb_bag", "su X tira bombas")
 	assert_eq(first.usable_item(0).id, &"bow", "la del P1 sigue con el arco")
 
 	GameState.give(Items.get_item(&"potion"))
-	GameState.assign_button(1, &"potion", 0)
-	GameState.assign_button(1, &"potion", 1)
+	assert_eq(GameState.buttons_of(0)[1], &"potion", "al primer botón libre")
 	GameState.inventory.remove(&"potion")
 	GameState.replace_on_buttons(&"potion", &"bottle_empty")
-	assert_eq(GameState.buttons_of(0)[1], &"bottle_empty", "la poción que se toma uno deja la botella en el P1")
-	assert_eq(GameState.buttons_of(1)[1], &"bottle_empty", "y en el P2")
+	assert_eq(GameState.buttons_of(0)[1], &"bottle_empty", "la poción tomada deja la botella")
+
+	var players: Node = (Engine.get_main_loop() as SceneTree).root.get_node(^"Players")
+	players.leave(1)
+	assert_eq(GameState.owner_of(&"bomb_bag"), -1, "el que sale suelta lo suyo")
 	await _done()
 
 

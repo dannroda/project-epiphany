@@ -216,6 +216,12 @@ msgstr "Fase {phase}"
 msgid "HUD_SAVED"
 msgstr "Guardado"
 
+msgid "HUD_RING_ASSIGN"
+msgstr "lo pone en ese botón"
+
+msgid "HUD_RING_TAKEN"
+msgstr "Lo lleva el {player}"
+
 # Pausa: Equipo, Ítems, Mapa
 msgid "EQUIP_CATEGORY_SWORD"
 msgstr "Espada"
@@ -312,6 +318,15 @@ msgstr "Ítem"
 
 msgid "ITEMS_ASSIGNED"
 msgstr "Asignado a {button}"
+
+msgid "ITEMS_COOP_TITLE"
+msgstr "CADA UNO CON SU X E Y"
+
+msgid "ITEMS_COOP_SHARED_HINT"
+msgstr "Cada uno mueve su cursor con su control y pone el ítem con X o Y. Un ítem lo lleva uno solo."
+
+msgid "ITEMS_COOP_RING_HINT"
+msgstr "Para cambiar los tuyos, mantené LB jugando (anillo de ítems)."
 
 msgid "ITEMS_ASSIGN"
 msgstr "Asignar a {button}"

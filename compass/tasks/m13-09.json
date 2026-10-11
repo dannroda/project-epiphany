@@ -2,31 +2,31 @@
   "checklist": [
     {
       "detail": "Escena del anillo por player en el HUD, desde el mockup Coop_Ring; se abre manteniendo LB (teclado: F) y se elige con el stick o WASD.",
-      "done": false,
+      "done": true,
       "text": "Anillo en el HUD"
     },
     {
       "detail": "GameState sabe qué player lleva cada ítem en sus X/Y; asignar uno que tiene otro no se puede (apagado con su etiqueta).",
-      "done": false,
+      "done": true,
       "text": "Ítems con dueño"
     },
     {
       "detail": "Solo: Engine.time_scale casi a cero mientras está abierto (mockup Solo_Ring); co-op: sin pausa.",
-      "done": false,
+      "done": true,
       "text": "Tiempo"
     },
     {
       "detail": "Solo lectura: quién lleva qué; asignar queda para el anillo.",
-      "done": false,
+      "done": true,
       "text": "Pestaña Ítems en co-op"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Tests y GDD"
     },
     {
       "detail": "Tecla 5 (debug): en co-op, anillo por player o menú compartido con un cursor por player (Settings coop_item_menu).",
-      "done": false,
+      "done": true,
       "text": "Toggle para probar"
     }
   ],
@@ -37,6 +37,10 @@
     {
       "task": "m13-04",
       "type": "related"
+    },
+    {
+      "task": "m10-25",
+      "type": "related"
     }
   ],
   "milestone": "m13",
@@ -44,7 +48,7 @@
   "order": 9,
   "priority": "medium",
   "refs": [],
-  "status": "doing",
+  "status": "review",
   "tags": [
     "coop",
     "ui",
@@ -52,5 +56,5 @@
   ],
   "test": "",
   "title": "Anillo de ítems por player",
-  "updated_at": "2026-10-11T07:43:07.531Z"
+  "updated_at": "2026-10-11T07:51:46.658Z"
 }

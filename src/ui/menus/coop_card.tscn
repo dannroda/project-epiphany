@@ -1,0 +1,115 @@
+[gd_scene format=3]
+
+[ext_resource type="FontFile" path="res://assets/fonts/Cinzel.ttf" id="1_cinzel"]
+
+[sub_resource type="StyleBoxFlat" id="CardStyle"]
+content_margin_left = 16.0
+content_margin_top = 14.0
+content_margin_right = 16.0
+content_margin_bottom = 14.0
+bg_color = Color(0.05882353, 0.07058824, 0.08627451, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="BorderStyle"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_left = 16.0
+expand_margin_top = 14.0
+expand_margin_right = 16.0
+expand_margin_bottom = 14.0
+
+[sub_resource type="StyleBoxFlat" id="TagStyle"]
+content_margin_left = 8.0
+content_margin_right = 8.0
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 11
+corner_radius_top_right = 11
+corner_radius_bottom_right = 11
+corner_radius_bottom_left = 11
+
+[node name="CoopCard" type="PanelContainer"]
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("CardStyle")
+
+[node name="Border" type="Panel" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("BorderStyle")
+
+[node name="Row" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Tag" type="PanelContainer" parent="Row"]
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("TagStyle")
+
+[node name="Label" type="Label" parent="Row/Tag"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.043137256, 0.050980393, 0.0627451, 1)
+theme_override_fonts/font = ExtResource("1_cinzel")
+theme_override_font_sizes/font_size = 13
+text = "P1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Buttons" type="VBoxContainer" parent="Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="X" type="HBoxContainer" parent="Row/Buttons"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Badge" type="TextureRect" parent="Row/Buttons/X"]
+custom_minimum_size = Vector2(26, 26)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Icon" type="TextureRect" parent="Row/Buttons/X"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="Row/Buttons/X"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"Value"
+
+[node name="Y" type="HBoxContainer" parent="Row/Buttons"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Badge" type="TextureRect" parent="Row/Buttons/Y"]
+custom_minimum_size = Vector2(26, 26)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Icon" type="TextureRect" parent="Row/Buttons/Y"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="Row/Buttons/Y"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"Value"

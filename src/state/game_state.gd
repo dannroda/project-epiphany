@@ -25,7 +25,8 @@ const PIN_PICK_RADIUS := 3.0
 var inventory := Inventory.new()
 var equipment: Dictionary[ItemData.Category, StringName] = {}
 var item_buttons: Array[StringName] = [&"", &""] ## X / Y del P1
-## X / Y de los demás players (13.4): el inventario es de todos pero cada uno asigna los suyos. No se guardan.
+## X / Y de los demás players (13.4): el inventario es de todos pero cada uno asigna los suyos y un ítem lo lleva uno
+## solo (13.9). No se guardan.
 var guest_buttons: Dictionary[int, Array] = {}
 var max_health: int = NEW_GAME_MAX_HEALTH
 var flags: Dictionary[StringName, Variant] = {}
@@ -80,31 +81,49 @@ func equip(item: ItemData) -> void:
 
 
 ## Si el ítem ya estaba en el otro botón, se intercambian.
-func assign_button(index: int, id: StringName, slot := 0) -> void:
+## Falso si el ítem lo lleva otro player.
+func assign_button(index: int, id: StringName, slot := 0) -> bool:
 	var buttons := buttons_of(slot)
 	if buttons[index] == id:
-		return
+		return true
+	if id != &"" and owner_of(id) not in [-1, slot]:
+		return false
 	var other := 1 - index
 	if buttons[other] == id:
 		buttons[other] = buttons[index]
 	buttons[index] = id
 	item_buttons_changed.emit()
+	return true
+
+
+## El slot del player que lleva el ítem en su X o Y; -1 si nadie.
+func owner_of(id: StringName) -> int:
+	for slot in _button_slots():
+		if buttons_of(slot).has(id):
+			return slot
+	return -1
+
+
+## El que sale de la partida suelta sus ítems.
+func release_buttons(slot: int) -> void:
+	if guest_buttons.erase(slot):
+		item_buttons_changed.emit()
 
 
 ## El ítem que se acabó deja su lugar en los X / Y de todos (poción tomada → botella vacía).
 func replace_on_buttons(from: StringName, to: StringName) -> void:
 	for slot in _button_slots():
 		var index := buttons_of(slot).find(from)
-		if index >= 0:
-			assign_button(index, to, slot)
+		if index >= 0 and not assign_button(index, to, slot):
+			assign_button(index, &"", slot)
 
 
-## Los X / Y del player en `slot`; uno que se suma arranca con una copia de los del P1.
+## Los X / Y del player en `slot`; uno que se suma arranca con las manos vacías.
 func buttons_of(slot: int) -> Array[StringName]:
 	if slot == 0:
 		return item_buttons
 	if not guest_buttons.has(slot):
-		guest_buttons[slot] = item_buttons.duplicate()
+		guest_buttons[slot] = [&"", &""] as Array[StringName]
 	return guest_buttons[slot]
 
 
@@ -180,7 +199,8 @@ func _add_hearts(count: int) -> void:
 	max_health_changed.emit(max_health)
 
 
-## Primer equipo de una categoría (o una mejora con `equip_on_get`): se equipa. Primer usable: va al primer botón libre.
+## Primer equipo de una categoría (o una mejora con `equip_on_get`): se equipa. Primer usable: al primer botón libre,
+## del primer player que tenga uno.
 func _auto_place(item: ItemData, only_slot := -1) -> void:
 	if item.is_equipment() and (item.equip_on_get or equipment.get(item.category, &"") == &""):
 		equip(item)

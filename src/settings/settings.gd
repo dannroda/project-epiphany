@@ -20,6 +20,8 @@ const DEFAULTS := {
 	&"minimap": true,
 	&"ui_scale": 100,
 	&"language": "",
+	## Co-op, a prueba (13.9): "ring" = cada uno elige con su anillo; "shared" = el menú de pausa con un cursor por player.
+	&"coop_item_menu": "ring",
 }
 ## Idiomas con traducción en translations/<código>.po. Vacío en `language` = todavía no se eligió.
 const LANGUAGES: Array[String] = ["es", "en"]

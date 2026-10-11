@@ -216,6 +216,12 @@ msgstr "Phase {phase}"
 msgid "HUD_SAVED"
 msgstr "Saved"
 
+msgid "HUD_RING_ASSIGN"
+msgstr "puts it on that button"
+
+msgid "HUD_RING_TAKEN"
+msgstr "{player} has it"
+
 # Pausa: Equipo, Ítems, Mapa
 msgid "EQUIP_CATEGORY_SWORD"
 msgstr "Sword"
@@ -312,6 +318,15 @@ msgstr "Item"
 
 msgid "ITEMS_ASSIGNED"
 msgstr "Assigned to {button}"
+
+msgid "ITEMS_COOP_TITLE"
+msgstr "EACH WITH THEIR OWN X AND Y"
+
+msgid "ITEMS_COOP_SHARED_HINT"
+msgstr "Everyone moves their own cursor with their controller and sets the item with X or Y. Only one player can carry each item."
+
+msgid "ITEMS_COOP_RING_HINT"
+msgstr "To change yours, hold LB while playing (item ring)."
 
 msgid "ITEMS_ASSIGN"
 msgstr "Assign to {button}"

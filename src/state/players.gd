@@ -15,6 +15,8 @@ const MAX_PLAYERS := 2
 ## Mantener Start este rato saca al invitado; un toque pausa, como el de cualquiera.
 const LEAVE_HOLD := 1.5
 const JOIN_SPACING := 1.2
+## Debug (tecla 5): alterna cómo eligen ítems en co-op (Settings `coop_item_menu`).
+const ITEM_MENU_TOGGLE := &"debug_item_menu"
 
 var all: Array[PlayerCharacter] = []
 ## Slot (1..) → control de cada invitado. El primero (slot 0) tiene el teclado y los controles que sobran.
@@ -104,6 +106,7 @@ func leave(slot: int) -> void:
 	if not guests.has(slot):
 		return
 	guests.erase(slot)
+	GameState.release_buttons(slot)
 	for player in all.duplicate():
 		if player.controls.slot == slot:
 			player.queue_free()
@@ -128,6 +131,23 @@ func _input(event: InputEvent) -> void:
 	elif event.pressed and can_join(event.device):
 		get_viewport().set_input_as_handled()
 		join(event.device)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if OS.is_debug_build() and InputMap.has_action(ITEM_MENU_TOGGLE) and event.is_action_pressed(ITEM_MENU_TOGGLE):
+		get_viewport().set_input_as_handled()
+		Settings.set_value(&"coop_item_menu", "ring" if shared_item_menu_chosen() else "shared")
+		DebugOverlay.watch("coop/menú de ítems", Settings.get_value(&"coop_item_menu"))
+		Log.info(&"coop", "Menú de ítems en co-op:", "un menú, un cursor por player" if shared_item_menu_chosen() else "un anillo por player")
+
+
+func shared_item_menu_chosen() -> bool:
+	return Settings.get_value(&"coop_item_menu") == "shared"
+
+
+## En co-op con el menú compartido, los ítems se eligen desde la pausa con un cursor por player; si no, con el anillo.
+func uses_shared_item_menu() -> bool:
+	return all.size() > 1 and shared_item_menu_chosen()
 
 
 func _process(delta: float) -> void:

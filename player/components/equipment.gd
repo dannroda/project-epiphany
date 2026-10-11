@@ -25,7 +25,7 @@ var held: Node3D
 
 
 func _ready() -> void:
-	GameState.equipment_changed.connect(func(_category: ItemData.Category, _id: StringName) -> void: refresh())
+	GameState.equipment_changed.connect(refresh.unbind(2))
 	GameState.loaded.connect(refresh)
 	refresh()
 

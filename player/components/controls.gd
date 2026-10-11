@@ -6,13 +6,15 @@ const ACTIONS: Array[StringName] = [
 	&"move_left", &"move_right", &"move_forward", &"move_backward",
 	&"look_left", &"look_right", &"look_up", &"look_down",
 	&"attack", &"interact", &"dodge", &"block", &"item_1", &"item_2",
-	&"z-lock", &"target_prev", &"target_next",
+	&"z-lock", &"target_prev", &"target_next", &"item_ring",
 ]
 
 var slot := 0
 var shared := true
 var keyboard := true
 var joypads: Array[int] = []
+## Con el anillo de ítems abierto (13.9) el player no lee nada; el anillo lee con `action()`.
+var captured := false
 
 
 func action(name: StringName) -> StringName:
@@ -63,14 +65,16 @@ func uses_gamepad() -> bool:
 
 
 func pressed(name: StringName) -> bool:
-	return Input.is_action_pressed(action(name))
+	return not captured and Input.is_action_pressed(action(name))
 
 
 func just_pressed(name: StringName) -> bool:
-	return Input.is_action_just_pressed(action(name))
+	return not captured and Input.is_action_just_pressed(action(name))
 
 
 func vector(negative_x: StringName, positive_x: StringName, negative_y: StringName, positive_y: StringName, deadzone := -1.0) -> Vector2:
+	if captured:
+		return Vector2.ZERO
 	return Input.get_vector(action(negative_x), action(positive_x), action(negative_y), action(positive_y), deadzone)
 
 
@@ -83,7 +87,7 @@ func look(deadzone := -1.0) -> Vector2:
 
 
 func event_pressed(event: InputEvent, name: StringName) -> bool:
-	return event.is_action_pressed(action(name))
+	return not captured and event.is_action_pressed(action(name))
 
 
 func event_released(event: InputEvent, name: StringName) -> bool:

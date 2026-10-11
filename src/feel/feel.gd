@@ -171,9 +171,11 @@ func set_trail(trail: Trail3D, on: bool) -> void:
 	if on:
 		trail.clear()
 	else:
+		var id := trail.get_instance_id()
 		get_tree().create_timer(trail.lifetime, false).timeout.connect(func() -> void:
-			if is_instance_valid(trail) and not trail.emitting:
-				trail.clear())
+			var left := instance_from_id(id) as Trail3D
+			if left and not left.emitting:
+				left.clear())
 	trail.emitting = on
 
 

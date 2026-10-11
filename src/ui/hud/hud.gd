@@ -5,10 +5,15 @@ extends CanvasLayer
 
 @export var solo_panel: PackedScene
 @export var coop_panel: PackedScene
+@export var item_ring: PackedScene
+## Del borde de la pantalla al anillo de ítems, que va debajo del panel de su player.
+@export var ring_margin := Vector2(40, 150)
 ## Color de la etiqueta de cada player en co-op (P1, P2); el del modelo es de 13.6.
 @export var player_colors: Array[Color] = [Color(0.85, 0.643, 0.255), Color(0.357, 0.608, 0.878)]
 
 @onready var panels: HBoxContainer = %Panels
+@onready var rings: Control = %Rings
+@onready var slow_dim: ColorRect = %SlowDim
 @onready var coop_keys: CenterContainer = %CoopKeys
 @onready var keys: HBoxContainer = %Keys
 @onready var small_key_count: Label = %SmallKeyCount
@@ -78,9 +83,39 @@ func _rebuild_panels() -> void:
 			panel.layout_direction = Control.LAYOUT_DIRECTION_RTL
 		panels.add_child(panel)
 		panel.bind(shown[i], player_colors[i])
+	_rebuild_rings(shown)
 	if not coop and panels.get_child_count() > 0:
 		keys.reparent((panels.get_child(0) as PlayerPanel).keys_spot, false)
 	coop_keys.visible = coop and _dungeon != null
+
+
+## El anillo de cada player: jugando solo, del lado de los slots (derecha); en co-op, del lado de su panel.
+func _rebuild_rings(shown: Array) -> void:
+	for ring in rings.get_children():
+		rings.remove_child(ring)
+		ring.queue_free()
+	var coop := shown.size() > 1
+	for i in shown.size():
+		var ring: ItemRing = item_ring.instantiate()
+		rings.add_child(ring)
+		var right := not coop or i % 2 == 1
+		ring.set_anchors_preset(Control.PRESET_TOP_RIGHT if right else Control.PRESET_TOP_LEFT)
+		ring.position = Vector2(rings.size.x - ring_margin.x - ring.custom_minimum_size.x if right else ring_margin.x, ring_margin.y)
+		ring.bind(shown[i], player_colors, coop)
+		ring.opened.connect(_on_ring_toggled)
+		ring.closed.connect(_on_ring_toggled)
+
+
+## Jugando solo el mundo casi se detiene mientras el anillo está abierto: se oscurece para que se note.
+func _on_ring_toggled() -> void:
+	slow_dim.visible = Players.all.size() == 1 and rings.get_children().any(func(ring: ItemRing) -> bool: return ring.is_open())
+
+
+func ring_of(player: PlayerCharacter) -> ItemRing:
+	for ring: ItemRing in rings.get_children():
+		if ring.player == player:
+			return ring
+	return null
 
 
 ## Nombre de la sala o la zona al entrar por primera vez: aparece, queda un rato y se va.

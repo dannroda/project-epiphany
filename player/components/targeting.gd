@@ -40,7 +40,7 @@ var flick_enabled := true
 
 func _ready() -> void:
 	_sync_settings()
-	Settings.changed.connect(func(_key: StringName) -> void: _sync_settings())
+	Settings.changed.connect(_sync_settings.unbind(1))
 
 
 func _sync_settings() -> void:
