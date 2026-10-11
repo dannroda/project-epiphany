@@ -3,7 +3,7 @@ extends SceneTree
 ## con el material de la paleta compartido, para usarlas sueltas en escenas.
 ## godot --headless --path . --script res://tools/extract_epiphany_meshes.gd
 
-const BLENDS := ["objetos", "equipo", "lugares", "templo", "naturaleza", "jefe"]
+const BLENDS := ["objetos", "equipo", "lugares", "templo", "naturaleza"]
 const DIR := "res://assets/epiphany/meshes/%s/"
 const MATERIAL := preload("res://data/kits/materials/epiphany.tres")
 
