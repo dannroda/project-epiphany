@@ -8,6 +8,7 @@ const SCENARIO_DIR := "res://debug/scenarios/"
 const NEXT_SCENARIO_FILE := "user://debug/next_scenario.txt"
 const TITLE := "res://src/ui/title/title_screen.tscn"
 const NEW_GAME_SCENE := "res://levels/overworld.tscn"
+const INTRO := preload("res://src/cutscene/intro.tscn")
 
 signal saved(slot: int)
 
@@ -191,7 +192,8 @@ func location() -> String:
 
 
 ## Partida nueva: equipo inicial, en el claro del inicio del overworld. Ocupa su ranura enseguida.
-func new_game(slot: int = -1) -> Error:
+## `with_intro`: la intro (tarea 10.20) arranca sobre el overworld; queda vista apenas empieza.
+func new_game(slot: int = -1, with_intro := false) -> Error:
 	if slot >= 0:
 		current_slot = slot
 	GameState.reset()
@@ -199,6 +201,9 @@ func new_game(slot: int = -1) -> Error:
 	GameState.spawn_point = &"start"
 	GameState.player_position = null
 	await _restore_player()
+	if with_intro:
+		GameState.set_flag(&"ow_intro_seen", true)
+		get_tree().current_scene.add_child(INTRO.instantiate())
 	save_game()
 	autosave()
 	return OK

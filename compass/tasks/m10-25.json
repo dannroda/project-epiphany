@@ -119,6 +119,10 @@
       "detail": "Escenario pre_boss: vencé al jefe; tomar el contenedor no corta el juego y la puerta queda cerrada. Entrá al portal: diálogo 'Fin de la demo' con tres respuestas (stick/flechas, A). Probá Volver a retar (pelea completa, sin otro contenedor), Seguir jugando (overworld con el progreso) y Volver al menú (al cargar, el jefe no está).",
       "done": false,
       "text": "Fin de la demo (10.19)"
+    },
+    {
+      "done": false,
+      "text": "Intro (10.20): Nueva partida desde el título corre la intro (4 planos, textos, temblor y brillo rojo en el templo); mantener A la saltea, un toque no; al terminar la cámara vuelve sola y el player se mueve; cargar o continuar no la repite. Afinar a ojo duración de planos, brillo y temblor"
     }
   ],
   "code": "10.28",
@@ -265,5 +269,5 @@
   ],
   "test": "",
   "title": "Playtest de revisión (lo que está en Revisión)",
-  "updated_at": "2026-10-11T16:57:16.004Z"
+  "updated_at": "2026-10-11T17:19:08.631Z"
 }

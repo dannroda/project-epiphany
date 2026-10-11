@@ -1066,3 +1066,18 @@ msgstr "Challenge the boss again"
 msgctxt "ending_to_title"
 msgid "Volver al menú principal"
 msgstr "Back to the main menu"
+
+msgid "CUTSCENE_HOLD_SKIP"
+msgstr "Hold: skip"
+
+msgid "INTRO_1"
+msgstr "Long ago, the sky had two suns."
+
+msgid "INTRO_2"
+msgstr "One came down to look at us. The ancients put it to sleep inside the temple."
+
+msgid "INTRO_3"
+msgstr "No one has come back in a long time."
+
+msgid "INTRO_4"
+msgstr "The Eye awakens."

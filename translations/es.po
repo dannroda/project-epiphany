@@ -862,3 +862,18 @@ msgstr "Tope de cuadros por segundo"
 
 msgid "OPTIONS_MAX_FPS_UNLIMITED"
 msgstr "Sin límite"
+
+msgid "CUTSCENE_HOLD_SKIP"
+msgstr "Mantener: saltar"
+
+msgid "INTRO_1"
+msgstr "Hace mucho, el cielo tenía dos soles."
+
+msgid "INTRO_2"
+msgstr "Uno bajó a mirarnos. Los antiguos lo durmieron dentro del templo."
+
+msgid "INTRO_3"
+msgstr "Hace mucho que nadie vuelve."
+
+msgid "INTRO_4"
+msgstr "El Ojo despierta."
