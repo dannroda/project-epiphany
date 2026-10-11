@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://src/world/portal.gd" id="1_portal"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/portal_anillo.res" id="m0_portal_anillo"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/portal_disco.res" id="m1_portal_disco"]
+[ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="pf_persistent_flag"]
 
 [sub_resource type="CylinderShape3D" id="Shape"]
 height = 1.6
@@ -86,3 +87,6 @@ libraries = {
 &"": SubResource("Library")
 }
 autoplay = &"spin"
+
+[node name="PersistentFlag" type="Node" parent="."]
+script = ExtResource("pf_persistent_flag")

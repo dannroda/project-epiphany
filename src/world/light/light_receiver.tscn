@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://src/world/light/light_receiver.gd" id="1_receiver"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/cristal_receptor.res" id="m0_cristal_receptor"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/cristal_receptor_cristales.res" id="3_crystal"]
+[ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="pf_persistent_flag"]
 
 [sub_resource type="BoxShape3D" id="Shape"]
 size = Vector3(0.8, 1.7, 0.8)
@@ -21,3 +22,6 @@ mesh = ExtResource("3_crystal")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
 shape = SubResource("Shape")
+
+[node name="PersistentFlag" type="Node" parent="."]
+script = ExtResource("pf_persistent_flag")

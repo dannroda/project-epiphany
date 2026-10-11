@@ -112,7 +112,7 @@ func _ready() -> void:
 	eye_hurtbox.team = EntityConfig.Team.ENEMY
 	eye_hurtbox.hit.connect(_on_eye_hit)
 	health.died.connect(func() -> void: phases.dispatch(&"died"))
-	_flash = HitFlash.attach(eye, health)
+	_flash = %HitFlash
 	phases.add_transition($Phases/Phase1, $Phases/Phase2, &"hands_down")
 	phases.add_transition($Phases/Phase2, $Phases/Phase3, &"enraged")
 	phases.add_transition($Phases/Phase2, $Phases/Defeated, &"died")

@@ -13,6 +13,7 @@ enum Pose { OPEN, FIST, CLAW }
 enum State { READY, BUSY, STUNNED, DOWN }
 
 ## Alto del centro de la mano apoyada en el piso.
+const SLAM_CRACK := preload("res://src/entities/boss/slam_crack.tscn")
 const FLOOR_HEIGHT := 0.6
 const SLAM_HEIGHT := 4.5
 const GRAB_REACH := 1.2
@@ -122,7 +123,7 @@ func _ready() -> void:
 		hitbox.damage_factory = _make_damage
 	hurtbox.hit.connect(_on_hit)
 	health.died.connect(_on_died)
-	_flash = HitFlash.attach(self, health)
+	_flash = $HandFlash
 	_material = mesh.mesh.surface_get_material(0).duplicate()
 	_base_glow = _material.emission_energy_multiplier
 	mesh.material_override = _material
@@ -519,10 +520,8 @@ func _squash_and_bounce() -> void:
 func _leave_crack(at: Vector3) -> void:
 	if _crack == null:
 		_crack = DoomAmbience.crack_texture()
-	var crack := Decal.new()
+	var crack := SLAM_CRACK.instantiate() as Decal
 	crack.texture_albedo = _crack
-	crack.size = Vector3(3.2, 1.0, 3.2)
-	crack.modulate = Color(0.1, 0.07, 0.07)
 	get_tree().current_scene.add_child(crack)
 	crack.global_position = Vector3(at.x, 0.1, at.z)
 	crack.rotation.y = randf() * TAU

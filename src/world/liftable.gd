@@ -3,6 +3,8 @@ extends Interactable
 ## Se levanta sobre la cabeza (vasijas, rocas chicas). Va de hijo del objeto: al levantarlo, el objeto pasa a vivir
 ## dentro de un ThrownObject (cuerpo físico) que sostiene el Carrier del player.
 
+const THROWN_OBJECT := preload("res://src/world/thrown_object.tscn")
+
 ## Tirado, se rompe al chocar (vasija: suelta lo suyo); si no, queda en el piso y se puede volver a levantar.
 @export var breaks := true
 @export var damage := 2
@@ -28,13 +30,9 @@ func make_body() -> ThrownObject:
 	var body := target.get_parent() as ThrownObject
 	if body:
 		return body
-	body = ThrownObject.new()
+	body = THROWN_OBJECT.instantiate() as ThrownObject
 	body.liftable = self
-	var shape := CollisionShape3D.new()
-	var sphere := SphereShape3D.new()
-	sphere.radius = body_radius
-	shape.shape = sphere
-	body.add_child(shape)
+	((body.get_node(^"CollisionShape3D") as CollisionShape3D).shape as SphereShape3D).radius = body_radius
 	var scene := target.get_tree().current_scene
 	scene.add_child(body)
 	body.global_position = target.global_position + Vector3.UP * body_height

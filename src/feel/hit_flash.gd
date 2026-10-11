@@ -4,23 +4,21 @@ extends Node
 
 const SHADER := preload("res://src/feel/hit_flash.gdshader")
 
+@export var health: Health
+## Sus mallas destellan; las que se ponen después se suman con `cover`.
+@export var visuals: Node3D
+
 var _material := ShaderMaterial.new()
 var _tween: Tween
 
 
-static func attach(visuals: Node3D, health: Health) -> HitFlash:
-	var flash := HitFlash.new()
-	flash.name = "HitFlash"
-	visuals.add_child(flash)
-	flash._setup(visuals, health)
-	return flash
-
-
-func _setup(visuals: Node3D, health: Health) -> void:
+func _ready() -> void:
 	_material.shader = SHADER
 	_material.set_shader_parameter(&"color", Feel.settings.flash_color)
-	cover(visuals)
-	health.damaged.connect(func(_amount: int) -> void: play())
+	if visuals:
+		cover(visuals)
+	if health:
+		health.damaged.connect(func(_amount: int) -> void: play())
 
 
 ## Suma las mallas de `node` (equipo que se pone después): destellan y marcan el stencil como el cuerpo, así la

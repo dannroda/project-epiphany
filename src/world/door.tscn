@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://src/world/door.gd" id="1_door"]
 [ext_resource type="Script" path="res://src/components/interactable.gd" id="2_interactable"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo/puerta_madera.res" id="3_leaf"]
+[ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="pf_persistent_flag"]
 
 [sub_resource type="BoxShape3D" id="Shape"]
 size = Vector3(2.0, 2.4, 0.3)
@@ -36,3 +37,6 @@ script = ExtResource("2_interactable")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Interactable"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 shape = SubResource("InteractShape")
+
+[node name="PersistentFlag" type="Node" parent="."]
+script = ExtResource("pf_persistent_flag")

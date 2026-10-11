@@ -39,6 +39,7 @@
 [ext_resource type="Script" uid="uid://dkmh3vf34vltv" path="res://player/states/transition.gd" id="st_transition"]
 [ext_resource type="Script" uid="uid://cugbj78ktnuka" path="res://player/states/using_item.gd" id="st_using_item"]
 [ext_resource type="Gradient" path="res://data/materials/sword_trail_fade.tres" id="trail_fade"]
+[ext_resource type="Script" path="res://src/feel/hit_flash.gd" id="hf_hit_flash"]
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_peicu"]
 fadeout_time = 0.3
@@ -373,6 +374,30 @@ transparency = 1
 shading_mode = 0
 albedo_color = Color(0.72, 0.92, 1, 0.6)
 rim_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="BlockConeMaterial"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+
+[sub_resource type="TorusMesh" id="ReticleRing"]
+inner_radius = 0.28
+outer_radius = 0.36
+rings = 24
+
+[sub_resource type="StandardMaterial3D" id="ReticleMaterial"]
+transparency = 1
+cull_mode = 2
+no_depth_test = true
+shading_mode = 0
+albedo_color = Color(1, 0.85, 0.4, 0.8)
+
+[sub_resource type="StandardMaterial3D" id="AimArrowMaterial"]
+transparency = 1
+cull_mode = 2
+no_depth_test = true
+shading_mode = 0
+albedo_color = Color(0.4, 0.8, 1, 0.8)
 
 [node name="Player" type="CharacterBody3D" unique_id=1694148988]
 script = ExtResource("1_2lfai")
@@ -801,3 +826,36 @@ debug_color = Color(0.9412777, 1.1743903e-05, 0.6135007, 0.41960785)
 
 [connection signal="body_entered" from="TargetDetector" to="Targeting" method="_on_detector_body_entered"]
 [connection signal="body_exited" from="TargetDetector" to="Targeting" method="_on_detector_body_exited"]
+
+[node name="HitFlash" type="Node" parent="ModelController/Visuals" node_paths=PackedStringArray("health", "visuals")]
+unique_name_in_owner = true
+script = ExtResource("hf_hit_flash")
+health = NodePath("../../../Health")
+visuals = NodePath("..")
+
+[node name="BlockCone" type="MeshInstance3D" parent="ModelController"]
+unique_name_in_owner = true
+visible = false
+material_override = SubResource("BlockConeMaterial")
+
+[node name="Reticle" type="MeshInstance3D" parent="Aim"]
+unique_name_in_owner = true
+top_level = true
+visible = false
+material_override = SubResource("ReticleMaterial")
+cast_shadow = 0
+mesh = SubResource("ReticleRing")
+
+[node name="AimArrow" type="MeshInstance3D" parent="Aim"]
+unique_name_in_owner = true
+top_level = true
+visible = false
+material_override = SubResource("AimArrowMaterial")
+cast_shadow = 0
+
+[node name="ItemGetLight" type="OmniLight3D" parent="."]
+unique_name_in_owner = true
+visible = false
+light_color = Color(1, 0.92, 0.6, 1)
+light_energy = 0.0
+omni_range = 4.0

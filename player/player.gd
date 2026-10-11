@@ -36,6 +36,7 @@ signal escaped
 @onready var carrier: Carrier = $Carrier
 ## Lo que se retoca en el inspector (duración, gradiente, material) es del nodo; el ancho y la posición se ajustan al arma.
 @onready var sword_trail: Trail3D = $ModelController/Skeleton3D/Hand_R/SwordTrail
+@onready var _block_cone: MeshInstance3D = %BlockCone
 
 var guard_tween: Tween
 ## Qué controles lee (13.2); existe desde que se instancia, así `Players` le asigna el slot antes de sumarlo.
@@ -44,7 +45,6 @@ var controls: PlayerControls = PlayerControls.new()
 var is_dead: bool:
 	get:
 		return health.current <= 0
-var _block_cone: MeshInstance3D
 var _light_frame := -10
 
 
@@ -69,7 +69,8 @@ func _ready() -> void:
 	hitbox.landed.connect(_on_hit_landed)
 	var silhouette := ShaderMaterial.new()
 	silhouette.shader = SILHOUETTE
-	var flash := HitFlash.attach($ModelController/Visuals, health)
+	var flash: HitFlash = %HitFlash
+	flash.cover($ModelController/Visuals)
 	flash.add_pass(silhouette)
 	equipment.flash = flash
 	health.died.connect(_on_died)
@@ -79,7 +80,7 @@ func _ready() -> void:
 	targeting.target_changed.connect(func(target: Node3D) -> void: movement_state.blackboard.set_var("target", target))
 	movement_state.initialize(self)
 	movement_state.set_active(true)
-	_block_cone = _make_block_cone()
+	_block_cone.mesh = _block_cone_mesh()
 	equipment.weapon_changed.connect(func(_item: ItemData) -> void: _fit_sword_trail())
 	_fit_sword_trail()
 
@@ -423,7 +424,8 @@ func _on_blocked(info: DamageInfo) -> void:
 	Feel.shake(Feel.settings.shake_block)
 
 
-func _make_block_cone() -> MeshInstance3D:
+## Debug: el arco donde el escudo bloquea (`block_angle_deg`).
+func _block_cone_mesh() -> Mesh:
 	var mesh := ImmediateMesh.new()
 	mesh.surface_begin(Mesh.PRIMITIVE_TRIANGLES)
 	var steps := 12
@@ -435,16 +437,7 @@ func _make_block_cone() -> MeshInstance3D:
 		mesh.surface_add_vertex(Vector3(sin(a), 0.05, cos(a)) * 1.5)
 		mesh.surface_add_vertex(Vector3(sin(b), 0.05, cos(b)) * 1.5)
 	mesh.surface_end()
-	var cone := MeshInstance3D.new()
-	cone.mesh = mesh
-	var material := StandardMaterial3D.new()
-	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	material.cull_mode = BaseMaterial3D.CULL_DISABLED
-	cone.material_override = material
-	cone.visible = false
-	model.add_child(cone)
-	return cone
+	return mesh
 
 
 func _update_block_cone() -> void:

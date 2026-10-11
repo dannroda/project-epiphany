@@ -7,6 +7,7 @@ extends Node
 
 ## Capa visual (bit) de lo que se tiene que leer con cualquier doom.
 const LEGIBLE_LAYER := 2
+const CRACK := preload("res://src/world/doom_crack.tscn")
 
 @export var calm_ambient := Color(0.55, 0.52, 0.65)
 @export var doom_ambient := Color(0.8, 0.3, 0.25)
@@ -24,13 +25,15 @@ const LEGIBLE_LAYER := 2
 var level := 0.0
 var environment: Environment
 var sun: DirectionalLight3D
-var dust: GPUParticles3D
 var cracks: Array[Decal] = []
-var legible_light: DirectionalLight3D
 var legible: Array[GeometryInstance3D] = []
 var _next_tremor := 6.0
 var _fogless := {}
 var _recheck := 0.0
+
+@onready var dust: GPUParticles3D = %DoomDust
+## La que ilumina lo legible: copia la dirección y la fuerza del sol.
+@onready var legible_light: DirectionalLight3D = %LegibleLight
 
 
 func _ready() -> void:
@@ -40,17 +43,13 @@ func _ready() -> void:
 			environment = (child as WorldEnvironment).environment
 		elif child is DirectionalLight3D:
 			sun = child
-	_make_dust.call_deferred()
 	_make_cracks.call_deferred()
+	legible_light.visible = sun != null
 	if sun:
 		sun.light_cull_mask &= ~LEGIBLE_LAYER
-		legible_light = DirectionalLight3D.new()
-		legible_light.name = "LegibleLight"
-		legible_light.light_cull_mask = LEGIBLE_LAYER
 		legible_light.light_energy = sun.light_energy
 		legible_light.light_color = calm_sun
 		legible_light.transform = sun.transform
-		scene.add_child.call_deferred(legible_light)
 	get_tree().node_added.connect(_on_node_added)
 	_mark_tree.call_deferred(scene)
 
@@ -74,11 +73,10 @@ func _process(delta: float) -> void:
 		environment.fog_light_color = fog_color
 	if sun:
 		sun.light_color = calm_sun.lerp(doom_sun, level)
-	if dust:
-		dust.amount_ratio = clampf(level * 1.2, 0.0, 1.0)
-		var camera := get_tree().get_first_node_in_group(&"room_camera") as TopDownCamera
-		if camera:
-			dust.global_position = camera.focus + Vector3.UP * 4.0
+	dust.amount_ratio = clampf(level * 1.2, 0.0, 1.0)
+	var camera := get_tree().get_first_node_in_group(&"room_camera") as TopDownCamera
+	if camera:
+		dust.global_position = camera.focus + Vector3.UP * 4.0
 	_recheck -= delta
 	if _recheck <= 0.0:
 		_recheck = 0.5
@@ -95,38 +93,8 @@ func tremor() -> void:
 	var player := Players.lead()
 	if player:
 		Feel.sfx(&"rumble", player.global_position)
-		if level > 0.5 and dust:
+		if level > 0.5:
 			dust.restart()
-
-
-func _make_dust() -> void:
-	dust = GPUParticles3D.new()
-	dust.name = "DoomDust"
-	dust.amount = 120
-	dust.lifetime = 4.0
-	dust.amount_ratio = 0.0
-	dust.visibility_aabb = AABB(Vector3(-14, -8, -10), Vector3(28, 12, 20))
-	var process := ParticleProcessMaterial.new()
-	process.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_BOX
-	process.emission_box_extents = Vector3(12, 0.5, 8)
-	process.direction = Vector3.DOWN
-	process.spread = 15.0
-	process.initial_velocity_min = 0.2
-	process.initial_velocity_max = 0.6
-	process.gravity = Vector3(0, -0.6, 0)
-	process.scale_min = 0.5
-	process.scale_max = 1.2
-	dust.process_material = process
-	var quad := QuadMesh.new()
-	quad.size = Vector2(0.06, 0.06)
-	var material := StandardMaterial3D.new()
-	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	material.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
-	material.albedo_color = Color(0.75, 0.68, 0.6, 0.7)
-	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	quad.material = material
-	dust.draw_pass_1 = quad
-	get_parent().add_child(dust)
 
 
 ## Grietas en el piso: más cuanto más doom tiene la sala (siempre en los mismos lugares).
@@ -139,12 +107,10 @@ func _make_cracks() -> void:
 	for room: Room in get_tree().get_nodes_in_group(Room.GROUP):
 		var bounds := room.bounds()
 		for i in int(room.doom * 7.0):
-			var decal := Decal.new()
+			var decal := CRACK.instantiate() as Decal
 			decal.texture_albedo = texture
 			decal.size = Vector3(rng.randf_range(2.0, 4.0), 1.0, rng.randf_range(2.0, 4.0))
-			decal.modulate = Color(0.12, 0.08, 0.08)
-			decal.cull_mask &= ~LEGIBLE_LAYER
-			get_parent().add_child(decal)
+			add_child(decal)
 			decal.global_position = Vector3(rng.randf_range(bounds.position.x + 1.5, bounds.end.x - 1.5), 0.1, rng.randf_range(bounds.position.y + 1.5, bounds.end.y - 1.5))
 			decal.rotation.y = rng.randf() * TAU
 			cracks.append(decal)

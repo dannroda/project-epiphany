@@ -33,12 +33,11 @@ func _ready() -> void:
 	_show(false)
 	if Engine.is_editor_hint() or flag == &"":
 		return
-	_persistent = PersistentFlag.new()
+	_persistent = $PersistentFlag
 	_persistent.flag = flag
 	_persistent.changed.connect(func(value: Variant) -> void:
 		if value == true and not lit:
 			_set_lit(true, false))
-	add_child(_persistent)
 	if _persistent.value == true:
 		_set_lit(true, false)
 

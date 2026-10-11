@@ -35,7 +35,6 @@ func _ready() -> void:
 	_glow.emission_enabled = true
 	_glow.emission = Color(1.0, 0.35, 0.15)
 	(%Iris as MeshInstance3D).material_override = _glow
-	HitFlash.attach(head, health)
 	set_charge(0.0)
 
 

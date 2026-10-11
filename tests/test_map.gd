@@ -212,11 +212,13 @@ func test_overworld_photo_is_taken_from_the_current_level() -> void:
 	var map: OverworldMap = tree.current_scene.get_node(^"OverworldMap")
 	assert_true(page.overworld_image.texture is ViewportTexture, "la imagen es la foto en vivo")
 	assert_eq(Vector2(map.texture.get_size()), map.world_rect.size * OverworldMap.PIXELS_PER_METER)
-	var copy: Node3D = map._grid_copy()
+	assert_true(map._grid_copy())
+	var copy: Node3D = map.get_node(^"%GridCopy")
 	var instances := 0
 	for child: MultiMeshInstance3D in copy.get_children():
 		instances += child.multimesh.instance_count
 		assert_eq(child.layers, 1 << (OverworldMap.MAP_LAYER - 1), "solo la cámara del mapa la ve")
 	assert_eq(instances, map.grid.get_used_cells().size(), "todas las celdas del GridMap")
-	copy.free()
+	for child in copy.get_children():
+		child.free()
 	_close(setup[2])

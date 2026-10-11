@@ -4,9 +4,7 @@ extends Node
 ## Overworld: calma. Templo: la base oscura y, sala a sala según su `Room.doom`, pulso, murmullo y latido.
 ## Con un menú o una caja de texto abierta, la música baja (ducking). El murmullo va por el bus Ambience.
 
-const BUS := &"Music"
 const LAYERS: Array[StringName] = [&"calm", &"dark", &"pulse", &"murmur", &"heartbeat"]
-const FOLDER := "res://assets/audio/music/"
 const TITLE := "res://src/ui/title/title_screen.tscn"
 const DUCK_DB := -8.0
 ## Cuánto cambia el volumen (lineal) por segundo.
@@ -19,19 +17,14 @@ var _duck := 0.0
 var boss_fight := false
 
 
+## Cada capa es un hijo con su nombre (music.tscn).
 func _ready() -> void:
-	process_mode = PROCESS_MODE_ALWAYS
 	for layer in LAYERS:
-		var stream := load(FOLDER + layer + ".wav") as AudioStreamWAV
+		var player := get_node(NodePath(layer)) as AudioStreamPlayer
+		var stream := player.stream as AudioStreamWAV
 		stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
 		stream.loop_begin = 0
 		stream.loop_end = int(stream.get_length() * stream.mix_rate)
-		var player := AudioStreamPlayer.new()
-		player.name = String(layer)
-		player.stream = stream
-		player.bus = &"Ambience" if layer == &"murmur" else BUS
-		player.volume_db = -80.0
-		add_child(player)
 		players[layer] = player
 		levels[layer] = 0.0
 	for player in players.values():

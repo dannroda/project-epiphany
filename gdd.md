@@ -411,6 +411,8 @@ Decidido el 2026-10-09: **KayKit + prototipo, pulido.** Personajes y armas de Ka
 ## 11. Arquitectura técnica
 <!-- id: arquitectura -->
 
+**Nodos en la escena (10.27):** todo lo que hereda de `Node` va en su `.tscn`, no con `X.new()` + `add_child`, así se retoca en el inspector; el código solo ajusta lo que depende del juego (un flag, un radio por objeto, un stream sorteado). Lo que aparece en runtime se instancia de una escena: ráfagas de `Feel` (`src/feel/bursts/*.tscn`), su onda (`shockwave.tscn`) y sus reproductores (`sfx_player.tscn`, `ui_sound.tscn`); tramos del haz de luz (`beam_segment.tscn`); grietas del doom y del golpe del jefe (`doom_crack.tscn`, `slam_crack.tscn`); cuerpo de lo levantado (`thrown_object.tscn`); pedazo de armadura (`armor_piece.tscn`); mallas de la foto del mapa (`map_piece.tscn`). Fijos en su escena: `PersistentFlag` (el dueño le copia su `flag` en `_ready`; acepta el flag tarde), `HitFlash` (con `health` y `visuals` exportados), el modelo del cofre, el área del checkpoint (`spawn_point.tscn`), las capas de `Music` (el autoload es `music.tscn`), el polvo y la luz legible del doom (`doom_ambience.tscn`) y, en el player, el cono de bloqueo, la mira, la flecha de apuntado y la luz del *item get*. Las herramientas del editor (`addons/`) arman su UI por código y quedan afuera.
+
 ### 11.1 Estructura de carpetas
 <!-- id: estructura-carpetas -->
 

@@ -71,7 +71,7 @@ func _ready() -> void:
 		Kind.LOCKED, Kind.BOSS:
 			interactable.enabled = true
 			interactable.interacted.connect(func(_by: PlayerCharacter) -> void: try_unlock())
-			_persistent = PersistentFlag.new()
+			_persistent = $PersistentFlag
 			_persistent.flag = flag
 			_persistent.changed.connect(func(value: Variant) -> void:
 				if value == true:
@@ -79,7 +79,6 @@ func _ready() -> void:
 				else:
 					close(false)
 				interactable.enabled = value != true)
-			add_child(_persistent)
 			if _persistent.value == true:
 				open(false)
 				interactable.enabled = false

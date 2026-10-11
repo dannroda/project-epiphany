@@ -1,0 +1,34 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n733a"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 0.9, 0.55, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_cyufl"]
+material = SubResource("StandardMaterial3D_n733a")
+radius = 0.05
+height = 0.14
+radial_segments = 4
+rings = 1
+
+[sub_resource type="Curve" id="Curve_1l1j3"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.6, 0.8), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="Sparkle" type="CPUParticles3D" unique_id=1490363123]
+emitting = false
+amount = 16
+lifetime = 0.7
+one_shot = true
+explosiveness = 0.9
+mesh = SubResource("SphereMesh_cyufl")
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 1.2
+initial_velocity_max = 2.4
+angular_velocity_min = -540.0
+angular_velocity_max = 540.0
+damping_min = 2.5
+damping_max = 3.5
+scale_amount_curve = SubResource("Curve_1l1j3")

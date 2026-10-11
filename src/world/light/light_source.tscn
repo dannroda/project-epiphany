@@ -2,9 +2,16 @@
 
 [ext_resource type="Script" path="res://src/world/light/light_beam.gd" id="1_beam"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/fuente_luz.res" id="m0_fuente_luz"]
+[ext_resource type="Material" path="res://src/world/light/beam_material.tres" id="2_material"]
+[ext_resource type="Material" path="res://data/kits/materials/light_glow.tres" id="3_glow"]
 
 [sub_resource type="BoxShape3D" id="Shape"]
 size = Vector3(0.7, 1.4, 0.7)
+
+[sub_resource type="SphereMesh" id="TipSphere"]
+material = ExtResource("2_material")
+radius = 0.175
+height = 0.35
 
 [node name="LightSource" type="StaticBody3D"]
 
@@ -15,6 +22,13 @@ mesh = ExtResource("m0_fuente_luz")
 [node name="Beam" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.26, -0.45)
 script = ExtResource("1_beam")
+
+[node name="Tip" type="MeshInstance3D" parent="Beam"]
+unique_name_in_owner = true
+top_level = true
+material_overlay = ExtResource("3_glow")
+cast_shadow = 0
+mesh = SubResource("TipSphere")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)

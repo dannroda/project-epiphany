@@ -1,0 +1,37 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/audio/music.gd" id="1_music"]
+[ext_resource type="AudioStream" path="res://assets/audio/music/calm.wav" id="2_calm"]
+[ext_resource type="AudioStream" path="res://assets/audio/music/dark.wav" id="3_dark"]
+[ext_resource type="AudioStream" path="res://assets/audio/music/pulse.wav" id="4_pulse"]
+[ext_resource type="AudioStream" path="res://assets/audio/music/murmur.wav" id="5_murmur"]
+[ext_resource type="AudioStream" path="res://assets/audio/music/heartbeat.wav" id="6_heartbeat"]
+
+[node name="Music" type="Node"]
+process_mode = 3
+script = ExtResource("1_music")
+
+[node name="calm" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_calm")
+volume_db = -80.0
+bus = &"Music"
+
+[node name="dark" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_dark")
+volume_db = -80.0
+bus = &"Music"
+
+[node name="pulse" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_pulse")
+volume_db = -80.0
+bus = &"Music"
+
+[node name="murmur" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_murmur")
+volume_db = -80.0
+bus = &"Ambience"
+
+[node name="heartbeat" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_heartbeat")
+volume_db = -80.0
+bus = &"Music"

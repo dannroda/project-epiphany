@@ -32,10 +32,9 @@ func _ready() -> void:
 				travel())
 	if required_flag != &"":
 		_set_open(false)
-		var persistent := PersistentFlag.new()
+		var persistent := $PersistentFlag as PersistentFlag
 		persistent.flag = required_flag
 		persistent.changed.connect(func(value: Variant) -> void: _set_open(value == true))
-		add_child(persistent)
 
 
 func travel() -> void:

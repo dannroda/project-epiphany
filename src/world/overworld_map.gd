@@ -7,6 +7,8 @@ extends Node
 const MAP_LAYER := 20
 const PIXELS_PER_METER := 20.0
 const CAMERA_HEIGHT := 60.0
+## Una malla del suelo copiada para la foto (en la capa del mapa).
+const MAP_PIECE := preload("res://src/world/map_piece.tscn")
 
 @export var display_name: String = ""
 @export var world_rect := Rect2(-20, -20, 40, 40)
@@ -20,6 +22,8 @@ var texture: Texture2D
 
 @onready var _viewport: SubViewport = $Snapshot
 @onready var _camera: Camera3D = $Snapshot/Camera
+## Dónde va la copia del GridMap mientras se saca la foto.
+@onready var _grid_copy_root: Node3D = %GridCopy
 
 
 func _ready() -> void:
@@ -41,12 +45,13 @@ func snapshot() -> void:
 	var camera := get_viewport().get_camera_3d()
 	var hole: Vector4 = camera.player_hole if camera is TopDownCamera else Vector4.ZERO
 	RenderingServer.global_shader_parameter_set(&"player_hole", Vector4.ZERO)
-	var copy := _grid_copy()
+	var copied := _grid_copy()
 	_viewport.render_target_update_mode = SubViewport.UPDATE_ONCE
 	await RenderingServer.frame_post_draw
 	RenderingServer.global_shader_parameter_set(&"player_hole", hole)
-	if copy:
-		copy.queue_free()
+	if copied:
+		for piece in _grid_copy_root.get_children():
+			piece.queue_free()
 
 
 static func _add_to_map_layer(node: Node) -> void:
@@ -58,9 +63,9 @@ static func _add_to_map_layer(node: Node) -> void:
 
 ## GridMap no tiene capas de render: para la foto se copian sus mallas (un MultiMesh por malla) solo en la capa del mapa.
 ## Las paredes "borde" vuelven a ser las normales: desde arriba no tienen tapa.
-func _grid_copy() -> Node3D:
+func _grid_copy() -> bool:
 	if not grid or not grid.is_inside_tree():
-		return null
+		return false
 	var library := grid.mesh_library
 	var by_mesh: Dictionary[Mesh, Array] = {}
 	for cell in grid.get_used_cells():
@@ -70,8 +75,9 @@ func _grid_copy() -> Node3D:
 			continue
 		var basis := grid.get_basis_with_orthogonal_index(grid.get_cell_item_orientation(cell)).scaled(Vector3.ONE * grid.cell_scale)
 		by_mesh.get_or_add(mesh, []).append(Transform3D(basis, grid.map_to_local(cell)) * library.get_item_mesh_transform(item))
-	var copy := Node3D.new()
-	copy.transform = grid.global_transform
+	for piece in _grid_copy_root.get_children():
+		piece.free()
+	_grid_copy_root.transform = grid.global_transform
 	for mesh in by_mesh:
 		var multimesh := MultiMesh.new()
 		multimesh.transform_format = MultiMesh.TRANSFORM_3D
@@ -79,12 +85,10 @@ func _grid_copy() -> Node3D:
 		multimesh.instance_count = by_mesh[mesh].size()
 		for i in multimesh.instance_count:
 			multimesh.set_instance_transform(i, by_mesh[mesh][i])
-		var instance := MultiMeshInstance3D.new()
-		instance.multimesh = multimesh
-		instance.layers = 1 << (MAP_LAYER - 1)
-		copy.add_child(instance)
-	add_child(copy)
-	return copy
+		var piece := MAP_PIECE.instantiate() as MultiMeshInstance3D
+		piece.multimesh = multimesh
+		_grid_copy_root.add_child(piece)
+	return true
 
 
 static func _without_edge(library: MeshLibrary, item: int) -> int:

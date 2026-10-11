@@ -36,12 +36,13 @@
 [ext_resource type="PackedScene" path="res://src/world/warp_portal.tscn" id="51_warp"]
 [ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="52_5r1vx"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="53_5adsw"]
-[ext_resource type="Script" uid="uid://cqtm1asamns1o" path="res://src/world/doom_ambience.gd" id="55_j188v"]
+[ext_resource type="PackedScene" path="res://src/world/doom_ambience.tscn" id="55_j188v"]
 [ext_resource type="PackedScene" path="res://src/entities/boss/boss.tscn" id="56_boss"]
 [ext_resource type="Script" uid="uid://biq7c248kwtba" path="res://src/entities/boss/boss_arena.gd" id="57_arena"]
 [ext_resource type="PackedScene" path="res://src/world/cracked_wall_templo.tscn" id="91_cracktemplo"]
 [ext_resource type="PackedScene" path="res://levels/decor/temple_decor.tscn" id="92_decor"]
 [ext_resource type="PackedScene" path="res://src/world/spike_trap.tscn" id="93_spikes"]
+[ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="94_persistent_flag"]
 
 [sub_resource type="Environment" id="Environment_h5c3c"]
 background_mode = 1
@@ -606,8 +607,7 @@ mask_margin = 2.0
 
 [node name="HUD" parent="." unique_id=1198023941 instance=ExtResource("53_5adsw")]
 
-[node name="DoomAmbience" type="Node" parent="." unique_id=1762153280]
-script = ExtResource("55_j188v")
+[node name="DoomAmbience" parent="." unique_id=1762153280 instance=ExtResource("55_j188v")]
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=486303064]
 navigation_mesh = SubResource("NavigationMesh_qekgw")
@@ -671,3 +671,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 54)
 offset = 1.8
 
 [node name="Decor" parent="." instance=ExtResource("92_decor")]
+
+[node name="PersistentFlag" type="Node" parent="ArenaWaves"]
+script = ExtResource("94_persistent_flag")

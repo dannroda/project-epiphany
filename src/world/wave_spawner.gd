@@ -24,12 +24,11 @@ var _persistent: PersistentFlag
 func _ready() -> void:
 	add_to_group(&"wave_spawners")
 	if flag != &"":
-		_persistent = PersistentFlag.new()
+		_persistent = $PersistentFlag
 		_persistent.flag = flag
 		_persistent.changed.connect(func(value: Variant) -> void:
 			if value == true and not active:
 				_win(false))
-		add_child(_persistent)
 		if _persistent.value == true:
 			_win(false)
 	if room:

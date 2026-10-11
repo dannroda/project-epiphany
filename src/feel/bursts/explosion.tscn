@@ -1,0 +1,38 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kh32u"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_dnjwk"]
+material = SubResource("StandardMaterial3D_kh32u")
+radius = 0.12
+height = 0.24
+radial_segments = 4
+rings = 1
+
+[sub_resource type="Curve" id="Curve_hrubu"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.6, 0.8), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_gw7fc"]
+offsets = PackedFloat32Array(0, 1, 0.35)
+colors = PackedColorArray(1, 0.95, 0.7, 1, 0.35, 0.22, 0.2, 1, 1, 0.55, 0.2, 1)
+
+[node name="Explosion" type="CPUParticles3D" unique_id=285377216]
+emitting = false
+amount = 32
+lifetime = 0.55
+one_shot = true
+explosiveness = 0.9
+mesh = SubResource("SphereMesh_dnjwk")
+spread = 180.0
+gravity = Vector3(0, -3, 0)
+initial_velocity_min = 3.0
+initial_velocity_max = 7.0
+damping_min = 4.0
+damping_max = 6.0
+scale_amount_min = 0.8
+scale_amount_max = 2.2
+scale_amount_curve = SubResource("Curve_hrubu")
+color_ramp = SubResource("Gradient_gw7fc")

@@ -4,38 +4,18 @@ extends Node3D
 ## activa los LightReceiver que toca. Se recalcula cada cuadro de física.
 
 const MIRROR_GROUP := &"light_mirror"
-const GLOW := preload("res://data/kits/materials/light_glow.tres")
+## Cada tramo del haz (el grosor, el color y el brillo se tocan ahí y en `%Tip`).
+const SEGMENT := preload("res://src/world/light/beam_segment.tscn")
 
 @export var max_length := 40.0
 @export var max_bounces := 8
-@export var radius := 0.07
-@export var color := Color(1.0, 0.92, 0.6)
 
 ## Los tramos del último cálculo (pares desde, hasta), para tests y depuración.
 var segments: Array[PackedVector3Array] = []
 
-var _material := StandardMaterial3D.new()
-var _glow := GLOW.duplicate() as ShaderMaterial
 var _meshes: Array[MeshInstance3D] = []
-var _tip: MeshInstance3D
 
-
-func _ready() -> void:
-	_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	_material.albedo_color = color
-	_material.emission_enabled = true
-	_material.emission = color
-	_glow.set_shader_parameter(&"color", color)
-	_tip = MeshInstance3D.new()
-	var sphere := SphereMesh.new()
-	sphere.radius = radius * 2.5
-	sphere.height = radius * 5.0
-	sphere.material = _material
-	_tip.mesh = sphere
-	_tip.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	_tip.material_overlay = _glow
-	_tip.top_level = true
-	add_child(_tip)
+@onready var _tip: MeshInstance3D = %Tip
 
 
 func _physics_process(_delta: float) -> void:
@@ -78,18 +58,7 @@ func _next_direction(collider: Object, direction: Vector3, normal: Vector3, poin
 
 func _draw() -> void:
 	while _meshes.size() < segments.size():
-		var mesh := MeshInstance3D.new()
-		var cylinder := CylinderMesh.new()
-		cylinder.top_radius = radius
-		cylinder.bottom_radius = radius
-		cylinder.height = 1.0
-		cylinder.radial_segments = 8
-		cylinder.rings = 1
-		cylinder.material = _material
-		mesh.mesh = cylinder
-		mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-		mesh.material_overlay = _glow
-		mesh.top_level = true
+		var mesh := SEGMENT.instantiate() as MeshInstance3D
 		add_child(mesh)
 		_meshes.append(mesh)
 	for i in _meshes.size():

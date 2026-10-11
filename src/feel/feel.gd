@@ -8,6 +8,18 @@ const UI_BUS := &"UI"
 const MIX_RATE := 22050
 const SAMPLE_DIR := "res://assets/audio/sfx/"
 const VOLUME_VARIATION_DB := 1.5
+const SFX_PLAYER := preload("res://src/feel/sfx_player.tscn")
+const UI_SOUND := preload("res://src/feel/ui_sound.tscn")
+const SHOCKWAVE := preload("res://src/feel/shockwave.tscn")
+## Una escena por ráfaga (src/feel/bursts/): ahí se tocan cantidad, vida, colores y forma.
+const BURSTS: Dictionary[StringName, PackedScene] = {
+	&"sparks": preload("res://src/feel/bursts/sparks.tscn"),
+	&"sparkle": preload("res://src/feel/bursts/sparkle.tscn"),
+	&"explosion": preload("res://src/feel/bursts/explosion.tscn"),
+	&"shards": preload("res://src/feel/bursts/shards.tscn"),
+	&"leaves": preload("res://src/feel/bursts/leaves.tscn"),
+	&"dust": preload("res://src/feel/bursts/dust.tscn"),
+}
 ## Evento → prefijos de archivo (carpeta/nombre) dentro de SAMPLE_DIR.
 const SAMPLES := {
 	&"hit": ["kenney_impact-sounds/impactPunch_medium_"],
@@ -89,9 +101,8 @@ func ui(sound: StringName) -> void:
 	var streams: Array = _sounds.get(sound, [])
 	if streams.is_empty():
 		return
-	var player := AudioStreamPlayer.new()
+	var player := UI_SOUND.instantiate() as AudioStreamPlayer
 	player.stream = streams.pick_random()
-	player.bus = UI_BUS
 	player.volume_db = settings.sfx_volume_db - 4.0
 	player.pitch_scale = 1.0 + randf_range(-0.04, 0.04)
 	add_child(player)
@@ -154,9 +165,8 @@ func sfx(sound: StringName, at: Vector3) -> void:
 	var scene := get_tree().current_scene
 	if streams.is_empty() or scene == null:
 		return
-	var player := AudioStreamPlayer3D.new()
+	var player := SFX_PLAYER.instantiate() as AudioStreamPlayer3D
 	player.stream = streams.pick_random()
-	player.bus = SFX_BUS
 	player.volume_db = settings.sfx_volume_db + randf_range(-VOLUME_VARIATION_DB, VOLUME_VARIATION_DB)
 	player.pitch_scale = 1.0 + randf_range(-settings.pitch_variation, settings.pitch_variation)
 	scene.add_child(player)
@@ -186,7 +196,7 @@ func burst(kind: StringName, at: Vector3, direction: Vector3) -> void:
 	var scene := get_tree().current_scene
 	if scene == null:
 		return
-	var particles := _burst_template(kind).duplicate() as CPUParticles3D
+	var particles := BURSTS.get(kind, BURSTS[&"dust"]).instantiate() as CPUParticles3D
 	particles.direction = direction
 	scene.add_child(particles)
 	particles.global_position = at
@@ -196,141 +206,12 @@ func burst(kind: StringName, at: Vector3, direction: Vector3) -> void:
 		_shockwave(scene, at)
 
 
-var _bursts: Dictionary[StringName, CPUParticles3D] = {}
-
-
-func _exit_tree() -> void:
-	for template in _bursts.values():
-		template.free()
-	_bursts.clear()
-
-
-func _burst_template(kind: StringName) -> CPUParticles3D:
-	if _bursts.has(kind):
-		return _bursts[kind]
-	var particles := CPUParticles3D.new()
-	particles.one_shot = true
-	particles.explosiveness = 0.9
-	particles.scale_amount_curve = _shrink_curve()
-	var mesh: PrimitiveMesh
-	var color: Color
-	match kind:
-		&"sparks":
-			particles.amount = 14
-			particles.lifetime = 0.25
-			particles.spread = 70.0
-			particles.initial_velocity_min = 3.5
-			particles.initial_velocity_max = 6.0
-			particles.gravity = Vector3(0, -6, 0)
-			particles.particle_flag_align_y = true
-			mesh = _gem(0.02, 0.16)
-			color = Color(1.0, 0.86, 0.45)
-		&"sparkle":
-			particles.amount = 16
-			particles.lifetime = 0.7
-			particles.spread = 180.0
-			particles.initial_velocity_min = 1.2
-			particles.initial_velocity_max = 2.4
-			particles.gravity = Vector3.ZERO
-			particles.damping_min = 2.5
-			particles.damping_max = 3.5
-			particles.angular_velocity_min = -540.0
-			particles.angular_velocity_max = 540.0
-			mesh = _gem(0.05, 0.14)
-			color = Color(1.0, 0.9, 0.55)
-		&"explosion":
-			particles.amount = 32
-			particles.lifetime = 0.55
-			particles.spread = 180.0
-			particles.initial_velocity_min = 3.0
-			particles.initial_velocity_max = 7.0
-			particles.gravity = Vector3(0, -3, 0)
-			particles.damping_min = 4.0
-			particles.damping_max = 6.0
-			particles.scale_amount_min = 0.8
-			particles.scale_amount_max = 2.2
-			particles.color_ramp = _fire_ramp()
-			mesh = _gem(0.12, 0.24)
-			color = Color.WHITE
-		&"shards", &"leaves":
-			var leaves := kind == &"leaves"
-			particles.amount = 14 if leaves else 10
-			particles.lifetime = 0.6
-			particles.spread = 80.0
-			particles.initial_velocity_min = 1.5
-			particles.initial_velocity_max = 3.0
-			particles.gravity = Vector3(0, -4 if leaves else -12, 0)
-			particles.damping_min = 2.0 if leaves else 0.0
-			particles.damping_max = 3.0 if leaves else 0.0
-			particles.angular_velocity_min = -360.0
-			particles.angular_velocity_max = 360.0
-			mesh = _gem(0.06, 0.05) if leaves else _gem(0.07, 0.12)
-			color = Color(0.36, 0.62, 0.27) if leaves else Color(0.62, 0.38, 0.24)
-		_:
-			particles.amount = 10
-			particles.lifetime = 0.45
-			particles.spread = 45.0
-			particles.initial_velocity_min = 0.8
-			particles.initial_velocity_max = 1.6
-			particles.gravity = Vector3(0, 0.6, 0)
-			particles.scale_amount_min = 0.6
-			particles.scale_amount_max = 1.2
-			mesh = _gem(0.08, 0.14)
-			color = Color(0.75, 0.68, 0.58)
-	var material := StandardMaterial3D.new()
-	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	material.vertex_color_use_as_albedo = true
-	material.albedo_color = color
-	mesh.material = material
-	particles.mesh = mesh
-	_bursts[kind] = particles
-	return particles
-
-
-## Un octaedro: la partícula low poly de todas las ráfagas.
-func _gem(radius: float, height: float) -> PrimitiveMesh:
-	var mesh := SphereMesh.new()
-	mesh.radius = radius
-	mesh.height = height
-	mesh.radial_segments = 4
-	mesh.rings = 1
-	return mesh
-
-
-func _shrink_curve() -> Curve:
-	var curve := Curve.new()
-	curve.add_point(Vector2(0.0, 1.0))
-	curve.add_point(Vector2(0.6, 0.8))
-	curve.add_point(Vector2(1.0, 0.0))
-	return curve
-
-
-func _fire_ramp() -> Gradient:
-	var ramp := Gradient.new()
-	ramp.set_color(0, Color(1.0, 0.95, 0.7))
-	ramp.set_color(1, Color(0.35, 0.22, 0.2))
-	ramp.add_point(0.35, Color(1.0, 0.55, 0.2))
-	return ramp
-
-
 ## Anillo plano que se abre a ras del piso con la explosión.
 func _shockwave(scene: Node, at: Vector3) -> void:
-	var ring := MeshInstance3D.new()
-	var torus := TorusMesh.new()
-	torus.inner_radius = 0.85
-	torus.outer_radius = 1.0
-	torus.rings = 12
-	torus.ring_segments = 3
-	var material := StandardMaterial3D.new()
-	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	material.albedo_color = Color(1.0, 0.8, 0.5, 0.8)
-	torus.material = material
-	ring.mesh = torus
-	ring.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	var ring := SHOCKWAVE.instantiate() as MeshInstance3D
+	var material := (ring.mesh as PrimitiveMesh).material as StandardMaterial3D
 	scene.add_child(ring)
 	ring.global_position = Vector3(at.x, at.y - 0.3, at.z)
-	ring.scale = Vector3(0.3, 0.15, 0.3)
 	var tween := ring.create_tween().set_parallel()
 	tween.tween_property(ring, "scale", Vector3(2.6, 0.15, 2.6), 0.35).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
 	tween.tween_property(material, "albedo_color:a", 0.0, 0.35)

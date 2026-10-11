@@ -9,13 +9,7 @@ var liftable: Liftable
 var flying := false
 
 
-func _init() -> void:
-	collision_layer = LAYER
-	collision_mask = 1 | LAYER
-	contact_monitor = true
-	max_contacts_reported = 4
-	continuous_cd = true
-	angular_damp = 4.0
+func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 
 

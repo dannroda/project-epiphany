@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://bcd4b7083of6t" path="res://src/components/attack_runner.gd" id="21_of2i0"]
 [ext_resource type="Resource" path="res://data/entities/skeleton.tres" id="20_config"]
 [ext_resource type="PackedScene" path="res://src/entities/models/chullpa.tscn" id="30_model"]
+[ext_resource type="Script" path="res://src/feel/hit_flash.gd" id="hf_hit_flash"]
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_peicu"]
 fadeout_time = 0.3
@@ -374,3 +375,9 @@ hitbox_root = NodePath("../ModelController/Hitboxes")
 path_desired_distance = 1.0
 target_desired_distance = 1.0
 radius = 0.5
+
+[node name="HitFlash" type="Node" parent="." node_paths=PackedStringArray("health", "visuals")]
+unique_name_in_owner = true
+script = ExtResource("hf_hit_flash")
+health = NodePath("../Health")
+visuals = NodePath("../ModelController/Visuals")

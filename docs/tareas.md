@@ -2392,7 +2392,7 @@ El 80 % de los triángulos son paredes: Acantilado 1224 tri por celda (211 celda
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 10.27 Nodos creados por código pasan a sus .tscn · En curso
+### 10.27 Nodos creados por código pasan a sus .tscn · Revisión
 
 **Prioridad:** media · **Etiquetas:** `arquitectura`
 
@@ -2404,10 +2404,12 @@ Regla (2026-10-11): todo lo que hereda de Node va en la escena, no con X.new() +
   PersistentFlag es un nodo PersistentFlag en door, chest, cracked_wall, floor_switch, eye_switch, light_receiver, warp_portal y bajo ArenaWaves del templo; el dueño le copia su flag en _ready (PersistentFlag acepta el flag tarde). Los portales sueltos de los niveles no tienen flag. HitFlash es un nodo con health y visuals exportados en enemy, turret, boss (ojo y cada mano) y player (bajo Visuals); se fue HitFlash.attach. Wiring es RefCounted: no aplica.
 - [x] Tanda 3: efectos de Feel, música y doom
   Ráfagas: una escena por tipo en src/feel/bursts/ (sparks, sparkle, explosion, shards, leaves, dust; lo desconocido usa dust), horneadas con los valores de antes. Onda de la explosión: src/feel/shockwave.tscn. Sonidos: sfx_player.tscn (3D, bus SFX) y ui_sound.tscn (bus UI); el stream sigue saliendo del código. Música: el autoload es src/audio/music.tscn con una capa por hijo. Doom: doom_ambience.tscn con DoomDust y LegibleLight (el templo lo instancia), grietas desde doom_crack.tscn. Grieta del golpe del jefe: slam_crack.tscn.
-- [ ] Tanda 4: resto del mundo
-  spawn_point (Area3D + forma), enemy (forma de los pedazos), liftable (ThrownObject + forma), overworld_map (copia con MultiMesh).
-- [ ] Tanda 5: player (cono de bloqueo)
-  Después de que la sesión de assets termine con los personajes (rozan player/).
+- [x] Tanda 4: resto del mundo
+  spawn_point.tscn trae el área Checkpoint (radio en la forma); los dos checkpoints del overworld son instancias, los demás puntos siguen siendo Marker3D sueltos. Pedazo de armadura: src/entities/armor_piece.tscn. Cuerpo de lo levantado: thrown_object.tscn (capas, CCD y amortiguación en la escena; el radio lo pone cada Liftable). Mapa: %GridCopy en overworld_map.tscn y una map_piece.tscn por malla.
+- [x] Tanda 5: player (cono de bloqueo)
+  BlockCone (bajo ModelController), Reticle y AimArrow (bajo Aim) e ItemGetLight en player.tscn; el código solo arma la malla del cono (según block_angle_deg) y la de la flecha. Se fue flash_color de ItemGet: el color está en la luz.
+
+**Prueba:** Jugar un rato: cofres (chico y grande), haz de luz y espejos, puertas con llave, interruptores, oleadas de la arena, bombas y explosiones, golpes a enemigos y al jefe (destello), levantar y tirar vasijas, armadura del esqueleto, mapa del overworld, música por zonas y doom del templo se ven y suenan como antes. Con el overlay de debug (1): cono de bloqueo y flecha de apuntado. En el editor, esos nodos aparecen en sus escenas.
 
 ### 10.28 Playtest de revisión (lo que está en Revisión) · Pendiente
 
@@ -2464,6 +2466,7 @@ Recorrido para revisar de a una las tareas en Revisión, en el orden de una part
 - [ ] Fin de la demo (10.19)
   Escenario pre_boss: vencé al jefe; tomar el contenedor no corta el juego y la puerta queda cerrada. Entrá al portal: diálogo 'Fin de la demo' con tres respuestas (stick/flechas, A). Probá Volver a retar (pelea completa, sin otro contenedor), Seguir jugando (overworld con el progreso) y Volver al menú (al cargar, el jefe no está).
 - [ ] Intro (10.20): Nueva partida desde el título corre la intro (4 planos, textos, temblor y brillo rojo en el templo); mantener A la saltea, un toque no; al terminar la cámara vuelve sola y el player se mueve; cargar o continuar no la repite. Afinar a ojo duración de planos, brillo y temblor
+- [ ] Nodos en escena (10.27): todo se ve y suena como antes (cofres, haz de luz, puertas, interruptores, oleadas, explosiones, destello de daño, vasijas, armadura del esqueleto, mapa, música, doom); con el overlay (1), cono de bloqueo y flecha. Abrir chest.tscn, light_source.tscn, player.tscn y src/feel/bursts/ en el editor y ver que se pueden retocar
 
 **Relacionadas:** 10.18 Idiomas: inglés y español; 11.45 Tutorial de controles y mini puzzle por ítem; 11.44 Levantar y tirar objetos; 11.53 Agujero de la cámara solo donde tiene sentido; 11.37 Minimapa en el HUD; 11.51 Pared agrietada que se integre al muro; 11.52 Zonas tapadas hasta abrirlas; 11.43 Bombas: tocar coloca, mantener apunta y tira; 11.33 Combate: sacar lo tosco; 11.49 VFX de combate; 11.25 Nuevos enemigos con los modelos existentes; 11.41 Esqueleto con escudo: bloquear con el escudo delante; 11.42 Arco que se tensa; 11.48 Pose de item get; 11.3 Decorar las salas del templo; 11.4 Decorar el overworld; 11.47 Manos del jefe animadas (shape keys); 13.1 Código listo para varios players; 13.2 Input por jugador y unirse a la partida; 10.9 Build para playtesters; 10.8 Pasada de rendimiento; 10.23 Tests en paralelo; 13.3 Cámara y salas para dos; 13.5 HUD de dos jugadores; 10.29 Pantalla de controles; 13.6 Player 2 con su color; 10.24 Tope de FPS; 11.58 Los enemigos muertos desaparecen después de un rato; 11.54 El velo de zona tapa también las paredes que la rodean; 10.25 Sombras del sol acordes a la cámara cenital; 10.26 Paredes del GridMap más livianas; 10.19 Fin de la demo; 13.4 Reglas del co-op; 13.9 Anillo de ítems por player
 
@@ -3406,7 +3409,7 @@ Segunda mazmorra con pisos (y quizás sótanos) apilados en la misma escena, en 
 - [ ] UI: selector de pisos
   Diseñar primero en el canvas de mockups (no lo tiene): pestañas de piso en el mapa de pausa con dónde estás, jefe y cofres; minimapa del piso actual.
 
-## M12 — Assets propios (Blender)  (4/13)
+## M12 — Assets propios (Blender)  (5/13)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -3680,9 +3683,9 @@ Cambiar el pipeline Blender→Godot a publicar `.glb` con un plugin de import qu
 
 **Relacionadas:** 12.12 Estilo toon (Wind Waker) + personaje cyber-shinobi
 
-### 12.11 Migrar los .blend al pipeline glb · En curso
+### 12.11 Migrar los .blend al pipeline glb · Hecho
 
-**Prioridad:** media · **Etiquetas:** `arte`, `herramientas`
+**Terminada:** 2026-10-11 · **Prioridad:** media · **Etiquetas:** `arte`, `herramientas`
 
 Pasar todos los `.blend` (props, equipo, templo, kits y personajes) al pipeline glb de 12.10 y retirar los scripts headless viejos, para que los builds funcionen sin Blender.
 

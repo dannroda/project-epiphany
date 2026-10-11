@@ -1,6 +1,7 @@
 class_name Enemy
 extends CharacterBody3D
 
+const ARMOR_PIECE := preload("res://src/entities/armor_piece.tscn")
 const KNOCKBACK_FRICTION: float = 18.0
 const KNOCKBACK_LIFT: float = 4.0
 const DEAD_COLLISION_LAYER: int = 4
@@ -48,7 +49,8 @@ func _ready() -> void:
 	hitbox.team = config.team
 	hitbox.damage_factory = config.make_damage.bind(self)
 	hurtbox.hit.connect(_on_hit)
-	flash = HitFlash.attach($ModelController/Visuals, health)
+	flash = %HitFlash
+	flash.cover($ModelController/Visuals)
 	_guard_pose = model.find_child("GuardPose", true, false) as PoseOverlay
 	if config.armored:
 		_armor = model.find_child("Armor", true, false) as Node3D
@@ -187,14 +189,7 @@ func _armor_stops(info: DamageInfo) -> bool:
 
 
 func _break_armor() -> void:
-	var piece := RigidBody3D.new()
-	piece.collision_layer = 0
-	piece.collision_mask = 1
-	var shape := CollisionShape3D.new()
-	var box := BoxShape3D.new()
-	box.size = Vector3(0.8, 0.5, 0.4)
-	shape.shape = box
-	piece.add_child(shape)
+	var piece := ARMOR_PIECE.instantiate() as RigidBody3D
 	get_parent().add_child(piece)
 	piece.global_transform = _armor.global_transform
 	_armor.reparent(piece)

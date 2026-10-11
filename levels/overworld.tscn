@@ -4,6 +4,7 @@
 [ext_resource type="MeshLibrary" uid="uid://dt62p0c61qjd0" path="res://data/kits/overworld_kit.tres" id="2_rqbxp"]
 [ext_resource type="Script" uid="uid://ch0f7xp8r0b66" path="res://src/world/area_zone.gd" id="3_rqerd"]
 [ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="4_cr2by"]
+[ext_resource type="PackedScene" path="res://src/world/spawn_point.tscn" id="4_spawn_scene"]
 [ext_resource type="Script" uid="uid://x60poi8g2tqu" path="res://src/world/grass_patch.gd" id="5_n78bg"]
 [ext_resource type="PackedScene" path="res://src/entities/archer_skeleton.tscn" id="6_archer"]
 [ext_resource type="PackedScene" path="res://src/entities/armored_skeleton.tscn" id="6_armored"]
@@ -131,9 +132,8 @@ shape = SubResource("BoxShape3D_mweuj")
 [node name="ZoneVeil" parent="Zone_santuario" unique_id=1676448301 instance=ExtResource("90_veil")]
 blockers = Array[NodePath]([NodePath("../../ShrineCrackedWall")])
 
-[node name="Spawn_santuario" type="Marker3D" parent="." unique_id=1883394303]
+[node name="Spawn_santuario" parent="." unique_id=1883394303 instance=ExtResource("4_spawn_scene")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -16)
-script = ExtResource("4_cr2by")
 id = &"santuario"
 checkpoint = true
 
@@ -225,9 +225,8 @@ display_name = "PLACE_FIRST_CLEARING"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_start" unique_id=1946411272]
 shape = SubResource("BoxShape3D_65jsb")
 
-[node name="Spawn_start" type="Marker3D" parent="." unique_id=579054127]
+[node name="Spawn_start" parent="." unique_id=579054127 instance=ExtResource("4_spawn_scene")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16)
-script = ExtResource("4_cr2by")
 checkpoint = true
 
 [node name="GrassPatch" type="Node3D" parent="." unique_id=1792801332]

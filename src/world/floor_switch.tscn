@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://src/world/floor_switch.gd" id="1_switch"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/interruptor_marco.res" id="m0_interruptor_marco"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/interruptor_placa.res" id="3_plate"]
+[ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="pf_persistent_flag"]
 
 [sub_resource type="BoxShape3D" id="Shape"]
 size = Vector3(1.2, 0.6, 1.2)
@@ -22,3 +23,6 @@ mesh = ExtResource("3_plate")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 shape = SubResource("Shape")
+
+[node name="PersistentFlag" type="Node" parent="."]
+script = ExtResource("pf_persistent_flag")

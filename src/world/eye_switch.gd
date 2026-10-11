@@ -31,14 +31,13 @@ func _ready() -> void:
 		return
 	hurtbox.hit.connect(_on_hit)
 	if flag != &"":
-		_persistent = PersistentFlag.new()
+		_persistent = $PersistentFlag
 		_persistent.flag = flag
 		_persistent.changed.connect(func(value: Variant) -> void:
 			var was := active
 			_show(value == true)
 			if active and not was:
 				activated.emit())
-		add_child(_persistent)
 		_show(_persistent.value == true)
 
 

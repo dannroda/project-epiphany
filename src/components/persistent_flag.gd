@@ -9,10 +9,15 @@ signal changed(value: Variant)
 const REGISTRY_PATH := "res://data/flag_registry.tres"
 const PREFIXES: PackedStringArray = ["ow_", "d0_", "d1_", "d2_", "d3_"]
 
+## Puede llegar después de `_ready` (lo copia el objeto dueño del flag en su `_ready`).
 @export var flag: StringName:
 	set(value):
 		flag = value
 		update_configuration_warnings()
+		if is_node_ready():
+			_watch()
+
+var _watching := false
 
 var value: Variant:
 	get:
@@ -23,8 +28,13 @@ var value: Variant:
 
 
 func _ready() -> void:
-	if Engine.is_editor_hint() or flag == &"":
+	_watch()
+
+
+func _watch() -> void:
+	if Engine.is_editor_hint() or flag == &"" or _watching:
 		return
+	_watching = true
 	GameState.flag_changed.connect(func(id: StringName, new_value: Variant) -> void:
 		if id == flag:
 			changed.emit(new_value))
@@ -33,6 +43,8 @@ func _ready() -> void:
 
 
 func _get_configuration_warnings() -> PackedStringArray:
+	if get_parent() and &"flag" in get_parent():
+		return PackedStringArray()
 	return warnings_for(flag, false)
 
 

@@ -23,10 +23,9 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 	hurtbox.hit.connect(_on_hit)
-	_persistent = PersistentFlag.new()
+	_persistent = $PersistentFlag
 	_persistent.flag = flag
 	_persistent.changed.connect(func(value: Variant) -> void: _show(value == true))
-	add_child(_persistent)
 	_show(_persistent.value == true)
 
 

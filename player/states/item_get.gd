@@ -9,7 +9,6 @@ const LOWER := &"Carry/ItemGet_Lower"
 @export var beat := 0.12
 ## Los anillos (con el ítem) van sobre la cabeza, donde se carga lo levantado; corrimiento en pantalla.
 @export var rings_offset := Vector2(0, -40)
-@export var flash_color := Color(1.0, 0.92, 0.6)
 
 var _elapsed := 0.0
 var _show_at := 0.0
@@ -66,11 +65,9 @@ func _hands() -> Vector3:
 
 func _flash(at: Vector3) -> void:
 	Feel.burst(&"sparkle", at + Vector3.UP * 0.3, Vector3.UP)
-	var light := OmniLight3D.new()
-	light.light_color = flash_color
-	light.omni_range = 4.0
-	player.add_child(light)
+	var light: OmniLight3D = player.get_node(^"%ItemGetLight")
 	light.global_position = at + Vector3.UP * 0.4
+	light.show()
 	var fade := light.create_tween()
 	fade.tween_property(light, "light_energy", 0.0, 0.6).from(5.0)
-	fade.tween_callback(light.queue_free)
+	fade.tween_callback(light.hide)

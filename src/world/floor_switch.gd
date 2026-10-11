@@ -32,14 +32,13 @@ func _ready() -> void:
 	collision_mask = 1 | 8
 	monitorable = false
 	if flag != &"":
-		_persistent = PersistentFlag.new()
+		_persistent = $PersistentFlag
 		_persistent.flag = flag
 		_persistent.changed.connect(func(value: Variant) -> void:
 			if value == true:
 				_solved = true
 				if not active:
 					_set_active(true, false))
-		add_child(_persistent)
 		if _persistent.value == true:
 			_solved = true
 			_set_active(true, false)

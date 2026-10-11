@@ -7,6 +7,7 @@
 [ext_resource type="BehaviorTree" path="res://src/entities/turret/turret_bt.tres" id="5_bt"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo/torreta.res" id="m0_torreta"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/ojo_globo.res" id="6_eye"]
+[ext_resource type="Script" path="res://src/feel/hit_flash.gd" id="hf_hit_flash"]
 
 [sub_resource type="SphereMesh" id="IrisMesh"]
 radius = 0.1
@@ -76,3 +77,9 @@ script = ExtResource("3_health")
 [node name="BTPlayer" type="BTPlayer" parent="."]
 behavior_tree = ExtResource("5_bt")
 blackboard_plan = SubResource("BlackboardPlan_turret")
+
+[node name="HitFlash" type="Node" parent="." node_paths=PackedStringArray("health", "visuals")]
+unique_name_in_owner = true
+script = ExtResource("hf_hit_flash")
+health = NodePath("../Health")
+visuals = NodePath("../Head")

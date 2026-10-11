@@ -6,21 +6,17 @@ const GROUP := &"spawn_points"
 
 @export var id: StringName = &"start"
 @export var checkpoint := false
-@export var checkpoint_radius := 1.5
 
 
+## El área `Checkpoint` viene en spawn_point.tscn; un Marker3D suelto con este script es solo un punto de aparición.
 func _ready() -> void:
 	add_to_group(GROUP)
+	var area := get_node_or_null(^"Checkpoint") as Area3D
+	if area == null:
+		return
+	area.monitoring = checkpoint
 	if checkpoint:
-		var area := Area3D.new()
-		var shape := CollisionShape3D.new()
-		var sphere := SphereShape3D.new()
-		sphere.radius = checkpoint_radius
-		shape.shape = sphere
-		area.add_child(shape)
-		area.collision_layer = 0
 		area.body_entered.connect(_on_body_entered)
-		add_child(area)
 
 
 func _on_body_entered(body: Node3D) -> void:
