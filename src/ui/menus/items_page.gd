@@ -21,6 +21,8 @@ var accept_label := ""
 @onready var detail: PanelContainer = %Detail
 
 var _slots: Dictionary[Button, ItemData] = {}
+## En co-op cada uno asigna sus X / Y: muestra y edita los del último player que tocó algo en el menú.
+var _player_slot := 0
 var _refresh_queued := false
 
 
@@ -47,6 +49,17 @@ func focus_default() -> void:
 	grid.get_child(0).grab_focus()
 
 
+func _input(event: InputEvent) -> void:
+	if not is_visible_in_tree() or not event.is_pressed():
+		return
+	var slot := 0
+	if event is InputEventJoypadButton or event is InputEventJoypadMotion:
+		slot = maxi(Players.slot_of_pad(event.device), 0)
+	if slot != _player_slot:
+		_player_slot = slot
+		_queue_refresh()
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_visible_in_tree():
 		return
@@ -60,7 +73,7 @@ func _assign_focused(button: int) -> bool:
 	var item: ItemData = _slots.get(get_viewport().gui_get_focus_owner())
 	if item == null or not _is_assignable(item):
 		return false
-	GameState.assign_button(button, item.id)
+	GameState.assign_button(button, item.id, _player_slot)
 	return true
 
 
@@ -92,7 +105,7 @@ func _refresh() -> void:
 		var owned := GameState.inventory.has(item.id)
 		slot.disabled = not owned
 		slot.icon = item.icon if owned else LOCK
-		var button := GameState.item_buttons.find(item.id)
+		var button := GameState.buttons_of(_player_slot).find(item.id)
 		var badge := slot.get_node(^"Badge") as TextureRect
 		badge.visible = owned and button != -1
 		if badge.visible:
@@ -143,7 +156,7 @@ func _show_detail(slot: Button) -> void:
 	if ammo:
 		detail.add_stat(ammo.display_name, "%d / %d" % [GameState.inventory.count(ammo.id), GameState.inventory.capacity(ammo.id)])
 	for i in BUTTON_ACTIONS.size():
-		detail.actions.add_child(_assign_button(i, GameState.item_buttons[i] == item.id))
+		detail.actions.add_child(_assign_button(i, GameState.buttons_of(_player_slot)[i] == item.id))
 
 
 func _assign_button(index: int, assigned: bool) -> Button:

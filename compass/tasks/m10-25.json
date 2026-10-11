@@ -89,6 +89,11 @@
       "detail": "Con dos controles: P1 arriba a la izquierda y P2 a la derecha, cada uno con sus corazones, sus X/Y con los botones de su control y su prompt; en mazmorra las llaves al medio; al salir el P2 vuelve el HUD de uno.",
       "done": false,
       "text": "Co-op: HUD de dos (13.5)"
+    },
+    {
+      "detail": "Con dos controles: que caiga uno; queda un espíritu que te sigue; parate encima un segundo y revive con un corazón (o cruzá a otra sala). Si caen los dos, game over. En la pestaña Ítems, con el control del P2, asigná X/Y: cambian solo los suyos. Un corazón cura solo al que lo agarra.",
+      "done": false,
+      "text": "Co-op: reglas (13.4)"
     }
   ],
   "code": "10.28",
@@ -203,5 +208,5 @@
   ],
   "test": "",
   "title": "Playtest de revisión (lo que está en Revisión)",
-  "updated_at": "2026-10-11T06:39:31.797Z"
+  "updated_at": "2026-10-11T06:59:11.673Z"
 }

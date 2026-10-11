@@ -24,7 +24,9 @@ const PIN_PICK_RADIUS := 3.0
 
 var inventory := Inventory.new()
 var equipment: Dictionary[ItemData.Category, StringName] = {}
-var item_buttons: Array[StringName] = [&"", &""] ## X / Y
+var item_buttons: Array[StringName] = [&"", &""] ## X / Y del P1
+## X / Y de los demás players (13.4): el inventario es de todos pero cada uno asigna los suyos. No se guardan.
+var guest_buttons: Dictionary[int, Array] = {}
 var max_health: int = NEW_GAME_MAX_HEALTH
 var flags: Dictionary[StringName, Variant] = {}
 var dungeons: Dictionary[StringName, DungeonState] = {}
@@ -78,14 +80,32 @@ func equip(item: ItemData) -> void:
 
 
 ## Si el ítem ya estaba en el otro botón, se intercambian.
-func assign_button(index: int, id: StringName) -> void:
-	if item_buttons[index] == id:
+func assign_button(index: int, id: StringName, slot := 0) -> void:
+	var buttons := buttons_of(slot)
+	if buttons[index] == id:
 		return
 	var other := 1 - index
-	if item_buttons[other] == id:
-		item_buttons[other] = item_buttons[index]
-	item_buttons[index] = id
+	if buttons[other] == id:
+		buttons[other] = buttons[index]
+	buttons[index] = id
 	item_buttons_changed.emit()
+
+
+## El ítem que se acabó deja su lugar en los X / Y de todos (poción tomada → botella vacía).
+func replace_on_buttons(from: StringName, to: StringName) -> void:
+	for slot in _button_slots():
+		var index := buttons_of(slot).find(from)
+		if index >= 0:
+			assign_button(index, to, slot)
+
+
+## Los X / Y del player en `slot`; uno que se suma arranca con una copia de los del P1.
+func buttons_of(slot: int) -> Array[StringName]:
+	if slot == 0:
+		return item_buttons
+	if not guest_buttons.has(slot):
+		guest_buttons[slot] = item_buttons.duplicate()
+	return guest_buttons[slot]
 
 
 func visit_zone(id: StringName) -> void:
@@ -141,11 +161,13 @@ func give(item: ItemData, amount: int = 1) -> void:
 func swap_item(from: StringName, to: ItemData) -> void:
 	inventory.remove(from)
 	inventory.add(to.id)
-	var index := item_buttons.find(from)
-	if index >= 0 and not inventory.has(from):
-		assign_button(index, to.id)
-	elif not item_buttons.has(to.id):
-		_auto_place(to)
+	for slot in _button_slots():
+		var buttons := buttons_of(slot)
+		var index := buttons.find(from)
+		if index >= 0 and not inventory.has(from):
+			assign_button(index, to.id, slot)
+		elif not buttons.has(to.id):
+			_auto_place(to, slot)
 
 
 ## Las que todavía no completan un corazón.
@@ -159,13 +181,20 @@ func _add_hearts(count: int) -> void:
 
 
 ## Primer equipo de una categoría (o una mejora con `equip_on_get`): se equipa. Primer usable: va al primer botón libre.
-func _auto_place(item: ItemData) -> void:
+func _auto_place(item: ItemData, only_slot := -1) -> void:
 	if item.is_equipment() and (item.equip_on_get or equipment.get(item.category, &"") == &""):
 		equip(item)
-	elif item.category == ItemData.Category.USABLE and not item_buttons.has(item.id):
-		var free := item_buttons.find(&"")
-		if free != -1:
-			assign_button(free, item.id)
+	elif item.category == ItemData.Category.USABLE:
+		for slot in _button_slots():
+			var buttons := buttons_of(slot)
+			if (only_slot == -1 or slot == only_slot) and not buttons.has(item.id) and buttons.has(&""):
+				assign_button(buttons.find(&""), item.id, slot)
+
+
+func _button_slots() -> Array[int]:
+	var slots: Array[int] = [0]
+	slots.append_array(guest_buttons.keys())
+	return slots
 
 
 func write_to(cfg: ConfigFile) -> void:
@@ -243,6 +272,7 @@ func _clear() -> void:
 	inventory.clear()
 	equipment.clear()
 	item_buttons.assign([&"", &""])
+	guest_buttons.clear()
 	max_health = NEW_GAME_MAX_HEALTH
 	play_time = 0.0
 	flags.clear()

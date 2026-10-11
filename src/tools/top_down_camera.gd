@@ -252,6 +252,8 @@ func enter_room(new_room: Room, crosser: PlayerCharacter = null) -> void:
 	var direction := Vector3(signf(step.x), 0.0, 0.0) if absf(step.x) > absf(step.y) else Vector3(0.0, 0.0, signf(step.y))
 	transitioning = true
 	_mask_around(room.bounds().merge(previous.bounds()))
+	for player in Players.all:
+		player.revive()
 	_bring_along(crosser, direction)
 	for player in framed():
 		player.begin_room_transition(direction, transition_time)

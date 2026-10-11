@@ -15,7 +15,7 @@ var _waiting := false
 
 func _enter() -> void:
 	_button = blackboard.get_var("item_button", 0)
-	_item = Items.get_item(GameState.item_buttons[_button])
+	_item = Items.get_item(GameState.buttons_of(player.controls.slot)[_button])
 	_elapsed = 0.0
 	_used = false
 	var tween := create_tween()
@@ -66,5 +66,5 @@ func _use() -> void:
 		return
 	_item.behavior.use(ctx, _item)
 	var leaves: ItemData = _item.behavior.get(&"leaves")
-	if leaves and not GameState.inventory.has(_item.id) and GameState.item_buttons[_button] == _item.id:
-		GameState.assign_button(_button, leaves.id)
+	if leaves and not GameState.inventory.has(_item.id):
+		GameState.replace_on_buttons(_item.id, leaves.id)

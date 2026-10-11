@@ -47,13 +47,12 @@ func bind(who: PlayerCharacter, color: Color) -> void:
 	refresh_item_slots()
 
 
-## Los botones X/Y son del grupo hasta que 13.4 decida si cada uno asigna los suyos.
 func refresh_item_slots() -> void:
 	if not is_instance_valid(player):
 		return
 	for i in BUTTON_ACTIONS.size():
 		var body := item_slots.get_child(i).get_node(^"Body")
-		var id := GameState.item_buttons[i]
+		var id := GameState.buttons_of(player.controls.slot)[i]
 		var item := Items.get_item(id) if id != &"" else null
 		body.visible = item != null
 		var icon := body.get_node(^"Icon") as TextureRect

@@ -2234,8 +2234,10 @@ Recorrido para revisar de a una las tareas en Revisión, en el orden de una part
   Dos controles en el templo: la cámara mira a los dos y no los deja separarse más que la pantalla; al cruzar uno una puerta, el otro aparece a su lado y entran juntos; overworld ↔ templo llegan juntos.
 - [ ] Co-op: HUD de dos (13.5)
   Con dos controles: P1 arriba a la izquierda y P2 a la derecha, cada uno con sus corazones, sus X/Y con los botones de su control y su prompt; en mazmorra las llaves al medio; al salir el P2 vuelve el HUD de uno.
+- [ ] Co-op: reglas (13.4)
+  Con dos controles: que caiga uno; queda un espíritu que te sigue; parate encima un segundo y revive con un corazón (o cruzá a otra sala). Si caen los dos, game over. En la pestaña Ítems, con el control del P2, asigná X/Y: cambian solo los suyos. Un corazón cura solo al que lo agarra.
 
-**Relacionadas:** 10.18 Idiomas: inglés y español; 11.45 Tutorial de controles y mini puzzle por ítem; 11.44 Levantar y tirar objetos; 11.53 Agujero de la cámara solo donde tiene sentido; 11.37 Minimapa en el HUD; 11.51 Pared agrietada que se integre al muro; 11.52 Zonas tapadas hasta abrirlas; 11.43 Bombas: tocar coloca, mantener apunta y tira; 11.33 Combate: sacar lo tosco; 11.49 VFX de combate; 11.25 Nuevos enemigos con los modelos existentes; 11.41 Esqueleto con escudo: bloquear con el escudo delante; 11.42 Arco que se tensa; 11.48 Pose de item get; 11.3 Decorar las salas del templo; 11.4 Decorar el overworld; 11.47 Manos del jefe animadas (shape keys); 13.1 Código listo para varios players; 13.2 Input por jugador y unirse a la partida; 10.9 Build para playtesters; 10.8 Pasada de rendimiento; 10.23 Tests en paralelo; 13.3 Cámara y salas para dos; 13.5 HUD de dos jugadores
+**Relacionadas:** 10.18 Idiomas: inglés y español; 11.45 Tutorial de controles y mini puzzle por ítem; 11.44 Levantar y tirar objetos; 11.53 Agujero de la cámara solo donde tiene sentido; 11.37 Minimapa en el HUD; 11.51 Pared agrietada que se integre al muro; 11.52 Zonas tapadas hasta abrirlas; 11.43 Bombas: tocar coloca, mantener apunta y tira; 11.33 Combate: sacar lo tosco; 11.49 VFX de combate; 11.25 Nuevos enemigos con los modelos existentes; 11.41 Esqueleto con escudo: bloquear con el escudo delante; 11.42 Arco que se tensa; 11.48 Pose de item get; 11.3 Decorar las salas del templo; 11.4 Decorar el overworld; 11.47 Manos del jefe animadas (shape keys); 13.1 Código listo para varios players; 13.2 Input por jugador y unirse a la partida; 10.9 Build para playtesters; 10.8 Pasada de rendimiento; 10.23 Tests en paralelo; 13.3 Cámara y salas para dos; 13.5 HUD de dos jugadores; 13.4 Reglas del co-op
 
 ## M11 — Pulido: contenido y feel  (20/54)
 
@@ -3327,17 +3329,17 @@ Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 13.4 Reglas del co-op · En curso
+### 13.4 Reglas del co-op · Revisión
 
 **Prioridad:** media · **Etiquetas:** `coop`, `diseño`
 
-- [ ] Vida, muerte y revivir
+- [x] Vida, muerte y revivir
   Cada uno con sus corazones; el caído queda como burbuja/espíritu y revive al tocarlo o en la sala siguiente. Game over solo si caen los dos.
-- [ ] Inventario y equipo
-  Progreso compartido (GameState); decidir si los ítems se comparten o cada uno equipa los suyos; munición compartida.
-- [ ] Drops
+- [x] Inventario y equipo
+  Inventario, munición, equipo y progreso compartidos (GameState); cada uno asigna sus X/Y (buttons_of(slot)); la pestaña Ítems asigna para el control que toca.
+- [x] Drops
   Corazones al que lo toca; rupias no hay.
-- [ ] Anotar en el GDD
+- [x] Anotar en el GDD
   Sección de co-op con las reglas.
 
 **Prueba:** Morir con uno solo no termina la partida y se puede revivir; con los dos, game over.
@@ -3347,6 +3349,8 @@ Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con
 **Referencias:** `gdd.md#fuera-mvp`
 
 **Bloqueada por:** 13.1 Código listo para varios players
+
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
 ### 13.5 HUD de dos jugadores · Revisión
 

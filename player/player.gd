@@ -20,6 +20,8 @@ signal escaped
 @export var light_turn_speed := 2.2
 
 @onready var model: Node3D = $ModelController
+## Lo que se ve del caído en co-op (estado Spirit).
+@onready var spirit: Node3D = $Spirit
 @onready var anim_player: AnimationPlayer = $ModelController/AnimationPlayer
 @onready var anim_tree: AnimationTree = $ModelController/AnimationTree
 @onready var movement_state: LimboHSM = $MovementState
@@ -72,7 +74,7 @@ func _ready() -> void:
 	equipment.flash = flash
 	health.died.connect(_on_died)
 	GameState.loaded.connect(_sync_health)
-	GameState.max_health_changed.connect(func(_value: int) -> void: _sync_health())
+	GameState.max_health_changed.connect(_on_max_health_changed)
 	_sync_health()
 	targeting.target_changed.connect(func(target: Node3D) -> void: movement_state.blackboard.set_var("target", target))
 	movement_state.initialize(self)
@@ -124,7 +126,8 @@ func _process(_delta: float) -> void:
 
 ## El ítem asignado al botón, si lo tiene y se puede usar ahora.
 func usable_item(button: int) -> ItemData:
-	var item := Items.get_item(GameState.item_buttons[button]) if GameState.item_buttons[button] != &"" else null
+	var id := GameState.buttons_of(controls.slot)[button]
+	var item := Items.get_item(id) if id != &"" else null
 	if item == null or item.behavior == null or not GameState.inventory.has(item.id):
 		return null
 	return item if item.behavior.can_use(make_item_context(), item) else null
@@ -163,6 +166,19 @@ func block_ahead(direction: Vector3) -> PushBlock:
 func lift(liftable: Liftable) -> void:
 	movement_state.blackboard.set_var("liftable", liftable)
 	movement_state.dispatch("lift")
+
+
+func is_spirit() -> bool:
+	return movement_state.get_active_state() == $MovementState/Spirit
+
+
+## Co-op (13.4): el espíritu vuelve con la vida que da el estado Spirit.
+func revive() -> void:
+	if not is_spirit():
+		return
+	health.heal($MovementState/Spirit.revive_health)
+	movement_state.dispatch("revive")
+	Feel.sfx(&"pickup", global_position)
 
 
 func can_interact() -> bool:
@@ -245,6 +261,10 @@ func _make_damage() -> DamageInfo:
 
 func _sync_health() -> void:
 	health.reset(GameState.max_health)
+
+
+func _on_max_health_changed(_value: int) -> void:
+	_sync_health()
 
 
 func _on_hit(info: DamageInfo) -> void:

@@ -30,6 +30,7 @@
 [ext_resource type="Script" path="res://player/components/carrier.gd" id="c_carrier"]
 [ext_resource type="AnimationLibrary" path="res://player/animation/libs/Carry.res" id="16_carry"]
 [ext_resource type="Script" uid="uid://dpgrgvvf2dmhs" path="res://player/states/dead.gd" id="st_dead"]
+[ext_resource type="Script" path="res://player/states/spirit.gd" id="st_spirit"]
 [ext_resource type="Script" uid="uid://do4y7vq0jtpd1" path="res://player/states/dodging.gd" id="st_dodging"]
 [ext_resource type="Script" uid="uid://dvf1o4fohyli8" path="res://player/states/item_get.gd" id="st_item_get"]
 [ext_resource type="Script" path="res://player/states/grabbed.gd" id="st_grabbed"]
@@ -359,6 +360,18 @@ radius = 6.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_interaction"]
 radius = 1.4
+
+[sub_resource type="SphereMesh" id="SphereMesh_spirit"]
+radius = 0.28
+height = 0.56
+radial_segments = 16
+rings = 8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_spirit"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.72, 0.92, 1, 0.6)
+rim_enabled = true
 
 [node name="Player" type="CharacterBody3D" unique_id=1694148988]
 script = ExtResource("1_2lfai")
@@ -712,6 +725,22 @@ script = ExtResource("st_grabbed")
 
 [node name="Dead" type="LimboState" parent="MovementState" unique_id=1372512458]
 script = ExtResource("st_dead")
+
+[node name="Spirit" type="LimboState" parent="MovementState"]
+script = ExtResource("st_spirit")
+
+[node name="Spirit" type="Node3D" parent="."]
+visible = false
+
+[node name="Wisp" type="MeshInstance3D" parent="Spirit"]
+cast_shadow = 0
+mesh = SubResource("SphereMesh_spirit")
+surface_material_override/0 = SubResource("StandardMaterial3D_spirit")
+
+[node name="Glow" type="OmniLight3D" parent="Spirit"]
+light_color = Color(0.6, 0.88, 1, 1)
+light_energy = 0.8
+omni_range = 2.5
 
 [node name="TargetIndicator" parent="." unique_id=1615443035 instance=ExtResource("22_bjvpn")]
 visible = false

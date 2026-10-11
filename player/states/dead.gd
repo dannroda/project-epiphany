@@ -1,7 +1,7 @@
 extends PlayerState
 
 @export var animation: StringName = &"General/Death_A"
-## Cuánto queda en el piso antes del game over.
+## Cuánto queda en el piso antes del game over (o de volverse espíritu si otro sigue vivo).
 @export var delay := 1.8
 
 
@@ -11,7 +11,16 @@ func _enter() -> void:
 	player.anim_tree.active = false
 	player.anim_player.play(animation, 0.1)
 	await player.get_tree().create_timer(delay).timeout
-	GameOver.open()
+	if not is_active():
+		return
+	if Players.any_alive():
+		dispatch("spirit")
+	elif not _game_over_open():
+		GameOver.open()
+
+
+func _game_over_open() -> bool:
+	return MenuStack.top() is GameOver
 
 
 func _update(delta: float) -> void:
