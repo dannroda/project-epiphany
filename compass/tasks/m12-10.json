@@ -29,6 +29,7 @@
   "code": "12.10",
   "created_at": "2026-10-10T23:24:31.058Z",
   "description": "Cambiar el pipeline Blender→Godot a publicar `.glb` con un plugin de import que asigne el material de paleta y convierta custom properties en colisiones, sockets y spring bones, para que Godot importe solo el `.glb` y los builds no necesiten Blender.",
+  "done_at": "2026-10-11T17:22:04.586Z",
   "links": [
     {
       "task": "m12-11",
@@ -44,12 +45,12 @@
   "order": 10,
   "priority": "high",
   "refs": [],
-  "status": "review",
+  "status": "done",
   "tags": [
     "arte",
     "herramientas"
   ],
   "test": "",
   "title": "Pipeline Blender→Godot: glb publicado + plugin de import",
-  "updated_at": "2026-10-11T07:50:15.038Z"
+  "updated_at": "2026-10-11T17:22:04.586Z"
 }

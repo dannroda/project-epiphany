@@ -32,12 +32,12 @@
   "order": 11,
   "priority": "medium",
   "refs": [],
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "arte",
     "herramientas"
   ],
   "test": "",
   "title": "Migrar los .blend al pipeline glb",
-  "updated_at": "2026-10-11T07:50:15.547Z"
+  "updated_at": "2026-10-11T17:22:05.088Z"
 }
