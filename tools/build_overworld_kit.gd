@@ -23,6 +23,8 @@ const BASE := {
 	6: ["terreno_overworld/anden"],
 	7: ["terreno_overworld/pirca"],
 	8: ["terreno_overworld/pasto", "naturaleza/quenoa_grande"],
+	9: ["terreno_overworld/abismo"],
+	10: ["terreno_overworld/abismo"],
 }
 ## Variantes: nombre → [id base de donde copia colisión y navmesh, piezas]. Las "borde" son paredes sin agujero, para
 ## el borde del mundo (OverworldMap las pone donde del lado de la cámara no hay nada).
@@ -51,6 +53,11 @@ const VARIANTS := {
 	"Risco borde": [6, ["terreno_overworld/risco"]],
 	"Cueva piso": [0, ["lugares/cueva_piso"]],
 	"Cueva pared": [6, ["lugares/cueva_pared"]],
+	"Abismo borde": [9, ["terreno_overworld/abismo_borde"]],
+	"Abismo esquina": [9, ["terreno_overworld/abismo_esquina"]],
+	"Abismo pasillo": [9, ["terreno_overworld/abismo_pasillo"]],
+	"Abismo punta": [9, ["terreno_overworld/abismo_punta"]],
+	"Abismo pozo": [9, ["terreno_overworld/abismo_pozo"]],
 }
 
 var _scenes := {}

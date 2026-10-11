@@ -20,6 +20,16 @@ const DIRT := 0
 const GRASS := 5
 ## Lado con tierra de las piezas de borde sin girar; cada giro de 90° lo pasa al siguiente.
 const SIDES: Array[Vector3i] = [Vector3i(-1, 0, 0), Vector3i(0, 0, 1), Vector3i(1, 0, 0), Vector3i(0, 0, -1)]
+## Abismo según los lados que dan a algo que no es abismo (sin girar, en el orden de SIDES).
+const ABYSS := 9
+const PIT := 10
+const ABYSS_PIECES := {
+	"Abismo borde": [true, false, false, false],
+	"Abismo esquina": [true, true, false, false],
+	"Abismo pasillo": [true, false, true, false],
+	"Abismo punta": [true, true, true, false],
+	"Abismo pozo": [true, true, true, true],
+}
 
 
 func _initialize() -> void:
@@ -31,6 +41,7 @@ func _initialize() -> void:
 		ids[KIT.get_item_name(id)] = id
 	var changed := 0
 	var borders := _borders(grid, ids)
+	borders.merge(_abyss(grid, ids))
 	for cell: Vector3i in borders:
 		grid.set_cell_item(cell, borders[cell][0], _turn(grid, borders[cell][1]))
 		changed += 1
@@ -80,6 +91,29 @@ func _borders(grid: GridMap, ids: Dictionary) -> Dictionary:
 				result[cell] = [ids["Tierra esquina int"], k]
 			elif count == 0 and grid.get_cell_item(cell + SIDES[k] + SIDES[next]) == DIRT:
 				result[cell] = [ids["Tierra esquina"], k]
+	return result
+
+
+## Cada celda de abismo (base o variante; los huecos no, que no tienen colisión) → la pieza con pared hacia donde no sigue el abismo.
+func _abyss(grid: GridMap, ids: Dictionary) -> Dictionary:
+	var abyss := [ABYSS]
+	for piece: String in ABYSS_PIECES:
+		abyss.append(ids[piece])
+	var result := {}
+	for cell in grid.get_used_cells():
+		if not grid.get_cell_item(cell) in abyss:
+			continue
+		var walls := []
+		for k in 4:
+			walls.append(not grid.get_cell_item(cell + SIDES[k]) in abyss + [PIT])
+		result[cell] = [ABYSS, 0]
+		for piece: String in ABYSS_PIECES:
+			for turn in 4:
+				var turned := []
+				for k in 4:
+					turned.append(ABYSS_PIECES[piece][(k - turn + 4) % 4])
+				if turned == walls:
+					result[cell] = [ids[piece], turn]
 	return result
 
 

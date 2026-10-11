@@ -286,6 +286,46 @@ piece("pirca_esquina", 17, pirca_esquina)
 piece("pirca_final", 18, pirca_final)
 piece("pirca_rota", 19, pirca_rota)
 
-ORDER = ["pasto", "tierra", "lajas", "anden", "pirca"]
+# --- abismo (lados: 0 = -X, 1 = -Y, 2 = +X, 3 = +Y; las variantes giran en vary_overworld.gd) ---
+
+DEPTH = -3.0
+
+
+def abyss_wall(p, side):
+	"""Pared de roca del lado side, de 0 a DEPTH: los bordes en X quedan rectos para empalmar con la vecina. Siete filas
+	(cuts=6); los colores cambian en el borde de una fila para que el corte no salga en serrucho."""
+	before = set(p.bm.faces)
+	faces = p.box(-1, 1, 0.88, 1, DEPTH, 0)
+	bmesh.ops.subdivide_edges(p.bm, edges=list({e for f in faces for e in f.edges}), cuts=6, use_grid_fill=True)
+	off = p.rng.random() * 40
+	for v in {v for f in p.bm.faces if f not in before for v in f.verts}:
+		if v.co.y < 0.89:
+			taper = max(0.0, math.sin((v.co.x + 1) / 2 * math.pi)) ** 0.6
+			k = 0.5 + 0.5 * noise.noise(Vector((v.co.x * 2.6, v.co.z * 1.8, off))) + (p.rng.random() - 0.5) * 0.3
+			v.co.y -= taper * (0.06 + 0.24 * k)
+	bmesh.ops.triangulate(p.bm, faces=[f for f in p.bm.faces if f not in before])
+	faces = [f for f in p.bm.faces if f not in before]
+	p.paint([f for f in faces if f.normal.z > 0.5 and f.calc_center_median().z > -0.01], "pasto", "MID")
+	p.paint_bands([f for f in faces if not (f.normal.z > 0.5 and f.calc_center_median().z > -0.01)],
+		[(DEPTH * 3 / 7, 0.1, "acantilado", "MID"), (DEPTH * 5 / 7, DEPTH * 3 / 7, "gris_4", "MID"), (DEPTH - 1, DEPTH * 5 / 7, "gris_5", "DARK")])
+	p.transform(faces, Matrix.Rotation((side + 1) * math.pi / 2, 4, "Z"))
+
+
+def abismo(sides):
+	def build(p):
+		p.paint(p.box(-1, 1, -1, 1, DEPTH - 0.1, DEPTH), "gris_5", "DARK")
+		for side in sides:
+			abyss_wall(p, side)
+	return build
+
+
+piece("abismo", 40, abismo(()))
+piece("abismo_borde", 41, abismo((0,)))
+piece("abismo_esquina", 42, abismo((0, 1)))
+piece("abismo_pasillo", 43, abismo((0, 2)))
+piece("abismo_punta", 44, abismo((0, 1, 2)))
+piece("abismo_pozo", 45, abismo((0, 1, 2, 3)))
+
+ORDER = ["pasto", "tierra", "lajas", "anden", "pirca", "abismo"]
 epi.layout(kit, columns=6, row_of=lambda n: next((i for i, k in enumerate(ORDER) if n.startswith(k)), 3 if n in ("risco", "escalon", "escalinata") else 9))
 epi.save("terreno_overworld")

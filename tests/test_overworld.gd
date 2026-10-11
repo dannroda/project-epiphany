@@ -75,3 +75,28 @@ func test_abyss_stops_the_player_but_not_arrows() -> void:
 	var high := PhysicsRayQueryParameters3D.create(Vector3(24, 1.0, -14), Vector3(24, 1.0, -21), 1)
 	assert_true(space.intersect_ray(high).is_empty(), "a la altura de una flecha pasa por arriba")
 	tree.root.get_node(^"GameState").reset()
+
+
+func test_abyss_walls_face_the_ground() -> void:
+	var root := (load(LEVEL) as PackedScene).instantiate()
+	var grid := root.get_node(^"GridMap") as GridMap
+	var lib := grid.mesh_library
+	var sides: Array[Vector3i] = [Vector3i(-1, 0, 0), Vector3i(0, 0, 1), Vector3i(1, 0, 0), Vector3i(0, 0, -1)]
+	var cells := 0
+	for cell in grid.get_used_cells():
+		if not lib.get_item_name(grid.get_cell_item(cell)).begins_with("Abismo"):
+			continue
+		cells += 1
+		var basis := grid.get_cell_item_basis(cell)
+		var faces := lib.get_item_mesh(grid.get_cell_item(cell)).get_faces()
+		for k in 4:
+			var neighbor := grid.get_cell_item(cell + sides[k])
+			var open := neighbor != -1 and lib.get_item_name(neighbor).begins_with("Abismo")
+			var wall := false
+			for v in faces:
+				var p := basis * v
+				var along := Vector3(sides[k]) * p.dot(Vector3(sides[k]))
+				wall = wall or (p.y > -0.05 and along.length() > 0.85 and Vector2(p.x - along.x, p.z - along.z).length() < 0.5 and p.dot(Vector3(sides[k])) > 0)
+			assert_eq(wall, not open, "abismo %s lado %d" % [cell, k])
+	assert_true(cells > 0, "el overworld tiene abismo")
+	root.free()
