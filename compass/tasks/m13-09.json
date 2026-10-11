@@ -1,7 +1,7 @@
 {
   "checklist": [
     {
-      "detail": "Escena del anillo por PlayerPanel, desde el mockup Coop_Ring; se abre manteniendo la cruceta (acción nueva por player; en teclado, una tecla a decidir).",
+      "detail": "Escena del anillo por player en el HUD, desde el mockup Coop_Ring; se abre manteniendo LB (teclado: F) y se elige con el stick o WASD.",
       "done": false,
       "text": "Anillo en el HUD"
     },
@@ -23,6 +23,11 @@
     {
       "done": false,
       "text": "Tests y GDD"
+    },
+    {
+      "detail": "Tecla 5 (debug): en co-op, anillo por player o menú compartido con un cursor por player (Settings coop_item_menu).",
+      "done": false,
+      "text": "Toggle para probar"
     }
   ],
   "code": "13.9",
@@ -39,7 +44,7 @@
   "order": 9,
   "priority": "medium",
   "refs": [],
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "coop",
     "ui",
@@ -47,5 +52,5 @@
   ],
   "test": "",
   "title": "Anillo de ítems por player",
-  "updated_at": "2026-10-11T07:36:32.605Z"
+  "updated_at": "2026-10-11T07:43:07.531Z"
 }

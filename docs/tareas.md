@@ -2967,7 +2967,7 @@ Assets propios y packs de terceros que ninguna escena, script ni builder referen
 - [ ] Mallas viejas del templo
   assets/epiphany/meshes/templo/: jefe_mano, jefe_ojo, jefe_parpado (el jefe usa meshes/jefe/*) y tablilla (la tablilla usa objetos/estela). Si se borran, sacarlas también de build_templo.py, que las sigue generando.
 - [ ] Mallas sueltas de objetos, equipo y lugares
-  objetos/corazon, objetos/bombas_x3, objetos/orbe; equipo/poncho; lugares/escombro_b, lugares/pedestal, lugares/santuario_pared, lugares/santuario_piso. Sacarlas también de su build_<kit>.py.
+  equipo/poncho; lugares/escombro_b, lugares/pedestal, lugares/santuario_pared, lugares/santuario_piso. Sacarlas también de su build_<kit>.py. objetos/corazon, bombas_x3 y orbe NO: son los modelos de 12.5 (pickups y orbe) que todavía no se conectaron.
 - [ ] Textura vieja del Knight
   assets/epiphany/textures/knight_texture.png
 - [ ] Packs KayKit sin uso (≈42M)
@@ -3447,7 +3447,7 @@ Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con
 
 **Bloqueada por:** 13.1 Código listo para varios players
 
-### 13.9 Anillo de ítems por player · Pendiente
+### 13.9 Anillo de ítems por player · En curso
 
 **Prioridad:** media · **Etiquetas:** `coop`, `ui`, `input`
 
@@ -3462,6 +3462,8 @@ Mockups D en el canvas (Coop_Ring, Solo_Ring): mantener la cruceta abre un anill
 - [ ] Pestaña Ítems en co-op
   Solo lectura: quién lleva qué; asignar queda para el anillo.
 - [ ] Tests y GDD
+- [ ] Toggle para probar
+  Tecla 5 (debug): en co-op, anillo por player o menú compartido con un cursor por player (Settings coop_item_menu).
 
 **Relacionadas:** 13.4 Reglas del co-op
 
