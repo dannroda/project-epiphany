@@ -32,7 +32,8 @@
       "text": "Abismo: borde recto, esquinas, fondo oscuro/niebla"
     },
     {
-      "done": false,
+      "detail": "Hecho: pirca, pirca_esquina, pirca_final (hasta el borde de la celda), pirca_poste y pirca_rota. vary_overworld.gd elige la pieza y el giro según dónde sigue la pirca; test_fence_ends_have_a_post.",
+      "done": true,
       "text": "Cerco: recto, esquina, final, poste, roto"
     },
     {
@@ -74,5 +75,5 @@
   ],
   "test": "El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.",
   "title": "Terreno del overworld",
-  "updated_at": "2026-10-11T07:50:41.716Z"
+  "updated_at": "2026-10-11T08:10:05.278Z"
 }
