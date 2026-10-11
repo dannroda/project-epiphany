@@ -114,6 +114,11 @@
       "detail": "Con dos controles: el P2 tiene otra tela y otro neón, también con la cota reforzada; los dos se distinguen de un vistazo.",
       "done": false,
       "text": "Co-op: colores (13.6)"
+    },
+    {
+      "detail": "Escenario pre_boss: vencé al jefe; tomar el contenedor no corta el juego y la puerta queda cerrada. Entrá al portal: diálogo 'Fin de la demo' con tres respuestas (stick/flechas, A). Probá Volver a retar (pelea completa, sin otro contenedor), Seguir jugando (overworld con el progreso) y Volver al menú (al cargar, el jefe no está).",
+      "done": false,
+      "text": "Fin de la demo (10.19)"
     }
   ],
   "code": "10.28",
@@ -243,6 +248,10 @@
     {
       "task": "m11-57",
       "type": "related"
+    },
+    {
+      "task": "m10-19",
+      "type": "related"
     }
   ],
   "milestone": "m10",
@@ -256,5 +265,5 @@
   ],
   "test": "",
   "title": "Playtest de revisión (lo que está en Revisión)",
-  "updated_at": "2026-10-11T08:38:03.376Z"
+  "updated_at": "2026-10-11T16:57:16.004Z"
 }

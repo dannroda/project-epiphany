@@ -2280,7 +2280,7 @@ Al vencer al jefe el portal es la única salida, y entrar abre un diálogo de fi
 
 **Referencias:** `gdd.md#jefe`, `gdd.md#ui`
 
-**Relacionadas:** 10.20 Intro / cutscene de apertura; 11.29 Overworld después del jefe
+**Relacionadas:** 10.20 Intro / cutscene de apertura; 10.28 Playtest de revisión (lo que está en Revisión); 11.29 Overworld después del jefe
 
 ### 10.20 Intro / cutscene de apertura · Pendiente
 
@@ -2450,8 +2450,10 @@ Recorrido para revisar de a una las tareas en Revisión, en el orden de una part
   Opciones → Ver controles: el diagrama del control que estés usando; Y (o T) cambia entre gamepad y teclado. Pausa → Sistema: a la derecha los controles; Guardar pisa la partida cargada (pregunta antes); Cargar te deja elegir el último checkpoint o el guardado; volver al título pregunta. Los botones tienen recuadro.
 - [ ] Co-op: colores (13.6)
   Con dos controles: el P2 tiene otra tela y otro neón, también con la cota reforzada; los dos se distinguen de un vistazo.
+- [ ] Fin de la demo (10.19)
+  Escenario pre_boss: vencé al jefe; tomar el contenedor no corta el juego y la puerta queda cerrada. Entrá al portal: diálogo 'Fin de la demo' con tres respuestas (stick/flechas, A). Probá Volver a retar (pelea completa, sin otro contenedor), Seguir jugando (overworld con el progreso) y Volver al menú (al cargar, el jefe no está).
 
-**Relacionadas:** 10.18 Idiomas: inglés y español; 11.45 Tutorial de controles y mini puzzle por ítem; 11.44 Levantar y tirar objetos; 11.53 Agujero de la cámara solo donde tiene sentido; 11.37 Minimapa en el HUD; 11.51 Pared agrietada que se integre al muro; 11.52 Zonas tapadas hasta abrirlas; 11.43 Bombas: tocar coloca, mantener apunta y tira; 11.33 Combate: sacar lo tosco; 11.49 VFX de combate; 11.25 Nuevos enemigos con los modelos existentes; 11.41 Esqueleto con escudo: bloquear con el escudo delante; 11.42 Arco que se tensa; 11.48 Pose de item get; 11.3 Decorar las salas del templo; 11.4 Decorar el overworld; 11.47 Manos del jefe animadas (shape keys); 13.1 Código listo para varios players; 13.2 Input por jugador y unirse a la partida; 10.9 Build para playtesters; 10.8 Pasada de rendimiento; 10.23 Tests en paralelo; 13.3 Cámara y salas para dos; 13.5 HUD de dos jugadores; 10.29 Pantalla de controles; 13.6 Player 2 con su color; 10.24 Tope de FPS; 11.58 Los enemigos muertos desaparecen después de un rato; 11.54 El velo de zona tapa también las paredes que la rodean; 10.25 Sombras del sol acordes a la cámara cenital; 10.26 Paredes del GridMap más livianas; 13.4 Reglas del co-op; 13.9 Anillo de ítems por player
+**Relacionadas:** 10.18 Idiomas: inglés y español; 11.45 Tutorial de controles y mini puzzle por ítem; 11.44 Levantar y tirar objetos; 11.53 Agujero de la cámara solo donde tiene sentido; 11.37 Minimapa en el HUD; 11.51 Pared agrietada que se integre al muro; 11.52 Zonas tapadas hasta abrirlas; 11.43 Bombas: tocar coloca, mantener apunta y tira; 11.33 Combate: sacar lo tosco; 11.49 VFX de combate; 11.25 Nuevos enemigos con los modelos existentes; 11.41 Esqueleto con escudo: bloquear con el escudo delante; 11.42 Arco que se tensa; 11.48 Pose de item get; 11.3 Decorar las salas del templo; 11.4 Decorar el overworld; 11.47 Manos del jefe animadas (shape keys); 13.1 Código listo para varios players; 13.2 Input por jugador y unirse a la partida; 10.9 Build para playtesters; 10.8 Pasada de rendimiento; 10.23 Tests en paralelo; 13.3 Cámara y salas para dos; 13.5 HUD de dos jugadores; 10.29 Pantalla de controles; 13.6 Player 2 con su color; 10.24 Tope de FPS; 11.58 Los enemigos muertos desaparecen después de un rato; 11.54 El velo de zona tapa también las paredes que la rodean; 10.25 Sombras del sol acordes a la cámara cenital; 10.26 Paredes del GridMap más livianas; 10.19 Fin de la demo; 13.4 Reglas del co-op; 13.9 Anillo de ítems por player
 
 ### 10.29 Pantalla de controles · Revisión
 
