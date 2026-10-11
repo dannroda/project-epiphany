@@ -1,7 +1,7 @@
 # Herramientas de los personajes en estilo toon tipo Wind Waker (12.12): cuerpo continuo (skin modifier) con pesos
 # automáticos, cabeza con la cara de calcomanías proyectadas, mechones de curvas, cadenas de huesos spring y el armado
 # final: cada parte se arma con un material etiqueta y al terminar todo se une en una malla pintada con UVs de la paleta
-# (PALETA) y se publica con epi.publish. Lo usan build_jugador_toon.py y build_shinobi.py.
+# (PALETA) y se publica con epi.publish. Lo usa build_shinobi.py.
 import math
 import os
 import sys
@@ -24,22 +24,16 @@ PALETA = {
 	"piel": ("piel", 0.85),
 	"pelo": ("ladrillo", 0.0),
 	"tela": ("gris_4", 0.25),
-	"traje": ("noche", 1.0),
 	"roja": ("tela_roja", 0.6),
-	"armadura": ("tela_roja", 0.75),
 	"crema": ("hueso", 0.85),
 	"bota": ("madera_oscura", 0.35),
 	"blanco": ("blanco", 1.0),
 	"negro": ("noche", 0.0),
 	"iris": ("tela_roja", 0.75),
-	"iris_azul": ("agua", 0.35),
-	"pelo_azul": ("tela_azul", 0.0),
 	"rubor": ("flor_rosa", 0.9),
 	"hierro": ("hierro", 0.85),
 	"dorado": ("dorado", 0.5),
-	"cobre": ("cobre_verde", 0.6),
 	"glow": ("doom", 0.75),
-	"neon": ("neon", 0.6),
 }
 
 
@@ -103,64 +97,6 @@ def ellipsoid(bm, center, radii, segs=24):
 	for v in res["verts"]:
 		v.co = Vector((v.co.x * radii[0], v.co.y * radii[1], v.co.z * radii[2])) + Vector(center)
 	return res["verts"]
-
-
-def disc(bm, center, axis, radius, depth, sides=16):
-	"""Cilindro corto con su eje en axis (tapas planas)."""
-	m = Matrix.Translation(center) @ Vector(axis).normalized().to_track_quat("Z", "Y").to_matrix().to_4x4()
-	bmesh.ops.create_cone(bm, cap_ends=True, segments=sides, radius1=radius, radius2=radius, depth=depth, matrix=m)
-
-
-def prism(bm, points, x, thickness):
-	"""Polígono del plano (y, z) con espesor en X, centrado en x (aletas, placas de perfil)."""
-	a = [bm.verts.new((x - thickness / 2, y, z)) for y, z in points]
-	b = [bm.verts.new((x + thickness / 2, y, z)) for y, z in points]
-	bm.faces.new(a[::-1])
-	bm.faces.new(b)
-	for i in range(len(points)):
-		j = (i + 1) % len(points)
-		bm.faces.new((a[i], a[j], b[j], b[i]))
-	bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
-
-
-def front_plate(bm, points, y, thickness):
-	"""Polígono del plano (x, z) con espesor en Y, centrado en y (placas de frente)."""
-	a = [bm.verts.new((x, y - thickness / 2, z)) for x, z in points]
-	b = [bm.verts.new((x, y + thickness / 2, z)) for x, z in points]
-	bm.faces.new(a)
-	bm.faces.new(b[::-1])
-	for i in range(len(points)):
-		j = (i + 1) % len(points)
-		bm.faces.new((a[j], a[i], b[i], b[j]))
-	bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
-
-
-def chakana(size):
-	"""Contorno de la cruz escalonada, centrado en el origen."""
-	s = size / 6
-	q = [(1, 3), (1, 2), (2, 2), (2, 1), (3, 1)]
-	pts = []
-	for sx, sz in ((1, 1), (1, -1), (-1, -1), (-1, 1)):
-		quad = [(x * s * sx, z * s * sz) for x, z in (q if sx * sz > 0 else q[::-1])]
-		pts += quad
-	return pts
-
-
-def curved_plate(bm, x0, x1, z0, z1, depth_at, cols=7, rows=9, bend=1.6, back=False):
-	"""Placa que envuelve el cuerpo: depth_at(z) es la distancia al eje en Y; se curva hacia atrás en los costados."""
-	grid = []
-	for j in range(rows):
-		z = z0 + (z1 - z0) * j / (rows - 1)
-		row = []
-		for i in range(cols):
-			x = x0 + (x1 - x0) * i / (cols - 1)
-			y = -depth_at(z) + bend * x * x
-			row.append(bm.verts.new((x, -y if back else y, z)))
-		grid.append(row)
-	for j in range(rows - 1):
-		for i in range(cols - 1):
-			quad = (grid[j][i], grid[j][i + 1], grid[j + 1][i + 1], grid[j + 1][i])
-			bm.faces.new(quad[::-1] if back else quad)
 
 
 def curve_obj(name, chains, bevel, material, flat=0.0, resolution=3, ring=1):
