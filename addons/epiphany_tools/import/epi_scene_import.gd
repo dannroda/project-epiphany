@@ -13,6 +13,7 @@ const MATERIALS := {"paleta": "res://data/kits/materials/epiphany.tres"}
 const TAGGED := {
 	"outdoor": "res://data/kits/materials/epiphany_outdoor.tres",
 	"wind": "res://data/kits/materials/epiphany_wind.tres",
+	"wall": "res://data/kits/materials/epiphany_wall.tres",
 }
 
 
