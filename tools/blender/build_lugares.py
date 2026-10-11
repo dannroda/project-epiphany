@@ -516,6 +516,62 @@ def puente(p):
 		p.paint(segs, "paja", "DARK", vary=0.08)
 
 
+def flag_floor(p, half_x, half_y, cols, rows, z1, swatch="piedra_templo", skip=(), gap=0.04):
+	"""Lajas sueltas sobre el piso (sin base), de -half a half; skip = (col, fila) que faltan."""
+	slabs = []
+	w, d = 2 * half_x / cols, 2 * half_y / rows
+	for c in range(cols):
+		for r in range(rows):
+			if (c, r) in skip:
+				continue
+			x0, y0 = -half_x + c * w, -half_y + r * d
+			slab = p.box(x0 + gap, x0 + w - gap, y0 + gap, y0 + d - gap, -0.02, z1 + p.rng.uniform(-0.01, 0.01), taper=0.012)
+			p.jitter(slab, 0.012, keep_z=True)
+			slabs += slab
+	p.paint(slabs, swatch, "MID", vary=0.1)
+	return slabs
+
+
+def cornisa_ojo(p):
+	"""Estrado de lajas bajo el pilar del ojo, con un borde escalonado adelante y dos mojones escalonados a los lados."""
+	base = p.box(-1.15, 1.15, -1.1, 0.45, -0.05, 0.06, taper=0.03)
+	p.paint(base, "piedra_templo", "DARK")
+	slabs = flag_floor(p, 1.05, 0.72, 3, 2, 0.1, skip={(2, 0)})
+	p.transform(slabs, Matrix.Translation((0, -0.33, 0)))
+	rim = []
+	for i, w in enumerate((0.9, 0.6, 0.3)):
+		rim += p.box(-w, w, -1.16 + i * 0.04, -1.08 + i * 0.04, 0.06, 0.1 + i * 0.03)
+	p.paint(rim, "piedra_templo", "LIGHT", vary=0.05)
+	for x in (-0.95, 0.95):
+		marker = []
+		for i, w in enumerate((0.3, 0.22, 0.14)):
+			marker += p.box(x - w / 2, x + w / 2, 0.15 - w / 2, 0.15 + w / 2, 0.06 + i * 0.16, 0.22 + i * 0.16)
+		p.paint(marker, "piedra_templo", z_range=(0.0, 0.6), vary=0.06)
+
+
+def nicho_carcaj(p):
+	"""Piso de lajas del nicho del carcaj (dos por dos celdas), con lajas que faltan donde asoma el pasto."""
+	flag_floor(p, 1.8, 1.8, 4, 4, 0.04, skip={(0, 0), (3, 1), (1, 3)})
+
+
+def estela_carcaj(p):
+	"""Estela contra la pared del nicho, con una flecha en relieve que apunta hacia arriba."""
+	base = p.box(-0.5, 0.5, -0.2, 0.2, 0.0, 0.18)
+	p.jitter(base, 0.015)
+	slab = p.box(-0.4, 0.4, -0.08, 0.08, 0.18, 1.4)
+	for v in {v for f in slab for v in f.verts}:
+		if v.co.z > 1.1:
+			v.co.x *= 0.8
+	p.paint(base, "piedra_templo", "DARK", vary=0.1)
+	p.paint(slab, "piedra_templo", z_range=(0.0, 1.6), vary=0.06)
+	relief = p.box(-0.035, 0.035, -0.1, -0.08, 0.35, 1.05)
+	shapes = p.polygon([(-0.16, 1.0), (0.16, 1.0), (0.0, 1.24)], 0.08, 0.1)
+	for side in (-1, 1):
+		shapes += p.polygon([(0.0, 0.4), (side * 0.13, 0.32), (side * 0.13, 0.46), (0.0, 0.54)][::side], 0.08, 0.1)
+	p.transform(shapes, Matrix.Rotation(math.pi / 2, 4, "X"))
+	p.paint(relief + shapes, "dorado", "MID")
+
+
 piece("reja", 14, reja)
 piece("bloque_empujable", 15, bloque_empujable)
 piece("interruptor_marco", 16, interruptor_marco)
@@ -624,6 +680,9 @@ piece("sello_ojo", 23, sello_ojo)
 piece("portal_disco", 24, portal_disco)
 piece("portal_anillo", 25, portal_anillo)
 piece("monolito", 26, monolito)
+piece("cornisa_ojo", 35, cornisa_ojo)
+piece("nicho_carcaj", 36, nicho_carcaj)
+piece("estela_carcaj", 37, estela_carcaj)
 
 piece("vertiente_pico", 30, vertiente_pico)
 piece("orilla_piedras", 31, orilla_piedras)

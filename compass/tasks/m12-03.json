@@ -40,8 +40,8 @@
       "text": "Sello violeta con el ojo"
     },
     {
-      "detail": "eye_switch.tscn, bridge.tscn.",
-      "done": false,
+      "detail": "Hecho: ojo (ojo_pilar/ojo_globo) y puente ya propios; nuevos cornisa_ojo (estrado de lajas con borde escalonado y mojones bajo el pilar), nicho_carcaj (lajas del nicho) y estela_carcaj (flecha dorada en relieve detrás del cofre). Los pone decorate_levels.gd (props de Zone_risco, pegados a CliffEye y QuiverChest).",
+      "done": true,
       "text": "Risco del ojo: cornisa, ojo-interruptor, puente, nicho del carcaj"
     },
     {
@@ -76,5 +76,5 @@
   ],
   "test": "Cada zona de [[gdd#overworld-layout]] tiene sus piezas propias y se reconoce sin el nombre de zona.",
   "title": "Lugares del overworld",
-  "updated_at": "2026-10-11T07:50:11.509Z"
+  "updated_at": "2026-10-11T16:45:41.543Z"
 }

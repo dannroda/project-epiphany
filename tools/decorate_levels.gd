@@ -35,12 +35,13 @@ const TEMPLE := {
 	"Antesala": {"banners": 2, "braziers": 2, "rubble": 3, "shards": 2, "veins": 4},
 	"Jefe": {"banners": 2, "braziers": 2, "rubble": 2, "veins": 5},
 }
-## Overworld, por zona: hitos cerca del centro y piezas contra los riscos y los muros, cada una [malla, cuántas].
+## Overworld, por zona: hitos cerca del centro y piezas contra los riscos y los muros, cada una [malla, cuántas];
+## props: [malla, nodo del nivel, corrimiento] van pegadas a algo jugable (la cornisa bajo el ojo, el nicho del cofre).
 const OVERWORLD := {
 	"Zone_start": {"landmarks": ["objetos/fogata", "naturaleza/tronco_caido"], "edge": [["naturaleza/piedra_chica_b", 3], ["naturaleza/ichu_cortado", 4], ["naturaleza/flores", 2]]},
 	"Zone_pradera": {"landmarks": ["objetos/apacheta"], "edge": [["naturaleza/piedra_chica_b", 3], ["naturaleza/cardon_chico", 2], ["naturaleza/ichu_cortado", 4], ["naturaleza/yareta", 2], ["naturaleza/flores", 2]]},
 	"Zone_arboleda": {"edge": [["naturaleza/tronco_caido", 2], ["naturaleza/cardon_chico", 3], ["naturaleza/roca_grande_b", 1], ["naturaleza/ichu_cortado", 3], ["naturaleza/tocon", 2], ["naturaleza/hongos", 2]]},
-	"Zone_risco": {"edge": [["naturaleza/roca_alta", 3], ["naturaleza/piedra_chica_b", 3], ["naturaleza/roca_grande_b", 1], ["naturaleza/yareta", 1]]},
+	"Zone_risco": {"props": [["lugares/cornisa_ojo", "CliffEye", Vector3(0, 0, 0.3)], ["lugares/nicho_carcaj", "QuiverChest", Vector3(1, 0, 1)], ["lugares/estela_carcaj", "QuiverChest", Vector3(0, 0, -0.75)]], "edge": [["naturaleza/roca_alta", 3], ["naturaleza/piedra_chica_b", 3], ["naturaleza/roca_grande_b", 1], ["naturaleza/yareta", 1]]},
 	"Zone_cueva": {"edge": [["lugares/estalagmitas", 4], ["naturaleza/roca_alta", 2], ["lugares/escombro_a", 2]]},
 	"Zone_gruta": {"edge": [["lugares/estalagmitas", 5], ["naturaleza/piedra_chica_b", 3]]},
 	"Zone_santuario": {"edge": [["objetos/apacheta", 2], ["naturaleza/piedra_chica_b", 3], ["naturaleza/ichu_cortado", 3], ["naturaleza/flores", 1]]},
@@ -169,6 +170,9 @@ func _overworld_zone(zone: Area3D, cells: Array[Vector3i], group: Node3D) -> voi
 	var facade: String = recipe.get("facade", "")
 	if not facade.is_empty():
 		_facade(zone.get_parent().get_node(facade) as Node3D, group)
+	for prop: Array in recipe.get("props", []):
+		var anchor_node := zone.get_parent().get_node(String(prop[1])) as Node3D
+		_mesh(group, prop[0], anchor_node.position + prop[2], anchor_node.rotation.y)
 	var center := Vector3(zone.position.x, 0.0, zone.position.z)
 	var by_center := ground.duplicate()
 	by_center.sort_custom(func(a: Vector3i, b: Vector3i) -> bool: return _center(a).distance_to(center) < _center(b).distance_to(center))
