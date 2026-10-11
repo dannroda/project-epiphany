@@ -1,7 +1,8 @@
 @tool
 class_name BossHand
 extends Node3D
-## Guantelete del jefe: tres mallas hermanas, una por pose; se ve una sola.
+## Guantelete del jefe: una malla con shape keys que cierran los dedos (`grip`, que sigue a la pose con un resorte).
+## La malla se anima sola encima del nodo: respira en reposo, se inclina al moverse y gesticula en cada ataque.
 ## Solo recibe daño aturdida; si no, el golpe rebota en el hierro.
 ## Los ataques (`perform`) avisan antes: la sombra en el piso se achica y oscurece hasta el impacto.
 
@@ -23,12 +24,29 @@ const TREMBLE := 0.06
 const IMPACT_HIT_STOP := 0.06
 const CRACK_LIFETIME := 8.0
 const STUN_WOBBLE := 0.18
+## grip de cada pose: 0 abierta, 0,5 garra, 1 puño; menos de 0 estira los dedos.
+const POSE_GRIP := {Pose.OPEN: 0.0, Pose.FIST: 1.0, Pose.CLAW: 0.5}
+## Las shape keys de jefe_mano_* (build_jefe.py, GRIP) y su grip; la malla sin shape keys es la abierta.
+const GRIP_KEYS := [[-0.3, &"estirada"], [0.0, &""], [0.25, &"garra_media"], [0.5, &"garra"], [0.75, &"puno_medio"], [1.0, &"puno"]]
+const GRIP_MIN := -0.3
+const GRIP_STIFFNESS := 260.0
+const GRIP_DAMPING := 24.0
+const BREATH := Vector2(0.07, 0.06)
+const LEAN := 0.06
+const LEAN_MAX := 0.45
+const TURN_SPEED := 9.0
 
 @export var pose := Pose.OPEN:
 	set(value):
 		pose = value
+		_grip_goal = POSE_GRIP[pose]
+		if Engine.is_editor_hint():
+			grip = _grip_goal
+@export_range(GRIP_MIN, 1.0) var grip := 0.0:
+	set(value):
+		grip = value
 		if is_inside_tree():
-			_show_pose()
+			_apply_grip()
 @export var damage := 4
 @export var knockback := 10.0
 
@@ -67,6 +85,16 @@ var _material: StandardMaterial3D
 var _spark_left := 0.0
 var _stun_time := 0.0
 var _base_glow := 1.0
+var _grip_goal := 0.0
+var _grip_speed := 0.0
+var _tilt := Vector3.ZERO
+var _tilt_goal := Vector3.ZERO
+var _aim: Node3D
+var _last_position := Vector3.ZERO
+var _velocity := Vector3.ZERO
+var _time := 0.0
+var _twitch := 0.0
+var _twitch_left := 0.0
 static var _crack: Texture2D
 
 @onready var health: Health = $Health
@@ -76,13 +104,16 @@ static var _crack: Texture2D
 @onready var shockwave: Hitbox = $Hitboxes/Shockwave
 @onready var shadow: Decal = $Shadow
 @onready var ring: MeshInstance3D = $Ring
-@onready var grip: Marker3D = $Grip
+@onready var grip_point: Marker3D = $Grip
+@onready var mesh: MeshInstance3D = $Mesh
 
 
 func _ready() -> void:
-	_show_pose()
+	_apply_grip()
 	if Engine.is_editor_hint():
 		return
+	_time = randf() * TAU
+	_last_position = global_position
 	_shockwave_data.damage_multiplier = 0.5
 	_shockwave_data.hitbox = &"shockwave"
 	hurtbox.team = EntityConfig.Team.ENEMY
@@ -92,17 +123,19 @@ func _ready() -> void:
 	hurtbox.hit.connect(_on_hit)
 	health.died.connect(_on_died)
 	_flash = HitFlash.attach(self, health)
-	_material = ($Open as MeshInstance3D).mesh.surface_get_material(0).duplicate()
+	_material = mesh.mesh.surface_get_material(0).duplicate()
 	_base_glow = _material.emission_energy_multiplier
-	for mesh in _meshes():
-		mesh.material_override = _material
+	mesh.material_override = _material
 	shadow.visible = false
 	ring.visible = false
 
 
-func _process(_delta: float) -> void:
-	if not Engine.is_editor_hint() and state == State.READY and rest:
+func _process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
+	if state == State.READY and rest:
 		global_position = rest.global_position
+	_animate(delta)
 
 
 func _physics_process(delta: float) -> void:
@@ -154,6 +187,7 @@ func regenerate() -> void:
 	health.reset(health.max_health)
 	rotation = Vector3.ZERO
 	set_state(State.BUSY)
+	_flex()
 	await _return_to_rest()
 	if state == State.BUSY:
 		set_state(State.READY)
@@ -184,6 +218,7 @@ func perform(attack: BossAttack, target: Node3D, area: Rect2) -> void:
 func _slam(attack: BossAttack, target: Node3D, area: Rect2) -> void:
 	var above := _floor_point(target.global_position, area) + Vector3.UP * SLAM_HEIGHT
 	_show_shadow(above, 3.6, 0.3)
+	_tilt_goal = Vector3(-0.55, 0.0, 0.0)
 	await _move(above, slam_rise_time)
 	var left := slam_track_time
 	while left > 0.0:
@@ -206,7 +241,10 @@ func _slam(attack: BossAttack, target: Node3D, area: Rect2) -> void:
 	if state != State.BUSY:
 		return
 	_set_hitbox(strike, attack.attack)
+	_tilt_goal = Vector3(0.25, 0.0, 0.0)
+	_tilt = _tilt_goal
 	await _move(Vector3(global_position.x, FLOOR_HEIGHT, global_position.z), slam_fall_time, Tween.EASE_IN)
+	_tilt_goal = Vector3.ZERO
 	_impact()
 	_squash_and_bounce()
 	await get_tree().create_timer(0.08, false).timeout
@@ -243,10 +281,13 @@ func _grab(_attack: BossAttack, target: Node3D, area: Rect2) -> void:
 	if side == 0.0:
 		side = 1.0
 	var start := _floor_point(target.global_position + Vector3(side * 3.5, 0.0, 0.0), area) + Vector3.UP * 1.4
+	_aim = target
 	await _move(start, 0.5)
 	if state != State.BUSY:
 		return
 	_flash.warn(grab_windup_time)
+	_grip_goal = -0.3
+	_tilt_goal = Vector3(-0.3, 0.0, 0.0)
 	var shake := create_tween()
 	for i in 6:
 		shake.tween_property(self, ^"rotation:z", 0.12 * (1 if i % 2 else -1), grab_windup_time / 6.0)
@@ -261,6 +302,8 @@ func _grab(_attack: BossAttack, target: Node3D, area: Rect2) -> void:
 	to.y = 1.0
 	var elapsed := 0.0
 	var caught := false
+	_grip_goal = 0.3
+	_tilt_goal = Vector3(0.15, 0.0, 0.0)
 	while elapsed < grab_lunge_time:
 		await get_tree().physics_frame
 		if state != State.BUSY:
@@ -275,11 +318,14 @@ func _grab(_attack: BossAttack, target: Node3D, area: Rect2) -> void:
 			if player.blocks_from(global_position):
 				Feel.sfx(&"block", global_position)
 				Feel.burst(&"sparks", global_position, Vector3.UP)
+				_grip_goal = -0.2
+				_tilt_goal = Vector3(-0.6, 0.0, 0.0)
 				await _move(global_position + (from - to).normalized() * 1.5, 0.25)
 				return
-			if player.grab(grip):
+			if player.grab(grip_point):
 				caught = true
 				break
+	_aim = null
 	if caught:
 		await _hold(target as PlayerCharacter)
 
@@ -289,6 +335,9 @@ func _hold(target: PlayerCharacter) -> void:
 	var escaped := [false]
 	var on_escape := func() -> void: escaped[0] = true
 	target.escaped.connect(on_escape)
+	_grip_goal = 0.85
+	_grip_speed = 6.0
+	_tilt_goal = Vector3.ZERO
 	await _move(global_position + Vector3.UP * 0.8, 0.3)
 	var left := grab_hold_time
 	var tick := grab_tick
@@ -299,6 +348,7 @@ func _hold(target: PlayerCharacter) -> void:
 		tick -= delta
 		if tick <= 0.0:
 			tick = grab_tick
+			_grip_speed += 7.0
 			if target.health.damage(1):
 				Feel.sfx(&"hurt", target.global_position)
 	target.escaped.disconnect(on_escape)
@@ -306,6 +356,8 @@ func _hold(target: PlayerCharacter) -> void:
 		stun(grab_escape_stun)
 		return
 	target.release()
+	_grip_goal = -0.2
+	_grip_speed = -8.0
 	if state == State.BUSY:
 		var info := _make_damage()
 		info.amount = 2
@@ -326,6 +378,8 @@ func _sweep(attack: BossAttack, target: Node3D, area: Rect2) -> void:
 		return
 	_show_shadow(global_position, 1.8, 0.5)
 	_flash.warn(sweep_windup_time)
+	_tilt_goal = Vector3(0.0, 0.0, -side * 1.3)
+	_grip_goal = 0.35
 	var windup := create_tween()
 	windup.tween_property(self, ^"position:x", position.x + side * 0.9, sweep_windup_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	windup.parallel().tween_method(func(t: float) -> void: position.z += randf_range(-TREMBLE, TREMBLE) * t, 0.0, 1.0, sweep_windup_time)
@@ -334,6 +388,7 @@ func _sweep(attack: BossAttack, target: Node3D, area: Rect2) -> void:
 		return
 	Feel.shake(0.25, finish - start)
 	_set_hitbox(strike, attack.attack)
+	_grip_goal = -0.15
 	var from := global_position
 	var elapsed := 0.0
 	while elapsed < sweep_time:
@@ -348,6 +403,8 @@ func _sweep(attack: BossAttack, target: Node3D, area: Rect2) -> void:
 
 ## El reposo flota con el cuerpo: lo sigue mientras vuelve.
 func _return_to_rest() -> void:
+	_aim = null
+	_tilt_goal = Vector3.ZERO
 	if rest:
 		var from := global_position
 		_motion = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
@@ -427,14 +484,12 @@ func collapse() -> void:
 	striking = false
 	_hide_shadow()
 	set_state(State.DOWN)
+	_aim = null
+	_tilt_goal = Vector3.ZERO
 	_fall = create_tween().set_parallel()
 	_fall.tween_property(self, ^"global_position:y", FLOOR_HEIGHT - 0.2, 0.4).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 	_fall.tween_property(self, ^"rotation:z", 0.5 * signf(position.x), 0.4)
 	Feel.sfx(&"boom", global_position)
-
-
-func _meshes() -> Array[MeshInstance3D]:
-	return [$Open, $Fist, $Claw]
 
 
 ## Tiembla cada vez más alrededor de `center` (en coordenadas del padre); la altura la maneja otro tween.
@@ -452,10 +507,9 @@ func _flash_shadow(progress: float) -> void:
 
 
 func _squash_and_bounce() -> void:
-	for mesh in _meshes():
-		mesh.scale = SQUASH
-		var back := mesh.create_tween()
-		back.tween_property(mesh, ^"scale", Vector3.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	mesh.scale = SQUASH
+	var back := mesh.create_tween()
+	back.tween_property(mesh, ^"scale", Vector3.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	var bounce := create_tween()
 	bounce.tween_property(self, ^"position:y", position.y + SLAM_BOUNCE, 0.12).set_ease(Tween.EASE_OUT).set_delay(0.08)
 	bounce.tween_property(self, ^"position:y", position.y, 0.14).set_ease(Tween.EASE_IN)
@@ -483,7 +537,69 @@ func _steady() -> void:
 	_material.emission_energy_multiplier = _base_glow
 
 
-func _show_pose() -> void:
-	$Open.visible = pose == Pose.OPEN
-	$Fist.visible = pose == Pose.FIST
-	$Claw.visible = pose == Pose.CLAW
+## Los dedos siguen a `_grip_goal` con un resorte (cierran de golpe y rebotan un poco) y la malla se inclina según la
+## velocidad, gira hacia `_aim` y va hacia `_tilt_goal` (los gestos de cada ataque). En reposo respira; aturdida se
+## crispa; caída queda floja.
+func _animate(delta: float) -> void:
+	if delta <= 0.0:
+		return
+	_time += delta
+	_velocity = _velocity.lerp((global_position - _last_position) / delta, 1.0 - exp(-10.0 * delta))
+	_last_position = global_position
+	var goal := _grip_goal
+	match state:
+		State.READY:
+			goal += BREATH.x + BREATH.y * sin(_time * 1.7)
+		State.STUNNED:
+			_twitch_left -= delta
+			if _twitch_left <= 0.0:
+				_twitch_left = randf_range(0.15, 0.45)
+				_twitch = randf_range(0.0, 0.45)
+			goal = 0.1 + _twitch
+		State.DOWN:
+			goal = -0.15
+	_grip_speed += ((goal - grip) * GRIP_STIFFNESS - _grip_speed * GRIP_DAMPING) * delta
+	grip = clampf(grip + _grip_speed * delta, GRIP_MIN, 1.0)
+	var yaw := 0.0
+	if is_instance_valid(_aim):
+		var to := global_basis.inverse() * (_aim.global_position - global_position)
+		if Vector2(to.x, to.z).length() > 0.3:
+			yaw = atan2(to.x, to.z)
+	var local := (global_basis.inverse() * _velocity).rotated(Vector3.UP, -mesh.rotation.y)
+	var lean := Vector3(clampf(local.z * LEAN, -LEAN_MAX, LEAN_MAX), 0.0, clampf(-local.x * LEAN, -LEAN_MAX, LEAN_MAX))
+	var weight := 1.0 - exp(-TURN_SPEED * delta)
+	_tilt = _tilt.lerp(_tilt_goal, weight)
+	var sway := Vector3(sin(_time * 1.1) * 0.05, 0.0, sin(_time * 0.8) * 0.04) if state == State.READY else Vector3.ZERO
+	mesh.rotation = Vector3(
+		lerpf(mesh.rotation.x, _tilt.x + lean.x + sway.x, weight),
+		lerp_angle(mesh.rotation.y, yaw, weight),
+		lerpf(mesh.rotation.z, _tilt.z + lean.z + sway.z, weight))
+
+
+## Pone los pesos de las dos shape keys entre las que cae `grip`.
+func _apply_grip() -> void:
+	var instance := get_node_or_null(^"Mesh") as MeshInstance3D
+	if instance == null or instance.mesh == null:
+		return
+	for key: Array in GRIP_KEYS:
+		if key[1] != &"":
+			instance.set_blend_shape_value(instance.find_blend_shape_by_name(key[1]), 0.0)
+	for i in GRIP_KEYS.size() - 1:
+		var low: float = GRIP_KEYS[i][0]
+		var high: float = GRIP_KEYS[i + 1][0]
+		if grip <= high or i == GRIP_KEYS.size() - 2:
+			var t := clampf((grip - low) / (high - low), 0.0, 1.0)
+			if GRIP_KEYS[i][1] != &"":
+				instance.set_blend_shape_value(instance.find_blend_shape_by_name(GRIP_KEYS[i][1]), 1.0 - t)
+			if GRIP_KEYS[i + 1][1] != &"":
+				instance.set_blend_shape_value(instance.find_blend_shape_by_name(GRIP_KEYS[i + 1][1]), t)
+			return
+
+
+## Al volver en la fase 2: cierra y abre el puño, como desperezándose.
+func _flex() -> void:
+	var flex := create_tween()
+	flex.tween_property(self, ^"_grip_goal", 1.0, 0.25)
+	flex.tween_interval(0.15)
+	flex.tween_property(self, ^"_grip_goal", -0.3, 0.2)
+	flex.tween_property(self, ^"_grip_goal", 0.0, 0.3)

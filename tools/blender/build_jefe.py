@@ -1,6 +1,7 @@
-# Arma assets/epiphany/jefe.blend: el Ojo con manos, por piezas sueltas que se mueven por código (sin esqueleto).
+# Publica assets/epiphany/jefe.glb (epi.publish): el Ojo con manos, por piezas sueltas que se mueven por código (sin esqueleto).
 # El cuerpo flota: el origen es su centro y mira a -Y. El ojo y los párpados tienen el origen en el centro del ojo (OJO);
-# las manos, en la palma (abajo plana), con tres poses: abierta (golpe), puño y garra (agarre). La derecha es la izquierda espejada.
+# las manos, en la palma (abajo plana), abiertas y con shape keys que cierran los dedos (GRIP: estirada, garra, puño y
+# los pasos intermedios, para que al mezclarlas las falanges giren en vez de acortarse). La derecha es la izquierda espejada.
 # blender -b -P tools/blender/build_jefe.py
 import math
 import os
@@ -23,7 +24,17 @@ OJO = Vector((0.0, -1.38, 0.3))
 EYE = 1.2
 LID = 1.32
 HAND = 1.3
-POSES = {"abierta": (0.05, 0.05, 0.08), "puno": (1.35, 1.45, 1.3), "garra": (0.55, 0.65, 0.6)}
+OPEN = (0.05, 0.05, 0.08)
+CLAW = (0.55, 0.65, 0.6)
+FIST = (1.35, 1.45, 1.3)
+# shape key → curvatura de cada falange; BossHand.GRIP les da el valor de grip (abierta = 0, garra = 0,5, puño = 1)
+GRIP = {
+	"estirada": (-0.3, -0.25, -0.1),
+	"garra_media": tuple((a + b) / 2 for a, b in zip(OPEN, CLAW)),
+	"garra": CLAW,
+	"puno_medio": tuple((a + b) / 2 for a, b in zip(CLAW, FIST)),
+	"puno": FIST,
+}
 kit = epi.start()
 
 
@@ -279,10 +290,9 @@ def finger(p, x, lengths, curl, width=0.11, height=0.3):
 	return segs, caps, claw
 
 
-def hand(p, pose, mirror):
+def hand(p, curl, mirror):
 	"""Guantelete de hierro flotando, la palma (plana, abajo) en el origen y los dedos hacia -Y. El lomo de piedra lleva
 	un ojo de neón (dónde pegar cuando la mano queda aturdida); la muñeca, el núcleo de neón que la une al cuerpo."""
-	curl = POSES[pose]
 	palm = p.rounded_box(-0.6, 0.6, -0.6, 0.45, 0.0, 0.42, radius=0.08, segments=1)
 	p.paint(palm, IRON, z_range=(0, 0.45), vary=0.04)
 	back = p.rounded_box(-0.5, 0.5, -0.5, 0.35, 0.42, 0.56, radius=0.05, segments=1)
@@ -321,9 +331,17 @@ piece("jefe_cuerpo", 1, jefe_cuerpo)
 piece("jefe_ojo", 2, jefe_ojo)
 piece("jefe_parpado", 3, jefe_parpado)
 piece("jefe_parpado_inf", 3, jefe_parpado_inf)
-for pose in POSES:
-	for side, mirror in (("izq", False), ("der", True)):
-		piece("jefe_mano_%s_%s" % (pose, side), 4, lambda p, pose=pose, mirror=mirror: hand(p, pose, mirror))
+for side, mirror in (("izq", False), ("der", True)):
+	obj = piece("jefe_mano_" + side, 4, lambda p, mirror=mirror: hand(p, OPEN, mirror))
+	obj.shape_key_add(name="Basis")
+	for key_name, curl in GRIP.items():
+		p = epi.Piece(4)
+		hand(p, curl, mirror)
+		assert len(p.bm.verts) == len(obj.data.vertices), key_name
+		key = obj.shape_key_add(name=key_name, from_mix=False)
+		for i, v in enumerate(p.bm.verts):
+			key.data[i].co = v.co
+		p.bm.free()
 
 epi.layout(kit, columns=4, spacing=5.5)
-epi.save("jefe")
+epi.publish("jefe")

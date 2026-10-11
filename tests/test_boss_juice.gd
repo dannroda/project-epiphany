@@ -70,9 +70,9 @@ func test_slam_squashes_and_leaves_a_crack() -> void:
 	var until := Time.get_ticks_msec() + 4000
 	while hand.state != BossHand.State.STUNNED and Time.get_ticks_msec() < until:
 		await tree.process_frame
-		squashed = squashed or hand.get_node(^"Fist").scale.y < 0.9
+		squashed = squashed or hand.mesh.scale.y < 0.9
 	await tree.process_frame
-	squashed = squashed or hand.get_node(^"Fist").scale.y < 0.9
+	squashed = squashed or hand.mesh.scale.y < 0.9
 	assert_true(squashed, "se aplasta al pegar")
 	assert_eq(decals.call(), before + 1, "queda una grieta en el piso")
 	assert_eq(Engine.time_scale, 1.0, "el hit-stop no deja el juego lento")

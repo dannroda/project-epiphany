@@ -11,6 +11,11 @@ func _spawn() -> Boss:
 	return boss
 
 
+func _frames(count: int) -> void:
+	for i in count:
+		await (Engine.get_main_loop() as SceneTree).process_frame
+
+
 func test_pieces_and_sockets() -> void:
 	var boss := _spawn()
 	for path in ["Body/Mesh", "%Eye", "%OrbMuzzle", "%UpperLid", "%LowerLid", "%HandAnchorLeft", "%HandAnchorRight", "%HandRestLeft", "%HandRestRight"]:
@@ -22,13 +27,26 @@ func test_pieces_and_sockets() -> void:
 	boss.free()
 
 
-func test_hands_show_one_pose() -> void:
+func test_fingers_close_gradually_into_each_pose() -> void:
 	var boss := _spawn()
-	for pose in [BossHand.Pose.OPEN, BossHand.Pose.FIST, BossHand.Pose.CLAW]:
-		boss.hand_right.pose = pose
-		var shown := [^"Open", ^"Fist", ^"Claw"].filter(func(mesh: NodePath) -> bool: return boss.hand_right.get_node(mesh).visible)
-		assert_eq(shown.size(), 1, "una sola malla por pose")
-	assert_eq(boss.hand_right.get_node(^"Claw").visible, true)
+	var hand := boss.hand_right
+	var mesh := hand.mesh
+	var fist := mesh.find_blend_shape_by_name(&"puno")
+	var claw := mesh.find_blend_shape_by_name(&"garra")
+	assert_true(fist >= 0 and claw >= 0, "una sola malla con shape keys")
+	hand.pose = BossHand.Pose.FIST
+	var midway := false
+	for i in 40:
+		await _frames(1)
+		midway = midway or (hand.grip > 0.3 and hand.grip < 0.7)
+	assert_true(midway, "los dedos van cerrándose, no saltan al puño")
+	assert_true(mesh.get_blend_shape_value(fist) > 0.8, "cierra el puño")
+	hand.pose = BossHand.Pose.CLAW
+	await _frames(40)
+	assert_true(hand.grip > 0.45 and hand.grip < 0.7 and mesh.get_blend_shape_value(claw) > 0.3 and mesh.get_blend_shape_value(fist) == 0.0, "afloja a la garra (y respira)")
+	hand.pose = BossHand.Pose.OPEN
+	await _frames(40)
+	assert_true(mesh.get_blend_shape_value(fist) == 0.0 and hand.grip < 0.2, "vuelve abierta")
 	boss.free()
 
 
@@ -313,7 +331,7 @@ func test_grab_holds_and_mashing_frees() -> void:
 	hand.perform(_attack(&"grab"), player, boss.arena)
 	assert_true(await _wait_until(player.is_grabbed, 3.0), "la garra lo atrapa")
 	await tree.create_timer(0.5).timeout
-	assert_true(player.global_position.distance_to(hand.grip.global_position) < 0.05, "lo lleva en la mano")
+	assert_true(player.global_position.distance_to(hand.grip_point.global_position) < 0.05, "lo lleva en la mano")
 	for i in 8:
 		await _press(tree, &"attack")
 	assert_true(not player.is_grabbed(), "apretando botones se suelta")

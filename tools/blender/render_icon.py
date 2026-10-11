@@ -14,7 +14,7 @@ EYE = Vector((0.0, -1.38, 0.3))
 LIDS = 0.55
 PIECES = ("jefe_ojo", "jefe_parpado", "jefe_parpado_inf")
 
-bpy.ops.wm.open_mainfile(filepath=os.path.join(ROOT, "assets", "epiphany", "jefe.blend"))
+bpy.ops.wm.open_mainfile(filepath=os.path.join(ROOT, "art", "blender", "jefe.blend"))
 sc = bpy.context.scene
 for obj in bpy.data.objects:
 	obj.hide_render = obj.name not in PIECES

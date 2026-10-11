@@ -2,13 +2,23 @@
   "checklist": [
     {
       "detail": "En build_jefe.py, como el arco: base abierta y shape keys «puno» y «garra» (los dedos rotan por falange); reemplaza las tres mallas sueltas.",
-      "done": false,
+      "done": true,
       "text": "Una malla por mano con blend shapes"
     },
     {
       "detail": "BossHand interpola los blend shapes en vez de alternar visibilidad (Open/Fist/Claw).",
-      "done": false,
+      "done": true,
       "text": "Transiciones en el código"
+    },
+    {
+      "detail": "Respiración en reposo, inclinación según la velocidad, apuntar hacia el objetivo, anticipaciones y reacciones por ataque, aturdida y caída; todo sobre la malla, sin tocar hitboxes ni tiempos.",
+      "done": true,
+      "text": "Gestos y movimiento propio"
+    },
+    {
+      "detail": "build_jefe.py publica jefe.glb (epi.publish) para que el import guarde las mallas con sus blend shapes; se borran jefe.blend y las seis mallas sueltas (parte de 12.11).",
+      "done": true,
+      "text": "jefe al pipeline glb"
     }
   ],
   "code": "11.47",
@@ -29,12 +39,12 @@
       "section": "jefe"
     }
   ],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "jefe",
     "arte"
   ],
-  "test": "Los dedos se cierran y abren de forma continua al pasar de una pose a otra; el ícono y la pelea siguen igual.",
-  "title": "Manos del jefe con shape keys",
-  "updated_at": "2026-10-10T23:13:27.924Z"
+  "test": "Los dedos se cierran y abren de forma continua; las manos respiran en reposo, se inclinan al moverse, abren antes de agarrar, aprietan al sostener, se crispan aturdidas y caen flojas; la pelea sigue igual.",
+  "title": "Manos del jefe animadas (shape keys)",
+  "updated_at": "2026-10-11T05:03:58.240Z"
 }
