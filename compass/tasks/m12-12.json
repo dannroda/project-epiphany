@@ -38,6 +38,11 @@
       "detail": "El personaje toon con el shader en el templo actual, contra el jugador de ahora.",
       "done": false,
       "text": "Render A/B en el templo"
+    },
+    {
+      "detail": "Intento del 2026-10-11, sin aprobar: tools/blender/build_jugador.py arma el diseño del jugador actual (casco con chakana, discos, aletas, trenza, peto, hombreras, brazales, cinturón con faldones, botas con suela de neón) con la estética de los modelos ZX de referencia (temp/, solo referencia, no se usan): 1,55 m y ~4,5 cabezas medidas, cara calibrada al perfil de referencia, casco desplazado desde la cabeza, traje continuo por skin modifier, textura propia assets/epiphany/jugador_colores.png. Feedback: 'es un avance pero sigue sin gustarme' (antes: cara rara, casco de karting, piernas sueltas, botas de lego, ya corregidos). Pendiente: manos, hombreras y peto menos cuadrados, ~24k tris, rig humanoide y animaciones. Comparar con: blender -b -P build_jugador.py -- <salida.blend>.",
+      "done": false,
+      "text": "Jugador estilo ZX (en pausa)"
     }
   ],
   "code": "12.12",
@@ -60,5 +65,5 @@
   ],
   "test": "",
   "title": "Estilo toon (Wind Waker) + personaje cyber-shinobi",
-  "updated_at": "2026-10-11T01:48:08.378Z"
+  "updated_at": "2026-10-11T02:57:37.530Z"
 }
