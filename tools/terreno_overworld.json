@@ -1068,7 +1068,89 @@
 		-51,
 		-26
 	],
-	"regions": [],
+	"regions": [
+		{
+			"rect": [
+				-59.0,
+				-39.0,
+				-13.0,
+				-25.0
+			],
+			"style": "explanada"
+		},
+		{
+			"rect": [
+				61.0,
+				-39.0,
+				83.0,
+				-25.0
+			],
+			"style": "cumbre"
+		},
+		{
+			"rect": [
+				-11.0,
+				-39.0,
+				11.0,
+				23.0
+			],
+			"style": "quebrada"
+		},
+		{
+			"rect": [
+				13.0,
+				-39.0,
+				59.0,
+				-25.0
+			],
+			"style": "cumbre"
+		},
+		{
+			"rect": [
+				13.0,
+				-23.0,
+				59.0,
+				7.0
+			],
+			"style": "necropolis"
+		},
+		{
+			"rect": [
+				61.0,
+				-23.0,
+				83.0,
+				7.0
+			],
+			"style": "necropolis"
+		},
+		{
+			"rect": [
+				13.0,
+				9.0,
+				83.0,
+				23.0
+			],
+			"style": "cardonal"
+		},
+		{
+			"rect": [
+				-59.0,
+				25.0,
+				35.0,
+				39.0
+			],
+			"style": "laguna"
+		},
+		{
+			"rect": [
+				37.0,
+				25.0,
+				83.0,
+				39.0
+			],
+			"style": "laguna"
+		}
+	],
 	"rows": [
 		"HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH",
 		"HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH",

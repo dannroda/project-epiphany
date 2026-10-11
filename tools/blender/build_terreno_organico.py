@@ -219,8 +219,48 @@ def style_at(x, y):
 	return chosen
 
 
+def split_styles(p, faces):
+	"""Corta las caras por donde pasa el borde entre estilos, para que no quede escalonado."""
+	at = {}
+	for f in faces:
+		for v in f.verts:
+			if v not in at:
+				at[v] = style_at(v.co.x, v.co.y)
+	cuts = {}
+	for e in {e for f in faces for e in f.edges}:
+		a, b = e.verts
+		if a not in at or b not in at or at[a] == at[b]:
+			continue
+		lo, hi = 0.0, 1.0
+		for _ in range(6):
+			mid = (lo + hi) / 2
+			co = a.co.lerp(b.co, mid)
+			lo, hi = (mid, hi) if style_at(co.x, co.y) == at[a] else (lo, mid)
+		cuts[e] = (a, (lo + hi) / 2)
+	made = {}
+	for e, (a, t) in cuts.items():
+		_e, v = bmesh.utils.edge_split(e, a, t)
+		for f in v.link_faces:
+			made.setdefault(f, []).append(v)
+	out = list(faces)
+	own = set(faces)
+	for f, verts in made.items():
+		if len(verts) == 2 and f in own:
+			try:
+				new, _loop = bmesh.utils.face_split(f, verts[0], verts[1])
+			except ValueError:
+				continue
+			out.append(new)
+	for f in out:
+		f.normal_update()
+	p.fixed.update(out)
+	return out
+
+
 def paint_role(p, faces, role, shade=None, z_range=None, vary=0.0):
 	"""Pinta cada cara con la franja de su papel en el estilo de la región donde cae."""
+	if REGIONS:
+		faces = split_styles(p, faces)
 	groups = {}
 	for f in faces:
 		c = f.calc_center_median()
