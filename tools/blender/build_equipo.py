@@ -162,13 +162,30 @@ def bolsa_bombas(p):
 	p.paint_bands(body, [(0.08, 0.13, "tela_azul", "MID"), (0.13, 0.17, "flor_amarilla", "MID"), (0.17, 0.22, "tela_azul", "MID"), (0.26, 0.3, "flor_rosa", "MID"), (0.36, 0.42, "paja", "DARK")], default=(0, 0, "tela_roja", "MID"))
 
 
-def porongo(p, potion):
-	"""Calabaza seca con tapón; la de poción, con lacre rojo y una franja roja."""
-	body = p.lathe([(0.0, 0.0), (0.1, 0.01), (0.14, 0.08), (0.12, 0.16), (0.07, 0.2), (0.08, 0.27), (0.05, 0.33), (0.04, 0.36), (0.0, 0.36)], sides=10)
-	bands = [(0.12, 0.15, "tela_roja", "MID")] if potion else []
-	p.paint_bands(body, bands, default=(0, 0, "paja", "MID"))
-	cork = p.cylinder(0.035, 0.34, 0.41, sides=6, radius_top=0.04)
-	p.paint(cork, "doom" if potion else "madera", "MID")
+# Frasco redondo de vidrio (perfil [(radio, z)]); el líquido llena la panza hasta LIQUID_TOP.
+FLASK = [(0.0, 0.0), (0.08, 0.005), (0.13, 0.05), (0.145, 0.11), (0.13, 0.17), (0.08, 0.215), (0.05, 0.24), (0.045, 0.32),
+	(0.056, 0.33), (0.056, 0.345), (0.0, 0.345)]
+LIQUID_TOP = 0.165
+
+
+def botella(p):
+	"""Lo opaco de la botella: tapón de madera y el cordel del cuello. El vidrio y el líquido son piezas aparte."""
+	cork = p.cylinder(0.04, 0.315, 0.4, sides=6, radius_top=0.045)
+	p.paint(cork, "madera", "MID")
+	cord = p.lathe([(0.049, 0.255), (0.052, 0.27), (0.049, 0.285)], sides=10, caps=False)
+	p.paint(cord, "paja", "MID")
+
+
+def botella_vidrio(p):
+	"""El frasco de vidrio (en Godot, con material transparente)."""
+	p.paint(p.lathe(FLASK, sides=12), "cristal", "LIGHT")
+
+
+def botella_liquido(p):
+	"""El contenido: la panza llena hasta LIQUID_TOP, en blanco; el material del ítem le da el color."""
+	inner = [(r * 0.9, z) for r, z in FLASK if z < LIQUID_TOP] + [(0.0, LIQUID_TOP)]
+	inner[0] = (0.0, 0.015)
+	p.paint(p.lathe(inner, sides=12), "blanco", "LIGHT")
 
 
 def armadura(p):
@@ -193,8 +210,9 @@ piece("escudo_espejo", 3, escudo_espejo)
 piece("arco", 4, arco)
 piece("carcaj", 5, carcaj)
 piece("bolsa_bombas", 6, bolsa_bombas)
-piece("botella", 7, lambda p: porongo(p, False))
-piece("botella_pocion", 8, lambda p: porongo(p, True))
+piece("botella", 7, botella)
+piece("botella_vidrio", 8, botella_vidrio)
+piece("botella_liquido", 10, botella_liquido)
 piece("armadura", 9, armadura)
 epi.layout(kit, columns=8, spacing=2.0)
 epi.save("equipo")

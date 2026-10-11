@@ -681,3 +681,21 @@ msgstr "Levantar"
 
 msgid "BOSS_NAME"
 msgstr "El Ojo Antiguo"
+
+msgid "ITEM_HOLY_WATER_NAME"
+msgstr "Agua bendita"
+
+msgid "ITEM_HOLY_WATER_DESC"
+msgstr "Agua de la vertiente de la cueva. Recupera toda la vida y por 20 segundos los golpes lastiman la mitad. Deja la botella vacía."
+
+msgid "ITEM_HOLY_WATER_GOT"
+msgstr "¡Llenaste la botella con Agua bendita!"
+
+msgid "PLACE_SPRING_CAVE"
+msgstr "Cueva de la vertiente"
+
+msgid "PROMPT_FILL"
+msgstr "Llenar"
+
+msgid "PROMPT_DRINK"
+msgstr "Beber"

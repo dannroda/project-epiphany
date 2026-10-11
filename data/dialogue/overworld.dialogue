@@ -48,3 +48,12 @@ Inscripción: Nosotros fuimos los últimos. Los que vengan después ya no van a 
 Inscripción: Cuando el Ojo bajó, un corazón se partió en cuatro y sus pedazos rodaron lejos. [ID:ow_cliff_heart_1]
 Inscripción: Uno se escondió entre el pasto alto. Dos esperan detrás de la piedra herida. El último espera junto al carcaj del cazador, tras la reja que abre el ojo. [ID:ow_cliff_heart_2]
 => END
+
+~ spring_drink
+El agua fría de la vertiente te devuelve las fuerzas. [ID:ow_spring_drink_1]
+=> END
+
+~ spring_hint
+Inscripción: Del corazón de la montaña brota un agua que el Ojo no alcanza a ensuciar. [ID:ow_spring_hint_1]
+Inscripción: Quien la lleva en una botella resiste mejor sus golpes. [ID:ow_spring_hint_2]
+=> END

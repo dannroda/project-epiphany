@@ -1,0 +1,21 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/spring.gd" id="1_spring"]
+[ext_resource type="Resource" path="res://data/items/holy_water.tres" id="2_holy"]
+[ext_resource type="Script" path="res://src/components/interactable.gd" id="3_interactable"]
+
+[sub_resource type="BoxShape3D" id="InteractShape"]
+size = Vector3(6, 1.2, 1.6)
+
+[node name="Spring" type="Node3D"]
+script = ExtResource("1_spring")
+fills = ExtResource("2_holy")
+
+[node name="Interactable" type="Area3D" parent="."]
+script = ExtResource("3_interactable")
+prompt = "PROMPT_DRINK"
+prompt_priority = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactable"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("InteractShape")

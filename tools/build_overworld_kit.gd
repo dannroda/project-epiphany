@@ -49,6 +49,8 @@ const VARIANTS := {
 	"Pared borde": [1, ["terreno_overworld/risco"]],
 	"Andén borde": [6, ["terreno_overworld/anden"]],
 	"Risco borde": [6, ["terreno_overworld/risco"]],
+	"Cueva piso": [0, ["lugares/cueva_piso"]],
+	"Cueva pared": [6, ["lugares/cueva_pared"]],
 }
 
 var _scenes := {}

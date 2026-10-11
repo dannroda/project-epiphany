@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://src/items/behaviors/consumable_behavior.gd" id="1_behavior"]
+[ext_resource type="Texture2D" path="res://assets/ui/items/holy_water.png" id="2_icon"]
+[ext_resource type="Script" path="res://src/items/item_data.gd" id="3_item"]
+[ext_resource type="Resource" path="res://data/items/bottle_empty.tres" id="4_bottle"]
+
+[sub_resource type="Resource" id="Behavior"]
+script = ExtResource("1_behavior")
+heal = -1
+leaves = ExtResource("4_bottle")
+ward_time = 20.0
+
+[resource]
+script = ExtResource("3_item")
+id = &"holy_water"
+display_name = "ITEM_HOLY_WATER_NAME"
+description = "ITEM_HOLY_WATER_DESC"
+icon = ExtResource("2_icon")
+category = 3
+behavior = SubResource("Behavior")
+liquid = Color(0.15, 0.88, 1, 1)
+liquid_glow = 2.2

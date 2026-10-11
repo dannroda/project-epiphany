@@ -19,3 +19,5 @@ description = "ITEM_POTION_DESC"
 icon = ExtResource("2_53lbm")
 category = 3
 behavior = SubResource("Resource_3oiyh")
+liquid = Color(0.92, 0.1, 0.12, 1)
+liquid_glow = 0.4

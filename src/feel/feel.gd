@@ -54,6 +54,7 @@ func _ready() -> void:
 		&"deny": [_synth(0.18, func(t: float) -> float: return signf(sin(TAU * (140.0 if t < 0.08 else 105.0) * t)) * 0.25 * (1.0 if fmod(t, 0.09) < 0.07 else 0.0))],
 		&"rumble": [_synth(1.2, func(t: float) -> float: return ((randf() * 2.0 - 1.0) * 0.3 + sin(TAU * 38.0 * t) * 0.45) * sin(PI * t / 1.2))],
 		&"item_get": [_synth(1.3, func(t: float) -> float: return 0.22 * (sin(TAU * [392.0, 523.0, 659.0, 784.0][mini(int(t / 0.09), 3)] * t) * exp(-fmod(t, 0.09) * 10.0) if t < 0.36 else (sin(TAU * 1047.0 * t) + 0.7 * sin(TAU * 1319.0 * t) + 0.5 * sin(TAU * 1568.0 * t)) * 0.5 * exp(-(t - 0.36) * 2.5) * minf(1.0, (t - 0.36) * 60.0)))],
+		&"drip": [_synth(0.12, func(t: float) -> float: return sin(TAU * lerpf(700.0, 1700.0, minf(t / 0.04, 1.0)) * t) * 0.3 * exp(-t * 35.0))],
 		&"heal": [_synth(0.45, func(t: float) -> float: return sin(TAU * [523.0, 659.0, 784.0][mini(int(t / 0.15), 2)] * t) * 0.3 * exp(-fmod(t, 0.15) * 12.0))],
 	}
 	for sound in SAMPLES:

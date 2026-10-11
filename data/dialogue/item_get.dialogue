@@ -25,3 +25,7 @@ Tres de cuatro\: te falta una. [ID:get_heart_piece_3]
 ~ heart_piece_full
 ¡Cuatro piezas! Se juntan en un corazón nuevo y tu vida máxima sube. [ID:get_heart_piece_full]
 => END
+
+~ holy_water
+Recupera toda la vida y por un rato los golpes lastiman la mitad. La vertiente la vuelve a llenar cuando quieras. [ID:get_holy_water_1]
+=> END

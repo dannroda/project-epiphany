@@ -11,6 +11,7 @@
 [ext_resource type="Resource" uid="uid://dwsn6cvxqrfpa" path="res://data/items/bomb_bag.tres" id="9_axpd1"]
 [ext_resource type="Resource" path="res://data/items/bomb.tres" id="10_h10lr"]
 [ext_resource type="Resource" uid="uid://cvf15473ufqvp" path="res://data/items/potion.tres" id="11_qdb6h"]
+[ext_resource type="Resource" path="res://data/items/holy_water.tres" id="19_holy"]
 [ext_resource type="Resource" path="res://data/items/bottle_empty.tres" id="12_oejcp"]
 [ext_resource type="Resource" path="res://data/items/small_key.tres" id="13_70lmf"]
 [ext_resource type="Resource" path="res://data/items/boss_key.tres" id="14_aber8"]
@@ -23,4 +24,4 @@
 
 [resource]
 script = ExtResource("19_0lh3u")
-items = Array[ExtResource("1_p363h")]([ExtResource("2_jn4gg"), ExtResource("3_j1dr6"), ExtResource("4_2avqm"), ExtResource("5_0jxo4"), ExtResource("6_fr6c6"), ExtResource("7_tf4ty"), ExtResource("8_hu1gi"), ExtResource("9_axpd1"), ExtResource("10_h10lr"), ExtResource("11_qdb6h"), ExtResource("12_oejcp"), ExtResource("13_70lmf"), ExtResource("14_aber8"), ExtResource("15_fk3p1"), ExtResource("16_6khe1"), ExtResource("17_br7di"), ExtResource("18_rasc4"), ExtResource("18_piece")])
+items = Array[ExtResource("1_p363h")]([ExtResource("2_jn4gg"), ExtResource("3_j1dr6"), ExtResource("4_2avqm"), ExtResource("5_0jxo4"), ExtResource("6_fr6c6"), ExtResource("7_tf4ty"), ExtResource("8_hu1gi"), ExtResource("9_axpd1"), ExtResource("10_h10lr"), ExtResource("11_qdb6h"), ExtResource("12_oejcp"), ExtResource("13_70lmf"), ExtResource("14_aber8"), ExtResource("15_fk3p1"), ExtResource("16_6khe1"), ExtResource("17_br7di"), ExtResource("18_rasc4"), ExtResource("18_piece"), ExtResource("19_holy")])

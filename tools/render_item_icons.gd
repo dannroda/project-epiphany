@@ -10,6 +10,7 @@ const OUTLINE_WIDTH := 6
 const PADDING := 0.04
 const VIEW := Vector3(-28.0, 35.0, 0.0)
 const MESH := "res://assets/epiphany/meshes/%s.res"
+const BOTTLE := "res://assets/items/bottle/bottle.tscn"
 ## Las piezas planas (llaves, mapa, brújula, flechas) se paran de frente a la cámara.
 const FLAT := Vector3(90, 0, 0)
 
@@ -25,8 +26,9 @@ const ICONS := {
 	"bomb_bag": [MESH % "equipo/bolsa_bombas", Vector3(0, 0, 0)],
 	"small_key": [MESH % "objetos/llave", FLAT + Vector3(0, 0, 45)],
 	"boss_key": [MESH % "objetos/llave_jefe", FLAT + Vector3(0, 0, 45)],
-	"potion": [MESH % "equipo/botella_pocion", Vector3(0, 0, 0)],
-	"bottle_empty": [MESH % "equipo/botella", Vector3(0, 0, 0)],
+	"potion": [BOTTLE, Vector3(0, 0, 0)],
+	"bottle_empty": [BOTTLE, Vector3(0, 0, 0)],
+	"holy_water": [BOTTLE, Vector3(0, 0, 0)],
 	"dungeon_map": [MESH % "objetos/mapa", FLAT],
 	"compass": [MESH % "objetos/brujula", FLAT],
 	"heart_container": [MESH % "objetos/contenedor_corazon", Vector3(0, 0, 0)],
@@ -77,6 +79,8 @@ func _run() -> void:
 		var model := _instance(entry[0])
 		pivot.add_child(model)
 		var item = load("res://data/items/%s.tres" % id)
+		if model is BottleModel:
+			(model as BottleModel).content = item
 		if item.body_material:
 			for mesh: MeshInstance3D in _meshes(model):
 				mesh.material_override = item.body_material

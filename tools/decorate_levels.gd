@@ -72,8 +72,11 @@ func _decorate(level_name: String, area_script: String, recipe: Callable) -> voi
 		var script: Script = child.get_script()
 		if child is Area3D and script and script.resource_path.ends_with(area_script):
 			areas.append(child)
-		elif child is Node3D and not (child.get_class() in IGNORED or child.name in IGNORED or child is Area3D):
+		elif child is Node3D and not (child.get_class() in IGNORED or child.name in IGNORED):
 			_keep_out.append((child as Node3D).position)
+			if "solved_position" in child:
+				_keep_out.append(((child as Node3D).position + child.solved_position) / 2.0)
+				_keep_out.append(child.solved_position)
 			if child.get_class() == "Node3D" and child.get_script() == null and child.scene_file_path.is_empty():
 				for inner in child.get_children():
 					if inner is Node3D:

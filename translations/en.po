@@ -849,3 +849,37 @@ msgstr "Inscription"
 msgctxt "character"
 msgid "Puerta"
 msgstr "Door"
+
+msgid "ITEM_HOLY_WATER_NAME"
+msgstr "Holy Water"
+
+msgid "ITEM_HOLY_WATER_DESC"
+msgstr "Water from the cave spring. Restores all health, and for 20 seconds hits deal half damage. Leaves the bottle empty."
+
+msgid "ITEM_HOLY_WATER_GOT"
+msgstr "You filled the bottle with Holy Water!"
+
+msgid "PLACE_SPRING_CAVE"
+msgstr "Spring Cave"
+
+msgid "PROMPT_FILL"
+msgstr "Fill"
+
+msgid "PROMPT_DRINK"
+msgstr "Drink"
+
+msgctxt "ow_spring_drink_1"
+msgid "El agua fría de la vertiente te devuelve las fuerzas."
+msgstr "The cold spring water restores your strength."
+
+msgctxt "ow_spring_hint_1"
+msgid "Del corazón de la montaña brota un agua que el Ojo no alcanza a ensuciar."
+msgstr "From the heart of the mountain springs a water the Eye cannot foul."
+
+msgctxt "ow_spring_hint_2"
+msgid "Quien la lleva en una botella resiste mejor sus golpes."
+msgstr "Whoever carries it in a bottle withstands its blows better."
+
+msgctxt "get_holy_water_1"
+msgid "Recupera toda la vida y por un rato los golpes lastiman la mitad. La vertiente la vuelve a llenar cuando quieras."
+msgstr "Restores all health, and for a while hits deal half damage. The spring refills it whenever you like."

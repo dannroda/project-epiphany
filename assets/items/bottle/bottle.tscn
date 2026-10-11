@@ -1,0 +1,30 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/items/bottle/bottle_model.gd" id="1_bottle"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/equipo/botella.res" id="2_cork"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/equipo/botella_vidrio.res" id="3_glass"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/equipo/botella_liquido.res" id="4_liquid"]
+
+[sub_resource type="StandardMaterial3D" id="Glass"]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(0.86, 0.97, 1, 0.3)
+roughness = 0.08
+metallic_specular = 0.9
+rim_enabled = true
+rim = 1.0
+rim_tint = 0.0
+
+[node name="Bottle" type="Node3D"]
+script = ExtResource("1_bottle")
+
+[node name="Cork" type="MeshInstance3D" parent="."]
+mesh = ExtResource("2_cork")
+
+[node name="Liquid" type="MeshInstance3D" parent="."]
+mesh = ExtResource("4_liquid")
+
+[node name="Glass" type="MeshInstance3D" parent="."]
+cast_shadow = 0
+mesh = ExtResource("3_glass")
+material_override = SubResource("Glass")

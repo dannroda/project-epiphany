@@ -136,6 +136,18 @@ func give(item: ItemData, amount: int = 1) -> void:
 				inventory.add(item.bundled.id, item.bundled_amount * amount)
 
 
+## Cambia una unidad de un ítem por otro (botella vacía ↔ llena) y el botón X/Y que tenía el viejo pasa al nuevo si ya
+## no queda ninguno del viejo.
+func swap_item(from: StringName, to: ItemData) -> void:
+	inventory.remove(from)
+	inventory.add(to.id)
+	var index := item_buttons.find(from)
+	if index >= 0 and not inventory.has(from):
+		assign_button(index, to.id)
+	elif not item_buttons.has(to.id):
+		_auto_place(to)
+
+
 ## Las que todavía no completan un corazón.
 func heart_pieces() -> int:
 	return inventory.count(&"heart_piece")

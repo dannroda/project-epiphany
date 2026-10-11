@@ -1,0 +1,43 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/feel/blessing.gd" id="1_blessing"]
+[ext_resource type="PackedScene" path="res://src/feel/stencil_light/stencil_light.tscn" id="2_glow"]
+
+[sub_resource type="StandardMaterial3D" id="Spark"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.72, 0.99, 1, 1)
+
+[sub_resource type="PrismMesh" id="SparkMesh"]
+material = SubResource("Spark")
+size = Vector3(0.08, 0.12, 0.08)
+
+[sub_resource type="Curve" id="Shrink"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Blessing" type="Node3D"]
+script = ExtResource("1_blessing")
+
+[node name="Sparks" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+amount = 14
+lifetime = 1.3
+mesh = SubResource("SparkMesh")
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.1
+emission_ring_radius = 0.55
+emission_ring_inner_radius = 0.45
+direction = Vector3(0, 1, 0)
+spread = 10.0
+gravity = Vector3(0, 0.6, 0)
+initial_velocity_min = 0.6
+initial_velocity_max = 1.1
+scale_amount_curve = SubResource("Shrink")
+color = Color(0.72, 0.99, 1, 1)
+
+[node name="Glow" parent="." instance=ExtResource("2_glow")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+color = Color(0.75, 1.15, 1.3, 1)
+radius = 1.6

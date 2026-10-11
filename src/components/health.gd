@@ -10,6 +10,7 @@ signal died
 
 var current: int
 var _invulnerable_left: float = 0.0 ## Con delta, así la pausa no la consume
+var _ward_left := 0.0
 
 
 func _ready() -> void:
@@ -18,6 +19,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	_invulnerable_left = maxf(_invulnerable_left - delta, 0.0)
+	_ward_left = maxf(_ward_left - delta, 0.0)
 
 
 func is_invulnerable() -> bool:
@@ -40,9 +42,24 @@ func make_invulnerable(seconds: float) -> void:
 	_invulnerable_left = maxf(_invulnerable_left, seconds)
 
 
+## Bendición (agua bendita): por un tiempo el daño recibido se reduce a la mitad (redondeando hacia arriba).
+func ward(seconds: float) -> void:
+	_ward_left = maxf(_ward_left, seconds)
+
+
+func is_warded() -> bool:
+	return _ward_left > 0.0
+
+
+func ward_left() -> float:
+	return _ward_left
+
+
 func damage(amount: int) -> bool:
 	if current <= 0 or is_invulnerable():
 		return false
+	if is_warded():
+		amount = ceili(amount / 2.0)
 	current = maxi(current - amount, 0)
 	_invulnerable_left = invulnerability_time
 	damaged.emit(amount)

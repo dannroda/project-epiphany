@@ -34,6 +34,12 @@ enum Category { SWORD, SHIELD, ARMOR, USABLE, AMMO, DUNGEON, UPGRADE }
 @export var capacity_for: ItemData
 @export var capacity_bonus: int = 0
 
+@export_group("Botella")
+## Color del contenido en la botella de vidrio (alfa 0 = vacía); cualquier botella puede llevar cualquier contenido.
+@export var liquid := Color(0, 0, 0, 0)
+## Brillo propio del contenido (el agua bendita brilla).
+@export var liquid_glow := 0.0
+
 
 func is_equipment() -> bool:
 	return category in [Category.SWORD, Category.SHIELD, Category.ARMOR]

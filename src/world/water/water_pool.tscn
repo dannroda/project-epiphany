@@ -1,0 +1,50 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/water/water_pool.gd" id="1_pool"]
+[ext_resource type="Shader" path="res://src/world/water/water.gdshader" id="2_water"]
+[ext_resource type="Shader" path="res://src/world/water/caustics.gdshader" id="3_caustics"]
+
+[sub_resource type="ShaderMaterial" id="Water"]
+render_priority = 1
+shader = ExtResource("2_water")
+
+[sub_resource type="PlaneMesh" id="Plane"]
+material = SubResource("Water")
+size = Vector2(4, 4)
+
+[sub_resource type="StandardMaterial3D" id="Stone"]
+cull_mode = 2
+albedo_color = Color(0.3, 0.36, 0.42, 1)
+roughness = 1.0
+
+[sub_resource type="ShaderMaterial" id="Caustics"]
+shader = ExtResource("3_caustics")
+
+[sub_resource type="BoxShape3D" id="Block"]
+size = Vector3(4, 1.4, 4)
+
+[node name="WaterPool" type="Node3D"]
+script = ExtResource("1_pool")
+caustics_material = SubResource("Caustics")
+
+[node name="Basin" type="MeshInstance3D" parent="."]
+material_override = SubResource("Stone")
+
+[node name="Surface" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.12, 0)
+cast_shadow = 0
+mesh = SubResource("Plane")
+
+[node name="Block" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Block"]
+shape = SubResource("Block")
+
+[node name="Caustics" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 3, 0)
+light_color = Color(0.8, 0.97, 1, 1)
+light_energy = 6.0
+shadow_enabled = true
+spot_range = 5.0
+spot_angle = 40.0
+spot_attenuation = 0.5
