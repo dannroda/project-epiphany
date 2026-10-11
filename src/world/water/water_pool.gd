@@ -1,9 +1,9 @@
 @tool
 class_name WaterPool
 extends Node3D
-## Pileta de agua: superficie (water.gdshader), fondo y paredes de piedra, un bloqueo para no meterse y una luz bajo
-## el agua que proyecta su reflejo en las paredes cercanas (caustics.gdshader). El origen es el centro del borde, a ras del piso; va en
-## celdas del GridMap sin piso.
+## Pileta de agua: superficie (water.gdshader), fondo y paredes de piedra, un bloqueo para no meterse y luces
+## (CausticsLight) que proyectan el agua en las paredes y el piso de alrededor. El origen es el centro del borde, a ras
+## del piso; va en celdas del GridMap sin piso.
 
 const SURFACE_DROP := 0.12
 
@@ -18,60 +18,43 @@ const SURFACE_DROP := 0.12
 		depth = value
 		if is_node_ready():
 			_build()
-@export var caustics_material: ShaderMaterial
-@export_range(64, 1024, 64) var resolution := 256
 ## Segundos entre gotas (mín, máx); cero = sin goteo.
 @export var drips := Vector2(1.2, 3.5)
 
-var texture: DrawableTexture2D
-var _source: ImageTexture
 var _next_drip := 0.0
 
 @onready var surface: MeshInstance3D = $Surface
 @onready var basin: MeshInstance3D = $Basin
 @onready var block: CollisionShape3D = $Block/CollisionShape3D
-@onready var light: SpotLight3D = $Caustics
 
 
 func _ready() -> void:
 	_build()
-	if Engine.is_editor_hint() or caustics_material == null:
-		return
-	caustics_material = caustics_material.duplicate()
-	var water := surface.mesh.surface_get_material(0) as ShaderMaterial
-	for param in [&"tile", &"speed"]:
-		caustics_material.set_shader_parameter(param, water.get_shader_parameter(param))
-	texture = DrawableTexture2D.new()
-	texture.setup(resolution, resolution, DrawableTexture2D.DRAWABLE_FORMAT_RGBA8, Color.BLACK, false)
-	var image := Image.create(1, 1, false, Image.FORMAT_RGBA8)
-	image.fill(Color.WHITE)
-	_source = ImageTexture.create_from_image(image)
-	light.light_projector = texture
+
+
+## Las luces que proyectan el agua.
+func lights() -> Array[CausticsLight]:
+	var found: Array[CausticsLight] = []
+	for child in get_children():
+		if child is CausticsLight:
+			found.append(child)
+	return found
 
 
 func _process(delta: float) -> void:
-	if texture:
-		_aim_caustics()
-		texture.blit_rect(Rect2i(0, 0, resolution, resolution), _source, Color.WHITE, 0, caustics_material)
-	if Engine.is_editor_hint() or drips.y <= 0.0:
+	if Engine.is_editor_hint():
+		return
+	var water := surface.mesh.surface_get_material(0) as ShaderMaterial
+	var center := Vector2(global_position.x, global_position.z)
+	for light in lights():
+		light.draw(water, surface.global_position.y, center - size * 0.5, center + size * 0.5)
+	if drips.y <= 0.0:
 		return
 	_next_drip -= delta
 	if _next_drip <= 0.0:
 		_next_drip = randf_range(drips.x, drips.y)
 		var spot := Vector3(randf_range(-0.5, 0.5) * size.x, -SURFACE_DROP, randf_range(-0.5, 0.5) * size.y)
 		Feel.sfx(&"drip", to_global(spot))
-
-
-## Le pasa a las cáusticas la pose de la luz y el plano del agua, así se puede mover y abrir la luz a ojo.
-func _aim_caustics() -> void:
-	var pose := light.global_transform
-	caustics_material.set_shader_parameter(&"light_basis", pose.basis.orthonormalized())
-	caustics_material.set_shader_parameter(&"light_origin", pose.origin)
-	caustics_material.set_shader_parameter(&"tan_half_angle", tan(deg_to_rad(light.spot_angle)))
-	caustics_material.set_shader_parameter(&"surface_y", surface.global_position.y)
-	var center := Vector2(global_position.x, global_position.z)
-	caustics_material.set_shader_parameter(&"pool_min", center - size * 0.5)
-	caustics_material.set_shader_parameter(&"pool_max", center + size * 0.5)
 
 
 func _build() -> void:

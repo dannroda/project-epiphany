@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="5_camera"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="6_hud"]
 [ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="7_portal"]
-[ext_resource type="PackedScene" path="res://src/world/water/water_pool.tscn" id="8_pool"]
+[ext_resource type="PackedScene" uid="uid://dl3q3n8t4t58t" path="res://src/world/water/water_pool.tscn" id="8_pool"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/estalagmitas.res" id="9_stal"]
 [ext_resource type="PackedScene" path="res://src/world/spring.tscn" id="11_spring"]
 [ext_resource type="PackedScene" path="res://src/world/tablet.tscn" id="12_tablet"]

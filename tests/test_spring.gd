@@ -109,11 +109,16 @@ func test_pool_reflects_the_water_on_the_walls_and_blocks_walking_in() -> void:
 	var setup: Array = await _setup()
 	var state: Node = setup[1]
 	var pool := (setup[0] as SceneTree).current_scene.get_node(^"WaterPool") as WaterPool
-	assert_true(pool.light.light_projector == pool.texture and pool.texture != null, "la luz proyecta el patrón")
-	assert_true(pool.light.global_position.y < pool.surface.global_position.y and -pool.light.global_basis.z.y > 0.5, "desde abajo del agua hacia arriba")
-	assert_true(pool.light.shadow_enabled, "sin sombra el projector del spot no se aplica (4.8-dev7)")
 	var water := pool.surface.mesh.surface_get_material(0) as ShaderMaterial
-	assert_eq(pool.caustics_material.get_shader_parameter(&"tile"), water.get_shader_parameter(&"tile"), "mismo patrón que la espuma")
+	var wall := pool.get_node(^"Caustics") as CausticsLight
+	var spill := pool.get_node(^"FloorCaustics") as CausticsLight
+	assert_eq(pool.lights().size(), 2)
+	for light in pool.lights():
+		assert_true(light.light_projector == light.texture and light.texture != null, "%s proyecta el agua" % light.name)
+		assert_true(light.shadow_enabled, "sin sombra el projector del spot no se aplica (4.8-dev7)")
+		assert_eq(light.caustics_material.get_shader_parameter(&"tile"), water.get_shader_parameter(&"tile"), "mismo patrón que la espuma")
+	assert_true(wall.global_position.y < pool.surface.global_position.y and -wall.global_basis.z.y > 0.5, "el reflejo sube a las paredes desde abajo del agua")
+	assert_true(-spill.global_basis.z.y < -0.5 and spill.caustics_material.get_shader_parameter(&"outside_reach") > 0.0, "y otra luz lo derrama en el piso de alrededor")
 	assert_true((pool.block.shape as BoxShape3D).size.x >= pool.size.x, "no se puede entrar al agua")
 	state.reset()
 
