@@ -204,6 +204,28 @@ def armadura(p):
 	p.paint(p.box(-0.26, 0.26, -0.19, 0.19, -0.04, 0.04), "dorado", "MID")
 
 
+def pluma(p):
+	"""Pluma de cóndor sobre +Z con el cañón en el origen: vexilo blanco curvado con la punta negra, una franja roja y
+	una muesca; las mitades abren en V a los lados del raquis y van en tiras para que las franjas tengan borde."""
+	length = 0.64
+	bend = lambda z: 0.07 * (z / length) ** 2  # noqa: E731
+	zs = [0.1, 0.17, 0.24, 0.27, 0.31, 0.38, 0.44, 0.5, 0.56, 0.6, length + 0.02]
+	for side, width, notch in ((1, 0.085, 0.38), (-1, 0.065, 0.5)):
+		def edge(z):
+			w = width * math.sin(math.pi * min(1.0, (z - 0.06) / (length - 0.04))) ** 0.6
+			return side * (w * 0.6 if abs(z - notch) < 0.01 else w) + bend(z)
+		for z0, z1 in zip(zs, zs[1:]):
+			pts = [(bend(z0), z0), (edge(z0), z0), (edge(z1), z1), (bend(z1), z1)]
+			strip = flat(p, pts if side < 0 else pts[::-1], 0.016)
+			p.transform(strip, Matrix.Rotation(side * 0.18, 4, "Z"))
+			mid = (z0 + z1) / 2
+			p.paint(strip, "noche" if mid > 0.5 else "tela_roja" if 0.27 < mid < 0.31 else "blanco", "MID", vary=0.03)
+	quill = flat(p, [(bend(z) + d, z) for d, z in ((0.008, -0.08), (0.008, 0.3), (0.003, length))] + [(bend(z) - d, z) for d, z in ((0.003, length), (0.008, 0.3), (0.008, -0.08))], 0.024)
+	p.paint(quill, "dorado", "MID")
+	tie = p.cylinder(0.02, 0.0, 0.05, sides=6)
+	p.paint(tie, "tela_azul", "MID")
+
+
 piece("espada", 1, espada)
 piece("escudo_madera", 2, escudo_madera)
 piece("escudo_espejo", 3, escudo_espejo)
@@ -214,5 +236,6 @@ piece("botella", 7, botella)
 piece("botella_vidrio", 8, botella_vidrio)
 piece("botella_liquido", 10, botella_liquido)
 piece("armadura", 9, armadura)
+piece("pluma", 11, pluma)
 epi.layout(kit, columns=8, spacing=2.0)
 epi.publish("equipo")

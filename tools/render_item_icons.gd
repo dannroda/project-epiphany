@@ -34,6 +34,7 @@ const ICONS := {
 	"heart_container": [MESH % "objetos/contenedor_corazon", Vector3(0, 0, 0)],
 	"tunic": [MESH % "equipo/armadura", Vector3(0, 0, 0)],
 	"armor_chainmail": [MESH % "equipo/armadura", Vector3(0, 0, 0)],
+	"feather": [MESH % "equipo/pluma", Vector3(0, 0, -35)],
 }
 
 func _initialize() -> void:
@@ -78,10 +79,11 @@ func _run() -> void:
 		viewport.add_child(pivot)
 		var model := _instance(entry[0])
 		pivot.add_child(model)
-		var item = load("res://data/items/%s.tres" % id)
+		var item_path := "res://data/items/%s.tres" % id
+		var item = load(item_path) if ResourceLoader.exists(item_path) else null
 		if model is BottleModel:
 			(model as BottleModel).content = item
-		if item.body_material:
+		if item and item.body_material:
 			for mesh: MeshInstance3D in _meshes(model):
 				mesh.material_override = item.body_material
 		model.rotation_degrees = entry[1]
