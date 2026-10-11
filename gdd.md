@@ -158,6 +158,8 @@ Inicio (espada + escudo de madera)
               └─ Sello del templo (reflejar haz de luz) ──► MAZMORRA
                   └─ … ──► PLUMA (sala 10) ──► ARCO (ítem de la mazmorra) ──► entrada del puzzle (salto) ──► llave del jefe ──► JEFE
                       └─ Vuelta al overworld: ojo-interruptor ──► CARCAJ GRANDE
+                      └─ Flecha al ojo del puente de la quebrada ──► Necrópolis ──► CHULLPA (D2) ──► GANCHO
+                          └─ Postes ──► isla de la Laguna ──► D3 ──► ítem por definir ──► puerta de la Cumbre ──► D4
 Opcionales: botella/poción (muro agrietado), cota reforzada (puzzle de bloques)
 ```
 
@@ -166,60 +168,79 @@ Regla: un ítem que se consigue en una mazmorra no desbloquea nada nuevo en las 
 ## 7. Overworld (MVP)
 <!-- id: overworld -->
 
-Una zona chica (≈6–8 "pantallas" de tamaño Link's Awakening), sin transiciones de sala: cámara de seguimiento libre. El nivel `levels/test.tscn` actual cumple el rol de overworld de pruebas.
-
-Contenido mínimo: punto de inicio, pradera con enemigos, cueva de las bombas, santuario del escudo espejo, entrada al templo con sello de luz, 2 secretos (poción, cota), 1 secreto post-mazmorra (carcaj). Objetos físicos (cajas, rocas) para mecánicas de empuje/explosión.
+Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin transiciones de sala: cámara de seguimiento libre. Lleva a cuatro mazmorras, y cada ítem nuevo abre algo afuera (§6.2). Objetos físicos (cajas, rocas) para mecánicas de empuje y explosión.
 
 ### 7.1 Layout
 <!-- id: overworld-layout -->
 
-Decidido el 2026-10-08. 8 zonas de ≈ 24 × 16 m (una "pantalla" con la cámara, que abarca ≈ 26 × 14.5 m) en una grilla de 3 × 3 sin la esquina sureste. La cámara sigue libre; las zonas se distinguen por el terreno y el nombre de área del HUD.
+**Rediseño (7.9), decidido el 2026-10-11:** variante D, *la mezcla*, de la propuesta https://claude.ai/artifact/8N6Sst4jMsTDTgKLWdqm4B. Toma la referencia del análisis del Light World de *A Link to the Past* (*Overworld Overload*, partes 1 y 2):
+- regiones núcleo con una mazmorra o un ítem importante, unidas por zonas de conexión que también tienen secretos y peleas;
+- paredes de terreno irregulares (riscos, andenes, agua, bosque) en vez de rectángulos de grilla;
+- puertas de ítem de dos clases: unas abren una región nueva y otras solo acortan un camino;
+- casi todo se puede pisar;
+- cada mazmorra se ve antes de poder entrar.
+
+7 × 5 pantallas (168 × 80 m). Una quebrada (abismo) corre de norte a sur y parte el mapa en dos actos. El **oeste** es el primer acto y tiene lo que ya existía. El **este** se abre con lo que da el templo; desde la Pradera se ve la torre de la Chullpa en la otra orilla. Cada orilla es un anillo chico alrededor de su hub, así se puede dar la vuelta sin repetir camino. El este tiene además tres niveles: Cardonal y Bañado abajo, Necrópolis en el medio, Cumbre y Risco arriba. Se sube por escalinatas y se baja por saltos de una sola vía, que cierran bucles.
 
 ```
-            OESTE                 CENTRO                  ESTE
-       ┌──────────────────┬──────────────────┬──────────────────┐
- NORTE │ SANTUARIO        │ ENTRADA TEMPLO   │ RISCO DEL OJO    │
-       │ escudo espejo    │ sello de luz     │ ojo-interruptor  │
-       │                  │                  │ → CARCAJ         │
-       │      ══atajo══►  │                  │                  │
-       ├───▲muro agriet.──┼────────▲─────────┼────────▲─────────┤
- MEDIO │ CUEVA            │ PRADERA (hub)    │ ARBOLEDA         │
-       │ BOMBAS           │                  │ → COTA           │
-       ├──────────────────┼────────▲─────────┼──────────────────┘
-  SUR  │ GRUTA OCULTA     │ INICIO           │
-       │ → BOTELLA        │                  │
-       └──────────────────┴──────────────────┘
+        OESTE (1er acto)                QUEBRADA     ESTE (2º acto)                   NIVEL
+   ┌──────────┬─────────────────────┬──────────┬─────────────────────┬──────────┐
+   │SANTUARIO │ EXPLANADA ◆   [D1]  ├══gancho══┤ CUMBRE ◆      [D4]  │ RISCO    │ alto
+   │esc.espejo│ templo, sello de luz│  abismo  │ puerta: ítem de D3  │ carcaj   │
+   ├──B───────┼─────────────────────┤          ├─────────────────────┤          │
+   │ CERROS   │ PRADERA ◆           ├═══arco═══┤ NECRÓPOLIS ◆  [D2]  │ MIRADOR  │ medio
+   │ bombas   │ hub del oeste       │ (puente) │ hub del este        │ corazón  │
+   │          │                     │          │ la Chullpa          │          │
+   ├──────────┼──────────┬──────────┤          ├──▼──────────────────┴──▼───────┤
+   │ GRUTA  B │ CLARO ◆  │ ARBOLEDA ├══pluma═══┤ CARDONAL                       │ bajo
+   │ botella  │ inicio   │ cota     │(angostura)│ secretos                       │
+   ├──────────┼──────────┴──────────┴──────────┴──────────┬─────────────────────┤
+   │VERTIENTE │ LAGUNA (agua: gancho; isla)          [D3] │ BAÑADO ◆            │ bajo
+   └──────────┴───────────────────────────────────────────┴─────────────────────┘
+   ◆ portal de viaje   B muro agrietado   ▼ bajada de una sola vía
 ```
 
-| Zona | Contenido | Combate | Se entra | Ritmo |
-|---|---|---|---|---|
-| **Inicio** (S) | Punto de inicio, tablilla de tutorial (controles, objetivo: el templo) | — | Libre | Calma |
-| **Pradera** (C, hub) | Pasto, vasijas, tablilla de lore. **Desde acá se ve el templo sellado** (cebo y referencia del mapa mental) | Esqueletos | Libre desde Inicio | Combate |
-| **Cueva** (O) | Cofre de la **bolsa de bombas**; adentro, un muro agrietado de práctica con una vasija de corazones detrás (enseñar en un lugar seguro) | 1–2 esqueletos | Libre desde la Pradera | Combate → descubrimiento |
-| **Gruta oculta** (SO) | Muro agrietado desde el Inicio; cofre con **botella + poción**; tablilla que da una pista | — | Bombas | Recompensa |
-| **Santuario** (NO) | Muro agrietado desde la Cueva. Puzzle de luz que **enseña** a reflejar el haz con el escudo (en sala chica, sin presión); cofre grande del **escudo espejo** | — | Bombas | Descubrimiento |
-| **Entrada al templo** (N) | Fuente de luz y sello: hay que pararse donde corresponde y reflejar el haz con el escudo espejo (la **prueba** de lo aprendido) → abre la mazmorra | Torreta opcional | Libre desde la Pradera (el sello se ve antes de poder abrirlo) | Prueba |
-| **Arboleda** (E) | Puzzle de bloques por grilla → cofre de la **cota reforzada** | Esqueleto | Libre desde la Pradera | Descanso / opcional |
-| **Risco del ojo** (NE) | Ojo-interruptor alto, del otro lado de un abismo; **se ve desde el principio**, solo se activa con flechas → baja un puente o una reja al cofre del **carcaj grande** | — | Libre desde la Arboleda; el cofre, con el arco | Post-mazmorra |
-
-**Atajos:** del Santuario a la Entrada del templo hay una reja que **solo se abre desde adentro** del Santuario (palanca o interruptor), así la vuelta con el escudo es corta y no se puede saltear el muro agrietado.
-
-**Verificación del gating** (camino crítico y qué bloquea cada cosa):
-
-| Para llegar a… | Hace falta | Dónde se consigue | ¿Se consigue antes sin lo que bloquea? |
+| Región | Contenido | Se entra | Acto |
 |---|---|---|---|
-| Bombas | — | Cueva, libre | Sí |
-| Santuario / escudo espejo | Bombas (muro agrietado) | Cueva | El atajo solo abre desde adentro → no hay otra entrada |
-| Mazmorra | Escudo espejo (sello) | Santuario | El escudo de madera no refleja; no hay otro espejo |
-| Botella (opcional) | Bombas | Cueva | — |
-| Cota (opcional) | Nada (empujar bloques) | Arboleda | — |
-| Carcaj (post-mazmorra) | Arco | Mazmorra | El ojo solo reacciona a proyectiles; las bombas no llegan al otro lado del abismo |
+| **Claro del inicio** | Spawn, tablillas de controles y de combate, puzzle de levantar (como hoy). Portal | Libre | 1 |
+| **Pradera** (hub oeste) | Pasto, vasijas, tablilla de lore; se ven el templo sellado y la torre del otro lado de la quebrada. Portal | Libre | 1 |
+| **Cerros** | Cueva de las bombas con su muro de práctica | Libre | 1 |
+| **Santuario** | Puzzle de luz y cofre del escudo espejo; la reja de adentro abre el atajo a la Explanada | Bombas | 1 |
+| **Explanada del templo** | Sello de luz → **D1 Templo**. Portal. Del lado este, el cruce con postes a la Cumbre | Libre (el sello, con el escudo espejo) | 1 |
+| **Gruta** | Poción en botella, tablilla | Bombas, desde el Claro | 1 |
+| **Vertiente** | Boca de la cueva del agua bendita (11.20) | Desde la Gruta | 1 |
+| **Arboleda** | Puzzle de bloques → cota reforzada. Al este, la angostura de la quebrada | Libre | 1 |
+| **Quebrada** | Abismo de norte a sur. Puente levadizo (Pradera ↔ Necrópolis) que baja el ojo de la otra orilla con una flecha; angostura (Arboleda ↔ Cardonal) que se salta con la pluma; postes (Explanada ↔ Cumbre) para el gancho | Caer devuelve a la orilla | — |
+| **Necrópolis** (hub este) | **D2 Chullpa**. Portal | Arco (puente) | 2 |
+| **Risco del ojo** | Ojo-interruptor → carcaj grande; franja que pide el gancho | Desde el Mirador | 2 |
+| **Mirador** | Pieza de corazón; bajada de una vía al Cardonal | Desde la Necrópolis | 2 |
+| **Cardonal** | Secretos; escalinata a la Necrópolis y bajada de una vía desde ella | Pluma (angostura) o desde la Necrópolis | 2 |
+| **Bañado** | Orilla este de la Laguna. Portal | Desde el Cardonal | 2 |
+| **Laguna** | Agua entre las dos orillas; postes hasta la isla de **D3** | Gancho | 3 |
+| **Cumbre** | **D4**: la región se alcanza con el gancho; la puerta pide el ítem de D3. Portal | Gancho; la puerta, ítem de D3 | 4 |
+
+**Cadena de mazmorras:** D1 Templo (escudo espejo para entrar; da pluma y arco) → arco → D2 Chullpa (da el gancho) → gancho → D3 Laguna (ítem por definir) → ese ítem → D4 Cumbre. Mientras D3 no exista, la puerta de D4 lleva un candado genérico.
+
+**Verificación del gating:**
+
+| Para llegar a… | Hace falta | Dónde se consigue | ¿Hay otra forma? |
+|---|---|---|---|
+| Bombas | — | Cerros, libre | — |
+| Santuario / escudo espejo | Bombas | Cerros | La reja del atajo solo abre desde adentro |
+| D1 | Escudo espejo (sello) | Santuario | El escudo de madera no refleja |
+| Este (Necrópolis, D2) | Arco (puente) | D1 | La pluma salta la angostura, también de D1; la quebrada es más ancha que un salto en el resto |
+| Laguna, isla de D3 | Gancho | D2 | El agua no se cruza nadando |
+| Cumbre | Gancho | D2 | Desde el Risco no hay paso |
+| Puerta de D4 | Ítem de D3 | D3 | — |
+| Carcaj | Arco | D1 | El ojo solo reacciona a proyectiles |
+
+**Viaje rápido (7.9):** seis portales (Claro, Pradera, Explanada, Necrópolis, Bañado, Cumbre), al lado de un hub o de la puerta de una mazmorra. Se prenden al pasar (flag por portal). El destino se elige en la pestaña Mapa del menú de pausa o parado en un portal; el viaje hace un fundido corto y lleva a todos los players. La pantalla se diseña primero en el canvas.
+
+**Curva de ritmo:** calma (Claro) → combate (Pradera) → descubrimiento (Cerros: bombas) → recompensa opcional (Gruta, Vertiente) → descubrimiento (Santuario) → prueba (sello) → D1 → el mundo se abre (puente) → hub nuevo con la torre a la vista → D2 → la Laguna y la Cumbre con el gancho → D3 → D4.
+
+**Pendiente de mudar (7.9):** los párrafos que siguen describen cada lugar tal como quedó en el overworld de 3 × 3; el contenido se muda entero a su región nueva. La grieta de la pluma entre la Explanada y el Risco desaparece (ahora el Risco está del otro lado de la quebrada); su lugar lo toma la angostura.
 
 **Pluma en el overworld (11.61):** el overworld es el hub, así que la pluma abre cosas ahí. La pieza de corazón de la pradera está arriba de un escalón de 0,6 m en el rincón noroeste (se ve desde el principio). Una grieta de una baldosa de ancho (dos de largo, así el acantilado del sur no la tapa desde la cámara) corta el acantilado entre la entrada del templo y el Risco: con la pluma es un atajo entre las dos zonas; caer devuelve del lado del templo (`CliffGapPit`). Tests en `test_jump`.
-
-**Vuelta:** del templo a la Pradera hay camino directo (S); el Inicio y el Santuario tienen `SpawnPoint` de checkpoint.
-
-**Curva de ritmo:** calma (Inicio) → combate (Pradera) → combate y descubrimiento (Cueva: bombas) → recompensa opcional (Gruta) → descubrimiento (Santuario: escudo espejo) → prueba (sello) → mazmorra → vuelta tranquila con el arco al Risco (carcaj).
 
 **Blockout (7.2):** `levels/overworld.tscn`, un `GridMap` con el kit gris más sus piezas de exterior (Pasto, Acantilado, Cerco, Árbol, Abismo). Zonas de 11 × 7 celdas de interior separadas por acantilados de una celda; aberturas de 3 celdas donde el paso es libre y de 1 celda donde hay gating (ahí van el muro agrietado o la reja de 7.4, 7.5 y 7.7). Cada zona tiene un `AreaZone` (el HUD muestra su nombre al entrar desde otra zona) y un `SpawnPoint` con el id de la zona (`start` y `santuario` son checkpoints). El abismo no tiene piso (el kit le saca la colisión a Abismo y Pozo, ids 9 y 10): el que entra cae a un `Pit`, pierde vida y vuelve a su `respawn` (en el Risco, `Spawn_risco`). Las flechas pasan por arriba. El del Risco tiene 2 celdas (4 m), más de lo que cruza la pluma (≈3 m), así que el ojo sigue siendo solo para flechas (11.35; `test_abyss_has_no_floor_but_a_pit`, `test_the_crag_abyss_is_too_wide_and_falling_returns`). Cajas y rocas: `src/world/physics_box.tscn` y `physics_rock.tscn`. La navmesh se hornea desde el grupo `navmesh_source` (el `GridMap`); si cambia el terreno, botón *Bake* del `NavigationRegion3D`. La navmesh queda 0.5 m sobre el piso, así que el `NavigationAgent3D` del enemigo usa `path_desired_distance` 1.0 (con 0.5 se trababa en las esquinas: nunca daba por alcanzado el punto). Los enemigos ven al player a 12 m (`EntityConfig.vision_range`, antes 8): con la cámara que muestra la sala entera, a 8 m se quedaban quietos estando en pantalla. `test_enemy_ai` revisa que ningún enemigo del overworld o del templo aparezca encimado con paredes o cercos. El mapa de pausa usa una foto cenital del nivel que se saca al abrirlo (ver §Pausa › Mapa).
 

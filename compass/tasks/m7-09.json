@@ -2,11 +2,12 @@
   "checklist": [
     {
       "detail": "Propuesta en https://claude.ai/artifact/8N6Sst4jMsTDTgKLWdqm4B. Daniel (2026-10-11): el tamaño no importa, 4 mazmorras, viaje rápido ahora. Propuesta D, la mezcla: quebrada de la B, anillos de la A, terrazas de la C solo al este, 6 portales. Falta que la apruebe.",
-      "done": false,
+      "done": true,
       "text": "Propuesta de layout (variantes) y elección"
     },
     {
-      "done": false,
+      "detail": "GDD §7 y §7.1 (gdd#overworld-layout): mapa de la variante D, tabla de regiones, cadena de mazmorras, gating, viaje rápido y ritmo; §6.2 con D2–D4.",
+      "done": true,
       "text": "Diseño elegido en el GDD (§7): regiones, gating, ritmo"
     },
     {
@@ -50,5 +51,5 @@
   ],
   "test": "",
   "title": "Rediseño del overworld como hub de varias mazmorras",
-  "updated_at": "2026-10-11T22:33:54.226Z"
+  "updated_at": "2026-10-11T22:36:44.601Z"
 }
