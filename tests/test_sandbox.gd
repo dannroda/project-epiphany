@@ -49,7 +49,7 @@ func test_solve_all_four_from_scenario() -> void:
 
 	# Bombas: colocar una contra el muro agrietado.
 	state.assign_button(1, &"bomb_bag")
-	player.global_position = level.get_node(^"CrackedWall").global_position + Vector3(0, 0, 1.6)
+	player.global_position = level.get_node(^"CrackedWall").global_position + Vector3(0, 0, 2.2)
 	_face(player, Vector3.FORWARD)
 	await tree.physics_frame
 	_action(&"item_2", true)

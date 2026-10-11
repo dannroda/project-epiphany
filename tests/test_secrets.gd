@@ -53,7 +53,7 @@ func test_find_the_three_secrets_with_everything() -> void:
 
 	var wall := level.get_node(^"GrottoCrackedWall") as CrackedWall
 	state.item_buttons[0] = &"bomb_bag"
-	player.global_position = wall.global_position + Vector3(1.3, 0, 0)
+	player.global_position = wall.global_position + Vector3(2.1, 0, 0)
 	_face(player, Vector3.LEFT)
 	await tree.physics_frame
 	await _press(tree, &"item_1")

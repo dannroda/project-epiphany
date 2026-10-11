@@ -39,6 +39,7 @@
 [ext_resource type="PackedScene" path="res://src/world/stone.tscn" id="42_stone"]
 [ext_resource type="Resource" path="res://data/items/quiver_big.tres" id="41_csg56"]
 [ext_resource type="PackedScene" path="res://src/world/zone_veil.tscn" id="90_veil"]
+[ext_resource type="PackedScene" path="res://src/world/cracked_wall_risco.tscn" id="91_crackrisco"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7se6l"]
 panorama = ExtResource("1_qyxw2")
@@ -332,7 +333,7 @@ dialogue = ExtResource("20_gd0nv")
 cue = "cave_bombs"
 flag = &"ow_tablet_cave"
 
-[node name="CavePracticeWall" parent="." unique_id=754652041 instance=ExtResource("21_uay0b")]
+[node name="CavePracticeWall" parent="." unique_id=754652041 instance=ExtResource("91_crackrisco")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 0, 2)
 flag = &"ow_cave_practice_wall"
 
@@ -356,6 +357,7 @@ solved_position = Vector3(-30, 0, -16)
 
 [node name="ChestGate" parent="." unique_id=1467179515 instance=ExtResource("26_iip2e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -18)
+depth = 2.0
 switches = Array[NodePath]([NodePath("../ShrineSwitch")])
 
 [node name="MirrorChest" parent="." unique_id=1406574529 instance=ExtResource("15_3hrjb")]
@@ -374,6 +376,7 @@ flag = &"ow_shrine_shortcut"
 
 [node name="ShortcutGate" parent="." unique_id=294050897 instance=ExtResource("26_iip2e")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12, 0, -16)
+depth = 2.0
 switches = Array[NodePath]([NodePath("../ShrineCrystal")])
 
 [node name="TempleLight" parent="." unique_id=108395462 instance=ExtResource("30_xv8lf")]
@@ -500,6 +503,7 @@ solved_position = Vector3(32, 0, 4)
 
 [node name="GroveGate" parent="." unique_id=919868571 instance=ExtResource("26_iip2e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, -2)
+depth = 2.0
 switches = Array[NodePath]([NodePath("../GroveSwitchA"), NodePath("../GroveSwitchB")])
 
 [node name="GroveChest" parent="." unique_id=964683035 instance=ExtResource("15_3hrjb")]
@@ -513,6 +517,7 @@ flag = &"ow_cliff_eye"
 
 [node name="CliffGate" parent="." unique_id=1552967466 instance=ExtResource("26_iip2e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, -14)
+depth = 2.0
 switches = Array[NodePath]([NodePath("../CliffEye")])
 
 [node name="QuiverChest" parent="." unique_id=2108365836 instance=ExtResource("15_3hrjb")]

@@ -39,6 +39,7 @@
 [ext_resource type="Script" uid="uid://cqtm1asamns1o" path="res://src/world/doom_ambience.gd" id="55_j188v"]
 [ext_resource type="PackedScene" path="res://src/entities/boss/boss.tscn" id="56_boss"]
 [ext_resource type="Script" path="res://src/entities/boss/boss_arena.gd" id="57_arena"]
+[ext_resource type="PackedScene" path="res://src/world/cracked_wall_templo.tscn" id="91_cracktemplo"]
 
 [sub_resource type="Environment" id="Environment_h5c3c"]
 background_mode = 1
@@ -278,6 +279,7 @@ solved_position = Vector3(28, 0, 62)
 
 [node name="VestibuleDoor" parent="." unique_id=905285617 instance=ExtResource("9_5u6gn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 56)
+depth = 2.0
 kind = 3
 switches = Array[NodePath]([NodePath("../VestibuleSwitch")])
 stays_open = false
@@ -309,16 +311,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 44)
 
 [node name="HubShutterW" parent="." unique_id=1159337302 node_paths=PackedStringArray("room") instance=ExtResource("9_5u6gn")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 12, 0, 48)
+depth = 2.0
 kind = 2
 room = NodePath("../Hub")
 
 [node name="HubLockedE" parent="." unique_id=1083297979 instance=ExtResource("9_5u6gn")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 36, 0, 48)
+depth = 2.0
 kind = 1
 flag = &"d1_hub_locked_door"
 
 [node name="HubSeal" parent="." unique_id=1529003820 instance=ExtResource("9_5u6gn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 40)
+depth = 2.0
 kind = 3
 switches = Array[NodePath]([NodePath("../PuzzleEye")])
 
@@ -346,6 +351,7 @@ flag = &"d1_gallery_eye"
 
 [node name="GalleryKeyGate" parent="." unique_id=123787515 instance=ExtResource("25_g51ep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 52)
+depth = 2.0
 switches = Array[NodePath]([NodePath("../GalleryEye")])
 
 [node name="GalleryKeyChest" parent="." unique_id=1030963809 instance=ExtResource("27_pwp4c")]
@@ -359,6 +365,7 @@ flag = &"d1_ojos_door_eye"
 
 [node name="OjosDoor" parent="." unique_id=1581707832 instance=ExtResource("9_5u6gn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 40)
+depth = 2.0
 kind = 3
 switches = Array[NodePath]([NodePath("../OjosDoorEye")])
 
@@ -377,7 +384,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54, 0, 42)
 item = ExtResource("31_mjdwr")
 flag = &"d1_map_chest"
 
-[node name="ArenaCrackedWall" parent="." unique_id=1502678505 instance=ExtResource("32_gvbwg")]
+[node name="ArenaCrackedWall" parent="." unique_id=1502678505 instance=ExtResource("91_cracktemplo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 40)
 flag = &"d1_arena_cracked_wall"
 
@@ -463,6 +470,7 @@ flag = &"d1_ojos_key_chest"
 
 [node name="OjosCompassGate" parent="." unique_id=1550851857 instance=ExtResource("25_g51ep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 36)
+depth = 2.0
 switches = Array[NodePath]([NodePath("../OjosEyeA")])
 
 [node name="OjosCompassChest" parent="." unique_id=1175635869 instance=ExtResource("27_pwp4c")]
@@ -475,6 +483,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 37)
 
 [node name="PuzzleDoor" parent="." unique_id=474679938 instance=ExtResource("9_5u6gn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24)
+depth = 2.0
 kind = 1
 flag = &"d1_puzzle_locked_door"
 
@@ -547,6 +556,7 @@ flag = &"d1_tablet_antechamber"
 
 [node name="BossDoor" parent="." unique_id=1162932531 instance=ExtResource("9_5u6gn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 24)
+depth = 2.0
 kind = 4
 flag = &"d1_boss_door"
 

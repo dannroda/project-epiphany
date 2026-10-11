@@ -2,27 +2,27 @@
   "checklist": [
     {
       "detail": "Que tape por completo lo que hay detrás: no se tiene que ver el pasillo a través.",
-      "done": false,
+      "done": true,
       "text": "Mismo grosor que el muro"
     },
     {
       "detail": "Usar la tierra/roca marrón del muro que la rodea, con grietas visibles como única pista.",
-      "done": false,
+      "done": true,
       "text": "Mismo material que el entorno"
     },
     {
       "detail": "Overworld y templo, con el mismo criterio.",
-      "done": false,
+      "done": true,
       "text": "Revisar las demás paredes agrietadas"
     },
     {
       "detail": "Lo de la pared fina también pasa con las puertas: que ocupen todo el grosor del muro.",
-      "done": false,
+      "done": true,
       "text": "Puertas con el mismo grosor que el muro"
     },
     {
       "detail": "En un paso con grosor, una reja en cada cara del muro en vez de una sola en el medio.",
-      "done": false,
+      "done": true,
       "text": "Rejas en cada borde"
     }
   ],
@@ -34,11 +34,11 @@
   "order": 51,
   "priority": "medium",
   "refs": [],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "arte"
   ],
   "test": "",
   "title": "Pared agrietada que se integre al muro",
-  "updated_at": "2026-10-11T04:14:22.594Z"
+  "updated_at": "2026-10-11T04:36:22.685Z"
 }

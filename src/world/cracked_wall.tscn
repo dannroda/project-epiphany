@@ -6,10 +6,10 @@
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/piedra_chica_a.res" id="4_rock"]
 
 [sub_resource type="BoxShape3D" id="WallShape"]
-size = Vector3(2.4, 2.4, 0.6)
+size = Vector3(2, 3.1, 2)
 
 [sub_resource type="BoxShape3D" id="HurtShape"]
-size = Vector3(2.6, 2.4, 1.0)
+size = Vector3(2.4, 2.6, 2.4)
 
 [node name="CrackedWall" type="StaticBody3D"]
 script = ExtResource("1_wall")
@@ -25,31 +25,31 @@ unique_name_in_owner = true
 visible = false
 
 [node name="Rock0" type="MeshInstance3D" parent="Rubble"]
-transform = Transform3D(0.9397, 0, -0.3420, 0, 1.0000, 0, 0.3420, 0, 0.9397, -0.8, 0, 0.3)
+transform = Transform3D(0.9397, 0, -0.342, 0, 1, 0, 0.342, 0, 0.9397, -1.28, 0, 0.72)
 mesh = ExtResource("4_rock")
 
 [node name="Rock1" type="MeshInstance3D" parent="Rubble"]
-transform = Transform3D(0.7727, 0, 0.2071, 0, 0.8000, 0, -0.2071, 0, 0.7727, -0.2, 0, 0.5)
+transform = Transform3D(0.7727, 0, 0.2071, 0, 0.8, 0, -0.2071, 0, 0.7727, -0.32, 0, 1.2)
 mesh = ExtResource("4_rock")
 
 [node name="Rock2" type="MeshInstance3D" parent="Rubble"]
-transform = Transform3D(0.9362, 0, -0.6555, 0, 1.1429, 0, 0.6555, 0, 0.9362, 0.4, 0, 0.25)
+transform = Transform3D(0.9362, 0, -0.6555, 0, 1.1429, 0, 0.6555, 0, 0.9362, 0.64, 0, 0.6)
 mesh = ExtResource("4_rock")
 
 [node name="Rock3" type="MeshInstance3D" parent="Rubble"]
-transform = Transform3D(0.7034, 0, -0.1240, 0, 0.7143, 0, 0.1240, 0, 0.7034, 0.9, 0, 0.55)
+transform = Transform3D(0.7034, 0, -0.124, 0, 0.7143, 0, 0.124, 0, 0.7034, 1.44, 0, 1.32)
 mesh = ExtResource("4_rock")
 
 [node name="Rock4" type="MeshInstance3D" parent="Rubble"]
-transform = Transform3D(0.7918, 0, 0.4571, 0, 0.9143, 0, -0.4571, 0, 0.7918, 0.05, 0, -0.1)
+transform = Transform3D(0.7918, 0, 0.4571, 0, 0.9143, 0, -0.4571, 0, 0.7918, 0.08, 0, -0.24)
 mesh = ExtResource("4_rock")
 
 [node name="Rock5" type="MeshInstance3D" parent="Rubble"]
-transform = Transform3D(0.4040, 0, -0.4815, 0, 0.6286, 0, 0.4815, 0, 0.4040, -0.55, 0, -0.25)
+transform = Transform3D(0.404, 0, -0.4815, 0, 0.6286, 0, 0.4815, 0, 0.404, -0.88, 0, -0.6)
 mesh = ExtResource("4_rock")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)
 shape = SubResource("WallShape")
 
 [node name="Hurtbox" type="Area3D" parent="."]

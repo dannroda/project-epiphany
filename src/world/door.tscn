@@ -20,6 +20,12 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 mesh = ExtResource("3_leaf")
 
+[node name="LeafBack" type="MeshInstance3D" parent="Leaf"]
+unique_name_in_owner = true
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
+visible = false
+mesh = ExtResource("3_leaf")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
 shape = SubResource("Shape")

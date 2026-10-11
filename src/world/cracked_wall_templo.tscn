@@ -1,0 +1,9 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://src/world/cracked_wall.tscn" id="1_base"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/muro_agrietado_templo.res" id="2_mesh"]
+
+[node name="CrackedWall" instance=ExtResource("1_base")]
+
+[node name="Model" parent="Wall" index="0"]
+mesh = ExtResource("2_mesh")

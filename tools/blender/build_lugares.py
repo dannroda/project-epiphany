@@ -103,29 +103,60 @@ piece("cueva_piso", 3, cueva_piso)
 piece("estalagmitas", 4, estalagmitas)
 
 
-# --- muro agrietado ---
+# --- muros agrietados: la celda de muro de cada lugar con grietas en las dos caras; solo las grietas la delatan ---
+
+CAP = 0.15
+
+
+def crack(p, face_y, z_top, z_bottom, x0=0.0, spread=0.45, width=0.06, branch=0.35):
+	"""Zigzag oscuro de z_top a z_bottom sobre la cara en face_y, con ramas cortas."""
+	faces = []
+
+	def segment(a, b):
+		seg = b - a
+		c = p.box(-width / 2, width / 2, -0.015, 0.015, 0, seg.length)
+		rot = seg.normalized().to_track_quat("Z", "Y").to_matrix().to_4x4()
+		p.transform(c, Matrix.Translation(a) @ rot)
+		return c
+
+	point = Vector((x0 + p.rng.uniform(-0.15, 0.15), face_y, z_top))
+	while point.z > z_bottom + 1e-3:
+		step = Vector((p.rng.uniform(-spread, spread) * 0.5, 0, -p.rng.uniform(0.22, 0.38)))
+		end = point + step
+		end.x = max(-0.75, min(0.75, end.x))
+		end.z = max(z_bottom, end.z)
+		faces += segment(point, end)
+		if p.rng.random() < branch:
+			tip = point + Vector((p.rng.choice((-1, 1)) * p.rng.uniform(0.2, 0.35), 0, -p.rng.uniform(0.05, 0.2)))
+			faces += segment(point, tip)
+		point = end
+	p.paint(faces, "noche", "DARK")
+	return faces
+
+
+def cracks_both_faces(p, face, z_top, z_bottom):
+	for side in (-1, 1):
+		crack(p, side * face, z_top, z_bottom)
+
 
 def muro_agrietado(p):
-	"""2.4 × 2.4 × 0.6, de piedra gris encastrada con musgo y una grieta en zigzag de arriba abajo, adelante y atrás."""
-	epi.stone_wall(p, 0.0, 2.4, size=(1.2, 0.3), swatch="ladrillo", sides=[Vector((0, -1, 0)), Vector((0, 1, 0)), Vector((1, 0, 0)), Vector((-1, 0, 0))], rows=(0.3, 0.15), widths=(0.35, 0.3), mortar="gris_5", depth=0.06)
-	crack = []
-	for side in (-1, 1):
-		x, z = p.rng.uniform(-0.2, 0.2), 2.4
-		while z > 0.1:
-			nz = z - p.rng.uniform(0.2, 0.35)
-			nx = x + p.rng.uniform(-0.25, 0.25)
-			seg = Vector((nx - x, 0, nz - z))
-			c = p.box(-0.035, 0.035, 0, 0.02, 0, seg.length)
-			rot = seg.normalized().to_track_quat("Z", "Y").to_matrix().to_4x4()
-			p.transform(c, Matrix.Translation((x, side * 0.38, z)) @ rot)
-			crack += c
-			x, z = nx, nz
-	p.paint(crack, "noche", "DARK")
-	moss = []
-	for _ in range(5):
-		side = p.rng.choice((-1, 1))
-		moss += p.blob((p.rng.uniform(-1.0, 1.0), side * 0.36, p.rng.uniform(0.1, 0.9)), p.rng.uniform(0.15, 0.28), squash=(1.4, 0.35, 0.8), subdiv=1, rough=0.3)
-	p.paint(moss, "musgo", vary=0.1)
+	"""Celda de andén del overworld (como la del kit) con grietas adelante y atrás."""
+	epi.stone_wall(p, -0.5, TOP - CAP)
+	epi.grass_cap(p, TOP - CAP, TOP)
+	cracks_both_faces(p, 1.09, TOP - CAP - 0.1, 0.05)
+
+
+def muro_agrietado_risco(p):
+	"""Celda de risco (roca natural) con grietas adelante y atrás."""
+	rock(p, -1, 1, -1, 1, -0.5, TOP - CAP, push=0.06, cuts=3, z_range=(-0.5, TOP - CAP))
+	epi.grass_cap(p, TOP - CAP, TOP)
+	cracks_both_faces(p, 1.1, TOP - CAP - 0.1, 0.05)
+
+
+def muro_agrietado_templo(p):
+	"""Tapón de piedra del templo para la abertura de un paso de puerta (1.8 × 2.3, 2 de fondo), con grietas."""
+	epi.stone_wall(p, -0.5, 2.3, swatch="piedra_templo", rows=(0.45, 0.12), widths=(0.6, 0.4), mortar="gris_5", depth=0.05, vary=0.07, size=(0.9, 1.0), sides=[Vector((0, -1, 0)), Vector((0, 1, 0))])
+	cracks_both_faces(p, 1.06, 2.2, 0.05)
 
 
 def escombro(p, n):
@@ -140,6 +171,8 @@ def escombro(p, n):
 
 
 piece("muro_agrietado", 5, muro_agrietado)
+piece("muro_agrietado_risco", 27, muro_agrietado_risco)
+piece("muro_agrietado_templo", 28, muro_agrietado_templo)
 piece("escombro_a", 6, lambda p: escombro(p, 4))
 piece("escombro_b", 7, lambda p: escombro(p, 2))
 

@@ -5,7 +5,7 @@ extends MeshInstance3D
 
 ## CrackedWall o Gate que cierran la zona.
 @export var blockers: Array[NodePath] = []
-@export var height := 8.0
+@export var height := 4.0
 @export var reveal_time := 1.2
 
 var _zone: AreaZone

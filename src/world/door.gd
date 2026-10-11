@@ -42,6 +42,8 @@ const TEXTS: DialogueResource = preload("res://data/dialogue/doors.dialogue")
 ## La primera vez que la abre un interruptor, el juego se pausa y la cámara la muestra.
 @export var reveal_on_open := false
 @export var open_time := 0.5
+## Fondo del paso en el que está: con más de 0, una hoja en cada cara del muro.
+@export var depth := 0.0
 
 @onready var leaf: Node3D = %Leaf
 @onready var shape: CollisionShape3D = $CollisionShape3D
@@ -61,6 +63,7 @@ func _ready() -> void:
 	add_to_group(&"doors")
 	_closed_y = leaf.position.y
 	%LeafMesh.mesh = load(LEAF_MESH % LEAVES[kind])
+	_fill_depth()
 	interactable.enabled = false
 	match kind:
 		Kind.OPEN, Kind.SHUTTER:
@@ -102,6 +105,23 @@ func _get_configuration_warnings() -> PackedStringArray:
 	if kind == Kind.SWITCH and switches.is_empty():
 		warnings.append("Una puerta con interruptor necesita al menos un interruptor en `switches`.")
 	return warnings
+
+
+func _fill_depth() -> void:
+	if depth <= 0.0:
+		return
+	var inset := depth / 2.0 - 0.15
+	%LeafMesh.position.z = inset
+	%LeafBack.position.z = -inset
+	%LeafBack.mesh = %LeafMesh.mesh
+	%LeafBack.show()
+	var box := shape.shape.duplicate() as BoxShape3D
+	box.size.z = depth
+	shape.shape = box
+	var reach := $Interactable/CollisionShape3D as CollisionShape3D
+	var area := reach.shape.duplicate() as BoxShape3D
+	area.size.z += depth
+	reach.shape = area
 
 
 ## Con llave: gasta una llave chica (LOCKED) o pide la del jefe (BOSS).

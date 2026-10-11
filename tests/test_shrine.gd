@@ -42,7 +42,7 @@ func test_reach_the_shrine_get_the_mirror_and_light_the_crystal() -> void:
 	assert_true(player.global_position.distance_to(Vector3(-24, 0, 0)) < 0.5, "bombs_only arranca en la cueva")
 
 	var wall := level.get_node(^"ShrineCrackedWall") as CrackedWall
-	player.global_position = wall.global_position + Vector3(0, 0, 1.3)
+	player.global_position = wall.global_position + Vector3(0, 0, 2.1)
 	_face(player, Vector3.FORWARD)
 	await _frames(tree, 2)
 	await _press(tree, &"item_1")

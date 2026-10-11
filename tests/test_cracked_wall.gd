@@ -29,7 +29,7 @@ func test_only_bombs_break_it_and_it_stays_broken() -> void:
 
 	var bomb: Bomb = BOMB.instantiate()
 	tree.current_scene.add_child(bomb)
-	bomb.global_position = wall.global_position + Vector3(0, 0.3, 1.0)
+	bomb.global_position = wall.global_position + Vector3(0, 0.3, 1.4)
 	await tree.create_timer(2.4).timeout
 	assert_eq(wall.is_broken, true, "una bomba sí")
 	assert_eq(wall.shape.disabled, true, "ya no bloquea el paso")

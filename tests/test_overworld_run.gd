@@ -122,7 +122,7 @@ func test_play_start_into_the_temple_and_back() -> void:
 	await _open_chest(^"CaveChest")
 	assert_eq(state.inventory.has(&"bomb_bag"), true, "bombas")
 
-	assert_true(await _bomb_wall(^"ShrineCrackedWall", Vector3(0, 0, 1.3), Vector3.FORWARD, Vector3(-24, 0, -2)), "muro del santuario")
+	assert_true(await _bomb_wall(^"ShrineCrackedWall", Vector3(0, 0, 2.1), Vector3.FORWARD, Vector3(-24, 0, -2)), "muro del santuario")
 	assert_true(await _walk_until(&"move_forward", at.call(2, -1.0, -11.0)), "entra al santuario caminando")
 	var block := tree.current_scene.get_node(^"ShrineBlock") as PushBlock
 	for i in 2:
