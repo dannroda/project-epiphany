@@ -2544,7 +2544,20 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prioridad:** alta · **Etiquetas:** `ia`
 
-Sumar enemigos en el overworld y el templo, para que el recorrido tenga más pelea.
+El recorrido tiene zonas y salas vacías: repartir esqueletos, esqueletos con escudo y arqueros por el overworld y el templo para que haya pelea en el camino, dejando tranquilo el inicio y usando cada sala para enseñar algo (bombas contra el escudo, golpes que tiran al hueco).
+
+- [x] Overworld: enemigos por zona, el inicio tranquilo
+  Pradera, gruta, cueva, explanada del templo, risco y arboleda; el escudo y el arquero en las zonas más avanzadas.
+- [x] Templo: hub, galería, sala agrietada y sala de ojos
+  Cada uno usa la sala: el de escudo donde hay bombas, el de la sala de ojos del lado de la entrada para tirarlo al hueco.
+- [x] Ninguno encimado con la grilla
+  `test_enemies_do_not_spawn_inside_walls` en tests/test_enemy_ai.gd.
+- [x] Anotar el reparto en el GDD
+  [[gdd#combate]] › Dónde hay enemigos (11.6).
+
+**Prueba:** Recorrer overworld y templo: todas las zonas salvo el inicio tienen pelea, ningún enemigo aparece dentro de una pared y los tests de IA pasan.
+
+**Referencias:** `gdd.md#combate`
 
 ### 11.7 Doom legible: player y objetos sin teñir · Hecho
 
@@ -2573,7 +2586,24 @@ Cuando una pared tapa al player se pierde de vista. Mostrar su silueta por encim
 
 **Prioridad:** baja · **Etiquetas:** `ia`
 
-La navmesh queda 0.5 m sobre el piso y obliga a compensarlo en el `NavigationAgent3D` de los enemigos (`path_desired_distance` 1.0 para que no se traben en las esquinas). Bajarla al piso.
+La navmesh horneada del GridMap queda 0.5 m sobre el piso (y hay islas sueltas arriba de paredes y acantilados, a 3 m). Por eso el `NavigationAgent3D` de los enemigos necesita `path_desired_distance` 1.0 para no trabarse en las esquinas. Bajarla al piso y sacar la compensación.
+
+- [ ] Encontrar de dónde salen los 0.5 m
+  El piso del kit gris tiene el techo de la colisión en y = 0, pero los vértices quedan en 0.5 (overworld y templo). Revisar cell_size/cell_height del NavigationMesh contra los del mapa de navegación (Project Settings › navigation), agent_max_climb y la posición del NavigationRegion3D.
+- [ ] Sacar las islas arriba de paredes y acantilados
+  Hay polígonos a y = 3 sobre Pared y Acantilado. Un enemigo nunca llega ahí, pero ensucian el mapa y algún punto aleatorio o el más cercano puede caer arriba. Opciones: filter_baking_aabb, agent_max_climb o colisión de pared sin techo transitable.
+- [ ] Rehornear overworld, templo y niveles de prueba
+  Botón Bake de cada NavigationRegion3D (levels/overworld.tscn, temple.tscn, test.tscn, dungeon_test.tscn, test_rooms.tscn).
+- [ ] Volver `path_desired_distance` a 0.5 si ya no se traban
+  src/entities/enemy.tscn › NavigationAgent3D. Probar persecución alrededor de columnas y esquinas de puerta.
+- [ ] Actualizar el GDD
+  [[gdd#overworld-layout]] › Blockout (7.2) cuenta la compensación; dejar lo nuevo.
+
+**Prueba:** Con Debug › Visible Navigation, la navmesh se ve pegada al piso y no hay islas arriba de las paredes; los enemigos persiguen alrededor de columnas y por las puertas sin quedarse girando en una esquina; test_enemy_ai pasa.
+
+**Referencias:** `gdd.md#overworld-layout`
+
+**Archivos:** `src/entities/enemy.tscn`, `levels/overworld.tscn`, `levels/temple.tscn`
 
 ### 11.10 Warning de transform singular en la suite · Hecho
 
@@ -2600,7 +2630,24 @@ El HUD muestra los slots X/Y aunque no tengan ítem, y el acercamiento del revea
 
 **Prioridad:** baja · **Etiquetas:** `mazmorra`
 
-Las 9 salas del templo tienen todas el mismo tamaño (11 × 7 celdas). Variar los tamaños de sala.
+Las 9 salas del templo miden todas 11 × 7 celdas (una pantalla), y eso lo vuelve monótono. Variar el tamaño según lo que pasa en cada una (una sala grande de dos pantallas donde haya combate o puzzle amplio, salas chicas de paso o de recompensa), como propone la guía de diseño de mazmorras en docs/.
+
+- [ ] Elegir qué salas cambian y a qué tamaño
+  Candidatas: arena de oleadas o sala de ojos más grandes (dos pantallas, la cámara se desplaza dentro); antesala o nichos más chicos. Mirar docs/the-ultimate-methodology-of-creating-zelda-like-dungeon-leve.md. Decidirlo con Daniel antes de tocar el nivel.
+- [ ] Salas que ocupan varias celdas del mapa
+  Hoy cada Room tiene un solo `map_cell` y map_data.gd (`room_pitch`, `room_grid_point`) asume el mismo paso para todas. Sumar un tamaño en celdas a Room y que la pestaña Mapa y el minimapa las dibujen enteras.
+- [ ] Cámara en salas grandes y chicas
+  top_down_camera.gd ya limita el foco a `Room.bounds()` y desplaza si la sala es más grande que la vista; comprobar la transición entre salas de distinto tamaño (`_mask_around` con merge) y que una sala chica quede centrada.
+- [ ] Rearmar el templo
+  GridMap, Room (CollisionShape3D), puertas en el centro de cada pared, spawns, decoración y velo; rehornear la navmesh. La regla de centros (24 cx, 16 cz) deja de valer: actualizar [[gdd#mazmorra-layout]].
+- [ ] Tests de puertas y enemigos
+  test_doorways_face_their_wall y test_enemies_do_not_spawn_inside_walls siguen pasando.
+
+**Prueba:** Recorrer el templo: al menos una sala grande donde la cámara se desplaza sin saltos y una chica que se ve centrada; las transiciones entre salas de distinto tamaño son limpias; el mapa y el minimapa muestran cada sala con su tamaño; los tests pasan.
+
+**Referencias:** `gdd.md#mazmorra-layout`, `gdd.md#camara`
+
+**Archivos:** `src/world/room.gd`, `src/ui/menus/map_data.gd`, `src/tools/top_down_camera.gd`, `levels/temple.tscn`
 
 ### 11.13 Modelos KayKit: esqueletos para los enemigos y Knight para el player · Hecho
 
