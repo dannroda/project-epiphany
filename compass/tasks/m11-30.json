@@ -1,8 +1,8 @@
 {
   "checklist": [
     {
-      "detail": "Gancho, o algo que mueva objetos a distancia (aprovecha la física). GDD §6.1 post-MVP.",
-      "done": false,
+      "detail": "Gancho (decidido el 2026-10-11): es el ítem de la mazmorra 2 (11.60, GDD §8b). Se engancha a postes y cofres y lleva al player; a enemigos livianos los trae. Cruza abismos de 4 m.",
+      "done": true,
       "text": "Elegir el ítem"
     },
     {
@@ -14,6 +14,12 @@
   "code": "11.30",
   "created_at": "2026-10-10T05:29:45.382Z",
   "description": "Un ítem post-MVP: gancho o algo que mueva objetos a distancia (GDD §6.1), con uso en combate y que abra lugares que antes no se podían.",
+  "links": [
+    {
+      "task": "m11-60",
+      "type": "related"
+    }
+  ],
   "milestone": "m11",
   "notes": "",
   "order": 30,
@@ -30,5 +36,5 @@
   ],
   "test": "El ítem tiene un uso en combate y abre al menos dos lugares que antes no se podían.",
   "title": "Ítem post-MVP: gancho o telequinesis",
-  "updated_at": "2026-10-11T07:51:05.575Z"
+  "updated_at": "2026-10-11T20:27:58.875Z"
 }

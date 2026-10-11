@@ -1,8 +1,8 @@
 {
   "checklist": [
     {
-      "detail": "Revisar los documentos de diseño; referencia: Torre de Hera en docs/the-ultimate-methodology... (caer por un pozo al piso de abajo).",
-      "done": false,
+      "detail": "Decidido el 2026-10-11 con el usuario: 3 pisos (sótano, planta baja, alto) de 2 × 2 salas apiladas; temática chullpa (torre funeraria); ítem gancho (11.30); recorrido sala por sala en GDD §8b (gdd#mazmorra-2). Caer por un hueco lleva a la sala de abajo; el cofre del gancho se alcanza tirándose desde 2SE (Torre de Hera).",
+      "done": true,
       "text": "Diseño: cantidad de pisos, sótanos, recorrido e ítem"
     },
     {
@@ -34,12 +34,12 @@
   "order": 57,
   "priority": "medium",
   "refs": [],
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "mazmorra",
     "ui"
   ],
   "test": "",
   "title": "Mazmorra nueva de varios pisos",
-  "updated_at": "2026-10-11T08:38:13.629Z"
+  "updated_at": "2026-10-11T20:27:57.594Z"
 }

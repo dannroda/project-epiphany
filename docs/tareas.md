@@ -2937,14 +2937,16 @@ Después de vencer al jefe, el overworld tiene que verse y sonar distinto (sin d
 
 Un ítem post-MVP: gancho o algo que mueva objetos a distancia (GDD §6.1), con uso en combate y que abra lugares que antes no se podían.
 
-- [ ] Elegir el ítem
-  Gancho, o algo que mueva objetos a distancia (aprovecha la física). GDD §6.1 post-MVP.
+- [x] Elegir el ítem
+  Gancho (decidido el 2026-10-11): es el ítem de la mazmorra 2 (11.60, GDD §8b). Se engancha a postes y cofres y lleva al player; a enemigos livianos los trae. Cruza abismos de 4 m.
 - [ ] Comportamiento y puzzles
   ItemBehavior nuevo + 2–3 usos en el mundo.
 
 **Prueba:** El ítem tiene un uso en combate y abre al menos dos lugares que antes no se podían.
 
 **Referencias:** `gdd.md#items-mvp`
+
+**Relacionadas:** 11.60 Mazmorra nueva de varios pisos
 
 ### 11.31 Sub-jefe del templo · Pendiente
 
@@ -2971,7 +2973,7 @@ Un modo extra que se desbloquea al terminar el juego, difícil (más daño, meno
 
 **Prueba:** Tras los créditos aparece la opción; una partida en ese modo cambia lo prometido.
 
-### 11.33 Combate: sacar lo tosco · En curso
+### 11.33 Combate: sacar lo tosco · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `combate`
 
@@ -3396,14 +3398,14 @@ Assets propios y packs de terceros que ninguna escena, script ni builder referen
 - [ ] Probar que nada se rompa
   Abrir el editor (sin dependencias rotas), correr los tests y recorrer overworld, templo y escenas de prueba.
 
-### 11.60 Mazmorra nueva de varios pisos · Pendiente
+### 11.60 Mazmorra nueva de varios pisos · En curso
 
 **Prioridad:** media · **Etiquetas:** `mazmorra`, `ui`
 
 Segunda mazmorra con pisos (y quizás sótanos) apilados en la misma escena, en vez de rehacer el templo. Decidido el 2026-10-11: mazmorra nueva; el co-op está en pausa, así que no condiciona el diseño. Cantidad de pisos por definir (Daniel revisa los documentos de diseño).
 
-- [ ] Diseño: cantidad de pisos, sótanos, recorrido e ítem
-  Revisar los documentos de diseño; referencia: Torre de Hera en docs/the-ultimate-methodology... (caer por un pozo al piso de abajo).
+- [x] Diseño: cantidad de pisos, sótanos, recorrido e ítem
+  Decidido el 2026-10-11 con el usuario: 3 pisos (sótano, planta baja, alto) de 2 × 2 salas apiladas; temática chullpa (torre funeraria); ítem gancho (11.30); recorrido sala por sala en GDD §8b (gdd#mazmorra-2). Caer por un hueco lleva a la sala de abajo; el cofre del gancho se alcanza tirándose desde 2SE (Torre de Hera).
 - [ ] Pisos en la escena
   Un GridMap por piso separados en altura; ocultar los pisos de arriba del player (y quizás atenuar el de abajo).
 - [ ] Escaleras y caídas entre pisos
@@ -3412,6 +3414,8 @@ Segunda mazmorra con pisos (y quizás sótanos) apilados en la misma escena, en 
   Room con piso; visitado, mapa y brújula por piso.
 - [ ] UI: selector de pisos
   Diseñar primero en el canvas de mockups (no lo tiene): pestañas de piso en el mapa de pausa con dónde estás, jefe y cofres; minimapa del piso actual.
+
+**Relacionadas:** 11.30 Ítem post-MVP: gancho o telequinesis
 
 ### 11.61 Pluma en el overworld: lugares de salto · Revisión
 

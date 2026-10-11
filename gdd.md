@@ -331,6 +331,55 @@ Decidido el 2026-10-08 con la metodología de [[gdd#overworld-layout]] (artícul
 
 **Mazmorra gris de prueba** (`levels/dungeon_test.tscn`, id `d0`, flags `d0_*`, escenario `dungeon_test`): un mini candado-y-llave. Vestíbulo: bloque → interruptor abre la puerta oeste; la puerta norte tiene llave. Sala de guardia (dos pantallas de ancho, lateral): la persiana se cierra con dos esqueletos y el cofre del fondo tiene la llave chica. Cámara sellada: cofre grande con la brújula.
 
+## 8b. Mazmorra 2 — La Chullpa (diseño, 11.60)
+<!-- id: mazmorra-2 -->
+
+Decidido el 2026-10-11. Torre funeraria de piedra (chullpa) con sótano de enterramientos, siguiendo a los enemigos chullpa (vale aunque el setting siga abierto). Tres pisos apilados en la misma escena, cada uno de 2 × 2 salas con la misma planta, así que un hueco siempre cae a la sala de abajo (referencia: la Torre de Hera de *A Link to the Past*, en `docs/the-ultimate-methodology…`). Ítem: el **gancho** (11.30). Unas 11 salas más el jefe.
+
+```
+ PISO ALTO    ┌────────┬────────┐
+              │2NO     │2NE     │
+              │pluma → │gancho→ │
+              │ llave  │ corazón│
+              ├──[  ]──┼────────┤
+              │2SO     │2SE     │
+              │combate ├[LLAVE]─┤
+              └──▲─────┴────────┘
+                 │ escalera
+ PLANTA BAJA  ┌──┴─────┬────────┐
+              │1NO     │1NE     │
+              │        │escalera│
+              ├────────┼─[ganch]┤
+              │1SO     │1SE     │
+              │ENTRADA ├ abierta┤
+              └────────┴────────┘
+                  ▲ escalera de mano (solo sube)
+ SÓTANO       ┌────────┬────────┐
+              │B-NO    │B-NE    │
+              │gancho →├[JEFE]──┤
+              │llave j.│ JEFE   │
+              ├────────┼────────┤
+              │B-SO    │B-SE    │
+              │brújula │mapa    │
+              └────────┴────────┘
+```
+
+| Sala | Qué pasa |
+|---|---|
+| 1SO Entrada | Llega del overworld; escalera al piso alto; puerta abierta a 1SE |
+| 1SE Sala del cofre | Cofre grande del **gancho** en una isla rodeada de huecos, visible desde la entrada (cebo). Caer lleva a B-SE |
+| B-SE | Donde se cae desde 1SE: **mapa** y una escalera de mano que solo sube a la entrada. Caer enseña que los huecos llevan a algún lado |
+| B-SO | Oscura; **brújula** |
+| 2SO | Llegada del piso alto; persiana hasta vencer a los enemigos |
+| 2NO | Huecos de una baldosa (pluma) hasta la **llave chica** |
+| 2SE | Con la llave. Piso agrietado justo encima de la isla de 1SE: una bomba lo abre y se cae sobre el cofre (el truco de la Torre de Hera) |
+| 1NE | Del otro lado de un abismo de 4 m desde 1SE: solo con el gancho (postes). Escalera al sótano |
+| B-NO | **Llave del jefe**, con un puzzle de gancho |
+| B-NE | Jefe (blockout: sala vacía; el jefe propio es otra tarea) |
+| 2NE | Opcional, con el gancho: pieza de corazón |
+
+**Ítems anteriores:** usa bombas, pluma y arco (vienen de antes; el templo no cambia, §6.2). **Overworld:** el gancho abre 2–3 lugares, entre ellos la franja del ojo del Risco. **Huecos:** cuando un hueco lleva a otra sala, el piso de abajo se ve iluminado a través; si no hay nada abajo, vuelve a la entrada como hoy. **Técnica:** un GridMap por piso separados en altura; se ocultan los pisos de arriba del player; escaleras con transición corta; mapa, brújula y salas visitadas por piso; selector de pisos en el mapa de pausa (primero en el canvas de mockups).
+
 ## 9. Jefe — El Ojo con manos
 <!-- id: jefe -->
 
