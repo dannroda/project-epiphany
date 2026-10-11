@@ -18,6 +18,7 @@
   ],
   "code": "11.4",
   "created_at": "2026-10-09T17:40:33.154Z",
+  "description": "Decorar cada zona del overworld con piezas propias de su ambiente y enmarcar la entrada del templo con su fachada, para que cada zona se reconozca sin su nombre y deje de verse vacía.",
   "milestone": "m11",
   "notes": "",
   "order": 4,
@@ -29,5 +30,5 @@
   ],
   "test": "Cada zona se reconoce sin su nombre; nada tapa los caminos, las entradas ni lo jugable; la foto del mapa muestra la decoración.",
   "title": "Decorar el overworld",
-  "updated_at": "2026-10-11T05:28:55.227Z"
+  "updated_at": "2026-10-11T07:50:53.721Z"
 }

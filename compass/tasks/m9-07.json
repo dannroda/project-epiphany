@@ -11,6 +11,7 @@
   ],
   "code": "9.7",
   "created_at": "2026-10-08T04:45:33.373Z",
+  "description": "Fase 3 opcional (primera en la lista de recortes): por debajo de cierto umbral de vida el ojo marca el piso antes de golpes de área y combina sus patrones con los de las manos. Solo si sobra tiempo.",
   "milestone": "m09",
   "notes": "Primera en la lista de recortes ([[gdd#roadmap]]). Solo si sobra tiempo.",
   "order": 7,
@@ -27,5 +28,5 @@
   "status": "done",
   "test": "La fase 3 se activa por debajo de cierto umbral de vida y se puede ganar sin recibir daño inevitable.",
   "title": "Fase 3 (recortable)",
-  "updated_at": "2026-10-10T05:50:04.057Z"
+  "updated_at": "2026-10-11T07:50:46.992Z"
 }

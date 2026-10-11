@@ -23,6 +23,7 @@
   ],
   "code": "11.44",
   "created_at": "2026-10-10T21:49:13.767Z",
+  "description": "Levantar y tirar objetos (vasijas, piedras, arbustos): se cargan caminando más lento y al tirarlos rompen y dañan enemigos; habilita puzzles como piedra sobre placa de presión.",
   "milestone": "m11",
   "notes": "",
   "order": 44,
@@ -35,5 +36,5 @@
   ],
   "test": "",
   "title": "Levantar y tirar objetos",
-  "updated_at": "2026-10-10T23:55:24.724Z"
+  "updated_at": "2026-10-11T07:51:10.559Z"
 }

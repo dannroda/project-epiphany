@@ -2,6 +2,7 @@
   "checklist": [],
   "code": "11.9",
   "created_at": "2026-10-09T17:40:34.556Z",
+  "description": "La navmesh queda 0.5 m sobre el piso y obliga a compensarlo en el `NavigationAgent3D` de los enemigos (`path_desired_distance` 1.0 para que no se traben en las esquinas). Bajarla al piso.",
   "milestone": "m11",
   "notes": "",
   "order": 9,
@@ -13,5 +14,5 @@
   ],
   "test": "",
   "title": "Navmesh sobre el piso",
-  "updated_at": "2026-10-09T17:40:34.556Z"
+  "updated_at": "2026-10-11T07:50:55.780Z"
 }

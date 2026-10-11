@@ -13,6 +13,7 @@
   ],
   "code": "11.18",
   "created_at": "2026-10-10T02:17:05.422Z",
+  "description": "En el templo, la pared sur deja una lámina de ladrillos sin colisión, con franjas y sombras, que tapa la puerta sur. Sacarla para que la pared sur quede como un zócalo bajo y la puerta se vea.",
   "milestone": "m11",
   "notes": "",
   "order": 18,
@@ -25,5 +26,5 @@
   ],
   "test": "En cualquier sala del templo, la pared sur queda como un zócalo bajo, sin franjas ni sombras de ladrillos, y la puerta sur se ve.",
   "title": "Pared sur del templo: lámina de ladrillos sin colisión tapando la puerta sur",
-  "updated_at": "2026-10-10T02:17:06.988Z"
+  "updated_at": "2026-10-11T07:51:00.287Z"
 }

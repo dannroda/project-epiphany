@@ -18,6 +18,7 @@
   ],
   "code": "9.4",
   "created_at": "2026-10-08T04:45:31.865Z",
+  "description": "Primera fase del jefe: las manos golpean el piso avisando con una sombra, agarran al player y quedan aturdidas tras el golpe, dando la ventana para pegarles. Aturdir las dos pasa a la fase 2; tiene que poder ganarse solo con bloqueo y roll.",
   "links": [
     {
       "task": "m9-05",
@@ -36,5 +37,5 @@
   "status": "done",
   "test": "Se puede ganar la fase solo con bloqueo y roll; los golpes se pueden anticipar mirando la sombra.",
   "title": "Fase 1: manos",
-  "updated_at": "2026-10-10T04:12:58.025Z"
+  "updated_at": "2026-10-11T07:50:45.418Z"
 }

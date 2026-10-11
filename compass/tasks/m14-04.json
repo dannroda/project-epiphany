@@ -13,6 +13,7 @@
   ],
   "code": "14.4",
   "created_at": "2026-10-10T05:37:30.830Z",
+  "description": "Que el combate del cliente se sienta como en local: golpes validados en el host con compensación de latencia, bloqueo y parry con margen, y hit-stop y flash mostrados al instante.",
   "links": [
     {
       "task": "m14-07",
@@ -36,5 +37,5 @@
   ],
   "test": "Pelear contra chullpas y el jefe como cliente con 100 ms: los golpes se sienten y no hay daño fantasma.",
   "title": "Combate en red",
-  "updated_at": "2026-10-11T06:39:31.225Z"
+  "updated_at": "2026-10-11T07:50:22.875Z"
 }

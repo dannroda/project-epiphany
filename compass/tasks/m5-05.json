@@ -18,6 +18,7 @@
   ],
   "code": "5.5",
   "created_at": "2026-10-08T04:45:16.672Z",
+  "description": "Muros agrietados (`CrackedWall`) que solo se rompen con explosiones, con una grieta legible desde la cámara y estado persistente por flag. Es el primer uso de las bombas para abrir caminos y secretos.",
   "links": [
     {
       "task": "m5-08",
@@ -44,5 +45,5 @@
   "status": "done",
   "test": "Un muro agrietado del nivel de prueba: la espada no lo rompe, una bomba sí; sigue roto después de guardar y cargar.",
   "title": "Muros agrietados",
-  "updated_at": "2026-10-08T19:19:36.225Z"
+  "updated_at": "2026-10-11T07:50:47.739Z"
 }

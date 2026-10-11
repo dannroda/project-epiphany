@@ -28,6 +28,7 @@
   ],
   "code": "6.1",
   "created_at": "2026-10-08T04:45:18.720Z",
+  "description": "`Room`: sala de mazmorra con la cámara limitada a sus bordes y transición deslizada al pasar de una a otra. Marca la sala como visitada, muestra su nombre la primera vez y es el punto de reaparición al morir en la mazmorra.",
   "links": [
     {
       "task": "m6-02",
@@ -62,5 +63,5 @@
   "status": "done",
   "test": "Dos salas pegadas: al cruzar, la cámara se desliza y queda dentro de los límites de la nueva; la cámara nunca muestra fuera de la sala.",
   "title": "`Room` y cámara por sala",
-  "updated_at": "2026-10-08T21:21:20.266Z"
+  "updated_at": "2026-10-11T07:50:50.328Z"
 }

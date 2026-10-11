@@ -15,6 +15,7 @@
   ],
   "code": "9.8",
   "created_at": "2026-10-09T16:15:48.795Z",
+  "description": "Una salida de la sala del jefe: un portal en el centro de la arena que lleva a la entrada del templo en el overworld, oculto hasta que un flag (el del jefe vencido, en 9.6) lo active.",
   "milestone": "m09",
   "notes": "Sin flag por ahora porque no hay jefe; 9.6 le pone d1_boss_defeated.",
   "order": 8,
@@ -26,5 +27,5 @@
   ],
   "test": "Desde pre_boss: pararse en el portal de la sala del jefe y aparecer en la Entrada del templo.",
   "title": "Portal de salida en la sala del jefe",
-  "updated_at": "2026-10-09T16:15:55.725Z"
+  "updated_at": "2026-10-11T07:50:47.503Z"
 }

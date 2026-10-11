@@ -18,6 +18,7 @@
   ],
   "code": "9.2",
   "created_at": "2026-10-08T04:45:30.850Z",
+  "description": "Preparar el escenario de la pelea: la sala del jefe cierra la puerta al entrar, encuadra la arena entera, corre una intro corta y salteable que presenta al ojo, y el HUD muestra la barra de vida del jefe.",
   "links": [
     {
       "task": "m9-04",
@@ -40,5 +41,5 @@
   "status": "done",
   "test": "Entrar a la arena: la puerta se cierra, la intro se puede saltar y la barra baja al pegarle.",
   "title": "Arena del jefe y barra de vida",
-  "updated_at": "2026-10-10T03:17:32.509Z"
+  "updated_at": "2026-10-11T07:50:44.425Z"
 }

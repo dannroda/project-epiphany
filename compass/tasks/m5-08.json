@@ -13,6 +13,7 @@
   ],
   "code": "5.8",
   "created_at": "2026-10-08T04:45:18.212Z",
+  "description": "Sala de pruebas (`levels/sandbox_items.tscn`) con un puzzle gris por ítem: muro bombable, ojo lejano, reflejo de luz y orbe de torreta, accesible desde el escenario `full_inventory`. Cierra el hito y queda como banco de pruebas de regresión.",
   "milestone": "m05",
   "notes": "Cierra el hito: 'cada ítem se usa en al menos un puzzle'. Sirve después como banco de pruebas de regresión. levels/sandbox_items.tscn (greybox, CSG): cuatro cubículos con una vasija de corazones detrás de algo que se abre — BOMBAS (muro agrietado, flag ow_sb_cracked_wall), ARCO (ojo en un corral bajo: la espada no llega, las flechas pasan por arriba → Gate), LUZ (fuente que cruza el sur; con el escudo espejo se desvía al cristal latch → Gate), ORBE (torreta en un corral; reflejarle los orbes → Gate). Gate nuevo (src/world/gate.gd): reja que se hunde; base para 6.2. levels/sandbox_items.gd expone solved(). full_inventory arranca en el sandbox con el escudo espejo. test_sandbox resuelve los cuatro desde el escenario. Se arregló de paso el dibujo de los tramos del haz (LightBeam escalaba en espacio global).",
   "order": 8,
@@ -25,5 +26,5 @@
   "status": "done",
   "test": "Resolver los cuatro puzzles del sandbox empezando desde el escenario.",
   "title": "Sala de pruebas de ítems",
-  "updated_at": "2026-10-08T20:34:44.814Z"
+  "updated_at": "2026-10-11T07:50:49.284Z"
 }

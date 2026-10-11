@@ -18,6 +18,7 @@
   ],
   "code": "3.8",
   "created_at": "2026-10-08T04:45:11.674Z",
+  "description": "Un ícono placeholder coherente por cada `ItemData`, que se distinga a tamaño de HUD, para las pantallas y el HUD. No es arte final: la dirección de arte se decide en 10.7.",
   "links": [
     {
       "task": "m0-03",
@@ -36,5 +37,5 @@
   "status": "done",
   "test": "Abrir las pantallas Equipo e Ítems con `full_inventory`: todos los ítems tienen ícono y se distinguen a tamaño de HUD.",
   "title": "Íconos placeholder de los ítems",
-  "updated_at": "2026-10-08T06:31:03.376Z"
+  "updated_at": "2026-10-11T07:50:19.498Z"
 }

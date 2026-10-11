@@ -18,6 +18,7 @@
   ],
   "code": "7.5",
   "created_at": "2026-10-08T04:45:24.262Z",
+  "description": "Santuario del escudo espejo detrás del muro agrietado: un desafío corto, el cofre grande con el escudo y un cristal de práctica que enseña el reflejo de luz antes del sello del templo.",
   "links": [
     {
       "task": "m7-06",
@@ -40,5 +41,5 @@
   "status": "done",
   "test": "Desde el escenario `bombs_only`: llegar al santuario, conseguir el escudo y activar el cristal de práctica.",
   "title": "Santuario del escudo espejo",
-  "updated_at": "2026-10-09T00:12:12.647Z"
+  "updated_at": "2026-10-11T07:50:55.924Z"
 }

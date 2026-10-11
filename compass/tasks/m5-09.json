@@ -28,6 +28,7 @@
   ],
   "code": "5.9",
   "created_at": "2026-10-08T18:28:06.127Z",
+  "description": "Que cada escudo frene ciertos tipos de daño según `DamageInfo.element` (la madera frena flechas pero no explosiones ni fuego) y que el escudo en la espalda también proteja de proyectiles. El espejo refleja siempre que intercepta, porque es un espejo.",
   "milestone": "m05",
   "notes": "Idea del 2026-10-08: que el escudo en la espalda proteja, y que cada escudo frene distintos tipos de daño (la madera frena flechas pero no explosiones ni fuego). El espejo refleja siempre que intercepta, porque es un espejo. Usa DamageInfo.element, que ya existe: \"explosive\" lo pone la bomba (5.4), \"light\" el haz (5.6), \"fire\" queda para espadas elementales post-MVP. Relacionada con 5.2 (torreta: primer enemigo que dispara), 5.4 y 5.6. Desde 2026-10-08 el escudo oculto no colisiona (Equipment.show_shield_in_hand).",
   "order": 9,
@@ -36,5 +37,5 @@
   "status": "done",
   "test": "Con escudo de madera: una flecha por la espalda se frena; una bomba o fuego lastiman aunque se bloquee de frente. Con escudo espejo: un orbe por la espalda vuelve y daña a la torreta que lo disparó.",
   "title": "Protección del escudo según el tipo de daño y por la espalda",
-  "updated_at": "2026-10-08T18:58:08.417Z"
+  "updated_at": "2026-10-11T07:50:49.816Z"
 }

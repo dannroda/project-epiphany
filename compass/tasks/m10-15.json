@@ -15,6 +15,7 @@
   ],
   "code": "10.15",
   "created_at": "2026-10-09T16:23:37.270Z",
+  "description": "Que los interruptores de piso de los puzzles se resuelvan con un bloque y no solo pisándolos: un modo `BLOCK` en el que el player los aprieta mientras está encima y la puerta se vuelve a cerrar al bajarse.",
   "milestone": "m10",
   "notes": "ONCE sigue disponible (overworld y mazmorra gris lo usan); se elige por puzzle.",
   "order": 15,
@@ -26,5 +27,5 @@
   ],
   "test": "",
   "title": "Interruptores de piso: solo un bloque los resuelve",
-  "updated_at": "2026-10-09T16:32:22.427Z"
+  "updated_at": "2026-10-11T07:50:55.157Z"
 }

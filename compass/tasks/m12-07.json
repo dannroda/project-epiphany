@@ -51,6 +51,7 @@
   ],
   "code": "12.7",
   "created_at": "2026-10-09T21:05:40.919Z",
+  "description": "Armar el kit propio del templo (piso, paredes, puertas por tipo, piezas de puzzle, torreta, antorchas, decoración, doom y sala del jefe) para que `temple_kit.tres` deje de usar piezas KayKit, sin romper el corte de la pared sur.",
   "links": [
     {
       "task": "m11-03",
@@ -69,5 +70,5 @@
   ],
   "test": "temple_kit.tres arma el templo con las piezas nuevas y el corte de la pared sur sigue andando.",
   "title": "Kit del templo propio",
-  "updated_at": "2026-10-11T05:37:38.268Z"
+  "updated_at": "2026-10-11T07:50:13.441Z"
 }

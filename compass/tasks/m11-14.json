@@ -15,6 +15,7 @@
   ],
   "code": "11.14",
   "created_at": "2026-10-09T18:11:50.849Z",
+  "description": "Al cargar partida, puertas, rejas y puentes que ya se habían abierto con un interruptor aparecen cerrados. Tienen que arrancar en el estado guardado de su interruptor.",
   "milestone": "m11",
   "notes": "HubSeal está antes que PuzzleEye en temple.tscn: al cargar leía el ojo antes de que restaurara su flag y quedaba cerrado. Afectaba a cualquier puerta/reja/puente cuyo interruptor esté después en el árbol.",
   "order": 14,
@@ -27,5 +28,5 @@
   ],
   "test": "",
   "title": "Puertas con interruptor cerradas al cargar partida",
-  "updated_at": "2026-10-09T18:11:53.692Z"
+  "updated_at": "2026-10-11T07:50:58.343Z"
 }

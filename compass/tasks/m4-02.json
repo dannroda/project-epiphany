@@ -23,6 +23,7 @@
   ],
   "code": "4.2",
   "created_at": "2026-10-08T04:45:12.656Z",
+  "description": "Caja de texto propia para tablillas e item get: letra por letra, varias páginas, pausa el juego y se avanza con `interact`/`attack` sin saltear páginas sin querer. Los textos van como datos para dejar lista la localización.",
   "links": [
     {
       "task": "m4-03",
@@ -45,5 +46,5 @@
   "status": "done",
   "test": "Leer un texto de tres páginas con gamepad y con teclado; apretar rápido no se saltea páginas sin querer.",
   "title": "Caja de texto",
-  "updated_at": "2026-10-08T07:54:06.210Z"
+  "updated_at": "2026-10-11T07:50:43.235Z"
 }

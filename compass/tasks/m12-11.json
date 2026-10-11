@@ -20,6 +20,7 @@
   ],
   "code": "12.11",
   "created_at": "2026-10-10T23:24:31.346Z",
+  "description": "Pasar todos los `.blend` (props, equipo, templo, kits y personajes) al pipeline glb de 12.10 y retirar los scripts headless viejos, para que los builds funcionen sin Blender.",
   "links": [
     {
       "task": "m11-47",
@@ -38,5 +39,5 @@
   ],
   "test": "",
   "title": "Migrar los .blend al pipeline glb",
-  "updated_at": "2026-10-11T05:37:40.420Z"
+  "updated_at": "2026-10-11T07:50:15.547Z"
 }

@@ -28,6 +28,7 @@
   ],
   "code": "6.2",
   "created_at": "2026-10-08T04:45:19.217Z",
+  "description": "Puertas de mazmorra (`Door`): abierta, con llave, persiana, de interruptor y del jefe, que se abren con animación y sonido. Las persianas encierran hasta limpiar la sala y las de llave quedan abiertas entre partidas.",
   "links": [
     {
       "task": "m6-03",
@@ -54,5 +55,5 @@
   "status": "done",
   "test": "Una sala con persiana: al entrar se cierra, al matar al último esqueleto se abre. Una puerta con llave no se abre sin llave y se queda abierta tras guardar y cargar.",
   "title": "Puertas",
-  "updated_at": "2026-10-08T21:34:53.424Z"
+  "updated_at": "2026-10-11T07:50:50.829Z"
 }

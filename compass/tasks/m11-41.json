@@ -18,6 +18,7 @@
   ],
   "code": "11.41",
   "created_at": "2026-10-10T21:49:12.951Z",
+  "description": "El esqueleto con escudo tiene que bloquear con el escudo de verdad delante, en la misma pose que el player, y solo cuando lo tiene levantado mirando al player; que el bloqueo se lea con chispa, sonido y retroceso.",
   "milestone": "m11",
   "notes": "",
   "order": 41,
@@ -30,5 +31,5 @@
   ],
   "test": "",
   "title": "Esqueleto con escudo: bloquear con el escudo delante",
-  "updated_at": "2026-10-10T23:13:26.413Z"
+  "updated_at": "2026-10-11T07:51:09.097Z"
 }

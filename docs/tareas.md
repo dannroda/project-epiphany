@@ -15,6 +15,8 @@ Dejar armada la base sobre la que se construye todo lo demás: ítems como datos
 
 ### 0.1 Limpieza · Hecho
 
+Arreglos chicos del código actual antes del refactor: corregir `is_empty` de la mano, evitar que la espada sin dueño del esqueleto rompa el juego y sacar archivos vacíos, código comentado y mensajes de depuración.
+
 - [x] Arreglar `is_empty` en `player/hand.gd`
   Devolvía `true` cuando la mano tenía un ítem. Tiene que quedar `return not is_instance_valid(equipped_item)`.
 - [x] Evitar que la espada del esqueleto rompa el juego
@@ -32,6 +34,8 @@ Dejar armada la base sobre la que se construye todo lo demás: ítems como datos
 No toques `addons/scope_compass/`: es un symlink al repo de Scope Compass y los cambios van allá.
 
 ### 0.2 Input map · Hecho
+
+Definir en el Input Map las acciones de gamepad que van a usar los hitos siguientes (juego, menús y depuración), según [[gdd#input]] y sin inputs repetidos dentro de un mismo contexto. Teclado y mouse quedan para más adelante.
 
 - [x] Acciones de juego: `interact`, `dodge`, `item_1`, `item_2`
   `interact` = B (botón 1), `dodge` = RB (botón 10), `item_1` = X (botón 2), `item_2` = Y (botón 3).
@@ -55,6 +59,8 @@ Se puede hacer en cualquier momento.
 **Referencias:** `gdd.md#input`
 
 ### 0.11 Sistema de depuración · Hecho
+
+Reemplazar los `print` y `print_rich` sueltos por un logger con niveles y canales (autoload `Log`), conectado al debugger de Godot con una pestaña propia para filtrar en vivo, monitores y un overlay en el juego.
 
 - [x] Crear el autoload `Log` (`addons/epiphany_tools/debug/runtime/log.gd`)
   Niveles debug, info, success, warning y error, y un canal por sistema (`combat`, `targeting`, `ai`, `items`, `save`, `camera`, `input`, `world`). Debug, info y success salen con `print_rich` y color; warning y error van por `push_warning`/`push_error`, así caen en la pestaña Errores con el stack. Lo registra el plugin `epiphany_tools` al activarse.
@@ -92,6 +98,8 @@ Probado en headless (4.8-dev7): `Log` filtra por nivel y canal, el sink captura 
 **Relacionadas:** 0.7 Componentes y EntityConfig; 0.10 Save Inspector v0; 0.8 Enemigo sobre componentes
 
 ### 0.3 Ítems: datos · Hecho
+
+Crear la base de datos de ítems: cada ítem es un `.tres` con sus datos y un comportamiento enchufable, así una espada de fuego no necesita una clase nueva. Incluye el inventario, los 17 ítems y el autoload `Items`.
 
 - [x] Crear `src/combat/attack_data.gd`
   Un recurso chico con la animación y el tramo en que pega un ataque. Código en [[gdd#ventanas-ataque]]. Va primero porque la espada lo necesita.
@@ -132,6 +140,8 @@ Daño de la espada (2) y cantidades máximas (flechas 30, bombas 10, llaves chic
 
 ### 0.4 Flags · Hecho
 
+Declarar las flags del mundo (un cofre abierto, una puerta destrabada) en un registro, para evitar errores de tipeo y que el Save Inspector pueda avisar cuando una partida tiene una flag que no existe.
+
 - [x] Crear `src/state/flag_definition.gd`
   Un recurso con `id`, `description` y `default_value` (una flag declarada). Si Godot no deja exportar `default_value` como `Variant`, usar `bool` por ahora: casi todas las flags son sí o no.
 - [x] Crear `src/state/flag_registry.gd`
@@ -150,6 +160,8 @@ Daño de la espada (2) y cantidades máximas (flechas 30, bombas 10, llaves chic
 **Bloquea a:** 0.5 GameState; 4.5 Flags del mundo persistentes
 
 ### 0.5 GameState · Hecho
+
+Crear `GameState`, la partida en memoria (inventario, equipo, flags, mazmorras y punto de aparición), como autoload para que sobreviva a los cambios de escena, con `write_to`/`read_from` y la partida nueva.
 
 - [x] Crear `src/state/dungeon_state.gd`
   El estado de una mazmorra: llaves chicas, mapa, brújula, llave del jefe y salas visitadas.
@@ -177,6 +189,8 @@ Partida nueva: espada, escudo de madera y túnica en el inventario y equipados, 
 **Relacionadas:** 1.5 Muerte y reaparición del player
 
 ### 0.6 Guardado · Hecho
+
+Guardar y cargar partidas en `user://saves/`: en texto plano desde el editor para poder leerlas y editarlas, encriptadas en release para que nadie las edite por accidente; con escritura atómica, respaldo y la posición del player.
 
 - [x] Crear `src/save/save_codec.gd`
   Funciones estáticas para escribir, leer, calcular el checksum, detectar partidas modificadas y validarlas. Es estático para que también lo use el Save Inspector (0.10). Código en [[gdd#guardado]].
@@ -207,6 +221,8 @@ Los presets de export (plain_saves en debug, excluir debug/scenarios y tests) pa
 
 ### 0.7 Componentes y EntityConfig · Hecho
 
+Crear las piezas reutilizables para todo lo que pega o recibe golpes (player, enemigos, trampas, jefe) y la ficha `EntityConfig` de cada tipo de entidad, con sus fichas y ataques en `data/`.
+
 - [x] Crear los componentes en `src/components/`
   `damage_info.gd` (los datos de un golpe), `health.gd` (vida e invulnerabilidad después de un golpe), `hurtbox.gd` (la zona que recibe golpes) y `hitbox.gd` (la zona que pega; a cada objetivo le pega una sola vez por ataque). Código en [[gdd#entidades-componentes]].
 - [x] Crear `src/components/attack_runner.gd`
@@ -235,6 +251,8 @@ El `AttackRunner` del GDD nunca prendía la hitbox (comparaba `monitoring` sin c
 **Relacionadas:** 0.11 Sistema de depuración
 
 ### 0.8 Enemigo sobre componentes · Hecho
+
+Pasar el esqueleto a los componentes de 0.7: que reciba daño por `Hurtbox` y `Health` en lugar de `take_hit`, con su ficha y su `AttackRunner`. Todavía no ataca: la IA de ataque es M1.
 
 - [x] Darle al esqueleto su ficha (`EntityConfig`)
   En `src/entities/enemy.gd`, agregar `@export var config: EntityConfig` y llamar `config.apply_to(self)` en `_ready`. Asignar `data/entities/skeleton.tres` en el Inspector del esqueleto.
@@ -265,6 +283,8 @@ Capas: la 5 es `Hurtbox`. La `Hurtbox` está en esa capa; la `Hitbox` detecta la
 **Relacionadas:** 0.9 Refactor del player; 0.11 Sistema de depuración
 
 ### 0.9 Refactor del player · Hecho
+
+Armar el player con componentes: el equipo sale de `GameState`, las hitboxes viven en el personaje con su `AttackRunner` y el lock-on pasa a un nodo propio, dejando `player.gd` y la máquina de estados solo con lo suyo.
 
 - [x] Crear `player/components/equipment.gd`
   Escucha `GameState.equipment_changed` y pone el modelo de cada ítem equipado en `Hand_R`, `Hand_L` o `BackShield`. El escudo va en la mano y en la espalda a la vez (`set_guard` alterna cuál se ve). Sacar de `player.tscn` la `Sword1H` y los dos `shield_badge` puestos a mano.
@@ -305,6 +325,8 @@ Hecho con el editor cerrado (escenas editadas en disco y caché regenerada con -
 
 ### 0.10 Save Inspector v0 · Hecho
 
+Un dock del editor para abrir, editar, validar y jugar partidas guardadas y escenarios, para probar situaciones raras sin tener que jugar hasta ahí.
+
 - [x] Crear el plugin `addons/epiphany_tools/` con un dock
   `plugin.cfg` + `plugin.gd`, con `EditorDock` y `add_dock()` como en `addons/scope_compass/scope_compass.gd`. Carpeta normal, no symlink.
 - [x] Listar partidas y escenarios
@@ -338,6 +360,8 @@ El Tree genérico de la primera versión se reemplazó por pestañas después de
 
 ### 0.12 Tests headless · Hecho
 
+Un runner de tests headless que se corre por línea de comandos y termina con código 1 si algo falla, para probar sin abrir el juego lo que se puede: guardado, datos de ítems y flags.
+
 - [x] Crear el runner `tests/run_tests.gd`
   Script que extiende `SceneTree`: recorre `tests/test_*.gd`, corre cada método `test_*` y termina con `quit(1)` si algo falló. Usar un `assert_eq()` propio que cuente fallos: un `assert()` que falla deja el proceso colgado en lugar de terminar.
 - [x] Correrlo por línea de comandos
@@ -358,6 +382,8 @@ Los presets de export (plain_saves en debug, excluir debug/scenarios y tests) pa
 **Relacionadas:** 0.3 Ítems: datos; 1.1 Daño, invulnerabilidad y knockback del player
 
 ### 0.13 Puente con el editor · Hecho
+
+Un servidor HTTP local en el editor para que Claude pueda manejarlo (registrar clases, correr y frenar escenas, leer el log, abrir y guardar) sin pedirle al usuario que le dé foco o haga clics.
 
 - [x] Servidor HTTP local en `epiphany_tools`
   `addons/epiphany_tools/bridge/editor_bridge.gd`: un `TCPServer` en `127.0.0.1:4713` que atiende pedidos HTTP chicos y responde JSON. Solo escucha en localhost.
@@ -380,6 +406,8 @@ Vida, invulnerabilidad breve, knockback, bloqueo direccional, roll, IA del esque
 - Pelear 1 contra 1 y poder perder.
 
 ### 1.1 Daño, invulnerabilidad y knockback del player · Hecho
+
+Que al player le duela: recibir daño por la `Hurtbox`, retroceder y parpadear durante una invulnerabilidad breve en la que no recibe otro golpe. Primer paso de M1, sobre `Health`, `Hurtbox` y `DamageInfo` de M0.
 
 - [x] Conectar `Hurtbox.hit` en `player.gd`
   `_on_hurtbox_hit(info)`: reduce el daño con `equipment.damage_reduction()` (mínimo 1) y llama `Health.damage()`. El bloqueo se suma en 1.2. Código en [[gdd#ventanas-ataque]].
@@ -408,6 +436,8 @@ El estado `Hurt` se alcanza desde cualquier estado (`anystate`); la animación e
 
 ### 1.2 Bloqueo direccional y golpe de escudo · Hecho
 
+Pilar 3, el escudo tiene doble función: bloquear de frente (cono de ±60°) anula el golpe con chispa y retroceso leve, y el golpe de escudo aturde al enemigo un momento. El reflejo con escudo espejo llega en M5.
+
 - [x] Implementar `_is_in_front()` con cono de ±60°
   `block_angle_deg` exportado. El modelo KayKit mira a +Z local. Código en [[gdd#ventanas-ataque]] ("Bloqueo direccional").
 - [x] `_on_blocked()`: chispa, retroceso leve y sonido
@@ -431,6 +461,8 @@ Cono: `block_angle_deg` (60) en player.gd, contra el +Z del modelo. Bloqueado: O
 
 ### 1.3 Esquiva (roll) con i-frames · Hecho
 
+Esquiva (roll) con i-frames en una ventana del roll, que cancela ataques y guardia, y buffer de input para que `dodge` y `attack` apretados un poco antes salgan igual.
+
 - [x] Estado `Dodging` con las animaciones `Dodge_*`
   `Dodge_Forward`, `Dodge_Backward`, `Dodge_Left`, `Dodge_Right`. Sin objetivo fijado siempre `Dodge_Forward` en la dirección del stick; con lock-on, la que corresponde a la dirección relativa.
 - [x] I-frames en una ventana del roll
@@ -453,6 +485,8 @@ Dodging: duración 0,45 s a 8 m/s; i-frames del 10 % al 75 % del roll (`Health.m
 **Relacionadas:** 0.9 Refactor del player
 
 ### 1.4 IA del esqueleto con `BTAttack` · Hecho
+
+El esqueleto es el enemigo que enseña a bloquear: tiene que ver al player, perseguirlo esquivando obstáculos, telegrafiar el ataque y pegar, reaccionar a golpes y aturdimiento, y morir. Usar las tareas de LimboAI que ya vienen y agregar solo las que falten.
 
 - [x] Crear `ai/tasks/bt_attack.gd`
   Una sola tarea de ataque para todos los BT: toma un `AttackData` y maneja el `AttackRunner`. Código en [[gdd#ventanas-ataque]].
@@ -485,6 +519,8 @@ Tareas propias en ai/tasks/: BTFindPlayer (rango de visión + línea de visión,
 
 ### 1.5 Muerte y reaparición del player · Hecho
 
+Cuando el player muere: animación de muerte, fundido y reaparición en el spawn del nivel con la vida llena, con los enemigos de vuelta en su posición. La reaparición en la entrada de la sala de mazmorra es 6.1.
+
 - [x] Estado `Dead`
   Animación `Death_A`, input bloqueado, los enemigos dejan de atacar (grupo `player_dead` o señal).
 - [x] Puntos de reaparición
@@ -508,6 +544,8 @@ Estado Dead (anystate, evento `die`): apaga el AnimationTree y deja Death_A; esp
 
 ### 1.6 HUD de corazones · Hecho
 
+Primera pieza de UI del juego: corazones con cuartos en el HUD, actualizados por señal y animados al perder y ganar vida, dejando `hud.tscn` preparado para sumar slots de ítems, llaves y la barra del jefe.
+
 - [x] Crear `src/ui/hud/hud.tscn`
   `CanvasLayer` con un `Control` anclado arriba a la izquierda y margen de zona segura. Instanciado por el nivel o por un autoload de UI.
 - [x] Corazones con cuartos
@@ -530,6 +568,8 @@ src/ui/hud/hud.tscn (CanvasLayer 10 + MarginContainer de zona segura 32/28 + HBo
 **Bloquea a:** 3.5 Slots X/Y en el HUD
 
 ### 1.7 Feel del combate · Hecho
+
+Que el combate se sienta: hit-stop, sacudida de cámara, flash blanco en el golpeado, chispas al bloquear, polvo al rodar y SFX placeholder, con todos los valores exportados para tunearlos desde el inspector.
 
 - [x] Hit-stop al conectar un golpe
   50–80 ms. Mejor congelar solo a los dos involucrados (`process_mode` o velocidad del AnimationTree) que tocar `Engine.time_scale`.
@@ -561,6 +601,8 @@ Cambio de objetivo moviendo el stick derecho de golpe (el mismo `look_*` que apu
 
 ### 2.1 Cambio de objetivo con el stick derecho · Hecho
 
+Hoy el lock-on siempre marca el más cercano. Cambiar de objetivo con el stick derecho entre candidatos válidos (no detrás de paredes), con feedback del salto y soltando el lock-on al perder el objetivo.
+
 - [x] Implementar `Targeting.cycle()`
   Lee `look_*` con umbral 0.7; un salto por movimiento del stick. Elige el candidato más alineado en espacio de pantalla. Código en [[gdd#player]].
 - [x] Candidatos válidos
@@ -588,6 +630,8 @@ Cambio después de jugarlo: el stick derecho ya no recorre la fila desde el obje
 
 ### 2.2 Componente `Aim` · Hecho
 
+Componente `Aim` con la dirección de apuntado (objetivo fijado, stick derecho o mouse), una retícula y el giro del modelo al usar un ítem. Lo consumen el arco, las bombas lanzadas y los ítems a distancia de M5 por `ItemUseContext.direction`.
+
 - [x] Crear `player/components/aim.gd`
   Fuentes FACING / STICK / MOUSE; con objetivo fijado gana el objetivo. Código en [[gdd#player]].
 - [x] Mouse: rayo cámara → plano del suelo
@@ -611,6 +655,8 @@ Aim (player/components/aim.gd) sigue al GDD: objetivo fijado > última fuente us
 
 ### 2.3 Controles de teclado y mouse · Hecho
 
+Pilar 5: gamepad y teclado/mouse son ciudadanos de primera. Definir el mapa de teclado y mouse, cambiar de objetivo con la rueda y detectar el dispositivo activo, para poder jugar sin gamepad. El remapeo es post-MVP.
+
 - [x] Definir el mapa de teclado y mouse
   Ideas del GDD: guardia en click derecho, ítems en `Q`/`R`, `Tab` para el inventario, rueda para cambiar de objetivo. Actualizar la tabla de [[gdd#input]].
 - [x] Agregar los eventos al `InputMap`
@@ -631,6 +677,8 @@ Mapa elegido: WASD, click izquierdo ataca, click derecho guardia, Shift izquierd
 **Referencias:** `gdd.md#input`, `gdd.md#pilares`
 
 ### 2.4 Encuadre de cámara con lock-on y apuntado · Hecho
+
+Ajustar el encuadre: con lock-on que entren el player y el objetivo, y al apuntar que la cámara se adelante hacia la dirección de `Aim` y vuelva suave, con el suavizado exportado. La cámara de salas es M6.
 
 - [x] Revisar el punto medio con lock-on
   Ya existe en `TopDownCamera`; limitar cuánto se aleja del player para que no salga de pantalla.
@@ -658,6 +706,8 @@ Pantallas Equipo e Ítems, asignar a X/Y, slots en el HUD, cofres, item get, rec
 
 ### 3.1 Menú de pausa y pila de pantallas · Hecho
 
+Base de todas las pantallas (inventario, mapa, opciones, título): una pila de menús y el menú de pausa, que congela el juego y tiene pestañas navegables con gamepad y teclado, más el theme base del juego.
+
 - [x] Crear `src/ui/menus/menu_stack.gd`
   Pila de pantallas: `push`/`pop`, la de arriba tiene el foco. Pausa el árbol con `get_tree().paused`; la UI con `process_mode = ALWAYS`.
 - [x] Abrir con `pause`, cerrar con `pause` o `ui_cancel`
@@ -681,6 +731,8 @@ MenuStack (autoload, CanvasLayer 50, process ALWAYS): push/pop, pausa el árbol 
 
 ### 3.2 Pantalla Equipo · Hecho
 
+Pantalla Equipo en el menú de pausa: ranuras de espada, escudo y armadura para equipar con `GameState.equip()`, con stats y preview del modelo. La cota reforzada (7.7) es el ítem que justifica esta pantalla en el MVP.
+
 - [x] Ranuras de espada, escudo y armadura
   Una fila por categoría; las ranuras sin ítem se muestran bloqueadas.
 - [x] Equipar con `GameState.equip()`
@@ -701,6 +753,8 @@ Página src/ui/menus/equipment_page.tscn dentro del menú de pausa (reemplaza el
 **Bloqueada por:** 3.1 Menú de pausa y pila de pantallas
 
 ### 3.3 Pantalla Ítems y asignación a X/Y · Hecho
+
+Pantalla Ítems: grilla de los ítems secundarios desde donde se asignan a X o Y, actualizada por `Inventory.changed`, con la asignación guardada en la partida.
 
 - [x] Grilla de ítems secundarios
   Ítems de categoría `USABLE`/`UPGRADE` del `Inventory`, con ícono, nombre, descripción y munición.
@@ -723,6 +777,8 @@ Página src/ui/menus/equipment_page.tscn dentro del menú de pausa (reemplaza el
 
 ### 3.4 Usar los ítems asignados · Hecho
 
+Usar el ítem asignado a X o Y: estado `UsingItem` que arma el `ItemUseContext` y llama `behavior.use()` en el momento justo de la animación, con feedback de "no se puede" cuando el ítem no se puede usar.
+
 - [x] Estado `UsingItem` en el `LimboHSM`
   `item_1`/`item_2` → busca el ítem en `GameState.item_buttons`, chequea `behavior.can_use()` y reproduce `behavior.get_animation()`.
 - [x] Armar el `ItemUseContext`
@@ -744,6 +800,8 @@ Página src/ui/menus/equipment_page.tscn dentro del menú de pausa (reemplaza el
 
 ### 3.5 Slots X/Y en el HUD · Hecho
 
+Slots X/Y en el HUD con el ícono y la munición del ítem asignado, actualizados al cambiar el inventario o la asignación, y con el ícono del botón según el dispositivo activo.
+
 - [x] Dos slots con ícono y munición
   En `hud.tscn`, abajo a la derecha (ver mockups). Vacío si no hay ítem asignado.
 - [x] Escuchar `Inventory.changed` y el cambio de asignación
@@ -762,6 +820,8 @@ Página src/ui/menus/equipment_page.tscn dentro del menú de pausa (reemplaza el
 **Relacionadas:** 3.3 Pantalla Ítems y asignación a X/Y
 
 ### 3.6 Cofres e item get · Hecho
+
+Cofres que se abren interactuando y dan su ítem con la secuencia de item get, con `GameState.give()` como entrada única, primer equipado automático y una flag para que el cofre no vuelva a dar el ítem.
 
 - [x] Crear `Interactable` e `InteractionDetector` mínimos
   `src/components/interactable.gd` y un `Area3D` en el player que elige el más cercano de frente al apretar `interact`. El prompt en pantalla es 4.1.
@@ -786,6 +846,8 @@ Página src/ui/menus/equipment_page.tscn dentro del menú de pausa (reemplaza el
 
 ### 3.7 Recolectables y tabla de drops · Hecho
 
+No hay moneda: los drops son lo que evita quedarse sin bombas ni flechas en la mazmorra. Recolectables y una tabla de drops ponderada que sueltan los enemigos al morir, solo con lo que el player puede usar.
+
 - [x] Escena `Pickup`
   `Area3D` con ítem y cantidad: corazón, flechas ×5, bombas ×3. Rebote al aparecer, un poco de imán hacia el player y parpadeo antes de desaparecer.
 - [x] Tabla de drops ponderada
@@ -804,6 +866,8 @@ Página src/ui/menus/equipment_page.tscn dentro del menú de pausa (reemplaza el
 **Relacionadas:** 1.4 IA del esqueleto con `BTAttack`
 
 ### 3.8 Íconos placeholder de los ítems · Hecho
+
+Un ícono placeholder coherente por cada `ItemData`, que se distinga a tamaño de HUD, para las pantallas y el HUD. No es arte final: la dirección de arte se decide en 10.7.
 
 - [x] Definir estilo y tamaño de íconos
   Un solo estilo (por ejemplo, silueta plana con contorno, 128 px, paleta corta) para que se lean juntos en la grilla.
@@ -833,6 +897,8 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 
 ### 4.1 Prompt de acción contextual · Hecho
 
+Prompt de acción contextual en el HUD: muestra qué hace `interact` ("Abrir", "Leer", "Empujar") con el `Interactable` más cercano y de frente, así el jugador sabe con qué va a interactuar. Se oculta en combate, en menús y cuando el player no puede actuar.
+
 - [x] `InteractionDetector` elige el mejor `Interactable`
   Más cercano y de frente; prioridad exportada para desempatar (cofre > tablilla).
 - [x] HUD: botón + texto del prompt
@@ -851,6 +917,8 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 **Bloqueada por:** 3.6 Cofres e item get
 
 ### 4.2 Caja de texto · Hecho
+
+Caja de texto propia para tablillas e item get: letra por letra, varias páginas, pausa el juego y se avanza con `interact`/`attack` sin saltear páginas sin querer. Los textos van como datos para dejar lista la localización.
 
 - [x] Crear `src/ui/text_box/`
   Texto que aparece letra por letra, varias páginas, avanzar con `interact`/`attack`, saltar la animación con el mismo botón.
@@ -873,6 +941,8 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 
 ### 4.3 Tablillas · Hecho
 
+Tablillas legibles (`Tablet`) con su texto, que pueden marcarse como leídas para que el mapa muestre las pistas. Escribir dos de prueba (ambientación y pista de puzzle) para validar el tono de la historia.
+
 - [x] Escena `Tablet`
   `StaticBody3D` con `Interactable` ("Leer") y un `TextData` exportado.
 - [x] Marcar como leída (opcional)
@@ -891,6 +961,8 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 **Bloqueada por:** 4.2 Caja de texto
 
 ### 4.4 Vasijas y pasto · Hecho
+
+Vasijas rompibles y pasto cortable que sueltan drops según su `DropTable` y reaparecen al recargar, para dar vida al mundo y corazones donde hagan falta. Levantar y lanzar vasijas es opcional y recortable.
 
 - [x] Vasija rompible
   `Hurtbox` de equipo neutral: se rompe con espada, bomba o al tirarla. Suelta según su `DropTable`.
@@ -912,6 +984,8 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 **Bloqueada por:** 3.7 Recolectables y tabla de drops
 
 ### 4.5 Flags del mundo persistentes · Hecho
+
+Componente `PersistentFlag` para que cofres, puertas, muros, interruptores y tablillas recuerden su estado entre partidas, con aviso en el editor si el flag está mal escrito y una convención de nombres (`ow_*`, `d1_*`). Es lo que hace que el mundo recuerde lo que hiciste.
 
 - [x] Componente `PersistentFlag`
   Nodo que, dado un `flag`, lee el estado al `_ready` y lo escribe al cambiar. Lo usan cofres, puertas, muros, interruptores y tablillas.
@@ -935,6 +1009,8 @@ Estilo: silueta plana con contorno oscuro (#1a1410), SVG de 128 px en assets/ui/
 ### 4.6 Integrar Dialogue Manager · Hecho
 
 **Prioridad:** media
+
+Integrar el plugin Dialogue Manager con nuestra `TextBox` como globo y pasar tablillas e item get a archivos `.dialogue`. Así hay textos condicionales con flags y traducciones desde ya, sin rehacerlos cuando haya muchos textos.
 
 - [x] Instalar Dialogue Manager y verificar compatibilidad
   Plugin de Nathan Hoad en addons/. Probar con Godot 4.8-dev7: que el editor lo cargue sin errores y que los tests headless sigan pasando.
@@ -962,6 +1038,8 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 ### 5.1 Proyectiles · Hecho
 
+Proyectiles base (`Projectile`, extiende `Hitbox`) que chocan con el mundo y que el escudo espejo puede reflejar hacia quien los tiró. Son la base de los orbes de la torreta, las flechas y el reflejo con el escudo.
+
 - [x] Crear `src/entities/projectile.gd`
   Extiende `Hitbox`: velocidad, vida, `reflect()`. Código en [[gdd#entidades-componentes]].
 - [x] Chocar con el mundo
@@ -983,6 +1061,8 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 ### 5.2 Torreta / ojo menor · Hecho
 
+Torreta / ojo menor: enemigo fijo que apunta, telegrafía y dispara orbes reflejables. Solo cae con su propio orbe reflejado o con flechas, para enseñar el reflejo con el escudo espejo.
+
 - [x] `EntityConfig` y escena de la torreta
   Estática, con `Health`, `Hurtbox` y un `Muzzle`.
 - [x] BT: apuntar, telegrafiar y disparar orbes
@@ -1001,6 +1081,8 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 **Bloqueada por:** 1.4 IA del esqueleto con `BTAttack`; 5.1 Proyectiles
 
 ### 5.3 Arco y flechas · Hecho
+
+Arco y flechas: mantener para apuntar y soltar para disparar, con munición limitada y flechas que se clavan. Suma `EyeSwitch`, un interruptor que solo reacciona a proyectiles, para puzzles a distancia (sala 6 y el carcaj).
 
 - [x] `ItemData` de arco y flecha con `ProjectileBehavior`
   Munición `arrow`, `max_stack` 30 (el carcaj grande suma con `_capacity_bonus`).
@@ -1023,6 +1105,8 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 ### 5.4 Bombas · Hecho
 
+Bombas que se colocan delante o se lanzan en arco hacia la mira, con mecha y explosión que daña a todos (el player incluido) y empuja objetos físicos. Son la llave de los muros agrietados y del gating del overworld.
+
 - [x] `PlaceBehavior` y `ItemData` de bombas
   Coloca la bomba delante; si se está apuntando, la lanza en arco hacia `Aim`. Animación `Throw`.
 - [x] Bomba física
@@ -1044,6 +1128,8 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 ### 5.5 Muros agrietados · Hecho
 
+Muros agrietados (`CrackedWall`) que solo se rompen con explosiones, con una grieta legible desde la cámara y estado persistente por flag. Es el primer uso de las bombas para abrir caminos y secretos.
+
 - [x] Escena `CrackedWall`
   Solo reacciona a daño `explosive`. Al romperse: animación o reemplazo por escombros, polvo y sonido de secreto.
 - [x] Persistencia con flag
@@ -1062,6 +1148,8 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 **Bloqueada por:** 4.5 Flags del mundo persistentes; 5.4 Bombas
 
 ### 5.6 Escudo espejo y haz de luz · Hecho
+
+Escudo espejo y haz de luz: un `LightBeam` que rebota en espejos y en el escudo mientras se bloquea, y un cristal (`LightReceiver`) que se activa al recibirlo. Es la mecánica central que abre el sello del templo y los puzzles de reflejo.
 
 - [x] `ItemData` y modelo del escudo espejo
   Categoría `SHIELD`, con `reflects`. Material reflectivo placeholder.
@@ -1084,6 +1172,8 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 ### 5.7 Poción y botella · Hecho
 
+Poción y botella: tomar la poción cura y deja la botella vacía en el inventario. El player queda vulnerable mientras toma, como riesgo/recompensa.
+
 - [x] `ItemData` de botella vacía y poción
   `ConsumableBehavior` con `heal` y `leaves` = botella vacía. Código en [[gdd#items-datos]].
 - [x] Animación de tomar
@@ -1098,6 +1188,8 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 **Bloqueada por:** 3.4 Usar los ítems asignados
 
 ### 5.8 Sala de pruebas de ítems · Hecho
+
+Sala de pruebas (`levels/sandbox_items.tscn`) con un puzzle gris por ítem: muro bombable, ojo lejano, reflejo de luz y orbe de torreta, accesible desde el escenario `full_inventory`. Cierra el hito y queda como banco de pruebas de regresión.
 
 - [x] Un puzzle por ítem en un nivel sandbox
   `levels/sandbox_items.tscn`: muro bombable, ojo-interruptor lejano, reflejo de luz, orbe de torreta. Grises.
@@ -1115,6 +1207,8 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 ### 5.9 Protección del escudo según el tipo de daño y por la espalda · Hecho
 
 **Prioridad:** media
+
+Que cada escudo frene ciertos tipos de daño según `DamageInfo.element` (la madera frena flechas pero no explosiones ni fuego) y que el escudo en la espalda también proteja de proyectiles. El espejo refleja siempre que intercepta, porque es un espejo.
 
 - [x] Qué frena cada escudo, como dato
   ItemData.protects_against: Array[StringName] con los elementos de DamageInfo.element que el escudo frena ("" = físico: espadas, flechas, orbes). Madera: solo físico; no frena explosiones ("explosive", 5.4) ni fuego ("fire"). Espejo: físico, más reflects. Nada frena explosiones (a confirmar jugando).
@@ -1140,6 +1234,8 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 ### 6.1 `Room` y cámara por sala · Hecho
 
+`Room`: sala de mazmorra con la cámara limitada a sus bordes y transición deslizada al pasar de una a otra. Marca la sala como visitada, muestra su nombre la primera vez y es el punto de reaparición al morir en la mazmorra.
+
 - [x] Crear `src/world/room.gd`
   `Area3D` con `room_index`, `camera_limits` y `display_name`. Código en [[gdd#mundo]].
 - [x] Cámara clampeada a la sala
@@ -1162,6 +1258,8 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 **Bloqueada por:** 0.9 Refactor del player
 
 ### 6.2 Puertas · Hecho
+
+Puertas de mazmorra (`Door`): abierta, con llave, persiana, de interruptor y del jefe, que se abren con animación y sonido. Las persianas encierran hasta limpiar la sala y las de llave quedan abiertas entre partidas.
 
 - [x] Crear `src/world/door.gd`
   Tipos `OPEN`, `LOCKED`, `SHUTTER`, `SWITCH`, `BOSS`. Código en [[gdd#mundo]].
@@ -1186,6 +1284,8 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 ### 6.3 Llaves de mazmorra y HUD · Hecho
 
+Llaves chicas y del jefe que van al `DungeonState` de la mazmorra actual, con contador en el HUD solo dentro de la mazmorra. Para eso la escena de la mazmorra setea `GameState.current_dungeon`.
+
 - [x] `GameState.current_dungeon` lo setea la escena de la mazmorra
   Al salir vuelve a `&""`.
 - [x] Llave chica y llave del jefe como `ItemData`
@@ -1204,6 +1304,8 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 **Bloqueada por:** 3.6 Cofres e item get; 6.2 Puertas
 
 ### 6.4 Bloques por grilla · Hecho
+
+Bloques que se empujan de a una celda (`PushBlock`) con el estado `Pushing` del player, sin meterse en paredes, bloques ni enemigos. Vuelven a su lugar al salir de la sala, salvo que el puzzle esté resuelto, para que no quede trabado.
 
 - [x] Crear `src/world/push_block.gd`
   `AnimatableBody3D` que se mueve 1 celda con tween tras empujar ≈0.3 s contra él.
@@ -1226,6 +1328,8 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 ### 6.5 Interruptores y cableado · Hecho
 
+Interruptor de piso y una interfaz común `activated`/`deactivated` con `EyeSwitch` y `LightReceiver`, para cablear puertas y aparatos desde el editor (todos o alguno) sin código por sala.
+
 - [x] Interruptor de piso
   `FloorSwitch`: lo activa el player, un bloque o un `RigidBody3D`. Modos: mantener / una vez.
 - [x] Interfaz común `activated`/`deactivated`
@@ -1245,6 +1349,8 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 
 ### 6.6 Mapa, brújula y pantalla de mapa · Hecho
 
+Mapa y brújula de la mazmorra como ítems y la pantalla Mapa (pestaña de pausa y acción `map`): salas visitadas, todas con mapa, cofres y jefe con brújula, y la posición del player. El mapa se arma solo desde las `Room`; el overworld lleva una imagen fija.
+
 - [x] Datos del mapa en cada `Room`
   Celda en la grilla del mapa (`map_cell`) y tamaño. El mapa se arma solo leyendo las salas.
 - [x] Pantalla Mapa (pestaña de pausa y acción `map`)
@@ -1263,6 +1369,8 @@ Proyectiles y reflejo con el escudo, arco, bombas y muros agrietados, poción.
 **Bloqueada por:** 3.1 Menú de pausa y pila de pantallas; 6.1 `Room` y cámara por sala
 
 ### 6.7 Mazmorra de prueba: tres salas grises · Hecho
+
+Mazmorra de prueba de tres salas grises conectadas, armadas con un kit de bloques en `GridMap`, que ejerciten bloque e interruptor, persiana con esqueletos y puerta con llave y cofre. Cierra el hito y deja el kit para M7 y M8.
 
 - [x] Kit de bloques grises
   `MeshLibrary` con pared, piso, columna, puerta y escalón sobre las texturas de prototipo; armar las salas con `GridMap`.
@@ -1294,6 +1402,8 @@ Zona chica con el gating bombas → escudo espejo → sello del templo, y los se
 
 ### 7.1 Diseño del layout del overworld · Hecho
 
+Diseñar el layout del overworld antes de construir: 6–8 pantallas con camino crítico, atajos y secretos, verificando el gating bombas → escudo espejo → sello y la curva de ritmo. Cierra la decisión abierta del layout en el GDD.
+
 - [x] Diagrama de 6–8 pantallas
   Inicio, pradera, cueva de bombas, santuario, entrada al templo y los 3 secretos. Camino crítico y atajos.
 - [x] Verificar el gating
@@ -1316,6 +1426,8 @@ Hecho 2026-10-08: layout de 8 zonas en GDD §7.1 (diagrama, tabla por zona, veri
 **Bloquea a:** 7.2 Blockout del overworld
 
 ### 7.2 Blockout del overworld · Hecho
+
+Blockout gris del overworld (`levels/overworld.tscn`) con el kit de 6.7: zonas con nombre y reaparición, navmesh, esqueletos y pasto en la pradera, y objetos físicos. `levels/test.tscn` queda como nivel de pruebas.
 
 - [x] Crear `levels/overworld.tscn`
   Terreno y límites en gris con el kit de 6.7; `levels/test.tscn` queda como nivel de pruebas.
@@ -1340,6 +1452,8 @@ Hecho 2026-10-08: `levels/overworld.tscn` con el kit gris + piezas de exterior (
 
 ### 7.3 Cambio de escena overworld ↔ mazmorra · Hecho
 
+`Portal` para pasar entre overworld y mazmorra con fundido y carga en segundo plano, sin congelar la imagen y apareciendo en la puerta correcta. Guarda al cambiar de escena para no perder progreso.
+
 - [x] `Portal`
   Área con escena destino y `spawn_point`. Actualiza `GameState.spawn_scene`, `spawn_point` y `current_dungeon`.
 - [x] Fundido y carga en segundo plano
@@ -1361,6 +1475,8 @@ Hecho 2026-10-08: `Portal` + `SaveManager.travel_to()` (pausa, fundido, `load_th
 
 ### 7.4 Cueva de las bombas · Hecho
 
+Cueva de las bombas: cofre con la bolsa de bombas, tablilla que enseña a usarlas y un muro agrietado justo después para probarlas enseguida. Es el primer paso del gating del overworld.
+
 - [x] Interior de la cueva
   Una o dos salas con `Room` (cámara de sala) o zona abierta, según el layout.
 - [x] Cofre con la bolsa de bombas
@@ -1379,6 +1495,8 @@ Hecho 2026-10-08: `Portal` + `SaveManager.travel_to()` (pausa, fundido, `load_th
 **Bloqueada por:** 5.4 Bombas; 5.5 Muros agrietados; 7.2 Blockout del overworld
 
 ### 7.5 Santuario del escudo espejo · Hecho
+
+Santuario del escudo espejo detrás del muro agrietado: un desafío corto, el cofre grande con el escudo y un cristal de práctica que enseña el reflejo de luz antes del sello del templo.
 
 - [x] Santuario detrás del muro agrietado
   Sala chica con un desafío corto antes del cofre (combate o bloques).
@@ -1399,6 +1517,8 @@ Hecho 2026-10-08: `Portal` + `SaveManager.travel_to()` (pausa, fundido, `load_th
 
 ### 7.6 Sello del templo · Hecho
 
+Sello del templo: puzzle de luz con fuente, espejos fijos y el escudo espejo que abre la entrada a la mazmorra para siempre. Es el primer momento de *doom*: temblor al abrirse y temblores lejanos al acercarse.
+
 - [x] Puzzle del sello
   Fuente de luz + espejos fijos + el escudo: hay que llevar el haz hasta el sello.
 - [x] Abrir la entrada
@@ -1418,6 +1538,8 @@ Hecho 2026-10-08: `Portal` + `SaveManager.travel_to()` (pausa, fundido, `load_th
 
 ### 7.7 Secretos del overworld · Hecho
 
+Tres secretos del overworld: botella con poción tras un muro agrietado, cota reforzada en un puzzle de bloques y carcaj grande en un ojo que solo se alcanza con el arco, después de la mazmorra. Si falta tiempo se recortan primero el carcaj y después la cota.
+
 - [x] Botella con poción tras un muro agrietado
   Opcional.
 - [x] Cota reforzada en un puzzle de bloques
@@ -1436,6 +1558,8 @@ Hecho 2026-10-08: gruta (muro + poción + tablilla con pista), arboleda (dos blo
 **Bloqueada por:** 5.3 Arco y flechas; 6.4 Bloques por grilla; 7.2 Blockout del overworld
 
 ### 7.8 Escenarios del overworld · Hecho
+
+Escenarios `start`, `bombs_only` y `pre_temple` para arrancar en cada etapa del overworld desde el Save Inspector, y un recorrido completo de `start` al templo y de vuelta. Cierra el hito: ida y vuelta entre overworld y mazmorra.
 
 - [x] Crear `start`, `bombs_only` y `pre_temple`
   En `debug/scenarios/`, desde el Save Inspector.
@@ -1461,6 +1585,8 @@ Las 8 salas en bloques grises, el arco a mitad de camino, la llave del jefe.
 
 ### 8.1 Layout de la mazmorra · Hecho
 
+Cerrar el layout de la mazmorra antes de construirla: cómo se conectan las 8 salas y el jefe alrededor de un hub, dónde va el arco a mitad de camino y la curva de *doom*, con llaves contadas para que ningún orden de recorrido deje al jugador trabado.
+
 - [x] Diagrama de conexiones de las 8 salas + jefe
   Hub central con 4 salidas ([[gdd#mazmorra]]).
 - [x] Contar llaves y puertas con llave
@@ -1483,6 +1609,8 @@ Hecho 2026-10-08: diagrama, tabla de puertas, conteo de llaves (2 y 2, la llave 
 **Bloquea a:** 8.3 Salas 1–2: vestíbulo y hub
 
 ### 8.2 Esqueleto con escudo · Hecho
+
+Un enemigo que no se resuelva a espadazos: un esqueleto con escudo que bloquea de frente y obliga a flanquearlo, usar bombas o romperle la guardia con un golpe de escudo. Más lento y torpe para girar que el común.
 
 - [x] `EntityConfig` y escena
   Variante del esqueleto con escudo equipado.
@@ -1507,6 +1635,8 @@ Hecho 2026-10-08: `shield_skeleton.tscn` + `data/entities/shield_skeleton.tres`.
 
 ### 8.3 Salas 1–2: vestíbulo y hub · Hecho
 
+Construir el vestíbulo y el hub del templo: la sala 1 enseña el bloque por grilla con su interruptor y la persiana, y la sala 2 reparte el recorrido con 4 salidas (con llave, con persiana, la del jefe sellada y una libre) y esqueletos.
+
 - [x] Sala 1: bloque por grilla → interruptor → persiana
 - [x] Sala 2: hub con 4 salidas y esqueletos
   Con llave, con persiana, la del jefe (sellada) y una libre.
@@ -1523,6 +1653,8 @@ Hecho 2026-10-08: `shield_skeleton.tscn` + `data/entities/shield_skeleton.tres`.
 
 ### 8.4 Salas 3–4: galería de trampas y sala agrietada · Hecho
 
+Las salas 3 y 4 del templo, resolubles sin el arco: una galería donde se reflejan los orbes de las torretas a un cristal para ganar una llave chica, y una sala agrietada donde las bombas abren el camino al mapa.
+
 - [x] Sala 3: reflejar orbes de torretas a un cristal
   Da una llave chica.
 - [x] Sala 4: muro bombable y bombas que empujan bloques físicos
@@ -1537,6 +1669,8 @@ Hecho 2026-10-08: `shield_skeleton.tscn` + `data/entities/shield_skeleton.tres`.
 **Bloqueada por:** 5.2 Torreta / ojo menor; 5.4 Bombas; 8.3 Salas 1–2: vestíbulo y hub
 
 ### 8.5 Sala 5: arena y arco · Hecho
+
+La arena del templo: oleadas de enemigos que cierran la sala hasta vencer la última y, de premio, el cofre grande con el arco, que abre la segunda mitad de la mazmorra. Morir a mitad tiene que reiniciar las oleadas.
 
 - [x] Oleadas
   `WaveSpawner`: las oleadas aparecen al entrar; la persiana se abre al terminar la última.
@@ -1555,6 +1689,8 @@ Hecho 2026-10-08: `shield_skeleton.tscn` + `data/entities/shield_skeleton.tres`.
 
 ### 8.6 Salas 6–7: ojos y puzzle combinado · Hecho
 
+Las salas 6 y 7, donde se usa el arco recién ganado: ojos-interruptor sobre un abismo que dan la brújula y una llave chica, y un puzzle que combina bloques, reflejo y flechas para conseguir la llave del jefe.
+
 - [x] Sala 6: ojos-interruptor sobre un abismo
   Solo con flechas. Da la brújula y una llave chica. Caer al abismo: daño y vuelta a la entrada.
 - [x] Sala 7: bloques + reflejo + flechas en secuencia
@@ -1572,6 +1708,8 @@ Hecho 2026-10-08: `shield_skeleton.tscn` + `data/entities/shield_skeleton.tres`.
 
 ### 8.7 Sala 8: antesala · Hecho
 
+La antesala antes del jefe: un respiro con vasijas de corazones, una tablilla que lo anticipa y la puerta del jefe. Funciona de checkpoint: morir contra el jefe devuelve acá.
+
 - [x] Vasijas con corazones, tablilla y puerta del jefe
   La tablilla anticipa al jefe.
 - [x] Checkpoint antes del jefe
@@ -1588,6 +1726,8 @@ Hecho 2026-10-08: `shield_skeleton.tscn` + `data/entities/shield_skeleton.tres`.
 **Bloqueada por:** 4.3 Tablillas; 4.4 Vasijas y pasto; 8.6 Salas 6–7: ojos y puzzle combinado
 
 ### 8.8 Recorrido completo y escenarios de la mazmorra · Hecho
+
+Cerrar el hito comprobando que la mazmorra se recorre entera de la entrada a la puerta del jefe, sin softlocks (sin bombas o flechas, bloques trabados, puertas cerradas del lado equivocado), y dejar los escenarios `dungeon_no_bow`, `pre_boss` y `boss_key_door_locked` para probarla.
 
 - [x] Escenarios `dungeon_no_bow`, `pre_boss` y `boss_key_door_locked`
   El último, inconsistente a propósito, para probar la validación.
@@ -1617,6 +1757,8 @@ Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 
 
 ### 9.1 Integrar el modelo del jefe · Hecho
 
+Traer al proyecto el modelo del jefe (el ojo con manos) armado como piezas que mueve el código, sin rig: ojo que mira, párpados, manos con tres poses y sus sockets, a una escala que entre entera en la sala del jefe.
+
 - [x] Traer el modelo del jefe al proyecto
   Las mallas de `assets/epiphany/meshes/jefe/` (salen de `tools/blender/build_jefe.py`), armadas en una escena.
 - [x] Armar la jerarquía que mueve el código
@@ -1636,6 +1778,8 @@ Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 
 
 ### 9.2 Arena del jefe y barra de vida · Hecho
 
+Preparar el escenario de la pelea: la sala del jefe cierra la puerta al entrar, encuadra la arena entera, corre una intro corta y salteable que presenta al ojo, y el HUD muestra la barra de vida del jefe.
+
 - [x] Sala del jefe con `Room`
   Límites de cámara que encuadran toda la arena; puerta que se cierra al entrar.
 - [x] Intro corta
@@ -1652,6 +1796,8 @@ Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 
 **Bloqueada por:** 6.1 `Room` y cámara por sala; 9.1 Integrar el modelo del jefe
 
 ### 9.3 Arquitectura del jefe · Hecho
+
+La base de la IA del jefe: el ojo y cada mano como entidades con su vida y sus golpes, fases con `LimboHSM` que corren su propio BT y un blackboard compartido que elige el ataque por utilidad para que no sea predecible.
 
 - [x] Jefe + manos como entidades
   Cada mano con su `Health`, `Hurtbox`, `Hitbox` y `AttackRunner`; el ojo con los suyos.
@@ -1672,6 +1818,8 @@ Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 
 
 ### 9.4 Fase 1: manos · Hecho
 
+Primera fase del jefe: las manos golpean el piso avisando con una sombra, agarran al player y quedan aturdidas tras el golpe, dando la ventana para pegarles. Aturdir las dos pasa a la fase 2; tiene que poder ganarse solo con bloqueo y roll.
+
 - [x] Golpe al piso telegrafiado
   Sombra en el suelo que se achica antes del impacto; onda de choque.
 - [x] Agarre
@@ -1691,6 +1839,8 @@ Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 
 
 ### 9.5 Fase 2: el ojo · Hecho
 
+Segunda fase: el ojo se abre y pasa a ser el blanco. Una flecha al ojo o devolverle sus orbes con el escudo espejo lo tira aturdido para los espadazos, mientras las manos regeneradas siguen presionando.
+
 - [x] El ojo se abre
   Transición con temblor; las manos se regeneran.
 - [x] Flecha al ojo → cae aturdido
@@ -1707,6 +1857,8 @@ Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 
 **Bloqueada por:** 5.1 Proyectiles; 5.3 Arco y flechas; 9.4 Fase 1: manos
 
 ### 9.6 Muerte del jefe y final · Hecho
+
+Cerrar la pelea y el hito: el jefe muere con su animación y flag `d1_boss_defeated`, deja un contenedor de corazón, aparece el portal de salida y el juego llega a un final. Se puede terminar el juego.
 
 - [x] Animación de muerte y flag `d1_boss_defeated`
   Las manos caen, la sala se calma.
@@ -1729,6 +1881,8 @@ Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 
 
 ### 9.7 Fase 3 (recortable) · Hecho
 
+Fase 3 opcional (primera en la lista de recortes): por debajo de cierto umbral de vida el ojo marca el piso antes de golpes de área y combina sus patrones con los de las manos. Solo si sobra tiempo.
+
 - [x] El ojo marca el piso antes de golpes de área
 - [x] Combinar patrones de manos y ojo
 
@@ -1743,6 +1897,8 @@ Integrar el ojo con manos (piezas que mueve el código) y armar las fases 1 y 2 
 ### 9.8 Portal de salida en la sala del jefe · Hecho
 
 **Prioridad:** media · **Etiquetas:** `mazmorra`
+
+Una salida de la sala del jefe: un portal en el centro de la arena que lleva a la entrada del templo en el overworld, oculto hasta que un flag (el del jefe vencido, en 9.6) lo active.
 
 - [x] Portal.required_flag: oculto hasta que el flag sea verdadero
 - [x] Escena warp_portal.tscn en el centro de la sala del jefe, al overworld (Spawn_templo)
@@ -1760,6 +1916,8 @@ Título, selección de partida, game over, opciones, ambientación del doom, aud
 - MVP jugable por otra persona.
 
 ### 10.1 Pantalla de título · Hecho
+
+El juego necesita una puerta de entrada: una pantalla de título con logo y menú (Continuar, Nueva partida, Opciones, Salir) navegable con gamepad y teclado, que pase a ser la escena principal sin romper `--scenario=` ni la carga de escenarios en debug.
 
 - [x] Logo y menú
   Continuar / Nueva partida / Opciones / Salir. Navegable con gamepad y teclado.
@@ -1781,6 +1939,8 @@ Hecho 2026-10-09: título como `run/main_scene` (mockup Main), `MenuItem` y `Hin
 **Bloqueada por:** 3.1 Menú de pausa y pila de pantallas
 
 ### 10.2 Selección de partida y autosave · Hecho
+
+Que el jugador elija partida y no pierda progreso: pantalla de ranuras con corazones, ubicación y tiempo jugado, borrar con confirmación y un autosave en momentos clave con indicador en pantalla, sin que un corte a mitad de guardado rompa la partida.
 
 - [x] Decidir 1 o 3 ranuras
   Cerrar la decisión en [[gdd#decisiones-abiertas]].
@@ -1804,6 +1964,8 @@ Hecho 2026-10-09: 3 ranuras (decisión cerrada), `FileSelect` + `SlotCard` (mock
 
 ### 10.3 Game over · Hecho
 
+Reemplazar el fundido al morir por una pantalla de game over con Continuar (desde la entrada de la sala o el último checkpoint) o Guardar y salir, que lleve al lugar correcto en overworld, mazmorra y jefe.
+
 - [x] Pantalla al morir
   Continuar (desde la entrada de la sala / último checkpoint) o Guardar y salir.
 - [x] Reemplaza el fundido de 1.5
@@ -1817,6 +1979,8 @@ Hecho 2026-10-09: 3 ranuras (decisión cerrada), `FileSelect` + `SlotCard` (mock
 **Bloqueada por:** 1.5 Muerte y reaparición del player; 10.1 Pantalla de título
 
 ### 10.4 Opciones · Hecho
+
+Un menú de opciones, desde el título y la pausa, para lock-on mantener/alternar, sensibilidad de apuntado y volúmenes, guardado en `user://settings.cfg` aparte de la partida para que se mantenga al reiniciar.
 
 - [x] Lock-on mantener/alternar, sensibilidad de apuntado, volúmenes
 - [x] Guardar en `user://settings.cfg`
@@ -1837,6 +2001,8 @@ Hecho 2026-10-09: autoload `Settings` + `OptionsPanel` (todo el mockup Options; 
 
 ### 10.5 Audio · Hecho
 
+Darle sonido al juego: buses con volumen desde Opciones, SFX y música conseguidos con sus licencias, variación para que los sonidos repetidos no suenen idénticos y música por capas que crece con el *doom* de la mazmorra.
+
 - [x] Buses Master / Music / SFX / UI / Ambience
   Volúmenes en dB desde Opciones (10.4).
 - [x] Conseguir SFX y música
@@ -1855,6 +2021,8 @@ Hecho 2026-10-09: buses (vía `Settings`), SFX de Kenney CC0 con variación, son
 **Referencias:** `gdd.md#historia`
 
 ### 10.6 Ambientación del doom · Hecho
+
+Que el *doom* se sienta sin cronometrarlo (pilar 4): cada sala del templo con un nivel que mueve luz hacia el rojo, niebla, polvo, grietas, temblores y murmullo, para que la progresión de calma a latido se note sin leer nada.
 
 - [x] Nivel de *doom* por sala
   Valor 0..1 exportado en `Room` que mueve luz, niebla y partículas.
@@ -1877,6 +2045,8 @@ Hecho 2026-10-09: `Room.doom` + `DoomAmbience` (luz, niebla, polvo, grietas con 
 
 ### 10.7 Dirección de arte y pasada visual · Hecho
 
+Decidir la dirección de arte (KayKit + prototipo o propia), escribir una guía de estilo corta y reemplazar los placeholders críticos (HUD, íconos, cofres, puertas, muros agrietados que se lean como secreto) para que overworld, mazmorra y HUD parezcan el mismo juego.
+
 - [x] Decidir: KayKit + prototipo o dirección propia
   Cerrar la decisión en [[gdd#decisiones-abiertas]].
 - [x] Guía de estilo corta
@@ -1893,6 +2063,8 @@ Hecho 2026-10-09: decisión cerrada (KayKit + prototipo pulido) y guía de estil
 **Referencias:** `gdd.md#decisiones-abiertas`
 
 ### 10.8 Pasada de rendimiento · Revisión
+
+Asegurar 60 FPS en la máquina más floja de los playtesters: perfilar las peores escenas (arena con oleadas, overworld con pasto, jefe) y arreglar lo que se mida.
 
 - [x] Presupuesto de frame
   60 FPS en la máquina más floja de los playtesters.
@@ -1912,6 +2084,8 @@ Hecho 2026-10-09: decisión cerrada (KayKit + prototipo pulido) y guía de estil
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
 ### 10.9 Build para playtesters · Revisión
+
+Un build instalable para playtesters en Linux, Windows y macOS: plantillas de export con LimboAI, presets sin escenarios ni tests, clave de guardado propia y un script para compilar por línea de comandos.
 
 - [x] Plantillas de export de LimboAI (oficial 1.8.1)
   Los template_release de Linux, Windows, macOS y web (wasm32 nothreads) salen del gdextension-4.6 oficial de LimboAI 1.8.1; el editor sigue con el build parchado (el parche es solo UI del editor). Probado 2026-10-10: export release de Linux y Windows, y el build de Linux corre el templo (LimboHSM del player, BTs de enemigos) sin errores.
@@ -1938,6 +2112,8 @@ Hecho 2026-10-09: decisión cerrada (KayKit + prototipo pulido) y guía de estil
 
 ### 10.10 Publicar en itch.io y playtest · Pendiente
 
+Cerrar el MVP: publicar el juego en itch.io para un grupo restringido, con instrucciones y una forma clara de reportar bugs, y observar una sesión de playtest con alguien que no lo vio, registrando lo que se encuentre.
+
 - [ ] Página privada o restringida en itch.io
   Con instrucciones y controles.
 - [ ] Subir con `butler push` a canales por plataforma
@@ -1961,6 +2137,8 @@ Skills: `workflows:itch-publish`.
 
 **Prioridad:** media · **Etiquetas:** `ui`
 
+Pasar a escenas `.tscn` la UI que todavía se arma por código (filas de stats, pestañas Equipo y Mapa, corazones), como pide la regla de que los scripts solo llenen datos, y un test que impida volver a crear Controls con `.new()` en `src/ui`.
+
 - [x] Filas de stats de ItemDetail como escena
   item_detail.gd add_stat arma HBox + Labels + MarginContainer + HSeparator con .new(). Pasar a stat_row.tscn.
 - [x] Pestaña Equipo: grilla y ranuras como escenas
@@ -1978,6 +2156,8 @@ Skills: `workflows:itch-publish`.
 
 **Prioridad:** baja · **Etiquetas:** `combate`
 
+`Targeting.targeting_range` pisa en `_ready` el radio de la forma del detector, así que cambiarla en el editor no tiene efecto. Dejar una sola fuente para el rango de fijado y que el inspector muestre el valor real.
+
 - [x] Decidir la fuente única del rango
   O se edita solo Targeting.targeting_range (y la forma se oculta/regenera), o Targeting lee el radio de la forma y se borra el export.
 - [x] Que el inspector refleje el valor real
@@ -1993,6 +2173,8 @@ Skills: `workflows:itch-publish`.
 
 **Prioridad:** media · **Etiquetas:** `ui`
 
+Sacar código de UI que reemplaza lo que el tema ya resuelve, empezando por el ▶ de `MenuItem` (que puede ser el ícono del tema), y revisar el resto de los scripts de UI por lo mismo, sin cambios visuales.
+
 - [x] MenuItem sin script: ▶ por ícono del tema
   MenuItem/icons/icon = textura ▶, icon_normal_color/hover alpha 0, icon_focus_color dorado. Borrar label/_refresh y usar text directo; adaptar escenas y tests que usan .label.
 - [x] Revisar el resto de scripts de UI por lo mismo
@@ -2005,6 +2187,8 @@ Skills: `workflows:itch-publish`.
 
 **Prioridad:** alta · **Etiquetas:** `camara`
 
+Que una sala del templo de 22 × 14 m entre entera en pantalla, alejando la cámara, y que la pared sur no tape lo que pasa adentro, recortándola con un shader de corte.
+
 - [x] Alejar la cámara para que entre una sala de 22 × 14 m
 - [x] Recortar la pared sur con un shader de corte
 - [x] Capturas, tests y GDD
@@ -2014,6 +2198,8 @@ Skills: `workflows:itch-publish`.
 ### 10.15 Interruptores de piso: solo un bloque los resuelve · Hecho
 
 **Prioridad:** media · **Etiquetas:** `puzzles`
+
+Que los interruptores de piso de los puzzles se resuelvan con un bloque y no solo pisándolos: un modo `BLOCK` en el que el player los aprieta mientras está encima y la puerta se vuelve a cerrar al bajarse.
 
 - [x] Modo BLOCK en FloorSwitch: el player sostiene, el bloque resuelve
 - [x] Gate.stays_open y close(); temple: Vestíbulo y Puzzle en BLOCK
@@ -2025,6 +2211,8 @@ Skills: `workflows:itch-publish`.
 
 **Prioridad:** media · **Etiquetas:** `camara`, `puzzles`
 
+Cuando un interruptor abre algo lejos del player, que la cámara lo muestre: pausa, se acerca al objetivo, lo abre y vuelve. Opcional por puerta o reja, solo la primera vez y nunca al cargar partida.
+
 - [x] TopDownCamera.reveal: pausa, se acerca, abre, vuelve
 - [x] reveal_on_open opcional en Door y Gate (solo la primera vez)
 - [x] Sin reveal al cargar partida; tests, captura y GDD
@@ -2033,6 +2221,8 @@ Skills: `workflows:itch-publish`.
 
 **Prioridad:** alta · **Etiquetas:** `ia`
 
+Con la cámara más alejada, los enemigos del overworld se quedan quietos estando en pantalla o se traban. Que vean al player a la nueva distancia, naveguen sin atascarse en las esquinas y ninguno aparezca encimado con paredes o cercos.
+
 - [x] Visión 12 m por la cámara más amplia
 - [x] Skeleton2 fuera del cerco y test de enemigos encimados
 - [x] path_desired_distance 1.0 por la navmesh a 0.5 m
@@ -2040,6 +2230,8 @@ Skills: `workflows:itch-publish`.
 ### 10.18 Idiomas: inglés y español · Revisión
 
 **Prioridad:** media · **Etiquetas:** `ui`
+
+El juego en inglés y español: todos los textos por clave con `tr()`, la elección de idioma la primera vez que se abre y un selector en Opciones que cambie en vivo, dejando fácil sumar otro idioma.
 
 - [x] Sistema de traducción con TranslationServer
   Archivo de traducciones (CSV o .po) con es y en; los textos se piden por clave con tr(). Por ahora solo esos dos idiomas, pero que sumar otro sea agregar una columna o archivo.
@@ -2063,6 +2255,8 @@ Skills: `workflows:itch-publish`.
 ### 10.19 Fin de la demo y créditos · Pendiente
 
 **Prioridad:** media · **Etiquetas:** `ui`
+
+Al vencer al jefe el portal es la única salida, y entrar abre un diálogo de fin de demo con opciones (seguir jugando, revancha contra el jefe o volver al menú), apoyado en respuestas nuevas en el `TextBox`. Sumar créditos reales con autoría, herramientas y licencias.
 
 - [ ] Quitar el final al tomar el contenedor
   Hoy Ending.open() salta al tomar el contenedor de corazón (boss_arena.gd _on_reward_taken). Sacarlo de ahí: tomar el contenedor es solo el item get.
@@ -2094,6 +2288,8 @@ Skills: `workflows:itch-publish`.
 
 **Prioridad:** media · **Etiquetas:** `camara`
 
+Una intro corta y salteable al empezar partida nueva que cuente sin diálogos que El Ojo despierta, sobre un sistema simple de cutscenes que también sirva para la intro del jefe y el epílogo. Solo la primera vez.
+
 - [ ] Guion corto de la intro
   Según la historia del GDD (El Ojo despierta, opción A): sin diálogos, se cuenta con imagen y alguna tablilla/texto breve. Decidir duración (30–60 s) y planos.
 - [ ] Sistema simple de cutscenes
@@ -2110,6 +2306,8 @@ Skills: `workflows:itch-publish`.
 ### 10.21 Título y ranuras: Continuar, Nueva partida y ranura de autosave · Hecho
 
 **Prioridad:** alta · **Etiquetas:** `ui`
+
+Hoy Continuar y Nueva partida abren los dos la selección de ranuras. Continuar tiene que cargar directo la última partida, Nueva partida elegir dónde crearla, y el autosave pasa a una ranura propia (Auto) que no pise las partidas manuales.
 
 - [x] Continuar carga directo la última partida
   Hoy los dos abren FileSelect (title_screen.gd) y solo cambia el slot preseleccionado. Continuar tiene que llamar SaveManager.load_game(latest_slot()) sin pasar por la selección.
@@ -2134,6 +2332,8 @@ Skills: `workflows:itch-publish`.
 
 **Prioridad:** baja · **Etiquetas:** `build`
 
+Un build web para jugar en el navegador desde itch, sin threads y con renderer Compatibility: que LimboAI corra, el juego se vea parecido al de escritorio y el guardado sobreviva a recargar. Prioridad muy baja: el escritorio va primero.
+
 - [ ] Preset Web
   Preset 'Web' en export_presets.cfg (2026-10-11): sin threads (corre en itch sin COOP/COEP), extensiones encendidas para LimboAI, renderer Compatibility. Falta agregarlo a tools/build.sh. Primera prueba local: anda mejor de lo esperado; se pierde lo que solo existe en Forward+.
 - [ ] LimboAI para web
@@ -2154,6 +2354,8 @@ Skills: `workflows:itch-publish`.
 ### 10.23 Tests en paralelo · Revisión
 
 **Prioridad:** media · **Etiquetas:** `herramientas`
+
+La suite de tests tarda unos 9 minutos en serie. Correrla en varios procesos headless en paralelo, cada uno con su `user://` aislado, para que termine en menos de la mitad del tiempo con los mismos resultados.
 
 - [x] Runner en paralelo
   run_tests.gd reparte los archivos test_*.gd en N procesos headless (por defecto, los núcleos disponibles, máx. 4), balanceados por la duración de la última corrida; junta resultados y sale con 1 si algo falla.
@@ -2251,11 +2453,15 @@ Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel d
 
 **Prioridad:** alta · **Etiquetas:** `arte`
 
+Traer al proyecto los packs KayKit Dungeon Remastered y Medieval (modelos, texturas y licencia) para tener piezas con qué vestir el templo y el overworld, que hoy se ven de prototipo.
+
 - [x] Bajar de GitHub e importar (modelos, texturas y licencia)
 
 ### 11.2 Kit del templo con piezas KayKit · Hecho
 
 **Prioridad:** alta · **Etiquetas:** `arte`
+
+Armar un kit del templo con piezas KayKit que reemplace al kit gris: mismos ítems y colisiones que `gray_kit`, para que las salas dejen de verse de prototipo sin rehacer los niveles.
 
 - [x] Generador tools/build_temple_kit.gd → data/kits/temple_kit.tres (mismos ítems/colisiones que gray_kit)
 - [x] Shader cutaway con use_uv + materiales kaykit_stone/kaykit_floor y atlas compartido
@@ -2268,6 +2474,8 @@ Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel d
 ### 11.3 Decorar las salas del templo · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `arte`
+
+Decorar las 9 salas del templo con estandartes, braseros, escombros y venas del doom, para que se vean habitadas y distintas y la ruina crezca hacia el jefe, sin tapar el camino ni lo jugable.
 
 - [x] Generador de decoración
   tools/decorate_levels.gd lee el GridMap, las salas y lo jugable, y escribe levels/decor/temple_decor.tscn (determinístico, se regenera); el nivel solo lo instancia.
@@ -2285,6 +2493,8 @@ Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel d
 ### 11.4 Decorar el overworld · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `arte`
+
+Decorar cada zona del overworld con piezas propias de su ambiente y enmarcar la entrada del templo con su fachada, para que cada zona se reconozca sin su nombre y deje de verse vacía.
 
 - [x] Decoración por zona
   Con el mismo generador (levels/decor/overworld_decor.tscn): fogata y tronco en el claro de inicio, apachetas en la pradera, troncos y cardones en la arboleda, rocas altas en el risco, estalagmitas y rocas en la cueva y la gruta, piedras en el santuario.
@@ -2318,9 +2528,13 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prioridad:** alta · **Etiquetas:** `ia`
 
+Sumar enemigos en el overworld y el templo, para que el recorrido tenga más pelea.
+
 ### 11.7 Doom legible: player y objetos sin teñir · Hecho
 
 **Prioridad:** media · **Etiquetas:** `arte`
+
+Con el doom alto el sol rojo, la niebla y las grietas tiñen todo y el player y los objetos se pierden en el piso. Tienen que conservar sus colores y su sombra para leerse sobre cualquier nivel de doom.
 
 - [x] Capa visual legible
   Player y objetos en la capa 2; el sol rojo no la ilumina pero sí le deja proyectar sombra.
@@ -2335,21 +2549,29 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prioridad:** media · **Etiquetas:** `camara`
 
+Cuando una pared tapa al player se pierde de vista. Mostrar su silueta por encima de lo que lo tapa, solo en las partes ocultas.
+
 **Notas:** Overlay por stencil: hit_flash escribe el stencil donde el player se ve y occluded_silhouette (sin depth test) pinta en dorado solo donde no. Revisado detrás del jefe y bajo la máscara de la puerta norte del Hub. Test test_silhouette_only_on_the_player.
 
 ### 11.9 Navmesh sobre el piso · Pendiente
 
 **Prioridad:** baja · **Etiquetas:** `ia`
 
+La navmesh queda 0.5 m sobre el piso y obliga a compensarlo en el `NavigationAgent3D` de los enemigos (`path_desired_distance` 1.0 para que no se traben en las esquinas). Bajarla al piso.
+
 ### 11.10 Warning de transform singular en la suite · Hecho
 
 **Prioridad:** baja · **Etiquetas:** `tecnico`
+
+La suite de tests tira un warning de transform singular. Encontrar de dónde sale y sacarlo, para que la suite quede limpia.
 
 **Notas:** 2026-10-09: eran los StaticBody de los dos escudos del player. El AnimationTree arrancaba inactivo (se activaba al entrar a Idle) y, desde la segunda carga de escena, el primer cuadro fundía desde una pose con escala 0: la mano quedaba con escala cero y Jolt avisaba. Arreglo: el AnimationTree arranca activo en player.tscn. La suite quedó sin ningún aviso de transform singular.
 
 ### 11.11 HUD sin slots vacíos y reveal dentro de la sala · Hecho
 
 **Prioridad:** baja · **Etiquetas:** `ui`
+
+El HUD muestra los slots X/Y aunque no tengan ítem, y el acercamiento del reveal puede mostrar lo que hay fuera de la sala. Ocultar los slots vacíos y acotar el reveal a la sala.
 
 - [x] Ocultar los slots X/Y sin ítem asignado
   Se oculta el Body; el slot guarda su lugar para que el otro botón no se corra.
@@ -2362,9 +2584,13 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prioridad:** baja · **Etiquetas:** `mazmorra`
 
+Las 9 salas del templo tienen todas el mismo tamaño (11 × 7 celdas). Variar los tamaños de sala.
+
 ### 11.13 Modelos KayKit: esqueletos para los enemigos y Knight para el player · Hecho
 
 **Prioridad:** alta · **Etiquetas:** `arte`, `personajes`
+
+Usar los packs KayKit de esqueletos y Adventurers: modelos de esqueleto para los enemigos y el Knight para el player, en vez de los modelos actuales.
 
 - [x] Pack Skeletons reducido a assets/kaykit_skeletons (gltf/glb + textura + licencia); el Adventurers nuevo es idéntico a assets/kaykit_adventure
 - [x] tools/build_character_models.gd → escenas Visuals en src/entities/models (Minion, Warrior, Rogue, Mage, Knight)
@@ -2378,6 +2604,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prioridad:** alta · **Etiquetas:** `bug`, `guardado`
 
+Al cargar partida, puertas, rejas y puentes que ya se habían abierto con un interruptor aparecen cerrados. Tienen que arrancar en el estado guardado de su interruptor.
+
 - [x] Wiring emite settled al frame siguiente; Door/Gate/Bridge toman de ahí el estado inicial
 - [x] EyeSwitch avisa activated cuando su flag se restaura en la misma escena
 - [x] Test de regresión con pre_boss (falla sin el arreglo) y suite completa: 182, solo el fallo conocido
@@ -2387,6 +2615,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 ### 11.15 Íconos de ítems y equipo renderizados desde los modelos 3D · Hecho
 
 **Prioridad:** media · **Etiquetas:** `ui`, `arte`
+
+Generar los íconos de ítems y equipo renderizando los modelos 3D, para que el HUD y los menús muestren lo mismo que se ve en la mano del player en vez de SVG sueltos.
 
 - [x] tools/render_item_icons.gd: PNG 256 px con contorno, 14 ítems; mapa, brújula y corazón siguen en SVG
 - [x] Escudos de Adventurers: madera = shield_round, espejo = shield_square cromado (también en la mano y el esqueleto)
@@ -2402,6 +2632,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prioridad:** alta · **Etiquetas:** `ui`, `bug`
 
+La letra de los prompts de input es calada en los SVG y toma el color de lo que hay detrás. Que se lean sobre cualquier fondo.
+
 - [x] InputPrompts rellena con #0b0d10 lo calado de cada SVG (flood fill desde el borde, caché por ruta)
 - [x] Capturas de HUD y pestañas de la pausa
 - [x] Suite completa
@@ -2410,6 +2642,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 ### 11.17 Pausa: páginas en un TabContainer y títulos en un TabBar · Hecho
 
 **Prioridad:** baja · **Etiquetas:** `ui`
+
+Pasar las páginas de la pausa a un `TabContainer` y los títulos a un `TabBar` del theme, en vez de las etiquetas a mano, y que un clic en una pestaña cambie de página.
 
 - [x] Pages → TabContainer sin barra; Tabs → TabBar con variación PauseTabBar (reemplaza TabLabel/TabLabelSelected)
 - [x] Clic en una pestaña cambia la página (test nuevo en test_map)
@@ -2420,6 +2654,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 ### 11.18 Pared sur del templo: lámina de ladrillos sin colisión tapando la puerta sur · Hecho
 
 **Prioridad:** alta · **Etiquetas:** `bug`, `camara`
+
+En el templo, la pared sur deja una lámina de ladrillos sin colisión, con franjas y sombras, que tapa la puerta sur. Sacarla para que la pared sur quede como un zócalo bajo y la puerta se vea.
 
 - [x] Encontrar qué dibuja las franjas
   Los ladrillos de la pared propia sobresalen ~7 cm de la celda; el corte empezaba 5 cm dentro de la sala y quedaba una lámina de 2 cm a toda altura.
@@ -2432,11 +2668,15 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prioridad:** alta · **Etiquetas:** `bug`, `mazmorra`
 
+Reportado por Daniel el 2026-10-09: en los pasos de puerta laterales del templo aparece una losa del alto de la pared, sin colisión, cruzada en el paso. Sacarla.
+
 **Notas:** Reportado por Daniel el 2026-10-09 (captura). Causa: las dos puertas laterales del templo, la (6, 24) y la (18, 24), tenían la pieza Puerta con orientación 0; el marco (3,1 m de alto, solo colisión de piso) quedaba cruzado en el paso. Se giraron 90° (orientación 16) y test_doorways_face_their_wall valida que cada marco siga a su pared.
 
 ### 11.20 Cueva con ojo de agua y cáusticas animadas · Revisión
 
 **Prioridad:** media · **Etiquetas:** `arte`, `overworld`, `items`
+
+Una cueva en el overworld con un ojo de agua de shader propio y cáusticas animadas del mismo patrón, con su luz y ambiente; el agua llena la botella de agua bendita y se puede recargar, lo que da razón para volver.
 
 - [x] Decidir qué hay en la cueva
   Abierto: recompensa, secreto, tablilla de historia, pieza de corazón, un ítem… Definirlo antes de diseñar la sala, y anotarlo en el GDD.
@@ -2467,6 +2707,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prioridad:** media · **Etiquetas:** `items`, `overworld`
 
+Piezas de corazón escondidas en el overworld: 4 juntan un contenedor nuevo. Premian explorar y le dan sentido a los secretos.
+
 - [x] Ítem pieza de corazón
   4 piezas = 1 contenedor; contador en la pantalla de equipo; item get distinto para la 4ª.
 - [x] Esconder 4–6 en el overworld
@@ -2477,6 +2719,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 ### 11.22 Tablillas de historia · Hecho
 
 **Prioridad:** media · **Etiquetas:** `historia`, `overworld`
+
+Tablillas de historia repartidas por el overworld y el templo que, leídas en cualquier orden, cuentan 'El Ojo despierta'; una o dos dan pistas de secretos.
 
 - [x] Escribir 6–8 textos cortos
   Cuentan 'El Ojo despierta' (GDD §3, opción A) en orden suelto; uno o dos dan pistas de secretos.
@@ -2493,6 +2737,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prioridad:** baja · **Etiquetas:** `overworld`, `puzzles`
 
+Sumar 4 a 6 secretos chicos al overworld (cuevitas con cofre, pasto que esconde algo, rocas que se empujan, muros agrietados) con recompensas útiles, para que explorar valga la pena.
+
 - [ ] Lista de 4–6 secretos chicos
   Cuevitas con cofre, pasto que esconde algo, roca que se empuja, muro agrietado extra.
 - [ ] Armarlos
@@ -2503,6 +2749,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 ### 11.25 Nuevos enemigos con los modelos existentes · Revisión
 
 **Prioridad:** media · **Etiquetas:** `enemigos`, `ia`
+
+Enemigos nuevos con los modelos que ya hay: un arquero chullpa, esqueletos que disparen flechas y uno con punto débil, cada uno con telegraph legible y una contra clara.
 
 - [x] Arquero chullpa
   Dispara de lejos; se bloquea con el escudo y se refleja con el espejo.
@@ -2519,6 +2767,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prioridad:** baja · **Etiquetas:** `combate`
 
+Una sala de combate opcional: 3 oleadas mezclando enemigos con la puerta cerrada hasta terminar y una recompensa al final (cota reforzada, carcaj o pieza de corazón).
+
 - [ ] Sala de oleadas
   3 oleadas mezclando enemigos; la puerta se cierra hasta terminar.
 - [ ] Recompensa
@@ -2530,6 +2780,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prioridad:** baja · **Etiquetas:** `mazmorra`, `puzzles`
 
+Un mini-santuario de 3–4 salas que se resuelven solo con el escudo espejo, cada una enseñando una variante del reflejo, con recompensa al final.
+
 - [ ] Diseñar 3–4 salas
   Todo con el escudo espejo: haces de luz, ojos-interruptor, espejos que giran.
 - [ ] Recompensa al final
@@ -2540,6 +2792,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prioridad:** baja · **Etiquetas:** `overworld`
 
+Uno o dos atajos que se abren desde adentro (puente o escalera) y quedan abiertos, para acortar el camino de vuelta al templo.
+
 - [ ] Uno o dos atajos de vuelta
   Puente o escalera que se despliega desde el lado de adentro; flag persistente.
 
@@ -2548,6 +2802,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 ### 11.29 Overworld después del jefe · Pendiente
 
 **Prioridad:** baja · **Etiquetas:** `overworld`, `audio`
+
+Después de vencer al jefe, el overworld tiene que verse y sonar distinto (sin doom: luz, niebla y música calmas) y ofrecer algo nuevo que solo aparece entonces.
 
 - [ ] Sin doom
   Luz, niebla y música calmas tras d1_boss_defeated.
@@ -2562,6 +2818,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prioridad:** baja · **Etiquetas:** `items`
 
+Un ítem post-MVP: gancho o algo que mueva objetos a distancia (GDD §6.1), con uso en combate y que abra lugares que antes no se podían.
+
 - [ ] Elegir el ítem
   Gancho, o algo que mueva objetos a distancia (aprovecha la física). GDD §6.1 post-MVP.
 - [ ] Comportamiento y puzzles
@@ -2575,6 +2833,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prioridad:** baja · **Etiquetas:** `jefe`, `enemigos`
 
+Un sub-jefe a mitad del templo: un chullpa guardián gigante con patrón propio que custodia el arco; al vencerlo aparece el cofre.
+
 - [ ] Chullpa guardián gigante
   Custodia el arco a mitad del templo; patrón propio, una sola fase.
 - [ ] Sala y recompensa
@@ -2586,6 +2846,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prioridad:** baja · **Etiquetas:** `rejugabilidad`
 
+Un modo extra que se desbloquea al terminar el juego, difícil (más daño, menos drops) o contrarreloj, para darle rejugabilidad.
+
 - [ ] Elegir uno
   Difícil: más daño y menos drops. Contrarreloj: tiempo total al final.
 - [ ] Desbloquear al terminar
@@ -2595,6 +2857,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 ### 11.33 Combate: sacar lo tosco · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `combate`
+
+Skills: `disciplines:game-feel`, `disciplines:input-systems`, `godot:godot-animation`.
 
 - [ ] Diagnóstico jugando
   Grabar y anotar qué se siente mal. Sospechas del código: un solo tajo (sword_slash.tres sin ventanas afinadas), el estado Attacking frena con un tween de 0.3 s y espera el fade_out entero para soltar el control (no se puede cancelar ni encadenar), sin avance en el golpe, feel.tres sin valores.
@@ -2609,7 +2873,7 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prueba:** Pelear contra 3 chullpas en el overworld: cada golpe responde al instante, se puede rodar o bloquear al final de un tajo, los impactos se sienten, y en una sesión de playtest nadie lo describe como tosco.
 
-**Notas:** Skills: `disciplines:game-feel`, `disciplines:input-systems`, `godot:godot-animation`. Hecho: cancel_from/lunge en AttackData, golpe encadenable (Attacking→Attacking), giro al objetivo o stick, chispas al pegar, aviso rojo (HitFlash.warn) y recovery_time 0,4 s en BTAttack, feel.tres con valores. Falta jugarlo (paso 1) y el sonido por superficie.
+**Notas:** Hecho: cancel_from/lunge en AttackData, golpe encadenable (Attacking→Attacking), giro al objetivo o stick, chispas al pegar, aviso rojo (HitFlash.warn) y recovery_time 0,4 s en BTAttack, feel.tres con valores. Falta jugarlo (paso 1) y el sonido por superficie.
 
 **Referencias:** `gdd.md#combate`
 
@@ -2620,6 +2884,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 ### 11.34 Combos y técnicas especiales (Minish Cap / Wind Waker) · Pendiente
 
 **Prioridad:** media · **Etiquetas:** `combate`
+
+Técnicas de espada al estilo Minish Cap y Wind Waker: combo de 3 golpes, giro cargado, contraataque y 1–2 técnicas extra que se aprenden en el mundo, sin chocar con fijar, bloquear y rodar.
 
 - [ ] Combo de 3 golpes
   Tajo, revés y estocada encadenados con el buffer; el tercero hace más daño y empuja. Animaciones de Rig_Medium (CombatMelee).
@@ -2648,6 +2914,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prioridad:** media · **Etiquetas:** `combate`, `movimiento`
 
+Saltar con un ítem tipo Pluma de Roc (nada de salto libre), para que el gating por saltos empiece al conseguirlo: huecos de un tile, andenes bajos y esquivar ondas de choque del jefe.
+
 - [x] Decidido: ítem tipo Pluma de Roc
   Nada de salto libre ni automático: se salta con un ítem que se consigue (Minish Cap), así el gating de saltos empieza cuando lo tenés. Anotado en GDD §4.2.
 - [ ] Estado Jumping en el player
@@ -2673,6 +2941,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prioridad:** media · **Etiquetas:** `ui`
 
+El mapa de la pausa es hoy una foto fija con el marcador. Que dé más información y se pueda recorrer: niebla de exploración en el overworld, marcas de puertas, cofres y entradas, cursor con nombres y pines propios.
+
 - [x] Overworld con niebla de exploración
   Hoy es una foto cenital fija con el marcador. Las zonas (AreaZone) se destapan al visitarlas; las no vistas quedan en sombra con su contorno.
 - [x] Marcas en el mapa
@@ -2696,6 +2966,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prioridad:** media · **Etiquetas:** `ui`
 
+Un minimapa chico en el HUD que muestre las salas alrededor en la mazmorra y el entorno del player en el overworld, con los mismos datos que la pestaña Mapa y que se pueda apagar.
+
 - [x] Mockup HUD_Minimap
   Esquina libre del HUD (no choca con corazones, ítems ni la barra del jefe); tamaño chico, marco simple bronce.
 - [x] Mazmorra
@@ -2717,31 +2989,35 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prioridad:** media · **Etiquetas:** `camara`
 
-**Notas:** Pedido por Daniel el 2026-10-10 (godotshaders stencil-based-silhouette y el custom x-ray de apples/godot-stencil-demo): la silueta del player gana fresnel, brilla en los bordes y es más transparente en el centro.
+Pedido por Daniel el 2026-10-10 (godotshaders stencil-based-silhouette y el custom x-ray de apples/godot-stencil-demo): la silueta del player gana fresnel, brilla en los bordes y es más transparente en el centro.
 
 ### 11.39 Luces estilo Wind Waker (volúmenes de stencil) · Hecho
 
 **Prioridad:** media · **Etiquetas:** `arte`
 
+Pedido por Daniel el 2026-10-10, como las Wind Waker lights de apples/godot-stencil-demo (el repo no tiene licencia: se reimplementa la técnica, sin copiar código). Esfera con 3 pasadas de stencil: marcar lo que queda delante, multiplicar color adentro, limpiar; prioridad propia por luz. Cuidar que no pise el stencil de la silueta del player (ref 1). Uso: antorchas del templo.
+
 - [x] Componente WindWakerLight (escena + shaders propios)
 - [x] Ordenar prioridades con la silueta del player
 - [x] Ponerla en las antorchas del templo y revisar en capturas
-
-**Notas:** Pedido por Daniel el 2026-10-10, como las Wind Waker lights de apples/godot-stencil-demo (el repo no tiene licencia: se reimplementa la técnica, sin copiar código). Esfera con 3 pasadas de stencil: marcar lo que queda delante, multiplicar color adentro, limpiar; prioridad propia por luz. Cuidar que no pise el stencil de la silueta del player (ref 1). Uso: antorchas del templo.
 
 ### 11.40 Agujero en lo que tapa al player · Hecho
 
 **Prioridad:** media · **Etiquetas:** `camara`
 
+Pedido por Daniel el 2026-10-10.
+
 - [x] Uniform global con la posición en pantalla y la profundidad del player
 - [x] Recorte circular (con borde suave o dither) en los materiales que tapan
 - [x] Decidir con Daniel si convive con la silueta o la reemplaza
 
-**Notas:** Pedido por Daniel el 2026-10-10. Decidido: agujero contra paredes, silueta contra objetos; en el borde del mundo, silueta (el agujero mostraba el vacío). Uniform global player_hole desde TopDownCamera; player_hole.gdshaderinc en cutaway.gdshader y epiphany_wall.gdshader; variantes 'borde' del kit del overworld que OverworldMap pone al cargar.
+**Notas:** Decidido: agujero contra paredes, silueta contra objetos; en el borde del mundo, silueta (el agujero mostraba el vacío). Uniform global player_hole desde TopDownCamera; player_hole.gdshaderinc en cutaway.gdshader y epiphany_wall.gdshader; variantes 'borde' del kit del overworld que OverworldMap pone al cargar.
 
 ### 11.41 Esqueleto con escudo: bloquear con el escudo delante · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `combate`, `enemigos`
+
+El esqueleto con escudo tiene que bloquear con el escudo de verdad delante, en la misma pose que el player, y solo cuando lo tiene levantado mirando al player; que el bloqueo se lea con chispa, sonido y retroceso.
 
 - [x] Pose del escudo al bloquear
   Mismo socket que el player: de frente, 20° hacia afuera, delante de la mano.
@@ -2756,6 +3032,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prioridad:** media · **Etiquetas:** `items`, `arte`
 
+Que el arco se tense mientras se mantiene el disparo: la cuerda se estira hacia la mano, las palas se doblan y la flecha queda en la cuerda; al soltar vuelve de golpe.
+
 - [x] Arco con hueso o shape key de tensado (Blender, otra sesión)
   Cuerda que se estira hacia la mano derecha y palas que se doblan.
 - [x] Tensado sigue a Ranged_Bow_Draw
@@ -2768,6 +3046,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prioridad:** media · **Etiquetas:** `items`
 
+Bombas con dos usos: tocar el botón la coloca a los pies como ahora y mantenerlo la levanta y apunta como el arco, para tirarla en parábola al soltar.
+
 - [x] Tocar: coloca la bomba a los pies como ahora
 - [x] Mantener: levanta la bomba y apunta como el arco
   Mira/arco de tiro en el piso; soltar la tira en parábola.
@@ -2779,6 +3059,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 ### 11.44 Levantar y tirar objetos · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `items`, `interaccion`
+
+Levantar y tirar objetos (vasijas, piedras, arbustos): se cargan caminando más lento y al tirarlos rompen y dañan enemigos; habilita puzzles como piedra sobre placa de presión.
 
 - [x] Objetos levantables
   Vasijas, piedras, arbustos: componente Liftable con peso.
@@ -2795,6 +3077,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prioridad:** alta · **Etiquetas:** `ui`, `puzzles`
 
+Enseñar los controles al empezar con tablitas en el claro del inicio y un mini puzzle al conseguir cada ítem, con los íconos de botón del dispositivo actual.
+
 - [x] Tutorial de controles al empezar
   Carteles/tablitas en el claro del inicio: moverse, atacar, rodar, bloquear, fijar, interactuar; muestra el botón según el dispositivo.
 - [x] Mini puzzle al conseguir cada ítem
@@ -2808,6 +3092,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 ### 11.46 Jefe: game juice · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `jefe`, `feel`
+
+Game juice para el jefe: cuerpo y ojo que reaccionan, anticipación y peso en las manos, impactos con hit-stop, grietas y vibración, y una muerte que se sienta como final.
 
 - [x] Cuerpo vivo
   Balanceo de flotación, inclinación hacia la mano que ataca; parpadeos ocasionales, párpados entrecerrados al apuntar. No hay malla de propulsor: el cuerpo brilla en cada ataque.
@@ -2834,6 +3120,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prioridad:** media · **Etiquetas:** `jefe`, `arte`
 
+Las manos del jefe alternan mallas sueltas (abierta, puño, garra). Hacer una malla por mano con shape keys, para que los dedos se cierren y abran de forma continua y las manos tengan gestos propios.
+
 - [x] Una malla por mano con blend shapes
   En build_jefe.py, como el arco: base abierta y shape keys «puno» y «garra» (los dedos rotan por falange); reemplaza las tres mallas sueltas.
 - [x] Transiciones en el código
@@ -2855,6 +3143,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prioridad:** media · **Etiquetas:** `personajes`, `feel`
 
+Pose de item get: el player levanta el ítem con las dos manos y se ve el objeto arriba con un destello mientras está la caja.
+
 - [x] Animación
   Las dos manos en alto con el objeto (como Carry, con IK horneado en build_carry_anims.py o un script hermano); entrada y salida cortas.
 - [x] Integración
@@ -2869,6 +3159,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 ### 11.49 VFX de combate · Revisión
 
 **Prioridad:** media · **Etiquetas:** `feel`, `combate`
+
+VFX de combate en el estilo del juego: estela de la espada y partículas low poly con la paleta para chispas, polvo al rodar, flechas y bombas, sin bajar los FPS.
 
 - [x] Estela de la espada
   Trail en el filo durante la ventana de golpe (AttackData), en la paleta (hueso/neón).
@@ -2886,6 +3178,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 ### 11.50 Audio del jefe · Pendiente
 
 **Prioridad:** baja · **Etiquetas:** `jefe`, `audio`
+
+Audio propio para el jefe: voz mecánica, chirridos, carga del orbe y golpes con grave, y un tema de música con capas por fase en lugar del placeholder.
 
 - [ ] Voz propia
   Zumbido mecánico de fondo, chirrido de párpados, carga del orbe, rugido de fase, golpes con más grave.
@@ -2993,6 +3287,8 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 
 **Prioridad:** alta · **Etiquetas:** `arte`
 
+Fijar la guía de estilo de los assets propios antes de modelar: una textura de paleta única con los colores de [[gdd#arte]], la escala respecto al Knight y la grilla, y una pieza de prueba que importe bien en Godot y se recorte con el shader de la pared sur.
+
 - [x] Textura de paleta única con degradés
   Estilo atlas KayKit, con los colores de [[gdd#arte]]: pasto #7aa86b, acantilado #947a61, piedra gris, naranja, madera, dorado, celeste de cristal, violeta del sello, rojo del doom. Un solo material compartido.
 - [x] Hoja de escala
@@ -3013,6 +3309,8 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 
 **Prioridad:** alta · **Etiquetas:** `arte`
 
+Modelar en Blender el terreno del overworld (pasto, caminos, piso de plaza, acantilados con sus aberturas, escalones, abismo, cercos y borde del mundo) y armar con eso el kit del GridMap, para reemplazar el kit gris sin perder colisiones ni navegación.
+
 - [x] Pasto: base + 3–4 variantes
   Florcitas, piedritas, manchas de tierra.
 - [ ] Camino de tierra: recto, curva, T, cruce, final, borde con pasto
@@ -3021,7 +3319,8 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 - [ ] Aberturas en acantilado de 1 y 3 celdas
   1 celda = gating (muro agrietado o reja), 3 = paso libre. Ver [[gdd#overworld-layout]].
 - [ ] Escalones y rampa (tierra y piedra)
-- [ ] Abismo: borde recto, esquinas, fondo oscuro/niebla
+- [x] Abismo: borde recto, esquinas, fondo oscuro/niebla
+  Hecho: abismo, abismo_borde/esquina/pasillo/punta/pozo en build_terreno_overworld.py (paredes de roca de 3 m con bandas pasto → acantilado → gris → casi negro, fondo oscuro). vary_overworld.gd elige la pieza y el giro según los vecinos; test_abyss_walls_face_the_ground. La niebla del fondo queda para Godot si hace falta.
 - [ ] Cerco: recto, esquina, final, poste, roto
 - [ ] Borde del mundo (árboles densos / acantilado alto)
 - [x] Kit del overworld para el GridMap
@@ -3040,6 +3339,8 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 ### 12.3 Lugares del overworld · En curso
 
 **Prioridad:** alta · **Etiquetas:** `arte`, `puzzles`
+
+Modelar las piezas propias de cada lugar del overworld (claro del inicio, cuevas, santuario, puzzle de luz, entrada y sello del templo, risco del ojo), para que cada zona de [[gdd#overworld-layout]] se reconozca por cómo se ve.
 
 - [x] Hito del claro del inicio
   Piedra tallada, fogata o similar.
@@ -3073,6 +3374,8 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 
 **Prioridad:** alta · **Etiquetas:** `arte`
 
+Modelar la vegetación y los props del overworld (árboles, pasto cortable, vasijas, rocas y cajas físicas, tablillas, decoración) con el estilo propio, para que reemplacen los de KayKit sin cambiar cómo se rompen o se mueven.
+
 - [x] Árbol que bloquea celda: grande, chico, grupo para bordes
 - [x] Pasto cortable: mata entera, cortada, hojitas
   grass.tscn.
@@ -3098,6 +3401,8 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 
 **Prioridad:** media · **Etiquetas:** `arte`
 
+Modelar cofres, pickups, bomba, flecha, orbe, llaves, mapa, brújula y contenedor de corazón con el estilo propio, y regenerar desde esos modelos los íconos que hoy son SVG planos.
+
 - [x] Cofre chico de madera (tapa aparte)
 - [x] Cofre grande dorado (tapa aparte)
 - [ ] Pickups: corazón, flechas ×5, bombas ×3
@@ -3115,6 +3420,8 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 
 **Prioridad:** media · **Etiquetas:** `arte`
 
+Modelar el equipo y los objetos del inventario (espada, escudos, cota reforzada, arco y carcaj, bolsa de bombas, botella) con el estilo propio, para que se vean en la mano, en la preview de Equipo y en los íconos.
+
 - [x] Espada(s)
   Según lo que se decida de espadas con elemento.
 - [x] Escudo de madera y escudo espejo
@@ -3131,6 +3438,8 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 ### 12.7 Kit del templo propio · En curso
 
 **Prioridad:** baja · **Etiquetas:** `arte`, `mazmorra`
+
+Armar el kit propio del templo (piso, paredes, puertas por tipo, piezas de puzzle, torreta, antorchas, decoración, doom y sala del jefe) para que `temple_kit.tres` deje de usar piezas KayKit, sin romper el corte de la pared sur.
 
 - [x] Piso + variantes (roto, yuyos, grieta del doom)
 - [ ] Pared a celda 2×2: recta, esquina, final, con antorcha
@@ -3158,6 +3467,8 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 
 **Prioridad:** baja · **Etiquetas:** `arte`, `personajes`
 
+Modelar los personajes propios (player, esqueletos y jefe) con los mismos nombres de huesos que el `Rig_Medium` de KayKit, para que usen las animaciones de `player/animation/libs/` sin retarget.
+
 - [x] Player
   Mismos nombres de huesos que el Rig_Medium de KayKit, para no perder las animaciones.
 - [x] Esqueleto
@@ -3175,6 +3486,8 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 
 **Prioridad:** baja · **Etiquetas:** `arte`
 
+Hacer con malla los efectos que lo piden (haz de luz, polvo y hojas, explosión, anillo del portal), con la paleta y el estilo de los assets propios.
+
 - [ ] Haz de luz
 - [ ] Polvo y hojas
 - [ ] Explosión
@@ -3187,6 +3500,8 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 ### 12.10 Pipeline Blender→Godot: glb publicado + plugin de import · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `arte`, `herramientas`
+
+Cambiar el pipeline Blender→Godot a publicar `.glb` con un plugin de import que asigne el material de paleta y convierta custom properties en colisiones, sockets y spring bones, para que Godot importe solo el `.glb` y los builds no necesiten Blender.
 
 - [x] Plugin de import en addons/epiphany_tools/import
   EditorScenePostImportPlugin: material de paleta por nombre (normal/emisión), guarda mallas en meshes/<fuente>/<pieza>.res (mismas rutas de hoy).
@@ -3209,6 +3524,8 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 
 **Prioridad:** media · **Etiquetas:** `arte`, `herramientas`
 
+Pasar todos los `.blend` (props, equipo, templo, kits y personajes) al pipeline glb de 12.10 y retirar los scripts headless viejos, para que los builds funcionen sin Blender.
+
 - [ ] Props y equipo (objetos, equipo, naturaleza, lugares)
   El jefe ya pasó al pipeline en 11.47.
 - [ ] Templo y kits (build_temple_kit / build_overworld_kit)
@@ -3224,6 +3541,8 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 ### 12.12 Estilo toon (Wind Waker) + personaje cyber-shinobi · En curso
 
 **Prioridad:** media · **Etiquetas:** `arte`, `personajes`
+
+Probar un look tipo Wind Waker con cel shading: shader toon en Godot y un personaje cyber-shinobi armado en Blender y publicado por el pipeline glb, para comparar en el templo contra el jugador actual y decidir el rumbo de estilo.
 
 - [x] Prueba de estilo en Blender (estilo_toon.py)
   Hecha: renders en docs/estilo/. El blockout de piezas epi se descartó (se veía cuadrado/viejo; suavizarlo lo volvía un globo).
@@ -3252,6 +3571,8 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 ### 12.13 Reajuste de estilo toon de todos los assets · Pendiente
 
 **Prioridad:** media · **Etiquetas:** `arte`
+
+Con el estilo toon de 12.12, aplicar el shader cel a todo el material de paleta, recorrer el mundo y ajustar paleta, vegetación, terreno, templo, personajes, objetos y efectos para que todo conviva con el personaje nuevo.
 
 - [ ] Aplicar el shader cel de 12.12 a todo el material de paleta y recorrer el mundo
   Herramienta: tools/toon_preview.gd (capturas base/toon en el jugador y cada Spawn* del overworld y el templo). Primera recorrida 2026-10-10: con el shader el mundo ya lee toon (follaje en dos tonos, sombras de color más suaves). Falta: pasar epiphany.tres al toon e incluir toon.gdshaderinc en cutaway y epiphany_wall (avisar a la otra sesión: cambia el look de todo), afinar energías por nivel y la lista de qué remodelar.
@@ -3289,6 +3610,8 @@ Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con
 
 **Prioridad:** alta · **Etiquetas:** `coop`, `arquitectura`
 
+Preparar el código para más de un player: un registro `Players` con señales que reemplace las referencias al grupo "player" y los `get_first_node_in_group`, para que ningún sistema asuma un solo jugador y el co-op tenga dónde apoyarse.
+
 - [x] Registro de players
   Un autoload o nodo `Players` con la lista y señales (joined/left); reemplaza las ~40 referencias al grupo "player" y los get_first_node_in_group.
 - [x] Regla para lo nuevo
@@ -3309,6 +3632,8 @@ Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con
 ### 13.2 Input por jugador y unirse a la partida · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `coop`, `input`
+
+Que cada player lea su propio control (teclado+mouse cuenta como uno) con su buffer, apuntado y targeting, y que un segundo control pueda sumarse o salir con Start en cualquier momento sin cortar la partida.
 
 - [x] Acciones por dispositivo
   Cada player lee su control (device id); InputBuffer, Aim y Targeting pasan a ser del player. Teclado+mouse cuenta como un dispositivo.
@@ -3333,6 +3658,8 @@ Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con
 
 **Prioridad:** alta · **Etiquetas:** `coop`, `camara`
 
+Que la cámara encuadre a los dos players y los frene si se alejan, y que los cambios de sala y de escena lleven a los dos juntos, para que nunca quede uno fuera de cuadro ni en otra sala.
+
 - [x] Encuadre de los dos
   Reusar el encuadre del lock-on: la cámara mantiene a ambos; si se alejan demasiado, un borde invisible los frena.
 - [x] Cambio de sala
@@ -3355,6 +3682,8 @@ Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con
 ### 13.4 Reglas del co-op · Revisión
 
 **Prioridad:** media · **Etiquetas:** `coop`, `diseño`
+
+Definir y aplicar las reglas del co-op: corazones por player, revivir al caído y game over solo si caen los dos; inventario, equipo y progreso compartidos con X/Y por jugador; y anotarlas en el GDD.
 
 - [x] Vida, muerte y revivir
   Cada uno con sus corazones; el caído queda como burbuja/espíritu y revive al tocarlo o en la sala siguiente. Game over solo si caen los dos.
@@ -3379,6 +3708,8 @@ Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con
 
 **Prioridad:** media · **Etiquetas:** `coop`, `ui`
 
+Que el HUD muestre los corazones e ítems de cada player, con el P2 en la otra esquina y su color, instanciando un panel por player que aparece y desaparece cuando entra o sale.
+
 - [x] Mockup
   Corazones e ítems del P2 en la otra esquina, con su color.
 - [x] Escenas
@@ -3398,6 +3729,8 @@ Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con
 
 **Prioridad:** media · **Etiquetas:** `coop`, `arte`
 
+Darle al P2 su propia variante de paleta (otra tela y otro neón, como los Links de colores de Four Swords), también con la cota reforzada, para distinguir a los dos jugadores de un vistazo.
+
 - [ ] Variante de paleta
   Una entrada en VARIANTS (epiphany_palette.py) para el P2: otra tela y otro neón, como los Links de colores de Four Swords.
 - [ ] Combinar con las armaduras
@@ -3414,6 +3747,8 @@ Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con
 ### 13.7 Enemigos y jefe con varios objetivos · Pendiente
 
 **Prioridad:** media · **Etiquetas:** `coop`, `ia`
+
+Que enemigos y jefe sepan elegir entre varios players (el más cercano o el último que les pegó, con histéresis) y que la dificultad escale con dos, sin cambiar nada al jugar solo.
 
 - [ ] Elegir objetivo
   Los BT de LimboAI eligen al más cercano o al último que les pegó; cambian con histéresis.
@@ -3433,6 +3768,8 @@ Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con
 ### 13.8 Puzzles cooperativos · Pendiente
 
 **Prioridad:** media · **Etiquetas:** `coop`, `puzzles`
+
+Revisar que los puzzles actuales no se rompan ni queden triviales con dos y sumar al menos tres que pidan a los dos jugadores (interruptores dobles, escudo espejo más flecha, cajas entre dos), con alternativa para jugar solo.
 
 - [ ] Revisar los puzzles actuales
   Que no se rompan ni queden triviales con dos (bloques, interruptores, haces).
@@ -3454,7 +3791,7 @@ Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con
 Mockups D en el canvas (Coop_Ring, Solo_Ring): mantener la cruceta abre un anillo con los ítems al lado del panel de cada player; cruceta o stick elige, X/Y lo asigna, un toque ←/→ cambia rápido. Cada player conserva X e Y. Un ítem lo lleva uno solo (el que tiene otro se ve apagado con su etiqueta). En co-op no pausa; jugando solo el mundo casi se detiene. La pestaña Ítems del menú de pausa queda para jugar solo; en co-op solo muestra quién lleva qué.
 
 - [ ] Anillo en el HUD
-  Escena del anillo por PlayerPanel, desde el mockup Coop_Ring; se abre manteniendo la cruceta (acción nueva por player; en teclado, una tecla a decidir).
+  Escena del anillo por player en el HUD, desde el mockup Coop_Ring; se abre manteniendo LB (teclado: F) y se elige con el stick o WASD.
 - [ ] Ítems con dueño
   GameState sabe qué player lleva cada ítem en sus X/Y; asignar uno que tiene otro no se puede (apagado con su etiqueta).
 - [ ] Tiempo
@@ -3479,6 +3816,8 @@ Llevar el co-op local a la red: host autoritativo, dos jugadores en distintas m�
 
 **Prioridad:** alta · **Etiquetas:** `online`, `arquitectura`
 
+Decidir la arquitectura de red del co-op online (host autoritativo con ENet y Steam más adelante) y dejar anotado en el GDD qué corre en el host y qué en el cliente.
+
 - [ ] Decidir
   Host autoritativo con ENet (MultiplayerAPI de Godot) y transporte Steam más adelante; el host corre IA, física, puzzles y guardado.
 - [ ] Anotar en el GDD
@@ -3494,6 +3833,8 @@ Llevar el co-op local a la red: host autoritativo, dos jugadores en distintas m�
 ### 14.2 Players en red · Pendiente
 
 **Prioridad:** alta · **Etiquetas:** `online`
+
+Que el cliente mande su input al host, que simula y devuelve el estado, con predicción del propio player para que con 100 ms de latencia se mueva sin retraso ni tirones.
 
 - [ ] El cliente manda input
   MultiplayerSynchronizer o RPC del input del P2; el host simula y devuelve estado.
@@ -3512,6 +3853,8 @@ Llevar el co-op local a la red: host autoritativo, dos jugadores en distintas m�
 
 **Prioridad:** alta · **Etiquetas:** `online`
 
+Sincronizar en red los objetos con estado (puertas, cofres, interruptores, oleadas, drops, bombas, cajas físicas) y los cambios de escena y sala, simulados por el host, para que el templo no se desincronice.
+
 - [ ] Objetos con estado
   Puertas, cofres, interruptores, oleadas, drops, bombas y cajas físicas de Jolt (solo las simula el host).
 - [ ] Escenas
@@ -3528,6 +3871,8 @@ Llevar el co-op local a la red: host autoritativo, dos jugadores en distintas m�
 ### 14.4 Combate en red · Pendiente
 
 **Prioridad:** alta · **Etiquetas:** `online`, `combate`
+
+Que el combate del cliente se sienta como en local: golpes validados en el host con compensación de latencia, bloqueo y parry con margen, y hit-stop y flash mostrados al instante.
 
 - [ ] Golpes del cliente
   Hitboxes validadas en el host con compensación de latencia; bloqueo y parry con margen.
@@ -3548,6 +3893,8 @@ Llevar el co-op local a la red: host autoritativo, dos jugadores en distintas m�
 
 **Prioridad:** media · **Etiquetas:** `online`, `ui`
 
+Poder crear una partida y unirse (por IP o código en debug, invitación de Steam en release) y manejar las desconexiones: si cae el cliente el host sigue solo, si cae el host el cliente vuelve al título con aviso.
+
 - [ ] Crear y unirse
   Por IP/código en debug; invitación de Steam en release.
 - [ ] Desconexiones
@@ -3564,6 +3911,8 @@ Llevar el co-op local a la red: host autoritativo, dos jugadores en distintas m�
 ### 14.6 Guardado en co-op · Pendiente
 
 **Prioridad:** media · **Etiquetas:** `online`, `guardado`
+
+Definir el guardado del co-op online: solo guarda el host y el cliente participa en su partida; decidir qué se lleva el cliente, sin perder ni duplicar progreso.
 
 - [ ] Solo el host guarda
   El cliente participa en la partida del host; decidir qué se lleva el cliente (nada, o una copia).

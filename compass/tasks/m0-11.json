@@ -23,6 +23,7 @@
   ],
   "code": "0.12",
   "created_at": "2026-10-08T04:17:33.214Z",
+  "description": "Un runner de tests headless que se corre por línea de comandos y termina con código 1 si algo falla, para probar sin abrir el juego lo que se puede: guardado, datos de ítems y flags.",
   "links": [
     {
       "task": "m0-03",
@@ -36,5 +37,5 @@
   "status": "done",
   "test": "Correr el comando headless: termina con código 0. Romper a propósito un test (por ejemplo, cambiar un valor esperado): termina con código 1 y dice cuál falló.",
   "title": "Tests headless",
-  "updated_at": "2026-10-08T05:01:25.674Z"
+  "updated_at": "2026-10-11T07:50:08.848Z"
 }

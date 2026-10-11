@@ -15,6 +15,7 @@
   ],
   "code": "10.17",
   "created_at": "2026-10-09T17:20:43.733Z",
+  "description": "Con la cámara más alejada, los enemigos del overworld se quedan quietos estando en pantalla o se traban. Que vean al player a la nueva distancia, naveguen sin atascarse en las esquinas y ninguno aparezca encimado con paredes o cercos.",
   "milestone": "m10",
   "notes": "",
   "order": 17,
@@ -26,5 +27,5 @@
   ],
   "test": "",
   "title": "Enemigos quietos en el overworld",
-  "updated_at": "2026-10-09T17:20:45.471Z"
+  "updated_at": "2026-10-11T07:50:56.151Z"
 }

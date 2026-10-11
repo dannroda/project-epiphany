@@ -18,6 +18,7 @@
   ],
   "code": "13.7",
   "created_at": "2026-10-10T05:37:22.090Z",
+  "description": "Que enemigos y jefe sepan elegir entre varios players (el más cercano o el último que les pegó, con histéresis) y que la dificultad escale con dos, sin cambiar nada al jugar solo.",
   "milestone": "m13",
   "notes": "Skills: `disciplines:game-ai`.",
   "order": 7,
@@ -35,5 +36,5 @@
   ],
   "test": "Con dos players, los enemigos se reparten y el jefe ataca a los dos; con uno, igual que siempre.",
   "title": "Enemigos y jefe con varios objetivos",
-  "updated_at": "2026-10-10T05:37:23.403Z"
+  "updated_at": "2026-10-11T07:50:20.301Z"
 }

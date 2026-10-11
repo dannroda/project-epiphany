@@ -13,6 +13,7 @@
   ],
   "code": "8.5",
   "created_at": "2026-10-08T04:45:28.309Z",
+  "description": "La arena del templo: oleadas de enemigos que cierran la sala hasta vencer la última y, de premio, el cofre grande con el arco, que abre la segunda mitad de la mazmorra. Morir a mitad tiene que reiniciar las oleadas.",
   "links": [
     {
       "task": "m8-06",
@@ -31,5 +32,5 @@
   "status": "done",
   "test": "Ganar las oleadas (incluido el esqueleto con escudo) y conseguir el arco; morir a mitad de oleada y reintentar empieza de cero.",
   "title": "Sala 5: arena y arco",
-  "updated_at": "2026-10-09T01:12:06.641Z"
+  "updated_at": "2026-10-11T07:50:41.868Z"
 }

@@ -13,6 +13,7 @@
   ],
   "code": "11.50",
   "created_at": "2026-10-10T23:12:51.056Z",
+  "description": "Audio propio para el jefe: voz mecánica, chirridos, carga del orbe y golpes con grave, y un tema de música con capas por fase en lugar del placeholder.",
   "links": [
     {
       "task": "m11-46",
@@ -36,5 +37,5 @@
   ],
   "test": "La pelea tiene sonido propio y la música cambia con las fases.",
   "title": "Audio del jefe",
-  "updated_at": "2026-10-10T23:13:28.677Z"
+  "updated_at": "2026-10-11T07:51:13.541Z"
 }

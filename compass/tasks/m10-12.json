@@ -18,6 +18,7 @@
   ],
   "code": "10.12",
   "created_at": "2026-10-09T07:29:24.681Z",
+  "description": "`Targeting.targeting_range` pisa en `_ready` el radio de la forma del detector, así que cambiarla en el editor no tiene efecto. Dejar una sola fuente para el rango de fijado y que el inspector muestre el valor real.",
   "milestone": "m10",
   "notes": "Targeting.targeting_range (12 m) pisaba en _ready el radio del CylinderShape3D de TargetDetector, así que cambiar la forma en el editor no tenía efecto.\n\n2026-10-09: la fuente única es la forma (radio 6 m, visible como gizmo en el editor). Se borró el export y `_set_range`; `targeting_range` quedó como getter de solo lectura. Test `test_range_is_the_detector_radius`.",
   "order": 12,
@@ -29,5 +30,5 @@
   ],
   "test": "",
   "title": "Rango de fijado: una sola fuente",
-  "updated_at": "2026-10-09T23:41:06.869Z"
+  "updated_at": "2026-10-11T07:50:53.597Z"
 }

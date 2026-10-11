@@ -17,6 +17,7 @@
   ],
   "code": "10.13",
   "created_at": "2026-10-09T07:29:24.940Z",
+  "description": "Sacar código de UI que reemplaza lo que el tema ya resuelve, empezando por el ▶ de `MenuItem` (que puede ser el ícono del tema), y revisar el resto de los scripts de UI por lo mismo, sin cambios visuales.",
   "milestone": "m10",
   "notes": "Código que reemplaza algo que el tema ya resuelve. MenuItem quedó sin script: ▶ = MenuItem/icons/icon con icon_normal_color alpha 0 e icon_focus/hover dorados; hover se ve como foco. Revisado el resto: SlotCard (vacía/llena), pestañas y modos de FileSelect dependen de estado, no de foco; se quitó slot.text = \"\" en Equipo y el botón DEBUG pasó a la variación DebugButton.",
   "order": 13,
@@ -28,5 +29,5 @@
   ],
   "test": "",
   "title": "Refactor de código de UI innecesario",
-  "updated_at": "2026-10-09T15:05:44.210Z"
+  "updated_at": "2026-10-11T07:50:54.143Z"
 }

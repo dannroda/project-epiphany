@@ -18,6 +18,7 @@
   ],
   "code": "13.2",
   "created_at": "2026-10-10T05:37:14.453Z",
+  "description": "Que cada player lea su propio control (teclado+mouse cuenta como uno) con su buffer, apuntado y targeting, y que un segundo control pueda sumarse o salir con Start en cualquier momento sin cortar la partida.",
   "links": [
     {
       "task": "m14-02",
@@ -41,5 +42,5 @@
   ],
   "test": "Con dos controles, cada uno mueve solo a su player; el P2 entra y sale con Start sin pausar el juego.",
   "title": "Input por jugador y unirse a la partida",
-  "updated_at": "2026-10-11T01:11:16.248Z"
+  "updated_at": "2026-10-11T07:50:17.721Z"
 }

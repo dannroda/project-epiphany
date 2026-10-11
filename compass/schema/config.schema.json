@@ -38,7 +38,8 @@
           "path": {
             "type": "string",
             "minLength": 1,
-            "description": "Ruta relativa a la raíz del proyecto, o un patrón como docs/**/*.md"
+            "description": "Ruta a un .md dentro del proyecto, relativa a la raíz, o un patrón como docs/**/*.md (sin .., llaves ni rutas absolutas)",
+            "pattern": "^(?![/\\\\])(?![a-zA-Z]:)(?!(.*/)?\\.\\.(/|$))[^\\\\{}]+\\.md$"
           }
         }
       }
@@ -46,7 +47,8 @@
     "export_md": {
       "type": "string",
       "minLength": 1,
-      "description": "Ruta del export markdown, relativa a la raíz del proyecto"
+      "description": "Ruta del export markdown (.md), relativa a la raíz del proyecto y dentro de él",
+      "pattern": "^(?![/\\\\])(?![a-zA-Z]:)(?!(.*/)?\\.\\.(/|$))[^\\\\{}]+\\.md$"
     },
     "port": {
       "type": "integer",
@@ -61,15 +63,29 @@
     },
     "views": {
       "type": "array",
-      "description": "Pestañas del proyecto en la web, en orden; la primera es la que abre. Sin views: board, lists, docs.",
+      "description": "Pestañas del proyecto en la web, en orden; la primera es la que abre. Sin views: board, lists, docs, files.",
       "minItems": 1,
       "uniqueItems": true,
       "items": {
         "enum": [
           "board",
           "lists",
-          "docs"
+          "docs",
+          "files"
         ]
+      }
+    },
+    "description_templates": {
+      "type": "object",
+      "description": "Plantillas de descripción por etiqueta: al ponerle esa etiqueta a una tarea sin descripción, la descripción arranca con este texto (p. ej. bug: pasos para reproducirlo, qué se esperaba y qué pasó).",
+      "propertyNames": {
+        "minLength": 1,
+        "maxLength": 40,
+        "pattern": "^[^,\\s]([^,]*[^,\\s])?$"
+      },
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
       }
     }
   }

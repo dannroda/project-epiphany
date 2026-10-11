@@ -47,6 +47,7 @@
   ],
   "code": "12.12",
   "created_at": "2026-10-10T23:24:31.663Z",
+  "description": "Probar un look tipo Wind Waker con cel shading: shader toon en Godot y un personaje cyber-shinobi armado en Blender y publicado por el pipeline glb, para comparar en el templo contra el jugador actual y decidir el rumbo de estilo.",
   "links": [
     {
       "task": "m12-13",
@@ -65,5 +66,5 @@
   ],
   "test": "",
   "title": "Estilo toon (Wind Waker) + personaje cyber-shinobi",
-  "updated_at": "2026-10-11T02:57:37.530Z"
+  "updated_at": "2026-10-11T07:50:16.083Z"
 }

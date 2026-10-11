@@ -31,6 +31,7 @@
   ],
   "code": "11.15",
   "created_at": "2026-10-09T18:11:53.976Z",
+  "description": "Generar los íconos de ítems y equipo renderizando los modelos 3D, para que el HUD y los menús muestren lo mismo que se ve en la mano del player en vez de SVG sueltos.",
   "milestone": "m11",
   "notes": "Los íconos se regeneran con godot --path . --script res://tools/render_item_icons.gd y después hay que importar (editor o --import con el editor cerrado). El escudo de madera también cambió en la mano y en el esqueleto.",
   "order": 15,
@@ -43,5 +44,5 @@
   ],
   "test": "",
   "title": "Íconos de ítems y equipo renderizados desde los modelos 3D",
-  "updated_at": "2026-10-09T19:17:49.069Z"
+  "updated_at": "2026-10-11T07:50:58.830Z"
 }

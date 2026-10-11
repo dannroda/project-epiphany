@@ -18,6 +18,7 @@
   ],
   "code": "11.7",
   "created_at": "2026-10-09T17:40:34.010Z",
+  "description": "Con el doom alto el sol rojo, la niebla y las grietas tiñen todo y el player y los objetos se pierden en el piso. Tienen que conservar sus colores y su sombra para leerse sobre cualquier nivel de doom.",
   "milestone": "m11",
   "notes": "",
   "order": 7,
@@ -29,5 +30,5 @@
   ],
   "test": "En la antesala (doom 0.9), el player, la tablilla y las vasijas conservan sus colores sobre el piso rojo y siguen proyectando sombra.",
   "title": "Doom legible: player y objetos sin teñir",
-  "updated_at": "2026-10-10T01:28:09.365Z"
+  "updated_at": "2026-10-11T07:50:54.752Z"
 }

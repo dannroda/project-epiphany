@@ -53,6 +53,7 @@
   ],
   "code": "0.11",
   "created_at": "2026-09-30T04:18:20.208Z",
+  "description": "Reemplazar los `print` y `print_rich` sueltos por un logger con niveles y canales (autoload `Log`), conectado al debugger de Godot con una pestaña propia para filtrar en vivo, monitores y un overlay en el juego.",
   "links": [
     {
       "task": "m0-07",
@@ -79,5 +80,5 @@
   "status": "done",
   "test": "Correr `levels/test.tscn` y golpear al esqueleto: la línea aparece en la pestaña Log del debugger. Filtrar por `combat` desde la pestaña oculta el resto sin reiniciar el juego. Doble clic en la línea abre `enemy.gd` donde se generó. En *Debugger › Monitors* aparece la categoría `epiphany`. La tecla `1` muestra y oculta el overlay. Un error provocado a propósito (por ejemplo, llamar a un método que no existe) también aparece en la pestaña, con canal `engine`, y el doble clic lleva a la línea.",
   "title": "Sistema de depuración",
-  "updated_at": "2026-10-08T04:32:50.209Z"
+  "updated_at": "2026-10-11T07:50:04.268Z"
 }

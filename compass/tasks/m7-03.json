@@ -18,6 +18,7 @@
   ],
   "code": "7.3",
   "created_at": "2026-10-08T04:45:23.257Z",
+  "description": "`Portal` para pasar entre overworld y mazmorra con fundido y carga en segundo plano, sin congelar la imagen y apareciendo en la puerta correcta. Guarda al cambiar de escena para no perder progreso.",
   "links": [
     {
       "task": "m7-06",
@@ -40,5 +41,5 @@
   "status": "done",
   "test": "Entrar y salir del templo varias veces: el player aparece en la puerta correcta, sin congelarse, y el estado de la mazmorra se conserva.",
   "title": "Cambio de escena overworld ↔ mazmorra",
-  "updated_at": "2026-10-08T23:55:16.415Z"
+  "updated_at": "2026-10-11T07:50:54.919Z"
 }

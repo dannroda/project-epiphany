@@ -23,6 +23,7 @@
   ],
   "code": "2.3",
   "created_at": "2026-10-08T04:45:07.157Z",
+  "description": "Pilar 5: gamepad y teclado/mouse son ciudadanos de primera. Definir el mapa de teclado y mouse, cambiar de objetivo con la rueda y detectar el dispositivo activo, para poder jugar sin gamepad. El remapeo es post-MVP.",
   "milestone": "m02",
   "notes": "Pilar 5: gamepad y teclado/mouse son ciudadanos de primera. El remapeo es post-MVP.\n\nSkills: `disciplines:input-systems`.\n\nMapa elegido: WASD, click izquierdo ataca, click derecho guardia, Shift izquierdo fija, rueda cambia de objetivo (acciones nuevas target_prev/target_next), Espacio rueda, E interactúa, Q/R ítems, Tab o Esc pausa, M mapa, Q/E pestañas. Teclas por posición física. Se cargó con un script headless sobre ProjectSettings (device -1, como el editor). Se corrigieron las teclas de debug: 3 guarda, 2 carga (como dice el GDD). Autoload InputDevice con input_device_changed (umbrales para ignorar drift de stick y temblor de mouse). Falta la prueba jugando sin gamepad.",
   "order": 3,
@@ -39,5 +40,5 @@
   "status": "done",
   "test": "Jugar el nivel de prueba sin gamepad: moverse, atacar, bloquear, rodar, fijar, cambiar de objetivo y apuntar con el mouse.",
   "title": "Controles de teclado y mouse",
-  "updated_at": "2026-10-08T06:26:06.788Z"
+  "updated_at": "2026-10-11T07:50:14.623Z"
 }

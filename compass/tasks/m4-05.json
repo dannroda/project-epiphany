@@ -23,6 +23,7 @@
   ],
   "code": "4.5",
   "created_at": "2026-10-08T04:45:14.209Z",
+  "description": "Componente `PersistentFlag` para que cofres, puertas, muros, interruptores y tablillas recuerden su estado entre partidas, con aviso en el editor si el flag está mal escrito y una convención de nombres (`ow_*`, `d1_*`). Es lo que hace que el mundo recuerde lo que hiciste.",
   "links": [
     {
       "task": "m5-05",
@@ -45,5 +46,5 @@
   "status": "done",
   "test": "Abrir un cofre, romper un muro y leer una tablilla; guardar con `3`, recargar la escena y cargar con `2`: todo sigue igual. Un flag mal escrito en un cofre muestra la advertencia en el editor.",
   "title": "Flags del mundo persistentes",
-  "updated_at": "2026-10-08T08:11:00.285Z"
+  "updated_at": "2026-10-11T07:50:44.739Z"
 }

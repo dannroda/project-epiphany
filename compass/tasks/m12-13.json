@@ -43,6 +43,7 @@
   ],
   "code": "12.13",
   "created_at": "2026-10-10T23:51:27.915Z",
+  "description": "Con el estilo toon de 12.12, aplicar el shader cel a todo el material de paleta, recorrer el mundo y ajustar paleta, vegetación, terreno, templo, personajes, objetos y efectos para que todo conviva con el personaje nuevo.",
   "links": [
     {
       "task": "m11-20",
@@ -72,5 +73,5 @@
   ],
   "test": "",
   "title": "Reajuste de estilo toon de todos los assets",
-  "updated_at": "2026-10-11T05:37:35.538Z"
+  "updated_at": "2026-10-11T07:50:16.636Z"
 }

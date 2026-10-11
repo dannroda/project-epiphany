@@ -13,6 +13,7 @@
   ],
   "code": "11.11",
   "created_at": "2026-10-09T17:40:35.146Z",
+  "description": "El HUD muestra los slots X/Y aunque no tengan ítem, y el acercamiento del reveal puede mostrar lo que hay fuera de la sala. Ocultar los slots vacíos y acotar el reveal a la sala.",
   "milestone": "m11",
   "notes": "",
   "order": 11,
@@ -24,5 +25,5 @@
   ],
   "test": "Nueva partida: el HUD no muestra los slots X/Y hasta asignarles un ítem. Al pisar un interruptor con reveal, el acercamiento no muestra nada fuera de la sala.",
   "title": "HUD sin slots vacíos y reveal dentro de la sala",
-  "updated_at": "2026-10-10T01:11:36.703Z"
+  "updated_at": "2026-10-11T07:50:56.829Z"
 }

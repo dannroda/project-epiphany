@@ -12,6 +12,7 @@
   ],
   "code": "10.3",
   "created_at": "2026-10-08T04:45:34.936Z",
+  "description": "Reemplazar el fundido al morir por una pantalla de game over con Continuar (desde la entrada de la sala o el último checkpoint) o Guardar y salir, que lleve al lugar correcto en overworld, mazmorra y jefe.",
   "milestone": "m10",
   "notes": "Hecho 2026-10-09: `GameOver` (mockup) reemplaza el fundido de 1.5; `SaveManager.save_checkpoint()` para Guardar y salir; `MenuStack` respeta pantallas `modal`. Morir contra el jefe vuelve a la antesala (8.7). Tests `tests/test_game_over.gd` + los de muerte actualizados.",
   "order": 3,
@@ -28,5 +29,5 @@
   "status": "done",
   "test": "Morir en overworld, en mazmorra y contra el jefe: cada \"Continuar\" lleva al lugar correcto.",
   "title": "Game over",
-  "updated_at": "2026-10-09T03:55:20.384Z"
+  "updated_at": "2026-10-11T07:50:49.018Z"
 }

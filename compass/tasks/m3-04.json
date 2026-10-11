@@ -23,6 +23,7 @@
   ],
   "code": "3.4",
   "created_at": "2026-10-08T04:45:09.671Z",
+  "description": "Usar el ítem asignado a X o Y: estado `UsingItem` que arma el `ItemUseContext` y llama `behavior.use()` en el momento justo de la animación, con feedback de \"no se puede\" cuando el ítem no se puede usar.",
   "links": [
     {
       "task": "m5-03",
@@ -53,5 +54,5 @@
   "status": "done",
   "test": "Con una poción asignada a X y el player herido: apretar X la toma y cura. Con la vida llena, no la gasta y suena el \"no se puede\".",
   "title": "Usar los ítems asignados",
-  "updated_at": "2026-10-08T07:22:19.429Z"
+  "updated_at": "2026-10-11T07:50:17.377Z"
 }

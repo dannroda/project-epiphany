@@ -28,6 +28,7 @@
   ],
   "code": "1.7",
   "created_at": "2026-10-08T04:45:05.631Z",
+  "description": "Que el combate se sienta: hit-stop, sacudida de cámara, flash blanco en el golpeado, chispas al bloquear, polvo al rodar y SFX placeholder, con todos los valores exportados para tunearlos desde el inspector.",
   "milestone": "m01",
   "notes": "Recién acá el combate tiene que \"sentirse\". Exportar todos los valores para tunearlos desde el inspector.\n\nSkills: `disciplines:game-feel`, `disciplines:camera-systems`, `godot:godot-shaders`.\n\nTodo pasa por el autoload Feel (src/feel/feel.gd) y los valores están en data/feel.tres (FeelSettings), con interruptores de sacudida y flash para accesibilidad. Hit-stop: desactiva el proceso del atacante y del golpeado (no toca Engine.time_scale). Sacudida: trauma² en TopDownCamera sobre h_offset/v_offset. Flash: shader aditivo como material_overlay (HitFlash, en player y esqueleto). Partículas: sparks (bloqueo) y dust (roll) con CPUParticles3D. Sonidos sintetizados en código (hit, hurt, block, roll) en el bus SFX creado en runtime; el bus definitivo va en 10.5. En headless el renderer dummy tira 'Parameter material is null' por el overlay: es ruido, en ventana no aparece. Falta la prueba subjetiva: jugar y ajustar.",
   "order": 7,
@@ -40,5 +41,5 @@
   "status": "done",
   "test": "Grabar un clip peleando contra el esqueleto y compararlo con uno antes de la tarea: cada golpe dado, recibido y bloqueado tiene respuesta visual y sonora.",
   "title": "Feel del combate",
-  "updated_at": "2026-10-08T06:11:03.690Z"
+  "updated_at": "2026-10-11T07:50:13.030Z"
 }

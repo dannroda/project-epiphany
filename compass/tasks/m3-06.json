@@ -28,6 +28,7 @@
   ],
   "code": "3.6",
   "created_at": "2026-10-08T04:45:10.677Z",
+  "description": "Cofres que se abren interactuando y dan su ítem con la secuencia de item get, con `GameState.give()` como entrada única, primer equipado automático y una flag para que el cofre no vuelva a dar el ítem.",
   "links": [
     {
       "task": "m4-01",
@@ -54,5 +55,5 @@
   "status": "done",
   "test": "Abrir un cofre con bombas: animación, texto y bombas en el inventario. Salir y volver a la escena (o guardar y cargar): el cofre sigue abierto y no da bombas de nuevo.",
   "title": "Cofres e item get",
-  "updated_at": "2026-10-08T07:28:26.940Z"
+  "updated_at": "2026-10-11T07:50:18.473Z"
 }

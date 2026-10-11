@@ -8,6 +8,7 @@
   ],
   "code": "11.28",
   "created_at": "2026-10-10T05:29:43.553Z",
+  "description": "Uno o dos atajos que se abren desde adentro (puente o escalera) y quedan abiertos, para acortar el camino de vuelta al templo.",
   "milestone": "m11",
   "notes": "",
   "order": 28,
@@ -19,5 +20,5 @@
   ],
   "test": "Abrir el atajo desde adentro: queda abierto y acorta el recorrido al templo.",
   "title": "Atajos que se abren al volver",
-  "updated_at": "2026-10-10T05:29:44.072Z"
+  "updated_at": "2026-10-11T07:51:04.618Z"
 }

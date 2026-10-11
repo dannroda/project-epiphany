@@ -13,6 +13,7 @@
   ],
   "code": "8.4",
   "created_at": "2026-10-08T04:45:27.800Z",
+  "description": "Las salas 3 y 4 del templo, resolubles sin el arco: una galería donde se reflejan los orbes de las torretas a un cristal para ganar una llave chica, y una sala agrietada donde las bombas abren el camino al mapa.",
   "milestone": "m08",
   "notes": "Hecho 2026-10-08: galería (torreta → reflejo → ojo → llave 1; ojo de la puerta norte solo con flecha) y sala agrietada (bomba vuela la caja del hueco → mapa; muro agrietado a la arena). Simplificación: en vez de \"bombas empujan bloques a un interruptor\", la bomba despeja el paso (más robusto con física). `dungeon_no_bow` ahora es del templo (en el hub); el escenario viejo de las salas de prueba se llama `test_rooms`. Test en `tests/test_temple.gd`.",
   "order": 4,
@@ -25,5 +26,5 @@
   "status": "done",
   "test": "Resolver las dos salas desde `dungeon_no_bow` y salir con la llave y el mapa.",
   "title": "Salas 3–4: galería de trampas y sala agrietada",
-  "updated_at": "2026-10-09T01:04:04.229Z"
+  "updated_at": "2026-10-11T07:50:41.310Z"
 }

@@ -33,6 +33,7 @@
   ],
   "code": "10.21",
   "created_at": "2026-10-10T05:25:45.155Z",
+  "description": "Hoy Continuar y Nueva partida abren los dos la selección de ranuras. Continuar tiene que cargar directo la última partida, Nueva partida elegir dónde crearla, y el autosave pasa a una ranura propia (Auto) que no pise las partidas manuales.",
   "links": [
     {
       "task": "m10-02",
@@ -50,5 +51,5 @@
   ],
   "test": "Con partidas guardadas: Continuar entra directo a la última jugada (auto o manual). Nueva partida: elegir un slot vacío arranca de cero; uno ocupado pide confirmación y, si se cancela, no toca la partida. Jugar, dejar que autoguarde: la ranura Auto se actualiza y las manuales no cambian hasta guardar a mano. Partidas viejas siguen apareciendo tras la migración.",
   "title": "Título y ranuras: Continuar, Nueva partida y ranura de autosave",
-  "updated_at": "2026-10-10T17:21:30.777Z"
+  "updated_at": "2026-10-11T07:50:58.154Z"
 }

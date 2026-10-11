@@ -13,6 +13,7 @@
   ],
   "code": "8.7",
   "created_at": "2026-10-08T04:45:29.324Z",
+  "description": "La antesala antes del jefe: un respiro con vasijas de corazones, una tablilla que lo anticipa y la puerta del jefe. Funciona de checkpoint: morir contra el jefe devuelve acá.",
   "links": [
     {
       "task": "m8-08",
@@ -31,5 +32,5 @@
   "status": "done",
   "test": "Abrir la puerta del jefe con su llave; morir adentro devuelve a la antesala.",
   "title": "Sala 8: antesala",
-  "updated_at": "2026-10-09T01:27:41.922Z"
+  "updated_at": "2026-10-11T07:50:42.892Z"
 }

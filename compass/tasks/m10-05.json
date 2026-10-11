@@ -23,6 +23,7 @@
   ],
   "code": "10.5",
   "created_at": "2026-10-08T04:45:35.972Z",
+  "description": "Darle sonido al juego: buses con volumen desde Opciones, SFX y música conseguidos con sus licencias, variación para que los sonidos repetidos no suenen idénticos y música por capas que crece con el *doom* de la mazmorra.",
   "milestone": "m10",
   "notes": "Skills: `disciplines:audio-design`, `godot:godot-audio`.\n\nHecho 2026-10-09: buses (vía `Settings`), SFX de Kenney CC0 con variación, sonidos de interfaz globales, música en capas sintetizada (`render_music.gd` + autoload `Music`) que sigue `Room.doom` y hace ducking con menús. Lista `assets-de-audio` con licencias y lo que falta conseguir. Test `tests/test_audio.gd`.",
   "order": 5,
@@ -35,5 +36,5 @@
   "status": "done",
   "test": "Recorrer el overworld y la mazmorra con auriculares: nada satura, la música cambia con el avance y los SFX repetidos no suenan idénticos.",
   "title": "Audio",
-  "updated_at": "2026-10-09T04:21:36.151Z"
+  "updated_at": "2026-10-11T07:50:50.002Z"
 }

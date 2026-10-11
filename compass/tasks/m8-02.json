@@ -23,6 +23,7 @@
   ],
   "code": "8.2",
   "created_at": "2026-10-08T04:45:26.798Z",
+  "description": "Un enemigo que no se resuelva a espadazos: un esqueleto con escudo que bloquea de frente y obliga a flanquearlo, usar bombas o romperle la guardia con un golpe de escudo. Más lento y torpe para girar que el común.",
   "links": [
     {
       "task": "m8-05",
@@ -41,5 +42,5 @@
   "status": "done",
   "test": "Pegarle de frente no hace daño; rodar a su espalda, una bomba o un golpe de escudo y luego espada, sí.",
   "title": "Esqueleto con escudo",
-  "updated_at": "2026-10-09T00:41:56.563Z"
+  "updated_at": "2026-10-11T07:50:40.335Z"
 }

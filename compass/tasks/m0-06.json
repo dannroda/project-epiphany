@@ -28,6 +28,7 @@
   ],
   "code": "0.6",
   "created_at": "2026-09-29T18:00:00Z",
+  "description": "Guardar y cargar partidas en `user://saves/`: en texto plano desde el editor para poder leerlas y editarlas, encriptadas en release para que nadie las edite por accidente; con escritura atómica, respaldo y la posición del player.",
   "links": [
     {
       "task": "m0-10",
@@ -50,5 +51,5 @@
   "status": "done",
   "test": "Jugar, apretar `3`, cerrar el juego, abrirlo y apretar `2`: todo vuelve igual. Después editar a mano el archivo de `user://saves/`: al cargar aparece un aviso en la consola y `GameState.save_tampered` queda en `true`.",
   "title": "Guardado",
-  "updated_at": "2026-10-08T05:01:19.556Z"
+  "updated_at": "2026-10-11T07:50:06.249Z"
 }

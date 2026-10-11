@@ -33,6 +33,7 @@
   ],
   "code": "11.35",
   "created_at": "2026-10-10T05:32:19.931Z",
+  "description": "Saltar con un ítem tipo Pluma de Roc (nada de salto libre), para que el gating por saltos empiece al conseguirlo: huecos de un tile, andenes bajos y esquivar ondas de choque del jefe.",
   "links": [
     {
       "task": "m11-34",
@@ -64,5 +65,5 @@
   ],
   "test": "Sin la pluma no se puede saltar. Con la pluma asignada: saltar un hueco de un tile y subir a un andén bajo; la sombra deja ver dónde cae. No se puede saltar una pirca ni un muro de sala. Saltar esquiva la onda de choque del golpe de las manos del jefe.",
   "title": "Saltar: ítem tipo Pluma de Roc",
-  "updated_at": "2026-10-10T05:33:05.837Z"
+  "updated_at": "2026-10-11T07:51:07.550Z"
 }

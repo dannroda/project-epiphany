@@ -28,6 +28,7 @@
   ],
   "code": "10.11",
   "created_at": "2026-10-09T07:29:24.413Z",
+  "description": "Pasar a escenas `.tscn` la UI que todavía se arma por código (filas de stats, pestañas Equipo y Mapa, corazones), como pide la regla de que los scripts solo llenen datos, y un test que impida volver a crear Controls con `.new()` en `src/ui`.",
   "milestone": "m10",
   "notes": "Lo que todavía se arma por código (anterior a la regla: toda la UI son .tscn, los scripts solo llenan datos). Lo repetido es su propia escena chica, instanciada por ítem; estilos en theme.tres.",
   "order": 11,
@@ -39,5 +40,5 @@
   ],
   "test": "",
   "title": "UI restante a escenas",
-  "updated_at": "2026-10-09T14:52:21.879Z"
+  "updated_at": "2026-10-11T07:50:53.066Z"
 }

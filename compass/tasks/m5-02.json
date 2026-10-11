@@ -18,6 +18,7 @@
   ],
   "code": "5.2",
   "created_at": "2026-10-08T04:45:15.188Z",
+  "description": "Torreta / ojo menor: enemigo fijo que apunta, telegrafía y dispara orbes reflejables. Solo cae con su propio orbe reflejado o con flechas, para enseñar el reflejo con el escudo espejo.",
   "links": [
     {
       "task": "m8-04",
@@ -36,5 +37,5 @@
   "status": "done",
   "test": "Con escudo espejo, reflejar tres orbes destruye la torreta; con escudo de madera solo se bloquean.",
   "title": "Torreta / ojo menor",
-  "updated_at": "2026-10-08T18:48:06.153Z"
+  "updated_at": "2026-10-11T07:50:46.207Z"
 }

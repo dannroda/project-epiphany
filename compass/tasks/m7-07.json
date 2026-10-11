@@ -18,6 +18,7 @@
   ],
   "code": "7.7",
   "created_at": "2026-10-08T04:45:25.265Z",
+  "description": "Tres secretos del overworld: botella con poción tras un muro agrietado, cota reforzada en un puzzle de bloques y carcaj grande en un ojo que solo se alcanza con el arco, después de la mazmorra. Si falta tiempo se recortan primero el carcaj y después la cota.",
   "milestone": "m07",
   "notes": "Recortables en este orden: carcaj, cota ([[gdd#roadmap]]).\n\nHecho 2026-10-08: gruta (muro + poción + tablilla con pista), arboleda (dos bloques → reja → cota), risco (ojo con flecha → nicho → carcaj +20). Test `tests/test_secrets.gd` (los tres con todo; sin arco el ojo no despierta).",
   "order": 7,
@@ -34,5 +35,5 @@
   "status": "done",
   "test": "Con `full_inventory`, encontrar los tres secretos; con `start`, el carcaj no se puede conseguir.",
   "title": "Secretos del overworld",
-  "updated_at": "2026-10-09T00:26:58.856Z"
+  "updated_at": "2026-10-11T07:50:56.932Z"
 }

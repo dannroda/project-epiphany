@@ -23,6 +23,7 @@
   ],
   "code": "11.13",
   "created_at": "2026-10-09T18:01:18.158Z",
+  "description": "Usar los packs KayKit de esqueletos y Adventurers: modelos de esqueleto para los enemigos y el Knight para el player, en vez de los modelos actuales.",
   "milestone": "m11",
   "notes": "Las animaciones de los packs nuevos (General, MovementBasic) son idénticas a las de kaykit_charanim: no hay nada extra. Los binds handslot.l/r pasan a hand.l/r porque el rig del proyecto no tiene esos huesos.",
   "order": 13,
@@ -35,5 +36,5 @@
   ],
   "test": "",
   "title": "Modelos KayKit: esqueletos para los enemigos y Knight para el player",
-  "updated_at": "2026-10-09T18:42:06.943Z"
+  "updated_at": "2026-10-11T07:50:57.852Z"
 }

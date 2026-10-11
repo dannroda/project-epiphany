@@ -23,6 +23,7 @@
   ],
   "code": "11.47",
   "created_at": "2026-10-10T23:12:47.043Z",
+  "description": "Las manos del jefe alternan mallas sueltas (abierta, puño, garra). Hacer una malla por mano con shape keys, para que los dedos se cierren y abran de forma continua y las manos tengan gestos propios.",
   "links": [
     {
       "task": "m11-46",
@@ -46,5 +47,5 @@
   ],
   "test": "Los dedos se cierran y abren de forma continua; las manos respiran en reposo, se inclinan al moverse, abren antes de agarrar, aprietan al sostener, se crispan aturdidas y caen flojas; la pelea sigue igual.",
   "title": "Manos del jefe animadas (shape keys)",
-  "updated_at": "2026-10-11T05:03:58.240Z"
+  "updated_at": "2026-10-11T07:51:12.007Z"
 }

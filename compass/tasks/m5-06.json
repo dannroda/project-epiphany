@@ -23,6 +23,7 @@
   ],
   "code": "5.6",
   "created_at": "2026-10-08T04:45:17.184Z",
+  "description": "Escudo espejo y haz de luz: un `LightBeam` que rebota en espejos y en el escudo mientras se bloquea, y un cristal (`LightReceiver`) que se activa al recibirlo. Es la mecánica central que abre el sello del templo y los puzzles de reflejo.",
   "links": [
     {
       "task": "m5-08",
@@ -53,5 +54,5 @@
   "status": "done",
   "test": "Bloquear frente a una fuente de luz y girar hasta apuntar a un cristal: el cristal se activa. Con escudo de madera, el haz se corta en el escudo.",
   "title": "Escudo espejo y haz de luz",
-  "updated_at": "2026-10-08T19:35:01.817Z"
+  "updated_at": "2026-10-11T07:50:48.248Z"
 }

@@ -28,6 +28,7 @@
   ],
   "code": "11.33",
   "created_at": "2026-10-10T05:30:49.373Z",
+  "description": "Skills: `disciplines:game-feel`, `disciplines:input-systems`, `godot:godot-animation`.",
   "links": [
     {
       "task": "m11-34",
@@ -35,7 +36,7 @@
     }
   ],
   "milestone": "m11",
-  "notes": "Skills: `disciplines:game-feel`, `disciplines:input-systems`, `godot:godot-animation`. Hecho: cancel_from/lunge en AttackData, golpe encadenable (Attacking→Attacking), giro al objetivo o stick, chispas al pegar, aviso rojo (HitFlash.warn) y recovery_time 0,4 s en BTAttack, feel.tres con valores. Falta jugarlo (paso 1) y el sonido por superficie.",
+  "notes": "Hecho: cancel_from/lunge en AttackData, golpe encadenable (Attacking→Attacking), giro al objetivo o stick, chispas al pegar, aviso rojo (HitFlash.warn) y recovery_time 0,4 s en BTAttack, feel.tres con valores. Falta jugarlo (paso 1) y el sonido por superficie.",
   "order": 33,
   "priority": "high",
   "refs": [
@@ -50,5 +51,5 @@
   ],
   "test": "Pelear contra 3 chullpas en el overworld: cada golpe responde al instante, se puede rodar o bloquear al final de un tajo, los impactos se sienten, y en una sesión de playtest nadie lo describe como tosco.",
   "title": "Combate: sacar lo tosco",
-  "updated_at": "2026-10-10T18:10:43.551Z"
+  "updated_at": "2026-10-11T07:46:11.764Z"
 }

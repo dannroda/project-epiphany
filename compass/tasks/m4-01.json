@@ -18,6 +18,7 @@
   ],
   "code": "4.1",
   "created_at": "2026-10-08T04:45:12.154Z",
+  "description": "Prompt de acción contextual en el HUD: muestra qué hace `interact` (\"Abrir\", \"Leer\", \"Empujar\") con el `Interactable` más cercano y de frente, así el jugador sabe con qué va a interactuar. Se oculta en combate, en menús y cuando el player no puede actuar.",
   "links": [
     {
       "task": "m6-02",
@@ -40,5 +41,5 @@
   "status": "done",
   "test": "Pararse entre un cofre y una tablilla y girar: el prompt cambia según hacia dónde mira el player.",
   "title": "Prompt de acción contextual",
-  "updated_at": "2026-10-08T07:48:20.085Z"
+  "updated_at": "2026-10-11T07:50:42.716Z"
 }

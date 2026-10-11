@@ -18,6 +18,7 @@
   ],
   "code": "10.8",
   "created_at": "2026-10-08T04:45:37.474Z",
+  "description": "Asegurar 60 FPS en la máquina más floja de los playtesters: perfilar las peores escenas (arena con oleadas, overworld con pasto, jefe) y arreglar lo que se mida.",
   "milestone": "m10",
   "notes": "Skills: `disciplines:performance-optimization`.\n\n2026-10-09: presupuesto 16,6 ms p95; `src/tools/profile_scenes.gd` mide pradera, arena y antesala (todas ≈ 5 ms medio, ≤ 8 ms p95 en RX 580). Arreglado el tirón al aparecer oleadas (un enemigo por cuadro). Queda en Revisión: falta la escena del jefe (M9) y medir en build release (10.9) en la máquina más floja.",
   "order": 8,
@@ -25,5 +26,5 @@
   "status": "review",
   "test": "Las tres escenas se mantienen en el presupuesto en build release.",
   "title": "Pasada de rendimiento",
-  "updated_at": "2026-10-11T05:37:40.688Z"
+  "updated_at": "2026-10-11T07:50:51.514Z"
 }

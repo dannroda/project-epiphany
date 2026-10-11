@@ -18,6 +18,7 @@
   ],
   "code": "13.1",
   "created_at": "2026-10-10T05:37:12.860Z",
+  "description": "Preparar el código para más de un player: un registro `Players` con señales que reemplace las referencias al grupo \"player\" y los `get_first_node_in_group`, para que ningún sistema asuma un solo jugador y el co-op tenga dónde apoyarse.",
   "links": [
     {
       "task": "m13-02",
@@ -65,5 +66,5 @@
   ],
   "test": "Con 1 player el juego es idéntico; instanciar un segundo player no tira errores en overworld ni templo.",
   "title": "Código listo para varios players",
-  "updated_at": "2026-10-11T00:52:50.718Z"
+  "updated_at": "2026-10-11T07:50:17.178Z"
 }

@@ -12,6 +12,7 @@
   ],
   "code": "8.3",
   "created_at": "2026-10-08T04:45:27.296Z",
+  "description": "Construir el vestíbulo y el hub del templo: la sala 1 enseña el bloque por grilla con su interruptor y la persiana, y la sala 2 reparte el recorrido con 4 salidas (con llave, con persiana, la del jefe sellada y una libre) y esqueletos.",
   "links": [
     {
       "task": "m8-04",
@@ -34,5 +35,5 @@
   "status": "done",
   "test": "Desde la entrada de la mazmorra, llegar al hub y ver las 4 salidas en el estado que dice el GDD.",
   "title": "Salas 1–2: vestíbulo y hub",
-  "updated_at": "2026-10-09T00:50:38.137Z"
+  "updated_at": "2026-10-11T07:50:40.834Z"
 }

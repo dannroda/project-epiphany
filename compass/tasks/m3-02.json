@@ -23,6 +23,7 @@
   ],
   "code": "3.2",
   "created_at": "2026-10-08T04:45:08.667Z",
+  "description": "Pantalla Equipo en el menú de pausa: ranuras de espada, escudo y armadura para equipar con `GameState.equip()`, con stats y preview del modelo. La cota reforzada (7.7) es el ítem que justifica esta pantalla en el MVP.",
   "milestone": "m03",
   "notes": "La cota reforzada (7.7) es el ítem que justifica esta pantalla en el MVP.\n\nPágina src/ui/menus/equipment_page.tscn dentro del menú de pausa (reemplaza el placeholder). Columnas como el mockup: preview (SubViewport con una copia de ModelController del player, sin Hitboxes ni AnimationTree, girando), corazones y stats; filas Espada/Escudo/Armadura de 4 ranuras (EquipSlot del theme), con E en lo equipado y candado en lo que no se tiene; detalle del ítem enfocado. Equipar: A/Enter llama GameState.equip(); la pantalla y el player se actualizan por equipment_changed. ItemData tiene reflects (escudo espejo) y los 17 ítems tienen descripción. La ayuda de aceptar la define cada página (accept_label). Guardar y cargar el equipo ya lo cubren los tests de GameState.",
   "order": 2,
@@ -39,5 +40,5 @@
   "status": "done",
   "test": "Desde el escenario `full_inventory`: cambiar de escudo y armadura en la pantalla, cerrar y ver el cambio en el player; guardar y cargar conserva el equipo.",
   "title": "Pantalla Equipo",
-  "updated_at": "2026-10-08T06:53:35.242Z"
+  "updated_at": "2026-10-11T07:50:16.263Z"
 }

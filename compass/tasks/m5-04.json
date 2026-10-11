@@ -23,6 +23,7 @@
   ],
   "code": "5.4",
   "created_at": "2026-10-08T04:45:16.184Z",
+  "description": "Bombas que se colocan delante o se lanzan en arco hacia la mira, con mecha y explosión que daña a todos (el player incluido) y empuja objetos físicos. Son la llave de los muros agrietados y del gating del overworld.",
   "links": [
     {
       "task": "m5-05",
@@ -57,5 +58,5 @@
   "status": "done",
   "test": "Una bomba junto a un esqueleto con escudo y a una caja física: el esqueleto recibe daño y la caja sale volando. El player también se lastima si queda en el radio.",
   "title": "Bombas",
-  "updated_at": "2026-10-08T19:15:28.715Z"
+  "updated_at": "2026-10-11T07:50:47.217Z"
 }

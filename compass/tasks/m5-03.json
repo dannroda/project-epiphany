@@ -23,6 +23,7 @@
   ],
   "code": "5.3",
   "created_at": "2026-10-08T04:45:15.687Z",
+  "description": "Arco y flechas: mantener para apuntar y soltar para disparar, con munición limitada y flechas que se clavan. Suma `EyeSwitch`, un interruptor que solo reacciona a proyectiles, para puzzles a distancia (sala 6 y el carcaj).",
   "links": [
     {
       "task": "m5-08",
@@ -57,5 +58,5 @@
   "status": "done",
   "test": "Disparar a un interruptor de ojo a distancia con stick y con mouse: se activa. Sin flechas, el arco no dispara y suena el \"no se puede\".",
   "title": "Arco y flechas",
-  "updated_at": "2026-10-08T18:11:48.271Z"
+  "updated_at": "2026-10-11T07:50:46.702Z"
 }

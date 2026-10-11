@@ -23,6 +23,7 @@
   ],
   "code": "11.17",
   "created_at": "2026-10-09T19:43:10.365Z",
+  "description": "Pasar las páginas de la pausa a un `TabContainer` y los títulos a un `TabBar` del theme, en vez de las etiquetas a mano, y que un clic en una pestaña cambie de página.",
   "milestone": "m11",
   "notes": "",
   "order": 17,
@@ -34,5 +35,5 @@
   ],
   "test": "",
   "title": "Pausa: páginas en un TabContainer y títulos en un TabBar",
-  "updated_at": "2026-10-09T20:02:58.520Z"
+  "updated_at": "2026-10-11T07:50:59.808Z"
 }

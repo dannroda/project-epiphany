@@ -23,6 +23,7 @@
   ],
   "code": "0.5",
   "created_at": "2026-09-29T18:00:00Z",
+  "description": "Crear `GameState`, la partida en memoria (inventario, equipo, flags, mazmorras y punto de aparición), como autoload para que sobreviva a los cambios de escena, con `write_to`/`read_from` y la partida nueva.",
   "links": [
     {
       "task": "m0-06",
@@ -49,5 +50,5 @@
   "status": "done",
   "test": "Llamar `write_to()` sobre un `ConfigFile` nuevo, cambiar algo del estado (por ejemplo, sumar bombas) y llamar `read_from()` con ese mismo `ConfigFile`: el estado vuelve a ser el de antes.",
   "title": "GameState",
-  "updated_at": "2026-10-08T04:56:05.015Z"
+  "updated_at": "2026-10-11T07:50:05.740Z"
 }

@@ -18,6 +18,7 @@
   ],
   "code": "3.5",
   "created_at": "2026-10-08T04:45:10.187Z",
+  "description": "Slots X/Y en el HUD con el ícono y la munición del ítem asignado, actualizados al cambiar el inventario o la asignación, y con el ícono del botón según el dispositivo activo.",
   "links": [
     {
       "task": "m3-03",
@@ -36,5 +37,5 @@
   "status": "done",
   "test": "Disparar flechas: la munición baja en el slot. Reasignar desde la pantalla Ítems: el slot cambia sin reabrir el HUD.",
   "title": "Slots X/Y en el HUD",
-  "updated_at": "2026-10-08T07:17:57.421Z"
+  "updated_at": "2026-10-11T07:50:17.952Z"
 }

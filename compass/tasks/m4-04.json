@@ -23,6 +23,7 @@
   ],
   "code": "4.4",
   "created_at": "2026-10-08T04:45:13.704Z",
+  "description": "Vasijas rompibles y pasto cortable que sueltan drops según su `DropTable` y reaparecen al recargar, para dar vida al mundo y corazones donde hagan falta. Levantar y lanzar vasijas es opcional y recortable.",
   "links": [
     {
       "task": "m8-07",
@@ -45,5 +46,5 @@
   "status": "done",
   "test": "Cortar un campo de 50 matas de pasto sin caídas de FPS (*Debugger › Monitors*). Romper vasijas: sueltan corazones y vuelven al recargar.",
   "title": "Vasijas y pasto",
-  "updated_at": "2026-10-08T08:06:04.257Z"
+  "updated_at": "2026-10-11T07:50:44.249Z"
 }

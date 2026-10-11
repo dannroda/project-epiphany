@@ -12,6 +12,7 @@
   ],
   "code": "11.27",
   "created_at": "2026-10-10T05:29:42.499Z",
+  "description": "Un mini-santuario de 3–4 salas que se resuelven solo con el escudo espejo, cada una enseñando una variante del reflejo, con recompensa al final.",
   "milestone": "m11",
   "notes": "",
   "order": 27,
@@ -24,5 +25,5 @@
   ],
   "test": "Se completa solo con el escudo espejo; cada sala enseña una variante del reflejo.",
   "title": "Mini-santuario de reflejos",
-  "updated_at": "2026-10-10T05:29:43.309Z"
+  "updated_at": "2026-10-11T07:51:04.142Z"
 }

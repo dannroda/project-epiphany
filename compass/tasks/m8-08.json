@@ -18,6 +18,7 @@
   ],
   "code": "8.8",
   "created_at": "2026-10-08T04:45:29.837Z",
+  "description": "Cerrar el hito comprobando que la mazmorra se recorre entera de la entrada a la puerta del jefe, sin softlocks (sin bombas o flechas, bloques trabados, puertas cerradas del lado equivocado), y dejar los escenarios `dungeon_no_bow`, `pre_boss` y `boss_key_door_locked` para probarla.",
   "links": [
     {
       "task": "m10-06",
@@ -44,5 +45,5 @@
   "status": "done",
   "test": "Jugar de la entrada a la puerta del jefe con un solo guardado al principio.",
   "title": "Recorrido completo y escenarios de la mazmorra",
-  "updated_at": "2026-10-09T01:37:12.985Z"
+  "updated_at": "2026-10-11T07:50:43.409Z"
 }

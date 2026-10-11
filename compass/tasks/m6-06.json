@@ -23,6 +23,7 @@
   ],
   "code": "6.6",
   "created_at": "2026-10-08T04:45:21.253Z",
+  "description": "Mapa y brújula de la mazmorra como ítems y la pantalla Mapa (pestaña de pausa y acción `map`): salas visitadas, todas con mapa, cofres y jefe con brújula, y la posición del player. El mapa se arma solo desde las `Room`; el overworld lleva una imagen fija.",
   "milestone": "m06",
   "notes": "Skills: `disciplines:game-ui-ux`. Hecho 2026-10-08: `Room.map_cell` + `boss_room` (el tamaño de celda es fijo, como en el mockup); título y piso desde el nodo `Dungeon`. Brújula: cofres sin abrir (grupo \"chests\") y ojo del jefe. Overworld: nodo `OverworldMap` con foto cenital ortográfica (`assets/ui/maps/test_level.png`). La tecla M abre la pausa en Mapa. Escenario `dungeon_no_bow` (test_rooms sin mapa). Tests en `tests/test_map.gd`.",
   "order": 6,
@@ -39,5 +40,5 @@
   "status": "done",
   "test": "Escenario `dungeon_no_bow` sin mapa: solo se ven las salas visitadas. Agregar el mapa desde el Save Inspector: aparecen todas.",
   "title": "Mapa, brújula y pantalla de mapa",
-  "updated_at": "2026-10-08T22:47:12.988Z"
+  "updated_at": "2026-10-11T07:50:52.887Z"
 }

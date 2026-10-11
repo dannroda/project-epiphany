@@ -33,6 +33,7 @@
   ],
   "code": "0.10",
   "created_at": "2026-09-29T18:00:00Z",
+  "description": "Un dock del editor para abrir, editar, validar y jugar partidas guardadas y escenarios, para probar situaciones raras sin tener que jugar hasta ahí.",
   "links": [
     {
       "task": "m4-05",
@@ -51,5 +52,5 @@
   "status": "done",
   "test": "Abrir una partida en el dock, agregar `bomb=3` en `[inventory]`, validar y apretar Jugar escenario: el juego arranca con 3 bombas.",
   "title": "Save Inspector v0",
-  "updated_at": "2026-10-08T05:18:34.975Z"
+  "updated_at": "2026-10-11T07:50:08.313Z"
 }

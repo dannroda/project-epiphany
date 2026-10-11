@@ -23,6 +23,7 @@
   ],
   "code": "11.2",
   "created_at": "2026-10-09T17:40:32.545Z",
+  "description": "Armar un kit del templo con piezas KayKit que reemplace al kit gris: mismos ítems y colisiones que `gray_kit`, para que las salas dejen de verse de prototipo sin rehacer los niveles.",
   "milestone": "m11",
   "notes": "Paredes con wall_half estiradas a 3.1 m de alto; columna pillar escalada. El overworld sigue con el kit gris. Las esquinas entre la columna y la pared dejan ver el vacío (rojo con el doom); se puede tapar en 11.3.",
   "order": 2,
@@ -34,5 +35,5 @@
   ],
   "test": "",
   "title": "Kit del templo con piezas KayKit",
-  "updated_at": "2026-10-09T17:58:49.760Z"
+  "updated_at": "2026-10-11T07:50:52.657Z"
 }

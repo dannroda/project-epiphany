@@ -33,6 +33,7 @@
   ],
   "code": "4.6",
   "created_at": "2026-10-08T08:17:17.448Z",
+  "description": "Integrar el plugin Dialogue Manager con nuestra `TextBox` como globo y pasar tablillas e item get a archivos `.dialogue`. Así hay textos condicionales con flags y traducciones desde ya, sin rehacerlos cuando haya muchos textos.",
   "milestone": "m04",
   "notes": "Decisión del 2026-10-08: el GDD no tiene NPCs con diálogo, pero se integra el plugin ya para no adaptar tablillas e item get después. Elegido sobre Dialogic porque solo maneja el contenido y deja la UI propia (mockups), es liviano y hay menos superficie para romperse con Godot 4.8-dev. Instalado Dialogue Manager v4.1.0 (para Godot 4.7) desde la release de GitHub: import, arranque y tests headless OK en 4.8-dev7; falta confirmar que el editor lo cargue sin errores. Textos en data/dialogue/*.dialogue; el personaje de la línea es el rótulo de la tablilla; item_get.dialogue tiene un cue por id de ítem (si falta, usa la descripción). Traducciones: IDs estáticos [ID:…] como claves; el plugin mantiene la lista de plantillas POT.",
   "order": 6,
@@ -41,5 +42,5 @@
   "status": "done",
   "test": "Leer las dos tablillas y abrir el cofre: se ven igual que antes (estilos de los mockups), pero el texto sale de .dialogue. Un texto condicional cambia según un flag. Guardar y cargar conserva las tablillas leídas.",
   "title": "Integrar Dialogue Manager",
-  "updated_at": "2026-10-08T08:24:33.784Z"
+  "updated_at": "2026-10-11T07:50:45.236Z"
 }

@@ -13,6 +13,7 @@
   ],
   "code": "11.30",
   "created_at": "2026-10-10T05:29:45.382Z",
+  "description": "Un ítem post-MVP: gancho o algo que mueva objetos a distancia (GDD §6.1), con uso en combate y que abra lugares que antes no se podían.",
   "milestone": "m11",
   "notes": "",
   "order": 30,
@@ -29,5 +30,5 @@
   ],
   "test": "El ítem tiene un uso en combate y abre al menos dos lugares que antes no se podían.",
   "title": "Ítem post-MVP: gancho o telequinesis",
-  "updated_at": "2026-10-10T05:29:46.413Z"
+  "updated_at": "2026-10-11T07:51:05.575Z"
 }

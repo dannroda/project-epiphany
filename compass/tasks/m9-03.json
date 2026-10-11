@@ -18,6 +18,7 @@
   ],
   "code": "9.3",
   "created_at": "2026-10-08T04:45:31.354Z",
+  "description": "La base de la IA del jefe: el ojo y cada mano como entidades con su vida y sus golpes, fases con `LimboHSM` que corren su propio BT y un blackboard compartido que elige el ataque por utilidad para que no sea predecible.",
   "links": [
     {
       "task": "m9-04",
@@ -36,5 +37,5 @@
   "status": "done",
   "test": "Con el overlay: la fase, el estado de cada mano y el ataque elegido se ven en vivo.",
   "title": "Arquitectura del jefe",
-  "updated_at": "2026-10-10T03:05:34.490Z"
+  "updated_at": "2026-10-11T07:50:44.919Z"
 }

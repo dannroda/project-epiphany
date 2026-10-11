@@ -12,6 +12,7 @@
   ],
   "code": "14.1",
   "created_at": "2026-10-10T05:37:26.928Z",
+  "description": "Decidir la arquitectura de red del co-op online (host autoritativo con ENet y Steam más adelante) y dejar anotado en el GDD qué corre en el host y qué en el cliente.",
   "links": [
     {
       "task": "m14-02",
@@ -55,5 +56,5 @@
   ],
   "test": "Documento corto con la arquitectura elegida, qué corre en el host y qué en el cliente.",
   "title": "Arquitectura de red",
-  "updated_at": "2026-10-11T06:39:30.918Z"
+  "updated_at": "2026-10-11T07:50:21.320Z"
 }

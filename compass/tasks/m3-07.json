@@ -18,6 +18,7 @@
   ],
   "code": "3.7",
   "created_at": "2026-10-08T04:45:11.181Z",
+  "description": "No hay moneda: los drops son lo que evita quedarse sin bombas ni flechas en la mazmorra. Recolectables y una tabla de drops ponderada que sueltan los enemigos al morir, solo con lo que el player puede usar.",
   "links": [
     {
       "task": "m1-04",
@@ -40,5 +41,5 @@
   "status": "done",
   "test": "Matar 20 esqueletos con el inventario vacío: solo caen corazones. Con bombas en el inventario, también caen bombas.",
   "title": "Recolectables y tabla de drops",
-  "updated_at": "2026-10-08T07:40:33.376Z"
+  "updated_at": "2026-10-11T07:50:18.983Z"
 }

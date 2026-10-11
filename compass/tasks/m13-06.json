@@ -13,6 +13,7 @@
   ],
   "code": "13.6",
   "created_at": "2026-10-10T05:37:20.788Z",
+  "description": "Darle al P2 su propia variante de paleta (otra tela y otro neón, como los Links de colores de Four Swords), también con la cota reforzada, para distinguir a los dos jugadores de un vistazo.",
   "milestone": "m13",
   "notes": "Skills: `disciplines:create-game-assets`.",
   "order": 6,
@@ -30,5 +31,5 @@
   ],
   "test": "P1 y P2 se distinguen de un vistazo con cualquier armadura.",
   "title": "Player 2 con su color",
-  "updated_at": "2026-10-10T05:37:21.831Z"
+  "updated_at": "2026-10-11T07:50:19.798Z"
 }

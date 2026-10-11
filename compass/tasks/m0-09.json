@@ -53,6 +53,7 @@
   ],
   "code": "0.9",
   "created_at": "2026-09-29T18:00:00Z",
+  "description": "Armar el player con componentes: el equipo sale de `GameState`, las hitboxes viven en el personaje con su `AttackRunner` y el lock-on pasa a un nodo propio, dejando `player.gd` y la máquina de estados solo con lo suyo.",
   "links": [
     {
       "task": "m1-01",
@@ -83,5 +84,5 @@
   "status": "done",
   "test": "Cambiar el escudo equipado a `shield_mirror` desde el Save Inspector y cargar: el player aparece con el otro escudo. Pegarle al esqueleto: pierde vida una sola vez por golpe. Con *Debug › Visible Collision Shapes*, rodar o recibir un golpe en medio de un ataque apaga la hitbox.",
   "title": "Refactor del player",
-  "updated_at": "2026-10-08T05:33:39.593Z"
+  "updated_at": "2026-10-11T07:50:07.784Z"
 }

@@ -13,6 +13,7 @@
   ],
   "code": "11.24",
   "created_at": "2026-10-10T05:29:39.385Z",
+  "description": "Sumar 4 a 6 secretos chicos al overworld (cuevitas con cofre, pasto que esconde algo, rocas que se empujan, muros agrietados) con recompensas útiles, para que explorar valga la pena.",
   "milestone": "m11",
   "notes": "",
   "order": 24,
@@ -25,5 +26,5 @@
   ],
   "test": "Cada secreto se encuentra con las herramientas que el player tiene en ese momento y queda resuelto al cargar.",
   "title": "Más secretos en el overworld",
-  "updated_at": "2026-10-10T05:29:40.172Z"
+  "updated_at": "2026-10-11T07:51:02.707Z"
 }

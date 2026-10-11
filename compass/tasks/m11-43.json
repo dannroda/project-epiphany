@@ -20,6 +20,7 @@
   ],
   "code": "11.43",
   "created_at": "2026-10-10T21:49:13.491Z",
+  "description": "Bombas con dos usos: tocar el botón la coloca a los pies como ahora y mantenerlo la levanta y apunta como el arco, para tirarla en parábola al soltar.",
   "milestone": "m11",
   "notes": "",
   "order": 43,
@@ -31,5 +32,5 @@
   ],
   "test": "",
   "title": "Bombas: tocar coloca, mantener apunta y tira",
-  "updated_at": "2026-10-10T23:13:26.919Z"
+  "updated_at": "2026-10-11T07:51:10.070Z"
 }

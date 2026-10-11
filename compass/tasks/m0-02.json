@@ -28,6 +28,7 @@
   ],
   "code": "0.2",
   "created_at": "2026-09-29T18:00:00Z",
+  "description": "Definir en el Input Map las acciones de gamepad que van a usar los hitos siguientes (juego, menús y depuración), según [[gdd#input]] y sin inputs repetidos dentro de un mismo contexto. Teclado y mouse quedan para más adelante.",
   "milestone": "m00",
   "notes": "Acciones de gamepad para los hitos siguientes, en *Project › Project Settings › Input Map*. Mapeo completo, con el índice de cada botón en Godot: [[gdd#input]].\n\nSolo gamepad por ahora: teclado y mouse se definen más adelante. Las teclas que ya existen quedan como provisorias.\n\nSe puede hacer en cualquier momento.",
   "order": 2,
@@ -40,5 +41,5 @@
   "status": "done",
   "test": "Con un gamepad conectado, cada acción responde a su botón: Start abre la pausa, Back el mapa, X/Y quedan para los ítems y RB para la esquiva. No queda ningún input repetido dentro del mismo contexto.",
   "title": "Input map",
-  "updated_at": "2026-09-30T06:31:59.177Z"
+  "updated_at": "2026-10-11T07:50:03.691Z"
 }

@@ -18,6 +18,7 @@
   ],
   "code": "3.3",
   "created_at": "2026-10-08T04:45:09.165Z",
+  "description": "Pantalla Ítems: grilla de los ítems secundarios desde donde se asignan a X o Y, actualizada por `Inventory.changed`, con la asignación guardada en la partida.",
   "links": [
     {
       "task": "m3-04",
@@ -40,5 +41,5 @@
   "status": "done",
   "test": "Asignar arco a X y bombas a Y, cerrar: el HUD muestra los dos. Guardar y cargar: siguen asignados.",
   "title": "Pantalla Ítems y asignación a X/Y",
-  "updated_at": "2026-10-08T07:08:17.383Z"
+  "updated_at": "2026-10-11T07:50:16.826Z"
 }

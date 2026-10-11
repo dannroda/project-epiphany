@@ -2,6 +2,7 @@
   "checklist": [],
   "code": "11.6",
   "created_at": "2026-10-09T17:40:33.736Z",
+  "description": "Sumar enemigos en el overworld y el templo, para que el recorrido tenga más pelea.",
   "milestone": "m11",
   "notes": "",
   "order": 6,
@@ -13,5 +14,5 @@
   ],
   "test": "",
   "title": "Más enemigos en el overworld y el templo",
-  "updated_at": "2026-10-10T18:37:27.055Z"
+  "updated_at": "2026-10-11T07:50:54.237Z"
 }

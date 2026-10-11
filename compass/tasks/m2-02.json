@@ -23,6 +23,7 @@
   ],
   "code": "2.2",
   "created_at": "2026-10-08T04:45:06.648Z",
+  "description": "Componente `Aim` con la dirección de apuntado (objetivo fijado, stick derecho o mouse), una retícula y el giro del modelo al usar un ítem. Lo consumen el arco, las bombas lanzadas y los ítems a distancia de M5 por `ItemUseContext.direction`.",
   "links": [
     {
       "task": "m0-09",
@@ -49,5 +50,5 @@
   "status": "done",
   "test": "Con el overlay activo, `DebugOverlay.watch` de la dirección y la fuente: el stick derecho, el mouse y el lock-on cambian la fuente y la flecha de debug apunta bien en los tres casos.",
   "title": "Componente `Aim`",
-  "updated_at": "2026-10-08T06:19:09.431Z"
+  "updated_at": "2026-10-11T07:50:14.086Z"
 }

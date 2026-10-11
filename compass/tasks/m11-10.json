@@ -2,6 +2,7 @@
   "checklist": [],
   "code": "11.10",
   "created_at": "2026-10-09T17:40:34.830Z",
+  "description": "La suite de tests tira un warning de transform singular. Encontrar de dónde sale y sacarlo, para que la suite quede limpia.",
   "milestone": "m11",
   "notes": "2026-10-09: eran los StaticBody de los dos escudos del player. El AnimationTree arrancaba inactivo (se activaba al entrar a Idle) y, desde la segunda carga de escena, el primer cuadro fundía desde una pose con escala 0: la mano quedaba con escala cero y Jolt avisaba. Arreglo: el AnimationTree arranca activo en player.tscn. La suite quedó sin ningún aviso de transform singular.",
   "order": 10,
@@ -13,5 +14,5 @@
   ],
   "test": "",
   "title": "Warning de transform singular en la suite",
-  "updated_at": "2026-10-10T00:53:06.759Z"
+  "updated_at": "2026-10-11T07:50:56.291Z"
 }

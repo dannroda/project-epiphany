@@ -13,6 +13,7 @@
   ],
   "code": "11.21",
   "created_at": "2026-10-10T05:29:35.976Z",
+  "description": "Piezas de corazón escondidas en el overworld: 4 juntan un contenedor nuevo. Premian explorar y le dan sentido a los secretos.",
   "milestone": "m11",
   "notes": "",
   "order": 21,
@@ -25,5 +26,5 @@
   ],
   "test": "Juntar 4 piezas: suma un corazón. El contador se guarda y se ve en equipo.",
   "title": "Piezas de corazón",
-  "updated_at": "2026-10-10T18:54:49.950Z"
+  "updated_at": "2026-10-11T07:51:01.740Z"
 }

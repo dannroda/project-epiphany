@@ -19,6 +19,7 @@
   ],
   "code": "12.9",
   "created_at": "2026-10-09T21:05:46.096Z",
+  "description": "Hacer con malla los efectos que lo piden (haz de luz, polvo y hojas, explosión, anillo del portal), con la paleta y el estilo de los assets propios.",
   "links": [
     {
       "task": "m11-49",
@@ -36,5 +37,5 @@
   ],
   "test": "",
   "title": "Efectos con malla",
-  "updated_at": "2026-10-11T05:37:36.079Z"
+  "updated_at": "2026-10-11T07:50:14.502Z"
 }

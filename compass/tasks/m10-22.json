@@ -28,6 +28,7 @@
   ],
   "code": "10.22",
   "created_at": "2026-10-10T22:49:40.714Z",
+  "description": "Un build web para jugar en el navegador desde itch, sin threads y con renderer Compatibility: que LimboAI corra, el juego se vea parecido al de escritorio y el guardado sobreviva a recargar. Prioridad muy baja: el escritorio va primero.",
   "links": [
     {
       "task": "m10-09",
@@ -45,5 +46,5 @@
   ],
   "test": "Abrir el build en Chrome y Firefox desde itch: carga en un tiempo razonable, se juega el overworld y el templo hasta el jefe con gamepad y teclado, el guardado sobrevive a recargar la página y se ve parecido al build de escritorio.",
   "title": "Build web",
-  "updated_at": "2026-10-11T03:24:21.147Z"
+  "updated_at": "2026-10-11T07:50:58.646Z"
 }

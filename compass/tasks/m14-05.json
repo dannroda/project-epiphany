@@ -13,6 +13,7 @@
   ],
   "code": "14.5",
   "created_at": "2026-10-10T05:37:32.161Z",
+  "description": "Poder crear una partida y unirse (por IP o código en debug, invitación de Steam en release) y manejar las desconexiones: si cae el cliente el host sigue solo, si cae el host el cliente vuelve al título con aviso.",
   "milestone": "m14",
   "notes": "Skills: `godot:godot-multiplayer`, `disciplines:physics-tuning`.",
   "order": 5,
@@ -30,5 +31,5 @@
   ],
   "test": "Crear partida, invitar, jugar y desconectar al cliente sin que el host pierda progreso.",
   "title": "Lobby y conexión",
-  "updated_at": "2026-10-10T05:37:33.197Z"
+  "updated_at": "2026-10-11T07:50:23.358Z"
 }

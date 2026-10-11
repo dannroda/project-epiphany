@@ -18,6 +18,7 @@
   ],
   "code": "9.5",
   "created_at": "2026-10-08T04:45:32.372Z",
+  "description": "Segunda fase: el ojo se abre y pasa a ser el blanco. Una flecha al ojo o devolverle sus orbes con el escudo espejo lo tira aturdido para los espadazos, mientras las manos regeneradas siguen presionando.",
   "links": [
     {
       "task": "m9-06",
@@ -36,5 +37,5 @@
   "status": "done",
   "test": "Se puede ganar la fase con flechas y también solo con reflejo; las manos siguen presionando.",
   "title": "Fase 2: el ojo",
-  "updated_at": "2026-10-10T04:42:32.430Z"
+  "updated_at": "2026-10-11T07:50:45.957Z"
 }

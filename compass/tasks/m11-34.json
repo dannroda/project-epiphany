@@ -33,6 +33,7 @@
   ],
   "code": "11.34",
   "created_at": "2026-10-10T05:30:51.535Z",
+  "description": "Técnicas de espada al estilo Minish Cap y Wind Waker: combo de 3 golpes, giro cargado, contraataque y 1–2 técnicas extra que se aprenden en el mundo, sin chocar con fijar, bloquear y rodar.",
   "links": [
     {
       "task": "m11-22",
@@ -59,5 +60,5 @@
   ],
   "test": "Con el combate pulido (11.33): encadenar el combo de 3, cargar y soltar el giro, contraatacar a un chullpa en su telegraph y usar una técnica aprendida en una tablilla; ninguna se dispara sin querer al rodar, bloquear o fijar.",
   "title": "Combos y técnicas especiales (Minish Cap / Wind Waker)",
-  "updated_at": "2026-10-10T05:30:58.443Z"
+  "updated_at": "2026-10-11T07:51:07.032Z"
 }

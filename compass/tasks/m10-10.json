@@ -23,6 +23,7 @@
   ],
   "code": "10.10",
   "created_at": "2026-10-08T04:45:38.485Z",
+  "description": "Cerrar el MVP: publicar el juego en itch.io para un grupo restringido, con instrucciones y una forma clara de reportar bugs, y observar una sesión de playtest con alguien que no lo vio, registrando lo que se encuentre.",
   "links": [
     {
       "task": "m10-22",
@@ -36,5 +37,5 @@
   "status": "todo",
   "test": "Una persona que no vio el juego lo descarga, lo termina (o se traba) y deja feedback registrado.",
   "title": "Publicar en itch.io y playtest",
-  "updated_at": "2026-10-10T22:49:42.745Z"
+  "updated_at": "2026-10-11T07:50:52.543Z"
 }

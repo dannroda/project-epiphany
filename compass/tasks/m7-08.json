@@ -13,6 +13,7 @@
   ],
   "code": "7.8",
   "created_at": "2026-10-08T04:45:25.789Z",
+  "description": "Escenarios `start`, `bombs_only` y `pre_temple` para arrancar en cada etapa del overworld desde el Save Inspector, y un recorrido completo de `start` al templo y de vuelta. Cierra el hito: ida y vuelta entre overworld y mazmorra.",
   "milestone": "m07",
   "notes": "Cierra el hito: \"ida y vuelta entre overworld y mazmorra\".\n\nHecho 2026-10-08: `start` ahora arranca en el overworld (escena principal del juego); `bombs_only` y `pre_temple` ya venían de 7.5 y 7.6 (generados con SaveCodec, mismo formato que el Save Inspector). `tests/test_overworld_run.gd` juega `start` hasta el templo y vuelve.",
   "order": 8,
@@ -25,5 +26,5 @@
   "status": "done",
   "test": "Jugar `start` hasta entrar al templo y volver a salir sin usar escenarios intermedios.",
   "title": "Escenarios del overworld",
-  "updated_at": "2026-10-09T00:32:45.464Z"
+  "updated_at": "2026-10-11T07:50:57.430Z"
 }

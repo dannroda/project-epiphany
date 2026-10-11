@@ -22,6 +22,7 @@
   ],
   "code": "11.45",
   "created_at": "2026-10-10T21:49:14.039Z",
+  "description": "Enseñar los controles al empezar con tablitas en el claro del inicio y un mini puzzle al conseguir cada ítem, con los íconos de botón del dispositivo actual.",
   "milestone": "m11",
   "notes": "",
   "order": 45,
@@ -34,5 +35,5 @@
   ],
   "test": "",
   "title": "Tutorial de controles y mini puzzle por ítem",
-  "updated_at": "2026-10-10T23:55:19.251Z"
+  "updated_at": "2026-10-11T07:51:11.033Z"
 }

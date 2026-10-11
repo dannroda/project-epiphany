@@ -22,6 +22,7 @@
   ],
   "code": "12.1",
   "created_at": "2026-10-09T21:05:25.999Z",
+  "description": "Fijar la guía de estilo de los assets propios antes de modelar: una textura de paleta única con los colores de [[gdd#arte]], la escala respecto al Knight y la grilla, y una pieza de prueba que importe bien en Godot y se recorte con el shader de la pared sur.",
   "links": [
     {
       "task": "m12-02",
@@ -72,5 +73,5 @@
   ],
   "test": "Una pieza de prueba importada en Godot se ve con la paleta, a escala del Knight, y se recorta con el shader de la pared sur.",
   "title": "Guía de estilo: paleta, escala y pieza de prueba",
-  "updated_at": "2026-10-09T21:45:30.514Z"
+  "updated_at": "2026-10-11T07:50:10.474Z"
 }

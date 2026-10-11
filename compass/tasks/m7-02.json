@@ -23,6 +23,7 @@
   ],
   "code": "7.2",
   "created_at": "2026-10-08T04:45:22.768Z",
+  "description": "Blockout gris del overworld (`levels/overworld.tscn`) con el kit de 6.7: zonas con nombre y reaparición, navmesh, esqueletos y pasto en la pradera, y objetos físicos. `levels/test.tscn` queda como nivel de pruebas.",
   "links": [
     {
       "task": "m7-03",
@@ -49,5 +50,5 @@
   "status": "done",
   "test": "Recorrer el overworld de punta a punta con el inventario completo sin caer fuera del mapa ni trabarse.",
   "title": "Blockout del overworld",
-  "updated_at": "2026-10-08T23:49:52.967Z"
+  "updated_at": "2026-10-11T07:50:54.416Z"
 }

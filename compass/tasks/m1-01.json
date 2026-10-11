@@ -28,6 +28,7 @@
   ],
   "code": "1.1",
   "created_at": "2026-10-08T04:45:02.620Z",
+  "description": "Que al player le duela: recibir daño por la `Hurtbox`, retroceder y parpadear durante una invulnerabilidad breve en la que no recibe otro golpe. Primer paso de M1, sobre `Health`, `Hurtbox` y `DamageInfo` de M0.",
   "links": [
     {
       "task": "m0-11",
@@ -50,5 +51,5 @@
   "status": "done",
   "test": "El esqueleto le pega al player: pierde vida, retrocede, parpadea ≈0.8 s y durante el parpadeo no recibe otro golpe. Los tests de `Health` pasan.",
   "title": "Daño, invulnerabilidad y knockback del player",
-  "updated_at": "2026-10-08T05:38:20.112Z"
+  "updated_at": "2026-10-11T07:50:09.909Z"
 }

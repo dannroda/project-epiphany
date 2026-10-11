@@ -18,6 +18,7 @@
   ],
   "code": "6.5",
   "created_at": "2026-10-08T04:45:20.743Z",
+  "description": "Interruptor de piso y una interfaz común `activated`/`deactivated` con `EyeSwitch` y `LightReceiver`, para cablear puertas y aparatos desde el editor (todos o alguno) sin código por sala.",
   "links": [
     {
       "task": "m6-07",
@@ -36,5 +37,5 @@
   "status": "done",
   "test": "Una puerta que necesita dos interruptores: pisar uno no abre; con un bloque sobre el otro, sí.",
   "title": "Interruptores y cableado",
-  "updated_at": "2026-10-08T22:27:52.593Z"
+  "updated_at": "2026-10-11T07:50:52.341Z"
 }
