@@ -2299,7 +2299,7 @@ Una intro corta y salteable al empezar partida nueva que cuente sin diálogos qu
 
 **Referencias:** `gdd.md#historia`
 
-**Relacionadas:** 10.19 Fin de la demo; 11.22 Tablillas de historia
+**Relacionadas:** 10.19 Fin de la demo; 10.30 Afinar la intro a ojo; 11.22 Tablillas de historia
 
 ### 10.21 Título y ranuras: Continuar, Nueva partida y ranura de autosave · Hecho
 
@@ -2392,11 +2392,22 @@ El 80 % de los triángulos son paredes: Acantilado 1224 tri por celda (211 celda
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 10.27 Nodos creados por código pasan a sus .tscn · Pendiente
+### 10.27 Nodos creados por código pasan a sus .tscn · En curso
 
 **Prioridad:** media · **Etiquetas:** `arquitectura`
 
 Regla (2026-10-11): todo lo que hereda de Node va en la escena, no con X.new() + add_child, para poder retocarlo en el inspector; el código solo ajusta lo que depende del juego. Lo que spawnea en runtime se instancia desde una escena (p. ej. un proyectil con su Trail3D). Pendientes: top_down_camera (máscara de sala), aim (MeshInstance3D de la mira), player (cono de bloqueo), item_get (OmniLight3D), chest (MeshInstance3D x2, Node3D), light_beam (MeshInstance3D x2), room (MeshInstance3D), overworld_map (Node3D, MultiMeshInstance3D), spawn_point (Area3D + CollisionShape3D), enemy (CollisionShape3D de los pedazos), liftable (CollisionShape3D, ThrownObject), doom_ambience (GPUParticles3D, Decal), boss_hand (Decal), feel (CPUParticles3D, MeshInstance3D, AudioStreamPlayer/3D: pasar a escenas de efecto instanciables), music (AudioStreamPlayer), y los PersistentFlag/Wiring/HitFlash que se agregan como hijos (door, chest, cracked_wall, portal, floor_switch, eye_switch, light_receiver, wave_spawner, wiring, hit_flash). Revisar cada caso: lo que es puro dato no cambia.
+
+- [x] Tanda 1: cofre, haz de luz, cámara, mira, item get
+  Cofre: Model/Base/Lid en chest.tscn (el arca grande cambia las mallas). Haz: beam_segment.tscn + %Tip en light_source.tscn, material en beam_material.tres. La máscara de la cámara ya se instanciaba de room_mask.tscn; la mira y la luz del item get ya no se crean por código. El contorno de Room es dibujo solo del editor: queda.
+- [x] Tanda 2: PersistentFlag, Wiring y HitFlash como hijos en las escenas
+  PersistentFlag es un nodo PersistentFlag en door, chest, cracked_wall, floor_switch, eye_switch, light_receiver, warp_portal y bajo ArenaWaves del templo; el dueño le copia su flag en _ready (PersistentFlag acepta el flag tarde). Los portales sueltos de los niveles no tienen flag. HitFlash es un nodo con health y visuals exportados en enemy, turret, boss (ojo y cada mano) y player (bajo Visuals); se fue HitFlash.attach. Wiring es RefCounted: no aplica.
+- [x] Tanda 3: efectos de Feel, música y doom
+  Ráfagas: una escena por tipo en src/feel/bursts/ (sparks, sparkle, explosion, shards, leaves, dust; lo desconocido usa dust), horneadas con los valores de antes. Onda de la explosión: src/feel/shockwave.tscn. Sonidos: sfx_player.tscn (3D, bus SFX) y ui_sound.tscn (bus UI); el stream sigue saliendo del código. Música: el autoload es src/audio/music.tscn con una capa por hijo. Doom: doom_ambience.tscn con DoomDust y LegibleLight (el templo lo instancia), grietas desde doom_crack.tscn. Grieta del golpe del jefe: slam_crack.tscn.
+- [ ] Tanda 4: resto del mundo
+  spawn_point (Area3D + forma), enemy (forma de los pedazos), liftable (ThrownObject + forma), overworld_map (copia con MultiMesh).
+- [ ] Tanda 5: player (cono de bloqueo)
+  Después de que la sesión de assets termine con los personajes (rozan player/).
 
 ### 10.28 Playtest de revisión (lo que está en Revisión) · Pendiente
 
@@ -2490,6 +2501,8 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
   settle_time (1,2 s) y skip_hold (0,8 s) en Cutscene.
 
 **Prueba:** Partida nueva desde el título: la intro se lee cómoda, el templo se ve encenderse, el temblor se siente sin marear y lo que se ve en cada plano es intencional.
+
+**Relacionadas:** 10.20 Intro / cutscene de apertura
 
 ## M11 — Pulido: contenido y feel  (20/56)
 
@@ -3673,9 +3686,9 @@ Cambiar el pipeline Blender→Godot a publicar `.glb` con un plugin de import qu
 
 Pasar todos los `.blend` (props, equipo, templo, kits y personajes) al pipeline glb de 12.10 y retirar los scripts headless viejos, para que los builds funcionen sin Blender.
 
-- [ ] Props y equipo (objetos, equipo, naturaleza, lugares)
+- [x] Props y equipo (objetos, equipo, naturaleza, lugares)
   El jefe ya pasó al pipeline en 11.47.
-- [ ] Templo y kits (build_temple_kit / build_overworld_kit)
+- [x] Templo y kits (build_temple_kit / build_overworld_kit)
 - [ ] Personajes (jugador, chullpas) y carry
 - [ ] Retirar scripts headless viejos y verificar builds sin Blender
 
