@@ -54,10 +54,14 @@ const CUTAWAY_MATERIALS: Array[ShaderMaterial] = [
 const SOUTH_WALL_DEPTH := 2.0
 ## El corte arranca un poco dentro de la sala: los ladrillos de la pared sobresalen de la celda.
 const SOUTH_WALL_RELIEF := 0.3
+## Alturas (sobre los pies) hacia donde se tiran rayos desde la cámara para saber si una pared tapa al player.
+const HOLE_PROBES: Array[float] = [0.8, 1.5]
+const HOLE_TIME := 0.2
 
 var trauma := 0.0
-## Lo último que se le pasó a las paredes (pies del player, w: 1 si hay player).
+## Lo último que se le pasó a las paredes (pies del player, w: cuánto está abierto el agujero, 0–1).
 var player_hole := Vector4.ZERO
+var _hole_open := 0.0
 ## Sala actual; null = overworld (seguimiento libre).
 var room: Room
 var transitioning := false
@@ -241,11 +245,30 @@ func _cut_south_wall(cut_room: Room) -> void:
 		material.set_shader_parameter(&"cut_height", height)
 
 
-## Las paredes (cutaway.gdshader) recortan un agujero alrededor del player cuando lo tapan.
-func _update_player_hole() -> void:
+## Las paredes (cutaway.gdshader, epiphany_wall.gdshader) recortan un agujero alrededor del player solo mientras
+## alguna tapa la vista hacia él; el agujero crece y se cierra en HOLE_TIME.
+func _update_player_hole(delta: float) -> void:
 	var feet := target_node.global_position if target_node else Vector3.ZERO
-	player_hole = Vector4(feet.x, feet.y, feet.z, 1.0 if target_node else 0.0)
+	var goal := 1.0 if target_node and _player_hidden() else 0.0
+	_hole_open = move_toward(_hole_open, goal, delta / HOLE_TIME)
+	player_hole = Vector4(feet.x, feet.y, feet.z, _hole_open)
 	RenderingServer.global_shader_parameter_set(&"player_hole", player_hole)
+
+
+## Solo cuentan las paredes (GridMap y cuerpos estáticos): players, enemigos y objetos sueltos no abren el agujero.
+func _player_hidden() -> bool:
+	var space := get_world_3d().direct_space_state
+	for height in HOLE_PROBES:
+		var query := PhysicsRayQueryParameters3D.create(global_position, target_node.global_position + Vector3.UP * height, 1)
+		query.exclude = Players.all.map(func(player: PlayerCharacter) -> RID: return player.get_rid())
+		for attempt in 4:
+			var hit := space.intersect_ray(query)
+			if hit.is_empty():
+				break
+			if hit.collider is GridMap or hit.collider is StaticBody3D:
+				return true
+			query.exclude += [hit.rid]
+	return false
 
 
 ## Donde se reaparece al morir. La sala del jefe no cuenta: se vuelve a la antesala.
@@ -362,7 +385,7 @@ func add_trauma(amount: float, direction := Vector3.ZERO) -> void:
 
 
 func _process(delta: float) -> void:
-	_update_player_hole()
+	_update_player_hole(delta)
 	_kick = _kick.lerp(Vector2.ZERO, 1.0 - exp(-8.0 * delta))
 	if trauma <= 0.0:
 		h_offset = _kick.x
