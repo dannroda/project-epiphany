@@ -1,7 +1,7 @@
 {
   "checklist": [
     {
-      "detail": "No tocar levels/overworld.tscn hasta que 12.14 elija; después ubicar los lugares sobre ese terreno.",
+      "detail": "No tocar levels/overworld.tscn hasta que 12.14 elija (variantes 6, 8 o 9; la otra sesión recomienda 9, marching cubes). Ninguna trae una cornisa baja caminable: meseta a 2,6 m, lomas suaves de ±0,3 m (rampa, no escalón), estratos decorativos de 0,1–0,16 m. Los lugares de salto y la cornisa de la pieza son piezas propias, de menos de 0,75 m (escalón de 0,6).",
       "done": false,
       "text": "Esperar el terreno de 12.14"
     },
@@ -43,5 +43,5 @@
   ],
   "test": "Sin la pluma, la pieza de corazón de la pradera y los otros lugares no se alcanzan; con la pluma, sí. Ningún lugar obliga a saltar una pirca o un muro.",
   "title": "Pluma en el overworld: lugares de salto",
-  "updated_at": "2026-10-11T18:42:27.758Z"
+  "updated_at": "2026-10-11T18:43:18.852Z"
 }

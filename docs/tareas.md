@@ -2467,6 +2467,8 @@ Recorrido para revisar de a una las tareas en Revisión, en el orden de una part
   Escenario pre_boss: vencé al jefe; tomar el contenedor no corta el juego y la puerta queda cerrada. Entrá al portal: diálogo 'Fin de la demo' con tres respuestas (stick/flechas, A). Probá Volver a retar (pelea completa, sin otro contenedor), Seguir jugando (overworld con el progreso) y Volver al menú (al cargar, el jefe no está).
 - [ ] Intro (10.20): Nueva partida desde el título corre la intro (4 planos, textos, temblor y brillo rojo en el templo); mantener A la saltea, un toque no; al terminar la cámara vuelve sola y el player se mueve; cargar o continuar no la repite. Afinar a ojo duración de planos, brillo y temblor
 - [ ] Nodos en escena (10.27): todo se ve y suena como antes (cofres, haz de luz, puertas, interruptores, oleadas, explosiones, destello de daño, vasijas, armadura del esqueleto, mapa, música, doom); con el overlay (1), cono de bloqueo y flecha. Abrir chest.tscn, light_source.tscn, player.tscn y src/feel/bursts/ en el editor y ver que se pueden retocar
+- [ ] Pluma (11.35)
+  Templo: la sala de la pluma (debajo de la agrietada) se entiende sin explicación; la zanja se lee como 'rodear ahora, saltar después'. La fila de huecos del Puzzle se ve desde la puerta y no hay forma de caer al entrar. El salto (alto 0,68, velocidad 4, control en el aire 2, en player/states/jumping.gd) se siente bien y la sombra deja calcular dónde cae. Risco: el abismo de 4 m se lee como 'solo flechas'.
 
 **Relacionadas:** 10.18 Idiomas: inglés y español; 11.45 Tutorial de controles y mini puzzle por ítem; 11.44 Levantar y tirar objetos; 11.53 Agujero de la cámara solo donde tiene sentido; 11.37 Minimapa en el HUD; 11.51 Pared agrietada que se integre al muro; 11.52 Zonas tapadas hasta abrirlas; 11.43 Bombas: tocar coloca, mantener apunta y tira; 11.33 Combate: sacar lo tosco; 11.49 VFX de combate; 11.25 Nuevos enemigos con los modelos existentes; 11.41 Esqueleto con escudo: bloquear con el escudo delante; 11.42 Arco que se tensa; 11.48 Pose de item get; 11.3 Decorar las salas del templo; 11.4 Decorar el overworld; 11.47 Manos del jefe animadas (shape keys); 13.1 Código listo para varios players; 13.2 Input por jugador y unirse a la partida; 10.9 Build para playtesters; 10.8 Pasada de rendimiento; 10.23 Tests en paralelo; 13.3 Cámara y salas para dos; 13.5 HUD de dos jugadores; 10.29 Pantalla de controles; 13.6 Player 2 con su color; 10.24 Tope de FPS; 11.58 Los enemigos muertos desaparecen después de un rato; 11.54 El velo de zona tapa también las paredes que la rodean; 10.25 Sombras del sol acordes a la cámara cenital; 10.26 Paredes del GridMap más livianas; 10.19 Fin de la demo; 13.4 Reglas del co-op; 13.9 Anillo de ítems por player
 
@@ -3416,7 +3418,7 @@ Segunda mazmorra con pisos (y quizás sótanos) apilados en la misma escena, en 
 El overworld es el hub: la pluma (11.35, templo) tiene que abrir ahí cosas y caminos nuevos. 2–3 lugares que solo se alcanzan saltando (huecos de una baldosa, escalón de 0,6 m), sobre el terreno que elija 12.14.
 
 - [ ] Esperar el terreno de 12.14
-  No tocar levels/overworld.tscn hasta que 12.14 elija; después ubicar los lugares sobre ese terreno.
+  No tocar levels/overworld.tscn hasta que 12.14 elija (variantes 6, 8 o 9; la otra sesión recomienda 9, marching cubes). Ninguna trae una cornisa baja caminable: meseta a 2,6 m, lomas suaves de ±0,3 m (rampa, no escalón), estratos decorativos de 0,1–0,16 m. Los lugares de salto y la cornisa de la pieza son piezas propias, de menos de 0,75 m (escalón de 0,6).
 - [ ] Pieza de corazón de la pradera en una cornisa
   Decidido con el usuario (2026-10-11): HeartPieceMeadow deja el pasto alto y pasa a una cornisa baja de la pradera a la que se sube con la pluma; siguen siendo 4 piezas = 1 corazón. Actualizar la tabla de ítems del GDD (§6.1).
 - [ ] 1–2 atajos o recovecos más con salto
@@ -3430,7 +3432,7 @@ El overworld es el hub: la pluma (11.35, templo) tiene que abrir ahí cosas y ca
 
 **Relacionadas:** 11.35 Saltar: ítem tipo Pluma de Roc
 
-## M12 — Assets propios (Blender)  (5/14)
+## M12 — Assets propios (Blender)  (6/16)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -3782,7 +3784,9 @@ Con el estilo toon de 12.12, aplicar el shader cel a todo el material de paleta,
 
 **Relacionadas:** 11.20 Cueva con ojo de agua y cáusticas animadas; 12.9 Efectos con malla; 11.49 VFX de combate; 12.8 Personajes propios
 
-### 12.14 Prueba: overworld menos cuadrado · En curso
+### 12.14 Prueba: overworld menos cuadrado · Hecho
+
+**Terminada:** 2026-10-11
 
 Probar en una misma zona chica de prueba tres formas de que el overworld no se vea cuadriculado, y combinaciones, para elegir mirando: A) grilla con diagonales, curvas y niveles de altura (rampas/escalinatas); B) grilla abajo con mallas modeladas que tapan los bordes rectos; C) terreno esculpido libre sin grilla.
 
@@ -3791,12 +3795,26 @@ Probar en una misma zona chica de prueba tres formas de que el overworld no se v
 - [x] B: grilla + mallas modeladas encima
 - [x] C: terreno esculpido libre
 - [x] Combinaciones (A+B, ...)
-- [ ] Capturas lado a lado y elección del usuario
-  Página de comparación: https://claude.ai/artifact/DeQ6YbE2gQqyQwRMFux2KH. Escena: levels/pruebas_terreno.tscn (1–7).
+- [x] Capturas lado a lado y elección del usuario
+  Página: https://claude.ai/artifact/DeQ6YbE2gQqyQwRMFux2KH. Escena: levels/pruebas_terreno.tscn (1–9). Elegida la 6 (B+C · Orgánico con lomas) para el MVP; la 9 (marching cubes en Godot) gustó más pero le faltan correcciones: queda en 12.16 para después del MVP.
 
 **Notas:** Pedido del usuario después de 12.2 paso 6 (rampa): elegir con pruebas antes de cambiar el overworld real. No tocar levels/overworld.tscn hasta elegir.
 
 **Bloquea a:** 11.61 Pluma en el overworld: lugares de salto
+
+### 12.15 Overworld orgánico con lomas (variante 6) · En curso
+
+**Prioridad:** alta · **Etiquetas:** `arte`
+
+Pasar el overworld real al estilo de la variante 6 de 12.14: bordes de andenes, riscos, abismo y camino con contornos orgánicos (no siguen la grilla) y el pasto con lomas suaves, sin perder colisiones, navegación ni los lugares de 12.3.
+
+### 12.16 Terreno con marching cubes en Godot (después del MVP) · Pendiente
+
+**Prioridad:** baja · **Etiquetas:** `arte`, `herramientas`
+
+La variante 9 de 12.14 (volumen + marching cubes armado en Godot con tools/build_prueba_mc.gd y data/kits/shaders/terreno_mc.gdshader) gustó más que la 6, pero le faltan un par de correcciones. Retomarla cuando termine el MVP.
+
+- [ ] Preguntar al usuario qué corregir de la 9
 
 ## M13 — Co-op local (estilo Four Swords)  (0/9)
 
