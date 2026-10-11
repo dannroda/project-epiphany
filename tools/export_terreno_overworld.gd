@@ -3,6 +3,8 @@ extends SceneTree
 ## celda (H alto, ~ abismo, : tierra, . pasto), los puntos fijos (lo jugable y las piezas que quedan en el GridMap), donde
 ## el terreno no se mueve ni tiene lomas, la decoración, donde el piso queda plano y la roca no avanza, y las paredes
 ## rompibles, que se arman con la misma roca.
+## También las regiones: el rectángulo de cada AreaZone con terrain_style. Para probar sin tocar la escena, los estilos
+## se pueden pasar por zona: … -- Zone_pradera=necropolis Zone_risco=cumbre
 ## godot --headless --path . --script res://tools/export_terreno_overworld.gd
 
 const LEVEL := "res://levels/overworld.tscn"
@@ -28,6 +30,7 @@ func _initialize() -> void:
 	var fixed := []
 	var decor := []
 	var cracked := []
+	var regions := []
 	for z in range(lo.y, hi.y + 1):
 		var row := ""
 		for x in range(lo.x, hi.x + 1):
@@ -39,6 +42,19 @@ func _initialize() -> void:
 				fixed.append([x * 2.0, z * 2.0, 1.4])
 			row += letter
 		rows.append(row)
+	var forced := {}
+	for arg in OS.get_cmdline_user_args():
+		forced[arg.get_slice("=", 0)] = arg.get_slice("=", 1)
+	for zone in level.get_children():
+		if not "terrain_style" in zone:
+			continue
+		var style := String(forced.get(String(zone.name), zone.terrain_style))
+		var shape := zone.get_node_or_null(^"CollisionShape3D") as CollisionShape3D
+		if style.is_empty() or shape == null or not shape.shape is BoxShape3D:
+			continue
+		var center := (zone as Node3D).transform * shape.position
+		var half := (shape.shape as BoxShape3D).size / 2.0
+		regions.append({"style": style, "rect": [center.x - half.x, center.z - half.z, center.x + half.x, center.z + half.z]})
 	for child in level.get_children():
 		if child is Node3D and not (child.get_class() in IGNORED or child.name in IGNORED) and not String(child.name).begins_with("Zone_"):
 			var at := (child as Node3D).position
@@ -52,8 +68,8 @@ func _initialize() -> void:
 		var at := _placed(piece, level)
 		decor.append([at.x, at.z, 0.8])
 	var file := FileAccess.open(OUT, FileAccess.WRITE)
-	file.store_string(JSON.stringify({"origin": [lo.x, lo.y], "cell": 2.0, "rows": rows, "fixed": fixed, "decor": decor, "cracked": cracked}, "\t"))
-	print("export_terreno_overworld: %d × %d celdas, %d puntos fijos, %d de decoración" % [hi.x - lo.x + 1, hi.y - lo.y + 1, fixed.size(), decor.size()])
+	file.store_string(JSON.stringify({"origin": [lo.x, lo.y], "cell": 2.0, "rows": rows, "fixed": fixed, "decor": decor, "cracked": cracked, "regions": regions}, "\t"))
+	print("export_terreno_overworld: %d × %d celdas, %d puntos fijos, %d de decoración, %d regiones" % [hi.x - lo.x + 1, hi.y - lo.y + 1, fixed.size(), decor.size(), regions.size()])
 	level.free()
 	quit()
 

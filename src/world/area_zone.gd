@@ -5,6 +5,9 @@ extends Area3D
 static var _current: AreaZone
 
 @export var display_name: String = ""
+## Estilo del terreno orgánico en la zona (STYLES de tools/blender/build_terreno_organico.py): necropolis, laguna, cumbre,
+## explanada, cardonal o quebrada; vacío, el de siempre.
+@export var terrain_style: StringName = &""
 
 
 func _ready() -> void:

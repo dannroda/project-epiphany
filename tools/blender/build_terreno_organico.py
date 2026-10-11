@@ -31,6 +31,27 @@ STRATA = (0.0, 0.12, 0.03, 0.16, 0.06, 0.13, 0.02)
 ## Distancia (m) desde el borde de un punto fijo en la que el terreno pasa de quieto a orgánico.
 FADE = 2.0
 CHUNK = 16.0
+## Ancho (m) de la franja donde un estilo de región se mezcla con el de al lado.
+BAND = 4.0
+REGIONS = [(r["style"], r["rect"][0], -r["rect"][3], r["rect"][2], -r["rect"][1]) for r in DATA.get("regions", [])]
+## Estilo de terreno de cada región (AreaZone.terrain_style): papel → (franja, tono); lo que falta sale de DEFAULT.
+DEFAULT = {
+	"ground": ("pasto", "MID"), "path": ("tierra", "MID"), "cap": ("pasto", "MID"), "hang": ("pasto", "DARK"),
+	"ledge": ("musgo", "MID"), "under": ("acantilado", "DARK"), "base": ("acantilado", "DARK"), "band": ("tierra", None),
+	"rock": ("acantilado", None), "abyss_top": ("acantilado", "MID"), "abyss_mid": ("gris_4", "MID"), "abyss_low": ("gris_5", "DARK"),
+}
+STYLES = {
+	"necropolis": {"ground": ("tierra", "MID"), "path": ("acantilado", "LIGHT"), "cap": ("tierra", "MID"), "hang": ("acantilado", "DARK"),
+		"ledge": ("tierra", "LIGHT"), "band": ("roca_naranja", None)},
+	"laguna": {"ground": ("musgo", "MID"), "path": ("tierra", "LOW"), "cap": ("musgo", "MID"), "hang": ("musgo", "DARK"),
+		"band": ("piedra", "LOW"), "rock": ("piedra", None), "under": ("piedra", "DARK"), "base": ("piedra", "DARK")},
+	"cumbre": {"ground": ("cristal", "LIGHT"), "path": ("piedra", "MID"), "cap": ("cristal", "LIGHT"), "hang": ("cristal", "MID"),
+		"ledge": ("cristal", "LIGHT"), "under": ("ladrillo", "DARK"), "base": ("ladrillo", "DARK"), "band": ("piedra", "MID"), "rock": ("ladrillo", None)},
+	"explanada": {"path": ("piedra_templo", "LOW")},
+	"cardonal": {"ground": ("tierra", "LIGHT"), "path": ("acantilado", "LIGHT"), "cap": ("tierra", "MID"), "hang": ("acantilado", "MID"),
+		"ledge": ("tierra", "MID"), "band": ("roca_naranja", None), "rock": ("roca_naranja", None)},
+	"quebrada": {"abyss_top": ("roca_naranja", "MID"), "abyss_mid": ("acantilado", "DARK"), "band": ("roca_naranja", None)},
+}
 FIXED = np.array([(x, -z, r) for x, z, r in DATA["fixed"]]).reshape(-1, 3)
 DECOR = np.array([(x, -z, r) for x, z, r in DATA["decor"]]).reshape(-1, 3)
 FLAT = np.concatenate([FIXED, DECOR])
@@ -188,6 +209,27 @@ def style(loop, seed, solid, jagged=0.0):
 	return final, flags
 
 
+def style_at(x, y):
+	"""Estilo de la región en (x, y): el borde del rectángulo ondula hasta BAND hacia los dos lados."""
+	chosen = ""
+	for k, (style, x0, y0, x1, y1) in enumerate(REGIONS):
+		depth = min(x - x0, x1 - x, y - y0, y1 - y)
+		if depth + BAND * noise.noise(Vector((x * 0.16, y * 0.16, 5.0 + k))) > 0:
+			chosen = style
+	return chosen
+
+
+def paint_role(p, faces, role, shade=None, z_range=None, vary=0.0):
+	"""Pinta cada cara con la franja de su papel en el estilo de la región donde cae."""
+	groups = {}
+	for f in faces:
+		c = f.calc_center_median()
+		groups.setdefault(style_at(c.x, c.y), []).append(f)
+	for style, group in groups.items():
+		swatch, style_shade = STYLES.get(style, {}).get(role, DEFAULT[role])
+		p.paint(group, swatch, style_shade or shade or "GRADIENT", z_range=z_range, vary=vary)
+
+
 def lomas(x, y):
 	return LOMAS * noise.noise(Vector((x * 0.3, y * 0.3, 3.7)))
 
@@ -222,13 +264,13 @@ def cliff_wall(p, loop):
 	for f in faces:
 		f.normal_update()
 	row_height = (z1 + 0.5) / 6
-	p.paint([f for f in faces if f.normal.z > 0.35], "musgo", "MID", vary=0.1)
-	p.paint([f for f in faces if f.normal.z < -0.15], "acantilado", "DARK")
+	paint_role(p, [f for f in faces if f.normal.z > 0.35], "ledge", vary=0.1)
+	paint_role(p, [f for f in faces if f.normal.z < -0.15], "under")
 	sides = [f for f in faces if -0.15 <= f.normal.z <= 0.35]
 	row = lambda f: int((f.calc_center_median().z + 0.5) / row_height)  # noqa: E731
-	p.paint([f for f in sides if row(f) < 2], "acantilado", "DARK", vary=0.12)
-	p.paint([f for f in sides if row(f) == 3], "tierra", z_range=(row_height * 2 - 0.5, row_height * 5 - 0.5), vary=0.15)
-	p.paint([f for f in sides if row(f) not in (0, 1, 3)], "acantilado", z_range=(-0.5, z1), vary=0.12)
+	paint_role(p, [f for f in sides if row(f) < 2], "base", vary=0.12)
+	paint_role(p, [f for f in sides if row(f) == 3], "band", z_range=(row_height * 2 - 0.5, row_height * 5 - 0.5), vary=0.15)
+	paint_role(p, [f for f in sides if row(f) not in (0, 1, 3)], "rock", z_range=(-0.5, z1), vary=0.12)
 	p.fixed.update(faces)
 
 
@@ -237,8 +279,8 @@ def cap(p, high_loops):
 	rims = []
 	for points, flags in high_loops:
 		rims.append(([pt + n * 0.12 if flags[i] or flags[i - 1] else pt for i, (pt, n) in enumerate(zip(points, normals(points)))], flags))
-	top = fill(p, [r[0] for r in rims], TOP)
-	p.paint(top, "pasto", "MID")
+	top = fill(p, [r[0] for r in rims], TOP, (lambda xy: np.zeros(len(xy))) if REGIONS else None)
+	paint_role(p, top, "cap")
 	hang = []
 	for points, flags in rims:
 		for i, a in enumerate(points):
@@ -254,21 +296,44 @@ def cap(p, high_loops):
 			hang.append(p.bm.faces.new((v[3], p.bm.verts.new((mid.x, mid.y, TOP - drop)), v[2])))
 	for f in hang:
 		f.normal_update()
-	p.paint(hang, "pasto", "DARK")
+	paint_role(p, hang, "hang")
 	p.fixed.update(top + hang)
+
+
+def _contains(outline, point):
+	xy = np.array([(q.x, q.y) for q in outline])
+	a, b = xy, np.roll(xy, -1, axis=0)
+	crosses = (a[:, 1] > point.y) != (b[:, 1] > point.y)
+	at = (b[:, 0] - a[:, 0]) * (point.y - a[:, 1]) / np.where(b[:, 1] == a[:, 1], 1e-9, b[:, 1] - a[:, 1]) + a[:, 0]
+	return int((crosses & (point.x < at)).sum()) % 2 == 1
+
+
+def islands(outlines):
+	"""Agrupa los contornos en islas: cada uno de profundidad par (cuántos lo rodean) con los de adentro que lo tocan
+	directo como agujeros. Así tessellate_polygon no tiende puentes entre contornos separados."""
+	probe = [o[0].lerp(o[1], 0.5) for o in outlines]
+	inside = [[j for j in range(len(outlines)) if j != i and _contains(outlines[j], probe[i])] for i in range(len(outlines))]
+	depth = [len(c) for c in inside]
+	groups = {i: [i] for i in range(len(outlines)) if depth[i] % 2 == 0}
+	for i in range(len(outlines)):
+		if depth[i] % 2 == 1:
+			parent = next((j for j in inside[i] if depth[j] == depth[i] - 1), None)
+			if parent is not None:
+				groups[parent].append(i)
+	return list(groups.values())
 
 
 def fill(p, outlines, z, height=None):
 	"""Tapa plana (con agujeros por paridad) de los contornos; height la deforma después de cortarla en 1 m."""
-	flat = [[Vector((pt.x, pt.y, z)) for pt in o] for o in outlines]
-	tris = geometry.tessellate_polygon(flat)
-	verts = [p.bm.verts.new(v) for o in flat for v in o]
 	faces = []
-	for tri in tris:
-		try:
-			faces.append(p.bm.faces.new([verts[i] for i in reversed(tri)]))
-		except ValueError:
-			pass
+	for group in islands(outlines):
+		flat = [[Vector((pt.x, pt.y, z)) for pt in outlines[i]] for i in group]
+		verts = [p.bm.verts.new(v) for o in flat for v in o]
+		for tri in geometry.tessellate_polygon(flat):
+			try:
+				faces.append(p.bm.faces.new([verts[i] for i in reversed(tri)]))
+			except ValueError:
+				pass
 	for f in faces:
 		f.normal_update()
 		if f.normal.z < 0:
@@ -317,7 +382,10 @@ def abyss(p, loop):
 				faces.append(p.bm.faces.new(tri))
 	for f in faces:
 		f.normal_update()
-	p.paint_bands(faces, [(DEPTH * 3 / 7, 1.0, "acantilado", "MID"), (DEPTH * 5 / 7, DEPTH * 3 / 7, "gris_4", "MID"), (DEPTH - 1, DEPTH * 5 / 7, "gris_5", "DARK")])
+	depth = lambda f: f.calc_center_median().z  # noqa: E731
+	paint_role(p, [f for f in faces if depth(f) >= DEPTH * 3 / 7], "abyss_top")
+	paint_role(p, [f for f in faces if DEPTH * 5 / 7 <= depth(f) < DEPTH * 3 / 7], "abyss_mid")
+	paint_role(p, [f for f in faces if depth(f) < DEPTH * 5 / 7], "abyss_low")
 	floor = fill(p, [points], DEPTH)
 	p.paint(floor, "gris_5", "DARK")
 	p.fixed.update(faces + floor)
@@ -325,7 +393,9 @@ def abyss(p, loop):
 
 # --- decoración ---
 
-NATURE = ["ichu_mata", "flores", "tola", "piedra_chica_a", "piedra_chica_b", "quenoa_grande", "quenoa_chica", "cardon_a"]
+NATURE = ["ichu_mata", "ichu_cortado", "flores", "tola", "hongos", "yareta", "piedra_chica_a", "piedra_chica_b", "roca_alta", "roca_grande_b",
+	"quenoa_grande", "quenoa_chica", "cardon_a", "cardon_b", "cardon_chico"]
+OBJECTS = ["apacheta"]
 WINDY = {"ichu_mata", "flores", "tola", "quenoa_grande", "quenoa_chica"}
 ## Por tipo de lugar: [(pieza, probabilidad)] — hasta dos cosas por celda. "monte": lo alto lejos del borde; "monte_sur":
 ## lo mismo del lado de la cámara, sin árboles que tapen.
@@ -336,20 +406,47 @@ SCATTER = {
 	"monte_sur": [("ichu_mata", 0.3), ("flores", 0.1), ("piedra_chica_a", 0.06)],
 	"H": [("ichu_mata", 0.25), ("flores", 0.1)],
 }
+## Lo mismo por estilo de región (lo que no está sale de SCATTER).
+STYLE_SCATTER = {
+	"necropolis": {
+		".": [("piedra_chica_a", 0.2), ("ichu_cortado", 0.2), ("piedra_chica_b", 0.12), ("cardon_chico", 0.05), ("apacheta", 0.03)],
+		"H": [("piedra_chica_b", 0.2), ("ichu_cortado", 0.15), ("apacheta", 0.04)],
+		"monte": [("ichu_cortado", 0.3), ("roca_grande_b", 0.06), ("apacheta", 0.05), ("cardon_a", 0.04)],
+	},
+	"laguna": {
+		".": [("ichu_mata", 0.55), ("hongos", 0.06), ("flores", 0.1), ("tola", 0.08)],
+		"H": [("ichu_mata", 0.4), ("hongos", 0.05)],
+		"monte": [("quenoa_chica", 0.1), ("ichu_mata", 0.45), ("tola", 0.1)],
+	},
+	"cumbre": {
+		".": [("yareta", 0.12), ("piedra_chica_a", 0.12), ("roca_alta", 0.03)],
+		":": [("piedra_chica_a", 0.18)],
+		"H": [("yareta", 0.1), ("piedra_chica_b", 0.1)],
+		"monte": [("roca_alta", 0.08), ("roca_grande_b", 0.06), ("yareta", 0.12)],
+		"monte_sur": [("yareta", 0.1), ("piedra_chica_a", 0.08)],
+	},
+	"cardonal": {
+		".": [("cardon_chico", 0.12), ("tola", 0.18), ("piedra_chica_b", 0.08), ("cardon_b", 0.04)],
+		"H": [("cardon_chico", 0.12), ("tola", 0.12)],
+		"monte": [("cardon_a", 0.16), ("cardon_b", 0.1), ("tola", 0.2)],
+		"monte_sur": [("cardon_chico", 0.1), ("tola", 0.15)],
+	},
+}
 LAST_LOW = max(r for r in range(GH) if any(ch != "H" for ch in GRID[r]))
 
 
 def load_meshes():
 	art = os.path.join(epi.ROOT, "art", "blender")
 	meshes = {}
-	with bpy.data.libraries.load(os.path.join(art, "naturaleza.blend"), link=False) as (src, dst):
-		dst.objects = list(NATURE)
-	for obj in dst.objects:
-		mesh = obj.data
-		mesh.materials.clear()
-		mesh.materials.append(epi.palette.palette_material())
-		meshes[obj.name.split(".")[0]] = mesh
-		bpy.data.objects.remove(obj)
+	for blend, names in (("naturaleza.blend", NATURE), ("objetos.blend", OBJECTS)):
+		with bpy.data.libraries.load(os.path.join(art, blend), link=False) as (src, dst):
+			dst.objects = list(names)
+		for obj in dst.objects:
+			mesh = obj.data
+			mesh.materials.clear()
+			mesh.materials.append(epi.palette.palette_material())
+			meshes[obj.name.split(".")[0]] = mesh
+			bpy.data.objects.remove(obj)
 	return meshes
 
 
@@ -371,7 +468,8 @@ def decor_spots():
 			rng = random.Random(r * 131 + c * 7 + 12)
 			center = cell_center(c, r)
 			placed = 0
-			for name, chance in SCATTER.get(kind, []):
+			style = style_at(center.x, center.y)
+			for name, chance in STYLE_SCATTER.get(style, {}).get(kind, SCATTER.get(kind, [])):
 				if placed < 2 and rng.random() < chance:
 					spot = center + Vector(((rng.random() - 0.5) * 1.2, (rng.random() - 0.5) * 1.2))
 					spots.append((name, spot, rng.random() * math.tau))
@@ -447,7 +545,8 @@ def _cut(bm, wall):
 
 
 def _keep(p, faces):
-	bmesh.ops.delete(p.bm, geom=[f for f in p.bm.faces if f not in set(faces)], context="FACES")
+	keep = set(faces)
+	bmesh.ops.delete(p.bm, geom=[f for f in p.bm.faces if f not in keep], context="FACES")
 	p.fixed = set(p.bm.faces)
 
 
@@ -508,10 +607,10 @@ def main():
 	objects.append(_build(terrain, "riscos-col", "wall", collection))
 	ground = epi.Piece(12)
 	outer = [Vector((BOUNDS[0].x, BOUNDS[0].y)), Vector((BOUNDS[1].x, BOUNDS[0].y)), Vector((BOUNDS[1].x, BOUNDS[1].y)), Vector((BOUNDS[0].x, BOUNDS[1].y))]
-	ground.paint(fill(ground, [outer] + [pt for pt, _f in pits] + [pt for pt, _f in paths], 0.0, ground_height), "pasto", "MID")
+	paint_role(ground, fill(ground, [outer] + [pt for pt, _f in pits] + [pt for pt, _f in paths], 0.0, ground_height), "ground")
 	for lp in pits:
 		abyss(ground, lp)
-	ground.paint(fill(ground, [pt for pt, _f in paths], 0.0, ground_height), "tierra", "MID", vary=0.015)
+	paint_role(ground, fill(ground, [pt for pt, _f in paths], 0.0, ground_height), "path", vary=0.015)
 	objects.append(_build(ground, "suelo-col", "outdoor", collection))
 	objects += decor(load_meshes(), collection)
 	epi.publish("terreno_organico", objects=objects)
