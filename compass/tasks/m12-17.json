@@ -6,7 +6,8 @@
       "text": "Prueba: la misma sala en los cuatro estilos"
     },
     {
-      "done": false,
+      "detail": "Aprobados los cuatro estilos el 2026-10-11. El usuario pide lo mismo para la zona del overworld de cada mazmorra (consultado con la otra sesión, dueña de 7.9).",
+      "done": true,
       "text": "Elección y ajustes del usuario"
     },
     {
@@ -40,5 +41,5 @@
   ],
   "test": "",
   "title": "Estilos por mazmorra",
-  "updated_at": "2026-10-11T22:42:25.150Z"
+  "updated_at": "2026-10-11T22:43:56.510Z"
 }

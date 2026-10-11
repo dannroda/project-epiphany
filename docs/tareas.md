@@ -3865,7 +3865,8 @@ Cada mazmorra con su propio estilo sobre el mismo kit (mismas piezas y colisione
 
 - [x] Prueba: la misma sala en los cuatro estilos
   diorama.py -- <png> templo templo_<estilo>.
-- [ ] Elección y ajustes del usuario
+- [x] Elección y ajustes del usuario
+  Aprobados los cuatro estilos el 2026-10-11. El usuario pide lo mismo para la zona del overworld de cada mazmorra (consultado con la otra sesión, dueña de 7.9).
 - [ ] Kit de cada mazmorra en Godot
   build_temple_kit.gd por estilo (chullpa_kit.tres…) y levels/chullpa.tscn con el suyo.
 - [ ] Luz y ambiente por mazmorra
