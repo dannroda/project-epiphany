@@ -38,6 +38,14 @@ static func icon_for_current(action: StringName) -> Texture2D:
 	return icon(action, InputDevice.current == InputDevice.Device.GAMEPAD)
 
 
+## El de un player (co-op): con solo un control, el del control aunque el último en tocar algo haya sido el teclado.
+static func icon_for(action: StringName, player: Node) -> Texture2D:
+	var controls: Node = player.get(&"controls") if player else null
+	if controls == null:
+		return icon_for_current(action)
+	return icon(action, controls.uses_gamepad())
+
+
 static func _path_for(event: InputEvent, gamepad: bool) -> String:
 	if gamepad:
 		if event is InputEventJoypadButton and JOY_BUTTONS.has(event.button_index):

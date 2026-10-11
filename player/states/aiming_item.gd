@@ -46,7 +46,7 @@ func _update(delta: float) -> void:
 	if _released_at < 0.0:
 		if _elapsed >= _draw_length and player.anim_tree.get(&"parameters/BowPhase/current_state") == "Draw":
 			player.anim_tree.set(&"parameters/BowPhase/transition_request", "Idle")
-		if _elapsed >= min_draw and not Input.is_action_pressed(ITEM_ACTIONS[_button]):
+		if _elapsed >= min_draw and not player.controls.pressed(ITEM_ACTIONS[_button]):
 			_release()
 	elif _elapsed - _released_at >= release_time:
 		dispatch("finished")

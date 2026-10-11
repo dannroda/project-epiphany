@@ -49,16 +49,17 @@ func _sync_settings() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if current and event.is_action_pressed(&"target_prev"):
+	var controls := player.controls
+	if current and controls.event_pressed(event, &"target_prev"):
 		cycle(Vector2.LEFT)
-	elif current and event.is_action_pressed(&"target_next"):
+	elif current and controls.event_pressed(event, &"target_next"):
 		cycle(Vector2.RIGHT)
 	if lock_mode == LockMode.HOLD:
-		if event.is_action_pressed(&"z-lock"):
+		if controls.event_pressed(event, &"z-lock"):
 			lock_best_target()
-		elif event.is_action_released(&"z-lock"):
+		elif controls.event_released(event, &"z-lock"):
 			clear()
-	elif event.is_action_pressed(&"z-lock"):
+	elif controls.event_pressed(event, &"z-lock"):
 		if current:
 			clear()
 		else:
@@ -70,7 +71,7 @@ func _physics_process(delta: float) -> void:
 	if current == null:
 		_last_dir = Vector2.ZERO
 		return
-	var dir := Input.get_vector(&"look_left", &"look_right", &"look_up", &"look_down", switch_threshold)
+	var dir := player.controls.look(switch_threshold)
 	if dir != Vector2.ZERO and flick_enabled:
 		point_at(Vector3(dir.x, 0.0, dir.y).normalized())
 	_last_dir = dir

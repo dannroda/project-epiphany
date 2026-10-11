@@ -43,6 +43,8 @@ var _mouse_moved := false
 
 
 func _input(event: InputEvent) -> void:
+	if not player.controls.owns(event):
+		return
 	if event is InputEventMouseMotion:
 		_mouse_moved = true
 	elif event is InputEventJoypadButton or (event is InputEventJoypadMotion and absf(event.axis_value) > stick_deadzone):
@@ -59,7 +61,7 @@ func get_direction() -> Vector3:
 		source = Source.TARGET
 		return _flat(target.global_position - player.global_position)
 	if move_aims:
-		var move := Input.get_vector(&"move_left", &"move_right", &"move_forward", &"move_backward")
+		var move := player.controls.move()
 		if move.length() > stick_deadzone:
 			source = Source.MOVE_STICK
 			return Vector3(move.x, 0.0, move.y).normalized()
@@ -131,7 +133,7 @@ func _update_debug(direction: Vector3) -> void:
 ## Lo que apunta el jugador a propósito: el mouse, o el stick derecho (solo para girar el reflejo del escudo espejo; el
 ## resto del tiempo mueve la cámara). Cero si no está apuntando (no cae en el frente del modelo).
 func pointed_direction() -> Vector3:
-	var stick := Input.get_vector(&"look_left", &"look_right", &"look_up", &"look_down")
+	var stick := player.controls.look()
 	if stick.length() > stick_deadzone:
 		return Vector3(stick.x, 0.0, stick.y).normalized()
 	if mouse_aims():

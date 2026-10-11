@@ -54,10 +54,10 @@ func _setup() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed(&"block"):
+	if player.controls.event_pressed(event, &"block"):
 		blackboard.set_var("is_blocking", true)
 		player.set_guard(true)
-	elif event.is_action_released(&"block"):
+	elif player.controls.event_released(event, &"block"):
 		blackboard.set_var("is_blocking", false)
 		player.set_guard(false)
 
@@ -66,7 +66,7 @@ func _update(delta: float) -> void:
 	if not player.is_on_floor():
 		player.velocity += player.get_gravity() * delta
 
-	var input_dir := Input.get_vector(&"move_left", &"move_right", &"move_forward", &"move_backward")
+	var input_dir := player.controls.move()
 	blackboard.set_var("input_dir", input_dir)
 
 	var buffer := player.input_buffer

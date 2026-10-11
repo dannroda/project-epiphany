@@ -1,6 +1,8 @@
 class_name PlayerCharacter
 extends CharacterBody3D
 
+const PlayerControls := preload("res://player/components/controls.gd")
+
 const SHIELD_THRUST: AttackData = preload("res://data/attacks/shield_thrust.tres")
 const SILHOUETTE := preload("res://src/feel/occluded_silhouette.gdshader")
 
@@ -32,6 +34,8 @@ signal escaped
 @onready var carrier: Carrier = $Carrier
 
 var guard_tween: Tween
+## Qué controles lee (13.2); existe desde que se instancia, así `Players` le asigna el slot antes de sumarlo.
+var controls: PlayerControls = PlayerControls.new()
 
 var is_dead: bool:
 	get:
@@ -50,6 +54,8 @@ func _exit_tree() -> void:
 
 func _ready() -> void:
 	add_to_group(&"player")
+	controls.name = "Controls"
+	add_child(controls)
 	_register_monitors()
 	config.apply_to(self)
 	hurtbox.team = config.team

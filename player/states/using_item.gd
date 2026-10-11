@@ -20,7 +20,7 @@ func _enter() -> void:
 	_used = false
 	var tween := create_tween()
 	tween.tween_property(player, "velocity", Vector3.ZERO, 0.15)
-	_waiting = _item.behavior.get(&"hold_time") != null and Input.is_action_pressed(ITEM_ACTIONS[_button])
+	_waiting = _item.behavior.get(&"hold_time") != null and player.controls.pressed(ITEM_ACTIONS[_button])
 	if not _waiting:
 		_start()
 
@@ -41,7 +41,7 @@ func _update(delta: float) -> void:
 	_elapsed += delta
 	player.move_and_slide()
 	if _waiting:
-		if not Input.is_action_pressed(ITEM_ACTIONS[_button]):
+		if not player.controls.pressed(ITEM_ACTIONS[_button]):
 			_start()
 		elif _elapsed >= _item.behavior.hold_time:
 			_waiting = false

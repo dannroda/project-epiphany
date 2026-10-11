@@ -21,7 +21,7 @@ func _init() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not event.is_action_pressed(&"interact") or not player.can_interact():
+	if not player.controls.event_pressed(event, &"interact") or not player.can_interact():
 		return
 	var target := best()
 	if target:

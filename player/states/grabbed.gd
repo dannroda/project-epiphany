@@ -26,7 +26,7 @@ func _update(_delta: float) -> void:
 		return
 	player.global_position = grip.global_position
 	for action in MASH_ACTIONS:
-		if Input.is_action_just_pressed(action):
+		if player.controls.just_pressed(action):
 			_presses += 1
 			player.model.rotation.y += 0.25 * (1 if _presses % 2 else -1)
 	if _presses >= presses_to_escape:

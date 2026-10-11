@@ -48,7 +48,7 @@ func _update(delta: float) -> void:
 	if not lifting:
 		player.carrier.set_walking(not direction.is_zero_approx())
 		var buffer := player.input_buffer
-		if Input.is_action_just_pressed(&"interact") or buffer.has(&"attack"):
+		if player.controls.just_pressed(&"interact") or buffer.has(&"attack"):
 			buffer.consume(&"attack")
 			_thrown_at = _elapsed
 			player.carrier.start_throw()

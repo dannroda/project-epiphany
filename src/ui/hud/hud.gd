@@ -57,7 +57,7 @@ func _refresh_item_slots() -> void:
 		var icon := body.get_node(^"Icon") as TextureRect
 		icon.texture = item.icon if item else null
 		icon.modulate.a = 1.0 if item and GameState.inventory.has(id) else 0.35
-		(body.get_node(^"Badge") as TextureRect).texture = InputPrompts.icon_for_current(BUTTON_ACTIONS[i])
+		(body.get_node(^"Badge") as TextureRect).texture = InputPrompts.icon_for(BUTTON_ACTIONS[i], Players.lead())
 		var ammo_label := body.get_node(^"Ammo") as Label
 		var ammo: ItemData = item.behavior.ammo if item and item.behavior else null
 		ammo_label.visible = ammo != null
@@ -84,7 +84,7 @@ func _refresh_prompt() -> void:
 	prompt.visible = _focus != null and is_instance_valid(_focus) and not MenuStack.is_open()
 	if prompt.visible:
 		prompt_text.text = _focus.prompt
-		prompt_icon.texture = InputPrompts.icon_for_current(&"interact")
+		prompt_icon.texture = InputPrompts.icon_for(&"interact", Players.lead())
 
 
 ## Nombre de la sala o la zona al entrar por primera vez: aparece, queda un rato y se va.

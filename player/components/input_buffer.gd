@@ -9,8 +9,9 @@ var _pressed_at: Dictionary[StringName, float] = {}
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	var controls: Node = get_parent().get(&"controls")
 	for action in actions:
-		if event.is_action_pressed(action):
+		if event.is_action_pressed(controls.action(action) if controls else action):
 			_pressed_at[action] = _now()
 
 

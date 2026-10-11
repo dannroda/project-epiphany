@@ -276,7 +276,7 @@ func _physics_process(delta: float) -> void:
 	var desired_look := Vector3.ZERO
 	var steering_light := target_node.is_blocking() and target_node.is_catching_light()
 	if not (locked_target and is_instance_valid(locked_target)) and not steering_light:
-		var stick := Input.get_vector(&"look_left", &"look_right", &"look_up", &"look_down", look_deadzone)
+		var stick := target_node.controls.look(look_deadzone)
 		desired_look = Vector3(stick.x, 0.0, stick.y) * look_distance
 	_look = _look.lerp(desired_look, 1.0 - exp(-look_speed * delta))
 

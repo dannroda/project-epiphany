@@ -35,7 +35,7 @@ func _update(delta: float) -> void:
 	if _released_at < 0.0:
 		if not player.carrier.is_carrying():
 			dispatch("finished")
-		elif not Input.is_action_pressed(ITEM_ACTIONS[_button]):
+		elif not player.controls.pressed(ITEM_ACTIONS[_button]):
 			_start_throw()
 	elif player.carrier.is_carrying() and _elapsed - _released_at >= player.carrier.throw_delay():
 		player.carrier.throw(_behavior.landing(_throw_point()), _behavior.flight_time)

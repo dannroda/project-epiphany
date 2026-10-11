@@ -2,17 +2,17 @@
   "checklist": [
     {
       "detail": "Cada player lee su control (device id); InputBuffer, Aim y Targeting pasan a ser del player. Teclado+mouse cuenta como un dispositivo.",
-      "done": false,
+      "done": true,
       "text": "Acciones por dispositivo"
     },
     {
       "detail": "Start en un segundo control suma al P2 en cualquier momento; salir lo saca sin cortar la partida.",
-      "done": false,
+      "done": true,
       "text": "Unirse / salir"
     },
     {
       "detail": "InputPrompts muestra los botones del control de cada uno.",
-      "done": false,
+      "done": true,
       "text": "Prompts por jugador"
     }
   ],
@@ -34,12 +34,12 @@
       "section": "fuera-mvp"
     }
   ],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "coop",
     "input"
   ],
   "test": "Con dos controles, cada uno mueve solo a su player; el P2 entra y sale con Start sin pausar el juego.",
   "title": "Input por jugador y unirse a la partida",
-  "updated_at": "2026-10-10T05:37:46.374Z"
+  "updated_at": "2026-10-11T01:11:16.248Z"
 }
