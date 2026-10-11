@@ -1583,6 +1583,7 @@ Hecho 2026-10-08: `start` ahora arranca en el overworld (escena principal del ju
 El overworld de 3 × 3 pantallas quedó hecho para una sola mazmorra y se siente encajonado. Rediseñarlo como hub (referencia: análisis del Light World de A Link to the Past, Overworld Overload partes 1 y 2): regiones núcleo con su mazmorra unidas por zonas de conexión, paredes de terreno y puertas de ítem que abren atajos o regiones nuevas, recorrido y ritmo revisados. Entra la Chullpa (11.60) y quedan lugares para las que vengan.
 
 - [ ] Propuesta de layout (variantes) y elección
+  Propuesta en https://claude.ai/artifact/8N6Sst4jMsTDTgKLWdqm4B. Daniel (2026-10-11): el tamaño no importa, 4 mazmorras, viaje rápido ahora. Propuesta D, la mezcla: quebrada de la B, anillos de la A, terrazas de la C solo al este, 6 portales. Falta que la apruebe.
 - [ ] Diseño elegido en el GDD (§7): regiones, gating, ritmo
 - [ ] Blockout del GridMap nuevo
 - [ ] Mudar los lugares existentes y la entrada de la Chullpa

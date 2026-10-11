@@ -1,7 +1,7 @@
 {
   "checklist": [
     {
-      "detail": "Propuesta en https://claude.ai/artifact/8N6Sst4jMsTDTgKLWdqm4B: A Anillo, B La quebrada (recomendada), C Terrazas. Falta que Daniel elija.",
+      "detail": "Propuesta en https://claude.ai/artifact/8N6Sst4jMsTDTgKLWdqm4B. Daniel (2026-10-11): el tamaño no importa, 4 mazmorras, viaje rápido ahora. Propuesta D, la mezcla: quebrada de la B, anillos de la A, terrazas de la C solo al este, 6 portales. Falta que la apruebe.",
       "done": false,
       "text": "Propuesta de layout (variantes) y elección"
     },
@@ -28,6 +28,11 @@
     {
       "done": false,
       "text": "Recorrerlo (Daniel)"
+    },
+    {
+      "detail": "6 portales que se activan al pasar (flag); se elige el destino en la pestaña Mapa o parado en un portal; viajan todos los players. Mockup en el canvas antes de construir.",
+      "done": false,
+      "text": "Viaje rápido: portales y mockup de la pantalla"
     }
   ],
   "code": "7.9",
@@ -45,5 +50,5 @@
   ],
   "test": "",
   "title": "Rediseño del overworld como hub de varias mazmorras",
-  "updated_at": "2026-10-11T22:16:01.637Z"
+  "updated_at": "2026-10-11T22:33:54.226Z"
 }
