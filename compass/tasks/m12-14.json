@@ -1,0 +1,40 @@
+{
+  "checklist": [
+    {
+      "done": true,
+      "text": "Zona de prueba común (mismo diseño para todas)"
+    },
+    {
+      "done": true,
+      "text": "A: diagonales, curvas y niveles"
+    },
+    {
+      "done": true,
+      "text": "B: grilla + mallas modeladas encima"
+    },
+    {
+      "done": true,
+      "text": "C: terreno esculpido libre"
+    },
+    {
+      "done": true,
+      "text": "Combinaciones (A+B, ...)"
+    },
+    {
+      "detail": "Página de comparación: https://claude.ai/artifact/DeQ6YbE2gQqyQwRMFux2KH. Escena: levels/pruebas_terreno.tscn (1–7).",
+      "done": false,
+      "text": "Capturas lado a lado y elección del usuario"
+    }
+  ],
+  "code": "12.14",
+  "created_at": "2026-10-11T18:02:26.509Z",
+  "description": "Probar en una misma zona chica de prueba tres formas de que el overworld no se vea cuadriculado, y combinaciones, para elegir mirando: A) grilla con diagonales, curvas y niveles de altura (rampas/escalinatas); B) grilla abajo con mallas modeladas que tapan los bordes rectos; C) terreno esculpido libre sin grilla.",
+  "milestone": "m12",
+  "notes": "Pedido del usuario después de 12.2 paso 6 (rampa): elegir con pruebas antes de cambiar el overworld real. No tocar levels/overworld.tscn hasta elegir.",
+  "order": 14,
+  "refs": [],
+  "status": "doing",
+  "test": "",
+  "title": "Prueba: overworld menos cuadrado",
+  "updated_at": "2026-10-11T18:22:31.261Z"
+}

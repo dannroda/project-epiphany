@@ -3023,7 +3023,7 @@ Técnicas de espada al estilo Minish Cap y Wind Waker: combo de 3 golpes, giro c
 
 **Relacionadas:** 11.22 Tablillas de historia; 11.35 Saltar: ítem tipo Pluma de Roc
 
-### 11.35 Saltar: ítem tipo Pluma de Roc · Pendiente
+### 11.35 Saltar: ítem tipo Pluma de Roc · En curso
 
 **Prioridad:** media · **Etiquetas:** `combate`, `movimiento`
 
@@ -3031,14 +3031,14 @@ Saltar con un ítem tipo Pluma de Roc (nada de salto libre), para que el gating 
 
 - [x] Decidido: ítem tipo Pluma de Roc
   Nada de salto libre ni automático: se salta con un ítem que se consigue (Minish Cap), así el gating de saltos empieza cuando lo tenés. Anotado en GDD §4.2.
-- [ ] Estado Jumping en el player
-  Arco con altura fija, control en el aire limitado, sombra en el piso para leer dónde cae (la cámara es cenital), aterrizaje con polvo; animaciones de Rig_Medium.
-- [ ] Integración con combate
-  Saltar esquiva golpes bajos (ondas de choque de las manos del jefe); golpe en el aire / caída con la espada (jump strike de 11.34).
+- [x] Estado Jumping en el player
+  player/states/jumping.gd: height 0,68 (apex ≈0,71), speed 4, air_control 2; sombra %JumpShadow (Decal) que se achica al subir; Jump_Full_Short por el OneShot de ítems; polvo al saltar y al caer. Altura limitada por la cápsula: con más de ≈0,75 se apoya en el borde de una pirca.
+- [x] Integración con combate
+  La onda de las manos del jefe es un Hitbox ground_only: estar en el aire cuando llega alcanza. El golpe en el aire / caída con la espada queda para 11.34.
 - [ ] Integración con el mundo
   Huecos de un tile, subir a andenes bajos, bajar de cualquier borde; revisar que no rompa puzzles ni salte paredes de sala (alto máximo menor que pircas y muros).
-- [ ] Ítem y input
-  ItemData + ItemBehavior de la pluma; se asigna a un botón de ítem como el arco o las bombas (sin botón propio). Ícono renderizado desde un modelo propio (build_equipo.py).
+- [x] Ítem y input
+  data/items/feather.tres ("Pluma", JumpBehavior, USABLE), en la base de ítems; el botón despacha jump en vez de use_item. Malla e ícono de la sesión de assets: equipo/pluma.res y assets/ui/items/feather.png (pluma de cóndor). Textos ITEM_FEATHER_*.
 - [ ] Dónde se consigue y qué abre
   Elegir el lugar (cofre en el overworld, mini-santuario 11.27, sub-jefe 11.31…) y armar 2–3 lugares que solo se alcanzan saltando, más una pieza de corazón (11.21). Actualizar la progresión del GDD §6.2.
 
@@ -3409,7 +3409,7 @@ Segunda mazmorra con pisos (y quizás sótanos) apilados en la misma escena, en 
 - [ ] UI: selector de pisos
   Diseñar primero en el canvas de mockups (no lo tiene): pestañas de piso en el mapa de pausa con dónde estás, jefe y cofres; minimapa del piso actual.
 
-## M12 — Assets propios (Blender)  (5/13)
+## M12 — Assets propios (Blender)  (5/14)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -3760,6 +3760,19 @@ Con el estilo toon de 12.12, aplicar el shader cel a todo el material de paleta,
 **Bloqueada por:** 12.12 Estilo toon (Wind Waker) + personaje cyber-shinobi
 
 **Relacionadas:** 11.20 Cueva con ojo de agua y cáusticas animadas; 12.9 Efectos con malla; 11.49 VFX de combate; 12.8 Personajes propios
+
+### 12.14 Prueba: overworld menos cuadrado · En curso
+
+Probar en una misma zona chica de prueba tres formas de que el overworld no se vea cuadriculado, y combinaciones, para elegir mirando: A) grilla con diagonales, curvas y niveles de altura (rampas/escalinatas); B) grilla abajo con mallas modeladas que tapan los bordes rectos; C) terreno esculpido libre sin grilla.
+
+- [x] Zona de prueba común (mismo diseño para todas)
+- [x] A: diagonales, curvas y niveles
+- [x] B: grilla + mallas modeladas encima
+- [x] C: terreno esculpido libre
+- [x] Combinaciones (A+B, ...)
+- [ ] Capturas lado a lado y elección del usuario
+
+**Notas:** Pedido del usuario después de 12.2 paso 6 (rampa): elegir con pruebas antes de cambiar el overworld real. No tocar levels/overworld.tscn hasta elegir.
 
 ## M13 — Co-op local (estilo Four Swords)  (0/9)
 
