@@ -6,7 +6,7 @@
       "text": "Mallas viejas del templo"
     },
     {
-      "detail": "objetos/corazon, objetos/bombas_x3, objetos/orbe; equipo/poncho; lugares/escombro_b, lugares/pedestal, lugares/santuario_pared, lugares/santuario_piso. Sacarlas también de su build_<kit>.py.",
+      "detail": "equipo/poncho; lugares/escombro_b, lugares/pedestal, lugares/santuario_pared, lugares/santuario_piso. Sacarlas también de su build_<kit>.py. objetos/corazon, bombas_x3 y orbe NO: son los modelos de 12.5 (pickups y orbe) que todavía no se conectaron.",
       "done": false,
       "text": "Mallas sueltas de objetos, equipo y lugares"
     },
@@ -56,5 +56,5 @@
   ],
   "test": "",
   "title": "Limpieza de assets sin uso",
-  "updated_at": "2026-10-11T07:35:06.790Z"
+  "updated_at": "2026-10-11T07:38:02.440Z"
 }
