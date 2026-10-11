@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/zone_veil.gd" id="1_veil"]
+[ext_resource type="Shader" path="res://src/world/zone_veil.gdshader" id="2_shader"]
+
+[sub_resource type="ShaderMaterial" id="Ink"]
+render_priority = 0
+shader = ExtResource("2_shader")
+shader_parameter/ink = Color(0.043137256, 0.050980393, 0.0627451, 1)
+shader_parameter/edge = 2.0
+
+[sub_resource type="BoxMesh" id="Box"]
+material = SubResource("Ink")
+
+[node name="ZoneVeil" type="MeshInstance3D"]
+cast_shadow = 0
+mesh = SubResource("Box")
+script = ExtResource("1_veil")

@@ -1,0 +1,44 @@
+{
+  "checklist": [
+    {
+      "detail": "Que tape por completo lo que hay detrás: no se tiene que ver el pasillo a través.",
+      "done": false,
+      "text": "Mismo grosor que el muro"
+    },
+    {
+      "detail": "Usar la tierra/roca marrón del muro que la rodea, con grietas visibles como única pista.",
+      "done": false,
+      "text": "Mismo material que el entorno"
+    },
+    {
+      "detail": "Overworld y templo, con el mismo criterio.",
+      "done": false,
+      "text": "Revisar las demás paredes agrietadas"
+    },
+    {
+      "detail": "Lo de la pared fina también pasa con las puertas: que ocupen todo el grosor del muro.",
+      "done": false,
+      "text": "Puertas con el mismo grosor que el muro"
+    },
+    {
+      "detail": "En un paso con grosor, una reja en cada cara del muro en vez de una sola en el medio.",
+      "done": false,
+      "text": "Rejas en cada borde"
+    }
+  ],
+  "code": "11.51",
+  "created_at": "2026-10-11T03:59:26.007Z",
+  "description": "Feedback de playtest (overworld, cueva de las bombas): la pared agrietada se delata sola. Es más fina que el muro y deja ver lo que tapa, y es piedra gris en un entorno marrón/pasto. Tiene que leerse como 'pared agrietada' por las grietas, no por el tamaño ni el color. Ver src/world/cracked_wall.tscn y su instancia en levels/overworld.tscn.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 51,
+  "priority": "medium",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "arte"
+  ],
+  "test": "",
+  "title": "Pared agrietada que se integre al muro",
+  "updated_at": "2026-10-11T04:14:22.594Z"
+}

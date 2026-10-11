@@ -1,0 +1,18 @@
+{
+  "checklist": [],
+  "code": "11.53",
+  "created_at": "2026-10-11T04:15:37.979Z",
+  "description": "Feedback de playtest: el agujero con dither alrededor del player se recorta en el follaje de los árboles al pasar por un sendero angosto del overworld, y ahí no tiene sentido. Revisar en qué materiales se aplica (player_hole.gdshaderinc) y limitarlo a paredes/acantilados que realmente tapan al player.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 53,
+  "priority": "medium",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "camara"
+  ],
+  "test": "",
+  "title": "Agujero de la cámara solo donde tiene sentido",
+  "updated_at": "2026-10-11T04:15:37.979Z"
+}

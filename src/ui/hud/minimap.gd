@@ -8,7 +8,6 @@ const MapData := preload("res://src/ui/menus/map_data.gd")
 const CELL := Vector2(46, 34)
 const PITCH := Vector2(53, 38)
 const GRID_ORIGIN := Vector2(10, 8)
-const ROOM_FILL := Color("#3a4250")
 const DOOR_SIZE := 7.0
 ## Píxeles del minimapa por metro en el overworld.
 const OVERWORLD_SCALE := 5.0
@@ -20,6 +19,9 @@ const REVEAL_FADE := 5.0
 ## Cuánto tiene que moverse un player para volver a pintar lo descubierto (m).
 const REVEAL_STEP := 1.0
 
+@export var room_style: StyleBox
+@export var current_style: StyleBox
+
 @onready var view: Control = %View
 @onready var fog: ShaderMaterial = view.material
 
@@ -27,8 +29,6 @@ var _scene: Node
 var _map: OverworldMap
 var _doors: Array = []
 var _doors_age := INF
-var _room_style := _room_box(MapRoomCell.BORDER)
-var _current_style := _room_box(MapRoomCell.GOLD)
 var _revealed: ImageTexture
 var _painted_at: Dictionary[PlayerCharacter, Vector2] = {}
 
@@ -37,15 +37,6 @@ func _ready() -> void:
 	view.draw.connect(_draw_view)
 	fog.set_shader_parameter(&"ink", MapRoomCell.INK)
 	GameState.loaded.connect(_setup_reveal)
-
-
-static func _room_box(border: Color) -> StyleBoxFlat:
-	var style := StyleBoxFlat.new()
-	style.bg_color = ROOM_FILL
-	style.border_color = border
-	style.set_border_width_all(2)
-	style.set_corner_radius_all(5)
-	return style
 
 
 func _process(delta: float) -> void:
@@ -93,23 +84,29 @@ func _setup_reveal() -> void:
 func _reveal() -> void:
 	if view.material == null or GameState.map_revealed == null:
 		return
+	var veils := get_tree().get_nodes_in_group(&"zone_veils").filter(func(veil: ZoneVeil) -> bool: return veil.visible)
+	if veils.any(func(veil: ZoneVeil) -> bool: return veil.is_revealing()):
+		_painted_at.clear()
 	var changed := false
 	for player in Players.all:
 		var here := Vector2(player.global_position.x, player.global_position.z)
 		if _painted_at.has(player) and _painted_at[player].distance_to(here) < REVEAL_STEP:
 			continue
 		_painted_at[player] = here
-		_paint_reveal(GameState.map_revealed, here - _map.world_rect.position)
+		_paint_reveal(GameState.map_revealed, here, _map.world_rect.position, veils)
 		changed = true
 	if changed:
 		_revealed.update(GameState.map_revealed)
 
 
-static func _paint_reveal(image: Image, center: Vector2) -> void:
+static func _paint_reveal(image: Image, here: Vector2, origin: Vector2, veils: Array) -> void:
+	var center := here - origin
 	var low := (center - Vector2.ONE * REVEAL_RADIUS).floor().max(Vector2.ZERO)
 	var high := (center + Vector2.ONE * REVEAL_RADIUS).ceil().min(Vector2(image.get_size()) - Vector2.ONE)
 	for y in range(int(low.y), int(high.y) + 1):
 		for x in range(int(low.x), int(high.x) + 1):
+			if not veils.is_empty() and veils.any(func(veil: ZoneVeil) -> bool: return veil.covers(origin + Vector2(x + 0.5, y + 0.5))):
+				continue
 			var value := 1.0 - smoothstep(REVEAL_RADIUS - REVEAL_FADE, REVEAL_RADIUS, center.distance_to(Vector2(x + 0.5, y + 0.5)))
 			if value > image.get_pixel(x, y).r:
 				image.set_pixel(x, y, Color(value, value, value))
@@ -154,7 +151,7 @@ func _draw_dungeon() -> void:
 		var visited := dungeon.was_visited(room.room_index)
 		var rect := Rect2(_cell_origin(Vector2(apart)), CELL)
 		if visited or room == current:
-			view.draw_style_box(_current_style if room == current else _room_style, rect)
+			view.draw_style_box(current_style if room == current else room_style, rect)
 		else:
 			MapRoomCell.draw_dashed_rect(view, rect.grow(-1), MapRoomCell.BORDER)
 		if dungeon.has_compass:

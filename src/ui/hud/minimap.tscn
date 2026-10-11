@@ -6,6 +6,30 @@
 [sub_resource type="ShaderMaterial" id="Fog"]
 shader = ExtResource("2_fog")
 
+[sub_resource type="StyleBoxFlat" id="Room"]
+bg_color = Color(0.227451, 0.25882354, 0.3137255, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.3372549, 0.38431373, 0.47843137, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="CurrentRoom"]
+bg_color = Color(0.227451, 0.25882354, 0.3137255, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
 [node name="Minimap" type="Control"]
 custom_minimum_size = Vector2(176, 132)
 layout_mode = 3
@@ -13,6 +37,8 @@ anchors_preset = 0
 process_mode = 3
 mouse_filter = 2
 script = ExtResource("1_minimap")
+room_style = SubResource("Room")
+current_style = SubResource("CurrentRoom")
 
 [node name="Frame" type="Panel" parent="."]
 layout_mode = 1

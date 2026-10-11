@@ -1,0 +1,44 @@
+{
+  "checklist": [
+    {
+      "detail": "src/world/zone_veil.tscn: caja de tinta del tamaño de la zona, se disuelve desde el bloqueo en ~1,2 s.",
+      "done": true,
+      "text": "Velo (escena + shader con disolución)"
+    },
+    {
+      "detail": "No pinta lo descubierto dentro de un velo; durante la disolución acompaña la animación.",
+      "done": true,
+      "text": "Minimapa respeta el velo"
+    },
+    {
+      "detail": "Gruta oculta (GrottoCrackedWall) y santuario (ShrineCrackedWall).",
+      "done": true,
+      "text": "Poner los velos en el overworld"
+    },
+    {
+      "detail": "Velo visible al empezar, se va al romper la pared, no vuelve al recargar; minimapa no descubre a través.",
+      "done": true,
+      "text": "Tests"
+    },
+    {
+      "detail": "Captura antes, durante y después de romper la pared.",
+      "done": true,
+      "text": "Revisión visual"
+    }
+  ],
+  "code": "11.52",
+  "created_at": "2026-10-11T04:04:34.710Z",
+  "description": "Feedback de playtest: en el overworld se ve lo que hay detrás de una pared rompible o puerta que todavía no se abrió, sin haber estado nunca ahí. Un velo de tinta (ZoneVeil, hijo de la AreaZone) tapa la zona mientras no se visitó y sus bloqueos siguen cerrados; al romper/abrir uno se disuelve con dither desde ahí, sin frenar al jugador. El minimapa no descubre lo tapado. Rejas no: dejar ver el cofre es el anzuelo.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 52,
+  "priority": "medium",
+  "refs": [],
+  "status": "review",
+  "tags": [
+    "mundo"
+  ],
+  "test": "",
+  "title": "Zonas tapadas hasta abrirlas",
+  "updated_at": "2026-10-11T04:17:08.718Z"
+}

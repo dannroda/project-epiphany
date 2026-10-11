@@ -38,6 +38,7 @@
 [ext_resource type="PackedScene" path="res://src/world/eye_switch.tscn" id="39_ailnf"]
 [ext_resource type="PackedScene" path="res://src/world/stone.tscn" id="42_stone"]
 [ext_resource type="Resource" path="res://data/items/quiver_big.tres" id="41_csg56"]
+[ext_resource type="PackedScene" path="res://src/world/zone_veil.tscn" id="90_veil"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7se6l"]
 panorama = ExtResource("1_qyxw2")
@@ -113,6 +114,9 @@ display_name = "PLACE_SANCTUARY"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_santuario" unique_id=1428017056]
 shape = SubResource("BoxShape3D_mweuj")
+
+[node name="ZoneVeil" parent="Zone_santuario" instance=ExtResource("90_veil")]
+blockers = Array[NodePath]([NodePath("../../ShrineCrackedWall")])
 
 [node name="Spawn_santuario" type="Marker3D" parent="." unique_id=1883394303]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -16)
@@ -191,6 +195,9 @@ display_name = "PLACE_HIDDEN_GROTTO"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_gruta" unique_id=845541249]
 shape = SubResource("BoxShape3D_01rmd")
+
+[node name="ZoneVeil" parent="Zone_gruta" instance=ExtResource("90_veil")]
+blockers = Array[NodePath]([NodePath("../../GrottoCrackedWall")])
 
 [node name="Spawn_gruta" type="Marker3D" parent="." unique_id=151939532]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 16)
