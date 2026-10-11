@@ -1,5 +1,26 @@
 {
-  "checklist": [],
+  "checklist": [
+    {
+      "detail": "tools/decorate_levels.gd lee el GridMap, las salas y lo jugable, y escribe levels/decor/temple_decor.tscn (determinístico, se regenera); el nivel solo lo instancia.",
+      "done": true,
+      "text": "Generador de decoración"
+    },
+    {
+      "detail": "Estandartes en las paredes norte y laterales (menos cuanto más doom), braseros en las esquinas de las salas grandes, escombros contra las paredes y vasijas rotas; nada en el paso, en puertas, pozos ni encima de lo jugable.",
+      "done": true,
+      "text": "Estandartes, braseros y escombros"
+    },
+    {
+      "detail": "Venas rojas en el piso de las salas con doom alto (Arena en adelante), que suben con la tensión.",
+      "done": true,
+      "text": "Venas del doom"
+    },
+    {
+      "detail": "Fotos de las 9 salas antes y después; profile_scenes.gd sigue dentro del presupuesto.",
+      "done": true,
+      "text": "Capturas y rendimiento"
+    }
+  ],
   "code": "11.3",
   "created_at": "2026-10-09T17:40:32.857Z",
   "milestone": "m11",
@@ -7,11 +28,11 @@
   "order": 3,
   "priority": "high",
   "refs": [],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "arte"
   ],
-  "test": "",
+  "test": "Cada sala se ve habitada y distinta, la decoración crece en ruina hacia el jefe, nada tapa el camino ni lo jugable y el rendimiento sigue en presupuesto.",
   "title": "Decorar las salas del templo",
-  "updated_at": "2026-10-09T17:40:32.857Z"
+  "updated_at": "2026-10-11T05:28:45.346Z"
 }

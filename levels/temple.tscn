@@ -38,8 +38,9 @@
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="53_5adsw"]
 [ext_resource type="Script" uid="uid://cqtm1asamns1o" path="res://src/world/doom_ambience.gd" id="55_j188v"]
 [ext_resource type="PackedScene" path="res://src/entities/boss/boss.tscn" id="56_boss"]
-[ext_resource type="Script" path="res://src/entities/boss/boss_arena.gd" id="57_arena"]
+[ext_resource type="Script" uid="uid://biq7c248kwtba" path="res://src/entities/boss/boss_arena.gd" id="57_arena"]
 [ext_resource type="PackedScene" path="res://src/world/cracked_wall_templo.tscn" id="91_cracktemplo"]
+[ext_resource type="PackedScene" path="res://levels/decor/temple_decor.tscn" id="92_decor"]
 
 [sub_resource type="Environment" id="Environment_h5c3c"]
 background_mode = 1
@@ -576,10 +577,10 @@ target_spawn = &"templo"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPortal" unique_id=76133986]
 shape = SubResource("BoxShape3D_3cduy")
 
-[node name="Boss" parent="." instance=ExtResource("56_boss")]
+[node name="Boss" parent="." unique_id=2138492114 instance=ExtResource("56_boss")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 14.5)
 
-[node name="BossArena" type="Node" parent="." node_paths=PackedStringArray("room", "boss", "door")]
+[node name="BossArena" type="Node" parent="." unique_id=599474082 node_paths=PackedStringArray("room", "boss", "door")]
 script = ExtResource("57_arena")
 room = NodePath("../Jefe")
 boss = NodePath("../Boss")
@@ -605,3 +606,5 @@ script = ExtResource("55_j188v")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=486303064]
 navigation_mesh = SubResource("NavigationMesh_qekgw")
+
+[node name="Decor" parent="." instance=ExtResource("92_decor")]

@@ -1,0 +1,299 @@
+extends SceneTree
+## Arma la decoración de cada nivel (11.3 templo, 11.4 overworld) en levels/decor/<nivel>_decor.tscn, que el nivel
+## instancia como "Decor". Lee el GridMap, las salas o zonas y lo jugable (los otros hijos del nivel) y reparte, según la
+## receta de cada sala o zona, piezas contra las paredes, en las esquinas y en el piso, lejos del paso, de las puertas, de
+## los pozos y de lo jugable. Determinístico (semilla por sala): se puede correr de nuevo después de tocar un nivel.
+## godot --headless --path . --script res://tools/decorate_levels.gd
+
+const MESH := "res://assets/epiphany/meshes/%s.res"
+const OUT := "res://levels/decor/%s_decor.tscn"
+const BRAZIER := preload("res://src/world/brazier.tscn")
+const CELL := 2.0
+## Lo jugable más cerca que esto (m) no deja decorar.
+const CLEARANCE := 1.8
+const DOOR_CLEARANCE := 2.6
+## Más alto que esto, la pieza lleva colisión.
+const SOLID_HEIGHT := 0.45
+const DIRS: Array[Vector2i] = [Vector2i(0, -1), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1)]
+const NORTH := Vector2i(0, -1)
+## Hijos del nivel que no son jugables (no reservan lugar).
+const IGNORED := ["GridMap", "WorldEnvironment", "DirectionalLight3D", "NavigationRegion3D", "Camera3D", "Decor"]
+
+## Templo, por sala: estandartes en la pared norte y en las laterales, braseros en las esquinas del norte, escombros
+## contra las paredes, vasijas rotas y venas del doom en el piso. Más ruina cuanto más cerca del jefe.
+const TEMPLE := {
+	"Vestibulo": {"banners": 2, "side_banners": 2, "braziers": 2, "rubble": 1},
+	"Hub": {"banners": 2, "side_banners": 2, "braziers": 2, "rubble": 2},
+	"Galeria": {"banners": 2, "side_banners": 1, "rubble": 2, "shards": 1},
+	"Agrietada": {"banners": 1, "rubble": 4, "shards": 1, "veins": 1},
+	"Arena": {"banners": 1, "side_banners": 1, "rubble": 4, "veins": 2},
+	"Ojos": {"banners": 1, "rubble": 3, "veins": 3},
+	"Puzzle": {"banners": 1, "rubble": 4, "shards": 1, "veins": 3},
+	"Antesala": {"banners": 2, "braziers": 2, "rubble": 3, "shards": 2, "veins": 4},
+	"Jefe": {"banners": 2, "braziers": 2, "rubble": 2, "veins": 5},
+}
+## Overworld, por zona: hitos cerca del centro y piezas contra los riscos y los muros, cada una [malla, cuántas].
+const OVERWORLD := {
+	"Zone_start": {"landmarks": ["objetos/fogata", "naturaleza/tronco_caido"], "edge": [["naturaleza/piedra_chica_b", 3], ["naturaleza/ichu_cortado", 4]]},
+	"Zone_pradera": {"landmarks": ["objetos/apacheta"], "edge": [["naturaleza/piedra_chica_b", 3], ["naturaleza/cardon_chico", 2], ["naturaleza/ichu_cortado", 4]]},
+	"Zone_arboleda": {"edge": [["naturaleza/tronco_caido", 2], ["naturaleza/cardon_chico", 3], ["naturaleza/roca_grande_b", 1], ["naturaleza/ichu_cortado", 3]]},
+	"Zone_risco": {"edge": [["naturaleza/roca_alta", 3], ["naturaleza/piedra_chica_b", 3], ["naturaleza/roca_grande_b", 1]]},
+	"Zone_cueva": {"edge": [["lugares/estalagmitas", 4], ["naturaleza/roca_alta", 2], ["lugares/escombro_a", 2]]},
+	"Zone_gruta": {"edge": [["lugares/estalagmitas", 5], ["naturaleza/piedra_chica_b", 3]]},
+	"Zone_santuario": {"edge": [["objetos/apacheta", 2], ["naturaleza/piedra_chica_b", 3], ["naturaleza/ichu_cortado", 3]]},
+	"Zone_templo": {"facade": "TempleSeal", "edge": [["lugares/escombro_a", 3], ["naturaleza/piedra_chica_b", 2]]},
+}
+
+var _grid: GridMap
+var _lib: MeshLibrary
+var _keep_out: Array[Vector3] = []
+var _doors: Array[Vector3] = []
+var _placed: Array[Vector3] = []
+var _root: Node3D
+var _rng := RandomNumberGenerator.new()
+
+
+func _initialize() -> void:
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path("res://levels/decor"))
+	_decorate("temple", "room.gd", _temple_room)
+	_decorate("overworld", "area_zone.gd", _overworld_zone)
+	quit()
+
+
+func _decorate(level_name: String, area_script: String, recipe: Callable) -> void:
+	var level: Node3D = (load("res://levels/%s.tscn" % level_name) as PackedScene).instantiate()
+	_grid = level.get_node("GridMap")
+	_lib = _grid.mesh_library
+	_keep_out.clear()
+	_doors.clear()
+	_placed.clear()
+	var areas: Array[Area3D] = []
+	for child in level.get_children():
+		var script: Script = child.get_script()
+		if child is Area3D and script and script.resource_path.ends_with(area_script):
+			areas.append(child)
+		elif child is Node3D and not (child.get_class() in IGNORED or child.name in IGNORED or child is Area3D):
+			_keep_out.append((child as Node3D).position)
+	for cell in _grid.get_used_cells():
+		if _name(cell) == "Puerta":
+			_doors.append(_center(cell))
+	_root = Node3D.new()
+	_root.name = "Decor"
+	var count := 0
+	for area in areas:
+		var group := Node3D.new()
+		group.name = area.name
+		_add(_root, group)
+		_rng.seed = hash(level_name + area.name)
+		recipe.call(area, _cells_in(area), group)
+		count += group.get_child_count()
+	var packed := PackedScene.new()
+	packed.pack(_root)
+	ResourceSaver.save(packed, OUT % level_name)
+	print("decorate_levels: %s, %d piezas" % [level_name, count])
+	_root.free()
+	level.free()
+
+
+func _temple_room(room: Area3D, cells: Array[Vector3i], group: Node3D) -> void:
+	var recipe: Dictionary = TEMPLE.get(String(room.name), {})
+	var floors := cells.filter(_is_floor)
+	if recipe.get("braziers", 0) > 0:
+		_brazier_pair(room, floors, group)
+	var north := _wall_faces(floors, [NORTH])
+	var sides := _wall_faces(floors, [Vector2i(1, 0), Vector2i(-1, 0)])
+	for spot in _pick(north, recipe.get("banners", 0), 3.0, 1.4):
+		_mesh(group, "templo/estandarte", spot[0] + Vector3.UP * 0.3, spot[1], false)
+	for spot in _pick(sides, recipe.get("side_banners", 0), 3.0, 1.4):
+		_mesh(group, "templo/estandarte", spot[0] + Vector3.UP * 0.3, spot[1], false)
+	var hugging := floors.filter(func(c: Vector3i) -> bool: return _toward_walls(c) != Vector3.ZERO and not _near_hole(c))
+	for spot in _pick(hugging.map(func(c: Vector3i) -> Array: return [_center(c) + _toward_walls(c) * 0.45, _rng.randf() * TAU]), recipe.get("rubble", 0), 2.0, CLEARANCE):
+		_mesh(group, "templo/escombros" if _rng.randf() < 0.6 else "lugares/escombro_a", spot[0], spot[1], false)
+	var open := floors.filter(func(c: Vector3i) -> bool: return not _near_hole(c))
+	for spot in _pick(open.map(func(c: Vector3i) -> Array: return [_center(c) + _jitter(0.5), _rng.randf() * TAU]), recipe.get("shards", 0), 3.0, CLEARANCE):
+		_mesh(group, "objetos/vasija_pedazos", spot[0], spot[1], false)
+	for spot in _pick(open.map(func(c: Vector3i) -> Array: return [_center(c) + _jitter(0.4) + Vector3.UP * 0.02, _rng.randf() * TAU]), recipe.get("veins", 0), 3.5, 1.2):
+		_mesh(group, "templo/venas_doom", spot[0], spot[1], false)
+
+
+## Dos braseros espejados contra la pared norte, lo más afuera posible.
+func _brazier_pair(room: Area3D, floors: Array, group: Node3D) -> void:
+	var mid := room.position.x + (room.get_node("CollisionShape3D") as Node3D).position.x
+	var north := floors.filter(func(c: Vector3i) -> bool: return _is_wall(c + Vector3i(0, 0, -1)) and _center(c).x < mid)
+	north.sort_custom(func(a: Vector3i, b: Vector3i) -> bool: return a.x < b.x)
+	for cell: Vector3i in north:
+		var left := _center(cell) + Vector3(0.2, 0, -0.35)
+		var right := Vector3(2.0 * mid - left.x, 0, left.z)
+		if _is_floor(_grid.local_to_map(right - _grid.position)) and _free(left, 1.4, 2.0) and _free(right, 1.4, 2.0):
+			for at in [left, right]:
+				var brazier := BRAZIER.instantiate() as Node3D
+				brazier.position = at
+				_add(group, brazier)
+				_placed.append(at)
+			return
+
+
+func _overworld_zone(zone: Area3D, cells: Array[Vector3i], group: Node3D) -> void:
+	var recipe: Dictionary = OVERWORLD.get(String(zone.name), {})
+	var ground := cells.filter(_is_ground)
+	var facade: String = recipe.get("facade", "")
+	if not facade.is_empty():
+		_facade(zone.get_parent().get_node(facade) as Node3D, group)
+	var center := Vector3(zone.position.x, 0.0, zone.position.z)
+	var by_center := ground.duplicate()
+	by_center.sort_custom(func(a: Vector3i, b: Vector3i) -> bool: return _center(a).distance_to(center) < _center(b).distance_to(center))
+	var anchor := Vector3.INF
+	for mesh_name: String in recipe.get("landmarks", []):
+		for cell: Vector3i in by_center:
+			var at := _center(cell) + _jitter(0.3)
+			if _free(at, CLEARANCE + 0.6, 2.2) and (anchor == Vector3.INF or at.distance_to(anchor) < 3.2):
+				_mesh(group, mesh_name, at, _rng.randf() * TAU)
+				if anchor == Vector3.INF:
+					anchor = at
+				break
+	var edge := ground.filter(func(c: Vector3i) -> bool: return _toward_walls(c) != Vector3.ZERO)
+	for entry: Array in recipe.get("edge", []):
+		var spots := edge.map(func(c: Vector3i) -> Array: return [_center(c) + _toward_walls(c) * _rng.randf_range(0.3, 0.6) + _jitter(0.25), _rng.randf() * TAU])
+		for spot in _pick(spots, entry[1], 2.2, CLEARANCE):
+			_mesh(group, entry[0], spot[0], spot[1])
+
+
+## La fachada del templo detrás del sello de la entrada, con la puerta donde está el sello.
+func _facade(seal: Node3D, group: Node3D) -> void:
+	_mesh(group, "lugares/fachada_templo", seal.position + seal.basis.z * -0.3, seal.rotation.y, false)
+
+
+func _cells_in(area: Area3D) -> Array[Vector3i]:
+	var shape := area.get_node("CollisionShape3D") as CollisionShape3D
+	var size := (shape.shape as BoxShape3D).size
+	var center := area.position + shape.position
+	var rect := Rect2(center.x - size.x / 2.0, center.z - size.z / 2.0, size.x, size.z)
+	var out: Array[Vector3i] = []
+	for cell in _grid.get_used_cells():
+		var at := _center(cell)
+		if rect.has_point(Vector2(at.x, at.z)):
+			out.append(cell)
+	return out
+
+
+## Puntos sobre las caras de pared que dan a esas celdas, mirando hacia adentro: [posición, giro en Y].
+func _wall_faces(floors: Array, dirs: Array) -> Array:
+	var out := []
+	for cell: Vector3i in floors:
+		for dir: Vector2i in dirs:
+			var wall := cell + Vector3i(dir.x, 0, dir.y)
+			if _name(wall).begins_with("Pared"):
+				var normal := Vector3(-dir.x, 0, -dir.y)
+				out.append([_center(cell) - normal * (CELL / 2.0), atan2(normal.x, normal.z)])
+	return out
+
+
+## Elige hasta count lugares al azar que no estén cerca de lo jugable, de las puertas ni de otra pieza.
+func _pick(spots: Array, count: int, spacing: float, clearance: float) -> Array:
+	var out := []
+	var pool := spots.duplicate()
+	while out.size() < count and not pool.is_empty():
+		var spot: Array = pool.pop_at(_rng.randi() % pool.size())
+		if _free(spot[0], clearance, spacing):
+			out.append(spot)
+			_placed.append(spot[0])
+	return out
+
+
+func _free(at: Vector3, clearance: float, spacing: float) -> bool:
+	for point in _keep_out:
+		if Vector2(point.x, point.z).distance_to(Vector2(at.x, at.z)) < clearance:
+			return false
+	for point in _doors:
+		if point.distance_to(at) < DOOR_CLEARANCE:
+			return false
+	for point in _placed:
+		if point.distance_to(at) < spacing:
+			return false
+	return true
+
+
+func _mesh(group: Node3D, mesh_name: String, at: Vector3, yaw: float, solid := true) -> void:
+	var mesh: Mesh = load(MESH % mesh_name)
+	var instance := MeshInstance3D.new()
+	instance.name = mesh_name.get_file().to_pascal_case()
+	instance.mesh = mesh
+	var box := mesh.get_aabb()
+	if solid and box.size.y > SOLID_HEIGHT:
+		var body := StaticBody3D.new()
+		body.name = instance.name
+		body.position = at
+		body.rotation.y = yaw
+		_add(group, body)
+		instance.name = "Model"
+		_add(body, instance)
+		var shape := CollisionShape3D.new()
+		shape.shape = BoxShape3D.new()
+		(shape.shape as BoxShape3D).size = Vector3(box.size.x * 0.8, box.size.y, box.size.z * 0.8)
+		shape.position = box.get_center()
+		_add(body, shape)
+	else:
+		instance.position = at
+		instance.rotation.y = yaw
+		_add(group, instance)
+	_placed.append(at)
+
+
+func _add(parent: Node, child: Node) -> void:
+	parent.add_child(child, true)
+	child.owner = _root
+	for inner in child.get_children():
+		if inner.owner == null:
+			inner.owner = _root
+
+
+func _name(cell: Vector3i) -> String:
+	var item := _grid.get_cell_item(cell)
+	return "" if item == GridMap.INVALID_CELL_ITEM else _lib.get_item_name(item)
+
+
+func _center(cell: Vector3i) -> Vector3:
+	return _grid.map_to_local(cell) * Vector3(1, 0, 1) + _grid.position
+
+
+func _is_floor(cell: Vector3i) -> bool:
+	var item_name := _name(cell)
+	return item_name.begins_with("Piso")
+
+
+func _is_ground(cell: Vector3i) -> bool:
+	var item_name := _name(cell)
+	return item_name == "Piso" or item_name.begins_with("Pasto") or item_name.begins_with("Tierra")
+
+
+func _is_wall(cell: Vector3i) -> bool:
+	var item := _grid.get_cell_item(cell)
+	if item == GridMap.INVALID_CELL_ITEM or _name(cell) in ["Puerta", "Escalón", "Abismo", "Hueco"]:
+		return false
+	for k in range(0, _lib.get_item_shapes(item).size(), 2):
+		var shapes := _lib.get_item_shapes(item)
+		var box: AABB = (shapes[k + 1] as Transform3D) * (shapes[k] as Shape3D).get_debug_mesh().get_aabb()
+		if box.end.y > 0.8:
+			return true
+	return false
+
+
+## Hacia qué paredes vecinas queda pegada la celda (suma de las direcciones, normalizada; cero si está suelta).
+func _toward_walls(cell: Vector3i) -> Vector3:
+	var sum := Vector3.ZERO
+	for dir in DIRS:
+		if _is_wall(cell + Vector3i(dir.x, 0, dir.y)):
+			sum += Vector3(dir.x, 0, dir.y)
+	return sum.normalized()
+
+
+func _near_hole(cell: Vector3i) -> bool:
+	for dir in DIRS + [Vector2i.ZERO]:
+		var item_name := _name(cell + Vector3i(dir.x, 0, dir.y))
+		if item_name in ["Hueco", "Abismo"]:
+			return true
+	return false
+
+
+func _jitter(amount: float) -> Vector3:
+	return Vector3(_rng.randf_range(-amount, amount), 0.0, _rng.randf_range(-amount, amount))
