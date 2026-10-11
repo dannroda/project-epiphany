@@ -439,11 +439,11 @@ flag = &"ow_start_lift_switch"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 20)
 
 [node name="LiftGate" parent="." instance=ExtResource("26_iip2e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 12)
 switches = Array[NodePath]([NodePath("../LiftSwitch")])
 
 [node name="LiftChest" parent="." instance=ExtResource("15_3hrjb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 10.8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 10.8)
 item = ExtResource("33_yqe63")
 flag = &"ow_start_lift_chest"
 
