@@ -3,6 +3,7 @@ shader_type spatial;
 
 #include "player_hole.gdshaderinc"
 #include "cloud_shadows.gdshaderinc"
+#include "wind.gdshaderinc"
 
 uniform vec4 albedo_color : source_color = vec4(0.72, 0.72, 0.72, 1.0);
 uniform sampler2D albedo_texture : source_color, filter_linear_mipmap;
@@ -13,6 +14,7 @@ varying vec3 world_pos;
 
 void vertex() {
 	world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+	VERTEX += wind_offset(UV, world_pos, MODEL_MATRIX);
 }
 
 void fragment() {

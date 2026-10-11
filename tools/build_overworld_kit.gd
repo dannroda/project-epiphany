@@ -12,7 +12,8 @@ const WALL_MATERIAL := preload("res://data/kits/materials/epiphany_wall.tres")
 const WALL_IDS := [1, 6]
 ## Las celdas con alguna de estas piezas usan el material con viento.
 const WIND_MATERIAL := preload("res://data/kits/materials/epiphany_wind.tres")
-const WINDY := ["pasto_flores", "pasto_ichu", "monte_ichu", "monte_flores", "tola", "quenoa_grande", "quenoa_chica"]
+const WALL_WIND_MATERIAL := preload("res://data/kits/materials/epiphany_wall_wind.tres")
+const WINDY := ["pasto_flores", "pasto_ichu", "monte_ichu", "monte_flores", "risco_ichu", "risco_flores", "tola", "quenoa_grande", "quenoa_chica"]
 ## Piso que llevan esas paredes adentro: por el agujero se ve suelo y no el vacío.
 const WALL_FLOOR := "terreno_overworld/tierra"
 const HIDDEN_FACES := preload("res://tools/hidden_faces.gd")
@@ -72,6 +73,10 @@ const VARIANTS := {
 	"Monte queñoa": [10, ["terreno_overworld/monte", "naturaleza/quenoa_grande@2.6"]],
 	"Monte queñoa chica": [10, ["terreno_overworld/monte_ichu", "naturaleza/quenoa_chica@2.6"]],
 	"Monte cardón": [10, ["terreno_overworld/monte", "naturaleza/cardon_a@2.6"]],
+	"Risco ichu": [6, ["terreno_overworld/risco_ichu"]],
+	"Risco ichu borde": [6, ["terreno_overworld/risco_ichu"]],
+	"Risco flores": [6, ["terreno_overworld/risco_flores"]],
+	"Risco flores borde": [6, ["terreno_overworld/risco_flores"]],
 }
 
 var _scenes := {}
@@ -123,5 +128,8 @@ func _merge(pieces: Array, wall := false) -> ArrayMesh:
 		for surface in mesh.get_surface_count():
 			tool.append_from(mesh, surface, lift)
 	var windy := pieces.any(func(path: String) -> bool: return path.get_slice("@", 0).get_file() in WINDY)
-	tool.set_material(WALL_MATERIAL if wall else WIND_MATERIAL if windy else MATERIAL)
+	if wall:
+		tool.set_material(WALL_WIND_MATERIAL if windy else WALL_MATERIAL)
+	else:
+		tool.set_material(WIND_MATERIAL if windy else MATERIAL)
 	return tool.commit()

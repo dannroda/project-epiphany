@@ -14,6 +14,8 @@ const RULES := {
 	6: [["Risco", 0.3]],
 	8: [["Queñoa chica", 0.3], ["Cardón", 0.42], ["Cardón brazos", 0.5]],
 }
+## Tope de cada risco: sale lo que primero supera el hash de la celda.
+const RISCO_TOPS := [["Risco", 0.4], ["Risco ichu", 0.75], ["Risco flores", 1.0]]
 ## Los que pueden girar sin que se note la costura.
 const SPIN := [5, 0]
 const DIRT := 0
@@ -61,6 +63,12 @@ func _initialize() -> void:
 		changed += 1
 	for cell in grid.get_used_cells():
 		var item := grid.get_cell_item(cell)
+		if item == ids["Risco"] and not borders.has(cell):
+			var top := _risco_top(ids, cell)
+			if top != item:
+				grid.set_cell_item(cell, top, grid.get_cell_item_orientation(cell))
+				changed += 1
+			continue
 		if not RULES.has(item) or borders.has(cell):
 			continue
 		var roll := _hash(cell / 3 if item == 6 else cell)
@@ -141,6 +149,14 @@ func _outside(grid: GridMap, ids: Dictionary) -> Dictionary:
 					result[cell] = [ids[entry[0]], _hash(cell + Vector3i(3, 0, 9)) * 4.0 as int]
 					break
 	return result
+
+
+func _risco_top(ids: Dictionary, cell: Vector3i) -> int:
+	var roll := _hash(cell + Vector3i(5, 0, 13))
+	for entry: Array in RISCO_TOPS:
+		if roll < entry[1]:
+			return ids[entry[0]]
+	return ids["Risco"]
 
 
 func _hash(cell: Vector3i) -> float:

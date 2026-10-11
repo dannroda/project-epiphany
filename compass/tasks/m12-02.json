@@ -63,8 +63,8 @@
       "text": "Sombras de nubes"
     },
     {
-      "detail": "Risco con más corte y vetas; ichu, piedras y flores sobre los topes.",
-      "done": false,
+      "detail": "Hecho: risco en seis estratos que salen y entran (repisas con musgo, abajo oscuro, una veta naranja); topes risco (piedras), risco_ichu y risco_flores, que vary_overworld.gd reparte por hash. Viento en wind.gdshaderinc, también en las paredes con agujero (epiphany_wall_wind.tres). Los andenes quedan lisos: Acantilado está en 944/950.",
+      "done": true,
       "text": "Cara del risco y topes con detalle"
     },
     {
@@ -102,5 +102,5 @@
   ],
   "test": "El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.",
   "title": "Terreno del overworld",
-  "updated_at": "2026-10-11T08:55:47.098Z"
+  "updated_at": "2026-10-11T09:03:14.919Z"
 }

@@ -186,24 +186,57 @@ def anden(p):
 	epi.grass_cap(p, TOP - CAP, TOP)
 
 
-def risco(p):
-	"""Roca natural: caja subdividida empujada hacia afuera con ruido; el borde de arriba queda recto para la tapa."""
-	faces = p.box(-1, 1, -1, 1, -0.5, TOP - CAP)
-	edges = list({e for f in faces for e in f.edges})
-	bmesh.ops.subdivide_edges(p.bm, edges=edges, cuts=3, use_grid_fill=True)
-	off = Vector((p.rng.random() * 40, p.rng.random() * 40, 0))
-	side = [v for v in p.bm.verts if v.co.z < TOP - CAP - 0.01 and v.co.z > -0.49]
-	for v in side:
-		n = Vector((v.co.x, v.co.y, 0))
-		outward = Vector((1 if v.co.x > 0.99 else -1 if v.co.x < -0.99 else 0, 1 if v.co.y > 0.99 else -1 if v.co.y < -0.99 else 0, 0))
-		if outward.length == 0:
-			continue
-		k = 0.5 + 0.5 * noise.noise(v.co * 1.7 + off)
-		v.co += outward.normalized() * (0.04 + 0.16 * k)
-		v.co.z += (p.rng.random() - 0.5) * 0.12
-	bmesh.ops.triangulate(p.bm, faces=list(p.bm.faces))
-	p.paint(list(p.bm.faces), "acantilado", z_range=(-0.5, TOP - CAP), vary=0.1)
-	epi.grass_cap(p, TOP - CAP, TOP)
+## Cuánto sale cada estrato del risco, de abajo arriba: los que salen hacen repisa, los que entran quedan en sombra.
+STRATA = (0.0, 0.12, 0.03, 0.16, 0.06, 0.13, 0.02)
+
+
+def risco(top=None):
+	"""Roca natural en estratos: caja subdividida empujada hacia afuera por fila y con ruido; el borde de arriba queda
+	recto para la tapa. top decora la tapa (ichu, piedras, flores)."""
+	def build(p):
+		z1 = TOP - CAP
+		faces = p.box(-1, 1, -1, 1, -0.5, z1)
+		bmesh.ops.subdivide_edges(p.bm, edges=list({e for f in faces for e in f.edges}), cuts=5, use_grid_fill=True)
+		row_height = (z1 + 0.5) / 6
+		off = Vector((p.rng.random() * 40, p.rng.random() * 40, 0))
+		for v in p.bm.verts:
+			outward = Vector((1 if v.co.x > 0.99 else -1 if v.co.x < -0.99 else 0, 1 if v.co.y > 0.99 else -1 if v.co.y < -0.99 else 0, 0))
+			if outward.length == 0 or not -0.49 < v.co.z < z1 - 0.01:
+				continue
+			k = 0.5 + 0.5 * noise.noise(v.co * 1.7 + off)
+			v.co += outward.normalized() * (0.03 + STRATA[round((v.co.z + 0.5) / row_height)] + 0.08 * k)
+			v.co.z += (p.rng.random() - 0.5) * 0.05
+		bmesh.ops.triangulate(p.bm, faces=list(p.bm.faces))
+		rock = list(p.bm.faces)
+		p.paint([f for f in rock if f.normal.z > 0.35], "musgo", "MID", vary=0.1)
+		p.paint([f for f in rock if f.normal.z < -0.15], "acantilado", "DARK")
+		sides = [f for f in rock if -0.15 <= f.normal.z <= 0.35]
+		row = lambda f: int((f.calc_center_median().z + 0.5) / row_height)  # noqa: E731
+		p.paint([f for f in sides if row(f) < 2], "acantilado", "DARK", vary=0.12)
+		p.paint([f for f in sides if row(f) == 3], "roca_naranja", z_range=(row_height * 2.6 - 0.5, row_height * 4.4 - 0.5), vary=0.25)
+		p.paint([f for f in sides if row(f) not in (0, 1, 3)], "acantilado", z_range=(-0.5, z1), vary=0.12)
+		epi.grass_cap(p, z1, TOP)
+		if top:
+			q = epi.Piece(p.rng.randint(0, 999))
+			top(q)
+			q.transform(list(q.bm.faces), Matrix.Translation((0, 0, TOP)))
+			p.merge(q)
+	return build
+
+
+def risco_ichu(q):
+	ichu(q, -0.5, 0.35, 0.5)
+	ichu(q, 0.4, -0.45, 0.4, blades=7)
+
+
+def risco_flores(q):
+	ichu(q, 0.45, 0.4, 0.45, blades=7)
+	flower(q, -0.4, -0.35, q.rng.choice(["flor_amarilla", "flor_rosa", "blanco"]))
+
+
+def risco_piedra(q):
+	small_rock(q, 0.3, 0.2, 0.22)
+	small_rock(q, -0.45, -0.4, 0.12)
 
 
 def escalon(p):
@@ -228,7 +261,9 @@ def escalinata(p):
 
 
 piece("anden", 12, anden)
-piece("risco", 13, risco)
+piece("risco", 13, risco(risco_piedra))
+piece("risco_ichu", 14, risco(risco_ichu))
+piece("risco_flores", 15, risco(risco_flores))
 piece("escalon", 14, escalon)
 piece("escalinata", 15, escalinata)
 
@@ -381,5 +416,5 @@ piece("abismo_punta", 44, abismo((0, 1, 2)))
 piece("abismo_pozo", 45, abismo((0, 1, 2, 3)))
 
 ORDER = ["pasto", "tierra", "lajas", "anden", "pirca", "abismo", "monte"]
-epi.layout(kit, columns=6, row_of=lambda n: next((i for i, k in enumerate(ORDER) if n.startswith(k)), 3 if n in ("risco", "escalon", "escalinata") else 9))
+epi.layout(kit, columns=6, row_of=lambda n: next((i for i, k in enumerate(ORDER) if n.startswith(k)), 3 if n.startswith("risco") or n in ("escalon", "escalinata") else 9))
 epi.save("terreno_overworld")

@@ -3431,8 +3431,8 @@ Modelar en Blender el terreno del overworld (pasto, caminos, piso de plaza, acan
 - [x] Viento en la vegetación
   Hecho: material epiphany_wind.tres (vertex shader) en ichu, flores, tola y queñoas; se mece más arriba en el degradé de la franja, onda en el sentido del viento.
 - [x] Sombras de nubes
-  Manchas que cruzan el piso despacio (en el light() toon).
-- [ ] Cara del risco y topes con detalle
+  Hecho: cloud_shadows.gdshaderinc (ruido en mundo, deriva) en los materiales de afuera (epiphany_outdoor/wind/wall: kit del overworld, lugares, naturaleza); global cloud_shadows que prende el nodo CloudShadows de overworld.tscn (fuerza, tamaño, deriva exportados). Personajes y templo sin nubes.
+- [x] Cara del risco y topes con detalle
   Risco con más corte y vetas; ichu, piedras y flores sobre los topes.
 - [ ] Camino con detalle
   Huellas, surcos o piedritas sueltas en la tierra.
