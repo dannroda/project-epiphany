@@ -38,6 +38,10 @@ var features: int = 0
 ## Un golpe que aturde (el golpe de escudo) le baja la guardia este tiempo.
 @export var guard_break_time := 1.5
 
+@export_group("Coraza")
+## Rebota todo menos las explosiones; la primera que lo alcanza le vuela la coraza (el nodo "Armor") y lo aturde.
+@export var armored := false
+
 
 func has(feature: Feature) -> bool:
 	return (features & feature) != 0

@@ -25,6 +25,7 @@ var _knockback := Vector3.ZERO
 var _facing_goal := Vector3.ZERO
 var _guard_down_until := 0
 var _guard_pose: PoseOverlay
+var _armor: Node3D
 
 var is_dead: bool:
 	get:
@@ -45,6 +46,8 @@ func _ready() -> void:
 	hurtbox.hit.connect(_on_hit)
 	flash = HitFlash.attach($ModelController/Visuals, health)
 	_guard_pose = model.find_child("GuardPose", true, false) as PoseOverlay
+	if config.armored:
+		_armor = model.find_child("Armor", true, false) as Node3D
 	if _guard_pose:
 		_guard_pose.influence = 1.0 if config.guards_front else 0.0
 	for held in model.find_children("*", "BoneAttachment3D", true, false):
@@ -160,8 +163,50 @@ func _guard_stops(info: DamageInfo) -> bool:
 	return true
 
 
+func is_armored() -> bool:
+	return config.armored and _armor != null and not is_dead
+
+
+## La coraza frena todo salvo explosiones; una explosión la vuela y lo deja aturdido.
+func _armor_stops(info: DamageInfo) -> bool:
+	if not is_armored():
+		return false
+	if info.element == &"explosive":
+		_break_armor()
+		return false
+	Feel.sfx(&"block", global_position)
+	var from := info.source.global_position if info.source else global_position + facing()
+	var toward := (from - global_position) * Vector3(1, 0, 1)
+	Feel.burst(&"sparks", global_position + Vector3.UP * 1.3 + toward.normalized() * 0.4, toward.normalized() + Vector3.UP * 0.3)
+	return true
+
+
+func _break_armor() -> void:
+	var piece := RigidBody3D.new()
+	piece.collision_layer = 0
+	piece.collision_mask = 1
+	var shape := CollisionShape3D.new()
+	var box := BoxShape3D.new()
+	box.size = Vector3(0.8, 0.5, 0.4)
+	shape.shape = box
+	piece.add_child(shape)
+	get_parent().add_child(piece)
+	piece.global_transform = _armor.global_transform
+	_armor.reparent(piece)
+	piece.linear_velocity = Vector3.UP * 5.0 - facing() * 2.0
+	piece.angular_velocity = Vector3(randf_range(-6, 6), randf_range(-6, 6), randf_range(-6, 6))
+	var fade := piece.create_tween()
+	fade.tween_interval(2.5)
+	fade.tween_callback(piece.queue_free)
+	_armor = null
+	Feel.burst(&"shards", global_position + Vector3.UP * 1.3, Vector3.UP)
+	Feel.sfx(&"boom", global_position)
+	bt_player.blackboard.set_var("stunned", true)
+	Log.debug(&"combat", name, "perdió la coraza")
+
+
 func _on_hit(info: DamageInfo) -> void:
-	if _guard_stops(info):
+	if _armor_stops(info) or _guard_stops(info):
 		return
 	if not health.damage(info.amount):
 		return

@@ -7,7 +7,7 @@
     },
     {
       "detail": "Solo por la espalda o solo con bombas.",
-      "done": false,
+      "done": true,
       "text": "Enemigo con punto débil"
     },
     {
@@ -23,12 +23,12 @@
   "order": 25,
   "priority": "medium",
   "refs": [],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "enemigos",
     "ia"
   ],
   "test": "Los dos enemigos aparecen en overworld o templo, se leen sus telegraphs y tienen contra clara.",
   "title": "Nuevos enemigos con los modelos existentes",
-  "updated_at": "2026-10-10T23:33:38.651Z"
+  "updated_at": "2026-10-11T01:17:19.307Z"
 }

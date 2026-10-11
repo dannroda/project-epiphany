@@ -2370,13 +2370,13 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
 
 **Prueba:** Cada secreto se encuentra con las herramientas que el player tiene en ese momento y queda resuelto al cargar.
 
-### 11.25 Nuevos enemigos con los modelos existentes · Pendiente
+### 11.25 Nuevos enemigos con los modelos existentes · Revisión
 
 **Prioridad:** media · **Etiquetas:** `enemigos`, `ia`
 
 - [x] Arquero chullpa
   Dispara de lejos; se bloquea con el escudo y se refleja con el espejo.
-- [ ] Enemigo con punto débil
+- [x] Enemigo con punto débil
   Solo por la espalda o solo con bombas.
 - [x] Esqueleto arquero
   Pedido: esqueletos que disparen flechas. Mantiene distancia, telegraph con el tensado, la flecha se bloquea con el escudo.
@@ -2663,21 +2663,21 @@ Vestir el templo y el overworld con KayKit, más enemigos, trampas, un doom legi
   El texto de la tablita usa los íconos de input actuales.
 - [x] Tests y GDD
 
-### 11.46 Jefe: game juice · En curso
+### 11.46 Jefe: game juice · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `jefe`, `feel`
 
-- [ ] Cuerpo vivo
-  Balanceo de flotación, inclinación hacia la mano que ataca, parpadeo del propulsor; parpadeos ocasionales, párpados entrecerrados al apuntar.
+- [x] Cuerpo vivo
+  Balanceo de flotación, inclinación hacia la mano que ataca; parpadeos ocasionales, párpados entrecerrados al apuntar. No hay malla de propulsor: el cuerpo brilla en cada ataque.
 - [ ] Ojo que carga
-  La pupila se dilata y el iris pulsa la emisión (material override por instancia) mientras carga el orbe; la boca de horno respira y se enciende en cada ataque.
-- [ ] Anticipación y peso de las manos
+  El iris pulsa la emisión (material override por instancia) mientras carga el orbe; la boca de horno se enciende en cada ataque. Falta: la pupila no se dilata (es parte de la malla del ojo; necesita pieza propia o shape key).
+- [x] Anticipación y peso de las manos
   Antes del golpe sube de más, cierra el puño y tiembla; cae más rápido, squash al tocar el piso y rebote chico. Mismo criterio para el agarre y el barrido.
-- [ ] Impactos
+- [x] Impactos
   Hit-stop (~60 ms) en el golpe al piso y cuando el player le pega (Feel ya lo tiene); grietas que quedan en el piso y piedritas; vibración del control; sacudida direccional; la sombra crece y destella el último instante.
-- [ ] Mano aturdida
+- [x] Mano aturdida
   Tambaleo mareado, el ojo de neón del dorso titila, chispas.
-- [ ] Fases y muerte
+- [x] Fases y muerte
   Cambio de fase: párpados que se abren de golpe, destello, polvo del techo. Muerte en etapas: placas que se desprenden, neón que se apaga, explosiones chicas en las juntas, cámara lenta en el último golpe.
 
 **Prueba:** Pelear contra el jefe de punta a punta: cada ataque se anticipa y se lee, los golpes al piso pesan (hit-stop, grietas, vibración), el ojo y el cuerpo reaccionan, y la muerte se siente como un final.
@@ -3011,7 +3011,7 @@ Rehacer en Blender todos los assets con un mismo estilo, empezando por el overwo
 **Prioridad:** media · **Etiquetas:** `arte`
 
 - [ ] Shader cel en el material de paleta y recorrida del mundo actual
-  Sale de 12.12 paso 2. Capturas de overworld, templo y jefe; lista de qué alcanza con shader y qué hay que remodelar.
+  Herramienta: tools/toon_preview.gd (capturas base/toon en el jugador y cada Spawn* del overworld y el templo). Primera recorrida 2026-10-10: con el shader el mundo ya lee toon (follaje en dos tonos, sombras de color más suaves). Falta: pasar epiphany.tres al toon e incluir toon.gdshaderinc en cutaway y epiphany_wall (avisar a la otra sesión: cambia el look de todo), afinar energías por nivel y la lista de qué remodelar.
 - [ ] Ajustar la paleta para sombras de color
   Las tiras ya tienen tono claro y oscuro: llevar el oscuro a sombras saturadas y frías tipo WW, no grises.
 - [ ] Vegetación
@@ -3042,15 +3042,15 @@ Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con
 - Hay al menos tres puzzles que piden a los dos jugadores.
 - Un solo jugador puede seguir jugando como siempre.
 
-### 13.1 Código listo para varios players · Pendiente
+### 13.1 Código listo para varios players · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `coop`, `arquitectura`
 
-- [ ] Registro de players
+- [x] Registro de players
   Un autoload o nodo `Players` con la lista y señales (joined/left); reemplaza las ~40 referencias al grupo "player" y los get_first_node_in_group.
-- [ ] Regla para lo nuevo
+- [x] Regla para lo nuevo
   Desde ahora ningún sistema asume un solo player (anotado en GDD §13).
-- [ ] Tests
+- [x] Tests
   Los tests existentes pasan con 1 player; uno nuevo instancia 2 y revisa que salas, HUD e IA no se rompan.
 
 **Prueba:** Con 1 player el juego es idéntico; instanciar un segundo player no tira errores en overworld ni templo.
@@ -3061,15 +3061,15 @@ Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con
 
 **Bloquea a:** 13.2 Input por jugador y unirse a la partida; 13.3 Cámara y salas para dos; 13.4 Reglas del co-op; 13.5 HUD de dos jugadores; 13.6 Player 2 con su color; 13.7 Enemigos y jefe con varios objetivos; 13.8 Puzzles cooperativos
 
-### 13.2 Input por jugador y unirse a la partida · Pendiente
+### 13.2 Input por jugador y unirse a la partida · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `coop`, `input`
 
-- [ ] Acciones por dispositivo
+- [x] Acciones por dispositivo
   Cada player lee su control (device id); InputBuffer, Aim y Targeting pasan a ser del player. Teclado+mouse cuenta como un dispositivo.
-- [ ] Unirse / salir
+- [x] Unirse / salir
   Start en un segundo control suma al P2 en cualquier momento; salir lo saca sin cortar la partida.
-- [ ] Prompts por jugador
+- [x] Prompts por jugador
   InputPrompts muestra los botones del control de cada uno.
 
 **Prueba:** Con dos controles, cada uno mueve solo a su player; el P2 entra y sale con Start sin pausar el juego.
