@@ -1,0 +1,41 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="Black"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="North"]
+resource_local_to_scene = true
+material = SubResource("Black")
+
+[sub_resource type="BoxMesh" id="South"]
+resource_local_to_scene = true
+material = SubResource("Black")
+
+[sub_resource type="BoxMesh" id="West"]
+resource_local_to_scene = true
+material = SubResource("Black")
+
+[sub_resource type="BoxMesh" id="East"]
+resource_local_to_scene = true
+material = SubResource("Black")
+
+[node name="RoomMask" type="Node3D"]
+top_level = true
+visible = false
+
+[node name="North" type="MeshInstance3D" parent="."]
+cast_shadow = 0
+mesh = SubResource("North")
+
+[node name="South" type="MeshInstance3D" parent="."]
+cast_shadow = 0
+mesh = SubResource("South")
+
+[node name="West" type="MeshInstance3D" parent="."]
+cast_shadow = 0
+mesh = SubResource("West")
+
+[node name="East" type="MeshInstance3D" parent="."]
+cast_shadow = 0
+mesh = SubResource("East")

@@ -1,7 +1,8 @@
 # Autoload
 extends Node
 ## Los players en juego (co-op, M13). Ningún sistema asume uno solo: la IA y lo que busca a alguien eligen al más
-## cercano; lo que todavía es de uno (cámara, guardado, menús, HUD) usa al primero, `lead()`, hasta 13.3 y 13.5.
+## cercano y la cámara encuadra a todos; lo que todavía es de uno (guardado, menús, HUD) usa al primero, `lead()`,
+## hasta 13.5.
 ## Start en un control libre suma un player (13.2); mantener Start en el suyo lo saca. Los invitados vuelven a
 ## aparecer al lado del primero en cada escena.
 

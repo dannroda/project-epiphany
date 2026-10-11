@@ -46,6 +46,13 @@ extends Camera3D
 ## La pared sur de la sala se recorta a esta altura para que no tape la puerta sur.
 @export var south_wall_cut := 0.4
 
+@export_group("Co-op")
+## Metros que quedan entre el borde de la pantalla y el player más alejado cuando el grupo no se puede abrir más.
+@export var leash_margin := 1.5
+## Al cruzar uno a otra sala, los demás aparecen a su lado a esta distancia.
+@export var follower_spacing := 0.7
+
+const ROOM_MASK := preload("res://src/tools/room_mask.tscn")
 const CUTAWAY_MATERIALS: Array[ShaderMaterial] = [
 	preload("res://data/kits/materials/wall.tres"),
 	preload("res://data/kits/materials/column.tres"),
@@ -57,6 +64,8 @@ const SOUTH_WALL_RELIEF := 0.3
 ## Alturas (sobre los pies) hacia donde se tiran rayos desde la cámara para saber si una pared tapa al player.
 const HOLE_PROBES: Array[float] = [0.8, 1.5]
 const HOLE_TIME := 0.2
+## Un salto de más que esto en un cuadro es un teletransporte (reaparecer, pozo): el borde invisible no lo deshace.
+const TELEPORT_DISTANCE := 1.0
 
 var trauma := 0.0
 ## Lo último que se le pasó a las paredes (pies del player, w: cuánto está abierto el agujero, 0–1).
@@ -74,6 +83,7 @@ var _look := Vector3.ZERO
 var _look_ahead := Vector3.ZERO
 var _mask: Node3D
 var _skip := false
+var _last_positions: Dictionary[PlayerCharacter, Vector3] = {}
 
 
 func _init() -> void:
@@ -86,7 +96,9 @@ func _ready() -> void:
 		target_node = get_parent()
 	look_at_from_position(global_position, global_position - offset, Vector3.UP)
 	add_to_group(&"room_camera")
-	_build_mask()
+	process_physics_priority = 100
+	_mask = ROOM_MASK.instantiate()
+	add_child(_mask)
 	_cut_south_wall(null)
 
 
@@ -102,20 +114,51 @@ func reset_room() -> void:
 func snap_to_target() -> void:
 	_look_ahead = Vector3.ZERO
 	_look = Vector3.ZERO
-	focus = target_node.global_position
+	_last_positions.clear()
+	focus = group_center()
 	global_position = focus + offset
 
 
-## La sala que contiene el centro del player; la actual tiene prioridad mientras siga adentro.
+## Los que encuadra la cámara: los players vivos; si no queda ninguno, el primero.
+func framed() -> Array[PlayerCharacter]:
+	var living := Players.alive()
+	if living.is_empty() and target_node:
+		living.append(target_node)
+	return living
+
+
+## Centro (XZ) del rectángulo que encierra a los encuadrados, a la altura del primero.
+func group_center() -> Vector3:
+	var box := _span_of(framed())
+	return Vector3(box.get_center().x, target_node.global_position.y, box.get_center().y)
+
+
+func _span_of(players: Array[PlayerCharacter], extra: Variant = null) -> Rect2:
+	var points: Array[Vector3] = []
+	for player in players:
+		points.append(player.global_position)
+	if extra != null:
+		points.append(extra)
+	var box := Rect2(Vector2(points[0].x, points[0].z), Vector2.ZERO)
+	for point in points:
+		box = box.expand(Vector2(point.x, point.z))
+	return box
+
+
+## La sala de los players; la actual tiene prioridad mientras estén todos adentro. Si uno pasa a otra sala, la
+## cámara va con él y se lleva a los demás (Four Swords).
 func _update_room() -> void:
-	var at := target_node.global_position
-	if room and room.contains(at):
+	var players := framed()
+	if room and players.all(func(player: PlayerCharacter) -> bool: return room.contains(player.global_position)):
 		return
-	for node in get_tree().get_nodes_in_group(Room.GROUP):
-		var each := node as Room
-		if each.contains(at):
-			enter_room(each)
-			return
+	for player in players:
+		if room and room.contains(player.global_position):
+			continue
+		for node in get_tree().get_nodes_in_group(Room.GROUP):
+			var each := node as Room
+			if each.contains(player.global_position):
+				enter_room(each, player)
+				return
 
 
 ## Lo que abarca la pantalla alrededor del foco, en XZ (offsets desde el foco), como en un Zelda 2D: el ancho es el
@@ -166,23 +209,6 @@ func _screen_height(point: Vector3, eye: Vector3) -> float:
 	return local.y / -local.z
 
 
-func _build_mask() -> void:
-	_mask = Node3D.new()
-	_mask.name = "RoomMask"
-	_mask.top_level = true
-	var material := StandardMaterial3D.new()
-	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	material.albedo_color = Color.BLACK
-	for i in 4:
-		var part := MeshInstance3D.new()
-		part.mesh = BoxMesh.new()
-		part.material_override = material
-		part.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-		_mask.add_child(part)
-	_mask.hide()
-	add_child(_mask)
-
-
 ## Tapa todo lo que queda fuera del rectángulo (XZ), desde abajo del piso hasta el tope de las paredes.
 func _mask_around(area: Rect2) -> void:
 	const FAR := 300.0
@@ -204,9 +230,12 @@ func _mask_around(area: Rect2) -> void:
 	_mask.show()
 
 
-func enter_room(new_room: Room) -> void:
+## `crosser`: el que entró; los demás aparecen a su lado. Sin él, el primero.
+func enter_room(new_room: Room, crosser: PlayerCharacter = null) -> void:
 	if new_room == room:
 		return
+	if crosser == null:
+		crosser = target_node
 	var previous := room
 	room = new_room
 	if previous:
@@ -215,7 +244,7 @@ func enter_room(new_room: Room) -> void:
 	_cut_south_wall(room)
 	if previous == null:
 		_mask_around(room.bounds())
-		focus = _clamp(target_node.global_position)
+		focus = _clamp(group_center())
 		global_position = focus + offset
 		_remember_entry()
 		return
@@ -223,14 +252,31 @@ func enter_room(new_room: Room) -> void:
 	var direction := Vector3(signf(step.x), 0.0, 0.0) if absf(step.x) > absf(step.y) else Vector3(0.0, 0.0, signf(step.y))
 	transitioning = true
 	_mask_around(room.bounds().merge(previous.bounds()))
-	target_node.begin_room_transition(direction, transition_time)
-	focus = _clamp(target_node.global_position + direction * transition_walk)
+	_bring_along(crosser, direction)
+	for player in framed():
+		player.begin_room_transition(direction, transition_time)
+	focus = _clamp(crosser.global_position + direction * transition_walk)
 	var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(self, "global_position", focus + offset, transition_time)
 	tween.tween_callback(func() -> void:
 		transitioning = false
 		_mask_around(room.bounds())
 		_remember_entry())
+
+
+## Los demás pasan a la sala nueva junto al que cruzó: a sus costados y, si son más, detrás.
+func _bring_along(crosser: PlayerCharacter, direction: Vector3) -> void:
+	var side := direction.cross(Vector3.UP)
+	var spots: Array[Vector3] = [side, -side, -direction]
+	var i := 0
+	for player in framed():
+		if player == crosser:
+			continue
+		var spot := spots[mini(i, spots.size() - 1)] * follower_spacing * (1 + i / spots.size())
+		player.global_position = crosser.global_position + spot
+		player.velocity = Vector3.ZERO
+		i += 1
+	_last_positions.clear()
 
 
 func _cut_south_wall(cut_room: Room) -> void:
@@ -248,18 +294,25 @@ func _cut_south_wall(cut_room: Room) -> void:
 ## Las paredes (cutaway.gdshader, epiphany_wall.gdshader) recortan un agujero alrededor del player solo mientras
 ## alguna tapa la vista hacia él; el agujero crece y se cierra en HOLE_TIME.
 func _update_player_hole(delta: float) -> void:
-	var feet := target_node.global_position if target_node else Vector3.ZERO
-	var goal := 1.0 if target_node and _player_hidden() else 0.0
+	var hidden: PlayerCharacter = null
+	if target_node:
+		for player in framed():
+			if _player_hidden(player):
+				hidden = player
+				break
+	var who := hidden if hidden else target_node
+	var feet := who.global_position if who else Vector3.ZERO
+	var goal := 1.0 if hidden else 0.0
 	_hole_open = move_toward(_hole_open, goal, delta / HOLE_TIME)
 	player_hole = Vector4(feet.x, feet.y, feet.z, _hole_open)
 	RenderingServer.global_shader_parameter_set(&"player_hole", player_hole)
 
 
 ## Solo cuentan las paredes (GridMap y cuerpos estáticos): players, enemigos y objetos sueltos no abren el agujero.
-func _player_hidden() -> bool:
+func _player_hidden(player: PlayerCharacter) -> bool:
 	var space := get_world_3d().direct_space_state
 	for height in HOLE_PROBES:
-		var query := PhysicsRayQueryParameters3D.create(global_position, target_node.global_position + Vector3.UP * height, 1)
+		var query := PhysicsRayQueryParameters3D.create(global_position, player.global_position + Vector3.UP * height, 1)
 		query.exclude = Players.all.map(func(player: PlayerCharacter) -> RID: return player.get_rid())
 		for attempt in 4:
 			var hit := space.intersect_ray(query)
@@ -280,25 +333,32 @@ func _remember_entry() -> void:
 func _physics_process(delta: float) -> void:
 	if not target_node or transitioning or revealing:
 		return
+	var players := framed()
+	var together := players.size() > 1
+	if together:
+		_hold_together(players)
+	_last_positions.clear()
+	for player in players:
+		_last_positions[player] = player.global_position
 	_update_room()
 	if transitioning:
 		return
-	var player_position := target_node.global_position
+	var player_position := group_center() if together else target_node.global_position
 	var desired_offset := Vector3.ZERO
-	var locked_target := target_node.targeting.current if target_node.targeting else null
+	var locked_target := target_node.targeting.current if target_node.targeting and not together else null
 	if locked_target and is_instance_valid(locked_target):
 		desired_offset = (locked_target.global_position - player_position) * lock_focus_weight
 		desired_offset.y = 0.0
 		desired_offset = desired_offset.limit_length(max_lock_offset)
 
 	var desired_look_ahead := Vector3.ZERO
-	if target_node.aim and target_node.aim.aiming:
+	if target_node.aim and target_node.aim.aiming and not together:
 		desired_look_ahead = target_node.aim.get_direction() * aim_look_ahead
 	_look_ahead = _look_ahead.lerp(desired_look_ahead, 1.0 - exp(-look_ahead_speed * delta))
 
 	var desired_look := Vector3.ZERO
 	var steering_light := target_node.is_blocking() and target_node.is_catching_light()
-	if not (locked_target and is_instance_valid(locked_target)) and not steering_light:
+	if not (locked_target and is_instance_valid(locked_target)) and not steering_light and not together:
 		var stick := target_node.controls.look(look_deadzone)
 		desired_look = Vector3(stick.x, 0.0, stick.y) * look_distance
 	_look = _look.lerp(desired_look, 1.0 - exp(-look_speed * delta))
@@ -308,6 +368,29 @@ func _physics_process(delta: float) -> void:
 		focus = _clamp(focus)
 	global_position = global_position.lerp(focus + offset, 1.0 - exp(-smooth_speed * delta))
 	DebugOverlay.watch("camera/focus_offset", (focus - player_position).snappedf(0.01))
+
+
+## Borde invisible: lo que cada uno se movió desde el cuadro anterior y abre el grupo más de lo que entra en
+## pantalla se deshace en ese eje. Los saltos grandes (reaparecer, pozo) no se tocan.
+func _hold_together(players: Array[PlayerCharacter]) -> void:
+	var fits := view_extents().size - Vector2.ONE * leash_margin * 2.0
+	for player in players:
+		if not _last_positions.has(player):
+			continue
+		var before := _last_positions[player]
+		var now := player.global_position
+		if now.distance_to(before) > TELEPORT_DISTANCE:
+			continue
+		var others := players.filter(func(other: PlayerCharacter) -> bool: return other != player)
+		var span_before := _span_of(others, before).size
+		var span_now := _span_of(others, now).size
+		if span_now.x > fits.x and span_now.x > span_before.x:
+			now.x = before.x
+			player.velocity.x = 0.0
+		if span_now.y > fits.y and span_now.y > span_before.y:
+			now.z = before.z
+			player.velocity.z = 0.0
+		player.global_position = now
 
 
 ## Pausa, lleva la cámara a `target`, corre `action` (abrir la puerta…), espera (`hold`, o `reveal_hold` si es

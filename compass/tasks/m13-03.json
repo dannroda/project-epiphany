@@ -2,17 +2,17 @@
   "checklist": [
     {
       "detail": "Reusar el encuadre del lock-on: la cámara mantiene a ambos; si se alejan demasiado, un borde invisible los frena.",
-      "done": false,
+      "done": true,
       "text": "Encuadre de los dos"
     },
     {
       "detail": "Estilo Four Swords: al cruzar uno la puerta, el otro es llevado con él (o hace falta que estén los dos). Decidir y anotar.",
-      "done": false,
+      "done": true,
       "text": "Cambio de sala"
     },
     {
       "detail": "Overworld ↔ templo llevan a los dos al spawn.",
-      "done": false,
+      "done": true,
       "text": "Escenas"
     }
   ],
@@ -34,12 +34,12 @@
       "section": "fuera-mvp"
     }
   ],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "coop",
     "camara"
   ],
   "test": "Recorrer el templo de punta a punta con dos players: nunca queda uno fuera de cuadro ni en otra sala.",
   "title": "Cámara y salas para dos",
-  "updated_at": "2026-10-10T05:37:46.657Z"
+  "updated_at": "2026-10-11T06:23:20.333Z"
 }
