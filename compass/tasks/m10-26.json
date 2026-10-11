@@ -28,12 +28,12 @@
   "order": 60,
   "priority": "medium",
   "refs": [],
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "ui",
     "input"
   ],
   "test": "",
   "title": "Pantalla de controles",
-  "updated_at": "2026-10-11T08:07:12.687Z"
+  "updated_at": "2026-10-11T08:08:43.703Z"
 }

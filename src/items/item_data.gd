@@ -26,6 +26,8 @@ enum Category { SWORD, SHIELD, ARMOR, USABLE, AMMO, DUNGEON, UPGRADE }
 @export var damage_reduction: float = 0.0
 ## Armaduras: material del cuerpo del player mientras está puesta (null = la textura del modelo).
 @export var body_material: Material
+## Co-op: el de cada invitado (P2, P3…), con sus colores.
+@export var guest_body_materials: Array[Material] = []
 ## Escudos: refleja proyectiles y haces de luz.
 @export var reflects := false
 ## Escudos: tipos de daño (DamageInfo.element) que frena; un elemento vacío es "physical".

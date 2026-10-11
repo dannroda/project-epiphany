@@ -31,6 +31,7 @@
 [ext_resource type="AnimationLibrary" path="res://player/animation/libs/Carry.res" id="16_carry"]
 [ext_resource type="Script" uid="uid://dpgrgvvf2dmhs" path="res://player/states/dead.gd" id="st_dead"]
 [ext_resource type="Script" path="res://player/states/spirit.gd" id="st_spirit"]
+[ext_resource type="Material" path="res://data/materials/player_p2.tres" id="mat_p2"]
 [ext_resource type="Script" uid="uid://do4y7vq0jtpd1" path="res://player/states/dodging.gd" id="st_dodging"]
 [ext_resource type="Script" uid="uid://dvf1o4fohyli8" path="res://player/states/item_get.gd" id="st_item_get"]
 [ext_resource type="Script" path="res://player/states/grabbed.gd" id="st_grabbed"]
@@ -768,6 +769,7 @@ weapon_socket = NodePath("../ModelController/Skeleton3D/Hand_R/WeaponSocket")
 shield_hand_socket = NodePath("../ModelController/Skeleton3D/Hand_L/ShieldSocket")
 shield_back_socket = NodePath("../ModelController/Skeleton3D/BackShield/ShieldSocket")
 held_socket = NodePath("../ModelController/Skeleton3D/Hand_L/BowSocket")
+guest_body_materials = Array[Material]([ExtResource("mat_p2")])
 
 [node name="Targeting" type="Node" parent="." unique_id=85013995 node_paths=PackedStringArray("player", "target_indicator", "detector_shape")]
 script = ExtResource("c_targeting")

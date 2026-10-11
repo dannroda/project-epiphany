@@ -9,6 +9,8 @@ signal weapon_changed(item: ItemData)
 @export var shield_back_socket: Node3D
 ## Donde va lo que se sostiene al usarlo (el arco), en la mano del escudo.
 @export var held_socket: Node3D
+## Co-op: el cuerpo de cada invitado (P2, P3…) sin armadura, con sus colores.
+@export var guest_body_materials: Array[Material] = []
 
 var weapon: ItemData
 ## El destello del player: los modelos que se ponen en las manos lo llevan también.
@@ -69,8 +71,14 @@ func _dress(armor: ItemData) -> void:
 	var visuals := owner.get_node_or_null(^"ModelController/Visuals")
 	if visuals == null:
 		return
+	var dressed := armor != null and armor.body_material != null
+	var material: Material = armor.body_material if dressed else null
+	var guests := armor.guest_body_materials if dressed else guest_body_materials
+	var slot: int = owner.controls.slot if owner is PlayerCharacter else 0
+	if slot > 0 and slot <= guests.size():
+		material = guests[slot - 1]
 	for mesh: MeshInstance3D in visuals.find_children("*", "MeshInstance3D", true, false):
-		mesh.material_override = armor.body_material if armor else null
+		mesh.material_override = material
 
 
 func _set_present(model: Node3D, present: bool) -> void:

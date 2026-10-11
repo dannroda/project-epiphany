@@ -59,6 +59,17 @@ VARIANTS = {
 		"noche": ("4a3468", "160c26"),
 		"neon": ("ffc4f6", "c040d8"),
 	},
+	# Co-op (13.6): el P2 con túnica azul y neón lima, como los Links de colores de Four Swords.
+	"p2": {
+		"tela_roja": ("6ea2ec", "23407a"),
+		"neon": ("efffc0", "72d82c"),
+	},
+	"reforzada_p2": {
+		"tela_roja": ("f5d67e", "b07a24"),
+		"dorado": ("6ea2ec", "23407a"),
+		"noche": ("2c4a6a", "0c1626"),
+		"neon": ("efffc0", "72d82c"),
+	},
 }
 # Fracción de la franja que no se usa arriba y abajo, para que el filtrado no mezcle con la vecina.
 MARGIN = 0.06

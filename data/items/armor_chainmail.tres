@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cc0x4qrp6o6tl" path="res://assets/ui/items/armor_chainmail.png" id="1_bekmn"]
 [ext_resource type="Script" path="res://src/items/item_data.gd" id="2_bekmn"]
 [ext_resource type="Material" path="res://data/materials/armor_reforzada.tres" id="3_gold"]
+[ext_resource type="Material" path="res://data/materials/armor_reforzada_p2.tres" id="4_p2"]
 
 [resource]
 script = ExtResource("2_bekmn")
@@ -14,3 +15,4 @@ icon = ExtResource("1_bekmn")
 category = 2
 damage_reduction = 0.25
 body_material = ExtResource("3_gold")
+guest_body_materials = Array[Material]([ExtResource("4_p2")])

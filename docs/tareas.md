@@ -2443,7 +2443,7 @@ Recorrido para revisar de a una las tareas en Revisión, en el orden de una part
 
 **Relacionadas:** 10.18 Idiomas: inglés y español; 11.45 Tutorial de controles y mini puzzle por ítem; 11.44 Levantar y tirar objetos; 11.53 Agujero de la cámara solo donde tiene sentido; 11.37 Minimapa en el HUD; 11.51 Pared agrietada que se integre al muro; 11.52 Zonas tapadas hasta abrirlas; 11.43 Bombas: tocar coloca, mantener apunta y tira; 11.33 Combate: sacar lo tosco; 11.49 VFX de combate; 11.25 Nuevos enemigos con los modelos existentes; 11.41 Esqueleto con escudo: bloquear con el escudo delante; 11.42 Arco que se tensa; 11.48 Pose de item get; 11.3 Decorar las salas del templo; 11.4 Decorar el overworld; 11.47 Manos del jefe animadas (shape keys); 13.1 Código listo para varios players; 13.2 Input por jugador y unirse a la partida; 10.9 Build para playtesters; 10.8 Pasada de rendimiento; 10.23 Tests en paralelo; 13.3 Cámara y salas para dos; 13.5 HUD de dos jugadores; 13.4 Reglas del co-op; 13.9 Anillo de ítems por player
 
-### 10.29 Pantalla de controles · Pendiente
+### 10.29 Pantalla de controles · En curso
 
 **Prioridad:** media · **Etiquetas:** `ui`, `input`
 
@@ -2454,7 +2454,7 @@ Como la de Basic Controls de TotK: el mando dibujado con una línea a cada botó
 - [ ] Textos desde el InputMap
   Cada caja lee los eventos de su acción (InputPrompts), así si cambia una asignación la pantalla la sigue.
 - [ ] Entradas
-  Título › Opciones › Controles abre la pantalla completa, por MenuStack. En la pausa, la pestaña Sistema (mockups Pause_System y Pause_System_Keyboard): a la izquierda Guardar, Cargar, separador, Opciones y Volver al título; a la derecha los controles básicos del dispositivo en uso, con Y (T en teclado) para ver el otro. Guardar muestra la partida cargada y pide confirmar: siempre guarda sobre esa ranura, no se elige otra (Pause_System_Save). Cargar cambia el panel por la lista de partidas: Auto + 1-3, la vacía apagada, pregunta antes de cargar (Pause_System_Load). B vuelve a los controles.
+  Título › Opciones › Controles abre la pantalla completa, por MenuStack. En la pausa, la pestaña Sistema (mockups Pause_System y Pause_System_Keyboard): a la izquierda Guardar, Cargar, separador, Opciones y Volver al título; a la derecha los controles básicos del dispositivo en uso, con Y (T en teclado) para ver el otro. Guardar muestra la partida cargada y pide confirmar: siempre guarda sobre esa ranura (Pause_System_Save). Cargar muestra el último checkpoint (Auto) y lo último guardado a mano de la partida cargada; se elige con el stick (checkpoint por defecto) y A confirma (Pause_System_Load). B vuelve a los controles.
 - [ ] Tests y GDD
 
 ## M11 — Pulido: contenido y feel  (20/55)
@@ -3384,7 +3384,8 @@ Modelar en Blender el terreno del overworld (pasto, caminos, piso de plaza, acan
 - [ ] Escalones y rampa (tierra y piedra)
 - [x] Abismo: borde recto, esquinas, fondo oscuro/niebla
   Hecho: abismo, abismo_borde/esquina/pasillo/punta/pozo en build_terreno_overworld.py (paredes de roca de 3 m con bandas pasto → acantilado → gris → casi negro, fondo oscuro). vary_overworld.gd elige la pieza y el giro según los vecinos; test_abyss_walls_face_the_ground. La niebla del fondo queda para Godot si hace falta.
-- [ ] Cerco: recto, esquina, final, poste, roto
+- [x] Cerco: recto, esquina, final, poste, roto
+  Hecho: pirca, pirca_esquina, pirca_final (hasta el borde de la celda), pirca_poste y pirca_rota. vary_overworld.gd elige la pieza y el giro según dónde sigue la pirca; test_fence_ends_have_a_post.
 - [ ] Borde del mundo (árboles densos / acantilado alto)
 - [x] Kit del overworld para el GridMap
   Como build_temple_kit.gd: mismos ítems, colisiones y navegación que el kit gris, mallas nuevas.
@@ -3788,7 +3789,7 @@ Que el HUD muestre los corazones e ítems de cada player, con el P2 en la otra e
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 13.6 Player 2 con su color · Pendiente
+### 13.6 Player 2 con su color · Revisión
 
 **Prioridad:** media · **Etiquetas:** `coop`, `arte`
 

@@ -24,12 +24,12 @@
       "section": "fuera-mvp"
     }
   ],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "coop",
     "arte"
   ],
   "test": "P1 y P2 se distinguen de un vistazo con cualquier armadura.",
   "title": "Player 2 con su color",
-  "updated_at": "2026-10-11T07:50:19.798Z"
+  "updated_at": "2026-10-11T08:10:34.141Z"
 }
