@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="ItemData" format=3]
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://ixwq86ig77xp"]
 
-[ext_resource type="Script" path="res://src/items/behaviors/jump_behavior.gd" id="1_jump"]
-[ext_resource type="Texture2D" path="res://assets/ui/items/feather.png" id="2_icon"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/equipo/pluma.res" id="4_pickup"]
-[ext_resource type="Script" path="res://src/items/item_data.gd" id="3_item"]
+[ext_resource type="Script" uid="uid://8m7gpmtlw5c" path="res://src/items/behaviors/jump_behavior.gd" id="1_jump"]
+[ext_resource type="Texture2D" uid="uid://be8lyxkfoyopv" path="res://assets/ui/items/feather.png" id="2_icon"]
+[ext_resource type="Script" uid="uid://l3nlu6710gm3" path="res://src/items/modifiers/item_modifier.gd" id="3_71etj"]
+[ext_resource type="Script" uid="uid://bn5pjgpia5grm" path="res://src/items/item_data.gd" id="3_item"]
+[ext_resource type="ArrayMesh" uid="uid://c8ekv2ltwmuei" path="res://assets/epiphany/meshes/equipo/pluma.res" id="4_pickup"]
 
 [sub_resource type="Resource" id="Resource_jump"]
 script = ExtResource("1_jump")
