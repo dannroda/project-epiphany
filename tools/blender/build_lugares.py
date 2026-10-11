@@ -73,7 +73,8 @@ def cueva_boca(p):
 
 
 def cueva_pared(p):
-	rock(p, -1, 1, -1, 1, -0.5, TOP, push=0.16, swatch="gris_4", keep_top=True, z_range=(-1.5, TOP + 1.0))
+	faces = rock(p, -1, 1, -1, 1, -0.5, TOP, push=0.16, swatch="gris_4", keep_top=True, z_range=(-1.5, TOP + 1.0))
+	bmesh.ops.delete(p.bm, geom=[f for f in faces if min(v.co.z for v in f.verts) > TOP - 1e-4], context="FACES")
 	top = p.box(-1, 1, -1, 1, TOP - 0.01, TOP)
 	p.paint(top, "noche", "MID")
 
