@@ -3303,13 +3303,13 @@ Feedback de playtest: el agujero con dither alrededor del player se recorta en e
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 11.54 El velo de zona tapa también las paredes que la rodean · Pendiente
+### 11.54 El velo de zona tapa también las paredes que la rodean · En curso
 
 **Prioridad:** media · **Etiquetas:** `camara`, `overworld`
 
 Feedback de playtest (seguimiento de 11.52): con la gruta tapada se ve el borde de la pared de la sala contigua, la tapa de pasto del muro entre el claro del inicio y la gruta queda entre el velo negro y el sendero, y más abajo una franja ancha de pasto sobre el acantilado sur. El velo debería llegar hasta la cara de la pared que da al lado del jugador, para que del otro lado de la pared no se vea nada.
 
-### 11.58 Los enemigos muertos desaparecen después de un rato · En curso
+### 11.58 Los enemigos muertos desaparecen después de un rato · Revisión
 
 **Prioridad:** media · **Etiquetas:** `combate`, `feel`
 

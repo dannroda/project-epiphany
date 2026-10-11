@@ -8,12 +8,12 @@
   "order": 54,
   "priority": "medium",
   "refs": [],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "camara",
     "overworld"
   ],
   "test": "",
   "title": "El velo de zona tapa también las paredes que la rodean",
-  "updated_at": "2026-10-11T05:33:54.022Z"
+  "updated_at": "2026-10-11T08:31:43.501Z"
 }

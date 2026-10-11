@@ -2,10 +2,16 @@ class_name ZoneVeil
 extends MeshInstance3D
 ## Tapa su AreaZone (el padre) mientras nunca se estuvo ahí y lo que la cierra sigue entero.
 ## Cuando uno de sus bloqueos se abre, se disuelve desde ahí sin frenar el juego.
+## Llega hasta la cara de afuera de las paredes que la rodean (`wall_margin`) y a la altura de su tapa
+## (`top`), así del otro lado no se ve nada (11.54).
 
 ## CrackedWall o Gate que cierran la zona.
 @export var blockers: Array[NodePath] = []
-@export var height := 4.0
+## Grosor de la pared que rodea la zona (una celda del GridMap).
+@export var wall_margin := 1.95
+## A ras de la tapa de las paredes (2,6 m): más alto, la cara del velo asoma por encima del muro.
+@export var top := 2.62
+@export var bottom := -1.0
 @export var reveal_time := 1.2
 
 var _zone: AreaZone
@@ -18,9 +24,9 @@ var _tween: Tween
 func _ready() -> void:
 	add_to_group(&"zone_veils")
 	_zone = get_parent() as AreaZone
-	_rect = _zone.bounds()
-	global_transform = Transform3D(Basis.from_scale(Vector3(_rect.size.x, height, _rect.size.y)),
-		Vector3(_rect.get_center().x, height / 2.0 - 1.0, _rect.get_center().y))
+	_rect = _zone.bounds().grow(wall_margin)
+	global_transform = Transform3D(Basis.from_scale(Vector3(_rect.size.x, top - bottom, _rect.size.y)),
+		Vector3(_rect.get_center().x, (top + bottom) / 2.0, _rect.get_center().y))
 	for path in blockers:
 		var blocker := get_node(path)
 		for signal_name: StringName in [&"broken", &"opened"]:

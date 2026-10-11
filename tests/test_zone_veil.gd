@@ -27,6 +27,9 @@ func test_the_grotto_stays_hidden_until_its_wall_breaks() -> void:
 		return state.map_revealed.get_pixelv(Vector2i(Vector2(x, z) - rect.position)).r
 	assert_true(veil.visible and veil.covers(Vector2(-24, 16)), "la gruta arranca tapada")
 	assert_true(scene.get_node(^"Zone_santuario/ZoneVeil").visible, "el santuario también")
+	assert_true(veil.covers(Vector2(-12, 12)) and veil.covers(Vector2(-24, 8)), "tapa también las paredes que la rodean")
+	assert_true(not veil.covers(Vector2(-10.8, 12)) and not veil.covers(Vector2(-24, 6.8)), "hasta su cara de este lado")
+	assert_true(absf(veil.get_aabb().end.y * veil.global_basis.get_scale().y + veil.global_position.y - 2.62) < 0.05, "a ras de la tapa del muro")
 	var before := ConfigFile.new()
 	state.write_to(before)
 
