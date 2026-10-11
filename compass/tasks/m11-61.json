@@ -2,22 +2,22 @@
   "checklist": [
     {
       "detail": "No tocar levels/overworld.tscn hasta que 12.14 elija (variantes 6, 8 o 9; la otra sesión recomienda 9, marching cubes). Ninguna trae una cornisa baja caminable: meseta a 2,6 m, lomas suaves de ±0,3 m (rampa, no escalón), estratos decorativos de 0,1–0,16 m. Los lugares de salto y la cornisa de la pieza son piezas propias, de menos de 0,75 m (escalón de 0,6).",
-      "done": false,
+      "done": true,
       "text": "Esperar el terreno de 12.14"
     },
     {
-      "detail": "Decidido con el usuario (2026-10-11): HeartPieceMeadow deja el pasto alto y pasa a una cornisa baja de la pradera a la que se sube con la pluma; siguen siendo 4 piezas = 1 corazón. Actualizar la tabla de ítems del GDD (§6.1).",
-      "done": false,
+      "detail": "HeartPieceMeadow en (−8, 0,6, −6), arriba de un Escalón en la celda (−4, −3), contra el acantilado norte de la pradera; se sube desde el este. test_meadow_heart_piece_sits_on_a_step.",
+      "done": true,
       "text": "Pieza de corazón de la pradera en una cornisa"
     },
     {
-      "detail": "Huecos de una baldosa o escalones; algo que se vea antes de tener la pluma (cebo).",
-      "done": false,
+      "detail": "Grieta de una baldosa de ancho en las celdas (6, −6) y (6, −5): abre el acantilado entre la entrada del templo y el Risco, atajo con la pluma; CliffGapPit devuelve del lado del templo. Dos de largo porque con una el acantilado del sur (2,6 m) la tapaba desde la cámara. test_cliff_gap_is_a_feather_shortcut.",
+      "done": true,
       "text": "1–2 atajos o recovecos más con salto"
     },
     {
-      "detail": "Test que recorra cada lugar con la pluma y que sin ella no se llegue; GDD §7 y §6.2.",
-      "done": false,
+      "detail": "test_jump: test_meadow_heart_piece_sits_on_a_step, test_cliff_gap_is_a_feather_shortcut. GDD §6.1 (pieza de la pradera) y §7 (pluma en el overworld). Terreno, muros y navmesh regenerados con los pasos de 12.15.",
+      "done": true,
       "text": "Tests y GDD"
     }
   ],
@@ -36,12 +36,12 @@
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "movimiento",
     "nivel"
   ],
   "test": "Sin la pluma, la pieza de corazón de la pradera y los otros lugares no se alcanzan; con la pluma, sí. Ningún lugar obliga a saltar una pirca o un muro.",
   "title": "Pluma en el overworld: lugares de salto",
-  "updated_at": "2026-10-11T18:43:18.852Z"
+  "updated_at": "2026-10-11T19:21:04.195Z"
 }

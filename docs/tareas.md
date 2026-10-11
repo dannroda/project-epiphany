@@ -2469,6 +2469,8 @@ Recorrido para revisar de a una las tareas en Revisión, en el orden de una part
 - [ ] Nodos en escena (10.27): todo se ve y suena como antes (cofres, haz de luz, puertas, interruptores, oleadas, explosiones, destello de daño, vasijas, armadura del esqueleto, mapa, música, doom); con el overlay (1), cono de bloqueo y flecha. Abrir chest.tscn, light_source.tscn, player.tscn y src/feel/bursts/ en el editor y ver que se pueden retocar
 - [ ] Pluma (11.35)
   Templo: la sala de la pluma (debajo de la agrietada) se entiende sin explicación; la zanja se lee como 'rodear ahora, saltar después'. La fila de huecos del Puzzle se ve desde la puerta y no hay forma de caer al entrar. El salto (alto 0,68, velocidad 4, control en el aire 2, en player/states/jumping.gd) se siente bien y la sombra deja calcular dónde cae. Risco: el abismo de 4 m se lee como 'solo flechas'.
+- [ ] Pluma en el overworld (11.61)
+  La pieza de corazón arriba del escalón de la pradera se ve como cebo antes de tener la pluma. La grieta entre la entrada del templo y el Risco se lee como paso saltable desde los dos lados (se ve un hueco oscuro entre los acantilados); caer devuelve del lado del templo.
 
 **Relacionadas:** 10.18 Idiomas: inglés y español; 11.45 Tutorial de controles y mini puzzle por ítem; 11.44 Levantar y tirar objetos; 11.53 Agujero de la cámara solo donde tiene sentido; 11.37 Minimapa en el HUD; 11.51 Pared agrietada que se integre al muro; 11.52 Zonas tapadas hasta abrirlas; 11.43 Bombas: tocar coloca, mantener apunta y tira; 11.33 Combate: sacar lo tosco; 11.49 VFX de combate; 11.25 Nuevos enemigos con los modelos existentes; 11.41 Esqueleto con escudo: bloquear con el escudo delante; 11.42 Arco que se tensa; 11.48 Pose de item get; 11.3 Decorar las salas del templo; 11.4 Decorar el overworld; 11.47 Manos del jefe animadas (shape keys); 13.1 Código listo para varios players; 13.2 Input por jugador y unirse a la partida; 10.9 Build para playtesters; 10.8 Pasada de rendimiento; 10.23 Tests en paralelo; 13.3 Cámara y salas para dos; 13.5 HUD de dos jugadores; 10.29 Pantalla de controles; 13.6 Player 2 con su color; 10.24 Tope de FPS; 11.58 Los enemigos muertos desaparecen después de un rato; 11.54 El velo de zona tapa también las paredes que la rodean; 10.25 Sombras del sol acordes a la cámara cenital; 10.26 Paredes del GridMap más livianas; 10.19 Fin de la demo; 13.4 Reglas del co-op; 13.9 Anillo de ítems por player
 
@@ -3411,20 +3413,20 @@ Segunda mazmorra con pisos (y quizás sótanos) apilados en la misma escena, en 
 - [ ] UI: selector de pisos
   Diseñar primero en el canvas de mockups (no lo tiene): pestañas de piso en el mapa de pausa con dónde estás, jefe y cofres; minimapa del piso actual.
 
-### 11.61 Pluma en el overworld: lugares de salto · Pendiente
+### 11.61 Pluma en el overworld: lugares de salto · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Etiquetas:** `movimiento`, `nivel`
 
 El overworld es el hub: la pluma (11.35, templo) tiene que abrir ahí cosas y caminos nuevos. 2–3 lugares que solo se alcanzan saltando (huecos de una baldosa, escalón de 0,6 m), sobre el terreno que elija 12.14.
 
-- [ ] Esperar el terreno de 12.14
+- [x] Esperar el terreno de 12.14
   No tocar levels/overworld.tscn hasta que 12.14 elija (variantes 6, 8 o 9; la otra sesión recomienda 9, marching cubes). Ninguna trae una cornisa baja caminable: meseta a 2,6 m, lomas suaves de ±0,3 m (rampa, no escalón), estratos decorativos de 0,1–0,16 m. Los lugares de salto y la cornisa de la pieza son piezas propias, de menos de 0,75 m (escalón de 0,6).
-- [ ] Pieza de corazón de la pradera en una cornisa
-  Decidido con el usuario (2026-10-11): HeartPieceMeadow deja el pasto alto y pasa a una cornisa baja de la pradera a la que se sube con la pluma; siguen siendo 4 piezas = 1 corazón. Actualizar la tabla de ítems del GDD (§6.1).
-- [ ] 1–2 atajos o recovecos más con salto
-  Huecos de una baldosa o escalones; algo que se vea antes de tener la pluma (cebo).
-- [ ] Tests y GDD
-  Test que recorra cada lugar con la pluma y que sin ella no se llegue; GDD §7 y §6.2.
+- [x] Pieza de corazón de la pradera en una cornisa
+  HeartPieceMeadow en (−8, 0,6, −6), arriba de un Escalón en la celda (−4, −3), contra el acantilado norte de la pradera; se sube desde el este. test_meadow_heart_piece_sits_on_a_step.
+- [x] 1–2 atajos o recovecos más con salto
+  Grieta de una baldosa de ancho en las celdas (6, −6) y (6, −5): abre el acantilado entre la entrada del templo y el Risco, atajo con la pluma; CliffGapPit devuelve del lado del templo. Dos de largo porque con una el acantilado del sur (2,6 m) la tapaba desde la cámara. test_cliff_gap_is_a_feather_shortcut.
+- [x] Tests y GDD
+  test_jump: test_meadow_heart_piece_sits_on_a_step, test_cliff_gap_is_a_feather_shortcut. GDD §6.1 (pieza de la pradera) y §7 (pluma en el overworld). Terreno, muros y navmesh regenerados con los pasos de 12.15.
 
 **Prueba:** Sin la pluma, la pieza de corazón de la pradera y los otros lugares no se alcanzan; con la pluma, sí. Ningún lugar obliga a saltar una pirca o un muro.
 
@@ -3802,7 +3804,7 @@ Probar en una misma zona chica de prueba tres formas de que el overworld no se v
 
 **Bloquea a:** 11.61 Pluma en el overworld: lugares de salto
 
-### 12.15 Overworld orgánico con lomas (variante 6) · En curso
+### 12.15 Overworld orgánico con lomas (variante 6) · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `arte`
 

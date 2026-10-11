@@ -139,7 +139,7 @@ Las teclas se mapean por posición física (`physical_keycode`): WASD queda en e
 | Carcaj grande | Mejora | Pasivo (+max flechas) | Overworld, **post-mazmorra** (requiere arco) | Muestra el backtracking |
 | Llaves chicas, llave del jefe, mapa, brújula | Mazmorra | — | Mazmorra | Estructura de mazmorra |
 | Contenedor de corazón | Mejora | +1 corazón | Tras el jefe | Recompensa |
-| Pieza de corazón (×4) | Mejora | 4 piezas = +1 corazón | Overworld: entre el pasto alto de la pradera, fondo de la gruta (bombas), rincón del santuario (bombas), junto al cofre del carcaj (post-mazmorra) | Premia explorar |
+| Pieza de corazón (×4) | Mejora | 4 piezas = +1 corazón | Overworld: arriba de un escalón de la pradera (con la pluma), fondo de la gruta (bombas), rincón del santuario (bombas), junto al cofre del carcaj (post-mazmorra) | Premia explorar |
 
 **Piezas de corazón (11.21):** `GameState.give` las guarda en el inventario (se guardan con la partida) y cada 4 suma un corazón y descuenta las 4. En el mundo son `HeartPiece` (`src/world/heart_piece.tscn`, un `Pickup` con item get y un flag `ow_heart_piece_*` para no volver). El item get dice cuántas lleva (cues `heart_piece_1..3` de `item_get.dialogue`) y la que completa el corazón usa `heart_piece_full` con el ícono del contenedor. La pantalla de Equipo muestra "Piezas de corazón" con un corazón en cuartos (`HeartPieceIcon`) y "n / 4".
 
@@ -214,6 +214,8 @@ Decidido el 2026-10-08. 8 zonas de ≈ 24 × 16 m (una "pantalla" con la cámara
 | Botella (opcional) | Bombas | Cueva | — |
 | Cota (opcional) | Nada (empujar bloques) | Arboleda | — |
 | Carcaj (post-mazmorra) | Arco | Mazmorra | El ojo solo reacciona a proyectiles; las bombas no llegan al otro lado del abismo |
+
+**Pluma en el overworld (11.61):** el overworld es el hub, así que la pluma abre cosas ahí. La pieza de corazón de la pradera está arriba de un escalón de 0,6 m en el rincón noroeste (se ve desde el principio). Una grieta de una baldosa de ancho (dos de largo, así el acantilado del sur no la tapa desde la cámara) corta el acantilado entre la entrada del templo y el Risco: con la pluma es un atajo entre las dos zonas; caer devuelve del lado del templo (`CliffGapPit`). Tests en `test_jump`.
 
 **Vuelta:** del templo a la Pradera hay camino directo (S); el Inicio y el Santuario tienen `SpawnPoint` de checkpoint.
 

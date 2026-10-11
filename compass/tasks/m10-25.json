@@ -132,6 +132,11 @@
       "detail": "Templo: la sala de la pluma (debajo de la agrietada) se entiende sin explicación; la zanja se lee como 'rodear ahora, saltar después'. La fila de huecos del Puzzle se ve desde la puerta y no hay forma de caer al entrar. El salto (alto 0,68, velocidad 4, control en el aire 2, en player/states/jumping.gd) se siente bien y la sombra deja calcular dónde cae. Risco: el abismo de 4 m se lee como 'solo flechas'.",
       "done": false,
       "text": "Pluma (11.35)"
+    },
+    {
+      "detail": "La pieza de corazón arriba del escalón de la pradera se ve como cebo antes de tener la pluma. La grieta entre la entrada del templo y el Risco se lee como paso saltable desde los dos lados (se ve un hueco oscuro entre los acantilados); caer devuelve del lado del templo.",
+      "done": false,
+      "text": "Pluma en el overworld (11.61)"
     }
   ],
   "code": "10.28",
@@ -278,5 +283,5 @@
   ],
   "test": "",
   "title": "Playtest de revisión (lo que está en Revisión)",
-  "updated_at": "2026-10-11T18:42:47.599Z"
+  "updated_at": "2026-10-11T19:21:04.643Z"
 }
