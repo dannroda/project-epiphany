@@ -1,7 +1,6 @@
 class_name PlayerCharacter
 extends CharacterBody3D
 
-const SWORD_TRAIL_FADE := preload("res://data/materials/sword_trail_fade.tres")
 const PlayerControls := preload("res://player/components/controls.gd")
 
 const SHIELD_THRUST: AttackData = preload("res://data/attacks/shield_thrust.tres")
@@ -33,7 +32,8 @@ signal escaped
 @onready var input_buffer: InputBuffer = $InputBuffer
 @onready var aim: Aim = $Aim
 @onready var carrier: Carrier = $Carrier
-var sword_trail := Trail3D.new()
+## Lo que se retoca en el inspector (duración, gradiente, material) es del nodo; el ancho y la posición se ajustan al arma.
+@onready var sword_trail: Trail3D = $ModelController/Skeleton3D/Hand_R/SwordTrail
 
 var guard_tween: Tween
 ## Qué controles lee (13.2); existe desde que se instancia, así `Players` le asigna el slot antes de sumarlo.
@@ -78,11 +78,6 @@ func _ready() -> void:
 	movement_state.initialize(self)
 	movement_state.set_active(true)
 	_block_cone = _make_block_cone()
-	sword_trail.name = "SwordTrail"
-	sword_trail.lifetime = 0.16
-	sword_trail.color_gradient = SWORD_TRAIL_FADE
-	sword_trail.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	equipment.weapon_socket.get_parent().add_child(sword_trail)
 	equipment.weapon_changed.connect(func(_item: ItemData) -> void: _fit_sword_trail())
 	_fit_sword_trail()
 
