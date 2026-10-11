@@ -5,7 +5,8 @@
       "text": "Piso + variantes (roto, yuyos, grieta del doom)"
     },
     {
-      "done": false,
+      "detail": "Hecho: la pared es un cubo de piedra encastrada con banda arriba, así que recta, esquina y final salen de la misma pieza; la antorcha es wall_torch.tscn. vary_temple.gd reparte pared_nicho y pared_ojo en las paredes que miran a la cámara, lejos de lo que ya cuelga.",
+      "done": true,
       "text": "Pared a celda 2×2: recta, esquina, final, con antorcha"
     },
     {
@@ -71,5 +72,5 @@
   ],
   "test": "temple_kit.tres arma el templo con las piezas nuevas y el corte de la pared sur sigue andando.",
   "title": "Kit del templo propio",
-  "updated_at": "2026-10-11T08:23:47.244Z"
+  "updated_at": "2026-10-11T08:25:33.706Z"
 }
