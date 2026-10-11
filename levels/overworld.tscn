@@ -41,6 +41,7 @@
 [ext_resource type="PackedScene" path="res://src/world/zone_veil.tscn" id="90_veil"]
 [ext_resource type="PackedScene" path="res://src/world/cracked_wall_risco.tscn" id="91_crackrisco"]
 [ext_resource type="Script" uid="uid://bv7heb806mclu" path="res://src/world/cloud_shadows.gd" id="92_clouds"]
+[ext_resource type="PackedScene" path="res://src/world/dust_motes.tscn" id="93_dust"]
 [ext_resource type="PackedScene" path="res://levels/decor/overworld_decor.tscn" id="92_decor"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/cueva_boca.res" id="93_mouth"]
 
@@ -322,6 +323,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.4, 23.7)
 fov = 40.0
 script = ExtResource("16_372gu")
 target_node = NodePath("../Player")
+
+[node name="DustMotes" parent="TopDownCamera" instance=ExtResource("93_dust")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -17)
 
 [node name="HUD" parent="." unique_id=1715079461 instance=ExtResource("17_lc5as")]
 
