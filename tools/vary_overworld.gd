@@ -5,6 +5,7 @@ extends SceneTree
 
 const LEVEL := "res://levels/overworld.tscn"
 const KIT := preload("res://data/kits/overworld_kit.tres")
+const Pieces := preload("res://tools/grid_pieces.gd")
 
 ## id base → [[variante, probabilidad acumulada], …]; lo que sobra queda como el base.
 const RULES := {
@@ -17,8 +18,8 @@ const RULES := {
 const SPIN := [5, 0]
 const DIRT := 0
 const GRASS := 5
-## Lado con tierra de las piezas de borde sin girar; cada giro de 90° lo pasa al siguiente.
-const SIDES: Array[Vector3i] = [Vector3i(-1, 0, 0), Vector3i(0, 0, 1), Vector3i(1, 0, 0), Vector3i(0, 0, -1)]
+## Lado con tierra de las piezas de borde sin girar (ver Pieces.SIDES).
+const SIDES := Pieces.SIDES
 ## Abismo según los lados que dan a algo que no es abismo (sin girar, en el orden de SIDES).
 const ABYSS := 9
 const PIT := 10
@@ -49,16 +50,14 @@ func _initialize() -> void:
 	var root := (load(LEVEL) as PackedScene).instantiate()
 	var grid := root.get_node("GridMap") as GridMap
 	grid.mesh_library = KIT
-	var ids := {}
-	for id in KIT.get_item_list():
-		ids[KIT.get_item_name(id)] = id
+	var ids := Pieces.ids_by_name(KIT)
 	var changed := 0
 	var borders := _borders(grid, ids)
-	borders.merge(_abyss(grid, ids))
+	borders.merge(Pieces.pits(grid, ids, ABYSS, ABYSS_PIECES, [PIT]))
 	borders.merge(_fences(grid, ids))
 	borders.merge(_outside(grid, ids))
 	for cell: Vector3i in borders:
-		grid.set_cell_item(cell, borders[cell][0], _turn(grid, borders[cell][1]))
+		grid.set_cell_item(cell, borders[cell][0], Pieces.turn(grid, borders[cell][1]))
 		changed += 1
 	for cell in grid.get_used_cells():
 		var item := grid.get_cell_item(cell)
@@ -67,7 +66,7 @@ func _initialize() -> void:
 		var roll := _hash(cell / 3 if item == 6 else cell)
 		var orientation := grid.get_cell_item_orientation(cell)
 		if item in SPIN:
-			orientation = _turn(grid, _hash(cell + Vector3i(7, 0, 3)) * 4.0 as int)
+			orientation = Pieces.turn(grid, _hash(cell + Vector3i(7, 0, 3)) * 4.0 as int)
 		var target := item
 		for rule: Array in RULES[item]:
 			if roll < rule[1]:
@@ -76,15 +75,10 @@ func _initialize() -> void:
 		if target != item or orientation != grid.get_cell_item_orientation(cell):
 			grid.set_cell_item(cell, target, orientation)
 			changed += 1
-	var text := FileAccess.get_file_as_string(LEVEL)
-	var cells := var_to_str(grid.get("data")["cells"])
-	text = RegEx.create_from_string('"cells": PackedInt32Array\\([^)]*\\)').sub(text, '"cells": ' + cells)
-	text = text.replace('path="res://data/kits/gray_kit.tres"', 'path="%s"' % KIT.resource_path)
-	text = text.replace('uid="uid://cgeqghyjch420" path="%s"' % KIT.resource_path, 'path="%s"' % KIT.resource_path)
-	var file := FileAccess.open(LEVEL, FileAccess.WRITE)
-	file.store_string(text)
-	var err := file.get_error()
-	file.close()
+	var err := Pieces.save_cells(LEVEL, grid, {
+		'path="res://data/kits/gray_kit.tres"': 'path="%s"' % KIT.resource_path,
+		'uid="uid://cgeqghyjch420" path="%s"' % KIT.resource_path: 'path="%s"' % KIT.resource_path,
+	})
 	print("vary_overworld: ", error_string(err), " · ", changed, " celdas")
 	root.free()
 	quit(0 if err == OK else 1)
@@ -109,25 +103,14 @@ func _borders(grid: GridMap, ids: Dictionary) -> Dictionary:
 	return result
 
 
-## Cada celda de abismo (base o variante; los huecos no, que no tienen colisión) → la pieza con pared hacia donde no sigue el abismo.
-func _abyss(grid: GridMap, ids: Dictionary) -> Dictionary:
-	var abyss := _ids(ids, [ABYSS], ABYSS_PIECES)
-	var result := {}
-	for cell in grid.get_used_cells():
-		if grid.get_cell_item(cell) in abyss:
-			var walls := _sides(grid, cell, abyss + [PIT]).map(func(open: bool) -> bool: return not open)
-			result[cell] = _match(ids, ABYSS_PIECES, walls, [ABYSS, 0])
-	return result
-
-
 ## Cada pirca → recta, esquina, final o poste según dónde sigue la pirca; las rectas salen rotas a veces.
 func _fences(grid: GridMap, ids: Dictionary) -> Dictionary:
-	var fences := _ids(ids, [FENCE, ids["Pirca rota"]], FENCE_PIECES)
+	var fences := Pieces.family(ids, [FENCE, ids["Pirca rota"]], FENCE_PIECES)
 	var result := {}
 	for cell in grid.get_used_cells():
 		if grid.get_cell_item(cell) in fences:
 			var fallback := [FENCE, 0 if grid.get_cell_item_orientation(cell) == 0 else 1]
-			var choice: Array = _match(ids, FENCE_PIECES, _sides(grid, cell, fences), fallback)
+			var choice: Array = Pieces.match(ids, FENCE_PIECES, Pieces.sides(grid, cell, fences), fallback)
 			if choice[0] == FENCE and _hash(cell) < BROKEN_FENCE:
 				choice[0] = ids["Pirca rota"]
 			result[cell] = choice
@@ -158,36 +141,6 @@ func _outside(grid: GridMap, ids: Dictionary) -> Dictionary:
 					result[cell] = [ids[entry[0]], _hash(cell + Vector3i(3, 0, 9)) * 4.0 as int]
 					break
 	return result
-
-
-func _ids(ids: Dictionary, base: Array, pieces: Dictionary) -> Array:
-	var result := base.duplicate()
-	for piece: String in pieces:
-		result.append(ids[piece])
-	return result
-
-
-func _sides(grid: GridMap, cell: Vector3i, items: Array) -> Array:
-	var result := []
-	for k in 4:
-		result.append(grid.get_cell_item(cell + SIDES[k]) in items)
-	return result
-
-
-## La pieza (y cuántos cuartos de giro) cuyo patrón de lados, girado, es sides.
-func _match(ids: Dictionary, pieces: Dictionary, sides: Array, fallback: Array) -> Array:
-	for piece: String in pieces:
-		for turn in 4:
-			var turned := []
-			for k in 4:
-				turned.append(pieces[piece][(k - turn + 4) % 4])
-			if turned == sides:
-				return [ids[piece], turn]
-	return fallback
-
-
-func _turn(grid: GridMap, quarters: int) -> int:
-	return grid.get_orthogonal_index_from_basis(Basis(Vector3.UP, PI / 2.0 * quarters))
 
 
 func _hash(cell: Vector3i) -> float:

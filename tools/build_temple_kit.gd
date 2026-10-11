@@ -15,6 +15,7 @@ const BASE := {
 	2: ["columna", STONE],
 	3: ["escalon", STONE],
 	4: ["paso_puerta", STONE],
+	10: ["hueco", FLOOR],
 }
 ## Variantes (ids desde 11, en este orden): nombre → [id base de donde copia colisión y navmesh, pieza, material].
 const VARIANTS := {
@@ -24,6 +25,11 @@ const VARIANTS := {
 	"Piso arena": [0, "piso_arena", FLOOR],
 	"Pared nicho": [1, "pared_nicho", STONE],
 	"Pared ojo": [1, "pared_ojo", STONE],
+	"Hueco borde": [10, "hueco_borde", FLOOR],
+	"Hueco esquina": [10, "hueco_esquina", FLOOR],
+	"Hueco pasillo": [10, "hueco_pasillo", FLOOR],
+	"Hueco punta": [10, "hueco_punta", FLOOR],
+	"Hueco pozo": [10, "hueco_pozo", FLOOR],
 }
 
 var _scene: Node

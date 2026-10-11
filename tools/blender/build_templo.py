@@ -417,5 +417,38 @@ piece("jefe_parpado", 24, jefe_parpado)
 piece("jefe_mano", 25, jefe_mano)
 piece("piso_arena", 26, piso_arena)
 
+
+# --- hueco (lados: 0 = -X, 1 = -Y, 2 = +X, 3 = +Y; las variantes giran en tools/vary_temple.gd) ---
+
+PIT_DEPTH = -3.0
+
+
+def pit_wall(p, side):
+	"""Muro de piedra del lado side, de 0 a PIT_DEPTH, que se oscurece hacia abajo; tapa los costados del piso vecino."""
+	before = set(p.bm.faces)
+	epi.stone_wall(p, PIT_DEPTH, -0.06, swatch=STONE, rows=(0.4, 0.15), widths=(0.55, 0.4), mortar="gris_5", depth=0.05,
+		vary=0.06, sides=[Vector((0, -1, 0))], size=(1.0, 0.06))
+	lip = p.box(-1.0, 1.0, -0.06, 0.06, -0.06, 0.0)
+	p.paint(lip, STONE, "LIGHT", vary=0.03)
+	faces = [f for f in p.bm.faces if f not in before]
+	p.paint_bands([f for f in faces if f.calc_center_median().z < -1.0], [(-2.0, -1.0, "gris_4", "MID"), (PIT_DEPTH - 1, -2.0, "gris_5", "DARK")])
+	p.transform(faces, Matrix.Rotation((side + 1) * math.pi / 2, 4, "Z") @ Matrix.Translation((0, 0.94, 0)))
+
+
+def hueco(sides):
+	def build(p):
+		p.paint(p.box(-1, 1, -1, 1, PIT_DEPTH - 0.1, PIT_DEPTH), "gris_5", "DARK")
+		for side in sides:
+			pit_wall(p, side)
+	return build
+
+
+piece("hueco", 27, hueco(()))
+piece("hueco_borde", 28, hueco((0,)))
+piece("hueco_esquina", 29, hueco((0, 1)))
+piece("hueco_pasillo", 30, hueco((0, 2)))
+piece("hueco_punta", 31, hueco((0, 1, 2)))
+piece("hueco_pozo", 32, hueco((0, 1, 2, 3)))
+
 epi.layout(kit, columns=7, spacing=3.5)
 epi.save("templo")
