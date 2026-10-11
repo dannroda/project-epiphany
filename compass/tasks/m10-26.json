@@ -2,21 +2,21 @@
   "checklist": [
     {
       "detail": "Controls_Gamepad: mando dibujado, cajas a los costados con líneas; Controls_Keyboard: grupos Moverse, Combate, Ítems, Menús. Íconos de Kenney Input Prompts.",
-      "done": false,
+      "done": true,
       "text": "Escena desde el mockup"
     },
     {
       "detail": "Cada caja lee los eventos de su acción (InputPrompts), así si cambia una asignación la pantalla la sigue.",
-      "done": false,
+      "done": true,
       "text": "Textos desde el InputMap"
     },
     {
       "detail": "Título › Opciones › Controles abre la pantalla completa, por MenuStack. En la pausa, la pestaña Sistema (mockups Pause_System y Pause_System_Keyboard): a la izquierda Guardar, Cargar, separador, Opciones y Volver al título; a la derecha los controles básicos del dispositivo en uso, con Y (T en teclado) para ver el otro. Guardar muestra la partida cargada y pide confirmar: siempre guarda sobre esa ranura (Pause_System_Save). Cargar muestra el último checkpoint (Auto) y lo último guardado a mano de la partida cargada; se elige con el stick (checkpoint por defecto) y A confirma (Pause_System_Load). B vuelve a los controles.",
-      "done": false,
+      "done": true,
       "text": "Entradas"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Tests y GDD"
     }
   ],
@@ -28,12 +28,12 @@
   "order": 60,
   "priority": "medium",
   "refs": [],
-  "status": "doing",
+  "status": "review",
   "tags": [
     "ui",
     "input"
   ],
   "test": "",
   "title": "Pantalla de controles",
-  "updated_at": "2026-10-11T08:08:43.703Z"
+  "updated_at": "2026-10-11T08:19:01.945Z"
 }

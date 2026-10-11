@@ -1,0 +1,193 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://src/ui/controls/control_row.tscn" id="1_row"]
+[ext_resource type="Texture2D" path="res://assets/kenney_input-prompts/Keyboard & Mouse/Vector/mouse_move.svg" id="2_mouse"]
+
+[sub_resource type="StyleBoxFlat" id="Box"]
+content_margin_left = 20.0
+content_margin_top = 14.0
+content_margin_right = 20.0
+content_margin_bottom = 14.0
+bg_color = Color(0.0588, 0.0706, 0.0863, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.1725, 0.2, 0.2431, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="KeyboardDiagram" type="HBoxContainer"]
+custom_minimum_size = Vector2(1040, 0)
+offset_right = 1040.0
+offset_bottom = 400.0
+mouse_filter = 2
+theme_override_constants/separation = 24
+
+[node name="Left" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+
+[node name="Move" type="PanelContainer" parent="Left"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("Box")
+
+[node name="Rows" type="VBoxContainer" parent="Left/Move"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Left/Move/Rows"]
+layout_mode = 2
+theme_type_variation = &"Caps"
+text = "CONTROLS_GROUP_MOVE"
+
+[node name="Row0" parent="Left/Move/Rows" instance=ExtResource("1_row")]
+layout_mode = 2
+gamepad = false
+actions = Array[StringName]([&"move_forward", &"move_left", &"move_backward", &"move_right"])
+
+[node name="Label" parent="Left/Move/Rows/Row0" index="0"]
+text = "CONTROLS_MOVE"
+
+[node name="Row1" parent="Left/Move/Rows" instance=ExtResource("1_row")]
+layout_mode = 2
+gamepad = false
+actions = Array[StringName]([&"dodge"])
+
+[node name="Label" parent="Left/Move/Rows/Row1" index="0"]
+text = "CONTROLS_DODGE"
+
+[node name="Row2" parent="Left/Move/Rows" instance=ExtResource("1_row")]
+layout_mode = 2
+gamepad = false
+fixed_icon = ExtResource("2_mouse")
+
+[node name="Label" parent="Left/Move/Rows/Row2" index="0"]
+text = "CONTROLS_LOOK"
+
+[node name="Menus" type="PanelContainer" parent="Left"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("Box")
+
+[node name="Rows" type="VBoxContainer" parent="Left/Menus"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Left/Menus/Rows"]
+layout_mode = 2
+theme_type_variation = &"Caps"
+text = "CONTROLS_GROUP_MENUS"
+
+[node name="Row0" parent="Left/Menus/Rows" instance=ExtResource("1_row")]
+layout_mode = 2
+gamepad = false
+actions = Array[StringName]([&"pause"])
+
+[node name="Label" parent="Left/Menus/Rows/Row0" index="0"]
+text = "CONTROLS_PAUSE"
+
+[node name="Row1" parent="Left/Menus/Rows" instance=ExtResource("1_row")]
+layout_mode = 2
+gamepad = false
+actions = Array[StringName]([&"map"])
+
+[node name="Label" parent="Left/Menus/Rows/Row1" index="0"]
+text = "CONTROLS_MAP"
+
+[node name="Right" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+
+[node name="Combat" type="PanelContainer" parent="Right"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("Box")
+
+[node name="Rows" type="VBoxContainer" parent="Right/Combat"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Right/Combat/Rows"]
+layout_mode = 2
+theme_type_variation = &"Caps"
+text = "CONTROLS_GROUP_COMBAT"
+
+[node name="Row0" parent="Right/Combat/Rows" instance=ExtResource("1_row")]
+layout_mode = 2
+gamepad = false
+actions = Array[StringName]([&"attack"])
+
+[node name="Label" parent="Right/Combat/Rows/Row0" index="0"]
+text = "CONTROLS_ATTACK"
+
+[node name="Row1" parent="Right/Combat/Rows" instance=ExtResource("1_row")]
+layout_mode = 2
+gamepad = false
+actions = Array[StringName]([&"block"])
+
+[node name="Label" parent="Right/Combat/Rows/Row1" index="0"]
+text = "CONTROLS_BLOCK"
+
+[node name="Row2" parent="Right/Combat/Rows" instance=ExtResource("1_row")]
+layout_mode = 2
+gamepad = false
+actions = Array[StringName]([&"z-lock"])
+
+[node name="Label" parent="Right/Combat/Rows/Row2" index="0"]
+text = "CONTROLS_LOCK"
+
+[node name="Row3" parent="Right/Combat/Rows" instance=ExtResource("1_row")]
+layout_mode = 2
+gamepad = false
+actions = Array[StringName]([&"target_prev", &"target_next"])
+
+[node name="Label" parent="Right/Combat/Rows/Row3" index="0"]
+text = "CONTROLS_SWITCH_TARGET"
+
+[node name="Items" type="PanelContainer" parent="Right"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("Box")
+
+[node name="Rows" type="VBoxContainer" parent="Right/Items"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Right/Items/Rows"]
+layout_mode = 2
+theme_type_variation = &"Caps"
+text = "CONTROLS_GROUP_ITEMS"
+
+[node name="Row0" parent="Right/Items/Rows" instance=ExtResource("1_row")]
+layout_mode = 2
+gamepad = false
+actions = Array[StringName]([&"item_1"])
+
+[node name="Label" parent="Right/Items/Rows/Row0" index="0"]
+text = "CONTROLS_ITEM_X"
+
+[node name="Row1" parent="Right/Items/Rows" instance=ExtResource("1_row")]
+layout_mode = 2
+gamepad = false
+actions = Array[StringName]([&"item_2"])
+
+[node name="Label" parent="Right/Items/Rows/Row1" index="0"]
+text = "CONTROLS_ITEM_Y"
+
+[node name="Row2" parent="Right/Items/Rows" instance=ExtResource("1_row")]
+layout_mode = 2
+gamepad = false
+actions = Array[StringName]([&"item_ring"])
+
+[node name="Label" parent="Right/Items/Rows/Row2" index="0"]
+text = "CONTROLS_RING_HOLD"
+
+[node name="Row3" parent="Right/Items/Rows" instance=ExtResource("1_row")]
+layout_mode = 2
+gamepad = false
+actions = Array[StringName]([&"interact"])
+
+[node name="Label" parent="Right/Items/Rows/Row3" index="0"]
+text = "CONTROLS_INTERACT"

@@ -714,3 +714,157 @@ msgstr "Llenar"
 
 msgid "PROMPT_DRINK"
 msgstr "Beber"
+
+# Controles y pestaña Sistema (10.29)
+msgid "CONTROLS_TITLE"
+msgstr "Controles"
+
+msgid "CONTROLS_GAMEPAD"
+msgstr "Mando"
+
+msgid "CONTROLS_KEYBOARD"
+msgstr "Teclado y mouse"
+
+msgid "CONTROLS_BASIC"
+msgstr "Controles básicos"
+
+msgid "CONTROLS_SEE_KEYBOARD"
+msgstr "Ver teclado y mouse"
+
+msgid "CONTROLS_SEE_GAMEPAD"
+msgstr "Ver mando"
+
+msgid "CONTROLS_HINT_DEVICE"
+msgstr "Mando / teclado"
+
+msgid "CONTROLS_HINT_KEYBOARD"
+msgstr "Teclado"
+
+msgid "CONTROLS_HINT_GAMEPAD"
+msgstr "Mando"
+
+msgid "CONTROLS_LOCK"
+msgstr "Fijar objetivo"
+
+msgid "CONTROLS_RING"
+msgstr "Anillo de ítems"
+
+msgid "CONTROLS_RING_NOTE"
+msgstr "(mantener) elegir con el stick"
+
+msgid "CONTROLS_RING_HOLD"
+msgstr "Anillo de ítems (mantener)"
+
+msgid "CONTROLS_MAP"
+msgstr "Mapa"
+
+msgid "CONTROLS_MOVE"
+msgstr "Moverse"
+
+msgid "CONTROLS_DPAD"
+msgstr "Cruceta"
+
+msgid "CONTROLS_DPAD_NOTE"
+msgstr "libre por ahora"
+
+msgid "CONTROLS_BLOCK"
+msgstr "Bloquear con el escudo"
+
+msgid "CONTROLS_DODGE"
+msgstr "Rodar"
+
+msgid "CONTROLS_PAUSE"
+msgstr "Pausa"
+
+msgid "CONTROLS_PAUSE_NOTE"
+msgstr "(co-op) en otro mando: sumarse · mantener: salir"
+
+msgid "CONTROLS_ITEM_X"
+msgstr "Ítem en X"
+
+msgid "CONTROLS_ITEM_Y"
+msgstr "Ítem en Y"
+
+msgid "CONTROLS_INTERACT"
+msgstr "Hablar, abrir, levantar"
+
+msgid "CONTROLS_ATTACK"
+msgstr "Atacar"
+
+msgid "CONTROLS_LOOK"
+msgstr "Mirar y apuntar"
+
+msgid "CONTROLS_LOOK_NOTE"
+msgstr "(con objetivo fijado) cambiar de objetivo"
+
+msgid "CONTROLS_SWITCH_TARGET"
+msgstr "Cambiar de objetivo"
+
+msgid "CONTROLS_GROUP_MOVE"
+msgstr "MOVERSE"
+
+msgid "CONTROLS_GROUP_COMBAT"
+msgstr "COMBATE"
+
+msgid "CONTROLS_GROUP_ITEMS"
+msgstr "ÍTEMS"
+
+msgid "CONTROLS_GROUP_MENUS"
+msgstr "MENÚS"
+
+msgid "OPTIONS_SHOW_CONTROLS"
+msgstr "Ver controles"
+
+msgid "SYSTEM_SAVE"
+msgstr "Guardar"
+
+msgid "SYSTEM_LOAD"
+msgstr "Cargar"
+
+msgid "SYSTEM_OPTIONS"
+msgstr "Opciones"
+
+msgid "SYSTEM_TO_TITLE"
+msgstr "Volver al título"
+
+msgid "SYSTEM_LAST_SAVED"
+msgstr "Último guardado: {place} · {ago}"
+
+msgid "SYSTEM_AGO_NOW"
+msgstr "recién"
+
+msgid "SYSTEM_AGO_MIN"
+msgstr "hace {n} min"
+
+msgid "SYSTEM_AGO_HOURS"
+msgstr "hace {n} h"
+
+msgid "SYSTEM_SAVE_HEADING"
+msgstr "GUARDAR"
+
+msgid "SYSTEM_SAVE_QUESTION"
+msgstr "¿Guardar sobre la partida {slot}?"
+
+msgid "SYSTEM_SAVE_NOTE"
+msgstr "Siempre guarda sobre la partida cargada. Para empezar otra, Nueva partida desde el título."
+
+msgid "SYSTEM_LOAD_HEADING"
+msgstr "CARGAR"
+
+msgid "SYSTEM_LOAD_CHECKPOINT"
+msgstr "ÚLTIMO CHECKPOINT"
+
+msgid "SYSTEM_LOAD_SAVED"
+msgstr "ÚLTIMO GUARDADO"
+
+msgid "SYSTEM_LOAD_QUESTION_AUTO"
+msgstr "¿Volver al último checkpoint?"
+
+msgid "SYSTEM_LOAD_QUESTION_SLOT"
+msgstr "¿Cargar lo último guardado?"
+
+msgid "SYSTEM_LOAD_NOTE"
+msgstr "Se pierde lo que pasó desde ese punto."
+
+msgid "SYSTEM_TITLE_QUESTION"
+msgstr "¿Volver al título? Se pierde lo que no guardaste."

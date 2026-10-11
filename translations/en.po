@@ -898,3 +898,157 @@ msgstr "Whoever carries it in a bottle withstands its blows better."
 msgctxt "get_holy_water_1"
 msgid "Recupera toda la vida y por un rato los golpes lastiman la mitad. La vertiente la vuelve a llenar cuando quieras."
 msgstr "Restores all health, and for a while hits deal half damage. The spring refills it whenever you like."
+
+# Controles y pestaña Sistema (10.29)
+msgid "CONTROLS_TITLE"
+msgstr "Controls"
+
+msgid "CONTROLS_GAMEPAD"
+msgstr "Controller"
+
+msgid "CONTROLS_KEYBOARD"
+msgstr "Keyboard and mouse"
+
+msgid "CONTROLS_BASIC"
+msgstr "Basic controls"
+
+msgid "CONTROLS_SEE_KEYBOARD"
+msgstr "Show keyboard and mouse"
+
+msgid "CONTROLS_SEE_GAMEPAD"
+msgstr "Show controller"
+
+msgid "CONTROLS_HINT_DEVICE"
+msgstr "Controller / keyboard"
+
+msgid "CONTROLS_HINT_KEYBOARD"
+msgstr "Keyboard"
+
+msgid "CONTROLS_HINT_GAMEPAD"
+msgstr "Controller"
+
+msgid "CONTROLS_LOCK"
+msgstr "Lock on"
+
+msgid "CONTROLS_RING"
+msgstr "Item ring"
+
+msgid "CONTROLS_RING_NOTE"
+msgstr "(hold) pick with the stick"
+
+msgid "CONTROLS_RING_HOLD"
+msgstr "Item ring (hold)"
+
+msgid "CONTROLS_MAP"
+msgstr "Map"
+
+msgid "CONTROLS_MOVE"
+msgstr "Move"
+
+msgid "CONTROLS_DPAD"
+msgstr "D-pad"
+
+msgid "CONTROLS_DPAD_NOTE"
+msgstr "unused for now"
+
+msgid "CONTROLS_BLOCK"
+msgstr "Block with the shield"
+
+msgid "CONTROLS_DODGE"
+msgstr "Roll"
+
+msgid "CONTROLS_PAUSE"
+msgstr "Pause"
+
+msgid "CONTROLS_PAUSE_NOTE"
+msgstr "(co-op) on another controller: join · hold: leave"
+
+msgid "CONTROLS_ITEM_X"
+msgstr "Item on X"
+
+msgid "CONTROLS_ITEM_Y"
+msgstr "Item on Y"
+
+msgid "CONTROLS_INTERACT"
+msgstr "Talk, open, lift"
+
+msgid "CONTROLS_ATTACK"
+msgstr "Attack"
+
+msgid "CONTROLS_LOOK"
+msgstr "Look and aim"
+
+msgid "CONTROLS_LOOK_NOTE"
+msgstr "(locked on) switch target"
+
+msgid "CONTROLS_SWITCH_TARGET"
+msgstr "Switch target"
+
+msgid "CONTROLS_GROUP_MOVE"
+msgstr "MOVEMENT"
+
+msgid "CONTROLS_GROUP_COMBAT"
+msgstr "COMBAT"
+
+msgid "CONTROLS_GROUP_ITEMS"
+msgstr "ITEMS"
+
+msgid "CONTROLS_GROUP_MENUS"
+msgstr "MENUS"
+
+msgid "OPTIONS_SHOW_CONTROLS"
+msgstr "View controls"
+
+msgid "SYSTEM_SAVE"
+msgstr "Save"
+
+msgid "SYSTEM_LOAD"
+msgstr "Load"
+
+msgid "SYSTEM_OPTIONS"
+msgstr "Options"
+
+msgid "SYSTEM_TO_TITLE"
+msgstr "Back to title"
+
+msgid "SYSTEM_LAST_SAVED"
+msgstr "Last saved: {place} · {ago}"
+
+msgid "SYSTEM_AGO_NOW"
+msgstr "just now"
+
+msgid "SYSTEM_AGO_MIN"
+msgstr "{n} min ago"
+
+msgid "SYSTEM_AGO_HOURS"
+msgstr "{n} h ago"
+
+msgid "SYSTEM_SAVE_HEADING"
+msgstr "SAVE"
+
+msgid "SYSTEM_SAVE_QUESTION"
+msgstr "Save over file {slot}?"
+
+msgid "SYSTEM_SAVE_NOTE"
+msgstr "Always saves over the loaded file. To start another, use New game on the title screen."
+
+msgid "SYSTEM_LOAD_HEADING"
+msgstr "LOAD"
+
+msgid "SYSTEM_LOAD_CHECKPOINT"
+msgstr "LAST CHECKPOINT"
+
+msgid "SYSTEM_LOAD_SAVED"
+msgstr "LAST SAVE"
+
+msgid "SYSTEM_LOAD_QUESTION_AUTO"
+msgstr "Go back to the last checkpoint?"
+
+msgid "SYSTEM_LOAD_QUESTION_SLOT"
+msgstr "Load the last save?"
+
+msgid "SYSTEM_LOAD_NOTE"
+msgstr "Anything since that point is lost."
+
+msgid "SYSTEM_TITLE_QUESTION"
+msgstr "Back to the title? Anything unsaved is lost."

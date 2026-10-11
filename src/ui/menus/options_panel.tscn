@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b7rlfpwm07n5n"]
 
 [ext_resource type="Script" uid="uid://cjku230tmriil" path="res://src/ui/menus/options_panel.gd" id="1_panel"]
+[ext_resource type="PackedScene" path="res://src/ui/menus/menu_item_small.tscn" id="2_item"]
 
 [sub_resource type="ButtonGroup" id="LockGroup"]
 
@@ -101,6 +102,12 @@ text = "OPTIONS_VIBRATION"
 [node name="vibration" type="CheckBox" parent="Controls/Vibration" unique_id=230248994]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="ShowControls" parent="Controls" instance=ExtResource("2_item")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+text = "OPTIONS_SHOW_CONTROLS"
 
 [node name="LanguageHeading" type="Label" parent="Controls"]
 custom_minimum_size = Vector2(0, 52)

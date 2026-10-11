@@ -34,6 +34,7 @@ func _ready() -> void:
 	var picker := %ui_scale as OptionButton
 	picker.select(picker.get_item_index(Settings.get_value(&"ui_scale")))
 	picker.item_selected.connect(func(index: int) -> void: Settings.set_value(&"ui_scale", picker.get_item_id(index)))
+	%ShowControls.pressed.connect(ControlsScreen.open)
 
 
 func focus_default() -> void:

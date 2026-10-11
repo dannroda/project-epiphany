@@ -2449,13 +2449,13 @@ Recorrido para revisar de a una las tareas en Revisión, en el orden de una part
 
 Como la de Basic Controls de TotK: el mando dibujado con una línea a cada botón y lo que hace (mockups Controls_Gamepad y Controls_Keyboard). LB/RB cambia entre mando y teclado/mouse. Se abre desde el título (Opciones › Controles); en la pausa va dentro de la pestaña Sistema, junto a Guardar/Cargar/Opciones/Volver al título (Pause_System).
 
-- [ ] Escena desde el mockup
+- [x] Escena desde el mockup
   Controls_Gamepad: mando dibujado, cajas a los costados con líneas; Controls_Keyboard: grupos Moverse, Combate, Ítems, Menús. Íconos de Kenney Input Prompts.
-- [ ] Textos desde el InputMap
+- [x] Textos desde el InputMap
   Cada caja lee los eventos de su acción (InputPrompts), así si cambia una asignación la pantalla la sigue.
-- [ ] Entradas
+- [x] Entradas
   Título › Opciones › Controles abre la pantalla completa, por MenuStack. En la pausa, la pestaña Sistema (mockups Pause_System y Pause_System_Keyboard): a la izquierda Guardar, Cargar, separador, Opciones y Volver al título; a la derecha los controles básicos del dispositivo en uso, con Y (T en teclado) para ver el otro. Guardar muestra la partida cargada y pide confirmar: siempre guarda sobre esa ranura (Pause_System_Save). Cargar muestra el último checkpoint (Auto) y lo último guardado a mano de la partida cargada; se elige con el stick (checkpoint por defecto) y A confirma (Pause_System_Load). B vuelve a los controles.
-- [ ] Tests y GDD
+- [x] Tests y GDD
 
 ## M11 — Pulido: contenido y feel  (20/55)
 
@@ -3382,11 +3382,13 @@ Modelar en Blender el terreno del overworld (pasto, caminos, piso de plaza, acan
 - [ ] Aberturas en acantilado de 1 y 3 celdas
   1 celda = gating (muro agrietado o reja), 3 = paso libre. Ver [[gdd#overworld-layout]].
 - [ ] Escalones y rampa (tierra y piedra)
+  Escalón: muro de piedra con lajas encastradas arriba (hecho). La escalinata está en el .blend pero no en el kit, y el overworld no tiene ningún desnivel que pida rampa: falta decidir si hacen falta.
 - [x] Abismo: borde recto, esquinas, fondo oscuro/niebla
   Hecho: abismo, abismo_borde/esquina/pasillo/punta/pozo en build_terreno_overworld.py (paredes de roca de 3 m con bandas pasto → acantilado → gris → casi negro, fondo oscuro). vary_overworld.gd elige la pieza y el giro según los vecinos; test_abyss_walls_face_the_ground. La niebla del fondo queda para Godot si hace falta.
 - [x] Cerco: recto, esquina, final, poste, roto
   Hecho: pirca, pirca_esquina, pirca_final (hasta el borde de la celda), pirca_poste y pirca_rota. vary_overworld.gd elige la pieza y el giro según dónde sigue la pirca; test_fence_ends_have_a_post.
-- [ ] Borde del mundo (árboles densos / acantilado alto)
+- [x] Borde del mundo (árboles densos / acantilado alto)
+  Hecho: meseta (monte, monte_ichu/piedras/flores + queñoas y cardones arriba) alrededor de la grilla, hasta donde ve la cámara; al sur solo baja. Sin colisión. +200 draw calls, mismo frame.
 - [x] Kit del overworld para el GridMap
   Como build_temple_kit.gd: mismos ítems, colisiones y navegación que el kit gris, mallas nuevas.
 

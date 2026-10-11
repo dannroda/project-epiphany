@@ -1,8 +1,10 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://src/ui/menus/system_page.gd" id="1_page"]
-[ext_resource type="PackedScene" path="res://src/ui/menus/options_panel.tscn" id="2_panel"]
-[ext_resource type="PackedScene" path="res://src/ui/menus/menu_item_small.tscn" id="3_item"]
+[ext_resource type="PackedScene" path="res://src/ui/menus/menu_item_small.tscn" id="2_item"]
+[ext_resource type="PackedScene" path="res://src/ui/controls/controls_view.tscn" id="3_view"]
+[ext_resource type="PackedScene" path="res://src/ui/title/slot_card.tscn" id="4_card"]
+[ext_resource type="PackedScene" path="res://src/ui/title/auto_slot_card.tscn" id="5_auto"]
 
 [node name="Sistema" type="Control"]
 layout_mode = 3
@@ -13,22 +15,216 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_page")
 
-[node name="Column" type="VBoxContainer" parent="."]
+[node name="Columns" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 28
 
-[node name="OptionsPanel" parent="Column" instance=ExtResource("2_panel")]
-unique_name_in_owner = true
+[node name="Menu" type="VBoxContainer" parent="Columns"]
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
-size_flags_vertical = 3
+theme_override_constants/separation = 8
 
-[node name="SaveAndQuit" parent="Column" instance=ExtResource("3_item")]
+[node name="Save" parent="Columns/Menu" instance=ExtResource("2_item")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
-text = "SYSTEM_SAVE_QUIT"
+text = "SYSTEM_SAVE"
+
+[node name="Load" parent="Columns/Menu" instance=ExtResource("2_item")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+text = "SYSTEM_LOAD"
+
+[node name="LastSaved" type="Label" parent="Columns/Menu"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"HintSmall"
+autowrap_mode = 3
+
+[node name="Rule" type="HSeparator" parent="Columns/Menu"]
+layout_mode = 2
+theme_override_constants/separation = 28
+
+[node name="Options" parent="Columns/Menu" instance=ExtResource("2_item")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+text = "SYSTEM_OPTIONS"
+
+[node name="ToTitle" parent="Columns/Menu" instance=ExtResource("2_item")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+text = "SYSTEM_TO_TITLE"
+
+[node name="Panel" type="PanelContainer" parent="Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"Card"
+
+[node name="ControlsPanel" type="VBoxContainer" parent="Columns/Panel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="HBoxContainer" parent="Columns/Panel/ControlsPanel"]
+layout_mode = 2
+
+[node name="ViewTitle" type="Label" parent="Columns/Panel/ControlsPanel/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"Caps"
+text = "CONTROLS_BASIC"
+
+[node name="Toggle" type="HBoxContainer" parent="Columns/Panel/ControlsPanel/Header"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ToggleIcon" type="TextureRect" parent="Columns/Panel/ControlsPanel/Header/Toggle"]
+unique_name_in_owner = true
+self_modulate = Color(0.8509804, 0.6431373, 0.25490198, 1)
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ToggleLabel" type="Label" parent="Columns/Panel/ControlsPanel/Header/Toggle"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Value"
+text = "CONTROLS_SEE_KEYBOARD"
+
+[node name="Center" type="CenterContainer" parent="Columns/Panel/ControlsPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="View" parent="Columns/Panel/ControlsPanel/Center" instance=ExtResource("3_view")]
+unique_name_in_owner = true
+layout_mode = 2
+view_scale = 0.7
+
+[node name="SavePanel" type="VBoxContainer" parent="Columns/Panel"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Title" type="Label" parent="Columns/Panel/SavePanel"]
+layout_mode = 2
+theme_type_variation = &"Caps"
+text = "SYSTEM_SAVE_HEADING"
+
+[node name="SaveCard" parent="Columns/Panel/SavePanel" instance=ExtResource("4_card")]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 2
+heart_size = Vector2(22, 20)
+filled_height = 84.0
+
+[node name="SaveQuestion" type="Label" parent="Columns/Panel/SavePanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"OptionLabel"
+horizontal_alignment = 1
+
+[node name="Buttons" type="HBoxContainer" parent="Columns/Panel/SavePanel"]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="SaveConfirm" type="Button" parent="Columns/Panel/SavePanel/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 48)
+layout_mode = 2
+text = "SYSTEM_SAVE"
+
+[node name="SaveCancel" type="Button" parent="Columns/Panel/SavePanel/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 48)
+layout_mode = 2
+text = "HINT_CANCEL"
+
+[node name="Spacer" type="Control" parent="Columns/Panel/SavePanel"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Note" type="Label" parent="Columns/Panel/SavePanel"]
+layout_mode = 2
+theme_type_variation = &"HintSmall"
+text = "SYSTEM_SAVE_NOTE"
+autowrap_mode = 3
+
+[node name="LoadPanel" type="VBoxContainer" parent="Columns/Panel"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Columns/Panel/LoadPanel"]
+layout_mode = 2
+theme_type_variation = &"Caps"
+text = "SYSTEM_LOAD_HEADING"
+
+[node name="CheckpointTitle" type="Label" parent="Columns/Panel/LoadPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"HintSmall"
+text = "SYSTEM_LOAD_CHECKPOINT"
+
+[node name="LoadAuto" parent="Columns/Panel/LoadPanel" instance=ExtResource("5_auto")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SavedTitle" type="Label" parent="Columns/Panel/LoadPanel"]
+layout_mode = 2
+theme_type_variation = &"HintSmall"
+text = "SYSTEM_LOAD_SAVED"
+
+[node name="LoadSlot" parent="Columns/Panel/LoadPanel" instance=ExtResource("4_card")]
+unique_name_in_owner = true
+layout_mode = 2
+heart_size = Vector2(22, 20)
+filled_height = 84.0
+
+[node name="LoadQuestion" type="Label" parent="Columns/Panel/LoadPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"OptionLabel"
+horizontal_alignment = 1
+
+[node name="Buttons" type="HBoxContainer" parent="Columns/Panel/LoadPanel"]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="LoadConfirm" type="Button" parent="Columns/Panel/LoadPanel/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 48)
+layout_mode = 2
+text = "SYSTEM_LOAD"
+
+[node name="LoadCancel" type="Button" parent="Columns/Panel/LoadPanel/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 48)
+layout_mode = 2
+text = "HINT_CANCEL"
+
+[node name="Spacer" type="Control" parent="Columns/Panel/LoadPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Note" type="Label" parent="Columns/Panel/LoadPanel"]
+layout_mode = 2
+theme_type_variation = &"HintSmall"
+text = "SYSTEM_LOAD_NOTE"
+autowrap_mode = 3

@@ -43,6 +43,12 @@ func focus_default() -> void:
 			return
 
 
+## Atrás lo resuelve primero la pestaña (Sistema vuelve de Guardar/Cargar a los controles).
+func cancel() -> bool:
+	var page := pages.get_child(current)
+	return page.has_method(&"cancel") and page.cancel()
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"ui_tab_left"):
 		show_page(current - 1)

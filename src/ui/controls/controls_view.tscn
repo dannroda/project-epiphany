@@ -1,0 +1,21 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/ui/controls/controls_view.gd" id="1_view"]
+[ext_resource type="PackedScene" path="res://src/ui/controls/gamepad_diagram.tscn" id="2_pad"]
+[ext_resource type="PackedScene" path="res://src/ui/controls/keyboard_diagram.tscn" id="3_keys"]
+
+[node name="ControlsView" type="Control"]
+custom_minimum_size = Vector2(1040, 440)
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("1_view")
+
+[node name="Gamepad" parent="." instance=ExtResource("2_pad")]
+layout_mode = 0
+
+[node name="Keyboard" parent="." instance=ExtResource("3_keys")]
+visible = false
+layout_mode = 0
+offset_top = 20.0
+offset_bottom = 420.0

@@ -25,13 +25,21 @@ const MOUSE_BUTTONS := {
 
 
 static func icon(action: StringName, gamepad: bool) -> Texture2D:
+	var all := icons(action, gamepad)
+	return all[0] if not all.is_empty() else null
+
+
+## Todos los del dispositivo, en el orden del InputMap (Pausa: Esc y Tab).
+static func icons(action: StringName, gamepad: bool) -> Array[Texture2D]:
+	var found: Array[Texture2D] = []
 	for event in InputMap.action_get_events(action):
 		var path := _path_for(event, gamepad)
 		if not path.is_empty() and ResourceLoader.exists(path):
 			if not _filled.has(path):
 				_filled[path] = _fill_holes(load(path))
-			return _filled[path]
-	return null
+			if not found.has(_filled[path]):
+				found.append(_filled[path])
+	return found
 
 
 static func icon_for_current(action: StringName) -> Texture2D:
