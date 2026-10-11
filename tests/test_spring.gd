@@ -121,6 +121,9 @@ func test_pool_reflects_the_water_on_the_walls_and_blocks_walking_in() -> void:
 	assert_true(spill.normal_fade > 0.0 and not spill.canvas.material.get_shader_parameter(&"lit_inside"), "el piso de alrededor sin encimarse con el agua ni con la pared")
 	assert_true(spill.size.x > pool.size.x and spill.size.z > pool.size.y, "el decal cubre la pileta y su borde")
 	assert_true((pool.block.shape as BoxShape3D).size.x >= pool.size.x, "no se puede entrar al agua")
+	var fall := pool.get_parent().get_node(^"Waterfall") as Node3D
+	var local := pool.to_local(fall.global_position)
+	assert_true(absf(local.x) < pool.size.x / 2.0 and absf(local.z) < pool.size.y / 2.0, "la cascada cae en la pileta")
 	state.reset()
 
 

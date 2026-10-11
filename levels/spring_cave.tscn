@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dl3q3n8t4t58t" path="res://src/world/water/water_pool.tscn" id="8_pool"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/estalagmitas.res" id="9_stal"]
 [ext_resource type="PackedScene" path="res://src/world/spring.tscn" id="11_spring"]
+[ext_resource type="PackedScene" path="res://src/world/water/waterfall.tscn" id="14_fall"]
 [ext_resource type="PackedScene" path="res://src/world/tablet.tscn" id="12_tablet"]
 [ext_resource type="Resource" uid="uid://b353kh0linjkb" path="res://data/dialogue/overworld.dialogue" id="13_dialogue"]
 
@@ -58,6 +59,9 @@ shape = SubResource("RoomShape")
 [node name="WaterPool" parent="." unique_id=1646859759 instance=ExtResource("8_pool")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
 size = Vector2(6, 4)
+
+[node name="Waterfall" parent="." instance=ExtResource("14_fall")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.12, -6.85)
 
 [node name="Spring" parent="." unique_id=511576325 instance=ExtResource("11_spring")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5)

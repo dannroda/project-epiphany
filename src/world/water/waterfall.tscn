@@ -1,0 +1,57 @@
+[gd_scene format=3]
+
+[ext_resource type="Shader" path="res://src/world/water/waterfall.gdshader" id="1_fall"]
+[ext_resource type="Shader" path="res://src/world/water/waterfall_splash.gdshader" id="2_splash"]
+
+[sub_resource type="ShaderMaterial" id="Fall"]
+render_priority = 2
+shader = ExtResource("1_fall")
+
+[sub_resource type="QuadMesh" id="FallMesh"]
+material = SubResource("Fall")
+size = Vector2(0.7, 2.6)
+subdivide_depth = 12
+
+[sub_resource type="ShaderMaterial" id="Splash"]
+render_priority = 2
+shader = ExtResource("2_splash")
+
+[sub_resource type="PlaneMesh" id="SplashMesh"]
+material = SubResource("Splash")
+size = Vector2(1.6, 1.0)
+
+[sub_resource type="StandardMaterial3D" id="Drop"]
+shading_mode = 0
+albedo_color = Color(0.93, 0.98, 1, 1)
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="DropMesh"]
+material = SubResource("Drop")
+size = Vector2(0.06, 0.06)
+
+[node name="Waterfall" type="Node3D"]
+
+[node name="Fall" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+cast_shadow = 0
+mesh = SubResource("FallMesh")
+
+[node name="Splash" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0.35)
+cast_shadow = 0
+mesh = SubResource("SplashMesh")
+
+[node name="Drops" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0.15)
+cast_shadow = 0
+amount = 24
+lifetime = 0.55
+mesh = SubResource("DropMesh")
+emission_shape = 3
+emission_box_extents = Vector3(0.3, 0.02, 0.08)
+direction = Vector3(0, 1, 0.5)
+spread = 40.0
+initial_velocity_min = 1.2
+initial_velocity_max = 2.2
+scale_amount_min = 0.6
+scale_amount_max = 1.4
