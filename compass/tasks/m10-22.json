@@ -1,7 +1,7 @@
 {
   "checklist": [
     {
-      "detail": "Exporta con el renderer Compatibility (rendering_method.web = gl_compatibility); 'Extensions Support' encendido para cargar LimboAI (GDExtension), sin threads para que corra en itch sin COOP/COEP. Agregarlo a tools/build.sh.",
+      "detail": "Preset 'Web' en export_presets.cfg (2026-10-11): sin threads (corre en itch sin COOP/COEP), extensiones encendidas para LimboAI, renderer Compatibility. Falta agregarlo a tools/build.sh. Primera prueba local: anda mejor de lo esperado; se pierde lo que solo existe en Forward+.",
       "done": false,
       "text": "Preset Web"
     },
@@ -35,9 +35,9 @@
     }
   ],
   "milestone": "m10",
-  "notes": "Skills: `godot:godot-export`.",
+  "notes": "Skills: `godot:godot-export`. Prioridad muy baja (2026-10-11): el escritorio va primero. El preset Web ya existe y la primera prueba local anduvo bien; lo pendiente es sumar la web a build.sh, reemplazos para lo que solo existe en Forward+ y publicar.",
   "order": 22,
-  "priority": "medium",
+  "priority": "low",
   "refs": [],
   "status": "todo",
   "tags": [
@@ -45,5 +45,5 @@
   ],
   "test": "Abrir el build en Chrome y Firefox desde itch: carga en un tiempo razonable, se juega el overworld y el templo hasta el jefe con gamepad y teclado, el guardado sobrevive a recargar la página y se ve parecido al build de escritorio.",
   "title": "Build web",
-  "updated_at": "2026-10-11T02:59:29.341Z"
+  "updated_at": "2026-10-11T03:24:21.147Z"
 }
