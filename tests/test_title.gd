@@ -58,3 +58,18 @@ func test_loading_from_the_title_fades_back_in() -> void:
 	saves.delete_slot(0)
 	saves.delete_slot(1)
 	tree.root.get_node(^"GameState").reset()
+
+
+func test_sideways_keeps_the_focus_on_the_menu() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.change_scene_to_file(TITLE)
+	await tree.scene_changed
+	await tree.process_frame
+	var title := tree.current_scene
+	for item in ["Continue", "Load", "NewGame", "Options", "Quit"]:
+		var button := title.get_node("%" + item) as Button
+		for side in [SIDE_LEFT, SIDE_RIGHT]:
+			var to := button.find_valid_focus_neighbor(side)
+			assert_true(to == null or to == button, "%s no pierde el foco hacia los costados" % item)
+	var disabled := (title.get_node(^"%Load") as Button).disabled
+	assert_eq((title.get_node(^"%Load") as Button).focus_mode == Control.FOCUS_NONE, disabled, "una opción deshabilitada no toma el foco")

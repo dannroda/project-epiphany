@@ -53,6 +53,8 @@ func _refresh() -> void:
 	var none := SaveManager.latest_slot() < 0
 	continue_item.disabled = none
 	load_item.disabled = none
+	for item: Button in [continue_item, load_item]:
+		item.focus_mode = FOCUS_NONE if none else FOCUS_ALL
 
 
 func _go(action: Callable) -> void:

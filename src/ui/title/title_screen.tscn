@@ -76,26 +76,36 @@ theme_override_constants/separation = 10
 [node name="Continue" parent="Menu" unique_id=840081313 instance=ExtResource("4_item")]
 unique_name_in_owner = true
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_right = NodePath(".")
 text = "Continuar"
 
 [node name="Load" parent="Menu" unique_id=1156117820 instance=ExtResource("4_item")]
 unique_name_in_owner = true
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_right = NodePath(".")
 text = "Cargar partida"
 
 [node name="NewGame" parent="Menu" unique_id=1156117819 instance=ExtResource("4_item")]
 unique_name_in_owner = true
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_right = NodePath(".")
 text = "Nueva partida"
 
 [node name="Options" parent="Menu" unique_id=2052812604 instance=ExtResource("4_item")]
 unique_name_in_owner = true
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_right = NodePath(".")
 text = "Opciones"
 
 [node name="Quit" parent="Menu" unique_id=785654314 instance=ExtResource("4_item")]
 unique_name_in_owner = true
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_right = NodePath(".")
 text = "Salir"
 
 [node name="DebugScenarios" type="Button" parent="." unique_id=1257324364]
