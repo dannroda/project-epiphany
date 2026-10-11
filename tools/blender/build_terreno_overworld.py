@@ -268,10 +268,22 @@ def pirca_esquina(p):
 
 def pirca_final(p):
 	ground(p)
-	pirca_run(p, -1.0, 0.0)
-	post = p.box(-0.05, 0.3, -0.28, 0.28, 0.0, 1.05, taper=0.04)
+	pirca_run(p, -1.0, 0.65)
+	post = p.box(0.55, 0.92, -0.28, 0.28, 0.0, 1.05, taper=0.04)
 	p.jitter(post, 0.03)
 	p.paint(post, "acantilado", vary=0.1)
+
+
+def pirca_poste(p):
+	ground(p)
+	post = p.box(-0.22, 0.22, -0.22, 0.22, 0.0, 1.05, taper=0.05)
+	p.jitter(post, 0.03)
+	p.paint(post, "acantilado", vary=0.1)
+	cap = p.box(-0.27, 0.27, -0.27, 0.27, 1.05, 1.15, taper=0.03)
+	p.jitter(cap, 0.02)
+	p.paint(cap, "piedra", vary=0.1)
+	for _ in range(2):
+		small_rock(p, p.rng.uniform(-0.5, 0.5), p.rng.choice([-0.45, 0.45]), p.rng.uniform(0.08, 0.13))
 
 
 def pirca_rota(p):
@@ -285,6 +297,7 @@ piece("pirca", 16, pirca)
 piece("pirca_esquina", 17, pirca_esquina)
 piece("pirca_final", 18, pirca_final)
 piece("pirca_rota", 19, pirca_rota)
+piece("pirca_poste", 21, pirca_poste)
 
 # --- abismo (lados: 0 = -X, 1 = -Y, 2 = +X, 3 = +Y; las variantes giran en vary_overworld.gd) ---
 

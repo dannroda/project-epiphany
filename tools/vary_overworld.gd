@@ -11,7 +11,6 @@ const RULES := {
 	0: [["Tierra piedras", 0.12]],
 	5: [["Pasto flores", 0.12], ["Pasto piedras", 0.2], ["Pasto ichu", 0.3], ["Pasto tola", 0.34]],
 	6: [["Risco", 0.3]],
-	7: [["Pirca rota", 0.3]],
 	8: [["Queñoa chica", 0.3], ["Cardón", 0.42], ["Cardón brazos", 0.5]],
 }
 ## Los que pueden girar sin que se note la costura.
@@ -30,6 +29,15 @@ const ABYSS_PIECES := {
 	"Abismo punta": [true, true, true, false],
 	"Abismo pozo": [true, true, true, true],
 }
+## Pirca según los lados donde sigue otra pirca; con tres o cuatro queda recta.
+const FENCE := 7
+const FENCE_PIECES := {
+	"Cerco": [true, false, true, false],
+	"Pirca esquina": [false, false, true, true],
+	"Pirca final": [true, false, false, false],
+	"Pirca poste": [false, false, false, false],
+}
+const BROKEN_FENCE := 0.3
 
 
 func _initialize() -> void:
@@ -42,6 +50,7 @@ func _initialize() -> void:
 	var changed := 0
 	var borders := _borders(grid, ids)
 	borders.merge(_abyss(grid, ids))
+	borders.merge(_fences(grid, ids))
 	for cell: Vector3i in borders:
 		grid.set_cell_item(cell, borders[cell][0], _turn(grid, borders[cell][1]))
 		changed += 1
@@ -96,25 +105,53 @@ func _borders(grid: GridMap, ids: Dictionary) -> Dictionary:
 
 ## Cada celda de abismo (base o variante; los huecos no, que no tienen colisión) → la pieza con pared hacia donde no sigue el abismo.
 func _abyss(grid: GridMap, ids: Dictionary) -> Dictionary:
-	var abyss := [ABYSS]
-	for piece: String in ABYSS_PIECES:
-		abyss.append(ids[piece])
+	var abyss := _ids(ids, [ABYSS], ABYSS_PIECES)
 	var result := {}
 	for cell in grid.get_used_cells():
-		if not grid.get_cell_item(cell) in abyss:
-			continue
-		var walls := []
-		for k in 4:
-			walls.append(not grid.get_cell_item(cell + SIDES[k]) in abyss + [PIT])
-		result[cell] = [ABYSS, 0]
-		for piece: String in ABYSS_PIECES:
-			for turn in 4:
-				var turned := []
-				for k in 4:
-					turned.append(ABYSS_PIECES[piece][(k - turn + 4) % 4])
-				if turned == walls:
-					result[cell] = [ids[piece], turn]
+		if grid.get_cell_item(cell) in abyss:
+			var walls := _sides(grid, cell, abyss + [PIT]).map(func(open: bool) -> bool: return not open)
+			result[cell] = _match(ids, ABYSS_PIECES, walls, [ABYSS, 0])
 	return result
+
+
+## Cada pirca → recta, esquina, final o poste según dónde sigue la pirca; las rectas salen rotas a veces.
+func _fences(grid: GridMap, ids: Dictionary) -> Dictionary:
+	var fences := _ids(ids, [FENCE, ids["Pirca rota"]], FENCE_PIECES)
+	var result := {}
+	for cell in grid.get_used_cells():
+		if grid.get_cell_item(cell) in fences:
+			var fallback := [FENCE, 0 if grid.get_cell_item_orientation(cell) == 0 else 1]
+			var choice: Array = _match(ids, FENCE_PIECES, _sides(grid, cell, fences), fallback)
+			if choice[0] == FENCE and _hash(cell) < BROKEN_FENCE:
+				choice[0] = ids["Pirca rota"]
+			result[cell] = choice
+	return result
+
+
+func _ids(ids: Dictionary, base: Array, pieces: Dictionary) -> Array:
+	var result := base.duplicate()
+	for piece: String in pieces:
+		result.append(ids[piece])
+	return result
+
+
+func _sides(grid: GridMap, cell: Vector3i, items: Array) -> Array:
+	var result := []
+	for k in 4:
+		result.append(grid.get_cell_item(cell + SIDES[k]) in items)
+	return result
+
+
+## La pieza (y cuántos cuartos de giro) cuyo patrón de lados, girado, es sides.
+func _match(ids: Dictionary, pieces: Dictionary, sides: Array, fallback: Array) -> Array:
+	for piece: String in pieces:
+		for turn in 4:
+			var turned := []
+			for k in 4:
+				turned.append(pieces[piece][(k - turn + 4) % 4])
+			if turned == sides:
+				return [ids[piece], turn]
+	return fallback
 
 
 func _turn(grid: GridMap, quarters: int) -> int:

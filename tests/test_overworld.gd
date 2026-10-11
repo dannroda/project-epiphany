@@ -100,3 +100,23 @@ func test_abyss_walls_face_the_ground() -> void:
 			assert_eq(wall, not open, "abismo %s lado %d" % [cell, k])
 	assert_true(cells > 0, "el overworld tiene abismo")
 	root.free()
+
+
+func test_fence_ends_have_a_post() -> void:
+	var root := (load(LEVEL) as PackedScene).instantiate()
+	var grid := root.get_node(^"GridMap") as GridMap
+	var lib := grid.mesh_library
+	var sides: Array[Vector3i] = [Vector3i(-1, 0, 0), Vector3i(0, 0, 1), Vector3i(1, 0, 0), Vector3i(0, 0, -1)]
+	var fence := func(item: int) -> bool: return item != -1 and (lib.get_item_name(item) == "Cerco" or lib.get_item_name(item).begins_with("Pirca"))
+	var ends := 0
+	for cell in grid.get_used_cells():
+		if not fence.call(grid.get_cell_item(cell)):
+			continue
+		var neighbors := 0
+		for side in sides:
+			neighbors += 1 if fence.call(grid.get_cell_item(cell + side)) else 0
+		if neighbors < 2:
+			ends += 1
+			assert_true(lib.get_item_name(grid.get_cell_item(cell)) in ["Pirca final", "Pirca poste"], "pirca %s termina con poste" % cell)
+	assert_true(ends > 0, "el overworld tiene puntas de pirca")
+	root.free()

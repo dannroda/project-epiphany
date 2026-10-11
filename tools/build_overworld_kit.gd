@@ -58,6 +58,7 @@ const VARIANTS := {
 	"Abismo pasillo": [9, ["terreno_overworld/abismo_pasillo"]],
 	"Abismo punta": [9, ["terreno_overworld/abismo_punta"]],
 	"Abismo pozo": [9, ["terreno_overworld/abismo_pozo"]],
+	"Pirca poste": [7, ["terreno_overworld/pirca_poste"]],
 }
 
 var _scenes := {}
