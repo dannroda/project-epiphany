@@ -868,3 +868,9 @@ msgstr "Se pierde lo que pasó desde ese punto."
 
 msgid "SYSTEM_TITLE_QUESTION"
 msgstr "¿Volver al título? Se pierde lo que no guardaste."
+
+msgid "OPTIONS_MAX_FPS"
+msgstr "Tope de cuadros por segundo"
+
+msgid "OPTIONS_MAX_FPS_UNLIMITED"
+msgstr "Sin límite"

@@ -8,11 +8,11 @@
   "order": 55,
   "priority": "high",
   "refs": [],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "rendimiento"
   ],
   "test": "",
   "title": "Tope de FPS",
-  "updated_at": "2026-10-11T05:42:42.995Z"
+  "updated_at": "2026-10-11T08:27:45.529Z"
 }

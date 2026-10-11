@@ -1052,3 +1052,9 @@ msgstr "Anything since that point is lost."
 
 msgid "SYSTEM_TITLE_QUESTION"
 msgstr "Back to the title? Anything unsaved is lost."
+
+msgid "OPTIONS_MAX_FPS"
+msgstr "Frame rate cap"
+
+msgid "OPTIONS_MAX_FPS_UNLIMITED"
+msgstr "Unlimited"

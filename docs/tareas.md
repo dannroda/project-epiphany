@@ -2368,7 +2368,7 @@ La suite de tests tarda unos 9 minutos en serie. Correrla en varios procesos hea
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 10.24 Tope de FPS · Pendiente
+### 10.24 Tope de FPS · En curso
 
 **Prioridad:** alta · **Etiquetas:** `rendimiento`
 
@@ -3501,7 +3501,7 @@ Modelar el equipo y los objetos del inventario (espada, escudos, cota reforzada,
 
 **Bloqueada por:** 12.1 Guía de estilo: paleta, escala y pieza de prueba
 
-### 12.7 Kit del templo propio · En curso
+### 12.7 Kit del templo propio · Revisión
 
 **Prioridad:** baja · **Etiquetas:** `arte`, `mazmorra`
 

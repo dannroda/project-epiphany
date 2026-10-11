@@ -20,7 +20,7 @@ func _restore(settings: Node) -> void:
 func test_every_option_persists_and_applies() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var settings := _settings()
-	var changes := {&"lock_toggle": true, &"mouse_aim": false, &"stick_sensitivity": 80, &"flick": false, &"vibration": false, &"music": 30, &"sfx": 40, &"ambience": 0, &"shake": false, &"ui_scale": 125, &"language": "en"}
+	var changes := {&"lock_toggle": true, &"mouse_aim": false, &"stick_sensitivity": 80, &"flick": false, &"vibration": false, &"music": 30, &"sfx": 40, &"ambience": 0, &"shake": false, &"ui_scale": 125, &"max_fps": 120, &"language": "en"}
 	for key in changes:
 		settings.set_value(key, changes[key])
 	settings.values = settings.DEFAULTS.duplicate()

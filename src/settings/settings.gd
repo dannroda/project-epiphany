@@ -19,6 +19,8 @@ const DEFAULTS := {
 	&"shake": true,
 	&"minimap": true,
 	&"ui_scale": 100,
+	## Tope de cuadros por segundo (0 = sin límite): con un monitor de 200 Hz el juego dibujaba 200 sin necesidad.
+	&"max_fps": 60,
 	&"language": "",
 	## Co-op, a prueba (13.9): "ring" = cada uno elige con su anillo; "shared" = el menú de pausa con un cursor por player.
 	&"coop_item_menu": "ring",
@@ -94,6 +96,7 @@ func _apply() -> void:
 	get_tree().root.content_scale_factor = float(get_value(&"ui_scale")) / 100.0
 	TranslationServer.set_locale(language())
 	if DisplayServer.get_name() != "headless":
+		Engine.max_fps = get_value(&"max_fps")
 		var mode := DisplayServer.WINDOW_MODE_FULLSCREEN if get_value(&"fullscreen") else DisplayServer.WINDOW_MODE_WINDOWED
 		if DisplayServer.window_get_mode() != mode:
 			DisplayServer.window_set_mode(mode)

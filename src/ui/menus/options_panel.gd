@@ -31,9 +31,10 @@ func _ready() -> void:
 		radio.toggled.connect(func(on: bool) -> void:
 			if on:
 				Settings.set_value(&"language", language))
-	var picker := %ui_scale as OptionButton
-	picker.select(picker.get_item_index(Settings.get_value(&"ui_scale")))
-	picker.item_selected.connect(func(index: int) -> void: Settings.set_value(&"ui_scale", picker.get_item_id(index)))
+	for key: StringName in [&"ui_scale", &"max_fps"]:
+		var picker := get_node("%" + key) as OptionButton
+		picker.select(picker.get_item_index(Settings.get_value(key)))
+		picker.item_selected.connect(func(index: int) -> void: Settings.set_value(key, picker.get_item_id(index)))
 	%ShowControls.pressed.connect(ControlsScreen.open)
 
 
