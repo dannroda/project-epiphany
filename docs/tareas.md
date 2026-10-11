@@ -3814,10 +3814,10 @@ Pasar el overworld real al estilo de la variante 6 de 12.14: bordes de andenes, 
   Fila ★ en https://claude.ai/artifact/DeQ6YbE2gQqyQwRMFux2KH.
 - [x] Meterlo en el overworld
   Celdas de terreno vacías (mallas vacías, sin colisión), piezas que quedan sin su piso, terreno en navmesh_source y re-bake, terreno en scenery del mapa.
-- [ ] Decoración sobre el terreno
-  decorate_levels.gd: paredes y alturas desde el terreno nuevo, no desde el GridMap.
-- [ ] Tests del overworld al día
-  test_player_hole, test_overworld (abismo), test_map, test_zone_veil y los que caminan el overworld.
+- [x] Decoración sobre el terreno
+  decorate_levels.gd lee las paredes de overworld_kit.tres (mismos ids); la decoración sale igual y el piso es plano alrededor.
+- [x] Tests del overworld al día
+  Al día (ede155e de la otra sesión): test_player_hole mira los materiales de Terreno, test_abyss_walls_face_the_ground nuevo. Suite completa pasa.
 
 **Bloquea a:** 11.61 Pluma en el overworld: lugares de salto
 
