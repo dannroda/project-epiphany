@@ -3428,7 +3428,7 @@ El overworld es el hub: la pluma (11.35, templo) tiene que abrir ahí cosas y ca
 
 **Prueba:** Sin la pluma, la pieza de corazón de la pradera y los otros lugares no se alcanzan; con la pluma, sí. Ningún lugar obliga a saltar una pirca o un muro.
 
-**Bloqueada por:** 12.14 Prueba: overworld menos cuadrado
+**Bloqueada por:** 12.14 Prueba: overworld menos cuadrado; 12.15 Overworld orgánico con lomas (variante 6)
 
 **Relacionadas:** 11.35 Saltar: ítem tipo Pluma de Roc
 
@@ -3807,6 +3807,19 @@ Probar en una misma zona chica de prueba tres formas de que el overworld no se v
 **Prioridad:** alta · **Etiquetas:** `arte`
 
 Pasar el overworld real al estilo de la variante 6 de 12.14: bordes de andenes, riscos, abismo y camino con contornos orgánicos (no siguen la grilla) y el pasto con lomas suaves, sin perder colisiones, navegación ni los lugares de 12.3.
+
+- [x] Generador desde el GridMap
+  tools/export_terreno_overworld.gd → tools/terreno_overworld.json → tools/blender/build_terreno_organico.py → assets/epiphany/terreno_organico.glb (rocas, suelo con colisión, plantas juntadas por pedazo).
+- [ ] Vista previa aprobada por el usuario
+  Fila ★ en https://claude.ai/artifact/DeQ6YbE2gQqyQwRMFux2KH.
+- [ ] Meterlo en el overworld
+  Celdas de terreno vacías (mallas vacías, sin colisión), piezas que quedan sin su piso, terreno en navmesh_source y re-bake, terreno en scenery del mapa.
+- [ ] Decoración sobre el terreno
+  decorate_levels.gd: paredes y alturas desde el terreno nuevo, no desde el GridMap.
+- [ ] Tests del overworld al día
+  test_player_hole, test_overworld (abismo), test_map, test_zone_veil y los que caminan el overworld.
+
+**Bloquea a:** 11.61 Pluma en el overworld: lugares de salto
 
 ### 12.16 Terreno con marching cubes en Godot (después del MVP) · Pendiente
 

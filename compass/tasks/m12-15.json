@@ -1,5 +1,31 @@
 {
-  "checklist": [],
+  "checklist": [
+    {
+      "detail": "tools/export_terreno_overworld.gd → tools/terreno_overworld.json → tools/blender/build_terreno_organico.py → assets/epiphany/terreno_organico.glb (rocas, suelo con colisión, plantas juntadas por pedazo).",
+      "done": true,
+      "text": "Generador desde el GridMap"
+    },
+    {
+      "detail": "Fila ★ en https://claude.ai/artifact/DeQ6YbE2gQqyQwRMFux2KH.",
+      "done": false,
+      "text": "Vista previa aprobada por el usuario"
+    },
+    {
+      "detail": "Celdas de terreno vacías (mallas vacías, sin colisión), piezas que quedan sin su piso, terreno en navmesh_source y re-bake, terreno en scenery del mapa.",
+      "done": false,
+      "text": "Meterlo en el overworld"
+    },
+    {
+      "detail": "decorate_levels.gd: paredes y alturas desde el terreno nuevo, no desde el GridMap.",
+      "done": false,
+      "text": "Decoración sobre el terreno"
+    },
+    {
+      "detail": "test_player_hole, test_overworld (abismo), test_map, test_zone_veil y los que caminan el overworld.",
+      "done": false,
+      "text": "Tests del overworld al día"
+    }
+  ],
   "code": "12.15",
   "created_at": "2026-10-11T18:43:52.621Z",
   "description": "Pasar el overworld real al estilo de la variante 6 de 12.14: bordes de andenes, riscos, abismo y camino con contornos orgánicos (no siguen la grilla) y el pasto con lomas suaves, sin perder colisiones, navegación ni los lugares de 12.3.",
@@ -20,5 +46,5 @@
   ],
   "test": "",
   "title": "Overworld orgánico con lomas (variante 6)",
-  "updated_at": "2026-10-11T18:43:59.963Z"
+  "updated_at": "2026-10-11T18:52:34.570Z"
 }
