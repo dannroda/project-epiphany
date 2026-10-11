@@ -3,8 +3,6 @@ extends BTAction
 ## Arquero: tensa (el aviso: brilla y sigue al objetivo), dispara una flecha y se queda quieto un momento.
 
 const ARROW := preload("res://src/items/arrow/arrow.tscn")
-## La animación de KayKit tensa el arco de costado: el modelo gira para que la flecha salga hacia el objetivo.
-const BOW_YAW_OFFSET := deg_to_rad(62.0)
 
 @export var target_var: StringName = &"target"
 @export var draw_time := 1.0
@@ -44,7 +42,6 @@ func _tick(_delta: float) -> Status:
 
 
 func _exit() -> void:
-	agent.model.rotation = Vector3.ZERO
 	var bow = _bow()
 	if bow:
 		bow.draw = 0.0
@@ -53,7 +50,6 @@ func _exit() -> void:
 
 func _aim_at(target: Node3D) -> void:
 	agent.face_towards(target.global_position)
-	agent.model.rotation = Vector3(0.0, -BOW_YAW_OFFSET, 0.0)
 
 
 func _shoot(target: Node3D) -> void:
