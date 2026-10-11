@@ -2,12 +2,12 @@
   "checklist": [
     {
       "detail": "Las dos manos en alto con el objeto (como Carry, con IK horneado en build_carry_anims.py o un script hermano); entrada y salida cortas.",
-      "done": false,
+      "done": true,
       "text": "Animación"
     },
     {
       "detail": "La caja de item get muestra al player en la pose con el objeto arriba y un destello; sonido propio.",
-      "done": false,
+      "done": true,
       "text": "Integración"
     }
   ],
@@ -18,12 +18,12 @@
   "order": 48,
   "priority": "medium",
   "refs": [],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "personajes",
     "feel"
   ],
   "test": "Abrir un cofre grande: el player levanta el ítem con las dos manos, se ve el objeto arriba y vuelve a su pose al cerrar la caja.",
   "title": "Pose de item get",
-  "updated_at": "2026-10-10T23:13:28.159Z"
+  "updated_at": "2026-10-11T02:24:39.260Z"
 }

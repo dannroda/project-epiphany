@@ -525,6 +525,7 @@ func test_marks_blast_whoever_stays_even_blocking() -> void:
 		hand.set_state(BossHand.State.DOWN)
 	boss.target = player
 	player.health.invulnerability_time = 0.0
+	player.health.reset(40)
 	var full := player.health.current
 	boss._mark_floor()
 	var marks := boss.get_children().filter(func(node: Node) -> bool: return node is Decal and node.visible)

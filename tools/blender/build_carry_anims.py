@@ -1,5 +1,5 @@
 # Arma assets/epiphany/anim/carry.glb: animaciones de cargar algo sobre la cabeza para el Rig_Medium de KayKit
-# (Carry_Lift, Carry_Idle, Carry_Walk, Carry_Throw). Parten de Idle_A y Walking_A; los brazos van por IK a puntos
+# (Carry_Lift, Carry_Idle, Carry_Walk, Carry_Throw) y de levantar un ítem recién conseguido (ItemGet_Raise, _Hold, _Lower). Parten de Idle_A y Walking_A; los brazos van por IK a puntos
 # fijos y el torso se dobla a mano (las piernas siguen la base). Se hornea todo a claves FK por hueso. El frente del rig mira a -Y.
 # Con la cabeza chibi las manos no llegan arriba del casco: quedan levantadas a los costados de la cabeza y el objeto
 # va apoyado arriba. Después: tools/build_carry_library.gd arma player/animation/libs/Carry.res.
@@ -146,6 +146,33 @@ def throw_pose(f, chest):
 	}
 
 
+ITEM_HANDS = Vector((0.6, -0.4, 1.72))
+ITEM_LEAN = 0.12
+
+
+def raise_pose(f, chest):
+	return {
+		"hands": lerp_keys([(0.0, Vector((0.3, -0.05, 0.75))), (0.35, Vector((0.32, -0.3, 0.9))), (0.8, ITEM_HANDS + Vector((0, 0, 0.06))), (1.0, ITEM_HANDS)], f),
+		"arms": lerp_keys([(0.0, 0.0), (0.3, 1.0)], f),
+		"bend": {"spine": (Vector((1, 0, 0)), lerp_keys([(0.0, 0.0), (0.35, -0.18), (0.8, ITEM_LEAN + 0.04), (1.0, ITEM_LEAN)], f))},
+	}
+
+
+def hold_pose(f, chest):
+	return {
+		"hands": ITEM_HANDS + (chest.to_translation() - REST_CHEST),
+		"bend": {"spine": (Vector((1, 0, 0)), ITEM_LEAN)},
+	}
+
+
+def lower_pose(f, chest):
+	return {
+		"hands": lerp_keys([(0.0, ITEM_HANDS), (1.0, Vector((0.3, -0.05, 0.75)))], f),
+		"arms": lerp_keys([(0.0, 1.0), (1.0, 0.0)], f),
+		"bend": {"spine": (Vector((1, 0, 0)), lerp_keys([(0.0, ITEM_LEAN), (1.0, 0.0)], f))},
+	}
+
+
 rig = load_rig()
 rig.animation_data_create()
 ik = add_ik(rig)
@@ -165,6 +192,9 @@ made = [
 	bake(rig, ik, "Carry_Idle", idle, frames_of(idle), carry_pose, loop=True),
 	bake(rig, ik, "Carry_Walk", walk, frames_of(walk), carry_pose, loop=True),
 	bake(rig, ik, "Carry_Throw", idle, int(0.6 * FPS), throw_pose),
+	bake(rig, ik, "ItemGet_Raise", idle, int(0.4 * FPS), raise_pose),
+	bake(rig, ik, "ItemGet_Hold", idle, frames_of(idle), hold_pose, loop=True),
+	bake(rig, ik, "ItemGet_Lower", idle, int(0.3 * FPS), lower_pose),
 ]
 for b in rig.pose.bones:
 	for c in list(b.constraints):

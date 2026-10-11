@@ -104,6 +104,15 @@ animation = &"Carry/Carry_Walk"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_carrythrow"]
 animation = &"Carry/Carry_Throw"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_itemraise"]
+animation = &"Carry/ItemGet_Raise"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_itemhold"]
+animation = &"Carry/ItemGet_Hold"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_itemlower"]
+animation = &"Carry/ItemGet_Lower"
+
 [sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_carryphase"]
 xfade_time = 0.12
 input_0/name = "Lift"
@@ -122,6 +131,18 @@ input_3/name = "Throw"
 input_3/auto_advance = false
 input_3/break_loop_at_end = false
 input_3/reset = true
+input_4/name = "ItemRaise"
+input_4/auto_advance = true
+input_4/break_loop_at_end = false
+input_4/reset = true
+input_5/name = "ItemHold"
+input_5/auto_advance = false
+input_5/break_loop_at_end = false
+input_5/reset = true
+input_6/name = "ItemLower"
+input_6/auto_advance = false
+input_6/break_loop_at_end = false
+input_6/reset = true
 
 [sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_peicu"]
 xfade_time = 0.3
@@ -313,11 +334,17 @@ nodes/CarryWalk/node = SubResource("AnimationNodeAnimation_carrywalk")
 nodes/CarryWalk/position = Vector2(2453.3333, 1600)
 nodes/CarryThrow/node = SubResource("AnimationNodeAnimation_carrythrow")
 nodes/CarryThrow/position = Vector2(2453.3333, 1750)
+nodes/ItemRaise/node = SubResource("AnimationNodeAnimation_itemraise")
+nodes/ItemRaise/position = Vector2(2453.3333, 1900)
+nodes/ItemHold/node = SubResource("AnimationNodeAnimation_itemhold")
+nodes/ItemHold/position = Vector2(2453.3333, 2050)
+nodes/ItemLower/node = SubResource("AnimationNodeAnimation_itemlower")
+nodes/ItemLower/position = Vector2(2453.3333, 2200)
 nodes/CarryPhase/node = SubResource("AnimationNodeTransition_carryphase")
 nodes/CarryPhase/position = Vector2(2800, 1400)
 nodes/CarryBlend/node = SubResource("AnimationNodeBlend2_carry")
 nodes/CarryBlend/position = Vector2(3100, 1000)
-node_connections = [&"output", 0, &"Dodge", &"Movement", 0, &"Idle", &"Movement", 1, &"Running", &"Attack", 0, &"GuardBlend", &"Attack", 1, &"AttackType", &"Combat", 0, &"Movement", &"Combat", 1, &"Targeting", &"GuardBlend", 0, &"Combat", &"GuardBlend", 1, &"MeleeBlocking", &"AttackType", 0, &"SwordSlice", &"AttackType", 1, &"ShieldThrust", &"Hurt", 0, &"Attack", &"Hurt", 1, &"HurtAnim+ Engine capabi", &"BlockHit", 0, &"Hurt", &"BlockHit", 1, &"BlockHitAnim", &"DodgeDir", 0, &"DodgeForward", &"DodgeDir", 1, &"DodgeBackward", &"DodgeDir", 2, &"DodgeLeft", &"DodgeDir", 3, &"DodgeRight", &"Dodge", 0, &"CarryBlend", &"Dodge", 1, &"DodgeDir", &"UseItem", 0, &"BlockHit", &"UseItem", 1, &"ItemAnim", &"BowPhase", 0, &"BowDraw", &"BowPhase", 1, &"BowIdle", &"BowPhase", 2, &"BowRelease", &"BowBlend", 0, &"UseItem", &"BowBlend", 1, &"BowPhase", &"CarryPhase", 0, &"CarryLift", &"CarryPhase", 1, &"CarryIdle", &"CarryPhase", 2, &"CarryWalk", &"CarryPhase", 3, &"CarryThrow", &"CarryBlend", 0, &"BowBlend", &"CarryBlend", 1, &"CarryPhase"]
+node_connections = [&"output", 0, &"Dodge", &"Movement", 0, &"Idle", &"Movement", 1, &"Running", &"Attack", 0, &"GuardBlend", &"Attack", 1, &"AttackType", &"Combat", 0, &"Movement", &"Combat", 1, &"Targeting", &"GuardBlend", 0, &"Combat", &"GuardBlend", 1, &"MeleeBlocking", &"AttackType", 0, &"SwordSlice", &"AttackType", 1, &"ShieldThrust", &"Hurt", 0, &"Attack", &"Hurt", 1, &"HurtAnim+ Engine capabi", &"BlockHit", 0, &"Hurt", &"BlockHit", 1, &"BlockHitAnim", &"DodgeDir", 0, &"DodgeForward", &"DodgeDir", 1, &"DodgeBackward", &"DodgeDir", 2, &"DodgeLeft", &"DodgeDir", 3, &"DodgeRight", &"Dodge", 0, &"CarryBlend", &"Dodge", 1, &"DodgeDir", &"UseItem", 0, &"BlockHit", &"UseItem", 1, &"ItemAnim", &"BowPhase", 0, &"BowDraw", &"BowPhase", 1, &"BowIdle", &"BowPhase", 2, &"BowRelease", &"BowBlend", 0, &"UseItem", &"BowBlend", 1, &"BowPhase", &"CarryPhase", 0, &"CarryLift", &"CarryPhase", 1, &"CarryIdle", &"CarryPhase", 2, &"CarryWalk", &"CarryPhase", 3, &"CarryThrow", &"CarryPhase", 4, &"ItemRaise", &"CarryPhase", 5, &"ItemHold", &"CarryPhase", 6, &"ItemLower", &"CarryBlend", 0, &"BowBlend", &"CarryBlend", 1, &"CarryPhase"]
 
 [sub_resource type="AnimationNodeObserverOneShot" id="AnimationNodeObserverOneShot_4uxyr"]
 

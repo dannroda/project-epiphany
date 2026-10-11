@@ -66,3 +66,26 @@ func test_give_auto_equips_empty_slot() -> void:
 	state.give(Items.get_item(&"bomb_bag"))
 	assert_eq(state.item_buttons, [&"bow", &"potion"] as Array[StringName], "sin botón libre no se asigna")
 	state.reset()
+
+
+func test_item_get_raises_both_hands_until_the_box_closes() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	state.reset()
+	await _load_level(tree)
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	player.play_item_get(Items.get_item(&"bow"))
+	await tree.create_timer(0.8).timeout
+	assert_true(stack.top() != null and stack.top().has_signal(&"closed"), "caja abierta")
+	assert_eq(player.anim_tree.get(&"parameters/CarryBlend/blend_amount"), 1.0, "en la pose de item get")
+	assert_true(String(player.anim_tree.get(&"parameters/CarryPhase/current_state")).begins_with("Item"))
+	assert_true(not player.equipment.weapon_socket.visible, "guarda la espada para levantar el ítem")
+	var hands := (player.equipment.weapon_socket.global_position + player.equipment.shield_hand_socket.global_position) * 0.5
+	assert_true(hands.y - player.global_position.y > 1.3, "las manos en alto")
+	stack.pop()
+	await tree.create_timer(0.6).timeout
+	assert_eq(player.movement_state.get_active_state().name, &"Idle", "vuelve a Idle")
+	assert_eq(player.anim_tree.get(&"parameters/CarryBlend/blend_amount"), 0.0, "sale de la pose")
+	assert_true(player.equipment.weapon_socket.visible, "la espada vuelve a la mano")
+	state.reset()

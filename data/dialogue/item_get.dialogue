@@ -1,5 +1,5 @@
 ~ bow
-Apuntá con el stick derecho o el mouse. Si tenés un objetivo fijado, la flecha va directo hacia él. [ID:get_bow_1]
+Mantené el botón para tensar y apuntá con el stick izquierdo o el mouse; al soltar, dispara. Si tenés un objetivo fijado, la flecha va directo hacia él. [ID:get_bow_1]
 => END
 
 ~ bomb_bag

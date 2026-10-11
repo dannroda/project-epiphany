@@ -53,6 +53,7 @@ func _ready() -> void:
 		&"door": [_synth(0.55, func(t: float) -> float: return ((randf() * 2.0 - 1.0) * 0.35 + sin(TAU * 55.0 * t) * 0.3) * sin(PI * t / 0.55))],
 		&"deny": [_synth(0.18, func(t: float) -> float: return signf(sin(TAU * (140.0 if t < 0.08 else 105.0) * t)) * 0.25 * (1.0 if fmod(t, 0.09) < 0.07 else 0.0))],
 		&"rumble": [_synth(1.2, func(t: float) -> float: return ((randf() * 2.0 - 1.0) * 0.3 + sin(TAU * 38.0 * t) * 0.45) * sin(PI * t / 1.2))],
+		&"item_get": [_synth(1.3, func(t: float) -> float: return 0.22 * (sin(TAU * [392.0, 523.0, 659.0, 784.0][mini(int(t / 0.09), 3)] * t) * exp(-fmod(t, 0.09) * 10.0) if t < 0.36 else (sin(TAU * 1047.0 * t) + 0.7 * sin(TAU * 1319.0 * t) + 0.5 * sin(TAU * 1568.0 * t)) * 0.5 * exp(-(t - 0.36) * 2.5) * minf(1.0, (t - 0.36) * 60.0)))],
 		&"heal": [_synth(0.45, func(t: float) -> float: return sin(TAU * [523.0, 659.0, 784.0][mini(int(t / 0.15), 2)] * t) * 0.3 * exp(-fmod(t, 0.15) * 12.0))],
 	}
 	for sound in SAMPLES:
@@ -164,7 +165,8 @@ func sfx(sound: StringName, at: Vector3) -> void:
 
 
 ## Partículas cortas, todas low poly con colores de la paleta y achicándose al morir: &"sparks" (bloqueo, rebote),
-## &"dust" (rodar, golpes contra el piso), &"shards" (algo que se rompe), &"leaves" (pasto), &"explosion" (bomba).
+## &"dust" (rodar, golpes contra el piso), &"shards" (algo que se rompe), &"leaves" (pasto), &"explosion" (bomba),
+## &"sparkle" (destello del item get).
 func burst(kind: StringName, at: Vector3, direction: Vector3) -> void:
 	var scene := get_tree().current_scene
 	if scene == null:
@@ -208,6 +210,19 @@ func _burst_template(kind: StringName) -> CPUParticles3D:
 			particles.particle_flag_align_y = true
 			mesh = _gem(0.02, 0.16)
 			color = Color(1.0, 0.86, 0.45)
+		&"sparkle":
+			particles.amount = 16
+			particles.lifetime = 0.7
+			particles.spread = 180.0
+			particles.initial_velocity_min = 1.2
+			particles.initial_velocity_max = 2.4
+			particles.gravity = Vector3.ZERO
+			particles.damping_min = 2.5
+			particles.damping_max = 3.5
+			particles.angular_velocity_min = -540.0
+			particles.angular_velocity_max = 540.0
+			mesh = _gem(0.05, 0.14)
+			color = Color(1.0, 0.9, 0.55)
 		&"explosion":
 			particles.amount = 32
 			particles.lifetime = 0.55

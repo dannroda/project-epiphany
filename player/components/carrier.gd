@@ -47,6 +47,17 @@ func set_walking(walking: bool) -> void:
 		anim_tree.set(&"parameters/CarryPhase/transition_request", "Walk" if walking else "Idle")
 
 
+## Las manos en alto con un ítem recién conseguido (ItemGet_Raise sigue solo a ItemGet_Hold) hasta `lower_item()`.
+func raise_item() -> void:
+	drop()
+	_play(&"ItemRaise")
+
+
+## ItemGet_Lower; quien llama termina con drop() cuando acaba.
+func lower_item() -> void:
+	anim_tree.set(&"parameters/CarryPhase/transition_request", "ItemLower")
+
+
 ## Empieza Carry_Throw; quien llama tira con throw() a los `throw_delay()` segundos.
 func start_throw() -> void:
 	_play(&"Throw")
