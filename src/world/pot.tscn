@@ -37,6 +37,7 @@ collision_layer = 16
 collision_mask = 0
 monitoring = false
 script = ExtResource("2_hurtbox")
+surface = "none"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)

@@ -72,3 +72,25 @@ func test_bursts_reuse_one_low_poly_template() -> void:
 	assert_true(bursts[0].scale_amount_curve != null, "se achican al morir")
 	var rings := tree.current_scene.find_children("*", "MeshInstance3D", false, false).filter(func(n: Node) -> bool: return n.mesh is TorusMesh)
 	assert_eq(rings.size(), 1, "la explosión abre un anillo")
+
+
+func test_sword_hits_sound_by_surface() -> void:
+	var feel := (Engine.get_main_loop() as SceneTree).root.get_node(^"Feel")
+	for surface in ["flesh", "metal", "stone"]:
+		assert_true(not feel._sounds.get(StringName("hit_" + surface), []).is_empty(), "hay sonido para %s" % surface)
+	var expected := {
+		"res://src/world/grass.tscn": "none",
+		"res://src/world/pot.tscn": "none",
+		"res://src/world/cracked_wall.tscn": "none",
+		"res://src/world/eye_switch.tscn": "stone",
+		"res://src/entities/turret/turret.tscn": "stone",
+		"res://src/entities/enemy.tscn": "flesh",
+	}
+	for path: String in expected:
+		var node := (load(path) as PackedScene).instantiate()
+		assert_eq((node.get_node(^"Hurtbox") as Hurtbox).surface, expected[path], path)
+		node.free()
+	var boss := (load("res://src/entities/boss/boss.tscn") as PackedScene).instantiate()
+	for hand in [^"HandLeft/Hurtbox", ^"HandRight/Hurtbox"]:
+		assert_eq((boss.get_node(hand) as Hurtbox).surface, "metal", "las manos del jefe son de hierro")
+	boss.free()

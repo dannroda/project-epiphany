@@ -38,7 +38,7 @@ func _on_hit(info: DamageInfo) -> void:
 		return
 	if info.element != &"explosive":
 		Feel.burst(&"sparks", hurtbox.global_position, Vector3.UP)
-		Feel.sfx(&"block", global_position)
+		Feel.sfx(&"hit_stone", global_position)
 		return
 	_show(true)
 	_persistent.value = true

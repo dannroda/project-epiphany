@@ -23,6 +23,9 @@ const BURSTS: Dictionary[StringName, PackedScene] = {
 ## Evento → prefijos de archivo (carpeta/nombre) dentro de SAMPLE_DIR.
 const SAMPLES := {
 	&"hit": ["kenney_impact-sounds/impactPunch_medium_"],
+	&"hit_flesh": ["kenney_impact-sounds/impactPunch_medium_"],
+	&"hit_metal": ["kenney_impact-sounds/impactPlate_medium_"],
+	&"hit_stone": ["kenney_impact-sounds/impactMining_"],
 	&"hurt": ["kenney_impact-sounds/impactPunch_heavy_"],
 	&"block": ["kenney_impact-sounds/impactMetal_medium_"],
 	&"click": ["kenney_rpg-audio/metalClick", "kenney_rpg-audio/metalLatch"],

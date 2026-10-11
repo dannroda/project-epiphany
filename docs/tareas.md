@@ -2971,7 +2971,7 @@ Un modo extra que se desbloquea al terminar el juego, difícil (más daño, meno
 
 **Prueba:** Tras los créditos aparece la opción; una partida en ese modo cambia lo prometido.
 
-### 11.33 Combate: sacar lo tosco · Revisión
+### 11.33 Combate: sacar lo tosco · En curso
 
 **Prioridad:** alta · **Etiquetas:** `combate`
 
@@ -2990,7 +2990,7 @@ Skills: `disciplines:game-feel`, `disciplines:input-systems`, `godot:godot-anima
 
 **Prueba:** Pelear contra 3 chullpas en el overworld: cada golpe responde al instante, se puede rodar o bloquear al final de un tajo, los impactos se sienten, y en una sesión de playtest nadie lo describe como tosco.
 
-**Notas:** Hecho: cancel_from/lunge en AttackData, golpe encadenable (Attacking→Attacking), giro al objetivo o stick, chispas al pegar, aviso rojo (HitFlash.warn) y recovery_time 0,4 s en BTAttack, feel.tres con valores. Falta jugarlo (paso 1) y el sonido por superficie.
+**Notas:** Hecho: cancel_from/lunge en AttackData, golpe encadenable (Attacking→Attacking), giro al objetivo o stick, chispas al pegar, aviso rojo (HitFlash.warn) y recovery_time 0,4 s en BTAttack, feel.tres con valores. Sonido por superficie (Hurtbox.surface: carne, metal, piedra, nada; el enemigo pasa a metal cuando la coraza o el escudo frenan); pasto y vasijas ya no disparan hit-stop ni sacudida. Falta jugarlo (paso 1).
 
 **Referencias:** `gdd.md#combate`
 

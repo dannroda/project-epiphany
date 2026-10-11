@@ -286,9 +286,11 @@ func _on_hit(info: DamageInfo) -> void:
 
 
 func _on_hit_landed(target: Hurtbox) -> void:
+	if target.surface == "none":
+		return
 	Feel.hit_stop([self, target.get_parent()], Feel.settings.hit_stop_give)
 	Feel.shake(Feel.settings.shake_give)
-	Feel.sfx(&"hit", target.global_position)
+	Feel.sfx(StringName("hit_" + target.surface), target.global_position)
 	if Feel.settings.sparks_on_hit:
 		var away := target.global_position - global_position
 		away.y = 0.0

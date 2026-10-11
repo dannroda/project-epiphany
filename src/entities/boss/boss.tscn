@@ -173,6 +173,7 @@ collision_layer = 16
 collision_mask = 0
 monitoring = false
 script = ExtResource("14_hurtbox")
+surface = "metal"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HandLeft/Hurtbox"]
 shape = SubResource("BoxShape3D_hand")
@@ -240,6 +241,7 @@ collision_layer = 16
 collision_mask = 0
 monitoring = false
 script = ExtResource("14_hurtbox")
+surface = "metal"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HandRight/Hurtbox"]
 shape = SubResource("BoxShape3D_hand")

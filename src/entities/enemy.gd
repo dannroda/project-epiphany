@@ -206,7 +206,9 @@ func _break_armor() -> void:
 
 
 func _on_hit(info: DamageInfo) -> void:
-	if _armor_stops(info) or _guard_stops(info):
+	var stopped := _armor_stops(info) or _guard_stops(info)
+	hurtbox.surface = "metal" if stopped else "flesh"
+	if stopped:
 		return
 	if not health.damage(info.amount):
 		return
