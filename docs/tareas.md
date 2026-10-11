@@ -3327,7 +3327,7 @@ Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 13.4 Reglas del co-op · Pendiente
+### 13.4 Reglas del co-op · En curso
 
 **Prioridad:** media · **Etiquetas:** `coop`, `diseño`
 
