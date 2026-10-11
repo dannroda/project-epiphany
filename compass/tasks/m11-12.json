@@ -1,18 +1,59 @@
 {
-  "checklist": [],
+  "checklist": [
+    {
+      "detail": "Candidatas: arena de oleadas o sala de ojos más grandes (dos pantallas, la cámara se desplaza dentro); antesala o nichos más chicos. Mirar docs/the-ultimate-methodology-of-creating-zelda-like-dungeon-leve.md. Decidirlo con Daniel antes de tocar el nivel.",
+      "done": false,
+      "text": "Elegir qué salas cambian y a qué tamaño"
+    },
+    {
+      "detail": "Hoy cada Room tiene un solo `map_cell` y map_data.gd (`room_pitch`, `room_grid_point`) asume el mismo paso para todas. Sumar un tamaño en celdas a Room y que la pestaña Mapa y el minimapa las dibujen enteras.",
+      "done": false,
+      "text": "Salas que ocupan varias celdas del mapa"
+    },
+    {
+      "detail": "top_down_camera.gd ya limita el foco a `Room.bounds()` y desplaza si la sala es más grande que la vista; comprobar la transición entre salas de distinto tamaño (`_mask_around` con merge) y que una sala chica quede centrada.",
+      "done": false,
+      "text": "Cámara en salas grandes y chicas"
+    },
+    {
+      "detail": "GridMap, Room (CollisionShape3D), puertas en el centro de cada pared, spawns, decoración y velo; rehornear la navmesh. La regla de centros (24 cx, 16 cz) deja de valer: actualizar [[gdd#mazmorra-layout]].",
+      "done": false,
+      "text": "Rearmar el templo"
+    },
+    {
+      "detail": "test_doorways_face_their_wall y test_enemies_do_not_spawn_inside_walls siguen pasando.",
+      "done": false,
+      "text": "Tests de puertas y enemigos"
+    }
+  ],
   "code": "11.12",
   "created_at": "2026-10-09T17:40:35.449Z",
-  "description": "Las 9 salas del templo tienen todas el mismo tamaño (11 × 7 celdas). Variar los tamaños de sala.",
+  "description": "Las 9 salas del templo miden todas 11 × 7 celdas (una pantalla), y eso lo vuelve monótono. Variar el tamaño según lo que pasa en cada una (una sala grande de dos pantallas donde haya combate o puzzle amplio, salas chicas de paso o de recompensa), como propone la guía de diseño de mazmorras en docs/.",
+  "files": [
+    "src/world/room.gd",
+    "src/ui/menus/map_data.gd",
+    "src/tools/top_down_camera.gd",
+    "levels/temple.tscn"
+  ],
   "milestone": "m11",
   "notes": "",
   "order": 12,
   "priority": "low",
-  "refs": [],
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "mazmorra-layout"
+    },
+    {
+      "doc": "gdd.md",
+      "section": "camara"
+    }
+  ],
   "status": "todo",
   "tags": [
     "mazmorra"
   ],
-  "test": "",
+  "test": "Recorrer el templo: al menos una sala grande donde la cámara se desplaza sin saltos y una chica que se ve centrada; las transiciones entre salas de distinto tamaño son limpias; el mapa y el minimapa muestran cada sala con su tamaño; los tests pasan.",
   "title": "Tamaños de sala variados",
-  "updated_at": "2026-10-11T07:50:57.323Z"
+  "updated_at": "2026-10-11T08:02:57.706Z"
 }

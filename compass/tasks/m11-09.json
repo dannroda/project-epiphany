@@ -1,18 +1,54 @@
 {
-  "checklist": [],
+  "checklist": [
+    {
+      "detail": "El piso del kit gris tiene el techo de la colisión en y = 0, pero los vértices quedan en 0.5 (overworld y templo). Revisar cell_size/cell_height del NavigationMesh contra los del mapa de navegación (Project Settings › navigation), agent_max_climb y la posición del NavigationRegion3D.",
+      "done": false,
+      "text": "Encontrar de dónde salen los 0.5 m"
+    },
+    {
+      "detail": "Hay polígonos a y = 3 sobre Pared y Acantilado. Un enemigo nunca llega ahí, pero ensucian el mapa y algún punto aleatorio o el más cercano puede caer arriba. Opciones: filter_baking_aabb, agent_max_climb o colisión de pared sin techo transitable.",
+      "done": false,
+      "text": "Sacar las islas arriba de paredes y acantilados"
+    },
+    {
+      "detail": "Botón Bake de cada NavigationRegion3D (levels/overworld.tscn, temple.tscn, test.tscn, dungeon_test.tscn, test_rooms.tscn).",
+      "done": false,
+      "text": "Rehornear overworld, templo y niveles de prueba"
+    },
+    {
+      "detail": "src/entities/enemy.tscn › NavigationAgent3D. Probar persecución alrededor de columnas y esquinas de puerta.",
+      "done": false,
+      "text": "Volver `path_desired_distance` a 0.5 si ya no se traban"
+    },
+    {
+      "detail": "[[gdd#overworld-layout]] › Blockout (7.2) cuenta la compensación; dejar lo nuevo.",
+      "done": false,
+      "text": "Actualizar el GDD"
+    }
+  ],
   "code": "11.9",
   "created_at": "2026-10-09T17:40:34.556Z",
-  "description": "La navmesh queda 0.5 m sobre el piso y obliga a compensarlo en el `NavigationAgent3D` de los enemigos (`path_desired_distance` 1.0 para que no se traben en las esquinas). Bajarla al piso.",
+  "description": "La navmesh horneada del GridMap queda 0.5 m sobre el piso (y hay islas sueltas arriba de paredes y acantilados, a 3 m). Por eso el `NavigationAgent3D` de los enemigos necesita `path_desired_distance` 1.0 para no trabarse en las esquinas. Bajarla al piso y sacar la compensación.",
+  "files": [
+    "src/entities/enemy.tscn",
+    "levels/overworld.tscn",
+    "levels/temple.tscn"
+  ],
   "milestone": "m11",
   "notes": "",
   "order": 9,
   "priority": "low",
-  "refs": [],
+  "refs": [
+    {
+      "doc": "gdd.md",
+      "section": "overworld-layout"
+    }
+  ],
   "status": "todo",
   "tags": [
     "ia"
   ],
-  "test": "",
+  "test": "Con Debug › Visible Navigation, la navmesh se ve pegada al piso y no hay islas arriba de las paredes; los enemigos persiguen alrededor de columnas y por las puertas sin quedarse girando en una esquina; test_enemy_ai pasa.",
   "title": "Navmesh sobre el piso",
-  "updated_at": "2026-10-11T07:50:55.780Z"
+  "updated_at": "2026-10-11T08:02:57.240Z"
 }
