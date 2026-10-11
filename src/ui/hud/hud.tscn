@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud_item_slot.tscn" id="4_slot"]
 [ext_resource type="Texture2D" path="res://assets/ui/frames/divider.png" id="5_divider"]
 [ext_resource type="Texture2D" path="res://assets/ui/frames/divider_flipped.png" id="6_divider_flipped"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/minimap.tscn" id="7_minimap"]
 
 [node name="HUD" type="CanvasLayer"]
 layer = 10
@@ -123,6 +124,12 @@ stretch_mode = 5
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"HudPillText"
+
+[node name="Minimap" parent="SafeArea" instance=ExtResource("7_minimap")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
 
 [node name="AreaName" type="HBoxContainer" parent="."]
 unique_name_in_owner = true

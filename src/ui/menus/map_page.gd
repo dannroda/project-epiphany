@@ -7,13 +7,11 @@ extends Control
 ## Cambió lo que muestra la barra de ayudas (zoom).
 signal hints_changed
 
+const MapData := preload("res://src/ui/menus/map_data.gd")
 const STEP := MapRoomCell.SIZE + Vector2(12, 12)
 const CURSOR_SPEED := 420.0
 const ZONE_NAME_SCENE := preload("res://src/ui/menus/map_zone_name.tscn")
 const ZOOM := 2.0
-## Puertas del kit sin nodo Door (pasos libres entre salas).
-const DOORWAY_ITEM := "Puerta"
-const DOOR_MERGE_DISTANCE := 2.0
 const DIRECTIONS := [
 	[&"move_left", Vector2i.LEFT], [&"move_right", Vector2i.RIGHT], [&"move_forward", Vector2i.UP], [&"move_backward", Vector2i.DOWN],
 	[&"ui_left", Vector2i.LEFT], [&"ui_right", Vector2i.RIGHT], [&"ui_up", Vector2i.UP], [&"ui_down", Vector2i.DOWN],
@@ -157,68 +155,19 @@ func _show_dungeon() -> void:
 		cell.position = Vector2(room.map_cell - low) * STEP
 		rooms_layer.add_child(cell)
 		_room_cells[room] = cell
-	_show_doors(rooms, low)
+	_show_doors(low)
 	_focus_room(current if _room_cells.has(current) else _room_cells.keys().front() if not _room_cells.is_empty() else null)
 
 
 ## Puertas con nodo Door (con llave, jefe, persianas, interruptor) y pasos libres del kit, junto a las salas que se ven.
-func _show_doors(rooms: Array, low: Vector2i) -> void:
-	var points: Array[Vector3] = []
-	var kinds: Array[MapMark.Kind] = []
-	for door: Door in get_tree().current_scene.find_children("*", "Door", true, false):
-		points.append(door.global_position)
-		kinds.append(_door_kind(door))
-	var grid := _find(GridMap) as GridMap
-	if grid and grid.mesh_library:
-		for cell in grid.get_used_cells():
-			if grid.mesh_library.get_item_name(grid.get_cell_item(cell)) != DOORWAY_ITEM:
-				continue
-			var point := grid.to_global(grid.map_to_local(cell))
-			if points.any(func(other: Vector3) -> bool: return Vector2(other.x, other.z).distance_to(Vector2(point.x, point.z)) < DOOR_MERGE_DISTANCE):
-				continue
-			points.append(point)
-			kinds.append(MapMark.Kind.DOOR_OPEN)
-	for i in points.size():
-		var shown := _room_cells.keys().filter(func(room: Room) -> bool: return room.bounds().grow(2.0).has_point(Vector2(points[i].x, points[i].z)))
+func _show_doors(low: Vector2i) -> void:
+	for door: Array in MapData.doors(get_tree()):
+		var point: Vector3 = door[0]
+		var shown := _room_cells.keys().filter(func(room: Room) -> bool: return room.bounds().grow(2.0).has_point(Vector2(point.x, point.z)))
 		if shown.is_empty():
 			continue
-		doors_layer.add_child(MapMark.create(kinds[i], _dungeon_map_point(points[i], shown[0], low)))
-
-
-func _door_kind(door: Door) -> MapMark.Kind:
-	if door.is_open:
-		return MapMark.Kind.DOOR_OPEN
-	match door.kind:
-		Door.Kind.LOCKED:
-			return MapMark.Kind.DOOR_LOCKED
-		Door.Kind.BOSS:
-			return MapMark.Kind.DOOR_BOSS
-		Door.Kind.SHUTTER, Door.Kind.SWITCH:
-			return MapMark.Kind.DOOR_SEALED
-	return MapMark.Kind.DOOR_OPEN
-
-
-## Pasa un punto del mundo al mapa de salas usando la sala `near` como referencia (salas de tamaño parejo).
-func _dungeon_map_point(point: Vector3, near: Room, low: Vector2i) -> Vector2:
-	var bounds := near.bounds()
-	var pitch := _room_pitch(bounds.size)
-	var offset := (Vector2(point.x, point.z) - bounds.get_center()) / pitch * STEP
-	return Vector2(near.map_cell - low) * STEP + MapRoomCell.SIZE / 2.0 + offset
-
-
-## Distancia en el mundo entre centros de salas vecinas (la sala más la pared compartida).
-func _room_pitch(fallback: Vector2) -> Vector2:
-	var rooms := get_tree().get_nodes_in_group(Room.GROUP)
-	var pitch := fallback
-	for a: Room in rooms:
-		for b: Room in rooms:
-			var cells_apart := b.map_cell - a.map_cell
-			var apart := b.bounds().get_center() - a.bounds().get_center()
-			if cells_apart.x != 0 and cells_apart.y == 0:
-				pitch.x = absf(apart.x / cells_apart.x)
-			elif cells_apart.y != 0 and cells_apart.x == 0:
-				pitch.y = absf(apart.y / cells_apart.y)
-	return pitch
+		var on_grid := MapData.room_grid_point(get_tree(), point, shown[0]) - Vector2(low)
+		doors_layer.add_child(MapMark.create(door[1], on_grid * STEP + MapRoomCell.SIZE / 2.0))
 
 
 func _dungeon_input(event: InputEvent) -> void:
@@ -286,7 +235,7 @@ func _focus_room(room: Room) -> void:
 
 
 func _chests_in(room: Room) -> Array:
-	return get_tree().get_nodes_in_group(&"chests").filter(func(chest: Chest) -> bool: return room.contains(chest.global_position))
+	return MapData.chests_in(get_tree(), room)
 
 
 # --- Overworld ---
@@ -478,18 +427,11 @@ func _in_dungeon() -> bool:
 
 
 func _current_room() -> Room:
-	var camera := get_tree().get_first_node_in_group(&"room_camera") as TopDownCamera
-	return camera.room if camera else null
+	return MapData.current_room(get_tree())
 
 
 func _find(type: Variant) -> Node:
-	var scene := get_tree().current_scene
-	if scene == null:
-		return null
-	for child in scene.get_children():
-		if is_instance_of(child, type):
-			return child
-	return null
+	return MapData.find(get_tree(), type)
 
 
 func _clear(node: Node) -> void:

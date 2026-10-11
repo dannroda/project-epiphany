@@ -17,6 +17,7 @@ const DEFAULTS := {
 	&"ambience": 60,
 	&"fullscreen": false,
 	&"shake": true,
+	&"minimap": true,
 	&"ui_scale": 100,
 }
 

@@ -3,7 +3,7 @@ extends HBoxContainer
 ## Las opciones del mockup Options en dos columnas (Controles | Audio y Video). Cada control se llama como su clave
 ## en Settings y guarda al cambiar.
 
-const TOGGLES: Array[StringName] = [&"mouse_aim", &"flick", &"vibration", &"fullscreen", &"shake"]
+const TOGGLES: Array[StringName] = [&"mouse_aim", &"flick", &"vibration", &"fullscreen", &"shake", &"minimap"]
 const SLIDERS: Array[StringName] = [&"stick_sensitivity", &"music", &"sfx", &"ambience"]
 
 @onready var first: Control = %lock_mantener

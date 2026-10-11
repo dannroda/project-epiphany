@@ -7,17 +7,17 @@
     },
     {
       "detail": "Las salas alrededor de la actual (3×3), con puertas y el player con flecha de orientación; usa los mismos datos que la pestaña Mapa (Room.map_cell, DungeonState).",
-      "done": false,
+      "done": true,
       "text": "Mazmorra"
     },
     {
-      "detail": "Recorte de la foto cenital alrededor del player, con la niebla de 11.36 y las marcas cercanas.",
-      "done": false,
+      "detail": "Recorte de la foto cenital alrededor del player, con la niebla de 11.36 (zonas sin visitar en sombra) y las marcas cercanas.",
+      "done": true,
       "text": "Overworld"
     },
     {
       "detail": "Opción en Opciones (encendido/apagado); se oculta en cutscenes, item get, diálogos y en la sala del jefe.",
-      "done": false,
+      "done": true,
       "text": "Cuándo se ve"
     }
   ],
@@ -39,11 +39,11 @@
       "section": "ui"
     }
   ],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "ui"
   ],
   "test": "Recorrer el templo: el minimapa sigue al player sala a sala y coincide con la pestaña Mapa. En el overworld muestra la zona y se destapa igual. Se apaga desde Opciones y no aparece durante el jefe ni en cutscenes.",
   "title": "Minimapa en el HUD",
-  "updated_at": "2026-10-10T19:16:05.706Z"
+  "updated_at": "2026-10-11T03:03:02.421Z"
 }
