@@ -27,7 +27,8 @@
       "text": "Escalones y rampa (tierra y piedra)"
     },
     {
-      "done": false,
+      "detail": "Hecho: abismo, abismo_borde/esquina/pasillo/punta/pozo en build_terreno_overworld.py (paredes de roca de 3 m con bandas pasto → acantilado → gris → casi negro, fondo oscuro). vary_overworld.gd elige la pieza y el giro según los vecinos; test_abyss_walls_face_the_ground. La niebla del fondo queda para Godot si hace falta.",
+      "done": true,
       "text": "Abismo: borde recto, esquinas, fondo oscuro/niebla"
     },
     {
@@ -46,6 +47,7 @@
   ],
   "code": "12.2",
   "created_at": "2026-10-09T21:05:27.572Z",
+  "description": "Modelar en Blender el terreno del overworld (pasto, caminos, piso de plaza, acantilados con sus aberturas, escalones, abismo, cercos y borde del mundo) y armar con eso el kit del GridMap, para reemplazar el kit gris sin perder colisiones ni navegación.",
   "links": [
     {
       "task": "m12-03",
@@ -72,5 +74,5 @@
   ],
   "test": "El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.",
   "title": "Terreno del overworld",
-  "updated_at": "2026-10-09T22:28:44.393Z"
+  "updated_at": "2026-10-11T07:50:41.716Z"
 }
