@@ -1,7 +1,10 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://src/world/stairs.gd" id="1_stairs"]
-[ext_resource type="Material" path="res://data/kits/materials/epiphany_stone.tres" id="2_stone"]
+
+[sub_resource type="StandardMaterial3D" id="Stone"]
+albedo_color = Color(0.46, 0.44, 0.52, 1)
+roughness = 0.9
 
 [sub_resource type="BoxShape3D" id="Trigger"]
 size = Vector3(1.6, 1.5, 1.2)
@@ -32,14 +35,14 @@ surface_material_override/0 = SubResource("Dark")
 [node name="Step1" type="MeshInstance3D" parent="Visual"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0.6)
 mesh = SubResource("Step")
-surface_material_override/0 = ExtResource("2_stone")
+surface_material_override/0 = SubResource("Stone")
 
 [node name="Step2" type="MeshInstance3D" parent="Visual"]
 transform = Transform3D(0.85, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0.1)
 mesh = SubResource("Step")
-surface_material_override/0 = ExtResource("2_stone")
+surface_material_override/0 = SubResource("Stone")
 
 [node name="Step3" type="MeshInstance3D" parent="Visual"]
 transform = Transform3D(0.7, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, -0.4)
 mesh = SubResource("Step")
-surface_material_override/0 = ExtResource("2_stone")
+surface_material_override/0 = SubResource("Stone")

@@ -222,3 +222,52 @@ func test_overworld_photo_is_taken_from_the_current_level() -> void:
 	for child in copy.get_children():
 		child.free()
 	_close(setup[2])
+
+
+func test_floor_selector_in_a_dungeon_with_floors() -> void:
+	var setup: Array = await _open_map("chullpa")
+	var tree: SceneTree = setup[0]
+	var state: Node = setup[1]
+	var page: Control = setup[3]
+	var dungeon: DungeonState = state.current_dungeon_state()
+	dungeon.has_map = true
+	dungeon.has_compass = true
+	await tree.process_frame
+	assert_true(page.floors_box.visible, "la Chullpa tiene columna de pisos")
+	var buttons: Array = page.floor_buttons.get_children()
+	assert_eq(buttons.map(func(button: MapFloorButton) -> String: return button.code), ["2P", "1P", "S1"], "de arriba abajo")
+	assert_true(buttons[1].here and buttons[1].selected, "abre en la planta baja, donde está el player")
+	assert_true(buttons[2].boss and buttons[2].chest, "con brújula, el sótano marca jefe y cofres")
+	assert_true(_cell(page, "Entrada") != null, "se ven las salas de la planta baja")
+	assert_eq(page.focused_room().name, &"Entrada")
+	_press(&"map_floor_up")
+	await tree.process_frame
+	assert_eq(page.viewed_level(), 1, "LT sube un piso")
+	assert_true(_cell(page, "Rellano") != null and _cell(page, "Entrada") == null, "ahora el piso alto")
+	assert_eq(page.focused_room().name, &"Rellano", "el cursor queda en la misma celda")
+	assert_true(page.extra_hints.any(func(hint: Array) -> bool: return hint[1] == "MAP_HINT_FLOOR"), "la barra de ayudas lo dice")
+	_press(&"map_floor_up")
+	await tree.process_frame
+	assert_eq(page.viewed_level(), 1, "no hay más arriba")
+	(page.floor_buttons.get_child(2) as MapFloorButton).pressed.emit()
+	await tree.process_frame
+	assert_eq(page.viewed_level(), -1, "con un clic se ve el sótano")
+	_close(setup[2])
+	state.reset()
+
+
+func test_minimap_names_the_floor() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	state.reset()
+	await tree.root.get_node(^"SaveManager").load_scenario("chullpa")
+	await tree.create_timer(1.0).timeout
+	var minimap: Control = tree.get_first_node_in_group(&"hud").find_child("Minimap", true, false)
+	assert_true(minimap.floor_tag.visible, "en la Chullpa, el minimapa nombra el piso")
+	assert_eq(minimap.floor_code.text, "1P")
+	state.reset()
+	await tree.root.get_node(^"SaveManager").load_scenario("pre_boss")
+	await tree.create_timer(1.0).timeout
+	minimap = tree.get_first_node_in_group(&"hud").find_child("Minimap", true, false)
+	assert_true(not minimap.floor_tag.visible, "en el templo (un solo piso), no")
+	state.reset()

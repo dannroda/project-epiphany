@@ -17,6 +17,11 @@ func _ready() -> void:
 	add_to_group(GROUP)
 
 
+## Cómo lo nombran el mapa y el minimapa: 1P, 2P… y S1, S2… los sótanos.
+func code() -> String:
+	return "%dP" % (level + 1) if level >= 0 else "S%d" % -level
+
+
 static func of(node: Node) -> DungeonFloor:
 	var parent := node.get_parent()
 	while parent and not parent is DungeonFloor:

@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bbh75d26628l5" path="res://assets/ui/frames/map_room.png" id="3_room"]
 [ext_resource type="Texture2D" uid="uid://cdjnnpwyam4fr" path="res://assets/ui/frames/map_room_mapped.png" id="4_mapped"]
 [ext_resource type="Texture2D" uid="uid://d1aqupafmga6l" path="res://assets/ui/frames/map_room_here.png" id="5_here"]
+[ext_resource type="FontFile" uid="uid://byrjjxr0lu8v3" path="res://assets/fonts/Cinzel.ttf" id="6_cinzel"]
 
 [sub_resource type="ShaderMaterial" id="Fog"]
 shader = ExtResource("2_fog")
@@ -81,3 +82,36 @@ offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="FloorTag" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_top = -40.0
+offset_bottom = -6.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_type_variation = &"HudPill"
+
+[node name="Row" type="HBoxContainer" parent="FloorTag"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="Code" type="Label" parent="FloorTag/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8509804, 0.6431373, 0.25490198, 1)
+theme_override_fonts/font = ExtResource("6_cinzel")
+theme_override_font_sizes/font_size = 18
+text = "2P"
+
+[node name="FloorName" type="Label" parent="FloorTag/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8117647, 0.827451, 0.8627451, 1)
+theme_override_font_sizes/font_size = 14
+text = "PLACE_FLOOR_UPPER"

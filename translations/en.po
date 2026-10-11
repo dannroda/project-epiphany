@@ -387,6 +387,9 @@ msgstr "Place or remove pin"
 msgid "MAP_HINT_MOVE"
 msgstr "Move cursor"
 
+msgid "MAP_HINT_FLOOR"
+msgstr "Floor"
+
 msgid "MAP_HINT_ZOOM_IN"
 msgstr "Zoom in"
 

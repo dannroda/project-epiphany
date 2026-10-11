@@ -25,7 +25,7 @@ var extra_hints: Array:
 	get:
 		var move := [[&"move_left", &"move_right"], "MAP_HINT_MOVE"]
 		if _in_dungeon():
-			return [move]
+			return [move, [[&"map_floor_up", &"map_floor_down"], "MAP_HINT_FLOOR"]] if _levels().size() > 1 else [move]
 		return [move, [&"item_2", "MAP_HINT_ZOOM_OUT" if _zoomed else "MAP_HINT_ZOOM_IN"]]
 
 @onready var map_card: Control = %MapCard
@@ -34,6 +34,10 @@ var extra_hints: Array:
 @onready var doors_layer: Control = %Doors
 @onready var room_cursor: MapCursor = %RoomCursor
 @onready var door_legend: Control = %DoorLegendBox
+@onready var floors_box: Control = %FloorsBox
+@onready var floor_buttons: VBoxContainer = %FloorButtons
+@onready var up_icon: TextureRect = %UpIcon
+@onready var down_icon: TextureRect = %DownIcon
 @onready var overworld: Control = %Overworld
 @onready var canvas: Control = %Canvas
 @onready var overworld_image: TextureRect = %OverworldImage
@@ -58,6 +62,9 @@ var _map: OverworldMap
 var _room_cells: Dictionary[Room, MapRoomCell] = {}
 var _focused_room: Room
 var _zoomed := false
+## Piso que se mira (null = el de la sala actual, al abrir el mapa) y la celda del cursor al cambiar de piso.
+var _view_level: Variant = null
+var _keep_cell: Variant = null
 
 
 func _ready() -> void:
@@ -66,7 +73,10 @@ func _ready() -> void:
 	GameState.map_changed.connect(_refresh_pins)
 	visibility_changed.connect(func() -> void:
 		if is_visible_in_tree():
+			_view_level = null
+			_keep_cell = null
 			refresh())
+	InputDevice.input_device_changed.connect(func(_device: int) -> void: _refresh_floor_icons())
 	marker.draw.connect(func() -> void: MapRoomCell.draw_arrow(marker, Vector2.ZERO, 0.0))
 	overworld_image.resized.connect(_place_overworld)
 	refresh()
@@ -81,7 +91,7 @@ func refresh() -> void:
 	if _dungeon and _dungeon.changed.is_connected(refresh):
 		_dungeon.changed.disconnect(refresh)
 	_dungeon = null
-	for layer in [rooms_layer, doors_layer, stats, focus_stats, fog, marks]:
+	for layer in [rooms_layer, doors_layer, stats, focus_stats, fog, marks, floor_buttons]:
 		_clear(layer)
 	_room_cells.clear()
 	var in_dungeon := _in_dungeon()
@@ -90,6 +100,7 @@ func refresh() -> void:
 	door_legend.visible = in_dungeon
 	overworld.visible = not in_dungeon
 	overworld_legend.visible = not in_dungeon
+	floors_box.visible = false
 	if in_dungeon:
 		_dungeon = GameState.current_dungeon_state()
 		_dungeon.changed.connect(refresh)
@@ -128,10 +139,14 @@ func _show_dungeon() -> void:
 	_stat(stats, "MAP_STAT_BOSS_KEY", "COMMON_YES" if _dungeon.has_boss_key else "COMMON_NO")
 	_stat(stats, "MAP_STAT_SMALL_KEYS", str(_dungeon.small_keys))
 	var current := _current_room()
-	var level := current.floor_level() if current else 0
-	var dungeon_floor := DungeonFloor.of(current) if current else null
+	var levels := _levels()
+	if _view_level == null or not _view_level in levels:
+		_view_level = current.floor_level() if current else 0
+	var level: int = _view_level
+	var dungeon_floor := _floor_node(level)
 	if dungeon_floor and not dungeon_floor.display_name.is_empty():
 		subtitle.text = dungeon_floor.display_name
+	_show_floors(levels, current)
 	var rooms := MapData.rooms_on(get_tree(), level)
 	if rooms.is_empty():
 		return
@@ -165,7 +180,65 @@ func _show_dungeon() -> void:
 		rooms_layer.add_child(cell)
 		_room_cells[room] = cell
 	_show_doors(low)
-	_focus_room(current if _room_cells.has(current) else _room_cells.keys().front() if not _room_cells.is_empty() else null)
+	var kept: Array = _room_cells.keys().filter(func(room: Room) -> bool: return room.map_cell == _keep_cell)
+	_keep_cell = null
+	_focus_room(kept[0] if not kept.is_empty() else current if _room_cells.has(current) else _room_cells.keys().front() if not _room_cells.is_empty() else null)
+
+
+## Columna de pisos (solo si la mazmorra tiene más de uno), de arriba abajo.
+func _show_floors(levels: Array, current: Room) -> void:
+	floors_box.visible = levels.size() > 1
+	if not floors_box.visible:
+		return
+	for level: int in levels:
+		var button := MapFloorButton.create()
+		button.name = "Floor_%d" % level
+		button.level = level
+		button.code = _floor_node(level).code()
+		button.floor_name = _floor_node(level).display_name
+		button.selected = level == _view_level
+		button.here = current != null and current.floor_level() == level
+		if _dungeon.has_compass:
+			var rooms := MapData.rooms_on(get_tree(), level)
+			button.boss = rooms.any(func(room: Room) -> bool: return room.boss_room)
+			button.chest = rooms.any(func(room: Room) -> bool: return _chests_in(room).any(func(chest: Chest) -> bool: return chest.interactable.enabled))
+		button.pressed.connect(view_floor.bind(level))
+		floor_buttons.add_child(button)
+	_refresh_floor_icons()
+
+
+func _refresh_floor_icons() -> void:
+	up_icon.texture = InputPrompts.icon_for_current(&"map_floor_up")
+	down_icon.texture = InputPrompts.icon_for_current(&"map_floor_down")
+
+
+## Pisos de la mazmorra, de arriba abajo.
+func _levels() -> Array:
+	var levels := get_tree().get_nodes_in_group(DungeonFloor.GROUP).map(func(node: DungeonFloor) -> int: return node.level)
+	levels.sort()
+	levels.reverse()
+	return levels
+
+
+func _floor_node(level: int) -> DungeonFloor:
+	for node: DungeonFloor in get_tree().get_nodes_in_group(DungeonFloor.GROUP):
+		if node.level == level:
+			return node
+	return null
+
+
+func viewed_level() -> int:
+	return _view_level if _view_level != null else 0
+
+
+## Mira otro piso; el cursor queda en la misma celda (los pisos comparten planta).
+func view_floor(level: int) -> void:
+	if level == _view_level:
+		return
+	_keep_cell = _focused_room.map_cell if _focused_room else null
+	_view_level = level
+	Feel.ui(&"ui_move")
+	refresh()
 
 
 ## Puertas con nodo Door (con llave, jefe, persianas, interruptor) y pasos libres del kit, junto a las salas que se ven.
@@ -180,6 +253,14 @@ func _show_doors(low: Vector2i) -> void:
 
 
 func _dungeon_input(event: InputEvent) -> void:
+	for pair in [[&"map_floor_up", 1], [&"map_floor_down", -1]]:
+		if event.is_action_pressed(pair[0]):
+			var levels := _levels()
+			var next: int = levels.find(_view_level) - pair[1]
+			if next >= 0 and next < levels.size():
+				view_floor(levels[next])
+			get_viewport().set_input_as_handled()
+			return
 	if _focused_room == null:
 		return
 	var direction := Vector2i.ZERO

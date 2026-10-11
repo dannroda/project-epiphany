@@ -71,6 +71,44 @@ mouse_filter = 2
 script = ExtResource("4_cursor")
 frame_style = SubResource("CursorFrame")
 
+[node name="FloorsBox" type="MarginContainer" parent="MapCard"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 40
+
+[node name="Floors" type="VBoxContainer" parent="MapCard/FloorsBox"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="UpIcon" type="TextureRect" parent="MapCard/FloorsBox/Floors"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="FloorButtons" type="VBoxContainer" parent="MapCard/FloorsBox/Floors"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="DownIcon" type="TextureRect" parent="MapCard/FloorsBox/Floors"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
 [node name="DoorLegendBox" type="VBoxContainer" parent="MapCard"]
 unique_name_in_owner = true
 layout_mode = 2

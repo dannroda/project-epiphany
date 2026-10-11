@@ -29,6 +29,9 @@ const REVEAL_STEP := 1.0
 ## Las marcas y la flecha del overworld van aparte, fuera de la niebla.
 @onready var marks: Control = %Marks
 @onready var fog: ShaderMaterial = view.material
+@onready var floor_tag: Control = %FloorTag
+@onready var floor_code: Label = %Code
+@onready var floor_name: Label = %FloorName
 
 var _scene: Node
 var _map: OverworldMap
@@ -53,6 +56,7 @@ func _process(delta: float) -> void:
 	visible = Settings.get_value(&"minimap") and not MenuStack.is_open() and Players.lead() != null \
 		and (_in_dungeon() and room != null or not _in_dungeon() and _map != null) and not (room and room.boss_room)
 	_reveal()
+	_show_floor(room if visible and _in_dungeon() else null)
 	if not visible:
 		return
 	_doors_age += delta
@@ -61,6 +65,15 @@ func _process(delta: float) -> void:
 		_doors_age = 0.0
 	view.queue_redraw()
 	marks.queue_redraw()
+
+
+## Etiqueta del piso arriba del minimapa (solo en mazmorras de varios pisos).
+func _show_floor(room: Room) -> void:
+	var dungeon_floor := DungeonFloor.of(room) if room else null
+	floor_tag.visible = dungeon_floor != null
+	if dungeon_floor:
+		floor_code.text = dungeon_floor.code()
+		floor_name.text = dungeon_floor.display_name
 
 
 func _bind(scene: Node) -> void:

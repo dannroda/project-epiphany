@@ -21,8 +21,8 @@
       "text": "Salas, guardado y mapa por piso"
     },
     {
-      "detail": "Mockup aprobado el 2026-10-11 en el canvas (Pausa · Mapa por pisos, HUD · Minimapa por pisos): columna de pisos 2P/1P/S1 a la izquierda del mapa con LT/RT, marcas de estás acá, cofres y jefe por piso; el cursor mantiene la celda al cambiar de piso; minimapa con etiqueta del piso. Falta construirlo.",
-      "done": false,
+      "detail": "Hecho (mockup aprobado el 2026-10-11): columna de pisos en la pestaña Mapa (MapFloorButton: código, nombre, estás acá, cofres y jefe con brújula), LT/RT o RePág/AvPág (acciones map_floor_up/down) o clic; el cursor mantiene la celda; etiqueta del piso sobre el minimapa. Tests en test_map.",
+      "done": true,
       "text": "UI: selector de pisos"
     },
     {
@@ -51,5 +51,5 @@
   ],
   "test": "",
   "title": "Mazmorra nueva de varios pisos",
-  "updated_at": "2026-10-11T21:51:38.979Z"
+  "updated_at": "2026-10-11T21:58:36.617Z"
 }

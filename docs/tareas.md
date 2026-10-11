@@ -3412,8 +3412,8 @@ Segunda mazmorra con pisos (y quizás sótanos) apilados en la misma escena, en 
   Hecho: Stairs (sube/baja, fundido corto, todos los players al marcador de llegada); un hueco con sala abajo cae a esa sala (sin daño, la entrada se anota al aterrizar); donde no hay, Pit. Piso agrietado (cracked_floor.tscn) que se rompe con bomba.
 - [x] Salas, guardado y mapa por piso
   Hecho: Room cuenta solo en la altura de su piso; visitadas, mapa y brújula de la mazmorra; mapa de pausa y minimapa muestran el piso de la sala actual y sus puertas. Tests en test_chullpa.
-- [ ] UI: selector de pisos
-  Mockup aprobado el 2026-10-11 en el canvas (Pausa · Mapa por pisos, HUD · Minimapa por pisos): columna de pisos 2P/1P/S1 a la izquierda del mapa con LT/RT, marcas de estás acá, cofres y jefe por piso; el cursor mantiene la celda al cambiar de piso; minimapa con etiqueta del piso. Falta construirlo.
+- [x] UI: selector de pisos
+  Hecho (mockup aprobado el 2026-10-11): columna de pisos en la pestaña Mapa (MapFloorButton: código, nombre, estás acá, cofres y jefe con brújula), LT/RT o RePág/AvPág (acciones map_floor_up/down) o clic; el cursor mantiene la celda; etiqueta del piso sobre el minimapa. Tests en test_map.
 - [ ] Entrada desde el overworld
   Falta decidir dónde está la chullpa en el overworld; el portal de salida apunta a un punto 'chullpa' que todavía no existe. Mientras, escenario de debug 'chullpa'.
 - [ ] Recorrerla (Daniel)

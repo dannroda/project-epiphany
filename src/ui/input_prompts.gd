@@ -67,7 +67,7 @@ static func _path_for(event: InputEvent, gamepad: bool) -> String:
 		return ""
 	if event is InputEventKey:
 		var keycode: Key = event.physical_keycode if event.physical_keycode != KEY_NONE else event.keycode
-		return KEYBOARD % ("keyboard_" + OS.get_keycode_string(keycode).to_lower().replace(" ", "_"))
+		return KEYBOARD % ("keyboard_" + OS.get_keycode_string(keycode).to_lower().replace(" ", "_").replace("page", "page_"))
 	if event is InputEventMouseButton and MOUSE_BUTTONS.has(event.button_index):
 		return KEYBOARD % MOUSE_BUTTONS[event.button_index]
 	return ""

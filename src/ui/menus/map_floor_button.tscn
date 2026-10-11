@@ -1,0 +1,35 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/ui/menus/map_floor_button.gd" id="1_floor"]
+[ext_resource type="Texture2D" uid="uid://bbh75d26628l5" path="res://assets/ui/frames/map_room.png" id="2_slot"]
+[ext_resource type="Texture2D" uid="uid://d1aqupafmga6l" path="res://assets/ui/frames/map_room_here.png" id="3_here"]
+[ext_resource type="FontFile" uid="uid://byrjjxr0lu8v3" path="res://assets/fonts/Cinzel.ttf" id="4_cinzel"]
+
+[sub_resource type="StyleBoxTexture" id="Normal"]
+texture = ExtResource("2_slot")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="Selected"]
+texture = ExtResource("3_here")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxEmpty" id="Empty"]
+
+[node name="MapFloorButton" type="Button"]
+custom_minimum_size = Vector2(150, 84)
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+flat = true
+script = ExtResource("1_floor")
+normal_style = SubResource("Normal")
+selected_style = SubResource("Selected")
+code_font = ExtResource("4_cinzel")
