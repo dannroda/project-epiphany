@@ -10,8 +10,12 @@ extends Node
 
 
 func _enter_tree() -> void:
-	RenderingServer.global_shader_parameter_set(&"cloud_shadows", Vector4(strength, size, drift.x, drift.y))
+	RenderingServer.global_shader_parameter_set(&"cloud_shadows", value())
 
 
 func _exit_tree() -> void:
 	RenderingServer.global_shader_parameter_set(&"cloud_shadows", Vector4.ZERO)
+
+
+func value() -> Vector4:
+	return Vector4(strength, size, drift.x, drift.y)

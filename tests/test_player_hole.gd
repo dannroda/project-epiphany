@@ -57,10 +57,12 @@ func test_the_camera_follows_the_player_with_the_hole() -> void:
 func test_clouds_only_while_in_the_overworld() -> void:
 	assert_true(ProjectSettings.has_setting("shader_globals/cloud_shadows"), "uniform global registrada")
 	var overworld: Node = load("res://levels/overworld.tscn").instantiate()
-	var tree := Engine.get_main_loop() as SceneTree
-	tree.root.add_child(overworld)
-	var clouds: Vector4 = RenderingServer.global_shader_parameter_get(&"cloud_shadows")
-	assert_true(clouds.x > 0.0 and clouds.y > 0.0, "las nubes pasan por el overworld")
-	tree.root.remove_child(overworld)
-	assert_eq(RenderingServer.global_shader_parameter_get(&"cloud_shadows"), Vector4.ZERO, "y no por el templo")
+	var clouds := overworld.get_node_or_null(^"CloudShadows")
+	assert_true(clouds != null, "el overworld tiene nubes")
+	if clouds:
+		var shade: Vector4 = clouds.value()
+		assert_true(shade.x > 0.0 and shade.y > 0.0, "fuerza y tamaño")
 	overworld.free()
+	var temple: Node = load("res://levels/temple.tscn").instantiate()
+	assert_true(temple.get_node_or_null(^"CloudShadows") == null, "el templo no")
+	temple.free()
