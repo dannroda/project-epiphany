@@ -43,6 +43,7 @@ VARIANTS = {
 	"diagonal_organico": {"style": "chamfer", "amp": 0.18},
 	"organico_lomas": {"style": "organic", "amp": 0.4, "lomas": 0.3},
 	"libre": {"style": "free", "amp": 0.4},
+	"libre_mc": {"style": "free_mc", "amp": 0.4},
 }
 
 W, H = len(MAP[0]), len(MAP)
@@ -192,7 +193,7 @@ def style(loop, variant, seed, jagged=0.0):
 		loop = chamfer(loop)
 	elif kind == "round":
 		loop = chamfer(loop, arc=5)
-	elif kind in ("organic", "free"):
+	elif kind in ("organic", "free", "free_mc"):
 		loop = chaikin(resample(loop, 1.0), 2)
 	loop = resample(loop, 0.4)
 	if variant.get("amp"):
@@ -410,14 +411,14 @@ def _paint_free(p, face, normal, center, paths):
 		p.paint([face], "gris_5" if z < DEPTH * 5 / 7 else "gris_4", "DARK")
 	elif normal.z > 0.7:
 		if z < 0.6 and any(_inside(center, pts) for pts, _f in paths):
-			p.paint([face], "tierra", "MID", vary=0.05)
+			p.paint([face], "tierra", "MID")
 		else:
-			p.paint([face], "pasto", "MID", vary=0.04)
+			p.paint([face], "pasto", "MID")
 	elif z < 0:
 		swatch = "acantilado" if z > DEPTH * 3 / 7 else "gris_4" if z > DEPTH * 5 / 7 else "gris_5"
 		p.paint([face], swatch, "MID" if swatch != "gris_5" else "DARK", vary=0.08)
 	else:
-		row = int(z / (TOP / 6))
+		row = int((z + 0.5) / ((TOP - CAP + 0.5) / 6))
 		if row < 2:
 			p.paint([face], "acantilado", "DARK", vary=0.05)
 		elif row == 3:
@@ -433,6 +434,132 @@ def _inside(point, polygon):
 		if (a.y > point.y) != (b.y > point.y) and point.x < (b.x - a.x) * (point.y - a.y) / (b.y - a.y) + a.x:
 			inside = not inside
 	return inside
+
+
+# --- marching cubes ---
+
+CUBE = [(x, y, z) for z in (0, 1) for y in (0, 1) for x in (0, 1)]
+CUBE_EDGES = [(a, b) for a in range(8) for b in range(a + 1, 8) if bin(a ^ b).count("1") == 1]
+CUBE_FACES = [(0, 2, 6, 4), (1, 3, 7, 5), (0, 1, 5, 4), (2, 3, 7, 6), (0, 1, 3, 2), (4, 5, 7, 6)]
+
+
+def _mc_table():
+	"""Triángulos (en aristas del cubo) de cada uno de los 256 casos: en cada cara se corta lo de adentro (en las caras
+	ambiguas cada esquina de adentro por separado, así dos cubos vecinos coinciden), y los cortes se encadenan en
+	polígonos que se abren en abanico. La orientación se arregla después con el gradiente."""
+	edge_id = {frozenset(e): i for i, e in enumerate(CUBE_EDGES)}
+	table = []
+	for case in range(256):
+		inside = [(case >> c) & 1 for c in range(8)]
+		segments = []
+		for face in CUBE_FACES:
+			sides = [edge_id[frozenset((face[k], face[(k + 1) % 4]))] for k in range(4)]
+			cut = [k for k in range(4) if inside[face[k]] != inside[face[(k + 1) % 4]]]
+			if len(cut) == 2:
+				segments.append((sides[cut[0]], sides[cut[1]]))
+			elif len(cut) == 4:
+				for k in range(4):
+					if inside[face[k]]:
+						segments.append((sides[k - 1], sides[k]))
+		tris = []
+		while segments:
+			a, b = segments.pop()
+			poly = [a, b]
+			while True:
+				nxt = next((s for s in segments if poly[-1] in s), None)
+				if nxt is None:
+					break
+				segments.remove(nxt)
+				other = nxt[1] if nxt[0] == poly[-1] else nxt[0]
+				if other == poly[0]:
+					break
+				poly.append(other)
+			tris += [(poly[0], poly[i], poly[i + 1]) for i in range(1, len(poly) - 1)]
+		table.append(tris)
+	return table
+
+
+def volume_terrain(paths, high, pits, ramp):
+	"""Un volumen (sólido donde la densidad es positiva) pasado a malla con marching cubes: el suelo con lomas, los
+	altos como columnas con estratos que salen y entran (repisas, aleros), el pozo excavado y la rampa."""
+	import numpy as np
+	voxel = 0.33
+	x0, y0 = BOUNDS[0]
+	z0 = DEPTH - 0.5
+	nx, ny, nz = int((BOUNDS[1].x - x0) / voxel) + 1, int((BOUNDS[1].y - y0) / voxel) + 1, int((TOP + 0.8 - z0) / voxel) + 1
+	xs, ys = np.meshgrid(x0 + np.arange(nx) * voxel, y0 + np.arange(ny) * voxel, indexing="ij")
+	pts = np.stack([xs.ravel(), ys.ravel()], 1)
+	sd_high = signed_distance(pts, [o for o, _f in high]).reshape(nx, ny)
+	sd_pit = signed_distance(pts, [o for o, _f in pits]).reshape(nx, ny)
+	sd_ramp = signed_distance(pts, [o for o, _f in ramp]).reshape(nx, ny)
+	base = np.array([0.3 * noise.noise(Vector((x * 0.3, y * 0.3, 3.7))) for x, y in pts]).reshape(nx, ny)
+	ramp_c = next((c, r) for r in range(GH) for c in range(GW) if GRID[r][c] == "^" and GRID[r + 1][c] != "^")
+	ramp_y0 = corner(*ramp_c).y - CELL
+	ramp_h = np.clip((ys - ramp_y0) / (2 * CELL), 0.0, 1.0) * TOP
+	row_height = (TOP - CAP + 0.5) / 6
+	density = np.empty((nx, ny, nz))
+	for k in range(nz):
+		z = z0 + k * voxel
+		row = min(6, max(0, round((z + 0.5) / row_height)))
+		strata = STRATA[row] + 0.03 if z < TOP - CAP else 0.0
+		rough = np.array([noise.noise(Vector((x * 0.9, y * 0.9, z * 0.9))) for x, y in pts]).reshape(nx, ny)
+		column = np.minimum(TOP + 0.04 * rough - z, sd_high + strata + 0.12 * rough)
+		solid = np.maximum(np.maximum(base - z, column), np.minimum(ramp_h - z, sd_ramp))
+		carve = np.minimum(sd_pit + 0.25 * rough + 0.06 * min(0.0, z), z - DEPTH)
+		density[:, :, k] = np.minimum(solid, -carve)
+	table = _mc_table()
+	cases = np.zeros((nx - 1, ny - 1, nz - 1), dtype=np.int32)
+	for c, (dx, dy, dz) in enumerate(CUBE):
+		cases |= (density[dx:nx - 1 + dx, dy:ny - 1 + dy, dz:nz - 1 + dz] > 0).astype(np.int32) << c
+	ground, rocks = epi.Piece(71), epi.Piece(72)
+	for i, j, k in zip(*np.nonzero((cases != 0) & (cases != 255))):
+		values = [density[i + dx, j + dy, k + dz] for dx, dy, dz in CUBE]
+		where = [Vector((x0 + (i + dx) * voxel, y0 + (j + dy) * voxel, z0 + (k + dz) * voxel)) for dx, dy, dz in CUBE]
+		grad = Vector((
+			sum(values[c] * (1 if CUBE[c][0] else -1) for c in range(8)),
+			sum(values[c] * (1 if CUBE[c][1] else -1) for c in range(8)),
+			sum(values[c] * (1 if CUBE[c][2] else -1) for c in range(8))))
+		points = {}
+		for tri in table[cases[i, j, k]]:
+			for e in tri:
+				if e not in points:
+					a, b = CUBE_EDGES[e]
+					t = values[a] / (values[a] - values[b])
+					points[e] = where[a].lerp(where[b], t)
+			v = [points[e] for e in tri]
+			normal = (v[1] - v[0]).cross(v[2] - v[0])
+			if normal.length < 1e-9:
+				continue
+			if normal.dot(grad) > 0:
+				v = [v[0], v[2], v[1]]
+				normal = -normal
+			normal.normalize()
+			center = (v[0] + v[1] + v[2]) / 3
+			piece = rocks if center.z > 0.5 or (normal.z < 0.8 and center.z > 0.1) else ground
+			piece.bm.faces.new([piece.bm.verts.new(x) for x in v])
+	cuts = [-0.5 + row_height * r for r in range(1, 6)] + [TOP - 0.08, DEPTH * 3 / 7, DEPTH * 5 / 7]
+	for piece in (ground, rocks):
+		bmesh.ops.remove_doubles(piece.bm, verts=list(piece.bm.verts), dist=0.0005)
+		for z in cuts:
+			geom = list(piece.bm.verts) + list(piece.bm.edges) + list(piece.bm.faces)
+			bmesh.ops.bisect_plane(piece.bm, geom=geom, plane_co=(0, 0, z), plane_no=(0, 0, 1))
+		for face in list(piece.bm.faces):
+			face.normal_update()
+			center = face.calc_center_median()
+			if face.normal.z < -0.2:
+				piece.paint([face], "acantilado", "DARK")
+			elif center.z > TOP - 0.08 and face.normal.z <= 0.7:
+				piece.paint([face], "pasto", "DARK")
+			else:
+				_paint_free(piece, face, face.normal, center, [])
+		bmesh.ops.dissolve_limit(piece.bm, angle_limit=math.radians(3), verts=list(piece.bm.verts), edges=list(piece.bm.edges), delimit={"UV"})
+		bmesh.ops.triangulate(piece.bm, faces=list(piece.bm.faces))
+	for points, _flags in paths:
+		ground.paint(fill(ground, [points], 0.05, lambda x, y: 0.3 * noise.noise(Vector((x * 0.3, y * 0.3, 3.7)))), "tierra", "MID")
+	for piece in (ground, rocks):
+		piece.fixed.update(piece.bm.faces)
+		print("marching cubes:", len(piece.bm.faces), "triángulos")
+	return ground, rocks
 
 
 # --- decoración y armado ---
@@ -481,7 +608,15 @@ def decor_spots(seed):
 def build_variant(name, variant, meshes, collection):
 	seed = sum(map(ord, name))
 	objects = []
-	if variant["style"] == "free":
+	if variant["style"] == "free_mc":
+		high = [style(lp, variant, seed) for lp in loops(lambda ch: ch in HIGH)]
+		pits = [style(lp, variant, seed + 5) for lp in loops(lambda ch: ch == "~")]
+		paths = [style(lp, variant, seed + 9, jagged=0.08) for lp in loops(lambda ch: ch == ":")]
+		ramp = [style(lp, {"style": "square"}, seed) for lp in loops(lambda ch: ch == "^")]
+		ground, rocks = volume_terrain(paths, high, pits, ramp)
+		objects.append(_build(ground, "suelo-col", "outdoor", collection))
+		objects.append(_build(rocks, "riscos-col", "wall", collection))
+	elif variant["style"] == "free":
 		high = [style(lp, variant, seed) for lp in loops(lambda ch: ch in HIGH)]
 		pits = [style(lp, variant, seed + 5) for lp in loops(lambda ch: ch == "~")]
 		paths = [style(lp, variant, seed + 9, jagged=0.08) for lp in loops(lambda ch: ch == ":")]
