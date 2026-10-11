@@ -63,7 +63,7 @@ func _awaken() -> void:
 	get_tree().call_group(&"hud", &"show_area_name", tr(boss.display_name))
 	Feel.sfx(&"rumble", boss.eye.global_position)
 	Feel.shake(0.35)
-	var player := get_tree().get_first_node_in_group(&"player") as Node3D
+	var player := Players.nearest(boss.eye.global_position)
 	if player:
 		boss.look_at_point(player.global_position + Vector3.UP)
 	var blink := boss.eye.create_tween()
@@ -122,8 +122,7 @@ func _spawn_reward(point: Vector3) -> void:
 func _on_reward_taken() -> void:
 	GameState.set_flag(CONTAINER_FLAG, true)
 	await get_tree().create_timer(0.3).timeout
-	var player := get_tree().get_first_node_in_group(&"player") as PlayerCharacter
-	while MenuStack.is_open() or (player and player.movement_state.get_active_state().name == &"ItemGet"):
+	while MenuStack.is_open() or Players.all.any(func(player: PlayerCharacter) -> bool: return player.movement_state.get_active_state().name == &"ItemGet"):
 		await get_tree().process_frame
 	Ending.open()
 

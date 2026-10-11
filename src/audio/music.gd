@@ -58,7 +58,7 @@ func targets() -> Dictionary[StringName, float]:
 		if boss_fight:
 			for layer in [&"pulse", &"murmur", &"heartbeat"]:
 				wanted[layer] = 1.0
-	elif get_tree().get_first_node_in_group(&"player"):
+	elif not Players.all.is_empty():
 		wanted[&"calm"] = 1.0
 	return wanted
 

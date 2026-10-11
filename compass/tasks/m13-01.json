@@ -2,17 +2,17 @@
   "checklist": [
     {
       "detail": "Un autoload o nodo `Players` con la lista y señales (joined/left); reemplaza las ~40 referencias al grupo \"player\" y los get_first_node_in_group.",
-      "done": false,
+      "done": true,
       "text": "Registro de players"
     },
     {
       "detail": "Desde ahora ningún sistema asume un solo player (anotado en GDD §13).",
-      "done": false,
+      "done": true,
       "text": "Regla para lo nuevo"
     },
     {
       "detail": "Los tests existentes pasan con 1 player; uno nuevo instancia 2 y revisa que salas, HUD e IA no se rompan.",
-      "done": false,
+      "done": true,
       "text": "Tests"
     }
   ],
@@ -58,12 +58,12 @@
       "section": "fuera-mvp"
     }
   ],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "coop",
     "arquitectura"
   ],
   "test": "Con 1 player el juego es idéntico; instanciar un segundo player no tira errores en overworld ni templo.",
   "title": "Código listo para varios players",
-  "updated_at": "2026-10-10T05:37:26.663Z"
+  "updated_at": "2026-10-11T00:52:50.718Z"
 }

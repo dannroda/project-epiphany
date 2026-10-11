@@ -36,6 +36,6 @@ func _physics_process(delta: float) -> void:
 func tremor() -> void:
 	trembled.emit()
 	Feel.shake(amount)
-	var player := get_tree().get_first_node_in_group(&"player") as Node3D
+	var player := Players.lead()
 	if player:
 		Feel.sfx(&"rumble", player.global_position)

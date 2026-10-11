@@ -134,7 +134,7 @@ func _show_dungeon() -> void:
 		high = high.max(room.map_cell)
 	cells.custom_minimum_size = Vector2(high - low + Vector2i.ONE) * STEP - Vector2(12, 12)
 	var current := _current_room()
-	var player := get_tree().get_first_node_in_group(&"player") as PlayerCharacter
+	var player := Players.lead()
 	for room: Room in rooms:
 		var visited := _dungeon.was_visited(room.room_index)
 		if not visited and not _dungeon.has_map and room != current:
@@ -341,7 +341,7 @@ func _place_overworld() -> void:
 		if tablet.is_read():
 			_add_mark(MapMark.Kind.TABLET, tablet.global_position)
 	_refresh_pins()
-	var player := get_tree().get_first_node_in_group(&"player") as PlayerCharacter
+	var player := Players.lead()
 	if player:
 		marker.position = world_to_map(Vector2(player.global_position.x, player.global_position.z))
 		var forward := player.model.global_basis.z

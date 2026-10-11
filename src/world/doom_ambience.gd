@@ -92,7 +92,7 @@ func _process(delta: float) -> void:
 func tremor() -> void:
 	_next_tremor = lerpf(tremor_interval.x, tremor_interval.y, level) * randf_range(0.7, 1.3)
 	Feel.shake(0.06 + 0.14 * level)
-	var player := get_tree().get_first_node_in_group(&"player") as Node3D
+	var player := Players.lead()
 	if player:
 		Feel.sfx(&"rumble", player.global_position)
 		if level > 0.5 and dust:

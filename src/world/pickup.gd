@@ -39,8 +39,8 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	_age += delta
 	_bounce(delta)
-	var player := get_tree().get_first_node_in_group(&"player") as PlayerCharacter
-	if player and not player.is_dead and _age >= pickup_delay:
+	var player := Players.nearest(global_position)
+	if player and _age >= pickup_delay:
 		var to := player.global_position - global_position
 		to.y = 0.0
 		if to.length() < magnet_radius:

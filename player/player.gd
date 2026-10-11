@@ -40,6 +40,14 @@ var _block_cone: MeshInstance3D
 var _light_frame := -10
 
 
+func _enter_tree() -> void:
+	Players.register(self)
+
+
+func _exit_tree() -> void:
+	Players.unregister(self)
+
+
 func _ready() -> void:
 	add_to_group(&"player")
 	_register_monitors()
@@ -400,10 +408,8 @@ static func _register_monitors() -> void:
 	if Performance.has_custom_monitor("epiphany/target_locked"):
 		return
 	Performance.add_custom_monitor("epiphany/player_hp", func() -> int:
-		var tree := Engine.get_main_loop() as SceneTree
-		var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+		var player := Players.lead()
 		return player.health.current if player else 0)
 	Performance.add_custom_monitor("epiphany/target_locked", func() -> int:
-		var tree := Engine.get_main_loop() as SceneTree
-		var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+		var player := Players.lead()
 		return 1 if player and player.targeting.current else 0)

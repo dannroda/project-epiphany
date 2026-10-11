@@ -1810,6 +1810,8 @@ Moneda y tiendas · NPCs con diálogo · piezas de corazón · gancho / telequin
 
 **Co-op (después del MVP, decidido el 2026-10-10):** estilo *Four Swords*: primero **local** (dos jugadores en la misma pantalla, M13) y después **online** (host autoritativo, M14). Progreso compartido en `GameState`; cada player con su control, sus corazones y su color (variante de paleta). **Regla desde ahora:** ningún sistema nuevo asume un solo player — se pide la lista de players (o el objetivo de la IA) en vez de "el" player del grupo `player`; el refactor de lo existente es la tarea 13.1.
 
+**Registro de players (13.1):** autoload `Players` (`src/state/players.gd`): `all`, señales `joined`/`left` (cada `PlayerCharacter` se anota al entrar al árbol y se borra al salir), `lead()`, `alive()`, `any_alive()` y `nearest(punto)`. Qué usa cada cosa: la IA (`FindPlayer` sigue al que ya tenía mientras lo vea; si no, el más cercano que vea), el jefe al empezar la pelea, los pickups (imán hacia el más cercano) y el jefe mirando en la intro usan `nearest`; lo que todavía es de uno solo usa `lead()` hasta que lleguen la cámara (13.3) y el HUD (13.5) para dos: guardar la posición, el nombre de la zona, el mapa, el HUD, Equipo y los temblores. Pausar pide algún player vivo; reaparecer pone a todos en fila (`SaveManager.PLAYER_SPACING`). El grupo `player` sigue (detección de cuerpos y tests), pero el código nuevo no busca "el" player con él. Todavía comparten el input (13.2).
+
 ## 14. Decisiones abiertas
 <!-- id: decisiones-abiertas -->
 

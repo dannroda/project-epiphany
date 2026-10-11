@@ -68,7 +68,7 @@ func _refresh_item_slots() -> void:
 func _bind_player() -> void:
 	if not is_inside_tree():
 		return
-	var player := get_tree().get_first_node_in_group(&"player") as PlayerCharacter
+	var player := Players.lead()
 	if player == null:
 		return
 	_health = player.health

@@ -244,5 +244,5 @@ func _keys(cfg: ConfigFile, section: String) -> Array[StringName]:
 
 
 func _process(delta: float) -> void:
-	if not get_tree().paused and get_tree().get_first_node_in_group(&"player") != null:
+	if not get_tree().paused and not Players.all.is_empty():
 		play_time += delta

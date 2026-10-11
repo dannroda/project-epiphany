@@ -110,7 +110,7 @@ func _refresh_stats() -> void:
 	pieces_value.text = "%d / %d" % [GameState.heart_pieces(), GameState.PIECES_PER_HEART]
 	for child in hearts.get_children():
 		child.queue_free()
-	var player := get_tree().get_first_node_in_group(&"player") as PlayerCharacter
+	var player := Players.lead()
 	var current: int = player.health.current if player else GameState.max_health
 	var count := ceili(GameState.max_health / float(HP_PER_HEART))
 	for i in count:
@@ -137,7 +137,7 @@ func _refresh_preview() -> void:
 	if _preview_model:
 		_preview_model.queue_free()
 		_preview_model = null
-	var player := get_tree().get_first_node_in_group(&"player") as PlayerCharacter
+	var player := Players.lead()
 	if player == null:
 		return
 	_preview_model = player.model.duplicate() as Node3D

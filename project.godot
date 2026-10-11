@@ -20,6 +20,7 @@ config/icon="res://assets/branding/icon.png"
 
 Items="*uid://c3fthcnre0g0f"
 GameState="*res://src/state/game_state.gd"
+Players="*res://src/state/players.gd"
 SaveManager="*res://src/save/save_manager.gd"
 Log="*res://addons/epiphany_tools/debug/runtime/log.gd"
 DebugOverlay="*res://addons/epiphany_tools/debug/runtime/debug_overlay.gd"

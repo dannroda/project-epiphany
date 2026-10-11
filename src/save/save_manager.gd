@@ -19,6 +19,8 @@ const PLAYER_SLOTS: Array[int] = [1, 2, 3]
 const SCENARIO_SLOT := 98
 ## Marca que las ranuras 0–2 de antes ya pasaron a 1–3.
 const MIGRATED_FILE := ".slots_v2"
+## Separación entre players al reaparecer juntos (co-op).
+const PLAYER_SPACING := 1.2
 
 ## Ranura del jugador de la partida en curso: ahí va Guardar; el autosave va a `AUTO_SLOT`.
 var current_slot := 1
@@ -174,7 +176,7 @@ func location() -> String:
 			var camera := get_tree().get_first_node_in_group(&"room_camera") as TopDownCamera
 			var room_name := camera.room.display_name if camera and camera.room else ""
 			return child.display_name + (" · " + room_name if not room_name.is_empty() else "")
-	var player := get_tree().get_first_node_in_group(&"player") as Node3D
+	var player := Players.lead()
 	for child in scene.get_children():
 		if child is AreaZone and player and (child as AreaZone).contains(player.global_position):
 			return child.display_name
@@ -252,7 +254,7 @@ func _capture_player() -> void:
 	var scene := get_tree().current_scene
 	if scene:
 		GameState.spawn_scene = scene.scene_file_path
-	var player := get_tree().get_first_node_in_group(&"player") as Node3D
+	var player := Players.lead()
 	if player:
 		GameState.player_position = player.global_position
 
@@ -299,20 +301,25 @@ func travel_to(scene_path: String, spawn: StringName) -> void:
 
 ## En mazmorra, en la entrada de la última sala; si no, en el punto de reaparición.
 func _place_at_spawn() -> void:
-	var player := get_tree().get_first_node_in_group(&"player") as CharacterBody3D
-	if player == null:
+	if Players.all.is_empty():
 		return
 	get_tree().call_group(&"room_camera", &"reset_room")
 	if GameState.current_dungeon != &"" and GameState.room_entry != null:
-		player.global_position = GameState.room_entry
-		player.velocity = Vector3.ZERO
+		_place_players(GameState.room_entry)
 		get_tree().call_group(&"room_camera", &"snap_to_target")
 		return
 	var point := SpawnPoint.find(get_tree(), GameState.spawn_point)
 	if point:
-		player.global_position = point.global_position
-		player.velocity = Vector3.ZERO
+		_place_players(point.global_position)
 	get_tree().call_group(&"room_camera", &"snap_to_target")
+
+
+## El primero en `at` y los demás en fila al costado.
+func _place_players(at: Vector3) -> void:
+	for i in Players.all.size():
+		var player := Players.all[i]
+		player.global_position = at + Vector3.RIGHT * PLAYER_SPACING * i
+		player.velocity = Vector3.ZERO
 
 
 func _restore_player() -> void:
@@ -320,9 +327,7 @@ func _restore_player() -> void:
 	if not GameState.spawn_scene.is_empty() and (scene == null or scene.scene_file_path != GameState.spawn_scene):
 		get_tree().change_scene_to_file(GameState.spawn_scene)
 		await get_tree().scene_changed
-	var player := get_tree().get_first_node_in_group(&"player") as CharacterBody3D
-	if player and GameState.player_position != null:
-		player.global_position = GameState.player_position
-		player.velocity = Vector3.ZERO
+	if not Players.all.is_empty() and GameState.player_position != null:
+		_place_players(GameState.player_position)
 	elif GameState.spawn_point != &"":
 		_place_at_spawn()

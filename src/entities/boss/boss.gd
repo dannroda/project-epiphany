@@ -122,7 +122,7 @@ func _ready() -> void:
 
 
 func start_fight() -> void:
-	target = get_tree().get_first_node_in_group(&"player") as Node3D
+	target = Players.nearest(eye.global_position)
 	phases.initialize(self)
 	phases.set_active(true)
 

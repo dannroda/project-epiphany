@@ -11,10 +11,10 @@ func _initialize() -> void:
 	var saves: Node = root.get_node(^"SaveManager")
 	await _measure("overworld · pradera con pasto", func() -> void:
 		await saves.load_scenario("start")
-		get_first_node_in_group(&"player").global_position = Vector3(0, 0, 2))
+		Players.lead().global_position = Vector3(0, 0, 2))
 	await _measure("templo · arena con oleadas", func() -> void:
 		await saves.load_scenario("dungeon_no_bow")
-		get_first_node_in_group(&"player").global_position = Vector3(48, 0, 37))
+		Players.lead().global_position = Vector3(48, 0, 37))
 	await _measure("templo · antesala (doom 0.9)", func() -> void:
 		await saves.load_scenario("pre_boss"))
 	quit()

@@ -1,6 +1,7 @@
 @tool
 extends BTCondition
-## Fija `target` si el player está a la vista (rango de la ficha + línea de visión).
+## Fija `target` con el player a la vista (rango de la ficha + línea de visión): sigue al que ya tenía mientras lo vea;
+## si no, el más cercano que vea.
 
 @export var target_var: StringName = &"target"
 ## Una vez visto, lo sigue viendo hasta este múltiplo del rango.
@@ -12,12 +13,17 @@ func _generate_name() -> String:
 
 
 func _tick(_delta: float) -> Status:
-	var player := agent.get_tree().get_first_node_in_group(&"player") as Node3D
 	var current: Node3D = blackboard.get_var(target_var, null, false)
-	var max_range: float = agent.config.vision_range * (lose_range_factor if current else 1.0)
-	if player and not player.get(&"is_dead") and _visible(player, max_range):
-		blackboard.set_var(target_var, player)
-		return SUCCESS
+	if current is PlayerCharacter and is_instance_valid(current) and not current.is_dead:
+		if _visible(current, agent.config.vision_range * lose_range_factor):
+			return SUCCESS
+	var candidates := Players.alive()
+	candidates.sort_custom(func(a: Node3D, b: Node3D) -> bool:
+		return agent.global_position.distance_squared_to(a.global_position) < agent.global_position.distance_squared_to(b.global_position))
+	for player in candidates:
+		if _visible(player, agent.config.vision_range):
+			blackboard.set_var(target_var, player)
+			return SUCCESS
 	blackboard.set_var(target_var, null)
 	return FAILURE
 

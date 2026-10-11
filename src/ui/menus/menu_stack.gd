@@ -116,5 +116,4 @@ func _focus(screen: Control) -> void:
 
 ## No se pausa sin player vivo (pantallas de carga, muerte, título).
 func _can_pause() -> bool:
-	var player := get_tree().get_first_node_in_group(&"player")
-	return player != null and not player.get(&"is_dead")
+	return Players.any_alive()
