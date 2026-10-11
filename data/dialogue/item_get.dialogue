@@ -3,7 +3,7 @@ Mantené el botón para tensar y apuntá con el stick izquierdo o el mouse; al s
 => END
 
 ~ bomb_bag
-Tocá el botón para dejar una bomba delante tuyo; mantenelo para levantarla, apuntá con el stick izquierdo o el mouse y soltá para tirarla. Rompe muros agrietados y empuja lo que está cerca. [ID:get_bomb_bag_1]
+Tocá el botón para dejar una bomba delante tuyo; mantenelo para levantarla, apuntá con el stick izquierdo o el mouse y soltá para tirarla. Rompe muros agrietados y corazas que la espada no atraviesa, y empuja lo que está cerca. [ID:get_bomb_bag_1]
 => END
 
 ~ shield_mirror
