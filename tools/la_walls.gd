@@ -19,20 +19,21 @@ const DOOR := "Puerta"
 const KINDS := {"pared": ["Pared LA ", "Pared"], "paso": ["Paso LA ", "Puerta"], "sube": ["Sube LA ", "Piso"], "baja": ["Baja LA ", "Piso"]}
 const SIDES := {"n": Vector3i(0, 0, -1), "e": Vector3i(1, 0, 0), "s": Vector3i(0, 0, 1), "o": Vector3i(-1, 0, 0)}
 const CORNERS := ["ne", "se", "so", "no"]
-const WALL_HEIGHT := 2.0
-## Ancho de la rampa según hacia dónde mira la pared (como RUN en build_paredes_la.py).
-const RUN := {"s": 0.5, "n": 1.5, "e": 1.0, "o": 1.0}
+## Rampa y alto según hacia dónde mira la pared (como PROFILE en build_paredes_la.py); la cámara tapa más allá de MASK_MARGIN.
+const PROFILE := {"s": [1.0, 2.0], "n": [1.2, 0.8], "e": [1.2, 2.0], "o": [1.2, 2.0]}
+const MASK_MARGIN := 2.0
 const BRAZIER_SCALE := 0.55
 const BRAZIER_FLAME := 1.07
 const DOOR_LEAF_SCALE := Vector3(0.7, 0.8, 1.0)
-## Cámara lejos y cerrada, casi sin perspectiva (como LA): las paredes de los costados tienen el mismo ancho arriba y abajo.
+## Cámara ortográfica (como LA): las paredes de los costados tienen el mismo ancho arriba y abajo.
 const CAMERA_OFFSET := Vector3(0, 84, 31.8)
-const CAMERA_FOV := 13.5
+const ORTHO_SIZE := 21.0
 
 
 func _initialize() -> void:
 	var mode := OS.get_cmdline_user_args()[0] if not OS.get_cmdline_user_args().is_empty() else "export"
 	var level: Node = (load(LEVEL) as PackedScene).instantiate()
+	_spread(level)
 	var cells := {}
 	for grid: GridMap in level.find_children("*", "GridMap", true, false):
 		cells[grid] = _shapes(grid)
@@ -72,8 +73,8 @@ func _dress(level: Node) -> void:
 			var torch := node as Node3D
 			var facing := torch.transform.basis.z.normalized()
 			var side := "s" if facing.z > 0.5 else "n" if facing.z < -0.5 else "e" if facing.x > 0.5 else "o"
-			torch.position = torch.position - facing * (RUN[side] + 0.3)
-			torch.position.y = WALL_HEIGHT
+			torch.position = torch.position - facing * (PROFILE[side][0] + MASK_MARGIN) / 2.0
+			torch.position.y = PROFILE[side][1]
 			var model := torch.get_node("Model") as MeshInstance3D
 			model.mesh = BRAZIER
 			model.position = Vector3.ZERO
@@ -91,8 +92,10 @@ func _dress(level: Node) -> void:
 			level.set_editable_instance(node, true)
 		elif node is Camera3D and "cuts_south_wall" in node:
 			node.set("offset", CAMERA_OFFSET)
-			node.set("field_of_view", CAMERA_FOV)
-			node.set("cuts_south_wall", false)
+			node.set("orthographic", true)
+			node.set("ortho_size", ORTHO_SIZE)
+			node.set("south_wall_cut", PROFILE["n"][1])
+			node.set("mask_margin", MASK_MARGIN)
 
 
 func _stairs_kind(node: Node) -> String:
@@ -154,3 +157,70 @@ func _kit() -> MeshLibrary:
 	if uid != ResourceUID.INVALID_ID:
 		ResourceSaver.set_uid(OUT_KIT, uid)
 	return load(OUT_KIT)
+
+
+## Duplica cada línea de pared entre salas (y la del borde), para que cada sala tenga su propia pared de 2 m: corre las celdas
+## y los nodos. Lo que está sobre una línea (puertas) queda en el medio de la pared doble; las escaleras, del lado de su sala.
+func _spread(level: Node) -> void:
+	var covered := [{}, {}]
+	for room: Node in level.find_children("*", "Area3D", true, false):
+		var shape := room.get_node_or_null(^"CollisionShape3D") as CollisionShape3D
+		if not "map_cell" in room or shape == null or not shape.shape is BoxShape3D:
+			continue
+		var size := (shape.shape as BoxShape3D).size
+		var center: Vector3 = (room as Node3D).position + shape.position
+		for axis in 2:
+			var c := center.x if axis == 0 else center.z
+			var half := (size.x if axis == 0 else size.z) / 2.0
+			for cell in range(ceili((c - half + 1.0) / 2.0 - 0.01), floori((c + half - 1.0) / 2.0 + 0.01) + 1):
+				covered[axis][cell] = true
+	var grids := level.find_children("*", "GridMap", true, false)
+	var low := Vector2i(1 << 20, 1 << 20)
+	var high := -low
+	for grid: GridMap in grids:
+		for cell in grid.get_used_cells():
+			low = Vector2i(mini(low.x, cell.x), mini(low.y, cell.z))
+			high = Vector2i(maxi(high.x, cell.x), maxi(high.y, cell.z))
+	var seps := [[], []]
+	for axis in 2:
+		for cell in range(low[axis], high[axis] + 1):
+			if not covered[axis].has(cell):
+				seps[axis].append(cell)
+	for grid: GridMap in grids:
+		var old := {}
+		for cell in grid.get_used_cells():
+			old[cell] = [grid.get_cell_item(cell), grid.get_cell_item_orientation(cell)]
+		grid.clear()
+		for cell: Vector3i in old:
+			for x in _copies(seps[0], cell.x):
+				for z in _copies(seps[1], cell.z):
+					grid.set_cell_item(Vector3i(x, cell.y, z), old[cell][0], old[cell][1])
+	for floor_node: Node in level.get_children():
+		for node: Node in floor_node.get_children() if floor_node.get_children().any(func(n: Node) -> bool: return n is GridMap) else []:
+			if node is GridMap or not node is Node3D:
+				continue
+			var spot := node as Node3D
+			var facing := spot.transform.basis.z
+			var stairs := _stairs_kind(node) != ""
+			spot.position.x = 2.0 * _shift(seps[0], spot.position.x / 2.0, facing.x if stairs else 0.0)
+			spot.position.z = 2.0 * _shift(seps[1], spot.position.z / 2.0, facing.z if stairs else 0.0)
+			if stairs:
+				var grid := floor_node.find_children("*", "GridMap", false, false)[0] as GridMap
+				var cell := grid.local_to_map(spot.position)
+				grid.set_cell_item(cell - Vector3i(roundi(facing.x), 0, roundi(facing.z)), grid.mesh_library.find_item_by_name(WALLS[0]))
+
+
+func _copies(seps: Array, cell: int) -> Array:
+	var at := cell + seps.filter(func(s: int) -> bool: return s < cell).size()
+	return [at, at + 1] if cell in seps else [at]
+
+
+## Coordenada (en celdas) corrida. Sobre una línea de pared: al medio de la doble, o, con `toward`, a la copia de ese lado.
+func _shift(seps: Array, u: float, toward: float) -> float:
+	for s: int in seps:
+		if absf(u - s) < 0.3:
+			var base := s + seps.filter(func(t: int) -> bool: return t < s).size()
+			if absf(toward) > 0.5:
+				return base + (1.0 if toward > 0.0 else 0.0)
+			return base + 0.5
+	return u + seps.filter(func(t: int) -> bool: return t < u).size()

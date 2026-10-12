@@ -17,8 +17,10 @@ import epi  # noqa: E402
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 HEIGHT = 2.0
 N = 24
-## Ancho de la rampa según hacia dónde está el piso: piso al sur = cara que mira a la cámara.
-RUN = {"s": 0.5, "n": 1.5, "e": 1.0, "o": 1.0}
+## Cada lado con piso ve su celda de pared (las paredes entre salas son dobles) (la cámara tapa lo demás): (rampa, alto). Piso al sur = pared norte de
+## la sala, alta y empinada con la cresta; piso al norte = pared sur, baja y tendida como en LA; los costados, altos.
+PROFILE = {"s": (1.0, HEIGHT), "n": (1.2, 0.8), "e": (1.2, HEIGHT), "o": (1.2, HEIGHT)}
+MARGIN = 2.0
 STONE = "acantilado"
 kit = epi.start()
 
@@ -27,17 +29,24 @@ def dist(x, y, side):
 	return {"n": 1 - y, "s": y + 1, "e": 1 - x, "o": x + 1}[side]
 
 
-def ramp(d, run):
-	return max(0.0, min(1.0, d / run))
+def profile(side, d):
+	run, top = PROFILE[side]
+	return top * max(0.0, min(1.0, d / run))
 
 
 def height(x, y, sides, corners):
-	f = 1.0
+	"""Cada punto toma el perfil de los lados con piso a menos de MARGIN (el más bajo si hay varios); si no hay ninguno
+	cerca, el más bajo de los lejanos. Las esquinas sueltas (piso solo en diagonal) son la unión de los dos perfiles."""
+	near, far = [], []
 	for side in sides:
-		f = min(f, ramp(dist(x, y, side), RUN[side]))
+		d = dist(x, y, side)
+		(near if d <= MARGIN else far).append(profile(side, d))
 	for c in corners:
-		f = min(f, max(ramp(dist(x, y, c[0]), RUN[c[0]]), ramp(dist(x, y, c[1]), RUN[c[1]])))
-	return HEIGHT * f
+		da, db = dist(x, y, c[0]), dist(x, y, c[1])
+		(near if da <= MARGIN and db <= MARGIN else far).append(max(profile(c[0], da), profile(c[1], db)))
+	if near:
+		return min(near)
+	return min(far) if far else HEIGHT
 
 
 def course_tone(c):
@@ -49,8 +58,8 @@ def course_tone(c):
 
 
 HALF = 0.7
-STEP_START = 0.4
-STEP_RUN = 0.3
+STEP_START = 0.3
+STEP_RUN = 0.35
 STEP_RISE = 0.25
 STEPS = 4
 
@@ -120,10 +129,10 @@ def piece(kind, code, cut=None):
 			elif d > STEP_START + STEPS * STEP_RUN:
 				p.paint([f], "noche", "DARK")
 			else:
-				shade(p, f, "piedra" if cut == "sube" else "gris_4", max(0.06, 0.6 - 0.45 * d / 1.6))
+				shade(p, f, "piedra" if cut == "sube" else "gris_4", max(0.06, 0.6 - 0.45 * d / 1.7))
 		elif inside and abs(f.normal.x if across_x(sides, cut) else f.normal.y) < 0.5:
-			shade(p, f, "piedra" if cut != "baja" else "gris_5", max(0.05, 0.3 - 0.2 * inside[0] / 1.6))
-		elif f.normal.z > 0.95 and c.z > HEIGHT - 0.05:
+			shade(p, f, "piedra" if cut != "baja" else "gris_5", max(0.05, 0.3 - 0.2 * inside[0] / 1.7))
+		elif f.normal.z > 0.95 and c.z > 0.3:
 			crest.append(f)
 		else:
 			shade(p, f, STONE, course_tone(c))
@@ -133,8 +142,9 @@ def piece(kind, code, cut=None):
 		if p.rng.random() > 0.12:
 			continue
 		c = f.calc_center_median()
-		rocks += p.blob((c.x, c.y, HEIGHT), p.rng.uniform(0.14, 0.22), squash=(1.1, 1.0, 0.6), subdiv=1, rough=0.25, flat_bottom=HEIGHT)
-	p.paint(rocks, "piedra", z_range=(HEIGHT - 0.1, HEIGHT + 0.25), vary=0.1)
+		r = p.rng.uniform(0.1, 0.16)
+		rocks += p.blob((c.x, c.y, c.z), r, squash=(1.1, 1.0, 0.6), subdiv=1, rough=0.25, flat_bottom=c.z)
+	p.paint(rocks, "piedra", "MID", vary=0.12)
 	p.build("%s_la_%s" % (kind, code), kit)
 
 

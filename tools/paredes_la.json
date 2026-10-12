@@ -5,25 +5,21 @@
 	],
 	"pared": [
 		"e",
-		"eo",
 		"n",
-		"ns",
 		"o",
 		"s",
+		"x",
 		"x_ne",
-		"x_ne_no",
-		"x_ne_se",
-		"x_ne_se_so_no",
 		"x_no",
 		"x_se",
-		"x_se_so",
-		"x_so",
-		"x_so_no"
+		"x_so"
 	],
 	"paso": [
-		"eo",
+		"e",
 		"n",
-		"ns"
+		"o",
+		"s",
+		"x"
 	],
 	"sube": [
 		"e",
