@@ -774,6 +774,51 @@ msgstr "Cripta oscura"
 msgid "PLACE_CH_CRYPT"
 msgstr "Cripta"
 
+msgid "PLACE_QUENOA"
+msgstr "La Queñoa Vigía"
+
+msgid "PLACE_FLOOR_ROOTS"
+msgstr "Raíces"
+
+msgid "PLACE_FLOOR_TRUNK"
+msgstr "Tronco"
+
+msgid "PLACE_FLOOR_CANOPY"
+msgstr "Copa"
+
+msgid "PLACE_QV_BRANCH"
+msgstr "Rama oeste"
+
+msgid "PLACE_QV_STAIRWELL"
+msgstr "Hueco de la escalera"
+
+msgid "PLACE_QV_TRUNK"
+msgstr "Tronco hueco"
+
+msgid "PLACE_QV_ENTRANCE"
+msgstr "Entrada"
+
+msgid "PLACE_QV_NEST"
+msgstr "Nido"
+
+msgid "PLACE_QV_CANOPY"
+msgstr "Copa"
+
+msgid "PLACE_QV_WARDEN"
+msgstr "Guarida del vigía"
+
+msgid "PLACE_QV_ANTECHAMBER"
+msgstr "Antesala"
+
+msgid "PLACE_QV_ROOTS"
+msgstr "Raíces"
+
+msgid "PLACE_QV_EYES"
+msgstr "Sala de los ojos"
+
+msgid "PLACE_QV_BOSS"
+msgstr "Corazón del árbol"
+
 msgid "PLACE_CH_OSSUARY"
 msgstr "Osario"
 

@@ -1,0 +1,551 @@
+[gd_scene format=3 uid="uid://dkprddkkruvxq"]
+
+[ext_resource type="Script" path="res://src/world/dungeon.gd" id="1_ka5m4"]
+[ext_resource type="Script" path="res://src/world/dungeon_floor.gd" id="2_u6itt"]
+[ext_resource type="MeshLibrary" path="res://data/kits/chullpa_kit.tres" id="3_ji7vh"]
+[ext_resource type="Script" path="res://src/world/room.gd" id="4_g2cit"]
+[ext_resource type="PackedScene" path="res://src/world/door.tscn" id="5_gq5qp"]
+[ext_resource type="PackedScene" path="res://src/world/eye_switch.tscn" id="7_crhmt"]
+[ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="9_i77fr"]
+[ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="11_5ogbh"]
+[ext_resource type="Resource" path="res://data/items/small_key.tres" id="13_vcwjq"]
+[ext_resource type="PackedScene" path="res://src/world/cracked_wall.tscn" id="14_y54qy"]
+[ext_resource type="Resource" path="res://data/items/boss_key.tres" id="16_8x4vj"]
+[ext_resource type="PackedScene" path="res://src/entities/enemy.tscn" id="17_r43r1"]
+[ext_resource type="PackedScene" path="res://src/world/stairs.tscn" id="20_ae6pq"]
+[ext_resource type="PackedScene" path="res://src/world/wall_torch.tscn" id="22_nm22u"]
+[ext_resource type="PackedScene" path="res://src/world/floor_switch.tscn" id="23_wvyc0"]
+[ext_resource type="PackedScene" path="res://src/world/push_block.tscn" id="25_41w6x"]
+[ext_resource type="PackedScene" path="res://src/world/heart_piece.tscn" id="27_qikql"]
+[ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="31_4k5gr"]
+[ext_resource type="PackedScene" path="res://src/world/stairs_down.tscn" id="34_dfq0f"]
+[ext_resource type="Resource" path="res://data/items/dungeon_map.tres" id="35_2hnwo"]
+[ext_resource type="Resource" path="res://data/items/compass.tres" id="36_8syh8"]
+[ext_resource type="Script" path="res://src/world/wave_spawner.gd" id="37_nit5u"]
+[ext_resource type="Script" path="res://src/world/wave_spawn.gd" id="38_a6a4g"]
+[ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="persistent_flag"]
+[ext_resource type="NavigationMesh" path="res://levels/nav/quenoa_navmesh.tres" id="nav_quenoa"]
+[ext_resource type="Resource" path="res://data/items/bow.tres" id="39_vhlen"]
+[ext_resource type="PackedScene" path="res://player/player.tscn" id="40_66c0e"]
+[ext_resource type="Script" path="res://src/world/spawn_point.gd" id="43_rqrax"]
+[ext_resource type="Script" path="res://src/world/portal.gd" id="44_d82md"]
+[ext_resource type="Script" path="res://src/tools/top_down_camera.gd" id="45_d6a2c"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="46_kifxg"]
+
+[sub_resource type="Environment" id="Environment_xuy7a"]
+background_mode = 1
+ambient_light_source = 2
+ambient_light_color = Color(0.55, 0.52, 0.65, 1)
+ambient_light_energy = 0.6
+tonemap_mode = 2
+fog_light_color = Color(0.25, 0.08, 0.06, 1)
+fog_density = 0.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tw10w"]
+size = Vector3(22, 2.4, 14)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qfyna"]
+size = Vector3(22, 2.4, 14)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b5g6x"]
+size = Vector3(22, 2.4, 14)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1o0uj"]
+size = Vector3(22, 2.4, 14)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_orgj2"]
+size = Vector3(22, 2.4, 14)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dxo2p"]
+size = Vector3(22, 2.4, 14)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_owgnv"]
+size = Vector3(22, 2.4, 14)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hiqku"]
+size = Vector3(22, 2.4, 14)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0sl1j"]
+size = Vector3(22, 2.4, 14)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lby5b"]
+size = Vector3(22, 2.4, 14)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5q4hq"]
+size = Vector3(22, 2.4, 14)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w3lyb"]
+size = Vector3(2, 2.4, 1.2)
+
+[node name="Quenoa" type="Node3D" unique_id=213387850]
+
+[node name="Dungeon" type="Node" parent="." unique_id=1454432452]
+script = ExtResource("1_ka5m4")
+id = &"qv"
+display_name = "PLACE_QUENOA"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1684361965]
+environment = SubResource("Environment_xuy7a")
+
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=1704964901]
+transform = Transform3D(0.8660254, -0.43301272, 0.24999999, 0, 0.49999997, 0.86602545, -0.5, -0.75, 0.43301266, 0, 0, 0)
+light_energy = 0.85
+shadow_enabled = true
+directional_shadow_mode = 1
+directional_shadow_max_distance = 32.0
+
+[node name="PisoRaices" type="Node3D" parent="." unique_id=979294698]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8, 0)
+script = ExtResource("2_u6itt")
+level = -1
+display_name = "PLACE_FLOOR_ROOTS"
+
+[node name="GridMap" type="GridMap" parent="PisoRaices" unique_id=2086710927 groups=["navmesh_source"]]
+mesh_library = ExtResource("3_ji7vh")
+cell_size = Vector3(2, 1, 2)
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+data = {
+"cells": PackedInt32Array(0, 0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 6, 1048580, 0, 7, 1, 0, 8, 1, 0, 9, 1, 0, 10, 1, 0, 11, 1, 0, 12, 1, 0, 13, 1, 0, 14, 1, 0, 15, 1, 0, 16, 1, 1, 0, 1, 1, 1, 0, 1, 2, 0, 1, 3, 0, 1, 4, 0, 1, 5, 0, 1, 6, 0, 1, 7, 0, 1, 8, 1, 1, 9, 1, 1, 10, 1, 1, 11, 1, 1, 12, 1, 1, 13, 1, 1, 14, 1, 1, 15, 1, 1, 16, 1, 2, 0, 1, 2, 1, 0, 2, 2, 0, 2, 3, 0, 2, 4, 0, 2, 5, 0, 2, 6, 0, 2, 7, 0, 2, 8, 1, 2, 9, 1, 2, 10, 1, 2, 11, 1, 2, 12, 1, 2, 13, 1, 2, 14, 1, 2, 15, 1, 2, 16, 1, 3, 0, 1, 3, 1, 0, 3, 2, 0, 3, 3, 0, 3, 4, 0, 3, 5, 0, 3, 6, 0, 3, 7, 0, 3, 8, 1, 3, 9, 1, 3, 10, 1, 3, 11, 1, 3, 12, 1, 3, 13, 1, 3, 14, 1, 3, 15, 1, 3, 16, 1, 4, 0, 1, 4, 1, 0, 4, 2, 0, 4, 3, 0, 4, 4, 0, 4, 5, 0, 4, 6, 0, 4, 7, 0, 4, 8, 1, 4, 9, 1, 4, 10, 1, 4, 11, 1, 4, 12, 1, 4, 13, 1, 4, 14, 1, 4, 15, 1, 4, 16, 1, 5, 0, 1, 5, 1, 0, 5, 2, 0, 5, 3, 0, 5, 4, 0, 5, 5, 0, 5, 6, 1, 5, 7, 1, 5, 8, 1, 5, 9, 1, 5, 10, 1, 5, 11, 1, 5, 12, 1, 5, 13, 1, 5, 14, 1, 5, 15, 1, 5, 16, 1, 6, 0, 1, 6, 1, 0, 6, 2, 0, 6, 3, 0, 6, 4, 0, 6, 5, 0, 6, 6, 0, 6, 7, 0, 6, 8, 1, 6, 9, 1, 6, 10, 1, 6, 11, 1, 6, 12, 1, 6, 13, 1, 6, 14, 1, 6, 15, 1, 6, 16, 1, 7, 0, 1, 7, 1, 0, 7, 2, 0, 7, 3, 0, 7, 4, 0, 7, 5, 0, 7, 6, 1, 7, 7, 1, 7, 8, 1, 7, 9, 1, 7, 10, 1, 7, 11, 1, 7, 12, 1, 7, 13, 1, 7, 14, 1, 7, 15, 1, 7, 16, 1, 8, 0, 1, 8, 1, 0, 8, 2, 0, 8, 3, 0, 8, 4, 0, 8, 5, 0, 8, 6, 0, 8, 7, 0, 8, 8, 1, 8, 9, 1, 8, 10, 1, 8, 11, 1, 8, 12, 1, 8, 13, 1, 8, 14, 1, 8, 15, 1, 8, 16, 1, 9, 0, 1, 9, 1, 0, 9, 2, 0, 9, 3, 0, 9, 4, 0, 9, 5, 0, 9, 6, 0, 9, 7, 0, 9, 8, 1, 9, 9, 1, 9, 10, 1, 9, 11, 1, 9, 12, 1, 9, 13, 1, 9, 14, 1, 9, 15, 1, 9, 16, 1, 10, 0, 1, 10, 1, 0, 10, 2, 0, 10, 3, 0, 10, 4, 0, 10, 5, 0, 10, 6, 0, 10, 7, 0, 10, 8, 1, 10, 9, 1, 10, 10, 1, 10, 11, 1, 10, 12, 1, 10, 13, 1, 10, 14, 1, 10, 15, 1, 10, 16, 1, 11, 0, 1, 11, 1, 0, 11, 2, 0, 11, 3, 0, 11, 4, 0, 11, 5, 0, 11, 6, 0, 11, 7, 0, 11, 8, 1, 11, 9, 1, 11, 10, 1, 11, 11, 1, 11, 12, 1, 11, 13, 1, 11, 14, 1, 11, 15, 1, 11, 16, 1, 12, 0, 1, 12, 1, 1, 12, 2, 1, 12, 3, 1, 12, 4, 1, 12, 5, 1, 12, 6, 1048580, 12, 7, 1, 12, 8, 1, 12, 9, 1, 12, 10, 1, 12, 11, 1, 12, 12, 1, 12, 13, 1, 12, 14, 1, 12, 15, 1, 12, 16, 1, 13, 0, 1, 13, 1, 0, 13, 2, 0, 13, 3, 0, 13, 4, 0, 13, 5, 0, 13, 6, 0, 13, 7, 0, 13, 8, 1, 13, 9, 0, 13, 10, 0, 13, 11, 0, 13, 12, 0, 13, 13, 0, 13, 14, 0, 13, 15, 0, 13, 16, 1, 14, 0, 1, 14, 1, 0, 14, 2, 0, 14, 3, 0, 14, 4, 0, 14, 5, 0, 14, 6, 0, 14, 7, 0, 14, 8, 1, 14, 9, 0, 14, 10, 0, 14, 11, 0, 14, 12, 0, 14, 13, 0, 14, 14, 0, 14, 15, 0, 14, 16, 1, 15, 0, 1, 15, 1, 0, 15, 2, 0, 15, 3, 0, 15, 4, 0, 15, 5, 0, 15, 6, 0, 15, 7, 0, 15, 8, 1, 15, 9, 0, 15, 10, 0, 15, 11, 0, 15, 12, 0, 15, 13, 0, 15, 14, 0, 15, 15, 0, 15, 16, 1, 16, 0, 1, 16, 1, 0, 16, 2, 0, 16, 3, 0, 16, 4, 0, 16, 5, 0, 16, 6, 0, 16, 7, 0, 16, 8, 1, 16, 9, 0, 16, 10, 0, 16, 11, 0, 16, 12, 0, 16, 13, 0, 16, 14, 0, 16, 15, 0, 16, 16, 1, 17, 0, 1, 17, 1, 1, 17, 2, 1, 17, 3, 0, 17, 4, 0, 17, 5, 0, 17, 6, 0, 17, 7, 0, 17, 8, 1, 17, 9, 0, 17, 10, 0, 17, 11, 0, 17, 12, 0, 17, 13, 0, 17, 14, 0, 17, 15, 0, 17, 16, 1, 18, 0, 1, 18, 1, 0, 18, 2, 0, 18, 3, 0, 18, 4, 0, 18, 5, 0, 18, 6, 0, 18, 7, 0, 18, 8, 4, 18, 9, 0, 18, 10, 0, 18, 11, 0, 18, 12, 0, 18, 13, 0, 18, 14, 0, 18, 15, 0, 18, 16, 1, 19, 0, 1, 19, 1, 1, 19, 2, 1, 19, 3, 0, 19, 4, 0, 19, 5, 0, 19, 6, 0, 19, 7, 0, 19, 8, 1, 19, 9, 0, 19, 10, 0, 19, 11, 0, 19, 12, 0, 19, 13, 0, 19, 14, 0, 19, 15, 0, 19, 16, 1, 20, 0, 1, 20, 1, 0, 20, 2, 0, 20, 3, 0, 20, 4, 0, 20, 5, 0, 20, 6, 0, 20, 7, 0, 20, 8, 1, 20, 9, 0, 20, 10, 0, 20, 11, 0, 20, 12, 0, 20, 13, 0, 20, 14, 0, 20, 15, 0, 20, 16, 1, 21, 0, 1, 21, 1, 1, 21, 2, 1, 21, 3, 0, 21, 4, 0, 21, 5, 0, 21, 6, 0, 21, 7, 0, 21, 8, 1, 21, 9, 0, 21, 10, 0, 21, 11, 0, 21, 12, 0, 21, 13, 0, 21, 14, 0, 21, 15, 0, 21, 16, 1, 22, 0, 1, 22, 1, 0, 22, 2, 0, 22, 3, 0, 22, 4, 0, 22, 5, 0, 22, 6, 0, 22, 7, 0, 22, 8, 1, 22, 9, 0, 22, 10, 0, 22, 11, 0, 22, 12, 0, 22, 13, 0, 22, 14, 0, 22, 15, 0, 22, 16, 1, 23, 0, 1, 23, 1, 1, 23, 2, 1, 23, 3, 0, 23, 4, 0, 23, 5, 0, 23, 6, 0, 23, 7, 0, 23, 8, 1, 23, 9, 0, 23, 10, 0, 23, 11, 0, 23, 12, 0, 23, 13, 0, 23, 14, 0, 23, 15, 0, 23, 16, 1, 24, 0, 1, 24, 1, 1, 24, 2, 1, 24, 3, 1, 24, 4, 1, 24, 5, 1, 24, 6, 1, 24, 7, 1, 24, 8, 1, 24, 9, 1, 24, 10, 1, 24, 11, 1, 24, 12, 1, 24, 13, 1, 24, 14, 1, 24, 15, 1, 24, 16, 1)
+}
+
+[node name="Raices" type="Area3D" parent="PisoRaices" unique_id=1825834023]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.2, 8)
+script = ExtResource("4_g2cit")
+room_index = 8
+display_name = "PLACE_QV_ROOTS"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoRaices/Raices" unique_id=915025192]
+shape = SubResource("BoxShape3D_tw10w")
+
+[node name="Ojos" type="Area3D" parent="PisoRaices" unique_id=417395759]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.2, 8)
+script = ExtResource("4_g2cit")
+room_index = 9
+display_name = "PLACE_QV_EYES"
+map_cell = Vector2i(1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoRaices/Ojos" unique_id=1285106676]
+shape = SubResource("BoxShape3D_qfyna")
+
+[node name="Jefe" type="Area3D" parent="PisoRaices" unique_id=680377674]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.2, 24)
+script = ExtResource("4_g2cit")
+room_index = 10
+display_name = "PLACE_QV_BOSS"
+map_cell = Vector2i(1, 1)
+boss_room = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoRaices/Jefe" unique_id=1498335628]
+shape = SubResource("BoxShape3D_b5g6x")
+
+[node name="RaicesLocked" parent="PisoRaices" unique_id=928128145 instance=ExtResource("5_gq5qp")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 24, 0, 12)
+kind = 1
+flag = &"qv_roots_locked_door"
+depth = 2.0
+
+[node name="BossDoor" parent="PisoRaices" unique_id=791963616 instance=ExtResource("5_gq5qp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 16)
+kind = 4
+flag = &"qv_boss_door"
+depth = 2.0
+
+[node name="RootEyeA" parent="PisoRaices" unique_id=1424022934 instance=ExtResource("7_crhmt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 1.6)
+flag = &"qv_root_eye_a"
+
+[node name="RootEyeB" parent="PisoRaices" unique_id=43094080 instance=ExtResource("7_crhmt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 1.6)
+flag = &"qv_root_eye_b"
+
+[node name="RootKeyGate" parent="PisoRaices" unique_id=567533266 instance=ExtResource("9_i77fr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 12)
+switches = Array[NodePath]([NodePath("../RootEyeA"), NodePath("../RootEyeB")])
+depth = 2.0
+
+[node name="RootKeyChest" parent="PisoRaices" unique_id=55072511 instance=ExtResource("11_5ogbh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 14)
+item = ExtResource("13_vcwjq")
+flag = &"qv_root_key_chest"
+
+[node name="FromTrunk" type="Marker3D" parent="PisoRaices" unique_id=453295079]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4, 0, 12)
+
+[node name="HiddenEye" parent="PisoRaices" unique_id=2067681723 instance=ExtResource("7_crhmt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 1.6)
+flag = &"qv_hidden_eye"
+
+[node name="OjosCrackedWall" parent="PisoRaices" unique_id=698424788 instance=ExtResource("14_y54qy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 4)
+flag = &"qv_hidden_cracked_wall"
+
+[node name="BossKeyGate" parent="PisoRaices" unique_id=197594756 instance=ExtResource("9_i77fr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 4)
+switches = Array[NodePath]([NodePath("../HiddenEye")])
+depth = 2.0
+
+[node name="BossKeyChest" parent="PisoRaices" unique_id=1495581339 instance=ExtResource("11_5ogbh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 2)
+item = ExtResource("16_8x4vj")
+flag = &"qv_boss_key_chest"
+big = true
+
+[node name="OjosEnemy1" parent="PisoRaices" unique_id=510737741 instance=ExtResource("17_r43r1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 10)
+
+[node name="RaicesStairs" parent="PisoRaices" unique_id=1198347042 node_paths=PackedStringArray("to") instance=ExtResource("20_ae6pq")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 12)
+to = NodePath("../../PisoTronco/FromRoots")
+
+[node name="Torch_Raices_0" parent="PisoRaices" unique_id=1278729808 instance=ExtResource("22_nm22u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.6, 1)
+
+[node name="Torch_Raices_1" parent="PisoRaices" unique_id=1631603675 instance=ExtResource("22_nm22u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.6, 1)
+
+[node name="Torch_Ojos_0" parent="PisoRaices" unique_id=630904660 instance=ExtResource("22_nm22u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.6, 1)
+
+[node name="Torch_Ojos_1" parent="PisoRaices" unique_id=202491737 instance=ExtResource("22_nm22u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1.6, 1)
+
+[node name="Torch_Jefe_0" parent="PisoRaices" unique_id=207485506 instance=ExtResource("22_nm22u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.6, 17)
+
+[node name="Torch_Jefe_1" parent="PisoRaices" unique_id=2047317627 instance=ExtResource("22_nm22u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1.6, 17)
+
+[node name="PisoTronco" type="Node3D" parent="." unique_id=893486123]
+script = ExtResource("2_u6itt")
+display_name = "PLACE_FLOOR_TRUNK"
+
+[node name="GridMap" type="GridMap" parent="PisoTronco" unique_id=548970249 groups=["navmesh_source"]]
+mesh_library = ExtResource("3_ji7vh")
+cell_size = Vector3(2, 1, 2)
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+data = {
+"cells": PackedInt32Array(0, 0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 6, 1, 0, 7, 1, 0, 8, 1, 0, 9, 1, 0, 10, 1048580, 0, 11, 1, 0, 12, 1, 0, 13, 1, 0, 14, 1, 0, 15, 1, 0, 16, 1, 1, 0, 1, 1, 1, 0, 1, 2, 0, 1, 3, 0, 1, 4, 0, 1, 5, 0, 1, 6, 0, 1, 7, 0, 1, 8, 1, 1, 9, 1, 1, 10, 0, 1, 11, 1, 1, 12, 0, 1, 13, 0, 1, 14, 0, 1, 15, 0, 1, 16, 1, 2, 0, 1, 2, 1, 1, 2, 2, 1, 2, 3, 0, 2, 4, 0, 2, 5, 0, 2, 6, 0, 2, 7, 0, 2, 8, 1, 2, 9, 0, 2, 10, 0, 2, 11, 0, 2, 12, 0, 2, 13, 0, 2, 14, 0, 2, 15, 0, 2, 16, 1, 3, 0, 1, 3, 1, 0, 3, 2, 0, 3, 3, 0, 3, 4, 0, 3, 5, 0, 3, 6, 0, 3, 7, 0, 3, 8, 1, 3, 9, 0, 3, 10, 0, 3, 11, 0, 3, 12, 0, 3, 13, 0, 3, 14, 0, 3, 15, 0, 3, 16, 1, 4, 0, 1, 4, 1, 1, 4, 2, 1, 4, 3, 0, 4, 4, 0, 4, 5, 0, 4, 6, 0, 4, 7, 0, 4, 8, 1, 4, 9, 0, 4, 10, 0, 4, 11, 0, 4, 12, 0, 4, 13, 0, 4, 14, 0, 4, 15, 0, 4, 16, 1, 5, 0, 1, 5, 1, 0, 5, 2, 0, 5, 3, 0, 5, 4, 0, 5, 5, 0, 5, 6, 0, 5, 7, 0, 5, 8, 1, 5, 9, 0, 5, 10, 0, 5, 11, 0, 5, 12, 0, 5, 13, 0, 5, 14, 0, 5, 15, 0, 5, 16, 1, 6, 0, 1, 6, 1, 0, 6, 2, 0, 6, 3, 0, 6, 4, 0, 6, 5, 0, 6, 6, 0, 6, 7, 0, 6, 8, 4, 6, 9, 0, 6, 10, 0, 6, 11, 0, 6, 12, 0, 6, 13, 0, 6, 14, 0, 6, 15, 0, 6, 16, 1, 7, 0, 1, 7, 1, 0, 7, 2, 0, 7, 3, 0, 7, 4, 0, 7, 5, 0, 7, 6, 0, 7, 7, 0, 7, 8, 1, 7, 9, 0, 7, 10, 0, 7, 11, 0, 7, 12, 0, 7, 13, 0, 7, 14, 0, 7, 15, 0, 7, 16, 1, 8, 0, 1, 8, 1, 1, 8, 2, 1, 8, 3, 0, 8, 4, 0, 8, 5, 0, 8, 6, 0, 8, 7, 0, 8, 8, 1, 8, 9, 0, 8, 10, 0, 8, 11, 0, 8, 12, 0, 8, 13, 0, 8, 14, 0, 8, 15, 0, 8, 16, 1, 9, 0, 1, 9, 1, 0, 9, 2, 0, 9, 3, 0, 9, 4, 0, 9, 5, 0, 9, 6, 0, 9, 7, 0, 9, 8, 1, 9, 9, 0, 9, 10, 0, 9, 11, 0, 9, 12, 0, 9, 13, 0, 9, 14, 0, 9, 15, 0, 9, 16, 1, 10, 0, 1, 10, 1, 1, 10, 2, 1, 10, 3, 0, 10, 4, 0, 10, 5, 0, 10, 6, 0, 10, 7, 0, 10, 8, 1, 10, 9, 0, 10, 10, 0, 10, 11, 0, 10, 12, 0, 10, 13, 0, 10, 14, 0, 10, 15, 0, 10, 16, 1, 11, 0, 1, 11, 1, 0, 11, 2, 0, 11, 3, 0, 11, 4, 0, 11, 5, 0, 11, 6, 0, 11, 7, 0, 11, 8, 1, 11, 9, 0, 11, 10, 0, 11, 11, 0, 11, 12, 0, 11, 13, 0, 11, 14, 0, 11, 15, 0, 11, 16, 1, 12, 0, 1, 12, 1, 1, 12, 2, 1, 12, 3, 1, 12, 4, 1, 12, 5, 1, 12, 6, 1, 12, 7, 1, 12, 8, 1, 12, 9, 1, 12, 10, 1, 12, 11, 1, 12, 12, 1048580, 12, 13, 1, 12, 14, 1, 12, 15, 1, 12, 16, 1, 13, 0, 1, 13, 1, 0, 13, 2, 0, 13, 3, 0, 13, 4, 0, 13, 5, 0, 13, 6, 0, 13, 7, 0, 13, 8, 1, 13, 9, 0, 13, 10, 0, 13, 11, 0, 13, 12, 0, 13, 13, 0, 13, 14, 0, 13, 15, 0, 13, 16, 1, 14, 0, 1, 14, 1, 0, 14, 2, 0, 14, 3, 0, 14, 4, 0, 14, 5, 0, 14, 6, 0, 14, 7, 0, 14, 8, 1, 14, 9, 0, 14, 10, 0, 14, 11, 0, 14, 12, 0, 14, 13, 0, 14, 14, 0, 14, 15, 0, 14, 16, 1, 15, 0, 1, 15, 1, 0, 15, 2, 0, 15, 3, 0, 15, 4, 0, 15, 5, 0, 15, 6, 0, 15, 7, 0, 15, 8, 1, 15, 9, 0, 15, 10, 0, 15, 11, 0, 15, 12, 0, 15, 13, 0, 15, 14, 0, 15, 15, 0, 15, 16, 1, 16, 0, 1, 16, 1, 0, 16, 2, 0, 16, 3, 0, 16, 4, 0, 16, 5, 0, 16, 6, 0, 16, 7, 0, 16, 8, 1, 16, 9, 0, 16, 10, 0, 16, 11, 0, 16, 12, 0, 16, 13, 0, 16, 14, 0, 16, 15, 0, 16, 16, 1, 17, 0, 1, 17, 1, 0, 17, 2, 0, 17, 3, 0, 17, 4, 0, 17, 5, 0, 17, 6, 0, 17, 7, 0, 17, 8, 1, 17, 9, 0, 17, 10, 0, 17, 11, 0, 17, 12, 0, 17, 13, 0, 17, 14, 0, 17, 15, 0, 17, 16, 1, 18, 0, 4, 18, 1, 0, 18, 2, 0, 18, 3, 0, 18, 4, 0, 18, 5, 0, 18, 6, 0, 18, 7, 0, 18, 8, 1, 18, 9, 0, 18, 10, 0, 18, 11, 0, 18, 12, 0, 18, 13, 0, 18, 14, 0, 18, 15, 0, 18, 16, 4, 19, 0, 1, 19, 1, 0, 19, 2, 0, 19, 3, 0, 19, 4, 0, 19, 5, 0, 19, 6, 0, 19, 7, 0, 19, 8, 1, 19, 9, 0, 19, 10, 0, 19, 11, 0, 19, 12, 0, 19, 13, 0, 19, 14, 0, 19, 15, 0, 19, 16, 1, 20, 0, 1, 20, 1, 0, 20, 2, 0, 20, 3, 0, 20, 4, 0, 20, 5, 0, 20, 6, 0, 20, 7, 0, 20, 8, 1, 20, 9, 0, 20, 10, 0, 20, 11, 0, 20, 12, 0, 20, 13, 0, 20, 14, 0, 20, 15, 0, 20, 16, 1, 21, 0, 1, 21, 1, 0, 21, 2, 0, 21, 3, 0, 21, 4, 0, 21, 5, 0, 21, 6, 0, 21, 7, 0, 21, 8, 1, 21, 9, 0, 21, 10, 0, 21, 11, 0, 21, 12, 0, 21, 13, 0, 21, 14, 0, 21, 15, 0, 21, 16, 1, 22, 0, 1, 22, 1, 0, 22, 2, 0, 22, 3, 0, 22, 4, 0, 22, 5, 0, 22, 6, 0, 22, 7, 0, 22, 8, 4, 22, 9, 0, 22, 10, 0, 22, 11, 0, 22, 12, 0, 22, 13, 0, 22, 14, 0, 22, 15, 0, 22, 16, 1, 23, 0, 1, 23, 1, 0, 23, 2, 0, 23, 3, 0, 23, 4, 0, 23, 5, 0, 23, 6, 0, 23, 7, 0, 23, 8, 1, 23, 9, 0, 23, 10, 0, 23, 11, 0, 23, 12, 0, 23, 13, 0, 23, 14, 0, 23, 15, 0, 23, 16, 1, 24, 0, 1, 24, 1, 1, 24, 2, 1, 24, 3, 1, 24, 4, 1, 24, 5, 1, 24, 6, 1, 24, 7, 1, 24, 8, 1, 24, 9, 1, 24, 10, 1, 24, 11, 1, 24, 12, 1, 24, 13, 1, 24, 14, 1, 24, 15, 1, 24, 16, 1)
+}
+
+[node name="Rama" type="Area3D" parent="PisoTronco" unique_id=691708513]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.2, 8)
+script = ExtResource("4_g2cit")
+display_name = "PLACE_QV_BRANCH"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoTronco/Rama" unique_id=1830683328]
+shape = SubResource("BoxShape3D_1o0uj")
+
+[node name="Escalera" type="Area3D" parent="PisoTronco" unique_id=2094677338]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.2, 8)
+script = ExtResource("4_g2cit")
+room_index = 1
+display_name = "PLACE_QV_STAIRWELL"
+map_cell = Vector2i(1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoTronco/Escalera" unique_id=1392349754]
+shape = SubResource("BoxShape3D_orgj2")
+
+[node name="Tronco" type="Area3D" parent="PisoTronco" unique_id=850770037]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.2, 24)
+script = ExtResource("4_g2cit")
+room_index = 2
+display_name = "PLACE_QV_TRUNK"
+map_cell = Vector2i(0, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoTronco/Tronco" unique_id=511267539]
+shape = SubResource("BoxShape3D_dxo2p")
+
+[node name="Entrada" type="Area3D" parent="PisoTronco" unique_id=119332382]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.2, 24)
+script = ExtResource("4_g2cit")
+room_index = 3
+display_name = "PLACE_QV_ENTRANCE"
+map_cell = Vector2i(1, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoTronco/Entrada" unique_id=345453128]
+shape = SubResource("BoxShape3D_owgnv")
+
+[node name="EntradaLocked" parent="PisoTronco" unique_id=1950879804 instance=ExtResource("5_gq5qp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 16)
+kind = 1
+flag = &"qv_entrance_locked_door"
+depth = 2.0
+
+[node name="RamaSwitch" parent="PisoTronco" unique_id=380941476 instance=ExtResource("23_wvyc0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 10)
+mode = 2
+flag = &"qv_west_switch"
+
+[node name="RamaBlock" parent="PisoTronco" unique_id=312255785 instance=ExtResource("25_41w6x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 10)
+solved_flag = &"qv_west_switch"
+solved_position = Vector3(14, 0, 10)
+
+[node name="RamaKeyGate" parent="PisoTronco" unique_id=759443533 instance=ExtResource("9_i77fr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 4)
+switches = Array[NodePath]([NodePath("../RamaSwitch")])
+depth = 2.0
+
+[node name="RamaKeyChest" parent="PisoTronco" unique_id=1940824733 instance=ExtResource("11_5ogbh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 2)
+item = ExtResource("13_vcwjq")
+flag = &"qv_west_key_chest"
+
+[node name="RamaEye" parent="PisoTronco" unique_id=567842958 instance=ExtResource("7_crhmt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 1.6)
+flag = &"qv_west_eye"
+
+[node name="HeartGate" parent="PisoTronco" unique_id=736230981 instance=ExtResource("9_i77fr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 4)
+switches = Array[NodePath]([NodePath("../RamaEye")])
+depth = 2.0
+
+[node name="HeartPieceRama" parent="PisoTronco" unique_id=42612648 instance=ExtResource("27_qikql")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 2)
+flag = &"qv_heart_piece"
+
+[node name="RamaEnemy1" parent="PisoTronco" unique_id=2031318847 instance=ExtResource("17_r43r1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 12)
+
+[node name="RamaEnemy2" parent="PisoTronco" unique_id=550345268 instance=ExtResource("17_r43r1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 12)
+
+[node name="TroncoEye" parent="PisoTronco" unique_id=59961283 instance=ExtResource("7_crhmt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 17.6)
+flag = &"qv_trunk_eye"
+
+[node name="TroncoGate" parent="PisoTronco" unique_id=1495134382 instance=ExtResource("9_i77fr")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, 0, 20)
+switches = Array[NodePath]([NodePath("../TroncoEye")])
+depth = 2.0
+
+[node name="EntradaPot1" parent="PisoTronco" unique_id=780741351 instance=ExtResource("31_4k5gr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 18)
+
+[node name="EntradaPot2" parent="PisoTronco" unique_id=1543954952 instance=ExtResource("31_4k5gr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 0, 30)
+
+[node name="FromCanopy" type="Marker3D" parent="PisoTronco" unique_id=2120924244]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 4)
+
+[node name="FromRoots" type="Marker3D" parent="PisoTronco" unique_id=513193480]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4, 0, 20)
+
+[node name="TroncoStairs" parent="PisoTronco" unique_id=501035157 node_paths=PackedStringArray("to") instance=ExtResource("34_dfq0f")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 20)
+to = NodePath("../../PisoRaices/FromTrunk")
+
+[node name="EscaleraStairs" parent="PisoTronco" unique_id=1420585042 node_paths=PackedStringArray("to") instance=ExtResource("20_ae6pq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 0)
+to = NodePath("../../PisoCopa/FromTrunk")
+
+[node name="Torch_Rama_0" parent="PisoTronco" unique_id=1417249236 instance=ExtResource("22_nm22u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.6, 1)
+
+[node name="Torch_Rama_1" parent="PisoTronco" unique_id=1121408574 instance=ExtResource("22_nm22u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.6, 1)
+
+[node name="Torch_Escalera_0" parent="PisoTronco" unique_id=939954064 instance=ExtResource("22_nm22u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.6, 1)
+
+[node name="Torch_Escalera_1" parent="PisoTronco" unique_id=1503086538 instance=ExtResource("22_nm22u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1.6, 1)
+
+[node name="Torch_Tronco_0" parent="PisoTronco" unique_id=1548844831 instance=ExtResource("22_nm22u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.6, 17)
+
+[node name="Torch_Tronco_1" parent="PisoTronco" unique_id=1657363572 instance=ExtResource("22_nm22u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.6, 17)
+
+[node name="Torch_Entrada_0" parent="PisoTronco" unique_id=1006346956 instance=ExtResource("22_nm22u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.6, 17)
+
+[node name="Torch_Entrada_1" parent="PisoTronco" unique_id=729744238 instance=ExtResource("22_nm22u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1.6, 17)
+
+[node name="PisoCopa" type="Node3D" parent="." unique_id=934917712]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
+script = ExtResource("2_u6itt")
+level = 1
+display_name = "PLACE_FLOOR_CANOPY"
+
+[node name="GridMap" type="GridMap" parent="PisoCopa" unique_id=2115704018 groups=["navmesh_source"]]
+mesh_library = ExtResource("3_ji7vh")
+cell_size = Vector3(2, 1, 2)
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+data = {
+"cells": PackedInt32Array(0, 0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 6, 1, 0, 7, 1, 0, 8, 1, 0, 9, 1, 0, 10, 1, 0, 11, 1, 0, 12, 1, 0, 13, 1, 0, 14, 1, 0, 15, 1, 0, 16, 1, 1, 0, 1, 1, 1, 0, 1, 2, 0, 1, 3, 0, 1, 4, 0, 1, 5, 0, 1, 6, 0, 1, 7, 0, 1, 8, 1, 1, 9, 0, 1, 10, 0, 1, 11, 0, 1, 12, 0, 1, 13, 0, 1, 14, 0, 1, 15, 0, 1, 16, 1, 2, 0, 1, 2, 1, 0, 2, 2, 0, 2, 3, 0, 2, 4, 0, 2, 5, 0, 2, 6, 0, 2, 7, 0, 2, 8, 1, 2, 9, 0, 2, 10, 0, 2, 11, 0, 2, 12, 0, 2, 13, 0, 2, 14, 0, 2, 15, 0, 2, 16, 1, 3, 0, 1, 3, 1, 0, 3, 2, 0, 3, 3, 0, 3, 4, 0, 3, 5, 0, 3, 6, 21, 3, 7, 0, 3, 8, 1, 3, 9, 0, 3, 10, 0, 3, 11, 0, 3, 12, 0, 3, 13, 0, 3, 14, 0, 3, 15, 0, 3, 16, 1, 4, 0, 1, 4, 1, 0, 4, 2, 0, 4, 3, 0, 4, 4, 0, 4, 5, 0, 4, 6, 0, 4, 7, 0, 4, 8, 1, 4, 9, 0, 4, 10, 0, 4, 11, 0, 4, 12, 0, 4, 13, 0, 4, 14, 0, 4, 15, 0, 4, 16, 1, 5, 0, 1, 5, 1, 0, 5, 2, 0, 5, 3, 0, 5, 4, 0, 5, 5, 0, 5, 6, 0, 5, 7, 0, 5, 8, 1, 5, 9, 1, 5, 10, 1, 5, 11, 0, 5, 12, 0, 5, 13, 0, 5, 14, 0, 5, 15, 0, 5, 16, 1, 6, 0, 1, 6, 1, 0, 6, 2, 0, 6, 3, 0, 6, 4, 0, 6, 5, 0, 6, 6, 0, 6, 7, 0, 6, 8, 1, 6, 9, 0, 6, 10, 0, 6, 11, 0, 6, 12, 0, 6, 13, 0, 6, 14, 0, 6, 15, 0, 6, 16, 1, 7, 0, 1, 7, 1, 0, 7, 2, 0, 7, 3, 0, 7, 4, 0, 7, 5, 0, 7, 6, 0, 7, 7, 0, 7, 8, 1, 7, 9, 1, 7, 10, 1, 7, 11, 0, 7, 12, 0, 7, 13, 0, 7, 14, 0, 7, 15, 0, 7, 16, 1, 8, 0, 1, 8, 1, 0, 8, 2, 0, 8, 3, 0, 8, 4, 0, 8, 5, 0, 8, 6, 0, 8, 7, 0, 8, 8, 1, 8, 9, 0, 8, 10, 0, 8, 11, 0, 8, 12, 0, 8, 13, 0, 8, 14, 0, 8, 15, 0, 8, 16, 1, 9, 0, 1, 9, 1, 0, 9, 2, 0, 9, 3, 0, 9, 4, 0, 9, 5, 0, 9, 6, 0, 9, 7, 0, 9, 8, 1, 9, 9, 0, 9, 10, 0, 9, 11, 0, 9, 12, 21, 9, 13, 0, 9, 14, 0, 9, 15, 0, 9, 16, 1, 10, 0, 1, 10, 1, 0, 10, 2, 0, 10, 3, 0, 10, 4, 0, 10, 5, 0, 10, 6, 0, 10, 7, 0, 10, 8, 1, 10, 9, 0, 10, 10, 0, 10, 11, 0, 10, 12, 0, 10, 13, 0, 10, 14, 0, 10, 15, 0, 10, 16, 1, 11, 0, 1, 11, 1, 0, 11, 2, 0, 11, 3, 0, 11, 4, 0, 11, 5, 0, 11, 6, 0, 11, 7, 0, 11, 8, 1, 11, 9, 0, 11, 10, 0, 11, 11, 0, 11, 12, 0, 11, 13, 0, 11, 14, 0, 11, 15, 0, 11, 16, 1, 12, 0, 1, 12, 1, 1, 12, 2, 1, 12, 3, 1, 12, 4, 1048580, 12, 5, 1, 12, 6, 1, 12, 7, 1, 12, 8, 1, 12, 9, 1, 12, 10, 1, 12, 11, 1, 12, 12, 1048580, 12, 13, 1, 12, 14, 1, 12, 15, 1, 12, 16, 1, 13, 0, 1, 13, 1, 0, 13, 2, 0, 13, 3, 0, 13, 4, 0, 13, 5, 0, 13, 6, 0, 13, 7, 0, 13, 8, 1, 13, 9, 0, 13, 10, 0, 13, 11, 0, 13, 12, 0, 13, 13, 0, 13, 14, 0, 13, 15, 0, 13, 16, 1, 14, 0, 1, 14, 1, 0, 14, 2, 0, 14, 3, 0, 14, 4, 0, 14, 5, 0, 14, 6, 0, 14, 7, 0, 14, 8, 1, 14, 9, 0, 14, 10, 0, 14, 11, 0, 14, 12, 0, 14, 13, 0, 14, 14, 0, 14, 15, 0, 14, 16, 1, 15, 0, 1, 15, 1, 0, 15, 2, 0, 15, 3, 0, 15, 4, 0, 15, 5, 0, 15, 6, 0, 15, 7, 0, 15, 8, 1, 15, 9, 0, 15, 10, 0, 15, 11, 0, 15, 12, 0, 15, 13, 0, 15, 14, 0, 15, 15, 0, 15, 16, 1, 16, 0, 1, 16, 1, 0, 16, 2, 0, 16, 3, 0, 16, 4, 0, 16, 5, 0, 16, 6, 0, 16, 7, 0, 16, 8, 1, 16, 9, 0, 16, 10, 0, 16, 11, 0, 16, 12, 0, 16, 13, 0, 16, 14, 0, 16, 15, 0, 16, 16, 1, 17, 0, 1, 17, 1, 0, 17, 2, 0, 17, 3, 0, 17, 4, 0, 17, 5, 0, 17, 6, 0, 17, 7, 0, 17, 8, 1, 17, 9, 0, 17, 10, 0, 17, 11, 0, 17, 12, 0, 17, 13, 0, 17, 14, 0, 17, 15, 0, 17, 16, 1, 18, 0, 4, 18, 1, 0, 18, 2, 0, 18, 3, 0, 18, 4, 0, 18, 5, 0, 18, 6, 0, 18, 7, 0, 18, 8, 4, 18, 9, 0, 18, 10, 0, 18, 11, 0, 18, 12, 0, 18, 13, 0, 18, 14, 0, 18, 15, 0, 18, 16, 1, 19, 0, 1, 19, 1, 0, 19, 2, 0, 19, 3, 0, 19, 4, 0, 19, 5, 0, 19, 6, 0, 19, 7, 0, 19, 8, 1, 19, 9, 0, 19, 10, 0, 19, 11, 0, 19, 12, 0, 19, 13, 0, 19, 14, 0, 19, 15, 0, 19, 16, 1, 20, 0, 1, 20, 1, 0, 20, 2, 0, 20, 3, 0, 20, 4, 0, 20, 5, 0, 20, 6, 0, 20, 7, 0, 20, 8, 1, 20, 9, 0, 20, 10, 0, 20, 11, 0, 20, 12, 0, 20, 13, 0, 20, 14, 0, 20, 15, 0, 20, 16, 1, 21, 0, 1, 21, 1, 0, 21, 2, 0, 21, 3, 0, 21, 4, 0, 21, 5, 0, 21, 6, 0, 21, 7, 0, 21, 8, 1, 21, 9, 0, 21, 10, 0, 21, 11, 0, 21, 12, 0, 21, 13, 0, 21, 14, 0, 21, 15, 0, 21, 16, 1, 22, 0, 1, 22, 1, 0, 22, 2, 0, 22, 3, 0, 22, 4, 0, 22, 5, 0, 22, 6, 0, 22, 7, 0, 22, 8, 1, 22, 9, 0, 22, 10, 0, 22, 11, 0, 22, 12, 0, 22, 13, 0, 22, 14, 0, 22, 15, 0, 22, 16, 1, 23, 0, 1, 23, 1, 0, 23, 2, 0, 23, 3, 0, 23, 4, 0, 23, 5, 0, 23, 6, 0, 23, 7, 0, 23, 8, 1, 23, 9, 0, 23, 10, 0, 23, 11, 0, 23, 12, 0, 23, 13, 0, 23, 14, 0, 23, 15, 0, 23, 16, 1, 24, 0, 1, 24, 1, 1, 24, 2, 1, 24, 3, 1, 24, 4, 1, 24, 5, 1, 24, 6, 1, 24, 7, 1, 24, 8, 1, 24, 9, 1, 24, 10, 1, 24, 11, 1, 24, 12, 1, 24, 13, 1, 24, 14, 1, 24, 15, 1, 24, 16, 1)
+}
+
+[node name="Nido" type="Area3D" parent="PisoCopa" unique_id=1797799344]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.2, 8)
+script = ExtResource("4_g2cit")
+room_index = 4
+display_name = "PLACE_QV_NEST"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoCopa/Nido" unique_id=926110519]
+shape = SubResource("BoxShape3D_hiqku")
+
+[node name="Copa" type="Area3D" parent="PisoCopa" unique_id=910296247]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.2, 8)
+script = ExtResource("4_g2cit")
+room_index = 5
+display_name = "PLACE_QV_CANOPY"
+map_cell = Vector2i(1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoCopa/Copa" unique_id=561728411]
+shape = SubResource("BoxShape3D_0sl1j")
+
+[node name="Vigia" type="Area3D" parent="PisoCopa" unique_id=812528767]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.2, 24)
+script = ExtResource("4_g2cit")
+room_index = 6
+display_name = "PLACE_QV_WARDEN"
+map_cell = Vector2i(0, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoCopa/Vigia" unique_id=892482244]
+shape = SubResource("BoxShape3D_lby5b")
+
+[node name="Antesala" type="Area3D" parent="PisoCopa" unique_id=266752495]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.2, 24)
+script = ExtResource("4_g2cit")
+room_index = 7
+display_name = "PLACE_QV_ANTECHAMBER"
+map_cell = Vector2i(1, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoCopa/Antesala" unique_id=521729438]
+shape = SubResource("BoxShape3D_5q4hq")
+
+[node name="NidoCrackedWall" parent="PisoCopa" unique_id=1892586098 instance=ExtResource("14_y54qy")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 24, 0, 8)
+flag = &"qv_nest_cracked_wall"
+
+[node name="CopaLocked" parent="PisoCopa" unique_id=191687561 instance=ExtResource("5_gq5qp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 16)
+kind = 1
+flag = &"qv_canopy_locked_door"
+depth = 2.0
+
+[node name="MapChest" parent="PisoCopa" unique_id=822495786 instance=ExtResource("11_5ogbh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 6)
+item = ExtResource("35_2hnwo")
+flag = &"qv_map_chest"
+
+[node name="CopaEnemy1" parent="PisoCopa" unique_id=1777270686 instance=ExtResource("17_r43r1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 10)
+
+[node name="CopaEnemy2" parent="PisoCopa" unique_id=1788957876 instance=ExtResource("17_r43r1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 12)
+
+[node name="NidoKeyChest" parent="PisoCopa" unique_id=2011647554 instance=ExtResource("11_5ogbh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 4)
+item = ExtResource("13_vcwjq")
+flag = &"qv_nest_key_chest"
+
+[node name="CompassChest" parent="PisoCopa" unique_id=1961742828 instance=ExtResource("11_5ogbh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 4)
+item = ExtResource("36_8syh8")
+flag = &"qv_compass_chest"
+
+[node name="VigiaWaves" type="Node3D" parent="PisoCopa" unique_id=1146533812 node_paths=PackedStringArray("room")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 26)
+script = ExtResource("37_nit5u")
+room = NodePath("../Vigia")
+flag = &"qv_warden_defeated"
+
+[node name="PersistentFlag" type="Node" parent="PisoCopa/VigiaWaves"]
+script = ExtResource("persistent_flag")
+
+[node name="Wave1" type="Node3D" parent="PisoCopa/VigiaWaves" unique_id=1205015310]
+
+[node name="Spawn1" type="Marker3D" parent="PisoCopa/VigiaWaves/Wave1" unique_id=1376980181]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
+script = ExtResource("38_a6a4g")
+enemy = ExtResource("17_r43r1")
+
+[node name="Spawn2" type="Marker3D" parent="PisoCopa/VigiaWaves/Wave1" unique_id=1606598811]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
+script = ExtResource("38_a6a4g")
+enemy = ExtResource("17_r43r1")
+
+[node name="BowGate" parent="PisoCopa" unique_id=213452068 instance=ExtResource("9_i77fr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 20)
+switches = Array[NodePath]([NodePath("../VigiaWaves")])
+depth = 2.0
+
+[node name="BowChest" parent="PisoCopa" unique_id=75794340 instance=ExtResource("11_5ogbh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 18)
+item = ExtResource("39_vhlen")
+flag = &"qv_bow_chest"
+big = true
+
+[node name="AntesalaPot1" parent="PisoCopa" unique_id=954175055 instance=ExtResource("31_4k5gr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 20)
+
+[node name="AntesalaPot2" parent="PisoCopa" unique_id=1980234430 instance=ExtResource("31_4k5gr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 0, 20)
+
+[node name="FromTrunk" type="Marker3D" parent="PisoCopa" unique_id=1105092565]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 4)
+
+[node name="CopaStairs" parent="PisoCopa" unique_id=1180159998 node_paths=PackedStringArray("to") instance=ExtResource("34_dfq0f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 0)
+to = NodePath("../../PisoTronco/FromCanopy")
+
+[node name="Torch_Nido_0" parent="PisoCopa" unique_id=1283380538 instance=ExtResource("22_nm22u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.6, 1)
+
+[node name="Torch_Nido_1" parent="PisoCopa" unique_id=88506322 instance=ExtResource("22_nm22u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.6, 1)
+
+[node name="Torch_Copa_0" parent="PisoCopa" unique_id=463622559 instance=ExtResource("22_nm22u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.6, 1)
+
+[node name="Torch_Copa_1" parent="PisoCopa" unique_id=456008790 instance=ExtResource("22_nm22u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1.6, 1)
+
+[node name="Torch_Vigia_0" parent="PisoCopa" unique_id=1735770310 instance=ExtResource("22_nm22u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.6, 17)
+
+[node name="Torch_Vigia_1" parent="PisoCopa" unique_id=302876205 instance=ExtResource("22_nm22u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.6, 17)
+
+[node name="Torch_Antesala_0" parent="PisoCopa" unique_id=1142861956 instance=ExtResource("22_nm22u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.6, 17)
+
+[node name="Torch_Antesala_1" parent="PisoCopa" unique_id=1577219414 instance=ExtResource("22_nm22u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1.6, 17)
+
+[node name="Player" parent="." unique_id=1694148988 instance=ExtResource("40_66c0e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 28)
+
+[node name="SpawnStart" type="Marker3D" parent="." unique_id=1456984558]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 28)
+script = ExtResource("43_rqrax")
+
+[node name="ExitPortal" type="Area3D" parent="." unique_id=38217254]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.2, 33.4)
+script = ExtResource("44_d82md")
+target_scene = "res://levels/overworld.tscn"
+target_spawn = &"arboleda"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPortal" unique_id=615693408]
+shape = SubResource("BoxShape3D_w3lyb")
+
+[node name="TopDownCamera" type="Camera3D" parent="." unique_id=1044510348 node_paths=PackedStringArray("target_node")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 17.4, 38)
+fov = 40.0
+script = ExtResource("45_d6a2c")
+target_node = NodePath("../Player")
+mask_margin = 2.0
+
+[node name="HUD" parent="." unique_id=960326471 instance=ExtResource("46_kifxg")]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1214710855]
+navigation_mesh = ExtResource("nav_quenoa")

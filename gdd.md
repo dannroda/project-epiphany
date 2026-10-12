@@ -420,22 +420,53 @@ Decidido el 2026-10-11. Torre funeraria de piedra (chullpa) con sótano de enter
 
 **Ítems anteriores:** usa bombas y arco (vienen de D1 y de antes). **Overworld:** la pluma abre la pieza de la Pradera y los angostos del barranco (§7.1). **Huecos:** cuando un hueco lleva a otra sala, el piso de abajo se ve iluminado a través; si no hay nada abajo, vuelve a la entrada como hoy. **Técnica (hecha):** `levels/chullpa.tscn`. Cada piso es un `DungeonFloor` (`level` −1, 0, 1; nombre del piso para el mapa) con su GridMap, sus salas y lo que hay en él, a `DungeonFloor.HEIGHT` = 8 m uno del otro. Una sala dentro de un piso cuenta solo desde 2,5 m debajo de su piso hasta el de arriba, así que el que cae por un hueco pasa a la sala de abajo: la cámara cambia de sala sin deslizarse, se lleva a los demás players y anota la entrada recién al aterrizar. La cámara oculta los pisos de arriba de la sala actual; el de abajo se ve por los huecos. Donde no hay sala abajo (1NE, B-NO) va un `Pit` como siempre. `Stairs` (`stairs.tscn` sube, `stairs_down.tscn` baja): fundido corto y todos los players aparecen en su `to`, un marcador afuera de la escalera de llegada; la escalera de mano de B-SE no tiene vuelta. El piso agrietado de 2SE es `cracked_floor.tscn` (el script del muro agrietado sobre un hueco). Visitadas, mapa y brújula siguen siendo de la mazmorra. **Selector de pisos** (mockups *Pausa · Mapa por pisos* y *HUD · Minimapa por pisos*): en una mazmorra de varios pisos, la pestaña Mapa tiene a la izquierda una columna con los pisos de arriba abajo (`DungeonFloor.code()`: 2P, 1P, S1), cada uno con su nombre y sus marcas (estás acá; con brújula, cofres sin abrir y jefe); abre en el piso de la sala actual y se cambia con LT/RT (`map_floor_up`/`map_floor_down`, en teclado RePág/AvPág) o con un clic, y el cursor queda en la misma celda. El minimapa muestra el piso actual con una etiqueta arriba. `tools/vary_temple.gd` arregla los huecos y paredes de cada GridMap de las dos mazmorras, y la navmesh se hornea con `godot --headless --path . --script res://tools/bake_overworld_nav.gd -- chullpa`. Escenario de debug: `chullpa`. Las columnas que eran postes del gancho quedan de decoración.
 
-## 8c. Mazmorra 1 — La Queñoa Vigía (diseño, 11.113)
+## 8c. Mazmorra 1 — La Queñoa Vigía (11.113)
 <!-- id: mazmorra-1 -->
 
-Propuesto el 2026-10-12, en revisión. Una queñoa antigua y hueca en el claro de la Arboleda, con ojos que le crecen en la corteza: son vigías del Ojo con manos del templo, así que D1 presenta los ojos y el final muestra de dónde salen. Tronco (planta baja), Copa (arriba) y Raíces (abajo), con huecos que caen al piso de abajo como en la Chullpa. Ítem: el **arco**. Trae las bombas de la cueva. Grafo de diseño: `data/dungeons/d1_graph.tres` (todavía sin escena).
+Propuesta el 2026-10-12 y armada en blockout (`levels/quenoa.tscn`). Una queñoa antigua y hueca en el claro de la Arboleda, con ojos que le crecen en la corteza: son vigías del Ojo con manos del templo, así que D1 presenta los ojos y el final muestra de dónde salen. Tres pisos de 2 × 2 salas como la Chullpa (Raíces, Tronco y Copa, 8 m uno del otro); un hueco cae a la sala de abajo. Ítem: el **arco**. Trae las bombas de la cueva. Grafo: `data/dungeons/d1_graph.tres` (con escena; pasa el test y las reglas del molde).
 
-| Zona | Qué pasa |
+```
+ COPA     ┌────────┬────────┐
+          │Nido    │Copa    │
+          │llave,  ├(bomba)─┤ mapa
+          │brújula │escalera│
+          │hueco↓  ├─[LLAVE]┤
+          │Vigía   │Antesala│
+          │ARCO    ├ abierta┤
+          │hueco↓  │        │
+          └────────┴────────┘
+ TRONCO   ┌────────┬────────┐
+          │Rama    │Escalera│
+          │bloque→ │escalera│
+          │llave   │   ▲    │
+          ├ abierta┼─[LLAVE]┤
+          │Tronco  │Entrada │
+          │ojo→    ├ abierta┤
+          │escalera│ salida │
+          └────────┴────────┘
+ RAÍCES   ┌────────┬────────┐
+          │Raíces  │Ojos    │
+          │2 ojos →├[LLAVE]─┤ ojo tras muro
+          │llave   │llave j.│ agrietado
+          │(macizo)├[JEFE]──┤
+          │        │Jefe    │
+          └────────┴────────┘
+```
+
+| Sala | Qué pasa |
 |---|---|
-| Entrada → Tronco | El hub. Un ojo alto en el tronco (con el arco) abre la bajada a las Raíces del sur |
-| Rama oeste | Interruptor de bloque → **llave chica**. Un ojo inalcanzable al principio: con el arco, pieza de corazón |
-| Copa | Con llave desde el Tronco. **Mapa**. Muro agrietado (bomba) al Nido; puerta con llave a la Antesala; un hueco cae a las Raíces del norte |
-| Nido | **Llave chica** |
-| Raíces norte | Donde se cae desde la Copa: **brújula** y una escalera que solo sube al Tronco |
-| Antesala → Vigía | Sub-jefe: un ojo que barre con un rayo y queda enganchado en las raíces después de cada uno; se le pega con la espada o se le tira una bomba o una vasija al ojo abierto. Guarda el **arco** |
-| Raíces sur | Con el arco, desde el Tronco. Dos ojos abren el cofre de la **llave chica** |
-| Ojos | Con llave. Un ojo detrás de un muro agrietado (bomba y flecha) da la **llave del jefe** |
-| Jefe | Dos ojos que flotan por la arena y barren con rayos; se abren para cargar y una flecha al ojo abierto los derriba para la espada. Al caer uno, el otro se apura |
+| Entrada (Tronco SE) | Llega del overworld. Abierta al Tronco; puerta con llave al hueco de la escalera |
+| Tronco (SO) | Hub. Un ojo en la pared norte (arco) abre la reja de la escalera que baja a las Raíces. Abajo cae el hueco de la guarida del vigía |
+| Rama oeste (NO) | Bloque al interruptor → reja del nicho de la **llave chica**. Un ojo en la pared norte, inalcanzable sin arco, abre el nicho de la pieza de corazón. Abajo cae el hueco del nido |
+| Hueco de la escalera (NE) | Con la llave. Escalera a la Copa |
+| Copa (NE) | **Mapa**. Muro agrietado (bomba) al Nido; puerta con llave a la Antesala |
+| Nido (NO) | **Llave chica** y **brújula**. Un hueco cae a la Rama: atajo de vuelta |
+| Antesala (SE) → Guarida del vigía (SO) | Sub-jefe (blockout: oleada de enemigos, `qv_warden_defeated`) que abre el nicho del **arco**. Un hueco cae al Tronco |
+| Raíces (NO) | Con el arco, desde el Tronco. Dos ojos abren el nicho de la **llave chica** |
+| Sala de los ojos (NE) | Con llave. Un ojo detrás de un muro agrietado (bomba y flecha) abre el nicho de la **llave del jefe** |
+| Corazón del árbol (SE) | Jefe (blockout: sala vacía). Dos ojos que flotan y barren con rayos; se abren para cargar y una flecha al ojo abierto los derriba para la espada. Al caer uno, el otro se apura |
+
+El sub-jefe propio (un ojo que barre con un rayo y queda enganchado en las raíces, vencible con espada, bomba o vasija) y el jefe son tareas aparte. El kit es el de la Chullpa hasta que haya uno de árbol. Escenario de debug: `quenoa`. La puerta en el overworld la pone la sesión del overworld (7.10); mientras, la salida lleva al punto `arboleda`.
 
 ## 9. Jefe — El Ojo con manos
 <!-- id: jefe -->

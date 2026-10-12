@@ -12,174 +12,172 @@ to = &"Tronco"
 [sub_resource type="Resource" id="Link_2"]
 script = ExtResource("2_link")
 from = &"Tronco"
-to = &"RamaOeste"
+to = &"Rama"
 
 [sub_resource type="Resource" id="Link_3"]
 script = ExtResource("2_link")
-from = &"Tronco"
-to = &"Copa"
+from = &"Entrada"
+to = &"Escalera"
+through = Array[NodePath]([NodePath("PisoTronco/EntradaLocked")])
 locked = true
 
 [sub_resource type="Resource" id="Link_4"]
 script = ExtResource("2_link")
-from = &"Copa"
-to = &"Nido"
-needs = Array[StringName]([&"bomb_bag"])
+from = &"Escalera"
+to = &"Copa"
 
 [sub_resource type="Resource" id="Link_5"]
 script = ExtResource("2_link")
 from = &"Copa"
-to = &"Antesala"
-locked = true
+to = &"Nido"
+through = Array[NodePath]([NodePath("PisoCopa/NidoCrackedWall")])
 
 [sub_resource type="Resource" id="Link_6"]
 script = ExtResource("2_link")
-from = &"Antesala"
-to = &"Vigia"
+from = &"Nido"
+to = &"Rama"
+one_way = true
 
 [sub_resource type="Resource" id="Link_7"]
 script = ExtResource("2_link")
 from = &"Copa"
-to = &"Raices:N"
-one_way = true
+to = &"Antesala"
+through = Array[NodePath]([NodePath("PisoCopa/CopaLocked")])
+locked = true
 
 [sub_resource type="Resource" id="Link_8"]
 script = ExtResource("2_link")
-from = &"Raices:N"
-to = &"Tronco"
-one_way = true
+from = &"Antesala"
+to = &"Vigia"
 
 [sub_resource type="Resource" id="Link_9"]
 script = ExtResource("2_link")
-from = &"Tronco"
-to = &"Raices:S"
-needs = Array[StringName]([&"d1_trunk_eye"])
+from = &"Vigia"
+to = &"Tronco"
+one_way = true
 
 [sub_resource type="Resource" id="Link_10"]
 script = ExtResource("2_link")
-from = &"Raices:S"
-to = &"Ojos"
-locked = true
+from = &"Tronco"
+to = &"Raices"
+through = Array[NodePath]([NodePath("PisoTronco/TroncoGate")])
 
 [sub_resource type="Resource" id="Link_11"]
 script = ExtResource("2_link")
+from = &"Raices"
+to = &"Ojos"
+through = Array[NodePath]([NodePath("PisoRaices/RaicesLocked")])
+locked = true
+
+[sub_resource type="Resource" id="Link_12"]
+script = ExtResource("2_link")
 from = &"Ojos"
 to = &"Jefe"
-needs = Array[StringName]([&"boss_key"])
+through = Array[NodePath]([NodePath("PisoRaices/BossDoor")])
 
 [sub_resource type="Resource" id="Spot_1"]
 script = ExtResource("3_spot")
-area = &"RamaOeste"
-node = NodePath("WestBlockSwitch")
-gives = &"d1_west_switch"
+area = &"Rama"
+node = NodePath("PisoTronco/RamaSwitch")
 
 [sub_resource type="Resource" id="Spot_2"]
 script = ExtResource("3_spot")
-area = &"RamaOeste"
-node = NodePath("WestKeyChest")
-needs = Array[StringName]([&"d1_west_switch"])
+area = &"Rama"
+node = NodePath("PisoTronco/RamaKeyChest")
+through = Array[NodePath]([NodePath("PisoTronco/RamaKeyGate")])
 key = true
 
 [sub_resource type="Resource" id="Spot_3"]
 script = ExtResource("3_spot")
-area = &"RamaOeste"
-node = NodePath("WestEye")
+area = &"Rama"
+node = NodePath("PisoTronco/RamaEye")
 needs = Array[StringName]([&"bow"])
-gives = &"d1_west_eye"
 
 [sub_resource type="Resource" id="Spot_4"]
 script = ExtResource("3_spot")
-area = &"RamaOeste"
-node = NodePath("HeartPieceWest")
-needs = Array[StringName]([&"d1_west_eye"])
-gives = &"d1_heart_piece"
+area = &"Rama"
+node = NodePath("PisoTronco/HeartPieceRama")
+through = Array[NodePath]([NodePath("PisoTronco/HeartGate")])
 
 [sub_resource type="Resource" id="Spot_5"]
 script = ExtResource("3_spot")
 area = &"Copa"
-node = NodePath("MapChest")
-gives = &"dungeon_map"
+node = NodePath("PisoCopa/MapChest")
 
 [sub_resource type="Resource" id="Spot_6"]
 script = ExtResource("3_spot")
 area = &"Nido"
-node = NodePath("NestKeyChest")
+node = NodePath("PisoCopa/NidoKeyChest")
 key = true
 
 [sub_resource type="Resource" id="Spot_7"]
 script = ExtResource("3_spot")
-area = &"Raices:N"
-node = NodePath("CompassChest")
-gives = &"compass"
+area = &"Nido"
+node = NodePath("PisoCopa/CompassChest")
 
 [sub_resource type="Resource" id="Spot_8"]
 script = ExtResource("3_spot")
 area = &"Vigia"
-node = NodePath("EyeWarden")
-gives = &"d1_warden_defeated"
+node = NodePath("PisoCopa/VigiaWaves")
 
 [sub_resource type="Resource" id="Spot_9"]
 script = ExtResource("3_spot")
 area = &"Vigia"
-node = NodePath("BowChest")
-needs = Array[StringName]([&"d1_warden_defeated"])
-gives = &"bow"
+node = NodePath("PisoCopa/BowChest")
+through = Array[NodePath]([NodePath("PisoCopa/BowGate")])
 
 [sub_resource type="Resource" id="Spot_10"]
 script = ExtResource("3_spot")
 area = &"Tronco"
-node = NodePath("TrunkEye")
+node = NodePath("PisoTronco/TroncoEye")
 needs = Array[StringName]([&"bow"])
-gives = &"d1_trunk_eye"
 
 [sub_resource type="Resource" id="Spot_11"]
 script = ExtResource("3_spot")
-area = &"Raices:S"
-node = NodePath("RootEyeA")
+area = &"Raices"
+node = NodePath("PisoRaices/RootEyeA")
 needs = Array[StringName]([&"bow"])
-gives = &"d1_root_eye_a"
 
 [sub_resource type="Resource" id="Spot_12"]
 script = ExtResource("3_spot")
-area = &"Raices:S"
-node = NodePath("RootEyeB")
+area = &"Raices"
+node = NodePath("PisoRaices/RootEyeB")
 needs = Array[StringName]([&"bow"])
-gives = &"d1_root_eye_b"
 
 [sub_resource type="Resource" id="Spot_13"]
 script = ExtResource("3_spot")
-area = &"Raices:S"
-node = NodePath("RootKeyChest")
-needs = Array[StringName]([&"d1_root_eye_a", &"d1_root_eye_b"])
+area = &"Raices"
+node = NodePath("PisoRaices/RootKeyChest")
+through = Array[NodePath]([NodePath("PisoRaices/RootKeyGate")])
 key = true
 
 [sub_resource type="Resource" id="Spot_14"]
 script = ExtResource("3_spot")
 area = &"Ojos"
-node = NodePath("HiddenEye")
-needs = Array[StringName]([&"bomb_bag", &"bow"])
-gives = &"d1_hidden_eye"
+node = NodePath("PisoRaices/HiddenEye")
+needs = Array[StringName]([&"bow"])
+through = Array[NodePath]([NodePath("PisoRaices/OjosCrackedWall")])
 
 [sub_resource type="Resource" id="Spot_15"]
 script = ExtResource("3_spot")
 area = &"Ojos"
-node = NodePath("BossKeyChest")
-needs = Array[StringName]([&"d1_hidden_eye"])
-gives = &"boss_key"
+node = NodePath("PisoRaices/BossKeyChest")
+through = Array[NodePath]([NodePath("PisoRaices/BossKeyGate")])
 
 [sub_resource type="Resource" id="Spot_16"]
 script = ExtResource("3_spot")
 area = &"Jefe"
-node = NodePath("EyeTwins")
+node = NodePath("PisoRaices/Jefe")
 needs = Array[StringName]([&"bow"])
-gives = &"d1_boss_defeated"
+gives = &"qv_boss_defeated"
 
 [resource]
 script = ExtResource("1_graph")
+scene = "res://levels/quenoa.tscn"
 start = &"Entrada"
-goal = &"d1_boss_defeated"
+goal = &"qv_boss_defeated"
 brings = Array[StringName]([&"bomb_bag"])
 item = &"bow"
-guard = &"d1_warden_defeated"
-links = Array[ExtResource("2_link")]([SubResource("Link_1"), SubResource("Link_2"), SubResource("Link_3"), SubResource("Link_4"), SubResource("Link_5"), SubResource("Link_6"), SubResource("Link_7"), SubResource("Link_8"), SubResource("Link_9"), SubResource("Link_10"), SubResource("Link_11")])
+guard = &"qv_warden_defeated"
+links = Array[ExtResource("2_link")]([SubResource("Link_1"), SubResource("Link_2"), SubResource("Link_3"), SubResource("Link_4"), SubResource("Link_5"), SubResource("Link_6"), SubResource("Link_7"), SubResource("Link_8"), SubResource("Link_9"), SubResource("Link_10"), SubResource("Link_11"), SubResource("Link_12")])
 spots = Array[ExtResource("3_spot")]([SubResource("Spot_1"), SubResource("Spot_2"), SubResource("Spot_3"), SubResource("Spot_4"), SubResource("Spot_5"), SubResource("Spot_6"), SubResource("Spot_7"), SubResource("Spot_8"), SubResource("Spot_9"), SubResource("Spot_10"), SubResource("Spot_11"), SubResource("Spot_12"), SubResource("Spot_13"), SubResource("Spot_14"), SubResource("Spot_15"), SubResource("Spot_16")])

@@ -4367,9 +4367,13 @@ Daniel (2026-10-12): el jefe del ojo se pensó como fin de demo, así que tiene 
 - [ ] Ampliar el templo: salas que usen todos los ítems
 - [ ] GDD §6 y §7, y el boceto de 7.10 al día
 - [ ] Qué es D1 (arco) y dónde está; qué da el santuario
-  Ubicación (-eb, boceto 7.10 v4): claro del medio de la Arboleda, sin ítems para entrar. Propuesta 2026-10-12, en revisión con Daniel: La Queñoa Vigía (árbol hueco con ojos; Tronco, Copa, Raíces), sub-jefe ojo vigía que guarda el arco, jefe de dos ojos con rayos. Grafo de diseño data/dungeons/d1_graph.tres (pasa el test), GDD §8c (gdd#mazmorra-1). Falta: aprobarlo y qué da el santuario.
+  Hecho el 2026-10-12 (Daniel: sigue): La Queñoa Vigía en el claro de la Arboleda (boceto 7.10 v4). Blockout levels/quenoa.tscn: Raíces, Tronco y Copa de 2 × 2 salas, llaves, bloque, ojos, muros agrietados, sub-jefe como oleada que guarda el arco; d1_graph.tres con escena pasa el test y las reglas; test_quenoa (escaleras, caídas, reja del tronco, bloque); escenario quenoa. GDD §8c. Falta: qué da el santuario; puerta en el overworld (7.10).
 - [x] Chequeo de grafos de diseño y reglas del molde
   Hecho: un DungeonGraph sin escena es de diseño (locked en los pasos, gives/key en los lugares) y test_dungeon_reach lo recorre igual; con escena, la escena tiene que coincidir con locked/key. Reglas: sin el ítem no se llega al objetivo; el ítem pide al sub-jefe (guard), que se vence sin él. tools/dungeon_graph_mermaid.gd lo dibuja. El grafo del templo pasa a temple_graph.tres.
+- [ ] D1: sub-jefe ojo vigía y jefe de los dos ojos
+  Hoy la guarida del vigía es una oleada (qv_warden_defeated) y el Corazón del árbol está vacío. Sub-jefe: un ojo que barre con un rayo y queda enganchado en las raíces, vencible sin arco (espada, bomba, vasija). Jefe: dos ojos que flotan y barren con rayos; flecha al ojo abierto.
+- [ ] D1: kit de árbol y recorrerla (Daniel)
+  Hoy usa el kit de la Chullpa. Recorrerla con el escenario quenoa.
 
 **Notas:** Sesión: diseño (-43 [a7e236]), con Daniel. Overworld (-eb) acomoda el boceto de 7.10 cuando esté la cadena.
 
