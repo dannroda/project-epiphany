@@ -209,24 +209,28 @@ func _screen_height(point: Vector3, eye: Vector3) -> float:
 	return local.y / -local.z
 
 
-## Tapa todo lo que queda fuera del rectángulo (XZ), desde abajo del piso hasta el tope de las paredes.
+## Tapa todo lo que queda fuera del rectángulo (XZ), desde el piso de abajo hasta el tope de las paredes.
 func _mask_around(area: Rect2) -> void:
 	const FAR := 300.0
 	area = area.grow(mask_margin)
 	var floor_y := _floor_y()
-	var bottom := floor_y - 2.0
+	var bottom := floor_y - DungeonFloor.HEIGHT - 2.0
 	var top := floor_y + wall_height + 0.02
+	var lip := area.end.y - mask_margin + SOUTH_WALL_RELIEF
+	var south := lip + (top - floor_y) * offset.z / offset.y
 	var strips := [
 		Rect2(area.position.x - FAR, area.position.y - FAR, area.size.x + FAR * 2.0, FAR),
-		Rect2(area.position.x - FAR, area.end.y, area.size.x + FAR * 2.0, FAR),
+		Rect2(area.position.x - FAR, south, area.size.x + FAR * 2.0, FAR),
 		Rect2(area.position.x - FAR, area.position.y, FAR, area.size.y),
 		Rect2(area.end.x, area.position.y, FAR, area.size.y),
+		Rect2(area.position.x - FAR, lip, area.size.x + FAR * 2.0, south - lip),
 	]
-	for i in 4:
+	for i in strips.size():
 		var strip: Rect2 = strips[i]
 		var part := _mask.get_child(i) as MeshInstance3D
-		(part.mesh as BoxMesh).size = Vector3(strip.size.x, top - bottom, strip.size.y)
-		part.global_position = Vector3(strip.get_center().x, (top + bottom) / 2.0, strip.get_center().y)
+		var strip_top := floor_y + 0.05 if i == 4 else top
+		(part.mesh as BoxMesh).size = Vector3(strip.size.x, strip_top - bottom, strip.size.y)
+		part.global_position = Vector3(strip.get_center().x, (strip_top + bottom) / 2.0, strip.get_center().y)
 	_mask.show()
 
 
@@ -288,13 +292,21 @@ func _bring_along(crosser: PlayerCharacter, direction: Vector3) -> void:
 func _cut_south_wall(cut_room: Room) -> void:
 	var area := Vector4.ZERO
 	var height := 0.0
+	var lip := 1e6
 	if cut_room:
 		var bounds := cut_room.bounds().grow(0.05)
 		area = Vector4(bounds.position.x - SOUTH_WALL_DEPTH, bounds.end.x + SOUTH_WALL_DEPTH, bounds.end.y - SOUTH_WALL_RELIEF, bounds.end.y + SOUTH_WALL_DEPTH)
 		height = cut_room.floor_y() + south_wall_cut
+		lip = bounds.end.y + SOUTH_WALL_RELIEF
+	for door: Door in get_tree().get_nodes_in_group(&"doors"):
+		var inside := cut_room != null and absf(door.global_position.y - cut_room.floor_y()) < 1.0 \
+				and door.global_position.z > area.z and door.global_position.z < area.w \
+				and door.global_position.x > area.x and door.global_position.x < area.y
+		door.south_cut = south_wall_cut if inside else 0.0
 	for material in CUTAWAY_MATERIALS:
 		material.set_shader_parameter(&"cut_area", area)
 		material.set_shader_parameter(&"cut_height", height)
+		material.set_shader_parameter(&"cut_lip", lip)
 
 
 ## Las paredes (cutaway.gdshader, epiphany_wall.gdshader) recortan un agujero alrededor del player solo mientras

@@ -19,6 +19,8 @@ const LEAVES := {
 }
 const LEAF_MESH := "res://assets/epiphany/meshes/templo/%s.res"
 const TEXTS: DialogueResource = preload("res://data/dialogue/doors.dialogue")
+const LEAF_HEIGHT := 2.4
+const BOSS_TINT := Color(1.0, 0.45, 0.4)
 
 @export var kind: Kind = Kind.OPEN:
 	set(value):
@@ -55,6 +57,12 @@ var _tween: Tween
 var _persistent: PersistentFlag
 var _wiring: Wiring
 var _revealed := false
+## Alto al que la cámara recorta la pared sur de la sala si la puerta está en ella (0: no lo está). La hoja baja a
+## ese alto como la pared y, si está cerrada con llave, el candado se muestra en el piso de adelante.
+var south_cut := 0.0:
+	set(value):
+		south_cut = value
+		_update_south_mark()
 
 
 func _ready() -> void:
@@ -151,6 +159,7 @@ func open(animate: bool = true) -> void:
 		return
 	is_open = true
 	_move_leaf(_closed_y - 2.5, animate, true)
+	_update_south_mark()
 	opened.emit()
 
 
@@ -160,6 +169,7 @@ func close(animate: bool = true) -> void:
 	is_open = false
 	shape.set_deferred(&"disabled", false)
 	_move_leaf(_closed_y, animate, false)
+	_update_south_mark()
 	closed.emit()
 
 
@@ -176,6 +186,16 @@ func _move_leaf(y: float, animate: bool, opening: bool) -> void:
 	_tween.tween_property(leaf, "position:y", y, open_time)
 	if opening:
 		_tween.tween_callback(func() -> void: shape.set_deferred(&"disabled", true))
+
+
+func _update_south_mark() -> void:
+	if not is_node_ready():
+		return
+	leaf.scale.y = south_cut / LEAF_HEIGHT if south_cut > 0.0 else 1.0
+	var mark := %SouthMark as Sprite3D
+	mark.visible = south_cut > 0.0 and not is_open and kind in [Kind.LOCKED, Kind.BOSS]
+	mark.modulate = BOSS_TINT if kind == Kind.BOSS else Color.WHITE
+	mark.position.z = -maxf(depth, 0.3) / 2.0 - 1.0
 
 
 func _refuse(cue: StringName) -> void:
