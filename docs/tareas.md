@@ -4032,7 +4032,7 @@ Playtest del 2026-10-12: la primera mazmorra ya tiene varios softblocks, y la pl
 - [x] Ítem por mazmorra
   Decidido con Daniel el 2026-10-12: D1 arco (lo guarda el sub-jefe, 11.31), D2 pluma, D3 gancho (11.30), D4 guantes de fuerza. El disco solar queda como ítem opcional (mini-mazmorra o secreto del overworld). Documento: https://claude.ai/code/artifact/4fce85f9-7f11-4285-9d2e-bb1d58b45b4e
 - [ ] Mudar la pluma a D2
-  Sacar la sala de la pluma y los huecos del Puzzle de D1; bajar o quitar la vasija del escalón de la Antesala. La Chullpa se rehace con la pluma en el cofre de la isla; lo que hoy pide gancho pasa a pluma o caída. La pieza de la pradera y la angostura quedan para después de D2.
+  D1 hecho el 2026-10-12: sin sala de la pluma (puerta tapiada en la grilla), sin la fila de huecos del Puzzle, sin el escalón de la vasija de la Antesala; d1_graph.tres, test_temple y test_doom al día; navmesh del templo horneada de nuevo en levels/nav/temple_navmesh.tres. Falta la Chullpa con la pluma (11.60, paso 8). La pieza de la pradera y la angostura quedan para después de D2.
 - [ ] Armadura del esqueleto
   Decidido: se quita con el gancho o con la bomba (las dos). Se implementa junto con el gancho (11.30), que ahora es de D3.
 - [x] Reparto en el overworld
@@ -4237,13 +4237,14 @@ Playtest 2026-10-12: las tablitas del claro (11.45) funcionan, pero no son la me
 
 **Notas:** Con 11.90 (cada mazmorra enseña su ítem).
 
-### 11.106 Intro al día con el overworld nuevo · Pendiente
+### 11.106 Intro al día con el overworld nuevo · Revisión
 
 **Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `camara`
 
 La intro (10.20) funciona, pero sus planos son del overworld viejo. Rehacer los planos sobre el layout D.
 
-- [ ] Planos nuevos
+- [x] Planos nuevos
+  Cámara, brillo y polvo corridos al templo (−48, −37,5) y al Claro (−48, 16); test de encuadre por plano.
 
 **Notas:** Sesión: overworld (-74), después de 7.9 paso 4. Junto con 10.30.
 

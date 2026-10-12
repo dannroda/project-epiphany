@@ -15,7 +15,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 6, 6.01, 14, 14.01, 20, 20.01, 25),
 "transitions": PackedFloat32Array(-2, -2, -2, -2, -2, -2, -2, -2),
 "update": 0,
-"values": [Vector3(0, 30, 30), Vector3(0, 26, 6), Vector3(0, 26, 6), Vector3(0, 16, -8), Vector3(0, 9, -12.5), Vector3(0, 8.6, -12), Vector3(0, 7, 22), Vector3(0, 7.5, 23)]
+"values": [Vector3(-46, 30, 32), Vector3(-46, 26, -9), Vector3(-48, 26, -9), Vector3(-48, 16, -25), Vector3(-48, 9, -29.5), Vector3(-48, 8.6, -29), Vector3(-48, 7, 23), Vector3(-48, 7.5, 24)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -112,7 +112,7 @@ _data = {
 [node name="Intro" instance=ExtResource("1_cutscene")]
 
 [node name="Camera" parent="." index="0"]
-transform = Transform3D(1, 0, 0, 0, 0.6427876, -0.76604444, 0, 0.76604444, 0.6427876, 0, 30, 30)
+transform = Transform3D(1, 0, 0, 0, 0.6427876, -0.76604444, 0, 0.76604444, 0.6427876, -46, 30, 32)
 
 [node name="AnimationPlayer" parent="." index="1"]
 libraries = {
@@ -120,13 +120,13 @@ libraries = {
 }
 
 [node name="TempleGlow" type="OmniLight3D" parent="." index="3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -19.8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 1.2, -36.8)
 light_color = Color(0.8156863, 0.3137255, 0.22745098, 1)
 light_energy = 0.0
 omni_range = 7.0
 
 [node name="TempleDust" type="Marker3D" parent="." index="4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -20.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 0.2, -37.5)
 
 [node name="ClearingDust" type="Marker3D" parent="." index="5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 15)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 0.2, 16)

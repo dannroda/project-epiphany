@@ -44,6 +44,25 @@ func test_new_game_plays_the_intro_over_the_overworld() -> void:
 	_cleanup(tree)
 
 
+func test_shots_frame_the_meadow_the_temple_and_the_player() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var intro := await _start(tree)
+	var level := tree.current_scene
+	var door := (level.get_node(^"TempleDoor") as Node3D).global_position
+	var start := (level.get_node(^"Spawn_start") as Node3D).global_position
+	var pradera := (level.get_node(^"Zone_pradera") as AreaZone).bounds().get_center()
+	var shows := func(at: float, point: Vector3) -> bool:
+		intro.player.seek(at, true)
+		return intro.camera.is_position_in_frustum(point)
+	assert_true(shows.call(3.0, Vector3(pradera.x, 0, pradera.y)) or shows.call(5.0, Vector3(pradera.x, 0, pradera.y)), "el primero pasa por la Pradera")
+	assert_true(shows.call(13.5, door), "el segundo llega a la puerta del templo")
+	assert_true(shows.call(17.0, door), "el tercero, la puerta que tiembla")
+	assert_true(shows.call(23.0, start), "el cuarto, el claro con el player")
+	intro.player.seek(intro.player.current_animation_length - 0.05, true)
+	await intro.finished
+	_cleanup(tree)
+
+
 func test_holding_accept_skips_it() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var intro := await _start(tree)

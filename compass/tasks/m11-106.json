@@ -1,7 +1,8 @@
 {
   "checklist": [
     {
-      "done": false,
+      "detail": "Cámara, brillo y polvo corridos al templo (−48, −37,5) y al Claro (−48, 16); test de encuadre por plano.",
+      "done": true,
       "text": "Planos nuevos"
     }
   ],
@@ -14,11 +15,11 @@
   "priority": "low",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "camara"
   ],
   "test": "",
   "title": "Intro al día con el overworld nuevo",
-  "updated_at": "2026-10-12T08:17:08.450Z"
+  "updated_at": "2026-10-12T18:39:11.366Z"
 }
