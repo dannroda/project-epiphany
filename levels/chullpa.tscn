@@ -482,8 +482,8 @@ shape = SubResource("BoxShape3D_h8srf")
 [node name="TopDownCamera" type="Camera3D" parent="." unique_id=556060150 node_paths=PackedStringArray("target_node")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 17.4, 38)
 fov = 40.0
-offset = Vector3(0, 28, 10.6)
 script = ExtResource("38_yjg8d")
+offset = Vector3(0, 28, 10.6)
 target_node = NodePath("../Player")
 mask_margin = 2.0
 
