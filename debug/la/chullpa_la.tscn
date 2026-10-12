@@ -550,7 +550,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 17.4, 38)
 fov = 40.0
 script = ExtResource("38_ku78o")
 target_node = NodePath("../Player")
+offset = Vector3(0, 28, 10.6)
 mask_margin = 2.0
+cuts_south_wall = false
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1439023435 instance=ExtResource("39_nhfhc")]
 layer = 10

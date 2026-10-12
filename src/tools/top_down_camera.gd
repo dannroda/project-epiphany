@@ -45,6 +45,8 @@ extends Camera3D
 @export var mask_margin := 0.5
 ## La pared sur de la sala se recorta a esta altura para que no tape la puerta sur.
 @export var south_wall_cut := 0.4
+## Sin recorte (paredes en rampa, estilo Link's Awakening): la pared sur se ve entera desde arriba.
+@export var cuts_south_wall := true
 
 @export_group("Co-op")
 ## Metros que quedan entre el borde de la pantalla y el player más alejado cuando el grupo no se puede abrir más.
@@ -216,8 +218,8 @@ func _mask_around(area: Rect2) -> void:
 	var floor_y := _floor_y()
 	var bottom := floor_y - DungeonFloor.HEIGHT - 2.0
 	var top := floor_y + wall_height + 0.02
-	var lip := area.end.y - mask_margin + SOUTH_WALL_RELIEF
-	var south := lip + (top - floor_y) * offset.z / offset.y
+	var lip := area.end.y - mask_margin + SOUTH_WALL_RELIEF if cuts_south_wall else area.end.y
+	var south := lip + (top - floor_y) * offset.z / offset.y if cuts_south_wall else lip
 	var strips := [
 		Rect2(area.position.x - FAR, area.position.y - FAR, area.size.x + FAR * 2.0, FAR),
 		Rect2(area.position.x - FAR, south, area.size.x + FAR * 2.0, FAR),
@@ -293,6 +295,8 @@ func _cut_south_wall(cut_room: Room) -> void:
 	var area := Vector4.ZERO
 	var height := 0.0
 	var lip := 1e6
+	if not cuts_south_wall:
+		cut_room = null
 	if cut_room:
 		var bounds := cut_room.bounds().grow(0.05)
 		area = Vector4(bounds.position.x - SOUTH_WALL_DEPTH, bounds.end.x + SOUTH_WALL_DEPTH, bounds.end.y - SOUTH_WALL_RELIEF, bounds.end.y + SOUTH_WALL_DEPTH)
