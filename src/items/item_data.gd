@@ -50,10 +50,7 @@ func is_equipment() -> bool:
 
 
 func make_damage(source: Node3D) -> DamageInfo:
-	var info := DamageInfo.new()
-	info.amount = damage
-	info.knockback = knockback
-	info.source = source
+	var info := DamageInfo.make(damage, knockback, source)
 	for modifier in modifiers:
 		modifier.modify_damage(info)
 	return info

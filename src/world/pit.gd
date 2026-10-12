@@ -3,7 +3,8 @@ extends Area3D
 ## Debajo de un hueco: el player que cae pierde vida y vuelve a la entrada de la sala.
 
 @export var damage := 2
-## Adónde vuelve el que cae (o al más cercano entre él y sus hijos); si no hay, a la entrada de la sala o al punto de aparición.
+## Adónde vuelve el que cae: el más cercano entre él y sus hijos a donde pisó suelo por última vez; si no hay, a la entrada de la
+## sala o al punto de aparición.
 @export var respawn: Node3D
 ## Si es agua: el que cae salpica en su superficie.
 @export var water: Node3D
@@ -23,16 +24,17 @@ func _fall(player: PlayerCharacter) -> void:
 		var at := Vector3(player.global_position.x, water.global_position.y, player.global_position.z)
 		Feel.burst(&"splash", at, Vector3.UP)
 		Feel.sfx(&"splash", at)
-	player.health.damage(damage)
+	var info := DamageInfo.make(damage, 0.0, self)
+	info.unavoidable = true
+	player.hurtbox.receive(info)
 	if player.is_dead:
 		return
-	var back: Variant = _nearest_respawn(player.global_position) if respawn else GameState.room_entry
+	var back: Variant = _nearest_respawn(player.last_ground) if respawn else GameState.room_entry
 	if back == null:
 		var point := SpawnPoint.find(get_tree(), GameState.spawn_point)
 		back = point.global_position if point else player.global_position + Vector3.UP * 3.0
 	player.global_position = back
 	player.velocity = Vector3.ZERO
-	Feel.sfx(&"hurt", player.global_position)
 	get_tree().call_group(&"room_camera", &"snap_to_target")
 
 
@@ -42,3 +44,4 @@ func _nearest_respawn(from: Vector3) -> Vector3:
 		if child is Node3D and from.distance_squared_to(child.global_position) < from.distance_squared_to(best):
 			best = child.global_position
 	return best
+

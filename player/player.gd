@@ -43,6 +43,8 @@ var guard_tween: Tween
 var controls: PlayerControls = PlayerControls.new()
 ## Lo que frena el suelo (agua baja): multiplica la velocidad al caminar.
 var ground_speed := 1.0
+## Dónde pisó suelo por última vez (los pozos lo devuelven a esa orilla).
+var last_ground := Vector3.ZERO
 
 var is_dead: bool:
 	get:
@@ -89,6 +91,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	movement_state.update(delta)
+	if is_on_floor():
+		last_ground = global_position
 	if is_blocking() and is_catching_light():
 		turn_towards(aim.pointed_direction(), delta)
 	_watch_debug_values()
@@ -271,10 +275,10 @@ func _on_max_health_changed(_value: int) -> void:
 
 
 func _on_hit(info: DamageInfo) -> void:
-	if _shield_stops(info):
+	if not info.unavoidable and _shield_stops(info):
 		return
 	var amount := maxi(1, roundi(info.amount * (1.0 - equipment.damage_reduction())))
-	if not health.damage(amount):
+	if not health.damage(amount, info.unavoidable):
 		return
 	Log.info(&"combat", "El player recibió", amount, "de daño de", info.source.name if info.source else "?", "· Vida:", health.current)
 	movement_state.blackboard.set_var("last_hit", info)
@@ -284,7 +288,8 @@ func _on_hit(info: DamageInfo) -> void:
 	if is_dead:
 		Log.info(&"combat", "El player murió:", info.source.name if info.source else "?", "le sacó", amount, "con", health.max_health, "de vida máxima")
 		return
-	movement_state.dispatch("hurt")
+	if not is_grabbed():
+		movement_state.dispatch("hurt")
 
 
 func _on_hit_landed(target: Hurtbox) -> void:

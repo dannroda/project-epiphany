@@ -75,9 +75,4 @@ func _set_raised(up: bool, instant := false) -> void:
 
 
 func _damage() -> DamageInfo:
-	var info := DamageInfo.new()
-	info.amount = damage
-	info.knockback = knockback
-	info.source = self
-	info.element = &"spikes"
-	return info
+	return DamageInfo.make(damage, knockback, self, &"spikes")

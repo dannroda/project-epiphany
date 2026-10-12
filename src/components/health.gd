@@ -55,8 +55,8 @@ func ward_left() -> float:
 	return _ward_left
 
 
-func damage(amount: int) -> bool:
-	if current <= 0 or is_invulnerable():
+func damage(amount: int, ignore_invulnerability := false) -> bool:
+	if current <= 0 or (is_invulnerable() and not ignore_invulnerability):
 		return false
 	if is_warded():
 		amount = ceili(amount / 2.0)

@@ -22,6 +22,8 @@ const MARK_RADIUS := 1.6
 const MARK_SPACING := 3.2
 const MARK_TELEGRAPH := 1.4
 const MARK_DAMAGE := 4
+## Cuadros de física en que la explosión de la marca lastima.
+const BLAST_FRAMES := 3
 ## Las manos vuelven un rato después de que se abre el ojo.
 const HANDS_BACK_DELAY := 1.2
 ## Alto del cuerpo en la fase 2 (más cerca para mirarte) y aturdido (caído, a tiro de espada).
@@ -341,16 +343,15 @@ func _blast(point: Vector3) -> void:
 	Feel.sfx(&"boom", point)
 	Feel.burst(&"dust", point, Vector3.UP)
 	Feel.shake(0.3)
-	var player := target as PlayerCharacter
-	if player == null or Vector2(player.global_position.x, player.global_position.z).distance_to(Vector2(point.x, point.z)) > MARK_RADIUS:
-		return
-	var info := DamageInfo.new()
-	info.amount = MARK_DAMAGE
-	info.knockback = 8.0
-	info.source = blast
-	info.team = EntityConfig.Team.ENEMY
-	info.element = &"blast"
-	(player.get_node(^"Hurtbox") as Hurtbox).receive(info)
+	var hit := %BlastHitTemplate.duplicate() as Hitbox
+	add_child(hit)
+	hit.global_position = point + Vector3.UP * 1.2
+	hit.team = EntityConfig.Team.ENEMY
+	hit.damage_factory = func() -> DamageInfo: return DamageInfo.make(MARK_DAMAGE, 8.0, hit, &"blast")
+	hit.monitoring = true
+	for i in BLAST_FRAMES:
+		await get_tree().physics_frame
+	hit.queue_free()
 
 
 func _fire_orb() -> void:
@@ -373,10 +374,7 @@ func _fire_orb() -> void:
 	relax.tween_method(_set_eye_glow, EYE_GLOW_CHARGED, EYE_GLOW, 0.3)
 	if is_eye_stunned() or not is_instance_valid(target) or health.current <= 0:
 		return
-	var info := DamageInfo.new()
-	info.amount = orb_damage
-	info.knockback = 6.0
-	info.source = self
+	var info := DamageInfo.make(orb_damage, 6.0, self)
 	info.team = EntityConfig.Team.ENEMY
 	info.reflectable = true
 	var orb: Projectile = ORB.instantiate()

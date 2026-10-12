@@ -350,8 +350,10 @@ func _hold(target: PlayerCharacter) -> void:
 		if tick <= 0.0:
 			tick = grab_tick
 			_grip_speed += 7.0
-			if target.health.damage(1):
-				Feel.sfx(&"hurt", target.global_position)
+			var squeeze := DamageInfo.make(1, 0.0, self)
+			squeeze.team = EntityConfig.Team.ENEMY
+			squeeze.unavoidable = true
+			target.hurtbox.receive(squeeze)
 	target.escaped.disconnect(on_escape)
 	if escaped[0]:
 		stun(grab_escape_stun)
@@ -364,7 +366,7 @@ func _hold(target: PlayerCharacter) -> void:
 		info.amount = 2
 		info.knockback = 12.0
 		info.team = EntityConfig.Team.ENEMY
-		(target.get_node(^"Hurtbox") as Hurtbox).receive(info)
+		target.hurtbox.receive(info)
 
 
 func _sweep(attack: BossAttack, target: Node3D, area: Rect2) -> void:
@@ -450,11 +452,7 @@ func _set_hitbox(hitbox: Hitbox, data: AttackData) -> void:
 
 
 func _make_damage() -> DamageInfo:
-	var info := DamageInfo.new()
-	info.amount = damage
-	info.knockback = knockback
-	info.source = self
-	return info
+	return DamageInfo.make(damage, knockback, self)
 
 
 func _on_hit(info: DamageInfo) -> void:

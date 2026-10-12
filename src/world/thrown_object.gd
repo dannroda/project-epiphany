@@ -19,10 +19,7 @@ func _on_body_entered(body: Node) -> void:
 	flying = false
 	var hurtbox := body.get_node_or_null(^"Hurtbox") as Hurtbox
 	if hurtbox and hurtbox.team != EntityConfig.Team.PLAYER:
-		var info := DamageInfo.new()
-		info.amount = liftable.damage
-		info.knockback = 6.0
-		info.source = self
+		var info := DamageInfo.make(liftable.damage, 6.0, self)
 		info.team = EntityConfig.Team.PLAYER
 		hurtbox.receive(info)
 	if liftable.breaks:

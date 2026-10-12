@@ -54,9 +54,6 @@ func apply_to(entity: Node) -> void:
 
 
 func make_damage(source: Node3D) -> DamageInfo:
-	var info := DamageInfo.new()
-	info.amount = attack_damage
-	info.knockback = attack_knockback
-	info.source = source
+	var info := DamageInfo.make(attack_damage, attack_knockback, source)
 	info.team = team
 	return info

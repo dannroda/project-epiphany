@@ -129,11 +129,8 @@ size = Vector3(94, 2.4, 14)
 [sub_resource type="BoxShape3D" id="BoxShape3D_zone_banado"]
 size = Vector3(46, 2.4, 14)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_QuebradaPitWest"]
-size = Vector3(12, 1, 66)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_QuebradaPitEast"]
-size = Vector3(12, 1, 66)
+[sub_resource type="BoxShape3D" id="BoxShape3D_QuebradaPit"]
+size = Vector3(24, 1, 66)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_LagunaPitWest"]
 size = Vector3(48, 1, 16)
@@ -363,45 +360,37 @@ terrain_style = &"laguna"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_banado" unique_id=336000691]
 shape = SubResource("BoxShape3D_zone_banado")
 
-[node name="QuebradaPitWest" type="Area3D" parent="." unique_id=1658558777 node_paths=PackedStringArray("respawn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -1.2, -9)
+[node name="QuebradaPit" type="Area3D" parent="." unique_id=1658558777 node_paths=PackedStringArray("respawn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2, -9)
 script = ExtResource("94_pit")
 respawn = NodePath("Respawn")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="QuebradaPitWest" unique_id=1154577184]
-shape = SubResource("BoxShape3D_QuebradaPitWest")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="QuebradaPit" unique_id=1154577184]
+shape = SubResource("BoxShape3D_QuebradaPit")
 
-[node name="Respawn" type="Marker3D" parent="QuebradaPitWest" unique_id=1640625688]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.2, -7)
+[node name="Respawn" type="Marker3D" parent="QuebradaPit" unique_id=1640625688]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 1.2, -7)
 
-[node name="Row0" type="Marker3D" parent="QuebradaPitWest/Respawn" unique_id=954742756]
+[node name="Row0" type="Marker3D" parent="QuebradaPit/Respawn" unique_id=954742756]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16)
 
-[node name="Row2" type="Marker3D" parent="QuebradaPitWest/Respawn" unique_id=1247829579]
+[node name="Row2" type="Marker3D" parent="QuebradaPit/Respawn" unique_id=1247829579]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16)
 
-[node name="Row3" type="Marker3D" parent="QuebradaPitWest/Respawn" unique_id=635503329]
+[node name="Row3" type="Marker3D" parent="QuebradaPit/Respawn" unique_id=635503329]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 32)
 
-[node name="QuebradaPitEast" type="Area3D" parent="." unique_id=763691783 node_paths=PackedStringArray("respawn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -1.2, -9)
-script = ExtResource("94_pit")
-respawn = NodePath("Respawn")
+[node name="EastRow1" type="Marker3D" parent="QuebradaPit/Respawn" unique_id=1962988033]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="QuebradaPitEast" unique_id=470892913]
-shape = SubResource("BoxShape3D_QuebradaPitEast")
+[node name="EastRow0" type="Marker3D" parent="QuebradaPit/Respawn" unique_id=1590342089]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, -16)
 
-[node name="Respawn" type="Marker3D" parent="QuebradaPitEast" unique_id=980421585]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.2, -7)
+[node name="EastRow2" type="Marker3D" parent="QuebradaPit/Respawn" unique_id=1610149562]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 16)
 
-[node name="Row0" type="Marker3D" parent="QuebradaPitEast/Respawn" unique_id=1226506003]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16)
-
-[node name="Row2" type="Marker3D" parent="QuebradaPitEast/Respawn" unique_id=1433524535]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16)
-
-[node name="Row3" type="Marker3D" parent="QuebradaPitEast/Respawn" unique_id=469836737]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 32)
+[node name="EastRow3" type="Marker3D" parent="QuebradaPit/Respawn" unique_id=272634884]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 32)
 
 [node name="LagunaPitWest" type="Area3D" parent="." unique_id=1133407547 node_paths=PackedStringArray("respawn", "water")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, -1.2, 32)

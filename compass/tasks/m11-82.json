@@ -1,18 +1,18 @@
 {
   "checklist": [
     {
-      "detail": "`static func make(amount, knockback, source, element := &\"\")` y usarla en los 8 sitios.",
-      "done": false,
+      "detail": "DamageInfo.make(amount, knockback, source, element): sin equipo en la firma (EntityConfig.Team como valor por defecto armaba un ciclo de dependencias); los que lo necesitan lo asignan después. Usada en los 8 lugares.",
+      "done": true,
       "text": "DamageInfo.make"
     },
     {
-      "detail": "`player.hurtbox.receive(info)` con un flag en DamageInfo para saltar escudo/i-frames donde se quiere (pozo, ticks del agarre). En pit.gd el splash (`@export water`) va antes del daño; dejarlo igual.",
-      "done": false,
+      "detail": "DamageInfo.unavoidable: saltea el escudo y los i-frames (Health.damage(amount, ignore_invulnerability)). Pozo y apretón del agarre pasan por player.hurtbox.receive; el agarre no despacha hurt mientras is_grabbed. El pozo vuelve a la orilla de donde cayó (PlayerCharacter.last_ground); la quebrada es un solo Pit con marcadores en las dos orillas.",
+      "done": true,
       "text": "Pozo y agarre por Hurtbox"
     },
     {
-      "detail": "`%BlastTemplate` con un Hitbox como explosion.tscn (resuelve también el daño a todos los players de 13.7).",
-      "done": false,
+      "detail": "BlastHitTemplate (Hitbox de equipo enemigo, cilindro de 1,1 m: con la cápsula del player da los 1,6 de la marca) se duplica en cada explosión y queda prendido BLAST_FRAMES cuadros: lastima a cualquier player adentro.",
+      "done": true,
       "text": "Marca con Hitbox"
     }
   ],
@@ -38,12 +38,12 @@
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug",
     "combate"
   ],
   "test": "Con túnica, el pozo y el agarre restan menos; el agarre resta en cada tick; la marca daña a cualquier player dentro vía Hitbox.",
   "title": "Daño que no pasa por el Hurtbox",
-  "updated_at": "2026-10-12T00:21:12.996Z"
+  "updated_at": "2026-10-12T01:13:51.464Z"
 }
