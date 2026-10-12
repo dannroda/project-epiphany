@@ -1598,7 +1598,7 @@ El overworld de 3 × 3 pantallas quedó hecho para una sola mazmorra y se siente
 - [x] Viaje rápido: mockup de la pantalla
   Artboard 'Pausa · Mapa (overworld nuevo) con portales de viaje' (Pause_Map_Travel) en https://claude.ai/artifact/UuD7d42rAXuYTBcMd9iZJy. Aprobado por Daniel.
 - [x] Viaje rápido: portales y viaje desde el Mapa
-  travel_portal.tscn ×6 en overworld.tscn (ow_portal_<id>); Mapa: marcas, cursor que se engancha, tarjeta y X Viajar con travel_dialog; interactuar en un portal abre el Mapa. test_travel_portals_light_up_and_the_map_travels.
+  travel_portal.tscn ×6 en overworld.tscn (ow_portal_<id>); Mapa: marcas, cursor que se engancha, tarjeta y X Viajar con travel_dialog; interactuar en un portal abre el Mapa. test_travel_portals_light_up_and_the_map_travels. Playtest 2026-10-12 'no puedo teletransportarme': el diálogo arrancaba en Cancelar (A cancelaba); ahora arranca en Viajar como el mockup (ConfirmDialog.confirm_first). El portal del Claro estaba pegado a la tablilla de controles y E podía leerla: se mudó a (−51, 17); el test pide que ningún portal tenga otro interactuable a menos de 3 m.
 - [x] Laguna de agua real y Bañado de agua baja
   Daniel (2026-10-11): la Laguna con el agua de la cueva de la vertiente (water.gdshader: espuma en la orilla, color por profundidad) sobre el hueco; cascada en el acantilado norte donde termina la quebrada; caer al agua salpica y vuelve a la orilla (no se nada); la isla de D3 con el gancho. El Bañado, agua baja que se camina.
 - [ ] Que todo se pueda alcanzar y cruzar
@@ -2536,7 +2536,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (51/105)
+## M11 — Pulido: contenido y feel  (51/106)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4288,6 +4288,22 @@ Del análisis de D1 (11.90, S2, S4, S5, S6, S7). Confirmar en el juego y arregla
   Solo al azar (vasijas 5 %, esqueletos 10 %); las vasijas de la Antesala y de la Pluma solo dan corazones, aunque GDD §8.1 dice que dan munición. Mínimo real: 1 bomba y 2 flechas (el GDD dice 2 y 4). Poner fuentes fijas cerca de cada uso o corregir el GDD.
 - [ ] Sin confirmar: orbe al ojo de Ojos, bomba en placa
   El orbe sin reflejar podría despertar OjosDoorEye (se entra sin arco); una bomba (capa 8) sobre una placa BLOCK (máscara 1|8) probablemente la traba y salta el puzzle de bloque.
+
+### 11.110 Tipos de placa de piso: bloque, peso y golpe fuerte · En curso
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `puzzles`
+
+Playtest 2026-10-12: los puzzles de bloques solo se tienen que activar con los bloques; los que se activan con objetos o con un golpe fuerte son otros tipos de placa. Y la placa del santuario se veía apretada sin bloque encima.
+
+- [x] BLOCK solo con bloques y modo WEIGHT para objetos
+  FloorSwitch: BLOCK lo aprieta solo un PushBlock (ni el player ni lo arrojado); WEIGHT, un objeto apoyado o arrojado (o un bloque), no el player; los dos quedan resueltos con flag. Santuario y mazmorra gris pasan de ONCE a BLOCK; la placa de levantar del Claro a WEIGHT. Tests: test_wiring, test_grove_puzzle. GDD §11 (interruptores) y §5 (tutorial).
+- [x] Placa del santuario apretada sin bloque
+  ShrineBlock tenía solved_position del overworld viejo (−30, −16): al cargar con el puzzle resuelto el bloque aparecía lejos y la placa quedaba apretada sola. Ahora (−78, −32); test_solved_blocks_rest_on_their_switch revisa todos los niveles.
+- [ ] Que cada tipo se distinga a la vista
+  Hoy las cuatro placas son iguales. Marca o color por tipo (bloque, peso, golpe fuerte); pasa por el arte.
+- [ ] Placa de golpe fuerte
+  Se activa con un golpe fuerte (¿martillo / golpe cargado?); espera el ítem que lo dé (11.90).
+- [ ] Probarlo (Daniel)
 
 ## M12 — Assets propios (Blender)  (6/17)
 

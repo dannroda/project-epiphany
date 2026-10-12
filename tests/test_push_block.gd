@@ -104,3 +104,28 @@ func test_loading_in_the_same_scene_moves_the_block() -> void:
 	await tree.physics_frame
 	assert_eq(block.global_position, block.solved_position, "con el puzzle resuelto va a su lugar final")
 	state.reset()
+
+
+func _origin(node: Node, root: Node) -> Vector3:
+	var transform := Transform3D.IDENTITY
+	while node != root:
+		if node is Node3D:
+			transform = (node as Node3D).transform * transform
+		node = node.get_parent()
+	return transform.origin
+
+
+func test_solved_blocks_rest_on_their_switch() -> void:
+	for path in ["res://levels/overworld.tscn", "res://levels/temple.tscn", "res://levels/chullpa.tscn", "res://levels/dungeon_test.tscn"]:
+		var level: Node = load(path).instantiate()
+		var switches := level.find_children("*", "FloorSwitch", true, false)
+		for block: PushBlock in level.find_children("*", "PushBlock", true, false):
+			if block.solved_flag == &"":
+				continue
+			var mine := switches.filter(func(switch: FloorSwitch) -> bool: return switch.flag == block.solved_flag)
+			assert_eq(mine.size(), 1, "%s: un interruptor con el flag de %s" % [path, block.name])
+			if mine.size() == 1:
+				var at := _origin(mine[0], level)
+				var solved := block.solved_position
+				assert_true(Vector2(solved.x, solved.z).distance_to(Vector2(at.x, at.z)) < 0.6, "%s: %s resuelto queda sobre su interruptor (%s, el interruptor en %s)" % [path, block.name, solved, at])
+		level.free()

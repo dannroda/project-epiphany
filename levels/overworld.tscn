@@ -608,13 +608,13 @@ flag = &"ow_shrine_cracked_wall"
 
 [node name="ShrineSwitch" parent="." unique_id=361397501 instance=ExtResource("22_gvf0k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78, 0, -32)
-mode = 1
+mode = 2
 flag = &"ow_shrine_switch"
 
 [node name="ShrineBlock" parent="." unique_id=2143523308 instance=ExtResource("24_v1yde")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78, 0, -28)
 solved_flag = &"ow_shrine_switch"
-solved_position = Vector3(-30, 0, -16)
+solved_position = Vector3(-78, 0, -32)
 
 [node name="ChestGate" parent="." unique_id=1467179515 instance=ExtResource("26_iip2e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72, 0, -34)
@@ -703,7 +703,7 @@ flag = &"ow_tablet_lift"
 
 [node name="LiftSwitch" parent="." unique_id=51521915 instance=ExtResource("22_gvf0k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.5, 0, 15.5)
-mode = 2
+mode = 3
 flag = &"ow_start_lift_switch"
 
 [node name="LiftStone" parent="." unique_id=1753049093 instance=ExtResource("42_stone")]

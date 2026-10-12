@@ -30,9 +30,9 @@ func test_stepping_on_the_plates_does_not_open_the_gate() -> void:
 	var b := level.get_node(^"GroveSwitchB") as FloorSwitch
 	var gate := level.get_node(^"GroveGate") as Gate
 	await _stand(tree, player, a.global_position)
-	assert_true(a.active, "el player la baja mientras está encima")
+	assert_true(not a.active, "el player no la baja: solo un bloque")
 	await _stand(tree, player, b.global_position)
-	assert_true(not a.active, "al bajarse vuelve a subir")
+	assert_true(not b.active, "ni la otra")
 	await _stand(tree, player, b.global_position + Vector3(0, 0, 3))
 	assert_true(not gate.is_open, "pisar las dos placas no abre la reja")
 	assert_true(not state.get_flag(&"ow_grove_switch_a") and not state.get_flag(&"ow_grove_switch_b"), "ni queda resuelto")

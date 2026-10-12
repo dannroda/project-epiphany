@@ -38,7 +38,7 @@ func test_door_needs_both_switches() -> void:
 	state.reset()
 
 
-func test_block_mode_player_holds_and_block_solves() -> void:
+func test_block_mode_only_a_block_solves_it() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state: Node = tree.root.get_node(^"GameState")
 	state.reset()
@@ -55,11 +55,23 @@ func test_block_mode_player_holds_and_block_solves() -> void:
 	player.global_position = switch.global_position
 	for i in 6:
 		await tree.physics_frame
-	assert_eq(switch.active, true, "el player lo activa")
-	player.global_position = switch.global_position + Vector3(0, 0, 3)
+	assert_eq(switch.active, false, "el player no lo aprieta: solo un bloque")
+	player.global_position = switch.global_position + Vector3(0, 0, 6)
+	var stone: RigidBody3D = load("res://src/world/physics_box.tscn").instantiate()
+	stone.freeze = true
+	level.add_child(stone)
+	stone.global_position = switch.global_position + Vector3.UP * 0.5
 	for i in 6:
 		await tree.physics_frame
-	assert_eq(switch.active, false, "al bajarse se apaga")
+	assert_eq(switch.active, false, "ni un objeto encima")
+	switch.mode = FloorSwitch.Mode.WEIGHT
+	for i in 6:
+		await tree.physics_frame
+	assert_eq(switch.active, true, "el de peso sí lo toma")
+	switch.mode = FloorSwitch.Mode.BLOCK
+	switch._set_active(false, false)
+	switch._solved = false
+	stone.free()
 	block.global_position = switch.global_position
 	for i in 6:
 		await tree.physics_frame

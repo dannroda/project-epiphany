@@ -97,7 +97,7 @@ shape = SubResource("BoxShape3D_57hh3")
 
 [node name="Switch" parent="." unique_id=1260744767 instance=ExtResource("4_jhdgp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
-mode = 1
+mode = 2
 flag = &"d0_gray_switch"
 
 [node name="Block" parent="." unique_id=280171958 node_paths=PackedStringArray("room") instance=ExtResource("6_aplt8")]

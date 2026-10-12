@@ -1,0 +1,44 @@
+{
+  "checklist": [
+    {
+      "detail": "FloorSwitch: BLOCK lo aprieta solo un PushBlock (ni el player ni lo arrojado); WEIGHT, un objeto apoyado o arrojado (o un bloque), no el player; los dos quedan resueltos con flag. Santuario y mazmorra gris pasan de ONCE a BLOCK; la placa de levantar del Claro a WEIGHT. Tests: test_wiring, test_grove_puzzle. GDD §11 (interruptores) y §5 (tutorial).",
+      "done": true,
+      "text": "BLOCK solo con bloques y modo WEIGHT para objetos"
+    },
+    {
+      "detail": "ShrineBlock tenía solved_position del overworld viejo (−30, −16): al cargar con el puzzle resuelto el bloque aparecía lejos y la placa quedaba apretada sola. Ahora (−78, −32); test_solved_blocks_rest_on_their_switch revisa todos los niveles.",
+      "done": true,
+      "text": "Placa del santuario apretada sin bloque"
+    },
+    {
+      "detail": "Hoy las cuatro placas son iguales. Marca o color por tipo (bloque, peso, golpe fuerte); pasa por el arte.",
+      "done": false,
+      "text": "Que cada tipo se distinga a la vista"
+    },
+    {
+      "detail": "Se activa con un golpe fuerte (¿martillo / golpe cargado?); espera el ítem que lo dé (11.90).",
+      "done": false,
+      "text": "Placa de golpe fuerte"
+    },
+    {
+      "done": false,
+      "text": "Probarlo (Daniel)"
+    }
+  ],
+  "code": "11.110",
+  "created_at": "2026-10-12T19:16:07.172Z",
+  "description": "Playtest 2026-10-12: los puzzles de bloques solo se tienen que activar con los bloques; los que se activan con objetos o con un golpe fuerte son otros tipos de placa. Y la placa del santuario se veía apretada sin bloque encima.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 107,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "doing",
+  "tags": [
+    "puzzles"
+  ],
+  "test": "",
+  "title": "Tipos de placa de piso: bloque, peso y golpe fuerte",
+  "updated_at": "2026-10-12T19:16:18.790Z"
+}
