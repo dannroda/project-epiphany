@@ -1,7 +1,7 @@
 {
   "checklist": [
     {
-      "detail": "ZoneVeil pasa de caja de tinta negra a banco de niebla: nubes claras que se mueven despacio y un borde que se deshace en jirones (fringe 3 m, 1 m por fuera de la pared); el interior de la zona sigue tapado. covers() no cambia.",
+      "detail": "ZoneVeil pasa de caja de tinta negra a banco de niebla con mezcla alfa (sin dither): nubes claras que se mueven despacio y un borde que se deshace en jirones suaves (fringe 3 m); el interior de la zona sigue tapado y el recorte al abrir también es suave. covers() no cambia. Playtest: el dither se veía horrible.",
       "done": true,
       "text": "Overworld"
     },
@@ -26,5 +26,5 @@
   ],
   "test": "",
   "title": "Zonas tapadas sin cuadrados sin explorar",
-  "updated_at": "2026-10-12T08:32:15.929Z"
+  "updated_at": "2026-10-12T19:01:51.676Z"
 }
