@@ -25,6 +25,11 @@ const WALL_HEIGHT := 2.0
 ## Alto de los pilares (PILLAR en build_paredes_la.py): hasta ahí tapa la cámara.
 const PILLAR_HEIGHT := 3.0
 const MASK_MARGIN := 2.0
+## Velo que oscurece la parte de afuera de las paredes hasta el negro de la máscara: arranca a esta distancia del piso.
+const FADE_START := {"n": 0.5, "s": 1.3, "e": 1.2, "o": 1.2}
+## Y llega al negro a esta distancia (abajo la cresta se ve poco: la máscara la tapa antes).
+const FADE_END := {"n": 1.3, "s": 2.0, "e": 2.0, "o": 2.0}
+const FADE := preload("res://debug/la/borde_oscuro.gdshader")
 const BRAZIER_SCALE := 0.55
 ## Sobre el borde, pegado al frente: más atrás queda en la franja que la sala de al norte ve por encima de su pared sur.
 const BRAZIER_SETBACK := 0.15
@@ -95,6 +100,8 @@ func _dress(level: Node) -> void:
 		elif _stairs_kind(node) != "":
 			(node.get_node("Visual") as Node3D).visible = false
 			level.set_editable_instance(node, true)
+		elif node is Area3D and "map_cell" in node:
+			_fade(level, node as Area3D)
 		elif node is Camera3D and "cuts_south_wall" in node:
 			node.set("offset", CAMERA_OFFSET)
 			node.set("orthographic", true)
@@ -102,6 +109,41 @@ func _dress(level: Node) -> void:
 			node.set("cuts_south_wall", false)
 			node.set("wall_height", PILLAR_HEIGHT)
 			node.set("mask_margin", MASK_MARGIN)
+
+
+func _fade(level: Node, room: Area3D) -> void:
+	var shape := room.get_node("CollisionShape3D") as CollisionShape3D
+	var size := (shape.shape as BoxShape3D).size
+	var to_level := shape.transform
+	var parent := shape.get_parent() as Node
+	while parent != level:
+		to_level = (parent as Node3D).transform * to_level
+		parent = parent.get_parent()
+	var center := to_level.origin
+	var floor_rect := Rect2(center.x - size.x / 2.0, center.z - size.z / 2.0, size.x, size.z)
+	var material := ShaderMaterial.new()
+	material.shader = FADE
+	material.set_shader_parameter("inner", Vector4(floor_rect.position.x - FADE_START["o"], floor_rect.position.y - FADE_START["s"],
+			floor_rect.end.x + FADE_START["e"], floor_rect.end.y + FADE_START["n"]))
+	material.set_shader_parameter("outer", Vector4(floor_rect.position.x - FADE_END["o"], floor_rect.position.y - FADE_END["s"],
+			floor_rect.end.x + FADE_END["e"], floor_rect.end.y + FADE_END["n"]))
+	var outer := floor_rect.grow(MASK_MARGIN)
+	var limit := outer.grow_individual(1.0, 0.0, 1.0, 0.0)
+	material.set_shader_parameter("limit", Vector4(limit.position.x, limit.position.y, limit.end.x, limit.end.y))
+	var floor_y := center.y - size.y / 2.0
+	material.set_shader_parameter("plane_y", floor_y + WALL_HEIGHT)
+	var plane := PlaneMesh.new()
+	plane.size = outer.size + Vector2(0, PILLAR_HEIGHT)
+	plane.center_offset = Vector3(0, 0, PILLAR_HEIGHT / 2.0)
+	plane.material = material
+	var veil := MeshInstance3D.new()
+	veil.name = "BordeOscuro"
+	veil.mesh = plane
+	veil.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	room.add_child(veil)
+	veil.owner = level
+	var local := (to_level * shape.transform.affine_inverse()).affine_inverse()
+	veil.transform.origin = local * Vector3(center.x, floor_y + PILLAR_HEIGHT + 0.02, center.z)
 
 
 func _stairs_kind(node: Node) -> String:
