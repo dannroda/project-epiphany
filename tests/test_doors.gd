@@ -76,6 +76,7 @@ func test_locked_door_needs_key_and_stays_open() -> void:
 	assert_eq(state.current_dungeon_state().small_keys, 2)
 	door.interactable.interact(player)
 	assert_eq(door.is_open, true, "con llave se abre")
+	assert_true(door._tween != null and door._tween.is_running(), "se abre con animación, no de golpe")
 	assert_eq(state.current_dungeon_state().small_keys, 1, "y gasta una")
 	assert_eq(state.get_flag(&"d1_test_locked_door"), true)
 	await tree.create_timer(0.8).timeout

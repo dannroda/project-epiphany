@@ -141,8 +141,8 @@ func try_unlock() -> bool:
 		_:
 			return false
 	interactable.enabled = false
-	_persistent.value = true
 	open(true)
+	_persistent.value = true
 	return true
 
 

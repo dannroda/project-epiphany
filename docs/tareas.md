@@ -3465,15 +3465,15 @@ El overworld es el hub: la pluma (11.35, templo) tiene que abrir ahí cosas y ca
 
 **Relacionadas:** 11.35 Saltar: ítem tipo Pluma de Roc
 
-### 11.62 Las puertas con llave se abren sin animación · Pendiente
+### 11.62 Las puertas con llave se abren sin animación · En curso
 
-**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`, `mundo`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `mundo`
 
 Al abrir una puerta LOCKED o BOSS, `_persistent.value = true` dispara `flag_changed`, el handler llama a `open(false)` y deja `is_open`; el `open(true)` de la línea siguiente sale temprano. Toda puerta con llave se abre de golpe, sin sonido ni polvo.
 
-- [ ] Abrir antes de guardar el flag
+- [x] Abrir antes de guardar el flag
   door.gd `try_unlock` (~l.144): llamar a `open(true)` antes de `_persistent.value = true`, o que el handler de `changed` ignore si ya `is_open`.
-- [ ] Test
+- [x] Test
   En test_doors: la puerta con llave pasa por la animación (no queda abierta en el mismo frame sin tween).
 
 **Prueba:** Abrir una puerta con llave en el templo: se ve la animación, suena y levanta polvo; al recargar la sala sigue abierta.
@@ -3973,7 +3973,7 @@ Varios valores de juego están como const o en sitios compartidos y no se pueden
 
 **Archivos:** `src/entities/boss/boss.gd`, `src/entities/boss/boss_hand.gd`, `player/states/carrying.gd`, `player/states/aiming_item.gd`, `player/components/carrier.gd`, `ai/tasks/bt_attack.gd`, `src/entities/enemy_bt.tres`, `src/state/game_state.gd`, `src/settings/settings.gd`, `tests/test_items.gd`
 
-### 11.88 Niveles referenciados por ruta: saves y portales frágiles · Pendiente
+### 11.88 Niveles referenciados por ruta: saves y portales frágiles · En curso
 
 **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `guardado`, `mundo`
 

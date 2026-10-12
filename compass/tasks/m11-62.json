@@ -1,19 +1,21 @@
 {
+  "assignee": "Claude",
   "checklist": [
     {
       "detail": "door.gd `try_unlock` (~l.144): llamar a `open(true)` antes de `_persistent.value = true`, o que el handler de `changed` ignore si ya `is_open`.",
-      "done": false,
+      "done": true,
       "text": "Abrir antes de guardar el flag"
     },
     {
       "detail": "En test_doors: la puerta con llave pasa por la animación (no queda abierta en el mismo frame sin tween).",
-      "done": false,
+      "done": true,
       "text": "Test"
     }
   ],
   "code": "11.62",
   "created_at": "2026-10-12T00:05:13.762Z",
   "description": "Al abrir una puerta LOCKED o BOSS, `_persistent.value = true` dispara `flag_changed`, el handler llama a `open(false)` y deja `is_open`; el `open(true)` de la línea siguiente sale temprano. Toda puerta con llave se abre de golpe, sin sonido ni polvo.",
+  "done_at": "2026-10-12T01:02:21.748Z",
   "files": [
     "src/world/door.gd",
     "tests/test_doors.gd"
@@ -24,12 +26,12 @@
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "done",
   "tags": [
     "bug",
     "mundo"
   ],
   "test": "Abrir una puerta con llave en el templo: se ve la animación, suena y levanta polvo; al recargar la sala sigue abierta.",
   "title": "Las puertas con llave se abren sin animación",
-  "updated_at": "2026-10-12T00:05:15.401Z"
+  "updated_at": "2026-10-12T01:02:21.748Z"
 }
