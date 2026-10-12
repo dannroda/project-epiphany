@@ -871,6 +871,10 @@ transform = Transform3D(0, 0, 3.2, 0, 1, 0, -3, 0, 0, 0, 0, 0)
 [node name="CollisionShape3D" parent="RavineBridge" index="1"]
 shape = SubResource("BoxShape3D_ravine_bridge")
 
+[node name="NavigationLink3D" type="NavigationLink3D" parent="RavineBridge"]
+start_position = Vector3(-8, 0.5, 0)
+end_position = Vector3(8, 0.5, 0)
+
 [node name="ChullpaTower" type="CSGCylinder3D" parent="." unique_id=1820417733]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 4.5, -21)
 use_collision = true

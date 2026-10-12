@@ -1592,7 +1592,7 @@ El overworld de 3 × 3 pantallas quedó hecho para una sola mazmorra y se siente
   Bridge que sube del fondo con una flecha al ojo de la otra orilla (ow_ravine_bridge_eye); torre provisoria de la Chullpa con su Portal en el norte de la Necrópolis y Spawn_chullpa delante. Los lugares viejos ya se mudaron en el paso 3. Postes del gancho, salto de una vía y puertas de D3/D4 esperan 11.90.
 - [x] Terreno orgánico, decoración y navmesh regenerados
   Rehecho con el puente y la Chullpa (945f45f); se repite cada vez que cambian el GridMap o los puntos fijos.
-- [ ] Tests y escenarios al día
+- [x] Tests y escenarios al día
   Escenario travel (los 6 portales prendidos, puente subido, todo el mapa visitado; para recorrerlo) y test_scenario_spawn_points_exist: el punto de cada escenario existe en su escena.
 - [ ] Recorrerlo (Daniel)
 - [x] Viaje rápido: mockup de la pantalla
@@ -1602,7 +1602,7 @@ El overworld de 3 × 3 pantallas quedó hecho para una sola mazmorra y se siente
 - [x] Laguna de agua real y Bañado de agua baja
   Daniel (2026-10-11): la Laguna con el agua de la cueva de la vertiente (water.gdshader: espuma en la orilla, color por profundidad) sobre el hueco; cascada en el acantilado norte donde termina la quebrada; caer al agua salpica y vuelve a la orilla (no se nada); la isla de D3 con el gancho. El Bañado, agua baja que se camina.
 - [ ] Que todo se pueda alcanzar y cruzar
-  Playtest 2026-10-12: hay áreas del overworld a las que es imposible llegar o cruzar. Recorrido con test de rutas (test_overworld) para cada región del layout D.
+  Playtest 2026-10-12: áreas imposibles de alcanzar o cruzar. test_every_region_is_reachable_except_the_item_gated (navmesh + link del puente): con el puente se llega a todas las zonas menos la Cumbre y la isla de la Laguna (gancho) y las franjas de la Quebrada (angostura y bajadas, 11.90). Falta que Daniel diga qué lugares puntuales no pudo cruzar.
 
 ## M8 — Contenido de mazmorra  (8/8)
 

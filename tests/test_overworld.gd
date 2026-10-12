@@ -308,3 +308,45 @@ func test_the_hud_names_a_region_once_while_walking_its_screens() -> void:
 	assert_eq(AreaZone._current.name, &"Zone_cueva", "termina en los Cerros")
 	assert_eq(shown, ["", "", tr("PLACE_MEADOW"), ""], "Claro → Arboleda → Gruta sin cartel; a la Pradera sí; a los Cerros, que también son Pradera, no")
 	state.reset()
+
+
+## Alguna parte de la zona tiene un camino por la navmesh desde el inicio (con el link del puente si está arriba).
+func _reachable_zones(tree: SceneTree) -> Array[String]:
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	var map := player.get_world_3d().navigation_map
+	var from := NavigationServer3D.map_get_closest_point(map, player.global_position)
+	var reached: Array[String] = []
+	for zone: AreaZone in tree.current_scene.find_children("Zone_*", "AreaZone", false, false):
+		var bounds := zone.bounds()
+		for fx in [0.25, 0.5, 0.75]:
+			for fz in [0.25, 0.5, 0.75]:
+				var target := Vector3(bounds.position.x + bounds.size.x * fx, 0, bounds.position.y + bounds.size.y * fz)
+				var closest := NavigationServer3D.map_get_closest_point(map, target)
+				var path := NavigationServer3D.map_get_path(map, from, closest, true)
+				if Vector2(closest.x, closest.z).distance_to(Vector2(target.x, target.z)) < 3.0 and not path.is_empty() and path[-1].distance_to(closest) < 0.6:
+					reached.append(String(zone.name))
+					break
+			if String(zone.name) in reached:
+				break
+	reached.sort()
+	return reached
+
+
+func test_every_region_is_reachable_except_the_item_gated() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	state.reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	for i in 10:
+		await tree.physics_frame
+	var west: Array[String] = ["Zone_arboleda", "Zone_cueva", "Zone_gruta", "Zone_pradera", "Zone_santuario", "Zone_start", "Zone_templo", "Zone_vertiente"]
+	assert_eq(_reachable_zones(tree), west, "sin el puente, solo el oeste de la quebrada")
+	(tree.current_scene.get_node(^"RavineBridge") as Bridge).raise(false)
+	for i in 4:
+		await tree.physics_frame
+	var all := west.duplicate()
+	all.append_array(["Zone_banado", "Zone_cardonal", "Zone_mirador", "Zone_necropolis", "Zone_risco"])
+	all.sort()
+	assert_eq(_reachable_zones(tree), all, "con el puente, todo menos la Cumbre (gancho), la isla de la Laguna (gancho) y las franjas de la Quebrada (11.90)")
+	state.reset()

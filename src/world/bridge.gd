@@ -1,6 +1,7 @@
 class_name Bridge
 extends StaticBody3D
-## Puente que sube desde el fondo de un hueco cuando se cumplen sus interruptores (y queda arriba).
+## Puente que sube desde el fondo de un hueco cuando se cumplen sus interruptores (y queda arriba). Si tiene un
+## `NavigationLink3D` hijo (de orilla a orilla), lo habilita arriba: la navmesh horneada no incluye el puente.
 
 @export var switches: Array[NodePath] = []
 @export var condition: Wiring.Condition = Wiring.Condition.ALL
@@ -18,6 +19,7 @@ func _ready() -> void:
 	_base_y = position.y
 	position.y -= drop
 	$CollisionShape3D.disabled = true
+	_set_link(false)
 	if switches.is_empty():
 		return
 	_wiring = Wiring.create(self, switches, condition)
@@ -36,9 +38,16 @@ func raise(animate := true) -> void:
 		return
 	is_up = true
 	$CollisionShape3D.set_deferred(&"disabled", false)
+	_set_link(true)
 	if not animate:
 		position.y = _base_y
 		return
 	var tween := create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tween.tween_property(self, "position:y", _base_y, duration)
 	Feel.sfx(&"secret", global_position)
+
+
+func _set_link(on: bool) -> void:
+	var link := get_node_or_null(^"NavigationLink3D") as NavigationLink3D
+	if link:
+		link.enabled = on
