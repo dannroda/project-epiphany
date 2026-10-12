@@ -57,13 +57,13 @@ func test_rooms_count_only_their_own_floor() -> void:
 
 func test_stairs_go_up_and_back() -> void:
 	await _start()
-	player.global_position = Vector3(4, 0, 18.5)
+	player.global_position = Vector3(0.6, 0, 20)
 	await tree.create_timer(1.2).timeout
 	assert_eq(camera.room, _room("PisoAlto/Rellano"), "la escalera lleva al rellano")
 	assert_true(absf(player.global_position.y - 8.0) < 0.5, "arriba, en el piso alto (y %.1f)" % player.global_position.y)
 	assert_true(_floor("PisoAlto").visible, "ahora se ve el piso alto")
 	assert_eq(tree.root.get_node(^"Fader/Rect").color.a, 0.0, "el fundido terminó")
-	player.global_position = Vector3(4, 8, 18.5)
+	player.global_position = Vector3(0.6, 8, 20)
 	await tree.create_timer(1.2).timeout
 	assert_eq(camera.room, _room("PlantaBaja/Entrada"), "y la de bajada vuelve a la entrada")
 	assert_true(not _floor("PisoAlto").visible, "el piso alto se oculta otra vez")
@@ -85,7 +85,7 @@ func test_hole_drops_to_the_room_below() -> void:
 func test_crypt_ladder_only_goes_up_to_the_entrance() -> void:
 	await _start()
 	await _drop(Vector3(32, 0.5, 24))
-	player.global_position = Vector3(28, -8, 18.6)
+	player.global_position = Vector3(47.4, -8, 20)
 	await tree.create_timer(1.2).timeout
 	assert_eq(camera.room, _room("PlantaBaja/Entrada"), "la escalera de mano sube a la entrada")
 	assert_true(level.find_children("*", "Stairs", true, false).all(func(stairs: Stairs) -> bool: return stairs.to != level.get_node(^"Sotano/CriptaLadder")), "nada baja por ella")
