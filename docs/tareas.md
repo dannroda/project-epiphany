@@ -1590,7 +1590,8 @@ El overworld de 3 × 3 pantallas quedó hecho para una sola mazmorra y se siente
   debug/tmp/ow/build_layout.gd (generador de una vez): 7 × 5 pantallas de 12 × 8 celdas; lugares viejos mudados con su contenido (celdas y nodos), regiones nuevas lisas con AreaZone, quebrada y laguna de Abismo con Pit por orilla (Pit vuelve al marcador más cercano), escalones de una vía como tiras de Escalón, angostura de una celda. world_rect del mapa (−85, −41, 170, 82). Tests de overworld al día (rutas de las dos orillas, angostura). GDD §7.1 (Blockout del layout D).
 - [x] Puente de la quebrada y entrada de la Chullpa
   Bridge que sube del fondo con una flecha al ojo de la otra orilla (ow_ravine_bridge_eye); torre provisoria de la Chullpa con su Portal en el norte de la Necrópolis y Spawn_chullpa delante. Los lugares viejos ya se mudaron en el paso 3. Postes del gancho, salto de una vía y puertas de D3/D4 esperan 11.90.
-- [ ] Terreno orgánico, decoración y navmesh regenerados
+- [x] Terreno orgánico, decoración y navmesh regenerados
+  Rehecho con el puente y la Chullpa (945f45f); se repite cada vez que cambian el GridMap o los puntos fijos.
 - [ ] Tests y escenarios al día
 - [ ] Recorrerlo (Daniel)
 - [x] Viaje rápido: mockup de la pantalla

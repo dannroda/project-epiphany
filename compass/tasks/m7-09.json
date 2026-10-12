@@ -21,7 +21,8 @@
       "text": "Puente de la quebrada y entrada de la Chullpa"
     },
     {
-      "done": false,
+      "detail": "Rehecho con el puente y la Chullpa (945f45f); se repite cada vez que cambian el GridMap o los puntos fijos.",
+      "done": true,
       "text": "Terreno orgánico, decoración y navmesh regenerados"
     },
     {
@@ -68,5 +69,5 @@
   ],
   "test": "",
   "title": "Rediseño del overworld como hub de varias mazmorras",
-  "updated_at": "2026-10-12T17:24:37.173Z"
+  "updated_at": "2026-10-12T17:29:06.604Z"
 }
