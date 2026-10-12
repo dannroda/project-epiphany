@@ -1511,6 +1511,7 @@ orthographic = true
 ortho_size = 21.0
 mask_margin = 2.0
 south_wall_cut = 0.8
+south_wall_reach = 1.7
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1439023435 instance=ExtResource("46_xk32g")]
 layer = 10

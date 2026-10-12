@@ -22,6 +22,8 @@ const CORNERS := ["ne", "se", "so", "no"]
 ## Rampa y alto según hacia dónde mira la pared (como PROFILE en build_paredes_la.py); la cámara tapa más allá de MASK_MARGIN.
 const PROFILE := {"s": [1.0, 2.0], "n": [1.2, 0.8], "e": [1.2, 2.0], "o": [1.2, 2.0]}
 const MASK_MARGIN := 2.0
+## La pared sur termina a MASK_MARGIN del piso; el recorte de la cámara arranca a 0.3 + esto.
+const SOUTH_REACH := 1.7
 const BRAZIER_SCALE := 0.55
 const BRAZIER_FLAME := 1.07
 const DOOR_LEAF_SCALE := Vector3(0.7, 0.8, 1.0)
@@ -96,6 +98,7 @@ func _dress(level: Node) -> void:
 			node.set("ortho_size", ORTHO_SIZE)
 			node.set("south_wall_cut", PROFILE["n"][1])
 			node.set("mask_margin", MASK_MARGIN)
+			node.set("south_wall_reach", SOUTH_REACH)
 
 
 func _stairs_kind(node: Node) -> String:
