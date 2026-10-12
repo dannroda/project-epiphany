@@ -47,7 +47,6 @@ var extra_hints: Array:
 @onready var overworld: Control = %Overworld
 @onready var canvas: Control = %Canvas
 @onready var overworld_image: TextureRect = %OverworldImage
-@onready var fog: Control = %Fog
 @onready var marks: Control = %Marks
 @onready var pins: Control = %Pins
 @onready var marker: Control = %Marker
@@ -104,7 +103,7 @@ func refresh() -> void:
 	if _dungeon and _dungeon.changed.is_connected(refresh):
 		_dungeon.changed.disconnect(refresh)
 	_dungeon = null
-	for layer in [rooms_layer, doors_layer, focus_stats, fog, marks, floor_buttons]:
+	for layer in [rooms_layer, doors_layer, focus_stats, marks, floor_buttons]:
 		_clear(layer)
 	_room_cells.clear()
 	_focused_portal = null
@@ -352,6 +351,8 @@ func _show_overworld() -> void:
 	_map = _find(OverworldMap) as OverworldMap
 	title.text = _map.display_name if _map and not _map.display_name.is_empty() else "MAP_TITLE_OVERWORLD"
 	overworld_image.texture = _map.texture if _map else null
+	var reveal := overworld_image.material as ShaderMaterial
+	reveal.set_shader_parameter(&"explored", ImageTexture.create_from_image(GameState.map_revealed) if GameState.map_revealed else null)
 	if _map:
 		_map.snapshot()
 	marker.visible = _map != null
@@ -371,11 +372,10 @@ func _show_overworld() -> void:
 	_place_overworld()
 
 
-## Niebla, marcas, pines, flecha y cursor sobre la foto; se rehace cuando la foto cambia de tamaño.
+## Marcas, pines, flecha y cursor sobre la foto; se rehace cuando la foto cambia de tamaño.
 func _place_overworld() -> void:
 	if not is_instance_valid(_map) or _in_dungeon() or not is_inside_tree() or get_tree().current_scene == null:
 		return
-	_clear(fog)
 	_clear(marks)
 	if _image_rect().size == Vector2.ZERO:
 		return
@@ -384,9 +384,6 @@ func _place_overworld() -> void:
 	var visited_regions := zones.filter(func(zone: AreaZone) -> bool: return zone.is_visited()).map(func(zone: AreaZone) -> String: return zone.display_name)
 	for zone: AreaZone in zones:
 		var bounds := zone.bounds()
-		if not zone.is_visited():
-			var uv := Rect2((bounds.position - _map.world_rect.position) / _map.world_rect.size, bounds.size / _map.world_rect.size)
-			fog.add_child(MapFogZone.create(_world_rect_to_map(bounds), _map.texture, uv))
 		if zone.region_label and not zone.display_name.is_empty() and zone.display_name in visited_regions:
 			var label: Label = ZONE_NAME_SCENE.instantiate()
 			label.text = tr(zone.display_name)

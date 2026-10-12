@@ -1,8 +1,10 @@
 shader_type canvas_item;
-// Niebla del minimapa del overworld: donde todavía no se pasó, la foto se funde en tinta; el mundo termina igual.
+// Niebla del minimapa del overworld: donde todavía no se pasó, la foto queda en boceto; el mundo termina en tinta.
+
+#include "res://src/ui/map_sketch.gdshaderinc"
 
 // Lo descubierto (GameState.map_revealed): 1 = visto; cubre world_rect.
-uniform sampler2D explored : filter_linear, repeat_disable;
+uniform sampler2D explored : hint_default_black, filter_linear, repeat_disable;
 uniform vec4 world_rect;
 // Qué rectángulo del mundo (x, z, ancho, alto) muestra la vista.
 uniform vec4 view_world;
@@ -21,6 +23,11 @@ void fragment() {
 	vec2 world = view_world.xy + local / view_size * view_world.zw;
 	vec2 uv = (world - world_rect.xy) / world_rect.zw;
 	vec2 edge = min(world - world_rect.xy, world_rect.xy + world_rect.zw - world);
-	float seen = texture(explored, clamp(uv, 0.0, 1.0)).r * smoothstep(0.0, edge_fade, min(edge.x, edge.y));
-	COLOR.rgb = mix(ink.rgb, COLOR.rgb, seen);
+	float inside = smoothstep(0.0, edge_fade, min(edge.x, edge.y));
+	float seen = texture(explored, clamp(uv, 0.0, 1.0)).r;
+	vec2 px = TEXTURE_PIXEL_SIZE * 1.5;
+	float gx = sketch_luma(texture(TEXTURE, UV + vec2(px.x, 0.0)).rgb) - sketch_luma(texture(TEXTURE, UV - vec2(px.x, 0.0)).rgb);
+	float gy = sketch_luma(texture(TEXTURE, UV + vec2(0.0, px.y)).rgb) - sketch_luma(texture(TEXTURE, UV - vec2(0.0, px.y)).rgb);
+	vec3 shown = mix(map_sketch(gx, gy, FRAGCOORD.xy), COLOR.rgb, seen);
+	COLOR.rgb = mix(ink.rgb, shown, inside);
 }

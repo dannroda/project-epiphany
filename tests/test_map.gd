@@ -101,16 +101,15 @@ func _press(action: StringName) -> void:
 	Input.parse_input_event(release)
 
 
-func test_overworld_fog_lifts_as_zones_are_visited() -> void:
+func test_overworld_names_appear_as_zones_are_visited() -> void:
 	var setup: Array = await _open_map("", "res://levels/overworld.tscn")
 	var tree: SceneTree = setup[0]
 	var state: Node = setup[1]
 	var page: Control = setup[3]
 	await tree.process_frame
-	var zones: int = page._zones().size()
 	assert_eq(state.visited_zones, [&"Zone_start"] as Array[StringName], "partida nueva: solo el claro del inicio")
-	assert_eq(page.fog.get_child_count(), zones - 1, "las demás en sombra")
-	assert_true(page.fog.get_children().all(func(zone: Control) -> bool: return zone.size.x > 20.0 and zone.position != Vector2.ZERO), "cada sombra cubre su zona")
+	var explored: Texture2D = (page.overworld_image.material as ShaderMaterial).get_shader_parameter(&"explored")
+	assert_true(explored != null and explored.get_size() == Vector2(state.map_revealed.get_size()), "la foto se revela con lo descubierto del minimapa")
 	assert_eq(page.subtitle.text, tr("MAP_ZONES_EXPLORED").format({done = 1, total = 8}) + " · " + tr("MAP_PORTALS_LIT").format({done = 0, total = 6}), "cuenta regiones grandes, no pantallas, y portales")
 	var names := func() -> Array: return page.marks.get_children().filter(func(mark: Node) -> bool: return mark is Label).map(func(label: Label) -> String: return label.text)
 	assert_eq(names.call(), [tr("PLACE_FIRST_CLEARING")], "solo el nombre de la región visitada, una vez")
@@ -126,7 +125,6 @@ func test_overworld_fog_lifts_as_zones_are_visited() -> void:
 	page.refresh()
 	await tree.process_frame
 	await tree.process_frame
-	assert_eq(page.fog.get_child_count(), zones - 4, "la pradera se destapa")
 	_close(setup[2])
 	state.reset()
 

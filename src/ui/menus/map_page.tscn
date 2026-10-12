@@ -9,6 +9,10 @@
 [ext_resource type="Texture2D" uid="uid://cdjnnpwyam4fr" path="res://assets/ui/frames/map_room_mapped.png" id="7_empty"]
 [ext_resource type="PackedScene" path="res://src/ui/menus/map_dungeon_item.tscn" id="20_ditem"]
 [ext_resource type="PackedScene" path="res://src/ui/menus/menu_item_small.tscn" id="21_item"]
+[ext_resource type="Shader" path="res://src/ui/menus/map_reveal.gdshader" id="22_reveal"]
+
+[sub_resource type="ShaderMaterial" id="Reveal"]
+shader = ExtResource("22_reveal")
 
 [sub_resource type="StyleBoxTexture" id="CursorFrame"]
 texture = ExtResource("5_focus")
@@ -210,6 +214,7 @@ mouse_filter = 2
 
 [node name="OverworldImage" type="TextureRect" parent="MapCard/Overworld/Canvas"]
 unique_name_in_owner = true
+material = SubResource("Reveal")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -223,11 +228,6 @@ grow_vertical = 2
 mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
-
-[node name="Fog" type="Control" parent="MapCard/Overworld/Canvas"]
-unique_name_in_owner = true
-anchors_preset = 0
-mouse_filter = 2
 
 [node name="Marks" type="Control" parent="MapCard/Overworld/Canvas"]
 unique_name_in_owner = true
