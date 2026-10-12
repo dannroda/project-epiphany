@@ -6,7 +6,6 @@
 [sub_resource type="ShaderMaterial" id="Ink"]
 render_priority = 0
 shader = ExtResource("2_shader")
-shader_parameter/ink = Color(0.043137256, 0.050980393, 0.0627451, 1)
 shader_parameter/edge = 2.0
 
 [sub_resource type="BoxMesh" id="Box"]

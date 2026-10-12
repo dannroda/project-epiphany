@@ -9,6 +9,9 @@ extends MeshInstance3D
 @export var blockers: Array[NodePath] = []
 ## Grosor de la pared que rodea la zona (una celda del GridMap).
 @export var wall_margin := 1.95
+## Franja donde el borde de la niebla se deshace en jirones: `fringe_out` por fuera de la pared, el resto por dentro.
+@export var fringe := 3.0
+@export var fringe_out := 1.0
 ## A ras de la tapa de las paredes (2,6 m): más alto, la cara del velo asoma por encima del muro.
 @export var top := 2.62
 @export var bottom := -1.0
@@ -16,6 +19,7 @@ extends MeshInstance3D
 
 var _zone: AreaZone
 var _rect: Rect2
+var _cover: Rect2
 var _center := Vector2.ZERO
 var _radius := 0.0
 var _tween: Tween
@@ -24,7 +28,10 @@ var _tween: Tween
 func _ready() -> void:
 	add_to_group(&"zone_veils")
 	_zone = get_parent() as AreaZone
-	_rect = _zone.bounds().grow(wall_margin)
+	_cover = _zone.bounds().grow(wall_margin)
+	_rect = _cover.grow(fringe_out)
+	set_instance_shader_parameter(&"fringe", fringe)
+	set_instance_shader_parameter(&"rect", Vector4(_rect.position.x, _rect.position.y, _rect.end.x, _rect.end.y))
 	global_transform = Transform3D(Basis.from_scale(Vector3(_rect.size.x, top - bottom, _rect.size.y)),
 		Vector3(_rect.get_center().x, (top + bottom) / 2.0, _rect.get_center().y))
 	for path in blockers:
@@ -41,7 +48,7 @@ func _ready() -> void:
 
 ## Si el punto (XZ del mundo) sigue tapado.
 func covers(point: Vector2) -> bool:
-	return visible and _rect.has_point(point) and point.distance_to(_center) >= _radius
+	return visible and _cover.has_point(point) and point.distance_to(_center) >= _radius
 
 
 func is_revealing() -> bool:

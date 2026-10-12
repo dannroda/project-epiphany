@@ -1,7 +1,8 @@
 {
   "checklist": [
     {
-      "done": false,
+      "detail": "ZoneVeil pasa de caja de tinta negra a banco de niebla: nubes claras que se mueven despacio y un borde que se deshace en jirones (fringe 3 m, 1 m por fuera de la pared); el interior de la zona sigue tapado. covers() no cambia.",
+      "done": true,
       "text": "Overworld"
     },
     {
@@ -25,5 +26,5 @@
   ],
   "test": "",
   "title": "Zonas tapadas sin cuadrados sin explorar",
-  "updated_at": "2026-10-12T08:17:00.848Z"
+  "updated_at": "2026-10-12T08:32:15.929Z"
 }
