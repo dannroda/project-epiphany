@@ -160,9 +160,9 @@ func test_pins_are_placed_removed_and_saved() -> void:
 	var page: Control = setup[3]
 	await tree.process_frame
 	page._move_cursor(page.world_to_map(Vector2(-10, 4)))
-	_press(&"ui_accept")
+	_press(&"item_1")
 	await tree.process_frame
-	assert_eq(state.map_pins.size(), 1, "A pone un pin")
+	assert_eq(state.map_pins.size(), 1, "X pone un pin")
 	assert_eq(page.pins.get_child_count(), 1)
 	assert_eq(page.pins_label.text, tr("MAP_PINS").format({count = 1, max = 4}))
 	for point in [Vector2(10, 4), Vector2(20, 4), Vector2(-20, 4)]:
@@ -184,11 +184,11 @@ func test_zoom_follows_the_cursor() -> void:
 	var tree: SceneTree = setup[0]
 	var page: Control = setup[3]
 	await tree.process_frame
-	assert_eq(page.extra_hints[1][1], "MAP_HINT_ZOOM_IN")
+	assert_eq(page.extra_hints[2][1], "MAP_HINT_ZOOM_IN")
 	_press(&"item_2")
 	await tree.process_frame
 	assert_eq(page.canvas.scale, Vector2.ONE * 2.0, "Y acerca")
-	assert_eq(page.extra_hints[1][1], "MAP_HINT_ZOOM_OUT")
+	assert_eq(page.extra_hints[2][1], "MAP_HINT_ZOOM_OUT")
 	var on_screen: Vector2 = page.canvas.position + page.cursor.position * page.canvas.scale
 	assert_true(Rect2(Vector2.ZERO, page.overworld.size).has_point(on_screen), "el cursor queda a la vista")
 	_close(setup[2])
@@ -333,8 +333,8 @@ func test_travel_portals_light_up_and_the_map_travels() -> void:
 	assert_eq(page.focused_portal(), necropolis)
 	assert_true(page.can_travel() and page.travel_button.visible, "a la Necrópolis se puede viajar")
 	assert_eq(page.portal_name.text, tr("MAP_PORTAL").format({name = tr("PLACE_NECROPOLIS")}))
-	assert_true(page.extra_hints.any(func(hint: Array) -> bool: return hint[1] == "MAP_HINT_TRAVEL"), "la barra de ayudas dice X Viajar")
-	_press(&"item_1")
+	assert_true(page.extra_hints.any(func(hint: Array) -> bool: return hint == [&"ui_accept", "MAP_HINT_TRAVEL"]), "la barra de ayudas dice A Viajar")
+	_press(&"ui_accept")
 	await tree.process_frame
 	await tree.process_frame
 	var dialog := stack.top() as ConfirmDialog

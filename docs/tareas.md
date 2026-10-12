@@ -1603,6 +1603,8 @@ El overworld de 3 × 3 pantallas quedó hecho para una sola mazmorra y se siente
   Daniel (2026-10-11): la Laguna con el agua de la cueva de la vertiente (water.gdshader: espuma en la orilla, color por profundidad) sobre el hueco; cascada en el acantilado norte donde termina la quebrada; caer al agua salpica y vuelve a la orilla (no se nada); la isla de D3 con el gancho. El Bañado, agua baja que se camina.
 - [ ] Que todo se pueda alcanzar y cruzar
   Playtest 2026-10-12: áreas imposibles de alcanzar o cruzar. test_every_region_is_reachable_except_the_item_gated (navmesh + link del puente): con el puente se llega a todas las zonas menos la Cumbre y la isla de la Laguna (gancho) y las franjas de la Quebrada (angostura y bajadas, 11.90). Falta que Daniel diga qué lugares puntuales no pudo cruzar.
+- [ ] Mapa: A viaja, X pone pin
+  Daniel (2026-10-12): era contraintuitivo que el viaje fuera con X. Mockups Pause_Map_Travel, Pause_Map_Regions y Pause_Map_Overworld al día; map_page: ui_accept viaja (si hay portal enganchado), item_1 pone o quita pin; barra de ayudas en el orden del mockup.
 
 ## M8 — Contenido de mazmorra  (8/8)
 

@@ -23,16 +23,16 @@ const DIRECTIONS := [
 ## Lo leen el menú de pausa (ayudas) y los tests.
 var accept_label: String:
 	get:
-		return "" if _in_dungeon() else "MAP_HINT_PIN"
+		return ""
 var extra_hints: Array:
 	get:
 		var move := [[&"move_left", &"move_right"], "MAP_HINT_MOVE"]
 		if _in_dungeon():
 			return [move, [[&"map_floor_up", &"map_floor_down"], "MAP_HINT_FLOOR"]] if _levels().size() > 1 else [move]
-		var hints := [move, [&"item_2", "MAP_HINT_ZOOM_OUT" if _zoomed else "MAP_HINT_ZOOM_IN"]]
+		var hints := [move]
 		if can_travel():
-			hints.push_front([&"item_1", "MAP_HINT_TRAVEL"])
-		return hints
+			hints.append([&"ui_accept", "MAP_HINT_TRAVEL"])
+		return hints + [[&"item_1", "MAP_HINT_PIN"], [&"item_2", "MAP_HINT_ZOOM_OUT" if _zoomed else "MAP_HINT_ZOOM_IN"]]
 
 @onready var map_card: Control = %MapCard
 @onready var cells: Control = %Cells
@@ -426,10 +426,11 @@ func _place_overworld() -> void:
 
 
 func _overworld_input(event: InputEvent) -> void:
-	if event.is_action_pressed(&"item_1") and can_travel():
-		_ask_travel()
+	if event.is_action_pressed(&"ui_accept"):
+		if can_travel():
+			_ask_travel()
 		get_viewport().set_input_as_handled()
-	elif event.is_action_pressed(&"ui_accept"):
+	elif event.is_action_pressed(&"item_1"):
 		if GameState.toggle_pin(map_to_world(cursor.position)):
 			Feel.ui(&"ui_accept")
 		else:
