@@ -6,164 +6,180 @@
 
 [sub_resource type="Resource" id="Link_1"]
 script = ExtResource("2_link")
-from = &"Vestibulo"
-to = &"Hub"
-through = Array[NodePath]([NodePath("VestibuleDoor")])
+from = &"Entrada"
+to = &"Tronco"
 
 [sub_resource type="Resource" id="Link_2"]
 script = ExtResource("2_link")
-from = &"Hub"
-to = &"Galeria"
-through = Array[NodePath]([NodePath("HubShutterW")])
+from = &"Tronco"
+to = &"RamaOeste"
 
 [sub_resource type="Resource" id="Link_3"]
 script = ExtResource("2_link")
-from = &"Hub"
-to = &"Agrietada:S"
-through = Array[NodePath]([NodePath("HubLockedE")])
+from = &"Tronco"
+to = &"Copa"
+locked = true
 
 [sub_resource type="Resource" id="Link_4"]
 script = ExtResource("2_link")
-from = &"Hub"
-to = &"Antesala"
-through = Array[NodePath]([NodePath("HubSeal")])
+from = &"Copa"
+to = &"Nido"
+needs = Array[StringName]([&"bomb_bag"])
 
 [sub_resource type="Resource" id="Link_5"]
 script = ExtResource("2_link")
-from = &"Galeria"
-to = &"Ojos:S"
-through = Array[NodePath]([NodePath("OjosDoor")])
+from = &"Copa"
+to = &"Antesala"
+locked = true
 
 [sub_resource type="Resource" id="Link_6"]
 script = ExtResource("2_link")
-from = &"Agrietada:S"
-to = &"Agrietada:N"
-through = Array[NodePath]([NodePath("CrackedBox")])
-needs = Array[StringName]([&"bomb_bag"])
+from = &"Antesala"
+to = &"Vigia"
 
 [sub_resource type="Resource" id="Link_7"]
 script = ExtResource("2_link")
-from = &"Agrietada:N"
-to = &"Arena"
-through = Array[NodePath]([NodePath("ArenaCrackedWall"), NodePath("ArenaShutter")])
+from = &"Copa"
+to = &"Raices:N"
+one_way = true
+
+[sub_resource type="Resource" id="Link_8"]
+script = ExtResource("2_link")
+from = &"Raices:N"
+to = &"Tronco"
+one_way = true
 
 [sub_resource type="Resource" id="Link_9"]
 script = ExtResource("2_link")
-from = &"Ojos:S"
-to = &"Ojos:N"
-through = Array[NodePath]([NodePath("OjosBridge")])
+from = &"Tronco"
+to = &"Raices:S"
+needs = Array[StringName]([&"d1_trunk_eye"])
 
 [sub_resource type="Resource" id="Link_10"]
 script = ExtResource("2_link")
-from = &"Ojos:N"
-to = &"Puzzle"
-through = Array[NodePath]([NodePath("PuzzleDoor")])
+from = &"Raices:S"
+to = &"Ojos"
+locked = true
 
-[sub_resource type="Resource" id="Link_13"]
+[sub_resource type="Resource" id="Link_11"]
 script = ExtResource("2_link")
-from = &"Antesala"
+from = &"Ojos"
 to = &"Jefe"
-through = Array[NodePath]([NodePath("BossDoor")])
+needs = Array[StringName]([&"boss_key"])
 
 [sub_resource type="Resource" id="Spot_1"]
 script = ExtResource("3_spot")
-area = &"Vestibulo"
-node = NodePath("VestibuleSwitch")
+area = &"RamaOeste"
+node = NodePath("WestBlockSwitch")
+gives = &"d1_west_switch"
 
 [sub_resource type="Resource" id="Spot_2"]
 script = ExtResource("3_spot")
-area = &"Galeria"
-node = NodePath("GalleryEye")
-needs = Array[StringName]([&"shield_mirror"])
+area = &"RamaOeste"
+node = NodePath("WestKeyChest")
+needs = Array[StringName]([&"d1_west_switch"])
+key = true
 
 [sub_resource type="Resource" id="Spot_3"]
 script = ExtResource("3_spot")
-area = &"Galeria"
-node = NodePath("GalleryKeyChest")
-through = Array[NodePath]([NodePath("GalleryKeyGate")])
+area = &"RamaOeste"
+node = NodePath("WestEye")
+needs = Array[StringName]([&"bow"])
+gives = &"d1_west_eye"
 
 [sub_resource type="Resource" id="Spot_4"]
 script = ExtResource("3_spot")
-area = &"Galeria"
-node = NodePath("OjosDoorEye")
-needs = Array[StringName]([&"bow"])
+area = &"RamaOeste"
+node = NodePath("HeartPieceWest")
+needs = Array[StringName]([&"d1_west_eye"])
+gives = &"d1_heart_piece"
 
 [sub_resource type="Resource" id="Spot_5"]
 script = ExtResource("3_spot")
-area = &"Agrietada:N"
+area = &"Copa"
 node = NodePath("MapChest")
+gives = &"dungeon_map"
 
 [sub_resource type="Resource" id="Spot_6"]
 script = ExtResource("3_spot")
-area = &"Arena"
-node = NodePath("ArenaWaves")
+area = &"Nido"
+node = NodePath("NestKeyChest")
+key = true
 
 [sub_resource type="Resource" id="Spot_7"]
 script = ExtResource("3_spot")
-area = &"Arena"
-node = NodePath("BowChest")
-through = Array[NodePath]([NodePath("BowGate")])
+area = &"Raices:N"
+node = NodePath("CompassChest")
+gives = &"compass"
+
+[sub_resource type="Resource" id="Spot_8"]
+script = ExtResource("3_spot")
+area = &"Vigia"
+node = NodePath("EyeWarden")
+gives = &"d1_warden_defeated"
 
 [sub_resource type="Resource" id="Spot_9"]
 script = ExtResource("3_spot")
-area = &"Ojos:S"
-node = NodePath("OjosEyeA")
-needs = Array[StringName]([&"bow"])
+area = &"Vigia"
+node = NodePath("BowChest")
+needs = Array[StringName]([&"d1_warden_defeated"])
+gives = &"bow"
 
 [sub_resource type="Resource" id="Spot_10"]
 script = ExtResource("3_spot")
-area = &"Ojos:S"
-node = NodePath("OjosCompassChest")
-through = Array[NodePath]([NodePath("OjosCompassGate")])
+area = &"Tronco"
+node = NodePath("TrunkEye")
+needs = Array[StringName]([&"bow"])
+gives = &"d1_trunk_eye"
 
 [sub_resource type="Resource" id="Spot_11"]
 script = ExtResource("3_spot")
-area = &"Ojos:S"
-node = NodePath("OjosEyeB")
+area = &"Raices:S"
+node = NodePath("RootEyeA")
 needs = Array[StringName]([&"bow"])
+gives = &"d1_root_eye_a"
 
 [sub_resource type="Resource" id="Spot_12"]
 script = ExtResource("3_spot")
-area = &"Ojos:N"
-node = NodePath("OjosKeyChest")
+area = &"Raices:S"
+node = NodePath("RootEyeB")
+needs = Array[StringName]([&"bow"])
+gives = &"d1_root_eye_b"
 
 [sub_resource type="Resource" id="Spot_13"]
 script = ExtResource("3_spot")
-area = &"Puzzle"
-node = NodePath("PuzzleSwitch")
+area = &"Raices:S"
+node = NodePath("RootKeyChest")
+needs = Array[StringName]([&"d1_root_eye_a", &"d1_root_eye_b"])
+key = true
 
 [sub_resource type="Resource" id="Spot_14"]
 script = ExtResource("3_spot")
-area = &"Puzzle"
-node = NodePath("PuzzleCrystal")
-needs = Array[StringName]([&"shield_mirror"])
-through = Array[NodePath]([NodePath("PuzzleBeamGate")])
+area = &"Ojos"
+node = NodePath("HiddenEye")
+needs = Array[StringName]([&"bomb_bag", &"bow"])
+gives = &"d1_hidden_eye"
 
 [sub_resource type="Resource" id="Spot_15"]
 script = ExtResource("3_spot")
-area = &"Puzzle"
-node = NodePath("PuzzleEye")
-needs = Array[StringName]([&"bow"])
-through = Array[NodePath]([NodePath("PuzzleEyeGate")])
+area = &"Ojos"
+node = NodePath("BossKeyChest")
+needs = Array[StringName]([&"d1_hidden_eye"])
+gives = &"boss_key"
 
 [sub_resource type="Resource" id="Spot_16"]
 script = ExtResource("3_spot")
-area = &"Puzzle"
-node = NodePath("BossKeyChest")
-through = Array[NodePath]([NodePath("BossKeyGate")])
-
-[sub_resource type="Resource" id="Spot_17"]
-script = ExtResource("3_spot")
 area = &"Jefe"
-node = NodePath("BossArena")
-needs = Array[StringName]([&"bow|shield_mirror"])
+node = NodePath("EyeTwins")
+needs = Array[StringName]([&"bow"])
 gives = &"d1_boss_defeated"
 
 [resource]
 script = ExtResource("1_graph")
-scene = "res://levels/temple.tscn"
-start = &"Vestibulo"
+start = &"Entrada"
 goal = &"d1_boss_defeated"
-brings = Array[StringName]([&"shield_mirror", &"bomb_bag"])
-links = Array[ExtResource("2_link")]([SubResource("Link_1"), SubResource("Link_2"), SubResource("Link_3"), SubResource("Link_4"), SubResource("Link_5"), SubResource("Link_6"), SubResource("Link_7"), SubResource("Link_9"), SubResource("Link_10"), SubResource("Link_13")])
-spots = Array[ExtResource("3_spot")]([SubResource("Spot_1"), SubResource("Spot_2"), SubResource("Spot_3"), SubResource("Spot_4"), SubResource("Spot_5"), SubResource("Spot_6"), SubResource("Spot_7"), SubResource("Spot_9"), SubResource("Spot_10"), SubResource("Spot_11"), SubResource("Spot_12"), SubResource("Spot_13"), SubResource("Spot_14"), SubResource("Spot_15"), SubResource("Spot_16"), SubResource("Spot_17")])
+brings = Array[StringName]([&"bomb_bag"])
+item = &"bow"
+guard = &"d1_warden_defeated"
+links = Array[ExtResource("2_link")]([SubResource("Link_1"), SubResource("Link_2"), SubResource("Link_3"), SubResource("Link_4"), SubResource("Link_5"), SubResource("Link_6"), SubResource("Link_7"), SubResource("Link_8"), SubResource("Link_9"), SubResource("Link_10"), SubResource("Link_11")])
+spots = Array[ExtResource("3_spot")]([SubResource("Spot_1"), SubResource("Spot_2"), SubResource("Spot_3"), SubResource("Spot_4"), SubResource("Spot_5"), SubResource("Spot_6"), SubResource("Spot_7"), SubResource("Spot_8"), SubResource("Spot_9"), SubResource("Spot_10"), SubResource("Spot_11"), SubResource("Spot_12"), SubResource("Spot_13"), SubResource("Spot_14"), SubResource("Spot_15"), SubResource("Spot_16")])

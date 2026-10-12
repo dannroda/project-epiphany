@@ -8,5 +8,7 @@ extends Resource
 @export var through: Array[NodePath] = []
 ## Lo que el paso pide además (ítems o flags; `a|b` = cualquiera de los dos).
 @export var needs: Array[StringName] = []
+## Puerta con llave chica (grafo de diseño; con escena tiene que coincidir con la puerta).
+@export var locked := false
 ## Solo de `from` a `to` (una caída, un salto de una vía).
 @export var one_way := false

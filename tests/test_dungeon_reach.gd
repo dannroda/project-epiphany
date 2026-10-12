@@ -13,6 +13,7 @@ func test_every_dungeon_graph_matches_its_scene_and_has_no_dead_end() -> void:
 		var read := Reach.read(graph)
 		assert_eq(read.problems, PackedStringArray(), "%s contra su escena" % file)
 		assert_eq(Reach.search(read.model, graph.brings), PackedStringArray(), "%s sin salidas trabadas" % file)
+		assert_eq(Reach.rules(graph, read.model), PackedStringArray(), "%s cumple el molde" % file)
 
 
 func test_a_key_spent_on_the_wrong_door_is_a_dead_end() -> void:
@@ -38,6 +39,48 @@ func test_a_drop_with_no_way_back_is_a_dead_end() -> void:
 func test_an_item_nobody_gives_never_reaches_the_goal() -> void:
 	var model := _model([], [_spot("A", "fin", ["gancho"])])
 	assert_eq(Reach.search(model), PackedStringArray(["no se llega a fin"]))
+
+
+func test_a_design_graph_without_a_scene_is_checked_alone() -> void:
+	var graph := DungeonGraph.new()
+	graph.start = &"A"
+	graph.goal = &"fin"
+	graph.links = [_design_link("A", "B", true), _design_link("A", "C", true)]
+	graph.spots = [_design_spot("A", "", true), _design_spot("C", "fin")]
+	var read := Reach.read(graph)
+	assert_eq(read.problems, PackedStringArray(), "sin escena no hay nada que cruzar")
+	var problems := Reach.search(read.model)
+	assert_true(not problems.is_empty() and problems[0].contains("gastando una llave"), "la llave en la puerta equivocada traba igual")
+
+
+func test_the_item_must_gate_the_goal_and_sit_behind_the_sub_boss() -> void:
+	var graph := DungeonGraph.new()
+	graph.start = &"A"
+	graph.goal = &"fin"
+	graph.item = &"arco"
+	graph.guard = &"vigia"
+	graph.spots = [_design_spot("A", "vigia"), _design_spot("A", "arco", false, ["vigia"]), _design_spot("A", "fin", false, ["arco"])]
+	assert_eq(Reach.rules(graph, Reach.read(graph).model), PackedStringArray(), "el molde bien")
+	graph.spots = [_design_spot("A", "vigia", false, ["arco"]), _design_spot("A", "arco"), _design_spot("A", "fin")]
+	assert_eq(Reach.rules(graph, Reach.read(graph).model), PackedStringArray(["se llega a fin sin arco", "vigia pide arco", "arco se consigue sin vigia"]))
+
+
+func _design_link(from: String, to: String, locked := false) -> DungeonLink:
+	var link := DungeonLink.new()
+	link.from = from
+	link.to = to
+	link.locked = locked
+	return link
+
+
+func _design_spot(area: String, gives: String, key := false, needs: Array[StringName] = []) -> DungeonSpot:
+	var spot := DungeonSpot.new()
+	spot.area = area
+	spot.node = NodePath(gives if gives else "llave")
+	spot.gives = gives
+	spot.key = key
+	spot.needs = needs
+	return spot
 
 
 func _model(links: Array, spots: Array) -> Dictionary:

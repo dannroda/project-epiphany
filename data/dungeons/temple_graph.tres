@@ -1,0 +1,173 @@
+[gd_resource type="Resource" script_class="DungeonGraph" format=3]
+
+[ext_resource type="Script" uid="uid://fuoosewf8un4" path="res://src/world/dungeon_graph/dungeon_graph.gd" id="1_graph"]
+[ext_resource type="Script" uid="uid://djven2p0k3w1i" path="res://src/world/dungeon_graph/dungeon_link.gd" id="2_link"]
+[ext_resource type="Script" uid="uid://2kgujv7wu8l3" path="res://src/world/dungeon_graph/dungeon_spot.gd" id="3_spot"]
+
+[sub_resource type="Resource" id="Link_1"]
+script = ExtResource("2_link")
+from = &"Vestibulo"
+to = &"Hub"
+through = Array[NodePath]([NodePath("VestibuleDoor")])
+
+[sub_resource type="Resource" id="Link_2"]
+script = ExtResource("2_link")
+from = &"Hub"
+to = &"Galeria"
+through = Array[NodePath]([NodePath("HubShutterW")])
+
+[sub_resource type="Resource" id="Link_3"]
+script = ExtResource("2_link")
+from = &"Hub"
+to = &"Agrietada:S"
+through = Array[NodePath]([NodePath("HubLockedE")])
+locked = true
+
+[sub_resource type="Resource" id="Link_4"]
+script = ExtResource("2_link")
+from = &"Hub"
+to = &"Antesala"
+through = Array[NodePath]([NodePath("HubSeal")])
+
+[sub_resource type="Resource" id="Link_5"]
+script = ExtResource("2_link")
+from = &"Galeria"
+to = &"Ojos:S"
+through = Array[NodePath]([NodePath("OjosDoor")])
+
+[sub_resource type="Resource" id="Link_6"]
+script = ExtResource("2_link")
+from = &"Agrietada:S"
+to = &"Agrietada:N"
+through = Array[NodePath]([NodePath("CrackedBox")])
+needs = Array[StringName]([&"bomb_bag"])
+
+[sub_resource type="Resource" id="Link_7"]
+script = ExtResource("2_link")
+from = &"Agrietada:N"
+to = &"Arena"
+through = Array[NodePath]([NodePath("ArenaCrackedWall"), NodePath("ArenaShutter")])
+
+[sub_resource type="Resource" id="Link_9"]
+script = ExtResource("2_link")
+from = &"Ojos:S"
+to = &"Ojos:N"
+through = Array[NodePath]([NodePath("OjosBridge")])
+
+[sub_resource type="Resource" id="Link_10"]
+script = ExtResource("2_link")
+from = &"Ojos:N"
+to = &"Puzzle"
+through = Array[NodePath]([NodePath("PuzzleDoor")])
+locked = true
+
+[sub_resource type="Resource" id="Link_13"]
+script = ExtResource("2_link")
+from = &"Antesala"
+to = &"Jefe"
+through = Array[NodePath]([NodePath("BossDoor")])
+
+[sub_resource type="Resource" id="Spot_1"]
+script = ExtResource("3_spot")
+area = &"Vestibulo"
+node = NodePath("VestibuleSwitch")
+
+[sub_resource type="Resource" id="Spot_2"]
+script = ExtResource("3_spot")
+area = &"Galeria"
+node = NodePath("GalleryEye")
+needs = Array[StringName]([&"shield_mirror"])
+
+[sub_resource type="Resource" id="Spot_3"]
+script = ExtResource("3_spot")
+area = &"Galeria"
+node = NodePath("GalleryKeyChest")
+through = Array[NodePath]([NodePath("GalleryKeyGate")])
+key = true
+
+[sub_resource type="Resource" id="Spot_4"]
+script = ExtResource("3_spot")
+area = &"Galeria"
+node = NodePath("OjosDoorEye")
+needs = Array[StringName]([&"bow"])
+
+[sub_resource type="Resource" id="Spot_5"]
+script = ExtResource("3_spot")
+area = &"Agrietada:N"
+node = NodePath("MapChest")
+
+[sub_resource type="Resource" id="Spot_6"]
+script = ExtResource("3_spot")
+area = &"Arena"
+node = NodePath("ArenaWaves")
+
+[sub_resource type="Resource" id="Spot_7"]
+script = ExtResource("3_spot")
+area = &"Arena"
+node = NodePath("BowChest")
+through = Array[NodePath]([NodePath("BowGate")])
+
+[sub_resource type="Resource" id="Spot_9"]
+script = ExtResource("3_spot")
+area = &"Ojos:S"
+node = NodePath("OjosEyeA")
+needs = Array[StringName]([&"bow"])
+
+[sub_resource type="Resource" id="Spot_10"]
+script = ExtResource("3_spot")
+area = &"Ojos:S"
+node = NodePath("OjosCompassChest")
+through = Array[NodePath]([NodePath("OjosCompassGate")])
+
+[sub_resource type="Resource" id="Spot_11"]
+script = ExtResource("3_spot")
+area = &"Ojos:S"
+node = NodePath("OjosEyeB")
+needs = Array[StringName]([&"bow"])
+
+[sub_resource type="Resource" id="Spot_12"]
+script = ExtResource("3_spot")
+area = &"Ojos:N"
+node = NodePath("OjosKeyChest")
+key = true
+
+[sub_resource type="Resource" id="Spot_13"]
+script = ExtResource("3_spot")
+area = &"Puzzle"
+node = NodePath("PuzzleSwitch")
+
+[sub_resource type="Resource" id="Spot_14"]
+script = ExtResource("3_spot")
+area = &"Puzzle"
+node = NodePath("PuzzleCrystal")
+needs = Array[StringName]([&"shield_mirror"])
+through = Array[NodePath]([NodePath("PuzzleBeamGate")])
+
+[sub_resource type="Resource" id="Spot_15"]
+script = ExtResource("3_spot")
+area = &"Puzzle"
+node = NodePath("PuzzleEye")
+needs = Array[StringName]([&"bow"])
+through = Array[NodePath]([NodePath("PuzzleEyeGate")])
+
+[sub_resource type="Resource" id="Spot_16"]
+script = ExtResource("3_spot")
+area = &"Puzzle"
+node = NodePath("BossKeyChest")
+through = Array[NodePath]([NodePath("BossKeyGate")])
+
+[sub_resource type="Resource" id="Spot_17"]
+script = ExtResource("3_spot")
+area = &"Jefe"
+node = NodePath("BossArena")
+needs = Array[StringName]([&"bow|shield_mirror"])
+gives = &"d1_boss_defeated"
+
+[resource]
+script = ExtResource("1_graph")
+scene = "res://levels/temple.tscn"
+start = &"Vestibulo"
+goal = &"d1_boss_defeated"
+brings = Array[StringName]([&"shield_mirror", &"bomb_bag"])
+links = Array[ExtResource("2_link")]([SubResource("Link_1"), SubResource("Link_2"), SubResource("Link_3"), SubResource("Link_4"), SubResource("Link_5"), SubResource("Link_6"), SubResource("Link_7"), SubResource("Link_9"), SubResource("Link_10"), SubResource("Link_13")])
+spots = Array[ExtResource("3_spot")]([SubResource("Spot_1"), SubResource("Spot_2"), SubResource("Spot_3"), SubResource("Spot_4"), SubResource("Spot_5"), SubResource("Spot_6"), SubResource("Spot_7"), SubResource("Spot_9"), SubResource("Spot_10"), SubResource("Spot_11"), SubResource("Spot_12"), SubResource("Spot_13"), SubResource("Spot_14"), SubResource("Spot_15"), SubResource("Spot_16"), SubResource("Spot_17")])

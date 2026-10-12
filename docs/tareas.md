@@ -1618,7 +1618,8 @@ Daniel (2026-10-12, con el mapa de Link's Awakening de referencia): el mundo se 
   Daniel (2026-10-12): el boceto va encaminado como primera versión (lo que cambie sale de recorrerlo); un poco más grande para más secretos: 100 × 48 celdas (200 × 96 m), generado por debug/tmp/ow2/layout.py y dibujado con los tiles de la sesión de arte (tilemap.py). El atajo del santuario queda como salida trasera de la cueva al andén del templo. Cadena de 11.113 aplicada: D1 nueva en el claro de la Arboleda (propuesta, avisada a diseño), templo final, sin rocas de guantes.
 - [ ] Cuevas interiores: Santuario, Gruta y Cueva de las bombas en escenas propias; ZoneVeil fuera del overworld
   Daniel (2026-10-12): la gruta y los santuarios pasan a ser cuevas interiores. Afuera, solo la boca o la grieta en la cara de un risco.
-- [ ] Blockout del GridMap nuevo
+- [ ] Blockout del GridMap nuevo, con terrazas reales
+  Daniel (2026-10-12): terrazas reales, las mesetas se caminan por arriba. Un nivel = 2,6 m (lo que mide una pared). El GridMap pasa a cell_size.y 2,6 y cada columna lleva su piso en y = nivel (0, 1, 2); la montaña es Monte en y = 3. Las escalinatas suben un nivel en 2 celdas de fondo (4 m, ≈33°). Los saltos son el único lugar de un borde por donde se baja: el resto del borde de arriba lleva una baranda invisible. Pasos: (a) layout.json → GridMap; (b) export_terreno_overworld.gd con niveles; (c) build_terreno_organico.py con un piso por nivel, caras de risco entre niveles, escalinatas y baranda; (d) mudar lo jugable (zonas, spawns, portales, tablillas, puzzles, enemigos) a su lugar nuevo. Las piezas 3D de escalinata y salto las pide arte; mientras tanto, rampas grises.
 - [ ] Terreno orgánico, decoración, navmesh y mapa regenerados
 - [ ] Tests y escenarios al día
 - [ ] Recorrerlo (Daniel)
@@ -4366,6 +4367,9 @@ Daniel (2026-10-12): el jefe del ojo se pensó como fin de demo, así que tiene 
 - [ ] Ampliar el templo: salas que usen todos los ítems
 - [ ] GDD §6 y §7, y el boceto de 7.10 al día
 - [ ] Qué es D1 (arco) y dónde está; qué da el santuario
+  Ubicación (-eb, boceto 7.10 v4): claro del medio de la Arboleda, sin ítems para entrar. Propuesta 2026-10-12, en revisión con Daniel: La Queñoa Vigía (árbol hueco con ojos; Tronco, Copa, Raíces), sub-jefe ojo vigía que guarda el arco, jefe de dos ojos con rayos. Grafo de diseño data/dungeons/d1_graph.tres (pasa el test), GDD §8c (gdd#mazmorra-1). Falta: aprobarlo y qué da el santuario.
+- [x] Chequeo de grafos de diseño y reglas del molde
+  Hecho: un DungeonGraph sin escena es de diseño (locked en los pasos, gives/key en los lugares) y test_dungeon_reach lo recorre igual; con escena, la escena tiene que coincidir con locked/key. Reglas: sin el ítem no se llega al objetivo; el ítem pide al sub-jefe (guard), que se vence sin él. tools/dungeon_graph_mermaid.gd lo dibuja. El grafo del templo pasa a temple_graph.tres.
 
 **Notas:** Sesión: diseño (-43 [a7e236]), con Daniel. Overworld (-eb) acomoda el boceto de 7.10 cuando esté la cadena.
 

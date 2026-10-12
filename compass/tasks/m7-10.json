@@ -16,8 +16,9 @@
       "text": "Cuevas interiores: Santuario, Gruta y Cueva de las bombas en escenas propias; ZoneVeil fuera del overworld"
     },
     {
+      "detail": "Daniel (2026-10-12): terrazas reales, las mesetas se caminan por arriba. Un nivel = 2,6 m (lo que mide una pared). El GridMap pasa a cell_size.y 2,6 y cada columna lleva su piso en y = nivel (0, 1, 2); la montaña es Monte en y = 3. Las escalinatas suben un nivel en 2 celdas de fondo (4 m, ≈33°). Los saltos son el único lugar de un borde por donde se baja: el resto del borde de arriba lleva una baranda invisible. Pasos: (a) layout.json → GridMap; (b) export_terreno_overworld.gd con niveles; (c) build_terreno_organico.py con un piso por nivel, caras de risco entre niveles, escalinatas y baranda; (d) mudar lo jugable (zonas, spawns, portales, tablillas, puzzles, enemigos) a su lugar nuevo. Las piezas 3D de escalinata y salto las pide arte; mientras tanto, rampas grises.",
       "done": false,
-      "text": "Blockout del GridMap nuevo"
+      "text": "Blockout del GridMap nuevo, con terrazas reales"
     },
     {
       "done": false,
@@ -47,5 +48,5 @@
   ],
   "test": "",
   "title": "Overworld con forma de Zelda 2D, no cuadrado",
-  "updated_at": "2026-10-12T20:43:33.702Z"
+  "updated_at": "2026-10-12T20:59:38.418Z"
 }

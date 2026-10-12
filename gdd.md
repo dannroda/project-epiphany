@@ -169,7 +169,7 @@ Es el orden decidido en 11.90 y cambiado en 11.113 (2026-10-12, Daniel): el temp
 
 **Ítem y sub-jefe (11.113):** el ítem de cada mazmorra lo guarda un sub-jefe basado en el jefe de esa mazmorra, que se vence sin ese ítem (con los anteriores, sí). La segunda mitad de la mazmorra se resuelve con el ítem, y los ítems de mazmorras anteriores se combinan con él para abrirla. Por ejemplo, en D2 una torre pide un flechazo para activar el puzzle previo al sub-jefe que guarda la pluma.
 
-**Molde de cada mazmorra (11.90):** prueba en el overworld → mazmorra con una mecánica que la recorre entera → ítem a mitad, guardado por un sub-jefe → el jefe se vence con ese ítem → el ítem abre la zona siguiente del overworld y 2–3 secretos en zonas ya visitadas. Cada mazmorra se diseña primero como grafo llave-cerradura (`DungeonGraph` en `data/dungeons/`: zonas, pasos y qué pide cada lugar), y `test_dungeon_reach` lo cruza con la escena (tipo de puerta, interruptores de cada reja, contenido de los cofres, que no falte ninguna puerta, reja, cofre o interruptor) y recorre todos los órdenes de juego: falla si algo pide un ítem que nadie da o si hay un estado desde el que ya no se llega al objetivo, y muestra el camino hasta ahí. El templo (`d1_graph.tres`) y la Chullpa (`d2_graph.tres`) tienen el suyo.
+**Molde de cada mazmorra (11.90):** prueba en el overworld → mazmorra con una mecánica que la recorre entera → ítem a mitad, guardado por un sub-jefe → el jefe se vence con ese ítem → el ítem abre la zona siguiente del overworld y 2–3 secretos en zonas ya visitadas. Cada mazmorra se diseña primero como grafo llave-cerradura (`DungeonGraph` en `data/dungeons/`: zonas, pasos y qué pide cada lugar), y `test_dungeon_reach` lo cruza con la escena (tipo de puerta, interruptores de cada reja, contenido de los cofres, que no falte ninguna puerta, reja, cofre o interruptor) y recorre todos los órdenes de juego: falla si algo pide un ítem que nadie da o si hay un estado desde el que ya no se llega al objetivo, y muestra el camino hasta ahí. Un grafo sin escena es de diseño: las cerraduras (`locked`, `needs`) y lo que da cada lugar (`gives`, `key`) se declaran en él y se prueba antes de construir; con escena, la escena tiene que coincidir. El test también revisa el molde: sin el ítem (`item`) no se llega al objetivo, y el ítem pide vencer al sub-jefe (`guard`), que se vence sin él. `tools/dungeon_graph_mermaid.gd -- <grafo>` lo dibuja como diagrama Mermaid. D1 (`d1_graph.tres`, de diseño), la Chullpa (`d2_graph.tres`) y el templo (`temple_graph.tres`) tienen el suyo.
 
 **Alcance por entregas:** el primer playtest externo lleva D1 y D2. D3, D4 y el templo se ven en el overworld pero están cerrados y llegan después como actualización (sirve para probar un sistema de parches). Con 11.113, D1 es una mazmorra nueva por hacer.
 
@@ -348,7 +348,7 @@ Decidido el 2026-10-08 con la metodología de [[gdd#overworld-layout]] (artícul
 
 **Llaves:** 2 llaves chicas y 2 puertas con llave. La llave 1 solo puede gastarse en la puerta este del hub, porque la otra puerta con llave (Ojos → Puzzle) queda detrás del arco, que está detrás de la puerta este. La llave 2 aparece recién en Ojos. En ningún orden quedan menos llaves que puertas.
 
-**Pluma (11.35):** estuvo en la sala 10 hasta el 2026-10-12; desde 11.90 es el ítem de D2. El grafo llave-cerradura del templo está en `data/dungeons/d1_graph.tres` (`test_dungeon_reach`).
+**Pluma (11.35):** estuvo en la sala 10 hasta el 2026-10-12; desde 11.90 es el ítem de D2. El grafo llave-cerradura del templo está en `data/dungeons/temple_graph.tres` (`test_dungeon_reach`).
 
 **Arco a mitad de camino:** sin arco se recorren Vestíbulo, Hub, Galería, Agrietada y Arena (5 de 9). Con el arco se vuelve a la Galería, cuyo ojo sobre la puerta norte se vio desde el principio (cebo), y empieza la segunda mitad: Ojos y Puzzle giran alrededor de las flechas, combinadas con bloques y el escudo espejo.
 
@@ -419,6 +419,23 @@ Decidido el 2026-10-11. Torre funeraria de piedra (chullpa) con sótano de enter
 | 2NE | Opcional, con la pluma: pieza de corazón del otro lado de una fila de huecos (caer va al foso de 1NE) |
 
 **Ítems anteriores:** usa bombas y arco (vienen de D1 y de antes). **Overworld:** la pluma abre la pieza de la Pradera y los angostos del barranco (§7.1). **Huecos:** cuando un hueco lleva a otra sala, el piso de abajo se ve iluminado a través; si no hay nada abajo, vuelve a la entrada como hoy. **Técnica (hecha):** `levels/chullpa.tscn`. Cada piso es un `DungeonFloor` (`level` −1, 0, 1; nombre del piso para el mapa) con su GridMap, sus salas y lo que hay en él, a `DungeonFloor.HEIGHT` = 8 m uno del otro. Una sala dentro de un piso cuenta solo desde 2,5 m debajo de su piso hasta el de arriba, así que el que cae por un hueco pasa a la sala de abajo: la cámara cambia de sala sin deslizarse, se lleva a los demás players y anota la entrada recién al aterrizar. La cámara oculta los pisos de arriba de la sala actual; el de abajo se ve por los huecos. Donde no hay sala abajo (1NE, B-NO) va un `Pit` como siempre. `Stairs` (`stairs.tscn` sube, `stairs_down.tscn` baja): fundido corto y todos los players aparecen en su `to`, un marcador afuera de la escalera de llegada; la escalera de mano de B-SE no tiene vuelta. El piso agrietado de 2SE es `cracked_floor.tscn` (el script del muro agrietado sobre un hueco). Visitadas, mapa y brújula siguen siendo de la mazmorra. **Selector de pisos** (mockups *Pausa · Mapa por pisos* y *HUD · Minimapa por pisos*): en una mazmorra de varios pisos, la pestaña Mapa tiene a la izquierda una columna con los pisos de arriba abajo (`DungeonFloor.code()`: 2P, 1P, S1), cada uno con su nombre y sus marcas (estás acá; con brújula, cofres sin abrir y jefe); abre en el piso de la sala actual y se cambia con LT/RT (`map_floor_up`/`map_floor_down`, en teclado RePág/AvPág) o con un clic, y el cursor queda en la misma celda. El minimapa muestra el piso actual con una etiqueta arriba. `tools/vary_temple.gd` arregla los huecos y paredes de cada GridMap de las dos mazmorras, y la navmesh se hornea con `godot --headless --path . --script res://tools/bake_overworld_nav.gd -- chullpa`. Escenario de debug: `chullpa`. Las columnas que eran postes del gancho quedan de decoración.
+
+## 8c. Mazmorra 1 — La Queñoa Vigía (diseño, 11.113)
+<!-- id: mazmorra-1 -->
+
+Propuesto el 2026-10-12, en revisión. Una queñoa antigua y hueca en el claro de la Arboleda, con ojos que le crecen en la corteza: son vigías del Ojo con manos del templo, así que D1 presenta los ojos y el final muestra de dónde salen. Tronco (planta baja), Copa (arriba) y Raíces (abajo), con huecos que caen al piso de abajo como en la Chullpa. Ítem: el **arco**. Trae las bombas de la cueva. Grafo de diseño: `data/dungeons/d1_graph.tres` (todavía sin escena).
+
+| Zona | Qué pasa |
+|---|---|
+| Entrada → Tronco | El hub. Un ojo alto en el tronco (con el arco) abre la bajada a las Raíces del sur |
+| Rama oeste | Interruptor de bloque → **llave chica**. Un ojo inalcanzable al principio: con el arco, pieza de corazón |
+| Copa | Con llave desde el Tronco. **Mapa**. Muro agrietado (bomba) al Nido; puerta con llave a la Antesala; un hueco cae a las Raíces del norte |
+| Nido | **Llave chica** |
+| Raíces norte | Donde se cae desde la Copa: **brújula** y una escalera que solo sube al Tronco |
+| Antesala → Vigía | Sub-jefe: un ojo que barre con un rayo y queda enganchado en las raíces después de cada uno; se le pega con la espada o se le tira una bomba o una vasija al ojo abierto. Guarda el **arco** |
+| Raíces sur | Con el arco, desde el Tronco. Dos ojos abren el cofre de la **llave chica** |
+| Ojos | Con llave. Un ojo detrás de un muro agrietado (bomba y flecha) da la **llave del jefe** |
+| Jefe | Dos ojos que flotan por la arena y barren con rayos; se abren para cargar y una flecha al ojo abierto los derriba para la espada. Al caer uno, el otro se apura |
 
 ## 9. Jefe — El Ojo con manos
 <!-- id: jefe -->

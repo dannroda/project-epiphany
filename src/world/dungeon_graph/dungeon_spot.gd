@@ -1,7 +1,7 @@
 class_name DungeonSpot
 extends Resource
 ## Algo que se hace en una zona: abrir un cofre, apretar un interruptor, despertar un ojo, ganar una pelea.
-## Da el ítem del cofre o el flag del nodo; `gives` es para nodos sin flag propio.
+## Da el ítem del cofre o el flag del nodo; `gives` es para nodos sin flag propio, o todo en un grafo de diseño.
 
 @export var area: StringName
 @export var node: NodePath
@@ -10,3 +10,5 @@ extends Resource
 ## Rejas que hay que tener abiertas para llegar.
 @export var through: Array[NodePath] = []
 @export var gives: StringName
+## Da una llave chica (grafo de diseño; con escena tiene que coincidir con el cofre).
+@export var key := false

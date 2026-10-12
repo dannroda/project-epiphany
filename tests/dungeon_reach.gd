@@ -7,8 +7,10 @@ const COVERED := [&"Door", &"Gate", &"Bridge", &"CrackedWall", &"Chest", &"EyeSw
 const MAX_STATES := 200000
 
 
-## Lee el grafo y la escena. Devuelve {problems, model}; `model` es lo que recorre `search`.
+## Lee el grafo y la escena (sin escena, solo el grafo). Devuelve {problems, model}; `model` es lo que recorre `search`.
 static func read(graph: DungeonGraph) -> Dictionary:
+	if graph.scene.is_empty():
+		return _read_design(graph)
 	var problems := PackedStringArray()
 	var root := (load(graph.scene) as PackedScene).instantiate()
 	var model := {start = graph.start, goal = graph.goal, links = [], spots = []}
@@ -29,6 +31,8 @@ static func read(graph: DungeonGraph) -> Dictionary:
 				entry.key_door = str(path)
 			else:
 				entry.needs.append_array(_lock(node, problems))
+		if link.locked != not entry.key_door.is_empty():
+			problems.append("%s: el grafo dice %s y la escena no" % [entry.label, "puerta con llave" if link.locked else "sin llave"])
 		model.links.append(entry)
 	for i in graph.spots.size():
 		var spot := graph.spots[i]
@@ -51,6 +55,8 @@ static func read(graph: DungeonGraph) -> Dictionary:
 				entry.key = true
 			else:
 				entry.gives.append(String(node.item.id))
+		if spot.key != entry.key:
+			problems.append("%s: el grafo dice %s y la escena no" % [entry.label, "llave chica" if spot.key else "sin llave chica"])
 		var token := _token(node)
 		if not token.is_empty():
 			entry.gives.append(token)
@@ -61,6 +67,54 @@ static func read(graph: DungeonGraph) -> Dictionary:
 	problems.append_array(_tokens(graph, model))
 	root.free()
 	return {problems = problems, model = model}
+
+
+static func _read_design(graph: DungeonGraph) -> Dictionary:
+	var model := {start = graph.start, goal = graph.goal, links = [], spots = []}
+	for i in graph.links.size():
+		var link := graph.links[i]
+		model.links.append({from = link.from, to = link.to, one_way = link.one_way, needs = _clauses(link.needs), key_door = "puerta %d" % i if link.locked else "", label = "%s → %s" % [link.from, link.to]})
+	for i in graph.spots.size():
+		var spot := graph.spots[i]
+		var gives := ["spot:%d" % i]
+		if not spot.gives.is_empty():
+			gives.append(String(spot.gives))
+		model.spots.append({area = spot.area, needs = _clauses(spot.needs), gives = gives, key = spot.key, label = "%s en %s" % [spot.node, spot.area]})
+	return {problems = _tokens(graph, model), model = model}
+
+
+## Las reglas del molde (11.113): sin el ítem no se llega al objetivo; el ítem pide vencer al sub-jefe, que se vence sin él.
+static func rules(graph: DungeonGraph, model: Dictionary) -> PackedStringArray:
+	var problems := PackedStringArray()
+	var item := String(graph.item)
+	var guard := String(graph.guard)
+	if not item.is_empty() and reaches(model, graph.brings, String(graph.goal), [item]):
+		problems.append("se llega a %s sin %s" % [graph.goal, item])
+	if not guard.is_empty():
+		if not item.is_empty() and not reaches(model, graph.brings, guard, [item]):
+			problems.append("%s pide %s" % [guard, item])
+		if not item.is_empty() and reaches(model, graph.brings, item, [guard]):
+			problems.append("%s se consigue sin %s" % [item, guard])
+	return problems
+
+
+## Si algún orden de juego consigue `token` cuando nadie da lo que está en `banned`.
+static func reaches(model: Dictionary, brings: Array, token: String, banned: Array = []) -> bool:
+	var first := {area = model.start, have = {}, keys = 0, opened = {}}
+	for item in brings:
+		first.have[String(item)] = true
+	var seen := {_key(first): true}
+	var queue := [first]
+	while not queue.is_empty():
+		var state: Dictionary = queue.pop_front()
+		if state.have.has(token):
+			return true
+		for next in _moves(model, state, banned):
+			var next_key := _key(next.state)
+			if not seen.has(next_key) and seen.size() < MAX_STATES:
+				seen[next_key] = true
+				queue.append(next.state)
+	return false
 
 
 ## Recorre todos los estados. Devuelve los problemas: objetivo inalcanzable o estados sin salida (con el camino).
@@ -112,7 +166,7 @@ static func search(model: Dictionary, brings: Array = []) -> PackedStringArray:
 	return PackedStringArray()
 
 
-static func _moves(model: Dictionary, state: Dictionary) -> Array:
+static func _moves(model: Dictionary, state: Dictionary, banned: Array = []) -> Array:
 	var moves := []
 	for link in model.links:
 		var forward: bool = link.from == state.area
@@ -131,6 +185,8 @@ static func _moves(model: Dictionary, state: Dictionary) -> Array:
 		moves.append({state = next, label = label})
 	for spot in model.spots:
 		if spot.area != state.area or state.have.has(spot.gives[0]) or not _met(spot.needs, state.have):
+			continue
+		if banned.any(func(token: String) -> bool: return spot.gives.has(token)):
 			continue
 		var next := _copy(state)
 		for token in spot.gives:
