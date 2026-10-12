@@ -29,6 +29,8 @@ var item_buttons: Array[StringName] = [&"", &""] ## X / Y del P1
 ## solo (13.9). No se guardan.
 var guest_buttons: Dictionary[int, Array] = {}
 var max_health: int = NEW_GAME_MAX_HEALTH
+## Vida actual de cada player por slot: es global, se mantiene al cambiar de escena y va en la partida.
+var player_health: Dictionary[int, int] = {}
 var flags: Dictionary[StringName, Variant] = {}
 var dungeons: Dictionary[StringName, DungeonState] = {}
 var visited_zones: Array[StringName] = []
@@ -68,6 +70,16 @@ func reset() -> void:
 
 func get_flag(id: StringName) -> Variant:
 	return flags.get(id, FLAGS.default_of(id))
+
+
+## Sin vida guardada, o caído (0), vuelve llena.
+func health_of(slot: int) -> int:
+	var stored: int = player_health.get(slot, 0)
+	return max_health if stored <= 0 else mini(stored, max_health)
+
+
+func set_health_of(slot: int, value: int) -> void:
+	player_health[slot] = value
 
 
 func set_flag(id: StringName, value: Variant) -> void:
@@ -221,6 +233,7 @@ func _button_slots() -> Array[int]:
 
 func write_to(cfg: ConfigFile) -> void:
 	cfg.set_value("player", "max_health", max_health)
+	cfg.set_value("player", "health", player_health.duplicate())
 	cfg.set_value("player", "play_time", play_time)
 	cfg.set_value("player", "spawn_scene", spawn_scene)
 	cfg.set_value("player", "spawn_point", spawn_point)
@@ -252,6 +265,7 @@ func write_to(cfg: ConfigFile) -> void:
 func read_from(cfg: ConfigFile) -> void:
 	_clear()
 	max_health = cfg.get_value("player", "max_health", NEW_GAME_MAX_HEALTH)
+	player_health.assign(cfg.get_value("player", "health", {}))
 	play_time = cfg.get_value("player", "play_time", 0.0)
 	spawn_scene = cfg.get_value("player", "spawn_scene", "")
 	spawn_point = cfg.get_value("player", "spawn_point", &"")
@@ -296,6 +310,7 @@ func _clear() -> void:
 	item_buttons.assign([&"", &""])
 	guest_buttons.clear()
 	max_health = NEW_GAME_MAX_HEALTH
+	player_health.clear()
 	play_time = 0.0
 	flags.clear()
 	visited_zones.clear()

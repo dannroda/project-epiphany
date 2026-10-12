@@ -1,29 +1,31 @@
 {
+  "assignee": "Claude",
   "checklist": [
     {
       "detail": "Guardar la vida de cada player (por índice de player, no un único valor) antes del cambio de escena (`travel_to`) y restaurarla en `_ready` en vez de `reset` al máximo. Se rellena solo en partida nueva, respawn tras morir y contenedor de corazón (ver 13.10 para no revivir espíritus).",
-      "done": false,
+      "done": true,
       "text": "Vida actual por player en GameState"
     },
     {
       "detail": "Los invitados que se re-spawnean al cambiar de escena también conservan la suya.",
-      "done": false,
+      "done": true,
       "text": "Invitados"
     },
     {
       "detail": "Decidido (usuario, 2026-10-11): el estado del player es global y no depende de la escena; la vida actual de cada player va en el save y se restaura al cargar. Validarla contra max_health al leer.",
-      "done": false,
+      "done": true,
       "text": "Guardar la vida actual en el save"
     },
     {
       "detail": "test_portal o test_player: bajar vida, viajar, comprobar.",
-      "done": false,
+      "done": true,
       "text": "Test"
     }
   ],
   "code": "11.79",
   "created_at": "2026-10-12T00:19:21.588Z",
   "description": "El estado del player (vida actual incluida) es global, no de la escena. Hoy GameState solo guarda `max_health`: cada nivel instancia su player y `_ready` → `_sync_health` → `health.reset(GameState.max_health)`, así que entrar o salir de una mazmorra (portal, escalera) rellena todos los corazones. La vida actual de cada player vive en GameState, se mantiene entre escenas y se guarda en el save.",
+  "done_at": "2026-10-12T01:16:10.891Z",
   "files": [
     "player/player.gd",
     "src/state/game_state.gd",
@@ -37,17 +39,17 @@
     }
   ],
   "milestone": "m11",
-  "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).",
+  "notes": "Revisión de arquitectura del 2026-10-11. Hecho: `GameState.player_health` (por slot, en la partida, se borra en reset). El player la escribe en cada `health.changed` y al aparecer o cargar hace `health.restore(max, GameState.health_of(slot))`. Si la vida guardada es 0 o no hay, vuelve llena: así 'guardar y salir' tras morir y el respawn arrancan llenos. Un contenedor de corazón sigue llenando la vida. Un compañero en espíritu que cambia de escena vuelve con la vida llena (pendiente para el co-op).",
   "order": 76,
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "done",
   "tags": [
     "bug",
     "combate"
   ],
   "test": "Entrar al templo con 2 corazones, salir al overworld: siguen 2. Guardar con 2 corazones y cargar: 2. Con dos players, cada uno conserva la suya. Morir/reaparecer y partida nueva empiezan llenos.",
   "title": "Los corazones se rellenan al cambiar de escena",
-  "updated_at": "2026-10-12T00:27:11.933Z"
+  "updated_at": "2026-10-12T01:16:10.891Z"
 }

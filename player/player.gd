@@ -78,6 +78,7 @@ func _ready() -> void:
 	flash.add_pass(silhouette)
 	equipment.flash = flash
 	health.died.connect(_on_died)
+	health.changed.connect(func(current: int, _max_value: int) -> void: GameState.set_health_of(controls.slot, current))
 	GameState.loaded.connect(_sync_health)
 	GameState.max_health_changed.connect(_on_max_health_changed)
 	_sync_health()
@@ -266,12 +267,13 @@ func _make_damage() -> DamageInfo:
 	return config.make_damage(self)
 
 
+## La vida es global (GameState), no de la escena: al aparecer o cargar, la que tenía.
 func _sync_health() -> void:
-	health.reset(GameState.max_health)
+	health.restore(GameState.max_health, GameState.health_of(controls.slot))
 
 
 func _on_max_health_changed(_value: int) -> void:
-	_sync_health()
+	health.reset(GameState.max_health)
 
 
 func _on_hit(info: DamageInfo) -> void:

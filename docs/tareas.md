@@ -2534,7 +2534,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (23/85)
+## M11 — Pulido: contenido y feel  (24/85)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3482,9 +3482,9 @@ Al abrir una puerta LOCKED o BOSS, `_persistent.value = true` dispara `flag_chan
 
 **Archivos:** `src/world/door.gd`, `tests/test_doors.gd`
 
-### 11.63 Objetos que no se actualizan al cargar en la misma escena · En curso
+### 11.63 Objetos que no se actualizan al cargar en la misma escena · Hecho
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `guardado`
+**Terminada:** 2026-10-11 · **Prioridad:** alta · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `guardado`
 
 heart_piece, push_block y tablet leen su flag una sola vez en `_ready` y no usan `PersistentFlag` ni escuchan `GameState.loaded`. Al cargar una partida de la misma escena desde el menú, la escena no se recarga: se puede volver a coger un fragmento de corazón (corazón duplicado), o queda oculto uno que en esa partida no se cogió, y el bloque no vuelve a `solved_position`.
 
@@ -3786,24 +3786,24 @@ Detalles sueltos de la revisión, sin bug visible o con efecto de un frame.
 
 **Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
 
-### 11.79 Los corazones se rellenan al cambiar de escena · Pendiente
+### 11.79 Los corazones se rellenan al cambiar de escena · En curso
 
-**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`, `combate`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `combate`
 
 El estado del player (vida actual incluida) es global, no de la escena. Hoy GameState solo guarda `max_health`: cada nivel instancia su player y `_ready` → `_sync_health` → `health.reset(GameState.max_health)`, así que entrar o salir de una mazmorra (portal, escalera) rellena todos los corazones. La vida actual de cada player vive en GameState, se mantiene entre escenas y se guarda en el save.
 
-- [ ] Vida actual por player en GameState
+- [x] Vida actual por player en GameState
   Guardar la vida de cada player (por índice de player, no un único valor) antes del cambio de escena (`travel_to`) y restaurarla en `_ready` en vez de `reset` al máximo. Se rellena solo en partida nueva, respawn tras morir y contenedor de corazón (ver 13.10 para no revivir espíritus).
-- [ ] Invitados
+- [x] Invitados
   Los invitados que se re-spawnean al cambiar de escena también conservan la suya.
-- [ ] Guardar la vida actual en el save
+- [x] Guardar la vida actual en el save
   Decidido (usuario, 2026-10-11): el estado del player es global y no depende de la escena; la vida actual de cada player va en el save y se restaura al cargar. Validarla contra max_health al leer.
-- [ ] Test
+- [x] Test
   test_portal o test_player: bajar vida, viajar, comprobar.
 
 **Prueba:** Entrar al templo con 2 corazones, salir al overworld: siguen 2. Guardar con 2 corazones y cargar: 2. Con dos players, cada uno conserva la suya. Morir/reaparecer y partida nueva empiezan llenos.
 
-**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+**Notas:** Revisión de arquitectura del 2026-10-11. Hecho: `GameState.player_health` (por slot, en la partida, se borra en reset). El player la escribe en cada `health.changed` y al aparecer o cargar hace `health.restore(max, GameState.health_of(slot))`. Si la vida guardada es 0 o no hay, vuelve llena: así 'guardar y salir' tras morir y el respawn arrancan llenos. Un contenedor de corazón sigue llenando la vida. Un compañero en espíritu que cambia de escena vuelve con la vida llena (pendiente para el co-op).
 
 **Archivos:** `player/player.gd`, `src/state/game_state.gd`, `src/save/save_manager.gd`, `src/state/players.gd`
 
@@ -3847,18 +3847,18 @@ El estado del player (vida actual incluida) es global, no de la escena. Hoy Game
 
 **Archivos:** `src/world/dungeon.gd`, `levels/temple.tscn`, `src/save/save_codec.gd`
 
-### 11.82 Daño que no pasa por el Hurtbox · En curso
+### 11.82 Daño que no pasa por el Hurtbox · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `combate`
 
 El pozo (`pit.gd:26`) y el agarre del jefe (`boss_hand.gd` ~353) llaman a `health.damage` directo: no aplica la reducción de la túnica, ni feedback, y en M14 son entradas de daño extra. El tick del agarre (0.75 s) es menor que los i-frames del player (0.8 s): la mitad de los ticks se pierden. La explosión de la marca y el arrojadizo llaman a `Hurtbox.receive` a mano y saltan el filtro de equipo/`_already_hit`. `DamageInfo.new()` se arma a mano en 8 lugares con equipo/elemento distintos.
 
-- [ ] DamageInfo.make
-  `static func make(amount, knockback, source, element := &"")` y usarla en los 8 sitios.
-- [ ] Pozo y agarre por Hurtbox
-  `player.hurtbox.receive(info)` con un flag en DamageInfo para saltar escudo/i-frames donde se quiere (pozo, ticks del agarre). En pit.gd el splash (`@export water`) va antes del daño; dejarlo igual.
-- [ ] Marca con Hitbox
-  `%BlastTemplate` con un Hitbox como explosion.tscn (resuelve también el daño a todos los players de 13.7).
+- [x] DamageInfo.make
+  DamageInfo.make(amount, knockback, source, element): sin equipo en la firma (EntityConfig.Team como valor por defecto armaba un ciclo de dependencias); los que lo necesitan lo asignan después. Usada en los 8 lugares.
+- [x] Pozo y agarre por Hurtbox
+  DamageInfo.unavoidable: saltea el escudo y los i-frames (Health.damage(amount, ignore_invulnerability)). Pozo y apretón del agarre pasan por player.hurtbox.receive; el agarre no despacha hurt mientras is_grabbed. El pozo vuelve a la orilla de donde cayó (PlayerCharacter.last_ground); la quebrada es un solo Pit con marcadores en las dos orillas.
+- [x] Marca con Hitbox
+  BlastHitTemplate (Hitbox de equipo enemigo, cilindro de 1,1 m: con la cápsula del player da los 1,6 de la marca) se duplica en cada explosión y queda prendido BLAST_FRAMES cuadros: lastima a cualquier player adentro.
 
 **Prueba:** Con túnica, el pozo y el agarre restan menos; el agarre resta en cada tick; la marca daña a cualquier player dentro vía Hitbox.
 

@@ -38,6 +38,13 @@ func reset(max_value: int) -> void:
 	changed.emit(current, max_health)
 
 
+## Vida máxima y actual a la vez (la del player viene de GameState).
+func restore(max_value: int, current_value: int) -> void:
+	max_health = max_value
+	current = clampi(current_value, 0, max_value)
+	changed.emit(current, max_health)
+
+
 func make_invulnerable(seconds: float) -> void:
 	_invulnerable_left = maxf(_invulnerable_left, seconds)
 

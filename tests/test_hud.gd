@@ -26,6 +26,7 @@ func test_hearts_follow_health() -> void:
 	player.health.heal(2)
 	assert_eq(_quarters(tree), [4, 4, 1])
 	game_state.max_health = 20
+	game_state.set_health_of(0, 20)
 	game_state.loaded.emit()
 	assert_eq(_quarters(tree), [4, 4, 4, 4, 4], "más vida máxima, más corazones")
 	game_state.reset()
