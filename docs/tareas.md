@@ -3790,18 +3790,18 @@ Detalles sueltos de la revisión, sin bug visible o con efecto de un frame.
 
 **Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`, `combate`
 
-GameState solo guarda `max_health`, no la vida actual. Cada nivel instancia su player y `_ready` → `_sync_health` → `health.reset(GameState.max_health)`, así que entrar o salir de una mazmorra (portal, escalera) rellena todos los corazones. La vida actual debe mantenerse entre escenas.
+El estado del player (vida actual incluida) es global, no de la escena. Hoy GameState solo guarda `max_health`: cada nivel instancia su player y `_ready` → `_sync_health` → `health.reset(GameState.max_health)`, así que entrar o salir de una mazmorra (portal, escalera) rellena todos los corazones. La vida actual de cada player vive en GameState, se mantiene entre escenas y se guarda en el save.
 
 - [ ] Vida actual por player en GameState
   Guardar la vida de cada player (por índice de player, no un único valor) antes del cambio de escena (`travel_to`) y restaurarla en `_ready` en vez de `reset` al máximo. Se rellena solo en partida nueva, respawn tras morir y contenedor de corazón (ver 13.10 para no revivir espíritus).
 - [ ] Invitados
   Los invitados que se re-spawnean al cambiar de escena también conservan la suya.
-- [ ] Decidir qué pasa al cargar partida
-  ¿Guardar la vida actual en el save o cargar con el máximo / 3 corazones como Zelda? Hoy carga con el máximo.
+- [ ] Guardar la vida actual en el save
+  Decidido (usuario, 2026-10-11): el estado del player es global y no depende de la escena; la vida actual de cada player va en el save y se restaura al cargar. Validarla contra max_health al leer.
 - [ ] Test
   test_portal o test_player: bajar vida, viajar, comprobar.
 
-**Prueba:** Entrar al templo con 2 corazones, salir al overworld: siguen 2. Con dos players, cada uno conserva la suya. Morir/reaparecer y partida nueva siguen empezando como hoy.
+**Prueba:** Entrar al templo con 2 corazones, salir al overworld: siguen 2. Guardar con 2 corazones y cargar: 2. Con dos players, cada uno conserva la suya. Morir/reaparecer y partida nueva empiezan llenos.
 
 **Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
 
@@ -3856,7 +3856,7 @@ El pozo (`pit.gd:26`) y el agarre del jefe (`boss_hand.gd` ~353) llaman a `healt
 - [ ] DamageInfo.make
   `static func make(amount, knockback, source, element := &"")` y usarla en los 8 sitios.
 - [ ] Pozo y agarre por Hurtbox
-  `player.hurtbox.receive(info)` con un flag en DamageInfo para saltar escudo/i-frames donde se quiere (pozo, ticks del agarre).
+  `player.hurtbox.receive(info)` con un flag en DamageInfo para saltar escudo/i-frames donde se quiere (pozo, ticks del agarre). En pit.gd el splash (`@export water`) va antes del daño; dejarlo igual.
 - [ ] Marca con Hitbox
   `%BlastTemplate` con un Hitbox como explosion.tscn (resuelve también el daño a todos los players de 13.7).
 

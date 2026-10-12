@@ -11,9 +11,9 @@
       "text": "Invitados"
     },
     {
-      "detail": "¿Guardar la vida actual en el save o cargar con el máximo / 3 corazones como Zelda? Hoy carga con el máximo.",
+      "detail": "Decidido (usuario, 2026-10-11): el estado del player es global y no depende de la escena; la vida actual de cada player va en el save y se restaura al cargar. Validarla contra max_health al leer.",
       "done": false,
-      "text": "Decidir qué pasa al cargar partida"
+      "text": "Guardar la vida actual en el save"
     },
     {
       "detail": "test_portal o test_player: bajar vida, viajar, comprobar.",
@@ -23,7 +23,7 @@
   ],
   "code": "11.79",
   "created_at": "2026-10-12T00:19:21.588Z",
-  "description": "GameState solo guarda `max_health`, no la vida actual. Cada nivel instancia su player y `_ready` → `_sync_health` → `health.reset(GameState.max_health)`, así que entrar o salir de una mazmorra (portal, escalera) rellena todos los corazones. La vida actual debe mantenerse entre escenas.",
+  "description": "El estado del player (vida actual incluida) es global, no de la escena. Hoy GameState solo guarda `max_health`: cada nivel instancia su player y `_ready` → `_sync_health` → `health.reset(GameState.max_health)`, así que entrar o salir de una mazmorra (portal, escalera) rellena todos los corazones. La vida actual de cada player vive en GameState, se mantiene entre escenas y se guarda en el save.",
   "files": [
     "player/player.gd",
     "src/state/game_state.gd",
@@ -47,7 +47,7 @@
     "bug",
     "combate"
   ],
-  "test": "Entrar al templo con 2 corazones, salir al overworld: siguen 2. Con dos players, cada uno conserva la suya. Morir/reaparecer y partida nueva siguen empezando como hoy.",
+  "test": "Entrar al templo con 2 corazones, salir al overworld: siguen 2. Guardar con 2 corazones y cargar: 2. Con dos players, cada uno conserva la suya. Morir/reaparecer y partida nueva empiezan llenos.",
   "title": "Los corazones se rellenan al cambiar de escena",
-  "updated_at": "2026-10-12T00:19:24.368Z"
+  "updated_at": "2026-10-12T00:27:11.933Z"
 }
