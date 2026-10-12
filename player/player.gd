@@ -82,6 +82,11 @@ func _ready() -> void:
 	GameState.loaded.connect(_sync_health)
 	GameState.max_health_changed.connect(_on_max_health_changed)
 	_sync_health()
+	var ward := GameState.ward_of(controls.slot)
+	if ward > 0.0:
+		GameState.set_ward_of(controls.slot, 0.0)
+		health.ward(ward)
+		Blessing.attach(self, health)
 	targeting.target_changed.connect(func(target: Node3D) -> void: movement_state.blackboard.set_var("target", target))
 	movement_state.initialize(self)
 	movement_state.set_active(true)

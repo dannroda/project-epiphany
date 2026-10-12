@@ -33,6 +33,8 @@ var guest_buttons: Dictionary[int, Array] = {}
 var max_health: int = NEW_GAME_MAX_HEALTH
 ## Vida actual de cada player por slot: es global, se mantiene al cambiar de escena y va en la partida.
 var player_health: Dictionary[int, int] = {}
+## La bendición (agua bendita) que le quedaba a cada player al viajar: la retoma en la escena nueva.
+var player_ward: Dictionary[int, float] = {}
 ## Botella → lo que tiene (bottle_empty, potion, holy_water…): son cuatro y cada una lleva cualquier contenido.
 var bottles: Dictionary[StringName, StringName] = {}
 var flags: Dictionary[StringName, Variant] = {}
@@ -84,6 +86,14 @@ func health_of(slot: int) -> int:
 
 func set_health_of(slot: int, value: int) -> void:
 	player_health[slot] = value
+
+
+func ward_of(slot: int) -> float:
+	return player_ward.get(slot, 0.0)
+
+
+func set_ward_of(slot: int, seconds: float) -> void:
+	player_ward[slot] = seconds
 
 
 func set_flag(id: StringName, value: Variant) -> void:
@@ -375,6 +385,7 @@ func _clear() -> void:
 	guest_buttons.clear()
 	max_health = NEW_GAME_MAX_HEALTH
 	player_health.clear()
+	player_ward.clear()
 	bottles.clear()
 	play_time = 0.0
 	flags.clear()

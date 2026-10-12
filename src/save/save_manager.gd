@@ -295,6 +295,8 @@ func travel_to(scene_path: String, spawn: StringName) -> void:
 		await Fader.fade_in(0.3)
 		traveling = false
 		return
+	for player in Players.all:
+		GameState.set_ward_of(player.controls.slot, player.health.ward_left())
 	get_tree().change_scene_to_packed(packed)
 	await get_tree().scene_changed
 	GameState.spawn_scene = scene_path

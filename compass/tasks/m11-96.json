@@ -1,33 +1,35 @@
 {
+  "assignee": "Claude",
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "Inventario de lo que se reinicia al cambiar de escena"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Pasarlo a GameState"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Tests de viaje ida y vuelta"
     }
   ],
   "code": "11.96",
   "created_at": "2026-10-12T08:16:50.166Z",
   "description": "Playtest 2026-10-12: el estado del player tiene que ser global toda la partida y no reiniciar valores al cargar una escena. 11.79 resolvió la vida; revisar el resto de lo que el player arma en _ready o el nivel reinicia al cargar.",
+  "done_at": "2026-10-12T17:25:37.108Z",
   "milestone": "m11",
-  "notes": "Sesión: auditoría (-04). Sigue a 11.79.",
+  "notes": "Sesión de bugs (-68). Repasé lo que guardan el player y sus componentes en el nodo. Inventario, equipo, botones, botellas y vida ya estaban en GameState; los ajustes de fijación y apuntado salen de Settings. Lo único que se perdía era la bendición del agua bendita: SaveManager.travel_to la guarda por slot (`GameState.player_ward`, no va en la partida) y el player nuevo la retoma y la consume. Quedan fuera a propósito: la orientación al llegar (la da el punto de aparición), lo que se lleva en brazos (se suelta al viajar) y, en co-op, un espíritu que cambia de escena vuelve lleno.",
   "order": 93,
   "priority": "high",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "done",
   "tags": [
     "guardado",
     "bug"
   ],
-  "test": "",
+  "test": "test_player_health: vida, bendición, equipo, botones y botellas siguen tras cambiar de escena; cargar una partida no arrastra la bendición.",
   "title": "Todo el estado del player es global durante la partida",
-  "updated_at": "2026-10-12T08:16:52.117Z"
+  "updated_at": "2026-10-12T17:25:37.108Z"
 }

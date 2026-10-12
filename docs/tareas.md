@@ -1588,7 +1588,8 @@ El overworld de 3 × 3 pantallas quedó hecho para una sola mazmorra y se siente
   GDD §7 y §7.1 (gdd#overworld-layout): mapa de la variante D, tabla de regiones, cadena de mazmorras, gating, viaje rápido y ritmo; §6.2 con D2–D4.
 - [x] Blockout del GridMap nuevo
   debug/tmp/ow/build_layout.gd (generador de una vez): 7 × 5 pantallas de 12 × 8 celdas; lugares viejos mudados con su contenido (celdas y nodos), regiones nuevas lisas con AreaZone, quebrada y laguna de Abismo con Pit por orilla (Pit vuelve al marcador más cercano), escalones de una vía como tiras de Escalón, angostura de una celda. world_rect del mapa (−85, −41, 170, 82). Tests de overworld al día (rutas de las dos orillas, angostura). GDD §7.1 (Blockout del layout D).
-- [ ] Mudar los lugares existentes y la entrada de la Chullpa
+- [x] Puente de la quebrada y entrada de la Chullpa
+  Bridge que sube del fondo con una flecha al ojo de la otra orilla (ow_ravine_bridge_eye); torre provisoria de la Chullpa con su Portal en el norte de la Necrópolis y Spawn_chullpa delante. Los lugares viejos ya se mudaron en el paso 3. Postes del gancho, salto de una vía y puertas de D3/D4 esperan 11.90.
 - [ ] Terreno orgánico, decoración y navmesh regenerados
 - [ ] Tests y escenarios al día
 - [ ] Recorrerlo (Daniel)
@@ -2531,7 +2532,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (45/103)
+## M11 — Pulido: contenido y feel  (47/103)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4079,9 +4080,9 @@ Playtest 2026-10-12: el arquero corta su ataque para reacomodarse a distancia de
 
 **Notas:** Sesión: auditoría (-04).
 
-### 11.95 Botellas únicas: 4 en total, cualquier contenido · En curso
+### 11.95 Botellas únicas: 4 en total, cualquier contenido · Hecho
 
-**Prioridad:** alta · **Tamaño:** M · **Responsable:** Claude · **Etiquetas:** `items`, `bug`
+**Terminada:** 2026-10-12 · **Prioridad:** alta · **Tamaño:** M · **Responsable:** Claude · **Etiquetas:** `items`, `bug`
 
 Las botellas no son un consumible apilable: son 4 en todo el juego, cada una un ítem propio que puede tener cualquier contenido. Bug visible: dos botellas con el mismo contenido cuentan como una sola.
 
@@ -4091,19 +4092,23 @@ Las botellas no son un consumible apilable: son 4 en todo el juego, cada una un 
 - [x] UI de Ítems y save (con migración)
 - [x] Tests
 
-**Notas:** Sesión: auditoría (-04). Toca inventario, save (migración de partidas viejas) y la UI de Ítems.
+**Prueba:** Dos pociones son dos botellas; nunca más de cuatro; un contenido llena primero una vacía; beber vacía solo esa botella; las botellas se guardan y las partidas viejas pasan sus pociones a botellas (test_bottles).
 
-### 11.96 Todo el estado del player es global durante la partida · Pendiente
+**Notas:** Sesión de bugs (-68). Hecho: las ranuras son ítems `bottle_1`..`bottle_4` (data/items), que ocupan su casilla y se asignan a X/Y. `GameState.bottles` guarda botella → contenido y `GameState.item_for(id)` resuelve qué mostrar y usar. Los contenidos (vacía, poción, agua bendita) llevan `bottled = true` y no tienen casilla. `give` de un contenido llena la primera vacía o suma una botella. `ItemUseContext.source` le dice al consumible qué botella vaciar. La migración (`_migrate_bottles`) corre al leer la partida. Se quitó `replace_on_buttons`.
 
-**Prioridad:** alta · **Tamaño:** M · **Etiquetas:** `guardado`, `bug`
+### 11.96 Todo el estado del player es global durante la partida · Hecho
+
+**Terminada:** 2026-10-12 · **Prioridad:** alta · **Tamaño:** M · **Responsable:** Claude · **Etiquetas:** `guardado`, `bug`
 
 Playtest 2026-10-12: el estado del player tiene que ser global toda la partida y no reiniciar valores al cargar una escena. 11.79 resolvió la vida; revisar el resto de lo que el player arma en _ready o el nivel reinicia al cargar.
 
-- [ ] Inventario de lo que se reinicia al cambiar de escena
-- [ ] Pasarlo a GameState
-- [ ] Tests de viaje ida y vuelta
+- [x] Inventario de lo que se reinicia al cambiar de escena
+- [x] Pasarlo a GameState
+- [x] Tests de viaje ida y vuelta
 
-**Notas:** Sesión: auditoría (-04). Sigue a 11.79.
+**Prueba:** test_player_health: vida, bendición, equipo, botones y botellas siguen tras cambiar de escena; cargar una partida no arrastra la bendición.
+
+**Notas:** Sesión de bugs (-68). Repasé lo que guardan el player y sus componentes en el nodo. Inventario, equipo, botones, botellas y vida ya estaban en GameState; los ajustes de fijación y apuntado salen de Settings. Lo único que se perdía era la bendición del agua bendita: SaveManager.travel_to la guarda por slot (`GameState.player_ward`, no va en la partida) y el player nuevo la retoma y la consume. Quedan fuera a propósito: la orientación al llegar (la da el punto de aparición), lo que se lleva en brazos (se suelta al viajar) y, en co-op, un espíritu que cambia de escena vuelve lleno.
 
 ### 11.97 Mazmorra: solo está activa la sala del player · Pendiente
 
@@ -4141,14 +4146,14 @@ Las torres que se activan al reflejarles el ataque de la torreta en D1 no cambia
 
 **Notas:** Sesión: arte (-77).
 
-### 11.100 Qué se puede levantar se tiene que entender · Pendiente
+### 11.100 Qué se puede levantar se tiene que entender · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `arte`, `ui`
 
 Playtest 2026-10-12: levantar y tirar funciona, pero no se entiende qué objeto se puede levantar y cuál no.
 
-- [ ] Lenguaje visual de lo levantable
-  Material, forma o marca consistente; prompt al acercarse.
+- [x] Lenguaje visual de lo levantable
+  Lo levantable lleva un cordón de lana roja y crema con nudo y borlas (vasija en el cuello; piedra nueva piedra_levantable, más clara y redonda que la de empujar). Al alcance, contorno crema (Liftable.highlight) junto al prompt Levantar. Interactable.focused avisa cuando algún player lo tiene de foco.
 
 **Notas:** Sesión: arte (-77).
 
@@ -4158,7 +4163,8 @@ Playtest 2026-10-12: levantar y tirar funciona, pero no se entiende qué objeto 
 
 Playtest 2026-10-12: las zonas tapadas (11.52, 11.54) no deberían verse como un cuadrado sin explorar, ni en el minimapa ni en el overworld.
 
-- [ ] Overworld
+- [x] Overworld
+  ZoneVeil pasa de caja de tinta negra a banco de niebla: nubes claras que se mueven despacio y un borde que se deshace en jirones (fringe 3 m, 1 m por fuera de la pared); el interior de la zona sigue tapado. covers() no cambia.
 - [ ] Minimapa y mapa
 
 **Notas:** Sesión: arte (-77) el overworld; overworld (-74) el minimapa.
@@ -4216,13 +4222,16 @@ La intro (10.20) funciona, pero sus planos son del overworld viejo. Rehacer los 
 
 **Notas:** Sesión: overworld (-74), después de 7.9 paso 4. Junto con 10.30.
 
-### 11.107 Mejorar la ambientación · Pendiente
+### 11.107 Mejorar la ambientación · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Etiquetas:** `arte`, `audio`
 
 Playtest 2026-10-12: hay que mejorar la ambientación del overworld y las mazmorras: luz, niebla, partículas, sonido ambiente.
 
-- [ ] Qué falta por zona (con Daniel)
+- [x] Qué falta por zona (con Daniel)
+  Daniel (2026-10-12): luz, niebla y partículas estuvieron bien; no hay que cambiarlas. El sonido anda; no se fijó si falta algo.
+- [ ] Escuchar el sonido ambiente por zona en el próximo playtest
+  Anotar qué zona suena vacía o repetida; recién ahí agregar o cambiar.
 
 **Notas:** Sesión: arte (-77). Definir con Daniel qué falta en cada zona.
 
