@@ -11,8 +11,8 @@
       "text": "Elección y ajustes del usuario"
     },
     {
-      "detail": "build_temple_kit.gd por estilo (chullpa_kit.tres…) y levels/chullpa.tscn con el suyo.",
-      "done": false,
+      "detail": "build_temple_kit.gd -- <estilo> arma chullpa_kit, laguna_kit y cumbre_kit (mismos ítems y colisiones que temple_kit). levels/chullpa.tscn usa chullpa_kit. Laguna y Cumbre todavía no tienen escena.",
+      "done": true,
       "text": "Kit de cada mazmorra en Godot"
     },
     {
@@ -46,5 +46,5 @@
   ],
   "test": "",
   "title": "Estilos por mazmorra",
-  "updated_at": "2026-10-11T23:43:39.081Z"
+  "updated_at": "2026-10-12T01:05:54.288Z"
 }
