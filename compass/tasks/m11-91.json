@@ -1,0 +1,29 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Las placas abren solo con peso que se queda"
+    },
+    {
+      "done": false,
+      "text": "Test"
+    }
+  ],
+  "code": "11.91",
+  "created_at": "2026-10-12T08:16:40.513Z",
+  "description": "En el overworld, la pantalla a la derecha del spawn tiene un mini puzzle de dos placas y bloques para abrir la reja del cofre. Pisar las placas alcanza para abrirla: tienen que mantenerla abierta los bloques, no el player.",
+  "milestone": "m11",
+  "notes": "Sesión: auditoría (-04).",
+  "order": 88,
+  "priority": "high",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "puzzle"
+  ],
+  "test": "",
+  "title": "Puzzle del claro: la reja se abre con solo pisar las placas",
+  "updated_at": "2026-10-12T08:16:41.953Z"
+}

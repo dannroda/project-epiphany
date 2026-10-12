@@ -2,77 +2,72 @@
   "checklist": [
     {
       "detail": "Pide idioma antes del título; en inglés menús, HUD, ítems y diálogos; Opciones → español cambia al instante y se mantiene al reiniciar.",
-      "done": false,
+      "done": true,
       "text": "Idiomas (10.18)"
     },
     {
-      "detail": "Tablitas del claro: moverse, atacar, rodar, bloquear, fijar, interactuar; los íconos cambian entre teclado y control.",
-      "done": false,
+      "detail": "Tablitas del claro: moverse, atacar, rodar, bloquear, fijar, interactuar; los íconos cambian entre teclado y control.\nFuncionan, pero no es la mejor forma de tutorial. Hay que revisarla",
+      "done": true,
       "text": "Tutorial (11.45)"
     },
     {
       "detail": "Piedra → placa → reja → cofre. Vasija: caminás más lento, se rompe al tirarla y suelta loot, daña enemigos.",
-      "done": false,
+      "done": true,
       "text": "Levantar y tirar (11.44)"
     },
     {
       "detail": "Junto al árbol del sendero no aparece; detrás de una pared se abre suave y se cierra al salir.",
-      "done": false,
+      "done": true,
       "text": "Agujero de la cámara (11.53)"
     },
     {
       "detail": "Se destapa al caminar, se apaga desde Opciones; en el templo sigue sala a sala y coincide con la pestaña Mapa.",
-      "done": false,
+      "done": true,
       "text": "Minimapa (11.37)"
     },
     {
-      "detail": "Mismo grosor y color que el muro, solo grietas; lo de atrás tapado; al volarla se descubre sin frenarte. Desde el inicio del claro no se ve el labio de pasto ni la pared de más allá (11.54).",
-      "done": false,
+      "detail": "Mismo grosor y color que el muro, solo grietas; lo de atrás tapado; al volarla se descubre sin frenarte. Desde el inicio del claro no se ve el labio de pasto ni la pared de más allá (11.54).\nNo debería verse como una zona cuadrada sin explorar, ni en el minimapa ni en el overworld",
+      "done": true,
       "text": "Pared agrietada y zonas tapadas (11.51, 11.52, 11.54)"
     },
     {
       "detail": "Toque: a los pies. Mantener: levanta y apunta, soltar tira en parábola; la mecha sigue corriendo.",
-      "done": false,
+      "done": true,
       "text": "Bombas (11.43)"
     },
     {
       "detail": "3 chullpas: respuesta instantánea, rodar/bloquear al final del tajo; VFX por acción; arquero y esqueleto con armadura telegrafían; el escudo del esqueleto bloquea solo de frente y levantado, con chispa y retroceso.",
-      "done": false,
+      "done": true,
       "text": "Combate (11.33, 11.49, 11.25, 11.41)"
     },
     {
       "detail": "Al mantener, la cuerda se tensa con la flecha; al soltar vuelve de golpe.",
-      "done": false,
+      "done": true,
       "text": "Arco (11.42)"
     },
     {
       "detail": "Cofre grande: levanta el ítem con las dos manos.",
-      "done": false,
+      "done": true,
       "text": "Item get (11.48)"
     },
     {
       "detail": "Cada zona se reconoce sin el cartel; el templo se arruina hacia el jefe; nada tapa caminos ni interactivos.",
-      "done": false,
+      "done": true,
       "text": "Decoración (11.3, 11.4)"
     },
     {
       "detail": "Puertas y rejas llenan el grosor del muro, una reja en cada borde.",
-      "done": false,
+      "done": true,
       "text": "Templo: puertas y rejas (11.51)"
     },
     {
       "detail": "Dedos que abren y cierran continuo; abren antes de agarrar, aprietan al sostener, caen flojas al vencerlas.",
-      "done": false,
+      "done": true,
       "text": "Jefe (11.47)"
     },
     {
-      "detail": "Dos controles: Start en el segundo suma al P2 sin pausar, cada uno mueve el suyo; mantener Start 1,5 s lo saca.",
-      "done": false,
-      "text": "Co-op (13.1, 13.2)"
-    },
-    {
       "detail": "Linux y Windows: arranca, guarda cifrado en user://, sin escenarios ni tests.",
-      "done": false,
+      "done": true,
       "text": "Build en máquina limpia (10.9)"
     },
     {
@@ -81,28 +76,8 @@
       "text": "Cerrar 10.8 y 10.23; rendimiento (10.24–10.26)"
     },
     {
-      "detail": "Dos controles en el templo: la cámara mira a los dos y no los deja separarse más que la pantalla; al cruzar uno una puerta, el otro aparece a su lado y entran juntos; overworld ↔ templo llegan juntos.",
-      "done": false,
-      "text": "Co-op: cámara y salas (13.3)"
-    },
-    {
-      "detail": "Con dos controles: P1 arriba a la izquierda y P2 a la derecha, cada uno con sus corazones, sus X/Y con los botones de su control y su prompt; en mazmorra las llaves al medio; al salir el P2 vuelve el HUD de uno.",
-      "done": false,
-      "text": "Co-op: HUD de dos (13.5)"
-    },
-    {
-      "detail": "Con dos controles: que caiga uno; queda un espíritu que te sigue; parate encima un segundo y revive con un corazón (o cruzá a otra sala). Si caen los dos, game over. En la pestaña Ítems, con el control del P2, asigná X/Y: cambian solo los suyos. Un corazón cura solo al que lo agarra.",
-      "done": false,
-      "text": "Co-op: reglas (13.4)"
-    },
-    {
-      "detail": "Solo: mantené LB (o F): el mundo casi se frena, elegí con el stick y poné con X/Y; al soltar sigue. Co-op: cada uno abre su anillo sin pausar; lo que lleva el otro se ve apagado con su etiqueta. Tecla 5: pasa al menú compartido; en Ítems el P2 mueve su cursor con su control y asigna con X/Y. Decidí cuál queda.",
-      "done": false,
-      "text": "Co-op: elegir ítems (13.9)"
-    },
-    {
       "detail": "Un enemigo muerto queda 4 s, se hunde en el piso con polvo y desaparece; lo que soltó queda; las salas y oleadas siguen abriendo al morir el último.",
-      "done": false,
+      "done": true,
       "text": "Cuerpos (11.58)"
     },
     {
@@ -111,17 +86,13 @@
       "text": "Controles y pestaña Sistema (10.29)"
     },
     {
-      "detail": "Con dos controles: el P2 tiene otra tela y otro neón, también con la cota reforzada; los dos se distinguen de un vistazo.",
-      "done": false,
-      "text": "Co-op: colores (13.6)"
-    },
-    {
       "detail": "Escenario pre_boss: vencé al jefe; tomar el contenedor no corta el juego y la puerta queda cerrada. Entrá al portal: diálogo 'Fin de la demo' con tres respuestas (stick/flechas, A). Probá Volver a retar (pelea completa, sin otro contenedor), Seguir jugando (overworld con el progreso) y Volver al menú (al cargar, el jefe no está).",
       "done": false,
       "text": "Fin de la demo (10.19)"
     },
     {
-      "done": false,
+      "detail": "Funciona! pero quedó desactualizado con el nuevo diseño del overworld",
+      "done": true,
       "text": "Intro (10.20): Nueva partida desde el título corre la intro (4 planos, textos, temblor y brillo rojo en el templo); mantener A la saltea, un toque no; al terminar la cámara vuelve sola y el player se mueve; cargar o continuar no la repite. Afinar a ojo duración de planos, brillo y temblor"
     },
     {
@@ -130,12 +101,12 @@
     },
     {
       "detail": "Templo: la sala de la pluma (debajo de la agrietada) se entiende sin explicación; la zanja se lee como 'rodear ahora, saltar después'. La fila de huecos del Puzzle se ve desde la puerta y no hay forma de caer al entrar. El salto (alto 0,68, velocidad 4, control en el aire 2, en player/states/jumping.gd) se siente bien y la sombra deja calcular dónde cae. Risco: el abismo de 4 m se lee como 'solo flechas'.",
-      "done": false,
+      "done": true,
       "text": "Pluma (11.35)"
     },
     {
       "detail": "La pieza de corazón arriba del escalón de la pradera se ve como cebo antes de tener la pluma. La grieta entre la entrada del templo y el Risco se lee como paso saltable desde los dos lados (se ve un hueco oscuro entre los acantilados); caer devuelve del lado del templo.",
-      "done": false,
+      "done": true,
       "text": "Pluma en el overworld (11.61)"
     }
   ],
@@ -273,15 +244,15 @@
     }
   ],
   "milestone": "m10",
-  "notes": "",
+  "notes": "Playtest del 2026-10-12 (Daniel): hallazgos en 11.90–11.107, 7.9 (zonas inaccesibles) y 14.9 (pantalla de carga); co-op aparte en 13.15. Quedan sin probar rendimiento, controles y pestaña Sistema, fin de la demo y nodos en escena.",
   "order": 59,
   "priority": "high",
   "refs": [],
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "playtest"
   ],
   "test": "",
   "title": "Playtest de revisión (lo que está en Revisión)",
-  "updated_at": "2026-10-11T19:21:04.643Z"
+  "updated_at": "2026-10-12T08:17:50.972Z"
 }

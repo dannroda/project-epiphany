@@ -1,0 +1,28 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Mockup"
+    },
+    {
+      "done": false,
+      "text": "Tamaño y qué zonas llevan nombre"
+    }
+  ],
+  "code": "11.102",
+  "created_at": "2026-10-12T08:17:01.143Z",
+  "description": "Playtest 2026-10-12: los nombres de zona en el mapa son muy grandes y no hace falta que cada área tenga nombre.",
+  "milestone": "m11",
+  "notes": "Sesión: overworld (-74). Ajustar el mockup del canvas primero.",
+  "order": 99,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "ui"
+  ],
+  "test": "",
+  "title": "Mapa: nombres de zona chicos y solo los que importan",
+  "updated_at": "2026-10-12T08:17:02.602Z"
+}

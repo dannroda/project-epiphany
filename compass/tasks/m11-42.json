@@ -18,17 +18,18 @@
   "code": "11.42",
   "created_at": "2026-10-10T21:49:13.215Z",
   "description": "Que el arco se tense mientras se mantiene el disparo: la cuerda se estira hacia la mano, las palas se doblan y la flecha queda en la cuerda; al soltar vuelve de golpe.",
+  "done_at": "2026-10-12T08:17:38.215Z",
   "milestone": "m11",
   "notes": "",
   "order": 42,
   "priority": "medium",
   "refs": [],
-  "status": "review",
+  "status": "done",
   "tags": [
     "items",
     "arte"
   ],
   "test": "",
   "title": "Arco que se tensa",
-  "updated_at": "2026-10-11T07:51:09.607Z"
+  "updated_at": "2026-10-12T08:17:38.215Z"
 }

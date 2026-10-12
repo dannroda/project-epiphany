@@ -24,6 +24,7 @@
   "code": "11.61",
   "created_at": "2026-10-11T18:42:24.769Z",
   "description": "El overworld es el hub: la pluma (11.35, templo) tiene que abrir ahí cosas y caminos nuevos. 2–3 lugares que solo se alcanzan saltando (huecos de una baldosa, escalón de 0,6 m), sobre el terreno que elija 12.14.",
+  "done_at": "2026-10-12T08:17:42.294Z",
   "links": [
     {
       "task": "m11-35",
@@ -36,12 +37,12 @@
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "review",
+  "status": "done",
   "tags": [
     "movimiento",
     "nivel"
   ],
   "test": "Sin la pluma, la pieza de corazón de la pradera y los otros lugares no se alcanzan; con la pluma, sí. Ningún lugar obliga a saltar una pirca o un muro.",
   "title": "Pluma en el overworld: lugares de salto",
-  "updated_at": "2026-10-11T19:21:04.195Z"
+  "updated_at": "2026-10-12T08:17:42.294Z"
 }

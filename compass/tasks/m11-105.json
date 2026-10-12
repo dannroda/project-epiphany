@@ -1,0 +1,25 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Propuesta"
+    }
+  ],
+  "code": "11.105",
+  "created_at": "2026-10-12T08:17:06.289Z",
+  "description": "Playtest 2026-10-12: las tablitas del claro (11.45) funcionan, pero no son la mejor forma de enseñar los controles. Buscar otra.",
+  "milestone": "m11",
+  "notes": "Con 11.90 (cada mazmorra enseña su ítem).",
+  "order": 102,
+  "priority": "low",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "diseno",
+    "ui"
+  ],
+  "test": "",
+  "title": "Repensar el tutorial",
+  "updated_at": "2026-10-12T08:17:07.228Z"
+}

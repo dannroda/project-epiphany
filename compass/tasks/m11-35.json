@@ -34,6 +34,7 @@
   "code": "11.35",
   "created_at": "2026-10-10T05:32:19.931Z",
   "description": "Saltar con un ítem tipo Pluma de Roc (nada de salto libre), para que el gating por saltos empiece al conseguirlo: huecos de un tile, andenes bajos y esquivar ondas de choque del jefe.",
+  "done_at": "2026-10-12T08:17:41.842Z",
   "links": [
     {
       "task": "m11-34",
@@ -58,12 +59,12 @@
       "section": "items-mvp"
     }
   ],
-  "status": "review",
+  "status": "done",
   "tags": [
     "combate",
     "movimiento"
   ],
   "test": "Sin la pluma no se puede saltar. Con la pluma asignada: saltar un hueco de un tile y subir a un andén bajo; la sombra deja ver dónde cae. No se puede saltar una pirca ni un muro de sala. Saltar esquiva la onda de choque del golpe de las manos del jefe. En el templo: la pluma está en la sala 10 (debajo de la agrietada); sin ella se rodea la zanja hasta el cofre, con ella se salta de vuelta; la entrada del Puzzle pide saltar. En el Risco, el abismo (4 m) no se cruza saltando y caer devuelve al spawn.",
   "title": "Saltar: ítem tipo Pluma de Roc",
-  "updated_at": "2026-10-11T18:42:40.097Z"
+  "updated_at": "2026-10-12T08:17:41.842Z"
 }

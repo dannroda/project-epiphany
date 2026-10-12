@@ -14,17 +14,18 @@
   "code": "11.48",
   "created_at": "2026-10-10T23:12:48.454Z",
   "description": "Pose de item get: el player levanta el ítem con las dos manos y se ve el objeto arriba con un destello mientras está la caja.",
+  "done_at": "2026-10-12T08:17:38.676Z",
   "milestone": "m11",
   "notes": "Skills: `godot:godot-animation`, `disciplines:game-feel`.",
   "order": 48,
   "priority": "medium",
   "refs": [],
-  "status": "review",
+  "status": "done",
   "tags": [
     "personajes",
     "feel"
   ],
   "test": "Abrir un cofre grande: el player levanta el ítem con las dos manos, se ve el objeto arriba y vuelve a su pose al cerrar la caja.",
   "title": "Pose de item get",
-  "updated_at": "2026-10-11T07:51:12.562Z"
+  "updated_at": "2026-10-12T08:17:38.676Z"
 }

@@ -1,0 +1,25 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Estado activo visible (luz, emisión, sonido)"
+    }
+  ],
+  "code": "11.99",
+  "created_at": "2026-10-12T08:16:56.894Z",
+  "description": "Las torres que se activan al reflejarles el ataque de la torreta en D1 no cambian a la vista cuando quedan activas.",
+  "milestone": "m11",
+  "notes": "Sesión: arte (-77).",
+  "order": 96,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "mazmorra",
+    "arte"
+  ],
+  "test": "",
+  "title": "Torres de D1: cambio visual al activarse",
+  "updated_at": "2026-10-12T08:16:57.852Z"
+}

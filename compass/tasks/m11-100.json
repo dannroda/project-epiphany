@@ -1,0 +1,26 @@
+{
+  "checklist": [
+    {
+      "detail": "Material, forma o marca consistente; prompt al acercarse.",
+      "done": false,
+      "text": "Lenguaje visual de lo levantable"
+    }
+  ],
+  "code": "11.100",
+  "created_at": "2026-10-12T08:16:58.150Z",
+  "description": "Playtest 2026-10-12: levantar y tirar funciona, pero no se entiende qué objeto se puede levantar y cuál no.",
+  "milestone": "m11",
+  "notes": "Sesión: arte (-77).",
+  "order": 97,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "arte",
+    "ui"
+  ],
+  "test": "",
+  "title": "Qué se puede levantar se tiene que entender",
+  "updated_at": "2026-10-12T08:16:59.106Z"
+}

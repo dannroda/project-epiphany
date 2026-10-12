@@ -24,6 +24,7 @@
   "code": "10.18",
   "created_at": "2026-10-10T05:23:28.116Z",
   "description": "El juego en inglés y español: todos los textos por clave con `tr()`, la elección de idioma la primera vez que se abre y un selector en Opciones que cambie en vivo, dejando fácil sumar otro idioma.",
+  "done_at": "2026-10-12T08:17:32.206Z",
   "milestone": "m10",
   "notes": "Skills: `disciplines:game-ui-ux`, `disciplines:dialogue-systems` (hooks de localización).",
   "order": 18,
@@ -34,11 +35,11 @@
       "section": "ui"
     }
   ],
-  "status": "review",
+  "status": "done",
   "tags": [
     "ui"
   ],
   "test": "Borrar settings.cfg y abrir el juego: pide idioma antes del título. Elegir inglés: todo el juego (menús, HUD, ítems, diálogos) en inglés. Cambiar a español desde Opciones en la pausa: cambia al instante y se mantiene al reiniciar. Un test recorre las claves y falla si alguna falta en algún idioma.",
   "title": "Idiomas: inglés y español",
-  "updated_at": "2026-10-11T07:50:56.676Z"
+  "updated_at": "2026-10-12T08:17:32.206Z"
 }

@@ -2,33 +2,29 @@
   "checklist": [
     {
       "detail": "Preset 'Web' en export_presets.cfg (2026-10-11): sin threads (corre en itch sin COOP/COEP), extensiones encendidas para LimboAI, renderer Compatibility. Falta agregarlo a tools/build.sh. Primera prueba local: anda mejor de lo esperado; se pierde lo que solo existe en Forward+.",
-      "done": false,
+      "done": true,
       "text": "Preset Web"
     },
     {
       "detail": "liblimboai.web.template_release.wasm32.nothreads.wasm ya está (gdextension oficial de LimboAI 1.8.1, como los de escritorio en 10.9); falta probar que los BT del jefe y los enemigos corren en el navegador.",
-      "done": false,
+      "done": true,
       "text": "LimboAI para web"
     },
     {
       "detail": "El escritorio usa Forward+: comparar el cutaway del templo, la emisión de la paleta, tonemap, niebla/doom, sombras y las cáusticas (projector + DrawableTexture). Lo que no ande, un fallback para web.",
-      "done": false,
+      "done": true,
       "text": "Revisar el juego en Compatibility"
     },
     {
       "detail": "Guardado en user:// (IndexedDB) persiste al recargar; el audio arranca tras el primer clic; gamepad y teclado; pantalla completa; tamaño del .pck y tiempo de carga.",
-      "done": false,
+      "done": true,
       "text": "Navegador"
-    },
-    {
-      "detail": "Proyecto HTML embebido (tamaño 1280×720, botón de pantalla completa), junto a los builds de escritorio de 10.10.",
-      "done": false,
-      "text": "Publicar en itch"
     }
   ],
   "code": "10.22",
   "created_at": "2026-10-10T22:49:40.714Z",
   "description": "Un build web para jugar en el navegador desde itch, sin threads y con renderer Compatibility: que LimboAI corra, el juego se vea parecido al de escritorio y el guardado sobreviva a recargar. Prioridad muy baja: el escritorio va primero.",
+  "done_at": "2026-10-12T08:00:18.375Z",
   "links": [
     {
       "task": "m10-09",
@@ -36,15 +32,15 @@
     }
   ],
   "milestone": "m10",
-  "notes": "Skills: `godot:godot-export`. Prioridad muy baja (2026-10-11): el escritorio va primero. El preset Web ya existe y la primera prueba local anduvo bien; lo pendiente es sumar la web a build.sh, reemplazos para lo que solo existe en Forward+ y publicar.",
+  "notes": "Skills: `godot:godot-export`. Prioridad muy baja (2026-10-11): el escritorio va primero. El preset Web ya existe y la primera prueba local anduvo bien; lo pendiente es sumar la web a build.sh, reemplazos para lo que solo existe en Forward+ y publicar.\n\nEsto fue un test",
   "order": 22,
   "priority": "low",
   "refs": [],
-  "status": "todo",
+  "status": "done",
   "tags": [
     "build"
   ],
   "test": "Abrir el build en Chrome y Firefox desde itch: carga en un tiempo razonable, se juega el overworld y el templo hasta el jefe con gamepad y teclado, el guardado sobrevive a recargar la página y se ve parecido al build de escritorio.",
   "title": "Build web",
-  "updated_at": "2026-10-11T07:50:58.646Z"
+  "updated_at": "2026-10-12T08:00:18.375Z"
 }

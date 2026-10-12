@@ -1,0 +1,29 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Overworld"
+    },
+    {
+      "done": false,
+      "text": "Minimapa y mapa"
+    }
+  ],
+  "code": "11.101",
+  "created_at": "2026-10-12T08:16:59.401Z",
+  "description": "Playtest 2026-10-12: las zonas tapadas (11.52, 11.54) no deberían verse como un cuadrado sin explorar, ni en el minimapa ni en el overworld.",
+  "milestone": "m11",
+  "notes": "Sesión: arte (-77) el overworld; overworld (-74) el minimapa.",
+  "order": 98,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "ui",
+    "arte"
+  ],
+  "test": "",
+  "title": "Zonas tapadas sin cuadrados sin explorar",
+  "updated_at": "2026-10-12T08:17:00.848Z"
+}

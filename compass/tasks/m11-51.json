@@ -29,16 +29,17 @@
   "code": "11.51",
   "created_at": "2026-10-11T03:59:26.007Z",
   "description": "Feedback de playtest (overworld, cueva de las bombas): la pared agrietada se delata sola. Es más fina que el muro y deja ver lo que tapa, y es piedra gris en un entorno marrón/pasto. Tiene que leerse como 'pared agrietada' por las grietas, no por el tamaño ni el color. Ver src/world/cracked_wall.tscn y su instancia en levels/overworld.tscn.",
+  "done_at": "2026-10-12T08:17:34.527Z",
   "milestone": "m11",
   "notes": "",
   "order": 51,
   "priority": "medium",
   "refs": [],
-  "status": "review",
+  "status": "done",
   "tags": [
     "arte"
   ],
   "test": "",
   "title": "Pared agrietada que se integre al muro",
-  "updated_at": "2026-10-11T04:36:22.685Z"
+  "updated_at": "2026-10-12T08:17:34.527Z"
 }

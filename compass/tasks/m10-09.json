@@ -34,6 +34,7 @@
   "code": "10.9",
   "created_at": "2026-10-08T04:45:37.982Z",
   "description": "Un build instalable para playtesters en Linux, Windows y macOS: plantillas de export con LimboAI, presets sin escenarios ni tests, clave de guardado propia y un script para compilar por línea de comandos.",
+  "done_at": "2026-10-12T08:17:40.475Z",
   "links": [
     {
       "task": "m10-10",
@@ -49,8 +50,8 @@
       "section": "guardado"
     }
   ],
-  "status": "review",
+  "status": "done",
   "test": "Instalar el build en una máquina limpia (Linux y Windows): arranca, guarda en `user://` cifrado y no incluye escenarios ni tests.",
   "title": "Build para playtesters",
-  "updated_at": "2026-10-11T07:50:52.004Z"
+  "updated_at": "2026-10-12T08:17:40.475Z"
 }

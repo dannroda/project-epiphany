@@ -1,0 +1,24 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Planos nuevos"
+    }
+  ],
+  "code": "11.106",
+  "created_at": "2026-10-12T08:17:07.513Z",
+  "description": "La intro (10.20) funciona, pero sus planos son del overworld viejo. Rehacer los planos sobre el layout D.",
+  "milestone": "m11",
+  "notes": "Sesión: overworld (-74), después de 7.9 paso 4. Junto con 10.30.",
+  "order": 103,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "camara"
+  ],
+  "test": "",
+  "title": "Intro al día con el overworld nuevo",
+  "updated_at": "2026-10-12T08:17:08.450Z"
+}

@@ -1,0 +1,50 @@
+{
+  "checklist": [
+    {
+      "detail": "Dos controles: Start en el segundo suma al P2 sin pausar, cada uno mueve el suyo; mantener Start 1,5 s lo saca.",
+      "done": false,
+      "text": "Co-op (13.1, 13.2)"
+    },
+    {
+      "detail": "Dos controles en el templo: la cámara mira a los dos y no los deja separarse más que la pantalla; al cruzar uno una puerta, el otro aparece a su lado y entran juntos; overworld ↔ templo llegan juntos.",
+      "done": false,
+      "text": "Co-op: cámara y salas (13.3)"
+    },
+    {
+      "detail": "Con dos controles: P1 arriba a la izquierda y P2 a la derecha, cada uno con sus corazones, sus X/Y con los botones de su control y su prompt; en mazmorra las llaves al medio; al salir el P2 vuelve el HUD de uno.",
+      "done": false,
+      "text": "Co-op: HUD de dos (13.5)"
+    },
+    {
+      "detail": "Con dos controles: que caiga uno; queda un espíritu que te sigue; parate encima un segundo y revive con un corazón (o cruzá a otra sala). Si caen los dos, game over. En la pestaña Ítems, con el control del P2, asigná X/Y: cambian solo los suyos. Un corazón cura solo al que lo agarra.",
+      "done": false,
+      "text": "Co-op: reglas (13.4)"
+    },
+    {
+      "detail": "Solo: mantené LB (o F): el mundo casi se frena, elegí con el stick y poné con X/Y; al soltar sigue. Co-op: cada uno abre su anillo sin pausar; lo que lleva el otro se ve apagado con su etiqueta. Tecla 5: pasa al menú compartido; en Ítems el P2 mueve su cursor con su control y asigna con X/Y. Decidí cuál queda.",
+      "done": false,
+      "text": "Co-op: elegir ítems (13.9)"
+    },
+    {
+      "detail": "Con dos controles: el P2 tiene otra tela y otro neón, también con la cota reforzada; los dos se distinguen de un vistazo.",
+      "done": false,
+      "text": "Co-op: colores (13.6)"
+    }
+  ],
+  "code": "13.15",
+  "created_at": "2026-10-12T08:17:19.042Z",
+  "description": "Los pasos de co-op del playtest de revisión (10.28), aparte: hacen falta dos controles. Al confirmar un paso, la tarea vinculada pasa a Hecho.",
+  "milestone": "m13",
+  "notes": "",
+  "order": 15,
+  "priority": "high",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "playtest",
+    "coop"
+  ],
+  "test": "",
+  "title": "Playtest de co-op",
+  "updated_at": "2026-10-12T08:17:22.120Z"
+}

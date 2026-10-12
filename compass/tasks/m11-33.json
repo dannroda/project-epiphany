@@ -29,6 +29,7 @@
   "code": "11.33",
   "created_at": "2026-10-10T05:30:49.373Z",
   "description": "Skills: `disciplines:game-feel`, `disciplines:input-systems`, `godot:godot-animation`.",
+  "done_at": "2026-10-12T08:17:36.391Z",
   "links": [
     {
       "task": "m11-34",
@@ -45,11 +46,11 @@
       "section": "combate"
     }
   ],
-  "status": "review",
+  "status": "done",
   "tags": [
     "combate"
   ],
   "test": "Pelear contra 3 chullpas en el overworld: cada golpe responde al instante, se puede rodar o bloquear al final de un tajo, los impactos se sienten, y en una sesión de playtest nadie lo describe como tosco.",
   "title": "Combate: sacar lo tosco",
-  "updated_at": "2026-10-11T19:42:14.204Z"
+  "updated_at": "2026-10-12T08:17:36.391Z"
 }

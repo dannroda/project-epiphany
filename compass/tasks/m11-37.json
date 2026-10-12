@@ -24,6 +24,7 @@
   "code": "11.37",
   "created_at": "2026-10-10T05:33:50.620Z",
   "description": "Un minimapa chico en el HUD que muestre las salas alrededor en la mazmorra y el entorno del player en el overworld, con los mismos datos que la pestaña Mapa y que se pueda apagar.",
+  "done_at": "2026-10-12T08:17:34.061Z",
   "links": [
     {
       "task": "m11-36",
@@ -40,11 +41,11 @@
       "section": "ui"
     }
   ],
-  "status": "review",
+  "status": "done",
   "tags": [
     "ui"
   ],
   "test": "Recorrer el templo: el minimapa sigue al player sala a sala y coincide con la pestaña Mapa. En el overworld muestra la zona y se destapa igual. Se apaga desde Opciones y no aparece durante el jefe ni en cutscenes.",
   "title": "Minimapa en el HUD",
-  "updated_at": "2026-10-11T07:51:08.586Z"
+  "updated_at": "2026-10-12T08:17:34.061Z"
 }

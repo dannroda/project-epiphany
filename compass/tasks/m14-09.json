@@ -8,6 +8,11 @@
     {
       "done": false,
       "text": "SaveManager: slots y capturar/aplicar"
+    },
+    {
+      "detail": "Playtest 2026-10-12: un sistema mejor de carga de niveles, con pantalla de carga (carga en hilo con ResourceLoader.load_threaded_request y progreso). Mockup en el canvas primero.",
+      "done": false,
+      "text": "Pantalla de carga"
     }
   ],
   "code": "14.9",
@@ -27,7 +32,7 @@
   "milestone": "m14",
   "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).",
   "order": 9,
-  "priority": "medium",
+  "priority": "high",
   "refs": [],
   "size": "m",
   "status": "todo",
@@ -36,6 +41,6 @@
     "arquitectura"
   ],
   "test": "SaveManager solo guarda/carga; los tests de viaje y respawn pasan contra SceneFlow.",
-  "title": "Separar el flujo de escenas de SaveManager",
-  "updated_at": "2026-10-12T00:20:14.436Z"
+  "title": "SceneFlow: flujo de escenas aparte de SaveManager y pantalla de carga",
+  "updated_at": "2026-10-12T08:17:55.766Z"
 }

@@ -1,0 +1,38 @@
+{
+  "checklist": [
+    {
+      "detail": "Cuatro ranuras de botella con su contenido, no un stack por contenido.",
+      "done": false,
+      "text": "Modelo de datos"
+    },
+    {
+      "done": false,
+      "text": "Llenar, vaciar y usar"
+    },
+    {
+      "done": false,
+      "text": "UI de Ítems y save (con migración)"
+    },
+    {
+      "done": false,
+      "text": "Tests"
+    }
+  ],
+  "code": "11.95",
+  "created_at": "2026-10-12T08:16:47.415Z",
+  "description": "Las botellas no son un consumible apilable: son 4 en todo el juego, cada una un ítem propio que puede tener cualquier contenido. Bug visible: dos botellas con el mismo contenido cuentan como una sola.",
+  "milestone": "m11",
+  "notes": "Sesión: auditoría (-04). Toca inventario, save (migración de partidas viejas) y la UI de Ítems.",
+  "order": 92,
+  "priority": "high",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "items",
+    "bug"
+  ],
+  "test": "",
+  "title": "Botellas únicas: 4 en total, cualquier contenido",
+  "updated_at": "2026-10-12T08:16:49.876Z"
+}

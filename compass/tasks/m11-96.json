@@ -1,0 +1,33 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Inventario de lo que se reinicia al cambiar de escena"
+    },
+    {
+      "done": false,
+      "text": "Pasarlo a GameState"
+    },
+    {
+      "done": false,
+      "text": "Tests de viaje ida y vuelta"
+    }
+  ],
+  "code": "11.96",
+  "created_at": "2026-10-12T08:16:50.166Z",
+  "description": "Playtest 2026-10-12: el estado del player tiene que ser global toda la partida y no reiniciar valores al cargar una escena. 11.79 resolvió la vida; revisar el resto de lo que el player arma en _ready o el nivel reinicia al cargar.",
+  "milestone": "m11",
+  "notes": "Sesión: auditoría (-04). Sigue a 11.79.",
+  "order": 93,
+  "priority": "high",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "guardado",
+    "bug"
+  ],
+  "test": "",
+  "title": "Todo el estado del player es global durante la partida",
+  "updated_at": "2026-10-12T08:16:52.117Z"
+}

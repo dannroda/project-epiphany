@@ -1,0 +1,30 @@
+{
+  "checklist": [
+    {
+      "detail": "Menos daño, ventanas más largas o menos ataques encadenados; a ojo con Daniel.",
+      "done": false,
+      "text": "Nerf de la fase 3"
+    },
+    {
+      "done": false,
+      "text": "Que no se hunda en el piso"
+    }
+  ],
+  "code": "11.93",
+  "created_at": "2026-10-12T08:16:43.966Z",
+  "description": "Playtest 2026-10-12: el jefe anda bien en general; la tercera fase es demasiado dura y el modelo suele hundirse en el piso.",
+  "milestone": "m11",
+  "notes": "Sesión: auditoría (-04).",
+  "order": 90,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "jefe",
+    "bug"
+  ],
+  "test": "",
+  "title": "Jefe: aflojar la fase 3 y el modelo que se hunde",
+  "updated_at": "2026-10-12T08:16:45.422Z"
+}

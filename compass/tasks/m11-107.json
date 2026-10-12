@@ -1,0 +1,25 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Qué falta por zona (con Daniel)"
+    }
+  ],
+  "code": "11.107",
+  "created_at": "2026-10-12T08:17:08.729Z",
+  "description": "Playtest 2026-10-12: hay que mejorar la ambientación del overworld y las mazmorras: luz, niebla, partículas, sonido ambiente.",
+  "milestone": "m11",
+  "notes": "Sesión: arte (-77). Definir con Daniel qué falta en cada zona.",
+  "order": 104,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "arte",
+    "audio"
+  ],
+  "test": "",
+  "title": "Mejorar la ambientación",
+  "updated_at": "2026-10-12T08:17:09.700Z"
+}

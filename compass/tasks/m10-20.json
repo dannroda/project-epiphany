@@ -19,6 +19,7 @@
   "code": "10.20",
   "created_at": "2026-10-10T05:24:53.664Z",
   "description": "Una intro corta y salteable al empezar partida nueva que cuente sin diálogos que El Ojo despierta, sobre un sistema simple de cutscenes que también sirva para la intro del jefe y el epílogo. Solo la primera vez.",
+  "done_at": "2026-10-12T08:17:41.390Z",
   "links": [
     {
       "task": "m10-19",
@@ -35,11 +36,11 @@
       "section": "historia"
     }
   ],
-  "status": "review",
+  "status": "done",
   "tags": [
     "camara"
   ],
   "test": "Partida nueva: corre la intro, se puede saltear, termina dando el control al player en el overworld. Cargar la partida: no se repite.",
   "title": "Intro / cutscene de apertura",
-  "updated_at": "2026-10-11T17:19:08.176Z"
+  "updated_at": "2026-10-12T08:17:41.390Z"
 }

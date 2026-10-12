@@ -1,0 +1,28 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Transparencia según la posición en pantalla"
+    },
+    {
+      "done": false,
+      "text": "Test"
+    }
+  ],
+  "code": "11.103",
+  "created_at": "2026-10-12T08:17:02.879Z",
+  "description": "Cuando el player está debajo del minimapa en pantalla, el minimapa se transparenta para no taparlo.",
+  "milestone": "m11",
+  "notes": "Sesión: overworld (-74). Con varios players: cualquiera de ellos.",
+  "order": 100,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "ui"
+  ],
+  "test": "",
+  "title": "El minimapa se transparenta con el player debajo",
+  "updated_at": "2026-10-12T08:17:04.305Z"
+}

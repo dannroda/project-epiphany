@@ -19,17 +19,18 @@
   "code": "11.25",
   "created_at": "2026-10-10T05:29:40.409Z",
   "description": "Enemigos nuevos con los modelos que ya hay: un arquero chullpa, esqueletos que disparen flechas y uno con punto débil, cada uno con telegraph legible y una contra clara.",
+  "done_at": "2026-10-12T08:17:37.309Z",
   "milestone": "m11",
   "notes": "",
   "order": 25,
   "priority": "medium",
   "refs": [],
-  "status": "review",
+  "status": "done",
   "tags": [
     "enemigos",
     "ia"
   ],
   "test": "Los dos enemigos aparecen en overworld o templo, se leen sus telegraphs y tienen contra clara.",
   "title": "Nuevos enemigos con los modelos existentes",
-  "updated_at": "2026-10-11T07:51:03.189Z"
+  "updated_at": "2026-10-12T08:17:37.309Z"
 }

@@ -1,0 +1,33 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Activar y dormir por sala"
+    },
+    {
+      "done": false,
+      "text": "Trampas y enemigos lo respetan"
+    },
+    {
+      "done": false,
+      "text": "Tests"
+    }
+  ],
+  "code": "11.97",
+  "created_at": "2026-10-12T08:16:52.409Z",
+  "description": "Hoy todo lo de la mazmorra corre a la vez: por ejemplo la línea de pinchos está activa aunque el player esté en otra sala. Las trampas, enemigos y efectos solo procesan en las salas con algún player (y se reinician o pausan al salir).",
+  "milestone": "m11",
+  "notes": "Sesión: auditoría (-04). Con varios players: activa toda sala con alguno adentro.",
+  "order": 94,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "mazmorra",
+    "rendimiento"
+  ],
+  "test": "",
+  "title": "Mazmorra: solo está activa la sala del player",
+  "updated_at": "2026-10-12T08:16:54.368Z"
+}

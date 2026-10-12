@@ -1,7 +1,7 @@
 # Tareas — Project Epiphany
 
 > Export de `compass/`, que es la fuente de verdad. No editar: los cambios se hacen en `compass/` o con `scompass`, y este archivo se regenera.
-> Generado: 2026-10-11
+> Generado: 2026-10-12
 
 ## M0 — Refactor del player + base de datos  (13/13)
 
@@ -1598,6 +1598,8 @@ El overworld de 3 × 3 pantallas quedó hecho para una sola mazmorra y se siente
   6 portales (Claro, Pradera, Explanada, Necrópolis, Bañado, Cumbre) que se activan al pasar (flag); se elige el destino en la pestaña Mapa o parado en un portal; viajan todos los players. Pantalla tal cual Pause_Map_Travel.
 - [x] Laguna de agua real y Bañado de agua baja
   Daniel (2026-10-11): la Laguna con el agua de la cueva de la vertiente (water.gdshader: espuma en la orilla, color por profundidad) sobre el hueco; cascada en el acantilado norte donde termina la quebrada; caer al agua salpica y vuelve a la orilla (no se nada); la isla de D3 con el gancho. El Bañado, agua baja que se camina.
+- [ ] Que todo se pueda alcanzar y cruzar
+  Playtest 2026-10-12: hay áreas del overworld a las que es imposible llegar o cruzar. Recorrido con test de rutas (test_overworld) para cada región del layout D.
 
 ## M8 — Contenido de mazmorra  (8/8)
 
@@ -1931,7 +1933,7 @@ Una salida de la sala del jefe: un portal en el centro de la arena que lleva a l
 
 **Notas:** Sin flag por ahora porque no hay jefe; 9.6 le pone d1_boss_defeated.
 
-## M10 — Terminación  (15/30)
+## M10 — Terminación  (19/30)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -2106,7 +2108,9 @@ Asegurar 60 FPS en la máquina más floja de los playtesters: perfilar las peore
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 10.9 Build para playtesters · Revisión
+### 10.9 Build para playtesters · Hecho
+
+**Terminada:** 2026-10-12
 
 Un build instalable para playtesters en Linux, Windows y macOS: plantillas de export con LimboAI, presets sin escenarios ni tests, clave de guardado propia y un script para compilar por línea de comandos.
 
@@ -2250,9 +2254,9 @@ Con la cámara más alejada, los enemigos del overworld se quedan quietos estand
 - [x] Skeleton2 fuera del cerco y test de enemigos encimados
 - [x] path_desired_distance 1.0 por la navmesh a 0.5 m
 
-### 10.18 Idiomas: inglés y español · Revisión
+### 10.18 Idiomas: inglés y español · Hecho
 
-**Prioridad:** media · **Etiquetas:** `ui`
+**Terminada:** 2026-10-12 · **Prioridad:** media · **Etiquetas:** `ui`
 
 El juego en inglés y español: todos los textos por clave con `tr()`, la elección de idioma la primera vez que se abre y un selector en Opciones que cambie en vivo, dejando fácil sumar otro idioma.
 
@@ -2305,9 +2309,9 @@ Al vencer al jefe el portal es la única salida, y entrar abre un diálogo de fi
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura; 10.28 Playtest de revisión (lo que está en Revisión); 11.29 Overworld después del jefe
 
-### 10.20 Intro / cutscene de apertura · Revisión
+### 10.20 Intro / cutscene de apertura · Hecho
 
-**Prioridad:** media · **Etiquetas:** `camara`
+**Terminada:** 2026-10-12 · **Prioridad:** media · **Etiquetas:** `camara`
 
 Una intro corta y salteable al empezar partida nueva que cuente sin diálogos que El Ojo despierta, sobre un sistema simple de cutscenes que también sirva para la intro del jefe y el epílogo. Solo la primera vez.
 
@@ -2349,26 +2353,26 @@ Hoy Continuar y Nueva partida abren los dos la selección de ranuras. Continuar 
 
 **Relacionadas:** 10.2 Selección de partida y autosave
 
-### 10.22 Build web · Pendiente
+### 10.22 Build web · Hecho
 
-**Prioridad:** baja · **Etiquetas:** `build`
+**Terminada:** 2026-10-12 · **Prioridad:** baja · **Etiquetas:** `build`
 
 Un build web para jugar en el navegador desde itch, sin threads y con renderer Compatibility: que LimboAI corra, el juego se vea parecido al de escritorio y el guardado sobreviva a recargar. Prioridad muy baja: el escritorio va primero.
 
-- [ ] Preset Web
+- [x] Preset Web
   Preset 'Web' en export_presets.cfg (2026-10-11): sin threads (corre en itch sin COOP/COEP), extensiones encendidas para LimboAI, renderer Compatibility. Falta agregarlo a tools/build.sh. Primera prueba local: anda mejor de lo esperado; se pierde lo que solo existe en Forward+.
-- [ ] LimboAI para web
+- [x] LimboAI para web
   liblimboai.web.template_release.wasm32.nothreads.wasm ya está (gdextension oficial de LimboAI 1.8.1, como los de escritorio en 10.9); falta probar que los BT del jefe y los enemigos corren en el navegador.
-- [ ] Revisar el juego en Compatibility
+- [x] Revisar el juego en Compatibility
   El escritorio usa Forward+: comparar el cutaway del templo, la emisión de la paleta, tonemap, niebla/doom, sombras y las cáusticas (projector + DrawableTexture). Lo que no ande, un fallback para web.
-- [ ] Navegador
+- [x] Navegador
   Guardado en user:// (IndexedDB) persiste al recargar; el audio arranca tras el primer clic; gamepad y teclado; pantalla completa; tamaño del .pck y tiempo de carga.
-- [ ] Publicar en itch
-  Proyecto HTML embebido (tamaño 1280×720, botón de pantalla completa), junto a los builds de escritorio de 10.10.
 
 **Prueba:** Abrir el build en Chrome y Firefox desde itch: carga en un tiempo razonable, se juega el overworld y el templo hasta el jefe con gamepad y teclado, el guardado sobrevive a recargar la página y se ve parecido al build de escritorio.
 
 **Notas:** Skills: `godot:godot-export`. Prioridad muy baja (2026-10-11): el escritorio va primero. El preset Web ya existe y la primera prueba local anduvo bien; lo pendiente es sumar la web a build.sh, reemplazos para lo que solo existe en Forward+ y publicar.
+
+Esto fue un test
 
 **Relacionadas:** 10.9 Build para playtesters; 10.10 Publicar en itch.io y playtest
 
@@ -2434,66 +2438,59 @@ Regla (2026-10-11): todo lo que hereda de Node va en la escena, no con X.new() +
 
 **Prueba:** Jugar un rato: cofres (chico y grande), haz de luz y espejos, puertas con llave, interruptores, oleadas de la arena, bombas y explosiones, golpes a enemigos y al jefe (destello), levantar y tirar vasijas, armadura del esqueleto, mapa del overworld, música por zonas y doom del templo se ven y suenan como antes. Con el overlay de debug (1): cono de bloqueo y flecha de apuntado. En el editor, esos nodos aparecen en sus escenas.
 
-### 10.28 Playtest de revisión (lo que está en Revisión) · Pendiente
+### 10.28 Playtest de revisión (lo que está en Revisión) · En curso
 
 **Prioridad:** alta · **Etiquetas:** `playtest`
 
 Recorrido para revisar de a una las tareas en Revisión, en el orden de una partida. Antes: borrar ~/.local/share/godot/app_userdata/Project Epiphany/settings.cfg y empezar partida nueva. Al confirmar un paso, la tarea vinculada pasa a Hecho.
 
-- [ ] Idiomas (10.18)
+- [x] Idiomas (10.18)
   Pide idioma antes del título; en inglés menús, HUD, ítems y diálogos; Opciones → español cambia al instante y se mantiene al reiniciar.
-- [ ] Tutorial (11.45)
+- [x] Tutorial (11.45)
   Tablitas del claro: moverse, atacar, rodar, bloquear, fijar, interactuar; los íconos cambian entre teclado y control.
-- [ ] Levantar y tirar (11.44)
+  Funcionan, pero no es la mejor forma de tutorial. Hay que revisarla
+- [x] Levantar y tirar (11.44)
   Piedra → placa → reja → cofre. Vasija: caminás más lento, se rompe al tirarla y suelta loot, daña enemigos.
-- [ ] Agujero de la cámara (11.53)
+- [x] Agujero de la cámara (11.53)
   Junto al árbol del sendero no aparece; detrás de una pared se abre suave y se cierra al salir.
-- [ ] Minimapa (11.37)
+- [x] Minimapa (11.37)
   Se destapa al caminar, se apaga desde Opciones; en el templo sigue sala a sala y coincide con la pestaña Mapa.
-- [ ] Pared agrietada y zonas tapadas (11.51, 11.52, 11.54)
+- [x] Pared agrietada y zonas tapadas (11.51, 11.52, 11.54)
   Mismo grosor y color que el muro, solo grietas; lo de atrás tapado; al volarla se descubre sin frenarte. Desde el inicio del claro no se ve el labio de pasto ni la pared de más allá (11.54).
-- [ ] Bombas (11.43)
+  No debería verse como una zona cuadrada sin explorar, ni en el minimapa ni en el overworld
+- [x] Bombas (11.43)
   Toque: a los pies. Mantener: levanta y apunta, soltar tira en parábola; la mecha sigue corriendo.
-- [ ] Combate (11.33, 11.49, 11.25, 11.41)
+- [x] Combate (11.33, 11.49, 11.25, 11.41)
   3 chullpas: respuesta instantánea, rodar/bloquear al final del tajo; VFX por acción; arquero y esqueleto con armadura telegrafían; el escudo del esqueleto bloquea solo de frente y levantado, con chispa y retroceso.
-- [ ] Arco (11.42)
+- [x] Arco (11.42)
   Al mantener, la cuerda se tensa con la flecha; al soltar vuelve de golpe.
-- [ ] Item get (11.48)
+- [x] Item get (11.48)
   Cofre grande: levanta el ítem con las dos manos.
-- [ ] Decoración (11.3, 11.4)
+- [x] Decoración (11.3, 11.4)
   Cada zona se reconoce sin el cartel; el templo se arruina hacia el jefe; nada tapa caminos ni interactivos.
-- [ ] Templo: puertas y rejas (11.51)
+- [x] Templo: puertas y rejas (11.51)
   Puertas y rejas llenan el grosor del muro, una reja en cada borde.
-- [ ] Jefe (11.47)
+- [x] Jefe (11.47)
   Dedos que abren y cierran continuo; abren antes de agarrar, aprietan al sostener, caen flojas al vencerlas.
-- [ ] Co-op (13.1, 13.2)
-  Dos controles: Start en el segundo suma al P2 sin pausar, cada uno mueve el suyo; mantener Start 1,5 s lo saca.
-- [ ] Build en máquina limpia (10.9)
+- [x] Build en máquina limpia (10.9)
   Linux y Windows: arranca, guarda cifrado en user://, sin escenarios ni tests.
 - [ ] Cerrar 10.8 y 10.23; rendimiento (10.24–10.26)
   10.23 verificada (~16 s, estable). 10.8 la reemplazan 10.24–10.26: en Opciones, Tope de FPS (30/60/120/sin tope) cambia al instante y se guarda; las sombras del sol y las paredes se ven igual que antes, sin tirones.
-- [ ] Co-op: cámara y salas (13.3)
-  Dos controles en el templo: la cámara mira a los dos y no los deja separarse más que la pantalla; al cruzar uno una puerta, el otro aparece a su lado y entran juntos; overworld ↔ templo llegan juntos.
-- [ ] Co-op: HUD de dos (13.5)
-  Con dos controles: P1 arriba a la izquierda y P2 a la derecha, cada uno con sus corazones, sus X/Y con los botones de su control y su prompt; en mazmorra las llaves al medio; al salir el P2 vuelve el HUD de uno.
-- [ ] Co-op: reglas (13.4)
-  Con dos controles: que caiga uno; queda un espíritu que te sigue; parate encima un segundo y revive con un corazón (o cruzá a otra sala). Si caen los dos, game over. En la pestaña Ítems, con el control del P2, asigná X/Y: cambian solo los suyos. Un corazón cura solo al que lo agarra.
-- [ ] Co-op: elegir ítems (13.9)
-  Solo: mantené LB (o F): el mundo casi se frena, elegí con el stick y poné con X/Y; al soltar sigue. Co-op: cada uno abre su anillo sin pausar; lo que lleva el otro se ve apagado con su etiqueta. Tecla 5: pasa al menú compartido; en Ítems el P2 mueve su cursor con su control y asigna con X/Y. Decidí cuál queda.
-- [ ] Cuerpos (11.58)
+- [x] Cuerpos (11.58)
   Un enemigo muerto queda 4 s, se hunde en el piso con polvo y desaparece; lo que soltó queda; las salas y oleadas siguen abriendo al morir el último.
 - [ ] Controles y pestaña Sistema (10.29)
   Opciones → Ver controles: el diagrama del control que estés usando; Y (o T) cambia entre gamepad y teclado. Pausa → Sistema: a la derecha los controles; Guardar pisa la partida cargada (pregunta antes); Cargar te deja elegir el último checkpoint o el guardado; volver al título pregunta. Los botones tienen recuadro.
-- [ ] Co-op: colores (13.6)
-  Con dos controles: el P2 tiene otra tela y otro neón, también con la cota reforzada; los dos se distinguen de un vistazo.
 - [ ] Fin de la demo (10.19)
   Escenario pre_boss: vencé al jefe; tomar el contenedor no corta el juego y la puerta queda cerrada. Entrá al portal: diálogo 'Fin de la demo' con tres respuestas (stick/flechas, A). Probá Volver a retar (pelea completa, sin otro contenedor), Seguir jugando (overworld con el progreso) y Volver al menú (al cargar, el jefe no está).
-- [ ] Intro (10.20): Nueva partida desde el título corre la intro (4 planos, textos, temblor y brillo rojo en el templo); mantener A la saltea, un toque no; al terminar la cámara vuelve sola y el player se mueve; cargar o continuar no la repite. Afinar a ojo duración de planos, brillo y temblor
+- [x] Intro (10.20): Nueva partida desde el título corre la intro (4 planos, textos, temblor y brillo rojo en el templo); mantener A la saltea, un toque no; al terminar la cámara vuelve sola y el player se mueve; cargar o continuar no la repite. Afinar a ojo duración de planos, brillo y temblor
+  Funciona! pero quedó desactualizado con el nuevo diseño del overworld
 - [ ] Nodos en escena (10.27): todo se ve y suena como antes (cofres, haz de luz, puertas, interruptores, oleadas, explosiones, destello de daño, vasijas, armadura del esqueleto, mapa, música, doom); con el overlay (1), cono de bloqueo y flecha. Abrir chest.tscn, light_source.tscn, player.tscn y src/feel/bursts/ en el editor y ver que se pueden retocar
-- [ ] Pluma (11.35)
+- [x] Pluma (11.35)
   Templo: la sala de la pluma (debajo de la agrietada) se entiende sin explicación; la zanja se lee como 'rodear ahora, saltar después'. La fila de huecos del Puzzle se ve desde la puerta y no hay forma de caer al entrar. El salto (alto 0,68, velocidad 4, control en el aire 2, en player/states/jumping.gd) se siente bien y la sombra deja calcular dónde cae. Risco: el abismo de 4 m se lee como 'solo flechas'.
-- [ ] Pluma en el overworld (11.61)
+- [x] Pluma en el overworld (11.61)
   La pieza de corazón arriba del escalón de la pradera se ve como cebo antes de tener la pluma. La grieta entre la entrada del templo y el Risco se lee como paso saltable desde los dos lados (se ve un hueco oscuro entre los acantilados); caer devuelve del lado del templo.
+
+**Notas:** Playtest del 2026-10-12 (Daniel): hallazgos en 11.90–11.107, 7.9 (zonas inaccesibles) y 14.9 (pantalla de carga); co-op aparte en 13.15. Quedan sin probar rendimiento, controles y pestaña Sistema, fin de la demo y nodos en escena.
 
 **Relacionadas:** 10.18 Idiomas: inglés y español; 11.45 Tutorial de controles y mini puzzle por ítem; 11.44 Levantar y tirar objetos; 11.53 Agujero de la cámara solo donde tiene sentido; 11.37 Minimapa en el HUD; 11.51 Pared agrietada que se integre al muro; 11.52 Zonas tapadas hasta abrirlas; 11.43 Bombas: tocar coloca, mantener apunta y tira; 11.33 Combate: sacar lo tosco; 11.49 VFX de combate; 11.25 Nuevos enemigos con los modelos existentes; 11.41 Esqueleto con escudo: bloquear con el escudo delante; 11.42 Arco que se tensa; 11.48 Pose de item get; 11.3 Decorar las salas del templo; 11.4 Decorar el overworld; 11.47 Manos del jefe animadas (shape keys); 13.1 Código listo para varios players; 13.2 Input por jugador y unirse a la partida; 10.9 Build para playtesters; 10.8 Pasada de rendimiento; 10.23 Tests en paralelo; 13.3 Cámara y salas para dos; 13.5 HUD de dos jugadores; 10.29 Pantalla de controles; 13.6 Player 2 con su color; 10.24 Tope de FPS; 11.58 Los enemigos muertos desaparecen después de un rato; 11.54 El velo de zona tapa también las paredes que la rodean; 10.25 Sombras del sol acordes a la cámara cenital; 10.26 Paredes del GridMap más livianas; 10.19 Fin de la demo; 13.4 Reglas del co-op; 13.9 Anillo de ítems por player
 
@@ -2534,7 +2531,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (25/85)
+## M11 — Pulido: contenido y feel  (45/103)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -2564,9 +2561,9 @@ Armar un kit del templo con piezas KayKit que reemplace al kit gris: mismos íte
 
 **Notas:** Paredes con wall_half estiradas a 3.1 m de alto; columna pillar escalada. El overworld sigue con el kit gris. Las esquinas entre la columna y la pared dejan ver el vacío (rojo con el doom); se puede tapar en 11.3.
 
-### 11.3 Decorar las salas del templo · Revisión
+### 11.3 Decorar las salas del templo · Hecho
 
-**Prioridad:** alta · **Etiquetas:** `arte`
+**Terminada:** 2026-10-12 · **Prioridad:** alta · **Etiquetas:** `arte`
 
 Decorar las 9 salas del templo con estandartes, braseros, escombros y venas del doom, para que se vean habitadas y distintas y la ruina crezca hacia el jefe, sin tapar el camino ni lo jugable.
 
@@ -2583,9 +2580,9 @@ Decorar las 9 salas del templo con estandartes, braseros, escombros y venas del 
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión); 12.7 Kit del templo propio
 
-### 11.4 Decorar el overworld · Revisión
+### 11.4 Decorar el overworld · Hecho
 
-**Prioridad:** alta · **Etiquetas:** `arte`
+**Terminada:** 2026-10-12 · **Prioridad:** alta · **Etiquetas:** `arte`
 
 Decorar cada zona del overworld con piezas propias de su ambiente y enmarcar la entrada del templo con su fachada, para que cada zona se reconozca sin su nombre y deje de verse vacía.
 
@@ -2886,9 +2883,9 @@ Sumar 4 a 6 secretos chicos al overworld (cuevitas con cofre, pasto que esconde 
 
 **Prueba:** Cada secreto se encuentra con las herramientas que el player tiene en ese momento y queda resuelto al cargar.
 
-### 11.25 Nuevos enemigos con los modelos existentes · Revisión
+### 11.25 Nuevos enemigos con los modelos existentes · Hecho
 
-**Prioridad:** media · **Etiquetas:** `enemigos`, `ia`
+**Terminada:** 2026-10-12 · **Prioridad:** media · **Etiquetas:** `enemigos`, `ia`
 
 Enemigos nuevos con los modelos que ya hay: un arquero chullpa, esqueletos que disparen flechas y uno con punto débil, cada uno con telegraph legible y una contra clara.
 
@@ -2996,9 +2993,9 @@ Un modo extra que se desbloquea al terminar el juego, difícil (más daño, meno
 
 **Prueba:** Tras los créditos aparece la opción; una partida en ese modo cambia lo prometido.
 
-### 11.33 Combate: sacar lo tosco · Revisión
+### 11.33 Combate: sacar lo tosco · Hecho
 
-**Prioridad:** alta · **Etiquetas:** `combate`
+**Terminada:** 2026-10-12 · **Prioridad:** alta · **Etiquetas:** `combate`
 
 Skills: `disciplines:game-feel`, `disciplines:input-systems`, `godot:godot-animation`.
 
@@ -3052,9 +3049,9 @@ Técnicas de espada al estilo Minish Cap y Wind Waker: combo de 3 golpes, giro c
 
 **Relacionadas:** 11.22 Tablillas de historia; 11.35 Saltar: ítem tipo Pluma de Roc
 
-### 11.35 Saltar: ítem tipo Pluma de Roc · Revisión
+### 11.35 Saltar: ítem tipo Pluma de Roc · Hecho
 
-**Prioridad:** media · **Etiquetas:** `combate`, `movimiento`
+**Terminada:** 2026-10-12 · **Prioridad:** media · **Etiquetas:** `combate`, `movimiento`
 
 Saltar con un ítem tipo Pluma de Roc (nada de salto libre), para que el gating por saltos empiece al conseguirlo: huecos de un tile, andenes bajos y esquivar ondas de choque del jefe.
 
@@ -3104,9 +3101,9 @@ El mapa de la pausa es hoy una foto fija con el marcador. Que dé más informaci
 
 **Relacionadas:** 11.37 Minimapa en el HUD
 
-### 11.37 Minimapa en el HUD · Revisión
+### 11.37 Minimapa en el HUD · Hecho
 
-**Prioridad:** media · **Etiquetas:** `ui`
+**Terminada:** 2026-10-12 · **Prioridad:** media · **Etiquetas:** `ui`
 
 Un minimapa chico en el HUD que muestre las salas alrededor en la mazmorra y el entorno del player en el overworld, con los mismos datos que la pestaña Mapa y que se pueda apagar.
 
@@ -3155,9 +3152,9 @@ Pedido por Daniel el 2026-10-10.
 
 **Notas:** Decidido: agujero contra paredes, silueta contra objetos; en el borde del mundo, silueta (el agujero mostraba el vacío). Uniform global player_hole desde TopDownCamera; player_hole.gdshaderinc en cutaway.gdshader y epiphany_wall.gdshader; variantes 'borde' del kit del overworld que OverworldMap pone al cargar.
 
-### 11.41 Esqueleto con escudo: bloquear con el escudo delante · Revisión
+### 11.41 Esqueleto con escudo: bloquear con el escudo delante · Hecho
 
-**Prioridad:** alta · **Etiquetas:** `combate`, `enemigos`
+**Terminada:** 2026-10-12 · **Prioridad:** alta · **Etiquetas:** `combate`, `enemigos`
 
 El esqueleto con escudo tiene que bloquear con el escudo de verdad delante, en la misma pose que el player, y solo cuando lo tiene levantado mirando al player; que el bloqueo se lea con chispa, sonido y retroceso.
 
@@ -3170,9 +3167,9 @@ El esqueleto con escudo tiene que bloquear con el escudo de verdad delante, en l
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 11.42 Arco que se tensa · Revisión
+### 11.42 Arco que se tensa · Hecho
 
-**Prioridad:** media · **Etiquetas:** `items`, `arte`
+**Terminada:** 2026-10-12 · **Prioridad:** media · **Etiquetas:** `items`, `arte`
 
 Que el arco se tense mientras se mantiene el disparo: la cuerda se estira hacia la mano, las palas se doblan y la flecha queda en la cuerda; al soltar vuelve de golpe.
 
@@ -3184,9 +3181,9 @@ Que el arco se tense mientras se mantiene el disparo: la cuerda se estira hacia 
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 11.43 Bombas: tocar coloca, mantener apunta y tira · Revisión
+### 11.43 Bombas: tocar coloca, mantener apunta y tira · Hecho
 
-**Prioridad:** media · **Etiquetas:** `items`
+**Terminada:** 2026-10-12 · **Prioridad:** media · **Etiquetas:** `items`
 
 Bombas con dos usos: tocar el botón la coloca a los pies como ahora y mantenerlo la levanta y apunta como el arco, para tirarla en parábola al soltar.
 
@@ -3198,9 +3195,9 @@ Bombas con dos usos: tocar el botón la coloca a los pies como ahora y mantenerl
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 11.44 Levantar y tirar objetos · Revisión
+### 11.44 Levantar y tirar objetos · Hecho
 
-**Prioridad:** alta · **Etiquetas:** `items`, `interaccion`
+**Terminada:** 2026-10-12 · **Prioridad:** alta · **Etiquetas:** `items`, `interaccion`
 
 Levantar y tirar objetos (vasijas, piedras, arbustos): se cargan caminando más lento y al tirarlos rompen y dañan enemigos; habilita puzzles como piedra sobre placa de presión.
 
@@ -3215,9 +3212,9 @@ Levantar y tirar objetos (vasijas, piedras, arbustos): se cargan caminando más 
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 11.45 Tutorial de controles y mini puzzle por ítem · Revisión
+### 11.45 Tutorial de controles y mini puzzle por ítem · Hecho
 
-**Prioridad:** alta · **Etiquetas:** `ui`, `puzzles`
+**Terminada:** 2026-10-12 · **Prioridad:** alta · **Etiquetas:** `ui`, `puzzles`
 
 Enseñar los controles al empezar con tablitas en el claro del inicio y un mini puzzle al conseguir cada ítem, con los íconos de botón del dispositivo actual.
 
@@ -3258,9 +3255,9 @@ Game juice para el jefe: cuerpo y ojo que reaccionan, anticipación y peso en la
 
 **Relacionadas:** 11.47 Manos del jefe animadas (shape keys); 11.50 Audio del jefe
 
-### 11.47 Manos del jefe animadas (shape keys) · Revisión
+### 11.47 Manos del jefe animadas (shape keys) · Hecho
 
-**Prioridad:** media · **Etiquetas:** `jefe`, `arte`
+**Terminada:** 2026-10-12 · **Prioridad:** media · **Etiquetas:** `jefe`, `arte`
 
 Las manos del jefe alternan mallas sueltas (abierta, puño, garra). Hacer una malla por mano con shape keys, para que los dedos se cierren y abran de forma continua y las manos tengan gestos propios.
 
@@ -3281,9 +3278,9 @@ Las manos del jefe alternan mallas sueltas (abierta, puño, garra). Hacer una ma
 
 **Relacionadas:** 11.46 Jefe: game juice; 10.28 Playtest de revisión (lo que está en Revisión); 12.8 Personajes propios; 12.11 Migrar los .blend al pipeline glb
 
-### 11.48 Pose de item get · Revisión
+### 11.48 Pose de item get · Hecho
 
-**Prioridad:** media · **Etiquetas:** `personajes`, `feel`
+**Terminada:** 2026-10-12 · **Prioridad:** media · **Etiquetas:** `personajes`, `feel`
 
 Pose de item get: el player levanta el ítem con las dos manos y se ve el objeto arriba con un destello mientras está la caja.
 
@@ -3298,9 +3295,9 @@ Pose de item get: el player levanta el ítem con las dos manos y se ve el objeto
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 11.49 VFX de combate · Revisión
+### 11.49 VFX de combate · Hecho
 
-**Prioridad:** media · **Etiquetas:** `feel`, `combate`
+**Terminada:** 2026-10-12 · **Prioridad:** media · **Etiquetas:** `feel`, `combate`
 
 VFX de combate en el estilo del juego: estela de la espada y partículas low poly con la paleta para chispas, polvo al rodar, flechas y bombas, sin bajar los FPS.
 
@@ -3336,9 +3333,9 @@ Audio propio para el jefe: voz mecánica, chirridos, carga del orbe y golpes con
 
 **Relacionadas:** 11.46 Jefe: game juice
 
-### 11.51 Pared agrietada que se integre al muro · Revisión
+### 11.51 Pared agrietada que se integre al muro · Hecho
 
-**Prioridad:** media · **Etiquetas:** `arte`
+**Terminada:** 2026-10-12 · **Prioridad:** media · **Etiquetas:** `arte`
 
 Feedback de playtest (overworld, cueva de las bombas): la pared agrietada se delata sola. Es más fina que el muro y deja ver lo que tapa, y es piedra gris en un entorno marrón/pasto. Tiene que leerse como 'pared agrietada' por las grietas, no por el tamaño ni el color. Ver src/world/cracked_wall.tscn y su instancia en levels/overworld.tscn.
 
@@ -3355,9 +3352,9 @@ Feedback de playtest (overworld, cueva de las bombas): la pared agrietada se del
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 11.52 Zonas tapadas hasta abrirlas · Revisión
+### 11.52 Zonas tapadas hasta abrirlas · Hecho
 
-**Prioridad:** media · **Etiquetas:** `mundo`
+**Terminada:** 2026-10-12 · **Prioridad:** media · **Etiquetas:** `mundo`
 
 Feedback de playtest: en el overworld se ve lo que hay detrás de una pared rompible o puerta que todavía no se abrió, sin haber estado nunca ahí. Un velo de tinta (ZoneVeil, hijo de la AreaZone) tapa la zona mientras no se visitó y sus bloqueos siguen cerrados; al romper/abrir uno se disuelve con dither desde ahí, sin frenar al jugador. El minimapa no descubre lo tapado. Rejas no: dejar ver el cofre es el anzuelo.
 
@@ -3374,25 +3371,25 @@ Feedback de playtest: en el overworld se ve lo que hay detrás de una pared romp
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 11.53 Agujero de la cámara solo donde tiene sentido · Revisión
+### 11.53 Agujero de la cámara solo donde tiene sentido · Hecho
 
-**Prioridad:** media · **Etiquetas:** `camara`
+**Terminada:** 2026-10-12 · **Prioridad:** media · **Etiquetas:** `camara`
 
 Feedback de playtest: el agujero con dither alrededor del player se recorta en el follaje de los árboles al pasar por un sendero angosto del overworld, y ahí no tiene sentido. Revisar en qué materiales se aplica (player_hole.gdshaderinc) y limitarlo a paredes/acantilados que realmente tapan al player.
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 11.54 El velo de zona tapa también las paredes que la rodean · Revisión
+### 11.54 El velo de zona tapa también las paredes que la rodean · Hecho
 
-**Prioridad:** media · **Etiquetas:** `camara`, `overworld`
+**Terminada:** 2026-10-12 · **Prioridad:** media · **Etiquetas:** `camara`, `overworld`
 
 Feedback de playtest (seguimiento de 11.52): con la gruta tapada se ve el borde de la pared de la sala contigua, la tapa de pasto del muro entre el claro del inicio y la gruta queda entre el velo negro y el sendero, y más abajo una franja ancha de pasto sobre el acantilado sur. El velo debería llegar hasta la cara de la pared que da al lado del jugador, para que del otro lado de la pared no se vea nada.
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 11.58 Los enemigos muertos desaparecen después de un rato · Revisión
+### 11.58 Los enemigos muertos desaparecen después de un rato · Hecho
 
-**Prioridad:** media · **Etiquetas:** `combate`, `feel`
+**Terminada:** 2026-10-12 · **Prioridad:** media · **Etiquetas:** `combate`, `feel`
 
 Feedback de playtest: hoy el cuerpo queda en el piso para siempre (Enemy.on_death_finished solo lo pasa a la capa de muertos y suelta el drop). Después de unos segundos tiene que irse con un efecto acorde (hundirse/desvanecerse con dither o deshacerse en polvo), sin llevarse el drop y sin romper lo que dependa de 'defeated' (salas que abren al limpiar, jefe).
 
@@ -3444,9 +3441,9 @@ Segunda mazmorra con pisos (y quizás sótanos) apilados en la misma escena, en 
 
 **Relacionadas:** 11.30 Ítem post-MVP: gancho o telequinesis
 
-### 11.61 Pluma en el overworld: lugares de salto · Revisión
+### 11.61 Pluma en el overworld: lugares de salto · Hecho
 
-**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `movimiento`, `nivel`
+**Terminada:** 2026-10-12 · **Prioridad:** media · **Tamaño:** M · **Etiquetas:** `movimiento`, `nivel`
 
 El overworld es el hub: la pluma (11.35, templo) tiene que abrir ahí cosas y caminos nuevos. 2–3 lugares que solo se alcanzan saltando (huecos de una baldosa, escalón de 0,6 m), sobre el terreno que elija 12.14.
 
@@ -4017,6 +4014,217 @@ La cámara de juego (505 líneas) y target_indicator están en src/tools/ junto 
 
 **Archivos:** `export_presets.cfg`, `project.godot`
 
+### 11.90 Diseño de mazmorras, ítems y su reparto en el overworld · Pendiente
+
+**Prioridad:** alta · **Tamaño:** L · **Etiquetas:** `diseno`, `nivel`
+
+Playtest del 2026-10-12: la primera mazmorra ya tiene varios softblocks, y la pluma está en D1 cuando debería ser de D2 (si no se mira el mapa, su sala pasa desapercibida). D1 tiene el arco como su ítem. Rediseñar qué ítem da cada mazmorra, cómo se enseña y prueba dentro de ella, y dónde gatea el overworld, respetando que un ítem de la mazmorra N no gatea nada de las anteriores.
+
+- [ ] Softblocks de D1
+  Recorrer la Chullpa y el templo de punta a punta y listar cada lugar donde se puede trabar la partida (llave gastada, salida sin vuelta, ítem que falta).
+- [ ] Ítem por mazmorra
+  D1 = arco. Pluma a D2. Proponer D3 y D4 (gancho, 11.30) y qué enseña cada una.
+- [ ] Mudar la pluma a D2
+  Sacar la sala de la pluma y el puzzle de huecos de D1; la pieza de corazón de la pradera y los angostos de la quebrada quedan para después de D2 (o cambian de cruce).
+- [ ] Armadura del esqueleto
+  Con la bomba cuesta mucho sacarla: que sea trabajo del gancho, sin quitarle el efecto a la bomba.
+- [ ] Reparto en el overworld
+  Qué gatea cada ítem en el overworld (layout D, GDD §7.1) y en qué orden se abre.
+- [ ] GDD §6 y §7 al día
+
+**Notas:** Sesión: overworld (-74), con Daniel. Toca 11.35/11.61 (pluma en D1 y en el overworld), los angostos de la quebrada (7.9, pensados como cruce con pluma), 11.30 (gancho) y la armadura del esqueleto.
+
+### 11.91 Puzzle del claro: la reja se abre con solo pisar las placas · Pendiente
+
+**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`, `puzzle`
+
+En el overworld, la pantalla a la derecha del spawn tiene un mini puzzle de dos placas y bloques para abrir la reja del cofre. Pisar las placas alcanza para abrirla: tienen que mantenerla abierta los bloques, no el player.
+
+- [ ] Las placas abren solo con peso que se queda
+- [ ] Test
+
+**Notas:** Sesión: auditoría (-04).
+
+### 11.92 Agarrar un cuarto de corazón cura · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `items`
+
+Playtest 2026-10-12: tomar una pieza de corazón no cura. Que cure (a quien la toma, como el corazón en co-op), y al completar el contenedor que llene como ya hace.
+
+- [ ] Curar al tomar la pieza
+- [ ] Test
+
+**Notas:** Sesión: auditoría (-04).
+
+### 11.93 Jefe: aflojar la fase 3 y el modelo que se hunde · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `jefe`, `bug`
+
+Playtest 2026-10-12: el jefe anda bien en general; la tercera fase es demasiado dura y el modelo suele hundirse en el piso.
+
+- [ ] Nerf de la fase 3
+  Menos daño, ventanas más largas o menos ataques encadenados; a ojo con Daniel.
+- [ ] Que no se hunda en el piso
+
+**Notas:** Sesión: auditoría (-04).
+
+### 11.94 Arquero: dispara sin frenarse a buscar distancia · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `enemigos`, `ia`
+
+Playtest 2026-10-12: el arquero corta su ataque para reacomodarse a distancia de rango. No hace falta: que dispare y se reacomode sin cancelar el ataque.
+
+- [ ] BT del arquero
+- [ ] Test
+
+**Notas:** Sesión: auditoría (-04).
+
+### 11.95 Botellas únicas: 4 en total, cualquier contenido · Pendiente
+
+**Prioridad:** alta · **Tamaño:** M · **Etiquetas:** `items`, `bug`
+
+Las botellas no son un consumible apilable: son 4 en todo el juego, cada una un ítem propio que puede tener cualquier contenido. Bug visible: dos botellas con el mismo contenido cuentan como una sola.
+
+- [ ] Modelo de datos
+  Cuatro ranuras de botella con su contenido, no un stack por contenido.
+- [ ] Llenar, vaciar y usar
+- [ ] UI de Ítems y save (con migración)
+- [ ] Tests
+
+**Notas:** Sesión: auditoría (-04). Toca inventario, save (migración de partidas viejas) y la UI de Ítems.
+
+### 11.96 Todo el estado del player es global durante la partida · Pendiente
+
+**Prioridad:** alta · **Tamaño:** M · **Etiquetas:** `guardado`, `bug`
+
+Playtest 2026-10-12: el estado del player tiene que ser global toda la partida y no reiniciar valores al cargar una escena. 11.79 resolvió la vida; revisar el resto de lo que el player arma en _ready o el nivel reinicia al cargar.
+
+- [ ] Inventario de lo que se reinicia al cambiar de escena
+- [ ] Pasarlo a GameState
+- [ ] Tests de viaje ida y vuelta
+
+**Notas:** Sesión: auditoría (-04). Sigue a 11.79.
+
+### 11.97 Mazmorra: solo está activa la sala del player · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `mazmorra`, `rendimiento`
+
+Hoy todo lo de la mazmorra corre a la vez: por ejemplo la línea de pinchos está activa aunque el player esté en otra sala. Las trampas, enemigos y efectos solo procesan en las salas con algún player (y se reinician o pausan al salir).
+
+- [ ] Activar y dormir por sala
+- [ ] Trampas y enemigos lo respetan
+- [ ] Tests
+
+**Notas:** Sesión: auditoría (-04). Con varios players: activa toda sala con alguno adentro.
+
+### 11.98 La cámara muestra lo que se desbloquea · Pendiente
+
+**Prioridad:** alta · **Tamaño:** M · **Etiquetas:** `camara`, `feel`
+
+Siempre que algo se desbloquea por una acción (puzzle resuelto, horda eliminada, interruptores activados) la cámara va a mostrar qué se abrió y vuelve, como en Zelda.
+
+- [ ] Toma de cámara reutilizable
+  Un nodo en la escena que apunta a lo que se abre; el juego se congela mientras dura.
+- [ ] Puzzles, oleadas e interruptores la usan
+- [ ] Tests
+
+**Notas:** Sesión: overworld (-74).
+
+### 11.99 Torres de D1: cambio visual al activarse · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `mazmorra`, `arte`
+
+Las torres que se activan al reflejarles el ataque de la torreta en D1 no cambian a la vista cuando quedan activas.
+
+- [ ] Estado activo visible (luz, emisión, sonido)
+
+**Notas:** Sesión: arte (-77).
+
+### 11.100 Qué se puede levantar se tiene que entender · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `arte`, `ui`
+
+Playtest 2026-10-12: levantar y tirar funciona, pero no se entiende qué objeto se puede levantar y cuál no.
+
+- [ ] Lenguaje visual de lo levantable
+  Material, forma o marca consistente; prompt al acercarse.
+
+**Notas:** Sesión: arte (-77).
+
+### 11.101 Zonas tapadas sin cuadrados sin explorar · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `ui`, `arte`
+
+Playtest 2026-10-12: las zonas tapadas (11.52, 11.54) no deberían verse como un cuadrado sin explorar, ni en el minimapa ni en el overworld.
+
+- [ ] Overworld
+- [ ] Minimapa y mapa
+
+**Notas:** Sesión: arte (-77) el overworld; overworld (-74) el minimapa.
+
+### 11.102 Mapa: nombres de zona chicos y solo los que importan · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `ui`
+
+Playtest 2026-10-12: los nombres de zona en el mapa son muy grandes y no hace falta que cada área tenga nombre.
+
+- [ ] Mockup
+- [ ] Tamaño y qué zonas llevan nombre
+
+**Notas:** Sesión: overworld (-74). Ajustar el mockup del canvas primero.
+
+### 11.103 El minimapa se transparenta con el player debajo · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `ui`
+
+Cuando el player está debajo del minimapa en pantalla, el minimapa se transparenta para no taparlo.
+
+- [ ] Transparencia según la posición en pantalla
+- [ ] Test
+
+**Notas:** Sesión: overworld (-74). Con varios players: cualquiera de ellos.
+
+### 11.104 Ítems de la mazmorra en la pantalla del mapa · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `ui`, `mazmorra`
+
+Los ítems conseguidos en la mazmorra (mapa, brújula, llave del jefe, llaves chicas) se ven en la pantalla del mapa.
+
+- [ ] Mockup
+- [ ] Pestaña Mapa
+
+**Notas:** Sesión: overworld (-74). Mockup primero.
+
+### 11.105 Repensar el tutorial · Pendiente
+
+**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `diseno`, `ui`
+
+Playtest 2026-10-12: las tablitas del claro (11.45) funcionan, pero no son la mejor forma de enseñar los controles. Buscar otra.
+
+- [ ] Propuesta
+
+**Notas:** Con 11.90 (cada mazmorra enseña su ítem).
+
+### 11.106 Intro al día con el overworld nuevo · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `camara`
+
+La intro (10.20) funciona, pero sus planos son del overworld viejo. Rehacer los planos sobre el layout D.
+
+- [ ] Planos nuevos
+
+**Notas:** Sesión: overworld (-74), después de 7.9 paso 4. Junto con 10.30.
+
+### 11.107 Mejorar la ambientación · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `arte`, `audio`
+
+Playtest 2026-10-12: hay que mejorar la ambientación del overworld y las mazmorras: luz, niebla, partículas, sonido ambiente.
+
+- [ ] Qué falta por zona (con Daniel)
+
+**Notas:** Sesión: arte (-77). Definir con Daniel qué falta en cada zona.
+
 ## M12 — Assets propios (Blender)  (6/17)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
@@ -4433,7 +4641,7 @@ Cada mazmorra con su propio estilo sobre el mismo kit (mismas piezas y colisione
 - [x] Estilo del terreno del overworld por región
   AreaZone.terrain_style (necropolis, laguna, cumbre, explanada, cardonal, quebrada); el build pinta suelo, riscos y abismo por región con borde ondulado y cambia la decoración. Puestos en overworld.tscn: Templo explanada, Quebrada, Necrópolis + Mirador, Cumbre + Risco, Laguna + Bañado, Cardonal. Falta que el usuario lo vea.
 
-## M13 — Co-op local (estilo Four Swords)  (0/14)
+## M13 — Co-op local (estilo Four Swords)  (0/15)
 
 Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con progreso compartido y puzzles que aprovechan a los dos.
 
@@ -4749,6 +4957,25 @@ En el menú de ítems compartido, el `_input` del invitado solo se traga `ui_acc
 
 **Relacionadas:** 14.1 Arquitectura de red
 
+### 13.15 Playtest de co-op · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `playtest`, `coop`
+
+Los pasos de co-op del playtest de revisión (10.28), aparte: hacen falta dos controles. Al confirmar un paso, la tarea vinculada pasa a Hecho.
+
+- [ ] Co-op (13.1, 13.2)
+  Dos controles: Start en el segundo suma al P2 sin pausar, cada uno mueve el suyo; mantener Start 1,5 s lo saca.
+- [ ] Co-op: cámara y salas (13.3)
+  Dos controles en el templo: la cámara mira a los dos y no los deja separarse más que la pantalla; al cruzar uno una puerta, el otro aparece a su lado y entran juntos; overworld ↔ templo llegan juntos.
+- [ ] Co-op: HUD de dos (13.5)
+  Con dos controles: P1 arriba a la izquierda y P2 a la derecha, cada uno con sus corazones, sus X/Y con los botones de su control y su prompt; en mazmorra las llaves al medio; al salir el P2 vuelve el HUD de uno.
+- [ ] Co-op: reglas (13.4)
+  Con dos controles: que caiga uno; queda un espíritu que te sigue; parate encima un segundo y revive con un corazón (o cruzá a otra sala). Si caen los dos, game over. En la pestaña Ítems, con el control del P2, asigná X/Y: cambian solo los suyos. Un corazón cura solo al que lo agarra.
+- [ ] Co-op: elegir ítems (13.9)
+  Solo: mantené LB (o F): el mundo casi se frena, elegí con el stick y poné con X/Y; al soltar sigue. Co-op: cada uno abre su anillo sin pausar; lo que lleva el otro se ve apagado con su etiqueta. Tecla 5: pasa al menú compartido; en Ítems el P2 mueve su cursor con su control y asigna con X/Y. Decidí cuál queda.
+- [ ] Co-op: colores (13.6)
+  Con dos controles: el P2 tiene otra tela y otro neón, también con la cota reforzada; los dos se distinguen de un vistazo.
+
 ## M14 — Co-op online  (0/13)
 
 Llevar el co-op local a la red: host autoritativo, dos jugadores en distintas máquinas, con el combate igual de preciso.
@@ -4775,7 +5002,7 @@ Decidir la arquitectura de red del co-op online (host autoritativo con ENet y St
 
 **Bloquea a:** 14.2 Players en red; 14.3 Mundo sincronizado; 14.4 Combate en red; 14.5 Lobby y conexión; 14.6 Guardado en co-op; 14.7 Modo arena: hasta 8 jugadores peleando entre sí
 
-**Relacionadas:** 13.14 Las salas las decide un nodo del mundo, no la cámara; 14.8 Escena raíz de gameplay que persiste entre niveles; 14.9 Separar el flujo de escenas de SaveManager; 14.10 El gameplay emite intenciones y la UI escucha; 14.12 Identidad del player independiente del pad; 14.13 Frame de input por tick en Controls
+**Relacionadas:** 13.14 Las salas las decide un nodo del mundo, no la cámara; 14.8 Escena raíz de gameplay que persiste entre niveles; 14.9 SceneFlow: flujo de escenas aparte de SaveManager y pantalla de carga; 14.10 El gameplay emite intenciones y la UI escucha; 14.12 Identidad del player independiente del pad; 14.13 Frame de input por tick en Controls
 
 ### 14.2 Players en red · Pendiente
 
@@ -4901,15 +5128,17 @@ Cada nivel trae su Player, cámara y HUD; P1 viene instanciado en el .tscn y los
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-### 14.9 Separar el flujo de escenas de SaveManager · Pendiente
+### 14.9 SceneFlow: flujo de escenas aparte de SaveManager y pantalla de carga · Pendiente
 
-**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `online`, `arquitectura`
+**Prioridad:** alta · **Tamaño:** M · **Etiquetas:** `online`, `arquitectura`
 
 SaveManager además de slots y codec hace `travel_to`, `respawn`, `new_game` (con intro), `quit_to_title`, `with_fade`, ubicar players, `location()` y escenarios de debug. Es el autoload que en M14 tiene que pasar a 'el servidor decide el cambio de escena', y está mezclado con archivos.
 
 - [ ] Autoload SceneFlow
   Viaje, respawn, partida nueva, salir, ubicar players y fades (Fader puede integrarse para no sumar autoloads).
 - [ ] SaveManager: slots y capturar/aplicar
+- [ ] Pantalla de carga
+  Playtest 2026-10-12: un sistema mejor de carga de niveles, con pantalla de carga (carga en hilo con ResourceLoader.load_threaded_request y progreso). Mockup en el canvas primero.
 
 **Prueba:** SaveManager solo guarda/carga; los tests de viaje y respawn pasan contra SceneFlow.
 
