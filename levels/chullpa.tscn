@@ -475,6 +475,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.2, 33.4)
 script = ExtResource("37_q5kf3")
 target_scene = "res://levels/overworld.tscn"
 target_spawn = &"chullpa"
+destination = "PLACE_NECROPOLIS"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPortal" unique_id=2025180320]
 shape = SubResource("BoxShape3D_h8srf")
