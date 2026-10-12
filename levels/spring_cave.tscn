@@ -280,6 +280,8 @@ target_node = NodePath("../Player")
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 12.4, 1.2, 0)
 script = ExtResource("7_portal")
 target_scene = "res://levels/overworld.tscn"
+destination_kind = "LOADING_REGION"
+destination = "PLACE_FIRST_CLEARING"
 target_spawn = &"vertiente"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPortal" unique_id=371585823]

@@ -352,6 +352,9 @@ msgstr "{done} de {total} portales"
 msgid "LOADING"
 msgstr "Cargando"
 
+msgid "LOADING_REGION"
+msgstr "Región"
+
 msgid "LOADING_DUNGEON"
 msgstr "Mazmorra"
 

@@ -352,6 +352,9 @@ msgstr "{done} of {total} portals"
 msgid "LOADING"
 msgstr "Loading"
 
+msgid "LOADING_REGION"
+msgstr "Region"
+
 msgid "LOADING_DUNGEON"
 msgstr "Dungeon"
 
