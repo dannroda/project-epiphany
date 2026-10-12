@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/escalinata_medio.res" id="1_mesh"]
+
+[sub_resource type="BoxShape3D" id="Ramp"]
+size = Vector3(2, 0.2, 4.7707)
+
+[node name="EscalinataMedio" type="StaticBody3D"]
+
+[node name="Model" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_mesh")
+
+[node name="Ramp" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.8384, -0.545, 0, 0.545, 0.8384, 0, 1.2162, -1.0545)
+shape = SubResource("Ramp")

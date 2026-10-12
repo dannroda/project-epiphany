@@ -595,5 +595,107 @@ piece("cristales_cueva", 32, cristales_cueva)
 piece("rocas_rincon", 33, rocas_rincon)
 piece("estalactitas_borde", 34, estalactitas_borde)
 
+
+# --- terrazas: escalinata metida en la meseta (sube TOP en 2 celdas hacia +Y) y alero del salto de una vía ---
+
+STEPS = 13
+WALL = 0.22
+
+
+def escalinata(walls):
+	"""Origen en el centro de la celda de abajo, pie en z 0 al ras de la cara del risco; walls: lados (-1 oeste, 1 este) con muro."""
+	def make(p):
+		run = 4.0 / STEPS
+		rise = TOP / STEPS
+		x0 = -1.0 + (WALL if -1 in walls else 0.0)
+		x1 = 1.0 - (WALL if 1 in walls else 0.0)
+		treads = []
+		for i in range(STEPS):
+			y = -1.0 + i * run
+			top = (i + 1) * rise
+			joint = 0.0 if i % 2 else 0.5 * (1 if i % 4 == 0 else -1)
+			for a, b in ((x0, joint), (joint, x1)):
+				if b - a > 0.05:
+					slab = p.box(a + 0.008, b - 0.008, y + 0.005, y + run + 0.02, top - rise - 0.12, top, taper=0.01)
+					p.jitter(slab, 0.01, keep_z=True)
+					treads += slab
+		p.paint([f for f in treads if f.normal.z > 0.5], "piedra", "LIGHT", vary=0.1)
+		p.paint([f for f in treads if f.normal.z <= 0.5], "piedra", "LOW", vary=0.1)
+		for side in walls:
+			cheek(p, side)
+	return make
+
+
+def cheek(p, side):
+	inner = side * (1.0 - WALL)
+	outer = side * 1.0
+	core = p.box(min(inner, outer), max(inner, outer), -1.0, 3.0, 0.0, TOP)
+	p.paint(core, "acantilado", "DARK")
+	facing = Vector((-side, 0, 0))
+	stones = []
+	z = 0.0
+	while z < TOP - 0.12:
+		h = min(TOP - z, 0.3 + p.rng.random() * 0.2)
+		if TOP - (z + h) < 0.2:
+			h = TOP - z
+		y = -1.0
+		while y < 2.9:
+			w = min(3.0 - y, 0.4 + p.rng.random() * 0.4)
+			if 3.0 - (y + w) < 0.25:
+				w = 3.0 - y
+			if z + h > TOP * (y + w + 1.0) / 4.0 - 0.05:
+				st = p.stone(Vector((inner, y + w / 2, z + h / 2)), w - 0.035, h - 0.035, 0.06 + p.rng.random() * 0.05, facing, inset=0.03)
+				p.jitter(st, 0.012)
+				stones += st
+			y += w
+		z += h
+	front = []
+	z = 0.0
+	while z < TOP - 0.1:
+		h = min(TOP - z, 0.35 + p.rng.random() * 0.15)
+		front += p.stone(Vector(((inner + outer) / 2, -1.0, z + h / 2)), WALL - 0.03, h - 0.035, 0.07, Vector((0, -1, 0)), inset=0.02)
+		z += h
+	cap = p.box(min(inner, outer) - 0.03, max(inner, outer) + 0.03, -1.08, 3.0, TOP, TOP + 0.08)
+	p.jitter(cap, 0.01)
+	p.paint(stones + front, "acantilado", z_range=(0, TOP), vary=0.12)
+	p.paint(cap, "piedra", "LIGHT")
+
+
+def salto(ends):
+	"""Alero del salto: lajas que sobresalen 0.3 m del borde (y 0) hacia -Y y piedras bajas encima; origen en el borde, z 0 = piso."""
+	def make(p):
+		slabs = []
+		stones = []
+		x = -1.0
+		k = 0
+		while x < 0.99:
+			w = min(1.0 - x, 0.5 + 0.12 * (k % 3))
+			if 1.0 - (x + w) < 0.2:
+				w = 1.0 - x
+			reach = 0.3 + 0.06 * ((k * 7) % 3 - 1)
+			slab = p.box(x + 0.02, x + w - 0.02, -reach, 0.45, -0.24, 0.03 + 0.02 * (k % 2), taper=0.03)
+			p.jitter(slab, 0.015, keep_z=True)
+			slabs += slab
+			x += w
+			k += 1
+		for i in range(5):
+			cx = -0.8 + i * 0.4 + p.rng.uniform(-0.05, 0.05)
+			r = p.rng.uniform(0.17, 0.21)
+			stones += p.blob((cx, 0.15, 0.03), r, squash=(1.1, 0.9, 0.85), subdiv=1, rough=0.2, flat_bottom=0.02)
+		for side in ends:
+			stones += p.blob((side * 0.8, 0.1, 0.03), 0.3, squash=(1.0, 1.0, 1.1), subdiv=1, rough=0.2, flat_bottom=0.02)
+		p.paint(slabs, "piedra", z_range=(-0.3, 0.05), vary=0.1)
+		p.paint(stones, "acantilado", z_range=(0.0, 0.35), vary=0.1)
+	return make
+
+
+piece("escalinata_o", 40, escalinata((-1,)))
+piece("escalinata_medio", 41, escalinata(()))
+piece("escalinata_e", 42, escalinata((1,)))
+piece("escalinata_sola", 43, escalinata((-1, 1)))
+piece("salto_o", 44, salto((-1,)))
+piece("salto_medio", 45, salto(()))
+piece("salto_e", 46, salto((1,)))
+
 epi.layout(kit, columns=7, spacing=3.5)
 epi.publish("lugares", material="outdoor")

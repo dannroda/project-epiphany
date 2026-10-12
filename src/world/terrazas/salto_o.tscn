@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/salto_o.res" id="1_mesh"]
+
+[node name="SaltoO" type="MeshInstance3D"]
+mesh = ExtResource("1_mesh")
