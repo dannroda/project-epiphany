@@ -2538,7 +2538,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (51/107)
+## M11 — Pulido: contenido y feel  (51/108)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4316,8 +4316,17 @@ Playtest 2026-10-12: los cactus, árboles y similares deberían poder cortarse y
 - [x] Escenas Breakable de cada planta y reparto en el overworld
   src/world/plants/*.tscn. Celdas del kit (Árbol, Queñoa chica, Cardón, Cardón brazos) sin malla ni colisión en el kit orgánico; decorate_levels.gd pone la escena en cada celda, en las 553 plantas que el terreno orgánico dejó en el piso jugable (tools/plantas_overworld.json) y en las piezas de planta de la decoración. Arriba de los riscos siguen en la malla. Terreno, kit, decoración y navmesh regenerados. 60 fps en la arboleda. Test test_overworld_plants_are_cut_like_grass. GDD §7.
 - [ ] Probarlo (Daniel): cortar un árbol abre paso, ¿hay alguno que no debería?
-- [ ] Animación al romperse
+- [x] Animación al romperse
   Daniel: que tengan un poco de animación. Breakable.break_style: CUT (pasto y matas: saltan girando y se achican; el ichu deja la mata cortada), FELL (árboles y cardones: caen del lado contrario al golpe, polvo y rebote, se hunden; los árboles dejan tocón). Cuerpo y hurtbox se apagan en el acto. Tests en test_breakables.
+
+### 11.112 Fantasmas al esquivar · Revisión
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `feel`
+
+Daniel 2026-10-12: al dash/esquivar ponerle un efecto similar al trail de la espada, como el ghosting del dash de Mega Man Zero.
+
+- [x] Copias de la pose que se desvanecen
+  DodgeGhosts (player.tscn) congela la pose cada 0,06 s mientras dura el roll; afterimage.tscn + ghost.gdshader (rosa translúcido con borde claro, depth prepass para que se lea la silueta) se desvanece en 0,3 s. Test test_roll_leaves_ghosts_that_fade. GDD §2 (feel).
 
 ## M12 — Assets propios (Blender)  (6/17)
 

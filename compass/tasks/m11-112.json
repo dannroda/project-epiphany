@@ -1,0 +1,29 @@
+{
+  "checklist": [
+    {
+      "detail": "DodgeGhosts (player.tscn) congela la pose cada 0,06 s mientras dura el roll; afterimage.tscn + ghost.gdshader (rosa translúcido con borde claro, depth prepass para que se lea la silueta) se desvanece en 0,3 s. Test test_roll_leaves_ghosts_that_fade. GDD §2 (feel).",
+      "done": true,
+      "text": "Copias de la pose que se desvanecen"
+    },
+    {
+      "done": false,
+      "text": "Probarlo (Daniel): color, cantidad, duración"
+    }
+  ],
+  "code": "11.112",
+  "created_at": "2026-10-12T19:59:14.343Z",
+  "description": "Daniel 2026-10-12: al dash/esquivar ponerle un efecto similar al trail de la espada, como el ghosting del dash de Mega Man Zero.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 109,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "review",
+  "tags": [
+    "feel"
+  ],
+  "test": "",
+  "title": "Fantasmas al esquivar",
+  "updated_at": "2026-10-12T19:59:15.918Z"
+}

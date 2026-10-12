@@ -178,6 +178,24 @@ func test_roll_iframes() -> void:
 	assert_eq(player.health.current, start - 2, "después del roll sí recibe")
 
 
+func test_roll_leaves_ghosts_that_fade() -> void:
+	var setup: Array = await _load_level()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	(setup[2] as Enemy).bt_player.active = false
+	_press(&"dodge")
+	await tree.create_timer(0.2).timeout
+	var ghosts := tree.current_scene.find_children("*", "Afterimage", false, false)
+	assert_true(ghosts.size() >= 2, "rodando deja fantasmas (%d)" % ghosts.size())
+	if ghosts.is_empty():
+		return
+	var ghost := ghosts[0] as Afterimage
+	assert_true(ghost.mesh.get_surface_count() > 0 and ghost.mesh.get_aabb().size.y > 0.5, "con la pose del player")
+	assert_true(ghost.get_instance_shader_parameter(&"fade") < 1.0, "y se van desvaneciendo")
+	await tree.create_timer(0.8).timeout
+	assert_eq(tree.current_scene.find_children("*", "Afterimage", false, false).size(), 0, "hasta irse")
+
+
 func test_roll_cancels_attack() -> void:
 	var setup: Array = await _load_level()
 	var tree: SceneTree = setup[0]

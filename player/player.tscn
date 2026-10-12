@@ -41,6 +41,8 @@
 [ext_resource type="Gradient" path="res://data/materials/sword_trail_fade.tres" id="trail_fade"]
 [ext_resource type="Script" path="res://src/feel/hit_flash.gd" id="hf_hit_flash"]
 [ext_resource type="Script" path="res://player/states/jumping.gd" id="s_jumping"]
+[ext_resource type="Script" path="res://player/components/dodge_ghosts.gd" id="c_dodge_ghosts"]
+[ext_resource type="PackedScene" path="res://src/feel/afterimage.tscn" id="dodge_afterimage"]
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_peicu"]
 fadeout_time = 0.3
@@ -822,6 +824,12 @@ script = ExtResource("c_input_buffer")
 [node name="Aim" type="Node" parent="." unique_id=616678504 node_paths=PackedStringArray("player")]
 script = ExtResource("c_aim")
 player = NodePath("..")
+
+[node name="DodgeGhosts" type="Node" parent="." node_paths=PackedStringArray("model", "skip")]
+script = ExtResource("c_dodge_ghosts")
+model = NodePath("../ModelController")
+ghost_scene = ExtResource("dodge_afterimage")
+skip = [NodePath("../ModelController/BlockCone")]
 
 [node name="Carrier" type="Node" parent="." unique_id=1157206663 node_paths=PackedStringArray("socket", "anim_tree", "hide_while_carrying")]
 script = ExtResource("c_carrier")

@@ -28,6 +28,7 @@ func _enter() -> void:
 	player.anim_tree.set(&"parameters/Dodge/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 	Feel.burst(&"dust", player.global_position + Vector3.UP * 0.1, -_direction)
 	Feel.sfx(&"roll", player.global_position)
+	player.dodge_ghosts.start(duration)
 
 
 func _update(delta: float) -> void:

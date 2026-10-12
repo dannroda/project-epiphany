@@ -1,0 +1,9 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/feel/afterimage.gd" id="1_script"]
+[ext_resource type="Material" path="res://data/materials/dodge_ghost.tres" id="2_material"]
+
+[node name="Afterimage" type="MeshInstance3D"]
+cast_shadow = 0
+material_override = ExtResource("2_material")
+script = ExtResource("1_script")
