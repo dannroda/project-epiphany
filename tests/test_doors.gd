@@ -55,6 +55,31 @@ func test_shutter_closes_until_room_is_cleared() -> void:
 	setup[1].reset()
 
 
+func test_clearing_the_room_shows_its_shutter_opening() -> void:
+	var setup: Array = await _setup()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[2]
+	var level: Node = setup[3]
+	var shutter: Door = level.get_node(^"ShutterAB")
+	var skeleton: Enemy = level.get_node(^"Skeleton")
+	var camera: TopDownCamera = level.get_node(^"TopDownCamera")
+	skeleton.bt_player.active = false
+	await _walk_until(tree, &"move_forward", func() -> bool: return player.global_position.z < -7.5)
+	await tree.create_timer(1.0).timeout
+	TopDownCamera.unlock_reveals = true
+	skeleton.health.damage(999)
+	var until := Time.get_ticks_msec() + 2000
+	while Time.get_ticks_msec() < until and not camera.revealing:
+		await tree.process_frame
+	assert_true(camera.revealing, "al limpiar la sala la cámara muestra la persiana")
+	assert_true(tree.paused, "con el juego en pausa")
+	while camera.revealing:
+		await tree.process_frame
+	assert_eq(shutter.is_open, true, "y se abrió")
+	assert_eq(tree.paused, false)
+	setup[1].reset()
+
+
 func test_locked_door_needs_key_and_stays_open() -> void:
 	var setup: Array = await _setup()
 	var tree: SceneTree = setup[0]

@@ -110,8 +110,15 @@ func test_an_arrow_at_the_eye_raises_the_bridge_to_the_necropolis() -> void:
 	var info := Items.get_item(&"bow").make_damage(player)
 	info.team = EntityConfig.Team.PLAYER
 	var from := Vector3(-8, 1.2, -16)
+	var camera := tree.get_first_node_in_group(&"room_camera") as TopDownCamera
+	TopDownCamera.unlock_reveals = true
 	arrow.launch(from, (eye.eye.global_position - from).normalized() * 20.0, info)
-	await tree.create_timer(1.6).timeout
+	var until := Time.get_ticks_msec() + 3000
+	while Time.get_ticks_msec() < until and not camera.revealing:
+		await tree.process_frame
+	assert_true(camera.revealing and tree.paused, "la cámara muestra el puente subiendo")
+	while camera.revealing:
+		await tree.process_frame
 	assert_eq(bridge.is_up, true, "una flecha desde la Pradera al ojo de la otra orilla sube el puente")
 	assert_eq(state.flags.get(&"ow_ravine_bridge_eye"), true, "y queda guardado")
 	await tree.create_timer(1.6).timeout

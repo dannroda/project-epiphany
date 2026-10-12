@@ -162,6 +162,7 @@ func _run_here(files: PackedStringArray) -> Dictionary:
 			suite.current_test = "%s › %s" % [file.get_basename(), test_name]
 			var before: int = suite.failures.size()
 			suite.assertions = 0
+			load("res://src/tools/top_down_camera.gd").set(&"unlock_reveals", false)
 			await suite.call(test_name)
 			for action in InputMap.get_actions():
 				Input.action_release(action)

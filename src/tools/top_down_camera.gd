@@ -417,6 +417,17 @@ func _hold_together(players: Array[PlayerCharacter]) -> void:
 		player.global_position = now
 
 
+## Los tests la apagan (el runner, antes de cada test) salvo los que prueban el acercamiento.
+static var unlock_reveals := true
+
+## Lo que se destraba por una acción (switches, puzzle, horda) se muestra con `reveal`.
+static func reveal_unlock(target: Node3D, action: Callable) -> void:
+	if unlock_reveals:
+		reveal(target, action)
+	else:
+		action.call()
+
+
 ## Pausa, lleva la cámara a `target`, corre `action` (abrir la puerta…), espera (`hold`, o `reveal_hold` si es
 ## negativo) y vuelve al player. Si no hay cámara o el juego ya está en pausa, solo corre `action`.
 static func reveal(target: Node3D, action: Callable, hold := -1.0) -> void:

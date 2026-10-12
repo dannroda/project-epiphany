@@ -108,8 +108,14 @@ func _physics_process(_delta: float) -> void:
 		return
 	if enemies_inside().is_empty() and not waves_running():
 		locked = false
-		for door: Door in shutters():
-			door.open()
+		var doors := shutters()
+		var open_all := func() -> void:
+			for door: Door in doors:
+				door.open()
+		if doors.is_empty():
+			open_all.call()
+		else:
+			TopDownCamera.reveal_unlock(doors[0], open_all)
 		Feel.sfx(&"secret", global_position)
 
 

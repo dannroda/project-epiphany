@@ -6,6 +6,8 @@ extends StaticBody3D
 @export var condition: Wiring.Condition = Wiring.Condition.ALL
 @export var drop := 3.0
 @export var duration := 0.8
+## La primera vez que lo suben sus interruptores, el juego se pausa y la cámara lo muestra.
+@export var reveal_on_raise := true
 
 var is_up := false
 var _base_y := 0.0
@@ -20,7 +22,9 @@ func _ready() -> void:
 		return
 	_wiring = Wiring.create(self, switches, condition)
 	_wiring.changed.connect(func(satisfied: bool) -> void:
-		if satisfied:
+		if satisfied and reveal_on_raise:
+			TopDownCamera.reveal_unlock(self, raise)
+		elif satisfied:
 			raise())
 	_wiring.settled.connect(func(satisfied: bool) -> void:
 		if satisfied:

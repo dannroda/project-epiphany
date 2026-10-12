@@ -4042,7 +4042,7 @@ Playtest del 2026-10-12: la primera mazmorra ya tiene varios softblocks, y la pl
   Lee las escenas directamente y los grafos llave-cerradura, y falla si algún orden de juego deja al jugador sin salida. Encaja con el paso de alcanzabilidad de 7.9.
 - [ ] D3 y D4 visibles pero bloqueadas
   Primer playtest externo con D1 y D2. D3 y D4 se ven en el overworld pero están cerradas y llegan como actualización: diseñar el bloqueo y el sistema de updates o parches.
-- [ ] GDD §6 y §7 al día
+- [x] GDD §6 y §7 al día
 
 **Notas:** Sesión: diseño (-43), con Daniel; antes overworld (-74). Toca 11.35/11.61 (pluma en D1 y en el overworld), los angostos de la quebrada (7.9), 11.30 (gancho, pasa a D3), 11.31 (sub-jefe con el arco) y la armadura del esqueleto.
 
@@ -4139,16 +4139,16 @@ Hoy todo lo de la mazmorra corre a la vez: por ejemplo la línea de pinchos est�
 
 **Notas:** Sesión: auditoría (-04). Con varios players: activa toda sala con alguno adentro.
 
-### 11.98 La cámara muestra lo que se desbloquea · Pendiente
+### 11.98 La cámara muestra lo que se desbloquea · Revisión
 
 **Prioridad:** alta · **Tamaño:** M · **Etiquetas:** `camara`, `feel`
 
 Siempre que algo se desbloquea por una acción (puzzle resuelto, horda eliminada, interruptores activados) la cámara va a mostrar qué se abrió y vuelve, como en Zelda.
 
-- [ ] Toma de cámara reutilizable
-  Un nodo en la escena que apunta a lo que se abre; el juego se congela mientras dura.
-- [ ] Puzzles, oleadas e interruptores la usan
-- [ ] Tests
+- [x] Toma de cámara reutilizable
+  TopDownCamera.reveal_unlock(): pausa, paneo a lo que se abre y vuelta (sobre reveal()).
+- [x] Puzzles, oleadas e interruptores la usan
+- [x] Tests
 
 **Notas:** Sesión: overworld (-74).
 

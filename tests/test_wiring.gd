@@ -72,6 +72,7 @@ func test_block_mode_player_holds_and_block_solves() -> void:
 
 
 func test_reveal_pauses_and_shows_only_the_first_time() -> void:
+	TopDownCamera.unlock_reveals = true
 	var tree := Engine.get_main_loop() as SceneTree
 	var state: Node = tree.root.get_node(^"GameState")
 	state.reset()

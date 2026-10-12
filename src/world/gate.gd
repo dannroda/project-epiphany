@@ -12,7 +12,7 @@ signal opened
 ## Si es false, se vuelve a levantar cuando la condición deja de cumplirse.
 @export var stays_open := true
 ## La primera vez que la abren sus interruptores, el juego se pausa y la cámara la muestra.
-@export var reveal_on_open := false
+@export var reveal_on_open := true
 ## Fondo del paso en el que está: con más de 0, una reja en cada cara del muro.
 @export var depth := 0.0
 
@@ -32,7 +32,7 @@ func _ready() -> void:
 	_wiring.changed.connect(func(satisfied: bool) -> void:
 		if satisfied and reveal_on_open and not _revealed:
 			_revealed = true
-			TopDownCamera.reveal(self, open)
+			TopDownCamera.reveal_unlock(self, open)
 		elif satisfied:
 			open()
 		elif not stays_open:

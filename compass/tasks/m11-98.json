@@ -1,16 +1,16 @@
 {
   "checklist": [
     {
-      "detail": "Un nodo en la escena que apunta a lo que se abre; el juego se congela mientras dura.",
-      "done": false,
+      "detail": "TopDownCamera.reveal_unlock(): pausa, paneo a lo que se abre y vuelta (sobre reveal()).",
+      "done": true,
       "text": "Toma de cámara reutilizable"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Puzzles, oleadas e interruptores la usan"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Tests"
     }
   ],
@@ -23,12 +23,12 @@
   "priority": "high",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "camara",
     "feel"
   ],
   "test": "",
   "title": "La cámara muestra lo que se desbloquea",
-  "updated_at": "2026-10-12T08:16:56.605Z"
+  "updated_at": "2026-10-12T17:57:20.784Z"
 }
