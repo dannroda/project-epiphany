@@ -13,7 +13,7 @@ phase = 3
 script = ExtResource("2_perform")
 
 [sub_resource type="BTWait" id="BTWait_attack"]
-duration = 0.5
+duration = 0.8
 custom_name = "Respiro"
 
 [sub_resource type="BTSequence" id="BTSequence_round"]

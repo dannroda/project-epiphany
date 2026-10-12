@@ -159,7 +159,8 @@ func test_utility_varies_and_uses_free_pieces() -> void:
 func test_overlay_shows_the_fight() -> void:
 	var boss := _spawn()
 	boss.start_fight()
-	boss.choose_attack(1)
+	boss.target = null
+	assert_true(boss.choose_attack(1))
 	await (Engine.get_main_loop() as SceneTree).physics_frame
 	await (Engine.get_main_loop() as SceneTree).physics_frame
 	var values: Dictionary = DebugOverlay.get(&"_values")
@@ -381,7 +382,20 @@ func test_phase_two_opens_the_eye_with_a_tremor() -> void:
 	assert_true(not boss.choose_attack(2), "aturdido no ataca: la ventana es para pegarle")
 	await (Engine.get_main_loop() as SceneTree).create_timer(0.5).timeout
 	assert_true(absf(boss.body.position.y - Boss.BODY_HEIGHT_STUNNED) <= Boss.BOB_HEIGHT + 0.01, "cae a tiro de espada")
+	var lowest := INF
+	for i in 30:
+		await (Engine.get_main_loop() as SceneTree).process_frame
+		lowest = minf(lowest, _body_bottom(boss))
+	assert_true(lowest >= boss.global_position.y, "apoyado, sin hundirse en el piso (%.2f)" % lowest)
 	boss.free()
+
+
+func _body_bottom(boss: Boss) -> float:
+	var mesh := boss.body.get_node(^"Mesh") as MeshInstance3D
+	var bottom := INF
+	for vertex in mesh.mesh.get_faces():
+		bottom = minf(bottom, (mesh.global_transform * vertex).y)
+	return bottom
 
 
 func test_arrow_flies_into_the_eye_and_the_sword_finishes() -> void:
@@ -577,6 +591,22 @@ func test_phase_three_below_a_third() -> void:
 	assert_true(not seen.has(&"grab"), "el agarre es solo de la fase 1")
 	boss.health.damage(99)
 	assert_eq(boss.phases.get_active_state().name, &"Defeated", "desde la fase 3 también se lo vence")
+	boss.free()
+
+
+func test_marks_keep_the_eye_busy_until_they_blast() -> void:
+	var boss := _spawn()
+	for hand in [boss.hand_left, boss.hand_right]:
+		hand.set_state(BossHand.State.DOWN)
+	var target := Node3D.new()
+	boss.add_child(target)
+	boss.target = target
+	var tree := Engine.get_main_loop() as SceneTree
+	boss._mark_floor()
+	await tree.create_timer(Boss.MARK_TELEGRAPH - 0.3).timeout
+	assert_true(boss.is_attack_running(), "mientras se cargan las marcas no encadena otro ataque")
+	await tree.create_timer(0.5).timeout
+	assert_true(not boss.is_attack_running(), "después del estallido sí")
 	boss.free()
 
 

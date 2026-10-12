@@ -4072,7 +4072,7 @@ Playtest 2026-10-12: tomar una pieza de corazón no cura. Que cure (a quien la t
 
 **Notas:** Sesión de bugs (-fd). La pieza (heart_piece.tscn) cura 4 de vida, lo mismo que un corazón suelto, solo a quien la toma; al completar el contenedor llena como antes (cambia la vida máxima).
 
-### 11.93 Jefe: aflojar la fase 3 y el modelo que se hunde · En curso
+### 11.93 Jefe: aflojar la fase 3 y el modelo que se hunde · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `jefe`, `bug`
 
@@ -4080,9 +4080,11 @@ Playtest 2026-10-12: el jefe anda bien en general; la tercera fase es demasiado 
 
 - [ ] Nerf de la fase 3
   Menos daño, ventanas más largas o menos ataques encadenados; a ojo con Daniel.
-- [ ] Que no se hunda en el piso
+- [x] Que no se hunda en el piso
 
-**Notas:** Sesión: auditoría (-04).
+**Prueba:** test_boss › test_phase_two_opens_the_eye_with_a_tremor: aturdido queda apoyado sin hundirse en el piso; test_marks_keep_the_eye_busy_until_they_blast: mientras se cargan las marcas no encadena otro ataque.
+
+**Notas:** Sesión de bugs (-fd). Hundido: lo más bajo del cuerpo queda 2,35 m bajo su origen; aturdido bajaba a 1,9 y, con el bamboleo, se metía 0,45–0,57 m en el piso (en cada aturdimiento, más seguido en la fase 3). Ahora BODY_HEIGHT_STUNNED = 2,4 y aturdido no se bambolea: queda apoyado (el hurtbox del ojo está fijo, el alcance de la espada no cambia; la caída se ve más corta, 0,2 m en vez de 0,7). Fase 3, primer pase: respiro entre rondas 0,5 → 0,8 s (como la fase 2) y las marcas tienen ocupado al ojo hasta que estallan (antes lo soltaban a los 0,4 s y otro ataque se encimaba con el estallido). Para revisar: probarlo a ojo con Daniel; si sigue duro, lo siguiente es MARK_DAMAGE 4 → 2 o menos peso para mark. De paso: test_overlay_shows_the_fight era inestable (apuntaba a un player de un test anterior y a veces ningún ataque puntuaba); ahora sin objetivo.
 
 ### 11.94 Arquero: dispara sin frenarse a buscar distancia · Hecho
 

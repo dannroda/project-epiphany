@@ -1,4 +1,5 @@
 {
+  "assignee": "Claude",
   "checklist": [
     {
       "detail": "Menos daño, ventanas más largas o menos ataques encadenados; a ojo con Daniel.",
@@ -6,7 +7,7 @@
       "text": "Nerf de la fase 3"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Que no se hunda en el piso"
     }
   ],
@@ -14,17 +15,17 @@
   "created_at": "2026-10-12T08:16:43.966Z",
   "description": "Playtest 2026-10-12: el jefe anda bien en general; la tercera fase es demasiado dura y el modelo suele hundirse en el piso.",
   "milestone": "m11",
-  "notes": "Sesión: auditoría (-04).",
+  "notes": "Sesión de bugs (-fd). Hundido: lo más bajo del cuerpo queda 2,35 m bajo su origen; aturdido bajaba a 1,9 y, con el bamboleo, se metía 0,45–0,57 m en el piso (en cada aturdimiento, más seguido en la fase 3). Ahora BODY_HEIGHT_STUNNED = 2,4 y aturdido no se bambolea: queda apoyado (el hurtbox del ojo está fijo, el alcance de la espada no cambia; la caída se ve más corta, 0,2 m en vez de 0,7). Fase 3, primer pase: respiro entre rondas 0,5 → 0,8 s (como la fase 2) y las marcas tienen ocupado al ojo hasta que estallan (antes lo soltaban a los 0,4 s y otro ataque se encimaba con el estallido). Para revisar: probarlo a ojo con Daniel; si sigue duro, lo siguiente es MARK_DAMAGE 4 → 2 o menos peso para mark. De paso: test_overlay_shows_the_fight era inestable (apuntaba a un player de un test anterior y a veces ningún ataque puntuaba); ahora sin objetivo.",
   "order": 90,
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "jefe",
     "bug"
   ],
-  "test": "",
+  "test": "test_boss › test_phase_two_opens_the_eye_with_a_tremor: aturdido queda apoyado sin hundirse en el piso; test_marks_keep_the_eye_busy_until_they_blast: mientras se cargan las marcas no encadena otro ataque.",
   "title": "Jefe: aflojar la fase 3 y el modelo que se hunde",
-  "updated_at": "2026-10-12T08:16:45.422Z"
+  "updated_at": "2026-10-12T17:59:03.527Z"
 }

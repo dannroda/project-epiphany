@@ -26,9 +26,10 @@ const MARK_DAMAGE := 4
 const BLAST_FRAMES := 3
 ## Las manos vuelven un rato después de que se abre el ojo.
 const HANDS_BACK_DELAY := 1.2
-## Alto del cuerpo en la fase 2 (más cerca para mirarte) y aturdido (caído, a tiro de espada).
+## Alto del cuerpo en la fase 2 (más cerca para mirarte) y aturdido (apoyado en el piso: lo más bajo del cuerpo queda
+## 2,35 m debajo de su origen).
 const BODY_HEIGHT_OPEN := 2.6
-const BODY_HEIGHT_STUNNED := 1.9
+const BODY_HEIGHT_STUNNED := 2.4
 const REPEAT_PENALTY := 0.25
 const SAME_HAND_PENALTY := 0.7
 ## Entran al sorteo los que tienen al menos esta fracción del mejor puntaje.
@@ -71,6 +72,8 @@ var _eye_attacking := false
 var _body_tween: Tween
 var _body_height := 0.0
 var _time := 0.0
+## 1 flota, 0 quieto (aturdido, apoyado en el piso).
+var _bob := 1.0
 var _blink := 0.0
 var _squint := 0.0
 ## -1 rendija, 0 normal, 1 dilatada.
@@ -161,7 +164,8 @@ func _process(delta: float) -> void:
 	if Engine.is_editor_hint() or not _alive:
 		return
 	_time += delta
-	body.position.y = _body_height + sin(_time * BOB_SPEED * TAU) * BOB_HEIGHT
+	_bob = move_toward(_bob, 0.0 if is_eye_stunned() else 1.0, delta * 4.0)
+	body.position.y = _body_height + sin(_time * BOB_SPEED * TAU) * BOB_HEIGHT * _bob
 	var lean := 0.0
 	if attacker is BossHand and attacker.striking:
 		lean = -signf(attacker.global_position.x - global_position.x) * deg_to_rad(LEAN_ANGLE)
@@ -281,14 +285,13 @@ func _mark_floor() -> void:
 	_flare_body()
 	_snap_pupil()
 	_combo_hand()
-	await get_tree().create_timer(0.4, false).timeout
-	_eye_attacking = false
-	await get_tree().create_timer(MARK_TELEGRAPH - 0.4, false).timeout
+	await get_tree().create_timer(MARK_TELEGRAPH, false).timeout
 	for mark in marks:
 		if is_instance_valid(mark):
 			if health.current > 0:
 				_blast(Vector3(mark.global_position.x, 0.0, mark.global_position.z))
 			mark.queue_free()
+	_eye_attacking = false
 
 
 ## Una marca bajo el player y las otras alrededor; se queda con el primer reparto que deja salida a 2,4 m
