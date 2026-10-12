@@ -4,6 +4,8 @@ const ITEM_ACTIONS: Array[StringName] = [&"item_1", &"item_2"]
 
 var player: PlayerCharacter
 
+@onready var _guard_states: Array[LimboState] = [$Idle, $Moving, $Attacking, $Hurt, $Transition]
+
 
 func _setup() -> void:
 	player = agent
@@ -58,16 +60,8 @@ func _setup() -> void:
 	initial_state = $Spawning
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if player.controls.event_pressed(event, &"block"):
-		blackboard.set_var("is_blocking", true)
-		player.set_guard(true)
-	elif player.controls.event_released(event, &"block"):
-		blackboard.set_var("is_blocking", false)
-		player.set_guard(false)
-
-
 func _update(delta: float) -> void:
+	_sync_guard()
 	if not player.is_on_floor():
 		player.velocity += player.get_gravity() * delta
 
@@ -85,6 +79,14 @@ func _update(delta: float) -> void:
 		dispatch("move")
 	else:
 		dispatch("idle")
+
+
+## El escudo sigue al botón mantenido, no a sus eventos: con el player congelado (hit-stop, pausa) se perderían.
+func _sync_guard() -> void:
+	var guard := player.controls.pressed(&"block") and get_active_state() in _guard_states
+	if guard != blackboard.get_var("is_blocking", false):
+		blackboard.set_var("is_blocking", guard)
+		player.set_guard(guard)
 
 
 ## Si el botón no tiene nada usable, avisa enseguida; si sí, espera en el buffer a que el estado lo permita.

@@ -56,8 +56,7 @@ func _press(action: StringName) -> void:
 func _block(on: bool) -> void:
 	if on:
 		use_gamepad()
-	player.movement_state.blackboard.set_var("is_blocking", on)
-	player.set_guard(on)
+	hold_block(player, on)
 
 
 func _open_chest(chest_name: NodePath) -> void:

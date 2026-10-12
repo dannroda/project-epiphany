@@ -38,8 +38,7 @@ func _fire(tree: SceneTree, shooter: Enemy, player: PlayerCharacter) -> Projecti
 
 
 func _guard(player: PlayerCharacter, on: bool) -> void:
-	player.movement_state.blackboard.set_var("is_blocking", on)
-	player.set_guard(on)
+	hold_block(player, on)
 
 
 func test_wood_shield_blocks() -> void:

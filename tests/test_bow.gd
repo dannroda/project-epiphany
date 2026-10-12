@@ -222,14 +222,12 @@ func test_hidden_shield_has_no_collision() -> void:
 	var back_shapes := player.equipment.shield_on_back.find_children("*", "CollisionShape3D", true, false)
 	assert_true(hand_shapes.all(func(s: CollisionShape3D) -> bool: return s.disabled), "escudo de la mano oculto: sin colisión")
 	assert_true(back_shapes.all(func(s: CollisionShape3D) -> bool: return not s.disabled), "escudo en la espalda: con colisión")
-	player.movement_state.blackboard.set_var("is_blocking", true)
-	player.set_guard(true)
+	hold_block(player, true)
 	await tree.physics_frame
 	await tree.physics_frame
 	assert_true(hand_shapes.all(func(s: CollisionShape3D) -> bool: return not s.disabled), "al bloquear, el de la mano colisiona")
 	assert_true(back_shapes.all(func(s: CollisionShape3D) -> bool: return s.disabled), "y el de la espalda no")
-	player.movement_state.blackboard.set_var("is_blocking", false)
-	player.set_guard(false)
+	hold_block(player, false)
 	setup[1].reset()
 
 

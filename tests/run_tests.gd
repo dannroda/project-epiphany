@@ -163,6 +163,8 @@ func _run_here(files: PackedStringArray) -> Dictionary:
 			var before: int = suite.failures.size()
 			suite.assertions = 0
 			await suite.call(test_name)
+			for action in InputMap.get_actions():
+				Input.action_release(action)
 			if suite.assertions == 0:
 				suite.failures.append("%s: no llegó a verificar nada (¿se cortó por un error?)" % suite.current_test)
 			print("%s %s" % ["ok  " if suite.failures.size() == before else "FALLA", suite.current_test])

@@ -53,9 +53,8 @@ func _block_and_aim_south(tree: SceneTree, player: PlayerCharacter) -> void:
 	player.global_position = Vector3(6, 0.25, -15.5)
 	var facing := Vector3(1, 0, 1).normalized()
 	player.model.look_at(player.model.global_position - facing, Vector3.UP)
-	player.movement_state.blackboard.set_var("is_blocking", true)
+	hold_block(player, true)
 	use_gamepad()
-	player.set_guard(true)
 	await _frames(tree, 6)
 
 

@@ -22,9 +22,8 @@ func _setup(shield: StringName) -> Array:
 	player.global_position = turret.global_position + Vector3(0, 0, 5)
 	player.model.look_at(player.model.global_position + Vector3.BACK, Vector3.UP)
 	player.health.invulnerability_time = 0.0
-	player.movement_state.blackboard.set_var("is_blocking", true)
+	hold_block(player, true)
 	use_gamepad()
-	player.set_guard(true)
 	return [tree, state, player, turret]
 
 

@@ -27,8 +27,7 @@ func _wait_for(tree: SceneTree, seconds: float, done: Callable) -> void:
 
 
 func _guard(player: PlayerCharacter, on: bool) -> void:
-	player.movement_state.blackboard.set_var("is_blocking", on)
-	player.set_guard(on)
+	hold_block(player, on)
 
 
 func test_solve_all_four_from_scenario() -> void:

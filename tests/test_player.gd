@@ -96,7 +96,7 @@ func test_armor_reduces_damage() -> void:
 
 
 func _block(player: PlayerCharacter, on: bool) -> void:
-	player.movement_state.blackboard.set_var("is_blocking", on)
+	hold_block(player, on)
 
 
 func test_block_from_front_only() -> void:

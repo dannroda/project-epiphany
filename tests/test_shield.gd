@@ -61,8 +61,7 @@ func test_wood_shield_does_not_stop_explosions() -> void:
 	var player: PlayerCharacter = setup[2]
 	var shooter: Enemy = setup[3]
 	shooter.global_position = player.global_position + Vector3.RIGHT * 1.5
-	player.movement_state.blackboard.set_var("is_blocking", true)
-	player.set_guard(true)
+	hold_block(player, true)
 	var slash := shooter.config.make_damage(shooter)
 	player.hurtbox.receive(slash)
 	assert_eq(player.health.current, player.health.max_health, "un espadazo de frente se bloquea")
@@ -96,3 +95,20 @@ func test_mirror_on_back_returns_orb_to_shooter() -> void:
 	assert_true(shooter.health.current < before, "vuelve y daña a quien lo tiró")
 	assert_eq(player.health.current, player.health.max_health)
 	setup[1].reset()
+
+
+func test_releasing_block_while_frozen_lowers_the_shield() -> void:
+	var setup: Array = await _setup(&"shield_wood")
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[2]
+	hold_block(player, true)
+	await tree.physics_frame
+	assert_eq(player.is_blocking(), true, "con el botón mantenido bloquea")
+	var mode := player.process_mode
+	player.process_mode = Node.PROCESS_MODE_DISABLED
+	Input.action_release(player.controls.action(&"block"))
+	await tree.physics_frame
+	player.process_mode = mode
+	await tree.physics_frame
+	await tree.physics_frame
+	assert_eq(player.is_blocking(), false, "soltar durante un hit-stop baja el escudo")

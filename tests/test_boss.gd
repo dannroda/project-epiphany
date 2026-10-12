@@ -419,9 +419,8 @@ func test_reflected_orb_stuns_the_eye() -> void:
 		hand.set_state(BossHand.State.DOWN)
 	player.model.look_at(player.model.global_position + Vector3.BACK, Vector3.UP)
 	player.health.make_invulnerable(30.0)
-	player.movement_state.blackboard.set_var("is_blocking", true)
+	hold_block(player, true)
 	use_gamepad()
-	player.set_guard(true)
 	boss.target = player
 	boss._fire_orb()
 	assert_true(await _wait_until(boss.is_eye_stunned, 4.0), "el orbe devuelto con el espejo aturde al ojo")
@@ -628,12 +627,10 @@ func test_marks_blast_whoever_stays_even_blocking() -> void:
 	var marks := boss.get_children().filter(func(node: Node) -> bool: return node is Decal and node.visible)
 	assert_eq(marks.size(), Boss.MARK_COUNT, "marca el piso")
 	assert_true(marks.any(func(mark: Decal) -> bool: return Vector2(mark.global_position.x, mark.global_position.z).distance_to(Vector2(player.global_position.x, player.global_position.z)) < 0.1), "una marca bajo el player")
-	player.movement_state.blackboard.set_var("is_blocking", true)
-	player.set_guard(true)
+	hold_block(player, true)
 	await tree.create_timer(Boss.MARK_TELEGRAPH + 0.2).timeout
 	assert_true(player.health.current < full, "quedarse en la marca lastima, aunque bloquee")
-	player.set_guard(false)
-	player.movement_state.blackboard.set_var("is_blocking", false)
+	hold_block(player, false)
 	await tree.create_timer(1.0).timeout
 	var before := player.health.current
 	boss._mark_floor()

@@ -75,8 +75,7 @@ func test_explosion_hurts_everyone_and_launches_boxes() -> void:
 	box.global_position = spot + Vector3(-1.0, 0.4, 0)
 	player.global_position = spot + Vector3(0, -0.25, 1.5)
 	player.model.look_at(player.model.global_position + Vector3.BACK, Vector3.UP)
-	player.movement_state.blackboard.set_var("is_blocking", true)
-	player.set_guard(true)
+	hold_block(player, true)
 	await tree.physics_frame
 	var bomb: Bomb = BOMB.instantiate()
 	tree.current_scene.add_child(bomb)

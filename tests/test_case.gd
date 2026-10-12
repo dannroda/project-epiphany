@@ -35,3 +35,14 @@ func use_gamepad() -> void:
 		motion.axis = JOY_AXIS_RIGHT_X
 		motion.axis_value = value
 		Input.parse_input_event(motion)
+
+
+## Mantiene o suelta el bloqueo como si se apretara el botón: el escudo sigue al botón mantenido.
+func hold_block(player: Node, on: bool) -> void:
+	var action: StringName = player.controls.action(&"block")
+	if on:
+		Input.action_press(action)
+	else:
+		Input.action_release(action)
+	player.movement_state.blackboard.set_var("is_blocking", on)
+	player.set_guard(on)

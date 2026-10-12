@@ -79,13 +79,11 @@ func test_reach_the_shrine_get_the_mirror_and_light_the_crystal() -> void:
 	var crystal := level.get_node(^"ShrineCrystal") as LightReceiver
 	player.global_position = Vector3(-64, 0, -30)
 	_face(player, Vector3(-1, 0, -1))
-	player.movement_state.blackboard.set_var("is_blocking", true)
+	hold_block(player, true)
 	use_gamepad()
-	player.set_guard(true)
 	await _frames(tree, 8)
 	assert_eq(crystal.lit, true, "el espejo manda el haz al cristal")
-	player.set_guard(false)
-	player.movement_state.blackboard.set_var("is_blocking", false)
+	hold_block(player, false)
 	await tree.create_timer(0.8).timeout
 	assert_eq(shortcut.is_open, true, "el cristal abre el atajo a la entrada del templo")
 	assert_eq(state.get_flag(&"ow_shrine_shortcut"), true)

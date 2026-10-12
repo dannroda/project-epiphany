@@ -3526,14 +3526,14 @@ heart_piece, push_block y tablet leen su flag una sola vez en `_ready` y no usan
 
 `is_blocking` solo cambia con los eventos de pulsar/soltar en `_unhandled_input`. Durante `Feel.hit_stop` o la pausa el player está DISABLED y no recibe eventos: si soltás el bloqueo en ese momento, el escudo queda arriba (velocidad 2.0, sigue bloqueando). Además se activa en Dead, Spirit, Carrying y Grabbed (bloquear es una de las teclas de forcejeo del agarre, y entonces el escudo frena golpes frontales).
 
-- [ ] Leer el estado del botón, no los eventos
+- [x] Leer el estado del botón, no los eventos
   state_machine.gd ~l.530: en `_update` calcular `controls.pressed(&"block")` solo en los estados que permiten bloquear y llamar a `set_guard` cuando cambia.
-- [ ] Test
+- [x] Test
   test_shield: soltar con el player deshabilitado y comprobar que baja al volver.
 
 **Prueba:** Bloquear, recibir un golpe imbloqueable y soltar durante el congelado: el escudo baja. Agarrado por el jefe, forcejear no levanta el escudo.
 
-**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+**Notas:** Sale de la revisión de código general del 2026-10-11. Hecho: el escudo se calcula en cada tick de la HSM desde `controls.pressed(&"block")` y solo en Idle, Moving, Attacking, Hurt y Transition. Los tests ya no fuerzan `is_blocking` en el blackboard: usan `hold_block(player, on)` (test_case.gd), que aprieta la acción, y run_tests suelta todas las acciones entre tests.
 
 **Archivos:** `player/state_machine.gd`, `tests/test_shield.gd`
 
@@ -3847,7 +3847,7 @@ El estado del player (vida actual incluida) es global, no de la escena. Hoy Game
 
 **Archivos:** `src/world/dungeon.gd`, `levels/temple.tscn`, `src/save/save_codec.gd`
 
-### 11.82 Daño que no pasa por el Hurtbox · Pendiente
+### 11.82 Daño que no pasa por el Hurtbox · En curso
 
 **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `combate`
 
@@ -3984,7 +3984,7 @@ Los saves guardan `spawn_scene` como ruta `res://` y los portales `target_scene`
 - [x] Aviso en Portal
   Portal es @tool: aviso en el editor si viaja y target_scene está vacío o no existe; en el editor no corre su _ready.
 - [ ] uid en el save
-  Guardar el uid del nivel (`ResourceUID`) y resolverlo al cargar; aceptar rutas viejas.
+  Espera a que -04 cierre 11.64 y 11.79 (save_manager.gd).
 
 **Prueba:** Un test recorre todos los portales de levels/ y comprueba escena y SpawnPoint; mover un nivel no rompe una partida guardada.
 
@@ -4424,8 +4424,8 @@ Cada mazmorra con su propio estilo sobre el mismo kit (mismas piezas y colisione
   diorama.py -- <png> templo templo_<estilo>.
 - [x] Elección y ajustes del usuario
   Aprobados los cuatro estilos el 2026-10-11. El usuario pide lo mismo para la zona del overworld de cada mazmorra (consultado con la otra sesión, dueña de 7.9).
-- [ ] Kit de cada mazmorra en Godot
-  build_temple_kit.gd por estilo (chullpa_kit.tres…) y levels/chullpa.tscn con el suyo.
+- [x] Kit de cada mazmorra en Godot
+  build_temple_kit.gd -- <estilo> arma chullpa_kit, laguna_kit y cumbre_kit (mismos ítems y colisiones que temple_kit). levels/chullpa.tscn usa chullpa_kit. Laguna y Cumbre todavía no tienen escena.
 - [ ] Luz y ambiente por mazmorra
   WorldEnvironment y luces: cálida y polvorienta (chullpa), fría y húmeda (laguna), blanca y ventosa (cumbre).
 - [ ] Props por estilo
