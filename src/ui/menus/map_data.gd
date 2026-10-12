@@ -25,14 +25,13 @@ static func chests_in(tree: SceneTree, room: Room) -> Array:
 	return tree.get_nodes_in_group(&"chests").filter(func(chest: Chest) -> bool: return room.contains(chest.global_position))
 
 
-## Puertas con nodo Door (con llave, jefe, persianas, interruptor) y pasos libres del kit: [[posición, MapMark.Kind], …].
+## Puertas con nodo Door (con llave, jefe, persianas, interruptor) y pasos libres del kit, también los de las escaleras: [[posición, MapMark.Kind], …].
 static func doors(tree: SceneTree) -> Array:
 	var found: Array = []
 	if tree.current_scene == null:
 		return found
 	for door: Door in tree.current_scene.find_children("*", "Door", true, false):
 		found.append([door.global_position, door_kind(door)])
-	var stairs: Array = tree.current_scene.find_children("*", "Stairs", true, false).map(func(node: Node3D) -> Vector3: return node.global_position)
 	for grid: GridMap in tree.current_scene.find_children("*", "GridMap", true, false):
 		if grid.mesh_library == null:
 			continue
@@ -40,8 +39,6 @@ static func doors(tree: SceneTree) -> Array:
 			if grid.mesh_library.get_item_name(grid.get_cell_item(cell)) != DOORWAY_ITEM:
 				continue
 			var point := grid.to_global(grid.map_to_local(cell))
-			if stairs.any(func(at: Vector3) -> bool: return at.distance_to(point) < DOOR_MERGE_DISTANCE):
-				continue
 			if found.any(func(other: Array) -> bool: return (other[0] as Vector3).distance_to(point) < DOOR_MERGE_DISTANCE):
 				continue
 			found.append([point, MapMark.Kind.DOOR_OPEN])

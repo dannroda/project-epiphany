@@ -169,5 +169,5 @@ func test_map_shows_the_current_floor() -> void:
 	var minimap: Node = tree.get_first_node_in_group(&"hud").find_children("*", "", true, false).filter(func(node: Node) -> bool: return node.has_method(&"rooms_around"))[0]
 	assert_true(minimap.rooms_around().all(func(room: Room) -> bool: return room.floor_level() == 0), "el minimapa muestra solo la planta baja")
 	var doors := MapData.doors(tree).filter(func(door: Array) -> bool: return MapData.near_room(_room("PlantaBaja/Entrada"), door[0]))
-	assert_eq(doors.size(), 3, "la entrada tiene sus tres puertas (de las de arriba y abajo, ninguna)")
+	assert_eq(doors.size(), 4, "la entrada tiene sus tres puertas y la escalera (de las de arriba y abajo, ninguna)")
 	tree.root.get_node(^"GameState").reset()
