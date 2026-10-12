@@ -1,12 +1,14 @@
 {
   "checklist": [
     {
-      "done": false,
+      "detail": "Artboard 'Pausa · Mapa (overworld) por regiones grandes (11.102)' en el canvas: 8 regiones, cuevas y mazmorras con nombre propio. Daniel: sí, y el HUD también por regiones; el Santuario lleva nombre.",
+      "done": true,
       "text": "Mockup"
     },
     {
-      "done": false,
-      "text": "Tamaño y qué zonas llevan nombre"
+      "detail": "AreaZone.region_label y display_name compartido por región; MapPlace para mazmorras, cuevas y santuario; el HUD nombra la región al cambiar de región.",
+      "done": true,
+      "text": "Regiones grandes y lugares con nombre"
     }
   ],
   "code": "11.102",
@@ -18,11 +20,11 @@
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "ui"
   ],
   "test": "",
   "title": "Mapa: nombres de zona chicos y solo los que importan",
-  "updated_at": "2026-10-12T08:17:02.602Z"
+  "updated_at": "2026-10-12T17:46:58.725Z"
 }

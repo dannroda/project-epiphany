@@ -87,6 +87,13 @@ static func draw_entrance(canvas: CanvasItem, center: Vector2, color: Color) -> 
 	canvas.draw_polyline(_arch(center + Vector2(0, 4), Vector2(3, 3), 5.0), color, 1.8, true)
 
 
+static func draw_cave(canvas: CanvasItem, center: Vector2) -> void:
+	var mound := _arch(center + Vector2(0, -2), Vector2(10, 8), 7.0)
+	canvas.draw_colored_polygon(mound.slice(0, -1), DOOR)
+	canvas.draw_polyline(mound, TEXT, 1.4, true)
+	canvas.draw_colored_polygon(_arch(center + Vector2(0, 2), Vector2(4.5, 4), 3.0).slice(0, -1), INK)
+
+
 static func draw_tablet(canvas: CanvasItem, center: Vector2, color: Color) -> void:
 	canvas.draw_polyline(_arch(center + Vector2(0, -4), Vector2(6, 3), 13.0), color, 1.8, true)
 	for y in [-1.0, 2.0, 5.0]:

@@ -111,12 +111,22 @@ func test_overworld_fog_lifts_as_zones_are_visited() -> void:
 	assert_eq(state.visited_zones, [&"Zone_start"] as Array[StringName], "partida nueva: solo el claro del inicio")
 	assert_eq(page.fog.get_child_count(), zones - 1, "las demás en sombra")
 	assert_true(page.fog.get_children().all(func(zone: Control) -> bool: return zone.size.x > 20.0 and zone.position != Vector2.ZERO), "cada sombra cubre su zona")
-	assert_eq(page.subtitle.text, tr("MAP_ZONES_EXPLORED").format({done = 1, total = zones}))
+	assert_eq(page.subtitle.text, tr("MAP_ZONES_EXPLORED").format({done = 1, total = 8}), "cuenta regiones grandes, no pantallas")
+	var names := func() -> Array: return page.marks.get_children().filter(func(mark: Node) -> bool: return mark is Label).map(func(label: Label) -> String: return label.text)
+	assert_eq(names.call(), [tr("PLACE_FIRST_CLEARING")], "solo el nombre de la región visitada, una vez")
+	state.visit_zone(&"Zone_gruta")
+	state.visit_zone(&"Zone_vertiente")
+	page.refresh()
+	await tree.process_frame
+	await tree.process_frame
+	assert_eq(names.call().count(tr("PLACE_FIRST_CLEARING")), 1, "varias pantallas de la región: el nombre va una sola vez")
+	assert_true(tr("PLACE_HIDDEN_GROTTO") in names.call() and tr("PLACE_SPRING") in names.call(), "las cuevas visitadas llevan su nombre (%s)" % [names.call()])
+	assert_true(not tr("PLACE_BOMB_CAVE") in names.call(), "la de una zona sin visitar no")
 	state.visit_zone(&"Zone_pradera")
 	page.refresh()
 	await tree.process_frame
 	await tree.process_frame
-	assert_eq(page.fog.get_child_count(), zones - 2, "la pradera se destapa")
+	assert_eq(page.fog.get_child_count(), zones - 4, "la pradera se destapa")
 	_close(setup[2])
 	state.reset()
 
@@ -132,10 +142,10 @@ func test_cursor_reads_what_is_missing_in_a_zone() -> void:
 	await tree.process_frame
 	var grotto: AreaZone = tree.current_scene.get_node(^"Zone_gruta")
 	page._move_cursor(page.world_to_map(grotto.bounds().get_center()))
-	assert_eq(page.focus_title.text, "PLACE_HIDDEN_GROTTO")
+	assert_eq(page.focus_title.text, "PLACE_FIRST_CLEARING", "la gruta es parte de la región del Claro")
 	var rows: Array = page.focus_stats.get_children().map(func(row: StatRow) -> String: return row.get_node(^"Padding/Row/Name").text + "=" + row.value_text())
 	assert_true(rows.has("MAP_HEART_PIECES=" + tr("MAP_COUNT").format({done = 0, total = 1})), "dice que falta la pieza (%s)" % [rows])
-	assert_true(rows.has("MAP_CHESTS=" + tr("MAP_COUNT").format({done = 0, total = 1})), "y el cofre")
+	assert_true(rows.has("MAP_CHESTS=" + tr("MAP_COUNT").format({done = 0, total = 2})), "y los cofres de lo visitado de la región: el del claro y el de la gruta (%s)" % [rows])
 	var risk: AreaZone = tree.current_scene.get_node(^"Zone_risco")
 	page._move_cursor(page.world_to_map(risk.bounds().get_center()))
 	assert_eq(page.focus_text.text, "MAP_UNEXPLORED", "de las zonas sin ver no cuenta nada")

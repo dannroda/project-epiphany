@@ -11,6 +11,7 @@ const MapData := preload("res://src/ui/menus/map_data.gd")
 const STEP := MapRoomCell.SIZE + Vector2(12, 12)
 const CURSOR_SPEED := 420.0
 const ZONE_NAME_SCENE := preload("res://src/ui/menus/map_zone_name.tscn")
+const PLACE_NAME_SCENE := preload("res://src/ui/menus/map_place_name.tscn")
 const ZOOM := 2.0
 const DIRECTIONS := [
 	[&"move_left", Vector2i.LEFT], [&"move_right", Vector2i.RIGHT], [&"move_forward", Vector2i.UP], [&"move_backward", Vector2i.DOWN],
@@ -343,9 +344,10 @@ func _show_overworld() -> void:
 	subtitle.text = ""
 	if _map == null:
 		return
-	var zones := _zones()
-	var visited := zones.filter(func(zone: AreaZone) -> bool: return zone.is_visited())
-	subtitle.text = tr("MAP_ZONES_EXPLORED").format({done = visited.size(), total = zones.size()})
+	var regions := {}
+	for zone: AreaZone in _zones():
+		regions[zone.display_name] = regions.get(zone.display_name, false) or zone.is_visited()
+	subtitle.text = tr("MAP_ZONES_EXPLORED").format({done = regions.values().count(true), total = regions.size()})
 	_place_overworld()
 
 
@@ -359,20 +361,29 @@ func _place_overworld() -> void:
 		return
 	_set_zoom(_zoomed)
 	var zones := _zones()
+	var visited_regions := zones.filter(func(zone: AreaZone) -> bool: return zone.is_visited()).map(func(zone: AreaZone) -> String: return zone.display_name)
 	for zone: AreaZone in zones:
 		var bounds := zone.bounds()
 		if not zone.is_visited():
 			var uv := Rect2((bounds.position - _map.world_rect.position) / _map.world_rect.size, bounds.size / _map.world_rect.size)
 			fog.add_child(MapFogZone.create(_world_rect_to_map(bounds), _map.texture, uv))
-		elif not zone.display_name.is_empty():
+		if zone.region_label and not zone.display_name.is_empty() and zone.display_name in visited_regions:
 			var label: Label = ZONE_NAME_SCENE.instantiate()
 			label.text = tr(zone.display_name)
 			var rect := _world_rect_to_map(bounds)
 			label.position = rect.position
 			label.size = rect.size
 			marks.add_child(label)
-	for portal: Portal in get_tree().current_scene.find_children("*", "Portal", true, false):
-		_add_mark(MapMark.Kind.ENTRANCE, portal.global_position)
+	for place: MapPlace in get_tree().current_scene.find_children("*", "MapPlace", true, false):
+		var zone := _zone_at(Vector2(place.global_position.x, place.global_position.z))
+		if zone and not zone.is_visited():
+			continue
+		var at := world_to_map(Vector2(place.global_position.x, place.global_position.z))
+		marks.add_child(MapMark.create(MapMark.Kind.CAVE if place.kind == MapPlace.Kind.CAVE else MapMark.Kind.ENTRANCE, at))
+		var name_label: Label = PLACE_NAME_SCENE.instantiate()
+		name_label.text = tr(place.display_name)
+		marks.add_child(name_label)
+		name_label.position = at + Vector2(-name_label.get_minimum_size().x / 2.0, 10.0)
 	for chest: Chest in get_tree().get_nodes_in_group(&"chests"):
 		if not chest.interactable.enabled:
 			_add_mark(MapMark.Kind.CHEST_OPEN, chest.global_position)
@@ -441,11 +452,13 @@ func _focus_zone(zone: AreaZone) -> void:
 	if not zone.is_visited():
 		focus_text.text = "MAP_UNEXPLORED"
 		return
-	var chests := get_tree().get_nodes_in_group(&"chests").filter(func(chest: Chest) -> bool: return zone.contains(chest.global_position))
+	var region := _zones().filter(func(other: AreaZone) -> bool: return other.display_name == zone.display_name and other.is_visited())
+	var inside := func(point: Vector3) -> bool: return region.any(func(other: AreaZone) -> bool: return other.contains(point))
+	var chests := get_tree().get_nodes_in_group(&"chests").filter(func(chest: Chest) -> bool: return inside.call(chest.global_position))
 	_count_row("MAP_CHESTS", chests.filter(func(chest: Chest) -> bool: return not chest.interactable.enabled).size(), chests.size())
-	var tablets := get_tree().current_scene.find_children("*", "Tablet", true, false).filter(func(tablet: Tablet) -> bool: return zone.contains(tablet.global_position))
+	var tablets := get_tree().current_scene.find_children("*", "Tablet", true, false).filter(func(tablet: Tablet) -> bool: return inside.call(tablet.global_position))
 	_count_row("MAP_TABLETS_READ", tablets.filter(func(tablet: Tablet) -> bool: return tablet.is_read()).size(), tablets.size())
-	var pieces := get_tree().current_scene.find_children("*", "HeartPiece", true, false).filter(func(piece: HeartPiece) -> bool: return zone.contains(piece.global_position))
+	var pieces := get_tree().current_scene.find_children("*", "HeartPiece", true, false).filter(func(piece: HeartPiece) -> bool: return inside.call(piece.global_position))
 	_count_row("MAP_HEART_PIECES", pieces.filter(func(piece: HeartPiece) -> bool: return piece.taken).size(), pieces.size())
 	if focus_stats.get_child_count() == 0:
 		focus_text.text = "MAP_NOTHING_HIDDEN"

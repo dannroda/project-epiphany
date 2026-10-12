@@ -44,20 +44,20 @@ func test_walk_every_zone_without_falling_or_sticking() -> void:
 		return func() -> bool: return (player.global_position[axis] - value) * sign_ >= 0.0
 	var route := [
 		[&"move_forward", at.call(2, -1.0, -16.0), "PLACE_MEADOW"],
-		[&"move_left", at.call(0, -1.0, -72.0), "PLACE_HILLS"],
-		[&"move_forward", at.call(2, -1.0, -32.0), "PLACE_SANCTUARY"],
-		[&"move_right", at.call(0, 1.0, -48.0), "PLACE_TEMPLE_ENTRANCE"],
+		[&"move_left", at.call(0, -1.0, -72.0), "PLACE_MEADOW"],
+		[&"move_forward", at.call(2, -1.0, -32.0), "PLACE_TEMPLE_ESPLANADE"],
+		[&"move_right", at.call(0, 1.0, -48.0), "PLACE_TEMPLE_ESPLANADE"],
 		[&"move_backward", at.call(2, 1.0, -16.0), "PLACE_MEADOW"],
 		[&"move_right", at.call(0, 1.0, -24.0), "PLACE_MEADOW"],
-		[&"move_backward", at.call(2, 1.0, 16.0), "PLACE_GROVE"],
+		[&"move_backward", at.call(2, 1.0, 16.0), "PLACE_FIRST_CLEARING"],
 		[&"move_left", at.call(0, -1.0, -48.0), "PLACE_FIRST_CLEARING"],
 		[&"move_backward", at.call(2, 1.0, 32.0), "PLACE_LAGOON"],
 		[&"move_forward", at.call(2, -1.0, 16.0), "PLACE_FIRST_CLEARING"],
-		[&"move_left", at.call(0, -1.0, -72.0), "PLACE_HIDDEN_GROTTO"],
-		[&"move_backward", at.call(2, 1.0, 32.0), "PLACE_SPRING"],
+		[&"move_left", at.call(0, -1.0, -72.0), "PLACE_FIRST_CLEARING"],
+		[&"move_backward", at.call(2, 1.0, 32.0), "PLACE_FIRST_CLEARING"],
 	]
 	await _walk_route(tree, player, route)
-	assert_eq(tree.get_first_node_in_group(&"hud").area_label.text, tr("PLACE_SPRING"), "el cartel muestra la última zona")
+	assert_eq(tree.get_first_node_in_group(&"hud").area_label.text, tr("PLACE_FIRST_CLEARING"), "el cartel muestra la última zona")
 	state.reset()
 
 
@@ -76,12 +76,12 @@ func test_walk_the_east_bank() -> void:
 	var at := func(axis: int, sign_: float, value: float) -> Callable:
 		return func() -> bool: return (player.global_position[axis] - value) * sign_ >= 0.0
 	var route := [
-		[&"move_right", at.call(0, 1.0, 72.0), "PLACE_LOOKOUT"],
-		[&"move_forward", at.call(2, -1.0, -30.0), "PLACE_EYE_CRAG"],
-		[&"move_backward", at.call(2, 1.0, -16.0), "PLACE_LOOKOUT"],
+		[&"move_right", at.call(0, 1.0, 72.0), "PLACE_NECROPOLIS"],
+		[&"move_forward", at.call(2, -1.0, -30.0), "PLACE_SUMMIT"],
+		[&"move_backward", at.call(2, 1.0, -16.0), "PLACE_NECROPOLIS"],
 		[&"move_left", at.call(0, -1.0, 48.0), "PLACE_NECROPOLIS"],
-		[&"move_backward", at.call(2, 1.0, 16.0), "PLACE_CACTUS_FIELD"],
-		[&"move_right", at.call(0, 1.0, 72.0), "PLACE_CACTUS_FIELD"],
+		[&"move_backward", at.call(2, 1.0, 16.0), "PLACE_MARSH"],
+		[&"move_right", at.call(0, 1.0, 72.0), "PLACE_MARSH"],
 		[&"move_backward", at.call(2, 1.0, 32.0), "PLACE_MARSH"],
 		[&"move_left", at.call(0, -1.0, 24.0), "PLACE_LAGOON"],
 	]
@@ -279,3 +279,25 @@ func test_fence_ends_have_a_post() -> void:
 			assert_true(lib.get_item_name(grid.get_cell_item(cell)) in ["Pirca final", "Pirca poste"], "pirca %s termina con poste" % cell)
 	assert_true(ends > 0, "el overworld tiene puntas de pirca")
 	root.free()
+
+
+func test_the_hud_names_a_region_once_while_walking_its_screens() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	state.reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	for enemy in tree.get_nodes_in_group(&"enemies"):
+		enemy.free()
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	var hud := tree.get_first_node_in_group(&"hud")
+	await tree.create_timer(0.3).timeout
+	var shown: Array[String] = []
+	for at in [Vector3(-24, 0, 16), Vector3(-72, 0, 16), Vector3(-36, 0, -8), Vector3(-72, 0, -8)]:
+		var before: Tween = hud._area_tween
+		player.global_position = at
+		await tree.create_timer(0.3).timeout
+		shown.append(hud.area_label.text if hud._area_tween != before else "")
+	assert_eq(AreaZone._current.name, &"Zone_cueva", "termina en los Cerros")
+	assert_eq(shown, ["", "", tr("PLACE_MEADOW"), ""], "Claro → Arboleda → Gruta sin cartel; a la Pradera sí; a los Cerros, que también son Pradera, no")
+	state.reset()

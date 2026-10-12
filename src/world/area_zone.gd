@@ -1,6 +1,7 @@
 class_name AreaZone
 extends Area3D
-## Zona del overworld: al entrar el player, el HUD muestra su nombre (solo si viene de otra zona).
+## Zona del overworld (una o más pantallas): las zonas de una misma región grande comparten `display_name`; al entrar
+## el player, el HUD muestra el nombre solo si viene de otra región.
 
 static var _current: AreaZone
 
@@ -8,6 +9,8 @@ static var _current: AreaZone
 ## Estilo del terreno orgánico en la zona (STYLES de tools/blender/build_terreno_organico.py): necropolis, laguna, cumbre,
 ## explanada, cardonal o quebrada; vacío, el de siempre.
 @export var terrain_style: StringName = &""
+## El nombre de la región va en el mapa sobre esta zona (una por región).
+@export var region_label := false
 
 
 func _ready() -> void:
@@ -18,8 +21,9 @@ func _ready() -> void:
 		if body is PlayerCharacter:
 			GameState.visit_zone(name)
 		if body is PlayerCharacter and _current != self:
+			var same_region := _current != null and _current.display_name == display_name
 			_current = self
-			if not display_name.is_empty():
+			if not display_name.is_empty() and not same_region:
 				get_tree().call_group(&"hud", &"show_area_name", tr(display_name)))
 
 

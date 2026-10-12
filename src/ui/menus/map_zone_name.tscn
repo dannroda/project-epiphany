@@ -1,9 +1,17 @@
 [gd_scene format=3]
 
+[ext_resource type="FontFile" uid="uid://byrjjxr0lu8v3" path="res://assets/fonts/Cinzel.ttf" id="1_cinzel"]
+
+[sub_resource type="FontVariation" id="Spaced"]
+base_font = ExtResource("1_cinzel")
+variation_embolden = 0.6
+spacing_glyph = 2
+
 [sub_resource type="LabelSettings" id="ZoneName"]
-font_size = 20
+font = SubResource("Spaced")
+font_size = 14
 font_color = Color(0.937, 0.902, 0.824, 1)
-outline_size = 6
+outline_size = 5
 outline_color = Color(0.043, 0.051, 0.063, 0.85)
 
 [node name="MapZoneName" type="Label"]
@@ -13,3 +21,4 @@ text = "Pradera"
 label_settings = SubResource("ZoneName")
 horizontal_alignment = 1
 vertical_alignment = 1
+uppercase = true

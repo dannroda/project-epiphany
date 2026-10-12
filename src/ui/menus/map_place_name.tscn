@@ -1,0 +1,21 @@
+[gd_scene format=3]
+
+[ext_resource type="FontFile" path="res://assets/fonts/AlegreyaSans-Regular.ttf" id="1_alegreya"]
+
+[sub_resource type="FontVariation" id="Slanted"]
+base_font = ExtResource("1_alegreya")
+variation_transform = Transform2D(1, 0, 0.2, 1, 0, 0)
+
+[sub_resource type="LabelSettings" id="PlaceName"]
+font = SubResource("Slanted")
+font_size = 14
+font_color = Color(0.937, 0.902, 0.824, 1)
+outline_size = 5
+outline_color = Color(0.043, 0.051, 0.063, 0.85)
+
+[node name="MapPlaceName" type="Label"]
+anchors_preset = 0
+mouse_filter = 2
+text = "Gruta oculta"
+label_settings = SubResource("PlaceName")
+horizontal_alignment = 1

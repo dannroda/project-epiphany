@@ -358,7 +358,7 @@ msgid "MAP_NOTHING_PENDING"
 msgstr "Nada pendiente a la vista"
 
 msgid "MAP_ZONES_EXPLORED"
-msgstr "{done} de {total} zonas exploradas"
+msgstr "{done} de {total} regiones exploradas"
 
 msgid "MAP_UNEXPLORED"
 msgstr "Sin explorar"
@@ -672,6 +672,12 @@ msgstr "Laguna"
 
 msgid "PLACE_MARSH"
 msgstr "Bañado"
+
+msgid "PLACE_TEMPLE_ESPLANADE"
+msgstr "Explanada del templo"
+
+msgid "PLACE_BOMB_CAVE"
+msgstr "Cueva de las bombas"
 
 msgid "PLACE_TEMPLE_VALLEY"
 msgstr "Valle del templo"

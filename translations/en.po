@@ -358,7 +358,7 @@ msgid "MAP_NOTHING_PENDING"
 msgstr "Nothing left in sight"
 
 msgid "MAP_ZONES_EXPLORED"
-msgstr "{done} of {total} areas explored"
+msgstr "{done} of {total} regions explored"
 
 msgid "MAP_UNEXPLORED"
 msgstr "Unexplored"
@@ -672,6 +672,12 @@ msgstr "Lagoon"
 
 msgid "PLACE_MARSH"
 msgstr "Marsh"
+
+msgid "PLACE_TEMPLE_ESPLANADE"
+msgstr "Temple Esplanade"
+
+msgid "PLACE_BOMB_CAVE"
+msgstr "Bomb Cave"
 
 msgid "PLACE_TEMPLE_VALLEY"
 msgstr "Temple Valley"

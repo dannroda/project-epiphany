@@ -1935,7 +1935,7 @@ Una salida de la sala del jefe: un portal en el centro de la arena que lleva a l
 
 **Notas:** Sin flag por ahora porque no hay jefe; 9.6 le pone d1_boss_defeated.
 
-## M10 — Terminación  (19/30)
+## M10 — Terminación  (21/30)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -2089,7 +2089,9 @@ Hecho 2026-10-09: decisión cerrada (KayKit + prototipo pulido) y guía de estil
 
 **Referencias:** `gdd.md#decisiones-abiertas`
 
-### 10.8 Pasada de rendimiento · Revisión
+### 10.8 Pasada de rendimiento · Hecho
+
+**Terminada:** 2026-10-12
 
 Asegurar 60 FPS en la máquina más floja de los playtesters: perfilar las peores escenas (arena con oleadas, overworld con pasto, jefe) y arreglar lo que se mida.
 
@@ -2496,9 +2498,9 @@ Recorrido para revisar de a una las tareas en Revisión, en el orden de una part
 
 **Relacionadas:** 10.18 Idiomas: inglés y español; 11.45 Tutorial de controles y mini puzzle por ítem; 11.44 Levantar y tirar objetos; 11.53 Agujero de la cámara solo donde tiene sentido; 11.37 Minimapa en el HUD; 11.51 Pared agrietada que se integre al muro; 11.52 Zonas tapadas hasta abrirlas; 11.43 Bombas: tocar coloca, mantener apunta y tira; 11.33 Combate: sacar lo tosco; 11.49 VFX de combate; 11.25 Nuevos enemigos con los modelos existentes; 11.41 Esqueleto con escudo: bloquear con el escudo delante; 11.42 Arco que se tensa; 11.48 Pose de item get; 11.3 Decorar las salas del templo; 11.4 Decorar el overworld; 11.47 Manos del jefe animadas (shape keys); 13.1 Código listo para varios players; 13.2 Input por jugador y unirse a la partida; 10.9 Build para playtesters; 10.8 Pasada de rendimiento; 10.23 Tests en paralelo; 13.3 Cámara y salas para dos; 13.5 HUD de dos jugadores; 10.29 Pantalla de controles; 13.6 Player 2 con su color; 10.24 Tope de FPS; 11.58 Los enemigos muertos desaparecen después de un rato; 11.54 El velo de zona tapa también las paredes que la rodean; 10.25 Sombras del sol acordes a la cámara cenital; 10.26 Paredes del GridMap más livianas; 10.19 Fin de la demo; 13.4 Reglas del co-op; 13.9 Anillo de ítems por player
 
-### 10.29 Pantalla de controles · Revisión
+### 10.29 Pantalla de controles · Hecho
 
-**Prioridad:** media · **Etiquetas:** `ui`, `input`
+**Terminada:** 2026-10-12 · **Prioridad:** media · **Etiquetas:** `ui`, `input`
 
 Como la de Basic Controls de TotK: el mando dibujado con una línea a cada botón y lo que hace (mockups Controls_Gamepad y Controls_Keyboard). LB/RB cambia entre mando y teclado/mouse. Se abre desde el título (Opciones › Controles); en la pausa va dentro de la pestaña Sistema, junto a Guardar/Cargar/Opciones/Volver al título (Pause_System).
 
@@ -4174,14 +4176,16 @@ Playtest 2026-10-12: las zonas tapadas (11.52, 11.54) no deberían verse como un
 
 **Notas:** Sesión: arte (-77) el overworld; overworld (-74) el minimapa.
 
-### 11.102 Mapa: nombres de zona chicos y solo los que importan · Pendiente
+### 11.102 Mapa: nombres de zona chicos y solo los que importan · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `ui`
 
 Playtest 2026-10-12: los nombres de zona en el mapa son muy grandes y no hace falta que cada área tenga nombre.
 
-- [ ] Mockup
-- [ ] Tamaño y qué zonas llevan nombre
+- [x] Mockup
+  Artboard 'Pausa · Mapa (overworld) por regiones grandes (11.102)' en el canvas: 8 regiones, cuevas y mazmorras con nombre propio. Daniel: sí, y el HUD también por regiones; el Santuario lleva nombre.
+- [x] Regiones grandes y lugares con nombre
+  AreaZone.region_label y display_name compartido por región; MapPlace para mazmorras, cuevas y santuario; el HUD nombra la región al cambiar de región.
 
 **Notas:** Sesión: overworld (-74). Ajustar el mockup del canvas primero.
 

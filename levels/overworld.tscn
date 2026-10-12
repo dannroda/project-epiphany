@@ -56,6 +56,7 @@
 [ext_resource type="PackedScene" path="res://src/world/water/shallow_water.tscn" id="102_shallow"]
 
 [ext_resource type="PackedScene" path="res://src/world/bridge.tscn" id="100_bridge"]
+[ext_resource type="Script" path="res://src/world/map_place.gd" id="101_place"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7se6l"]
 panorama = ExtResource("1_qyxw2")
@@ -200,7 +201,7 @@ data = {
 [node name="Zone_santuario" type="Area3D" parent="." unique_id=1678673474]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72, 1.2, -32)
 script = ExtResource("3_rqerd")
-display_name = "PLACE_SANCTUARY"
+display_name = "PLACE_TEMPLE_ESPLANADE"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_santuario" unique_id=1428017056]
 shape = SubResource("BoxShape3D_mweuj")
@@ -216,8 +217,9 @@ checkpoint = true
 [node name="Zone_templo" type="Area3D" parent="." unique_id=1263706178]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 1.2, -32)
 script = ExtResource("3_rqerd")
-display_name = "PLACE_TEMPLE_ENTRANCE"
+display_name = "PLACE_TEMPLE_ESPLANADE"
 terrain_style = &"explanada"
+region_label = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_templo" unique_id=124426366]
 shape = SubResource("BoxShape3D_xv8lf")
@@ -230,7 +232,7 @@ id = &"templo"
 [node name="Zone_risco" type="Area3D" parent="." unique_id=361301439]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 1.2, -32)
 script = ExtResource("3_rqerd")
-display_name = "PLACE_EYE_CRAG"
+display_name = "PLACE_SUMMIT"
 terrain_style = &"cumbre"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_risco" unique_id=11524084]
@@ -249,7 +251,7 @@ id = &"chullpa"
 [node name="Zone_cueva" type="Area3D" parent="." unique_id=1969367872]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72, 1.2, -8)
 script = ExtResource("3_rqerd")
-display_name = "PLACE_HILLS"
+display_name = "PLACE_MEADOW"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_cueva" unique_id=1634190035]
 shape = SubResource("BoxShape3D_jqovx")
@@ -263,6 +265,7 @@ id = &"cueva"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 1.2, -8)
 script = ExtResource("3_rqerd")
 display_name = "PLACE_MEADOW"
+region_label = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_pradera" unique_id=9997703]
 shape = SubResource("BoxShape3D_naip4")
@@ -275,7 +278,7 @@ id = &"pradera"
 [node name="Zone_arboleda" type="Area3D" parent="." unique_id=308361582]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 1.2, 16)
 script = ExtResource("3_rqerd")
-display_name = "PLACE_GROVE"
+display_name = "PLACE_FIRST_CLEARING"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_arboleda" unique_id=2016310975]
 shape = SubResource("BoxShape3D_yqe63")
@@ -288,7 +291,7 @@ id = &"arboleda"
 [node name="Zone_gruta" type="Area3D" parent="." unique_id=1629919669]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72, 1.2, 16)
 script = ExtResource("3_rqerd")
-display_name = "PLACE_HIDDEN_GROTTO"
+display_name = "PLACE_FIRST_CLEARING"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_gruta" unique_id=845541249]
 shape = SubResource("BoxShape3D_01rmd")
@@ -305,6 +308,7 @@ id = &"gruta"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 1.2, 16)
 script = ExtResource("3_rqerd")
 display_name = "PLACE_FIRST_CLEARING"
+region_label = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_start" unique_id=1946411272]
 shape = SubResource("BoxShape3D_65jsb")
@@ -312,7 +316,7 @@ shape = SubResource("BoxShape3D_65jsb")
 [node name="Zone_vertiente" type="Area3D" parent="." unique_id=412107030]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72, 1.2, 32)
 script = ExtResource("3_rqerd")
-display_name = "PLACE_SPRING"
+display_name = "PLACE_FIRST_CLEARING"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_vertiente" unique_id=1039531078]
 shape = SubResource("BoxShape3D_zone_vertiente")
@@ -322,6 +326,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -8)
 script = ExtResource("3_rqerd")
 display_name = "PLACE_RAVINE"
 terrain_style = &"quebrada"
+region_label = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_quebrada" unique_id=1379591972]
 shape = SubResource("BoxShape3D_zone_quebrada")
@@ -331,6 +336,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.2, -32)
 script = ExtResource("3_rqerd")
 display_name = "PLACE_SUMMIT"
 terrain_style = &"cumbre"
+region_label = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_cumbre" unique_id=617351240]
 shape = SubResource("BoxShape3D_zone_cumbre")
@@ -340,6 +346,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.2, -8)
 script = ExtResource("3_rqerd")
 display_name = "PLACE_NECROPOLIS"
 terrain_style = &"necropolis"
+region_label = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_necropolis" unique_id=1654173063]
 shape = SubResource("BoxShape3D_zone_necropolis")
@@ -347,7 +354,7 @@ shape = SubResource("BoxShape3D_zone_necropolis")
 [node name="Zone_mirador" type="Area3D" parent="." unique_id=1586876401]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 1.2, -8)
 script = ExtResource("3_rqerd")
-display_name = "PLACE_LOOKOUT"
+display_name = "PLACE_NECROPOLIS"
 terrain_style = &"necropolis"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_mirador" unique_id=1161863327]
@@ -356,7 +363,7 @@ shape = SubResource("BoxShape3D_zone_mirador")
 [node name="Zone_cardonal" type="Area3D" parent="." unique_id=432904364]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 1.2, 16)
 script = ExtResource("3_rqerd")
-display_name = "PLACE_CACTUS_FIELD"
+display_name = "PLACE_MARSH"
 terrain_style = &"cardonal"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_cardonal" unique_id=242074098]
@@ -367,6 +374,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 1.2, 32)
 script = ExtResource("3_rqerd")
 display_name = "PLACE_LAGOON"
 terrain_style = &"laguna"
+region_label = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_laguna" unique_id=163856653]
 shape = SubResource("BoxShape3D_zone_laguna")
@@ -376,6 +384,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 1.2, 32)
 script = ExtResource("3_rqerd")
 display_name = "PLACE_MARSH"
 terrain_style = &"laguna"
+region_label = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_banado" unique_id=336000691]
 shape = SubResource("BoxShape3D_zone_banado")
@@ -881,3 +890,39 @@ target_spawn = &"start"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ChullpaDoor" unique_id=1820417736]
 shape = SubResource("BoxShape3D_chullpa_door")
+
+[node name="PlaceTemple" type="Marker3D" parent="." unique_id=1820417740]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 0, -36)
+script = ExtResource("101_place")
+display_name = "PLACE_EYE_TEMPLE"
+kind = 0
+
+[node name="PlaceChullpa" type="Marker3D" parent="." unique_id=1820417741]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, -17)
+script = ExtResource("101_place")
+display_name = "PLACE_CHULLPA"
+kind = 0
+
+[node name="PlaceSanctuary" type="Marker3D" parent="." unique_id=1820417742]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72, 0, -32)
+script = ExtResource("101_place")
+display_name = "PLACE_SANCTUARY"
+kind = 2
+
+[node name="PlaceBombCave" type="Marker3D" parent="." unique_id=1820417743]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74, 0, -20)
+script = ExtResource("101_place")
+display_name = "PLACE_BOMB_CAVE"
+kind = 1
+
+[node name="PlaceGrotto" type="Marker3D" parent="." unique_id=1820417744]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72, 0, 16)
+script = ExtResource("101_place")
+display_name = "PLACE_HIDDEN_GROTTO"
+kind = 1
+
+[node name="PlaceSpring" type="Marker3D" parent="." unique_id=1820417745]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -82, 0, 30)
+script = ExtResource("101_place")
+display_name = "PLACE_SPRING"
+kind = 1
