@@ -20,6 +20,10 @@ func _init() -> void:
 	monitorable = false
 
 
+func _exit_tree() -> void:
+	_set_focus(null)
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if not player.controls.event_pressed(event, &"interact") or not player.can_interact():
 		return
@@ -38,7 +42,11 @@ func _physics_process(_delta: float) -> void:
 
 func _set_focus(target: Interactable) -> void:
 	if target != focus:
+		if is_instance_valid(focus):
+			focus.set_focus(false)
 		focus = target
+		if focus:
+			focus.set_focus(true)
 		focus_changed.emit(target)
 
 

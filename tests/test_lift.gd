@@ -111,3 +111,24 @@ func test_dodging_drops_what_it_carries() -> void:
 	assert_eq(player.carrier.is_carrying(), false, "rodar la suelta")
 	assert_eq(is_instance_valid(pot), false, "y se rompe al caer")
 	setup[1].reset()
+
+
+func test_in_reach_it_gets_an_outline() -> void:
+	var setup: Array = await _setup()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[2]
+	var pot: Breakable = tree.current_scene.get_node(^"Pot1")
+	var model := pot.find_children("*", "MeshInstance3D", true, false)[0] as MeshInstance3D
+	player.global_position = pot.global_position + Vector3(0, 0, 6.0)
+	for i in 3:
+		await tree.physics_frame
+	assert_eq(model.material_overlay, null, "lejos, sin contorno")
+	player.global_position = pot.global_position + Vector3(0, 0, 1.0)
+	player.model.look_at(player.model.global_position + Vector3.BACK, Vector3.UP)
+	for i in 3:
+		await tree.physics_frame
+	assert_true(model.material_overlay != null, "al alcance, con contorno")
+	await _tap(tree, &"interact")
+	await tree.create_timer(0.7).timeout
+	assert_eq(model.material_overlay, null, "levantada, sin contorno")
+	setup[1].reset()

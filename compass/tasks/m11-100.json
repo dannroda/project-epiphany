@@ -1,8 +1,8 @@
 {
   "checklist": [
     {
-      "detail": "Material, forma o marca consistente; prompt al acercarse.",
-      "done": false,
+      "detail": "Lo levantable lleva un cordón de lana roja y crema con nudo y borlas (vasija en el cuello; piedra nueva piedra_levantable, más clara y redonda que la de empujar). Al alcance, contorno crema (Liftable.highlight) junto al prompt Levantar. Interactable.focused avisa cuando algún player lo tiene de foco.",
+      "done": true,
       "text": "Lenguaje visual de lo levantable"
     }
   ],
@@ -15,12 +15,12 @@
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "arte",
     "ui"
   ],
   "test": "",
   "title": "Qué se puede levantar se tiene que entender",
-  "updated_at": "2026-10-12T08:16:59.106Z"
+  "updated_at": "2026-10-12T08:30:02.582Z"
 }

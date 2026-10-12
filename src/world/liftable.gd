@@ -11,6 +11,8 @@ const THROWN_OBJECT := preload("res://src/world/thrown_object.tscn")
 @export var body_radius := 0.3
 ## Del pie del objeto al centro del cuerpo físico.
 @export var body_height := 0.35
+## Contorno sobre el objeto mientras algún player lo tiene al alcance.
+@export var highlight: Material = preload("res://src/world/liftable_outline.tres")
 
 var target: Node3D
 
@@ -23,6 +25,12 @@ func _init() -> void:
 func _ready() -> void:
 	target = get_parent()
 	interacted.connect(func(by: PlayerCharacter) -> void: by.lift(self))
+	focused.connect(_highlight)
+
+
+func _highlight(on: bool) -> void:
+	for mesh in target.find_children("*", "MeshInstance3D", true, false):
+		(mesh as MeshInstance3D).material_overlay = highlight if on else null
 
 
 ## El cuerpo que se lleva: lo crea la primera vez (el objeto deja de ser estático) y después lo reusa.

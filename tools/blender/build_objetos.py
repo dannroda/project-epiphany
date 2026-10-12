@@ -25,6 +25,20 @@ def piece(name, seed, fn):
 
 # --- props ---
 
+def cordon(p, radius, z, width=0.05):
+	"""Cordón de lana roja y crema con un nudo y dos borlas adelante: la marca de lo que se levanta."""
+	band = p.cylinder(radius, z - width / 2, z + width / 2, sides=14, cap_top=False, cap_bottom=False)
+	p.paint(band, "tela_roja", "MID")
+	stripe = p.cylinder(radius + 0.004, z - width / 6, z + width / 6, sides=14, cap_top=False, cap_bottom=False)
+	p.paint(stripe, "hueso", "LIGHT")
+	knot = p.blob((0, -radius - 0.02, z), 0.045, subdiv=1, rough=0.1)
+	p.paint(knot, "tela_roja", "DARK")
+	for side in (-1, 1):
+		tassel = p.box(-0.018, 0.018, -0.018, 0.018, z - 0.13, z - 0.02, taper=0.01)
+		p.transform(tassel, Matrix.Translation((side * 0.035, -radius - 0.03, 0)))
+		p.paint(tassel, "hueso", "MID")
+
+
 def vasija(p):
 	"""Aríbalo: cuerpo panzón, cuello angosto y boca abierta, con guardas rojas, negras y crema."""
 	profile = [(0.1, 0.0), (0.2, 0.05), (0.27, 0.18), (0.29, 0.3), (0.26, 0.42), (0.17, 0.52), (0.1, 0.58), (0.1, 0.64), (0.15, 0.7), (0.0, 0.69)]
@@ -34,6 +48,14 @@ def vasija(p):
 		ear = p.box(-0.04, 0.04, -0.035, 0.035, 0.2, 0.3)
 		p.transform(ear, Matrix.Translation((side * 0.29, 0, 0)))
 		p.paint(ear, "roca_naranja", "DARK")
+	cordon(p, 0.115, 0.6, width=0.04)
+
+
+def piedra_levantable(p):
+	"""Piedra que se levanta: más clara y redonda que las de adorno, atada con el cordón."""
+	rock = p.blob((0, 0, 0.25), 0.28, squash=(1.0, 0.95, 0.9), subdiv=2, rough=0.12, flat_bottom=0.0)
+	p.paint(rock, "tierra", "LIGHT", vary=0.06)
+	cordon(p, 0.27, 0.26, width=0.05)
 
 
 def vasija_pedazos(p):
@@ -378,6 +400,7 @@ piece("bomba", 19, lambda p: bomb(p))
 piece("bombas_x3", 20, bombas_x3)
 piece("orbe", 21, orbe)
 piece("explosion", 22, explosion)
+piece("piedra_levantable", 23, piedra_levantable)
 
 epi.layout(kit, columns=6, spacing=2.0)
 epi.publish("objetos")
