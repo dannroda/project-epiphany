@@ -5,6 +5,8 @@ extends BTAction
 const ARROW := preload("res://src/items/arrow/arrow.tscn")
 
 @export var target_var: StringName = &"target"
+## Mientras tensa queda en true: KeepAway no lo interrumpe.
+@export var drawing_var: StringName = &"drawing"
 @export var draw_time := 1.0
 @export var arrow_speed := 13.0
 @export var recovery_time := 0.7
@@ -18,6 +20,7 @@ func _generate_name() -> String:
 
 func _enter() -> void:
 	_shot = false
+	blackboard.set_var(drawing_var, true)
 	agent.stop_moving()
 	agent.anim_player.play(&"CombatRanged/Ranged_Bow_Draw", 0.15)
 	agent.flash.warn(draw_time)
@@ -42,6 +45,7 @@ func _tick(_delta: float) -> Status:
 
 
 func _exit() -> void:
+	blackboard.set_var(drawing_var, false)
 	var bow = _bow()
 	if bow:
 		bow.draw = 0.0
@@ -54,6 +58,7 @@ func _aim_at(target: Node3D) -> void:
 
 func _shoot(target: Node3D) -> void:
 	_shot = true
+	blackboard.set_var(drawing_var, false)
 	agent.anim_player.play(&"CombatRanged/Ranged_Bow_Release", 0.05)
 	var bow = _bow()
 	if bow:

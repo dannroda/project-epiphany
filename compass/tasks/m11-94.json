@@ -1,29 +1,31 @@
 {
+  "assignee": "Claude",
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "BT del arquero"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Test"
     }
   ],
   "code": "11.94",
   "created_at": "2026-10-12T08:16:45.697Z",
   "description": "Playtest 2026-10-12: el arquero corta su ataque para reacomodarse a distancia de rango. No hace falta: que dispare y se reacomode sin cancelar el ataque.",
+  "done_at": "2026-10-12T17:48:28.503Z",
   "milestone": "m11",
-  "notes": "Sesión: auditoría (-04).",
+  "notes": "Sesión de bugs (-fd). La raíz del árbol es un DynamicSelector con Alejarse antes de Disparar: se reevalúa cada tick y, si el player se acercaba a mitad de tensar, Alejarse cortaba el tiro. Ahora ShootArrow pone `drawing` en el blackboard mientras tensa y KeepAway no arranca con eso en true; apenas suelta la flecha, puede alejarse durante la recuperación.",
   "order": 91,
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "done",
   "tags": [
     "enemigos",
     "ia"
   ],
-  "test": "",
+  "test": "test_archer › test_a_close_player_does_not_cancel_the_shot: con el player encima a mitad de tensar sigue tensando, dispara y después se aleja.",
   "title": "Arquero: dispara sin frenarse a buscar distancia",
-  "updated_at": "2026-10-12T08:16:47.141Z"
+  "updated_at": "2026-10-12T17:48:28.503Z"
 }

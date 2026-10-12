@@ -68,3 +68,20 @@ func test_backs_away_when_the_player_is_close() -> void:
 	await tree.create_timer(1.0).timeout
 	assert_true(archer.global_position.distance_to(player.global_position) > 3.0, "retrocede (a %.1f m)" % archer.global_position.distance_to(player.global_position))
 	setup[1].reset()
+
+
+func test_a_close_player_does_not_cancel_the_shot() -> void:
+	var setup: Array = await _setup(6.0)
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[2]
+	var archer: Enemy = setup[3]
+	var before := player.health.current
+	await tree.create_timer(0.5).timeout
+	player.global_position = archer.global_position + Vector3(-2.0, 0, 0)
+	await tree.create_timer(0.3).timeout
+	assert_eq(archer.anim_player.current_animation, &"CombatRanged/Ranged_Bow_Draw", "sigue tensando con el player encima")
+	await tree.create_timer(0.6).timeout
+	assert_true(player.health.current < before, "y dispara (%d → %d)" % [before, player.health.current])
+	await tree.create_timer(1.2).timeout
+	assert_true(archer.global_position.distance_to(player.global_position) > 3.0, "después se reacomoda (a %.1f m)" % archer.global_position.distance_to(player.global_position))
+	setup[1].reset()

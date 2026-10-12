@@ -7,6 +7,8 @@ extends BTAction
 @export var safe_distance := 6.0
 @export var max_time := 1.5
 @export var animation: StringName = &"MovementAdvanced/Walking_Backwards"
+## No arranca mientras esta variable esté en true (el arquero tensando).
+@export var busy_var: StringName = &"drawing"
 
 
 func _generate_name() -> String:
@@ -15,13 +17,13 @@ func _generate_name() -> String:
 
 func _enter() -> void:
 	var target: Node3D = blackboard.get_var(target_var, null, false)
-	if target and _distance(target) < min_distance:
+	if target and _distance(target) < min_distance and not blackboard.get_var(busy_var, false, false):
 		agent.anim_player.play(animation, 0.2)
 
 
 func _tick(_delta: float) -> Status:
 	var target: Node3D = blackboard.get_var(target_var, null, false)
-	if target == null or (elapsed_time == 0.0 and _distance(target) >= min_distance):
+	if target == null or (elapsed_time == 0.0 and (_distance(target) >= min_distance or blackboard.get_var(busy_var, false, false))):
 		return FAILURE
 	if _distance(target) >= safe_distance or elapsed_time >= max_time:
 		return SUCCESS

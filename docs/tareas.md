@@ -4076,16 +4076,18 @@ Playtest 2026-10-12: el jefe anda bien en general; la tercera fase es demasiado 
 
 **Notas:** Sesión: auditoría (-04).
 
-### 11.94 Arquero: dispara sin frenarse a buscar distancia · Pendiente
+### 11.94 Arquero: dispara sin frenarse a buscar distancia · En curso
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `enemigos`, `ia`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `enemigos`, `ia`
 
 Playtest 2026-10-12: el arquero corta su ataque para reacomodarse a distancia de rango. No hace falta: que dispare y se reacomode sin cancelar el ataque.
 
-- [ ] BT del arquero
-- [ ] Test
+- [x] BT del arquero
+- [x] Test
 
-**Notas:** Sesión: auditoría (-04).
+**Prueba:** test_archer › test_a_close_player_does_not_cancel_the_shot: con el player encima a mitad de tensar sigue tensando, dispara y después se aleja.
+
+**Notas:** Sesión de bugs (-fd). La raíz del árbol es un DynamicSelector con Alejarse antes de Disparar: se reevalúa cada tick y, si el player se acercaba a mitad de tensar, Alejarse cortaba el tiro. Ahora ShootArrow pone `drawing` en el blackboard mientras tensa y KeepAway no arranca con eso en true; apenas suelta la flecha, puede alejarse durante la recuperación.
 
 ### 11.95 Botellas únicas: 4 en total, cualquier contenido · Hecho
 
