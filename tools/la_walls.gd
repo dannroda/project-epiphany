@@ -25,6 +25,8 @@ const MASK_MARGIN := 2.0
 ## La pared sur termina a MASK_MARGIN del piso; el recorte de la cámara arranca a 0.3 + esto.
 const SOUTH_REACH := 1.7
 const BRAZIER_SCALE := 0.55
+## Sobre el borde, pegado al frente: más atrás queda en la franja que la sala de al norte ve por encima de su pared sur.
+const BRAZIER_SETBACK := 0.15
 const BRAZIER_FLAME := 1.07
 const DOOR_LEAF_SCALE := Vector3(0.7, 0.8, 1.0)
 ## Cámara ortográfica (como LA): las paredes de los costados tienen el mismo ancho arriba y abajo.
@@ -75,7 +77,7 @@ func _dress(level: Node) -> void:
 			var torch := node as Node3D
 			var facing := torch.transform.basis.z.normalized()
 			var side := "s" if facing.z > 0.5 else "n" if facing.z < -0.5 else "e" if facing.x > 0.5 else "o"
-			torch.position = torch.position - facing * (PROFILE[side][0] + MASK_MARGIN) / 2.0
+			torch.position = torch.position - facing * (PROFILE[side][0] + BRAZIER_SETBACK)
 			torch.position.y = PROFILE[side][1]
 			var model := torch.get_node("Model") as MeshInstance3D
 			model.mesh = BRAZIER
@@ -131,6 +133,9 @@ func _shapes(grid: GridMap) -> Dictionary:
 		for corner: String in CORNERS:
 			if not code.contains(corner[0]) and not code.contains(corner[1]) and open.call(cell + SIDES[corner[0]] + SIDES[corner[1]]):
 				corners += "_" + corner
+		if item_name in WALLS and not code.contains("s") and code.contains("e") != code.contains("o") \
+				and not open.call(cell + SIDES["s"] + SIDES["e" if code.contains("e") else "o"]):
+			corners += "_fin"
 		var kind: String = "pared" if item_name in WALLS else stairs.get(cell, "paso")
 		out[cell] = [kind, (code if code else "x") + corners]
 	return out

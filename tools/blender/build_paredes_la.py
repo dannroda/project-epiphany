@@ -21,6 +21,10 @@ N = 24
 ## la sala, alta y empinada con la cresta; piso al norte = pared sur, baja y tendida como en LA; los costados, altos.
 PROFILE = {"s": (1.0, HEIGHT), "n": (1.2, 0.8), "e": (1.2, HEIGHT), "o": (1.2, HEIGHT)}
 MARGIN = 2.0
+## En las esquinas de abajo el costado baja a la altura de la pared sur: la cámara recorta todo lo más alto desde
+## FIN antes del borde sur de la sala, y lo recortado se vería oscuro.
+CORNER_DROP = 0.05
+FIN = 0.4
 STONE = "acantilado"
 kit = epi.start()
 
@@ -34,7 +38,24 @@ def profile(side, d):
 	return top * max(0.0, min(1.0, d / run))
 
 
+def corner(c, da, db):
+	"""Unión de los dos perfiles; en las esquinas de abajo (piso al norte) el costado baja en rampa a la altura de la pared sur."""
+	a, b = profile(c[0], da), profile(c[1], db)
+	if c[0] == "n":
+		low = PROFILE["n"][1]
+		b = min(b, HEIGHT - (HEIGHT - low) * min(1.0, da / CORNER_DROP))
+	return max(a, b)
+
+
 def height(x, y, sides, corners):
+	h = _height(x, y, sides, [c for c in corners if c != "fin"])
+	if "fin" in corners:
+		low = PROFILE["n"][1]
+		h = min(h, low + (HEIGHT - low) * max(0.0, min(1.0, (dist(x, y, "s") - FIN) / CORNER_DROP)))
+	return h
+
+
+def _height(x, y, sides, corners):
 	"""Cada punto toma el perfil de los lados con piso a menos de MARGIN (el más bajo si hay varios); si no hay ninguno
 	cerca, el más bajo de los lejanos. Las esquinas sueltas (piso solo en diagonal) son la unión de los dos perfiles."""
 	near, far = [], []
@@ -43,7 +64,7 @@ def height(x, y, sides, corners):
 		(near if d <= MARGIN else far).append(profile(side, d))
 	for c in corners:
 		da, db = dist(x, y, c[0]), dist(x, y, c[1])
-		(near if da <= MARGIN and db <= MARGIN else far).append(max(profile(c[0], da), profile(c[1], db)))
+		(near if da <= MARGIN and db <= MARGIN else far).append(corner(c, da, db))
 	if near:
 		return min(near)
 	return min(far) if far else HEIGHT
@@ -89,9 +110,11 @@ def across_x(sides, cut):
 	return ("n" in sides or "s" in sides) if cut == "paso" else sides[0] in "ns"
 
 
-def axes(sides, cut):
+def axes(sides, cut, code=""):
 	base = [0.5 * t + 0.5 * math.sin(t * math.pi / 2) for t in (-1 + 2 * i / N for i in range(N + 1))]
 	xs, ys = set(base), set(base)
+	if "fin" in code:
+		ys |= {coord("s", FIN), coord("s", FIN + CORNER_DROP)}
 	if cut:
 		for b in (-HALF, -HALF + 0.01, HALF - 0.01, HALF):
 			(xs if across_x(sides, cut) else ys).add(b)
@@ -109,7 +132,7 @@ def piece(kind, code, cut=None):
 	sides = [] if parts[0] == "x" else list(parts[0])
 	corners = parts[1:]
 	p = epi.Piece(sum(map(ord, kind + code)))
-	xs, ys = axes(sides, cut)
+	xs, ys = axes(sides, cut, code)
 
 	def h(x, y):
 		inside = channel(x, y, sides, cut) if cut else None
@@ -132,7 +155,7 @@ def piece(kind, code, cut=None):
 				shade(p, f, "piedra" if cut == "sube" else "gris_4", max(0.06, 0.6 - 0.45 * d / 1.7))
 		elif inside and abs(f.normal.x if across_x(sides, cut) else f.normal.y) < 0.5:
 			shade(p, f, "piedra" if cut != "baja" else "gris_5", max(0.05, 0.3 - 0.2 * inside[0] / 1.7))
-		elif f.normal.z > 0.95 and c.z > 0.3:
+		elif c.z > 0.3 and (f.normal.z > 0.95 or (f.normal.z > 0.75 and f.normal.y < -0.3)):
 			crest.append(f)
 		else:
 			shade(p, f, STONE, course_tone(c))
