@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/world/dungeon.gd" id="1_p48v1"]
 [ext_resource type="Script" path="res://src/world/dungeon_floor.gd" id="2_c7ykk"]
-[ext_resource type="MeshLibrary" path="res://data/kits/temple_kit.tres" id="3_exs1s"]
+[ext_resource type="MeshLibrary" path="res://data/kits/chullpa_kit.tres" id="3_exs1s"]
 [ext_resource type="Script" path="res://src/world/room.gd" id="4_m6qph"]
 [ext_resource type="Script" path="res://src/world/pit.gd" id="5_d3wa8"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="6_ufxwh"]

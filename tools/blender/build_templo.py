@@ -192,10 +192,10 @@ def relief(p):
 			if v.co.z > 1.5:
 				v.co.x *= 0.65
 		p.paint(niche, "noche", "MID")
-		skull = p.blob((0.0, -1.0, 1.08), 0.15, squash=(1.0, 0.8, 0.9), subdiv=1, rough=0.1)
+		skull = p.blob((0.0, -1.16, 1.08), 0.15, squash=(1.0, 0.8, 0.9), subdiv=1, rough=0.1)
 		p.paint(skull, "hueso", "MID")
 		for x in (-0.05, 0.05):
-			p.paint(p.box(x - 0.03, x + 0.03, -1.15, -1.1, 1.08, 1.13), "noche", "DARK")
+			p.paint(p.box(x - 0.03, x + 0.03, -1.3, -1.25, 1.08, 1.13), "noche", "DARK")
 	elif STYLE_NAME == "laguna":
 		ring = []
 		for r in (0.42, 0.28, 0.14):

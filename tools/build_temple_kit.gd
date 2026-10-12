@@ -1,10 +1,9 @@
 extends SceneTree
 ## Arma data/kits/temple_kit.tres: los mismos ítems y colisiones que el kit gris, con las piezas de assets/epiphany/templo.glb.
 ## godot --headless --path . --script res://tools/build_temple_kit.gd
+## Otro estilo de mazmorra (build_templo.py -- <estilo>): … -- chullpa (templo_chullpa.glb → data/kits/chullpa_kit.tres)
 
 const SOURCE := "res://data/kits/gray_kit.tres"
-const OUTPUT := "res://data/kits/temple_kit.tres"
-const SOURCE_GLB := "res://assets/epiphany/templo.glb"
 const STONE := preload("res://data/kits/materials/epiphany_stone.tres")
 const FLOOR := preload("res://data/kits/materials/epiphany.tres")
 const HIDDEN_FACES := preload("res://tools/hidden_faces.gd")
@@ -35,11 +34,19 @@ const VARIANTS := {
 	"Hueco pozo": [10, "hueco_pozo", FLOOR],
 }
 
+var _style := _style_name()
+var _output := "res://data/kits/%s_kit.tres" % (_style if _style else "temple")
+var _source_glb := "res://assets/epiphany/templo%s.glb" % ("_" + _style if _style else "")
 var _scene: Node
 
 
+static func _style_name() -> String:
+	var args := OS.get_cmdline_user_args()
+	return args[0] if not args.is_empty() else ""
+
+
 func _initialize() -> void:
-	_scene = (load(SOURCE_GLB) as PackedScene).instantiate()
+	_scene = (load(_source_glb) as PackedScene).instantiate()
 	var source: MeshLibrary = load(SOURCE)
 	var kit := MeshLibrary.new()
 	for id in source.get_item_list():
@@ -58,11 +65,11 @@ func _initialize() -> void:
 		kit.set_item_navigation_mesh(next, source.get_item_navigation_mesh(variant[0]))
 		next += 1
 	_scene.free()
-	var uid := ResourceLoader.get_resource_uid(OUTPUT)
-	var err := ResourceSaver.save(kit, OUTPUT)
+	var uid := ResourceLoader.get_resource_uid(_output) if ResourceLoader.exists(_output) else ResourceUID.INVALID_ID
+	var err := ResourceSaver.save(kit, _output)
 	if err == OK and uid != ResourceUID.INVALID_ID:
-		ResourceSaver.set_uid(OUTPUT, uid)
-	print("temple_kit: ", error_string(err), " · ", kit.get_item_list().size(), " ítems")
+		ResourceSaver.set_uid(_output, uid)
+	print(_output.get_file(), ": ", error_string(err), " · ", kit.get_item_list().size(), " ítems")
 	quit(0 if err == OK else 1)
 
 

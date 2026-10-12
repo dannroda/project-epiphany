@@ -17,6 +17,9 @@ func test_walls_carry_no_faces_nobody_sees() -> void:
 	var walls := {
 		"res://data/kits/overworld_kit.tres": {"Acantilado": 950, "Andén borde": 950},
 		"res://data/kits/temple_kit.tres": {"Pared": 700, "Pared nicho": 750, "Pared ojo": 750},
+		"res://data/kits/chullpa_kit.tres": {"Pared": 2100, "Pared nicho": 2000, "Pared ojo": 2000},
+		"res://data/kits/laguna_kit.tres": {"Pared": 750, "Pared nicho": 750, "Pared ojo": 850},
+		"res://data/kits/cumbre_kit.tres": {"Pared": 950, "Pared nicho": 950, "Pared ojo": 1050},
 	}
 	for path: String in walls:
 		var kit: MeshLibrary = load(path)
