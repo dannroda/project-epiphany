@@ -4327,6 +4327,7 @@ Daniel 2026-10-12: al dash/esquivar ponerle un efecto similar al trail de la esp
 
 - [x] Copias de la pose que se desvanecen
   DodgeGhosts (player.tscn) congela la pose cada 0,06 s mientras dura el roll; afterimage.tscn + ghost.gdshader (rosa translúcido con borde claro, depth prepass para que se lea la silueta) se desvanece en 0,3 s. Test test_roll_leaves_ghosts_that_fade. GDD §2 (feel).
+- [ ] Probarlo (Daniel): color, cantidad, duración
 
 ## M12 — Assets propios (Blender)  (6/17)
 

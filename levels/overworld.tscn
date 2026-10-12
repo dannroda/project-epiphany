@@ -576,8 +576,6 @@ navigation_mesh = ExtResource("99_nav")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 1.2, -37.5)
 script = ExtResource("14_5vrew")
 target_scene = "res://levels/temple.tscn"
-destination_kind = "LOADING_DUNGEON"
-destination = "PLACE_EYE_TEMPLE"
 target_spawn = &"start"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TempleDoor" unique_id=1496600314]
@@ -830,8 +828,6 @@ shape = SubResource("BoxShape3D_jamb")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -83.7, 1.2, 30)
 script = ExtResource("14_5vrew")
 target_scene = "res://levels/spring_cave.tscn"
-destination_kind = "LOADING_CAVE"
-destination = "PLACE_SPRING"
 target_spawn = &"entrada"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SpringCaveDoor" unique_id=668428541]
@@ -895,8 +891,6 @@ mesh = SubResource("BoxMesh_chullpa_doorway")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.2, -16.9)
 script = ExtResource("14_5vrew")
 target_scene = "res://levels/chullpa.tscn"
-destination_kind = "LOADING_DUNGEON"
-destination = "PLACE_CHULLPA"
 target_spawn = &"start"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ChullpaDoor" unique_id=1820417736]

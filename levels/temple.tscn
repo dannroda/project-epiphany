@@ -571,8 +571,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.2, 72.4)
 script = ExtResource("51_h4s6m")
 target_scene = "res://levels/overworld.tscn"
 target_spawn = &"templo"
-destination_kind = "LOADING_REGION"
-destination = "PLACE_TEMPLE_ESPLANADE"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPortal" unique_id=76133986]
 shape = SubResource("BoxShape3D_3cduy")
@@ -591,8 +589,6 @@ exit_portal = NodePath("../BossExitPortal")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 16)
 target_scene = "res://levels/overworld.tscn"
 target_spawn = &"templo"
-destination_kind = "LOADING_REGION"
-destination = "PLACE_TEMPLE_ESPLANADE"
 required_flag = &"d1_boss_defeated"
 travels = false
 

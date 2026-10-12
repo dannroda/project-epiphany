@@ -10,7 +10,7 @@
       "text": "SaveManager: slots y capturar/aplicar"
     },
     {
-      "detail": "Mockup Loading en el canvas (falta el visto bueno de Daniel). SceneFlow: si la carga en hilo tarda más de 0,25 s, tipo y nombre del destino (Portal.destination_kind/destination), barra de progreso y ojo; mínimo 0,6 s. Puestos en las puertas del overworld; las salidas de templo y Chullpa quedan genéricas.",
+      "detail": "Daniel (2026-10-12): alcanza con el ojo y un Cargando animado en la esquina inferior derecha. Mockup Loading rehecho así (aprobado). SceneFlow: si la carga en hilo tarda más de 0,25 s, negro con el ojo que parpadea y Cargando… (puntos animados) abajo a la derecha; mínimo 0,6 s. Sin destino ni barra: Portal.destination_kind/destination y las claves LOADING_* se quitaron (la salida de la Chullpa la limpia su sesión).",
       "done": true,
       "text": "Pantalla de carga"
     }
@@ -42,5 +42,5 @@
   ],
   "test": "SaveManager solo guarda/carga; los tests de viaje y respawn pasan contra SceneFlow.",
   "title": "SceneFlow: flujo de escenas aparte de SaveManager y pantalla de carga",
-  "updated_at": "2026-10-12T18:44:21.760Z"
+  "updated_at": "2026-10-12T20:10:42.959Z"
 }

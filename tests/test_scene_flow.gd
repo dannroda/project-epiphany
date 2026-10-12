@@ -10,7 +10,7 @@ func test_save_manager_only_handles_saves() -> void:
 		assert_true(tree.root.get_node(^"SceneFlow").has_method(method), "SceneFlow sí")
 
 
-func test_a_slow_trip_shows_the_loading_screen_with_the_destination() -> void:
+func test_a_slow_trip_shows_the_eye_loading_in_the_corner() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state: Node = tree.root.get_node(^"GameState")
 	var flow: Node = tree.root.get_node(^"SceneFlow")
@@ -20,7 +20,6 @@ func test_a_slow_trip_shows_the_loading_screen_with_the_destination() -> void:
 	for i in 3:
 		await tree.physics_frame
 	var door: Portal = tree.current_scene.get_node(^"ChullpaDoor")
-	assert_eq(door.destination, "PLACE_CHULLPA", "la puerta dice adónde lleva")
 	var after: float = flow.show_loading_after
 	flow.show_loading_after = 0.0
 	door.travel()
@@ -28,9 +27,15 @@ func test_a_slow_trip_shows_the_loading_screen_with_the_destination() -> void:
 	while Time.get_ticks_msec() < until and not flow.loading_screen.visible:
 		await tree.process_frame
 	assert_true(flow.loading_screen.visible, "aparece la pantalla de carga")
-	assert_eq(flow.get_node(^"%Name").text, "PLACE_CHULLPA", "con el destino")
-	assert_eq(flow.get_node(^"%Kind").text, "LOADING_DUNGEON")
-	assert_true(flow.get_node(^"%Header").visible)
+	var busy := flow.get_node(^"Loading/Busy") as Control
+	assert_eq(flow.get_node(^"Loading").get_children().map(func(node: Node) -> StringName: return node.name), [&"Background", &"Busy"], "solo el ojo y Cargando, sin destino ni barra")
+	assert_true(busy.get_global_rect().end.x > 1100 and busy.get_global_rect().end.y > 600, "en la esquina inferior derecha (%s)" % busy.get_global_rect())
+	var dots := flow.get_node(^"Loading/Busy/Text/Dots") as Label
+	var seen := {}
+	for i in 60:
+		seen[dots.visible_characters] = true
+		await tree.process_frame
+	assert_true(seen.size() >= 2, "los puntos se animan (%s)" % seen.keys())
 	while flow.traveling:
 		await tree.process_frame
 	flow.show_loading_after = after

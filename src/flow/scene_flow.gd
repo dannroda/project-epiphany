@@ -18,10 +18,6 @@ var traveling := false
 
 @onready var _rect: ColorRect = $Rect
 @onready var loading_screen: Control = $Loading
-@onready var _kind: Label = %Kind
-@onready var _name: Label = %Name
-@onready var _header: Control = %Header
-@onready var _bar: ProgressBar = %Bar
 
 
 func fade_out(seconds: float = 0.4) -> void:
@@ -47,16 +43,15 @@ func with_fade(action: Callable) -> void:
 
 
 ## Cambio de escena por un portal: fundido, carga en segundo plano (con pantalla de carga si tarda), los players en
-## `spawn` de la escena nueva y autosave. El juego queda en pausa mientras dura. `kind` y `title`: claves que la
-## pantalla de carga muestra (p. ej. LOADING_DUNGEON y PLACE_CHULLPA).
-func travel_to(scene_path: String, spawn: StringName, kind := "", title := "") -> void:
+## `spawn` de la escena nueva y autosave. El juego queda en pausa mientras dura.
+func travel_to(scene_path: String, spawn: StringName) -> void:
 	traveling = true
 	get_tree().paused = true
 	ResourceLoader.load_threaded_request(scene_path)
 	await fade_out(0.3)
 	for player in Players.all:
 		GameState.set_ward_of(player.controls.slot, player.health.ward_left())
-	if not await _change_scene(scene_path, kind, title):
+	if not await _change_scene(scene_path):
 		get_tree().paused = false
 		await fade_in(0.3)
 		traveling = false
@@ -74,26 +69,22 @@ func travel_to(scene_path: String, spawn: StringName, kind := "", title := "") -
 
 
 ## Carga `scene_path` en un hilo (pedido antes o acá) y cambia de escena. Si tarda más de `show_loading_after`,
-## la pantalla de carga muestra el destino y el progreso.
-func _change_scene(scene_path: String, kind := "", title := "") -> bool:
+## aparece la pantalla de carga (el ojo y "Cargando…" en la esquina).
+func _change_scene(scene_path: String) -> bool:
 	if ResourceLoader.load_threaded_get_status(scene_path) == ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
 		ResourceLoader.load_threaded_request(scene_path)
 	var started := Time.get_ticks_msec()
 	var shown_at := -1
-	var progress := []
-	while ResourceLoader.load_threaded_get_status(scene_path, progress) == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+	while ResourceLoader.load_threaded_get_status(scene_path) == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
 		if shown_at < 0 and Time.get_ticks_msec() - started >= show_loading_after * 1000.0:
 			shown_at = Time.get_ticks_msec()
-			show_loading(kind, title)
-		if shown_at >= 0:
-			_bar.value = progress[0] if not progress.is_empty() else 0.0
+			show_loading()
 		await get_tree().process_frame
 	if shown_at < 0 and show_loading_after <= 0.0:
 		shown_at = Time.get_ticks_msec()
-		show_loading(kind, title)
+		show_loading()
 	var packed := ResourceLoader.load_threaded_get(scene_path) as PackedScene
 	if shown_at >= 0:
-		_bar.value = 1.0
 		while Time.get_ticks_msec() - shown_at < loading_min_time * 1000.0:
 			await get_tree().process_frame
 	if packed == null:
@@ -106,11 +97,7 @@ func _change_scene(scene_path: String, kind := "", title := "") -> bool:
 	return true
 
 
-func show_loading(kind := "", title := "") -> void:
-	_kind.text = kind
-	_name.text = title
-	_header.visible = not title.is_empty()
-	_bar.value = 0.0
+func show_loading() -> void:
 	loading_screen.visible = true
 
 
