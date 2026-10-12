@@ -1,4 +1,5 @@
 {
+  "assignee": "Claude",
   "checklist": [
     {
       "done": false,
@@ -18,12 +19,12 @@
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "bug",
     "puzzle"
   ],
   "test": "",
   "title": "Puzzle del claro: la reja se abre con solo pisar las placas",
-  "updated_at": "2026-10-12T08:16:41.953Z"
+  "updated_at": "2026-10-12T17:27:15.301Z"
 }

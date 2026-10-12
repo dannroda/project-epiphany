@@ -16,8 +16,9 @@
       "text": "Blockout del GridMap nuevo"
     },
     {
-      "done": false,
-      "text": "Mudar los lugares existentes y la entrada de la Chullpa"
+      "detail": "Bridge que sube del fondo con una flecha al ojo de la otra orilla (ow_ravine_bridge_eye); torre provisoria de la Chullpa con su Portal en el norte de la Necrópolis y Spawn_chullpa delante. Los lugares viejos ya se mudaron en el paso 3. Postes del gancho, salto de una vía y puertas de D3/D4 esperan 11.90.",
+      "done": true,
+      "text": "Puente de la quebrada y entrada de la Chullpa"
     },
     {
       "done": false,
@@ -67,5 +68,5 @@
   ],
   "test": "",
   "title": "Rediseño del overworld como hub de varias mazmorras",
-  "updated_at": "2026-10-12T08:17:49.465Z"
+  "updated_at": "2026-10-12T17:24:37.173Z"
 }

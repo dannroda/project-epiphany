@@ -55,6 +55,8 @@
 [ext_resource type="PackedScene" path="res://src/world/water/waterfall.tscn" id="101_fall"]
 [ext_resource type="PackedScene" path="res://src/world/water/shallow_water.tscn" id="102_shallow"]
 
+[ext_resource type="PackedScene" path="res://src/world/bridge.tscn" id="100_bridge"]
+
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7se6l"]
 panorama = ExtResource("1_qyxw2")
 
@@ -156,6 +158,24 @@ shader_parameter/speed = 0.8
 material = SubResource("ShaderMaterial_laguna")
 size = Vector2(94, 14)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_ravine_bridge"]
+size = Vector3(13, 0.5, 6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_chullpa_door"]
+size = Vector3(2.4, 2.4, 1.4)
+
+[sub_resource type="StandardMaterial3D" id="Mat_chullpa_tower"]
+albedo_color = Color(0.56, 0.47, 0.38, 1)
+roughness = 1.0
+
+[sub_resource type="StandardMaterial3D" id="Mat_chullpa_doorway"]
+albedo_color = Color(0.03, 0.02, 0.02, 1)
+roughness = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_chullpa_doorway"]
+material = SubResource("Mat_chullpa_doorway")
+size = Vector3(2.2, 2.6, 0.3)
+
 [node name="Overworld" type="Node3D" unique_id=295443412]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1045124328]
@@ -222,7 +242,7 @@ script = ExtResource("4_cr2by")
 id = &"risco"
 
 [node name="Spawn_chullpa" type="Marker3D" parent="." unique_id=257450616]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, -10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, -13.5)
 script = ExtResource("4_cr2by")
 id = &"chullpa"
 
@@ -824,3 +844,40 @@ mesh = ExtResource("98_wall_grotto")
 [editable path="CavePracticeWall"]
 [editable path="ShrineCrackedWall"]
 [editable path="GrottoCrackedWall"]
+
+[node name="RavineEye" parent="." unique_id=1820417731 instance=ExtResource("39_ailnf")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 13, 0, -18.5)
+flag = &"ow_ravine_bridge_eye"
+
+[node name="RavineBridge" parent="." unique_id=1820417732 instance=ExtResource("100_bridge")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16)
+switches = Array[NodePath]([NodePath("../RavineEye")])
+drop = 4.0
+duration = 1.4
+
+[node name="Model" parent="RavineBridge" index="0"]
+transform = Transform3D(0, 0, 3.2, 0, 1, 0, -3, 0, 0, 0, 0, 0)
+
+[node name="CollisionShape3D" parent="RavineBridge" index="1"]
+shape = SubResource("BoxShape3D_ravine_bridge")
+
+[node name="ChullpaTower" type="CSGCylinder3D" parent="." unique_id=1820417733]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 4.5, -21)
+use_collision = true
+radius = 3.6
+height = 9.0
+sides = 10
+material = SubResource("Mat_chullpa_tower")
+
+[node name="ChullpaDoorway" type="MeshInstance3D" parent="ChullpaTower" unique_id=1820417734]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.2, 3.45)
+mesh = SubResource("BoxMesh_chullpa_doorway")
+
+[node name="ChullpaDoor" type="Area3D" parent="." unique_id=1820417735]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.2, -16.9)
+script = ExtResource("14_5vrew")
+target_scene = "res://levels/chullpa.tscn"
+target_spawn = &"start"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ChullpaDoor" unique_id=1820417736]
+shape = SubResource("BoxShape3D_chullpa_door")

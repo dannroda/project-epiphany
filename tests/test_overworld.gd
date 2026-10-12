@@ -89,6 +89,49 @@ func test_walk_the_east_bank() -> void:
 	state.reset()
 
 
+func test_an_arrow_at_the_eye_raises_the_bridge_to_the_necropolis() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	state.reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	for enemy in tree.get_nodes_in_group(&"enemies"):
+		enemy.free()
+	var level := tree.current_scene
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	var bridge := level.get_node(^"RavineBridge") as Bridge
+	player.global_position = Vector3(-10, 0, -16)
+	await tree.create_timer(0.3).timeout
+	assert_eq(bridge.is_up, false, "sin flecha el puente está abajo")
+	assert_eq((bridge.get_node(^"CollisionShape3D") as CollisionShape3D).disabled, true, "y no se pisa")
+	var eye := level.get_node(^"RavineEye") as EyeSwitch
+	var arrow: Projectile = load("res://src/items/arrow/arrow.tscn").instantiate()
+	level.add_child(arrow)
+	var info := Items.get_item(&"bow").make_damage(player)
+	info.team = EntityConfig.Team.PLAYER
+	var from := Vector3(-8, 1.2, -16)
+	arrow.launch(from, (eye.eye.global_position - from).normalized() * 20.0, info)
+	await tree.create_timer(1.6).timeout
+	assert_eq(bridge.is_up, true, "una flecha desde la Pradera al ojo de la otra orilla sube el puente")
+	assert_eq(state.flags.get(&"ow_ravine_bridge_eye"), true, "y queda guardado")
+	await tree.create_timer(1.6).timeout
+	var crossed := await _walk_until(tree, player, &"move_right", func() -> bool: return player.global_position.x > 14.0)
+	assert_true(crossed[0], "cruza el puente (quedó en %s)" % player.global_position.snappedf(0.1))
+	assert_eq(crossed[1], false, "sin caerse")
+	assert_eq(AreaZone._current.display_name, "PLACE_NECROPOLIS", "y llega a la Necrópolis")
+	state.reset()
+
+
+func test_the_chullpa_door_leads_into_the_dungeon_and_back() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var level := (load(LEVEL) as PackedScene).instantiate()
+	var door := level.get_node(^"ChullpaDoor") as Portal
+	var spawn := level.get_node(^"Spawn_chullpa") as Node3D
+	assert_eq(door.target_scene, "res://levels/chullpa.tscn", "la puerta lleva a la Chullpa")
+	assert_true(spawn.position.distance_to(door.position) > 2.5, "la llegada desde la Chullpa queda afuera de la puerta")
+	level.free()
+
+
 func _walk_route(tree: SceneTree, player: PlayerCharacter, route: Array) -> void:
 	for leg in route:
 		var result: Array = await _walk_until(tree, player, leg[0], leg[1])

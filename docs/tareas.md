@@ -2532,7 +2532,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (47/103)
+## M11 — Pulido: contenido y feel  (48/103)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4035,9 +4035,9 @@ Playtest del 2026-10-12: la primera mazmorra ya tiene varios softblocks, y la pl
 
 **Notas:** Sesión: overworld (-74), con Daniel. Toca 11.35/11.61 (pluma en D1 y en el overworld), los angostos de la quebrada (7.9, pensados como cruce con pluma), 11.30 (gancho) y la armadura del esqueleto.
 
-### 11.91 Puzzle del claro: la reja se abre con solo pisar las placas · Pendiente
+### 11.91 Puzzle del claro: la reja se abre con solo pisar las placas · En curso
 
-**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`, `puzzle`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `puzzle`
 
 En el overworld, la pantalla a la derecha del spawn tiene un mini puzzle de dos placas y bloques para abrir la reja del cofre. Pisar las placas alcanza para abrirla: tienen que mantenerla abierta los bloques, no el player.
 
@@ -4046,16 +4046,18 @@ En el overworld, la pantalla a la derecha del spawn tiene un mini puzzle de dos 
 
 **Notas:** Sesión: auditoría (-04).
 
-### 11.92 Agarrar un cuarto de corazón cura · Pendiente
+### 11.92 Agarrar un cuarto de corazón cura · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `items`
+**Terminada:** 2026-10-12 · **Prioridad:** media · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `items`
 
 Playtest 2026-10-12: tomar una pieza de corazón no cura. Que cure (a quien la toma, como el corazón en co-op), y al completar el contenedor que llene como ya hace.
 
-- [ ] Curar al tomar la pieza
-- [ ] Test
+- [x] Curar al tomar la pieza
+- [x] Test
 
-**Notas:** Sesión: auditoría (-04).
+**Prueba:** test_heart_pieces › test_piece_in_the_world_is_taken_once: tomar la pieza cura un corazón a quien la toma.
+
+**Notas:** Sesión de bugs (-fd). La pieza (heart_piece.tscn) cura 4 de vida, lo mismo que un corazón suelto, solo a quien la toma; al completar el contenedor llena como antes (cambia la vida máxima).
 
 ### 11.93 Jefe: aflojar la fase 3 y el modelo que se hunde · Pendiente
 
