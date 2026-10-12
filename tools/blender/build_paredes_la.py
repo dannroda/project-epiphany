@@ -21,9 +21,9 @@ N = 24
 ## la sala, alta y empinada con la cresta; piso al norte = pared sur, baja y tendida como en LA; los costados, altos.
 PROFILE = {"s": (1.0, HEIGHT), "n": (1.2, 0.8), "e": (1.2, HEIGHT), "o": (1.2, HEIGHT)}
 MARGIN = 2.0
-## En las esquinas de abajo el costado baja a la altura de la pared sur: la cámara recorta todo lo más alto desde
+## Al final de cada costado la cresta baja en pendiente (CORNER_DROP) a la altura de la pared sur: la cámara recorta todo lo más alto desde
 ## FIN antes del borde sur de la sala, y lo recortado se vería oscuro.
-CORNER_DROP = 0.05
+CORNER_DROP = 1.2
 FIN = 0.4
 STONE = "acantilado"
 kit = epi.start()
@@ -39,11 +39,10 @@ def profile(side, d):
 
 
 def corner(c, da, db):
-	"""Unión de los dos perfiles; en las esquinas de abajo (piso al norte) el costado baja en rampa a la altura de la pared sur."""
+	"""Unión de los dos perfiles; en las esquinas de abajo (piso al norte) el costado no pasa de la altura de la pared sur."""
 	a, b = profile(c[0], da), profile(c[1], db)
 	if c[0] == "n":
-		low = PROFILE["n"][1]
-		b = min(b, HEIGHT - (HEIGHT - low) * min(1.0, da / CORNER_DROP))
+		b = min(b, PROFILE["n"][1])
 	return max(a, b)
 
 
@@ -155,7 +154,7 @@ def piece(kind, code, cut=None):
 				shade(p, f, "piedra" if cut == "sube" else "gris_4", max(0.06, 0.6 - 0.45 * d / 1.7))
 		elif inside and abs(f.normal.x if across_x(sides, cut) else f.normal.y) < 0.5:
 			shade(p, f, "piedra" if cut != "baja" else "gris_5", max(0.05, 0.3 - 0.2 * inside[0] / 1.7))
-		elif c.z > 0.3 and (f.normal.z > 0.95 or (f.normal.z > 0.75 and f.normal.y < -0.3)):
+		elif c.z > 0.3 and (f.normal.z > 0.95 or (f.normal.z > 0.6 and f.normal.y < -0.5)):
 			crest.append(f)
 		else:
 			shade(p, f, STONE, course_tone(c))
