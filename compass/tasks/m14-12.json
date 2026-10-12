@@ -1,0 +1,48 @@
+{
+  "checklist": [
+    {
+      "detail": "Lo pone el registro; el estado por player se indexa por él.",
+      "done": false,
+      "text": "player_index propio"
+    },
+    {
+      "detail": "Mapeo de pads y unirse/irse en un nodo LocalJoin (o en Controls).",
+      "done": false,
+      "text": "Input local aparte"
+    },
+    {
+      "detail": "Renombrar a registered/unregistered o emitir tras `ready`; agregar `guest_joined(slot)`/`guest_left(slot)` desde join/leave.",
+      "done": false,
+      "text": "Señales de sesión"
+    }
+  ],
+  "code": "14.12",
+  "created_at": "2026-10-12T00:20:20.025Z",
+  "description": "`slot` significa a la vez 'quién' y 'qué pad'; `GameState.guest_buttons` va por `controls.slot`; los nodos se llaman `Player%d`. Players mezcla la lista con asignar joypads, mantener Start para irse, eventos de pausa sintéticos y un toggle de debug. `Players.joined/left` en realidad significan 'entró/salió del árbol': saltan antes del `_ready` del player y en cada cambio de escena.",
+  "files": [
+    "src/state/players.gd",
+    "src/state/game_state.gd",
+    "player/components/controls.gd"
+  ],
+  "links": [
+    {
+      "task": "m14-01",
+      "type": "related"
+    }
+  ],
+  "milestone": "m14",
+  "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).",
+  "order": 12,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "online",
+    "coop",
+    "input"
+  ],
+  "test": "Cambiar el pad de un player no cambia su índice ni su estado guardado; `guest_joined` salta una vez por invitado.",
+  "title": "Identidad del player independiente del pad",
+  "updated_at": "2026-10-12T00:20:22.186Z"
+}

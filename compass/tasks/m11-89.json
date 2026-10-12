@@ -1,0 +1,57 @@
+{
+  "checklist": [
+    {
+      "detail": "Y excluir la carpeta en export_presets.cfg.",
+      "done": false,
+      "text": "Escenas de prueba a levels/test/"
+    },
+    {
+      "detail": "Mover desde el editor (puente) para que se actualicen uids y rutas.",
+      "done": false,
+      "text": "Cámara a src/camera/"
+    },
+    {
+      "detail": "Los de src/tools/ que corren headless.",
+      "done": false,
+      "text": "Scripts de build a tools/"
+    },
+    {
+      "done": false,
+      "text": "BT junto a su entidad o en data/ai/"
+    },
+    {
+      "detail": "Log y DebugOverlay; el overlay como .tscn.",
+      "done": false,
+      "text": "Debug runtime a src/debug/"
+    },
+    {
+      "detail": "MenuStack antes que Feel; conectar `MenuStack.changed` directo.",
+      "done": false,
+      "text": "Orden de autoloads"
+    },
+    {
+      "done": false,
+      "text": "Renombrar el .tres por defecto"
+    }
+  ],
+  "code": "11.89",
+  "created_at": "2026-10-12T00:20:04.390Z",
+  "description": "La cámara de juego (505 líneas) y target_indicator están en src/tools/ junto a scripts de build; un EditorScript en src/debug/; Log y DebugOverlay (autoloads de runtime) en un addon, y DebugOverlay arma su Label por código; los BT entre src/entities/ y data/boss/; las escenas de prueba (test*, prueba_mc_godot, pruebas_terreno, sandbox_items, test_shinobi) en levels/ se exportan porque el filtro solo excluye tests/*; `player/animation/new_animation_node_state_machine.tres` con nombre por defecto; Feel cargado antes que MenuStack (por eso lo busca diferido).",
+  "files": [
+    "export_presets.cfg",
+    "project.godot"
+  ],
+  "milestone": "m11",
+  "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).",
+  "order": 86,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "herramientas"
+  ],
+  "test": "El export no incluye escenas de prueba; tests verdes tras mover.",
+  "title": "Orden de carpetas y escenas de prueba en la build",
+  "updated_at": "2026-10-12T00:20:07.025Z"
+}

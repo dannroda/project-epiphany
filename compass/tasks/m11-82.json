@@ -1,0 +1,49 @@
+{
+  "checklist": [
+    {
+      "detail": "`static func make(amount, knockback, source, element := &\"\")` y usarla en los 8 sitios.",
+      "done": false,
+      "text": "DamageInfo.make"
+    },
+    {
+      "detail": "`player.hurtbox.receive(info)` con un flag en DamageInfo para saltar escudo/i-frames donde se quiere (pozo, ticks del agarre).",
+      "done": false,
+      "text": "Pozo y agarre por Hurtbox"
+    },
+    {
+      "detail": "`%BlastTemplate` con un Hitbox como explosion.tscn (resuelve también el daño a todos los players de 13.7).",
+      "done": false,
+      "text": "Marca con Hitbox"
+    }
+  ],
+  "code": "11.82",
+  "created_at": "2026-10-12T00:19:28.680Z",
+  "description": "El pozo (`pit.gd:26`) y el agarre del jefe (`boss_hand.gd` ~353) llaman a `health.damage` directo: no aplica la reducción de la túnica, ni feedback, y en M14 son entradas de daño extra. El tick del agarre (0.75 s) es menor que los i-frames del player (0.8 s): la mitad de los ticks se pierden. La explosión de la marca y el arrojadizo llaman a `Hurtbox.receive` a mano y saltan el filtro de equipo/`_already_hit`. `DamageInfo.new()` se arma a mano en 8 lugares con equipo/elemento distintos.",
+  "files": [
+    "src/world/pit.gd",
+    "src/entities/boss/boss_hand.gd",
+    "src/entities/boss/boss.gd",
+    "src/components/damage_info.gd",
+    "src/world/thrown_object.gd"
+  ],
+  "links": [
+    {
+      "task": "m13-07",
+      "type": "related"
+    }
+  ],
+  "milestone": "m11",
+  "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).",
+  "order": 79,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "combate"
+  ],
+  "test": "Con túnica, el pozo y el agarre restan menos; el agarre resta en cada tick; la marca daña a cualquier player dentro vía Hitbox.",
+  "title": "Daño que no pasa por el Hurtbox",
+  "updated_at": "2026-10-12T00:19:44.390Z"
+}

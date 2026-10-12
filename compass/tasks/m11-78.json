@@ -34,6 +34,11 @@
       "detail": "spring.gd usa `by.health`; ToonToggle limpia `_saved` de nodos liberados.",
       "done": false,
       "text": "Varios"
+    },
+    {
+      "detail": "player_panel.gd `get_node(^\"InteractionDetector\")`, boss `get_node(^\"Hurtbox\")` (ya existe `player.hurtbox`), input_buffer `get_parent().get(&\"controls\")`, equipment.gd `owner.…` → propiedades tipadas en PlayerCharacter o `@export var player`.",
+      "done": false,
+      "text": "Accesos por ruta a nodos del player"
     }
   ],
   "code": "11.78",
@@ -52,5 +57,5 @@
   ],
   "test": "Tests verdes; sin cambios visibles salvo el parpadeo de chips/corazones.",
   "title": "Limpieza menor de la revisión de código",
-  "updated_at": "2026-10-12T00:06:05.795Z"
+  "updated_at": "2026-10-12T00:20:25.426Z"
 }

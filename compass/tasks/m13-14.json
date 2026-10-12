@@ -1,0 +1,50 @@
+{
+  "checklist": [
+    {
+      "detail": "Nodo en el .tscn (bajo Dungeon) con `_update_room`/`enter_room`, bring-along, correa de pantalla y `room_entry`; emite `room_changed(previous, room, crosser)`.",
+      "done": false,
+      "text": "RoomTracker en la escena de la mazmorra"
+    },
+    {
+      "detail": "Solo pan y encuadre; `reveal` pasa a ser un pedido que la cámara puede atender.",
+      "done": false,
+      "text": "La cámara escucha"
+    },
+    {
+      "detail": "test_rooms y test_coop_camera sin depender de la cámara para la lógica.",
+      "done": false,
+      "text": "Tests"
+    }
+  ],
+  "code": "13.14",
+  "created_at": "2026-10-12T00:20:07.308Z",
+  "description": "`top_down_camera.gd` detecta en qué sala están los players y desde ahí llama a `room.mark_entered()` (visita, autosave, rejas, oleadas, reset de bloques), emite `Room.player_left`, revive espíritus, teletransporta rezagados, los mantiene en pantalla y escribe `GameState.room_entry`. Una escena sin esa cámara (tests headless, cutscene con otra cámara) no tiene progresión de salas, y en online cada cliente lo haría por su cuenta (oleadas y autosaves duplicados).",
+  "files": [
+    "src/tools/top_down_camera.gd",
+    "src/world/room.gd",
+    "src/world/door.gd",
+    "src/world/gate.gd",
+    "src/entities/boss/boss_arena.gd"
+  ],
+  "links": [
+    {
+      "task": "m14-01",
+      "type": "related"
+    }
+  ],
+  "milestone": "m13",
+  "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).",
+  "order": 14,
+  "priority": "high",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "coop",
+    "arquitectura",
+    "camara"
+  ],
+  "test": "Con la cámara quitada, entrar a una sala la marca visitada y arranca la oleada; la cámara solo encuadra.",
+  "title": "Las salas las decide un nodo del mundo, no la cámara",
+  "updated_at": "2026-10-12T00:20:10.098Z"
+}

@@ -1,0 +1,43 @@
+{
+  "checklist": [
+    {
+      "detail": "La entidad lo respeta en su propia física (local en M13, replicado u omitido en M14).",
+      "done": false,
+      "text": "Hit-stop como flag"
+    },
+    {
+      "detail": "Animación, VFX y cámara.",
+      "done": false,
+      "text": "freeze solo presentación"
+    }
+  ],
+  "code": "14.11",
+  "created_at": "2026-10-12T00:20:17.560Z",
+  "description": "`Feel.hit_stop` pone `PROCESS_MODE_DISABLED` a nodos de gameplay y `freeze` cambia `Engine.time_scale`. En online cada proceso congelaría por su cuenta, y deshabilitar nodos hace perder eventos de input (causa de fondo de 11.65).",
+  "files": [
+    "src/feel/feel.gd",
+    "player/player.gd",
+    "src/entities/boss/boss.gd",
+    "src/entities/boss/boss_hand.gd"
+  ],
+  "links": [
+    {
+      "task": "m11-65",
+      "type": "related"
+    }
+  ],
+  "milestone": "m14",
+  "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).",
+  "order": 11,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "online",
+    "feel"
+  ],
+  "test": "Durante un hit-stop el player sigue recibiendo input; los tests no dependen del timing del freeze.",
+  "title": "Feel solo cosmético: hit-stop como estado de gameplay",
+  "updated_at": "2026-10-12T00:20:19.764Z"
+}

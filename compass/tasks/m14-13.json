@@ -1,0 +1,44 @@
+{
+  "checklist": [
+    {
+      "detail": "Botones pressed/just_pressed más la intención de cambiar objetivo.",
+      "done": false,
+      "text": "Controls arma un frame por tick"
+    },
+    {
+      "detail": "state_machine, input_buffer, targeting, aim; el objetivo elegido es parte del input.",
+      "done": false,
+      "text": "Consumidores leen del frame"
+    }
+  ],
+  "code": "14.13",
+  "created_at": "2026-10-12T00:20:22.448Z",
+  "description": "Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del bloqueo, input_buffer, targeting y aim), y el targeting depende de `camera.unproject_position` local. M14 necesita snapshots de input por tick que el servidor pueda aplicar.",
+  "files": [
+    "player/components/controls.gd",
+    "player/state_machine.gd",
+    "player/components/input_buffer.gd",
+    "player/components/targeting.gd",
+    "player/components/aim.gd"
+  ],
+  "links": [
+    {
+      "task": "m14-01",
+      "type": "related"
+    }
+  ],
+  "milestone": "m14",
+  "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).",
+  "order": 13,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "online",
+    "input"
+  ],
+  "test": "El FSM, el buffer y el targeting leen solo del frame de Controls; se puede reproducir una partida corta a partir de los frames grabados.",
+  "title": "Frame de input por tick en Controls",
+  "updated_at": "2026-10-12T00:20:24.940Z"
+}

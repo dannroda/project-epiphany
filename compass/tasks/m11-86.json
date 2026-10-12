@@ -1,0 +1,49 @@
+{
+  "checklist": [
+    {
+      "detail": "`set_room_entry`, `set_spawn_point`, etc.",
+      "done": false,
+      "text": "Setters para los campos sueltos"
+    },
+    {
+      "detail": "`GameState.reveal_at(xz)` dueño de la Image, llamado desde un nodo del overworld; el minimapa solo lee.",
+      "done": false,
+      "text": "Revelar el mapa desde el mundo"
+    },
+    {
+      "detail": "Salir si ya tiene ese valor.",
+      "done": false,
+      "text": "set_flag sin cambio no emite"
+    },
+    {
+      "detail": "Guard `_bulk` en `read_from`/`_clear` que suprime las señales finas; solo `loaded`.",
+      "done": false,
+      "text": "Carga en bloque"
+    }
+  ],
+  "code": "11.86",
+  "created_at": "2026-10-12T00:19:53.982Z",
+  "description": "Hay campos de GameState que se escriben a pelo desde afuera (`room_entry` desde la cámara y boss_arena, `boss_rematch`, `spawn_point`, `map_revealed` desde el minimapa), sin señal ni setter. El progreso del overworld lo pinta el minimapa del HUD: sin HUD no se registra lo explorado. `set_flag` emite aunque el valor no cambie. Cargar emite `dungeon_changed` dos veces y `inventory.changed` por ítem antes de `loaded` (el HUD crea un DungeonState fantasma; el mapa se reconstruye 2-3 veces).",
+  "files": [
+    "src/state/game_state.gd",
+    "src/ui/hud/minimap.gd",
+    "src/tools/top_down_camera.gd",
+    "src/entities/boss/boss_arena.gd",
+    "src/world/spawn_point.gd",
+    "src/items/inventory.gd"
+  ],
+  "milestone": "m11",
+  "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).",
+  "order": 83,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "arquitectura",
+    "guardado"
+  ],
+  "test": "Sin HUD, caminar el overworld revela el mapa; cargar una partida emite `loaded` y nada intermedio.",
+  "title": "GameState: escrituras con señal y carga sin emisiones parciales",
+  "updated_at": "2026-10-12T00:19:56.982Z"
+}

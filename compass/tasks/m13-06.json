@@ -9,6 +9,11 @@
       "detail": "Que la cota reforzada también tenga su versión P2.",
       "done": false,
       "text": "Combinar con las armaduras"
+    },
+    {
+      "detail": "Hoy están en `hud.gd` (`player_colors`) y items_page los busca con `get_first_node_in_group(&\"hud\")` (sin HUD el cursor sale blanco). Un recurso exportado donde se necesite, también para el modelo. (Revisión de arquitectura 2026-10-11.)",
+      "done": false,
+      "text": "Colores de player en un solo .tres"
     }
   ],
   "code": "13.6",
@@ -31,5 +36,5 @@
   ],
   "test": "P1 y P2 se distinguen de un vistazo con cualquier armadura.",
   "title": "Player 2 con su color",
-  "updated_at": "2026-10-11T08:10:34.141Z"
+  "updated_at": "2026-10-12T00:20:25.928Z"
 }

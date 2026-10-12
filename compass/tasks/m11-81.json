@@ -1,0 +1,42 @@
+{
+  "checklist": [
+    {
+      "detail": "dungeon.gd: `&\"\"` y config warning; poner `id = &\"d1\"` en temple.tscn.",
+      "done": false,
+      "text": "Id vacío por defecto + aviso"
+    },
+    {
+      "detail": "`^(ow|d\\\\d+)_` en PersistentFlag y SaveCodec.",
+      "done": false,
+      "text": "Prefijos por regex"
+    },
+    {
+      "detail": "Un flag `dN_` en una escena cuyo Dungeon.id no es dN.",
+      "done": false,
+      "text": "Opcional: avisar prefijo distinto"
+    }
+  ],
+  "code": "11.81",
+  "created_at": "2026-10-12T00:19:26.492Z",
+  "description": "`Dungeon.id` vale `&\"d1\"` por defecto y temple.tscn depende de eso (no tiene `id =`). Una mazmorra nueva que olvide el id comparte llaves, mapa y brújula con D1 sin aviso. `PersistentFlag.PREFIXES` es una lista fija `ow_, d0_..d3_` y SaveCodec deriva la sección del prefijo: D4 requiere tocar código.",
+  "files": [
+    "src/world/dungeon.gd",
+    "levels/temple.tscn",
+    "src/save/save_codec.gd"
+  ],
+  "milestone": "m11",
+  "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).",
+  "order": 78,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "mazmorra",
+    "guardado"
+  ],
+  "test": "Un Dungeon sin id muestra aviso; temple tiene `id = &\"d1\"` explícito; un flag `d4_x` valida sin tocar código.",
+  "title": "Dungeon.id por defecto d1 y prefijos de flags fijos",
+  "updated_at": "2026-10-12T00:19:28.399Z"
+}

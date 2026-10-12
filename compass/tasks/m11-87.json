@@ -1,0 +1,63 @@
+{
+  "checklist": [
+    {
+      "detail": "boss.gd: 24 const (EYE_STUN_TIME, ENRAGE_FRACTION, MARK_*, REPEAT_PENALTY, SAME_HAND_PENALTY); boss_hand.gd: SLAM_HEIGHT, GRAB_REACH, IMPACT_HIT_STOP, SLAM_OVERSHOOT/BOUNCE → `@export_group`. Lo cosmético (bob, parpadeo) puede quedar const.",
+      "done": false,
+      "text": "Jefe"
+    },
+    {
+      "detail": "carrying.gd CARRY_SPEED/THROW_DISTANCE/FLIGHT_TIME, aiming_item.gd LOCKED_SPEED, carrier.gd → `@export`.",
+      "done": false,
+      "text": "Player"
+    },
+    {
+      "detail": "windup_time, windup_pose, recovery_time de bt_attack a AttackData; `attack` en EntityConfig; enemy_bt.tres deja de fijar skeleton_slash.",
+      "done": false,
+      "text": "Timing de ataque de enemigos"
+    },
+    {
+      "detail": "player.tres `max_health` se ignora (manda NEW_GAME_MAX_HEALTH); HP_PER_HEART copiado en game_state, player_panel, equipment_page y un `/ 4` en slot_card → una sola fuente.",
+      "done": false,
+      "text": "Vida inicial y HP por corazón"
+    },
+    {
+      "detail": "settings.gd escribe `shake_enabled` en el recurso de diseño; que Feel lo lea de Settings.",
+      "done": false,
+      "text": "Opciones fuera de feel.tres"
+    },
+    {
+      "detail": "`@export_range` en EntityConfig, ItemData, DropEntry; test_items compara archivos de data/items con la base en vez de ITEM_COUNT.",
+      "done": false,
+      "text": "Rangos y test de ítems"
+    }
+  ],
+  "code": "11.87",
+  "created_at": "2026-10-12T00:19:57.282Z",
+  "description": "Varios valores de juego están como const o en sitios compartidos y no se pueden tunear a ojo en el editor.",
+  "files": [
+    "src/entities/boss/boss.gd",
+    "src/entities/boss/boss_hand.gd",
+    "player/states/carrying.gd",
+    "player/states/aiming_item.gd",
+    "player/components/carrier.gd",
+    "ai/tasks/bt_attack.gd",
+    "src/entities/enemy_bt.tres",
+    "src/state/game_state.gd",
+    "src/settings/settings.gd",
+    "tests/test_items.gd"
+  ],
+  "milestone": "m11",
+  "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).",
+  "order": 84,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "feel",
+    "combate"
+  ],
+  "test": "Cada valor listado aparece en el inspector o en un .tres; cambiar el windup del esqueleto acorazado no cambia a los otros.",
+  "title": "Valores de ajuste al inspector",
+  "updated_at": "2026-10-12T00:20:01.945Z"
+}

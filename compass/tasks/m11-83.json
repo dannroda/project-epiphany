@@ -1,0 +1,44 @@
+{
+  "checklist": [
+    {
+      "detail": "Aceptar cualquier Node3D o tipar por una clase común; darle `signal defeated` a Turret.",
+      "done": false,
+      "text": "Arreglar el cast de WaveSpawner"
+    },
+    {
+      "detail": "`Projectile.fire(scene, from, velocity, info)` junto a `launch`.",
+      "done": false,
+      "text": "Helper de disparo"
+    },
+    {
+      "detail": "Un nodo en el .tscn (grupo o export) que usan el helper, `DropTable.drop_at` y PlaceBehavior.",
+      "done": false,
+      "text": "Nodo raíz de spawn en los niveles"
+    }
+  ],
+  "code": "11.83",
+  "created_at": "2026-10-12T00:19:44.657Z",
+  "description": "Instanciar → `current_scene.add_child` → `launch` está copiado en projectile_behavior, turret, boss y bt_shoot_arrow; bombas y la grieta del slam van a `current_scene`, pickups a `get_parent()` o a `self`. Hay tres raíces de spawn distintas, y M14 necesita una para el MultiplayerSpawner. Además WaveSpawner hace `as Enemy` y `.position`: una torreta en una oleada crashea.",
+  "files": [
+    "src/world/wave_spawner.gd",
+    "src/entities/turret/turret.gd",
+    "src/items/behaviors/projectile_behavior.gd",
+    "src/items/behaviors/place_behavior.gd",
+    "ai/tasks/bt_shoot_arrow.gd",
+    "src/entities/boss/boss.gd"
+  ],
+  "milestone": "m11",
+  "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).",
+  "order": 80,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "arquitectura"
+  ],
+  "test": "Una torreta dentro de un WaveSpawn funciona; todos los objetos de runtime cuelgan del mismo nodo raíz de spawn.",
+  "title": "Un solo camino para spawnear proyectiles, bombas y pickups",
+  "updated_at": "2026-10-12T00:19:47.405Z"
+}

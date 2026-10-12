@@ -1,0 +1,41 @@
+{
+  "checklist": [
+    {
+      "detail": "`defeated_flag`, `container_flag`, `reward: ItemData`, `ending: DialogueResource`; setearlos en temple.tscn.",
+      "done": false,
+      "text": "Exports"
+    },
+    {
+      "detail": "`_get_configuration_warnings` con `PersistentFlag.warnings_for`.",
+      "done": false,
+      "text": "Avisos en el editor"
+    },
+    {
+      "detail": "`_spawn_reward` usa `DropTable.drop_at`/el helper de pickups en vez de su copia.",
+      "done": false,
+      "text": "Premio por DropTable"
+    }
+  ],
+  "code": "11.80",
+  "created_at": "2026-10-12T00:19:24.632Z",
+  "description": "`boss_arena.gd` tiene `DEFEATED_FLAG := &\"d1_boss_defeated\"`, `CONTAINER_FLAG := &\"d1_heart_container\"`, el contenedor y `ending.dialogue` como const. Reusar la arena en D2 marcaría derrotado al jefe de D1 y pondría su final.",
+  "files": [
+    "src/entities/boss/boss_arena.gd",
+    "levels/temple.tscn"
+  ],
+  "milestone": "m11",
+  "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).",
+  "order": 77,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "jefe",
+    "mazmorra"
+  ],
+  "test": "Una BossArena con los exports vacíos muestra aviso en el editor; temple sigue igual; una arena de D2 usa sus propios flags.",
+  "title": "BossArena tiene los flags y el premio de D1 fijos en el código",
+  "updated_at": "2026-10-12T00:19:26.211Z"
+}

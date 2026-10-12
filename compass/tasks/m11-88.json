@@ -1,0 +1,41 @@
+{
+  "checklist": [
+    {
+      "detail": "Cargar cada portal de levels/*.tscn y comprobar que la escena existe y tiene el `target_spawn`.",
+      "done": false,
+      "text": "Test de todos los portales"
+    },
+    {
+      "detail": "Config warning si `target_scene` vacío o inexistente.",
+      "done": false,
+      "text": "Aviso en Portal"
+    },
+    {
+      "detail": "Guardar el uid del nivel (`ResourceUID`) y resolverlo al cargar; aceptar rutas viejas.",
+      "done": false,
+      "text": "uid en el save"
+    }
+  ],
+  "code": "11.88",
+  "created_at": "2026-10-12T00:20:02.234Z",
+  "description": "Los saves guardan `spawn_scene` como ruta `res://` y los portales `target_scene` como ruta + `target_spawn` sin validar (solo test_portal/test_spring prueban casos sueltos). Renombrar o mover un nivel rompe partidas viejas y portales sin aviso.",
+  "files": [
+    "src/world/portal.gd",
+    "src/save/save_manager.gd",
+    "src/state/game_state.gd"
+  ],
+  "milestone": "m11",
+  "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).",
+  "order": 85,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "guardado",
+    "mundo"
+  ],
+  "test": "Un test recorre todos los portales de levels/ y comprueba escena y SpawnPoint; mover un nivel no rompe una partida guardada.",
+  "title": "Niveles referenciados por ruta: saves y portales frágiles",
+  "updated_at": "2026-10-12T00:20:04.118Z"
+}

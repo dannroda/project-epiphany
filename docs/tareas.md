@@ -2534,7 +2534,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (20/74)
+## M11 — Pulido: contenido y feel  (20/85)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3537,6 +3537,8 @@ heart_piece, push_block y tablet leen su flag una sola vez en `_ready` y no usan
 
 **Archivos:** `player/state_machine.gd`, `tests/test_shield.gd`
 
+**Relacionadas:** 14.11 Feel solo cosmético: hit-stop como estado de gameplay
+
 ### 11.66 Pausa, reveal, portal y muerte se pisan get_tree().paused · Pendiente
 
 **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `ui`
@@ -3777,10 +3779,243 @@ Detalles sueltos de la revisión, sin bug visible o con efecto de un frame.
   boss.gd no depende del orden de nodos en temple.tscn para el rect de la arena.
 - [ ] Varios
   spring.gd usa `by.health`; ToonToggle limpia `_saved` de nodos liberados.
+- [ ] Accesos por ruta a nodos del player
+  player_panel.gd `get_node(^"InteractionDetector")`, boss `get_node(^"Hurtbox")` (ya existe `player.hurtbox`), input_buffer `get_parent().get(&"controls")`, equipment.gd `owner.…` → propiedades tipadas en PlayerCharacter o `@export var player`.
 
 **Prueba:** Tests verdes; sin cambios visibles salvo el parpadeo de chips/corazones.
 
 **Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+
+### 11.79 Los corazones se rellenan al cambiar de escena · Pendiente
+
+**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`, `combate`
+
+GameState solo guarda `max_health`, no la vida actual. Cada nivel instancia su player y `_ready` → `_sync_health` → `health.reset(GameState.max_health)`, así que entrar o salir de una mazmorra (portal, escalera) rellena todos los corazones. La vida actual debe mantenerse entre escenas.
+
+- [ ] Vida actual por player en GameState
+  Guardar la vida de cada player (por índice de player, no un único valor) antes del cambio de escena (`travel_to`) y restaurarla en `_ready` en vez de `reset` al máximo. Se rellena solo en partida nueva, respawn tras morir y contenedor de corazón (ver 13.10 para no revivir espíritus).
+- [ ] Invitados
+  Los invitados que se re-spawnean al cambiar de escena también conservan la suya.
+- [ ] Decidir qué pasa al cargar partida
+  ¿Guardar la vida actual en el save o cargar con el máximo / 3 corazones como Zelda? Hoy carga con el máximo.
+- [ ] Test
+  test_portal o test_player: bajar vida, viajar, comprobar.
+
+**Prueba:** Entrar al templo con 2 corazones, salir al overworld: siguen 2. Con dos players, cada uno conserva la suya. Morir/reaparecer y partida nueva siguen empezando como hoy.
+
+**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+
+**Archivos:** `player/player.gd`, `src/state/game_state.gd`, `src/save/save_manager.gd`, `src/state/players.gd`
+
+**Relacionadas:** 13.10 Un espíritu revive al coger un contenedor de corazón
+
+### 11.80 BossArena tiene los flags y el premio de D1 fijos en el código · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `jefe`, `mazmorra`
+
+`boss_arena.gd` tiene `DEFEATED_FLAG := &"d1_boss_defeated"`, `CONTAINER_FLAG := &"d1_heart_container"`, el contenedor y `ending.dialogue` como const. Reusar la arena en D2 marcaría derrotado al jefe de D1 y pondría su final.
+
+- [ ] Exports
+  `defeated_flag`, `container_flag`, `reward: ItemData`, `ending: DialogueResource`; setearlos en temple.tscn.
+- [ ] Avisos en el editor
+  `_get_configuration_warnings` con `PersistentFlag.warnings_for`.
+- [ ] Premio por DropTable
+  `_spawn_reward` usa `DropTable.drop_at`/el helper de pickups en vez de su copia.
+
+**Prueba:** Una BossArena con los exports vacíos muestra aviso en el editor; temple sigue igual; una arena de D2 usa sus propios flags.
+
+**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+
+**Archivos:** `src/entities/boss/boss_arena.gd`, `levels/temple.tscn`
+
+### 11.81 Dungeon.id por defecto d1 y prefijos de flags fijos · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `mazmorra`, `guardado`
+
+`Dungeon.id` vale `&"d1"` por defecto y temple.tscn depende de eso (no tiene `id =`). Una mazmorra nueva que olvide el id comparte llaves, mapa y brújula con D1 sin aviso. `PersistentFlag.PREFIXES` es una lista fija `ow_, d0_..d3_` y SaveCodec deriva la sección del prefijo: D4 requiere tocar código.
+
+- [ ] Id vacío por defecto + aviso
+  dungeon.gd: `&""` y config warning; poner `id = &"d1"` en temple.tscn.
+- [ ] Prefijos por regex
+  `^(ow|d\\d+)_` en PersistentFlag y SaveCodec.
+- [ ] Opcional: avisar prefijo distinto
+  Un flag `dN_` en una escena cuyo Dungeon.id no es dN.
+
+**Prueba:** Un Dungeon sin id muestra aviso; temple tiene `id = &"d1"` explícito; un flag `d4_x` valida sin tocar código.
+
+**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+
+**Archivos:** `src/world/dungeon.gd`, `levels/temple.tscn`, `src/save/save_codec.gd`
+
+### 11.82 Daño que no pasa por el Hurtbox · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `combate`
+
+El pozo (`pit.gd:26`) y el agarre del jefe (`boss_hand.gd` ~353) llaman a `health.damage` directo: no aplica la reducción de la túnica, ni feedback, y en M14 son entradas de daño extra. El tick del agarre (0.75 s) es menor que los i-frames del player (0.8 s): la mitad de los ticks se pierden. La explosión de la marca y el arrojadizo llaman a `Hurtbox.receive` a mano y saltan el filtro de equipo/`_already_hit`. `DamageInfo.new()` se arma a mano en 8 lugares con equipo/elemento distintos.
+
+- [ ] DamageInfo.make
+  `static func make(amount, knockback, source, element := &"")` y usarla en los 8 sitios.
+- [ ] Pozo y agarre por Hurtbox
+  `player.hurtbox.receive(info)` con un flag en DamageInfo para saltar escudo/i-frames donde se quiere (pozo, ticks del agarre).
+- [ ] Marca con Hitbox
+  `%BlastTemplate` con un Hitbox como explosion.tscn (resuelve también el daño a todos los players de 13.7).
+
+**Prueba:** Con túnica, el pozo y el agarre restan menos; el agarre resta en cada tick; la marca daña a cualquier player dentro vía Hitbox.
+
+**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+
+**Archivos:** `src/world/pit.gd`, `src/entities/boss/boss_hand.gd`, `src/entities/boss/boss.gd`, `src/components/damage_info.gd`, `src/world/thrown_object.gd`
+
+**Relacionadas:** 13.7 Enemigos y jefe con varios objetivos
+
+### 11.83 Un solo camino para spawnear proyectiles, bombas y pickups · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `arquitectura`
+
+Instanciar → `current_scene.add_child` → `launch` está copiado en projectile_behavior, turret, boss y bt_shoot_arrow; bombas y la grieta del slam van a `current_scene`, pickups a `get_parent()` o a `self`. Hay tres raíces de spawn distintas, y M14 necesita una para el MultiplayerSpawner. Además WaveSpawner hace `as Enemy` y `.position`: una torreta en una oleada crashea.
+
+- [ ] Arreglar el cast de WaveSpawner
+  Aceptar cualquier Node3D o tipar por una clase común; darle `signal defeated` a Turret.
+- [ ] Helper de disparo
+  `Projectile.fire(scene, from, velocity, info)` junto a `launch`.
+- [ ] Nodo raíz de spawn en los niveles
+  Un nodo en el .tscn (grupo o export) que usan el helper, `DropTable.drop_at` y PlaceBehavior.
+
+**Prueba:** Una torreta dentro de un WaveSpawn funciona; todos los objetos de runtime cuelgan del mismo nodo raíz de spawn.
+
+**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+
+**Archivos:** `src/world/wave_spawner.gd`, `src/entities/turret/turret.gd`, `src/items/behaviors/projectile_behavior.gd`, `src/items/behaviors/place_behavior.gd`, `ai/tasks/bt_shoot_arrow.gd`, `src/entities/boss/boss.gd`
+
+### 11.84 Ítems: que la estrategia decida, no la máquina de estados · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `items`, `arquitectura`
+
+La lógica de ítems se escapa del ItemBehavior al FSM del player: `_try_item` pregunta `is JumpBehavior` y `hold_to_aim`; using_item duck-typea `hold_time` y `leaves` (este último redundante: ConsumableBehavior ya llama a `swap_item`); aiming_throw castea a PlaceBehavior; AimingItem es solo-arco (animaciones, BowPhase, yaw). Un segundo ítem de apuntar (gancho, bumerán) usaría las animaciones del arco. Los estados leen `GameState.inventory` en vez de `ctx.inventory`; `ItemUseContext.equipped` no se usa.
+
+- [ ] entry_event() en ItemBehavior
+  Por defecto `&"use_item"`; Jump → `&"jump"`; hold_to_aim → `&"aim_item"`. Borrar JumpBehavior como etiqueta de tipo si queda vacía.
+- [ ] hold_time en la base
+  0 = sin mantener; quitar el bloque `leaves`.
+- [ ] AimingItem genérico
+  Animaciones y yaw desde exports del behavior.
+- [ ] ctx.inventory
+  Los estados usan el contexto; quitar `equipped`.
+
+**Prueba:** Agregar un ítem nuevo de apuntar es un .tres + su behavior, sin tocar state_machine.gd.
+
+**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+
+**Archivos:** `player/state_machine.gd`, `player/states/using_item.gd`, `player/states/aiming_item.gd`, `player/states/aiming_throw.gd`, `src/items/behaviors/item_behavior.gd`
+
+### 11.85 Combate y HSM: casos que fallan en silencio · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `combate`, `jefe`
+
+Tres puntos que no dan error cuando algo no cuadra: (1) el ataque melee elige la animación con un bool (Slash/ShieldThrust) e ignora `AttackData.animation`, que solo se usa para la duración: un arma nueva desincroniza hitbox y animación; el combo de MeleeBehavior tiene una sola entrada y siempre se usa `get_attack(0)`. (2) Los ataques del jefe se despachan por id en `match` sin default: un .tres con id nuevo o mal escrito no hace nada (mano) o dispara un orbe (ojo). (3) Los estados interrumpibles por `transition` y `grabbed` están en dos listas a mano en state_machine.gd: un estado nuevo que falte se queda atrás en el cambio de sala.
+
+- [ ] Animación desde AttackData
+  `@export var tree_state` en AttackData; MeleeBehavior con un solo `attack` o avanzar el combo de verdad.
+- [ ] Ids de ataque del jefe
+  Enum en BossAttack o rama `_:` con push_error; caso explícito `&"orb"`.
+- [ ] Interrupciones con anystate
+  `add_transition(anystate(), …, guard)` con un guard común, o `@export var interruptible` en PlayerState.
+
+**Prueba:** Un BossAttack con id desconocido da push_error; un estado nuevo del player sigue la transición de sala sin tocar listas.
+
+**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+
+**Archivos:** `player/states/attacking.gd`, `src/items/behaviors/melee_behavior.gd`, `src/combat/attack_data.gd`, `src/entities/boss/boss.gd`, `src/entities/boss/boss_hand.gd`, `player/state_machine.gd`
+
+### 11.86 GameState: escrituras con señal y carga sin emisiones parciales · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `arquitectura`, `guardado`
+
+Hay campos de GameState que se escriben a pelo desde afuera (`room_entry` desde la cámara y boss_arena, `boss_rematch`, `spawn_point`, `map_revealed` desde el minimapa), sin señal ni setter. El progreso del overworld lo pinta el minimapa del HUD: sin HUD no se registra lo explorado. `set_flag` emite aunque el valor no cambie. Cargar emite `dungeon_changed` dos veces y `inventory.changed` por ítem antes de `loaded` (el HUD crea un DungeonState fantasma; el mapa se reconstruye 2-3 veces).
+
+- [ ] Setters para los campos sueltos
+  `set_room_entry`, `set_spawn_point`, etc.
+- [ ] Revelar el mapa desde el mundo
+  `GameState.reveal_at(xz)` dueño de la Image, llamado desde un nodo del overworld; el minimapa solo lee.
+- [ ] set_flag sin cambio no emite
+  Salir si ya tiene ese valor.
+- [ ] Carga en bloque
+  Guard `_bulk` en `read_from`/`_clear` que suprime las señales finas; solo `loaded`.
+
+**Prueba:** Sin HUD, caminar el overworld revela el mapa; cargar una partida emite `loaded` y nada intermedio.
+
+**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+
+**Archivos:** `src/state/game_state.gd`, `src/ui/hud/minimap.gd`, `src/tools/top_down_camera.gd`, `src/entities/boss/boss_arena.gd`, `src/world/spawn_point.gd`, `src/items/inventory.gd`
+
+### 11.87 Valores de ajuste al inspector · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `feel`, `combate`
+
+Varios valores de juego están como const o en sitios compartidos y no se pueden tunear a ojo en el editor.
+
+- [ ] Jefe
+  boss.gd: 24 const (EYE_STUN_TIME, ENRAGE_FRACTION, MARK_*, REPEAT_PENALTY, SAME_HAND_PENALTY); boss_hand.gd: SLAM_HEIGHT, GRAB_REACH, IMPACT_HIT_STOP, SLAM_OVERSHOOT/BOUNCE → `@export_group`. Lo cosmético (bob, parpadeo) puede quedar const.
+- [ ] Player
+  carrying.gd CARRY_SPEED/THROW_DISTANCE/FLIGHT_TIME, aiming_item.gd LOCKED_SPEED, carrier.gd → `@export`.
+- [ ] Timing de ataque de enemigos
+  windup_time, windup_pose, recovery_time de bt_attack a AttackData; `attack` en EntityConfig; enemy_bt.tres deja de fijar skeleton_slash.
+- [ ] Vida inicial y HP por corazón
+  player.tres `max_health` se ignora (manda NEW_GAME_MAX_HEALTH); HP_PER_HEART copiado en game_state, player_panel, equipment_page y un `/ 4` en slot_card → una sola fuente.
+- [ ] Opciones fuera de feel.tres
+  settings.gd escribe `shake_enabled` en el recurso de diseño; que Feel lo lea de Settings.
+- [ ] Rangos y test de ítems
+  `@export_range` en EntityConfig, ItemData, DropEntry; test_items compara archivos de data/items con la base en vez de ITEM_COUNT.
+
+**Prueba:** Cada valor listado aparece en el inspector o en un .tres; cambiar el windup del esqueleto acorazado no cambia a los otros.
+
+**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+
+**Archivos:** `src/entities/boss/boss.gd`, `src/entities/boss/boss_hand.gd`, `player/states/carrying.gd`, `player/states/aiming_item.gd`, `player/components/carrier.gd`, `ai/tasks/bt_attack.gd`, `src/entities/enemy_bt.tres`, `src/state/game_state.gd`, `src/settings/settings.gd`, `tests/test_items.gd`
+
+### 11.88 Niveles referenciados por ruta: saves y portales frágiles · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `guardado`, `mundo`
+
+Los saves guardan `spawn_scene` como ruta `res://` y los portales `target_scene` como ruta + `target_spawn` sin validar (solo test_portal/test_spring prueban casos sueltos). Renombrar o mover un nivel rompe partidas viejas y portales sin aviso.
+
+- [ ] Test de todos los portales
+  Cargar cada portal de levels/*.tscn y comprobar que la escena existe y tiene el `target_spawn`.
+- [ ] Aviso en Portal
+  Config warning si `target_scene` vacío o inexistente.
+- [ ] uid en el save
+  Guardar el uid del nivel (`ResourceUID`) y resolverlo al cargar; aceptar rutas viejas.
+
+**Prueba:** Un test recorre todos los portales de levels/ y comprueba escena y SpawnPoint; mover un nivel no rompe una partida guardada.
+
+**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+
+**Archivos:** `src/world/portal.gd`, `src/save/save_manager.gd`, `src/state/game_state.gd`
+
+### 11.89 Orden de carpetas y escenas de prueba en la build · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `herramientas`
+
+La cámara de juego (505 líneas) y target_indicator están en src/tools/ junto a scripts de build; un EditorScript en src/debug/; Log y DebugOverlay (autoloads de runtime) en un addon, y DebugOverlay arma su Label por código; los BT entre src/entities/ y data/boss/; las escenas de prueba (test*, prueba_mc_godot, pruebas_terreno, sandbox_items, test_shinobi) en levels/ se exportan porque el filtro solo excluye tests/*; `player/animation/new_animation_node_state_machine.tres` con nombre por defecto; Feel cargado antes que MenuStack (por eso lo busca diferido).
+
+- [ ] Escenas de prueba a levels/test/
+  Y excluir la carpeta en export_presets.cfg.
+- [ ] Cámara a src/camera/
+  Mover desde el editor (puente) para que se actualicen uids y rutas.
+- [ ] Scripts de build a tools/
+  Los de src/tools/ que corren headless.
+- [ ] BT junto a su entidad o en data/ai/
+- [ ] Debug runtime a src/debug/
+  Log y DebugOverlay; el overlay como .tscn.
+- [ ] Orden de autoloads
+  MenuStack antes que Feel; conectar `MenuStack.changed` directo.
+- [ ] Renombrar el .tres por defecto
+
+**Prueba:** El export no incluye escenas de prueba; tests verdes tras mover.
+
+**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+
+**Archivos:** `export_presets.cfg`, `project.godot`
 
 ## M12 — Assets propios (Blender)  (6/17)
 
@@ -4198,7 +4433,7 @@ Cada mazmorra con su propio estilo sobre el mismo kit (mismas piezas y colisione
 - [x] Estilo del terreno del overworld por región
   AreaZone.terrain_style (necropolis, laguna, cumbre, explanada, cardonal, quebrada); el build pinta suelo, riscos y abismo por región con borde ondulado y cambia la decoración. Puestos en overworld.tscn: Templo explanada, Quebrada, Necrópolis + Mirador, Cumbre + Risco, Laguna + Bañado, Cardonal. Falta que el usuario lo vea.
 
-## M13 — Co-op local (estilo Four Swords)  (0/13)
+## M13 — Co-op local (estilo Four Swords)  (0/14)
 
 Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con progreso compartido y puzzles que aprovechan a los dos.
 
@@ -4336,6 +4571,8 @@ Darle al P2 su propia variante de paleta (otra tela y otro neón, como los Links
   Una entrada en VARIANTS (epiphany_palette.py) para el P2: otra tela y otro neón, como los Links de colores de Four Swords.
 - [ ] Combinar con las armaduras
   Que la cota reforzada también tenga su versión P2.
+- [ ] Colores de player en un solo .tres
+  Hoy están en `hud.gd` (`player_colors`) y items_page los busca con `get_first_node_in_group(&"hud")` (sin HUD el cursor sale blanco). Un recurso exportado donde se necesite, también para el modelo. (Revisión de arquitectura 2026-10-11.)
 
 **Prueba:** P1 y P2 se distinguen de un vistazo con cualquier armadura.
 
@@ -4370,7 +4607,7 @@ Que enemigos y jefe sepan elegir entre varios players (el más cercano o el últ
 
 **Bloqueada por:** 13.1 Código listo para varios players
 
-**Relacionadas:** 13.13 Referencias colgadas cuando un invitado se va
+**Relacionadas:** 11.82 Daño que no pasa por el Hurtbox; 13.13 Referencias colgadas cuando un invitado se va
 
 ### 13.8 Puzzles cooperativos · Pendiente
 
@@ -4427,6 +4664,8 @@ Mockups D en el canvas (Coop_Ring, Solo_Ring): mantener la cruceta abre un anill
 **Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
 
 **Archivos:** `player/player.gd`, `tests/test_coop_rules.gd`
+
+**Relacionadas:** 11.79 Los corazones se rellenan al cambiar de escena
 
 ### 13.11 Estado de un player que se cuela en el otro · Pendiente
 
@@ -4489,7 +4728,28 @@ En el menú de ítems compartido, el `_input` del invitado solo se traga `ui_acc
 
 **Relacionadas:** 13.7 Enemigos y jefe con varios objetivos
 
-## M14 — Co-op online  (0/7)
+### 13.14 Las salas las decide un nodo del mundo, no la cámara · Pendiente
+
+**Prioridad:** alta · **Tamaño:** M · **Etiquetas:** `coop`, `arquitectura`, `camara`
+
+`top_down_camera.gd` detecta en qué sala están los players y desde ahí llama a `room.mark_entered()` (visita, autosave, rejas, oleadas, reset de bloques), emite `Room.player_left`, revive espíritus, teletransporta rezagados, los mantiene en pantalla y escribe `GameState.room_entry`. Una escena sin esa cámara (tests headless, cutscene con otra cámara) no tiene progresión de salas, y en online cada cliente lo haría por su cuenta (oleadas y autosaves duplicados).
+
+- [ ] RoomTracker en la escena de la mazmorra
+  Nodo en el .tscn (bajo Dungeon) con `_update_room`/`enter_room`, bring-along, correa de pantalla y `room_entry`; emite `room_changed(previous, room, crosser)`.
+- [ ] La cámara escucha
+  Solo pan y encuadre; `reveal` pasa a ser un pedido que la cámara puede atender.
+- [ ] Tests
+  test_rooms y test_coop_camera sin depender de la cámara para la lógica.
+
+**Prueba:** Con la cámara quitada, entrar a una sala la marca visitada y arranca la oleada; la cámara solo encuadra.
+
+**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+
+**Archivos:** `src/tools/top_down_camera.gd`, `src/world/room.gd`, `src/world/door.gd`, `src/world/gate.gd`, `src/entities/boss/boss_arena.gd`
+
+**Relacionadas:** 14.1 Arquitectura de red
+
+## M14 — Co-op online  (0/13)
 
 Llevar el co-op local a la red: host autoritativo, dos jugadores en distintas máquinas, con el combate igual de preciso.
 
@@ -4514,6 +4774,8 @@ Decidir la arquitectura de red del co-op online (host autoritativo con ENet y St
 **Referencias:** `gdd.md#fuera-mvp`
 
 **Bloquea a:** 14.2 Players en red; 14.3 Mundo sincronizado; 14.4 Combate en red; 14.5 Lobby y conexión; 14.6 Guardado en co-op; 14.7 Modo arena: hasta 8 jugadores peleando entre sí
+
+**Relacionadas:** 13.14 Las salas las decide un nodo del mundo, no la cámara; 14.8 Escena raíz de gameplay que persiste entre niveles; 14.9 Separar el flujo de escenas de SaveManager; 14.10 El gameplay emite intenciones y la UI escucha; 14.12 Identidad del player independiente del pad; 14.13 Frame de input por tick en Controls
 
 ### 14.2 Players en red · Pendiente
 
@@ -4617,6 +4879,123 @@ Definir el guardado del co-op online: solo guarda el host y el cliente participa
 Decidido 2026-10-11: para probar el online, un modo arena aparte donde hasta 8 jugadores se pelean entre sí (daño entre players, una sala cerrada, reaparecer al morir). Sirve para medir hasta dónde aguanta la red (latencia, ancho de banda, sincronización del combate) con más jugadores que el co-op; la meta del co-op online sigue siendo 4 y el local, 2 por ahora.
 
 **Bloqueada por:** 14.1 Arquitectura de red; 14.4 Combate en red
+
+### 14.8 Escena raíz de gameplay que persiste entre niveles · Pendiente
+
+**Prioridad:** alta · **Tamaño:** L · **Etiquetas:** `online`, `arquitectura`
+
+Cada nivel trae su Player, cámara y HUD; P1 viene instanciado en el .tscn y los invitados se crean en runtime: dos formas de crear players y todo se destruye en cada cambio de escena. El MultiplayerSpawner de M14 necesita un padre estable y un único camino de spawn; además la cámara y el HUD se configuran distinto en cada nivel.
+
+- [ ] Cámara como escena propia
+  Primer paso chico: un camera.tscn instanciado en cada nivel en vez de un Camera3D con script y overrides.
+- [ ] gameplay.tscn
+  Players, cámara, HUD y un LevelContainer; los niveles solo traen mundo y SpawnPoints.
+- [ ] Un solo camino de spawn
+  P1 se crea igual que los invitados.
+
+**Prueba:** Cambiar de nivel no destruye players, cámara ni HUD; P1 e invitados se crean por el mismo camino.
+
+**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+
+**Archivos:** `src/state/players.gd`, `src/save/save_manager.gd`
+
+**Relacionadas:** 14.1 Arquitectura de red
+
+### 14.9 Separar el flujo de escenas de SaveManager · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `online`, `arquitectura`
+
+SaveManager además de slots y codec hace `travel_to`, `respawn`, `new_game` (con intro), `quit_to_title`, `with_fade`, ubicar players, `location()` y escenarios de debug. Es el autoload que en M14 tiene que pasar a 'el servidor decide el cambio de escena', y está mezclado con archivos.
+
+- [ ] Autoload SceneFlow
+  Viaje, respawn, partida nueva, salir, ubicar players y fades (Fader puede integrarse para no sumar autoloads).
+- [ ] SaveManager: slots y capturar/aplicar
+
+**Prueba:** SaveManager solo guarda/carga; los tests de viaje y respawn pasan contra SceneFlow.
+
+**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+
+**Archivos:** `src/save/save_manager.gd`, `src/ui/fader.tscn`, `project.godot`
+
+**Relacionadas:** 14.1 Arquitectura de red
+
+### 14.10 El gameplay emite intenciones y la UI escucha · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `online`, `arquitectura`, `ui`
+
+El estado Dead de un player abre GameOver (decide el fin de la partida por todos); item_get.gd empuja su pantalla y pausa el juego compartido desde un estado del player; area_zone, room y boss_arena hacen `call_group(&"hud", …)`. En online el game over es decisión del servidor y los carteles son presentación por cliente.
+
+- [ ] Señales de intención
+  `Players.all_dead`, `GameState.item_received(player, item)`, `area_entered(name)` en Room/AreaZone.
+- [ ] Listener de flujo/HUD
+  Abre GameOver, ItemGet y el cartel de zona.
+
+**Prueba:** dead.gd e item_get.gd no referencian escenas de UI; la UI se abre desde listeners.
+
+**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+
+**Archivos:** `player/states/dead.gd`, `player/states/item_get.gd`, `src/world/area_zone.gd`, `src/world/room.gd`, `src/entities/boss/boss_arena.gd`
+
+**Relacionadas:** 14.1 Arquitectura de red
+
+### 14.11 Feel solo cosmético: hit-stop como estado de gameplay · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `online`, `feel`
+
+`Feel.hit_stop` pone `PROCESS_MODE_DISABLED` a nodos de gameplay y `freeze` cambia `Engine.time_scale`. En online cada proceso congelaría por su cuenta, y deshabilitar nodos hace perder eventos de input (causa de fondo de 11.65).
+
+- [ ] Hit-stop como flag
+  La entidad lo respeta en su propia física (local en M13, replicado u omitido en M14).
+- [ ] freeze solo presentación
+  Animación, VFX y cámara.
+
+**Prueba:** Durante un hit-stop el player sigue recibiendo input; los tests no dependen del timing del freeze.
+
+**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+
+**Archivos:** `src/feel/feel.gd`, `player/player.gd`, `src/entities/boss/boss.gd`, `src/entities/boss/boss_hand.gd`
+
+**Relacionadas:** 11.65 El escudo se queda levantado tras un hit-stop o la pausa
+
+### 14.12 Identidad del player independiente del pad · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `online`, `coop`, `input`
+
+`slot` significa a la vez 'quién' y 'qué pad'; `GameState.guest_buttons` va por `controls.slot`; los nodos se llaman `Player%d`. Players mezcla la lista con asignar joypads, mantener Start para irse, eventos de pausa sintéticos y un toggle de debug. `Players.joined/left` en realidad significan 'entró/salió del árbol': saltan antes del `_ready` del player y en cada cambio de escena.
+
+- [ ] player_index propio
+  Lo pone el registro; el estado por player se indexa por él.
+- [ ] Input local aparte
+  Mapeo de pads y unirse/irse en un nodo LocalJoin (o en Controls).
+- [ ] Señales de sesión
+  Renombrar a registered/unregistered o emitir tras `ready`; agregar `guest_joined(slot)`/`guest_left(slot)` desde join/leave.
+
+**Prueba:** Cambiar el pad de un player no cambia su índice ni su estado guardado; `guest_joined` salta una vez por invitado.
+
+**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+
+**Archivos:** `src/state/players.gd`, `src/state/game_state.gd`, `player/components/controls.gd`
+
+**Relacionadas:** 14.1 Arquitectura de red
+
+### 14.13 Frame de input por tick en Controls · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `online`, `input`
+
+Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del bloqueo, input_buffer, targeting y aim), y el targeting depende de `camera.unproject_position` local. M14 necesita snapshots de input por tick que el servidor pueda aplicar.
+
+- [ ] Controls arma un frame por tick
+  Botones pressed/just_pressed más la intención de cambiar objetivo.
+- [ ] Consumidores leen del frame
+  state_machine, input_buffer, targeting, aim; el objetivo elegido es parte del input.
+
+**Prueba:** El FSM, el buffer y el targeting leen solo del frame de Controls; se puede reproducir una partida corta a partir de los frames grabados.
+
+**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+
+**Archivos:** `player/components/controls.gd`, `player/state_machine.gd`, `player/components/input_buffer.gd`, `player/components/targeting.gd`, `player/components/aim.gd`
+
+**Relacionadas:** 14.1 Arquitectura de red
 
 ## Listas
 

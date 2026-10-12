@@ -1,0 +1,48 @@
+{
+  "checklist": [
+    {
+      "detail": "Por defecto `&\"use_item\"`; Jump → `&\"jump\"`; hold_to_aim → `&\"aim_item\"`. Borrar JumpBehavior como etiqueta de tipo si queda vacía.",
+      "done": false,
+      "text": "entry_event() en ItemBehavior"
+    },
+    {
+      "detail": "0 = sin mantener; quitar el bloque `leaves`.",
+      "done": false,
+      "text": "hold_time en la base"
+    },
+    {
+      "detail": "Animaciones y yaw desde exports del behavior.",
+      "done": false,
+      "text": "AimingItem genérico"
+    },
+    {
+      "detail": "Los estados usan el contexto; quitar `equipped`.",
+      "done": false,
+      "text": "ctx.inventory"
+    }
+  ],
+  "code": "11.84",
+  "created_at": "2026-10-12T00:19:47.678Z",
+  "description": "La lógica de ítems se escapa del ItemBehavior al FSM del player: `_try_item` pregunta `is JumpBehavior` y `hold_to_aim`; using_item duck-typea `hold_time` y `leaves` (este último redundante: ConsumableBehavior ya llama a `swap_item`); aiming_throw castea a PlaceBehavior; AimingItem es solo-arco (animaciones, BowPhase, yaw). Un segundo ítem de apuntar (gancho, bumerán) usaría las animaciones del arco. Los estados leen `GameState.inventory` en vez de `ctx.inventory`; `ItemUseContext.equipped` no se usa.",
+  "files": [
+    "player/state_machine.gd",
+    "player/states/using_item.gd",
+    "player/states/aiming_item.gd",
+    "player/states/aiming_throw.gd",
+    "src/items/behaviors/item_behavior.gd"
+  ],
+  "milestone": "m11",
+  "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).",
+  "order": 81,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "items",
+    "arquitectura"
+  ],
+  "test": "Agregar un ítem nuevo de apuntar es un .tres + su behavior, sin tocar state_machine.gd.",
+  "title": "Ítems: que la estrategia decida, no la máquina de estados",
+  "updated_at": "2026-10-12T00:19:50.367Z"
+}

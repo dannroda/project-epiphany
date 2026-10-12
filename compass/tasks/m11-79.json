@@ -1,0 +1,53 @@
+{
+  "checklist": [
+    {
+      "detail": "Guardar la vida de cada player (por índice de player, no un único valor) antes del cambio de escena (`travel_to`) y restaurarla en `_ready` en vez de `reset` al máximo. Se rellena solo en partida nueva, respawn tras morir y contenedor de corazón (ver 13.10 para no revivir espíritus).",
+      "done": false,
+      "text": "Vida actual por player en GameState"
+    },
+    {
+      "detail": "Los invitados que se re-spawnean al cambiar de escena también conservan la suya.",
+      "done": false,
+      "text": "Invitados"
+    },
+    {
+      "detail": "¿Guardar la vida actual en el save o cargar con el máximo / 3 corazones como Zelda? Hoy carga con el máximo.",
+      "done": false,
+      "text": "Decidir qué pasa al cargar partida"
+    },
+    {
+      "detail": "test_portal o test_player: bajar vida, viajar, comprobar.",
+      "done": false,
+      "text": "Test"
+    }
+  ],
+  "code": "11.79",
+  "created_at": "2026-10-12T00:19:21.588Z",
+  "description": "GameState solo guarda `max_health`, no la vida actual. Cada nivel instancia su player y `_ready` → `_sync_health` → `health.reset(GameState.max_health)`, así que entrar o salir de una mazmorra (portal, escalera) rellena todos los corazones. La vida actual debe mantenerse entre escenas.",
+  "files": [
+    "player/player.gd",
+    "src/state/game_state.gd",
+    "src/save/save_manager.gd",
+    "src/state/players.gd"
+  ],
+  "links": [
+    {
+      "task": "m13-10",
+      "type": "related"
+    }
+  ],
+  "milestone": "m11",
+  "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).",
+  "order": 76,
+  "priority": "high",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "combate"
+  ],
+  "test": "Entrar al templo con 2 corazones, salir al overworld: siguen 2. Con dos players, cada uno conserva la suya. Morir/reaparecer y partida nueva siguen empezando como hoy.",
+  "title": "Los corazones se rellenan al cambiar de escena",
+  "updated_at": "2026-10-12T00:19:24.368Z"
+}

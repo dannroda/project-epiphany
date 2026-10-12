@@ -1,0 +1,44 @@
+{
+  "checklist": [
+    {
+      "detail": "`@export var tree_state` en AttackData; MeleeBehavior con un solo `attack` o avanzar el combo de verdad.",
+      "done": false,
+      "text": "Animación desde AttackData"
+    },
+    {
+      "detail": "Enum en BossAttack o rama `_:` con push_error; caso explícito `&\"orb\"`.",
+      "done": false,
+      "text": "Ids de ataque del jefe"
+    },
+    {
+      "detail": "`add_transition(anystate(), …, guard)` con un guard común, o `@export var interruptible` en PlayerState.",
+      "done": false,
+      "text": "Interrupciones con anystate"
+    }
+  ],
+  "code": "11.85",
+  "created_at": "2026-10-12T00:19:50.983Z",
+  "description": "Tres puntos que no dan error cuando algo no cuadra: (1) el ataque melee elige la animación con un bool (Slash/ShieldThrust) e ignora `AttackData.animation`, que solo se usa para la duración: un arma nueva desincroniza hitbox y animación; el combo de MeleeBehavior tiene una sola entrada y siempre se usa `get_attack(0)`. (2) Los ataques del jefe se despachan por id en `match` sin default: un .tres con id nuevo o mal escrito no hace nada (mano) o dispara un orbe (ojo). (3) Los estados interrumpibles por `transition` y `grabbed` están en dos listas a mano en state_machine.gd: un estado nuevo que falte se queda atrás en el cambio de sala.",
+  "files": [
+    "player/states/attacking.gd",
+    "src/items/behaviors/melee_behavior.gd",
+    "src/combat/attack_data.gd",
+    "src/entities/boss/boss.gd",
+    "src/entities/boss/boss_hand.gd",
+    "player/state_machine.gd"
+  ],
+  "milestone": "m11",
+  "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).",
+  "order": 82,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "combate",
+    "jefe"
+  ],
+  "test": "Un BossAttack con id desconocido da push_error; un estado nuevo del player sigue la transición de sala sin tocar listas.",
+  "title": "Combate y HSM: casos que fallan en silencio",
+  "updated_at": "2026-10-12T00:19:53.699Z"
+}

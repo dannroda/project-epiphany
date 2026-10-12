@@ -1,0 +1,45 @@
+{
+  "checklist": [
+    {
+      "detail": "`Players.all_dead`, `GameState.item_received(player, item)`, `area_entered(name)` en Room/AreaZone.",
+      "done": false,
+      "text": "Señales de intención"
+    },
+    {
+      "detail": "Abre GameOver, ItemGet y el cartel de zona.",
+      "done": false,
+      "text": "Listener de flujo/HUD"
+    }
+  ],
+  "code": "14.10",
+  "created_at": "2026-10-12T00:20:14.715Z",
+  "description": "El estado Dead de un player abre GameOver (decide el fin de la partida por todos); item_get.gd empuja su pantalla y pausa el juego compartido desde un estado del player; area_zone, room y boss_arena hacen `call_group(&\"hud\", …)`. En online el game over es decisión del servidor y los carteles son presentación por cliente.",
+  "files": [
+    "player/states/dead.gd",
+    "player/states/item_get.gd",
+    "src/world/area_zone.gd",
+    "src/world/room.gd",
+    "src/entities/boss/boss_arena.gd"
+  ],
+  "links": [
+    {
+      "task": "m14-01",
+      "type": "related"
+    }
+  ],
+  "milestone": "m14",
+  "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).",
+  "order": 10,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "online",
+    "arquitectura",
+    "ui"
+  ],
+  "test": "dead.gd e item_get.gd no referencian escenas de UI; la UI se abre desde listeners.",
+  "title": "El gameplay emite intenciones y la UI escucha",
+  "updated_at": "2026-10-12T00:20:17.210Z"
+}
