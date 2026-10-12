@@ -1,48 +1,30 @@
 [gd_scene format=3 uid="uid://ccn88kav7u1vk"]
 
-[ext_resource type="Script" path="res://src/world/dungeon.gd" id="1_p48v1"]
-[ext_resource type="Script" path="res://src/world/dungeon_floor.gd" id="2_c7ykk"]
+[ext_resource type="Script" uid="uid://c5hiaqs0y4egi" path="res://src/world/dungeon.gd" id="1_p48v1"]
+[ext_resource type="Script" uid="uid://dxfmc58bemc3t" path="res://src/world/dungeon_floor.gd" id="2_c7ykk"]
 [ext_resource type="MeshLibrary" path="res://data/kits/chullpa_kit.tres" id="3_exs1s"]
-[ext_resource type="Script" path="res://src/world/room.gd" id="4_m6qph"]
-[ext_resource type="Script" path="res://src/world/pit.gd" id="5_d3wa8"]
+[ext_resource type="Script" uid="uid://nqxfiofg56dy" path="res://src/world/room.gd" id="4_m6qph"]
+[ext_resource type="Script" uid="uid://b5m7kta46hqrv" path="res://src/world/pit.gd" id="5_d3wa8"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="6_ufxwh"]
-[ext_resource type="Script" path="res://src/world/chest.gd" id="7_6y0cd"]
 [ext_resource type="Resource" path="res://data/items/boss_key.tres" id="8_0rnpi"]
 [ext_resource type="Resource" path="res://data/items/dungeon_map.tres" id="9_7e1xe"]
 [ext_resource type="Resource" path="res://data/items/compass.tres" id="10_tu8eq"]
 [ext_resource type="PackedScene" path="res://src/world/door.tscn" id="11_e5qux"]
-[ext_resource type="Script" path="res://src/world/door.gd" id="12_qhm2b"]
 [ext_resource type="PackedScene" path="res://src/world/stairs.tscn" id="13_52yo1"]
-[ext_resource type="Script" path="res://src/world/stairs.gd" id="14_m2ei1"]
 [ext_resource type="PackedScene" path="res://src/world/wall_torch.tscn" id="15_mw81a"]
 [ext_resource type="Resource" path="res://data/items/arrow.tres" id="16_syx8m"]
 [ext_resource type="PackedScene" path="res://src/world/floor_switch.tscn" id="17_rjinf"]
-[ext_resource type="Script" path="res://src/world/floor_switch.gd" id="18_wdvk0"]
 [ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="19_7rkw0"]
-[ext_resource type="Script" path="res://src/world/breakable.gd" id="20_pna7f"]
-[ext_resource type="Resource" path="res://data/drops/pot.tres" id="21_xafiw"]
 [ext_resource type="PackedScene" path="res://src/world/stairs_down.tscn" id="22_1wqbm"]
 [ext_resource type="Resource" path="res://data/items/small_key.tres" id="23_2g4bn"]
 [ext_resource type="PackedScene" path="res://src/world/cracked_floor.tscn" id="24_crkrm"]
-[ext_resource type="Script" path="res://src/world/cracked_wall.gd" id="25_j20n3"]
 [ext_resource type="PackedScene" path="res://src/world/heart_piece.tscn" id="26_ht767"]
-[ext_resource type="Script" path="res://src/world/heart_piece.gd" id="27_mo6ti"]
-[ext_resource type="Resource" path="res://data/items/heart_piece.tres" id="28_iyg24"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/corazon.res" id="29_e541c"]
-[ext_resource type="PackedScene" path="res://src/entities/enemy.tscn" id="30_gc68l"]
-[ext_resource type="Script" path="res://src/entities/enemy.gd" id="31_g5ban"]
-[ext_resource type="Resource" path="res://data/entities/skeleton.tres" id="32_d27po"]
-[ext_resource type="PackedScene" path="res://player/player.tscn" id="33_iuiyr"]
-[ext_resource type="Script" path="res://player/player.gd" id="34_86iea"]
-[ext_resource type="Resource" path="res://data/entities/player.tres" id="35_4g78b"]
-[ext_resource type="Script" path="res://src/world/spawn_point.gd" id="36_3iwqa"]
-[ext_resource type="Script" path="res://src/world/portal.gd" id="37_q5kf3"]
-[ext_resource type="Script" path="res://src/tools/top_down_camera.gd" id="38_yjg8d"]
+[ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="30_gc68l"]
+[ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="33_iuiyr"]
+[ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="36_3iwqa"]
+[ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="37_q5kf3"]
+[ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="38_yjg8d"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="39_iq7xx"]
-[ext_resource type="Script" path="res://src/ui/hud/hud.gd" id="40_kbmgj"]
-[ext_resource type="PackedScene" path="res://src/ui/hud/player_panel_solo.tscn" id="41_1cuov"]
-[ext_resource type="PackedScene" path="res://src/ui/hud/player_panel.tscn" id="42_3lpbq"]
-[ext_resource type="PackedScene" path="res://src/ui/hud/item_ring.tscn" id="43_baen8"]
 [ext_resource type="NavigationMesh" path="res://levels/nav/chullpa_navmesh.tres" id="nav_chullpa"]
 
 [sub_resource type="Environment" id="Environment_lhowt"]
@@ -179,66 +161,60 @@ script = ExtResource("5_d3wa8")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Sotano/MausoleoPit" unique_id=733984244]
 shape = SubResource("BoxShape3D_6dghf")
 
-[node name="BossKeyChest" type="StaticBody3D" parent="Sotano" unique_id=301552816 instance=ExtResource("6_ufxwh")]
+[node name="BossKeyChest" parent="Sotano" unique_id=301552816 instance=ExtResource("6_ufxwh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 2)
-script = ExtResource("7_6y0cd")
 item = ExtResource("8_0rnpi")
 flag = &"d2_boss_key_chest"
 
-[node name="MapChest" type="StaticBody3D" parent="Sotano" unique_id=2034294543 instance=ExtResource("6_ufxwh")]
+[node name="MapChest" parent="Sotano" unique_id=2034294543 instance=ExtResource("6_ufxwh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 28)
-script = ExtResource("7_6y0cd")
 item = ExtResource("9_7e1xe")
 flag = &"d2_map_chest"
 
-[node name="CompassChest" type="StaticBody3D" parent="Sotano" unique_id=2481673 instance=ExtResource("6_ufxwh")]
+[node name="CompassChest" parent="Sotano" unique_id=2481673 instance=ExtResource("6_ufxwh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 28)
-script = ExtResource("7_6y0cd")
 item = ExtResource("10_tu8eq")
 flag = &"d2_compass_chest"
 
-[node name="BossDoor" type="StaticBody3D" parent="Sotano" unique_id=1613927784 instance=ExtResource("11_e5qux")]
+[node name="BossDoor" parent="Sotano" unique_id=1613927784 instance=ExtResource("11_e5qux")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 24, 0, 12)
-script = ExtResource("12_qhm2b")
 kind = 4
 flag = &"d2_boss_door"
 depth = 2.0
 
-[node name="CriptaLadder" type="Area3D" parent="Sotano" unique_id=2054954054 node_paths=PackedStringArray("to") instance=ExtResource("13_52yo1")]
+[node name="CriptaLadder" parent="Sotano" unique_id=2054954054 node_paths=PackedStringArray("to") instance=ExtResource("13_52yo1")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 48, 0, 20)
-script = ExtResource("14_m2ei1")
 to = NodePath("../../PlantaBaja/FromCrypt")
 
-[node name="MausoleoStairs" type="Area3D" parent="Sotano" unique_id=1718703931 node_paths=PackedStringArray("to") instance=ExtResource("13_52yo1")]
+[node name="MausoleoStairs" parent="Sotano" unique_id=1718703931 node_paths=PackedStringArray("to") instance=ExtResource("13_52yo1")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 12)
-script = ExtResource("14_m2ei1")
 to = NodePath("../../PlantaBaja/FromBasement")
 
 [node name="FromChasm" type="Marker3D" parent="Sotano" unique_id=1345539909]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4, 0, 12)
 
-[node name="Torch_Mausoleo_0" type="Node3D" parent="Sotano" unique_id=963709572 instance=ExtResource("15_mw81a")]
+[node name="Torch_Mausoleo_0" parent="Sotano" unique_id=963709572 instance=ExtResource("15_mw81a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.6, 1)
 
-[node name="Torch_Mausoleo_1" type="Node3D" parent="Sotano" unique_id=90493975 instance=ExtResource("15_mw81a")]
+[node name="Torch_Mausoleo_1" parent="Sotano" unique_id=90493975 instance=ExtResource("15_mw81a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.6, 1)
 
-[node name="Torch_Guardian_0" type="Node3D" parent="Sotano" unique_id=397190040 instance=ExtResource("15_mw81a")]
+[node name="Torch_Guardian_0" parent="Sotano" unique_id=397190040 instance=ExtResource("15_mw81a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.6, 1)
 
-[node name="Torch_Guardian_1" type="Node3D" parent="Sotano" unique_id=651151934 instance=ExtResource("15_mw81a")]
+[node name="Torch_Guardian_1" parent="Sotano" unique_id=651151934 instance=ExtResource("15_mw81a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1.6, 1)
 
-[node name="Torch_CriptaOscura_0" type="Node3D" parent="Sotano" unique_id=102500601 instance=ExtResource("15_mw81a")]
+[node name="Torch_CriptaOscura_0" parent="Sotano" unique_id=102500601 instance=ExtResource("15_mw81a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.6, 17)
 
-[node name="Torch_CriptaOscura_1" type="Node3D" parent="Sotano" unique_id=1767208732 instance=ExtResource("15_mw81a")]
+[node name="Torch_CriptaOscura_1" parent="Sotano" unique_id=1767208732 instance=ExtResource("15_mw81a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.6, 17)
 
-[node name="Torch_Cripta_0" type="Node3D" parent="Sotano" unique_id=1747977606 instance=ExtResource("15_mw81a")]
+[node name="Torch_Cripta_0" parent="Sotano" unique_id=1747977606 instance=ExtResource("15_mw81a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.6, 17)
 
-[node name="Torch_Cripta_1" type="Node3D" parent="Sotano" unique_id=88139797 instance=ExtResource("15_mw81a")]
+[node name="Torch_Cripta_1" parent="Sotano" unique_id=88139797 instance=ExtResource("15_mw81a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1.6, 17)
 
 [node name="PlantaBaja" type="Node3D" parent="." unique_id=121937985]
@@ -300,38 +276,29 @@ script = ExtResource("5_d3wa8")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlantaBaja/AbismoPit" unique_id=1207366329]
 shape = SubResource("BoxShape3D_n1d8o")
 
-[node name="GanchoChest" type="StaticBody3D" parent="PlantaBaja" unique_id=780078450 instance=ExtResource("6_ufxwh")]
+[node name="GanchoChest" parent="PlantaBaja" unique_id=780078450 instance=ExtResource("6_ufxwh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 22)
-script = ExtResource("7_6y0cd")
 item = ExtResource("16_syx8m")
 amount = 10
 flag = &"d2_hookshot_chest"
 big = true
 
-[node name="OsarioSwitch" type="Area3D" parent="PlantaBaja" unique_id=345616237 instance=ExtResource("17_rjinf")]
+[node name="OsarioSwitch" parent="PlantaBaja" unique_id=345616237 instance=ExtResource("17_rjinf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 6)
-script = ExtResource("18_wdvk0")
 mode = 1
 flag = &"d2_ossuary_switch"
 
-[node name="OsarioDoor" type="StaticBody3D" parent="PlantaBaja" unique_id=1362114138 instance=ExtResource("11_e5qux")]
+[node name="OsarioDoor" parent="PlantaBaja" unique_id=1362114138 instance=ExtResource("11_e5qux")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 16)
-script = ExtResource("12_qhm2b")
 kind = 3
 switches = Array[NodePath]([NodePath("../OsarioSwitch")])
 depth = 2.0
 
-[node name="OsarioPot1" type="Node3D" parent="PlantaBaja" unique_id=2013117650 instance=ExtResource("19_7rkw0")]
+[node name="OsarioPot1" parent="PlantaBaja" unique_id=2013117650 instance=ExtResource("19_7rkw0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 12)
-script = ExtResource("20_pna7f")
-drops = ExtResource("21_xafiw")
-drop_height = 0.1
 
-[node name="OsarioPot2" type="Node3D" parent="PlantaBaja" unique_id=1419697584 instance=ExtResource("19_7rkw0")]
+[node name="OsarioPot2" parent="PlantaBaja" unique_id=1419697584 instance=ExtResource("19_7rkw0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 4)
-script = ExtResource("20_pna7f")
-drops = ExtResource("21_xafiw")
-drop_height = 0.1
 
 [node name="FromUpper" type="Marker3D" parent="PlantaBaja" unique_id=824462020]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4, 0, 20)
@@ -342,38 +309,36 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 26)
 [node name="FromBasement" type="Marker3D" parent="PlantaBaja" unique_id=1888903614]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 4)
 
-[node name="AbismoStairs" type="Area3D" parent="PlantaBaja" unique_id=1448079194 node_paths=PackedStringArray("to") instance=ExtResource("22_1wqbm")]
+[node name="AbismoStairs" parent="PlantaBaja" unique_id=1448079194 node_paths=PackedStringArray("to") instance=ExtResource("22_1wqbm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 0)
-script = ExtResource("14_m2ei1")
 to = NodePath("../../Sotano/FromChasm")
 
-[node name="EntradaStairs" type="Area3D" parent="PlantaBaja" unique_id=1897855459 node_paths=PackedStringArray("to") instance=ExtResource("13_52yo1")]
+[node name="EntradaStairs" parent="PlantaBaja" unique_id=1897855459 node_paths=PackedStringArray("to") instance=ExtResource("13_52yo1")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 20)
-script = ExtResource("14_m2ei1")
 to = NodePath("../../PisoAlto/FromGround")
 
-[node name="Torch_Osario_0" type="Node3D" parent="PlantaBaja" unique_id=1494308620 instance=ExtResource("15_mw81a")]
+[node name="Torch_Osario_0" parent="PlantaBaja" unique_id=1494308620 instance=ExtResource("15_mw81a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.6, 1)
 
-[node name="Torch_Osario_1" type="Node3D" parent="PlantaBaja" unique_id=1222781229 instance=ExtResource("15_mw81a")]
+[node name="Torch_Osario_1" parent="PlantaBaja" unique_id=1222781229 instance=ExtResource("15_mw81a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.6, 1)
 
-[node name="Torch_Abismo_0" type="Node3D" parent="PlantaBaja" unique_id=2110306605 instance=ExtResource("15_mw81a")]
+[node name="Torch_Abismo_0" parent="PlantaBaja" unique_id=2110306605 instance=ExtResource("15_mw81a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.6, 1)
 
-[node name="Torch_Abismo_1" type="Node3D" parent="PlantaBaja" unique_id=1806621092 instance=ExtResource("15_mw81a")]
+[node name="Torch_Abismo_1" parent="PlantaBaja" unique_id=1806621092 instance=ExtResource("15_mw81a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1.6, 1)
 
-[node name="Torch_Entrada_0" type="Node3D" parent="PlantaBaja" unique_id=1685660567 instance=ExtResource("15_mw81a")]
+[node name="Torch_Entrada_0" parent="PlantaBaja" unique_id=1685660567 instance=ExtResource("15_mw81a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.6, 17)
 
-[node name="Torch_Entrada_1" type="Node3D" parent="PlantaBaja" unique_id=1282067762 instance=ExtResource("15_mw81a")]
+[node name="Torch_Entrada_1" parent="PlantaBaja" unique_id=1282067762 instance=ExtResource("15_mw81a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.6, 17)
 
-[node name="Torch_SalaCofre_0" type="Node3D" parent="PlantaBaja" unique_id=774663265 instance=ExtResource("15_mw81a")]
+[node name="Torch_SalaCofre_0" parent="PlantaBaja" unique_id=774663265 instance=ExtResource("15_mw81a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.6, 17)
 
-[node name="Torch_SalaCofre_1" type="Node3D" parent="PlantaBaja" unique_id=1474266129 instance=ExtResource("15_mw81a")]
+[node name="Torch_SalaCofre_1" parent="PlantaBaja" unique_id=1474266129 instance=ExtResource("15_mw81a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1.6, 17)
 
 [node name="PisoAlto" type="Node3D" parent="." unique_id=1051391863]
@@ -431,106 +396,76 @@ map_cell = Vector2i(1, 1)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PisoAlto/Agrietada" unique_id=2024558862]
 shape = SubResource("BoxShape3D_eafar")
 
-[node name="RellanoShutter" type="StaticBody3D" parent="PisoAlto" unique_id=354031693 node_paths=PackedStringArray("room") instance=ExtResource("11_e5qux")]
+[node name="RellanoShutter" parent="PisoAlto" unique_id=354031693 node_paths=PackedStringArray("room") instance=ExtResource("11_e5qux")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 16)
-script = ExtResource("12_qhm2b")
 kind = 2
 room = NodePath("../Rellano")
 depth = 2.0
 
-[node name="RellanoLocked" type="StaticBody3D" parent="PisoAlto" unique_id=660477150 instance=ExtResource("11_e5qux")]
+[node name="RellanoLocked" parent="PisoAlto" unique_id=660477150 instance=ExtResource("11_e5qux")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 24, 0, 24)
-script = ExtResource("12_qhm2b")
 kind = 1
 flag = &"d2_landing_locked_door"
 depth = 2.0
 
-[node name="KeyChest" type="StaticBody3D" parent="PisoAlto" unique_id=1634173861 instance=ExtResource("6_ufxwh")]
+[node name="KeyChest" parent="PisoAlto" unique_id=1634173861 instance=ExtResource("6_ufxwh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 2)
-script = ExtResource("7_6y0cd")
 item = ExtResource("23_2g4bn")
 flag = &"d2_key_chest"
 
-[node name="CrackedFloor" type="StaticBody3D" parent="PisoAlto" unique_id=515377963 instance=ExtResource("24_crkrm")]
+[node name="CrackedFloor" parent="PisoAlto" unique_id=515377963 instance=ExtResource("24_crkrm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 26)
-script = ExtResource("25_j20n3")
 flag = &"d2_cracked_floor"
 
-[node name="HeartPieceLookout" type="Area3D" parent="PisoAlto" unique_id=1019190333 instance=ExtResource("26_ht767")]
+[node name="HeartPieceLookout" parent="PisoAlto" unique_id=1019190333 instance=ExtResource("26_ht767")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 4)
-collision_layer = 0
-monitorable = false
-script = ExtResource("27_mo6ti")
 flag = &"d2_heart_piece"
-item = ExtResource("28_iyg24")
-lifetime = 0.0
-item_get = true
-magnet_radius = 0.0
-world_size = 1.0
-heart_mesh = ExtResource("29_e541c")
 
-[node name="RellanoEnemy10" type="CharacterBody3D" parent="PisoAlto" unique_id=510737741 instance=ExtResource("30_gc68l")]
+[node name="RellanoEnemy10" parent="PisoAlto" unique_id=510737741 instance=ExtResource("30_gc68l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 22)
-collision_layer = 5
-collision_mask = 5
-script = ExtResource("31_g5ban")
-config = ExtResource("32_d27po")
 
-[node name="RellanoEnemy11" type="CharacterBody3D" parent="PisoAlto" unique_id=2005074834 instance=ExtResource("30_gc68l")]
+[node name="RellanoEnemy11" parent="PisoAlto" unique_id=2005074834 instance=ExtResource("30_gc68l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 27)
-collision_layer = 5
-collision_mask = 5
-script = ExtResource("31_g5ban")
-config = ExtResource("32_d27po")
 
-[node name="AgrietadaPot1" type="Node3D" parent="PisoAlto" unique_id=945413809 instance=ExtResource("19_7rkw0")]
+[node name="AgrietadaPot1" parent="PisoAlto" unique_id=945413809 instance=ExtResource("19_7rkw0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 18)
-script = ExtResource("20_pna7f")
-drops = ExtResource("21_xafiw")
-drop_height = 0.1
 
-[node name="AgrietadaPot2" type="Node3D" parent="PisoAlto" unique_id=208836056 instance=ExtResource("19_7rkw0")]
+[node name="AgrietadaPot2" parent="PisoAlto" unique_id=208836056 instance=ExtResource("19_7rkw0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 0, 30)
-script = ExtResource("20_pna7f")
-drops = ExtResource("21_xafiw")
-drop_height = 0.1
 
 [node name="FromGround" type="Marker3D" parent="PisoAlto" unique_id=1831800402]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4, 0, 20)
 
-[node name="RellanoStairs" type="Area3D" parent="PisoAlto" unique_id=1669347187 node_paths=PackedStringArray("to") instance=ExtResource("22_1wqbm")]
+[node name="RellanoStairs" parent="PisoAlto" unique_id=1669347187 node_paths=PackedStringArray("to") instance=ExtResource("22_1wqbm")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 20)
-script = ExtResource("14_m2ei1")
 to = NodePath("../../PlantaBaja/FromUpper")
 
-[node name="Torch_Saltos_0" type="Node3D" parent="PisoAlto" unique_id=1558699965 instance=ExtResource("15_mw81a")]
+[node name="Torch_Saltos_0" parent="PisoAlto" unique_id=1558699965 instance=ExtResource("15_mw81a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.6, 1)
 
-[node name="Torch_Saltos_1" type="Node3D" parent="PisoAlto" unique_id=1731298368 instance=ExtResource("15_mw81a")]
+[node name="Torch_Saltos_1" parent="PisoAlto" unique_id=1731298368 instance=ExtResource("15_mw81a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.6, 1)
 
-[node name="Torch_Mirador_0" type="Node3D" parent="PisoAlto" unique_id=87956893 instance=ExtResource("15_mw81a")]
+[node name="Torch_Mirador_0" parent="PisoAlto" unique_id=87956893 instance=ExtResource("15_mw81a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.6, 1)
 
-[node name="Torch_Mirador_1" type="Node3D" parent="PisoAlto" unique_id=1358755810 instance=ExtResource("15_mw81a")]
+[node name="Torch_Mirador_1" parent="PisoAlto" unique_id=1358755810 instance=ExtResource("15_mw81a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1.6, 1)
 
-[node name="Torch_Rellano_0" type="Node3D" parent="PisoAlto" unique_id=1263795534 instance=ExtResource("15_mw81a")]
+[node name="Torch_Rellano_0" parent="PisoAlto" unique_id=1263795534 instance=ExtResource("15_mw81a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.6, 17)
 
-[node name="Torch_Rellano_1" type="Node3D" parent="PisoAlto" unique_id=1468053119 instance=ExtResource("15_mw81a")]
+[node name="Torch_Rellano_1" parent="PisoAlto" unique_id=1468053119 instance=ExtResource("15_mw81a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.6, 17)
 
-[node name="Torch_Agrietada_0" type="Node3D" parent="PisoAlto" unique_id=673148331 instance=ExtResource("15_mw81a")]
+[node name="Torch_Agrietada_0" parent="PisoAlto" unique_id=673148331 instance=ExtResource("15_mw81a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.6, 17)
 
-[node name="Torch_Agrietada_1" type="Node3D" parent="PisoAlto" unique_id=2009179777 instance=ExtResource("15_mw81a")]
+[node name="Torch_Agrietada_1" parent="PisoAlto" unique_id=2009179777 instance=ExtResource("15_mw81a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1.6, 17)
 
-[node name="Player" type="CharacterBody3D" parent="." unique_id=1694148988 instance=ExtResource("33_iuiyr")]
+[node name="Player" parent="." unique_id=1694148988 instance=ExtResource("33_iuiyr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 28)
-script = ExtResource("34_86iea")
-config = ExtResource("35_4g78b")
 
 [node name="SpawnStart" type="Marker3D" parent="." unique_id=311400194]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 28)
@@ -552,12 +487,7 @@ script = ExtResource("38_yjg8d")
 target_node = NodePath("../Player")
 mask_margin = 2.0
 
-[node name="HUD" type="CanvasLayer" parent="." unique_id=1439023435 instance=ExtResource("39_iq7xx")]
-layer = 10
-script = ExtResource("40_kbmgj")
-solo_panel = ExtResource("41_1cuov")
-coop_panel = ExtResource("42_3lpbq")
-item_ring = ExtResource("43_baen8")
+[node name="HUD" parent="." unique_id=1439023435 instance=ExtResource("39_iq7xx")]
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=574871214]
 navigation_mesh = ExtResource("nav_chullpa")

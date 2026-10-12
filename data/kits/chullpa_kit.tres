@@ -1,4 +1,4 @@
-[gd_resource type="MeshLibrary" format=4]
+[gd_resource type="MeshLibrary" format=4 uid="uid://c6bpop12oyaw5"]
 
 [ext_resource type="Material" path="res://data/kits/materials/epiphany.tres" id="1_q67gr"]
 [ext_resource type="Material" path="res://data/kits/materials/epiphany_stone.tres" id="2_de0er"]
