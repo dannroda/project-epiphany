@@ -24,7 +24,7 @@ radius = 0.6
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_turret"]
 
-[node name="Turret" type="StaticBody3D"]
+[node name="Turret" type="StaticBody3D" groups=["room_sleepers"]]
 collision_layer = 5
 script = ExtResource("1_turret")
 config = ExtResource("2_config")

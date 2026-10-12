@@ -8,7 +8,7 @@
 [sub_resource type="BoxShape3D" id="Shape"]
 size = Vector3(1.7, 0.8, 1.7)
 
-[node name="SpikeTrap" type="Node3D"]
+[node name="SpikeTrap" type="Node3D" groups=["room_sleepers"]]
 script = ExtResource("1_trap")
 
 [node name="Base" type="MeshInstance3D" parent="."]

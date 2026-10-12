@@ -1,33 +1,35 @@
 {
+  "assignee": "Claude",
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "Activar y dormir por sala"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Trampas y enemigos lo respetan"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Tests"
     }
   ],
   "code": "11.97",
   "created_at": "2026-10-12T08:16:52.409Z",
   "description": "Hoy todo lo de la mazmorra corre a la vez: por ejemplo la línea de pinchos está activa aunque el player esté en otra sala. Las trampas, enemigos y efectos solo procesan en las salas con algún player (y se reinician o pausan al salir).",
+  "done_at": "2026-10-12T18:01:46.349Z",
   "milestone": "m11",
-  "notes": "Sesión: auditoría (-04). Con varios players: activa toda sala con alguno adentro.",
+  "notes": "Sesión de bugs (-fd). Cada Room sabe si tiene algún player adentro (`occupied`, mira todos los players: en co-op corre toda sala con alguno). Cuando cambia, lo del grupo `room_sleepers` que está en una sala sin players pasa a PROCESS_MODE_DISABLED (se pausa y sigue donde quedó al volver; sus colisiones salen de la física mientras tanto); fuera de toda sala (overworld) siempre corre, y sin ningún player también. Están en el grupo, desde su .tscn: enemy.tscn (todos los enemigos), turret.tscn y spike_trap.tscn. Las oleadas no hace falta: arrancan al entrar. El jefe tampoco: su pelea arranca con la arena.",
   "order": 94,
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "done",
   "tags": [
     "mazmorra",
     "rendimiento"
   ],
-  "test": "",
+  "test": "test_rooms › test_only_rooms_with_a_player_run: el esqueleto y unos pinchos de una sala se duermen cuando el player pasa a la otra y despiertan al volver.",
   "title": "Mazmorra: solo está activa la sala del player",
-  "updated_at": "2026-10-12T08:16:54.368Z"
+  "updated_at": "2026-10-12T18:01:46.349Z"
 }

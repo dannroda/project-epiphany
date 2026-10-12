@@ -9,6 +9,8 @@ signal player_entered(room: Room)
 signal player_left(room: Room)
 
 const GROUP := &"rooms"
+## Lo que solo corre mientras haya algún player en su sala (enemigos, trampas); fuera de toda sala corre siempre.
+const SLEEPERS := &"room_sleepers"
 
 @export var room_index: int = 0 ## Bit en DungeonState.visited_rooms
 @export var display_name: String = ""
@@ -27,6 +29,10 @@ var _outline: MeshInstance3D
 var _announced := false
 ## Persianas cerradas hasta limpiar la sala.
 var locked := false
+## Hay algún player adentro.
+var occupied := false
+
+static var _waking := false
 
 
 func _ready() -> void:
@@ -39,6 +45,7 @@ func _ready() -> void:
 	collision_mask = 0
 	monitoring = false
 	monitorable = false
+	_request_wake()
 
 
 func contains(point: Vector3) -> bool:
@@ -103,8 +110,43 @@ func waves_running() -> bool:
 		return spawner.get(&"room") == self and spawner.get(&"running") == true)
 
 
+func has_player() -> bool:
+	return Players.all.any(func(player: PlayerCharacter) -> bool: return contains(player.global_position))
+
+
+func _request_wake() -> void:
+	if not _waking:
+		_waking = true
+		_wake_rooms.call_deferred()
+
+
+## Despierta lo de las salas con algún player y duerme lo de las demás (en pausa: sigue donde quedó al volver).
+func _wake_rooms() -> void:
+	_waking = false
+	if not is_inside_tree():
+		return
+	var rooms := get_tree().get_nodes_in_group(GROUP)
+	for node in get_tree().get_nodes_in_group(SLEEPERS):
+		var sleeper := node as Node3D
+		var awake := Players.all.is_empty()
+		var inside := false
+		for room: Room in rooms:
+			if room.contains(sleeper.global_position):
+				inside = true
+				awake = awake or room.has_player()
+		awake = awake or not inside
+		if not sleeper.has_meta(&"awake_mode"):
+			sleeper.set_meta(&"awake_mode", sleeper.process_mode)
+		sleeper.process_mode = sleeper.get_meta(&"awake_mode") if awake else Node.PROCESS_MODE_DISABLED
+
+
 func _physics_process(_delta: float) -> void:
-	if Engine.is_editor_hint() or not locked:
+	if Engine.is_editor_hint():
+		return
+	if has_player() != occupied:
+		occupied = not occupied
+		_request_wake()
+	if not locked:
 		return
 	if enemies_inside().is_empty() and not waves_running():
 		locked = false

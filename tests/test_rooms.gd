@@ -118,3 +118,33 @@ func test_dying_in_dungeon_respawns_at_room_entrance() -> void:
 	camera = tree.current_scene.get_node(^"TopDownCamera")
 	assert_eq(camera.room, tree.current_scene.get_node(^"RoomB"), "con la cámara en esa sala")
 	state.reset()
+
+
+func test_only_rooms_with_a_player_run() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	state.reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	var level := tree.current_scene
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	var rooms: Array[Room] = [level.get_node(^"RoomA"), level.get_node(^"RoomB")]
+	var skeleton := level.get_node(^"Skeleton") as Node3D
+	var home: Room = rooms[0] if rooms[0].contains(skeleton.global_position) else rooms[1]
+	var away: Room = rooms[1] if home == rooms[0] else rooms[0]
+	var spikes: Node3D = load("res://src/world/spike_trap.tscn").instantiate()
+	level.add_child(spikes)
+	var center := home.bounds().get_center()
+	spikes.global_position = Vector3(center.x, home.floor_y(), center.y)
+	for pair in [[away, false], [home, true], [away, false]]:
+		var room: Room = pair[0]
+		var spot := room.bounds().get_center()
+		player.global_position = Vector3(spot.x, room.floor_y() + 0.1, spot.y)
+		for i in 4:
+			await tree.physics_frame
+		var running: bool = pair[1]
+		var label := "con el player en %s" % room.name
+		assert_eq(skeleton.process_mode != Node.PROCESS_MODE_DISABLED, running, "el enemigo de %s corre solo %s" % [home.name, label])
+		assert_eq(spikes.process_mode != Node.PROCESS_MODE_DISABLED, running, "los pinchos también")
+	assert_true(home.occupied == false and away.occupied, "la sala sabe si tiene un player")
+	state.reset()

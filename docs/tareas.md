@@ -4129,17 +4129,19 @@ Playtest 2026-10-12: el estado del player tiene que ser global toda la partida y
 
 **Notas:** Sesión de bugs (-68). Repasé lo que guardan el player y sus componentes en el nodo. Inventario, equipo, botones, botellas y vida ya estaban en GameState; los ajustes de fijación y apuntado salen de Settings. Lo único que se perdía era la bendición del agua bendita: SaveManager.travel_to la guarda por slot (`GameState.player_ward`, no va en la partida) y el player nuevo la retoma y la consume. Quedan fuera a propósito: la orientación al llegar (la da el punto de aparición), lo que se lleva en brazos (se suelta al viajar) y, en co-op, un espíritu que cambia de escena vuelve lleno.
 
-### 11.97 Mazmorra: solo está activa la sala del player · Pendiente
+### 11.97 Mazmorra: solo está activa la sala del player · En curso
 
-**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `mazmorra`, `rendimiento`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** Claude · **Etiquetas:** `mazmorra`, `rendimiento`
 
 Hoy todo lo de la mazmorra corre a la vez: por ejemplo la línea de pinchos está activa aunque el player esté en otra sala. Las trampas, enemigos y efectos solo procesan en las salas con algún player (y se reinician o pausan al salir).
 
-- [ ] Activar y dormir por sala
-- [ ] Trampas y enemigos lo respetan
-- [ ] Tests
+- [x] Activar y dormir por sala
+- [x] Trampas y enemigos lo respetan
+- [x] Tests
 
-**Notas:** Sesión: auditoría (-04). Con varios players: activa toda sala con alguno adentro.
+**Prueba:** test_rooms › test_only_rooms_with_a_player_run: el esqueleto y unos pinchos de una sala se duermen cuando el player pasa a la otra y despiertan al volver.
+
+**Notas:** Sesión de bugs (-fd). Cada Room sabe si tiene algún player adentro (`occupied`, mira todos los players: en co-op corre toda sala con alguno). Cuando cambia, lo del grupo `room_sleepers` que está en una sala sin players pasa a PROCESS_MODE_DISABLED (se pausa y sigue donde quedó al volver; sus colisiones salen de la física mientras tanto); fuera de toda sala (overworld) siempre corre, y sin ningún player también. Están en el grupo, desde su .tscn: enemy.tscn (todos los enemigos), turret.tscn y spike_trap.tscn. Las oleadas no hace falta: arrancan al entrar. El jefe tampoco: su pelea arranca con la arena.
 
 ### 11.98 La cámara muestra lo que se desbloquea · Revisión
 
