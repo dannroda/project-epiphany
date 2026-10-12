@@ -3,7 +3,7 @@ extends RefCounted
 ## (zona, ítems y flags, llaves en mano, puertas abiertas con llave). Falla si falta algo en el grafo o si hay un
 ## estado alcanzable desde el que ya no se llega al objetivo.
 
-const COVERED := [&"Door", &"Gate", &"Bridge", &"CrackedWall", &"Chest", &"EyeSwitch", &"FloorSwitch", &"LightReceiver", &"WaveSpawner"]
+const COVERED := [&"Door", &"Gate", &"Bridge", &"CrackedWall", &"Chest", &"EyeSwitch", &"FloorSwitch", &"LightReceiver", &"WaveSpawner", &"EyeFight"]
 const MAX_STATES := 200000
 
 

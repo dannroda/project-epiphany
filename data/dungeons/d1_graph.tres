@@ -49,6 +49,7 @@ locked = true
 script = ExtResource("2_link")
 from = &"Antesala"
 to = &"Vigia"
+through = Array[NodePath]([NodePath("PisoCopa/VigiaShutter")])
 
 [sub_resource type="Resource" id="Link_9"]
 script = ExtResource("2_link")
@@ -118,7 +119,7 @@ node = NodePath("PisoCopa/CompassChest")
 [sub_resource type="Resource" id="Spot_8"]
 script = ExtResource("3_spot")
 area = &"Vigia"
-node = NodePath("PisoCopa/VigiaWaves")
+node = NodePath("PisoCopa/WardenFight")
 
 [sub_resource type="Resource" id="Spot_9"]
 script = ExtResource("3_spot")
@@ -167,7 +168,7 @@ through = Array[NodePath]([NodePath("PisoRaices/BossKeyGate")])
 [sub_resource type="Resource" id="Spot_16"]
 script = ExtResource("3_spot")
 area = &"Jefe"
-node = NodePath("PisoRaices/Jefe")
+node = NodePath("PisoRaices/BossFight")
 needs = Array[StringName]([&"bow"])
 gives = &"qv_boss_defeated"
 

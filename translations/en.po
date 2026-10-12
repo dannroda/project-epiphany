@@ -819,6 +819,12 @@ msgstr "Hall of Eyes"
 msgid "PLACE_QV_BOSS"
 msgstr "Heart of the Tree"
 
+msgid "BOSS_QV_WARDEN"
+msgstr "The Watcher Eye"
+
+msgid "BOSS_QV_EYES"
+msgstr "Eyes of the Queñoa"
+
 msgid "PLACE_CH_OSSUARY"
 msgstr "Ossuary"
 

@@ -819,6 +819,12 @@ msgstr "Sala de los ojos"
 msgid "PLACE_QV_BOSS"
 msgstr "Corazón del árbol"
 
+msgid "BOSS_QV_WARDEN"
+msgstr "Ojo Vigía"
+
+msgid "BOSS_QV_EYES"
+msgstr "Los Ojos de la Queñoa"
+
 msgid "PLACE_CH_OSSUARY"
 msgstr "Osario"
 

@@ -1,0 +1,171 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/entities/watcher_eye/watcher_eye.gd" id="1_eye"]
+[ext_resource type="Resource" path="res://data/entities/watcher_eye.tres" id="2_config"]
+[ext_resource type="Script" path="res://src/components/health.gd" id="3_health"]
+[ext_resource type="Script" path="res://src/components/hurtbox.gd" id="4_hurtbox"]
+[ext_resource type="Script" path="res://src/components/hitbox.gd" id="5_hitbox"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/ojo_globo.res" id="6_globe"]
+[ext_resource type="Script" path="res://src/feel/hit_flash.gd" id="7_flash"]
+
+[sub_resource type="StandardMaterial3D" id="Bark"]
+albedo_color = Color(0.32, 0.22, 0.14, 1)
+roughness = 1.0
+
+[sub_resource type="StandardMaterial3D" id="Glow"]
+shading_mode = 0
+albedo_color = Color(1, 0.3, 0.2, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mark"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 0.2, 0.15, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="AimMat"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.2, 0.02, 0.02, 0.55)
+
+[sub_resource type="SphereMesh" id="LidMesh"]
+material = SubResource("Bark")
+radius = 0.95
+height = 1.9
+
+[sub_resource type="SphereMesh" id="IrisMesh"]
+material = SubResource("Glow")
+radius = 0.28
+height = 0.56
+radial_segments = 12
+rings = 6
+
+[sub_resource type="CylinderMesh" id="BeamMesh"]
+material = SubResource("Glow")
+top_radius = 0.08
+bottom_radius = 0.08
+height = 1.0
+radial_segments = 8
+rings = 1
+
+[sub_resource type="CylinderMesh" id="SpotMesh"]
+material = SubResource("Glow")
+top_radius = 0.6
+bottom_radius = 0.6
+height = 0.05
+radial_segments = 16
+rings = 1
+
+[sub_resource type="SphereShape3D" id="SpotShape"]
+radius = 0.6
+
+[sub_resource type="BoxMesh" id="PathMesh"]
+material = SubResource("Mark")
+size = Vector3(0.1, 0.02, 1)
+
+[sub_resource type="CylinderMesh" id="AimMesh"]
+material = SubResource("AimMat")
+top_radius = 1.5
+bottom_radius = 1.5
+height = 0.02
+radial_segments = 24
+rings = 1
+
+[sub_resource type="SphereShape3D" id="ImpactShape"]
+radius = 1.5
+
+[sub_resource type="CylinderShape3D" id="HurtShape"]
+height = 4.2
+radius = 0.95
+
+[node name="WatcherEye" type="Node3D" groups=["room_sleepers"]]
+script = ExtResource("1_eye")
+config = ExtResource("2_config")
+
+[node name="Body" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+
+[node name="Globe" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(3.4, 0, 0, 0, 3.4, 0, 0, 0, 3.4, 0, 0, 0)
+mesh = ExtResource("6_globe")
+
+[node name="Iris" type="MeshInstance3D" parent="Body"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 0, 0.85)
+mesh = SubResource("IrisMesh")
+
+[node name="Lid" type="MeshInstance3D" parent="Body"]
+unique_name_in_owner = true
+mesh = SubResource("LidMesh")
+
+[node name="Glow" type="OmniLight3D" parent="Body"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.2)
+light_color = Color(1, 0.35, 0.2, 1)
+light_energy = 0.0
+omni_range = 5.0
+
+[node name="Beam" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+top_level = true
+cast_shadow = 0
+mesh = SubResource("BeamMesh")
+
+[node name="Spot" type="Area3D" parent="."]
+unique_name_in_owner = true
+top_level = true
+collision_layer = 0
+collision_mask = 24
+monitorable = false
+script = ExtResource("5_hitbox")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Spot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("SpotShape")
+
+[node name="Mesh" type="MeshInstance3D" parent="Spot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0)
+cast_shadow = 0
+mesh = SubResource("SpotMesh")
+
+[node name="PathMark" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+top_level = true
+cast_shadow = 0
+mesh = SubResource("PathMesh")
+
+[node name="AimMark" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+top_level = true
+cast_shadow = 0
+mesh = SubResource("AimMesh")
+
+[node name="Impact" type="Area3D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 24
+monitorable = false
+script = ExtResource("5_hitbox")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Impact"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("ImpactShape")
+
+[node name="Hurtbox" type="Area3D" parent="."]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+script = ExtResource("4_hurtbox")
+surface = "stone"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1, 0)
+shape = SubResource("HurtShape")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("3_health")
+invulnerability_time = 0.25
+
+[node name="HitFlash" type="Node" parent="." node_paths=PackedStringArray("health", "visuals")]
+script = ExtResource("7_flash")
+health = NodePath("../Health")
+visuals = NodePath("../Body")

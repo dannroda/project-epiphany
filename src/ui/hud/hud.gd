@@ -37,7 +37,8 @@ var prompt_text: Label:
 var _area_tween: Tween
 var _dungeon: DungeonState
 var _saved_tween: Tween
-var _boss: Boss
+## Boss o EyeFight: display_name, bar_changed, bar_fraction() y phase().
+var _boss: Node
 var _boss_tween: Tween
 
 
@@ -157,7 +158,7 @@ func _flash_saved() -> void:
 
 
 
-func show_boss(boss: Boss) -> void:
+func show_boss(boss: Node) -> void:
 	_boss = boss
 	%BossName.text = tr(boss.display_name)
 	boss.bar_changed.connect(_refresh_boss)
@@ -181,7 +182,7 @@ func hide_boss() -> void:
 func _refresh_boss() -> void:
 	if _boss == null:
 		return
-	var phase := _boss.phase()
+	var phase: int = _boss.phase()
 	%BossPhase.text = tr("HUD_BOSS_PHASE").format({phase = phase})
 	%BossPhase.visible = phase > 0
 	if _boss_tween:
