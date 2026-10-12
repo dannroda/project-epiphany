@@ -157,21 +157,21 @@ Las teclas se mapean por posición física (`physical_keycode`): WASD queda en e
 Inicio (espada + escudo de madera)
   └─ Pradera: enemigos, pasto, tablilla
       └─ Cueva ──► BOMBAS
-          └─ Muro agrietado ──► Santuario ──► ESCUDO ESPEJO
-              └─ Sello del templo (reflejar haz de luz) ──► MAZMORRA
-                  └─ … ──► sub-jefe ──► ARCO (ítem de D1) ──► puzzle (luz + flechas) ──► llave del jefe ──► JEFE
-                      └─ Vuelta al overworld: ojo-interruptor ──► CARCAJ GRANDE
-                      └─ Flecha al ojo del puente de la quebrada ──► Necrópolis ──► CHULLPA (D2) ──► PLUMA
-                          └─ Angostura, Cardonal, pieza de la pradera; islotes de la Laguna ──► D3 ──► GANCHO
-                              └─ Postes ──► Cumbre ──► D4 ──► GUANTES DE FUERZA
-Opcionales: botella/poción (muro agrietado), cota reforzada (puzzle de bloques), disco solar (por ubicar)
+          └─ D1 (nueva, por ubicar en el oeste) ──► sub-jefe ──► ARCO ──► segunda mitad con el arco ──► JEFE
+              └─ Flecha al ojo del puente de la quebrada ──► Necrópolis ──► CHULLPA (D2) ──► sub-jefe ──► PLUMA ──► JEFE
+                  └─ Angostura, Cardonal, pieza de la pradera; islotes de la Laguna ──► D3 ──► GANCHO
+                      └─ Postes ──► Cumbre ──► D4 ──► ESCUDO ESPEJO
+                          └─ Sello del templo (reflejar haz de luz) ──► TEMPLO DEL OJO (última) ──► EL OJO CON MANOS
+Opcionales: botella/poción (muro agrietado), cota reforzada (puzzle de bloques), carcaj grande, disco solar (por ubicar)
 ```
 
-Es el orden decidido en 11.90 (2026-10-12). D1 ya no tiene la pluma; la Chullpa todavía está armada para el gancho y se rehace con la pluma en 11.60.
+Es el orden decidido en 11.90 y cambiado en 11.113 (2026-10-12, Daniel): el templo del ojo pasa a ser la última mazmorra, porque su jefe se pensó como final, y se amplía para que use todos los ítems. El escudo espejo es el ítem de D4 y abre el sello; el templo se ve desde el principio en la Explanada con el sello cerrado. Los guantes de fuerza quedan fuera. El santuario ya no da el escudo espejo. **Pendiente (11.113):** qué es D1 y dónde está; qué da el santuario.
 
-**Molde de cada mazmorra (11.90):** prueba en el overworld → mazmorra con una mecánica que la recorre entera → ítem a mitad, guardado por un sub-jefe → el jefe se vence con ese ítem → el ítem abre la zona siguiente del overworld y 2–3 secretos en zonas ya visitadas. Cada mazmorra se diseña primero como grafo llave-cerradura (`DungeonGraph` en `data/dungeons/`: zonas, pasos y qué pide cada lugar), y `test_dungeon_reach` lo cruza con la escena (tipo de puerta, interruptores de cada reja, contenido de los cofres, que no falte ninguna puerta, reja, cofre o interruptor) y recorre todos los órdenes de juego: falla si algo pide un ítem que nadie da o si hay un estado desde el que ya no se llega al objetivo, y muestra el camino hasta ahí. D1 tiene el suyo (`d1_graph.tres`).
+**Ítem y sub-jefe (11.113):** el ítem de cada mazmorra lo guarda un sub-jefe basado en el jefe de esa mazmorra, que se vence sin ese ítem (con los anteriores, sí). La segunda mitad de la mazmorra se resuelve con el ítem, y los ítems de mazmorras anteriores se combinan con él para abrirla. Por ejemplo, en D2 una torre pide un flechazo para activar el puzzle previo al sub-jefe que guarda la pluma.
 
-**Alcance por entregas:** el primer playtest externo lleva D1 y D2. D3 y D4 se ven en el overworld pero están cerradas y llegan después como actualización (sirve para probar un sistema de parches).
+**Molde de cada mazmorra (11.90):** prueba en el overworld → mazmorra con una mecánica que la recorre entera → ítem a mitad, guardado por un sub-jefe → el jefe se vence con ese ítem → el ítem abre la zona siguiente del overworld y 2–3 secretos en zonas ya visitadas. Cada mazmorra se diseña primero como grafo llave-cerradura (`DungeonGraph` en `data/dungeons/`: zonas, pasos y qué pide cada lugar), y `test_dungeon_reach` lo cruza con la escena (tipo de puerta, interruptores de cada reja, contenido de los cofres, que no falte ninguna puerta, reja, cofre o interruptor) y recorre todos los órdenes de juego: falla si algo pide un ítem que nadie da o si hay un estado desde el que ya no se llega al objetivo, y muestra el camino hasta ahí. El templo (`d1_graph.tres`) y la Chullpa (`d2_graph.tres`) tienen el suyo.
+
+**Alcance por entregas:** el primer playtest externo lleva D1 y D2. D3, D4 y el templo se ven en el overworld pero están cerrados y llegan después como actualización (sirve para probar un sistema de parches). Con 11.113, D1 es una mazmorra nueva por hacer.
 
 Regla: un ítem que se consigue en una mazmorra no desbloquea nada nuevo en las mazmorras anteriores. Por ejemplo, si la pluma saliera de la segunda mazmorra, la primera no tendría ningún cofre que pida la pluma. Lo que el ítem abre está en su propia mazmorra, en las siguientes o en el overworld. El overworld funciona como un hub: cada ítem nuevo de una mazmorra o una cueva debería abrir ahí cosas o caminos nuevos.
 

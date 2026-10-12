@@ -1,11 +1,13 @@
 {
   "checklist": [
     {
-      "done": false,
+      "detail": "Decidido con Daniel el 2026-10-12: D1 arco (mazmorra nueva), D2 pluma (Chullpa), D3 gancho, D4 escudo espejo, y el templo del ojo como última mazmorra (usa todos los ítems). Los guantes de fuerza quedan fuera. Cada ítem lo guarda un sub-jefe basado en el jefe de su mazmorra, que se vence sin ese ítem; la segunda mitad de la mazmorra se resuelve con el ítem, combinado con los de mazmorras anteriores (ej.: en D2 una torre pide un flechazo para activar el puzzle previo al sub-jefe de la pluma). Falta: qué es D1 y dónde está; qué da el santuario. GDD §6.2.",
+      "done": true,
       "text": "Cadena nueva de mazmorras e ítems (con Daniel)"
     },
     {
-      "done": false,
+      "detail": "Decidido: es el ítem de D4 (la Cumbre). El santuario del primer acto ya no lo da.",
+      "done": true,
       "text": "Dónde se consigue el escudo espejo y qué lo gatea"
     },
     {
@@ -15,6 +17,10 @@
     {
       "done": false,
       "text": "GDD §6 y §7, y el boceto de 7.10 al día"
+    },
+    {
+      "done": false,
+      "text": "Qué es D1 (arco) y dónde está; qué da el santuario"
     }
   ],
   "code": "11.113",
@@ -32,5 +38,5 @@
   ],
   "test": "",
   "title": "El templo del ojo pasa a ser la última mazmorra",
-  "updated_at": "2026-10-12T20:36:36.783Z"
+  "updated_at": "2026-10-12T20:42:20.452Z"
 }

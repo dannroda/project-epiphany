@@ -48,6 +48,11 @@
     {
       "done": false,
       "text": "Más enemigos y un acertijo por piso"
+    },
+    {
+      "detail": "11.113: sub-jefe basado en el jefe de la Chullpa que se vence sin la pluma; antes, una torre que pide un flechazo activa el puzzle previo. La segunda mitad (abismo, llave del jefe) ya pide la pluma.",
+      "done": false,
+      "text": "Sub-jefe que guarda la pluma y torre del flechazo"
     }
   ],
   "code": "11.60",
@@ -65,5 +70,5 @@
   ],
   "test": "",
   "title": "Mazmorra nueva de varios pisos",
-  "updated_at": "2026-10-12T18:43:15.270Z"
+  "updated_at": "2026-10-12T20:42:21.126Z"
 }

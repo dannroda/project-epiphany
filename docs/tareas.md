@@ -3467,6 +3467,8 @@ Segunda mazmorra con pisos (y quizás sótanos) apilados en la misma escena, en 
 - [ ] Jefe del Guardián que se vence saltando
   Sala B-NE, hoy vacía. En d2_graph.tres el objetivo d2_boss_defeated pide la pluma.
 - [ ] Más enemigos y un acertijo por piso
+- [ ] Sub-jefe que guarda la pluma y torre del flechazo
+  11.113: sub-jefe basado en el jefe de la Chullpa que se vence sin la pluma; antes, una torre que pide un flechazo activa el puzzle previo. La segunda mitad (abismo, llave del jefe) ya pide la pluma.
 
 **Relacionadas:** 11.30 Ítem post-MVP: gancho o telequinesis
 
@@ -4052,7 +4054,7 @@ Playtest del 2026-10-12: la primera mazmorra ya tiene varios softblocks, y la pl
 - [x] Softblocks de D1
   Hecho el 2026-10-12 leyendo temple.tscn y sus scripts (grafo y tabla en el documento de diseño). El orden de llaves es seguro: la llave 1 solo alcanza la puerta este del hub. Softblock duro solo cargando en la misma escena (11.108); los menores en 11.109; el de co-op en 13.16. Falta recorrer la Chullpa cuando se rehaga.
 - [x] Ítem por mazmorra
-  Decidido con Daniel el 2026-10-12: D1 arco (lo guarda el sub-jefe, 11.31), D2 pluma, D3 gancho (11.30), D4 guantes de fuerza. El disco solar queda como ítem opcional (mini-mazmorra o secreto del overworld). Documento: https://claude.ai/code/artifact/4fce85f9-7f11-4285-9d2e-bb1d58b45b4e
+  Decidido con Daniel el 2026-10-12, cambiado en 11.113: D1 arco (mazmorra nueva), D2 pluma, D3 gancho (11.30), D4 escudo espejo; el templo del ojo es la última. Los guantes de fuerza quedan fuera. El disco solar queda como ítem opcional. Documento: https://claude.ai/code/artifact/4fce85f9-7f11-4285-9d2e-bb1d58b45b4e
 - [x] Mudar la pluma a D2
   Hecho el 2026-10-12. D1: sin sala de la pluma (puerta tapiada), sin la fila de huecos del Puzzle ni el escalón de la Antesala; navmesh del templo horneada de nuevo. D2: la isla de la Chullpa da la pluma y lo que pedía gancho pasa a pluma (11.60, paso 8). La pieza de la pradera y la angostura quedan para después de D2.
 - [ ] Armadura del esqueleto
@@ -4357,10 +4359,13 @@ Daniel 2026-10-12: al dash/esquivar ponerle un efecto similar al trail de la esp
 
 Daniel (2026-10-12): el jefe del ojo se pensó como fin de demo, así que tiene sentido que sea el final del juego. El templo (hoy D1) pasa a ser D4, la última; el escudo espejo pasa a ser lo que se consigue para entrar a la última mazmorra (el sello de luz). Hay que ampliar el templo para que use todos los ítems. Cambia la cadena de 11.90 (qué es D1 ahora, de dónde sale el arco, qué pasa con la mazmorra de la Cumbre) y el reparto del overworld (7.10).
 
-- [ ] Cadena nueva de mazmorras e ítems (con Daniel)
-- [ ] Dónde se consigue el escudo espejo y qué lo gatea
+- [x] Cadena nueva de mazmorras e ítems (con Daniel)
+  Decidido con Daniel el 2026-10-12: D1 arco (mazmorra nueva), D2 pluma (Chullpa), D3 gancho, D4 escudo espejo, y el templo del ojo como última mazmorra (usa todos los ítems). Los guantes de fuerza quedan fuera. Cada ítem lo guarda un sub-jefe basado en el jefe de su mazmorra, que se vence sin ese ítem; la segunda mitad de la mazmorra se resuelve con el ítem, combinado con los de mazmorras anteriores (ej.: en D2 una torre pide un flechazo para activar el puzzle previo al sub-jefe de la pluma). Falta: qué es D1 y dónde está; qué da el santuario. GDD §6.2.
+- [x] Dónde se consigue el escudo espejo y qué lo gatea
+  Decidido: es el ítem de D4 (la Cumbre). El santuario del primer acto ya no lo da.
 - [ ] Ampliar el templo: salas que usen todos los ítems
 - [ ] GDD §6 y §7, y el boceto de 7.10 al día
+- [ ] Qué es D1 (arco) y dónde está; qué da el santuario
 
 **Notas:** Sesión: diseño (-43 [a7e236]), con Daniel. Overworld (-eb) acomoda el boceto de 7.10 cuando esté la cadena.
 

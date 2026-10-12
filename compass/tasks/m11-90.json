@@ -6,7 +6,7 @@
       "text": "Softblocks de D1"
     },
     {
-      "detail": "Decidido con Daniel el 2026-10-12: D1 arco (lo guarda el sub-jefe, 11.31), D2 pluma, D3 gancho (11.30), D4 guantes de fuerza. El disco solar queda como ítem opcional (mini-mazmorra o secreto del overworld). Documento: https://claude.ai/code/artifact/4fce85f9-7f11-4285-9d2e-bb1d58b45b4e",
+      "detail": "Decidido con Daniel el 2026-10-12, cambiado en 11.113: D1 arco (mazmorra nueva), D2 pluma, D3 gancho (11.30), D4 escudo espejo; el templo del ojo es la última. Los guantes de fuerza quedan fuera. El disco solar queda como ítem opcional. Documento: https://claude.ai/code/artifact/4fce85f9-7f11-4285-9d2e-bb1d58b45b4e",
       "done": true,
       "text": "Ítem por mazmorra"
     },
@@ -61,5 +61,5 @@
   ],
   "test": "",
   "title": "Diseño de mazmorras, ítems y su reparto en el overworld",
-  "updated_at": "2026-10-12T18:43:17.369Z"
+  "updated_at": "2026-10-12T20:42:21.626Z"
 }
