@@ -6,6 +6,10 @@ extends Camera3D
 @export var offset: Vector3 = Vector3(0, 17.4, 10.0)
 ## El `fov` de la cámara (lo pisa al arrancar: así se puede poner desde la escena). Lejos y angosta casi no hay perspectiva.
 @export var field_of_view := 40.0
+## Sin perspectiva (paredes en rampa, estilo Link's Awakening): las paredes se ven del mismo ancho arriba y abajo.
+@export var orthographic := false
+## Alto en metros de lo que se ve con `orthographic`.
+@export var ortho_size := 19.0
 @export var smooth_speed: float = 8.0
 @export var trauma_decay := 1.6
 @export var max_shake_offset := Vector2(0.35, 0.25)
@@ -92,6 +96,9 @@ var _last_positions: Dictionary[PlayerCharacter, Vector3] = {}
 
 func _ready() -> void:
 	fov = field_of_view
+	if orthographic:
+		projection = PROJECTION_ORTHOGONAL
+		size = ortho_size
 	top_level = true
 	if not target_node and get_parent() is PlayerCharacter:
 		target_node = get_parent()
@@ -174,9 +181,10 @@ func view_extents() -> Rect2:
 
 
 func _offset_at_height(screen_point: Vector2, height: float) -> Vector2:
+	var origin := project_ray_origin(screen_point) - global_position + offset
 	var ray := project_ray_normal(screen_point)
-	var t := (height - offset.y) / minf(ray.y, -0.01)
-	return Vector2(offset.x + ray.x * t, offset.z + ray.z * t)
+	var t := (height - origin.y) / minf(ray.y, -0.01)
+	return Vector2(origin.x + ray.x * t, origin.z + ray.z * t)
 
 
 ## Foco dentro de la sala. Si la sala es más baja que la pantalla, queda fija y centrada en pantalla: con la
@@ -207,7 +215,7 @@ func _clamp(point: Vector3) -> Vector3:
 ## Altura en pantalla (tangente, + = arriba) de un punto visto desde `eye` con la orientación de la cámara.
 func _screen_height(point: Vector3, eye: Vector3) -> float:
 	var local := global_basis.inverse() * (point - eye)
-	return local.y / -local.z
+	return local.y if orthographic else local.y / -local.z
 
 
 ## Tapa todo lo que queda fuera del rectángulo (XZ), desde el piso de abajo hasta el tope de las paredes.
@@ -333,7 +341,9 @@ func _update_player_hole(delta: float) -> void:
 func _player_hidden(player: PlayerCharacter) -> bool:
 	var space := get_world_3d().direct_space_state
 	for height in HOLE_PROBES:
-		var query := PhysicsRayQueryParameters3D.create(global_position, player.global_position + Vector3.UP * height, 1)
+		var point := player.global_position + Vector3.UP * height
+		var eye := point + global_basis.z * offset.length() if orthographic else global_position
+		var query := PhysicsRayQueryParameters3D.create(eye, point, 1)
 		query.exclude = Players.all.map(func(player: PlayerCharacter) -> RID: return player.get_rid())
 		for attempt in 4:
 			var hit := space.intersect_ray(query)
