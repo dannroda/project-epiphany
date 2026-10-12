@@ -218,18 +218,18 @@ func quit_to_title() -> void:
 
 
 func load_game(slot: int = -1) -> Error:
-	if slot >= 0:
-		current_slot = slot
-	return await _load_path(slot_path(current_slot))
+	if slot < 0:
+		slot = current_slot
+	return await _load_path(slot_path(slot), slot)
 
 
 ## Un nombre de debug/scenarios/ o una ruta completa (la que deja el Save Inspector).
 func load_scenario(scenario: String) -> Error:
-	current_slot = SCENARIO_SLOT
-	return await _load_path(scenario if "://" in scenario else SCENARIO_DIR + scenario + ".cfg")
+	return await _load_path(scenario if "://" in scenario else SCENARIO_DIR + scenario + ".cfg", SCENARIO_SLOT)
 
 
-func _load_path(path: String) -> Error:
+## La ranura pasa a ser `slot` solo si la partida se pudo leer.
+func _load_path(path: String, slot: int) -> Error:
 	var cfg := ConfigFile.new()
 	var err := SaveCodec.read(path, cfg)
 	if err != OK:
@@ -238,6 +238,7 @@ func _load_path(path: String) -> Error:
 	for problem in SaveCodec.validate(cfg):
 		Log.warning(&"save", problem)
 	_migrate(cfg, cfg.get_value("meta", "version", 0))
+	current_slot = slot
 	if current_slot == AUTO_SLOT:
 		var origin: int = cfg.get_value("meta", "slot", PLAYER_SLOTS[0])
 		current_slot = origin if origin in PLAYER_SLOTS else PLAYER_SLOTS[0]
@@ -332,9 +333,17 @@ func _place_players(at: Vector3) -> void:
 
 
 func _restore_player() -> void:
+	if not GameState.spawn_scene.is_empty() and not ResourceLoader.exists(GameState.spawn_scene):
+		Log.error(&"save", "La escena de la partida ya no existe:", GameState.spawn_scene)
+		GameState.spawn_scene = NEW_GAME_SCENE
+		GameState.spawn_point = &"start"
+		GameState.player_position = null
 	var scene := get_tree().current_scene
 	if not GameState.spawn_scene.is_empty() and (scene == null or scene.scene_file_path != GameState.spawn_scene):
-		get_tree().change_scene_to_file(GameState.spawn_scene)
+		var err := get_tree().change_scene_to_file(GameState.spawn_scene)
+		if err != OK:
+			Log.error(&"save", "No se pudo cambiar a", GameState.spawn_scene, error_string(err))
+			return
 		await get_tree().scene_changed
 	if not Players.all.is_empty() and GameState.player_position != null:
 		_place_players(GameState.player_position)

@@ -2534,7 +2534,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (21/85)
+## M11 — Pulido: contenido y feel  (22/85)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3501,28 +3501,28 @@ heart_piece, push_block y tablet leen su flag una sola vez en `_ready` y no usan
 
 **Archivos:** `src/world/heart_piece.gd`, `src/world/push_block.gd`, `src/world/tablet.gd`
 
-### 11.64 Cargar partida: no colgarse ni cambiar de slot si falla · Pendiente
+### 11.64 Cargar partida: no colgarse ni cambiar de slot si falla · En curso
 
-**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`, `guardado`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `guardado`
 
 `_restore_player` llama a `change_scene_to_file(GameState.spawn_scene)` sin mirar el resultado y espera `scene_changed`: si el nivel guardado ya no existe (se renombraron niveles con el overworld nuevo), la pantalla queda negra para siempre y `loading` en true (que además apaga los reveal de cámara). `load_game` además cambia `current_slot` antes de leer, así que una carga fallida deja guardando en el slot equivocado.
 
-- [ ] Comprobar la escena antes de cambiar
+- [x] Comprobar la escena antes de cambiar
   save_manager.gd `_restore_player`: `ResourceLoader.exists` y `change_scene_to_file(...) == OK` antes del await; si no, fallback a NEW_GAME_SCENE o error, y resetear `loading`. `travel_to` ya lo hace.
-- [ ] Slot solo tras leer OK
+- [x] Slot solo tras leer OK
   `load_game`: pasar el slot a `_load_path` y asignar `current_slot` cuando `SaveCodec.read` devuelve OK.
-- [ ] Tests
+- [x] Tests
   test_save_manager: escena inexistente y slot corrupto.
 
 **Prueba:** Una partida con `spawn_scene` inexistente vuelve con error (o al inicio) sin colgarse; cargar un slot corrupto no cambia el slot activo.
 
-**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+**Notas:** Sale de la revisión de código general del 2026-10-11. Hecho: si la escena guardada no existe, la partida carga en el comienzo (NEW_GAME_SCENE, spawn start) con lo que tenía y lo deja en el log; si change_scene falla, no espera scene_changed. La ranura cambia solo tras leer OK (load_game y load_scenario pasan la ranura a _load_path).
 
 **Archivos:** `src/save/save_manager.gd`, `tests/test_save_manager.gd`
 
-### 11.65 El escudo se queda levantado tras un hit-stop o la pausa · En curso
+### 11.65 El escudo se queda levantado tras un hit-stop o la pausa · Hecho
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `combate`, `input`
+**Terminada:** 2026-10-11 · **Prioridad:** alta · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `combate`, `input`
 
 `is_blocking` solo cambia con los eventos de pulsar/soltar en `_unhandled_input`. Durante `Feel.hit_stop` o la pausa el player está DISABLED y no recibe eventos: si soltás el bloqueo en ese momento, el escudo queda arriba (velocidad 2.0, sigue bloqueando). Además se activa en Dead, Spirit, Carrying y Grabbed (bloquear es una de las teclas de forcejeo del agarre, y entonces el escudo frena golpes frontales).
 
