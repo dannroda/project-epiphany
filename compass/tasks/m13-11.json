@@ -1,0 +1,57 @@
+{
+  "checklist": [
+    {
+      "detail": "`resource_local_to_scene` en el sub-recurso o `tree_root.duplicate(true)` en `player._ready`.",
+      "done": false,
+      "text": "AnimationTree por instancia"
+    },
+    {
+      "detail": "`Feel.rumble(amount, device := -1)`: el player pasa su pad; eventos del mundo vibran todos los pads asignados.",
+      "done": false,
+      "text": "Vibración por pad"
+    },
+    {
+      "detail": "aim.gd ~l.54: quitar el chequeo de `InputDevice.current`, ya se sigue por player con `controls.owns()`.",
+      "done": false,
+      "text": "Apuntado con ratón"
+    },
+    {
+      "detail": "Contar players adentro o `get_overlapping_bodies().any(...)`.",
+      "done": false,
+      "text": "Zona de temblor"
+    },
+    {
+      "detail": "place_behavior.gd: contar solo las de `ctx.user`.",
+      "done": false,
+      "text": "Bombas por player"
+    }
+  ],
+  "code": "13.11",
+  "created_at": "2026-10-12T00:06:08.167Z",
+  "description": "Cosas que todavía son de todos o de P1: el `tree_root` del AnimationTree es un sub-recurso compartido y jumping/pushing/using_item cambian `ItemAnim` (la animación de uno se mete en el otro); `Feel.rumble` siempre vibra el pad 0; el apuntado con ratón depende de `InputDevice.current` global; `tremor_zone` usa un solo bool `_inside`; el tope de bombas cuenta las de todos; el banner de zona (`AreaZone._current` estático) cambia cuando cruza cualquiera.",
+  "files": [
+    "player/player.tscn",
+    "player/states/jumping.gd",
+    "player/states/pushing.gd",
+    "player/states/using_item.gd",
+    "src/feel/feel.gd",
+    "player/components/aim.gd",
+    "src/world/tremor_zone.gd",
+    "src/items/behaviors/place_behavior.gd",
+    "src/world/area_zone.gd"
+  ],
+  "milestone": "m13",
+  "notes": "Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).",
+  "order": 11,
+  "priority": "high",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "coop"
+  ],
+  "test": "Con dos players: P1 salta mientras P2 usa un ítem y cada uno ve su animación; un golpe a P2 vibra solo su pad; cada uno puede tener sus bombas.",
+  "title": "Estado de un player que se cuela en el otro",
+  "updated_at": "2026-10-12T00:06:13.279Z"
+}

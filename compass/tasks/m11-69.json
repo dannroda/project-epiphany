@@ -1,0 +1,42 @@
+{
+  "checklist": [
+    {
+      "detail": "enemy.gd `_break_armor.call_deferred()`.",
+      "done": false,
+      "text": "Diferir la armadura"
+    },
+    {
+      "detail": "player.gd `_on_hit`: `movement_state.dispatch.call_deferred(\"hurt\")` (o diferir el reparent en `Carrier._release`).",
+      "done": false,
+      "text": "Diferir el golpe del player"
+    },
+    {
+      "detail": "thrown_object.gd: `liftable.shatter.call_deferred()`.",
+      "done": false,
+      "text": "Diferir el estallido"
+    }
+  ],
+  "code": "11.69",
+  "created_at": "2026-10-12T00:05:28.781Z",
+  "description": "Se agregan, reparentan o liberan cuerpos dentro de señales de física (durante el flush), lo que Jolt puede rechazar o aplicar un paso tarde: `enemy._break_armor` (RigidBody nuevo al romper la armadura desde `Hurtbox.hit`), `carrier.drop()` al recibir un golpe cargando algo (reparent de un RigidBody vía `_on_hit` → dispatch hurt), y `thrown_object` → `shatter()` en `body_entered`.",
+  "files": [
+    "src/entities/enemy.gd",
+    "player/player.gd",
+    "player/components/carrier.gd",
+    "src/world/thrown_object.gd"
+  ],
+  "milestone": "m11",
+  "notes": "Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).",
+  "order": 66,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "combate"
+  ],
+  "test": "Romper armadura con una bomba, recibir un golpe cargando una vasija y estrellar una vasija: sin errores ni avisos de física en la salida.",
+  "title": "Cambios de física dentro de callbacks",
+  "updated_at": "2026-10-12T00:05:31.234Z"
+}

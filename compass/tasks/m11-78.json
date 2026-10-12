@@ -1,0 +1,56 @@
+{
+  "checklist": [
+    {
+      "detail": "items_page.gd ~l.183/201 y equipment_page.gd ~l.118: `remove_child` antes de `queue_free` (hoy duplican un frame).",
+      "done": false,
+      "text": "Liberar con remove_child"
+    },
+    {
+      "detail": "TextBox, ItemGet y LanguageSelect extienden UiScreen; MenuStack tipado como `Array[UiScreen]`.",
+      "done": false,
+      "text": "Pantallas con contrato UiScreen"
+    },
+    {
+      "detail": "`MenuStack.depth()`.",
+      "done": false,
+      "text": "Feel sin tocar MenuStack._stack"
+    },
+    {
+      "detail": "text_box.gd `body`, pause_menu.gd `extra`/`accept`, minimap.gd `_doors`, bt_* `bow`.",
+      "done": false,
+      "text": "Tipos estáticos"
+    },
+    {
+      "detail": "ItemModifier sin subclases; estado Spawning que dura un frame (arreglar o quitar).",
+      "done": false,
+      "text": "Código sin uso"
+    },
+    {
+      "detail": "boss.gd no depende del orden de nodos en temple.tscn para el rect de la arena.",
+      "done": false,
+      "text": "Arena del jefe"
+    },
+    {
+      "detail": "spring.gd usa `by.health`; ToonToggle limpia `_saved` de nodos liberados.",
+      "done": false,
+      "text": "Varios"
+    }
+  ],
+  "code": "11.78",
+  "created_at": "2026-10-12T00:06:03.589Z",
+  "description": "Detalles sueltos de la revisión, sin bug visible o con efecto de un frame.",
+  "milestone": "m11",
+  "notes": "Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).",
+  "order": 75,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "arquitectura",
+    "ui"
+  ],
+  "test": "Tests verdes; sin cambios visibles salvo el parpadeo de chips/corazones.",
+  "title": "Limpieza menor de la revisión de código",
+  "updated_at": "2026-10-12T00:06:05.795Z"
+}

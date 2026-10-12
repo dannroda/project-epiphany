@@ -1,0 +1,30 @@
+{
+  "checklist": [
+    {
+      "detail": "room.gd ~l.91 y wave_spawner.gd ~l.62/76: `is_inside_tree()` y que la sala de la cámara siga siendo esta.",
+      "done": false,
+      "text": "Revalidar después del await"
+    }
+  ],
+  "code": "11.70",
+  "created_at": "2026-10-12T00:05:31.512Z",
+  "description": "`room._lock_after_entering` espera 0.6 s y cierra las rejas sin comprobar que la cámara sigue en esa sala; wave_spawner hace lo mismo. Si los players salen enseguida (escalera, pozo, paso atrás) quedan rejas cerradas en una sala vacía, y tras un `reload_current_scene` las corrutinas siguen sobre instancias liberadas. Los 0.6 s dependen sin decirlo del `transition_time` (0.5) de la cámara.",
+  "files": [
+    "src/world/room.gd",
+    "src/world/wave_spawner.gd"
+  ],
+  "milestone": "m11",
+  "notes": "Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).",
+  "order": 67,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "mazmorra"
+  ],
+  "test": "Entrar a una sala de oleadas y salir en menos de medio segundo: no se cierra; tras morir y reaparecer no hay errores en la salida.",
+  "title": "Sala que se cierra después de que los players se fueron",
+  "updated_at": "2026-10-12T00:05:32.607Z"
+}

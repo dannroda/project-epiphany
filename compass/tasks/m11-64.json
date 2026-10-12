@@ -1,0 +1,40 @@
+{
+  "checklist": [
+    {
+      "detail": "save_manager.gd `_restore_player`: `ResourceLoader.exists` y `change_scene_to_file(...) == OK` antes del await; si no, fallback a NEW_GAME_SCENE o error, y resetear `loading`. `travel_to` ya lo hace.",
+      "done": false,
+      "text": "Comprobar la escena antes de cambiar"
+    },
+    {
+      "detail": "`load_game`: pasar el slot a `_load_path` y asignar `current_slot` cuando `SaveCodec.read` devuelve OK.",
+      "done": false,
+      "text": "Slot solo tras leer OK"
+    },
+    {
+      "detail": "test_save_manager: escena inexistente y slot corrupto.",
+      "done": false,
+      "text": "Tests"
+    }
+  ],
+  "code": "11.64",
+  "created_at": "2026-10-12T00:05:18.465Z",
+  "description": "`_restore_player` llama a `change_scene_to_file(GameState.spawn_scene)` sin mirar el resultado y espera `scene_changed`: si el nivel guardado ya no existe (se renombraron niveles con el overworld nuevo), la pantalla queda negra para siempre y `loading` en true (que además apaga los reveal de cámara). `load_game` además cambia `current_slot` antes de leer, así que una carga fallida deja guardando en el slot equivocado.",
+  "files": [
+    "src/save/save_manager.gd",
+    "tests/test_save_manager.gd"
+  ],
+  "milestone": "m11",
+  "notes": "Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).",
+  "order": 61,
+  "priority": "high",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "guardado"
+  ],
+  "test": "Una partida con `spawn_scene` inexistente vuelve con error (o al inicio) sin colgarse; cargar un slot corrupto no cambia el slot activo.",
+  "title": "Cargar partida: no colgarse ni cambiar de slot si falla",
+  "updated_at": "2026-10-12T00:05:20.835Z"
+}

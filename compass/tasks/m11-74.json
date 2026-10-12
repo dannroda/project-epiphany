@@ -1,0 +1,45 @@
+{
+  "checklist": [
+    {
+      "detail": "`_typed(cfg, sec, key, default)` que vuelve al default si `typeof` no coincide; usarlo en `read_from` y `validate`.",
+      "done": false,
+      "text": "Helper tipado"
+    },
+    {
+      "detail": "save_manager: `_migrate` primero; rechazar `version > VERSION`.",
+      "done": false,
+      "text": "Migrar antes de validar"
+    },
+    {
+      "detail": "Era de antes de publicar; no hay build pública.",
+      "done": false,
+      "text": "Quitar la migración de slots"
+    },
+    {
+      "detail": "save_manager ~l.120.",
+      "done": false,
+      "text": "has_save mira el .bak"
+    }
+  ],
+  "code": "11.74",
+  "created_at": "2026-10-12T00:05:54.117Z",
+  "description": "Los datos cargados no se validan por tipo: una clave con tipo inesperado (por un cambio propio del esquema) tira error en las asignaciones tipadas de `GameState.read_from` y en `SaveCodec.validate`. `_migrate` corre después de validar, no hace nada y no rechaza versiones más nuevas. La migración de slots 0-2→1-3 corre en cada arranque protegida solo por `.slots_v2` (si se pierde, corre los slots y pisa el 3; y abre el marcador sin mirar null). Un slot con solo `.bak` aparece vacío.",
+  "files": [
+    "src/save/save_manager.gd",
+    "src/save/save_codec.gd",
+    "src/state/game_state.gd"
+  ],
+  "milestone": "m11",
+  "notes": "Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).",
+  "order": 71,
+  "priority": "low",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "guardado"
+  ],
+  "test": "Una partida con un campo de tipo erróneo carga con el valor por defecto; una de versión futura se rechaza con mensaje; sin la migración de slots los tests pasan.",
+  "title": "Guardado: validar tipos, versionado y slots",
+  "updated_at": "2026-10-12T00:05:56.633Z"
+}

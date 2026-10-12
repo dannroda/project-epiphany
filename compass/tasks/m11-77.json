@@ -1,0 +1,37 @@
+{
+  "checklist": [
+    {
+      "detail": "Como Aim y Carrier.",
+      "done": false,
+      "text": "Componente Shield en player.tscn"
+    },
+    {
+      "detail": "Quitar el add_child; input_buffer.gd lee `controls` tipado.",
+      "done": false,
+      "text": "PlayerControls extiende RefCounted"
+    }
+  ],
+  "code": "11.77",
+  "created_at": "2026-10-12T00:06:01.044Z",
+  "description": "player.gd tiene ~470 líneas y ~200 son del escudo (bloqueo, reflejo, escudo trasero, luz espejo, empuje). `PlayerControls.new()` + `add_child` rompe la regla de nodos en el .tscn y no usa nada de Node.",
+  "files": [
+    "player/player.gd",
+    "player/player.tscn",
+    "player/components/controls.gd",
+    "player/components/input_buffer.gd"
+  ],
+  "milestone": "m11",
+  "notes": "Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).",
+  "order": 74,
+  "priority": "low",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "arquitectura",
+    "combate"
+  ],
+  "test": "El player se comporta igual (tests de escudo y controles verdes) y player.gd baja de ~300 líneas.",
+  "title": "Player: escudo como componente y PlayerControls sin nodo",
+  "updated_at": "2026-10-12T00:06:03.270Z"
+}

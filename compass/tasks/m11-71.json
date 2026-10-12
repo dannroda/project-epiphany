@@ -1,0 +1,36 @@
+{
+  "checklist": [
+    {
+      "detail": "minimap.gd `_bind()`: paso entre salas, puertas del kit, portales, tablillas y zonas; por frame solo `Door.is_open`.",
+      "done": false,
+      "text": "Cachear en el minimapa"
+    },
+    {
+      "detail": "map_page.gd `_focus_zone`: salir si la zona es la misma; cachear zonas, tablillas y fragmentos en `_show_overworld`.",
+      "done": false,
+      "text": "Panel del mapa solo al cambiar de zona"
+    }
+  ],
+  "code": "11.71",
+  "created_at": "2026-10-12T00:05:32.885Z",
+  "description": "El minimapa recorre la escena entera cada frame: en mazmorra `room_pitch` es O(salas²) por puerta, y `MapData.doors()` escanea todas las celdas del GridMap cada 0.5 s (tirón periódico); en overworld hace `find_children` de Portal, Tablet y AreaZone. El cursor del mapa reconstruye el panel de info (`_focus_zone`, con más `find_children` y `load`) cada frame mientras se mueve el stick.",
+  "files": [
+    "src/ui/hud/minimap.gd",
+    "src/ui/menus/map_data.gd",
+    "src/ui/menus/map_page.gd"
+  ],
+  "milestone": "m11",
+  "notes": "Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).",
+  "order": 68,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "rendimiento",
+    "ui"
+  ],
+  "test": "Profiler: el minimapa no aparece entre los costos por frame; mover el cursor del mapa no genera nodos nuevos si la zona no cambió.",
+  "title": "Minimapa y mapa: cachear las consultas a la escena",
+  "updated_at": "2026-10-12T00:05:45.949Z"
+}

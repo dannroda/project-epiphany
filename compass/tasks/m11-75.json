@@ -1,0 +1,36 @@
+{
+  "checklist": [
+    {
+      "detail": "area_zone.gd: `@export var id: StringName`, usado como clave (fallback al nombre si está vacío).",
+      "done": false,
+      "text": "Exportar un id"
+    },
+    {
+      "detail": "Con los nombres actuales, para no perder las partidas existentes.",
+      "done": false,
+      "text": "Rellenar los ids en el overworld"
+    }
+  ],
+  "code": "11.75",
+  "created_at": "2026-10-12T00:05:56.975Z",
+  "description": "`GameState.visit_zone(name)` usa el nombre del nodo como clave: renombrar una zona (como en el overworld nuevo) borra su estado de visitada de las partidas y el ZoneVeil vuelve a tapar zonas ya visitadas.",
+  "files": [
+    "src/world/area_zone.gd",
+    "src/world/zone_veil.gd",
+    "levels/overworld.tscn"
+  ],
+  "milestone": "m11",
+  "notes": "Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).",
+  "order": 72,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "guardado",
+    "overworld"
+  ],
+  "test": "Renombrar el nodo de una zona no cambia si figura como visitada.",
+  "title": "AreaZone: id estable para guardar las zonas visitadas",
+  "updated_at": "2026-10-12T00:05:58.850Z"
+}

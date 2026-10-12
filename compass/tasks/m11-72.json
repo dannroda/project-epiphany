@@ -1,0 +1,66 @@
+{
+  "checklist": [
+    {
+      "detail": "boss.gd: `%Charge`, `$Body/Eye/Mesh`, `%UpperLid`/`%LowerLid` en `@onready`; `phase()` sin Dictionary nuevo. boss_hand.gd: índices de blend shapes resueltos en `_ready`.",
+      "done": false,
+      "text": "Jefe"
+    },
+    {
+      "detail": "Cachear la cámara, salir si `level` ya llegó al objetivo; WorldEnvironment y sol por `@export`.",
+      "done": false,
+      "text": "DoomAmbience"
+    },
+    {
+      "detail": "room.gd: `set_process(Engine.is_editor_hint())` y material del contorno cacheado; floor_switch.gd: apagar el physics_process de un ONCE resuelto.",
+      "done": false,
+      "text": "Room y FloorSwitch"
+    },
+    {
+      "detail": "bt_shoot_arrow.gd: el arco se busca una vez en `_setup()`, tipado.",
+      "done": false,
+      "text": "Arquero"
+    },
+    {
+      "detail": "music.gd: escuchar `MenuStack.changed` en vez de buscarlo cada frame.",
+      "done": false,
+      "text": "Música"
+    },
+    {
+      "detail": "top_down_camera.gd: `framed()` una vez por tick; exclude de rayos cacheado en joined/left; `DebugOverlay.watch` solo en debug.",
+      "done": false,
+      "text": "Cámara"
+    },
+    {
+      "detail": "players.gd: `preload` de la escena del player.",
+      "done": false,
+      "text": "Unirse a la partida"
+    }
+  ],
+  "code": "11.72",
+  "created_at": "2026-10-12T00:05:46.216Z",
+  "description": "Varias búsquedas por frame o trabajo en nodos ociosos, baratos uno por uno pero que suman.",
+  "files": [
+    "src/entities/boss/boss.gd",
+    "src/entities/boss/boss_hand.gd",
+    "src/world/doom_ambience.gd",
+    "src/world/room.gd",
+    "src/world/floor_switch.gd",
+    "ai/tasks/bt_shoot_arrow.gd",
+    "src/audio/music.gd",
+    "src/tools/top_down_camera.gd",
+    "src/state/players.gd"
+  ],
+  "milestone": "m11",
+  "notes": "Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).",
+  "order": 69,
+  "priority": "low",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "rendimiento"
+  ],
+  "test": "Profiler en templo y overworld sin get_node/find_child por frame en estos scripts.",
+  "title": "Búsquedas de nodos y trabajo por frame innecesario",
+  "updated_at": "2026-10-12T00:06:26.688Z"
+}

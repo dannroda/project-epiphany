@@ -1,0 +1,35 @@
+{
+  "checklist": [
+    {
+      "detail": "player.gd `_on_max_health_changed` / `_sync_health`: si `is_dead`, solo actualizar `max_health`.",
+      "done": false,
+      "text": "No resetear a un muerto"
+    },
+    {
+      "detail": "test_coop_rules.",
+      "done": false,
+      "text": "Test"
+    }
+  ],
+  "code": "13.10",
+  "created_at": "2026-10-12T00:06:06.162Z",
+  "description": "`max_health_changed` y `loaded` llaman a `health.reset(full)` en todos los players, también en Dead/Spirit: el espíritu queda vivo, `Players.nearest()` se devuelve a sí mismo y revive solo en 1 s; mientras, los enemigos persiguen al espíritu invisible.",
+  "files": [
+    "player/player.gd",
+    "tests/test_coop_rules.gd"
+  ],
+  "milestone": "m13",
+  "notes": "Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).",
+  "order": 10,
+  "priority": "high",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "coop"
+  ],
+  "test": "Con P2 en espíritu, P1 coge un contenedor: P2 sigue siendo espíritu y solo revive con P1 cerca.",
+  "title": "Un espíritu revive al coger un contenedor de corazón",
+  "updated_at": "2026-10-12T00:06:07.812Z"
+}

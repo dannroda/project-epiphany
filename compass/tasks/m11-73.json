@@ -1,0 +1,35 @@
+{
+  "checklist": [
+    {
+      "detail": "settings.gd: `_apply` por clave.",
+      "done": false,
+      "text": "Aplicar solo la clave cambiada"
+    },
+    {
+      "detail": "options_panel.gd: guardar en `drag_ended` o al cerrar la pantalla.",
+      "done": false,
+      "text": "Guardar al soltar o al salir"
+    }
+  ],
+  "code": "11.73",
+  "created_at": "2026-10-12T00:05:52.142Z",
+  "description": "Cada `value_changed` llama a `Settings.set_value`, que reaplica todo (buses, modo de ventana, escala, idioma) y escribe settings.cfg: arrastrar un slider de volumen escribe decenas de veces por segundo.",
+  "files": [
+    "src/settings/settings.gd",
+    "src/ui/menus/options_panel.gd"
+  ],
+  "milestone": "m11",
+  "notes": "Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).",
+  "order": 70,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "rendimiento",
+    "ui"
+  ],
+  "test": "Arrastrar un slider escribe settings.cfg una sola vez.",
+  "title": "Opciones: no guardar a disco en cada tick del slider",
+  "updated_at": "2026-10-12T00:05:53.746Z"
+}

@@ -1,0 +1,40 @@
+{
+  "checklist": [
+    {
+      "detail": "boss.gd ~l.148: `phase() >= 2`.",
+      "done": false,
+      "text": "Barra en fase 3"
+    },
+    {
+      "detail": "boss_hand.gd: guardar los tweens de ataque en `_attack_tween` y matarlo en `collapse()` y al salir de BUSY.",
+      "done": false,
+      "text": "Un tween de ataque por mano"
+    },
+    {
+      "detail": "boss.gd: guardar `grow` en un miembro y `kill()` en `_stun_eye` y `_on_defeated`.",
+      "done": false,
+      "text": "Cortar la carga al aturdir"
+    }
+  ],
+  "code": "11.68",
+  "created_at": "2026-10-12T00:05:26.516Z",
+  "description": "`bar_fraction` usa `phase() == 2`, así que en fase 3 la barra vuelve a la vida de las manos. Además las manos al colapsar solo matan `_motion` y siguen corriendo los tweens de ataque (hold, shake, windup, bounce), y un aturdimiento durante la carga del orbe es pisado por el tween `grow`.",
+  "files": [
+    "src/entities/boss/boss.gd",
+    "src/entities/boss/boss_hand.gd"
+  ],
+  "milestone": "m11",
+  "notes": "Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).",
+  "order": 65,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "jefe"
+  ],
+  "test": "En fase 3 la barra baja con los golpes al ojo; el jefe muerto durante un ataque cae quieto; aturdido durante la carga, el ojo no sigue pulsando.",
+  "title": "Barra del jefe en fase 3 y animaciones que siguen tras morir",
+  "updated_at": "2026-10-12T00:05:28.438Z"
+}

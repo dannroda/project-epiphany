@@ -1,0 +1,35 @@
+{
+  "checklist": [
+    {
+      "detail": "menu_stack.gd `_can_pause`: `not get_tree().paused and Players.any_alive()`.",
+      "done": false,
+      "text": "No pausar si el árbol ya está pausado"
+    },
+    {
+      "detail": "player/states/dead.gd ~l.13: `create_timer(delay, false)`.",
+      "done": false,
+      "text": "Timer de muerte respeta la pausa"
+    }
+  ],
+  "code": "11.66",
+  "created_at": "2026-10-12T00:05:23.119Z",
+  "description": "El reveal de cámara y `travel_to` ponen `paused` a mano, y `MenuStack._can_pause` solo mira `Players.any_alive()`: se puede abrir la pausa durante un reveal o un fade de portal, y al cerrarla se despausa a mitad del reveal (o el reveal termina y despausa con el menú abierto). El timer de muerte (`create_timer(delay)`) corre en pausa y el GameOver aparece encima del menú de pausa.",
+  "files": [
+    "src/ui/menus/menu_stack.gd",
+    "player/states/dead.gd"
+  ],
+  "milestone": "m11",
+  "notes": "Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).",
+  "order": 63,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "ui"
+  ],
+  "test": "Abrir la pausa durante un reveal o al cruzar un portal no hace nada; morir y pausar enseguida no muestra el GameOver hasta despausar.",
+  "title": "Pausa, reveal, portal y muerte se pisan get_tree().paused",
+  "updated_at": "2026-10-12T00:05:24.796Z"
+}

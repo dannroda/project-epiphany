@@ -1,0 +1,38 @@
+{
+  "checklist": [
+    {
+      "detail": "items_page.gd ~l.83: también `ui_cancel`, `ui_tab_left`, `ui_tab_right`; o MenuStack ignora pads con `slot_of_pad > 0`.",
+      "done": false,
+      "text": "Tragar las acciones del invitado"
+    },
+    {
+      "detail": "text_box.gd ~l.199: `GameState.owner_of(id)` + `buttons_of(slot)` + `InputPrompts.icon_for(action, player)`.",
+      "done": false,
+      "text": "Tokens del text box por dueño"
+    }
+  ],
+  "code": "13.12",
+  "created_at": "2026-10-12T00:06:13.631Z",
+  "description": "En el menú de ítems compartido, el `_input` del invitado solo se traga `ui_accept`: su B cierra la pausa de todos y LB/RB cambian la pestaña de P1 (`ui_cancel` está ligado a cualquier pad). Además los tokens `{item:...}` del text box usan los botones de P1 y equipment_page dibuja solo los corazones del líder.",
+  "files": [
+    "src/ui/menus/items_page.gd",
+    "src/ui/menus/menu_stack.gd",
+    "src/ui/text_box/text_box.gd",
+    "src/ui/menus/equipment_page.gd"
+  ],
+  "milestone": "m13",
+  "notes": "Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).",
+  "order": 12,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "coop",
+    "ui"
+  ],
+  "test": "El invitado aprieta B y LB/RB en el menú de ítems: solo afecta a su cursor; un cartel con `{item:bow}` muestra el botón de quien tiene el arco.",
+  "title": "El pad del invitado maneja los menús de P1",
+  "updated_at": "2026-10-12T00:06:16.022Z"
+}

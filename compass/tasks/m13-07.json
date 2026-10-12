@@ -6,7 +6,7 @@
       "text": "Elegir objetivo"
     },
     {
-      "detail": "Las manos pueden ir cada una por un player; balance de vida con 2.",
+      "detail": "Las manos pueden ir cada una por un player; balance de vida con 2. Hoy boss.gd elige `target` una sola vez en `start_fight` (l.134) y no vuelve a elegir: volver a elegir con `Players.nearest` en `choose_attack`; la explosión de la marca (l.344-353) recorre `Players.alive()`; el agarre (boss_hand.gd l.315) prueba a todos los vivos. El daño pasa por el hurtbox tipado del player, no `get_node(^\"Hurtbox\")` ni `health.damage` directo (revisión de código 2026-10-11).",
       "done": false,
       "text": "Jefe"
     },
@@ -19,6 +19,10 @@
   "code": "13.7",
   "created_at": "2026-10-10T05:37:22.090Z",
   "description": "Que enemigos y jefe sepan elegir entre varios players (el más cercano o el último que les pegó, con histéresis) y que la dificultad escale con dos, sin cambiar nada al jugar solo.",
+  "files": [
+    "src/entities/boss/boss.gd",
+    "src/entities/boss/boss_hand.gd"
+  ],
   "milestone": "m13",
   "notes": "Skills: `disciplines:game-ai`.",
   "order": 7,
@@ -36,5 +40,5 @@
   ],
   "test": "Con dos players, los enemigos se reparten y el jefe ataca a los dos; con uno, igual que siempre.",
   "title": "Enemigos y jefe con varios objetivos",
-  "updated_at": "2026-10-11T07:50:20.301Z"
+  "updated_at": "2026-10-12T00:06:35.181Z"
 }

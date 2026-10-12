@@ -1,0 +1,36 @@
+{
+  "checklist": [
+    {
+      "detail": "state_machine.gd ~l.530: en `_update` calcular `controls.pressed(&\"block\")` solo en los estados que permiten bloquear y llamar a `set_guard` cuando cambia.",
+      "done": false,
+      "text": "Leer el estado del botón, no los eventos"
+    },
+    {
+      "detail": "test_shield: soltar con el player deshabilitado y comprobar que baja al volver.",
+      "done": false,
+      "text": "Test"
+    }
+  ],
+  "code": "11.65",
+  "created_at": "2026-10-12T00:05:21.191Z",
+  "description": "`is_blocking` solo cambia con los eventos de pulsar/soltar en `_unhandled_input`. Durante `Feel.hit_stop` o la pausa el player está DISABLED y no recibe eventos: si soltás el bloqueo en ese momento, el escudo queda arriba (velocidad 2.0, sigue bloqueando). Además se activa en Dead, Spirit, Carrying y Grabbed (bloquear es una de las teclas de forcejeo del agarre, y entonces el escudo frena golpes frontales).",
+  "files": [
+    "player/state_machine.gd",
+    "tests/test_shield.gd"
+  ],
+  "milestone": "m11",
+  "notes": "Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).",
+  "order": 62,
+  "priority": "high",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "combate",
+    "input"
+  ],
+  "test": "Bloquear, recibir un golpe imbloqueable y soltar durante el congelado: el escudo baja. Agarrado por el jefe, forcejear no levanta el escudo.",
+  "title": "El escudo se queda levantado tras un hit-stop o la pausa",
+  "updated_at": "2026-10-12T00:05:22.778Z"
+}

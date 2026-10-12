@@ -1,0 +1,47 @@
+{
+  "checklist": [
+    {
+      "detail": "`if not is_instance_valid(target): return` tras cada await; proteger el `disconnect`.",
+      "done": false,
+      "text": "Manos del jefe"
+    },
+    {
+      "detail": "Leer `target` sin tipo, validar y después castear; o limpiar `target` en `Players.left`.",
+      "done": false,
+      "text": "Tareas de LimboAI"
+    },
+    {
+      "detail": "top_down_camera.gd `_change_floor`: `is_instance_valid(crosser)` en el loop y en `_remember_entry`.",
+      "done": false,
+      "text": "Cámara"
+    }
+  ],
+  "code": "13.13",
+  "created_at": "2026-10-12T00:06:16.332Z",
+  "description": "`Players.leave` hace `queue_free` del invitado, pero lo siguen usando: las manos del jefe en `_slam`/`_grab`/`_hold` (l.231, 315, 345, 355) tras cada await; los blackboards de los enemigos guardan `target` y los bt_* lo asignan a una variable tipada antes del `is_instance_valid` (error cada tick); la cámara en `_change_floor` espera que `crosser` aterrice.",
+  "files": [
+    "src/entities/boss/boss_hand.gd",
+    "ai/tasks/bt_find_player.gd",
+    "src/tools/top_down_camera.gd"
+  ],
+  "links": [
+    {
+      "task": "m13-07",
+      "type": "related"
+    }
+  ],
+  "milestone": "m13",
+  "notes": "Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).",
+  "order": 13,
+  "priority": "high",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "coop"
+  ],
+  "test": "Con P2 como objetivo del jefe agarrado o en caída entre pisos, P2 se va con Start: sin errores y el juego sigue con P1.",
+  "title": "Referencias colgadas cuando un invitado se va",
+  "updated_at": "2026-10-12T00:06:19.029Z"
+}

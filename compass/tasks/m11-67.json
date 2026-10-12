@@ -1,0 +1,30 @@
+{
+  "checklist": [
+    {
+      "detail": "item_ring.gd `_can_open`: `(visible or not player.controls.captured)`; en `_open` guardar el `captured` previo y restaurarlo en `_close`.",
+      "done": false,
+      "text": "Respetar la captura ajena"
+    }
+  ],
+  "code": "11.67",
+  "created_at": "2026-10-12T00:05:25.142Z",
+  "description": "`item_ring` es PROCESS_MODE_ALWAYS y `_can_open` no mira si otro sistema ya capturó los controles; `_close` siempre pone `captured = false`. Mantener LB en una cutscene abre un anillo invisible con `time_scale = 0.05` (la cutscene va al 5%) y al soltar el player puede moverse en mitad de la cutscene.",
+  "files": [
+    "src/ui/hud/item_ring.gd"
+  ],
+  "milestone": "m11",
+  "notes": "Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).",
+  "order": 64,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "ui",
+    "input"
+  ],
+  "test": "Durante una cutscene, LB no hace nada; si el anillo estaba abierto al empezar, al cerrarlo el player sigue capturado.",
+  "title": "El anillo de ítems se abre durante una cutscene",
+  "updated_at": "2026-10-12T00:05:26.149Z"
+}

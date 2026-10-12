@@ -1596,6 +1596,8 @@ El overworld de 3 × 3 pantallas quedó hecho para una sola mazmorra y se siente
   Artboard 'Pausa · Mapa (overworld nuevo) con portales de viaje' (Pause_Map_Travel) en https://claude.ai/artifact/UuD7d42rAXuYTBcMd9iZJy. Aprobado por Daniel.
 - [ ] Viaje rápido: portales y viaje desde el Mapa
   6 portales (Claro, Pradera, Explanada, Necrópolis, Bañado, Cumbre) que se activan al pasar (flag); se elige el destino en la pestaña Mapa o parado en un portal; viajan todos los players. Pantalla tal cual Pause_Map_Travel.
+- [ ] Laguna de agua real y Bañado de agua baja
+  Daniel (2026-10-11): la Laguna con el agua de la cueva de la vertiente (water.gdshader: espuma en la orilla, color por profundidad) sobre el hueco; cascada en el acantilado norte donde termina la quebrada; caer al agua salpica y vuelve a la orilla (no se nada); la isla de D3 con el gancho. El Bañado, agua baja que se camina.
 
 ## M8 — Contenido de mazmorra  (8/8)
 
@@ -2532,7 +2534,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (20/57)
+## M11 — Pulido: contenido y feel  (20/74)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3463,6 +3465,323 @@ El overworld es el hub: la pluma (11.35, templo) tiene que abrir ahí cosas y ca
 
 **Relacionadas:** 11.35 Saltar: ítem tipo Pluma de Roc
 
+### 11.62 Las puertas con llave se abren sin animación · Pendiente
+
+**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`, `mundo`
+
+Al abrir una puerta LOCKED o BOSS, `_persistent.value = true` dispara `flag_changed`, el handler llama a `open(false)` y deja `is_open`; el `open(true)` de la línea siguiente sale temprano. Toda puerta con llave se abre de golpe, sin sonido ni polvo.
+
+- [ ] Abrir antes de guardar el flag
+  door.gd `try_unlock` (~l.144): llamar a `open(true)` antes de `_persistent.value = true`, o que el handler de `changed` ignore si ya `is_open`.
+- [ ] Test
+  En test_doors: la puerta con llave pasa por la animación (no queda abierta en el mismo frame sin tween).
+
+**Prueba:** Abrir una puerta con llave en el templo: se ve la animación, suena y levanta polvo; al recargar la sala sigue abierta.
+
+**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+
+**Archivos:** `src/world/door.gd`, `tests/test_doors.gd`
+
+### 11.63 Objetos que no se actualizan al cargar en la misma escena · Pendiente
+
+**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`, `guardado`
+
+heart_piece, push_block y tablet leen su flag una sola vez en `_ready` y no usan `PersistentFlag` ni escuchan `GameState.loaded`. Al cargar una partida de la misma escena desde el menú, la escena no se recarga: se puede volver a coger un fragmento de corazón (corazón duplicado), o queda oculto uno que en esa partida no se cogió, y el bloque no vuelve a `solved_position`.
+
+- [ ] Fragmento de corazón con PersistentFlag
+  Como Chest y CrackedWall: hijo PersistentFlag en la escena, reaccionar a `changed`.
+- [ ] Bloque empujable y tablilla
+  push_block.gd ~l.43 y tablet.gd `is_read`: mismo patrón.
+- [ ] Test de carga en la misma escena
+  Guardar, cambiar el estado, cargar sin cambiar de escena, comprobar.
+
+**Prueba:** Coger un fragmento, cargar una partida vieja de la misma escena: el fragmento reaparece; cargar una donde ya estaba cogido: desaparece. Igual con el bloque empujable.
+
+**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+
+**Archivos:** `src/world/heart_piece.gd`, `src/world/push_block.gd`, `src/world/tablet.gd`
+
+### 11.64 Cargar partida: no colgarse ni cambiar de slot si falla · Pendiente
+
+**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`, `guardado`
+
+`_restore_player` llama a `change_scene_to_file(GameState.spawn_scene)` sin mirar el resultado y espera `scene_changed`: si el nivel guardado ya no existe (se renombraron niveles con el overworld nuevo), la pantalla queda negra para siempre y `loading` en true (que además apaga los reveal de cámara). `load_game` además cambia `current_slot` antes de leer, así que una carga fallida deja guardando en el slot equivocado.
+
+- [ ] Comprobar la escena antes de cambiar
+  save_manager.gd `_restore_player`: `ResourceLoader.exists` y `change_scene_to_file(...) == OK` antes del await; si no, fallback a NEW_GAME_SCENE o error, y resetear `loading`. `travel_to` ya lo hace.
+- [ ] Slot solo tras leer OK
+  `load_game`: pasar el slot a `_load_path` y asignar `current_slot` cuando `SaveCodec.read` devuelve OK.
+- [ ] Tests
+  test_save_manager: escena inexistente y slot corrupto.
+
+**Prueba:** Una partida con `spawn_scene` inexistente vuelve con error (o al inicio) sin colgarse; cargar un slot corrupto no cambia el slot activo.
+
+**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+
+**Archivos:** `src/save/save_manager.gd`, `tests/test_save_manager.gd`
+
+### 11.65 El escudo se queda levantado tras un hit-stop o la pausa · Pendiente
+
+**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`, `combate`, `input`
+
+`is_blocking` solo cambia con los eventos de pulsar/soltar en `_unhandled_input`. Durante `Feel.hit_stop` o la pausa el player está DISABLED y no recibe eventos: si soltás el bloqueo en ese momento, el escudo queda arriba (velocidad 2.0, sigue bloqueando). Además se activa en Dead, Spirit, Carrying y Grabbed (bloquear es una de las teclas de forcejeo del agarre, y entonces el escudo frena golpes frontales).
+
+- [ ] Leer el estado del botón, no los eventos
+  state_machine.gd ~l.530: en `_update` calcular `controls.pressed(&"block")` solo en los estados que permiten bloquear y llamar a `set_guard` cuando cambia.
+- [ ] Test
+  test_shield: soltar con el player deshabilitado y comprobar que baja al volver.
+
+**Prueba:** Bloquear, recibir un golpe imbloqueable y soltar durante el congelado: el escudo baja. Agarrado por el jefe, forcejear no levanta el escudo.
+
+**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+
+**Archivos:** `player/state_machine.gd`, `tests/test_shield.gd`
+
+### 11.66 Pausa, reveal, portal y muerte se pisan get_tree().paused · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `ui`
+
+El reveal de cámara y `travel_to` ponen `paused` a mano, y `MenuStack._can_pause` solo mira `Players.any_alive()`: se puede abrir la pausa durante un reveal o un fade de portal, y al cerrarla se despausa a mitad del reveal (o el reveal termina y despausa con el menú abierto). El timer de muerte (`create_timer(delay)`) corre en pausa y el GameOver aparece encima del menú de pausa.
+
+- [ ] No pausar si el árbol ya está pausado
+  menu_stack.gd `_can_pause`: `not get_tree().paused and Players.any_alive()`.
+- [ ] Timer de muerte respeta la pausa
+  player/states/dead.gd ~l.13: `create_timer(delay, false)`.
+
+**Prueba:** Abrir la pausa durante un reveal o al cruzar un portal no hace nada; morir y pausar enseguida no muestra el GameOver hasta despausar.
+
+**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+
+**Archivos:** `src/ui/menus/menu_stack.gd`, `player/states/dead.gd`
+
+### 11.67 El anillo de ítems se abre durante una cutscene · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `ui`, `input`
+
+`item_ring` es PROCESS_MODE_ALWAYS y `_can_open` no mira si otro sistema ya capturó los controles; `_close` siempre pone `captured = false`. Mantener LB en una cutscene abre un anillo invisible con `time_scale = 0.05` (la cutscene va al 5%) y al soltar el player puede moverse en mitad de la cutscene.
+
+- [ ] Respetar la captura ajena
+  item_ring.gd `_can_open`: `(visible or not player.controls.captured)`; en `_open` guardar el `captured` previo y restaurarlo en `_close`.
+
+**Prueba:** Durante una cutscene, LB no hace nada; si el anillo estaba abierto al empezar, al cerrarlo el player sigue capturado.
+
+**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+
+**Archivos:** `src/ui/hud/item_ring.gd`
+
+### 11.68 Barra del jefe en fase 3 y animaciones que siguen tras morir · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `jefe`
+
+`bar_fraction` usa `phase() == 2`, así que en fase 3 la barra vuelve a la vida de las manos. Además las manos al colapsar solo matan `_motion` y siguen corriendo los tweens de ataque (hold, shake, windup, bounce), y un aturdimiento durante la carga del orbe es pisado por el tween `grow`.
+
+- [ ] Barra en fase 3
+  boss.gd ~l.148: `phase() >= 2`.
+- [ ] Un tween de ataque por mano
+  boss_hand.gd: guardar los tweens de ataque en `_attack_tween` y matarlo en `collapse()` y al salir de BUSY.
+- [ ] Cortar la carga al aturdir
+  boss.gd: guardar `grow` en un miembro y `kill()` en `_stun_eye` y `_on_defeated`.
+
+**Prueba:** En fase 3 la barra baja con los golpes al ojo; el jefe muerto durante un ataque cae quieto; aturdido durante la carga, el ojo no sigue pulsando.
+
+**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+
+**Archivos:** `src/entities/boss/boss.gd`, `src/entities/boss/boss_hand.gd`
+
+### 11.69 Cambios de física dentro de callbacks · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `combate`
+
+Se agregan, reparentan o liberan cuerpos dentro de señales de física (durante el flush), lo que Jolt puede rechazar o aplicar un paso tarde: `enemy._break_armor` (RigidBody nuevo al romper la armadura desde `Hurtbox.hit`), `carrier.drop()` al recibir un golpe cargando algo (reparent de un RigidBody vía `_on_hit` → dispatch hurt), y `thrown_object` → `shatter()` en `body_entered`.
+
+- [ ] Diferir la armadura
+  enemy.gd `_break_armor.call_deferred()`.
+- [ ] Diferir el golpe del player
+  player.gd `_on_hit`: `movement_state.dispatch.call_deferred("hurt")` (o diferir el reparent en `Carrier._release`).
+- [ ] Diferir el estallido
+  thrown_object.gd: `liftable.shatter.call_deferred()`.
+
+**Prueba:** Romper armadura con una bomba, recibir un golpe cargando una vasija y estrellar una vasija: sin errores ni avisos de física en la salida.
+
+**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+
+**Archivos:** `src/entities/enemy.gd`, `player/player.gd`, `player/components/carrier.gd`, `src/world/thrown_object.gd`
+
+### 11.70 Sala que se cierra después de que los players se fueron · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `mazmorra`
+
+`room._lock_after_entering` espera 0.6 s y cierra las rejas sin comprobar que la cámara sigue en esa sala; wave_spawner hace lo mismo. Si los players salen enseguida (escalera, pozo, paso atrás) quedan rejas cerradas en una sala vacía, y tras un `reload_current_scene` las corrutinas siguen sobre instancias liberadas. Los 0.6 s dependen sin decirlo del `transition_time` (0.5) de la cámara.
+
+- [ ] Revalidar después del await
+  room.gd ~l.91 y wave_spawner.gd ~l.62/76: `is_inside_tree()` y que la sala de la cámara siga siendo esta.
+
+**Prueba:** Entrar a una sala de oleadas y salir en menos de medio segundo: no se cierra; tras morir y reaparecer no hay errores en la salida.
+
+**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+
+**Archivos:** `src/world/room.gd`, `src/world/wave_spawner.gd`
+
+### 11.71 Minimapa y mapa: cachear las consultas a la escena · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `rendimiento`, `ui`
+
+El minimapa recorre la escena entera cada frame: en mazmorra `room_pitch` es O(salas²) por puerta, y `MapData.doors()` escanea todas las celdas del GridMap cada 0.5 s (tirón periódico); en overworld hace `find_children` de Portal, Tablet y AreaZone. El cursor del mapa reconstruye el panel de info (`_focus_zone`, con más `find_children` y `load`) cada frame mientras se mueve el stick.
+
+- [ ] Cachear en el minimapa
+  minimap.gd `_bind()`: paso entre salas, puertas del kit, portales, tablillas y zonas; por frame solo `Door.is_open`.
+- [ ] Panel del mapa solo al cambiar de zona
+  map_page.gd `_focus_zone`: salir si la zona es la misma; cachear zonas, tablillas y fragmentos en `_show_overworld`.
+
+**Prueba:** Profiler: el minimapa no aparece entre los costos por frame; mover el cursor del mapa no genera nodos nuevos si la zona no cambió.
+
+**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+
+**Archivos:** `src/ui/hud/minimap.gd`, `src/ui/menus/map_data.gd`, `src/ui/menus/map_page.gd`
+
+### 11.72 Búsquedas de nodos y trabajo por frame innecesario · Pendiente
+
+**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `rendimiento`
+
+Varias búsquedas por frame o trabajo en nodos ociosos, baratos uno por uno pero que suman.
+
+- [ ] Jefe
+  boss.gd: `%Charge`, `$Body/Eye/Mesh`, `%UpperLid`/`%LowerLid` en `@onready`; `phase()` sin Dictionary nuevo. boss_hand.gd: índices de blend shapes resueltos en `_ready`.
+- [ ] DoomAmbience
+  Cachear la cámara, salir si `level` ya llegó al objetivo; WorldEnvironment y sol por `@export`.
+- [ ] Room y FloorSwitch
+  room.gd: `set_process(Engine.is_editor_hint())` y material del contorno cacheado; floor_switch.gd: apagar el physics_process de un ONCE resuelto.
+- [ ] Arquero
+  bt_shoot_arrow.gd: el arco se busca una vez en `_setup()`, tipado.
+- [ ] Música
+  music.gd: escuchar `MenuStack.changed` en vez de buscarlo cada frame.
+- [ ] Cámara
+  top_down_camera.gd: `framed()` una vez por tick; exclude de rayos cacheado en joined/left; `DebugOverlay.watch` solo en debug.
+- [ ] Unirse a la partida
+  players.gd: `preload` de la escena del player.
+
+**Prueba:** Profiler en templo y overworld sin get_node/find_child por frame en estos scripts.
+
+**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+
+**Archivos:** `src/entities/boss/boss.gd`, `src/entities/boss/boss_hand.gd`, `src/world/doom_ambience.gd`, `src/world/room.gd`, `src/world/floor_switch.gd`, `ai/tasks/bt_shoot_arrow.gd`, `src/audio/music.gd`, `src/tools/top_down_camera.gd`, `src/state/players.gd`
+
+### 11.73 Opciones: no guardar a disco en cada tick del slider · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `rendimiento`, `ui`
+
+Cada `value_changed` llama a `Settings.set_value`, que reaplica todo (buses, modo de ventana, escala, idioma) y escribe settings.cfg: arrastrar un slider de volumen escribe decenas de veces por segundo.
+
+- [ ] Aplicar solo la clave cambiada
+  settings.gd: `_apply` por clave.
+- [ ] Guardar al soltar o al salir
+  options_panel.gd: guardar en `drag_ended` o al cerrar la pantalla.
+
+**Prueba:** Arrastrar un slider escribe settings.cfg una sola vez.
+
+**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+
+**Archivos:** `src/settings/settings.gd`, `src/ui/menus/options_panel.gd`
+
+### 11.74 Guardado: validar tipos, versionado y slots · Pendiente
+
+**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `guardado`
+
+Los datos cargados no se validan por tipo: una clave con tipo inesperado (por un cambio propio del esquema) tira error en las asignaciones tipadas de `GameState.read_from` y en `SaveCodec.validate`. `_migrate` corre después de validar, no hace nada y no rechaza versiones más nuevas. La migración de slots 0-2→1-3 corre en cada arranque protegida solo por `.slots_v2` (si se pierde, corre los slots y pisa el 3; y abre el marcador sin mirar null). Un slot con solo `.bak` aparece vacío.
+
+- [ ] Helper tipado
+  `_typed(cfg, sec, key, default)` que vuelve al default si `typeof` no coincide; usarlo en `read_from` y `validate`.
+- [ ] Migrar antes de validar
+  save_manager: `_migrate` primero; rechazar `version > VERSION`.
+- [ ] Quitar la migración de slots
+  Era de antes de publicar; no hay build pública.
+- [ ] has_save mira el .bak
+  save_manager ~l.120.
+
+**Prueba:** Una partida con un campo de tipo erróneo carga con el valor por defecto; una de versión futura se rechaza con mensaje; sin la migración de slots los tests pasan.
+
+**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+
+**Archivos:** `src/save/save_manager.gd`, `src/save/save_codec.gd`, `src/state/game_state.gd`
+
+### 11.75 AreaZone: id estable para guardar las zonas visitadas · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `guardado`, `overworld`
+
+`GameState.visit_zone(name)` usa el nombre del nodo como clave: renombrar una zona (como en el overworld nuevo) borra su estado de visitada de las partidas y el ZoneVeil vuelve a tapar zonas ya visitadas.
+
+- [ ] Exportar un id
+  area_zone.gd: `@export var id: StringName`, usado como clave (fallback al nombre si está vacío).
+- [ ] Rellenar los ids en el overworld
+  Con los nombres actuales, para no perder las partidas existentes.
+
+**Prueba:** Renombrar el nodo de una zona no cambia si figura como visitada.
+
+**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+
+**Archivos:** `src/world/area_zone.gd`, `src/world/zone_veil.gd`, `levels/overworld.tscn`
+
+### 11.76 Constantes en vez de strings sueltos · Pendiente
+
+**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `arquitectura`
+
+Claves del blackboard (`"target"`, `"is_blocking"`, `"is_hit"`, `"stunned"`, …) en ~20 lugares, `ITEM_ACTIONS` / `[&"item_1", &"item_2"]` copiado en 8 archivos, grupos y métodos de `call_group` como literales, ids de ataque del jefe que tienen que coincidir con los .tres. Un typo devuelve el default o no hace nada, sin error.
+
+- [ ] Blackboard y acciones de ítem
+  Constantes StringName en PlayerState (generic.gd) y en Enemy; una sola lista de acciones de ítem.
+- [ ] Grupos
+  Constante `GROUP` en la clase dueña de cada grupo (hud, room_camera, enemies, doors, wave_spawners, chests), como ya tienen Room y SpawnPoint; `spawn_point` con `is PlayerCharacter`, `room.gd` con el spawner tipado.
+- [ ] Ataques del jefe
+  Ids en constantes compartidas con los .tres.
+- [ ] Etiquetas de botón
+  items_page.gd `BUTTON_NAMES` X/Y → icono de InputPrompts (en teclado no es X/Y).
+
+**Prueba:** Buscar los literales: cada clave/acción/grupo aparece definida una sola vez.
+
+**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+
+### 11.77 Player: escudo como componente y PlayerControls sin nodo · Pendiente
+
+**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `arquitectura`, `combate`
+
+player.gd tiene ~470 líneas y ~200 son del escudo (bloqueo, reflejo, escudo trasero, luz espejo, empuje). `PlayerControls.new()` + `add_child` rompe la regla de nodos en el .tscn y no usa nada de Node.
+
+- [ ] Componente Shield en player.tscn
+  Como Aim y Carrier.
+- [ ] PlayerControls extiende RefCounted
+  Quitar el add_child; input_buffer.gd lee `controls` tipado.
+
+**Prueba:** El player se comporta igual (tests de escudo y controles verdes) y player.gd baja de ~300 líneas.
+
+**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+
+**Archivos:** `player/player.gd`, `player/player.tscn`, `player/components/controls.gd`, `player/components/input_buffer.gd`
+
+### 11.78 Limpieza menor de la revisión de código · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `arquitectura`, `ui`
+
+Detalles sueltos de la revisión, sin bug visible o con efecto de un frame.
+
+- [ ] Liberar con remove_child
+  items_page.gd ~l.183/201 y equipment_page.gd ~l.118: `remove_child` antes de `queue_free` (hoy duplican un frame).
+- [ ] Pantallas con contrato UiScreen
+  TextBox, ItemGet y LanguageSelect extienden UiScreen; MenuStack tipado como `Array[UiScreen]`.
+- [ ] Feel sin tocar MenuStack._stack
+  `MenuStack.depth()`.
+- [ ] Tipos estáticos
+  text_box.gd `body`, pause_menu.gd `extra`/`accept`, minimap.gd `_doors`, bt_* `bow`.
+- [ ] Código sin uso
+  ItemModifier sin subclases; estado Spawning que dura un frame (arreglar o quitar).
+- [ ] Arena del jefe
+  boss.gd no depende del orden de nodos en temple.tscn para el rect de la arena.
+- [ ] Varios
+  spring.gd usa `by.health`; ToonToggle limpia `_saved` de nodos liberados.
+
+**Prueba:** Tests verdes; sin cambios visibles salvo el parpadeo de chips/corazones.
+
+**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+
 ## M12 — Assets propios (Blender)  (6/17)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
@@ -3879,7 +4198,7 @@ Cada mazmorra con su propio estilo sobre el mismo kit (mismas piezas y colisione
 - [x] Estilo del terreno del overworld por región
   AreaZone.terrain_style (necropolis, laguna, cumbre, explanada, cardonal, quebrada); el build pinta suelo, riscos y abismo por región con borde ondulado y cambia la decoración. Puestos en overworld.tscn: Templo explanada, Quebrada, Necrópolis + Mirador, Cumbre + Risco, Laguna + Bañado, Cardonal. Falta que el usuario lo vea.
 
-## M13 — Co-op local (estilo Four Swords)  (0/9)
+## M13 — Co-op local (estilo Four Swords)  (0/13)
 
 Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con progreso compartido y puzzles que aprovechan a los dos.
 
@@ -4037,7 +4356,7 @@ Que enemigos y jefe sepan elegir entre varios players (el más cercano o el últ
 - [ ] Elegir objetivo
   Los BT de LimboAI eligen al más cercano o al último que les pegó; cambian con histéresis.
 - [ ] Jefe
-  Las manos pueden ir cada una por un player; balance de vida con 2.
+  Las manos pueden ir cada una por un player; balance de vida con 2. Hoy boss.gd elige `target` una sola vez en `start_fight` (l.134) y no vuelve a elegir: volver a elegir con `Players.nearest` en `choose_attack`; la explosión de la marca (l.344-353) recorre `Players.alive()`; el agarre (boss_hand.gd l.315) prueba a todos los vivos. El daño pasa por el hurtbox tipado del player, no `get_node(^"Hurtbox")` ni `health.damage` directo (revisión de código 2026-10-11).
 - [ ] Escalado
   Un poco más de vida o enemigos con dos players.
 
@@ -4047,7 +4366,11 @@ Que enemigos y jefe sepan elegir entre varios players (el más cercano o el últ
 
 **Referencias:** `gdd.md#fuera-mvp`
 
+**Archivos:** `src/entities/boss/boss.gd`, `src/entities/boss/boss_hand.gd`
+
 **Bloqueada por:** 13.1 Código listo para varios players
+
+**Relacionadas:** 13.13 Referencias colgadas cuando un invitado se va
 
 ### 13.8 Puzzles cooperativos · Pendiente
 
@@ -4087,6 +4410,84 @@ Mockups D en el canvas (Coop_Ring, Solo_Ring): mantener la cruceta abre un anill
   Tecla 5 (debug): en co-op, anillo por player o menú compartido con un cursor por player (Settings coop_item_menu).
 
 **Relacionadas:** 13.4 Reglas del co-op; 10.28 Playtest de revisión (lo que está en Revisión)
+
+### 13.10 Un espíritu revive al coger un contenedor de corazón · Pendiente
+
+**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`, `coop`
+
+`max_health_changed` y `loaded` llaman a `health.reset(full)` en todos los players, también en Dead/Spirit: el espíritu queda vivo, `Players.nearest()` se devuelve a sí mismo y revive solo en 1 s; mientras, los enemigos persiguen al espíritu invisible.
+
+- [ ] No resetear a un muerto
+  player.gd `_on_max_health_changed` / `_sync_health`: si `is_dead`, solo actualizar `max_health`.
+- [ ] Test
+  test_coop_rules.
+
+**Prueba:** Con P2 en espíritu, P1 coge un contenedor: P2 sigue siendo espíritu y solo revive con P1 cerca.
+
+**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+
+**Archivos:** `player/player.gd`, `tests/test_coop_rules.gd`
+
+### 13.11 Estado de un player que se cuela en el otro · Pendiente
+
+**Prioridad:** alta · **Tamaño:** M · **Etiquetas:** `bug`, `coop`
+
+Cosas que todavía son de todos o de P1: el `tree_root` del AnimationTree es un sub-recurso compartido y jumping/pushing/using_item cambian `ItemAnim` (la animación de uno se mete en el otro); `Feel.rumble` siempre vibra el pad 0; el apuntado con ratón depende de `InputDevice.current` global; `tremor_zone` usa un solo bool `_inside`; el tope de bombas cuenta las de todos; el banner de zona (`AreaZone._current` estático) cambia cuando cruza cualquiera.
+
+- [ ] AnimationTree por instancia
+  `resource_local_to_scene` en el sub-recurso o `tree_root.duplicate(true)` en `player._ready`.
+- [ ] Vibración por pad
+  `Feel.rumble(amount, device := -1)`: el player pasa su pad; eventos del mundo vibran todos los pads asignados.
+- [ ] Apuntado con ratón
+  aim.gd ~l.54: quitar el chequeo de `InputDevice.current`, ya se sigue por player con `controls.owns()`.
+- [ ] Zona de temblor
+  Contar players adentro o `get_overlapping_bodies().any(...)`.
+- [ ] Bombas por player
+  place_behavior.gd: contar solo las de `ctx.user`.
+
+**Prueba:** Con dos players: P1 salta mientras P2 usa un ítem y cada uno ve su animación; un golpe a P2 vibra solo su pad; cada uno puede tener sus bombas.
+
+**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+
+**Archivos:** `player/player.tscn`, `player/states/jumping.gd`, `player/states/pushing.gd`, `player/states/using_item.gd`, `src/feel/feel.gd`, `player/components/aim.gd`, `src/world/tremor_zone.gd`, `src/items/behaviors/place_behavior.gd`, `src/world/area_zone.gd`
+
+### 13.12 El pad del invitado maneja los menús de P1 · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `coop`, `ui`
+
+En el menú de ítems compartido, el `_input` del invitado solo se traga `ui_accept`: su B cierra la pausa de todos y LB/RB cambian la pestaña de P1 (`ui_cancel` está ligado a cualquier pad). Además los tokens `{item:...}` del text box usan los botones de P1 y equipment_page dibuja solo los corazones del líder.
+
+- [ ] Tragar las acciones del invitado
+  items_page.gd ~l.83: también `ui_cancel`, `ui_tab_left`, `ui_tab_right`; o MenuStack ignora pads con `slot_of_pad > 0`.
+- [ ] Tokens del text box por dueño
+  text_box.gd ~l.199: `GameState.owner_of(id)` + `buttons_of(slot)` + `InputPrompts.icon_for(action, player)`.
+
+**Prueba:** El invitado aprieta B y LB/RB en el menú de ítems: solo afecta a su cursor; un cartel con `{item:bow}` muestra el botón de quien tiene el arco.
+
+**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+
+**Archivos:** `src/ui/menus/items_page.gd`, `src/ui/menus/menu_stack.gd`, `src/ui/text_box/text_box.gd`, `src/ui/menus/equipment_page.gd`
+
+### 13.13 Referencias colgadas cuando un invitado se va · Pendiente
+
+**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`, `coop`
+
+`Players.leave` hace `queue_free` del invitado, pero lo siguen usando: las manos del jefe en `_slam`/`_grab`/`_hold` (l.231, 315, 345, 355) tras cada await; los blackboards de los enemigos guardan `target` y los bt_* lo asignan a una variable tipada antes del `is_instance_valid` (error cada tick); la cámara en `_change_floor` espera que `crosser` aterrice.
+
+- [ ] Manos del jefe
+  `if not is_instance_valid(target): return` tras cada await; proteger el `disconnect`.
+- [ ] Tareas de LimboAI
+  Leer `target` sin tipo, validar y después castear; o limpiar `target` en `Players.left`.
+- [ ] Cámara
+  top_down_camera.gd `_change_floor`: `is_instance_valid(crosser)` en el loop y en `_remember_entry`.
+
+**Prueba:** Con P2 como objetivo del jefe agarrado o en caída entre pisos, P2 se va con Start: sin errores y el juego sigue con P1.
+
+**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+
+**Archivos:** `src/entities/boss/boss_hand.gd`, `ai/tasks/bt_find_player.gd`, `src/tools/top_down_camera.gd`
+
+**Relacionadas:** 13.7 Enemigos y jefe con varios objetivos
 
 ## M14 — Co-op online  (0/7)
 
