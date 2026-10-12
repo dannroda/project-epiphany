@@ -15,6 +15,8 @@ const OPEN := Color(1.0, 0.78, 0.3)
 
 @onready var hurtbox: Hurtbox = $Hurtbox
 @onready var eye: MeshInstance3D = %Eye
+@onready var gem: MeshInstance3D = %Gem
+@onready var glow: OmniLight3D = %Glow
 
 var active := false
 var _persistent: PersistentFlag
@@ -61,3 +63,5 @@ func _show(open: bool) -> void:
 	_material.albedo_color = OPEN if open else CLOSED
 	_material.emission = OPEN if open else Color.BLACK
 	_material.emission_energy_multiplier = 1.5 if open else 0.0
+	gem.visible = open
+	glow.visible = open

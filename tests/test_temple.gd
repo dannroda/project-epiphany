@@ -167,6 +167,7 @@ func test_rooms_3_4_key_and_map_without_the_bow() -> void:
 		await tree.physics_frame
 	_block(false)
 	assert_eq(eye.active, true, "el orbe de la torreta, reflejado con el espejo, despierta el ojo")
+	assert_true(eye.gem.visible and eye.glow.visible, "la torre se ilumina arriba, visible desde la cámara")
 	await tree.create_timer(0.8).timeout
 	assert_eq((level.get_node(^"GalleryKeyGate") as Gate).is_open, true, "y baja la reja del nicho")
 	level.get_node(^"GalleryTurret").free()
