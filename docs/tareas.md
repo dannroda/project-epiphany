@@ -2533,7 +2533,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (48/103)
+## M11 — Pulido: contenido y feel  (49/103)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4036,16 +4036,18 @@ Playtest del 2026-10-12: la primera mazmorra ya tiene varios softblocks, y la pl
 
 **Notas:** Sesión: overworld (-74), con Daniel. Toca 11.35/11.61 (pluma en D1 y en el overworld), los angostos de la quebrada (7.9, pensados como cruce con pluma), 11.30 (gancho) y la armadura del esqueleto.
 
-### 11.91 Puzzle del claro: la reja se abre con solo pisar las placas · En curso
+### 11.91 Puzzle del claro: la reja se abre con solo pisar las placas · Hecho
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `puzzle`
+**Terminada:** 2026-10-12 · **Prioridad:** alta · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `puzzle`
 
 En el overworld, la pantalla a la derecha del spawn tiene un mini puzzle de dos placas y bloques para abrir la reja del cofre. Pisar las placas alcanza para abrirla: tienen que mantenerla abierta los bloques, no el player.
 
-- [ ] Las placas abren solo con peso que se queda
-- [ ] Test
+- [x] Las placas abren solo con peso que se queda
+- [x] Test
 
-**Notas:** Sesión: auditoría (-04).
+**Prueba:** test_grove_puzzle: pisar las dos placas no abre la reja ni la resuelve; un bloque en cada placa la abre, y al volver los bloques siguen sobre sus placas.
+
+**Notas:** Sesión de bugs (-fd). GroveSwitchA/B estaban en ONCE (pisar una vez la dejaba resuelta); pasan a BLOCK, así el player solo las baja mientras está encima y un bloque las deja resueltas. Además el solved_position de los bloques apuntaba a (28,0,4)/(32,0,4), lejos de las placas: al volver a la escena aparecían fuera del claro; ahora es la posición de cada placa. Ojo co-op: dos players parados uno en cada placa la abren (la reja se queda abierta).
 
 ### 11.92 Agarrar un cuarto de corazón cura · Hecho
 
