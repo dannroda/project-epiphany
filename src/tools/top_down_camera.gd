@@ -4,6 +4,8 @@ extends Camera3D
 @export var target_node: PlayerCharacter
 ## FOV 40 y unos 60° de inclinación; una pantalla abarca ≈ 26 × 14.5 m, una sala entera del templo con sus puertas.
 @export var offset: Vector3 = Vector3(0, 17.4, 10.0)
+## El `fov` de la cámara (lo pisa al arrancar: así se puede poner desde la escena). Lejos y angosta casi no hay perspectiva.
+@export var field_of_view := 40.0
 @export var smooth_speed: float = 8.0
 @export var trauma_decay := 1.6
 @export var max_shake_offset := Vector2(0.35, 0.25)
@@ -88,11 +90,8 @@ var _skip := false
 var _last_positions: Dictionary[PlayerCharacter, Vector3] = {}
 
 
-func _init() -> void:
-	fov = 40.0
-
-
 func _ready() -> void:
+	fov = field_of_view
 	top_level = true
 	if not target_node and get_parent() is PlayerCharacter:
 		target_node = get_parent()
