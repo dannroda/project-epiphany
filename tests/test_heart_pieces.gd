@@ -81,3 +81,27 @@ func test_equipment_page_counts_pieces() -> void:
 	assert_eq(shown.size(), 2, "dos cuartos llenos")
 	page.queue_free()
 	state.reset()
+
+
+func test_loading_in_the_same_scene_shows_or_hides_the_piece() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state := _state()
+	state.reset()
+	tree.change_scene_to_file("res://levels/test.tscn")
+	await tree.scene_changed
+	var piece: HeartPiece = load("res://src/world/heart_piece.tscn").instantiate()
+	piece.flag = &"ow_heart_piece_grotto"
+	tree.current_scene.add_child(piece)
+	var before := ConfigFile.new()
+	state.write_to(before)
+	state.set_flag(&"ow_heart_piece_grotto", true)
+	var after := ConfigFile.new()
+	state.write_to(after)
+	piece._consume()
+	state.read_from(before)
+	assert_eq(piece.taken, false, "una partida de antes de tomarla la vuelve a mostrar")
+	assert_eq(piece.visible, true)
+	state.read_from(after)
+	assert_eq(piece.taken, true, "una partida donde ya estaba tomada la oculta")
+	assert_eq(piece.visible, false)
+	state.reset()

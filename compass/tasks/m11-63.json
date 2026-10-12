@@ -1,41 +1,43 @@
 {
+  "assignee": "Claude",
   "checklist": [
     {
       "detail": "Como Chest y CrackedWall: hijo PersistentFlag en la escena, reaccionar a `changed`.",
-      "done": false,
+      "done": true,
       "text": "Fragmento de corazón con PersistentFlag"
     },
     {
       "detail": "push_block.gd ~l.43 y tablet.gd `is_read`: mismo patrón.",
-      "done": false,
+      "done": true,
       "text": "Bloque empujable y tablilla"
     },
     {
       "detail": "Guardar, cambiar el estado, cargar sin cambiar de escena, comprobar.",
-      "done": false,
+      "done": true,
       "text": "Test de carga en la misma escena"
     }
   ],
   "code": "11.63",
   "created_at": "2026-10-12T00:05:15.757Z",
   "description": "heart_piece, push_block y tablet leen su flag una sola vez en `_ready` y no usan `PersistentFlag` ni escuchan `GameState.loaded`. Al cargar una partida de la misma escena desde el menú, la escena no se recarga: se puede volver a coger un fragmento de corazón (corazón duplicado), o queda oculto uno que en esa partida no se cogió, y el bloque no vuelve a `solved_position`.",
+  "done_at": "2026-10-12T01:09:58.944Z",
   "files": [
     "src/world/heart_piece.gd",
     "src/world/push_block.gd",
     "src/world/tablet.gd"
   ],
   "milestone": "m11",
-  "notes": "Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).",
+  "notes": "Sale de la revisión de código general del 2026-10-11. Hecho escuchando `GameState.loaded` (también lo emite `reset`) en vez de un PersistentFlag, sin tocar escenas: la pieza se oculta o reaparece y el bloque va a `solved_position` o a su inicio. La tablilla no tenía el bug: `is_read()` consulta GameState cada vez. El bloque es AnimatableBody3D con sync_to_physics: la posición nueva se ve tras un frame de física.",
   "order": 60,
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "done",
   "tags": [
     "bug",
     "guardado"
   ],
   "test": "Coger un fragmento, cargar una partida vieja de la misma escena: el fragmento reaparece; cargar una donde ya estaba cogido: desaparece. Igual con el bloque empujable.",
   "title": "Objetos que no se actualizan al cargar en la misma escena",
-  "updated_at": "2026-10-12T00:05:18.102Z"
+  "updated_at": "2026-10-12T01:09:58.944Z"
 }

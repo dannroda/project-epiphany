@@ -40,6 +40,7 @@ func _ready() -> void:
 				room = node
 	if room:
 		room.player_left.connect(func(_room: Room) -> void: reset_position())
+	GameState.loaded.connect(_on_loaded)
 	if is_solved():
 		global_position = solved_position
 
@@ -96,6 +97,13 @@ func try_push(direction: Vector3) -> bool:
 		moving = false
 		moved.emit())
 	return true
+
+
+## Al cargar una partida sin cambiar de escena: resuelto en su lugar final, si no en el de inicio.
+func _on_loaded() -> void:
+	if moving:
+		return
+	global_position = solved_position if is_solved() else _start
 
 
 func reset_position() -> void:

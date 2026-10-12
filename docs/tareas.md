@@ -2534,7 +2534,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (22/85)
+## M11 — Pulido: contenido y feel  (23/85)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3482,28 +3482,28 @@ Al abrir una puerta LOCKED o BOSS, `_persistent.value = true` dispara `flag_chan
 
 **Archivos:** `src/world/door.gd`, `tests/test_doors.gd`
 
-### 11.63 Objetos que no se actualizan al cargar en la misma escena · Pendiente
+### 11.63 Objetos que no se actualizan al cargar en la misma escena · En curso
 
-**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`, `guardado`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `guardado`
 
 heart_piece, push_block y tablet leen su flag una sola vez en `_ready` y no usan `PersistentFlag` ni escuchan `GameState.loaded`. Al cargar una partida de la misma escena desde el menú, la escena no se recarga: se puede volver a coger un fragmento de corazón (corazón duplicado), o queda oculto uno que en esa partida no se cogió, y el bloque no vuelve a `solved_position`.
 
-- [ ] Fragmento de corazón con PersistentFlag
+- [x] Fragmento de corazón con PersistentFlag
   Como Chest y CrackedWall: hijo PersistentFlag en la escena, reaccionar a `changed`.
-- [ ] Bloque empujable y tablilla
+- [x] Bloque empujable y tablilla
   push_block.gd ~l.43 y tablet.gd `is_read`: mismo patrón.
-- [ ] Test de carga en la misma escena
+- [x] Test de carga en la misma escena
   Guardar, cambiar el estado, cargar sin cambiar de escena, comprobar.
 
 **Prueba:** Coger un fragmento, cargar una partida vieja de la misma escena: el fragmento reaparece; cargar una donde ya estaba cogido: desaparece. Igual con el bloque empujable.
 
-**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+**Notas:** Sale de la revisión de código general del 2026-10-11. Hecho escuchando `GameState.loaded` (también lo emite `reset`) en vez de un PersistentFlag, sin tocar escenas: la pieza se oculta o reaparece y el bloque va a `solved_position` o a su inicio. La tablilla no tenía el bug: `is_read()` consulta GameState cada vez. El bloque es AnimatableBody3D con sync_to_physics: la posición nueva se ve tras un frame de física.
 
 **Archivos:** `src/world/heart_piece.gd`, `src/world/push_block.gd`, `src/world/tablet.gd`
 
-### 11.64 Cargar partida: no colgarse ni cambiar de slot si falla · En curso
+### 11.64 Cargar partida: no colgarse ni cambiar de slot si falla · Hecho
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `guardado`
+**Terminada:** 2026-10-11 · **Prioridad:** alta · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `guardado`
 
 `_restore_player` llama a `change_scene_to_file(GameState.spawn_scene)` sin mirar el resultado y espera `scene_changed`: si el nivel guardado ya no existe (se renombraron niveles con el overworld nuevo), la pantalla queda negra para siempre y `loading` en true (que además apaga los reveal de cámara). `load_game` además cambia `current_slot` antes de leer, así que una carga fallida deja guardando en el slot equivocado.
 

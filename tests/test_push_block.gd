@@ -83,3 +83,24 @@ func test_solved_flag_keeps_it_in_place() -> void:
 	block.reset_position()
 	assert_eq(block.global_position, moved, "con el puzzle resuelto no vuelve")
 	state.reset()
+
+
+func test_loading_in_the_same_scene_moves_the_block() -> void:
+	var setup: Array = await _setup()
+	var tree: SceneTree = setup[0]
+	var state: Node = setup[1]
+	var level: Node = setup[3]
+	var block: PushBlock = level.get_node(^"Block")
+	var start := block.global_position
+	block.solved_flag = &"d1_test_block_solved"
+	block.solved_position = start + Vector3(4, 0, 0)
+	var solved := ConfigFile.new()
+	state.set_flag(&"d1_test_block_solved", true)
+	state.write_to(solved)
+	state.reset()
+	await tree.physics_frame
+	assert_eq(block.global_position, start, "sin el puzzle resuelto vuelve a su lugar")
+	state.read_from(solved)
+	await tree.physics_frame
+	assert_eq(block.global_position, block.solved_position, "con el puzzle resuelto va a su lugar final")
+	state.reset()
