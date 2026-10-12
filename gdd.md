@@ -168,7 +168,7 @@ Opcionales: botella/poción (muro agrietado), cota reforzada (puzzle de bloques)
 
 Es el orden decidido en 11.90 (2026-10-12). El código todavía tiene la pluma en la sala 10 de D1 y el gancho como ítem de la Chullpa; se muda en 11.90 y 11.60.
 
-**Molde de cada mazmorra (11.90):** prueba en el overworld → mazmorra con una mecánica que la recorre entera → ítem a mitad, guardado por un sub-jefe → el jefe se vence con ese ítem → el ítem abre la zona siguiente del overworld y 2–3 secretos en zonas ya visitadas. Cada mazmorra se diseña primero como grafo llave-cerradura, y un test de alcanzabilidad lee las escenas y los grafos y falla si algún orden de juego deja al jugador sin salida.
+**Molde de cada mazmorra (11.90):** prueba en el overworld → mazmorra con una mecánica que la recorre entera → ítem a mitad, guardado por un sub-jefe → el jefe se vence con ese ítem → el ítem abre la zona siguiente del overworld y 2–3 secretos en zonas ya visitadas. Cada mazmorra se diseña primero como grafo llave-cerradura (`DungeonGraph` en `data/dungeons/`: zonas, pasos y qué pide cada lugar), y `test_dungeon_reach` lo cruza con la escena (tipo de puerta, interruptores de cada reja, contenido de los cofres, que no falte ninguna puerta, reja, cofre o interruptor) y recorre todos los órdenes de juego: falla si algo pide un ítem que nadie da o si hay un estado desde el que ya no se llega al objetivo, y muestra el camino hasta ahí. D1 tiene el suyo (`d1_graph.tres`).
 
 **Alcance por entregas:** el primer playtest externo lleva D1 y D2. D3 y D4 se ven en el overworld pero están cerradas y llegan después como actualización (sirve para probar un sistema de parches).
 

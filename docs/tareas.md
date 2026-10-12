@@ -4037,9 +4037,9 @@ Playtest del 2026-10-12: la primera mazmorra ya tiene varios softblocks, y la pl
 - [x] Reparto en el overworld
   Arco: Quebrada, Necrópolis, carcaj del Risco. Pluma: Cardonal, angostura, pieza de la pradera, islotes de la Laguna (entrada a D3). Gancho: postes de la Cumbre (entrada a D4), Mirador, franja del Risco. Cada ítem abre 2–3 secretos en zonas ya visitadas.
 - [ ] Grafos llave-cerradura de D1 y D2
-  Un grafo por mazmorra (salas, cerraduras, llaves, ítems, cerraduras de un solo sentido) antes de tocar el blockout. Referencias: darkade, metazelda.
-- [ ] Test de alcanzabilidad
-  Lee las escenas directamente y los grafos llave-cerradura, y falla si algún orden de juego deja al jugador sin salida. Encaja con el paso de alcanzabilidad de 7.9.
+  D1 hecho: data/dungeons/d1_graph.tres (grafo y softblocks en el documento de diseño). D2 cuando se rehaga la Chullpa con la pluma.
+- [x] Test de alcanzabilidad
+  Hecho: DungeonGraph (src/world/dungeon_graph/) por mazmorra en data/dungeons/; tests/dungeon_reach.gd lo cruza con la escena (cerraduras, interruptores, cofres, cobertura de puertas, rejas, cofres e interruptores, salas) y recorre todos los estados (zona, ítems, llaves, puertas abiertas). Falla si algo pide un ítem que nadie da o si hay un estado sin salida, con el camino. test_dungeon_reach: D1 pasa, más casos sintéticos (llave en la puerta equivocada, caída sin vuelta, ítem que falta). El overworld (7.9) queda para después.
 - [ ] D3 y D4 visibles pero bloqueadas
   Primer playtest externo con D1 y D2. D3 y D4 se ven en el overworld pero están cerradas y llegan como actualización: diseñar el bloqueo y el sistema de updates o parches.
 - [x] GDD §6 y §7 al día

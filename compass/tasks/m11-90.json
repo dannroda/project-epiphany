@@ -26,13 +26,13 @@
       "text": "Reparto en el overworld"
     },
     {
-      "detail": "Un grafo por mazmorra (salas, cerraduras, llaves, ítems, cerraduras de un solo sentido) antes de tocar el blockout. Referencias: darkade, metazelda.",
+      "detail": "D1 hecho: data/dungeons/d1_graph.tres (grafo y softblocks en el documento de diseño). D2 cuando se rehaga la Chullpa con la pluma.",
       "done": false,
       "text": "Grafos llave-cerradura de D1 y D2"
     },
     {
-      "detail": "Lee las escenas directamente y los grafos llave-cerradura, y falla si algún orden de juego deja al jugador sin salida. Encaja con el paso de alcanzabilidad de 7.9.",
-      "done": false,
+      "detail": "Hecho: DungeonGraph (src/world/dungeon_graph/) por mazmorra en data/dungeons/; tests/dungeon_reach.gd lo cruza con la escena (cerraduras, interruptores, cofres, cobertura de puertas, rejas, cofres e interruptores, salas) y recorre todos los estados (zona, ítems, llaves, puertas abiertas). Falla si algo pide un ítem que nadie da o si hay un estado sin salida, con el camino. test_dungeon_reach: D1 pasa, más casos sintéticos (llave en la puerta equivocada, caída sin vuelta, ítem que falta). El overworld (7.9) queda para después.",
+      "done": true,
       "text": "Test de alcanzabilidad"
     },
     {
@@ -61,5 +61,5 @@
   ],
   "test": "",
   "title": "Diseño de mazmorras, ítems y su reparto en el overworld",
-  "updated_at": "2026-10-12T18:03:48.337Z"
+  "updated_at": "2026-10-12T18:26:33.356Z"
 }
