@@ -1612,8 +1612,10 @@ El overworld de 3 × 3 pantallas quedó hecho para una sola mazmorra y se siente
 
 Daniel (2026-10-12, con el mapa de Link's Awakening de referencia): el mundo se ve cuadriculado, regiones rectangulares de una pantalla. Que se parezca más a los Zelda 2D: bordes de riscos que zigzaguean, hileras de árboles como paredes, caminos que serpentean, regiones de tamaños y formas distintas, rincones y entradas escondidas. Los secretos se esconden por diseño (entrada en un risco, detrás de una hilera de árboles, cueva interior) y no con ZoneVeil, que en el overworld delata que hay algo oculto; el velo queda para otros usos. Se mantienen las regiones, la cadena de mazmorras y el gating de §7 (variante D).
 
-- [ ] Análisis de la referencia (Link's Awakening, ALttP): qué hace que no se vea cuadrado
+- [x] Análisis de la referencia (Link's Awakening, ALttP): qué hace que no se vea cuadrado
+  Propuesta en https://claude.ai/artifact/NF4jYH76khQkD2mr4A8tus: hoy son salas rectangulares unidas por aberturas, la lógica de un mapa de mazmorra. Los Zelda 2D tienen terreno continuo, bordes de paisaje (cornisas, hileras de árboles, cercos, agua), formas y tamaños distintos, caminos que guían, densidad y los secretos en cuevas interiores.
 - [ ] Propuesta del layout nuevo (variantes) y elección de Daniel
+  Boceto celda por celda (84 × 40, mismas regiones y gating de D) generado por debug/tmp/ow2/layout.py; esperando a Daniel (tamaño, atajo del Santuario).
 - [ ] Secretos escondidos por diseño: gruta y santuario sin ZoneVeil
 - [ ] Blockout del GridMap nuevo
 - [ ] Terreno orgánico, decoración, navmesh y mapa regenerados

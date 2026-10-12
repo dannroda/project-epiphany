@@ -1,16 +1,19 @@
 {
   "checklist": [
     {
-      "done": false,
+      "detail": "Propuesta en https://claude.ai/artifact/NF4jYH76khQkD2mr4A8tus: hoy son salas rectangulares unidas por aberturas, la lógica de un mapa de mazmorra. Los Zelda 2D tienen terreno continuo, bordes de paisaje (cornisas, hileras de árboles, cercos, agua), formas y tamaños distintos, caminos que guían, densidad y los secretos en cuevas interiores.",
+      "done": true,
       "text": "Análisis de la referencia (Link's Awakening, ALttP): qué hace que no se vea cuadrado"
     },
     {
+      "detail": "Boceto celda por celda (84 × 40, mismas regiones y gating de D) generado por debug/tmp/ow2/layout.py; esperando a Daniel (tamaño, atajo del Santuario).",
       "done": false,
       "text": "Propuesta del layout nuevo (variantes) y elección de Daniel"
     },
     {
+      "detail": "Daniel (2026-10-12): la gruta y los santuarios pasan a ser cuevas interiores. Afuera, solo la boca o la grieta en la cara de un risco.",
       "done": false,
-      "text": "Secretos escondidos por diseño: gruta y santuario sin ZoneVeil"
+      "text": "Cuevas interiores: Santuario, Gruta y Cueva de las bombas en escenas propias; ZoneVeil fuera del overworld"
     },
     {
       "done": false,
@@ -44,5 +47,5 @@
   ],
   "test": "",
   "title": "Overworld con forma de Zelda 2D, no cuadrado",
-  "updated_at": "2026-10-12T20:23:39.780Z"
+  "updated_at": "2026-10-12T20:33:04.125Z"
 }
