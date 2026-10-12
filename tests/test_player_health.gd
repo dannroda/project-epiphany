@@ -69,7 +69,7 @@ func test_the_blessing_survives_a_scene_change() -> void:
 	var saves: Node = tree.root.get_node(^"SaveManager")
 	var player: PlayerCharacter = setup[1]
 	player.health.ward(10.0)
-	await saves.travel_to(LEVEL, &"start")
+	await tree.root.get_node(^"SceneFlow").travel_to(LEVEL, &"start")
 	player = tree.get_first_node_in_group(&"player") as PlayerCharacter
 	assert_true(player.health.ward_left() > 8.0, "la bendición sigue en la escena nueva (%.1f)" % player.health.ward_left())
 	assert_true(player.get_node_or_null(^"Blessing") != null, "con su brillo")

@@ -11,6 +11,9 @@ signal player_entered(player: PlayerCharacter)
 		target_scene = value
 		update_configuration_warnings()
 @export var target_spawn: StringName
+## Lo que muestra la pantalla de carga si el viaje tarda (claves: LOADING_DUNGEON y PLACE_CHULLPA, por ejemplo).
+@export var destination_kind := ""
+@export var destination := ""
 ## Si tiene flag, el portal aparece recién cuando el flag es verdadero (p. ej. al vencer al jefe).
 @export var required_flag: StringName
 ## Si es false no viaja solo: otro nodo decide con `player_entered` (el portal del jefe abre el fin de la demo).
@@ -35,7 +38,7 @@ func _ready() -> void:
 	collision_mask = 1 | 2
 	monitorable = false
 	body_entered.connect(func(body: Node3D) -> void:
-		if body is PlayerCharacter and not SaveManager.traveling:
+		if body is PlayerCharacter and not SceneFlow.traveling:
 			player_entered.emit(body)
 			if travels:
 				travel())
@@ -53,7 +56,7 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 
 func travel() -> void:
-	SaveManager.travel_to(target_scene, target_spawn)
+	SceneFlow.travel_to(target_scene, target_spawn, destination_kind, destination)
 
 
 func _set_open(open: bool) -> void:

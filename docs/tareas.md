@@ -5198,17 +5198,17 @@ Cada nivel trae su Player, cámara y HUD; P1 viene instanciado en el .tscn y los
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-### 14.9 SceneFlow: flujo de escenas aparte de SaveManager y pantalla de carga · Pendiente
+### 14.9 SceneFlow: flujo de escenas aparte de SaveManager y pantalla de carga · Revisión
 
 **Prioridad:** alta · **Tamaño:** M · **Etiquetas:** `online`, `arquitectura`
 
 SaveManager además de slots y codec hace `travel_to`, `respawn`, `new_game` (con intro), `quit_to_title`, `with_fade`, ubicar players, `location()` y escenarios de debug. Es el autoload que en M14 tiene que pasar a 'el servidor decide el cambio de escena', y está mezclado con archivos.
 
-- [ ] Autoload SceneFlow
+- [x] Autoload SceneFlow
   Viaje, respawn, partida nueva, salir, ubicar players y fades (Fader puede integrarse para no sumar autoloads).
-- [ ] SaveManager: slots y capturar/aplicar
-- [ ] Pantalla de carga
-  Playtest 2026-10-12: un sistema mejor de carga de niveles, con pantalla de carga (carga en hilo con ResourceLoader.load_threaded_request y progreso). Mockup en el canvas primero.
+- [x] SaveManager: slots y capturar/aplicar
+- [x] Pantalla de carga
+  Mockup Loading en el canvas (falta el visto bueno de Daniel). SceneFlow: si la carga en hilo tarda más de 0,25 s, tipo y nombre del destino (Portal.destination_kind/destination), barra de progreso y ojo; mínimo 0,6 s. Puestos en las puertas del overworld; las salidas de templo y Chullpa quedan genéricas.
 
 **Prueba:** SaveManager solo guarda/carga; los tests de viaje y respawn pasan contra SceneFlow.
 

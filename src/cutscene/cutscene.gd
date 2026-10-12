@@ -53,11 +53,11 @@ func skip() -> void:
 	if not playing:
 		return
 	playing = false
-	await Fader.fade_out(0.3)
+	await SceneFlow.fade_out(0.3)
 	player.stop()
 	caption.text = ""
 	_restore()
-	await Fader.fade_in(0.3)
+	await SceneFlow.fade_in(0.3)
 	finished.emit()
 	queue_free()
 

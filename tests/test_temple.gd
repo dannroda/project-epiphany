@@ -248,7 +248,7 @@ func test_dying_mid_wave_restarts_the_arena() -> void:
 	_kill_all(_alive_in(^"Arena"))
 	await tree.create_timer(1.5).timeout
 	assert_eq(waves.wave, 1, "va por la segunda oleada")
-	await tree.root.get_node(^"SaveManager").respawn()
+	await tree.root.get_node(^"SceneFlow").respawn()
 	level = tree.current_scene
 	await tree.create_timer(1.0).timeout
 	waves = level.get_node(^"ArenaWaves") as WaveSpawner

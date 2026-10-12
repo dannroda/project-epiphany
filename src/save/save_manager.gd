@@ -1,14 +1,12 @@
 # Autoload
 extends Node
+## Partidas: ranuras, guardar, cargar y escenarios de debug. Los cambios de escena son de SceneFlow.
 
 const SAVE_DIR := "user://saves/"
 ## Carpeta de las ranuras; los tests la cambian para no tocar las partidas reales.
 var save_dir := SAVE_DIR
 const SCENARIO_DIR := "res://debug/scenarios/"
 const NEXT_SCENARIO_FILE := "user://debug/next_scenario.txt"
-const TITLE := "res://src/ui/title/title_screen.tscn"
-const NEW_GAME_SCENE := "res://levels/overworld.tscn"
-const INTRO := preload("res://src/cutscene/intro.tscn")
 
 signal saved(slot: int)
 
@@ -20,12 +18,9 @@ const PLAYER_SLOTS: Array[int] = [1, 2, 3]
 const SCENARIO_SLOT := 98
 ## Marca que las ranuras 0–2 de antes ya pasaron a 1–3.
 const MIGRATED_FILE := ".slots_v2"
-## Separación entre players al reaparecer juntos (co-op).
-const PLAYER_SPACING := 1.2
 
 ## Ranura del jugador de la partida en curso: ahí va Guardar; el autosave va a `AUTO_SLOT`.
 var current_slot := 1
-var traveling := false
 ## Mientras se aplica una partida: los objetos reciben sus flags pero no es algo que el jugador hizo.
 var loading := false
 
@@ -71,7 +66,7 @@ func save_game(slot: int = -1, capture_player := true) -> Error:
 		_capture_player()
 	var cfg := ConfigFile.new()
 	GameState.write_to(cfg)
-	cfg.set_value("player", "location", location())
+	cfg.set_value("player", "location", SceneFlow.location())
 	cfg.set_value("meta", "slot", current_slot)
 	var err := SaveCodec.write(cfg, slot_path(slot))
 	if err == OK:
@@ -107,14 +102,6 @@ func migrate_slots() -> void:
 			if FileAccess.file_exists(slot_path(old) + suffix):
 				DirAccess.rename_absolute(slot_path(old) + suffix, slot_path(old + 1) + suffix)
 	FileAccess.open(marker, FileAccess.WRITE).store_string("1")
-
-
-## Fundido a negro, `action` (cargar, partida nueva…) y fundido de vuelta. Corre acá y no en la pantalla que la pide,
-## porque esa pantalla se libera al cambiar de escena y el fundido de vuelta nunca llegaría.
-func with_fade(action: Callable) -> void:
-	await Fader.fade_out(0.3)
-	await action.call()
-	await Fader.fade_in(0.3)
 
 
 func has_save(slot: int = 0) -> bool:
@@ -170,53 +157,6 @@ func copy_slot(from: int, to: int) -> Error:
 	return DirAccess.copy_absolute(slot_path(from), slot_path(to))
 
 
-## Dónde está el player, para la pantalla de ranuras: "Mazmorra · Sala" o la zona del overworld, sin traducir
-## (claves PLACE_* que `SlotCard` traduce al mostrar).
-func location() -> String:
-	var scene := get_tree().current_scene
-	if scene == null:
-		return ""
-	for child in scene.get_children():
-		if child is Dungeon:
-			var camera := get_tree().get_first_node_in_group(&"room_camera") as TopDownCamera
-			var room_name := camera.room.display_name if camera and camera.room else ""
-			return child.display_name + (" · " + room_name if not room_name.is_empty() else "")
-	var player := Players.lead()
-	for child in scene.get_children():
-		if child is AreaZone and player and (child as AreaZone).contains(player.global_position):
-			return child.display_name
-	for child in scene.get_children():
-		if child is OverworldMap:
-			return child.display_name
-	return ""
-
-
-## Partida nueva: equipo inicial, en el claro del inicio del overworld. Ocupa su ranura enseguida.
-## `with_intro`: la intro (tarea 10.20) arranca sobre el overworld; queda vista apenas empieza.
-func new_game(slot: int = -1, with_intro := false) -> Error:
-	if slot >= 0:
-		current_slot = slot
-	GameState.reset()
-	GameState.spawn_scene = NEW_GAME_SCENE
-	GameState.spawn_point = &"start"
-	GameState.player_position = null
-	await _restore_player()
-	if with_intro:
-		GameState.set_flag(&"ow_intro_seen", true)
-		get_tree().current_scene.add_child(INTRO.instantiate())
-	save_game()
-	autosave()
-	return OK
-
-
-func quit_to_title() -> void:
-	while MenuStack.is_open():
-		MenuStack.pop()
-	get_tree().paused = false
-	get_tree().change_scene_to_file(TITLE)
-	await get_tree().scene_changed
-
-
 func load_game(slot: int = -1) -> Error:
 	if slot < 0:
 		slot = current_slot
@@ -247,7 +187,7 @@ func _load_path(path: String, slot: int) -> Error:
 	GameState.save_tampered = SaveCodec.is_tampered(cfg)
 	if GameState.save_tampered:
 		Log.warning(&"save", "La partida fue modificada a mano:", path)
-	await _restore_player()
+	await SceneFlow.enter_saved_scene()
 	loading = false
 	Log.success(&"save", "Partida cargada:", path)
 	Log.debug(&"save", "Inventario:", ", ".join(GameState.inventory.ids().map(func(id: StringName) -> String: return "%s=%d" % [id, GameState.inventory.count(id)])))
@@ -267,87 +207,3 @@ func _capture_player() -> void:
 	var player := Players.lead()
 	if player:
 		GameState.player_position = player.global_position
-
-
-## Fundido, recarga la escena y pone al player en el punto de reaparición con la vida llena.
-func respawn() -> void:
-	await Fader.fade_out()
-	get_tree().reload_current_scene()
-	await get_tree().scene_changed
-	_place_at_spawn()
-	Log.info(&"combat", "Reapareció en", GameState.spawn_point if GameState.spawn_point else &"(el primero)")
-	await Fader.fade_in()
-
-
-## Cambio de escena por un `Portal`: fundido, carga en segundo plano (la imagen no se congela), el player en
-## `spawn` de la escena nueva y autosave. El juego queda en pausa mientras dura.
-func travel_to(scene_path: String, spawn: StringName) -> void:
-	traveling = true
-	get_tree().paused = true
-	ResourceLoader.load_threaded_request(scene_path)
-	await Fader.fade_out(0.3)
-	while ResourceLoader.load_threaded_get_status(scene_path) == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
-		await get_tree().process_frame
-	var packed := ResourceLoader.load_threaded_get(scene_path) as PackedScene
-	if packed == null:
-		Log.error(&"save", "No se pudo cargar", scene_path)
-		get_tree().paused = false
-		await Fader.fade_in(0.3)
-		traveling = false
-		return
-	for player in Players.all:
-		GameState.set_ward_of(player.controls.slot, player.health.ward_left())
-	get_tree().change_scene_to_packed(packed)
-	await get_tree().scene_changed
-	GameState.spawn_scene = scene_path
-	GameState.spawn_point = spawn
-	GameState.room_entry = null
-	GameState.player_position = null
-	_place_at_spawn()
-	autosave()
-	Log.info(&"save", "Viaje a", scene_path, spawn)
-	get_tree().paused = false
-	await Fader.fade_in(0.3)
-	traveling = false
-
-
-## En mazmorra, en la entrada de la última sala; si no, en el punto de reaparición.
-func _place_at_spawn() -> void:
-	if Players.all.is_empty():
-		return
-	get_tree().call_group(&"room_camera", &"reset_room")
-	if GameState.current_dungeon != &"" and GameState.room_entry != null:
-		_place_players(GameState.room_entry)
-		get_tree().call_group(&"room_camera", &"snap_to_target")
-		return
-	var point := SpawnPoint.find(get_tree(), GameState.spawn_point)
-	if point:
-		_place_players(point.global_position)
-	get_tree().call_group(&"room_camera", &"snap_to_target")
-
-
-## El primero en `at` y los demás en fila al costado.
-func _place_players(at: Vector3) -> void:
-	for i in Players.all.size():
-		var player := Players.all[i]
-		player.global_position = at + Vector3.RIGHT * PLAYER_SPACING * i
-		player.velocity = Vector3.ZERO
-
-
-func _restore_player() -> void:
-	if not GameState.spawn_scene.is_empty() and not ResourceLoader.exists(GameState.spawn_scene):
-		Log.error(&"save", "La escena de la partida ya no existe:", GameState.spawn_scene)
-		GameState.spawn_scene = NEW_GAME_SCENE
-		GameState.spawn_point = &"start"
-		GameState.player_position = null
-	var scene := get_tree().current_scene
-	if not GameState.spawn_scene.is_empty() and (scene == null or scene.scene_file_path != GameState.spawn_scene):
-		var err := get_tree().change_scene_to_file(GameState.spawn_scene)
-		if err != OK:
-			Log.error(&"save", "No se pudo cambiar a", GameState.spawn_scene, error_string(err))
-			return
-		await get_tree().scene_changed
-	if not Players.all.is_empty() and GameState.player_position != null:
-		_place_players(GameState.player_position)
-	elif GameState.spawn_point != &"":
-		_place_at_spawn()

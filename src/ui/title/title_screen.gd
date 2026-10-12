@@ -43,14 +43,14 @@ func focus_default() -> void:
 func open_file_select(mode: FileSelect.Mode) -> FileSelect:
 	var screen := FileSelect.open(mode)
 	screen.chosen.connect(func(slot: int, fresh: bool) -> void:
-		_go(SaveManager.new_game.bind(slot, true) if fresh else SaveManager.load_game.bind(slot)))
+		_go(SceneFlow.new_game.bind(slot, true) if fresh else SaveManager.load_game.bind(slot)))
 	return screen
 
 
 ## Sin ninguna partida va directo a la primera ranura; si no, se elige dónde.
 func _new_game() -> void:
 	if SaveManager.latest_slot() < 0:
-		_go(SaveManager.new_game.bind(SaveManager.PLAYER_SLOTS[0], true))
+		_go(SceneFlow.new_game.bind(SaveManager.PLAYER_SLOTS[0], true))
 	else:
 		open_file_select(FileSelect.Mode.NEW)
 
@@ -66,4 +66,4 @@ func _refresh() -> void:
 func _go(action: Callable) -> void:
 	MenuStack.clear()
 	process_mode = PROCESS_MODE_DISABLED
-	SaveManager.with_fade(action)
+	SceneFlow.with_fade(action)

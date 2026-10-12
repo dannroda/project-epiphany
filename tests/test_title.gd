@@ -19,7 +19,7 @@ func test_new_game_quit_to_title_and_continue() -> void:
 	assert_eq(title.get_node(^"%DebugScenarios").visible, OS.is_debug_build(), "cargar escenario solo en debug")
 	assert_true(tree.root.gui_get_focus_owner() is Button, "una opción tiene el foco (gamepad y teclado)")
 
-	assert_eq(await saves.new_game(), OK)
+	assert_eq(await tree.root.get_node(^"SceneFlow").new_game(), OK)
 	assert_eq(tree.current_scene.scene_file_path, "res://levels/overworld.tscn", "nueva partida: overworld")
 	var player := tree.get_first_node_in_group(&"player") as Node3D
 	assert_true(player.global_position.distance_to(Vector3(-48, 0, 16)) < 0.6, "en el claro del inicio")
@@ -27,7 +27,7 @@ func test_new_game_quit_to_title_and_continue() -> void:
 	state.give(Items.get_item(&"bomb_bag"))
 	assert_eq(saves.save_game(SLOT), OK)
 
-	await saves.quit_to_title()
+	await tree.root.get_node(^"SceneFlow").quit_to_title()
 	assert_eq(tree.current_scene.scene_file_path, TITLE, "salir al título")
 	assert_eq(tree.paused, false)
 	state.reset()
@@ -42,9 +42,9 @@ func test_new_game_quit_to_title_and_continue() -> void:
 func test_loading_from_the_title_fades_back_in() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var saves: Node = tree.root.get_node(^"SaveManager")
-	var fader: Node = tree.root.get_node(^"Fader")
+	var fader: Node = tree.root.get_node(^"SceneFlow")
 	saves.save_dir = saves_dir
-	await saves.new_game(1)
+	await tree.root.get_node(^"SceneFlow").new_game(1)
 	tree.change_scene_to_file(TITLE)
 	await tree.scene_changed
 	await tree.process_frame

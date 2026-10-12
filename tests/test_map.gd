@@ -342,9 +342,9 @@ func test_travel_portals_light_up_and_the_map_travels() -> void:
 	dialog.yes.pressed.emit()
 	var saves: Node = tree.root.get_node(^"SaveManager")
 	var until := Time.get_ticks_msec() + 5000
-	while Time.get_ticks_msec() < until and (not saves.traveling or tree.paused):
+	while Time.get_ticks_msec() < until and (not tree.root.get_node(^"SceneFlow").traveling or tree.paused):
 		await tree.process_frame
-	while saves.traveling:
+	while tree.root.get_node(^"SceneFlow").traveling:
 		await tree.process_frame
 	player = tree.get_first_node_in_group(&"player") as PlayerCharacter
 	assert_eq(state.spawn_point, &"portal_necropolis", "viajó al portal de la Necrópolis")

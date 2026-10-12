@@ -14,14 +14,14 @@ func _ready() -> void:
 	collision_mask = 1 | 2
 	monitorable = false
 	body_entered.connect(func(body: Node3D) -> void:
-		if body is PlayerCharacter and to and not _busy and not SaveManager.traveling:
+		if body is PlayerCharacter and to and not _busy and not SceneFlow.traveling:
 			_climb(body))
 
 
 func _climb(crosser: PlayerCharacter) -> void:
 	_busy = true
 	Feel.sfx(&"stairs", crosser.global_position)
-	await Fader.fade_out(fade_time)
+	await SceneFlow.fade_out(fade_time)
 	var side := to.global_basis.x.normalized()
 	var i := 0
 	for player in Players.all:
@@ -33,5 +33,5 @@ func _climb(crosser: PlayerCharacter) -> void:
 	get_tree().call_group(&"room_camera", &"reset_room")
 	await get_tree().physics_frame
 	get_tree().call_group(&"room_camera", &"snap_to_target")
-	await Fader.fade_in(fade_time)
+	await SceneFlow.fade_in(fade_time)
 	_busy = false

@@ -18,7 +18,7 @@ func _ready() -> void:
 	%Hints.hints = [[&"ui_accept", "HINT_ACCEPT"]]
 	_continue.pressed.connect(_on_continue)
 	%SaveAndQuit.pressed.connect(_on_save_and_quit)
-	%Quit.pressed.connect(SaveManager.quit_to_title)
+	%Quit.pressed.connect(SceneFlow.quit_to_title)
 
 
 func focus_default() -> void:
@@ -27,9 +27,9 @@ func focus_default() -> void:
 
 func _on_continue() -> void:
 	MenuStack.pop()
-	SaveManager.respawn()
+	SceneFlow.respawn()
 
 
 func _on_save_and_quit() -> void:
 	SaveManager.save_checkpoint()
-	SaveManager.quit_to_title()
+	SceneFlow.quit_to_title()

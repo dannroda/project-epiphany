@@ -113,7 +113,7 @@ func _load() -> void:
 		Feel.sfx(&"deny", Vector3.ZERO)
 		return
 	MenuStack.clear()
-	SaveManager.with_fade(SaveManager.load_game.bind(_load_slot))
+	SceneFlow.with_fade(SaveManager.load_game.bind(_load_slot))
 
 
 func _to_title() -> void:
@@ -122,7 +122,7 @@ func _to_title() -> void:
 
 func _on_to_title_answered(yes: bool) -> void:
 	if yes:
-		SaveManager.quit_to_title()
+		SceneFlow.quit_to_title()
 
 
 func _refresh_last_saved() -> void:

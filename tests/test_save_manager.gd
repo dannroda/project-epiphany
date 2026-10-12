@@ -50,7 +50,7 @@ func test_missing_scene_loads_at_the_start_instead_of_hanging() -> void:
 	game_state.spawn_scene = "res://levels/ya_no_existe.tscn"
 	assert_eq(save_manager.save_game(SLOT, false), OK)
 	assert_eq(await save_manager.load_game(SLOT), OK, "carga igual")
-	assert_eq(tree.current_scene.scene_file_path, save_manager.NEW_GAME_SCENE, "en la escena del comienzo")
+	assert_eq(tree.current_scene.scene_file_path, SceneFlow.NEW_GAME_SCENE, "en la escena del comienzo")
 	assert_eq(save_manager.loading, false, "y termina de cargar")
 	assert_eq(game_state.inventory.count(&"bomb"), 4, "con lo que tenía")
 	for suffix in ["", ".bak"]:

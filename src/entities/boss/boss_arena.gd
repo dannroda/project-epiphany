@@ -141,7 +141,7 @@ func _on_reward_taken() -> void:
 func start_rematch() -> void:
 	GameState.boss_rematch = true
 	GameState.room_entry = door.global_position + Vector3.FORWARD * rematch_entry_depth
-	SaveManager.respawn()
+	SceneFlow.respawn()
 
 
 func _on_exit(_player: PlayerCharacter) -> void:
@@ -157,7 +157,7 @@ func _on_exit(_player: PlayerCharacter) -> void:
 			start_rematch()
 		"to_title":
 			SaveManager.save_checkpoint()
-			SaveManager.quit_to_title()
+			SceneFlow.quit_to_title()
 
 
 func _exit_tree() -> void:

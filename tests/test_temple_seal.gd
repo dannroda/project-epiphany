@@ -17,10 +17,10 @@ func _walk_into(tree: SceneTree, action: StringName, scene_path: String) -> bool
 	var saves: Node = tree.root.get_node(^"SaveManager")
 	_walk(action, true)
 	var until := Time.get_ticks_msec() + 8000
-	while Time.get_ticks_msec() < until and not saves.traveling:
+	while Time.get_ticks_msec() < until and not tree.root.get_node(^"SceneFlow").traveling:
 		await tree.physics_frame
 	_walk(action, false)
-	while Time.get_ticks_msec() < until and saves.traveling:
+	while Time.get_ticks_msec() < until and tree.root.get_node(^"SceneFlow").traveling:
 		await tree.process_frame
 	for enemy in tree.get_nodes_in_group(&"enemies"):
 		enemy.free()

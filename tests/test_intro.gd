@@ -6,7 +6,7 @@ const SLOT := 1
 func _start(tree: SceneTree) -> Cutscene:
 	var saves: Node = tree.root.get_node(^"SaveManager")
 	saves.save_dir = saves_dir
-	await saves.new_game(SLOT, true)
+	await tree.root.get_node(^"SceneFlow").new_game(SLOT, true)
 	await tree.process_frame
 	await tree.process_frame
 	return tree.current_scene.find_children("*", "Cutscene", true, false).front()
@@ -102,7 +102,7 @@ func test_loading_or_continuing_never_replays_it() -> void:
 	await tree.process_frame
 	assert_eq(tree.current_scene.find_children("*", "Cutscene", true, false).size(), 0, "cargar no la repite")
 	assert_eq(GameState.get_flag(&"ow_intro_seen"), true)
-	assert_eq(await saves.new_game(SLOT), OK)
+	assert_eq(await tree.root.get_node(^"SceneFlow").new_game(SLOT), OK)
 	await tree.process_frame
 	assert_eq(tree.current_scene.find_children("*", "Cutscene", true, false).size(), 0, "sin with_intro no hay intro (tests y escenarios)")
 	_cleanup(tree)

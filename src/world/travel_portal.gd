@@ -58,7 +58,7 @@ static func all(tree: SceneTree) -> Array[TravelPortal]:
 
 
 func travel() -> void:
-	SaveManager.travel_to(get_tree().current_scene.scene_file_path, spawn_id())
+	SceneFlow.travel_to(get_tree().current_scene.scene_file_path, spawn_id())
 
 
 func _set_lit(value: bool) -> void:

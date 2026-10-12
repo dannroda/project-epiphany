@@ -50,7 +50,7 @@ func test_save_and_quit_keeps_the_checkpoint() -> void:
 	saves.save_dir = saves_dir
 	saves.delete_slot(1)
 	state.reset()
-	await saves.new_game(1)
+	await tree.root.get_node(^"SceneFlow").new_game(1)
 	var player := tree.get_first_node_in_group(&"player") as Node3D
 	player.global_position = Vector3(-48, 0, -16)
 	var screen := await _die(tree)

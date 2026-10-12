@@ -59,8 +59,8 @@ func test_spawn_places_everyone_side_by_side() -> void:
 	var setup: Array = await _load("res://levels/test.tscn")
 	var first: PlayerCharacter = setup[2]
 	var second: PlayerCharacter = setup[3]
-	var save: Node = (Engine.get_main_loop() as SceneTree).root.get_node(^"SaveManager")
-	save._place_players(Vector3(2, 0, 2))
+	var save: Node = (Engine.get_main_loop() as SceneTree).root.get_node(^"SceneFlow")
+	save.place_players(Vector3(2, 0, 2))
 	assert_true(first.global_position.is_equal_approx(Vector3(2, 0, 2)), str(first.global_position))
 	assert_true(second.global_position.distance_to(first.global_position) > 1.0, "el segundo al costado")
 	second.free()

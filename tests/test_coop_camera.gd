@@ -99,7 +99,7 @@ func test_crossing_into_another_room_brings_the_other_along() -> void:
 func test_both_travel_between_the_overworld_and_the_temple() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state: Node = tree.root.get_node(^"GameState")
-	var save: Node = tree.root.get_node(^"SaveManager")
+	var save: Node = tree.root.get_node(^"SceneFlow")
 	var players: Node = tree.root.get_node(^"Players")
 	state.reset()
 	tree.change_scene_to_file("res://levels/overworld.tscn")

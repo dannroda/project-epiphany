@@ -26,11 +26,11 @@ func _teardown() -> void:
 
 func test_two_slots_do_not_overwrite_each_other() -> void:
 	await _setup()
-	assert_eq(await saves.new_game(1), OK)
+	assert_eq(await tree.root.get_node(^"SceneFlow").new_game(1), OK)
 	assert_eq(saves.has_save(1), true, "nueva partida guarda enseguida en su ranura")
 	state.give(Items.get_item(&"bomb_bag"))
 	saves.save_game()
-	assert_eq(await saves.new_game(2), OK)
+	assert_eq(await tree.root.get_node(^"SceneFlow").new_game(2), OK)
 	assert_eq(state.inventory.has(&"bomb_bag"), false, "la ranura 2 arranca de cero")
 	saves.save_game()
 	assert_true(&"bomb_bag" in saves.slot_summary(1).items, "la ranura 1 conserva las bombas")
@@ -45,7 +45,7 @@ func test_two_slots_do_not_overwrite_each_other() -> void:
 
 func test_autosave_goes_to_the_auto_slot_and_remembers_its_game() -> void:
 	await _setup()
-	await saves.new_game(2)
+	await tree.root.get_node(^"SceneFlow").new_game(2)
 	state.give(Items.get_item(&"bomb_bag"))
 	saves.autosave()
 	assert_true(&"bomb_bag" in saves.slot_summary(saves.AUTO_SLOT).items, "el autosave va a la ranura Auto")
@@ -91,7 +91,7 @@ func test_old_slots_move_up_once() -> void:
 
 func test_a_cut_save_falls_back_to_the_backup() -> void:
 	await _setup()
-	await saves.new_game(1)
+	await tree.root.get_node(^"SceneFlow").new_game(1)
 	state.give(Items.get_item(&"bomb_bag"))
 	saves.save_game()
 	var file := FileAccess.open(saves.slot_path(1), FileAccess.WRITE)
@@ -105,7 +105,7 @@ func test_a_cut_save_falls_back_to_the_backup() -> void:
 
 func test_copy_and_delete() -> void:
 	await _setup()
-	await saves.new_game(1)
+	await tree.root.get_node(^"SceneFlow").new_game(1)
 	assert_eq(saves.copy_slot(1, 3), OK)
 	assert_eq(saves.slot_summary(3).location, saves.slot_summary(1).location, "copiar duplica la partida")
 	saves.delete_slot(3)
@@ -144,7 +144,7 @@ func test_autosave_on_big_chests_and_the_antechamber() -> void:
 
 func test_play_time_counts_while_playing() -> void:
 	await _setup()
-	await saves.new_game(1)
+	await tree.root.get_node(^"SceneFlow").new_game(1)
 	var before: float = state.play_time
 	await tree.create_timer(0.5).timeout
 	assert_true(state.play_time - before > 0.3, "el tiempo jugado avanza")
@@ -166,7 +166,7 @@ func _title() -> void:
 
 func test_file_select_screen() -> void:
 	await _setup()
-	await saves.new_game(1)
+	await tree.root.get_node(^"SceneFlow").new_game(1)
 	await _title()
 	var screen: FileSelect = tree.current_scene.open_file_select(FileSelect.Mode.PLAY)
 	await tree.process_frame
@@ -199,7 +199,7 @@ func test_file_select_screen() -> void:
 
 func test_new_game_picks_where_and_confirms_overwriting() -> void:
 	await _setup()
-	await saves.new_game(1)
+	await tree.root.get_node(^"SceneFlow").new_game(1)
 	await _title()
 	var title := tree.current_scene
 	(title.get_node(^"%NewGame") as Button).pressed.emit()
@@ -238,7 +238,7 @@ func test_title_continues_straight_into_the_latest_game() -> void:
 	var title := tree.current_scene
 	assert_eq((title.get_node(^"%Continue") as Button).disabled, true, "sin partidas no hay Continuar")
 	assert_eq((title.get_node(^"%Load") as Button).disabled, true, "ni Cargar")
-	await saves.new_game(2)
+	await tree.root.get_node(^"SceneFlow").new_game(2)
 	state.give(Items.get_item(&"bomb_bag"))
 	saves.autosave()
 	state.reset()

@@ -2,16 +2,16 @@
   "checklist": [
     {
       "detail": "Viaje, respawn, partida nueva, salir, ubicar players y fades (Fader puede integrarse para no sumar autoloads).",
-      "done": false,
+      "done": true,
       "text": "Autoload SceneFlow"
     },
     {
-      "done": false,
+      "done": true,
       "text": "SaveManager: slots y capturar/aplicar"
     },
     {
-      "detail": "Playtest 2026-10-12: un sistema mejor de carga de niveles, con pantalla de carga (carga en hilo con ResourceLoader.load_threaded_request y progreso). Mockup en el canvas primero.",
-      "done": false,
+      "detail": "Mockup Loading en el canvas (falta el visto bueno de Daniel). SceneFlow: si la carga en hilo tarda más de 0,25 s, tipo y nombre del destino (Portal.destination_kind/destination), barra de progreso y ojo; mínimo 0,6 s. Puestos en las puertas del overworld; las salidas de templo y Chullpa quedan genéricas.",
+      "done": true,
       "text": "Pantalla de carga"
     }
   ],
@@ -35,12 +35,12 @@
   "priority": "high",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "online",
     "arquitectura"
   ],
   "test": "SaveManager solo guarda/carga; los tests de viaje y respawn pasan contra SceneFlow.",
   "title": "SceneFlow: flujo de escenas aparte de SaveManager y pantalla de carga",
-  "updated_at": "2026-10-12T08:17:55.766Z"
+  "updated_at": "2026-10-12T18:44:21.760Z"
 }
