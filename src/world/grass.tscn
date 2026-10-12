@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://src/components/hurtbox.gd" id="2_hurtbox"]
 [ext_resource type="Resource" path="res://data/drops/grass.tres" id="3_drops"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/ichu_mata.res" id="m0_ichu_mata"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/ichu_cortado.res" id="9_stump"]
 
 [sub_resource type="CylinderShape3D" id="Shape"]
 height = 1.2
@@ -14,6 +15,7 @@ script = ExtResource("1_breakable")
 drops = ExtResource("3_drops")
 burst = &"leaves"
 sound = &"cut"
+break_style = 1
 
 [node name="Model" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
@@ -29,3 +31,8 @@ surface = "none"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 shape = SubResource("Shape")
+
+[node name="Stump" type="MeshInstance3D" parent="."]
+visible = false
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 0, 0, 0)
+mesh = ExtResource("9_stump")

@@ -66,7 +66,9 @@ func test_sword_cuts_grass() -> void:
 	assert_eq(patch.get_child_count(), 50, "campo de 50 matas")
 	var first := patch.get_child(patch.columns * (patch.rows - 1) + 4) as Node3D
 	await _swing_at(tree, player, first.global_position)
-	assert_true(patch.get_child_count() < 50, "la espada corta pasto")
+	assert_true(patch.get_children().any(func(grass: Breakable) -> bool: return grass.broken), "la espada corta pasto")
+	await tree.create_timer(0.5).timeout
+	assert_true(first.get_node(^"Stump").visible and not first.has_node(^"Model"), "salta la mata y queda el ichu cortado")
 	state.reset()
 
 
@@ -93,5 +95,16 @@ func test_overworld_plants_are_cut_like_grass() -> void:
 	var cactus: Breakable = plants.filter(func(plant: Breakable) -> bool: return plant.global_position.distance_to(Vector3(-20, 0, 22)) < 0.1).front()
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	await _swing_at(tree, player, cactus.global_position, 1.3)
-	assert_eq(is_instance_valid(cactus), false, "la espada corta el cardón de la arboleda")
+	assert_true(cactus.broken, "la espada corta el cardón de la arboleda")
+	await tree.create_timer(1.5).timeout
+	assert_eq(is_instance_valid(cactus), false, "cae, se hunde y se va")
+	var tree_plant: Breakable = plants.filter(func(plant: Breakable) -> bool: return plant.has_node(^"Stump") and plant.get_node(^"Body") != null).front()
+	var model := tree_plant.get_node(^"Model") as Node3D
+	tree_plant.smash(tree_plant.global_position + Vector3(0, 0, 2))
+	assert_eq(tree_plant.get_node(^"Body").process_mode, Node.PROCESS_MODE_DISABLED, "el paso se abre en el acto")
+	await tree.create_timer(0.6).timeout
+	var top := model.global_basis.y
+	assert_true(top.z < -0.8, "el árbol cae para el lado contrario al golpe (%s)" % top)
+	await tree.create_timer(1.0).timeout
+	assert_true(is_instance_valid(tree_plant) and tree_plant.get_node(^"Stump").visible and not is_instance_valid(model), "y queda el tocón")
 	state.reset()

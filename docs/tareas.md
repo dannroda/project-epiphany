@@ -4316,6 +4316,8 @@ Playtest 2026-10-12: los cactus, árboles y similares deberían poder cortarse y
 - [x] Escenas Breakable de cada planta y reparto en el overworld
   src/world/plants/*.tscn. Celdas del kit (Árbol, Queñoa chica, Cardón, Cardón brazos) sin malla ni colisión en el kit orgánico; decorate_levels.gd pone la escena en cada celda, en las 553 plantas que el terreno orgánico dejó en el piso jugable (tools/plantas_overworld.json) y en las piezas de planta de la decoración. Arriba de los riscos siguen en la malla. Terreno, kit, decoración y navmesh regenerados. 60 fps en la arboleda. Test test_overworld_plants_are_cut_like_grass. GDD §7.
 - [ ] Probarlo (Daniel): cortar un árbol abre paso, ¿hay alguno que no debería?
+- [ ] Animación al romperse
+  Daniel: que tengan un poco de animación. Breakable.break_style: CUT (pasto y matas: saltan girando y se achican; el ichu deja la mata cortada), FELL (árboles y cardones: caen del lado contrario al golpe, polvo y rebote, se hunden; los árboles dejan tocón). Cuerpo y hurtbox se apagan en el acto. Tests en test_breakables.
 
 ## M12 — Assets propios (Blender)  (6/17)
 

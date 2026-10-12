@@ -1,11 +1,19 @@
 class_name Breakable
 extends Node3D
-## Vasijas y pasto: se rompen con cualquier golpe (espada, bomba), sueltan según su DropTable y reaparecen al recargar.
+## Vasijas, pasto y plantas: se rompen con cualquier golpe (espada, bomba), sueltan según su DropTable y reaparecen al recargar.
+## SHATTER: desaparece en el acto. CUT: la mata salta girando y se achica. FELL: cae del lado contrario al golpe, rebota y se hunde.
+## Si tiene un "Stump" (oculto), queda a la vista hasta recargar.
+
+enum Break { SHATTER, CUT, FELL }
 
 @export var drops: DropTable
 @export var burst: StringName = &"shards"
 @export var sound: StringName = &"break"
 @export var drop_height := 0.0
+@export var break_style := Break.SHATTER
+@export var cut_time := 0.3
+@export var fall_time := 0.55
+@export var sink_time := 0.4
 
 @onready var hurtbox: Hurtbox = $Hurtbox
 
@@ -13,10 +21,10 @@ var broken := false
 
 
 func _ready() -> void:
-	hurtbox.hit.connect(func(_info: DamageInfo) -> void: smash())
+	hurtbox.hit.connect(func(info: DamageInfo) -> void: smash(info.source.global_position if is_instance_valid(info.source) else Vector3.INF))
 
 
-func smash() -> void:
+func smash(from := Vector3.INF) -> void:
 	if broken:
 		return
 	broken = true
@@ -24,4 +32,59 @@ func smash() -> void:
 	Feel.sfx(sound, global_position)
 	if drops:
 		drops.drop_at.call_deferred(global_position + Vector3.UP * drop_height, get_parent())
-	queue_free()
+	if break_style == Break.SHATTER:
+		queue_free()
+		return
+	hurtbox.set_deferred(&"monitorable", false)
+	var body := get_node_or_null(^"Body") as CollisionObject3D
+	if body:
+		body.process_mode = Node.PROCESS_MODE_DISABLED
+	var stump := get_node_or_null(^"Stump") as Node3D
+	if stump:
+		stump.visible = true
+	var leaves := get_node_or_null(^"Leaves")
+	if leaves:
+		leaves.queue_free()
+	var model := $Model as Node3D
+	if break_style == Break.CUT:
+		_cut(model, stump)
+	else:
+		_fell(model, stump, from)
+
+
+func _cut(model: Node3D, stump: Node3D) -> void:
+	var tween := create_tween().set_parallel()
+	tween.tween_property(model, ^"position:y", model.position.y + 0.5, cut_time).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(model, ^"rotation:y", model.rotation.y + PI, cut_time)
+	tween.tween_property(model, ^"scale", Vector3.ONE * 0.05, cut_time).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	tween.chain().tween_callback(_finish.bind(model, stump))
+
+
+func _fell(model: Node3D, stump: Node3D, from: Vector3) -> void:
+	var away := global_position - from if from != Vector3.INF else Vector3(randf_range(-1, 1), 0, 1)
+	away.y = 0.0
+	away = away.normalized() if away.length() > 0.01 else Vector3.BACK
+	var axis := Vector3.UP.cross(away).normalized()
+	var start := model.global_basis
+	var tilt := func(angle: float) -> void: model.global_basis = Basis(axis, angle) * start
+	var tween := create_tween()
+	tween.tween_method(tilt, 0.0, deg_to_rad(85.0), fall_time).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tween.tween_callback(func() -> void:
+		Feel.burst(&"dust", global_position + away * 1.2, Vector3.UP)
+		Feel.sfx(&"hit", global_position))
+	tween.tween_method(tilt, deg_to_rad(85.0), deg_to_rad(75.0), 0.1).set_ease(Tween.EASE_OUT)
+	tween.tween_method(tilt, deg_to_rad(75.0), deg_to_rad(88.0), 0.15).set_ease(Tween.EASE_IN)
+	tween.tween_interval(0.2)
+	tween.tween_property(model, ^"position:y", model.position.y - 0.6, sink_time).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tween.parallel().tween_property(model, ^"scale", Vector3.ONE * 0.6, sink_time)
+	tween.tween_callback(_finish.bind(model, stump))
+
+
+func _finish(model: Node3D, stump: Node3D) -> void:
+	if stump:
+		model.queue_free()
+		for child in get_children():
+			if child != stump:
+				child.queue_free()
+	else:
+		queue_free()

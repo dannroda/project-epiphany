@@ -8,6 +8,11 @@
     {
       "done": false,
       "text": "Probarlo (Daniel): cortar un árbol abre paso, ¿hay alguno que no debería?"
+    },
+    {
+      "detail": "Daniel: que tengan un poco de animación. Breakable.break_style: CUT (pasto y matas: saltan girando y se achican; el ichu deja la mata cortada), FELL (árboles y cardones: caen del lado contrario al golpe, polvo y rebote, se hunden; los árboles dejan tocón). Cuerpo y hurtbox se apagan en el acto. Tests en test_breakables.",
+      "done": true,
+      "text": "Animación al romperse"
     }
   ],
   "code": "11.111",
@@ -26,5 +31,5 @@
   ],
   "test": "",
   "title": "Cactus, árboles y matas se cortan como el pasto",
-  "updated_at": "2026-10-12T19:39:04.621Z"
+  "updated_at": "2026-10-12T19:48:19.065Z"
 }

@@ -17,6 +17,7 @@ script = ExtResource("1_breakable")
 drops = ExtResource("3_drops")
 burst = &"leaves"
 sound = &"cut"
+break_style = 2
 
 [node name="Model" type="MeshInstance3D" parent="."]
 mesh = ExtResource("4_mesh")
