@@ -337,11 +337,7 @@ msgstr "Boss key"
 msgid "MAP_STAT_SMALL_KEYS"
 msgstr "Small keys"
 
-msgid "MAP_OBTAINED_MAP"
-msgstr "Found"
 
-msgid "MAP_OBTAINED_COMPASS"
-msgstr "Found"
 
 msgid "MAP_NOT_VISITED"
 msgstr "Not visited"

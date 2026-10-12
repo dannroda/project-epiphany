@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cewskbxhonmxb" path="res://assets/ui/frames/map_cursor.png" id="5_focus"]
 [ext_resource type="Texture2D" uid="uid://bbh75d26628l5" path="res://assets/ui/frames/map_room.png" id="6_slot"]
 [ext_resource type="Texture2D" uid="uid://cdjnnpwyam4fr" path="res://assets/ui/frames/map_room_mapped.png" id="7_empty"]
+[ext_resource type="PackedScene" path="res://src/ui/menus/map_dungeon_item.tscn" id="20_ditem"]
 
 [sub_resource type="StyleBoxTexture" id="CursorFrame"]
 texture = ExtResource("5_focus")
@@ -302,10 +303,36 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="MapStats" type="VBoxContainer" parent="Info"]
+[node name="MapItems" type="GridContainer" parent="Info"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 0
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 4
+
+[node name="MapItem" parent="Info/MapItems" instance=ExtResource("20_ditem")]
+unique_name_in_owner = true
+layout_mode = 2
+item_id = &"dungeon_map"
+label = "MAP_STAT_MAP"
+
+[node name="CompassItem" parent="Info/MapItems" instance=ExtResource("20_ditem")]
+unique_name_in_owner = true
+layout_mode = 2
+item_id = &"compass"
+label = "MAP_STAT_COMPASS"
+
+[node name="BossKeyItem" parent="Info/MapItems" instance=ExtResource("20_ditem")]
+unique_name_in_owner = true
+layout_mode = 2
+item_id = &"boss_key"
+label = "MAP_STAT_BOSS_KEY"
+
+[node name="KeysItem" parent="Info/MapItems" instance=ExtResource("20_ditem")]
+unique_name_in_owner = true
+layout_mode = 2
+item_id = &"small_key"
+label = "MAP_STAT_SMALL_KEYS"
 
 [node name="Legend" type="VBoxContainer" parent="Info"]
 unique_name_in_owner = true

@@ -337,11 +337,7 @@ msgstr "Llave del jefe"
 msgid "MAP_STAT_SMALL_KEYS"
 msgstr "Llaves chicas"
 
-msgid "MAP_OBTAINED_MAP"
-msgstr "Obtenido"
 
-msgid "MAP_OBTAINED_COMPASS"
-msgstr "Obtenida"
 
 msgid "MAP_NOT_VISITED"
 msgstr "Sin visitar"

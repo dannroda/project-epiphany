@@ -1,11 +1,12 @@
 {
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "Mockup"
     },
     {
-      "done": false,
+      "detail": "Íconos en lugar de texto (pedido de Daniel): map_dungeon_item.tscn, 4 en una grilla bajo el título.",
+      "done": true,
       "text": "Pestaña Mapa"
     }
   ],
@@ -18,12 +19,12 @@
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "ui",
     "mazmorra"
   ],
   "test": "",
   "title": "Ítems de la mazmorra en la pantalla del mapa",
-  "updated_at": "2026-10-12T08:17:06.012Z"
+  "updated_at": "2026-10-12T18:19:47.835Z"
 }

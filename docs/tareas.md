@@ -4214,14 +4214,15 @@ Cuando el player está debajo del minimapa en pantalla, el minimapa se transpare
 
 **Notas:** Sesión: overworld (-74). Con varios players: cualquiera de ellos.
 
-### 11.104 Ítems de la mazmorra en la pantalla del mapa · Pendiente
+### 11.104 Ítems de la mazmorra en la pantalla del mapa · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `ui`, `mazmorra`
 
 Los ítems conseguidos en la mazmorra (mapa, brújula, llave del jefe, llaves chicas) se ven en la pantalla del mapa.
 
-- [ ] Mockup
-- [ ] Pestaña Mapa
+- [x] Mockup
+- [x] Pestaña Mapa
+  Íconos en lugar de texto (pedido de Daniel): map_dungeon_item.tscn, 4 en una grilla bajo el título.
 
 **Notas:** Sesión: overworld (-74). Mockup primero.
 

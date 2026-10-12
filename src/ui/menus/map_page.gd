@@ -52,7 +52,7 @@ var extra_hints: Array:
 @onready var focus_title: Label = %FocusTitle
 @onready var focus_text: Label = %FocusText
 @onready var focus_stats: VBoxContainer = %FocusStats
-@onready var stats: VBoxContainer = %MapStats
+@onready var map_items: GridContainer = %MapItems
 @onready var legend: VBoxContainer = %Legend
 @onready var overworld_legend: VBoxContainer = %OverworldLegend
 @onready var pins_label: Label = %PinsLabel
@@ -92,12 +92,13 @@ func refresh() -> void:
 	if _dungeon and _dungeon.changed.is_connected(refresh):
 		_dungeon.changed.disconnect(refresh)
 	_dungeon = null
-	for layer in [rooms_layer, doors_layer, stats, focus_stats, fog, marks, floor_buttons]:
+	for layer in [rooms_layer, doors_layer, focus_stats, fog, marks, floor_buttons]:
 		_clear(layer)
 	_room_cells.clear()
 	var in_dungeon := _in_dungeon()
 	cells.visible = in_dungeon
 	legend.visible = in_dungeon
+	map_items.visible = in_dungeon
 	door_legend.visible = in_dungeon
 	overworld.visible = not in_dungeon
 	overworld_legend.visible = not in_dungeon
@@ -135,10 +136,10 @@ func _show_dungeon() -> void:
 	var dungeon_node := _find(Dungeon) as Dungeon
 	title.text = dungeon_node.display_name if dungeon_node and not dungeon_node.display_name.is_empty() else "MAP_TITLE_DUNGEON"
 	subtitle.text = dungeon_node.floor_name if dungeon_node else ""
-	_stat(stats, "MAP_STAT_MAP", "MAP_OBTAINED_MAP" if _dungeon.has_map else "COMMON_NO")
-	_stat(stats, "MAP_STAT_COMPASS", "MAP_OBTAINED_COMPASS" if _dungeon.has_compass else "COMMON_NO")
-	_stat(stats, "MAP_STAT_BOSS_KEY", "COMMON_YES" if _dungeon.has_boss_key else "COMMON_NO")
-	_stat(stats, "MAP_STAT_SMALL_KEYS", str(_dungeon.small_keys))
+	(%MapItem as MapDungeonItem).show_owned(_dungeon.has_map)
+	(%CompassItem as MapDungeonItem).show_owned(_dungeon.has_compass)
+	(%BossKeyItem as MapDungeonItem).show_owned(_dungeon.has_boss_key)
+	(%KeysItem as MapDungeonItem).show_owned(_dungeon.small_keys > 0, _dungeon.small_keys)
 	var current := _current_room()
 	var levels := _levels()
 	if _view_level == null or not _view_level in levels:

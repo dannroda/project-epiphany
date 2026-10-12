@@ -71,7 +71,7 @@ func test_overworld_shows_marker_over_the_image() -> void:
 	var tree: SceneTree = setup[0]
 	var page: Control = setup[3]
 	await tree.process_frame
-	assert_true(page.overworld.visible and not page.cells.visible, "vista de overworld")
+	assert_true(page.overworld.visible and not page.cells.visible and not page.map_items.visible, "vista de overworld, sin ítems de mazmorra")
 	assert_eq(page.title.text, "Campo de pruebas")
 	assert_true(page.overworld_image.texture != null, "imagen del mapa")
 	var image_rect := Rect2(page.overworld_image.position, page.overworld_image.size)
@@ -244,6 +244,14 @@ func test_floor_selector_in_a_dungeon_with_floors() -> void:
 	dungeon.has_compass = true
 	await tree.process_frame
 	assert_true(page.floors_box.visible, "la Chullpa tiene columna de pisos")
+	assert_true(page.map_items.visible, "los ítems de la mazmorra se ven")
+	var shown := func(tile: String) -> bool: return page.get_node("%" + tile).modulate.a == 1.0
+	assert_true(shown.call("MapItem") and shown.call("CompassItem"), "mapa y brújula, prendidos")
+	assert_true(not shown.call("BossKeyItem") and not shown.call("KeysItem"), "sin llave del jefe ni llaves, apagados")
+	assert_true(page.get_node(^"%MapItem/%Icon").texture != null, "con su ícono")
+	dungeon.small_keys = 2
+	await tree.process_frame
+	assert_eq(page.get_node(^"%KeysItem/%Count").text, "2", "las llaves chicas con su cantidad")
 	var buttons: Array = page.floor_buttons.get_children()
 	assert_eq(buttons.map(func(button: MapFloorButton) -> String: return button.code), ["2P", "1P", "S1"], "de arriba abajo")
 	assert_true(buttons[1].here and buttons[1].selected, "abre en la planta baja, donde está el player")
