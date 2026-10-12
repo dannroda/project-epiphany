@@ -24,7 +24,12 @@ const WALL_RUN := {"n": 0.8, "s": 0.8, "e": 1.4, "o": 1.4}
 const WALL_HEIGHT := 2.0
 ## Alto de los pilares (PILLAR en build_paredes_la.py): hasta ahí tapa la cámara.
 const PILLAR_HEIGHT := 3.0
+## Para encuadrar, la cámara mira el tope de la pared norte en el borde del piso: con esto llega a ver también la cresta.
+const FRAME_HEIGHT := 4.4
 const MASK_MARGIN := 2.0
+## La sala se ensancha hasta sus paredes de los costados (no arriba ni abajo, que ya entran): la cámara llena la pantalla
+## de alto y se corre de costado hasta mostrarlas.
+const ROOM_SIDE_GROWTH := 1.4
 ## Velo que oscurece la parte de afuera de las paredes hasta el negro de la máscara: arranca a esta distancia del piso.
 const FADE_START := {"n": 0.5, "s": 1.3, "e": 1.2, "o": 1.2}
 ## Y llega al negro a esta distancia (abajo la cresta se ve poco: la máscara la tapa antes).
@@ -37,7 +42,7 @@ const BRAZIER_FLAME := 1.07
 const DOOR_LEAF_SCALE := Vector3(0.7, 0.8, 1.0)
 ## Cámara ortográfica (como LA): las paredes de los costados tienen el mismo ancho arriba y abajo.
 const CAMERA_OFFSET := Vector3(0, 68.9, 57.9)
-const ORTHO_SIZE := 15.0
+const ORTHO_SIZE := 13.2
 
 
 func _initialize() -> void:
@@ -102,12 +107,18 @@ func _dress(level: Node) -> void:
 			level.set_editable_instance(node, true)
 		elif node is Area3D and "map_cell" in node:
 			_fade(level, node as Area3D)
+			var shape := node.get_node("CollisionShape3D") as CollisionShape3D
+			var box := shape.shape.duplicate() as BoxShape3D
+			box.size.x += ROOM_SIDE_GROWTH * 2.0
+			shape.shape = box
 		elif node is Camera3D and "cuts_south_wall" in node:
 			node.set("offset", CAMERA_OFFSET)
 			node.set("orthographic", true)
 			node.set("ortho_size", ORTHO_SIZE)
-			node.set("cuts_south_wall", false)
-			node.set("wall_height", PILLAR_HEIGHT)
+			node.set("cuts_south_wall", true)
+			node.set("south_wall_cut", PILLAR_HEIGHT)
+			node.set("south_wall_reach", MASK_MARGIN - 0.3)
+			node.set("wall_height", FRAME_HEIGHT)
 			node.set("mask_margin", MASK_MARGIN)
 
 
