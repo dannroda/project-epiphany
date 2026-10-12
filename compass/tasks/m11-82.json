@@ -6,7 +6,7 @@
       "text": "DamageInfo.make"
     },
     {
-      "detail": "`player.hurtbox.receive(info)` con un flag en DamageInfo para saltar escudo/i-frames donde se quiere (pozo, ticks del agarre).",
+      "detail": "`player.hurtbox.receive(info)` con un flag en DamageInfo para saltar escudo/i-frames donde se quiere (pozo, ticks del agarre). En pit.gd el splash (`@export water`) va antes del daño; dejarlo igual.",
       "done": false,
       "text": "Pozo y agarre por Hurtbox"
     },
@@ -45,5 +45,5 @@
   ],
   "test": "Con túnica, el pozo y el agarre restan menos; el agarre resta en cada tick; la marca daña a cualquier player dentro vía Hitbox.",
   "title": "Daño que no pasa por el Hurtbox",
-  "updated_at": "2026-10-12T00:19:44.390Z"
+  "updated_at": "2026-10-12T00:21:12.996Z"
 }

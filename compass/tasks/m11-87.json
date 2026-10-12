@@ -6,7 +6,7 @@
       "text": "Jefe"
     },
     {
-      "detail": "carrying.gd CARRY_SPEED/THROW_DISTANCE/FLIGHT_TIME, aiming_item.gd LOCKED_SPEED, carrier.gd → `@export`.",
+      "detail": "carrying.gd CARRY_SPEED/THROW_DISTANCE/FLIGHT_TIME, aiming_item.gd LOCKED_SPEED, carrier.gd → `@export`. Mantener la multiplicación por `player.ground_speed` (agua poco profunda, 11169f5): moving, generic `move_locked` y carrying la aplican.",
       "done": false,
       "text": "Player"
     },
@@ -59,5 +59,5 @@
   ],
   "test": "Cada valor listado aparece en el inspector o en un .tres; cambiar el windup del esqueleto acorazado no cambia a los otros.",
   "title": "Valores de ajuste al inspector",
-  "updated_at": "2026-10-12T00:20:01.945Z"
+  "updated_at": "2026-10-12T00:21:12.499Z"
 }

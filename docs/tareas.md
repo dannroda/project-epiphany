@@ -3957,7 +3957,7 @@ Varios valores de juego están como const o en sitios compartidos y no se pueden
 - [ ] Jefe
   boss.gd: 24 const (EYE_STUN_TIME, ENRAGE_FRACTION, MARK_*, REPEAT_PENALTY, SAME_HAND_PENALTY); boss_hand.gd: SLAM_HEIGHT, GRAB_REACH, IMPACT_HIT_STOP, SLAM_OVERSHOOT/BOUNCE → `@export_group`. Lo cosmético (bob, parpadeo) puede quedar const.
 - [ ] Player
-  carrying.gd CARRY_SPEED/THROW_DISTANCE/FLIGHT_TIME, aiming_item.gd LOCKED_SPEED, carrier.gd → `@export`.
+  carrying.gd CARRY_SPEED/THROW_DISTANCE/FLIGHT_TIME, aiming_item.gd LOCKED_SPEED, carrier.gd → `@export`. Mantener la multiplicación por `player.ground_speed` (agua poco profunda, 11169f5): moving, generic `move_locked` y carrying la aplican.
 - [ ] Timing de ataque de enemigos
   windup_time, windup_pose, recovery_time de bt_attack a AttackData; `attack` en EntityConfig; enemy_bt.tres deja de fijar skeleton_slash.
 - [ ] Vida inicial y HP por corazón
