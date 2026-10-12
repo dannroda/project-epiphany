@@ -510,6 +510,11 @@ STYLE_SCATTER = {
 	},
 }
 LAST_LOW = max(r for r in range(GH) if any(ch != "H" for ch in GRID[r]))
+## Plantas que se cortan como el pasto: en el piso jugable no van a la malla, van a tools/plantas_overworld.json y
+## tools/decorate_levels.gd pone una escena Breakable en cada una. Arriba de los riscos quedan en la malla.
+CUTTABLE = {"ichu_mata", "flores", "tola", "hongos", "yareta", "cardon_chico", "cardon_a", "cardon_b", "quenoa_grande", "quenoa_chica"}
+WALKABLE = {".", ":", "w"}
+PLANTS_OUT = os.path.join(epi.ROOT, "tools", "plantas_overworld.json")
 
 
 def load_meshes():
@@ -549,7 +554,7 @@ def decor_spots():
 			for name, chance in STYLE_SCATTER.get(style, {}).get(kind, SCATTER.get(kind, [])):
 				if placed < 2 and rng.random() < chance:
 					spot = center + Vector(((rng.random() - 0.5) * 1.2, (rng.random() - 0.5) * 1.2))
-					spots.append((name, spot, rng.random() * math.tau))
+					spots.append((name, spot, rng.random() * math.tau, kind))
 					placed += 1
 	if not spots:
 		return spots
@@ -563,9 +568,13 @@ def decor(meshes, collection):
 	bpy.context.view_layer.update()
 	depsgraph = bpy.context.evaluated_depsgraph_get()
 	groups = {}
-	for kind, spot, angle in decor_spots():
+	cuttable = []
+	for kind, spot, angle, place in decor_spots():
 		hit, location, normal, _i, _obj, _m = bpy.context.scene.ray_cast(depsgraph, Vector((spot.x, spot.y, 20.0)), Vector((0, 0, -1)))
 		if not hit or normal.z < 0.85 or location.z < -0.5:
+			continue
+		if kind in CUTTABLE and place in WALKABLE:
+			cuttable.append({"kind": kind, "at": [round(location.x, 3), round(location.z, 3), round(-location.y, 3)], "yaw": round(angle, 4)})
 			continue
 		key = ("wind" if kind in WINDY else "outdoor", math.floor(spot.x / CHUNK), math.floor(spot.y / CHUNK))
 		groups.setdefault(key, []).append((kind, location, angle))
@@ -590,6 +599,8 @@ def decor(meshes, collection):
 		obj["material"] = material
 		collection.objects.link(obj)
 		objects.append(obj)
+	with open(PLANTS_OUT, "w") as f:
+		json.dump(cuttable, f, indent=0)
 	return objects
 
 

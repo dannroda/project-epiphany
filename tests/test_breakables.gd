@@ -12,8 +12,8 @@ func _load(tree: SceneTree) -> void:
 		enemy.queue_free()
 
 
-func _swing_at(tree: SceneTree, player: PlayerCharacter, target: Vector3) -> void:
-	var from := target + Vector3(0, 0, 1.0)
+func _swing_at(tree: SceneTree, player: PlayerCharacter, target: Vector3, distance := 1.0) -> void:
+	var from := target + Vector3(0, 0, distance)
 	player.global_position = from
 	player.model.look_at(player.model.global_position + Vector3.BACK, Vector3.UP)
 	for i in 3:
@@ -67,4 +67,31 @@ func test_sword_cuts_grass() -> void:
 	var first := patch.get_child(patch.columns * (patch.rows - 1) + 4) as Node3D
 	await _swing_at(tree, player, first.global_position)
 	assert_true(patch.get_child_count() < 50, "la espada corta pasto")
+	state.reset()
+
+
+func test_overworld_plants_are_cut_like_grass() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	state.reset()
+	tree.change_scene_to_file("res://levels/overworld.tscn")
+	await tree.scene_changed
+	for i in 3:
+		await tree.physics_frame
+	for enemy in tree.get_nodes_in_group(&"enemies"):
+		enemy.queue_free()
+	var level := tree.current_scene
+	var grid: GridMap = level.get_node(^"GridMap")
+	var plants := level.get_node(^"Decor/Plantas").get_children().filter(func(node: Node) -> bool: return node is Breakable)
+	assert_true(plants.size() > 100, "las plantas del piso jugable se cortan (%d)" % plants.size())
+	for cell in grid.get_used_cells():
+		var cell_name := grid.mesh_library.get_item_name(grid.get_cell_item(cell))
+		if cell_name in ["Árbol", "Queñoa chica", "Cardón", "Cardón brazos"]:
+			var at := grid.map_to_local(cell) * Vector3(1, 0, 1) + grid.position
+			assert_true(plants.any(func(plant: Breakable) -> bool: return plant.global_position.distance_to(at) < 0.1), "%s en %s es cortable" % [cell_name, at])
+			assert_eq(grid.mesh_library.get_item_shapes(grid.get_cell_item(cell)).size(), 0, "y la celda no choca ni se dibuja: la planta lo hace")
+	var cactus: Breakable = plants.filter(func(plant: Breakable) -> bool: return plant.global_position.distance_to(Vector3(-20, 0, 22)) < 0.1).front()
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	await _swing_at(tree, player, cactus.global_position, 1.3)
+	assert_eq(is_instance_valid(cactus), false, "la espada corta el cardón de la arboleda")
 	state.reset()

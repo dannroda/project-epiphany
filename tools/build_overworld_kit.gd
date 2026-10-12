@@ -12,6 +12,8 @@ const ORGANIC_OUTPUT := "res://data/kits/overworld_organico_kit.tres"
 const TERRAIN := ["Piso", "Pasto", "Tierra", "Lajas", "Pared", "Acantilado", "Andén", "Risco", "Abismo", "Hueco", "Monte", "Cueva"]
 ## Más bajo que esto (m) es piso de la celda.
 const FLOOR_TOP := 0.01
+## Celdas de plantas que se cortan: en el kit orgánico quedan sin malla ni colisión, decorate_levels.gd pone la escena.
+const PLANTS := ["Árbol", "Queñoa chica", "Cardón", "Cardón brazos"]
 const GLB := "res://assets/epiphany/%s.glb"
 const MATERIAL := preload("res://data/kits/materials/epiphany_outdoor.tres")
 ## Las paredes que pueden tapar al player: se recortan alrededor de él.
@@ -140,7 +142,7 @@ func _organic(kit: MeshLibrary) -> MeshLibrary:
 		var item_name := kit.get_item_name(id)
 		organic.create_item(id)
 		organic.set_item_name(id, item_name)
-		if TERRAIN.any(func(prefix: String) -> bool: return item_name.begins_with(prefix)):
+		if item_name in PLANTS or TERRAIN.any(func(prefix: String) -> bool: return item_name.begins_with(prefix)):
 			organic.set_item_mesh(id, ArrayMesh.new())
 			continue
 		organic.set_item_mesh(id, _without_floor(kit.get_item_mesh(id)))

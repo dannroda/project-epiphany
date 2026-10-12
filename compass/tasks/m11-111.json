@@ -1,0 +1,30 @@
+{
+  "checklist": [
+    {
+      "detail": "src/world/plants/*.tscn. Celdas del kit (Árbol, Queñoa chica, Cardón, Cardón brazos) sin malla ni colisión en el kit orgánico; decorate_levels.gd pone la escena en cada celda, en las 553 plantas que el terreno orgánico dejó en el piso jugable (tools/plantas_overworld.json) y en las piezas de planta de la decoración. Arriba de los riscos siguen en la malla. Terreno, kit, decoración y navmesh regenerados. 60 fps en la arboleda. Test test_overworld_plants_are_cut_like_grass. GDD §7.",
+      "done": true,
+      "text": "Escenas Breakable de cada planta y reparto en el overworld"
+    },
+    {
+      "done": false,
+      "text": "Probarlo (Daniel): cortar un árbol abre paso, ¿hay alguno que no debería?"
+    }
+  ],
+  "code": "11.111",
+  "created_at": "2026-10-12T19:39:03.100Z",
+  "description": "Playtest 2026-10-12: los cactus, árboles y similares deberían poder cortarse y funcionar como el pasto.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 108,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "review",
+  "tags": [
+    "overworld",
+    "arte"
+  ],
+  "test": "",
+  "title": "Cactus, árboles y matas se cortan como el pasto",
+  "updated_at": "2026-10-12T19:39:04.621Z"
+}

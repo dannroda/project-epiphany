@@ -1603,7 +1603,7 @@ El overworld de 3 × 3 pantallas quedó hecho para una sola mazmorra y se siente
   Daniel (2026-10-11): la Laguna con el agua de la cueva de la vertiente (water.gdshader: espuma en la orilla, color por profundidad) sobre el hueco; cascada en el acantilado norte donde termina la quebrada; caer al agua salpica y vuelve a la orilla (no se nada); la isla de D3 con el gancho. El Bañado, agua baja que se camina.
 - [ ] Que todo se pueda alcanzar y cruzar
   Playtest 2026-10-12: áreas imposibles de alcanzar o cruzar. test_every_region_is_reachable_except_the_item_gated (navmesh + link del puente): con el puente se llega a todas las zonas menos la Cumbre y la isla de la Laguna (gancho) y las franjas de la Quebrada (angostura y bajadas, 11.90). Falta que Daniel diga qué lugares puntuales no pudo cruzar.
-- [ ] Mapa: A viaja, X pone pin
+- [x] Mapa: A viaja, X pone pin
   Daniel (2026-10-12): era contraintuitivo que el viaje fuera con X. Mockups Pause_Map_Travel, Pause_Map_Regions y Pause_Map_Overworld al día; map_page: ui_accept viaja (si hay portal enganchado), item_1 pone o quita pin; barra de ayudas en el orden del mockup.
 
 ## M8 — Contenido de mazmorra  (8/8)
@@ -2538,7 +2538,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (51/106)
+## M11 — Pulido: contenido y feel  (51/107)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4306,6 +4306,16 @@ Playtest 2026-10-12: los puzzles de bloques solo se tienen que activar con los b
 - [ ] Placa de golpe fuerte
   Se activa con un golpe fuerte (¿martillo / golpe cargado?); espera el ítem que lo dé (11.90).
 - [ ] Probarlo (Daniel)
+
+### 11.111 Cactus, árboles y matas se cortan como el pasto · Revisión
+
+**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `overworld`, `arte`
+
+Playtest 2026-10-12: los cactus, árboles y similares deberían poder cortarse y funcionar como el pasto.
+
+- [x] Escenas Breakable de cada planta y reparto en el overworld
+  src/world/plants/*.tscn. Celdas del kit (Árbol, Queñoa chica, Cardón, Cardón brazos) sin malla ni colisión en el kit orgánico; decorate_levels.gd pone la escena en cada celda, en las 553 plantas que el terreno orgánico dejó en el piso jugable (tools/plantas_overworld.json) y en las piezas de planta de la decoración. Arriba de los riscos siguen en la malla. Terreno, kit, decoración y navmesh regenerados. 60 fps en la arboleda. Test test_overworld_plants_are_cut_like_grass. GDD §7.
+- [ ] Probarlo (Daniel): cortar un árbol abre paso, ¿hay alguno que no debería?
 
 ## M12 — Assets propios (Blender)  (6/17)
 

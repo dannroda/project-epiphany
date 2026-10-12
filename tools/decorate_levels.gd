@@ -8,9 +8,27 @@ extends SceneTree
 const MESH := "res://assets/epiphany/meshes/%s.res"
 const OUT := "res://levels/decor/%s_decor.tscn"
 const BRAZIER := preload("res://src/world/brazier.tscn")
-const LEAVES := preload("res://src/world/falling_leaves.tscn")
-## Árboles del kit → altura de la copa, de donde caen hojas.
-const CANOPIES := {"Árbol": 2.4, "Queñoa chica": 1.5}
+## Plantas que se cortan como el pasto (Breakable): las celdas del kit, las que el terreno orgánico dejó en el piso
+## jugable (tools/plantas_overworld.json) y las piezas de la decoración.
+const PLANT_CELLS := {
+	"Árbol": "res://src/world/plants/arbol.tscn",
+	"Queñoa chica": "res://src/world/plants/quenoa_chica.tscn",
+	"Cardón": "res://src/world/plants/cardon.tscn",
+	"Cardón brazos": "res://src/world/plants/cardon_brazos.tscn",
+}
+const PLANTS := {
+	"ichu_mata": "res://src/world/grass.tscn",
+	"flores": "res://src/world/plants/flores.tscn",
+	"tola": "res://src/world/plants/tola.tscn",
+	"hongos": "res://src/world/plants/hongos.tscn",
+	"yareta": "res://src/world/plants/yareta.tscn",
+	"cardon_chico": "res://src/world/plants/cardon_chico.tscn",
+	"cardon_a": "res://src/world/plants/cardon.tscn",
+	"cardon_b": "res://src/world/plants/cardon_brazos.tscn",
+	"quenoa_grande": "res://src/world/plants/arbol.tscn",
+	"quenoa_chica": "res://src/world/plants/quenoa_chica.tscn",
+}
+const SCATTERED := "res://tools/plantas_overworld.json"
 const CELL := 2.0
 ## Lo jugable más cerca que esto (m) no deja decorar.
 const CLEARANCE := 1.8
@@ -101,7 +119,8 @@ func _decorate(level_name: String, area_script: String, recipe: Callable) -> voi
 		_rng.seed = hash(level_name + area.name)
 		recipe.call(area, _cells_in(area), group)
 		count += group.get_child_count()
-	_leaves()
+	if level_name == "overworld":
+		_plants()
 	var packed := PackedScene.new()
 	packed.pack(_root)
 	ResourceSaver.save(packed, OUT % level_name)
@@ -110,17 +129,24 @@ func _decorate(level_name: String, area_script: String, recipe: Callable) -> voi
 	level.free()
 
 
-func _leaves() -> void:
-	var group: Node3D
+func _plants() -> void:
+	var group := Node3D.new()
+	group.name = "Plantas"
+	_add(_root, group)
 	for cell in _grid.get_used_cells():
-		if CANOPIES.has(_name(cell)):
-			if group == null:
-				group = Node3D.new()
-				group.name = "Hojas"
-				_add(_root, group)
-			var leaves := LEAVES.instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE) as Node3D
-			leaves.position = _center(cell) + Vector3.UP * CANOPIES[_name(cell)]
-			_add(group, leaves)
+		if PLANT_CELLS.has(_name(cell)):
+			var plant := _scene(PLANT_CELLS[_name(cell)])
+			plant.transform = Transform3D(_grid.get_cell_item_basis(cell), _center(cell))
+			_add(group, plant)
+	for spot: Dictionary in JSON.parse_string(FileAccess.get_file_as_string(SCATTERED)):
+		var plant := _scene(PLANTS[spot.kind])
+		plant.position = Vector3(spot.at[0], spot.at[1], spot.at[2])
+		plant.rotation.y = spot.yaw
+		_add(group, plant)
+
+
+func _scene(path: String) -> Node3D:
+	return (load(path) as PackedScene).instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE) as Node3D
 
 
 func _temple_room(room: Area3D, cells: Array[Vector3i], group: Node3D) -> void:
@@ -251,6 +277,13 @@ func _free(at: Vector3, clearance: float, spacing: float) -> bool:
 
 
 func _mesh(group: Node3D, mesh_name: String, at: Vector3, yaw: float, solid := true) -> void:
+	if mesh_name.begins_with("naturaleza/") and PLANTS.has(mesh_name.get_file()):
+		var plant := _scene(PLANTS[mesh_name.get_file()])
+		plant.position = at
+		plant.rotation.y = yaw
+		_add(group, plant)
+		_placed.append(at)
+		return
 	var mesh: Mesh = load(MESH % mesh_name)
 	var instance := MeshInstance3D.new()
 	instance.name = mesh_name.get_file().to_pascal_case()

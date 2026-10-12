@@ -1,0 +1,30 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/breakable.gd" id="1_breakable"]
+[ext_resource type="Script" path="res://src/components/hurtbox.gd" id="2_hurtbox"]
+[ext_resource type="Resource" path="res://data/drops/grass.tres" id="3_drops"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/flores.res" id="4_mesh"]
+
+[sub_resource type="CylinderShape3D" id="Hurt"]
+height = 0.45
+radius = 0.4
+
+[node name="Flores" type="Node3D"]
+script = ExtResource("1_breakable")
+drops = ExtResource("3_drops")
+burst = &"leaves"
+sound = &"cut"
+
+[node name="Model" type="MeshInstance3D" parent="."]
+mesh = ExtResource("4_mesh")
+
+[node name="Hurtbox" type="Area3D" parent="."]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+script = ExtResource("2_hurtbox")
+surface = "none"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.225, 0)
+shape = SubResource("Hurt")
