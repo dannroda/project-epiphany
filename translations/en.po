@@ -295,6 +295,15 @@ msgstr "Boss key"
 msgid "ITEMS_BOSS_KEY_NO"
 msgstr "Boss key: no"
 
+msgid "ITEMS_BOTTLES"
+msgstr "BOTTLES"
+
+msgid "ITEMS_BOTTLE_MISSING"
+msgstr "Bottle not found"
+
+msgid "ITEMS_BOTTLE_MISSING_DESC"
+msgstr "There are four bottles to find. Each one carries any liquid."
+
 msgid "ITEMS_UNDISCOVERED"
 msgstr "Undiscovered"
 

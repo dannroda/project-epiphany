@@ -15,9 +15,25 @@ script = ExtResource("1_page")
 
 [node name="Rows" type="VBoxContainer" parent="." unique_id=1450220760]
 layout_mode = 2
-theme_override_constants/separation = 22
+theme_override_constants/separation = 18
 
 [node name="Grid" type="GridContainer" parent="Rows" unique_id=413912208]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 16
+columns = 4
+
+[node name="Bottles" type="VBoxContainer" parent="Rows"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="BottlesTitle" type="Label" parent="Rows/Bottles"]
+layout_mode = 2
+theme_type_variation = &"Caps"
+text = "ITEMS_BOTTLES"
+
+[node name="BottleGrid" type="GridContainer" parent="Rows/Bottles"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/h_separation = 16

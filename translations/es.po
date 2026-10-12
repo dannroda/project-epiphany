@@ -295,6 +295,15 @@ msgstr "Llave del jefe"
 msgid "ITEMS_BOSS_KEY_NO"
 msgstr "Llave del jefe: no"
 
+msgid "ITEMS_BOTTLES"
+msgstr "BOTELLAS"
+
+msgid "ITEMS_BOTTLE_MISSING"
+msgstr "Botella sin encontrar"
+
+msgid "ITEMS_BOTTLE_MISSING_DESC"
+msgstr "Hay cuatro botellas para encontrar. Cada una lleva cualquier líquido."
+
 msgid "ITEMS_UNDISCOVERED"
 msgstr "Sin descubrir"
 

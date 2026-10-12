@@ -1,11 +1,12 @@
 extends Control
-## Pestaña Ítems: ítems secundarios para asignar a X/Y (item_1/item_2), objetos de la mazmorra y detalle.
+## Pestaña Ítems: ítems secundarios para asignar a X/Y (item_1/item_2), la fila fija de las cuatro botellas, objetos de
+## la mazmorra y detalle.
 ## En co-op, en vez del detalle, una tarjeta por player con lo que lleva (13.9). Con el menú compartido cada invitado
 ## mueve su cursor con su control y asigna con X/Y; con el anillo, la pestaña solo muestra quién lleva qué.
 
 const MapData := preload("res://src/ui/menus/map_data.gd")
 const COLUMNS := 4
-const SLOT_COUNT := 12
+const SLOT_COUNT := 8
 const BUTTON_ACTIONS: Array[StringName] = [&"item_1", &"item_2"]
 const BUTTON_NAMES := ["X", "Y"]
 const LOCK := preload("res://assets/ui/lock.svg")
@@ -20,6 +21,7 @@ const DIRECTIONS := {&"ui_left": Vector2i.LEFT, &"ui_right": Vector2i.RIGHT, &"u
 var accept_label := ""
 
 @onready var grid: GridContainer = %Grid
+@onready var bottle_grid: GridContainer = %BottleGrid
 @onready var dungeon_box: VBoxContainer = %Dungeon
 @onready var dungeon_title: Label = %DungeonTitle
 @onready var chips: HFlowContainer = %Chips
@@ -58,7 +60,7 @@ func focus_default() -> void:
 		if _is_assignable(_slots[slot]):
 			slot.grab_focus()
 			return
-	grid.get_child(0).grab_focus()
+	_cells()[0].grab_focus()
 
 
 ## El control de un invitado mueve su cursor y asigna; no llega al foco del menú (que es del primero).
@@ -107,7 +109,7 @@ func _can_assign() -> bool:
 
 
 func _move_cursor(slot: int, step: Vector2i) -> void:
-	var count := grid.get_child_count()
+	var count := _cells().size()
 	var at := _cursor_at.get(slot, 0) as int
 	var cell := Vector2i(at % COLUMNS, at / COLUMNS) + step
 	if cell.x < 0 or cell.x >= COLUMNS or cell.y < 0 or cell.y * COLUMNS + cell.x >= count:
@@ -117,25 +119,35 @@ func _move_cursor(slot: int, step: Vector2i) -> void:
 
 
 func _assign_at(slot: int, button: int) -> void:
-	var item: ItemData = _slots.get(grid.get_child(_cursor_at.get(slot, 0)))
+	var item: ItemData = _slots.get(_cells()[_cursor_at.get(slot, 0)])
 	if item == null or not _is_assignable(item) or not GameState.assign_button(button, item.id, slot):
 		Feel.sfx(&"deny", Vector3.ZERO)
 
 
 func _build_slots() -> void:
 	var usables := Items.database.items.filter(func(item: ItemData) -> bool:
-		return item.category == ItemData.Category.USABLE and not item.bottled)
+		return item.category == ItemData.Category.USABLE and not item.bottled and item.id not in GameState.BOTTLES)
 	for i in SLOT_COUNT:
-		var item: ItemData = usables[i] if i < usables.size() else null
-		var slot: Button = SLOT.instantiate()
-		if item:
-			_slots[slot] = item
-		else:
-			slot.disabled = true
-			slot.icon = LOCK
-		slot.focus_entered.connect(_show_detail.bind(slot))
-		slot.mouse_entered.connect(slot.grab_focus)
-		grid.add_child(slot)
+		_add_slot(grid, usables[i] if i < usables.size() else null)
+	for bottle in GameState.BOTTLES:
+		_add_slot(bottle_grid, Items.get_item(bottle))
+
+
+func _add_slot(parent: GridContainer, item: ItemData) -> void:
+	var slot: Button = SLOT.instantiate()
+	if item:
+		_slots[slot] = item
+	else:
+		slot.disabled = true
+		slot.icon = LOCK
+	slot.focus_entered.connect(_show_detail.bind(slot))
+	slot.mouse_entered.connect(slot.grab_focus)
+	parent.add_child(slot)
+
+
+## Las casillas en el orden del cursor: la grilla y después la fila de botellas (las dos de COLUMNS columnas).
+func _cells() -> Array[Node]:
+	return grid.get_children() + bottle_grid.get_children()
 
 
 func _queue_refresh() -> void:
@@ -150,7 +162,8 @@ func _refresh() -> void:
 		var item := _slots[slot]
 		var owned := GameState.inventory.has(item.id)
 		slot.disabled = not owned
-		slot.icon = GameState.item_for(item.id).icon if owned else LOCK
+		var bottle := item.id in GameState.BOTTLES
+		slot.icon = GameState.item_for(item.id).icon if owned else Items.get_item(GameState.EMPTY_BOTTLE).icon if bottle else LOCK
 		var owner_slot := GameState.owner_of(item.id)
 		var holder := _player(owner_slot)
 		var button := GameState.buttons_of(owner_slot).find(item.id) if owner_slot != -1 else -1
@@ -171,7 +184,7 @@ func _refresh() -> void:
 	_refresh_dungeon()
 	_refresh_coop()
 	var focused := get_viewport().gui_get_focus_owner() as Button
-	if focused and focused.get_parent() == grid:
+	if focused and focused in _cells():
 		_show_detail(focused)
 
 
@@ -202,6 +215,9 @@ func _show_detail(slot: Button) -> void:
 	for child in detail.actions.get_children():
 		child.queue_free()
 	var item: ItemData = _slots.get(slot)
+	if item and item.id in GameState.BOTTLES and not GameState.inventory.has(item.id):
+		detail.show_item(Items.get_item(GameState.EMPTY_BOTTLE).icon, "ITEMS_BOTTLE_MISSING", "", "ITEMS_BOTTLE_MISSING_DESC")
+		return
 	if item == null or not GameState.inventory.has(item.id):
 		detail.show_item(LOCK, "ITEMS_UNDISCOVERED", "", "ITEMS_UNDISCOVERED_DESC")
 		return
@@ -272,7 +288,7 @@ func _place_cursors() -> void:
 			cursor.get_node(^"Tag").self_modulate = _color(slot)
 			(cursor.get_node(^"Tag/Label") as Label).text = "P%d" % (slot + 1)
 			_cursors[slot] = cursor
-		var target := grid.get_child(_cursor_at.get(slot, 0))
+		var target := _cells()[_cursor_at.get(slot, 0)]
 		if _cursors[slot].get_parent() != target:
 			if _cursors[slot].get_parent():
 				_cursors[slot].reparent(target, false)

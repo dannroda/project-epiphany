@@ -94,3 +94,24 @@ func test_keys_assign_on_the_items_page() -> void:
 	assert_eq(stack.top().current, 0, "sin ítem enfocado, Q cambia de pestaña")
 	stack.pop()
 	state.reset()
+
+
+func test_bottles_have_their_own_fixed_row() -> void:
+	var setup: Array = await _open()
+	var tree: SceneTree = setup[0]
+	var state: Node = setup[1]
+	var page: Control = setup[3]
+	state.give(Items.get_item(&"potion"))
+	await tree.process_frame
+	await tree.process_frame
+	assert_eq(page.bottle_grid.get_children().map(func(slot: Button) -> StringName: return page._slots[slot].id), [&"bottle_1", &"bottle_2", &"bottle_3", &"bottle_4"], "las cuatro botellas, siempre en su fila")
+	assert_true(page.grid.get_children().all(func(slot: Button) -> bool: return not page._slots.has(slot) or page._slots[slot].id not in state.BOTTLES), "la grilla común no tiene botellas")
+	var first := page.bottle_grid.get_child(0) as Button
+	assert_true(not first.disabled and first.icon == Items.get_item(&"potion").icon, "la primera lleva la poción")
+	var missing := page.bottle_grid.get_child(1) as Button
+	assert_true(missing.disabled and missing.icon == Items.get_item(&"bottle_empty").icon, "las que faltan, apagadas")
+	missing.grab_focus()
+	await tree.process_frame
+	assert_eq(page.detail.title.text, "ITEMS_BOTTLE_MISSING", "y dicen que falta encontrarla")
+	(setup[2] as Node).pop()
+	state.reset()

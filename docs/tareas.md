@@ -1614,7 +1614,7 @@ Daniel (2026-10-12, con el mapa de Link's Awakening de referencia): el mundo se 
 
 - [x] Análisis de la referencia (Link's Awakening, ALttP): qué hace que no se vea cuadrado
   Propuesta en https://claude.ai/artifact/NF4jYH76khQkD2mr4A8tus: hoy son salas rectangulares unidas por aberturas, la lógica de un mapa de mazmorra. Los Zelda 2D tienen terreno continuo, bordes de paisaje (cornisas, hileras de árboles, cercos, agua), formas y tamaños distintos, caminos que guían, densidad y los secretos en cuevas interiores.
-- [ ] Propuesta del layout nuevo (variantes) y elección de Daniel
+- [x] Propuesta del layout nuevo (variantes) y elección de Daniel
   Daniel (2026-10-12): el boceto va encaminado como primera versión (lo que cambie sale de recorrerlo); un poco más grande para más secretos: 100 × 48 celdas (200 × 96 m), generado por debug/tmp/ow2/layout.py; el atajo del santuario queda como salida trasera de la cueva al andén del templo. Tiles 2D al estilo de los assets 3D pedidos a la sesión de arte. Falta acomodar el gating a la cadena nueva de 11.113 (el templo pasa a ser la última mazmorra).
 - [ ] Cuevas interiores: Santuario, Gruta y Cueva de las bombas en escenas propias; ZoneVeil fuera del overworld
   Daniel (2026-10-12): la gruta y los santuarios pasan a ser cuevas interiores. Afuera, solo la boca o la grieta en la cara de un risco.
@@ -2555,7 +2555,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (52/109)
+## M11 — Pulido: contenido y feel  (52/110)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4363,6 +4363,16 @@ Daniel (2026-10-12): el jefe del ojo se pensó como fin de demo, así que tiene 
 - [ ] GDD §6 y §7, y el boceto de 7.10 al día
 
 **Notas:** Sesión: diseño (-43 [a7e236]), con Daniel. Overworld (-eb) acomoda el boceto de 7.10 cuando esté la cadena.
+
+### 11.114 Botellas en su propia fila de la pestaña Ítems · Revisión
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `ui`
+
+Daniel (2026-10-12): las botellas tienen su fila fija, separada de los ítems comunes, en la misma pestaña.
+
+- [x] Mockup Pause_Items: fila Botellas debajo de la grilla
+- [x] items_page: grilla de 8 sin botellas y BottleGrid con bottle_1..4; el cursor de co-op recorre las dos
+- [x] Tests: test_bottles_have_their_own_fixed_row y test_item_ring al día
 
 ## M12 — Assets propios (Blender)  (6/17)
 

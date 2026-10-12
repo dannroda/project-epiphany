@@ -152,12 +152,12 @@ func test_toggle_switches_to_one_menu_with_a_cursor_each() -> void:
 	assert_eq(page.cards.get_child_count(), 2)
 	var focus := tree.root.get_viewport().gui_get_focus_owner()
 
-	for event in [_pad_button(JOY_BUTTON_DPAD_RIGHT), _pad_button(JOY_BUTTON_DPAD_RIGHT), _pad_button(JOY_BUTTON_DPAD_RIGHT)]:
+	for event in [_pad_button(JOY_BUTTON_DPAD_DOWN), _pad_button(JOY_BUTTON_DPAD_DOWN)]:
 		Input.parse_input_event(event)
 		await tree.process_frame
-	assert_eq(page.cursor_of(1), 3, "el control del P2 mueve su cursor")
+	assert_eq(page.cursor_of(1), 8, "el control del P2 mueve su cursor, hasta la fila de botellas")
 	assert_eq(tree.root.get_viewport().gui_get_focus_owner(), focus, "sin mover el del P1")
-	var potion_slot: Control = page.grid.get_child(3)
+	var potion_slot: Control = page.bottle_grid.get_child(0)
 	assert_eq(page._slots.get(potion_slot).id, &"bottle_1", "la botella con la poción")
 	Input.parse_input_event(_pad_button(JOY_BUTTON_X))
 	await tree.process_frame

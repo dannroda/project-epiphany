@@ -1,0 +1,32 @@
+{
+  "checklist": [
+    {
+      "done": true,
+      "text": "Mockup Pause_Items: fila Botellas debajo de la grilla"
+    },
+    {
+      "done": true,
+      "text": "items_page: grilla de 8 sin botellas y BottleGrid con bottle_1..4; el cursor de co-op recorre las dos"
+    },
+    {
+      "done": true,
+      "text": "Tests: test_bottles_have_their_own_fixed_row y test_item_ring al día"
+    }
+  ],
+  "code": "11.114",
+  "created_at": "2026-10-12T20:40:08.860Z",
+  "description": "Daniel (2026-10-12): las botellas tienen su fila fija, separada de los ítems comunes, en la misma pestaña.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 111,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "review",
+  "tags": [
+    "ui"
+  ],
+  "test": "",
+  "title": "Botellas en su propia fila de la pestaña Ítems",
+  "updated_at": "2026-10-12T20:40:10.501Z"
+}
