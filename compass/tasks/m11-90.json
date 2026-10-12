@@ -41,7 +41,7 @@
       "text": "D3 y D4 visibles pero bloqueadas"
     },
     {
-      "done": false,
+      "done": true,
       "text": "GDD §6 y §7 al día"
     }
   ],
@@ -61,5 +61,5 @@
   ],
   "test": "",
   "title": "Diseño de mazmorras, ítems y su reparto en el overworld",
-  "updated_at": "2026-10-12T17:48:31.368Z"
+  "updated_at": "2026-10-12T17:49:53.805Z"
 }

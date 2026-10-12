@@ -145,7 +145,9 @@ Las teclas se mapean por posición física (`physical_keycode`): WASD queda en e
 
 **Recolectables** (vasijas, pasto, enemigos): corazón, flechas ×5, bombas ×3. No hay moneda.
 
-**Post-MVP:** pluma (salto, §4.2), gancho / algo que mueva objetos a distancia (aprovecha las pruebas de física), espada con elemento (fuego/rayo), spin attack.
+**Un ítem por mazmorra (11.90, decidido el 2026-10-12):** D1 arco, D2 pluma (salto, §4.2), D3 gancho (11.30), D4 guantes de fuerza (levantar y tirar rocas grandes, sobre el sistema de 11.44). El disco solar (un haz de luz que se apunta como el arco) queda como ítem opcional, en una mini-mazmorra o escondido en el overworld. La armadura del esqueleto acorazado se quita con el gancho o con la bomba. Hasta que se implemente, la pluma sigue en la sala 10 de D1 y la Chullpa da flechas en el cofre del gancho. Documento de diseño: https://claude.ai/code/artifact/4fce85f9-7f11-4285-9d2e-bb1d58b45b4e
+
+**Post-MVP:** espada con elemento (fuego/rayo), spin attack.
 
 ### 6.2 Progresión (gating)
 <!-- id: progresion-gating -->
@@ -156,12 +158,19 @@ Inicio (espada + escudo de madera)
       └─ Cueva ──► BOMBAS
           └─ Muro agrietado ──► Santuario ──► ESCUDO ESPEJO
               └─ Sello del templo (reflejar haz de luz) ──► MAZMORRA
-                  └─ … ──► PLUMA (sala 10) ──► ARCO (ítem de la mazmorra) ──► entrada del puzzle (salto) ──► llave del jefe ──► JEFE
+                  └─ … ──► sub-jefe ──► ARCO (ítem de D1) ──► puzzle (luz + flechas) ──► llave del jefe ──► JEFE
                       └─ Vuelta al overworld: ojo-interruptor ──► CARCAJ GRANDE
-                      └─ Flecha al ojo del puente de la quebrada ──► Necrópolis ──► CHULLPA (D2) ──► GANCHO
-                          └─ Postes ──► isla de la Laguna ──► D3 ──► ítem por definir ──► puerta de la Cumbre ──► D4
-Opcionales: botella/poción (muro agrietado), cota reforzada (puzzle de bloques)
+                      └─ Flecha al ojo del puente de la quebrada ──► Necrópolis ──► CHULLPA (D2) ──► PLUMA
+                          └─ Angostura, Cardonal, pieza de la pradera; islotes de la Laguna ──► D3 ──► GANCHO
+                              └─ Postes ──► Cumbre ──► D4 ──► GUANTES DE FUERZA
+Opcionales: botella/poción (muro agrietado), cota reforzada (puzzle de bloques), disco solar (por ubicar)
 ```
+
+Es el orden decidido en 11.90 (2026-10-12). El código todavía tiene la pluma en la sala 10 de D1 y el gancho como ítem de la Chullpa; se muda en 11.90 y 11.60.
+
+**Molde de cada mazmorra (11.90):** prueba en el overworld → mazmorra con una mecánica que la recorre entera → ítem a mitad, guardado por un sub-jefe → el jefe se vence con ese ítem → el ítem abre la zona siguiente del overworld y 2–3 secretos en zonas ya visitadas. Cada mazmorra se diseña primero como grafo llave-cerradura, y un test de alcanzabilidad lee las escenas y los grafos y falla si algún orden de juego deja al jugador sin salida.
+
+**Alcance por entregas:** el primer playtest externo lleva D1 y D2. D3 y D4 se ven en el overworld pero están cerradas y llegan después como actualización (sirve para probar un sistema de parches).
 
 Regla: un ítem que se consigue en una mazmorra no desbloquea nada nuevo en las mazmorras anteriores. Por ejemplo, si la pluma saliera de la segunda mazmorra, la primera no tendría ningún cofre que pida la pluma. Lo que el ítem abre está en su propia mazmorra, en las siguientes o en el overworld. El overworld funciona como un hub: cada ítem nuevo de una mazmorra o una cueva debería abrir ahí cosas o caminos nuevos.
 
@@ -186,7 +195,7 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
         OESTE (1er acto)                QUEBRADA     ESTE (2º acto)                   NIVEL
    ┌──────────┬─────────────────────┬──────────┬─────────────────────┬──────────┐
    │SANTUARIO │ EXPLANADA ◆   [D1]  ├══gancho══┤ CUMBRE ◆      [D4]  │ RISCO    │ alto
-   │esc.espejo│ templo, sello de luz│  abismo  │ puerta: ítem de D3  │ carcaj   │
+   │esc.espejo│ templo, sello de luz│  abismo  │ guantes de fuerza   │ carcaj   │
    ├──B───────┼─────────────────────┤          ├─────────────────────┤          │
    │ CERROS   │ PRADERA ◆           ├═══arco═══┤ NECRÓPOLIS ◆  [D2]  │ MIRADOR  │ medio
    │ bombas   │ hub del oeste       │ (puente) │ hub del este        │ corazón  │
@@ -195,7 +204,7 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
    │ GRUTA  B │ CLARO ◆  │ ARBOLEDA ├══pluma═══┤ CARDONAL                       │ bajo
    │ botella  │ inicio   │ cota     │(angostura)│ secretos                       │
    ├──────────┼──────────┴──────────┴──────────┴──────────┬─────────────────────┤
-   │VERTIENTE │ LAGUNA (agua: gancho; isla)          [D3] │ BAÑADO ◆            │ bajo
+   │VERTIENTE │ LAGUNA (islotes: pluma)              [D3] │ BAÑADO ◆            │ bajo
    └──────────┴───────────────────────────────────────────┴─────────────────────┘
    ◆ portal de viaje   B muro agrietado   ▼ bajada de una sola vía
 ```
@@ -216,10 +225,10 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 | **Mirador** | Pieza de corazón; bajada de una vía al Cardonal | Desde la Necrópolis | 2 |
 | **Cardonal** | Secretos; escalinata a la Necrópolis y bajada de una vía desde ella | Pluma (angostura) o desde la Necrópolis | 2 |
 | **Bañado** | Orilla este de la Laguna. Portal | Desde el Cardonal | 2 |
-| **Laguna** | Agua entre las dos orillas; postes hasta la isla de **D3** | Gancho | 3 |
-| **Cumbre** | **D4**: la región se alcanza con el gancho; la puerta pide el ítem de D3. Portal | Gancho; la puerta, ítem de D3 | 4 |
+| **Laguna** | Agua entre las dos orillas; islotes hasta la isla de **D3** | Pluma (islotes) | 3 |
+| **Cumbre** | **D4**: la región se alcanza por los postes con el gancho (ítem de D3). Portal | Gancho | 4 |
 
-**Cadena de mazmorras:** D1 Templo (escudo espejo para entrar; da pluma y arco) → arco → D2 Chullpa (da el gancho) → gancho → D3 Laguna (ítem por definir) → ese ítem → D4 Cumbre. Mientras D3 no exista, la puerta de D4 lleva un candado genérico.
+**Cadena de mazmorras (11.90):** D1 Templo (escudo espejo para entrar; da el arco) → arco → D2 Chullpa (da la pluma) → pluma → D3 Laguna (da el gancho) → gancho → D4 Cumbre (da los guantes de fuerza). Para el primer playtest externo, D3 y D4 se ven pero están cerradas.
 
 **Verificación del gating:**
 
@@ -228,15 +237,14 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 | Bombas | — | Cerros, libre | — |
 | Santuario / escudo espejo | Bombas | Cerros | La reja del atajo solo abre desde adentro |
 | D1 | Escudo espejo (sello) | Santuario | El escudo de madera no refleja |
-| Este (Necrópolis, D2) | Arco (puente) | D1 | La pluma salta la angostura, también de D1; la quebrada es más ancha que un salto en el resto |
-| Laguna, isla de D3 | Gancho | D2 | El agua no se cruza nadando |
-| Cumbre | Gancho | D2 | Desde el Risco no hay paso |
-| Puerta de D4 | Ítem de D3 | D3 | — |
+| Este (Necrópolis, D2) | Arco (puente) | D1 | La angostura pide la pluma, que es de D2: queda como atajo; la quebrada es más ancha que un salto en el resto |
+| Laguna, isla de D3 | Pluma (islotes) | D2 | El agua no se cruza nadando |
+| Cumbre, D4 | Gancho (postes) | D3 | Desde el Risco no hay paso |
 | Carcaj | Arco | D1 | El ojo solo reacciona a proyectiles |
 
 **Viaje rápido (7.9):** seis portales (Claro, Pradera, Explanada, Necrópolis, Bañado, Cumbre), al lado de un hub o de la puerta de una mazmorra. Se prenden al pasar (flag por portal). El destino se elige en la pestaña Mapa del menú de pausa o parado en un portal; el viaje hace un fundido corto y lleva a todos los players. La pantalla se diseña primero en el canvas.
 
-**Curva de ritmo:** calma (Claro) → combate (Pradera) → descubrimiento (Cerros: bombas) → recompensa opcional (Gruta, Vertiente) → descubrimiento (Santuario) → prueba (sello) → D1 → el mundo se abre (puente) → hub nuevo con la torre a la vista → D2 → la Laguna y la Cumbre con el gancho → D3 → D4.
+**Curva de ritmo:** calma (Claro) → combate (Pradera) → descubrimiento (Cerros: bombas) → recompensa opcional (Gruta, Vertiente) → descubrimiento (Santuario) → prueba (sello) → D1 → el mundo se abre (puente) → hub nuevo con la torre a la vista → D2 → la pluma abre el Cardonal y los islotes de la Laguna → D3 → el gancho abre la Cumbre → D4.
 
 **Pendiente de mudar (7.9):** los párrafos que siguen describen cada lugar tal como quedó en el overworld de 3 × 3; el contenido se muda entero a su región nueva. La grieta de la pluma entre la Explanada y el Risco desaparece (ahora el Risco está del otro lado de la quebrada); su lugar lo toma la angostura.
 
@@ -246,7 +254,7 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 
 **Agua (7.9):** la Laguna es agua de verdad: un plano con `water.gdshader` (el de la cueva de la vertiente: color por profundidad y espuma donde toca la orilla) sobre el hueco de Abismo, cuyas paredes el estilo `laguna` pinta de piedra y musgo. Una cascada (`waterfall.tscn`, agrandada) cae del acantilado norte donde termina la quebrada. Caer al agua es un `Pit` con `water`: salpica (`Feel.burst(&"splash")` y su sonido), saca vida y vuelve a la orilla; no se nada. El Bañado tiene agua baja que se camina: cada `ShallowWater` (`src/world/water/shallow_water.tscn`, un rectángulo con `size`) marca sus celdas como `w` al exportar el terreno, y `build_terreno_organico.py` hunde ahí el piso 0,35 m con una orilla en pendiente y un borde que ondula ±1 m; alrededor el piso queda sin lomas. La superficie se pasa 1,4 m del rectángulo, así la orilla la dibuja el pozo. Adentro los players van a `wade_speed` (0,6; `PlayerCharacter.ground_speed` multiplica la velocidad al caminar y al cargar) y salpican al andar. Tests: `test_falling_in_the_lagoon_splashes_and_returns_to_the_shore`, `test_the_marsh_water_slows_and_splashes_but_holds`.
 
-**Pluma en el overworld (11.61):** el overworld es el hub, así que la pluma abre cosas ahí. La pieza de corazón de la pradera está arriba de un escalón de 0,6 m en el rincón noroeste (se ve desde el principio). La grieta entre la entrada del templo y el Risco ya no está (7.9): la reemplaza la angostura de la quebrada. Tests en `test_jump`.
+**Pluma en el overworld (11.61):** el overworld es el hub, así que la pluma abre cosas ahí. Desde 11.90 la pluma es de D2, así que todo esto queda para después de la Chullpa. La pieza de corazón de la pradera está arriba de un escalón de 0,6 m en el rincón noroeste (se ve desde el principio). La grieta entre la entrada del templo y el Risco ya no está (7.9): la reemplaza la angostura de la quebrada. Tests en `test_jump`.
 
 **Blockout (7.2):** `levels/overworld.tscn`, un `GridMap` con el kit gris más sus piezas de exterior (Pasto, Acantilado, Cerco, Árbol, Abismo). Zonas de 11 × 7 celdas de interior separadas por acantilados de una celda; aberturas de 3 celdas donde el paso es libre y de 1 celda donde hay gating (ahí van el muro agrietado o la reja de 7.4, 7.5 y 7.7). Cada zona tiene un `AreaZone` (el HUD muestra su nombre al entrar desde otra zona) y un `SpawnPoint` con el id de la zona (`start` y `santuario` son checkpoints). El abismo no tiene piso (el kit le saca la colisión a Abismo y Pozo, ids 9 y 10): el que entra cae a un `Pit`, pierde vida y vuelve a su `respawn` (en el Risco, `Spawn_risco`). Las flechas pasan por arriba. El del Risco tiene 2 celdas (4 m), más de lo que cruza la pluma (≈3 m), así que el ojo sigue siendo solo para flechas (11.35; `test_abyss_has_no_floor_but_a_pit`, `test_the_crag_abyss_is_too_wide_and_falling_returns`). Cajas y rocas: `src/world/physics_box.tscn` y `physics_rock.tscn`. La navmesh se hornea desde el grupo `navmesh_source` (el `GridMap`); si cambia el terreno, botón *Bake* del `NavigationRegion3D`. La navmesh queda 0.5 m sobre el piso, así que el `NavigationAgent3D` del enemigo usa `path_desired_distance` 1.0 (con 0.5 se trababa en las esquinas: nunca daba por alcanzado el punto). Los enemigos ven al player a 12 m (`EntityConfig.vision_range`, antes 8): con la cámara que muestra la sala entera, a 8 m se quedaban quietos estando en pantalla. `test_enemy_ai` revisa que ningún enemigo del overworld o del templo aparezca encimado con paredes o cercos. El mapa de pausa usa una foto cenital del nivel que se saca al abrirlo (ver §Pausa › Mapa).
 
@@ -276,6 +284,8 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 <!-- id: mazmorra -->
 
 9 salas + jefe. Hub central con puertas que se van abriendo.
+
+**Pendiente (11.90):** la pluma pasa a D2. Se quitan la sala 10 y los huecos de la entrada del puzzle, la vasija del escalón de la Antesala se baja o se quita, y el arco lo guarda el sub-jefe (11.31). La tabla y el layout de abajo describen el templo tal como está hoy.
 
 | # | Sala | Puzzle / mecánica | Combate | Obtiene | Doom |
 |---|---|---|---|---|---|
@@ -362,6 +372,8 @@ Decidido el 2026-10-08 con la metodología de [[gdd#overworld-layout]] (artícul
 <!-- id: mazmorra-2 -->
 
 Decidido el 2026-10-11. Torre funeraria de piedra (chullpa) con sótano de enterramientos, siguiendo a los enemigos chullpa (vale aunque el setting siga abierto). Tres pisos apilados en la misma escena, cada uno de 2 × 2 salas con la misma planta, así que un hueco siempre cae a la sala de abajo (referencia: la Torre de Hera de *A Link to the Past*, en `docs/the-ultimate-methodology…`). Ítem: el **gancho** (11.30). Unas 11 salas más el jefe.
+
+**Pendiente (11.90, 11.60):** el ítem pasa a ser la **pluma** y el gancho va a D3. El cofre de la isla da la pluma; lo que hoy pide gancho (abismo, foso de la llave del jefe, pieza del Mirador) pasa a pluma o caída; jefe nuevo que se vence saltando. Lo de abajo describe el diseño con gancho.
 
 ```
  PISO ALTO    ┌────────┬────────┐
