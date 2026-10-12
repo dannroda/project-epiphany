@@ -19,6 +19,8 @@ const HP_PER_HEART := 4
 const PIECES_PER_HEART := 4
 const DUNGEON_PREFIX := "dungeon_"
 const MAX_MAP_PINS := 4
+const BOTTLES: Array[StringName] = [&"bottle_1", &"bottle_2", &"bottle_3", &"bottle_4"]
+const EMPTY_BOTTLE := &"bottle_empty"
 ## Radio (m) dentro del cual poner un pin quita el que ya está.
 const PIN_PICK_RADIUS := 3.0
 
@@ -31,6 +33,8 @@ var guest_buttons: Dictionary[int, Array] = {}
 var max_health: int = NEW_GAME_MAX_HEALTH
 ## Vida actual de cada player por slot: es global, se mantiene al cambiar de escena y va en la partida.
 var player_health: Dictionary[int, int] = {}
+## Botella → lo que tiene (bottle_empty, potion, holy_water…): son cuatro y cada una lleva cualquier contenido.
+var bottles: Dictionary[StringName, StringName] = {}
 var flags: Dictionary[StringName, Variant] = {}
 var dungeons: Dictionary[StringName, DungeonState] = {}
 var visited_zones: Array[StringName] = []
@@ -124,14 +128,6 @@ func release_buttons(slot: int) -> void:
 		item_buttons_changed.emit()
 
 
-## El ítem que se acabó deja su lugar en los X / Y de todos (poción tomada → botella vacía).
-func replace_on_buttons(from: StringName, to: StringName) -> void:
-	for slot in _button_slots():
-		var index := buttons_of(slot).find(from)
-		if index >= 0 and not assign_button(index, to, slot):
-			assign_button(index, &"", slot)
-
-
 ## Los X / Y del player en `slot`; uno que se suma arranca con las manos vacías.
 func buttons_of(slot: int) -> Array[StringName]:
 	if slot == 0:
@@ -169,6 +165,10 @@ func current_dungeon_state() -> DungeonState:
 
 ## Punto único de entrada para cofres, drops y recompensas.
 func give(item: ItemData, amount: int = 1) -> void:
+	if item.bottled:
+		for i in amount:
+			_bottle(item)
+		return
 	match item.id:
 		&"small_key": current_dungeon_state().small_keys += amount
 		&"boss_key": current_dungeon_state().has_boss_key = true
@@ -192,6 +192,9 @@ func give(item: ItemData, amount: int = 1) -> void:
 ## Cambia una unidad de un ítem por otro (botella vacía ↔ llena) y el botón X/Y que tenía el viejo pasa al nuevo si ya
 ## no queda ninguno del viejo.
 func swap_item(from: StringName, to: ItemData) -> void:
+	if bottles.has(from):
+		fill(from, to.id)
+		return
 	inventory.remove(from)
 	inventory.add(to.id)
 	for slot in _button_slots():
@@ -201,6 +204,59 @@ func swap_item(from: StringName, to: ItemData) -> void:
 			assign_button(index, to.id, slot)
 		elif not buttons.has(to.id):
 			_auto_place(to, slot)
+
+
+## Lo que hay detrás de un ítem del inventario: una botella da su contenido.
+func item_for(id: StringName) -> ItemData:
+	if id == &"":
+		return null
+	return Items.get_item(bottles.get(id, id))
+
+
+## La primera botella con ese contenido (&"" si ninguna).
+func bottle_with(content: StringName) -> StringName:
+	for bottle in BOTTLES:
+		if bottles.get(bottle, &"") == content:
+			return bottle
+	return &""
+
+
+func fill(bottle: StringName, content: StringName) -> void:
+	bottles[bottle] = content
+	inventory.changed.emit(bottle, inventory.count(bottle))
+
+
+## Un contenido llena la primera botella vacía; si no hay, llega en una botella nueva (hasta cuatro).
+func _bottle(content: ItemData, place := true) -> StringName:
+	var bottle := bottle_with(EMPTY_BOTTLE) if content.id != EMPTY_BOTTLE else &""
+	if bottle != &"":
+		fill(bottle, content.id)
+		return bottle
+	for candidate in BOTTLES:
+		if not bottles.has(candidate):
+			bottles[candidate] = content.id
+			inventory.add(candidate)
+			if place:
+				_auto_place(Items.get_item(candidate))
+			return candidate
+	return &""
+
+
+## Partidas de antes de las botellas únicas: cada poción, agua bendita o botella vacía pasa a una botella.
+func _migrate_bottles() -> void:
+	for id in inventory.ids():
+		var item := Items.get_item(id)
+		if item == null or not item.bottled:
+			continue
+		var count := inventory.count(id)
+		inventory.remove(id, count)
+		for i in count:
+			var bottle := _bottle(item, false)
+			for slot in _button_slots():
+				var buttons := buttons_of(slot)
+				var index := buttons.find(id)
+				if index >= 0:
+					buttons[index] = bottle
 
 
 ## Las que todavía no completan un corazón.
@@ -245,6 +301,8 @@ func write_to(cfg: ConfigFile) -> void:
 		cfg.set_value("player", "position", player_position)
 	for id in inventory.ids():
 		cfg.set_value("inventory", id, inventory.count(id))
+	for bottle in bottles:
+		cfg.set_value("bottles", bottle, bottles[bottle])
 	for category in equipment:
 		cfg.set_value("equipment", ItemData.Category.find_key(category), equipment[category])
 	cfg.set_value("equipment", "buttons", item_buttons.duplicate())
@@ -285,6 +343,9 @@ func read_from(cfg: ConfigFile) -> void:
 			item_buttons.assign(cfg.get_value("equipment", key))
 		elif ItemData.Category.has(key):
 			equipment[ItemData.Category[key]] = cfg.get_value("equipment", key)
+	for bottle in _keys(cfg, "bottles"):
+		bottles[bottle] = cfg.get_value("bottles", bottle)
+	_migrate_bottles()
 	for id in _keys(cfg, "flags"):
 		flags[id] = cfg.get_value("flags", id)
 	visited_zones.assign(cfg.get_value("map", "visited_zones", []))
@@ -314,6 +375,7 @@ func _clear() -> void:
 	guest_buttons.clear()
 	max_health = NEW_GAME_MAX_HEALTH
 	player_health.clear()
+	bottles.clear()
 	play_time = 0.0
 	flags.clear()
 	visited_zones.clear()

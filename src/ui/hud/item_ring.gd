@@ -81,7 +81,7 @@ func _can_open() -> bool:
 
 func _open() -> void:
 	_items.assign(Items.database.items.filter(func(item: ItemData) -> bool:
-		return item.category == ItemData.Category.USABLE and GameState.inventory.has(item.id)))
+		return item.category == ItemData.Category.USABLE and not item.bottled and GameState.inventory.has(item.id)))
 	if _items.is_empty():
 		return
 	_build_slots()
@@ -116,7 +116,7 @@ func _build_slots() -> void:
 		var slot: Control = SLOT.instantiate()
 		slots.add_child(slot)
 		slot.position = center + Vector2(sin(angle), -cos(angle)) * radius - slot.custom_minimum_size / 2.0
-		(slot.get_node(^"Icon") as TextureRect).texture = _items[i].icon
+		(slot.get_node(^"Icon") as TextureRect).texture = GameState.item_for(_items[i].id).icon
 
 
 func _pick() -> void:
@@ -162,7 +162,7 @@ func _refresh() -> void:
 			owner_tag.self_modulate = _color_of(owner_slot)
 			(owner_tag.get_node(^"Label") as Label).text = "P%d" % (owner_slot + 1)
 	var item := _items[_selected]
-	title.text = tr(item.display_name)
+	title.text = tr(GameState.item_for(item.id).display_name)
 	var owner_slot := GameState.owner_of(item.id)
 	var ammo: ItemData = item.behavior.ammo if item.behavior else null
 	if owner_slot not in [-1, mine]:

@@ -135,8 +135,8 @@ func _process(_delta: float) -> void:
 ## El ítem asignado al botón, si lo tiene y se puede usar ahora.
 func usable_item(button: int) -> ItemData:
 	var id := GameState.buttons_of(controls.slot)[button]
-	var item := Items.get_item(id) if id != &"" else null
-	if item == null or item.behavior == null or not GameState.inventory.has(item.id):
+	var item := GameState.item_for(id)
+	if item == null or item.behavior == null or not GameState.inventory.has(id):
 		return null
 	return item if item.behavior.can_use(make_item_context(), item) else null
 

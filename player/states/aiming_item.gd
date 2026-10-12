@@ -23,7 +23,7 @@ var _blend: Tween
 
 func _enter() -> void:
 	_button = blackboard.get_var("item_button", 0)
-	_item = Items.get_item(GameState.buttons_of(player.controls.slot)[_button])
+	_item = GameState.item_for(GameState.buttons_of(player.controls.slot)[_button])
 	_elapsed = 0.0
 	_released_at = -1.0
 	_draw_length = player.anim_player.get_animation(&"CombatRanged/Ranged_Bow_Draw").length

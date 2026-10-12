@@ -11,3 +11,4 @@ display_name = "ITEM_BOTTLE_EMPTY_NAME"
 description = "ITEM_BOTTLE_EMPTY_DESC"
 icon = ExtResource("1_6btoj")
 category = 3
+bottled = true

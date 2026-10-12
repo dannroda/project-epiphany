@@ -39,6 +39,8 @@ enum Category { SWORD, SHIELD, ARMOR, USABLE, AMMO, DUNGEON, UPGRADE }
 @export var capacity_bonus: int = 0
 
 @export_group("Botella")
+## Contenido de botella (vacía, poción, agua bendita): no tiene casilla propia, va en una de las cuatro botellas.
+@export var bottled := false
 ## Color del contenido en la botella de vidrio (alfa 0 = vacía); cualquier botella puede llevar cualquier contenido.
 @export var liquid := Color(0, 0, 0, 0)
 ## Brillo propio del contenido (el agua bendita brilla).

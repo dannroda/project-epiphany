@@ -46,11 +46,11 @@ func test_spring_fills_the_empty_bottle_and_keeps_its_button() -> void:
 	var spring: Spring = setup[3]
 	assert_eq(spring.interactable.prompt, "PROMPT_DRINK", "sin botella se bebe")
 	state.give(Items.get_item(&"bottle_empty"))
-	state.assign_button(1, &"bottle_empty")
+	state.assign_button(1, &"bottle_1")
 	assert_eq(spring.interactable.prompt, "PROMPT_FILL", "con botella vacía se llena")
 	spring._use(player)
-	assert_true(state.inventory.has(&"holy_water") and not state.inventory.has(&"bottle_empty"), "la botella queda con agua bendita")
-	assert_eq(state.item_buttons[1], &"holy_water", "en el mismo botón")
+	assert_eq(state.bottles[&"bottle_1"], &"holy_water", "la botella queda con agua bendita")
+	assert_eq(state.item_buttons[1], &"bottle_1", "en el mismo botón")
 	assert_eq(spring.interactable.prompt, "PROMPT_DRINK")
 	await _close_top(tree)
 	state.reset()
@@ -74,12 +74,13 @@ func test_holy_water_wards_halves_damage_and_leaves_the_bottle() -> void:
 	var state: Node = setup[1]
 	var player: PlayerCharacter = setup[2]
 	state.give(Items.get_item(&"holy_water"))
-	state.assign_button(0, &"holy_water")
+	state.assign_button(0, &"bottle_1")
 	await _press(tree, &"item_1")
 	await tree.create_timer(1.8).timeout
 	assert_true(player.health.is_warded(), "queda bendecido")
 	assert_true(player.get_node_or_null(^"Blessing") != null, "se ve el brillo")
-	assert_eq(state.item_buttons[0], &"bottle_empty", "la botella vacía queda en X")
+	assert_eq(state.bottles[&"bottle_1"], &"bottle_empty", "la botella queda vacía")
+	assert_eq(state.item_buttons[0], &"bottle_1", "en X")
 	var before := player.health.current
 	player.health.damage(4)
 	assert_eq(player.health.current, before - 2, "el daño entra a la mitad")

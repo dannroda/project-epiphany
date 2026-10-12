@@ -1,7 +1,7 @@
 extends "res://tests/test_case.gd"
 
 const ITEMS_DIR := "res://data/items"
-const ITEM_COUNT := 20
+const ITEM_COUNT := 24
 
 
 class DoubleDamage extends ItemModifier:

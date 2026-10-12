@@ -1,11 +1,9 @@
 class_name Spring
 extends Node3D
-## Vertiente de agua bendita: con una botella vacía, "Llenar" la cambia por agua bendita (se puede volver cuantas veces
+## Vertiente de agua bendita: con una botella vacía, "Llenar" le pone agua bendita (se puede volver cuantas veces
 ## se quiera); sin botella vacía, "Beber" devuelve toda la vida.
 
 const DIALOGUE: DialogueResource = preload("res://data/dialogue/overworld.dialogue")
-const EMPTY := &"bottle_empty"
-
 @export var fills: ItemData
 
 @onready var interactable: Interactable = $Interactable
@@ -18,7 +16,7 @@ func _ready() -> void:
 
 
 func can_fill() -> bool:
-	return GameState.inventory.has(EMPTY)
+	return GameState.bottle_with(GameState.EMPTY_BOTTLE) != &""
 
 
 func _update_prompt() -> void:
@@ -28,7 +26,7 @@ func _update_prompt() -> void:
 func _use(by: PlayerCharacter) -> void:
 	Feel.burst(&"sparkle", global_position + Vector3.UP * 0.5, Vector3.UP)
 	if can_fill():
-		GameState.swap_item(EMPTY, fills)
+		GameState.fill(GameState.bottle_with(GameState.EMPTY_BOTTLE), fills.id)
 		by.play_item_get(fills)
 		return
 	var health: Health = by.get_node(^"Health")

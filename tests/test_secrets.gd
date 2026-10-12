@@ -62,7 +62,7 @@ func test_find_the_three_secrets_with_everything() -> void:
 	await tree.create_timer(2.6).timeout
 	assert_eq(wall.is_broken, true, "una bomba abre la gruta")
 	await _open_chest(tree, level.get_node(^"GrottoChest"), player)
-	assert_eq(state.inventory.has(&"potion"), true, "la gruta guarda la poción")
+	assert_eq(state.bottle_with(&"potion") != &"", true, "la gruta guarda la poción")
 
 	var grove_gate := level.get_node(^"GroveGate") as Gate
 	player.global_position = Vector3(-26, 0, 16)

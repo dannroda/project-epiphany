@@ -20,7 +20,7 @@ func use(ctx: ItemUseContext, item: ItemData) -> void:
 		health.ward(ward_time)
 		Blessing.attach(ctx.user, health)
 	if leaves and ctx.inventory == GameState.inventory:
-		GameState.swap_item(item.id, leaves)
+		GameState.swap_item(ctx.source if ctx.source != &"" else item.id, leaves)
 		return
 	ctx.inventory.remove(item.id)
 	if leaves:

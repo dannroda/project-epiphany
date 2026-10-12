@@ -64,7 +64,7 @@ func test_give_auto_equips_empty_slot() -> void:
 	state.give(Items.get_item(&"bow"))
 	state.give(Items.get_item(&"potion"))
 	state.give(Items.get_item(&"bomb_bag"))
-	assert_eq(state.item_buttons, [&"bow", &"potion"] as Array[StringName], "sin botón libre no se asigna")
+	assert_eq(state.item_buttons, [&"bow", &"bottle_1"] as Array[StringName], "la poción llega en botella; sin botón libre no se asigna")
 	state.reset()
 
 

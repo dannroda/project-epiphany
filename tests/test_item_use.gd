@@ -12,7 +12,7 @@ func _setup() -> Array:
 	for i in 5:
 		await tree.process_frame
 	state.give(Items.get_item(&"potion"))
-	state.assign_button(0, &"potion")
+	assert_eq(state.item_buttons[0], &"bottle_1", "la botella con la poción va a X")
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	return [tree, state, player]
 
@@ -41,9 +41,9 @@ func test_potion_heals_and_leaves_the_bottle() -> void:
 	assert_eq(player.health.current, 6, "todavía no curó")
 	await tree.create_timer(1.8).timeout
 	assert_eq(player.health.current, player.health.max_health, "curó toda la vida")
-	assert_eq(state.inventory.has(&"potion"), false)
-	assert_eq(state.inventory.has(&"bottle_empty"), true, "deja la botella")
-	assert_eq(state.item_buttons[0], &"bottle_empty", "la botella queda en X")
+	assert_eq((state.bottles[&"bottle_1"] == &"potion"), false)
+	assert_eq((state.bottles[&"bottle_1"] == &"bottle_empty"), true, "deja la botella")
+	assert_eq(state.item_buttons[0], &"bottle_1", "la botella queda en X")
 	assert_eq(player.movement_state.get_active_state().name, &"Idle")
 	state.reset()
 
@@ -58,7 +58,7 @@ func test_full_health_denies_without_spending() -> void:
 	await _press(tree, &"item_1")
 	assert_eq(denied, [0], "avisa que no se puede")
 	assert_true(player.movement_state.get_active_state().name != &"UsingItem", "no la toma")
-	assert_eq(state.inventory.has(&"potion"), true, "no la gasta")
+	assert_eq((state.bottles[&"bottle_1"] == &"potion"), true, "no la gasta")
 	await _press(tree, &"item_2")
 	assert_eq(denied, [0, 1], "botón vacío también avisa")
 	state.reset()
@@ -75,8 +75,8 @@ func test_potion_at_one_heart_leaves_empty_bottle() -> void:
 	await _press(tree, &"item_1")
 	await tree.create_timer(1.8).timeout
 	assert_eq(player.health.current, player.health.max_health, "cura todo")
-	assert_eq(state.inventory.has(&"bottle_empty"), true, "queda la botella vacía")
-	assert_eq(state.inventory.has(&"potion"), false)
+	assert_eq((state.bottles[&"bottle_1"] == &"bottle_empty"), true, "queda la botella vacía")
+	assert_eq((state.bottles[&"bottle_1"] == &"potion"), false)
 	state.reset()
 
 
@@ -97,5 +97,5 @@ func test_hit_while_drinking_wastes_the_moment_not_the_potion() -> void:
 	assert_eq(player.movement_state.get_active_state().name, &"Hurt", "un golpe corta el trago")
 	await tree.create_timer(1.5).timeout
 	assert_true(player.health.current < 6, "recibió el daño y no curó")
-	assert_eq(state.inventory.has(&"potion"), true, "la poción no se gasta")
+	assert_eq((state.bottles[&"bottle_1"] == &"potion"), true, "la poción no se gasta")
 	state.reset()

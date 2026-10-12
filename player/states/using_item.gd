@@ -5,6 +5,8 @@ const DEFAULT_ANIMATION := &"General/Use_Item"
 const ITEM_ACTIONS: Array[StringName] = [&"item_1", &"item_2"]
 
 var _item: ItemData
+## El ítem del botón: la botella, si _item es su contenido.
+var _source: StringName
 var _button := 0
 var _duration := 1.0
 var _elapsed := 0.0
@@ -15,7 +17,8 @@ var _waiting := false
 
 func _enter() -> void:
 	_button = blackboard.get_var("item_button", 0)
-	_item = Items.get_item(GameState.buttons_of(player.controls.slot)[_button])
+	_source = GameState.buttons_of(player.controls.slot)[_button]
+	_item = GameState.item_for(_source)
 	_elapsed = 0.0
 	_used = false
 	var tween := create_tween()
@@ -61,10 +64,8 @@ func _exit() -> void:
 func _use() -> void:
 	_used = true
 	var ctx := player.make_item_context()
-	if not GameState.inventory.has(_item.id) or not _item.behavior.can_use(ctx, _item):
+	ctx.source = _source
+	if not GameState.inventory.has(_source) or not _item.behavior.can_use(ctx, _item):
 		player.deny_item(_button)
 		return
 	_item.behavior.use(ctx, _item)
-	var leaves: ItemData = _item.behavior.get(&"leaves")
-	if leaves and not GameState.inventory.has(_item.id):
-		GameState.replace_on_buttons(_item.id, leaves.id)

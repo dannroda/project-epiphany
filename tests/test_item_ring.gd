@@ -88,11 +88,11 @@ func test_solo_ring_nearly_stops_the_world_and_assigns() -> void:
 	assert_true(hud.slow_dim.visible, "y se oscurece")
 	assert_true(player.controls.captured, "el player no se mueve ni usa ítems")
 
-	_point(player, ring, _index(ring, &"potion"))
+	_point(player, ring, _index(ring, &"bottle_1"))
 	await tree.process_frame
-	assert_eq(ring._items[ring._selected].id, &"potion", "el stick elige")
+	assert_eq(ring._items[ring._selected].id, &"bottle_1", "el stick elige la botella con la poción")
 	await _press(tree, &"item_1")
-	assert_eq(GameState.item_buttons[0], &"potion", "X la pone en X")
+	assert_eq(GameState.item_buttons[0], &"bottle_1", "X la pone en X")
 
 	Input.action_release(&"item_ring")
 	await tree.process_frame
@@ -122,10 +122,10 @@ func test_coop_ring_does_not_pause_and_respects_owners() -> void:
 	await _press(tree, second.controls.action(&"item_1"))
 	assert_eq(GameState.buttons_of(1)[0], &"", "no se lo puede sacar")
 
-	_point(second, ring, _index(ring, &"potion"))
+	_point(second, ring, _index(ring, &"bottle_1"))
 	await tree.process_frame
 	await _press(tree, second.controls.action(&"item_1"))
-	assert_eq(GameState.buttons_of(1)[0], &"potion", "la poción libre sí")
+	assert_eq(GameState.buttons_of(1)[0], &"bottle_1", "la poción libre sí")
 	await _done()
 
 
@@ -152,16 +152,16 @@ func test_toggle_switches_to_one_menu_with_a_cursor_each() -> void:
 	assert_eq(page.cards.get_child_count(), 2)
 	var focus := tree.root.get_viewport().gui_get_focus_owner()
 
-	for event in [_pad_button(JOY_BUTTON_DPAD_RIGHT), _pad_button(JOY_BUTTON_DPAD_RIGHT)]:
+	for event in [_pad_button(JOY_BUTTON_DPAD_RIGHT), _pad_button(JOY_BUTTON_DPAD_RIGHT), _pad_button(JOY_BUTTON_DPAD_RIGHT)]:
 		Input.parse_input_event(event)
 		await tree.process_frame
-	assert_eq(page.cursor_of(1), 2, "el control del P2 mueve su cursor")
+	assert_eq(page.cursor_of(1), 3, "el control del P2 mueve su cursor")
 	assert_eq(tree.root.get_viewport().gui_get_focus_owner(), focus, "sin mover el del P1")
-	var potion_slot: Control = page.grid.get_child(2)
-	assert_eq(page._slots.get(potion_slot).id, &"potion")
+	var potion_slot: Control = page.grid.get_child(3)
+	assert_eq(page._slots.get(potion_slot).id, &"bottle_1", "la botella con la poción")
 	Input.parse_input_event(_pad_button(JOY_BUTTON_X))
 	await tree.process_frame
-	assert_eq(GameState.buttons_of(1)[0], &"potion", "X del P2 se la pone a él")
+	assert_eq(GameState.buttons_of(1)[0], &"bottle_1", "X del P2 se la pone a él")
 	await tree.process_frame
 	assert_true(potion_slot.get_node(^"Owner").visible, "la celda muestra de quién es")
 	await _done()

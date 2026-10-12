@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Texture2D" uid="uid://ch6y5kp4rnf73" path="res://assets/ui/items/bottle_empty.png" id="1_icon"]
+[ext_resource type="Script" uid="uid://bn5pjgpia5grm" path="res://src/items/item_data.gd" id="2_item"]
+
+[resource]
+script = ExtResource("2_item")
+id = &"bottle_4"
+display_name = "ITEM_BOTTLE_EMPTY_NAME"
+description = "ITEM_BOTTLE_EMPTY_DESC"
+icon = ExtResource("1_icon")
+category = 3

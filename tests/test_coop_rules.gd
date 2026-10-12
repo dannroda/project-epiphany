@@ -72,10 +72,7 @@ func test_each_player_assigns_their_own_buttons_from_the_shared_bag() -> void:
 	assert_eq(first.usable_item(0).id, &"bow", "la del P1 sigue con el arco")
 
 	GameState.give(Items.get_item(&"potion"))
-	assert_eq(GameState.buttons_of(0)[1], &"potion", "al primer botón libre")
-	GameState.inventory.remove(&"potion")
-	GameState.replace_on_buttons(&"potion", &"bottle_empty")
-	assert_eq(GameState.buttons_of(0)[1], &"bottle_empty", "la poción tomada deja la botella")
+	assert_eq(GameState.buttons_of(0)[1], &"bottle_1", "la poción llega en botella, al primer botón libre")
 
 	var players: Node = (Engine.get_main_loop() as SceneTree).root.get_node(^"Players")
 	players.leave(1)

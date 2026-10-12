@@ -54,6 +54,8 @@ func test_every_key_used_in_the_game_exists() -> void:
 				assert_true(known.has(key), "%s (en %s) tiene traducción" % [key, path])
 	assert_true(used > 150, "se encontraron las claves en uso (%d)" % used)
 	for item: ItemData in Items.database.items:
+		if item.id in GameState.BOTTLES:
+			continue
 		for suffix in ["_NAME", "_DESC", "_GOT"]:
 			assert_true(known.has("ITEM_%s%s" % [String(item.id).to_upper(), suffix]), "%s tiene %s" % [item.id, suffix])
 

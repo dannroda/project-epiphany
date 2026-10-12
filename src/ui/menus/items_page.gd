@@ -123,7 +123,8 @@ func _assign_at(slot: int, button: int) -> void:
 
 
 func _build_slots() -> void:
-	var usables := Items.database.items.filter(func(item: ItemData) -> bool: return item.category == ItemData.Category.USABLE)
+	var usables := Items.database.items.filter(func(item: ItemData) -> bool:
+		return item.category == ItemData.Category.USABLE and not item.bottled)
 	for i in SLOT_COUNT:
 		var item: ItemData = usables[i] if i < usables.size() else null
 		var slot: Button = SLOT.instantiate()
@@ -149,7 +150,7 @@ func _refresh() -> void:
 		var item := _slots[slot]
 		var owned := GameState.inventory.has(item.id)
 		slot.disabled = not owned
-		slot.icon = item.icon if owned else LOCK
+		slot.icon = GameState.item_for(item.id).icon if owned else LOCK
 		var owner_slot := GameState.owner_of(item.id)
 		var holder := _player(owner_slot)
 		var button := GameState.buttons_of(owner_slot).find(item.id) if owner_slot != -1 else -1
@@ -204,7 +205,8 @@ func _show_detail(slot: Button) -> void:
 	if item == null or not GameState.inventory.has(item.id):
 		detail.show_item(LOCK, "ITEMS_UNDISCOVERED", "", "ITEMS_UNDISCOVERED_DESC")
 		return
-	detail.show_item(item.icon, item.display_name, "ITEMS_KIND", item.description)
+	var shown := GameState.item_for(item.id)
+	detail.show_item(shown.icon, shown.display_name, "ITEMS_KIND", shown.description)
 	var ammo := _ammo(item)
 	if ammo:
 		detail.add_stat(ammo.display_name, "%d / %d" % [GameState.inventory.count(ammo.id), GameState.inventory.capacity(ammo.id)])
@@ -245,7 +247,7 @@ func _card(player: PlayerCharacter) -> Control:
 	var buttons := GameState.buttons_of(slot)
 	for i in BUTTON_ACTIONS.size():
 		var row := card.get_node(^"Row/Buttons").get_child(i)
-		var item := Items.get_item(buttons[i]) if buttons[i] != &"" else null
+		var item := GameState.item_for(buttons[i])
 		(row.get_node(^"Badge") as TextureRect).texture = InputPrompts.icon_for(BUTTON_ACTIONS[i], player)
 		(row.get_node(^"Icon") as TextureRect).texture = item.icon if item else null
 		(row.get_node(^"Name") as Label).text = tr(item.display_name) if item else "—"

@@ -53,7 +53,7 @@ func refresh_item_slots() -> void:
 	for i in BUTTON_ACTIONS.size():
 		var body := item_slots.get_child(i).get_node(^"Body")
 		var id := GameState.buttons_of(player.controls.slot)[i]
-		var item := Items.get_item(id) if id != &"" else null
+		var item := GameState.item_for(id)
 		body.visible = item != null
 		var icon := body.get_node(^"Icon") as TextureRect
 		icon.texture = item.icon if item else null

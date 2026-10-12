@@ -4079,17 +4079,17 @@ Playtest 2026-10-12: el arquero corta su ataque para reacomodarse a distancia de
 
 **Notas:** Sesión: auditoría (-04).
 
-### 11.95 Botellas únicas: 4 en total, cualquier contenido · Pendiente
+### 11.95 Botellas únicas: 4 en total, cualquier contenido · En curso
 
-**Prioridad:** alta · **Tamaño:** M · **Etiquetas:** `items`, `bug`
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** Claude · **Etiquetas:** `items`, `bug`
 
 Las botellas no son un consumible apilable: son 4 en todo el juego, cada una un ítem propio que puede tener cualquier contenido. Bug visible: dos botellas con el mismo contenido cuentan como una sola.
 
-- [ ] Modelo de datos
+- [x] Modelo de datos
   Cuatro ranuras de botella con su contenido, no un stack por contenido.
-- [ ] Llenar, vaciar y usar
-- [ ] UI de Ítems y save (con migración)
-- [ ] Tests
+- [x] Llenar, vaciar y usar
+- [x] UI de Ítems y save (con migración)
+- [x] Tests
 
 **Notas:** Sesión: auditoría (-04). Toca inventario, save (migración de partidas viejas) y la UI de Ítems.
 
@@ -4130,13 +4130,14 @@ Siempre que algo se desbloquea por una acción (puzzle resuelto, horda eliminada
 
 **Notas:** Sesión: overworld (-74).
 
-### 11.99 Torres de D1: cambio visual al activarse · Pendiente
+### 11.99 Torres de D1: cambio visual al activarse · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `mazmorra`, `arte`
 
 Las torres que se activan al reflejarles el ataque de la torreta en D1 no cambian a la vista cuando quedan activas.
 
-- [ ] Estado activo visible (luz, emisión, sonido)
+- [x] Estado activo visible (luz, emisión, sonido)
+  Al activarse, la torre de ojo prende una piedra dorada arriba (se ve desde la cámara cenital aunque el ojo mire de costado) y una luz que ilumina alrededor. El sonido de reflejo ya estaba.
 
 **Notas:** Sesión: arte (-77).
 

@@ -19,6 +19,7 @@ display_name = "ITEM_HOLY_WATER_NAME"
 description = "ITEM_HOLY_WATER_DESC"
 icon = ExtResource("2_icon")
 category = 3
+bottled = true
 behavior = SubResource("Behavior")
 liquid = Color(0.15, 0.88, 1, 1)
 liquid_glow = 2.2
