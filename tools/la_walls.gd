@@ -32,7 +32,7 @@ const BRAZIER_FLAME := 1.07
 const DOOR_LEAF_SCALE := Vector3(0.7, 0.8, 1.0)
 ## Cámara ortográfica (como LA): las paredes de los costados tienen el mismo ancho arriba y abajo.
 const CAMERA_OFFSET := Vector3(0, 68.9, 57.9)
-const ORTHO_SIZE := 19.0
+const ORTHO_SIZE := 15.0
 
 
 func _initialize() -> void:
