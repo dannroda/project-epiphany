@@ -1506,9 +1506,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 17.4, 38)
 fov = 40.0
 script = ExtResource("45_alc52")
 target_node = NodePath("../Player")
-offset = Vector3(0, 84, 31.8)
+offset = Vector3(0, 68.9, 57.9)
 orthographic = true
-ortho_size = 21.0
 mask_margin = 2.0
 cuts_south_wall = false
 
