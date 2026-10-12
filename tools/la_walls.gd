@@ -19,11 +19,10 @@ const DOOR := "Puerta"
 const KINDS := {"pared": ["Pared LA ", "Pared"], "paso": ["Paso LA ", "Puerta"], "sube": ["Sube LA ", "Piso"], "baja": ["Baja LA ", "Piso"]}
 const SIDES := {"n": Vector3i(0, 0, -1), "e": Vector3i(1, 0, 0), "s": Vector3i(0, 0, 1), "o": Vector3i(-1, 0, 0)}
 const CORNERS := ["ne", "se", "so", "no"]
-## Rampa y alto según hacia dónde mira la pared (como PROFILE en build_paredes_la.py); la cámara tapa más allá de MASK_MARGIN.
-const PROFILE := {"s": [1.0, 2.0], "n": [1.2, 0.8], "e": [1.2, 2.0], "o": [1.2, 2.0]}
+## Rampa y alto de las paredes (como en build_paredes_la.py); la cámara tapa más allá de MASK_MARGIN.
+const WALL_RUN := 0.8
+const WALL_HEIGHT := 2.0
 const MASK_MARGIN := 2.0
-## La pared sur termina a MASK_MARGIN del piso; el recorte de la cámara arranca a 0.3 + esto.
-const SOUTH_REACH := 1.7
 const BRAZIER_SCALE := 0.55
 ## Sobre el borde, pegado al frente: más atrás queda en la franja que la sala de al norte ve por encima de su pared sur.
 const BRAZIER_SETBACK := 0.15
@@ -76,9 +75,8 @@ func _dress(level: Node) -> void:
 		if path.ends_with("wall_torch.tscn"):
 			var torch := node as Node3D
 			var facing := torch.transform.basis.z.normalized()
-			var side := "s" if facing.z > 0.5 else "n" if facing.z < -0.5 else "e" if facing.x > 0.5 else "o"
-			torch.position = torch.position - facing * (PROFILE[side][0] + BRAZIER_SETBACK)
-			torch.position.y = PROFILE[side][1]
+			torch.position = torch.position - facing * (WALL_RUN + BRAZIER_SETBACK)
+			torch.position.y = WALL_HEIGHT
 			var model := torch.get_node("Model") as MeshInstance3D
 			model.mesh = BRAZIER
 			model.position = Vector3.ZERO
@@ -98,9 +96,8 @@ func _dress(level: Node) -> void:
 			node.set("offset", CAMERA_OFFSET)
 			node.set("orthographic", true)
 			node.set("ortho_size", ORTHO_SIZE)
-			node.set("south_wall_cut", PROFILE["n"][1])
+			node.set("cuts_south_wall", false)
 			node.set("mask_margin", MASK_MARGIN)
-			node.set("south_wall_reach", SOUTH_REACH)
 
 
 func _stairs_kind(node: Node) -> String:
@@ -133,9 +130,6 @@ func _shapes(grid: GridMap) -> Dictionary:
 		for corner: String in CORNERS:
 			if not code.contains(corner[0]) and not code.contains(corner[1]) and open.call(cell + SIDES[corner[0]] + SIDES[corner[1]]):
 				corners += "_" + corner
-		if item_name in WALLS and not code.contains("s") and code.contains("e") != code.contains("o") \
-				and not open.call(cell + SIDES["s"] + SIDES["e" if code.contains("e") else "o"]):
-			corners += "_fin"
 		var kind: String = "pared" if item_name in WALLS else stairs.get(cell, "paso")
 		out[cell] = [kind, (code if code else "x") + corners]
 	return out

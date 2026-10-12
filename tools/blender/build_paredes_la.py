@@ -1,6 +1,5 @@
 # Publica assets/epiphany/paredes_la.glb: paredes de mazmorra a lo Link's Awakening (prueba sobre la Chullpa).
-# Cada pieza es una celda de pared que baja en rampa hacia los lados con piso, para que con la cámara casi cenital se vean las
-# cuatro caras de la sala: la norte empinada y alta, la sur tendida (se ve desde arriba), las de los costados a 63°.
+# Cada pieza es una celda de pared que baja en rampa hacia los lados con piso, igual en las cuatro caras de la sala.
 # Las formas salen de tools/paredes_la.json (godot ... tools/la_walls.gd -- export): lados con piso (n e s o) y esquinas sueltas.
 # Las puertas (paso) son la misma pared con un corte de 1.4 m; las escaleras (sube, baja) un corte ciego con escalones.
 # blender -b -P tools/blender/build_paredes_la.py
@@ -17,14 +16,10 @@ import epi  # noqa: E402
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 HEIGHT = 2.0
 N = 24
-## Cada lado con piso ve su celda de pared (las paredes entre salas son dobles) (la cámara tapa lo demás): (rampa, alto). Piso al sur = pared norte de
-## la sala, alta y empinada con la cresta; piso al norte = pared sur, baja y tendida como en LA; los costados, altos.
-PROFILE = {"s": (1.0, HEIGHT), "n": (1.2, 0.8), "e": (1.2, HEIGHT), "o": (1.2, HEIGHT)}
+## Como en LA: las cuatro paredes con el mismo alto y la misma rampa (la sur esconde poco piso porque la cámara es casi
+## cenital), y la cresta plana sigue igual en las esquinas.
+RUN = 0.8
 MARGIN = 2.0
-## Al final de cada costado la cresta baja en pendiente (CORNER_DROP) a la altura de la pared sur: la cámara recorta todo lo más alto desde
-## FIN antes del borde sur de la sala, y lo recortado se vería oscuro.
-CORNER_DROP = 1.2
-FIN = 0.4
 STONE = "acantilado"
 kit = epi.start()
 
@@ -33,40 +28,16 @@ def dist(x, y, side):
 	return {"n": 1 - y, "s": y + 1, "e": 1 - x, "o": x + 1}[side]
 
 
-def profile(side, d):
-	run, top = PROFILE[side]
-	return top * max(0.0, min(1.0, d / run))
-
-
-def corner(c, da, db):
-	"""Unión de los dos perfiles; en las esquinas de abajo (piso al norte) el costado no pasa de la altura de la pared sur."""
-	a, b = profile(c[0], da), profile(c[1], db)
-	if c[0] == "n":
-		b = min(b, PROFILE["n"][1])
-	return max(a, b)
+def profile(d):
+	return HEIGHT * max(0.0, min(1.0, d / RUN))
 
 
 def height(x, y, sides, corners):
-	h = _height(x, y, sides, [c for c in corners if c != "fin"])
-	if "fin" in corners:
-		low = PROFILE["n"][1]
-		h = min(h, low + (HEIGHT - low) * max(0.0, min(1.0, (dist(x, y, "s") - FIN) / CORNER_DROP)))
-	return h
-
-
-def _height(x, y, sides, corners):
-	"""Cada punto toma el perfil de los lados con piso a menos de MARGIN (el más bajo si hay varios); si no hay ninguno
-	cerca, el más bajo de los lejanos. Las esquinas sueltas (piso solo en diagonal) son la unión de los dos perfiles."""
-	near, far = [], []
-	for side in sides:
-		d = dist(x, y, side)
-		(near if d <= MARGIN else far).append(profile(side, d))
-	for c in corners:
-		da, db = dist(x, y, c[0]), dist(x, y, c[1])
-		(near if da <= MARGIN and db <= MARGIN else far).append(corner(c, da, db))
-	if near:
-		return min(near)
-	return min(far) if far else HEIGHT
+	"""Cada punto toma el perfil del lado o la esquina con piso más cercanos (a menos de MARGIN); si no hay ninguno, el alto."""
+	near = [dist(x, y, side) for side in sides]
+	near += [max(dist(x, y, c[0]), dist(x, y, c[1])) for c in corners]
+	near = [d for d in near if d <= MARGIN]
+	return profile(min(near)) if near else HEIGHT
 
 
 def course_tone(c):
@@ -109,11 +80,9 @@ def across_x(sides, cut):
 	return ("n" in sides or "s" in sides) if cut == "paso" else sides[0] in "ns"
 
 
-def axes(sides, cut, code=""):
+def axes(sides, cut):
 	base = [0.5 * t + 0.5 * math.sin(t * math.pi / 2) for t in (-1 + 2 * i / N for i in range(N + 1))]
 	xs, ys = set(base), set(base)
-	if "fin" in code:
-		ys |= {coord("s", FIN), coord("s", FIN + CORNER_DROP)}
 	if cut:
 		for b in (-HALF, -HALF + 0.01, HALF - 0.01, HALF):
 			(xs if across_x(sides, cut) else ys).add(b)
@@ -131,7 +100,7 @@ def piece(kind, code, cut=None):
 	sides = [] if parts[0] == "x" else list(parts[0])
 	corners = parts[1:]
 	p = epi.Piece(sum(map(ord, kind + code)))
-	xs, ys = axes(sides, cut, code)
+	xs, ys = axes(sides, cut)
 
 	def h(x, y):
 		inside = channel(x, y, sides, cut) if cut else None
@@ -154,7 +123,7 @@ def piece(kind, code, cut=None):
 				shade(p, f, "piedra" if cut == "sube" else "gris_4", max(0.06, 0.6 - 0.45 * d / 1.7))
 		elif inside and abs(f.normal.x if across_x(sides, cut) else f.normal.y) < 0.5:
 			shade(p, f, "piedra" if cut != "baja" else "gris_5", max(0.05, 0.3 - 0.2 * inside[0] / 1.7))
-		elif c.z > 0.3 and (f.normal.z > 0.95 or (f.normal.z > 0.6 and f.normal.y < -0.5)):
+		elif c.z > 0.3 and f.normal.z > 0.95:
 			crest.append(f)
 		else:
 			shade(p, f, STONE, course_tone(c))
