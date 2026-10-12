@@ -2535,7 +2535,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (49/103)
+## M11 — Pulido: contenido y feel  (50/103)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -2962,7 +2962,7 @@ Después de vencer al jefe, el overworld tiene que verse y sonar distinto (sin d
 Un ítem post-MVP: gancho o algo que mueva objetos a distancia (GDD §6.1), con uso en combate y que abra lugares que antes no se podían.
 
 - [x] Elegir el ítem
-  Gancho (decidido el 2026-10-11): es el ítem de la mazmorra 2 (11.60, GDD §8b). Se engancha a postes y cofres y lleva al player; a enemigos livianos los trae. Cruza abismos de 4 m.
+  Gancho. Decidido el 2026-10-11 para D2; el 2026-10-12 (11.90) pasa a ser el ítem de D3 (Laguna), y la pluma va a D2. Se engancha a postes y cofres y lleva al player; a enemigos livianos los trae; cruza abismos de 4 m; también quita la armadura del esqueleto acorazado (la bomba sigue sirviendo).
 - [ ] Comportamiento y puzzles
   ItemBehavior nuevo + 2–3 usos en el mundo.
 
@@ -3442,6 +3442,8 @@ Segunda mazmorra con pisos (y quizás sótanos) apilados en la misma escena, en 
   Falta decidir dónde está la chullpa en el overworld; el portal de salida apunta a un punto 'chullpa' que todavía no existe. Mientras, escenario de debug 'chullpa'.
 - [ ] Recorrerla (Daniel)
   Con el escenario chullpa: escaleras, caer de 1SE a la cripta, llave en 2NO con la pluma, bomba en 2SE sobre la isla, atajo del osario. Gancho y postes quedan para 11.30.
+- [ ] Rehacer con la pluma como ítem
+  Decidido el 2026-10-12 (11.90): el cofre grande de la isla da la pluma en vez del gancho. Lo que hoy pide gancho (abismo de 2NE/1NE, foso de la llave del jefe, pieza del Mirador) pasa a pedir pluma o caída. Jefe nuevo en la sala del Guardián, que se vence saltando. Más enemigos y un puzzle por piso.
 
 **Relacionadas:** 11.30 Ítem post-MVP: gancho o telequinesis
 
@@ -4018,25 +4020,31 @@ La cámara de juego (505 líneas) y target_indicator están en src/tools/ junto 
 
 **Archivos:** `export_presets.cfg`, `project.godot`
 
-### 11.90 Diseño de mazmorras, ítems y su reparto en el overworld · Pendiente
+### 11.90 Diseño de mazmorras, ítems y su reparto en el overworld · En curso
 
 **Prioridad:** alta · **Tamaño:** L · **Etiquetas:** `diseno`, `nivel`
 
 Playtest del 2026-10-12: la primera mazmorra ya tiene varios softblocks, y la pluma está en D1 cuando debería ser de D2 (si no se mira el mapa, su sala pasa desapercibida). D1 tiene el arco como su ítem. Rediseñar qué ítem da cada mazmorra, cómo se enseña y prueba dentro de ella, y dónde gatea el overworld, respetando que un ítem de la mazmorra N no gatea nada de las anteriores.
 
 - [ ] Softblocks de D1
-  Recorrer la Chullpa y el templo de punta a punta y listar cada lugar donde se puede trabar la partida (llave gastada, salida sin vuelta, ítem que falta).
-- [ ] Ítem por mazmorra
-  D1 = arco. Pluma a D2. Proponer D3 y D4 (gancho, 11.30) y qué enseña cada una.
+  Recorrer el templo (y la Chullpa) de punta a punta con el grafo llave-cerradura y listar cada lugar donde se puede trabar la partida (llave gastada, salida sin vuelta, ítem que falta).
+- [x] Ítem por mazmorra
+  Decidido con Daniel el 2026-10-12: D1 arco (lo guarda el sub-jefe, 11.31), D2 pluma, D3 gancho (11.30), D4 guantes de fuerza. El disco solar queda como ítem opcional (mini-mazmorra o secreto del overworld). Documento: https://claude.ai/code/artifact/4fce85f9-7f11-4285-9d2e-bb1d58b45b4e
 - [ ] Mudar la pluma a D2
-  Sacar la sala de la pluma y el puzzle de huecos de D1; la pieza de corazón de la pradera y los angostos de la quebrada quedan para después de D2 (o cambian de cruce).
+  Sacar la sala de la pluma y los huecos del Puzzle de D1; bajar o quitar la vasija del escalón de la Antesala. La Chullpa se rehace con la pluma en el cofre de la isla; lo que hoy pide gancho pasa a pluma o caída. La pieza de la pradera y la angostura quedan para después de D2.
 - [ ] Armadura del esqueleto
-  Con la bomba cuesta mucho sacarla: que sea trabajo del gancho, sin quitarle el efecto a la bomba.
-- [ ] Reparto en el overworld
-  Qué gatea cada ítem en el overworld (layout D, GDD §7.1) y en qué orden se abre.
+  Decidido: se quita con el gancho o con la bomba (las dos). Se implementa junto con el gancho (11.30), que ahora es de D3.
+- [x] Reparto en el overworld
+  Arco: Quebrada, Necrópolis, carcaj del Risco. Pluma: Cardonal, angostura, pieza de la pradera, islotes de la Laguna (entrada a D3). Gancho: postes de la Cumbre (entrada a D4), Mirador, franja del Risco. Cada ítem abre 2–3 secretos en zonas ya visitadas.
+- [ ] Grafos llave-cerradura de D1 y D2
+  Un grafo por mazmorra (salas, cerraduras, llaves, ítems, cerraduras de un solo sentido) antes de tocar el blockout. Referencias: darkade, metazelda.
+- [ ] Test de alcanzabilidad
+  Lee las escenas directamente y los grafos llave-cerradura, y falla si algún orden de juego deja al jugador sin salida. Encaja con el paso de alcanzabilidad de 7.9.
+- [ ] D3 y D4 visibles pero bloqueadas
+  Primer playtest externo con D1 y D2. D3 y D4 se ven en el overworld pero están cerradas y llegan como actualización: diseñar el bloqueo y el sistema de updates o parches.
 - [ ] GDD §6 y §7 al día
 
-**Notas:** Sesión: overworld (-74), con Daniel. Toca 11.35/11.61 (pluma en D1 y en el overworld), los angostos de la quebrada (7.9, pensados como cruce con pluma), 11.30 (gancho) y la armadura del esqueleto.
+**Notas:** Sesión: diseño (-43), con Daniel; antes overworld (-74). Toca 11.35/11.61 (pluma en D1 y en el overworld), los angostos de la quebrada (7.9), 11.30 (gancho, pasa a D3), 11.31 (sub-jefe con el arco) y la armadura del esqueleto.
 
 ### 11.91 Puzzle del claro: la reja se abre con solo pisar las placas · Hecho
 
@@ -4064,9 +4072,9 @@ Playtest 2026-10-12: tomar una pieza de corazón no cura. Que cure (a quien la t
 
 **Notas:** Sesión de bugs (-fd). La pieza (heart_piece.tscn) cura 4 de vida, lo mismo que un corazón suelto, solo a quien la toma; al completar el contenedor llena como antes (cambia la vida máxima).
 
-### 11.93 Jefe: aflojar la fase 3 y el modelo que se hunde · Pendiente
+### 11.93 Jefe: aflojar la fase 3 y el modelo que se hunde · En curso
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `jefe`, `bug`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `jefe`, `bug`
 
 Playtest 2026-10-12: el jefe anda bien en general; la tercera fase es demasiado dura y el modelo suele hundirse en el piso.
 
@@ -4076,9 +4084,9 @@ Playtest 2026-10-12: el jefe anda bien en general; la tercera fase es demasiado 
 
 **Notas:** Sesión: auditoría (-04).
 
-### 11.94 Arquero: dispara sin frenarse a buscar distancia · En curso
+### 11.94 Arquero: dispara sin frenarse a buscar distancia · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `enemigos`, `ia`
+**Terminada:** 2026-10-12 · **Prioridad:** media · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `enemigos`, `ia`
 
 Playtest 2026-10-12: el arquero corta su ataque para reacomodarse a distancia de rango. No hace falta: que dispare y se reacomode sin cancelar el ataque.
 

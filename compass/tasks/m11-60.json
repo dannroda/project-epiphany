@@ -34,6 +34,11 @@
       "detail": "Con el escenario chullpa: escaleras, caer de 1SE a la cripta, llave en 2NO con la pluma, bomba en 2SE sobre la isla, atajo del osario. Gancho y postes quedan para 11.30.",
       "done": false,
       "text": "Recorrerla (Daniel)"
+    },
+    {
+      "detail": "Decidido el 2026-10-12 (11.90): el cofre grande de la isla da la pluma en vez del gancho. Lo que hoy pide gancho (abismo de 2NE/1NE, foso de la llave del jefe, pieza del Mirador) pasa a pedir pluma o caída. Jefe nuevo en la sala del Guardián, que se vence saltando. Más enemigos y un puzzle por piso.",
+      "done": false,
+      "text": "Rehacer con la pluma como ítem"
     }
   ],
   "code": "11.60",
@@ -51,5 +56,5 @@
   ],
   "test": "",
   "title": "Mazmorra nueva de varios pisos",
-  "updated_at": "2026-10-11T21:58:36.617Z"
+  "updated_at": "2026-10-12T17:48:43.860Z"
 }

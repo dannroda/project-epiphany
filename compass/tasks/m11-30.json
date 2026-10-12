@@ -1,7 +1,7 @@
 {
   "checklist": [
     {
-      "detail": "Gancho (decidido el 2026-10-11): es el ítem de la mazmorra 2 (11.60, GDD §8b). Se engancha a postes y cofres y lleva al player; a enemigos livianos los trae. Cruza abismos de 4 m.",
+      "detail": "Gancho. Decidido el 2026-10-11 para D2; el 2026-10-12 (11.90) pasa a ser el ítem de D3 (Laguna), y la pluma va a D2. Se engancha a postes y cofres y lleva al player; a enemigos livianos los trae; cruza abismos de 4 m; también quita la armadura del esqueleto acorazado (la bomba sigue sirviendo).",
       "done": true,
       "text": "Elegir el ítem"
     },
@@ -36,5 +36,5 @@
   ],
   "test": "El ítem tiene un uso en combate y abre al menos dos lugares que antes no se podían.",
   "title": "Ítem post-MVP: gancho o telequinesis",
-  "updated_at": "2026-10-11T20:27:58.875Z"
+  "updated_at": "2026-10-12T17:48:43.357Z"
 }
