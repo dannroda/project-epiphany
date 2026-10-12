@@ -14,6 +14,7 @@ const STONE := preload("res://data/kits/materials/epiphany_stone.tres")
 const WALLS := ["Pared", "Pared nicho", "Pared ojo"]
 const SIDES := {"n": Vector3i(0, 0, -1), "e": Vector3i(1, 0, 0), "s": Vector3i(0, 0, 1), "o": Vector3i(-1, 0, 0)}
 const CORNERS := ["ne", "se", "so", "no"]
+const CAMERA_OFFSET := Vector3(0, 28, 10.6)
 
 
 func _initialize() -> void:
@@ -37,6 +38,10 @@ func _initialize() -> void:
 			grid.mesh_library = kit
 			for cell: Vector3i in walls[grid]:
 				grid.set_cell_item(cell, kit.find_item_by_name("Pared LA " + walls[grid][cell]))
+		for camera: Camera3D in level.find_children("*", "Camera3D", true, false):
+			if "cuts_south_wall" in camera:
+				camera.set("offset", CAMERA_OFFSET)
+				camera.set("cuts_south_wall", false)
 		var packed := PackedScene.new()
 		packed.pack(level)
 		print(OUT_LEVEL, ": ", error_string(ResourceSaver.save(packed, OUT_LEVEL)))
