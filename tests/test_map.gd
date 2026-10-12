@@ -305,6 +305,9 @@ func test_travel_portals_light_up_and_the_map_travels() -> void:
 	for portal in portals:
 		var hit := space.intersect_ray(PhysicsRayQueryParameters3D.create(portal.global_position + Vector3.UP * 5.0, portal.global_position + Vector3.DOWN * 5.0, 1))
 		assert_true(not hit.is_empty() and absf(hit.position.y - portal.global_position.y) < 0.3, "%s apoyado en el piso" % portal.name)
+		var near := tree.current_scene.find_children("*", "Interactable", true, false).filter(func(other: Interactable) -> bool:
+			return not portal.is_ancestor_of(other) and other.global_position.distance_to(portal.global_position) < 3.0)
+		assert_eq(near.size(), 0, "%s sin otro interactuable al lado (E lee eso en vez de abrir el mapa)" % portal.name)
 	var claro: TravelPortal = tree.current_scene.get_node(^"TravelPortals/PortalClaro")
 	player.global_position = claro.global_position + Vector3.UP * 0.2
 	for i in 6:
@@ -339,6 +342,7 @@ func test_travel_portals_light_up_and_the_map_travels() -> void:
 	if dialog == null:
 		_close(stack)
 		return
+	assert_true(dialog.yes.has_focus(), "arranca en Viajar (A confirma, como el mockup)")
 	dialog.yes.pressed.emit()
 	var saves: Node = tree.root.get_node(^"SaveManager")
 	var until := Time.get_ticks_msec() + 5000

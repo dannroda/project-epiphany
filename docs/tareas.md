@@ -4189,7 +4189,7 @@ Playtest 2026-10-12: levantar y tirar funciona, pero no se entiende qué objeto 
 Playtest 2026-10-12: las zonas tapadas (11.52, 11.54) no deberían verse como un cuadrado sin explorar, ni en el minimapa ni en el overworld.
 
 - [x] Overworld
-  ZoneVeil pasa de caja de tinta negra a banco de niebla: nubes claras que se mueven despacio y un borde que se deshace en jirones (fringe 3 m, 1 m por fuera de la pared); el interior de la zona sigue tapado. covers() no cambia.
+  ZoneVeil pasa de caja de tinta negra a banco de niebla con mezcla alfa (sin dither): nubes claras que se mueven despacio y un borde que se deshace en jirones suaves (fringe 3 m); el interior de la zona sigue tapado y el recorte al abrir también es suave. covers() no cambia. Playtest: el dither se veía horrible.
 - [ ] Minimapa y mapa
 
 **Notas:** Sesión: arte (-77) el overworld; overworld (-74) el minimapa.

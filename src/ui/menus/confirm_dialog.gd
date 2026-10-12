@@ -6,6 +6,9 @@ signal answered(confirmed: bool)
 
 const SCENE_PATH := "res://src/ui/menus/confirm_dialog.tscn"
 
+## Arranca con el foco en confirmar (el viaje rápido: elegir el portal ya fue la decisión).
+@export var confirm_first := false
+
 @onready var question: Label = %Question
 @onready var yes: Button = %Yes
 @onready var no: Button = %No
@@ -31,7 +34,7 @@ func _ready() -> void:
 
 
 func focus_default() -> void:
-	no.grab_focus()
+	(yes if confirm_first else no).grab_focus()
 
 
 func cancel() -> bool:

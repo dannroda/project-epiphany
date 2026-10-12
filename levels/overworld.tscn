@@ -941,7 +941,7 @@ kind = 1
 [node name="TravelPortals" type="Node3D" parent="."]
 
 [node name="PortalClaro" parent="TravelPortals" instance=ExtResource("110_travel")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 0, 19)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51, 0, 17)
 id = &"claro"
 display_name = "PLACE_FIRST_CLEARING"
 

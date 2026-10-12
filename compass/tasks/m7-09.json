@@ -40,7 +40,7 @@
       "text": "Viaje rápido: mockup de la pantalla"
     },
     {
-      "detail": "travel_portal.tscn ×6 en overworld.tscn (ow_portal_<id>); Mapa: marcas, cursor que se engancha, tarjeta y X Viajar con travel_dialog; interactuar en un portal abre el Mapa. test_travel_portals_light_up_and_the_map_travels.",
+      "detail": "travel_portal.tscn ×6 en overworld.tscn (ow_portal_<id>); Mapa: marcas, cursor que se engancha, tarjeta y X Viajar con travel_dialog; interactuar en un portal abre el Mapa. test_travel_portals_light_up_and_the_map_travels. Playtest 2026-10-12 'no puedo teletransportarme': el diálogo arrancaba en Cancelar (A cancelaba); ahora arranca en Viajar como el mockup (ConfirmDialog.confirm_first). El portal del Claro estaba pegado a la tablilla de controles y E podía leerla: se mudó a (−51, 17); el test pide que ningún portal tenga otro interactuable a menos de 3 m.",
       "done": true,
       "text": "Viaje rápido: portales y viaje desde el Mapa"
     },
@@ -70,5 +70,5 @@
   ],
   "test": "",
   "title": "Rediseño del overworld como hub de varias mazmorras",
-  "updated_at": "2026-10-12T18:30:50.088Z"
+  "updated_at": "2026-10-12T19:11:26.083Z"
 }

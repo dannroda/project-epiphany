@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://src/ui/menus/map_mark.gd" id="2_mark"]
 
 [node name="TravelDialog" instance=ExtResource("1_base")]
+confirm_first = true
 
 [node name="Icon" type="Control" parent="Center/Panel/Box" index="0"]
 custom_minimum_size = Vector2(44, 44)
