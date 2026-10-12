@@ -1,0 +1,171 @@
+[gd_resource type="Resource" script_class="DungeonGraph" format=3]
+
+[ext_resource type="Script" uid="uid://fuoosewf8un4" path="res://src/world/dungeon_graph/dungeon_graph.gd" id="1_graph"]
+[ext_resource type="Script" uid="uid://djven2p0k3w1i" path="res://src/world/dungeon_graph/dungeon_link.gd" id="2_link"]
+[ext_resource type="Script" uid="uid://2kgujv7wu8l3" path="res://src/world/dungeon_graph/dungeon_spot.gd" id="3_spot"]
+
+[sub_resource type="Resource" id="Link_1"]
+script = ExtResource("2_link")
+from = &"Entrada"
+to = &"Rellano"
+
+[sub_resource type="Resource" id="Link_2"]
+script = ExtResource("2_link")
+from = &"Entrada"
+to = &"Osario"
+through = Array[NodePath]([NodePath("PlantaBaja/OsarioDoor")])
+
+[sub_resource type="Resource" id="Link_3"]
+script = ExtResource("2_link")
+from = &"Entrada"
+to = &"SalaCofre"
+
+[sub_resource type="Resource" id="Link_4"]
+script = ExtResource("2_link")
+from = &"SalaCofre"
+to = &"Cripta"
+one_way = true
+
+[sub_resource type="Resource" id="Link_5"]
+script = ExtResource("2_link")
+from = &"SalaCofre:Isla"
+to = &"Cripta"
+one_way = true
+
+[sub_resource type="Resource" id="Link_6"]
+script = ExtResource("2_link")
+from = &"Cripta"
+to = &"CriptaOscura"
+
+[sub_resource type="Resource" id="Link_7"]
+script = ExtResource("2_link")
+from = &"Cripta"
+to = &"Entrada"
+one_way = true
+
+[sub_resource type="Resource" id="Link_8"]
+script = ExtResource("2_link")
+from = &"SalaCofre"
+to = &"Abismo:S"
+
+[sub_resource type="Resource" id="Link_9"]
+script = ExtResource("2_link")
+from = &"Abismo:S"
+to = &"Abismo:N"
+needs = Array[StringName]([&"feather"])
+
+[sub_resource type="Resource" id="Link_10"]
+script = ExtResource("2_link")
+from = &"Abismo:N"
+to = &"Mausoleo:S"
+
+[sub_resource type="Resource" id="Link_11"]
+script = ExtResource("2_link")
+from = &"Mausoleo:S"
+to = &"Mausoleo:N"
+needs = Array[StringName]([&"feather"])
+
+[sub_resource type="Resource" id="Link_12"]
+script = ExtResource("2_link")
+from = &"Mausoleo:S"
+to = &"Guardian"
+through = Array[NodePath]([NodePath("Sotano/BossDoor")])
+
+[sub_resource type="Resource" id="Link_13"]
+script = ExtResource("2_link")
+from = &"Rellano"
+to = &"Saltos:S"
+through = Array[NodePath]([NodePath("PisoAlto/RellanoShutter")])
+
+[sub_resource type="Resource" id="Link_14"]
+script = ExtResource("2_link")
+from = &"Saltos:S"
+to = &"Saltos:N"
+needs = Array[StringName]([&"feather"])
+
+[sub_resource type="Resource" id="Link_15"]
+script = ExtResource("2_link")
+from = &"Saltos:S"
+to = &"Osario"
+one_way = true
+
+[sub_resource type="Resource" id="Link_16"]
+script = ExtResource("2_link")
+from = &"Saltos:N"
+to = &"Osario"
+one_way = true
+
+[sub_resource type="Resource" id="Link_17"]
+script = ExtResource("2_link")
+from = &"Rellano"
+to = &"Agrietada"
+through = Array[NodePath]([NodePath("PisoAlto/RellanoLocked")])
+
+[sub_resource type="Resource" id="Link_18"]
+script = ExtResource("2_link")
+from = &"Agrietada"
+to = &"SalaCofre:Isla"
+through = Array[NodePath]([NodePath("PisoAlto/CrackedFloor")])
+one_way = true
+
+[sub_resource type="Resource" id="Link_19"]
+script = ExtResource("2_link")
+from = &"Agrietada"
+to = &"Mirador:S"
+
+[sub_resource type="Resource" id="Link_20"]
+script = ExtResource("2_link")
+from = &"Mirador:S"
+to = &"Mirador:N"
+needs = Array[StringName]([&"feather"])
+
+[sub_resource type="Resource" id="Spot_1"]
+script = ExtResource("3_spot")
+area = &"Osario"
+node = NodePath("PlantaBaja/OsarioSwitch")
+
+[sub_resource type="Resource" id="Spot_2"]
+script = ExtResource("3_spot")
+area = &"Cripta"
+node = NodePath("Sotano/MapChest")
+
+[sub_resource type="Resource" id="Spot_3"]
+script = ExtResource("3_spot")
+area = &"CriptaOscura"
+node = NodePath("Sotano/KeyChest")
+
+[sub_resource type="Resource" id="Spot_4"]
+script = ExtResource("3_spot")
+area = &"Saltos:N"
+node = NodePath("PisoAlto/CompassChest")
+
+[sub_resource type="Resource" id="Spot_5"]
+script = ExtResource("3_spot")
+area = &"SalaCofre:Isla"
+node = NodePath("PlantaBaja/FeatherChest")
+
+[sub_resource type="Resource" id="Spot_6"]
+script = ExtResource("3_spot")
+area = &"Mirador:N"
+node = NodePath("PisoAlto/HeartPieceLookout")
+
+[sub_resource type="Resource" id="Spot_7"]
+script = ExtResource("3_spot")
+area = &"Mausoleo:N"
+node = NodePath("Sotano/BossKeyChest")
+
+[sub_resource type="Resource" id="Spot_8"]
+script = ExtResource("3_spot")
+area = &"Guardian"
+node = NodePath("Sotano/Guardian")
+needs = Array[StringName]([&"feather"])
+gives = &"d2_boss_defeated"
+
+[resource]
+script = ExtResource("1_graph")
+scene = "res://levels/chullpa.tscn"
+start = &"Entrada"
+goal = &"d2_boss_defeated"
+brings = Array[StringName]([&"bow", &"bomb_bag", &"shield_mirror"])
+links = Array[ExtResource("2_link")]([SubResource("Link_1"), SubResource("Link_2"), SubResource("Link_3"), SubResource("Link_4"), SubResource("Link_5"), SubResource("Link_6"), SubResource("Link_7"), SubResource("Link_8"), SubResource("Link_9"), SubResource("Link_10"), SubResource("Link_11"), SubResource("Link_12"), SubResource("Link_13"), SubResource("Link_14"), SubResource("Link_15"), SubResource("Link_16"), SubResource("Link_17"), SubResource("Link_18"), SubResource("Link_19"), SubResource("Link_20")])
+spots = Array[ExtResource("3_spot")]([SubResource("Spot_1"), SubResource("Spot_2"), SubResource("Spot_3"), SubResource("Spot_4"), SubResource("Spot_5"), SubResource("Spot_6"), SubResource("Spot_7"), SubResource("Spot_8")])

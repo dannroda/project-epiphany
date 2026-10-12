@@ -368,15 +368,15 @@ Decidido el 2026-10-08 con la metodología de [[gdd#overworld-layout]] (artícul
 ## 8b. Mazmorra 2 — La Chullpa (diseño, 11.60)
 <!-- id: mazmorra-2 -->
 
-Decidido el 2026-10-11. Torre funeraria de piedra (chullpa) con sótano de enterramientos, siguiendo a los enemigos chullpa (vale aunque el setting siga abierto). Tres pisos apilados en la misma escena, cada uno de 2 × 2 salas con la misma planta, así que un hueco siempre cae a la sala de abajo (referencia: la Torre de Hera de *A Link to the Past*, en `docs/the-ultimate-methodology…`). Ítem: el **gancho** (11.30). Unas 11 salas más el jefe.
+Decidido el 2026-10-11. Torre funeraria de piedra (chullpa) con sótano de enterramientos, siguiendo a los enemigos chullpa (vale aunque el setting siga abierto). Tres pisos apilados en la misma escena, cada uno de 2 × 2 salas con la misma planta, así que un hueco siempre cae a la sala de abajo (referencia: la Torre de Hera de *A Link to the Past*, en `docs/the-ultimate-methodology…`). Ítem: la **pluma** (el gancho pasó a D3, §6.2). Unas 11 salas más el jefe. El orden lo comprueba `data/dungeons/d2_graph.tres` con el test de alcanzabilidad (§6.2).
 
-**Pendiente (11.90, 11.60):** el ítem pasa a ser la **pluma** y el gancho va a D3. El cofre de la isla da la pluma; lo que hoy pide gancho (abismo, foso de la llave del jefe, pieza del Mirador) pasa a pluma o caída; jefe nuevo que se vence saltando. Lo de abajo describe el diseño con gancho.
+**Pendiente (11.60):** jefe nuevo que se vence saltando; más enemigos y un acertijo por piso.
 
 ```
  PISO ALTO    ┌────────┬────────┐
               │2NO     │2NE     │
-              │pluma → │gancho→ │
-              │ llave  │ corazón│
+              │pluma → │pluma → │
+              │ brújula│ corazón│
               ├──[  ]──┼────────┤
               │2SO     │2SE     │
               │combate ├[LLAVE]─┤
@@ -385,18 +385,18 @@ Decidido el 2026-10-11. Torre funeraria de piedra (chullpa) con sótano de enter
  PLANTA BAJA  ┌──┴─────┬────────┐
               │1NO     │1NE     │
               │        │escalera│
-              ├────────┼─[ganch]┤
+              ├────────┼─[pluma]┤
               │1SO     │1SE     │
               │ENTRADA ├ abierta┤
               └────────┴────────┘
                   ▲ escalera de mano (solo sube)
  SÓTANO       ┌────────┬────────┐
               │B-NO    │B-NE    │
-              │gancho →├[JEFE]──┤
+              │pluma → ├[JEFE]──┤
               │llave j.│ JEFE   │
               ├────────┼────────┤
               │B-SO    │B-SE    │
-              │brújula │mapa    │
+              │llave   │mapa    │
               └────────┴────────┘
 ```
 
@@ -404,18 +404,18 @@ Decidido el 2026-10-11. Torre funeraria de piedra (chullpa) con sótano de enter
 |---|---|
 | 1SO Entrada | Llega del overworld; escalera al piso alto; puerta abierta a 1SE |
 | 1NO Osario | Donde se cae desde los huecos de 2NO. Un interruptor abre el atajo a la entrada (la puerta, del lado de la entrada, está sellada) |
-| 1SE Sala del cofre | Cofre grande del **gancho** en una isla de 3 baldosas (cofre al norte, la del sur queda libre para caer desde 2SE) rodeada de huecos de 2 baldosas, así que la pluma no alcanza. Caer lleva a B-SE. La puerta a 1NE está en la esquina noreste |
+| 1SE Sala del cofre | Cofre grande de la **pluma** en una isla de 3 baldosas (cofre al norte, la del sur queda libre para caer desde 2SE) rodeada de huecos de 2 baldosas, así que ni con la pluma se sale saltando: se sale cayendo. Caer lleva a B-SE. La puerta a 1NE está en la esquina noreste |
 | B-SE | Donde se cae desde 1SE: **mapa** y una escalera de mano que solo sube a la entrada. Caer enseña que los huecos llevan a algún lado |
-| B-SO | Oscura; **brújula** |
+| B-SO | Oscura; **llave chica** (la de 2SE): se llega cayendo desde 1SE, sin ítems |
 | 2SO | Llegada del piso alto; persiana hasta vencer a los enemigos |
-| 2NO | Huecos de una baldosa (pluma) hasta la **llave chica** |
+| 2NO | Dos filas de huecos de una baldosa. Sin pluma, caer lleva al Osario (y a su atajo); con la pluma se cruzan hasta la **brújula** |
 | 2SE | Con la llave. Piso agrietado justo encima de la isla de 1SE: una bomba lo abre y se cae sobre el cofre (el truco de la Torre de Hera) |
-| 1NE Sala del abismo | Al pasar la puerta desde 1SE, un abismo de 4 m (sin sala abajo: foso que lastima y vuelve) y un poste enfrente: solo con el gancho. Escalera al sótano, que llega a B-NO |
-| B-NO Mausoleo | Llega la escalera de 1NE. **Llave del jefe** del otro lado de un foso, junto a un poste (gancho). Puerta del jefe a B-NE, del lado de la escalera |
+| 1NE Sala del abismo | Al pasar la puerta desde 1SE, una fila de huecos de una baldosa sobre un abismo (sin sala abajo: foso que lastima y vuelve): solo con la pluma. Escalera al sótano, que llega a B-NO |
+| B-NO Mausoleo | Llega la escalera de 1NE. **Llave del jefe** del otro lado de una fila de huecos sobre un foso (pluma). Puerta del jefe a B-NE, del lado de la escalera |
 | B-NE | Jefe (blockout: sala vacía; el jefe propio es otra tarea) |
-| 2NE | Opcional, con el gancho: pieza de corazón |
+| 2NE | Opcional, con la pluma: pieza de corazón del otro lado de una fila de huecos (caer va al foso de 1NE) |
 
-**Ítems anteriores:** usa bombas, pluma y arco (vienen de antes; el templo no cambia, §6.2). **Overworld:** el gancho abre 2–3 lugares, entre ellos la franja del ojo del Risco. **Huecos:** cuando un hueco lleva a otra sala, el piso de abajo se ve iluminado a través; si no hay nada abajo, vuelve a la entrada como hoy. **Técnica (hecha):** `levels/chullpa.tscn`. Cada piso es un `DungeonFloor` (`level` −1, 0, 1; nombre del piso para el mapa) con su GridMap, sus salas y lo que hay en él, a `DungeonFloor.HEIGHT` = 8 m uno del otro. Una sala dentro de un piso cuenta solo desde 2,5 m debajo de su piso hasta el de arriba, así que el que cae por un hueco pasa a la sala de abajo: la cámara cambia de sala sin deslizarse, se lleva a los demás players y anota la entrada recién al aterrizar. La cámara oculta los pisos de arriba de la sala actual; el de abajo se ve por los huecos. Donde no hay sala abajo (1NE, B-NO) va un `Pit` como siempre. `Stairs` (`stairs.tscn` sube, `stairs_down.tscn` baja): fundido corto y todos los players aparecen en su `to`, un marcador afuera de la escalera de llegada; la escalera de mano de B-SE no tiene vuelta. El piso agrietado de 2SE es `cracked_floor.tscn` (el script del muro agrietado sobre un hueco). Visitadas, mapa y brújula siguen siendo de la mazmorra. **Selector de pisos** (mockups *Pausa · Mapa por pisos* y *HUD · Minimapa por pisos*): en una mazmorra de varios pisos, la pestaña Mapa tiene a la izquierda una columna con los pisos de arriba abajo (`DungeonFloor.code()`: 2P, 1P, S1), cada uno con su nombre y sus marcas (estás acá; con brújula, cofres sin abrir y jefe); abre en el piso de la sala actual y se cambia con LT/RT (`map_floor_up`/`map_floor_down`, en teclado RePág/AvPág) o con un clic, y el cursor queda en la misma celda. El minimapa muestra el piso actual con una etiqueta arriba. `tools/vary_temple.gd` arregla los huecos y paredes de cada GridMap de las dos mazmorras, y la navmesh se hornea con `godot --headless --path . --script res://tools/bake_overworld_nav.gd -- chullpa`. Escenario de debug: `chullpa`. **Pendiente:** el cofre del gancho da flechas hasta que exista el gancho (11.30), y los postes son columnas; la entrada desde el overworld (el portal de salida apunta a un punto `chullpa` que todavía no existe).
+**Ítems anteriores:** usa bombas y arco (vienen de D1 y de antes). **Overworld:** la pluma abre la pieza de la Pradera y los angostos del barranco (§7.1). **Huecos:** cuando un hueco lleva a otra sala, el piso de abajo se ve iluminado a través; si no hay nada abajo, vuelve a la entrada como hoy. **Técnica (hecha):** `levels/chullpa.tscn`. Cada piso es un `DungeonFloor` (`level` −1, 0, 1; nombre del piso para el mapa) con su GridMap, sus salas y lo que hay en él, a `DungeonFloor.HEIGHT` = 8 m uno del otro. Una sala dentro de un piso cuenta solo desde 2,5 m debajo de su piso hasta el de arriba, así que el que cae por un hueco pasa a la sala de abajo: la cámara cambia de sala sin deslizarse, se lleva a los demás players y anota la entrada recién al aterrizar. La cámara oculta los pisos de arriba de la sala actual; el de abajo se ve por los huecos. Donde no hay sala abajo (1NE, B-NO) va un `Pit` como siempre. `Stairs` (`stairs.tscn` sube, `stairs_down.tscn` baja): fundido corto y todos los players aparecen en su `to`, un marcador afuera de la escalera de llegada; la escalera de mano de B-SE no tiene vuelta. El piso agrietado de 2SE es `cracked_floor.tscn` (el script del muro agrietado sobre un hueco). Visitadas, mapa y brújula siguen siendo de la mazmorra. **Selector de pisos** (mockups *Pausa · Mapa por pisos* y *HUD · Minimapa por pisos*): en una mazmorra de varios pisos, la pestaña Mapa tiene a la izquierda una columna con los pisos de arriba abajo (`DungeonFloor.code()`: 2P, 1P, S1), cada uno con su nombre y sus marcas (estás acá; con brújula, cofres sin abrir y jefe); abre en el piso de la sala actual y se cambia con LT/RT (`map_floor_up`/`map_floor_down`, en teclado RePág/AvPág) o con un clic, y el cursor queda en la misma celda. El minimapa muestra el piso actual con una etiqueta arriba. `tools/vary_temple.gd` arregla los huecos y paredes de cada GridMap de las dos mazmorras, y la navmesh se hornea con `godot --headless --path . --script res://tools/bake_overworld_nav.gd -- chullpa`. Escenario de debug: `chullpa`. Las columnas que eran postes del gancho quedan de decoración.
 
 ## 9. Jefe — El Ojo con manos
 <!-- id: jefe -->

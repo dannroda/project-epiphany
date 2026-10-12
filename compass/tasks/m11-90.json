@@ -11,8 +11,8 @@
       "text": "Ítem por mazmorra"
     },
     {
-      "detail": "D1 hecho el 2026-10-12: sin sala de la pluma (puerta tapiada en la grilla), sin la fila de huecos del Puzzle, sin el escalón de la vasija de la Antesala; d1_graph.tres, test_temple y test_doom al día; navmesh del templo horneada de nuevo en levels/nav/temple_navmesh.tres. Falta la Chullpa con la pluma (11.60, paso 8). La pieza de la pradera y la angostura quedan para después de D2.",
-      "done": false,
+      "detail": "Hecho el 2026-10-12. D1: sin sala de la pluma (puerta tapiada), sin la fila de huecos del Puzzle ni el escalón de la Antesala; navmesh del templo horneada de nuevo. D2: la isla de la Chullpa da la pluma y lo que pedía gancho pasa a pluma (11.60, paso 8). La pieza de la pradera y la angostura quedan para después de D2.",
+      "done": true,
       "text": "Mudar la pluma a D2"
     },
     {
@@ -26,8 +26,8 @@
       "text": "Reparto en el overworld"
     },
     {
-      "detail": "D1 hecho: data/dungeons/d1_graph.tres (grafo y softblocks en el documento de diseño). D2 cuando se rehaga la Chullpa con la pluma.",
-      "done": false,
+      "detail": "Hecho: data/dungeons/d1_graph.tres y d2_graph.tres, los dos pasan test_dungeon_reach.",
+      "done": true,
       "text": "Grafos llave-cerradura de D1 y D2"
     },
     {
@@ -61,5 +61,5 @@
   ],
   "test": "",
   "title": "Diseño de mazmorras, ítems y su reparto en el overworld",
-  "updated_at": "2026-10-12T18:33:33.105Z"
+  "updated_at": "2026-10-12T18:43:17.369Z"
 }

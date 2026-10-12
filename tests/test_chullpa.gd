@@ -62,7 +62,7 @@ func test_stairs_go_up_and_back() -> void:
 	assert_eq(camera.room, _room("PisoAlto/Rellano"), "la escalera lleva al rellano")
 	assert_true(absf(player.global_position.y - 8.0) < 0.5, "arriba, en el piso alto (y %.1f)" % player.global_position.y)
 	assert_true(_floor("PisoAlto").visible, "ahora se ve el piso alto")
-	assert_eq(tree.root.get_node(^"Fader/Rect").color.a, 0.0, "el fundido terminó")
+	assert_eq(tree.root.get_node(^"SceneFlow/Rect").color.a, 0.0, "el fundido terminó")
 	player.global_position = Vector3(0.6, 8, 20)
 	await tree.create_timer(1.2).timeout
 	assert_eq(camera.room, _room("PlantaBaja/Entrada"), "y la de bajada vuelve a la entrada")
@@ -115,10 +115,52 @@ func test_chasm_has_no_room_below() -> void:
 	assert_eq(camera.room, _room("PlantaBaja/Abismo"))
 	await tree.create_timer(0.8).timeout
 	var health := player.health.current
-	await _drop(Vector3(36, 0.5, 9))
+	await _drop(Vector3(36, 0.5, 10))
 	assert_eq(camera.room, _room("PlantaBaja/Abismo"), "el abismo devuelve a la sala")
 	assert_eq(player.health.current, health - 2, "y lastima")
 	tree.root.get_node(^"GameState").reset()
+
+
+func test_the_feather_jumps_the_gaps() -> void:
+	await _start()
+	var state: Node = tree.root.get_node(^"GameState")
+	state.give(Items.get_item(&"feather"))
+	state.assign_button(1, &"feather")
+	for gap: Array in [[Vector3(36, 0, 12.6), "PlantaBaja/Abismo"], [Vector3(12, -8, 10.6), "Sotano/Mausoleo"], [Vector3(12, 8, 12.6), "PisoAlto/Saltos"], [Vector3(36, 8, 12.6), "PisoAlto/Mirador"]]:
+		player.global_position = gap[0]
+		await tree.create_timer(0.3).timeout
+		var landed := await _jump(&"move_forward")
+		assert_true(landed < gap[0].z - 2.6 and absf(player.global_position.y - gap[0].y) < 0.2, "%s: la fila de huecos se salta (z %.2f, y %.2f)" % [gap[1], landed, player.global_position.y])
+		assert_eq(camera.room, _room(gap[1]), "%s: sigue en la sala" % gap[1])
+	state.reset()
+
+
+func _jump(action: StringName) -> float:
+	_walk(action, true)
+	await tree.physics_frame
+	var event := InputEventAction.new()
+	event.action = &"item_2"
+	event.pressed = true
+	Input.parse_input_event(event)
+	var release := InputEventAction.new()
+	release.action = &"item_2"
+	Input.parse_input_event(release)
+	for i in 90:
+		await tree.physics_frame
+		if i > 5 and player.movement_state.get_active_state().name != &"Jumping":
+			break
+	_walk(action, false)
+	for i in 10:
+		await tree.physics_frame
+	return player.global_position.z
+
+
+func _walk(action: StringName, pressed: bool) -> void:
+	var event := InputEventAction.new()
+	event.action = action
+	event.pressed = pressed
+	event.strength = 1.0
+	Input.parse_input_event(event)
 
 
 func test_map_shows_the_current_floor() -> void:

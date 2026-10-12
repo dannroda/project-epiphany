@@ -3442,9 +3442,12 @@ Segunda mazmorra con pisos (y quizás sótanos) apilados en la misma escena, en 
 - [ ] Entrada desde el overworld
   Falta decidir dónde está la chullpa en el overworld; el portal de salida apunta a un punto 'chullpa' que todavía no existe. Mientras, escenario de debug 'chullpa'.
 - [ ] Recorrerla (Daniel)
-  Con el escenario chullpa: escaleras, caer de 1SE a la cripta, llave en 2NO con la pluma, bomba en 2SE sobre la isla, atajo del osario. Gancho y postes quedan para 11.30.
-- [ ] Rehacer con la pluma como ítem
-  Decidido el 2026-10-12 (11.90): el cofre grande de la isla da la pluma en vez del gancho. Lo que hoy pide gancho (abismo de 2NE/1NE, foso de la llave del jefe, pieza del Mirador) pasa a pedir pluma o caída. Jefe nuevo en la sala del Guardián, que se vence saltando. Más enemigos y un puzzle por piso.
+  Con el escenario chullpa: escaleras, caer de 1SE a la cripta y la llave en B-SO, atajo del osario cayendo desde 2NO, bomba en 2SE sobre la isla (pluma), y con la pluma el abismo, el foso de la llave del jefe, la brújula y la pieza del Mirador.
+- [x] Rehacer con la pluma como ítem
+  Hecho el 2026-10-12: el cofre grande de la isla da la pluma (FeatherChest, flag d2_feather_chest). Las franjas dobles de huecos (abismo de 1NE, foso de la llave del jefe, pieza del Mirador) son ahora una fila de una baldosa: se cruzan con la pluma. La llave chica pasó a B-SO (se llega cayendo desde 1SE, sin ítems) y la brújula a 2NO (pluma). data/dungeons/d2_graph.tres pasa el test de alcanzabilidad; test_chullpa salta las cuatro filas. GDD §8b.
+- [ ] Jefe del Guardián que se vence saltando
+  Sala B-NE, hoy vacía. En d2_graph.tres el objetivo d2_boss_defeated pide la pluma.
+- [ ] Más enemigos y un acertijo por piso
 
 **Relacionadas:** 11.30 Ítem post-MVP: gancho o telequinesis
 
@@ -4031,14 +4034,14 @@ Playtest del 2026-10-12: la primera mazmorra ya tiene varios softblocks, y la pl
   Hecho el 2026-10-12 leyendo temple.tscn y sus scripts (grafo y tabla en el documento de diseño). El orden de llaves es seguro: la llave 1 solo alcanza la puerta este del hub. Softblock duro solo cargando en la misma escena (11.108); los menores en 11.109; el de co-op en 13.16. Falta recorrer la Chullpa cuando se rehaga.
 - [x] Ítem por mazmorra
   Decidido con Daniel el 2026-10-12: D1 arco (lo guarda el sub-jefe, 11.31), D2 pluma, D3 gancho (11.30), D4 guantes de fuerza. El disco solar queda como ítem opcional (mini-mazmorra o secreto del overworld). Documento: https://claude.ai/code/artifact/4fce85f9-7f11-4285-9d2e-bb1d58b45b4e
-- [ ] Mudar la pluma a D2
-  D1 hecho el 2026-10-12: sin sala de la pluma (puerta tapiada en la grilla), sin la fila de huecos del Puzzle, sin el escalón de la vasija de la Antesala; d1_graph.tres, test_temple y test_doom al día; navmesh del templo horneada de nuevo en levels/nav/temple_navmesh.tres. Falta la Chullpa con la pluma (11.60, paso 8). La pieza de la pradera y la angostura quedan para después de D2.
+- [x] Mudar la pluma a D2
+  Hecho el 2026-10-12. D1: sin sala de la pluma (puerta tapiada), sin la fila de huecos del Puzzle ni el escalón de la Antesala; navmesh del templo horneada de nuevo. D2: la isla de la Chullpa da la pluma y lo que pedía gancho pasa a pluma (11.60, paso 8). La pieza de la pradera y la angostura quedan para después de D2.
 - [ ] Armadura del esqueleto
   Decidido: se quita con el gancho o con la bomba (las dos). Se implementa junto con el gancho (11.30), que ahora es de D3.
 - [x] Reparto en el overworld
   Arco: Quebrada, Necrópolis, carcaj del Risco. Pluma: Cardonal, angostura, pieza de la pradera, islotes de la Laguna (entrada a D3). Gancho: postes de la Cumbre (entrada a D4), Mirador, franja del Risco. Cada ítem abre 2–3 secretos en zonas ya visitadas.
-- [ ] Grafos llave-cerradura de D1 y D2
-  D1 hecho: data/dungeons/d1_graph.tres (grafo y softblocks en el documento de diseño). D2 cuando se rehaga la Chullpa con la pluma.
+- [x] Grafos llave-cerradura de D1 y D2
+  Hecho: data/dungeons/d1_graph.tres y d2_graph.tres, los dos pasan test_dungeon_reach.
 - [x] Test de alcanzabilidad
   Hecho: DungeonGraph (src/world/dungeon_graph/) por mazmorra en data/dungeons/; tests/dungeon_reach.gd lo cruza con la escena (cerraduras, interruptores, cofres, cobertura de puertas, rejas, cofres e interruptores, salas) y recorre todos los estados (zona, ítems, llaves, puertas abiertas). Falla si algo pide un ítem que nadie da o si hay un estado sin salida, con el camino. test_dungeon_reach: D1 pasa, más casos sintéticos (llave en la puerta equivocada, caída sin vuelta, ítem que falta). El overworld (7.9) queda para después.
 - [ ] D3 y D4 visibles pero bloqueadas
