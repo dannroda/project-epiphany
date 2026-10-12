@@ -5,6 +5,8 @@ extends Area3D
 @export var damage := 2
 ## Adónde vuelve el que cae (o al más cercano entre él y sus hijos); si no hay, a la entrada de la sala o al punto de aparición.
 @export var respawn: Node3D
+## Si es agua: el que cae salpica en su superficie.
+@export var water: Node3D
 
 
 func _ready() -> void:
@@ -17,6 +19,10 @@ func _ready() -> void:
 
 
 func _fall(player: PlayerCharacter) -> void:
+	if water:
+		var at := Vector3(player.global_position.x, water.global_position.y, player.global_position.z)
+		Feel.burst(&"splash", at, Vector3.UP)
+		Feel.sfx(&"splash", at)
 	player.health.damage(damage)
 	if player.is_dead:
 		return

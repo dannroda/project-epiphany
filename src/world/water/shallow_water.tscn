@@ -1,0 +1,38 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/water/shallow_water.gd" id="1_shallow"]
+[ext_resource type="Shader" uid="uid://ch7brbhtrooc4" path="res://src/world/water/water.gdshader" id="2_water"]
+
+[sub_resource type="BoxShape3D" id="Box"]
+resource_local_to_scene = true
+size = Vector3(8, 1.2, 6)
+
+[sub_resource type="ShaderMaterial" id="Water"]
+render_priority = 1
+shader = ExtResource("2_water")
+shader_parameter/shallow_color = Color(0.6, 0.8, 0.72, 1)
+shader_parameter/deep_color = Color(0.3, 0.5, 0.45, 1)
+shader_parameter/foam_color = Color(0.93, 0.98, 1, 1)
+shader_parameter/depth_fade = 0.6
+shader_parameter/shallow_alpha = 0.15
+shader_parameter/deep_alpha = 0.5
+shader_parameter/shore_foam = 0.06
+shader_parameter/foam_amount = 0.35
+shader_parameter/tile = 1.6
+shader_parameter/speed = 0.6
+
+[sub_resource type="PlaneMesh" id="Plane"]
+resource_local_to_scene = true
+material = SubResource("Water")
+size = Vector2(10.8, 8.8)
+
+[node name="ShallowWater" type="Area3D" unique_id=1840395112]
+script = ExtResource("1_shallow")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1840395113]
+shape = SubResource("Box")
+
+[node name="Surface" type="MeshInstance3D" parent="." unique_id=1840395114]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.08, 0)
+cast_shadow = 0
+mesh = SubResource("Plane")

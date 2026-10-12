@@ -1,6 +1,6 @@
 extends SceneTree
 ## Pasa el GridMap de levels/overworld.tscn a tools/terreno_overworld.json para build_terreno_organico.py: una letra por
-## celda (H alto, ~ abismo, : tierra, . pasto), los puntos fijos (lo jugable y las piezas que quedan en el GridMap), donde
+## celda (H alto, ~ abismo, : tierra, . pasto, w agua baja: las celdas bajo un ShallowWater), los puntos fijos (lo jugable y las piezas que quedan en el GridMap), donde
 ## el terreno no se mueve ni tiene lomas, la decoración, donde el piso queda plano y la roca no avanza, y las paredes
 ## rompibles, que se arman con la misma roca.
 ## También las regiones: el rectángulo de cada AreaZone con terrain_style. Para probar sin tocar la escena, los estilos
@@ -42,6 +42,16 @@ func _initialize() -> void:
 				fixed.append([x * 2.0, z * 2.0, 1.4])
 			row += letter
 		rows.append(row)
+	for water in level.get_children():
+		if not "wade_speed" in water:
+			continue
+		var rect := Rect2(Vector2(water.position.x, water.position.z) - water.size / 2.0, water.size)
+		for r in rows.size():
+			var row := rows[r]
+			for c in row.length():
+				if row[c] in ".:" and rect.has_point(Vector2((lo.x + c) * 2.0, (lo.y + r) * 2.0)):
+					row = row.substr(0, c) + "w" + row.substr(c + 1)
+			rows[r] = row
 	var forced := {}
 	for arg in OS.get_cmdline_user_args():
 		forced[arg.get_slice("=", 0)] = arg.get_slice("=", 1)
@@ -56,7 +66,7 @@ func _initialize() -> void:
 		var half := (shape.shape as BoxShape3D).size / 2.0
 		regions.append({"style": style, "rect": [center.x - half.x, center.z - half.z, center.x + half.x, center.z + half.z]})
 	for child in level.get_children():
-		if child is Node3D and not (child.get_class() in IGNORED or child.name in IGNORED) and not String(child.name).begins_with("Zone_"):
+		if child is Node3D and not (child.get_class() in IGNORED or child.name in IGNORED) and not String(child.name).begins_with("Zone_") and not "wade_speed" in child:
 			var at := (child as Node3D).position
 			fixed.append([at.x, at.z, 1.6])
 			if child.scene_file_path.begins_with("res://src/world/cracked_wall"):

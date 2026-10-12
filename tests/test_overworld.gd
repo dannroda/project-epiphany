@@ -114,6 +114,59 @@ func test_abyss_has_no_floor_but_a_pit() -> void:
 	tree.root.get_node(^"GameState").reset()
 
 
+
+func test_falling_in_the_lagoon_splashes_and_returns_to_the_shore() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.root.get_node(^"GameState").reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	for enemy in tree.get_nodes_in_group(&"enemies"):
+		enemy.free()
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	player.health.invulnerability_time = 0.0
+	await tree.physics_frame
+	var before := player.health.current
+	player.global_position = Vector3(-30, 0.5, 32)
+	var splashed := false
+	for i in 90:
+		await tree.physics_frame
+		splashed = splashed or tree.current_scene.find_children("Splash*", "CPUParticles3D", false, false).size() > 0
+	assert_true(splashed, "salpica")
+	assert_true(player.health.current < before, "caer al agua saca vida")
+	assert_true(player.global_position.x < -40.0 and player.global_position.y > -0.5, "y vuelve a la orilla oeste (%s)" % player.global_position)
+	tree.root.get_node(^"GameState").reset()
+
+
+func test_the_marsh_water_slows_and_splashes_but_holds() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.root.get_node(^"GameState").reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	for enemy in tree.get_nodes_in_group(&"enemies"):
+		enemy.free()
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	var water := tree.current_scene.get_node(^"BanadoWaterA") as ShallowWater
+	player.global_position = water.global_position + Vector3(-2, 0.3, 0)
+	for i in 20:
+		await tree.physics_frame
+	assert_eq(player.ground_speed, water.wade_speed, "adentro del agua baja frena")
+	_walk(&"move_right", true)
+	var splashed := false
+	var lowest := player.global_position.y
+	for i in 30:
+		await tree.physics_frame
+		lowest = minf(lowest, player.global_position.y)
+		splashed = splashed or tree.current_scene.find_children("Wade*", "CPUParticles3D", false, false).size() > 0
+	_walk(&"move_right", false)
+	assert_true(splashed, "al andar salpica")
+	assert_true(lowest > -0.5, "se camina: no cae (y mín %.2f)" % lowest)
+	assert_true(player.global_position.y < -0.15, "y se hunde hasta el fondo (y %.2f)" % player.global_position.y)
+	player.global_position = water.global_position + Vector3(0, 0.3, -8)
+	for i in 10:
+		await tree.physics_frame
+	assert_eq(player.ground_speed, 1.0, "afuera vuelve a la velocidad de siempre")
+	tree.root.get_node(^"GameState").reset()
+
 func test_pit_walls_face_the_ground() -> void:
 	var root := (load("res://levels/temple.tscn") as PackedScene).instantiate()
 	var grid := root.get_node(^"GridMap") as GridMap

@@ -1596,7 +1596,7 @@ El overworld de 3 × 3 pantallas quedó hecho para una sola mazmorra y se siente
   Artboard 'Pausa · Mapa (overworld nuevo) con portales de viaje' (Pause_Map_Travel) en https://claude.ai/artifact/UuD7d42rAXuYTBcMd9iZJy. Aprobado por Daniel.
 - [ ] Viaje rápido: portales y viaje desde el Mapa
   6 portales (Claro, Pradera, Explanada, Necrópolis, Bañado, Cumbre) que se activan al pasar (flag); se elige el destino en la pestaña Mapa o parado en un portal; viajan todos los players. Pantalla tal cual Pause_Map_Travel.
-- [ ] Laguna de agua real y Bañado de agua baja
+- [x] Laguna de agua real y Bañado de agua baja
   Daniel (2026-10-11): la Laguna con el agua de la cueva de la vertiente (water.gdshader: espuma en la orilla, color por profundidad) sobre el hueco; cascada en el acantilado norte donde termina la quebrada; caer al agua salpica y vuelve a la orilla (no se nada); la isla de D3 con el gancho. El Bañado, agua baja que se camina.
 
 ## M8 — Contenido de mazmorra  (8/8)

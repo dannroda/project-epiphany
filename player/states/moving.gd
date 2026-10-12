@@ -29,7 +29,7 @@ func _locked_move(input: Vector2, _delta: float, target: Node3D) -> void:
 func _free_move(dir: Vector3, _delta: float) -> void:
 	var is_blocking: bool = blackboard.get_var("is_blocking", false)
 	var holding_light := is_blocking and player.is_catching_light()
-	var speed := BLOCK_SPEED if is_blocking else SPEED
+	var speed := (BLOCK_SPEED if is_blocking else SPEED) * player.ground_speed
 	
 	player.velocity.x = dir.x * speed
 	player.velocity.z = dir.z * speed

@@ -40,8 +40,8 @@ func _update(delta: float) -> void:
 	var lifting := _elapsed < _lift_time
 	var input_dir: Vector2 = blackboard.get_var("input_dir", Vector2.ZERO)
 	var direction := Vector3(input_dir.x, 0, input_dir.y).normalized() if not lifting else Vector3.ZERO
-	player.velocity.x = direction.x * CARRY_SPEED
-	player.velocity.z = direction.z * CARRY_SPEED
+	player.velocity.x = direction.x * CARRY_SPEED * player.ground_speed
+	player.velocity.z = direction.z * CARRY_SPEED * player.ground_speed
 	player.move_and_slide()
 	if not direction.is_zero_approx():
 		player.model.look_at(player.global_position - direction)

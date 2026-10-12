@@ -41,6 +41,8 @@ signal escaped
 var guard_tween: Tween
 ## Qué controles lee (13.2); existe desde que se instancia, así `Players` le asigna el slot antes de sumarlo.
 var controls: PlayerControls = PlayerControls.new()
+## Lo que frena el suelo (agua baja): multiplica la velocidad al caminar.
+var ground_speed := 1.0
 
 var is_dead: bool:
 	get:

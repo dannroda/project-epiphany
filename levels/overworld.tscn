@@ -51,6 +51,9 @@
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/muros_organicos/muro_ShrineCrackedWall.res" id="97_wall_shrine"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/muros_organicos/muro_GrottoCrackedWall.res" id="98_wall_grotto"]
 [ext_resource type="NavigationMesh" path="res://levels/nav/overworld_navmesh.tres" id="99_nav"]
+[ext_resource type="Shader" uid="uid://ch7brbhtrooc4" path="res://src/world/water/water.gdshader" id="100_water"]
+[ext_resource type="PackedScene" path="res://src/world/water/waterfall.tscn" id="101_fall"]
+[ext_resource type="PackedScene" path="res://src/world/water/shallow_water.tscn" id="102_shallow"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7se6l"]
 panorama = ExtResource("1_qyxw2")
@@ -137,6 +140,24 @@ size = Vector3(48, 1, 16)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_LagunaPitEast"]
 size = Vector3(48, 1, 16)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_laguna"]
+render_priority = 1
+shader = ExtResource("100_water")
+shader_parameter/shallow_color = Color(0.557, 0.831, 0.894, 1)
+shader_parameter/deep_color = Color(0.13, 0.36, 0.48, 1)
+shader_parameter/foam_color = Color(0.93, 0.98, 1, 1)
+shader_parameter/depth_fade = 1.4
+shader_parameter/shallow_alpha = 0.2
+shader_parameter/deep_alpha = 0.75
+shader_parameter/shore_foam = 0.2
+shader_parameter/foam_amount = 0.5
+shader_parameter/tile = 1.2
+shader_parameter/speed = 0.8
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_laguna"]
+material = SubResource("ShaderMaterial_laguna")
+size = Vector2(94, 14)
 
 [node name="Overworld" type="Node3D" unique_id=295443412]
 
@@ -377,10 +398,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16)
 [node name="Row3" type="Marker3D" parent="QuebradaPitEast/Respawn" unique_id=469836737]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 32)
 
-[node name="LagunaPitWest" type="Area3D" parent="." unique_id=1133407547 node_paths=PackedStringArray("respawn")]
+[node name="LagunaPitWest" type="Area3D" parent="." unique_id=1133407547 node_paths=PackedStringArray("respawn", "water")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, -1.2, 32)
 script = ExtResource("94_pit")
 respawn = NodePath("Respawn")
+water = NodePath("../LagunaWater")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LagunaPitWest" unique_id=1878237108]
 shape = SubResource("BoxShape3D_LagunaPitWest")
@@ -388,16 +410,37 @@ shape = SubResource("BoxShape3D_LagunaPitWest")
 [node name="Respawn" type="Marker3D" parent="LagunaPitWest" unique_id=1578400098]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 1.2, -2)
 
-[node name="LagunaPitEast" type="Area3D" parent="." unique_id=889895687 node_paths=PackedStringArray("respawn")]
+[node name="LagunaPitEast" type="Area3D" parent="." unique_id=889895687 node_paths=PackedStringArray("respawn", "water")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, -1.2, 32)
 script = ExtResource("94_pit")
 respawn = NodePath("Respawn")
+water = NodePath("../LagunaWater")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LagunaPitEast" unique_id=1428278806]
 shape = SubResource("BoxShape3D_LagunaPitEast")
 
 [node name="Respawn" type="Marker3D" parent="LagunaPitEast" unique_id=1855973351]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.2, 0)
+
+[node name="LagunaWater" type="MeshInstance3D" parent="." unique_id=1240494067]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, -0.35, 32)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_laguna")
+
+[node name="LagunaWaterfall" parent="." unique_id=1494022698 instance=ExtResource("101_fall")]
+transform = Transform3D(2.5, 0, 0, 0, 1.25, 0, 0, 0, 2.5, 0, -0.35, 25.2)
+
+[node name="BanadoWaterA" parent="." unique_id=1630520198 instance=ExtResource("102_shallow")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 33)
+size = Vector2(10, 8)
+
+[node name="BanadoWaterB" parent="." unique_id=1220909598 instance=ExtResource("102_shallow")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64, 0, 30)
+size = Vector2(12, 6)
+
+[node name="BanadoWaterC" parent="." unique_id=793532970 instance=ExtResource("102_shallow")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76, 0, 35)
+size = Vector2(8, 6)
 
 [node name="Spawn_start" parent="." unique_id=579054127 instance=ExtResource("4_spawn_scene")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 0, 16)
@@ -486,7 +529,7 @@ script = ExtResource("92_clouds")
 display_name = "PLACE_TEMPLE_VALLEY"
 world_rect = Rect2(-85, -41, 170, 82)
 grid = NodePath("../GridMap")
-scenery = [NodePath("../Decor"), NodePath("../Terreno")]
+scenery = [NodePath("../Decor"), NodePath("../Terreno"), NodePath("../LagunaWater"), NodePath("../BanadoWaterA"), NodePath("../BanadoWaterB"), NodePath("../BanadoWaterC")]
 
 [node name="Player" parent="." unique_id=1694148988 instance=ExtResource("13_gd0nv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 0, 16)

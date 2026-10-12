@@ -40,6 +40,11 @@
       "detail": "6 portales (Claro, Pradera, Explanada, Necrópolis, Bañado, Cumbre) que se activan al pasar (flag); se elige el destino en la pestaña Mapa o parado en un portal; viajan todos los players. Pantalla tal cual Pause_Map_Travel.",
       "done": false,
       "text": "Viaje rápido: portales y viaje desde el Mapa"
+    },
+    {
+      "detail": "Daniel (2026-10-11): la Laguna con el agua de la cueva de la vertiente (water.gdshader: espuma en la orilla, color por profundidad) sobre el hueco; cascada en el acantilado norte donde termina la quebrada; caer al agua salpica y vuelve a la orilla (no se nada); la isla de D3 con el gancho. El Bañado, agua baja que se camina.",
+      "done": true,
+      "text": "Laguna de agua real y Bañado de agua baja"
     }
   ],
   "code": "7.9",
@@ -57,5 +62,5 @@
   ],
   "test": "",
   "title": "Rediseño del overworld como hub de varias mazmorras",
-  "updated_at": "2026-10-11T23:31:03.338Z"
+  "updated_at": "2026-10-12T00:17:28.525Z"
 }

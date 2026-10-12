@@ -25,6 +25,11 @@ GW, GH = len(GRID[0]), len(GRID)
 TOP = 2.6
 CAP = 0.15
 DEPTH = -3.0
+## Fondo del agua baja (ShallowWater) y ancho de su orilla en pendiente (m).
+SHALLOW = -0.35
+BANK = 0.9
+## Cuánto ondula (m) el borde del agua baja, para un lado y para el otro.
+WATER_AMP = 1.0
 AMP = 0.4
 LOMAS = 0.3
 STRATA = (0.0, 0.12, 0.03, 0.16, 0.06, 0.13, 0.02)
@@ -44,7 +49,8 @@ STYLES = {
 	"necropolis": {"ground": ("tierra", "MID"), "path": ("acantilado", "LIGHT"), "cap": ("tierra", "MID"), "hang": ("acantilado", "DARK"),
 		"ledge": ("tierra", "LIGHT"), "band": ("roca_naranja", None)},
 	"laguna": {"ground": ("musgo", "MID"), "path": ("tierra", "LOW"), "cap": ("musgo", "MID"), "hang": ("musgo", "DARK"),
-		"band": ("piedra", "LOW"), "rock": ("piedra", None), "under": ("piedra", "DARK"), "base": ("piedra", "DARK")},
+		"band": ("piedra", "LOW"), "rock": ("piedra", None), "under": ("piedra", "DARK"), "base": ("piedra", "DARK"),
+		"abyss_top": ("piedra", "MID"), "abyss_mid": ("musgo", "DARK"), "abyss_low": ("musgo", "DARK")},
 	"cumbre": {"ground": ("cristal", "LIGHT"), "path": ("piedra", "MID"), "cap": ("cristal", "LIGHT"), "hang": ("cristal", "MID"),
 		"ledge": ("cristal", "LIGHT"), "under": ("ladrillo", "DARK"), "base": ("ladrillo", "DARK"), "band": ("piedra", "MID"), "rock": ("ladrillo", None)},
 	"explanada": {"path": ("piedra_templo", "LOW")},
@@ -55,6 +61,8 @@ STYLES = {
 FIXED = np.array([(x, -z, r) for x, z, r in DATA["fixed"]]).reshape(-1, 3)
 DECOR = np.array([(x, -z, r) for x, z, r in DATA["decor"]]).reshape(-1, 3)
 FLAT = np.concatenate([FIXED, DECOR])
+## Celdas de agua baja: alrededor el piso queda sin lomas, así la superficie del agua no asoma sobre el pasto.
+WET = np.array([[(X0 + c) * CELL, -(Z0 + r) * CELL, CELL / 2 + WATER_AMP + 0.6] for r in range(GH) for c in range(GW) if GRID[r][c] == "w"]).reshape(-1, 3)
 
 
 def corner(c, r):
@@ -184,7 +192,7 @@ def _nearest_on(points, square):
 	return near[np.arange(len(q)), pick]
 
 
-def style(loop, seed, solid, jagged=0.0):
+def style(loop, seed, solid, jagged=0.0, amp=AMP):
 	"""Contorno orgánico; solid(ch) dice qué es el lado de adentro, para no achicar pasos de una celda."""
 	square = resample(loop, 0.4)
 	points, flags = resample(chaikin(resample(loop, 1.0), 2), 0.4)
@@ -195,7 +203,7 @@ def style(loop, seed, solid, jagged=0.0):
 		if not (flags[i] or flags[i - 1]):
 			moved.append(p)
 			continue
-		push = AMP * noise.noise(Vector((p.x * 0.42, p.y * 0.42, seed)))
+		push = amp * noise.noise(Vector((p.x * 0.42, p.y * 0.42, seed)))
 		probe = p + n * (CELL * 1.2)
 		if push > 0 and (near_decor[i] or solid(cell_at(probe.x, probe.y))):
 			push = 0.0
@@ -397,7 +405,7 @@ def fill(p, outlines, z, height=None):
 
 
 def ground_height(xy):
-	return np.array([lomas(x, y) for x, y in xy]) * freedom(xy, FLAT)
+	return np.array([lomas(x, y) for x, y in xy]) * freedom(xy, FLAT) * freedom(xy, WET)
 
 
 def abyss(p, loop):
@@ -428,6 +436,35 @@ def abyss(p, loop):
 	paint_role(p, [f for f in faces if depth(f) < DEPTH * 5 / 7], "abyss_low")
 	floor = fill(p, [points], DEPTH)
 	p.paint(floor, "gris_5", "DARK")
+	p.fixed.update(faces + floor)
+
+
+
+def shallow(p, loop):
+	"""Agua baja: orilla en pendiente hacia adentro, del suelo a SHALLOW, y el fondo, que se camina."""
+	points, _flags = loop
+	nrm = normals(points, -1.0)
+	tops = ground_height(np.array([(pt.x, pt.y) for pt in points]))
+	rows = 3
+	ring = []
+	for pt, n, top in zip(points, nrm, tops):
+		col = []
+		for k in range(rows + 1):
+			t = k / rows
+			z = top + (SHALLOW - top) * t * t * (3 - 2 * t)
+			col.append(p.bm.verts.new((pt.x + n.x * BANK * t, pt.y + n.y * BANK * t, z)))
+		ring.append(col)
+	faces = []
+	for i in range(len(points)):
+		a, b = ring[i], ring[(i + 1) % len(points)]
+		for k in range(rows):
+			for tri in ((a[k], b[k], b[k + 1]), (a[k], b[k + 1], a[k + 1])):
+				faces.append(p.bm.faces.new(tri))
+	for f in faces:
+		f.normal_update()
+	p.paint(faces, "musgo", "MID")
+	floor = fill(p, [[Vector((col[-1].co.x, col[-1].co.y)) for col in ring]], SHALLOW)
+	p.paint(floor, "musgo", "DARK")
 	p.fixed.update(faces + floor)
 
 
@@ -517,7 +554,8 @@ def decor_spots():
 	if not spots:
 		return spots
 	far = gap(np.array([(s[1].x, s[1].y) for s in spots]), FLAT)
-	return [s for s, d in zip(spots, far) if d > 0.6]
+	dry = [all(cell_at(s[1].x + dx, s[1].y + dy) != "w" for dx, dy in ((0.7, 0), (-0.7, 0), (0, 0.7), (0, -0.7))) for s in spots]
+	return [s for s, d, ok in zip(spots, far, dry) if d > 0.6 and ok]
 
 
 def decor(meshes, collection):
@@ -642,14 +680,17 @@ def main():
 	bpy.context.scene.collection.children.link(collection)
 	pits = [style(lp, 16.0, lambda ch: ch != "~") for lp in loops(lambda ch: ch == "~")]
 	paths = [style(lp, 20.0, lambda ch: True, jagged=0.08) for lp in loops(lambda ch: ch == ":")]
+	waters = [style(lp, 24.0, lambda ch: ch in "H~", amp=WATER_AMP) for lp in loops(lambda ch: ch == "w")]
 	objects = []
 	terrain, walls = cracked_walls(collection)
 	objects.append(_build(terrain, "riscos-col", "wall", collection))
 	ground = epi.Piece(12)
 	outer = [Vector((BOUNDS[0].x, BOUNDS[0].y)), Vector((BOUNDS[1].x, BOUNDS[0].y)), Vector((BOUNDS[1].x, BOUNDS[1].y)), Vector((BOUNDS[0].x, BOUNDS[1].y))]
-	paint_role(ground, fill(ground, [outer] + [pt for pt, _f in pits] + [pt for pt, _f in paths], 0.0, ground_height), "ground")
+	paint_role(ground, fill(ground, [outer] + [pt for pt, _f in pits] + [pt for pt, _f in paths] + [pt for pt, _f in waters], 0.0, ground_height), "ground")
 	for lp in pits:
 		abyss(ground, lp)
+	for lp in waters:
+		shallow(ground, lp)
 	paint_role(ground, fill(ground, [pt for pt, _f in paths], 0.0, ground_height), "path", vary=0.015)
 	objects.append(_build(ground, "suelo-col", "outdoor", collection))
 	objects += decor(load_meshes(), collection)

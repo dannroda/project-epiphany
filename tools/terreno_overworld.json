@@ -674,6 +674,16 @@
 			1.6
 		],
 		[
+			-12.0,
+			32.0,
+			1.6
+		],
+		[
+			0.0,
+			25.2000007629395,
+			1.6
+		],
+		[
 			-48.0,
 			16.0,
 			1.6
@@ -1192,11 +1202,11 @@
 		"HHHHHHHHHH:::::::::::H...........H...........HHHH~~~~~HHHH:::::::::::::::::::::::::::::::::::HHHHHHHHHH",
 		"HHHHHHHHHHHHHH:::HHHHHHHHH...HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH:::HHHHHHHHHHHHHH",
 		"HHHHHHHHHH...........H.........~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~........H.......................HHHHHHHHHH",
-		"HHHHHHHHHH:..........H.........~~~~~~~~~~.........~~~~~~~~~~~........H.......................HHHHHHHHHH",
-		"HHHHHHHHH::..........H.........~~~~~~~~~~.........~~~~~~~~~~~................................HHHHHHHHHH",
-		"HHHHHHHHHH:..........H.........~~~~~~~~~~.........~~~~~~~~~~~................................HHHHHHHHHH",
-		"HHHHHHHHHH...........H.........~~~~~~~~~~.........~~~~~~~~~~~................................HHHHHHHHHH",
-		"HHHHHHHHHH...........H.........~~~~~~~~~~.........~~~~~~~~~~~........H.......................HHHHHHHHHH",
+		"HHHHHHHHHH:..........H.........~~~~~~~~~~.........~~~~~~~~~~~........H..........wwwwww.......HHHHHHHHHH",
+		"HHHHHHHHH::..........H.........~~~~~~~~~~.........~~~~~~~~~~~............wwwww..wwwwww.......HHHHHHHHHH",
+		"HHHHHHHHHH:..........H.........~~~~~~~~~~.........~~~~~~~~~~~............wwwww..wwwwww.wwww..HHHHHHHHHH",
+		"HHHHHHHHHH...........H.........~~~~~~~~~~.........~~~~~~~~~~~............wwwww.........wwww..HHHHHHHHHH",
+		"HHHHHHHHHH...........H.........~~~~~~~~~~.........~~~~~~~~~~~........H...wwwww.........wwww..HHHHHHHHHH",
 		"HHHHHHHHHH...........H.........~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~........H.......................HHHHHHHHHH",
 		"HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH",
 		"HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH",
