@@ -436,15 +436,6 @@ func test_full_run_from_the_entrance_to_the_boss_door() -> void:
 	assert_eq(state.current_dungeon_state().has_map, true, "agrietada: mapa")
 	_lap(laps, "sala agrietada")
 
-	player.global_position = Vector3(48, 0, 58.6)
-	await tree.create_timer(1.2).timeout
-	player.global_position = Vector3(44, 0, 68)
-	_face(Vector3.FORWARD)
-	await _open_chest(^"FeatherChest")
-	assert_eq(state.inventory.has(&"feather"), true, "sala de la pluma: pluma")
-	state.assign_button(1, &"feather")
-	_lap(laps, "sala de la pluma")
-
 	player.global_position = Vector3(48, 0, 37)
 	await tree.create_timer(1.5).timeout
 	for i in 2:
@@ -479,8 +470,9 @@ func test_full_run_from_the_entrance_to_the_boss_door() -> void:
 
 	player.global_position = Vector3(0, 0, 22.2)
 	await tree.create_timer(1.2).timeout
-	player.global_position = Vector3(0, 0, 19.6)
-	assert_true(await _jump(&"move_forward") < 17.0, "puzzle: salta la fila de huecos de la entrada")
+	player.global_position = Vector3(0, 0, 21.0)
+	assert_true(await _walk_until(&"move_forward", func() -> bool: return player.global_position.z <= 17.0), "puzzle: la entrada se camina, sin pluma")
+	assert_true(player.global_position.y > -0.1, "y sin huecos")
 	player.global_position = Vector3(6, 0, 16)
 	await tree.physics_frame
 	await _push(^"PuzzleBlock", [Vector3.LEFT, Vector3.LEFT])
@@ -502,68 +494,6 @@ func test_full_run_from_the_entrance_to_the_boss_door() -> void:
 	_lap(laps, "antesala")
 	for n in range(1, laps.size()):
 		print("  recorrido · %s: %.1f s" % [laps[n][0], (laps[n][1] - laps[n - 1][1]) / 1000.0])
-	state.reset()
-
-
-## Salta con la pluma (en el segundo botón) caminando hacia un lado; devuelve el z donde cae.
-func _jump(action: StringName) -> float:
-	_walk(action, true)
-	await tree.physics_frame
-	await _press(&"item_2")
-	for i in 90:
-		await tree.physics_frame
-		if i > 5 and player.movement_state.get_active_state().name != &"Jumping":
-			break
-	_walk(action, false)
-	for i in 10:
-		await tree.physics_frame
-	return player.global_position.z
-
-
-func test_room_10_feather_room() -> void:
-	await _start([[&"shield_mirror", 1], [&"bomb_bag", 1]])
-	player.global_position = Vector3(48, 0, 58.6)
-	await tree.create_timer(1.2).timeout
-	assert_eq((level.get_node(^"TopDownCamera") as TopDownCamera).room, level.get_node(^"Pluma"), "en la sala de la pluma")
-	var hp: int = player.health.current
-	assert_true(await _walk_until(&"move_backward", func() -> bool: return player.global_position.y < -0.5), "derecho al sur, la zanja")
-	await tree.create_timer(1.2).timeout
-	assert_true(player.health.current < hp, "caer lastima")
-	assert_true(player.global_position.z < 61.0 and player.global_position.y > -0.5, "y vuelve a la entrada (%s)" % player.global_position)
-
-	player.global_position = Vector3(48, 0, 59)
-	assert_true(await _walk_until(&"move_right", func() -> bool: return player.global_position.x >= 57.0), "por el este")
-	assert_true(await _walk_until(&"move_backward", func() -> bool: return player.global_position.z >= 70.0), "bordeando la zanja")
-	assert_true(await _walk_until(&"move_left", func() -> bool: return player.global_position.x <= 46.0), "por el fondo hasta el cofre")
-	assert_true(player.global_position.y > -0.3, "sin la pluma, sin caerse")
-	player.global_position = Vector3(44, 0, 68)
-	_face(Vector3.FORWARD)
-	await _open_chest(^"FeatherChest")
-	assert_eq(state.inventory.has(&"feather"), true, "la pluma")
-	assert_eq(state.get_flag(&"d1_feather_chest"), true)
-
-	state.assign_button(1, &"feather")
-	player.global_position = Vector3(40, 0, 63.6)
-	await tree.create_timer(0.3).timeout
-	var landed := await _jump(&"move_forward")
-	assert_true(landed < 61.0 and player.global_position.y > -0.1, "con la pluma, la zanja es un atajo (z %.2f)" % landed)
-	state.reset()
-
-
-func test_room_7_entrance_needs_the_feather() -> void:
-	await _start([[&"bow", 1]])
-	player.global_position = Vector3(0, 0, 22.4)
-	await tree.create_timer(1.2).timeout
-	var hp: int = player.health.current
-	assert_true(await _walk_until(&"move_forward", func() -> bool: return player.global_position.y < -0.5), "sin pluma, la fila de huecos no se cruza")
-	await tree.create_timer(1.2).timeout
-	assert_true(player.health.current < hp and player.global_position.z > 19.0, "cae y vuelve a la puerta (%s)" % player.global_position)
-	state.give(Items.get_item(&"feather"))
-	state.assign_button(1, &"feather")
-	player.global_position = Vector3(0, 0, 19.6)
-	await tree.create_timer(0.3).timeout
-	assert_true(await _jump(&"move_forward") < 17.0, "con la pluma, la cruza")
-	assert_true(player.global_position.y > -0.1, "y queda en el piso")
 	state.reset()
 
 

@@ -145,7 +145,7 @@ Las teclas se mapean por posición física (`physical_keycode`): WASD queda en e
 
 **Recolectables** (vasijas, pasto, enemigos): corazón, flechas ×5, bombas ×3. No hay moneda.
 
-**Un ítem por mazmorra (11.90, decidido el 2026-10-12):** D1 arco, D2 pluma (salto, §4.2), D3 gancho (11.30), D4 guantes de fuerza (levantar y tirar rocas grandes, sobre el sistema de 11.44). El disco solar (un haz de luz que se apunta como el arco) queda como ítem opcional, en una mini-mazmorra o escondido en el overworld. La armadura del esqueleto acorazado se quita con el gancho o con la bomba. Hasta que se implemente, la pluma sigue en la sala 10 de D1 y la Chullpa da flechas en el cofre del gancho. Documento de diseño: https://claude.ai/code/artifact/4fce85f9-7f11-4285-9d2e-bb1d58b45b4e
+**Un ítem por mazmorra (11.90, decidido el 2026-10-12):** D1 arco, D2 pluma (salto, §4.2), D3 gancho (11.30), D4 guantes de fuerza (levantar y tirar rocas grandes, sobre el sistema de 11.44). El disco solar (un haz de luz que se apunta como el arco) queda como ítem opcional, en una mini-mazmorra o escondido en el overworld. La armadura del esqueleto acorazado se quita con el gancho o con la bomba. D1 ya no tiene la pluma; hasta que se rehaga la Chullpa (11.60), su cofre de la isla da flechas y la pluma no se consigue en ningún lado. Documento de diseño: https://claude.ai/code/artifact/4fce85f9-7f11-4285-9d2e-bb1d58b45b4e
 
 **Post-MVP:** espada con elemento (fuego/rayo), spin attack.
 
@@ -166,7 +166,7 @@ Inicio (espada + escudo de madera)
 Opcionales: botella/poción (muro agrietado), cota reforzada (puzzle de bloques), disco solar (por ubicar)
 ```
 
-Es el orden decidido en 11.90 (2026-10-12). El código todavía tiene la pluma en la sala 10 de D1 y el gancho como ítem de la Chullpa; se muda en 11.90 y 11.60.
+Es el orden decidido en 11.90 (2026-10-12). D1 ya no tiene la pluma; la Chullpa todavía está armada para el gancho y se rehace con la pluma en 11.60.
 
 **Molde de cada mazmorra (11.90):** prueba en el overworld → mazmorra con una mecánica que la recorre entera → ítem a mitad, guardado por un sub-jefe → el jefe se vence con ese ítem → el ítem abre la zona siguiente del overworld y 2–3 secretos en zonas ya visitadas. Cada mazmorra se diseña primero como grafo llave-cerradura (`DungeonGraph` en `data/dungeons/`: zonas, pasos y qué pide cada lugar), y `test_dungeon_reach` lo cruza con la escena (tipo de puerta, interruptores de cada reja, contenido de los cofres, que no falte ninguna puerta, reja, cofre o interruptor) y recorre todos los órdenes de juego: falla si algo pide un ítem que nadie da o si hay un estado desde el que ya no se llega al objetivo, y muestra el camino hasta ahí. D1 tiene el suyo (`d1_graph.tres`).
 
@@ -285,7 +285,7 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 
 9 salas + jefe. Hub central con puertas que se van abriendo.
 
-**Pendiente (11.90):** la pluma pasa a D2. Se quitan la sala 10 y los huecos de la entrada del puzzle, la vasija del escalón de la Antesala se baja o se quita, y el arco lo guarda el sub-jefe (11.31). La tabla y el layout de abajo describen el templo tal como está hoy.
+**Sin pluma (11.90, 2026-10-12):** la pluma pasó a D2. Se quitaron la sala de la pluma (era la 10, debajo de la agrietada: su puerta quedó tapiada), la fila de huecos de la entrada del puzzle y el escalón de la vasija de la antesala. Pendiente: el arco lo guarda un sub-jefe (11.31) en vez de solo oleadas.
 
 | # | Sala | Puzzle / mecánica | Combate | Obtiene | Doom |
 |---|---|---|---|---|---|
@@ -293,11 +293,10 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 | 2 | Hub central | 4 salidas: con llave, con persiana, del jefe (sellada), libre | Esqueletos | — | Primeras grietas |
 | 3 | Galería de trampas | Torretas disparan orbes → reflejar con escudo espejo a un cristal; entre la entrada y el puzzle, dos columnas de pinchos (`SpikeTrap`) que suben en ola de norte a sur y se cruzan con timing | Torretas, pinchos | Llave chica | Polvo cae al resolver |
 | 4 | Sala agrietada | Muro bombable; bombas empujan bloques físicos a un interruptor | — | Mapa | Temblor breve |
-| 10 | Sala de la pluma | Zanja de huecos de una baldosa: sin pluma se rodea hasta el cofre; con ella, la zanja es un atajo. Vasija de corazones arriba de un escalón | — | **Cofre grande: PLUMA** | Inquietud (0.45) |
 | 5 | Arena | Puerta se cierra hasta limpiar la sala | Oleada con esqueleto con escudo | **Cofre grande: ARCO** | Rugido lejano |
 | 6 | Sala de ojos | Ojos-interruptor sobre un abismo, solo alcanzables con flechas | Torreta | Brújula + llave chica | Luz vira a rojizo |
-| 7 | Puzzle combinado | Fila de huecos en la entrada (pluma) → bloques + reflejo + flechas en secuencia | Mixto | **Llave del jefe** | Murmullo audible |
-| 8 | Antesala | Vasijas con corazones (una arriba de un escalón, con la pluma), tablilla, puerta del jefe | — | — | Latido constante |
+| 7 | Puzzle combinado | Bloques + reflejo + flechas en secuencia | Mixto | **Llave del jefe** | Murmullo audible |
+| 8 | Antesala | Vasijas con corazones, tablilla, puerta del jefe | — | — | Latido constante |
 | 9 | **Jefe** | Ver §9 | — | Contenedor de corazón | Clímax |
 
 ### 8.1 Layout
@@ -322,13 +321,13 @@ Decidido el 2026-10-08 con la metodología de [[gdd#overworld-layout]] (artícul
 │ 6 OJOS    │    │ 2 HUB     │    │ 4 AGRIET. │
 │ brújula + │    │ esqueletos│◄───┤ bombas →  │
 │ llave 2   │    │           │LLAVE  MAPA    │
-└─────▲─────┘    └─────▲─────┘    └─────┬─────┘
-   [OJO→flecha]        │                │
-┌─────┴─────┐          │          ┌─────┴─────┐
-│ 3 GALERÍA ├─[PERSIANA]┘          │10 PLUMA   │
-│ torreta → │    ┌─────┴─────┐    │ zanja →   │
-│ llave 1   │    │ 1 VESTÍB. │    │ PLUMA     │
-└───────────┘    │ bloque →  │    └───────────┘
+└─────▲─────┘    └─────▲─────┘    └───────────┘
+   [OJO→flecha]        │
+┌─────┴─────┐          │
+│ 3 GALERÍA ├─[PERSIANA]┘
+│ torreta → │    ┌─────┴─────┐
+│ llave 1   │    │ 1 VESTÍB. │
+└───────────┘    │ bloque →  │
                  │ interrup. │
                  └───────────┘  ← entrada desde el overworld (vestíbulo)
 ```
@@ -339,8 +338,6 @@ Decidido el 2026-10-08 con la metodología de [[gdd#overworld-layout]] (artícul
 | Hub → Galería (O) | Persiana | Vencer a los esqueletos del hub |
 | Hub → Sala agrietada (E) | Con llave | Llave 1 (Galería) |
 | Agrietada → Arena (N) | Muro agrietado | Bomba |
-| Agrietada → Pluma (S) | Libre | — (del lado de la entrada de la agrietada, sin bombas) |
-| Ojos → Puzzle: fila de huecos | Hueco de una baldosa | Pluma |
 | Galería → Ojos (N) | Interruptor | Ojo sobre la puerta: **solo con flecha** (vuelta a una sala vista con el arco) |
 | Ojos → Puzzle (N) | Con llave | Llave 2 (Ojos) |
 | Hub → Antesala (N) | Sellada (interruptor) | Resolver el puzzle combinado: se ve cerrada desde el principio |
@@ -348,7 +345,7 @@ Decidido el 2026-10-08 con la metodología de [[gdd#overworld-layout]] (artícul
 
 **Llaves:** 2 llaves chicas y 2 puertas con llave. La llave 1 solo puede gastarse en la puerta este del hub, porque la otra puerta con llave (Ojos → Puzzle) queda detrás del arco, que está detrás de la puerta este. La llave 2 aparece recién en Ojos. En ningún orden quedan menos llaves que puertas.
 
-**Pluma (11.35):** el segundo ítem de la mazmorra, en la primera mitad: la sala 10 sale de la agrietada sin bombas. Se practica en su propia sala (la zanja es el atajo de vuelta) y se exige en la entrada del Puzzle (7), detrás del arco; la vasija del escalón de la antesala es opcional. Sin pluma se llega a la entrada del Puzzle y se vuelve a buscarla: la fila de huecos se ve desde la puerta.
+**Pluma (11.35):** estuvo en la sala 10 hasta el 2026-10-12; desde 11.90 es el ítem de D2. El grafo llave-cerradura del templo está en `data/dungeons/d1_graph.tres` (`test_dungeon_reach`).
 
 **Arco a mitad de camino:** sin arco se recorren Vestíbulo, Hub, Galería, Agrietada y Arena (5 de 9). Con el arco se vuelve a la Galería, cuyo ojo sobre la puerta norte se vio desde el principio (cebo), y empieza la segunda mitad: Ojos y Puzzle giran alrededor de las flechas, combinadas con bloques y el escudo espejo.
 
@@ -356,9 +353,9 @@ Decidido el 2026-10-08 con la metodología de [[gdd#overworld-layout]] (artícul
 
 **Curva de tensión y *doom*:** calma (Vestíbulo) → combate (Hub) → puzzle con presión (Galería) → puzzle (Agrietada) → clímax de la primera mitad (Arena, oleadas) → descubrimiento con el arco (Ojos) → prueba combinada (Puzzle) → respiro antes del jefe (Antesala) → Jefe. El *doom* de cada sala es la columna de la tabla de arriba.
 
-**Construcción:** `levels/temple.tscn` (id `d1`, flags `d1_*`, diálogos en `data/dialogue/temple.dialogue`) con el kit gris: 10 salas de 11 × 7 celdas (22 × 14 m, apenas más que una pantalla) con paredes compartidas y la puerta en el centro de cada pared; la sala (cx, cz) del mapa tiene su centro en (24 cx, 16 cz) m. La puerta del templo del overworld lleva al vestíbulo (spawn `start`) y la salida sur vuelve al spawn `templo`. *Vestíbulo:* bloque → interruptor (`d1_vestibule_switch`) → puerta al hub. *Hub:* dos esqueletos cierran la persiana oeste hasta vencerlos; este con llave (`d1_hub_locked_door`); norte, el sello; vasijas con munición. *Galería:* una torreta al norte; bloqueando en diagonal con el escudo espejo, el orbe entra de frente y sale hacia el ojo del noroeste (`d1_gallery_eye`), que baja la reja del nicho con la llave 1. El ojo sobre la puerta norte (`d1_ojos_door_eye`) solo se despierta con flecha. *Sala agrietada:* una pared cruza la sala con un hueco tapado por una caja liviana (masa 0.3): el player no la empuja, una bomba la vuela. Del otro lado, el mapa (`d1_map_chest`) y el muro agrietado hacia la arena (`d1_arena_cracked_wall`). Si la caja queda trabando la salida, otra bomba la saca (las vasijas dan bombas). *Arena:* `WaveSpawner` (cada hijo es una oleada; sus `WaveSpawn` dicen qué enemigo y dónde) arranca al entrar y retiene cerrada la persiana entre oleadas (`Room.waves_running`). Dos oleadas: dos esqueletos; después el esqueleto con escudo y dos esqueletos. Al ganar (`d1_arena_cleared`) baja la reja del cofre grande del arco (`d1_chest_bow`, trae 10 flechas). Morir a mitad recarga la sala y las oleadas empiezan de cero. *Sala de ojos:* un hueco (pieza Hueco del kit, sin colisión) cruza la sala; caer lastima medio corazón y devuelve a la entrada de la sala (`Pit`). Del otro lado, dos ojos que solo despiertan con flecha: el oeste (`d1_ojos_eye_a`) abre el nicho de la brújula, el este (`d1_ojos_eye_b`) sube un `Bridge` sobre el hueco; cruzando, la llave 2 y la puerta con llave al puzzle. *Sala de la pluma* (`Pluma`, celda de mapa (2, 4), debajo de la agrietada): una zanja de huecos (pieza Hueco) cruza la sala en la segunda fila y baja por el este; sin pluma se rodea por el este y el fondo hasta el cofre grande (`d1_feather_chest`); con ella se vuelve saltando la zanja. Junto a la entrada, una vasija de corazones arriba de un escalón (0,6 m). Caer devuelve a la entrada (`PlumaPit`). *Sala del puzzle*: una fila de huecos de una baldosa cruza la sala a 4 m de la puerta (la caminata de entrada de la cámara es 1,6 m: más cerca dejaría la entrada al borde del hueco); se salta con la pluma (`PuzzlePit`). Después, en secuencia: 1) el bloque, al este del interruptor, empujado dos veces al oeste, baja la reja que corta el haz; 2) atajando el haz con el escudo espejo se enciende el cristal, que baja la reja delante del ojo; 3) una flecha al ojo (`d1_puzzle_eye`) abre el nicho de la llave del jefe y el sello del hub. *Antesala:* cuatro vasijas de corazones, una tablilla que anticipa al jefe (cue `antechamber`: flechas y reflejo) y la puerta del jefe (`d1_boss_door`; la llave del jefe no se gasta). Checkpoint: la cámara no anota la entrada de la sala del jefe (`Room.boss_room`), así que morir ahí devuelve a la antesala. *Guarida del ojo:* sala vacía; el jefe es M9.
+**Construcción:** `levels/temple.tscn` (id `d1`, flags `d1_*`, diálogos en `data/dialogue/temple.dialogue`) con el kit gris: 9 salas de 11 × 7 celdas (22 × 14 m, apenas más que una pantalla) con paredes compartidas y la puerta en el centro de cada pared; la sala (cx, cz) del mapa tiene su centro en (24 cx, 16 cz) m. La puerta del templo del overworld lleva al vestíbulo (spawn `start`) y la salida sur vuelve al spawn `templo`. *Vestíbulo:* bloque → interruptor (`d1_vestibule_switch`) → puerta al hub. *Hub:* dos esqueletos cierran la persiana oeste hasta vencerlos; este con llave (`d1_hub_locked_door`); norte, el sello; vasijas con munición. *Galería:* una torreta al norte; bloqueando en diagonal con el escudo espejo, el orbe entra de frente y sale hacia el ojo del noroeste (`d1_gallery_eye`), que baja la reja del nicho con la llave 1. El ojo sobre la puerta norte (`d1_ojos_door_eye`) solo se despierta con flecha. *Sala agrietada:* una pared cruza la sala con un hueco tapado por una caja liviana (masa 0.3): el player no la empuja, una bomba la vuela. Del otro lado, el mapa (`d1_map_chest`) y el muro agrietado hacia la arena (`d1_arena_cracked_wall`). Si la caja queda trabando la salida, otra bomba la saca (las vasijas dan bombas). *Arena:* `WaveSpawner` (cada hijo es una oleada; sus `WaveSpawn` dicen qué enemigo y dónde) arranca al entrar y retiene cerrada la persiana entre oleadas (`Room.waves_running`). Dos oleadas: dos esqueletos; después el esqueleto con escudo y dos esqueletos. Al ganar (`d1_arena_cleared`) baja la reja del cofre grande del arco (`d1_chest_bow`, trae 10 flechas). Morir a mitad recarga la sala y las oleadas empiezan de cero. *Sala de ojos:* un hueco (pieza Hueco del kit, sin colisión) cruza la sala; caer lastima medio corazón y devuelve a la entrada de la sala (`Pit`). Del otro lado, dos ojos que solo despiertan con flecha: el oeste (`d1_ojos_eye_a`) abre el nicho de la brújula, el este (`d1_ojos_eye_b`) sube un `Bridge` sobre el hueco; cruzando, la llave 2 y la puerta con llave al puzzle. *Sala del puzzle*: en secuencia: 1) el bloque, al este del interruptor, empujado dos veces al oeste, baja la reja que corta el haz; 2) atajando el haz con el escudo espejo se enciende el cristal, que baja la reja delante del ojo; 3) una flecha al ojo (`d1_puzzle_eye`) abre el nicho de la llave del jefe y el sello del hub. *Antesala:* cuatro vasijas de corazones, una tablilla que anticipa al jefe (cue `antechamber`: flechas y reflejo) y la puerta del jefe (`d1_boss_door`; la llave del jefe no se gasta). Checkpoint: la cámara no anota la entrada de la sala del jefe (`Room.boss_room`), así que morir ahí devuelve a la antesala. *Guarida del ojo:* sala vacía; el jefe es M9.
 
-**Doom (10.6):** cada `Room` tiene `doom` (0..1): Vestíbulo 0, Hub 0.15, Galería 0.3, Agrietada 0.4, Pluma 0.45, Arena 0.55, Ojos 0.65, Puzzle 0.75, Antesala 0.9, Jefe 1. `DoomAmbience` (un nodo en la escena del templo) lo sigue suavizado: la luz ambiente y el sol viran de frío a rojo, sube una niebla rojiza, cae polvo alrededor de la cámara, el piso se agrieta (decals generados, más cuanto más doom; el vestíbulo queda intacto) y desde 0.3 el templo tiembla cada vez más seguido (de cada ~14 s a cada ~4 s) con retumbo. La música suma capas con el mismo valor (10.5). **Legibilidad (11.7):** el player y los objetos (cofres, pickups, vasijas, bloques, bombas, tablillas, interruptores; `DoomAmbience.is_legible`) no se tiñen: van en la capa visual 2, que el sol rojo no ilumina (pero sí proyectan sombra, `shadow_caster_mask`), los ilumina `LegibleLight`, una luz neutra con la dirección del sol, y sus materiales no reciben niebla (copias con `disable_fog`). Las grietas no se proyectan sobre ellos. La luz ambiente sí les llega.
+**Doom (10.6):** cada `Room` tiene `doom` (0..1): Vestíbulo 0, Hub 0.15, Galería 0.3, Agrietada 0.4, Arena 0.55, Ojos 0.65, Puzzle 0.75, Antesala 0.9, Jefe 1. `DoomAmbience` (un nodo en la escena del templo) lo sigue suavizado: la luz ambiente y el sol viran de frío a rojo, sube una niebla rojiza, cae polvo alrededor de la cámara, el piso se agrieta (decals generados, más cuanto más doom; el vestíbulo queda intacto) y desde 0.3 el templo tiembla cada vez más seguido (de cada ~14 s a cada ~4 s) con retumbo. La música suma capas con el mismo valor (10.5). **Legibilidad (11.7):** el player y los objetos (cofres, pickups, vasijas, bloques, bombas, tablillas, interruptores; `DoomAmbience.is_legible`) no se tiñen: van en la capa visual 2, que el sol rojo no ilumina (pero sí proyectan sombra, `shadow_caster_mask`), los ilumina `LegibleLight`, una luz neutra con la dirección del sol, y sus materiales no reciben niebla (copias con `disable_fog`). Las grietas no se proyectan sobre ellos. La luz ambiente sí les llega.
 
 **Escenarios y recorrido (8.8):** `dungeon_no_bow` (en el hub, con escudo espejo y bombas), `pre_boss` (en la antesala, todo resuelto y la llave del jefe) y `boss_key_door_locked` (inconsistente a propósito: la puerta del jefe abierta sin la llave; `SaveCodec.validate` lo marca). `tests/test_temple.gd › test_full_run_from_the_entrance_to_the_boss_door` recorre de la entrada a la puerta del jefe desde un único estado inicial e imprime el tiempo por tramo (simulado, sin pelear de verdad); el recorrido real queda para la prueba a mano.
 

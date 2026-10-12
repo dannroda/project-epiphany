@@ -11,7 +11,7 @@
       "text": "Ítem por mazmorra"
     },
     {
-      "detail": "Sacar la sala de la pluma y los huecos del Puzzle de D1; bajar o quitar la vasija del escalón de la Antesala. La Chullpa se rehace con la pluma en el cofre de la isla; lo que hoy pide gancho pasa a pluma o caída. La pieza de la pradera y la angostura quedan para después de D2.",
+      "detail": "D1 hecho el 2026-10-12: sin sala de la pluma (puerta tapiada en la grilla), sin la fila de huecos del Puzzle, sin el escalón de la vasija de la Antesala; d1_graph.tres, test_temple y test_doom al día; navmesh del templo horneada de nuevo en levels/nav/temple_navmesh.tres. Falta la Chullpa con la pluma (11.60, paso 8). La pieza de la pradera y la angostura quedan para después de D2.",
       "done": false,
       "text": "Mudar la pluma a D2"
     },
@@ -61,5 +61,5 @@
   ],
   "test": "",
   "title": "Diseño de mazmorras, ítems y su reparto en el overworld",
-  "updated_at": "2026-10-12T18:26:33.356Z"
+  "updated_at": "2026-10-12T18:33:33.105Z"
 }

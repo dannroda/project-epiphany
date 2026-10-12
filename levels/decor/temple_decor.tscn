@@ -323,4 +323,3 @@ mesh = ExtResource("6_18bbf")
 transform = Transform3D(-0.97157305, 0, -0.2367399, 0, 1, 0, 0.2367399, 0, -0.97157305, 29.65916, 0.02, 16.346739)
 mesh = ExtResource("6_18bbf")
 
-[node name="Pluma" type="Node3D" parent="." unique_id=888838353]
