@@ -82,7 +82,7 @@ func test_holes_drop_to_the_floor_below() -> void:
 	await _drop(Vector3(6, 8.5, 12))
 	assert_eq(camera.room, _room("PisoTronco/Rama"), "el hueco del nido cae a la rama")
 	await _drop(Vector3(18, 8.5, 24))
-	assert_eq(camera.room, _room("PisoTronco/Tronco"), "el de la guarida del vigía, al tronco")
+	assert_eq(camera.room, _room("PisoTronco/Tronco"), "el de la cámara del arco, al tronco")
 	tree.root.get_node(^"GameState").reset()
 
 
@@ -124,11 +124,15 @@ func test_the_warden_gets_stuck_in_the_roots_and_falls_to_the_sword() -> void:
 	await _start()
 	var fight := level.get_node(^"PisoCopa/WardenFight") as EyeFight
 	var warden := fight.get_node(^"Warden") as WatcherEye
-	var shutter := level.get_node(^"PisoCopa/VigiaShutter") as Door
+	var entry := level.get_node(^"PisoCopa/CopaLocked") as Door
+	var bow_door := level.get_node(^"PisoCopa/ArcoDoor") as Door
+	tree.root.get_node(^"GameState").set_flag(&"qv_canopy_locked_door", true)
+	await tree.create_timer(0.2).timeout
 	warden.rest_time = 0.1
-	player.global_position = Vector3(12, 8, 28)
+	player.global_position = Vector3(36, 8, 26)
 	assert_true(await _until(func() -> bool: return warden.state != WatcherEye.State.IDLE), "arranca la pelea")
-	assert_true(not shutter.is_open, "la puerta se cierra detrás")
+	assert_true(not entry.is_open, "la puerta de entrada se cierra detrás")
+	assert_true(not bow_door.is_open, "la cámara del arco está cerrada")
 	warden.hurtbox.receive(DamageInfo.make(2, 0.0, player))
 	assert_eq(warden.health.current, warden.health.max_health, "flotando, la espada rebota")
 	assert_true(await _until(func() -> bool: return warden.state == WatcherEye.State.STUCK, 20.0), "se tira y queda enganchado")
@@ -136,19 +140,20 @@ func test_the_warden_gets_stuck_in_the_roots_and_falls_to_the_sword() -> void:
 	assert_true(warden.is_dead, "enganchado, la espada lo vence sin arco")
 	assert_true(await _until(func() -> bool: return fight.active), "pelea ganada")
 	assert_true(tree.root.get_node(^"GameState").get_flag(&"qv_warden_defeated") == true, "queda el flag")
-	assert_true(await _until(func() -> bool: return (level.get_node(^"PisoCopa/BowGate") as Gate).is_open, 4.0), "se abre la reja del arco")
-	assert_true(shutter.is_open, "y la puerta")
+	assert_true(await _until(func() -> bool: return bow_door.is_open, 6.0), "se abre la cámara del arco")
+	assert_true(entry.is_open, "y la puerta de entrada")
 	tree.root.get_node(^"GameState").reset()
 
 
 func test_leaving_the_lair_resets_the_fight() -> void:
 	await _start()
 	var warden := level.get_node(^"PisoCopa/WardenFight/Warden") as WatcherEye
-	player.global_position = Vector3(12, 8, 28)
+	tree.root.get_node(^"GameState").set_flag(&"qv_canopy_locked_door", true)
+	player.global_position = Vector3(36, 8, 26)
 	assert_true(await _until(func() -> bool: return warden.state != WatcherEye.State.IDLE), "arranca la pelea")
-	await _drop(Vector3(18, 8.5, 24))
-	assert_eq(warden.state, WatcherEye.State.IDLE, "cayó por el hueco: el ojo vuelve a esperar")
-	assert_true((level.get_node(^"PisoCopa/VigiaShutter") as Door).is_open, "y la puerta queda abierta")
+	player.global_position = Vector3(36, 8, 8)
+	assert_true(await _until(func() -> bool: return warden.state == WatcherEye.State.IDLE, 3.0), "fuera de la sala, el ojo vuelve a esperar")
+	assert_true((level.get_node(^"PisoCopa/CopaLocked") as Door).is_open, "y la puerta de entrada queda abierta")
 	tree.root.get_node(^"GameState").reset()
 
 

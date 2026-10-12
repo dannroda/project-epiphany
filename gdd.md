@@ -431,9 +431,9 @@ Propuesta el 2026-10-12 y armada en blockout (`levels/quenoa.tscn`). Una queñoa
           │llave,  ├(bomba)─┤ mapa
           │brújula │escalera│
           │hueco↓  ├─[LLAVE]┤
-          │Vigía   │Antesala│
-          │ARCO    ├ abierta┤
-          │hueco↓  │        │
+          │Cámara  │Guarida │
+          │ARCO    ├[VIGÍA]─┤ sub-jefe
+          │hueco↓  │vasijas │
           └────────┴────────┘
  TRONCO   ┌────────┬────────┐
           │Rama    │Escalera│
@@ -456,17 +456,18 @@ Propuesta el 2026-10-12 y armada en blockout (`levels/quenoa.tscn`). Una queñoa
 | Sala | Qué pasa |
 |---|---|
 | Entrada (Tronco SE) | Llega del overworld. Abierta al Tronco; puerta con llave al hueco de la escalera |
-| Tronco (SO) | Hub. Un ojo en la pared norte (arco) abre la reja de la escalera que baja a las Raíces. Abajo cae el hueco de la guarida del vigía |
+| Tronco (SO) | Hub. Un ojo en la pared norte (arco) abre la reja de la escalera que baja a las Raíces. Abajo cae el hueco de la cámara del arco |
 | Rama oeste (NO) | Bloque al interruptor → reja del nicho de la **llave chica**. Un ojo en la pared norte, inalcanzable sin arco, abre el nicho de la pieza de corazón. Abajo cae el hueco del nido |
 | Hueco de la escalera (NE) | Con la llave. Escalera a la Copa |
-| Copa (NE) | **Mapa**. Muro agrietado (bomba) al Nido; puerta con llave a la Antesala |
+| Copa (NE) | **Mapa**. Muro agrietado (bomba) al Nido; puerta con llave a la guarida del vigía |
 | Nido (NO) | **Llave chica** y **brújula**. Un hueco cae a la Rama: atajo de vuelta |
-| Antesala (SE) → Guarida del vigía (SO) | Sub-jefe (blockout: oleada de enemigos, `qv_warden_defeated`) que abre el nicho del **arco**. Un hueco cae al Tronco |
+| Guarida del vigía (SE) | Sub-jefe, el **Ojo Vigía** (`WardenFight`, `qv_warden_defeated`). Sala sin obstáculos, solo vasijas. Al entrar se cierra la puerta. El ojo flota, se abre, marca una línea en el piso y la barre con un rayo; después se tira sobre el player y queda enganchado en las raíces, y ahí le pegan la espada, las bombas y las vasijas. Vencido, abre la puerta de la cámara del arco |
+| Cámara del arco (SO) | Solo se abre al vencer al sub-jefe. Cofre del **arco**. Un hueco cae al Tronco, que es la vuelta |
 | Raíces (NO) | Con el arco, desde el Tronco. Dos ojos abren el nicho de la **llave chica** |
 | Sala de los ojos (NE) | Con llave. Un ojo detrás de un muro agrietado (bomba y flecha) abre el nicho de la **llave del jefe** |
-| Corazón del árbol (SE) | Jefe (blockout: sala vacía). Dos ojos que flotan y barren con rayos; se abren para cargar y una flecha al ojo abierto los derriba para la espada. Al caer uno, el otro se apura |
+| Corazón del árbol (SE) | Jefe, **Los Ojos de la Queñoa** (`BossFight`, `qv_boss_defeated`). Sala sin obstáculos. Dos ojos que flotan y barren con rayos, de a uno por vez. Cerrados, todo les rebota. Una flecha mientras se abren para cargar los derriba, y en el piso les pega la espada. Al caer uno, el otro se apura. Vencidos: se abre la puerta, aparecen el contenedor de corazón (`qv_heart_container`) y el portal de salida |
 
-El sub-jefe propio (un ojo que barre con un rayo y queda enganchado en las raíces, vencible con espada, bomba o vasija) y el jefe son tareas aparte. El kit es el de la Chullpa hasta que haya uno de árbol. Escenario de debug: `quenoa`. La puerta en el overworld la pone la sesión del overworld (7.10); mientras, la salida lleva al punto `arboleda`.
+Los ojos son `WatcherEye` (`src/entities/watcher_eye/`). Los maneja un `EyeFight` en la sala, como una oleada: cierra las puertas, hace la intro con la cámara y el nombre, muestra la barra del HUD, deja barrer a un ojo por vez y, si el player sale, la pelea vuelve a empezar. Al ganar pone el flag y hace de interruptor. Molde de todas las mazmorras: las peleas de sub-jefe y jefe van en salas sin obstáculos (solo objetos como vasijas), y el cofre del ítem va en una sala contigua que se abre al vencer al sub-jefe. El kit es el de la Chullpa hasta que haya uno de árbol. Escenario de debug: `quenoa`. La puerta en el overworld la pone la sesión del overworld (7.10); mientras, la salida lleva al punto `arboleda`.
 
 ## 9. Jefe — El Ojo con manos
 <!-- id: jefe -->

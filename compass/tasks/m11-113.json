@@ -29,8 +29,8 @@
       "text": "Chequeo de grafos de diseño y reglas del molde"
     },
     {
-      "detail": "Hoy la guarida del vigía es una oleada (qv_warden_defeated) y el Corazón del árbol está vacío. Sub-jefe: un ojo que barre con un rayo y queda enganchado en las raíces, vencible sin arco (espada, bomba, vasija). Jefe: dos ojos que flotan y barren con rayos; flecha al ojo abierto.",
-      "done": false,
+      "detail": "Hecho el 2026-10-12. WatcherEye (src/entities/watcher_eye/): un ojo flotante que se abre, marca una línea en el piso y la barre con un rayo. Sub-jefe Ojo Vigía: después del barrido se tira sobre el player y queda enganchado en las raíces, y ahí le pegan espada, bomba o vasija. Jefe Los Ojos de la Queñoa: dos ojos, de a uno por vez; una flecha con el ojo abierto lo derriba para la espada, y el que queda se apura. EyeFight maneja la pelea como una oleada: cierra las puertas, intro, barra, se reinicia si el player sale, flag e interruptor. Con la regla de Daniel (salas sin obstáculos, cofre del ítem en una sala contigua que abre el sub-jefe), la guarida pasa a la sala SE con vasijas y el arco a la Cámara del arco (SO), detrás de una puerta que abre el sub-jefe. Contenedor de corazón y portal de salida. test_quenoa juega las dos peleas.",
+      "done": true,
       "text": "D1: sub-jefe ojo vigía y jefe de los dos ojos"
     },
     {
@@ -54,5 +54,5 @@
   ],
   "test": "",
   "title": "El templo del ojo pasa a ser la última mazmorra",
-  "updated_at": "2026-10-12T21:22:19.205Z"
+  "updated_at": "2026-10-12T22:10:58.425Z"
 }

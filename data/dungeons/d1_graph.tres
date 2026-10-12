@@ -41,19 +41,19 @@ one_way = true
 [sub_resource type="Resource" id="Link_7"]
 script = ExtResource("2_link")
 from = &"Copa"
-to = &"Antesala"
+to = &"Vigia"
 through = Array[NodePath]([NodePath("PisoCopa/CopaLocked")])
 locked = true
 
 [sub_resource type="Resource" id="Link_8"]
 script = ExtResource("2_link")
-from = &"Antesala"
-to = &"Vigia"
-through = Array[NodePath]([NodePath("PisoCopa/VigiaShutter")])
+from = &"Vigia"
+to = &"Arco"
+through = Array[NodePath]([NodePath("PisoCopa/ArcoDoor")])
 
 [sub_resource type="Resource" id="Link_9"]
 script = ExtResource("2_link")
-from = &"Vigia"
+from = &"Arco"
 to = &"Tronco"
 one_way = true
 
@@ -123,9 +123,8 @@ node = NodePath("PisoCopa/WardenFight")
 
 [sub_resource type="Resource" id="Spot_9"]
 script = ExtResource("3_spot")
-area = &"Vigia"
+area = &"Arco"
 node = NodePath("PisoCopa/BowChest")
-through = Array[NodePath]([NodePath("PisoCopa/BowGate")])
 
 [sub_resource type="Resource" id="Spot_10"]
 script = ExtResource("3_spot")

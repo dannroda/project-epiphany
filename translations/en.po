@@ -807,8 +807,8 @@ msgstr "Canopy"
 msgid "PLACE_QV_WARDEN"
 msgstr "Warden's Lair"
 
-msgid "PLACE_QV_ANTECHAMBER"
-msgstr "Antechamber"
+msgid "PLACE_QV_BOW"
+msgstr "Bow Chamber"
 
 msgid "PLACE_QV_ROOTS"
 msgstr "Roots"

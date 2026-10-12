@@ -4370,10 +4370,10 @@ Daniel (2026-10-12): el jefe del ojo se pensó como fin de demo, así que tiene 
   Hecho el 2026-10-12 (Daniel: sigue): La Queñoa Vigía en el claro de la Arboleda (boceto 7.10 v4). Blockout levels/quenoa.tscn: Raíces, Tronco y Copa de 2 × 2 salas, llaves, bloque, ojos, muros agrietados, sub-jefe como oleada que guarda el arco; d1_graph.tres con escena pasa el test y las reglas; test_quenoa (escaleras, caídas, reja del tronco, bloque); escenario quenoa. GDD §8c. Falta: qué da el santuario; puerta en el overworld (7.10).
 - [x] Chequeo de grafos de diseño y reglas del molde
   Hecho: un DungeonGraph sin escena es de diseño (locked en los pasos, gives/key en los lugares) y test_dungeon_reach lo recorre igual; con escena, la escena tiene que coincidir con locked/key. Reglas: sin el ítem no se llega al objetivo; el ítem pide al sub-jefe (guard), que se vence sin él. tools/dungeon_graph_mermaid.gd lo dibuja. El grafo del templo pasa a temple_graph.tres.
-- [ ] D1: sub-jefe ojo vigía y jefe de los dos ojos
-  Hoy la guarida del vigía es una oleada (qv_warden_defeated) y el Corazón del árbol está vacío. Sub-jefe: un ojo que barre con un rayo y queda enganchado en las raíces, vencible sin arco (espada, bomba, vasija). Jefe: dos ojos que flotan y barren con rayos; flecha al ojo abierto.
+- [x] D1: sub-jefe ojo vigía y jefe de los dos ojos
+  Hecho el 2026-10-12. WatcherEye (src/entities/watcher_eye/): un ojo flotante que se abre, marca una línea en el piso y la barre con un rayo. Sub-jefe Ojo Vigía: después del barrido se tira sobre el player y queda enganchado en las raíces, y ahí le pegan espada, bomba o vasija. Jefe Los Ojos de la Queñoa: dos ojos, de a uno por vez; una flecha con el ojo abierto lo derriba para la espada, y el que queda se apura. EyeFight maneja la pelea como una oleada: cierra las puertas, intro, barra, se reinicia si el player sale, flag e interruptor. Con la regla de Daniel (salas sin obstáculos, cofre del ítem en una sala contigua que abre el sub-jefe), la guarida pasa a la sala SE con vasijas y el arco a la Cámara del arco (SO), detrás de una puerta que abre el sub-jefe. Contenedor de corazón y portal de salida. test_quenoa juega las dos peleas.
 - [ ] D1: kit de árbol y recorrerla (Daniel)
-  Hoy usa el kit de la Chullpa. Recorrerla con el escenario quenoa.
+  Hoy usa el kit de la Chullpa. Arte (Daniel, 2026-10-12): las paredes sueltas dentro de una sala (nichos de cofres, reja de la escalera del tronco) se ven como bloques macizos con la tapa cortada; hacen falta piezas de nicho o pared baja propias del kit. Recorrerla con el escenario quenoa.
 
 **Notas:** Sesión: diseño (-43 [a7e236]), con Daniel. Overworld (-eb) acomoda el boceto de 7.10 cuando esté la cadena.
 

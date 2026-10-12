@@ -807,8 +807,8 @@ msgstr "Copa"
 msgid "PLACE_QV_WARDEN"
 msgstr "Guarida del vigía"
 
-msgid "PLACE_QV_ANTECHAMBER"
-msgstr "Antesala"
+msgid "PLACE_QV_BOW"
+msgstr "Cámara del arco"
 
 msgid "PLACE_QV_ROOTS"
 msgstr "Raíces"
