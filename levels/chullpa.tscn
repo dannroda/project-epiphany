@@ -1,4 +1,4 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://ccn88kav7u1vk"]
 
 [ext_resource type="Script" path="res://src/world/dungeon.gd" id="1_p48v1"]
 [ext_resource type="Script" path="res://src/world/dungeon_floor.gd" id="2_c7ykk"]

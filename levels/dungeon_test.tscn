@@ -1,4 +1,4 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://0ys75g85hc83"]
 
 [ext_resource type="Script" path="res://src/world/dungeon.gd" id="1_ksc1b"]
 [ext_resource type="MeshLibrary" path="res://data/kits/gray_kit.tres" id="2_dsxqm"]

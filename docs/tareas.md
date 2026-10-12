@@ -2534,7 +2534,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (24/85)
+## M11 — Pulido: contenido y feel  (25/85)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3786,9 +3786,9 @@ Detalles sueltos de la revisión, sin bug visible o con efecto de un frame.
 
 **Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
 
-### 11.79 Los corazones se rellenan al cambiar de escena · En curso
+### 11.79 Los corazones se rellenan al cambiar de escena · Hecho
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `combate`
+**Terminada:** 2026-10-11 · **Prioridad:** alta · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `combate`
 
 El estado del player (vida actual incluida) es global, no de la escena. Hoy GameState solo guarda `max_health`: cada nivel instancia su player y `_ready` → `_sync_health` → `health.reset(GameState.max_health)`, así que entrar o salir de una mazmorra (portal, escalera) rellena todos los corazones. La vida actual de cada player vive en GameState, se mantiene entre escenas y se guarda en el save.
 
@@ -3973,7 +3973,7 @@ Varios valores de juego están como const o en sitios compartidos y no se pueden
 
 **Archivos:** `src/entities/boss/boss.gd`, `src/entities/boss/boss_hand.gd`, `player/states/carrying.gd`, `player/states/aiming_item.gd`, `player/components/carrier.gd`, `ai/tasks/bt_attack.gd`, `src/entities/enemy_bt.tres`, `src/state/game_state.gd`, `src/settings/settings.gd`, `tests/test_items.gd`
 
-### 11.88 Niveles referenciados por ruta: saves y portales frágiles · En curso
+### 11.88 Niveles referenciados por ruta: saves y portales frágiles · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `guardado`, `mundo`
 
@@ -3983,8 +3983,8 @@ Los saves guardan `spawn_scene` como ruta `res://` y los portales `target_scene`
   tests/test_portals.gd: instancia cada levels/*.tscn, y cada Portal que viaja apunta a una escena que existe y que tiene un SpawnPoint con su target_spawn. Encontró la salida de la Chullpa sin punto de llegada: Spawn_chullpa provisorio en la Necrópolis (la entrada de verdad es 7.9 paso 4).
 - [x] Aviso en Portal
   Portal es @tool: aviso en el editor si viaja y target_scene está vacío o no existe; en el editor no corre su _ready.
-- [ ] uid en el save
-  Espera a que -04 cierre 11.64 y 11.79 (save_manager.gd).
+- [x] uid en el save
+  GameState guarda spawn_uid junto a spawn_scene y al cargar resuelve el uid (si no, la ruta). Chullpa, dungeon_test y sandbox_items no tenían uid: se lo puse (ResourceSaver.set_uid). test_portals exige uid en todo nivel con SpawnPoint; test_save_manager carga un save con ruta vieja por su uid.
 
 **Prueba:** Un test recorre todos los portales de levels/ y comprueba escena y SpawnPoint; mover un nivel no rompe una partida guardada.
 

@@ -56,3 +56,19 @@ func test_missing_scene_loads_at_the_start_instead_of_hanging() -> void:
 	for suffix in ["", ".bak"]:
 		DirAccess.remove_absolute(save_manager.slot_path(SLOT) + suffix)
 	game_state.reset()
+
+
+func test_a_moved_level_loads_by_its_uid() -> void:
+	var game_state: Node = (Engine.get_main_loop() as SceneTree).root.get_node(^"GameState")
+	game_state.reset()
+	game_state.spawn_scene = LEVEL
+	var cfg := ConfigFile.new()
+	game_state.write_to(cfg)
+	cfg.set_value("player", "spawn_scene", "res://niveles/viejo/test.tscn")
+	game_state.read_from(cfg)
+	assert_eq(game_state.spawn_scene, LEVEL, "el uid encuentra el nivel aunque la ruta guardada ya no exista")
+	cfg.erase_section_key("player", "spawn_uid")
+	cfg.set_value("player", "spawn_scene", LEVEL)
+	game_state.read_from(cfg)
+	assert_eq(game_state.spawn_scene, LEVEL, "un save viejo sin uid sigue usando la ruta")
+	game_state.reset()

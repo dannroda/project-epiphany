@@ -11,8 +11,8 @@
       "text": "Aviso en Portal"
     },
     {
-      "detail": "Espera a que -04 cierre 11.64 y 11.79 (save_manager.gd).",
-      "done": false,
+      "detail": "GameState guarda spawn_uid junto a spawn_scene y al cargar resuelve el uid (si no, la ruta). Chullpa, dungeon_test y sandbox_items no tenían uid: se lo puse (ResourceSaver.set_uid). test_portals exige uid en todo nivel con SpawnPoint; test_save_manager carga un save con ruta vieja por su uid.",
+      "done": true,
       "text": "uid en el save"
     }
   ],
@@ -30,12 +30,12 @@
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "guardado",
     "mundo"
   ],
   "test": "Un test recorre todos los portales de levels/ y comprueba escena y SpawnPoint; mover un nivel no rompe una partida guardada.",
   "title": "Niveles referenciados por ruta: saves y portales frágiles",
-  "updated_at": "2026-10-12T01:03:25.141Z"
+  "updated_at": "2026-10-12T01:19:44.985Z"
 }

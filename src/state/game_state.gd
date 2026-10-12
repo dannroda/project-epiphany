@@ -236,6 +236,9 @@ func write_to(cfg: ConfigFile) -> void:
 	cfg.set_value("player", "health", player_health.duplicate())
 	cfg.set_value("player", "play_time", play_time)
 	cfg.set_value("player", "spawn_scene", spawn_scene)
+	var uid := ResourceLoader.get_resource_uid(spawn_scene) if not spawn_scene.is_empty() else ResourceUID.INVALID_ID
+	if uid != ResourceUID.INVALID_ID:
+		cfg.set_value("player", "spawn_uid", ResourceUID.id_to_text(uid))
 	cfg.set_value("player", "spawn_point", spawn_point)
 	cfg.set_value("player", "current_dungeon", current_dungeon)
 	if player_position != null:
@@ -267,7 +270,7 @@ func read_from(cfg: ConfigFile) -> void:
 	max_health = cfg.get_value("player", "max_health", NEW_GAME_MAX_HEALTH)
 	player_health.assign(cfg.get_value("player", "health", {}))
 	play_time = cfg.get_value("player", "play_time", 0.0)
-	spawn_scene = cfg.get_value("player", "spawn_scene", "")
+	spawn_scene = _scene_path(cfg.get_value("player", "spawn_uid", ""), cfg.get_value("player", "spawn_scene", ""))
 	spawn_point = cfg.get_value("player", "spawn_point", &"")
 	current_dungeon = cfg.get_value("player", "current_dungeon", &"")
 	if cfg.has_section_key("player", "position"):
@@ -324,6 +327,14 @@ func _clear() -> void:
 	room_entry = null
 	boss_rematch = false
 	save_tampered = false
+
+
+## El uid sigue al nivel si se movió o se renombró; la ruta queda para saves viejos sin uid.
+func _scene_path(uid_text: String, path: String) -> String:
+	var uid := ResourceUID.text_to_id(uid_text) if not uid_text.is_empty() else ResourceUID.INVALID_ID
+	if uid != ResourceUID.INVALID_ID and ResourceUID.has_id(uid):
+		return ResourceUID.get_id_path(uid)
+	return path
 
 
 func _keys(cfg: ConfigFile, section: String) -> Array[StringName]:
