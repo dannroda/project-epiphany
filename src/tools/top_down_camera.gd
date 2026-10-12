@@ -232,8 +232,8 @@ func _mask_around(area: Rect2) -> void:
 	var strips := [
 		Rect2(area.position.x - FAR, area.position.y - FAR, area.size.x + FAR * 2.0, FAR),
 		Rect2(area.position.x - FAR, south, area.size.x + FAR * 2.0, FAR),
-		Rect2(area.position.x - FAR, area.position.y, FAR, area.size.y),
-		Rect2(area.end.x, area.position.y, FAR, area.size.y),
+		Rect2(area.position.x - FAR, area.position.y, FAR, maxf(south, area.end.y) - area.position.y),
+		Rect2(area.end.x, area.position.y, FAR, maxf(south, area.end.y) - area.position.y),
 		Rect2(area.position.x - FAR, lip, area.size.x + FAR * 2.0, south - lip),
 	]
 	for i in strips.size():
@@ -308,7 +308,7 @@ func _cut_south_wall(cut_room: Room) -> void:
 		cut_room = null
 	if cut_room:
 		var bounds := cut_room.bounds().grow(0.05)
-		area = Vector4(bounds.position.x - SOUTH_WALL_DEPTH, bounds.end.x + SOUTH_WALL_DEPTH, bounds.end.y - SOUTH_WALL_RELIEF, bounds.end.y + SOUTH_WALL_DEPTH)
+		area = Vector4(bounds.position.x - SOUTH_WALL_DEPTH, bounds.end.x + SOUTH_WALL_DEPTH, bounds.end.y - SOUTH_WALL_RELIEF, bounds.end.y + SOUTH_WALL_DEPTH + south_wall_reach)
 		height = cut_room.floor_y() + south_wall_cut
 		lip = bounds.end.y + SOUTH_WALL_RELIEF + south_wall_reach
 	for door: Door in get_tree().get_nodes_in_group(&"doors"):
