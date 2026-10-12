@@ -26,7 +26,8 @@
       "text": "Terreno orgánico, decoración y navmesh regenerados"
     },
     {
-      "done": false,
+      "detail": "Escenario travel (los 6 portales prendidos, puente subido, todo el mapa visitado; para recorrerlo) y test_scenario_spawn_points_exist: el punto de cada escenario existe en su escena.",
+      "done": true,
       "text": "Tests y escenarios al día"
     },
     {
@@ -69,5 +70,5 @@
   ],
   "test": "",
   "title": "Rediseño del overworld como hub de varias mazmorras",
-  "updated_at": "2026-10-12T18:27:10.811Z"
+  "updated_at": "2026-10-12T18:28:16.718Z"
 }

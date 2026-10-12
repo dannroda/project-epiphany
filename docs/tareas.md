@@ -1593,6 +1593,7 @@ El overworld de 3 × 3 pantallas quedó hecho para una sola mazmorra y se siente
 - [x] Terreno orgánico, decoración y navmesh regenerados
   Rehecho con el puente y la Chullpa (945f45f); se repite cada vez que cambian el GridMap o los puntos fijos.
 - [ ] Tests y escenarios al día
+  Escenario travel (los 6 portales prendidos, puente subido, todo el mapa visitado; para recorrerlo) y test_scenario_spawn_points_exist: el punto de cada escenario existe en su escena.
 - [ ] Recorrerlo (Daniel)
 - [x] Viaje rápido: mockup de la pantalla
   Artboard 'Pausa · Mapa (overworld nuevo) con portales de viaje' (Pause_Map_Travel) en https://claude.ai/artifact/UuD7d42rAXuYTBcMd9iZJy. Aprobado por Daniel.

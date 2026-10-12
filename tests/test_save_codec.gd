@@ -88,11 +88,26 @@ func test_validate() -> void:
 
 
 func test_scenarios_are_valid() -> void:
-	for scenario in ["start", "full_inventory", "test_rooms", "dungeon_no_bow", "dungeon_test", "bombs_only", "pre_temple", "pre_boss"]:
+	for scenario in ["start", "full_inventory", "test_rooms", "dungeon_no_bow", "dungeon_test", "bombs_only", "pre_temple", "pre_boss", "chullpa", "travel"]:
 		var cfg := ConfigFile.new()
 		assert_eq(SaveCodec.read("res://debug/scenarios/%s.cfg" % scenario, cfg), OK, scenario)
 		assert_eq(SaveCodec.validate(cfg).size(), 0, scenario)
 		assert_eq(SaveCodec.is_tampered(cfg), false, scenario)
+
+
+func test_scenario_spawn_points_exist() -> void:
+	for file in DirAccess.get_files_at("res://debug/scenarios/"):
+		var cfg := ConfigFile.new()
+		SaveCodec.read("res://debug/scenarios/" + file, cfg)
+		var spawn: StringName = cfg.get_value("player", "spawn_point", &"")
+		var scene: String = cfg.get_value("player", "spawn_scene", "")
+		if spawn == &"" or scene.is_empty() or cfg.has_section_key("player", "position"):
+			continue
+		var level: Node = load(scene).instantiate()
+		var ids := level.find_children("*", "SpawnPoint", true, false).map(func(point: SpawnPoint) -> StringName: return point.id)
+		ids.append_array(level.find_children("*", "TravelPortal", true, false).map(func(portal: TravelPortal) -> StringName: return portal.spawn_id()))
+		assert_true(spawn in ids, "%s: %s tiene el punto %s" % [file, scene.get_file(), spawn])
+		level.free()
 
 
 func test_inconsistent_scenario_is_flagged() -> void:
