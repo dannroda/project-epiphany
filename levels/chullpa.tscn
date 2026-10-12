@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c5hiaqs0y4egi" path="res://src/world/dungeon.gd" id="1_p48v1"]
 [ext_resource type="Script" uid="uid://dxfmc58bemc3t" path="res://src/world/dungeon_floor.gd" id="2_c7ykk"]
-[ext_resource type="MeshLibrary" path="res://data/kits/chullpa_kit.tres" id="3_exs1s"]
+[ext_resource type="MeshLibrary" uid="uid://c6bpop12oyaw5" path="res://data/kits/chullpa_kit.tres" id="3_exs1s"]
 [ext_resource type="Script" uid="uid://nqxfiofg56dy" path="res://src/world/room.gd" id="4_m6qph"]
 [ext_resource type="Script" uid="uid://b5m7kta46hqrv" path="res://src/world/pit.gd" id="5_d3wa8"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="6_ufxwh"]
@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" path="res://src/world/door.tscn" id="11_e5qux"]
 [ext_resource type="PackedScene" path="res://src/world/stairs.tscn" id="13_52yo1"]
 [ext_resource type="PackedScene" path="res://src/world/wall_torch.tscn" id="15_mw81a"]
-[ext_resource type="Resource" path="res://data/items/feather.tres" id="16_syx8m"]
+[ext_resource type="Resource" uid="uid://ixwq86ig77xp" path="res://data/items/feather.tres" id="16_syx8m"]
 [ext_resource type="PackedScene" path="res://src/world/floor_switch.tscn" id="17_rjinf"]
 [ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="19_7rkw0"]
 [ext_resource type="PackedScene" path="res://src/world/stairs_down.tscn" id="22_1wqbm"]
@@ -475,8 +475,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.2, 33.4)
 script = ExtResource("37_q5kf3")
 target_scene = "res://levels/overworld.tscn"
 target_spawn = &"chullpa"
-destination_kind = "LOADING_REGION"
-destination = "PLACE_NECROPOLIS"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPortal" unique_id=2025180320]
 shape = SubResource("BoxShape3D_h8srf")
