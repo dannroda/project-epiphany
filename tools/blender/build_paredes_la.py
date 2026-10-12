@@ -16,9 +16,13 @@ import epi  # noqa: E402
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 HEIGHT = 2.0
 N = 24
-## Como en LA: las cuatro paredes con el mismo alto y la misma rampa (la sur esconde poco piso porque la cámara es casi
-## cenital), y la cresta plana sigue igual en las esquinas.
-RUN = 0.8
+## Como en LA: las cuatro paredes con el mismo alto y la cresta plana alrededor. Rampa según el lado con piso: los
+## costados más tendidos para que la cámara sin perspectiva los vea anchos.
+RUN = {"n": 0.8, "s": 0.8, "e": 1.4, "o": 1.4}
+## Pilares en las esquinas de la sala y a los lados de las puertas, algo más altos que la pared.
+PILLAR = 3.0
+PILLAR_SIZE = 0.6
+CORNERS = ("ne", "no", "se", "so")
 MARGIN = 2.0
 STONE = "acantilado"
 kit = epi.start()
@@ -28,16 +32,38 @@ def dist(x, y, side):
 	return {"n": 1 - y, "s": y + 1, "e": 1 - x, "o": x + 1}[side]
 
 
-def profile(d):
-	return HEIGHT * max(0.0, min(1.0, d / RUN))
+def profile(side, d):
+	return HEIGHT * max(0.0, min(1.0, d / RUN[side]))
 
 
 def height(x, y, sides, corners):
-	"""Cada punto toma el perfil del lado o la esquina con piso más cercanos (a menos de MARGIN); si no hay ninguno, el alto."""
-	near = [dist(x, y, side) for side in sides]
-	near += [max(dist(x, y, c[0]), dist(x, y, c[1])) for c in corners]
-	near = [d for d in near if d <= MARGIN]
-	return profile(min(near)) if near else HEIGHT
+	"""El más bajo de los perfiles de los lados con piso a menos de MARGIN; las esquinas sueltas son la unión de sus dos
+	perfiles. Sin ninguno cerca, el alto."""
+	near = [profile(side, dist(x, y, side)) for side in sides if dist(x, y, side) <= MARGIN]
+	near += [max(profile(c[0], dist(x, y, c[0])), profile(c[1], dist(x, y, c[1]))) for c in corners if c in CORNERS]
+	return min(near) if near else HEIGHT
+
+
+def pillar(x, y, sides, corners, cut):
+	for c in corners:
+		if c in CORNERS and all(RUN[s] <= dist(x, y, s) <= RUN[s] + PILLAR_SIZE for s in c):
+			return True
+		if c.startswith("p") and len(sides) == 1 and dist(x, y, c[1]) <= PILLAR_SIZE and dist(x, y, sides[0]) >= RUN[sides[0]]:
+			return True
+	return cut == "paso" and len(sides) == 1 and dist(x, y, sides[0]) >= RUN[sides[0]]
+
+
+def pillar_edges(sides, corners, cut):
+	edges = []
+	for c in corners:
+		if c in CORNERS:
+			edges += [(s, RUN[s] - 0.01) for s in c] + [(s, RUN[s]) for s in c]
+			edges += [(s, RUN[s] + PILLAR_SIZE) for s in c] + [(s, RUN[s] + PILLAR_SIZE + 0.01) for s in c]
+		elif c.startswith("p") and len(sides) == 1:
+			edges += [(c[1], PILLAR_SIZE), (c[1], PILLAR_SIZE + 0.01), (sides[0], RUN[sides[0]] - 0.01), (sides[0], RUN[sides[0]])]
+	if cut == "paso" and len(sides) == 1:
+		edges += [(sides[0], RUN[sides[0]] - 0.01), (sides[0], RUN[sides[0]])]
+	return edges
 
 
 def course_tone(c):
@@ -80,9 +106,11 @@ def across_x(sides, cut):
 	return ("n" in sides or "s" in sides) if cut == "paso" else sides[0] in "ns"
 
 
-def axes(sides, cut):
+def axes(sides, corners, cut):
 	base = [0.5 * t + 0.5 * math.sin(t * math.pi / 2) for t in (-1 + 2 * i / N for i in range(N + 1))]
 	xs, ys = set(base), set(base)
+	for side, d in pillar_edges(sides, corners, cut):
+		(ys if side in "ns" else xs).add(coord(side, d))
 	if cut:
 		for b in (-HALF, -HALF + 0.01, HALF - 0.01, HALF):
 			(xs if across_x(sides, cut) else ys).add(b)
@@ -100,11 +128,13 @@ def piece(kind, code, cut=None):
 	sides = [] if parts[0] == "x" else list(parts[0])
 	corners = parts[1:]
 	p = epi.Piece(sum(map(ord, kind + code)))
-	xs, ys = axes(sides, cut)
+	xs, ys = axes(sides, corners, cut)
 
 	def h(x, y):
 		inside = channel(x, y, sides, cut) if cut else None
-		return cut_height(inside[0], cut) if inside else height(x, y, sides, corners)
+		if inside:
+			return cut_height(inside[0], cut)
+		return PILLAR if pillar(x, y, sides, corners, cut) else height(x, y, sides, corners)
 
 	grid = [[p.bm.verts.new((x, y, h(x, y))) for x in xs] for y in ys]
 	faces = [p.bm.faces.new((grid[j][i], grid[j][i + 1], grid[j + 1][i + 1], grid[j + 1][i])) for j in range(len(ys) - 1) for i in range(len(xs) - 1)]
@@ -125,12 +155,14 @@ def piece(kind, code, cut=None):
 			shade(p, f, "piedra" if cut != "baja" else "gris_5", max(0.05, 0.3 - 0.2 * inside[0] / 1.7))
 		elif c.z > 0.3 and f.normal.z > 0.95:
 			crest.append(f)
+		elif c.z > HEIGHT:
+			shade(p, f, "piedra", course_tone(c))
 		else:
 			shade(p, f, STONE, course_tone(c))
 	p.paint(crest, "piedra", "MID", vary=0.08)
 	rocks = []
 	for f in crest:
-		if p.rng.random() > 0.12:
+		if p.rng.random() > 0.12 or f.calc_center_median().z > HEIGHT + 0.1:
 			continue
 		c = f.calc_center_median()
 		r = p.rng.uniform(0.1, 0.16)
