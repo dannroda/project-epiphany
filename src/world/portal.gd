@@ -1,3 +1,4 @@
+@tool
 class_name Portal
 extends Area3D
 ## Puerta entre escenas (overworld ↔ mazmorra): al entrar el player, fundido y viaje al `SpawnPoint` de la otra escena.
@@ -5,12 +6,18 @@ extends Area3D
 
 signal player_entered(player: PlayerCharacter)
 
-@export_file("*.tscn") var target_scene: String
+@export_file("*.tscn") var target_scene: String:
+	set(value):
+		target_scene = value
+		update_configuration_warnings()
 @export var target_spawn: StringName
 ## Si tiene flag, el portal aparece recién cuando el flag es verdadero (p. ej. al vencer al jefe).
 @export var required_flag: StringName
 ## Si es false no viaja solo: otro nodo decide con `player_entered` (el portal del jefe abre el fin de la demo).
-@export var travels := true
+@export var travels := true:
+	set(value):
+		travels = value
+		update_configuration_warnings()
 
 ## Cerrado aunque su flag esté en true (la revancha del jefe).
 var held := false:
@@ -22,6 +29,8 @@ var _flag_open := true
 
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
 	collision_layer = 0
 	collision_mask = 1 | 2
 	monitorable = false
@@ -35,6 +44,12 @@ func _ready() -> void:
 		var persistent := $PersistentFlag as PersistentFlag
 		persistent.flag = required_flag
 		persistent.changed.connect(func(value: Variant) -> void: _set_open(value == true))
+
+
+func _get_configuration_warnings() -> PackedStringArray:
+	if travels and not ResourceLoader.exists(target_scene):
+		return ["target_scene está vacío o la escena no existe: el portal no lleva a ningún lado."]
+	return []
 
 
 func travel() -> void:

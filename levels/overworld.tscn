@@ -224,6 +224,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 0, -30)
 script = ExtResource("4_cr2by")
 id = &"risco"
 
+[node name="Spawn_chullpa" type="Marker3D" parent="." unique_id=257450616]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, -10)
+script = ExtResource("4_cr2by")
+id = &"chullpa"
+
 [node name="Zone_cueva" type="Area3D" parent="." unique_id=1969367872]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72, 1.2, -8)
 script = ExtResource("3_rqerd")

@@ -1,17 +1,17 @@
 {
   "checklist": [
     {
-      "detail": "Cargar cada portal de levels/*.tscn y comprobar que la escena existe y tiene el `target_spawn`.",
-      "done": false,
+      "detail": "tests/test_portals.gd: instancia cada levels/*.tscn, y cada Portal que viaja apunta a una escena que existe y que tiene un SpawnPoint con su target_spawn. Encontró la salida de la Chullpa sin punto de llegada: Spawn_chullpa provisorio en la Necrópolis (la entrada de verdad es 7.9 paso 4).",
+      "done": true,
       "text": "Test de todos los portales"
     },
     {
-      "detail": "Config warning si `target_scene` vacío o inexistente.",
-      "done": false,
+      "detail": "Portal es @tool: aviso en el editor si viaja y target_scene está vacío o no existe; en el editor no corre su _ready.",
+      "done": true,
       "text": "Aviso en Portal"
     },
     {
-      "detail": "Guardar el uid del nivel (`ResourceUID`) y resolverlo al cargar; aceptar rutas viejas.",
+      "detail": "Espera a que -04 cierre 11.64 y 11.79 (save_manager.gd).",
       "done": false,
       "text": "uid en el save"
     }
@@ -30,12 +30,12 @@
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "guardado",
     "mundo"
   ],
   "test": "Un test recorre todos los portales de levels/ y comprueba escena y SpawnPoint; mover un nivel no rompe una partida guardada.",
   "title": "Niveles referenciados por ruta: saves y portales frágiles",
-  "updated_at": "2026-10-12T00:20:04.118Z"
+  "updated_at": "2026-10-12T01:03:25.141Z"
 }

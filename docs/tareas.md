@@ -2534,7 +2534,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (20/85)
+## M11 — Pulido: contenido y feel  (21/85)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3465,9 +3465,9 @@ El overworld es el hub: la pluma (11.35, templo) tiene que abrir ahí cosas y ca
 
 **Relacionadas:** 11.35 Saltar: ítem tipo Pluma de Roc
 
-### 11.62 Las puertas con llave se abren sin animación · En curso
+### 11.62 Las puertas con llave se abren sin animación · Hecho
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `mundo`
+**Terminada:** 2026-10-11 · **Prioridad:** alta · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `mundo`
 
 Al abrir una puerta LOCKED o BOSS, `_persistent.value = true` dispara `flag_changed`, el handler llama a `open(false)` y deja `is_open`; el `open(true)` de la línea siguiente sale temprano. Toda puerta con llave se abre de golpe, sin sonido ni polvo.
 
@@ -3520,9 +3520,9 @@ heart_piece, push_block y tablet leen su flag una sola vez en `_ready` y no usan
 
 **Archivos:** `src/save/save_manager.gd`, `tests/test_save_manager.gd`
 
-### 11.65 El escudo se queda levantado tras un hit-stop o la pausa · Pendiente
+### 11.65 El escudo se queda levantado tras un hit-stop o la pausa · En curso
 
-**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`, `combate`, `input`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `combate`, `input`
 
 `is_blocking` solo cambia con los eventos de pulsar/soltar en `_unhandled_input`. Durante `Feel.hit_stop` o la pausa el player está DISABLED y no recibe eventos: si soltás el bloqueo en ese momento, el escudo queda arriba (velocidad 2.0, sigue bloqueando). Además se activa en Dead, Spirit, Carrying y Grabbed (bloquear es una de las teclas de forcejeo del agarre, y entonces el escudo frena golpes frontales).
 
@@ -3979,10 +3979,10 @@ Varios valores de juego están como const o en sitios compartidos y no se pueden
 
 Los saves guardan `spawn_scene` como ruta `res://` y los portales `target_scene` como ruta + `target_spawn` sin validar (solo test_portal/test_spring prueban casos sueltos). Renombrar o mover un nivel rompe partidas viejas y portales sin aviso.
 
-- [ ] Test de todos los portales
-  Cargar cada portal de levels/*.tscn y comprobar que la escena existe y tiene el `target_spawn`.
-- [ ] Aviso en Portal
-  Config warning si `target_scene` vacío o inexistente.
+- [x] Test de todos los portales
+  tests/test_portals.gd: instancia cada levels/*.tscn, y cada Portal que viaja apunta a una escena que existe y que tiene un SpawnPoint con su target_spawn. Encontró la salida de la Chullpa sin punto de llegada: Spawn_chullpa provisorio en la Necrópolis (la entrada de verdad es 7.9 paso 4).
+- [x] Aviso en Portal
+  Portal es @tool: aviso en el editor si viaja y target_scene está vacío o no existe; en el editor no corre su _ready.
 - [ ] uid en el save
   Guardar el uid del nivel (`ResourceUID`) y resolverlo al cargar; aceptar rutas viejas.
 
