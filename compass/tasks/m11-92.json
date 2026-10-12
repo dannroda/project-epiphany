@@ -1,28 +1,30 @@
 {
+  "assignee": "Claude",
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "Curar al tomar la pieza"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Test"
     }
   ],
   "code": "11.92",
   "created_at": "2026-10-12T08:16:42.238Z",
   "description": "Playtest 2026-10-12: tomar una pieza de corazón no cura. Que cure (a quien la toma, como el corazón en co-op), y al completar el contenedor que llene como ya hace.",
+  "done_at": "2026-10-12T17:28:49.387Z",
   "milestone": "m11",
-  "notes": "Sesión: auditoría (-04).",
+  "notes": "Sesión de bugs (-fd). La pieza (heart_piece.tscn) cura 4 de vida, lo mismo que un corazón suelto, solo a quien la toma; al completar el contenedor llena como antes (cambia la vida máxima).",
   "order": 89,
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "done",
   "tags": [
     "items"
   ],
-  "test": "",
+  "test": "test_heart_pieces › test_piece_in_the_world_is_taken_once: tomar la pieza cura un corazón a quien la toma.",
   "title": "Agarrar un cuarto de corazón cura",
-  "updated_at": "2026-10-12T08:16:43.683Z"
+  "updated_at": "2026-10-12T17:28:49.387Z"
 }

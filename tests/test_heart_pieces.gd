@@ -48,8 +48,12 @@ func test_piece_in_the_world_is_taken_once() -> void:
 	assert_true(pieces.size() >= 4, "hay al menos cuatro escondidas (%d)" % pieces.size())
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	var piece: HeartPiece = tree.current_scene.get_node(^"HeartPieceGrotto")
+	player.health.invulnerability_time = 0.0
+	player.health.damage(8)
+	var hurt := player.health.current
 	piece.collect(player)
 	assert_eq(state.heart_pieces(), 1)
+	assert_eq(player.health.current, hurt + GameState.HP_PER_HEART, "tomarla cura un corazón")
 	assert_eq(state.get_flag(&"ow_heart_piece_grotto"), true)
 	var stack: Node = tree.root.get_node(^"MenuStack")
 	for i in 120:
