@@ -1,8 +1,14 @@
 {
   "checklist": [
     {
-      "done": false,
+      "detail": "Daniel (2026-10-12): luz, niebla y partículas estuvieron bien; no hay que cambiarlas. El sonido anda; no se fijó si falta algo.",
+      "done": true,
       "text": "Qué falta por zona (con Daniel)"
+    },
+    {
+      "detail": "Anotar qué zona suena vacía o repetida; recién ahí agregar o cambiar.",
+      "done": false,
+      "text": "Escuchar el sonido ambiente por zona en el próximo playtest"
     }
   ],
   "code": "11.107",
@@ -14,12 +20,12 @@
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "arte",
     "audio"
   ],
   "test": "",
   "title": "Mejorar la ambientación",
-  "updated_at": "2026-10-12T08:17:09.700Z"
+  "updated_at": "2026-10-12T17:25:24.622Z"
 }
