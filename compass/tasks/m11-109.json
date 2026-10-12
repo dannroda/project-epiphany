@@ -1,0 +1,51 @@
+{
+  "checklist": [
+    {
+      "detail": "Antes de resolver la placa, empujar VestibuleBlock al hueco de la salida (24,72) tapa la salida con la puerta norte cerrada; el bloque solo se resetea al salir de la sala o recargar (push_block.gd:41-42, 103-112). Probar; si traba, que el bloque no entre en celdas de puerta.",
+      "done": false,
+      "text": "S2: bloque en la salida del vestíbulo"
+    },
+    {
+      "detail": "GalleryTurret es la única fuente de proyectiles antes del arco; si muere antes de despertar GalleryEye no hay llave 1 hasta salir y volver. Opciones: torreta invulnerable a sus orbes, o que reviva al salir de la sala.",
+      "done": false,
+      "text": "S4: matar la torreta antes del ojo"
+    },
+    {
+      "detail": "CrackedBox vuelve al hueco en cada recarga y del lado norte casi no salen bombas. La espada probablemente la mueve (hitbox mask 24 incluye la capa 9): confirmar; si se mueve, el puzzle se salta.",
+      "done": false,
+      "text": "S5: caja de la Agrietada y espada"
+    },
+    {
+      "detail": "PuzzleBlock se puede seguir empujando y tapa el haz (capa 9 vs máscara 1 del haz, light_beam.gd:28). Trabarlo en la placa una vez resuelto.",
+      "done": false,
+      "text": "S6: bloque resuelto del Puzzle corta el haz"
+    },
+    {
+      "detail": "Solo al azar (vasijas 5 %, esqueletos 10 %); las vasijas de la Antesala y de la Pluma solo dan corazones, aunque GDD §8.1 dice que dan munición. Mínimo real: 1 bomba y 2 flechas (el GDD dice 2 y 4). Poner fuentes fijas cerca de cada uso o corregir el GDD.",
+      "done": false,
+      "text": "S7: munición en el templo"
+    },
+    {
+      "detail": "El orbe sin reflejar podría despertar OjosDoorEye (se entra sin arco); una bomba (capa 8) sobre una placa BLOCK (máscara 1|8) probablemente la traba y salta el puzzle de bloque.",
+      "done": false,
+      "text": "Sin confirmar: orbe al ojo de Ojos, bomba en placa"
+    }
+  ],
+  "code": "11.109",
+  "created_at": "2026-10-12T18:03:32.326Z",
+  "description": "Del análisis de D1 (11.90, S2, S4, S5, S6, S7). Confirmar en el juego y arreglar lo que trabe.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 106,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "mazmorra"
+  ],
+  "test": "",
+  "title": "Softblocks menores de D1",
+  "updated_at": "2026-10-12T18:03:47.372Z"
+}

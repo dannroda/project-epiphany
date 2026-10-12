@@ -1,0 +1,20 @@
+{
+  "checklist": [],
+  "code": "11.108",
+  "created_at": "2026-10-12T18:03:32.046Z",
+  "description": "Encontrado en el análisis de D1 (11.90, softblock S1). Cargar desde la pausa una partida de la misma escena, sin recargarla, vuelve los flags a falso pero el mundo no los sigue: FloorSwitch ignora el falso (floor_switch.gd:37-41), EyeSwitch se apaga sin emitir (eye_switch.gd:38-42), y LightReceiver, WaveSpawner y Bridge solo reaccionan a verdadero; rejas y puertas solo se mueven con Wiring.changed. Si se cruza una puerta que debería estar cerrada y se guarda ahí, al recargar se queda encerrado (ej.: Ojos sin arco con el puente bajo). Arreglo probable: recargar siempre la escena al cargar una partida (save_manager.gd:344).",
+  "milestone": "m11",
+  "notes": "",
+  "order": 105,
+  "priority": "high",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "mazmorra"
+  ],
+  "test": "",
+  "title": "Cargar en la misma escena desincroniza puertas y flags",
+  "updated_at": "2026-10-12T18:03:32.046Z"
+}

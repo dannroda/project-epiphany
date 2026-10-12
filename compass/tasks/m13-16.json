@@ -1,0 +1,20 @@
+{
+  "checklist": [],
+  "code": "13.16",
+  "created_at": "2026-10-12T18:03:32.598Z",
+  "description": "Del análisis de D1 (11.90, S3). P2 aprieta la placa BLOCK del vestíbulo, P1 entra al hub y la cámara arrastra a P2 (top_down_camera.gd): la puerta (stays_open=false) se cierra, el bloque se resetea y nada del lado del hub la reabre. Encaja con 13.8 (puzzles co-op con alternativa solo).",
+  "milestone": "m13",
+  "notes": "",
+  "order": 16,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "coop"
+  ],
+  "test": "",
+  "title": "Co-op: la puerta del vestíbulo de D1 se cierra con P2 afuera",
+  "updated_at": "2026-10-12T18:03:32.598Z"
+}

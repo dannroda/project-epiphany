@@ -1,8 +1,8 @@
 {
   "checklist": [
     {
-      "detail": "Recorrer el templo (y la Chullpa) de punta a punta con el grafo llave-cerradura y listar cada lugar donde se puede trabar la partida (llave gastada, salida sin vuelta, ítem que falta).",
-      "done": false,
+      "detail": "Hecho el 2026-10-12 leyendo temple.tscn y sus scripts (grafo y tabla en el documento de diseño). El orden de llaves es seguro: la llave 1 solo alcanza la puerta este del hub. Softblock duro solo cargando en la misma escena (11.108); los menores en 11.109; el de co-op en 13.16. Falta recorrer la Chullpa cuando se rehaga.",
+      "done": true,
       "text": "Softblocks de D1"
     },
     {
@@ -61,5 +61,5 @@
   ],
   "test": "",
   "title": "Diseño de mazmorras, ítems y su reparto en el overworld",
-  "updated_at": "2026-10-12T17:49:53.805Z"
+  "updated_at": "2026-10-12T18:03:48.337Z"
 }

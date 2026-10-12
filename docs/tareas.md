@@ -2535,7 +2535,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (50/103)
+## M11 — Pulido: contenido y feel  (51/105)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4026,8 +4026,8 @@ La cámara de juego (505 líneas) y target_indicator están en src/tools/ junto 
 
 Playtest del 2026-10-12: la primera mazmorra ya tiene varios softblocks, y la pluma está en D1 cuando debería ser de D2 (si no se mira el mapa, su sala pasa desapercibida). D1 tiene el arco como su ítem. Rediseñar qué ítem da cada mazmorra, cómo se enseña y prueba dentro de ella, y dónde gatea el overworld, respetando que un ítem de la mazmorra N no gatea nada de las anteriores.
 
-- [ ] Softblocks de D1
-  Recorrer el templo (y la Chullpa) de punta a punta con el grafo llave-cerradura y listar cada lugar donde se puede trabar la partida (llave gastada, salida sin vuelta, ítem que falta).
+- [x] Softblocks de D1
+  Hecho el 2026-10-12 leyendo temple.tscn y sus scripts (grafo y tabla en el documento de diseño). El orden de llaves es seguro: la llave 1 solo alcanza la puerta este del hub. Softblock duro solo cargando en la misma escena (11.108); los menores en 11.109; el de co-op en 13.16. Falta recorrer la Chullpa cuando se rehaga.
 - [x] Ítem por mazmorra
   Decidido con Daniel el 2026-10-12: D1 arco (lo guarda el sub-jefe, 11.31), D2 pluma, D3 gancho (11.30), D4 guantes de fuerza. El disco solar queda como ítem opcional (mini-mazmorra o secreto del overworld). Documento: https://claude.ai/code/artifact/4fce85f9-7f11-4285-9d2e-bb1d58b45b4e
 - [ ] Mudar la pluma a D2
@@ -4129,9 +4129,9 @@ Playtest 2026-10-12: el estado del player tiene que ser global toda la partida y
 
 **Notas:** Sesión de bugs (-68). Repasé lo que guardan el player y sus componentes en el nodo. Inventario, equipo, botones, botellas y vida ya estaban en GameState; los ajustes de fijación y apuntado salen de Settings. Lo único que se perdía era la bendición del agua bendita: SaveManager.travel_to la guarda por slot (`GameState.player_ward`, no va en la partida) y el player nuevo la retoma y la consume. Quedan fuera a propósito: la orientación al llegar (la da el punto de aparición), lo que se lleva en brazos (se suelta al viajar) y, en co-op, un espíritu que cambia de escena vuelve lleno.
 
-### 11.97 Mazmorra: solo está activa la sala del player · En curso
+### 11.97 Mazmorra: solo está activa la sala del player · Hecho
 
-**Prioridad:** media · **Tamaño:** M · **Responsable:** Claude · **Etiquetas:** `mazmorra`, `rendimiento`
+**Terminada:** 2026-10-12 · **Prioridad:** media · **Tamaño:** M · **Responsable:** Claude · **Etiquetas:** `mazmorra`, `rendimiento`
 
 Hoy todo lo de la mazmorra corre a la vez: por ejemplo la línea de pinchos está activa aunque el player esté en otra sala. Las trampas, enemigos y efectos solo procesan en las salas con algún player (y se reinician o pausan al salir).
 
@@ -4257,6 +4257,31 @@ Playtest 2026-10-12: hay que mejorar la ambientación del overworld y las mazmor
   Anotar qué zona suena vacía o repetida; recién ahí agregar o cambiar.
 
 **Notas:** Sesión: arte (-77). Definir con Daniel qué falta en cada zona.
+
+### 11.108 Cargar en la misma escena desincroniza puertas y flags · Pendiente
+
+**Prioridad:** alta · **Tamaño:** M · **Etiquetas:** `bug`, `mazmorra`
+
+Encontrado en el análisis de D1 (11.90, softblock S1). Cargar desde la pausa una partida de la misma escena, sin recargarla, vuelve los flags a falso pero el mundo no los sigue: FloorSwitch ignora el falso (floor_switch.gd:37-41), EyeSwitch se apaga sin emitir (eye_switch.gd:38-42), y LightReceiver, WaveSpawner y Bridge solo reaccionan a verdadero; rejas y puertas solo se mueven con Wiring.changed. Si se cruza una puerta que debería estar cerrada y se guarda ahí, al recargar se queda encerrado (ej.: Ojos sin arco con el puente bajo). Arreglo probable: recargar siempre la escena al cargar una partida (save_manager.gd:344).
+
+### 11.109 Softblocks menores de D1 · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `mazmorra`
+
+Del análisis de D1 (11.90, S2, S4, S5, S6, S7). Confirmar en el juego y arreglar lo que trabe.
+
+- [ ] S2: bloque en la salida del vestíbulo
+  Antes de resolver la placa, empujar VestibuleBlock al hueco de la salida (24,72) tapa la salida con la puerta norte cerrada; el bloque solo se resetea al salir de la sala o recargar (push_block.gd:41-42, 103-112). Probar; si traba, que el bloque no entre en celdas de puerta.
+- [ ] S4: matar la torreta antes del ojo
+  GalleryTurret es la única fuente de proyectiles antes del arco; si muere antes de despertar GalleryEye no hay llave 1 hasta salir y volver. Opciones: torreta invulnerable a sus orbes, o que reviva al salir de la sala.
+- [ ] S5: caja de la Agrietada y espada
+  CrackedBox vuelve al hueco en cada recarga y del lado norte casi no salen bombas. La espada probablemente la mueve (hitbox mask 24 incluye la capa 9): confirmar; si se mueve, el puzzle se salta.
+- [ ] S6: bloque resuelto del Puzzle corta el haz
+  PuzzleBlock se puede seguir empujando y tapa el haz (capa 9 vs máscara 1 del haz, light_beam.gd:28). Trabarlo en la placa una vez resuelto.
+- [ ] S7: munición en el templo
+  Solo al azar (vasijas 5 %, esqueletos 10 %); las vasijas de la Antesala y de la Pluma solo dan corazones, aunque GDD §8.1 dice que dan munición. Mínimo real: 1 bomba y 2 flechas (el GDD dice 2 y 4). Poner fuentes fijas cerca de cada uso o corregir el GDD.
+- [ ] Sin confirmar: orbe al ojo de Ojos, bomba en placa
+  El orbe sin reflejar podría despertar OjosDoorEye (se entra sin arco); una bomba (capa 8) sobre una placa BLOCK (máscara 1|8) probablemente la traba y salta el puzzle de bloque.
 
 ## M12 — Assets propios (Blender)  (6/17)
 
@@ -4674,7 +4699,7 @@ Cada mazmorra con su propio estilo sobre el mismo kit (mismas piezas y colisione
 - [x] Estilo del terreno del overworld por región
   AreaZone.terrain_style (necropolis, laguna, cumbre, explanada, cardonal, quebrada); el build pinta suelo, riscos y abismo por región con borde ondulado y cambia la decoración. Puestos en overworld.tscn: Templo explanada, Quebrada, Necrópolis + Mirador, Cumbre + Risco, Laguna + Bañado, Cardonal. Falta que el usuario lo vea.
 
-## M13 — Co-op local (estilo Four Swords)  (0/15)
+## M13 — Co-op local (estilo Four Swords)  (0/16)
 
 Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con progreso compartido y puzzles que aprovechan a los dos.
 
@@ -5008,6 +5033,12 @@ Los pasos de co-op del playtest de revisión (10.28), aparte: hacen falta dos co
   Solo: mantené LB (o F): el mundo casi se frena, elegí con el stick y poné con X/Y; al soltar sigue. Co-op: cada uno abre su anillo sin pausar; lo que lleva el otro se ve apagado con su etiqueta. Tecla 5: pasa al menú compartido; en Ítems el P2 mueve su cursor con su control y asigna con X/Y. Decidí cuál queda.
 - [ ] Co-op: colores (13.6)
   Con dos controles: el P2 tiene otra tela y otro neón, también con la cota reforzada; los dos se distinguen de un vistazo.
+
+### 13.16 Co-op: la puerta del vestíbulo de D1 se cierra con P2 afuera · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `coop`
+
+Del análisis de D1 (11.90, S3). P2 aprieta la placa BLOCK del vestíbulo, P1 entra al hub y la cámara arrastra a P2 (top_down_camera.gd): la puerta (stays_open=false) se cierra, el bloque se resetea y nada del lado del hub la reabre. Encaja con 13.8 (puzzles co-op con alternativa solo).
 
 ## M14 — Co-op online  (0/13)
 
