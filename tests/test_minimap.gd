@@ -98,3 +98,31 @@ func test_overworld_stays_revealed_where_the_player_went_and_saves_it() -> void:
 	state.read_from(cfg)
 	assert_true(seen.call(far) > 0.9 and seen.call(start) > 0.9, "se guarda con la partida")
 	state.reset()
+
+
+func test_fades_while_a_player_is_under_it() -> void:
+	var setup: Array = await _load("test_rooms")
+	var tree: SceneTree = setup[0]
+	var minimap: Control = setup[3]
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	await tree.create_timer(1.0).timeout
+	var start := player.global_position
+	var camera := tree.root.get_viewport().get_camera_3d()
+	var center := minimap.get_global_rect().get_center()
+	var under := start
+	for dx in range(-20, 21):
+		for dz in range(-14, 15):
+			var point := start + Vector3(dx * 0.5, 0, dz * 0.5)
+			if camera.unproject_position(point).distance_to(center) < camera.unproject_position(under).distance_to(center):
+				under = point
+	assert_true(minimap.visible and minimap.get_global_rect().has_point(camera.unproject_position(under)), "se ve y hay piso debajo")
+	assert_eq(minimap.covers_a_player(), false, "en la entrada no tapa al player")
+	player.global_position = under
+	player.velocity = Vector3.ZERO
+	await tree.create_timer(0.6).timeout
+	assert_true(minimap.covers_a_player(), "con el player debajo lo tapa")
+	assert_true(minimap.modulate.a < 0.5, "y se transparenta (%.2f)" % minimap.modulate.a)
+	player.global_position = start
+	await tree.create_timer(0.6).timeout
+	assert_true(minimap.modulate.a > 0.9, "al salir vuelve (%.2f)" % minimap.modulate.a)
+	setup[1].reset()

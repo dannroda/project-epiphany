@@ -4185,14 +4185,14 @@ Playtest 2026-10-12: los nombres de zona en el mapa son muy grandes y no hace fa
 
 **Notas:** Sesión: overworld (-74). Ajustar el mockup del canvas primero.
 
-### 11.103 El minimapa se transparenta con el player debajo · Pendiente
+### 11.103 El minimapa se transparenta con el player debajo · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `ui`
 
 Cuando el player está debajo del minimapa en pantalla, el minimapa se transparenta para no taparlo.
 
-- [ ] Transparencia según la posición en pantalla
-- [ ] Test
+- [x] Transparencia según la posición en pantalla
+- [x] Test
 
 **Notas:** Sesión: overworld (-74). Con varios players: cualquiera de ellos.
 

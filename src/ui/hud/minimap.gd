@@ -24,6 +24,12 @@ const REVEAL_STEP := 1.0
 @export var room_style: StyleBox
 @export var mapped_style: StyleBox
 @export var current_style: StyleBox
+## Con un player debajo en pantalla, el minimapa baja a esta opacidad para no taparlo.
+@export var covered_alpha := 0.3
+@export var fade_rate := 10.0
+## Alto del player que tiene que quedar a la vista (m) y margen alrededor del minimapa (px).
+@export var player_height := 1.8
+@export var covered_margin := 12.0
 
 @onready var view: Control = %View
 ## Las marcas y la flecha del overworld van aparte, fuera de la niebla.
@@ -59,12 +65,26 @@ func _process(delta: float) -> void:
 	_show_floor(room if visible and _in_dungeon() else null)
 	if not visible:
 		return
+	modulate.a = lerpf(modulate.a, covered_alpha if covers_a_player() else 1.0, 1.0 - exp(-fade_rate * delta))
 	_doors_age += delta
 	if _in_dungeon() and _doors_age >= DOORS_REFRESH:
 		_doors = MapData.doors(tree)
 		_doors_age = 0.0
 	view.queue_redraw()
 	marks.queue_redraw()
+
+
+func covers_a_player() -> bool:
+	var camera := get_viewport().get_camera_3d()
+	if camera == null:
+		return false
+	var rect := get_global_rect().grow(covered_margin)
+	for player in Players.all:
+		for height in [0.0, player_height]:
+			var point: Vector3 = player.global_position + Vector3.UP * height
+			if not camera.is_position_behind(point) and rect.has_point(camera.unproject_position(point)):
+				return true
+	return false
 
 
 ## Etiqueta del piso arriba del minimapa (solo en mazmorras de varios pisos).

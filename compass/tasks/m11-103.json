@@ -1,11 +1,11 @@
 {
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "Transparencia según la posición en pantalla"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Test"
     }
   ],
@@ -18,11 +18,11 @@
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "ui"
   ],
   "test": "",
   "title": "El minimapa se transparenta con el player debajo",
-  "updated_at": "2026-10-12T08:17:04.305Z"
+  "updated_at": "2026-10-12T17:31:41.537Z"
 }
