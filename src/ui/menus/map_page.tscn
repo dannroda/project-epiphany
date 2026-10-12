@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bbh75d26628l5" path="res://assets/ui/frames/map_room.png" id="6_slot"]
 [ext_resource type="Texture2D" uid="uid://cdjnnpwyam4fr" path="res://assets/ui/frames/map_room_mapped.png" id="7_empty"]
 [ext_resource type="PackedScene" path="res://src/ui/menus/map_dungeon_item.tscn" id="20_ditem"]
+[ext_resource type="PackedScene" path="res://src/ui/menus/menu_item_small.tscn" id="21_item"]
 
 [sub_resource type="StyleBoxTexture" id="CursorFrame"]
 texture = ExtResource("5_focus")
@@ -287,6 +288,26 @@ theme_override_constants/margin_bottom = 12
 layout_mode = 2
 theme_override_constants/separation = 4
 
+[node name="PortalTitle" type="HBoxContainer" parent="Info/Focus/Margin/Rows"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Icon" type="Control" parent="Info/Focus/Margin/Rows/PortalTitle"]
+custom_minimum_size = Vector2(20, 22)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("3_mark")
+kind = 9
+
+[node name="PortalName" type="Label" parent="Info/Focus/Margin/Rows/PortalTitle"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SectionTitle"
+theme_override_colors/font_color = Color(0.49803922, 0.827451, 0.8666667, 1)
+theme_override_font_sizes/font_size = 17
+
 [node name="FocusTitle" type="Label" parent="Info/Focus/Margin/Rows"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -302,6 +323,14 @@ autowrap_mode = 3
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 0
+
+[node name="Travel" parent="Info/Focus/Margin/Rows" instance=ExtResource("21_item")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+text = "MAP_TRAVEL"
 
 [node name="MapItems" type="GridContainer" parent="Info"]
 unique_name_in_owner = true
@@ -522,3 +551,19 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"Legend"
 text = "MAP_LEGEND_PIN"
+
+[node name="Entry7" type="HBoxContainer" parent="Info/OverworldLegend"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Icon" type="Control" parent="Info/OverworldLegend/Entry7"]
+custom_minimum_size = Vector2(26, 28)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_legend")
+kind = 10
+
+[node name="Label" type="Label" parent="Info/OverworldLegend/Entry7"]
+layout_mode = 2
+theme_type_variation = &"Legend"
+text = "MAP_LEGEND_PORTAL"

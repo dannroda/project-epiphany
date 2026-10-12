@@ -39,8 +39,8 @@
       "text": "Viaje rápido: mockup de la pantalla"
     },
     {
-      "detail": "6 portales (Claro, Pradera, Explanada, Necrópolis, Bañado, Cumbre) que se activan al pasar (flag); se elige el destino en la pestaña Mapa o parado en un portal; viajan todos los players. Pantalla tal cual Pause_Map_Travel.",
-      "done": false,
+      "detail": "travel_portal.tscn ×6 en overworld.tscn (ow_portal_<id>); Mapa: marcas, cursor que se engancha, tarjeta y X Viajar con travel_dialog; interactuar en un portal abre el Mapa. test_travel_portals_light_up_and_the_map_travels.",
+      "done": true,
       "text": "Viaje rápido: portales y viaje desde el Mapa"
     },
     {
@@ -69,5 +69,5 @@
   ],
   "test": "",
   "title": "Rediseño del overworld como hub de varias mazmorras",
-  "updated_at": "2026-10-12T17:29:06.604Z"
+  "updated_at": "2026-10-12T18:27:10.811Z"
 }

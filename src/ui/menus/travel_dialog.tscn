@@ -1,0 +1,20 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://src/ui/menus/confirm_dialog.tscn" id="1_base"]
+[ext_resource type="Script" path="res://src/ui/menus/map_mark.gd" id="2_mark"]
+
+[node name="TravelDialog" instance=ExtResource("1_base")]
+
+[node name="Icon" type="Control" parent="Center/Panel/Box" index="0"]
+custom_minimum_size = Vector2(44, 44)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+script = ExtResource("2_mark")
+kind = 9
+
+[node name="Detail" type="Label" parent="Center/Panel/Box" index="2"]
+layout_mode = 2
+theme_type_variation = &"Legend"
+text = "MAP_TRAVEL_ALL"
+horizontal_alignment = 1

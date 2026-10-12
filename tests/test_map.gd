@@ -111,7 +111,7 @@ func test_overworld_fog_lifts_as_zones_are_visited() -> void:
 	assert_eq(state.visited_zones, [&"Zone_start"] as Array[StringName], "partida nueva: solo el claro del inicio")
 	assert_eq(page.fog.get_child_count(), zones - 1, "las demás en sombra")
 	assert_true(page.fog.get_children().all(func(zone: Control) -> bool: return zone.size.x > 20.0 and zone.position != Vector2.ZERO), "cada sombra cubre su zona")
-	assert_eq(page.subtitle.text, tr("MAP_ZONES_EXPLORED").format({done = 1, total = 8}), "cuenta regiones grandes, no pantallas")
+	assert_eq(page.subtitle.text, tr("MAP_ZONES_EXPLORED").format({done = 1, total = 8}) + " · " + tr("MAP_PORTALS_LIT").format({done = 0, total = 6}), "cuenta regiones grandes, no pantallas, y portales")
 	var names := func() -> Array: return page.marks.get_children().filter(func(mark: Node) -> bool: return mark is Label).map(func(label: Label) -> String: return label.text)
 	assert_eq(names.call(), [tr("PLACE_FIRST_CLEARING")], "solo el nombre de la región visitada, una vez")
 	state.visit_zone(&"Zone_gruta")
@@ -288,4 +288,66 @@ func test_minimap_names_the_floor() -> void:
 	await tree.create_timer(1.0).timeout
 	minimap = tree.get_first_node_in_group(&"hud").find_child("Minimap", true, false)
 	assert_true(not minimap.floor_tag.visible, "en el templo (un solo piso), no")
+	state.reset()
+
+
+func test_travel_portals_light_up_and_the_map_travels() -> void:
+	var setup: Array = await _open_map("", "res://levels/overworld.tscn")
+	var tree: SceneTree = setup[0]
+	var state: Node = setup[1]
+	var stack: Node = setup[2]
+	_close(stack)
+	var portals := TravelPortal.all(tree)
+	assert_eq(portals.size(), 6, "seis portales")
+	assert_true(portals.all(func(portal: TravelPortal) -> bool: return not portal.lit), "arrancan apagados")
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	var space := player.get_world_3d().direct_space_state
+	for portal in portals:
+		var hit := space.intersect_ray(PhysicsRayQueryParameters3D.create(portal.global_position + Vector3.UP * 5.0, portal.global_position + Vector3.DOWN * 5.0, 1))
+		assert_true(not hit.is_empty() and absf(hit.position.y - portal.global_position.y) < 0.3, "%s apoyado en el piso" % portal.name)
+	var claro: TravelPortal = tree.current_scene.get_node(^"TravelPortals/PortalClaro")
+	player.global_position = claro.global_position + Vector3.UP * 0.2
+	for i in 6:
+		await tree.physics_frame
+	assert_true(claro.lit, "al pasar se prende")
+	assert_eq(state.get_flag(&"ow_portal_claro"), true, "y queda guardado")
+	claro.interactable.interact(player)
+	await tree.process_frame
+	assert_true(stack.top() is UiScreen and stack.top().get(&"pages") != null and stack.top().current == 2, "parado en él, interactuar abre el Mapa")
+	var page: Control = stack.top().pages.get_node(^"Mapa")
+	state.set_flag(&"ow_portal_necropolis", true)
+	state.visit_zone(&"Zone_necropolis")
+	page.refresh()
+	await tree.process_frame
+	assert_eq(page.marks.get_children().filter(func(mark: Node) -> bool: return mark is MapMark and mark.kind == MapMark.Kind.PORTAL).size(), 2, "los dos prendidos en el mapa")
+	page._move_cursor(page._portal_point(claro) + Vector2(4, 3))
+	assert_eq(page.focused_portal(), claro, "cerca de un portal el cursor se engancha")
+	assert_eq(page.cursor.position, page._portal_point(claro))
+	assert_true(page.portal_title.visible and not page.can_travel(), "el del claro: ya está en esa región")
+	assert_eq(page.focus_text.text, "MAP_TRAVEL_HERE")
+	var necropolis: TravelPortal = tree.current_scene.get_node(^"TravelPortals/PortalNecropolis")
+	page._move_cursor(page._portal_point(necropolis) - Vector2(5, 0))
+	assert_eq(page.focused_portal(), necropolis)
+	assert_true(page.can_travel() and page.travel_button.visible, "a la Necrópolis se puede viajar")
+	assert_eq(page.portal_name.text, tr("MAP_PORTAL").format({name = tr("PLACE_NECROPOLIS")}))
+	assert_true(page.extra_hints.any(func(hint: Array) -> bool: return hint[1] == "MAP_HINT_TRAVEL"), "la barra de ayudas dice X Viajar")
+	_press(&"item_1")
+	await tree.process_frame
+	await tree.process_frame
+	var dialog := stack.top() as ConfirmDialog
+	assert_true(dialog != null, "pregunta antes de viajar")
+	if dialog == null:
+		_close(stack)
+		return
+	dialog.yes.pressed.emit()
+	var saves: Node = tree.root.get_node(^"SaveManager")
+	var until := Time.get_ticks_msec() + 5000
+	while Time.get_ticks_msec() < until and (not saves.traveling or tree.paused):
+		await tree.process_frame
+	while saves.traveling:
+		await tree.process_frame
+	player = tree.get_first_node_in_group(&"player") as PlayerCharacter
+	assert_eq(state.spawn_point, &"portal_necropolis", "viajó al portal de la Necrópolis")
+	assert_true(Vector2(player.global_position.x, player.global_position.z).distance_to(Vector2(36, -5)) < 2.5, "y aparece ahí (%s)" % player.global_position.snappedf(0.1))
+	assert_true(not stack.is_open(), "con el menú cerrado")
 	state.reset()

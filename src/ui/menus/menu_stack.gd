@@ -79,6 +79,13 @@ func pop() -> void:
 	changed.emit()
 
 
+## Abre el menú de pausa en la pestaña Mapa (la acción `map`, un portal de viaje).
+func open_map() -> void:
+	var menu := PAUSE_MENU.instantiate()
+	push(menu)
+	menu.show_page(MAP_PAGE)
+
+
 ## Cierra todas las pantallas (al salir al título o cambiar de escena).
 func clear() -> void:
 	while is_open():
@@ -91,9 +98,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			push(PAUSE_MENU.instantiate())
 			get_viewport().set_input_as_handled()
 		elif event.is_action_pressed(&"map") and _can_pause():
-			var menu := PAUSE_MENU.instantiate()
-			push(menu)
-			menu.show_page(MAP_PAGE)
+			open_map()
 			get_viewport().set_input_as_handled()
 		return
 	var screen := top()

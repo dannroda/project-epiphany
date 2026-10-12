@@ -1,8 +1,8 @@
 extends Control
 ## Pestaña Mapa. En mazmorra: las salas (visitadas; con mapa, todas; con brújula, cofres sin abrir y el jefe), las
 ## puertas y dónde está el player; el cursor salta de sala en sala. En el overworld: la foto cenital con las zonas sin
-## explorar en sombra, las marcas (entradas, cofres abiertos, tablillas leídas), los pines del jugador y un cursor libre
-## que muestra qué falta en cada zona.
+## explorar en sombra, las marcas (entradas, cofres abiertos, tablillas leídas, portales prendidos), los pines del
+## jugador y un cursor libre que muestra qué falta en cada zona; cerca de un portal se engancha a él y X viaja.
 
 ## Cambió lo que muestra la barra de ayudas (zoom).
 signal hints_changed
@@ -13,6 +13,8 @@ const CURSOR_SPEED := 420.0
 const ZONE_NAME_SCENE := preload("res://src/ui/menus/map_zone_name.tscn")
 const PLACE_NAME_SCENE := preload("res://src/ui/menus/map_place_name.tscn")
 const ZOOM := 2.0
+const PORTAL_SNAP := 14.0
+const TRAVEL_DIALOG := "res://src/ui/menus/travel_dialog.tscn"
 const DIRECTIONS := [
 	[&"move_left", Vector2i.LEFT], [&"move_right", Vector2i.RIGHT], [&"move_forward", Vector2i.UP], [&"move_backward", Vector2i.DOWN],
 	[&"ui_left", Vector2i.LEFT], [&"ui_right", Vector2i.RIGHT], [&"ui_up", Vector2i.UP], [&"ui_down", Vector2i.DOWN],
@@ -27,7 +29,10 @@ var extra_hints: Array:
 		var move := [[&"move_left", &"move_right"], "MAP_HINT_MOVE"]
 		if _in_dungeon():
 			return [move, [[&"map_floor_up", &"map_floor_down"], "MAP_HINT_FLOOR"]] if _levels().size() > 1 else [move]
-		return [move, [&"item_2", "MAP_HINT_ZOOM_OUT" if _zoomed else "MAP_HINT_ZOOM_IN"]]
+		var hints := [move, [&"item_2", "MAP_HINT_ZOOM_OUT" if _zoomed else "MAP_HINT_ZOOM_IN"]]
+		if can_travel():
+			hints.push_front([&"item_1", "MAP_HINT_TRAVEL"])
+		return hints
 
 @onready var map_card: Control = %MapCard
 @onready var cells: Control = %Cells
@@ -50,6 +55,9 @@ var extra_hints: Array:
 @onready var title: Label = %MapTitle
 @onready var subtitle: Label = %MapSubtitle
 @onready var focus_title: Label = %FocusTitle
+@onready var portal_title: Control = %PortalTitle
+@onready var portal_name: Label = %PortalName
+@onready var travel_button: Button = %Travel
 @onready var focus_text: Label = %FocusText
 @onready var focus_stats: VBoxContainer = %FocusStats
 @onready var map_items: GridContainer = %MapItems
@@ -63,6 +71,9 @@ var _map: OverworldMap
 var _room_cells: Dictionary[Room, MapRoomCell] = {}
 var _focused_room: Room
 var _zoomed := false
+## Overworld: dónde está el cursor antes de engancharse a un portal, y el portal enganchado.
+var _cursor_point := Vector2.ZERO
+var _focused_portal: TravelPortal
 ## Piso que se mira (null = el de la sala actual, al abrir el mapa) y la celda del cursor al cambiar de piso.
 var _view_level: Variant = null
 var _keep_cell: Variant = null
@@ -80,6 +91,7 @@ func _ready() -> void:
 	InputDevice.input_device_changed.connect(func(_device: int) -> void: _refresh_floor_icons())
 	marker.draw.connect(func() -> void: MapRoomCell.draw_arrow(marker, Vector2.ZERO, 0.0))
 	overworld_image.resized.connect(_place_overworld)
+	travel_button.pressed.connect(_ask_travel)
 	refresh()
 
 
@@ -95,6 +107,10 @@ func refresh() -> void:
 	for layer in [rooms_layer, doors_layer, focus_stats, fog, marks, floor_buttons]:
 		_clear(layer)
 	_room_cells.clear()
+	_focused_portal = null
+	portal_title.visible = false
+	focus_title.visible = true
+	travel_button.visible = false
 	var in_dungeon := _in_dungeon()
 	cells.visible = in_dungeon
 	legend.visible = in_dungeon
@@ -118,7 +134,7 @@ func _process(delta: float) -> void:
 	direction += Input.get_vector(&"ui_left", &"ui_right", &"ui_up", &"ui_down")
 	if direction:
 		direction = direction.limit_length()
-		_move_cursor(cursor.position + direction * CURSOR_SPEED / canvas.scale.x * delta)
+		_move_cursor(_cursor_point + direction * CURSOR_SPEED / canvas.scale.x * delta)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -349,6 +365,9 @@ func _show_overworld() -> void:
 	for zone: AreaZone in _zones():
 		regions[zone.display_name] = regions.get(zone.display_name, false) or zone.is_visited()
 	subtitle.text = tr("MAP_ZONES_EXPLORED").format({done = regions.values().count(true), total = regions.size()})
+	var portals := TravelPortal.all(get_tree())
+	if not portals.is_empty():
+		subtitle.text += " · " + tr("MAP_PORTALS_LIT").format({done = portals.filter(func(portal: TravelPortal) -> bool: return portal.lit).size(), total = portals.size()})
 	_place_overworld()
 
 
@@ -385,6 +404,9 @@ func _place_overworld() -> void:
 		name_label.text = tr(place.display_name)
 		marks.add_child(name_label)
 		name_label.position = at + Vector2(-name_label.get_minimum_size().x / 2.0, 10.0)
+	for portal in TravelPortal.all(get_tree()):
+		if portal.lit:
+			marks.add_child(MapMark.create(MapMark.Kind.PORTAL, _portal_point(portal)))
 	for chest: Chest in get_tree().get_nodes_in_group(&"chests"):
 		if not chest.interactable.enabled:
 			_add_mark(MapMark.Kind.CHEST_OPEN, chest.global_position)
@@ -404,7 +426,10 @@ func _place_overworld() -> void:
 
 
 func _overworld_input(event: InputEvent) -> void:
-	if event.is_action_pressed(&"ui_accept"):
+	if event.is_action_pressed(&"item_1") and can_travel():
+		_ask_travel()
+		get_viewport().set_input_as_handled()
+	elif event.is_action_pressed(&"ui_accept"):
 		if GameState.toggle_pin(map_to_world(cursor.position)):
 			Feel.ui(&"ui_accept")
 		else:
@@ -428,9 +453,57 @@ func _set_zoom(zoomed: bool) -> void:
 
 func _move_cursor(point: Vector2) -> void:
 	var image := _image_rect()
-	cursor.place(point.clamp(image.position, image.end))
+	_cursor_point = point.clamp(image.position, image.end)
+	var portal := _portal_near(_cursor_point)
+	cursor.place(_portal_point(portal) if portal else _cursor_point)
 	_follow_cursor()
+	var changed := portal != _focused_portal
+	_focused_portal = portal
 	_focus_zone(_zone_at(map_to_world(cursor.position)))
+	if changed:
+		hints_changed.emit()
+
+
+func _portal_near(point: Vector2) -> TravelPortal:
+	var best: TravelPortal
+	var best_distance := PORTAL_SNAP / canvas.scale.x
+	for portal in TravelPortal.all(get_tree()):
+		var distance := _portal_point(portal).distance_to(point)
+		if portal.lit and distance <= best_distance:
+			best = portal
+			best_distance = distance
+	return best
+
+
+func _portal_point(portal: TravelPortal) -> Vector2:
+	return world_to_map(Vector2(portal.global_position.x, portal.global_position.z))
+
+
+func focused_portal() -> TravelPortal:
+	return _focused_portal
+
+
+## Hay un portal enganchado y no es de la región donde ya está el player.
+func can_travel() -> bool:
+	if _focused_portal == null or _in_dungeon():
+		return false
+	var player := Players.lead()
+	if player == null:
+		return true
+	var here := _zone_at(Vector2(player.global_position.x, player.global_position.z))
+	var there := _zone_at(Vector2(_focused_portal.global_position.x, _focused_portal.global_position.z))
+	return here == null or there == null or here.display_name != there.display_name
+
+
+func _ask_travel() -> void:
+	var portal := _focused_portal
+	if not can_travel():
+		return
+	var dialog := ConfirmDialog.ask(tr("MAP_TRAVEL_ASK").format({name = tr(portal.display_name)}), "MAP_TRAVEL", TRAVEL_DIALOG)
+	dialog.answered.connect(func(confirmed: bool) -> void:
+		if confirmed:
+			MenuStack.clear()
+			portal.travel())
 
 
 ## Con zoom, el lienzo se corre para que el cursor no salga de la tarjeta.
@@ -446,6 +519,11 @@ func _follow_cursor() -> void:
 func _focus_zone(zone: AreaZone) -> void:
 	_clear(focus_stats)
 	focus_text.text = ""
+	portal_title.visible = _focused_portal != null
+	focus_title.visible = _focused_portal == null
+	travel_button.visible = can_travel()
+	if _focused_portal:
+		portal_name.text = tr("MAP_PORTAL").format({name = tr(_focused_portal.display_name)})
 	if zone == null:
 		focus_title.text = ""
 		return
@@ -461,7 +539,9 @@ func _focus_zone(zone: AreaZone) -> void:
 	_count_row("MAP_TABLETS_READ", tablets.filter(func(tablet: Tablet) -> bool: return tablet.is_read()).size(), tablets.size())
 	var pieces := get_tree().current_scene.find_children("*", "HeartPiece", true, false).filter(func(piece: HeartPiece) -> bool: return inside.call(piece.global_position))
 	_count_row("MAP_HEART_PIECES", pieces.filter(func(piece: HeartPiece) -> bool: return piece.taken).size(), pieces.size())
-	if focus_stats.get_child_count() == 0:
+	if _focused_portal and not can_travel():
+		focus_text.text = "MAP_TRAVEL_HERE"
+	elif focus_stats.get_child_count() == 0:
 		focus_text.text = "MAP_NOTHING_HIDDEN"
 
 

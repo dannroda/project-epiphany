@@ -325,6 +325,30 @@ msgstr "Dungeon"
 msgid "MAP_TITLE_OVERWORLD"
 msgstr "Overworld"
 
+msgid "MAP_PORTAL"
+msgstr "Portal: {name}"
+
+msgid "MAP_TRAVEL"
+msgstr "Travel"
+
+msgid "MAP_TRAVEL_ASK"
+msgstr "Travel to {name}?"
+
+msgid "MAP_TRAVEL_ALL"
+msgstr "All players travel."
+
+msgid "MAP_TRAVEL_HERE"
+msgstr "You are already in this region."
+
+msgid "MAP_HINT_TRAVEL"
+msgstr "Travel"
+
+msgid "MAP_LEGEND_PORTAL"
+msgstr "Lit portal"
+
+msgid "MAP_PORTALS_LIT"
+msgstr "{done} of {total} portals"
+
 msgid "MAP_STAT_MAP"
 msgstr "Map"
 
@@ -761,6 +785,9 @@ msgstr "Landing"
 
 msgid "PLACE_CH_CRACKED"
 msgstr "Cracked Hall"
+
+msgid "PROMPT_TRAVEL"
+msgstr "Travel"
 
 msgid "PROMPT_OPEN"
 msgstr "Open"

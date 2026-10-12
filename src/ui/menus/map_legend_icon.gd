@@ -2,7 +2,7 @@
 extends Control
 ## Ícono de la leyenda del mapa: el mismo dibujo que usan las salas.
 
-enum Kind { VISITED, MAPPED, HERE, CHEST, BOSS, FOG, ENTRANCE, CHEST_OPEN, TABLET, PIN }
+enum Kind { VISITED, MAPPED, HERE, CHEST, BOSS, FOG, ENTRANCE, CHEST_OPEN, TABLET, PIN, PORTAL }
 
 @export var kind := Kind.VISITED:
 	set(value):
@@ -38,3 +38,5 @@ func _draw() -> void:
 			MapRoomCell.draw_tablet(self, Vector2(13, 14), MapRoomCell.NAME)
 		Kind.PIN:
 			MapRoomCell.draw_pin(self, Vector2(13, 14))
+		Kind.PORTAL:
+			MapRoomCell.draw_portal(self, Vector2(13, 13), 0.8)

@@ -57,6 +57,7 @@
 
 [ext_resource type="PackedScene" path="res://src/world/bridge.tscn" id="100_bridge"]
 [ext_resource type="Script" path="res://src/world/map_place.gd" id="101_place"]
+[ext_resource type="PackedScene" path="res://src/world/travel_portal.tscn" id="110_travel"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7se6l"]
 panorama = ExtResource("1_qyxw2")
@@ -926,3 +927,35 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -82, 0, 30)
 script = ExtResource("101_place")
 display_name = "PLACE_SPRING"
 kind = 1
+
+[node name="TravelPortals" type="Node3D" parent="."]
+
+[node name="PortalClaro" parent="TravelPortals" instance=ExtResource("110_travel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 0, 19)
+id = &"claro"
+display_name = "PLACE_FIRST_CLEARING"
+
+[node name="PortalPradera" parent="TravelPortals" instance=ExtResource("110_travel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 0, -5)
+id = &"pradera"
+display_name = "PLACE_MEADOW"
+
+[node name="PortalExplanada" parent="TravelPortals" instance=ExtResource("110_travel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 0, -29)
+id = &"explanada"
+display_name = "PLACE_TEMPLE_ESPLANADE"
+
+[node name="PortalNecropolis" parent="TravelPortals" instance=ExtResource("110_travel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, -5)
+id = &"necropolis"
+display_name = "PLACE_NECROPOLIS"
+
+[node name="PortalBanado" parent="TravelPortals" instance=ExtResource("110_travel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 62, 0, 35)
+id = &"banado"
+display_name = "PLACE_MARSH"
+
+[node name="PortalCumbre" parent="TravelPortals" instance=ExtResource("110_travel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, -29)
+id = &"cumbre"
+display_name = "PLACE_SUMMIT"

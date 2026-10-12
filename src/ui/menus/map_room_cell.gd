@@ -16,6 +16,7 @@ const SEALED := Color("#8a8374")
 const PAPER := Color("#cdb98f")
 const PAPER_INK := Color("#6b4f30")
 const INK := Color("#0b0d10")
+const PORTAL := Color("#7fd3dd")
 const SCENE_PATH := "res://src/ui/menus/map_room_cell.tscn"
 
 @export var visited_style: StyleBox
@@ -85,6 +86,23 @@ static func draw_arrow(canvas: CanvasItem, center: Vector2, angle: float) -> voi
 static func draw_entrance(canvas: CanvasItem, center: Vector2, color: Color) -> void:
 	canvas.draw_polyline(_arch(center, Vector2(8, 8), 9.0), color, 1.8, true)
 	canvas.draw_polyline(_arch(center + Vector2(0, 4), Vector2(3, 3), 5.0), color, 1.8, true)
+
+
+## Portal de viaje (mockup Pause_Map_Travel): óvalo oscuro con borde y centro celestes y una base.
+static func draw_portal(canvas: CanvasItem, center: Vector2, scale := 1.0) -> void:
+	var outer := _ellipse(center, Vector2(9, 11) * scale)
+	canvas.draw_colored_polygon(outer, INK)
+	canvas.draw_polyline(outer + PackedVector2Array([outer[0]]), PORTAL, 2.4 * scale, true)
+	canvas.draw_colored_polygon(_ellipse(center, Vector2(4.5, 6) * scale), Color(PORTAL, 0.85))
+	canvas.draw_line(center + Vector2(-9, 10) * scale, center + Vector2(9, 10) * scale, PORTAL, 2.4 * scale, true)
+
+
+static func _ellipse(center: Vector2, radius: Vector2) -> PackedVector2Array:
+	var points := PackedVector2Array()
+	for i in 24:
+		var angle := TAU * i / 24.0
+		points.append(center + Vector2(cos(angle), sin(angle)) * radius)
+	return points
 
 
 static func draw_cave(canvas: CanvasItem, center: Vector2) -> void:

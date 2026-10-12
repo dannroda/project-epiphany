@@ -14,8 +14,9 @@ var _question := ""
 var _confirm := ""
 
 
-static func ask(text: String, confirm_label: String) -> ConfirmDialog:
-	var dialog: ConfirmDialog = load(SCENE_PATH).instantiate()
+## `scene`: una variante de confirm_dialog.tscn (el viaje rápido suma ícono y detalle).
+static func ask(text: String, confirm_label: String, scene := SCENE_PATH) -> ConfirmDialog:
+	var dialog: ConfirmDialog = load(scene).instantiate()
 	dialog._question = text
 	dialog._confirm = confirm_label
 	MenuStack.push(dialog)

@@ -1,9 +1,9 @@
 @tool
 class_name MapMark
 extends Control
-## Una marca sobre el mapa (entrada, cueva, cofre abierto, tablilla leída, pin, puerta de mazmorra), centrada en `position`.
+## Una marca sobre el mapa (entrada, cueva, portal, cofre abierto, tablilla leída, pin, puerta de mazmorra), centrada en `position`.
 
-enum Kind { ENTRANCE, CHEST_OPEN, TABLET, PIN, DOOR_OPEN, DOOR_LOCKED, DOOR_BOSS, DOOR_SEALED, CAVE }
+enum Kind { ENTRANCE, CHEST_OPEN, TABLET, PIN, DOOR_OPEN, DOOR_LOCKED, DOOR_BOSS, DOOR_SEALED, CAVE, PORTAL }
 
 const SCENE_PATH := "res://src/ui/menus/map_mark.tscn"
 const DOOR_SIZE := 16.0
@@ -29,6 +29,8 @@ func _draw() -> void:
 			MapRoomCell.draw_entrance(self, center, MapRoomCell.TEXT)
 		Kind.CAVE:
 			MapRoomCell.draw_cave(self, center)
+		Kind.PORTAL:
+			MapRoomCell.draw_portal(self, center, size.y / 28.0)
 		Kind.CHEST_OPEN:
 			MapRoomCell.draw_chest(self, center + Vector2(0, 2), MapRoomCell.GREY)
 		Kind.TABLET:
