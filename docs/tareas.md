@@ -1616,7 +1616,8 @@ Daniel (2026-10-12, con el mapa de Link's Awakening de referencia): el mundo se 
   Propuesta en https://claude.ai/artifact/NF4jYH76khQkD2mr4A8tus: hoy son salas rectangulares unidas por aberturas, la lógica de un mapa de mazmorra. Los Zelda 2D tienen terreno continuo, bordes de paisaje (cornisas, hileras de árboles, cercos, agua), formas y tamaños distintos, caminos que guían, densidad y los secretos en cuevas interiores.
 - [ ] Propuesta del layout nuevo (variantes) y elección de Daniel
   Boceto celda por celda (84 × 40, mismas regiones y gating de D) generado por debug/tmp/ow2/layout.py; esperando a Daniel (tamaño, atajo del Santuario).
-- [ ] Secretos escondidos por diseño: gruta y santuario sin ZoneVeil
+- [ ] Cuevas interiores: Santuario, Gruta y Cueva de las bombas en escenas propias; ZoneVeil fuera del overworld
+  Daniel (2026-10-12): la gruta y los santuarios pasan a ser cuevas interiores. Afuera, solo la boca o la grieta en la cara de un risco.
 - [ ] Blockout del GridMap nuevo
 - [ ] Terreno orgánico, decoración, navmesh y mapa regenerados
 - [ ] Tests y escenarios al día
@@ -2554,7 +2555,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (52/108)
+## M11 — Pulido: contenido y feel  (52/109)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4349,6 +4350,17 @@ Daniel 2026-10-12: al dash/esquivar ponerle un efecto similar al trail de la esp
 - [x] Copias de la pose que se desvanecen
   DodgeGhosts (player.tscn) congela la pose cada 0,06 s mientras dura el roll; afterimage.tscn + ghost.gdshader (rosa translúcido con borde claro, depth prepass para que se lea la silueta) se desvanece en 0,3 s. Test test_roll_leaves_ghosts_that_fade. GDD §2 (feel).
 - [ ] Probarlo (Daniel): color, cantidad, duración
+
+### 11.113 El templo del ojo pasa a ser la última mazmorra · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `diseno`, `nivel`
+
+Daniel (2026-10-12): el jefe del ojo se pensó como fin de demo, así que tiene sentido que sea el final del juego. El templo (hoy D1) pasa a ser D4, la última; el escudo espejo pasa a ser lo que se consigue para entrar a la última mazmorra (el sello de luz). Hay que ampliar el templo para que use todos los ítems. Cambia la cadena de 11.90 (qué es D1 ahora, de dónde sale el arco, qué pasa con la mazmorra de la Cumbre) y el reparto del overworld (7.10).
+
+- [ ] Cadena nueva de mazmorras e ítems (con Daniel)
+- [ ] Dónde se consigue el escudo espejo y qué lo gatea
+- [ ] Ampliar el templo: salas que usen todos los ítems
+- [ ] GDD §6 y §7, y el boceto de 7.10 al día
 
 ## M12 — Assets propios (Blender)  (6/17)
 
