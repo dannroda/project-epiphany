@@ -6,25 +6,27 @@
       "text": "Overworld"
     },
     {
-      "done": false,
-      "text": "Minimapa y mapa"
+      "detail": "Daniel (2026-10-12): el velo en el overworld queda horrible y hace demasiado evidente que hay algo oculto. Los secretos del overworld se esconden por diseño (7.10) y ZoneVeil queda para otros usos; la niebla en el minimapa y el mapa se probó y se deshizo.",
+      "done": true,
+      "text": "Minimapa y mapa (descartado)"
     }
   ],
   "code": "11.101",
   "created_at": "2026-10-12T08:16:59.401Z",
   "description": "Playtest 2026-10-12: las zonas tapadas (11.52, 11.54) no deberían verse como un cuadrado sin explorar, ni en el minimapa ni en el overworld.",
+  "done_at": "2026-10-12T20:23:40.643Z",
   "milestone": "m11",
   "notes": "Sesión: arte (-77) el overworld; overworld (-74) el minimapa.",
   "order": 98,
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "done",
   "tags": [
     "ui",
     "arte"
   ],
   "test": "",
   "title": "Zonas tapadas sin cuadrados sin explorar",
-  "updated_at": "2026-10-12T19:01:51.676Z"
+  "updated_at": "2026-10-12T20:23:40.643Z"
 }

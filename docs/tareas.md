@@ -1393,7 +1393,7 @@ Hecho 2026-10-08: kit `data/kits/gray_kit.tres` (lo arma `src/tools/build_gray_k
 
 **Bloqueada por:** 6.2 Puertas; 6.3 Llaves de mazmorra y HUD; 6.4 Bloques por grilla; 6.5 Interruptores y cableado
 
-## M7 — Overworld  (8/9)
+## M7 — Overworld  (8/10)
 
 Zona chica con el gating bombas → escudo espejo → sello del templo, y los secretos.
 
@@ -1605,6 +1605,20 @@ El overworld de 3 × 3 pantallas quedó hecho para una sola mazmorra y se siente
   Playtest 2026-10-12: áreas imposibles de alcanzar o cruzar. test_every_region_is_reachable_except_the_item_gated (navmesh + link del puente): con el puente se llega a todas las zonas menos la Cumbre y la isla de la Laguna (gancho) y las franjas de la Quebrada (angostura y bajadas, 11.90). Falta que Daniel diga qué lugares puntuales no pudo cruzar.
 - [x] Mapa: A viaja, X pone pin
   Daniel (2026-10-12): era contraintuitivo que el viaje fuera con X. Mockups Pause_Map_Travel, Pause_Map_Regions y Pause_Map_Overworld al día; map_page: ui_accept viaja (si hay portal enganchado), item_1 pone o quita pin; barra de ayudas en el orden del mockup.
+
+### 7.10 Overworld con forma de Zelda 2D, no cuadrado · En curso
+
+**Prioridad:** alta · **Etiquetas:** `overworld`, `nivel`
+
+Daniel (2026-10-12, con el mapa de Link's Awakening de referencia): el mundo se ve cuadriculado, regiones rectangulares de una pantalla. Que se parezca más a los Zelda 2D: bordes de riscos que zigzaguean, hileras de árboles como paredes, caminos que serpentean, regiones de tamaños y formas distintas, rincones y entradas escondidas. Los secretos se esconden por diseño (entrada en un risco, detrás de una hilera de árboles, cueva interior) y no con ZoneVeil, que en el overworld delata que hay algo oculto; el velo queda para otros usos. Se mantienen las regiones, la cadena de mazmorras y el gating de §7 (variante D).
+
+- [ ] Análisis de la referencia (Link's Awakening, ALttP): qué hace que no se vea cuadrado
+- [ ] Propuesta del layout nuevo (variantes) y elección de Daniel
+- [ ] Secretos escondidos por diseño: gruta y santuario sin ZoneVeil
+- [ ] Blockout del GridMap nuevo
+- [ ] Terreno orgánico, decoración, navmesh y mapa regenerados
+- [ ] Tests y escenarios al día
+- [ ] Recorrerlo (Daniel)
 
 ## M8 — Contenido de mazmorra  (8/8)
 
@@ -2538,7 +2552,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (51/108)
+## M11 — Pulido: contenido y feel  (52/108)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4184,15 +4198,16 @@ Playtest 2026-10-12: levantar y tirar funciona, pero no se entiende qué objeto 
 
 **Notas:** Sesión: arte (-77).
 
-### 11.101 Zonas tapadas sin cuadrados sin explorar · Pendiente
+### 11.101 Zonas tapadas sin cuadrados sin explorar · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `ui`, `arte`
+**Terminada:** 2026-10-12 · **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `ui`, `arte`
 
 Playtest 2026-10-12: las zonas tapadas (11.52, 11.54) no deberían verse como un cuadrado sin explorar, ni en el minimapa ni en el overworld.
 
 - [x] Overworld
   ZoneVeil pasa de caja de tinta negra a banco de niebla con mezcla alfa (sin dither): nubes claras que se mueven despacio y un borde que se deshace en jirones suaves (fringe 3 m); el interior de la zona sigue tapado y el recorte al abrir también es suave. covers() no cambia. Playtest: el dither se veía horrible.
-- [ ] Minimapa y mapa
+- [x] Minimapa y mapa (descartado)
+  Daniel (2026-10-12): el velo en el overworld queda horrible y hace demasiado evidente que hay algo oculto. Los secretos del overworld se esconden por diseño (7.10) y ZoneVeil queda para otros usos; la niebla en el minimapa y el mapa se probó y se deshizo.
 
 **Notas:** Sesión: arte (-77) el overworld; overworld (-74) el minimapa.
 
