@@ -142,20 +142,24 @@ func quit_to_title() -> void:
 
 
 ## La escena y el lugar que dice GameState (al cargar una partida o empezar una nueva).
+## Siempre se recarga, aunque sea la misma: puertas e interruptores arrancan con los flags de la partida.
 func enter_saved_scene() -> void:
 	if not GameState.spawn_scene.is_empty() and not ResourceLoader.exists(GameState.spawn_scene):
 		Log.error(&"flow", "La escena de la partida ya no existe:", GameState.spawn_scene)
 		GameState.spawn_scene = NEW_GAME_SCENE
 		GameState.spawn_point = &"start"
 		GameState.player_position = null
-	var scene := get_tree().current_scene
-	if not GameState.spawn_scene.is_empty() and (scene == null or scene.scene_file_path != GameState.spawn_scene):
+	traveling = true
+	if not GameState.spawn_scene.is_empty():
 		if not await _change_scene(GameState.spawn_scene):
+			traveling = false
 			return
 	if not Players.all.is_empty() and GameState.player_position != null:
 		place_players(GameState.player_position)
 	elif GameState.spawn_point != &"":
 		_place_at_spawn()
+	await get_tree().physics_frame
+	traveling = false
 
 
 ## En mazmorra, en la entrada de la última sala; si no, en el punto de reaparición.

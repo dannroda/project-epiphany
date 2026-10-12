@@ -4266,11 +4266,15 @@ Playtest 2026-10-12: hay que mejorar la ambientación del overworld y las mazmor
 
 **Notas:** Sesión: arte (-77). Definir con Daniel qué falta en cada zona.
 
-### 11.108 Cargar en la misma escena desincroniza puertas y flags · Pendiente
+### 11.108 Cargar en la misma escena desincroniza puertas y flags · Revisión
 
 **Prioridad:** alta · **Tamaño:** M · **Etiquetas:** `bug`, `mazmorra`
 
 Encontrado en el análisis de D1 (11.90, softblock S1). Cargar desde la pausa una partida de la misma escena, sin recargarla, vuelve los flags a falso pero el mundo no los sigue: FloorSwitch ignora el falso (floor_switch.gd:37-41), EyeSwitch se apaga sin emitir (eye_switch.gd:38-42), y LightReceiver, WaveSpawner y Bridge solo reaccionan a verdadero; rejas y puertas solo se mueven con Wiring.changed. Si se cruza una puerta que debería estar cerrada y se guarda ahí, al recargar se queda encerrado (ej.: Ojos sin arco con el puente bajo). Arreglo probable: recargar siempre la escena al cargar una partida (save_manager.gd:344).
+
+- [x] SceneFlow.enter_saved_scene recarga siempre la escena, aunque sea la misma
+  Mientras carga, traveling queda en verdadero para que el checkpoint donde aparece el player nuevo no pise el spawn_point de la partida (pasaba con bombs_only).
+- [x] Test: cargar en la misma escena da una instancia nueva con el muro entero
 
 ### 11.109 Softblocks menores de D1 · Pendiente
 
@@ -5248,7 +5252,7 @@ SaveManager además de slots y codec hace `travel_to`, `respawn`, `new_game` (co
   Viaje, respawn, partida nueva, salir, ubicar players y fades (Fader puede integrarse para no sumar autoloads).
 - [x] SaveManager: slots y capturar/aplicar
 - [x] Pantalla de carga
-  Mockup Loading en el canvas (falta el visto bueno de Daniel). SceneFlow: si la carga en hilo tarda más de 0,25 s, tipo y nombre del destino (Portal.destination_kind/destination), barra de progreso y ojo; mínimo 0,6 s. Puestos en las puertas del overworld; las salidas de templo y Chullpa quedan genéricas.
+  Daniel (2026-10-12): alcanza con el ojo y un Cargando animado en la esquina inferior derecha. Mockup Loading rehecho así (aprobado). SceneFlow: si la carga en hilo tarda más de 0,25 s, negro con el ojo que parpadea y Cargando… (puntos animados) abajo a la derecha; mínimo 0,6 s. Sin destino ni barra: Portal.destination_kind/destination y las claves LOADING_* se quitaron (la salida de la Chullpa la limpia su sesión).
 
 **Prueba:** SaveManager solo guarda/carga; los tests de viaje y respawn pasan contra SceneFlow.
 

@@ -40,6 +40,7 @@ func test_health_is_saved_and_loaded() -> void:
 	assert_eq(saves.save_game(SLOT), OK)
 	player.health.reset(state.max_health)
 	assert_eq(await saves.load_game(SLOT), OK)
+	player = (Engine.get_main_loop() as SceneTree).get_first_node_in_group(&"player")
 	assert_eq(player.health.current, left, "cargar la partida devuelve la vida que tenía")
 	for suffix in ["", ".bak"]:
 		DirAccess.remove_absolute(saves.slot_path(SLOT) + suffix)

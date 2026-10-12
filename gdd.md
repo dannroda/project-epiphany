@@ -1598,6 +1598,7 @@ func _find(id: StringName) -> FlagDefinition:
 - **Escritura atómica:** se escribe a `slot_N.cfg.tmp`, la partida anterior pasa a `slot_N.cfg.bak` y el `.tmp` se renombra. Si `slot_N.cfg` no carga, se lee el `.bak`.
 - **Posición:** por ahora `[player] position` guarda la posición exacta y `spawn_scene` la escena; con salas y overworld pasa a `spawn_point`.
 - **Escena por uid:** junto a `spawn_scene` va `spawn_uid`, y al cargar manda el uid, así que mover o renombrar un nivel no rompe partidas viejas. Un save sin uid usa la ruta. Todo nivel con `SpawnPoint` necesita uid (lo prueba `test_portals`).
+- **Cargar recarga la escena** aunque sea la misma en la que se está (`SceneFlow.enter_saved_scene`, tarea 11.108): así puertas, interruptores y puentes arrancan con los flags de la partida en vez de quedar como los dejó el mundo en curso.
 
 Ejemplo de partida en texto plano:
 

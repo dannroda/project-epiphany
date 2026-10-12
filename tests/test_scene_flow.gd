@@ -57,3 +57,24 @@ func test_a_fast_trip_skips_it() -> void:
 		shown = shown or flow.loading_screen.visible
 		await tree.process_frame
 	assert_true(not shown, "una escena ya cargada no muestra la pantalla")
+
+
+func test_loading_a_save_of_the_same_scene_reloads_it() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	var saves: Node = tree.root.get_node(^"SaveManager")
+	state.reset()
+	tree.change_scene_to_file("res://levels/test.tscn")
+	await tree.scene_changed
+	state.spawn_scene = "res://levels/test.tscn"
+	state.player_position = Vector3(2, 0, 2)
+	assert_eq(saves.save_game(9), OK)
+	var before := tree.current_scene
+	state.set_flag(&"ow_test_cracked_wall", true)
+	assert_eq(await saves.load_game(9), OK)
+	assert_true(tree.current_scene != before, "la escena es otra instancia, no la del mundo que se tocó")
+	assert_eq(state.get_flag(&"ow_test_cracked_wall"), false)
+	assert_eq((tree.current_scene.get_node(^"CrackedWall") as CrackedWall).is_broken, false, "el muro vuelve a estar entero")
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(saves.slot_path(9)))
+	saves.current_slot = 1
+	state.reset()
