@@ -112,6 +112,87 @@ def brasero_quenoa(p):
 	p.paint(coals, "fuego", "DARK", vary=0.1)
 
 
+def soga(p, points, radius=0.03, sides=6):
+	"""Soga que pasa por points: tramos de cilindro, con un nudo chico en cada unión."""
+	faces = []
+	for a, b in zip(points, points[1:]):
+		a, b = Vector(a), Vector(b)
+		seg = p.cylinder(radius, 0.0, (b - a).length, sides=sides)
+		p.transform(seg, Matrix.Translation(a) @ (b - a).to_track_quat("Z", "Y").to_matrix().to_4x4())
+		faces += seg
+	return faces
+
+
+## Escalera de soga (rope_ladder.tscn): ejes de Godot pasados a Blender (z de Godot = -y). Cuelga LADDER_DROP con 12
+## peldaños; las sogas salen de las estacas, pasan por arriba del labio del risco (LADDER_LIP) y cuelgan a LADDER_OUT.
+LADDER_DROP = 5.4
+LADDER_HALF = 0.4
+LADDER_LIP = 1.0
+LADDER_OUT = 1.15
+LADDER_RUNGS = 12
+
+
+def escalera_soga(p):
+	"""Lo que cuelga: dos sogas de ichu trenzado que ondulan apenas y peldaños de palo atados con una vuelta de soga."""
+	rope = []
+	for side in (-1, 1):
+		points = [(side * LADDER_HALF, 0.2, 0.36), (side * LADDER_HALF, -0.3, 0.06), (side * LADDER_HALF, -LADDER_LIP, 0.06), (side * LADDER_HALF, -LADDER_OUT, -0.12)]
+		points += [(side * LADDER_HALF + 0.02 * math.sin(k * 1.3 + side), -LADDER_OUT, -0.12 - (LADDER_DROP - 0.12) * k / 16) for k in range(1, 17)]
+		rope += soga(p, points, 0.032)
+	p.paint(rope, "paja", "MID", vary=0.06)
+	rungs, ties = [], []
+	for k in range(LADDER_RUNGS):
+		z = -0.25 - k * (5.05 - 0.25) / (LADDER_RUNGS - 1)
+		tilt = p.rng.uniform(-0.04, 0.04)
+		rung = p.cylinder(0.035, -LADDER_HALF - 0.06, LADDER_HALF + 0.06, sides=6)
+		p.transform(rung, Matrix.Translation((0, -LADDER_OUT, z)) @ Matrix.Rotation(tilt, 4, "Y") @ Matrix.Rotation(math.pi / 2, 4, "Y"))
+		p.jitter(rung, 0.006)
+		rungs += rung
+		for side in (-1, 1):
+			tie = p.cylinder(0.05, z - 0.04, z + 0.04, sides=6)
+			p.transform(tie, Matrix.Translation((side * LADDER_HALF, -LADDER_OUT, 0)))
+			ties += tie
+	p.paint(rungs, "madera", "MID", vary=0.08)
+	p.paint(ties, "paja", "DARK", vary=0.05)
+
+
+def escalera_soga_estacas(p):
+	"""Las dos estacas clavadas al borde, con la soga atada en varias vueltas, y unas piedras que las calzan."""
+	wood, wraps = [], []
+	for side in (-1, 1):
+		x = side * 0.5
+		stake = p.lathe([(0.075, 0.0), (0.07, 0.5), (0.06, 0.6), (0.0, 0.7)], sides=6)
+		p.transform(stake, Matrix.Translation((x, 0.25, 0)) @ Matrix.Rotation(-side * 0.08, 4, "Y") @ Matrix.Rotation(0.12, 4, "X"))
+		p.jitter(stake, 0.01)
+		wood += stake
+		for k in range(3):
+			wrap = p.cylinder(0.088, 0.3 + k * 0.05, 0.34 + k * 0.05, sides=8)
+			p.transform(wrap, Matrix.Translation((x + (-side * 0.08) * 0.32, 0.25 + 0.04, 0)))
+			wraps += wrap
+		for k in range(2):
+			stone = p.blob((x + p.rng.uniform(-0.15, 0.15), 0.25 + p.rng.uniform(0.08, 0.2), 0.0), p.rng.uniform(0.08, 0.12), squash=(1.2, 1.0, 0.6), subdiv=1, rough=0.25, flat_bottom=0.0)
+			p.paint(stone, "piedra", vary=0.1)
+	p.paint(wood, "madera_oscura", z_range=(0.0, 0.7), vary=0.08)
+	p.paint(wraps, "paja", "MID", vary=0.05)
+
+
+def escalera_soga_rollo(p):
+	"""La escalera enrollada al borde: un rollo acostado de vueltas de soga con las puntas de los peldaños asomando."""
+	coil = []
+	for k in range(5):
+		x = -0.32 + k * 0.16
+		ring = [(x, 0.2 + 0.2 * math.cos(a), 0.2 + 0.2 * math.sin(a)) for a in (2 * math.pi * i / 14 for i in range(15))]
+		coil += soga(p, ring, 0.055, sides=6)
+	p.paint(coil, "paja", z_range=(0.0, 0.42), vary=0.06)
+	ends = []
+	for k in range(4):
+		a = 2 * math.pi * k / 4 + 0.4
+		stick = p.cylinder(0.03, -0.45, 0.45, sides=6)
+		p.transform(stick, Matrix.Translation((0, 0.2 + 0.17 * math.cos(a), 0.2 + 0.17 * math.sin(a))) @ Matrix.Rotation(math.pi / 2, 4, "Y"))
+		ends += stick
+	p.paint(ends, "madera", "MID", vary=0.08)
+
+
 def piedra_levantable(p):
 	"""Piedra que se levanta: más clara y redonda que las de adorno, atada con el cordón."""
 	rock = p.blob((0, 0, 0.25), 0.28, squash=(1.0, 0.95, 0.9), subdiv=3, rough=0.06, flat_bottom=0.0)
@@ -213,6 +294,9 @@ piece("vasija", 1, vasija, smooth=50)
 piece("vasija_pedazos", 2, vasija_pedazos, smooth=30)
 piece("mate", 30, mate, smooth=50)
 piece("brasero_quenoa", 31, brasero_quenoa, smooth=40)
+piece("escalera_soga", 32, escalera_soga, smooth=40)
+piece("escalera_soga_estacas", 33, escalera_soga_estacas, smooth=40)
+piece("escalera_soga_rollo", 34, escalera_soga_rollo, smooth=40)
 piece("estela", 3, estela, smooth=35)
 piece("apacheta", 4, apacheta, smooth=60)
 piece("cajon", 5, cajon, smooth=35)
