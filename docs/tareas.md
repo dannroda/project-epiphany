@@ -4375,7 +4375,7 @@ Daniel (2026-10-12): el jefe del ojo se pensó como fin de demo, así que tiene 
 - [x] D1: sub-jefe ojo vigía y jefe de los dos ojos
   Hecho el 2026-10-12. WatcherEye (src/entities/watcher_eye/): un ojo flotante que se abre, marca una línea en el piso y la barre con un rayo. Sub-jefe Ojo Vigía: después del barrido se tira sobre el player y queda enganchado en las raíces, y ahí le pegan espada, bomba o vasija. Jefe Los Ojos de la Queñoa: dos ojos, de a uno por vez; una flecha con el ojo abierto lo derriba para la espada, y el que queda se apura. EyeFight maneja la pelea como una oleada: cierra las puertas, intro, barra, se reinicia si el player sale, flag e interruptor. Con la regla de Daniel (salas sin obstáculos, cofre del ítem en una sala contigua que abre el sub-jefe), la guarida pasa a la sala SE con vasijas y el arco a la Cámara del arco (SO), detrás de una puerta que abre el sub-jefe. Contenedor de corazón y portal de salida. test_quenoa juega las dos peleas.
 - [ ] D1: kit de árbol y recorrerla (Daniel)
-  Hoy usa el kit de la Chullpa. Arte (Daniel, 2026-10-12): las paredes sueltas dentro de una sala (nichos de cofres, reja de la escalera del tronco) se ven como bloques macizos con la tapa cortada; hacen falta piezas de nicho o pared baja propias del kit. Recorrerla con el escenario quenoa.
+  Arte hecho el 2026-10-13 (sesión de arte, 12.18 y 3b3aaa33): la Queñoa tiene el estilo LA (doble muro, cámara, kit) y las paredes sueltas dentro de las salas (nichos de cofres, reja de la escalera del tronco) son paredes bajas LA de 1,3 m con borde de hojas; la colisión no cambió. Rejas y puertas con una sola hoja en el medio del paso (e34db47f). Falta: recorrerla (Daniel) con el escenario quenoa (ahora es D2: trae bombas y pluma).
 - [x] Invertir D1 y D2: la pluma primero
   Hecho el 2026-10-13 (Daniel: la pluma es mejor como primer ítem de mazmorra). La Chullpa es D1 (pluma) y la Queñoa D2 (arco); ninguna pedía el ítem de la otra. Grafos renombrados a chullpa_graph.tres y quenoa_graph.tres; la Chullpa trae solo bombas y la Queñoa bombas y pluma. Id y flags de la Chullpa pasan de d2 a ch (prefijo por mazmorra: ch_, qv_, d1_ el templo). Escenario chullpa sin arco ni pluma, quenoa con pluma. GDD §6.1, §6.2, §8b y §8c. Falta: §7 y el boceto de 7.10 (dónde está la Chullpa, qué gatea el camino a la Arboleda) con la sesión del overworld; la Queñoa no usa la pluma todavía.
 
@@ -4822,18 +4822,26 @@ Cada mazmorra con su propio estilo sobre el mismo kit (mismas piezas y colisione
 - [x] Estilo del terreno del overworld por región
   AreaZone.terrain_style (necropolis, laguna, cumbre, explanada, cardonal, quebrada); el build pinta suelo, riscos y abismo por región con borde ondulado y cambia la decoración. Puestos en overworld.tscn: Templo explanada, Quebrada, Necrópolis + Mirador, Cumbre + Risco, Laguna + Bañado, Cardonal. Falta que el usuario lo vea.
 
-### Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos · Pendiente
+### Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos · En curso
 
 **Prioridad:** media · **Tamaño:** M · **Etiquetas:** `arte`, `mazmorra`, `camara`
 
 Daniel (2026-10-13): la Chullpa real tiene la cámara vieja; el test LA (debug/la/chullpa_la.tscn) ya tiene la cámara de Link's Awakening, paredes, puertas y props nuevos. Llevar eso a las mazmorras jugables cuando la sesión de arte tenga los assets nuevos. El juego no cambia: no se mueven nodos de juego (puertas, placas, cofres, peleas, huecos, escaleras).
 
-- [ ] Chullpa: cámara LA y kit nuevo
-  La escena jugable levels/chullpa.tscn toma la cámara (pitch, fov, distancia, tilt-shift, luces por sala) y el kit del test LA. Correr test_chullpa, test_dungeon_reach y test_map.
-- [ ] Queñoa: kit de árbol en estilo LA
-  Junto con 11.113 paso 8 (piezas de nicho y pared baja propias del árbol).
+- [x] Chullpa: cámara LA y kit nuevo
+  Hecho el 2026-10-13 (15b5a3e8, antes e8966e9b mueve el look a src/world/look). tools/la_walls.gd -- bake duplica las paredes entre salas en levels/chullpa.tscn (cada sala con la suya; marcadores, escaleras y portal se corren con su sala), pone las paredes LA, la cámara LA, luz por sala, piso, brillo y fuego; -- refresh vuelve a elegir piezas después de editar. El mapa lee los pasos LA. Navmesh rehecho; test_chullpa, test_dungeon_reach y test_map pasan.
+- [x] Queñoa: kit de árbol en estilo LA
+  Hecho el 2026-10-13: bake con nueve formas nuevas (bf4d88b3); paredes bajas de 1,3 m con borde de hojas en nichos y reja del tronco (3b3aaa33, 11.113 paso 8); cofres en nicho mirando a la entrada y reja del tronco en la boca de la escalera (6566b7d6). El kit guarda los números de pieza al agregar formas. Navmesh rehecho; test_quenoa pasa.
 - [ ] Templo del ojo en estilo LA
+  En espera (Daniel, 2026-10-13): se hace junto con su rediseño (11.113 paso 3), todo de una vez.
+- [x] Puertas LA al ras de la pared
+  Hecho el 2026-10-13 con Daniel en el recorrido (una puerta con llave parecía abierta). Puerta cerrada llena el paso, una hoja en cada cara (f25bdf02); hojas de madera de 3 m con bandas de hierro, cerradura, ojo de jefe/interruptor y persiana, inclinadas como su pared, bajan 3,2 m al abrir (3d08a58d). door.gd gana leaf_meshes y sink. El velo oscuro de los pasos ya no tapa al player (stencil).
+- [x] Bloque empujable y placa en estilo LA
+  Hecho el 2026-10-13 (d3f537ad; Daniel: el azul se veía raro). Piedra cálida con chakana; placa de madera con ojo dorado en marco de piedra. Mismos tamaños y colisión.
+- [x] Look final: el actual sin viñeta
+  Hecho el 2026-10-13 (9db90fc3). Comparado con Daniel contra la curva real de LA (RenderDoc) y un intermedio; eligió el actual sin viñeta. La marca de bake pasa a BrilloLA.
 - [ ] Recorrerlas (Daniel)
+  En curso con Daniel: lo que salga del recorrido (paredes, puertas, props) lo arregla la sesión de arte con la-walls refresh; diseño (-43) hace el jefe de la Chullpa en B-NE y avisa antes si necesita tocar paredes.
 
 **Notas:** Sesión: arte (-11). Diseño (-43) revisa que el juego no cambie.
 
