@@ -16,10 +16,10 @@ TOP = 2.6
 kit = epi.start()
 
 
-def piece(name, seed, fn):
+def piece(name, seed, fn, smooth=None):
 	p = epi.Piece(seed)
 	extra = fn(p)
-	obj = p.build(name, kit)
+	obj = p.build(name, kit, smooth=smooth)
 	for key, value in (extra if isinstance(extra, dict) else {}).items():
 		obj[key] = value
 	return obj
@@ -488,39 +488,73 @@ piece("puente", 20, puente)
 
 # --- templo por fuera ---
 
+def fitted_stones(p, half, front, z0, z1, door=0.0):
+	"""Hileras de piedras grandes encajadas, de canto redondeado, en un frente de x ±half con la cara en y = front;
+	deja libre el hueco de la puerta (|x| < door, hasta 3 m)."""
+	faces = []
+	z, row = z0, 0
+	while z < z1 - 0.1:
+		h = min(0.6 if row % 2 else 0.5, z1 - z)
+		x = -half + (0.35 if row % 2 else 0.0)
+		if row % 2:
+			faces += p.rounded_box(-half + 0.02, x - 0.02, front, front + 2.0, z + 0.02, z + h - 0.02, radius=0.07, segments=2)
+		while x < half - 0.01:
+			w = min(0.7 + p.rng.random() * 0.5, half - x)
+			if half - x - w < 0.3:
+				w = half - x
+			if not (abs(x + w / 2) < door + w / 2 and z < 3.0):
+				out = p.rng.uniform(0.0, 0.05)
+				faces += p.rounded_box(x + 0.02, x + w - 0.02, front - out, front + 2.0, z + 0.02, z + h - 0.02, radius=0.07, segments=2)
+			x += w
+		z += h
+		row += 1
+	return faces
+
+
 def fachada_templo(p):
-	"""Portada del templo, 6 m de ancho: jambas y dintel monolíticos con un friso de ojos y escalonados.
-	La abertura (2.4 × 2.6, trapezoidal arriba) queda centrada en el origen; el sello entra justo ahí."""
-	plinth = p.box(-3.2, 3.2, -0.9, 0.9, -0.5, 0.2)
-	p.paint(plinth, "piedra_templo", "DARK", vary=0.05)
-	dark = p.box(-1.2, 1.2, -0.3, 0.9, 0.2, 2.8)
-	p.paint(dark, "noche", "DARK")
+	"""Templo escalonado a lo Link's Awakening: un muro de piedras grandes encajadas con la puerta trapezoidal de
+	doble marco y nichos a los costados, y dos gradas que suben detrás hasta un altar con el ojo de oro.
+	La abertura (2.4 × 2.6, la del sello) queda centrada en el origen; el frente mira a -Y."""
+	stone = "piedra_templo"
+	p.paint(p.rounded_box(-3.7, 3.7, -1.3, 2.8, -0.5, 0.15, radius=0.08), stone, "DARK", vary=0.05)
+	p.paint(p.box(-1.2, 1.2, -0.3, 1.2, 0.15, 2.8), "noche", "DARK")
+	blocks = fitted_stones(p, 3.5, -0.75, 0.15, 3.55, door=1.55)
+	blocks += fitted_stones(p, 2.6, 0.0, 3.8, 4.9)
+	blocks += fitted_stones(p, 1.5, 0.7, 5.05, 6.0)
+	p.paint(blocks, stone, z_range=(0, 6.5), vary=0.07)
+	frame = []
+	for inset, out, swatch in ((1.55, 0.82, stone), (1.35, 0.9, stone)):
+		for side in (-1, 1):
+			jamb = p.polygon([(side * 1.2, -out), (side * inset, -out), (side * (inset - 0.18), -0.3), (side * 1.2, -0.3)][:: side], 0.15, 2.95)
+			for v in {v for f in jamb for v in f.verts if abs(v.co.x) > 1.25}:
+				v.co.x -= side * 0.25 * (v.co.z - 0.15) / 2.8
+			frame += jamb
+		frame += p.rounded_box(-inset + 0.2, inset - 0.2, -out, 0.4, 2.6, 3.1 if inset > 1.4 else 2.95, radius=0.05)
+	niches = []
 	for side in (-1, 1):
-		jamb = p.box(1.2, 3.0, -0.7, 0.7, 0.2, 3.4)
-		for v in {v for f in jamb for v in f.verts}:
-			if v.co.z > 3.0 and v.co.x < 1.3:
-				v.co.x = 1.0
-		p.transform(jamb, Matrix.Scale(side, 4, Vector((1, 0, 0))))
-		p.paint(jamb, "piedra_templo", z_range=(0, 5), vary=0.06)
-		for k in range(3):
-			niche = p.box(1.9, 2.4, -0.74, -0.7, 0.6 + k * 0.9, 1.2 + k * 0.9)
-			for v in {v for f in niche for v in f.verts}:
-				if v.co.z > 0.9 + k * 0.9:
-					v.co.x += 0.06 if v.co.x < 2.1 else -0.06
-			p.transform(niche, Matrix.Scale(side, 4, Vector((1, 0, 0))))
-			p.paint(niche, "gris_5", "MID")
-	lintel = p.box(-3.1, 3.1, -0.8, 0.8, 3.4, 4.6)
-	p.paint(lintel, "piedra_templo", z_range=(0, 5), vary=0.04)
-	frieze = epi.eye(p, Vector((0, -0.8, 4.0)), 0.55, depth=0.06)
+		for k in range(2):
+			cx = side * (2.25 + k * 0.85)
+			rim = p.polygon([(cx - 0.36, -0.86), (cx + 0.36, -0.86), (cx + 0.36, -0.7), (cx - 0.36, -0.7)], 0.8, 2.2)
+			hole = p.polygon([(cx - 0.24, -0.88), (cx + 0.24, -0.88), (cx + 0.24, -0.84), (cx - 0.24, -0.84)], 0.92, 2.06)
+			for faces, top, k in ((rim, 1.5, 0.7), (hole, 1.5, 0.62)):
+				for v in {v for f in faces for v in f.verts if v.co.z > top}:
+					v.co.x = cx + (v.co.x - cx) * k
+			frame += rim
+			niches += hole
+	p.paint(frame, stone, "LIGHT", vary=0.04)
+	p.paint(niches, "noche", "MID")
+	p.paint(p.rounded_box(-3.6, 3.6, -0.9, 2.7, 3.55, 3.8, radius=0.06), stone, "LIGHT")
+	p.paint(p.rounded_box(-2.6, 2.6, 0.1, 2.7, 3.8, 4.9, radius=0.1), stone, "DARK")
+	p.paint(p.rounded_box(-2.8, 2.8, -0.1, 2.8, 4.9, 5.05, radius=0.05), stone, "LIGHT")
+	p.paint(p.rounded_box(-1.5, 1.5, 0.8, 2.6, 5.05, 6.0, radius=0.1), stone, "DARK")
+	p.paint(p.rounded_box(-1.7, 1.7, 0.6, 2.7, 6.0, 6.15, radius=0.05), stone, "LIGHT")
+	gold = epi.eye(p, Vector((0, -0.1, 4.35)), 0.42, depth=0.06)
 	for side in (-1, 1):
 		for i in range(3):
 			w = 0.9 - i * 0.25
-			step = p.box(-w / 2, w / 2, -0.86, -0.8, 3.55 + i * 0.25, 3.8 + i * 0.25)
-			p.transform(step, Matrix.Translation((side * 1.9, 0, 0)))
-			frieze += step
-	p.paint(frieze, "dorado", "MID", vary=0.05)
-	cornice = p.box(-3.3, 3.3, -0.95, 0.95, 4.6, 4.85, taper=0.08)
-	p.paint(cornice, "piedra_templo", "LIGHT")
+			gold += p.rounded_box(side * 1.75 - w / 2, side * 1.75 + w / 2, -0.12, -0.03, 3.9 + i * 0.25, 4.15 + i * 0.25, radius=0.02, segments=1)
+	gold += epi.eye(p, Vector((0, 0.6, 5.5)), 0.3, depth=0.05)
+	p.paint(gold, "dorado", "MID", vary=0.05)
 
 
 def sello_losa(p):
@@ -579,7 +613,7 @@ def monolito(p):
 	p.paint(relief, "piedra", "DARK")
 
 
-piece("fachada_templo", 21, fachada_templo)
+piece("fachada_templo", 21, fachada_templo, smooth=35)
 piece("sello_losa", 22, sello_losa)
 piece("sello_ojo", 23, sello_ojo)
 piece("portal_disco", 24, portal_disco)
