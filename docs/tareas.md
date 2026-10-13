@@ -4619,8 +4619,8 @@ Mazmorra 4 (GDD §8e): el escudo espejo parte la Cumbre; el piso bajo sin él, e
   Hoy un ojo vigía prestado en PisoCima/BossFight. Pide el escudo.
 - [ ] Entrada en el overworld (sesión del overworld)
   Spawn_cumbre y la puerta; hasta entonces las salidas van a risco.
-- [ ] Horneado LA (arte)
-  El estilo cumbre ya está en la_walls; falta sumar levels/cumbre.tscn a LEVELS y hornearla.
+- [x] Horneado LA (arte)
+  Hecho por arte (b07155ba, en main 69115da1): cumbre en LEVELS de la_walls con spread false, las salas quedan donde estaban (espejos, haces, postes y el hueco del Hueco sin mover). Si se edita el grid: la_walls.gd -- refresh cumbre, sin rehornear.
 - [ ] Recorrerla (Daniel)
 
 **Prueba:** test_cumbre, test_dungeon_reach (cumbre_graph), test_walk_doors, test_drop_holes
