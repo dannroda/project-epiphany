@@ -2971,14 +2971,15 @@ Un mini-santuario de 3–4 salas que se resuelven solo con el escudo espejo, cad
 
 **Prueba:** Se completa solo con el escudo espejo; cada sala enseña una variante del reflejo.
 
-### 11.28 Atajos que se abren al volver · Pendiente
+### 11.28 Atajos que se abren al volver · Revisión
 
 **Prioridad:** baja · **Etiquetas:** `overworld`
 
 Uno o dos atajos que se abren desde adentro (puente o escalera) y quedan abiertos, para acortar el camino de vuelta al templo.
 
-- [ ] Uno o dos atajos de vuelta
-  Puente o escalera que se despliega desde el lado de adentro; flag persistente.
+- [x] Uno o dos atajos de vuelta
+  Daniel (2026-10-13): escalera de soga Cumbre → Explanada. Hecho: CumbreLadder en el borde oeste de la Cumbre (7.6, 5.2, -33), se descuelga desde arriba (flag ow_cumbre_ladder) y une la Cumbre con la orilla al pie, que por el norte de la Quebrada lleva a la Explanada. Test en test_secrets.
+- [ ] Recorrerlo (Daniel)
 
 **Prueba:** Abrir el atajo desde adentro: queda abierto y acorta el recorrido al templo.
 

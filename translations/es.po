@@ -927,6 +927,9 @@ msgstr "Empujar"
 msgid "PROMPT_LIFT"
 msgstr "Levantar"
 
+msgid "PROMPT_UNROLL"
+msgstr "Descolgar"
+
 msgid "BOSS_NAME"
 msgstr "El Ojo Antiguo"
 

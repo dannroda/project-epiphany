@@ -243,3 +243,32 @@ func test_cutting_the_bush_opens_the_stairs_to_a_cave() -> void:
 	player = tree.get_first_node_in_group(&"player") as PlayerCharacter
 	assert_true(player.global_position.distance_to(tree.current_scene.get_node(^"BushCaveDoor").global_position) < 3.5, "y se sale al lado de la mata")
 	state.reset()
+
+
+func test_the_cumbre_rope_ladder_is_lowered_from_above_and_stays() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var setup: Array = await _load(tree, [])
+	var state: Node = setup[0]
+	var level: Node = setup[1]
+	var player: PlayerCharacter = setup[2]
+	var ladder := level.get_node(^"CumbreLadder") as RopeLadder
+	player.global_position = (ladder.bottom.get_child(0) as Node3D).global_position + Vector3(0, -0.7, 0)
+	await tree.create_timer(1.0).timeout
+	assert_true(player.global_position.y < 1.0, "enrollada, desde abajo no se sube (y %.2f)" % player.global_position.y)
+	player.global_position = ladder.get_node(^"TopSpot").global_position
+	await tree.physics_frame
+	ladder.interactable.interact(player)
+	assert_eq([state.get_flag(&"ow_cumbre_ladder"), ladder.ladder.visible], [true, true], "desde arriba se descuelga")
+	await tree.create_timer(0.8).timeout
+	player.global_position = (ladder.top.get_child(0) as Node3D).global_position + Vector3(0, -0.7, 0)
+	await tree.create_timer(1.2).timeout
+	assert_true(player.global_position.y < 1.0, "se baja por la soga (y %.2f)" % player.global_position.y)
+	await tree.create_timer(0.5).timeout
+	player.global_position = (ladder.bottom.get_child(0) as Node3D).global_position + Vector3(0, -0.7, 0)
+	await tree.create_timer(1.2).timeout
+	assert_true(player.global_position.y > 4.5, "y se sube (y %.2f)" % player.global_position.y)
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	await tree.physics_frame
+	assert_eq((tree.current_scene.get_node(^"CumbreLadder") as RopeLadder).ladder.visible, true, "al volver sigue colgada")
+	state.reset()

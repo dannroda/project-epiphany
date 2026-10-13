@@ -1,0 +1,140 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/rope_ladder.gd" id="1_ladder"]
+[ext_resource type="Script" path="res://src/components/interactable.gd" id="2_interact"]
+[ext_resource type="Script" path="res://src/world/stairs.gd" id="3_stairs"]
+
+[sub_resource type="StandardMaterial3D" id="Rope"]
+albedo_color = Color(0.62, 0.5, 0.32, 1)
+roughness = 1.0
+
+[sub_resource type="StandardMaterial3D" id="Wood"]
+albedo_color = Color(0.45, 0.31, 0.18, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="RopeSide"]
+material = SubResource("Rope")
+size = Vector3(0.06, 5.40, 0.06)
+
+[sub_resource type="BoxMesh" id="Rung"]
+material = SubResource("Wood")
+size = Vector3(0.8, 0.06, 0.08)
+
+[sub_resource type="CylinderMesh" id="CoilMesh"]
+material = SubResource("Rope")
+top_radius = 0.22
+bottom_radius = 0.22
+height = 0.9
+
+[sub_resource type="BoxMesh" id="Stake"]
+material = SubResource("Wood")
+size = Vector3(0.12, 0.6, 0.4)
+
+[sub_resource type="BoxShape3D" id="Use"]
+size = Vector3(1.4, 1.5, 1.2)
+
+[sub_resource type="BoxShape3D" id="Step"]
+size = Vector3(1.2, 1.5, 0.6)
+
+[node name="RopeLadder" type="Node3D"]
+script = ExtResource("1_ladder")
+
+[node name="StakeL" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.3, -0.25)
+mesh = SubResource("Stake")
+
+[node name="StakeR" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.3, -0.25)
+mesh = SubResource("Stake")
+
+[node name="Coil" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, -1, 0, 1, 0, 0, 0, 0, 1, 0, 0.22, -0.2)
+mesh = SubResource("CoilMesh")
+
+[node name="Ladder" type="Node3D" parent="."]
+
+[node name="RopeL" type="MeshInstance3D" parent="Ladder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, -2.600, 0.4)
+mesh = SubResource("RopeSide")
+
+[node name="RopeR" type="MeshInstance3D" parent="Ladder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, -2.600, 0.4)
+mesh = SubResource("RopeSide")
+
+[node name="Rung1" type="MeshInstance3D" parent="Ladder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.250, 0.4)
+mesh = SubResource("Rung")
+
+[node name="Rung2" type="MeshInstance3D" parent="Ladder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.686, 0.4)
+mesh = SubResource("Rung")
+
+[node name="Rung3" type="MeshInstance3D" parent="Ladder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.123, 0.4)
+mesh = SubResource("Rung")
+
+[node name="Rung4" type="MeshInstance3D" parent="Ladder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.559, 0.4)
+mesh = SubResource("Rung")
+
+[node name="Rung5" type="MeshInstance3D" parent="Ladder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.995, 0.4)
+mesh = SubResource("Rung")
+
+[node name="Rung6" type="MeshInstance3D" parent="Ladder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.432, 0.4)
+mesh = SubResource("Rung")
+
+[node name="Rung7" type="MeshInstance3D" parent="Ladder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.868, 0.4)
+mesh = SubResource("Rung")
+
+[node name="Rung8" type="MeshInstance3D" parent="Ladder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.305, 0.4)
+mesh = SubResource("Rung")
+
+[node name="Rung9" type="MeshInstance3D" parent="Ladder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.741, 0.4)
+mesh = SubResource("Rung")
+
+[node name="Rung10" type="MeshInstance3D" parent="Ladder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.177, 0.4)
+mesh = SubResource("Rung")
+
+[node name="Rung11" type="MeshInstance3D" parent="Ladder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.614, 0.4)
+mesh = SubResource("Rung")
+
+[node name="Rung12" type="MeshInstance3D" parent="Ladder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.050, 0.4)
+mesh = SubResource("Rung")
+
+[node name="Interactable" type="Area3D" parent="."]
+script = ExtResource("2_interact")
+prompt = "PROMPT_UNROLL"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactable"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -0.4)
+shape = SubResource("Use")
+
+[node name="Top" type="Area3D" parent="." node_paths=PackedStringArray("to")]
+script = ExtResource("3_stairs")
+to = NodePath("../BottomSpot")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Top"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -0.3)
+shape = SubResource("Step")
+
+[node name="Bottom" type="Area3D" parent="." node_paths=PackedStringArray("to")]
+script = ExtResource("3_stairs")
+to = NodePath("../TopSpot")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bottom"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.45, 1.9)
+shape = SubResource("Step")
+
+[node name="TopSpot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.8)
+
+[node name="BottomSpot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.20, 3.1)

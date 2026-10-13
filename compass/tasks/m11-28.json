@@ -1,9 +1,13 @@
 {
   "checklist": [
     {
-      "detail": "Puente o escalera que se despliega desde el lado de adentro; flag persistente.",
-      "done": false,
+      "detail": "Daniel (2026-10-13): escalera de soga Cumbre → Explanada. Hecho: CumbreLadder en el borde oeste de la Cumbre (7.6, 5.2, -33), se descuelga desde arriba (flag ow_cumbre_ladder) y une la Cumbre con la orilla al pie, que por el norte de la Quebrada lleva a la Explanada. Test en test_secrets.",
+      "done": true,
       "text": "Uno o dos atajos de vuelta"
+    },
+    {
+      "done": false,
+      "text": "Recorrerlo (Daniel)"
     }
   ],
   "code": "11.28",
@@ -14,11 +18,11 @@
   "order": 28,
   "priority": "low",
   "refs": [],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "overworld"
   ],
   "test": "Abrir el atajo desde adentro: queda abierto y acorta el recorrido al templo.",
   "title": "Atajos que se abren al volver",
-  "updated_at": "2026-10-11T07:51:04.618Z"
+  "updated_at": "2026-10-13T16:31:52.614Z"
 }

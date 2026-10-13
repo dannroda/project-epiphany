@@ -927,6 +927,9 @@ msgstr "Push"
 msgid "PROMPT_LIFT"
 msgstr "Lift"
 
+msgid "PROMPT_UNROLL"
+msgstr "Lower"
+
 msgid "BOSS_NAME"
 msgstr "The Ancient Eye"
 

@@ -137,6 +137,7 @@
 [ext_resource type="PackedScene" path="res://src/world/plants/quenoa_secreta.tscn" id="ow_secret_tree"]
 [ext_resource type="PackedScene" path="res://src/world/plants/mata_tapa.tscn" id="ow_mata_tapa"]
 [ext_resource type="PackedScene" path="res://src/world/hoyo_escalera.tscn" id="ow_hoyo"]
+[ext_resource type="PackedScene" path="res://src/world/rope_ladder.tscn" id="ow_rope_ladder"]
 
 [ext_resource type="Script" uid="uid://c3gjwha8na3yi" path="res://src/world/look/sombra_la.gd" id="sombra_la"]
 
@@ -685,6 +686,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74, 0, 27)
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -71.8, 0, 27)
 script = ExtResource("4_cr2by")
 id = &"mata"
+
+[node name="CumbreLadder" parent="." instance=ExtResource("ow_rope_ladder")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7.6, 5.2, -33)
+flag = &"ow_cumbre_ladder"
 
 [node name="MeadowStep" parent="." instance=ExtResource("ow_escalon_alto")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0, -10)
