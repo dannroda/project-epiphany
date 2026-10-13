@@ -8,7 +8,13 @@ extends SceneTree
 ## Las paredes finitas sueltas (piso a los dos lados) son paredes bajas (muro). Las celdas Puerta llevan un corte (paso) o, si tienen escalera, un corte ciego con escalones (sube, baja).
 ## godot --headless --path . --script res://tools/la_walls.gd -- export | bake <nivel> | refresh <nivel>
 
-const LEVELS := {"chullpa": "res://levels/chullpa.tscn", "quenoa": "res://levels/quenoa.tscn"}
+const LEVELS := {"chullpa": "res://levels/chullpa.tscn", "quenoa": "res://levels/quenoa.tscn",
+	"bomb_cave": "res://levels/bomb_cave.tscn", "bush_cave": "res://levels/bush_cave.tscn", "grotto_cave": "res://levels/grotto_cave.tscn",
+	"shrine_cave": "res://levels/shrine_cave.tscn", "spring_cave": "res://levels/spring_cave.tscn"}
+## Niveles que comparten el look de otro (LOOKS).
+const LOOK_OF := {"bomb_cave": "cueva", "bush_cave": "cueva", "grotto_cave": "cueva", "shrine_cave": "cueva", "spring_cave": "cueva"}
+## Piezas de otros kits que se pasan a las del kit chullpa (las cuevas vienen del overworld_kit).
+const ADOPT := {"Cueva pared": "Pared", "Cueva piso": "Piso"}
 const KIT := "res://data/kits/chullpa_kit.tres"
 const OUT_KIT := "res://data/kits/chullpa_la_kit.tres"
 ## Marca de que el nivel ya tiene el look (bake no se repite).
@@ -109,6 +115,13 @@ const LOOKS := {
 		"doors": "res://assets/epiphany/meshes/paredes_la/%s_quenoa_la.res",
 		"walls": "res://assets/epiphany/meshes/paredes_la/%s_quenoa_la_%s.res", "kit": "res://data/kits/quenoa_la_kit.tres", "grain": [0.6, Vector4(0.51, 0.615, 0.0, 0.25)],
 		"floor": {"plank_width": 0.45, "floor_color": Color(0.44, 0.26, 0.16, 1.0), "grout_width": 0.025, "grout_shade": 0.35, "tone_spread": 0.16}},
+	"cueva": {"ambient": Color(0.48, 0.5, 0.6), "ambient_energy": 0.85, "sun": Color(0.66, 0.7, 0.82), "sun_energy": 0.4,
+		"room": Color(0.98, 0.86, 0.7), "room_energy": 1.6, "dust": "res://src/world/look/polvo_quenoa.tscn",
+		"brazier": "res://assets/epiphany/meshes/templo_chullpa/brasero.res",
+		"doors": "res://assets/epiphany/meshes/paredes_la/%s_la.res",
+		"walls": "res://assets/epiphany/meshes/paredes_la/%s_cueva_la_%s.res", "kit": "res://data/kits/cueva_la_kit.tres", "grain": [0.0, GRAIN_RECT],
+		"floor": {"tile_size": 0.6, "jitter": 0.4, "grout_width": 0.04, "bevel": 0.06, "earth": 0.78, "earth_shade": 0.55,
+			"floor_color": Color(0.32, 0.27, 0.24, 1.0)}},
 }
 ## El polvo va colgado de la cámara, a esta distancia por delante (más cerca que el player).
 const DUST_AHEAD := 20.0
@@ -146,11 +159,12 @@ func _initialize() -> void:
 		push_error("uso: -- export | bake <nivel> | refresh <nivel>, con nivel en %s" % [LEVELS.keys()])
 		quit(1)
 		return
-	_door_leaves = LOOKS[args[1]].doors
-	_walls = LOOKS[args[1]].walls
-	_out_kit = LOOKS[args[1]].kit
-	_floor_params = LOOKS[args[1]].floor
-	_grain = LOOKS[args[1]].grain
+	var look: Dictionary = LOOKS[LOOK_OF.get(args[1], args[1])]
+	_door_leaves = look.doors
+	_walls = look.walls
+	_out_kit = look.kit
+	_floor_params = look.floor
+	_grain = look.grain
 	var level := _load(path)
 	if mode == "bake" and level.has_node(NodePath(BAKED)):
 		push_error("%s ya tiene el look de LA: usar refresh" % path)
@@ -170,6 +184,10 @@ func _initialize() -> void:
 		return
 	for grid: GridMap in level.find_children("*", "GridMap", true, false):
 		var cells := _shapes(grid)
+		for cell in grid.get_used_cells():
+			var adopted: String = ADOPT.get(grid.mesh_library.get_item_name(grid.get_cell_item(cell)), "")
+			if adopted != "" and not cells.has(cell):
+				grid.set_cell_item(cell, kit.find_item_by_name(adopted), grid.get_cell_item_orientation(cell))
 		grid.mesh_library = kit
 		for cell: Vector3i in cells:
 			var shape: Array = cells[cell]
@@ -182,7 +200,7 @@ func _initialize() -> void:
 		for node: Node in level.find_children("*", "", true, false):
 			if node.scene_file_path.ends_with("door.tscn"):
 				_door(level, node)
-	_look(level, LOOKS[args[1]])
+	_look(level, look)
 	var packed := PackedScene.new()
 	packed.pack(level)
 	var uid := ResourceLoader.get_resource_uid(path)
@@ -529,6 +547,7 @@ func _sides(cell: Vector3i, open: Callable) -> String:
 
 ## El ítem del kit chullpa que una pieza LA reemplaza: Pared LA … es una pared, Paso LA …, Sube LA … y Baja LA … una puerta.
 func _base_name(item_name: String) -> String:
+	item_name = ADOPT.get(item_name, item_name)
 	if item_name.begins_with(KINDS["pared"][0]) or item_name.begins_with(KINDS["muro"][0]):
 		return WALLS[0]
 	for kind: String in ["paso", "sube", "baja"]:
@@ -654,7 +673,7 @@ func _with_window(mesh: Mesh, bottom_material: Material, fog: Material = null) -
 
 ## Los huecos que caen al piso de abajo usan la pieza con ventana; los demás (fosos), la de siempre.
 func _drops(level: Node, kit: MeshLibrary) -> void:
-	for old in level.find_children("*", "Node3D", true, false).filter(func(n: Node) -> bool: return n.scene_file_path == DROP_LOOK.resource_path):
+	for old in level.find_children("*", "Node3D", true, false).filter(func(n: Node) -> bool: return n.scene_file_path == DROP_LOOK.resource_path and n.name.begins_with("CaidaLA")):
 		old.get_parent().remove_child(old)
 		old.free()
 	for floor in DropHoles.floors(level):
@@ -690,10 +709,12 @@ func _drops(level: Node, kit: MeshLibrary) -> void:
 ## y los nodos. Lo que está sobre una línea (puertas) queda en el medio de la pared doble; las escaleras, del lado de su sala.
 func _spread(level: Node) -> void:
 	var covered := [{}, {}]
+	var rooms := 0
 	for room: Node in level.find_children("*", "Area3D", true, false):
 		var shape := room.get_node_or_null(^"CollisionShape3D") as CollisionShape3D
 		if not "map_cell" in room or shape == null or not shape.shape is BoxShape3D:
 			continue
+		rooms += 1
 		var size := (shape.shape as BoxShape3D).size
 		var center: Vector3 = (room as Node3D).position + shape.position
 		for axis in 2:
@@ -701,6 +722,8 @@ func _spread(level: Node) -> void:
 			var half := (size.x if axis == 0 else size.z) / 2.0
 			for cell in range(ceili((c - half + 1.0) / 2.0 - 0.01), floori((c + half - 1.0) / 2.0 + 0.01) + 1):
 				covered[axis][cell] = true
+	if rooms < 2:
+		return
 	var grids := level.find_children("*", "GridMap", true, false)
 	var low := Vector2i(1 << 20, 1 << 20)
 	var high := -low

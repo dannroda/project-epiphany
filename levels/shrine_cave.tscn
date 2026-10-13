@@ -1,154 +1,280 @@
 [gd_scene format=3 uid="uid://dht7i5q55h55h"]
 
-[ext_resource type="MeshLibrary" uid="uid://dt62p0c61qjd0" path="res://data/kits/overworld_kit.tres" id="c1_kit"]
-[ext_resource type="Script" uid="uid://nqxfiofg56dy" path="res://src/world/room.gd" id="c2_room"]
-[ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="c3_player"]
-[ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="c4_spawn"]
-[ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="c5_camera"]
-[ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="c6_hud"]
-[ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="c7_portal"]
-
+[ext_resource type="Script" path="res://src/world/look/sombra_la.gd" id="1_0nei8"]
+[ext_resource type="Script" path="res://src/world/look/tono_la.gd" id="2_vqq0k"]
+[ext_resource type="MeshLibrary" path="res://data/kits/cueva_la_kit.tres" id="3_2ky4v"]
+[ext_resource type="Shader" path="res://src/world/look/borde_oscuro.gdshader" id="5_o45gf"]
 [ext_resource type="PackedScene" path="res://src/world/heart_piece.tscn" id="6_piece"]
-
+[ext_resource type="Script" path="res://src/world/floor_switch.gd" id="7_ireil"]
+[ext_resource type="Script" path="res://src/world/push_block.gd" id="9_1fm1w"]
+[ext_resource type="Script" path="res://src/world/gate.gd" id="11_ukr0n"]
+[ext_resource type="Script" path="res://src/world/chest.gd" id="13_fa1x1"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="15_3hrjb"]
-
+[ext_resource type="Script" path="res://src/world/light/light_receiver.gd" id="17_rr1ab"]
 [ext_resource type="PackedScene" path="res://src/world/tablet.tscn" id="18_gsck2"]
-
-[ext_resource type="Resource" uid="uid://b353kh0linjkb" path="res://data/dialogue/overworld.dialogue" id="20_gd0nv"]
-
+[ext_resource type="Script" path="res://src/world/tablet.gd" id="19_6rd22"]
+[ext_resource type="Resource" path="res://data/dialogue/overworld.dialogue" id="20_gd0nv"]
+[ext_resource type="Script" path="res://src/world/heart_piece.gd" id="22_chuuf"]
 [ext_resource type="PackedScene" path="res://src/world/floor_switch.tscn" id="22_gvf0k"]
-
+[ext_resource type="Resource" path="res://data/items/heart_piece.tres" id="23_iv4kd"]
 [ext_resource type="PackedScene" path="res://src/world/push_block.tscn" id="24_v1yde"]
-
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/corazon.res" id="24_xlqr6"]
 [ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="26_iip2e"]
-
+[ext_resource type="Script" path="res://player/player.gd" id="28_67qrq"]
+[ext_resource type="Resource" path="res://data/entities/player.tres" id="29_5o3ln"]
 [ext_resource type="Resource" path="res://data/items/heart_container.tres" id="29_mweuj"]
-
 [ext_resource type="PackedScene" path="res://src/world/light/light_source.tscn" id="30_xv8lf"]
-
 [ext_resource type="PackedScene" path="res://src/world/light/light_receiver.tscn" id="31_fe77v"]
+[ext_resource type="Script" path="res://src/world/look/enfoque_la.gd" id="31_kffl2"]
+[ext_resource type="PackedScene" path="res://src/world/look/polvo_quenoa.tscn" id="32_lpyv4"]
+[ext_resource type="Script" path="res://src/ui/hud/hud.gd" id="34_psg4d"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/player_panel_solo.tscn" id="35_p4qax"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/player_panel.tscn" id="36_v31tx"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/item_ring.tscn" id="37_5i5jo"]
+[ext_resource type="Script" path="res://src/world/look/brillo_la.gd" id="38_supea"]
+[ext_resource type="Script" path="res://src/world/room.gd" id="c2_room"]
+[ext_resource type="PackedScene" path="res://player/player.tscn" id="c3_player"]
+[ext_resource type="Script" path="res://src/world/spawn_point.gd" id="c4_spawn"]
+[ext_resource type="Script" path="res://src/tools/top_down_camera.gd" id="c5_camera"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="c6_hud"]
+[ext_resource type="Script" path="res://src/world/portal.gd" id="c7_portal"]
 
-[sub_resource type="Environment" id="Environment"]
+[sub_resource type="Environment" id="Environment_foida"]
 background_mode = 1
-background_color = Color(0.02, 0.03, 0.05, 1)
 ambient_light_source = 2
-ambient_light_color = Color(0.42, 0.5, 0.62, 1)
-ambient_light_energy = 0.9
-tonemap_mode = 2
+ambient_light_color = Color(0.48, 0.5, 0.6, 1)
+ambient_light_energy = 0.85
+glow_enabled = true
+glow_intensity = 0.2
+glow_blend_mode = 0
+glow_hdr_threshold = 0.25
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_co66w"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("1_0nei8")
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_lakqi"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("2_vqq0k")
+exposure = 1.0
+
+[sub_resource type="Compositor" id="Compositor_4o460"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_co66w"), SubResource("CompositorEffect_lakqi")])
 
 [sub_resource type="BoxShape3D" id="RoomShape"]
 size = Vector3(26, 2.4, 16)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bxdsq"]
+render_priority = 0
+shader = ExtResource("5_o45gf")
+shader_parameter/inner = Vector4(-13.3, -9.4, 13.3, 7.9)
+shader_parameter/outer = Vector4(-14.8, -10.8, 14.8, 8.8)
+shader_parameter/limit = Vector4(-15.2, -11.2, 15.2, 9.2)
+shader_parameter/plane_y = 3.0
+shader_parameter/floor_rect = Vector4(-13, -9, 13, 7)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_r4owp"]
+material = SubResource("ShaderMaterial_bxdsq")
+size = Vector2(37.2, 27.2)
+
 [sub_resource type="BoxShape3D" id="PortalShape"]
 size = Vector3(2, 2.4, 1.4)
 
-[node name="ShrineCave" type="Node3D"]
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_aymj7"]
+dof_blur_far_enabled = true
+dof_blur_far_distance = 36.5
+dof_blur_far_transition = 6.0
+dof_blur_near_enabled = true
+dof_blur_near_distance = 30.5
+dof_blur_near_transition = 3.0
+dof_blur_amount = 0.12
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment")
+[node name="ShrineCave" type="Node3D" unique_id=1247938216]
 
-[node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.8660254, -0.43301272, 0.24999999, 0, 0.49999997, 0.86602545, -0.5, -0.75, 0.43301266, 0, 0, 0)
-light_color = Color(0.7, 0.8, 1, 1)
-light_energy = 0.5
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=847699921]
+environment = SubResource("Environment_foida")
+compositor = SubResource("Compositor_4o460")
 
-[node name="GridMap" type="GridMap" parent="." groups=["navmesh_source"]]
-mesh_library = ExtResource("c1_kit")
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=1630088467]
+transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 0, 0, 0)
+light_color = Color(0.66, 0.7, 0.82, 1)
+light_energy = 0.4
+
+[node name="GridMap" type="GridMap" parent="." unique_id=1886084655 groups=["navmesh_source"]]
+mesh_library = ExtResource("3_2ky4v")
 cell_size = Vector3(2, 1, 2)
 cell_center_x = false
 cell_center_y = false
 cell_center_z = false
 data = {
-"cells": PackedInt32Array(65529, 65531, 34, 65529, 65532, 34, 65529, 65533, 34, 65529, 65534, 34, 65529, 65535, 34, 65529, 0, 34, 65529, 1, 34, 65529, 2, 34, 65529, 3, 34, 65529, 4, 34, 65530, 65531, 34, 65530, 65532, 34, 65530, 65533, 34, 65530, 65534, 34, 65530, 65535, 34, 65530, 0, 34, 65530, 1, 34, 65530, 2, 34, 65530, 3, 34, 65530, 4, 34, 65531, 65531, 34, 65531, 65532, 34, 65531, 65533, 33, 65531, 65534, 33, 65531, 65535, 33, 65531, 0, 33, 65531, 1, 33, 65531, 2, 33, 65531, 3, 33, 65531, 4, 34, 65532, 65531, 34, 65532, 65532, 34, 65532, 65533, 34, 65532, 65534, 33, 65532, 65535, 33, 65532, 0, 33, 65532, 1, 33, 65532, 2, 33, 65532, 3, 34, 65532, 4, 34, 65533, 65531, 34, 65533, 65532, 34, 65533, 65533, 33, 65533, 65534, 33, 65533, 65535, 33, 65533, 0, 33, 65533, 1, 33, 65533, 2, 33, 65533, 3, 33, 65533, 4, 34, 65534, 65531, 34, 65534, 65532, 34, 65534, 65533, 34, 65534, 65534, 34, 65534, 65535, 34, 65534, 0, 33, 65534, 1, 33, 65534, 2, 33, 65534, 3, 33, 65534, 4, 34, 65535, 65531, 34, 65535, 65532, 34, 65535, 65533, 33, 65535, 65534, 33, 65535, 65535, 34, 65535, 0, 33, 65535, 1, 33, 65535, 2, 33, 65535, 3, 33, 65535, 4, 34, 0, 65531, 34, 0, 65532, 34, 0, 65533, 33, 0, 65534, 33, 0, 65535, 33, 0, 0, 33, 0, 1, 33, 0, 2, 33, 0, 3, 33, 0, 4, 33, 1, 65531, 34, 1, 65532, 34, 1, 65533, 33, 1, 65534, 33, 1, 65535, 34, 1, 0, 33, 1, 1, 33, 1, 2, 33, 1, 3, 33, 1, 4, 34, 2, 65531, 34, 2, 65532, 34, 2, 65533, 34, 2, 65534, 34, 2, 65535, 34, 2, 0, 33, 2, 1, 33, 2, 2, 33, 2, 3, 33, 2, 4, 34, 3, 65531, 34, 3, 65532, 34, 3, 65533, 33, 3, 65534, 33, 3, 65535, 33, 3, 0, 33, 3, 1, 33, 3, 2, 33, 3, 3, 33, 3, 4, 34, 4, 65531, 34, 4, 65532, 34, 4, 65533, 33, 4, 65534, 33, 4, 65535, 33, 4, 0, 33, 4, 1, 33, 4, 2, 33, 4, 3, 34, 4, 4, 34, 5, 65531, 34, 5, 65532, 34, 5, 65533, 33, 5, 65534, 33, 5, 65535, 33, 5, 0, 33, 5, 1, 33, 5, 2, 33, 5, 3, 33, 5, 4, 34, 6, 65531, 34, 6, 65532, 34, 6, 65533, 34, 6, 65534, 34, 6, 65535, 34, 6, 0, 33, 6, 1, 34, 6, 2, 34, 6, 3, 34, 6, 4, 34, 7, 65531, 34, 7, 65532, 34, 7, 65533, 34, 7, 65534, 34, 7, 65535, 34, 7, 0, 33, 7, 1, 34, 7, 2, 34, 7, 3, 34, 7, 4, 34)
+"cells": PackedInt32Array(65529, 65531, 36, 65529, 65532, 36, 65529, 65533, 36, 65529, 65534, 36, 65529, 65535, 36, 65529, 0, 36, 65529, 1, 36, 65529, 2, 36, 65529, 3, 36, 65529, 4, 36, 65530, 65531, 36, 65530, 65532, 39, 65530, 65533, 22, 65530, 65534, 22, 65530, 65535, 22, 65530, 0, 22, 65530, 1, 22, 65530, 2, 22, 65530, 3, 22, 65530, 4, 37, 65531, 65531, 36, 65531, 65532, 33, 65531, 65533, 0, 65531, 65534, 0, 65531, 65535, 0, 65531, 0, 0, 65531, 1, 0, 65531, 2, 0, 65531, 3, 0, 65531, 4, 26, 65532, 65531, 36, 65532, 65532, 33, 65532, 65533, 60, 65532, 65534, 0, 65532, 65535, 0, 65532, 0, 0, 65532, 1, 0, 65532, 2, 0, 65532, 3, 61, 65532, 4, 26, 65533, 65531, 36, 65533, 65532, 33, 65533, 65533, 0, 65533, 65534, 0, 65533, 65535, 0, 65533, 0, 0, 65533, 1, 0, 65533, 2, 0, 65533, 3, 0, 65533, 4, 26, 65534, 65531, 36, 65534, 65532, 33, 65534, 65533, 59, 65534, 65534, 59, 65534, 65535, 69, 65534, 0, 0, 65534, 1, 0, 65534, 2, 0, 65534, 3, 0, 65534, 4, 26, 65535, 65531, 36, 65535, 65532, 33, 65535, 65533, 0, 65535, 65534, 0, 65535, 65535, 62, 65535, 0, 0, 65535, 1, 0, 65535, 2, 0, 65535, 3, 0, 65535, 4, 29, 0, 65531, 36, 0, 65532, 33, 0, 65533, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 1, 65531, 36, 1, 65532, 33, 1, 65533, 0, 1, 65534, 0, 1, 65535, 72, 1, 0, 0, 1, 1, 0, 1, 2, 0, 1, 3, 0, 1, 4, 70, 2, 65531, 36, 2, 65532, 33, 2, 65533, 59, 2, 65534, 59, 2, 65535, 69, 2, 0, 0, 2, 1, 0, 2, 2, 0, 2, 3, 0, 2, 4, 26, 3, 65531, 36, 3, 65532, 33, 3, 65533, 0, 3, 65534, 0, 3, 65535, 0, 3, 0, 0, 3, 1, 0, 3, 2, 0, 3, 3, 0, 3, 4, 26, 4, 65531, 36, 4, 65532, 33, 4, 65533, 0, 4, 65534, 0, 4, 65535, 0, 4, 0, 0, 4, 1, 0, 4, 2, 0, 4, 3, 61, 4, 4, 26, 5, 65531, 36, 5, 65532, 33, 5, 65533, 0, 5, 65534, 0, 5, 65535, 0, 5, 0, 0, 5, 1, 0, 5, 2, 0, 5, 3, 0, 5, 4, 26, 6, 65531, 36, 6, 65532, 40, 6, 65533, 30, 6, 65534, 30, 6, 65535, 54, 6, 0, 0, 6, 1, 70, 6, 2, 30, 6, 3, 30, 6, 4, 38, 7, 65531, 36, 7, 65532, 36, 7, 65533, 36, 7, 65534, 36, 7, 65535, 33, 7, 0, 0, 7, 1, 26, 7, 2, 36, 7, 3, 36, 7, 4, 36)
 }
 
-[node name="Room" type="Area3D" parent="."]
+[node name="Room" type="Area3D" parent="." unique_id=1114178853]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -1)
 script = ExtResource("c2_room")
 display_name = "PLACE_SANCTUARY"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Room"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room" unique_id=1686025108]
 shape = SubResource("RoomShape")
 
-[node name="ShrineSwitch" parent="." instance=ExtResource("22_gvf0k")]
+[node name="BordeOscuro" type="MeshInstance3D" parent="Room" unique_id=100436489]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_r4owp")
+
+[node name="LuzSala" type="SpotLight3D" parent="Room" unique_id=1647739636]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(0.98, 0.86, 0.7, 1)
+light_energy = 1.6
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="Room" unique_id=2046862316]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(30, 5, 20)
+box_projection = true
+interior = true
+ambient_mode = 0
+
+[node name="ShrineSwitch" type="Area3D" parent="." unique_id=455544807 instance=ExtResource("22_gvf0k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
+script = ExtResource("7_ireil")
 mode = 2
 flag = &"ow_shrine_switch"
 
-[node name="ShrineBlock" parent="." instance=ExtResource("24_v1yde")]
+[node name="ShrineBlock" type="AnimatableBody3D" parent="." unique_id=1795437620 instance=ExtResource("24_v1yde")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 4)
+collision_layer = 9
+collision_mask = 0
+script = ExtResource("9_1fm1w")
 solved_flag = &"ow_shrine_switch"
 solved_position = Vector3(-78, 0, -32)
 
-[node name="ChestGate" parent="." instance=ExtResource("26_iip2e")]
+[node name="ChestGate" type="StaticBody3D" parent="." unique_id=386566849 instance=ExtResource("26_iip2e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+script = ExtResource("11_ukr0n")
 switches = Array[NodePath]([NodePath("../ShrineCrystal")])
 depth = 2.0
 
-[node name="ShrineChest" parent="." instance=ExtResource("15_3hrjb")]
+[node name="ShrineChest" type="StaticBody3D" parent="." unique_id=758877351 instance=ExtResource("15_3hrjb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+script = ExtResource("13_fa1x1")
 item = ExtResource("29_mweuj")
 flag = &"ow_shrine_chest"
 big = true
 
-[node name="ShrineLight" parent="." instance=ExtResource("30_xv8lf")]
+[node name="ShrineLight" type="StaticBody3D" parent="." unique_id=754792049 instance=ExtResource("30_xv8lf")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 8, 0, -6)
 
-[node name="ShrineCrystal" parent="." instance=ExtResource("31_fe77v")]
+[node name="ShrineCrystal" type="StaticBody3D" parent="." unique_id=957183138 instance=ExtResource("31_fe77v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
+script = ExtResource("17_rr1ab")
 latch = true
 flag = &"ow_shrine_crystal"
 
-[node name="ShortcutGate" parent="." instance=ExtResource("26_iip2e")]
+[node name="ShortcutGate" type="StaticBody3D" parent="." unique_id=1811513252 instance=ExtResource("26_iip2e")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 12, 0, 0)
+script = ExtResource("11_ukr0n")
 switches = Array[NodePath]([NodePath("../ShrineSwitch")])
 depth = 2.0
 
-[node name="ShrineTablet" parent="." instance=ExtResource("18_gsck2")]
+[node name="ShrineTablet" type="StaticBody3D" parent="." unique_id=1199650090 instance=ExtResource("18_gsck2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 4)
+script = ExtResource("19_6rd22")
 dialogue = ExtResource("20_gd0nv")
 cue = "shrine_mirror"
 flag = &"ow_tablet_shrine"
 
-[node name="HeartPieceShrine" parent="." instance=ExtResource("6_piece")]
+[node name="HeartPieceShrine" type="Area3D" parent="." unique_id=552954853 instance=ExtResource("6_piece")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -5)
+collision_layer = 0
+monitorable = false
+script = ExtResource("22_chuuf")
 flag = &"ow_heart_piece_shrine"
+item = ExtResource("23_iv4kd")
+heal = 4
+lifetime = 0.0
+item_get = true
+magnet_radius = 0.0
+world_size = 1.0
+heart_mesh = ExtResource("24_xlqr6")
 
-[node name="Spawn_entrada" type="Marker3D" parent="."]
+[node name="Spawn_entrada" type="Marker3D" parent="." unique_id=1369838862]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 script = ExtResource("c4_spawn")
 id = &"entrada"
 
-[node name="ExitPortal" type="Area3D" parent="."]
+[node name="ExitPortal" type="Area3D" parent="." unique_id=288648979]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 8.6)
 script = ExtResource("c7_portal")
 target_scene = "res://levels/overworld.tscn"
 target_spawn = &"santuario"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPortal"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPortal" unique_id=867491923]
 shape = SubResource("PortalShape")
 
-[node name="Spawn_atajo" type="Marker3D" parent="."]
+[node name="Spawn_atajo" type="Marker3D" parent="." unique_id=438568649]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 11, 0, 0)
 script = ExtResource("c4_spawn")
 id = &"atajo"
 
-[node name="BackPortal" type="Area3D" parent="."]
+[node name="BackPortal" type="Area3D" parent="." unique_id=1867427264]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 14.6, 1.2, 0)
 script = ExtResource("c7_portal")
 target_scene = "res://levels/overworld.tscn"
 target_spawn = &"atajo"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="BackPortal"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BackPortal" unique_id=1583543177]
 shape = SubResource("PortalShape")
 
-[node name="Player" parent="." instance=ExtResource("c3_player")]
+[node name="Player" type="CharacterBody3D" parent="." unique_id=974841641 instance=ExtResource("c3_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+script = ExtResource("28_67qrq")
+config = ExtResource("29_5o3ln")
 
-[node name="TopDownCamera" type="Camera3D" parent="." node_paths=PackedStringArray("target_node")]
+[node name="TopDownCamera" type="Camera3D" parent="." unique_id=1241806022 node_paths=PackedStringArray("target_node")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.4, 12.7)
+attributes = SubResource("CameraAttributesPractical_aymj7")
 fov = 40.0
 script = ExtResource("c5_camera")
 target_node = NodePath("../Player")
+offset = Vector3(0, 30.814466, 14.369021)
+field_of_view = 28.0
+wall_height = 5.4
+mask_margin = 2.0
+south_wall_cut = 3.6
+south_wall_reach = 1.7
 
-[node name="HUD" parent="." instance=ExtResource("c6_hud")]
+[node name="EnfoqueLA" type="Node" parent="TopDownCamera" unique_id=1243072761]
+script = ExtResource("31_kffl2")
+near_margin = 3.5
+
+[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1886843607 instance=ExtResource("32_lpyv4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1081973311 instance=ExtResource("c6_hud")]
+layer = 10
+script = ExtResource("34_psg4d")
+solo_panel = ExtResource("35_p4qax")
+coop_panel = ExtResource("36_v31tx")
+item_ring = ExtResource("37_5i5jo")
+
+[node name="BrilloLA" type="Node" parent="." unique_id=175905304]
+script = ExtResource("38_supea")

@@ -49,7 +49,8 @@ kit = epi.start()
 
 ## Estilo de las paredes que se están armando: None (roca de LA con borde de hojas), "chullpa" (pirca de piedra de
 ## campo en hiladas asentadas en barro, cornisa de barro con matas de ichu) o "quenoa" (la madera del tronco por dentro,
-## con vetas que bajan, musgo y hojas arriba). Los dos estilos van sin el bulto de las rocas.
+## con vetas que bajan, musgo y hojas arriba) y "cueva" (la roca de LA más oscura, sin hojas: la cresta es de piedra
+## y cada tanto cuelga una estalactita). La chullpa y la queñoa van sin el bulto de las rocas.
 WALL_STYLE = None
 PIRCA_ROW = 0.42
 PIRCA_JOINT = 0.04
@@ -301,6 +302,11 @@ def piece(kind, code, cut=None):
 			else:
 				tone = 0.32 + 0.33 * random.Random(row * 104729 + k * 7919 + round(a * 0.5)).random()
 				shade(p, f, STONE, tone + 0.15 * min(1.0, edge / 0.12) - 0.08)
+		elif WALL_STYLE == "cueva":
+			if c.z < MOSS_FOOT * (0.5 + noise.noise(Vector((c.x + c.y, 0.0, 6.0)) * 2.0)):
+				p.paint([f], "tierra", "LOW", vary=0.1)
+			else:
+				shade(p, f, STONE, rock_tone(c, sides, kind) * 0.55)
 		elif WALL_STYLE == "quenoa" and not moss(c, seed):
 			a = c.x if abs(f.normal.y) > abs(f.normal.x) else c.y
 			g = grain(a, c.z)
@@ -315,7 +321,8 @@ def piece(kind, code, cut=None):
 				shade(p, f, MOSS, min(0.8, 0.3 + 0.5 * (c.z - top + MOSS_TOP) / MOSS_TOP))
 		else:
 			shade(p, f, STONE, rock_tone(c, sides, kind))
-	p.paint(crest, "tierra" if WALL_STYLE == "chullpa" else LEAF, "MID" if WALL_STYLE == "chullpa" else "DARK", vary=0.08)
+	crest_swatch = {"chullpa": ("tierra", "MID"), "cueva": ("gris_4", "MID")}.get(WALL_STYLE, (LEAF, "DARK"))
+	p.paint(crest, crest_swatch[0], crest_swatch[1], vary=0.08)
 	hedge(p, xs, ys, h)
 	if cut:
 		for side in sides:
@@ -414,6 +421,10 @@ def hedge(p, xs, ys, h):
 		p.paint(leaves, "tierra", vary=0.12)
 		ichu(p, spots)
 		return
+	if WALL_STYLE == "cueva":
+		p.paint(leaves, "gris_4", vary=0.15)
+		stalactites(p, spots, h)
+		return
 	p.paint(leaves, LEAF, vary=0.25)
 	vine = []
 	for lx, ly, ox, oy in spots:
@@ -447,6 +458,22 @@ def ichu(p, spots):
 	p.paint(blades, "paja", vary=0.12)
 
 
+def stalactites(p, spots, h):
+	"""Estalactitas que cuelgan del borde de la cresta de la cueva, pegadas a la cara."""
+	drops = []
+	for lx, ly, ox, oy in spots:
+		if top < HEIGHT or p.rng.random() > 0.2:
+			continue
+		length = p.rng.uniform(0.35, 0.8)
+		t = 0.0
+		while t < 2.0 and h(lx + ox * t, ly + oy * t) >= top - length * 0.5:
+			t += 0.02
+		drop = p.cylinder(p.rng.uniform(0.07, 0.11), 0.0, length, sides=6, radius_top=0.0)
+		p.transform(drop, Matrix.Translation((lx + ox * (t + 0.02), ly + oy * (t + 0.02), top - 0.05)) @ Matrix.Rotation(math.pi, 4, "X"))
+		drops += drop
+	p.paint(drops, STONE, "LOW", vary=0.1)
+
+
 SHADE_SPAN = 20.0
 
 
@@ -456,7 +483,7 @@ def shade(p, f, swatch, t):
 
 
 shapes = json.load(open(os.path.join(ROOT, "tools", "paredes_la.json")))
-for WALL_STYLE, BULGE, STONE in ((None, 0.7, "acantilado"), ("chullpa", 0.0, "acantilado"), ("quenoa", 0.0, "madera")):
+for WALL_STYLE, BULGE, STONE in ((None, 0.7, "acantilado"), ("chullpa", 0.0, "acantilado"), ("quenoa", 0.0, "madera"), ("cueva", 0.7, "acantilado")):
 	for code in shapes["pared"]:
 		piece("pared", code)
 	for code in shapes.get("muro", []):

@@ -1,32 +1,86 @@
 [gd_scene format=3 uid="uid://daefrmxf0dueu"]
 
-[ext_resource type="MeshLibrary" uid="uid://dt62p0c61qjd0" path="res://data/kits/overworld_kit.tres" id="c1_kit"]
-[ext_resource type="Script" uid="uid://nqxfiofg56dy" path="res://src/world/room.gd" id="c2_room"]
-[ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="c3_player"]
-[ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="c4_spawn"]
-[ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="c5_camera"]
+[ext_resource type="Script" path="res://src/world/look/sombra_la.gd" id="1_4jacf"]
+[ext_resource type="Script" path="res://src/world/look/tono_la.gd" id="2_an1nk"]
+[ext_resource type="MeshLibrary" path="res://data/kits/cueva_la_kit.tres" id="3_5a1fo"]
+[ext_resource type="Shader" path="res://src/world/look/borde_oscuro.gdshader" id="5_x2gwa"]
+[ext_resource type="Script" path="res://src/world/chest.gd" id="7_0726h"]
+[ext_resource type="Script" path="res://src/world/breakable.gd" id="10_aqd4u"]
+[ext_resource type="Script" path="res://src/world/look/caida_la.gd" id="18_vd86t"]
+[ext_resource type="Script" path="res://player/player.gd" id="20_xg7ff"]
+[ext_resource type="Resource" path="res://data/entities/player.tres" id="21_kbiu8"]
+[ext_resource type="Script" path="res://src/world/look/enfoque_la.gd" id="23_qu23k"]
+[ext_resource type="PackedScene" path="res://src/world/look/polvo_quenoa.tscn" id="24_8kfsa"]
+[ext_resource type="Script" path="res://src/ui/hud/hud.gd" id="26_c7d1t"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/player_panel_solo.tscn" id="27_4kmm6"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/player_panel.tscn" id="28_a1cnm"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/item_ring.tscn" id="29_s5dto"]
+[ext_resource type="Script" path="res://src/world/look/brillo_la.gd" id="30_xbf1i"]
+[ext_resource type="Script" path="res://src/world/room.gd" id="c2_room"]
+[ext_resource type="PackedScene" path="res://player/player.tscn" id="c3_player"]
+[ext_resource type="Script" path="res://src/world/spawn_point.gd" id="c4_spawn"]
+[ext_resource type="Script" path="res://src/tools/top_down_camera.gd" id="c5_camera"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="c6_hud"]
-[ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="c7_portal"]
+[ext_resource type="Script" path="res://src/world/portal.gd" id="c7_portal"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="c8_chest"]
 [ext_resource type="Resource" path="res://data/items/bomb.tres" id="c9_bomb"]
 [ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="c10_pot"]
-[ext_resource type="Resource" uid="uid://dteshjodcq26c" path="res://data/drops/pot_hearts.tres" id="c11_hearts"]
-
+[ext_resource type="Resource" path="res://data/drops/pot_hearts.tres" id="c11_hearts"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/estalagmitas.res" id="d1_stal"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/rocas_rincon.res" id="d2_rincon"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/estalactitas_borde.res" id="d3_estalactitas"]
 [ext_resource type="PackedScene" path="res://src/world/look/caida_la.tscn" id="d4_caida"]
 
-[sub_resource type="Environment" id="Environment"]
+[sub_resource type="Environment" id="Environment_qv6ik"]
 background_mode = 1
-background_color = Color(0.02, 0.03, 0.05, 1)
 ambient_light_source = 2
-ambient_light_color = Color(0.42, 0.5, 0.62, 1)
-ambient_light_energy = 0.9
-tonemap_mode = 2
+ambient_light_color = Color(0.48, 0.5, 0.6, 1)
+ambient_light_energy = 0.85
+glow_enabled = true
+glow_intensity = 0.2
+glow_blend_mode = 0
+glow_hdr_threshold = 0.25
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_lg4sk"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("1_4jacf")
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_bd7sr"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("2_an1nk")
+exposure = 1.0
+
+[sub_resource type="Compositor" id="Compositor_yn0fx"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_lg4sk"), SubResource("CompositorEffect_bd7sr")])
 
 [sub_resource type="BoxShape3D" id="RoomShape"]
 size = Vector3(18, 2.4, 10)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mb320"]
+render_priority = 0
+shader = ExtResource("5_x2gwa")
+shader_parameter/inner = Vector4(-8.3, -5.4, 10.3, 5.9)
+shader_parameter/outer = Vector4(-9.8, -6.8, 11.8, 6.8)
+shader_parameter/limit = Vector4(-10.2, -7.2, 12.2, 7.2)
+shader_parameter/plane_y = 3.0
+shader_parameter/floor_rect = Vector4(-8, -5, 10, 5)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5d8xi"]
+material = SubResource("ShaderMaterial_mb320")
+size = Vector2(29.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="PortalShape"]
 size = Vector3(2, 2.4, 1.4)
@@ -34,162 +88,224 @@ size = Vector3(2, 2.4, 1.4)
 [sub_resource type="BoxShape3D" id="CornerShape"]
 size = Vector3(1.3, 1.6, 1.3)
 
-[node name="BushCave" type="Node3D"]
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_6aha5"]
+dof_blur_far_enabled = true
+dof_blur_far_distance = 36.5
+dof_blur_far_transition = 6.0
+dof_blur_near_enabled = true
+dof_blur_near_distance = 30.5
+dof_blur_near_transition = 3.0
+dof_blur_amount = 0.12
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment")
+[node name="BushCave" type="Node3D" unique_id=783601563]
 
-[node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.8660254, -0.43301272, 0.24999999, 0, 0.49999997, 0.86602545, -0.5, -0.75, 0.43301266, 0, 0, 0)
-light_color = Color(0.7, 0.8, 1, 1)
-light_energy = 0.5
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1598982773]
+environment = SubResource("Environment_qv6ik")
+compositor = SubResource("Compositor_yn0fx")
 
-[node name="GridMap" type="GridMap" parent="." groups=["navmesh_source"]]
-mesh_library = ExtResource("c1_kit")
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=322758272]
+transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 0, 0, 0)
+light_color = Color(0.66, 0.7, 0.82, 1)
+light_energy = 0.4
+
+[node name="GridMap" type="GridMap" parent="." unique_id=218856766 groups=["navmesh_source"]]
+mesh_library = ExtResource("3_5a1fo")
 cell_size = Vector3(2, 1, 2)
 cell_center_x = false
 cell_center_y = false
 cell_center_z = false
 data = {
-"cells": PackedInt32Array(65532, 65533, 34, 65532, 65534, 34, 65532, 65535, 34, 65532, 0, 34, 65532, 1, 34, 65532, 2, 34, 65533, 65533, 34, 65533, 65534, 33, 65533, 65535, 33, 65533, 0, 33, 65533, 1, 33, 65533, 2, 34, 65534, 65533, 34, 65534, 65534, 33, 65534, 65535, 33, 65534, 0, 33, 65534, 1, 33, 65534, 2, 34, 65535, 65533, 34, 65535, 65534, 33, 65535, 65535, 33, 65535, 0, 33, 65535, 1, 33, 65535, 2, 34, 0, 65533, 34, 0, 65534, 33, 0, 65535, 33, 0, 0, 33, 0, 1, 33, 0, 2, 34, 1, 65533, 34, 1, 65534, 33, 1, 65535, 33, 1, 0, 33, 1, 1, 33, 1, 2, 34, 2, 65533, 34, 2, 65534, 33, 2, 65535, 33, 2, 0, 33, 2, 1, 33, 2, 2, 34, 3, 65533, 34, 3, 65534, 33, 3, 65535, 33, 3, 0, 33, 3, 1, 33, 3, 2, 34, 4, 65533, 34, 4, 65534, 34, 4, 65535, 33, 4, 0, 33, 4, 1, 34, 4, 2, 34, 5, 65535, 34, 5, 0, 34)
+"cells": PackedInt32Array(65532, 65533, 39, 65532, 65534, 22, 65532, 65535, 22, 65532, 0, 22, 65532, 1, 22, 65532, 2, 37, 65533, 65533, 33, 65533, 65534, 0, 65533, 65535, 0, 65533, 0, 0, 65533, 1, 0, 65533, 2, 26, 65534, 65533, 33, 65534, 65534, 0, 65534, 65535, 0, 65534, 0, 0, 65534, 1, 0, 65534, 2, 26, 65535, 65533, 33, 65535, 65534, 0, 65535, 65535, 0, 65535, 0, 0, 65535, 1, 0, 65535, 2, 26, 0, 65533, 33, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 26, 1, 65533, 33, 1, 65534, 0, 1, 65535, 0, 1, 0, 0, 1, 1, 0, 1, 2, 26, 2, 65533, 33, 2, 65534, 0, 2, 65535, 0, 2, 0, 0, 2, 1, 0, 2, 2, 26, 3, 65533, 33, 3, 65534, 0, 3, 65535, 0, 3, 0, 0, 3, 1, 0, 3, 2, 26, 4, 65533, 40, 4, 65534, 54, 4, 65535, 0, 4, 0, 0, 4, 1, 70, 4, 2, 38, 5, 65535, 30, 5, 0, 30)
 }
 
-[node name="Room" type="Area3D" parent="."]
+[node name="Room" type="Area3D" parent="." unique_id=16668204]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.2, 0)
 script = ExtResource("c2_room")
 display_name = "PLACE_BUSH_CAVE"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Room"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room" unique_id=764518590]
 shape = SubResource("RoomShape")
 
-[node name="BushCaveChest" parent="." instance=ExtResource("c8_chest")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4, 0, 0)
+[node name="BordeOscuro" type="MeshInstance3D" parent="Room" unique_id=1704778918]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_5d8xi")
+
+[node name="LuzSala" type="SpotLight3D" parent="Room" unique_id=1611558460]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(0.98, 0.86, 0.7, 1)
+light_energy = 1.6
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="Room" unique_id=962443205]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(22, 5, 14)
+box_projection = true
+interior = true
+ambient_mode = 0
+
+[node name="BushCaveChest" type="StaticBody3D" parent="." unique_id=1549456472 instance=ExtResource("c8_chest")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+script = ExtResource("7_0726h")
 item = ExtResource("c9_bomb")
 amount = 10
 flag = &"ow_secret_bush_chest"
 
-[node name="Pot1" parent="." instance=ExtResource("c10_pot")]
+[node name="Pot1" type="Node3D" parent="." unique_id=1463929101 instance=ExtResource("c10_pot")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -3)
+script = ExtResource("10_aqd4u")
 drops = ExtResource("c11_hearts")
+drop_height = 0.1
 
-[node name="Pot2" parent="." instance=ExtResource("c10_pot")]
+[node name="Pot2" type="Node3D" parent="." unique_id=1802133388 instance=ExtResource("c10_pot")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 3)
+script = ExtResource("10_aqd4u")
 drops = ExtResource("c11_hearts")
+drop_height = 0.1
 
-[node name="Spawn_entrada" type="Marker3D" parent="."]
+[node name="Spawn_entrada" type="Marker3D" parent="." unique_id=285349202]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 6, 0, 0)
 script = ExtResource("c4_spawn")
 id = &"entrada"
 
-[node name="ExitPortal" type="Area3D" parent="."]
+[node name="ExitPortal" type="Area3D" parent="." unique_id=1739821519]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 9.4, 1.2, 0)
 script = ExtResource("c7_portal")
 target_scene = "res://levels/overworld.tscn"
 target_spawn = &"mata"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPortal"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPortal" unique_id=218432346]
 shape = SubResource("PortalShape")
 
-[node name="Decor" type="Node3D" parent="."]
+[node name="Decor" type="Node3D" parent="." unique_id=388965048]
 
-[node name="CornerNE" type="StaticBody3D" parent="Decor"]
+[node name="CornerNE" type="StaticBody3D" parent="Decor" unique_id=86863225]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -4)
 
-[node name="Model" type="MeshInstance3D" parent="Decor/CornerNE"]
+[node name="Model" type="MeshInstance3D" parent="Decor/CornerNE" unique_id=243612568]
 mesh = ExtResource("d2_rincon")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Decor/CornerNE"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Decor/CornerNE" unique_id=871904524]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0.8, -0.45)
 shape = SubResource("CornerShape")
 
-[node name="CornerNW" type="StaticBody3D" parent="Decor"]
+[node name="CornerNW" type="StaticBody3D" parent="Decor" unique_id=721768472]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -7, 0, -4)
 
-[node name="Model" type="MeshInstance3D" parent="Decor/CornerNW"]
+[node name="Model" type="MeshInstance3D" parent="Decor/CornerNW" unique_id=807656555]
 mesh = ExtResource("d2_rincon")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Decor/CornerNW"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Decor/CornerNW" unique_id=780366361]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0.8, -0.45)
 shape = SubResource("CornerShape")
 
-[node name="CornerSW" type="StaticBody3D" parent="Decor"]
+[node name="CornerSW" type="StaticBody3D" parent="Decor" unique_id=2127366143]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -7, 0, 4)
 
-[node name="Model" type="MeshInstance3D" parent="Decor/CornerSW"]
+[node name="Model" type="MeshInstance3D" parent="Decor/CornerSW" unique_id=45114896]
 mesh = ExtResource("d2_rincon")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Decor/CornerSW"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Decor/CornerSW" unique_id=359005498]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0.8, -0.45)
 shape = SubResource("CornerShape")
 
-[node name="CornerSE" type="StaticBody3D" parent="Decor"]
+[node name="CornerSE" type="StaticBody3D" parent="Decor" unique_id=115923511]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 9, 0, 4)
 
-[node name="Model" type="MeshInstance3D" parent="Decor/CornerSE"]
+[node name="Model" type="MeshInstance3D" parent="Decor/CornerSE" unique_id=1289488808]
 mesh = ExtResource("d2_rincon")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Decor/CornerSE"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Decor/CornerSE" unique_id=881999125]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0.8, -0.45)
 shape = SubResource("CornerShape")
 
-[node name="StalactitesN0" type="MeshInstance3D" parent="Decor"]
+[node name="StalactitesN0" type="MeshInstance3D" parent="Decor" unique_id=1277502359]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -5)
 mesh = ExtResource("d3_estalactitas")
 
-[node name="StalactitesN1" type="MeshInstance3D" parent="Decor"]
+[node name="StalactitesN1" type="MeshInstance3D" parent="Decor" unique_id=334975528]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -5)
 mesh = ExtResource("d3_estalactitas")
 
-[node name="StalactitesN2" type="MeshInstance3D" parent="Decor"]
+[node name="StalactitesN2" type="MeshInstance3D" parent="Decor" unique_id=745843635]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -5)
 mesh = ExtResource("d3_estalactitas")
 
-[node name="StalactitesN3" type="MeshInstance3D" parent="Decor"]
+[node name="StalactitesN3" type="MeshInstance3D" parent="Decor" unique_id=898672385]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
 mesh = ExtResource("d3_estalactitas")
 
-[node name="StalactitesN4" type="MeshInstance3D" parent="Decor"]
+[node name="StalactitesN4" type="MeshInstance3D" parent="Decor" unique_id=1965553165]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -5)
 mesh = ExtResource("d3_estalactitas")
 
-[node name="StalactitesN5" type="MeshInstance3D" parent="Decor"]
+[node name="StalactitesN5" type="MeshInstance3D" parent="Decor" unique_id=1589163835]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -5)
 mesh = ExtResource("d3_estalactitas")
 
-[node name="StalactitesN6" type="MeshInstance3D" parent="Decor"]
+[node name="StalactitesN6" type="MeshInstance3D" parent="Decor" unique_id=2013082308]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -5)
 mesh = ExtResource("d3_estalactitas")
 
-[node name="StalactitesN7" type="MeshInstance3D" parent="Decor"]
+[node name="StalactitesN7" type="MeshInstance3D" parent="Decor" unique_id=332913577]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -5)
 mesh = ExtResource("d3_estalactitas")
 
-[node name="Stalagmites0" type="MeshInstance3D" parent="Decor"]
+[node name="Stalagmites0" type="MeshInstance3D" parent="Decor" unique_id=353696583]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -5.6, 0, -4.2)
 mesh = ExtResource("d1_stal")
 
-[node name="Stalagmites1" type="MeshInstance3D" parent="Decor"]
+[node name="Stalagmites1" type="MeshInstance3D" parent="Decor" unique_id=1999390649]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 2.5, 0, -4.3)
 mesh = ExtResource("d1_stal")
 
-[node name="Stalagmites2" type="MeshInstance3D" parent="Decor"]
+[node name="Stalagmites2" type="MeshInstance3D" parent="Decor" unique_id=1043678017]
 transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 6.8, 0, -4.2)
 mesh = ExtResource("d1_stal")
 
-[node name="Stalagmites3" type="MeshInstance3D" parent="Decor"]
+[node name="Stalagmites3" type="MeshInstance3D" parent="Decor" unique_id=1785591838]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, -1.2, 0, 4.3)
 mesh = ExtResource("d1_stal")
 
-[node name="LuzEntrada" parent="Decor" instance=ExtResource("d4_caida")]
+[node name="LuzEntrada" type="Node3D" parent="Decor" unique_id=2134272372 instance=ExtResource("d4_caida")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 6.2, 0)
+script = ExtResource("18_vd86t")
 
-[node name="Player" parent="." instance=ExtResource("c3_player")]
+[node name="Player" type="CharacterBody3D" parent="." unique_id=1946852108 instance=ExtResource("c3_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
+script = ExtResource("20_xg7ff")
+config = ExtResource("21_kbiu8")
 
-[node name="TopDownCamera" type="Camera3D" parent="." node_paths=PackedStringArray("target_node")]
+[node name="TopDownCamera" type="Camera3D" parent="." unique_id=510359032 node_paths=PackedStringArray("target_node")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 13.4, 7.7)
+attributes = SubResource("CameraAttributesPractical_6aha5")
 fov = 40.0
 script = ExtResource("c5_camera")
 target_node = NodePath("../Player")
+offset = Vector3(0, 30.814466, 14.369021)
+field_of_view = 28.0
+wall_height = 5.4
+mask_margin = 2.0
+south_wall_cut = 3.6
+south_wall_reach = 1.7
 
-[node name="HUD" parent="." instance=ExtResource("c6_hud")]
+[node name="EnfoqueLA" type="Node" parent="TopDownCamera" unique_id=359808923]
+script = ExtResource("23_qu23k")
+near_margin = 3.5
+
+[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1385654304 instance=ExtResource("24_8kfsa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1572211827 instance=ExtResource("c6_hud")]
+layer = 10
+script = ExtResource("26_c7d1t")
+solo_panel = ExtResource("27_4kmm6")
+coop_panel = ExtResource("28_a1cnm")
+item_ring = ExtResource("29_s5dto")
+
+[node name="BrilloLA" type="Node" parent="." unique_id=1239269541]
+script = ExtResource("30_xbf1i")
