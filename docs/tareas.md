@@ -4309,7 +4309,7 @@ Los ítems conseguidos en la mazmorra (mapa, brújula, llave del jefe, llaves ch
 
 ### 11.105 Repensar el tutorial · Pendiente
 
-**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `diseno`, `ui`
+**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `diseno`, `ui`
 
 Playtest 2026-10-12: las tablitas del claro (11.45) funcionan, pero no son la mejor forma de enseñar los controles. Buscar otra. 2026-10-13 (Daniel): un mini tutorial cada vez que aparece una mecánica nueva, empezando por agarrar un ítem: qué hace, con qué botón y una situación para probarlo enseguida. Ejemplo: con el arco Daniel se olvidó de que dispararle al ojo era una mecánica; el juego tiene que mostrarlo.
 
@@ -4319,7 +4319,7 @@ Playtest 2026-10-12: las tablitas del claro (11.45) funcionan, pero no son la me
 - [ ] Una situación para probarlo enseguida, cerca de donde se consigue (el primer ojo justo después del sub-jefe, etc.), en la línea de 11.90
 - [ ] Revisar las tablitas del claro: cuáles quedan y cuáles reemplaza el mini tutorial
 
-**Notas:** Con 11.90 (cada mazmorra enseña su ítem).
+**Notas:** Con 11.90 (cada mazmorra enseña su ítem). Daniel 2026-10-13: queda para el final, porque va a involucrar bastante rediseño.
 
 ### 11.106 Intro al día con el overworld nuevo · Revisión
 
