@@ -308,3 +308,12 @@ func test_the_ravine_ledge_takes_one_feather_jump() -> void:
 	await tree.create_timer(1.2).timeout
 	assert_true(state.inventory.count(&"arrow") > before, "y su cofre tiene flechas")
 	state.reset()
+
+
+func test_the_grove_gap_takes_one_feather_jump() -> void:
+	var setup: Array = await _overworld(true)
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	var landed := await _jump_right(tree, player, Vector3(-43.6, 2.7, 23))
+	assert_true(landed.y > 2.0 and landed.x > -41.0, "un salto de pluma cruza de la cornisa del claro a la Arboleda (%s)" % landed)
+	(setup[2] as Node).reset()
