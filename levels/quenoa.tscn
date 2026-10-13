@@ -2386,11 +2386,11 @@ script = ExtResource("41_5ia7f")
 color = Color(1.35, 1.15, 0.9, 1)
 radius = 3.0
 
-[node name="CaidaLA30" type="Node3D" parent="PisoCopa" unique_id=1155956564 instance=ExtResource("63_borgw")]
+[node name="CaidaLA30" type="Node3D" parent="PisoCopa" unique_id=988927801 instance=ExtResource("63_borgw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 14)
 script = ExtResource("64_lvm7h")
 
-[node name="CaidaLA31" type="Node3D" parent="PisoCopa" unique_id=24995758 instance=ExtResource("63_borgw")]
+[node name="CaidaLA31" type="Node3D" parent="PisoCopa" unique_id=1418240881 instance=ExtResource("63_borgw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 28)
 script = ExtResource("64_lvm7h")
 

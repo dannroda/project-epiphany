@@ -1,15 +1,6 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://src/world/look/caida_la.gd" id="1_caida"]
-[ext_resource type="Shader" path="res://src/world/look/rayo_caida.gdshader" id="2_rayo"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rayo"]
-render_priority = 1
-shader = ExtResource("2_rayo")
-
-[sub_resource type="QuadMesh" id="QuadMesh_rayo"]
-material = SubResource("ShaderMaterial_rayo")
-size = Vector2(1, 6)
 
 [sub_resource type="Curve" id="Curve_fade"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.7, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -51,10 +42,14 @@ size = Vector2(0.14, 0.14)
 [node name="CaidaLA" type="Node3D"]
 script = ExtResource("1_caida")
 
-[node name="Rayo" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0)
-cast_shadow = 0
-mesh = SubResource("QuadMesh_rayo")
+[node name="Luz" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -3.2, 0)
+light_color = Color(1, 0.88, 0.68, 1)
+light_energy = 7.0
+spot_range = 7.0
+spot_attenuation = 0.3
+spot_angle = 26.0
+spot_angle_attenuation = 0.5
 
 [node name="Polvo" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0)
