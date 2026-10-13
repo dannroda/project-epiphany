@@ -1,4 +1,5 @@
 # Publica assets/epiphany/naturaleza.glb (epi.publish; el .blend de trabajo en art/blender/): vegetación y rocas del altiplano. Origen en la base, sin piso.
+# Acabado de Link's Awakening: copas y matas como domos lisos llenos de bultos, rocas redondeadas, sombreado suave.
 # blender -b -P tools/blender/build_naturaleza.py
 import math
 import os
@@ -12,10 +13,25 @@ import epi  # noqa: E402
 kit = epi.start()
 
 
+SMOOTH = 60
+
+
 def piece(name, seed, fn):
 	p = epi.Piece(seed)
 	fn(p)
-	p.build(name, kit)
+	p.build(name, kit, smooth=SMOOTH)
+
+
+def crown(p, center, radius, squash=0.8, bumps=12, flat_bottom=None):
+	"""Copa a lo LA: un domo liso cubierto de bultos redondos a medio hundir."""
+	c = Vector(center)
+	faces = p.blob(c, radius, squash=(1.0, 1.0, squash), subdiv=2, rough=0.06, flat_bottom=flat_bottom)
+	for i in range(bumps):
+		up = 0.1 + 0.8 * (i + 0.5) / bumps
+		a = i * 2.39996 + p.rng.random() * 0.4
+		d = Vector((math.cos(a) * math.sqrt(1 - up * up), math.sin(a) * math.sqrt(1 - up * up), up * squash))
+		faces += p.blob(c + d * radius * 0.85, radius * (0.38 + p.rng.random() * 0.1), squash=(1.0, 1.0, 0.85), subdiv=2, rough=0.04, flat_bottom=flat_bottom)
+	return faces
 
 
 def branch(p, start, direction, length, r0, r1, segments=3, bend=0.35):
@@ -27,7 +43,7 @@ def branch(p, start, direction, length, r0, r1, segments=3, bend=0.35):
 		seg = length / segments
 		ra = r0 + (r1 - r0) * i / segments
 		rb = r0 + (r1 - r0) * (i + 1) / segments
-		c = p.cylinder(ra, 0.0, seg + rb * 0.5, sides=6, radius_top=rb, cap_bottom=(i == 0), phase=p.rng.random())
+		c = p.cylinder(ra, 0.0, seg + rb * 0.5, sides=10, radius_top=rb, cap_bottom=(i == 0), phase=p.rng.random())
 		rot = d.to_track_quat("Z", "Y").to_matrix().to_4x4()
 		p.transform(c, Matrix.Translation(pos) @ rot)
 		faces += c
@@ -50,11 +66,9 @@ def quenoa(p, height, spread, trunks, clusters):
 			f2, tip2 = branch(p, tip - direction.normalized() * 0.3, Vector((math.cos(a + p.rng.uniform(-1, 1)), math.sin(a + p.rng.uniform(-1, 1)), 0.6)), height * 0.3, 0.07, 0.03, segments=2)
 			bark += f2
 			tips.append(tip2)
-	for tip in tips[:clusters]:
-		for _ in range(3):
-			r = spread * (0.2 + p.rng.random() * 0.13)
-			off = Vector((p.rng.uniform(-1, 1), p.rng.uniform(-1, 1), p.rng.uniform(-0.3, 0.5))) * r * 0.9
-			leaves += p.blob(tip + off + Vector((0, 0, r * 0.2)), r, squash=(1.2, 1.2, 0.6), subdiv=1, rough=0.35)
+	for tip in tips[:clusters:3]:
+		leaves += crown(p, tip + Vector((0, 0, spread * 0.15)), spread * 0.5, squash=0.7, bumps=10)
+	leaves += crown(p, (0, 0, height * 0.82), spread * 0.62, squash=0.75, bumps=14)
 	p.paint(bark, "madera_oscura", z_range=(0, height * 0.7), vary=0.1)
 	zs = [v.co.z for f in leaves for v in f.verts]
 	z0, z1 = min(zs), max(zs)
@@ -136,9 +150,7 @@ piece("ichu_cortado", 7, ichu_cortado)
 
 def tola(p):
 	"""Arbusto bajo y redondo, verde oliva."""
-	parts = []
-	for _ in range(5):
-		parts += p.blob((p.rng.uniform(-0.3, 0.3), p.rng.uniform(-0.3, 0.3), 0.3 + p.rng.random() * 0.15), 0.35 + p.rng.random() * 0.12, squash=(1, 1, 0.75), subdiv=1, rough=0.35, flat_bottom=0.0)
+	parts = crown(p, (0, 0, 0.3), 0.48, squash=0.8, bumps=10, flat_bottom=0.0)
 	p.paint(parts, "musgo", z_range=(0, 0.9), vary=0.08)
 
 
@@ -146,7 +158,7 @@ piece("tola", 8, tola)
 
 
 def roca(p, size, squash, swatch="piedra"):
-	f = p.blob((0, 0, size * squash[2] * 0.55), size, squash=squash, subdiv=2, rough=0.28, flat_bottom=0.0)
+	f = p.blob((0, 0, size * squash[2] * 0.55), size, squash=squash, subdiv=3, rough=0.14, flat_bottom=0.0)
 	p.paint(f, swatch, z_range=(0, size * squash[2] * 1.4), vary=0.06)
 
 
@@ -169,7 +181,7 @@ piece("tronco_caido", 15, tronco_caido)
 
 def tocon(p):
 	"""Tocón de queñoa: el corte claro arriba, mellado, y tres raíces."""
-	trunk = p.cylinder(0.24, 0.0, 0.42, sides=8, radius_top=0.2)
+	trunk = p.cylinder(0.24, 0.0, 0.42, sides=12, radius_top=0.2)
 	for v in {v for f in trunk for v in f.verts if v.co.z > 0.4}:
 		v.co.z += (p.rng.random() - 0.5) * 0.1
 	p.paint([f for f in trunk if f.normal.z <= 0.6], "madera_oscura", "MID", vary=0.1)
@@ -184,19 +196,19 @@ def tocon(p):
 
 def yareta(p):
 	"""Yareta: cojín verde vivo, achatado y lleno de bultitos."""
-	base = p.blob((0, 0, 0.12), 0.55, squash=(1.2, 1.0, 0.45), subdiv=2, rough=0.12, flat_bottom=0.0)
+	base = p.blob((0, 0, 0.12), 0.55, squash=(1.2, 1.0, 0.45), subdiv=3, rough=0.06, flat_bottom=0.0)
 	p.paint(base, "follaje", z_range=(0.0, 0.45), vary=0.05)
 	bumps = []
 	for _ in range(9):
 		a = p.rng.random() * 2 * math.pi
 		d = p.rng.random() * 0.45
-		bumps += p.blob((math.cos(a) * d * 1.2, math.sin(a) * d, 0.28 - d * 0.25), 0.13 + p.rng.random() * 0.06, squash=(1, 1, 0.6), subdiv=1, rough=0.2)
+		bumps += p.blob((math.cos(a) * d * 1.2, math.sin(a) * d, 0.28 - d * 0.25), 0.13 + p.rng.random() * 0.06, squash=(1, 1, 0.6), subdiv=2, rough=0.05)
 	p.paint(bumps, "follaje", "LIGHT", vary=0.08)
 
 
 def flores(p):
 	"""Macizo de flores silvestres sobre una mata baja."""
-	p.paint(p.blob((0, 0, 0.05), 0.38, squash=(1.3, 1.0, 0.35), subdiv=1, rough=0.3, flat_bottom=0.0), "musgo", "MID", vary=0.08)
+	p.paint(p.blob((0, 0, 0.05), 0.38, squash=(1.3, 1.0, 0.35), subdiv=2, rough=0.08, flat_bottom=0.0), "musgo", "MID", vary=0.08)
 	stems, heads = [], []
 	color = p.rng.choice(["flor_amarilla", "flor_rosa"])
 	for _ in range(9):
