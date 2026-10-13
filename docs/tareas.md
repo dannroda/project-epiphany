@@ -4581,11 +4581,16 @@ test_grove_puzzle teletransporta los bloques a las placas; no prueba que se lleg
 
 **Notas:** Hecho: test_grove_puzzle empuja los bloques caminando contra ellos (A dos celdas al sur; B una al este y una al sur) y verifica que cada uno llega a su placa. Ubicación: el puzzle no pide ningún ítem y da la cota, así que queda en la Pradera; 'Grove' es el nombre del mapa viejo.
 
-### 11.126 Push bloqueado: terreno del overworld pasa 100 MB · Pendiente
+### 11.126 Push bloqueado: terreno del overworld pasa 100 MB · En curso
 
 **Prioridad:** alta · **Tamaño:** L · **Etiquetas:** `bug`, `arte`, `repo`
 
 GitHub rechaza el push: assets/epiphany/terreno_organico.glb (hasta 334 MB) y assets/epiphany/meshes/terreno_organico/riscos.res (170 MB) pasan el límite de 100 MB por archivo. Hay 24 versiones en los ~360 commits sin pushear (desde 985d9e56, origin/main del 2026-10-11). Los dos salen de tools/blender/build_terreno_organico.py. Plan probable (Daniel): partir el terreno en chunks de menos de 100 MB y después limpiar las versiones grandes del historial sin pushear (git filter-repo; cambia los hashes, con las otras sesiones quietas).
+
+- [x] Partir los archivos grandes en partes de menos de 100 MB
+  Hecho (b658b129): terreno_organico.0..11.glb (15-72 MB) juntados en terreno_organico.tscn, paredes_la.<estilo>.glb (18-40 MB); epi.publish(part=...).
+- [ ] Limpiar del historial sin pushear las versiones de más de 100 MB
+  29 objetos, ~5,3 GB (terreno_organico.glb, paredes_la.glb, riscos.res). git filter-repo cambia los hashes: con todas las sesiones quietas, lo coordina -fd con Daniel.
 
 ### 11.127 Etiqueta del piso tapa el minimapa · Hecho
 
@@ -4619,8 +4624,8 @@ Mazmorra 4 (GDD §8e): el escudo espejo parte la Cumbre; el piso bajo sin él, e
   Hoy un ojo vigía prestado en PisoCima/BossFight. Pide el escudo.
 - [x] Entrada en el overworld (sesión del overworld)
   Spawn_cumbre y la puerta; hasta entonces las salidas van a risco.
-- [ ] Horneado LA (arte)
-  El estilo cumbre ya está en la_walls; falta sumar levels/cumbre.tscn a LEVELS y hornearla.
+- [x] Horneado LA (arte)
+  Hecho por arte (b07155ba, en main 69115da1): cumbre en LEVELS de la_walls con spread false, las salas quedan donde estaban (espejos, haces, postes y el hueco del Hueco sin mover). Si se edita el grid: la_walls.gd -- refresh cumbre, sin rehornear.
 - [ ] Recorrerla (Daniel)
 
 **Prueba:** test_cumbre, test_dungeon_reach (cumbre_graph), test_walk_doors, test_drop_holes

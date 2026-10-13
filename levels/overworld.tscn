@@ -37,7 +37,7 @@
 [ext_resource type="PackedScene" path="res://levels/decor/overworld_decor.tscn" id="92_decor"]
 [ext_resource type="PackedScene" path="res://src/world/dust_motes.tscn" id="93_dust"]
 [ext_resource type="Script" uid="uid://b5m7kta46hqrv" path="res://src/world/pit.gd" id="94_pit"]
-[ext_resource type="PackedScene" uid="uid://cp5a2q0nsa2uj" path="res://assets/epiphany/terreno_organico.glb" id="95_terrain"]
+[ext_resource type="PackedScene" path="res://assets/epiphany/terreno_organico.tscn" id="95_terrain"]
 [ext_resource type="ArrayMesh" uid="uid://ij7qmaakhaks" path="res://assets/epiphany/meshes/muros_organicos/muro_ShrineCrackedWall.res" id="97_wall_shrine"]
 [ext_resource type="ArrayMesh" uid="uid://dfsvws2sr3ejo" path="res://assets/epiphany/meshes/muros_organicos/muro_GrottoCrackedWall.res" id="98_wall_grotto"]
 [ext_resource type="NavigationMesh" uid="uid://dt15fxrx36bkw" path="res://levels/nav/overworld_navmesh.tres" id="99_nav"]

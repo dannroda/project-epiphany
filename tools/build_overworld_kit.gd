@@ -2,7 +2,7 @@ extends SceneTree
 ## Arma data/kits/overworld_kit.tres: los ítems y colisiones del kit gris con las piezas propias de assets/epiphany,
 ## más variantes (ids desde 11) que reparte tools/vary_overworld.gd.
 ## También arma data/kits/overworld_organico_kit.tres para el overworld de terreno orgánico (12.15): los mismos ítems, pero
-## el terreno (TERRAIN) queda sin malla ni colisión, porque lo dibuja assets/epiphany/terreno_organico.glb, y las piezas que
+## el terreno (TERRAIN) queda sin malla ni colisión, porque lo dibuja assets/epiphany/terreno_organico.tscn, y las piezas que
 ## quedan pierden su piso.
 ## godot --headless --path . --script res://tools/build_overworld_kit.gd
 

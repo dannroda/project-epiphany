@@ -9,8 +9,8 @@ func test_overworld_walls_cut_a_hole_but_not_at_the_edge_of_the_world() -> void:
 	var grid := overworld.get_node(^"GridMap") as GridMap
 	var library := grid.mesh_library
 	var terrain := overworld.get_node(^"Terreno")
-	assert_eq((terrain.get_node(^"riscos") as MeshInstance3D).get_active_material(0), WALL, "la roca del terreno se recorta alrededor del player")
-	assert_eq((terrain.get_node(^"suelo") as MeshInstance3D).get_active_material(0), PLAIN, "el piso no")
+	assert_eq((terrain.get_node(^"Parte0/riscos_0") as MeshInstance3D).get_active_material(0), WALL, "la roca del terreno se recorta alrededor del player")
+	assert_eq((terrain.get_node(^"Parte0/suelo_0") as MeshInstance3D).get_active_material(0), PLAIN, "el piso no")
 	assert_true((overworld.get_node(^"OverworldMap") as OverworldMap).grid == grid)
 	OverworldMap.use_edge_walls(grid)
 	var edges := 0

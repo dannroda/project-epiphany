@@ -1,0 +1,40 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" uid="uid://drobof1wrkdy6" path="res://assets/epiphany/terreno_organico.0.glb" id="1_parte"]
+[ext_resource type="PackedScene" uid="uid://bpe8ws2xfkf4j" path="res://assets/epiphany/terreno_organico.1.glb" id="2_parte"]
+[ext_resource type="PackedScene" uid="uid://c5yrl6k7cbwrn" path="res://assets/epiphany/terreno_organico.2.glb" id="3_parte"]
+[ext_resource type="PackedScene" uid="uid://dm6i6kes5b7e3" path="res://assets/epiphany/terreno_organico.3.glb" id="4_parte"]
+[ext_resource type="PackedScene" uid="uid://ret7atj31vvt" path="res://assets/epiphany/terreno_organico.4.glb" id="5_parte"]
+[ext_resource type="PackedScene" uid="uid://c048oljx51tgw" path="res://assets/epiphany/terreno_organico.5.glb" id="6_parte"]
+[ext_resource type="PackedScene" uid="uid://b8derj64cy8a" path="res://assets/epiphany/terreno_organico.6.glb" id="7_parte"]
+[ext_resource type="PackedScene" uid="uid://b07wyriiv1biv" path="res://assets/epiphany/terreno_organico.7.glb" id="8_parte"]
+[ext_resource type="PackedScene" uid="uid://tid5gt6s6ygo" path="res://assets/epiphany/terreno_organico.8.glb" id="9_parte"]
+[ext_resource type="PackedScene" uid="uid://b54jb74sexudf" path="res://assets/epiphany/terreno_organico.9.glb" id="10_parte"]
+[ext_resource type="PackedScene" uid="uid://lxnsa41b1tmk" path="res://assets/epiphany/terreno_organico.10.glb" id="11_parte"]
+[ext_resource type="PackedScene" uid="uid://d3e78yatlfg8n" path="res://assets/epiphany/terreno_organico.11.glb" id="12_parte"]
+
+[node name="Terreno" type="Node3D"]
+
+[node name="Parte0" parent="." instance=ExtResource("1_parte")]
+
+[node name="Parte1" parent="." instance=ExtResource("2_parte")]
+
+[node name="Parte2" parent="." instance=ExtResource("3_parte")]
+
+[node name="Parte3" parent="." instance=ExtResource("4_parte")]
+
+[node name="Parte4" parent="." instance=ExtResource("5_parte")]
+
+[node name="Parte5" parent="." instance=ExtResource("6_parte")]
+
+[node name="Parte6" parent="." instance=ExtResource("7_parte")]
+
+[node name="Parte7" parent="." instance=ExtResource("8_parte")]
+
+[node name="Parte8" parent="." instance=ExtResource("9_parte")]
+
+[node name="Parte9" parent="." instance=ExtResource("10_parte")]
+
+[node name="Parte10" parent="." instance=ExtResource("11_parte")]
+
+[node name="Parte11" parent="." instance=ExtResource("12_parte")]
