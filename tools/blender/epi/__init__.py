@@ -38,10 +38,12 @@ def save(name):
 	print("guardado:", path, len(bpy.data.collections["kit"].objects), "piezas")
 
 
-def publish(name, objects=None, material=None, materials=None):
+def publish(name, objects=None, material=None, materials=None, part=None):
 	"""Guarda el .blend de trabajo en art/blender/ (Godot no lo ve) y publica assets/epiphany/<name>.glb con las
 	custom properties; lo importa addons/epiphany_tools/import/epi_scene_import.gd. Sin objects, exporta la colección 'kit'.
-	material (o materials[nombre del objeto]) marca la variante de la paleta: outdoor, wind."""
+	material (o materials[nombre del objeto]) marca la variante de la paleta: outdoor, wind. Con part (objeto → nombre),
+	un <name>.<parte>.glb por parte en lugar de uno solo, para que ningún archivo pase los 100 MB de GitHub; las mallas
+	de todas van igual a meshes/<name>/."""
 	blend = os.path.join(ROOT, "art", "blender", name + ".blend")
 	os.makedirs(os.path.dirname(blend), exist_ok=True)
 	bpy.ops.wm.save_as_mainfile(filepath=blend)
@@ -54,11 +56,15 @@ def publish(name, objects=None, material=None, materials=None):
 		tag = (materials or {}).get(obj.name, material)
 		if tag:
 			obj["material"] = tag
-	for obj in bpy.context.scene.objects:
-		obj.select_set(obj in objects)
-	glb = os.path.join(ROOT, "assets", "epiphany", name + ".glb")
-	bpy.ops.export_scene.gltf(filepath=glb, export_format="GLB", use_selection=True, export_extras=True, export_image_format="NONE", export_animation_mode="ACTIONS")
-	print("publicado:", glb, len(objects), "objetos")
+	groups = {}
+	for obj in objects:
+		groups.setdefault(part(obj) if part else None, []).append(obj)
+	for key, group in sorted(groups.items(), key=lambda item: str(item[0])):
+		for obj in bpy.context.scene.objects:
+			obj.select_set(obj in group)
+		glb = os.path.join(ROOT, "assets", "epiphany", name + ("." + key if key else "") + ".glb")
+		bpy.ops.export_scene.gltf(filepath=glb, export_format="GLB", use_selection=True, export_extras=True, export_image_format="NONE", export_animation_mode="ACTIONS")
+		print("publicado:", glb, len(group), "objetos")
 
 
 class Piece:

@@ -1,5 +1,16 @@
 {
-  "checklist": [],
+  "checklist": [
+    {
+      "detail": "Hecho (b658b129): terreno_organico.0..11.glb (15-72 MB) juntados en terreno_organico.tscn, paredes_la.<estilo>.glb (18-40 MB); epi.publish(part=...).",
+      "done": true,
+      "text": "Partir los archivos grandes en partes de menos de 100 MB"
+    },
+    {
+      "detail": "29 objetos, ~5,3 GB (terreno_organico.glb, paredes_la.glb, riscos.res). git filter-repo cambia los hashes: con todas las sesiones quietas, lo coordina -fd con Daniel.",
+      "done": false,
+      "text": "Limpiar del historial sin pushear las versiones de más de 100 MB"
+    }
+  ],
   "code": "11.126",
   "created_at": "2026-10-13T19:00:44.759Z",
   "description": "GitHub rechaza el push: assets/epiphany/terreno_organico.glb (hasta 334 MB) y assets/epiphany/meshes/terreno_organico/riscos.res (170 MB) pasan el límite de 100 MB por archivo. Hay 24 versiones en los ~360 commits sin pushear (desde 985d9e56, origin/main del 2026-10-11). Los dos salen de tools/blender/build_terreno_organico.py. Plan probable (Daniel): partir el terreno en chunks de menos de 100 MB y después limpiar las versiones grandes del historial sin pushear (git filter-repo; cambia los hashes, con las otras sesiones quietas).",
@@ -9,7 +20,7 @@
   "priority": "high",
   "refs": [],
   "size": "l",
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "bug",
     "arte",
@@ -17,5 +28,5 @@
   ],
   "test": "",
   "title": "Push bloqueado: terreno del overworld pasa 100 MB",
-  "updated_at": "2026-10-13T19:00:44.759Z"
+  "updated_at": "2026-10-13T23:12:40.289Z"
 }

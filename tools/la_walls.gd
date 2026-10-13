@@ -3,7 +3,7 @@ extends SceneTree
 ## los vecinos con piso.
 ## export: tools/paredes_la.json con las formas que usan los niveles (luego blender -b -P tools/blender/build_paredes_la.py).
 ## bake: una sola vez por nivel: duplica las paredes entre salas (cada sala la suya; todo se corre con su sala), pone las
-## piezas de data/kits/chullpa_la_kit.tres (kit chullpa + paredes_la.glb) y el look de LA.
+## piezas de data/kits/chullpa_la_kit.tres (kit chullpa + paredes_la.<estilo>.glb) y el look de LA.
 ## refresh: en el nivel ya hecho, vuelve a elegir la pieza de cada celda de pared (después de editar el nivel).
 ## Las paredes finitas sueltas (piso a los dos lados) son paredes bajas (muro). Las celdas Puerta llevan un corte (paso) o, si tienen escalera, un corte ciego con escalones (sube, baja).
 ## godot --headless --path . --script res://tools/la_walls.gd -- export | bake <nivel> | refresh <nivel>
