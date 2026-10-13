@@ -1,6 +1,7 @@
 {
 	"baja": [
 		"e",
+		"o",
 		"s"
 	],
 	"muro": [
@@ -21,8 +22,11 @@
 		"n_pe",
 		"n_po",
 		"ne",
+		"nes",
 		"neso",
 		"no",
+		"ns",
+		"nso",
 		"o",
 		"o_pn",
 		"o_ps",
@@ -33,15 +37,20 @@
 		"x",
 		"x_ne",
 		"x_ne_no",
+		"x_ne_se",
+		"x_ne_se_no",
+		"x_ne_se_so_no",
 		"x_no",
 		"x_se",
 		"x_se_so",
-		"x_so"
+		"x_so",
+		"x_so_no"
 	],
 	"paso": [
 		"e",
 		"eo",
 		"n",
+		"ns",
 		"o",
 		"s",
 		"x"

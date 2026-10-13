@@ -91,7 +91,7 @@ layout_mode = 2
 mouse_filter = 2
 script = ExtResource("2_eye")
 
-[node name="Text" type="HBoxContainer" parent="Loading/Busy"]
+[node name="Text" type="HBoxContainer" parent="Loading/Busy" unique_id=1395321640]
 layout_mode = 2
 theme_override_constants/separation = 0
 
@@ -101,13 +101,14 @@ theme_type_variation = &"Caps"
 theme_override_font_sizes/font_size = 18
 text = "LOADING"
 
-[node name="Dots" type="Label" parent="Loading/Busy/Text"]
+[node name="Dots" type="Label" parent="Loading/Busy/Text" unique_id=1102510455]
 custom_minimum_size = Vector2(22, 0)
 layout_mode = 2
 theme_type_variation = &"Caps"
 theme_override_font_sizes/font_size = 18
 text = "..."
 visible_characters = 0
+visible_ratio = 0.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=612073739]
 libraries/ = SubResource("Library")

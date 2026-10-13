@@ -2586,7 +2586,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (73/122)
+## M11 — Pulido: contenido y feel  (74/123)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4583,6 +4583,14 @@ test_grove_puzzle teletransporta los bloques a las placas; no prueba que se lleg
 
 GitHub rechaza el push: assets/epiphany/terreno_organico.glb (hasta 334 MB) y assets/epiphany/meshes/terreno_organico/riscos.res (170 MB) pasan el límite de 100 MB por archivo. Hay 24 versiones en los ~360 commits sin pushear (desde 985d9e56, origin/main del 2026-10-11). Los dos salen de tools/blender/build_terreno_organico.py. Plan probable (Daniel): partir el terreno en chunks de menos de 100 MB y después limpiar las versiones grandes del historial sin pushear (git filter-repo; cambia los hashes, con las otras sesiones quietas).
 
+### 11.127 Etiqueta del piso tapa el minimapa · Hecho
+
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `ui`
+
+La etiqueta del piso (FloorTag, en mazmorras de varios pisos) tenía lugar para 34 px, pero con los márgenes de HudPill y el texto mide 49, y crecía hacia abajo sobre el minimapa. Ahora crece hacia arriba (grow_vertical = begin): el borde de abajo queda 6 px sobre el minimapa.
+
+**Prueba:** test_minimap › test_the_floor_tag_sits_above_the_minimap: en la Chullpa la etiqueta se ve y termina arriba del minimapa.
+
 ## M12 — Assets propios (Blender)  (13/19)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
@@ -5024,15 +5032,18 @@ Daniel (2026-10-13): la Chullpa real tiene la cámara vieja; el test LA (debug/l
 
 **Notas:** Sesión: arte (-11). Diseño (-43) revisa que el juego no cambie.
 
-### Totora (D3) en estilo Link's Awakening y su entrada · Pendiente
+### Totora (D3) en estilo Link's Awakening y su entrada · En curso
 
 **Prioridad:** media · **Tamaño:** M · **Etiquetas:** `arte`, `mazmorra`
 
 Diseño (-43) armó levels/totora.tscn en el kit gris (a8d40e91, GDD §8d): dos pisos de 3×2 salas de 7×5 celdas, agua profunda (celdas vacías con Pit y agua water_la a -0.35). Estilo propio de agua y totora, como Chullpa, Queñoa y templo. Regla de juego: cada cruce del gancho son 4 celdas de agua con el HookPost 0.5 m pasada la orilla; test_totora es relativo a la sala. Overworld (-eb, 5e04f395): TotoraHut es un CSGBox3D provisorio en la isla de la Laguna; vestirlo de santuario de juncos sin mover TotoraDoor, avisando a -eb antes de tocar overworld.tscn.
 
-- [ ] Estilo de la Totora: paredes, piso, puertas y luz (LOOKS en la_walls)
-- [ ] Bake y refresh de levels/totora.tscn, con los cruces del gancho intactos
+- [x] Estilo de la Totora: paredes, piso, puertas y luz (LOOKS en la_walls)
+  Hecho el 2026-10-13 (41357968, wt/art). build_paredes_la: estilo totora (atados apilados amarrados con soga, musgo húmedo al pie, juncos y totoras en flor arriba; puertas de atados parados con soga oscura). LOOKS totora: luz fresca de lago, piso de estera de totora (totora_la_kit).
+- [x] Bake y refresh de levels/totora.tscn, con los cruces del gancho intactos
+  Hecho el 2026-10-13 (41357968). Sin separar las salas: la pared de 2 m que comparten sale entera con cara a cada lado, así los cruces del gancho siguen de 4 celdas y test_totora no cambia. El agua honda cuenta como piso (LOOKS water). Las puertas en pared fina tienen paso de 2 m (también el templo). test_totora, test_amaru, test_walk_doors, test_dungeon_reach, test_hookshot y otros pasan.
 - [ ] Santuario de totora en la isla (TotoraHut)
+  Modelo hecho (41357968): src/world/totora_entrada.tscn, choza de los uros sobre balsa, techo con borla roja, columnas con cabeza de puma, aguayo y totoras; mismo colisionador que TotoraHut. Falta que overworld (-eb) la ponga en lugar del CSGBox3D, girada con la puerta al oeste.
 - [ ] Recorrerla (Daniel)
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)

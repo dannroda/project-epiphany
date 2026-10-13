@@ -8,7 +8,7 @@ extends SceneTree
 ## Las paredes finitas sueltas (piso a los dos lados) son paredes bajas (muro). Las celdas Puerta llevan un corte (paso) o, si tienen escalera, un corte ciego con escalones (sube, baja).
 ## godot --headless --path . --script res://tools/la_walls.gd -- export | bake <nivel> | refresh <nivel>
 
-const LEVELS := {"chullpa": "res://levels/chullpa.tscn", "quenoa": "res://levels/quenoa.tscn", "templo": "res://levels/templo.tscn",
+const LEVELS := {"chullpa": "res://levels/chullpa.tscn", "quenoa": "res://levels/quenoa.tscn", "templo": "res://levels/templo.tscn", "totora": "res://levels/totora.tscn",
 	"bomb_cave": "res://levels/bomb_cave.tscn", "bush_cave": "res://levels/bush_cave.tscn", "grotto_cave": "res://levels/grotto_cave.tscn",
 	"shrine_cave": "res://levels/shrine_cave.tscn", "spring_cave": "res://levels/spring_cave.tscn"}
 ## Niveles que comparten el look de otro (LOOKS).
@@ -121,6 +121,13 @@ const LOOKS := {
 		"doors": "res://assets/epiphany/meshes/paredes_la/%s_templo_la.res",
 		"walls": "res://assets/epiphany/meshes/paredes_la/%s_templo_la_%s.res", "kit": "res://data/kits/templo_la_kit.tres", "grain": [0.0, GRAIN_RECT],
 		"floor": {"tile_size": 1.4, "jitter": 0.14, "grout_width": 0.04, "grout_shade": 0.5, "floor_color": Color(0.44, 0.41, 0.52, 0.95)}},
+	"totora": {"ambient": Color(0.6, 0.72, 0.74), "ambient_energy": 1.2, "sun": Color(0.78, 0.9, 0.94), "sun_energy": 0.7,
+		"room": Color(0.98, 0.95, 0.84), "room_energy": 2.0, "dust": "res://src/world/look/polvo_quenoa.tscn",
+		"brazier": "res://assets/epiphany/meshes/templo_chullpa/brasero.res",
+		"doors": "res://assets/epiphany/meshes/paredes_la/%s_totora_la.res",
+		"walls": "res://assets/epiphany/meshes/paredes_la/%s_totora_la_%s.res", "kit": "res://data/kits/totora_la_kit.tres", "grain": [0.0, GRAIN_RECT],
+		"spread": false, "water": true,
+		"floor": {"plank_width": 0.24, "plank_length": 2.6, "floor_color": Color(0.6, 0.55, 0.4, 1.0), "grout_width": 0.02, "grout_shade": 0.45, "tone_spread": 0.12}},
 	"cueva": {"ambient": Color(0.48, 0.5, 0.6), "ambient_energy": 0.85, "sun": Color(0.66, 0.7, 0.82), "sun_energy": 0.4,
 		"room": Color(0.98, 0.86, 0.7), "room_energy": 1.6, "dust": "res://src/world/look/polvo_quenoa.tscn",
 		"brazier": "res://assets/epiphany/meshes/templo_chullpa/brasero.res",
@@ -137,6 +144,8 @@ var _walls := MESHES
 var _out_kit := OUT_KIT
 var _floor_params := {}
 var _grain: Array = [GRAIN_AMOUNT, GRAIN_RECT]
+## Las celdas vacías dentro de una sala (o entre dos) son agua honda y cuentan como piso (LOOKS water).
+var _water := false
 
 
 func _initialize() -> void:
@@ -146,7 +155,9 @@ func _initialize() -> void:
 		var codes := {}
 		for kind: String in KINDS:
 			codes[kind] = {}
-		for path: String in LEVELS.values():
+		for key: String in LEVELS:
+			var path: String = LEVELS[key]
+			_water = LOOKS[LOOK_OF.get(key, key)].get("water", false)
 			var level := _load(path)
 			for grid: GridMap in level.find_children("*", "GridMap", true, false):
 				for shape: Array in _shapes(grid).values():
@@ -171,6 +182,7 @@ func _initialize() -> void:
 	_out_kit = look.kit
 	_floor_params = look.floor
 	_grain = look.grain
+	_water = look.get("water", false)
 	var level := _load(path)
 	if mode == "bake" and level.has_node(NodePath(BAKED)):
 		push_error("%s ya tiene el look de LA: usar refresh" % path)
@@ -221,7 +233,8 @@ func _initialize() -> void:
 ## El nivel, con las paredes ya duplicadas (si todavía no tiene el look, las duplica en memoria).
 func _load(path: String) -> Node:
 	var level: Node = (load(path) as PackedScene).instantiate()
-	if not level.has_node(NodePath(BAKED)):
+	var key: String = LEVELS.find_key(path)
+	if not level.has_node(NodePath(BAKED)) and LOOKS[LOOK_OF.get(key, key)].get("spread", true):
 		_spread(level)
 	return level
 
@@ -499,6 +512,21 @@ func _room_rects(grid: GridMap) -> Array[Rect2]:
 	return rects
 
 
+## Largo del paso de una puerta: DOOR_PASSAGE entre paredes duplicadas, una celda en una pared fina entre dos salas.
+func _passage(door: Node3D) -> float:
+	var grids := door.get_parent().find_children("*", "GridMap", false, false)
+	if grids.is_empty():
+		return DOOR_PASSAGE
+	var grid := grids[0] as GridMap
+	var lib := grid.mesh_library
+	var ahead := door.transform.basis.z.normalized() * (CELL * 0.75)
+	for at: Vector3 in [door.position + ahead, door.position - ahead]:
+		var item := grid.get_cell_item(grid.local_to_map(grid.transform.affine_inverse() * at))
+		if item != GridMap.INVALID_CELL_ITEM and (_base_name(lib.get_item_name(item)) in WALLS or _base_name(lib.get_item_name(item)) == DOOR):
+			return DOOR_PASSAGE
+	return CELL
+
+
 ## La caja de una sala en coordenadas del nivel (vacía si no es una sala).
 func _room_box(level: Node, room: Node) -> AABB:
 	var shape := room.get_node_or_null(^"CollisionShape3D") as CollisionShape3D
@@ -534,10 +562,19 @@ func _shapes(grid: GridMap) -> Dictionary:
 	for node: Node in grid.get_parent().get_children():
 		if node is Node3D and _stairs_kind(node) != "":
 			stairs[grid.local_to_map(grid.transform.affine_inverse() * (node as Node3D).position)] = _stairs_kind(node)
+	var rooms := _room_rects(grid)
 	var floor := func(cell: Vector3i) -> bool:
 		var item := grid.get_cell_item(cell)
-		return item != GridMap.INVALID_CELL_ITEM and _base_name(lib.get_item_name(item)) not in WALLS and _base_name(lib.get_item_name(item)) != DOOR and not stairs.has(cell)
-	var rooms := _room_rects(grid)
+		if item == GridMap.INVALID_CELL_ITEM:
+			if not _water:
+				return false
+			if _room_of(rooms, grid.map_to_local(cell)) >= 0:
+				return true
+			for pair in [["n", "s"], ["e", "o"]]:
+				if _room_of(rooms, grid.map_to_local(cell + SIDES[pair[0]])) >= 0 and _room_of(rooms, grid.map_to_local(cell + SIDES[pair[1]])) >= 0:
+					return true
+			return false
+		return _base_name(lib.get_item_name(item)) not in WALLS and _base_name(lib.get_item_name(item)) != DOOR and not stairs.has(cell)
 	var thin := {}
 	for cell in grid.get_used_cells():
 		if _base_name(lib.get_item_name(grid.get_cell_item(cell))) in WALLS and not stairs.has(cell):
@@ -575,12 +612,13 @@ func _shapes(grid: GridMap) -> Dictionary:
 ## La puerta llena el pasillo de la pared doble: la colisión lo cubre entero y hay una hoja LA del alto de la pared en la
 ## cara de cada sala (la de atrás girada), inclinada como esa pared.
 func _door(level: Node, door: Node) -> void:
-	door.set("depth", DOOR_PASSAGE)
+	var depth := _passage(door as Node3D)
+	door.set("depth", depth)
 	door.set("leaf_meshes", _door_leaves)
 	door.set("sink", WALL_HEIGHT + 0.2)
 	var leaves: Dictionary = door.get_script().get_script_constant_map()["LEAVES"]
 	var mesh: Mesh = load(_door_leaves % leaves[door.get("kind")])
-	var face := DOOR_PASSAGE / 2.0 - mesh.get_aabb().end.z
+	var face := depth / 2.0 - mesh.get_aabb().end.z
 	var front := door.get_node("Leaf/LeafMesh") as MeshInstance3D
 	var back := door.get_node_or_null("Leaf/LeafBackLA") as MeshInstance3D
 	if back == null:
