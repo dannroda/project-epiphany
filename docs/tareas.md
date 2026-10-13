@@ -3489,8 +3489,8 @@ Assets propios y packs de terceros que ninguna escena, script ni builder referen
   Hecho (1ae3b5df): fuera dungeon, dungeon_remastered, skeletons, medieval; de kaykit_adventure queda solo Characters/gltf/Knight.glb y su textura (fuente del rig de build_personajes y make_template). gdd.md lo anota.
 - [x] kenney_development-essentials (1.3M)
   Nada lo referencia.
-- [ ] Decidir los packs que son fuente
-  kaykit_charanim (56M): solo es la fuente de player/animation/libs/*.res (ya extraídas). kenney_fantasy-ui-borders (1.6M): original de assets/ui/frames/ (tools/build_ui_frames.sh). Sacarlos del repo o dejarlos para poder regenerar.
+- [x] Decidir los packs que son fuente
+  Decidido (Daniel, 2026-10-13): se quedan los dos, kaykit_charanim (fuente de player/animation/libs) y kenney_fantasy-ui-borders (original de assets/ui/frames), para poder regenerar.
 - [x] Recortar packs que se usan en parte
   Hecho (1ae3b5df): kenney_skyboxes solo skybox-morning; Prototype Textures solo las 8 del kit gris (src/tools/build_gray_kit.gd). kenney_input-prompts sin tocar.
 - [ ] Probar que nada se rompa

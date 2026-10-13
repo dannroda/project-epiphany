@@ -26,8 +26,8 @@
       "text": "kenney_development-essentials (1.3M)"
     },
     {
-      "detail": "kaykit_charanim (56M): solo es la fuente de player/animation/libs/*.res (ya extraídas). kenney_fantasy-ui-borders (1.6M): original de assets/ui/frames/ (tools/build_ui_frames.sh). Sacarlos del repo o dejarlos para poder regenerar.",
-      "done": false,
+      "detail": "Decidido (Daniel, 2026-10-13): se quedan los dos, kaykit_charanim (fuente de player/animation/libs) y kenney_fantasy-ui-borders (original de assets/ui/frames), para poder regenerar.",
+      "done": true,
       "text": "Decidir los packs que son fuente"
     },
     {
@@ -56,5 +56,5 @@
   ],
   "test": "",
   "title": "Limpieza de assets sin uso",
-  "updated_at": "2026-10-13T23:47:01.271Z"
+  "updated_at": "2026-10-13T23:59:44.498Z"
 }
