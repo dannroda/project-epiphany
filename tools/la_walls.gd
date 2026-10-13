@@ -66,6 +66,9 @@ const FLAME := preload("res://src/world/look/llama_la.gdshader")
 const GLOSS := preload("res://src/world/look/brillo_la.gd")
 const FLAME_SIZE := Vector2(0.45, 0.8)
 const DOOR_LEAF_SCALE := Vector3(0.7, 0.8, 1.0)
+## Largo del pasillo de una puerta entre dos salas (las dos paredes de 2 m).
+const DOOR_PASSAGE := 4.0
+const LEAF_MESHES := "res://assets/epiphany/meshes/templo/%s.res"
 ## Cámara con perspectiva como LA: la sala se ve en trapecio (abajo más ancha) y asoman las caras de los costados.
 ## La cámara de LA, calibrada en el visor de LA contra capturas: 65° sobre el horizonte, 28° de campo, a 23 m. La sala
 ## es más grande que la pantalla y la cámara se mueve adentro.
@@ -131,6 +134,10 @@ func _initialize() -> void:
 		_face_chests(grid)
 	if mode == "bake":
 		_dress(level)
+	else:
+		for node: Node in level.find_children("*", "", true, false):
+			if node.scene_file_path.ends_with("door.tscn"):
+				_door(level, node)
 	var packed := PackedScene.new()
 	packed.pack(level)
 	var uid := ResourceLoader.get_resource_uid(path)
@@ -186,9 +193,7 @@ func _dress(level: Node) -> void:
 			(torch.get_node("Glow") as Node3D).visible = false
 			level.set_editable_instance(torch, true)
 		elif path.ends_with("door.tscn"):
-			node.set("depth", 0.0)
-			(node.get_node("Leaf/LeafMesh") as Node3D).scale = DOOR_LEAF_SCALE
-			level.set_editable_instance(node, true)
+			_door(level, node)
 		elif _stairs_kind(node) != "":
 			(node.get_node("Visual") as Node3D).visible = false
 			level.set_editable_instance(node, true)
@@ -439,6 +444,28 @@ func _shapes(grid: GridMap) -> Dictionary:
 		var kind: String = "pared" if item_name in WALLS else stairs.get(cell, "paso")
 		out[cell] = [kind, (code if code else "x") + corners]
 	return out
+
+
+## La puerta llena el pasillo de la pared doble: la colisión lo cubre entero y la hoja está al ras de la pared de cada
+## sala (una por lado, la de atrás girada).
+func _door(level: Node, door: Node) -> void:
+	door.set("depth", DOOR_PASSAGE)
+	var front := door.get_node("Leaf/LeafMesh") as MeshInstance3D
+	front.scale = DOOR_LEAF_SCALE
+	var leaves: Dictionary = door.get_script().get_script_constant_map()["LEAVES"]
+	var mesh: Mesh = load(LEAF_MESHES % leaves[door.get("kind")])
+	var face := DOOR_PASSAGE / 2.0 - mesh.get_aabb().end.z
+	front.position = Vector3(0, 0, face)
+	var back := door.get_node_or_null("Leaf/LeafBackLA") as MeshInstance3D
+	if back == null:
+		back = MeshInstance3D.new()
+		back.name = "LeafBackLA"
+		door.get_node("Leaf").add_child(back)
+		back.owner = level
+	back.mesh = mesh
+	back.material_overlay = front.material_overlay
+	back.transform = Transform3D(Basis(Vector3.UP, PI).scaled(DOOR_LEAF_SCALE), Vector3(0, 0, -face))
+	level.set_editable_instance(door, true)
 
 
 ## Los cofres miran al sur (a la cámara); el que tiene pared al sur (en un nicho) mira al lado por donde se llega.

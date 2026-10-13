@@ -1,5 +1,7 @@
 shader_type spatial;
 render_mode unshaded, cull_disabled, shadows_disabled, depth_draw_never;
+// No oscurece lo que marca el stencil con 1 donde se lo ve: el player (hit_flash) y la hoja de las puertas (marca_visible).
+stencil_mode read, compare_not_equal, 1;
 
 // Rectángulos XZ (x0, z0, x1, z1) en mundo: adentro de inner no oscurece, en outer ya es negro. El velo va más alto
 // (sobre los pilares) y mide cada píxel donde está lo que tapa.

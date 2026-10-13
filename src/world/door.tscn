@@ -5,6 +5,7 @@
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo/puerta_madera.res" id="3_leaf"]
 [ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="pf_persistent_flag"]
 [ext_resource type="Texture2D" path="res://assets/ui/lock.svg" id="4_lock"]
+[ext_resource type="Material" path="res://src/world/look/marca_visible.tres" id="5_mark"]
 
 [sub_resource type="BoxShape3D" id="Shape"]
 size = Vector3(2.0, 2.4, 0.3)
@@ -20,6 +21,7 @@ unique_name_in_owner = true
 
 [node name="LeafMesh" type="MeshInstance3D" parent="Leaf"]
 unique_name_in_owner = true
+material_overlay = ExtResource("5_mark")
 mesh = ExtResource("3_leaf")
 
 [node name="SouthMark" type="Sprite3D" parent="."]
