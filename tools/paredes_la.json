@@ -3,19 +3,21 @@
 		"e",
 		"s"
 	],
+	"muro": [
+		"eo",
+		"eso",
+		"neo",
+		"nes"
+	],
 	"pared": [
 		"e",
 		"e_pn",
 		"e_ps",
-		"eo",
 		"es",
-		"eso",
 		"n",
 		"n_pe",
 		"n_po",
 		"ne",
-		"neo",
-		"nes",
 		"o",
 		"o_pn",
 		"o_ps",
@@ -25,11 +27,8 @@
 		"so",
 		"x",
 		"x_ne",
-		"x_ne_no",
-		"x_ne_se",
 		"x_no",
 		"x_se",
-		"x_se_so",
 		"x_so"
 	],
 	"paso": [

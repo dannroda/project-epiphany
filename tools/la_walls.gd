@@ -406,18 +406,26 @@ func _shapes(grid: GridMap) -> Dictionary:
 	for node: Node in grid.get_parent().get_children():
 		if node is Node3D and _stairs_kind(node) != "":
 			stairs[grid.local_to_map(grid.transform.affine_inverse() * (node as Node3D).position)] = _stairs_kind(node)
-	var open := func(cell: Vector3i) -> bool:
+	var floor := func(cell: Vector3i) -> bool:
 		var item := grid.get_cell_item(cell)
 		return item != GridMap.INVALID_CELL_ITEM and _base_name(lib.get_item_name(item)) not in WALLS and _base_name(lib.get_item_name(item)) != DOOR and not stairs.has(cell)
+	var thin := {}
+	for cell in grid.get_used_cells():
+		if _base_name(lib.get_item_name(grid.get_cell_item(cell))) in WALLS and not stairs.has(cell):
+			var code := _sides(cell, floor)
+			if (code.contains("e") and code.contains("o")) or (code.contains("n") and code.contains("s")):
+				thin[cell] = code
+	var open := func(cell: Vector3i) -> bool:
+		return thin.has(cell) or floor.call(cell)
 	var out := {}
 	for cell in grid.get_used_cells():
 		var item_name := _base_name(lib.get_item_name(grid.get_cell_item(cell)))
 		if item_name not in WALLS and item_name != DOOR and not stairs.has(cell):
 			continue
-		var code := ""
-		for side: String in SIDES:
-			if open.call(cell + SIDES[side]):
-				code += side
+		if thin.has(cell):
+			out[cell] = ["muro", thin[cell]]
+			continue
+		var code := _sides(cell, open)
 		var corners := ""
 		for corner: String in CORNERS:
 			if not code.contains(corner[0]) and not code.contains(corner[1]) and open.call(cell + SIDES[corner[0]] + SIDES[corner[1]]):
@@ -428,10 +436,16 @@ func _shapes(grid: GridMap) -> Dictionary:
 				if not code.contains(side) and SIDES[side] != -SIDES[code] and beside != GridMap.INVALID_CELL_ITEM and _base_name(lib.get_item_name(beside)) == DOOR:
 					corners += "_p" + side
 		var kind: String = "pared" if item_name in WALLS else stairs.get(cell, "paso")
-		if kind == "pared" and ((code.contains("e") and code.contains("o")) or (code.contains("n") and code.contains("s"))):
-			kind = "muro"
 		out[cell] = [kind, (code if code else "x") + corners]
 	return out
+
+
+func _sides(cell: Vector3i, open: Callable) -> String:
+	var code := ""
+	for side: String in SIDES:
+		if open.call(cell + SIDES[side]):
+			code += side
+	return code
 
 
 ## El ítem del kit chullpa que una pieza LA reemplaza: Pared LA … es una pared, Paso LA …, Sube LA … y Baja LA … una puerta.

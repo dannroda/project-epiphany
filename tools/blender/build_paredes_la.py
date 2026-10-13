@@ -38,6 +38,13 @@ RELIEF_SCALE = 2.2
 MOSS = "musgo"
 MOSS_TOP = 0.55
 MOSS_FOOT = 0.25
+## Paredes finitas sueltas dentro de una sala (nichos, rejas): pared baja con borde de hojas en vez de una pared entera.
+LOW = 1.3
+LOW_HALF = 0.85
+LOW_BEVEL = 0.15
+## Hileras de hojas de más para que tapen toda la tapa de la pared baja.
+LOW_LEAF_ROWS = (1.05,)
+top = HEIGHT
 kit = epi.start()
 
 
@@ -94,7 +101,7 @@ def relief(p):
 	p.bm.normal_update()
 	for v in p.bm.verts:
 		x, y, z = v.co
-		window = max(0.0, 1.0 - x * x) * max(0.0, 1.0 - y * y) * min(1.0, z / 0.3, (HEIGHT - z) / 0.3)
+		window = max(0.0, 1.0 - x * x) * max(0.0, 1.0 - y * y) * min(1.0, z / 0.3, (top - z) / 0.3)
 		out = Vector((v.normal.x, v.normal.y, 0.0))
 		if window <= 0.0 or out.length < 0.5:
 			continue
@@ -106,7 +113,7 @@ def relief(p):
 def moss(c, seed):
 	q = Vector((c.x + c.y + seed, c.z, c.x - c.y)) * 1.8
 	n = 0.5 + 0.5 * noise.noise(q)
-	return c.z > HEIGHT - MOSS_TOP * (0.3 + n) or c.z < MOSS_FOOT * (n * 3.0 - 1.4)
+	return c.z > top - MOSS_TOP * (0.3 + n) or c.z < MOSS_FOOT * (n * 3.0 - 1.4)
 
 
 def rock_tone(c, sides, kind):
@@ -122,7 +129,7 @@ def rock_tone(c, sides, kind):
 	if gap < BEVEL * 0.35:
 		return 0.08
 	tone = 0.3 + 0.35 * random.Random(sum(map(ord, kind + side)) * 31 + k).random()
-	return tone + 0.12 * (c.z / HEIGHT - 0.5)
+	return tone + 0.12 * (c.z / top - 0.5)
 
 
 def course_tone(c):
@@ -187,14 +194,29 @@ def axes(sides, corners, cut):
 	return sorted(xs), sorted(ys)
 
 
+def low(x, y, sides):
+	"""Pared baja: llena la celda hasta LOW_HALF del centro por cada lado con piso, con el borde en bisel."""
+	d = min([LOW_HALF - 1.0 + dist(x, y, s) for s in sides] + [1.0])
+	return LOW * max(0.0, min(1.0, d / LOW_BEVEL))
+
+
 def piece(kind, code, cut=None):
+	global top
 	parts = code.split("_")
 	sides = [] if parts[0] == "x" else list(parts[0])
 	corners = parts[1:]
 	p = epi.Piece(sum(map(ord, kind + code)))
 	xs, ys = axes(sides, corners, cut)
+	top = LOW if kind == "muro" else HEIGHT
+	if kind == "muro":
+		for s in sides:
+			for b in (LOW_HALF, LOW_HALF - 0.01, LOW_HALF - LOW_BEVEL, LOW_HALF - LOW_BEVEL - 0.01):
+				(xs if s in "eo" else ys).extend((b, -b))
+		xs, ys = sorted(set(xs)), sorted(set(ys))
 
 	def h(x, y):
+		if kind == "muro":
+			return low(x, y, sides)
 		inside = channel(x, y, sides, cut) if cut else None
 		if inside:
 			return cut_height(inside[0], cut)
@@ -222,13 +244,13 @@ def piece(kind, code, cut=None):
 			shade(p, f, "piedra" if cut != "baja" else "gris_5", max(0.05, 0.3 - 0.2 * inside[0] / 1.7))
 		elif c.z > 0.3 and f.normal.z > 0.95:
 			crest.append(f)
-		elif c.z > HEIGHT:
+		elif c.z > top:
 			shade(p, f, "piedra", course_tone(c))
 		elif moss(c, seed):
 			if c.z < 1.0:
 				p.paint([f], MOSS, "LOW", vary=0.15)
 			else:
-				shade(p, f, MOSS, min(0.8, 0.3 + 0.5 * (c.z - HEIGHT + MOSS_TOP) / MOSS_TOP))
+				shade(p, f, MOSS, min(0.8, 0.3 + 0.5 * (c.z - top + MOSS_TOP) / MOSS_TOP))
 		else:
 			shade(p, f, STONE, rock_tone(c, sides, kind))
 	p.paint(crest, LEAF, "DARK", vary=0.08)
@@ -303,10 +325,10 @@ def hedge(p, xs, ys, h):
 	edges = []
 	for j, y in enumerate(ys):
 		for i, x in enumerate(xs):
-			if h(x, y) < HEIGHT - 0.01:
+			if h(x, y) < top - 0.01:
 				continue
 			for di, dj in ((1, 0), (-1, 0), (0, 1), (0, -1)):
-				if 0 <= i + di < len(xs) and 0 <= j + dj < len(ys) and h(xs[i + di], ys[j + dj]) < HEIGHT - 0.3:
+				if 0 <= i + di < len(xs) and 0 <= j + dj < len(ys) and h(xs[i + di], ys[j + dj]) < top - (0.3 if top == HEIGHT else 0.02):
 					edges.append((x, y, xs[i + di] - x, ys[j + dj] - y))
 					break
 	taken = set()
@@ -315,13 +337,13 @@ def hedge(p, xs, ys, h):
 	for x, y, ox, oy in edges:
 		length = math.hypot(ox, oy)
 		ox, oy = ox / length, oy / length
-		for k, back in enumerate(LEAF_ROWS):
+		for k, back in enumerate(LEAF_ROWS if top == HEIGHT else LEAF_ROWS + LOW_LEAF_ROWS):
 			lx, ly = x - ox * back, y - oy * back
 			key = (round(lx / LEAF_SIZE), round(ly / LEAF_SIZE), k)
 			if key in taken or abs(lx) > 1.15 or abs(ly) > 1.15:
 				continue
 			taken.add(key)
-			z = HEIGHT + 0.05 - (LEAF_DROOP if back < 0 else 0.0)
+			z = top + 0.05 - (LEAF_DROOP if back < 0 else 0.0)
 			r = LEAF_SIZE * p.rng.uniform(0.85, 1.15)
 			leaves += p.blob((lx, ly, z), r, squash=(1.0, 1.0, 0.4), subdiv=1, rough=0.2)
 			if k == 0:
@@ -329,12 +351,12 @@ def hedge(p, xs, ys, h):
 	p.paint(leaves, LEAF, vary=0.25)
 	vine = []
 	for lx, ly, ox, oy in spots:
-		if p.rng.random() > VINE_CHANCE / 6.0:
+		if top < HEIGHT or p.rng.random() > VINE_CHANCE / 6.0:
 			continue
 		length = p.rng.uniform(*VINE_LENGTH)
-		z = HEIGHT - LEAF_DROOP - 0.1
+		z = top - LEAF_DROOP - 0.1
 		side = 1
-		while z > HEIGHT - length:
+		while z > top - length:
 			t = 0.0
 			while t < 2.0 and h(lx + ox * t, ly + oy * t) >= z:
 				t += 0.02
@@ -356,6 +378,8 @@ def shade(p, f, swatch, t):
 shapes = json.load(open(os.path.join(ROOT, "tools", "paredes_la.json")))
 for code in shapes["pared"]:
 	piece("pared", code)
+for code in shapes.get("muro", []):
+	piece("muro", code)
 for kind in ("paso", "sube", "baja"):
 	for code in shapes[kind]:
 		piece(kind, code, kind)
