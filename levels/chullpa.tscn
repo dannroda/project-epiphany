@@ -88,6 +88,7 @@
 [ext_resource type="NavigationMesh" path="res://levels/nav/chullpa_navmesh.tres" id="nav_chullpa"]
 [ext_resource type="Script" path="res://src/world/look/sombra_la.gd" id="sombra_la"]
 [ext_resource type="Script" path="res://src/world/look/tono_la.gd" id="tono_la"]
+[ext_resource type="PackedScene" path="res://src/world/floor_switch_weight.tscn" id="weight_switch"]
 
 [sub_resource type="Environment" id="Environment_5ecsj"]
 background_mode = 1
@@ -2350,7 +2351,7 @@ shape = SubResource("InteractShape")
 [node name="PersistentFlag" parent="PisoAlto/MiradorDoor" index="4"]
 script = ExtResource("41_pflag")
 
-[node name="RellanoWeight" type="Area3D" parent="PisoAlto" unique_id=2034742464 instance=ExtResource("17_rjinf")]
+[node name="RellanoWeight" type="Area3D" parent="PisoAlto" unique_id=2034742464 instance=ExtResource("weight_switch")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, 31)
 script = ExtResource("27_iuiyr")
 mode = 3

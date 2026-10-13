@@ -633,9 +633,41 @@ def interruptor_placa(p):
 	p.paint(glyph, "dorado", "MID")
 
 
+def interruptor_peso_marco(p):
+	"""Marco de la placa de peso (floor_switch_weight.tscn): más ancho y alto que el del que se pisa, de bloques de piedra
+	con cuatro mojones en las esquinas, para que se lea que ahí va algo pesado y no el player."""
+	ring = []
+	for x0, x1, y0, y1 in ((-1.05, 1.05, -1.05, -0.72), (-1.05, 1.05, 0.72, 1.05), (-1.05, -0.72, -0.72, 0.72), (0.72, 1.05, -0.72, 0.72)):
+		ring += p.rounded_box(x0, x1, y0, y1, -0.02, 0.16, radius=0.04, segments=1)
+	p.jitter(ring, 0.01)
+	p.paint(ring, "acantilado", "DARK", vary=0.05)
+	posts, caps = [], []
+	for sx in (-1, 1):
+		for sy in (-1, 1):
+			posts += p.rounded_box(sx * 0.88 - 0.17, sx * 0.88 + 0.17, sy * 0.88 - 0.17, sy * 0.88 + 0.17, 0.0, 0.34, radius=0.05, segments=2)
+			caps += p.rounded_box(sx * 0.88 - 0.12, sx * 0.88 + 0.12, sy * 0.88 - 0.12, sy * 0.88 + 0.12, 0.34, 0.39, radius=0.02, segments=1)
+	p.paint(posts, "acantilado", "MID", vary=0.05)
+	p.paint(caps, "cobre_verde", "MID", vary=0.04)
+	p.paint(p.box(-0.72, 0.72, -0.72, 0.72, -0.1, -0.05), "noche", "MID")
+
+
+def interruptor_peso_placa(p):
+	"""Losa de piedra con un aríbalo tallado: ahí se apoya una vasija (o lo que pese)."""
+	p.paint(p.rounded_box(-0.68, 0.68, -0.68, 0.68, 0.0, 0.12, radius=0.04, segments=1), "piedra", "MID", vary=0.04)
+	outline = [(0.0, -0.42), (0.1, -0.33), (0.22, -0.15), (0.27, 0.02), (0.24, 0.17), (0.12, 0.26), (0.08, 0.36), (0.16, 0.42)]
+	points = outline + [(-x, y) for x, y in reversed(outline)]
+	pot = p.polygon(points, 0.12, 0.15)
+	p.paint(pot, "roca_naranja", "MID", vary=0.04)
+	band = p.box(-0.22, 0.22, -0.015, 0.015, 0.15, 0.16)
+	p.transform(band, Matrix.Translation((0, 0.12, 0)))
+	p.paint(band, "noche", "MID")
+
+
 piece("bloque_empujable", 24, bloque_empujable, smooth=40)
 piece("interruptor_marco", 25, interruptor_marco, smooth=40)
 piece("interruptor_placa", 26, interruptor_placa, smooth=40)
+piece("interruptor_peso_marco", 35, interruptor_peso_marco, smooth=40)
+piece("interruptor_peso_placa", 36, interruptor_peso_placa, smooth=40)
 
 epi.layout(kit, columns=6, spacing=2.0)
 epi.publish("objetos")
