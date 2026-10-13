@@ -37,6 +37,8 @@ func _initialize() -> void:
 	var fixed := []
 	var decor := []
 	var cracked := []
+	var mouths := []
+	var posts := []
 	var regions := []
 	for z in range(lo.y, hi.y + 1):
 		var row := ""
@@ -83,6 +85,10 @@ func _initialize() -> void:
 			if child.scene_file_path.begins_with("res://src/world/cracked_wall"):
 				var t := (child as Node3D).transform
 				cracked.append({"name": String(child.name), "x": at.x, "z": at.z, "yaw": t.basis.get_euler().y})
+			if child.scene_file_path == "res://src/world/hook_post.tscn":
+				posts.append([at.x, at.z])
+			if String(child.name).ends_with("Mouth"):
+				mouths.append({"name": String(child.name), "x": at.x, "y": at.y, "z": at.z, "yaw": (child as Node3D).transform.basis.get_euler().y})
 			if "solved_position" in child:
 				fixed.append([child.solved_position.x, child.solved_position.z, 1.6])
 	var plants := level.get_node_or_null("Decor/Plantas")
@@ -92,7 +98,7 @@ func _initialize() -> void:
 		var at := _placed(piece, level)
 		decor.append([at.x, at.z, 0.8])
 	var file := FileAccess.open(OUT, FileAccess.WRITE)
-	file.store_string(JSON.stringify({"origin": [lo.x, lo.y], "cell": 2.0, "rows": rows, "levels": levels, "fixed": fixed, "decor": decor, "cracked": cracked, "regions": regions}, "\t"))
+	file.store_string(JSON.stringify({"origin": [lo.x, lo.y], "cell": 2.0, "rows": rows, "levels": levels, "fixed": fixed, "decor": decor, "cracked": cracked, "mouths": mouths, "posts": posts, "regions": regions}, "\t"))
 	print("export_terreno_overworld: %d × %d celdas, %d puntos fijos, %d de decoración, %d regiones" % [hi.x - lo.x + 1, hi.y - lo.y + 1, fixed.size(), decor.size(), regions.size()])
 	level.free()
 	quit()

@@ -36,7 +36,6 @@
 [ext_resource type="Script" uid="uid://bv7heb806mclu" path="res://src/world/cloud_shadows.gd" id="92_clouds"]
 [ext_resource type="PackedScene" path="res://levels/decor/overworld_decor.tscn" id="92_decor"]
 [ext_resource type="PackedScene" path="res://src/world/dust_motes.tscn" id="93_dust"]
-[ext_resource type="ArrayMesh" uid="uid://bb40lw7urvi77" path="res://assets/epiphany/meshes/lugares/cueva_boca.res" id="93_mouth"]
 [ext_resource type="Script" uid="uid://b5m7kta46hqrv" path="res://src/world/pit.gd" id="94_pit"]
 [ext_resource type="PackedScene" path="res://assets/epiphany/terreno_organico.tscn" id="95_terrain"]
 [ext_resource type="ArrayMesh" uid="uid://ij7qmaakhaks" path="res://assets/epiphany/meshes/muros_organicos/muro_ShrineCrackedWall.res" id="97_wall_shrine"]
@@ -252,10 +251,7 @@ region_label = true
 shape = SubResource("BoxShape3D_zone_arboleda")
 
 [node name="ShrineBackMouth" type="Node3D" parent="." unique_id=354472368]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -79.1, 2.6, -34)
-
-[node name="Model" type="MeshInstance3D" parent="ShrineBackMouth" unique_id=517341782]
-mesh = ExtResource("93_mouth")
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -80, 2.6, -34)
 
 [node name="Jambs" type="StaticBody3D" parent="ShrineBackMouth" unique_id=141911410]
 
@@ -1325,10 +1321,7 @@ flag = &"ow_heart_piece_cliff"
 hidden_until_revealed = false
 
 [node name="SpringCaveMouth" type="Node3D" parent="." unique_id=156304344]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -99, 7.8, 38)
-
-[node name="Model" type="MeshInstance3D" parent="SpringCaveMouth" unique_id=1698459557]
-mesh = ExtResource("93_mouth")
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -99.85, 0, 38)
 
 [node name="Jambs" type="StaticBody3D" parent="SpringCaveMouth" unique_id=774572202]
 
@@ -1350,10 +1343,7 @@ target_spawn = &"entrada"
 shape = SubResource("BoxShape3D_springportal")
 
 [node name="BombCaveMouth" type="Node3D" parent="." unique_id=2130645365]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -71.1, 0, -16)
-
-[node name="Model" type="MeshInstance3D" parent="BombCaveMouth" unique_id=556472722]
-mesh = ExtResource("93_mouth")
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -71.97, 0, -16)
 
 [node name="Jambs" type="StaticBody3D" parent="BombCaveMouth" unique_id=2075727006]
 
@@ -1460,6 +1450,39 @@ id = &"totora"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 0, 41)
 script = ExtResource("101_place")
 display_name = "PLACE_TOTORA"
+kind = 0
+
+[node name="CumbreMouth" type="Node3D" parent="." unique_id=840187496]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 5.2, -46)
+
+[node name="Jambs" type="StaticBody3D" parent="CumbreMouth" unique_id=1325530251]
+
+[node name="East" type="CollisionShape3D" parent="CumbreMouth/Jambs" unique_id=895766007]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 1.3, 0)
+shape = SubResource("BoxShape3D_jamb")
+
+[node name="West" type="CollisionShape3D" parent="CumbreMouth/Jambs" unique_id=829797032]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 1.3, 0)
+shape = SubResource("BoxShape3D_jamb")
+
+[node name="CumbreDoor" type="Area3D" parent="." unique_id=1279155434]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 6.4, -45.2)
+script = ExtResource("14_5vrew")
+target_scene = "res://levels/cumbre.tscn"
+target_spawn = &"start"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CumbreDoor" unique_id=170489116]
+shape = SubResource("BoxShape3D_springportal")
+
+[node name="Spawn_cumbre" type="Marker3D" parent="." unique_id=1080257179]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 5.2, -42.4)
+script = ExtResource("4_cr2by")
+id = &"cumbre"
+
+[node name="PlaceCumbre" type="Marker3D" parent="." unique_id=1465752225]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 5.2, -43)
+script = ExtResource("101_place")
+display_name = "PLACE_CUMBRE"
 kind = 0
 
 [node name="PlaceChullpa" type="Marker3D" parent="." unique_id=1820417741]

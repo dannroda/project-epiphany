@@ -2586,7 +2586,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (75/125)
+## M11 — Pulido: contenido y feel  (75/126)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4622,13 +4622,23 @@ Mazmorra 4 (GDD §8e): el escudo espejo parte la Cumbre; el piso bajo sin él, e
   Hoy una momia prestada en PisoBase/KunturFight. Se vence sin el escudo.
 - [ ] Jefe Apu Kuntur
   Hoy un ojo vigía prestado en PisoCima/BossFight. Pide el escudo.
-- [ ] Entrada en el overworld (sesión del overworld)
+- [x] Entrada en el overworld (sesión del overworld)
   Spawn_cumbre y la puerta; hasta entonces las salidas van a risco.
 - [x] Horneado LA (arte)
   Hecho por arte (b07155ba, en main 69115da1): cumbre en LEVELS de la_walls con spread false, las salas quedan donde estaban (espejos, haces, postes y el hueco del Hueco sin mover). Si se edita el grid: la_walls.gd -- refresh cumbre, sin rehornear.
 - [ ] Recorrerla (Daniel)
 
 **Prueba:** test_cumbre, test_dungeon_reach (cumbre_graph), test_walk_doors, test_drop_holes
+
+### 11.130 Bocas de cueva talladas en el risco · Revisión
+
+**Responsable:** sesión del overworld
+
+Daniel: las bocas de cueva del overworld (la entrada trasera de la ermita, la cueva de las bombas, el manantial) eran una caja marrón con una puerta negra pegada al risco. Pidió darles detalle como a las puertas, pero hecho con el terreno.
+
+**Prueba:** En el overworld, las tres bocas (y la de la Cumbre) son un vano trapezoidal en el risco con jambas y dintel del mismo risco y un túnel oscuro; se entra caminando y el portal lleva a la cueva. test_portals, test_cave, test_shrine, test_spring, test_overworld
+
+**Notas:** build_terreno_organico.py › cave_mouths(): cada nodo *Mouth del overworld (exportado a terreno_overworld.json › mouths) se talla en riscos: se busca la cara del risco delante, se corta el vano (como paso_puerta del templo: 1.5 abajo, 1.2 arriba, 1.95 de alto), las aristas del borde se extruyen 1.6 m hacia adentro como túnel (noche) con fondo y piso oscuros, y el risco alrededor sale 0.18 m como jambas y dintel. Sin lomas delante ni dentro. Se quitó cueva_boca de las tres; SpringCaveMouth estaba girada hacia la montaña. De paso: el risco ya no pone baranda a 1.2 m de un poste del gancho (POSTS en el json), porque tapaba la vista desde abajo (fallaban los dos tests de test_overworld_hook).
 
 ## M12 — Assets propios (Blender)  (15/22)
 
