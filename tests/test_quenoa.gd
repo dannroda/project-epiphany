@@ -28,6 +28,12 @@ func _room(path: String) -> Room:
 	return level.get_node(path) as Room
 
 
+## Un punto de la sala en sus propias coordenadas: x y z desde su centro, y desde su piso.
+func _in(path: String, local: Vector3) -> Vector3:
+	var room := _room(path)
+	return Vector3(room.global_position.x, (room.get_parent() as Node3D).global_position.y, room.global_position.z) + local
+
+
 func _drop(at: Vector3) -> void:
 	player.global_position = at
 	player.velocity = Vector3.ZERO
@@ -51,11 +57,11 @@ func test_starts_in_the_entrance_with_three_floors() -> void:
 
 func test_stairs_go_up_to_the_canopy_and_back() -> void:
 	await _start()
-	player.global_position = Vector3(36, 0, 0.6)
+	player.global_position = _in("PisoTronco/Escalera", Vector3(0, 0, -7.4))
 	await tree.create_timer(1.2).timeout
 	assert_eq(camera.room, _room("PisoCopa/Copa"), "la escalera sube a la copa")
 	assert_true(absf(player.global_position.y - 8.0) < 0.5, "arriba (y %.1f)" % player.global_position.y)
-	player.global_position = Vector3(36, 8, 0.6)
+	player.global_position = _in("PisoCopa/Copa", Vector3(0, 0, -7.4))
 	await tree.create_timer(1.2).timeout
 	assert_eq(camera.room, _room("PisoTronco/Escalera"), "y baja al hueco de la escalera")
 	tree.root.get_node(^"GameState").reset()
@@ -68,10 +74,10 @@ func test_roots_stairs_sit_behind_the_trunk_gate() -> void:
 	tree.root.get_node(^"GameState").set_flag(&"qv_trunk_eye", true)
 	await tree.create_timer(1.0).timeout
 	assert_true(gate.is_open, "el ojo la abre")
-	player.global_position = Vector3(0.6, 0, 20)
+	player.global_position = _in("PisoTronco/Tronco", Vector3(-11.4, 0, -4))
 	await tree.create_timer(1.2).timeout
 	assert_eq(camera.room, _room("PisoRaices/Raices"), "la bajada lleva a las raíces")
-	player.global_position = Vector3(0.6, -8, 12)
+	player.global_position = _in("PisoRaices/Raices", Vector3(-11.4, 0, 4))
 	await tree.create_timer(1.2).timeout
 	assert_eq(camera.room, _room("PisoTronco/Tronco"), "y la de subida vuelve al tronco")
 	tree.root.get_node(^"GameState").reset()
@@ -79,9 +85,9 @@ func test_roots_stairs_sit_behind_the_trunk_gate() -> void:
 
 func test_holes_drop_to_the_floor_below() -> void:
 	await _start()
-	await _drop(Vector3(6, 8.5, 12))
+	await _drop(_in("PisoCopa/Nido", Vector3(-6, 0.5, 4)))
 	assert_eq(camera.room, _room("PisoTronco/Rama"), "el hueco del nido cae a la rama")
-	await _drop(Vector3(18, 8.5, 24))
+	await _drop(_in("PisoCopa/Arco", Vector3(6, 0.5, 0)))
 	assert_eq(camera.room, _room("PisoTronco/Tronco"), "el de la cámara del arco, al tronco")
 	tree.root.get_node(^"GameState").reset()
 
@@ -129,7 +135,7 @@ func test_the_warden_gets_stuck_in_the_roots_and_falls_to_the_sword() -> void:
 	tree.root.get_node(^"GameState").set_flag(&"qv_canopy_locked_door", true)
 	await tree.create_timer(0.2).timeout
 	warden.rest_time = 0.1
-	player.global_position = Vector3(36, 8, 26)
+	player.global_position = _in("PisoCopa/Vigia", Vector3(0, 0, 2))
 	assert_true(await _until(func() -> bool: return warden.state != WatcherEye.State.IDLE), "arranca la pelea")
 	assert_true(not entry.is_open, "la puerta de entrada se cierra detrás")
 	assert_true(not bow_door.is_open, "la cámara del arco está cerrada")
@@ -149,9 +155,9 @@ func test_leaving_the_lair_resets_the_fight() -> void:
 	await _start()
 	var warden := level.get_node(^"PisoCopa/WardenFight/Warden") as WatcherEye
 	tree.root.get_node(^"GameState").set_flag(&"qv_canopy_locked_door", true)
-	player.global_position = Vector3(36, 8, 26)
+	player.global_position = _in("PisoCopa/Vigia", Vector3(0, 0, 2))
 	assert_true(await _until(func() -> bool: return warden.state != WatcherEye.State.IDLE), "arranca la pelea")
-	player.global_position = Vector3(36, 8, 8)
+	player.global_position = _in("PisoCopa/Copa", Vector3.ZERO)
 	assert_true(await _until(func() -> bool: return warden.state == WatcherEye.State.IDLE, 3.0), "fuera de la sala, el ojo vuelve a esperar")
 	assert_true((level.get_node(^"PisoCopa/CopaLocked") as Door).is_open, "y la puerta de entrada queda abierta")
 	tree.root.get_node(^"GameState").reset()
@@ -165,7 +171,7 @@ func test_an_arrow_drops_an_open_eye_for_the_sword() -> void:
 		eye.rest_time = 0.1
 	var arrow := (load("res://src/entities/projectile.tscn") as PackedScene).instantiate()
 	var shot := func(eye: WatcherEye) -> void: eye.hurtbox.receive(DamageInfo.make(2, 0.0, arrow))
-	player.global_position = Vector3(36, -8, 28)
+	player.global_position = _in("PisoRaices/Jefe", Vector3(0, 0, 4))
 	assert_true(await _until(func() -> bool: return eyes[0].state == WatcherEye.State.DRIFT), "arranca la pelea")
 	assert_true(not (level.get_node(^"PisoRaices/BossDoor") as Door).is_open, "la puerta del jefe se cierra")
 	shot.call(eyes[0])
