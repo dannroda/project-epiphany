@@ -1,13 +1,13 @@
 extends SceneTree
 ## Diagrama Mermaid de un DungeonGraph, para revisarlo en un documento:
-## godot --headless --path . --script res://tools/dungeon_graph_mermaid.gd -- d1_graph
+## godot --headless --path . --script res://tools/dungeon_graph_mermaid.gd -- quenoa_graph
 ## Escribe debug/tmp/<grafo>.mmd y lo imprime. Con escena, las cerraduras salen de la escena.
 
 const Reach := preload("res://tests/dungeon_reach.gd")
 
 
 func _initialize() -> void:
-	var name := OS.get_cmdline_user_args()[0] if OS.get_cmdline_user_args().size() > 0 else "d1_graph"
+	var name := OS.get_cmdline_user_args()[0] if OS.get_cmdline_user_args().size() > 0 else "chullpa_graph"
 	var graph := load("res://data/dungeons/%s.tres" % name) as DungeonGraph
 	var read := Reach.read(graph)
 	var lines := PackedStringArray(["flowchart TD"])

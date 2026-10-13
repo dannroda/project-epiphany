@@ -7,7 +7,7 @@ extends Node
 signal changed(value: Variant)
 
 const REGISTRY_PATH := "res://data/flag_registry.tres"
-const PREFIXES: PackedStringArray = ["ow_", "d0_", "d1_", "d2_", "d3_"]
+const PREFIXES: PackedStringArray = ["ow_", "d0_", "d1_", "ch_", "qv_"]
 
 ## Puede llegar después de `_ready` (lo copia el objeto dueño del flag en su `_ready`).
 @export var flag: StringName:
@@ -57,5 +57,5 @@ static func warnings_for(id: StringName, optional: bool) -> PackedStringArray:
 	if registry and not registry.has(id):
 		warnings.append("El flag \"%s\" no está en flag_registry.tres." % id)
 	if not Array(PREFIXES).any(func(prefix: String) -> bool: return String(id).begins_with(prefix)):
-		warnings.append("El flag \"%s\" no sigue la convención: ow_* (overworld) o dN_* (mazmorra N)." % id)
+		warnings.append("El flag \"%s\" no sigue la convención: ow_* (overworld) o el prefijo de la mazmorra (d1_ el templo, ch_ la Chullpa, qv_ la Queñoa)." % id)
 	return warnings

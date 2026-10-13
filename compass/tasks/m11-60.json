@@ -41,7 +41,7 @@
       "text": "Rehacer con la pluma como ítem"
     },
     {
-      "detail": "Sala B-NE, hoy vacía. En d2_graph.tres el objetivo d2_boss_defeated pide la pluma.",
+      "detail": "Sala B-NE, hoy vacía. En chullpa_graph.tres el objetivo ch_boss_defeated pide la pluma.",
       "done": false,
       "text": "Jefe del Guardián que se vence saltando"
     },
@@ -50,9 +50,9 @@
       "text": "Más enemigos y un acertijo por piso"
     },
     {
-      "detail": "11.113: sub-jefe basado en el jefe de la Chullpa que se vence sin la pluma; antes, una torre que pide un flechazo activa el puzzle previo. La segunda mitad (abismo, llave del jefe) ya pide la pluma. Regla de Daniel (2026-10-12): pelea en una sala sin obstáculos (solo vasijas o similares), y la pluma en una sala contigua que se abre al vencer al sub-jefe; hoy la pluma está en un cofre suelto, así que hay que reacomodarlo. Base: EyeFight/WatcherEye de D1.",
+      "detail": "11.113: sub-jefe basado en el jefe de la Chullpa que se vence sin la pluma. Con la Chullpa como D1 (2026-10-13) no hay arco: la torre del flechazo se reemplaza por un acertijo sin ítems (bombas, bloques o vasijas grandes sobre placas). Regla de Daniel (2026-10-12): pelea en una sala sin obstáculos (solo vasijas o similares), y la pluma en una sala contigua que se abre al vencer al sub-jefe; hoy la pluma está en un cofre suelto, así que hay que reacomodarlo. Base: EyeFight/WatcherEye de la Queñoa.",
       "done": false,
-      "text": "Sub-jefe que guarda la pluma y torre del flechazo"
+      "text": "Sub-jefe que guarda la pluma, sin ítems"
     }
   ],
   "code": "11.60",
@@ -70,5 +70,5 @@
   ],
   "test": "",
   "title": "Mazmorra nueva de varios pisos",
-  "updated_at": "2026-10-12T22:11:22.459Z"
+  "updated_at": "2026-10-13T04:13:39.967Z"
 }

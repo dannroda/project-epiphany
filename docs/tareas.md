@@ -1,7 +1,7 @@
 # Tareas — Project Epiphany
 
 > Export de `compass/`, que es la fuente de verdad. No editar: los cambios se hacen en `compass/` o con `scompass`, y este archivo se regenera.
-> Generado: 2026-10-12
+> Generado: 2026-10-13
 
 ## M0 — Refactor del player + base de datos  (13/13)
 
@@ -3466,10 +3466,10 @@ Segunda mazmorra con pisos (y quizás sótanos) apilados en la misma escena, en 
 - [x] Rehacer con la pluma como ítem
   Hecho el 2026-10-12: el cofre grande de la isla da la pluma (FeatherChest, flag d2_feather_chest). Las franjas dobles de huecos (abismo de 1NE, foso de la llave del jefe, pieza del Mirador) son ahora una fila de una baldosa: se cruzan con la pluma. La llave chica pasó a B-SO (se llega cayendo desde 1SE, sin ítems) y la brújula a 2NO (pluma). data/dungeons/d2_graph.tres pasa el test de alcanzabilidad; test_chullpa salta las cuatro filas. GDD §8b.
 - [ ] Jefe del Guardián que se vence saltando
-  Sala B-NE, hoy vacía. En d2_graph.tres el objetivo d2_boss_defeated pide la pluma.
+  Sala B-NE, hoy vacía. En chullpa_graph.tres el objetivo ch_boss_defeated pide la pluma.
 - [ ] Más enemigos y un acertijo por piso
-- [ ] Sub-jefe que guarda la pluma y torre del flechazo
-  11.113: sub-jefe basado en el jefe de la Chullpa que se vence sin la pluma; antes, una torre que pide un flechazo activa el puzzle previo. La segunda mitad (abismo, llave del jefe) ya pide la pluma.
+- [ ] Sub-jefe que guarda la pluma, sin ítems
+  11.113: sub-jefe basado en el jefe de la Chullpa que se vence sin la pluma. Con la Chullpa como D1 (2026-10-13) no hay arco: la torre del flechazo se reemplaza por un acertijo sin ítems (bombas, bloques o vasijas grandes sobre placas). Regla de Daniel (2026-10-12): pelea en una sala sin obstáculos (solo vasijas o similares), y la pluma en una sala contigua que se abre al vencer al sub-jefe; hoy la pluma está en un cofre suelto, así que hay que reacomodarlo. Base: EyeFight/WatcherEye de la Queñoa.
 
 **Relacionadas:** 11.30 Ítem post-MVP: gancho o telequinesis
 
@@ -4374,6 +4374,8 @@ Daniel (2026-10-12): el jefe del ojo se pensó como fin de demo, así que tiene 
   Hecho el 2026-10-12. WatcherEye (src/entities/watcher_eye/): un ojo flotante que se abre, marca una línea en el piso y la barre con un rayo. Sub-jefe Ojo Vigía: después del barrido se tira sobre el player y queda enganchado en las raíces, y ahí le pegan espada, bomba o vasija. Jefe Los Ojos de la Queñoa: dos ojos, de a uno por vez; una flecha con el ojo abierto lo derriba para la espada, y el que queda se apura. EyeFight maneja la pelea como una oleada: cierra las puertas, intro, barra, se reinicia si el player sale, flag e interruptor. Con la regla de Daniel (salas sin obstáculos, cofre del ítem en una sala contigua que abre el sub-jefe), la guarida pasa a la sala SE con vasijas y el arco a la Cámara del arco (SO), detrás de una puerta que abre el sub-jefe. Contenedor de corazón y portal de salida. test_quenoa juega las dos peleas.
 - [ ] D1: kit de árbol y recorrerla (Daniel)
   Hoy usa el kit de la Chullpa. Arte (Daniel, 2026-10-12): las paredes sueltas dentro de una sala (nichos de cofres, reja de la escalera del tronco) se ven como bloques macizos con la tapa cortada; hacen falta piezas de nicho o pared baja propias del kit. Recorrerla con el escenario quenoa.
+- [x] Invertir D1 y D2: la pluma primero
+  Hecho el 2026-10-13 (Daniel: la pluma es mejor como primer ítem de mazmorra). La Chullpa es D1 (pluma) y la Queñoa D2 (arco); ninguna pedía el ítem de la otra. Grafos renombrados a chullpa_graph.tres y quenoa_graph.tres; la Chullpa trae solo bombas y la Queñoa bombas y pluma. Id y flags de la Chullpa pasan de d2 a ch (prefijo por mazmorra: ch_, qv_, d1_ el templo). Escenario chullpa sin arco ni pluma, quenoa con pluma. GDD §6.1, §6.2, §8b y §8c. Falta: §7 y el boceto de 7.10 (dónde está la Chullpa, qué gatea el camino a la Arboleda) con la sesión del overworld; la Queñoa no usa la pluma todavía.
 
 **Notas:** Sesión: diseño (-43 [a7e236]), con Daniel. Overworld (-eb) acomoda el boceto de 7.10 cuando esté la cadena.
 

@@ -85,7 +85,7 @@ size = Vector3(2, 2.4, 1.2)
 
 [node name="Dungeon" type="Node" parent="." unique_id=745544560]
 script = ExtResource("1_p48v1")
-id = &"d2"
+id = &"ch"
 display_name = "PLACE_CHULLPA"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=471664082]
@@ -164,22 +164,22 @@ shape = SubResource("BoxShape3D_6dghf")
 [node name="BossKeyChest" parent="Sotano" unique_id=301552816 instance=ExtResource("6_ufxwh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 2)
 item = ExtResource("8_0rnpi")
-flag = &"d2_boss_key_chest"
+flag = &"ch_boss_key_chest"
 
 [node name="MapChest" parent="Sotano" unique_id=2034294543 instance=ExtResource("6_ufxwh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 28)
 item = ExtResource("9_7e1xe")
-flag = &"d2_map_chest"
+flag = &"ch_map_chest"
 
 [node name="KeyChest" parent="Sotano" unique_id=2481673 instance=ExtResource("6_ufxwh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 28)
 item = ExtResource("23_2g4bn")
-flag = &"d2_key_chest"
+flag = &"ch_key_chest"
 
 [node name="BossDoor" parent="Sotano" unique_id=1613927784 instance=ExtResource("11_e5qux")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 24, 0, 12)
 kind = 4
-flag = &"d2_boss_door"
+flag = &"ch_boss_door"
 depth = 2.0
 
 [node name="CriptaLadder" parent="Sotano" unique_id=2054954054 node_paths=PackedStringArray("to") instance=ExtResource("13_52yo1")]
@@ -279,13 +279,13 @@ shape = SubResource("BoxShape3D_n1d8o")
 [node name="FeatherChest" parent="PlantaBaja" unique_id=780078450 instance=ExtResource("6_ufxwh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 22)
 item = ExtResource("16_syx8m")
-flag = &"d2_feather_chest"
+flag = &"ch_feather_chest"
 big = true
 
 [node name="OsarioSwitch" parent="PlantaBaja" unique_id=345616237 instance=ExtResource("17_rjinf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 6)
 mode = 1
-flag = &"d2_ossuary_switch"
+flag = &"ch_ossuary_switch"
 
 [node name="OsarioDoor" parent="PlantaBaja" unique_id=1362114138 instance=ExtResource("11_e5qux")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 16)
@@ -404,21 +404,21 @@ depth = 2.0
 [node name="RellanoLocked" parent="PisoAlto" unique_id=660477150 instance=ExtResource("11_e5qux")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 24, 0, 24)
 kind = 1
-flag = &"d2_landing_locked_door"
+flag = &"ch_landing_locked_door"
 depth = 2.0
 
 [node name="CompassChest" parent="PisoAlto" unique_id=1634173861 instance=ExtResource("6_ufxwh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 2)
 item = ExtResource("10_tu8eq")
-flag = &"d2_compass_chest"
+flag = &"ch_compass_chest"
 
 [node name="CrackedFloor" parent="PisoAlto" unique_id=515377963 instance=ExtResource("24_crkrm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 26)
-flag = &"d2_cracked_floor"
+flag = &"ch_cracked_floor"
 
 [node name="HeartPieceLookout" parent="PisoAlto" unique_id=1019190333 instance=ExtResource("26_ht767")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 4)
-flag = &"d2_heart_piece"
+flag = &"ch_heart_piece"
 
 [node name="RellanoEnemy10" parent="PisoAlto" unique_id=510737741 instance=ExtResource("30_gc68l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 22)
