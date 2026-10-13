@@ -66,6 +66,11 @@
 [ext_resource type="PackedScene" path="res://src/ui/hud/item_ring.tscn" id="60_pucgk"]
 [ext_resource type="Script" path="res://src/world/look/brillo_la.gd" id="63_n1d8o"]
 [ext_resource type="NavigationMesh" path="res://levels/nav/chullpa_navmesh.tres" id="nav_chullpa"]
+[ext_resource type="PackedScene" path="res://src/world/pickup.tscn" id="70_pickup"]
+[ext_resource type="Script" path="res://src/world/pickup.gd" id="71_pickupgd"]
+[ext_resource type="Resource" path="res://data/items/heart_container.tres" id="72_heart"]
+[ext_resource type="PackedScene" path="res://src/world/warp_portal.tscn" id="73_warp"]
+[ext_resource type="Resource" path="res://data/entities/mummy_guardian.tres" id="74_guardcfg"]
 
 [sub_resource type="Gradient" id="Gradient_qwhhl"]
 offsets = PackedFloat32Array(0, 0.03125, 0.0625, 0.09375, 0.125, 0.15625, 0.1875, 0.21875, 0.25, 0.28125, 0.3125, 0.34375, 0.375, 0.40625, 0.4375, 0.46875, 0.5, 0.53125, 0.5625, 0.59375, 0.625, 0.65625, 0.6875, 0.71875, 0.75, 0.78125, 0.8125, 0.84375, 0.875, 0.90625, 0.9375, 0.96875, 1)
@@ -937,6 +942,55 @@ shape = SubResource("InteractShape")
 
 [node name="PersistentFlag" parent="Sotano/BossDoor" index="4"]
 script = ExtResource("41_pflag")
+
+[node name="BossFight" type="Node3D" parent="Sotano" unique_id=1760224151 node_paths=PackedStringArray("room", "doors", "reward")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 10)
+script = ExtResource("40_fight")
+room = NodePath("../Guardian")
+flag = &"ch_boss_defeated"
+display_name = "BOSS_CH_MALLQUI"
+doors = [NodePath("../BossDoor")]
+reward = NodePath("HeartContainer")
+reward_flag = &"ch_heart_container"
+
+[node name="PersistentFlag" type="Node" parent="Sotano/BossFight" unique_id=1288311402]
+script = ExtResource("41_pflag")
+
+[node name="Mallqui" type="Node3D" parent="Sotano/BossFight" unique_id=873195260 instance=ExtResource("42_mummy")]
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 4, 0, -2)
+script = ExtResource("38_iq7xx")
+config = ExtResource("74_guardcfg")
+hops = 3
+hop_distance = 4.0
+leap_height = 5.0
+aim_time = 0.9
+aim_size = 1.7
+impact_damage = 6
+wave_radius = 24.0
+wave_speed = 9.0
+wave_width = 1.2
+wave_damage = 4
+stuck_time = 2.2
+rage_leaps = 2
+
+[node name="HeartContainer" type="Area3D" parent="Sotano/BossFight" unique_id=1991647320 instance=ExtResource("70_pickup")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+collision_layer = 0
+monitorable = false
+script = ExtResource("71_pickupgd")
+item = ExtResource("72_heart")
+lifetime = 0.0
+item_get = true
+magnet_radius = 0.0
+world_size = 1.4
+heart_mesh = ExtResource("45_baen8")
+
+[node name="BossExitPortal" type="Area3D" parent="Sotano" unique_id=1149226385 instance=ExtResource("73_warp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 14)
+script = ExtResource("37_q5kf3")
+target_scene = "res://levels/overworld.tscn"
+target_spawn = &"chullpa"
+required_flag = &"ch_boss_defeated"
 
 [node name="CriptaLadder" parent="Sotano" unique_id=2054954054 node_paths=PackedStringArray("to") instance=ExtResource("13_52yo1")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 52, 0, 24)

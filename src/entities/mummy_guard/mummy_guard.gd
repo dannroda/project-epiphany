@@ -25,10 +25,13 @@ enum State { IDLE, HOP, AIM, FALL, STUCK, DEAD }
 @export var wave_width := 0.9
 @export var wave_damage := 2
 @export var stuck_time := 2.6
+@export var aim_size := 1.0
+## Saltos seguidos (sin trabarse entre uno y otro) con la mitad de la vida o menos.
+@export var rage_leaps := 1
 
 @onready var body: Node3D = %Body
 @onready var aim_mark: MeshInstance3D = %AimMark
-@onready var wave: MeshInstance3D = %Wave
+@onready var waves: Array[MeshInstance3D] = [%Wave, %Wave2]
 @onready var impact: Hitbox = %Impact
 @onready var hurtbox: Hurtbox = %Hurtbox
 @onready var health: Health = $Health
@@ -43,9 +46,7 @@ var _turn := 0
 var _tweens: Array[Tween] = []
 var _home := Vector3.ZERO
 var _aim_locked := false
-var _wave_at := -1.0
-var _wave_center := Vector3.ZERO
-var _wave_hit: Array[PlayerCharacter] = []
+var _rings: Array[Dictionary] = []
 
 var is_dead: bool:
 	get:
@@ -63,7 +64,7 @@ func _ready() -> void:
 	impact.damage_factory = func() -> DamageInfo: return DamageInfo.make(impact_damage, config.attack_knockback * 1.5, impact, &"blast")
 	_home = global_position
 	aim_mark.hide()
-	wave.hide()
+	_stop_waves()
 
 
 func start() -> void:
@@ -97,10 +98,10 @@ func _physics_process(delta: float) -> void:
 		look.y = body.global_position.y
 		if not look.is_equal_approx(body.global_position):
 			body.look_at(look, Vector3.UP, true)
-	if state == State.AIM and _wave_at < 0.0 and player and aim_mark.visible and not _aim_locked:
+	if state == State.AIM and player and aim_mark.visible and not _aim_locked:
 		aim_mark.global_position = _clamp_to_arena(player.global_position) + Vector3.UP * 0.03
-	if _wave_at >= 0.0:
-		_spread_wave(delta)
+	if not _rings.is_empty():
+		_spread_waves(delta)
 
 
 
@@ -118,9 +119,11 @@ func _run() -> void:
 		if may_attack.is_valid() and not may_attack.call(self):
 			await _wait(0.4)
 			continue
-		await _leap()
-		if turn != _turn:
-			return
+		var leaps := rage_leaps if health.current * 2 <= health.max_health else 1
+		for i in leaps:
+			await _leap(i == leaps - 1)
+			if turn != _turn:
+				return
 		attack_finished.emit()
 
 
@@ -141,16 +144,16 @@ func _hop() -> void:
 	await _wait(0.25)
 
 
-func _leap() -> void:
+func _leap(last := true) -> void:
 	state = State.AIM
 	_aim_locked = false
 	Feel.sfx(&"roll", global_position)
 	_tween_to(body, ^"position:y", leap_height, 0.4).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	var player := Players.nearest(global_position)
 	aim_mark.global_position = _clamp_to_arena(player.global_position if player else global_position) + Vector3.UP * 0.03
-	aim_mark.scale = Vector3.ONE * 0.4
+	aim_mark.scale = Vector3.ONE * 0.4 * aim_size
 	aim_mark.show()
-	_tween_to(aim_mark, ^"scale", Vector3.ONE, aim_time)
+	_tween_to(aim_mark, ^"scale", Vector3.ONE * aim_size, aim_time)
 	await _wait(aim_time)
 	if state != State.AIM:
 		return
@@ -175,6 +178,9 @@ func _leap() -> void:
 	Feel.sfx(&"boom", global_position)
 	Feel.shake(0.45)
 	_start_wave()
+	if not last:
+		await _wait(0.35)
+		return
 	state = State.STUCK
 	body.position.y = -0.35
 	var wobble := _new_tween().set_loops(maxi(int(stuck_time / 0.3), 1))
@@ -191,35 +197,39 @@ func _leap() -> void:
 
 
 func _start_wave() -> void:
-	_wave_at = 0.0
-	_wave_center = global_position
-	_wave_hit.clear()
-	wave.global_position = _wave_center + Vector3.UP * 0.05
-	wave.scale = Vector3.ONE * 0.01
-	wave.show()
+	var free := waves.filter(func(mesh: MeshInstance3D) -> bool: return not mesh.visible)
+	var mesh: MeshInstance3D = waves[0] if free.is_empty() else free[0]
+	_rings = _rings.filter(func(ring: Dictionary) -> bool: return ring.mesh != mesh)
+	_rings.append({mesh = mesh, at = 0.0, center = global_position, hit = []})
+	mesh.global_position = global_position + Vector3.UP * 0.05
+	mesh.scale = Vector3.ONE * 0.01
+	mesh.show()
 
 
-func _spread_wave(delta: float) -> void:
-	_wave_at += wave_speed * pace * delta
-	if _wave_at > wave_radius:
-		_stop_wave()
-		return
-	wave.scale = Vector3(_wave_at, 1.0, _wave_at)
-	for player in Players.alive():
-		if _wave_hit.has(player) or not player.is_on_floor():
+func _spread_waves(delta: float) -> void:
+	for ring in _rings.duplicate():
+		ring.at += wave_speed * pace * delta
+		if ring.at > wave_radius:
+			ring.mesh.hide()
+			_rings.erase(ring)
 			continue
-		var away := (player.global_position - _wave_center) * Vector3(1, 0, 1)
-		if absf(away.length() - _wave_at) > wave_width / 2.0:
-			continue
-		_wave_hit.append(player)
-		var info := DamageInfo.make(wave_damage, config.attack_knockback, self, &"blast")
-		info.team = config.team
-		player.hurtbox.receive(info)
+		ring.mesh.scale = Vector3(ring.at, 1.0, ring.at)
+		for player in Players.alive():
+			if ring.hit.has(player) or not player.is_on_floor():
+				continue
+			var away: Vector3 = (player.global_position - ring.center) * Vector3(1, 0, 1)
+			if absf(away.length() - ring.at) > wave_width / 2.0:
+				continue
+			ring.hit.append(player)
+			var info := DamageInfo.make(wave_damage, config.attack_knockback, self, &"blast")
+			info.team = config.team
+			player.hurtbox.receive(info)
 
 
-func _stop_wave() -> void:
-	_wave_at = -1.0
-	wave.hide()
+func _stop_waves() -> void:
+	_rings.clear()
+	for mesh in waves:
+		mesh.hide()
 
 
 func _interrupt() -> void:
@@ -228,7 +238,7 @@ func _interrupt() -> void:
 		if tween.is_valid():
 			tween.kill()
 	_tweens.clear()
-	_stop_wave()
+	_stop_waves()
 	aim_mark.hide()
 	impact.set_deferred(&"monitoring", false)
 	body.rotation.z = 0.0

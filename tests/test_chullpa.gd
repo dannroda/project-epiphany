@@ -163,6 +163,98 @@ func test_the_mummy_guardian_breaks_the_floor_onto_the_feather() -> void:
 	tree.root.get_node(^"GameState").reset()
 
 
+func test_the_mallqui_fills_its_room_with_waves_that_the_feather_jumps() -> void:
+	await _start()
+	var state: Node = tree.root.get_node(^"GameState")
+	state.give(Items.get_item(&"feather"))
+	state.assign_button(1, &"feather")
+	var fight := level.get_node(^"Sotano/BossFight") as ArenaFight
+	var boss := fight.get_node(^"Mallqui") as MummyGuard
+	player.health.reset(80)
+	await _drop(_in("Sotano/Guardian", Vector3(-6, 0.5, 4)))
+	assert_eq(camera.room, _room("Sotano/Guardian"))
+	assert_true(await _until(func() -> bool: return boss.state != MummyGuard.State.IDLE, 20.0), "arranca la pelea")
+	assert_true(not (level.get_node(^"Sotano/BossDoor") as Door).is_open, "se cierra la puerta del jefe")
+	var far := await _dodge_the_landing(boss)
+	var before := player.health.current
+	assert_true(await _until(func() -> bool: return player.health.current < before, 4.0), "la onda llega a %.1f m: no se esquiva caminando" % far)
+	assert_true(far > 8.0, "lejos del golpe")
+	assert_true(await _until(func() -> bool: return boss.state == MummyGuard.State.STUCK, 5.0), "queda trabado")
+	assert_true(await _until(func() -> bool: return boss._rings.is_empty(), 5.0))
+	player.health.reset(80)
+	await _dodge_the_landing(boss)
+	before = player.health.current
+	assert_true(await _jump_the_wave(boss), "la onda llega")
+	assert_eq(player.health.current, before, "saltando con la pluma, la onda pasa por abajo")
+	assert_true(await _until(func() -> bool: return boss.state == MummyGuard.State.STUCK, 5.0))
+	while boss.health.current * 2 > boss.health.max_health:
+		await _until(func() -> bool: return boss.is_vulnerable(), 20.0)
+		boss.hurtbox.receive(DamageInfo.make(2, 0.0, player))
+		await tree.create_timer(0.3).timeout
+	await _until(func() -> bool: return boss.state == MummyGuard.State.HOP, 10.0)
+	var falls := 0
+	var last := boss.state
+	while boss.state != MummyGuard.State.STUCK:
+		if boss.state == MummyGuard.State.AIM and boss._aim_locked:
+			player.global_position = _far_from(boss.aim_mark.global_position)
+		if boss.state != last and boss.state == MummyGuard.State.FALL:
+			falls += 1
+		last = boss.state
+		player.health.reset(80)
+		await tree.physics_frame
+	assert_eq(falls, 2, "con media vida salta dos veces seguidas")
+	while not boss.is_dead:
+		player.health.reset(80)
+		if boss.is_vulnerable():
+			boss.hurtbox.receive(DamageInfo.make(2, 0.0, player))
+			await tree.create_timer(0.3).timeout
+		else:
+			await tree.physics_frame
+	assert_true(await _until(func() -> bool: return fight.active), "pelea ganada")
+	assert_true(state.get_flag(&"ch_boss_defeated") == true)
+	assert_true(await _until(func() -> bool: return (level.get_node(^"Sotano/BossDoor") as Door).is_open, 3.0), "se abre la puerta")
+	assert_true(fight.get_node_or_null(^"HeartContainer") != null, "aparece el contenedor de corazón")
+	state.reset()
+
+
+func _far_from(point: Vector3) -> Vector3:
+	var best := Vector3.INF
+	for corner in [Vector3(-8, 0, -4), Vector3(8, 0, -4), Vector3(-8, 0, 4), Vector3(8, 0, 4)]:
+		var at := _in("Sotano/Guardian", corner)
+		if best == Vector3.INF or at.distance_to(point) > best.distance_to(point):
+			best = at
+	return best
+
+
+## Espera a que fije la sombra y se para en la esquina más lejana; devuelve a cuánto queda.
+func _dodge_the_landing(boss: MummyGuard) -> float:
+	await _until(func() -> bool: return boss.state == MummyGuard.State.AIM and boss._aim_locked, 20.0)
+	var spot := _far_from(boss.aim_mark.global_position)
+	player.global_position = spot
+	player.velocity = Vector3.ZERO
+	return Vector2(spot.x, spot.z).distance_to(Vector2(boss.aim_mark.global_position.x, boss.aim_mark.global_position.z))
+
+
+func _jump_the_wave(boss: MummyGuard) -> bool:
+	var near := func() -> bool:
+		for ring in boss._rings:
+			var away: Vector3 = (player.global_position - ring.center) * Vector3(1, 0, 1)
+			if away.length() - ring.at < 1.6:
+				return true
+		return false
+	if not await _until(near, 5.0):
+		return false
+	var event := InputEventAction.new()
+	event.action = &"item_2"
+	event.pressed = true
+	Input.parse_input_event(event)
+	var release := InputEventAction.new()
+	release.action = &"item_2"
+	Input.parse_input_event(release)
+	await _until(func() -> bool: return boss._rings.is_empty(), 5.0)
+	return true
+
+
 func test_chasm_has_no_room_below() -> void:
 	await _start()
 	await _drop(_in("PlantaBaja/Abismo", Vector3(0, 0.5, 6)))

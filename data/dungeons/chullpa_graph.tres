@@ -160,7 +160,7 @@ node = NodePath("Sotano/BossKeyChest")
 [sub_resource type="Resource" id="Spot_8"]
 script = ExtResource("3_spot")
 area = &"Guardian"
-node = NodePath("Sotano/Guardian")
+node = NodePath("Sotano/BossFight")
 needs = Array[StringName]([&"feather"])
 gives = &"ch_boss_defeated"
 

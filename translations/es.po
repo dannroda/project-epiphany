@@ -825,6 +825,9 @@ msgstr "Ojo Vigía"
 msgid "BOSS_CH_MUMMY"
 msgstr "Momia Guardiana"
 
+msgid "BOSS_CH_MALLQUI"
+msgstr "Mallqui, el Ancestro"
+
 msgid "BOSS_QV_EYES"
 msgstr "Los Ojos de la Queñoa"
 
