@@ -137,6 +137,15 @@ func usable_item(button: int) -> ItemData:
 	return item if item.behavior.can_use(make_item_context(), item) else null
 
 
+## Alcance del gancho si está en un botón; cero si no.
+func hook_reach() -> float:
+	for id in GameState.buttons_of(controls.slot):
+		var item := GameState.item_for(id)
+		if item and item.behavior is HookBehavior and GameState.inventory.has(id):
+			return (item.behavior as HookBehavior).reach
+	return 0.0
+
+
 func make_item_context() -> ItemUseContext:
 	var ctx := ItemUseContext.new()
 	ctx.user = self

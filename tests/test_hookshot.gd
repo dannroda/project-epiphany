@@ -58,6 +58,8 @@ func _place(tree: SceneTree, player: PlayerCharacter, at: Vector3, facing: Vecto
 	player.model.look_at(player.model.global_position - facing, Vector3.UP)
 	for i in 10:
 		await tree.physics_frame
+	tree.call_group(TopDownCamera.GROUP, &"snap_to_target")
+	await tree.process_frame
 
 
 ## Dispara y espera a que el player vuelva a Idle; devuelve el estado de cada frame.
@@ -199,4 +201,64 @@ func test_the_sandbox_gap_is_crossed_with_the_hookshot() -> void:
 	for i in 20:
 		await tree.physics_frame
 	assert_true(player.global_position.z < 18.0 and player.global_position.y > 0.0, "y vuelve con el otro poste (%s)" % player.global_position.snappedf(0.1))
+	state.reset()
+
+
+func _cliff(tree: SceneTree) -> void:
+	_box(tree, FAR + Vector3(-5, -0.5, 0), Vector3(16, 1, 10))
+	_box(tree, FAR + Vector3(8, 2.1, 0), Vector3(10, 6.2, 10))
+
+
+func test_a_post_up_a_ledge_is_targeted_and_lifts_the_player() -> void:
+	var setup: Array = await _level()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	_cliff(tree)
+	var post := _add(tree, POST, FAR + Vector3(3.4, 5.2, 0)) as HookPost
+	await _place(tree, player, FAR, Vector3.RIGHT)
+	player.targeting.lock_best_target()
+	assert_true(player.targeting.current == post, "con el gancho en un botón, el poste del borde se fija")
+	var states := await _fire(tree, player)
+	for i in 10:
+		await tree.physics_frame
+	assert_true(&"Hooking" in states)
+	assert_true(absf(player.global_position.y - 5.2) < 0.3 and player.global_position.distance_to(post.global_position) < 1.5, "sube 5.2 m al piso del poste (%s)" % player.global_position.snappedf(0.1))
+	assert_eq(_state(player), &"Idle", "y queda parado arriba")
+	player.targeting.clear()
+	setup[2].reset()
+
+
+func test_a_post_below_brings_the_player_down() -> void:
+	var setup: Array = await _level()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	_cliff(tree)
+	var post := _add(tree, POST, FAR) as HookPost
+	await _place(tree, player, FAR + Vector3(3.3, 5.2, 0), Vector3.LEFT)
+	player.targeting.lock_best_target()
+	assert_true(player.targeting.current == post, "el poste de abajo también se fija")
+	await _fire(tree, player)
+	for i in 10:
+		await tree.physics_frame
+	assert_true(absf(player.global_position.y) < 0.3 and player.global_position.distance_to(post.global_position) < 1.5, "baja al pie del poste (%s)" % player.global_position.snappedf(0.1))
+	player.targeting.clear()
+	setup[2].reset()
+
+
+func test_posts_are_targets_only_with_the_hookshot_and_in_reach() -> void:
+	var setup: Array = await _level()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	var state: Node = setup[2]
+	_cliff(tree)
+	var post := _add(tree, POST, FAR + Vector3(3.4, 5.2, 0)) as HookPost
+	var far_post := _add(tree, POST, FAR + Vector3(9.5, 5.2, 0)) as HookPost
+	state.buttons_of(0).fill(&"")
+	await _place(tree, player, FAR, Vector3.RIGHT)
+	assert_true(not post in player.targeting.possible_targets, "sin el gancho en un botón el poste no se fija")
+	state.assign_button(0, &"hookshot")
+	await tree.physics_frame
+	await tree.physics_frame
+	assert_true(post in player.targeting.possible_targets, "con el gancho, sí")
+	assert_true(not far_post in player.targeting.possible_targets, "pero no uno fuera del alcance del gancho")
 	state.reset()

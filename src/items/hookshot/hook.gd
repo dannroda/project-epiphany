@@ -21,6 +21,10 @@ const LINK := 0.16
 
 var phase := Phase.OUT
 var user: PlayerCharacter
+## Donde se clavó.
+var anchor: Node3D
+## El poste fijado: va derecho a él y no se engancha en otra cosa (para fijarlo tenía que estar a la vista).
+var target: HookPost
 var _direction := Vector3.ZERO
 var _reach := 8.0
 var _travelled := 0.0
@@ -41,7 +45,7 @@ func fire(by: PlayerCharacter, direction: Vector3, reach: float, damage: int) ->
 	_reach = reach
 	_damage = damage
 	global_position = hand()
-	head.global_basis = Basis.looking_at(_direction)
+	head.global_basis = _facing(_direction)
 	_draw_chain()
 
 
@@ -79,7 +83,7 @@ func _fly(delta: float) -> void:
 			return
 	global_position = to
 	_travelled += step
-	if _travelled >= _reach - 0.001:
+	if _travelled >= _reach - 0.001 or (target and _travelled > hand().distance_to(target.ring()) + 1.0):
 		phase = Phase.BACK
 
 
@@ -111,7 +115,10 @@ func _react(collider: Object, point: Vector3) -> bool:
 	var node := collider as Node
 	if node == null or node == user or user.is_ancestor_of(node):
 		return false
-	if _is_anchor(node):
+	if target and node != target and not target.is_ancestor_of(node):
+		return false
+	anchor = _anchor_of(node)
+	if anchor:
 		global_position = point - _direction * 0.1
 		phase = Phase.LATCHED
 		Feel.sfx(&"hit_stone", point)
@@ -152,8 +159,9 @@ func _react(collider: Object, point: Vector3) -> bool:
 	return true
 
 
-func _is_anchor(node: Node) -> bool:
-	return _ancestor_of_type(node, HookPost) != null or _ancestor_of_type(node, Chest) != null
+func _anchor_of(node: Node) -> Node3D:
+	var post := _ancestor_of_type(node, HookPost)
+	return post if post else _ancestor_of_type(node, Chest)
 
 
 func _ancestor_of_type(node: Node, type: Variant) -> Node:
@@ -218,5 +226,9 @@ func _draw_chain() -> void:
 	chain.visible = length > 0.05
 	if not chain.visible:
 		return
-	chain.global_transform = Transform3D(Basis.looking_at(to - from), from)
+	chain.global_transform = Transform3D(_facing(to - from), from)
 	chain.multimesh.visible_instance_count = mini(ceili(length / LINK), chain.multimesh.instance_count)
+
+
+func _facing(direction: Vector3) -> Basis:
+	return Basis.looking_at(direction, Vector3.UP if absf(direction.normalized().y) < 0.99 else Vector3.BACK)

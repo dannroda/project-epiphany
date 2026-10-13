@@ -67,6 +67,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	_sync_posts()
 	_check_current(delta)
 	if current == null:
 		_last_dir = Vector2.ZERO
@@ -218,8 +219,20 @@ func _in_sight(target: Node3D) -> bool:
 	return player.get_world_3d().direct_space_state.intersect_ray(query).is_empty()
 
 
+## Los postes no entran por el detector: con el gancho en un botón se fijan los que están a su alcance, a cualquier altura.
+func _sync_posts() -> void:
+	var reach := player.hook_reach()
+	var hand := player.global_position + Vector3.UP * Hook.HEIGHT
+	for post: HookPost in get_tree().get_nodes_in_group(HookPost.GROUP):
+		var near := reach > 0.0 and hand.distance_to(post.ring()) <= reach
+		if near and not possible_targets.has(post):
+			possible_targets.append(post)
+		elif not near:
+			possible_targets.erase(post)
+
+
 func _on_detector_body_entered(body: Node3D) -> void:
-	if body.is_in_group(&"targetable"):
+	if body.is_in_group(&"targetable") and not body is HookPost:
 		possible_targets.append(body)
 
 
