@@ -98,7 +98,7 @@ size = Vector3(14, 2.4, 10)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ej705"]
 material = ExtResource("40_vrfs0")
-size = Vector2(50, 26)
+size = Vector2(46, 22)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_iqimp"]
 size = Vector3(50, 2.4, 26)
@@ -148,6 +148,31 @@ size = Vector3(8, 2.4, 10)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_x275d"]
 size = Vector3(2, 2.4, 1.2)
+
+[sub_resource type="StandardMaterial3D" id="Basin"]
+cull_mode = 1
+albedo_color = Color(0.07, 0.16, 0.19, 1)
+roughness = 1.0
+
+[sub_resource type="BoxMesh" id="BasinMesh0"]
+material = SubResource("Basin")
+size = Vector3(46, 1.2, 22)
+
+[sub_resource type="BoxMesh" id="BasinMesh1"]
+material = SubResource("Basin")
+size = Vector3(12, 1.2, 8)
+
+[sub_resource type="BoxMesh" id="BasinMesh2"]
+material = SubResource("Basin")
+size = Vector3(8, 1.2, 10)
+
+[sub_resource type="BoxMesh" id="BasinMesh3"]
+material = SubResource("Basin")
+size = Vector3(8, 1.2, 10)
+
+[sub_resource type="BoxMesh" id="BasinMesh4"]
+material = SubResource("Basin")
+size = Vector3(8, 1.2, 10)
 
 [node name="Totora" type="Node3D" unique_id=628508757]
 
@@ -422,6 +447,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, -0.35, 12)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_ej705")
 
+[node name="Fondo" type="MeshInstance3D" parent="PisoBajo/Agua"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+cast_shadow = 0
+mesh = SubResource("BasinMesh0")
+
 [node name="AguaPit" type="Area3D" parent="PisoBajo" unique_id=589897382 node_paths=PackedStringArray("water")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, -1.8, 12)
 script = ExtResource("41_4rcne")
@@ -580,6 +610,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, -0.35, 15)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_fwxao")
 
+[node name="Fondo" type="MeshInstance3D" parent="PisoAlto/TelarAgua"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+cast_shadow = 0
+mesh = SubResource("BasinMesh1")
+
 [node name="TelarPit" type="Area3D" parent="PisoAlto" unique_id=1978939878 node_paths=PackedStringArray("water")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, -1.8, 15)
 script = ExtResource("41_4rcne")
@@ -610,6 +645,11 @@ flag = &"tt_pond_key_chest"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -0.35, 6)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_re012")
+
+[node name="Fondo" type="MeshInstance3D" parent="PisoAlto/EstanqueAgua"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+cast_shadow = 0
+mesh = SubResource("BasinMesh2")
 
 [node name="EstanquePit" type="Area3D" parent="PisoAlto" unique_id=369862776 node_paths=PackedStringArray("water")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -1.8, 6)
@@ -653,6 +693,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, -0.35, 6)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_wnqry")
 
+[node name="Fondo" type="MeshInstance3D" parent="PisoAlto/MiradorAgua"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+cast_shadow = 0
+mesh = SubResource("BasinMesh3")
+
 [node name="MiradorPit" type="Area3D" parent="PisoAlto" unique_id=1308484931 node_paths=PackedStringArray("water")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, -1.8, 6)
 script = ExtResource("41_4rcne")
@@ -688,6 +733,11 @@ big = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, -0.35, 6)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_ib12e")
+
+[node name="Fondo" type="MeshInstance3D" parent="PisoAlto/TejedoresAgua"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+cast_shadow = 0
+mesh = SubResource("BasinMesh4")
 
 [node name="TejedoresPit" type="Area3D" parent="PisoAlto" unique_id=488741089 node_paths=PackedStringArray("water")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, -1.8, 6)
