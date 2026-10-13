@@ -555,6 +555,35 @@ def fachada_templo(p):
 			gold += p.rounded_box(side * 1.75 - w / 2, side * 1.75 + w / 2, -0.12, -0.03, 3.9 + i * 0.25, 4.15 + i * 0.25, radius=0.02, segments=1)
 	gold += epi.eye(p, Vector((0, 0.6, 5.5)), 0.3, depth=0.05)
 	p.paint(gold, "dorado", "MID", vary=0.05)
+	mountain(p)
+
+
+## Frente del cerro: donde termina la explanada (la roca del terreno empieza ahí).
+MOUNTAIN_FRONT = 0.6
+
+
+def mountain(p):
+	"""El cerro donde está tallado el templo: peñascos redondos apilados a los costados y detrás, más altos hacia
+	atrás, con pasto encima; deja libre el frente del templo (el templo sigue bajo tierra)."""
+	rock, grass = [], []
+	for gy in range(5):
+		for gx in range(-7, 8):
+			x = gx * 1.13 + p.rng.uniform(-0.15, 0.15)
+			if abs(x) < 3.9 and gy < 2:
+				continue
+			top = 3.2 + 4.6 * max(0.0, 1.0 - abs(x) / 9.0) + gy * 0.6
+			if abs(x) < 3.0 and gy < 4:
+				top = max(top, 6.6)
+			z = 0.0
+			while z < top:
+				r = p.rng.uniform(0.85, 1.25)
+				y = MOUNTAIN_FRONT + r + gy * 1.4 + (p.rng.uniform(0.0, 0.3) if gy else 0.0)
+				faces = p.blob((x, y, z + r * 0.55), r, squash=(1.1, 1.0, 0.75), subdiv=2, rough=0.12, flat_bottom=0.0 if z == 0.0 else None)
+				for f in faces:
+					(grass if f.normal.z > 0.75 and f.calc_center_median().z > top - 0.6 else rock).append(f)
+				z += r * 1.1
+	p.paint(rock, "acantilado", z_range=(0.0, 9.0), vary=0.08)
+	p.paint(grass, "pasto", "MID", vary=0.06)
 
 
 def sello_losa(p):
@@ -613,7 +642,7 @@ def monolito(p):
 	p.paint(relief, "piedra", "DARK")
 
 
-piece("fachada_templo", 21, fachada_templo, smooth=35)
+piece("fachada_templo", 21, fachada_templo, smooth=60)
 piece("sello_losa", 22, sello_losa)
 piece("sello_ojo", 23, sello_ojo)
 piece("portal_disco", 24, portal_disco)
