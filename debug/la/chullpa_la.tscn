@@ -67,7 +67,7 @@
 
 [sub_resource type="Gradient" id="Gradient_ex805"]
 offsets = PackedFloat32Array(0, 0.03125, 0.0625, 0.09375, 0.125, 0.15625, 0.1875, 0.21875, 0.25, 0.28125, 0.3125, 0.34375, 0.375, 0.40625, 0.4375, 0.46875, 0.5, 0.53125, 0.5625, 0.59375, 0.625, 0.65625, 0.6875, 0.71875, 0.75, 0.78125, 0.8125, 0.84375, 0.875, 0.90625, 0.9375, 0.96875, 1)
-colors = PackedColorArray(0, 0, 0, 1, 9.050202e-05, 9.050202e-05, 9.050202e-05, 1, 0.0004893881, 0.0004893881, 0.0004893881, 1, 0.001729022, 0.001729022, 0.001729022, 1, 0.0047976584, 0.0047976584, 0.0047976584, 1, 0.011301153, 0.011301153, 0.011301153, 1, 0.023647657, 0.023647657, 0.023647657, 1, 0.045007046, 0.045007046, 0.045007046, 1, 0.072268106, 0.072268106, 0.072268106, 1, 0.10319321, 0.10319321, 0.10319321, 1, 0.13786563, 0.13786563, 0.13786563, 1, 0.1763628, 0.1763628, 0.1763628, 1, 0.21875724, 0.21875724, 0.21875724, 1, 0.26511726, 0.26511726, 0.26511726, 1, 0.3155074, 0.3155074, 0.3155074, 1, 0.3699889, 0.3699889, 0.3699889, 1, 0.4286201, 0.4286201, 0.4286201, 1, 0.49145663, 0.49145663, 0.49145663, 1, 0.5585521, 0.5585521, 0.5585521, 1, 0.59375, 0.59375, 0.59375, 1, 0.625, 0.625, 0.625, 1, 0.65625, 0.65625, 0.65625, 1, 0.68749994, 0.68749994, 0.68749994, 1, 0.71875, 0.71875, 0.71875, 1, 0.75, 0.75, 0.75, 1, 0.78125, 0.78125, 0.78125, 1, 0.8125, 0.8125, 0.8125, 1, 0.84375, 0.84375, 0.84375, 1, 0.875, 0.875, 0.875, 1, 0.90625, 0.90625, 0.90625, 1, 0.9375, 0.9375, 0.9375, 1, 0.96875, 0.96875, 0.96875, 1, 1, 1, 1, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.0010699818, 0.0010699818, 0.0010699818, 1, 0.0038740204, 0.0038740204, 0.0038740204, 1, 0.010139859, 0.010139859, 0.010139859, 1, 0.022075947, 0.022075947, 0.022075947, 1, 0.04236076, 0.04236076, 0.04236076, 1, 0.068094745, 0.068094745, 0.068094745, 1, 0.09626258, 0.09626258, 0.09626258, 1, 0.12677714, 0.12677714, 0.12677714, 1, 0.15956329, 0.15956329, 0.15956329, 1, 0.19455545, 0.19455545, 0.19455545, 1, 0.2316954, 0.2316954, 0.2316954, 1, 0.2709312, 0.2709312, 0.2709312, 1, 0.31221583, 0.31221583, 0.31221583, 1, 0.35550666, 0.35550666, 0.35550666, 1, 0.40076444, 0.40076444, 0.40076444, 1, 0.4479533, 0.4479533, 0.4479533, 1, 0.4970398, 0.4970398, 0.4970398, 1, 0.5479932, 0.5479932, 0.5479932, 1, 0.59375, 0.59375, 0.59375, 1, 0.625, 0.625, 0.625, 1, 0.65625, 0.65625, 0.65625, 1, 0.68749994, 0.68749994, 0.68749994, 1, 0.71875, 0.71875, 0.71875, 1, 0.75, 0.75, 0.75, 1, 0.78125, 0.78125, 0.78125, 1, 0.8125, 0.8125, 0.8125, 1, 0.84375, 0.84375, 0.84375, 1, 0.875, 0.875, 0.875, 1, 0.90625, 0.90625, 0.90625, 1, 0.9375, 0.9375, 0.9375, 1, 0.96875, 0.96875, 0.96875, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_u111u"]
 gradient = SubResource("Gradient_ex805")
@@ -76,7 +76,7 @@ gradient = SubResource("Gradient_ex805")
 background_mode = 1
 ambient_light_source = 2
 ambient_light_color = Color(0.62, 0.72, 0.85, 1)
-ambient_light_energy = 1.7
+ambient_light_energy = 1.3
 ssao_enabled = true
 ssao_radius = 0.8
 ssao_intensity = 1.5
@@ -87,7 +87,7 @@ glow_hdr_threshold = 1.2
 fog_light_color = Color(0.25, 0.08, 0.06, 1)
 fog_density = 0.0
 adjustment_enabled = true
-adjustment_saturation = 0.8
+adjustment_saturation = 0.9
 adjustment_color_correction = SubResource("GradientTexture1D_u111u")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_308dp"]
@@ -484,12 +484,12 @@ display_name = "PLACE_CH_MAUSOLEUM"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Sotano/Mausoleo" unique_id=1736954339]
 shape = SubResource("BoxShape3D_308dp")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/Mausoleo" unique_id=1972116638]
+[node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/Mausoleo" unique_id=873163718]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_opqgd")
 
-[node name="LuzSala" type="SpotLight3D" parent="Sotano/Mausoleo" unique_id=517466569]
+[node name="LuzSala" type="SpotLight3D" parent="Sotano/Mausoleo" unique_id=388876502]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
 light_color = Color(1, 0.9, 0.78, 1)
 light_energy = 2.2
@@ -499,7 +499,7 @@ spot_attenuation = 0.0
 spot_angle = 75.0
 spot_angle_attenuation = 0.5
 
-[node name="ReflejoSala" type="ReflectionProbe" parent="Sotano/Mausoleo" unique_id=1858059954]
+[node name="ReflejoSala" type="ReflectionProbe" parent="Sotano/Mausoleo" unique_id=1748284654]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
 size = Vector3(26, 5, 18)
 box_projection = true
@@ -517,12 +517,12 @@ boss_room = true
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Sotano/Guardian" unique_id=355475746]
 shape = SubResource("BoxShape3D_ier5i")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/Guardian" unique_id=372833221]
+[node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/Guardian" unique_id=559927716]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_5k16b")
 
-[node name="LuzSala" type="SpotLight3D" parent="Sotano/Guardian" unique_id=82276924]
+[node name="LuzSala" type="SpotLight3D" parent="Sotano/Guardian" unique_id=232572437]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
 light_color = Color(1, 0.9, 0.78, 1)
 light_energy = 2.2
@@ -532,7 +532,7 @@ spot_attenuation = 0.0
 spot_angle = 75.0
 spot_angle_attenuation = 0.5
 
-[node name="ReflejoSala" type="ReflectionProbe" parent="Sotano/Guardian" unique_id=1134267034]
+[node name="ReflejoSala" type="ReflectionProbe" parent="Sotano/Guardian" unique_id=1662588695]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
 size = Vector3(26, 5, 18)
 box_projection = true
@@ -549,12 +549,12 @@ map_cell = Vector2i(0, 1)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Sotano/CriptaOscura" unique_id=849526528]
 shape = SubResource("BoxShape3D_yesgf")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/CriptaOscura" unique_id=1985269667]
+[node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/CriptaOscura" unique_id=187033498]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_aev7p")
 
-[node name="LuzSala" type="SpotLight3D" parent="Sotano/CriptaOscura" unique_id=1825019320]
+[node name="LuzSala" type="SpotLight3D" parent="Sotano/CriptaOscura" unique_id=898483452]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
 light_color = Color(1, 0.9, 0.78, 1)
 light_energy = 2.2
@@ -564,7 +564,7 @@ spot_attenuation = 0.0
 spot_angle = 75.0
 spot_angle_attenuation = 0.5
 
-[node name="ReflejoSala" type="ReflectionProbe" parent="Sotano/CriptaOscura" unique_id=609487663]
+[node name="ReflejoSala" type="ReflectionProbe" parent="Sotano/CriptaOscura" unique_id=284867532]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
 size = Vector3(26, 5, 18)
 box_projection = true
@@ -581,12 +581,12 @@ map_cell = Vector2i(1, 1)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Sotano/Cripta" unique_id=2011139786]
 shape = SubResource("BoxShape3D_bkpqy")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/Cripta" unique_id=1854974728]
+[node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/Cripta" unique_id=1330733024]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_8m0sy")
 
-[node name="LuzSala" type="SpotLight3D" parent="Sotano/Cripta" unique_id=1966982358]
+[node name="LuzSala" type="SpotLight3D" parent="Sotano/Cripta" unique_id=1248219744]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
 light_color = Color(1, 0.9, 0.78, 1)
 light_energy = 2.2
@@ -596,7 +596,7 @@ spot_attenuation = 0.0
 spot_angle = 75.0
 spot_angle_attenuation = 0.5
 
-[node name="ReflejoSala" type="ReflectionProbe" parent="Sotano/Cripta" unique_id=142020031]
+[node name="ReflejoSala" type="ReflectionProbe" parent="Sotano/Cripta" unique_id=298310263]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
 size = Vector3(26, 5, 18)
 box_projection = true
@@ -988,12 +988,12 @@ display_name = "PLACE_CH_OSSUARY"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlantaBaja/Osario" unique_id=1034137515]
 shape = SubResource("BoxShape3D_8asnb")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/Osario" unique_id=497610224]
+[node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/Osario" unique_id=1307969651]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_r8ubj")
 
-[node name="LuzSala" type="SpotLight3D" parent="PlantaBaja/Osario" unique_id=1158358108]
+[node name="LuzSala" type="SpotLight3D" parent="PlantaBaja/Osario" unique_id=870532114]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
 light_color = Color(1, 0.9, 0.78, 1)
 light_energy = 2.2
@@ -1003,7 +1003,7 @@ spot_attenuation = 0.0
 spot_angle = 75.0
 spot_angle_attenuation = 0.5
 
-[node name="ReflejoSala" type="ReflectionProbe" parent="PlantaBaja/Osario" unique_id=7621239]
+[node name="ReflejoSala" type="ReflectionProbe" parent="PlantaBaja/Osario" unique_id=2038015083]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
 size = Vector3(26, 5, 18)
 box_projection = true
@@ -1020,12 +1020,12 @@ map_cell = Vector2i(1, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlantaBaja/Abismo" unique_id=1273304869]
 shape = SubResource("BoxShape3D_tfrkv")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/Abismo" unique_id=1216095887]
+[node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/Abismo" unique_id=1140862261]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_p5xdt")
 
-[node name="LuzSala" type="SpotLight3D" parent="PlantaBaja/Abismo" unique_id=887468180]
+[node name="LuzSala" type="SpotLight3D" parent="PlantaBaja/Abismo" unique_id=1063998080]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
 light_color = Color(1, 0.9, 0.78, 1)
 light_energy = 2.2
@@ -1035,7 +1035,7 @@ spot_attenuation = 0.0
 spot_angle = 75.0
 spot_angle_attenuation = 0.5
 
-[node name="ReflejoSala" type="ReflectionProbe" parent="PlantaBaja/Abismo" unique_id=108618878]
+[node name="ReflejoSala" type="ReflectionProbe" parent="PlantaBaja/Abismo" unique_id=1923120481]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
 size = Vector3(26, 5, 18)
 box_projection = true
@@ -1052,12 +1052,12 @@ map_cell = Vector2i(0, 1)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlantaBaja/Entrada" unique_id=525827890]
 shape = SubResource("BoxShape3D_pucgk")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/Entrada" unique_id=43626222]
+[node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/Entrada" unique_id=1863023744]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_iixbe")
 
-[node name="LuzSala" type="SpotLight3D" parent="PlantaBaja/Entrada" unique_id=749018438]
+[node name="LuzSala" type="SpotLight3D" parent="PlantaBaja/Entrada" unique_id=1838973256]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
 light_color = Color(1, 0.9, 0.78, 1)
 light_energy = 2.2
@@ -1067,7 +1067,7 @@ spot_attenuation = 0.0
 spot_angle = 75.0
 spot_angle_attenuation = 0.5
 
-[node name="ReflejoSala" type="ReflectionProbe" parent="PlantaBaja/Entrada" unique_id=641742142]
+[node name="ReflejoSala" type="ReflectionProbe" parent="PlantaBaja/Entrada" unique_id=494554966]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
 size = Vector3(26, 5, 18)
 box_projection = true
@@ -1084,12 +1084,12 @@ map_cell = Vector2i(1, 1)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlantaBaja/SalaCofre" unique_id=1182654310]
 shape = SubResource("BoxShape3D_uu46w")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/SalaCofre" unique_id=1230596911]
+[node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/SalaCofre" unique_id=455720247]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_14841")
 
-[node name="LuzSala" type="SpotLight3D" parent="PlantaBaja/SalaCofre" unique_id=1245306266]
+[node name="LuzSala" type="SpotLight3D" parent="PlantaBaja/SalaCofre" unique_id=52391546]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
 light_color = Color(1, 0.9, 0.78, 1)
 light_energy = 2.2
@@ -1099,7 +1099,7 @@ spot_attenuation = 0.0
 spot_angle = 75.0
 spot_angle_attenuation = 0.5
 
-[node name="ReflejoSala" type="ReflectionProbe" parent="PlantaBaja/SalaCofre" unique_id=445118846]
+[node name="ReflejoSala" type="ReflectionProbe" parent="PlantaBaja/SalaCofre" unique_id=103826601]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
 size = Vector3(26, 5, 18)
 box_projection = true
@@ -1470,13 +1470,13 @@ script = ExtResource("23_1rwyg")
 color = Color(1.35, 1.15, 0.9, 1)
 radius = 3.0
 
-[node name="OsarioPot1" type="AnimatableBody3D" parent="PlantaBaja" unique_id=948403905 instance=ExtResource("28_7r5y8")]
+[node name="OsarioPot1" type="AnimatableBody3D" parent="PlantaBaja" unique_id=1233564684 instance=ExtResource("28_7r5y8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 14)
 collision_layer = 9
 collision_mask = 0
 script = ExtResource("29_h4lh2")
 
-[node name="OsarioPot2" type="AnimatableBody3D" parent="PlantaBaja" unique_id=894313249 instance=ExtResource("28_7r5y8")]
+[node name="OsarioPot2" type="AnimatableBody3D" parent="PlantaBaja" unique_id=2099614025 instance=ExtResource("28_7r5y8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 6)
 collision_layer = 9
 collision_mask = 0
@@ -1507,12 +1507,12 @@ display_name = "PLACE_CH_LEAPS"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PisoAlto/Saltos" unique_id=1281431642]
 shape = SubResource("BoxShape3D_qwhhl")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Saltos" unique_id=2125777652]
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Saltos" unique_id=1858413025]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_2gpsm")
 
-[node name="LuzSala" type="SpotLight3D" parent="PisoAlto/Saltos" unique_id=987244919]
+[node name="LuzSala" type="SpotLight3D" parent="PisoAlto/Saltos" unique_id=1083362450]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
 light_color = Color(1, 0.9, 0.78, 1)
 light_energy = 2.2
@@ -1522,7 +1522,7 @@ spot_attenuation = 0.0
 spot_angle = 75.0
 spot_angle_attenuation = 0.5
 
-[node name="ReflejoSala" type="ReflectionProbe" parent="PisoAlto/Saltos" unique_id=1292260829]
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoAlto/Saltos" unique_id=1476582981]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
 size = Vector3(26, 5, 18)
 box_projection = true
@@ -1539,12 +1539,12 @@ map_cell = Vector2i(1, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PisoAlto/Mirador" unique_id=958131720]
 shape = SubResource("BoxShape3D_uwrga")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Mirador" unique_id=474057266]
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Mirador" unique_id=714015370]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_bshie")
 
-[node name="LuzSala" type="SpotLight3D" parent="PisoAlto/Mirador" unique_id=1168451881]
+[node name="LuzSala" type="SpotLight3D" parent="PisoAlto/Mirador" unique_id=1111304000]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
 light_color = Color(1, 0.9, 0.78, 1)
 light_energy = 2.2
@@ -1554,7 +1554,7 @@ spot_attenuation = 0.0
 spot_angle = 75.0
 spot_angle_attenuation = 0.5
 
-[node name="ReflejoSala" type="ReflectionProbe" parent="PisoAlto/Mirador" unique_id=1802179401]
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoAlto/Mirador" unique_id=1051547661]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
 size = Vector3(26, 5, 18)
 box_projection = true
@@ -1572,12 +1572,12 @@ map_cell = Vector2i(0, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
 shape = SubResource("BoxShape3D_5ecsj")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Rellano" unique_id=1148375790]
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Rellano" unique_id=2056821451]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.42, 0)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_gocq2")
 
-[node name="LuzSala" type="SpotLight3D" parent="PisoAlto/Rellano" unique_id=335901460]
+[node name="LuzSala" type="SpotLight3D" parent="PisoAlto/Rellano" unique_id=629054771]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, -2, 5.8, 1.5)
 light_color = Color(1, 0.9, 0.78, 1)
 light_energy = 2.2
@@ -1587,7 +1587,7 @@ spot_attenuation = 0.0
 spot_angle = 75.0
 spot_angle_attenuation = 0.5
 
-[node name="ReflejoSala" type="ReflectionProbe" parent="PisoAlto/Rellano" unique_id=1097474000]
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoAlto/Rellano" unique_id=1395452740]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -4.7683717e-08, 0)
 size = Vector3(30, 5, 18)
 box_projection = true
@@ -1604,12 +1604,12 @@ map_cell = Vector2i(1, 1)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PisoAlto/Agrietada" unique_id=2024558862]
 shape = SubResource("BoxShape3D_eafar")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Agrietada" unique_id=271223209]
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Agrietada" unique_id=488133867]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_bgwno")
 
-[node name="LuzSala" type="SpotLight3D" parent="PisoAlto/Agrietada" unique_id=1996855120]
+[node name="LuzSala" type="SpotLight3D" parent="PisoAlto/Agrietada" unique_id=440380747]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
 light_color = Color(1, 0.9, 0.78, 1)
 light_energy = 2.2
@@ -1619,7 +1619,7 @@ spot_attenuation = 0.0
 spot_angle = 75.0
 spot_angle_attenuation = 0.5
 
-[node name="ReflejoSala" type="ReflectionProbe" parent="PisoAlto/Agrietada" unique_id=107715530]
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoAlto/Agrietada" unique_id=949669621]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
 size = Vector3(26, 5, 18)
 box_projection = true
@@ -1716,7 +1716,7 @@ shape = SubResource("InteractShape")
 [node name="PersistentFlag" parent="PisoAlto/AgrietadaDoor" index="4"]
 script = ExtResource("17_bgwdy")
 
-[node name="MiradorDoor" parent="PisoAlto" unique_id=1371203311 instance=ExtResource("12_n81yw")]
+[node name="MiradorDoor" parent="PisoAlto" unique_id=654090445 instance=ExtResource("12_n81yw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 19)
 script = ExtResource("13_au2ht")
 
@@ -1759,30 +1759,30 @@ shape = SubResource("InteractShape")
 [node name="PersistentFlag" parent="PisoAlto/MiradorDoor" index="4"]
 script = ExtResource("17_bgwdy")
 
-[node name="RellanoWeight" type="Area3D" parent="PisoAlto" unique_id=914293616 instance=ExtResource("25_lsqbk")]
+[node name="RellanoWeight" type="Area3D" parent="PisoAlto" unique_id=384203672 instance=ExtResource("25_lsqbk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, 31)
 script = ExtResource("26_rad4u")
 mode = 3
 flag = &"ch_landing_weight"
 
-[node name="RellanoStep" type="Area3D" parent="PisoAlto" unique_id=2133102824 instance=ExtResource("25_lsqbk")]
+[node name="RellanoStep" type="Area3D" parent="PisoAlto" unique_id=842823138 instance=ExtResource("25_lsqbk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 30)
 script = ExtResource("26_rad4u")
 mode = 1
 flag = &"ch_landing_step"
 
-[node name="RellanoCrackedWall" type="StaticBody3D" parent="PisoAlto" unique_id=373497273 instance=ExtResource("30_oo1r3")]
+[node name="RellanoCrackedWall" type="StaticBody3D" parent="PisoAlto" unique_id=660477544 instance=ExtResource("30_oo1r3")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, 0, 30)
 script = ExtResource("31_4nmv1")
 flag = &"ch_landing_cracked_wall"
 
-[node name="SaltosPot" type="AnimatableBody3D" parent="PisoAlto" unique_id=1790435531 instance=ExtResource("28_7r5y8")]
+[node name="SaltosPot" type="AnimatableBody3D" parent="PisoAlto" unique_id=2104840347 instance=ExtResource("28_7r5y8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 15)
 collision_layer = 9
 collision_mask = 0
 script = ExtResource("29_h4lh2")
 
-[node name="MummyFight" type="Node3D" parent="PisoAlto" unique_id=808873424 node_paths=PackedStringArray("room", "doors")]
+[node name="MummyFight" type="Node3D" parent="PisoAlto" unique_id=986768216 node_paths=PackedStringArray("room", "doors")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 26)
 script = ExtResource("32_alc52")
 room = NodePath("../Agrietada")
@@ -1790,10 +1790,10 @@ flag = &"ch_mummy_defeated"
 display_name = "BOSS_CH_MUMMY"
 doors = [NodePath("../AgrietadaDoor"), NodePath("../MiradorDoor")]
 
-[node name="PersistentFlag" type="Node" parent="PisoAlto/MummyFight" unique_id=1522584015]
+[node name="PersistentFlag" type="Node" parent="PisoAlto/MummyFight" unique_id=1233376141]
 script = ExtResource("17_bgwdy")
 
-[node name="Mummy" type="Node3D" parent="PisoAlto/MummyFight" unique_id=1706762031 instance=ExtResource("33_xk32g")]
+[node name="Mummy" type="Node3D" parent="PisoAlto/MummyFight" unique_id=1371175944 instance=ExtResource("33_xk32g")]
 script = ExtResource("34_q6ayq")
 config = ExtResource("35_kncs1")
 
@@ -2192,7 +2192,7 @@ mask_margin = 2.0
 south_wall_cut = 3.6
 south_wall_reach = 1.7
 
-[node name="EnfoqueLA" type="Node" parent="TopDownCamera" unique_id=1060511200]
+[node name="EnfoqueLA" type="Node" parent="TopDownCamera" unique_id=622618192]
 script = ExtResource("57_bgdc1")
 near_margin = 3.5
 
@@ -2206,9 +2206,9 @@ item_ring = ExtResource("62_uyddf")
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=574871214]
 navigation_mesh = ExtResource("63_sd55r")
 
-[node name="VinetaLA" type="CanvasLayer" parent="." unique_id=848071368]
+[node name="VinetaLA" type="CanvasLayer" parent="." unique_id=1849042986]
 
-[node name="Vineta" type="ColorRect" parent="VinetaLA" unique_id=1542026110]
+[node name="Vineta" type="ColorRect" parent="VinetaLA" unique_id=333677405]
 material = SubResource("ShaderMaterial_x0uke")
 anchors_preset = 15
 anchor_right = 1.0

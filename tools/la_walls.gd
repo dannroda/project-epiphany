@@ -41,12 +41,13 @@ const GRAIN_RECT := Vector4(0.42, 0.455, 0.0, 0.25)
 const BIG_POT := "res://src/world/big_pot.tscn"
 ## Vasijas que pasan a ser las grandes que se empujan (big_pot.tscn).
 const BIG_POTS := ["OsarioPot1", "OsarioPot2"]
-## Curva de tono de LA (visor de LA): por debajo de TOE_PIVOT (lineal) oscurece con esta potencia, arriba queda igual.
-const TOE_PIVOT := 0.28
-const TOE_POWER := 2.23
+## Curva de tono: entre la del visor de LA (0.3 / 1.2) y la vieja (0.28 / 2.23), por contraste; por debajo de TOE_PIVOT
+## (lineal) oscurece con esta potencia, arriba queda igual.
+const TOE_PIVOT := 0.3
+const TOE_POWER := 1.7
 ## Luz de relleno fría, como el ambiente de las salas de LA.
 const AMBIENT_COLOR := Color(0.62, 0.72, 0.85)
-const AMBIENT_ENERGY := 1.7
+const AMBIENT_ENERGY := 1.3
 const GLOSS_ROUGHNESS := 0.5
 const GLOSS_SPECULAR := 0.4
 const EXPOSURE := 1.0
@@ -171,7 +172,7 @@ func _dress(level: Node) -> void:
 			env.tonemap_exposure = EXPOSURE
 			env.reflected_light_source = Environment.REFLECTION_SOURCE_BG
 			env.adjustment_enabled = true
-			env.adjustment_saturation = 0.8
+			env.adjustment_saturation = 0.9
 			env.adjustment_color_correction = _tone_curve()
 			env.glow_enabled = true
 			env.glow_intensity = 0.8
