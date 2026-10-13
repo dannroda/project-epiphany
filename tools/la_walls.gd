@@ -33,29 +33,53 @@ const FADE_START := {"n": 0.9, "s": 0.4, "e": 0.3, "o": 0.3}
 const FADE_END := {"n": 1.8, "s": 1.8, "e": 1.8, "o": 1.8}
 const FADE := preload("res://debug/la/borde_oscuro.gdshader")
 const FOCUS := preload("res://debug/la/enfoque_la.gd")
+const VIGNETTE := preload("res://debug/la/vineta_la.gdshader")
+const BIG_POT := "res://src/world/big_pot.tscn"
+## Vasijas que pasan a ser las grandes que se empujan (big_pot.tscn).
+const BIG_POTS := ["OsarioPot1", "OsarioPot2"]
+## Curva de tono de LA (visor de LA): por debajo de TOE_PIVOT (lineal) oscurece con esta potencia, arriba queda igual.
+const TOE_PIVOT := 0.28
+const TOE_POWER := 2.23
+## Luz de relleno fría, como el ambiente de las salas de LA.
+const AMBIENT_COLOR := Color(0.62, 0.72, 0.85)
+const AMBIENT_ENERGY := 1.7
+const GLOSS_ROUGHNESS := 0.5
+const GLOSS_SPECULAR := 0.4
+const EXPOSURE := 1.0
+const VIGNETTE_STRENGTH := 0.7
 const BRAZIER_SCALE := 0.55
 ## Colgados de la cara de la pared, como en LA: a este alto y esto por delante de la roca.
 const BRAZIER_HEIGHT := 1.9
 const BRAZIER_SETBACK := 0.25
 const BRAZIER_FLAME := 1.07
+## Fuego de las antorchas como en el visor de LA: una luz chica y fuerte pegada a la llama.
+const FIRE_OFFSET := Vector3(0, 0.3, 0.3)
+const FIRE_ENERGY := 3.5
+const FIRE_RANGE := 4.0
 const DOOR_LEAF_SCALE := Vector3(0.7, 0.8, 1.0)
 ## Cámara con perspectiva como LA: la sala se ve en trapecio (abajo más ancha) y asoman las caras de los costados.
-## Como la cámara de LA: 52° sobre el horizonte y 30° de campo (casi maqueta), alejada hasta que entra la sala.
-const CAMERA_PITCH := 52.0
-const CAMERA_DISTANCE := 30.0
-const FIELD_OF_VIEW := 30.0
+## La cámara de LA, calibrada en el visor de LA contra capturas: 65° sobre el horizonte, 28° de campo, a 23 m. La sala
+## es más grande que la pantalla y la cámara se mueve adentro.
+const CAMERA_PITCH := 65.0
+const CAMERA_DISTANCE := 34.0
+const FIELD_OF_VIEW := 28.0
 ## Desenfoque arriba y abajo de la pantalla, solo fuera del piso: el borde sur (con Kai parado) queda a ~5.5 m más cerca y
 ## la cresta norte a ~2 m más lejos.
-const FOCUS_NEAR := 7.0
+const FOCUS_NEAR := 3.5
 const FOCUS_FAR := 2.5
 ## Un foco por sala que baja desde arriba, un poco desde el sur para que dé en la pared norte.
 const ROOM_LIGHT_HEIGHT := 7.0
 const ROOM_LIGHT_SOUTH := 1.5
 const ROOM_LIGHT_TILT := 13.0
 const ROOM_LIGHT_COLOR := Color(1.0, 0.9, 0.78)
-const ROOM_LIGHT_ENERGY := 2.0
-const ROOM_LIGHT_ANGLE := 55.0
-const SUN_ENERGY := 0.45
+const ROOM_LIGHT_ENERGY := 2.2
+const ROOM_LIGHT_ANGLE := 75.0
+## Menos de 1: el borde del foco se esfuma de a poco en vez de cortar.
+const ROOM_LIGHT_SOFTNESS := 0.5
+## En lugar del sol, la luz fría de LA que llega del lado de la cámara (el sur, en alto) y aclara las caras de las paredes.
+const SUN_ENERGY := 0.7
+const SUN_COLOR := Color(0.62, 0.78, 1.0)
+const SUN_ELEVATION := 40.0
 ## Las vasijas, del ancho de la placa del botón (1.4 m, como en LA, que pueden reemplazar a un bloque sobre él) y algo
 ## más bajas para no pasar a Kai. Solo el modelo.
 const POT_SCALE := Vector3(2.1, 1.5, 2.1)
@@ -98,6 +122,9 @@ func _initialize() -> void:
 
 ## Antorchas a braseros sobre el borde, puertas a la medida del corte, sin los escalones viejos y la cámara casi sin perspectiva.
 func _dress(level: Node) -> void:
+	_vignette(level)
+	for pot: Node in level.find_children("*", "", true, false).filter(func(n: Node) -> bool: return n.name in BIG_POTS):
+		_big_pot(level, pot as Node3D)
 	for node: Node in level.find_children("*", "", true, false):
 		var path := node.scene_file_path
 		if path.ends_with("wall_torch.tscn"):
@@ -112,6 +139,12 @@ func _dress(level: Node) -> void:
 			model.scale = Vector3.ONE * BRAZIER_SCALE
 			for part: String in ["Flame", "Light"]:
 				torch.get_node(part).position = Vector3(0, BRAZIER_FLAME * BRAZIER_SCALE, 0)
+			var fire := torch.get_node("Light") as OmniLight3D
+			fire.position += FIRE_OFFSET
+			fire.light_energy = FIRE_ENERGY
+			fire.omni_range = FIRE_RANGE
+			fire.omni_attenuation = 1.0
+			(torch.get_node("Glow") as Node3D).visible = false
 			level.set_editable_instance(torch, true)
 		elif path.ends_with("door.tscn"):
 			node.set("depth", 0.0)
@@ -127,17 +160,30 @@ func _dress(level: Node) -> void:
 		elif node is WorldEnvironment:
 			var env := (node as WorldEnvironment).environment.duplicate() as Environment
 			env.background_color = Color.BLACK
+			env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
+			env.ambient_light_color = AMBIENT_COLOR
+			env.ambient_light_energy = AMBIENT_ENERGY
+			env.tonemap_mode = Environment.TONE_MAPPER_LINEAR
+			env.tonemap_exposure = EXPOSURE
+			env.reflected_light_source = Environment.REFLECTION_SOURCE_BG
+			env.adjustment_enabled = true
+			env.adjustment_saturation = 0.8
+			env.adjustment_color_correction = _tone_curve()
 			env.glow_enabled = true
-			env.glow_intensity = 0.6
-			env.glow_bloom = 0.05
-			env.glow_hdr_threshold = 0.9
-			env.glow_blend_mode = Environment.GLOW_BLEND_MODE_SOFTLIGHT
+			env.glow_intensity = 0.8
+			env.glow_bloom = 0.0
+			env.glow_hdr_threshold = 1.2
+			env.glow_blend_mode = Environment.GLOW_BLEND_MODE_ADDITIVE
 			env.ssao_enabled = true
 			env.ssao_radius = 0.8
 			env.ssao_intensity = 1.5
 			(node as WorldEnvironment).environment = env
 		elif node is DirectionalLight3D:
-			(node as DirectionalLight3D).light_energy = SUN_ENERGY
+			var sun := node as DirectionalLight3D
+			sun.light_energy = SUN_ENERGY
+			sun.light_color = SUN_COLOR
+			sun.rotation = Vector3(deg_to_rad(-SUN_ELEVATION), 0, 0)
+			sun.shadow_enabled = false
 		elif node is Camera3D and "cuts_south_wall" in node:
 			var pitch := deg_to_rad(CAMERA_PITCH)
 			node.set("offset", Vector3(0, sin(pitch), cos(pitch)) * CAMERA_DISTANCE)
@@ -164,9 +210,74 @@ func _dress(level: Node) -> void:
 			node.set("south_wall_reach", MASK_MARGIN - 0.3)
 			node.set("wall_height", FRAME_HEIGHT)
 			node.set("mask_margin", MASK_MARGIN)
-		if path.ends_with("pot.tscn"):
+		if path.get_file() == "pot.tscn":
 			(node.get_node("Body/Model") as Node3D).scale = POT_SCALE
 			level.set_editable_instance(node, true)
+
+
+## Como en LA, la piedra y el piso brillan un poco y reflejan la sala (sondas de reflejo por sala).
+var _glossy_cache := {}
+
+
+func _glossy(material: Material) -> Material:
+	if not material is ShaderMaterial or not "cutaway" in (material as ShaderMaterial).shader.resource_path:
+		return material
+	if not _glossy_cache.has(material):
+		var copy := material.duplicate() as ShaderMaterial
+		copy.set_shader_parameter("roughness", GLOSS_ROUGHNESS)
+		copy.set_shader_parameter("specular", GLOSS_SPECULAR)
+		_glossy_cache[material] = copy
+	return _glossy_cache[material]
+
+
+func _tone_curve() -> GradientTexture1D:
+	const N := 33
+	var offsets := PackedFloat32Array()
+	var colors := PackedColorArray()
+	for i in N:
+		var x := i / float(N - 1)
+		var y := _toe(Color(x, x, x).srgb_to_linear().r)
+		offsets.append(x)
+		colors.append(Color(y, y, y).linear_to_srgb())
+	var gradient := Gradient.new()
+	gradient.offsets = offsets
+	gradient.colors = colors
+	var curve := GradientTexture1D.new()
+	curve.gradient = gradient
+	curve.width = 256
+	return curve
+
+
+func _toe(x: float) -> float:
+	return TOE_PIVOT * pow(x / TOE_PIVOT, TOE_POWER) if x < TOE_PIVOT else x
+
+
+func _vignette(level: Node) -> void:
+	var layer := CanvasLayer.new()
+	layer.name = "VinetaLA"
+	var rect := ColorRect.new()
+	rect.name = "Vineta"
+	rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var material := ShaderMaterial.new()
+	material.shader = VIGNETTE
+	material.set_shader_parameter("strength", VIGNETTE_STRENGTH)
+	rect.material = material
+	level.add_child(layer)
+	layer.owner = level
+	layer.add_child(rect)
+	rect.owner = level
+
+
+func _big_pot(level: Node, pot: Node3D) -> void:
+	var big := (load(BIG_POT) as PackedScene).instantiate() as Node3D
+	big.name = pot.name
+	big.transform = pot.transform
+	var parent := pot.get_parent()
+	parent.remove_child(pot)
+	pot.free()
+	parent.add_child(big)
+	big.owner = level
 
 
 func _light(level: Node, room: Area3D) -> void:
@@ -179,12 +290,23 @@ func _light(level: Node, room: Area3D) -> void:
 	spot.spot_range = ROOM_LIGHT_HEIGHT * 2.5
 	spot.spot_angle = ROOM_LIGHT_ANGLE
 	spot.spot_attenuation = 0.0
-	spot.spot_angle_attenuation = 1.2
+	spot.spot_angle_attenuation = ROOM_LIGHT_SOFTNESS
 	spot.light_specular = 0.6
 	room.add_child(spot)
 	spot.owner = level
 	spot.position = shape.position + Vector3(0, floor_y - shape.position.y + ROOM_LIGHT_HEIGHT, ROOM_LIGHT_SOUTH)
 	spot.rotation = Vector3(deg_to_rad(-90.0 + ROOM_LIGHT_TILT), 0, 0)
+	var size := (shape.shape as BoxShape3D).size
+	var probe := ReflectionProbe.new()
+	probe.name = "ReflejoSala"
+	probe.size = Vector3(size.x + MASK_MARGIN * 2.0, WALL_HEIGHT + 2.0, size.z + MASK_MARGIN * 2.0)
+	probe.interior = true
+	probe.box_projection = true
+	probe.ambient_mode = ReflectionProbe.AMBIENT_DISABLED
+	probe.update_mode = ReflectionProbe.UPDATE_ONCE
+	room.add_child(probe)
+	probe.owner = level
+	probe.position = shape.position + Vector3(0, floor_y - shape.position.y + 1.2, 0)
 
 
 func _fade(level: Node, room: Area3D) -> void:
@@ -264,6 +386,14 @@ func _shapes(grid: GridMap) -> Dictionary:
 
 func _kit() -> MeshLibrary:
 	var kit: MeshLibrary = (load(KIT) as MeshLibrary).duplicate(true)
+	for item in kit.get_item_list():
+		var mesh := kit.get_item_mesh(item)
+		if mesh == null:
+			continue
+		mesh = mesh.duplicate()
+		for surface in mesh.get_surface_count():
+			mesh.surface_set_material(surface, _glossy(mesh.surface_get_material(surface)))
+		kit.set_item_mesh(item, mesh)
 	var next := kit.get_last_unused_item_id()
 	var shapes: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(SHAPES))
 	for kind: String in KINDS:
@@ -274,7 +404,7 @@ func _kit() -> MeshLibrary:
 			var mesh: Mesh = load(MESHES % [kind, code])
 			for surface in mesh.get_surface_count():
 				tool.append_from(mesh, surface, Transform3D.IDENTITY)
-			tool.set_material(STONE)
+			tool.set_material(_glossy(STONE))
 			kit.create_item(next)
 			kit.set_item_name(next, KINDS[kind][0] + code)
 			kit.set_item_mesh(next, tool.commit())

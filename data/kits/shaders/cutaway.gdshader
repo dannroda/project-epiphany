@@ -17,6 +17,9 @@ uniform float cut_lip = 1e6;
 uniform float back_shade = 0.12;
 // Lo de adentro de una pared recortada se ve como su tapa: la textura vista desde arriba, algo más oscura.
 uniform float cap_shade = 0.75;
+// Brillo de la superficie (los valores por defecto son los de Godot sin tocar).
+uniform float roughness : hint_range(0.0, 1.0) = 1.0;
+uniform float specular : hint_range(0.0, 1.0) = 0.5;
 
 varying vec3 world_pos;
 varying vec3 world_normal;
@@ -46,6 +49,8 @@ void fragment() {
 	}
 	if (FRONT_FACING) {
 		ALBEDO = albedo_color.rgb * tex;
+		ROUGHNESS = roughness;
+		SPECULAR = specular;
 	} else if (in_cut) {
 		vec3 top = use_uv ? tex : texture(albedo_texture, p.xz).rgb;
 		ALBEDO = albedo_color.rgb * top * cap_shade;
