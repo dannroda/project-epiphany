@@ -695,6 +695,35 @@ def chullpa_tumba(p):
 
 
 piece("chullpa_tumba", 38, chullpa_tumba, smooth=40)
+
+
+def hoyo_escalera(p):
+	"""Hoyo con escalera bajo una mata (el piso del terreno no se abre: todo va apenas sobre el suelo). Tierra removida,
+	un borde de piedras redondeadas y adentro el negro con tres escalones que bajan hacia el fondo (-Y en Blender es el
+	sur de Godot: el escalón de arriba queda del lado de la cámara)."""
+	dirt = p.lathe([(0.0, 0.035), (1.1, 0.035), (1.2, 0.0)], sides=16)
+	p.jitter(dirt, 0.05, keep_z=True)
+	p.paint(dirt, "tierra", "DARK", vary=0.05)
+	hole = p.box(-0.7, 0.7, -0.7, 0.7, 0.036, 0.045)
+	p.paint(hole, "noche", "DARK")
+	for i, (y, shade) in enumerate(((-0.5, "MID"), (-0.18, "LOW"), (0.14, "DARK"))):
+		step = p.box(-0.6, 0.6, y - 0.13, y + 0.13, 0.045, 0.055 - i * 0.003)
+		p.paint(step, "piedra", shade, vary=0.04)
+	rim = []
+	for k in range(12):
+		t = k / 12 * 4
+		side, f = int(t), t - int(t)
+		x, y = [(-0.8 + 1.6 * f, -0.8), (0.8, -0.8 + 1.6 * f), (0.8 - 1.6 * f, 0.8), (-0.8, 0.8 - 1.6 * f)][side]
+		w = p.rng.uniform(0.24, 0.32)
+		stone = p.rounded_box(x - w, x + w, y - 0.17, y + 0.17, 0.0, p.rng.uniform(0.13, 0.19), radius=0.06)
+		if side % 2:
+			p.transform(stone, Matrix.Translation((x, y, 0)) @ Matrix.Rotation(math.pi / 2, 4, "Z") @ Matrix.Translation((-x, -y, 0)))
+		p.jitter(stone, 0.015)
+		rim += stone
+	p.paint(rim, "piedra", z_range=(0.0, 0.19), vary=0.08)
+
+
+piece("hoyo_escalera", 39, hoyo_escalera, smooth=30)
 piece("fachada_templo", 21, fachada_templo, smooth=60)
 piece("sello_losa", 22, sello_losa)
 piece("sello_ojo", 23, sello_ojo)

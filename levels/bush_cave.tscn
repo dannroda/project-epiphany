@@ -12,6 +12,11 @@
 [ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="c10_pot"]
 [ext_resource type="Resource" uid="uid://dteshjodcq26c" path="res://data/drops/pot_hearts.tres" id="c11_hearts"]
 
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/estalagmitas.res" id="d1_stal"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/rocas_rincon.res" id="d2_rincon"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/estalactitas_borde.res" id="d3_estalactitas"]
+[ext_resource type="PackedScene" path="res://src/world/look/caida_la.tscn" id="d4_caida"]
+
 [sub_resource type="Environment" id="Environment"]
 background_mode = 1
 background_color = Color(0.02, 0.03, 0.05, 1)
@@ -25,6 +30,9 @@ size = Vector3(18, 2.4, 10)
 
 [sub_resource type="BoxShape3D" id="PortalShape"]
 size = Vector3(2, 2.4, 1.4)
+
+[sub_resource type="BoxShape3D" id="CornerShape"]
+size = Vector3(1.3, 1.6, 1.3)
 
 [node name="BushCave" type="Node3D"]
 
@@ -81,6 +89,99 @@ target_spawn = &"mata"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPortal"]
 shape = SubResource("PortalShape")
+
+[node name="Decor" type="Node3D" parent="."]
+
+[node name="CornerNE" type="StaticBody3D" parent="Decor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -4)
+
+[node name="Model" type="MeshInstance3D" parent="Decor/CornerNE"]
+mesh = ExtResource("d2_rincon")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Decor/CornerNE"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0.8, -0.45)
+shape = SubResource("CornerShape")
+
+[node name="CornerNW" type="StaticBody3D" parent="Decor"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -7, 0, -4)
+
+[node name="Model" type="MeshInstance3D" parent="Decor/CornerNW"]
+mesh = ExtResource("d2_rincon")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Decor/CornerNW"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0.8, -0.45)
+shape = SubResource("CornerShape")
+
+[node name="CornerSW" type="StaticBody3D" parent="Decor"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -7, 0, 4)
+
+[node name="Model" type="MeshInstance3D" parent="Decor/CornerSW"]
+mesh = ExtResource("d2_rincon")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Decor/CornerSW"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0.8, -0.45)
+shape = SubResource("CornerShape")
+
+[node name="CornerSE" type="StaticBody3D" parent="Decor"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 9, 0, 4)
+
+[node name="Model" type="MeshInstance3D" parent="Decor/CornerSE"]
+mesh = ExtResource("d2_rincon")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Decor/CornerSE"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0.8, -0.45)
+shape = SubResource("CornerShape")
+
+[node name="StalactitesN0" type="MeshInstance3D" parent="Decor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -5)
+mesh = ExtResource("d3_estalactitas")
+
+[node name="StalactitesN1" type="MeshInstance3D" parent="Decor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -5)
+mesh = ExtResource("d3_estalactitas")
+
+[node name="StalactitesN2" type="MeshInstance3D" parent="Decor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -5)
+mesh = ExtResource("d3_estalactitas")
+
+[node name="StalactitesN3" type="MeshInstance3D" parent="Decor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+mesh = ExtResource("d3_estalactitas")
+
+[node name="StalactitesN4" type="MeshInstance3D" parent="Decor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -5)
+mesh = ExtResource("d3_estalactitas")
+
+[node name="StalactitesN5" type="MeshInstance3D" parent="Decor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -5)
+mesh = ExtResource("d3_estalactitas")
+
+[node name="StalactitesN6" type="MeshInstance3D" parent="Decor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -5)
+mesh = ExtResource("d3_estalactitas")
+
+[node name="StalactitesN7" type="MeshInstance3D" parent="Decor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -5)
+mesh = ExtResource("d3_estalactitas")
+
+[node name="Stalagmites0" type="MeshInstance3D" parent="Decor"]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -5.6, 0, -4.2)
+mesh = ExtResource("d1_stal")
+
+[node name="Stalagmites1" type="MeshInstance3D" parent="Decor"]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 2.5, 0, -4.3)
+mesh = ExtResource("d1_stal")
+
+[node name="Stalagmites2" type="MeshInstance3D" parent="Decor"]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 6.8, 0, -4.2)
+mesh = ExtResource("d1_stal")
+
+[node name="Stalagmites3" type="MeshInstance3D" parent="Decor"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, -1.2, 0, 4.3)
+mesh = ExtResource("d1_stal")
+
+[node name="LuzEntrada" parent="Decor" instance=ExtResource("d4_caida")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 6.2, 0)
 
 [node name="Player" parent="." instance=ExtResource("c3_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
