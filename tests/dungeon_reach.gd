@@ -50,6 +50,8 @@ static func read(graph: DungeonGraph) -> Dictionary:
 				continue
 			referenced[gate] = true
 			entry.needs.append_array(_lock(gate, problems))
+		if node is Chest and not node.switches.is_empty():
+			entry.needs.append_array(_wiring(node, problems))
 		if node is Chest:
 			if node.item.id == &"small_key":
 				entry.key = true

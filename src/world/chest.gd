@@ -16,12 +16,16 @@ const BIG_SCALE := 1.4
 		flag = value
 		update_configuration_warnings()
 @export var big: bool = false ## Cofre grande: ítem de la mazmorra / llave del jefe
+## Aparece recién cuando se cumplen (p. ej. al vencer una oleada).
+@export var switches: Array[NodePath] = []
 
 @onready var interactable: Interactable = $Interactable
 ## La tapa (gira sobre la bisagra de atrás).
 @onready var lid: MeshInstance3D = $Model/Lid
 
 var persistent: PersistentFlag
+var _wiring: Wiring
+var _layer := 0
 
 
 func _ready() -> void:
@@ -37,6 +41,33 @@ func _ready() -> void:
 	persistent.changed.connect(func(opened: Variant) -> void: _show(opened == true))
 	_show(persistent.value == true)
 	interactable.interacted.connect(_open)
+	if not switches.is_empty() and persistent.value != true:
+		_hide()
+		_wiring = Wiring.create(self, switches, Wiring.Condition.ALL)
+		_wiring.settled.connect(func(ok: bool) -> void:
+			if ok:
+				_appear(false))
+		_wiring.changed.connect(func(ok: bool) -> void:
+			if ok:
+				_appear(true))
+
+
+func _hide() -> void:
+	visible = false
+	_layer = collision_layer
+	collision_layer = 0
+	interactable.enabled = false
+
+
+func _appear(announce: bool) -> void:
+	if visible:
+		return
+	visible = true
+	collision_layer = _layer
+	interactable.enabled = true
+	if announce:
+		Feel.burst(&"dust", global_position + Vector3.UP * 0.3, Vector3.UP)
+		Feel.sfx(&"secret", global_position)
 
 
 func _get_configuration_warnings() -> PackedStringArray:

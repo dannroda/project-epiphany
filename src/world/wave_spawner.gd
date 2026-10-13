@@ -61,7 +61,7 @@ func _next_wave() -> void:
 		if not _alive.is_empty():
 			await get_tree().process_frame
 		var enemy := (spawn as WaveSpawn).enemy.instantiate() as Enemy
-		enemy.position = (spawn as WaveSpawn).global_position
+		enemy.position = (get_parent() as Node3D).to_local((spawn as WaveSpawn).global_position)
 		get_parent().add_child(enemy)
 		_alive.append(enemy)
 		enemy.defeated.connect(_on_defeated)

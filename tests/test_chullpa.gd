@@ -255,6 +255,50 @@ func _jump_the_wave(boss: MummyGuard) -> bool:
 	return true
 
 
+func test_the_entry_blocks_open_the_stairs_gate() -> void:
+	await _start()
+	var gate := level.get_node(^"PlantaBaja/EntradaGate") as Gate
+	var upper := level.get_node(^"PlantaBaja/EntradaBlockA") as PushBlock
+	var lower := level.get_node(^"PlantaBaja/EntradaBlockB") as PushBlock
+	assert_true(not gate.is_open, "la reja tapa la escalera")
+	assert_true(not lower.try_push(Vector3.FORWARD), "los bloques no se empujan en fila")
+	await tree.create_timer(0.4).timeout
+	assert_true(lower.try_push(Vector3.RIGHT), "el de abajo se corre")
+	await tree.create_timer(0.6).timeout
+	for i in 2:
+		assert_true(upper.try_push(Vector3.FORWARD), "el de arriba sube hacia la placa")
+		await tree.create_timer(0.6).timeout
+	assert_true(not upper.try_push(Vector3.LEFT), "la placa está entre columnas")
+	assert_true(tree.root.get_node(^"GameState").get_flag(&"ch_entry_plate") == true, "queda sobre la placa")
+	assert_true(await _until(func() -> bool: return gate.is_open, 3.0), "y se abre la reja de la escalera")
+	tree.root.get_node(^"GameState").reset()
+
+
+func test_the_crypt_waves_reveal_the_map_chest() -> void:
+	await _start()
+	var waves := level.get_node(^"Sotano/CriptaWaves") as WaveSpawner
+	var chest := level.get_node(^"Sotano/MapChest") as Chest
+	assert_true(not chest.visible, "el cofre del mapa no está")
+	player.health.reset(40)
+	await _drop(_in("Sotano/Cripta", Vector3(0, 0.5, 0)))
+	assert_true(await _until(func() -> bool: return waves.running, 3.0), "al caer empiezan las oleadas")
+	for wave in 2:
+		assert_true(await _until(func() -> bool: return not _alive_in("Sotano/Cripta").is_empty(), 4.0), "oleada %d" % (wave + 1))
+		await tree.create_timer(0.3).timeout
+		for enemy: Enemy in _alive_in("Sotano/Cripta"):
+			enemy.health.invulnerability_time = 0.0
+			enemy.health.damage(100)
+		await tree.create_timer(0.6).timeout
+	assert_true(await _until(func() -> bool: return waves.active, 4.0), "ganadas")
+	assert_true(chest.visible and chest.interactable.enabled, "aparece el cofre del mapa")
+	tree.root.get_node(^"GameState").reset()
+
+
+func _alive_in(path: String) -> Array:
+	var room := _room(path)
+	return room.enemies_inside()
+
+
 func test_chasm_has_no_room_below() -> void:
 	await _start()
 	await _drop(_in("PlantaBaja/Abismo", Vector3(0, 0.5, 6)))
