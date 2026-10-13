@@ -4644,8 +4644,8 @@ Modelar en Blender el terreno del overworld (pasto, caminos, piso de plaza, acan
   Cubierto por las celdas de andén y risco (cada celda tiene las cuatro caras y su tope de pasto), con Andén/Risco borde para el borde del mundo.
 - [x] Aberturas en acantilado de 1 y 3 celdas
   Cubierto: las aberturas son celdas libres en la pared; las de 1 celda llevan cracked_wall_risco o reja.
-- [ ] Escalones y rampa (tierra y piedra)
-  Escalón: muro de piedra con lajas encastradas arriba (hecho). La escalinata está en el .blend pero no en el kit, y el overworld no tiene ningún desnivel que pida rampa: falta decidir si hacen falta.
+- [x] Escalones y rampa (tierra y piedra)
+  Escalón: muro de piedra con lajas encastradas arriba. Escalinata en estilo LA sin muros: bloques macizos de piedra redondeados hasta el piso, costado escalonado; el último escalón queda bajo el pasto (sin z-fighting). Las escenas escalinata_* sin choques de costado. No hace falta rampa.
 - [x] Abismo: borde recto, esquinas, fondo oscuro/niebla
   Hecho: abismo, abismo_borde/esquina/pasillo/punta/pozo en build_terreno_overworld.py (paredes de roca de 3 m con bandas pasto → acantilado → gris → casi negro, fondo oscuro). vary_overworld.gd elige la pieza y el giro según los vecinos; test_abyss_walls_face_the_ground. La niebla del fondo queda para Godot si hace falta.
 - [x] Cerco: recto, esquina, final, poste, roto
