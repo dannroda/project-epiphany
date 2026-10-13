@@ -747,6 +747,48 @@ msgstr "Antesala"
 msgid "PLACE_EYE_LAIR"
 msgstr "Guarida del ojo"
 
+msgid "PLACE_TE_BOSS"
+msgstr "Guarida del Ojo"
+
+msgid "PLACE_TE_COMBINED"
+msgstr "Sala de las pruebas"
+
+msgid "PLACE_TE_ANTECHAMBER"
+msgstr "Antesala"
+
+msgid "PLACE_TE_HAND"
+msgstr "Sala de la Mano"
+
+msgid "PLACE_TE_HOOK_EYE"
+msgstr "Ojo del gancho"
+
+msgid "PLACE_TE_HOOK"
+msgstr "Sala de los postes"
+
+msgid "PLACE_TE_HUB"
+msgstr "Sala del sello"
+
+msgid "PLACE_TE_MIRROR"
+msgstr "Galería de orbes"
+
+msgid "PLACE_TE_MIRROR_EYE"
+msgstr "Ojo del espejo"
+
+msgid "PLACE_TE_FEATHER_EYE"
+msgstr "Ojo de la pluma"
+
+msgid "PLACE_TE_FEATHER"
+msgstr "Sala de los saltos"
+
+msgid "PLACE_TE_VESTIBULE"
+msgstr "Vestíbulo"
+
+msgid "PLACE_TE_BOW"
+msgstr "Sala agrietada"
+
+msgid "PLACE_TE_BOW_EYE"
+msgstr "Ojo del arco"
+
 msgid "PLACE_FLOOR_1"
 msgstr "Piso 1"
 

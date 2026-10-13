@@ -747,6 +747,48 @@ msgstr "Antechamber"
 msgid "PLACE_EYE_LAIR"
 msgstr "Lair of the Eye"
 
+msgid "PLACE_TE_BOSS"
+msgstr "Lair of the Eye"
+
+msgid "PLACE_TE_COMBINED"
+msgstr "Hall of Trials"
+
+msgid "PLACE_TE_ANTECHAMBER"
+msgstr "Antechamber"
+
+msgid "PLACE_TE_HAND"
+msgstr "Hall of the Hand"
+
+msgid "PLACE_TE_HOOK_EYE"
+msgstr "Hookshot Eye"
+
+msgid "PLACE_TE_HOOK"
+msgstr "Hall of Posts"
+
+msgid "PLACE_TE_HUB"
+msgstr "Seal Hall"
+
+msgid "PLACE_TE_MIRROR"
+msgstr "Orb Gallery"
+
+msgid "PLACE_TE_MIRROR_EYE"
+msgstr "Mirror Eye"
+
+msgid "PLACE_TE_FEATHER_EYE"
+msgstr "Feather Eye"
+
+msgid "PLACE_TE_FEATHER"
+msgstr "Hall of Leaps"
+
+msgid "PLACE_TE_VESTIBULE"
+msgstr "Vestibule"
+
+msgid "PLACE_TE_BOW"
+msgstr "Cracked Hall"
+
+msgid "PLACE_TE_BOW_EYE"
+msgstr "Bow Eye"
+
 msgid "PLACE_FLOOR_1"
 msgstr "Floor 1"
 

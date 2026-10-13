@@ -423,6 +423,111 @@ script = ExtResource("1_ox7fe")
 id = &"ch_crypt_waves"
 description = "Chullpa, cripta: oleadas vencidas (aparece el cofre del mapa)"
 
+[sub_resource type="Resource" id="R_te_vestibule_switch"]
+script = ExtResource("1_ox7fe")
+id = &"te_vestibule_switch"
+description = "Templo, vestíbulo: bloque sobre el interruptor de la puerta del hub"
+
+[sub_resource type="Resource" id="R_te_feather_key_chest"]
+script = ExtResource("1_ox7fe")
+id = &"te_feather_key_chest"
+description = "Templo, ojo de la pluma: cofre de la llave chica"
+
+[sub_resource type="Resource" id="R_te_compass_chest"]
+script = ExtResource("1_ox7fe")
+id = &"te_compass_chest"
+description = "Templo, ojo de la pluma: cofre de la brújula"
+
+[sub_resource type="Resource" id="R_te_eye_feather"]
+script = ExtResource("1_ox7fe")
+id = &"te_eye_feather"
+description = "Templo, ojo de la pluma: placa que enciende el ojo del sello"
+
+[sub_resource type="Resource" id="R_te_map_chest"]
+script = ExtResource("1_ox7fe")
+id = &"te_map_chest"
+description = "Templo, ala del arco: cofre del mapa"
+
+[sub_resource type="Resource" id="R_te_bow_cracked_wall"]
+script = ExtResource("1_ox7fe")
+id = &"te_bow_cracked_wall"
+description = "Templo, ala del arco: muro agrietado al ojo del arco"
+
+[sub_resource type="Resource" id="R_te_bow_key_eye"]
+script = ExtResource("1_ox7fe")
+id = &"te_bow_key_eye"
+description = "Templo, ojo del arco: ojo que abre el nicho de la llave chica"
+
+[sub_resource type="Resource" id="R_te_eye_bow"]
+script = ExtResource("1_ox7fe")
+id = &"te_eye_bow"
+description = "Templo, ojo del arco: ojo que enciende el ojo del sello"
+
+[sub_resource type="Resource" id="R_te_bow_key_chest"]
+script = ExtResource("1_ox7fe")
+id = &"te_bow_key_chest"
+description = "Templo, ojo del arco: cofre de la llave chica"
+
+[sub_resource type="Resource" id="R_te_hub_locked_w"]
+script = ExtResource("1_ox7fe")
+id = &"te_hub_locked_w"
+description = "Templo, hub: puerta con llave al ala del gancho"
+
+[sub_resource type="Resource" id="R_te_hub_locked_e"]
+script = ExtResource("1_ox7fe")
+id = &"te_hub_locked_e"
+description = "Templo, hub: puerta con llave al ala del espejo"
+
+[sub_resource type="Resource" id="R_te_eye_hook"]
+script = ExtResource("1_ox7fe")
+id = &"te_eye_hook"
+description = "Templo, ojo del gancho: placa que enciende el ojo del sello"
+
+[sub_resource type="Resource" id="R_te_mirror_crystal"]
+script = ExtResource("1_ox7fe")
+id = &"te_mirror_crystal"
+description = "Templo, ala del espejo: cristal que abre la puerta al ojo del espejo"
+
+[sub_resource type="Resource" id="R_te_eye_mirror"]
+script = ExtResource("1_ox7fe")
+id = &"te_eye_mirror"
+description = "Templo, ojo del espejo: receptor del haz que enciende el ojo del sello"
+
+[sub_resource type="Resource" id="R_te_combined_cracked_wall"]
+script = ExtResource("1_ox7fe")
+id = &"te_combined_cracked_wall"
+description = "Templo, combinada: muro agrietado del ojo"
+
+[sub_resource type="Resource" id="R_te_combined_eye"]
+script = ExtResource("1_ox7fe")
+id = &"te_combined_eye"
+description = "Templo, combinada: ojo detrás del muro agrietado"
+
+[sub_resource type="Resource" id="R_te_combined_crystal"]
+script = ExtResource("1_ox7fe")
+id = &"te_combined_crystal"
+description = "Templo, combinada: receptor del haz"
+
+[sub_resource type="Resource" id="R_te_boss_key_chest"]
+script = ExtResource("1_ox7fe")
+id = &"te_boss_key_chest"
+description = "Templo, combinada: cofre de la llave del jefe"
+
+[sub_resource type="Resource" id="R_te_boss_door"]
+script = ExtResource("1_ox7fe")
+id = &"te_boss_door"
+description = "Templo, antesala: puerta del jefe"
+
+[sub_resource type="Resource" id="R_te_boss_defeated"]
+script = ExtResource("1_ox7fe")
+id = &"te_boss_defeated"
+description = "Templo, templo: el Ojo con manos vencido"
+
+[sub_resource type="Resource" id="R_te_heart_container"]
+script = ExtResource("1_ox7fe")
+id = &"te_heart_container"
+description = "Templo, templo: contenedor de corazón del jefe"
+
 [sub_resource type="Resource" id="R_ch_key_chest"]
 script = ExtResource("1_ox7fe")
 id = &"ch_key_chest"
@@ -645,4 +750,4 @@ description = "Cofre del secreto del Cardonal abierto (bombas)"
 
 [resource]
 script = ExtResource("2_3vvdp")
-definitions = Array[ExtResource("1_ox7fe")]([SubResource("Resource_mrp87"), SubResource("Resource_tablethint"), SubResource("Resource_crackedwall"), SubResource("Resource_sbwall"), SubResource("Resource_testdoor"), SubResource("Resource_testblock"), SubResource("Resource_testchest"), SubResource("Resource_gray_switch"), SubResource("Resource_gray_key_chest"), SubResource("Resource_gray_locked"), SubResource("Resource_gray_compass_chest"), SubResource("Resource_cave_chest"), SubResource("Resource_cave_practice"), SubResource("Resource_shrine_wall"), SubResource("Resource_shrine_switch"), SubResource("Resource_shrine_chest"), SubResource("Resource_shrine_shortcut"), SubResource("Resource_temple_seal"), SubResource("Resource_grotto_wall"), SubResource("Resource_grotto_chest"), SubResource("Resource_grove_a"), SubResource("Resource_grove_b"), SubResource("Resource_grove_chest"), SubResource("Resource_cliff_eye"), SubResource("Resource_cliff_chest"), SubResource("R_d1_vestibule_switch"), SubResource("R_d1_hub_locked_door"), SubResource("R_d1_gallery_eye"), SubResource("R_d1_gallery_key_chest"), SubResource("R_d1_ojos_door_eye"), SubResource("R_d1_map_chest"), SubResource("R_d1_arena_cracked_wall"), SubResource("R_d1_arena_cleared"), SubResource("R_d1_chest_bow"), SubResource("R_d1_feather_chest"), SubResource("R_d1_ojos_eye_a"), SubResource("R_d1_ojos_eye_b"), SubResource("R_d1_ojos_compass_chest"), SubResource("R_d1_ojos_key_chest"), SubResource("R_d1_puzzle_locked_door"), SubResource("R_d1_puzzle_switch"), SubResource("R_d1_puzzle_crystal"), SubResource("R_d1_puzzle_eye"), SubResource("R_d1_boss_key_chest"), SubResource("R_d1_boss_door"), SubResource("R_d1_boss_defeated"), SubResource("R_d1_heart_container"), SubResource("R_ow_heart_piece_meadow"), SubResource("R_ow_heart_piece_grotto"), SubResource("R_ow_heart_piece_shrine"), SubResource("R_ow_heart_piece_cliff"), SubResource("R_ow_tablet_start"), SubResource("R_ow_tablet_meadow"), SubResource("R_ow_tablet_shrine"), SubResource("R_ow_tablet_grove"), SubResource("R_ow_tablet_cliff"), SubResource("R_ow_tablet_cave"), SubResource("R_ow_tablet_grotto"), SubResource("R_d1_tablet_vestibule"), SubResource("R_d1_tablet_hub"), SubResource("R_d1_tablet_eyes"), SubResource("R_d1_tablet_antechamber"), SubResource("R_ow_tablet_controls"), SubResource("R_ow_tablet_combat"), SubResource("R_ow_tablet_lift"), SubResource("R_ow_start_lift_switch"), SubResource("R_ow_start_lift_chest"), SubResource("R_d1_tablet_bow"), SubResource("R_ow_intro_seen"), SubResource("R_ch_feather_chest"), SubResource("R_ch_ossuary_switch"), SubResource("R_ch_boss_key_chest"), SubResource("R_ch_map_chest"), SubResource("R_ch_compass_chest"), SubResource("R_ch_boss_door"), SubResource("R_ch_leaps_locked_door"), SubResource("R_ch_landing_weight"), SubResource("R_ch_landing_step"), SubResource("R_ch_landing_cracked_wall"), SubResource("R_ch_mummy_defeated"), SubResource("R_ch_boss_defeated"), SubResource("R_ch_heart_container"), SubResource("R_ch_entry_plate"), SubResource("R_ch_crypt_waves"), SubResource("R_ch_key_chest"), SubResource("R_ch_cracked_floor"), SubResource("R_ch_heart_piece"), SubResource("R_ow_ravine_bridge_eye"), SubResource("R_qv_west_switch"), SubResource("R_qv_west_key_chest"), SubResource("R_qv_west_eye"), SubResource("R_qv_heart_piece"), SubResource("R_qv_entrance_locked_door"), SubResource("R_qv_map_chest"), SubResource("R_qv_nest_cracked_wall"), SubResource("R_qv_nest_key_chest"), SubResource("R_qv_compass_chest"), SubResource("R_qv_canopy_locked_door"), SubResource("R_qv_warden_defeated"), SubResource("R_qv_bow_chest"), SubResource("R_qv_trunk_eye"), SubResource("R_qv_root_eye_a"), SubResource("R_qv_eyes_step"), SubResource("R_qv_root_key_chest"), SubResource("R_qv_roots_locked_door"), SubResource("R_qv_hidden_cracked_wall"), SubResource("R_qv_hidden_eye"), SubResource("R_qv_boss_key_chest"), SubResource("R_qv_boss_door"), SubResource("R_qv_boss_defeated"), SubResource("R_qv_heart_container"), SubResource("Resource_portal_claro"), SubResource("Resource_portal_pradera"), SubResource("Resource_portal_explanada"), SubResource("Resource_portal_necropolis"), SubResource("Resource_portal_banado"), SubResource("Resource_portal_cumbre"), SubResource("R_ow_heart_piece_hills"), SubResource("R_ow_heart_piece_islet"), SubResource("R_ow_secret_hills_wall"), SubResource("R_ow_secret_summit_wall"), SubResource("R_ow_secret_summit_chest"), SubResource("R_ow_secret_ravine_wall"), SubResource("R_ow_secret_ravine_chest"), SubResource("R_ow_secret_lookout_wall"), SubResource("R_ow_secret_lookout_chest"), SubResource("R_ow_secret_cactus_wall"), SubResource("R_ow_secret_cactus_chest")])
+definitions = Array[ExtResource("1_ox7fe")]([SubResource("Resource_mrp87"), SubResource("Resource_tablethint"), SubResource("Resource_crackedwall"), SubResource("Resource_sbwall"), SubResource("Resource_testdoor"), SubResource("Resource_testblock"), SubResource("Resource_testchest"), SubResource("Resource_gray_switch"), SubResource("Resource_gray_key_chest"), SubResource("Resource_gray_locked"), SubResource("Resource_gray_compass_chest"), SubResource("Resource_cave_chest"), SubResource("Resource_cave_practice"), SubResource("Resource_shrine_wall"), SubResource("Resource_shrine_switch"), SubResource("Resource_shrine_chest"), SubResource("Resource_shrine_shortcut"), SubResource("Resource_temple_seal"), SubResource("Resource_grotto_wall"), SubResource("Resource_grotto_chest"), SubResource("Resource_grove_a"), SubResource("Resource_grove_b"), SubResource("Resource_grove_chest"), SubResource("Resource_cliff_eye"), SubResource("Resource_cliff_chest"), SubResource("R_d1_vestibule_switch"), SubResource("R_d1_hub_locked_door"), SubResource("R_d1_gallery_eye"), SubResource("R_d1_gallery_key_chest"), SubResource("R_d1_ojos_door_eye"), SubResource("R_d1_map_chest"), SubResource("R_d1_arena_cracked_wall"), SubResource("R_d1_arena_cleared"), SubResource("R_d1_chest_bow"), SubResource("R_d1_feather_chest"), SubResource("R_d1_ojos_eye_a"), SubResource("R_d1_ojos_eye_b"), SubResource("R_d1_ojos_compass_chest"), SubResource("R_d1_ojos_key_chest"), SubResource("R_d1_puzzle_locked_door"), SubResource("R_d1_puzzle_switch"), SubResource("R_d1_puzzle_crystal"), SubResource("R_d1_puzzle_eye"), SubResource("R_d1_boss_key_chest"), SubResource("R_d1_boss_door"), SubResource("R_d1_boss_defeated"), SubResource("R_d1_heart_container"), SubResource("R_ow_heart_piece_meadow"), SubResource("R_ow_heart_piece_grotto"), SubResource("R_ow_heart_piece_shrine"), SubResource("R_ow_heart_piece_cliff"), SubResource("R_ow_tablet_start"), SubResource("R_ow_tablet_meadow"), SubResource("R_ow_tablet_shrine"), SubResource("R_ow_tablet_grove"), SubResource("R_ow_tablet_cliff"), SubResource("R_ow_tablet_cave"), SubResource("R_ow_tablet_grotto"), SubResource("R_d1_tablet_vestibule"), SubResource("R_d1_tablet_hub"), SubResource("R_d1_tablet_eyes"), SubResource("R_d1_tablet_antechamber"), SubResource("R_ow_tablet_controls"), SubResource("R_ow_tablet_combat"), SubResource("R_ow_tablet_lift"), SubResource("R_ow_start_lift_switch"), SubResource("R_ow_start_lift_chest"), SubResource("R_d1_tablet_bow"), SubResource("R_ow_intro_seen"), SubResource("R_ch_feather_chest"), SubResource("R_ch_ossuary_switch"), SubResource("R_ch_boss_key_chest"), SubResource("R_ch_map_chest"), SubResource("R_ch_compass_chest"), SubResource("R_ch_boss_door"), SubResource("R_ch_leaps_locked_door"), SubResource("R_ch_landing_weight"), SubResource("R_ch_landing_step"), SubResource("R_ch_landing_cracked_wall"), SubResource("R_ch_mummy_defeated"), SubResource("R_ch_boss_defeated"), SubResource("R_ch_heart_container"), SubResource("R_ch_entry_plate"), SubResource("R_ch_crypt_waves"), SubResource("R_te_vestibule_switch"), SubResource("R_te_feather_key_chest"), SubResource("R_te_compass_chest"), SubResource("R_te_eye_feather"), SubResource("R_te_map_chest"), SubResource("R_te_bow_cracked_wall"), SubResource("R_te_bow_key_eye"), SubResource("R_te_eye_bow"), SubResource("R_te_bow_key_chest"), SubResource("R_te_hub_locked_w"), SubResource("R_te_hub_locked_e"), SubResource("R_te_eye_hook"), SubResource("R_te_mirror_crystal"), SubResource("R_te_eye_mirror"), SubResource("R_te_combined_cracked_wall"), SubResource("R_te_combined_eye"), SubResource("R_te_combined_crystal"), SubResource("R_te_boss_key_chest"), SubResource("R_te_boss_door"), SubResource("R_te_boss_defeated"), SubResource("R_te_heart_container"), SubResource("R_ch_key_chest"), SubResource("R_ch_cracked_floor"), SubResource("R_ch_heart_piece"), SubResource("R_ow_ravine_bridge_eye"), SubResource("R_qv_west_switch"), SubResource("R_qv_west_key_chest"), SubResource("R_qv_west_eye"), SubResource("R_qv_heart_piece"), SubResource("R_qv_entrance_locked_door"), SubResource("R_qv_map_chest"), SubResource("R_qv_nest_cracked_wall"), SubResource("R_qv_nest_key_chest"), SubResource("R_qv_compass_chest"), SubResource("R_qv_canopy_locked_door"), SubResource("R_qv_warden_defeated"), SubResource("R_qv_bow_chest"), SubResource("R_qv_trunk_eye"), SubResource("R_qv_root_eye_a"), SubResource("R_qv_eyes_step"), SubResource("R_qv_root_key_chest"), SubResource("R_qv_roots_locked_door"), SubResource("R_qv_hidden_cracked_wall"), SubResource("R_qv_hidden_eye"), SubResource("R_qv_boss_key_chest"), SubResource("R_qv_boss_door"), SubResource("R_qv_boss_defeated"), SubResource("R_qv_heart_container"), SubResource("Resource_portal_claro"), SubResource("Resource_portal_pradera"), SubResource("Resource_portal_explanada"), SubResource("Resource_portal_necropolis"), SubResource("Resource_portal_banado"), SubResource("Resource_portal_cumbre"), SubResource("R_ow_heart_piece_hills"), SubResource("R_ow_heart_piece_islet"), SubResource("R_ow_secret_hills_wall"), SubResource("R_ow_secret_summit_wall"), SubResource("R_ow_secret_summit_chest"), SubResource("R_ow_secret_ravine_wall"), SubResource("R_ow_secret_ravine_chest"), SubResource("R_ow_secret_lookout_wall"), SubResource("R_ow_secret_lookout_chest"), SubResource("R_ow_secret_cactus_wall"), SubResource("R_ow_secret_cactus_chest")])

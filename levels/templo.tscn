@@ -1,0 +1,742 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/dungeon.gd" id="1_gppge"]
+[ext_resource type="Script" path="res://src/world/dungeon_floor.gd" id="2_v4a8r"]
+[ext_resource type="MeshLibrary" path="res://data/kits/chullpa_kit.tres" id="3_6wj7r"]
+[ext_resource type="Script" path="res://src/world/room.gd" id="4_w4fgy"]
+[ext_resource type="PackedScene" path="res://src/world/floor_switch.tscn" id="5_iwn1m"]
+[ext_resource type="Script" path="res://src/world/floor_switch.gd" id="6_ue4tp"]
+[ext_resource type="PackedScene" path="res://src/world/push_block.tscn" id="7_dx72k"]
+[ext_resource type="Script" path="res://src/world/push_block.gd" id="8_xabc2"]
+[ext_resource type="PackedScene" path="res://src/world/door.tscn" id="9_lb8sh"]
+[ext_resource type="Script" path="res://src/world/door.gd" id="10_8q16s"]
+[ext_resource type="Script" path="res://src/world/pit.gd" id="11_ilyv2"]
+[ext_resource type="PackedScene" path="res://src/world/spike_trap.tscn" id="12_fq8i4"]
+[ext_resource type="Script" path="res://src/world/spike_trap.gd" id="13_yxbmt"]
+[ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="14_kwpl7"]
+[ext_resource type="Script" path="res://src/world/chest.gd" id="15_845xq"]
+[ext_resource type="Resource" path="res://data/items/small_key.tres" id="16_1ctrm"]
+[ext_resource type="Resource" path="res://data/items/compass.tres" id="17_ux04o"]
+[ext_resource type="Resource" path="res://data/items/dungeon_map.tres" id="18_jtvwk"]
+[ext_resource type="PackedScene" path="res://src/entities/shield_skeleton.tscn" id="19_6gut6"]
+[ext_resource type="Script" path="res://src/entities/enemy.gd" id="20_do24o"]
+[ext_resource type="Resource" path="res://data/entities/shield_skeleton.tres" id="21_ewe6p"]
+[ext_resource type="PackedScene" path="res://src/world/cracked_wall_templo.tscn" id="22_22l1c"]
+[ext_resource type="Script" path="res://src/world/cracked_wall.gd" id="23_eh8au"]
+[ext_resource type="PackedScene" path="res://src/world/eye_switch.tscn" id="24_2frbs"]
+[ext_resource type="Script" path="res://src/world/eye_switch.gd" id="25_qyap5"]
+[ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="26_5l3iu"]
+[ext_resource type="Script" path="res://src/world/gate.gd" id="27_nroec"]
+[ext_resource type="PackedScene" path="res://src/entities/enemy.tscn" id="28_askxy"]
+[ext_resource type="Resource" path="res://data/entities/skeleton.tres" id="29_etxll"]
+[ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="30_m6v74"]
+[ext_resource type="Script" path="res://src/world/breakable.gd" id="31_befet"]
+[ext_resource type="Resource" path="res://data/drops/pot.tres" id="32_nu3dp"]
+[ext_resource type="PackedScene" path="res://src/entities/armored_skeleton.tscn" id="33_1krf6"]
+[ext_resource type="Resource" path="res://data/entities/armored_skeleton.tres" id="34_cjedn"]
+[ext_resource type="PackedScene" path="res://src/entities/turret/turret.tscn" id="35_ycq0f"]
+[ext_resource type="Script" path="res://src/entities/turret/turret.gd" id="36_ypy2f"]
+[ext_resource type="Resource" path="res://data/entities/turret.tres" id="37_s4egn"]
+[ext_resource type="PackedScene" path="res://src/world/light/light_source.tscn" id="38_m888e"]
+[ext_resource type="PackedScene" path="res://src/world/light/light_receiver.tscn" id="39_srmr6"]
+[ext_resource type="Script" path="res://src/world/light/light_receiver.gd" id="40_pcqlr"]
+[ext_resource type="Resource" path="res://data/items/boss_key.tres" id="41_ank0x"]
+[ext_resource type="PackedScene" path="res://src/world/wall_torch.tscn" id="42_eppxl"]
+[ext_resource type="PackedScene" path="res://src/entities/boss/boss.tscn" id="43_l2qle"]
+[ext_resource type="Script" path="res://src/entities/boss/boss.gd" id="44_tiw1f"]
+[ext_resource type="Script" path="res://src/entities/boss/boss_attack.gd" id="45_vrfyu"]
+[ext_resource type="Resource" path="res://data/boss/attack_slam.tres" id="46_6btj5"]
+[ext_resource type="Resource" path="res://data/boss/attack_grab.tres" id="47_nw8wq"]
+[ext_resource type="Resource" path="res://data/boss/attack_sweep.tres" id="48_ewur0"]
+[ext_resource type="Resource" path="res://data/boss/attack_orb.tres" id="49_7bncd"]
+[ext_resource type="Resource" path="res://data/boss/attack_mark.tres" id="50_wgnm1"]
+[ext_resource type="PackedScene" path="res://src/world/warp_portal.tscn" id="51_43cnq"]
+[ext_resource type="Script" path="res://src/world/portal.gd" id="52_0i344"]
+[ext_resource type="Script" path="res://src/entities/boss/boss_arena.gd" id="53_2dht2"]
+[ext_resource type="PackedScene" path="res://player/player.tscn" id="54_jhn6u"]
+[ext_resource type="Script" path="res://player/player.gd" id="55_m178d"]
+[ext_resource type="Resource" path="res://data/entities/player.tres" id="56_q50av"]
+[ext_resource type="Script" path="res://src/world/spawn_point.gd" id="57_5184v"]
+[ext_resource type="Script" path="res://src/tools/top_down_camera.gd" id="58_10kg3"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="59_07stk"]
+[ext_resource type="Script" path="res://src/ui/hud/hud.gd" id="60_hnplg"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/player_panel_solo.tscn" id="61_6dq88"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/player_panel.tscn" id="62_5bylj"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/item_ring.tscn" id="63_oqvbs"]
+[ext_resource type="PackedScene" path="res://src/world/doom_ambience.tscn" id="64_mhghd"]
+[ext_resource type="Script" path="res://src/world/doom_ambience.gd" id="65_qmvvc"]
+[ext_resource type="NavigationMesh" path="res://levels/nav/templo_navmesh.tres" id="nav_templo"]
+
+[sub_resource type="Environment" id="Environment_xib4i"]
+background_mode = 1
+ambient_light_source = 2
+ambient_light_color = Color(0.55, 0.52, 0.65, 1)
+ambient_light_energy = 0.6
+tonemap_mode = 2
+fog_light_color = Color(0.25, 0.08, 0.06, 1)
+fog_density = 0.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4oc56"]
+size = Vector3(22, 2.4, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ywg56"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rg7ke"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_p8als"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nioq2"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0jhvc"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_utgfk"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_p0rd1"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a2862"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qdtbt"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q1vmi"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sprnv"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6vpyr"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8xv7h"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1kwkn"]
+size = Vector3(6, 1, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v0vw2"]
+size = Vector3(14, 1, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_oc5q1"]
+size = Vector3(6, 1, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wyfw6"]
+size = Vector3(10, 1, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xctfo"]
+size = Vector3(2, 2.4, 1.2)
+
+[node name="Templo" type="Node3D" unique_id=2118838176]
+
+[node name="Dungeon" type="Node" parent="." unique_id=1232898295]
+script = ExtResource("1_gppge")
+id = &"te"
+display_name = "PLACE_EYE_TEMPLE"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=588181436]
+environment = SubResource("Environment_xib4i")
+
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=1076534433]
+transform = Transform3D(0.8660254, -0.43301272, 0.24999999, 0, 0.49999997, 0.86602545, -0.5, -0.75, 0.43301266, 0, 0, 0)
+light_energy = 0.85
+shadow_enabled = true
+directional_shadow_mode = 1
+directional_shadow_max_distance = 32.0
+
+[node name="Planta" type="Node3D" parent="." unique_id=897919616]
+script = ExtResource("2_v4a8r")
+display_name = "PLACE_FLOOR_GROUND"
+
+[node name="GridMap" type="GridMap" parent="Planta" unique_id=1308098011 groups=["navmesh_source"]]
+mesh_library = ExtResource("3_6wj7r")
+cell_size = Vector3(2, 1, 2)
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+data = {
+"cells": PackedInt32Array(0, 0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 6, 1, 0, 7, 1, 0, 8, 1, 0, 9, 1, 0, 10, 1, 0, 11, 1, 0, 12, 1, 0, 13, 1, 0, 14, 1, 0, 15, 1, 0, 16, 1, 0, 17, 1, 0, 18, 1, 0, 19, 1, 0, 20, 1, 0, 21, 1, 0, 22, 1, 0, 23, 1, 0, 24, 1, 1, 0, 1, 1, 1, 1, 1, 2, 1, 1, 3, 1, 1, 4, 1, 1, 5, 1, 1, 6, 1, 1, 7, 1, 1, 8, 1, 1, 9, 1, 1, 10, 1, 1, 11, 1, 1, 12, 1, 1, 13, 0, 1, 14, 0, 1, 15, 0, 1, 16, 0, 1, 17, 0, 1, 18, 1, 1, 19, 0, 1, 20, 0, 1, 21, 0, 1, 22, 0, 1, 23, 0, 1, 24, 1, 2, 0, 1, 2, 1, 1, 2, 2, 1, 2, 3, 1, 2, 4, 1, 2, 5, 1, 2, 6, 1, 2, 7, 1, 2, 8, 1, 2, 9, 1, 2, 10, 1, 2, 11, 1, 2, 12, 1, 2, 13, 0, 2, 14, 0, 2, 15, 0, 2, 16, 0, 2, 17, 0, 2, 18, 1, 2, 19, 0, 2, 20, 0, 2, 21, 0, 2, 22, 0, 2, 23, 0, 2, 24, 1, 3, 0, 1, 3, 1, 1, 3, 2, 1, 3, 3, 1, 3, 4, 1, 3, 5, 1, 3, 6, 1, 3, 7, 1, 3, 8, 1, 3, 9, 1, 3, 10, 1, 3, 11, 1, 3, 12, 1, 3, 13, 0, 3, 14, 0, 3, 15, 0, 3, 16, 0, 3, 17, 0, 3, 18, 1, 3, 19, 0, 3, 20, 0, 3, 21, 0, 3, 22, 0, 3, 23, 0, 3, 24, 1, 4, 0, 1, 4, 1, 1, 4, 2, 1, 4, 3, 1, 4, 4, 1, 4, 5, 1, 4, 6, 1, 4, 7, 1, 4, 8, 1, 4, 9, 1, 4, 10, 1, 4, 11, 1, 4, 12, 1, 4, 13, 0, 4, 14, 0, 4, 15, 0, 4, 16, 0, 4, 17, 0, 4, 18, 1, 4, 19, 0, 4, 20, 0, 4, 21, 0, 4, 22, 0, 4, 23, 0, 4, 24, 1, 5, 0, 1, 5, 1, 1, 5, 2, 1, 5, 3, 1, 5, 4, 1, 5, 5, 1, 5, 6, 1, 5, 7, 1, 5, 8, 1, 5, 9, 1, 5, 10, 1, 5, 11, 1, 5, 12, 1, 5, 13, 0, 5, 14, 0, 5, 15, 0, 5, 16, 0, 5, 17, 0, 5, 18, 1, 5, 19, 0, 5, 20, 0, 5, 21, 0, 5, 22, 0, 5, 23, 0, 5, 24, 1, 6, 0, 1, 6, 1, 1, 6, 2, 1, 6, 3, 1, 6, 4, 1, 6, 5, 1, 6, 6, 1, 6, 7, 1, 6, 8, 1, 6, 9, 1, 6, 10, 1, 6, 11, 1, 6, 12, 1, 6, 13, 0, 6, 14, 0, 6, 15, 0, 6, 16, 0, 6, 17, 0, 6, 18, 1, 6, 19, 0, 6, 20, 0, 6, 21, 0, 6, 22, 0, 6, 23, 0, 6, 24, 1, 7, 0, 1, 7, 1, 1, 7, 2, 1, 7, 3, 1, 7, 4, 1, 7, 5, 1, 7, 6, 1, 7, 7, 1, 7, 8, 1, 7, 9, 1, 7, 10, 1, 7, 11, 1, 7, 12, 1, 7, 13, 0, 7, 14, 0, 7, 15, 0, 7, 16, 0, 7, 17, 0, 7, 18, 1, 7, 19, 0, 7, 20, 0, 7, 21, 0, 7, 22, 0, 7, 23, 0, 7, 24, 1, 8, 0, 1, 8, 1, 1, 8, 2, 1, 8, 3, 1, 8, 4, 1, 8, 5, 1, 8, 6, 1, 8, 7, 1, 8, 8, 1, 8, 9, 1, 8, 10, 1, 8, 11, 1, 8, 12, 1, 8, 13, 1, 8, 14, 1, 8, 15, 1048580, 8, 16, 1, 8, 17, 1, 8, 18, 1, 8, 19, 1, 8, 20, 1, 8, 21, 1048580, 8, 22, 1, 8, 23, 1, 8, 24, 1, 9, 0, 1, 9, 1, 1, 9, 2, 1, 9, 3, 1, 9, 4, 1, 9, 5, 1, 9, 6, 1, 9, 7, 0, 9, 8, 0, 9, 9, 0, 9, 10, 0, 9, 11, 0, 9, 12, 1, 9, 13, 0, 9, 14, 0, 9, 15, 0, 9, 16, 0, 9, 17, 0, 9, 18, 1, 9, 19, 0, 9, 20, 0, 9, 21, 0, 9, 22, 0, 9, 23, 0, 9, 24, 1, 10, 0, 1, 10, 1, 1, 10, 2, 1, 10, 3, 1, 10, 4, 1, 10, 5, 1, 10, 6, 1, 10, 7, 0, 10, 8, 0, 10, 9, 10, 10, 10, 0, 10, 11, 0, 10, 12, 1, 10, 13, 0, 10, 14, 0, 10, 15, 0, 10, 16, 0, 10, 17, 0, 10, 18, 1, 10, 19, 0, 10, 20, 0, 10, 21, 0, 10, 22, 0, 10, 23, 0, 10, 24, 1, 11, 0, 1, 11, 1, 1, 11, 2, 1, 11, 3, 1, 11, 4, 1, 11, 5, 1, 11, 6, 1, 11, 7, 1, 11, 8, 1, 11, 9, 10, 11, 10, 0, 11, 11, 0, 11, 12, 1, 11, 13, 10, 11, 14, 10, 11, 15, 10, 11, 16, 10, 11, 17, 10, 11, 18, 1, 11, 19, 10, 11, 20, 10, 11, 21, 10, 11, 22, 10, 11, 23, 10, 11, 24, 1, 12, 0, 1, 12, 1, 1, 12, 2, 1, 12, 3, 1, 12, 4, 1, 12, 5, 1, 12, 6, 1, 12, 7, 0, 12, 8, 0, 12, 9, 10, 12, 10, 0, 12, 11, 0, 12, 12, 1, 12, 13, 10, 12, 14, 10, 12, 15, 10, 12, 16, 10, 12, 17, 10, 12, 18, 1, 12, 19, 0, 12, 20, 0, 12, 21, 0, 12, 22, 0, 12, 23, 0, 12, 24, 1, 13, 0, 1, 13, 1, 1, 13, 2, 1, 13, 3, 1, 13, 4, 1, 13, 5, 1, 13, 6, 1, 13, 7, 1, 13, 8, 1, 13, 9, 10, 13, 10, 0, 13, 11, 0, 13, 12, 1, 13, 13, 10, 13, 14, 10, 13, 15, 10, 13, 16, 10, 13, 17, 10, 13, 18, 1, 13, 19, 10, 13, 20, 10, 13, 21, 10, 13, 22, 10, 13, 23, 10, 13, 24, 1, 14, 0, 1, 14, 1, 1, 14, 2, 1, 14, 3, 1, 14, 4, 1, 14, 5, 1, 14, 6, 1, 14, 7, 1, 14, 8, 1, 14, 9, 10, 14, 10, 0, 14, 11, 0, 14, 12, 1, 14, 13, 0, 14, 14, 0, 14, 15, 0, 14, 16, 0, 14, 17, 0, 14, 18, 1, 14, 19, 0, 14, 20, 0, 14, 21, 0, 14, 22, 0, 14, 23, 0, 14, 24, 1, 15, 0, 1, 15, 1, 0, 15, 2, 0, 15, 3, 0, 15, 4, 0, 15, 5, 0, 15, 6, 1, 15, 7, 0, 15, 8, 0, 15, 9, 0, 15, 10, 0, 15, 11, 0, 15, 12, 1, 15, 13, 0, 15, 14, 0, 15, 15, 0, 15, 16, 0, 15, 17, 0, 15, 18, 1, 15, 19, 0, 15, 20, 0, 15, 21, 0, 15, 22, 0, 15, 23, 0, 15, 24, 1, 16, 0, 1, 16, 1, 0, 16, 2, 0, 16, 3, 0, 16, 4, 0, 16, 5, 0, 16, 6, 1, 16, 7, 1, 16, 8, 1, 16, 9, 1048580, 16, 10, 1, 16, 11, 1, 16, 12, 1, 16, 13, 1, 16, 14, 1, 16, 15, 1048580, 16, 16, 1, 16, 17, 1, 16, 18, 1, 16, 19, 1, 16, 20, 1, 16, 21, 1048580, 16, 22, 1, 16, 23, 1, 16, 24, 1, 17, 0, 1, 17, 1, 0, 17, 2, 0, 17, 3, 0, 17, 4, 0, 17, 5, 0, 17, 6, 1, 17, 7, 0, 17, 8, 0, 17, 9, 0, 17, 10, 0, 17, 11, 0, 17, 12, 1, 17, 13, 0, 17, 14, 0, 17, 15, 0, 17, 16, 0, 17, 17, 0, 17, 18, 1, 17, 19, 0, 17, 20, 0, 17, 21, 0, 17, 22, 0, 17, 23, 0, 17, 24, 1, 18, 0, 1, 18, 1, 0, 18, 2, 0, 18, 3, 0, 18, 4, 0, 18, 5, 0, 18, 6, 1, 18, 7, 0, 18, 8, 0, 18, 9, 0, 18, 10, 0, 18, 11, 0, 18, 12, 1, 18, 13, 0, 18, 14, 0, 18, 15, 0, 18, 16, 0, 18, 17, 0, 18, 18, 1, 18, 19, 0, 18, 20, 0, 18, 21, 0, 18, 22, 0, 18, 23, 0, 18, 24, 1, 19, 0, 1, 19, 1, 0, 19, 2, 0, 19, 3, 0, 19, 4, 0, 19, 5, 0, 19, 6, 1, 19, 7, 0, 19, 8, 0, 19, 9, 0, 19, 10, 0, 19, 11, 0, 19, 12, 1, 19, 13, 0, 19, 14, 0, 19, 15, 0, 19, 16, 0, 19, 17, 0, 19, 18, 1, 19, 19, 0, 19, 20, 0, 19, 21, 0, 19, 22, 0, 19, 23, 0, 19, 24, 1, 20, 0, 1, 20, 1, 0, 20, 2, 0, 20, 3, 0, 20, 4, 0, 20, 5, 0, 20, 6, 4, 20, 7, 0, 20, 8, 0, 20, 9, 0, 20, 10, 0, 20, 11, 0, 20, 12, 4, 20, 13, 0, 20, 14, 0, 20, 15, 0, 20, 16, 0, 20, 17, 0, 20, 18, 4, 20, 19, 0, 20, 20, 0, 20, 21, 0, 20, 22, 0, 20, 23, 0, 20, 24, 4, 21, 0, 1, 21, 1, 0, 21, 2, 0, 21, 3, 0, 21, 4, 0, 21, 5, 0, 21, 6, 1, 21, 7, 0, 21, 8, 0, 21, 9, 0, 21, 10, 0, 21, 11, 0, 21, 12, 1, 21, 13, 0, 21, 14, 0, 21, 15, 0, 21, 16, 0, 21, 17, 0, 21, 18, 1, 21, 19, 0, 21, 20, 0, 21, 21, 0, 21, 22, 0, 21, 23, 0, 21, 24, 1, 22, 0, 1, 22, 1, 0, 22, 2, 0, 22, 3, 0, 22, 4, 0, 22, 5, 0, 22, 6, 1, 22, 7, 0, 22, 8, 0, 22, 9, 0, 22, 10, 0, 22, 11, 0, 22, 12, 1, 22, 13, 0, 22, 14, 0, 22, 15, 0, 22, 16, 0, 22, 17, 0, 22, 18, 1, 22, 19, 0, 22, 20, 0, 22, 21, 0, 22, 22, 0, 22, 23, 0, 22, 24, 1, 23, 0, 1, 23, 1, 0, 23, 2, 0, 23, 3, 0, 23, 4, 0, 23, 5, 0, 23, 6, 1, 23, 7, 0, 23, 8, 0, 23, 9, 0, 23, 10, 0, 23, 11, 0, 23, 12, 1, 23, 13, 0, 23, 14, 0, 23, 15, 0, 23, 16, 0, 23, 17, 0, 23, 18, 1, 23, 19, 0, 23, 20, 0, 23, 21, 0, 23, 22, 0, 23, 23, 0, 23, 24, 1, 24, 0, 1, 24, 1, 0, 24, 2, 0, 24, 3, 0, 24, 4, 0, 24, 5, 0, 24, 6, 1, 24, 7, 1, 24, 8, 1, 24, 9, 1048580, 24, 10, 1, 24, 11, 1, 24, 12, 1, 24, 13, 1, 24, 14, 1, 24, 15, 1048580, 24, 16, 1, 24, 17, 1, 24, 18, 1, 24, 19, 1, 24, 20, 1, 24, 21, 1048580, 24, 22, 1, 24, 23, 1, 24, 24, 1, 25, 0, 1, 25, 1, 0, 25, 2, 0, 25, 3, 0, 25, 4, 0, 25, 5, 0, 25, 6, 1, 25, 7, 0, 25, 8, 0, 25, 9, 0, 25, 10, 0, 25, 11, 0, 25, 12, 1, 25, 13, 0, 25, 14, 0, 25, 15, 0, 25, 16, 0, 25, 17, 0, 25, 18, 1, 25, 19, 0, 25, 20, 0, 25, 21, 0, 25, 22, 0, 25, 23, 0, 25, 24, 1, 26, 0, 1, 26, 1, 1, 26, 2, 1, 26, 3, 1, 26, 4, 1, 26, 5, 1, 26, 6, 1, 26, 7, 0, 26, 8, 0, 26, 9, 0, 26, 10, 0, 26, 11, 0, 26, 12, 1, 26, 13, 0, 26, 14, 0, 26, 15, 0, 26, 16, 0, 26, 17, 0, 26, 18, 1, 26, 19, 0, 26, 20, 0, 26, 21, 0, 26, 22, 0, 26, 23, 0, 26, 24, 1, 27, 0, 1, 27, 1, 1, 27, 2, 1, 27, 3, 1, 27, 4, 1, 27, 5, 1, 27, 6, 1, 27, 7, 0, 27, 8, 0, 27, 9, 0, 27, 10, 0, 27, 11, 0, 27, 12, 1, 27, 13, 0, 27, 14, 0, 27, 15, 0, 27, 16, 0, 27, 17, 0, 27, 18, 1, 27, 19, 0, 27, 20, 0, 27, 21, 0, 27, 22, 0, 27, 23, 0, 27, 24, 1, 28, 0, 1, 28, 1, 1, 28, 2, 1, 28, 3, 1, 28, 4, 1, 28, 5, 1, 28, 6, 1, 28, 7, 0, 28, 8, 0, 28, 9, 0, 28, 10, 0, 28, 11, 0, 28, 12, 1, 28, 13, 0, 28, 14, 0, 28, 15, 0, 28, 16, 0, 28, 17, 0, 28, 18, 1, 28, 19, 0, 28, 20, 0, 28, 21, 0, 28, 22, 0, 28, 23, 0, 28, 24, 1, 29, 0, 1, 29, 1, 1, 29, 2, 1, 29, 3, 1, 29, 4, 1, 29, 5, 1, 29, 6, 1, 29, 7, 0, 29, 8, 0, 29, 9, 0, 29, 10, 0, 29, 11, 0, 29, 12, 1, 29, 13, 0, 29, 14, 0, 29, 15, 0, 29, 16, 0, 29, 17, 0, 29, 18, 1, 29, 19, 0, 29, 20, 0, 29, 21, 0, 29, 22, 0, 29, 23, 0, 29, 24, 1, 30, 0, 1, 30, 1, 1, 30, 2, 1, 30, 3, 1, 30, 4, 1, 30, 5, 1, 30, 6, 1, 30, 7, 0, 30, 8, 0, 30, 9, 0, 30, 10, 0, 30, 11, 0, 30, 12, 1, 30, 13, 0, 30, 14, 0, 30, 15, 0, 30, 16, 0, 30, 17, 0, 30, 18, 1, 30, 19, 0, 30, 20, 0, 30, 21, 0, 30, 22, 0, 30, 23, 0, 30, 24, 1, 31, 0, 1, 31, 1, 1, 31, 2, 1, 31, 3, 1, 31, 4, 1, 31, 5, 1, 31, 6, 1, 31, 7, 0, 31, 8, 0, 31, 9, 0, 31, 10, 0, 31, 11, 0, 31, 12, 1, 31, 13, 0, 31, 14, 0, 31, 15, 0, 31, 16, 0, 31, 17, 0, 31, 18, 1, 31, 19, 0, 31, 20, 0, 31, 21, 0, 31, 22, 0, 31, 23, 0, 31, 24, 1, 32, 0, 1, 32, 1, 1, 32, 2, 1, 32, 3, 1, 32, 4, 1, 32, 5, 1, 32, 6, 1, 32, 7, 1, 32, 8, 1, 32, 9, 1, 32, 10, 1, 32, 11, 1, 32, 12, 1, 32, 13, 1, 32, 14, 1, 32, 15, 1048580, 32, 16, 1, 32, 17, 1, 32, 18, 1, 32, 19, 1, 32, 20, 1, 32, 21, 1048580, 32, 22, 1, 32, 23, 1, 32, 24, 1, 33, 0, 1, 33, 1, 1, 33, 2, 1, 33, 3, 1, 33, 4, 1, 33, 5, 1, 33, 6, 1, 33, 7, 1, 33, 8, 1, 33, 9, 1, 33, 10, 1, 33, 11, 1, 33, 12, 1, 33, 13, 0, 33, 14, 0, 33, 15, 0, 33, 16, 0, 33, 17, 0, 33, 18, 1, 33, 19, 10, 33, 20, 10, 33, 21, 0, 33, 22, 0, 33, 23, 0, 33, 24, 1, 34, 0, 1, 34, 1, 1, 34, 2, 1, 34, 3, 1, 34, 4, 1, 34, 5, 1, 34, 6, 1, 34, 7, 1, 34, 8, 1, 34, 9, 1, 34, 10, 1, 34, 11, 1, 34, 12, 1, 34, 13, 0, 34, 14, 0, 34, 15, 0, 34, 16, 0, 34, 17, 0, 34, 18, 1, 34, 19, 10, 34, 20, 10, 34, 21, 0, 34, 22, 0, 34, 23, 0, 34, 24, 1, 35, 0, 1, 35, 1, 1, 35, 2, 1, 35, 3, 1, 35, 4, 1, 35, 5, 1, 35, 6, 1, 35, 7, 1, 35, 8, 1, 35, 9, 1, 35, 10, 1, 35, 11, 1, 35, 12, 1, 35, 13, 0, 35, 14, 0, 35, 15, 0, 35, 16, 0, 35, 17, 0, 35, 18, 1, 35, 19, 10, 35, 20, 10, 35, 21, 0, 35, 22, 1, 35, 23, 1, 35, 24, 1, 36, 0, 1, 36, 1, 1, 36, 2, 1, 36, 3, 1, 36, 4, 1, 36, 5, 1, 36, 6, 1, 36, 7, 1, 36, 8, 1, 36, 9, 1, 36, 10, 1, 36, 11, 1, 36, 12, 1, 36, 13, 0, 36, 14, 0, 36, 15, 0, 36, 16, 0, 36, 17, 0, 36, 18, 1, 36, 19, 10, 36, 20, 10, 36, 21, 0, 36, 22, 0, 36, 23, 0, 36, 24, 1, 37, 0, 1, 37, 1, 1, 37, 2, 1, 37, 3, 1, 37, 4, 1, 37, 5, 1, 37, 6, 1, 37, 7, 1, 37, 8, 1, 37, 9, 1, 37, 10, 1, 37, 11, 1, 37, 12, 1, 37, 13, 0, 37, 14, 0, 37, 15, 0, 37, 16, 0, 37, 17, 0, 37, 18, 1, 37, 19, 10, 37, 20, 10, 37, 21, 0, 37, 22, 1, 37, 23, 1, 37, 24, 1, 38, 0, 1, 38, 1, 1, 38, 2, 1, 38, 3, 1, 38, 4, 1, 38, 5, 1, 38, 6, 1, 38, 7, 1, 38, 8, 1, 38, 9, 1, 38, 10, 1, 38, 11, 1, 38, 12, 1, 38, 13, 0, 38, 14, 0, 38, 15, 0, 38, 16, 0, 38, 17, 0, 38, 18, 1, 38, 19, 10, 38, 20, 10, 38, 21, 0, 38, 22, 0, 38, 23, 0, 38, 24, 1, 39, 0, 1, 39, 1, 1, 39, 2, 1, 39, 3, 1, 39, 4, 1, 39, 5, 1, 39, 6, 1, 39, 7, 1, 39, 8, 1, 39, 9, 1, 39, 10, 1, 39, 11, 1, 39, 12, 1, 39, 13, 0, 39, 14, 0, 39, 15, 0, 39, 16, 0, 39, 17, 0, 39, 18, 1, 39, 19, 10, 39, 20, 10, 39, 21, 0, 39, 22, 0, 39, 23, 0, 39, 24, 1, 40, 0, 1, 40, 1, 1, 40, 2, 1, 40, 3, 1, 40, 4, 1, 40, 5, 1, 40, 6, 1, 40, 7, 1, 40, 8, 1, 40, 9, 1, 40, 10, 1, 40, 11, 1, 40, 12, 1, 40, 13, 1, 40, 14, 1, 40, 15, 1, 40, 16, 1, 40, 17, 1, 40, 18, 1, 40, 19, 1, 40, 20, 1, 40, 21, 1, 40, 22, 1, 40, 23, 1, 40, 24, 1)
+}
+
+[node name="Jefe" type="Area3D" parent="Planta" unique_id=859488872]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 6)
+script = ExtResource("4_w4fgy")
+display_name = "PLACE_TE_BOSS"
+map_cell = Vector2i(2, 0)
+boss_room = true
+doom = 1.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/Jefe" unique_id=2090641547]
+shape = SubResource("BoxShape3D_4oc56")
+
+[node name="Combinada" type="Area3D" parent="Planta" unique_id=1338911824]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.2, 18)
+script = ExtResource("4_w4fgy")
+room_index = 1
+display_name = "PLACE_TE_COMBINED"
+map_cell = Vector2i(1, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/Combinada" unique_id=1056956592]
+shape = SubResource("BoxShape3D_ywg56")
+
+[node name="Antesala" type="Area3D" parent="Planta" unique_id=1449210510]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 18)
+script = ExtResource("4_w4fgy")
+room_index = 2
+display_name = "PLACE_TE_ANTECHAMBER"
+map_cell = Vector2i(2, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/Antesala" unique_id=289764520]
+shape = SubResource("BoxShape3D_rg7ke")
+
+[node name="Mano" type="Area3D" parent="Planta" unique_id=1913402948]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 1.2, 18)
+script = ExtResource("4_w4fgy")
+room_index = 3
+display_name = "PLACE_TE_HAND"
+map_cell = Vector2i(3, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/Mano" unique_id=613702311]
+shape = SubResource("BoxShape3D_p8als")
+
+[node name="GanchoOjo" type="Area3D" parent="Planta" unique_id=179655823]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.2, 30)
+script = ExtResource("4_w4fgy")
+room_index = 4
+display_name = "PLACE_TE_HOOK_EYE"
+map_cell = Vector2i(0, 2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/GanchoOjo" unique_id=2071328545]
+shape = SubResource("BoxShape3D_nioq2")
+
+[node name="Gancho" type="Area3D" parent="Planta" unique_id=78467346]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.2, 30)
+script = ExtResource("4_w4fgy")
+room_index = 5
+display_name = "PLACE_TE_HOOK"
+map_cell = Vector2i(1, 2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/Gancho" unique_id=1047983769]
+shape = SubResource("BoxShape3D_0jhvc")
+
+[node name="Hub" type="Area3D" parent="Planta" unique_id=223286347]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 30)
+script = ExtResource("4_w4fgy")
+room_index = 6
+display_name = "PLACE_TE_HUB"
+map_cell = Vector2i(2, 2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/Hub" unique_id=438474002]
+shape = SubResource("BoxShape3D_utgfk")
+
+[node name="Espejo" type="Area3D" parent="Planta" unique_id=107480253]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 1.2, 30)
+script = ExtResource("4_w4fgy")
+room_index = 7
+display_name = "PLACE_TE_MIRROR"
+map_cell = Vector2i(3, 2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/Espejo" unique_id=61607580]
+shape = SubResource("BoxShape3D_p0rd1")
+
+[node name="EspejoOjo" type="Area3D" parent="Planta" unique_id=390396828]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 1.2, 30)
+script = ExtResource("4_w4fgy")
+room_index = 8
+display_name = "PLACE_TE_MIRROR_EYE"
+map_cell = Vector2i(4, 2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/EspejoOjo" unique_id=1188973237]
+shape = SubResource("BoxShape3D_a2862")
+
+[node name="PlumaOjo" type="Area3D" parent="Planta" unique_id=678315277]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.2, 42)
+script = ExtResource("4_w4fgy")
+room_index = 9
+display_name = "PLACE_TE_FEATHER_EYE"
+map_cell = Vector2i(0, 3)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/PlumaOjo" unique_id=1814700505]
+shape = SubResource("BoxShape3D_qdtbt")
+
+[node name="Pluma" type="Area3D" parent="Planta" unique_id=1499307236]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.2, 42)
+script = ExtResource("4_w4fgy")
+room_index = 10
+display_name = "PLACE_TE_FEATHER"
+map_cell = Vector2i(1, 3)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/Pluma" unique_id=646064865]
+shape = SubResource("BoxShape3D_q1vmi")
+
+[node name="Vestibulo" type="Area3D" parent="Planta" unique_id=839127740]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 42)
+script = ExtResource("4_w4fgy")
+room_index = 11
+display_name = "PLACE_TE_VESTIBULE"
+map_cell = Vector2i(2, 3)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/Vestibulo" unique_id=1634048984]
+shape = SubResource("BoxShape3D_sprnv")
+
+[node name="Arco" type="Area3D" parent="Planta" unique_id=1472436037]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 1.2, 42)
+script = ExtResource("4_w4fgy")
+room_index = 12
+display_name = "PLACE_TE_BOW"
+map_cell = Vector2i(3, 3)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/Arco" unique_id=1997757137]
+shape = SubResource("BoxShape3D_6vpyr")
+
+[node name="ArcoOjo" type="Area3D" parent="Planta" unique_id=1966556873]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 1.2, 42)
+script = ExtResource("4_w4fgy")
+room_index = 13
+display_name = "PLACE_TE_BOW_EYE"
+map_cell = Vector2i(4, 3)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/ArcoOjo" unique_id=1135707956]
+shape = SubResource("BoxShape3D_8xv7h")
+
+[node name="VestibuleSwitch" type="Area3D" parent="Planta" unique_id=1365107047 instance=ExtResource("5_iwn1m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 40)
+script = ExtResource("6_ue4tp")
+mode = 2
+flag = &"te_vestibule_switch"
+
+[node name="VestibuleBlock" type="AnimatableBody3D" parent="Planta" unique_id=1262574881 instance=ExtResource("7_dx72k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 42)
+collision_layer = 9
+collision_mask = 0
+script = ExtResource("8_xabc2")
+solved_flag = &"te_vestibule_switch"
+solved_position = Vector3(44, 0, 40)
+
+[node name="VestibuleDoor" type="StaticBody3D" parent="Planta" unique_id=1837145994 instance=ExtResource("9_lb8sh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 36)
+script = ExtResource("10_8q16s")
+kind = 3
+switches = Array[NodePath]([NodePath("../VestibuleSwitch")])
+depth = 2.0
+
+[node name="PlumaPit" type="Area3D" parent="Planta" unique_id=261431034]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, -1.2, 42)
+script = ExtResource("11_ilyv2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/PlumaPit" unique_id=1152062106]
+shape = SubResource("BoxShape3D_1kwkn")
+
+[node name="PlumaSpikes_38" type="Node3D" parent="Planta" unique_id=1260169180 groups=["room_sleepers"] instance=ExtResource("12_fq8i4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 38)
+script = ExtResource("13_yxbmt")
+
+[node name="PlumaSpikes_40" type="Node3D" parent="Planta" unique_id=741185067 groups=["room_sleepers"] instance=ExtResource("12_fq8i4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 40)
+script = ExtResource("13_yxbmt")
+offset = 0.3
+
+[node name="PlumaSpikes_42" type="Node3D" parent="Planta" unique_id=685947865 groups=["room_sleepers"] instance=ExtResource("12_fq8i4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 42)
+script = ExtResource("13_yxbmt")
+offset = 0.6
+
+[node name="PlumaSpikes_44" type="Node3D" parent="Planta" unique_id=841749264 groups=["room_sleepers"] instance=ExtResource("12_fq8i4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 44)
+script = ExtResource("13_yxbmt")
+offset = 0.8999999999999999
+
+[node name="PlumaSpikes_46" type="Node3D" parent="Planta" unique_id=735938884 groups=["room_sleepers"] instance=ExtResource("12_fq8i4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 46)
+script = ExtResource("13_yxbmt")
+offset = 1.2
+
+[node name="FeatherKeyChest" type="StaticBody3D" parent="Planta" unique_id=372051043 instance=ExtResource("14_kwpl7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 40)
+script = ExtResource("15_845xq")
+item = ExtResource("16_1ctrm")
+flag = &"te_feather_key_chest"
+
+[node name="CompassChest" type="StaticBody3D" parent="Planta" unique_id=1748537660 instance=ExtResource("14_kwpl7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 40)
+script = ExtResource("15_845xq")
+item = ExtResource("17_ux04o")
+flag = &"te_compass_chest"
+
+[node name="FeatherEye" type="Area3D" parent="Planta" unique_id=196061179 instance=ExtResource("5_iwn1m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 44)
+script = ExtResource("6_ue4tp")
+mode = 1
+flag = &"te_eye_feather"
+
+[node name="MapChest" type="StaticBody3D" parent="Planta" unique_id=531143107 instance=ExtResource("14_kwpl7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, 40)
+script = ExtResource("15_845xq")
+item = ExtResource("18_jtvwk")
+flag = &"te_map_chest"
+
+[node name="ArcoShield" type="CharacterBody3D" parent="Planta" unique_id=560594724 groups=["room_sleepers"] instance=ExtResource("19_6gut6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54, 0, 44)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("20_do24o")
+config = ExtResource("21_ewe6p")
+
+[node name="ArcoCrackedWall" type="StaticBody3D" parent="Planta" unique_id=407522826 instance=ExtResource("22_22l1c")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 64, 0, 42)
+script = ExtResource("23_eh8au")
+flag = &"te_bow_cracked_wall"
+
+[node name="ArcoOjoPit" type="Area3D" parent="Planta" unique_id=1498157519]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, -1.2, 39)
+script = ExtResource("11_ilyv2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/ArcoOjoPit" unique_id=1001276216]
+shape = SubResource("BoxShape3D_v0vw2")
+
+[node name="BowKeyEye" type="StaticBody3D" parent="Planta" unique_id=556794177 instance=ExtResource("24_2frbs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68, 0, 37.6)
+script = ExtResource("25_qyap5")
+flag = &"te_bow_key_eye"
+
+[node name="BowEye" type="StaticBody3D" parent="Planta" unique_id=2028769547 instance=ExtResource("24_2frbs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76, 0, 37.6)
+script = ExtResource("25_qyap5")
+flag = &"te_eye_bow"
+
+[node name="BowKeyGate" type="StaticBody3D" parent="Planta" unique_id=2005035402 instance=ExtResource("26_5l3iu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 0, 44)
+script = ExtResource("27_nroec")
+switches = Array[NodePath]([NodePath("../BowKeyEye")])
+depth = 2.0
+
+[node name="BowKeyChest" type="StaticBody3D" parent="Planta" unique_id=98173627 instance=ExtResource("14_kwpl7")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 72, 0, 46)
+script = ExtResource("15_845xq")
+item = ExtResource("16_1ctrm")
+flag = &"te_bow_key_chest"
+
+[node name="HubSkeleton1" type="CharacterBody3D" parent="Planta" unique_id=510737741 groups=["room_sleepers"] instance=ExtResource("28_askxy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 28)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("20_do24o")
+config = ExtResource("29_etxll")
+
+[node name="HubSkeleton2" type="CharacterBody3D" parent="Planta" unique_id=2127344310 groups=["room_sleepers"] instance=ExtResource("28_askxy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 28)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("20_do24o")
+config = ExtResource("29_etxll")
+
+[node name="HubPot1" type="Node3D" parent="Planta" unique_id=1003668880 instance=ExtResource("30_m6v74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0, 33)
+script = ExtResource("31_befet")
+drops = ExtResource("32_nu3dp")
+drop_height = 0.1
+
+[node name="HubPot2" type="Node3D" parent="Planta" unique_id=838881674 instance=ExtResource("30_m6v74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, 33)
+script = ExtResource("31_befet")
+drops = ExtResource("32_nu3dp")
+drop_height = 0.1
+
+[node name="HubLockedW" type="StaticBody3D" parent="Planta" unique_id=542877911 instance=ExtResource("9_lb8sh")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 32, 0, 30)
+script = ExtResource("10_8q16s")
+kind = 1
+flag = &"te_hub_locked_w"
+depth = 2.0
+
+[node name="HubLockedE" type="StaticBody3D" parent="Planta" unique_id=817941181 instance=ExtResource("9_lb8sh")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 48, 0, 30)
+script = ExtResource("10_8q16s")
+kind = 1
+flag = &"te_hub_locked_e"
+depth = 2.0
+
+[node name="GanchoPit" type="Area3D" parent="Planta" unique_id=1649408715]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, -1.2, 30)
+script = ExtResource("11_ilyv2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/GanchoPit" unique_id=323096496]
+shape = SubResource("BoxShape3D_oc5q1")
+
+[node name="HookArmored" type="CharacterBody3D" parent="Planta" unique_id=343658103 groups=["room_sleepers"] instance=ExtResource("33_1krf6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 28)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("20_do24o")
+config = ExtResource("34_cjedn")
+
+[node name="HookEye" type="Area3D" parent="Planta" unique_id=807553339 instance=ExtResource("5_iwn1m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 30)
+script = ExtResource("6_ue4tp")
+mode = 1
+flag = &"te_eye_hook"
+
+[node name="MirrorTurret" type="StaticBody3D" parent="Planta" unique_id=1099961256 groups=["room_sleepers"] instance=ExtResource("35_ycq0f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, 30)
+collision_layer = 5
+script = ExtResource("36_ypy2f")
+config = ExtResource("37_s4egn")
+
+[node name="MirrorCrystal" type="StaticBody3D" parent="Planta" unique_id=640870978 instance=ExtResource("24_2frbs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52, 0, 25.6)
+script = ExtResource("25_qyap5")
+flag = &"te_mirror_crystal"
+
+[node name="MirrorDoor" type="StaticBody3D" parent="Planta" unique_id=1561748351 instance=ExtResource("9_lb8sh")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 64, 0, 30)
+script = ExtResource("10_8q16s")
+kind = 3
+switches = Array[NodePath]([NodePath("../MirrorCrystal")])
+depth = 2.0
+
+[node name="MirrorLight" type="StaticBody3D" parent="Planta" unique_id=98012829 instance=ExtResource("38_m888e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68, 0, 33)
+
+[node name="MirrorEye" type="StaticBody3D" parent="Planta" unique_id=1692321546 instance=ExtResource("39_srmr6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76, 0, 27)
+script = ExtResource("40_pcqlr")
+latch = true
+flag = &"te_eye_mirror"
+
+[node name="HubSeal" type="StaticBody3D" parent="Planta" unique_id=1749636216 instance=ExtResource("9_lb8sh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 24)
+script = ExtResource("10_8q16s")
+kind = 3
+switches = Array[NodePath]([NodePath("../FeatherEye"), NodePath("../BowEye"), NodePath("../HookEye"), NodePath("../MirrorEye")])
+depth = 2.0
+
+[node name="AntesalaPot3515" type="Node3D" parent="Planta" unique_id=1100608506 instance=ExtResource("30_m6v74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0, 15)
+script = ExtResource("31_befet")
+drops = ExtResource("32_nu3dp")
+drop_height = 0.1
+
+[node name="AntesalaPot4515" type="Node3D" parent="Planta" unique_id=858112706 instance=ExtResource("30_m6v74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, 15)
+script = ExtResource("31_befet")
+drops = ExtResource("32_nu3dp")
+drop_height = 0.1
+
+[node name="AntesalaPot3521" type="Node3D" parent="Planta" unique_id=489408177 instance=ExtResource("30_m6v74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0, 21)
+script = ExtResource("31_befet")
+drops = ExtResource("32_nu3dp")
+drop_height = 0.1
+
+[node name="AntesalaPot4521" type="Node3D" parent="Planta" unique_id=1507913463 instance=ExtResource("30_m6v74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, 21)
+script = ExtResource("31_befet")
+drops = ExtResource("32_nu3dp")
+drop_height = 0.1
+
+[node name="HandDoor" type="StaticBody3D" parent="Planta" unique_id=1994339639 instance=ExtResource("9_lb8sh")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 48, 0, 18)
+script = ExtResource("10_8q16s")
+depth = 2.0
+
+[node name="CombinedDoor" type="StaticBody3D" parent="Planta" unique_id=283373927 instance=ExtResource("9_lb8sh")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 32, 0, 18)
+script = ExtResource("10_8q16s")
+kind = 3
+depth = 2.0
+
+[node name="CombinedCrackedWall" type="StaticBody3D" parent="Planta" unique_id=708827518 instance=ExtResource("22_22l1c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 16)
+script = ExtResource("23_eh8au")
+flag = &"te_combined_cracked_wall"
+
+[node name="CombinedEye" type="StaticBody3D" parent="Planta" unique_id=384311694 instance=ExtResource("24_2frbs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 13.6)
+script = ExtResource("25_qyap5")
+flag = &"te_combined_eye"
+
+[node name="CombinedLight" type="StaticBody3D" parent="Planta" unique_id=173782861 instance=ExtResource("38_m888e")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 18, 0, 20)
+
+[node name="CombinedCrystal" type="StaticBody3D" parent="Planta" unique_id=1317349058 instance=ExtResource("39_srmr6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 22)
+script = ExtResource("40_pcqlr")
+latch = true
+flag = &"te_combined_crystal"
+
+[node name="CombinedPit" type="Area3D" parent="Planta" unique_id=1803310023]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, -1.2, 18)
+script = ExtResource("11_ilyv2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/CombinedPit" unique_id=2129506559]
+shape = SubResource("BoxShape3D_wyfw6")
+
+[node name="BossKeyGate" type="StaticBody3D" parent="Planta" unique_id=992159789 instance=ExtResource("26_5l3iu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 16)
+script = ExtResource("27_nroec")
+switches = Array[NodePath]([NodePath("../CombinedEye"), NodePath("../CombinedCrystal")])
+depth = 2.0
+
+[node name="BossKeyChest" type="StaticBody3D" parent="Planta" unique_id=1659985307 instance=ExtResource("14_kwpl7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 14)
+script = ExtResource("15_845xq")
+item = ExtResource("41_ank0x")
+flag = &"te_boss_key_chest"
+big = true
+
+[node name="BossDoor" type="StaticBody3D" parent="Planta" unique_id=824122003 instance=ExtResource("9_lb8sh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 12)
+script = ExtResource("10_8q16s")
+kind = 4
+flag = &"te_boss_door"
+depth = 2.0
+
+[node name="Torch_Jefe_0" type="Node3D" parent="Planta" unique_id=443925381 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.6, 1)
+
+[node name="Torch_Jefe_1" type="Node3D" parent="Planta" unique_id=1651687211 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 1.6, 1)
+
+[node name="Torch_Combinada_0" type="Node3D" parent="Planta" unique_id=809369513 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.6, 13)
+
+[node name="Torch_Combinada_1" type="Node3D" parent="Planta" unique_id=204382043 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 1.6, 13)
+
+[node name="Torch_Antesala_0" type="Node3D" parent="Planta" unique_id=1549584786 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.6, 13)
+
+[node name="Torch_Antesala_1" type="Node3D" parent="Planta" unique_id=388963611 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 1.6, 13)
+
+[node name="Torch_Mano_0" type="Node3D" parent="Planta" unique_id=1185026832 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52, 1.6, 13)
+
+[node name="Torch_Mano_1" type="Node3D" parent="Planta" unique_id=1063295127 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 1.6, 13)
+
+[node name="Torch_GanchoOjo_0" type="Node3D" parent="Planta" unique_id=525135661 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.6, 25)
+
+[node name="Torch_GanchoOjo_1" type="Node3D" parent="Planta" unique_id=1174136734 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.6, 25)
+
+[node name="Torch_Gancho_0" type="Node3D" parent="Planta" unique_id=596646939 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.6, 25)
+
+[node name="Torch_Gancho_1" type="Node3D" parent="Planta" unique_id=1212184714 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 1.6, 25)
+
+[node name="Torch_Hub_0" type="Node3D" parent="Planta" unique_id=1308989970 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.6, 25)
+
+[node name="Torch_Hub_1" type="Node3D" parent="Planta" unique_id=1961664521 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 1.6, 25)
+
+[node name="Torch_Espejo_0" type="Node3D" parent="Planta" unique_id=144702067 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52, 1.6, 25)
+
+[node name="Torch_Espejo_1" type="Node3D" parent="Planta" unique_id=801176040 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 1.6, 25)
+
+[node name="Torch_EspejoOjo_0" type="Node3D" parent="Planta" unique_id=1275707622 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68, 1.6, 25)
+
+[node name="Torch_EspejoOjo_1" type="Node3D" parent="Planta" unique_id=824600795 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76, 1.6, 25)
+
+[node name="Torch_PlumaOjo_0" type="Node3D" parent="Planta" unique_id=57953305 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.6, 37)
+
+[node name="Torch_PlumaOjo_1" type="Node3D" parent="Planta" unique_id=141609663 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.6, 37)
+
+[node name="Torch_Pluma_0" type="Node3D" parent="Planta" unique_id=423415237 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.6, 37)
+
+[node name="Torch_Pluma_1" type="Node3D" parent="Planta" unique_id=2025698461 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 1.6, 37)
+
+[node name="Torch_Vestibulo_0" type="Node3D" parent="Planta" unique_id=739804473 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.6, 37)
+
+[node name="Torch_Vestibulo_1" type="Node3D" parent="Planta" unique_id=1126768347 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 1.6, 37)
+
+[node name="Torch_Arco_0" type="Node3D" parent="Planta" unique_id=532584475 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52, 1.6, 37)
+
+[node name="Torch_Arco_1" type="Node3D" parent="Planta" unique_id=595724330 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 1.6, 37)
+
+[node name="Torch_ArcoOjo_0" type="Node3D" parent="Planta" unique_id=1763562695 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68, 1.6, 37)
+
+[node name="Torch_ArcoOjo_1" type="Node3D" parent="Planta" unique_id=1618832520 instance=ExtResource("42_eppxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76, 1.6, 37)
+
+[node name="Boss" type="Node3D" parent="." unique_id=285360790 instance=ExtResource("43_l2qle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 4.5)
+script = ExtResource("44_tiw1f")
+attacks = Array[ExtResource("45_vrfyu")]([ExtResource("46_6btj5"), ExtResource("47_nw8wq"), ExtResource("48_ewur0"), ExtResource("49_7bncd"), ExtResource("50_wgnm1")])
+
+[node name="BossExitPortal" type="Area3D" parent="." unique_id=1034165056 instance=ExtResource("51_43cnq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 7)
+script = ExtResource("52_0i344")
+target_scene = "res://levels/overworld.tscn"
+target_spawn = &"templo"
+required_flag = &"te_boss_defeated"
+travels = false
+
+[node name="BossArena" type="Node" parent="." unique_id=1442482810 node_paths=PackedStringArray("room", "boss", "door", "exit_portal")]
+script = ExtResource("53_2dht2")
+room = NodePath("../Planta/Jefe")
+defeated_flag = &"te_boss_defeated"
+container_flag = &"te_heart_container"
+boss = NodePath("../Boss")
+door = NodePath("../Planta/BossDoor")
+exit_portal = NodePath("../BossExitPortal")
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=1694148988 instance=ExtResource("54_jhn6u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 44)
+script = ExtResource("55_m178d")
+config = ExtResource("56_q50av")
+
+[node name="SpawnStart" type="Marker3D" parent="." unique_id=1347350948]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 44)
+script = ExtResource("57_5184v")
+
+[node name="ExitPortal" type="Area3D" parent="." unique_id=1850171865]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 49.4)
+script = ExtResource("52_0i344")
+target_scene = "res://levels/overworld.tscn"
+target_spawn = &"templo"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPortal" unique_id=1415539207]
+shape = SubResource("BoxShape3D_xctfo")
+
+[node name="TopDownCamera" type="Camera3D" parent="." unique_id=1048237834 node_paths=PackedStringArray("target_node")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 13.4, 51.7)
+fov = 40.0
+script = ExtResource("58_10kg3")
+target_node = NodePath("../Player")
+mask_margin = 2.0
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=613354597 instance=ExtResource("59_07stk")]
+layer = 10
+script = ExtResource("60_hnplg")
+solo_panel = ExtResource("61_6dq88")
+coop_panel = ExtResource("62_5bylj")
+item_ring = ExtResource("63_oqvbs")
+
+[node name="DoomAmbience" type="Node" parent="." unique_id=1483456077 instance=ExtResource("64_mhghd")]
+script = ExtResource("65_qmvvc")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=597154871]
+navigation_mesh = ExtResource("nav_templo")

@@ -2,14 +2,12 @@ class_name BossArena
 extends Node
 ## La guarida: al entrar se cierra la puerta, corre la intro (cámara al ojo, nombre, música) y arranca la pelea.
 ## La intro se salta con aceptar/atacar/interactuar. Al morir el player se recarga la escena y todo vuelve a empezar.
-## Vencido: flag `d1_boss_defeated` (abre el portal de salida), la sala se calma y aparece el contenedor de corazón.
+## Vencido: `defeated_flag` (abre el portal de salida), la sala se calma y aparece el contenedor de corazón.
 ## La puerta queda cerrada: el portal es la única salida y entrar abre el fin de la demo. Al volver a cargar el jefe
 ## ya no está, salvo en la revancha (`GameState.boss_rematch`): pelea completa, sin otro contenedor.
 
 signal fight_started
 
-const DEFEATED_FLAG := &"d1_boss_defeated"
-const CONTAINER_FLAG := &"d1_heart_container"
 const PICKUP := preload("res://src/world/pickup.tscn")
 const HEART_CONTAINER := preload("res://data/items/heart_container.tres")
 const ENDING := preload("res://data/dialogue/ending.dialogue")
@@ -19,6 +17,8 @@ const CALM_DOOM := 0.2
 const SKIP_ACTIONS: Array[StringName] = [&"ui_accept", &"attack", &"interact"]
 
 @export var room: Room
+@export var defeated_flag := &"d1_boss_defeated"
+@export var container_flag := &"d1_heart_container"
 @export var boss: Boss
 @export var door: Door
 @export var exit_portal: Portal
@@ -40,7 +40,7 @@ var ending_choice := ""
 func _ready() -> void:
 	process_mode = PROCESS_MODE_ALWAYS
 	exit_portal.player_entered.connect(_on_exit)
-	if GameState.get_flag(DEFEATED_FLAG) == true and not GameState.boss_rematch:
+	if GameState.get_flag(defeated_flag) == true and not GameState.boss_rematch:
 		_already_won()
 		return
 	var bounds := room.bounds().grow(-1.5)
@@ -98,11 +98,11 @@ func _on_defeated() -> void:
 
 
 func _on_death_finished() -> void:
-	GameState.set_flag(DEFEATED_FLAG, true)
+	GameState.set_flag(defeated_flag, true)
 	room.doom = CALM_DOOM
 	var reward_point := boss.global_position + reward_offset
 	boss.queue_free()
-	if GameState.get_flag(CONTAINER_FLAG) != true:
+	if GameState.get_flag(container_flag) != true:
 		_spawn_reward(reward_point)
 	Feel.sfx(&"secret", reward_point)
 	if GameState.boss_rematch:
@@ -117,7 +117,7 @@ func _already_won() -> void:
 	door.close(false)
 	var reward_point := boss.global_position + reward_offset
 	boss.queue_free()
-	if GameState.get_flag(CONTAINER_FLAG) != true:
+	if GameState.get_flag(container_flag) != true:
 		_spawn_reward(reward_point)
 
 
@@ -134,7 +134,7 @@ func _spawn_reward(point: Vector3) -> void:
 
 
 func _on_reward_taken() -> void:
-	GameState.set_flag(CONTAINER_FLAG, true)
+	GameState.set_flag(container_flag, true)
 
 
 ## Vuelve a cargar la arena con el jefe vivo; el player aparece adentro, junto a la puerta.
