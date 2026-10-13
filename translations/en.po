@@ -528,6 +528,15 @@ msgstr "Assign them to a button and hold it: you wind up and run straight until 
 msgid "ITEM_SANDALS_GOT"
 msgstr "You got the Sandals!"
 
+msgid "ITEM_HOOKSHOT_NAME"
+msgstr "Hookshot"
+
+msgid "ITEM_HOOKSHOT_DESC"
+msgstr "Fires a chain four tiles long. It bites into posts and chests and pulls you there, over water and pits. It brings back pots and loose things, stuns enemies and tears the armor off armored skeletons."
+
+msgid "ITEM_HOOKSHOT_GOT"
+msgstr "You got the Hookshot!"
+
 msgid "ITEM_BOMB_NAME"
 msgstr "Bombs"
 

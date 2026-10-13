@@ -2999,16 +2999,26 @@ Después de vencer al jefe, el overworld tiene que verse y sonar distinto (sin d
 
 **Relacionadas:** 10.19 Fin de la demo
 
-### 11.30 Ítem post-MVP: gancho o telequinesis · Pendiente
+### 11.30 Ítem de D3: el gancho · En curso
 
-**Prioridad:** baja · **Etiquetas:** `items`
+**Prioridad:** alta · **Etiquetas:** `items`
 
 Un ítem post-MVP: gancho o algo que mueva objetos a distancia (GDD §6.1), con uso en combate y que abra lugares que antes no se podían.
 
 - [x] Elegir el ítem
   Gancho. Decidido el 2026-10-11 para D2; el 2026-10-12 (11.90) pasa a ser el ítem de D3 (Laguna), y la pluma va a D2. Se engancha a postes y cofres y lleva al player; a enemigos livianos los trae; cruza abismos de 4 m; también quita la armadura del esqueleto acorazado (la bomba sigue sirviendo).
-- [ ] Comportamiento y puzzles
-  ItemBehavior nuevo + 2–3 usos en el mundo.
+- [x] Comportamiento del gancho
+  Hecho el 2026-10-13 (Daniel: si, me gusta). HookBehavior: el botón pasa al estado Hooking del player y dispara Hook (src/items/hookshot/hook.tscn), que sale recto 8 m (4 baldosas). En un HookPost (src/world/hook_post.tscn) o un cofre se clava y el player vuela hasta ahí a 14 m/s sin gravedad: cruza agua y huecos. Trae vasijas (se rompen a los pies), rocas y recolectables; la vasija grande viene de a una celda. Golpea con el elemento hook: 1 de daño y aturde 1,2 s, le baja el escudo al esqueleto con escudo y le arranca la coraza al acorazado sin dañarlo. Contra paredes rebota. test_hookshot (7).
+- [ ] Probarlo en el banco de pruebas (Daniel)
+  Escenario gancho (debug/scenarios/gancho.cfg): sandbox de ítems, zona GANCHO al sur: hueco de 6 m con un poste, isla con una vasija y una vasija grande, y otro poste para volver. Ajustar a ojo alcance, velocidades y aturdimiento.
+- [ ] Arte: modelo del gancho, del poste e ícono
+  Hoy son primitivas (punta de cobre, cuerda, poste de madera con argolla) y el ícono es el de la pluma.
+- [ ] D3, Santuario de Totora: plano y blockout
+  Aprobado el 2026-10-13: islas de totora sobre agua honda (el agua hace de pozo), unas 12 salas de 14 × 10 m en dos pisos. Primera mitad con pluma, arco y bombas; sub-jefe Amaru (serpiente joven, se vence sin el gancho) guarda el gancho; segunda mitad con postes, vasija grande, llave en un islote, acorazados y un ojo con tiempo. Jefe Yacumama: el gancho le arrastra la máscara a la orilla; fase 2, barrido de cola que se salta con la pluma.
+- [ ] Usos en el overworld (sesión del overworld)
+  Postes de la Quebrada Explanada ↔ Cumbre (D4) y la franja del Risco del ojo (carcaj grande), con src/world/hook_post.tscn.
+- [ ] Ala del gancho del templo
+  Gancho y GanchoOjo en levels/templo.tscn: postes sobre el abismo y el acorazado del ojo. Editar el grid y correr tools/la_walls.gd -- refresh templo (avisar a arte).
 
 **Prueba:** El ítem tiene un uso en combate y abre al menos dos lugares que antes no se podían.
 
@@ -3495,7 +3505,7 @@ Segunda mazmorra con pisos (y quizás sótanos) apilados en la misma escena, en 
 - [x] Sub-jefe que guarda la pluma, sin ítems
   Hecho el 2026-10-13 (Daniel aprobó la propuesta). Momia Guardiana (MummyGuard, src/entities/mummy_guard/; modelo provisorio de primitivas para arte) en 2SE: se acerca a saltitos, salta alto con la sombra siguiendo al player, cae con golpe y una onda corta que se esquiva alejándose, y queda trabada para la espada, bombas o vasijas. EyeFight pasa a ArenaFight (src/world/arena_fight.gd) y sirve para cualquier peleador. Vencida, su caída rompe el piso agrietado (CrackedWall con switches: las bombas ya no lo rompen) y se cae sobre la isla de la pluma, que es la sala contigua. Acertijo previo en 2SO sin arco: la puerta a 2SE la abren una placa de peso (vasija grande de 2NO) y una placa en un nicho detrás de un muro agrietado (bomba). La llave chica de B-SO abre ahora 2NO. Grafo con guard ch_mummy_defeated (pasa las reglas del molde); test_chullpa juega el acertijo y la pelea. GDD §8b. Falta recorrerla (paso 7) y el jefe saltando (paso 9), que sería la versión grande de la momia.
 
-**Relacionadas:** 11.30 Ítem post-MVP: gancho o telequinesis
+**Relacionadas:** 11.30 Ítem de D3: el gancho
 
 ### 11.61 Pluma en el overworld: lugares de salto · Hecho
 
@@ -4976,7 +4986,7 @@ Daniel (2026-10-13): la Chullpa real tiene la cámara vieja; el test LA (debug/l
 - [x] Queñoa: kit de árbol en estilo LA
   Hecho el 2026-10-13: bake con nueve formas nuevas (bf4d88b3); paredes bajas de 1,3 m con borde de hojas en nichos y reja del tronco (3b3aaa33, 11.113 paso 8); cofres en nicho mirando a la entrada y reja del tronco en la boca de la escalera (6566b7d6). El kit guarda los números de pieza al agregar formas. Navmesh rehecho; test_quenoa pasa.
 - [x] Templo del ojo en estilo LA
-  En espera (Daniel, 2026-10-13): se hace junto con su rediseño (11.113 paso 3), todo de una vez.
+  Hecho el 2026-10-13 (d5df3c44), después del rediseño de diseño (-43). Estilo propio: sillares lavanda en hiladas con cornisa dorada, crestas de piedra clara, puertas de losa con metal dorado, piso de lajas frías (templo_la_kit) y luz violeta tenue. El bake separa las salas por las paredes dobles: SpawnStart pasa a (44, 0, 52), test_portal lo sigue. test_templo, test_walk_doors, test_dungeon_reach, test_drop_holes, test_portal, test_overworld_run, test_temple_seal y test_coop_camera pasan.
 - [x] Puertas LA al ras de la pared
   Hecho el 2026-10-13 con Daniel en el recorrido (una puerta con llave parecía abierta). Puerta cerrada llena el paso, una hoja en cada cara (f25bdf02); hojas de madera de 3 m con bandas de hierro, cerradura, ojo de jefe/interruptor y persiana, inclinadas como su pared, bajan 3,2 m al abrir (3d08a58d). door.gd gana leaf_meshes y sink. El velo oscuro de los pasos ya no tapa al player (stencil).
 - [x] Bloque empujable y placa en estilo LA

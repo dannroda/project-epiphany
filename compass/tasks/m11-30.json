@@ -6,9 +6,34 @@
       "text": "Elegir el ítem"
     },
     {
-      "detail": "ItemBehavior nuevo + 2–3 usos en el mundo.",
+      "detail": "Hecho el 2026-10-13 (Daniel: si, me gusta). HookBehavior: el botón pasa al estado Hooking del player y dispara Hook (src/items/hookshot/hook.tscn), que sale recto 8 m (4 baldosas). En un HookPost (src/world/hook_post.tscn) o un cofre se clava y el player vuela hasta ahí a 14 m/s sin gravedad: cruza agua y huecos. Trae vasijas (se rompen a los pies), rocas y recolectables; la vasija grande viene de a una celda. Golpea con el elemento hook: 1 de daño y aturde 1,2 s, le baja el escudo al esqueleto con escudo y le arranca la coraza al acorazado sin dañarlo. Contra paredes rebota. test_hookshot (7).",
+      "done": true,
+      "text": "Comportamiento del gancho"
+    },
+    {
+      "detail": "Escenario gancho (debug/scenarios/gancho.cfg): sandbox de ítems, zona GANCHO al sur: hueco de 6 m con un poste, isla con una vasija y una vasija grande, y otro poste para volver. Ajustar a ojo alcance, velocidades y aturdimiento.",
       "done": false,
-      "text": "Comportamiento y puzzles"
+      "text": "Probarlo en el banco de pruebas (Daniel)"
+    },
+    {
+      "detail": "Hoy son primitivas (punta de cobre, cuerda, poste de madera con argolla) y el ícono es el de la pluma.",
+      "done": false,
+      "text": "Arte: modelo del gancho, del poste e ícono"
+    },
+    {
+      "detail": "Aprobado el 2026-10-13: islas de totora sobre agua honda (el agua hace de pozo), unas 12 salas de 14 × 10 m en dos pisos. Primera mitad con pluma, arco y bombas; sub-jefe Amaru (serpiente joven, se vence sin el gancho) guarda el gancho; segunda mitad con postes, vasija grande, llave en un islote, acorazados y un ojo con tiempo. Jefe Yacumama: el gancho le arrastra la máscara a la orilla; fase 2, barrido de cola que se salta con la pluma.",
+      "done": false,
+      "text": "D3, Santuario de Totora: plano y blockout"
+    },
+    {
+      "detail": "Postes de la Quebrada Explanada ↔ Cumbre (D4) y la franja del Risco del ojo (carcaj grande), con src/world/hook_post.tscn.",
+      "done": false,
+      "text": "Usos en el overworld (sesión del overworld)"
+    },
+    {
+      "detail": "Gancho y GanchoOjo en levels/templo.tscn: postes sobre el abismo y el acorazado del ojo. Editar el grid y correr tools/la_walls.gd -- refresh templo (avisar a arte).",
+      "done": false,
+      "text": "Ala del gancho del templo"
     }
   ],
   "code": "11.30",
@@ -23,18 +48,18 @@
   "milestone": "m11",
   "notes": "",
   "order": 30,
-  "priority": "low",
+  "priority": "high",
   "refs": [
     {
       "doc": "gdd.md",
       "section": "items-mvp"
     }
   ],
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "items"
   ],
   "test": "El ítem tiene un uso en combate y abre al menos dos lugares que antes no se podían.",
-  "title": "Ítem post-MVP: gancho o telequinesis",
-  "updated_at": "2026-10-12T17:48:43.357Z"
+  "title": "Ítem de D3: el gancho",
+  "updated_at": "2026-10-13T18:49:13.394Z"
 }

@@ -528,6 +528,15 @@ msgstr "Asignalas a un botón y mantenelo: toman impulso y corren recto hasta so
 msgid "ITEM_SANDALS_GOT"
 msgstr "¡Conseguiste las Sandalias!"
 
+msgid "ITEM_HOOKSHOT_NAME"
+msgstr "Gancho"
+
+msgid "ITEM_HOOKSHOT_DESC"
+msgstr "Dispara una cadena de cuatro baldosas. En un poste o un cofre se clava y te lleva hasta ahí, por encima del agua y los huecos. Trae vasijas y lo que esté suelto, aturde a los enemigos y le arranca la coraza al esqueleto acorazado."
+
+msgid "ITEM_HOOKSHOT_GOT"
+msgstr "¡Conseguiste el Gancho!"
+
 msgid "ITEM_BOMB_NAME"
 msgstr "Bombas"
 

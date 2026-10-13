@@ -1,0 +1,42 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/hook_post.gd" id="1_post"]
+
+[sub_resource type="StandardMaterial3D" id="Wood"]
+albedo_color = Color(0.42, 0.28, 0.17, 1)
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="Copper"]
+albedo_color = Color(0.78, 0.46, 0.24, 1)
+metallic = 0.6
+roughness = 0.4
+
+[sub_resource type="CylinderMesh" id="PostMesh"]
+material = SubResource("Wood")
+top_radius = 0.22
+bottom_radius = 0.26
+height = 1.6
+
+[sub_resource type="TorusMesh" id="RingMesh"]
+material = SubResource("Copper")
+inner_radius = 0.24
+outer_radius = 0.32
+
+[sub_resource type="CylinderShape3D" id="PostShape"]
+height = 1.6
+radius = 0.3
+
+[node name="HookPost" type="StaticBody3D"]
+script = ExtResource("1_post")
+
+[node name="Model" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+mesh = SubResource("PostMesh")
+
+[node name="Ring" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+mesh = SubResource("RingMesh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("PostShape")

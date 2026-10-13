@@ -47,7 +47,10 @@ func _setup() -> void:
 	add_transition($Moving, $Dashing, "dash")
 	add_transition($Dashing, $Idle, "finished")
 	add_transition($Dashing, $Jumping, "jump")
-	for state in [$Idle, $Moving, $Attacking, $Dodging, $UsingItem, $AimingItem, $AimingThrow, $Carrying, $Hurt, $Jumping, $Dashing]:
+	add_transition($Idle, $Hooking, "hook")
+	add_transition($Moving, $Hooking, "hook")
+	add_transition($Hooking, $Idle, "finished")
+	for state in [$Idle, $Moving, $Attacking, $Dodging, $UsingItem, $AimingItem, $AimingThrow, $Carrying, $Hurt, $Jumping, $Dashing, $Hooking]:
 		add_transition(state, $Transition, "transition")
 	add_transition($Transition, $Idle, "finished")
 	add_transition($Moving, $Pushing, "push")
@@ -55,7 +58,7 @@ func _setup() -> void:
 	add_transition($Idle, $ItemGet, "item_get")
 	add_transition($Moving, $ItemGet, "item_get")
 	add_transition($ItemGet, $Idle, "finished")
-	for state in [$Idle, $Moving, $Attacking, $Dodging, $UsingItem, $AimingItem, $AimingThrow, $Carrying, $Hurt, $Pushing, $Jumping, $Dashing]:
+	for state in [$Idle, $Moving, $Attacking, $Dodging, $UsingItem, $AimingItem, $AimingThrow, $Carrying, $Hurt, $Pushing, $Jumping, $Dashing, $Hooking]:
 		add_transition(state, $Grabbed, "grabbed")
 	add_transition($Grabbed, $Idle, "finished")
 
@@ -102,7 +105,7 @@ func _try_item(buffer: InputBuffer) -> bool:
 			return true
 		blackboard.set_var(PlayerState.BB_ITEM_BUTTON, i)
 		var behavior := player.usable_item(i).behavior
-		var event := "jump" if behavior is JumpBehavior else "dash" if behavior is DashBehavior else "aim_item" if behavior.hold_to_aim else "use_item"
+		var event := "jump" if behavior is JumpBehavior else "dash" if behavior is DashBehavior else "hook" if behavior is HookBehavior else "aim_item" if behavior.hold_to_aim else "use_item"
 		if dispatch(event):
 			buffer.consume(PlayerCharacter.ITEM_ACTIONS[i])
 			return true

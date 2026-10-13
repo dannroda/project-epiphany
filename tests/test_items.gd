@@ -1,7 +1,7 @@
 extends "res://tests/test_case.gd"
 
 const ITEMS_DIR := "res://data/items"
-const ITEM_COUNT := 25
+const ITEM_COUNT := 26
 
 
 func test_every_item_file_loads_with_its_id() -> void:

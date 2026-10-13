@@ -204,13 +204,13 @@ func is_armored() -> bool:
 	return config.armored and _armor != null and not is_dead
 
 
-## La coraza frena todo salvo explosiones; una explosión la vuela y lo deja aturdido.
+## La coraza frena todo salvo explosiones; una explosión la vuela y lo deja aturdido. El gancho se la arranca sin dañarlo.
 func _armor_stops(info: DamageInfo) -> bool:
 	if not is_armored():
 		return false
-	if info.element == &"explosive":
+	if info.element == &"explosive" or info.element == Hook.ELEMENT:
 		_break_armor()
-		return false
+		return info.element == Hook.ELEMENT
 	Feel.sfx(&"block", global_position)
 	var from := info.source.global_position if info.source else global_position + facing()
 	var toward := (from - global_position) * Vector3(1, 0, 1)
