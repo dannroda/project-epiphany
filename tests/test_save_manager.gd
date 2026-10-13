@@ -50,7 +50,15 @@ func test_missing_scene_loads_at_the_start_instead_of_hanging() -> void:
 	game_state.give(Items.get_item(&"bomb"), 4)
 	game_state.spawn_scene = "res://levels/ya_no_existe.tscn"
 	assert_eq(save_manager.save_game(SLOT, false), OK)
-	assert_eq(await save_manager.load_game(SLOT), OK, "carga igual")
+	var loaded := [false]
+	(func() -> void:
+		await save_manager.load_game(SLOT)
+		loaded[0] = true).call()
+	await tree.process_frame
+	assert_true(tree.paused, "mientras carga, la escena vieja queda en pausa: no lo matan en el medio")
+	while not loaded[0]:
+		await tree.process_frame
+	assert_true(not tree.paused and not MenuStack.is_open(), "y al llegar sigue el juego, sin game over")
 	assert_eq(tree.current_scene.scene_file_path, SceneFlow.NEW_GAME_SCENE, "en la escena del comienzo")
 	assert_eq(save_manager.loading, false, "y termina de cargar")
 	assert_eq(game_state.inventory.count(&"bomb"), 4, "con lo que tenía")

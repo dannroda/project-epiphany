@@ -2576,7 +2576,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (63/114)
+## M11 — Pulido: contenido y feel  (64/115)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4485,6 +4485,16 @@ Daniel (2026-10-13): con la pluma de D1, los islotes llevaban a D3 sin el arco y
 - [x] Tests (carrera, choque, salto largo: 3 baldosas sí, 4 no)
   Hecho el 2026-10-13: test_sandals (8): carrera, cancelar, choque con dash, 3 baldosas sí y 4 no en cajas planas (b5c13e2b); y en el overworld (09271dbb) cruza la angostura y los dos huecos de la Laguna hasta la isla de D3, y cae en el abismo del Risco. long_jump_speed 8,6.
 - [ ] Recorrido de Daniel (velocidades: corrida 9,5 m/s, salto largo 8,6 m/s)
+
+### 11.119 Cargar partida: la escena vieja sigue corriendo mientras carga · Hecho
+
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `guardado`
+
+SceneFlow.enter_saved_scene no pausaba como travel_to: mientras el nivel nuevo carga en un hilo, la escena vieja sigue y un enemigo puede matar al player; el game over queda abierto en la partida recién cargada. Pasaba en los tests (test_save_manager dejaba el árbol pausado con GameOver y tiraba test_player y test_quenoa en el mismo proceso desde que el overworld tarda más en cargar).
+
+**Prueba:** test_save_manager › test_missing_scene_loads_at_the_start_instead_of_hanging: en pausa mientras carga, sin game over al llegar.
+
+**Notas:** Además: GameState.read_from ya no pide player/position con default null (Godot lo toma como sin default y tira ERROR).
 
 ## M12 — Assets propios (Blender)  (6/18)
 

@@ -342,7 +342,7 @@ func read_from(cfg: ConfigFile) -> void:
 	spawn_scene = _scene_path(get_typed.call("player", "spawn_uid", ""), get_typed.call("player", "spawn_scene", ""))
 	spawn_point = get_typed.call("player", "spawn_point", &"")
 	current_dungeon = get_typed.call("player", "current_dungeon", &"")
-	if typeof(cfg.get_value("player", "position", null)) == TYPE_VECTOR3:
+	if cfg.has_section_key("player", "position") and cfg.get_value("player", "position") is Vector3:
 		player_position = cfg.get_value("player", "position")
 	for id in _keys(cfg, "inventory"):
 		var count: int = get_typed.call("inventory", id, 0)

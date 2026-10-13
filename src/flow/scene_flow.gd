@@ -143,6 +143,7 @@ func quit_to_title() -> void:
 
 ## La escena y el lugar que dice GameState (al cargar una partida o empezar una nueva).
 ## Siempre se recarga, aunque sea la misma: puertas e interruptores arrancan con los flags de la partida.
+## Mientras carga, la escena vieja queda en pausa (que no maten al player en el medio).
 func enter_saved_scene() -> void:
 	if not GameState.spawn_scene.is_empty() and not ResourceLoader.exists(GameState.spawn_scene):
 		Log.error(&"flow", "La escena de la partida ya no existe:", GameState.spawn_scene)
@@ -150,10 +151,14 @@ func enter_saved_scene() -> void:
 		GameState.spawn_point = &"start"
 		GameState.player_position = null
 	traveling = true
+	get_tree().paused = true
+	var changed := true
 	if not GameState.spawn_scene.is_empty():
-		if not await _change_scene(GameState.spawn_scene):
-			traveling = false
-			return
+		changed = await _change_scene(GameState.spawn_scene)
+	get_tree().paused = MenuStack.is_open()
+	if not changed:
+		traveling = false
+		return
 	if not Players.all.is_empty() and GameState.player_position != null:
 		place_players(GameState.player_position)
 	elif GameState.spawn_point != &"":
