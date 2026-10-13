@@ -4388,6 +4388,7 @@ Daniel (2026-10-12): el jefe del ojo se pensó como fin de demo, así que tiene 
 - [x] D2: segunda mitad de la Queñoa con la pluma
   Hecho el 2026-10-13 (4ed4b97d, Daniel: si). Raíces: un ojo con tiempo (6 s) abre la reja RaicesGate, rodeada de huecos frente a la puerta a la Sala de los ojos: flecha, salto con la pluma y pasar antes de que se cierre; una placa del otro lado (qv_eyes_step) la deja abierta para volver. Sala de los ojos: el nicho de la llave del jefe queda tras una fila de huecos (bomba, arco y pluma). Grafo y test_quenoa al día. Falta: que Daniel lo recorra y ajuste el tiempo del ojo.
 - [ ] Templo: escena y salas (sin el ala del gancho)
+  Hecho el 2026-10-13 (af952662): levels/templo.tscn con 14 salas de 14 × 10 m (jefe 22 × 10), armada con debug/tmp/build_templo.gd en el kit gris (arte le pone el estilo LA al final, 12.18 paso 3). Vestíbulo, alas de la pluma, del arco y del espejo, sello de los cuatro ojos, combinada y jefe con flags te_. El ala del gancho queda tapada por un abismo hasta 11.30. test_templo (7). Falta: la Mano (paso 12) y apuntar el grafo templo_graph.tres a la escena cuando esté completa.
 - [ ] Templo: la Mano, sub-jefe
 - [ ] Templo: ala del gancho (con 11.30)
 - [ ] Templo: el portal del overworld al templo nuevo

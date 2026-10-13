@@ -50,7 +50,8 @@
       "text": "D2: segunda mitad de la Queñoa con la pluma"
     },
     {
-      "done": false,
+      "detail": "Hecho el 2026-10-13 (af952662): levels/templo.tscn con 14 salas de 14 × 10 m (jefe 22 × 10), armada con debug/tmp/build_templo.gd en el kit gris (arte le pone el estilo LA al final, 12.18 paso 3). Vestíbulo, alas de la pluma, del arco y del espejo, sello de los cuatro ojos, combinada y jefe con flags te_. El ala del gancho queda tapada por un abismo hasta 11.30. test_templo (7). Falta: la Mano (paso 12) y apuntar el grafo templo_graph.tres a la escena cuando esté completa.",
+      "done": true,
       "text": "Templo: escena y salas (sin el ala del gancho)"
     },
     {
@@ -81,5 +82,5 @@
   ],
   "test": "",
   "title": "El templo del ojo pasa a ser la última mazmorra",
-  "updated_at": "2026-10-13T07:18:54.591Z"
+  "updated_at": "2026-10-13T07:30:00.071Z"
 }
