@@ -9,15 +9,15 @@
 [ext_resource type="PackedScene" path="res://src/world/eye_switch.tscn" id="7_crhmt"]
 [ext_resource type="Script" path="res://src/world/door.gd" id="7_wvyc0"]
 [ext_resource type="Material" path="res://src/world/look/marca_visible.tres" id="8_41w6x"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_llave_la.res" id="9_3eapi"]
 [ext_resource type="Texture2D" path="res://assets/ui/lock.svg" id="9_41w6x"]
 [ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="9_i77fr"]
 [ext_resource type="Script" path="res://src/components/interactable.gd" id="10_u66i5"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="11_5ogbh"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_jefe_la.res" id="13_41w6x"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_llave_quenoa_la.res" id="11_lvm7h"]
 [ext_resource type="Resource" path="res://data/items/small_key.tres" id="13_vcwjq"]
 [ext_resource type="Script" path="res://src/entities/watcher_eye/watcher_eye.gd" id="14_qikql"]
 [ext_resource type="PackedScene" path="res://src/world/cracked_wall_templo.tscn" id="14_y54qy"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_jefe_quenoa_la.res" id="15_3db8p"]
 [ext_resource type="Resource" path="res://data/items/boss_key.tres" id="16_8x4vj"]
 [ext_resource type="Script" path="res://src/world/pickup.gd" id="17_borgw"]
 [ext_resource type="PackedScene" path="res://src/entities/enemy.tscn" id="17_r43r1"]
@@ -62,8 +62,8 @@
 [ext_resource type="Resource" path="res://data/drops/pot.tres" id="51_620bx"]
 [ext_resource type="Resource" path="res://data/entities/watcher_eye.tres" id="55_xuy7a"]
 [ext_resource type="Script" path="res://player/player.gd" id="58_tw10w"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_interruptor_la.res" id="58_u66i5"]
 [ext_resource type="Resource" path="res://data/entities/player.tres" id="59_qfyna"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_interruptor_quenoa_la.res" id="61_4k5gr"]
 [ext_resource type="Script" path="res://src/world/look/enfoque_la.gd" id="62_b5g6x"]
 [ext_resource type="PackedScene" path="res://src/world/look/caida_la.tscn" id="63_borgw"]
 [ext_resource type="Script" path="res://src/ui/hud/hud.gd" id="64_1o0uj"]
@@ -818,7 +818,7 @@ script = ExtResource("7_wvyc0")
 kind = 1
 flag = &"qv_roots_locked_door"
 depth = 4.0
-leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_la.res"
+leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_quenoa_la.res"
 sink = 3.2
 
 [node name="Leaf" parent="PisoRaices/RaicesLocked" index="0"]
@@ -826,14 +826,14 @@ unique_name_in_owner = true
 
 [node name="LeafMesh" parent="PisoRaices/RaicesLocked/Leaf" index="0"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.76)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.7436354)
 material_overlay = ExtResource("8_41w6x")
-mesh = ExtResource("9_3eapi")
+mesh = ExtResource("11_lvm7h")
 
 [node name="LeafBackLA" type="MeshInstance3D" parent="PisoRaices/RaicesLocked/Leaf" index="1" unique_id=1032337995]
-transform = Transform3D(-1, 1.4570463e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.16666667, -1, -1.538641e-07, 0, -1.76)
+transform = Transform3D(-1, 1.4570463e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.16666667, -1, -1.5243344e-07, 0, -1.7436354)
 material_overlay = ExtResource("8_41w6x")
-mesh = ExtResource("9_3eapi")
+mesh = ExtResource("11_lvm7h")
 
 [node name="SouthMark" parent="PisoRaices/RaicesLocked" index="1"]
 unique_name_in_owner = true
@@ -866,7 +866,7 @@ script = ExtResource("7_wvyc0")
 kind = 4
 flag = &"qv_boss_door"
 depth = 4.0
-leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_la.res"
+leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_quenoa_la.res"
 sink = 3.2
 
 [node name="Leaf" parent="PisoRaices/BossDoor" index="0"]
@@ -874,14 +874,14 @@ unique_name_in_owner = true
 
 [node name="LeafMesh" parent="PisoRaices/BossDoor/Leaf" index="0"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.75)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.739423)
 material_overlay = ExtResource("8_41w6x")
-mesh = ExtResource("13_41w6x")
+mesh = ExtResource("15_3db8p")
 
 [node name="LeafBackLA" type="MeshInstance3D" parent="PisoRaices/BossDoor/Leaf" index="1" unique_id=2143672117]
-transform = Transform3D(-1, 4.0797296e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.46666667, -1, -1.5298986e-07, 0, -1.75)
+transform = Transform3D(-1, 4.0797296e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.46666667, -1, -1.520652e-07, 0, -1.739423)
 material_overlay = ExtResource("8_41w6x")
-mesh = ExtResource("13_41w6x")
+mesh = ExtResource("15_3db8p")
 
 [node name="SouthMark" parent="PisoRaices/BossDoor" index="1"]
 unique_name_in_owner = true
@@ -1378,7 +1378,7 @@ script = ExtResource("7_wvyc0")
 kind = 1
 flag = &"qv_entrance_locked_door"
 depth = 4.0
-leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_la.res"
+leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_quenoa_la.res"
 sink = 3.2
 
 [node name="Leaf" parent="PisoTronco/EntradaLocked" index="0"]
@@ -1386,14 +1386,14 @@ unique_name_in_owner = true
 
 [node name="LeafMesh" parent="PisoTronco/EntradaLocked/Leaf" index="0"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.76)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.7436354)
 material_overlay = ExtResource("8_41w6x")
-mesh = ExtResource("9_3eapi")
+mesh = ExtResource("11_lvm7h")
 
 [node name="LeafBackLA" type="MeshInstance3D" parent="PisoTronco/EntradaLocked/Leaf" index="1" unique_id=2144918348]
-transform = Transform3D(-1, 4.0797296e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.46666667, -1, -1.538641e-07, 0, -1.76)
+transform = Transform3D(-1, 4.0797296e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.46666667, -1, -1.5243344e-07, 0, -1.7436354)
 material_overlay = ExtResource("8_41w6x")
-mesh = ExtResource("9_3eapi")
+mesh = ExtResource("11_lvm7h")
 
 [node name="SouthMark" parent="PisoTronco/EntradaLocked" index="1"]
 unique_name_in_owner = true
@@ -1958,7 +1958,7 @@ script = ExtResource("7_wvyc0")
 kind = 1
 flag = &"qv_canopy_locked_door"
 depth = 4.0
-leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_la.res"
+leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_quenoa_la.res"
 sink = 3.2
 
 [node name="Leaf" parent="PisoCopa/CopaLocked" index="0"]
@@ -1966,14 +1966,14 @@ unique_name_in_owner = true
 
 [node name="LeafMesh" parent="PisoCopa/CopaLocked/Leaf" index="0"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.76)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.7436354)
 material_overlay = ExtResource("8_41w6x")
-mesh = ExtResource("9_3eapi")
+mesh = ExtResource("11_lvm7h")
 
 [node name="LeafBackLA" type="MeshInstance3D" parent="PisoCopa/CopaLocked/Leaf" index="1" unique_id=1249190719]
-transform = Transform3D(-1, 4.0797296e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.46666667, -1, -1.538641e-07, 0, -1.76)
+transform = Transform3D(-1, 4.0797296e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.46666667, -1, -1.5243344e-07, 0, -1.7436354)
 material_overlay = ExtResource("8_41w6x")
-mesh = ExtResource("9_3eapi")
+mesh = ExtResource("11_lvm7h")
 
 [node name="SouthMark" parent="PisoCopa/CopaLocked" index="1"]
 unique_name_in_owner = true
@@ -2056,7 +2056,7 @@ kind = 3
 room = NodePath("../Vigia")
 switches = Array[NodePath]([NodePath("../WardenFight")])
 depth = 4.0
-leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_la.res"
+leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_quenoa_la.res"
 sink = 3.2
 
 [node name="Leaf" parent="PisoCopa/ArcoDoor" index="0"]
@@ -2066,12 +2066,12 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.75)
 material_overlay = ExtResource("8_41w6x")
-mesh = ExtResource("58_u66i5")
+mesh = ExtResource("61_4k5gr")
 
 [node name="LeafBackLA" type="MeshInstance3D" parent="PisoCopa/ArcoDoor/Leaf" index="1" unique_id=1916113099]
 transform = Transform3D(-1, 1.4570463e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.16666667, -1, -1.5298986e-07, 0, -1.75)
 material_overlay = ExtResource("8_41w6x")
-mesh = ExtResource("58_u66i5")
+mesh = ExtResource("61_4k5gr")
 
 [node name="SouthMark" parent="PisoCopa/ArcoDoor" index="1"]
 unique_name_in_owner = true
@@ -2387,11 +2387,11 @@ script = ExtResource("41_5ia7f")
 color = Color(1.35, 1.15, 0.9, 1)
 radius = 3.0
 
-[node name="CaidaLA30" type="Node3D" parent="PisoCopa" unique_id=1568608498 instance=ExtResource("63_borgw")]
+[node name="CaidaLA30" type="Node3D" parent="PisoCopa" unique_id=1635214714 instance=ExtResource("63_borgw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 14)
 script = ExtResource("64_lvm7h")
 
-[node name="CaidaLA31" type="Node3D" parent="PisoCopa" unique_id=1862653851 instance=ExtResource("63_borgw")]
+[node name="CaidaLA31" type="Node3D" parent="PisoCopa" unique_id=1982358382 instance=ExtResource("63_borgw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 28)
 script = ExtResource("64_lvm7h")
 
@@ -2430,7 +2430,7 @@ south_wall_reach = 1.7
 script = ExtResource("62_b5g6x")
 near_margin = 3.5
 
-[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1567232833 instance=ExtResource("71_lvm7h")]
+[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=431266646 instance=ExtResource("71_lvm7h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=960326471 instance=ExtResource("46_kifxg")]

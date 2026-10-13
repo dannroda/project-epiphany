@@ -16,10 +16,10 @@
 [ext_resource type="Script" path="res://src/world/door.gd" id="13_crkrm"]
 [ext_resource type="Material" path="res://src/world/look/marca_visible.tres" id="14_ht767"]
 [ext_resource type="Texture2D" path="res://assets/ui/lock.svg" id="15_ht767"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_jefe_la.res" id="15_j20n3"]
 [ext_resource type="PackedScene" path="res://src/world/wall_torch.tscn" id="15_mw81a"]
 [ext_resource type="Script" path="res://src/components/interactable.gd" id="16_mo6ti"]
 [ext_resource type="Resource" path="res://data/items/feather.tres" id="16_syx8m"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_jefe_chullpa_la.res" id="17_308dp"]
 [ext_resource type="PackedScene" path="res://src/world/floor_switch.tscn" id="17_rjinf"]
 [ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="19_7rkw0"]
 [ext_resource type="Script" path="res://src/world/stairs.gd" id="19_iyg24"]
@@ -33,13 +33,10 @@
 [ext_resource type="PackedScene" path="res://src/world/heart_piece.tscn" id="26_ht767"]
 [ext_resource type="Script" path="res://src/world/floor_switch.gd" id="27_iuiyr"]
 [ext_resource type="Script" path="res://src/world/breakable.gd" id="29_86iea"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_interruptor_la.res" id="29_ht767"]
 [ext_resource type="Resource" path="res://data/drops/pot.tres" id="30_4g78b"]
 [ext_resource type="PackedScene" path="res://src/entities/enemy.tscn" id="30_gc68l"]
 [ext_resource type="Script" path="res://src/world/cracked_wall.gd" id="33_3iwqa"]
 [ext_resource type="PackedScene" path="res://player/player.tscn" id="33_iuiyr"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_llave_la.res" id="34_mo6ti"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_madera_la.res" id="35_iyg24"]
 [ext_resource type="Script" path="res://src/world/big_pot.gd" id="35_q5kf3"]
 [ext_resource type="Script" path="res://src/world/spawn_point.gd" id="36_3iwqa"]
 [ext_resource type="Script" path="res://src/world/portal.gd" id="37_q5kf3"]
@@ -60,6 +57,7 @@
 [ext_resource type="Script" path="res://src/entities/enemy.gd" id="47_lhowt"]
 [ext_resource type="Resource" path="res://data/entities/skeleton.tres" id="48_308dp"]
 [ext_resource type="Script" path="res://player/player.gd" id="50_ier5i"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_interruptor_chullpa_la.res" id="50_yesgf"]
 [ext_resource type="Resource" path="res://data/entities/player.tres" id="51_yesgf"]
 [ext_resource type="Script" path="res://src/world/look/enfoque_la.gd" id="55_bkpqy"]
 [ext_resource type="Script" path="res://src/world/gate.gd" id="56_lhowt"]
@@ -70,6 +68,8 @@
 [ext_resource type="PackedScene" path="res://src/world/look/caida_la.tscn" id="60_lhowt"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/item_ring.tscn" id="60_pucgk"]
 [ext_resource type="Script" path="res://src/world/look/caida_la.gd" id="61_308dp"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_llave_chullpa_la.res" id="62_bkpqy"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_madera_chullpa_la.res" id="63_6dghf"]
 [ext_resource type="Script" path="res://src/world/look/brillo_la.gd" id="63_n1d8o"]
 [ext_resource type="PackedScene" path="res://src/world/pickup.tscn" id="70_pickup"]
 [ext_resource type="Script" path="res://src/world/pickup.gd" id="71_pickupgd"]
@@ -928,7 +928,7 @@ script = ExtResource("13_crkrm")
 kind = 4
 flag = &"ch_boss_door"
 depth = 4.0
-leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_la.res"
+leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_chullpa_la.res"
 sink = 3.2
 
 [node name="Leaf" parent="Sotano/BossDoor" index="0"]
@@ -938,12 +938,12 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.75)
 material_overlay = ExtResource("14_ht767")
-mesh = ExtResource("15_j20n3")
+mesh = ExtResource("17_308dp")
 
 [node name="LeafBackLA" type="MeshInstance3D" parent="Sotano/BossDoor/Leaf" index="1" unique_id=133905942]
 transform = Transform3D(-1, 1.4570463e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.16666667, -1, -1.5298986e-07, 0, -1.75)
 material_overlay = ExtResource("14_ht767")
-mesh = ExtResource("15_j20n3")
+mesh = ExtResource("17_308dp")
 
 [node name="SouthMark" parent="Sotano/BossDoor" index="1"]
 unique_name_in_owner = true
@@ -1621,7 +1621,7 @@ script = ExtResource("13_crkrm")
 kind = 3
 switches = Array[NodePath]([NodePath("../OsarioSwitch")])
 depth = 4.0
-leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_la.res"
+leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_chullpa_la.res"
 sink = 3.2
 
 [node name="Leaf" parent="PlantaBaja/OsarioDoor" index="0"]
@@ -1631,12 +1631,12 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.75)
 material_overlay = ExtResource("14_ht767")
-mesh = ExtResource("29_ht767")
+mesh = ExtResource("50_yesgf")
 
 [node name="LeafBackLA" type="MeshInstance3D" parent="PlantaBaja/OsarioDoor/Leaf" index="1" unique_id=934705364]
 transform = Transform3D(-1, 4.0797296e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.46666667, -1, -1.5298986e-07, 0, -1.75)
 material_overlay = ExtResource("14_ht767")
-mesh = ExtResource("29_ht767")
+mesh = ExtResource("50_yesgf")
 
 [node name="SouthMark" parent="PlantaBaja/OsarioDoor" index="1"]
 unique_name_in_owner = true
@@ -2039,27 +2039,27 @@ collision_mask = 5
 script = ExtResource("47_lhowt")
 config = ExtResource("48_308dp")
 
-[node name="CaidaLA34" type="Node3D" parent="PlantaBaja" unique_id=1683645483 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA34" type="Node3D" parent="PlantaBaja" unique_id=2123004043 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 22)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA35" type="Node3D" parent="PlantaBaja" unique_id=1156845153 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA35" type="Node3D" parent="PlantaBaja" unique_id=1498940176 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 28)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA36" type="Node3D" parent="PlantaBaja" unique_id=941155238 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA36" type="Node3D" parent="PlantaBaja" unique_id=290110733 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 34)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA37" type="Node3D" parent="PlantaBaja" unique_id=1925542000 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA37" type="Node3D" parent="PlantaBaja" unique_id=1431369215 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 22)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA38" type="Node3D" parent="PlantaBaja" unique_id=394486234 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA38" type="Node3D" parent="PlantaBaja" unique_id=537635413 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 28)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA39" type="Node3D" parent="PlantaBaja" unique_id=238908599 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA39" type="Node3D" parent="PlantaBaja" unique_id=1588148215 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 34)
 script = ExtResource("61_308dp")
 
@@ -2213,7 +2213,7 @@ script = ExtResource("13_crkrm")
 kind = 1
 flag = &"ch_leaps_locked_door"
 depth = 4.0
-leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_la.res"
+leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_chullpa_la.res"
 sink = 3.2
 
 [node name="Leaf" parent="PisoAlto/SaltosLocked" index="0"]
@@ -2223,12 +2223,12 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.76)
 material_overlay = ExtResource("14_ht767")
-mesh = ExtResource("34_mo6ti")
+mesh = ExtResource("62_bkpqy")
 
 [node name="LeafBackLA" type="MeshInstance3D" parent="PisoAlto/SaltosLocked/Leaf" index="1" unique_id=1944795030]
 transform = Transform3D(-1, 4.0797296e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.46666667, -1, -1.538641e-07, 0, -1.76)
 material_overlay = ExtResource("14_ht767")
-mesh = ExtResource("34_mo6ti")
+mesh = ExtResource("62_bkpqy")
 
 [node name="SouthMark" parent="PisoAlto/SaltosLocked" index="1"]
 unique_name_in_owner = true
@@ -2261,7 +2261,7 @@ script = ExtResource("13_crkrm")
 kind = 3
 switches = Array[NodePath]([NodePath("../RellanoWeight"), NodePath("../RellanoStep")])
 depth = 4.0
-leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_la.res"
+leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_chullpa_la.res"
 sink = 3.2
 
 [node name="Leaf" parent="PisoAlto/AgrietadaDoor" index="0"]
@@ -2271,12 +2271,12 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.75)
 material_overlay = ExtResource("14_ht767")
-mesh = ExtResource("29_ht767")
+mesh = ExtResource("50_yesgf")
 
 [node name="LeafBackLA" type="MeshInstance3D" parent="PisoAlto/AgrietadaDoor/Leaf" index="1" unique_id=1636819224]
 transform = Transform3D(-1, 1.4570463e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.16666667, -1, -1.5298986e-07, 0, -1.75)
 material_overlay = ExtResource("14_ht767")
-mesh = ExtResource("29_ht767")
+mesh = ExtResource("50_yesgf")
 
 [node name="SouthMark" parent="PisoAlto/AgrietadaDoor" index="1"]
 unique_name_in_owner = true
@@ -2307,7 +2307,7 @@ script = ExtResource("41_pflag")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 19)
 script = ExtResource("13_crkrm")
 depth = 4.0
-leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_la.res"
+leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_chullpa_la.res"
 sink = 3.2
 
 [node name="Leaf" parent="PisoAlto/MiradorDoor" index="0"]
@@ -2315,14 +2315,14 @@ unique_name_in_owner = true
 
 [node name="LeafMesh" parent="PisoAlto/MiradorDoor/Leaf" index="0"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.775)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.815)
 material_overlay = ExtResource("14_ht767")
-mesh = ExtResource("35_iyg24")
+mesh = ExtResource("63_6dghf")
 
 [node name="LeafBackLA" type="MeshInstance3D" parent="PisoAlto/MiradorDoor/Leaf" index="1" unique_id=1021151656]
-transform = Transform3D(-1, 4.0797296e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.46666667, -1, -1.5517543e-07, 0, -1.775)
+transform = Transform3D(-1, 4.0797296e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.46666667, -1, -1.5867235e-07, 0, -1.815)
 material_overlay = ExtResource("14_ht767")
-mesh = ExtResource("35_iyg24")
+mesh = ExtResource("63_6dghf")
 
 [node name="SouthMark" parent="PisoAlto/MiradorDoor" index="1"]
 unique_name_in_owner = true
@@ -2698,39 +2698,39 @@ collision_mask = 5
 script = ExtResource("47_lhowt")
 config = ExtResource("46_baen8")
 
-[node name="CaidaLA31" type="Node3D" parent="PisoAlto" unique_id=664709864 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA31" type="Node3D" parent="PisoAlto" unique_id=212401799 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 8)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA32" type="Node3D" parent="PisoAlto" unique_id=1547969966 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA32" type="Node3D" parent="PisoAlto" unique_id=1445825515 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 8)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA33" type="Node3D" parent="PisoAlto" unique_id=934101859 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA33" type="Node3D" parent="PisoAlto" unique_id=1375841425 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 8)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA34" type="Node3D" parent="PisoAlto" unique_id=760706715 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA34" type="Node3D" parent="PisoAlto" unique_id=611528400 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 8)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA35" type="Node3D" parent="PisoAlto" unique_id=980748081 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA35" type="Node3D" parent="PisoAlto" unique_id=957332926 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 12)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA36" type="Node3D" parent="PisoAlto" unique_id=8289912 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA36" type="Node3D" parent="PisoAlto" unique_id=2002159481 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 12)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA37" type="Node3D" parent="PisoAlto" unique_id=630752297 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA37" type="Node3D" parent="PisoAlto" unique_id=1477387807 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 30)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA38" type="Node3D" parent="PisoAlto" unique_id=1324799588 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA38" type="Node3D" parent="PisoAlto" unique_id=1888437188 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 12)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA39" type="Node3D" parent="PisoAlto" unique_id=519857695 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA39" type="Node3D" parent="PisoAlto" unique_id=1936146409 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 12)
 script = ExtResource("61_308dp")
 
@@ -2769,7 +2769,7 @@ south_wall_reach = 1.7
 script = ExtResource("55_bkpqy")
 near_margin = 3.5
 
-[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1058892314 instance=ExtResource("80_308dp")]
+[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1928055238 instance=ExtResource("80_308dp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1439023435 instance=ExtResource("39_iq7xx")]

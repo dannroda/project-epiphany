@@ -390,7 +390,32 @@ DOOR_THICK = 0.15
 DOOR_PLANKS = 4
 
 
+## Estilo de las hojas que se están armando: None (madera con flejes de hierro), "chullpa" (losas de piedra con un
+## escalonado en relieve y herrajes de cobre) o "quenoa" (tablones atados con soga y musgo arriba).
+DOOR_STYLE = None
+METAL = {None: "hierro", "chullpa": "cobre_verde", "quenoa": "paja"}
+
+
+def stone_leaf(p, dark):
+	"""Tres losas apiladas de cantos gastados y un escalonado (media chakana) en relieve arriba."""
+	slabs = []
+	z = 0.0
+	for h in (1.15, 1.0, HEIGHT - 2.15):
+		slabs += p.rounded_box(-DOOR_WIDTH + 0.01, DOOR_WIDTH - 0.01, -DOOR_THICK, DOOR_THICK, z + 0.015, z + h - 0.015, radius=0.06, segments=2)
+		z += h
+	p.jitter(slabs, 0.01)
+	p.paint(slabs, "acantilado", "LOW" if dark else "MID", vary=0.05)
+	steps = []
+	for k, (w, h) in enumerate(((0.9, 0.12), (0.62, 0.12), (0.34, 0.12))):
+		z0 = 2.32 + k * 0.12
+		steps += p.box(-w / 2, w / 2, -DOOR_THICK - 0.035, -DOOR_THICK + 0.01, z0, z0 + h - 0.015)
+	p.paint(steps, "acantilado", "LIGHT", vary=0.03)
+
+
 def door_leaf(p, wood, bands=(0.55, 2.45)):
+	if DOOR_STYLE == "chullpa":
+		stone_leaf(p, wood == "madera_oscura")
+		return
 	planks = []
 	w = 2 * DOOR_WIDTH / DOOR_PLANKS
 	for k in range(DOOR_PLANKS):
@@ -398,6 +423,18 @@ def door_leaf(p, wood, bands=(0.55, 2.45)):
 		faces = p.rounded_box(x0 + 0.012, x0 + w - 0.012, -DOOR_THICK, DOOR_THICK, 0.0, HEIGHT - 0.02 * (k % 2), radius=0.03, segments=1)
 		p.paint(faces, wood, z_range=(-1.0 - 0.6 * (k % 3), HEIGHT + 1.5), vary=0.03)
 		planks += faces
+	if DOOR_STYLE == "quenoa":
+		rope = []
+		for z in bands:
+			for dz in (-0.05, 0.05):
+				rope += p.rounded_box(-DOOR_WIDTH - 0.01, DOOR_WIDTH + 0.01, -DOOR_THICK - 0.035, -DOOR_THICK + 0.01, z + dz - 0.035, z + dz + 0.035, radius=0.03, segments=1)
+		p.paint(rope, "paja", "MID", vary=0.04)
+		moss = []
+		for k in range(5):
+			x = -DOOR_WIDTH + 0.15 + k * (2 * DOOR_WIDTH - 0.3) / 4
+			moss += p.blob((x, -DOOR_THICK * 0.5, HEIGHT - 0.02), p.rng.uniform(0.14, 0.2), squash=(1.4, 1.0, 0.6), subdiv=1, rough=0.25)
+		p.paint(moss, "musgo", "MID", vary=0.08)
+		return
 	iron = []
 	for z in bands:
 		iron += p.rounded_box(-DOOR_WIDTH - 0.01, DOOR_WIDTH + 0.01, -DOOR_THICK - 0.04, -DOOR_THICK + 0.01, z - 0.09, z + 0.09, radius=0.02, segments=1)
@@ -421,7 +458,7 @@ def lock_plate(p, z, size, metal):
 def door(name, seed, fn):
 	p = epi.Piece(seed)
 	fn(p)
-	p.build("puerta_%s_la" % name, kit, smooth=35)
+	p.build("puerta_%s%s_la" % (name, "_" + DOOR_STYLE if DOOR_STYLE else ""), kit, smooth=35)
 
 
 def door_switch(p):
@@ -447,18 +484,19 @@ def door_shutter(p):
 	for k in range(n):
 		z0 = HEIGHT * k / n
 		slats += p.rounded_box(-DOOR_WIDTH, DOOR_WIDTH, -DOOR_THICK - 0.03 * (k % 2), DOOR_THICK, z0 + 0.015, z0 + HEIGHT / n - 0.015, radius=0.03, segments=1)
-	p.paint(slats, "madera_oscura", z_range=(-1.0, HEIGHT + 1.0), vary=0.04)
+	p.paint(slats, "acantilado" if DOOR_STYLE == "chullpa" else "madera_oscura", z_range=(-1.0, HEIGHT + 1.0), vary=0.04)
 	posts = []
 	for x in (-DOOR_WIDTH + 0.1, DOOR_WIDTH - 0.1):
 		posts += p.rounded_box(x - 0.06, x + 0.06, -DOOR_THICK - 0.08, -DOOR_THICK, 0.0, HEIGHT, radius=0.02, segments=1)
-	p.paint(posts, "hierro", "DARK", vary=0.03)
+	p.paint(posts, METAL[DOOR_STYLE], "DARK", vary=0.03)
 
 
-door("madera", 61, lambda p: door_leaf(p, "madera"))
-door("llave", 62, lambda p: (door_leaf(p, "madera_oscura"), lock_plate(p, 1.3, 0.5, "hierro")))
-door("jefe", 63, door_boss)
-door("interruptor", 64, door_switch)
-door("persiana", 65, door_shutter)
+for DOOR_STYLE in (None, "chullpa", "quenoa"):
+	door("madera", 61, lambda p: door_leaf(p, "madera"))
+	door("llave", 62, lambda p: (door_leaf(p, "madera_oscura"), lock_plate(p, 1.3, 0.5, "hierro" if DOOR_STYLE != "chullpa" else "cobre_verde")))
+	door("jefe", 63, door_boss)
+	door("interruptor", 64, door_switch)
+	door("persiana", 65, door_shutter)
 
 epi.layout(kit, columns=6, spacing=3.0)
 epi.publish("paredes_la")

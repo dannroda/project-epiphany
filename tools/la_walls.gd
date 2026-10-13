@@ -75,7 +75,6 @@ const GLOSS := preload("res://src/world/look/brillo_la.gd")
 const FLAME_SIZE := Vector2(0.45, 0.8)
 ## Largo del pasillo de una puerta entre dos salas (las dos paredes de 2 m).
 const DOOR_PASSAGE := 4.0
-const DOOR_LEAVES := "res://assets/epiphany/meshes/paredes_la/%s_la.res"
 ## Cámara con perspectiva como LA: la sala se ve en trapecio (abajo más ancha) y asoman las caras de los costados.
 ## La cámara de LA, calibrada en el visor de LA contra capturas: 65° sobre el horizonte, 28° de campo, a 23 m. La sala
 ## es más grande que la pantalla y la cámara se mueve adentro.
@@ -96,17 +95,23 @@ const ROOM_LIGHT_SOFTNESS := 0.5
 ## En lugar del sol, la luz de LA que llega del lado de la cámara (el sur, en alto) y aclara las caras de las paredes.
 const SUN_ELEVATION := 40.0
 ## Luz de cada mazmorra: ambiente de relleno, la luz del lado de la cámara (sun), el foco de cada sala (room) y el polvo que
-## flota delante de la cámara, y sus braseros (las vasijas van por escena: pot_quenoa.tscn). La Chullpa, cálida y polvorienta; la Queñoa, fría y húmeda.
+## flota delante de la cámara, sus braseros y sus puertas (las vasijas van por escena: pot_quenoa.tscn). La Chullpa, cálida y polvorienta; la Queñoa, fría y húmeda.
 const LOOKS := {
 	"chullpa": {"ambient": Color(0.76, 0.7, 0.66), "ambient_energy": 1.25, "sun": Color(0.85, 0.8, 0.74), "sun_energy": 0.65,
 		"room": Color(1.0, 0.87, 0.7), "room_energy": 2.3, "dust": "res://src/world/look/polvo_chullpa.tscn",
-		"brazier": "res://assets/epiphany/meshes/templo_chullpa/brasero.res"},
+		"brazier": "res://assets/epiphany/meshes/templo_chullpa/brasero.res",
+		"doors": "res://assets/epiphany/meshes/paredes_la/%s_chullpa_la.res"},
 	"quenoa": {"ambient": Color(0.56, 0.7, 0.8), "ambient_energy": 1.35, "sun": Color(0.6, 0.8, 0.98), "sun_energy": 0.75,
 		"room": Color(0.9, 0.96, 0.94), "room_energy": 2.1, "dust": "res://src/world/look/polvo_quenoa.tscn",
-		"brazier": "res://assets/epiphany/meshes/objetos/brasero_quenoa.res"},
+		"brazier": "res://assets/epiphany/meshes/objetos/brasero_quenoa.res",
+		"doors": "res://assets/epiphany/meshes/paredes_la/%s_quenoa_la.res"},
 }
 ## El polvo va colgado de la cámara, a esta distancia por delante (más cerca que el player).
 const DUST_AHEAD := 20.0
+## Hojas de las puertas de la mazmorra que se está armando (LOOKS); %s es el nombre de Door.LEAVES.
+var _door_leaves := ""
+
+
 func _initialize() -> void:
 	var args := OS.get_cmdline_user_args()
 	var mode := args[0] if not args.is_empty() else "export"
@@ -133,6 +138,7 @@ func _initialize() -> void:
 		push_error("uso: -- export | bake <nivel> | refresh <nivel>, con nivel en %s" % [LEVELS.keys()])
 		quit(1)
 		return
+	_door_leaves = LOOKS[args[1]].doors
 	var level := _load(path)
 	if mode == "bake" and level.has_node(NodePath(BAKED)):
 		push_error("%s ya tiene el look de LA: usar refresh" % path)
@@ -460,10 +466,10 @@ func _shapes(grid: GridMap) -> Dictionary:
 ## cara de cada sala (la de atrás girada), inclinada como esa pared.
 func _door(level: Node, door: Node) -> void:
 	door.set("depth", DOOR_PASSAGE)
-	door.set("leaf_meshes", DOOR_LEAVES)
+	door.set("leaf_meshes", _door_leaves)
 	door.set("sink", WALL_HEIGHT + 0.2)
 	var leaves: Dictionary = door.get_script().get_script_constant_map()["LEAVES"]
-	var mesh: Mesh = load(DOOR_LEAVES % leaves[door.get("kind")])
+	var mesh: Mesh = load(_door_leaves % leaves[door.get("kind")])
 	var face := DOOR_PASSAGE / 2.0 - mesh.get_aabb().end.z
 	var front := door.get_node("Leaf/LeafMesh") as MeshInstance3D
 	var back := door.get_node_or_null("Leaf/LeafBackLA") as MeshInstance3D
