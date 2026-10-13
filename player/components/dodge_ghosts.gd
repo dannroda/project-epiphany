@@ -48,6 +48,8 @@ func _bake() -> ArrayMesh:
 		if piece in skip or not piece.is_visible_in_tree() or piece.mesh == null:
 			continue
 		var mesh: Mesh = piece.bake_mesh_from_current_skeleton_pose() if piece.skin != null or piece.skeleton != NodePath() else piece.mesh
+		if mesh == null:
+			continue
 		var xform := to_model * piece.global_transform
 		var normals_xform := Transform3D(xform.basis.inverse().transposed(), Vector3.ZERO)
 		for surface in mesh.get_surface_count():

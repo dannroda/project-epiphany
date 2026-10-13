@@ -30,7 +30,7 @@ func _enter() -> void:
 
 
 func _tick(_delta: float) -> Status:
-	var target: Node3D = blackboard.get_var(target_var, null, false)
+	var target := _target()
 	if not _shot:
 		if target == null:
 			return FAILURE
@@ -79,3 +79,9 @@ func _shoot(target: Node3D) -> void:
 func _bow() -> Node3D:
 	var bow := agent.find_child("Bow", true, false) as Node3D
 	return bow if bow and &"draw" in bow else null
+
+
+## Puede ser un player ya liberado (cambio de escena): entonces no hay objetivo.
+func _target() -> Node3D:
+	var target: Variant = blackboard.get_var(target_var, null, false)
+	return target if is_instance_valid(target) else null

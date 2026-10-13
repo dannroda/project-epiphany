@@ -71,7 +71,7 @@ func pop() -> void:
 		uncovered.show()
 		if uncovered.has_method(&"screen_uncovered"):
 			uncovered.screen_uncovered()
-		var remembered: Control = _focus_memory.get(uncovered)
+		var remembered: Variant = _focus_memory.get(uncovered)
 		if is_instance_valid(remembered) and uncovered.is_ancestor_of(remembered):
 			remembered.grab_focus()
 		else:
