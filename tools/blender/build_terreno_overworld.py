@@ -318,25 +318,31 @@ piece("escalinata", 15, escalinata)
 # --- pircas (muro bajo de piedra seca, a lo largo de X por el centro de la celda) ---
 
 def pirca_run(p, x0, x1, height=0.85, missing=0.0):
-	"""Piedra seca: hiladas de lajas planas, cada una corrida y torcida un poco, más angostas arriba."""
-	stones = []
-	z = 0.0
-	course = 0
-	while z < height - 0.05:
-		h = 0.13 + p.rng.random() * 0.1
-		depth = 0.5 - 0.1 * z / height
-		x = x0 - (0.12 if course % 2 else 0.0)
+	"""Muro bajo como en LA: una hilada de piedras grandes redondeadas y arriba una tapa clara de lajas más anchas."""
+	body, coping = [], []
+	top = height * 0.7
+	for z0, z1, depth, widths, radius, faces in ((0.0, top, 0.5, (0.5, 0.8), 0.1, body), (top, height, 0.58, (0.75, 1.15), 0.07, coping)):
+		x = x0 - p.rng.random() * widths[0] * 0.5
 		while x < x1 - 0.05:
-			w = 0.28 + p.rng.random() * 0.26
-			left, right = max(x, x0), min(x + w, x1)
-			if right - left > 0.08 and p.rng.random() >= missing:
-				s = p.box(left + 0.015, right - 0.015, -depth / 2, depth / 2, z, z + h - 0.015, taper=0.03)
-				p.jitter(s, 0.025)
-				stones += s
+			w = p.rng.uniform(*widths)
+			left, right = max(x, x0) + 0.02, min(x + w, x1) - 0.02
+			if right - left > 0.15 and (faces is body or p.rng.random() >= missing * 1.5):
+				y = (p.rng.random() - 0.5) * 0.05
+				h = z1 - (p.rng.random() * 0.05 if faces is body else 0.0)
+				stone = p.rounded_box(left, right, y - depth / 2, y + depth / 2, z0, h, radius=radius)
+				p.jitter(stone, 0.02)
+				faces += stone
 			x += w
-		z += h
-		course += 1
-	p.paint(stones, "piedra", z_range=(0, height), vary=0.2)
+	p.paint(body, "piedra", z_range=(0, top), vary=0.1)
+	p.paint(coping, "piedra", "LIGHT", vary=0.06)
+
+
+def _post(p, x, half, height):
+	post = p.rounded_box(x - half, x + half, -half, half, 0.0, height, radius=0.08)
+	p.jitter(post, 0.02)
+	p.paint(post, "piedra", z_range=(0, height), vary=0.1)
+	cap = p.rounded_box(x - half - 0.05, x + half + 0.05, -half - 0.05, half + 0.05, height, height + 0.12, radius=0.05)
+	p.paint(cap, "piedra", "LIGHT", vary=0.05)
 
 
 def pirca(p):
@@ -355,20 +361,13 @@ def pirca_esquina(p):
 
 def pirca_final(p):
 	ground(p)
-	pirca_run(p, -1.0, 0.65)
-	post = p.box(0.55, 0.92, -0.28, 0.28, 0.0, 1.05, taper=0.04)
-	p.jitter(post, 0.03)
-	p.paint(post, "acantilado", vary=0.1)
+	pirca_run(p, -1.0, 0.6)
+	_post(p, 0.73, 0.2, 0.95)
 
 
 def pirca_poste(p):
 	ground(p)
-	post = p.box(-0.22, 0.22, -0.22, 0.22, 0.0, 1.05, taper=0.05)
-	p.jitter(post, 0.03)
-	p.paint(post, "acantilado", vary=0.1)
-	cap = p.box(-0.27, 0.27, -0.27, 0.27, 1.05, 1.15, taper=0.03)
-	p.jitter(cap, 0.02)
-	p.paint(cap, "piedra", vary=0.1)
+	_post(p, 0.0, 0.22, 0.95)
 	for _ in range(2):
 		small_rock(p, p.rng.uniform(-0.5, 0.5), p.rng.choice([-0.45, 0.45]), p.rng.uniform(0.08, 0.13))
 
