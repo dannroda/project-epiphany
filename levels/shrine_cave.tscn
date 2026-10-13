@@ -1,4 +1,4 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://dht7i5q55h55h"]
 
 [ext_resource type="MeshLibrary" uid="uid://dt62p0c61qjd0" path="res://data/kits/overworld_kit.tres" id="c1_kit"]
 [ext_resource type="Script" uid="uid://nqxfiofg56dy" path="res://src/world/room.gd" id="c2_room"]
