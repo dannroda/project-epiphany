@@ -1,6 +1,6 @@
 [gd_resource type="MeshLibrary" format=4]
 
-[ext_resource type="Shader" path="res://debug/la/piso_la.gdshader" id="1_252cx"]
+[ext_resource type="Shader" path="res://src/world/look/piso_la.gdshader" id="1_252cx"]
 [ext_resource type="Texture2D" path="res://assets/epiphany/palette.png" id="2_rvxix"]
 [ext_resource type="Shader" path="res://data/kits/shaders/cutaway.gdshader" id="3_c73y3"]
 [ext_resource type="Material" path="res://data/kits/materials/epiphany.tres" id="4_4dyfx"]

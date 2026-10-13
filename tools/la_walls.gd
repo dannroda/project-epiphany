@@ -31,10 +31,10 @@ const MASK_MARGIN := 2.0
 const FADE_START := {"n": 0.9, "s": 0.4, "e": 0.3, "o": 0.3}
 ## Y llega al negro a esta distancia (abajo la cresta se ve poco: la máscara la tapa antes).
 const FADE_END := {"n": 1.8, "s": 1.8, "e": 1.8, "o": 1.8}
-const FADE := preload("res://debug/la/borde_oscuro.gdshader")
-const FOCUS := preload("res://debug/la/enfoque_la.gd")
-const VIGNETTE := preload("res://debug/la/vineta_la.gdshader")
-const FLOOR := preload("res://debug/la/piso_la.gdshader")
+const FADE := preload("res://src/world/look/borde_oscuro.gdshader")
+const FOCUS := preload("res://src/world/look/enfoque_la.gd")
+const VIGNETTE := preload("res://src/world/look/vineta_la.gdshader")
+const FLOOR := preload("res://src/world/look/piso_la.gdshader")
 ## Veta de las paredes: la franja "acantilado" de la paleta (columna 3, fila 0).
 const GRAIN_AMOUNT := 0.5
 const GRAIN_RECT := Vector4(0.42, 0.455, 0.0, 0.25)
@@ -61,8 +61,8 @@ const BRAZIER_FLAME := 1.07
 const FIRE_OFFSET := Vector3(0, 0.3, 0.3)
 const FIRE_ENERGY := 3.5
 const FIRE_RANGE := 4.0
-const FLAME := preload("res://debug/la/llama_la.gdshader")
-const GLOSS := preload("res://debug/la/brillo_la.gd")
+const FLAME := preload("res://src/world/look/llama_la.gdshader")
+const GLOSS := preload("res://src/world/look/brillo_la.gd")
 const FLAME_SIZE := Vector2(0.45, 0.8)
 const DOOR_LEAF_SCALE := Vector3(0.7, 0.8, 1.0)
 ## Cámara con perspectiva como LA: la sala se ve en trapecio (abajo más ancha) y asoman las caras de los costados.
