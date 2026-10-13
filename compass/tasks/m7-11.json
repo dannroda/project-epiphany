@@ -11,7 +11,7 @@
       "text": "Mini quest de la Necrópolis (arco → sandalias)"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Tests del overworld al día (angostura, islotes, Risco, quest)"
     },
     {
@@ -34,5 +34,5 @@
   ],
   "test": "",
   "title": "Overworld: huecos de salto largo y mini quest de las sandalias",
-  "updated_at": "2026-10-13T08:41:13.351Z"
+  "updated_at": "2026-10-13T08:51:04.853Z"
 }
