@@ -7,6 +7,7 @@ const DESIGN := {
 	"res://levels/quenoa.tscn": ["Arco", "Nido"],
 	"res://levels/templo.tscn": [],
 	"res://levels/totora.tscn": ["Tejedores"],
+	"res://levels/cumbre.tscn": ["Hueco"],
 }
 
 

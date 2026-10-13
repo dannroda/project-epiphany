@@ -1,0 +1,55 @@
+{
+  "checklist": [
+    {
+      "detail": "Aprobado el 2026-10-13 (Daniel: si, me gusta). Doc de diseño actualizado (sección D4 y mapa).",
+      "done": true,
+      "text": "Plano"
+    },
+    {
+      "detail": "Hecho el 2026-10-13: levels/cumbre.tscn (debug/tmp/design/build_cumbre.gd), 12 salas de 14 × 12 m en dos pisos y la Cima. Espejo que gira (src/world/light/rotating_mirror.tscn, gira 90° de un espadazo). Grafo data/dungeons/cumbre_graph.tres, flags cu_, nombres en es/en, escenario cumbre, test_cumbre (4). GDD §8e.",
+      "done": true,
+      "text": "Blockout"
+    },
+    {
+      "detail": "Hoy una momia prestada en PisoBase/KunturFight. Se vence sin el escudo.",
+      "done": false,
+      "text": "Sub-jefe Kuntur joven"
+    },
+    {
+      "detail": "Hoy un ojo vigía prestado en PisoCima/BossFight. Pide el escudo.",
+      "done": false,
+      "text": "Jefe Apu Kuntur"
+    },
+    {
+      "detail": "Spawn_cumbre y la puerta; hasta entonces las salidas van a risco.",
+      "done": false,
+      "text": "Entrada en el overworld (sesión del overworld)"
+    },
+    {
+      "detail": "El estilo cumbre ya está en la_walls; falta sumar levels/cumbre.tscn a LEVELS y hornearla.",
+      "done": false,
+      "text": "Horneado LA (arte)"
+    },
+    {
+      "done": false,
+      "text": "Recorrerla (Daniel)"
+    }
+  ],
+  "code": "11.129",
+  "created_at": "2026-10-13T21:59:41.600Z",
+  "description": "Mazmorra 4 (GDD §8e): el escudo espejo parte la Cumbre; el piso bajo sin él, el alto con él. Sub-jefe Kuntur joven, jefe Apu Kuntur. Plano aprobado por Daniel el 2026-10-13 (si, me gusta).",
+  "milestone": "m11",
+  "notes": "",
+  "order": 126,
+  "priority": "medium",
+  "refs": [],
+  "size": "l",
+  "status": "doing",
+  "tags": [
+    "mazmorra",
+    "puzzles"
+  ],
+  "test": "test_cumbre, test_dungeon_reach (cumbre_graph), test_walk_doors, test_drop_holes",
+  "title": "D4, Intihuatana de la Cumbre",
+  "updated_at": "2026-10-13T21:59:45.460Z"
+}

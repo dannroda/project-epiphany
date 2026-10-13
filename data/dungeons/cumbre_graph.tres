@@ -1,0 +1,232 @@
+[gd_resource type="Resource" script_class="DungeonGraph" format=3]
+
+[ext_resource type="Script" uid="uid://fuoosewf8un4" path="res://src/world/dungeon_graph/dungeon_graph.gd" id="1_graph"]
+[ext_resource type="Script" uid="uid://djven2p0k3w1i" path="res://src/world/dungeon_graph/dungeon_link.gd" id="2_link"]
+[ext_resource type="Script" uid="uid://2kgujv7wu8l3" path="res://src/world/dungeon_graph/dungeon_spot.gd" id="3_spot"]
+
+[sub_resource type="Resource" id="Link_1"]
+script = ExtResource("2_link")
+from = &"Atrio"
+to = &"Columnas"
+
+[sub_resource type="Resource" id="Link_2"]
+script = ExtResource("2_link")
+from = &"Columnas"
+to = &"Columnas:O"
+needs = Array[StringName]([&"hookshot"])
+
+[sub_resource type="Resource" id="Link_3"]
+script = ExtResource("2_link")
+from = &"Columnas"
+to = &"Grieta"
+through = Array[NodePath]([NodePath("PisoBase/GrietaCrackedWall")])
+
+[sub_resource type="Resource" id="Link_4"]
+script = ExtResource("2_link")
+from = &"Grieta"
+to = &"Grieta:Brujula"
+needs = Array[StringName]([&"feather"])
+
+[sub_resource type="Resource" id="Link_5"]
+script = ExtResource("2_link")
+from = &"Atrio"
+to = &"Ventisquero"
+
+[sub_resource type="Resource" id="Link_6"]
+script = ExtResource("2_link")
+from = &"Ventisquero"
+to = &"Ventisquero:Mapa"
+through = Array[NodePath]([NodePath("PisoBase/MapGate")])
+
+[sub_resource type="Resource" id="Link_7"]
+script = ExtResource("2_link")
+from = &"Atrio"
+to = &"Atrio:Nicho"
+through = Array[NodePath]([NodePath("PisoBase/AtrioNicheGate")])
+
+[sub_resource type="Resource" id="Link_8"]
+script = ExtResource("2_link")
+from = &"Atrio"
+to = &"Nido"
+through = Array[NodePath]([NodePath("PisoBase/NidoLocked")])
+locked = true
+
+[sub_resource type="Resource" id="Link_9"]
+script = ExtResource("2_link")
+from = &"Nido"
+to = &"Camara"
+through = Array[NodePath]([NodePath("PisoBase/CamaraDoor")])
+
+[sub_resource type="Resource" id="Link_10"]
+script = ExtResource("2_link")
+from = &"Camara"
+to = &"Llegada"
+through = Array[NodePath]([NodePath("PisoBase/CamaraStairsGate")])
+
+[sub_resource type="Resource" id="Link_11"]
+script = ExtResource("2_link")
+from = &"Llegada"
+to = &"Espejos"
+
+[sub_resource type="Resource" id="Link_12"]
+script = ExtResource("2_link")
+from = &"Espejos"
+to = &"Torretas"
+through = Array[NodePath]([NodePath("PisoCornisa/TorretasDoor")])
+
+[sub_resource type="Resource" id="Link_13"]
+script = ExtResource("2_link")
+from = &"Torretas"
+to = &"Torretas:O"
+needs = Array[StringName]([&"hookshot"])
+
+[sub_resource type="Resource" id="Link_14"]
+script = ExtResource("2_link")
+from = &"Torretas:O"
+to = &"Torretas:Llave"
+through = Array[NodePath]([NodePath("PisoCornisa/TorretasKeyGate")])
+
+[sub_resource type="Resource" id="Link_15"]
+script = ExtResource("2_link")
+from = &"Torretas"
+to = &"OjoDelSol"
+
+[sub_resource type="Resource" id="Link_16"]
+script = ExtResource("2_link")
+from = &"OjoDelSol"
+to = &"OjoDelSol:Nicho"
+through = Array[NodePath]([NodePath("PisoCornisa/BossKeyGate")])
+
+[sub_resource type="Resource" id="Link_17"]
+script = ExtResource("2_link")
+from = &"OjoDelSol"
+to = &"Hueco"
+
+[sub_resource type="Resource" id="Link_18"]
+script = ExtResource("2_link")
+from = &"Hueco"
+to = &"Hueco:Islote"
+needs = Array[StringName]([&"feather"])
+
+[sub_resource type="Resource" id="Link_19"]
+script = ExtResource("2_link")
+from = &"Hueco"
+to = &"Atrio"
+one_way = true
+
+[sub_resource type="Resource" id="Link_20"]
+script = ExtResource("2_link")
+from = &"Hueco"
+to = &"Antesala"
+through = Array[NodePath]([NodePath("PisoCornisa/AntesalaLocked")])
+locked = true
+
+[sub_resource type="Resource" id="Link_21"]
+script = ExtResource("2_link")
+from = &"Antesala"
+to = &"Cima"
+through = Array[NodePath]([NodePath("PisoCornisa/BossDoor")])
+
+[sub_resource type="Resource" id="Spot_1"]
+script = ExtResource("3_spot")
+area = &"Columnas:O"
+node = NodePath("PisoBase/ColumnasKeyChest")
+key = true
+
+[sub_resource type="Resource" id="Spot_2"]
+script = ExtResource("3_spot")
+area = &"Grieta:Brujula"
+node = NodePath("PisoBase/CompassChest")
+
+[sub_resource type="Resource" id="Spot_3"]
+script = ExtResource("3_spot")
+area = &"Ventisquero"
+node = NodePath("PisoBase/VentisqueroEye")
+needs = Array[StringName]([&"bow"])
+
+[sub_resource type="Resource" id="Spot_4"]
+script = ExtResource("3_spot")
+area = &"Ventisquero:Mapa"
+node = NodePath("PisoBase/MapChest")
+
+[sub_resource type="Resource" id="Spot_5"]
+script = ExtResource("3_spot")
+area = &"Atrio"
+node = NodePath("PisoBase/AtrioCrystal")
+needs = Array[StringName]([&"shield_mirror"])
+
+[sub_resource type="Resource" id="Spot_6"]
+script = ExtResource("3_spot")
+area = &"Nido"
+node = NodePath("PisoBase/KunturFight")
+gives = &"cu_kuntur_defeated"
+
+[sub_resource type="Resource" id="Spot_7"]
+script = ExtResource("3_spot")
+area = &"Camara"
+node = NodePath("PisoBase/ShieldChest")
+
+[sub_resource type="Resource" id="Spot_8"]
+script = ExtResource("3_spot")
+area = &"Camara"
+node = NodePath("PisoBase/CamaraCrystal")
+needs = Array[StringName]([&"shield_mirror"])
+
+[sub_resource type="Resource" id="Spot_9"]
+script = ExtResource("3_spot")
+area = &"Espejos"
+node = NodePath("PisoCornisa/EspejosCrystal")
+needs = Array[StringName]([&"shield_mirror"])
+
+[sub_resource type="Resource" id="Spot_10"]
+script = ExtResource("3_spot")
+area = &"Torretas"
+node = NodePath("PisoCornisa/TorretasEye")
+needs = Array[StringName]([&"shield_mirror"])
+
+[sub_resource type="Resource" id="Spot_11"]
+script = ExtResource("3_spot")
+area = &"Torretas:Llave"
+node = NodePath("PisoCornisa/TorretasKeyChest")
+key = true
+
+[sub_resource type="Resource" id="Spot_12"]
+script = ExtResource("3_spot")
+area = &"OjoDelSol"
+node = NodePath("PisoCornisa/SolEye")
+needs = Array[StringName]([&"bow"])
+
+[sub_resource type="Resource" id="Spot_13"]
+script = ExtResource("3_spot")
+area = &"OjoDelSol"
+node = NodePath("PisoCornisa/SolReceiver")
+needs = Array[StringName]([&"shield_mirror"])
+through = Array[NodePath]([NodePath("PisoCornisa/SolShutter")])
+
+[sub_resource type="Resource" id="Spot_14"]
+script = ExtResource("3_spot")
+area = &"OjoDelSol:Nicho"
+node = NodePath("PisoCornisa/BossKeyChest")
+
+[sub_resource type="Resource" id="Spot_15"]
+script = ExtResource("3_spot")
+area = &"Hueco:Islote"
+node = NodePath("PisoCornisa/HeartPieceHueco")
+
+[sub_resource type="Resource" id="Spot_16"]
+script = ExtResource("3_spot")
+area = &"Cima"
+node = NodePath("PisoCima/BossFight")
+needs = Array[StringName]([&"shield_mirror"])
+gives = &"cu_boss_defeated"
+
+[resource]
+script = ExtResource("1_graph")
+scene = "res://levels/cumbre.tscn"
+start = &"Atrio"
+goal = &"cu_boss_defeated"
+brings = Array[StringName]([&"bomb_bag", &"feather", &"bow", &"sandals", &"hookshot"])
+item = &"shield_mirror"
+guard = &"cu_kuntur_defeated"
+links = Array[ExtResource("2_link")]([SubResource("Link_1"), SubResource("Link_2"), SubResource("Link_3"), SubResource("Link_4"), SubResource("Link_5"), SubResource("Link_6"), SubResource("Link_7"), SubResource("Link_8"), SubResource("Link_9"), SubResource("Link_10"), SubResource("Link_11"), SubResource("Link_12"), SubResource("Link_13"), SubResource("Link_14"), SubResource("Link_15"), SubResource("Link_16"), SubResource("Link_17"), SubResource("Link_18"), SubResource("Link_19"), SubResource("Link_20"), SubResource("Link_21")])
+spots = Array[ExtResource("3_spot")]([SubResource("Spot_1"), SubResource("Spot_2"), SubResource("Spot_3"), SubResource("Spot_4"), SubResource("Spot_5"), SubResource("Spot_6"), SubResource("Spot_7"), SubResource("Spot_8"), SubResource("Spot_9"), SubResource("Spot_10"), SubResource("Spot_11"), SubResource("Spot_12"), SubResource("Spot_13"), SubResource("Spot_14"), SubResource("Spot_15"), SubResource("Spot_16")])
