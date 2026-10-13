@@ -14,13 +14,16 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import epi  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-HEIGHT = 2.0
-N = 24
-## Como en LA: las cuatro paredes con el mismo alto y la cresta plana alrededor. Rampa según el lado con piso: los
-## costados más tendidos para que la cámara sin perspectiva los vea anchos.
-RUN = {"n": 0.8, "s": 0.8, "e": 1.4, "o": 1.4}
+HEIGHT = 3.0
+N = 40
+## Como en LA: paredes casi verticales de bloques de roca con la cresta arriba; una sola pared entre dos salas. La
+## sur (piso al norte) va tendida: su cara no se ve y así tapa poco piso.
+RUN = {"n": 1.4, "s": 0.5, "e": 0.5, "o": 0.5}
+## Bloques: la cara avanza y retrocede a lo largo de la pared (BLOCK m por bloque, que entran justos en la celda).
+BLOCK = 1.0
+BULGE = 0.6
 ## Pilares en las esquinas de la sala y a los lados de las puertas, algo más altos que la pared.
-PILLAR = 3.0
+PILLAR = 3.6
 PILLAR_SIZE = 0.6
 CORNERS = ("ne", "no", "se", "so")
 MARGIN = 2.0
@@ -32,15 +35,21 @@ def dist(x, y, side):
 	return {"n": 1 - y, "s": y + 1, "e": 1 - x, "o": x + 1}[side]
 
 
-def profile(side, d):
-	return HEIGHT * max(0.0, min(1.0, d / RUN[side]))
+def run(side, x, y):
+	along = x if side in "ns" else y
+	block = 0.5 + 0.5 * math.cos(2.0 * math.pi * along / BLOCK)
+	return RUN[side] * (1.0 - BULGE * 0.5 + BULGE * block) if side != "n" else RUN[side]
+
+
+def profile(side, d, x=0.0, y=0.0):
+	return HEIGHT * max(0.0, min(1.0, d / run(side, x, y)))
 
 
 def height(x, y, sides, corners):
 	"""El más bajo de los perfiles de los lados con piso a menos de MARGIN; las esquinas sueltas son la unión de sus dos
 	perfiles. Sin ninguno cerca, el alto."""
-	near = [profile(side, dist(x, y, side)) for side in sides if dist(x, y, side) <= MARGIN]
-	near += [max(profile(c[0], dist(x, y, c[0])), profile(c[1], dist(x, y, c[1]))) for c in corners if c in CORNERS]
+	near = [profile(side, dist(x, y, side), x, y) for side in sides if dist(x, y, side) <= MARGIN]
+	near += [max(profile(c[0], dist(x, y, c[0]), x, y), profile(c[1], dist(x, y, c[1]), x, y)) for c in corners if c in CORNERS]
 	return min(near) if near else HEIGHT
 
 

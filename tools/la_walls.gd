@@ -20,29 +20,30 @@ const KINDS := {"pared": ["Pared LA ", "Pared"], "paso": ["Paso LA ", "Puerta"],
 const SIDES := {"n": Vector3i(0, 0, -1), "e": Vector3i(1, 0, 0), "s": Vector3i(0, 0, 1), "o": Vector3i(-1, 0, 0)}
 const CORNERS := ["ne", "se", "so", "no"]
 ## Rampa por lado con piso y alto de las paredes (como en build_paredes_la.py); la cámara tapa más allá de MASK_MARGIN.
-const WALL_RUN := {"n": 0.8, "s": 0.8, "e": 1.4, "o": 1.4}
-const WALL_HEIGHT := 2.0
+const WALL_RUN := {"n": 1.4, "s": 0.5, "e": 0.5, "o": 0.5}
+const WALL_HEIGHT := 3.0
 ## Alto de los pilares (PILLAR en build_paredes_la.py): hasta ahí tapa la cámara.
-const PILLAR_HEIGHT := 3.0
+const PILLAR_HEIGHT := 3.6
 ## Para encuadrar, la cámara mira el tope de la pared norte en el borde del piso: con esto llega a ver también la cresta.
-const FRAME_HEIGHT := 4.4
+const FRAME_HEIGHT := 5.4
 const MASK_MARGIN := 2.0
 ## La sala se ensancha hasta sus paredes de los costados (no arriba ni abajo, que ya entran): la cámara llena la pantalla
 ## de alto y se corre de costado hasta mostrarlas.
-const ROOM_SIDE_GROWTH := 1.4
+const ROOM_SIDE_GROWTH := 0.8
 ## Velo que oscurece la parte de afuera de las paredes hasta el negro de la máscara: arranca a esta distancia del piso.
-const FADE_START := {"n": 0.5, "s": 1.3, "e": 1.2, "o": 1.2}
+const FADE_START := {"n": 1.5, "s": 1.0, "e": 0.9, "o": 0.9}
 ## Y llega al negro a esta distancia (abajo la cresta se ve poco: la máscara la tapa antes).
-const FADE_END := {"n": 1.3, "s": 2.0, "e": 2.0, "o": 2.0}
+const FADE_END := {"n": 2.0, "s": 2.0, "e": 2.0, "o": 2.0}
 const FADE := preload("res://debug/la/borde_oscuro.gdshader")
 const BRAZIER_SCALE := 0.55
-## Sobre el borde, pegado al frente: más atrás queda en la franja que la sala de al norte ve por encima de su pared sur.
-const BRAZIER_SETBACK := 0.15
+## Colgados de la cara de la pared, como en LA: a este alto y esto por delante de la roca.
+const BRAZIER_HEIGHT := 1.9
+const BRAZIER_SETBACK := 0.25
 const BRAZIER_FLAME := 1.07
 const DOOR_LEAF_SCALE := Vector3(0.7, 0.8, 1.0)
 ## Cámara ortográfica (como LA): las paredes de los costados tienen el mismo ancho arriba y abajo.
 const CAMERA_OFFSET := Vector3(0, 68.9, 57.9)
-const ORTHO_SIZE := 13.2
+const ORTHO_SIZE := 14.6
 
 
 func _initialize() -> void:
@@ -88,8 +89,8 @@ func _dress(level: Node) -> void:
 			var torch := node as Node3D
 			var facing := torch.transform.basis.z.normalized()
 			var side := "s" if facing.z > 0.5 else "n" if facing.z < -0.5 else "e" if facing.x > 0.5 else "o"
-			torch.position = torch.position - facing * (WALL_RUN[side] + BRAZIER_SETBACK)
-			torch.position.y = WALL_HEIGHT
+			torch.position = torch.position - facing * (WALL_RUN[side] * BRAZIER_HEIGHT / WALL_HEIGHT - BRAZIER_SETBACK)
+			torch.position.y = BRAZIER_HEIGHT
 			var model := torch.get_node("Model") as MeshInstance3D
 			model.mesh = BRAZIER
 			model.position = Vector3.ZERO
