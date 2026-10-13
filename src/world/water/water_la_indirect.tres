@@ -8,11 +8,12 @@ fractal_octaves = 1
 domain_warp_enabled = true
 domain_warp_amplitude = 40.0
 domain_warp_frequency = 0.01
+domain_warp_fractal_octaves = 1
 
 [resource]
 width = 512
 height = 512
 seamless = true
 as_normal_map = true
-bump_strength = 5.0
+bump_strength = 4.0
 noise = SubResource("noise")

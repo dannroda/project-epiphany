@@ -12,5 +12,5 @@ width = 512
 height = 512
 seamless = true
 as_normal_map = true
-bump_strength = 3.0
+bump_strength = 2.2
 noise = SubResource("noise")
