@@ -64,7 +64,8 @@
       "text": "Templo: ala del gancho (con 11.30)"
     },
     {
-      "done": false,
+      "detail": "Hecho el 2026-10-13 (ca9d975d, Daniel: sigue): la puerta del templo del overworld (TempleDoor) lleva a levels/templo.tscn, spawn start en el vestíbulo; la mazmorra es te. levels/temple.tscn queda como nivel de prueba (sus tests lo cargan directo). test_portal, test_overworld_run, test_temple_seal y test_coop_camera al día.",
+      "done": true,
       "text": "Templo: el portal del overworld al templo nuevo"
     }
   ],
@@ -83,5 +84,5 @@
   ],
   "test": "",
   "title": "El templo del ojo pasa a ser la última mazmorra",
-  "updated_at": "2026-10-13T07:40:50.614Z"
+  "updated_at": "2026-10-13T07:47:43.192Z"
 }
