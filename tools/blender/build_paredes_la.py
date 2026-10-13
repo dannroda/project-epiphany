@@ -47,6 +47,36 @@ LOW_LEAF_ROWS = (1.05,)
 top = HEIGHT
 kit = epi.start()
 
+## Estilo de las paredes que se están armando: None (roca de LA con borde de hojas), "chullpa" (pirca de piedra de
+## campo en hiladas asentadas en barro, cornisa de barro con matas de ichu) o "quenoa" (la madera del tronco por dentro,
+## con vetas que bajan, musgo y hojas arriba). Los dos estilos van sin el bulto de las rocas.
+WALL_STYLE = None
+PIRCA_ROW = 0.42
+PIRCA_JOINT = 0.04
+_pirca_rows = {}
+
+
+def pirca(a, z):
+	"""Hilada, piedra y distancia a la junta más cercana en la pirca; las juntas de cada hilada caen en el borde de la
+	celda para que las piezas empalmen."""
+	row = math.floor(z / PIRCA_ROW)
+	if row not in _pirca_rows:
+		rr = random.Random(row * 7177 + 13)
+		while True:
+			cuts = [-1.0] + sorted(rr.uniform(-0.75, 0.75) for _ in range(rr.choice((1, 2, 2, 3)))) + [1.0]
+			if all(b - a0 > 0.4 for a0, b in zip(cuts, cuts[1:])):
+				break
+		_pirca_rows[row] = cuts
+	cuts = _pirca_rows[row]
+	k = min(len(cuts) - 2, max(i for i in range(len(cuts) - 1) if a >= cuts[i] or i == 0))
+	return row, k, min(a - cuts[k], cuts[k + 1] - a, z - row * PIRCA_ROW, (row + 1) * PIRCA_ROW - z)
+
+
+def grain(a, z):
+	"""Vetas de la madera de la Queñoa: de -1 (surco) a 1, que bajan casi derechas y se tuercen un poco."""
+	n = noise.noise(Vector((a * 2.5, z * 0.35, 7.0)))
+	return math.sin(a * 17.0 + n * 5.0 + z * 0.15)
+
 
 def dist(x, y, side):
 	return {"n": 1 - y, "s": y + 1, "e": 1 - x, "o": x + 1}[side]
@@ -106,7 +136,13 @@ def relief(p):
 		if window <= 0.0 or out.length < 0.5:
 			continue
 		a = x if abs(v.normal.y) > abs(v.normal.x) else y
-		v.co += out.normalized() * noise.noise(Vector((a, z * 0.5, 3.0)) * RELIEF_SCALE) * RELIEF * window
+		if WALL_STYLE == "chullpa":
+			bump = min(1.0, pirca(a, z)[2] / 0.1) * 0.08 + noise.noise(Vector((a, z, 5.0)) * 4.0) * 0.015
+		elif WALL_STYLE == "quenoa":
+			bump = grain(a, z) * 0.025 + noise.noise(Vector((a * 1.5, z * 0.2, 9.0))) * 0.07
+		else:
+			bump = noise.noise(Vector((a, z * 0.5, 3.0)) * RELIEF_SCALE) * RELIEF
+		v.co += out.normalized() * bump * window
 	p.bm.normal_update()
 
 
@@ -182,6 +218,13 @@ def axes(sides, corners, cut):
 					(xs if side in "ns" else ys).add(b)
 	for side, d in pillar_edges(sides, corners, cut):
 		(ys if side in "ns" else xs).add(coord(side, d))
+	if WALL_STYLE == "chullpa":
+		for side in sides:
+			for k in range(1, math.ceil(HEIGHT / PIRCA_ROW)):
+				for dz in (-PIRCA_JOINT / 2, PIRCA_JOINT / 2, PIRCA_ROW / 2):
+					d = RUN[side] * (k * PIRCA_ROW + dz) / HEIGHT
+					if 0.0 < d < 2.0:
+						(ys if side in "ns" else xs).add(coord(side, d))
 	if cut:
 		for b in (-HALF, -HALF + 0.01, HALF - 0.01, HALF):
 			(xs if across_x(sides, cut) else ys).add(b)
@@ -246,6 +289,25 @@ def piece(kind, code, cut=None):
 			crest.append(f)
 		elif c.z > top:
 			shade(p, f, "piedra", course_tone(c))
+		elif WALL_STYLE == "chullpa":
+			a = c.x if abs(f.normal.y) > abs(f.normal.x) else c.y
+			row, k, edge = pirca(a, c.z)
+			if c.z > top - 0.22:
+				shade(p, f, "tierra", 0.42)
+			elif edge < PIRCA_JOINT * 0.75:
+				shade(p, f, "tierra", 0.16)
+			elif c.z < 0.3 * (0.5 + 0.5 * noise.noise(Vector((c.x + c.y, 0.0, 2.0)) * 2.0)):
+				p.paint([f], "tierra", "LOW", vary=0.1)
+			else:
+				tone = 0.32 + 0.33 * random.Random(row * 104729 + k * 7919 + round(a * 0.5)).random()
+				shade(p, f, STONE, tone + 0.15 * min(1.0, edge / 0.12) - 0.08)
+		elif WALL_STYLE == "quenoa" and not moss(c, seed):
+			a = c.x if abs(f.normal.y) > abs(f.normal.x) else c.y
+			g = grain(a, c.z)
+			if g < -0.93:
+				shade(p, f, "roca_naranja", 0.12)
+			else:
+				shade(p, f, "roca_naranja", 0.3 + 0.08 * g + 0.12 * noise.noise(Vector((a * 1.2, c.z * 0.25, 4.0))))
 		elif moss(c, seed):
 			if c.z < 1.0:
 				p.paint([f], MOSS, "LOW", vary=0.15)
@@ -253,12 +315,12 @@ def piece(kind, code, cut=None):
 				shade(p, f, MOSS, min(0.8, 0.3 + 0.5 * (c.z - top + MOSS_TOP) / MOSS_TOP))
 		else:
 			shade(p, f, STONE, rock_tone(c, sides, kind))
-	p.paint(crest, LEAF, "DARK", vary=0.08)
+	p.paint(crest, "tierra" if WALL_STYLE == "chullpa" else LEAF, "MID" if WALL_STYLE == "chullpa" else "DARK", vary=0.08)
 	hedge(p, xs, ys, h)
 	if cut:
 		for side in sides:
 			sill(p, side)
-	p.build("%s_la_%s" % (kind, code), kit)
+	p.build("%s_la_%s" % (kind, code) if WALL_STYLE is None else "%s_%s_la_%s" % (kind, WALL_STYLE, code), kit)
 
 
 ## Umbral de las puertas, como en LA: sobre el piso de la sala, una U de bloques de piedra que rodea la boca del pasillo
@@ -348,10 +410,14 @@ def hedge(p, xs, ys, h):
 			leaves += p.blob((lx, ly, z), r, squash=(1.0, 1.0, 0.4), subdiv=1, rough=0.2)
 			if k == 0:
 				spots.append((lx, ly, ox, oy))
+	if WALL_STYLE == "chullpa":
+		p.paint(leaves, "tierra", vary=0.12)
+		ichu(p, spots)
+		return
 	p.paint(leaves, LEAF, vary=0.25)
 	vine = []
 	for lx, ly, ox, oy in spots:
-		if top < HEIGHT or p.rng.random() > VINE_CHANCE / 6.0:
+		if top < HEIGHT or p.rng.random() > VINE_CHANCE * (2.5 if WALL_STYLE == "quenoa" else 1.0) / 6.0:
 			continue
 		length = p.rng.uniform(*VINE_LENGTH)
 		z = top - LEAF_DROOP - 0.1
@@ -367,6 +433,20 @@ def hedge(p, xs, ys, h):
 	p.paint(vine, LEAF, vary=0.15)
 
 
+def ichu(p, spots):
+	"""Matas de ichu sobre la cornisa de barro de la Chullpa: hojas finas y duras que se abren hacia afuera."""
+	blades = []
+	for lx, ly, ox, oy in spots:
+		if p.rng.random() > 0.3:
+			continue
+		for i in range(7):
+			blade = p.cylinder(0.025, 0.0, p.rng.uniform(0.3, 0.55), sides=4, radius_top=0.0)
+			lean = Matrix.Rotation(p.rng.uniform(0.15, 0.6), 4, Vector((math.cos(i * 0.9), math.sin(i * 0.9), 0.0)))
+			p.transform(blade, Matrix.Translation((lx - ox * 0.15, ly - oy * 0.15, top - 0.02)) @ lean)
+			blades += blade
+	p.paint(blades, "paja", vary=0.12)
+
+
 SHADE_SPAN = 20.0
 
 
@@ -376,13 +456,14 @@ def shade(p, f, swatch, t):
 
 
 shapes = json.load(open(os.path.join(ROOT, "tools", "paredes_la.json")))
-for code in shapes["pared"]:
-	piece("pared", code)
-for code in shapes.get("muro", []):
-	piece("muro", code)
-for kind in ("paso", "sube", "baja"):
-	for code in shapes[kind]:
-		piece(kind, code, kind)
+for WALL_STYLE, BULGE, STONE in ((None, 0.7, "acantilado"), ("chullpa", 0.0, "acantilado"), ("quenoa", 0.0, "madera")):
+	for code in shapes["pared"]:
+		piece("pared", code)
+	for code in shapes.get("muro", []):
+		piece("muro", code)
+	for kind in ("paso", "sube", "baja"):
+		for code in shapes[kind]:
+			piece(kind, code, kind)
 ## Hojas de puerta del alto de la pared, para el corte del paso (2 HALF de ancho); el frente mira a -Y y el código la
 ## inclina como la cara de la pared de cada sala.
 DOOR_WIDTH = HALF + 0.03

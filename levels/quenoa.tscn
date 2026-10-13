@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://src/world/dungeon.gd" id="1_ka5m4"]
 [ext_resource type="Script" path="res://src/world/dungeon_floor.gd" id="2_u6itt"]
-[ext_resource type="MeshLibrary" path="res://data/kits/chullpa_la_kit.tres" id="3_x0p3s"]
 [ext_resource type="Script" path="res://src/world/room.gd" id="4_g2cit"]
 [ext_resource type="PackedScene" path="res://src/world/door.tscn" id="5_gq5qp"]
+[ext_resource type="MeshLibrary" path="res://data/kits/quenoa_la_kit.tres" id="5_lvm7h"]
 [ext_resource type="Shader" path="res://src/world/look/borde_oscuro.gdshader" id="5_nm22u"]
 [ext_resource type="PackedScene" path="res://src/world/eye_switch.tscn" id="7_crhmt"]
 [ext_resource type="Script" path="res://src/world/door.gd" id="7_wvyc0"]
@@ -707,7 +707,7 @@ level = -1
 display_name = "PLACE_FLOOR_ROOTS"
 
 [node name="GridMap" type="GridMap" parent="PisoRaices" unique_id=2086710927 groups=["navmesh_source"]]
-mesh_library = ExtResource("3_x0p3s")
+mesh_library = ExtResource("5_lvm7h")
 cell_size = Vector3(2, 1, 2)
 cell_center_x = false
 cell_center_y = false
@@ -1237,7 +1237,7 @@ script = ExtResource("2_u6itt")
 display_name = "PLACE_FLOOR_TRUNK"
 
 [node name="GridMap" type="GridMap" parent="PisoTronco" unique_id=548970249 groups=["navmesh_source"]]
-mesh_library = ExtResource("3_x0p3s")
+mesh_library = ExtResource("5_lvm7h")
 cell_size = Vector3(2, 1, 2)
 cell_center_x = false
 cell_center_y = false
@@ -1811,7 +1811,7 @@ level = 1
 display_name = "PLACE_FLOOR_CANOPY"
 
 [node name="GridMap" type="GridMap" parent="PisoCopa" unique_id=2115704018 groups=["navmesh_source"]]
-mesh_library = ExtResource("3_x0p3s")
+mesh_library = ExtResource("5_lvm7h")
 cell_size = Vector3(2, 1, 2)
 cell_center_x = false
 cell_center_y = false
@@ -2387,11 +2387,11 @@ script = ExtResource("41_5ia7f")
 color = Color(1.35, 1.15, 0.9, 1)
 radius = 3.0
 
-[node name="CaidaLA30" type="Node3D" parent="PisoCopa" unique_id=1635214714 instance=ExtResource("63_borgw")]
+[node name="CaidaLA30" type="Node3D" parent="PisoCopa" unique_id=954882441 instance=ExtResource("63_borgw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 14)
 script = ExtResource("64_lvm7h")
 
-[node name="CaidaLA31" type="Node3D" parent="PisoCopa" unique_id=1982358382 instance=ExtResource("63_borgw")]
+[node name="CaidaLA31" type="Node3D" parent="PisoCopa" unique_id=1119000366 instance=ExtResource("63_borgw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 28)
 script = ExtResource("64_lvm7h")
 
@@ -2430,7 +2430,7 @@ south_wall_reach = 1.7
 script = ExtResource("62_b5g6x")
 near_margin = 3.5
 
-[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=431266646 instance=ExtResource("71_lvm7h")]
+[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1364719673 instance=ExtResource("71_lvm7h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=960326471 instance=ExtResource("46_kifxg")]

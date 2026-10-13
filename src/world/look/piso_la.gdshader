@@ -1,6 +1,7 @@
 // Piso de losas a lo Link's Awakening: sobre el color de la paleta, losas de piedra irregulares en coordenadas de mundo
 // (sin costuras entre piezas) con juntas oscuras, tono propio por losa, manchas, alguna grieta y el borde biselado que
-// agarra el brillo. Solo en las caras de arriba; los costados quedan con la paleta.
+// agarra el brillo. Solo en las caras de arriba; los costados quedan con la paleta. Cada mazmorra lo cambia (la_walls
+// LOOKS): con earth, parte de las losas son tierra apisonada; con plank_width, tablones en vez de losas.
 shader_type spatial;
 render_mode cull_back;
 
@@ -18,6 +19,13 @@ uniform float crack_amount : hint_range(0.0, 1.0) = 0.15;
 uniform float roughness : hint_range(0.0, 1.0) = 0.5;
 uniform float specular : hint_range(0.0, 1.0) = 0.4;
 uniform float normal_strength = 0.6;
+// Parte de las losas que son tierra (sin junta ni bisel, más oscura) y ancho de los tablones (0: losas).
+uniform float earth : hint_range(0.0, 1.0) = 0.0;
+uniform float earth_shade = 0.8;
+uniform float plank_width = 0.0;
+uniform float plank_length = 1.7;
+// Color propio del piso sobre el de la paleta (alfa = cuánto).
+uniform vec4 floor_color : source_color = vec4(0.0);
 
 varying vec3 world_pos;
 varying vec3 world_normal;
@@ -71,9 +79,30 @@ vec3 stones(vec2 p) {
 	return vec3(edge, best_cell);
 }
 
-float stone_height(vec2 p) {
+// Distancia al borde de la losa o tablón en metros y su id.
+vec3 cells(vec2 p) {
+	if (plank_width > 0.0) {
+		float row = floor(p.y / plank_width);
+		float x = p.x + hash1(vec2(row, 3.0)) * plank_length;
+		float k = floor(x / plank_length);
+		float fx = x - k * plank_length;
+		float fy = p.y - row * plank_width;
+		return vec3(min(min(fx, plank_length - fx), min(fy, plank_width - fy)), k, row);
+	}
 	vec3 s = stones(p / tile_size);
-	return smoothstep(0.0, bevel / tile_size, s.x - grout_width / tile_size);
+	return vec3(s.x * tile_size, s.yz);
+}
+
+bool is_earth(vec2 id) {
+	return hash1(id + 11.0) < earth;
+}
+
+float stone_height(vec2 p) {
+	vec3 s = cells(p);
+	if (is_earth(s.yz)) {
+		return 0.0;
+	}
+	return smoothstep(0.0, bevel, s.x - grout_width);
 }
 
 void vertex() {
@@ -83,19 +112,24 @@ void vertex() {
 
 void fragment() {
 	vec3 base = albedo_color.rgb * texture(albedo_texture, UV).rgb;
+	base = mix(base, floor_color.rgb, floor_color.a);
 	if (world_normal.y < 0.9) {
 		ALBEDO = base;
 		ROUGHNESS = 1.0;
 	} else {
 		vec2 p = world_pos.xz;
-		vec3 s = stones(p / tile_size);
-		float edge = s.x * tile_size;
-		float tone = 1.0 + (hash1(s.yz) - 0.5) * 2.0 * tone_spread;
+		vec3 s = cells(p);
+		float edge = s.x;
+		bool dirt = is_earth(s.yz);
+		float tone = dirt ? earth_shade : 1.0 + (hash1(s.yz) - 0.5) * 2.0 * tone_spread;
 		float spots = value_noise(p * 1.7) * 0.6 + value_noise(p * 5.3) * 0.4;
 		float shade = tone * (1.0 - mottle + mottle * 2.0 * spots);
+		if (plank_width > 0.0) {
+			shade *= 0.88 + 0.24 * value_noise(vec2(p.x * 0.9, p.y * 18.0) + s.yz * 5.0);
+		}
 		float crack_line = abs(value_noise(p * 2.2 + s.yz * 3.1) - 0.5);
-		float crack = step(hash1(s.yz + 7.0), crack_amount) * smoothstep(0.015, 0.0, crack_line) * smoothstep(grout_width, grout_width + 0.15, edge);
-		float grout = 1.0 - smoothstep(grout_width * 0.5, grout_width, edge);
+		float crack = dirt ? 0.0 : step(hash1(s.yz + 7.0), crack_amount) * smoothstep(0.015, 0.0, crack_line) * smoothstep(grout_width, grout_width + 0.15, edge);
+		float grout = dirt ? 0.0 : 1.0 - smoothstep(grout_width * 0.5, grout_width, edge);
 		vec3 color = base * shade;
 		color *= 1.0 - crack * 0.5;
 		color = mix(color, base * grout_shade, grout);

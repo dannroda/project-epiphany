@@ -100,16 +100,24 @@ const LOOKS := {
 	"chullpa": {"ambient": Color(0.76, 0.7, 0.66), "ambient_energy": 1.25, "sun": Color(0.85, 0.8, 0.74), "sun_energy": 0.65,
 		"room": Color(1.0, 0.87, 0.7), "room_energy": 2.3, "dust": "res://src/world/look/polvo_chullpa.tscn",
 		"brazier": "res://assets/epiphany/meshes/templo_chullpa/brasero.res",
-		"doors": "res://assets/epiphany/meshes/paredes_la/%s_chullpa_la.res"},
+		"doors": "res://assets/epiphany/meshes/paredes_la/%s_chullpa_la.res",
+		"walls": "res://assets/epiphany/meshes/paredes_la/%s_chullpa_la_%s.res", "kit": "res://data/kits/chullpa_la_kit.tres", "grain": [0.0, GRAIN_RECT],
+		"floor": {"tile_size": 1.1, "jitter": 0.38, "grout_width": 0.05, "grout_shade": 0.55, "earth": 0.6, "earth_shade": 0.64}},
 	"quenoa": {"ambient": Color(0.56, 0.7, 0.8), "ambient_energy": 1.35, "sun": Color(0.6, 0.8, 0.98), "sun_energy": 0.75,
 		"room": Color(0.9, 0.96, 0.94), "room_energy": 2.1, "dust": "res://src/world/look/polvo_quenoa.tscn",
 		"brazier": "res://assets/epiphany/meshes/objetos/brasero_quenoa.res",
-		"doors": "res://assets/epiphany/meshes/paredes_la/%s_quenoa_la.res"},
+		"doors": "res://assets/epiphany/meshes/paredes_la/%s_quenoa_la.res",
+		"walls": "res://assets/epiphany/meshes/paredes_la/%s_quenoa_la_%s.res", "kit": "res://data/kits/quenoa_la_kit.tres", "grain": [0.6, Vector4(0.51, 0.615, 0.0, 0.25)],
+		"floor": {"plank_width": 0.45, "floor_color": Color(0.58, 0.35, 0.22, 1.0), "grout_width": 0.025, "grout_shade": 0.35, "tone_spread": 0.16}},
 }
 ## El polvo va colgado de la cámara, a esta distancia por delante (más cerca que el player).
 const DUST_AHEAD := 20.0
 ## Hojas de las puertas de la mazmorra que se está armando (LOOKS); %s es el nombre de Door.LEAVES.
 var _door_leaves := ""
+var _walls := MESHES
+var _out_kit := OUT_KIT
+var _floor_params := {}
+var _grain: Array = [GRAIN_AMOUNT, GRAIN_RECT]
 
 
 func _initialize() -> void:
@@ -139,6 +147,10 @@ func _initialize() -> void:
 		quit(1)
 		return
 	_door_leaves = LOOKS[args[1]].doors
+	_walls = LOOKS[args[1]].walls
+	_out_kit = LOOKS[args[1]].kit
+	_floor_params = LOOKS[args[1]].floor
+	_grain = LOOKS[args[1]].grain
 	var level := _load(path)
 	if mode == "bake" and level.has_node(NodePath(BAKED)):
 		push_error("%s ya tiene el look de LA: usar refresh" % path)
@@ -304,8 +316,8 @@ var _wood_material: ShaderMaterial
 func _wood() -> ShaderMaterial:
 	if _wood_material == null:
 		_wood_material = _glossy(STONE).duplicate()
-		_wood_material.set_shader_parameter("grain_amount", GRAIN_AMOUNT)
-		_wood_material.set_shader_parameter("grain_rect", GRAIN_RECT)
+		_wood_material.set_shader_parameter("grain_amount", _grain[0])
+		_wood_material.set_shader_parameter("grain_rect", _grain[1])
 	return _wood_material
 
 
@@ -319,6 +331,8 @@ func _floor(material: Material) -> Material:
 		tiles.set_shader_parameter("albedo_color", (material as BaseMaterial3D).albedo_color)
 		tiles.set_shader_parameter("roughness", GLOSS_ROUGHNESS)
 		tiles.set_shader_parameter("specular", GLOSS_SPECULAR)
+		for param: String in _floor_params:
+			tiles.set_shader_parameter(param, _floor_params[param])
 		_glossy_cache[material] = tiles
 	return _glossy_cache[material]
 
@@ -539,8 +553,9 @@ func _kit() -> MeshLibrary:
 		kit.set_item_mesh(item, mesh)
 	var shapes: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(SHAPES))
 	var ids := {}
-	if ResourceLoader.exists(OUT_KIT):
-		var old: MeshLibrary = ResourceLoader.load(OUT_KIT, "", ResourceLoader.CACHE_MODE_IGNORE)
+	var previous := _out_kit if ResourceLoader.exists(_out_kit) else OUT_KIT
+	if ResourceLoader.exists(previous):
+		var old: MeshLibrary = ResourceLoader.load(previous, "", ResourceLoader.CACHE_MODE_IGNORE)
 		for item in old.get_item_list():
 			ids[old.get_item_name(item)] = item
 			for kind: String in KINDS:
@@ -553,7 +568,8 @@ func _kit() -> MeshLibrary:
 		for code: String in shapes.get(kind, []):
 			var tool := SurfaceTool.new()
 			tool.begin(Mesh.PRIMITIVE_TRIANGLES)
-			var mesh: Mesh = load(MESHES % [kind, code])
+			var path: String = _walls % [kind, code]
+			var mesh: Mesh = load(path if ResourceLoader.exists(path) else MESHES % [kind, code])
 			for surface in mesh.get_surface_count():
 				tool.append_from(mesh, surface, Transform3D.IDENTITY)
 			tool.set_material(_wood())
@@ -589,11 +605,11 @@ func _kit() -> MeshLibrary:
 		kit.set_item_mesh(id, _with_window(pit, window))
 		kit.set_item_shapes(id, kit.get_item_shapes(item))
 		kit.set_item_navigation_mesh(id, kit.get_item_navigation_mesh(item))
-	var uid := ResourceLoader.get_resource_uid(OUT_KIT) if ResourceLoader.exists(OUT_KIT) else ResourceUID.INVALID_ID
-	ResourceSaver.save(kit, OUT_KIT)
+	var uid := ResourceLoader.get_resource_uid(_out_kit) if ResourceLoader.exists(_out_kit) else ResourceUID.INVALID_ID
+	ResourceSaver.save(kit, _out_kit)
 	if uid != ResourceUID.INVALID_ID:
-		ResourceSaver.set_uid(OUT_KIT, uid)
-	return ResourceLoader.load(OUT_KIT, "", ResourceLoader.CACHE_MODE_REPLACE)
+		ResourceSaver.set_uid(_out_kit, uid)
+	return ResourceLoader.load(_out_kit, "", ResourceLoader.CACHE_MODE_REPLACE)
 
 
 ## La pieza de hueco con el fondo (lo que está más abajo que HOLE_BOTTOM) pasado a `bottom_material`; con `fog`, una copia de
