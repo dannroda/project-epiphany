@@ -669,11 +669,41 @@ def interruptor_peso_placa(p):
 	p.paint(band, "noche", "MID")
 
 
+def aro(p, radius, thick, z=0.0, sides=16, segs=8):
+	"""Aro (toro) alrededor de Z a la altura z."""
+	profile = [(radius + thick * math.cos(a), z + thick * math.sin(a)) for a in (2 * math.pi * k / segs for k in range(segs + 1))]
+	return p.lathe(profile, sides=sides, caps=False)
+
+
+def poste_gancho(p):
+	"""Poste de 1.6 m para el gancho (hook_post.tscn): base de piedra, fuste de madera con bandas talladas y remate dorado
+	con la chakana al frente; el aro va aparte."""
+	base = p.rounded_box(-0.36, 0.36, -0.36, 0.36, 0.0, 0.16, radius=0.05, segments=1)
+	p.jitter(base, 0.01)
+	p.paint(base, "acantilado", "MID", vary=0.05)
+	shaft = p.lathe([(0.0, 0.14), (0.27, 0.14), (0.25, 0.3), (0.23, 1.38), (0.25, 1.42), (0.25, 1.5), (0.2, 1.56), (0.0, 1.6)], sides=10)
+	p.paint_bands(shaft, [(0.34, 0.39, "madera_oscura", "DARK"), (1.2, 1.25, "madera_oscura", "DARK"), (1.41, 1.51, "dorado", "MID")], default=(0, 0, "madera", "MID"))
+	epi.chakana_plate(p, Vector((0, -0.228, 1.31)), 0.11, "dorado")
+
+
+def poste_gancho_anillo(p):
+	"""El aro dorado del poste, centrado en el origen (Ring de hook_post.tscn, a 0.9 m): donde muerde la punta."""
+	ring = aro(p, 0.275, 0.045, sides=18, segs=8)
+	p.paint(ring, "dorado", "LIGHT", vary=0.03)
+	studs = []
+	for k in range(4):
+		a = math.pi / 4 + math.pi / 2 * k
+		studs += p.blob((0.32 * math.cos(a), 0.32 * math.sin(a), 0.0), 0.035, subdiv=1, rough=0.0)
+	p.paint(studs, "cobre_verde", "MID")
+
+
 piece("bloque_empujable", 24, bloque_empujable, smooth=40)
 piece("interruptor_marco", 25, interruptor_marco, smooth=40)
 piece("interruptor_placa", 26, interruptor_placa, smooth=40)
 piece("interruptor_peso_marco", 35, interruptor_peso_marco, smooth=40)
 piece("interruptor_peso_placa", 36, interruptor_peso_placa, smooth=40)
+piece("poste_gancho", 37, poste_gancho, smooth=40)
+piece("poste_gancho_anillo", 38, poste_gancho_anillo, smooth=40)
 
 epi.layout(kit, columns=6, spacing=2.0)
 epi.publish("objetos")

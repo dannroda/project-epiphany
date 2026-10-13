@@ -1,7 +1,8 @@
 [gd_resource type="Resource" script_class="ItemData" format=3]
 
 [ext_resource type="Script" path="res://src/items/behaviors/hook_behavior.gd" id="1_hook"]
-[ext_resource type="Texture2D" path="res://assets/ui/items/feather.png" id="2_icon"]
+[ext_resource type="Texture2D" path="res://assets/ui/items/hookshot.png" id="2_icon"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/equipo/gancho.res" id="5_pickup"]
 [ext_resource type="Script" uid="uid://bn5pjgpia5grm" path="res://src/items/item_data.gd" id="3_item"]
 [ext_resource type="PackedScene" path="res://src/items/hookshot/hook.tscn" id="4_scene"]
 
@@ -15,6 +16,7 @@ id = &"hookshot"
 display_name = "ITEM_HOOKSHOT_NAME"
 description = "ITEM_HOOKSHOT_DESC"
 icon = ExtResource("2_icon")
+pickup_mesh = ExtResource("5_pickup")
 category = 3
 behavior = SubResource("Resource_hook")
 damage = 1

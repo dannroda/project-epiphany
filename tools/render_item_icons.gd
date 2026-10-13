@@ -36,6 +36,7 @@ const ICONS := {
 	"armor_chainmail": [MESH % "equipo/armadura", Vector3(0, 0, 0)],
 	"feather": [MESH % "equipo/pluma", Vector3(0, 0, -35)],
 	"sandals": [MESH % "equipo/sandalias", Vector3(40, 0, 0)],
+	"hookshot": [MESH % "equipo/gancho", Vector3(0, 0, -45)],
 }
 
 func _initialize() -> void:

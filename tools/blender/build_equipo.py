@@ -280,6 +280,66 @@ def sandalias(p):
 	ojota(p, -1, (-0.075, 0.02, 0.0), 0.08)
 
 
+def aro(p, radius, thick, z=0.0, sides=16, segs=8):
+	"""Aro (toro) alrededor de Z a la altura z."""
+	profile = [(radius + thick * math.cos(a), z + thick * math.sin(a)) for a in (2 * math.pi * k / segs for k in range(segs + 1))]
+	return p.lathe(profile, sides=sides, caps=False)
+
+
+def punta(p):
+	"""La punta del gancho sobre +Z con el ojo de la cadena en el origen: cuello de cobre atado con lana roja, punta de
+	rombo y dos garfios que vuelven hacia atrás."""
+	eye = aro(p, 0.035, 0.012, sides=10, segs=6)
+	p.transform(eye, Matrix.Rotation(math.pi / 2, 4, "Y"))
+	p.paint(eye, "hierro", "LIGHT")
+	neck = p.cylinder(0.04, 0.02, 0.15, sides=8, radius_top=0.05)
+	p.paint_bands(neck, [(0.06, 0.1, "tela_roja", "MID")], default=(0, 0, "roca_naranja", "MID"))
+	head = p.lathe([(0.0, 0.14), (0.06, 0.15), (0.09, 0.21), (0.0, 0.42)], sides=4)
+	p.paint(head, "roca_naranja", "LIGHT", vary=0.03)
+	barbs = []
+	right = [(0.04, 0.26), (0.1, 0.22), (0.17, 0.12), (0.19, 0.03), (0.15, 0.06), (0.11, 0.13), (0.05, 0.17)]
+	for side in (1, -1):
+		pts = [(side * x, z) for x, z in right]
+		barbs += flat(p, pts if side < 0 else pts[::-1], 0.035)
+	p.paint(barbs, "dorado", "MID")
+	return eye + neck + head + barbs
+
+
+def gancho_punta(p):
+	punta(p)
+
+
+CHAIN_TILE = 0.16
+
+
+def gancho_cadena(p):
+	"""Un tramo de cadena de CHAIN_TILE sobre +Y (en Godot, de 0 a -CHAIN_TILE en Z): dos eslabones cruzados que encastran
+	con los del tramo siguiente; se repite a lo largo, sin estirar."""
+	links = []
+	for k in (0, 1):
+		zc = CHAIN_TILE * (0.25 + 0.5 * k)
+		pts = [(0.03 * math.cos(t), 0.0, zc + 0.055 * math.sin(t)) for t in (2 * math.pi * i / 10 for i in range(11))]
+		link = tube(p, pts, 0.01, sides=5)
+		p.transform(link, Matrix.Rotation(math.pi / 2 * k, 4, "Z"))
+		links += link
+	p.paint(links, "hierro", "LIGHT", vary=0.05)
+	p.transform(links, Matrix.Rotation(-math.pi / 2, 4, "X"))
+
+
+def gancho(p):
+	"""El gancho entero (para el ícono): caño de cobre sobre +Z con la empuñadura colgando, la cadena enrollada y la punta."""
+	barrel = p.lathe([(0.0, 0.0), (0.05, 0.0), (0.056, 0.02), (0.05, 0.3), (0.062, 0.32), (0.062, 0.34), (0.0, 0.34)], sides=12)
+	p.paint_bands(barrel, [(0.0, 0.03, "dorado", "MID"), (0.29, 0.34, "dorado", "MID")], default=(0, 0, "roca_naranja", "MID"))
+	coil = []
+	for z in (0.1, 0.125, 0.15, 0.175, 0.2):
+		coil += aro(p, 0.062, 0.013, z, sides=12, segs=6)
+	p.paint(coil, "hierro", "LIGHT", vary=0.06)
+	grip = p.cylinder(0.032, 0.0, 0.17, sides=8, radius_top=0.028)
+	p.paint_bands(grip, [(0.05, 0.08, "tela_roja", "MID"), (0.12, 0.15, "tela_roja", "MID")], default=(0, 0, "madera_oscura", "MID"))
+	p.transform(grip, Matrix.Translation((0, 0, 0.05)) @ Matrix.Rotation(math.pi / 2, 4, "X"))
+	p.transform(punta(p), Matrix.Translation((0, 0, 0.33)))
+
+
 piece("espada", 1, espada)
 piece("escudo_madera", 2, escudo_madera)
 piece("escudo_espejo", 3, escudo_espejo)
@@ -292,5 +352,8 @@ piece("botella_liquido", 10, botella_liquido)
 piece("armadura", 9, armadura)
 piece("pluma", 11, pluma)
 piece("sandalias", 12, sandalias)
+piece("gancho", 13, gancho)
+piece("gancho_punta", 14, gancho_punta)
+piece("gancho_cadena", 15, gancho_cadena)
 epi.layout(kit, columns=8, spacing=2.0)
 epi.publish("equipo")
