@@ -110,10 +110,11 @@ func test_overworld_names_appear_as_zones_are_visited() -> void:
 	assert_eq(state.visited_zones, [&"Zone_start"] as Array[StringName], "partida nueva: solo el claro del inicio")
 	var explored: Texture2D = (page.overworld_image.material as ShaderMaterial).get_shader_parameter(&"explored")
 	assert_true(explored != null and explored.get_size() == Vector2(state.map_revealed.get_size()), "la foto se revela con lo descubierto del minimapa")
-	assert_eq(page.subtitle.text, tr("MAP_ZONES_EXPLORED").format({done = 1, total = 8}) + " · " + tr("MAP_PORTALS_LIT").format({done = 0, total = 6}), "cuenta regiones grandes, no pantallas, y portales")
+	assert_eq(page.subtitle.text, tr("MAP_ZONES_EXPLORED").format({done = 1, total = 14}) + " · " + tr("MAP_PORTALS_LIT").format({done = 0, total = 6}), "cuenta regiones grandes, no pantallas, y portales")
 	var names := func() -> Array: return page.marks.get_children().filter(func(mark: Node) -> bool: return mark is Label).map(func(label: Label) -> String: return label.text)
 	assert_eq(names.call(), [tr("PLACE_FIRST_CLEARING")], "solo el nombre de la región visitada, una vez")
-	state.visit_zone(&"Zone_gruta")
+	state.set_flag(&"ow_grotto_cracked_wall", true)
+	state.visit_zone(page._zone_at(Vector2(-82, 14)).name)
 	state.visit_zone(&"Zone_vertiente")
 	page.refresh()
 	await tree.process_frame
@@ -134,16 +135,16 @@ func test_cursor_reads_what_is_missing_in_a_zone() -> void:
 	var tree: SceneTree = setup[0]
 	var state: Node = setup[1]
 	var page: Control = setup[3]
-	state.visit_zone(&"Zone_gruta")
+	var grotto: AreaZone = page._zone_at(Vector2(-82, 14))
+	state.visit_zone(grotto.name)
 	page.refresh()
 	await tree.process_frame
 	await tree.process_frame
-	var grotto: AreaZone = tree.current_scene.get_node(^"Zone_gruta")
 	page._move_cursor(page.world_to_map(grotto.bounds().get_center()))
-	assert_eq(page.focus_title.text, "PLACE_FIRST_CLEARING", "la gruta es parte de la región del Claro")
+	assert_eq(page.focus_title.text, "PLACE_FIRST_CLEARING", "la entrada de la gruta es parte de la región del Claro")
 	var rows: Array = page.focus_stats.get_children().map(func(row: StatRow) -> String: return row.get_node(^"Padding/Row/Name").text + "=" + row.value_text())
-	assert_true(rows.has("MAP_HEART_PIECES=" + tr("MAP_COUNT").format({done = 0, total = 1})), "dice que falta la pieza (%s)" % [rows])
-	assert_true(rows.has("MAP_CHESTS=" + tr("MAP_COUNT").format({done = 0, total = 2})), "y los cofres de lo visitado de la región: el del claro y el de la gruta (%s)" % [rows])
+	assert_true(rows.has("MAP_CHESTS=" + tr("MAP_COUNT").format({done = 0, total = 1})), "dice que falta el cofre del claro (%s)" % [rows])
+	assert_true(rows.has("MAP_TABLETS_READ=" + tr("MAP_COUNT").format({done = 0, total = 4})), "y las tablillas sin leer (%s)" % [rows])
 	var risk: AreaZone = tree.current_scene.get_node(^"Zone_risco")
 	page._move_cursor(page.world_to_map(risk.bounds().get_center()))
 	assert_eq(page.focus_text.text, "MAP_UNEXPLORED", "de las zonas sin ver no cuenta nada")
@@ -350,6 +351,6 @@ func test_travel_portals_light_up_and_the_map_travels() -> void:
 		await tree.process_frame
 	player = tree.get_first_node_in_group(&"player") as PlayerCharacter
 	assert_eq(state.spawn_point, &"portal_necropolis", "viajó al portal de la Necrópolis")
-	assert_true(Vector2(player.global_position.x, player.global_position.z).distance_to(Vector2(36, -5)) < 2.5, "y aparece ahí (%s)" % player.global_position.snappedf(0.1))
+	assert_true(Vector2(player.global_position.x, player.global_position.z).distance_to(Vector2(32, -2)) < 2.5, "y aparece ahí (%s)" % player.global_position.snappedf(0.1))
 	assert_true(not stack.is_open(), "con el menú cerrado")
 	state.reset()

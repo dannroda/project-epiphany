@@ -139,7 +139,7 @@ func test_play_start_into_the_temple_and_back() -> void:
 	assert_eq((tree.current_scene.get_node(^"TempleSeal") as TempleSeal).is_open, true, "sello abierto")
 	await tree.create_timer(1.0).timeout
 
-	await _place(Vector3(-48, 0, -32), Vector3.FORWARD)
+	await _place(Vector3(-42, 5.2, -33), Vector3.FORWARD)
 	assert_true(await _walk_into(&"move_forward", DUNGEON), "entra al templo")
 	assert_true(await _walk_into(&"move_backward", OVERWORLD), "y vuelve a salir")
 	assert_eq((tree.current_scene.get_node(^"TempleSeal") as TempleSeal).is_open, true, "el sello sigue abierto")

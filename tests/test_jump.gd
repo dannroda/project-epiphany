@@ -272,15 +272,15 @@ func test_the_narrows_are_a_feather_crossing() -> void:
 	var tree: SceneTree = setup[0]
 	var player: PlayerCharacter = setup[1]
 	var before := player.health.current
-	var walked: Array = await _try(tree, player, Vector3(-1.6, 0, 17), &"move_right", false)
+	var walked: Array = await _try(tree, player, Vector3(-3.6, 0, 17), &"move_right", false)
 	assert_true(walked[1] < -0.5, "sin pluma cae en la angostura (y mín %.2f)" % walked[1])
 	assert_true(player.health.current < before, "caer lastima")
-	assert_true(walked[0].x < -1.0 and walked[0].y > -0.5, "y vuelve del lado de la Arboleda (%s)" % walked[0])
+	assert_true(walked[0].x < -3.0 and walked[0].y > -0.5, "y vuelve del lado de la Arboleda (%s)" % walked[0])
 	setup = await _overworld(true)
 	tree = setup[0]
 	player = setup[1]
-	var jumped: Array = await _try(tree, player, Vector3(-1.6, 0, 17), &"move_right", true)
-	assert_true(jumped[0].x > 1.5 and jumped[1] > -0.2, "con la pluma la cruza al Cardonal (%s)" % jumped[0])
-	jumped = await _try(tree, player, Vector3(1.6, 0, 17), &"move_left", true)
-	assert_true(jumped[0].x < -1.5 and jumped[1] > -0.2, "y vuelve (%s)" % jumped[0])
+	var jumped: Array = await _try(tree, player, Vector3(-3.6, 0, 17), &"move_right", true)
+	assert_true(jumped[0].x > -0.5 and jumped[1] > -0.2, "con la pluma la cruza al Cardonal (%s)" % jumped[0])
+	jumped = await _try(tree, player, Vector3(-0.4, 0, 17), &"move_left", true)
+	assert_true(jumped[0].x < -3.5 and jumped[1] > -0.2, "y vuelve (%s)" % jumped[0])
 	(setup[2] as Node).reset()

@@ -113,18 +113,18 @@
 [ext_resource type="Script" path="res://src/world/map_place.gd" id="101_place"]
 
 [ext_resource type="PackedScene" path="res://src/world/travel_portal.tscn" id="110_travel"]
+
 [ext_resource type="PackedScene" path="res://src/world/terrazas/escalinata_e.tscn" id="terr_escalinata_e"]
+
 [ext_resource type="PackedScene" path="res://src/world/terrazas/escalinata_o.tscn" id="terr_escalinata_o"]
+
 [ext_resource type="PackedScene" path="res://src/world/terrazas/escalinata_medio.tscn" id="terr_escalinata_medio"]
+
 [ext_resource type="PackedScene" path="res://src/world/terrazas/salto_o.tscn" id="terr_salto_o"]
+
 [ext_resource type="PackedScene" path="res://src/world/terrazas/salto_e.tscn" id="terr_salto_e"]
+
 [ext_resource type="PackedScene" path="res://src/world/terrazas/salto_medio.tscn" id="terr_salto_medio"]
-
-
-
-
-
-
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7se6l"]
 panorama = ExtResource("1_qyxw2")
@@ -1271,6 +1271,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -88, 2.6, -20)
 script = ExtResource("101_place")
 display_name = "PLACE_SANCTUARY"
 kind = 2
+reveal_flag = &"ow_shrine_cracked_wall"
 
 [node name="PlaceBombCave" type="Marker3D" parent="." unique_id=1820417743]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70, 0, -16)
@@ -1283,6 +1284,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -82, 0, 14)
 script = ExtResource("101_place")
 display_name = "PLACE_HIDDEN_GROTTO"
 kind = 1
+reveal_flag = &"ow_grotto_cracked_wall"
 
 [node name="PlaceSpring" type="Marker3D" parent="." unique_id=1820417745]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -97, 0, 38)
@@ -1293,7 +1295,7 @@ kind = 1
 [node name="TravelPortals" type="Node3D" parent="."]
 
 [node name="PortalClaro" parent="TravelPortals" instance=ExtResource("110_travel")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54, 0, 20)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56, 0, 10)
 id = &"claro"
 display_name = "PLACE_FIRST_CLEARING"
 

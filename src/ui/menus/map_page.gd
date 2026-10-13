@@ -393,7 +393,7 @@ func _place_overworld() -> void:
 			marks.add_child(label)
 	for place: MapPlace in get_tree().current_scene.find_children("*", "MapPlace", true, false):
 		var zone := _zone_at(Vector2(place.global_position.x, place.global_position.z))
-		if zone and not zone.is_visited():
+		if zone and not zone.is_visited() or not place.is_revealed():
 			continue
 		var at := world_to_map(Vector2(place.global_position.x, place.global_position.z))
 		marks.add_child(MapMark.create(MapMark.Kind.CAVE if place.kind == MapPlace.Kind.CAVE else MapMark.Kind.ENTRANCE, at))
