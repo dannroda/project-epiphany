@@ -4309,11 +4309,15 @@ Los ítems conseguidos en la mazmorra (mapa, brújula, llave del jefe, llaves ch
 
 ### 11.105 Repensar el tutorial · Pendiente
 
-**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `diseno`, `ui`
+**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `diseno`, `ui`
 
-Playtest 2026-10-12: las tablitas del claro (11.45) funcionan, pero no son la mejor forma de enseñar los controles. Buscar otra.
+Playtest 2026-10-12: las tablitas del claro (11.45) funcionan, pero no son la mejor forma de enseñar los controles. Buscar otra. 2026-10-13 (Daniel): un mini tutorial cada vez que aparece una mecánica nueva, empezando por agarrar un ítem: qué hace, con qué botón y una situación para probarlo enseguida. Ejemplo: con el arco Daniel se olvidó de que dispararle al ojo era una mecánica; el juego tiene que mostrarlo.
 
 - [ ] Propuesta
+- [ ] Listar las mecánicas nuevas y dónde aparecen por primera vez: cada ítem (pluma, arco, sandalias, gancho, escudo espejo, bombas) y sus usos no obvios (flecha al ojo, salto largo, reflejar el haz), además de levantar, empujar, placas, etc.
+- [ ] Mini tutorial al agarrar un ítem: después del item get, un aviso corto con el botón del dispositivo actual y la mecánica que abre (p. ej. arco: 'dispará a los ojos de piedra')
+- [ ] Una situación para probarlo enseguida, cerca de donde se consigue (el primer ojo justo después del sub-jefe, etc.), en la línea de 11.90
+- [ ] Revisar las tablitas del claro: cuáles quedan y cuáles reemplaza el mini tutorial
 
 **Notas:** Con 11.90 (cada mazmorra enseña su ítem).
 
