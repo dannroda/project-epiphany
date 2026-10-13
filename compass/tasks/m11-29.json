@@ -1,14 +1,18 @@
 {
   "checklist": [
     {
-      "detail": "Luz, niebla y música calmas tras d1_boss_defeated.",
-      "done": false,
-      "text": "Sin doom"
+      "detail": "Daniel (2026-10-13): el jefe del templo (te_boss_defeated). El overworld ya no tiene doom; AfterTheEye pasa el sol a luz de amanecer, apaga el ojo de la fachada (TempleEyeGlow) y para los temblores. Valores de luz: arte.",
+      "done": true,
+      "text": "Amanecer tras el jefe final"
     },
     {
-      "detail": "Una zona o secreto que solo aparece después.",
+      "detail": "Escalinata de una celda (X -48, Z -36) cerrada por SummitGate hasta te_boss_defeated; arriba, HeartPieceSummit. Test en test_secrets.",
+      "done": true,
+      "text": "Cima del templo"
+    },
+    {
       "done": false,
-      "text": "Algo nuevo accesible"
+      "text": "Recorrerlo (Daniel)"
     }
   ],
   "code": "11.29",
@@ -25,12 +29,12 @@
   "order": 29,
   "priority": "low",
   "refs": [],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "overworld",
     "audio"
   ],
   "test": "Vencer al jefe y salir: el overworld se ve y suena distinto, y hay algo nuevo para encontrar.",
   "title": "Overworld después del jefe",
-  "updated_at": "2026-10-11T07:51:05.091Z"
+  "updated_at": "2026-10-13T17:09:49.679Z"
 }

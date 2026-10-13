@@ -2983,16 +2983,17 @@ Uno o dos atajos que se abren desde adentro (puente o escalera) y quedan abierto
 
 **Prueba:** Abrir el atajo desde adentro: queda abierto y acorta el recorrido al templo.
 
-### 11.29 Overworld después del jefe · Pendiente
+### 11.29 Overworld después del jefe · Revisión
 
 **Prioridad:** baja · **Etiquetas:** `overworld`, `audio`
 
 Después de vencer al jefe, el overworld tiene que verse y sonar distinto (sin doom: luz, niebla y música calmas) y ofrecer algo nuevo que solo aparece entonces.
 
-- [ ] Sin doom
-  Luz, niebla y música calmas tras d1_boss_defeated.
-- [ ] Algo nuevo accesible
-  Una zona o secreto que solo aparece después.
+- [x] Amanecer tras el jefe final
+  Daniel (2026-10-13): el jefe del templo (te_boss_defeated). El overworld ya no tiene doom; AfterTheEye pasa el sol a luz de amanecer, apaga el ojo de la fachada (TempleEyeGlow) y para los temblores. Valores de luz: arte.
+- [x] Cima del templo
+  Escalinata de una celda (X -48, Z -36) cerrada por SummitGate hasta te_boss_defeated; arriba, HeartPieceSummit. Test en test_secrets.
+- [ ] Recorrerlo (Daniel)
 
 **Prueba:** Vencer al jefe y salir: el overworld se ve y suena distinto, y hay algo nuevo para encontrar.
 
@@ -4917,7 +4918,7 @@ Cada mazmorra con su propio estilo sobre el mismo kit (mismas piezas y colisione
   build_temple_kit.gd -- <estilo> arma chullpa_kit, laguna_kit y cumbre_kit (mismos ítems y colisiones que temple_kit). levels/chullpa.tscn usa chullpa_kit. Laguna y Cumbre todavía no tienen escena.
 - [x] Luz y ambiente por mazmorra
   Hecho el 2026-10-13 (d5384189), arte -11: LOOKS en la_walls.gd (ambiente, luz del lado de la cámara, foco de sala y polvo), se aplica en bake y en cada refresh. Chullpa cálida y polvorienta (polvo_chullpa.tscn), Queñoa fría y húmeda (polvo_quenoa.tscn). Las escenas de polvo se ajustan a ojo en el editor; los colores, en LOOKS.
-- [ ] Props por estilo
+- [x] Props por estilo
   Hecho el 2026-10-13, arte -11. Queñoa: brasero_quenoa (muñón de tronco colgado de la pared) y vasijas mate burilado (pot_quenoa.tscn) en 70d206ae; puertas de tablones atados con soga y musgo (ccee04af). Chullpa: brasero de piedra y aríbalo de antes, puertas de losas de piedra con escalonado y cobre (ccee04af). Todo lo pone la_walls LOOKS en cada refresh, menos las vasijas (por escena). Estandartes: el modelo existe en cada kit de estilo pero no hay ninguno puesto; ponerlos es de diseño.
 - [x] Estilo del terreno del overworld por región
   AreaZone.terrain_style (necropolis, laguna, cumbre, explanada, cardonal, quebrada); el build pinta suelo, riscos y abismo por región con borde ondulado y cambia la decoración. Puestos en overworld.tscn: Templo explanada, Quebrada, Necrópolis + Mirador, Cumbre + Risco, Laguna + Bañado, Cardonal. Falta que el usuario lo vea.

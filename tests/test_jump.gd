@@ -295,6 +295,7 @@ func test_the_ravine_ledge_takes_one_feather_jump() -> void:
 	var tree: SceneTree = setup[0]
 	var player: PlayerCharacter = setup[1]
 	var state: Node = setup[2]
+	state.give(Items.get_item(&"bow"))
 	var landed := await _jump_right(tree, player, Vector3(-9.6, 0, -32.4))
 	assert_true(landed.y > -0.5 and landed.x > -7.2 and landed.x < -4.8, "un salto de pluma llega a la repisa (%s)" % landed)
 	var chest := tree.current_scene.get_node(^"SecretLedgeChest") as Chest

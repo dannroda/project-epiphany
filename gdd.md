@@ -207,6 +207,7 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
   - Quebrada: una repisa a una celda de la orilla oeste, con la pluma, con 10 flechas (`ow_secret_ledge_chest`).
   - Pradera: una queñoa sola (`SecretTree`) que ningún golpe voltea; el choque de las sandalias la sacude y cae una pieza de corazón (`HeartPieceTree`, `ow_heart_piece_tree`).
 - *Atajo de la Cumbre (11.28):* una escalera de soga (`CumbreLadder`, `src/world/rope_ladder.tscn`) enrollada en el borde oeste de la Cumbre (7.6, -33). Se descuelga desde arriba (`ow_cumbre_ladder`) y desde entonces se sube y se baja entre la Cumbre y la orilla que lleva por el norte de la Quebrada a la Explanada, sin el gancho.
+- *Después del jefe final (11.29):* `AfterTheEye` aplica `te_boss_defeated` al entrar, al vencerlo y al cargar: el sol pasa a luz de amanecer (`dawn_color`, `dawn_energy`), se apaga el brillo rojo del ojo de la fachada (`TempleEyeGlow`), paran los temblores del templo y se abre la reja (`SummitGate`) de una escalinata de la Explanada a la cima de la montaña del templo, con una pieza de corazón (`HeartPieceSummit`, `ow_heart_piece_summit`).
 
 **Rediseño (7.9), decidido el 2026-10-11:** variante D, *la mezcla*, de la propuesta https://claude.ai/artifact/8N6Sst4jMsTDTgKLWdqm4B. Toma la referencia del análisis del Light World de *A Link to the Past* (*Overworld Overload*, partes 1 y 2):
 - regiones núcleo con una mazmorra o un ítem importante, unidas por zonas de conexión que también tienen secretos y peleas;

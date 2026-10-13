@@ -197,7 +197,7 @@ func test_the_sandals_crash_shakes_the_heart_piece_out_of_the_quenoa() -> void:
 
 func test_the_hills_rock_slides_off_its_niche() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
-	var setup: Array = await _load(tree, [])
+	var setup: Array = await _load(tree, [[&"bow", 1]])
 	var state: Node = setup[0]
 	var level: Node = setup[1]
 	var player: PlayerCharacter = setup[2]
@@ -271,4 +271,48 @@ func test_the_cumbre_rope_ladder_is_lowered_from_above_and_stays() -> void:
 	await tree.scene_changed
 	await tree.physics_frame
 	assert_eq((tree.current_scene.get_node(^"CumbreLadder") as RopeLadder).ladder.visible, true, "al volver sigue colgada")
+	state.reset()
+
+
+func _walk(tree: SceneTree, player: PlayerCharacter, from: Vector3, action: StringName, frames := 150) -> float:
+	player.global_position = from
+	for i in 10:
+		await tree.physics_frame
+	var press := InputEventAction.new()
+	press.action = action
+	press.pressed = true
+	Input.parse_input_event(press)
+	var highest := player.global_position.y
+	for i in frames:
+		await tree.physics_frame
+		highest = maxf(highest, player.global_position.y)
+	var release := InputEventAction.new()
+	release.action = action
+	Input.parse_input_event(release)
+	return highest
+
+
+func test_after_the_final_boss_the_dawn_comes_and_the_temple_top_opens() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var setup: Array = await _load(tree, [])
+	var state: Node = setup[0]
+	var level: Node = setup[1]
+	var player: PlayerCharacter = setup[2]
+	var after := level.get_node(^"AfterTheEye") as AfterTheEye
+	var gate := level.get_node(^"SummitGate") as Gate
+	var glow := level.get_node(^"TempleEyeGlow") as Node3D
+	var foot := Vector3(-48, 5.3, -33.5)
+	assert_eq([gate.is_open, glow.visible], [false, true], "con el ojo despierto la cima está cerrada y el ojo brilla")
+	assert_true(await _walk(tree, player, foot, &"move_forward") < 6.0, "la reja no deja subir")
+	state.set_flag(&"te_boss_defeated", true)
+	await tree.create_timer(0.8).timeout
+	assert_eq([gate.is_open, glow.visible], [true, false], "vencido el jefe, se abre la cima y el ojo se apaga")
+	assert_eq(after.sun.light_color, after.dawn_color, "y amanece")
+	assert_true(await _walk(tree, player, foot, &"move_forward") > 7.0, "la escalinata sube a la cima del templo")
+	player.global_position = level.get_node(^"HeartPieceSummit").global_position
+	await tree.create_timer(0.6).timeout
+	assert_eq(state.get_flag(&"ow_heart_piece_summit"), true, "donde hay una pieza de corazón")
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	while stack.is_open():
+		stack.pop()
 	state.reset()
