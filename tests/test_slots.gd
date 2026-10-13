@@ -61,31 +61,28 @@ func test_autosave_goes_to_the_auto_slot_and_remembers_its_game() -> void:
 	_teardown()
 
 
-func test_old_slots_move_up_once() -> void:
+func test_a_slot_with_only_its_backup_is_not_empty() -> void:
 	await _setup()
-	var dir := saves_dir.trim_suffix("/") + "_migrate/"
-	saves.save_dir = dir
-	DirAccess.make_dir_recursive_absolute(dir)
-	DirAccess.remove_absolute(dir + saves.MIGRATED_FILE)
-	for slot in 4:
-		saves.delete_slot(slot)
-	for slot in [0, 2]:
-		var file := FileAccess.open(saves.slot_path(slot), FileAccess.WRITE)
-		file.store_string("old %d" % slot)
-		file.close()
-	saves.migrate_slots()
-	assert_eq(FileAccess.get_file_as_string(saves.slot_path(1)), "old 0", "la 1 de antes es la 1 de ahora")
-	assert_eq(FileAccess.get_file_as_string(saves.slot_path(3)), "old 2")
-	assert_eq(saves.has_save(0), false, "la Auto queda libre")
-	assert_eq(saves.has_save(2), false)
-	var file := FileAccess.open(saves.slot_path(0), FileAccess.WRITE)
-	file.store_string("auto")
-	file.close()
-	saves.migrate_slots()
-	assert_eq(FileAccess.get_file_as_string(saves.slot_path(0)), "auto", "una sola vez")
-	for slot in 4:
-		saves.delete_slot(slot)
-	DirAccess.remove_absolute(dir + saves.MIGRATED_FILE)
+	await tree.root.get_node(^"SceneFlow").new_game(1)
+	saves.save_game()
+	DirAccess.rename_absolute(saves.slot_path(1), saves.slot_path(1) + ".bak")
+	assert_eq(saves.has_save(1), true, "con solo la copia de respaldo la ranura no aparece vacía")
+	assert_true(not saves.slot_summary(1).is_empty(), "y la pantalla de ranuras la muestra")
+	assert_eq(saves.copy_slot(1, 3), OK, "se puede copiar")
+	assert_eq(saves.has_save(3), true)
+	assert_eq(await saves.load_game(1), OK, "y cargar")
+	_teardown()
+
+
+func test_a_save_from_a_newer_version_is_refused() -> void:
+	await _setup()
+	var cfg := ConfigFile.new()
+	cfg.set_value("player", "max_health", 40)
+	cfg.set_value("meta", "version", SaveCodec.VERSION + 1)
+	cfg.save(saves.slot_path(2))
+	assert_eq(await saves.load_game(2), ERR_FILE_UNRECOGNIZED, "no carga una partida de un juego más nuevo")
+	assert_eq(saves.current_slot, 1, "y no cambia de ranura")
+	assert_eq(state.max_health, GameState.NEW_GAME_MAX_HEALTH, "ni la aplica")
 	_teardown()
 
 

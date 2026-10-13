@@ -2576,7 +2576,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (58/114)
+## M11 — Pulido: contenido y feel  (59/114)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3735,24 +3735,24 @@ Cada `value_changed` llama a `Settings.set_value`, que reaplica todo (buses, mod
 
 **Archivos:** `src/settings/settings.gd`, `src/ui/menus/options_panel.gd`
 
-### 11.74 Guardado: validar tipos, versionado y slots · Pendiente
+### 11.74 Guardado: validar tipos, versionado y slots · Hecho
 
-**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `guardado`
+**Terminada:** 2026-10-13 · **Prioridad:** baja · **Tamaño:** M · **Responsable:** Claude · **Etiquetas:** `guardado`
 
 Los datos cargados no se validan por tipo: una clave con tipo inesperado (por un cambio propio del esquema) tira error en las asignaciones tipadas de `GameState.read_from` y en `SaveCodec.validate`. `_migrate` corre después de validar, no hace nada y no rechaza versiones más nuevas. La migración de slots 0-2→1-3 corre en cada arranque protegida solo por `.slots_v2` (si se pierde, corre los slots y pisa el 3; y abre el marcador sin mirar null). Un slot con solo `.bak` aparece vacío.
 
-- [ ] Helper tipado
+- [x] Helper tipado
   `_typed(cfg, sec, key, default)` que vuelve al default si `typeof` no coincide; usarlo en `read_from` y `validate`.
-- [ ] Migrar antes de validar
+- [x] Migrar antes de validar
   save_manager: `_migrate` primero; rechazar `version > VERSION`.
-- [ ] Quitar la migración de slots
+- [x] Quitar la migración de slots
   Era de antes de publicar; no hay build pública.
-- [ ] has_save mira el .bak
+- [x] has_save mira el .bak
   save_manager ~l.120.
 
-**Prueba:** Una partida con un campo de tipo erróneo carga con el valor por defecto; una de versión futura se rechaza con mensaje; sin la migración de slots los tests pasan.
+**Prueba:** test_save_codec › test_a_key_of_the_wrong_type_falls_back_to_its_default; test_slots › test_a_slot_with_only_its_backup_is_not_empty y test_a_save_from_a_newer_version_is_refused (fallan con el código viejo).
 
-**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+**Notas:** Sesión de bugs (-fd). SaveCodec.typed(cfg, sección, clave, default): vuelve al default si el tipo no coincide (avisa con push_warning); int→float y String↔StringName pasan. GameState.read_from lee todo con eso (la posición solo si es Vector3, el inventario solo cantidades > 0) y validate también. _load_path: versión más nueva que SaveCodec.VERSION → ERR_FILE_UNRECOGNIZED sin tocar nada; _migrate corre antes de validate. Quitada migrate_slots (y .slots_v2, y su test). has_save y copy_slot cuentan una ranura con solo .bak. GDD al día.
 
 **Archivos:** `src/save/save_manager.gd`, `src/save/save_codec.gd`, `src/state/game_state.gd`
 

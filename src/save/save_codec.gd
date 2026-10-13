@@ -58,6 +58,23 @@ static func is_tampered(cfg: ConfigFile) -> bool:
 	return cfg.get_value("meta", "checksum", "") != checksum(cfg)
 
 
+## El valor guardado, o `default` si falta o es de otro tipo (un cambio del esquema). int ↔ float y String ↔ StringName pasan.
+static func typed(cfg: ConfigFile, section: String, key: String, default: Variant) -> Variant:
+	var value: Variant = cfg.get_value(section, key, default)
+	var want := typeof(default)
+	var got := typeof(value)
+	if got == want:
+		return value
+	if want == TYPE_FLOAT and got == TYPE_INT:
+		return float(value)
+	if want == TYPE_STRING_NAME and got == TYPE_STRING:
+		return StringName(value)
+	if want == TYPE_STRING and got == TYPE_STRING_NAME:
+		return String(value)
+	push_warning("[save] %s/%s: se esperaba %s y hay %s; queda el valor por defecto" % [section, key, type_string(want), type_string(got)])
+	return default
+
+
 ## No bloquea la carga: se pueden forzar escenarios imposibles a propósito.
 static func validate(cfg: ConfigFile) -> PackedStringArray:
 	var errors := PackedStringArray()
@@ -66,7 +83,7 @@ static func validate(cfg: ConfigFile) -> PackedStringArray:
 	if cfg.has_section("inventory"):
 		for id in cfg.get_section_keys("inventory"):
 			var item := db.get_item(id)
-			var count: int = cfg.get_value("inventory", id)
+			var count: int = typed(cfg, "inventory", id, 0)
 			if item == null:
 				errors.append("inventory/%s: ítem inexistente" % id)
 			elif count < 0 or count > item.max_stack:

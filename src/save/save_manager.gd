@@ -16,8 +16,6 @@ const AUTO_SLOT := 0
 const PLAYER_SLOTS: Array[int] = [1, 2, 3]
 ## Ranura de los escenarios de debug: su autosave nunca pisa una partida del jugador.
 const SCENARIO_SLOT := 98
-## Marca que las ranuras 0–2 de antes ya pasaron a 1–3.
-const MIGRATED_FILE := ".slots_v2"
 
 ## Ranura del jugador de la partida en curso: ahí va Guardar; el autosave va a `AUTO_SLOT`.
 var current_slot := 1
@@ -27,7 +25,6 @@ var loading := false
 
 func _ready() -> void:
 	process_mode = PROCESS_MODE_ALWAYS
-	migrate_slots()
 	if not OS.is_debug_build():
 		return
 	for arg in OS.get_cmdline_user_args():
@@ -91,21 +88,9 @@ func auto_slot() -> int:
 	return AUTO_SLOT if current_slot in PLAYER_SLOTS else current_slot
 
 
-## Las ranuras 0–2 de antes pasan a 1–3, porque la 0 es ahora la Auto. Corre una sola vez.
-func migrate_slots() -> void:
-	var marker := save_dir + MIGRATED_FILE
-	if FileAccess.file_exists(marker):
-		return
-	DirAccess.make_dir_recursive_absolute(save_dir)
-	for old in [2, 1, 0]:
-		for suffix in ["", ".bak"]:
-			if FileAccess.file_exists(slot_path(old) + suffix):
-				DirAccess.rename_absolute(slot_path(old) + suffix, slot_path(old + 1) + suffix)
-	FileAccess.open(marker, FileAccess.WRITE).store_string("1")
-
-
+## También cuenta una ranura con solo la copia de respaldo (un guardado cortado): al leerla se usa esa.
 func has_save(slot: int = 0) -> bool:
-	return FileAccess.file_exists(slot_path(slot))
+	return FileAccess.file_exists(slot_path(slot)) or FileAccess.file_exists(slot_path(slot) + ".bak")
 
 
 ## Lo que muestra la pantalla de ranuras; vacío si la ranura no tiene partida.
@@ -154,7 +139,8 @@ func copy_slot(from: int, to: int) -> Error:
 		return ERR_FILE_NOT_FOUND
 	DirAccess.make_dir_recursive_absolute(save_dir)
 	delete_slot(to)
-	return DirAccess.copy_absolute(slot_path(from), slot_path(to))
+	var source := slot_path(from) if FileAccess.file_exists(slot_path(from)) else slot_path(from) + ".bak"
+	return DirAccess.copy_absolute(source, slot_path(to))
 
 
 func load_game(slot: int = -1) -> Error:
@@ -175,9 +161,13 @@ func _load_path(path: String, slot: int) -> Error:
 	if err != OK:
 		Log.error(&"save", "No se pudo cargar", path, error_string(err))
 		return err
+	var version: int = SaveCodec.typed(cfg, "meta", "version", 0)
+	if version > SaveCodec.VERSION:
+		Log.error(&"save", "La partida es de una versión más nueva del juego:", path, version)
+		return ERR_FILE_UNRECOGNIZED
+	_migrate(cfg, version)
 	for problem in SaveCodec.validate(cfg):
 		Log.warning(&"save", problem)
-	_migrate(cfg, cfg.get_value("meta", "version", 0))
 	current_slot = slot
 	if current_slot == AUTO_SLOT:
 		var origin: int = cfg.get_value("meta", "slot", PLAYER_SLOTS[0])

@@ -117,3 +117,24 @@ func test_inconsistent_scenario_is_flagged() -> void:
 	assert_eq(problems.size(), 1, "boss_key_door_locked es inconsistente a propósito")
 	assert_true(problems.size() == 1 and "llave del jefe" in problems[0], str(problems))
 
+
+func test_a_key_of_the_wrong_type_falls_back_to_its_default() -> void:
+	var state: Node = (Engine.get_main_loop() as SceneTree).root.get_node(^"GameState")
+	var cfg := ConfigFile.new()
+	cfg.set_value("player", "max_health", "doce")
+	cfg.set_value("player", "play_time", 30)
+	cfg.set_value("player", "spawn_point", "start")
+	cfg.set_value("inventory", "bomb", "muchas")
+	cfg.set_value("inventory", "arrow", 5)
+	cfg.set_value("dungeon_d1", "small_keys", true)
+	cfg.set_value("map", "visited_zones", "pradera")
+	state.read_from(cfg)
+	assert_eq(state.max_health, GameState.NEW_GAME_MAX_HEALTH, "un tipo inesperado vuelve al valor por defecto")
+	assert_eq(state.play_time, 30.0, "un entero donde va un decimal pasa")
+	assert_eq(state.spawn_point, &"start", "un texto donde va un StringName pasa")
+	assert_eq(state.inventory.count(&"bomb"), 0)
+	assert_eq(state.inventory.count(&"arrow"), 5, "lo demás se lee igual")
+	assert_eq(state.dungeons[&"d1"].small_keys, 0)
+	assert_true(state.visited_zones.is_empty())
+	state.reset()
+

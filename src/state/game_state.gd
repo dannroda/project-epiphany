@@ -335,45 +335,48 @@ func write_to(cfg: ConfigFile) -> void:
 
 func read_from(cfg: ConfigFile) -> void:
 	_clear()
-	max_health = cfg.get_value("player", "max_health", NEW_GAME_MAX_HEALTH)
-	player_health.assign(cfg.get_value("player", "health", {}))
-	play_time = cfg.get_value("player", "play_time", 0.0)
-	spawn_scene = _scene_path(cfg.get_value("player", "spawn_uid", ""), cfg.get_value("player", "spawn_scene", ""))
-	spawn_point = cfg.get_value("player", "spawn_point", &"")
-	current_dungeon = cfg.get_value("player", "current_dungeon", &"")
-	if cfg.has_section_key("player", "position"):
+	var get_typed := func(section: String, key: String, default: Variant) -> Variant: return SaveCodec.typed(cfg, section, key, default)
+	max_health = get_typed.call("player", "max_health", NEW_GAME_MAX_HEALTH)
+	player_health.assign(get_typed.call("player", "health", {}))
+	play_time = get_typed.call("player", "play_time", 0.0)
+	spawn_scene = _scene_path(get_typed.call("player", "spawn_uid", ""), get_typed.call("player", "spawn_scene", ""))
+	spawn_point = get_typed.call("player", "spawn_point", &"")
+	current_dungeon = get_typed.call("player", "current_dungeon", &"")
+	if typeof(cfg.get_value("player", "position", null)) == TYPE_VECTOR3:
 		player_position = cfg.get_value("player", "position")
 	for id in _keys(cfg, "inventory"):
-		if Items.get_item(id):
-			inventory.add(id, cfg.get_value("inventory", id))
-		else:
+		var count: int = get_typed.call("inventory", id, 0)
+		if Items.get_item(id) == null:
 			Log.warning(&"save", "Ítem inexistente en la partida:", id)
+		elif count > 0:
+			inventory.add(id, count)
 	for key in _keys(cfg, "equipment"):
 		if key == &"buttons":
-			item_buttons.assign(cfg.get_value("equipment", key))
+			item_buttons.assign(get_typed.call("equipment", key, []))
 		elif ItemData.Category.has(key):
-			equipment[ItemData.Category[key]] = cfg.get_value("equipment", key)
+			equipment[ItemData.Category[key]] = get_typed.call("equipment", key, &"")
 	for bottle in _keys(cfg, "bottles"):
-		bottles[bottle] = cfg.get_value("bottles", bottle)
+		bottles[bottle] = get_typed.call("bottles", bottle, &"")
 	_migrate_bottles()
 	for id in _keys(cfg, "flags"):
 		flags[id] = cfg.get_value("flags", id)
-	visited_zones.assign(cfg.get_value("map", "visited_zones", []))
-	map_pins.assign(cfg.get_value("map", "pins", []))
-	if cfg.has_section_key("map", "revealed"):
-		var size: Vector2i = cfg.get_value("map", "revealed_size", Vector2i.ZERO)
-		var data: PackedByteArray = cfg.get_value("map", "revealed").decompress(size.x * size.y, FileAccess.COMPRESSION_ZSTD)
-		if size.x > 0 and data.size() == size.x * size.y:
+	visited_zones.assign(get_typed.call("map", "visited_zones", []))
+	map_pins.assign(get_typed.call("map", "pins", []))
+	var size: Vector2i = get_typed.call("map", "revealed_size", Vector2i.ZERO)
+	var packed: PackedByteArray = get_typed.call("map", "revealed", PackedByteArray())
+	if size.x > 0 and not packed.is_empty():
+		var data := packed.decompress(size.x * size.y, FileAccess.COMPRESSION_ZSTD)
+		if data.size() == size.x * size.y:
 			map_revealed = Image.create_from_data(size.x, size.y, false, Image.FORMAT_L8, data)
 	for section in cfg.get_sections():
 		if not section.begins_with(DUNGEON_PREFIX):
 			continue
 		var dungeon := DungeonState.new()
-		dungeon.small_keys = cfg.get_value(section, "small_keys", 0)
-		dungeon.has_map = cfg.get_value(section, "has_map", false)
-		dungeon.has_compass = cfg.get_value(section, "has_compass", false)
-		dungeon.has_boss_key = cfg.get_value(section, "has_boss_key", false)
-		dungeon.visited_rooms = cfg.get_value(section, "visited_rooms", 0)
+		dungeon.small_keys = get_typed.call(section, "small_keys", 0)
+		dungeon.has_map = get_typed.call(section, "has_map", false)
+		dungeon.has_compass = get_typed.call(section, "has_compass", false)
+		dungeon.has_boss_key = get_typed.call(section, "has_boss_key", false)
+		dungeon.visited_rooms = get_typed.call(section, "visited_rooms", 0)
 		dungeons[StringName(section.trim_prefix(DUNGEON_PREFIX))] = dungeon
 	loaded.emit()
 
