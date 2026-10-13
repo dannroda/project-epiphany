@@ -4599,7 +4599,7 @@ Daniel: entrando al santuario por la puerta de atrás se salía por la de abajo 
 
 **Prueba:** test_shrine › test_the_back_door_skips_neither_the_shortcut_nor_the_cracked_wall: por atrás arranca afuera de la reja cerrada y no pasa; la salida está tapada por el muro de adentro; con el flag del muro de afuera, el de adentro está roto. test_overworld_run sigue pasando.
 
-## M12 — Assets propios (Blender)  (13/20)
+## M12 — Assets propios (Blender)  (13/21)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -5064,6 +5064,16 @@ La pantalla de título (src/ui/title/title_screen.tscn) sigue con arte provisori
 - [ ] Fondo: paneo lento del overworld con una cámara sobre un recorrido (Path3D), en un SubViewport desenfocado detrás del menú. Medir la carga: si cargar el overworld entero demora el título, usar una versión liviana o un video pregrabado
 - [ ] Integrar en title_screen.tscn (nodos en la escena, no por código) y decidir si el ojo de title_eye.gd queda o lo reemplaza el logo
 - [ ] Actualizar el mockup de la pantalla de título en el canvas de diseño
+
+### 12.21 Ojo interruptor: la pupila sigue al player y se parece al ojo del jefe final · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `arte`, `detalle`
+
+Para después de terminar los assets (Daniel). El ojo de los interruptores de flecha (src/world/eye_switch.tscn: ojo_pilar + ojo_globo, p. ej. CliffEye, RavineEye, los ojos de la Necrópolis) tiene la pupila fija. La pupila tiene que seguir al player más cercano (girar el globo o mover la pupila, con límite de ángulo) y el ojo tiene que parecerse más al del jefe final (El Ojo con manos, src/entities/boss): iris, color y brillo.
+
+- [ ] Rediseñar ojo_globo con la forma del ojo del jefe final (iris, pupila separada, brillo)
+- [ ] La pupila mira al player más cercano en eye_switch.gd, suave y con límite de ángulo; quieta cuando el ojo está apagado o ya resuelto
+- [ ] Probar que siga funcionando como blanco de flecha (test_secrets, test_overworld)
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 
