@@ -73,6 +73,13 @@ var _zoomed := false
 ## Overworld: dónde está el cursor antes de engancharse a un portal, y el portal enganchado.
 var _cursor_point := Vector2.ZERO
 var _focused_portal: TravelPortal
+## Lo que muestra el panel (zona y portal): mover el cursor dentro de la misma zona no lo rehace.
+var _focus_key: Array = []
+## Zonas, tablillas y fragmentos del overworld, leídos una vez por escena.
+var _cached_scene: Node
+var _zone_list: Array = []
+var _tablets: Array = []
+var _pieces: Array = []
 ## Piso que se mira (null = el de la sala actual, al abrir el mapa) y la celda del cursor al cambiar de piso.
 var _view_level: Variant = null
 var _keep_cell: Variant = null
@@ -107,6 +114,7 @@ func refresh() -> void:
 		_clear(layer)
 	_room_cells.clear()
 	_focused_portal = null
+	_focus_key = []
 	portal_title.visible = false
 	focus_title.visible = true
 	travel_button.visible = false
@@ -407,7 +415,8 @@ func _place_overworld() -> void:
 	for chest: Chest in get_tree().get_nodes_in_group(&"chests"):
 		if not chest.interactable.enabled:
 			_add_mark(MapMark.Kind.CHEST_OPEN, chest.global_position)
-	for tablet: Tablet in get_tree().current_scene.find_children("*", "Tablet", true, false):
+	_cache_scene()
+	for tablet: Tablet in _tablets:
 		if tablet.is_read():
 			_add_mark(MapMark.Kind.TABLET, tablet.global_position)
 	_refresh_pins()
@@ -515,6 +524,10 @@ func _follow_cursor() -> void:
 
 
 func _focus_zone(zone: AreaZone) -> void:
+	var key := [zone, _focused_portal]
+	if key == _focus_key:
+		return
+	_focus_key = key
 	_clear(focus_stats)
 	focus_text.text = ""
 	portal_title.visible = _focused_portal != null
@@ -533,9 +546,9 @@ func _focus_zone(zone: AreaZone) -> void:
 	var inside := func(point: Vector3) -> bool: return region.any(func(other: AreaZone) -> bool: return other.contains(point))
 	var chests := get_tree().get_nodes_in_group(&"chests").filter(func(chest: Chest) -> bool: return inside.call(chest.global_position))
 	_count_row("MAP_CHESTS", chests.filter(func(chest: Chest) -> bool: return not chest.interactable.enabled).size(), chests.size())
-	var tablets := get_tree().current_scene.find_children("*", "Tablet", true, false).filter(func(tablet: Tablet) -> bool: return inside.call(tablet.global_position))
+	var tablets := _tablets.filter(func(tablet: Tablet) -> bool: return inside.call(tablet.global_position))
 	_count_row("MAP_TABLETS_READ", tablets.filter(func(tablet: Tablet) -> bool: return tablet.is_read()).size(), tablets.size())
-	var pieces := get_tree().current_scene.find_children("*", "HeartPiece", true, false).filter(func(piece: HeartPiece) -> bool: return inside.call(piece.global_position))
+	var pieces := _pieces.filter(func(piece: HeartPiece) -> bool: return inside.call(piece.global_position))
 	_count_row("MAP_HEART_PIECES", pieces.filter(func(piece: HeartPiece) -> bool: return piece.taken).size(), pieces.size())
 	if _focused_portal and not can_travel():
 		focus_text.text = "MAP_TRAVEL_HERE"
@@ -565,7 +578,18 @@ func _add_mark(kind: MapMark.Kind, point: Vector3) -> void:
 
 
 func _zones() -> Array:
-	return get_tree().current_scene.find_children("*", "AreaZone", true, false)
+	_cache_scene()
+	return _zone_list
+
+
+func _cache_scene() -> void:
+	var scene := get_tree().current_scene
+	if scene == _cached_scene:
+		return
+	_cached_scene = scene
+	_zone_list = scene.find_children("*", "AreaZone", true, false) if scene else []
+	_tablets = scene.find_children("*", "Tablet", true, false) if scene else []
+	_pieces = scene.find_children("*", "HeartPiece", true, false) if scene else []
 
 
 func _zone_at(point: Vector2) -> AreaZone:

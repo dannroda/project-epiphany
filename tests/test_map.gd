@@ -145,6 +145,10 @@ func test_cursor_reads_what_is_missing_in_a_zone() -> void:
 	var rows: Array = page.focus_stats.get_children().map(func(row: StatRow) -> String: return row.get_node(^"Padding/Row/Name").text + "=" + row.value_text())
 	assert_true(rows.has("MAP_CHESTS=" + tr("MAP_COUNT").format({done = 0, total = 1})), "dice que falta el cofre del claro (%s)" % [rows])
 	assert_true(rows.has("MAP_TABLETS_READ=" + tr("MAP_COUNT").format({done = 0, total = 4})), "y las tablillas sin leer (%s)" % [rows])
+	var first_row: Node = page.focus_stats.get_child(0)
+	page._move_cursor(page.world_to_map(grotto.bounds().get_center() + Vector2(0.5, 0.5)))
+	await tree.process_frame
+	assert_true(is_instance_valid(first_row) and first_row.get_parent() == page.focus_stats, "moverse dentro de la misma zona no rehace el panel")
 	var risk: AreaZone = tree.current_scene.get_node(^"Zone_risco")
 	page._move_cursor(page.world_to_map(risk.bounds().get_center()))
 	assert_eq(page.focus_text.text, "MAP_UNEXPLORED", "de las zonas sin ver no cuenta nada")

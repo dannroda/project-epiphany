@@ -2576,7 +2576,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (62/114)
+## M11 — Pulido: contenido y feel  (63/114)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3674,18 +3674,18 @@ Se agregan, reparentan o liberan cuerpos dentro de señales de física (durante 
 
 **Archivos:** `src/world/room.gd`, `src/world/wave_spawner.gd`
 
-### 11.71 Minimapa y mapa: cachear las consultas a la escena · Pendiente
+### 11.71 Minimapa y mapa: cachear las consultas a la escena · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `rendimiento`, `ui`
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `rendimiento`, `ui`
 
 El minimapa recorre la escena entera cada frame: en mazmorra `room_pitch` es O(salas²) por puerta, y `MapData.doors()` escanea todas las celdas del GridMap cada 0.5 s (tirón periódico); en overworld hace `find_children` de Portal, Tablet y AreaZone. El cursor del mapa reconstruye el panel de info (`_focus_zone`, con más `find_children` y `load`) cada frame mientras se mueve el stick.
 
-- [ ] Cachear en el minimapa
+- [x] Cachear en el minimapa
   minimap.gd `_bind()`: paso entre salas, puertas del kit, portales, tablillas y zonas; por frame solo `Door.is_open`.
-- [ ] Panel del mapa solo al cambiar de zona
+- [x] Panel del mapa solo al cambiar de zona
   map_page.gd `_focus_zone`: salir si la zona es la misma; cachear zonas, tablillas y fragmentos en `_show_overworld`.
 
-**Prueba:** Profiler: el minimapa no aparece entre los costos por frame; mover el cursor del mapa no genera nodos nuevos si la zona no cambió.
+**Prueba:** Profiler: el minimapa no aparece entre los costos por frame; mover el cursor del mapa no genera nodos nuevos si la zona no cambió. Cubierto en test_minimap › test_dungeon_doors_are_read_once_and_follow_their_state y test_map › test_cursor_reads_what_is_missing_in_a_zone.
 
 **Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
 

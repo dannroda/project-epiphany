@@ -1,19 +1,21 @@
 {
+  "assignee": "Claude",
   "checklist": [
     {
       "detail": "minimap.gd `_bind()`: paso entre salas, puertas del kit, portales, tablillas y zonas; por frame solo `Door.is_open`.",
-      "done": false,
+      "done": true,
       "text": "Cachear en el minimapa"
     },
     {
       "detail": "map_page.gd `_focus_zone`: salir si la zona es la misma; cachear zonas, tablillas y fragmentos en `_show_overworld`.",
-      "done": false,
+      "done": true,
       "text": "Panel del mapa solo al cambiar de zona"
     }
   ],
   "code": "11.71",
   "created_at": "2026-10-12T00:05:32.885Z",
   "description": "El minimapa recorre la escena entera cada frame: en mazmorra `room_pitch` es O(salas²) por puerta, y `MapData.doors()` escanea todas las celdas del GridMap cada 0.5 s (tirón periódico); en overworld hace `find_children` de Portal, Tablet y AreaZone. El cursor del mapa reconstruye el panel de info (`_focus_zone`, con más `find_children` y `load`) cada frame mientras se mueve el stick.",
+  "done_at": "2026-10-13T13:40:29.875Z",
   "files": [
     "src/ui/hud/minimap.gd",
     "src/ui/menus/map_data.gd",
@@ -25,12 +27,12 @@
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "done",
   "tags": [
     "rendimiento",
     "ui"
   ],
-  "test": "Profiler: el minimapa no aparece entre los costos por frame; mover el cursor del mapa no genera nodos nuevos si la zona no cambió.",
+  "test": "Profiler: el minimapa no aparece entre los costos por frame; mover el cursor del mapa no genera nodos nuevos si la zona no cambió. Cubierto en test_minimap › test_dungeon_doors_are_read_once_and_follow_their_state y test_map › test_cursor_reads_what_is_missing_in_a_zone.",
   "title": "Minimapa y mapa: cachear las consultas a la escena",
-  "updated_at": "2026-10-12T00:05:45.949Z"
+  "updated_at": "2026-10-13T13:40:29.875Z"
 }

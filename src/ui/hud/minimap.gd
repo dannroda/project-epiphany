@@ -11,8 +11,6 @@ const GRID_ORIGIN := Vector2(10, 8)
 const DOOR_SIZE := 7.0
 ## Píxeles del minimapa por metro en el overworld.
 const OVERWORLD_SCALE := 5.0
-## Cada cuánto se vuelven a leer las puertas (se abren y se cierran).
-const DOORS_REFRESH := 0.5
 ## Lo que cada player deja descubierto a su alrededor en el overworld (m); el borde se funde en REVEAL_FADE.
 const REVEAL_RADIUS := 11.0
 const REVEAL_FADE := 5.0
@@ -42,7 +40,14 @@ const REVEAL_STEP := 1.0
 var _scene: Node
 var _map: OverworldMap
 var _doors: Array = []
-var _doors_age := INF
+## Lo de la escena que no cambia, leído una vez en `_bind`: puertas con nodo, pasos libres, paso entre salas, marcas.
+var _door_nodes: Array = []
+var _passages: Array = []
+var _passages_read := false
+var _pitch := Vector2.ZERO
+var _portals: Array = []
+var _tablets: Array = []
+var _zones: Array = []
 var _revealed: ImageTexture
 var _painted_at: Dictionary[PlayerCharacter, Vector2] = {}
 
@@ -66,10 +71,11 @@ func _process(delta: float) -> void:
 	if not visible:
 		return
 	modulate.a = lerpf(modulate.a, covered_alpha if covers_a_player() else 1.0, 1.0 - exp(-fade_rate * delta))
-	_doors_age += delta
-	if _in_dungeon() and _doors_age >= DOORS_REFRESH:
-		_doors = MapData.doors(tree)
-		_doors_age = 0.0
+	if _in_dungeon():
+		if not _passages_read:
+			_passages = MapData.passages(tree, _door_nodes)
+			_passages_read = true
+		_doors = MapData.door_marks(_door_nodes) + _passages
 	view.queue_redraw()
 	marks.queue_redraw()
 
@@ -98,8 +104,15 @@ func _show_floor(room: Room) -> void:
 
 func _bind(scene: Node) -> void:
 	_scene = scene
-	_doors_age = INF
-	_map = MapData.find(get_tree(), OverworldMap) as OverworldMap if scene else null
+	var tree := get_tree()
+	_map = MapData.find(tree, OverworldMap) as OverworldMap if scene else null
+	_door_nodes = MapData.door_nodes(tree)
+	_passages = []
+	_passages_read = false
+	_pitch = MapData.room_pitch(tree, Vector2.ZERO)
+	_portals = scene.find_children("*", "Portal", true, false) if scene else []
+	_tablets = scene.find_children("*", "Tablet", true, false) if scene else []
+	_zones = scene.find_children("*", "AreaZone", true, false) if scene else []
 	if _map:
 		_map.snapshot()
 	_setup_reveal()
@@ -200,7 +213,7 @@ func _draw_dungeon() -> void:
 		_draw_door(door[0], door[1], shown, current)
 	var player := Players.lead()
 	if player:
-		var at := MapData.room_grid_point(tree, player.global_position, current) - Vector2(current.map_cell)
+		var at := MapData.grid_point(player.global_position, current, _pitch) - Vector2(current.map_cell)
 		var forward := player.model.global_basis.z
 		var point := (_cell_origin(at) + CELL / 2.0).clamp(_cell_origin(Vector2.ZERO) + Vector2(7, 7), _cell_origin(Vector2.ZERO) + CELL - Vector2(7, 7))
 		_draw_small(view, func() -> void: MapRoomCell.draw_arrow(view, Vector2.ZERO, atan2(forward.x, -forward.z)), point, 0.8)
@@ -225,7 +238,7 @@ func _draw_door(point: Vector3, kind: MapMark.Kind, shown: Array[Room], current:
 	var near := shown.filter(func(room: Room) -> bool: return MapData.near_room(room, point))
 	if near.is_empty():
 		return
-	var at := MapData.room_grid_point(get_tree(), point, near[0]) - Vector2(current.map_cell)
+	var at := MapData.grid_point(point, near[0], _pitch) - Vector2(current.map_cell)
 	if absf(at.x) > 1.6 or absf(at.y) > 1.6:
 		return
 	var center := _cell_origin(at) + CELL / 2.0
@@ -278,12 +291,12 @@ func _draw_marks() -> void:
 	var center := marks.size / 2.0
 	var here := Vector2(player.global_position.x, player.global_position.z)
 	var world_view := Rect2(here - center / OVERWORLD_SCALE, marks.size / OVERWORLD_SCALE)
-	for portal: Portal in get_tree().current_scene.find_children("*", "Portal", true, false):
+	for portal: Portal in _portals.filter(is_instance_valid):
 		_draw_mark(func() -> void: MapRoomCell.draw_entrance(marks, Vector2.ZERO, MapRoomCell.TEXT), portal.global_position, here, world_view)
 	for chest: Chest in get_tree().get_nodes_in_group(&"chests"):
 		if not chest.interactable.enabled:
 			_draw_mark(func() -> void: MapRoomCell.draw_chest(marks, Vector2.ZERO, MapRoomCell.GREY), chest.global_position, here, world_view)
-	for tablet: Tablet in get_tree().current_scene.find_children("*", "Tablet", true, false):
+	for tablet: Tablet in _tablets.filter(is_instance_valid):
 		if tablet.is_read():
 			_draw_mark(func() -> void: MapRoomCell.draw_tablet(marks, Vector2.ZERO, MapRoomCell.NAME), tablet.global_position, here, world_view)
 	for pin: Vector2 in GameState.map_pins:
@@ -301,7 +314,7 @@ func _draw_mark(draw: Callable, point: Vector3, here: Vector2, world_view: Rect2
 	var flat := Vector2(point.x, point.z)
 	if not world_view.grow(1.0).has_point(flat):
 		return
-	for zone: AreaZone in get_tree().current_scene.find_children("*", "AreaZone", true, false):
-		if not zone.is_visited() and zone.bounds().has_point(flat):
+	for zone in _zones:
+		if is_instance_valid(zone) and not zone.is_visited() and zone.bounds().has_point(flat):
 			return
 	_draw_small(marks, draw, marks.size / 2.0 + (flat - here) * OVERWORLD_SCALE, 0.75)

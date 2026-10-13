@@ -126,3 +126,19 @@ func test_fades_while_a_player_is_under_it() -> void:
 	await tree.create_timer(0.6).timeout
 	assert_true(minimap.modulate.a > 0.9, "al salir vuelve (%.2f)" % minimap.modulate.a)
 	setup[1].reset()
+
+
+func test_dungeon_doors_are_read_once_and_follow_their_state() -> void:
+	var setup: Array = await _load("test_rooms")
+	var tree: SceneTree = setup[0]
+	var minimap: Control = setup[3]
+	var MapData: GDScript = minimap.MapData
+	assert_eq(minimap._doors.size(), MapData.doors(tree).size(), "las mismas puertas que lee la pestaña Mapa")
+	var door: Door = minimap._door_nodes.filter(func(each: Door) -> bool: return not each.is_open).front()
+	var at: Array = minimap._doors.filter(func(mark: Array) -> bool: return mark[0] == door.global_position).front()
+	assert_true(at[1] != MapMark.Kind.DOOR_OPEN, "una puerta cerrada")
+	door.open()
+	await tree.process_frame
+	at = minimap._doors.filter(func(mark: Array) -> bool: return mark[0] == door.global_position).front()
+	assert_eq(at[1], MapMark.Kind.DOOR_OPEN, "al abrirse, el minimapa lo muestra en el cuadro siguiente")
+	setup[1].reset()

@@ -28,13 +28,34 @@ static func chests_in(tree: SceneTree, room: Room) -> Array:
 
 ## Puertas con nodo Door (con llave, jefe, persianas, interruptor), escaleras y pasos libres del kit: [[posición, MapMark.Kind], …].
 static func doors(tree: SceneTree) -> Array:
+	var nodes := door_nodes(tree)
+	return door_marks(nodes) + passages(tree, nodes)
+
+
+static func door_nodes(tree: SceneTree) -> Array:
+	return tree.current_scene.find_children("*", "Door", true, false) if tree.current_scene else []
+
+
+## Las puertas con nodo cambian (se abren y se cierran): esto es lo que se vuelve a leer.
+static func door_marks(nodes: Array) -> Array:
+	var found: Array = []
+	for door in nodes:
+		if is_instance_valid(door):
+			found.append([door.global_position, door_kind(door)])
+	return found
+
+
+## Escaleras y pasos libres del kit (fijos: se pueden leer una vez por escena).
+static func passages(tree: SceneTree, nodes: Array) -> Array:
 	var found: Array = []
 	if tree.current_scene == null:
 		return found
-	for door: Door in tree.current_scene.find_children("*", "Door", true, false):
-		found.append([door.global_position, door_kind(door)])
+	var taken: Array[Vector3] = []
+	for door: Door in nodes:
+		taken.append(door.global_position)
 	for stairs: Stairs in tree.current_scene.find_children("*", "Stairs", true, false):
 		found.append([stairs.global_position, MapMark.Kind.DOOR_OPEN])
+		taken.append(stairs.global_position)
 	for grid: GridMap in tree.current_scene.find_children("*", "GridMap", true, false):
 		if grid.mesh_library == null:
 			continue
@@ -43,9 +64,10 @@ static func doors(tree: SceneTree) -> Array:
 			if item_name != DOORWAY_ITEM and not item_name.begins_with(DOORWAY_LA_PREFIX):
 				continue
 			var point := grid.to_global(grid.map_to_local(cell))
-			if found.any(func(other: Array) -> bool: return (other[0] as Vector3).distance_to(point) < DOOR_MERGE_DISTANCE):
+			if taken.any(func(other: Vector3) -> bool: return other.distance_to(point) < DOOR_MERGE_DISTANCE):
 				continue
 			found.append([point, MapMark.Kind.DOOR_OPEN])
+			taken.append(point)
 	return found
 
 
@@ -89,5 +111,14 @@ static func room_pitch(tree: SceneTree, fallback: Vector2) -> Vector2:
 
 ## Un punto del mundo en la grilla de salas: celda (fraccionaria) usando la sala `near` como referencia.
 static func room_grid_point(tree: SceneTree, point: Vector3, near: Room) -> Vector2:
+	return grid_point(point, near, room_pitch(tree, Vector2.ZERO))
+
+
+## Igual, con el paso entre salas ya calculado (`room_pitch`); en un eje sin vecinas, el tamaño de `near`.
+static func grid_point(point: Vector3, near: Room, pitch: Vector2) -> Vector2:
 	var bounds := near.bounds()
-	return Vector2(near.map_cell) + (Vector2(point.x, point.z) - bounds.get_center()) / room_pitch(tree, bounds.size)
+	if pitch.x == 0.0:
+		pitch.x = bounds.size.x
+	if pitch.y == 0.0:
+		pitch.y = bounds.size.y
+	return Vector2(near.map_cell) + (Vector2(point.x, point.z) - bounds.get_center()) / pitch
