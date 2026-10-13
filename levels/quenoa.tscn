@@ -72,6 +72,7 @@
 [ext_resource type="Script" path="res://src/world/look/brillo_la.gd" id="70_0sl1j"]
 [ext_resource type="NavigationMesh" path="res://levels/nav/quenoa_navmesh.tres" id="nav_quenoa"]
 [ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="persistent_flag"]
+[ext_resource type="Script" path="res://src/world/pit.gd" id="90_pit"]
 
 [sub_resource type="Gradient" id="Gradient_lby5b"]
 offsets = PackedFloat32Array(0, 0.03125, 0.0625, 0.09375, 0.125, 0.15625, 0.1875, 0.21875, 0.25, 0.28125, 0.3125, 0.34375, 0.375, 0.40625, 0.4375, 0.46875, 0.5, 0.53125, 0.5625, 0.59375, 0.625, 0.65625, 0.6875, 0.71875, 0.75, 0.78125, 0.8125, 0.84375, 0.875, 0.90625, 0.9375, 0.96875, 1)
@@ -652,6 +653,12 @@ center_offset = Vector3(0, 0.32, 0)
 [sub_resource type="BoxShape3D" id="BoxShape3D_w3lyb"]
 size = Vector3(2, 2.4, 1.2)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_raicespit"]
+size = Vector3(4, 1, 6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ojospit"]
+size = Vector3(6, 1, 2)
+
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_40bi1"]
 dof_blur_far_enabled = true
 dof_blur_far_distance = 36.5
@@ -951,6 +958,20 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 14, 
 script = ExtResource("27_wlgwi")
 item = ExtResource("13_vcwjq")
 flag = &"qv_root_key_chest"
+
+[node name="RaicesPit" type="Area3D" parent="PisoRaices" unique_id=1934410071]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, -1.2, 14)
+script = ExtResource("90_pit")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoRaices/RaicesPit" unique_id=1934410072]
+shape = SubResource("BoxShape3D_raicespit")
+
+[node name="OjosPit" type="Area3D" parent="PisoRaices" unique_id=1934410073]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, -1.2, 8)
+script = ExtResource("90_pit")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoRaices/OjosPit" unique_id=1934410074]
+shape = SubResource("BoxShape3D_ojospit")
 
 [node name="RaicesGate" type="StaticBody3D" parent="PisoRaices" unique_id=1308264117 instance=ExtResource("9_i77fr")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 24, 0, 14)

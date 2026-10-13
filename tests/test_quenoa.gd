@@ -162,6 +162,20 @@ func test_the_timed_root_eye_opens_the_gate_for_a_feather_jump() -> void:
 	tree.root.get_node(^"GameState").reset()
 
 
+func test_the_new_pits_hurt_and_return_to_the_room() -> void:
+	await _start()
+	for spec: Array in [["PisoRaices/Raices", Vector3(8, 0.5, 4)], ["PisoRaices/Ojos", Vector3(8, 0.5, -2)]]:
+		await _drop(_in(spec[0], Vector3(0, 0.5, 0)))
+		await tree.create_timer(0.8).timeout
+		var health := player.health.current
+		await _drop(_in(spec[0], spec[1]))
+		await tree.create_timer(1.5).timeout
+		assert_eq(camera.room, _room(spec[0]), "%s: el hueco devuelve a la sala" % spec[0])
+		assert_eq(player.health.current, health - 2, "%s: y lastima" % spec[0])
+		assert_true(player.global_position.y > _in(spec[0], Vector3.ZERO).y - 0.5, "%s: parado en el piso" % spec[0])
+	tree.root.get_node(^"GameState").reset()
+
+
 func test_the_boss_key_sits_across_a_row_of_pits() -> void:
 	await _start()
 	_feather()
