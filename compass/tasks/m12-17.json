@@ -16,8 +16,8 @@
       "text": "Kit de cada mazmorra en Godot"
     },
     {
-      "detail": "WorldEnvironment y luces: cálida y polvorienta (chullpa), fría y húmeda (laguna), blanca y ventosa (cumbre).",
-      "done": false,
+      "detail": "Hecho el 2026-10-13 (d5384189), arte -11: LOOKS en la_walls.gd (ambiente, luz del lado de la cámara, foco de sala y polvo), se aplica en bake y en cada refresh. Chullpa cálida y polvorienta (polvo_chullpa.tscn), Queñoa fría y húmeda (polvo_quenoa.tscn). Las escenas de polvo se ajustan a ojo en el editor; los colores, en LOOKS.",
+      "done": true,
       "text": "Luz y ambiente por mazmorra"
     },
     {
@@ -46,5 +46,5 @@
   ],
   "test": "",
   "title": "Estilos por mazmorra",
-  "updated_at": "2026-10-12T01:05:54.288Z"
+  "updated_at": "2026-10-13T15:38:45.737Z"
 }

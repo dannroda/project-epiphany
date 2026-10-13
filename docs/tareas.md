@@ -3756,7 +3756,7 @@ Los datos cargados no se validan por tipo: una clave con tipo inesperado (por un
 
 **Archivos:** `src/save/save_manager.gd`, `src/save/save_codec.gd`, `src/state/game_state.gd`
 
-### 11.75 AreaZone: id estable para guardar las zonas visitadas · En curso
+### 11.75 AreaZone: id estable para guardar las zonas visitadas · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `guardado`, `overworld`
 
@@ -4905,7 +4905,7 @@ Cada mazmorra con su propio estilo sobre el mismo kit (mismas piezas y colisione
   Aprobados los cuatro estilos el 2026-10-11. El usuario pide lo mismo para la zona del overworld de cada mazmorra (consultado con la otra sesión, dueña de 7.9).
 - [x] Kit de cada mazmorra en Godot
   build_temple_kit.gd -- <estilo> arma chullpa_kit, laguna_kit y cumbre_kit (mismos ítems y colisiones que temple_kit). levels/chullpa.tscn usa chullpa_kit. Laguna y Cumbre todavía no tienen escena.
-- [ ] Luz y ambiente por mazmorra
+- [x] Luz y ambiente por mazmorra
   WorldEnvironment y luces: cálida y polvorienta (chullpa), fría y húmeda (laguna), blanca y ventosa (cumbre).
 - [ ] Props por estilo
   Braseros, estandartes, puertas y vasijas con la piedra y los motivos de cada mazmorra.
