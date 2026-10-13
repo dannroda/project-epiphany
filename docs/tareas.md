@@ -2575,7 +2575,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (53/114)
+## M11 — Pulido: contenido y feel  (54/114)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3588,20 +3588,20 @@ heart_piece, push_block y tablet leen su flag una sola vez en `_ready` y no usan
 
 **Relacionadas:** 14.11 Feel solo cosmético: hit-stop como estado de gameplay
 
-### 11.66 Pausa, reveal, portal y muerte se pisan get_tree().paused · Pendiente
+### 11.66 Pausa, reveal, portal y muerte se pisan get_tree().paused · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `ui`
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `ui`
 
 El reveal de cámara y `travel_to` ponen `paused` a mano, y `MenuStack._can_pause` solo mira `Players.any_alive()`: se puede abrir la pausa durante un reveal o un fade de portal, y al cerrarla se despausa a mitad del reveal (o el reveal termina y despausa con el menú abierto). El timer de muerte (`create_timer(delay)`) corre en pausa y el GameOver aparece encima del menú de pausa.
 
-- [ ] No pausar si el árbol ya está pausado
+- [x] No pausar si el árbol ya está pausado
   menu_stack.gd `_can_pause`: `not get_tree().paused and Players.any_alive()`.
-- [ ] Timer de muerte respeta la pausa
+- [x] Timer de muerte respeta la pausa
   player/states/dead.gd ~l.13: `create_timer(delay, false)`.
 
-**Prueba:** Abrir la pausa durante un reveal o al cruzar un portal no hace nada; morir y pausar enseguida no muestra el GameOver hasta despausar.
+**Prueba:** test_pause › test_no_pause_menu_while_something_else_paused_the_game y test_dying_while_paused_waits_for_the_game_to_resume (fallan sin el arreglo).
 
-**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+**Notas:** Sesión de bugs (-fd). MenuStack._can_pause no abre la pausa ni el mapa si el árbol ya está pausado (reveal de cámara, fundido de SceneFlow), así cerrar el menú no despausa a mitad de eso. El timer de Dead es pausable: el game over (o volverse espíritu) espera a que el juego siga.
 
 **Archivos:** `src/ui/menus/menu_stack.gd`, `player/states/dead.gd`
 

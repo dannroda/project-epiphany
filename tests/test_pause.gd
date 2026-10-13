@@ -59,3 +59,38 @@ func test_pause_freezes_and_resumes() -> void:
 	for i in 30:
 		await tree.physics_frame
 	assert_eq(fired[0], true, "el juego sigue (un timer pausable se dispara)")
+
+
+func test_no_pause_menu_while_something_else_paused_the_game() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	tree.root.get_node(^"GameState").reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	tree.paused = true
+	await _key(tree, KEY_TAB)
+	assert_eq(stack.is_open(), false, "durante un reveal o un fundido, Tab no abre la pausa")
+	tree.paused = false
+	await _key(tree, KEY_TAB)
+	assert_eq(stack.is_open(), true, "después sí")
+	await _key(tree, KEY_ESCAPE)
+
+
+func test_dying_while_paused_waits_for_the_game_to_resume() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	tree.root.get_node(^"GameState").reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	player.get_node(^"MovementState/Dead").delay = 0.2
+	player.health.damage(player.health.current)
+	await tree.physics_frame
+	tree.paused = true
+	await tree.create_timer(0.6, true).timeout
+	assert_true(not (stack.top() is GameOver), "con el juego pausado no aparece el game over")
+	tree.paused = false
+	await tree.create_timer(0.6).timeout
+	assert_true(stack.top() is GameOver, "al seguir, sí")
+	stack.clear()
+	tree.root.get_node(^"GameState").reset()

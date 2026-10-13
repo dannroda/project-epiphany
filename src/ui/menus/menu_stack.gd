@@ -119,6 +119,7 @@ func _focus(screen: Control) -> void:
 		screen.focus_default.call_deferred()
 
 
-## No se pausa sin player vivo (pantallas de carga, muerte, título).
+## No se pausa sin player vivo (pantallas de carga, muerte, título) ni si ya hay algo pausando el juego (un reveal de
+## cámara, el fundido de un viaje): al cerrar, el menú despausaría a mitad de eso.
 func _can_pause() -> bool:
-	return Players.any_alive()
+	return not get_tree().paused and Players.any_alive()
