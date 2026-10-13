@@ -4603,7 +4603,7 @@ Daniel: entrando al santuario por la puerta de atrás se salía por la de abajo 
 
 **Prueba:** test_shrine › test_the_back_door_skips_neither_the_shortcut_nor_the_cracked_wall: por atrás arranca afuera de la reja cerrada y no pasa; la salida está tapada por el muro de adentro; con el flag del muro de afuera, el de adentro está roto. test_overworld_run sigue pasando.
 
-## M12 — Assets propios (Blender)  (14/22)
+## M12 — Assets propios (Blender)  (15/22)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -5058,9 +5058,9 @@ Diseño (-43) armó levels/totora.tscn en el kit gris (a8d40e91, GDD §8d): dos 
   Modelo hecho (41357968): src/world/totora_entrada.tscn, choza de los uros sobre balsa, techo con borla roja, columnas con cabeza de puma, aguayo y totoras; mismo colisionador que TotoraHut. Falta que overworld (-eb) la ponga en lugar del CSGBox3D, girada con la puerta al oeste.
 - [ ] Recorrerla (Daniel)
 
-### 12.20 Arte de la pantalla de título: logo y fondo del overworld · Pendiente
+### 12.20 Arte de la pantalla de título: logo y fondo del overworld · Hecho
 
-**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `arte`, `ui`
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Tamaño:** M · **Etiquetas:** `arte`, `ui`
 
 La pantalla de título (src/ui/title/title_screen.tscn) sigue con arte provisorio: Background es un ColorRect, el título es un Label y hay un ojo dibujado por código (title_eye.gd). Idea de Daniel: un logo propio y, de fondo, un paneo lento del overworld, desenfocado, detrás del menú.
 
@@ -5068,7 +5068,7 @@ La pantalla de título (src/ui/title/title_screen.tscn) sigue con arte provisori
 - [x] Fondo: paneo lento del overworld con una cámara sobre un recorrido (Path3D), en un SubViewport desenfocado detrás del menú. Medir la carga: si cargar el overworld entero demora el título, usar una versión liviana o un video pregrabado
   Hecho como video pregrabado: cargar el overworld entero tardaba ~3,8 s. tools/title_flyover/flyover.tscn intercala la vista general con tomas de sectores (templo, laguna, Queñoa, Chullpa, Cumbre; marcadores From/To por toma) y se graba con --write-movie; assets/ui/title/flyover.ogv (88 s en loop, 7,4 MB), desenfocado con title_blur.gdshader.
 - [x] Integrar en title_screen.tscn (nodos en la escena, no por código) y decidir si el ojo de title_eye.gd queda o lo reemplaza el logo
-- [ ] Actualizar el mockup de la pantalla de título en el canvas de diseño
+- [x] Actualizar el mockup de la pantalla de título en el canvas de diseño
 
 ### 12.21 Ojo interruptor: la pupila sigue al player y se parece al ojo del jefe final · Pendiente
 
