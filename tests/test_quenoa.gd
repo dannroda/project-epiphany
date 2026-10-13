@@ -104,6 +104,78 @@ func test_the_branch_block_opens_the_key_gate() -> void:
 	tree.root.get_node(^"GameState").reset()
 
 
+func _feather() -> void:
+	var state: Node = tree.root.get_node(^"GameState")
+	state.give(Items.get_item(&"feather"))
+	state.assign_button(1, &"feather")
+
+
+func _walk(action: StringName, pressed: bool) -> void:
+	var event := InputEventAction.new()
+	event.action = action
+	event.pressed = pressed
+	event.strength = 1.0
+	Input.parse_input_event(event)
+
+
+func _jump(action: StringName) -> void:
+	_walk(action, true)
+	await tree.physics_frame
+	var event := InputEventAction.new()
+	event.action = &"item_2"
+	event.pressed = true
+	Input.parse_input_event(event)
+	var release := InputEventAction.new()
+	release.action = &"item_2"
+	Input.parse_input_event(release)
+	for i in 90:
+		await tree.physics_frame
+		if i > 5 and player.movement_state.get_active_state().name != &"Jumping":
+			break
+	_walk(action, false)
+	for i in 10:
+		await tree.physics_frame
+
+
+func test_the_timed_root_eye_opens_the_gate_for_a_feather_jump() -> void:
+	await _start()
+	_feather()
+	var gate := level.get_node(^"PisoRaices/RaicesGate") as Gate
+	var eye := level.get_node(^"PisoRaices/RootEyeB") as EyeSwitch
+	await _drop(_in("PisoRaices/Raices", Vector3(6, 0.5, 4)))
+	assert_eq(camera.room, _room("PisoRaices/Raices"))
+	assert_true(not gate.is_open, "cerrada")
+	var arrow := Projectile.new()
+	eye.hurtbox.receive(DamageInfo.make(2, 0.0, arrow))
+	arrow.free()
+	assert_true(await _until(func() -> bool: return gate.is_open, 2.0), "la flecha al ojo la abre")
+	var floor_y := player.global_position.y
+	await _jump(&"move_right")
+	assert_true(player.global_position.x > _in("PisoRaices/Raices", Vector3(9.2, 0, 0)).x and absf(player.global_position.y - floor_y) < 0.3, "con la pluma salta los huecos hasta la reja (%s)" % player.global_position.snappedf(0.1))
+	player.global_position = _in("PisoRaices/Raices", Vector3(0, 0.5, 0))
+	assert_true(await _until(func() -> bool: return not gate.is_open, 8.0), "a los segundos se vuelve a cerrar")
+	assert_true(not eye.active, "y el ojo se apaga")
+	tree.root.get_node(^"GameState").set_flag(&"qv_eyes_step", true)
+	assert_true(await _until(func() -> bool: return gate.is_open, 2.0), "la placa del otro lado la abre")
+	await tree.create_timer(7.0).timeout
+	assert_true(gate.is_open, "y queda abierta")
+	tree.root.get_node(^"GameState").reset()
+
+
+func test_the_boss_key_sits_across_a_row_of_pits() -> void:
+	await _start()
+	_feather()
+	tree.root.get_node(^"GameState").set_flag(&"qv_hidden_eye", true)
+	var gate := level.get_node(^"PisoRaices/BossKeyGate") as Gate
+	assert_true(await _until(func() -> bool: return gate.is_open, 3.0), "el ojo escondido abre el nicho")
+	await _drop(_in("PisoRaices/Ojos", Vector3(8, 0.5, 0)))
+	assert_eq(camera.room, _room("PisoRaices/Ojos"))
+	var floor_y := player.global_position.y
+	await _jump(&"move_forward")
+	assert_true(player.global_position.z < _in("PisoRaices/Ojos", Vector3(0, 0, -2.6)).z and absf(player.global_position.y - floor_y) < 0.3, "con la pluma llega al nicho de la llave del jefe (%s)" % player.global_position.snappedf(0.1))
+	tree.root.get_node(^"GameState").reset()
+
+
 func _until(condition: Callable, seconds := 15.0) -> bool:
 	var until := Time.get_ticks_msec() + int(seconds * 1000)
 	while Time.get_ticks_msec() < until:

@@ -4,6 +4,7 @@ extends StaticBody3D
 ## Ojo de piedra que solo reacciona a proyectiles (flechas, orbes reflejados). Con flag queda abierto entre partidas.
 
 signal activated
+signal deactivated
 
 const CLOSED := Color(0.55, 0.5, 0.6)
 const OPEN := Color(1.0, 0.78, 0.3)
@@ -12,6 +13,8 @@ const OPEN := Color(1.0, 0.78, 0.3)
 	set(value):
 		flag = value
 		update_configuration_warnings()
+## Con tiempo: se apaga solo a los tantos segundos (sin flag; se vuelve a flechar).
+@export var open_time := 0.0
 
 @onready var hurtbox: Hurtbox = $Hurtbox
 @onready var eye: MeshInstance3D = %Eye
@@ -56,6 +59,21 @@ func _on_hit(info: DamageInfo) -> void:
 	Feel.sfx(&"reflect", global_position)
 	Feel.burst(&"sparks", eye.global_position, Vector3.UP)
 	activated.emit()
+	if open_time > 0.0:
+		_count_down()
+
+
+func _count_down() -> void:
+	var left := open_time
+	while left > 0.0:
+		var step := minf(left, 1.0 if left > 2.0 else 0.5)
+		await get_tree().create_timer(step, false).timeout
+		left -= step
+		if left > 0.0:
+			Feel.sfx(&"click", global_position)
+	_show(false)
+	Feel.sfx(&"block", global_position)
+	deactivated.emit()
 
 
 func _show(open: bool) -> void:

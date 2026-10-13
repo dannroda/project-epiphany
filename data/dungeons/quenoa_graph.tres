@@ -67,7 +67,8 @@ through = Array[NodePath]([NodePath("PisoTronco/TroncoGate")])
 script = ExtResource("2_link")
 from = &"Raices"
 to = &"Ojos"
-through = Array[NodePath]([NodePath("PisoRaices/RaicesLocked")])
+needs = Array[StringName]([&"feather"])
+through = Array[NodePath]([NodePath("PisoRaices/RaicesGate"), NodePath("PisoRaices/RaicesLocked")])
 locked = true
 
 [sub_resource type="Resource" id="Link_12"]
@@ -162,7 +163,13 @@ through = Array[NodePath]([NodePath("PisoRaices/OjosCrackedWall")])
 script = ExtResource("3_spot")
 area = &"Ojos"
 node = NodePath("PisoRaices/BossKeyChest")
+needs = Array[StringName]([&"feather"])
 through = Array[NodePath]([NodePath("PisoRaices/BossKeyGate")])
+
+[sub_resource type="Resource" id="Spot_17"]
+script = ExtResource("3_spot")
+area = &"Ojos"
+node = NodePath("PisoRaices/OjosStep")
 
 [sub_resource type="Resource" id="Spot_16"]
 script = ExtResource("3_spot")
@@ -180,4 +187,4 @@ brings = Array[StringName]([&"bomb_bag", &"feather"])
 item = &"bow"
 guard = &"qv_warden_defeated"
 links = Array[ExtResource("2_link")]([SubResource("Link_1"), SubResource("Link_2"), SubResource("Link_3"), SubResource("Link_4"), SubResource("Link_5"), SubResource("Link_6"), SubResource("Link_7"), SubResource("Link_8"), SubResource("Link_9"), SubResource("Link_10"), SubResource("Link_11"), SubResource("Link_12")])
-spots = Array[ExtResource("3_spot")]([SubResource("Spot_1"), SubResource("Spot_2"), SubResource("Spot_3"), SubResource("Spot_4"), SubResource("Spot_5"), SubResource("Spot_6"), SubResource("Spot_7"), SubResource("Spot_8"), SubResource("Spot_9"), SubResource("Spot_10"), SubResource("Spot_11"), SubResource("Spot_12"), SubResource("Spot_13"), SubResource("Spot_14"), SubResource("Spot_15"), SubResource("Spot_16")])
+spots = Array[ExtResource("3_spot")]([SubResource("Spot_1"), SubResource("Spot_2"), SubResource("Spot_3"), SubResource("Spot_4"), SubResource("Spot_5"), SubResource("Spot_6"), SubResource("Spot_7"), SubResource("Spot_8"), SubResource("Spot_9"), SubResource("Spot_10"), SubResource("Spot_11"), SubResource("Spot_12"), SubResource("Spot_13"), SubResource("Spot_14"), SubResource("Spot_15"), SubResource("Spot_16"), SubResource("Spot_17")])
