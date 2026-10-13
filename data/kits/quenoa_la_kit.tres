@@ -32,7 +32,7 @@ shader_parameter/earth = null
 shader_parameter/earth_shade = null
 shader_parameter/plank_width = 0.45
 shader_parameter/plank_length = null
-shader_parameter/floor_color = Color(0.58, 0.35, 0.22, 1)
+shader_parameter/floor_color = Color(0.44, 0.26, 0.16, 1)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_0ljhm"]
 _surfaces = [{

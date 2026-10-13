@@ -108,7 +108,7 @@ const LOOKS := {
 		"brazier": "res://assets/epiphany/meshes/objetos/brasero_quenoa.res",
 		"doors": "res://assets/epiphany/meshes/paredes_la/%s_quenoa_la.res",
 		"walls": "res://assets/epiphany/meshes/paredes_la/%s_quenoa_la_%s.res", "kit": "res://data/kits/quenoa_la_kit.tres", "grain": [0.6, Vector4(0.51, 0.615, 0.0, 0.25)],
-		"floor": {"plank_width": 0.45, "floor_color": Color(0.58, 0.35, 0.22, 1.0), "grout_width": 0.025, "grout_shade": 0.35, "tone_spread": 0.16}},
+		"floor": {"plank_width": 0.45, "floor_color": Color(0.44, 0.26, 0.16, 1.0), "grout_width": 0.025, "grout_shade": 0.35, "tone_spread": 0.16}},
 }
 ## El polvo va colgado de la cámara, a esta distancia por delante (más cerca que el player).
 const DUST_AHEAD := 20.0
