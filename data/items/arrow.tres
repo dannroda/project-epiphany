@@ -1,6 +1,5 @@
 [gd_resource type="Resource" script_class="ItemData" format=3]
 
-[ext_resource type="Script" path="res://src/items/modifiers/item_modifier.gd" id="1_22fbi"]
 [ext_resource type="Texture2D" uid="uid://u60hrbk0uqh4" path="res://assets/ui/items/arrow.png" id="1_jhgp1"]
 [ext_resource type="Script" path="res://src/items/item_data.gd" id="2_jhgp1"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/flechas_x5.res" id="9_pickup"]

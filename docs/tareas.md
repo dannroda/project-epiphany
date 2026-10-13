@@ -2576,7 +2576,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (66/115)
+## M11 — Pulido: contenido y feel  (67/115)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3809,9 +3809,9 @@ player.gd tiene ~470 líneas y ~200 son del escudo (bloqueo, reflejo, escudo tra
 
 **Archivos:** `player/player.gd`, `player/player.tscn`, `player/components/controls.gd`, `player/components/input_buffer.gd`
 
-### 11.78 Limpieza menor de la revisión de código · Pendiente
+### 11.78 Limpieza menor de la revisión de código · Hecho
 
-**Prioridad:** baja · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `arquitectura`, `ui`
+**Terminada:** 2026-10-13 · **Prioridad:** baja · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `arquitectura`, `ui`
 
 Detalles sueltos de la revisión, sin bug visible o con efecto de un frame.
 

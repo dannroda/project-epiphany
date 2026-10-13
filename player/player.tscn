@@ -7,7 +7,6 @@
 [ext_resource type="AnimationLibrary" uid="uid://74525rcrsep8" path="res://player/animation/libs/MovementAdvanced.res" id="14_65viv"]
 [ext_resource type="Script" uid="uid://cy3a33fu5bqxg" path="res://player/state_machine.gd" id="15_c35mf"]
 [ext_resource type="AnimationLibrary" uid="uid://drilm8odwmi5s" path="res://player/animation/libs/MovementBasic.res" id="15_x7c3f"]
-[ext_resource type="Script" uid="uid://cux1vjdx6vum5" path="res://player/states/spawning.gd" id="16_32hag"]
 [ext_resource type="Script" uid="uid://cbd8lw0x1j7nv" path="res://player/states/idle.gd" id="16_e7oew"]
 [ext_resource type="Script" uid="uid://c1dqyr008pc70" path="res://player/states/moving.gd" id="17_c35mf"]
 [ext_resource type="Script" uid="uid://bubek4m3axgwv" path="res://player/states/attacking.gd" id="18_65viv"]
@@ -607,6 +606,7 @@ transform = Transform3D(-0.12969656, -0.9911532, 0.028182058, 0.9913636, -0.1290
 
 [node name="SwordTrail" type="Trail3D" parent="ModelController/Skeleton3D/Hand_R"]
 lifetime = 0.16
+emitting = false
 color_gradient = ExtResource("trail_fade")
 cast_shadow = 0
 
@@ -721,9 +721,6 @@ shape = SubResource("CapsuleShape3D_32ebh")
 
 [node name="MovementState" type="LimboHSM" parent="." unique_id=1410244712]
 script = ExtResource("15_c35mf")
-
-[node name="Spawning" type="LimboState" parent="MovementState" unique_id=766999083]
-script = ExtResource("16_32hag")
 
 [node name="Idle" type="LimboState" parent="MovementState" unique_id=950358264]
 script = ExtResource("16_e7oew")

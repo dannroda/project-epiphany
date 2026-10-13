@@ -4,11 +4,6 @@ const ITEMS_DIR := "res://data/items"
 const ITEM_COUNT := 25
 
 
-class DoubleDamage extends ItemModifier:
-	func modify_damage(info: DamageInfo) -> void:
-		info.amount *= 2
-
-
 func test_every_item_file_loads_with_its_id() -> void:
 	var files := Array(DirAccess.get_files_at(ITEMS_DIR)).filter(func(f: String) -> bool: return f.ends_with(".tres"))
 	assert_eq(files.size(), ITEM_COUNT)
@@ -54,14 +49,6 @@ func test_inventory_respects_max_stack() -> void:
 	assert_eq(inventory.has(&"arrow"), false)
 	assert_eq(inventory.ids(), [] as Array[StringName])
 	assert_eq(changes, [[&"arrow", 30], [&"arrow", 0]])
-
-
-func test_make_damage_applies_modifiers() -> void:
-	var sword := Items.get_item(&"sword_basic").duplicate() as ItemData
-	sword.modifiers = [DoubleDamage.new()]
-	var info := sword.make_damage(null)
-	assert_eq(info.amount, Items.get_item(&"sword_basic").damage * 2)
-	assert_eq(info.knockback, sword.knockback)
 
 
 func test_every_item_has_an_icon() -> void:

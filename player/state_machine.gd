@@ -11,7 +11,6 @@ func _setup() -> void:
 	blackboard.set_var(PlayerState.BB_TARGET, null)
 	blackboard.set_var(PlayerState.BB_IS_BLOCKING, false)
 
-	add_transition($Spawning, $Idle, "idle")
 	add_transition($Idle, $Moving, "move")
 	add_transition($Idle, $Attacking, "attack")
 	add_transition($Moving, $Idle, "idle")
@@ -60,7 +59,7 @@ func _setup() -> void:
 		add_transition(state, $Grabbed, "grabbed")
 	add_transition($Grabbed, $Idle, "finished")
 
-	initial_state = $Spawning
+	initial_state = $Idle
 
 
 func _update(delta: float) -> void:

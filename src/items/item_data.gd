@@ -15,7 +15,6 @@ enum Category { SWORD, SHIELD, ARMOR, USABLE, AMMO, DUNGEON, UPGRADE }
 ## Mejora de equipo: al conseguirla se equipa aunque la ranura ya tenga algo.
 @export var equip_on_get := false
 @export var behavior: ItemBehavior
-@export var modifiers: Array[ItemModifier] = []
 ## Viene con munición al conseguirlo (la bolsa trae bombas, el arco flechas).
 @export var bundled: ItemData
 @export var bundled_amount: int = 0
@@ -52,7 +51,4 @@ func is_equipment() -> bool:
 
 
 func make_damage(source: Node3D) -> DamageInfo:
-	var info := DamageInfo.make(damage, knockback, source)
-	for modifier in modifiers:
-		modifier.modify_damage(info)
-	return info
+	return DamageInfo.make(damage, knockback, source)

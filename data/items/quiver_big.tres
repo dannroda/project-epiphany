@@ -1,7 +1,6 @@
 [gd_resource type="Resource" script_class="ItemData" format=3]
 
 [ext_resource type="Texture2D" uid="uid://cjr1jiua237if" path="res://assets/ui/items/quiver_big.png" id="1_s7mbv"]
-[ext_resource type="Script" path="res://src/items/modifiers/item_modifier.gd" id="1_s53tx"]
 [ext_resource type="Script" path="res://src/items/item_data.gd" id="2_s7mbv"]
 [ext_resource type="Resource" path="res://data/items/arrow.tres" id="3_arrow"]
 
