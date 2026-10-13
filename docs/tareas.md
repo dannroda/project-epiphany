@@ -2576,7 +2576,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (59/114)
+## M11 — Pulido: contenido y feel  (60/114)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4318,24 +4318,28 @@ Encontrado en el análisis de D1 (11.90, softblock S1). Cargar desde la pausa un
   Mientras carga, traveling queda en verdadero para que el checkpoint donde aparece el player nuevo no pise el spawn_point de la partida (pasaba con bombs_only).
 - [x] Test: cargar en la misma escena da una instancia nueva con el muro entero
 
-### 11.109 Softblocks menores de D1 · Pendiente
+### 11.109 Softblocks menores de D1 · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `mazmorra`
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `mazmorra`
 
-Del análisis de D1 (11.90, S2, S4, S5, S6, S7). Confirmar en el juego y arreglar lo que trabe.
+Del análisis de D1 (11.90, S2, S4, S5, S6, S7). Los cuartos del análisis son del templo viejo (levels/temple.tscn, hoy nivel de prueba): se arreglan los bugs genéricos en los scripts, que pegan también en templo.tscn, la Chullpa y la Queñoa. Los niveles los toca diseño (-43).
 
-- [ ] S2: bloque en la salida del vestíbulo
-  Antes de resolver la placa, empujar VestibuleBlock al hueco de la salida (24,72) tapa la salida con la puerta norte cerrada; el bloque solo se resetea al salir de la sala o recargar (push_block.gd:41-42, 103-112). Probar; si traba, que el bloque no entre en celdas de puerta.
-- [ ] S4: matar la torreta antes del ojo
-  GalleryTurret es la única fuente de proyectiles antes del arco; si muere antes de despertar GalleryEye no hay llave 1 hasta salir y volver. Opciones: torreta invulnerable a sus orbes, o que reviva al salir de la sala.
-- [ ] S5: caja de la Agrietada y espada
-  CrackedBox vuelve al hueco en cada recarga y del lado norte casi no salen bombas. La espada probablemente la mueve (hitbox mask 24 incluye la capa 9): confirmar; si se mueve, el puzzle se salta.
-- [ ] S6: bloque resuelto del Puzzle corta el haz
-  PuzzleBlock se puede seguir empujando y tapa el haz (capa 9 vs máscara 1 del haz, light_beam.gd:28). Trabarlo en la placa una vez resuelto.
-- [ ] S7: munición en el templo
-  Solo al azar (vasijas 5 %, esqueletos 10 %); las vasijas de la Antesala y de la Pluma solo dan corazones, aunque GDD §8.1 dice que dan munición. Mínimo real: 1 bomba y 2 flechas (el GDD dice 2 y 4). Poner fuentes fijas cerca de cada uso o corregir el GDD.
-- [ ] Sin confirmar: orbe al ojo de Ojos, bomba en placa
-  El orbe sin reflejar podría despertar OjosDoorEye (se entra sin arco); una bomba (capa 8) sobre una placa BLOCK (máscara 1|8) probablemente la traba y salta el puzzle de bloque.
+- [x] S2: un bloque no entra en una celda de puerta
+  push_block.gd. Pega en VestibuleBlock (templo) y los bloques de entrada de la Chullpa.
+- [x] S4: la torreta no muere antes de cumplir su función
+  Una torreta que alimenta un ojo o un cristal (MirrorTurret → MirrorCrystal en templo) no puede quedar muerta: inmune a sus orbes o revive al salir de la sala.
+- [x] S5: la espada no mueve cajas físicas
+  CrackedBox solo existía en el templo viejo: se descarta; solo confirmar que la espada no empuja cuerpos físicos en otro lado.
+- [x] S6: un bloque resuelto queda trabado en su placa
+  Genérico: una vez resuelta la placa, el bloque no se empuja más.
+- [x] S7: munición en el templo (diseño, -43)
+  Hecho por -43 en templo.tscn: vasijas que siempre dan bombas o flechas (pot_bombs/pot_arrows) en el Arco, el Ojo del arco y la combinada; lo cubre test_templo.
+- [x] Bomba sobre placa BLOCK
+  Ya no pasa desde 11.110: BLOCK solo lo aprieta un PushBlock. El orbe al ojo de Ojos era del templo viejo: descartado.
+
+**Prueba:** test_push_block › test_a_solved_block_stays_on_its_plate y test_a_block_does_not_go_into_a_doorway; test_turret › test_a_destroyed_turret_comes_back_when_you_leave_its_room.
+
+**Notas:** Sesión de bugs (-fd), con -43 (diseño). S2: PushBlock.can_move no entra a una celda a menos de 1,5 m de una puerta (el hueco del muro), abierta o no. S6: resuelto (is_solved), el bloque no se mueve más. S4: Turret.revives (true por defecto): destruida, vuelve cuando el player sale de su sala (player_left); ser inmune a su orbe rompería los puzzles de reflejo. S5: la espada empuja cuerpos físicos a propósito (Hitbox._on_body_entered); en el juego solo hay cajas y rocas sueltas (overworld, cueva de bombas), ninguna trabada en un puzzle. S7 lo hizo -43 en templo.tscn. La bomba en placa BLOCK ya no aprieta desde 11.110. De paso: las tareas de IA que leen el objetivo del blackboard descartan un player ya liberado (salió en test_intro).
 
 ### 11.110 Tipos de placa de piso: bloque, peso y golpe fuerte · En curso
 

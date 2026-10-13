@@ -60,9 +60,10 @@ func is_solved() -> bool:
 	return solved_flag != &"" and GameState.get_flag(solved_flag) == true
 
 
+## Resuelto, queda trabado en su placa; tampoco entra al hueco de una puerta (taparía la salida).
 func can_move(direction: Vector3) -> bool:
 	var target := global_position + direction * CELL
-	if not fits(target):
+	if is_solved() or in_doorway(target) or not fits(target):
 		return false
 	var space := get_world_3d().direct_space_state
 	# Las paredes CSG son mallas: la caja no las detecta, un rayo sí.
@@ -75,6 +76,11 @@ func can_move(direction: Vector3) -> bool:
 			if not space.intersect_ray(ray).is_empty():
 				return false
 	return has_floor(target)
+
+
+func in_doorway(target: Vector3) -> bool:
+	return get_tree().get_nodes_in_group(&"doors").any(func(door: Node3D) -> bool:
+		return Vector2(door.global_position.x - target.x, door.global_position.z - target.z).length() < CELL * 0.75)
 
 
 ## Nada sólido en el lugar que ocuparía en `target`.

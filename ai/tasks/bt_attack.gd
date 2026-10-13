@@ -24,7 +24,8 @@ func _enter() -> void:
 	_striking = false
 	var anim_player: AnimationPlayer = agent.anim_player
 	_length = anim_player.get_animation(attack.animation).length
-	var target: Node3D = blackboard.get_var(target_var, null, false)
+	var stored: Variant = blackboard.get_var(target_var, null, false)
+	var target: Node3D = stored if is_instance_valid(stored) else null
 	if target:
 		agent.face_towards(target.global_position)
 	anim_player.play(attack.animation, 0.15)

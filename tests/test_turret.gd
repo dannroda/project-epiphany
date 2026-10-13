@@ -82,3 +82,25 @@ func test_arrows_hurt_sword_does_not() -> void:
 	await tree.create_timer(0.4).timeout
 	assert_eq(turret.health.current, turret.health.max_health - 2, "la flecha la daña")
 	setup[1].reset()
+
+
+func test_a_destroyed_turret_comes_back_when_you_leave_its_room() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.root.get_node(^"GameState").reset()
+	tree.change_scene_to_file("res://levels/test_rooms.tscn")
+	await tree.scene_changed
+	var level := tree.current_scene
+	level.get_node(^"Skeleton").free()
+	var room: Room = level.get_node(^"RoomB")
+	var turret: Turret = load("res://src/entities/turret/turret.tscn").instantiate()
+	level.add_child(turret)
+	var spot := room.bounds().get_center()
+	turret.global_position = Vector3(spot.x, room.floor_y(), spot.y)
+	for i in 3:
+		await tree.physics_frame
+	turret.health.damage(turret.health.current)
+	assert_true(turret.is_dead, "destruida")
+	room.player_left.emit(room)
+	assert_true(not turret.is_dead, "al salir de su sala vuelve: un puzzle que la necesita no se traba")
+	assert_true(turret.head.visible and turret.bt_player.active)
+	tree.root.get_node(^"GameState").reset()

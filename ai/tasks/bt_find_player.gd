@@ -13,8 +13,8 @@ func _generate_name() -> String:
 
 
 func _tick(_delta: float) -> Status:
-	var current: Node3D = blackboard.get_var(target_var, null, false)
-	if current is PlayerCharacter and is_instance_valid(current) and not current.is_dead:
+	var current: Variant = blackboard.get_var(target_var, null, false)
+	if is_instance_valid(current) and current is PlayerCharacter and not current.is_dead:
 		if _visible(current, agent.config.vision_range * lose_range_factor):
 			return SUCCESS
 	var candidates := Players.alive()

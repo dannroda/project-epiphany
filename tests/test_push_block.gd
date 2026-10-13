@@ -129,3 +129,32 @@ func test_solved_blocks_rest_on_their_switch() -> void:
 				var solved := block.solved_position
 				assert_true(Vector2(solved.x, solved.z).distance_to(Vector2(at.x, at.z)) < 0.6, "%s: %s resuelto queda sobre su interruptor (%s, el interruptor en %s)" % [path, block.name, solved, at])
 		level.free()
+
+
+func test_a_solved_block_stays_on_its_plate() -> void:
+	var setup: Array = await _setup()
+	var state: Node = setup[1]
+	var block: PushBlock = setup[3].get_node(^"Block")
+	var directions := [Vector3.FORWARD, Vector3.BACK, Vector3.LEFT, Vector3.RIGHT].filter(block.can_move)
+	assert_true(not directions.is_empty(), "sin resolver se mueve")
+	block.solved_flag = &"d1_test_block_solved"
+	state.set_flag(&"d1_test_block_solved", true)
+	assert_true(directions.all(func(direction: Vector3) -> bool: return not block.can_move(direction)), "resuelto, queda trabado")
+	state.reset()
+
+
+func test_a_block_does_not_go_into_a_doorway() -> void:
+	var setup: Array = await _setup()
+	var level: Node = setup[3]
+	var block: PushBlock = level.get_node(^"Block")
+	var directions := [Vector3.FORWARD, Vector3.BACK, Vector3.LEFT, Vector3.RIGHT].filter(block.can_move)
+	assert_true(not directions.is_empty())
+	var direction: Vector3 = directions[0]
+	var door: Door = preload("res://src/world/door.tscn").instantiate()
+	level.add_child(door)
+	door.global_position = block.global_position + direction * PushBlock.CELL
+	door.open(false)
+	await (setup[0] as SceneTree).physics_frame
+	assert_true(not block.can_move(direction), "no entra al hueco de una puerta, aunque esté abierta")
+	door.free()
+	setup[1].reset()
