@@ -93,12 +93,12 @@ func test_overworld_plants_are_cut_like_grass() -> void:
 			assert_true(plants.any(func(plant: Breakable) -> bool: return plant.global_position.distance_to(at) < 0.1), "%s en %s es cortable" % [cell_name, at])
 			assert_eq(grid.mesh_library.get_item_shapes(grid.get_cell_item(cell)).size(), 0, "y la celda no choca ni se dibuja: la planta lo hace")
 	var cactus: Breakable = plants.filter(func(plant: Breakable) -> bool: return plant.global_position.distance_to(Vector3(-20, 0, 2)) < 0.1).front()
+	var tree_plant: Breakable = plants.filter(func(plant: Breakable) -> bool: return plant.has_node(^"Stump") and plant.get_node(^"Body") != null).front()
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	await _swing_at(tree, player, cactus.global_position, 1.3)
 	assert_true(cactus.broken, "la espada corta el cardón de la arboleda")
 	await tree.create_timer(1.5).timeout
 	assert_eq(is_instance_valid(cactus), false, "cae, se hunde y se va")
-	var tree_plant: Breakable = plants.filter(func(plant: Breakable) -> bool: return plant.has_node(^"Stump") and plant.get_node(^"Body") != null).front()
 	var model := tree_plant.get_node(^"Model") as Node3D
 	tree_plant.smash(tree_plant.global_position + Vector3(0, 0, 2))
 	assert_eq(tree_plant.get_node(^"Body").process_mode, Node.PROCESS_MODE_DISABLED, "el paso se abre en el acto")
