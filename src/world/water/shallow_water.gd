@@ -6,7 +6,8 @@ extends Area3D
 
 const SURFACE_Y := -0.08
 const STEP_TIME := 0.3
-## La superficie se pasa este margen (m) del rectángulo: la orilla la dibuja el pozo del terreno, que ondula.
+## La superficie se pasa este margen (m) del rectángulo: la orilla la dibuja el pozo del terreno, que ondula. Del lado
+## que toca otra ShallowWater no se pasa, así las dos no se pisan (el agua es transparente y se vería el doble).
 const MARGIN := 1.4
 
 ## Medidas en XZ (m).
@@ -60,5 +61,27 @@ func _physics_process(delta: float) -> void:
 
 func _build() -> void:
 	(shape.shape as BoxShape3D).size = Vector3(size.x, 1.2, size.y)
-	(surface.mesh as PlaneMesh).size = size + Vector2.ONE * MARGIN * 2.0
-	surface.position.y = SURFACE_Y
+	var lo := Vector2.ONE * MARGIN
+	var hi := Vector2.ONE * MARGIN
+	if is_inside_tree():
+		var mine := _rect()
+		for other in get_parent().get_children():
+			if other == self or not other is ShallowWater:
+				continue
+			var theirs: Rect2 = other._rect()
+			if not mine.grow(MARGIN * 2.0).intersects(theirs):
+				continue
+			for axis in 2:
+				var across := 1 - axis
+				if mine.position[across] >= theirs.end[across] or theirs.position[across] >= mine.end[across]:
+					continue
+				if absf(mine.position[axis] - theirs.end[axis]) < MARGIN * 2.0:
+					lo[axis] = 0.0
+				if absf(theirs.position[axis] - mine.end[axis]) < MARGIN * 2.0:
+					hi[axis] = 0.0
+	(surface.mesh as PlaneMesh).size = size + lo + hi
+	surface.position = Vector3((hi.x - lo.x) / 2.0, SURFACE_Y, (hi.y - lo.y) / 2.0)
+
+
+func _rect() -> Rect2:
+	return Rect2(Vector2(position.x, position.z) - size / 2.0, size)
