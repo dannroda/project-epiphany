@@ -1,0 +1,40 @@
+{
+  "checklist": [
+    {
+      "detail": "Rama nueva en enemy_bt.tres en lugar de Quieto: punto al azar de la navmesh dentro de wander_radius del lugar de inicio, caminar a wander_speed, pausa y mirar alrededor. Datos en EntityConfig. Que no salgan de su zona ni se tiren a un abismo.",
+      "done": false,
+      "text": "Deambular cerca de su lugar para todos los enemigos"
+    },
+    {
+      "detail": "Tipo de enemigo nuevo para guaridas (personaje humano o de una facción, no esqueleto). Lo decide Daniel con diseño y arte.",
+      "done": false,
+      "text": "Diseño del centinela: quién es el grupo enemigo no monstruo y cómo se ve"
+    },
+    {
+      "detail": "Al verte: pausa de alerta con un ! antes de atacar. Si te pierde: va al último lugar visto, mira alrededor y vuelve a su puesto.",
+      "done": false,
+      "text": "Alerta y búsqueda del centinela"
+    },
+    {
+      "detail": "Deambula sin salirse del radio ni trabarse; el centinela alerta, persigue, busca y vuelve.",
+      "done": false,
+      "text": "Tests"
+    }
+  ],
+  "code": "",
+  "created_at": "2026-10-13T04:42:36.897Z",
+  "description": "Daniel (2026-10-13): los enemigos que no te detectaron no se quedan quietos. Todos deambulan cerca de su lugar: caminan despacio a puntos al azar de la navmesh dentro de unos metros de donde empiezan, paran un rato y miran alrededor (reemplaza la rama Quieto de enemy_bt.tres; radio, velocidad y pausas en EntityConfig). Alerta y búsqueda solo para un tipo de enemigo nuevo: el centinela o guardia de una guarida de un grupo enemigo que no son monstruos. Al verte hace una pausa de alerta (un !) antes de atacar; si te pierde va a tu último lugar visto, mira alrededor y vuelve a su puesto. Descartados por ahora: rondas fijas y cono de visión.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 112,
+  "priority": "high",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "ia",
+    "enemigos"
+  ],
+  "test": "",
+  "title": "Enemigos que deambulan mientras no te ven; centinelas con alerta y búsqueda",
+  "updated_at": "2026-10-13T04:42:45.198Z"
+}

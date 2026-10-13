@@ -2558,7 +2558,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (52/110)
+## M11 — Pulido: contenido y feel  (52/111)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4390,6 +4390,21 @@ Daniel (2026-10-12): las botellas tienen su fila fija, separada de los ítems co
 - [x] Mockup Pause_Items: fila Botellas debajo de la grilla
 - [x] items_page: grilla de 8 sin botellas y BottleGrid con bottle_1..4; el cursor de co-op recorre las dos
 - [x] Tests: test_bottles_have_their_own_fixed_row y test_item_ring al día
+
+### Enemigos que deambulan mientras no te ven; centinelas con alerta y búsqueda · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `ia`, `enemigos`
+
+Daniel (2026-10-13): los enemigos que no te detectaron no se quedan quietos. Todos deambulan cerca de su lugar: caminan despacio a puntos al azar de la navmesh dentro de unos metros de donde empiezan, paran un rato y miran alrededor (reemplaza la rama Quieto de enemy_bt.tres; radio, velocidad y pausas en EntityConfig). Alerta y búsqueda solo para un tipo de enemigo nuevo: el centinela o guardia de una guarida de un grupo enemigo que no son monstruos. Al verte hace una pausa de alerta (un !) antes de atacar; si te pierde va a tu último lugar visto, mira alrededor y vuelve a su puesto. Descartados por ahora: rondas fijas y cono de visión.
+
+- [ ] Deambular cerca de su lugar para todos los enemigos
+  Rama nueva en enemy_bt.tres en lugar de Quieto: punto al azar de la navmesh dentro de wander_radius del lugar de inicio, caminar a wander_speed, pausa y mirar alrededor. Datos en EntityConfig. Que no salgan de su zona ni se tiren a un abismo.
+- [ ] Diseño del centinela: quién es el grupo enemigo no monstruo y cómo se ve
+  Tipo de enemigo nuevo para guaridas (personaje humano o de una facción, no esqueleto). Lo decide Daniel con diseño y arte.
+- [ ] Alerta y búsqueda del centinela
+  Al verte: pausa de alerta con un ! antes de atacar. Si te pierde: va al último lugar visto, mira alrededor y vuelve a su puesto.
+- [ ] Tests
+  Deambula sin salirse del radio ni trabarse; el centinela alerta, persigue, busca y vuelve.
 
 ## M12 — Assets propios (Blender)  (6/17)
 
