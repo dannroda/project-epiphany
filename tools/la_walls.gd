@@ -35,6 +35,9 @@ const FADE := preload("res://debug/la/borde_oscuro.gdshader")
 const FOCUS := preload("res://debug/la/enfoque_la.gd")
 const VIGNETTE := preload("res://debug/la/vineta_la.gdshader")
 const FLOOR := preload("res://debug/la/piso_la.gdshader")
+## Veta de las paredes: la franja "acantilado" de la paleta (columna 3, fila 0).
+const GRAIN_AMOUNT := 0.5
+const GRAIN_RECT := Vector4(0.42, 0.455, 0.0, 0.25)
 const BIG_POT := "res://src/world/big_pot.tscn"
 ## Vasijas que pasan a ser las grandes que se empujan (big_pot.tscn).
 const BIG_POTS := ["OsarioPot1", "OsarioPot2"]
@@ -231,6 +234,17 @@ func _glossy(material: Material) -> Material:
 	return _glossy_cache[material]
 
 
+var _wood_material: ShaderMaterial
+
+
+func _wood() -> ShaderMaterial:
+	if _wood_material == null:
+		_wood_material = _glossy(STONE).duplicate()
+		_wood_material.set_shader_parameter("grain_amount", GRAIN_AMOUNT)
+		_wood_material.set_shader_parameter("grain_rect", GRAIN_RECT)
+	return _wood_material
+
+
 func _floor(material: Material) -> Material:
 	if not material is BaseMaterial3D:
 		return material
@@ -421,7 +435,7 @@ func _kit() -> MeshLibrary:
 			var mesh: Mesh = load(MESHES % [kind, code])
 			for surface in mesh.get_surface_count():
 				tool.append_from(mesh, surface, Transform3D.IDENTITY)
-			tool.set_material(_glossy(STONE))
+			tool.set_material(_wood())
 			kit.create_item(next)
 			kit.set_item_name(next, KINDS[kind][0] + code)
 			kit.set_item_mesh(next, tool.commit())

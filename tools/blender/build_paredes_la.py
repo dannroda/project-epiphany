@@ -9,7 +9,7 @@ import os
 import random
 import sys
 
-from mathutils import Vector
+from mathutils import Vector, noise
 
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -32,6 +32,12 @@ PILLAR_SIZE = 0.6
 CORNERS = ("ne", "no", "se", "so")
 MARGIN = 2.0
 STONE = "acantilado"
+## Detalle de las caras: relieve (corre la cara hasta RELIEF m, cero en los bordes de la celda para que empalmen) y musgo que cae desde la cresta y junta en el pie.
+RELIEF = 0.08
+RELIEF_SCALE = 2.2
+MOSS = "musgo"
+MOSS_TOP = 0.55
+MOSS_FOOT = 0.25
 kit = epi.start()
 
 
@@ -82,6 +88,25 @@ def pillar_edges(sides, corners, cut):
 	if cut == "paso" and len(sides) == 1:
 		edges += [(sides[0], RUN[sides[0]] - 0.01), (sides[0], RUN[sides[0]])]
 	return edges
+
+
+def relief(p):
+	p.bm.normal_update()
+	for v in p.bm.verts:
+		x, y, z = v.co
+		window = max(0.0, 1.0 - x * x) * max(0.0, 1.0 - y * y) * min(1.0, z / 0.3, (HEIGHT - z) / 0.3)
+		out = Vector((v.normal.x, v.normal.y, 0.0))
+		if window <= 0.0 or out.length < 0.5:
+			continue
+		a = x if abs(v.normal.y) > abs(v.normal.x) else y
+		v.co += out.normalized() * noise.noise(Vector((a, z * 0.5, 3.0)) * RELIEF_SCALE) * RELIEF * window
+	p.bm.normal_update()
+
+
+def moss(c, seed):
+	q = Vector((c.x + c.y + seed, c.z, c.x - c.y)) * 1.8
+	n = 0.5 + 0.5 * noise.noise(q)
+	return c.z > HEIGHT - MOSS_TOP * (0.3 + n) or c.z < MOSS_FOOT * (n * 3.0 - 1.4)
 
 
 def rock_tone(c, sides, kind):
@@ -173,13 +198,16 @@ def piece(kind, code, cut=None):
 		inside = channel(x, y, sides, cut) if cut else None
 		if inside:
 			return cut_height(inside[0], cut)
-		return PILLAR if pillar(x, y, sides, corners, cut) else height(x, y, sides, corners)
+		if pillar(x, y, sides, corners, cut):
+			return PILLAR
+		return height(x, y, sides, corners)
 
 	grid = [[p.bm.verts.new((x, y, h(x, y))) for x in xs] for y in ys]
 	faces = [p.bm.faces.new((grid[j][i], grid[j][i + 1], grid[j + 1][i + 1], grid[j + 1][i])) for j in range(len(ys) - 1) for i in range(len(xs) - 1)]
+	relief(p)
+	seed = sum(map(ord, kind + code)) % 97 * 0.37
 	crest = []
 	for f in faces:
-		f.normal_update()
 		c = f.calc_center_median()
 		inside = channel(c.x, c.y, sides, cut) if cut else None
 		if inside and f.normal.z > 0.9:
@@ -196,6 +224,11 @@ def piece(kind, code, cut=None):
 			crest.append(f)
 		elif c.z > HEIGHT:
 			shade(p, f, "piedra", course_tone(c))
+		elif moss(c, seed):
+			if c.z < 1.0:
+				p.paint([f], MOSS, "LOW", vary=0.15)
+			else:
+				shade(p, f, MOSS, min(0.8, 0.3 + 0.5 * (c.z - HEIGHT + MOSS_TOP) / MOSS_TOP))
 		else:
 			shade(p, f, STONE, rock_tone(c, sides, kind))
 	p.paint(crest, LEAF, "DARK", vary=0.08)
@@ -312,9 +345,12 @@ def hedge(p, xs, ys, h):
 	p.paint(vine, LEAF, vary=0.15)
 
 
+SHADE_SPAN = 20.0
+
+
 def shade(p, f, swatch, t):
 	c = f.calc_center_median()
-	p.paint([f], swatch, z_range=(c.z - t * 2.0, c.z + (1 - t) * 2.0))
+	p.paint([f], swatch, z_range=(c.z - t * SHADE_SPAN, c.z + (1 - t) * SHADE_SPAN))
 
 
 shapes = json.load(open(os.path.join(ROOT, "tools", "paredes_la.json")))

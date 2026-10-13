@@ -20,9 +20,33 @@ uniform float cap_shade = 0.75;
 // Brillo de la superficie (los valores por defecto son los de Godot sin tocar).
 uniform float roughness : hint_range(0.0, 1.0) = 1.0;
 uniform float specular : hint_range(0.0, 1.0) = 0.5;
+// Veta de madera dibujada en las caras paradas cuyo color de paleta cae en grain_rect (u0, u1, v0, v1); 0 la apaga.
+uniform float grain_amount : hint_range(0.0, 1.0) = 0.0;
+uniform vec4 grain_rect = vec4(0.0);
+uniform float grain_spacing = 0.2;
 
 varying vec3 world_pos;
 varying vec3 world_normal;
+
+float grain_hash(vec2 p) {
+	return fract(sin(dot(p, vec2(41.3, 289.1))) * 43758.5453);
+}
+
+float grain_noise(vec2 p) {
+	vec2 i = floor(p);
+	vec2 f = fract(p);
+	f = f * f * (3.0 - 2.0 * f);
+	return mix(mix(grain_hash(i), grain_hash(i + vec2(1.0, 0.0)), f.x), mix(grain_hash(i + vec2(0.0, 1.0)), grain_hash(i + vec2(1.0, 1.0)), f.x), f.y);
+}
+
+float grain(vec3 pos, vec3 n) {
+	float along = n.x > n.z ? pos.z : pos.x;
+	float w = along / grain_spacing + 1.2 * grain_noise(vec2(along * 1.5, pos.y * 0.4));
+	float fiber = smoothstep(0.09, 0.0, abs(fract(w) - 0.5)) * smoothstep(0.35, 0.6, grain_noise(vec2(floor(w) * 3.7, pos.y * 0.6)));
+	float k = grain_noise(vec2(along * 6.0, pos.y * 3.0));
+	float knot = smoothstep(0.025, 0.0, abs(k - 0.9)) + smoothstep(0.95, 0.98, k);
+	return clamp(fiber + knot, 0.0, 1.0);
+}
 
 void vertex() {
 	world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
@@ -49,6 +73,9 @@ void fragment() {
 	}
 	if (FRONT_FACING) {
 		ALBEDO = albedo_color.rgb * tex;
+		if (grain_amount > 0.0 && world_normal.y < 0.6 && UV.x > grain_rect.x && UV.x < grain_rect.y && UV.y > grain_rect.z && UV.y < grain_rect.w) {
+			ALBEDO *= 1.0 - grain_amount * grain(world_pos, world_normal);
+		}
 		ROUGHNESS = roughness;
 		SPECULAR = specular;
 	} else if (in_cut) {
