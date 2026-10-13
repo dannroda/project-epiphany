@@ -34,6 +34,7 @@ const FADE_END := {"n": 1.8, "s": 1.8, "e": 1.8, "o": 1.8}
 const FADE := preload("res://debug/la/borde_oscuro.gdshader")
 const FOCUS := preload("res://debug/la/enfoque_la.gd")
 const VIGNETTE := preload("res://debug/la/vineta_la.gdshader")
+const FLOOR := preload("res://debug/la/piso_la.gdshader")
 const BIG_POT := "res://src/world/big_pot.tscn"
 ## Vasijas que pasan a ser las grandes que se empujan (big_pot.tscn).
 const BIG_POTS := ["OsarioPot1", "OsarioPot2"]
@@ -230,6 +231,20 @@ func _glossy(material: Material) -> Material:
 	return _glossy_cache[material]
 
 
+func _floor(material: Material) -> Material:
+	if not material is BaseMaterial3D:
+		return material
+	if not _glossy_cache.has(material):
+		var tiles := ShaderMaterial.new()
+		tiles.shader = FLOOR
+		tiles.set_shader_parameter("albedo_texture", (material as BaseMaterial3D).albedo_texture)
+		tiles.set_shader_parameter("albedo_color", (material as BaseMaterial3D).albedo_color)
+		tiles.set_shader_parameter("roughness", GLOSS_ROUGHNESS)
+		tiles.set_shader_parameter("specular", GLOSS_SPECULAR)
+		_glossy_cache[material] = tiles
+	return _glossy_cache[material]
+
+
 func _tone_curve() -> GradientTexture1D:
 	const N := 33
 	var offsets := PackedFloat32Array()
@@ -391,8 +406,10 @@ func _kit() -> MeshLibrary:
 		if mesh == null:
 			continue
 		mesh = mesh.duplicate()
+		var floor := kit.get_item_name(item).begins_with("Piso")
 		for surface in mesh.get_surface_count():
-			mesh.surface_set_material(surface, _glossy(mesh.surface_get_material(surface)))
+			var material := mesh.surface_get_material(surface)
+			mesh.surface_set_material(surface, _floor(material) if floor else _glossy(material))
 		kit.set_item_mesh(item, mesh)
 	var next := kit.get_last_unused_item_id()
 	var shapes: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(SHAPES))
