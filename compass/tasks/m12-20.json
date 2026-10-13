@@ -1,0 +1,37 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Logo: wordmark de Epiphany con el motivo del ojo; exportar en PNG con alfa (y versión clara/oscura si hace falta)"
+    },
+    {
+      "done": false,
+      "text": "Fondo: paneo lento del overworld con una cámara sobre un recorrido (Path3D), en un SubViewport desenfocado detrás del menú. Medir la carga: si cargar el overworld entero demora el título, usar una versión liviana o un video pregrabado"
+    },
+    {
+      "done": false,
+      "text": "Integrar en title_screen.tscn (nodos en la escena, no por código) y decidir si el ojo de title_eye.gd queda o lo reemplaza el logo"
+    },
+    {
+      "done": false,
+      "text": "Actualizar el mockup de la pantalla de título en el canvas de diseño"
+    }
+  ],
+  "code": "12.20",
+  "created_at": "2026-10-13T21:23:35.332Z",
+  "description": "La pantalla de título (src/ui/title/title_screen.tscn) sigue con arte provisorio: Background es un ColorRect, el título es un Label y hay un ojo dibujado por código (title_eye.gd). Idea de Daniel: un logo propio y, de fondo, un paneo lento del overworld, desenfocado, detrás del menú.",
+  "milestone": "m12",
+  "notes": "",
+  "order": 20,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "arte",
+    "ui"
+  ],
+  "test": "",
+  "title": "Arte de la pantalla de título: logo y fondo del overworld",
+  "updated_at": "2026-10-13T21:23:51.368Z"
+}

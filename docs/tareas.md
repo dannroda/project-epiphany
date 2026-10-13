@@ -4599,7 +4599,7 @@ Daniel: entrando al santuario por la puerta de atrás se salía por la de abajo 
 
 **Prueba:** test_shrine › test_the_back_door_skips_neither_the_shortcut_nor_the_cracked_wall: por atrás arranca afuera de la reja cerrada y no pasa; la salida está tapada por el muro de adentro; con el flag del muro de afuera, el de adentro está roto. test_overworld_run sigue pasando.
 
-## M12 — Assets propios (Blender)  (13/19)
+## M12 — Assets propios (Blender)  (13/20)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -5053,6 +5053,17 @@ Diseño (-43) armó levels/totora.tscn en el kit gris (a8d40e91, GDD §8d): dos 
 - [ ] Santuario de totora en la isla (TotoraHut)
   Modelo hecho (41357968): src/world/totora_entrada.tscn, choza de los uros sobre balsa, techo con borla roja, columnas con cabeza de puma, aguayo y totoras; mismo colisionador que TotoraHut. Falta que overworld (-eb) la ponga en lugar del CSGBox3D, girada con la puerta al oeste.
 - [ ] Recorrerla (Daniel)
+
+### 12.20 Arte de la pantalla de título: logo y fondo del overworld · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `arte`, `ui`
+
+La pantalla de título (src/ui/title/title_screen.tscn) sigue con arte provisorio: Background es un ColorRect, el título es un Label y hay un ojo dibujado por código (title_eye.gd). Idea de Daniel: un logo propio y, de fondo, un paneo lento del overworld, desenfocado, detrás del menú.
+
+- [ ] Logo: wordmark de Epiphany con el motivo del ojo; exportar en PNG con alfa (y versión clara/oscura si hace falta)
+- [ ] Fondo: paneo lento del overworld con una cámara sobre un recorrido (Path3D), en un SubViewport desenfocado detrás del menú. Medir la carga: si cargar el overworld entero demora el título, usar una versión liviana o un video pregrabado
+- [ ] Integrar en title_screen.tscn (nodos en la escena, no por código) y decidir si el ojo de title_eye.gd queda o lo reemplaza el logo
+- [ ] Actualizar el mockup de la pantalla de título en el canvas de diseño
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 
