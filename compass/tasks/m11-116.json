@@ -1,0 +1,31 @@
+{
+  "assignee": "Claude",
+  "checklist": [
+    {
+      "done": true,
+      "text": "Runner: los errores de script fallan el test"
+    },
+    {
+      "done": true,
+      "text": "Repartir lo que destapó"
+    }
+  ],
+  "code": "11.116",
+  "created_at": "2026-10-13T07:55:53.935Z",
+  "description": "Un SCRIPT ERROR corta la función del test pero el runner la cuenta como ok si ya había verificado algo (test_dungeon_reach dio 7/0 con el grafo cortado en el primer chequeo). Que todo error de script mientras corre un test lo marque FALLA y muestre el error.",
+  "done_at": "2026-10-13T07:59:06.546Z",
+  "milestone": "m11",
+  "notes": "Sesión de bugs (-fd), pedido de Daniel vía -43. run_tests.gd registra un Logger (OS.add_logger) que junta los errores de tipo SCRIPT; cada error mientras corre un test (en el test o en el código del juego) lo marca FALLA con el primero y la cantidad. push_error y los errores del motor no cuentan. La suite completa destapó: dodge_ghosts.gd:53 (11.112, -eb: bake_mesh_from_current_skeleton_pose da null en headless) en 7 tests de player, lift, bombs, input e interaction; test_cave:46 y test_breakables:102 (overworld, -eb en 7.10); test_save_manager:23 (desde 14.9 cargar vuelve a entrar a la escena y el test leía el player viejo: arreglado acá). Aparte, sin error de script: templo.tscn sin uid (11.113, -43 [a7e236]) rompe test_portals.",
+  "order": 113,
+  "priority": "high",
+  "refs": [],
+  "size": "s",
+  "status": "done",
+  "tags": [
+    "bug",
+    "tests"
+  ],
+  "test": "A mano: un test con una lectura sobre null después de un assert da FALLA y muestra 'error de script (1): archivo:línea mensaje'.",
+  "title": "Tests: un error de script cuenta como falla",
+  "updated_at": "2026-10-13T07:59:20.539Z"
+}

@@ -14,6 +14,26 @@ const MAX_JOBS := 4
 const UNKNOWN_TIME := 20.0
 
 
+## Junta los errores de script (los que cortan la función que corría) para fallar el test en curso.
+class ScriptErrors extends Logger:
+	var _mutex := Mutex.new()
+	var _seen := PackedStringArray()
+
+	func _log_error(_function: String, file: String, line: int, code: String, rationale: String, _editor_notify: bool, error_type: int, _script_backtraces: Array[ScriptBacktrace]) -> void:
+		if error_type != ERROR_TYPE_SCRIPT:
+			return
+		_mutex.lock()
+		_seen.append("%s:%d %s" % [file.get_file(), line, rationale if not rationale.is_empty() else code])
+		_mutex.unlock()
+
+	func take() -> PackedStringArray:
+		_mutex.lock()
+		var seen := _seen
+		_seen = PackedStringArray()
+		_mutex.unlock()
+		return seen
+
+
 func _initialize() -> void:
 	var args := _args()
 	if args.has("worker"):
@@ -145,6 +165,8 @@ func _run_here(files: PackedStringArray) -> Dictionary:
 	var total := 0
 	var failures := PackedStringArray()
 	var times := {}
+	var errors := ScriptErrors.new()
+	OS.add_logger(errors)
 	for file in files:
 		var started := Time.get_ticks_msec()
 		var script: GDScript = load(DIR.path_join(file))
@@ -163,12 +185,17 @@ func _run_here(files: PackedStringArray) -> Dictionary:
 			var before: int = suite.failures.size()
 			suite.assertions = 0
 			load("res://src/tools/top_down_camera.gd").set(&"unlock_reveals", false)
+			errors.take()
 			await suite.call(test_name)
 			for action in InputMap.get_actions():
 				Input.action_release(action)
+			var seen := errors.take()
+			if not seen.is_empty():
+				suite.failures.append("%s: error de script (%d): %s" % [suite.current_test, seen.size(), seen[0]])
 			if suite.assertions == 0:
 				suite.failures.append("%s: no llegó a verificar nada (¿se cortó por un error?)" % suite.current_test)
 			print("%s %s" % ["ok  " if suite.failures.size() == before else "FALLA", suite.current_test])
 		failures.append_array(suite.failures)
 		times[file] = (Time.get_ticks_msec() - started) / 1000.0
+	OS.remove_logger(errors)
 	return {total = total, failures = failures, times = times}

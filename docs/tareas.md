@@ -2563,7 +2563,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (52/111)
+## M11 — Pulido: contenido y feel  (53/112)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4421,6 +4421,19 @@ Daniel (2026-10-13): los enemigos que no te detectaron no se quedan quietos. Tod
   Al verte: pausa de alerta con un ! antes de atacar. Si te pierde: va al último lugar visto, mira alrededor y vuelve a su puesto.
 - [ ] Tests
   Deambula sin salirse del radio ni trabarse; el centinela alerta, persigue, busca y vuelve.
+
+### 11.116 Tests: un error de script cuenta como falla · Hecho
+
+**Terminada:** 2026-10-13 · **Prioridad:** alta · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `tests`
+
+Un SCRIPT ERROR corta la función del test pero el runner la cuenta como ok si ya había verificado algo (test_dungeon_reach dio 7/0 con el grafo cortado en el primer chequeo). Que todo error de script mientras corre un test lo marque FALLA y muestre el error.
+
+- [x] Runner: los errores de script fallan el test
+- [x] Repartir lo que destapó
+
+**Prueba:** A mano: un test con una lectura sobre null después de un assert da FALLA y muestra 'error de script (1): archivo:línea mensaje'.
+
+**Notas:** Sesión de bugs (-fd), pedido de Daniel vía -43. run_tests.gd registra un Logger (OS.add_logger) que junta los errores de tipo SCRIPT; cada error mientras corre un test (en el test o en el código del juego) lo marca FALLA con el primero y la cantidad. push_error y los errores del motor no cuentan. La suite completa destapó: dodge_ghosts.gd:53 (11.112, -eb: bake_mesh_from_current_skeleton_pose da null en headless) en 7 tests de player, lift, bombs, input e interaction; test_cave:46 y test_breakables:102 (overworld, -eb en 7.10); test_save_manager:23 (desde 14.9 cargar vuelve a entrar a la escena y el test leía el player viejo: arreglado acá). Aparte, sin error de script: templo.tscn sin uid (11.113, -43 [a7e236]) rompe test_portals.
 
 ## M12 — Assets propios (Blender)  (6/18)
 
