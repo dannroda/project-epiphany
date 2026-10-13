@@ -65,7 +65,7 @@
       "text": "Sombras de nubes"
     },
     {
-      "detail": "Hecho: risco en seis estratos que salen y entran (repisas con musgo, abajo oscuro, una veta sutil en tierra); topes risco (piedras), risco_ichu y risco_flores, que vary_overworld.gd reparte por hash. Viento en wind.gdshaderinc, también en las paredes con agujero (epiphany_wall_wind.tres). Los andenes quedan lisos: Acantilado está en 944/950.",
+      "detail": "Hecho: risco en seis estratos que salen y entran (topes risco, risco_ichu, risco_flores por hash; viento en wind.gdshaderinc). 2026-10-13 (0867d75a, arte -11): las caras de risco del terreno orgánico pasan a bloques redondeados como en LA (ladrillos metidos abajo, bloques grandes, labio claro arriba; tapa de pasto sin puntas). Pircas igual (492ba44d): piedras grandes y tapa clara. Look LA (tono_la + sombra_la, Linear) en overworld.tscn (678bd9fa). Tope de Acantilado y Andén borde 960 (1dd0f4fb).",
       "done": true,
       "text": "Cara del risco y topes con detalle"
     },
@@ -119,5 +119,5 @@
   ],
   "test": "El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.",
   "title": "Terreno del overworld",
-  "updated_at": "2026-10-11T16:34:26.767Z"
+  "updated_at": "2026-10-13T15:33:12.348Z"
 }

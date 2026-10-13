@@ -1641,7 +1641,7 @@ Daniel (2026-10-13): la pluma cruza 1 celda (2 m) y sandalias + pluma 3 (6 m). L
   Daniel (2026-10-13): la pluma cruza 1 celda (2 m) y sandalias + pluma 3 (6 m). La angostura y los huecos muelle → islote → isla de D3 miden 3 celdas; el Risco 4 (8 m), con el ojo corrido al norte (Z -32.4). La pieza de los islotes va sobre el islote.
 - [x] Mini quest de la Necrópolis (arco → sandalias)
   Hecho: corral de pirca de la Necrópolis (X 24..36, Z -12..-3, nivel 1). Tres chullpas (src/world/chullpa_tumba.tscn: torre de piedra con un EyeSwitch de 8 s) miran al centro; con los tres ojos prendidos a la vez aparece el cofre grande SandalsChest (flag ow_sandals_chest) con las sandalias. Test en test_secrets.
-- [ ] Tests del overworld al día (angostura, islotes, Risco, quest)
+- [x] Tests del overworld al día (angostura, islotes, Risco, quest)
 - [ ] Recorrerlo (Daniel)
 
 ## M8 — Contenido de mazmorra  (8/8)
@@ -3823,7 +3823,7 @@ Detalles sueltos de la revisión, sin bug visible o con efecto de un frame.
   `MenuStack.depth()`.
 - [x] Tipos estáticos
   text_box.gd `body`, pause_menu.gd `extra`/`accept`, minimap.gd `_doors`, bt_* `bow`.
-- [ ] Código sin uso
+- [x] Código sin uso
   ItemModifier sin subclases; estado Spawning que dura un frame (arreglar o quitar).
 - [x] Arena del jefe
   boss.gd no depende del orden de nodos en temple.tscn para el rect de la arena.
@@ -3834,7 +3834,7 @@ Detalles sueltos de la revisión, sin bug visible o con efecto de un frame.
 
 **Prueba:** Tests verdes; sin cambios visibles salvo el parpadeo de chips/corazones.
 
-**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review). Hecho todo menos el paso 5: quitar ItemModifier toca ~20 .tres de ítems (dos con cambios sin commitear de otra sesión) y el estado Spawning está en player.tscn (también con cambios ajenos); queda para cuando estén libres. text_box `body` queda Variant explícito: es Label o RichTextLabel y no comparten clase con visible_characters. ToonToggle olvida las mallas liberadas al crecer `_saved`; arena del jefe: boss.gd solo pone el rect por defecto si BossArena no lo puso antes.
+**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review). text_box `body` queda Variant explícito: es Label o RichTextLabel y no comparten clase con visible_characters. Paso 5: ItemModifier se quitó (ningún ítem lo usaba; solo sacaba una línea ext_resource de 19 .tres); el estado Spawning se quitó y el player arranca en Idle; SwordTrail arranca con emitting = false (antes ese cuadro de Spawning lo tapaba).
 
 ### 11.79 Los corazones se rellenan al cambiar de escena · Hecho
 
@@ -4558,7 +4558,7 @@ Modelar en Blender el terreno del overworld (pasto, caminos, piso de plaza, acan
 - [x] Sombras de nubes
   Hecho: cloud_shadows.gdshaderinc (ruido en mundo, deriva) en los materiales de afuera (epiphany_outdoor/wind/wall: kit del overworld, lugares, naturaleza); global cloud_shadows que prende el nodo CloudShadows de overworld.tscn (fuerza, tamaño, deriva exportados). Personajes y templo sin nubes.
 - [x] Cara del risco y topes con detalle
-  Hecho: risco en seis estratos que salen y entran (repisas con musgo, abajo oscuro, una veta sutil en tierra); topes risco (piedras), risco_ichu y risco_flores, que vary_overworld.gd reparte por hash. Viento en wind.gdshaderinc, también en las paredes con agujero (epiphany_wall_wind.tres). Los andenes quedan lisos: Acantilado está en 944/950.
+  Hecho: risco en seis estratos que salen y entran (topes risco, risco_ichu, risco_flores por hash; viento en wind.gdshaderinc). 2026-10-13 (0867d75a, arte -11): las caras de risco del terreno orgánico pasan a bloques redondeados como en LA (ladrillos metidos abajo, bloques grandes, labio claro arriba; tapa de pasto sin puntas). Pircas igual (492ba44d): piedras grandes y tapa clara. Look LA (tono_la + sombra_la, Linear) en overworld.tscn (678bd9fa). Tope de Acantilado y Andén borde 960 (1dd0f4fb).
 - [x] Camino con detalle
   Hecho: tierra_manchas, tierra_guijarros, tierra_huellas (pisadas de llama) y tierra_pasto (matitas que se mecen); vary_overworld.gd las reparte en la tierra junto con tierra_piedras (54 % de las celdas con algo).
 - [x] Niebla en el abismo
