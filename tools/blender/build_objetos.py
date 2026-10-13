@@ -14,10 +14,10 @@ kit = epi.start()
 FRONT = Vector((0, -1, 0))
 
 
-def piece(name, seed, fn):
+def piece(name, seed, fn, smooth=None):
 	p = epi.Piece(seed)
 	extra = fn(p)
-	obj = p.build(name, kit)
+	obj = p.build(name, kit, smooth=smooth)
 	for key, value in (extra if isinstance(extra, dict) else {}).items():
 		obj[key] = value
 	return obj
@@ -40,12 +40,12 @@ def cordon(p, radius, z, width=0.05):
 
 
 def vasija(p):
-	"""Aríbalo: cuerpo panzón, cuello angosto y boca abierta, con guardas rojas, negras y crema."""
-	profile = [(0.1, 0.0), (0.2, 0.05), (0.27, 0.18), (0.29, 0.3), (0.26, 0.42), (0.17, 0.52), (0.1, 0.58), (0.1, 0.64), (0.15, 0.7), (0.0, 0.69)]
-	body = p.lathe(profile, sides=12)
-	p.paint_bands(body, [(0.16, 0.24, "noche", "MID"), (0.24, 0.36, "hueso", "MID"), (0.36, 0.46, "tela_roja", "MID"), (0.46, 0.52, "noche", "MID"), (0.62, 0.71, "tela_roja", "DARK")], default=(0, 0, "roca_naranja", "MID"))
+	"""Aríbalo: cuerpo panzón, cuello angosto y boca con labio, con guardas rojas, negras y crema; liso y redondo."""
+	profile = [(0.1, 0.0), (0.17, 0.02), (0.23, 0.07), (0.27, 0.14), (0.29, 0.22), (0.295, 0.3), (0.28, 0.38), (0.25, 0.44), (0.2, 0.5), (0.14, 0.55), (0.105, 0.59), (0.1, 0.63), (0.12, 0.67), (0.155, 0.7), (0.14, 0.715), (0.09, 0.69), (0.0, 0.66)]
+	body = p.lathe(profile, sides=20)
+	p.paint_bands(body, [(0.16, 0.24, "noche", "MID"), (0.24, 0.36, "hueso", "MID"), (0.36, 0.46, "tela_roja", "MID"), (0.46, 0.52, "noche", "MID"), (0.62, 0.72, "tela_roja", "DARK")], default=(0, 0, "roca_naranja", "MID"))
 	for side in (-1, 1):
-		ear = p.box(-0.04, 0.04, -0.035, 0.035, 0.2, 0.3)
+		ear = p.rounded_box(-0.045, 0.045, -0.035, 0.035, 0.2, 0.3, radius=0.02)
 		p.transform(ear, Matrix.Translation((side * 0.29, 0, 0)))
 		p.paint(ear, "roca_naranja", "DARK")
 	cordon(p, 0.115, 0.6, width=0.04)
@@ -108,21 +108,29 @@ def apacheta(p):
 
 
 def cajon(p):
-	"""Caja física de 1 m: tablas con marco oscuro."""
+	"""Caja física de 1 m: tablas con marco oscuro de cantos gastados y clavos en las esquinas."""
 	core = p.box(-0.47, 0.47, -0.47, 0.47, 0.03, 0.97)
 	p.paint(core, "madera", z_range=(0, 1), vary=0.08)
 	frame = []
 	for x in (-0.5, 0.42):
 		for y in (-0.5, 0.42):
-			frame += p.box(x, x + 0.08, y, y + 0.08, 0.0, 1.0)
+			frame += p.rounded_box(x, x + 0.08, y, y + 0.08, 0.0, 1.0, radius=0.015, segments=1)
 	for z in (0.0, 0.92):
-		frame += p.box(-0.5, 0.5, -0.5, -0.42, z, z + 0.08) + p.box(-0.5, 0.5, 0.42, 0.5, z, z + 0.08)
-		frame += p.box(-0.5, -0.42, -0.5, 0.5, z, z + 0.08) + p.box(0.42, 0.5, -0.5, 0.5, z, z + 0.08)
+		frame += p.rounded_box(-0.5, 0.5, -0.5, -0.42, z, z + 0.08, radius=0.015, segments=1) + p.rounded_box(-0.5, 0.5, 0.42, 0.5, z, z + 0.08, radius=0.015, segments=1)
+		frame += p.rounded_box(-0.5, -0.42, -0.5, 0.5, z, z + 0.08, radius=0.015, segments=1) + p.rounded_box(0.42, 0.5, -0.5, 0.5, z, z + 0.08, radius=0.015, segments=1)
 	p.paint(frame, "madera_oscura", "MID", vary=0.08)
 	planks = []
 	for z in (0.33, 0.64):
-		planks += p.box(-0.42, 0.42, -0.5, -0.47, z - 0.015, z + 0.015)
+		for facing in range(4):
+			plank = p.box(-0.42, 0.42, -0.48, -0.465, z - 0.012, z + 0.012)
+			p.transform(plank, Matrix.Rotation(facing * math.pi / 2, 4, "Z"))
+			planks += plank
 	p.paint(planks, "madera_oscura", "DARK")
+	nails = []
+	for x in (-0.46, 0.46):
+		for z in (0.04, 0.96):
+			nails += p.box(x - 0.014, x + 0.014, -0.507, -0.5, z - 0.014, z + 0.014)
+	p.paint(nails, "hierro", "LIGHT")
 
 
 def fogata(p):
@@ -141,11 +149,11 @@ def fogata(p):
 	p.paint(p.cylinder(0.25, 0.0, 0.03, sides=8), "noche", "MID")
 
 
-piece("vasija", 1, vasija)
+piece("vasija", 1, vasija, smooth=50)
 piece("vasija_pedazos", 2, vasija_pedazos)
 piece("estela", 3, estela)
 piece("apacheta", 4, apacheta)
-piece("cajon", 5, cajon)
+piece("cajon", 5, cajon, smooth=35)
 piece("fogata", 6, fogata)
 
 
@@ -159,41 +167,73 @@ def hollow_top(p, w, d, top, rim, swatch, inside="noche"):
 	p.paint(p.box(-w / 2 + rim, w / 2 - rim, -d / 2 + rim, d / 2 - rim, top - 0.08, top - 0.06), inside, "LOW")
 
 
+def rivets(p, points, swatch, size=0.018):
+	"""Cabezas de remache que miran a -Y."""
+	faces = []
+	for x, y, z in points:
+		head = p.blob((x, y, z), size, squash=(1, 0.6, 1), subdiv=1, rough=0.0)
+		faces += head
+	p.paint(faces, swatch, "LIGHT")
+
+
 def chest_base(p, w, d, h, wood, metal):
-	box = p.box(-w / 2, w / 2, -d / 2, d / 2, 0.0, h - 0.06)
+	"""Cofre de tablas: canto redondeado, juntas de las tablas, esquineros y remaches de metal."""
+	box = p.rounded_box(-w / 2, w / 2, -d / 2, d / 2, 0.0, h - 0.06, radius=0.025, segments=2)
 	hollow_top(p, w, d, h, 0.07, wood)
 	p.paint(box, wood, z_range=(0, h * 1.5), vary=0.05)
+	seams = []
+	for z in (h * 0.36, h * 0.68):
+		seams += p.box(-w / 2 + 0.02, w / 2 - 0.02, -d / 2 - 0.004, -d / 2 + 0.01, z - 0.008, z + 0.008)
+		seams += p.box(-w / 2 + 0.02, w / 2 - 0.02, d / 2 - 0.01, d / 2 + 0.004, z - 0.008, z + 0.008)
+		seams += p.box(-w / 2 - 0.004, -w / 2 + 0.01, -d / 2 + 0.02, d / 2 - 0.02, z - 0.008, z + 0.008)
+		seams += p.box(w / 2 - 0.01, w / 2 + 0.004, -d / 2 + 0.02, d / 2 - 0.02, z - 0.008, z + 0.008)
+	p.paint(seams, "madera_oscura", "DARK")
 	bands = []
 	for x in (-w / 2 + 0.1, w / 2 - 0.16):
-		bands += p.box(x, x + 0.06, -d / 2 - 0.02, d / 2 + 0.02, -0.01, h + 0.005)
-	bands += p.box(-w / 2 - 0.02, w / 2 + 0.02, -d / 2 - 0.02, d / 2 + 0.02, 0.0, 0.07)
+		bands += p.rounded_box(x, x + 0.06, -d / 2 - 0.02, d / 2 + 0.02, -0.01, h + 0.005, radius=0.012, segments=1)
+	bands += p.rounded_box(-w / 2 - 0.02, w / 2 + 0.02, -d / 2 - 0.02, d / 2 + 0.02, 0.0, 0.07, radius=0.015, segments=1)
+	for x in (-w / 2, w / 2):
+		for y in (-d / 2, d / 2):
+			bands += p.rounded_box(x - 0.035, x + 0.035, y - 0.035, y + 0.035, 0.0, h - 0.04, radius=0.012, segments=1)
 	p.paint(bands, metal, "MID", vary=0.05)
+	rivets(p, [(x + 0.03, -d / 2 - 0.022, z) for x in (-w / 2 + 0.1, w / 2 - 0.16) for z in (0.14, h - 0.12)], metal)
 	epi.chakana_plate(p, Vector((0, -d / 2 - 0.02, h - 0.12)), 0.2, metal)
 	p.paint(p.box(-w / 2 + 0.1, w / 2 - 0.1, -d / 2 + 0.1, d / 2 - 0.1, h - 0.07, h - 0.02), "dorado", "LIGHT", vary=0.2)
 
 
+def barrel(p, x0, x1, d, h, grow=0.0, steps=10):
+	"""Medio cilindro a lo largo de x, de y = -d (frente) a y = 0 (bisagra), alto h: la tapa abombada de los cofres."""
+	ry, rz = d / 2 + grow, h + grow
+	arc = [(-d / 2 - ry * math.cos(math.pi * i / steps), rz * math.sin(math.pi * i / steps)) for i in range(steps + 1)]
+	left = [p.bm.verts.new((x0, y, z)) for y, z in arc]
+	right = [p.bm.verts.new((x1, y, z)) for y, z in arc]
+	faces = [p.bm.faces.new((left[i], left[i + 1], right[i + 1], right[i])) for i in range(steps)]
+	faces.append(p.bm.faces.new(list(reversed(left))))
+	faces.append(p.bm.faces.new(right))
+	faces.append(p.bm.faces.new((left[0], right[0], right[-1], left[-1])))
+	return faces
+
+
 def chest_lid(p, w, d, h, wood, metal):
-	"""Tapa trapezoidal con la bisagra en el origen (arriba del borde de atrás de la base)."""
-	lid = p.box(-w / 2, w / 2, -d, 0.0, 0.0, h, taper=0.0)
-	for v in {v for f in lid for v in f.verts}:
-		if v.co.z > h / 2:
-			v.co.y = -d + 0.08 if v.co.y < -d / 2 else -0.08
-			v.co.x *= 0.92
+	"""Tapa abombada con la bisagra en el origen (arriba del borde de atrás de la base), con aros y remaches."""
+	lid = barrel(p, -w / 2, w / 2, d, h)
 	p.paint(lid, wood, z_range=(-h, h * 1.3), vary=0.05)
 	bands = []
 	for x in (-w / 2 + 0.1, w / 2 - 0.16):
-		b = p.box(x, x + 0.06, -d - 0.02, 0.02, -0.005, h * 0.5)
-		bands += b
+		bands += barrel(p, x, x + 0.06, d, h, grow=0.015)
+	for x in (-w / 2 - 0.012, w / 2 - 0.008):
+		bands += barrel(p, x, x + 0.02, d, h, grow=0.008)
 	p.paint(bands, metal, "MID", vary=0.05)
+	rivets(p, [(x + 0.03, -d - 0.016, 0.06) for x in (-w / 2 + 0.1, w / 2 - 0.16)], metal)
 	p.paint(p.box(-w / 2 + 0.07, w / 2 - 0.07, -d + 0.07, -0.07, -0.01, 0.0), "madera_oscura", "DARK")
 
 
-piece("cofre", 7, lambda p: chest_base(p, 1.0, 0.7, 0.5, "madera", "cobre_verde"))
-piece("cofre_tapa", 8, lambda p: (chest_lid(p, 1.0, 0.7, 0.3, "madera", "cobre_verde"), {"bisagra": [0.0, 0.5, -0.35]})[1])
+piece("cofre", 7, lambda p: chest_base(p, 1.0, 0.7, 0.5, "madera", "cobre_verde"), smooth=35)
+piece("cofre_tapa", 8, lambda p: (chest_lid(p, 1.0, 0.7, 0.3, "madera", "cobre_verde"), {"bisagra": [0.0, 0.5, -0.35]})[1], smooth=35)
 def arca(p, w, d, h):
 	"""Cofre grande: arca de piedra del templo, con zócalo escalonado, guardas doradas y el ojo en el frente."""
-	plinth = p.box(-w / 2 - 0.06, w / 2 + 0.06, -d / 2 - 0.06, d / 2 + 0.06, 0.0, 0.1)
-	body = p.box(-w / 2, w / 2, -d / 2, d / 2, 0.1, h - 0.06)
+	plinth = p.rounded_box(-w / 2 - 0.06, w / 2 + 0.06, -d / 2 - 0.06, d / 2 + 0.06, 0.0, 0.1, radius=0.03, segments=2)
+	body = p.rounded_box(-w / 2, w / 2, -d / 2, d / 2, 0.1, h - 0.06, radius=0.035, segments=2)
 	p.paint(plinth, "piedra_templo", "DARK", vary=0.05)
 	p.paint(body, "piedra_templo", z_range=(0, h * 1.4), vary=0.05)
 	hollow_top(p, w + 0.04, d + 0.04, h, 0.1, "dorado")
@@ -207,8 +247,8 @@ def arca(p, w, d, h):
 
 def arca_tapa(p, w, d, h):
 	"""Tapa escalonada (dos gradas), con la bisagra en el origen."""
-	low = p.box(-w / 2 - 0.02, w / 2 + 0.02, -d - 0.02, 0.02, 0.0, h * 0.5)
-	high = p.box(-w / 2 + 0.12, w / 2 - 0.12, -d + 0.12, -0.12, h * 0.5, h)
+	low = p.rounded_box(-w / 2 - 0.02, w / 2 + 0.02, -d - 0.02, 0.02, 0.0, h * 0.5, radius=0.03, segments=2)
+	high = p.rounded_box(-w / 2 + 0.12, w / 2 - 0.12, -d + 0.12, -0.12, h * 0.5, h, radius=0.03, segments=2)
 	p.paint(low + high, "piedra_templo", z_range=(-h, h * 1.4), vary=0.05)
 	p.paint(p.box(-w / 2 + 0.1, w / 2 - 0.1, -d + 0.1, -0.1, -0.01, 0.0), "piedra_templo", "DARK")
 	chakana = []
@@ -217,8 +257,8 @@ def arca_tapa(p, w, d, h):
 	p.paint(chakana, "dorado", "LIGHT")
 
 
-piece("cofre_grande", 9, lambda p: arca(p, 1.4, 0.95, 0.65))
-piece("cofre_grande_tapa", 10, lambda p: (arca_tapa(p, 1.4, 0.95, 0.35), {"bisagra": [0.0, 0.65, -0.475]})[1])
+piece("cofre_grande", 9, lambda p: arca(p, 1.4, 0.95, 0.65), smooth=35)
+piece("cofre_grande_tapa", 10, lambda p: (arca_tapa(p, 1.4, 0.95, 0.35), {"bisagra": [0.0, 0.65, -0.475]})[1], smooth=35)
 
 
 # --- llaves y objetos de mazmorra ---

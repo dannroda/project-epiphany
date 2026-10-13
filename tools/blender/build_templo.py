@@ -32,10 +32,10 @@ kit = epi.start()
 UPRIGHT = Matrix.Rotation(math.pi / 2, 4, "X")
 
 
-def piece(name, seed, fn):
+def piece(name, seed, fn, smooth=None):
 	p = epi.Piece(seed)
 	extra = fn(p)
-	obj = p.build(name, kit)
+	obj = p.build(name, kit, smooth=smooth)
 	for key, value in (extra if isinstance(extra, dict) else {}).items():
 		obj[key] = value
 	return obj
@@ -406,15 +406,16 @@ def antorcha_pared(p):
 
 
 def brasero(p):
+	"""Pedestal de tres gradas de cantos gastados y un cuenco de cobre redondo con borde y brasas."""
 	z = 0.0
 	parts = []
 	for w, h in ((0.8, 0.2), (0.55, 0.5), (0.7, 0.12)):
-		parts += p.box(-w / 2, w / 2, -w / 2, w / 2, z, z + h)
+		parts += p.rounded_box(-w / 2, w / 2, -w / 2, w / 2, z, z + h, radius=0.03, segments=2)
 		z += h
 	p.paint(parts, STONE, z_range=(0, 1.0), vary=0.05)
-	bowl = p.lathe([(0.25, z), (0.42, z + 0.18), (0.36, z + 0.2), (0.0, z + 0.1)], sides=10)
+	bowl = p.lathe([(0.2, z), (0.27, z + 0.04), (0.36, z + 0.12), (0.42, z + 0.19), (0.44, z + 0.215), (0.42, z + 0.235), (0.38, z + 0.2), (0.0, z + 0.12)], sides=20)
 	p.paint(bowl, "cobre_verde", "MID")
-	coals = p.blob((0, 0, z + 0.15), 0.3, squash=(1, 1, 0.35), subdiv=1, rough=0.3)
+	coals = p.blob((0, 0, z + 0.16), 0.3, squash=(1, 1, 0.35), subdiv=2, rough=0.3)
 	p.paint(coals, "fuego", "DARK", vary=0.1)
 	return {"llama": [0.0, z + 0.25, 0.0]}
 
@@ -506,7 +507,7 @@ def pinchos(p):
 piece("pinchos_base", 22, pinchos_base)
 piece("pinchos", 23, pinchos)
 piece("antorcha_pared", 16, antorcha_pared)
-piece("brasero", 17, brasero)
+piece("brasero", 17, brasero, smooth=40)
 piece("estandarte", 18, estandarte)
 piece("tablilla", 19, tablilla)
 piece("escombros", 20, escombros)

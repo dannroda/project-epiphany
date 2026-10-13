@@ -49,6 +49,16 @@ SWATCHES = [
 	("neon", "b8fdff", "18b8d8"),
 ]
 COLS, ROWS = 8, 4
+# Superficie de cada franja (palette_surface.png: rojo = metal, verde = rugosidad); las que no están, mate.
+SURFACE_DEFAULT = (0.0, 0.85)
+SURFACE = {
+	"hierro": (0.45, 0.35), "dorado": (0.4, 0.3), "cobre_verde": (0.3, 0.4),
+	"cristal": (0.0, 0.12), "agua": (0.0, 0.12), "neon": (0.0, 0.2),
+	"roca_naranja": (0.0, 0.45), "hueso": (0.0, 0.5), "noche": (0.0, 0.5), "tela_roja": (0.0, 0.55), "blanco": (0.0, 0.5),
+	"madera": (0.0, 0.6), "madera_oscura": (0.0, 0.6),
+	"piedra": (0.0, 0.6), "piedra_templo": (0.0, 0.55), "acantilado": (0.0, 0.6), "ladrillo": (0.0, 0.6),
+	"gris_2": (0.0, 0.6), "gris_4": (0.0, 0.6), "gris_5": (0.0, 0.6), "sello": (0.0, 0.4), "doom": (0.0, 0.4),
+}
 # Franjas que brillan solas (palette_emission.png).
 EMISSIVE = {"neon", "doom"}
 # Paletas alternativas (palette_<nombre>.png): franja → (arriba, abajo). Las usan las armaduras como material del cuerpo.

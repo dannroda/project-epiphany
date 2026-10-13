@@ -220,11 +220,15 @@ class Piece:
 
 	# --- salida ---
 
-	def build(self, name, kit, location=(0.0, 0.0, 0.0)):
+	def build(self, name, kit, location=(0.0, 0.0, 0.0), smooth=None):
+		"""smooth: ángulo en grados hasta el que las caras vecinas se sombrean suave (curvas lisas, cantos marcados)."""
 		bmesh.ops.recalc_face_normals(self.bm, faces=[f for f in self.bm.faces if f not in self.fixed])
 		mesh = bpy.data.meshes.new(name)
 		self.bm.to_mesh(mesh)
 		self.bm.free()
+		if smooth:
+			mesh.shade_smooth()
+			mesh.set_sharp_from_angle(angle=math.radians(smooth))
 		mesh.materials.append(palette.palette_material())
 		obj = bpy.data.objects.new(name, mesh)
 		obj.location = location

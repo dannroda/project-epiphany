@@ -62,6 +62,7 @@ const FIRE_OFFSET := Vector3(0, 0.3, 0.3)
 const FIRE_ENERGY := 3.5
 const FIRE_RANGE := 4.0
 const FLAME := preload("res://debug/la/llama_la.gdshader")
+const GLOSS := preload("res://debug/la/brillo_la.gd")
 const FLAME_SIZE := Vector2(0.45, 0.8)
 const DOOR_LEAF_SCALE := Vector3(0.7, 0.8, 1.0)
 ## Cámara con perspectiva como LA: la sala se ve en trapecio (abajo más ancha) y asoman las caras de los costados.
@@ -130,6 +131,11 @@ func _initialize() -> void:
 ## Antorchas a braseros sobre el borde, puertas a la medida del corte, sin los escalones viejos y la cámara casi sin perspectiva.
 func _dress(level: Node) -> void:
 	_vignette(level)
+	var gloss := Node.new()
+	gloss.name = "BrilloLA"
+	gloss.set_script(GLOSS)
+	level.add_child(gloss)
+	gloss.owner = level
 	for pot: Node in level.find_children("*", "", true, false).filter(func(n: Node) -> bool: return n.name in BIG_POTS):
 		_big_pot(level, pot as Node3D)
 	for node: Node in level.find_children("*", "", true, false):
