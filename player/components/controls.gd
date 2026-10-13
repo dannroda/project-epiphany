@@ -1,4 +1,4 @@
-extends Node
+extends RefCounted
 ## Qué acciones lee este player. Jugando solo (`shared`) son las de siempre: el teclado y cualquier control.
 ## En co-op cada player tiene sus copias `p<slot>_<acción>` con los eventos de sus dispositivos (13.2).
 

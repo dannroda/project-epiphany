@@ -323,7 +323,7 @@ func _grab(_attack: BossAttack, target: Node3D, area: Rect2) -> void:
 			var player := target as PlayerCharacter
 			if player == null:
 				continue
-			if player.blocks_from(global_position):
+			if player.shield.blocks_from(global_position):
 				Feel.sfx(&"block", global_position)
 				Feel.burst(&"sparks", global_position, Vector3.UP)
 				_grip_goal = -0.2

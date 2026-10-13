@@ -45,4 +45,4 @@ func hold_block(player: Node, on: bool) -> void:
 	else:
 		Input.action_release(action)
 	player.movement_state.blackboard.set_var("is_blocking", on)
-	player.set_guard(on)
+	player.shield.set_guard(on)

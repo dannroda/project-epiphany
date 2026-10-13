@@ -89,7 +89,7 @@ func _sync_guard() -> void:
 	var guard := player.controls.pressed(&"block") and get_active_state() in _guard_states
 	if guard != blackboard.get_var(PlayerState.BB_IS_BLOCKING, false):
 		blackboard.set_var(PlayerState.BB_IS_BLOCKING, guard)
-		player.set_guard(guard)
+		player.shield.set_guard(guard)
 
 
 ## Si el botón no tiene nada usable, avisa enseguida; si sí, espera en el buffer a que el estado lo permita.

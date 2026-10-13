@@ -14,12 +14,6 @@ signal item_denied(button: int)
 signal escaped
 
 @export var config: EntityConfig
-@export var block_angle_deg := 60.0
-@export var block_pushback := 0.3
-## Sin bloquear, el escudo en la espalda frena los proyectiles que llegan dentro de este cono.
-@export var back_shield_angle_deg := 45.0
-## Bloqueando con el haz en el escudo espejo, el stick derecho (o el mouse) gira al player (rad/s).
-@export var light_turn_speed := 2.2
 
 @onready var model: Node3D = $ModelController
 ## Lo que se ve del caído en co-op (estado Spirit).
@@ -38,13 +32,12 @@ signal escaped
 @onready var carrier: Carrier = $Carrier
 @onready var interaction_detector: InteractionDetector = $InteractionDetector
 @onready var dodge_ghosts: DodgeGhosts = $DodgeGhosts
+@onready var shield: Shield = $Shield
 ## Lo que se retoca en el inspector (duración, gradiente, material) es del nodo; el ancho y la posición se ajustan al arma.
 @onready var sword_trail: Trail3D = $ModelController/Skeleton3D/Hand_R/SwordTrail
-@onready var _block_cone: MeshInstance3D = %BlockCone
 
-var guard_tween: Tween
 ## Qué controles lee (13.2); existe desde que se instancia, así `Players` le asigna el slot antes de sumarlo.
-var controls: PlayerControls = PlayerControls.new()
+var controls := PlayerControls.new()
 ## Lo que frena el suelo (agua baja): multiplica la velocidad al caminar.
 var ground_speed := 1.0
 ## Dónde pisó suelo por última vez (los pozos lo devuelven a esa orilla).
@@ -53,7 +46,6 @@ var last_ground := Vector3.ZERO
 var is_dead: bool:
 	get:
 		return health.current <= 0
-var _light_frame := -10
 
 
 func _enter_tree() -> void:
@@ -67,8 +59,6 @@ func _exit_tree() -> void:
 func _ready() -> void:
 	add_to_group(&"player")
 	anim_tree.tree_root = anim_tree.tree_root.duplicate(true)
-	controls.name = "Controls"
-	add_child(controls)
 	_register_monitors()
 	config.apply_to(self)
 	hurtbox.team = config.team
@@ -95,7 +85,6 @@ func _ready() -> void:
 	targeting.target_changed.connect(func(target: Node3D) -> void: movement_state.blackboard.set_var(PlayerState.BB_TARGET, target))
 	movement_state.initialize(self)
 	movement_state.set_active(true)
-	_block_cone.mesh = _block_cone_mesh()
 	equipment.weapon_changed.connect(func(_item: ItemData) -> void: _fit_sword_trail())
 	_fit_sword_trail()
 
@@ -104,8 +93,6 @@ func _physics_process(delta: float) -> void:
 	movement_state.update(delta)
 	if is_on_floor():
 		last_ground = global_position
-	if is_blocking() and is_catching_light():
-		turn_towards(aim.pointed_direction(), delta)
 	_watch_debug_values()
 
 
@@ -136,7 +123,6 @@ func _fit_sword_trail() -> void:
 
 
 func _process(_delta: float) -> void:
-	_update_block_cone()
 	var trailing := attack_runner.is_active() and attack_runner.current.trail
 	if trailing != sword_trail.emitting:
 		Feel.set_trail(sword_trail, trailing)
@@ -233,11 +219,6 @@ func is_grabbed() -> bool:
 	return movement_state.get_active_state() == $MovementState/Grabbed
 
 
-## Bloqueando con escudo y de frente a `point`.
-func blocks_from(point: Vector3) -> bool:
-	return is_blocking() and shield() != null and _is_in_front(point)
-
-
 func is_blocking() -> bool:
 	return movement_state.blackboard.get_var(PlayerState.BB_IS_BLOCKING, false)
 
@@ -250,25 +231,6 @@ func current_attack() -> AttackData:
 	if weapon and weapon.behavior is MeleeBehavior:
 		return (weapon.behavior as MeleeBehavior).get_attack(0)
 	return null
-
-
-func set_guard(active: bool) -> void:
-	if guard_tween and guard_tween.is_valid():
-		guard_tween.kill()
-	guard_tween = create_tween()
-	if active:
-		_show_shield_in_hand(true)
-		guard_tween.tween_property(anim_tree, "parameters/GuardBlend/blend_amount", 1.0, 0.15)
-	else:
-		guard_tween.tween_property(anim_tree, "parameters/GuardBlend/blend_amount", 0.0, 0.15)
-		guard_tween.finished.connect(func() -> void:
-			if not is_blocking():
-				_show_shield_in_hand(false))
-
-
-func _show_shield_in_hand(in_hand: bool) -> void:
-	if equipment.shield_in_hand:
-		equipment.show_shield_in_hand(in_hand)
 
 
 func _make_damage() -> DamageInfo:
@@ -293,7 +255,7 @@ func _hurt() -> void:
 
 
 func _on_hit(info: DamageInfo) -> void:
-	if not info.unavoidable and _shield_stops(info):
+	if not info.unavoidable and shield.stops(info):
 		return
 	var amount := maxi(1, roundi(info.amount * (1.0 - equipment.damage_reduction())))
 	if not health.damage(amount, info.unavoidable):
@@ -324,154 +286,6 @@ func _on_hit_landed(target: Hurtbox) -> void:
 
 func _on_died() -> void:
 	movement_state.dispatch("die")
-
-
-## El modelo KayKit mira a +Z local.
-func _is_in_front(point: Vector3) -> bool:
-	var forward := model.global_basis.z
-	forward.y = 0.0
-	var to_point := point - global_position
-	to_point.y = 0.0
-	if to_point.is_zero_approx() or forward.is_zero_approx():
-		return true
-	return rad_to_deg(forward.angle_to(to_point)) <= block_angle_deg
-
-
-func shield() -> ItemData:
-	var id: StringName = GameState.equipment.get(ItemData.Category.SHIELD, &"")
-	return Items.get_item(id) if id != &"" else null
-
-
-func shield_reflects() -> bool:
-	var equipped := shield()
-	return equipped != null and equipped.reflects
-
-
-func shield_protects(info: DamageInfo) -> bool:
-	var equipped := shield()
-	var kind := info.element if info.element != &"" else &"physical"
-	return equipped != null and kind in equipped.protects_against
-
-
-## De frente bloqueando: el espejo refleja lo reflejable y el escudo frena lo que protege; lo demás pasa.
-## En la espalda sin bloquear: solo proyectiles; el espejo los devuelve a quien los tiró.
-func _shield_stops(info: DamageInfo) -> bool:
-	if info.source == null:
-		return false
-	var projectile := info.source as Projectile
-	if is_blocking() and _is_in_front(info.source.global_position):
-		if projectile and info.reflectable and shield_reflects():
-			_reflect(projectile, aim.get_direction(), true)
-			return true
-		if shield_protects(info):
-			_on_blocked(info)
-			return true
-		Log.debug(&"combat", "El escudo no frena", info.element)
-		Feel.burst(&"shards", global_position + model.global_basis.z * 0.6 + Vector3.UP * 1.1, model.global_basis.z)
-		return false
-	if projectile and not is_blocking() and _is_behind(projectile.global_position):
-		if info.reflectable and shield_reflects():
-			var back := projectile.shooter.global_position - global_position if is_instance_valid(projectile.shooter) else -projectile.velocity
-			_reflect(projectile, back, false)
-			return true
-		if shield_protects(info):
-			Log.debug(&"combat", "Frenado por el escudo de la espalda:", projectile.name)
-			Feel.burst(&"sparks", projectile.global_position, -projectile.velocity.normalized())
-			Feel.sfx(&"block", global_position)
-			return true
-	return false
-
-
-## El haz de luz que toca al player: el escudo espejo lo refleja como un espejo (de frente bloqueando, según
-## hacia dónde mira el player; en la espalda, rebota). Con otro escudo o sin cubrirse, el haz se corta acá (null).
-## Devuelve la nueva dirección y el punto de salida: el escudo, delante del centro del player.
-func light_hit(direction: Vector3, point: Vector3) -> Variant:
-	if not shield_reflects():
-		return null
-	var from := point - direction
-	var out: Vector3
-	if is_blocking() and _is_in_front(from):
-		_light_frame = Engine.get_physics_frames()
-		var facing := model.global_basis.z
-		facing.y = 0.0
-		out = direction.bounce(facing.normalized()).normalized()
-	elif not is_blocking() and _is_behind(from):
-		var back := -model.global_basis.z
-		back.y = 0.0
-		out = direction.bounce(back.normalized()).normalized()
-	else:
-		return null
-	var center := Vector3(global_position.x, point.y, global_position.z)
-	return {direction = out, origin = center + out * 0.6}
-
-
-## El escudo espejo está recibiendo un haz (este cuadro o el anterior).
-func is_catching_light() -> bool:
-	return Engine.get_physics_frames() - _light_frame <= 1
-
-
-## Gira el modelo hacia `direction` a velocidad constante (para apuntar el haz con precisión).
-func turn_towards(direction: Vector3, delta: float) -> void:
-	if direction.is_zero_approx():
-		return
-	var desired := atan2(direction.x, direction.z)
-	model.global_rotation.y = rotate_toward(model.global_rotation.y, desired, light_turn_speed * Settings.stick_factor() * delta)
-
-
-func _is_behind(point: Vector3) -> bool:
-	var back := -model.global_basis.z
-	back.y = 0.0
-	var to_point := point - global_position
-	to_point.y = 0.0
-	if to_point.is_zero_approx() or back.is_zero_approx():
-		return false
-	return rad_to_deg(back.angle_to(to_point)) <= back_shield_angle_deg
-
-
-## Escudo espejo: el proyectil vuelve en esa dirección y pasa a ser del player.
-func _reflect(projectile: Projectile, direction: Vector3, front: bool) -> void:
-	projectile.reflect(direction, config.team)
-	Log.debug(&"combat", "Reflejado:", projectile.name, "hacia", direction)
-	if front:
-		anim_tree.set(&"parameters/BlockHit/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
-		Feel.shake(Feel.settings.shake_block, Vector3.ZERO, controls.joypads)
-	Feel.burst(&"sparks", projectile.global_position, direction)
-	Feel.sfx(&"reflect", global_position)
-
-
-func _on_blocked(info: DamageInfo) -> void:
-	Log.debug(&"combat", "Bloqueado:", info.source.name, info.amount, "de daño")
-	anim_tree.set(&"parameters/BlockHit/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
-	var away := global_position - info.source.global_position
-	away.y = 0.0
-	if not away.is_zero_approx():
-		move_and_collide(away.normalized() * block_pushback)
-	Feel.burst(&"sparks", global_position + model.global_basis.z * 0.6 + Vector3.UP * 1.1, model.global_basis.z)
-	Feel.sfx(&"block", global_position)
-	Feel.shake(Feel.settings.shake_block, Vector3.ZERO, controls.joypads)
-
-
-## Debug: el arco donde el escudo bloquea (`block_angle_deg`).
-func _block_cone_mesh() -> Mesh:
-	var mesh := ImmediateMesh.new()
-	mesh.surface_begin(Mesh.PRIMITIVE_TRIANGLES)
-	var steps := 12
-	var half := deg_to_rad(block_angle_deg)
-	for i in steps:
-		var a := -half + 2.0 * half * i / steps
-		var b := -half + 2.0 * half * (i + 1) / steps
-		mesh.surface_add_vertex(Vector3(0, 0.05, 0))
-		mesh.surface_add_vertex(Vector3(sin(a), 0.05, cos(a)) * 1.5)
-		mesh.surface_add_vertex(Vector3(sin(b), 0.05, cos(b)) * 1.5)
-	mesh.surface_end()
-	return mesh
-
-
-func _update_block_cone() -> void:
-	_block_cone.visible = DebugOverlay.visible
-	if _block_cone.visible:
-		var color := Color(0.3, 0.8, 1.0, 0.35) if is_blocking() else Color(1, 1, 1, 0.12)
-		(_block_cone.material_override as StandardMaterial3D).albedo_color = color
 
 
 func _watch_debug_values() -> void:

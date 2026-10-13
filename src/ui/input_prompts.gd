@@ -48,7 +48,7 @@ static func icon_for_current(action: StringName) -> Texture2D:
 
 ## El de un player (co-op): con solo un control, el del control aunque el último en tocar algo haya sido el teclado.
 static func icon_for(action: StringName, player: Node) -> Texture2D:
-	var controls: Node = player.get(&"controls") if player else null
+	var controls: Variant = player.get(&"controls") if player else null
 	if controls == null:
 		return icon_for_current(action)
 	return icon(action, controls.uses_gamepad())

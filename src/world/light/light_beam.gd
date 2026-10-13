@@ -52,7 +52,7 @@ func _next_direction(collider: Object, direction: Vector3, normal: Vector3, poin
 	if collider is Node and (collider as Node).is_in_group(MIRROR_GROUP):
 		return direction.bounce(normal).normalized()
 	if collider is PlayerCharacter:
-		return collider.light_hit(direction, point)
+		return collider.shield.light_hit(direction, point)
 	return null
 
 

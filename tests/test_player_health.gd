@@ -93,7 +93,7 @@ func test_equipment_buttons_and_bottles_survive_a_round_trip() -> void:
 	var setup: Array = await _enter()
 	setup = await _enter()
 	var player: PlayerCharacter = setup[1]
-	assert_eq(player.shield().id, &"shield_mirror", "vuelve con el escudo que tenía")
+	assert_eq(player.shield.item().id, &"shield_mirror", "vuelve con el escudo que tenía")
 	assert_eq(state.item_buttons, [&"bow", &"bottle_1"] as Array[StringName], "y con los mismos botones")
 	assert_eq(player.usable_item(0).id, &"bow")
 	assert_eq(state.item_for(&"bottle_1").id, &"potion", "y la poción en su botella")

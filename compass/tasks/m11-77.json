@@ -1,19 +1,21 @@
 {
+  "assignee": "Claude",
   "checklist": [
     {
       "detail": "Como Aim y Carrier.",
-      "done": false,
+      "done": true,
       "text": "Componente Shield en player.tscn"
     },
     {
       "detail": "Quitar el add_child; input_buffer.gd lee `controls` tipado.",
-      "done": false,
+      "done": true,
       "text": "PlayerControls extiende RefCounted"
     }
   ],
   "code": "11.77",
   "created_at": "2026-10-12T00:06:01.044Z",
   "description": "player.gd tiene ~470 líneas y ~200 son del escudo (bloqueo, reflejo, escudo trasero, luz espejo, empuje). `PlayerControls.new()` + `add_child` rompe la regla de nodos en el .tscn y no usa nada de Node.",
+  "done_at": "2026-10-13T14:49:54.681Z",
   "files": [
     "player/player.gd",
     "player/player.tscn",
@@ -26,12 +28,12 @@
   "priority": "low",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "done",
   "tags": [
     "arquitectura",
     "combate"
   ],
-  "test": "El player se comporta igual (tests de escudo y controles verdes) y player.gd baja de ~300 líneas.",
+  "test": "El player se comporta igual (tests de escudo y controles verdes) y player.gd baja de ~300 líneas. player.gd: 494 → 308 líneas; test_shield › test_the_shield_is_a_component_and_controls_are_not_a_node.",
   "title": "Player: escudo como componente y PlayerControls sin nodo",
-  "updated_at": "2026-10-12T00:06:03.270Z"
+  "updated_at": "2026-10-13T14:49:54.681Z"
 }

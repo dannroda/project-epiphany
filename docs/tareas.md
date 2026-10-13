@@ -2576,7 +2576,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (65/115)
+## M11 — Pulido: contenido y feel  (66/115)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3792,18 +3792,18 @@ Claves del blackboard (`"target"`, `"is_blocking"`, `"is_hit"`, `"stunned"`, …
 
 **Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review). Claves: PlayerState.BB_* y Enemy.BB_*; acciones: PlayerCharacter.ITEM_ACTIONS; grupos: Hud/TopDownCamera/Enemy/Door/WaveSpawner/Chest.GROUP (Hud es class_name nuevo); ataques: BossAttack.SLAM… e IDS. Las etiquetas Asignar/Asignado ya no dicen X/Y: el botón va como ícono de InputPrompts.
 
-### 11.77 Player: escudo como componente y PlayerControls sin nodo · Pendiente
+### 11.77 Player: escudo como componente y PlayerControls sin nodo · Hecho
 
-**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `arquitectura`, `combate`
+**Terminada:** 2026-10-13 · **Prioridad:** baja · **Tamaño:** M · **Responsable:** Claude · **Etiquetas:** `arquitectura`, `combate`
 
 player.gd tiene ~470 líneas y ~200 son del escudo (bloqueo, reflejo, escudo trasero, luz espejo, empuje). `PlayerControls.new()` + `add_child` rompe la regla de nodos en el .tscn y no usa nada de Node.
 
-- [ ] Componente Shield en player.tscn
+- [x] Componente Shield en player.tscn
   Como Aim y Carrier.
-- [ ] PlayerControls extiende RefCounted
+- [x] PlayerControls extiende RefCounted
   Quitar el add_child; input_buffer.gd lee `controls` tipado.
 
-**Prueba:** El player se comporta igual (tests de escudo y controles verdes) y player.gd baja de ~300 líneas.
+**Prueba:** El player se comporta igual (tests de escudo y controles verdes) y player.gd baja de ~300 líneas. player.gd: 494 → 308 líneas; test_shield › test_the_shield_is_a_component_and_controls_are_not_a_node.
 
 **Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
 

@@ -44,6 +44,7 @@
 [ext_resource type="Script" path="res://player/states/dashing.gd" id="s_dashing"]
 [ext_resource type="Script" path="res://player/components/dodge_ghosts.gd" id="c_dodge_ghosts"]
 [ext_resource type="PackedScene" path="res://src/feel/afterimage.tscn" id="dodge_afterimage"]
+[ext_resource type="Script" path="res://player/components/shield.gd" id="c_shield"]
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_peicu"]
 fadeout_time = 0.3
@@ -834,6 +835,11 @@ script = ExtResource("c_dodge_ghosts")
 model = NodePath("../ModelController")
 ghost_scene = ExtResource("dodge_afterimage")
 skip = [NodePath("../ModelController/BlockCone")]
+
+[node name="Shield" type="Node" parent="." node_paths=PackedStringArray("player", "block_cone")]
+script = ExtResource("c_shield")
+player = NodePath("..")
+block_cone = NodePath("../ModelController/BlockCone")
 
 [node name="Carrier" type="Node" parent="." unique_id=1157206663 node_paths=PackedStringArray("socket", "anim_tree", "hide_while_carrying")]
 script = ExtResource("c_carrier")

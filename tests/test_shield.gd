@@ -112,3 +112,12 @@ func test_releasing_block_while_frozen_lowers_the_shield() -> void:
 	await tree.physics_frame
 	await tree.physics_frame
 	assert_eq(player.is_blocking(), false, "soltar durante un hit-stop baja el escudo")
+
+
+func test_the_shield_is_a_component_and_controls_are_not_a_node() -> void:
+	var setup: Array = await _setup(&"shield_wood")
+	var player: PlayerCharacter = setup[2]
+	assert_true(player.get_node(^"Shield") == player.shield, "el escudo es un nodo de player.tscn")
+	assert_eq(player.shield.item().id, &"shield_wood", "con el escudo equipado")
+	assert_true(player.controls is RefCounted and player.find_children("*", "", false, false).all(func(child: Node) -> bool: return child.name != &"Controls"), "los controles no son un nodo hijo")
+	setup[1].reset()

@@ -26,7 +26,7 @@ func _enter() -> void:
 	player.attack_runner.stop()
 	if player.is_blocking():
 		blackboard.set_var(BB_IS_BLOCKING, false)
-		player.set_guard(false)
+		player.shield.set_guard(false)
 	_phase = Phase.WINDUP
 	_elapsed = 0.0
 	_dust = 0.0

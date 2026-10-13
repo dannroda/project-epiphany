@@ -123,7 +123,7 @@ func test_right_stick_turns_player_while_catching_light() -> void:
 	var player: PlayerCharacter = setup[2]
 	var beam: LightBeam = setup[3]
 	await _block_and_aim_south(tree, player)
-	assert_eq(player.is_catching_light(), true, "el escudo recibe el haz")
+	assert_eq(player.shield.is_catching_light(), true, "el escudo recibe el haz")
 	var start := player.global_position
 	var before := player.model.global_basis.z
 	var stick := InputEventJoypadMotion.new()
