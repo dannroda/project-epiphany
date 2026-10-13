@@ -46,8 +46,8 @@
       "text": "Jefe Yacumama"
     },
     {
-      "detail": "Portal a levels/totora.tscn en la isla de la Laguna y SpawnPoint totora (la salida de D3 y el portal del jefe llevan ahí).",
-      "done": false,
+      "detail": "Hecho por el overworld (5e04f395): TotoraDoor en una choza provisoria de la isla de la Laguna, Spawn_totora afuera; las dos salidas de D3 vuelven ahí.",
+      "done": true,
       "text": "Entrada de D3 en el overworld (sesión del overworld)"
     },
     {
@@ -86,5 +86,5 @@
   ],
   "test": "El ítem tiene un uso en combate y abre al menos dos lugares que antes no se podían.",
   "title": "Ítem de D3: el gancho",
-  "updated_at": "2026-10-13T19:29:54.664Z"
+  "updated_at": "2026-10-13T19:52:46.609Z"
 }

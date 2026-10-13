@@ -3023,7 +3023,7 @@ Un ítem post-MVP: gancho o algo que mueva objetos a distancia (GDD §6.1), con 
   Serpiente joven: asoma por cuatro charcos a ras del piso, se lanza recta, cae sobre la totora y queda expuesta a la espada (también bombas y vasijas). Se vence sin el gancho. Hoy pelea una momia prestada (PisoBajo/AmaruFight/Amaru).
 - [ ] Jefe Yacumama
   Madre serpiente: asoma por los charcos y escupe; fase 1, el gancho a la argolla de su máscara la arrastra al piso y le pega la espada; fase 2, barrido de cola que se salta con la pluma. Hoy pelea un ojo vigía prestado (PisoBajo/BossFight/Yacumama).
-- [ ] Entrada de D3 en el overworld (sesión del overworld)
+- [x] Entrada de D3 en el overworld (sesión del overworld)
   Portal a levels/totora.tscn en la isla de la Laguna y SpawnPoint totora (la salida de D3 y el portal del jefe llevan ahí).
 - [ ] Arte: horneado LA de la totora
   Agregar totora a tools/la_walls.gd (kit propio de totora y agua) cuando arte pueda; los tests de test_totora ya son relativos a cada sala.
