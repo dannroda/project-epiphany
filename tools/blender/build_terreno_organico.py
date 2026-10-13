@@ -726,7 +726,7 @@ def rocks(levels, seed, holes=None, rail=None):
 
 def railing(p, high, level):
 	"""Pared invisible sobre el borde de la terraza, salvo donde se baja a propósito: un salto (v) arriba o la boca de una
-	escalinata (S) abajo."""
+	escalinata (S) abajo, o donde un abismo de una celda separa dos terrazas del mismo nivel (se cruza con la pluma)."""
 	z = level * TOP
 	for points, flags in high:
 		nrm = normals(points)
@@ -737,6 +737,9 @@ def railing(p, high, level):
 			mid, n = (a + b) / 2, (nrm[i] + nrm[(i + 1) % len(points)]).normalized()
 			up, down = mid - n * 0.6, mid + n * 1.0
 			if cell_at(up.x, up.y) == "v" or cell_at(down.x, down.y) == "S" or level_at(down.x, down.y) >= level:
+				continue
+			far = mid + n * (CELL + 1.0)
+			if cell_at(down.x, down.y) in "~W" and level_at(far.x, far.y) >= level:
 				continue
 			v = [p.bm.verts.new((q.x, q.y, h)) for q, h in ((a, z - 0.3), (b, z - 0.3), (b, z + RAIL), (a, z + RAIL))]
 			p.bm.faces.new(v)
