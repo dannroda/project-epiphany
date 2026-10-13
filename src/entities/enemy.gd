@@ -189,20 +189,28 @@ func _armor_stops(info: DamageInfo) -> bool:
 
 
 func _break_armor() -> void:
-	var piece := ARMOR_PIECE.instantiate() as RigidBody3D
-	get_parent().add_child(piece)
-	piece.global_transform = _armor.global_transform
-	_armor.reparent(piece)
-	piece.linear_velocity = Vector3.UP * 5.0 - facing() * 2.0
-	piece.angular_velocity = Vector3(randf_range(-6, 6), randf_range(-6, 6), randf_range(-6, 6))
-	var fade := piece.create_tween()
-	fade.tween_interval(2.5)
-	fade.tween_callback(piece.queue_free)
+	var at := _armor.global_transform
+	_armor.get_parent().remove_child(_armor)
+	_fling_armor.call_deferred(_armor, at)
 	_armor = null
 	Feel.burst(&"shards", global_position + Vector3.UP * 1.3, Vector3.UP)
 	Feel.sfx(&"boom", global_position)
 	bt_player.blackboard.set_var("stunned", true)
 	Log.debug(&"combat", name, "perdió la coraza")
+
+
+## Diferido: el golpe llega en un callback de física y acá se agrega un cuerpo nuevo.
+func _fling_armor(armor: Node3D, at: Transform3D) -> void:
+	var piece := ARMOR_PIECE.instantiate() as RigidBody3D
+	get_parent().add_child(piece)
+	piece.global_transform = at
+	piece.add_child(armor)
+	armor.transform = Transform3D.IDENTITY
+	piece.linear_velocity = Vector3.UP * 5.0 - facing() * 2.0
+	piece.angular_velocity = Vector3(randf_range(-6, 6), randf_range(-6, 6), randf_range(-6, 6))
+	var fade := piece.create_tween()
+	fade.tween_interval(2.5)
+	fade.tween_callback(piece.queue_free)
 
 
 func _on_hit(info: DamageInfo) -> void:

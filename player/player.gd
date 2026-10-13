@@ -283,6 +283,12 @@ func _on_max_health_changed(_value: int) -> void:
 	health.reset(GameState.max_health)
 
 
+## Diferido: el golpe llega en un callback de física y al lastimarse suelta lo que lleva (reparenta un cuerpo).
+func _hurt() -> void:
+	if not is_dead and not is_grabbed():
+		movement_state.dispatch("hurt")
+
+
 func _on_hit(info: DamageInfo) -> void:
 	if not info.unavoidable and _shield_stops(info):
 		return
@@ -298,7 +304,7 @@ func _on_hit(info: DamageInfo) -> void:
 		Log.info(&"combat", "El player murió:", info.source.name if info.source else "?", "le sacó", amount, "con", health.max_health, "de vida máxima")
 		return
 	if not is_grabbed():
-		movement_state.dispatch("hurt")
+		_hurt.call_deferred()
 
 
 func _on_hit_landed(target: Hurtbox) -> void:

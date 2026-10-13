@@ -23,8 +23,13 @@ func _on_body_entered(body: Node) -> void:
 		info.team = EntityConfig.Team.PLAYER
 		hurtbox.receive(info)
 	if liftable.breaks:
-		liftable.shatter()
-		queue_free()
+		_shatter.call_deferred()
 	else:
 		linear_velocity = Vector3(0.0, minf(linear_velocity.y, 0.0), 0.0)
 		angular_velocity = Vector3.ZERO
+
+
+## Fuera del callback de física: estallar reparenta el objeto.
+func _shatter() -> void:
+	liftable.shatter()
+	queue_free()

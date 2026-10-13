@@ -2576,7 +2576,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (56/114)
+## M11 — Pulido: contenido y feel  (57/114)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3640,22 +3640,22 @@ El reveal de cámara y `travel_to` ponen `paused` a mano, y `MenuStack._can_paus
 
 **Archivos:** `src/entities/boss/boss.gd`, `src/entities/boss/boss_hand.gd`
 
-### 11.69 Cambios de física dentro de callbacks · Pendiente
+### 11.69 Cambios de física dentro de callbacks · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `combate`
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `combate`
 
 Se agregan, reparentan o liberan cuerpos dentro de señales de física (durante el flush), lo que Jolt puede rechazar o aplicar un paso tarde: `enemy._break_armor` (RigidBody nuevo al romper la armadura desde `Hurtbox.hit`), `carrier.drop()` al recibir un golpe cargando algo (reparent de un RigidBody vía `_on_hit` → dispatch hurt), y `thrown_object` → `shatter()` en `body_entered`.
 
-- [ ] Diferir la armadura
+- [x] Diferir la armadura
   enemy.gd `_break_armor.call_deferred()`.
-- [ ] Diferir el golpe del player
+- [x] Diferir el golpe del player
   player.gd `_on_hit`: `movement_state.dispatch.call_deferred("hurt")` (o diferir el reparent en `Carrier._release`).
-- [ ] Diferir el estallido
+- [x] Diferir el estallido
   thrown_object.gd: `liftable.shatter.call_deferred()`.
 
-**Prueba:** Romper armadura con una bomba, recibir un golpe cargando una vasija y estrellar una vasija: sin errores ni avisos de física en la salida.
+**Prueba:** Preventivo: hoy no hay errores de flush en los logs, así que no hay test que falle sin el arreglo. Siguen pasando test_armored_skeleton, test_lift, test_bombs, test_big_pot, test_tutorial y test_player (suite completa sin fallas propias).
 
-**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+**Notas:** Sesión de bugs (-fd). Enemy: romper la coraza saca la malla del cuerpo y deja de estar acorazado en el mismo golpe (la lógica sigue inmediata); el RigidBody que vuela se crea diferido (_fling_armor). Player: el golpe pasa a Hurt en diferido (_hurt, revalida que no esté muerto ni agarrado), que es donde suelta lo que lleva. Diferir Carrier.drop() no sirve: el _release diferido soltaba lo que levantaba después. ThrownObject: estalla y se libera en diferido (_shatter).
 
 **Archivos:** `src/entities/enemy.gd`, `player/player.gd`, `player/components/carrier.gd`, `src/world/thrown_object.gd`
 
