@@ -39,14 +39,14 @@ enum State { IDLE, DRIFT, CHARGE, SWEEP, LUNGE, STUCK, DOWN, DEAD }
 @onready var health: Health = $Health
 
 var state := State.IDLE
-## La sala menos el borde, en XZ; la pone EyeFight.
+## La sala menos el borde, en XZ; la pone ArenaFight.
 var arena := Rect2()
 ## Más de 1: todo más rápido (el que queda cuando cae el otro).
 var pace := 1.0
-## () -> bool: si puede atacar ahora (EyeFight no deja que dos barran a la vez).
+## () -> bool: si puede atacar ahora (ArenaFight no deja que dos barran a la vez).
 var may_attack: Callable
 ## Los otros ojos de la pelea: no se amontona con ellos.
-var peers: Array[WatcherEye] = []
+var peers: Array = []
 var _turn := 0
 var _tweens: Array[Tween] = []
 var _sweep_from := Vector3.ZERO

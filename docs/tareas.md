@@ -3460,7 +3460,7 @@ Segunda mazmorra con pisos (y quizás sótanos) apilados en la misma escena, en 
 - [x] UI: selector de pisos
   Hecho (mockup aprobado el 2026-10-11): columna de pisos en la pestaña Mapa (MapFloorButton: código, nombre, estás acá, cofres y jefe con brújula), LT/RT o RePág/AvPág (acciones map_floor_up/down) o clic; el cursor mantiene la celda; etiqueta del piso sobre el minimapa. Tests en test_map.
 - [ ] Entrada desde el overworld
-  Falta decidir dónde está la chullpa en el overworld; el portal de salida apunta a un punto 'chullpa' que todavía no existe. Mientras, escenario de debug 'chullpa'.
+  Decidido por Daniel el 2026-10-13 (vía la sesión del overworld): la Chullpa (D1) va en los Cerros del oeste, cerca de la Cueva de las bombas, accesible desde el inicio con espada y bombas. La Arboleda pasa a ser una meseta a la que solo se entra con un salto de pluma (la Queñoa, D2, pide la pluma); la Necrópolis queda sin mazmorra. -eb lo arma en 7.10 y pone un Spawn 'chullpa' frente a la torre (el portal de salida ya apunta ahí).
 - [ ] Recorrerla (Daniel)
   Con el escenario chullpa: escaleras, caer de 1SE a la cripta y la llave en B-SO, atajo del osario cayendo desde 2NO, bomba en 2SE sobre la isla (pluma), y con la pluma el abismo, el foso de la llave del jefe, la brújula y la pieza del Mirador.
 - [x] Rehacer con la pluma como ítem
@@ -3469,7 +3469,7 @@ Segunda mazmorra con pisos (y quizás sótanos) apilados en la misma escena, en 
   Sala B-NE, hoy vacía. En chullpa_graph.tres el objetivo ch_boss_defeated pide la pluma.
 - [ ] Más enemigos y un acertijo por piso
 - [ ] Sub-jefe que guarda la pluma, sin ítems
-  11.113: sub-jefe basado en el jefe de la Chullpa que se vence sin la pluma. Con la Chullpa como D1 (2026-10-13) no hay arco: la torre del flechazo se reemplaza por un acertijo sin ítems (bombas, bloques o vasijas grandes sobre placas). Regla de Daniel (2026-10-12): pelea en una sala sin obstáculos (solo vasijas o similares), y la pluma en una sala contigua que se abre al vencer al sub-jefe; hoy la pluma está en un cofre suelto, así que hay que reacomodarlo. Base: EyeFight/WatcherEye de la Queñoa.
+  Hecho el 2026-10-13 (Daniel aprobó la propuesta). Momia Guardiana (MummyGuard, src/entities/mummy_guard/; modelo provisorio de primitivas para arte) en 2SE: se acerca a saltitos, salta alto con la sombra siguiendo al player, cae con golpe y una onda corta que se esquiva alejándose, y queda trabada para la espada, bombas o vasijas. EyeFight pasa a ArenaFight (src/world/arena_fight.gd) y sirve para cualquier peleador. Vencida, su caída rompe el piso agrietado (CrackedWall con switches: las bombas ya no lo rompen) y se cae sobre la isla de la pluma, que es la sala contigua. Acertijo previo en 2SO sin arco: la puerta a 2SE la abren una placa de peso (vasija grande de 2NO) y una placa en un nicho detrás de un muro agrietado (bomba). La llave chica de B-SO abre ahora 2NO. Grafo con guard ch_mummy_defeated (pasa las reglas del molde); test_chullpa juega el acertijo y la pelea. GDD §8b. Falta recorrerla (paso 7) y el jefe saltando (paso 9), que sería la versión grande de la momia.
 
 **Relacionadas:** 11.30 Ítem post-MVP: gancho o telequinesis
 

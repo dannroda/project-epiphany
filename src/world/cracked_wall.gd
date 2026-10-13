@@ -2,6 +2,7 @@
 class_name CrackedWall
 extends StaticBody3D
 ## Pared con grietas: solo una explosión la rompe. Queda rota entre partidas por su flag.
+## Con `switches` no la rompe una explosión sino sus interruptores (el piso que rompe un sub-jefe al caer).
 
 signal broken
 
@@ -9,6 +10,8 @@ signal broken
 	set(value):
 		flag = value
 		update_configuration_warnings()
+@export var switches: Array[NodePath] = []
+@export var condition: Wiring.Condition = Wiring.Condition.ALL
 
 @onready var wall: Node3D = %Wall
 @onready var rubble: Node3D = %Rubble
@@ -17,6 +20,7 @@ signal broken
 
 var is_broken := false
 var _persistent: PersistentFlag
+var _wiring: Wiring
 
 
 func _ready() -> void:
@@ -27,6 +31,14 @@ func _ready() -> void:
 	_persistent.flag = flag
 	_persistent.changed.connect(func(value: Variant) -> void: _show(value == true))
 	_show(_persistent.value == true)
+	if not switches.is_empty():
+		_wiring = Wiring.create(self, switches, condition)
+		_wiring.changed.connect(func(satisfied: bool) -> void:
+			if satisfied:
+				smash())
+		_wiring.settled.connect(func(satisfied: bool) -> void:
+			if satisfied:
+				_show(true))
 
 
 func _get_configuration_warnings() -> PackedStringArray:
@@ -36,9 +48,15 @@ func _get_configuration_warnings() -> PackedStringArray:
 func _on_hit(info: DamageInfo) -> void:
 	if is_broken:
 		return
-	if info.element != &"explosive":
+	if info.element != &"explosive" or not switches.is_empty():
 		Feel.burst(&"sparks", hurtbox.global_position, Vector3.UP)
 		Feel.sfx(&"hit_stone", global_position)
+		return
+	smash()
+
+
+func smash() -> void:
+	if is_broken:
 		return
 	_show(true)
 	_persistent.value = true

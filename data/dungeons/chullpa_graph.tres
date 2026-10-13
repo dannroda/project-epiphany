@@ -75,7 +75,8 @@ through = Array[NodePath]([NodePath("Sotano/BossDoor")])
 script = ExtResource("2_link")
 from = &"Rellano"
 to = &"Saltos:S"
-through = Array[NodePath]([NodePath("PisoAlto/RellanoShutter")])
+through = Array[NodePath]([NodePath("PisoAlto/SaltosLocked")])
+locked = true
 
 [sub_resource type="Resource" id="Link_14"]
 script = ExtResource("2_link")
@@ -99,8 +100,7 @@ one_way = true
 script = ExtResource("2_link")
 from = &"Rellano"
 to = &"Agrietada"
-through = Array[NodePath]([NodePath("PisoAlto/RellanoLocked")])
-locked = true
+through = Array[NodePath]([NodePath("PisoAlto/AgrietadaDoor")])
 
 [sub_resource type="Resource" id="Link_18"]
 script = ExtResource("2_link")
@@ -113,6 +113,7 @@ one_way = true
 script = ExtResource("2_link")
 from = &"Agrietada"
 to = &"Mirador:S"
+through = Array[NodePath]([NodePath("PisoAlto/MiradorDoor")])
 
 [sub_resource type="Resource" id="Link_20"]
 script = ExtResource("2_link")
@@ -163,12 +164,36 @@ node = NodePath("Sotano/Guardian")
 needs = Array[StringName]([&"feather"])
 gives = &"ch_boss_defeated"
 
+[sub_resource type="Resource" id="Spot_9"]
+script = ExtResource("3_spot")
+area = &"Saltos:S"
+node = NodePath("PisoAlto/SaltosPot")
+gives = &"ch_saltos_pot"
+
+[sub_resource type="Resource" id="Spot_10"]
+script = ExtResource("3_spot")
+area = &"Rellano"
+node = NodePath("PisoAlto/RellanoWeight")
+needs = Array[StringName]([&"ch_saltos_pot"])
+
+[sub_resource type="Resource" id="Spot_11"]
+script = ExtResource("3_spot")
+area = &"Rellano"
+node = NodePath("PisoAlto/RellanoStep")
+through = Array[NodePath]([NodePath("PisoAlto/RellanoCrackedWall")])
+
+[sub_resource type="Resource" id="Spot_12"]
+script = ExtResource("3_spot")
+area = &"Agrietada"
+node = NodePath("PisoAlto/MummyFight")
+
 [resource]
 script = ExtResource("1_graph")
 scene = "res://levels/chullpa.tscn"
 start = &"Entrada"
 goal = &"ch_boss_defeated"
 item = &"feather"
+guard = &"ch_mummy_defeated"
 brings = Array[StringName]([&"bomb_bag"])
 links = Array[ExtResource("2_link")]([SubResource("Link_1"), SubResource("Link_2"), SubResource("Link_3"), SubResource("Link_4"), SubResource("Link_5"), SubResource("Link_6"), SubResource("Link_7"), SubResource("Link_8"), SubResource("Link_9"), SubResource("Link_10"), SubResource("Link_11"), SubResource("Link_12"), SubResource("Link_13"), SubResource("Link_14"), SubResource("Link_15"), SubResource("Link_16"), SubResource("Link_17"), SubResource("Link_18"), SubResource("Link_19"), SubResource("Link_20")])
-spots = Array[ExtResource("3_spot")]([SubResource("Spot_1"), SubResource("Spot_2"), SubResource("Spot_3"), SubResource("Spot_4"), SubResource("Spot_5"), SubResource("Spot_6"), SubResource("Spot_7"), SubResource("Spot_8")])
+spots = Array[ExtResource("3_spot")]([SubResource("Spot_1"), SubResource("Spot_2"), SubResource("Spot_3"), SubResource("Spot_4"), SubResource("Spot_5"), SubResource("Spot_6"), SubResource("Spot_7"), SubResource("Spot_8"), SubResource("Spot_9"), SubResource("Spot_10"), SubResource("Spot_11"), SubResource("Spot_12")])

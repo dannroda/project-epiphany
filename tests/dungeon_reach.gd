@@ -3,7 +3,7 @@ extends RefCounted
 ## (zona, ítems y flags, llaves en mano, puertas abiertas con llave). Falla si falta algo en el grafo o si hay un
 ## estado alcanzable desde el que ya no se llega al objetivo.
 
-const COVERED := [&"Door", &"Gate", &"Bridge", &"CrackedWall", &"Chest", &"EyeSwitch", &"FloorSwitch", &"LightReceiver", &"WaveSpawner", &"EyeFight"]
+const COVERED := [&"Door", &"Gate", &"Bridge", &"CrackedWall", &"Chest", &"EyeSwitch", &"FloorSwitch", &"LightReceiver", &"WaveSpawner", &"ArenaFight"]
 const MAX_STATES := 200000
 
 
@@ -241,7 +241,7 @@ static func _lock(node: Node, problems: PackedStringArray) -> Array:
 	if node is Gate or node is Bridge:
 		return _wiring(node, problems)
 	if node is CrackedWall:
-		return [["bomb_bag"]]
+		return _wiring(node, problems) if not node.switches.is_empty() else [["bomb_bag"]]
 	return []
 
 

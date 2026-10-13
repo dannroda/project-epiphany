@@ -1,0 +1,143 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/entities/mummy_guard/mummy_guard.gd" id="1_mummy"]
+[ext_resource type="Resource" path="res://data/entities/mummy_guard.tres" id="2_config"]
+[ext_resource type="Script" path="res://src/components/health.gd" id="3_health"]
+[ext_resource type="Script" path="res://src/components/hurtbox.gd" id="4_hurtbox"]
+[ext_resource type="Script" path="res://src/components/hitbox.gd" id="5_hitbox"]
+[ext_resource type="Script" path="res://src/feel/hit_flash.gd" id="6_flash"]
+
+[sub_resource type="StandardMaterial3D" id="Cloth"]
+albedo_color = Color(0.55, 0.42, 0.28, 1)
+roughness = 1.0
+
+[sub_resource type="StandardMaterial3D" id="Rope"]
+albedo_color = Color(0.3, 0.2, 0.12, 1)
+roughness = 1.0
+
+[sub_resource type="StandardMaterial3D" id="Mask"]
+albedo_color = Color(0.85, 0.65, 0.25, 1)
+metallic = 0.6
+roughness = 0.4
+
+[sub_resource type="StandardMaterial3D" id="AimMat"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.1, 0.05, 0.02, 0.55)
+
+[sub_resource type="StandardMaterial3D" id="WaveMat"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.85, 0.7, 0.45, 0.7)
+
+[sub_resource type="CapsuleMesh" id="BundleMesh"]
+material = SubResource("Cloth")
+radius = 0.85
+height = 2.4
+
+[sub_resource type="TorusMesh" id="RopeMesh"]
+material = SubResource("Rope")
+inner_radius = 0.8
+outer_radius = 0.95
+
+[sub_resource type="SphereMesh" id="HeadMesh"]
+material = SubResource("Cloth")
+radius = 0.55
+height = 1.1
+
+[sub_resource type="BoxMesh" id="MaskMesh"]
+material = SubResource("Mask")
+size = Vector3(0.6, 0.55, 0.12)
+
+[sub_resource type="CylinderMesh" id="AimMesh"]
+material = SubResource("AimMat")
+top_radius = 1.6
+bottom_radius = 1.6
+height = 0.02
+radial_segments = 24
+rings = 1
+
+[sub_resource type="TorusMesh" id="WaveMesh"]
+material = SubResource("WaveMat")
+inner_radius = 0.92
+outer_radius = 1.0
+rings = 48
+ring_segments = 4
+
+[sub_resource type="SphereShape3D" id="ImpactShape"]
+radius = 1.7
+
+[sub_resource type="CylinderShape3D" id="HurtShape"]
+height = 3.0
+radius = 0.95
+
+[node name="MummyGuard" type="Node3D"]
+script = ExtResource("1_mummy")
+config = ExtResource("2_config")
+
+[node name="Body" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="Bundle" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+mesh = SubResource("BundleMesh")
+
+[node name="RopeLow" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("RopeMesh")
+
+[node name="RopeHigh" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(0.95, 0, 0, 0, 1, 0, 0, 0, 0.95, 0, 1.6, 0)
+mesh = SubResource("RopeMesh")
+
+[node name="Head" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.55, 0.1)
+mesh = SubResource("HeadMesh")
+
+[node name="Mask" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.55, 0.6)
+mesh = SubResource("MaskMesh")
+
+[node name="AimMark" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+top_level = true
+cast_shadow = 0
+mesh = SubResource("AimMesh")
+
+[node name="Wave" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+top_level = true
+cast_shadow = 0
+mesh = SubResource("WaveMesh")
+
+[node name="Impact" type="Area3D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 24
+monitorable = false
+script = ExtResource("5_hitbox")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Impact"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("ImpactShape")
+
+[node name="Hurtbox" type="Area3D" parent="Body"]
+unique_name_in_owner = true
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+script = ExtResource("4_hurtbox")
+surface = "stone"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body/Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("HurtShape")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("3_health")
+invulnerability_time = 0.25
+
+[node name="HitFlash" type="Node" parent="." node_paths=PackedStringArray("health", "visuals")]
+script = ExtResource("6_flash")
+health = NodePath("../Health")
+visuals = NodePath("../Body")

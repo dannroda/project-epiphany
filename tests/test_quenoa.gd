@@ -122,7 +122,7 @@ func _open_eye(eyes: Array[WatcherEye]) -> WatcherEye:
 
 func test_the_warden_gets_stuck_in_the_roots_and_falls_to_the_sword() -> void:
 	await _start()
-	var fight := level.get_node(^"PisoCopa/WardenFight") as EyeFight
+	var fight := level.get_node(^"PisoCopa/WardenFight") as ArenaFight
 	var warden := fight.get_node(^"Warden") as WatcherEye
 	var entry := level.get_node(^"PisoCopa/CopaLocked") as Door
 	var bow_door := level.get_node(^"PisoCopa/ArcoDoor") as Door
@@ -159,7 +159,7 @@ func test_leaving_the_lair_resets_the_fight() -> void:
 
 func test_an_arrow_drops_an_open_eye_for_the_sword() -> void:
 	await _start()
-	var fight := level.get_node(^"PisoRaices/BossFight") as EyeFight
+	var fight := level.get_node(^"PisoRaices/BossFight") as ArenaFight
 	var eyes: Array[WatcherEye] = [fight.get_node(^"EyeWest"), fight.get_node(^"EyeEast")]
 	for eye in eyes:
 		eye.rest_time = 0.1

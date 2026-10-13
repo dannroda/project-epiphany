@@ -1,9 +1,10 @@
-class_name EyeFight
+class_name ArenaFight
 extends Node3D
-## Pelea con ojos vigía (D1). Sus hijos WatcherEye pelean dentro de la sala: al entrar el player se cierran las
-## puertas, la cámara muestra al primer ojo con el nombre y arranca, con la barra del HUD. De a un ojo barre por vez;
-## cuando cae uno, los demás se apuran. Si el player sale de la sala, la pelea vuelve a empezar.
-## Hace de interruptor (`active`/`activated`) para lo que se abre al ganar; con flag, ganada queda ganada.
+## Pelea de sub-jefe o jefe en una sala. Sus hijos pelean dentro de ella (WatcherEye, MummyGuard: los que tienen
+## `attack_finished`): al entrar el player se cierran las puertas, la cámara muestra al primero con el nombre y arranca,
+## con la barra del HUD. De a uno ataca por vez; cuando cae uno, los demás se apuran. Si el player sale de la sala,
+## la pelea vuelve a empezar. Hace de interruptor (`active`/`activated`) para lo que se abre al ganar; con flag,
+## ganada queda ganada.
 
 signal activated
 signal bar_changed
@@ -30,15 +31,15 @@ const SKIP_ACTIONS: Array[StringName] = [&"ui_accept", &"attack", &"interact"]
 var active := false
 var started := false
 var in_intro := false
-var _eyes: Array[WatcherEye] = []
-var _attacker: WatcherEye
+var _fighters: Array = []
+var _attacker = null
 var _persistent: PersistentFlag
 
 
 func _ready() -> void:
 	for child in get_children():
-		if child is WatcherEye:
-			_eyes.append(child)
+		if child.has_signal(&"attack_finished"):
+			_fighters.append(child)
 	if reward:
 		remove_child(reward)
 	_persistent = $PersistentFlag
@@ -47,13 +48,13 @@ func _ready() -> void:
 		_already_won()
 		return
 	var bounds := room.bounds().grow(-arena_margin)
-	for eye in _eyes:
-		eye.arena = bounds
-		eye.may_attack = _may_attack
-		eye.peers = _eyes
-		eye.attack_finished.connect(_on_attack_finished.bind(eye))
-		eye.defeated.connect(_on_eye_defeated)
-		eye.health_changed.connect(bar_changed.emit)
+	for fighter in _fighters:
+		fighter.arena = bounds
+		fighter.may_attack = _may_attack
+		fighter.peers = _fighters
+		fighter.attack_finished.connect(_on_attack_finished.bind(fighter))
+		fighter.defeated.connect(_on_defeated)
+		fighter.health_changed.connect(bar_changed.emit)
 	room.player_entered.connect(func(_room: Room) -> void: _begin())
 	room.player_left.connect(func(_room: Room) -> void: _reset())
 
@@ -73,18 +74,18 @@ func _begin() -> void:
 		door.close()
 	in_intro = true
 	Music.boss_fight = true
-	await TopDownCamera.reveal(_eyes[0].body, _awaken, intro_hold)
+	await TopDownCamera.reveal(_fighters[0].body, _awaken, intro_hold)
 	in_intro = false
 	if not started:
 		return
 	get_tree().call_group(&"hud", &"show_boss", self)
-	for eye in _eyes:
-		eye.start()
+	for fighter in _fighters:
+		fighter.start()
 
 
 func _awaken() -> void:
 	get_tree().call_group(&"hud", &"show_area_name", tr(display_name))
-	Feel.sfx(&"rumble", _eyes[0].body.global_position)
+	Feel.sfx(&"rumble", _fighters[0].body.global_position)
 	Feel.shake(0.35)
 
 
@@ -106,29 +107,29 @@ func _reset() -> void:
 	_attacker = null
 	Music.boss_fight = false
 	get_tree().call_group(&"hud", &"hide_boss")
-	for eye in _eyes:
-		eye.reset()
+	for fighter in _fighters:
+		fighter.reset()
 	for door in doors:
 		door.open(false)
 
 
-func _may_attack(eye: WatcherEye) -> bool:
-	if is_instance_valid(_attacker) and _attacker != eye and not _attacker.is_dead:
+func _may_attack(fighter) -> bool:
+	if is_instance_valid(_attacker) and _attacker != fighter and not _attacker.is_dead:
 		return false
-	_attacker = eye
+	_attacker = fighter
 	return true
 
 
-func _on_attack_finished(eye: WatcherEye) -> void:
-	if _attacker == eye:
+func _on_attack_finished(fighter) -> void:
+	if _attacker == fighter:
 		_attacker = null
 
 
-func _on_eye_defeated(_eye: WatcherEye) -> void:
+func _on_defeated(_fighter) -> void:
 	bar_changed.emit()
-	var left := _eyes.filter(func(eye: WatcherEye) -> bool: return not eye.is_dead)
-	for eye: WatcherEye in left:
-		eye.pace = enrage_pace
+	var left := _fighters.filter(func(fighter) -> bool: return not fighter.is_dead)
+	for fighter in left:
+		fighter.pace = enrage_pace
 	if left.is_empty():
 		await get_tree().create_timer(1.2, false).timeout
 		_win(true)
@@ -151,8 +152,8 @@ func _win(announce: bool) -> void:
 
 func _already_won() -> void:
 	active = true
-	for eye in _eyes:
-		eye.queue_free()
+	for fighter in _fighters:
+		fighter.queue_free()
 	_show_reward()
 
 
@@ -163,13 +164,13 @@ func _show_reward() -> void:
 	reward.collected.connect(func() -> void: GameState.set_flag(reward_flag, true))
 
 
-## Barra del HUD: la vida que les queda a todos los ojos.
+## Barra del HUD: la vida que les queda a todos.
 func bar_fraction() -> float:
 	var total := 0
 	var left := 0
-	for eye in _eyes:
-		total += eye.health.max_health
-		left += maxi(eye.health.current, 0)
+	for fighter in _fighters:
+		total += fighter.health.max_health
+		left += maxi(fighter.health.current, 0)
 	return float(left) / maxf(total, 1)
 
 

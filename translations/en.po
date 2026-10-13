@@ -822,6 +822,9 @@ msgstr "Heart of the Tree"
 msgid "BOSS_QV_WARDEN"
 msgstr "The Watcher Eye"
 
+msgid "BOSS_CH_MUMMY"
+msgstr "The Mummy Guardian"
+
 msgid "BOSS_QV_EYES"
 msgstr "Eyes of the Queñoa"
 

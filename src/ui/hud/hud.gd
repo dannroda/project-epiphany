@@ -37,7 +37,7 @@ var prompt_text: Label:
 var _area_tween: Tween
 var _dungeon: DungeonState
 var _saved_tween: Tween
-## Boss o EyeFight: display_name, bar_changed, bar_fraction() y phase().
+## Boss o ArenaFight: display_name, bar_changed, bar_fraction() y phase().
 var _boss: Node
 var _boss_tween: Tween
 

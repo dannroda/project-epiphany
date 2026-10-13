@@ -92,20 +92,67 @@ func test_crypt_ladder_only_goes_up_to_the_entrance() -> void:
 	tree.root.get_node(^"GameState").reset()
 
 
-func test_bombed_floor_drops_onto_the_island() -> void:
-	await _start()
-	var cracked := level.get_node(^"PisoAlto/CrackedFloor") as CrackedWall
-	await _drop(Vector3(36, 8.5, 26))
-	assert_eq(camera.room, _room("PisoAlto/Agrietada"), "el piso agrietado aguanta")
+func _until(condition: Callable, seconds := 15.0) -> bool:
+	var until := Time.get_ticks_msec() + int(seconds * 1000)
+	while Time.get_ticks_msec() < until:
+		if condition.call():
+			return true
+		await tree.physics_frame
+	return false
+
+
+func _explode(at: Vector3) -> void:
 	var explosion := (load("res://src/items/bomb/explosion.tscn") as PackedScene).instantiate() as Node3D
 	level.add_child(explosion)
-	explosion.global_position = Vector3(36, 8.3, 27)
-	player.global_position = Vector3(28, 8.5, 18)
+	explosion.global_position = at
 	await tree.create_timer(0.6).timeout
-	assert_true(cracked.is_broken, "la bomba lo rompe")
+
+
+func test_the_pot_and_the_niche_open_the_mummy_room() -> void:
+	await _start()
+	var door := level.get_node(^"PisoAlto/AgrietadaDoor") as Door
+	var weight := level.get_node(^"PisoAlto/RellanoWeight") as FloorSwitch
+	var step := level.get_node(^"PisoAlto/RellanoStep") as FloorSwitch
+	var wall := level.get_node(^"PisoAlto/RellanoCrackedWall") as CrackedWall
+	var pot := level.get_node(^"PisoAlto/SaltosPot") as BigPot
+	await _drop(Vector3(12, 8.5, 24))
+	assert_true(not door.is_open, "la puerta a la sala agrietada está cerrada")
+	pot.global_position = weight.global_position
+	assert_true(await _until(func() -> bool: return weight.active, 2.0), "la vasija grande aprieta la placa de peso")
+	assert_true(not door.is_open, "con una sola placa sigue cerrada")
+	player.global_position = Vector3(4, 8.5, 26)
+	await _explode(Vector3(1, 8.3, 26))
+	assert_true(wall.is_broken, "la bomba abre el nicho")
+	player.global_position = Vector3(-2, 8.5, 26)
+	assert_true(await _until(func() -> bool: return step.active, 2.0), "pisar la placa del nicho")
+	assert_true(await _until(func() -> bool: return door.is_open, 8.0), "las dos placas abren la puerta")
+	tree.root.get_node(^"GameState").reset()
+
+
+func test_the_mummy_guardian_breaks_the_floor_onto_the_feather() -> void:
+	await _start()
+	var fight := level.get_node(^"PisoAlto/MummyFight") as ArenaFight
+	var mummy := fight.get_node(^"Mummy") as MummyGuard
+	var cracked := level.get_node(^"PisoAlto/CrackedFloor") as CrackedWall
+	player.health.reset(40)
+	await _drop(Vector3(44, 8.5, 30))
+	assert_eq(camera.room, _room("PisoAlto/Agrietada"))
+	await _explode(Vector3(36, 8.3, 27))
+	assert_true(not cracked.is_broken, "la bomba ya no rompe el piso")
+	assert_true(await _until(func() -> bool: return mummy.state != MummyGuard.State.IDLE), "arranca la pelea")
+	assert_true(not (level.get_node(^"PisoAlto/MiradorDoor") as Door).is_open, "se cierra la puerta al mirador")
+	mummy.hurtbox.receive(DamageInfo.make(2, 0.0, player))
+	assert_eq(mummy.health.current, mummy.health.max_health, "sin trabarse, la espada rebota")
+	assert_true(await _until(func() -> bool: return mummy.state == MummyGuard.State.STUCK, 20.0), "cae y queda trabada")
+	while not mummy.is_dead and mummy.is_vulnerable():
+		mummy.hurtbox.receive(DamageInfo.make(2, 0.0, player))
+		await tree.create_timer(0.3).timeout
+	assert_true(mummy.is_dead, "trabada, la espada la vence sin ítems")
+	assert_true(await _until(func() -> bool: return fight.active), "pelea ganada")
+	assert_true(cracked.is_broken, "al caer rompe el piso")
 	await _drop(Vector3(36, 8.5, 26))
 	assert_eq(camera.room, _room("PlantaBaja/SalaCofre"), "y se cae a la sala del cofre")
-	assert_true(absf(player.global_position.y) < 0.5 and Vector2(player.global_position.x, player.global_position.z).distance_to(Vector2(36, 25)) < 1.5, "sobre la isla del cofre (%s)" % player.global_position.snappedf(0.1))
+	assert_true(absf(player.global_position.y) < 0.5 and Vector2(player.global_position.x, player.global_position.z).distance_to(Vector2(36, 25)) < 1.5, "sobre la isla de la pluma (%s)" % player.global_position.snappedf(0.1))
 	tree.root.get_node(^"GameState").reset()
 
 
