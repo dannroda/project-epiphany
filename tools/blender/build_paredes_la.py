@@ -200,7 +200,7 @@ def piece(kind, code, cut=None):
 			shade(p, f, STONE, rock_tone(c, sides, kind))
 	p.paint(crest, LEAF, "DARK", vary=0.08)
 	hedge(p, xs, ys, h)
-	if cut == "paso":
+	if cut:
 		for side in sides:
 			sill(p, side)
 	p.build("%s_la_%s" % (kind, code), kit)
