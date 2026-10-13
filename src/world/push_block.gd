@@ -20,7 +20,7 @@ const MASK := 1 | 4 | 8
 ## Cuánto hay que empujar contra el bloque antes de que se mueva.
 @export var push_delay := 0.3
 
-@onready var interactable: Interactable = $Interactable
+@onready var interactable: Interactable = get_node_or_null(^"Interactable")
 @onready var shape: CollisionShape3D = $CollisionShape3D
 
 var moving := false
@@ -31,9 +31,10 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 	_start = global_position
-	interactable.interacted.connect(func(by: PlayerCharacter) -> void:
-		var facing := by.model.global_basis.z
-		try_push(PushBlock.axis(facing)))
+	if interactable:
+		interactable.interacted.connect(func(by: PlayerCharacter) -> void:
+			var facing := by.model.global_basis.z
+			try_push(PushBlock.axis(facing)))
 	if room == null:
 		for node in get_tree().get_nodes_in_group(Room.GROUP):
 			if (node as Room).contains(global_position):
@@ -61,16 +62,9 @@ func is_solved() -> bool:
 
 func can_move(direction: Vector3) -> bool:
 	var target := global_position + direction * CELL
-	var box := BoxShape3D.new()
-	box.size = (shape.shape as BoxShape3D).size * 0.9
-	var query := PhysicsShapeQueryParameters3D.new()
-	query.shape = box
-	query.transform = Transform3D(Basis.IDENTITY, target + shape.position + Vector3.UP * 0.1)
-	query.collision_mask = MASK
-	query.exclude = [get_rid()]
-	var space := get_world_3d().direct_space_state
-	if not space.intersect_shape(query, 1).is_empty():
+	if not fits(target):
 		return false
+	var space := get_world_3d().direct_space_state
 	# Las paredes CSG son mallas: la caja no las detecta, un rayo sí.
 	var half := (shape.shape as BoxShape3D).size.x / 2.0
 	var side := Vector3.UP.cross(direction).normalized()
@@ -80,8 +74,24 @@ func can_move(direction: Vector3) -> bool:
 			var ray := PhysicsRayQueryParameters3D.create(from, from + direction * (CELL + half - 0.05), MASK, [get_rid()])
 			if not space.intersect_ray(ray).is_empty():
 				return false
+	return has_floor(target)
+
+
+## Nada sólido en el lugar que ocuparía en `target`.
+func fits(target: Vector3, exclude: Array = []) -> bool:
+	var box := BoxShape3D.new()
+	box.size = (shape.shape as BoxShape3D).size * 0.9
+	var query := PhysicsShapeQueryParameters3D.new()
+	query.shape = box
+	query.transform = Transform3D(Basis.IDENTITY, target + shape.position + Vector3.UP * 0.1)
+	query.collision_mask = MASK
+	query.exclude = [get_rid()] + exclude
+	return get_world_3d().direct_space_state.intersect_shape(query, 1).is_empty()
+
+
+func has_floor(target: Vector3) -> bool:
 	var floor_ray := PhysicsRayQueryParameters3D.create(target + Vector3.UP * 0.5, target + Vector3.DOWN * 0.5, 1, [get_rid()])
-	return not space.intersect_ray(floor_ray).is_empty()
+	return not get_world_3d().direct_space_state.intersect_ray(floor_ray).is_empty()
 
 
 func try_push(direction: Vector3) -> bool:

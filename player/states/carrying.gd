@@ -1,6 +1,6 @@
 extends PlayerState
 ## Lleva algo levantado (Liftable) sobre la cabeza: camina más lento; interactuar o atacar lo tira hacia adelante (o al
-## objetivo fijado), rodar o recibir un golpe lo suelta.
+## objetivo fijado), o lo apoya si el Liftable lo pide y no hay dirección; rodar o recibir un golpe lo suelta.
 
 const CARRY_SPEED := 3.0
 const THROW_DISTANCE := 4.5
@@ -50,14 +50,28 @@ func _update(delta: float) -> void:
 		var buffer := player.input_buffer
 		if player.controls.just_pressed(&"interact") or buffer.has(&"attack"):
 			buffer.consume(&"attack")
-			_thrown_at = _elapsed
-			player.carrier.start_throw()
+			if _body.liftable.sets_down and direction.is_zero_approx():
+				_set_down()
+			else:
+				_thrown_at = _elapsed
+				player.carrier.start_throw()
 
 
 func _exit() -> void:
 	if player.carrier.is_carrying():
 		_body.flying = true
 	player.carrier.drop()
+
+
+func _set_down() -> void:
+	var liftable := _body.liftable
+	var spot: Vector3 = liftable.target.drop_spot(player.global_position, player.model.global_basis.z, [player.get_rid()])
+	if spot == Vector3.INF:
+		Feel.sfx(&"deny", player.global_position)
+		return
+	player.carrier.drop()
+	liftable.put_down(spot)
+	dispatch("finished")
 
 
 func _throw_point() -> Vector3:

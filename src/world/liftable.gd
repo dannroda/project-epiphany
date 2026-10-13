@@ -11,6 +11,8 @@ const THROWN_OBJECT := preload("res://src/world/thrown_object.tscn")
 @export var body_radius := 0.3
 ## Del pie del objeto al centro del cuerpo físico.
 @export var body_height := 0.35
+## Con las manos quietas, interactuar lo apoya en el piso de adelante en vez de tirarlo (el objeto da `drop_spot`).
+@export var sets_down := false
 ## Contorno sobre el objeto mientras algún player lo tiene al alcance.
 @export var highlight: Material = preload("res://src/world/liftable_outline.tres")
 
@@ -44,6 +46,8 @@ func make_body() -> ThrownObject:
 	var scene := target.get_tree().current_scene
 	scene.add_child(body)
 	body.global_position = target.global_position + Vector3.UP * body_height
+	if target.has_method(&"lift_off"):
+		target.lift_off()
 	target.reparent(body)
 	for solid in target.find_children("*", "StaticBody3D", true, false):
 		(solid as StaticBody3D).process_mode = Node.PROCESS_MODE_DISABLED
@@ -52,6 +56,16 @@ func make_body() -> ThrownObject:
 
 ## Vuelve a la escena antes de romperse, así lo que suelta no se va con el cuerpo.
 func shatter() -> void:
-	if target is Breakable:
+	if target.has_method(&"smash"):
 		target.reparent(target.get_tree().current_scene)
 		target.smash()
+
+
+## Lo deja en `spot` y el cuerpo físico se va: el objeto vuelve a ser lo que era antes de levantarlo.
+func put_down(spot: Vector3) -> void:
+	var body := target.get_parent() as ThrownObject
+	target.reparent(target.get_tree().current_scene)
+	target.set_down()
+	target.global_transform = Transform3D(Basis.IDENTITY, spot)
+	if body:
+		body.queue_free()
