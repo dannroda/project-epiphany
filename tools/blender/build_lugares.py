@@ -642,6 +642,59 @@ def monolito(p):
 	p.paint(relief, "piedra", "DARK")
 
 
+# --- necrópolis ---
+
+CHULLPA_BODY = 2.9
+CHULLPA_BOTTOM = 0.9
+CHULLPA_TOP = 1.15
+CHULLPA_COURSES = 8
+CHULLPA_DOOR = (0.32, 0.7)
+
+
+def chullpa_radius(z):
+	return CHULLPA_BOTTOM + (CHULLPA_TOP - CHULLPA_BOTTOM) * z / CHULLPA_BODY
+
+
+def chullpa_tumba(p):
+	"""Chullpa de Sillustani: torre de piedras labradas en hileras que se ensancha hacia arriba, cornisa, cúpula baja
+	y la puerta chica a ras del piso mirando al frente. Origen en el centro de la base."""
+	core = p.lathe([(CHULLPA_BOTTOM - 0.06, 0.0), (CHULLPA_TOP - 0.06, CHULLPA_BODY)], sides=20)
+	p.paint(core, "acantilado", "DARK")
+	h = CHULLPA_BODY / CHULLPA_COURSES
+	for k in range(CHULLPA_COURSES):
+		z0, z1 = k * h, (k + 1) * h
+		r = chullpa_radius((z0 + z1) / 2)
+		n = max(8, round(2 * math.pi * r / 0.68))
+		step = 2 * math.pi / n
+		phase = step / 2 if k % 2 else 0.0
+		for i in range(n):
+			a = phase + i * step
+			if abs(math.remainder(a, 2 * math.pi)) < CHULLPA_DOOR[0] / r + step / 2 and z0 < CHULLPA_DOOR[1]:
+				continue
+			w = 2 * r * math.sin(step / 2) - 0.04
+			out = p.rng.uniform(0.0, 0.03)
+			block = p.rounded_box(-w / 2, w / 2, -r - out, -r + 0.3, z0 + 0.02, z1 - 0.02, radius=0.06, segments=2)
+			p.paint(block, "piedra", "MID", z_range=(0.0, CHULLPA_BODY + 0.6), vary=0.08)
+			p.transform(block, Matrix.Rotation(a, 4, "Z"))
+	door = p.box(-CHULLPA_DOOR[0], CHULLPA_DOOR[0], -CHULLPA_BOTTOM - 0.02, -CHULLPA_BOTTOM + 0.4, 0.0, CHULLPA_DOOR[1], taper=0.06)
+	p.paint(door, "noche", "MID")
+	lintel = p.rounded_box(-CHULLPA_DOOR[0] - 0.12, CHULLPA_DOOR[0] + 0.12, -chullpa_radius(0.8) - 0.06, -chullpa_radius(0.8) + 0.3,
+			CHULLPA_DOOR[1], CHULLPA_DOOR[1] + 0.18, radius=0.04, segments=2)
+	p.paint(lintel, "piedra", "LIGHT", vary=0.05)
+	cornice = p.lathe([(CHULLPA_TOP - 0.05, CHULLPA_BODY - 0.02), (CHULLPA_TOP + 0.08, CHULLPA_BODY), (CHULLPA_TOP + 0.1, CHULLPA_BODY + 0.16),
+			(CHULLPA_TOP - 0.02, CHULLPA_BODY + 0.18)], sides=24)
+	p.paint(cornice, "piedra", "LIGHT", vary=0.04)
+	dome = p.lathe([(CHULLPA_TOP - 0.04, CHULLPA_BODY + 0.16), (CHULLPA_TOP - 0.1, CHULLPA_BODY + 0.42), (0.85, CHULLPA_BODY + 0.72),
+			(0.5, CHULLPA_BODY + 0.9), (0.0, CHULLPA_BODY + 0.97)], sides=24)
+	p.paint(dome, "acantilado", "GRADIENT", z_range=(CHULLPA_BODY, CHULLPA_BODY + 1.0), vary=0.05)
+	for i in range(7):
+		a = p.rng.uniform(0, 2 * math.pi)
+		r = CHULLPA_BOTTOM + 0.05
+		tuft = p.blob((r * math.cos(a), r * math.sin(a), 0.05), p.rng.uniform(0.12, 0.2), squash=(1.3, 1.3, 0.6), subdiv=1, rough=0.25)
+		p.paint(tuft, "musgo", "MID")
+
+
+piece("chullpa_tumba", 38, chullpa_tumba, smooth=40)
 piece("fachada_templo", 21, fachada_templo, smooth=60)
 piece("sello_losa", 22, sello_losa)
 piece("sello_ojo", 23, sello_ojo)
