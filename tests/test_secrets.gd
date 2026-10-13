@@ -82,7 +82,6 @@ func test_find_the_secrets_with_everything() -> void:
 	assert_eq(hills.is_broken, true, "la grieta de los Cerros se abre")
 	assert_true(level.get_node(^"HeartPieceHills").global_position.distance_to(hills.global_position) < 3.0, "y detrás está la pieza de corazón")
 
-	var grove_gate := level.get_node(^"GroveGate") as Gate
 	var block_a := level.get_node(^"GroveBlockA") as PushBlock
 	var block_b := level.get_node(^"GroveBlockB") as PushBlock
 	player.global_position = block_a.global_position + Vector3(4, 0, -4)
@@ -91,9 +90,9 @@ func test_find_the_secrets_with_everything() -> void:
 		assert_true(push[0].try_push(push[1]), "%s avanza hacia %s" % [push[0].name, push[1]])
 		await tree.create_timer(0.6).timeout
 	await tree.create_timer(0.6).timeout
-	assert_eq(grove_gate.is_open, true, "los dos bloques en sus interruptores abren la reja")
+	assert_eq((level.get_node(^"GroveChest") as Chest).visible, true, "los dos bloques en sus interruptores traen el cofre")
 	await _open_chest(tree, level.get_node(^"GroveChest"), player)
-	assert_eq(state.inventory.has(&"armor_chainmail"), true, "la reja guarda la cota")
+	assert_eq(state.inventory.has(&"armor_chainmail"), true, "el cofre guarda la cota")
 	assert_eq(state.equipment[ItemData.Category.ARMOR], &"tunic", "la cota no se equipa sola: hay que ir a Equipo")
 
 	var eye := level.get_node(^"CliffEye") as EyeSwitch

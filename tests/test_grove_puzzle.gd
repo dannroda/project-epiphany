@@ -37,7 +37,7 @@ func _push_until(tree: SceneTree, action: StringName, done: Callable) -> void:
 		await tree.physics_frame
 
 
-func test_stepping_on_the_plates_does_not_open_the_gate() -> void:
+func test_stepping_on_the_plates_does_not_bring_the_chest() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state: Node = tree.root.get_node(^"GameState")
 	state.reset()
@@ -45,18 +45,18 @@ func test_stepping_on_the_plates_does_not_open_the_gate() -> void:
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	var a := level.get_node(^"GroveSwitchA") as FloorSwitch
 	var b := level.get_node(^"GroveSwitchB") as FloorSwitch
-	var gate := level.get_node(^"GroveGate") as Gate
+	var chest := level.get_node(^"GroveChest") as Chest
 	await _stand(tree, player, a.global_position)
 	assert_true(not a.active, "el player no la baja: solo un bloque")
 	await _stand(tree, player, b.global_position)
 	assert_true(not b.active, "ni la otra")
 	await _stand(tree, player, b.global_position + Vector3(0, 0, 3))
-	assert_true(not gate.is_open, "pisar las dos placas no abre la reja")
+	assert_true(not chest.visible, "pisar las dos placas no trae el cofre")
 	assert_true(not state.get_flag(&"ow_grove_switch_a") and not state.get_flag(&"ow_grove_switch_b"), "ni queda resuelto")
 	state.reset()
 
 
-func test_pushing_the_blocks_onto_the_plates_opens_the_gate_and_they_stay() -> void:
+func test_pushing_the_blocks_onto_the_plates_brings_the_chest_and_they_stay() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state: Node = tree.root.get_node(^"GameState")
 	state.reset()
@@ -78,10 +78,9 @@ func test_pushing_the_blocks_onto_the_plates_opens_the_gate_and_they_stay() -> v
 		assert_true(block.global_position.distance_to(target) < 0.05, "%s llega empujando a %s (quedó en %s)" % [block.name, target, block.global_position])
 	for i in 6:
 		await tree.physics_frame
-	var gate := level.get_node(^"GroveGate") as Gate
-	assert_true(gate.is_open, "con un bloque en cada placa se abre")
+	assert_true((level.get_node(^"GroveChest") as Chest).visible, "con un bloque en cada placa aparece el cofre")
 	level = await _enter()
-	assert_true((level.get_node(^"GroveGate") as Gate).is_open, "y sigue abierta al volver")
+	assert_true((level.get_node(^"GroveChest") as Chest).visible, "y sigue ahí al volver")
 	for pair in [[^"GroveBlockA", ^"GroveSwitchA"], [^"GroveBlockB", ^"GroveSwitchB"]]:
 		var block := level.get_node(pair[0] as NodePath) as Node3D
 		var plate := level.get_node(pair[1] as NodePath) as Node3D

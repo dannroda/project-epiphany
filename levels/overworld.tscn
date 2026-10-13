@@ -1143,15 +1143,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 0.5, -5.5)
 [node name="Box2" parent="." unique_id=982436721 instance=ExtResource("9_axpip")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49, 0.5, -5.5)
 
-[node name="Box3" parent="." unique_id=1271472787 instance=ExtResource("9_axpip")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.5, -2)
-
-[node name="Box4" parent="." unique_id=1381097841 instance=ExtResource("9_axpip")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 0.5, -1)
-
-[node name="Rock3" parent="." unique_id=375734465 instance=ExtResource("10_vrnmo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0.6, 4)
-
 [node name="CloudShadows" type="Node" parent="." unique_id=1184443777]
 script = ExtResource("92_clouds")
 
@@ -1255,14 +1246,11 @@ flag = &"ow_start_lift_switch"
 [node name="LiftStone" parent="." unique_id=1753049093 instance=ExtResource("42_stone")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58, 0, 26)
 
-[node name="LiftGate" parent="." unique_id=1692030268 instance=ExtResource("26_iip2e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52, 0, 18)
-switches = Array[NodePath]([NodePath("../LiftSwitch")])
-
 [node name="LiftChest" parent="." unique_id=388282977 instance=ExtResource("15_3hrjb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52, 0, 16.8)
 item = ExtResource("33_yqe63")
 flag = &"ow_start_lift_chest"
+switches = Array[NodePath]([NodePath("../LiftSwitch")])
 
 [node name="MeadowTablet" parent="." unique_id=1108411487 instance=ExtResource("18_gsck2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0, -5)
@@ -1302,15 +1290,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0, 2)
 solved_flag = &"ow_grove_switch_b"
 solved_position = Vector3(-31, 0, 4)
 
-[node name="GroveGate" parent="." unique_id=919868571 instance=ExtResource("26_iip2e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0, -2)
-switches = Array[NodePath]([NodePath("../GroveSwitchA"), NodePath("../GroveSwitchB")])
-depth = 2.0
-
 [node name="GroveChest" parent="." unique_id=964683035 instance=ExtResource("15_3hrjb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0, -5)
 item = ExtResource("38_khlv8")
 flag = &"ow_grove_chest"
+switches = Array[NodePath]([NodePath("../GroveSwitchA"), NodePath("../GroveSwitchB")])
 
 [node name="CliffEye" parent="." unique_id=953284347 instance=ExtResource("39_ailnf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 5.2, -32.4)

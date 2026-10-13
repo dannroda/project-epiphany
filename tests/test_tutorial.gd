@@ -43,7 +43,7 @@ func test_tablets_in_the_clearing_have_their_cues() -> void:
 		assert_true(line != null and line.text.contains("{btn:"), "%s trae botones" % cue)
 
 
-func test_throwing_the_stone_on_the_plate_opens_the_niche() -> void:
+func test_throwing_the_stone_on_the_plate_brings_the_chest() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state: Node = tree.root.get_node(^"GameState")
 	state.reset()
@@ -55,7 +55,8 @@ func test_throwing_the_stone_on_the_plate_opens_the_niche() -> void:
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	var stone: Node3D = level.get_node(^"LiftStone")
 	var plate: FloorSwitch = level.get_node(^"LiftSwitch")
-	var gate: Node3D = level.get_node(^"LiftGate")
+	var chest := level.get_node(^"LiftChest") as Chest
+	assert_true(not chest.visible, "el cofre aparece con el puzzle")
 	var toward: Vector3 = plate.global_position - stone.global_position
 	toward.y = 0.0
 	toward = toward.normalized()
@@ -82,5 +83,5 @@ func test_throwing_the_stone_on_the_plate_opens_the_niche() -> void:
 	await tree.create_timer(2.0).timeout
 	assert_true(plate.active, "la piedra cae en la placa (%s, placa %s, player %s)" % [stone.global_position, plate.global_position, player.global_position])
 	assert_eq(state.get_flag(&"ow_start_lift_switch"), true, "queda trabada")
-	assert_true(gate.is_open, "la reja del nicho se abre")
+	assert_true(chest.visible and chest.interactable.enabled, "aparece el cofre")
 	state.reset()
