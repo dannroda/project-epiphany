@@ -266,48 +266,49 @@ piece("cofre_grande_tapa", 10, lambda p: (arca_tapa(p, 1.4, 0.95, 0.35), {"bisag
 def key(p, length, metal, boss=False):
 	"""Llave acostada sobre XY, con el ojal en -X: un ojo (anillo con pupila) o, la del jefe, una chakana."""
 	parts = []
-	shaft = p.box(-length * 0.15, length * 0.55, -0.025, 0.025, -0.025, 0.025)
+	shaft = p.cylinder(0.028, -length * 0.15, length * 0.58, sides=12)
+	p.transform(shaft, Matrix.Rotation(math.pi / 2, 4, "Y"))
 	parts += shaft
-	parts += p.box(length * 0.4, length * 0.48, -0.12, -0.025, -0.025, 0.025)
-	parts += p.box(length * 0.5, length * 0.56, -0.09, -0.025, -0.025, 0.025)
+	parts += p.rounded_box(length * 0.4, length * 0.48, -0.12, -0.02, -0.025, 0.025, radius=0.012, segments=1)
+	parts += p.rounded_box(length * 0.5, length * 0.56, -0.09, -0.02, -0.025, 0.025, radius=0.012, segments=1)
 	if boss:
 		s = length * 0.36
 		for w, h in ((s, s * 0.34), (s * 0.67, s * 0.67), (s * 0.34, s)):
-			parts += p.box(-length * 0.32 - w / 2, -length * 0.32 + w / 2, -h / 2, h / 2, -0.03, 0.03)
+			parts += p.rounded_box(-length * 0.32 - w / 2, -length * 0.32 + w / 2, -h / 2, h / 2, -0.03, 0.03, radius=0.012, segments=1)
 	else:
 		r = length * 0.17
-		ring = p.cylinder(r, -0.03, 0.03, sides=10)
+		ring = p.cylinder(r, -0.03, 0.03, sides=24)
 		p.transform(ring, Matrix.Translation((-length * 0.32, 0, 0)))
 		parts += ring
 	p.paint(parts, metal, "MID", vary=0.08)
-	center = p.cylinder(length * 0.06, -0.04, 0.04, sides=8)
+	center = p.cylinder(length * 0.06, -0.04, 0.04, sides=16)
 	p.transform(center, Matrix.Translation((-length * 0.32, 0, 0)))
 	p.paint(center, "noche" if not boss else "doom", "MID")
 	everything = parts + center
 	p.transform(everything, Matrix.Translation((0, 0, 0.04)))
 
 
-piece("llave", 11, lambda p: key(p, 0.5, "cobre_verde"))
-piece("llave_jefe", 12, lambda p: key(p, 0.75, "dorado", boss=True))
+piece("llave", 11, lambda p: key(p, 0.5, "cobre_verde"), smooth=40)
+piece("llave_jefe", 12, lambda p: key(p, 0.75, "dorado", boss=True), smooth=40)
 
 
 def mapa(p):
 	"""Tela enrollada en franjas (rojo, crema, azul) con un cordón."""
 	bands = [(-0.3, -0.2, "tela_roja"), (-0.2, -0.07, "hueso"), (-0.07, 0.07, "tela_azul"), (0.07, 0.2, "hueso"), (0.2, 0.3, "tela_roja")]
 	for x0, x1, swatch in bands:
-		seg = p.cylinder(0.08, x0, x1, sides=10)
+		seg = p.cylinder(0.08, x0, x1, sides=18)
 		p.transform(seg, Matrix.Translation((0, 0, 0.08)) @ Matrix.Rotation(math.pi / 2, 4, "Y"))
 		p.paint(seg, swatch, "MID")
-	cord = p.cylinder(0.088, -0.02, 0.02, sides=10)
+	cord = p.cylinder(0.088, -0.02, 0.02, sides=18)
 	p.transform(cord, Matrix.Translation((0.13, 0, 0.08)) @ Matrix.Rotation(math.pi / 2, 4, "Y"))
 	p.paint(cord, "paja", "DARK")
 
 
 def brujula(p):
 	"""Disco de piedra con una aguja de obsidiana y cuatro marcas."""
-	disk = p.cylinder(0.26, 0.0, 0.08, sides=12)
+	disk = p.cylinder(0.26, 0.0, 0.08, sides=28)
 	p.paint(disk, "piedra", "MID", vary=0.05)
-	rim = p.cylinder(0.28, 0.0, 0.05, sides=12)
+	rim = p.cylinder(0.28, 0.0, 0.05, sides=28)
 	p.paint(rim, "cobre_verde", "MID")
 	marks = []
 	for i in range(4):
@@ -322,8 +323,8 @@ def brujula(p):
 	p.paint(tip, "doom", "LIGHT")
 
 
-piece("mapa", 13, mapa)
-piece("brujula", 14, brujula)
+piece("mapa", 13, mapa, smooth=40)
+piece("brujula", 14, brujula, smooth=40)
 
 
 def heart_points(size, steps=20):
@@ -336,9 +337,20 @@ def heart_points(size, steps=20):
 	return pts
 
 
-def heart(p, size, thick, swatch="tela_roja"):
-	"""Corazón parado, mirando a -Y."""
-	h = p.polygon(heart_points(size), -thick / 2, thick / 2)
+def heart(p, size, thick, swatch="tela_roja", layers=6):
+	"""Corazón parado y abombado (el contorno se achica hacia el frente y la espalda), mirando a -Y."""
+	outline = heart_points(size, steps=36)
+	rings = []
+	for k in range(-layers, layers + 1):
+		t = k / layers
+		scale = math.sqrt(max(0.0, 1.0 - t * t)) * 0.85 + 0.15
+		rings.append([p.bm.verts.new((x * scale, y * scale, t * thick / 2)) for x, y in outline])
+	h = []
+	n = len(outline)
+	for a, b in zip(rings, rings[1:]):
+		h += [p.bm.faces.new((a[i], a[(i + 1) % n], b[(i + 1) % n], b[i])) for i in range(n)]
+	h.append(p.bm.faces.new(list(reversed(rings[0]))))
+	h.append(p.bm.faces.new(rings[-1]))
 	p.transform(h, Matrix.Translation((0, 0, size * 1.05)) @ Matrix.Rotation(math.pi / 2, 4, "X"))
 	p.paint(h, swatch, z_range=(0, size * 2.1), vary=0.03)
 	return h
@@ -349,21 +361,21 @@ def contenedor(p):
 	ring = []
 	for i in range(8):
 		a = 2 * math.pi * i / 8
-		b = p.box(-0.04, 0.04, -0.04, 0.04, -0.04, 0.04)
-		p.transform(b, Matrix.Translation((math.cos(a) * 0.42, 0, 0.36 + math.sin(a) * 0.42)))
+		b = p.blob((math.cos(a) * 0.42, 0, 0.36 + math.sin(a) * 0.42), 0.045, subdiv=2, rough=0.0)
 		ring += b
 	p.paint(ring, "dorado", "LIGHT")
 
 
-piece("corazon", 15, lambda p: heart(p, 0.2, 0.1))
-piece("contenedor_corazon", 16, contenedor)
+piece("corazon", 15, lambda p: heart(p, 0.2, 0.1), smooth=70)
+piece("contenedor_corazon", 16, contenedor, smooth=70)
 
 
 # --- proyectiles y municiones ---
 
 def arrow(p, length=0.9):
 	"""Flecha a lo largo de +X: caña, punta de obsidiana y plumas."""
-	shaft = p.box(0.0, length * 0.86, -0.012, 0.012, -0.012, 0.012)
+	shaft = p.cylinder(0.013, 0.0, length * 0.86, sides=6)
+	p.transform(shaft, Matrix.Rotation(math.pi / 2, 4, "Y"))
 	p.paint(shaft, "madera", "MID")
 	head = p.polygon([(length * 0.86, 0.045), (length, 0.0), (length * 0.86, -0.045)], -0.012, 0.012)
 	p.paint(head, "noche", "LIGHT")
@@ -390,9 +402,9 @@ def flechas_x5(p):
 
 def bomb(p, radius=0.22):
 	"""Cántaro de barro redondo con boca corta y mecha de cordel."""
-	body = p.lathe([(0.0, 0.0), (radius * 0.7, radius * 0.1), (radius, radius * 0.9), (radius * 0.8, radius * 1.6), (radius * 0.35, radius * 1.9), (radius * 0.35, radius * 2.05), (0.0, radius * 2.05)], sides=10)
+	body = p.lathe([(0.0, 0.0), (radius * 0.7, radius * 0.1), (radius, radius * 0.9), (radius * 0.8, radius * 1.6), (radius * 0.35, radius * 1.9), (radius * 0.35, radius * 2.05), (0.0, radius * 2.05)], sides=20)
 	p.paint_bands(body, [(radius * 1.05, radius * 1.25, "noche", "MID")], default=(0, 0, "roca_naranja", "DARK"))
-	fuse = p.cylinder(0.02, radius * 2.0, radius * 2.0 + 0.16, sides=4, radius_top=0.015)
+	fuse = p.cylinder(0.02, radius * 2.0, radius * 2.0 + 0.16, sides=6, radius_top=0.015)
 	p.transform(fuse, Matrix.Rotation(0.3, 4, "X"))
 	p.paint(fuse, "paja", "MID")
 
@@ -406,7 +418,7 @@ def bombas_x3(p):
 
 
 def orbe(p):
-	core = p.blob((0, 0, 0), 0.22, subdiv=1, rough=0.0)
+	core = p.blob((0, 0, 0), 0.22, subdiv=3, rough=0.0)
 	p.paint(core, "doom", "MID")
 	shell = []
 	for i in range(6):
@@ -434,13 +446,13 @@ def explosion(p):
 		p.transform(spike, direction.to_track_quat("Z", "Y").to_matrix().to_4x4())
 
 
-piece("flecha", 17, flecha)
-piece("flechas_x5", 18, flechas_x5)
-piece("bomba", 19, lambda p: bomb(p))
-piece("bombas_x3", 20, bombas_x3)
-piece("orbe", 21, orbe)
+piece("flecha", 17, flecha, smooth=40)
+piece("flechas_x5", 18, flechas_x5, smooth=40)
+piece("bomba", 19, lambda p: bomb(p), smooth=50)
+piece("bombas_x3", 20, bombas_x3, smooth=50)
+piece("orbe", 21, orbe, smooth=40)
 piece("explosion", 22, explosion)
-piece("piedra_levantable", 23, piedra_levantable)
+piece("piedra_levantable", 23, piedra_levantable, smooth=50)
 
 epi.layout(kit, columns=6, spacing=2.0)
 epi.publish("objetos")
