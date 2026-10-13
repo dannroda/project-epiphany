@@ -2,84 +2,668 @@
 
 [ext_resource type="Script" path="res://src/world/dungeon.gd" id="1_ka5m4"]
 [ext_resource type="Script" path="res://src/world/dungeon_floor.gd" id="2_u6itt"]
-[ext_resource type="MeshLibrary" path="res://data/kits/chullpa_kit.tres" id="3_ji7vh"]
+[ext_resource type="MeshLibrary" path="res://data/kits/chullpa_la_kit.tres" id="3_x0p3s"]
 [ext_resource type="Script" path="res://src/world/room.gd" id="4_g2cit"]
 [ext_resource type="PackedScene" path="res://src/world/door.tscn" id="5_gq5qp"]
+[ext_resource type="Shader" path="res://src/world/look/borde_oscuro.gdshader" id="5_nm22u"]
 [ext_resource type="PackedScene" path="res://src/world/eye_switch.tscn" id="7_crhmt"]
+[ext_resource type="Script" path="res://src/world/door.gd" id="7_wvyc0"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo/puerta_madera.res" id="8_3eapi"]
+[ext_resource type="Texture2D" path="res://assets/ui/lock.svg" id="9_41w6x"]
 [ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="9_i77fr"]
+[ext_resource type="Script" path="res://src/components/interactable.gd" id="10_u66i5"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="11_5ogbh"]
 [ext_resource type="Resource" path="res://data/items/small_key.tres" id="13_vcwjq"]
+[ext_resource type="Script" path="res://src/entities/watcher_eye/watcher_eye.gd" id="14_qikql"]
 [ext_resource type="PackedScene" path="res://src/world/cracked_wall_templo.tscn" id="14_y54qy"]
 [ext_resource type="Resource" path="res://data/items/boss_key.tres" id="16_8x4vj"]
+[ext_resource type="Script" path="res://src/world/pickup.gd" id="17_borgw"]
 [ext_resource type="PackedScene" path="res://src/entities/enemy.tscn" id="17_r43r1"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/corazon.res" id="19_lvm7h"]
 [ext_resource type="PackedScene" path="res://src/world/stairs.tscn" id="20_ae6pq"]
 [ext_resource type="PackedScene" path="res://src/world/wall_torch.tscn" id="22_nm22u"]
+[ext_resource type="Script" path="res://src/world/eye_switch.gd" id="23_3db8p"]
 [ext_resource type="PackedScene" path="res://src/world/floor_switch.tscn" id="23_wvyc0"]
+[ext_resource type="Script" path="res://src/world/gate.gd" id="25_4k5gr"]
 [ext_resource type="PackedScene" path="res://src/world/push_block.tscn" id="25_41w6x"]
 [ext_resource type="PackedScene" path="res://src/world/heart_piece.tscn" id="27_qikql"]
+[ext_resource type="Script" path="res://src/world/chest.gd" id="27_wlgwi"]
+[ext_resource type="Script" path="res://src/world/cracked_wall.gd" id="30_0a0he"]
 [ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="31_4k5gr"]
+[ext_resource type="Script" path="res://src/entities/enemy.gd" id="33_dfq0f"]
+[ext_resource type="Resource" path="res://data/entities/skeleton.tres" id="34_2hnwo"]
 [ext_resource type="PackedScene" path="res://src/world/stairs_down.tscn" id="34_dfq0f"]
 [ext_resource type="Resource" path="res://data/items/dungeon_map.tres" id="35_2hnwo"]
 [ext_resource type="Resource" path="res://data/items/compass.tres" id="36_8syh8"]
+[ext_resource type="Script" path="res://src/world/stairs.gd" id="36_nit5u"]
 [ext_resource type="Script" path="res://src/world/arena_fight.gd" id="37_fight"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo_chullpa/brasero.res" id="38_a6a4g"]
 [ext_resource type="PackedScene" path="res://src/entities/watcher_eye/watcher_eye.tscn" id="38_eye"]
-[ext_resource type="Resource" path="res://data/entities/watcher_eye_boss.tres" id="47_eyeboss"]
-[ext_resource type="PackedScene" path="res://src/world/pickup.tscn" id="48_pickup"]
-[ext_resource type="Resource" path="res://data/items/heart_container.tres" id="49_heart"]
-[ext_resource type="PackedScene" path="res://src/world/warp_portal.tscn" id="50_warp"]
-[ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="persistent_flag"]
-[ext_resource type="NavigationMesh" path="res://levels/nav/quenoa_navmesh.tres" id="nav_quenoa"]
+[ext_resource type="Shader" path="res://src/world/look/llama_la.gdshader" id="39_66c0e"]
 [ext_resource type="Resource" path="res://data/items/bow.tres" id="39_vhlen"]
 [ext_resource type="PackedScene" path="res://player/player.tscn" id="40_66c0e"]
+[ext_resource type="Script" path="res://src/world/torch_flicker.gd" id="40_d5r2d"]
+[ext_resource type="Script" path="res://src/feel/stencil_light/stencil_light.gd" id="41_5ia7f"]
+[ext_resource type="Script" path="res://src/world/floor_switch.gd" id="43_d82md"]
 [ext_resource type="Script" path="res://src/world/spawn_point.gd" id="43_rqrax"]
 [ext_resource type="Script" path="res://src/world/portal.gd" id="44_d82md"]
 [ext_resource type="Script" path="res://src/tools/top_down_camera.gd" id="45_d6a2c"]
+[ext_resource type="Script" path="res://src/world/push_block.gd" id="45_kifxg"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="46_kifxg"]
+[ext_resource type="Script" path="res://src/world/heart_piece.gd" id="47_d6b3u"]
+[ext_resource type="Resource" path="res://data/entities/watcher_eye_boss.tres" id="47_eyeboss"]
+[ext_resource type="Resource" path="res://data/items/heart_piece.tres" id="48_e5cvg"]
+[ext_resource type="PackedScene" path="res://src/world/pickup.tscn" id="48_pickup"]
+[ext_resource type="Resource" path="res://data/items/heart_container.tres" id="49_heart"]
+[ext_resource type="Script" path="res://src/world/breakable.gd" id="50_nhcls"]
+[ext_resource type="PackedScene" path="res://src/world/warp_portal.tscn" id="50_warp"]
+[ext_resource type="Resource" path="res://data/drops/pot.tres" id="51_620bx"]
+[ext_resource type="Resource" path="res://data/entities/watcher_eye.tres" id="55_xuy7a"]
+[ext_resource type="Script" path="res://player/player.gd" id="58_tw10w"]
+[ext_resource type="Resource" path="res://data/entities/player.tres" id="59_qfyna"]
+[ext_resource type="Script" path="res://src/world/look/enfoque_la.gd" id="62_b5g6x"]
+[ext_resource type="Script" path="res://src/ui/hud/hud.gd" id="64_1o0uj"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/player_panel_solo.tscn" id="65_orgj2"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/player_panel.tscn" id="66_dxo2p"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/item_ring.tscn" id="67_owgnv"]
+[ext_resource type="Shader" path="res://src/world/look/vineta_la.gdshader" id="69_hiqku"]
+[ext_resource type="Script" path="res://src/world/look/brillo_la.gd" id="70_0sl1j"]
+[ext_resource type="NavigationMesh" path="res://levels/nav/quenoa_navmesh.tres" id="nav_quenoa"]
+[ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="persistent_flag"]
 
-[sub_resource type="Environment" id="Environment_xuy7a"]
+[sub_resource type="Gradient" id="Gradient_lby5b"]
+offsets = PackedFloat32Array(0, 0.03125, 0.0625, 0.09375, 0.125, 0.15625, 0.1875, 0.21875, 0.25, 0.28125, 0.3125, 0.34375, 0.375, 0.40625, 0.4375, 0.46875, 0.5, 0.53125, 0.5625, 0.59375, 0.625, 0.65625, 0.6875, 0.71875, 0.75, 0.78125, 0.8125, 0.84375, 0.875, 0.90625, 0.9375, 0.96875, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.0010699818, 0.0010699818, 0.0010699818, 1, 0.0038740204, 0.0038740204, 0.0038740204, 1, 0.010139859, 0.010139859, 0.010139859, 1, 0.022075947, 0.022075947, 0.022075947, 1, 0.04236076, 0.04236076, 0.04236076, 1, 0.068094745, 0.068094745, 0.068094745, 1, 0.09626258, 0.09626258, 0.09626258, 1, 0.12677714, 0.12677714, 0.12677714, 1, 0.15956329, 0.15956329, 0.15956329, 1, 0.19455545, 0.19455545, 0.19455545, 1, 0.2316954, 0.2316954, 0.2316954, 1, 0.2709312, 0.2709312, 0.2709312, 1, 0.31221583, 0.31221583, 0.31221583, 1, 0.35550666, 0.35550666, 0.35550666, 1, 0.40076444, 0.40076444, 0.40076444, 1, 0.4479533, 0.4479533, 0.4479533, 1, 0.4970398, 0.4970398, 0.4970398, 1, 0.5479932, 0.5479932, 0.5479932, 1, 0.59375, 0.59375, 0.59375, 1, 0.625, 0.625, 0.625, 1, 0.65625, 0.65625, 0.65625, 1, 0.68749994, 0.68749994, 0.68749994, 1, 0.71875, 0.71875, 0.71875, 1, 0.75, 0.75, 0.75, 1, 0.78125, 0.78125, 0.78125, 1, 0.8125, 0.8125, 0.8125, 1, 0.84375, 0.84375, 0.84375, 1, 0.875, 0.875, 0.875, 1, 0.90625, 0.90625, 0.90625, 1, 0.9375, 0.9375, 0.9375, 1, 0.96875, 0.96875, 0.96875, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5q4hq"]
+gradient = SubResource("Gradient_lby5b")
+
+[sub_resource type="Environment" id="Environment_w3lyb"]
 background_mode = 1
 ambient_light_source = 2
-ambient_light_color = Color(0.55, 0.52, 0.65, 1)
-ambient_light_energy = 0.6
-tonemap_mode = 2
+ambient_light_color = Color(0.62, 0.72, 0.85, 1)
+ambient_light_energy = 1.3
+ssao_enabled = true
+ssao_radius = 0.8
+ssao_intensity = 1.5
+glow_enabled = true
+glow_intensity = 0.8
+glow_blend_mode = 0
+glow_hdr_threshold = 1.2
 fog_light_color = Color(0.25, 0.08, 0.06, 1)
 fog_density = 0.0
+adjustment_enabled = true
+adjustment_saturation = 0.9
+adjustment_color_correction = SubResource("GradientTexture1D_5q4hq")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tw10w"]
 size = Vector3(22, 2.4, 14)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ngbsp"]
+render_priority = 0
+shader = ExtResource("5_nm22u")
+shader_parameter/inner = Vector4(2.7, 2.6, 25.3, 17.9)
+shader_parameter/outer = Vector4(1.2, 1.2, 26.8, 18.8)
+shader_parameter/limit = Vector4(0.8, 0.8, 27.199999, 19.199999)
+shader_parameter/plane_y = -5.000000238418579
+shader_parameter/floor_rect = Vector4(3, 3, 25, 17)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_i5dwr"]
+material = SubResource("ShaderMaterial_ngbsp")
+size = Vector2(33.2, 25.2)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_qfyna"]
 size = Vector3(22, 2.4, 14)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ku4t0"]
+render_priority = 0
+shader = ExtResource("5_nm22u")
+shader_parameter/inner = Vector4(28.7, 2.6, 51.3, 17.9)
+shader_parameter/outer = Vector4(27.2, 1.2, 52.8, 18.8)
+shader_parameter/limit = Vector4(26.8, 0.8, 53.199997, 19.199999)
+shader_parameter/plane_y = -5.000000238418579
+shader_parameter/floor_rect = Vector4(29, 3, 51, 17)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_kgmjf"]
+material = SubResource("ShaderMaterial_ku4t0")
+size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_b5g6x"]
 size = Vector3(22, 2.4, 14)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rgmxq"]
+render_priority = 0
+shader = ExtResource("5_nm22u")
+shader_parameter/inner = Vector4(28.7, 20.6, 51.3, 35.9)
+shader_parameter/outer = Vector4(27.2, 19.2, 52.8, 36.8)
+shader_parameter/limit = Vector4(26.8, 18.8, 53.199997, 37.199997)
+shader_parameter/plane_y = -5.000000238418579
+shader_parameter/floor_rect = Vector4(29, 21, 51, 35)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_8yinp"]
+material = SubResource("ShaderMaterial_rgmxq")
+size = Vector2(33.2, 25.2)
+
+[sub_resource type="BoxShape3D" id="Shape"]
+size = Vector3(2, 2.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="InteractShape"]
+size = Vector3(2, 1.6, 2.6)
+
+[sub_resource type="BoxShape3D" id="Trigger"]
+size = Vector3(1.6, 1.5, 0.8)
+
+[sub_resource type="BoxShape3D" id="Back"]
+size = Vector3(1.8, 2.4, 0.7)
+
+[sub_resource type="BoxMesh" id="Step1"]
+size = Vector3(1.5, 0.2, 1.6)
+
+[sub_resource type="StandardMaterial3D" id="Stone1"]
+albedo_color = Color(0.42, 0.37, 0.33, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="Step2"]
+size = Vector3(1.5, 0.4, 1.2)
+
+[sub_resource type="StandardMaterial3D" id="Stone2"]
+albedo_color = Color(0.3, 0.26, 0.23, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="Step3"]
+size = Vector3(1.5, 0.6, 0.8)
+
+[sub_resource type="StandardMaterial3D" id="Stone3"]
+albedo_color = Color(0.18, 0.16, 0.14, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="Step4"]
+size = Vector3(1.5, 0.8, 0.4)
+
+[sub_resource type="StandardMaterial3D" id="Stone4"]
+albedo_color = Color(0.09, 0.08, 0.08, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="Void"]
+size = Vector3(1.8, 2.4, 0.05)
+
+[sub_resource type="StandardMaterial3D" id="Dark"]
+shading_mode = 0
+albedo_color = Color(0.02, 0.02, 0.03, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gfrdh"]
+render_priority = 0
+shader = ExtResource("39_66c0e")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_m0l3m"]
+material = SubResource("ShaderMaterial_gfrdh")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0d63c"]
+render_priority = 0
+shader = ExtResource("39_66c0e")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_qmgug"]
+material = SubResource("ShaderMaterial_0d63c")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gna55"]
+render_priority = 0
+shader = ExtResource("39_66c0e")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_0sjlk"]
+material = SubResource("ShaderMaterial_gna55")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hgnei"]
+render_priority = 0
+shader = ExtResource("39_66c0e")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_yahuk"]
+material = SubResource("ShaderMaterial_hgnei")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r168f"]
+render_priority = 0
+shader = ExtResource("39_66c0e")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_p6ggc"]
+material = SubResource("ShaderMaterial_r168f")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bywja"]
+render_priority = 0
+shader = ExtResource("39_66c0e")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_0mghl"]
+material = SubResource("ShaderMaterial_bywja")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_1o0uj"]
 size = Vector3(22, 2.4, 14)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_skcmy"]
+render_priority = 0
+shader = ExtResource("5_nm22u")
+shader_parameter/inner = Vector4(2.7, 2.6, 25.3, 17.9)
+shader_parameter/outer = Vector4(1.2, 1.2, 26.8, 18.8)
+shader_parameter/limit = Vector4(0.8, 0.8, 27.199999, 19.199999)
+shader_parameter/plane_y = 3.0
+shader_parameter/floor_rect = Vector4(3, 3, 25, 17)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_n6xjq"]
+material = SubResource("ShaderMaterial_skcmy")
+size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_orgj2"]
 size = Vector3(22, 2.4, 14)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u6a1o"]
+render_priority = 0
+shader = ExtResource("5_nm22u")
+shader_parameter/inner = Vector4(28.7, 2.6, 51.3, 17.9)
+shader_parameter/outer = Vector4(27.2, 1.2, 52.8, 18.8)
+shader_parameter/limit = Vector4(26.8, 0.8, 53.199997, 19.199999)
+shader_parameter/plane_y = 3.0
+shader_parameter/floor_rect = Vector4(29, 3, 51, 17)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_m7rie"]
+material = SubResource("ShaderMaterial_u6a1o")
+size = Vector2(33.2, 25.2)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_dxo2p"]
 size = Vector3(22, 2.4, 14)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0wkfp"]
+render_priority = 0
+shader = ExtResource("5_nm22u")
+shader_parameter/inner = Vector4(2.7, 20.6, 25.3, 35.9)
+shader_parameter/outer = Vector4(1.2, 19.2, 26.8, 36.8)
+shader_parameter/limit = Vector4(0.8, 18.8, 27.199999, 37.199997)
+shader_parameter/plane_y = 3.0
+shader_parameter/floor_rect = Vector4(3, 21, 25, 35)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_bo0qj"]
+material = SubResource("ShaderMaterial_0wkfp")
+size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_owgnv"]
 size = Vector3(22, 2.4, 14)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p43p3"]
+render_priority = 0
+shader = ExtResource("5_nm22u")
+shader_parameter/inner = Vector4(28.7, 20.6, 51.3, 35.9)
+shader_parameter/outer = Vector4(27.2, 19.2, 52.8, 36.8)
+shader_parameter/limit = Vector4(26.8, 18.8, 53.199997, 37.199997)
+shader_parameter/plane_y = 3.0
+shader_parameter/floor_rect = Vector4(29, 21, 51, 35)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ntgrw"]
+material = SubResource("ShaderMaterial_p43p3")
+size = Vector2(33.2, 25.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kfd5l"]
+size = Vector3(1.6, 1.5, 0.8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0tnly"]
+size = Vector3(1.8, 2.4, 0.7)
+
+[sub_resource type="BoxMesh" id="Opening"]
+size = Vector3(1.5, 0.02, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aot6n"]
+shading_mode = 0
+albedo_color = Color(0.02, 0.02, 0.03, 1)
+
+[sub_resource type="BoxMesh" id="Step"]
+size = Vector3(1.5, 0.03, 0.22)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ajg5h"]
+albedo_color = Color(0.42, 0.37, 0.33, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eqgk0"]
+albedo_color = Color(0.27, 0.24, 0.21, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xhjub"]
+albedo_color = Color(0.14, 0.12, 0.11, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_eujmy"]
+size = Vector3(1.8, 2.4, 0.05)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xsast"]
+render_priority = 0
+shader = ExtResource("39_66c0e")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_lmteb"]
+material = SubResource("ShaderMaterial_xsast")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c6tap"]
+render_priority = 0
+shader = ExtResource("39_66c0e")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_dq0ok"]
+material = SubResource("ShaderMaterial_c6tap")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_om0yc"]
+render_priority = 0
+shader = ExtResource("39_66c0e")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_tql7m"]
+material = SubResource("ShaderMaterial_om0yc")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n6oxv"]
+render_priority = 0
+shader = ExtResource("39_66c0e")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_q1rit"]
+material = SubResource("ShaderMaterial_n6oxv")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n1ph6"]
+render_priority = 0
+shader = ExtResource("39_66c0e")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_dj3q5"]
+material = SubResource("ShaderMaterial_n1ph6")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dwldm"]
+render_priority = 0
+shader = ExtResource("39_66c0e")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_5d5e3"]
+material = SubResource("ShaderMaterial_dwldm")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n6gcg"]
+render_priority = 0
+shader = ExtResource("39_66c0e")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_8vdmv"]
+material = SubResource("ShaderMaterial_n6gcg")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7hjia"]
+render_priority = 0
+shader = ExtResource("39_66c0e")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_gfdh4"]
+material = SubResource("ShaderMaterial_7hjia")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_hiqku"]
 size = Vector3(22, 2.4, 14)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vbokl"]
+render_priority = 0
+shader = ExtResource("5_nm22u")
+shader_parameter/inner = Vector4(2.7, 2.6, 25.3, 17.9)
+shader_parameter/outer = Vector4(1.2, 1.2, 26.8, 18.8)
+shader_parameter/limit = Vector4(0.8, 0.8, 27.199999, 19.199999)
+shader_parameter/plane_y = 10.99999976158142
+shader_parameter/floor_rect = Vector4(3, 3, 25, 17)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_7khdi"]
+material = SubResource("ShaderMaterial_vbokl")
+size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0sl1j"]
 size = Vector3(22, 2.4, 14)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bcwa0"]
+render_priority = 0
+shader = ExtResource("5_nm22u")
+shader_parameter/inner = Vector4(28.7, 2.6, 51.3, 17.9)
+shader_parameter/outer = Vector4(27.2, 1.2, 52.8, 18.8)
+shader_parameter/limit = Vector4(26.8, 0.8, 53.199997, 19.199999)
+shader_parameter/plane_y = 10.99999976158142
+shader_parameter/floor_rect = Vector4(29, 3, 51, 17)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_cq2t5"]
+material = SubResource("ShaderMaterial_bcwa0")
+size = Vector2(33.2, 25.2)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_lby5b"]
 size = Vector3(22, 2.4, 14)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rnw7s"]
+render_priority = 0
+shader = ExtResource("5_nm22u")
+shader_parameter/inner = Vector4(2.7, 20.6, 25.3, 35.9)
+shader_parameter/outer = Vector4(1.2, 19.2, 26.8, 36.8)
+shader_parameter/limit = Vector4(0.8, 18.8, 27.199999, 37.199997)
+shader_parameter/plane_y = 10.99999976158142
+shader_parameter/floor_rect = Vector4(3, 21, 25, 35)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_wnesm"]
+material = SubResource("ShaderMaterial_rnw7s")
+size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5q4hq"]
 size = Vector3(22, 2.4, 14)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ugbva"]
+render_priority = 0
+shader = ExtResource("5_nm22u")
+shader_parameter/inner = Vector4(28.7, 20.6, 51.3, 35.9)
+shader_parameter/outer = Vector4(27.2, 19.2, 52.8, 36.8)
+shader_parameter/limit = Vector4(26.8, 18.8, 53.199997, 37.199997)
+shader_parameter/plane_y = 10.99999976158142
+shader_parameter/floor_rect = Vector4(29, 21, 51, 35)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_184fl"]
+material = SubResource("ShaderMaterial_ugbva")
+size = Vector2(33.2, 25.2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qbrgg"]
+render_priority = 0
+shader = ExtResource("39_66c0e")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_f7al1"]
+material = SubResource("ShaderMaterial_qbrgg")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_btfhe"]
+render_priority = 0
+shader = ExtResource("39_66c0e")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_imkms"]
+material = SubResource("ShaderMaterial_btfhe")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c43g6"]
+render_priority = 0
+shader = ExtResource("39_66c0e")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_3g8ll"]
+material = SubResource("ShaderMaterial_c43g6")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cvkyi"]
+render_priority = 0
+shader = ExtResource("39_66c0e")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_qf24u"]
+material = SubResource("ShaderMaterial_cvkyi")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_esp75"]
+render_priority = 0
+shader = ExtResource("39_66c0e")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_3p4ts"]
+material = SubResource("ShaderMaterial_esp75")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2jvi6"]
+render_priority = 0
+shader = ExtResource("39_66c0e")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_x0acw"]
+material = SubResource("ShaderMaterial_2jvi6")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wv7rl"]
+render_priority = 0
+shader = ExtResource("39_66c0e")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_20cop"]
+material = SubResource("ShaderMaterial_wv7rl")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qxj2e"]
+render_priority = 0
+shader = ExtResource("39_66c0e")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_c8nqy"]
+material = SubResource("ShaderMaterial_qxj2e")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_w3lyb"]
 size = Vector3(2, 2.4, 1.2)
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_40bi1"]
+dof_blur_far_enabled = true
+dof_blur_far_distance = 36.5
+dof_blur_far_transition = 6.0
+dof_blur_near_enabled = true
+dof_blur_near_distance = 30.5
+dof_blur_near_transition = 3.0
+dof_blur_amount = 0.12
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xyjbk"]
+shader = ExtResource("69_hiqku")
+shader_parameter/strength = 0.7
+shader_parameter/inner = null
+shader_parameter/power = null
 
 [node name="Quenoa" type="Node3D" unique_id=213387850]
 
@@ -89,12 +673,12 @@ id = &"qv"
 display_name = "PLACE_QUENOA"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1684361965]
-environment = SubResource("Environment_xuy7a")
+environment = SubResource("Environment_w3lyb")
 
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=1704964901]
-transform = Transform3D(0.8660254, -0.43301272, 0.24999999, 0, 0.49999997, 0.86602545, -0.5, -0.75, 0.43301266, 0, 0, 0)
-light_energy = 0.85
-shadow_enabled = true
+transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 0, 0, 0)
+light_color = Color(0.62, 0.78, 1, 1)
+light_energy = 0.7
 directional_shadow_mode = 1
 directional_shadow_max_distance = 32.0
 
@@ -105,17 +689,17 @@ level = -1
 display_name = "PLACE_FLOOR_ROOTS"
 
 [node name="GridMap" type="GridMap" parent="PisoRaices" unique_id=2086710927 groups=["navmesh_source"]]
-mesh_library = ExtResource("3_ji7vh")
+mesh_library = ExtResource("3_x0p3s")
 cell_size = Vector3(2, 1, 2)
 cell_center_x = false
 cell_center_y = false
 cell_center_z = false
 data = {
-"cells": PackedInt32Array(0, 0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 6, 0, 0, 7, 1, 0, 8, 1, 0, 9, 1, 0, 10, 1, 0, 11, 1, 0, 12, 1, 0, 13, 1, 0, 14, 1, 0, 15, 1, 0, 16, 1, 1, 0, 1, 1, 1, 0, 1, 2, 0, 1, 3, 0, 1, 4, 0, 1, 5, 0, 1, 6, 0, 1, 7, 0, 1, 8, 1, 1, 9, 1, 1, 10, 1, 1, 11, 1, 1, 12, 1, 1, 13, 1, 1, 14, 1, 1, 15, 1, 1, 16, 1, 2, 0, 1, 2, 1, 0, 2, 2, 0, 2, 3, 0, 2, 4, 0, 2, 5, 0, 2, 6, 0, 2, 7, 0, 2, 8, 1, 2, 9, 1, 2, 10, 1, 2, 11, 1, 2, 12, 1, 2, 13, 1, 2, 14, 1, 2, 15, 1, 2, 16, 1, 3, 0, 1, 3, 1, 0, 3, 2, 0, 3, 3, 0, 3, 4, 0, 3, 5, 0, 3, 6, 0, 3, 7, 0, 3, 8, 1, 3, 9, 1, 3, 10, 1, 3, 11, 1, 3, 12, 1, 3, 13, 1, 3, 14, 1, 3, 15, 1, 3, 16, 1, 4, 0, 1, 4, 1, 0, 4, 2, 0, 4, 3, 0, 4, 4, 0, 4, 5, 0, 4, 6, 0, 4, 7, 0, 4, 8, 1, 4, 9, 1, 4, 10, 1, 4, 11, 1, 4, 12, 1, 4, 13, 1, 4, 14, 1, 4, 15, 1, 4, 16, 1, 5, 0, 1, 5, 1, 0, 5, 2, 0, 5, 3, 0, 5, 4, 0, 5, 5, 0, 5, 6, 1, 5, 7, 1, 5, 8, 1, 5, 9, 1, 5, 10, 1, 5, 11, 1, 5, 12, 1, 5, 13, 1, 5, 14, 1, 5, 15, 1, 5, 16, 1, 6, 0, 1, 6, 1, 0, 6, 2, 0, 6, 3, 0, 6, 4, 0, 6, 5, 0, 6, 6, 0, 6, 7, 0, 6, 8, 1, 6, 9, 1, 6, 10, 1, 6, 11, 1, 6, 12, 1, 6, 13, 1, 6, 14, 1, 6, 15, 1, 6, 16, 1, 7, 0, 1, 7, 1, 0, 7, 2, 0, 7, 3, 0, 7, 4, 0, 7, 5, 0, 7, 6, 1, 7, 7, 1, 7, 8, 1, 7, 9, 1, 7, 10, 1, 7, 11, 1, 7, 12, 1, 7, 13, 1, 7, 14, 1, 7, 15, 1, 7, 16, 1, 8, 0, 1, 8, 1, 0, 8, 2, 0, 8, 3, 0, 8, 4, 0, 8, 5, 0, 8, 6, 0, 8, 7, 0, 8, 8, 1, 8, 9, 1, 8, 10, 1, 8, 11, 1, 8, 12, 1, 8, 13, 1, 8, 14, 1, 8, 15, 1, 8, 16, 1, 9, 0, 1, 9, 1, 0, 9, 2, 0, 9, 3, 0, 9, 4, 0, 9, 5, 0, 9, 6, 0, 9, 7, 0, 9, 8, 1, 9, 9, 1, 9, 10, 1, 9, 11, 1, 9, 12, 1, 9, 13, 1, 9, 14, 1, 9, 15, 1, 9, 16, 1, 10, 0, 1, 10, 1, 0, 10, 2, 0, 10, 3, 0, 10, 4, 0, 10, 5, 0, 10, 6, 0, 10, 7, 0, 10, 8, 1, 10, 9, 1, 10, 10, 1, 10, 11, 1, 10, 12, 1, 10, 13, 1, 10, 14, 1, 10, 15, 1, 10, 16, 1, 11, 0, 1, 11, 1, 0, 11, 2, 0, 11, 3, 0, 11, 4, 0, 11, 5, 0, 11, 6, 0, 11, 7, 0, 11, 8, 1, 11, 9, 1, 11, 10, 1, 11, 11, 1, 11, 12, 1, 11, 13, 1, 11, 14, 1, 11, 15, 1, 11, 16, 1, 12, 0, 1, 12, 1, 1, 12, 2, 1, 12, 3, 1, 12, 4, 1, 12, 5, 1, 12, 6, 1048580, 12, 7, 1, 12, 8, 1, 12, 9, 1, 12, 10, 1, 12, 11, 1, 12, 12, 1, 12, 13, 1, 12, 14, 1, 12, 15, 1, 12, 16, 1, 13, 0, 1, 13, 1, 0, 13, 2, 0, 13, 3, 0, 13, 4, 0, 13, 5, 0, 13, 6, 0, 13, 7, 0, 13, 8, 1, 13, 9, 0, 13, 10, 0, 13, 11, 0, 13, 12, 0, 13, 13, 0, 13, 14, 0, 13, 15, 0, 13, 16, 1, 14, 0, 1, 14, 1, 0, 14, 2, 0, 14, 3, 0, 14, 4, 0, 14, 5, 0, 14, 6, 0, 14, 7, 0, 14, 8, 1, 14, 9, 0, 14, 10, 0, 14, 11, 0, 14, 12, 0, 14, 13, 0, 14, 14, 0, 14, 15, 0, 14, 16, 1, 15, 0, 1, 15, 1, 0, 15, 2, 0, 15, 3, 0, 15, 4, 0, 15, 5, 0, 15, 6, 0, 15, 7, 0, 15, 8, 1, 15, 9, 0, 15, 10, 0, 15, 11, 0, 15, 12, 0, 15, 13, 0, 15, 14, 0, 15, 15, 0, 15, 16, 1, 16, 0, 1, 16, 1, 0, 16, 2, 0, 16, 3, 0, 16, 4, 0, 16, 5, 0, 16, 6, 0, 16, 7, 0, 16, 8, 1, 16, 9, 0, 16, 10, 0, 16, 11, 0, 16, 12, 0, 16, 13, 0, 16, 14, 0, 16, 15, 0, 16, 16, 1, 17, 0, 1, 17, 1, 1, 17, 2, 1, 17, 3, 0, 17, 4, 0, 17, 5, 0, 17, 6, 0, 17, 7, 0, 17, 8, 1, 17, 9, 0, 17, 10, 0, 17, 11, 0, 17, 12, 0, 17, 13, 0, 17, 14, 0, 17, 15, 0, 17, 16, 1, 18, 0, 1, 18, 1, 0, 18, 2, 0, 18, 3, 0, 18, 4, 0, 18, 5, 0, 18, 6, 0, 18, 7, 0, 18, 8, 4, 18, 9, 0, 18, 10, 0, 18, 11, 0, 18, 12, 0, 18, 13, 0, 18, 14, 0, 18, 15, 0, 18, 16, 1, 19, 0, 1, 19, 1, 1, 19, 2, 1, 19, 3, 0, 19, 4, 0, 19, 5, 0, 19, 6, 0, 19, 7, 0, 19, 8, 1, 19, 9, 0, 19, 10, 0, 19, 11, 0, 19, 12, 0, 19, 13, 0, 19, 14, 0, 19, 15, 0, 19, 16, 1, 20, 0, 1, 20, 1, 0, 20, 2, 0, 20, 3, 0, 20, 4, 0, 20, 5, 0, 20, 6, 0, 20, 7, 0, 20, 8, 1, 20, 9, 0, 20, 10, 0, 20, 11, 0, 20, 12, 0, 20, 13, 0, 20, 14, 0, 20, 15, 0, 20, 16, 1, 21, 0, 1, 21, 1, 1, 21, 2, 1, 21, 3, 0, 21, 4, 0, 21, 5, 0, 21, 6, 0, 21, 7, 0, 21, 8, 1, 21, 9, 0, 21, 10, 0, 21, 11, 0, 21, 12, 0, 21, 13, 0, 21, 14, 0, 21, 15, 0, 21, 16, 1, 22, 0, 1, 22, 1, 0, 22, 2, 0, 22, 3, 0, 22, 4, 0, 22, 5, 0, 22, 6, 0, 22, 7, 0, 22, 8, 1, 22, 9, 0, 22, 10, 0, 22, 11, 0, 22, 12, 0, 22, 13, 0, 22, 14, 0, 22, 15, 0, 22, 16, 1, 23, 0, 1, 23, 1, 1, 23, 2, 1, 23, 3, 0, 23, 4, 0, 23, 5, 0, 23, 6, 0, 23, 7, 0, 23, 8, 1, 23, 9, 0, 23, 10, 0, 23, 11, 0, 23, 12, 0, 23, 13, 0, 23, 14, 0, 23, 15, 0, 23, 16, 1, 24, 0, 1, 24, 1, 1, 24, 2, 1, 24, 3, 1, 24, 4, 1, 24, 5, 1, 24, 6, 1, 24, 7, 1, 24, 8, 1, 24, 9, 1, 24, 10, 1, 24, 11, 1, 24, 12, 1, 24, 13, 1, 24, 14, 1, 24, 15, 1, 24, 16, 1)
+"cells": PackedInt32Array(0, 0, 36, 0, 1, 36, 1, 0, 36, 1, 1, 39, 0, 2, 36, 1, 2, 22, 0, 3, 36, 1, 3, 22, 0, 4, 36, 1, 4, 22, 0, 5, 36, 1, 5, 22, 0, 6, 36, 1, 6, 22, 0, 7, 36, 1, 7, 46, 0, 8, 36, 1, 8, 22, 0, 9, 36, 0, 10, 36, 1, 9, 37, 1, 10, 36, 0, 11, 36, 1, 11, 36, 0, 12, 36, 1, 12, 36, 0, 13, 36, 1, 13, 36, 0, 14, 36, 1, 14, 36, 0, 15, 36, 1, 15, 36, 0, 16, 36, 1, 16, 36, 0, 17, 36, 1, 17, 36, 0, 18, 36, 0, 19, 36, 1, 18, 36, 1, 19, 36, 2, 0, 36, 2, 1, 33, 2, 2, 0, 2, 3, 0, 2, 4, 0, 2, 5, 0, 2, 6, 0, 2, 7, 0, 2, 8, 0, 2, 9, 26, 2, 10, 36, 2, 11, 36, 2, 12, 36, 2, 13, 36, 2, 14, 36, 2, 15, 36, 2, 16, 36, 2, 17, 36, 2, 18, 36, 2, 19, 36, 3, 0, 36, 3, 1, 33, 3, 2, 0, 3, 3, 0, 3, 4, 0, 3, 5, 0, 3, 6, 0, 3, 7, 0, 3, 8, 0, 3, 9, 26, 3, 10, 36, 3, 11, 36, 3, 12, 36, 3, 13, 36, 3, 14, 36, 3, 15, 36, 3, 16, 36, 3, 17, 36, 3, 18, 36, 3, 19, 36, 4, 0, 36, 4, 1, 33, 4, 2, 0, 4, 3, 0, 4, 4, 0, 4, 5, 0, 4, 6, 0, 4, 7, 0, 4, 8, 0, 4, 9, 26, 4, 10, 36, 4, 11, 36, 4, 12, 36, 4, 13, 36, 4, 14, 36, 4, 15, 36, 4, 16, 36, 4, 17, 36, 4, 18, 36, 4, 19, 36, 5, 0, 36, 5, 1, 33, 5, 2, 0, 5, 3, 0, 5, 4, 0, 5, 5, 0, 5, 6, 0, 5, 7, 0, 5, 8, 0, 5, 9, 26, 5, 10, 36, 5, 11, 36, 5, 12, 36, 5, 13, 36, 5, 14, 36, 5, 15, 36, 5, 16, 36, 5, 17, 36, 5, 18, 36, 5, 19, 36, 6, 0, 36, 6, 1, 33, 6, 2, 0, 6, 3, 0, 6, 4, 0, 6, 5, 0, 6, 6, 0, 6, 7, 52, 6, 8, 50, 6, 9, 55, 6, 10, 36, 6, 11, 36, 6, 12, 36, 6, 13, 36, 6, 14, 36, 6, 15, 36, 6, 16, 36, 6, 17, 36, 6, 18, 36, 6, 19, 36, 7, 0, 36, 7, 1, 33, 7, 2, 0, 7, 3, 0, 7, 4, 0, 7, 5, 0, 7, 6, 0, 7, 7, 0, 7, 8, 0, 7, 9, 26, 7, 10, 36, 7, 11, 36, 7, 12, 36, 7, 13, 36, 7, 14, 36, 7, 15, 36, 7, 16, 36, 7, 17, 36, 7, 18, 36, 7, 19, 36, 8, 0, 36, 8, 1, 33, 8, 2, 0, 8, 3, 0, 8, 4, 0, 8, 5, 0, 8, 6, 0, 8, 7, 52, 8, 8, 50, 8, 9, 55, 8, 10, 36, 8, 11, 36, 8, 12, 36, 8, 13, 36, 8, 14, 36, 8, 15, 36, 8, 16, 36, 8, 17, 36, 8, 18, 36, 8, 19, 36, 9, 0, 36, 9, 1, 33, 9, 2, 0, 9, 3, 0, 9, 4, 0, 9, 5, 0, 9, 6, 0, 9, 7, 0, 9, 8, 0, 9, 9, 26, 9, 10, 36, 9, 11, 36, 9, 12, 36, 9, 13, 36, 9, 14, 36, 9, 15, 36, 9, 16, 36, 9, 17, 36, 9, 18, 36, 9, 19, 36, 10, 0, 36, 10, 1, 33, 10, 2, 0, 10, 3, 0, 10, 4, 0, 10, 5, 0, 10, 6, 0, 10, 7, 0, 10, 8, 0, 10, 9, 26, 10, 10, 36, 10, 11, 36, 10, 12, 36, 10, 13, 36, 10, 14, 36, 10, 15, 36, 10, 16, 36, 10, 17, 36, 10, 18, 36, 10, 19, 36, 11, 0, 36, 11, 1, 33, 11, 2, 0, 11, 3, 0, 11, 4, 0, 11, 5, 0, 11, 6, 0, 11, 7, 0, 11, 8, 0, 11, 9, 26, 11, 10, 36, 11, 11, 36, 11, 12, 36, 11, 13, 36, 11, 14, 36, 11, 15, 36, 11, 16, 36, 11, 17, 36, 11, 18, 36, 11, 19, 36, 12, 0, 36, 12, 1, 33, 12, 2, 0, 12, 3, 0, 12, 4, 0, 12, 5, 0, 12, 6, 0, 12, 7, 0, 12, 8, 0, 12, 9, 26, 12, 10, 36, 12, 11, 36, 12, 12, 36, 12, 13, 36, 12, 14, 36, 12, 15, 36, 12, 16, 36, 12, 17, 36, 12, 18, 36, 12, 19, 36, 13, 0, 36, 13, 1, 40, 14, 0, 36, 14, 1, 39, 13, 2, 30, 14, 2, 22, 13, 3, 30, 14, 3, 22, 13, 4, 30, 14, 4, 22, 13, 5, 30, 14, 5, 22, 13, 6, 32, 14, 6, 24, 13, 7, 43, 14, 7, 41, 13, 8, 31, 14, 8, 23, 13, 9, 38, 13, 10, 36, 14, 9, 37, 14, 10, 39, 13, 11, 36, 14, 11, 22, 13, 12, 36, 14, 12, 22, 13, 13, 36, 14, 13, 22, 13, 14, 36, 14, 14, 22, 13, 15, 36, 14, 15, 22, 13, 16, 36, 14, 16, 22, 13, 17, 36, 14, 17, 22, 13, 18, 36, 13, 19, 36, 14, 18, 37, 14, 19, 36, 15, 0, 36, 15, 1, 33, 15, 2, 0, 15, 3, 0, 15, 4, 0, 15, 5, 0, 15, 6, 0, 15, 7, 0, 15, 8, 0, 15, 9, 26, 15, 10, 33, 15, 11, 0, 15, 12, 0, 15, 13, 0, 15, 14, 0, 15, 15, 0, 15, 16, 0, 15, 17, 0, 15, 18, 26, 15, 19, 36, 16, 0, 36, 16, 1, 33, 16, 2, 0, 16, 3, 0, 16, 4, 0, 16, 5, 0, 16, 6, 0, 16, 7, 0, 16, 8, 0, 16, 9, 26, 16, 10, 33, 16, 11, 0, 16, 12, 0, 16, 13, 0, 16, 14, 0, 16, 15, 0, 16, 16, 0, 16, 17, 0, 16, 18, 26, 16, 19, 36, 17, 0, 36, 17, 1, 33, 17, 2, 0, 17, 3, 0, 17, 4, 0, 17, 5, 0, 17, 6, 0, 17, 7, 0, 17, 8, 0, 17, 9, 26, 17, 10, 33, 17, 11, 0, 17, 12, 0, 17, 13, 0, 17, 14, 0, 17, 15, 0, 17, 16, 0, 17, 17, 0, 17, 18, 26, 17, 19, 36, 18, 0, 36, 18, 1, 33, 18, 2, 0, 18, 3, 0, 18, 4, 0, 18, 5, 0, 18, 6, 0, 18, 7, 0, 18, 8, 0, 18, 9, 26, 18, 10, 33, 18, 11, 0, 18, 12, 0, 18, 13, 0, 18, 14, 0, 18, 15, 0, 18, 16, 0, 18, 17, 0, 18, 18, 26, 18, 19, 36, 19, 0, 36, 19, 1, 57, 19, 2, 50, 19, 3, 51, 19, 4, 0, 19, 5, 0, 19, 6, 0, 19, 7, 0, 19, 8, 0, 19, 9, 27, 19, 10, 34, 19, 11, 0, 19, 12, 0, 19, 13, 0, 19, 14, 0, 19, 15, 0, 19, 16, 0, 19, 17, 0, 19, 18, 26, 19, 19, 36, 20, 0, 36, 20, 1, 33, 20, 2, 0, 20, 3, 0, 20, 4, 0, 20, 5, 0, 20, 6, 0, 20, 7, 0, 20, 8, 0, 20, 9, 42, 20, 10, 44, 20, 11, 0, 20, 12, 0, 20, 13, 0, 20, 14, 0, 20, 15, 0, 20, 16, 0, 20, 17, 0, 20, 18, 26, 20, 19, 36, 21, 0, 36, 21, 1, 57, 21, 2, 50, 21, 3, 51, 21, 4, 0, 21, 5, 0, 21, 6, 0, 21, 7, 0, 21, 8, 0, 21, 9, 28, 21, 10, 35, 21, 11, 0, 21, 12, 0, 21, 13, 0, 21, 14, 0, 21, 15, 0, 21, 16, 0, 21, 17, 0, 21, 18, 26, 21, 19, 36, 22, 0, 36, 22, 1, 33, 22, 2, 0, 22, 3, 0, 22, 4, 0, 22, 5, 0, 22, 6, 0, 22, 7, 0, 22, 8, 0, 22, 9, 26, 22, 10, 33, 22, 11, 0, 22, 12, 0, 22, 13, 0, 22, 14, 0, 22, 15, 0, 22, 16, 0, 22, 17, 0, 22, 18, 26, 22, 19, 36, 23, 0, 36, 23, 1, 57, 23, 2, 50, 23, 3, 51, 23, 4, 0, 23, 5, 0, 23, 6, 0, 23, 7, 0, 23, 8, 0, 23, 9, 26, 23, 10, 33, 23, 11, 0, 23, 12, 0, 23, 13, 0, 23, 14, 0, 23, 15, 0, 23, 16, 0, 23, 17, 0, 23, 18, 26, 23, 19, 36, 24, 0, 36, 24, 1, 33, 24, 2, 0, 24, 3, 0, 24, 4, 0, 24, 5, 0, 24, 6, 0, 24, 7, 0, 24, 8, 0, 24, 9, 26, 24, 10, 33, 24, 11, 0, 24, 12, 0, 24, 13, 0, 24, 14, 0, 24, 15, 0, 24, 16, 0, 24, 17, 0, 24, 18, 26, 24, 19, 36, 25, 0, 36, 25, 1, 40, 25, 2, 30, 25, 3, 54, 25, 4, 0, 25, 5, 0, 25, 6, 0, 25, 7, 0, 25, 8, 0, 25, 9, 26, 25, 10, 33, 25, 11, 0, 25, 12, 0, 25, 13, 0, 25, 14, 0, 25, 15, 0, 25, 16, 0, 25, 17, 0, 25, 18, 26, 25, 19, 36, 26, 0, 36, 26, 1, 36, 27, 0, 36, 27, 1, 36, 26, 2, 36, 27, 2, 36, 26, 3, 40, 27, 3, 36, 26, 4, 30, 27, 4, 36, 26, 5, 30, 27, 5, 36, 26, 6, 30, 27, 6, 36, 26, 7, 30, 27, 7, 36, 26, 8, 30, 27, 8, 36, 26, 9, 38, 26, 10, 40, 27, 9, 36, 27, 10, 36, 26, 11, 30, 27, 11, 36, 26, 12, 30, 27, 12, 36, 26, 13, 30, 27, 13, 36, 26, 14, 30, 27, 14, 36, 26, 15, 30, 27, 15, 36, 26, 16, 30, 27, 16, 36, 26, 17, 30, 27, 17, 36, 26, 18, 38, 26, 19, 36, 27, 18, 36, 27, 19, 36)
 }
 
 [node name="Raices" type="Area3D" parent="PisoRaices" unique_id=1825834023]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.2, 8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 1.2, 10)
 script = ExtResource("4_g2cit")
 room_index = 8
 display_name = "PLACE_QV_ROOTS"
@@ -123,8 +707,30 @@ display_name = "PLACE_QV_ROOTS"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PisoRaices/Raices" unique_id=915025192]
 shape = SubResource("BoxShape3D_tw10w")
 
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoRaices/Raices" unique_id=954919818]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_i5dwr")
+
+[node name="LuzSala" type="SpotLight3D" parent="PisoRaices/Raices" unique_id=51831298]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(1, 0.9, 0.78, 1)
+light_energy = 2.2
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoRaices/Raices" unique_id=1415773375]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(26, 5, 18)
+box_projection = true
+interior = true
+ambient_mode = 0
+
 [node name="Ojos" type="Area3D" parent="PisoRaices" unique_id=417395759]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.2, 8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 10)
 script = ExtResource("4_g2cit")
 room_index = 9
 display_name = "PLACE_QV_EYES"
@@ -133,8 +739,30 @@ map_cell = Vector2i(1, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PisoRaices/Ojos" unique_id=1285106676]
 shape = SubResource("BoxShape3D_qfyna")
 
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoRaices/Ojos" unique_id=1164848740]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_kgmjf")
+
+[node name="LuzSala" type="SpotLight3D" parent="PisoRaices/Ojos" unique_id=2101351393]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(1, 0.9, 0.78, 1)
+light_energy = 2.2
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoRaices/Ojos" unique_id=1400144700]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(26, 5, 18)
+box_projection = true
+interior = true
+ambient_mode = 0
+
 [node name="Jefe" type="Area3D" parent="PisoRaices" unique_id=680377674]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.2, 24)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 28)
 script = ExtResource("4_g2cit")
 room_index = 10
 display_name = "PLACE_QV_BOSS"
@@ -144,20 +772,120 @@ boss_room = true
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PisoRaices/Jefe" unique_id=1498335628]
 shape = SubResource("BoxShape3D_b5g6x")
 
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoRaices/Jefe" unique_id=2109272761]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_8yinp")
+
+[node name="LuzSala" type="SpotLight3D" parent="PisoRaices/Jefe" unique_id=1994714526]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(1, 0.9, 0.78, 1)
+light_energy = 2.2
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoRaices/Jefe" unique_id=1553263615]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(26, 5, 18)
+box_projection = true
+interior = true
+ambient_mode = 0
+
 [node name="RaicesLocked" parent="PisoRaices" unique_id=928128145 instance=ExtResource("5_gq5qp")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 24, 0, 12)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 27, 0, 14)
+script = ExtResource("7_wvyc0")
 kind = 1
 flag = &"qv_roots_locked_door"
-depth = 2.0
+
+[node name="Leaf" parent="PisoRaices/RaicesLocked" index="0"]
+unique_name_in_owner = true
+
+[node name="LeafMesh" parent="PisoRaices/RaicesLocked/Leaf" index="0"]
+unique_name_in_owner = true
+transform = Transform3D(0.7, 0, 0, 0, 0.8, 0, 0, 0, 1, 0, 0, 0)
+mesh = ExtResource("8_3eapi")
+
+[node name="LeafBack" parent="PisoRaices/RaicesLocked/Leaf" index="1"]
+unique_name_in_owner = true
+transform = Transform3D(-0.7, 0, -8.742278e-08, 0, 0.8, 0, 6.119594e-08, 0, -1, 0, 0, 0)
+visible = false
+mesh = ExtResource("8_3eapi")
+
+[node name="SouthMark" parent="PisoRaices/RaicesLocked" index="1"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.03, -1.8)
+visible = false
+pixel_size = 0.009
+shaded = true
+texture = ExtResource("9_41w6x")
+
+[node name="CollisionShape3D" parent="PisoRaices/RaicesLocked" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = SubResource("Shape")
+
+[node name="Interactable" parent="PisoRaices/RaicesLocked" index="3"]
+collision_layer = 32
+collision_mask = 0
+monitoring = false
+script = ExtResource("10_u66i5")
+
+[node name="CollisionShape3D" parent="PisoRaices/RaicesLocked/Interactable" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("InteractShape")
+
+[node name="PersistentFlag" parent="PisoRaices/RaicesLocked" index="4"]
+script = ExtResource("persistent_flag")
 
 [node name="BossDoor" parent="PisoRaices" unique_id=791963616 instance=ExtResource("5_gq5qp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 16)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 19)
+script = ExtResource("7_wvyc0")
 kind = 4
 flag = &"qv_boss_door"
-depth = 2.0
 
-[node name="BossFight" type="Node3D" parent="PisoRaices" node_paths=PackedStringArray("room", "doors", "reward")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 24)
+[node name="Leaf" parent="PisoRaices/BossDoor" index="0"]
+unique_name_in_owner = true
+
+[node name="LeafMesh" parent="PisoRaices/BossDoor/Leaf" index="0"]
+unique_name_in_owner = true
+transform = Transform3D(0.7, 0, 0, 0, 0.8, 0, 0, 0, 1, 0, 0, 0)
+mesh = ExtResource("8_3eapi")
+
+[node name="LeafBack" parent="PisoRaices/BossDoor/Leaf" index="1"]
+unique_name_in_owner = true
+transform = Transform3D(-0.7, 0, -8.742278e-08, 0, 0.8, 0, 6.119594e-08, 0, -1, 0, 0, 0)
+visible = false
+mesh = ExtResource("8_3eapi")
+
+[node name="SouthMark" parent="PisoRaices/BossDoor" index="1"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.03, -1.8)
+visible = false
+pixel_size = 0.009
+shaded = true
+texture = ExtResource("9_41w6x")
+
+[node name="CollisionShape3D" parent="PisoRaices/BossDoor" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = SubResource("Shape")
+
+[node name="Interactable" parent="PisoRaices/BossDoor" index="3"]
+collision_layer = 32
+collision_mask = 0
+monitoring = false
+script = ExtResource("10_u66i5")
+
+[node name="CollisionShape3D" parent="PisoRaices/BossDoor/Interactable" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("InteractShape")
+
+[node name="PersistentFlag" parent="PisoRaices/BossDoor" index="4"]
+script = ExtResource("persistent_flag")
+
+[node name="BossFight" type="Node3D" parent="PisoRaices" unique_id=591466077 node_paths=PackedStringArray("room", "doors", "reward")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 28)
 script = ExtResource("37_fight")
 room = NodePath("../Jefe")
 flag = &"qv_boss_defeated"
@@ -166,122 +894,338 @@ doors = [NodePath("../BossDoor")]
 reward = NodePath("HeartContainer")
 reward_flag = &"qv_heart_container"
 
-[node name="PersistentFlag" type="Node" parent="PisoRaices/BossFight"]
+[node name="PersistentFlag" type="Node" parent="PisoRaices/BossFight" unique_id=575505297]
 script = ExtResource("persistent_flag")
 
-[node name="EyeWest" parent="PisoRaices/BossFight" instance=ExtResource("38_eye")]
+[node name="EyeWest" type="Node3D" parent="PisoRaices/BossFight" unique_id=90371593 instance=ExtResource("38_eye")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -1)
+script = ExtResource("14_qikql")
 config = ExtResource("47_eyeboss")
 hover_height = 3.2
 
-[node name="EyeEast" parent="PisoRaices/BossFight" instance=ExtResource("38_eye")]
+[node name="EyeEast" type="Node3D" parent="PisoRaices/BossFight" unique_id=1229779087 instance=ExtResource("38_eye")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -1)
+script = ExtResource("14_qikql")
 config = ExtResource("47_eyeboss")
 hover_height = 3.2
 
-[node name="HeartContainer" parent="PisoRaices/BossFight" instance=ExtResource("48_pickup")]
+[node name="HeartContainer" type="Area3D" parent="PisoRaices/BossFight" unique_id=2105459423 instance=ExtResource("48_pickup")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+collision_layer = 0
+monitorable = false
+script = ExtResource("17_borgw")
 item = ExtResource("49_heart")
 lifetime = 0.0
 item_get = true
 magnet_radius = 0.0
 world_size = 1.4
+heart_mesh = ExtResource("19_lvm7h")
 
-[node name="BossExitPortal" parent="PisoRaices" instance=ExtResource("50_warp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 28)
+[node name="BossExitPortal" type="Area3D" parent="PisoRaices" unique_id=1612604094 instance=ExtResource("50_warp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 32)
+script = ExtResource("44_d82md")
 target_scene = "res://levels/overworld.tscn"
 target_spawn = &"quenoa"
 required_flag = &"qv_boss_defeated"
 
-[node name="RootEyeA" parent="PisoRaices" unique_id=1424022934 instance=ExtResource("7_crhmt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 1.6)
+[node name="RootEyeA" type="StaticBody3D" parent="PisoRaices" unique_id=1424022934 instance=ExtResource("7_crhmt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 3.6)
+script = ExtResource("23_3db8p")
 flag = &"qv_root_eye_a"
 
-[node name="RootEyeB" parent="PisoRaices" unique_id=43094080 instance=ExtResource("7_crhmt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 1.6)
+[node name="RootEyeB" type="StaticBody3D" parent="PisoRaices" unique_id=43094080 instance=ExtResource("7_crhmt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 3.6)
+script = ExtResource("23_3db8p")
 flag = &"qv_root_eye_b"
 
-[node name="RootKeyGate" parent="PisoRaices" unique_id=567533266 instance=ExtResource("9_i77fr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 12)
+[node name="RootKeyGate" type="StaticBody3D" parent="PisoRaices" unique_id=567533266 instance=ExtResource("9_i77fr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 14)
+script = ExtResource("25_4k5gr")
 switches = Array[NodePath]([NodePath("../RootEyeA"), NodePath("../RootEyeB")])
 depth = 2.0
 
-[node name="RootKeyChest" parent="PisoRaices" unique_id=55072511 instance=ExtResource("11_5ogbh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 14)
+[node name="RootKeyChest" type="StaticBody3D" parent="PisoRaices" unique_id=55072511 instance=ExtResource("11_5ogbh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 16)
+script = ExtResource("27_wlgwi")
 item = ExtResource("13_vcwjq")
 flag = &"qv_root_key_chest"
 
 [node name="FromTrunk" type="Marker3D" parent="PisoRaices" unique_id=453295079]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4, 0, 12)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6, 0, 14)
 
-[node name="HiddenEye" parent="PisoRaices" unique_id=2067681723 instance=ExtResource("7_crhmt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 1.6)
+[node name="HiddenEye" type="StaticBody3D" parent="PisoRaices" unique_id=2067681723 instance=ExtResource("7_crhmt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 3.6)
+script = ExtResource("23_3db8p")
 flag = &"qv_hidden_eye"
 
-[node name="OjosCrackedWall" parent="PisoRaices" unique_id=698424788 instance=ExtResource("14_y54qy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 4)
+[node name="OjosCrackedWall" type="StaticBody3D" parent="PisoRaices" unique_id=698424788 instance=ExtResource("14_y54qy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 6)
+script = ExtResource("30_0a0he")
 flag = &"qv_hidden_cracked_wall"
 
-[node name="BossKeyGate" parent="PisoRaices" unique_id=197594756 instance=ExtResource("9_i77fr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 4)
+[node name="BossKeyGate" type="StaticBody3D" parent="PisoRaices" unique_id=197594756 instance=ExtResource("9_i77fr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 6)
+script = ExtResource("25_4k5gr")
 switches = Array[NodePath]([NodePath("../HiddenEye")])
 depth = 2.0
 
-[node name="BossKeyChest" parent="PisoRaices" unique_id=1495581339 instance=ExtResource("11_5ogbh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 2)
+[node name="BossKeyChest" type="StaticBody3D" parent="PisoRaices" unique_id=1495581339 instance=ExtResource("11_5ogbh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 4)
+script = ExtResource("27_wlgwi")
 item = ExtResource("16_8x4vj")
 flag = &"qv_boss_key_chest"
 big = true
 
-[node name="OjosEnemy1" parent="PisoRaices" unique_id=510737741 instance=ExtResource("17_r43r1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 10)
+[node name="OjosEnemy1" type="CharacterBody3D" parent="PisoRaices" unique_id=510737741 groups=["room_sleepers"] instance=ExtResource("17_r43r1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 12)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("33_dfq0f")
+config = ExtResource("34_2hnwo")
 
 [node name="RaicesStairs" parent="PisoRaices" unique_id=1198347042 node_paths=PackedStringArray("to") instance=ExtResource("20_ae6pq")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 12)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, 0, 14)
+script = ExtResource("36_nit5u")
 to = NodePath("../../PisoTronco/FromRoots")
 
+[node name="CollisionShape3D" parent="PisoRaices/RaicesStairs" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0.5)
+shape = SubResource("Trigger")
+
+[node name="CollisionShape3D" parent="PisoRaices/RaicesStairs/Back" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.65)
+shape = SubResource("Back")
+
+[node name="Visual" parent="PisoRaices/RaicesStairs" index="2"]
+visible = false
+
+[node name="Step1" parent="PisoRaices/RaicesStairs/Visual" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -0.2)
+mesh = SubResource("Step1")
+surface_material_override/0 = SubResource("Stone1")
+
+[node name="Step2" parent="PisoRaices/RaicesStairs/Visual" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -0.4)
+mesh = SubResource("Step2")
+surface_material_override/0 = SubResource("Stone2")
+
+[node name="Step3" parent="PisoRaices/RaicesStairs/Visual" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, -0.6)
+mesh = SubResource("Step3")
+surface_material_override/0 = SubResource("Stone3")
+
+[node name="Step4" parent="PisoRaices/RaicesStairs/Visual" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -0.8)
+mesh = SubResource("Step4")
+surface_material_override/0 = SubResource("Stone4")
+
+[node name="Void" parent="PisoRaices/RaicesStairs/Visual" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.97)
+mesh = SubResource("Void")
+surface_material_override/0 = SubResource("Dark")
+
 [node name="Torch_Raices_0" parent="PisoRaices" unique_id=1278729808 instance=ExtResource("22_nm22u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.6, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.9, 2.9333334)
+
+[node name="Model" parent="PisoRaices/Torch_Raices_0" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("38_a6a4g")
+
+[node name="Flame" parent="PisoRaices/Torch_Raices_0" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_m0l3m")
+
+[node name="Light" parent="PisoRaices/Torch_Raices_0" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("40_d5r2d")
+
+[node name="Glow" parent="PisoRaices/Torch_Raices_0" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("41_5ia7f")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
 
 [node name="Torch_Raices_1" parent="PisoRaices" unique_id=1631603675 instance=ExtResource("22_nm22u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.6, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.9, 2.9333334)
+
+[node name="Model" parent="PisoRaices/Torch_Raices_1" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("38_a6a4g")
+
+[node name="Flame" parent="PisoRaices/Torch_Raices_1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_qmgug")
+
+[node name="Light" parent="PisoRaices/Torch_Raices_1" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("40_d5r2d")
+
+[node name="Glow" parent="PisoRaices/Torch_Raices_1" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("41_5ia7f")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
 
 [node name="Torch_Ojos_0" parent="PisoRaices" unique_id=630904660 instance=ExtResource("22_nm22u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.6, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 1.9, 2.9333334)
+
+[node name="Model" parent="PisoRaices/Torch_Ojos_0" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("38_a6a4g")
+
+[node name="Flame" parent="PisoRaices/Torch_Ojos_0" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_0sjlk")
+
+[node name="Light" parent="PisoRaices/Torch_Ojos_0" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("40_d5r2d")
+
+[node name="Glow" parent="PisoRaices/Torch_Ojos_0" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("41_5ia7f")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
 
 [node name="Torch_Ojos_1" parent="PisoRaices" unique_id=202491737 instance=ExtResource("22_nm22u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1.6, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 1.9, 2.9333334)
+
+[node name="Model" parent="PisoRaices/Torch_Ojos_1" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("38_a6a4g")
+
+[node name="Flame" parent="PisoRaices/Torch_Ojos_1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_yahuk")
+
+[node name="Light" parent="PisoRaices/Torch_Ojos_1" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("40_d5r2d")
+
+[node name="Glow" parent="PisoRaices/Torch_Ojos_1" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("41_5ia7f")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
 
 [node name="Torch_Jefe_0" parent="PisoRaices" unique_id=207485506 instance=ExtResource("22_nm22u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.6, 17)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 1.9, 20.933332)
+
+[node name="Model" parent="PisoRaices/Torch_Jefe_0" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("38_a6a4g")
+
+[node name="Flame" parent="PisoRaices/Torch_Jefe_0" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_p6ggc")
+
+[node name="Light" parent="PisoRaices/Torch_Jefe_0" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("40_d5r2d")
+
+[node name="Glow" parent="PisoRaices/Torch_Jefe_0" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("41_5ia7f")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
 
 [node name="Torch_Jefe_1" parent="PisoRaices" unique_id=2047317627 instance=ExtResource("22_nm22u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1.6, 17)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 1.9, 20.933332)
+
+[node name="Model" parent="PisoRaices/Torch_Jefe_1" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("38_a6a4g")
+
+[node name="Flame" parent="PisoRaices/Torch_Jefe_1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_0mghl")
+
+[node name="Light" parent="PisoRaices/Torch_Jefe_1" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("40_d5r2d")
+
+[node name="Glow" parent="PisoRaices/Torch_Jefe_1" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("41_5ia7f")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
 
 [node name="PisoTronco" type="Node3D" parent="." unique_id=893486123]
 script = ExtResource("2_u6itt")
 display_name = "PLACE_FLOOR_TRUNK"
 
 [node name="GridMap" type="GridMap" parent="PisoTronco" unique_id=548970249 groups=["navmesh_source"]]
-mesh_library = ExtResource("3_ji7vh")
+mesh_library = ExtResource("3_x0p3s")
 cell_size = Vector3(2, 1, 2)
 cell_center_x = false
 cell_center_y = false
 cell_center_z = false
 data = {
-"cells": PackedInt32Array(0, 0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 6, 1, 0, 7, 1, 0, 8, 1, 0, 9, 1, 0, 10, 0, 0, 11, 1, 0, 12, 1, 0, 13, 1, 0, 14, 1, 0, 15, 1, 0, 16, 1, 1, 0, 1, 1, 1, 0, 1, 2, 0, 1, 3, 0, 1, 4, 0, 1, 5, 0, 1, 6, 0, 1, 7, 0, 1, 8, 1, 1, 9, 1, 1, 10, 0, 1, 11, 1, 1, 12, 0, 1, 13, 0, 1, 14, 0, 1, 15, 0, 1, 16, 1, 2, 0, 1, 2, 1, 1, 2, 2, 1, 2, 3, 0, 2, 4, 0, 2, 5, 0, 2, 6, 0, 2, 7, 0, 2, 8, 1, 2, 9, 0, 2, 10, 0, 2, 11, 0, 2, 12, 0, 2, 13, 0, 2, 14, 0, 2, 15, 0, 2, 16, 1, 3, 0, 1, 3, 1, 0, 3, 2, 0, 3, 3, 0, 3, 4, 0, 3, 5, 0, 3, 6, 0, 3, 7, 0, 3, 8, 1, 3, 9, 0, 3, 10, 0, 3, 11, 0, 3, 12, 0, 3, 13, 0, 3, 14, 0, 3, 15, 0, 3, 16, 1, 4, 0, 1, 4, 1, 1, 4, 2, 1, 4, 3, 0, 4, 4, 0, 4, 5, 0, 4, 6, 0, 4, 7, 0, 4, 8, 1, 4, 9, 0, 4, 10, 0, 4, 11, 0, 4, 12, 0, 4, 13, 0, 4, 14, 0, 4, 15, 0, 4, 16, 1, 5, 0, 1, 5, 1, 0, 5, 2, 0, 5, 3, 0, 5, 4, 0, 5, 5, 0, 5, 6, 0, 5, 7, 0, 5, 8, 1, 5, 9, 0, 5, 10, 0, 5, 11, 0, 5, 12, 0, 5, 13, 0, 5, 14, 0, 5, 15, 0, 5, 16, 1, 6, 0, 1, 6, 1, 0, 6, 2, 0, 6, 3, 0, 6, 4, 0, 6, 5, 0, 6, 6, 0, 6, 7, 0, 6, 8, 4, 6, 9, 0, 6, 10, 0, 6, 11, 0, 6, 12, 0, 6, 13, 0, 6, 14, 0, 6, 15, 0, 6, 16, 1, 7, 0, 1, 7, 1, 0, 7, 2, 0, 7, 3, 0, 7, 4, 0, 7, 5, 0, 7, 6, 0, 7, 7, 0, 7, 8, 1, 7, 9, 0, 7, 10, 0, 7, 11, 0, 7, 12, 0, 7, 13, 0, 7, 14, 0, 7, 15, 0, 7, 16, 1, 8, 0, 1, 8, 1, 1, 8, 2, 1, 8, 3, 0, 8, 4, 0, 8, 5, 0, 8, 6, 0, 8, 7, 0, 8, 8, 1, 8, 9, 0, 8, 10, 0, 8, 11, 0, 8, 12, 0, 8, 13, 0, 8, 14, 0, 8, 15, 0, 8, 16, 1, 9, 0, 1, 9, 1, 0, 9, 2, 0, 9, 3, 0, 9, 4, 0, 9, 5, 0, 9, 6, 0, 9, 7, 0, 9, 8, 1, 9, 9, 0, 9, 10, 0, 9, 11, 0, 9, 12, 0, 9, 13, 0, 9, 14, 0, 9, 15, 0, 9, 16, 1, 10, 0, 1, 10, 1, 1, 10, 2, 1, 10, 3, 0, 10, 4, 0, 10, 5, 0, 10, 6, 0, 10, 7, 0, 10, 8, 1, 10, 9, 0, 10, 10, 0, 10, 11, 0, 10, 12, 0, 10, 13, 0, 10, 14, 0, 10, 15, 0, 10, 16, 1, 11, 0, 1, 11, 1, 0, 11, 2, 0, 11, 3, 0, 11, 4, 0, 11, 5, 0, 11, 6, 0, 11, 7, 0, 11, 8, 1, 11, 9, 0, 11, 10, 0, 11, 11, 0, 11, 12, 0, 11, 13, 0, 11, 14, 0, 11, 15, 0, 11, 16, 1, 12, 0, 1, 12, 1, 1, 12, 2, 1, 12, 3, 1, 12, 4, 1, 12, 5, 1, 12, 6, 1, 12, 7, 1, 12, 8, 1, 12, 9, 1, 12, 10, 1, 12, 11, 1, 12, 12, 1048580, 12, 13, 1, 12, 14, 1, 12, 15, 1, 12, 16, 1, 13, 0, 1, 13, 1, 0, 13, 2, 0, 13, 3, 0, 13, 4, 0, 13, 5, 0, 13, 6, 0, 13, 7, 0, 13, 8, 1, 13, 9, 0, 13, 10, 0, 13, 11, 0, 13, 12, 0, 13, 13, 0, 13, 14, 0, 13, 15, 0, 13, 16, 1, 14, 0, 1, 14, 1, 0, 14, 2, 0, 14, 3, 0, 14, 4, 0, 14, 5, 0, 14, 6, 0, 14, 7, 0, 14, 8, 1, 14, 9, 0, 14, 10, 0, 14, 11, 0, 14, 12, 0, 14, 13, 0, 14, 14, 0, 14, 15, 0, 14, 16, 1, 15, 0, 1, 15, 1, 0, 15, 2, 0, 15, 3, 0, 15, 4, 0, 15, 5, 0, 15, 6, 0, 15, 7, 0, 15, 8, 1, 15, 9, 0, 15, 10, 0, 15, 11, 0, 15, 12, 0, 15, 13, 0, 15, 14, 0, 15, 15, 0, 15, 16, 1, 16, 0, 1, 16, 1, 0, 16, 2, 0, 16, 3, 0, 16, 4, 0, 16, 5, 0, 16, 6, 0, 16, 7, 0, 16, 8, 1, 16, 9, 0, 16, 10, 0, 16, 11, 0, 16, 12, 0, 16, 13, 0, 16, 14, 0, 16, 15, 0, 16, 16, 1, 17, 0, 1, 17, 1, 0, 17, 2, 0, 17, 3, 0, 17, 4, 0, 17, 5, 0, 17, 6, 0, 17, 7, 0, 17, 8, 1, 17, 9, 0, 17, 10, 0, 17, 11, 0, 17, 12, 0, 17, 13, 0, 17, 14, 0, 17, 15, 0, 17, 16, 1, 18, 0, 0, 18, 1, 0, 18, 2, 0, 18, 3, 0, 18, 4, 0, 18, 5, 0, 18, 6, 0, 18, 7, 0, 18, 8, 1, 18, 9, 0, 18, 10, 0, 18, 11, 0, 18, 12, 0, 18, 13, 0, 18, 14, 0, 18, 15, 0, 18, 16, 4, 19, 0, 1, 19, 1, 0, 19, 2, 0, 19, 3, 0, 19, 4, 0, 19, 5, 0, 19, 6, 0, 19, 7, 0, 19, 8, 1, 19, 9, 0, 19, 10, 0, 19, 11, 0, 19, 12, 0, 19, 13, 0, 19, 14, 0, 19, 15, 0, 19, 16, 1, 20, 0, 1, 20, 1, 0, 20, 2, 0, 20, 3, 0, 20, 4, 0, 20, 5, 0, 20, 6, 0, 20, 7, 0, 20, 8, 1, 20, 9, 0, 20, 10, 0, 20, 11, 0, 20, 12, 0, 20, 13, 0, 20, 14, 0, 20, 15, 0, 20, 16, 1, 21, 0, 1, 21, 1, 0, 21, 2, 0, 21, 3, 0, 21, 4, 0, 21, 5, 0, 21, 6, 0, 21, 7, 0, 21, 8, 1, 21, 9, 0, 21, 10, 0, 21, 11, 0, 21, 12, 0, 21, 13, 0, 21, 14, 0, 21, 15, 0, 21, 16, 1, 22, 0, 1, 22, 1, 0, 22, 2, 0, 22, 3, 0, 22, 4, 0, 22, 5, 0, 22, 6, 0, 22, 7, 0, 22, 8, 4, 22, 9, 0, 22, 10, 0, 22, 11, 0, 22, 12, 0, 22, 13, 0, 22, 14, 0, 22, 15, 0, 22, 16, 1, 23, 0, 1, 23, 1, 0, 23, 2, 0, 23, 3, 0, 23, 4, 0, 23, 5, 0, 23, 6, 0, 23, 7, 0, 23, 8, 1, 23, 9, 0, 23, 10, 0, 23, 11, 0, 23, 12, 0, 23, 13, 0, 23, 14, 0, 23, 15, 0, 23, 16, 1, 24, 0, 1, 24, 1, 1, 24, 2, 1, 24, 3, 1, 24, 4, 1, 24, 5, 1, 24, 6, 1, 24, 7, 1, 24, 8, 1, 24, 9, 1, 24, 10, 1, 24, 11, 1, 24, 12, 1, 24, 13, 1, 24, 14, 1, 24, 15, 1, 24, 16, 1)
+"cells": PackedInt32Array(0, 0, 36, 0, 1, 36, 1, 0, 36, 1, 1, 39, 0, 2, 36, 1, 2, 22, 0, 3, 36, 1, 3, 22, 0, 4, 36, 1, 4, 22, 0, 5, 36, 1, 5, 22, 0, 6, 36, 1, 6, 22, 0, 7, 36, 1, 7, 22, 0, 8, 36, 1, 8, 22, 0, 9, 36, 0, 10, 36, 1, 9, 37, 1, 10, 36, 0, 11, 36, 1, 11, 39, 0, 12, 36, 1, 12, 48, 0, 13, 36, 1, 13, 56, 0, 14, 36, 1, 14, 22, 0, 15, 36, 1, 15, 22, 0, 16, 36, 1, 16, 22, 0, 17, 36, 1, 17, 22, 0, 18, 36, 0, 19, 36, 1, 18, 37, 1, 19, 36, 2, 0, 36, 2, 1, 33, 2, 2, 0, 2, 3, 0, 2, 4, 0, 2, 5, 0, 2, 6, 0, 2, 7, 0, 2, 8, 0, 2, 9, 26, 2, 10, 39, 2, 11, 25, 2, 12, 0, 2, 13, 53, 2, 14, 0, 2, 15, 0, 2, 16, 0, 2, 17, 0, 2, 18, 26, 2, 19, 36, 3, 0, 36, 3, 1, 57, 3, 2, 50, 3, 3, 51, 3, 4, 0, 3, 5, 0, 3, 6, 0, 3, 7, 0, 3, 8, 0, 3, 9, 26, 3, 10, 33, 3, 11, 0, 3, 12, 0, 3, 13, 0, 3, 14, 0, 3, 15, 0, 3, 16, 0, 3, 17, 0, 3, 18, 26, 3, 19, 36, 4, 0, 36, 4, 1, 33, 4, 2, 0, 4, 3, 0, 4, 4, 0, 4, 5, 0, 4, 6, 0, 4, 7, 0, 4, 8, 0, 4, 9, 26, 4, 10, 33, 4, 11, 0, 4, 12, 0, 4, 13, 0, 4, 14, 0, 4, 15, 0, 4, 16, 0, 4, 17, 0, 4, 18, 26, 4, 19, 36, 5, 0, 36, 5, 1, 57, 5, 2, 50, 5, 3, 51, 5, 4, 0, 5, 5, 0, 5, 6, 0, 5, 7, 0, 5, 8, 0, 5, 9, 26, 5, 10, 33, 5, 11, 0, 5, 12, 0, 5, 13, 0, 5, 14, 0, 5, 15, 0, 5, 16, 0, 5, 17, 0, 5, 18, 26, 5, 19, 36, 6, 0, 36, 6, 1, 33, 6, 2, 0, 6, 3, 0, 6, 4, 0, 6, 5, 0, 6, 6, 0, 6, 7, 0, 6, 8, 0, 6, 9, 27, 6, 10, 34, 6, 11, 0, 6, 12, 0, 6, 13, 0, 6, 14, 0, 6, 15, 0, 6, 16, 0, 6, 17, 0, 6, 18, 26, 6, 19, 36, 7, 0, 36, 7, 1, 33, 7, 2, 0, 7, 3, 0, 7, 4, 0, 7, 5, 0, 7, 6, 0, 7, 7, 0, 7, 8, 0, 7, 9, 42, 7, 10, 44, 7, 11, 0, 7, 12, 0, 7, 13, 0, 7, 14, 0, 7, 15, 0, 7, 16, 0, 7, 17, 0, 7, 18, 26, 7, 19, 36, 8, 0, 36, 8, 1, 33, 8, 2, 0, 8, 3, 0, 8, 4, 0, 8, 5, 0, 8, 6, 0, 8, 7, 0, 8, 8, 0, 8, 9, 28, 8, 10, 35, 8, 11, 0, 8, 12, 0, 8, 13, 0, 8, 14, 0, 8, 15, 0, 8, 16, 0, 8, 17, 0, 8, 18, 26, 8, 19, 36, 9, 0, 36, 9, 1, 57, 9, 2, 50, 9, 3, 51, 9, 4, 0, 9, 5, 0, 9, 6, 0, 9, 7, 0, 9, 8, 0, 9, 9, 26, 9, 10, 33, 9, 11, 0, 9, 12, 0, 9, 13, 0, 9, 14, 0, 9, 15, 0, 9, 16, 0, 9, 17, 0, 9, 18, 26, 9, 19, 36, 10, 0, 36, 10, 1, 33, 10, 2, 0, 10, 3, 0, 10, 4, 0, 10, 5, 0, 10, 6, 0, 10, 7, 0, 10, 8, 0, 10, 9, 26, 10, 10, 33, 10, 11, 0, 10, 12, 0, 10, 13, 0, 10, 14, 0, 10, 15, 0, 10, 16, 0, 10, 17, 0, 10, 18, 26, 10, 19, 36, 11, 0, 36, 11, 1, 57, 11, 2, 50, 11, 3, 51, 11, 4, 0, 11, 5, 0, 11, 6, 0, 11, 7, 0, 11, 8, 0, 11, 9, 26, 11, 10, 33, 11, 11, 0, 11, 12, 0, 11, 13, 0, 11, 14, 0, 11, 15, 0, 11, 16, 0, 11, 17, 0, 11, 18, 26, 11, 19, 36, 12, 0, 36, 12, 1, 33, 12, 2, 0, 12, 3, 0, 12, 4, 0, 12, 5, 0, 12, 6, 0, 12, 7, 0, 12, 8, 0, 12, 9, 26, 12, 10, 33, 12, 11, 0, 12, 12, 0, 12, 13, 0, 12, 14, 0, 12, 15, 0, 12, 16, 0, 12, 17, 0, 12, 18, 26, 12, 19, 36, 13, 0, 36, 13, 1, 40, 14, 0, 36, 14, 1, 39, 13, 2, 30, 14, 2, 22, 13, 3, 30, 14, 3, 22, 13, 4, 30, 14, 4, 22, 13, 5, 30, 14, 5, 22, 13, 6, 30, 14, 6, 22, 13, 7, 30, 14, 7, 22, 13, 8, 30, 14, 8, 22, 13, 9, 38, 13, 10, 40, 14, 9, 37, 14, 10, 39, 13, 11, 30, 14, 11, 22, 13, 12, 30, 14, 12, 22, 13, 13, 32, 14, 13, 24, 13, 14, 43, 14, 14, 41, 13, 15, 31, 14, 15, 23, 13, 16, 30, 14, 16, 22, 13, 17, 30, 14, 17, 22, 13, 18, 38, 13, 19, 36, 14, 18, 37, 14, 19, 36, 15, 0, 36, 15, 1, 33, 15, 2, 0, 15, 3, 0, 15, 4, 0, 15, 5, 0, 15, 6, 0, 15, 7, 0, 15, 8, 0, 15, 9, 26, 15, 10, 33, 15, 11, 0, 15, 12, 0, 15, 13, 0, 15, 14, 0, 15, 15, 0, 15, 16, 0, 15, 17, 0, 15, 18, 26, 15, 19, 36, 16, 0, 36, 16, 1, 33, 16, 2, 0, 16, 3, 0, 16, 4, 0, 16, 5, 0, 16, 6, 0, 16, 7, 0, 16, 8, 0, 16, 9, 26, 16, 10, 33, 16, 11, 0, 16, 12, 0, 16, 13, 0, 16, 14, 0, 16, 15, 0, 16, 16, 0, 16, 17, 0, 16, 18, 26, 16, 19, 36, 17, 0, 36, 17, 1, 33, 17, 2, 0, 17, 3, 0, 17, 4, 0, 17, 5, 0, 17, 6, 0, 17, 7, 0, 17, 8, 0, 17, 9, 26, 17, 10, 33, 17, 11, 0, 17, 12, 0, 17, 13, 0, 17, 14, 0, 17, 15, 0, 17, 16, 0, 17, 17, 0, 17, 18, 26, 17, 19, 36, 18, 0, 36, 18, 1, 33, 18, 2, 0, 18, 3, 0, 18, 4, 0, 18, 5, 0, 18, 6, 0, 18, 7, 0, 18, 8, 0, 18, 9, 26, 18, 10, 33, 18, 11, 0, 18, 12, 0, 18, 13, 0, 18, 14, 0, 18, 15, 0, 18, 16, 0, 18, 17, 0, 18, 18, 26, 18, 19, 36, 19, 0, 36, 19, 1, 33, 19, 2, 0, 19, 3, 0, 19, 4, 0, 19, 5, 0, 19, 6, 0, 19, 7, 0, 19, 8, 0, 19, 9, 26, 19, 10, 33, 19, 11, 0, 19, 12, 0, 19, 13, 0, 19, 14, 0, 19, 15, 0, 19, 16, 0, 19, 17, 0, 19, 18, 27, 19, 19, 36, 20, 0, 36, 20, 1, 58, 20, 2, 0, 20, 3, 0, 20, 4, 0, 20, 5, 0, 20, 6, 0, 20, 7, 0, 20, 8, 0, 20, 9, 26, 20, 10, 33, 20, 11, 0, 20, 12, 0, 20, 13, 0, 20, 14, 0, 20, 15, 0, 20, 16, 0, 20, 17, 0, 20, 18, 42, 20, 19, 45, 21, 0, 36, 21, 1, 33, 21, 2, 0, 21, 3, 0, 21, 4, 0, 21, 5, 0, 21, 6, 0, 21, 7, 0, 21, 8, 0, 21, 9, 26, 21, 10, 33, 21, 11, 0, 21, 12, 0, 21, 13, 0, 21, 14, 0, 21, 15, 0, 21, 16, 0, 21, 17, 0, 21, 18, 28, 21, 19, 36, 22, 0, 36, 22, 1, 33, 22, 2, 0, 22, 3, 0, 22, 4, 0, 22, 5, 0, 22, 6, 0, 22, 7, 0, 22, 8, 0, 22, 9, 26, 22, 10, 33, 22, 11, 0, 22, 12, 0, 22, 13, 0, 22, 14, 0, 22, 15, 0, 22, 16, 0, 22, 17, 0, 22, 18, 26, 22, 19, 36, 23, 0, 36, 23, 1, 33, 23, 2, 0, 23, 3, 0, 23, 4, 0, 23, 5, 0, 23, 6, 0, 23, 7, 0, 23, 8, 0, 23, 9, 27, 23, 10, 34, 23, 11, 0, 23, 12, 0, 23, 13, 0, 23, 14, 0, 23, 15, 0, 23, 16, 0, 23, 17, 0, 23, 18, 26, 23, 19, 36, 24, 0, 36, 24, 1, 33, 24, 2, 0, 24, 3, 0, 24, 4, 0, 24, 5, 0, 24, 6, 0, 24, 7, 0, 24, 8, 0, 24, 9, 42, 24, 10, 44, 24, 11, 0, 24, 12, 0, 24, 13, 0, 24, 14, 0, 24, 15, 0, 24, 16, 0, 24, 17, 0, 24, 18, 26, 24, 19, 36, 25, 0, 36, 25, 1, 33, 25, 2, 0, 25, 3, 0, 25, 4, 0, 25, 5, 0, 25, 6, 0, 25, 7, 0, 25, 8, 0, 25, 9, 28, 25, 10, 35, 25, 11, 0, 25, 12, 0, 25, 13, 0, 25, 14, 0, 25, 15, 0, 25, 16, 0, 25, 17, 0, 25, 18, 26, 25, 19, 36, 26, 0, 36, 26, 1, 40, 27, 0, 36, 27, 1, 36, 26, 2, 30, 27, 2, 36, 26, 3, 30, 27, 3, 36, 26, 4, 30, 27, 4, 36, 26, 5, 30, 27, 5, 36, 26, 6, 30, 27, 6, 36, 26, 7, 30, 27, 7, 36, 26, 8, 30, 27, 8, 36, 26, 9, 38, 26, 10, 40, 27, 9, 36, 27, 10, 36, 26, 11, 30, 27, 11, 36, 26, 12, 30, 27, 12, 36, 26, 13, 30, 27, 13, 36, 26, 14, 30, 27, 14, 36, 26, 15, 30, 27, 15, 36, 26, 16, 30, 27, 16, 36, 26, 17, 30, 27, 17, 36, 26, 18, 38, 26, 19, 36, 27, 18, 36, 27, 19, 36)
 }
 
 [node name="Rama" type="Area3D" parent="PisoTronco" unique_id=691708513]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.2, 8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 1.2, 10)
 script = ExtResource("4_g2cit")
 display_name = "PLACE_QV_BRANCH"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PisoTronco/Rama" unique_id=1830683328]
 shape = SubResource("BoxShape3D_1o0uj")
 
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoTronco/Rama" unique_id=1780892489]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_n6xjq")
+
+[node name="LuzSala" type="SpotLight3D" parent="PisoTronco/Rama" unique_id=109818629]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(1, 0.9, 0.78, 1)
+light_energy = 2.2
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoTronco/Rama" unique_id=132438533]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(26, 5, 18)
+box_projection = true
+interior = true
+ambient_mode = 0
+
 [node name="Escalera" type="Area3D" parent="PisoTronco" unique_id=2094677338]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.2, 8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 10)
 script = ExtResource("4_g2cit")
 room_index = 1
 display_name = "PLACE_QV_STAIRWELL"
@@ -290,8 +1234,30 @@ map_cell = Vector2i(1, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PisoTronco/Escalera" unique_id=1392349754]
 shape = SubResource("BoxShape3D_orgj2")
 
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoTronco/Escalera" unique_id=1321013989]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_m7rie")
+
+[node name="LuzSala" type="SpotLight3D" parent="PisoTronco/Escalera" unique_id=1276063755]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(1, 0.9, 0.78, 1)
+light_energy = 2.2
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoTronco/Escalera" unique_id=1270631010]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(26, 5, 18)
+box_projection = true
+interior = true
+ambient_mode = 0
+
 [node name="Tronco" type="Area3D" parent="PisoTronco" unique_id=850770037]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.2, 24)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 1.2, 28)
 script = ExtResource("4_g2cit")
 room_index = 2
 display_name = "PLACE_QV_TRUNK"
@@ -300,8 +1266,30 @@ map_cell = Vector2i(0, 1)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PisoTronco/Tronco" unique_id=511267539]
 shape = SubResource("BoxShape3D_dxo2p")
 
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoTronco/Tronco" unique_id=1166912060]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_bo0qj")
+
+[node name="LuzSala" type="SpotLight3D" parent="PisoTronco/Tronco" unique_id=1460573170]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(1, 0.9, 0.78, 1)
+light_energy = 2.2
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoTronco/Tronco" unique_id=1865412922]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(26, 5, 18)
+box_projection = true
+interior = true
+ambient_mode = 0
+
 [node name="Entrada" type="Area3D" parent="PisoTronco" unique_id=119332382]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.2, 24)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 28)
 script = ExtResource("4_g2cit")
 room_index = 3
 display_name = "PLACE_QV_ENTRANCE"
@@ -310,103 +1298,456 @@ map_cell = Vector2i(1, 1)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PisoTronco/Entrada" unique_id=345453128]
 shape = SubResource("BoxShape3D_owgnv")
 
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoTronco/Entrada" unique_id=376928113]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_ntgrw")
+
+[node name="LuzSala" type="SpotLight3D" parent="PisoTronco/Entrada" unique_id=966126248]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(1, 0.9, 0.78, 1)
+light_energy = 2.2
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoTronco/Entrada" unique_id=656556940]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(26, 5, 18)
+box_projection = true
+interior = true
+ambient_mode = 0
+
 [node name="EntradaLocked" parent="PisoTronco" unique_id=1950879804 instance=ExtResource("5_gq5qp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 16)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 19)
+script = ExtResource("7_wvyc0")
 kind = 1
 flag = &"qv_entrance_locked_door"
-depth = 2.0
 
-[node name="RamaSwitch" parent="PisoTronco" unique_id=380941476 instance=ExtResource("23_wvyc0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 10)
+[node name="Leaf" parent="PisoTronco/EntradaLocked" index="0"]
+unique_name_in_owner = true
+
+[node name="LeafMesh" parent="PisoTronco/EntradaLocked/Leaf" index="0"]
+unique_name_in_owner = true
+transform = Transform3D(0.7, 0, 0, 0, 0.8, 0, 0, 0, 1, 0, 0, 0)
+mesh = ExtResource("8_3eapi")
+
+[node name="LeafBack" parent="PisoTronco/EntradaLocked/Leaf" index="1"]
+unique_name_in_owner = true
+transform = Transform3D(-0.7, 0, -8.742278e-08, 0, 0.8, 0, 6.119594e-08, 0, -1, 0, 0, 0)
+visible = false
+mesh = ExtResource("8_3eapi")
+
+[node name="SouthMark" parent="PisoTronco/EntradaLocked" index="1"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.03, -1.8)
+visible = false
+pixel_size = 0.009
+shaded = true
+texture = ExtResource("9_41w6x")
+
+[node name="CollisionShape3D" parent="PisoTronco/EntradaLocked" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = SubResource("Shape")
+
+[node name="Interactable" parent="PisoTronco/EntradaLocked" index="3"]
+collision_layer = 32
+collision_mask = 0
+monitoring = false
+script = ExtResource("10_u66i5")
+
+[node name="CollisionShape3D" parent="PisoTronco/EntradaLocked/Interactable" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("InteractShape")
+
+[node name="PersistentFlag" parent="PisoTronco/EntradaLocked" index="4"]
+script = ExtResource("persistent_flag")
+
+[node name="RamaSwitch" type="Area3D" parent="PisoTronco" unique_id=380941476 instance=ExtResource("23_wvyc0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 12)
+script = ExtResource("43_d82md")
 mode = 2
 flag = &"qv_west_switch"
 
-[node name="RamaBlock" parent="PisoTronco" unique_id=312255785 instance=ExtResource("25_41w6x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 10)
+[node name="RamaBlock" type="AnimatableBody3D" parent="PisoTronco" unique_id=312255785 instance=ExtResource("25_41w6x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 12)
+collision_layer = 9
+collision_mask = 0
+script = ExtResource("45_kifxg")
 solved_flag = &"qv_west_switch"
 solved_position = Vector3(14, 0, 10)
 
-[node name="RamaKeyGate" parent="PisoTronco" unique_id=759443533 instance=ExtResource("9_i77fr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 4)
+[node name="RamaKeyGate" type="StaticBody3D" parent="PisoTronco" unique_id=759443533 instance=ExtResource("9_i77fr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 6)
+script = ExtResource("25_4k5gr")
 switches = Array[NodePath]([NodePath("../RamaSwitch")])
 depth = 2.0
 
-[node name="RamaKeyChest" parent="PisoTronco" unique_id=1940824733 instance=ExtResource("11_5ogbh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 2)
+[node name="RamaKeyChest" type="StaticBody3D" parent="PisoTronco" unique_id=1940824733 instance=ExtResource("11_5ogbh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 4)
+script = ExtResource("27_wlgwi")
 item = ExtResource("13_vcwjq")
 flag = &"qv_west_key_chest"
 
-[node name="RamaEye" parent="PisoTronco" unique_id=567842958 instance=ExtResource("7_crhmt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 1.6)
+[node name="RamaEye" type="StaticBody3D" parent="PisoTronco" unique_id=567842958 instance=ExtResource("7_crhmt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 3.6)
+script = ExtResource("23_3db8p")
 flag = &"qv_west_eye"
 
-[node name="HeartGate" parent="PisoTronco" unique_id=736230981 instance=ExtResource("9_i77fr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 4)
+[node name="HeartGate" type="StaticBody3D" parent="PisoTronco" unique_id=736230981 instance=ExtResource("9_i77fr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 6)
+script = ExtResource("25_4k5gr")
 switches = Array[NodePath]([NodePath("../RamaEye")])
 depth = 2.0
 
-[node name="HeartPieceRama" parent="PisoTronco" unique_id=42612648 instance=ExtResource("27_qikql")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 2)
+[node name="HeartPieceRama" type="Area3D" parent="PisoTronco" unique_id=42612648 instance=ExtResource("27_qikql")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 4)
+collision_layer = 0
+monitorable = false
+script = ExtResource("47_d6b3u")
 flag = &"qv_heart_piece"
+item = ExtResource("48_e5cvg")
+heal = 4
+lifetime = 0.0
+item_get = true
+magnet_radius = 0.0
+world_size = 1.0
+heart_mesh = ExtResource("19_lvm7h")
 
-[node name="RamaEnemy1" parent="PisoTronco" unique_id=2031318847 instance=ExtResource("17_r43r1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 12)
+[node name="RamaEnemy1" type="CharacterBody3D" parent="PisoTronco" unique_id=2031318847 groups=["room_sleepers"] instance=ExtResource("17_r43r1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 14)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("33_dfq0f")
+config = ExtResource("34_2hnwo")
 
-[node name="RamaEnemy2" parent="PisoTronco" unique_id=550345268 instance=ExtResource("17_r43r1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 12)
+[node name="RamaEnemy2" type="CharacterBody3D" parent="PisoTronco" unique_id=550345268 groups=["room_sleepers"] instance=ExtResource("17_r43r1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 14)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("33_dfq0f")
+config = ExtResource("34_2hnwo")
 
-[node name="TroncoEye" parent="PisoTronco" unique_id=59961283 instance=ExtResource("7_crhmt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 17.6)
+[node name="TroncoEye" type="StaticBody3D" parent="PisoTronco" unique_id=59961283 instance=ExtResource("7_crhmt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 21.6)
+script = ExtResource("23_3db8p")
 flag = &"qv_trunk_eye"
 
-[node name="TroncoGate" parent="PisoTronco" unique_id=1495134382 instance=ExtResource("9_i77fr")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, 0, 20)
+[node name="TroncoGate" type="StaticBody3D" parent="PisoTronco" unique_id=1495134382 instance=ExtResource("9_i77fr")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4, 0, 24)
+script = ExtResource("25_4k5gr")
 switches = Array[NodePath]([NodePath("../TroncoEye")])
 depth = 2.0
 
-[node name="EntradaPot1" parent="PisoTronco" unique_id=780741351 instance=ExtResource("31_4k5gr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 18)
+[node name="EntradaPot1" type="Node3D" parent="PisoTronco" unique_id=780741351 instance=ExtResource("31_4k5gr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 22)
+script = ExtResource("50_nhcls")
+drops = ExtResource("51_620bx")
+drop_height = 0.1
 
-[node name="EntradaPot2" parent="PisoTronco" unique_id=1543954952 instance=ExtResource("31_4k5gr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 0, 30)
+[node name="EntradaPot2" type="Node3D" parent="PisoTronco" unique_id=1543954952 instance=ExtResource("31_4k5gr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 0, 34)
+script = ExtResource("50_nhcls")
+drops = ExtResource("51_620bx")
+drop_height = 0.1
 
 [node name="FromCanopy" type="Marker3D" parent="PisoTronco" unique_id=2120924244]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 6)
 
 [node name="FromRoots" type="Marker3D" parent="PisoTronco" unique_id=513193480]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4, 0, 20)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6, 0, 24)
 
 [node name="TroncoStairs" parent="PisoTronco" unique_id=501035157 node_paths=PackedStringArray("to") instance=ExtResource("34_dfq0f")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 20)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, 0, 24)
+script = ExtResource("36_nit5u")
 to = NodePath("../../PisoRaices/FromTrunk")
 
+[node name="CollisionShape3D" parent="PisoTronco/TroncoStairs" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0.5)
+shape = SubResource("BoxShape3D_kfd5l")
+
+[node name="CollisionShape3D" parent="PisoTronco/TroncoStairs/Back" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.65)
+shape = SubResource("BoxShape3D_0tnly")
+
+[node name="Visual" parent="PisoTronco/TroncoStairs" index="2"]
+visible = false
+
+[node name="Opening" parent="PisoTronco/TroncoStairs/Visual" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
+mesh = SubResource("Opening")
+surface_material_override/0 = SubResource("StandardMaterial3D_aot6n")
+
+[node name="Step1" parent="PisoTronco/TroncoStairs/Visual" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0.75)
+mesh = SubResource("Step")
+surface_material_override/0 = SubResource("StandardMaterial3D_ajg5h")
+
+[node name="Step2" parent="PisoTronco/TroncoStairs/Visual" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0.3)
+mesh = SubResource("Step")
+surface_material_override/0 = SubResource("StandardMaterial3D_eqgk0")
+
+[node name="Step3" parent="PisoTronco/TroncoStairs/Visual" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, -0.15)
+mesh = SubResource("Step")
+surface_material_override/0 = SubResource("StandardMaterial3D_xhjub")
+
+[node name="Void" parent="PisoTronco/TroncoStairs/Visual" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.97)
+mesh = SubResource("BoxMesh_eujmy")
+surface_material_override/0 = SubResource("StandardMaterial3D_aot6n")
+
 [node name="EscaleraStairs" parent="PisoTronco" unique_id=1420585042 node_paths=PackedStringArray("to") instance=ExtResource("20_ae6pq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 2)
+script = ExtResource("36_nit5u")
 to = NodePath("../../PisoCopa/FromTrunk")
 
+[node name="CollisionShape3D" parent="PisoTronco/EscaleraStairs" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0.5)
+shape = SubResource("Trigger")
+
+[node name="CollisionShape3D" parent="PisoTronco/EscaleraStairs/Back" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.65)
+shape = SubResource("Back")
+
+[node name="Visual" parent="PisoTronco/EscaleraStairs" index="2"]
+visible = false
+
+[node name="Step1" parent="PisoTronco/EscaleraStairs/Visual" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -0.2)
+mesh = SubResource("Step1")
+surface_material_override/0 = SubResource("Stone1")
+
+[node name="Step2" parent="PisoTronco/EscaleraStairs/Visual" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -0.4)
+mesh = SubResource("Step2")
+surface_material_override/0 = SubResource("Stone2")
+
+[node name="Step3" parent="PisoTronco/EscaleraStairs/Visual" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, -0.6)
+mesh = SubResource("Step3")
+surface_material_override/0 = SubResource("Stone3")
+
+[node name="Step4" parent="PisoTronco/EscaleraStairs/Visual" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -0.8)
+mesh = SubResource("Step4")
+surface_material_override/0 = SubResource("Stone4")
+
+[node name="Void" parent="PisoTronco/EscaleraStairs/Visual" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.97)
+mesh = SubResource("Void")
+surface_material_override/0 = SubResource("Dark")
+
 [node name="Torch_Rama_0" parent="PisoTronco" unique_id=1417249236 instance=ExtResource("22_nm22u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.6, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.9, 2.9333334)
+
+[node name="Model" parent="PisoTronco/Torch_Rama_0" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("38_a6a4g")
+
+[node name="Flame" parent="PisoTronco/Torch_Rama_0" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_lmteb")
+
+[node name="Light" parent="PisoTronco/Torch_Rama_0" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("40_d5r2d")
+
+[node name="Glow" parent="PisoTronco/Torch_Rama_0" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("41_5ia7f")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
 
 [node name="Torch_Rama_1" parent="PisoTronco" unique_id=1121408574 instance=ExtResource("22_nm22u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.6, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.9, 2.9333334)
+
+[node name="Model" parent="PisoTronco/Torch_Rama_1" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("38_a6a4g")
+
+[node name="Flame" parent="PisoTronco/Torch_Rama_1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_dq0ok")
+
+[node name="Light" parent="PisoTronco/Torch_Rama_1" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("40_d5r2d")
+
+[node name="Glow" parent="PisoTronco/Torch_Rama_1" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("41_5ia7f")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
 
 [node name="Torch_Escalera_0" parent="PisoTronco" unique_id=939954064 instance=ExtResource("22_nm22u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.6, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 1.9, 2.9333334)
+
+[node name="Model" parent="PisoTronco/Torch_Escalera_0" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("38_a6a4g")
+
+[node name="Flame" parent="PisoTronco/Torch_Escalera_0" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_tql7m")
+
+[node name="Light" parent="PisoTronco/Torch_Escalera_0" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("40_d5r2d")
+
+[node name="Glow" parent="PisoTronco/Torch_Escalera_0" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("41_5ia7f")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
 
 [node name="Torch_Escalera_1" parent="PisoTronco" unique_id=1503086538 instance=ExtResource("22_nm22u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1.6, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 1.9, 2.9333334)
+
+[node name="Model" parent="PisoTronco/Torch_Escalera_1" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("38_a6a4g")
+
+[node name="Flame" parent="PisoTronco/Torch_Escalera_1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_q1rit")
+
+[node name="Light" parent="PisoTronco/Torch_Escalera_1" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("40_d5r2d")
+
+[node name="Glow" parent="PisoTronco/Torch_Escalera_1" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("41_5ia7f")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
 
 [node name="Torch_Tronco_0" parent="PisoTronco" unique_id=1548844831 instance=ExtResource("22_nm22u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.6, 17)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.9, 20.933332)
+
+[node name="Model" parent="PisoTronco/Torch_Tronco_0" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("38_a6a4g")
+
+[node name="Flame" parent="PisoTronco/Torch_Tronco_0" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_dj3q5")
+
+[node name="Light" parent="PisoTronco/Torch_Tronco_0" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("40_d5r2d")
+
+[node name="Glow" parent="PisoTronco/Torch_Tronco_0" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("41_5ia7f")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
 
 [node name="Torch_Tronco_1" parent="PisoTronco" unique_id=1657363572 instance=ExtResource("22_nm22u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.6, 17)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.9, 20.933332)
+
+[node name="Model" parent="PisoTronco/Torch_Tronco_1" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("38_a6a4g")
+
+[node name="Flame" parent="PisoTronco/Torch_Tronco_1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_5d5e3")
+
+[node name="Light" parent="PisoTronco/Torch_Tronco_1" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("40_d5r2d")
+
+[node name="Glow" parent="PisoTronco/Torch_Tronco_1" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("41_5ia7f")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
 
 [node name="Torch_Entrada_0" parent="PisoTronco" unique_id=1006346956 instance=ExtResource("22_nm22u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.6, 17)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 1.9, 20.933332)
+
+[node name="Model" parent="PisoTronco/Torch_Entrada_0" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("38_a6a4g")
+
+[node name="Flame" parent="PisoTronco/Torch_Entrada_0" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_8vdmv")
+
+[node name="Light" parent="PisoTronco/Torch_Entrada_0" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("40_d5r2d")
+
+[node name="Glow" parent="PisoTronco/Torch_Entrada_0" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("41_5ia7f")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
 
 [node name="Torch_Entrada_1" parent="PisoTronco" unique_id=729744238 instance=ExtResource("22_nm22u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1.6, 17)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 1.9, 20.933332)
+
+[node name="Model" parent="PisoTronco/Torch_Entrada_1" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("38_a6a4g")
+
+[node name="Flame" parent="PisoTronco/Torch_Entrada_1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_gfdh4")
+
+[node name="Light" parent="PisoTronco/Torch_Entrada_1" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("40_d5r2d")
+
+[node name="Glow" parent="PisoTronco/Torch_Entrada_1" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("41_5ia7f")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
 
 [node name="PisoCopa" type="Node3D" parent="." unique_id=934917712]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
@@ -415,17 +1756,17 @@ level = 1
 display_name = "PLACE_FLOOR_CANOPY"
 
 [node name="GridMap" type="GridMap" parent="PisoCopa" unique_id=2115704018 groups=["navmesh_source"]]
-mesh_library = ExtResource("3_ji7vh")
+mesh_library = ExtResource("3_x0p3s")
 cell_size = Vector3(2, 1, 2)
 cell_center_x = false
 cell_center_y = false
 cell_center_z = false
 data = {
-"cells": PackedInt32Array(0, 0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 6, 1, 0, 7, 1, 0, 8, 1, 0, 9, 1, 0, 10, 1, 0, 11, 1, 0, 12, 1, 0, 13, 1, 0, 14, 1, 0, 15, 1, 0, 16, 1, 1, 0, 1, 1, 1, 0, 1, 2, 0, 1, 3, 0, 1, 4, 0, 1, 5, 0, 1, 6, 0, 1, 7, 0, 1, 8, 1, 1, 9, 0, 1, 10, 0, 1, 11, 0, 1, 12, 0, 1, 13, 0, 1, 14, 0, 1, 15, 0, 1, 16, 1, 2, 0, 1, 2, 1, 0, 2, 2, 0, 2, 3, 0, 2, 4, 0, 2, 5, 0, 2, 6, 0, 2, 7, 0, 2, 8, 1, 2, 9, 0, 2, 10, 0, 2, 11, 0, 2, 12, 0, 2, 13, 0, 2, 14, 0, 2, 15, 0, 2, 16, 1, 3, 0, 1, 3, 1, 0, 3, 2, 0, 3, 3, 0, 3, 4, 0, 3, 5, 0, 3, 6, 21, 3, 7, 0, 3, 8, 1, 3, 9, 0, 3, 10, 0, 3, 11, 0, 3, 12, 0, 3, 13, 0, 3, 14, 0, 3, 15, 0, 3, 16, 1, 4, 0, 1, 4, 1, 0, 4, 2, 0, 4, 3, 0, 4, 4, 0, 4, 5, 0, 4, 6, 0, 4, 7, 0, 4, 8, 1, 4, 9, 0, 4, 10, 0, 4, 11, 0, 4, 12, 0, 4, 13, 0, 4, 14, 0, 4, 15, 0, 4, 16, 1, 5, 0, 1, 5, 1, 0, 5, 2, 0, 5, 3, 0, 5, 4, 0, 5, 5, 0, 5, 6, 0, 5, 7, 0, 5, 8, 1, 5, 9, 0, 5, 10, 0, 5, 11, 0, 5, 12, 0, 5, 13, 0, 5, 14, 0, 5, 15, 0, 5, 16, 1, 6, 0, 1, 6, 1, 0, 6, 2, 0, 6, 3, 0, 6, 4, 0, 6, 5, 0, 6, 6, 0, 6, 7, 0, 6, 8, 1, 6, 9, 0, 6, 10, 0, 6, 11, 0, 6, 12, 0, 6, 13, 0, 6, 14, 0, 6, 15, 0, 6, 16, 1, 7, 0, 1, 7, 1, 0, 7, 2, 0, 7, 3, 0, 7, 4, 0, 7, 5, 0, 7, 6, 0, 7, 7, 0, 7, 8, 1, 7, 9, 0, 7, 10, 0, 7, 11, 0, 7, 12, 0, 7, 13, 0, 7, 14, 0, 7, 15, 0, 7, 16, 1, 8, 0, 1, 8, 1, 0, 8, 2, 0, 8, 3, 0, 8, 4, 0, 8, 5, 0, 8, 6, 0, 8, 7, 0, 8, 8, 1, 8, 9, 0, 8, 10, 0, 8, 11, 0, 8, 12, 0, 8, 13, 0, 8, 14, 0, 8, 15, 0, 8, 16, 1, 9, 0, 1, 9, 1, 0, 9, 2, 0, 9, 3, 0, 9, 4, 0, 9, 5, 0, 9, 6, 0, 9, 7, 0, 9, 8, 1, 9, 9, 0, 9, 10, 0, 9, 11, 0, 9, 12, 21, 9, 13, 0, 9, 14, 0, 9, 15, 0, 9, 16, 1, 10, 0, 1, 10, 1, 0, 10, 2, 0, 10, 3, 0, 10, 4, 0, 10, 5, 0, 10, 6, 0, 10, 7, 0, 10, 8, 1, 10, 9, 0, 10, 10, 0, 10, 11, 0, 10, 12, 0, 10, 13, 0, 10, 14, 0, 10, 15, 0, 10, 16, 1, 11, 0, 1, 11, 1, 0, 11, 2, 0, 11, 3, 0, 11, 4, 0, 11, 5, 0, 11, 6, 0, 11, 7, 0, 11, 8, 1, 11, 9, 0, 11, 10, 0, 11, 11, 0, 11, 12, 0, 11, 13, 0, 11, 14, 0, 11, 15, 0, 11, 16, 1, 12, 0, 1, 12, 1, 1, 12, 2, 1, 12, 3, 1, 12, 4, 1048580, 12, 5, 1, 12, 6, 1, 12, 7, 1, 12, 8, 1, 12, 9, 1, 12, 10, 1, 12, 11, 1, 12, 12, 1048580, 12, 13, 1, 12, 14, 1, 12, 15, 1, 12, 16, 1, 13, 0, 1, 13, 1, 0, 13, 2, 0, 13, 3, 0, 13, 4, 0, 13, 5, 0, 13, 6, 0, 13, 7, 0, 13, 8, 1, 13, 9, 0, 13, 10, 0, 13, 11, 0, 13, 12, 0, 13, 13, 0, 13, 14, 0, 13, 15, 0, 13, 16, 1, 14, 0, 1, 14, 1, 0, 14, 2, 0, 14, 3, 0, 14, 4, 0, 14, 5, 0, 14, 6, 0, 14, 7, 0, 14, 8, 1, 14, 9, 0, 14, 10, 0, 14, 11, 0, 14, 12, 0, 14, 13, 0, 14, 14, 0, 14, 15, 0, 14, 16, 1, 15, 0, 1, 15, 1, 0, 15, 2, 0, 15, 3, 0, 15, 4, 0, 15, 5, 0, 15, 6, 0, 15, 7, 0, 15, 8, 1, 15, 9, 0, 15, 10, 0, 15, 11, 0, 15, 12, 0, 15, 13, 0, 15, 14, 0, 15, 15, 0, 15, 16, 1, 16, 0, 1, 16, 1, 0, 16, 2, 0, 16, 3, 0, 16, 4, 0, 16, 5, 0, 16, 6, 0, 16, 7, 0, 16, 8, 1, 16, 9, 0, 16, 10, 0, 16, 11, 0, 16, 12, 0, 16, 13, 0, 16, 14, 0, 16, 15, 0, 16, 16, 1, 17, 0, 1, 17, 1, 0, 17, 2, 0, 17, 3, 0, 17, 4, 0, 17, 5, 0, 17, 6, 0, 17, 7, 0, 17, 8, 1, 17, 9, 0, 17, 10, 0, 17, 11, 0, 17, 12, 0, 17, 13, 0, 17, 14, 0, 17, 15, 0, 17, 16, 1, 18, 0, 0, 18, 1, 0, 18, 2, 0, 18, 3, 0, 18, 4, 0, 18, 5, 0, 18, 6, 0, 18, 7, 0, 18, 8, 4, 18, 9, 0, 18, 10, 0, 18, 11, 0, 18, 12, 0, 18, 13, 0, 18, 14, 0, 18, 15, 0, 18, 16, 1, 19, 0, 1, 19, 1, 0, 19, 2, 0, 19, 3, 0, 19, 4, 0, 19, 5, 0, 19, 6, 0, 19, 7, 0, 19, 8, 1, 19, 9, 0, 19, 10, 0, 19, 11, 0, 19, 12, 0, 19, 13, 0, 19, 14, 0, 19, 15, 0, 19, 16, 1, 20, 0, 1, 20, 1, 0, 20, 2, 0, 20, 3, 0, 20, 4, 0, 20, 5, 0, 20, 6, 0, 20, 7, 0, 20, 8, 1, 20, 9, 0, 20, 10, 0, 20, 11, 0, 20, 12, 0, 20, 13, 0, 20, 14, 0, 20, 15, 0, 20, 16, 1, 21, 0, 1, 21, 1, 0, 21, 2, 0, 21, 3, 0, 21, 4, 0, 21, 5, 0, 21, 6, 0, 21, 7, 0, 21, 8, 1, 21, 9, 0, 21, 10, 0, 21, 11, 0, 21, 12, 0, 21, 13, 0, 21, 14, 0, 21, 15, 0, 21, 16, 1, 22, 0, 1, 22, 1, 0, 22, 2, 0, 22, 3, 0, 22, 4, 0, 22, 5, 0, 22, 6, 0, 22, 7, 0, 22, 8, 1, 22, 9, 0, 22, 10, 0, 22, 11, 0, 22, 12, 0, 22, 13, 0, 22, 14, 0, 22, 15, 0, 22, 16, 1, 23, 0, 1, 23, 1, 0, 23, 2, 0, 23, 3, 0, 23, 4, 0, 23, 5, 0, 23, 6, 0, 23, 7, 0, 23, 8, 1, 23, 9, 0, 23, 10, 0, 23, 11, 0, 23, 12, 0, 23, 13, 0, 23, 14, 0, 23, 15, 0, 23, 16, 1, 24, 0, 1, 24, 1, 1, 24, 2, 1, 24, 3, 1, 24, 4, 1, 24, 5, 1, 24, 6, 1, 24, 7, 1, 24, 8, 1, 24, 9, 1, 24, 10, 1, 24, 11, 1, 24, 12, 1, 24, 13, 1, 24, 14, 1, 24, 15, 1, 24, 16, 1)
+"cells": PackedInt32Array(0, 0, 36, 0, 1, 36, 1, 0, 36, 1, 1, 39, 0, 2, 36, 1, 2, 22, 0, 3, 36, 1, 3, 22, 0, 4, 36, 1, 4, 22, 0, 5, 36, 1, 5, 22, 0, 6, 36, 1, 6, 22, 0, 7, 36, 1, 7, 22, 0, 8, 36, 1, 8, 22, 0, 9, 36, 0, 10, 36, 1, 9, 37, 1, 10, 39, 0, 11, 36, 1, 11, 22, 0, 12, 36, 1, 12, 22, 0, 13, 36, 1, 13, 22, 0, 14, 36, 1, 14, 22, 0, 15, 36, 1, 15, 22, 0, 16, 36, 1, 16, 22, 0, 17, 36, 1, 17, 22, 0, 18, 36, 0, 19, 36, 1, 18, 37, 1, 19, 36, 2, 0, 36, 2, 1, 33, 2, 2, 0, 2, 3, 0, 2, 4, 0, 2, 5, 0, 2, 6, 0, 2, 7, 0, 2, 8, 0, 2, 9, 26, 2, 10, 33, 2, 11, 0, 2, 12, 0, 2, 13, 0, 2, 14, 0, 2, 15, 0, 2, 16, 0, 2, 17, 0, 2, 18, 26, 2, 19, 36, 3, 0, 36, 3, 1, 33, 3, 2, 0, 3, 3, 0, 3, 4, 0, 3, 5, 0, 3, 6, 0, 3, 7, 0, 3, 8, 0, 3, 9, 26, 3, 10, 33, 3, 11, 0, 3, 12, 0, 3, 13, 0, 3, 14, 0, 3, 15, 0, 3, 16, 0, 3, 17, 0, 3, 18, 26, 3, 19, 36, 4, 0, 36, 4, 1, 33, 4, 2, 0, 4, 3, 0, 4, 4, 0, 4, 5, 0, 4, 6, 0, 4, 7, 21, 4, 8, 0, 4, 9, 26, 4, 10, 33, 4, 11, 0, 4, 12, 0, 4, 13, 0, 4, 14, 0, 4, 15, 0, 4, 16, 0, 4, 17, 0, 4, 18, 26, 4, 19, 36, 5, 0, 36, 5, 1, 33, 5, 2, 0, 5, 3, 0, 5, 4, 0, 5, 5, 0, 5, 6, 0, 5, 7, 0, 5, 8, 0, 5, 9, 26, 5, 10, 33, 5, 11, 0, 5, 12, 0, 5, 13, 0, 5, 14, 0, 5, 15, 0, 5, 16, 0, 5, 17, 0, 5, 18, 26, 5, 19, 36, 6, 0, 36, 6, 1, 33, 6, 2, 0, 6, 3, 0, 6, 4, 0, 6, 5, 0, 6, 6, 0, 6, 7, 0, 6, 8, 0, 6, 9, 26, 6, 10, 33, 6, 11, 0, 6, 12, 0, 6, 13, 0, 6, 14, 0, 6, 15, 0, 6, 16, 0, 6, 17, 0, 6, 18, 26, 6, 19, 36, 7, 0, 36, 7, 1, 33, 7, 2, 0, 7, 3, 0, 7, 4, 0, 7, 5, 0, 7, 6, 0, 7, 7, 0, 7, 8, 0, 7, 9, 26, 7, 10, 33, 7, 11, 0, 7, 12, 0, 7, 13, 0, 7, 14, 0, 7, 15, 0, 7, 16, 0, 7, 17, 0, 7, 18, 26, 7, 19, 36, 8, 0, 36, 8, 1, 33, 8, 2, 0, 8, 3, 0, 8, 4, 0, 8, 5, 0, 8, 6, 0, 8, 7, 0, 8, 8, 0, 8, 9, 26, 8, 10, 33, 8, 11, 0, 8, 12, 0, 8, 13, 0, 8, 14, 0, 8, 15, 0, 8, 16, 0, 8, 17, 0, 8, 18, 26, 8, 19, 36, 9, 0, 36, 9, 1, 33, 9, 2, 0, 9, 3, 0, 9, 4, 0, 9, 5, 0, 9, 6, 0, 9, 7, 0, 9, 8, 0, 9, 9, 26, 9, 10, 33, 9, 11, 0, 9, 12, 0, 9, 13, 0, 9, 14, 0, 9, 15, 0, 9, 16, 0, 9, 17, 0, 9, 18, 26, 9, 19, 36, 10, 0, 36, 10, 1, 33, 10, 2, 0, 10, 3, 0, 10, 4, 0, 10, 5, 0, 10, 6, 0, 10, 7, 0, 10, 8, 0, 10, 9, 26, 10, 10, 33, 10, 11, 0, 10, 12, 0, 10, 13, 0, 10, 14, 21, 10, 15, 0, 10, 16, 0, 10, 17, 0, 10, 18, 26, 10, 19, 36, 11, 0, 36, 11, 1, 33, 11, 2, 0, 11, 3, 0, 11, 4, 0, 11, 5, 0, 11, 6, 0, 11, 7, 0, 11, 8, 0, 11, 9, 26, 11, 10, 33, 11, 11, 0, 11, 12, 0, 11, 13, 0, 11, 14, 0, 11, 15, 0, 11, 16, 0, 11, 17, 0, 11, 18, 26, 11, 19, 36, 12, 0, 36, 12, 1, 33, 12, 2, 0, 12, 3, 0, 12, 4, 0, 12, 5, 0, 12, 6, 0, 12, 7, 0, 12, 8, 0, 12, 9, 26, 12, 10, 33, 12, 11, 0, 12, 12, 0, 12, 13, 0, 12, 14, 0, 12, 15, 0, 12, 16, 0, 12, 17, 0, 12, 18, 26, 12, 19, 36, 13, 0, 36, 13, 1, 40, 14, 0, 36, 14, 1, 39, 13, 2, 30, 14, 2, 22, 13, 3, 30, 14, 3, 22, 13, 4, 32, 14, 4, 24, 13, 5, 43, 14, 5, 41, 13, 6, 31, 14, 6, 23, 13, 7, 30, 14, 7, 22, 13, 8, 30, 14, 8, 22, 13, 9, 38, 13, 10, 40, 14, 9, 37, 14, 10, 39, 13, 11, 30, 14, 11, 22, 13, 12, 30, 14, 12, 22, 13, 13, 32, 14, 13, 24, 13, 14, 43, 14, 14, 41, 13, 15, 31, 14, 15, 23, 13, 16, 30, 14, 16, 22, 13, 17, 30, 14, 17, 22, 13, 18, 38, 13, 19, 36, 14, 18, 37, 14, 19, 36, 15, 0, 36, 15, 1, 33, 15, 2, 0, 15, 3, 0, 15, 4, 0, 15, 5, 0, 15, 6, 0, 15, 7, 0, 15, 8, 0, 15, 9, 26, 15, 10, 33, 15, 11, 0, 15, 12, 0, 15, 13, 0, 15, 14, 0, 15, 15, 0, 15, 16, 0, 15, 17, 0, 15, 18, 26, 15, 19, 36, 16, 0, 36, 16, 1, 33, 16, 2, 0, 16, 3, 0, 16, 4, 0, 16, 5, 0, 16, 6, 0, 16, 7, 0, 16, 8, 0, 16, 9, 26, 16, 10, 33, 16, 11, 0, 16, 12, 0, 16, 13, 0, 16, 14, 0, 16, 15, 0, 16, 16, 0, 16, 17, 0, 16, 18, 26, 16, 19, 36, 17, 0, 36, 17, 1, 33, 17, 2, 0, 17, 3, 0, 17, 4, 0, 17, 5, 0, 17, 6, 0, 17, 7, 0, 17, 8, 0, 17, 9, 26, 17, 10, 33, 17, 11, 0, 17, 12, 0, 17, 13, 0, 17, 14, 0, 17, 15, 0, 17, 16, 0, 17, 17, 0, 17, 18, 26, 17, 19, 36, 18, 0, 36, 18, 1, 33, 18, 2, 0, 18, 3, 0, 18, 4, 0, 18, 5, 0, 18, 6, 0, 18, 7, 0, 18, 8, 0, 18, 9, 26, 18, 10, 33, 18, 11, 0, 18, 12, 0, 18, 13, 0, 18, 14, 0, 18, 15, 0, 18, 16, 0, 18, 17, 0, 18, 18, 26, 18, 19, 36, 19, 0, 36, 19, 1, 33, 19, 2, 0, 19, 3, 0, 19, 4, 0, 19, 5, 0, 19, 6, 0, 19, 7, 0, 19, 8, 0, 19, 9, 27, 19, 10, 34, 19, 11, 0, 19, 12, 0, 19, 13, 0, 19, 14, 0, 19, 15, 0, 19, 16, 0, 19, 17, 0, 19, 18, 26, 19, 19, 36, 20, 0, 36, 20, 1, 49, 20, 2, 0, 20, 3, 0, 20, 4, 0, 20, 5, 0, 20, 6, 0, 20, 7, 0, 20, 8, 0, 20, 9, 42, 20, 10, 44, 20, 11, 0, 20, 12, 0, 20, 13, 0, 20, 14, 0, 20, 15, 0, 20, 16, 0, 20, 17, 0, 20, 18, 26, 20, 19, 36, 21, 0, 36, 21, 1, 33, 21, 2, 0, 21, 3, 0, 21, 4, 0, 21, 5, 0, 21, 6, 0, 21, 7, 0, 21, 8, 0, 21, 9, 28, 21, 10, 35, 21, 11, 0, 21, 12, 0, 21, 13, 0, 21, 14, 0, 21, 15, 0, 21, 16, 0, 21, 17, 0, 21, 18, 26, 21, 19, 36, 22, 0, 36, 22, 1, 33, 22, 2, 0, 22, 3, 0, 22, 4, 0, 22, 5, 0, 22, 6, 0, 22, 7, 0, 22, 8, 0, 22, 9, 26, 22, 10, 33, 22, 11, 0, 22, 12, 0, 22, 13, 0, 22, 14, 0, 22, 15, 0, 22, 16, 0, 22, 17, 0, 22, 18, 26, 22, 19, 36, 23, 0, 36, 23, 1, 33, 23, 2, 0, 23, 3, 0, 23, 4, 0, 23, 5, 0, 23, 6, 0, 23, 7, 0, 23, 8, 0, 23, 9, 26, 23, 10, 33, 23, 11, 0, 23, 12, 0, 23, 13, 0, 23, 14, 0, 23, 15, 0, 23, 16, 0, 23, 17, 0, 23, 18, 26, 23, 19, 36, 24, 0, 36, 24, 1, 33, 24, 2, 0, 24, 3, 0, 24, 4, 0, 24, 5, 0, 24, 6, 0, 24, 7, 0, 24, 8, 0, 24, 9, 26, 24, 10, 33, 24, 11, 0, 24, 12, 0, 24, 13, 0, 24, 14, 0, 24, 15, 0, 24, 16, 0, 24, 17, 0, 24, 18, 26, 24, 19, 36, 25, 0, 36, 25, 1, 33, 25, 2, 0, 25, 3, 0, 25, 4, 0, 25, 5, 0, 25, 6, 0, 25, 7, 0, 25, 8, 0, 25, 9, 26, 25, 10, 33, 25, 11, 0, 25, 12, 0, 25, 13, 0, 25, 14, 0, 25, 15, 0, 25, 16, 0, 25, 17, 0, 25, 18, 26, 25, 19, 36, 26, 0, 36, 26, 1, 40, 27, 0, 36, 27, 1, 36, 26, 2, 30, 27, 2, 36, 26, 3, 30, 27, 3, 36, 26, 4, 30, 27, 4, 36, 26, 5, 30, 27, 5, 36, 26, 6, 30, 27, 6, 36, 26, 7, 30, 27, 7, 36, 26, 8, 30, 27, 8, 36, 26, 9, 38, 26, 10, 40, 27, 9, 36, 27, 10, 36, 26, 11, 30, 27, 11, 36, 26, 12, 30, 27, 12, 36, 26, 13, 30, 27, 13, 36, 26, 14, 30, 27, 14, 36, 26, 15, 30, 27, 15, 36, 26, 16, 30, 27, 16, 36, 26, 17, 30, 27, 17, 36, 26, 18, 38, 26, 19, 36, 27, 18, 36, 27, 19, 36)
 }
 
 [node name="Nido" type="Area3D" parent="PisoCopa" unique_id=1797799344]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.2, 8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 1.2, 10)
 script = ExtResource("4_g2cit")
 room_index = 4
 display_name = "PLACE_QV_NEST"
@@ -433,8 +1774,30 @@ display_name = "PLACE_QV_NEST"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PisoCopa/Nido" unique_id=926110519]
 shape = SubResource("BoxShape3D_hiqku")
 
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoCopa/Nido" unique_id=152479185]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_7khdi")
+
+[node name="LuzSala" type="SpotLight3D" parent="PisoCopa/Nido" unique_id=147352840]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(1, 0.9, 0.78, 1)
+light_energy = 2.2
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoCopa/Nido" unique_id=270423873]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(26, 5, 18)
+box_projection = true
+interior = true
+ambient_mode = 0
+
 [node name="Copa" type="Area3D" parent="PisoCopa" unique_id=910296247]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.2, 8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 10)
 script = ExtResource("4_g2cit")
 room_index = 5
 display_name = "PLACE_QV_CANOPY"
@@ -443,8 +1806,30 @@ map_cell = Vector2i(1, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PisoCopa/Copa" unique_id=561728411]
 shape = SubResource("BoxShape3D_0sl1j")
 
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoCopa/Copa" unique_id=913818351]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_cq2t5")
+
+[node name="LuzSala" type="SpotLight3D" parent="PisoCopa/Copa" unique_id=1976530936]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(1, 0.9, 0.78, 1)
+light_energy = 2.2
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoCopa/Copa" unique_id=148330075]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(26, 5, 18)
+box_projection = true
+interior = true
+ambient_mode = 0
+
 [node name="Arco" type="Area3D" parent="PisoCopa" unique_id=812528767]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.2, 24)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 1.2, 28)
 script = ExtResource("4_g2cit")
 room_index = 6
 display_name = "PLACE_QV_BOW"
@@ -453,8 +1838,30 @@ map_cell = Vector2i(0, 1)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PisoCopa/Arco" unique_id=892482244]
 shape = SubResource("BoxShape3D_lby5b")
 
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoCopa/Arco" unique_id=1333827537]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_wnesm")
+
+[node name="LuzSala" type="SpotLight3D" parent="PisoCopa/Arco" unique_id=74569496]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(1, 0.9, 0.78, 1)
+light_energy = 2.2
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoCopa/Arco" unique_id=1569505431]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(26, 5, 18)
+box_projection = true
+interior = true
+ambient_mode = 0
+
 [node name="Vigia" type="Area3D" parent="PisoCopa" unique_id=266752495]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.2, 24)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 28)
 script = ExtResource("4_g2cit")
 room_index = 7
 display_name = "PLACE_QV_WARDEN"
@@ -463,120 +1870,473 @@ map_cell = Vector2i(1, 1)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PisoCopa/Vigia" unique_id=521729438]
 shape = SubResource("BoxShape3D_5q4hq")
 
-[node name="NidoCrackedWall" parent="PisoCopa" unique_id=1892586098 instance=ExtResource("14_y54qy")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 24, 0, 8)
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoCopa/Vigia" unique_id=600596538]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_184fl")
+
+[node name="LuzSala" type="SpotLight3D" parent="PisoCopa/Vigia" unique_id=1703030277]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(1, 0.9, 0.78, 1)
+light_energy = 2.2
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoCopa/Vigia" unique_id=574325515]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(26, 5, 18)
+box_projection = true
+interior = true
+ambient_mode = 0
+
+[node name="NidoCrackedWall" type="StaticBody3D" parent="PisoCopa" unique_id=1892586098 instance=ExtResource("14_y54qy")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 27, 0, 10)
+script = ExtResource("30_0a0he")
 flag = &"qv_nest_cracked_wall"
 
 [node name="CopaLocked" parent="PisoCopa" unique_id=191687561 instance=ExtResource("5_gq5qp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 16)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 19)
+script = ExtResource("7_wvyc0")
 kind = 1
 flag = &"qv_canopy_locked_door"
-depth = 2.0
 
-[node name="MapChest" parent="PisoCopa" unique_id=822495786 instance=ExtResource("11_5ogbh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 6)
+[node name="Leaf" parent="PisoCopa/CopaLocked" index="0"]
+unique_name_in_owner = true
+
+[node name="LeafMesh" parent="PisoCopa/CopaLocked/Leaf" index="0"]
+unique_name_in_owner = true
+transform = Transform3D(0.7, 0, 0, 0, 0.8, 0, 0, 0, 1, 0, 0, 0)
+mesh = ExtResource("8_3eapi")
+
+[node name="LeafBack" parent="PisoCopa/CopaLocked/Leaf" index="1"]
+unique_name_in_owner = true
+transform = Transform3D(-0.7, 0, -8.742278e-08, 0, 0.8, 0, 6.119594e-08, 0, -1, 0, 0, 0)
+visible = false
+mesh = ExtResource("8_3eapi")
+
+[node name="SouthMark" parent="PisoCopa/CopaLocked" index="1"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.03, -1.8)
+visible = false
+pixel_size = 0.009
+shaded = true
+texture = ExtResource("9_41w6x")
+
+[node name="CollisionShape3D" parent="PisoCopa/CopaLocked" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = SubResource("Shape")
+
+[node name="Interactable" parent="PisoCopa/CopaLocked" index="3"]
+collision_layer = 32
+collision_mask = 0
+monitoring = false
+script = ExtResource("10_u66i5")
+
+[node name="CollisionShape3D" parent="PisoCopa/CopaLocked/Interactable" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("InteractShape")
+
+[node name="PersistentFlag" parent="PisoCopa/CopaLocked" index="4"]
+script = ExtResource("persistent_flag")
+
+[node name="MapChest" type="StaticBody3D" parent="PisoCopa" unique_id=822495786 instance=ExtResource("11_5ogbh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 8)
+script = ExtResource("27_wlgwi")
 item = ExtResource("35_2hnwo")
 flag = &"qv_map_chest"
 
-[node name="CopaEnemy1" parent="PisoCopa" unique_id=1777270686 instance=ExtResource("17_r43r1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 10)
+[node name="CopaEnemy1" type="CharacterBody3D" parent="PisoCopa" unique_id=1777270686 groups=["room_sleepers"] instance=ExtResource("17_r43r1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 12)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("33_dfq0f")
+config = ExtResource("34_2hnwo")
 
-[node name="CopaEnemy2" parent="PisoCopa" unique_id=1788957876 instance=ExtResource("17_r43r1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 12)
+[node name="CopaEnemy2" type="CharacterBody3D" parent="PisoCopa" unique_id=1788957876 groups=["room_sleepers"] instance=ExtResource("17_r43r1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 0, 14)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("33_dfq0f")
+config = ExtResource("34_2hnwo")
 
-[node name="NidoKeyChest" parent="PisoCopa" unique_id=2011647554 instance=ExtResource("11_5ogbh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 4)
+[node name="NidoKeyChest" type="StaticBody3D" parent="PisoCopa" unique_id=2011647554 instance=ExtResource("11_5ogbh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 6)
+script = ExtResource("27_wlgwi")
 item = ExtResource("13_vcwjq")
 flag = &"qv_nest_key_chest"
 
-[node name="CompassChest" parent="PisoCopa" unique_id=1961742828 instance=ExtResource("11_5ogbh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 4)
+[node name="CompassChest" type="StaticBody3D" parent="PisoCopa" unique_id=1961742828 instance=ExtResource("11_5ogbh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 6)
+script = ExtResource("27_wlgwi")
 item = ExtResource("36_8syh8")
 flag = &"qv_compass_chest"
 
-[node name="WardenFight" type="Node3D" parent="PisoCopa" node_paths=PackedStringArray("room", "doors")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 24)
+[node name="WardenFight" type="Node3D" parent="PisoCopa" unique_id=1109680458 node_paths=PackedStringArray("room", "doors")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 28)
 script = ExtResource("37_fight")
 room = NodePath("../Vigia")
 flag = &"qv_warden_defeated"
 display_name = "BOSS_QV_WARDEN"
 doors = [NodePath("../CopaLocked"), NodePath("../ArcoDoor")]
 
-[node name="PersistentFlag" type="Node" parent="PisoCopa/WardenFight"]
+[node name="PersistentFlag" type="Node" parent="PisoCopa/WardenFight" unique_id=792403998]
 script = ExtResource("persistent_flag")
 
-[node name="Warden" parent="PisoCopa/WardenFight" instance=ExtResource("38_eye")]
+[node name="Warden" type="Node3D" parent="PisoCopa/WardenFight" unique_id=1806393464 instance=ExtResource("38_eye")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+script = ExtResource("14_qikql")
+config = ExtResource("55_xuy7a")
 lunges = true
 
-[node name="ArcoDoor" parent="PisoCopa" node_paths=PackedStringArray("room") instance=ExtResource("5_gq5qp")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 24, 0, 24)
+[node name="ArcoDoor" parent="PisoCopa" unique_id=1453187720 node_paths=PackedStringArray("room") instance=ExtResource("5_gq5qp")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 27, 0, 28)
+script = ExtResource("7_wvyc0")
 kind = 3
 room = NodePath("../Vigia")
 switches = Array[NodePath]([NodePath("../WardenFight")])
-depth = 2.0
 
-[node name="VigiaPot1" parent="PisoCopa" instance=ExtResource("31_4k5gr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 0, 29)
+[node name="Leaf" parent="PisoCopa/ArcoDoor" index="0"]
+unique_name_in_owner = true
 
-[node name="VigiaPot2" parent="PisoCopa" instance=ExtResource("31_4k5gr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.2, 0, 29.5)
+[node name="LeafMesh" parent="PisoCopa/ArcoDoor/Leaf" index="0"]
+unique_name_in_owner = true
+transform = Transform3D(0.7, 0, 0, 0, 0.8, 0, 0, 0, 1, 0, 0, 0)
+mesh = ExtResource("8_3eapi")
 
-[node name="VigiaPot3" parent="PisoCopa" instance=ExtResource("31_4k5gr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.8, 0, 29.2)
+[node name="LeafBack" parent="PisoCopa/ArcoDoor/Leaf" index="1"]
+unique_name_in_owner = true
+transform = Transform3D(-0.7, 0, -8.742278e-08, 0, 0.8, 0, 6.119594e-08, 0, -1, 0, 0, 0)
+visible = false
+mesh = ExtResource("8_3eapi")
 
-[node name="BowChest" parent="PisoCopa" unique_id=75794340 instance=ExtResource("11_5ogbh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 18)
+[node name="SouthMark" parent="PisoCopa/ArcoDoor" index="1"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.03, -1.8)
+visible = false
+pixel_size = 0.009
+shaded = true
+texture = ExtResource("9_41w6x")
+
+[node name="CollisionShape3D" parent="PisoCopa/ArcoDoor" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = SubResource("Shape")
+
+[node name="Interactable" parent="PisoCopa/ArcoDoor" index="3"]
+collision_layer = 32
+collision_mask = 0
+monitoring = false
+script = ExtResource("10_u66i5")
+
+[node name="CollisionShape3D" parent="PisoCopa/ArcoDoor/Interactable" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("InteractShape")
+
+[node name="PersistentFlag" parent="PisoCopa/ArcoDoor" index="4"]
+script = ExtResource("persistent_flag")
+
+[node name="VigiaPot1" type="Node3D" parent="PisoCopa" unique_id=2056303145 instance=ExtResource("31_4k5gr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31, 0, 33)
+script = ExtResource("50_nhcls")
+drops = ExtResource("51_620bx")
+drop_height = 0.1
+
+[node name="VigiaPot2" type="Node3D" parent="PisoCopa" unique_id=1313971951 instance=ExtResource("31_4k5gr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.2, 0, 33.5)
+script = ExtResource("50_nhcls")
+drops = ExtResource("51_620bx")
+drop_height = 0.1
+
+[node name="VigiaPot3" type="Node3D" parent="PisoCopa" unique_id=1870999294 instance=ExtResource("31_4k5gr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.8, 0, 33.2)
+script = ExtResource("50_nhcls")
+drops = ExtResource("51_620bx")
+drop_height = 0.1
+
+[node name="BowChest" type="StaticBody3D" parent="PisoCopa" unique_id=75794340 instance=ExtResource("11_5ogbh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 22)
+script = ExtResource("27_wlgwi")
 item = ExtResource("39_vhlen")
 flag = &"qv_bow_chest"
 big = true
 
-[node name="VigiaPot4" parent="PisoCopa" unique_id=954175055 instance=ExtResource("31_4k5gr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 20)
+[node name="VigiaPot4" type="Node3D" parent="PisoCopa" unique_id=954175055 instance=ExtResource("31_4k5gr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 24)
+script = ExtResource("50_nhcls")
+drops = ExtResource("51_620bx")
+drop_height = 0.1
 
-[node name="VigiaPot5" parent="PisoCopa" unique_id=1980234430 instance=ExtResource("31_4k5gr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 0, 20)
+[node name="VigiaPot5" type="Node3D" parent="PisoCopa" unique_id=1980234430 instance=ExtResource("31_4k5gr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 0, 24)
+script = ExtResource("50_nhcls")
+drops = ExtResource("51_620bx")
+drop_height = 0.1
 
 [node name="FromTrunk" type="Marker3D" parent="PisoCopa" unique_id=1105092565]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 6)
 
 [node name="CopaStairs" parent="PisoCopa" unique_id=1180159998 node_paths=PackedStringArray("to") instance=ExtResource("34_dfq0f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 2)
+script = ExtResource("36_nit5u")
 to = NodePath("../../PisoTronco/FromCanopy")
 
+[node name="CollisionShape3D" parent="PisoCopa/CopaStairs" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0.5)
+shape = SubResource("BoxShape3D_kfd5l")
+
+[node name="CollisionShape3D" parent="PisoCopa/CopaStairs/Back" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.65)
+shape = SubResource("BoxShape3D_0tnly")
+
+[node name="Visual" parent="PisoCopa/CopaStairs" index="2"]
+visible = false
+
+[node name="Opening" parent="PisoCopa/CopaStairs/Visual" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
+mesh = SubResource("Opening")
+surface_material_override/0 = SubResource("StandardMaterial3D_aot6n")
+
+[node name="Step1" parent="PisoCopa/CopaStairs/Visual" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0.75)
+mesh = SubResource("Step")
+surface_material_override/0 = SubResource("StandardMaterial3D_ajg5h")
+
+[node name="Step2" parent="PisoCopa/CopaStairs/Visual" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0.3)
+mesh = SubResource("Step")
+surface_material_override/0 = SubResource("StandardMaterial3D_eqgk0")
+
+[node name="Step3" parent="PisoCopa/CopaStairs/Visual" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, -0.15)
+mesh = SubResource("Step")
+surface_material_override/0 = SubResource("StandardMaterial3D_xhjub")
+
+[node name="Void" parent="PisoCopa/CopaStairs/Visual" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.97)
+mesh = SubResource("BoxMesh_eujmy")
+surface_material_override/0 = SubResource("StandardMaterial3D_aot6n")
+
 [node name="Torch_Nido_0" parent="PisoCopa" unique_id=1283380538 instance=ExtResource("22_nm22u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.6, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.9, 2.9333334)
+
+[node name="Model" parent="PisoCopa/Torch_Nido_0" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("38_a6a4g")
+
+[node name="Flame" parent="PisoCopa/Torch_Nido_0" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_f7al1")
+
+[node name="Light" parent="PisoCopa/Torch_Nido_0" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("40_d5r2d")
+
+[node name="Glow" parent="PisoCopa/Torch_Nido_0" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("41_5ia7f")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
 
 [node name="Torch_Nido_1" parent="PisoCopa" unique_id=88506322 instance=ExtResource("22_nm22u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.6, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.9, 2.9333334)
+
+[node name="Model" parent="PisoCopa/Torch_Nido_1" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("38_a6a4g")
+
+[node name="Flame" parent="PisoCopa/Torch_Nido_1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_imkms")
+
+[node name="Light" parent="PisoCopa/Torch_Nido_1" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("40_d5r2d")
+
+[node name="Glow" parent="PisoCopa/Torch_Nido_1" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("41_5ia7f")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
 
 [node name="Torch_Copa_0" parent="PisoCopa" unique_id=463622559 instance=ExtResource("22_nm22u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.6, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 1.9, 2.9333334)
+
+[node name="Model" parent="PisoCopa/Torch_Copa_0" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("38_a6a4g")
+
+[node name="Flame" parent="PisoCopa/Torch_Copa_0" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_3g8ll")
+
+[node name="Light" parent="PisoCopa/Torch_Copa_0" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("40_d5r2d")
+
+[node name="Glow" parent="PisoCopa/Torch_Copa_0" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("41_5ia7f")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
 
 [node name="Torch_Copa_1" parent="PisoCopa" unique_id=456008790 instance=ExtResource("22_nm22u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1.6, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 1.9, 2.9333334)
+
+[node name="Model" parent="PisoCopa/Torch_Copa_1" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("38_a6a4g")
+
+[node name="Flame" parent="PisoCopa/Torch_Copa_1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_qf24u")
+
+[node name="Light" parent="PisoCopa/Torch_Copa_1" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("40_d5r2d")
+
+[node name="Glow" parent="PisoCopa/Torch_Copa_1" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("41_5ia7f")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
 
 [node name="Torch_Arco_0" parent="PisoCopa" unique_id=1735770310 instance=ExtResource("22_nm22u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.6, 17)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.9, 20.933332)
+
+[node name="Model" parent="PisoCopa/Torch_Arco_0" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("38_a6a4g")
+
+[node name="Flame" parent="PisoCopa/Torch_Arco_0" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_3p4ts")
+
+[node name="Light" parent="PisoCopa/Torch_Arco_0" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("40_d5r2d")
+
+[node name="Glow" parent="PisoCopa/Torch_Arco_0" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("41_5ia7f")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
 
 [node name="Torch_Arco_1" parent="PisoCopa" unique_id=302876205 instance=ExtResource("22_nm22u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.6, 17)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.9, 20.933332)
+
+[node name="Model" parent="PisoCopa/Torch_Arco_1" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("38_a6a4g")
+
+[node name="Flame" parent="PisoCopa/Torch_Arco_1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_x0acw")
+
+[node name="Light" parent="PisoCopa/Torch_Arco_1" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("40_d5r2d")
+
+[node name="Glow" parent="PisoCopa/Torch_Arco_1" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("41_5ia7f")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
 
 [node name="Torch_Vigia_0" parent="PisoCopa" unique_id=1142861956 instance=ExtResource("22_nm22u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.6, 17)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 1.9, 20.933332)
+
+[node name="Model" parent="PisoCopa/Torch_Vigia_0" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("38_a6a4g")
+
+[node name="Flame" parent="PisoCopa/Torch_Vigia_0" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_20cop")
+
+[node name="Light" parent="PisoCopa/Torch_Vigia_0" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("40_d5r2d")
+
+[node name="Glow" parent="PisoCopa/Torch_Vigia_0" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("41_5ia7f")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
 
 [node name="Torch_Vigia_1" parent="PisoCopa" unique_id=1577219414 instance=ExtResource("22_nm22u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1.6, 17)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 1.9, 20.933332)
 
-[node name="Player" parent="." unique_id=1694148988 instance=ExtResource("40_66c0e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 28)
+[node name="Model" parent="PisoCopa/Torch_Vigia_1" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("38_a6a4g")
+
+[node name="Flame" parent="PisoCopa/Torch_Vigia_1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_c8nqy")
+
+[node name="Light" parent="PisoCopa/Torch_Vigia_1" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("40_d5r2d")
+
+[node name="Glow" parent="PisoCopa/Torch_Vigia_1" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("41_5ia7f")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=1694148988 instance=ExtResource("40_66c0e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 32)
+script = ExtResource("58_tw10w")
+config = ExtResource("59_qfyna")
 
 [node name="SpawnStart" type="Marker3D" parent="." unique_id=1456984558]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 28)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 32)
 script = ExtResource("43_rqrax")
 
 [node name="ExitPortal" type="Area3D" parent="." unique_id=38217254]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.2, 33.4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 39.4)
 script = ExtResource("44_d82md")
 target_scene = "res://levels/overworld.tscn"
 target_spawn = &"quenoa"
@@ -586,13 +2346,71 @@ shape = SubResource("BoxShape3D_w3lyb")
 
 [node name="TopDownCamera" type="Camera3D" parent="." unique_id=1044510348 node_paths=PackedStringArray("target_node")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 17.4, 38)
+attributes = SubResource("CameraAttributesPractical_40bi1")
 fov = 40.0
 script = ExtResource("45_d6a2c")
-offset = Vector3(0, 28, 10.6)
 target_node = NodePath("../Player")
+offset = Vector3(0, 30.814466, 14.369021)
+field_of_view = 28.0
+wall_height = 5.4
 mask_margin = 2.0
+south_wall_cut = 3.6
+south_wall_reach = 1.7
 
-[node name="HUD" parent="." unique_id=960326471 instance=ExtResource("46_kifxg")]
+[node name="EnfoqueLA" type="Node" parent="TopDownCamera" unique_id=1778193251]
+script = ExtResource("62_b5g6x")
+near_margin = 3.5
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=960326471 instance=ExtResource("46_kifxg")]
+layer = 10
+script = ExtResource("64_1o0uj")
+solo_panel = ExtResource("65_orgj2")
+coop_panel = ExtResource("66_dxo2p")
+item_ring = ExtResource("67_owgnv")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1214710855]
 navigation_mesh = ExtResource("nav_quenoa")
+
+[node name="VinetaLA" type="CanvasLayer" parent="." unique_id=545335536]
+
+[node name="Vineta" type="ColorRect" parent="VinetaLA" unique_id=655179970]
+material = SubResource("ShaderMaterial_xyjbk")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="BrilloLA" type="Node" parent="." unique_id=1399842527]
+script = ExtResource("70_0sl1j")
+
+[editable path="PisoRaices/RaicesLocked"]
+[editable path="PisoRaices/BossDoor"]
+[editable path="PisoRaices/RaicesStairs"]
+[editable path="PisoRaices/Torch_Raices_0"]
+[editable path="PisoRaices/Torch_Raices_1"]
+[editable path="PisoRaices/Torch_Ojos_0"]
+[editable path="PisoRaices/Torch_Ojos_1"]
+[editable path="PisoRaices/Torch_Jefe_0"]
+[editable path="PisoRaices/Torch_Jefe_1"]
+[editable path="PisoTronco/EntradaLocked"]
+[editable path="PisoTronco/TroncoStairs"]
+[editable path="PisoTronco/EscaleraStairs"]
+[editable path="PisoTronco/Torch_Rama_0"]
+[editable path="PisoTronco/Torch_Rama_1"]
+[editable path="PisoTronco/Torch_Escalera_0"]
+[editable path="PisoTronco/Torch_Escalera_1"]
+[editable path="PisoTronco/Torch_Tronco_0"]
+[editable path="PisoTronco/Torch_Tronco_1"]
+[editable path="PisoTronco/Torch_Entrada_0"]
+[editable path="PisoTronco/Torch_Entrada_1"]
+[editable path="PisoCopa/CopaLocked"]
+[editable path="PisoCopa/ArcoDoor"]
+[editable path="PisoCopa/CopaStairs"]
+[editable path="PisoCopa/Torch_Nido_0"]
+[editable path="PisoCopa/Torch_Nido_1"]
+[editable path="PisoCopa/Torch_Copa_0"]
+[editable path="PisoCopa/Torch_Copa_1"]
+[editable path="PisoCopa/Torch_Arco_0"]
+[editable path="PisoCopa/Torch_Arco_1"]
+[editable path="PisoCopa/Torch_Vigia_0"]
+[editable path="PisoCopa/Torch_Vigia_1"]

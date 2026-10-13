@@ -1,13 +1,14 @@
 extends SceneTree
-## Paredes inclinadas a lo Link's Awakening en la Chullpa: cada celda de pared baja en rampa hacia los vecinos con piso.
-## export: tools/paredes_la.json con las formas que usa el nivel (luego blender -b -P tools/blender/build_paredes_la.py).
-## bake: una sola vez, sobre levels/chullpa.tscn: duplica las paredes entre salas (cada sala la suya; todo se corre con
-## su sala), pone las piezas de data/kits/chullpa_la_kit.tres (kit chullpa + paredes_la.glb) y el look de LA.
+## Paredes inclinadas a lo Link's Awakening en las mazmorras del kit chullpa (LEVELS): cada celda de pared baja en rampa hacia
+## los vecinos con piso.
+## export: tools/paredes_la.json con las formas que usan los niveles (luego blender -b -P tools/blender/build_paredes_la.py).
+## bake: una sola vez por nivel: duplica las paredes entre salas (cada sala la suya; todo se corre con su sala), pone las
+## piezas de data/kits/chullpa_la_kit.tres (kit chullpa + paredes_la.glb) y el look de LA.
 ## refresh: en el nivel ya hecho, vuelve a elegir la pieza de cada celda de pared (después de editar el nivel).
 ## Las celdas Puerta llevan un corte (paso) o, si tienen escalera, un corte ciego con escalones (sube, baja).
-## godot --headless --path . --script res://tools/la_walls.gd -- export|bake|refresh
+## godot --headless --path . --script res://tools/la_walls.gd -- export | bake <nivel> | refresh <nivel>
 
-const LEVEL := "res://levels/chullpa.tscn"
+const LEVELS := {"chullpa": "res://levels/chullpa.tscn", "quenoa": "res://levels/quenoa.tscn"}
 const KIT := "res://data/kits/chullpa_kit.tres"
 const OUT_KIT := "res://data/kits/chullpa_la_kit.tres"
 ## Marca de que el nivel ya tiene el look (bake no se repite).
@@ -89,48 +90,61 @@ const SUN_ENERGY := 0.7
 const SUN_COLOR := Color(0.62, 0.78, 1.0)
 const SUN_ELEVATION := 40.0
 func _initialize() -> void:
-	var mode := OS.get_cmdline_user_args()[0] if not OS.get_cmdline_user_args().is_empty() else "export"
-	var level: Node = (load(LEVEL) as PackedScene).instantiate()
-	var baked := level.has_node(NodePath(BAKED))
-	if mode == "bake" and baked:
-		push_error("%s ya tiene el look de LA: usar refresh" % LEVEL)
-		level.free()
-		quit(1)
-		return
-	if not baked:
-		_spread(level)
-	var cells := {}
-	for grid: GridMap in level.find_children("*", "GridMap", true, false):
-		cells[grid] = _shapes(grid)
+	var args := OS.get_cmdline_user_args()
+	var mode := args[0] if not args.is_empty() else "export"
 	if mode == "export":
 		var codes := {}
 		for kind: String in KINDS:
 			codes[kind] = {}
-		for grid: GridMap in cells:
-			for shape: Array in cells[grid].values():
-				codes[shape[0]][shape[1]] = true
+		for path: String in LEVELS.values():
+			var level := _load(path)
+			for grid: GridMap in level.find_children("*", "GridMap", true, false):
+				for shape: Array in _shapes(grid).values():
+					codes[shape[0]][shape[1]] = true
+			level.free()
 		var out := {}
 		for kind: String in codes:
 			out[kind] = codes[kind].keys()
 			out[kind].sort()
 		FileAccess.open(SHAPES, FileAccess.WRITE).store_string(JSON.stringify(out, "\t") + "\n")
 		print(SHAPES, ": ", out)
-	elif mode == "bake" or mode == "refresh":
-		var kit := _kit()
-		for grid: GridMap in cells:
-			grid.mesh_library = kit
-			for cell: Vector3i in cells[grid]:
-				var shape: Array = cells[grid][cell]
-				grid.set_cell_item(cell, kit.find_item_by_name(KINDS[shape[0]][0] + shape[1]))
-		if mode == "bake":
-			_dress(level)
-		var packed := PackedScene.new()
-		packed.pack(level)
-		var uid := ResourceLoader.get_resource_uid(LEVEL)
-		print(LEVEL, ": ", error_string(ResourceSaver.save(packed, LEVEL)))
-		ResourceSaver.set_uid(LEVEL, uid)
+		quit()
+		return
+	var path: String = LEVELS.get(args[1] if args.size() > 1 else "", "")
+	if path == "" or mode not in ["bake", "refresh"]:
+		push_error("uso: -- export | bake <nivel> | refresh <nivel>, con nivel en %s" % [LEVELS.keys()])
+		quit(1)
+		return
+	var level := _load(path)
+	if mode == "bake" and level.has_node(NodePath(BAKED)):
+		push_error("%s ya tiene el look de LA: usar refresh" % path)
+		level.free()
+		quit(1)
+		return
+	var kit := _kit()
+	for grid: GridMap in level.find_children("*", "GridMap", true, false):
+		var cells := _shapes(grid)
+		grid.mesh_library = kit
+		for cell: Vector3i in cells:
+			var shape: Array = cells[cell]
+			grid.set_cell_item(cell, kit.find_item_by_name(KINDS[shape[0]][0] + shape[1]))
+	if mode == "bake":
+		_dress(level)
+	var packed := PackedScene.new()
+	packed.pack(level)
+	var uid := ResourceLoader.get_resource_uid(path)
+	print(path, ": ", error_string(ResourceSaver.save(packed, path)))
+	ResourceSaver.set_uid(path, uid)
 	level.free()
 	quit()
+
+
+## El nivel, con las paredes ya duplicadas (si todavía no tiene el look, las duplica en memoria).
+func _load(path: String) -> Node:
+	var level: Node = (load(path) as PackedScene).instantiate()
+	if not level.has_node(NodePath(BAKED)):
+		_spread(level)
+	return level
 
 
 ## Antorchas a braseros sobre el borde, puertas a la medida del corte, sin los escalones viejos y la cámara casi sin perspectiva.
@@ -441,7 +455,12 @@ func _kit() -> MeshLibrary:
 			var material := mesh.surface_get_material(surface)
 			mesh.surface_set_material(surface, _floor(material) if floor else _glossy(material))
 		kit.set_item_mesh(item, mesh)
-	var next := kit.get_last_unused_item_id()
+	var ids := {}
+	if ResourceLoader.exists(OUT_KIT):
+		var old: MeshLibrary = ResourceLoader.load(OUT_KIT, "", ResourceLoader.CACHE_MODE_IGNORE)
+		for item in old.get_item_list():
+			ids[old.get_item_name(item)] = item
+	var next := maxi(kit.get_last_unused_item_id(), (ids.values().max() + 1) if ids else 0)
 	var shapes: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(SHAPES))
 	for kind: String in KINDS:
 		var source := kit.find_item_by_name(KINDS[kind][1])
@@ -452,12 +471,15 @@ func _kit() -> MeshLibrary:
 			for surface in mesh.get_surface_count():
 				tool.append_from(mesh, surface, Transform3D.IDENTITY)
 			tool.set_material(_wood())
-			kit.create_item(next)
-			kit.set_item_name(next, KINDS[kind][0] + code)
-			kit.set_item_mesh(next, tool.commit())
-			kit.set_item_shapes(next, kit.get_item_shapes(source))
-			kit.set_item_navigation_mesh(next, kit.get_item_navigation_mesh(source))
-			next += 1
+			var item_name: String = KINDS[kind][0] + code
+			var id: int = ids.get(item_name, next)
+			if id == next:
+				next += 1
+			kit.create_item(id)
+			kit.set_item_name(id, item_name)
+			kit.set_item_mesh(id, tool.commit())
+			kit.set_item_shapes(id, kit.get_item_shapes(source))
+			kit.set_item_navigation_mesh(id, kit.get_item_navigation_mesh(source))
 	var uid := ResourceLoader.get_resource_uid(OUT_KIT) if ResourceLoader.exists(OUT_KIT) else ResourceUID.INVALID_ID
 	ResourceSaver.save(kit, OUT_KIT)
 	if uid != ResourceUID.INVALID_ID:

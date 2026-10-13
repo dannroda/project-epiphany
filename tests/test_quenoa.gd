@@ -48,7 +48,7 @@ func _drop(at: Vector3) -> void:
 func test_starts_in_the_entrance_with_three_floors() -> void:
 	await _start()
 	assert_eq(camera.room, _room("PisoTronco/Entrada"), "arranca en la entrada")
-	assert_eq(camera.offset, Vector3(0, 28, 10.6), "la cámara de la escena, no la de por defecto")
+	assert_true(camera.offset.is_equal_approx(Vector3(0, 30.814466, 14.369021)), "la cámara de la escena (la de LA), no la de por defecto")
 	assert_eq(MapData.rooms_on(tree, 0).size(), 4, "cuatro salas en el tronco")
 	assert_eq(MapData.rooms_on(tree, 1).size(), 4, "cuatro en la copa")
 	assert_eq(MapData.rooms_on(tree, -1).size(), 3, "tres en las raíces")
