@@ -21,7 +21,7 @@
       "text": "Jefe Apu Kuntur"
     },
     {
-      "detail": "Spawn_cumbre y la puerta; hasta entonces las salidas van a risco.",
+      "detail": "Hecho por el overworld: CumbreDoor en el risco norte de la Cumbre (39, 6.4, -45.2) y Spawn_cumbre (39, 5.2, -42.4); ExitPortal y BossExitPortal de cumbre.tscn van a target_spawn cumbre.",
       "done": true,
       "text": "Entrada en el overworld (sesión del overworld)"
     },
@@ -51,5 +51,5 @@
   ],
   "test": "test_cumbre, test_dungeon_reach (cumbre_graph), test_walk_doors, test_drop_holes",
   "title": "D4, Intihuatana de la Cumbre",
-  "updated_at": "2026-10-13T22:52:47.991Z"
+  "updated_at": "2026-10-13T23:44:37.065Z"
 }
