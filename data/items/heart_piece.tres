@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="ItemData" format=3]
 
-[ext_resource type="Texture2D" path="res://assets/ui/items/heart_piece.svg" id="1_icon"]
+[ext_resource type="Texture2D" path="res://assets/ui/items/heart_piece.png" id="1_icon"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/pieza_corazon.res" id="3_pickup"]
 [ext_resource type="Script" path="res://src/items/item_data.gd" id="2_item"]
 
 [resource]
@@ -9,5 +10,6 @@ id = &"heart_piece"
 display_name = "ITEM_HEART_PIECE_NAME"
 description = "ITEM_HEART_PIECE_DESC"
 icon = ExtResource("1_icon")
+pickup_mesh = ExtResource("3_pickup")
 category = 6
 max_stack = 8

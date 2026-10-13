@@ -32,6 +32,7 @@ const ICONS := {
 	"dungeon_map": [MESH % "objetos/mapa", FLAT],
 	"compass": [MESH % "objetos/brujula", FLAT],
 	"heart_container": [MESH % "objetos/contenedor_corazon", Vector3(0, 0, 0)],
+	"heart_piece": [MESH % "objetos/pieza_corazon", Vector3(0, 0, 0)],
 	"tunic": [MESH % "equipo/armadura", Vector3(0, 0, 0)],
 	"armor_chainmail": [MESH % "equipo/armadura", Vector3(0, 0, 0)],
 	"feather": [MESH % "equipo/pluma", Vector3(0, 0, -35)],
