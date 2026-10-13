@@ -907,12 +907,6 @@ unique_name_in_owner = true
 transform = Transform3D(0.7, 0, 0, 0, 0.8, 0, 0, 0, 1, 0, 0, 0)
 mesh = ExtResource("14_j20n3")
 
-[node name="LeafBack" parent="Sotano/BossDoor/Leaf" index="1"]
-unique_name_in_owner = true
-transform = Transform3D(-0.7, 0, -8.742278e-08, 0, 0.8, 0, 6.119594e-08, 0, -1, 0, 0, 0)
-visible = false
-mesh = ExtResource("14_j20n3")
-
 [node name="SouthMark" parent="Sotano/BossDoor" index="1"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.03, -1.8)
@@ -1403,12 +1397,6 @@ unique_name_in_owner = true
 [node name="LeafMesh" parent="PlantaBaja/OsarioDoor/Leaf" index="0"]
 unique_name_in_owner = true
 transform = Transform3D(0.7, 0, 0, 0, 0.8, 0, 0, 0, 1, 0, 0, 0)
-mesh = ExtResource("14_j20n3")
-
-[node name="LeafBack" parent="PlantaBaja/OsarioDoor/Leaf" index="1"]
-unique_name_in_owner = true
-transform = Transform3D(-0.7, 0, -8.742278e-08, 0, 0.8, 0, 6.119594e-08, 0, -1, 0, 0, 0)
-visible = false
 mesh = ExtResource("14_j20n3")
 
 [node name="SouthMark" parent="PlantaBaja/OsarioDoor" index="1"]
@@ -1905,12 +1893,6 @@ unique_name_in_owner = true
 transform = Transform3D(0.7, 0, 0, 0, 0.8, 0, 0, 0, 1, 0, 0, 0)
 mesh = ExtResource("14_j20n3")
 
-[node name="LeafBack" parent="PisoAlto/SaltosLocked/Leaf" index="1"]
-unique_name_in_owner = true
-transform = Transform3D(-0.7, 0, -8.742278e-08, 0, 0.8, 0, 6.119594e-08, 0, -1, 0, 0, 0)
-visible = false
-mesh = ExtResource("14_j20n3")
-
 [node name="SouthMark" parent="PisoAlto/SaltosLocked" index="1"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.03, -1.8)
@@ -1950,12 +1932,6 @@ unique_name_in_owner = true
 transform = Transform3D(0.7, 0, 0, 0, 0.8, 0, 0, 0, 1, 0, 0, 0)
 mesh = ExtResource("14_j20n3")
 
-[node name="LeafBack" parent="PisoAlto/AgrietadaDoor/Leaf" index="1"]
-unique_name_in_owner = true
-transform = Transform3D(-0.7, 0, -8.742278e-08, 0, 0.8, 0, 6.119594e-08, 0, -1, 0, 0, 0)
-visible = false
-mesh = ExtResource("14_j20n3")
-
 [node name="SouthMark" parent="PisoAlto/AgrietadaDoor" index="1"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.03, -1.8)
@@ -1991,12 +1967,6 @@ unique_name_in_owner = true
 [node name="LeafMesh" parent="PisoAlto/MiradorDoor/Leaf" index="0"]
 unique_name_in_owner = true
 transform = Transform3D(0.7, 0, 0, 0, 0.8, 0, 0, 0, 1, 0, 0, 0)
-mesh = ExtResource("14_j20n3")
-
-[node name="LeafBack" parent="PisoAlto/MiradorDoor/Leaf" index="1"]
-unique_name_in_owner = true
-transform = Transform3D(-0.7, 0, -8.742278e-08, 0, 0.8, 0, 6.119594e-08, 0, -1, 0, 0, 0)
-visible = false
 mesh = ExtResource("14_j20n3")
 
 [node name="SouthMark" parent="PisoAlto/MiradorDoor" index="1"]

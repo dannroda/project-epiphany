@@ -13,7 +13,7 @@ signal opened
 @export var stays_open := true
 ## La primera vez que la abren sus interruptores, el juego se pausa y la cámara la muestra.
 @export var reveal_on_open := true
-## Fondo del paso en el que está: con más de 0, una reja en cada cara del muro.
+## Fondo del paso en el que está: la colisión lo cubre entero; la reja es una sola, en el medio.
 @export var depth := 0.0
 
 var is_open := false
@@ -45,10 +45,6 @@ func _ready() -> void:
 func _fill_depth() -> void:
 	if depth <= 0.0:
 		return
-	var inset := depth / 2.0 - 0.15
-	$Model.position.z = inset
-	$Back.position.z = -inset
-	$Back.show()
 	var box := $CollisionShape3D.shape.duplicate() as BoxShape3D
 	box.size.z = depth
 	$CollisionShape3D.shape = box

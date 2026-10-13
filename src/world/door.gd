@@ -44,7 +44,7 @@ const BOSS_TINT := Color(1.0, 0.45, 0.4)
 ## La primera vez que la abre un interruptor, el juego se pausa y la cámara la muestra.
 @export var reveal_on_open := true
 @export var open_time := 0.5
-## Fondo del paso en el que está: con más de 0, una hoja en cada cara del muro.
+## Fondo del paso en el que está: la colisión lo cubre entero; la hoja es una sola, en el medio.
 @export var depth := 0.0
 
 @onready var leaf: Node3D = %Leaf
@@ -117,11 +117,6 @@ func _get_configuration_warnings() -> PackedStringArray:
 func _fill_depth() -> void:
 	if depth <= 0.0:
 		return
-	var inset := depth / 2.0 - 0.15
-	%LeafMesh.position.z = inset
-	%LeafBack.position.z = -inset
-	%LeafBack.mesh = %LeafMesh.mesh
-	%LeafBack.show()
 	var box := shape.shape.duplicate() as BoxShape3D
 	box.size.z = depth
 	shape.shape = box

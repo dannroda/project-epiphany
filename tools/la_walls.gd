@@ -5,7 +5,7 @@ extends SceneTree
 ## bake: una sola vez por nivel: duplica las paredes entre salas (cada sala la suya; todo se corre con su sala), pone las
 ## piezas de data/kits/chullpa_la_kit.tres (kit chullpa + paredes_la.glb) y el look de LA.
 ## refresh: en el nivel ya hecho, vuelve a elegir la pieza de cada celda de pared (después de editar el nivel).
-## Las celdas Puerta llevan un corte (paso) o, si tienen escalera, un corte ciego con escalones (sube, baja).
+## Las paredes finitas sueltas (piso a los dos lados) son paredes bajas (muro). Las celdas Puerta llevan un corte (paso) o, si tienen escalera, un corte ciego con escalones (sube, baja).
 ## godot --headless --path . --script res://tools/la_walls.gd -- export | bake <nivel> | refresh <nivel>
 
 const LEVELS := {"chullpa": "res://levels/chullpa.tscn", "quenoa": "res://levels/quenoa.tscn"}
@@ -20,7 +20,7 @@ const BRAZIER := preload("res://assets/epiphany/meshes/templo_chullpa/brasero.re
 const WALLS := ["Pared", "Pared nicho", "Pared ojo"]
 const DOOR := "Puerta"
 ## kind de la pieza → [nombre del ítem, ítem del kit de donde copia colisión y navmesh].
-const KINDS := {"pared": ["Pared LA ", "Pared"], "paso": ["Paso LA ", "Puerta"], "sube": ["Sube LA ", "Piso"], "baja": ["Baja LA ", "Piso"]}
+const KINDS := {"pared": ["Pared LA ", "Pared"], "muro": ["Muro LA ", "Pared"], "paso": ["Paso LA ", "Puerta"], "sube": ["Sube LA ", "Piso"], "baja": ["Baja LA ", "Piso"]}
 const SIDES := {"n": Vector3i(0, 0, -1), "e": Vector3i(1, 0, 0), "s": Vector3i(0, 0, 1), "o": Vector3i(-1, 0, 0)}
 const CORNERS := ["ne", "se", "so", "no"]
 ## Rampa por lado con piso y alto de las paredes (como en build_paredes_la.py); la cámara tapa más allá de MASK_MARGIN.
@@ -186,8 +186,7 @@ func _dress(level: Node) -> void:
 			level.set_editable_instance(torch, true)
 		elif path.ends_with("door.tscn"):
 			node.set("depth", 0.0)
-			for leaf: String in ["Leaf/LeafMesh", "Leaf/LeafBack"]:
-				(node.get_node(leaf) as Node3D).scale = DOOR_LEAF_SCALE
+			(node.get_node("Leaf/LeafMesh") as Node3D).scale = DOOR_LEAF_SCALE
 			level.set_editable_instance(node, true)
 		elif _stairs_kind(node) != "":
 			(node.get_node("Visual") as Node3D).visible = false
@@ -429,13 +428,15 @@ func _shapes(grid: GridMap) -> Dictionary:
 				if not code.contains(side) and SIDES[side] != -SIDES[code] and beside != GridMap.INVALID_CELL_ITEM and _base_name(lib.get_item_name(beside)) == DOOR:
 					corners += "_p" + side
 		var kind: String = "pared" if item_name in WALLS else stairs.get(cell, "paso")
+		if kind == "pared" and ((code.contains("e") and code.contains("o")) or (code.contains("n") and code.contains("s"))):
+			kind = "muro"
 		out[cell] = [kind, (code if code else "x") + corners]
 	return out
 
 
 ## El ítem del kit chullpa que una pieza LA reemplaza: Pared LA … es una pared, Paso LA …, Sube LA … y Baja LA … una puerta.
 func _base_name(item_name: String) -> String:
-	if item_name.begins_with(KINDS["pared"][0]):
+	if item_name.begins_with(KINDS["pared"][0]) or item_name.begins_with(KINDS["muro"][0]):
 		return WALLS[0]
 	for kind: String in ["paso", "sube", "baja"]:
 		if item_name.begins_with(KINDS[kind][0]):
@@ -443,6 +444,8 @@ func _base_name(item_name: String) -> String:
 	return item_name
 
 
+## Cada pieza conserva su número entre corridas y las que ya no se usan quedan: MeshLibrary no guarda ítems con números
+## salteados.
 func _kit() -> MeshLibrary:
 	var kit: MeshLibrary = (load(KIT) as MeshLibrary).duplicate(true)
 	for item in kit.get_item_list():
@@ -455,16 +458,20 @@ func _kit() -> MeshLibrary:
 			var material := mesh.surface_get_material(surface)
 			mesh.surface_set_material(surface, _floor(material) if floor else _glossy(material))
 		kit.set_item_mesh(item, mesh)
+	var shapes: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(SHAPES))
 	var ids := {}
 	if ResourceLoader.exists(OUT_KIT):
 		var old: MeshLibrary = ResourceLoader.load(OUT_KIT, "", ResourceLoader.CACHE_MODE_IGNORE)
 		for item in old.get_item_list():
 			ids[old.get_item_name(item)] = item
+			for kind: String in KINDS:
+				var code := old.get_item_name(item).trim_prefix(KINDS[kind][0])
+				if old.get_item_name(item).begins_with(KINDS[kind][0]) and code not in shapes.get(kind, []):
+					shapes[kind] = shapes.get(kind, []) + [code]
 	var next := maxi(kit.get_last_unused_item_id(), (ids.values().max() + 1) if ids else 0)
-	var shapes: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(SHAPES))
 	for kind: String in KINDS:
 		var source := kit.find_item_by_name(KINDS[kind][1])
-		for code: String in shapes[kind]:
+		for code: String in shapes.get(kind, []):
 			var tool := SurfaceTool.new()
 			tool.begin(Mesh.PRIMITIVE_TRIANGLES)
 			var mesh: Mesh = load(MESHES % [kind, code])
@@ -484,7 +491,7 @@ func _kit() -> MeshLibrary:
 	ResourceSaver.save(kit, OUT_KIT)
 	if uid != ResourceUID.INVALID_ID:
 		ResourceSaver.set_uid(OUT_KIT, uid)
-	return load(OUT_KIT)
+	return ResourceLoader.load(OUT_KIT, "", ResourceLoader.CACHE_MODE_REPLACE)
 
 
 ## Duplica cada línea de pared entre salas (y la del borde), para que cada sala tenga su propia pared de 2 m: corre las celdas
