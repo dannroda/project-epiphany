@@ -41,7 +41,7 @@ func bind(who: PlayerCharacter, color: Color) -> void:
 		tag.self_modulate = color
 		(tag.get_node(^"Label") as Label).text = "P%d" % (who.controls.slot + 1)
 	who.item_denied.connect(_shake_slot)
-	who.get_node(^"InteractionDetector").focus_changed.connect(_on_focus_changed)
+	who.interaction_detector.focus_changed.connect(_on_focus_changed)
 	who.health.changed.connect(_on_health_changed)
 	_on_health_changed(who.health.current, who.health.max_health)
 	refresh_item_slots()

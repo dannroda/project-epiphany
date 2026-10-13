@@ -99,7 +99,7 @@ func _input(event: InputEvent) -> void:
 
 
 func _on_menus_changed(stack: Node) -> void:
-	var depth: int = stack._stack.size()
+	var depth: int = stack.depth()
 	ui(&"ui_open" if depth > _menu_depth else &"ui_close")
 	_menu_depth = depth
 

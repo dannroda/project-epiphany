@@ -114,7 +114,8 @@ func _ready() -> void:
 	_eye_base_glow = _eye_material.emission_energy_multiplier
 	_body_base_glow = _body_material.emission_energy_multiplier
 	_pupil_keys = Vector2i(_eye_mesh.find_blend_shape_by_name(&"rendija"), _eye_mesh.find_blend_shape_by_name(&"dilatada"))
-	arena = Rect2(global_position.x - 9.0, global_position.z - 3.0, 18.0, 10.0)
+	if not arena.has_area():
+		arena = Rect2(global_position.x - 9.0, global_position.z - 3.0, 18.0, 10.0)
 	for hand in [hand_left, hand_right]:
 		hand.rest = hand_rest(hand)
 		hand.global_position = hand.rest.global_position

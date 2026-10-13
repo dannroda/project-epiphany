@@ -29,7 +29,6 @@ func _use(by: PlayerCharacter) -> void:
 		GameState.fill(GameState.bottle_with(GameState.EMPTY_BOTTLE), fills.id)
 		by.play_item_get(fills)
 		return
-	var health: Health = by.get_node(^"Health")
-	health.heal(health.max_health)
+	by.health.heal(by.health.max_health)
 	Feel.sfx(&"heal", by.global_position)
 	TextBox.open(DIALOGUE, "spring_drink")

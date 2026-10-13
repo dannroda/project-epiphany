@@ -1,4 +1,4 @@
-extends Control
+extends UiScreen
 ## Item get: el ícono en anillos sobre el player y la caja de texto con el nombre y la descripción. Pausa hasta confirmar.
 
 signal closed

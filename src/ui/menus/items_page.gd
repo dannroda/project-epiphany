@@ -195,6 +195,7 @@ func _refresh_dungeon() -> void:
 	var dungeon_node := MapData.find(get_tree(), Dungeon) as Dungeon
 	dungeon_title.text = tr(dungeon_node.display_name).to_upper() if dungeon_node else ""
 	for child in chips.get_children():
+		chips.remove_child(child)
 		child.queue_free()
 	var dungeon := GameState.current_dungeon_state()
 	_chip(&"small_key", tr("ITEMS_SMALL_KEYS").format({count = dungeon.small_keys}), dungeon.small_keys > 0)
@@ -213,6 +214,7 @@ func _chip(item_id: StringName, text: String, owned: bool) -> void:
 
 func _show_detail(slot: Button) -> void:
 	for child in detail.actions.get_children():
+		detail.actions.remove_child(child)
 		child.queue_free()
 	var item: ItemData = _slots.get(slot)
 	if item and item.id in GameState.BOTTLES and not GameState.inventory.has(item.id):

@@ -3811,30 +3811,30 @@ player.gd tiene ~470 líneas y ~200 son del escudo (bloqueo, reflejo, escudo tra
 
 ### 11.78 Limpieza menor de la revisión de código · Pendiente
 
-**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `arquitectura`, `ui`
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `arquitectura`, `ui`
 
 Detalles sueltos de la revisión, sin bug visible o con efecto de un frame.
 
-- [ ] Liberar con remove_child
+- [x] Liberar con remove_child
   items_page.gd ~l.183/201 y equipment_page.gd ~l.118: `remove_child` antes de `queue_free` (hoy duplican un frame).
-- [ ] Pantallas con contrato UiScreen
+- [x] Pantallas con contrato UiScreen
   TextBox, ItemGet y LanguageSelect extienden UiScreen; MenuStack tipado como `Array[UiScreen]`.
-- [ ] Feel sin tocar MenuStack._stack
+- [x] Feel sin tocar MenuStack._stack
   `MenuStack.depth()`.
-- [ ] Tipos estáticos
+- [x] Tipos estáticos
   text_box.gd `body`, pause_menu.gd `extra`/`accept`, minimap.gd `_doors`, bt_* `bow`.
 - [ ] Código sin uso
   ItemModifier sin subclases; estado Spawning que dura un frame (arreglar o quitar).
-- [ ] Arena del jefe
+- [x] Arena del jefe
   boss.gd no depende del orden de nodos en temple.tscn para el rect de la arena.
-- [ ] Varios
+- [x] Varios
   spring.gd usa `by.health`; ToonToggle limpia `_saved` de nodos liberados.
-- [ ] Accesos por ruta a nodos del player
+- [x] Accesos por ruta a nodos del player
   player_panel.gd `get_node(^"InteractionDetector")`, boss `get_node(^"Hurtbox")` (ya existe `player.hurtbox`), input_buffer `get_parent().get(&"controls")`, equipment.gd `owner.…` → propiedades tipadas en PlayerCharacter o `@export var player`.
 
 **Prueba:** Tests verdes; sin cambios visibles salvo el parpadeo de chips/corazones.
 
-**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review). Hecho todo menos el paso 5: quitar ItemModifier toca ~20 .tres de ítems (dos con cambios sin commitear de otra sesión) y el estado Spawning está en player.tscn (también con cambios ajenos); queda para cuando estén libres. text_box `body` queda Variant explícito: es Label o RichTextLabel y no comparten clase con visible_characters. ToonToggle olvida las mallas liberadas al crecer `_saved`; arena del jefe: boss.gd solo pone el rect por defecto si BossArena no lo puso antes.
 
 ### 11.79 Los corazones se rellenan al cambiar de escena · Hecho
 

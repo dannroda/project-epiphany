@@ -74,7 +74,8 @@ func _dress(armor: ItemData) -> void:
 	var dressed := armor != null and armor.body_material != null
 	var material: Material = armor.body_material if dressed else null
 	var guests := armor.guest_body_materials if dressed else guest_body_materials
-	var slot: int = owner.controls.slot if owner is PlayerCharacter else 0
+	var player := owner as PlayerCharacter
+	var slot := player.controls.slot if player else 0
 	if slot > 0 and slot <= guests.size():
 		material = guests[slot - 1]
 	for mesh: MeshInstance3D in visuals.find_children("*", "MeshInstance3D", true, false):

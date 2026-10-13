@@ -9,6 +9,8 @@ const PALETTE := "epiphany/palette.png"
 var _on := false
 ## [MeshInstance3D o Mesh, superficie] → el material que tenía.
 var _saved := {}
+## Al llegar a este tamaño se olvidan las mallas liberadas (enemigos, ítems que van y vienen).
+var _prune_at := 64
 
 
 func _ready() -> void:
@@ -47,6 +49,11 @@ func set_enabled(on: bool) -> void:
 func _on_node_added(node: Node) -> void:
 	if _on and (node is MeshInstance3D or node is GridMap):
 		_apply_node.call_deferred(node)
+		if _saved.size() >= _prune_at:
+			for key: Array in _saved.keys():
+				if not is_instance_valid(key[0]):
+					_saved.erase(key)
+			_prune_at = maxi(64, _saved.size() * 2)
 
 
 func _apply_node(node: Variant) -> void:

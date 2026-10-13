@@ -34,6 +34,7 @@ signal escaped
 @onready var input_buffer: InputBuffer = $InputBuffer
 @onready var aim: Aim = $Aim
 @onready var carrier: Carrier = $Carrier
+@onready var interaction_detector: InteractionDetector = $InteractionDetector
 @onready var dodge_ghosts: DodgeGhosts = $DodgeGhosts
 ## Lo que se retoca en el inspector (duración, gradiente, material) es del nodo; el ancho y la posición se ajustan al arma.
 @onready var sword_trail: Trail3D = $ModelController/Skeleton3D/Hand_R/SwordTrail

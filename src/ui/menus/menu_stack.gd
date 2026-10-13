@@ -2,14 +2,14 @@
 extends CanvasLayer
 ## Máquina de estados de la UI: una pila de pantallas (autómata de pila). Solo la de arriba recibe input y foco;
 ## las de abajo quedan desactivadas (y ocultas si la de arriba las cubre). Con alguna abierta, el juego queda en pausa.
-## Las pantallas pueden ser `UiScreen` o cualquier Control (caja de texto, item get): se leen sus propiedades si las tienen.
+## La raíz (`set_base`, la pantalla de título) puede ser cualquier Control: de ella se leen los métodos si los tiene.
 
 signal changed
 
 const PAUSE_MENU := preload("res://src/ui/menus/pause_menu.tscn")
 const MAP_PAGE := 2
 
-var _stack: Array[Control] = []
+var _stack: Array[UiScreen] = []
 ## Estado raíz que no es de la pila (la pantalla de título): queda desactivado mientras haya algo encima.
 var _base: Control
 var _focus_memory: Dictionary[Control, Control] = {}
@@ -24,7 +24,11 @@ func is_open() -> bool:
 	return not _stack.is_empty()
 
 
-func top() -> Control:
+func depth() -> int:
+	return _stack.size()
+
+
+func top() -> UiScreen:
 	return _stack.back() if is_open() else null
 
 
@@ -36,12 +40,12 @@ func set_base(screen: Control) -> void:
 			_base = null)
 
 
-func push(screen: Control) -> void:
-	var covered := top() if is_open() else _base
+func push(screen: UiScreen) -> void:
+	var covered: Control = top() if is_open() else _base
 	if covered:
 		_focus_memory[covered] = get_viewport().gui_get_focus_owner()
 		covered.process_mode = PROCESS_MODE_DISABLED
-		if screen.get(&"hides_below") != false:
+		if screen.hides_below:
 			covered.hide()
 		if covered.has_method(&"screen_covered"):
 			covered.screen_covered()
@@ -49,8 +53,7 @@ func push(screen: Control) -> void:
 	screen.process_mode = PROCESS_MODE_ALWAYS
 	add_child(screen)
 	get_tree().paused = true
-	if screen.has_method(&"screen_enter"):
-		screen.screen_enter()
+	screen.screen_enter()
 	_focus(screen)
 	changed.emit()
 
@@ -58,14 +61,13 @@ func push(screen: Control) -> void:
 func pop() -> void:
 	if not is_open():
 		return
-	var screen: Control = _stack.pop_back()
+	var screen: UiScreen = _stack.pop_back()
 	_focus_memory.erase(screen)
-	if screen.has_method(&"screen_exit"):
-		screen.screen_exit()
+	screen.screen_exit()
 	screen.queue_free()
 	if not is_open():
 		get_tree().paused = false
-	var uncovered := top() if is_open() else _base
+	var uncovered: Control = top() if is_open() else _base
 	if uncovered:
 		uncovered.process_mode = PROCESS_MODE_ALWAYS if is_open() else PROCESS_MODE_INHERIT
 		uncovered.show()
@@ -104,13 +106,13 @@ func _unhandled_input(event: InputEvent) -> void:
 	var screen := top()
 	if event.is_action_pressed(&"ui_cancel"):
 		get_viewport().set_input_as_handled()
-		if screen.has_method(&"cancel") and screen.cancel():
+		if screen.cancel():
 			return
-		if screen.get(&"modal") != true:
+		if not screen.modal:
 			pop()
 	elif event.is_action_pressed(&"pause") or event.is_action_pressed(&"map"):
 		get_viewport().set_input_as_handled()
-		if screen.get(&"closes_with_pause") == true:
+		if screen.closes_with_pause:
 			pop()
 
 

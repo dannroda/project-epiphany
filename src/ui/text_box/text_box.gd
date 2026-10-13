@@ -1,5 +1,5 @@
 class_name TextBox
-extends Control
+extends UiScreen
 ## Globo de Dialogue Manager con los estilos de los mockups: cada línea es una página, letra por letra.
 ## Avanza con interact/attack/aceptar; el mismo botón completa la línea. Si la línea trae respuestas, al terminar de
 ## escribirse aparecen en la caja (estilo ITEM) y elegir una sigue por su `next_id`.
@@ -47,7 +47,7 @@ var line: DialogueLine
 var page := -1
 var title_label: Label
 ## El texto de la línea: el Label, o el RichTextLabel si la línea trae íconos de botón.
-var body
+var body: Variant
 var _label: Label
 var _rich: RichTextLabel
 

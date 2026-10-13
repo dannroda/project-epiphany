@@ -1,4 +1,4 @@
-extends Control
+extends UiScreen
 ## Elegir idioma la primera vez que se abre el juego (mockup Language), arriba del título en el MenuStack.
 ## Mientras el foco pasa por una opción, la pantalla ya se ve en ese idioma.
 
@@ -6,13 +6,11 @@ signal chosen(language: String)
 
 const SCENE_PATH := "res://src/ui/title/language_select.tscn"
 
-var modal := true
-
 @onready var options: Dictionary = {"es": %Spanish, "en": %English}
 
 
-static func open() -> Control:
-	var screen: Control = load(SCENE_PATH).instantiate()
+static func open() -> UiScreen:
+	var screen: UiScreen = load(SCENE_PATH).instantiate()
 	MenuStack.push(screen)
 	return screen
 

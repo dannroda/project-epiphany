@@ -116,6 +116,7 @@ func _refresh_stats() -> void:
 	pieces_icon.pieces = GameState.heart_pieces()
 	pieces_value.text = "%d / %d" % [GameState.heart_pieces(), GameState.PIECES_PER_HEART]
 	for child in hearts.get_children():
+		hearts.remove_child(child)
 		child.queue_free()
 	var player := Players.lead()
 	var current: int = player.health.current if player else GameState.max_health

@@ -53,7 +53,7 @@ func test_prompt_follows_facing_and_hides() -> void:
 	assert_eq(hud.prompt_text.text, "PROMPT_OPEN", "de costado a los dos: gana la prioridad")
 
 	var stack: Node = tree.root.get_node(^"MenuStack")
-	stack.push(Control.new())
+	stack.push(UiScreen.new())
 	assert_eq(hud.prompt.visible, false, "oculto con un menú abierto")
 	stack.pop()
 	assert_eq(hud.prompt.visible, true)
