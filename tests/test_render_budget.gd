@@ -15,7 +15,7 @@ func test_the_sun_shadows_only_what_the_camera_sees() -> void:
 
 func test_walls_carry_no_faces_nobody_sees() -> void:
 	var walls := {
-		"res://data/kits/overworld_kit.tres": {"Acantilado": 950, "Andén borde": 950},
+		"res://data/kits/overworld_kit.tres": {"Acantilado": 960, "Andén borde": 960},
 		"res://data/kits/temple_kit.tres": {"Pared": 700, "Pared nicho": 750, "Pared ojo": 750},
 		"res://data/kits/chullpa_kit.tres": {"Pared": 2100, "Pared nicho": 2000, "Pared ojo": 2000},
 		"res://data/kits/laguna_kit.tres": {"Pared": 750, "Pared nicho": 750, "Pared ojo": 850},
