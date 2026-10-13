@@ -4589,8 +4589,9 @@ GitHub rechaza el push: assets/epiphany/terreno_organico.glb (hasta 334 MB) y as
 
 - [x] Partir los archivos grandes en partes de menos de 100 MB
   Hecho (b658b129): terreno_organico.0..11.glb (15-72 MB) juntados en terreno_organico.tscn, paredes_la.<estilo>.glb (18-40 MB); epi.publish(part=...).
-- [ ] Limpiar del historial sin pushear las versiones de más de 100 MB
-  29 objetos, ~5,3 GB (terreno_organico.glb, paredes_la.glb, riscos.res). git filter-repo cambia los hashes: con todas las sesiones quietas, lo coordina -fd con Daniel.
+- [x] Limpiar del historial sin pushear las versiones de más de 100 MB
+  Hecho el 2026-10-13: git filter-repo --refs main wt/* ^985d9e56 --invert-paths con terreno_organico.glb, paredes_la.glb y meshes/terreno_organico/riscos.res. Mismos commits (429) y mismos árboles en las puntas, nuevos hashes; ningún blob de más de 100 MB entre origin/main y main. Respaldo previo: /home/ssd_disk/epiphany-backup-pre-filter.git.
+- [ ] Pushear (Daniel)
 
 ### 11.127 Etiqueta del piso tapa el minimapa · Hecho
 
