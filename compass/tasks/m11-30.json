@@ -41,8 +41,8 @@
       "text": "Sub-jefe Amaru"
     },
     {
-      "detail": "Madre serpiente: asoma por los charcos y escupe; fase 1, el gancho a la argolla de su máscara la arrastra al piso y le pega la espada; fase 2, barrido de cola que se salta con la pluma. Hoy pelea un ojo vigía prestado (PisoBajo/BossFight/Yacumama).",
-      "done": false,
+      "detail": "Hecho el 2026-10-13: src/entities/yacumama/ (Yacumama hereda de Amaru), data/entities/yacumama.tres, 14 de vida. Asoma por uno de cuatro charcos, escupe dos bolas (reflejables) y queda asomada 2,5 s; asomada solo cuenta el gancho, que la tira al piso a 2 m del player: 3 s tirada, le pega la espada; vuelve reptando. Con media vida, antes de escupir barre la sala con la cola desde su charco (hasta la pared; pega 2 en el piso, se salta con la pluma). El gancho le pega en el cuerpo: la punta va a 0,9 m y la argolla de la máscara queda como detalle del modelo. Reemplaza al ojo vigía prestado; las vasijas del Nido van a las cuatro esquinas. test_yacumama (4).",
+      "done": true,
       "text": "Jefe Yacumama"
     },
     {
@@ -86,5 +86,5 @@
   ],
   "test": "El ítem tiene un uso en combate y abre al menos dos lugares que antes no se podían.",
   "title": "Ítem de D3: el gancho",
-  "updated_at": "2026-10-13T20:33:19.678Z"
+  "updated_at": "2026-10-13T21:02:47.198Z"
 }
