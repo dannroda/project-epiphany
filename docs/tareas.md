@@ -1622,8 +1622,13 @@ Daniel (2026-10-12, con el mapa de Link's Awakening de referencia): el mundo se 
   Daniel (2026-10-12): terrazas reales, las mesetas se caminan por arriba. Un nivel = 2,6 m. GridMap con cell_size.y 2,6, piso en y = nivel (0, 1, 2), montaña Monte en y = 3. Hecho: layout.json → GridMap, export y Blender con niveles (risco entre niveles, baranda invisible salvo en saltos), lo jugable mudado. Escalinatas y saltos de arte (src/world/terrazas/) puestos en las celdas de escalón. Daniel (2026-10-13), con la Chullpa como D1: la Chullpa va a los Cerros (se llega con espada y bombas) y la Arboleda es una meseta a la que se entra cruzando con la pluma un abismo de una celda desde una cornisa del claro (la Queñoa queda D2). El bañado sigue las celdas de bañado, con orilla contra la laguna.
 - [x] Terreno orgánico, decoración, navmesh y mapa regenerados
   Contornos relajados (las escaleras de celdas pasan a curvas y diagonales; menos en agua y caminos), sin agujeros entre la laguna y el bañado. Decoración, plantas despejadas alrededor de escalinatas, navmesh y foto del mapa regenerados. El mapa y el minimapa revelan igual: boceto en pergamino donde no se pasó, foto a color donde sí. Falta: el agua del bañado son planos rectangulares y se nota el borde recto sobre la orilla.
-- [ ] Tests y escenarios al día
-  Al día: test_enemy_ai, test_breakables, test_player_hole, test_title, test_game_over, test_intro (tomas de la intro reubicadas) y test_push_block. Faltan los de posiciones (test_map, test_portal, test_shrine, test_zone_veil, test_heart_pieces, test_overworld, test_overworld_run, test_grove_puzzle, test_temple_seal) y los de puzzles que el layout nuevo todavía no tiene: abismo de 4 m del risco, angostura, escalón de la pradera, ojo del abismo, haz del espejo del templo, piezas de corazón escondidas y postes del gancho. Los secretos de la pluma van antes que los del arco.
+- [x] Tests y escenarios al día, puzzles y secretos puestos
+  Daniel (2026-10-13) eligió:
+  - Risco: escalinata a la cornisa y abismo de 4 m (RiscoPit, nivel 2). El ojo abre con flecha el nicho del carcaj grande y una pieza de corazón.
+  - Santuario: después de D4. El bloque abre el atajo al andén del templo; el cristal, con el escudo espejo, abre el cofre del contenedor de corazón.
+  - Piezas de corazón: Pradera (escalón de 0,6 m, con la pluma), Risco, Islotes de la Laguna y Cerros (muro agrietado).
+  - Secretos en muescas de risco con muro agrietado: Cumbre 5 bombas, Quebrada 10 flechas, Mirador poción, Cardonal 5 bombas. No hay rupias en el juego.
+  Al día: test_overworld, test_jump, test_heart_pieces, test_secrets (nuevo), test_shrine, test_overworld_run, test_map, test_portal, test_temple_seal, test_grove_puzzle, test_enemy_ai, test_save_codec (escenarios re-firmados). test_zone_veil se borró. Flags nuevos en flag_registry. El puzzle de la Arboleda se corrió 2 m al norte: la orilla relajada del risco tapaba las placas. Pendiente: el texto de la tablilla del santuario habla del escudo espejo como premio. [[gdd#overworld-layout]]
 - [ ] Recorrerlo (Daniel)
 
 ## M8 — Contenido de mazmorra  (8/8)

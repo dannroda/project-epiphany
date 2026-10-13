@@ -31,7 +31,7 @@ func test_walk_every_zone_without_falling_or_sticking() -> void:
 	var state: Node = tree.root.get_node(^"GameState")
 	state.reset()
 	state.set_flag(&"ow_shrine_cracked_wall", true)
-	state.set_flag(&"ow_shrine_shortcut", true)
+	state.set_flag(&"ow_shrine_switch", true)
 	state.set_flag(&"ow_grotto_cracked_wall", true)
 	tree.change_scene_to_file(LEVEL)
 	await tree.scene_changed
@@ -163,12 +163,13 @@ func test_abyss_has_no_floor_but_a_pit() -> void:
 	await tree.scene_changed
 	await tree.physics_frame
 	var space := (tree.current_scene as Node3D).get_world_3d().direct_space_state
-	for point: Vector3 in [Vector3(-2, 0, -30), Vector3(-2, 0, -12), Vector3(2, 0, 4)]:
+	for point: Vector3 in [Vector3(-2, 0, -30), Vector3(-2, 0, -12), Vector3(2, 0, 4), Vector3(80, 5.2, -25)]:
 		var down := PhysicsRayQueryParameters3D.create(point + Vector3.UP * 2.0, point + Vector3.DOWN * 0.8, 1)
 		assert_true(space.intersect_ray(down).is_empty(), "el abismo no tiene piso (%s)" % point)
 	var high := PhysicsRayQueryParameters3D.create(Vector3(-9, 1.0, -30), Vector3(5, 1.0, -30), 1)
 	assert_true(space.intersect_ray(high).is_empty(), "a la altura de una flecha pasa por arriba")
 	assert_true(tree.current_scene.get_node(^"QuebradaPit") is Pit, "abajo hay un Pit")
+	assert_true(tree.current_scene.get_node(^"RiscoPit") is Pit, "y otro en el abismo del Risco")
 	tree.root.get_node(^"GameState").reset()
 
 
@@ -273,7 +274,7 @@ func test_abyss_walls_face_the_ground() -> void:
 			if abyss.call(neighbor) or neighbor != -1 and lib.get_item_name(neighbor) == "Hueco":
 				continue
 			sides += 1
-			var from := grid.to_global(grid.map_to_local(cell)) * Vector3(1, 0, 1) + Vector3.DOWN
+			var from := grid.to_global(grid.map_to_local(cell)) + Vector3.DOWN * (grid.cell_size.y / 2.0 + 1.0)
 			var ray := PhysicsRayQueryParameters3D.create(from, from + Vector3(side) * 1.6, 1)
 			assert_true(not space.intersect_ray(ray).is_empty(), "abismo %s: pared hacia %s" % [cell, side])
 	assert_true(sides > 0, "el overworld tiene abismo")
@@ -355,13 +356,13 @@ func test_every_region_is_reachable_except_the_item_gated() -> void:
 	await tree.scene_changed
 	for i in 10:
 		await tree.physics_frame
-	var west: Array[String] = ["Zone_cerros", "Zone_cerros_2", "Zone_laguna", "Zone_pradera", "Zone_pradera_2", "Zone_pradera_3", "Zone_pradera_4", "Zone_quebrada", "Zone_start", "Zone_start_2", "Zone_templo", "Zone_templo_2", "Zone_vertiente"]
+	var west: Array[String] = ["Zone_cerros", "Zone_cerros_2", "Zone_laguna", "Zone_pradera", "Zone_pradera_2", "Zone_pradera_3", "Zone_pradera_4", "Zone_pradera_5", "Zone_quebrada", "Zone_start", "Zone_start_2", "Zone_templo", "Zone_templo_2", "Zone_templo_3", "Zone_vertiente"]
 	assert_eq(_reachable_zones(tree), west, "sin el puente, solo el oeste de la quebrada, sin la Arboleda (pluma)")
 	(tree.current_scene.get_node(^"RavineBridge") as Bridge).raise(false)
 	for i in 4:
 		await tree.physics_frame
 	var all := west.duplicate()
-	all.append_array(["Zone_banado", "Zone_cardonal", "Zone_cumbre_2", "Zone_mirador", "Zone_necropolis", "Zone_necropolis_2", "Zone_necropolis_3"])
+	all.append_array(["Zone_banado", "Zone_cardonal", "Zone_cumbre_2", "Zone_mirador", "Zone_necropolis", "Zone_necropolis_2", "Zone_necropolis_3", "Zone_risco"])
 	all.sort()
-	assert_eq(_reachable_zones(tree), all, "con el puente, todo menos la Arboleda (pluma), la Cumbre (salvo el pasillo bajo de su pantalla sur) y el Risco (gancho)")
+	assert_eq(_reachable_zones(tree), all, "con el puente, todo menos la Arboleda (pluma) y la Cumbre (gancho; salvo el pasillo bajo de su pantalla sur)")
 	state.reset()

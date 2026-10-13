@@ -191,24 +191,24 @@ func test_the_crag_abyss_is_too_wide_and_falling_returns() -> void:
 	tree.change_scene_to_file("res://levels/overworld.tscn")
 	await tree.scene_changed
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
-	player.global_position = Vector3(73, 0, -31.6)
+	player.global_position = Vector3(80, 5.3, -22.4)
 	for i in 20:
 		await tree.physics_frame
 	var before := player.health.current
 	_press(&"move_forward", true)
 	await tree.physics_frame
 	_press(&"item_1")
-	var lowest := 0.0
+	var lowest := player.global_position.y
 	for i in 180:
 		await tree.physics_frame
 		lowest = minf(lowest, player.global_position.y)
-		if lowest < -0.5:
+		if lowest < 4.7:
 			_release(&"move_forward")
 	_release(&"move_forward")
 	var spawn := tree.current_scene.get_node(^"Spawn_risco") as Node3D
-	assert_true(lowest < -0.5, "el abismo de 4 m no se cruza saltando: cae (y mín %.2f)" % lowest)
+	assert_true(lowest < 4.7, "el abismo de 4 m no se cruza saltando: cae (y mín %.2f)" % lowest)
 	assert_true(player.health.current < before, "caer saca vida")
-	assert_true(player.global_position.z > -32.0, "y vuelve del lado del spawn del Risco (z %.2f)" % player.global_position.z)
+	assert_true(player.global_position.z > -23.0, "y vuelve a la cornisa (z %.2f)" % player.global_position.z)
 	assert_true(player.global_position.distance_to(spawn.global_position) < 6.0, "cerca de Spawn_risco")
 	state.reset()
 
@@ -254,16 +254,15 @@ func test_meadow_heart_piece_sits_on_a_step() -> void:
 	var tree: SceneTree = setup[0]
 	var player: PlayerCharacter = setup[1]
 	var state: Node = setup[2]
-	var walked: Array = await _try(tree, player, Vector3(-52.6, 0, -22), &"move_left", false)
+	var walked: Array = await _try(tree, player, Vector3(-46.6, 0, -10), &"move_left", false)
 	assert_true(walked[0].y < 0.1, "sin pluma el escalón no se sube (y %.2f)" % walked[0].y)
 	assert_eq(state.get_flag(&"ow_heart_piece_meadow"), false, "ni se toma la pieza")
 	setup = await _overworld(true)
 	tree = setup[0]
 	player = setup[1]
 	state = setup[2]
-	var jumped: Array = await _try(tree, player, Vector3(-53.2, 0, -22), &"move_left", true)
-	assert_true(jumped[0].y > 0.5, "con la pluma sube al escalón (y %.2f)" % jumped[0].y)
-	assert_eq(state.get_flag(&"ow_heart_piece_meadow"), true, "y toma la pieza")
+	await _try(tree, player, Vector3(-47.2, 0, -10), &"move_left", true)
+	assert_eq(state.get_flag(&"ow_heart_piece_meadow"), true, "con la pluma sube al escalón y toma la pieza")
 	state.reset()
 
 

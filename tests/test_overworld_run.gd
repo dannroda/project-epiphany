@@ -1,8 +1,11 @@
 extends "res://tests/test_case.gd"
-## La prueba de 7.8: desde `start`, todo el overworld hasta entrar al templo y volver a salir.
+## La prueba de 7.8: desde `start`, las bombas de la cueva, el atajo del santuario y, con el escudo espejo de D4, el sello del
+## templo: entrar y volver a salir.
 
 const OVERWORLD := "res://levels/overworld.tscn"
 const DUNGEON := "res://levels/temple.tscn"
+const BOMB_CAVE := "res://levels/bomb_cave.tscn"
+const SHRINE := "res://levels/shrine_cave.tscn"
 const SLOT := 9
 
 var tree: SceneTree
@@ -114,29 +117,33 @@ func test_play_start_into_the_temple_and_back() -> void:
 	var at := func(axis: int, sign_: float, value: float) -> Callable:
 		return func() -> bool: return (player.global_position[axis] - value) * sign_ >= 0.0
 
-	assert_true(await _walk_until(&"move_forward", at.call(2, -1.0, -16.0)), "del claro a la pradera")
-	assert_true(await _walk_until(&"move_left", at.call(0, -1.0, -72.0)), "de la pradera a la cueva")
-	await _place(Vector3(-76, 0, -19.8), Vector3.FORWARD)
+	assert_true(await _walk_until(&"move_forward", at.call(2, -1.0, -4.0)), "del claro a la pradera")
+	await _place(Vector3(-66, 0, -16), Vector3.LEFT)
+	assert_true(await _walk_into(&"move_left", BOMB_CAVE), "entra a la cueva de las bombas")
+	await _place(Vector3(-4, 0, -3.6), Vector3.FORWARD)
 	await _open_chest(^"CaveChest")
 	assert_eq(state.inventory.has(&"bomb_bag"), true, "bombas")
+	await _place(Vector3(12, 0, 0), Vector3.RIGHT)
+	assert_true(await _walk_into(&"move_right", OVERWORLD), "sale de la cueva")
 
-	assert_true(await _bomb_wall(^"ShrineCrackedWall", Vector3(0, 0, 2.1), Vector3.FORWARD, Vector3(-72, 0, -18)), "muro del santuario")
-	assert_true(await _walk_until(&"move_forward", at.call(2, -1.0, -27.0)), "entra al santuario caminando")
+	var wall := tree.current_scene.get_node(^"ShrineCrackedWall") as Node3D
+	assert_true(await _bomb_wall(^"ShrineCrackedWall", Vector3(0, 0, 2.1), Vector3.FORWARD, wall.global_position + Vector3(0, 0, 6)), "muro del santuario")
+	await _place(wall.global_position + Vector3(0, 0, 2.0), Vector3.FORWARD)
+	assert_true(await _walk_into(&"move_forward", SHRINE), "entra al santuario caminando")
 	var block := tree.current_scene.get_node(^"ShrineBlock") as PushBlock
 	for i in 2:
 		block.try_push(Vector3.FORWARD)
 		await tree.create_timer(0.6).timeout
 	await tree.create_timer(0.8).timeout
-	await _place(Vector3(-72, 0, -35.6), Vector3.FORWARD)
-	await _open_chest(^"MirrorChest")
-	assert_eq(state.equipment[ItemData.Category.SHIELD], &"shield_mirror", "escudo espejo")
-	await _reflect(Vector3(-64, 0, -30), Vector3(-1, 0, -1))
 	assert_eq((tree.current_scene.get_node(^"ShortcutGate") as Gate).is_open, true, "atajo abierto")
+	await _place(Vector3(10, 0, 0), Vector3.RIGHT)
+	assert_true(await _walk_into(&"move_right", OVERWORLD), "por el atajo a la entrada del templo")
+	assert_true(player.global_position.distance_to(tree.current_scene.get_node(^"Spawn_atajo").global_position) < 1.0, "sale en el atajo")
 
-	await _place(Vector3(-68, 0, -32), Vector3.RIGHT)
-	assert_true(await _walk_until(&"move_right", at.call(0, 1.0, -48.0)), "por el atajo a la entrada del templo")
-	await _reflect(Vector3(-40, 0, -27), Vector3(-1, 0, -1))
-	assert_eq((tree.current_scene.get_node(^"TempleSeal") as TempleSeal).is_open, true, "sello abierto")
+	state.give(Items.get_item(&"shield_mirror"))
+	state.equip(Items.get_item(&"shield_mirror"))
+	await _reflect(Vector3(-34, 5.2, -28), Vector3(-1, 0, -1))
+	assert_eq((tree.current_scene.get_node(^"TempleSeal") as TempleSeal).is_open, true, "con el escudo espejo de D4, sello abierto")
 	await tree.create_timer(1.0).timeout
 
 	await _place(Vector3(-42, 5.2, -33), Vector3.FORWARD)

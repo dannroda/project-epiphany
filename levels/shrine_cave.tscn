@@ -22,7 +22,7 @@
 
 [ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="26_iip2e"]
 
-[ext_resource type="Resource" path="res://data/items/shield_mirror.tres" id="29_mweuj"]
+[ext_resource type="Resource" path="res://data/items/heart_container.tres" id="29_mweuj"]
 
 [ext_resource type="PackedScene" path="res://src/world/light/light_source.tscn" id="30_xv8lf"]
 
@@ -82,13 +82,13 @@ solved_position = Vector3(-78, 0, -32)
 
 [node name="ChestGate" parent="." instance=ExtResource("26_iip2e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
-switches = Array[NodePath]([NodePath("../ShrineSwitch")])
+switches = Array[NodePath]([NodePath("../ShrineCrystal")])
 depth = 2.0
 
-[node name="MirrorChest" parent="." instance=ExtResource("15_3hrjb")]
+[node name="ShrineChest" parent="." instance=ExtResource("15_3hrjb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
 item = ExtResource("29_mweuj")
-flag = &"ow_shrine_mirror_chest"
+flag = &"ow_shrine_chest"
 big = true
 
 [node name="ShrineLight" parent="." instance=ExtResource("30_xv8lf")]
@@ -97,11 +97,11 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 8, 0
 [node name="ShrineCrystal" parent="." instance=ExtResource("31_fe77v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
 latch = true
-flag = &"ow_shrine_shortcut"
+flag = &"ow_shrine_crystal"
 
 [node name="ShortcutGate" parent="." instance=ExtResource("26_iip2e")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 12, 0, 0)
-switches = Array[NodePath]([NodePath("../ShrineCrystal")])
+switches = Array[NodePath]([NodePath("../ShrineSwitch")])
 depth = 2.0
 
 [node name="ShrineTablet" parent="." instance=ExtResource("18_gsck2")]

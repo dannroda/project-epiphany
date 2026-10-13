@@ -47,14 +47,14 @@ func test_piece_in_the_world_is_taken_once() -> void:
 	var pieces := tree.current_scene.find_children("*", "HeartPiece", false, false)
 	assert_true(pieces.size() >= 4, "hay al menos cuatro escondidas (%d)" % pieces.size())
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
-	var piece: HeartPiece = tree.current_scene.get_node(^"HeartPieceGrotto")
+	var piece: HeartPiece = tree.current_scene.get_node(^"HeartPieceHills")
 	player.health.invulnerability_time = 0.0
 	player.health.damage(8)
 	var hurt := player.health.current
 	piece.collect(player)
 	assert_eq(state.heart_pieces(), 1)
 	assert_eq(player.health.current, hurt + GameState.HP_PER_HEART, "tomarla cura un corazón")
-	assert_eq(state.get_flag(&"ow_heart_piece_grotto"), true)
+	assert_eq(state.get_flag(&"ow_heart_piece_hills"), true)
 	var stack: Node = tree.root.get_node(^"MenuStack")
 	for i in 120:
 		await tree.process_frame
@@ -65,8 +65,8 @@ func test_piece_in_the_world_is_taken_once() -> void:
 	tree.change_scene_to_file("res://levels/overworld.tscn")
 	await tree.scene_changed
 	await tree.process_frame
-	assert_true(tree.current_scene.get_node(^"HeartPieceGrotto").taken, "no vuelve a aparecer")
-	assert_eq(tree.current_scene.get_node(^"HeartPieceGrotto").visible, false)
+	assert_true(tree.current_scene.get_node(^"HeartPieceHills").taken, "no vuelve a aparecer")
+	assert_eq(tree.current_scene.get_node(^"HeartPieceHills").visible, false)
 	assert_true(tree.current_scene.has_node(^"HeartPieceMeadow"), "las otras siguen")
 	state.reset()
 

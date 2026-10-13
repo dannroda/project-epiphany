@@ -697,5 +697,13 @@ piece("salto_o", 44, salto((-1,)))
 piece("salto_medio", 45, salto(()))
 piece("salto_e", 46, salto((1,)))
 
+
+def escalon_alto(p):
+	"""Escalón de roca de 0.6 m en medio del pasto: no se sube caminando, sí saltando con la pluma; origen en la base."""
+	rock(p, -0.85, 0.85, -0.85, 0.85, 0.0, 0.6, push=0.1)
+
+
+piece("escalon_alto", 47, escalon_alto)
+
 epi.layout(kit, columns=7, spacing=3.5)
 epi.publish("lugares", material="outdoor")

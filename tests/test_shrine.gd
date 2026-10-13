@@ -25,7 +25,7 @@ func _frames(tree: SceneTree, count: int) -> void:
 		await tree.physics_frame
 
 
-func test_reach_the_shrine_get_the_mirror_and_light_the_crystal() -> void:
+func test_bombs_open_the_shrine_and_the_mirror_from_d4_lights_its_chest() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state: Node = tree.root.get_node(^"GameState")
 	var saves: Node = tree.root.get_node(^"SaveManager")
@@ -39,7 +39,8 @@ func test_reach_the_shrine_get_the_mirror_and_light_the_crystal() -> void:
 	var level := tree.current_scene
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	player.health.invulnerability_time = 0.0
-	assert_true(player.global_position.distance_to(Vector3(-72, 0, -16)) < 0.5, "bombs_only arranca en la cueva")
+	var spawn := level.get_node(^"Spawn_cueva") as Node3D
+	assert_true(player.global_position.distance_to(spawn.global_position) < 0.5, "bombs_only arranca a la salida de la cueva")
 
 	var wall := level.get_node(^"ShrineCrackedWall") as CrackedWall
 	player.global_position = wall.global_position + Vector3(0, 0, 2.1)
@@ -47,13 +48,16 @@ func test_reach_the_shrine_get_the_mirror_and_light_the_crystal() -> void:
 	await _frames(tree, 2)
 	await _press(tree, &"item_1")
 	await tree.create_timer(1.0).timeout
-	player.global_position = Vector3(-72, 0, -18)
+	player.global_position = wall.global_position + Vector3(0, 0, 6.0)
 	await tree.create_timer(2.6).timeout
 	assert_eq(wall.is_broken, true, "la bomba abre el paso al santuario")
 
+	tree.change_scene_to_file("res://levels/shrine_cave.tscn")
+	await tree.scene_changed
+	level = tree.current_scene
+	player = tree.get_first_node_in_group(&"player") as PlayerCharacter
 	var chest_gate := level.get_node(^"ChestGate") as Gate
 	var shortcut := level.get_node(^"ShortcutGate") as Gate
-	player.global_position = Vector3(-72, 0, -27)
 	await _frames(tree, 2)
 	assert_eq(chest_gate.is_open, false, "el cofre está detrás de una reja")
 	assert_eq(shortcut.is_open, false, "y el atajo, cerrado")
@@ -62,37 +66,49 @@ func test_reach_the_shrine_get_the_mirror_and_light_the_crystal() -> void:
 		assert_true(block.try_push(Vector3.FORWARD), "el bloque avanza")
 		await tree.create_timer(0.6).timeout
 	await tree.create_timer(0.8).timeout
-	assert_eq(chest_gate.is_open, true, "el bloque en el interruptor abre la reja del cofre")
+	assert_eq(shortcut.is_open, true, "el bloque en el interruptor abre el atajo a la entrada del templo")
+	assert_eq(chest_gate.is_open, false, "pero no el cofre")
 
-	var chest := level.get_node(^"MirrorChest") as Chest
+	var crystal := level.get_node(^"ShrineCrystal") as LightReceiver
+	player.global_position = Vector3(8, 0, 2)
+	_face(player, Vector3(-1, 0, -1))
+	hold_block(player, true)
+	use_gamepad()
+	await _frames(tree, 8)
+	assert_eq(crystal.lit, false, "el escudo de madera no devuelve la luz")
+	hold_block(player, false)
+	state.give(Items.get_item(&"shield_mirror"))
+	state.equip(Items.get_item(&"shield_mirror"))
+	await _frames(tree, 2)
+	_face(player, Vector3(-1, 0, -1))
+	hold_block(player, true)
+	await _frames(tree, 8)
+	assert_eq(crystal.lit, true, "con el escudo espejo de D4 el haz llega al cristal")
+	hold_block(player, false)
+	await tree.create_timer(0.8).timeout
+	assert_eq(chest_gate.is_open, true, "el cristal abre la reja del cofre")
+
+	var hearts_before: int = state.max_health
+	var chest := level.get_node(^"ShrineChest") as Chest
 	player.global_position = chest.global_position + Vector3(0, 0, 1.4)
 	_face(player, Vector3.FORWARD)
 	await _frames(tree, 2)
 	chest.interactable.interact(player)
 	await tree.create_timer(1.0).timeout
-	assert_true(stack.is_open() and stack.top().text_box.title_label.text == tr("ITEM_SHIELD_MIRROR_GOT"), "item get del escudo espejo")
+	assert_true(stack.is_open() and stack.top().text_box.title_label.text == tr("ITEM_HEART_CONTAINER_GOT"), "item get del contenedor de corazón")
 	while stack.is_open():
 		stack.pop()
 	await tree.create_timer(1.2).timeout
-	assert_eq(state.equipment[ItemData.Category.SHIELD], &"shield_mirror", "se equipa solo")
-
-	var crystal := level.get_node(^"ShrineCrystal") as LightReceiver
-	player.global_position = Vector3(-64, 0, -30)
-	_face(player, Vector3(-1, 0, -1))
-	hold_block(player, true)
-	use_gamepad()
-	await _frames(tree, 8)
-	assert_eq(crystal.lit, true, "el espejo manda el haz al cristal")
-	hold_block(player, false)
-	await tree.create_timer(0.8).timeout
-	assert_eq(shortcut.is_open, true, "el cristal abre el atajo a la entrada del templo")
-	assert_eq(state.get_flag(&"ow_shrine_shortcut"), true)
+	assert_true(state.max_health > hearts_before, "suma un corazón")
 
 	assert_eq(saves.save_game(SLOT), OK)
 	state.reset()
 	tree.change_scene_to_file("res://levels/test.tscn")
 	await tree.scene_changed
 	assert_eq(await saves.load_game(SLOT), OK)
+	await _frames(tree, 2)
+	tree.change_scene_to_file("res://levels/shrine_cave.tscn")
+	await tree.scene_changed
 	await _frames(tree, 2)
 	level = tree.current_scene
 	assert_eq((level.get_node(^"ChestGate") as Gate).is_open, true, "la reja del cofre sigue abierta al cargar")
