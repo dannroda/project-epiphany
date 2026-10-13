@@ -1,0 +1,22 @@
+{
+  "assignee": "Claude",
+  "checklist": [],
+  "code": "11.128",
+  "created_at": "2026-10-13T21:14:12.343Z",
+  "description": "Daniel: entrando al santuario por la puerta de atrás se salía por la de abajo atravesando el muro agrietado de la Explanada sin romperlo. Además Spawn_atajo (x 11) quedaba del lado de adentro de la reja del atajo, así que el atajo no hacía falta abrirlo. Ahora shrine_cave tiene su propio muro agrietado en la boca de la salida (EntranceCrackedWall, mismo flag ow_shrine_cracked_wall: romper uno rompe el otro), y Spawn_atajo pasa a x 13,4, afuera de la reja. Todos los muros agrietados del juego (14) tienen flag y quedan rotos.",
+  "done_at": "2026-10-13T21:14:13.080Z",
+  "milestone": "m11",
+  "notes": "",
+  "order": 125,
+  "priority": "high",
+  "refs": [],
+  "size": "s",
+  "status": "done",
+  "tags": [
+    "bug",
+    "overworld"
+  ],
+  "test": "test_shrine › test_the_back_door_skips_neither_the_shortcut_nor_the_cracked_wall: por atrás arranca afuera de la reja cerrada y no pasa; la salida está tapada por el muro de adentro; con el flag del muro de afuera, el de adentro está roto. test_overworld_run sigue pasando.",
+  "title": "Por atrás del santuario se salteaba el muro agrietado y el atajo",
+  "updated_at": "2026-10-13T21:14:13.080Z"
+}

@@ -2586,7 +2586,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (74/123)
+## M11 — Pulido: contenido y feel  (75/124)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4590,6 +4590,14 @@ GitHub rechaza el push: assets/epiphany/terreno_organico.glb (hasta 334 MB) y as
 La etiqueta del piso (FloorTag, en mazmorras de varios pisos) tenía lugar para 34 px, pero con los márgenes de HudPill y el texto mide 49, y crecía hacia abajo sobre el minimapa. Ahora crece hacia arriba (grow_vertical = begin): el borde de abajo queda 6 px sobre el minimapa.
 
 **Prueba:** test_minimap › test_the_floor_tag_sits_above_the_minimap: en la Chullpa la etiqueta se ve y termina arriba del minimapa.
+
+### 11.128 Por atrás del santuario se salteaba el muro agrietado y el atajo · Hecho
+
+**Terminada:** 2026-10-13 · **Prioridad:** alta · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `overworld`
+
+Daniel: entrando al santuario por la puerta de atrás se salía por la de abajo atravesando el muro agrietado de la Explanada sin romperlo. Además Spawn_atajo (x 11) quedaba del lado de adentro de la reja del atajo, así que el atajo no hacía falta abrirlo. Ahora shrine_cave tiene su propio muro agrietado en la boca de la salida (EntranceCrackedWall, mismo flag ow_shrine_cracked_wall: romper uno rompe el otro), y Spawn_atajo pasa a x 13,4, afuera de la reja. Todos los muros agrietados del juego (14) tienen flag y quedan rotos.
+
+**Prueba:** test_shrine › test_the_back_door_skips_neither_the_shortcut_nor_the_cracked_wall: por atrás arranca afuera de la reja cerrada y no pasa; la salida está tapada por el muro de adentro; con el flag del muro de afuera, el de adentro está roto. test_overworld_run sigue pasando.
 
 ## M12 — Assets propios (Blender)  (13/19)
 
