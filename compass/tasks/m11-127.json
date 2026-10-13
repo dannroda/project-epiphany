@@ -1,0 +1,22 @@
+{
+  "assignee": "Claude",
+  "checklist": [],
+  "code": "11.127",
+  "created_at": "2026-10-13T20:59:03.988Z",
+  "description": "La etiqueta del piso (FloorTag, en mazmorras de varios pisos) tenía lugar para 34 px, pero con los márgenes de HudPill y el texto mide 49, y crecía hacia abajo sobre el minimapa. Ahora crece hacia arriba (grow_vertical = begin): el borde de abajo queda 6 px sobre el minimapa.",
+  "done_at": "2026-10-13T20:59:04.617Z",
+  "milestone": "m11",
+  "notes": "",
+  "order": 124,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "done",
+  "tags": [
+    "bug",
+    "ui"
+  ],
+  "test": "test_minimap › test_the_floor_tag_sits_above_the_minimap: en la Chullpa la etiqueta se ve y termina arriba del minimapa.",
+  "title": "Etiqueta del piso tapa el minimapa",
+  "updated_at": "2026-10-13T20:59:04.617Z"
+}
