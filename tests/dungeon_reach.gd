@@ -258,7 +258,7 @@ static func _wiring(node: Node, problems: PackedStringArray) -> Array:
 	if tokens.is_empty():
 		problems.append("%s no tiene interruptores" % node.name)
 		return [["nunca"]]
-	if node.condition == Wiring.Condition.ANY:
+	if node.get("condition") == Wiring.Condition.ANY:
 		return [tokens]
 	return tokens.map(func(token: String) -> Array: return [token])
 
