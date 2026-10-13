@@ -226,6 +226,60 @@ def pluma(p):
 	p.paint(tie, "tela_azul", "MID")
 
 
+def tube(p, points, radius, sides=6):
+	"""Tira redonda que pasa por points (cuero de las correas)."""
+	faces = []
+	for a, b in zip(points, points[1:]):
+		a, b = Vector(a), Vector(b)
+		seg = p.cylinder(radius, 0.0, (b - a).length + radius, sides=sides)
+		p.transform(seg, Matrix.Translation(a) @ (b - a).to_track_quat("Z", "Y").to_matrix().to_4x4())
+		faces += seg
+	return faces
+
+
+SOLE = [(0.0, 0.155), (0.033, 0.146), (0.044, 0.1), (0.043, 0.03), (0.053, -0.04), (0.058, -0.1), (0.045, -0.142), (0.016, -0.16),
+		(-0.018, -0.156), (-0.043, -0.13), (-0.049, -0.07), (-0.039, 0.0), (-0.039, 0.1), (-0.029, 0.145)]
+
+
+def ojota(p, side, at, turn):
+	"""Una ojota (side 1 derecha, -1 izquierda) apoyada en z 0 con la punta hacia -Y: suela de dos capas, dos correas
+	rojas del dedo a los costados, la tira del talón y un ala chica de cóndor en el talón, del lado de afuera."""
+	faces = []
+	outline = [(side * x, y) for x, y in SOLE]
+	if side > 0:
+		outline.reverse()
+	base = p.polygon(outline, 0.0, 0.016)
+	p.paint(base, "noche", "MID")
+	top = p.polygon([(x * 0.97, y * 0.98) for x, y in outline], 0.016, 0.03)
+	p.paint(top, "madera", "MID", vary=0.04)
+	faces += base + top
+	post = (0.0, -0.105, 0.026)
+	for k in (-1, 1):
+		strap = tube(p, [post, (k * 0.022, -0.075, 0.062), (k * 0.044, -0.02, 0.05), (k * 0.043, 0.0, 0.026)], 0.012)
+		p.paint(strap, "tela_roja", "MID")
+		faces += strap
+	heel = tube(p, [(-0.04, 0.0, 0.026), (-0.045, 0.08, 0.075), (-0.025, 0.155, 0.085), (0.025, 0.155, 0.085), (0.045, 0.08, 0.075), (0.04, 0.0, 0.026)], 0.011)
+	p.paint(heel, "tela_roja", "LOW")
+	faces += heel
+	for x, y, z in (post, (0.044, -0.02, 0.05), (-0.044, -0.02, 0.05)):
+		bead = p.blob((x, y, z), 0.016, subdiv=1, rough=0.0)
+		p.paint(bead, "dorado", "MID")
+		faces += bead
+	for i, tilt in enumerate((0.25, 0.65, 1.05)):
+		length = 0.15 - i * 0.02
+		quill = flat(p, [(0.0, 0.0), (0.024, length * 0.3), (0.018, length * 0.8), (0.0, length), (-0.01, length * 0.6), (-0.008, length * 0.2)], 0.012)
+		p.transform(quill, Matrix.Translation((side * 0.05, 0.13, 0.06)) @ Matrix.Rotation(side * math.pi / 2, 4, "Z") @ Matrix.Rotation(tilt, 4, "Y"))
+		p.paint_bands(quill, [(0.06 + length * 0.7, 1.0, "noche", "MID")], default=(0, 0, "blanco", "MID"))
+		faces += quill
+	p.transform(faces, Matrix.Translation(at) @ Matrix.Rotation(turn, 4, "Z"))
+
+
+def sandalias(p):
+	"""El par de ojotas para correr (las botas Pegaso): la derecha un poco adelante."""
+	ojota(p, 1, (0.075, -0.02, 0.0), -0.08)
+	ojota(p, -1, (-0.075, 0.02, 0.0), 0.08)
+
+
 piece("espada", 1, espada)
 piece("escudo_madera", 2, escudo_madera)
 piece("escudo_espejo", 3, escudo_espejo)
@@ -237,5 +291,6 @@ piece("botella_vidrio", 8, botella_vidrio)
 piece("botella_liquido", 10, botella_liquido)
 piece("armadura", 9, armadura)
 piece("pluma", 11, pluma)
+piece("sandalias", 12, sandalias)
 epi.layout(kit, columns=8, spacing=2.0)
 epi.publish("equipo")
