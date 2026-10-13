@@ -1,7 +1,7 @@
 extends "res://tests/test_case.gd"
 
 const OVERWORLD := "res://levels/overworld.tscn"
-const DUNGEON := "res://levels/temple.tscn"
+const DUNGEON := "res://levels/templo.tscn"
 const SLOT := 9
 const WARP := preload("res://src/world/warp_portal.tscn")
 
@@ -49,11 +49,11 @@ func test_enter_and_leave_the_temple_keeping_the_dungeon() -> void:
 	await tree.create_timer(0.3).timeout
 
 	assert_true(await _walk_into(tree, &"move_forward", DUNGEON), "la puerta del templo lleva a la mazmorra")
-	assert_eq(state.current_dungeon, &"d1", "la mazmorra queda activa")
-	assert_true(_player(tree).global_position.distance_to(Vector3(24, 0, 68)) < 0.8, "aparece en la entrada (%s)" % _player(tree).global_position)
+	assert_eq(state.current_dungeon, &"te", "la mazmorra queda activa")
+	assert_true(_player(tree).global_position.distance_to(Vector3(40, 0, 44)) < 0.8, "aparece en la entrada (%s)" % _player(tree).global_position)
 	assert_eq(tree.paused, false, "el juego sigue al terminar el fundido")
 	var camera := tree.current_scene.get_node(^"TopDownCamera") as TopDownCamera
-	assert_eq(camera.room, tree.current_scene.get_node(^"Vestibulo"), "la cámara toma la sala de entrada")
+	assert_eq(camera.room, tree.current_scene.get_node(^"Planta/Vestibulo"), "la cámara toma la sala de entrada")
 	var autosave := ConfigFile.new()
 	assert_eq(SaveCodec.read(saves.slot_path(SLOT), autosave), OK, "guardó al cambiar de escena")
 	assert_eq(autosave.get_value("player", "spawn_scene", ""), DUNGEON)
@@ -68,8 +68,8 @@ func test_enter_and_leave_the_temple_keeping_the_dungeon() -> void:
 
 	assert_true(await _walk_into(tree, &"move_forward", DUNGEON), "se puede volver a entrar")
 	assert_eq(state.current_dungeon_state().small_keys, 1, "la mazmorra conserva su estado")
-	assert_true(state.current_dungeon_state().was_visited(0), "y las salas visitadas")
-	assert_true(_player(tree).global_position.distance_to(Vector3(24, 0, 68)) < 0.8, "otra vez en la entrada")
+	assert_true(state.current_dungeon_state().was_visited(11), "y las salas visitadas")
+	assert_true(_player(tree).global_position.distance_to(Vector3(40, 0, 44)) < 0.8, "otra vez en la entrada")
 
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(saves.slot_path(SLOT)))
 	saves.current_slot = 1

@@ -1,7 +1,7 @@
 extends "res://tests/test_case.gd"
 
 const OVERWORLD := "res://levels/overworld.tscn"
-const DUNGEON := "res://levels/temple.tscn"
+const DUNGEON := "res://levels/templo.tscn"
 const SLOT := 9
 
 

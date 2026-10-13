@@ -3,7 +3,7 @@ extends "res://tests/test_case.gd"
 ## templo: entrar y volver a salir.
 
 const OVERWORLD := "res://levels/overworld.tscn"
-const DUNGEON := "res://levels/temple.tscn"
+const DUNGEON := "res://levels/templo.tscn"
 const BOMB_CAVE := "res://levels/bomb_cave.tscn"
 const SHRINE := "res://levels/shrine_cave.tscn"
 const SLOT := 9

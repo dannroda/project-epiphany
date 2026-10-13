@@ -108,7 +108,7 @@ func test_both_travel_between_the_overworld_and_the_temple() -> void:
 		await tree.physics_frame
 	players.lead_pad = PAD_1
 	players.join(PAD_2)
-	for trip: Array in [["res://levels/temple.tscn", &"start"], ["res://levels/overworld.tscn", &"templo"]]:
+	for trip: Array in [["res://levels/templo.tscn", &"start"], ["res://levels/overworld.tscn", &"templo"]]:
 		await save.travel_to(trip[0], trip[1])
 		for i in 10:
 			await tree.physics_frame
