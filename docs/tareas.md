@@ -4910,7 +4910,7 @@ Cada mazmorra con su propio estilo sobre el mismo kit (mismas piezas y colisione
 - [x] Luz y ambiente por mazmorra
   Hecho el 2026-10-13 (d5384189), arte -11: LOOKS en la_walls.gd (ambiente, luz del lado de la cámara, foco de sala y polvo), se aplica en bake y en cada refresh. Chullpa cálida y polvorienta (polvo_chullpa.tscn), Queñoa fría y húmeda (polvo_quenoa.tscn). Las escenas de polvo se ajustan a ojo en el editor; los colores, en LOOKS.
 - [ ] Props por estilo
-  En curso. 2026-10-13 (70d206ae), arte -11: Queñoa con brasero propio (brasero_quenoa: muñón de tronco colgado de la pared, lo pone la_walls LOOKS) y vasijas mate burilado (pot_quenoa.tscn, escena heredada de pot.tscn). Chullpa sigue con el brasero de piedra y el aríbalo. Falta: puertas por estilo y estandartes (no hay ninguno puesto en las mazmorras).
+  Hecho el 2026-10-13, arte -11. Queñoa: brasero_quenoa (muñón de tronco colgado de la pared) y vasijas mate burilado (pot_quenoa.tscn) en 70d206ae; puertas de tablones atados con soga y musgo (ccee04af). Chullpa: brasero de piedra y aríbalo de antes, puertas de losas de piedra con escalonado y cobre (ccee04af). Todo lo pone la_walls LOOKS en cada refresh, menos las vasijas (por escena). Estandartes: el modelo existe en cada kit de estilo pero no hay ninguno puesto; ponerlos es de diseño.
 - [x] Estilo del terreno del overworld por región
   AreaZone.terrain_style (necropolis, laguna, cumbre, explanada, cardonal, quebrada); el build pinta suelo, riscos y abismo por región con borde ondulado y cambia la decoración. Puestos en overworld.tscn: Templo explanada, Quebrada, Necrópolis + Mirador, Cumbre + Risco, Laguna + Bañado, Cardonal. Falta que el usuario lo vea.
 
