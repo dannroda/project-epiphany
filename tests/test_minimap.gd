@@ -49,6 +49,15 @@ func test_dungeon_shows_the_rooms_around_and_hides_with_menus_or_option() -> voi
 	state.reset()
 
 
+func test_the_floor_tag_sits_above_the_minimap() -> void:
+	var setup: Array = await _load("chullpa")
+	var minimap: Control = setup[3]
+	var tag: Control = minimap.get_node(^"%FloorTag")
+	assert_true(tag.visible, "en una mazmorra de varios pisos se ve el piso")
+	assert_true(tag.get_global_rect().end.y <= minimap.get_global_rect().position.y, "arriba del minimapa, sin taparlo (%s / %s)" % [tag.get_global_rect(), minimap.get_global_rect()])
+	(setup[1] as Node).reset()
+
+
 func test_hidden_in_the_boss_room() -> void:
 	var setup: Array = await _load("", "res://levels/temple.tscn")
 	var tree: SceneTree = setup[0]

@@ -2586,7 +2586,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (73/122)
+## M11 — Pulido: contenido y feel  (74/123)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4582,6 +4582,14 @@ test_grove_puzzle teletransporta los bloques a las placas; no prueba que se lleg
 **Prioridad:** alta · **Tamaño:** L · **Etiquetas:** `bug`, `arte`, `repo`
 
 GitHub rechaza el push: assets/epiphany/terreno_organico.glb (hasta 334 MB) y assets/epiphany/meshes/terreno_organico/riscos.res (170 MB) pasan el límite de 100 MB por archivo. Hay 24 versiones en los ~360 commits sin pushear (desde 985d9e56, origin/main del 2026-10-11). Los dos salen de tools/blender/build_terreno_organico.py. Plan probable (Daniel): partir el terreno en chunks de menos de 100 MB y después limpiar las versiones grandes del historial sin pushear (git filter-repo; cambia los hashes, con las otras sesiones quietas).
+
+### 11.127 Etiqueta del piso tapa el minimapa · Hecho
+
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `ui`
+
+La etiqueta del piso (FloorTag, en mazmorras de varios pisos) tenía lugar para 34 px, pero con los márgenes de HudPill y el texto mide 49, y crecía hacia abajo sobre el minimapa. Ahora crece hacia arriba (grow_vertical = begin): el borde de abajo queda 6 px sobre el minimapa.
+
+**Prueba:** test_minimap › test_the_floor_tag_sits_above_the_minimap: en la Chullpa la etiqueta se ve y termina arriba del minimapa.
 
 ## M12 — Assets propios (Blender)  (13/19)
 
