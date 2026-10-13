@@ -217,41 +217,10 @@ piece("muro_agrietado", 5, muro_agrietado)
 piece("muro_agrietado_risco", 27, muro_agrietado_risco)
 piece("muro_agrietado_templo", 28, muro_agrietado_templo)
 piece("escombro_a", 6, lambda p: escombro(p, 4))
-piece("escombro_b", 7, lambda p: escombro(p, 2))
 
 
 # --- santuario ---
 
-def santuario_piso(p):
-	base = p.box(-1, 1, -1, 1, -0.5, -0.03)
-	p.paint(base, "gris_5", "MID")
-	slabs = []
-	for x in (-1, 0):
-		for y in (-1, 0):
-			s = p.box(x + 0.03, x + 0.97, y + 0.03, y + 0.97, -0.05, 0.0, taper=0.015)
-			slabs += s
-	p.paint(slabs, "piedra_templo", "MID", vary=0.08)
-
-
-def santuario_pared(p):
-	epi.stone_wall(p, -0.5, TOP, swatch="piedra_templo", rows=(0.42, 0.1), widths=(0.6, 0.35), mortar="gris_5", depth=0.05, vary=0.08)
-	cap = p.box(-1.0, 1.0, -1.0, 1.0, TOP, TOP + 0.12, taper=0.04)
-	p.paint(cap, "piedra_templo", "LIGHT")
-
-
-def pedestal(p):
-	"""Altar escalonado de 1.4 m para el cofre grande."""
-	steps = []
-	for i, w in enumerate((1.4, 1.1, 0.8)):
-		steps += p.box(-w / 2, w / 2, -w / 2, w / 2, i * 0.18, (i + 1) * 0.18)
-	p.paint(steps, "piedra_templo", z_range=(0, 0.6), vary=0.06)
-	trim = p.box(-0.42, 0.42, -0.42, 0.42, 0.54, 0.56)
-	p.paint(trim, "dorado", "MID")
-
-
-piece("santuario_piso", 8, santuario_piso)
-piece("santuario_pared", 9, santuario_pared)
-piece("pedestal", 10, pedestal)
 
 
 # --- puzzle de luz ---

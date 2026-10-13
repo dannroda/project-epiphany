@@ -438,18 +438,6 @@ def estandarte(p):
 	p.paint(fringe, "paja", "MID")
 
 
-def tablilla(p):
-	base = p.box(-0.55, 0.55, -0.22, 0.22, 0.0, 0.2)
-	slab = p.box(-0.45, 0.45, -0.09, 0.09, 0.2, 1.3)
-	for v in {v for f in slab for v in f.verts}:
-		if v.co.z > 1.0:
-			v.co.x *= 0.82
-	p.paint(base, STONE, "DARK", vary=0.1)
-	p.paint(slab, STONE, z_range=(0.0, 1.5), vary=0.05)
-	relief = epi.eye(p, Vector((0, -0.09, 0.85)), 0.28)
-	p.paint(relief, "dorado", "MID")
-
-
 def escombros(p):
 	chunks = []
 	for _ in range(6):
@@ -509,7 +497,6 @@ piece("pinchos", 23, pinchos)
 piece("antorcha_pared", 16, antorcha_pared)
 piece("brasero", 17, brasero, smooth=40)
 piece("estandarte", 18, estandarte)
-piece("tablilla", 19, tablilla)
 piece("escombros", 20, escombros)
 piece("venas_doom", 21, venas_doom)
 
@@ -532,57 +519,6 @@ def torreta(p):
 	return {"centro_ojo": [0.0, 1.1, 0.45]}
 
 
-def jefe_ojo(p):
-	"""El Ojo: globo de 1.2 m de radio con iris violeta y pupila roja, mirando a -Y. Los párpados van aparte."""
-	ball = p.blob((0, 0, 0), 1.2, subdiv=3, rough=0.0)
-	white, iris, pupil = [], [], []
-	for f in ball:
-		c = f.calc_center_median().normalized()
-		(pupil if c.y < -0.95 else iris if c.y < -0.78 else white).append(f)
-	p.paint(white, "hueso", z_range=(-1.4, 1.4))
-	p.paint(iris, "sello", "MID", vary=0.05)
-	p.paint(pupil, "doom", "LIGHT")
-	veins = []
-	for _ in range(8):
-		a = p.rng.uniform(0, 2 * math.pi)
-		v = p.box(-0.02, 0.02, -0.02, 0.02, 0.0, p.rng.uniform(0.3, 0.6))
-		p.transform(v, Matrix.Rotation(a, 4, "Y") @ Matrix.Translation((0, -0.9, 0.0)) @ Matrix.Rotation(-math.pi / 2 + 0.6, 4, "X") @ Matrix.Translation((0, 0, 0.75)))
-		veins += v
-	p.paint(veins, "doom", "MID")
-
-
-def jefe_parpado(p):
-	"""Párpado superior de piedra (media cáscara) que se baja girando en X; el inferior es el mismo, girado 180°."""
-	shell = p.lathe([(0.0, 1.38), (0.6, 1.26), (1.05, 0.95), (1.32, 0.45), (1.38, 0.0), (1.28, 0.0), (1.22, 0.42), (0.95, 0.88), (0.55, 1.16), (0.0, 1.28)], sides=16, caps=False)
-	p.paint(shell, STONE, z_range=(0, 1.4), vary=0.05)
-	rim = p.lathe([(1.4, -0.03), (1.46, 0.0), (1.4, 0.06), (1.3, 0.0), (1.4, -0.03)], sides=16, caps=False)
-	p.paint(rim, "dorado", "MID")
-	p.transform(shell + rim, Matrix.Rotation(math.pi / 2, 4, "X") @ Matrix.Rotation(math.pi, 4, "Y"))
-
-
-def jefe_mano(p):
-	"""Mano izquierda de piedra, palma hacia abajo, los dedos hacia -Y; la derecha es la misma espejada en X."""
-	palm = p.box(-0.55, 0.55, -0.5, 0.5, 0.0, 0.35, taper=0.05)
-	p.jitter(palm, 0.03)
-	parts = palm
-	for i, x in enumerate((-0.4, -0.13, 0.13, 0.4)):
-		y = -0.5
-		length = 0.42 + (0.08 if i in (1, 2) else 0.0)
-		for k in range(3):
-			seg = p.box(x - 0.11, x + 0.11, y - length, y, 0.03, 0.28 - k * 0.03, taper=0.02)
-			p.transform(seg, Matrix.Translation((0, 0, -k * 0.06)))
-			parts += seg
-			y -= length + 0.03
-			length *= 0.8
-	thumb = p.box(-0.12, 0.12, -0.4, 0.0, 0.05, 0.28)
-	p.transform(thumb, Matrix.Translation((0.62, 0.0, 0.0)) @ Matrix.Rotation(-0.7, 4, "Z"))
-	parts += thumb
-	p.paint(parts, STONE, z_range=(-0.3, 0.6), vary=0.08)
-	glyph = epi.eye(p, Vector((0, 0, 0)), 0.25, depth=0.03)
-	p.transform(glyph, Matrix.Translation((0, 0.05, 0.35)) @ Matrix.Rotation(-math.pi / 2, 4, "X"))
-	p.paint(glyph, "doom", "LIGHT")
-
-
 def piso_arena(p):
 	"""Piso de la sala del jefe: arena con un anillo de lajas."""
 	base = p.box(-1, 1, -1, 1, -0.5, 0.0)
@@ -594,9 +530,6 @@ def piso_arena(p):
 
 
 piece("torreta", 22, torreta)
-piece("jefe_ojo", 23, jefe_ojo)
-piece("jefe_parpado", 24, jefe_parpado)
-piece("jefe_mano", 25, jefe_mano)
 piece("piso_arena", 26, piso_arena)
 
 
