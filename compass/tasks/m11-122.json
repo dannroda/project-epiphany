@@ -3,18 +3,19 @@
   "code": "11.122",
   "created_at": "2026-10-13T17:30:44.787Z",
   "description": "BushCaveBush se corta con la espada desde el arranque y el cofre de bush_cave da 10 bombas: se llega antes de la Cueva de las bombas y aparece 'no tenés bolsa'. Cambiar el contenido o tapar el hoyo con algo que pida bombas.",
+  "done_at": "2026-10-13T18:03:32.516Z",
   "milestone": "m11",
-  "notes": "",
+  "notes": "Daniel (2026-10-13): queda así. La bolsa está en la cueva de las bombas (oeste de la Pradera, sin requisitos); si se llega antes a la cueva de la mata, el cofre queda cerrado (11.120) hasta volver con la bolsa.",
   "order": 119,
   "priority": "low",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "done",
   "tags": [
     "bug",
     "diseño"
   ],
   "test": "",
   "title": "Cofre de bombas de la cueva de la mata en el inicio",
-  "updated_at": "2026-10-13T17:31:01.528Z"
+  "updated_at": "2026-10-13T18:03:32.516Z"
 }

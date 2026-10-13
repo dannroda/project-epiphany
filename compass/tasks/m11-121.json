@@ -3,18 +3,19 @@
   "code": "11.121",
   "created_at": "2026-10-13T17:30:44.493Z",
   "description": "SecretRockChest (Cerros, solo empujar), SecretRavineChest (Quebrada, bombas) y SecretLedgeChest (Quebrada, pluma) dan 10 flechas y se alcanzan antes del arco (D2). Con 11.120 el cofre no las pierde, pero el premio del secreto es 'no tenés arco'. Propuesta: roca y muro dan bombas o poción; la repisa queda en flechas o también cambia.",
+  "done_at": "2026-10-13T18:03:31.567Z",
   "milestone": "m11",
-  "notes": "",
+  "notes": "Daniel (2026-10-13): queda así. Desde 11.120 el cofre sigue cerrado y avisa que falta el arco; al volver con el arco da las flechas. Pociones y bombas descartadas (botellas máximo 4; hay cofres de bombas antes de la bolsa).",
   "order": 118,
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "done",
   "tags": [
     "bug",
     "diseño"
   ],
   "test": "",
   "title": "Secretos de flechas antes del arco",
-  "updated_at": "2026-10-13T17:31:01.281Z"
+  "updated_at": "2026-10-13T18:03:31.567Z"
 }

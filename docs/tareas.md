@@ -2576,7 +2576,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (68/121)
+## M11 — Pulido: contenido y feel  (69/121)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4507,17 +4507,21 @@ Abrir un cofre con bombas sin la bolsa (o flechas sin el arco) gastaba el cofre 
 
 **Prueba:** test_chest › test_ammo_without_its_holder_stays_in_the_chest: sin bolsa no da bombas, abre el aviso y el cofre queda cerrado; con la bolsa, las da.
 
-### 11.121 Secretos de flechas antes del arco · Pendiente
+### 11.121 Secretos de flechas antes del arco · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `diseño`
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `diseño`
 
 SecretRockChest (Cerros, solo empujar), SecretRavineChest (Quebrada, bombas) y SecretLedgeChest (Quebrada, pluma) dan 10 flechas y se alcanzan antes del arco (D2). Con 11.120 el cofre no las pierde, pero el premio del secreto es 'no tenés arco'. Propuesta: roca y muro dan bombas o poción; la repisa queda en flechas o también cambia.
+
+**Notas:** Daniel (2026-10-13): queda así. Desde 11.120 el cofre sigue cerrado y avisa que falta el arco; al volver con el arco da las flechas. Pociones y bombas descartadas (botellas máximo 4; hay cofres de bombas antes de la bolsa).
 
 ### 11.122 Cofre de bombas de la cueva de la mata en el inicio · Pendiente
 
 **Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `bug`, `diseño`
 
 BushCaveBush se corta con la espada desde el arranque y el cofre de bush_cave da 10 bombas: se llega antes de la Cueva de las bombas y aparece 'no tenés bolsa'. Cambiar el contenido o tapar el hoyo con algo que pida bombas.
+
+**Notas:** Daniel (2026-10-13): queda así. La bolsa está en la cueva de las bombas (oeste de la Pradera, sin requisitos); si se llega antes a la cueva de la mata, el cofre queda cerrado (11.120) hasta volver con la bolsa.
 
 ### 11.123 Tablilla del Risco desactualizada · Pendiente
 
