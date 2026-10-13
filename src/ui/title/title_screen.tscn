@@ -2,9 +2,14 @@
 
 [ext_resource type="Theme" uid="uid://covrlpuexf2af" path="res://src/ui/theme.tres" id="1_theme"]
 [ext_resource type="Script" uid="uid://6pj48g1rapde" path="res://src/ui/title/title_screen.gd" id="2_script"]
-[ext_resource type="Script" uid="uid://dea03f5unluxn" path="res://src/ui/title/title_eye.gd" id="3_eye"]
+[ext_resource type="VideoStream" path="res://assets/ui/title/flyover.ogv" id="3_video"]
+[ext_resource type="Shader" path="res://src/ui/title/title_blur.gdshader" id="6_blur"]
+[ext_resource type="Texture2D" path="res://assets/ui/logo/epiphany_logo.png" id="7_logo"]
 [ext_resource type="PackedScene" uid="uid://pyyqflynppn5" path="res://src/ui/menus/menu_item.tscn" id="4_item"]
 [ext_resource type="Script" uid="uid://jou4nqurtyvf" path="res://src/ui/hint_bar.gd" id="5_hints"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_blur"]
+shader = ExtResource("6_blur")
 
 [node name="TitleScreen" type="Control" unique_id=24387741]
 layout_mode = 3
@@ -25,40 +30,33 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.043137256, 0.050980393, 0.0627451, 1)
 
-[node name="Eye" type="Control" parent="." unique_id=761762833]
-modulate = Color(1, 1, 1, 0.8)
+[node name="Flyover" type="VideoStreamPlayer" parent="." unique_id=1907113420]
+texture_filter = 2
+material = SubResource("ShaderMaterial_blur")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("3_video")
+autoplay = true
+expand = true
+loop = true
+
+[node name="Logo" type="TextureRect" parent="." unique_id=1907113421]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -300.0
-offset_top = 70.0
-offset_right = 300.0
-offset_bottom = 320.0
+offset_left = -330.0
+offset_top = 50.0
+offset_right = 330.0
+offset_bottom = 336.0
 grow_horizontal = 2
-script = ExtResource("3_eye")
-
-[node name="Heading" type="VBoxContainer" parent="." unique_id=1419574404]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = 250.0
-offset_bottom = 340.0
-grow_horizontal = 2
-theme_override_constants/separation = 10
-alignment = 1
-
-[node name="Title" type="Label" parent="Heading" unique_id=2097589688]
-layout_mode = 2
-theme_type_variation = &"DisplayTitle"
-text = "PROJECT EPIPHANY"
-horizontal_alignment = 1
-
-[node name="Rule" type="ColorRect" parent="Heading" unique_id=1890873559]
-custom_minimum_size = Vector2(420, 1)
-layout_mode = 2
-size_flags_horizontal = 4
-color = Color(0.41960785, 0.3529412, 0.22745098, 1)
+texture = ExtResource("7_logo")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Menu" type="VBoxContainer" parent="." unique_id=1237946082]
 unique_name_in_owner = true
