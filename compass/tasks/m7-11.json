@@ -1,12 +1,13 @@
 {
   "checklist": [
     {
-      "done": false,
-      "text": "Angostura e islotes a 4 m; abismo del Risco a 6 m"
+      "detail": "Daniel (2026-10-13): la pluma cruza 1 celda (2 m) y sandalias + pluma 3 (6 m). La angostura y los huecos muelle → islote → isla de D3 miden 3 celdas; el Risco 4 (8 m), con el ojo corrido al norte (Z -32.4). La pieza de los islotes va sobre el islote.",
+      "done": true,
+      "text": "Angostura e islotes a 3 celdas; abismo del Risco a 4"
     },
     {
-      "detail": "Hecho: corral de pirca de la Necrópolis (X 24..36, Z -12..-3, nivel 1). Tres chullpas provisorias (src/world/chullpa_tumba.tscn: torre de piedra con un EyeSwitch de 8 s) miran al centro; con los tres ojos prendidos a la vez aparece el cofre grande SandalsChest (flag ow_sandals_chest). Falta: el ítem del cofre cuando 11.118 cree las sandalias, y el modelo de chullpa de arte. Test en test_secrets.",
-      "done": false,
+      "detail": "Hecho: corral de pirca de la Necrópolis (X 24..36, Z -12..-3, nivel 1). Tres chullpas (src/world/chullpa_tumba.tscn: torre de piedra con un EyeSwitch de 8 s) miran al centro; con los tres ojos prendidos a la vez aparece el cofre grande SandalsChest (flag ow_sandals_chest) con las sandalias. Test en test_secrets.",
+      "done": true,
       "text": "Mini quest de la Necrópolis (arco → sandalias)"
     },
     {
@@ -20,7 +21,7 @@
   ],
   "code": "7.11",
   "created_at": "2026-10-13T08:16:07.238Z",
-  "description": "Daniel (2026-10-13): la angostura (Arboleda ↔ Cardonal) y los huecos de los islotes de la Laguna pasan a 4 m (dos celdas): solo se cruzan con dash + pluma (11.118). El abismo del Risco pasa a 6 m. Mini quest en la Necrópolis, del otro lado del puente: una prueba con el arco (p. ej. tres ojos en las chullpas) da las sandalias. Depende de 11.118. [[gdd#progresion-gating]]",
+  "description": "Daniel (2026-10-13): la pluma cruza 1 celda (2 m) y sandalias + pluma 3 (6 m). La angostura (Arboleda ↔ Cardonal) y los huecos de los islotes de la Laguna pasan a 3 celdas: solo se cruzan con el salto largo (11.118). El abismo del Risco pasa a 4 celdas (8 m). Mini quest en la Necrópolis, del otro lado del puente: tres ojos en las chullpas, prendidos a la vez con flechas, dan las sandalias. Depende de 11.118. [[gdd#progresion-gating]]",
   "milestone": "m07",
   "notes": "",
   "order": 11,
@@ -33,5 +34,5 @@
   ],
   "test": "",
   "title": "Overworld: huecos de salto largo y mini quest de las sandalias",
-  "updated_at": "2026-10-13T08:24:10.325Z"
+  "updated_at": "2026-10-13T08:41:13.351Z"
 }

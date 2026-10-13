@@ -108,3 +108,28 @@ func test_overworld_plants_are_cut_like_grass() -> void:
 	await tree.create_timer(1.0).timeout
 	assert_true(is_instance_valid(tree_plant) and tree_plant.get_node(^"Stump").visible and not is_instance_valid(model), "y queda el tocón")
 	state.reset()
+
+
+func test_the_sandals_crash_shakes_trees_and_cracked_walls() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	state.reset()
+	tree.change_scene_to_file("res://levels/overworld.tscn")
+	await tree.scene_changed
+	for i in 3:
+		await tree.physics_frame
+	var level := tree.current_scene
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	var plants := level.get_node(^"Decor/Plantas").get_children().filter(func(node: Node) -> bool: return node is Breakable)
+	var tree_plant: Breakable = plants.filter(func(plant: Breakable) -> bool: return plant.break_style == Breakable.Break.FELL).front()
+	var model := tree_plant.get_node(^"Model") as Node3D
+	var rest := model.position
+	tree_plant.hurtbox.receive(DamageInfo.make(1, 6.0, player, &"dash"))
+	await tree.create_timer(0.6).timeout
+	assert_eq(tree_plant.broken, false, "el choque sacude el árbol sin voltearlo")
+	assert_true(model.position.is_equal_approx(rest), "y vuelve a su lugar")
+	var wall := level.get_node(^"ShrineCrackedWall") as CrackedWall
+	wall.hurtbox.receive(DamageInfo.make(1, 6.0, player, &"dash"))
+	await tree.create_timer(0.4).timeout
+	assert_eq(wall.is_broken, false, "el muro agrietado se sacude pero solo lo rompe una bomba")
+	state.reset()

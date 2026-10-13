@@ -2,7 +2,7 @@ class_name Breakable
 extends Node3D
 ## Vasijas, pasto y plantas: se rompen con cualquier golpe (espada, bomba), sueltan según su DropTable y reaparecen al recargar.
 ## SHATTER: desaparece en el acto. CUT: la mata salta girando y se achica. FELL: cae del lado contrario al golpe, rebota y se hunde.
-## Si tiene un "Stump" (oculto), queda a la vista hasta recargar.
+## Si tiene un "Stump" (oculto), queda a la vista hasta recargar. El choque de las sandalias sacude los árboles (FELL) sin voltearlos.
 
 enum Break { SHATTER, CUT, FELL }
 
@@ -18,10 +18,32 @@ enum Break { SHATTER, CUT, FELL }
 @onready var hurtbox: Hurtbox = $Hurtbox
 
 var broken := false
+var _shaking := false
 
 
 func _ready() -> void:
-	hurtbox.hit.connect(func(info: DamageInfo) -> void: smash(info.source.global_position if is_instance_valid(info.source) else Vector3.INF))
+	hurtbox.hit.connect(_on_hit)
+
+
+func _on_hit(info: DamageInfo) -> void:
+	if info.element == &"dash" and break_style == Break.FELL:
+		shake()
+		return
+	smash(info.source.global_position if is_instance_valid(info.source) else Vector3.INF)
+
+
+func shake() -> void:
+	var model := get_node_or_null(^"Model") as Node3D
+	if broken or model == null or _shaking:
+		return
+	_shaking = true
+	Feel.burst(&"leaves", global_position + Vector3.UP * 2.4, Vector3.DOWN)
+	Feel.sfx(&"hit", global_position)
+	var rest := model.position
+	var tween := create_tween()
+	for offset: float in [0.12, -0.1, 0.06, -0.03, 0.0]:
+		tween.tween_property(model, ^"position:x", rest.x + offset, 0.06)
+	tween.tween_callback(func() -> void: _shaking = false)
 
 
 func smash(from := Vector3.INF) -> void:

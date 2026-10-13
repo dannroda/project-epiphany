@@ -1635,11 +1635,12 @@ Daniel (2026-10-12, con el mapa de Link's Awakening de referencia): el mundo se 
 
 **Prioridad:** alta · **Etiquetas:** `overworld`, `nivel`
 
-Daniel (2026-10-13): la angostura (Arboleda ↔ Cardonal) y los huecos de los islotes de la Laguna pasan a 4 m (dos celdas): solo se cruzan con dash + pluma (11.118). El abismo del Risco pasa a 6 m. Mini quest en la Necrópolis, del otro lado del puente: una prueba con el arco (p. ej. tres ojos en las chullpas) da las sandalias. Depende de 11.118. [[gdd#progresion-gating]]
+Daniel (2026-10-13): la pluma cruza 1 celda (2 m) y sandalias + pluma 3 (6 m). La angostura (Arboleda ↔ Cardonal) y los huecos de los islotes de la Laguna pasan a 3 celdas: solo se cruzan con el salto largo (11.118). El abismo del Risco pasa a 4 celdas (8 m). Mini quest en la Necrópolis, del otro lado del puente: tres ojos en las chullpas, prendidos a la vez con flechas, dan las sandalias. Depende de 11.118. [[gdd#progresion-gating]]
 
-- [ ] Angostura e islotes a 4 m; abismo del Risco a 6 m
-- [ ] Mini quest de la Necrópolis (arco → sandalias)
-  Hecho: corral de pirca de la Necrópolis (X 24..36, Z -12..-3, nivel 1). Tres chullpas provisorias (src/world/chullpa_tumba.tscn: torre de piedra con un EyeSwitch de 8 s) miran al centro; con los tres ojos prendidos a la vez aparece el cofre grande SandalsChest (flag ow_sandals_chest). Falta: el ítem del cofre cuando 11.118 cree las sandalias, y el modelo de chullpa de arte. Test en test_secrets.
+- [x] Angostura e islotes a 3 celdas; abismo del Risco a 4
+  Daniel (2026-10-13): la pluma cruza 1 celda (2 m) y sandalias + pluma 3 (6 m). La angostura y los huecos muelle → islote → isla de D3 miden 3 celdas; el Risco 4 (8 m), con el ojo corrido al norte (Z -32.4). La pieza de los islotes va sobre el islote.
+- [x] Mini quest de la Necrópolis (arco → sandalias)
+  Hecho: corral de pirca de la Necrópolis (X 24..36, Z -12..-3, nivel 1). Tres chullpas (src/world/chullpa_tumba.tscn: torre de piedra con un EyeSwitch de 8 s) miran al centro; con los tres ojos prendidos a la vez aparece el cofre grande SandalsChest (flag ow_sandals_chest) con las sandalias. Test en test_secrets.
 - [ ] Tests del overworld al día (angostura, islotes, Risco, quest)
 - [ ] Recorrerlo (Daniel)
 

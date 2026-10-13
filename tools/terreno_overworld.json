@@ -217,7 +217,7 @@
 		],
 		[
 			80.0,
-			-28.1000003814697,
+			-32.1000022888184,
 			0.8
 		],
 		[
@@ -231,33 +231,18 @@
 			0.8
 		],
 		[
-			72.1172561645508,
-			-37.5545310974121,
+			73.4075927734375,
+			-36.1523208618164,
 			0.8
 		],
 		[
-			74.104606628418,
-			-29.7781143188477,
+			70.5115127563477,
+			-35.9240951538086,
 			0.8
 		],
 		[
-			72.6127624511719,
-			-27.9845218658447,
-			0.8
-		],
-		[
-			71.9601669311523,
-			-34.496410369873,
-			0.8
-		],
-		[
-			70.3419570922852,
-			-36.1167945861816,
-			0.8
-		],
-		[
-			75.8076171875,
-			-27.8711357116699,
+			72.0086669921875,
+			-34.2435035705566,
 			0.8
 		]
 	],
@@ -280,11 +265,6 @@
 		[
 			20.0,
 			-30.0,
-			0.4
-		],
-		[
-			74.0,
-			-28.0,
 			0.4
 		],
 		[
@@ -1743,8 +1723,8 @@
 			1.6
 		],
 		[
-			-36.0,
-			38.0,
+			-41.0,
+			35.0,
 			1.6
 		],
 		[
@@ -1839,7 +1819,7 @@
 		],
 		[
 			79.0,
-			-25.0,
+			-27.0,
 			1.6
 		],
 		[
@@ -2079,7 +2059,7 @@
 		],
 		[
 			80.0,
-			-28.3999996185303,
+			-32.4000015258789,
 			1.6
 		],
 		[
@@ -2125,6 +2105,26 @@
 		[
 			0.0,
 			0.0,
+			1.6
+		],
+		[
+			25.5,
+			-10.0,
+			1.6
+		],
+		[
+			34.5,
+			-10.5,
+			1.6
+		],
+		[
+			30.0,
+			-3.5,
+			1.6
+		],
+		[
+			30.0,
+			-8.0,
 			1.6
 		],
 		[
@@ -2406,8 +2406,8 @@
 		"HHHHHHHHHHH.....................:::::::::::::.........~~~~~~...........................................HHHHHHHHHHH",
 		"HHHHHHHHHH......................:::::::::::::.........~~~~~............................................HHHHHHHHHHH",
 		"HHHHHHHHHH......................:::::::::::::.........~~~~~............................................HHHHHHHHHHH",
-		"HHHHHHHHHH......................:::::::::::::.........~~~~~............................................HHHHHHHHHHH",
-		"HHHHHHHHHH......................:::::SSS:::::...........~~~~...........................................HHHHHHHHHHH",
+		"HHHHHHHHHH......................:::::::::::::.........~~~~~..................................~~~~~~~~~~HHHHHHHHHHH",
+		"HHHHHHHHHH......................:::::SSS:::::...........~~~~.................................~~~~~~~~~~HHHHHHHHHHH",
 		"HHHHHHHHHH...........................SSS................~~~~~~...............................~~~~~~~~~~HHHHHHHHHHH",
 		"HHHHHHHHHH...............................................~~~~~...............................~~~~~~~~~~HHHHHHHHHHH",
 		"HHHHHHHHHH...............................................~~~~~.........................................HHHHHHHHHHH",
@@ -2429,18 +2429,18 @@
 		"HHHHHHHHHH...................:::::......................~~~~.........:SS::.......................vvv...HHHHHHHHHHH",
 		"HHHHHHHHHH.................:.::::.......................~~~~.........:::.:.............................HHHHHHHHHHH",
 		"HHHHHHHHHH.................:::::........................~~~..........:::::.............................HHHHHHHHHHH",
-		"HHHHHHHHHH.................:::::.........................~...........:::::::...........................HHHHHHHHHHH",
-		"HHHHHHHHHH................:::::..........................~............::::::::::.......................HHHHHHHHHHH",
-		"HHHHHHHHHH................::::::::::.~...................~...............:::::::::::...................HHHHHHHHHHH",
+		"HHHHHHHHHH.................:::::........................~~~..........:::::::...........................HHHHHHHHHHH",
+		"HHHHHHHHHH................:::::.........................~~~...........::::::::::.......................HHHHHHHHHHH",
+		"HHHHHHHHHH................::::::::::.~..................~~~..............:::::::::::...................HHHHHHHHHHH",
 		"HHHHHHHHHH................:::::::::::~::...::::.........~~~...............::::::::::...................HHHHHHHHHHH",
 		"HHHHHHHHHH................::::.::::::~::::::::::......~~~~~.................::::::::::::::...............HHHHHHHHH",
 		"HHHHHHHHHH................::::....SS:~::::::::::......~~~~~~.................:.::::::::::::............HHHHHHHHHHH",
 		"HHHHHHHHHH........................SS.................~~~~~~~W~...................::::::::::............HHHHHHHHHHH",
 		"HHHHHHHHHH...........................................~WWWWWWWWWWWWW........wwwwwwwwww::::::.wwwwwwwwww.HHHHHHHHHHH",
 		"HHHHHHHHH...........WWWWWWWWWW...:WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW....wwwwwwwwwww:::::wwwwwwwwww.HHHHHHHHHHH",
-		"HHHHHHHHH.........WWWWWWWWWWWWWWW:WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW..wwwwwwwwwww:::::wwwwwwwwww.HHHHHHHHHHH",
-		"HHHHHHHHH.........WWWWWWWWWWWWWWWWW.WWWWWW.......WWWWWWWWWWWWWWWWWWWWWWWWW..wwwwwwwwwww::::.wwwwwwwwww.HHHHHHHHHHH",
-		"HHHHHHHHH.........WWWWWWWWWWWWWWWWWWWW.W.W.......WWWWWWWWWWWWWWWWWWWWWWWWW..wwwwwwwwwww.::::wwwwwwwwww.HHHHHHHHHHH",
+		"HHHHHHHHH.........WWWWWWWWWWWWWWW:WWW..WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW..wwwwwwwwwww:::::wwwwwwwwww.HHHHHHHHHHH",
+		"HHHHHHHHH.........WWWWWWWWWWWWWWWWWWW..WWW.......WWWWWWWWWWWWWWWWWWWWWWWWW..wwwwwwwwwww::::.wwwwwwwwww.HHHHHHHHHHH",
+		"HHHHHHHHH.........WWWWWWWWWWWWWWWWWWWWWWWW.......WWWWWWWWWWWWWWWWWWWWWWWWW..wwwwwwwwwww.::::wwwwwwwwww.HHHHHHHHHHH",
 		"HHHHHHHHH.........WWWWWWWWWWWWWWWWWWWWWWW........WWWWWWWWWWWWWWWWWWWWWWWWWW.wwwwwwwwwwwwwwwwwwwwwwwwww.HHHHHHHHHHH",
 		"HHHHHHHHH.........WWWWWWWWWWWWWWWWWWWWWWWW........WWWWWWWWWWWWWWWWWWWWWWWW..wwwwwwwwwwwwwwwwwwwwwwwwww.HHHHHHHHHHH",
 		"HHHHHHHHH.........WWWWWWWWWWWWWWWWWWWWWWWWW..WWWWWWWWWWWWWWWWWWWWWWWWWWWW...wwwwwwwwwwwwwwwwwwwwwwwwww.HHHHHHHHHHH",
