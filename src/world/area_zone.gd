@@ -20,7 +20,7 @@ func _ready() -> void:
 	body_entered.connect(func(body: Node3D) -> void:
 		if body is PlayerCharacter:
 			GameState.visit_zone(name)
-		if body is PlayerCharacter and _current != self:
+		if body == Players.lead() and _current != self:
 			var same_region := _current != null and _current.display_name == display_name
 			_current = self
 			if not display_name.is_empty() and not same_region:

@@ -4914,7 +4914,7 @@ Daniel (2026-10-13): la Chullpa real tiene la cámara vieja; el test LA (debug/l
 
 **Notas:** Sesión: arte (-11). Diseño (-43) revisa que el juego no cambie.
 
-## M13 — Co-op local (estilo Four Swords)  (0/16)
+## M13 — Co-op local (estilo Four Swords)  (1/16)
 
 Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con progreso compartido y puzzles que aprovechan a los dos.
 
@@ -5148,26 +5148,26 @@ Mockups D en el canvas (Coop_Ring, Solo_Ring): mantener la cruceta abre un anill
 
 **Relacionadas:** 11.79 Los corazones se rellenan al cambiar de escena
 
-### 13.11 Estado de un player que se cuela en el otro · En curso
+### 13.11 Estado de un player que se cuela en el otro · Hecho
 
-**Prioridad:** alta · **Tamaño:** M · **Responsable:** Claude · **Etiquetas:** `bug`, `coop`
+**Terminada:** 2026-10-13 · **Prioridad:** alta · **Tamaño:** M · **Responsable:** Claude · **Etiquetas:** `bug`, `coop`
 
 Cosas que todavía son de todos o de P1: el `tree_root` del AnimationTree es un sub-recurso compartido y jumping/pushing/using_item cambian `ItemAnim` (la animación de uno se mete en el otro); `Feel.rumble` siempre vibra el pad 0; el apuntado con ratón depende de `InputDevice.current` global; `tremor_zone` usa un solo bool `_inside`; el tope de bombas cuenta las de todos; el banner de zona (`AreaZone._current` estático) cambia cuando cruza cualquiera.
 
-- [ ] AnimationTree por instancia
+- [x] AnimationTree por instancia
   `resource_local_to_scene` en el sub-recurso o `tree_root.duplicate(true)` en `player._ready`.
-- [ ] Vibración por pad
+- [x] Vibración por pad
   `Feel.rumble(amount, device := -1)`: el player pasa su pad; eventos del mundo vibran todos los pads asignados.
-- [ ] Apuntado con ratón
+- [x] Apuntado con ratón
   aim.gd ~l.54: quitar el chequeo de `InputDevice.current`, ya se sigue por player con `controls.owns()`.
-- [ ] Zona de temblor
+- [x] Zona de temblor
   Contar players adentro o `get_overlapping_bodies().any(...)`.
-- [ ] Bombas por player
+- [x] Bombas por player
   place_behavior.gd: contar solo las de `ctx.user`.
 
-**Prueba:** Con dos players: P1 salta mientras P2 usa un ítem y cada uno ve su animación; un golpe a P2 vibra solo su pad; cada uno puede tener sus bombas.
+**Prueba:** test_coop_state: árbol de animación por player, tope de bombas por player, el temblor sigue con alguno adentro, el apuntado con ratón no depende del último dispositivo de nadie y el banner de zona sigue al que manda (fallan los cinco sin el arreglo). La vibración por pad no tiene test: headless no hay gamepads.
 
-**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+**Notas:** Sesión de bugs (-fd). player._ready duplica tree_root del AnimationTree (sin tocar player.tscn). Feel.rumble/shake reciben los pads del player (controls.joypads); vacío = todos los conectados (algo del mundo o un player que usa cualquier pad); el player pasa los suyos al recibir, dar y bloquear golpes. aim.mouse_aims ya no mira InputDevice.current (el seguimiento por player con controls.owns() alcanzaba). TremorZone cuenta players adentro. PlaceBehavior marca la bomba con placed_by y el tope cuenta solo las del que la pone. AreaZone: el banner cambia solo cuando cruza Players.lead() (la cámara es compartida).
 
 **Archivos:** `player/player.tscn`, `player/states/jumping.gd`, `player/states/pushing.gd`, `player/states/using_item.gd`, `src/feel/feel.gd`, `player/components/aim.gd`, `src/world/tremor_zone.gd`, `src/items/behaviors/place_behavior.gd`, `src/world/area_zone.gd`
 

@@ -1,34 +1,36 @@
 {
+  "assignee": "Claude",
   "checklist": [
     {
       "detail": "`resource_local_to_scene` en el sub-recurso o `tree_root.duplicate(true)` en `player._ready`.",
-      "done": false,
+      "done": true,
       "text": "AnimationTree por instancia"
     },
     {
       "detail": "`Feel.rumble(amount, device := -1)`: el player pasa su pad; eventos del mundo vibran todos los pads asignados.",
-      "done": false,
+      "done": true,
       "text": "Vibración por pad"
     },
     {
       "detail": "aim.gd ~l.54: quitar el chequeo de `InputDevice.current`, ya se sigue por player con `controls.owns()`.",
-      "done": false,
+      "done": true,
       "text": "Apuntado con ratón"
     },
     {
       "detail": "Contar players adentro o `get_overlapping_bodies().any(...)`.",
-      "done": false,
+      "done": true,
       "text": "Zona de temblor"
     },
     {
       "detail": "place_behavior.gd: contar solo las de `ctx.user`.",
-      "done": false,
+      "done": true,
       "text": "Bombas por player"
     }
   ],
   "code": "13.11",
   "created_at": "2026-10-12T00:06:08.167Z",
   "description": "Cosas que todavía son de todos o de P1: el `tree_root` del AnimationTree es un sub-recurso compartido y jumping/pushing/using_item cambian `ItemAnim` (la animación de uno se mete en el otro); `Feel.rumble` siempre vibra el pad 0; el apuntado con ratón depende de `InputDevice.current` global; `tremor_zone` usa un solo bool `_inside`; el tope de bombas cuenta las de todos; el banner de zona (`AreaZone._current` estático) cambia cuando cruza cualquiera.",
+  "done_at": "2026-10-13T08:19:17.703Z",
   "files": [
     "player/player.tscn",
     "player/states/jumping.gd",
@@ -41,17 +43,17 @@
     "src/world/area_zone.gd"
   ],
   "milestone": "m13",
-  "notes": "Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).",
+  "notes": "Sesión de bugs (-fd). player._ready duplica tree_root del AnimationTree (sin tocar player.tscn). Feel.rumble/shake reciben los pads del player (controls.joypads); vacío = todos los conectados (algo del mundo o un player que usa cualquier pad); el player pasa los suyos al recibir, dar y bloquear golpes. aim.mouse_aims ya no mira InputDevice.current (el seguimiento por player con controls.owns() alcanzaba). TremorZone cuenta players adentro. PlaceBehavior marca la bomba con placed_by y el tope cuenta solo las del que la pone. AreaZone: el banner cambia solo cuando cruza Players.lead() (la cámara es compartida).",
   "order": 11,
   "priority": "high",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "done",
   "tags": [
     "bug",
     "coop"
   ],
-  "test": "Con dos players: P1 salta mientras P2 usa un ítem y cada uno ve su animación; un golpe a P2 vibra solo su pad; cada uno puede tener sus bombas.",
+  "test": "test_coop_state: árbol de animación por player, tope de bombas por player, el temblor sigue con alguno adentro, el apuntado con ratón no depende del último dispositivo de nadie y el banner de zona sigue al que manda (fallan los cinco sin el arreglo). La vibración por pad no tiene test: headless no hay gamepads.",
   "title": "Estado de un player que se cuela en el otro",
-  "updated_at": "2026-10-12T00:06:13.279Z"
+  "updated_at": "2026-10-13T08:19:17.703Z"
 }

@@ -159,8 +159,8 @@ func freeze(duration: float, scale := 0.05) -> void:
 
 
 ## `direction` (mundo): de dónde viene el golpe; el encuadre se empuja hacia ese lado.
-func shake(amount: float, direction := Vector3.ZERO) -> void:
-	rumble(amount)
+func shake(amount: float, direction := Vector3.ZERO, pads: Array[int] = []) -> void:
+	rumble(amount, pads)
 	if not settings.shake_enabled:
 		return
 	var camera := get_viewport().get_camera_3d()
@@ -240,9 +240,11 @@ func _synth(seconds: float, wave: Callable) -> AudioStreamWAV:
 	return stream
 
 
-## Vibración del gamepad, proporcional al golpe (Opciones › Vibración).
-func rumble(amount: float) -> void:
-	if not Settings.get_value(&"vibration") or Input.get_connected_joypads().is_empty():
+## Vibración del gamepad, proporcional al golpe (Opciones › Vibración). `pads`: los del player al que le pasa;
+## vacío (algo del mundo, o un player que usa cualquier pad) vibran todos.
+func rumble(amount: float, pads: Array[int] = []) -> void:
+	if not Settings.get_value(&"vibration"):
 		return
 	var strength := clampf(amount, 0.0, 1.0)
-	Input.start_joy_vibration(Input.get_connected_joypads()[0], strength * 0.6, strength, 0.12 + strength * 0.25)
+	for pad in (pads if not pads.is_empty() else Input.get_connected_joypads()):
+		Input.start_joy_vibration(pad, strength * 0.6, strength, 0.12 + strength * 0.25)

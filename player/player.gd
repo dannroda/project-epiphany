@@ -63,6 +63,7 @@ func _exit_tree() -> void:
 
 func _ready() -> void:
 	add_to_group(&"player")
+	anim_tree.tree_root = anim_tree.tree_root.duplicate(true)
 	controls.name = "Controls"
 	add_child(controls)
 	_register_monitors()
@@ -290,7 +291,7 @@ func _on_hit(info: DamageInfo) -> void:
 		return
 	Log.info(&"combat", "El player recibió", amount, "de daño de", info.source.name if info.source else "?", "· Vida:", health.current)
 	movement_state.blackboard.set_var("last_hit", info)
-	Feel.shake(Feel.settings.shake_take)
+	Feel.shake(Feel.settings.shake_take, Vector3.ZERO, controls.joypads)
 	Feel.sfx(&"hurt", global_position)
 	Feel.hit_stop([self, info.source], Feel.settings.hit_stop_take)
 	if is_dead:
@@ -304,7 +305,7 @@ func _on_hit_landed(target: Hurtbox) -> void:
 	if target.surface == "none":
 		return
 	Feel.hit_stop([self, target.get_parent()], Feel.settings.hit_stop_give)
-	Feel.shake(Feel.settings.shake_give)
+	Feel.shake(Feel.settings.shake_give, Vector3.ZERO, controls.joypads)
 	Feel.sfx(StringName("hit_" + target.surface), target.global_position)
 	if Feel.settings.sparks_on_hit:
 		var away := target.global_position - global_position
@@ -424,7 +425,7 @@ func _reflect(projectile: Projectile, direction: Vector3, front: bool) -> void:
 	Log.debug(&"combat", "Reflejado:", projectile.name, "hacia", direction)
 	if front:
 		anim_tree.set(&"parameters/BlockHit/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
-		Feel.shake(Feel.settings.shake_block)
+		Feel.shake(Feel.settings.shake_block, Vector3.ZERO, controls.joypads)
 	Feel.burst(&"sparks", projectile.global_position, direction)
 	Feel.sfx(&"reflect", global_position)
 
@@ -438,7 +439,7 @@ func _on_blocked(info: DamageInfo) -> void:
 		move_and_collide(away.normalized() * block_pushback)
 	Feel.burst(&"sparks", global_position + model.global_basis.z * 0.6 + Vector3.UP * 1.1, model.global_basis.z)
 	Feel.sfx(&"block", global_position)
-	Feel.shake(Feel.settings.shake_block)
+	Feel.shake(Feel.settings.shake_block, Vector3.ZERO, controls.joypads)
 
 
 ## Debug: el arco donde el escudo bloquea (`block_angle_deg`).

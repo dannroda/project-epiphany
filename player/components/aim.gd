@@ -51,7 +51,7 @@ func _input(event: InputEvent) -> void:
 
 
 func mouse_aims() -> bool:
-	return _mouse_moved and InputDevice.current == InputDevice.Device.KEYBOARD_MOUSE and Settings.get_value(&"mouse_aim")
+	return _mouse_moved and Settings.get_value(&"mouse_aim")
 
 
 func get_direction() -> Vector3:

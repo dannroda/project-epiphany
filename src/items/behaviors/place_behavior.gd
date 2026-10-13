@@ -18,7 +18,9 @@ func get_animation(_item: ItemData) -> StringName:
 
 func can_use(ctx: ItemUseContext, _item: ItemData) -> bool:
 	var has_ammo := ammo == null or ctx.inventory.has(ammo.id)
-	return has_ammo and ctx.user.get_tree().get_nodes_in_group(&"bombs").size() < max_active
+	var own := ctx.user.get_tree().get_nodes_in_group(&"bombs").filter(func(bomb: Node) -> bool:
+		return bomb.get_meta(&"placed_by", null) == ctx.user)
+	return has_ammo and own.size() < max_active
 
 
 func use(ctx: ItemUseContext, _item: ItemData) -> void:
@@ -32,11 +34,13 @@ func use(ctx: ItemUseContext, _item: ItemData) -> void:
 	bomb.linear_velocity = (landing(ctx.throw_to) - bomb.global_position) / flight_time - gravity * flight_time * 0.5
 
 
-## Gasta la munición y devuelve la bomba (sin agregar a la escena).
+## Gasta la munición y devuelve la bomba (sin agregar a la escena). El tope es por player: la bomba sabe quién la puso.
 func spawn(ctx: ItemUseContext) -> RigidBody3D:
 	if ammo:
 		ctx.inventory.remove(ammo.id)
-	return bomb_scene.instantiate()
+	var bomb: RigidBody3D = bomb_scene.instantiate()
+	bomb.set_meta(&"placed_by", ctx.user)
+	return bomb
 
 
 func landing(point: Vector3) -> Vector3:
