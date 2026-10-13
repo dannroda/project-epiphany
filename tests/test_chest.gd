@@ -89,3 +89,30 @@ func test_item_get_raises_both_hands_until_the_box_closes() -> void:
 	assert_eq(player.anim_tree.get(&"parameters/CarryBlend/blend_amount"), 0.0, "sale de la pose")
 	assert_true(player.equipment.weapon_socket.visible, "la espada vuelve a la mano")
 	state.reset()
+
+
+func test_ammo_without_its_holder_stays_in_the_chest() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	state.reset()
+	await _load_level(tree)
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	var chest: Chest = tree.current_scene.get_node(^"Chest")
+	chest.item = Items.get_item(&"bomb")
+	chest.amount = 5
+	chest.interactable.interact(player)
+	await tree.process_frame
+	assert_eq(state.inventory.count(&"bomb"), 0, "sin la bolsa no se lleva las bombas")
+	assert_true(stack.top() is TextBox and stack.top().cue == "missing_bomb_bag", "le dice que no tiene bolsa")
+	assert_true(chest.interactable.enabled and state.get_flag(&"ow_test_chest") != true, "el cofre queda cerrado, con las bombas")
+	assert_true(player.movement_state.get_active_state().name != &"ItemGet", "sin item get")
+	stack.clear()
+	await tree.process_frame
+	state.give(Items.get_item(&"bomb_bag"))
+	state.inventory.remove(&"bomb", state.inventory.count(&"bomb"))
+	chest.interactable.interact(player)
+	assert_eq(state.inventory.count(&"bomb"), 5, "con la bolsa, las saca")
+	assert_true(not chest.interactable.enabled, "y se abre")
+	stack.clear()
+	state.reset()

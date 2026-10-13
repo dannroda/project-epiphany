@@ -1,0 +1,22 @@
+{
+  "assignee": "Claude",
+  "checklist": [],
+  "code": "11.120",
+  "created_at": "2026-10-13T17:07:23.752Z",
+  "description": "Abrir un cofre con bombas sin la bolsa (o flechas sin el arco) gastaba el cofre y la munición quedaba sin uso. Ahora el cofre avisa qué falta (\"No tenés una bolsa para llevar bombas\") y queda cerrado con el contenido: GameState.missing_holder(item) busca el ítem cuyo behavior usa esa munición.",
+  "done_at": "2026-10-13T17:07:23.752Z",
+  "milestone": "m11",
+  "notes": "",
+  "order": 117,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "done",
+  "tags": [
+    "bug",
+    "items"
+  ],
+  "test": "test_chest › test_ammo_without_its_holder_stays_in_the_chest: sin bolsa no da bombas, abre el aviso y el cofre queda cerrado; con la bolsa, las da.",
+  "title": "Cofre con munición sin su contenedor: no la pierde",
+  "updated_at": "2026-10-13T17:07:24.061Z"
+}

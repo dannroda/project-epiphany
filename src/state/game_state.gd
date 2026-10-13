@@ -173,6 +173,14 @@ func current_dungeon_state() -> DungeonState:
 	return dungeons[current_dungeon]
 
 
+## Si `item` es munición y no tiene con qué llevarla (las bombas sin la bolsa, las flechas sin el arco), lo que le falta.
+func missing_holder(item: ItemData) -> ItemData:
+	var holders := Items.database.items.filter(func(other: ItemData) -> bool: return other.behavior != null and other.behavior.ammo == item)
+	if holders.is_empty() or holders.any(func(other: ItemData) -> bool: return inventory.has(other.id)):
+		return null
+	return holders[0]
+
+
 ## Punto único de entrada para cofres, drops y recompensas.
 func give(item: ItemData, amount: int = 1) -> void:
 	if item.bottled:

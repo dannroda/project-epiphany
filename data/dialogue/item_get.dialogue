@@ -29,3 +29,11 @@ Tres de cuatro\: te falta una. [ID:get_heart_piece_3]
 ~ holy_water
 Recupera toda la vida y por un rato los golpes lastiman la mitad. La vertiente la vuelve a llenar cuando quieras. [ID:get_holy_water_1]
 => END
+
+~ missing_bomb_bag
+No tenés una bolsa para llevar bombas. Las dejás en el cofre. [ID:chest_missing_bomb_bag_1]
+=> END
+
+~ missing_bow
+No tenés un arco para usar flechas. Las dejás en el cofre. [ID:chest_missing_bow_1]
+=> END

@@ -2576,7 +2576,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (67/115)
+## M11 — Pulido: contenido y feel  (68/116)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4497,6 +4497,14 @@ SceneFlow.enter_saved_scene no pausaba como travel_to: mientras el nivel nuevo c
 **Prueba:** test_save_manager › test_missing_scene_loads_at_the_start_instead_of_hanging: en pausa mientras carga, sin game over al llegar.
 
 **Notas:** Además: GameState.read_from ya no pide player/position con default null (Godot lo toma como sin default y tira ERROR).
+
+### 11.120 Cofre con munición sin su contenedor: no la pierde · Hecho
+
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `items`
+
+Abrir un cofre con bombas sin la bolsa (o flechas sin el arco) gastaba el cofre y la munición quedaba sin uso. Ahora el cofre avisa qué falta ("No tenés una bolsa para llevar bombas") y queda cerrado con el contenido: GameState.missing_holder(item) busca el ítem cuyo behavior usa esa munición.
+
+**Prueba:** test_chest › test_ammo_without_its_holder_stays_in_the_chest: sin bolsa no da bombas, abre el aviso y el cofre queda cerrado; con la bolsa, las da.
 
 ## M12 — Assets propios (Blender)  (6/18)
 

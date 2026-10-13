@@ -1329,3 +1329,11 @@ msgstr "No one has come back in a long time."
 
 msgid "INTRO_4"
 msgstr "The Eye awakens."
+
+msgctxt "chest_missing_bomb_bag_1"
+msgid "No tenés una bolsa para llevar bombas. Las dejás en el cofre."
+msgstr "You have no bag to carry bombs. You leave them in the chest."
+
+msgctxt "chest_missing_bow_1"
+msgid "No tenés un arco para usar flechas. Las dejás en el cofre."
+msgstr "You have no bow to use arrows. You leave them in the chest."

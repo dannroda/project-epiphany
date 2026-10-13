@@ -9,6 +9,8 @@ const BIG_LID := preload("res://assets/epiphany/meshes/objetos/cofre_grande_tapa
 ## Bisagra de la tapa del arca sobre su base (la tapa tiene el origen ahí).
 const BIG_HINGE := Vector3(0.0, 0.65, -0.475)
 const BIG_SCALE := 1.4
+## Lo que dice si no tiene dónde guardar el contenido (cue `missing_<id>` del ítem que le falta).
+const TEXTS: DialogueResource = preload("res://data/dialogue/item_get.dialogue")
 
 @export var item: ItemData
 @export var amount: int = 1
@@ -76,6 +78,11 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 
 func _open(by: PlayerCharacter) -> void:
+	var holder := GameState.missing_holder(item)
+	if holder:
+		Feel.sfx(&"deny", global_position)
+		TextBox.open(TEXTS, "missing_" + holder.id)
+		return
 	interactable.enabled = false
 	persistent.value = true
 	GameState.give(item, amount)
