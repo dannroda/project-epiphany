@@ -17,8 +17,8 @@ uniform float depth_global_range = 4.0;
 // Cuánto se ve el fondo a través: 1 = transparente en la orilla.
 uniform float clarity = 0.85;
 
-uniform vec3 caustics_color : source_color = vec3(1.0, 1.0, 1.0);
-uniform float caustics_strength = 0.7;
+uniform vec3 caustics_color : source_color = vec3(0.7, 0.93, 1.0);
+uniform float caustics_strength = 0.35;
 // Repeticiones por metro y velocidad de cada capa.
 uniform vec2 caustics_scale = vec2(0.55, 0.9);
 uniform vec2 caustics_speed = vec2(0.35, -0.5);
@@ -39,7 +39,7 @@ uniform float smoothness = 0.9;
 
 uniform vec3 foam_color : source_color = vec3(0.95, 0.99, 1.0);
 // Metros de agua con espuma en la orilla.
-uniform float shore_foam = 0.18;
+uniform float shore_foam = 0.1;
 
 varying vec3 world_position;
 
@@ -75,7 +75,7 @@ float caustics(vec2 p, float t) {
 	p += 0.35 * vec2(sin(p.y * 1.9 + t * 0.7), sin(p.x * 1.6 - t * 0.6));
 	float a = cell_edges(p * caustics_scale.x + vec2(t * caustics_speed.x, 0.0), t * 0.6);
 	float b = cell_edges(p * caustics_scale.y + vec2(0.0, t * caustics_speed.y), t * 0.8 + 3.0);
-	return smoothstep(0.12, 0.0, a) * 0.6 + smoothstep(0.1, 0.0, b) * 0.5;
+	return smoothstep(0.06, 0.0, a) * 0.6 + smoothstep(0.05, 0.0, b) * 0.4;
 }
 
 float wave_height(vec2 p, float t) {
@@ -119,7 +119,7 @@ void fragment() {
 	background += caustics_color * caustics(bottom.xz, TIME) * caustics_strength * (1.0 - clamp(water_depth / caustics_depth, 0.0, 1.0));
 	float seen = clarity * (1.0 - near * 0.6) * (1.0 - far);
 	vec3 color = mix(tint, background * mix(vec3(1.0), shallow_water_color, 0.5), seen);
-	color += caustics_color * caustics(bottom.xz, TIME) * caustics_strength * 0.35 * far;
+	color += caustics_color * caustics(bottom.xz, TIME) * caustics_strength * 0.2 * far;
 
 	float fresnel = pow(1.0 - clamp(dot(NORMAL, VIEW), 0.0, 1.0), fresnel_coeff);
 	color = mix(color, reflection_color, fresnel * fresnel_strength);
