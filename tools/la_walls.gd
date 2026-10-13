@@ -44,6 +44,9 @@ const DOOR_LEAF_SCALE := Vector3(0.7, 0.8, 1.0)
 ## Cámara ortográfica (como LA): las paredes de los costados tienen el mismo ancho arriba y abajo.
 const CAMERA_OFFSET := Vector3(0, 68.9, 57.9)
 const ORTHO_SIZE := 14.6
+## Como en LA, lo que está parado se echa hacia atrás (la parte de arriba hacia el norte) para mostrarle la cara a la cámara.
+const LEAN := -20.0
+const LEANED := {"pot.tscn": "Body/Model", "chest.tscn": "Model", "wall_torch.tscn": "."}
 
 
 func _initialize() -> void:
@@ -121,6 +124,18 @@ func _dress(level: Node) -> void:
 			node.set("south_wall_reach", MASK_MARGIN - 0.3)
 			node.set("wall_height", FRAME_HEIGHT)
 			node.set("mask_margin", MASK_MARGIN)
+		if path.get_file() in LEANED:
+			_lean(node.get_node(LEANED[path.get_file()]) as Node3D)
+			level.set_editable_instance(node, true)
+
+
+func _lean(model: Node3D) -> void:
+	var parent := Basis.IDENTITY
+	var node := model.get_parent() as Node3D
+	while node:
+		parent = node.basis * parent
+		node = node.get_parent() as Node3D
+	model.basis = parent.inverse() * Basis(Vector3.RIGHT, deg_to_rad(LEAN)) * parent * model.basis
 
 
 func _fade(level: Node, room: Area3D) -> void:
