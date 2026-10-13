@@ -181,3 +181,72 @@ func test_the_long_jump_clears_three_tiles() -> void:
 func test_the_long_jump_does_not_clear_four_tiles() -> void:
 	var landed := await _long_jump(8.0)
 	assert_true(landed.y < FAR.y - 1.0, "4 baldosas no se cruzan: cae (x %.2f, y %.2f)" % [landed.x - FAR.x, landed.y - FAR.y])
+
+
+func _overworld() -> Array:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state := tree.root.get_node(^"GameState")
+	state.reset()
+	tree.change_scene_to_file("res://levels/overworld.tscn")
+	await tree.scene_changed
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	for i in 30:
+		await tree.physics_frame
+	for enemy in tree.get_nodes_in_group(&"enemies"):
+		enemy.free()
+	state.give(Items.get_item(&"feather"))
+	state.assign_button(0, &"feather")
+	state.give(Items.get_item(&"sandals"))
+	state.assign_button(1, &"sandals")
+	return [tree, player, state]
+
+
+## Corre con las sandalias desde `from` por `action` y salta con la pluma al pasar `edge` (en el eje de `axis`);
+## devuelve [dónde quedó, altura mínima].
+func _overworld_long_jump(tree: SceneTree, player: PlayerCharacter, from: Vector3, action: StringName, axis: Vector3, edge: float) -> Array:
+	await _place(tree, player, from)
+	_press(action)
+	await tree.physics_frame
+	_press(&"item_2")
+	var jumped := false
+	var lowest := from.y
+	for i in 300:
+		await tree.physics_frame
+		lowest = minf(lowest, player.global_position.y)
+		if not jumped and player.global_position.dot(axis) >= edge - 0.15:
+			assert_true(_dashing(player), "llega corriendo al borde (%s)" % player.global_position)
+			_press(&"item_1")
+			await tree.physics_frame
+			_press(&"item_1", false)
+			_press(&"item_2", false)
+			_press(action, false)
+			jumped = true
+		elif jumped and i > 30 and player.is_on_floor() and _state(player) != &"Jumping":
+			break
+	_press(&"item_2", false)
+	_press(action, false)
+	await tree.create_timer(0.3).timeout
+	return [player.global_position, lowest]
+
+
+func test_the_long_jump_crosses_the_narrows() -> void:
+	var setup: Array = await _overworld()
+	var result: Array = await _overworld_long_jump(setup[0], setup[1], Vector3(-8.5, 0, 18), &"move_right", Vector3.RIGHT, -5.0)
+	assert_true(result[1] > -0.6 and result[0].x > 0.0 and result[0].y > -0.3, "cruza la angostura al Cardonal (%s, y mín %.2f)" % [result[0], result[1]])
+	(setup[2] as Node).reset()
+
+
+func test_the_long_jump_crosses_both_lagoon_gaps_to_d3() -> void:
+	var setup: Array = await _overworld()
+	var result: Array = await _overworld_long_jump(setup[0], setup[1], Vector3(-50.6, 0, 35), &"move_right", Vector3.RIGHT, -49.0)
+	assert_true(result[1] > -0.6 and result[0].x > -43.0 and result[0].x < -39.0, "del muelle al islote (%s, y mín %.2f)" % [result[0], result[1]])
+	result = await _overworld_long_jump(setup[0], setup[1], Vector3(-42.5, 0, 36), &"move_right", Vector3.RIGHT, -39.0)
+	assert_true(result[1] > -0.6 and result[0].x > -34.0 and result[0].y > -0.3, "del islote a la isla de D3 (%s, y mín %.2f)" % [result[0], result[1]])
+	(setup[2] as Node).reset()
+
+
+func test_the_long_jump_does_not_cross_the_crag_abyss() -> void:
+	var setup: Array = await _overworld()
+	var result: Array = await _overworld_long_jump(setup[0], setup[1], Vector3(80, 5.3, -17.5), &"move_forward", Vector3.BACK * -1.0, 23.0)
+	assert_true(result[1] < 4.7, "el abismo del Risco (4 celdas) no se cruza ni con el salto largo: cae (y mín %.2f)" % result[1])
+	(setup[2] as Node).reset()

@@ -11,7 +11,7 @@ const ANIMATION := &"MovementBasic/Jump_Full_Short"
 ## Qué tan rápido el stick corrige la dirección en el aire (0 = nada).
 @export var air_control := 2.0
 ## Salto largo (11.118): saltar en plena carrera de las sandalias sigue recto a esta velocidad, sin control en el aire.
-@export var long_jump_speed := 8.0
+@export var long_jump_speed := 8.6
 ## Tamaño de la sombra en el piso y en lo más alto.
 @export var shadow_size := Vector2(0.9, 0.55)
 
