@@ -1,0 +1,68 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/look/caida_la.gd" id="1_caida"]
+[ext_resource type="Shader" path="res://src/world/look/rayo_caida.gdshader" id="2_rayo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rayo"]
+render_priority = 1
+shader = ExtResource("2_rayo")
+
+[sub_resource type="QuadMesh" id="QuadMesh_rayo"]
+material = SubResource("ShaderMaterial_rayo")
+size = Vector2(1, 6)
+
+[sub_resource type="Curve" id="Curve_fade"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.7, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_fade"]
+curve = SubResource("Curve_fade")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_polvo"]
+resource_local_to_scene = true
+emission_shape = 3
+emission_box_extents = Vector3(0.8, 0.3, 0.8)
+direction = Vector3(0, -1, 0)
+spread = 25.0
+initial_velocity_min = 0.15
+initial_velocity_max = 0.35
+gravity = Vector3(0, -0.12, 0)
+scale_min = 0.6
+scale_curve = SubResource("CurveTexture_fade")
+turbulence_enabled = true
+turbulence_noise_strength = 0.4
+turbulence_noise_scale = 3.0
+turbulence_influence_min = 0.02
+turbulence_influence_max = 0.05
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_polvo"]
+render_priority = 1
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+albedo_color = Color(1, 0.92, 0.74, 0.7)
+billboard_mode = 3
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_polvo"]
+material = SubResource("StandardMaterial3D_polvo")
+size = Vector2(0.14, 0.14)
+
+[node name="CaidaLA" type="Node3D"]
+script = ExtResource("1_caida")
+
+[node name="Rayo" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_rayo")
+
+[node name="Polvo" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0)
+cast_shadow = 0
+amount = 20
+lifetime = 9.0
+preprocess = 9.0
+randomness = 1.0
+visibility_aabb = AABB(-8, -8, -8, 16, 10, 16)
+process_material = SubResource("ParticleProcessMaterial_polvo")
+draw_pass_1 = SubResource("QuadMesh_polvo")

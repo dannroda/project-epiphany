@@ -47,6 +47,17 @@ const AO := preload("res://src/world/look/sombra_la.gd")
 ## El juego usa 2, pero nuestras luces se ajustaron con exposición 1.
 const TONE_EXPOSURE := 1.0
 const GLOW_THRESHOLD := 0.25
+## Huecos que caen al piso de abajo (DropHoles): la misma pieza con el fondo cambiado por una ventana a la sala de abajo.
+const DROP_PREFIX := "Hueco caída"
+const WINDOW := preload("res://src/world/look/ventana_caida.gdshader")
+const HOLE_BOTTOM := -2.9
+const PIT_FOG := preload("res://src/world/look/niebla_foso.gdshader")
+## La niebla va sobre una copia de las paredes del foso, corrida hacia adentro.
+const PIT_FOG_INSET := 0.03
+const DROP_LOOK := preload("res://src/world/look/caida_la.tscn")
+const CELL := 2.0
+## Un haz cada tantos metros de hueco.
+const SHAFT_SPACING := 6.0
 const GLOW_INTENSITY := 0.2
 ## Luz de relleno fría, como el ambiente de las salas de LA.
 const AMBIENT_COLOR := Color(0.62, 0.72, 0.85)
@@ -142,6 +153,7 @@ func _initialize() -> void:
 			var shape: Array = cells[cell]
 			grid.set_cell_item(cell, kit.find_item_by_name(KINDS[shape[0]][0] + shape[1]))
 		_face_chests(grid)
+	_drops(level, kit)
 	if mode == "bake":
 		_dress(level)
 	else:
@@ -521,11 +533,108 @@ func _kit() -> MeshLibrary:
 			kit.set_item_mesh(id, tool.commit())
 			kit.set_item_shapes(id, kit.get_item_shapes(source))
 			kit.set_item_navigation_mesh(id, kit.get_item_navigation_mesh(source))
+	var window := ShaderMaterial.new()
+	window.shader = WINDOW
+	window.render_priority = -1
+	var fog := ShaderMaterial.new()
+	fog.shader = PIT_FOG
+	var black := StandardMaterial3D.new()
+	black.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	black.albedo_color = Color.BLACK
+	for item in kit.get_item_list():
+		var hole := kit.get_item_name(item)
+		if not hole.begins_with("Hueco") or hole.begins_with(DROP_PREFIX) or kit.get_item_mesh(item) == null:
+			continue
+		var pit := kit.get_item_mesh(item)
+		kit.set_item_mesh(item, _with_window(pit, black, fog))
+		var item_name := DROP_PREFIX + hole.trim_prefix("Hueco")
+		var id: int = ids.get(item_name, next)
+		if id == next:
+			next += 1
+		kit.create_item(id)
+		kit.set_item_name(id, item_name)
+		kit.set_item_mesh(id, _with_window(pit, window))
+		kit.set_item_shapes(id, kit.get_item_shapes(item))
+		kit.set_item_navigation_mesh(id, kit.get_item_navigation_mesh(item))
 	var uid := ResourceLoader.get_resource_uid(OUT_KIT) if ResourceLoader.exists(OUT_KIT) else ResourceUID.INVALID_ID
 	ResourceSaver.save(kit, OUT_KIT)
 	if uid != ResourceUID.INVALID_ID:
 		ResourceSaver.set_uid(OUT_KIT, uid)
 	return ResourceLoader.load(OUT_KIT, "", ResourceLoader.CACHE_MODE_REPLACE)
+
+
+## La pieza de hueco con el fondo (lo que está más abajo que HOLE_BOTTOM) pasado a `bottom_material`; con `fog`, una copia de
+## las paredes corrida hacia adentro lleva la niebla del foso.
+func _with_window(mesh: Mesh, bottom_material: Material, fog: Material = null) -> ArrayMesh:
+	var walls := SurfaceTool.new()
+	walls.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var shell := SurfaceTool.new()
+	shell.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var bottom := SurfaceTool.new()
+	bottom.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var material: Material = null
+	for surface in mesh.get_surface_count():
+		material = mesh.surface_get_material(surface)
+		var data := MeshDataTool.new()
+		data.create_from_surface(mesh as ArrayMesh, surface)
+		for face in data.get_face_count():
+			var low := true
+			for k in 3:
+				low = low and data.get_vertex(data.get_face_vertex(face, k)).y < HOLE_BOTTOM
+			var tool := bottom if low else walls
+			var inner := not low and data.get_vertex(data.get_face_vertex(face, 0)).y < 0.0 and absf(data.get_face_normal(face).y) < 0.5
+			for k in 3:
+				var v := data.get_face_vertex(face, k)
+				tool.set_normal(data.get_vertex_normal(v))
+				tool.set_uv(data.get_vertex_uv(v))
+				tool.set_color(data.get_vertex_color(v))
+				tool.add_vertex(data.get_vertex(v))
+				if inner:
+					shell.set_normal(data.get_vertex_normal(v))
+					shell.add_vertex(data.get_vertex(v) + data.get_face_normal(face) * PIT_FOG_INSET)
+	var out := ArrayMesh.new()
+	walls.set_material(material)
+	walls.commit(out)
+	bottom.set_material(bottom_material)
+	bottom.commit(out)
+	if fog:
+		shell.set_material(fog)
+		shell.commit(out)
+	return out
+
+
+## Los huecos que caen al piso de abajo usan la pieza con ventana; los demás (fosos), la de siempre.
+func _drops(level: Node, kit: MeshLibrary) -> void:
+	for old in level.find_children("*", "Node3D", true, false).filter(func(n: Node) -> bool: return n.scene_file_path == DROP_LOOK.resource_path):
+		old.get_parent().remove_child(old)
+		old.free()
+	for floor in DropHoles.floors(level):
+		var drops := {}
+		var floor_y := 0.0
+		for at in DropHoles.of_floor(level, floor):
+			drops[Vector2(at.x, at.z).snapped(Vector2(0.01, 0.01))] = true
+			floor_y = at.y
+		var shafts: Array[Vector2] = []
+		var cells: Array = drops.keys()
+		cells.sort()
+		for at: Vector2 in cells:
+			if shafts.all(func(other: Vector2) -> bool: return other.distance_to(at) >= SHAFT_SPACING):
+				shafts.append(at)
+		for at in shafts:
+			var look := DROP_LOOK.instantiate()
+			look.name = "CaidaLA%d" % floor.get_child_count()
+			floor.add_child(look)
+			look.owner = level
+			look.position = DropHoles.transform_of(floor).affine_inverse() * Vector3(at.x, floor_y, at.y)
+		for grid: GridMap in floor.find_children("*", "GridMap", true, false):
+			for at_cell in grid.get_used_cells():
+				var hole := kit.get_item_name(grid.get_cell_item(at_cell))
+				if not hole.begins_with("Hueco"):
+					continue
+				var at := DropHoles.transform_of(grid) * grid.map_to_local(at_cell)
+				var base := "Hueco" + hole.trim_prefix(DROP_PREFIX) if hole.begins_with(DROP_PREFIX) else hole
+				var want := DROP_PREFIX + base.trim_prefix("Hueco") if drops.has(Vector2(at.x, at.z).snapped(Vector2(0.01, 0.01))) else base
+				grid.set_cell_item(at_cell, kit.find_item_by_name(want), grid.get_cell_item_orientation(at_cell))
 
 
 ## Duplica cada línea de pared entre salas (y la del borde), para que cada sala tenga su propia pared de 2 m: corre las celdas
