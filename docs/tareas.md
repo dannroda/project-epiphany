@@ -1976,7 +1976,7 @@ Una salida de la sala del jefe: un portal en el centro de la arena que lleva a l
 
 **Notas:** Sin flag por ahora porque no hay jefe; 9.6 le pone d1_boss_defeated.
 
-## M10 — Terminación  (22/30)
+## M10 — Terminación  (22/31)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -2575,6 +2575,16 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 **Prueba:** Partida nueva desde el título: la intro se lee cómoda, el templo se ve encenderse, el temblor se siente sin marear y lo que se ve en cada plano es intencional.
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
+
+### 10.31 Videos de presentación y trailer/teaser · Pendiente
+
+**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `marketing`, `video`
+
+Grabar videos para presentar el juego. Pensar un trailer o teaser corto para generar expectativa (aunque muestre más de lo que hay todavía): planos del overworld, entradas de las mazmorras, pelea con un jefe, el templo del ojo.
+
+- [ ] Elegir qué mostrar y armar un guion corto (30–60 s)
+- [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
+- [ ] Grabar los planos y editar el teaser
 
 ## M11 — Pulido: contenido y feel  (73/122)
 

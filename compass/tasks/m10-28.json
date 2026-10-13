@@ -1,0 +1,33 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Elegir qué mostrar y armar un guion corto (30–60 s)"
+    },
+    {
+      "done": false,
+      "text": "Modo de captura: sin HUD/debug, cámara libre o con rieles para planos"
+    },
+    {
+      "done": false,
+      "text": "Grabar los planos y editar el teaser"
+    }
+  ],
+  "code": "10.31",
+  "created_at": "2026-10-13T20:32:37.124Z",
+  "description": "Grabar videos para presentar el juego. Pensar un trailer o teaser corto para generar expectativa (aunque muestre más de lo que hay todavía): planos del overworld, entradas de las mazmorras, pelea con un jefe, el templo del ojo.",
+  "milestone": "m10",
+  "notes": "",
+  "order": 62,
+  "priority": "low",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "marketing",
+    "video"
+  ],
+  "test": "",
+  "title": "Videos de presentación y trailer/teaser",
+  "updated_at": "2026-10-13T20:32:43.986Z"
+}
