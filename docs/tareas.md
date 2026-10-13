@@ -2576,7 +2576,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (55/114)
+## M11 — Pulido: contenido y feel  (56/114)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3621,22 +3621,22 @@ El reveal de cámara y `travel_to` ponen `paused` a mano, y `MenuStack._can_paus
 
 **Archivos:** `src/ui/hud/item_ring.gd`
 
-### 11.68 Barra del jefe en fase 3 y animaciones que siguen tras morir · Pendiente
+### 11.68 Barra del jefe en fase 3 y animaciones que siguen tras morir · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `jefe`
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `jefe`
 
 `bar_fraction` usa `phase() == 2`, así que en fase 3 la barra vuelve a la vida de las manos. Además las manos al colapsar solo matan `_motion` y siguen corriendo los tweens de ataque (hold, shake, windup, bounce), y un aturdimiento durante la carga del orbe es pisado por el tween `grow`.
 
-- [ ] Barra en fase 3
+- [x] Barra en fase 3
   boss.gd ~l.148: `phase() >= 2`.
-- [ ] Un tween de ataque por mano
+- [x] Un tween de ataque por mano
   boss_hand.gd: guardar los tweens de ataque en `_attack_tween` y matarlo en `collapse()` y al salir de BUSY.
-- [ ] Cortar la carga al aturdir
+- [x] Cortar la carga al aturdir
   boss.gd: guardar `grow` en un miembro y `kill()` en `_stun_eye` y `_on_defeated`.
 
-**Prueba:** En fase 3 la barra baja con los golpes al ojo; el jefe muerto durante un ataque cae quieto; aturdido durante la carga, el ojo no sigue pulsando.
+**Prueba:** test_boss › test_the_bar_shows_the_eye_in_phase_three, test_a_collapsing_hand_stops_its_windup y test_stunning_the_eye_cuts_the_orb_charge (fallan sin el arreglo).
 
-**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+**Notas:** Sesión de bugs (-fd). bar_fraction: phase() >= 2. BossHand: los avisos de ataque (sostener del golpe, sacudida del agarre, carga del barrido) van en _attack_tween, que se mata al salir de BUSY y en collapse(); el rebote tras el golpe al piso va aparte (_bounce, solo lo corta collapse) porque la mano se aturde antes de que termine. Boss: la carga del orbe es _charge_tween; _stun_eye y _on_defeated la cortan con _cut_charge(), que además libera _eye_attacking (si no, el BT esperaba para siempre).
 
 **Archivos:** `src/entities/boss/boss.gd`, `src/entities/boss/boss_hand.gd`
 

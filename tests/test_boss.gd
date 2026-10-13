@@ -675,3 +675,53 @@ func test_marks_blast_whoever_stays_even_blocking() -> void:
 	await tree.create_timer(Boss.MARK_TELEGRAPH + 0.2).timeout
 	assert_eq(player.health.current, before, "fuera de las marcas no pasa nada")
 	tree.root.get_node(^"GameState").reset()
+
+
+func test_the_bar_shows_the_eye_in_phase_three() -> void:
+	var boss := _spawn()
+	await _open_phase_two(boss)
+	boss.health.invulnerability_time = 0.0
+	boss.health.damage(boss.health.max_health - 6)
+	assert_eq(boss.phase(), 3)
+	assert_eq(boss.bar_fraction(), 6.0 / boss.health.max_health, "en la fase 3 la barra sigue siendo la vida del ojo")
+	boss.free()
+
+
+func test_a_collapsing_hand_stops_its_windup() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var boss := _spawn()
+	var target := Node3D.new()
+	boss.add_child(target)
+	target.global_position = boss.global_position + Vector3(1, 0, 6)
+	var hand := boss.hand_left
+	hand.perform(_attack(&"sweep"), target, boss.arena)
+	assert_true(await _wait_until(func() -> bool: return hand._attack_tween != null and hand._attack_tween.is_running(), 2.0), "carga el barrido")
+	hand.collapse()
+	assert_true(not hand._attack_tween.is_valid(), "al caer, el aviso del ataque se corta")
+	await tree.create_timer(0.5).timeout
+	var resting := hand.global_position
+	await tree.create_timer(0.5).timeout
+	assert_true(hand.global_position.is_equal_approx(resting), "y queda quieta en el piso")
+	boss.free()
+
+
+func test_stunning_the_eye_cuts_the_orb_charge() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var boss := _spawn()
+	await _open_phase_two(boss)
+	var target := Node3D.new()
+	boss.add_child(target)
+	target.global_position = boss.global_position + Vector3(0, 0, 8)
+	boss.target = target
+	boss.phases.set_active(false)
+	var orbs := func() -> int: return tree.current_scene.find_children("*", "Projectile", true, false).size() if tree.current_scene else 0
+	var before: int = orbs.call()
+	boss._fire_orb()
+	await tree.create_timer(boss.orb_charge_time * 0.4).timeout
+	boss._stun_eye()
+	assert_true(not boss.is_attack_running(), "aturdido, el ojo deja de cargar")
+	await tree.create_timer(boss.orb_charge_time).timeout
+	assert_eq(boss._squint, 0.0, "la carga no le vuelve a entrecerrar el ojo")
+	assert_true(not boss.get_node(^"%Charge").visible)
+	assert_eq(orbs.call(), before, "ni dispara")
+	boss.free()

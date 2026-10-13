@@ -80,6 +80,9 @@ var rest: Node3D
 var _stun_left := 0.0
 var _fall: Tween
 var _motion: Tween
+## El tween del aviso del ataque en curso (sostener, sacudir, cargar): se corta al dejar de atacar.
+var _attack_tween: Tween
+var _bounce: Tween
 var _shockwave_data := AttackData.new()
 var _flash: HitFlash
 var _material: StandardMaterial3D
@@ -167,6 +170,8 @@ func set_state(value: State) -> void:
 		_steady()
 	state = value
 	if state != State.BUSY:
+		if _attack_tween:
+			_attack_tween.kill()
 		attack_runner.stop()
 		_set_hitbox(strike, null)
 	state_changed.emit(state)
@@ -234,7 +239,7 @@ func _slam(attack: BossAttack, target: Node3D, area: Rect2) -> void:
 		_show_shadow(global_position, lerpf(3.6, 2.6, t), lerpf(0.3, 0.75, t))
 	_show_shadow(global_position, 2.4, 1.0)
 	_flash.warn(slam_lock_time)
-	var hold := create_tween()
+	var hold := _new_attack_tween()
 	hold.tween_property(self, ^"position:y", position.y + SLAM_OVERSHOOT, slam_lock_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	hold.parallel().tween_method(_tremble.bind(position), 0.0, 1.0, slam_lock_time)
 	hold.parallel().tween_method(_flash_shadow, 0.0, 1.0, slam_lock_time)
@@ -289,7 +294,7 @@ func _grab(_attack: BossAttack, target: Node3D, area: Rect2) -> void:
 	_flash.warn(grab_windup_time)
 	_grip_goal = -0.3
 	_tilt_goal = Vector3(-0.3, 0.0, 0.0)
-	var shake := create_tween()
+	var shake := _new_attack_tween()
 	for i in 6:
 		shake.tween_property(self, ^"rotation:z", 0.12 * (1 if i % 2 else -1), grab_windup_time / 6.0)
 	shake.tween_property(self, ^"rotation:z", 0.0, 0.05)
@@ -383,7 +388,7 @@ func _sweep(attack: BossAttack, target: Node3D, area: Rect2) -> void:
 	_flash.warn(sweep_windup_time)
 	_tilt_goal = Vector3(0.0, 0.0, -side * 1.3)
 	_grip_goal = 0.35
-	var windup := create_tween()
+	var windup := _new_attack_tween()
 	windup.tween_property(self, ^"position:x", position.x + side * 0.9, sweep_windup_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	windup.parallel().tween_method(func(t: float) -> void: position.z += randf_range(-TREMBLE, TREMBLE) * t, 0.0, 1.0, sweep_windup_time)
 	await windup.finished
@@ -474,12 +479,20 @@ func _on_died() -> void:
 	downed.emit()
 
 
+func _new_attack_tween() -> Tween:
+	if _attack_tween:
+		_attack_tween.kill()
+	_attack_tween = create_tween()
+	return _attack_tween
+
+
 ## Cae al piso y queda ahí (sin vida, o porque murió el jefe).
 func collapse() -> void:
 	if state == State.DOWN:
 		return
-	if _motion:
-		_motion.kill()
+	for tween in [_motion, _attack_tween, _bounce]:
+		if tween:
+			tween.kill()
 	striking = false
 	_hide_shadow()
 	set_state(State.DOWN)
@@ -509,9 +522,9 @@ func _squash_and_bounce() -> void:
 	mesh.scale = SQUASH
 	var back := mesh.create_tween()
 	back.tween_property(mesh, ^"scale", Vector3.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	var bounce := create_tween()
-	bounce.tween_property(self, ^"position:y", position.y + SLAM_BOUNCE, 0.12).set_ease(Tween.EASE_OUT).set_delay(0.08)
-	bounce.tween_property(self, ^"position:y", position.y, 0.14).set_ease(Tween.EASE_IN)
+	_bounce = create_tween()
+	_bounce.tween_property(self, ^"position:y", position.y + SLAM_BOUNCE, 0.12).set_ease(Tween.EASE_OUT).set_delay(0.08)
+	_bounce.tween_property(self, ^"position:y", position.y, 0.14).set_ease(Tween.EASE_IN)
 
 
 ## Una grieta que queda en el piso un rato y se va borrando.

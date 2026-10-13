@@ -70,6 +70,7 @@ var rng := RandomNumberGenerator.new()
 var _eye_stun_left := 0.0
 var _eye_attacking := false
 var _body_tween: Tween
+var _charge_tween: Tween
 var _body_height := 0.0
 var _time := 0.0
 ## 1 flota, 0 quieto (aturdido, apoyado en el piso).
@@ -150,7 +151,7 @@ func phase() -> int:
 
 ## Barra del HUD: en la fase 1, la vida que les queda a las dos manos; después, la del ojo.
 func bar_fraction() -> float:
-	if phase() == 2 or health.current == 0:
+	if phase() >= 2 or health.current == 0:
 		return health.current / float(health.max_health)
 	var left := hand_left.health.current + hand_right.health.current
 	return left / float(hand_left.health.max_health + hand_right.health.max_health)
@@ -362,7 +363,8 @@ func _fire_orb() -> void:
 	var charge: MeshInstance3D = %Charge
 	charge.visible = true
 	charge.scale = Vector3.ONE * 0.1
-	var grow := create_tween()
+	_charge_tween = create_tween()
+	var grow := _charge_tween
 	grow.tween_property(charge, ^"scale", Vector3.ONE, orb_charge_time).set_ease(Tween.EASE_IN)
 	grow.parallel().tween_property(self, ^"_squint", 1.0, 0.2)
 	grow.parallel().tween_method(_pulse_eye, 0.0, 1.0, orb_charge_time)
@@ -447,7 +449,7 @@ func _stun_eye() -> void:
 	Feel.sfx(&"deny", eye.global_position)
 	Feel.burst(&"sparks", eye.global_position, Vector3.BACK)
 	Feel.shake(0.3)
-	%Charge.visible = false
+	_cut_charge()
 	_squint = 0.0
 	_pupil_goal = 0.0
 	_set_eye_glow(EYE_GLOW)
@@ -500,10 +502,18 @@ func _on_phase3_entered() -> void:
 	phase_changed.emit(3)
 
 
+## Corta la carga del orbe a mitad (aturdido o vencido): no dispara y el BT ya puede seguir.
+func _cut_charge() -> void:
+	if _charge_tween:
+		_charge_tween.kill()
+	%Charge.visible = false
+	_eye_attacking = false
+
+
 func _on_defeated() -> void:
 	%Solid.remove_from_group(&"targetable")
 	_eye_stun_left = 0.0
-	%Charge.visible = false
+	_cut_charge()
 	eye_hurtbox.set_deferred(&"monitorable", false)
 	for hand in [hand_left, hand_right]:
 		hand.collapse()
