@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://bgracgdcxw3ko"]
 
+[ext_resource type="Material" path="res://src/world/water/water_la.tres" id="water_la"]
 [ext_resource type="MeshLibrary" uid="uid://dt62p0c61qjd0" path="res://data/kits/overworld_kit.tres" id="1_kit"]
 [ext_resource type="Script" uid="uid://nqxfiofg56dy" path="res://src/world/room.gd" id="2_room"]
 [ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="3_player"]
@@ -67,6 +68,15 @@ shape = SubResource("RoomShape")
 [node name="WaterPool" parent="." unique_id=1646859759 instance=ExtResource("8_pool")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
 size = Vector2(6, 4)
+
+[node name="Surface" parent="WaterPool" index="1"]
+material_override = ExtResource("water_la")
+
+[node name="Caustics" parent="WaterPool" index="3"]
+visible = false
+
+[node name="FloorCaustics" parent="WaterPool" index="4"]
+visible = false
 
 [node name="Waterfall" parent="." unique_id=345341076 instance=ExtResource("14_fall")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.12, -6.35)
