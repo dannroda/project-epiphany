@@ -116,24 +116,37 @@ func _explode(at: Vector3) -> void:
 	await tree.create_timer(0.6).timeout
 
 
-func test_the_pot_and_the_niche_open_the_mummy_room() -> void:
+func test_pushing_the_pot_onto_the_plate_opens_the_mummy_room() -> void:
 	await _start()
 	var door := level.get_node(^"PisoAlto/AgrietadaDoor") as Door
 	var weight := level.get_node(^"PisoAlto/RellanoWeight") as FloorSwitch
-	var step := level.get_node(^"PisoAlto/RellanoStep") as FloorSwitch
-	var wall := level.get_node(^"PisoAlto/RellanoCrackedWall") as CrackedWall
-	var pot := level.get_node(^"PisoAlto/SaltosPot") as BigPot
+	var pot := level.get_node(^"PisoAlto/RellanoPot") as BigPot
 	await _drop(_in("PisoAlto/Rellano", Vector3(0, 0.5, 0)))
+	assert_eq(camera.room, _room("PisoAlto/Rellano"))
+	assert_true(_room("PisoAlto/Rellano").contains(pot.global_position), "la vasija está en el rellano")
 	assert_true(not door.is_open, "la puerta a la sala agrietada está cerrada")
-	pot.global_position = weight.global_position
-	assert_true(await _until(func() -> bool: return weight.active, 2.0), "la vasija grande aprieta la placa de peso")
-	assert_true(not door.is_open, "con una sola placa sigue cerrada")
-	player.global_position = _in("PisoAlto/Rellano", Vector3(-8, 0.5, 2))
+	player.global_position = weight.global_position + Vector3(0, 0.5, 0)
+	await tree.create_timer(0.3).timeout
+	assert_true(not weight.active, "el player no aprieta la placa de peso")
+	player.global_position = pot.global_position + Vector3(0, 0.5, -2)
+	await tree.create_timer(0.3).timeout
+	for i in 2:
+		assert_true(pot.try_push(Vector3.BACK), "la vasija avanza hacia la placa")
+		await tree.create_timer(0.7).timeout
+	assert_true(await _until(func() -> bool: return weight.active, 2.0), "dos empujones y la vasija aprieta la placa")
+	assert_true(await _until(func() -> bool: return door.is_open, 8.0), "y se abre la puerta")
+	tree.root.get_node(^"GameState").reset()
+
+
+func test_the_niche_behind_the_crack_keeps_bombs() -> void:
+	await _start()
+	var wall := level.get_node(^"PisoAlto/RellanoCrackedWall") as CrackedWall
+	var chest := level.get_node(^"PisoAlto/RellanoNicheChest") as Chest
+	await _drop(_in("PisoAlto/Rellano", Vector3(-8, 0.5, 2)))
 	await _explode(_in("PisoAlto/Rellano", Vector3(-11, 0.3, 2)))
 	assert_true(wall.is_broken, "la bomba abre el nicho")
-	player.global_position = _in("PisoAlto/Rellano", Vector3(-14, 0.5, 2))
-	assert_true(await _until(func() -> bool: return step.active, 2.0), "pisar la placa del nicho")
-	assert_true(await _until(func() -> bool: return door.is_open, 8.0), "las dos placas abren la puerta")
+	assert_eq(chest.item.id, &"bomb")
+	assert_true(chest.global_position.distance_to(wall.global_position) < 2.5, "el cofre está detrás de la grieta")
 	tree.root.get_node(^"GameState").reset()
 
 

@@ -167,20 +167,20 @@ gives = &"ch_boss_defeated"
 
 [sub_resource type="Resource" id="Spot_9"]
 script = ExtResource("3_spot")
-area = &"Saltos:S"
-node = NodePath("PisoAlto/SaltosPot")
-gives = &"ch_saltos_pot"
+area = &"Rellano"
+node = NodePath("PisoAlto/RellanoPot")
+gives = &"ch_rellano_pot"
 
 [sub_resource type="Resource" id="Spot_10"]
 script = ExtResource("3_spot")
 area = &"Rellano"
 node = NodePath("PisoAlto/RellanoWeight")
-needs = Array[StringName]([&"ch_saltos_pot"])
+needs = Array[StringName]([&"ch_rellano_pot"])
 
 [sub_resource type="Resource" id="Spot_11"]
 script = ExtResource("3_spot")
 area = &"Rellano"
-node = NodePath("PisoAlto/RellanoStep")
+node = NodePath("PisoAlto/RellanoNicheChest")
 through = Array[NodePath]([NodePath("PisoAlto/RellanoCrackedWall")])
 
 [sub_resource type="Resource" id="Spot_13"]

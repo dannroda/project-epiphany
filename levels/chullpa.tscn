@@ -7,6 +7,7 @@
 [ext_resource type="Shader" path="res://src/world/look/borde_oscuro.gdshader" id="5_1wqbm"]
 [ext_resource type="Script" path="res://src/world/pit.gd" id="5_d3wa8"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="6_ufxwh"]
+[ext_resource type="Resource" path="res://data/items/bomb.tres" id="ch_bomb"]
 [ext_resource type="Resource" path="res://data/items/boss_key.tres" id="8_0rnpi"]
 [ext_resource type="Script" path="res://src/world/chest.gd" id="8_2g4bn"]
 [ext_resource type="Resource" path="res://data/items/dungeon_map.tres" id="9_7e1xe"]
@@ -2259,7 +2260,7 @@ script = ExtResource("41_pflag")
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 27, 0, 28)
 script = ExtResource("13_crkrm")
 kind = 3
-switches = Array[NodePath]([NodePath("../RellanoWeight"), NodePath("../RellanoStep")])
+switches = Array[NodePath]([NodePath("../RellanoWeight")])
 depth = 4.0
 leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_chullpa_la.res"
 sink = 3.2
@@ -2355,22 +2356,25 @@ script = ExtResource("27_iuiyr")
 mode = 3
 flag = &"ch_landing_weight"
 
-[node name="RellanoStep" type="Area3D" parent="PisoAlto" unique_id=991280052 instance=ExtResource("17_rjinf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 30)
-script = ExtResource("27_iuiyr")
-mode = 1
-flag = &"ch_landing_step"
+[node name="RellanoNicheChest" type="StaticBody3D" parent="PisoAlto" unique_id=1748203391 instance=ExtResource("6_ufxwh")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 30)
+script = ExtResource("8_2g4bn")
+item = ExtResource("ch_bomb")
+amount = 5
+flag = &"ch_landing_niche_chest"
 
 [node name="RellanoCrackedWall" type="StaticBody3D" parent="PisoAlto" unique_id=1246005233 instance=ExtResource("44_crackwall")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, 0, 30)
 script = ExtResource("33_3iwqa")
 flag = &"ch_landing_cracked_wall"
 
-[node name="SaltosPot" type="AnimatableBody3D" parent="PisoAlto" unique_id=2048567083 instance=ExtResource("43_bigpot")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 15)
+[node name="RellanoPot" type="AnimatableBody3D" parent="PisoAlto" unique_id=2048567083 instance=ExtResource("43_bigpot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, 27)
 collision_layer = 9
 collision_mask = 0
 script = ExtResource("35_q5kf3")
+solved_flag = &"ch_landing_weight"
+solved_position = Vector3(19, 0, 31)
 
 [node name="MummyFight" type="Node3D" parent="PisoAlto" unique_id=1930815309 node_paths=PackedStringArray("room", "doors")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 26)
@@ -2421,7 +2425,7 @@ script = ExtResource("47_lhowt")
 config = ExtResource("48_308dp")
 
 [node name="RellanoEnemy11" type="CharacterBody3D" parent="PisoAlto" unique_id=2005074834 groups=["room_sleepers"] instance=ExtResource("30_gc68l")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 31)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 33)
 collision_layer = 5
 collision_mask = 5
 script = ExtResource("47_lhowt")
