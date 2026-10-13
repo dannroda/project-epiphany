@@ -21,7 +21,7 @@
       "text": "Luz y ambiente por mazmorra"
     },
     {
-      "detail": "Braseros, estandartes, puertas y vasijas con la piedra y los motivos de cada mazmorra.",
+      "detail": "En curso. 2026-10-13 (70d206ae), arte -11: Queñoa con brasero propio (brasero_quenoa: muñón de tronco colgado de la pared, lo pone la_walls LOOKS) y vasijas mate burilado (pot_quenoa.tscn, escena heredada de pot.tscn). Chullpa sigue con el brasero de piedra y el aríbalo. Falta: puertas por estilo y estandartes (no hay ninguno puesto en las mazmorras).",
       "done": false,
       "text": "Props por estilo"
     },
@@ -46,5 +46,5 @@
   ],
   "test": "",
   "title": "Estilos por mazmorra",
-  "updated_at": "2026-10-13T15:38:45.737Z"
+  "updated_at": "2026-10-13T16:07:16.688Z"
 }

@@ -2915,14 +2915,14 @@ Tablillas de historia repartidas por el overworld y el templo que, leídas en cu
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura; 11.34 Combos y técnicas especiales (Minish Cap / Wind Waker)
 
-### 11.24 Más secretos en el overworld · Pendiente
+### 11.24 Más secretos en el overworld · En curso
 
 **Prioridad:** baja · **Etiquetas:** `overworld`, `puzzles`
 
 Sumar 4 a 6 secretos chicos al overworld (cuevitas con cofre, pasto que esconde algo, rocas que se empujan, muros agrietados) con recompensas útiles, para que explorar valga la pena.
 
-- [ ] Lista de 4–6 secretos chicos
-  Cuevitas con cofre, pasto que esconde algo, roca que se empuja, muro agrietado extra.
+- [x] Lista de 4–6 secretos chicos
+  Daniel (2026-10-13): 1) queñoa sola que, chocada con las sandalias, se sacude y suelta una pieza de corazón; 2) mata en el Claro/Arboleda que al cortarla destapa una escalera a una cuevita con cofre; 3) roca empujable en los Cerros que destapa un cofre chico; 4) repisa en la Quebrada a una celda, con la pluma, con cofre de flechas.
 - [ ] Armarlos
   Recompensas: flechas, bombas, piezas de corazón.
 
@@ -4906,7 +4906,7 @@ Cada mazmorra con su propio estilo sobre el mismo kit (mismas piezas y colisione
 - [x] Kit de cada mazmorra en Godot
   build_temple_kit.gd -- <estilo> arma chullpa_kit, laguna_kit y cumbre_kit (mismos ítems y colisiones que temple_kit). levels/chullpa.tscn usa chullpa_kit. Laguna y Cumbre todavía no tienen escena.
 - [x] Luz y ambiente por mazmorra
-  WorldEnvironment y luces: cálida y polvorienta (chullpa), fría y húmeda (laguna), blanca y ventosa (cumbre).
+  Hecho el 2026-10-13 (d5384189), arte -11: LOOKS en la_walls.gd (ambiente, luz del lado de la cámara, foco de sala y polvo), se aplica en bake y en cada refresh. Chullpa cálida y polvorienta (polvo_chullpa.tscn), Queñoa fría y húmeda (polvo_quenoa.tscn). Las escenas de polvo se ajustan a ojo en el editor; los colores, en LOOKS.
 - [ ] Props por estilo
   Braseros, estandartes, puertas y vasijas con la piedra y los motivos de cada mazmorra.
 - [x] Estilo del terreno del overworld por región
