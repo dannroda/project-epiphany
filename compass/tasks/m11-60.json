@@ -41,8 +41,8 @@
       "text": "Rehacer con la pluma como ítem"
     },
     {
-      "detail": "Sala B-NE, hoy vacía. En chullpa_graph.tres el objetivo ch_boss_defeated pide la pluma.",
-      "done": false,
+      "detail": "Hecho el 2026-10-13 (3872d817): Mallqui, el Ancestro, en B-NE. Es la MummyGuard a 1,6× (24 de vida): saltitos, salto alto con la sombra fija y trabado al caer (ahí se le pega). Su onda cruza toda la sala, así que solo se pasa saltando con la pluma; con media vida salta dos veces seguidas. Da contenedor de corazón y abre el portal al overworld. test_chullpa lo pelea. Falta: que Daniel lo pruebe y ajuste a ojo (velocidad de la onda, vida, tiempo trabado).",
+      "done": true,
       "text": "Jefe del Guardián que se vence saltando"
     },
     {
@@ -70,5 +70,5 @@
   ],
   "test": "",
   "title": "Mazmorra nueva de varios pisos",
-  "updated_at": "2026-10-13T04:30:10.124Z"
+  "updated_at": "2026-10-13T06:44:42.428Z"
 }
