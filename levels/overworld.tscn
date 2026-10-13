@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" path="res://src/world/cracked_wall.tscn" id="21_uay0b"]
 [ext_resource type="PackedScene" path="res://src/world/floor_switch.tscn" id="22_gvf0k"]
 [ext_resource type="PackedScene" path="res://src/world/floor_switch_weight.tscn" id="ow_switch_weight"]
+[ext_resource type="PackedScene" path="res://src/world/hook_post.tscn" id="ow_hook_post"]
 [ext_resource type="PackedScene" path="res://src/world/push_block.tscn" id="24_v1yde"]
 [ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="26_iip2e"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_mirror.tscn" id="28_gvf0k"]
@@ -1316,8 +1317,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0.6, -10)
 flag = &"ow_heart_piece_meadow"
 hidden_until_revealed = false
 
+[node name="CumbrePost" parent="." instance=ExtResource("ow_hook_post")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.6, 5.2, -36)
+
+[node name="RiscoPost" parent="." instance=ExtResource("ow_hook_post")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70.2, 5.2, -35)
+
 [node name="HeartPieceCliff" parent="." unique_id=997712761 instance=ExtResource("6_piece")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90, 5.2, -20)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 5.2, -36)
 flag = &"ow_heart_piece_cliff"
 hidden_until_revealed = false
 

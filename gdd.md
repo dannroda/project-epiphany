@@ -191,7 +191,7 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 
 **Forma Zelda 2D (7.10, 2026-10-12/13; donde contradice lo de abajo, manda esto):** 100 × 48 celdas (200 × 96 m) con terreno continuo, generado por `debug/tmp/ow2/layout.py` (celda (x, y) → mundo (2(x − 50), nivel · 2,6, 2(y − 24))). Terrazas reales de 2,6 m (niveles 0, 1 y 2): se sube por escalinatas y se baja por saltos. Cadena: **D1 Chullpa** en los Cerros (espada y bombas; da la pluma) → **D2 Queñoa** en la Arboleda, que se alcanza cruzando con la pluma un abismo de una celda (da el arco) → D3 (gancho) → D4 (escudo espejo) → el templo, último. Gruta, Santuario y Cueva de las bombas son cuevas interiores; afuera solo se ve la boca o la grieta en la cara del risco.
 - *Santuario:* queda para después de D4. El bloque al interruptor (`ow_shrine_switch`) abre el atajo al andén del templo; el cristal (`ow_shrine_crystal`), que solo prende el escudo espejo, baja la reja del cofre con un contenedor de corazón (`ow_shrine_chest`).
-- *Risco:* una escalinata sube a la cornisa (nivel 2). Frente a ella hay un abismo de 8 m (cuatro celdas, `RiscoPit`), más de lo que cruza el salto largo. Del otro lado, el ojo (`CliffEye`) abre con una flecha el nicho con la pieza de corazón y el carcaj grande.
+- *Risco:* una escalinata sube a la cornisa (nivel 2). Frente a ella hay un abismo de 8 m (cuatro celdas, `RiscoPit`), más de lo que cruza el salto largo. Del otro lado, el ojo (`CliffEye`) abre con una flecha el nicho con el carcaj grande. La pieza de corazón (`HeartPieceCliff`) está del lado del ojo: se sube desde el pasillo bajo con el gancho, apuntando al poste del borde (`RiscoPost`).
 - *Piezas de corazón:*
   - Pradera: sobre un escalón de 0,6 m (`MeadowStep`), con la pluma.
   - Risco.
@@ -255,7 +255,7 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 | **Cardonal** | Secretos; escalinata a la Necrópolis y bajada de una vía desde ella | Pluma (angostura) o desde la Necrópolis | 2 |
 | **Bañado** | Orilla este de la Laguna. Portal | Desde el Cardonal | 2 |
 | **Laguna** | Agua entre las dos orillas; islotes hasta la isla de **D3** | Pluma (islotes) | 3 |
-| **Cumbre** | **D4**: la región se alcanza por los postes con el gancho (ítem de D3). Portal | Gancho | 4 |
+| **Cumbre** | **D4**: la región se alcanza con el gancho (ítem de D3), desde la franja al pie del risco apuntando al poste del borde (`CumbrePost`; los postes se apuntan aunque estén a otra altura). Portal | Gancho | 4 |
 
 **Cadena de mazmorras (11.90):** D1 Templo (escudo espejo para entrar; da el arco) → arco → D2 Chullpa (da la pluma) → pluma → D3 Laguna (da el gancho) → gancho → D4 Cumbre (da los guantes de fuerza). Para el primer playtest externo, D3 y D4 se ven pero están cerradas.
 

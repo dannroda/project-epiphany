@@ -113,7 +113,7 @@ func test_find_the_secrets_with_everything() -> void:
 	var arrows_capacity: int = state.inventory.capacity(&"arrow")
 	await _open_chest(tree, level.get_node(^"QuiverChest"), player)
 	assert_eq(state.inventory.capacity(&"arrow"), arrows_capacity + 20, "el carcaj grande suma flechas")
-	assert_true(level.get_node(^"HeartPieceCliff").global_position.distance_to(cliff_gate.global_position) < 3.0, "y en el nicho está la pieza del Risco")
+	assert_true(level.get_node(^"HeartPieceCliff").global_position.distance_to(level.get_node(^"RiscoPost").global_position) < 6.0, "la pieza del Risco está del lado del ojo, junto al poste del gancho")
 	state.reset()
 
 
