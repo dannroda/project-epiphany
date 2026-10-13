@@ -31,8 +31,8 @@
       "text": "Usos en el overworld (sesión del overworld)"
     },
     {
-      "detail": "Gancho y GanchoOjo en levels/templo.tscn: postes sobre el abismo y el acorazado del ojo. Editar el grid y correr tools/la_walls.gd -- refresh templo (avisar a arte).",
-      "done": false,
+      "detail": "Hecho el 2026-10-13: el abismo del Gancho pasa de 3 a 4 celdas (x 12..15 del grid; el salto largo cruzaba 3) y su GanchoPit se ensancha a 8 m; GanchoWestPost (22.5, 0, 34) y GanchoEastPost (31.5, 0, 38), a 0,5 m del borde y corridos de la línea de las puertas. Editado como texto (sin re-guardar la escena); las paredes no cambian, así que no hizo falta el refresh de la_walls. El acorazado y el ojo del ala ya estaban. test_templo (nuevo test del cruce).",
+      "done": true,
       "text": "Ala del gancho del templo"
     },
     {
@@ -86,5 +86,5 @@
   ],
   "test": "El ítem tiene un uso en combate y abre al menos dos lugares que antes no se podían.",
   "title": "Ítem de D3: el gancho",
-  "updated_at": "2026-10-13T21:02:47.198Z"
+  "updated_at": "2026-10-13T21:32:53.224Z"
 }

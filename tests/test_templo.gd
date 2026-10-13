@@ -157,6 +157,44 @@ func test_the_bow_wing_needs_a_bomb_and_arrows() -> void:
 	state.reset()
 
 
+func _hook_to(post: HookPost) -> void:
+	player.targeting.set_target(post)
+	var press := InputEventAction.new()
+	press.action = &"item_1"
+	press.pressed = true
+	Input.parse_input_event(press)
+	await tree.physics_frame
+	var release := InputEventAction.new()
+	release.action = &"item_1"
+	Input.parse_input_event(release)
+	for i in 180:
+		await tree.physics_frame
+		if i > 3 and player.movement_state.get_active_state().name != &"Hooking":
+			break
+	await tree.create_timer(0.3).timeout
+	player.targeting.clear()
+
+
+func test_the_hook_wing_abyss_is_crossed_only_with_the_hookshot() -> void:
+	await _start()
+	var grid := level.get_node(^"Planta/GridMap") as GridMap
+	var holes := range(10, 18).filter(func(x: int) -> bool: return grid.get_cell_item(Vector3i(x, 0, 18)) == 10)
+	assert_eq(holes.size(), 4, "el abismo mide 4 celdas: el salto largo cruza 3")
+	state.give(Items.get_item(&"hookshot"))
+	state.assign_button(0, &"hookshot")
+	var west := _node("GanchoWestPost") as HookPost
+	var east := _node("GanchoEastPost") as HookPost
+	for spec: Array in [[Vector3(32.4, 0.2, 34), west], [Vector3(22, 0.2, 38), east]]:
+		await _drop(spec[0])
+		var health := player.health.current
+		var post: HookPost = spec[1]
+		assert_true(post in player.targeting.possible_targets, "%s está al alcance" % post.name)
+		await _hook_to(post)
+		assert_true(player.global_position.distance_to(post.global_position) < 1.5 and player.health.current == health, "el gancho cruza hasta %s (%s)" % [post.name, player.global_position.snappedf(0.1)])
+	assert_eq(camera.room, _room("Gancho"), "sin salir de la sala")
+	state.reset()
+
+
 func test_the_four_eyes_open_the_seal() -> void:
 	await _start()
 	var seal := _node("HubSeal") as Door

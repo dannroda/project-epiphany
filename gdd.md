@@ -314,7 +314,7 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 ## 8. Mazmorra — El Templo
 <!-- id: mazmorra -->
 
-**Rediseño (11.113, 2026-10-13, Daniel: si):** el templo es la última mazmorra y usa todos los ítems. No da ítem: el sub-jefe guarda la llave del jefe. Escena nueva `levels/templo.tscn`, flags `te_`; `levels/temple.tscn` (lo de abajo) queda como nivel de prueba hasta que el nuevo esté listo, y entonces el portal del overworld apunta al nuevo. Salas de 7 × 6 celdas (14 × 12 m), para que la cámara quede fija como en Link's Awakening. Grafo de diseño: `data/dungeons/templo_graph.tres` (pasa el test de alcanzabilidad y el molde, con `item` = llave del jefe y `guard` = la Mano). El ala del gancho se construye cuando exista el gancho (11.30, D3).
+**Rediseño (11.113, 2026-10-13, Daniel: si):** el templo es la última mazmorra y usa todos los ítems. No da ítem: el sub-jefe guarda la llave del jefe. Escena nueva `levels/templo.tscn`, flags `te_`; `levels/temple.tscn` (lo de abajo) queda como nivel de prueba hasta que el nuevo esté listo, y entonces el portal del overworld apunta al nuevo. Salas de 7 × 6 celdas (14 × 12 m), para que la cámara quede fija como en Link's Awakening. Grafo de diseño: `data/dungeons/templo_graph.tres` (pasa el test de alcanzabilidad y el molde, con `item` = llave del jefe y `guard` = la Mano). El ala del gancho está hecha (11.30): el abismo se ensanchó a 4 celdas y lleva dos postes.
 
 ```
                       ┌──────────┐
@@ -347,7 +347,7 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 | Arco | **Mapa**. Muro agrietado (bomba) al ojo del arco |
 | Ojo del arco | Ojos-interruptor sobre un abismo, solo con flechas: abren el nicho de la **llave chica** y encienden el ojo del ala (`te_eye_bow`) |
 | Hub | Esqueletos. Cuatro ojos tallados en el sello de la pared norte, uno por ala. Puertas con llave a las alas del gancho y del espejo |
-| Gancho | Postes sobre un abismo: se cruza con el gancho |
+| Gancho | Un abismo (foso) de 4 celdas a lo ancho de la sala, entre el hub y el ojo del gancho: el salto largo cruza 3, así que solo pasa el gancho. Un poste de cada lado, a 0,5 m del borde (`GanchoWestPost`, `GanchoEastPost`), corridos de la línea de las puertas para no tapar el paso |
 | Ojo del gancho | Esqueleto acorazado: el gancho le saca la armadura (11.90). Vencido, enciende el ojo del ala (`te_eye_hook`) |
 | Espejo | Torretas que disparan orbes: el escudo espejo los devuelve al cristal (`te_mirror_crystal`, de la galería de hoy) |
 | Ojo del espejo | Un haz de luz que se refleja con el escudo espejo hasta el receptor del ojo del ala (`te_eye_mirror`) |

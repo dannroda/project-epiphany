@@ -3027,8 +3027,8 @@ Un ítem post-MVP: gancho o algo que mueva objetos a distancia (GDD §6.1), con 
   Hecho el 2026-10-13: levels/totora.tscn (debug/tmp/build_totora.gd), 11 salas de 14 × 10 m en dos pisos, GDD §8d. El agua es celda vacía con Pit; los cruces del gancho miden 4 celdas (el salto largo cruza 3). Grafo data/dungeons/totora_graph.tres, test_totora (6), escenario totora. Diferencias con el plano: sin la vasija grande (se levanta con las manos), reja en lugar de puente en el Juncal, el acorazado en el Telar, el Mirador solo con postes.
 - [x] Usos en el overworld (sesión del overworld)
   Hecho por el overworld (6910e214, a598979a): CumbrePost y RiscoPost en el borde, se suben fijándolos; test_overworld_hook.
-- [ ] Ala del gancho del templo
-  Gancho y GanchoOjo en levels/templo.tscn: postes sobre el abismo y el acorazado del ojo. Editar el grid y correr tools/la_walls.gd -- refresh templo (avisar a arte).
+- [x] Ala del gancho del templo
+  Hecho el 2026-10-13: el abismo del Gancho pasa de 3 a 4 celdas (x 12..15 del grid; el salto largo cruzaba 3) y su GanchoPit se ensancha a 8 m; GanchoWestPost (22.5, 0, 34) y GanchoEastPost (31.5, 0, 38), a 0,5 m del borde y corridos de la línea de las puertas. Editado como texto (sin re-guardar la escena); las paredes no cambian, así que no hizo falta el refresh de la_walls. El acorazado y el ojo del ala ya estaban. test_templo (nuevo test del cruce).
 - [x] Sub-jefe Amaru
   Hecho el 2026-10-13: src/entities/amaru/ (Amaru, AmaruPool), data/entities/amaru.tres. Asoma por uno de cuatro charcos (asomada, todo rebota), marca una línea 1 s, se lanza recta (2 de daño) y queda tirada 2,2 s, vulnerable a espada, bombas y vasijas; vuelve reptando al charco más cercano. Con media vida escupe un Projectile antes del lanzazo. 10 de vida, modelo primitivo. Reemplaza a la momia prestada en PisoBajo/AmaruFight; las vasijas del Pozo pasan a las esquinas. test_amaru (4).
 - [x] Jefe Yacumama
