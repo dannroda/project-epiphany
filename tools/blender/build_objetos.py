@@ -652,14 +652,20 @@ def interruptor_peso_marco(p):
 
 
 def interruptor_peso_placa(p):
-	"""Losa de piedra con un aríbalo tallado: ahí se apoya una vasija (o lo que pese)."""
+	"""Losa de piedra con una vasija tallada (base plana, panza, cuello, borde y asas): ahí se apoya una vasija (o lo que pese)."""
 	p.paint(p.rounded_box(-0.68, 0.68, -0.68, 0.68, 0.0, 0.12, radius=0.04, segments=1), "piedra", "MID", vary=0.04)
-	outline = [(0.0, -0.42), (0.1, -0.33), (0.22, -0.15), (0.27, 0.02), (0.24, 0.17), (0.12, 0.26), (0.08, 0.36), (0.16, 0.42)]
+	outline = [(0.15, -0.4), (0.24, -0.3), (0.29, -0.14), (0.29, 0.02), (0.24, 0.15), (0.13, 0.23), (0.1, 0.3), (0.19, 0.34), (0.19, 0.41)]
 	points = outline + [(-x, y) for x, y in reversed(outline)]
 	pot = p.polygon(points, 0.12, 0.15)
+	for side in (-1, 1):
+		for k in range(6):
+			a = -math.pi / 2 + math.pi * (k + 0.5) / 6
+			bit = p.box(-0.022, 0.022, -0.04, 0.04, 0.12, 0.145)
+			p.transform(bit, Matrix.Translation((side * (0.26 + 0.1 * math.cos(a)), 0.05 + 0.1 * math.sin(a), 0)) @ Matrix.Rotation(side * a, 4, "Z"))
+			pot += bit
 	p.paint(pot, "roca_naranja", "MID", vary=0.04)
-	band = p.box(-0.22, 0.22, -0.015, 0.015, 0.15, 0.16)
-	p.transform(band, Matrix.Translation((0, 0.12, 0)))
+	band = p.box(-0.25, 0.25, -0.015, 0.015, 0.15, 0.16)
+	p.transform(band, Matrix.Translation((0, 0.08, 0)))
 	p.paint(band, "noche", "MID")
 
 
