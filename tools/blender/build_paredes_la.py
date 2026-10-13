@@ -50,11 +50,14 @@ kit = epi.start()
 ## Estilo de las paredes que se están armando: None (roca de LA con borde de hojas), "chullpa" (pirca de piedra de
 ## campo en hiladas asentadas en barro, cornisa de barro con matas de ichu) o "quenoa" (la madera del tronco por dentro,
 ## con vetas que bajan, musgo y hojas arriba) y "cueva" (la roca de LA más oscura, sin hojas: la cresta es de piedra
-## y cada tanto cuelga una estalactita). La chullpa y la queñoa van sin el bulto de las rocas.
+## y cada tanto cuelga una estalactita) y "templo" (sillares de piedra lavanda bien encajados con cornisa clara, sin
+## hojas). La chullpa, la queñoa y el templo van sin el bulto de las rocas.
 WALL_STYLE = None
 PIRCA_ROW = 0.42
 PIRCA_JOINT = 0.04
 _pirca_rows = {}
+## Piedra, junta y cornisa de las paredes de hiladas (chullpa: pirca en barro; templo: sillares lavanda).
+COURSES = {"chullpa": ("acantilado", "tierra", "tierra", True), "templo": ("piedra_templo", "gris_5", "piedra_templo", False)}
 
 
 def pirca(a, z):
@@ -137,7 +140,7 @@ def relief(p):
 		if window <= 0.0 or out.length < 0.5:
 			continue
 		a = x if abs(v.normal.y) > abs(v.normal.x) else y
-		if WALL_STYLE == "chullpa":
+		if WALL_STYLE in COURSES:
 			bump = min(1.0, pirca(a, z)[2] / 0.1) * 0.08 + noise.noise(Vector((a, z, 5.0)) * 4.0) * 0.015
 		elif WALL_STYLE == "quenoa":
 			bump = grain(a, z) * 0.025 + noise.noise(Vector((a * 1.5, z * 0.2, 9.0))) * 0.07
@@ -219,7 +222,7 @@ def axes(sides, corners, cut):
 					(xs if side in "ns" else ys).add(b)
 	for side, d in pillar_edges(sides, corners, cut):
 		(ys if side in "ns" else xs).add(coord(side, d))
-	if WALL_STYLE == "chullpa":
+	if WALL_STYLE in COURSES:
 		for side in sides:
 			for k in range(1, math.ceil(HEIGHT / PIRCA_ROW)):
 				for dz in (-PIRCA_JOINT / 2, PIRCA_JOINT / 2, PIRCA_ROW / 2):
@@ -290,18 +293,19 @@ def piece(kind, code, cut=None):
 			crest.append(f)
 		elif c.z > top:
 			shade(p, f, "piedra", course_tone(c))
-		elif WALL_STYLE == "chullpa":
+		elif WALL_STYLE in COURSES:
+			stone, joint, cornice, dusty = COURSES[WALL_STYLE]
 			a = c.x if abs(f.normal.y) > abs(f.normal.x) else c.y
 			row, k, edge = pirca(a, c.z)
 			if c.z > top - 0.22:
-				shade(p, f, "tierra", 0.42)
+				shade(p, f, cornice, 0.42 if dusty else 0.7)
 			elif edge < PIRCA_JOINT * 0.75:
-				shade(p, f, "tierra", 0.16)
-			elif c.z < 0.3 * (0.5 + 0.5 * noise.noise(Vector((c.x + c.y, 0.0, 2.0)) * 2.0)):
+				shade(p, f, joint, 0.16 if dusty else 0.3)
+			elif dusty and c.z < 0.3 * (0.5 + 0.5 * noise.noise(Vector((c.x + c.y, 0.0, 2.0)) * 2.0)):
 				p.paint([f], "tierra", "LOW", vary=0.1)
 			else:
 				tone = 0.32 + 0.33 * random.Random(row * 104729 + k * 7919 + round(a * 0.5)).random()
-				shade(p, f, STONE, tone + 0.15 * min(1.0, edge / 0.12) - 0.08)
+				shade(p, f, stone, tone + 0.15 * min(1.0, edge / 0.12) - 0.08)
 		elif WALL_STYLE == "cueva":
 			if c.z < MOSS_FOOT * (0.5 + noise.noise(Vector((c.x + c.y, 0.0, 6.0)) * 2.0)):
 				p.paint([f], "tierra", "LOW", vary=0.1)
@@ -321,7 +325,7 @@ def piece(kind, code, cut=None):
 				shade(p, f, MOSS, min(0.8, 0.3 + 0.5 * (c.z - top + MOSS_TOP) / MOSS_TOP))
 		else:
 			shade(p, f, STONE, rock_tone(c, sides, kind))
-	crest_swatch = {"chullpa": ("tierra", "MID"), "cueva": ("gris_4", "MID")}.get(WALL_STYLE, (LEAF, "DARK"))
+	crest_swatch = {"chullpa": ("tierra", "MID"), "cueva": ("gris_4", "MID"), "templo": ("piedra_templo", "LIGHT")}.get(WALL_STYLE, (LEAF, "DARK"))
 	p.paint(crest, crest_swatch[0], crest_swatch[1], vary=0.08)
 	hedge(p, xs, ys, h)
 	if cut:
@@ -421,6 +425,9 @@ def hedge(p, xs, ys, h):
 		p.paint(leaves, "tierra", vary=0.12)
 		ichu(p, spots)
 		return
+	if WALL_STYLE == "templo":
+		p.paint(leaves, "piedra_templo", "LIGHT", vary=0.05)
+		return
 	if WALL_STYLE == "cueva":
 		p.paint(leaves, "gris_4", vary=0.15)
 		stalactites(p, spots, h)
@@ -483,7 +490,9 @@ def shade(p, f, swatch, t):
 
 
 shapes = json.load(open(os.path.join(ROOT, "tools", "paredes_la.json")))
-for WALL_STYLE, BULGE, STONE in ((None, 0.7, "acantilado"), ("chullpa", 0.0, "acantilado"), ("quenoa", 0.0, "madera"), ("cueva", 0.7, "acantilado")):
+for WALL_STYLE, BULGE, STONE in ((None, 0.7, "acantilado"), ("chullpa", 0.0, "acantilado"), ("quenoa", 0.0, "madera"), ("cueva", 0.7, "acantilado"), ("templo", 0.0, "piedra_templo")):
+	PIRCA_ROW = 0.48 if WALL_STYLE == "templo" else 0.42
+	_pirca_rows.clear()
 	for code in shapes["pared"]:
 		piece("pared", code)
 	for code in shapes.get("muro", []):
@@ -501,7 +510,9 @@ DOOR_PLANKS = 4
 ## Estilo de las hojas que se están armando: None (madera con flejes de hierro), "chullpa" (losas de piedra con un
 ## escalonado en relieve y herrajes de cobre) o "quenoa" (tablones atados con soga y musgo arriba).
 DOOR_STYLE = None
-METAL = {None: "hierro", "chullpa": "cobre_verde", "quenoa": "paja"}
+METAL = {None: "hierro", "chullpa": "cobre_verde", "quenoa": "paja", "templo": "dorado"}
+## Piedra de las hojas de losa (chullpa y templo).
+SLAB = {"chullpa": "acantilado", "templo": "piedra_templo"}
 
 
 def stone_leaf(p, dark):
@@ -512,16 +523,16 @@ def stone_leaf(p, dark):
 		slabs += p.rounded_box(-DOOR_WIDTH + 0.01, DOOR_WIDTH - 0.01, -DOOR_THICK, DOOR_THICK, z + 0.015, z + h - 0.015, radius=0.06, segments=2)
 		z += h
 	p.jitter(slabs, 0.01)
-	p.paint(slabs, "acantilado", "LOW" if dark else "MID", vary=0.05)
+	p.paint(slabs, SLAB[DOOR_STYLE], "LOW" if dark else "MID", vary=0.05)
 	steps = []
 	for k, (w, h) in enumerate(((0.9, 0.12), (0.62, 0.12), (0.34, 0.12))):
 		z0 = 2.32 + k * 0.12
 		steps += p.box(-w / 2, w / 2, -DOOR_THICK - 0.035, -DOOR_THICK + 0.01, z0, z0 + h - 0.015)
-	p.paint(steps, "acantilado", "LIGHT", vary=0.03)
+	p.paint(steps, SLAB[DOOR_STYLE] if DOOR_STYLE == "chullpa" else "dorado", "LIGHT", vary=0.03)
 
 
 def door_leaf(p, wood, bands=(0.55, 2.45)):
-	if DOOR_STYLE == "chullpa":
+	if DOOR_STYLE in SLAB:
 		stone_leaf(p, wood == "madera_oscura")
 		return
 	planks = []
@@ -592,16 +603,16 @@ def door_shutter(p):
 	for k in range(n):
 		z0 = HEIGHT * k / n
 		slats += p.rounded_box(-DOOR_WIDTH, DOOR_WIDTH, -DOOR_THICK - 0.03 * (k % 2), DOOR_THICK, z0 + 0.015, z0 + HEIGHT / n - 0.015, radius=0.03, segments=1)
-	p.paint(slats, "acantilado" if DOOR_STYLE == "chullpa" else "madera_oscura", z_range=(-1.0, HEIGHT + 1.0), vary=0.04)
+	p.paint(slats, SLAB.get(DOOR_STYLE, "madera_oscura"), z_range=(-1.0, HEIGHT + 1.0), vary=0.04)
 	posts = []
 	for x in (-DOOR_WIDTH + 0.1, DOOR_WIDTH - 0.1):
 		posts += p.rounded_box(x - 0.06, x + 0.06, -DOOR_THICK - 0.08, -DOOR_THICK, 0.0, HEIGHT, radius=0.02, segments=1)
 	p.paint(posts, METAL[DOOR_STYLE], "DARK", vary=0.03)
 
 
-for DOOR_STYLE in (None, "chullpa", "quenoa"):
+for DOOR_STYLE in (None, "chullpa", "quenoa", "templo"):
 	door("madera", 61, lambda p: door_leaf(p, "madera"))
-	door("llave", 62, lambda p: (door_leaf(p, "madera_oscura"), lock_plate(p, 1.3, 0.5, "hierro" if DOOR_STYLE != "chullpa" else "cobre_verde")))
+	door("llave", 62, lambda p: (door_leaf(p, "madera_oscura"), lock_plate(p, 1.3, 0.5, METAL[DOOR_STYLE] if DOOR_STYLE in SLAB else "hierro")))
 	door("jefe", 63, door_boss)
 	door("interruptor", 64, door_switch)
 	door("persiana", 65, door_shutter)
