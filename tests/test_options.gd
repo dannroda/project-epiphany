@@ -95,3 +95,27 @@ func test_options_from_title_and_pause() -> void:
 	while stack.is_open():
 		stack.pop()
 	_restore(settings)
+
+
+func test_a_slider_saves_when_released_not_on_every_step() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var settings := _settings()
+	var panel: Control = load("res://src/ui/menus/options_panel.tscn").instantiate()
+	tree.root.add_child(panel)
+	var slider := panel.find_child("music", true, false) as Slider
+	var stored := func() -> Variant:
+		var cfg := ConfigFile.new()
+		cfg.load(settings_path)
+		return cfg.get_value("options", "music", null)
+	var before: Variant = stored.call()
+	for value in [20, 30, 40]:
+		slider.value = value
+	assert_eq(settings.get_value(&"music"), 40, "mientras se arrastra se aplica")
+	assert_true(absf(AudioServer.get_bus_volume_db(AudioServer.get_bus_index(&"Music")) - linear_to_db(0.4)) < 0.01, "y suena con ese volumen")
+	assert_eq(stored.call(), before, "pero no escribe a disco en cada paso")
+	slider.drag_ended.emit(true)
+	assert_eq(stored.call(), 40, "al soltar, se guarda")
+	slider.value = 50
+	panel.free()
+	assert_eq(stored.call(), 50, "al cerrar la pantalla también")
+	_restore(settings)

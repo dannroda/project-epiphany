@@ -1,7 +1,7 @@
 class_name OptionsPanel
 extends HBoxContainer
 ## Las opciones del mockup Options en dos columnas (Controles e Idioma | Audio y Video). Cada control se llama como su
-## clave en Settings y guarda al cambiar.
+## clave en Settings y guarda al cambiar (un slider, al soltarlo o al dejarlo: mientras se mueve solo aplica).
 
 const TOGGLES: Array[StringName] = [&"mouse_aim", &"flick", &"vibration", &"fullscreen", &"shake", &"minimap"]
 const SLIDERS: Array[StringName] = [&"stick_sensitivity", &"music", &"sfx", &"ambience"]
@@ -17,7 +17,9 @@ func _ready() -> void:
 	for key in SLIDERS:
 		var slider := get_node("%" + key) as HSlider
 		slider.value = Settings.get_value(key)
-		slider.value_changed.connect(func(value: float) -> void: Settings.set_value(key, int(value)))
+		slider.value_changed.connect(func(value: float) -> void: Settings.set_value(key, int(value), false))
+		slider.drag_ended.connect(func(_changed: bool) -> void: Settings.save_settings())
+		slider.focus_exited.connect(Settings.save_settings)
 	var lock_toggle: bool = Settings.get_value(&"lock_toggle")
 	for radio: CheckBox in [%lock_mantener, %lock_alternar]:
 		var value := radio == %lock_alternar
@@ -40,3 +42,7 @@ func _ready() -> void:
 
 func focus_default() -> void:
 	first.grab_focus()
+
+
+func _exit_tree() -> void:
+	Settings.save_settings()

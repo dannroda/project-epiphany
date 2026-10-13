@@ -41,10 +41,12 @@ func get_value(key: StringName) -> Variant:
 	return values.get(key, DEFAULTS.get(key))
 
 
-func set_value(key: StringName, value: Variant) -> void:
+## `persist` false: aplica sin escribir a disco (un slider mientras se arrastra); después se llama a `save_settings`.
+func set_value(key: StringName, value: Variant, persist := true) -> void:
 	values[key] = value
-	_apply()
-	save_settings()
+	_apply(key)
+	if persist:
+		save_settings()
 	changed.emit(key)
 
 
@@ -82,21 +84,33 @@ func stick_factor() -> float:
 	return lerpf(0.5, 1.5, float(get_value(&"stick_sensitivity")) / 100.0)
 
 
-func _apply() -> void:
-	for bus in BUSES:
-		if AudioServer.get_bus_index(bus) == -1:
-			AudioServer.add_bus()
-			AudioServer.set_bus_name(AudioServer.bus_count - 1, bus)
-			AudioServer.set_bus_send(AudioServer.bus_count - 1, &"Master")
-	_volume(&"Music", get_value(&"music"))
-	_volume(&"SFX", get_value(&"sfx"))
-	_volume(&"UI", get_value(&"sfx"))
-	_volume(&"Ambience", get_value(&"ambience"))
-	Feel.settings.shake_enabled = get_value(&"shake")
-	get_tree().root.content_scale_factor = float(get_value(&"ui_scale")) / 100.0
-	TranslationServer.set_locale(language())
-	if DisplayServer.get_name() != "headless":
+## Solo lo que depende de `key`; sin clave, todo (al arrancar o al cargar).
+func _apply(key := &"") -> void:
+	var all := key == &""
+	if all:
+		for bus in BUSES:
+			if AudioServer.get_bus_index(bus) == -1:
+				AudioServer.add_bus()
+				AudioServer.set_bus_name(AudioServer.bus_count - 1, bus)
+				AudioServer.set_bus_send(AudioServer.bus_count - 1, &"Master")
+	if all or key == &"music":
+		_volume(&"Music", get_value(&"music"))
+	if all or key == &"sfx":
+		_volume(&"SFX", get_value(&"sfx"))
+		_volume(&"UI", get_value(&"sfx"))
+	if all or key == &"ambience":
+		_volume(&"Ambience", get_value(&"ambience"))
+	if all or key == &"shake":
+		Feel.settings.shake_enabled = get_value(&"shake")
+	if all or key == &"ui_scale":
+		get_tree().root.content_scale_factor = float(get_value(&"ui_scale")) / 100.0
+	if all or key == &"language":
+		TranslationServer.set_locale(language())
+	if DisplayServer.get_name() == "headless":
+		return
+	if all or key == &"max_fps":
 		Engine.max_fps = get_value(&"max_fps")
+	if all or key == &"fullscreen":
 		var mode := DisplayServer.WINDOW_MODE_FULLSCREEN if get_value(&"fullscreen") else DisplayServer.WINDOW_MODE_WINDOWED
 		if DisplayServer.window_get_mode() != mode:
 			DisplayServer.window_set_mode(mode)

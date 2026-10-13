@@ -2576,7 +2576,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (60/114)
+## M11 — Pulido: contenido y feel  (61/114)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3718,18 +3718,18 @@ Varias búsquedas por frame o trabajo en nodos ociosos, baratos uno por uno pero
 
 **Archivos:** `src/entities/boss/boss.gd`, `src/entities/boss/boss_hand.gd`, `src/world/doom_ambience.gd`, `src/world/room.gd`, `src/world/floor_switch.gd`, `ai/tasks/bt_shoot_arrow.gd`, `src/audio/music.gd`, `src/tools/top_down_camera.gd`, `src/state/players.gd`
 
-### 11.73 Opciones: no guardar a disco en cada tick del slider · Pendiente
+### 11.73 Opciones: no guardar a disco en cada tick del slider · Hecho
 
-**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `rendimiento`, `ui`
+**Terminada:** 2026-10-13 · **Prioridad:** baja · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `rendimiento`, `ui`
 
 Cada `value_changed` llama a `Settings.set_value`, que reaplica todo (buses, modo de ventana, escala, idioma) y escribe settings.cfg: arrastrar un slider de volumen escribe decenas de veces por segundo.
 
-- [ ] Aplicar solo la clave cambiada
+- [x] Aplicar solo la clave cambiada
   settings.gd: `_apply` por clave.
-- [ ] Guardar al soltar o al salir
+- [x] Guardar al soltar o al salir
   options_panel.gd: guardar en `drag_ended` o al cerrar la pantalla.
 
-**Prueba:** Arrastrar un slider escribe settings.cfg una sola vez.
+**Prueba:** Arrastrar un slider escribe settings.cfg una sola vez. Cubierto en test_options › test_a_slider_saves_when_released_not_on_every_step.
 
 **Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
 
