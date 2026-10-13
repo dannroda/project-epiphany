@@ -2725,7 +2725,7 @@ heart_mesh = ExtResource("53_j23tx")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 25)
 script = ExtResource("62_281cb")
 target_scene = "res://levels/overworld.tscn"
-target_spawn = &"risco"
+target_spawn = &"cumbre"
 required_flag = &"cu_boss_defeated"
 
 [node name="Torch_Cima_0" parent="PisoCima" unique_id=510006866 instance=ExtResource("42_ef7sn")]
@@ -2793,7 +2793,7 @@ script = ExtResource("66_2bu1c")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.2, 27.4)
 script = ExtResource("62_281cb")
 target_scene = "res://levels/overworld.tscn"
-target_spawn = &"risco"
+target_spawn = &"cumbre"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPortal" unique_id=2047061363]
 shape = SubResource("BoxShape3D_xbu6j")
