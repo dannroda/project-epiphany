@@ -46,7 +46,8 @@
       "text": "Jefe del Guardián que se vence saltando"
     },
     {
-      "done": false,
+      "detail": "Hecho el 2026-10-13 (e8f78362). Entrada: dos bloques en fila y una placa entre columnas abren la reja de la escalera al piso alto. Cripta (B-SE): dos oleadas al caer; vencidas aparece el cofre del mapa (Chest.switches). Cripta oscura (B-SO): tres columnas de pinchos en ola hacia la llave. Piso alto: las placas del Rellano. Esqueletos en Entrada y Osario, arqueros en 2NO y el Mausoleo. El Osario no lleva bloques: solo se llega cayendo y un bloque trabado encerraría al player. Falta: que Daniel lo recorra.",
+      "done": true,
       "text": "Más enemigos y un acertijo por piso"
     },
     {
@@ -70,5 +71,5 @@
   ],
   "test": "",
   "title": "Mazmorra nueva de varios pisos",
-  "updated_at": "2026-10-13T06:44:42.428Z"
+  "updated_at": "2026-10-13T07:12:21.840Z"
 }
