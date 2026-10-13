@@ -344,6 +344,8 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 | Antesala | Se abre con los cuatro ojos. Vasijas con corazones, tablilla, puerta del jefe |
 | La Mano | Sub-jefe: uno de los guanteletes del jefe, suelto (`te_hand_defeated`, `HandGuard`). Usa los tres ataques de las manos del jefe (golpe al piso, agarre, barrido); rebota todo mientras está lista y tras el golpe al piso queda aturdida, y ahí entra la espada. Sala sin obstáculos. Vencida, abre la combinada |
 | Combinada | Todos los ítems en secuencia (salto, flecha, gancho, reflejo, bomba) hasta el cofre de la **llave del jefe** |
+
+**Munición (11.109 S7):** cada sala que gasta munición tiene vasijas que siempre la dan (`data/drops/pot_bombs.tres`, `pot_arrows.tres`; vuelven al salir de la sala): dos de bombas en el Arco, dos de flechas en el Ojo del arco, y una de cada en la combinada.
 | Jefe | El Ojo con manos (§9) |
 
 **Templo viejo (nivel de prueba):**

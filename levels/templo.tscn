@@ -32,6 +32,8 @@
 [ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="30_m6v74"]
 [ext_resource type="Script" path="res://src/world/breakable.gd" id="31_befet"]
 [ext_resource type="Resource" path="res://data/drops/pot.tres" id="32_nu3dp"]
+[ext_resource type="Resource" path="res://data/drops/pot_bombs.tres" id="93_bombs"]
+[ext_resource type="Resource" path="res://data/drops/pot_arrows.tres" id="94_arrows"]
 [ext_resource type="PackedScene" path="res://src/entities/armored_skeleton.tscn" id="33_1krf6"]
 [ext_resource type="Resource" path="res://data/entities/armored_skeleton.tres" id="34_cjedn"]
 [ext_resource type="PackedScene" path="res://src/entities/turret/turret.tscn" id="35_ycq0f"]
@@ -449,6 +451,42 @@ drop_height = 0.1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, 33)
 script = ExtResource("31_befet")
 drops = ExtResource("32_nu3dp")
+drop_height = 0.1
+
+[node name="ArcoBombPot1" type="Node3D" parent="Planta" unique_id=241758265 instance=ExtResource("30_m6v74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 0, 46)
+script = ExtResource("31_befet")
+drops = ExtResource("93_bombs")
+drop_height = 0.1
+
+[node name="ArcoBombPot2" type="Node3D" parent="Planta" unique_id=1295003893 instance=ExtResource("30_m6v74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52, 0, 46)
+script = ExtResource("31_befet")
+drops = ExtResource("93_bombs")
+drop_height = 0.1
+
+[node name="ArcoOjoArrowPot1" type="Node3D" parent="Planta" unique_id=1096222405 instance=ExtResource("30_m6v74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 0, 46)
+script = ExtResource("31_befet")
+drops = ExtResource("94_arrows")
+drop_height = 0.1
+
+[node name="ArcoOjoArrowPot2" type="Node3D" parent="Planta" unique_id=1297601112 instance=ExtResource("30_m6v74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68, 0, 46)
+script = ExtResource("31_befet")
+drops = ExtResource("94_arrows")
+drop_height = 0.1
+
+[node name="CombinedBombPot" type="Node3D" parent="Planta" unique_id=417322182 instance=ExtResource("30_m6v74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 22)
+script = ExtResource("31_befet")
+drops = ExtResource("93_bombs")
+drop_height = 0.1
+
+[node name="CombinedArrowPot" type="Node3D" parent="Planta" unique_id=132727602 instance=ExtResource("30_m6v74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 22)
+script = ExtResource("31_befet")
+drops = ExtResource("94_arrows")
 drop_height = 0.1
 
 [node name="HubLockedW" type="StaticBody3D" parent="Planta" unique_id=542877911 instance=ExtResource("9_lb8sh")]

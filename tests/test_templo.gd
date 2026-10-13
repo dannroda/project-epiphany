@@ -223,3 +223,19 @@ func test_the_hand_fights_and_opens_the_combined_room() -> void:
 	assert_true(state.get_flag(&"te_hand_defeated") == true)
 	assert_true(await _until(func() -> bool: return (_node("CombinedDoor") as Door).is_open, 4.0), "se abre la sala combinada")
 	state.reset()
+
+
+func test_every_room_that_spends_ammo_has_pots_that_always_give_it() -> void:
+	await _start()
+	state.give(Items.get_item(&"bomb_bag"))
+	state.give(Items.get_item(&"bow"))
+	var rng := RandomNumberGenerator.new()
+	for spot: Array in [["ArcoBombPot1", &"Arco", &"bomb"], ["ArcoBombPot2", &"Arco", &"bomb"],
+			["ArcoOjoArrowPot1", &"ArcoOjo", &"arrow"], ["ArcoOjoArrowPot2", &"ArcoOjo", &"arrow"],
+			["CombinedBombPot", &"Combinada", &"bomb"], ["CombinedArrowPot", &"Combinada", &"arrow"]]:
+		var pot := level.get_node("Planta/" + spot[0]) as Node3D
+		assert_true(_room(spot[1]).contains(pot.global_position), "%s está en %s" % [spot[0], spot[1]])
+		for i in 20:
+			var entry: DropEntry = pot.drops.roll(rng)
+			assert_true(entry != null and entry.item != null and entry.item.id == spot[2], "%s siempre da %s" % [spot[0], spot[2]])
+	state.reset()
