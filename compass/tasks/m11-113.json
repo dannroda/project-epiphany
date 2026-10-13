@@ -11,7 +11,8 @@
       "text": "Dónde se consigue el escudo espejo y qué lo gatea"
     },
     {
-      "done": false,
+      "detail": "Diseño hecho el 2026-10-13 (Daniel: si): hub con cuatro alas, una por ítem (pluma, arco y bombas, gancho, escudo espejo); cada ala enciende un ojo del sello del hub, y los cuatro abren la antesala. Sub-jefe la Mano (un guantelete del jefe) guarda la sala combinada con la llave del jefe; el templo no da ítem. Salas de 14 × 12 m (cámara fija). Escena nueva levels/templo.tscn con flags te_; grafo de diseño data/dungeons/templo_graph.tres. GDD §8. Se construye en los pasos siguientes.",
+      "done": true,
       "text": "Ampliar el templo: salas que usen todos los ítems"
     },
     {
@@ -47,6 +48,22 @@
       "detail": "Hecho el 2026-10-13 (4ed4b97d, Daniel: si). Raíces: un ojo con tiempo (6 s) abre la reja RaicesGate, rodeada de huecos frente a la puerta a la Sala de los ojos: flecha, salto con la pluma y pasar antes de que se cierre; una placa del otro lado (qv_eyes_step) la deja abierta para volver. Sala de los ojos: el nicho de la llave del jefe queda tras una fila de huecos (bomba, arco y pluma). Grafo y test_quenoa al día. Falta: que Daniel lo recorra y ajuste el tiempo del ojo.",
       "done": true,
       "text": "D2: segunda mitad de la Queñoa con la pluma"
+    },
+    {
+      "done": false,
+      "text": "Templo: escena y salas (sin el ala del gancho)"
+    },
+    {
+      "done": false,
+      "text": "Templo: la Mano, sub-jefe"
+    },
+    {
+      "done": false,
+      "text": "Templo: ala del gancho (con 11.30)"
+    },
+    {
+      "done": false,
+      "text": "Templo: el portal del overworld al templo nuevo"
     }
   ],
   "code": "11.113",
@@ -64,5 +81,5 @@
   ],
   "test": "",
   "title": "El templo del ojo pasa a ser la última mazmorra",
-  "updated_at": "2026-10-13T07:00:48.491Z"
+  "updated_at": "2026-10-13T07:18:54.591Z"
 }

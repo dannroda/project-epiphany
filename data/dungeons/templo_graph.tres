@@ -1,0 +1,159 @@
+[gd_resource type="Resource" script_class="DungeonGraph" format=3]
+
+[ext_resource type="Script" path="res://src/world/dungeon_graph/dungeon_graph.gd" id="1_graph"]
+[ext_resource type="Script" path="res://src/world/dungeon_graph/dungeon_link.gd" id="2_link"]
+[ext_resource type="Script" path="res://src/world/dungeon_graph/dungeon_spot.gd" id="3_spot"]
+
+[sub_resource type="Resource" id="Link_1"]
+script = ExtResource("2_link")
+from = &"Vestibulo"
+to = &"Hub"
+needs = Array[StringName]([&"te_vestibule_switch"])
+
+[sub_resource type="Resource" id="Link_2"]
+script = ExtResource("2_link")
+from = &"Vestibulo"
+to = &"Pluma"
+
+[sub_resource type="Resource" id="Link_3"]
+script = ExtResource("2_link")
+from = &"Vestibulo"
+to = &"Arco"
+
+[sub_resource type="Resource" id="Link_4"]
+script = ExtResource("2_link")
+from = &"Pluma"
+to = &"PlumaOjo"
+needs = Array[StringName]([&"feather"])
+
+[sub_resource type="Resource" id="Link_5"]
+script = ExtResource("2_link")
+from = &"Arco"
+to = &"ArcoOjo"
+needs = Array[StringName]([&"bomb_bag"])
+
+[sub_resource type="Resource" id="Link_6"]
+script = ExtResource("2_link")
+from = &"Hub"
+to = &"Gancho"
+locked = true
+
+[sub_resource type="Resource" id="Link_7"]
+script = ExtResource("2_link")
+from = &"Gancho"
+to = &"GanchoOjo"
+needs = Array[StringName]([&"hookshot"])
+
+[sub_resource type="Resource" id="Link_8"]
+script = ExtResource("2_link")
+from = &"Hub"
+to = &"Espejo"
+locked = true
+
+[sub_resource type="Resource" id="Link_9"]
+script = ExtResource("2_link")
+from = &"Espejo"
+to = &"EspejoOjo"
+needs = Array[StringName]([&"te_mirror_crystal"])
+
+[sub_resource type="Resource" id="Link_10"]
+script = ExtResource("2_link")
+from = &"Hub"
+to = &"Antesala"
+needs = Array[StringName]([&"te_eye_feather", &"te_eye_bow", &"te_eye_hook", &"te_eye_mirror"])
+
+[sub_resource type="Resource" id="Link_11"]
+script = ExtResource("2_link")
+from = &"Antesala"
+to = &"Mano"
+
+[sub_resource type="Resource" id="Link_12"]
+script = ExtResource("2_link")
+from = &"Antesala"
+to = &"Combinada"
+needs = Array[StringName]([&"te_hand_defeated"])
+
+[sub_resource type="Resource" id="Link_13"]
+script = ExtResource("2_link")
+from = &"Antesala"
+to = &"Jefe"
+needs = Array[StringName]([&"boss_key"])
+
+[sub_resource type="Resource" id="Spot_1"]
+script = ExtResource("3_spot")
+area = &"Vestibulo"
+gives = &"te_vestibule_switch"
+
+[sub_resource type="Resource" id="Spot_2"]
+script = ExtResource("3_spot")
+area = &"PlumaOjo"
+needs = Array[StringName]([&"feather"])
+key = true
+
+[sub_resource type="Resource" id="Spot_3"]
+script = ExtResource("3_spot")
+area = &"PlumaOjo"
+needs = Array[StringName]([&"feather"])
+gives = &"te_eye_feather"
+
+[sub_resource type="Resource" id="Spot_4"]
+script = ExtResource("3_spot")
+area = &"Arco"
+gives = &"te_map"
+
+[sub_resource type="Resource" id="Spot_5"]
+script = ExtResource("3_spot")
+area = &"ArcoOjo"
+needs = Array[StringName]([&"bow"])
+key = true
+
+[sub_resource type="Resource" id="Spot_6"]
+script = ExtResource("3_spot")
+area = &"ArcoOjo"
+needs = Array[StringName]([&"bow"])
+gives = &"te_eye_bow"
+
+[sub_resource type="Resource" id="Spot_7"]
+script = ExtResource("3_spot")
+area = &"GanchoOjo"
+needs = Array[StringName]([&"hookshot"])
+gives = &"te_eye_hook"
+
+[sub_resource type="Resource" id="Spot_8"]
+script = ExtResource("3_spot")
+area = &"Espejo"
+needs = Array[StringName]([&"mirror_shield"])
+gives = &"te_mirror_crystal"
+
+[sub_resource type="Resource" id="Spot_9"]
+script = ExtResource("3_spot")
+area = &"EspejoOjo"
+needs = Array[StringName]([&"mirror_shield"])
+gives = &"te_eye_mirror"
+
+[sub_resource type="Resource" id="Spot_10"]
+script = ExtResource("3_spot")
+area = &"Mano"
+gives = &"te_hand_defeated"
+
+[sub_resource type="Resource" id="Spot_11"]
+script = ExtResource("3_spot")
+area = &"Combinada"
+needs = Array[StringName]([&"feather", &"bow", &"hookshot", &"mirror_shield", &"bomb_bag"])
+gives = &"boss_key"
+
+[sub_resource type="Resource" id="Spot_12"]
+script = ExtResource("3_spot")
+area = &"Jefe"
+needs = Array[StringName]([&"boss_key", &"bow|mirror_shield"])
+gives = &"te_boss_defeated"
+
+[resource]
+script = ExtResource("1_graph")
+start = &"Vestibulo"
+goal = &"te_boss_defeated"
+item = &"boss_key"
+guard = &"te_hand_defeated"
+brings = Array[StringName]([&"bomb_bag", &"feather", &"bow", &"hookshot", &"mirror_shield"])
+links = Array[ExtResource("2_link")]([SubResource("Link_1"), SubResource("Link_2"), SubResource("Link_3"), SubResource("Link_4"), SubResource("Link_5"), SubResource("Link_6"), SubResource("Link_7"), SubResource("Link_8"), SubResource("Link_9"), SubResource("Link_10"), SubResource("Link_11"), SubResource("Link_12"), SubResource("Link_13")])
+spots = Array[ExtResource("3_spot")]([SubResource("Spot_1"), SubResource("Spot_2"), SubResource("Spot_3"), SubResource("Spot_4"), SubResource("Spot_5"), SubResource("Spot_6"), SubResource("Spot_7"), SubResource("Spot_8"), SubResource("Spot_9"), SubResource("Spot_10"), SubResource("Spot_11"), SubResource("Spot_12")])

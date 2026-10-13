@@ -300,6 +300,50 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 ## 8. Mazmorra — El Templo
 <!-- id: mazmorra -->
 
+**Rediseño (11.113, 2026-10-13, Daniel: si):** el templo es la última mazmorra y usa todos los ítems. No da ítem: el sub-jefe guarda la llave del jefe. Escena nueva `levels/templo.tscn`, flags `te_`; `levels/temple.tscn` (lo de abajo) queda como nivel de prueba hasta que el nuevo esté listo, y entonces el portal del overworld apunta al nuevo. Salas de 7 × 6 celdas (14 × 12 m), para que la cámara quede fija como en Link's Awakening. Grafo de diseño: `data/dungeons/templo_graph.tres` (pasa el test de alcanzabilidad y el molde, con `item` = llave del jefe y `guard` = la Mano). El ala del gancho se construye cuando exista el gancho (11.30, D3).
+
+```
+                      ┌──────────┐
+                      │ JEFE     │ el Ojo con manos (§9)
+                      └────▲─────┘
+                        [JEFE]
+           ┌──────────┐┌───┴──────┐┌──────────┐
+           │COMBINADA ├┤ ANTESALA ├┤ LA MANO  │
+           │LLAVE JEFE││          ││ sub-jefe │
+           └──────────┘└───▲──────┘└──────────┘
+                     [SELLO: 4 ojos]
+┌──────────┐┌──────────┐┌───┴──────┐┌──────────┐┌──────────┐
+│ OJO DEL  ├┤ GANCHO   ├┤   HUB    ├┤ ESPEJO   ├┤ OJO DEL  │
+│ GANCHO   ││ postes   │[L]4 ojos [L]orbes →   ││ ESPEJO   │
+│acorazado ││          ││esqueletos││ cristal  ││ haz      │
+└──────────┘└──────────┘└───▲──────┘└──────────┘└──────────┘
+┌──────────┐┌──────────┐┌───┴──────┐┌──────────┐┌──────────┐
+│ OJO DE   ├┤ PLUMA    ├┤VESTÍBULO ├┤ ARCO     ├┤ OJO DEL  │
+│ LA PLUMA ││ huecos y ││ bloque → ││ agrietada││ ARCO     │
+│llave,brúj││ pinchos  ││interrupt.││ mapa     ││ojos/abismo│
+└──────────┘└──────────┘└──────────┘└──────────┘└──────────┘
+                              ▲ entrada (sello de afuera: escudo espejo)
+```
+
+| Sala | Qué pasa |
+|---|---|
+| Vestíbulo | Bloque por grilla al interruptor que abre la puerta del hub (como hoy). Libre a las alas de la pluma y del arco |
+| Pluma | Filas de huecos de una baldosa con pinchos en ola: se saltan con la pluma siguiendo el ritmo |
+| Ojo de la pluma | Del otro lado de los huecos: **llave chica**, **brújula** y el ojo del ala (`te_eye_feather`) |
+| Arco | **Mapa**. Muro agrietado (bomba) al ojo del arco |
+| Ojo del arco | Ojos-interruptor sobre un abismo, solo con flechas: abren el nicho de la **llave chica** y encienden el ojo del ala (`te_eye_bow`) |
+| Hub | Esqueletos. Cuatro ojos tallados en el sello de la pared norte, uno por ala. Puertas con llave a las alas del gancho y del espejo |
+| Gancho | Postes sobre un abismo: se cruza con el gancho |
+| Ojo del gancho | Esqueleto acorazado: el gancho le saca la armadura (11.90). Vencido, enciende el ojo del ala (`te_eye_hook`) |
+| Espejo | Torretas que disparan orbes: el escudo espejo los devuelve al cristal (`te_mirror_crystal`, de la galería de hoy) |
+| Ojo del espejo | Un haz de luz que se refleja con el escudo espejo hasta el receptor del ojo del ala (`te_eye_mirror`) |
+| Antesala | Se abre con los cuatro ojos. Vasijas con corazones, tablilla, puerta del jefe |
+| La Mano | Sub-jefe: uno de los guanteletes del jefe, suelto (`te_hand_defeated`). Sala sin obstáculos. Vencido, abre la combinada |
+| Combinada | Todos los ítems en secuencia (salto, flecha, gancho, reflejo, bomba) hasta el cofre de la **llave del jefe** |
+| Jefe | El Ojo con manos (§9) |
+
+**Templo viejo (nivel de prueba):**
+
 9 salas + jefe. Hub central con puertas que se van abriendo.
 
 **Sin pluma (11.90, 2026-10-12):** la pluma pasó a D2. Se quitaron la sala de la pluma (era la 10, debajo de la agrietada: su puerta quedó tapiada), la fila de huecos de la entrada del puzzle y el escalón de la vasija de la antesala. Pendiente: el arco lo guarda un sub-jefe (11.31) en vez de solo oleadas.
