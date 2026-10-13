@@ -55,6 +55,27 @@ func test_shutter_closes_until_room_is_cleared() -> void:
 	setup[1].reset()
 
 
+func test_a_room_left_right_away_does_not_lock() -> void:
+	var setup: Array = await _setup()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[2]
+	var level: Node = setup[3]
+	var room_a: Room = level.get_node(^"RoomA")
+	var room_b: Room = level.get_node(^"RoomB")
+	var shutter: Door = level.get_node(^"ShutterAB")
+	(level.get_node(^"Skeleton") as Enemy).bt_player.active = false
+	var spot := room_a.bounds().get_center()
+	player.global_position = Vector3(spot.x, room_a.floor_y() + 0.1, spot.y)
+	room_b.mark_entered()
+	await tree.create_timer(room_b.lock_delay + 0.4).timeout
+	assert_eq(room_b.locked, false, "si el player ya se fue, la sala vacía no se cierra")
+	assert_eq(shutter.is_open, true)
+	room_b.mark_entered()
+	tree.reload_current_scene()
+	await tree.create_timer(room_b.lock_delay + 0.4).timeout
+	setup[1].reset()
+
+
 func test_clearing_the_room_shows_its_shutter_opening() -> void:
 	var setup: Array = await _setup()
 	var tree: SceneTree = setup[0]

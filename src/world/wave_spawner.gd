@@ -60,6 +60,8 @@ func _next_wave() -> void:
 			continue
 		if not _alive.is_empty():
 			await get_tree().process_frame
+			if not is_inside_tree():
+				return
 		var enemy := (spawn as WaveSpawn).enemy.instantiate() as Enemy
 		enemy.position = (get_parent() as Node3D).to_local((spawn as WaveSpawn).global_position)
 		get_parent().add_child(enemy)
@@ -73,8 +75,7 @@ func _on_defeated(_enemy: Enemy) -> void:
 	if _alive.any(func(enemy: Variant) -> bool: return is_instance_valid(enemy) and not enemy.is_dead):
 		return
 	if wave + 1 < waves().size():
-		await get_tree().create_timer(wave_delay).timeout
-		_next_wave()
+		create_tween().tween_callback(_next_wave).set_delay(wave_delay)
 	else:
 		_win(true)
 

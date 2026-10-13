@@ -24,6 +24,9 @@ const SLEEPERS := &"room_sleepers"
 @export_range(0.0, 1.0, 0.05) var doom := 0.0
 ## Opcional, local en XZ: dónde puede estar el FOCO de la cámara. Vacío = lo calcula la cámara para no ver fuera de la sala.
 @export var camera_limits: Rect2
+## Las persianas se cierran recién cuando terminó de entrar: algo más que el deslizamiento de la cámara
+## (TopDownCamera.transition_time).
+@export var lock_delay := 0.6
 
 var _outline: MeshInstance3D
 var _announced := false
@@ -81,7 +84,7 @@ func mark_entered() -> void:
 	if autosave_on_enter:
 		SaveManager.autosave.call_deferred()
 	if not enemies_inside().is_empty() and not shutters().is_empty():
-		_lock_after_entering.call_deferred()
+		create_tween().tween_callback(_lock_after_entering).set_delay(lock_delay)
 
 
 func enemies_inside() -> Array:
@@ -94,10 +97,9 @@ func shutters() -> Array:
 		return door.kind == Door.Kind.SHUTTER and door.room == self)
 
 
-## Se cierran recién cuando el player terminó de entrar (después del deslizamiento de la cámara).
+## Si ya se fueron todos (escalera, pozo, paso atrás) no cierra una sala vacía.
 func _lock_after_entering() -> void:
-	await get_tree().create_timer(0.6).timeout
-	if enemies_inside().is_empty():
+	if not has_player() or enemies_inside().is_empty():
 		return
 	locked = true
 	for door: Door in shutters():

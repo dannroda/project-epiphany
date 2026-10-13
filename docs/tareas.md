@@ -2575,7 +2575,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (54/114)
+## M11 — Pulido: contenido y feel  (55/114)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3658,18 +3658,18 @@ Se agregan, reparentan o liberan cuerpos dentro de señales de física (durante 
 
 **Archivos:** `src/entities/enemy.gd`, `player/player.gd`, `player/components/carrier.gd`, `src/world/thrown_object.gd`
 
-### 11.70 Sala que se cierra después de que los players se fueron · Pendiente
+### 11.70 Sala que se cierra después de que los players se fueron · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `mazmorra`
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `mazmorra`
 
 `room._lock_after_entering` espera 0.6 s y cierra las rejas sin comprobar que la cámara sigue en esa sala; wave_spawner hace lo mismo. Si los players salen enseguida (escalera, pozo, paso atrás) quedan rejas cerradas en una sala vacía, y tras un `reload_current_scene` las corrutinas siguen sobre instancias liberadas. Los 0.6 s dependen sin decirlo del `transition_time` (0.5) de la cámara.
 
-- [ ] Revalidar después del await
+- [x] Revalidar después del await
   room.gd ~l.91 y wave_spawner.gd ~l.62/76: `is_inside_tree()` y que la sala de la cámara siga siendo esta.
 
-**Prueba:** Entrar a una sala de oleadas y salir en menos de medio segundo: no se cierra; tras morir y reaparecer no hay errores en la salida.
+**Prueba:** test_doors › test_a_room_left_right_away_does_not_lock: entrar y salir enseguida no cierra la sala vacía, y recargar la escena en ese momento no deja corrutinas sobre la sala liberada (falla sin el arreglo).
 
-**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+**Notas:** Sesión de bugs (-fd). Room: el cierre va en un tween de la sala (muere con ella) tras lock_delay (export, 0,6 s: algo más que TopDownCamera.transition_time) y revalida con has_player() de 11.97 en vez de la cámara. WaveSpawner: la pausa entre oleadas también es un tween suyo (y ya no corre en pausa) y, entre enemigos, después de esperar un frame revisa que siga en el árbol.
 
 **Archivos:** `src/world/room.gd`, `src/world/wave_spawner.gd`
 
