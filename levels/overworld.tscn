@@ -73,6 +73,8 @@
 [ext_resource type="ArrayMesh" uid="uid://c7lvusadu8l35" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretLookoutWall.res" id="wall_SecretLookoutWall"]
 [ext_resource type="ArrayMesh" uid="uid://e178snsf1sk0" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretRavineWall.res" id="wall_SecretRavineWall"]
 [ext_resource type="ArrayMesh" uid="uid://xj64yut5ifba" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretSummitWall.res" id="wall_SecretSummitWall"]
+[ext_resource type="PackedScene" path="res://src/world/chullpa_entrada.tscn" id="ent_chullpa"]
+[ext_resource type="PackedScene" path="res://src/world/quenoa_entrada.tscn" id="ent_quenoa"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7se6l"]
 panorama = ExtResource("1_qyxw2")
@@ -211,16 +213,6 @@ size = Vector3(22, 2.4, 14)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jamb"]
 size = Vector3(0.45, 2.6, 2)
-
-[sub_resource type="StandardMaterial3D" id="Mat_chullpa_tower"]
-albedo_color = Color(0.56, 0.47, 0.38, 1)
-
-[sub_resource type="StandardMaterial3D" id="Mat_chullpa_doorway"]
-albedo_color = Color(0.03, 0.02, 0.02, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_chullpa_doorway"]
-material = SubResource("Mat_chullpa_doorway")
-size = Vector3(2.2, 2.6, 0.3)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_chullpa_door"]
 size = Vector3(2.4, 2.4, 1.4)
@@ -1419,17 +1411,8 @@ duration = 1.4
 start_position = Vector3(-8, 0.5, 0)
 end_position = Vector3(8, 0.5, 0)
 
-[node name="ChullpaTower" type="CSGCylinder3D" parent="." unique_id=1820417733]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -86, 7.1, -10.1)
-use_collision = true
-radius = 3.6
-height = 9.0
-sides = 10
-material = SubResource("Mat_chullpa_tower")
-
-[node name="ChullpaDoorway" type="MeshInstance3D" parent="ChullpaTower" unique_id=1820417734]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.2, 3.45)
-mesh = SubResource("BoxMesh_chullpa_doorway")
+[node name="ChullpaTower" parent="." unique_id=1820417733 instance=ExtResource("ent_chullpa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -86, 2.6, -10.1)
 
 [node name="ChullpaDoor" type="Area3D" parent="." unique_id=1820417735]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -86, 3.8, -6)
@@ -1446,17 +1429,8 @@ script = ExtResource("101_place")
 display_name = "PLACE_EYE_TEMPLE"
 kind = 0
 
-[node name="QuenoaTree" type="CSGCylinder3D" parent="." unique_id=959416529]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 7.1, 18.5)
-use_collision = true
-radius = 3.0
-height = 9.0
-sides = 9
-material = SubResource("Mat_chullpa_tower")
-
-[node name="QuenoaDoorway" type="MeshInstance3D" parent="QuenoaTree" unique_id=1474310705]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.2, 2.85)
-mesh = SubResource("BoxMesh_chullpa_doorway")
+[node name="QuenoaTree" parent="." unique_id=959416529 instance=ExtResource("ent_quenoa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 2.6, 18.5)
 
 [node name="QuenoaDoor" type="Area3D" parent="." unique_id=1484064993]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 3.8, 22.1)

@@ -850,5 +850,211 @@ def escalon_alto(p):
 
 piece("escalon_alto", 47, escalon_alto)
 
+
+# --- entradas de las mazmorras en el overworld ---
+
+## Chullpa grande: radio abajo y arriba, alto del cuerpo, hileras. La puerta (2.2 × 2.6) mira a -Y.
+ENTRADA_CHULLPA = (3.2, 3.9, 8.0, 11)
+ENTRADA_DOOR = (1.1, 0.9, 2.6)
+
+
+def _arc(p, radius, a0, a1, y, thick, steps=8, center_z=0.0):
+	"""Tronco curvo en el plano XZ (y fijo): tramos de cilindro sobre un arco."""
+	faces = []
+	pts = [Vector((radius * math.cos(a0 + (a1 - a0) * i / steps), y, center_z + radius * math.sin(a0 + (a1 - a0) * i / steps))) for i in range(steps + 1)]
+	for a, b in zip(pts, pts[1:]):
+		seg = p.cylinder(thick, 0.0, (b - a).length + thick * 0.6, sides=7)
+		p.transform(seg, Matrix.Translation(a) @ (b - a).to_track_quat("Z", "Y").to_matrix().to_4x4())
+		faces += seg
+	return faces
+
+
+def chullpa_entrada(p):
+	"""Entrada a la Chullpa: chullpa grande de piedra de campo asentada en barro que se ensancha hacia arriba, puerta
+	trapezoidal con jambas de piedra y dintel con la media chakana escalonada, nichos con cráneos bajo la cornisa y
+	cúpula baja. Origen en el centro de la base."""
+	bottom, top, body, courses = ENTRADA_CHULLPA
+	half0, half1, door_h = ENTRADA_DOOR
+
+	def radius(z):
+		return bottom + (top - bottom) * z / body
+
+	p.paint(p.lathe([(bottom - 0.1, 0.0), (top - 0.1, body)], sides=32), "tierra", "DARK")
+	h = body / courses
+	niches = [math.pi / 4 * i + math.pi / 8 for i in range(8)]
+	niche_z = (body - 2.0, body - 0.9)
+	stones = []
+	for k in range(courses):
+		z0, z1 = k * h, (k + 1) * h
+		r = radius((z0 + z1) / 2)
+		n = max(10, round(2 * math.pi * r / 0.95))
+		step = 2 * math.pi / n
+		phase = step * (0.5 if k % 2 else 0.0) + p.rng.uniform(-0.05, 0.05)
+		for i in range(n):
+			a = phase + i * step
+			along = abs(math.remainder(a, 2 * math.pi)) * r
+			if along < 1.75 + step * r / 2 and z0 < door_h + 0.65:
+				continue
+			if z1 > niche_z[0] and z0 < niche_z[1] and any(abs(math.remainder(a - b, 2 * math.pi)) * r < 0.55 + step * r / 2 for b in niches):
+				continue
+			w = 2 * r * math.sin(step / 2) - 0.06
+			out = p.rng.uniform(0.0, 0.06)
+			block = p.rounded_box(-w / 2, w / 2, -r - out, -r + 0.35, z0 + 0.04, z1 - 0.04, radius=0.1, segments=2)
+			p.jitter(block, 0.035)
+			p.transform(block, Matrix.Rotation(a, 4, "Z"))
+			stones += block
+	p.paint(stones, "acantilado", z_range=(0.0, body + 0.5), vary=0.12)
+	front = -radius(1.3)
+	door = p.box(-half0, half0, front - 0.45, front + 1.5, 0.0, door_h, taper=half0 - half1)
+	p.paint(door, "noche", "MID")
+	frame = []
+	for side in (-1, 1):
+		jamb = p.box(-0.32, 0.32, front - 0.6, front + 0.3, 0.0, door_h, taper=0.04)
+		p.jitter(jamb, 0.02)
+		lean = Matrix.Rotation(-side * math.atan2(half0 - half1, door_h), 4, "Y")
+		p.transform(jamb, Matrix.Translation((side * (half0 + 0.3), 0, 0)) @ lean)
+		frame += jamb
+	frame += p.rounded_box(-1.75, 1.75, front - 0.7, front + 0.4, door_h, door_h + 0.65, radius=0.08, segments=2)
+	frame += p.rounded_box(-1.6, 1.6, front - 1.05, front - 0.5, -0.05, 0.14, radius=0.05, segments=1)
+	p.paint(frame, "acantilado", "LIGHT", vary=0.05)
+	relief = []
+	for i in range(3):
+		w = 1.35 - i * 0.38
+		relief += p.rounded_box(-w, w, front - 0.78, front - 0.68, door_h + 0.1 + i * 0.15, door_h + 0.23 + i * 0.15, radius=0.02, segments=1)
+	p.paint(relief, "cobre_verde", "MID", vary=0.04)
+	skulls, holes = [], []
+	for b in niches:
+		r = radius(sum(niche_z) / 2)
+		hole = p.box(-0.42, 0.42, -r + 0.12, -r + 0.6, niche_z[0] + 0.05, niche_z[1] - 0.05, taper=0.08)
+		lintel = p.rounded_box(-0.6, 0.6, -r - 0.12, -r + 0.3, niche_z[1] - 0.06, niche_z[1] + 0.12, radius=0.04, segments=1)
+		skull = p.blob((0, -r - 0.02, niche_z[0] + 0.45), 0.3, squash=(0.95, 1.0, 0.95), subdiv=2, rough=0.05)
+		jaw = p.rounded_box(-0.16, 0.16, -r - 0.22, -r + 0.05, niche_z[0] + 0.1, niche_z[0] + 0.26, radius=0.05, segments=1)
+		eyes = [p.blob((s * 0.11, -r - 0.29, niche_z[0] + 0.48), 0.075, subdiv=1, rough=0.0) for s in (-1, 1)]
+		for faces in (hole, lintel, skull, jaw, *eyes):
+			p.transform(faces, Matrix.Rotation(b, 4, "Z"))
+		holes += hole + sum(eyes, [])
+		skulls += skull + jaw
+		stones_l = lintel
+		p.paint(stones_l, "piedra", "LIGHT", vary=0.04)
+	p.paint(holes, "noche", "MID")
+	p.paint(skulls, "hueso", "MID", vary=0.05)
+	cornice = p.lathe([(top - 0.1, body - 0.02), (top + 0.14, body), (top + 0.18, body + 0.3), (top - 0.04, body + 0.34)], sides=40)
+	p.paint(cornice, "tierra", "MID", vary=0.04)
+	dome = p.lathe([(top - 0.08, body + 0.3), (top - 0.25, body + 0.9), (2.2, body + 1.5), (1.2, body + 1.9), (0.0, body + 2.0)], sides=40)
+	p.paint(dome, "acantilado", "GRADIENT", z_range=(body, body + 2.0), vary=0.05)
+	tufts = []
+	for i in range(14):
+		a = p.rng.uniform(0, 2 * math.pi)
+		if abs(math.remainder(a + math.pi / 2, 2 * math.pi)) < 0.75:
+			continue
+		r = bottom + 0.1
+		tufts += p.blob((r * math.cos(a), r * math.sin(a), 0.05), p.rng.uniform(0.2, 0.35), squash=(1.3, 1.3, 0.6), subdiv=1, rough=0.25)
+	for i in range(10):
+		a = p.rng.uniform(0, 2 * math.pi)
+		z = p.rng.uniform(body - 0.2, body + 0.4)
+		tufts += p.blob((top * math.cos(a), top * math.sin(a), z), p.rng.uniform(0.18, 0.3), squash=(1.3, 1.3, 0.5), subdiv=1, rough=0.25)
+	p.paint(tufts, "musgo", "MID", vary=0.08)
+
+
+## Queñoa gigante: tronco retorcido de corteza que se pela, raíces, cuatro ramas y la copa. Puerta en arco a -Y.
+QUENOA_DOOR = (1.1, 2.6)
+
+
+def quenoa_entrada(p):
+	"""Entrada a la Queñoa: un queñoa enorme de tronco retorcido, corteza rojiza que se pela en láminas, raíces que
+	abrazan la base, cuatro ramas gruesas y copa de hojitas gris verdosas; en el frente, una puerta en arco con marco
+	de troncos atados con soga y musgo colgando, como las puertas de adentro. Origen en el centro de la base."""
+	half, door_h = QUENOA_DOOR
+	front_angle = -math.pi / 2
+	trunk = p.lathe([(3.5, -0.2), (3.0, 0.7), (2.8, 2.2), (2.6, 4.5), (2.45, 6.5), (2.2, 8.0), (1.4, 8.8), (0.0, 9.0)], sides=28)
+	off = Vector((3.1, 7.7, 1.3))
+	for v in {v for f in trunk for v in f.verts}:
+		flat = Vector((v.co.x, v.co.y, 0.0))
+		if flat.length < 1e-3:
+			continue
+		a = math.atan2(v.co.y, v.co.x)
+		calm = min(1.0, abs(math.remainder(a - front_angle, 2 * math.pi)) / 0.8) if v.co.z < door_h + 0.8 else 1.0
+		twist = v.co.z * 0.12
+		n = noise.noise(Vector((math.cos(a + twist) * 1.6, math.sin(a + twist) * 1.6, v.co.z * 0.3)) + off)
+		k = 1.0 + calm * (0.12 * n + 0.07 * math.sin(a * 5 + v.co.z * 0.5))
+		v.co.x *= k
+		v.co.y *= k
+	p.paint(trunk, "roca_naranja", "DARK", vary=0.06)
+	limbs = []
+	ends = []
+	for i in range(4):
+		a = front_angle + math.pi / 4 + i * math.pi / 2 + p.rng.uniform(-0.2, 0.2)
+		start = Vector((1.0 * math.cos(a), 1.0 * math.sin(a), 7.6))
+		end = Vector((3.8 * math.cos(a), 3.8 * math.sin(a), 11.2 + p.rng.uniform(-0.5, 0.5)))
+		limb = p.cylinder(1.0, 0.0, (end - start).length, sides=9, radius_top=0.45)
+		p.jitter(limb, 0.06)
+		p.transform(limb, Matrix.Translation(start) @ (end - start).to_track_quat("Z", "Y").to_matrix().to_4x4())
+		limbs += limb
+		ends.append(end)
+	p.paint(limbs, "roca_naranja", "DARK", vary=0.06)
+	roots = []
+	for i in range(7):
+		a = front_angle + 0.95 + i * (2 * math.pi - 1.9) / 6
+		start = Vector((2.4 * math.cos(a), 2.4 * math.sin(a), 1.4))
+		end = Vector((4.6 * math.cos(a), 4.6 * math.sin(a), -0.3))
+		root = p.cylinder(0.75, 0.0, (end - start).length, sides=8, radius_top=0.2)
+		p.jitter(root, 0.05)
+		p.transform(root, Matrix.Translation(start) @ (end - start).to_track_quat("Z", "Y").to_matrix().to_4x4())
+		roots += root
+	p.paint(roots, "madera_oscura", "MID", vary=0.06)
+	from mathutils.bvhtree import BVHTree
+	tree = BVHTree.FromBMesh(p.bm)
+	flakes = []
+	for i in range(320):
+		a = p.rng.uniform(0, 2 * math.pi)
+		z = p.rng.uniform(0.3, 8.0)
+		if abs(math.remainder(a - front_angle, 2 * math.pi)) < 0.55 and z < door_h + 0.9:
+			continue
+		out = Vector((math.cos(a), math.sin(a), 0.0))
+		hit, normal, _, _ = tree.ray_cast(Vector((0, 0, z)) + out * 6.0, -out, 7.0)
+		if hit is None:
+			continue
+		w, hgt = p.rng.uniform(0.12, 0.28), p.rng.uniform(0.5, 1.3)
+		flake = p.box(-w / 2, w / 2, 0.0, 0.03, -hgt, 0.0)
+		p.jitter(flake, 0.02)
+		curl = Matrix.Rotation(-p.rng.uniform(0.15, 0.5), 4, "X")
+		p.transform(flake, Matrix.Translation(hit + out * 0.02) @ Matrix.Rotation(a + math.pi / 2, 4, "Z") @ curl)
+		flakes += flake
+	p.paint(flakes, "roca_naranja", "LIGHT", vary=0.12)
+	leaves = []
+	for end in ends + [Vector((0, 0, 12.3))]:
+		for k in range(7):
+			c = end + Vector((p.rng.uniform(-1.6, 1.6), p.rng.uniform(-1.6, 1.6), p.rng.uniform(-0.3, 1.4)))
+			leaves += p.blob(c, p.rng.uniform(1.3, 2.0), squash=(1.0, 1.0, 0.75), subdiv=3, rough=0.18)
+	p.paint(leaves, "musgo", z_range=(9.5, 14.5), vary=0.1)
+	front = -2.95
+	arch = [(-half, 0.0), (half, 0.0), (half, door_h - half)]
+	arch += [(half * math.cos(t), door_h - half + half * math.sin(t)) for t in (math.pi * i / 8 for i in range(1, 8))]
+	arch += [(-half, door_h - half)]
+	door = p.polygon(arch, -front - 1.8, -front + 0.25)
+	p.transform(door, Matrix.Rotation(math.pi / 2, 4, "X"))
+	p.paint(door, "noche", "MID")
+	frame, rope, moss = [], [], []
+	for side in (-1, 1):
+		post = p.cylinder(0.22, -0.1, door_h - half, sides=8, radius_top=0.2, center=(side * (half + 0.15), front - 0.15))
+		p.jitter(post, 0.02)
+		frame += post
+		for z in (0.55, 1.35):
+			rope += p.cylinder(0.26, z, z + 0.14, sides=8, center=(side * (half + 0.15), front - 0.15))
+	frame += _arc(p, half + 0.15, 0.0, math.pi, front - 0.15, 0.21, steps=9, center_z=door_h - half)
+	p.paint(frame, "madera", "MID", vary=0.08)
+	p.paint(rope, "paja", "DARK", vary=0.05)
+	for i in range(9):
+		t = math.pi * (i + 0.5) / 9
+		c = Vector(((half + 0.15) * math.cos(t), front - 0.2, door_h - half + (half + 0.35) * math.sin(t)))
+		moss += p.blob(c, p.rng.uniform(0.16, 0.26), squash=(1.2, 0.9, 1.4), subdiv=1, rough=0.25)
+		if i % 2:
+			moss += p.cylinder(0.05, c.z - p.rng.uniform(0.5, 0.9), c.z, sides=5, center=(c.x, c.y - 0.05), radius_top=0.08)
+	p.paint(moss, "musgo", "DARK", vary=0.08)
+
+
+piece("chullpa_entrada", 48, chullpa_entrada, smooth=40)
+piece("quenoa_entrada", 49, quenoa_entrada, smooth=40)
+
 epi.layout(kit, columns=7, spacing=3.5)
 epi.publish("lugares", material="outdoor")
