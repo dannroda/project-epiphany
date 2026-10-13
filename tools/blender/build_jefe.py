@@ -42,10 +42,10 @@ GRIP = {
 kit = epi.start()
 
 
-def piece(name, seed, fn):
+def piece(name, seed, fn, smooth=40):
 	p = epi.Piece(seed)
 	extra = fn(p)
-	obj = p.build(name, kit)
+	obj = p.build(name, kit, smooth=smooth)
 	for key, value in (extra if isinstance(extra, dict) else {}).items():
 		obj[key] = value
 	return obj
@@ -176,11 +176,11 @@ def jefe_cuerpo(p):
 	for i in range(steps):
 		t = i / (steps - 1)
 		r0 = 0.14 * (1 - t) + 0.03
-		seg = p.cylinder(r0, 0.0, 0.17, sides=6, radius_top=r0 * 0.85)
+		seg = p.cylinder(r0, 0.0, 0.17, sides=10, radius_top=r0 * 0.85)
 		p.transform(seg, Matrix.Translation((0.2 * math.sin(t * 5), 0.1 * math.cos(t * 4) - 0.1, z + t * 1.15)) @ Matrix.Rotation(0.35 * math.cos(t * 5), 4, "Y"))
 		stem += seg
 	p.paint(stem, "cobre_verde", z_range=(z, z + 1.2))
-	tip = p.blob((0.2 * math.sin(5), 0.1 * math.cos(4) - 0.1, z + 1.3), 0.13, subdiv=1, rough=0.0)
+	tip = p.blob((0.2 * math.sin(5), 0.1 * math.cos(4) - 0.1, z + 1.3), 0.13, subdiv=2, rough=0.0)
 	p.paint(tip, NEON, "MID")
 	for sx in (-1, 1):
 		leaf = p.box(-0.06, 0.06, -0.02, 0.02, 0.0, 0.45)
@@ -190,15 +190,15 @@ def jefe_cuerpo(p):
 	cores = []
 	for sx in (-1, 1):
 		base = Vector((sx * RADIUS * 0.97, 0.1, -0.1))
-		a = ring(p, 0.26, 0.11, 0.24, sides=10)
+		a = ring(p, 0.26, 0.11, 0.24, sides=18)
 		p.transform(a, Matrix.Translation(base) @ Matrix.Rotation(sx * math.pi / 2, 4, "Z"))
 		p.paint(a, IRON, "MID")
-		core = p.cylinder(0.26, 0.0, 0.14, sides=10)
+		core = p.cylinder(0.26, 0.0, 0.14, sides=18)
 		p.transform(core, Matrix.Translation(base) @ Matrix.Rotation(sx * math.pi / 2, 4, "Y"))
 		cores += core
-	thruster = p.lathe([(0.0, -RADIUS * 0.84), (1.05, -RADIUS * 0.84), (0.95, -RADIUS * 0.84 - 0.3), (0.7, -RADIUS * 0.84 - 0.42), (0.0, -RADIUS * 0.84 - 0.42)], sides=12)
+	thruster = p.lathe([(0.0, -RADIUS * 0.84), (1.05, -RADIUS * 0.84), (0.95, -RADIUS * 0.84 - 0.3), (0.7, -RADIUS * 0.84 - 0.42), (0.0, -RADIUS * 0.84 - 0.42)], sides=24)
 	p.paint(thruster, IRON, "LOW")
-	vent = p.cylinder(0.5, -RADIUS * 0.84 - 0.46, -RADIUS * 0.84 - 0.4, sides=12)
+	vent = p.cylinder(0.5, -RADIUS * 0.84 - 0.46, -RADIUS * 0.84 - 0.4, sides=24)
 	cores += vent
 	p.paint(cores, NEON, "MID")
 	studs = []
@@ -264,9 +264,9 @@ def jefe_parpado(p, hinges=True):
 		return
 	pins, rings = [], []
 	for sx in (-1, 1):
-		pin = p.cylinder(0.34, 0.0, 0.42, sides=10, radius_top=0.3)
-		ring = p.cylinder(0.37, 0.12, 0.2, sides=10)
-		cap = p.cylinder(0.14, 0.42, 0.48, sides=8)
+		pin = p.cylinder(0.34, 0.0, 0.42, sides=18, radius_top=0.3)
+		ring = p.cylinder(0.37, 0.12, 0.2, sides=18)
+		cap = p.cylinder(0.14, 0.42, 0.48, sides=14)
 		p.transform(pin + ring + cap, Matrix.Rotation(sx * math.pi / 2, 4, "Y") @ Matrix.Translation((0, 0, EYE - 0.22)))
 		pins += pin
 		rings += ring + cap
