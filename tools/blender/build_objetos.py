@@ -53,9 +53,9 @@ def vasija(p):
 
 def piedra_levantable(p):
 	"""Piedra que se levanta: más clara y redonda que las de adorno, atada con el cordón."""
-	rock = p.blob((0, 0, 0.25), 0.28, squash=(1.0, 0.95, 0.9), subdiv=2, rough=0.12, flat_bottom=0.0)
+	rock = p.blob((0, 0, 0.25), 0.28, squash=(1.0, 0.95, 0.9), subdiv=3, rough=0.06, flat_bottom=0.0)
 	p.paint(rock, "tierra", "LIGHT", vary=0.06)
-	cordon(p, 0.27, 0.26, width=0.05)
+	cordon(p, 0.292, 0.26, width=0.05)
 
 
 def vasija_pedazos(p):
@@ -73,9 +73,8 @@ def vasija_pedazos(p):
 
 def estela(p):
 	"""Tablilla: monolito trapezoidal sobre una base, con un ojo y un escalonado en relieve en la cara de adelante."""
-	base = p.box(-0.55, 0.55, -0.22, 0.22, 0.0, 0.2)
-	p.jitter(base, 0.015)
-	slab = p.box(-0.45, 0.45, -0.09, 0.09, 0.2, 1.3, taper=0.0)
+	base = p.rounded_box(-0.55, 0.55, -0.22, 0.22, 0.0, 0.2, radius=0.06)
+	slab = p.rounded_box(-0.45, 0.45, -0.09, 0.09, 0.18, 1.3, radius=0.07)
 	for v in {v for f in slab for v in f.verts}:
 		if v.co.z > 1.0:
 			v.co.x *= 0.82
@@ -85,7 +84,7 @@ def estela(p):
 	relief += epi.eye(p, Vector((0, -0.09, 0.85)), 0.28)
 	for i in range(3):
 		w = 0.62 - i * 0.16
-		relief += p.box(-w / 2, w / 2, -0.11, -0.09, 0.32 + i * 0.07, 0.38 + i * 0.07)
+		relief += p.rounded_box(-w / 2, w / 2, -0.115, -0.08, 0.32 + i * 0.07, 0.38 + i * 0.07, radius=0.012, segments=1)
 	p.paint(relief, "piedra", "LIGHT")
 
 
@@ -99,11 +98,11 @@ def apacheta(p):
 			a = p.rng.random() * 2 * math.pi
 			d = r * p.rng.uniform(0.0, 0.7)
 			size = p.rng.uniform(0.18, 0.28) * (0.6 + r)
-			stones += p.blob((math.cos(a) * d, math.sin(a) * d, z + size * 0.3), size, squash=(1.2, 1.0, 0.5), subdiv=1, rough=0.25)
+			stones += p.blob((math.cos(a) * d, math.sin(a) * d, z + size * 0.3), size, squash=(1.2, 1.0, 0.5), subdiv=2, rough=0.1)
 		z += 0.17
 		r -= 0.13
 	p.paint(stones, "piedra", z_range=(0, z + 0.2), vary=0.18)
-	top = p.blob((0, 0, z + 0.12), 0.14, squash=(0.8, 0.8, 1.4), subdiv=1, rough=0.15)
+	top = p.blob((0, 0, z + 0.12), 0.14, squash=(0.8, 0.8, 1.4), subdiv=2, rough=0.06)
 	p.paint(top, "hueso", "MID")
 
 
@@ -137,12 +136,12 @@ def fogata(p):
 	ring = []
 	for i in range(9):
 		a = 2 * math.pi * i / 9
-		ring += p.blob((math.cos(a) * 0.45, math.sin(a) * 0.45, 0.06), 0.13, squash=(1.2, 1, 0.7), subdiv=1, rough=0.25)
+		ring += p.blob((math.cos(a) * 0.45, math.sin(a) * 0.45, 0.06), 0.13, squash=(1.2, 1, 0.7), subdiv=2, rough=0.08)
 	p.paint(ring, "piedra", vary=0.15)
 	logs = []
 	for i in range(4):
 		a = math.pi * i / 2 + 0.4
-		log = p.cylinder(0.06, 0.0, 0.55, sides=6)
+		log = p.cylinder(0.06, 0.0, 0.55, sides=10)
 		p.transform(log, Matrix.Translation((math.cos(a) * 0.22, math.sin(a) * 0.22, 0.02)) @ Matrix.Rotation(-1.0, 4, Vector((-math.sin(a), math.cos(a), 0))))
 		logs += log
 	p.paint(logs, "madera_oscura", "DARK", vary=0.1)
@@ -150,11 +149,11 @@ def fogata(p):
 
 
 piece("vasija", 1, vasija, smooth=50)
-piece("vasija_pedazos", 2, vasija_pedazos)
-piece("estela", 3, estela)
-piece("apacheta", 4, apacheta)
+piece("vasija_pedazos", 2, vasija_pedazos, smooth=30)
+piece("estela", 3, estela, smooth=35)
+piece("apacheta", 4, apacheta, smooth=60)
 piece("cajon", 5, cajon, smooth=35)
-piece("fogata", 6, fogata)
+piece("fogata", 6, fogata, smooth=50)
 
 
 # --- cofres ---
@@ -452,7 +451,7 @@ piece("bomba", 19, lambda p: bomb(p), smooth=50)
 piece("bombas_x3", 20, bombas_x3, smooth=50)
 piece("orbe", 21, orbe, smooth=40)
 piece("explosion", 22, explosion)
-piece("piedra_levantable", 23, piedra_levantable, smooth=50)
+piece("piedra_levantable", 23, piedra_levantable, smooth=70)
 
 
 def bloque_empujable(p):
