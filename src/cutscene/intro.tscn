@@ -15,7 +15,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 6, 6.01, 14, 14.01, 20, 20.01, 25),
 "transitions": PackedFloat32Array(-2, -2, -2, -2, -2, -2, -2, -2),
 "update": 0,
-"values": [Vector3(-46, 30, 32), Vector3(-46, 26, -9), Vector3(-48, 26, -9), Vector3(-48, 16, -25), Vector3(-48, 9, -29.5), Vector3(-48, 8.6, -29), Vector3(-48, 7, 23), Vector3(-48, 7.5, 24)]
+"values": [Vector3(-55, 30, 35), Vector3(-55, 26, -6), Vector3(-42, 31.2, -10), Vector3(-42, 21.2, -26), Vector3(-42, 14.2, -30.5), Vector3(-42, 13.8, -30), Vector3(-62, 7, 29), Vector3(-62, 7.5, 30)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false

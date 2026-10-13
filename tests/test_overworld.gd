@@ -195,7 +195,7 @@ func test_the_marsh_water_slows_and_splashes_but_holds() -> void:
 	for enemy in tree.get_nodes_in_group(&"enemies"):
 		enemy.free()
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
-	var water := tree.current_scene.get_node(^"BanadoWaterA") as ShallowWater
+	var water := tree.current_scene.get_node(^"BanadoWater1") as ShallowWater
 	player.global_position = water.global_position + Vector3(-2, 0.3, 0)
 	for i in 20:
 		await tree.physics_frame

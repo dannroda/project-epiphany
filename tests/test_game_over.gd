@@ -61,7 +61,7 @@ func test_save_and_quit_keeps_the_checkpoint() -> void:
 	state.reset()
 	await saves.load_game(1)
 	player = tree.get_first_node_in_group(&"player") as Node3D
-	assert_true(player.global_position.distance_to(Vector3(-48, 0, 16)) < 0.6, "carga en el punto de control, no donde cayó")
+	assert_true(player.global_position.distance_to(Vector3(-62, 0, 22)) < 0.6, "carga en el punto de control, no donde cayó")
 	saves.delete_slot(0)
 	saves.delete_slot(1)
 	saves.save_dir = saves_dir

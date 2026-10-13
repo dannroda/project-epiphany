@@ -190,7 +190,7 @@ world_size = 1.4
 [node name="BossExitPortal" parent="PisoRaices" instance=ExtResource("50_warp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 28)
 target_scene = "res://levels/overworld.tscn"
-target_spawn = &"arboleda"
+target_spawn = &"quenoa"
 required_flag = &"qv_boss_defeated"
 
 [node name="RootEyeA" parent="PisoRaices" unique_id=1424022934 instance=ExtResource("7_crhmt")]
@@ -579,7 +579,7 @@ script = ExtResource("43_rqrax")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.2, 33.4)
 script = ExtResource("44_d82md")
 target_scene = "res://levels/overworld.tscn"
-target_spawn = &"arboleda"
+target_spawn = &"quenoa"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPortal" unique_id=615693408]
 shape = SubResource("BoxShape3D_w3lyb")

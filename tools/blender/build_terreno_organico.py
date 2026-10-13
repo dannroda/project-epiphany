@@ -1,5 +1,7 @@
 # Terreno del overworld con bordes orgánicos y lomas (12.15, la variante 6 de 12.14): lee tools/terreno_overworld.json
 # (lo escribe tools/export_terreno_overworld.gd desde el GridMap) y publica assets/epiphany/terreno_organico.glb.
+# Terrazas (7.10): cada columna tiene un nivel (0 a 2 se caminan, 3 es montaña) a TOP m por nivel; entre niveles, cara de
+# risco; arriba de cada borde, una baranda invisible salvo en los saltos (v) y en la boca de las escalinatas (S).
 # Cerca de los puntos fijos (lo jugable, la decoración, las piezas que quedan en el GridMap) los bordes siguen la grilla
 # y el piso queda plano; en los pasos de una celda la roca solo se mete, no se come el paso.
 # blender -b -P tools/blender/build_terreno_organico.py
@@ -19,6 +21,10 @@ import epi  # noqa: E402
 
 DATA = json.load(open(os.path.join(epi.ROOT, "tools", "terreno_overworld.json")))
 GRID = DATA["rows"]
+LEVELS = [[int(ch) for ch in row] for row in DATA["levels"]]
+MOUNTAIN = 3
+## Alto de la baranda invisible sobre el borde de cada terraza (m).
+RAIL = 1.6
 X0, Z0 = DATA["origin"]
 CELL = DATA["cell"]
 GW, GH = len(GRID[0]), len(GRID)
@@ -33,6 +39,8 @@ WATER_AMP = 1.0
 AMP = 0.4
 LOMAS = 0.3
 STRATA = (0.0, 0.12, 0.03, 0.16, 0.06, 0.13, 0.02)
+## Pasadas de relajación del contorno: vuelven diagonales y curvas las escaleras de celdas.
+RELAX = 24
 ## Distancia (m) desde el borde de un punto fijo en la que el terreno pasa de quieto a orgánico.
 FADE = 2.0
 CHUNK = 16.0
@@ -58,7 +66,8 @@ STYLES = {
 		"ledge": ("tierra", "MID"), "band": ("roca_naranja", None), "rock": ("roca_naranja", None)},
 	"quebrada": {"abyss_top": ("roca_naranja", "MID"), "abyss_mid": ("acantilado", "DARK"), "band": ("roca_naranja", None)},
 }
-FIXED = np.array([(x, -z, r) for x, z, r in DATA["fixed"]]).reshape(-1, 3)
+STEPS = [((X0 + c) * CELL, (Z0 + r) * CELL, 1.4) for r in range(len(GRID)) for c in range(len(GRID[0])) if GRID[r][c] in "Sv"]
+FIXED = np.array([(x, -z, r) for x, z, r in DATA["fixed"] + STEPS]).reshape(-1, 3)
 DECOR = np.array([(x, -z, r) for x, z, r in DATA["decor"]]).reshape(-1, 3)
 FLAT = np.concatenate([FIXED, DECOR])
 ## Celdas de agua baja: alrededor el piso queda sin lomas, así la superficie del agua no asoma sobre el pasto.
@@ -79,6 +88,26 @@ def cell_at(x, y):
 	if not (0 <= c < GW and 0 <= r < GH):
 		return "H"
 	return GRID[r][c]
+
+
+def level_at(x, y):
+	c = math.floor((x + CELL / 2) / CELL) - X0
+	r = math.floor((-y + CELL / 2) / CELL) - Z0
+	if not (0 <= c < GW and 0 <= r < GH):
+		return MOUNTAIN
+	return LEVELS[r][c]
+
+
+def at_level(level, levels=None):
+	"""La grilla de letras con lo que no es de ese nivel tapado (X)."""
+	levels = levels or LEVELS
+	return ["".join(ch if levels[r][c] == level else "X" for c, ch in enumerate(row)) for r, row in enumerate(GRID)]
+
+
+def at_least(level, levels=None):
+	"""H donde el nivel llega a level, . donde no."""
+	levels = levels or LEVELS
+	return ["".join("H" if levels[r][c] >= level else "." for c in range(GW)) for r in range(GH)]
 
 
 BOUNDS = (corner(0, GH), corner(GW, 0))
@@ -192,10 +221,18 @@ def _nearest_on(points, square):
 	return near[np.arange(len(q)), pick]
 
 
-def style(loop, seed, solid, jagged=0.0, amp=AMP):
-	"""Contorno orgánico; solid(ch) dice qué es el lado de adentro, para no achicar pasos de una celda."""
+def relax(loop, times=RELAX):
+	points, flags = loop
+	n = len(points)
+	for _ in range(times):
+		points = [points[i] if not (flags[i] or flags[i - 1]) else (points[i - 1] + points[i] * 2.0 + points[(i + 1) % n]) / 4.0 for i in range(n)]
+	return points, flags
+
+
+def style(loop, seed, solid, jagged=0.0, amp=AMP, smooth=RELAX):
+	"""Contorno orgánico; solid(punto) dice qué es el lado de adentro, para no achicar pasos de una celda."""
 	square = resample(loop, 0.4)
-	points, flags = resample(chaikin(resample(loop, 1.0), 2), 0.4)
+	points, flags = relax(resample(chaikin(resample(loop, 1.0), 2), 0.4), smooth)
 	nrm = normals(points)
 	near_decor = gap(np.array([(p.x, p.y) for p in points]), DECOR) < 1.2
 	moved = []
@@ -205,7 +242,7 @@ def style(loop, seed, solid, jagged=0.0, amp=AMP):
 			continue
 		push = amp * noise.noise(Vector((p.x * 0.42, p.y * 0.42, seed)))
 		probe = p + n * (CELL * 1.2)
-		if push > 0 and (near_decor[i] or solid(cell_at(probe.x, probe.y))):
+		if push > 0 and (near_decor[i] or solid(probe)):
 			push = 0.0
 		if jagged:
 			push += (random.Random(seed + i).random() - 0.5) * 2 * jagged
@@ -284,8 +321,8 @@ def lomas(x, y):
 
 # --- piezas ---
 
-def cliff_wall(p, loop):
-	"""Roca en estratos a lo largo del contorno, de -0.5 a la tapa, mirando hacia afuera."""
+def cliff_wall(p, loop, z0=0.0):
+	"""Roca en estratos a lo largo del contorno, de z0 - 0.5 a la tapa, mirando hacia afuera."""
 	points, flags = loop
 	z1 = TOP - CAP
 	nrm = normals(points)
@@ -322,12 +359,13 @@ def cliff_wall(p, loop):
 	p.fixed.update(faces)
 
 
-def cap(p, high_loops):
-	"""Tapa de pasto sobre todo lo alto, un poco más ancha que la roca, con el borde que cuelga en puntas."""
+def cap(p, high_loops, holes=()):
+	"""Tapa de pasto sobre todo lo alto, un poco más ancha que la roca, con el borde que cuelga en puntas; holes son los
+	pozos, caminos y agua de ese nivel."""
 	rims = []
 	for points, flags in high_loops:
 		rims.append(([pt + n * 0.12 if flags[i] or flags[i - 1] else pt for i, (pt, n) in enumerate(zip(points, normals(points)))], flags))
-	top = fill(p, [r[0] for r in rims], TOP, (lambda xy: np.zeros(len(xy))) if REGIONS else None)
+	top = fill(p, [r[0] for r in rims] + list(holes), TOP, (lambda xy: np.zeros(len(xy))) if REGIONS else None)
 	paint_role(p, top, "cap")
 	hang = []
 	for points, flags in rims:
@@ -408,17 +446,18 @@ def ground_height(xy):
 	return np.array([lomas(x, y) for x, y in xy]) * freedom(xy, FLAT) * freedom(xy, WET)
 
 
-def abyss(p, loop):
-	"""Paredes del pozo hacia adentro, de la altura del suelo hasta DEPTH, y el fondo."""
+def abyss(p, loop, z0=0.0):
+	"""Paredes del pozo hacia adentro, de la altura del suelo (z0) hasta z0 + DEPTH, y el fondo."""
 	points, _flags = loop
 	nrm = normals(points, -1.0)
-	tops = ground_height(np.array([(pt.x, pt.y) for pt in points]))
+	xy = np.array([(pt.x, pt.y) for pt in points])
+	tops = (ground_height(xy) if z0 == 0.0 else np.zeros(len(xy))) + z0
 	rows = 7
 	ring = []
 	for pt, n, top in zip(points, nrm, tops):
 		col = []
 		for k in range(rows + 1):
-			z = top + (DEPTH - top) * k / rows
+			z = top + (z0 + DEPTH - top) * k / rows
 			out = 0.0 if k == 0 else (0.06 + 0.24 * (0.5 + 0.5 * noise.noise(Vector((pt.x * 2.6, pt.y * 2.6, z * 1.8)))))
 			col.append(p.bm.verts.new((pt.x + n.x * out, pt.y + n.y * out, z)))
 		ring.append(col)
@@ -430,11 +469,11 @@ def abyss(p, loop):
 				faces.append(p.bm.faces.new(tri))
 	for f in faces:
 		f.normal_update()
-	depth = lambda f: f.calc_center_median().z  # noqa: E731
+	depth = lambda f: f.calc_center_median().z - z0  # noqa: E731
 	paint_role(p, [f for f in faces if depth(f) >= DEPTH * 3 / 7], "abyss_top")
 	paint_role(p, [f for f in faces if DEPTH * 5 / 7 <= depth(f) < DEPTH * 3 / 7], "abyss_mid")
 	paint_role(p, [f for f in faces if depth(f) < DEPTH * 5 / 7], "abyss_low")
-	floor = fill(p, [points], DEPTH)
+	floor = fill(p, [points], z0 + DEPTH)
 	p.paint(floor, "gris_5", "DARK")
 	p.fixed.update(faces + floor)
 
@@ -604,13 +643,48 @@ def decor(meshes, collection):
 	return objects
 
 
-def rocks(grid, seed):
-	high = [style(lp, 11.0, lambda ch: ch != "H") for lp in loops(lambda ch: ch == "H", grid)]
+def merge(dst, src):
+	mesh = bpy.data.meshes.new("tmp")
+	src.bm.to_mesh(mesh)
+	dst.bm.from_mesh(mesh)
+	bpy.data.meshes.remove(mesh)
+	src.bm.free()
+
+
+def rocks(levels, seed, holes=None, rail=None):
+	"""Las caras de risco de cada nivel con su tapa, una sobre otra; rail junta la baranda de los bordes que se caminan."""
 	p = epi.Piece(seed)
-	for lp in high:
-		cliff_wall(p, lp)
-	cap(p, high)
+	for level in range(1, MOUNTAIN + 1):
+		grid = at_least(level, levels)
+		high = [style(lp, 11.0 + level, lambda v, level=level: level_at(v.x, v.y) < level) for lp in loops(lambda ch: ch == "H", grid)]
+		part = epi.Piece(seed + level)
+		for lp in high:
+			cliff_wall(part, lp)
+		cap(part, high, (holes or {}).get(level, ()))
+		bmesh.ops.translate(part.bm, verts=part.bm.verts[:], vec=(0.0, 0.0, (level - 1) * TOP))
+		merge(p, part)
+		if rail is not None and level < MOUNTAIN:
+			railing(rail, high, level)
+	p.fixed = set(p.bm.faces)
 	return p
+
+
+def railing(p, high, level):
+	"""Pared invisible sobre el borde de la terraza, salvo donde se baja a propósito: un salto (v) arriba o la boca de una
+	escalinata (S) abajo."""
+	z = level * TOP
+	for points, flags in high:
+		nrm = normals(points)
+		for i, a in enumerate(points):
+			if not flags[i]:
+				continue
+			b = points[(i + 1) % len(points)]
+			mid, n = (a + b) / 2, (nrm[i] + nrm[(i + 1) % len(points)]).normalized()
+			up, down = mid - n * 0.6, mid + n * 1.0
+			if cell_at(up.x, up.y) == "v" or cell_at(down.x, down.y) == "S" or level_at(down.x, down.y) >= level:
+				continue
+			v = [p.bm.verts.new((q.x, q.y, h)) for q, h in ((a, z - 0.3), (b, z - 0.3), (b, z + RAIL), (a, z + RAIL))]
+			p.bm.faces.new(v)
 
 
 ACROSS = 1.7
@@ -639,15 +713,16 @@ def _keep(p, faces):
 	p.fixed = set(p.bm.faces)
 
 
-def cracked_walls(collection):
+def cracked_walls(collection, holes, rail):
 	"""Las paredes rompibles salen del terreno con su celda alta: lo de la celda es la pared (con grietas en las dos
 	caras, en el marco de la pared), y en su lugar el terreno lleva las jambas del paso abierto, que la pared tapa."""
 	walls = DATA["cracked"]
-	closed = list(GRID)
+	closed = [list(row) for row in LEVELS]
 	for wall in walls:
 		c, r = round(wall["x"] / CELL) - X0, round(wall["z"] / CELL) - Z0
-		closed[r] = closed[r][:c] + "H" + closed[r][c + 1:]
-	terrain = rocks(closed, 11)
+		wall["low"] = LEVELS[r][c]
+		closed[r][c] = max(LEVELS[rr][cc] for cc, rr in ((c + 1, r), (c - 1, r), (c, r + 1), (c, r - 1)) if 0 <= cc < GW and 0 <= rr < GH)
+	terrain = rocks(closed, 11, holes)
 	plugs = []
 	for wall in walls:
 		plug = epi.Piece(31)
@@ -655,13 +730,13 @@ def cracked_walls(collection):
 		plug.uv = plug.bm.loops.layers.uv.verify()
 		inside, _outside = _cut(plug.bm, wall)
 		_keep(plug, inside)
-		bmesh.ops.transform(plug.bm, matrix=_to_wall(wall), verts=plug.bm.verts)
+		bmesh.ops.transform(plug.bm, matrix=Matrix.Translation(Vector((0.0, 0.0, -wall["low"] * TOP))) @ _to_wall(wall), verts=plug.bm.verts)
 		epi.cracks_both_faces(plug, CELL / 2, (0.0, 1.2), 0.92, 0.05, TOP - CAP - 0.05, "acantilado", "tierra")
 		plugs.append(_build(plug, "muro_" + wall["name"], "wall", collection))
 		plugs[-1].location.z = -1000.0
 		_inside, outside = _cut(terrain.bm, wall)
 		_keep(terrain, outside)
-	opened = rocks(GRID, 11)
+	opened = rocks(LEVELS, 11, holes, rail)
 	for wall in walls:
 		jamb = epi.Piece(32)
 		jamb.bm = opened.bm.copy()
@@ -689,26 +764,33 @@ def main():
 	epi.start()
 	collection = bpy.data.collections.new("terreno")
 	bpy.context.scene.collection.children.link(collection)
-	pits = [style(lp, 16.0, lambda ch: ch != "~") for lp in loops(lambda ch: ch == "~")]
-	paths = [style(lp, 20.0, lambda ch: True, jagged=0.08) for lp in loops(lambda ch: ch == ":")]
-	waters = [style(lp, 24.0, lambda ch: ch in "H~", amp=WATER_AMP) for lp in loops(lambda ch: ch == "w")]
+	pits, paths, waters, holes = {}, {}, {}, {}
+	for level in range(MOUNTAIN):
+		grid = at_level(level)
+		pits[level] = [style(lp, 16.0, lambda v: cell_at(v.x, v.y) not in "~W") for lp in loops(lambda ch: ch in "~W", grid)]
+		paths[level] = [style(lp, 20.0, lambda v: True, jagged=0.08, smooth=RELAX // 3) for lp in loops(lambda ch: ch in ":S", grid)]
+		waters[level] = [style(lp, 24.0, lambda v, level=level: cell_at(v.x, v.y) in "H~W" or level_at(v.x, v.y) != level, amp=WATER_AMP, smooth=RELAX // 3) for lp in loops(lambda ch: ch == "w", grid)]
+		holes[level] = [pt for pt, _f in pits[level] + paths[level] + waters[level]]
 	objects = []
-	terrain, walls = cracked_walls(collection)
+	rail = epi.Piece(40)
+	terrain, walls = cracked_walls(collection, holes, rail)
 	objects.append(_build(terrain, "riscos-col", "wall", collection))
+	objects.append(_build(rail, "baranda-colonly", None, collection))
 	ground = epi.Piece(12)
 	outer = [Vector((BOUNDS[0].x, BOUNDS[0].y)), Vector((BOUNDS[1].x, BOUNDS[0].y)), Vector((BOUNDS[1].x, BOUNDS[1].y)), Vector((BOUNDS[0].x, BOUNDS[1].y))]
-	paint_role(ground, fill(ground, [outer] + [pt for pt, _f in pits] + [pt for pt, _f in paths] + [pt for pt, _f in waters], 0.0, ground_height), "ground")
-	for lp in pits:
-		abyss(ground, lp)
-	for lp in waters:
-		shallow(ground, lp)
-	paint_role(ground, fill(ground, [pt for pt, _f in paths], 0.0, ground_height), "path", vary=0.015)
+	paint_role(ground, fill(ground, [outer] + holes[0], 0.0, ground_height), "ground")
+	for level in range(MOUNTAIN):
+		z = level * TOP
+		for lp in pits[level]:
+			abyss(ground, lp, z)
+		for lp in waters[level]:
+			shallow(ground, lp)
+		paint_role(ground, fill(ground, [pt for pt, _f in paths[level]], z, ground_height if level == 0 else None), "path", vary=0.015)
 	objects.append(_build(ground, "suelo-col", "outdoor", collection))
 	objects += decor(load_meshes(), collection)
 	epi.publish("terreno_organico", objects=objects)
 	for wall in walls:
 		wall.location.z = 0.0
 	epi.publish("muros_organicos", objects=walls)
-
 
 main()

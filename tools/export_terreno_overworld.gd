@@ -1,6 +1,7 @@
 extends SceneTree
-## Pasa el GridMap de levels/overworld.tscn a tools/terreno_overworld.json para build_terreno_organico.py: una letra por
-## celda (H alto, ~ abismo, : tierra, . pasto, w agua baja: las celdas bajo un ShallowWater), los puntos fijos (lo jugable y las piezas que quedan en el GridMap), donde
+## Pasa el GridMap de levels/overworld.tscn a tools/terreno_overworld.json para build_terreno_organico.py: por columna,
+## su nivel (el y de su celda más alta: 0 a 2 se caminan, 3 es montaña) y una letra (H alto, ~ abismo, W agua honda,
+## S escalinata, v salto, : tierra, . pasto, w agua baja: las celdas bajo un ShallowWater), los puntos fijos (lo jugable y las piezas que quedan en el GridMap), donde
 ## el terreno no se mueve ni tiene lomas, la decoración, donde el piso queda plano y la roca no avanza, y las paredes
 ## rompibles, que se arman con la misma roca.
 ## También las regiones: el rectángulo de cada AreaZone con terrain_style. Para probar sin tocar la escena, los estilos
@@ -10,9 +11,14 @@ extends SceneTree
 const LEVEL := "res://levels/overworld.tscn"
 const OUT := "res://tools/terreno_overworld.json"
 const HIGH := ["Acantilado", "Risco", "Pared", "Andén", "Monte", "Cueva pared"]
-const ABYSS := ["Abismo", "Hueco"]
+const ABYSS := ["Abismo"]
 const DIRT := ["Piso", "Tierra", "Lajas", "Cueva piso"]
 const GRASS := ["Pasto"]
+## Escalinata (sube hacia el nivel de al lado), salto (borde de una vía, se baja hacia el sur) y agua honda.
+const SPECIAL := {"Escalón": "S", "Andén borde": "v", "Hueco": "W"}
+const MOUNTAIN := 3
+## Las plantas de la grilla apenas aplanan el terreno: si no, una hilera de árboles deja el borde de la terraza en escalera.
+const PLANTS := ["Árbol", "Queñoa chica", "Cardón", "Cardón brazos"]
 const IGNORED := ["GridMap", "WorldEnvironment", "DirectionalLight3D", "NavigationRegion3D", "Camera3D", "Decor", "Player", "HUD", "OverworldMap", "CloudShadows"]
 
 
@@ -27,21 +33,26 @@ func _initialize() -> void:
 		lo = Vector2i(mini(lo.x, cell.x), mini(lo.y, cell.z))
 		hi = Vector2i(maxi(hi.x, cell.x), maxi(hi.y, cell.z))
 	var rows: Array[String] = []
+	var levels: Array[String] = []
 	var fixed := []
 	var decor := []
 	var cracked := []
 	var regions := []
 	for z in range(lo.y, hi.y + 1):
 		var row := ""
+		var heights := ""
 		for x in range(lo.x, hi.x + 1):
-			var id := grid.get_cell_item(Vector3i(x, 0, z))
+			var y := _top(grid, x, z)
+			var id := grid.get_cell_item(Vector3i(x, y, z))
 			var item := lib.get_item_name(id) if id >= 0 else ""
 			var letter := _letter(item)
 			if letter == "":
-				letter = _under(grid, Vector3i(x, 0, z))
-				fixed.append([x * 2.0, z * 2.0, 1.4])
+				letter = _under(grid, Vector3i(x, y, z))
+				fixed.append([x * 2.0, z * 2.0, 0.4 if item in PLANTS else 1.4])
 			row += letter
+			heights += str(y)
 		rows.append(row)
+		levels.append(heights)
 	for water in level.get_children():
 		if not "wade_speed" in water:
 			continue
@@ -78,7 +89,7 @@ func _initialize() -> void:
 		var at := _placed(piece, level)
 		decor.append([at.x, at.z, 0.8])
 	var file := FileAccess.open(OUT, FileAccess.WRITE)
-	file.store_string(JSON.stringify({"origin": [lo.x, lo.y], "cell": 2.0, "rows": rows, "fixed": fixed, "decor": decor, "cracked": cracked, "regions": regions}, "\t"))
+	file.store_string(JSON.stringify({"origin": [lo.x, lo.y], "cell": 2.0, "rows": rows, "levels": levels, "fixed": fixed, "decor": decor, "cracked": cracked, "regions": regions}, "\t"))
 	print("export_terreno_overworld: %d × %d celdas, %d puntos fijos, %d de decoración, %d regiones" % [hi.x - lo.x + 1, hi.y - lo.y + 1, fixed.size(), decor.size(), regions.size()])
 	level.free()
 	quit()
@@ -103,7 +114,17 @@ func _under(grid: GridMap, cell: Vector3i) -> String:
 	return ":" if dirt >= 2 else "."
 
 
+## Nivel de la columna: el y de su celda más alta (el GridMap lleva un nivel de terraza por celda en y).
+func _top(grid: GridMap, x: int, z: int) -> int:
+	for y in range(MOUNTAIN, -1, -1):
+		if grid.get_cell_item(Vector3i(x, y, z)) != GridMap.INVALID_CELL_ITEM:
+			return y
+	return MOUNTAIN
+
+
 func _letter(item: String) -> String:
+	if SPECIAL.has(item):
+		return SPECIAL[item]
 	for group: Array in [[HIGH, "H"], [ABYSS, "~"], [DIRT, ":"], [GRASS, "."]]:
 		for prefix: String in group[0]:
 			if item.begins_with(prefix):

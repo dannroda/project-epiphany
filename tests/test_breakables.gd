@@ -89,10 +89,10 @@ func test_overworld_plants_are_cut_like_grass() -> void:
 	for cell in grid.get_used_cells():
 		var cell_name := grid.mesh_library.get_item_name(grid.get_cell_item(cell))
 		if cell_name in ["Árbol", "Queñoa chica", "Cardón", "Cardón brazos"]:
-			var at := grid.map_to_local(cell) * Vector3(1, 0, 1) + grid.position
+			var at := grid.map_to_local(cell) + grid.position
 			assert_true(plants.any(func(plant: Breakable) -> bool: return plant.global_position.distance_to(at) < 0.1), "%s en %s es cortable" % [cell_name, at])
 			assert_eq(grid.mesh_library.get_item_shapes(grid.get_cell_item(cell)).size(), 0, "y la celda no choca ni se dibuja: la planta lo hace")
-	var cactus: Breakable = plants.filter(func(plant: Breakable) -> bool: return plant.global_position.distance_to(Vector3(-20, 0, 22)) < 0.1).front()
+	var cactus: Breakable = plants.filter(func(plant: Breakable) -> bool: return plant.global_position.distance_to(Vector3(-20, 0, 2)) < 0.1).front()
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	await _swing_at(tree, player, cactus.global_position, 1.3)
 	assert_true(cactus.broken, "la espada corta el cardón de la arboleda")

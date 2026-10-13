@@ -5,6 +5,7 @@ extends SceneTree
 ## los pozos y de lo jugable. Determinístico (semilla por sala): se puede correr de nuevo después de tocar un nivel.
 ## godot --headless --path . --script res://tools/decorate_levels.gd
 
+const TERRACE_HEIGHT := 2.6
 const MESH := "res://assets/epiphany/meshes/%s.res"
 const OUT := "res://levels/decor/%s_decor.tscn"
 const BRAZIER := preload("res://src/world/brazier.tscn")
@@ -323,7 +324,7 @@ func _name(cell: Vector3i) -> String:
 
 
 func _center(cell: Vector3i) -> Vector3:
-	return _grid.map_to_local(cell) * Vector3(1, 0, 1) + _grid.position
+	return _grid.map_to_local(cell) * Vector3(1, 0, 1) + _grid.position + Vector3(0, cell.y * _grid.cell_size.y, 0)
 
 
 func _is_floor(cell: Vector3i) -> bool:
@@ -338,12 +339,24 @@ func _is_ground(cell: Vector3i) -> bool:
 
 func _is_wall(cell: Vector3i) -> bool:
 	var item := _grid.get_cell_item(cell)
-	if item == GridMap.INVALID_CELL_ITEM or _name(cell) in ["Puerta", "Escalón"] or _is_hole(cell):
+	if item == GridMap.INVALID_CELL_ITEM:
+		return _rises(cell)
+	if _name(cell) in ["Puerta", "Escalón"] or _is_hole(cell):
 		return false
 	for k in range(0, _shapes.get_item_shapes(item).size(), 2):
 		var shapes := _shapes.get_item_shapes(item)
 		var box: AABB = (shapes[k + 1] as Transform3D) * (shapes[k] as Shape3D).get_debug_mesh().get_aabb()
 		if box.end.y > 0.8:
+			return true
+	return false
+
+
+## Terrazas (7.10): en un GridMap de niveles de terraza, una columna con terreno más arriba que la celda es pared (la cara del risco).
+func _rises(cell: Vector3i) -> bool:
+	if _grid.cell_size.y < TERRACE_HEIGHT:
+		return false
+	for y in range(cell.y + 1, cell.y + 4):
+		if _grid.get_cell_item(Vector3i(cell.x, y, cell.z)) != GridMap.INVALID_CELL_ITEM:
 			return true
 	return false
 

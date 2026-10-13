@@ -9,7 +9,7 @@ extends SceneTree
 const SOURCE := "res://data/kits/gray_kit.tres"
 const OUTPUT := "res://data/kits/overworld_kit.tres"
 const ORGANIC_OUTPUT := "res://data/kits/overworld_organico_kit.tres"
-const TERRAIN := ["Piso", "Pasto", "Tierra", "Lajas", "Pared", "Acantilado", "Andén", "Risco", "Abismo", "Hueco", "Monte", "Cueva"]
+const TERRAIN := ["Piso", "Pasto", "Tierra", "Lajas", "Pared", "Acantilado", "Andén", "Risco", "Abismo", "Hueco", "Monte", "Cueva", "Escalón"]
 ## Más bajo que esto (m) es piso de la celda.
 const FLOOR_TOP := 0.01
 ## Celdas de plantas que se cortan: en el kit orgánico quedan sin malla ni colisión, decorate_levels.gd pone la escena.

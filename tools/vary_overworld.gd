@@ -44,6 +44,9 @@ const BROKEN_FENCE := 0.3
 ## Borde del mundo: celdas de meseta alrededor del mapa, hasta donde llega a ver la cámara (oeste, norte, este, sur).
 const OUTSIDE_MARGIN := [9, 6, 9, 3]
 const OUTSIDE := [["Monte queñoa", 0.14], ["Monte queñoa chica", 0.24], ["Monte cardón", 0.3], ["Monte ichu", 0.5], ["Monte piedras", 0.6], ["Monte flores", 0.68], ["Monte", 1.0]]
+## Nivel de la montaña (el GridMap tiene un nivel por celda en y) y de la meseta baja del sur.
+const MOUNTAIN := 3
+const SOUTH_LEVEL := 1
 ## Del lado de la cámara (al sur del mapa) un árbol taparía al player: ahí solo meseta baja.
 const OUTSIDE_SOUTH := [["Monte ichu", 0.3], ["Monte piedras", 0.45], ["Monte flores", 0.55], ["Monte", 1.0]]
 
@@ -126,7 +129,8 @@ func _fences(grid: GridMap, ids: Dictionary) -> Dictionary:
 	return result
 
 
-## Cada celda vacía (o ya de meseta) del rectángulo del mapa agrandado por OUTSIDE_MARGIN → una meseta al azar.
+## Cada columna vacía (o ya de meseta) del rectángulo del mapa agrandado por OUTSIDE_MARGIN → una meseta al azar, a la
+## altura de la montaña (MOUNTAIN); del lado de la cámara, baja (SOUTH_LEVEL).
 func _outside(grid: GridMap, ids: Dictionary) -> Dictionary:
 	var outside := []
 	for entry: Array in OUTSIDE:
@@ -134,16 +138,22 @@ func _outside(grid: GridMap, ids: Dictionary) -> Dictionary:
 	var low := Vector2i(1 << 20, 1 << 20)
 	var high := -low
 	for cell in grid.get_used_cells():
-		if cell.y == 0 and not grid.get_cell_item(cell) in outside:
+		if not grid.get_cell_item(cell) in outside:
 			low = Vector2i(mini(low.x, cell.x), mini(low.y, cell.z))
 			high = Vector2i(maxi(high.x, cell.x), maxi(high.y, cell.z))
 	var result := {}
 	for x in range(low.x - OUTSIDE_MARGIN[0], high.x + OUTSIDE_MARGIN[2] + 1):
 		for z in range(low.y - OUTSIDE_MARGIN[1], high.y + OUTSIDE_MARGIN[3] + 1):
-			var cell := Vector3i(x, 0, z)
-			var item := grid.get_cell_item(cell)
-			if item != GridMap.INVALID_CELL_ITEM and not item in outside:
+			var taken := false
+			for y in MOUNTAIN + 1:
+				var item := grid.get_cell_item(Vector3i(x, y, z))
+				if item != GridMap.INVALID_CELL_ITEM and not item in outside:
+					taken = true
+				elif item != GridMap.INVALID_CELL_ITEM:
+					grid.set_cell_item(Vector3i(x, y, z), GridMap.INVALID_CELL_ITEM)
+			if taken:
 				continue
+			var cell := Vector3i(x, SOUTH_LEVEL if z > high.y else MOUNTAIN, z)
 			var roll := _hash(cell + Vector3i(11, 0, 5))
 			for entry: Array in OUTSIDE_SOUTH if z > high.y else OUTSIDE:
 				if roll < entry[1]:

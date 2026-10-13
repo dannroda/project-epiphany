@@ -22,7 +22,7 @@ func test_new_game_quit_to_title_and_continue() -> void:
 	assert_eq(await tree.root.get_node(^"SceneFlow").new_game(), OK)
 	assert_eq(tree.current_scene.scene_file_path, "res://levels/overworld.tscn", "nueva partida: overworld")
 	var player := tree.get_first_node_in_group(&"player") as Node3D
-	assert_true(player.global_position.distance_to(Vector3(-48, 0, 16)) < 0.6, "en el claro del inicio")
+	assert_true(player.global_position.distance_to(Vector3(-62, 0, 22)) < 0.6, "en el claro del inicio")
 	assert_eq(state.inventory.has(&"sword_basic"), true, "con el equipo inicial")
 	state.give(Items.get_item(&"bomb_bag"))
 	assert_eq(saves.save_game(SLOT), OK)
