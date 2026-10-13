@@ -1,17 +1,17 @@
 // Agua a lo Link's Awakening (Switch): el shader del visor de LA (godot_viewer, la_water.gdshader: el modelo de color de
 // "bezel_water_basic" transcrito con RenderDoc) con dos cambios: las texturas son nuestras (water_la_*.tres, ruido) en vez
-// de las del juego, y la luz de ambiente por sala (SH) es un color, ambient_light.
+// de las del juego, y la luz de ambiente por sala (SH) y su cubemap son colores, ambient_light y reflection_color.
 //   t      = distancia de la superficie al punto de la escena detrás
 //   tint   = mix(shallow_water_color, water_color, t / depth_color_range)
 //   A      = refr * tint + tint * cáusticas, que va a muddy_color en muddy_range
 //   out    = mix(refr, A iluminada * blend_color, t / depth_global_blend_range)
 shader_type spatial;
-render_mode blend_mix, depth_draw_opaque, cull_back, specular_schlick_ggx;
+render_mode blend_mix, depth_draw_always, cull_back, specular_schlick_ggx, ambient_light_disabled;
 
 group_uniforms textures;
 uniform sampler2D wave_normal : repeat_enable, filter_linear_mipmap_anisotropic;
 uniform sampler2D indirect_normal : repeat_enable, filter_linear_mipmap_anisotropic;
-uniform sampler2D caustics_tex : repeat_enable, filter_linear_mipmap;
+uniform sampler2D caustics_tex : source_color, repeat_enable, filter_linear_mipmap;
 uniform sampler2D screen_tex : hint_screen_texture, filter_linear_mipmap;
 uniform sampler2D depth_tex : hint_depth_texture, filter_linear_mipmap;
 
@@ -24,6 +24,8 @@ uniform vec3 caustics_blend_color0 = vec3(0.6, 1.0, 1.0);
 uniform vec3 caustics_blend_color1 = vec3(0.0, 0.5, 0.8);
 // Luz de la sala que ilumina el agua (en LA, la SH de la sala): la de Lv04 mirando arriba.
 uniform vec3 ambient_light = vec3(0.68, 1.05, 1.14);
+// Lo que refleja el agua (en LA, el cubemap de la sala).
+uniform vec3 reflection_color = vec3(0.68, 1.05, 1.14);
 
 group_uniforms depth;
 uniform float depth_color_range = 0.5;
@@ -46,8 +48,10 @@ group_uniforms uv_transforms;
 uniform vec2 texsrt0 = vec2(2.0, 2.6179938);
 uniform vec2 texsrt1 = vec2(2.0, 0.0);
 uniform vec2 texsrt2 = vec2(3.0, 0.17453292);
-uniform vec2 caustics_texsrt0 = vec2(0.5, 2.6179938);
-uniform vec2 caustics_texsrt1 = vec2(0.5, 0.17453292);
+// Las cáusticas se proyectan sobre el fondo, en metros.
+uniform vec3 caustics_axis = vec3(0.0, 0.928477, -0.371391);
+uniform vec4 caustics_m0 = vec4(-0.433, -0.25, 0.25, -0.433);
+uniform vec4 caustics_m1 = vec4(0.492408, -0.0868247, 0.0868247, 0.492408);
 
 group_uniforms animation;
 uniform float wave_speed0 = 0.02;
@@ -101,15 +105,24 @@ void fragment() {
 	vec3 refr = texture(screen_tex, refr_uv).rgb;
 
 	vec3 tint = mix(shallow_water_color, water_color, clamp(t / depth_color_range, 0.0, 1.0));
-	vec3 c0 = texture(caustics_tex, srt(base_uv, caustics_texsrt0, tm * caustics_speed0) + ind).rgb;
-	vec3 c1 = texture(caustics_tex, srt(base_uv, caustics_texsrt1, -tm * caustics_speed1) + ind).rgb;
+	vec3 scene_w = (INV_VIEW_MATRIX * vec4(view_pos(refr_uv, texture(depth_tex, refr_uv).r, INV_PROJECTION_MATRIX), 1.0)).xyz;
+	vec2 cp = vec2(-scene_w.x, dot(scene_w, caustics_axis));
+	vec3 c0 = texture(caustics_tex, cp.x * caustics_m0.xy + cp.y * caustics_m0.zw + vec2(tm * caustics_speed0)).rgb;
+	vec3 c1 = texture(caustics_tex, cp.x * caustics_m1.xy + cp.y * caustics_m1.zw - vec2(tm * caustics_speed1)).rgb;
 	vec3 A = refr * tint + caustics_strength * tint * (c0 * caustics_blend_color0 + c1 * caustics_blend_color1);
 	A = mix(A, caustics_strength * muddy_color, clamp(t / muddy_range, 0.0, 1.0));
 
 	vec3 alb = A * blend_color;
+	float rough = 1.0 - smoothness;
+	vec3 v_world = normalize((INV_VIEW_MATRIX * vec4(VERTEX, 0.0)).xyz);
+	float nv = clamp(dot(n_world, -v_world), 0.0, 1.0);
+	float a004 = min(exp2(-9.28 * nv), smoothness * smoothness) * smoothness + (-0.0275 * rough + 0.0425);
+	float env_a = -1.04 * a004 + (-0.572 * rough + 1.04);
+	float env_b = 1.04 * a004 + (0.022 * rough - 0.04);
+	vec3 spec = reflection_color * (mix(vec3(0.04), A, metalness) * env_a + env_b);
 	ALBEDO = alb;
 	METALLIC = metalness;
-	ROUGHNESS = 1.0 - smoothness;
-	EMISSION = alb * (1.0 - metalness) * ambient_light;
+	ROUGHNESS = rough;
+	EMISSION = (A * (1.0 - metalness) * ambient_light + spec) * blend_color;
 	ALPHA = clamp(t / depth_global_blend_range, 0.0, 1.0);
 }
