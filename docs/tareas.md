@@ -3756,15 +3756,15 @@ Los datos cargados no se validan por tipo: una clave con tipo inesperado (por un
 
 **Archivos:** `src/save/save_manager.gd`, `src/save/save_codec.gd`, `src/state/game_state.gd`
 
-### 11.75 AreaZone: id estable para guardar las zonas visitadas · Pendiente
+### 11.75 AreaZone: id estable para guardar las zonas visitadas · En curso
 
 **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `guardado`, `overworld`
 
 `GameState.visit_zone(name)` usa el nombre del nodo como clave: renombrar una zona (como en el overworld nuevo) borra su estado de visitada de las partidas y el ZoneVeil vuelve a tapar zonas ya visitadas.
 
-- [ ] Exportar un id
+- [x] Exportar un id
   area_zone.gd: `@export var id: StringName`, usado como clave (fallback al nombre si está vacío).
-- [ ] Rellenar los ids en el overworld
+- [x] Rellenar los ids en el overworld
   Con los nombres actuales, para no perder las partidas existentes.
 
 **Prueba:** Renombrar el nodo de una zona no cambia si figura como visitada.

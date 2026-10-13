@@ -2,12 +2,12 @@
   "checklist": [
     {
       "detail": "area_zone.gd: `@export var id: StringName`, usado como clave (fallback al nombre si está vacío).",
-      "done": false,
+      "done": true,
       "text": "Exportar un id"
     },
     {
       "detail": "Con los nombres actuales, para no perder las partidas existentes.",
-      "done": false,
+      "done": true,
       "text": "Rellenar los ids en el overworld"
     }
   ],
@@ -25,12 +25,12 @@
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "guardado",
     "overworld"
   ],
   "test": "Renombrar el nodo de una zona no cambia si figura como visitada.",
   "title": "AreaZone: id estable para guardar las zonas visitadas",
-  "updated_at": "2026-10-12T00:05:58.850Z"
+  "updated_at": "2026-10-13T15:36:44.898Z"
 }

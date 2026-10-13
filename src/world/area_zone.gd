@@ -5,6 +5,8 @@ extends Area3D
 
 static var _current: AreaZone
 
+## Clave de la zona en las partidas (visitada o no); vacío, el nombre del nodo. Renombrar el nodo no la cambia.
+@export var id: StringName = &""
 @export var display_name: String = ""
 ## Estilo del terreno orgánico en la zona (STYLES de tools/blender/build_terreno_organico.py): necropolis, laguna, cumbre,
 ## explanada, cardonal o quebrada; vacío, el de siempre.
@@ -19,7 +21,7 @@ func _ready() -> void:
 	monitorable = false
 	body_entered.connect(func(body: Node3D) -> void:
 		if body is PlayerCharacter:
-			GameState.visit_zone(name)
+			GameState.visit_zone(key())
 		if body == Players.lead() and _current != self:
 			var same_region := _current != null and _current.display_name == display_name
 			_current = self
@@ -47,8 +49,12 @@ func bounds() -> Rect2:
 	return Rect2(center.x - size.x / 2.0, center.z - size.z / 2.0, size.x, size.z)
 
 
+func key() -> StringName:
+	return id if not id.is_empty() else StringName(name)
+
+
 func is_visited() -> bool:
-	return GameState.visited_zones.has(name)
+	return GameState.visited_zones.has(key())
 
 
 func _exit_tree() -> void:

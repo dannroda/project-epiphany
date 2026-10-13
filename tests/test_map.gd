@@ -358,3 +358,19 @@ func test_travel_portals_light_up_and_the_map_travels() -> void:
 	assert_true(Vector2(player.global_position.x, player.global_position.z).distance_to(Vector2(32, -2)) < 2.5, "y aparece ahí (%s)" % player.global_position.snappedf(0.1))
 	assert_true(not stack.is_open(), "con el menú cerrado")
 	state.reset()
+
+
+func test_renaming_a_zone_keeps_it_visited() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	state.reset()
+	tree.change_scene_to_file("res://levels/overworld.tscn")
+	await tree.scene_changed
+	await tree.physics_frame
+	var risk: AreaZone = tree.current_scene.get_node(^"Zone_risco")
+	assert_eq(risk.is_visited(), false)
+	state.visit_zone(&"Zone_risco")
+	risk.name = &"Zone_risco_renombrada"
+	assert_eq(risk.is_visited(), true, "la clave es el id, no el nombre del nodo")
+	assert_true(tree.current_scene.find_children("Zone_*", "AreaZone", false, false).all(func(zone: AreaZone) -> bool: return not zone.id.is_empty()), "todas las zonas del overworld tienen id")
+	state.reset()

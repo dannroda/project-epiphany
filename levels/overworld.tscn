@@ -322,6 +322,7 @@ data = {
 [node name="Zone_arboleda" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 4, 19)
 script = ExtResource("3_rqerd")
+id = &"Zone_arboleda"
 display_name = "PLACE_GROVE"
 region_label = true
 
@@ -387,6 +388,7 @@ shape = SubResource("BoxShape3D_zone_arboleda")
 [node name="Zone_banado" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63, 4, 39)
 script = ExtResource("3_rqerd")
+id = &"Zone_banado"
 display_name = "PLACE_MARSH"
 terrain_style = &"laguna"
 region_label = true
@@ -397,6 +399,7 @@ shape = SubResource("BoxShape3D_zone_banado")
 [node name="Zone_cardonal" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51, 4, 23)
 script = ExtResource("3_rqerd")
+id = &"Zone_cardonal"
 display_name = "PLACE_CACTUS_FIELD"
 terrain_style = &"cardonal"
 region_label = true
@@ -407,6 +410,7 @@ shape = SubResource("BoxShape3D_zone_cardonal")
 [node name="Zone_cerros" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -77, 4, -21)
 script = ExtResource("3_rqerd")
+id = &"Zone_cerros"
 display_name = "PLACE_HILLS"
 region_label = true
 
@@ -416,6 +420,7 @@ shape = SubResource("BoxShape3D_zone_cerros")
 [node name="Zone_cerros_2" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -93, 4, -17)
 script = ExtResource("3_rqerd")
+id = &"Zone_cerros_2"
 display_name = "PLACE_HILLS"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_cerros_2"]
@@ -424,6 +429,7 @@ shape = SubResource("BoxShape3D_zone_cerros_2")
 [node name="Zone_start" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -73, 4, 15)
 script = ExtResource("3_rqerd")
+id = &"Zone_start"
 display_name = "PLACE_FIRST_CLEARING"
 region_label = true
 
@@ -433,6 +439,7 @@ shape = SubResource("BoxShape3D_zone_start")
 [node name="Zone_start_2" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -61, 4, 27)
 script = ExtResource("3_rqerd")
+id = &"Zone_start_2"
 display_name = "PLACE_FIRST_CLEARING"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_start_2"]
@@ -441,6 +448,7 @@ shape = SubResource("BoxShape3D_zone_start_2")
 [node name="Zone_cumbre" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 4, -37)
 script = ExtResource("3_rqerd")
+id = &"Zone_cumbre"
 display_name = "PLACE_SUMMIT"
 terrain_style = &"cumbre"
 region_label = true
@@ -451,6 +459,7 @@ shape = SubResource("BoxShape3D_zone_cumbre")
 [node name="Zone_cumbre_2" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31, 4, -21)
 script = ExtResource("3_rqerd")
+id = &"Zone_cumbre_2"
 display_name = "PLACE_SUMMIT"
 terrain_style = &"cumbre"
 
@@ -460,6 +469,7 @@ shape = SubResource("BoxShape3D_zone_cumbre_2")
 [node name="Zone_templo" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41, 4, -37)
 script = ExtResource("3_rqerd")
+id = &"Zone_templo"
 display_name = "PLACE_TEMPLE_ESPLANADE"
 terrain_style = &"explanada"
 region_label = true
@@ -470,6 +480,7 @@ shape = SubResource("BoxShape3D_zone_templo")
 [node name="Zone_templo_2" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 4, -29)
 script = ExtResource("3_rqerd")
+id = &"Zone_templo_2"
 display_name = "PLACE_TEMPLE_ESPLANADE"
 terrain_style = &"explanada"
 
@@ -479,6 +490,7 @@ shape = SubResource("BoxShape3D_zone_templo_2")
 [node name="Zone_templo_3" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 4, -21)
 script = ExtResource("3_rqerd")
+id = &"Zone_templo_3"
 display_name = "PLACE_TEMPLE_ESPLANADE"
 terrain_style = &"explanada"
 
@@ -488,6 +500,7 @@ shape = SubResource("BoxShape3D_zone_templo_3")
 [node name="Zone_laguna" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 4, 39)
 script = ExtResource("3_rqerd")
+id = &"Zone_laguna"
 display_name = "PLACE_LAGOON"
 terrain_style = &"laguna"
 region_label = true
@@ -498,6 +511,7 @@ shape = SubResource("BoxShape3D_zone_laguna")
 [node name="Zone_mirador" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 4, -1)
 script = ExtResource("3_rqerd")
+id = &"Zone_mirador"
 display_name = "PLACE_LOOKOUT"
 terrain_style = &"necropolis"
 region_label = true
@@ -508,6 +522,7 @@ shape = SubResource("BoxShape3D_zone_mirador")
 [node name="Zone_necropolis" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43, 4, -1)
 script = ExtResource("3_rqerd")
+id = &"Zone_necropolis"
 display_name = "PLACE_NECROPOLIS"
 terrain_style = &"necropolis"
 region_label = true
@@ -518,6 +533,7 @@ shape = SubResource("BoxShape3D_zone_necropolis")
 [node name="Zone_necropolis_2" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 4, -5)
 script = ExtResource("3_rqerd")
+id = &"Zone_necropolis_2"
 display_name = "PLACE_NECROPOLIS"
 terrain_style = &"necropolis"
 
@@ -527,6 +543,7 @@ shape = SubResource("BoxShape3D_zone_necropolis_2")
 [node name="Zone_necropolis_3" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51, 4, -21)
 script = ExtResource("3_rqerd")
+id = &"Zone_necropolis_3"
 display_name = "PLACE_NECROPOLIS"
 terrain_style = &"necropolis"
 
@@ -536,6 +553,7 @@ shape = SubResource("BoxShape3D_zone_necropolis_3")
 [node name="Zone_pradera" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 4, -5)
 script = ExtResource("3_rqerd")
+id = &"Zone_pradera"
 display_name = "PLACE_MEADOW"
 region_label = true
 
@@ -545,6 +563,7 @@ shape = SubResource("BoxShape3D_zone_pradera")
 [node name="Zone_pradera_2" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41, 4, -45)
 script = ExtResource("3_rqerd")
+id = &"Zone_pradera_2"
 display_name = "PLACE_MEADOW"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_pradera_2"]
@@ -553,6 +572,7 @@ shape = SubResource("BoxShape3D_zone_pradera_2")
 [node name="Zone_pradera_3" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 4, -13)
 script = ExtResource("3_rqerd")
+id = &"Zone_pradera_3"
 display_name = "PLACE_MEADOW"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_pradera_3"]
@@ -561,6 +581,7 @@ shape = SubResource("BoxShape3D_zone_pradera_3")
 [node name="Zone_pradera_4" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65, 4, -9)
 script = ExtResource("3_rqerd")
+id = &"Zone_pradera_4"
 display_name = "PLACE_MEADOW"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_pradera_4"]
@@ -569,6 +590,7 @@ shape = SubResource("BoxShape3D_zone_pradera_4")
 [node name="Zone_pradera_5" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 4, -9)
 script = ExtResource("3_rqerd")
+id = &"Zone_pradera_5"
 display_name = "PLACE_MEADOW"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_pradera_5"]
@@ -577,6 +599,7 @@ shape = SubResource("BoxShape3D_zone_pradera_5")
 [node name="Zone_quebrada" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 4, -9)
 script = ExtResource("3_rqerd")
+id = &"Zone_quebrada"
 display_name = "PLACE_RAVINE"
 terrain_style = &"quebrada"
 region_label = true
@@ -587,6 +610,7 @@ shape = SubResource("BoxShape3D_zone_quebrada")
 [node name="Zone_risco" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79, 4, -29)
 script = ExtResource("3_rqerd")
+id = &"Zone_risco"
 display_name = "PLACE_EYE_CRAG"
 terrain_style = &"cumbre"
 region_label = true
@@ -597,6 +621,7 @@ shape = SubResource("BoxShape3D_zone_risco")
 [node name="Zone_vertiente" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -89, 4, 35)
 script = ExtResource("3_rqerd")
+id = &"Zone_vertiente"
 display_name = "PLACE_SPRING"
 region_label = true
 
