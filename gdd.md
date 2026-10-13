@@ -338,7 +338,7 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 | Espejo | Torretas que disparan orbes: el escudo espejo los devuelve al cristal (`te_mirror_crystal`, de la galería de hoy) |
 | Ojo del espejo | Un haz de luz que se refleja con el escudo espejo hasta el receptor del ojo del ala (`te_eye_mirror`) |
 | Antesala | Se abre con los cuatro ojos. Vasijas con corazones, tablilla, puerta del jefe |
-| La Mano | Sub-jefe: uno de los guanteletes del jefe, suelto (`te_hand_defeated`). Sala sin obstáculos. Vencido, abre la combinada |
+| La Mano | Sub-jefe: uno de los guanteletes del jefe, suelto (`te_hand_defeated`, `HandGuard`). Usa los tres ataques de las manos del jefe (golpe al piso, agarre, barrido); rebota todo mientras está lista y tras el golpe al piso queda aturdida, y ahí entra la espada. Sala sin obstáculos. Vencida, abre la combinada |
 | Combinada | Todos los ítems en secuencia (salto, flecha, gancho, reflejo, bomba) hasta el cofre de la **llave del jefe** |
 | Jefe | El Ojo con manos (§9) |
 

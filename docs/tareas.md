@@ -4387,9 +4387,10 @@ Daniel (2026-10-12): el jefe del ojo se pensó como fin de demo, así que tiene 
   Hecho el 2026-10-13 (Daniel: la pluma es mejor como primer ítem de mazmorra). La Chullpa es D1 (pluma) y la Queñoa D2 (arco); ninguna pedía el ítem de la otra. Grafos renombrados a chullpa_graph.tres y quenoa_graph.tres; la Chullpa trae solo bombas y la Queñoa bombas y pluma. Id y flags de la Chullpa pasan de d2 a ch (prefijo por mazmorra: ch_, qv_, d1_ el templo). Escenario chullpa sin arco ni pluma, quenoa con pluma. GDD §6.1, §6.2, §8b y §8c. Falta: §7 y el boceto de 7.10 (dónde está la Chullpa, qué gatea el camino a la Arboleda) con la sesión del overworld; la Queñoa no usa la pluma todavía.
 - [x] D2: segunda mitad de la Queñoa con la pluma
   Hecho el 2026-10-13 (4ed4b97d, Daniel: si). Raíces: un ojo con tiempo (6 s) abre la reja RaicesGate, rodeada de huecos frente a la puerta a la Sala de los ojos: flecha, salto con la pluma y pasar antes de que se cierre; una placa del otro lado (qv_eyes_step) la deja abierta para volver. Sala de los ojos: el nicho de la llave del jefe queda tras una fila de huecos (bomba, arco y pluma). Grafo y test_quenoa al día. Falta: que Daniel lo recorra y ajuste el tiempo del ojo.
-- [ ] Templo: escena y salas (sin el ala del gancho)
+- [x] Templo: escena y salas (sin el ala del gancho)
   Hecho el 2026-10-13 (af952662): levels/templo.tscn con 14 salas de 14 × 10 m (jefe 22 × 10), armada con debug/tmp/build_templo.gd en el kit gris (arte le pone el estilo LA al final, 12.18 paso 3). Vestíbulo, alas de la pluma, del arco y del espejo, sello de los cuatro ojos, combinada y jefe con flags te_. El ala del gancho queda tapada por un abismo hasta 11.30. test_templo (7). Falta: la Mano (paso 12) y apuntar el grafo templo_graph.tres a la escena cuando esté completa.
-- [ ] Templo: la Mano, sub-jefe
+- [x] Templo: la Mano, sub-jefe
+  Hecho el 2026-10-13 (f8bad885, Daniel: si): HandGuard (src/entities/hand_guard/) es una copia de la mano del jefe (boss_hand.gd, 12 de vida) que pelea sola en una ArenaFight: golpe al piso, agarre y barrido, sin repetir el último; rebota todo mientras está lista y queda aturdida tras el golpe al piso, ahí entra la espada. ManoFight (te_hand_defeated, BOSS_TE_HAND) cierra HandDoor y al ganar abre la combinada. templo_graph.tres apunta ya a levels/templo.tscn y pasa test_dungeon_reach; test_templo (8). Falta: que Daniel la pruebe y ajuste vida y descanso.
 - [ ] Templo: ala del gancho (con 11.30)
 - [ ] Templo: el portal del overworld al templo nuevo
 

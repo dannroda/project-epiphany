@@ -55,7 +55,8 @@
       "text": "Templo: escena y salas (sin el ala del gancho)"
     },
     {
-      "done": false,
+      "detail": "Hecho el 2026-10-13 (f8bad885, Daniel: si): HandGuard (src/entities/hand_guard/) es una copia de la mano del jefe (boss_hand.gd, 12 de vida) que pelea sola en una ArenaFight: golpe al piso, agarre y barrido, sin repetir el último; rebota todo mientras está lista y queda aturdida tras el golpe al piso, ahí entra la espada. ManoFight (te_hand_defeated, BOSS_TE_HAND) cierra HandDoor y al ganar abre la combinada. templo_graph.tres apunta ya a levels/templo.tscn y pasa test_dungeon_reach; test_templo (8). Falta: que Daniel la pruebe y ajuste vida y descanso.",
+      "done": true,
       "text": "Templo: la Mano, sub-jefe"
     },
     {
@@ -82,5 +83,5 @@
   ],
   "test": "",
   "title": "El templo del ojo pasa a ser la última mazmorra",
-  "updated_at": "2026-10-13T07:30:00.071Z"
+  "updated_at": "2026-10-13T07:40:50.614Z"
 }
