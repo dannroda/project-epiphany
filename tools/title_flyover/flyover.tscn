@@ -1,0 +1,63 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://tools/title_flyover/flyover.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://levels/overworld.tscn" id="2_overworld"]
+
+[node name="Flyover" type="Node3D"]
+script = ExtResource("1_script")
+
+[node name="Overworld" parent="." instance=ExtResource("2_overworld")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+fov = 45.0
+far = 400.0
+
+[node name="Shots" type="Node3D" parent="."]
+
+[node name="Overview" type="Node3D" parent="Shots"]
+
+[node name="From" type="Marker3D" parent="Shots/Overview"]
+transform = Transform3D(0.9979, 0.0508, -0.0395, -0.0000, 0.6134, 0.7898, 0.0644, -0.7882, 0.6121, -14.000, 80.000, 62.000)
+
+[node name="To" type="Marker3D" parent="Shots/Overview"]
+transform = Transform3D(0.9995, 0.0255, -0.0198, -0.0000, 0.6128, 0.7903, 0.0322, -0.7898, 0.6125, -4.000, 80.000, 60.000)
+
+[node name="Templo" type="Node3D" parent="Shots"]
+
+[node name="From" type="Marker3D" parent="Shots/Templo"]
+transform = Transform3D(0.9487, 0.1690, -0.2673, -0.0000, 0.8452, 0.5345, 0.3162, -0.5071, 0.8018, -52.000, 15.000, -18.000)
+
+[node name="To" type="Marker3D" parent="Shots/Templo"]
+transform = Transform3D(0.9762, -0.1111, 0.1863, 0.0000, 0.8588, 0.5123, -0.2169, -0.5001, 0.8383, -36.000, 14.000, -19.000)
+
+[node name="Laguna" type="Node3D" parent="Shots"]
+
+[node name="From" type="Marker3D" parent="Shots/Laguna"]
+transform = Transform3D(0.9104, 0.2074, -0.3581, -0.0000, 0.8653, 0.5013, 0.4138, -0.4563, 0.7877, -40.000, 14.000, 62.000)
+
+[node name="To" type="Marker3D" parent="Shots/Laguna"]
+transform = Transform3D(1.0000, 0.0000, -0.0000, -0.0000, 0.8503, 0.5264, 0.0000, -0.5264, 0.8503, -22.000, 13.000, 60.000)
+
+[node name="Quenoa" type="Node3D" parent="Shots"]
+
+[node name="From" type="Marker3D" parent="Shots/Quenoa"]
+transform = Transform3D(0.8944, 0.2248, -0.3866, -0.0000, 0.8645, 0.5026, 0.4472, -0.4495, 0.7732, -36.000, 15.000, 40.000)
+
+[node name="To" type="Marker3D" parent="Shots/Quenoa"]
+transform = Transform3D(0.9615, -0.1323, 0.2408, 0.0000, 0.8764, 0.4815, -0.2747, -0.4630, 0.8427, -16.000, 14.000, 40.000)
+
+[node name="Chullpa" type="Node3D" parent="Shots"]
+
+[node name="From" type="Marker3D" parent="Shots/Chullpa"]
+transform = Transform3D(0.8742, 0.2593, -0.4107, -0.0000, 0.8456, 0.5338, 0.4856, -0.4667, 0.7392, -98.000, 15.000, 12.000)
+
+[node name="To" type="Marker3D" parent="Shots/Chullpa"]
+transform = Transform3D(0.9734, -0.1297, 0.1888, 0.0000, 0.8242, 0.5663, -0.2290, -0.5513, 0.8023, -80.000, 14.000, 11.000)
+
+[node name="Cumbre" type="Node3D" parent="Shots"]
+
+[node name="From" type="Marker3D" parent="Shots/Cumbre"]
+transform = Transform3D(0.9345, 0.1976, -0.2961, -0.0000, 0.8317, 0.5552, 0.3560, -0.5188, 0.7772, 28.000, 18.000, -16.000)
+
+[node name="To" type="Marker3D" parent="Shots/Cumbre"]
+transform = Transform3D(0.9785, -0.1205, 0.1671, 0.0000, 0.8111, 0.5849, -0.2060, -0.5723, 0.7937, 46.000, 17.000, -18.000)

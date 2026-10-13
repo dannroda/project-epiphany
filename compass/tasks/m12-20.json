@@ -1,15 +1,16 @@
 {
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "Logo: wordmark de Epiphany con el motivo del ojo; exportar en PNG con alfa (y versión clara/oscura si hace falta)"
     },
     {
-      "done": false,
+      "detail": "Hecho como video pregrabado: cargar el overworld entero tardaba ~3,8 s. tools/title_flyover/flyover.tscn intercala la vista general con tomas de sectores (templo, laguna, Queñoa, Chullpa, Cumbre; marcadores From/To por toma) y se graba con --write-movie; assets/ui/title/flyover.ogv (88 s en loop, 7,4 MB), desenfocado con title_blur.gdshader.",
+      "done": true,
       "text": "Fondo: paneo lento del overworld con una cámara sobre un recorrido (Path3D), en un SubViewport desenfocado detrás del menú. Medir la carga: si cargar el overworld entero demora el título, usar una versión liviana o un video pregrabado"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Integrar en title_screen.tscn (nodos en la escena, no por código) y decidir si el ojo de title_eye.gd queda o lo reemplaza el logo"
     },
     {
@@ -33,5 +34,5 @@
   ],
   "test": "",
   "title": "Arte de la pantalla de título: logo y fondo del overworld",
-  "updated_at": "2026-10-13T21:23:51.368Z"
+  "updated_at": "2026-10-13T21:50:23.557Z"
 }
