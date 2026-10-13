@@ -4958,6 +4958,8 @@ Cada mazmorra con su propio estilo sobre el mismo kit (mismas piezas y colisione
   Hecho el 2026-10-13, arte -11. Queñoa: brasero_quenoa (muñón de tronco colgado de la pared) y vasijas mate burilado (pot_quenoa.tscn) en 70d206ae; puertas de tablones atados con soga y musgo (ccee04af). Chullpa: brasero de piedra y aríbalo de antes, puertas de losas de piedra con escalonado y cobre (ccee04af). Todo lo pone la_walls LOOKS en cada refresh, menos las vasijas (por escena). Estandartes: el modelo existe en cada kit de estilo pero no hay ninguno puesto; ponerlos es de diseño.
 - [x] Estilo del terreno del overworld por región
   AreaZone.terrain_style (necropolis, laguna, cumbre, explanada, cardonal, quebrada); el build pinta suelo, riscos y abismo por región con borde ondulado y cambia la decoración. Puestos en overworld.tscn: Templo explanada, Quebrada, Necrópolis + Mirador, Cumbre + Risco, Laguna + Bañado, Cardonal. Falta que el usuario lo vea.
+- [x] Paredes y piso propios de cada mazmorra
+  Hecho el 2026-10-13 (6552966a), arte -11, pedido de Daniel. Chullpa: pirca de piedra de campo con juntas de barro, cornisa de barro con ichu, piso de tierra apisonada con losas sueltas. Queñoa: madera del tronco por dentro (vetas y nudos), musgo y hojas arriba, piso de tablones. Cada una con su kit (chullpa_la_kit / quenoa_la_kit). Los números del piso y la veta están en LOOKS de la_walls.gd para ajustarlos a ojo. Entradas del overworld vestidas en 472ad964.
 
 ### Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos · En curso
 

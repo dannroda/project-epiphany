@@ -29,6 +29,11 @@
       "detail": "AreaZone.terrain_style (necropolis, laguna, cumbre, explanada, cardonal, quebrada); el build pinta suelo, riscos y abismo por región con borde ondulado y cambia la decoración. Puestos en overworld.tscn: Templo explanada, Quebrada, Necrópolis + Mirador, Cumbre + Risco, Laguna + Bañado, Cardonal. Falta que el usuario lo vea.",
       "done": true,
       "text": "Estilo del terreno del overworld por región"
+    },
+    {
+      "detail": "Hecho el 2026-10-13 (6552966a), arte -11, pedido de Daniel. Chullpa: pirca de piedra de campo con juntas de barro, cornisa de barro con ichu, piso de tierra apisonada con losas sueltas. Queñoa: madera del tronco por dentro (vetas y nudos), musgo y hojas arriba, piso de tablones. Cada una con su kit (chullpa_la_kit / quenoa_la_kit). Los números del piso y la veta están en LOOKS de la_walls.gd para ajustarlos a ojo. Entradas del overworld vestidas en 472ad964.",
+      "done": true,
+      "text": "Paredes y piso propios de cada mazmorra"
     }
   ],
   "code": "12.17",
@@ -46,5 +51,5 @@
   ],
   "test": "",
   "title": "Estilos por mazmorra",
-  "updated_at": "2026-10-13T16:33:02.327Z"
+  "updated_at": "2026-10-13T17:47:12.225Z"
 }
