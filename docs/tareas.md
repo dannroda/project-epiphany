@@ -4478,8 +4478,9 @@ Daniel (2026-10-13): con la pluma de D1, los islotes llevaban a D3 sin el arco y
   Hecho el 2026-10-13 (b5c13e2b): estado Dashing. Mantener toma impulso 0,5 s en el lugar (el stick apunta), después corre recto a 9,5 m/s hasta soltar o chocar. El choque rebota, sacude el encuadre y manda a la Hurtbox de adelante un DamageInfo con elemento dash; árboles y muros agrietados se sacuden (ramas de -eb en Breakable y CrackedWall).
 - [x] Salto largo: la pluma en plena carrera cruza 3 baldosas
   Hecho el 2026-10-13 (b5c13e2b). Daniel: la pluma cruza 1 baldosa y sandalias + pluma 3. Jumping sigue la dirección de la carrera a long_jump_speed 8, sin control en el aire: cruza 6 m y no 8.
-- [ ] Tests (carrera, choque, salto largo: 3 baldosas sí, 4 no)
-  Hecho en test_sandals (5 tests, en cajas planas). Faltan los del overworld (angostura, islotes, Risco) cuando -eb termine de regenerar.
+- [x] Tests (carrera, choque, salto largo: 3 baldosas sí, 4 no)
+  Hecho el 2026-10-13: test_sandals (8): carrera, cancelar, choque con dash, 3 baldosas sí y 4 no en cajas planas (b5c13e2b); y en el overworld (09271dbb) cruza la angostura y los dos huecos de la Laguna hasta la isla de D3, y cae en el abismo del Risco. long_jump_speed 8,6.
+- [ ] Recorrido de Daniel (velocidades: corrida 9,5 m/s, salto largo 8,6 m/s)
 
 ## M12 — Assets propios (Blender)  (6/18)
 

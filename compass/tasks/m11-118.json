@@ -16,9 +16,13 @@
       "text": "Salto largo: la pluma en plena carrera cruza 3 baldosas"
     },
     {
-      "detail": "Hecho en test_sandals (5 tests, en cajas planas). Faltan los del overworld (angostura, islotes, Risco) cuando -eb termine de regenerar.",
-      "done": false,
+      "detail": "Hecho el 2026-10-13: test_sandals (8): carrera, cancelar, choque con dash, 3 baldosas sí y 4 no en cajas planas (b5c13e2b); y en el overworld (09271dbb) cruza la angostura y los dos huecos de la Laguna hasta la isla de D3, y cae en el abismo del Risco. long_jump_speed 8,6.",
+      "done": true,
       "text": "Tests (carrera, choque, salto largo: 3 baldosas sí, 4 no)"
+    },
+    {
+      "done": false,
+      "text": "Recorrido de Daniel (velocidades: corrida 9,5 m/s, salto largo 8,6 m/s)"
     }
   ],
   "code": "11.118",
@@ -36,5 +40,5 @@
   ],
   "test": "",
   "title": "Sandalias: correr manteniendo y salto largo con la pluma",
-  "updated_at": "2026-10-13T08:32:27.730Z"
+  "updated_at": "2026-10-13T08:50:52.888Z"
 }
