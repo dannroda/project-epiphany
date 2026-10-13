@@ -52,7 +52,7 @@ kit = epi.start()
 ## con vetas que bajan, musgo y hojas arriba) y "cueva" (la roca de LA más oscura, sin hojas: la cresta es de piedra
 ## y cada tanto cuelga una estalactita) y "templo" (sillares de piedra lavanda bien encajados con cornisa clara, sin
 ## hojas) y "totora" (atados de totora apilados y amarrados con soga, húmedos al pie, con juncos y totoras en flor
-## arriba). La chullpa, la queñoa, el templo y la totora van sin el bulto de las rocas.
+## arriba) y "cumbre" (columnas de basalto con juntas, escarcha arriba, nieve en la cresta y carámbanos). La chullpa, la queñoa, el templo, la totora y la cumbre van sin el bulto de las rocas.
 WALL_STYLE = None
 PIRCA_ROW = 0.42
 PIRCA_JOINT = 0.04
@@ -89,6 +89,20 @@ def bundle(a, z):
 	shift = (row % 2) * TIE_SPACING / 2
 	along = (a + 1.0 + shift) % TIE_SPACING
 	return row, math.sqrt(max(0.0, 1.0 - (2.0 * t - 1.0) ** 2)), min(along, TIE_SPACING - along)
+
+
+## Columnas de basalto de la Cumbre: COLUMN de ancho (seis por celda, así empalman), con la faceta del frente en bisel y
+## una o dos juntas por columna a alturas de BASALT_JOINTS.
+COLUMN = 2.0 / 6
+BASALT_JOINTS = (0.7, 1.25, 1.8, 2.35)
+
+
+def column(a, z):
+	"""Columna, cuánto sobresale (0 en la junta, 1 en la faceta del frente) y distancia a su junta más cercana."""
+	k = min(5, max(0, math.floor((a + 1.0) / COLUMN)))
+	t = (a + 1.0 - k * COLUMN) / COLUMN
+	joints = random.Random(k * 7919 + 17).sample(BASALT_JOINTS, 2 - k % 2)
+	return k, min(1.0, min(t, 1.0 - t) / 0.22), min(abs(z - j) for j in joints)
 
 
 def grain(a, z):
@@ -160,6 +174,9 @@ def relief(p):
 		elif WALL_STYLE == "totora":
 			row, round_, tie = bundle(a, z)
 			bump = round_ * 0.09 - 0.04 - (0.025 if tie < TIE_HALF and row % 2 == 0 else 0.0) + noise.noise(Vector((a * 6.0, z * 0.6, 11.0))) * 0.01
+		elif WALL_STYLE == "cumbre":
+			k, facet, joint = column(a, z)
+			bump = facet * 0.07 - 0.035 - (0.03 if joint < 0.04 else 0.0) + noise.noise(Vector((a * 3.0, z * 2.0, 13.0))) * 0.008
 		elif WALL_STYLE == "quenoa":
 			bump = grain(a, z) * 0.025 + noise.noise(Vector((a * 1.5, z * 0.2, 9.0))) * 0.07
 		else:
@@ -247,6 +264,16 @@ def axes(sides, corners, cut):
 					d = RUN[side] * (k * PIRCA_ROW + dz) / HEIGHT
 					if 0.0 < d < 2.0:
 						(ys if side in "ns" else xs).add(coord(side, d))
+	if WALL_STYLE == "cumbre":
+		for side in sides:
+			for k in range(7):
+				for b in (-1.0 + k * COLUMN + dt for dt in (-0.07, 0.0, 0.07)):
+					if -1.0 < b < 1.0:
+						(xs if side in "ns" else ys).add(b)
+			for j in BASALT_JOINTS:
+				for dz in (-0.04, 0.04):
+					d = RUN[side] * (j + dz) / HEIGHT
+					(ys if side in "ns" else xs).add(coord(side, d))
 	if cut:
 		for b in (-HALF, -HALF + 0.01, HALF - 0.01, HALF):
 			(xs if across_x(sides, cut) else ys).add(b)
@@ -338,6 +365,18 @@ def piece(kind, code, cut=None):
 				shade(p, f, "madera", 0.12)
 			else:
 				shade(p, f, "madera", 0.2 + 0.32 * round_ + 0.1 * random.Random(row * 7919 + 3).random())
+		elif WALL_STYLE == "cumbre":
+			a = c.x if abs(f.normal.y) > abs(f.normal.x) else c.y
+			k, facet, joint = column(a, c.z)
+			frost = noise.noise(Vector((a * 2.0, c.z, 15.0)))
+			if c.z < 0.22 * (0.6 + frost):
+				p.paint([f], "blanco", "LOW", vary=0.04)
+			elif facet < 0.12 or joint < 0.04:
+				shade(p, f, "gris_4", 0.3)
+			elif c.z > top - 0.6 * (0.7 + 0.5 * frost):
+				shade(p, f, "cristal", 0.75 + 0.15 * frost)
+			else:
+				shade(p, f, STONE, 0.3 + 0.25 * random.Random(k * 104729 + 5).random() + 0.1 * facet)
 		elif WALL_STYLE == "quenoa" and not moss(c, seed):
 			a = c.x if abs(f.normal.y) > abs(f.normal.x) else c.y
 			g = grain(a, c.z)
@@ -352,7 +391,7 @@ def piece(kind, code, cut=None):
 				shade(p, f, MOSS, min(0.8, 0.3 + 0.5 * (c.z - top + MOSS_TOP) / MOSS_TOP))
 		else:
 			shade(p, f, STONE, rock_tone(c, sides, kind))
-	crest_swatch = {"chullpa": ("tierra", "MID"), "totora": ("paja", "MID"), "cueva": ("gris_4", "MID"), "templo": ("piedra_templo", "LIGHT")}.get(WALL_STYLE, (LEAF, "DARK"))
+	crest_swatch = {"chullpa": ("tierra", "MID"), "totora": ("paja", "MID"), "cueva": ("gris_4", "MID"), "templo": ("piedra_templo", "LIGHT"), "cumbre": ("blanco", "LIGHT")}.get(WALL_STYLE, (LEAF, "DARK"))
 	p.paint(crest, crest_swatch[0], crest_swatch[1], vary=0.08)
 	hedge(p, xs, ys, h)
 	if cut:
@@ -463,6 +502,10 @@ def hedge(p, xs, ys, h):
 		p.paint(leaves, "gris_4", vary=0.15)
 		stalactites(p, spots, h)
 		return
+	if WALL_STYLE == "cumbre":
+		p.paint(leaves, "blanco", "LIGHT", vary=0.04)
+		icicles(p, spots, h)
+		return
 	p.paint(leaves, LEAF, vary=0.25)
 	vine = []
 	for lx, ly, ox, oy in spots:
@@ -533,6 +576,32 @@ def stalactites(p, spots, h):
 	p.paint(drops, STONE, "LOW", vary=0.1)
 
 
+def face_at(spot, h, z):
+	"""Dónde cae la cara de la pared a la altura z bajando desde un punto del borde."""
+	lx, ly, ox, oy = spot
+	t = 0.0
+	while t < 2.0 and h(lx + ox * t, ly + oy * t) >= z:
+		t += 0.02
+	return t
+
+
+def icicles(p, spots, h):
+	"""Carámbanos de hielo colgando de la nieve de la cresta de la Cumbre, de a dos o tres, finitos."""
+	drops = []
+	for spot in spots:
+		lx, ly, ox, oy = spot
+		if top < HEIGHT or p.rng.random() > 0.3:
+			continue
+		for i in range(p.rng.choice((2, 3))):
+			length = p.rng.uniform(0.25, 0.6)
+			t = face_at(spot, h, top - length * 0.4)
+			off = p.rng.uniform(-0.12, 0.12)
+			drop = p.cylinder(p.rng.uniform(0.035, 0.06), 0.0, length, sides=5, radius_top=0.0)
+			p.transform(drop, Matrix.Translation((lx + ox * (t + 0.03) - oy * off, ly + oy * (t + 0.03) + ox * off, top - 0.08)) @ Matrix.Rotation(math.pi, 4, "X"))
+			drops += drop
+	p.paint(drops, "cristal", "LIGHT", vary=0.06)
+
+
 SHADE_SPAN = 20.0
 
 
@@ -542,7 +611,7 @@ def shade(p, f, swatch, t):
 
 
 shapes = json.load(open(os.path.join(ROOT, "tools", "paredes_la.json")))
-for WALL_STYLE, BULGE, STONE in ((None, 0.7, "acantilado"), ("chullpa", 0.0, "acantilado"), ("quenoa", 0.0, "madera"), ("cueva", 0.7, "acantilado"), ("templo", 0.0, "piedra_templo"), ("totora", 0.0, "paja")):
+for WALL_STYLE, BULGE, STONE in ((None, 0.7, "acantilado"), ("chullpa", 0.0, "acantilado"), ("quenoa", 0.0, "madera"), ("cueva", 0.7, "acantilado"), ("templo", 0.0, "piedra_templo"), ("totora", 0.0, "paja"), ("cumbre", 0.0, "ladrillo")):
 	PIRCA_ROW = {"templo": 0.48, "totora": 0.36}.get(WALL_STYLE, 0.42)
 	_pirca_rows.clear()
 	for code in shapes["pared"]:
@@ -561,16 +630,16 @@ DOOR_PLANKS = 4
 
 ## Estilo de las hojas que se están armando: None (madera con flejes de hierro), "chullpa" (losas de piedra con un
 ## escalonado en relieve y herrajes de cobre), "quenoa" (tablones atados con soga y musgo arriba) o "totora" (atados de
-## totora parados, amarrados con soga oscura).
+## totora parados, amarrados con soga oscura) o "cumbre" (losas de basalto con un sol de oro arriba).
 DOOR_STYLE = None
-METAL = {None: "hierro", "chullpa": "cobre_verde", "quenoa": "paja", "templo": "dorado", "totora": "cobre_verde"}
+METAL = {None: "hierro", "chullpa": "cobre_verde", "quenoa": "paja", "templo": "dorado", "totora": "cobre_verde", "cumbre": "dorado"}
 ## Atados de las hojas de totora: el color de cada madera.
 REED = {"madera": "paja", "madera_oscura": "tierra"}
 ## Piedra de las hojas de losa (chullpa y templo).
-SLAB = {"chullpa": "acantilado", "templo": "piedra_templo"}
+SLAB = {"chullpa": "acantilado", "templo": "piedra_templo", "cumbre": "ladrillo"}
 
 
-def stone_leaf(p, dark):
+def stone_leaf(p, dark, sun_top=True):
 	"""Tres losas apiladas de cantos gastados y un escalonado (media chakana) en relieve arriba."""
 	slabs = []
 	z = 0.0
@@ -579,6 +648,10 @@ def stone_leaf(p, dark):
 		z += h
 	p.jitter(slabs, 0.01)
 	p.paint(slabs, SLAB[DOOR_STYLE], "LOW" if dark else "MID", vary=0.05)
+	if DOOR_STYLE == "cumbre":
+		if sun_top:
+			sun(p, Vector((0, -DOOR_THICK, 2.55)))
+		return
 	steps = []
 	for k, (w, h) in enumerate(((0.9, 0.12), (0.62, 0.12), (0.34, 0.12))):
 		z0 = 2.32 + k * 0.12
@@ -586,9 +659,23 @@ def stone_leaf(p, dark):
 	p.paint(steps, SLAB[DOOR_STYLE] if DOOR_STYLE == "chullpa" else "dorado", "LIGHT", vary=0.03)
 
 
-def door_leaf(p, wood, bands=(0.55, 2.45)):
+def sun(p, at):
+	"""Sol de oro (Inti) de la Cumbre en relieve sobre el frente de la hoja: disco, cara y ocho rayos."""
+	disc = p.cylinder(0.2, 0.0, 0.05, sides=12)
+	face = p.cylinder(0.11, 0.05, 0.075, sides=12)
+	rays = []
+	for k in range(8):
+		ray = p.cylinder(0.055, 0.0, 0.04, sides=3)
+		p.transform(ray, Matrix.Rotation(k * math.pi / 4, 4, "Z") @ Matrix.Translation((0.28, 0.0, 0.0)) @ Matrix.Scale(1.5, 4, Vector((1, 0, 0))))
+		rays += ray
+	p.transform(disc + face + rays, Matrix.Translation(at) @ Matrix.Rotation(math.pi / 2, 4, "X"))
+	p.paint(disc + rays, "dorado", "MID", vary=0.03)
+	p.paint(face, "dorado", "LIGHT")
+
+
+def door_leaf(p, wood, bands=(0.55, 2.45), sun_top=True):
 	if DOOR_STYLE in SLAB:
-		stone_leaf(p, wood == "madera_oscura")
+		stone_leaf(p, wood == "madera_oscura", sun_top)
 		return
 	planks = []
 	reed = DOOR_STYLE == "totora"
@@ -650,7 +737,7 @@ def door_switch(p):
 
 
 def door_boss(p):
-	door_leaf(p, "madera_oscura", bands=(0.4, 2.6))
+	door_leaf(p, "madera_oscura", bands=(0.4, 2.6), sun_top=False)
 	frame = []
 	for x0, x1, z0, z1 in ((-DOOR_WIDTH, DOOR_WIDTH, HEIGHT - 0.16, HEIGHT), (-DOOR_WIDTH, -DOOR_WIDTH + 0.14, 0.0, HEIGHT), (DOOR_WIDTH - 0.14, DOOR_WIDTH, 0.0, HEIGHT)):
 		frame += p.rounded_box(x0, x1, -DOOR_THICK - 0.06, -DOOR_THICK + 0.01, z0, z1, radius=0.03, segments=1)
@@ -673,7 +760,7 @@ def door_shutter(p):
 	p.paint(posts, METAL[DOOR_STYLE], "DARK", vary=0.03)
 
 
-for DOOR_STYLE in (None, "chullpa", "quenoa", "templo", "totora"):
+for DOOR_STYLE in (None, "chullpa", "quenoa", "templo", "totora", "cumbre"):
 	door("madera", 61, lambda p: door_leaf(p, "madera"))
 	door("llave", 62, lambda p: (door_leaf(p, "madera_oscura"), lock_plate(p, 1.3, 0.5, METAL[DOOR_STYLE] if DOOR_STYLE in SLAB else "hierro")))
 	door("jefe", 63, door_boss)
