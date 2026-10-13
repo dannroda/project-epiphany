@@ -67,69 +67,81 @@ tonemap_mode = 2
 fog_light_color = Color(0.25, 0.08, 0.06, 1)
 fog_density = 0.0
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_xmovh"]
-size = Vector3(23.6, 2.4, 14)
+[sub_resource type="BoxShape3D" id="BoxShape3D_308dp"]
+size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jhuhl"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xmovh"]
 render_priority = 0
 shader = ExtResource("5_2kgc7")
-shader_parameter/inner = Vector4(2.1, 2, 25.9, 18.5)
-shader_parameter/outer = Vector4(1, 1, 27, 19)
-shader_parameter/limit = Vector4(0, 1, 28, 19)
+shader_parameter/inner = Vector4(2.7, 2.6, 25.3, 17.9)
+shader_parameter/outer = Vector4(1.2, 1.2, 26.8, 18.8)
+shader_parameter/limit = Vector4(0.8, 0.8, 27.199999, 19.199999)
 shader_parameter/plane_y = -5.000000238418579
+shader_parameter/floor_rect = Vector4(3, 3, 25, 17)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_tkn3g"]
-material = SubResource("ShaderMaterial_jhuhl")
-size = Vector2(26, 21.6)
-center_offset = Vector3(0, 0, 1.8)
+[sub_resource type="PlaneMesh" id="PlaneMesh_jhuhl"]
+material = SubResource("ShaderMaterial_xmovh")
+size = Vector2(33.2, 25.2)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_47ejy"]
-size = Vector3(23.6, 2.4, 14)
+[sub_resource type="BoxShape3D" id="BoxShape3D_ier5i"]
+size = Vector3(22, 2.4, 14)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tkn3g"]
+render_priority = 0
+shader = ExtResource("5_2kgc7")
+shader_parameter/inner = Vector4(28.7, 2.6, 51.3, 17.9)
+shader_parameter/outer = Vector4(27.2, 1.2, 52.8, 18.8)
+shader_parameter/limit = Vector4(26.8, 0.8, 53.199997, 19.199999)
+shader_parameter/plane_y = -5.000000238418579
+shader_parameter/floor_rect = Vector4(29, 3, 51, 17)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_47ejy"]
+material = SubResource("ShaderMaterial_tkn3g")
+size = Vector2(33.2, 25.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yesgf"]
+size = Vector3(22, 2.4, 14)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_djsob"]
 render_priority = 0
 shader = ExtResource("5_2kgc7")
-shader_parameter/inner = Vector4(28.1, 2, 51.9, 18.5)
-shader_parameter/outer = Vector4(27, 1, 53, 19)
-shader_parameter/limit = Vector4(26, 1, 54, 19)
+shader_parameter/inner = Vector4(2.7, 20.6, 25.3, 35.9)
+shader_parameter/outer = Vector4(1.2, 19.2, 26.8, 36.8)
+shader_parameter/limit = Vector4(0.8, 18.8, 27.199999, 37.199997)
 shader_parameter/plane_y = -5.000000238418579
+shader_parameter/floor_rect = Vector4(3, 21, 25, 35)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_jg02x"]
 material = SubResource("ShaderMaterial_djsob")
-size = Vector2(26, 21.6)
-center_offset = Vector3(0, 0, 1.8)
+size = Vector2(33.2, 25.2)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_bgdc1"]
-size = Vector3(23.6, 2.4, 14)
+[sub_resource type="BoxShape3D" id="BoxShape3D_bkpqy"]
+size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_nnhrc"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bgdc1"]
 render_priority = 0
 shader = ExtResource("5_2kgc7")
-shader_parameter/inner = Vector4(2.1, 20, 25.9, 36.5)
-shader_parameter/outer = Vector4(1, 19, 27, 37)
-shader_parameter/limit = Vector4(0, 19, 28, 37)
+shader_parameter/inner = Vector4(28.7, 20.6, 51.3, 35.9)
+shader_parameter/outer = Vector4(27.2, 19.2, 52.8, 36.8)
+shader_parameter/limit = Vector4(26.8, 18.8, 53.199997, 37.199997)
 shader_parameter/plane_y = -5.000000238418579
+shader_parameter/floor_rect = Vector4(29, 21, 51, 35)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_rw0cb"]
-material = SubResource("ShaderMaterial_nnhrc")
-size = Vector2(26, 21.6)
-center_offset = Vector3(0, 0, 1.8)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_553gu"]
-size = Vector3(23.6, 2.4, 14)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_n2kpp"]
-render_priority = 0
-shader = ExtResource("5_2kgc7")
-shader_parameter/inner = Vector4(28.1, 20, 51.9, 36.5)
-shader_parameter/outer = Vector4(27, 19, 53, 37)
-shader_parameter/limit = Vector4(26, 19, 54, 37)
-shader_parameter/plane_y = -5.000000238418579
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_uyddf"]
-material = SubResource("ShaderMaterial_n2kpp")
-size = Vector2(26, 21.6)
-center_offset = Vector3(0, 0, 1.8)
+[sub_resource type="PlaneMesh" id="PlaneMesh_nnhrc"]
+material = SubResource("ShaderMaterial_bgdc1")
+size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6dghf"]
 size = Vector3(22, 1, 2)
@@ -143,7 +155,7 @@ size = Vector3(1.4, 1, 1.2)
 [sub_resource type="BoxShape3D" id="Shape"]
 size = Vector3(2, 2.4, 0.3)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_sd55r"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_rw0cb"]
 size = Vector3(2, 1.6, 2.6)
 
 [sub_resource type="BoxShape3D" id="Trigger"]
@@ -198,74 +210,86 @@ height = 0.34
 radial_segments = 6
 rings = 3
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_kto1a"]
-size = Vector3(23.6, 2.4, 14)
+[sub_resource type="BoxShape3D" id="BoxShape3D_8asnb"]
+size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ex805"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_553gu"]
 render_priority = 0
 shader = ExtResource("5_2kgc7")
-shader_parameter/inner = Vector4(2.1, 2, 25.9, 18.5)
-shader_parameter/outer = Vector4(1, 1, 27, 19)
-shader_parameter/limit = Vector4(0, 1, 28, 19)
+shader_parameter/inner = Vector4(2.7, 2.6, 25.3, 17.9)
+shader_parameter/outer = Vector4(1.2, 1.2, 26.8, 18.8)
+shader_parameter/limit = Vector4(0.8, 0.8, 27.199999, 19.199999)
 shader_parameter/plane_y = 3.0
+shader_parameter/floor_rect = Vector4(3, 3, 25, 17)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_u111u"]
-material = SubResource("ShaderMaterial_ex805")
-size = Vector2(26, 21.6)
-center_offset = Vector3(0, 0, 1.8)
+[sub_resource type="PlaneMesh" id="PlaneMesh_n2kpp"]
+material = SubResource("ShaderMaterial_553gu")
+size = Vector2(33.2, 25.2)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_wl76a"]
-size = Vector3(23.6, 2.4, 14)
+[sub_resource type="BoxShape3D" id="BoxShape3D_tfrkv"]
+size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_lkufv"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uyddf"]
 render_priority = 0
 shader = ExtResource("5_2kgc7")
-shader_parameter/inner = Vector4(28.1, 2, 51.9, 18.5)
-shader_parameter/outer = Vector4(27, 1, 53, 19)
-shader_parameter/limit = Vector4(26, 1, 54, 19)
+shader_parameter/inner = Vector4(28.7, 2.6, 51.3, 17.9)
+shader_parameter/outer = Vector4(27.2, 1.2, 52.8, 18.8)
+shader_parameter/limit = Vector4(26.8, 0.8, 53.199997, 19.199999)
 shader_parameter/plane_y = 3.0
+shader_parameter/floor_rect = Vector4(29, 3, 51, 17)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_opqgd"]
-material = SubResource("ShaderMaterial_lkufv")
-size = Vector2(26, 21.6)
-center_offset = Vector3(0, 0, 1.8)
+[sub_resource type="PlaneMesh" id="PlaneMesh_sd55r"]
+material = SubResource("ShaderMaterial_uyddf")
+size = Vector2(33.2, 25.2)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_epded"]
-size = Vector3(23.6, 2.4, 14)
+[sub_resource type="BoxShape3D" id="BoxShape3D_pucgk"]
+size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5k16b"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kto1a"]
 render_priority = 0
 shader = ExtResource("5_2kgc7")
-shader_parameter/inner = Vector4(2.1, 20, 25.9, 36.5)
-shader_parameter/outer = Vector4(1, 19, 27, 37)
-shader_parameter/limit = Vector4(0, 19, 28, 37)
+shader_parameter/inner = Vector4(2.7, 20.6, 25.3, 35.9)
+shader_parameter/outer = Vector4(1.2, 19.2, 26.8, 36.8)
+shader_parameter/limit = Vector4(0.8, 18.8, 27.199999, 37.199997)
 shader_parameter/plane_y = 3.0
+shader_parameter/floor_rect = Vector4(3, 21, 25, 35)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_c0uri"]
-material = SubResource("ShaderMaterial_5k16b")
-size = Vector2(26, 21.6)
-center_offset = Vector3(0, 0, 1.8)
+[sub_resource type="PlaneMesh" id="PlaneMesh_ex805"]
+material = SubResource("ShaderMaterial_kto1a")
+size = Vector2(33.2, 25.2)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_aev7p"]
-size = Vector3(23.6, 2.4, 14)
+[sub_resource type="BoxShape3D" id="BoxShape3D_uu46w"]
+size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wyicj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u111u"]
 render_priority = 0
 shader = ExtResource("5_2kgc7")
-shader_parameter/inner = Vector4(28.1, 20, 51.9, 36.5)
-shader_parameter/outer = Vector4(27, 19, 53, 37)
-shader_parameter/limit = Vector4(26, 19, 54, 37)
+shader_parameter/inner = Vector4(28.7, 20.6, 51.3, 35.9)
+shader_parameter/outer = Vector4(27.2, 19.2, 52.8, 36.8)
+shader_parameter/limit = Vector4(26.8, 18.8, 53.199997, 37.199997)
 shader_parameter/plane_y = 3.0
+shader_parameter/floor_rect = Vector4(29, 21, 51, 35)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_8m0sy"]
-material = SubResource("ShaderMaterial_wyicj")
-size = Vector2(26, 21.6)
-center_offset = Vector3(0, 0, 1.8)
+[sub_resource type="PlaneMesh" id="PlaneMesh_wl76a"]
+material = SubResource("ShaderMaterial_u111u")
+size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_n1d8o"]
 size = Vector3(22, 1, 2)
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_q76en"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_lkufv"]
 height = 0.7
 radius = 0.27
 
@@ -276,100 +300,112 @@ radius = 0.35
 [sub_resource type="SphereShape3D" id="LiftShape"]
 radius = 0.6
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_r8ubj"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_opqgd"]
 size = Vector3(1.6, 1.5, 0.8)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_rxebs"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_epded"]
 size = Vector3(1.8, 2.4, 0.7)
 
 [sub_resource type="BoxMesh" id="Opening"]
 size = Vector3(1.5, 0.02, 2)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p5xdt"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5k16b"]
 shading_mode = 0
 albedo_color = Color(0.02, 0.02, 0.03, 1)
 
 [sub_resource type="BoxMesh" id="Step"]
 size = Vector3(1.5, 0.03, 0.22)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_me6p2"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c0uri"]
 albedo_color = Color(0.42, 0.37, 0.33, 1)
 roughness = 0.9
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iixbe"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aev7p"]
 albedo_color = Color(0.27, 0.24, 0.21, 1)
 roughness = 0.9
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ijx4e"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wyicj"]
 albedo_color = Color(0.14, 0.12, 0.11, 1)
 roughness = 0.9
 
-[sub_resource type="BoxMesh" id="BoxMesh_14841"]
+[sub_resource type="BoxMesh" id="BoxMesh_8m0sy"]
 size = Vector3(1.8, 2.4, 0.05)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_tvwpq"]
-size = Vector3(23.6, 2.4, 14)
+[sub_resource type="BoxShape3D" id="BoxShape3D_qwhhl"]
+size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_j5roy"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q76en"]
 render_priority = 0
 shader = ExtResource("5_2kgc7")
-shader_parameter/inner = Vector4(2.1, 2, 25.9, 18.5)
-shader_parameter/outer = Vector4(1, 1, 27, 19)
-shader_parameter/limit = Vector4(0, 1, 28, 19)
+shader_parameter/inner = Vector4(2.7, 2.6, 25.3, 17.9)
+shader_parameter/outer = Vector4(1.2, 1.2, 26.8, 18.8)
+shader_parameter/limit = Vector4(0.8, 0.8, 27.199999, 19.199999)
 shader_parameter/plane_y = 10.999999761581421
+shader_parameter/floor_rect = Vector4(3, 3, 25, 17)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_gewpb"]
-material = SubResource("ShaderMaterial_j5roy")
-size = Vector2(26, 21.6)
-center_offset = Vector3(0, 0, 1.8)
+[sub_resource type="PlaneMesh" id="PlaneMesh_r8ubj"]
+material = SubResource("ShaderMaterial_q76en")
+size = Vector2(33.2, 25.2)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_hjhi2"]
-size = Vector3(23.6, 2.4, 14)
+[sub_resource type="BoxShape3D" id="BoxShape3D_uwrga"]
+size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_g438t"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rxebs"]
 render_priority = 0
 shader = ExtResource("5_2kgc7")
-shader_parameter/inner = Vector4(28.1, 2, 51.9, 18.5)
-shader_parameter/outer = Vector4(27, 1, 53, 19)
-shader_parameter/limit = Vector4(26, 1, 54, 19)
+shader_parameter/inner = Vector4(28.7, 2.6, 51.3, 17.9)
+shader_parameter/outer = Vector4(27.2, 1.2, 52.8, 18.8)
+shader_parameter/limit = Vector4(26.8, 0.8, 53.199997, 19.199999)
 shader_parameter/plane_y = 10.999999761581421
+shader_parameter/floor_rect = Vector4(29, 3, 51, 17)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_jqlvi"]
-material = SubResource("ShaderMaterial_g438t")
-size = Vector2(26, 21.6)
-center_offset = Vector3(0, 0, 1.8)
+[sub_resource type="PlaneMesh" id="PlaneMesh_p5xdt"]
+material = SubResource("ShaderMaterial_rxebs")
+size = Vector2(33.2, 25.2)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_inmor"]
-size = Vector3(23.6, 2.4, 14)
+[sub_resource type="BoxShape3D" id="BoxShape3D_5ecsj"]
+size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_3n5b8"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_me6p2"]
 render_priority = 0
 shader = ExtResource("5_2kgc7")
-shader_parameter/inner = Vector4(2.1, 20, 25.9, 36.5)
-shader_parameter/outer = Vector4(1, 19, 27, 37)
-shader_parameter/limit = Vector4(0, 19, 28, 37)
+shader_parameter/inner = Vector4(2.7, 20.6, 25.3, 35.9)
+shader_parameter/outer = Vector4(1.2, 19.2, 26.8, 36.8)
+shader_parameter/limit = Vector4(0.8, 18.8, 27.199999, 37.199997)
 shader_parameter/plane_y = 10.999999761581421
+shader_parameter/floor_rect = Vector4(3, 21, 25, 35)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_2gpsm"]
-material = SubResource("ShaderMaterial_3n5b8")
-size = Vector2(26, 21.6)
-center_offset = Vector3(0, 0, 1.8)
+[sub_resource type="PlaneMesh" id="PlaneMesh_iixbe"]
+material = SubResource("ShaderMaterial_me6p2")
+size = Vector2(33.2, 25.2)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_vserd"]
-size = Vector3(23.6, 2.4, 14)
+[sub_resource type="BoxShape3D" id="BoxShape3D_eafar"]
+size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bshie"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ijx4e"]
 render_priority = 0
 shader = ExtResource("5_2kgc7")
-shader_parameter/inner = Vector4(28.1, 20, 51.9, 36.5)
-shader_parameter/outer = Vector4(27, 19, 53, 37)
-shader_parameter/limit = Vector4(26, 19, 54, 37)
+shader_parameter/inner = Vector4(28.7, 20.6, 51.3, 35.9)
+shader_parameter/outer = Vector4(27.2, 19.2, 52.8, 36.8)
+shader_parameter/limit = Vector4(26.8, 18.8, 53.199997, 37.199997)
 shader_parameter/plane_y = 10.999999761581421
+shader_parameter/floor_rect = Vector4(29, 21, 51, 35)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_l6wl6"]
-material = SubResource("ShaderMaterial_bshie")
-size = Vector2(26, 21.6)
-center_offset = Vector3(0, 0, 1.8)
+[sub_resource type="PlaneMesh" id="PlaneMesh_14841"]
+material = SubResource("ShaderMaterial_ijx4e")
+size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_h8srf"]
 size = Vector3(2, 2.4, 1.2)
@@ -414,12 +450,12 @@ room_index = 8
 display_name = "PLACE_CH_MAUSOLEUM"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Sotano/Mausoleo" unique_id=1736954339]
-shape = SubResource("BoxShape3D_xmovh")
+shape = SubResource("BoxShape3D_308dp")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/Mausoleo" unique_id=663555302]
+[node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/Mausoleo" unique_id=1247195257]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_tkn3g")
+mesh = SubResource("PlaneMesh_jhuhl")
 
 [node name="Guardian" type="Area3D" parent="Sotano" unique_id=1148514710]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 10)
@@ -430,12 +466,12 @@ map_cell = Vector2i(1, 0)
 boss_room = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Sotano/Guardian" unique_id=355475746]
-shape = SubResource("BoxShape3D_47ejy")
+shape = SubResource("BoxShape3D_ier5i")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/Guardian" unique_id=1964326930]
+[node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/Guardian" unique_id=1506701647]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_jg02x")
+mesh = SubResource("PlaneMesh_47ejy")
 
 [node name="CriptaOscura" type="Area3D" parent="Sotano" unique_id=1786474763]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 1.2, 28)
@@ -445,12 +481,12 @@ display_name = "PLACE_CH_DARK_CRYPT"
 map_cell = Vector2i(0, 1)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Sotano/CriptaOscura" unique_id=849526528]
-shape = SubResource("BoxShape3D_bgdc1")
+shape = SubResource("BoxShape3D_yesgf")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/CriptaOscura" unique_id=481331354]
+[node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/CriptaOscura" unique_id=145131707]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_rw0cb")
+mesh = SubResource("PlaneMesh_jg02x")
 
 [node name="Cripta" type="Area3D" parent="Sotano" unique_id=1836233876]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 28)
@@ -460,12 +496,12 @@ display_name = "PLACE_CH_CRYPT"
 map_cell = Vector2i(1, 1)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Sotano/Cripta" unique_id=2011139786]
-shape = SubResource("BoxShape3D_553gu")
+shape = SubResource("BoxShape3D_bkpqy")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/Cripta" unique_id=1892834145]
+[node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/Cripta" unique_id=1511336176]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_uyddf")
+mesh = SubResource("PlaneMesh_nnhrc")
 
 [node name="MausoleoPit" type="Area3D" parent="Sotano" unique_id=155934991]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, -1.2, 10)
@@ -616,7 +652,7 @@ script = ExtResource("10_xh8sa")
 
 [node name="CollisionShape3D" parent="Sotano/BossDoor/Interactable" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
-shape = SubResource("BoxShape3D_sd55r")
+shape = SubResource("BoxShape3D_rw0cb")
 
 [node name="PersistentFlag" parent="Sotano/BossDoor" index="4"]
 script = ExtResource("13_cvypj")
@@ -926,12 +962,12 @@ script = ExtResource("4_0cvf7")
 display_name = "PLACE_CH_OSSUARY"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlantaBaja/Osario" unique_id=1034137515]
-shape = SubResource("BoxShape3D_kto1a")
+shape = SubResource("BoxShape3D_8asnb")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/Osario" unique_id=1087388965]
+[node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/Osario" unique_id=784304688]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_u111u")
+mesh = SubResource("PlaneMesh_n2kpp")
 
 [node name="Abismo" type="Area3D" parent="PlantaBaja" unique_id=1166707979]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 10)
@@ -941,12 +977,12 @@ display_name = "PLACE_CH_CHASM"
 map_cell = Vector2i(1, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlantaBaja/Abismo" unique_id=1273304869]
-shape = SubResource("BoxShape3D_wl76a")
+shape = SubResource("BoxShape3D_tfrkv")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/Abismo" unique_id=176739436]
+[node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/Abismo" unique_id=2059395825]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_opqgd")
+mesh = SubResource("PlaneMesh_sd55r")
 
 [node name="Entrada" type="Area3D" parent="PlantaBaja" unique_id=1396067275]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 1.2, 28)
@@ -956,12 +992,12 @@ display_name = "PLACE_CH_ENTRANCE"
 map_cell = Vector2i(0, 1)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlantaBaja/Entrada" unique_id=525827890]
-shape = SubResource("BoxShape3D_epded")
+shape = SubResource("BoxShape3D_pucgk")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/Entrada" unique_id=275198246]
+[node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/Entrada" unique_id=1747754527]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_c0uri")
+mesh = SubResource("PlaneMesh_ex805")
 
 [node name="SalaCofre" type="Area3D" parent="PlantaBaja" unique_id=914835876]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 28)
@@ -971,12 +1007,12 @@ display_name = "PLACE_CH_CHEST_HALL"
 map_cell = Vector2i(1, 1)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlantaBaja/SalaCofre" unique_id=1182654310]
-shape = SubResource("BoxShape3D_aev7p")
+shape = SubResource("BoxShape3D_uu46w")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/SalaCofre" unique_id=540752809]
+[node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/SalaCofre" unique_id=2044394816]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_8m0sy")
+mesh = SubResource("PlaneMesh_wl76a")
 
 [node name="AbismoPit" type="Area3D" parent="PlantaBaja" unique_id=281186349]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, -1.2, 12)
@@ -1066,7 +1102,7 @@ script = ExtResource("10_xh8sa")
 
 [node name="CollisionShape3D" parent="PlantaBaja/OsarioDoor/Interactable" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
-shape = SubResource("BoxShape3D_sd55r")
+shape = SubResource("BoxShape3D_rw0cb")
 
 [node name="PersistentFlag" parent="PlantaBaja/OsarioDoor" index="4"]
 script = ExtResource("13_cvypj")
@@ -1083,7 +1119,7 @@ mesh = ExtResource("32_lsqbk")
 
 [node name="CollisionShape3D" parent="PlantaBaja/OsarioPot1/Body" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
-shape = SubResource("CylinderShape3D_q76en")
+shape = SubResource("CylinderShape3D_lkufv")
 
 [node name="Hurtbox" parent="PlantaBaja/OsarioPot1" index="1"]
 collision_layer = 16
@@ -1119,7 +1155,7 @@ mesh = ExtResource("32_lsqbk")
 
 [node name="CollisionShape3D" parent="PlantaBaja/OsarioPot2/Body" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
-shape = SubResource("CylinderShape3D_q76en")
+shape = SubResource("CylinderShape3D_lkufv")
 
 [node name="Hurtbox" parent="PlantaBaja/OsarioPot2" index="1"]
 collision_layer = 16
@@ -1159,11 +1195,11 @@ to = NodePath("../../Sotano/FromChasm")
 
 [node name="CollisionShape3D" parent="PlantaBaja/AbismoStairs" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0.5)
-shape = SubResource("BoxShape3D_r8ubj")
+shape = SubResource("BoxShape3D_opqgd")
 
 [node name="CollisionShape3D" parent="PlantaBaja/AbismoStairs/Back" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.65)
-shape = SubResource("BoxShape3D_rxebs")
+shape = SubResource("BoxShape3D_epded")
 
 [node name="Visual" parent="PlantaBaja/AbismoStairs" index="2"]
 visible = false
@@ -1171,27 +1207,27 @@ visible = false
 [node name="Opening" parent="PlantaBaja/AbismoStairs/Visual" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
 mesh = SubResource("Opening")
-surface_material_override/0 = SubResource("StandardMaterial3D_p5xdt")
+surface_material_override/0 = SubResource("StandardMaterial3D_5k16b")
 
 [node name="Step1" parent="PlantaBaja/AbismoStairs/Visual" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0.75)
 mesh = SubResource("Step")
-surface_material_override/0 = SubResource("StandardMaterial3D_me6p2")
+surface_material_override/0 = SubResource("StandardMaterial3D_c0uri")
 
 [node name="Step2" parent="PlantaBaja/AbismoStairs/Visual" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0.3)
 mesh = SubResource("Step")
-surface_material_override/0 = SubResource("StandardMaterial3D_iixbe")
+surface_material_override/0 = SubResource("StandardMaterial3D_aev7p")
 
 [node name="Step3" parent="PlantaBaja/AbismoStairs/Visual" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, -0.15)
 mesh = SubResource("Step")
-surface_material_override/0 = SubResource("StandardMaterial3D_ijx4e")
+surface_material_override/0 = SubResource("StandardMaterial3D_wyicj")
 
 [node name="Void" parent="PlantaBaja/AbismoStairs/Visual" index="4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.97)
-mesh = SubResource("BoxMesh_14841")
-surface_material_override/0 = SubResource("StandardMaterial3D_p5xdt")
+mesh = SubResource("BoxMesh_8m0sy")
+surface_material_override/0 = SubResource("StandardMaterial3D_5k16b")
 
 [node name="EntradaStairs" parent="PlantaBaja" unique_id=1897855459 node_paths=PackedStringArray("to") instance=ExtResource("20_au2ht")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, 0, 24)
@@ -1457,12 +1493,12 @@ room_index = 4
 display_name = "PLACE_CH_LEAPS"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PisoAlto/Saltos" unique_id=1281431642]
-shape = SubResource("BoxShape3D_tvwpq")
+shape = SubResource("BoxShape3D_qwhhl")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Saltos" unique_id=1627719874]
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Saltos" unique_id=175352719]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_gewpb")
+mesh = SubResource("PlaneMesh_r8ubj")
 
 [node name="Mirador" type="Area3D" parent="PisoAlto" unique_id=1966898364]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 10)
@@ -1472,12 +1508,12 @@ display_name = "PLACE_CH_LOOKOUT"
 map_cell = Vector2i(1, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PisoAlto/Mirador" unique_id=958131720]
-shape = SubResource("BoxShape3D_hjhi2")
+shape = SubResource("BoxShape3D_uwrga")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Mirador" unique_id=527056774]
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Mirador" unique_id=2005010223]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_jqlvi")
+mesh = SubResource("PlaneMesh_p5xdt")
 
 [node name="Rellano" type="Area3D" parent="PisoAlto" unique_id=1940565925]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 1.2, 28)
@@ -1487,12 +1523,12 @@ display_name = "PLACE_CH_LANDING"
 map_cell = Vector2i(0, 1)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PisoAlto/Rellano" unique_id=685165382]
-shape = SubResource("BoxShape3D_inmor")
+shape = SubResource("BoxShape3D_5ecsj")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Rellano" unique_id=796361596]
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Rellano" unique_id=1549942155]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_2gpsm")
+mesh = SubResource("PlaneMesh_iixbe")
 
 [node name="Agrietada" type="Area3D" parent="PisoAlto" unique_id=800773184]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 28)
@@ -1502,12 +1538,12 @@ display_name = "PLACE_CH_CRACKED"
 map_cell = Vector2i(1, 1)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PisoAlto/Agrietada" unique_id=2024558862]
-shape = SubResource("BoxShape3D_vserd")
+shape = SubResource("BoxShape3D_eafar")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Agrietada" unique_id=1915795281]
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Agrietada" unique_id=1549783168]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_l6wl6")
+mesh = SubResource("PlaneMesh_14841")
 
 [node name="RellanoShutter" parent="PisoAlto" unique_id=354031693 node_paths=PackedStringArray("room") instance=ExtResource("16_eqsxu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 19)
@@ -1549,7 +1585,7 @@ script = ExtResource("10_xh8sa")
 
 [node name="CollisionShape3D" parent="PisoAlto/RellanoShutter/Interactable" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
-shape = SubResource("BoxShape3D_sd55r")
+shape = SubResource("BoxShape3D_rw0cb")
 
 [node name="PersistentFlag" parent="PisoAlto/RellanoShutter" index="4"]
 script = ExtResource("13_cvypj")
@@ -1594,7 +1630,7 @@ script = ExtResource("10_xh8sa")
 
 [node name="CollisionShape3D" parent="PisoAlto/RellanoLocked/Interactable" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
-shape = SubResource("BoxShape3D_sd55r")
+shape = SubResource("BoxShape3D_rw0cb")
 
 [node name="PersistentFlag" parent="PisoAlto/RellanoLocked" index="4"]
 script = ExtResource("13_cvypj")
@@ -1678,7 +1714,7 @@ mesh = ExtResource("32_lsqbk")
 
 [node name="CollisionShape3D" parent="PisoAlto/AgrietadaPot1/Body" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
-shape = SubResource("CylinderShape3D_q76en")
+shape = SubResource("CylinderShape3D_lkufv")
 
 [node name="Hurtbox" parent="PisoAlto/AgrietadaPot1" index="1"]
 collision_layer = 16
@@ -1714,7 +1750,7 @@ mesh = ExtResource("32_lsqbk")
 
 [node name="CollisionShape3D" parent="PisoAlto/AgrietadaPot2/Body" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
-shape = SubResource("CylinderShape3D_q76en")
+shape = SubResource("CylinderShape3D_lkufv")
 
 [node name="Hurtbox" parent="PisoAlto/AgrietadaPot2" index="1"]
 collision_layer = 16
@@ -1748,11 +1784,11 @@ to = NodePath("../../PlantaBaja/FromUpper")
 
 [node name="CollisionShape3D" parent="PisoAlto/RellanoStairs" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0.5)
-shape = SubResource("BoxShape3D_r8ubj")
+shape = SubResource("BoxShape3D_opqgd")
 
 [node name="CollisionShape3D" parent="PisoAlto/RellanoStairs/Back" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.65)
-shape = SubResource("BoxShape3D_rxebs")
+shape = SubResource("BoxShape3D_epded")
 
 [node name="Visual" parent="PisoAlto/RellanoStairs" index="2"]
 visible = false
@@ -1760,27 +1796,27 @@ visible = false
 [node name="Opening" parent="PisoAlto/RellanoStairs/Visual" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
 mesh = SubResource("Opening")
-surface_material_override/0 = SubResource("StandardMaterial3D_p5xdt")
+surface_material_override/0 = SubResource("StandardMaterial3D_5k16b")
 
 [node name="Step1" parent="PisoAlto/RellanoStairs/Visual" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0.75)
 mesh = SubResource("Step")
-surface_material_override/0 = SubResource("StandardMaterial3D_me6p2")
+surface_material_override/0 = SubResource("StandardMaterial3D_c0uri")
 
 [node name="Step2" parent="PisoAlto/RellanoStairs/Visual" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0.3)
 mesh = SubResource("Step")
-surface_material_override/0 = SubResource("StandardMaterial3D_iixbe")
+surface_material_override/0 = SubResource("StandardMaterial3D_aev7p")
 
 [node name="Step3" parent="PisoAlto/RellanoStairs/Visual" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, -0.15)
 mesh = SubResource("Step")
-surface_material_override/0 = SubResource("StandardMaterial3D_ijx4e")
+surface_material_override/0 = SubResource("StandardMaterial3D_wyicj")
 
 [node name="Void" parent="PisoAlto/RellanoStairs/Visual" index="4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.97)
-mesh = SubResource("BoxMesh_14841")
-surface_material_override/0 = SubResource("StandardMaterial3D_p5xdt")
+mesh = SubResource("BoxMesh_8m0sy")
+surface_material_override/0 = SubResource("StandardMaterial3D_5k16b")
 
 [node name="Torch_Saltos_0" parent="PisoAlto" unique_id=1558699965 instance=ExtResource("22_0dwue")]
 transform = Transform3D(1, 0, 0, 0, 0.9396926, 0.34202012, 0, -0.34202012, 0.9396926, 8, 1.9, 2.9333334)
@@ -2005,9 +2041,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 17.4, 38)
 fov = 40.0
 script = ExtResource("51_ay6bo")
 target_node = NodePath("../Player")
-offset = Vector3(0, 68.9, 57.9)
-orthographic = true
-ortho_size = 14.6
+offset = Vector3(0, 17.6, 14.8)
+field_of_view = 42.0
 wall_height = 5.4
 mask_margin = 2.0
 south_wall_cut = 3.6

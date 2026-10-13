@@ -27,13 +27,10 @@ const PILLAR_HEIGHT := 3.6
 ## Para encuadrar, la cámara mira el tope de la pared norte en el borde del piso: con esto llega a ver también la cresta.
 const FRAME_HEIGHT := 5.4
 const MASK_MARGIN := 2.0
-## La sala se ensancha hasta sus paredes de los costados (no arriba ni abajo, que ya entran): la cámara llena la pantalla
-## de alto y se corre de costado hasta mostrarlas.
-const ROOM_SIDE_GROWTH := 0.8
 ## Velo que oscurece la parte de afuera de las paredes hasta el negro de la máscara: arranca a esta distancia del piso.
-const FADE_START := {"n": 1.5, "s": 1.0, "e": 0.9, "o": 0.9}
+const FADE_START := {"n": 0.9, "s": 0.4, "e": 0.3, "o": 0.3}
 ## Y llega al negro a esta distancia (abajo la cresta se ve poco: la máscara la tapa antes).
-const FADE_END := {"n": 2.0, "s": 2.0, "e": 2.0, "o": 2.0}
+const FADE_END := {"n": 1.8, "s": 1.8, "e": 1.8, "o": 1.8}
 const FADE := preload("res://debug/la/borde_oscuro.gdshader")
 const BRAZIER_SCALE := 0.55
 ## Colgados de la cara de la pared, como en LA: a este alto y esto por delante de la roca.
@@ -41,9 +38,9 @@ const BRAZIER_HEIGHT := 1.9
 const BRAZIER_SETBACK := 0.25
 const BRAZIER_FLAME := 1.07
 const DOOR_LEAF_SCALE := Vector3(0.7, 0.8, 1.0)
-## Cámara ortográfica (como LA): las paredes de los costados tienen el mismo ancho arriba y abajo.
-const CAMERA_OFFSET := Vector3(0, 68.9, 57.9)
-const ORTHO_SIZE := 14.6
+## Cámara con perspectiva como LA: la sala se ve en trapecio (abajo más ancha) y asoman las caras de los costados.
+const CAMERA_OFFSET := Vector3(0, 17.6, 14.8)
+const FIELD_OF_VIEW := 42.0
 ## Como en LA, lo que está parado se echa hacia atrás (la parte de arriba hacia el norte) para mostrarle la cara a la cámara.
 const LEAN := -20.0
 const LEANED := {"pot.tscn": "Body/Model", "chest.tscn": "Model", "wall_torch.tscn": "."}
@@ -111,14 +108,10 @@ func _dress(level: Node) -> void:
 			level.set_editable_instance(node, true)
 		elif node is Area3D and "map_cell" in node:
 			_fade(level, node as Area3D)
-			var shape := node.get_node("CollisionShape3D") as CollisionShape3D
-			var box := shape.shape.duplicate() as BoxShape3D
-			box.size.x += ROOM_SIDE_GROWTH * 2.0
-			shape.shape = box
 		elif node is Camera3D and "cuts_south_wall" in node:
 			node.set("offset", CAMERA_OFFSET)
-			node.set("orthographic", true)
-			node.set("ortho_size", ORTHO_SIZE)
+			node.set("orthographic", false)
+			node.set("field_of_view", FIELD_OF_VIEW)
 			node.set("cuts_south_wall", true)
 			node.set("south_wall_cut", PILLAR_HEIGHT)
 			node.set("south_wall_reach", MASK_MARGIN - 0.3)
@@ -154,14 +147,14 @@ func _fade(level: Node, room: Area3D) -> void:
 			floor_rect.end.x + FADE_START["e"], floor_rect.end.y + FADE_START["n"]))
 	material.set_shader_parameter("outer", Vector4(floor_rect.position.x - FADE_END["o"], floor_rect.position.y - FADE_END["s"],
 			floor_rect.end.x + FADE_END["e"], floor_rect.end.y + FADE_END["n"]))
+	material.set_shader_parameter("floor_rect", Vector4(floor_rect.position.x, floor_rect.position.y, floor_rect.end.x, floor_rect.end.y))
 	var outer := floor_rect.grow(MASK_MARGIN)
-	var limit := outer.grow_individual(1.0, 0.0, 1.0, 0.0)
+	var limit := outer.grow(0.2)
 	material.set_shader_parameter("limit", Vector4(limit.position.x, limit.position.y, limit.end.x, limit.end.y))
 	var floor_y := center.y - size.y / 2.0
 	material.set_shader_parameter("plane_y", floor_y + WALL_HEIGHT)
 	var plane := PlaneMesh.new()
-	plane.size = outer.size + Vector2(0, PILLAR_HEIGHT)
-	plane.center_offset = Vector3(0, 0, PILLAR_HEIGHT / 2.0)
+	plane.size = outer.size + Vector2.ONE * PILLAR_HEIGHT * 2.0
 	plane.material = material
 	var veil := MeshInstance3D.new()
 	veil.name = "BordeOscuro"
