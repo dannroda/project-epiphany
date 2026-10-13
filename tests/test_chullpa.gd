@@ -138,6 +138,15 @@ func test_pushing_the_pot_onto_the_plate_opens_the_mummy_room() -> void:
 	tree.root.get_node(^"GameState").reset()
 
 
+func test_the_ossuary_keeps_the_big_pots() -> void:
+	await _start()
+	for pot_name in [^"PlantaBaja/OsarioPot1", ^"PlantaBaja/OsarioPot2"]:
+		var pot := level.get_node(pot_name) as Node3D
+		assert_true(pot is BigPot, "%s es una vasija grande" % pot_name)
+		assert_true(_room("PlantaBaja/Osario").contains(pot.global_position), "%s está en el osario" % pot_name)
+	tree.root.get_node(^"GameState").reset()
+
+
 func test_the_niche_behind_the_crack_keeps_bombs() -> void:
 	await _start()
 	var wall := level.get_node(^"PisoAlto/RellanoCrackedWall") as CrackedWall
@@ -147,6 +156,13 @@ func test_the_niche_behind_the_crack_keeps_bombs() -> void:
 	assert_true(wall.is_broken, "la bomba abre el nicho")
 	assert_eq(chest.item.id, &"bomb")
 	assert_true(chest.global_position.distance_to(wall.global_position) < 2.5, "el cofre está detrás de la grieta")
+	var pot := level.get_node(^"PisoAlto/RellanoBombPot") as Breakable
+	assert_true(_room("PisoAlto/Rellano").contains(pot.global_position), "una vasija del rellano da la bomba para abrirlo")
+	tree.root.get_node(^"GameState").give(Items.get_item(&"bomb_bag"))
+	var rng := RandomNumberGenerator.new()
+	for i in 20:
+		var entry: DropEntry = pot.drops.roll(rng)
+		assert_true(entry != null and entry.item.id == &"bomb", "siempre da bombas")
 	tree.root.get_node(^"GameState").reset()
 
 
