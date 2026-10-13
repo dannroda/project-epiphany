@@ -42,6 +42,11 @@
       "detail": "Hecho el 2026-10-13 (Daniel: la pluma es mejor como primer ítem de mazmorra). La Chullpa es D1 (pluma) y la Queñoa D2 (arco); ninguna pedía el ítem de la otra. Grafos renombrados a chullpa_graph.tres y quenoa_graph.tres; la Chullpa trae solo bombas y la Queñoa bombas y pluma. Id y flags de la Chullpa pasan de d2 a ch (prefijo por mazmorra: ch_, qv_, d1_ el templo). Escenario chullpa sin arco ni pluma, quenoa con pluma. GDD §6.1, §6.2, §8b y §8c. Falta: §7 y el boceto de 7.10 (dónde está la Chullpa, qué gatea el camino a la Arboleda) con la sesión del overworld; la Queñoa no usa la pluma todavía.",
       "done": true,
       "text": "Invertir D1 y D2: la pluma primero"
+    },
+    {
+      "detail": "Hecho el 2026-10-13 (4ed4b97d, Daniel: si). Raíces: un ojo con tiempo (6 s) abre la reja RaicesGate, rodeada de huecos frente a la puerta a la Sala de los ojos: flecha, salto con la pluma y pasar antes de que se cierre; una placa del otro lado (qv_eyes_step) la deja abierta para volver. Sala de los ojos: el nicho de la llave del jefe queda tras una fila de huecos (bomba, arco y pluma). Grafo y test_quenoa al día. Falta: que Daniel lo recorra y ajuste el tiempo del ojo.",
+      "done": true,
+      "text": "D2: segunda mitad de la Queñoa con la pluma"
     }
   ],
   "code": "11.113",
@@ -59,5 +64,5 @@
   ],
   "test": "",
   "title": "El templo del ojo pasa a ser la última mazmorra",
-  "updated_at": "2026-10-13T05:59:59.118Z"
+  "updated_at": "2026-10-13T07:00:48.491Z"
 }
