@@ -116,3 +116,43 @@ func test_bombs_open_the_shrine_and_the_mirror_from_d4_lights_its_chest() -> voi
 	assert_eq((level.get_node(^"ShrineCrystal") as LightReceiver).lit, true, "el cristal sigue encendido")
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(saves.slot_path(SLOT)))
 	state.reset()
+
+
+func _hold(tree: SceneTree, action: StringName, seconds: float) -> void:
+	var event := InputEventAction.new()
+	event.action = action
+	event.pressed = true
+	event.strength = 1.0
+	Input.parse_input_event(event)
+	await tree.create_timer(seconds).timeout
+	var release := InputEventAction.new()
+	release.action = action
+	Input.parse_input_event(release)
+	await _frames(tree, 2)
+
+
+func test_the_back_door_skips_neither_the_shortcut_nor_the_cracked_wall() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	var flow: Node = tree.root.get_node(^"SceneFlow")
+	state.reset()
+	await flow.travel_to("res://levels/shrine_cave.tscn", &"atajo")
+	await _frames(tree, 4)
+	var level := tree.current_scene
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	assert_eq((level.get_node(^"ShortcutGate") as Gate).is_open, false, "el atajo arranca cerrado")
+	assert_true(player.global_position.x > 13.0, "por atrás se entra del lado de afuera de la reja (%s)" % player.global_position)
+	await _hold(tree, &"move_left", 1.2)
+	assert_true(player.global_position.x > 12.5, "la reja cerrada no deja pasar al santuario (%s)" % player.global_position)
+
+	var wall := level.get_node(^"EntranceCrackedWall") as CrackedWall
+	assert_eq(wall.is_broken, false, "adentro, la salida a la explanada está tapada por el mismo muro agrietado")
+	player.global_position = (level.get_node(^"Spawn_entrada") as Node3D).global_position
+	await _hold(tree, &"move_backward", 1.2)
+	assert_eq(flow.traveling, false, "sin romperlo no se sale por ahí")
+	assert_eq(tree.current_scene, level, "y sigue en el santuario")
+
+	state.set_flag(wall.flag, true)
+	await _frames(tree, 2)
+	assert_eq(wall.is_broken, true, "roto afuera (el mismo flag), queda roto adentro")
+	state.reset()
