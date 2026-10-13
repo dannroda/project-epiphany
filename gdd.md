@@ -137,6 +137,7 @@ Las teclas se mapean por posición física (`physical_keycode`): WASD queda en e
 | Botella (+ poción) | Ítems | Consumible | Overworld: secreto opcional | Cura; deja la botella vacía |
 | Agua bendita | Ítems | Consumible (en botella) | Overworld: vertiente de la gruta, se rellena siempre | 20 s de bendición: el daño entra a la mitad; deja la botella vacía |
 | **Arco + flechas** | Ítems | Proyectil | **Mazmorra (ítem de la mazmorra)** | Interruptores de ojo lejanos, punto débil del jefe |
+| **Sandalias** | Ítems | Mantener: tomar impulso y correr recto hasta soltar o chocar (como las botas de Pegaso); chocar sacude árboles y muros agrietados | Overworld: mini quest en la Necrópolis, que pide el arco | Con la pluma en plena carrera, salto largo (≈5,5 m contra ≈3 m): islotes de la Laguna, angostura y otros huecos de 4 m |
 | Carcaj grande | Mejora | Pasivo (+max flechas) | Overworld, **post-mazmorra** (requiere arco) | Muestra el backtracking |
 | Llaves chicas, llave del jefe, mapa, brújula | Mazmorra | — | Mazmorra | Estructura de mazmorra |
 | Contenedor de corazón | Mejora | +1 corazón | Tras el jefe | Recompensa |
@@ -157,15 +158,18 @@ Las teclas se mapean por posición física (`physical_keycode`): WASD queda en e
 Inicio (espada + escudo de madera)
   └─ Pradera: enemigos, pasto, tablilla
       └─ Cueva ──► BOMBAS
-          └─ CHULLPA (D1, por ubicar) ──► sub-jefe ──► PLUMA ──► segunda mitad con la pluma ──► JEFE
-              └─ Angostura, Cardonal, pieza de la pradera (pluma) ──► QUEÑOA VIGÍA (D2, Arboleda) ──► sub-jefe ──► ARCO ──► JEFE
-                  └─ Flecha al ojo del puente de la quebrada ──► Necrópolis; islotes de la Laguna ──► D3 ──► GANCHO
-                      └─ Postes ──► Cumbre ──► D4 ──► ESCUDO ESPEJO
-                          └─ Sello del templo (reflejar haz de luz) ──► TEMPLO DEL OJO (última) ──► EL OJO CON MANOS
-Opcionales: botella/poción (muro agrietado), cota reforzada (puzzle de bloques), carcaj grande, disco solar (por ubicar)
+          └─ CHULLPA (D1, Cerros) ──► sub-jefe ──► PLUMA ──► segunda mitad con la pluma ──► JEFE
+              └─ Abismo de la cornisa del claro, pieza de la pradera (pluma) ──► QUEÑOA VIGÍA (D2, Arboleda) ──► sub-jefe ──► ARCO ──► JEFE
+                  └─ Flecha al ojo del puente de la quebrada ──► Necrópolis ──► mini quest (arco) ──► SANDALIAS
+                      └─ Dash + pluma: islotes de la Laguna ──► D3 ──► GANCHO; angostura (atajo Arboleda ↔ Cardonal)
+                          └─ Postes ──► Cumbre ──► D4 ──► ESCUDO ESPEJO
+                              └─ Sello del templo (reflejar haz de luz) ──► TEMPLO DEL OJO (última) ──► EL OJO CON MANOS
+Opcionales: secretos de bombas, flechas y poción (muros agrietados), cota reforzada (puzzle de bloques), carcaj grande (arco), contenedor del santuario (escudo espejo), disco solar (por ubicar)
 ```
 
-Es el orden decidido en 11.90 y cambiado en 11.113 (2026-10-12, Daniel): el templo del ojo pasa a ser la última mazmorra, porque su jefe se pensó como final, y se amplía para que use todos los ítems. El escudo espejo es el ítem de D4 y abre el sello; el templo se ve desde el principio en la Explanada con el sello cerrado. Los guantes de fuerza quedan fuera. El santuario ya no da el escudo espejo. El 2026-10-13 se invirtieron D1 y D2: la Chullpa (pluma) es la primera y la Queñoa (arco) la segunda; ninguna de las dos pedía el ítem de la otra. **Pendiente:** qué da el santuario (11.113); dónde está la Chullpa y qué gatea el camino a la Arboleda (7.10).
+**Sandalias y salto largo (2026-10-13, Daniel):** con la pluma de D1, los islotes de la Laguna llevaban a D3 sin el arco, y la angostura abría el este sin el puente. Ahora los dos pasos piden el salto largo: dash de las sandalias + pluma. Los huecos de salto largo miden 4 m (dos celdas), más de lo que cruza la pluma sola (≈3 m). Las sandalias se ganan en una mini quest de la Necrópolis, del otro lado del puente, que usa el arco: por ejemplo, darle a tres ojos en las chullpas. El abismo del Risco pasa a 6 m, así el carcaj sigue pidiendo flechas y no se cruza saltando.
+
+Es el orden decidido en 11.90 y cambiado en 11.113 (2026-10-12, Daniel): el templo del ojo pasa a ser la última mazmorra, porque su jefe se pensó como final, y se amplía para que use todos los ítems. El escudo espejo es el ítem de D4 y abre el sello; el templo se ve desde el principio en la Explanada con el sello cerrado. Los guantes de fuerza quedan fuera. El santuario ya no da el escudo espejo. El 2026-10-13 se invirtieron D1 y D2: la Chullpa (pluma) es la primera y la Queñoa (arco) la segunda; ninguna de las dos pedía el ítem de la otra. El santuario da un contenedor de corazón después de D4; la Chullpa está en los Cerros y a la Arboleda se entra con la pluma (7.10).
 
 **Ítem y sub-jefe (11.113):** el ítem de cada mazmorra lo guarda un sub-jefe basado en el jefe de esa mazmorra, que se vence sin ese ítem (con los anteriores, sí). La segunda mitad de la mazmorra se resuelve con el ítem, y los ítems de mazmorras anteriores se combinan con él para abrirla. Por ejemplo, en la Queñoa (D2) la segunda mitad combina el arco con los saltos de la pluma.
 

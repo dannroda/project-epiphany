@@ -1,0 +1,36 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Angostura e islotes a 4 m; abismo del Risco a 6 m"
+    },
+    {
+      "done": false,
+      "text": "Mini quest de la Necrópolis (arco → sandalias)"
+    },
+    {
+      "done": false,
+      "text": "Tests del overworld al día (angostura, islotes, Risco, quest)"
+    },
+    {
+      "done": false,
+      "text": "Recorrerlo (Daniel)"
+    }
+  ],
+  "code": "7.11",
+  "created_at": "2026-10-13T08:16:07.238Z",
+  "description": "Daniel (2026-10-13): la angostura (Arboleda ↔ Cardonal) y los huecos de los islotes de la Laguna pasan a 4 m (dos celdas): solo se cruzan con dash + pluma (11.118). El abismo del Risco pasa a 6 m. Mini quest en la Necrópolis, del otro lado del puente: una prueba con el arco (p. ej. tres ojos en las chullpas) da las sandalias. Depende de 11.118. [[gdd#progresion-gating]]",
+  "milestone": "m07",
+  "notes": "",
+  "order": 11,
+  "priority": "high",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "overworld",
+    "nivel"
+  ],
+  "test": "",
+  "title": "Overworld: huecos de salto largo y mini quest de las sandalias",
+  "updated_at": "2026-10-13T08:16:16.179Z"
+}

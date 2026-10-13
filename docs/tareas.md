@@ -1393,7 +1393,7 @@ Hecho 2026-10-08: kit `data/kits/gray_kit.tres` (lo arma `src/tools/build_gray_k
 
 **Bloqueada por:** 6.2 Puertas; 6.3 Llaves de mazmorra y HUD; 6.4 Bloques por grilla; 6.5 Interruptores y cableado
 
-## M7 — Overworld  (8/10)
+## M7 — Overworld  (8/11)
 
 Zona chica con el gating bombas → escudo espejo → sello del templo, y los secretos.
 
@@ -1629,6 +1629,17 @@ Daniel (2026-10-12, con el mapa de Link's Awakening de referencia): el mundo se 
   - Piezas de corazón: Pradera (escalón de 0,6 m, con la pluma), Risco, Islotes de la Laguna y Cerros (muro agrietado).
   - Secretos en muescas de risco con muro agrietado: Cumbre 5 bombas, Quebrada 10 flechas, Mirador poción, Cardonal 5 bombas. No hay rupias en el juego.
   Al día: test_overworld, test_jump, test_heart_pieces, test_secrets (nuevo), test_shrine, test_overworld_run, test_map, test_portal, test_temple_seal, test_grove_puzzle, test_enemy_ai, test_save_codec (escenarios re-firmados). test_zone_veil se borró. Flags nuevos en flag_registry. El puzzle de la Arboleda se corrió 2 m al norte: la orilla relajada del risco tapaba las placas. Pendiente: el texto de la tablilla del santuario habla del escudo espejo como premio. [[gdd#overworld-layout]]
+- [ ] Recorrerlo (Daniel)
+
+### 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `overworld`, `nivel`
+
+Daniel (2026-10-13): la angostura (Arboleda ↔ Cardonal) y los huecos de los islotes de la Laguna pasan a 4 m (dos celdas): solo se cruzan con dash + pluma (11.118). El abismo del Risco pasa a 6 m. Mini quest en la Necrópolis, del otro lado del puente: una prueba con el arco (p. ej. tres ojos en las chullpas) da las sandalias. Depende de 11.118. [[gdd#progresion-gating]]
+
+- [ ] Angostura e islotes a 4 m; abismo del Risco a 6 m
+- [ ] Mini quest de la Necrópolis (arco → sandalias)
+- [ ] Tests del overworld al día (angostura, islotes, Risco, quest)
 - [ ] Recorrerlo (Daniel)
 
 ## M8 — Contenido de mazmorra  (8/8)
@@ -2563,7 +2574,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (53/113)
+## M11 — Pulido: contenido y feel  (53/114)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4453,6 +4464,17 @@ Daniel (2026-10-13): la mayoría no va a entender a la primera que hay que tirar
 
 **Notas:** Sesión: diseño (-43 [a7e236]) con arte (-11 / -5d) para el aspecto.
 
+### 11.118 Sandalias: correr manteniendo y salto largo con la pluma · Pendiente
+
+**Prioridad:** alta · **Etiquetas:** `diseno`, `items`
+
+Daniel (2026-10-13): con la pluma de D1, los islotes llevaban a D3 sin el arco y la angostura abría el este sin el puente. Ítem nuevo, las sandalias (como las botas de Pegaso): se mantiene el botón, el player toma impulso medio segundo y corre recto hasta soltar o chocar; chocar sacude árboles y muros agrietados. Saltar con la pluma en plena carrera da el salto largo (≈5,5 m contra ≈3 m de la pluma sola). Se ganan en una mini quest de la Necrópolis que pide el arco (7.11). [[gdd#progresion-gating]]
+
+- [ ] Ítem sandalias (data/items, ícono, item get)
+- [ ] Estado de carrera: mantener, impulso, correr recto, chocar
+- [ ] Salto largo: la pluma en plena carrera salta ≈5,5 m
+- [ ] Tests (carrera, choque, salto largo vs. hueco de 4 m)
+
 ## M12 — Assets propios (Blender)  (6/18)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
@@ -5126,9 +5148,9 @@ Mockups D en el canvas (Coop_Ring, Solo_Ring): mantener la cruceta abre un anill
 
 **Relacionadas:** 11.79 Los corazones se rellenan al cambiar de escena
 
-### 13.11 Estado de un player que se cuela en el otro · Pendiente
+### 13.11 Estado de un player que se cuela en el otro · En curso
 
-**Prioridad:** alta · **Tamaño:** M · **Etiquetas:** `bug`, `coop`
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** Claude · **Etiquetas:** `bug`, `coop`
 
 Cosas que todavía son de todos o de P1: el `tree_root` del AnimationTree es un sub-recurso compartido y jumping/pushing/using_item cambian `ItemAnim` (la animación de uno se mete en el otro); `Feel.rumble` siempre vibra el pad 0; el apuntado con ratón depende de `InputDevice.current` global; `tremor_zone` usa un solo bool `_inside`; el tope de bombas cuenta las de todos; el banner de zona (`AreaZone._current` estático) cambia cuando cruza cualquiera.
 
