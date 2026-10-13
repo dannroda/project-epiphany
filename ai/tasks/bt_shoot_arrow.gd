@@ -12,10 +12,15 @@ const ARROW := preload("res://src/items/arrow/arrow.tscn")
 @export var recovery_time := 0.7
 
 var _shot := false
+var _bow: BowModel
 
 
 func _generate_name() -> String:
 	return "ShootArrow %ss" % draw_time
+
+
+func _setup() -> void:
+	_bow = agent.find_child("Bow", true, false) as BowModel
 
 
 func _enter() -> void:
@@ -24,9 +29,8 @@ func _enter() -> void:
 	agent.stop_moving()
 	agent.anim_player.play(&"CombatRanged/Ranged_Bow_Draw", 0.15)
 	agent.flash.warn(draw_time)
-	var bow = _bow()
-	if bow:
-		bow.nocked = true
+	if _bow:
+		_bow.nocked = true
 
 
 func _tick(_delta: float) -> Status:
@@ -35,9 +39,8 @@ func _tick(_delta: float) -> Status:
 		if target == null:
 			return FAILURE
 		_aim_at(target)
-		var bow = _bow()
-		if bow:
-			bow.draw = elapsed_time / draw_time
+		if _bow:
+			_bow.draw = elapsed_time / draw_time
 		if elapsed_time < draw_time:
 			return RUNNING
 		_shoot(target)
@@ -46,10 +49,7 @@ func _tick(_delta: float) -> Status:
 
 func _exit() -> void:
 	blackboard.set_var(drawing_var, false)
-	var bow = _bow()
-	if bow:
-		bow.draw = 0.0
-		bow.nocked = false
+	_release_bow()
 
 
 func _aim_at(target: Node3D) -> void:
@@ -60,10 +60,7 @@ func _shoot(target: Node3D) -> void:
 	_shot = true
 	blackboard.set_var(drawing_var, false)
 	agent.anim_player.play(&"CombatRanged/Ranged_Bow_Release", 0.05)
-	var bow = _bow()
-	if bow:
-		bow.draw = 0.0
-		bow.nocked = false
+	_release_bow()
 	var info: DamageInfo = agent.config.make_damage(agent)
 	info.reflectable = true
 	var arrow: Projectile = ARROW.instantiate()
@@ -76,9 +73,10 @@ func _shoot(target: Node3D) -> void:
 	Feel.sfx(&"click", from)
 
 
-func _bow() -> Node3D:
-	var bow := agent.find_child("Bow", true, false) as Node3D
-	return bow if bow and &"draw" in bow else null
+func _release_bow() -> void:
+	if is_instance_valid(_bow):
+		_bow.draw = 0.0
+		_bow.nocked = false
 
 
 ## Puede ser un player ya liberado (cambio de escena): entonces no hay objetivo.

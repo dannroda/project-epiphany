@@ -13,6 +13,7 @@ signal phase_changed(phase: int)
 signal bar_changed
 
 const LID_OPEN_ANGLE := 70.0
+const PHASES := {&"Phase1": 1, &"Phase2": 2, &"Phase3": 3}
 const ORB := preload("res://src/entities/projectile.tscn")
 const EYE_STUN_TIME := 3.0
 ## La fase 3 arranca con el ojo a este tanto de su vida (la última marca de la barra).
@@ -53,7 +54,7 @@ const SLOW_MOTION_TIME := 0.7
 @export_range(0.0, 1.0) var eye_open := 0.0:
 	set(value):
 		eye_open = value
-		if is_inside_tree():
+		if is_node_ready():
 			_apply_lids()
 @export var attacks: Array[BossAttack] = []
 @export var display_name := "BOSS_NAME"
@@ -97,6 +98,10 @@ var _body_base_glow := 1.0
 @onready var health: Health = $Health
 @onready var eye_hurtbox: Hurtbox = %EyeHurtbox
 @onready var phases: LimboHSM = $Phases
+@onready var _charge: MeshInstance3D = %Charge
+@onready var _eye_mesh: MeshInstance3D = $Body/Eye/Mesh
+@onready var _upper_lid: Node3D = %UpperLid
+@onready var _lower_lid: Node3D = %LowerLid
 
 
 func _ready() -> void:
@@ -104,12 +109,11 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 	_body_height = body.position.y
-	_eye_material = _own_material($Body/Eye/Mesh)
+	_eye_material = _own_material(_eye_mesh)
 	_body_material = _own_material($Body/Mesh)
 	_eye_base_glow = _eye_material.emission_energy_multiplier
 	_body_base_glow = _body_material.emission_energy_multiplier
-	var eye_mesh: MeshInstance3D = $Body/Eye/Mesh
-	_pupil_keys = Vector2i(eye_mesh.find_blend_shape_by_name(&"rendija"), eye_mesh.find_blend_shape_by_name(&"dilatada"))
+	_pupil_keys = Vector2i(_eye_mesh.find_blend_shape_by_name(&"rendija"), _eye_mesh.find_blend_shape_by_name(&"dilatada"))
 	arena = Rect2(global_position.x - 9.0, global_position.z - 3.0, 18.0, 10.0)
 	for hand in [hand_left, hand_right]:
 		hand.rest = hand_rest(hand)
@@ -146,7 +150,7 @@ func phase() -> int:
 	var state := phases.get_active_state() if phases.is_active() else null
 	if state == null:
 		return 0
-	return {&"Phase1": 1, &"Phase2": 2, &"Phase3": 3}.get(state.name, 0)
+	return PHASES.get(state.name, 0)
 
 
 ## Barra del HUD: en la fase 1, la vida que les queda a las dos manos; después, la del ojo.
@@ -171,7 +175,7 @@ func _process(delta: float) -> void:
 	if attacker is BossHand and attacker.striking:
 		lean = -signf(attacker.global_position.x - global_position.x) * deg_to_rad(LEAN_ANGLE)
 	body.rotation.z = lerpf(body.rotation.z, lean, 1.0 - exp(-4.0 * delta))
-	if eye_open >= 1.0 and not is_eye_stunned() and not %Charge.visible:
+	if eye_open >= 1.0 and not is_eye_stunned() and not _charge.visible:
 		_next_blink -= delta
 		if _next_blink <= 0.0:
 			_next_blink = rng.randf_range(BLINK_EVERY.x, BLINK_EVERY.y)
@@ -360,17 +364,16 @@ func _blast(point: Vector3) -> void:
 
 func _fire_orb() -> void:
 	_eye_attacking = true
-	var charge: MeshInstance3D = %Charge
-	charge.visible = true
-	charge.scale = Vector3.ONE * 0.1
+	_charge.visible = true
+	_charge.scale = Vector3.ONE * 0.1
 	_charge_tween = create_tween()
 	var grow := _charge_tween
-	grow.tween_property(charge, ^"scale", Vector3.ONE, orb_charge_time).set_ease(Tween.EASE_IN)
+	grow.tween_property(_charge, ^"scale", Vector3.ONE, orb_charge_time).set_ease(Tween.EASE_IN)
 	grow.parallel().tween_property(self, ^"_squint", 1.0, 0.2)
 	grow.parallel().tween_method(_pulse_eye, 0.0, 1.0, orb_charge_time)
 	grow.parallel().tween_property(self, ^"_pupil_goal", 1.0, orb_charge_time).set_ease(Tween.EASE_IN)
 	await grow.finished
-	charge.visible = false
+	_charge.visible = false
 	_eye_attacking = false
 	_flare_body()
 	_snap_pupil()
@@ -506,7 +509,7 @@ func _on_phase3_entered() -> void:
 func _cut_charge() -> void:
 	if _charge_tween:
 		_charge_tween.kill()
-	%Charge.visible = false
+	_charge.visible = false
 	_eye_attacking = false
 
 
@@ -562,17 +565,16 @@ func _snap_pupil() -> void:
 
 
 func _apply_pupil() -> void:
-	var eye_mesh: MeshInstance3D = $Body/Eye/Mesh
 	if _pupil_keys.x >= 0:
-		eye_mesh.set_blend_shape_value(_pupil_keys.x, maxf(-pupil, 0.0))
+		_eye_mesh.set_blend_shape_value(_pupil_keys.x, maxf(-pupil, 0.0))
 	if _pupil_keys.y >= 0:
-		eye_mesh.set_blend_shape_value(_pupil_keys.y, maxf(pupil, 0.0))
+		_eye_mesh.set_blend_shape_value(_pupil_keys.y, maxf(pupil, 0.0))
 
 
 func _apply_lids() -> void:
 	var open := eye_open * (1.0 - _blink) * (1.0 - SQUINT * _squint)
-	%UpperLid.rotation.x = deg_to_rad(-LID_OPEN_ANGLE * open)
-	%LowerLid.rotation.x = deg_to_rad(LID_OPEN_ANGLE * open)
+	_upper_lid.rotation.x = deg_to_rad(-LID_OPEN_ANGLE * open)
+	_lower_lid.rotation.x = deg_to_rad(LID_OPEN_ANGLE * open)
 
 
 ## Brillo del neón del ojo relativo al de la paleta (1 = normal).

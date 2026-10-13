@@ -27,6 +27,7 @@ var _solved := false
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
+		set_physics_process(false)
 		return
 	_plate_y = plate.position.y
 	collision_layer = 0
@@ -50,8 +51,6 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 
 func _physics_process(_delta: float) -> void:
-	if Engine.is_editor_hint():
-		return
 	var pressed := get_overlapping_bodies().any(_presses)
 	if pressed and not active:
 		_set_active(true, true)
@@ -61,6 +60,8 @@ func _physics_process(_delta: float) -> void:
 		_solved = true
 		if _persistent:
 			_persistent.value = true
+	if active and _solved and mode != Mode.HOLD:
+		set_physics_process(false)
 
 
 func _presses(body: Node3D) -> bool:
@@ -74,6 +75,8 @@ func _presses(body: Node3D) -> bool:
 
 func _set_active(on: bool, announce: bool) -> void:
 	active = on
+	if not on:
+		set_physics_process(true)
 	plate.position.y = _plate_y - (0.06 if on else 0.0)
 	if announce:
 		Feel.sfx(&"click", global_position)

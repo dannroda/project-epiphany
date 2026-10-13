@@ -80,6 +80,9 @@ func test_block_mode_only_a_block_solves_it() -> void:
 	for i in 6:
 		await tree.physics_frame
 	assert_eq(switch.active, true, "y queda resuelto")
+	assert_true(not switch.is_physics_processing(), "resuelto, deja de mirar qué tiene encima")
+	switch._set_active(false, false)
+	assert_true(switch.is_physics_processing(), "si se reinicia, vuelve a mirar")
 	state.reset()
 
 

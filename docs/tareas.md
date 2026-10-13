@@ -2576,7 +2576,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (61/114)
+## M11 — Pulido: contenido y feel  (62/114)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3691,30 +3691,30 @@ El minimapa recorre la escena entera cada frame: en mazmorra `room_pitch` es O(s
 
 **Archivos:** `src/ui/hud/minimap.gd`, `src/ui/menus/map_data.gd`, `src/ui/menus/map_page.gd`
 
-### 11.72 Búsquedas de nodos y trabajo por frame innecesario · Pendiente
+### 11.72 Búsquedas de nodos y trabajo por frame innecesario · Hecho
 
-**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `rendimiento`
+**Terminada:** 2026-10-13 · **Prioridad:** baja · **Tamaño:** M · **Responsable:** Claude · **Etiquetas:** `rendimiento`
 
 Varias búsquedas por frame o trabajo en nodos ociosos, baratos uno por uno pero que suman.
 
-- [ ] Jefe
+- [x] Jefe
   boss.gd: `%Charge`, `$Body/Eye/Mesh`, `%UpperLid`/`%LowerLid` en `@onready`; `phase()` sin Dictionary nuevo. boss_hand.gd: índices de blend shapes resueltos en `_ready`.
-- [ ] DoomAmbience
+- [x] DoomAmbience
   Cachear la cámara, salir si `level` ya llegó al objetivo; WorldEnvironment y sol por `@export`.
-- [ ] Room y FloorSwitch
+- [x] Room y FloorSwitch
   room.gd: `set_process(Engine.is_editor_hint())` y material del contorno cacheado; floor_switch.gd: apagar el physics_process de un ONCE resuelto.
-- [ ] Arquero
+- [x] Arquero
   bt_shoot_arrow.gd: el arco se busca una vez en `_setup()`, tipado.
-- [ ] Música
+- [x] Música
   music.gd: escuchar `MenuStack.changed` en vez de buscarlo cada frame.
-- [ ] Cámara
+- [x] Cámara
   top_down_camera.gd: `framed()` una vez por tick; exclude de rayos cacheado en joined/left; `DebugOverlay.watch` solo en debug.
-- [ ] Unirse a la partida
+- [x] Unirse a la partida
   players.gd: `preload` de la escena del player.
 
-**Prueba:** Profiler en templo y overworld sin get_node/find_child por frame en estos scripts.
+**Prueba:** Profiler en templo y overworld sin get_node/find_child por frame en estos scripts. Cubierto en test_wiring (el interruptor resuelto deja de procesar), test_rooms (Room sin _process en el juego) y test_audio › test_music_ducks_when_a_menu_opens.
 
-**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review). DoomAmbience: `world_environment` y `sun` son @export; sin asignar los busca entre los hijos del nivel (temple/templo no se tocaron).
 
 **Archivos:** `src/entities/boss/boss.gd`, `src/entities/boss/boss_hand.gd`, `src/world/doom_ambience.gd`, `src/world/room.gd`, `src/world/floor_switch.gd`, `ai/tasks/bt_shoot_arrow.gd`, `src/audio/music.gd`, `src/tools/top_down_camera.gd`, `src/state/players.gd`
 

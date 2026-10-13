@@ -60,3 +60,16 @@ func test_music_layers_follow_the_doom() -> void:
 	while stack.is_open():
 		stack.pop()
 	tree.root.get_node(^"GameState").reset()
+
+
+func test_music_ducks_when_a_menu_opens() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var music: Node = tree.root.get_node(^"Music")
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	stack.push(load("res://src/ui/menus/pause_menu.tscn").instantiate())
+	await tree.process_frame
+	assert_true(music._menu_open, "se entera por MenuStack.changed")
+	stack.clear()
+	await tree.process_frame
+	assert_true(not music._menu_open, "y al cerrarse, también")
+	tree.paused = false

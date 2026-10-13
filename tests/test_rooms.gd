@@ -147,4 +147,5 @@ func test_only_rooms_with_a_player_run() -> void:
 		assert_eq(skeleton.process_mode != Node.PROCESS_MODE_DISABLED, running, "el enemigo de %s corre solo %s" % [home.name, label])
 		assert_eq(spikes.process_mode != Node.PROCESS_MODE_DISABLED, running, "los pinchos también")
 	assert_true(home.occupied == false and away.occupied, "la sala sabe si tiene un player")
+	assert_true(not home.is_processing(), "en el juego no corre el _process del contorno del editor")
 	state.reset()

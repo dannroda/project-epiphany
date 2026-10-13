@@ -9,7 +9,7 @@ extends Node
 signal joined(player: PlayerCharacter)
 signal left(player: PlayerCharacter)
 
-const PLAYER_SCENE := "res://player/player.tscn"
+const PLAYER_SCENE := preload("res://player/player.tscn")
 ## Por ahora el co-op es de dos (los puzzles y el HUD para 3–4 vienen después).
 const MAX_PLAYERS := 2
 ## Mantener Start este rato saca al invitado; un toque pausa, como el de cualquiera.
@@ -193,7 +193,7 @@ func _spawn(slot: int) -> PlayerCharacter:
 	var scene := get_tree().current_scene
 	if first == null or scene == null:
 		return null
-	var player := (load(PLAYER_SCENE) as PackedScene).instantiate() as PlayerCharacter
+	var player := PLAYER_SCENE.instantiate() as PlayerCharacter
 	player.name = "Player%d" % (slot + 1)
 	player.controls.slot = slot
 	player.controls.assign(false, [guests[slot]] as Array[int])

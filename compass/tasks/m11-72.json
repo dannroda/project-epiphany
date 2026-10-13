@@ -1,44 +1,46 @@
 {
+  "assignee": "Claude",
   "checklist": [
     {
       "detail": "boss.gd: `%Charge`, `$Body/Eye/Mesh`, `%UpperLid`/`%LowerLid` en `@onready`; `phase()` sin Dictionary nuevo. boss_hand.gd: índices de blend shapes resueltos en `_ready`.",
-      "done": false,
+      "done": true,
       "text": "Jefe"
     },
     {
       "detail": "Cachear la cámara, salir si `level` ya llegó al objetivo; WorldEnvironment y sol por `@export`.",
-      "done": false,
+      "done": true,
       "text": "DoomAmbience"
     },
     {
       "detail": "room.gd: `set_process(Engine.is_editor_hint())` y material del contorno cacheado; floor_switch.gd: apagar el physics_process de un ONCE resuelto.",
-      "done": false,
+      "done": true,
       "text": "Room y FloorSwitch"
     },
     {
       "detail": "bt_shoot_arrow.gd: el arco se busca una vez en `_setup()`, tipado.",
-      "done": false,
+      "done": true,
       "text": "Arquero"
     },
     {
       "detail": "music.gd: escuchar `MenuStack.changed` en vez de buscarlo cada frame.",
-      "done": false,
+      "done": true,
       "text": "Música"
     },
     {
       "detail": "top_down_camera.gd: `framed()` una vez por tick; exclude de rayos cacheado en joined/left; `DebugOverlay.watch` solo en debug.",
-      "done": false,
+      "done": true,
       "text": "Cámara"
     },
     {
       "detail": "players.gd: `preload` de la escena del player.",
-      "done": false,
+      "done": true,
       "text": "Unirse a la partida"
     }
   ],
   "code": "11.72",
   "created_at": "2026-10-12T00:05:46.216Z",
   "description": "Varias búsquedas por frame o trabajo en nodos ociosos, baratos uno por uno pero que suman.",
+  "done_at": "2026-10-13T13:32:38.154Z",
   "files": [
     "src/entities/boss/boss.gd",
     "src/entities/boss/boss_hand.gd",
@@ -51,16 +53,16 @@
     "src/state/players.gd"
   ],
   "milestone": "m11",
-  "notes": "Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).",
+  "notes": "Sale de la revisión de código general del 2026-10-11 (skill godot-code-review). DoomAmbience: `world_environment` y `sun` son @export; sin asignar los busca entre los hijos del nivel (temple/templo no se tocaron).",
   "order": 69,
   "priority": "low",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "done",
   "tags": [
     "rendimiento"
   ],
-  "test": "Profiler en templo y overworld sin get_node/find_child por frame en estos scripts.",
+  "test": "Profiler en templo y overworld sin get_node/find_child por frame en estos scripts. Cubierto en test_wiring (el interruptor resuelto deja de procesar), test_rooms (Room sin _process en el juego) y test_audio › test_music_ducks_when_a_menu_opens.",
   "title": "Búsquedas de nodos y trabajo por frame innecesario",
-  "updated_at": "2026-10-12T00:06:26.688Z"
+  "updated_at": "2026-10-13T13:32:38.154Z"
 }

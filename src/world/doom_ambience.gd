@@ -20,16 +20,20 @@ const CRACK := preload("res://src/world/doom_crack.tscn")
 ## Segundos entre temblores en la calma y en el clímax.
 @export var tremor_interval := Vector2(14.0, 4.0)
 @export var seed_value := 7
+## Sin asignar, los busca entre los hijos del nivel.
+@export var world_environment: WorldEnvironment
+@export var sun: DirectionalLight3D
 
 ## Doom aplicado ahora (0..1).
 var level := 0.0
 var environment: Environment
-var sun: DirectionalLight3D
 var cracks: Array[Decal] = []
 var legible: Array[GeometryInstance3D] = []
 var _next_tremor := 6.0
 var _fogless := {}
 var _recheck := 0.0
+var _applied := -1.0
+var _camera: TopDownCamera
 
 @onready var dust: GPUParticles3D = %DoomDust
 ## La que ilumina lo legible: copia la dirección y la fuerza del sol.
@@ -39,10 +43,12 @@ var _recheck := 0.0
 func _ready() -> void:
 	var scene := get_parent()
 	for child in scene.get_children():
-		if child is WorldEnvironment:
-			environment = (child as WorldEnvironment).environment
-		elif child is DirectionalLight3D:
+		if child is WorldEnvironment and world_environment == null:
+			world_environment = child
+		elif child is DirectionalLight3D and sun == null:
 			sun = child
+	if world_environment:
+		environment = world_environment.environment
 	_make_cracks.call_deferred()
 	legible_light.visible = sun != null
 	if sun:
@@ -60,21 +66,16 @@ static func is_legible(node: Node) -> bool:
 
 
 func current_doom() -> float:
-	var camera := get_tree().get_first_node_in_group(&"room_camera") as TopDownCamera
+	var camera := _room_camera()
 	return camera.room.doom if camera and camera.room else 0.0
 
 
 func _process(delta: float) -> void:
 	level = move_toward(level, current_doom(), blend_speed * delta)
-	if environment:
-		environment.ambient_light_color = calm_ambient.lerp(doom_ambient, level)
-		environment.fog_enabled = level > 0.05
-		environment.fog_density = level * max_fog_density
-		environment.fog_light_color = fog_color
-	if sun:
-		sun.light_color = calm_sun.lerp(doom_sun, level)
-	dust.amount_ratio = clampf(level * 1.2, 0.0, 1.0)
-	var camera := get_tree().get_first_node_in_group(&"room_camera") as TopDownCamera
+	if level != _applied:
+		_applied = level
+		_apply_level()
+	var camera := _room_camera()
 	if camera:
 		dust.global_position = camera.focus + Vector3.UP * 4.0
 	_recheck -= delta
@@ -85,6 +86,23 @@ func _process(delta: float) -> void:
 		_next_tremor -= delta
 		if _next_tremor <= 0.0:
 			tremor()
+
+
+func _apply_level() -> void:
+	if environment:
+		environment.ambient_light_color = calm_ambient.lerp(doom_ambient, level)
+		environment.fog_enabled = level > 0.05
+		environment.fog_density = level * max_fog_density
+		environment.fog_light_color = fog_color
+	if sun:
+		sun.light_color = calm_sun.lerp(doom_sun, level)
+	dust.amount_ratio = clampf(level * 1.2, 0.0, 1.0)
+
+
+func _room_camera() -> TopDownCamera:
+	if not is_instance_valid(_camera):
+		_camera = get_tree().get_first_node_in_group(&"room_camera") as TopDownCamera
+	return _camera
 
 
 func tremor() -> void:

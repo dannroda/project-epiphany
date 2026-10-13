@@ -36,10 +36,12 @@ var locked := false
 var occupied := false
 
 static var _waking := false
+static var _outline_material: StandardMaterial3D
 
 
 func _ready() -> void:
 	add_to_group(GROUP)
+	set_process(Engine.is_editor_hint())
 	if Engine.is_editor_hint():
 		_outline = MeshInstance3D.new()
 		add_child(_outline, false, INTERNAL_MODE_FRONT)
@@ -164,8 +166,7 @@ func _physics_process(_delta: float) -> void:
 
 
 func _process(_delta: float) -> void:
-	if Engine.is_editor_hint():
-		_draw_outline()
+	_draw_outline()
 
 
 ## Rectángulo global de la sala en XZ (x, z).
@@ -215,9 +216,10 @@ func _draw_outline() -> void:
 		mesh.surface_add_vertex(to_local(Vector3(a.x, global_position.y + y, a.y)))
 		mesh.surface_add_vertex(to_local(Vector3(b.x, global_position.y + y, b.y)))
 	mesh.surface_end()
-	var material := StandardMaterial3D.new()
-	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	material.albedo_color = Color(0.95, 0.75, 0.25)
-	material.no_depth_test = true
-	mesh.surface_set_material(0, material)
+	if _outline_material == null:
+		_outline_material = StandardMaterial3D.new()
+		_outline_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		_outline_material.albedo_color = Color(0.95, 0.75, 0.25)
+		_outline_material.no_depth_test = true
+	mesh.surface_set_material(0, _outline_material)
 	_outline.mesh = mesh

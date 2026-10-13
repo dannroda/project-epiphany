@@ -99,6 +99,8 @@ var _velocity := Vector3.ZERO
 var _time := 0.0
 var _twitch := 0.0
 var _twitch_left := 0.0
+## Índice de cada shape key de GRIP_KEYS en la malla (-1 la pose base).
+var _grip_shapes := PackedInt32Array()
 static var _crack: Texture2D
 
 @onready var health: Health = $Health
@@ -591,18 +593,21 @@ func _apply_grip() -> void:
 	var instance := get_node_or_null(^"Mesh") as MeshInstance3D
 	if instance == null or instance.mesh == null:
 		return
-	for key: Array in GRIP_KEYS:
-		if key[1] != &"":
-			instance.set_blend_shape_value(instance.find_blend_shape_by_name(key[1]), 0.0)
+	if _grip_shapes.is_empty():
+		for key: Array in GRIP_KEYS:
+			_grip_shapes.append(instance.find_blend_shape_by_name(key[1]) if key[1] != &"" else -1)
+	for shape in _grip_shapes:
+		if shape >= 0:
+			instance.set_blend_shape_value(shape, 0.0)
 	for i in GRIP_KEYS.size() - 1:
 		var low: float = GRIP_KEYS[i][0]
 		var high: float = GRIP_KEYS[i + 1][0]
 		if grip <= high or i == GRIP_KEYS.size() - 2:
 			var t := clampf((grip - low) / (high - low), 0.0, 1.0)
-			if GRIP_KEYS[i][1] != &"":
-				instance.set_blend_shape_value(instance.find_blend_shape_by_name(GRIP_KEYS[i][1]), 1.0 - t)
-			if GRIP_KEYS[i + 1][1] != &"":
-				instance.set_blend_shape_value(instance.find_blend_shape_by_name(GRIP_KEYS[i + 1][1]), t)
+			if _grip_shapes[i] >= 0:
+				instance.set_blend_shape_value(_grip_shapes[i], 1.0 - t)
+			if _grip_shapes[i + 1] >= 0:
+				instance.set_blend_shape_value(_grip_shapes[i + 1], t)
 			return
 
 

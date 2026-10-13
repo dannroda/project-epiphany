@@ -13,6 +13,7 @@ const FADE_SPEED := 0.6
 var players: Dictionary[StringName, AudioStreamPlayer] = {}
 var levels: Dictionary[StringName, float] = {}
 var _duck := 0.0
+var _menu_open := false
 ## Pelea con el jefe (placeholder hasta tener su tema): todas las capas del templo al máximo.
 var boss_fight := false
 
@@ -29,6 +30,7 @@ func _ready() -> void:
 		levels[layer] = 0.0
 	for player in players.values():
 		player.play()
+	MenuStack.changed.connect(func() -> void: _menu_open = MenuStack.is_open())
 
 
 ## Volumen (0..1) que debería tener cada capa ahora.
@@ -62,8 +64,7 @@ func current_doom() -> float:
 
 
 func _process(delta: float) -> void:
-	var menus := get_node_or_null(^"/root/MenuStack")
-	var duck_target := DUCK_DB if menus and menus.is_open() else 0.0
+	var duck_target := DUCK_DB if _menu_open else 0.0
 	_duck = move_toward(_duck, duck_target, 30.0 * delta)
 	var wanted := targets()
 	for layer in LAYERS:

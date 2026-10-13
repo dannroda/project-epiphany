@@ -94,6 +94,7 @@ var _look_ahead := Vector3.ZERO
 var _mask: Node3D
 var _skip := false
 var _last_positions: Dictionary[PlayerCharacter, Vector3] = {}
+var _player_rids: Array[RID] = []
 
 
 func _ready() -> void:
@@ -106,10 +107,16 @@ func _ready() -> void:
 		target_node = get_parent()
 	look_at_from_position(global_position, global_position - offset, Vector3.UP)
 	add_to_group(&"room_camera")
+	Players.joined.connect(_forget_player_rids)
+	Players.left.connect(_forget_player_rids)
 	process_physics_priority = 100
 	_mask = ROOM_MASK.instantiate()
 	add_child(_mask)
 	_cut_south_wall(null)
+
+
+func _forget_player_rids(_player: PlayerCharacter) -> void:
+	_player_rids.clear()
 
 
 ## Olvida la sala: la próxima se toma sin transición (al empezar o al reaparecer).
@@ -138,8 +145,8 @@ func framed() -> Array[PlayerCharacter]:
 
 
 ## Centro (XZ) del rectángulo que encierra a los encuadrados, a la altura del primero.
-func group_center() -> Vector3:
-	var box := _span_of(framed())
+func group_center(players := framed()) -> Vector3:
+	var box := _span_of(players)
 	return Vector3(box.get_center().x, target_node.global_position.y, box.get_center().y)
 
 
@@ -157,8 +164,7 @@ func _span_of(players: Array[PlayerCharacter], extra: Variant = null) -> Rect2:
 
 ## La sala de los players; la actual tiene prioridad mientras estén todos adentro. Si uno pasa a otra sala, la
 ## cámara va con él y se lleva a los demás (Four Swords).
-func _update_room() -> void:
-	var players := framed()
+func _update_room(players: Array[PlayerCharacter]) -> void:
 	if room and players.all(func(player: PlayerCharacter) -> bool: return room.contains(player.global_position)):
 		return
 	for player in players:
@@ -346,7 +352,9 @@ func _player_hidden(player: PlayerCharacter) -> bool:
 		var point := player.global_position + Vector3.UP * height
 		var eye := point + global_basis.z * offset.length() if orthographic else global_position
 		var query := PhysicsRayQueryParameters3D.create(eye, point, 1)
-		query.exclude = Players.all.map(func(player: PlayerCharacter) -> RID: return player.get_rid())
+		if _player_rids.is_empty():
+			_player_rids.assign(Players.all.map(func(each: PlayerCharacter) -> RID: return each.get_rid()))
+		query.exclude = _player_rids
 		for attempt in 4:
 			var hit := space.intersect_ray(query)
 			if hit.is_empty():
@@ -391,10 +399,10 @@ func _physics_process(delta: float) -> void:
 	_last_positions.clear()
 	for player in players:
 		_last_positions[player] = player.global_position
-	_update_room()
+	_update_room(players)
 	if transitioning:
 		return
-	var player_position := group_center() if together else target_node.global_position
+	var player_position := group_center(players) if together else target_node.global_position
 	var desired_offset := Vector3.ZERO
 	var locked_target := target_node.targeting.current if target_node.targeting and not together else null
 	if locked_target and is_instance_valid(locked_target):
@@ -418,7 +426,8 @@ func _physics_process(delta: float) -> void:
 	if room:
 		focus = _clamp(focus)
 	global_position = global_position.lerp(focus + offset, 1.0 - exp(-smooth_speed * delta))
-	DebugOverlay.watch("camera/focus_offset", (focus - player_position).snappedf(0.01))
+	if OS.is_debug_build():
+		DebugOverlay.watch("camera/focus_offset", (focus - player_position).snappedf(0.01))
 
 
 ## Borde invisible: lo que cada uno se movió desde el cuadro anterior y abre el grupo más de lo que entra en
