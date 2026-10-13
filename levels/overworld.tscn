@@ -1318,10 +1318,10 @@ flag = &"ow_heart_piece_meadow"
 hidden_until_revealed = false
 
 [node name="CumbrePost" parent="." instance=ExtResource("ow_hook_post")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.6, 5.2, -36)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.35, 5.2, -36)
 
 [node name="RiscoPost" parent="." instance=ExtResource("ow_hook_post")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70.2, 5.2, -35)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.3, 5.2, -35)
 
 [node name="HeartPieceCliff" parent="." unique_id=997712761 instance=ExtResource("6_piece")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 5.2, -36)
