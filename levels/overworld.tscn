@@ -102,6 +102,7 @@
 
 [ext_resource type="NavigationMesh" path="res://levels/nav/overworld_navmesh.tres" id="99_nav"]
 
+[ext_resource type="PackedScene" path="res://src/world/chullpa_tumba.tscn" id="ow_chullpa_tumba"]
 [ext_resource type="Material" path="res://src/world/water/water_la.tres" id="103_water_la"]
 
 [ext_resource type="PackedScene" path="res://src/world/water/waterfall.tscn" id="101_fall"]
@@ -1307,6 +1308,21 @@ mesh = ExtResource("98_wall_grotto")
 [editable path="ShrineCrackedWall"]
 
 [editable path="GrottoCrackedWall"]
+
+[node name="NecroTomb1" parent="." instance=ExtResource("ow_chullpa_tumba")]
+transform = Transform3D(0.4061, 0, 0.9138, 0, 1, 0, -0.9138, 0, 0.4061, 25.5, 2.6, -10)
+
+[node name="NecroTomb2" parent="." instance=ExtResource("ow_chullpa_tumba")]
+transform = Transform3D(0.4856, 0, -0.8742, 0, 1, 0, 0.8742, 0, 0.4856, 34.5, 2.6, -10.5)
+
+[node name="NecroTomb3" parent="." instance=ExtResource("ow_chullpa_tumba")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 30, 2.6, -3.5)
+
+[node name="SandalsChest" parent="." instance=ExtResource("15_3hrjb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 2.6, -8)
+flag = &"ow_sandals_chest"
+big = true
+switches = Array[NodePath]([NodePath("../NecroTomb1/Eye"), NodePath("../NecroTomb2/Eye"), NodePath("../NecroTomb3/Eye")])
 
 [node name="RavineEye" parent="." unique_id=1820417731 instance=ExtResource("39_ailnf")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 8, 2.6, -6)

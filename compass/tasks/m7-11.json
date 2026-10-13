@@ -5,6 +5,7 @@
       "text": "Angostura e islotes a 4 m; abismo del Risco a 6 m"
     },
     {
+      "detail": "Hecho: corral de pirca de la Necrópolis (X 24..36, Z -12..-3, nivel 1). Tres chullpas provisorias (src/world/chullpa_tumba.tscn: torre de piedra con un EyeSwitch de 8 s) miran al centro; con los tres ojos prendidos a la vez aparece el cofre grande SandalsChest (flag ow_sandals_chest). Falta: el ítem del cofre cuando 11.118 cree las sandalias, y el modelo de chullpa de arte. Test en test_secrets.",
       "done": false,
       "text": "Mini quest de la Necrópolis (arco → sandalias)"
     },
@@ -25,12 +26,12 @@
   "order": 11,
   "priority": "high",
   "refs": [],
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "overworld",
     "nivel"
   ],
   "test": "",
   "title": "Overworld: huecos de salto largo y mini quest de las sandalias",
-  "updated_at": "2026-10-13T08:16:16.179Z"
+  "updated_at": "2026-10-13T08:24:10.325Z"
 }

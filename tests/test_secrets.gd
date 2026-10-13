@@ -131,3 +131,38 @@ func test_without_the_bow_the_eye_stays_shut() -> void:
 	assert_eq(eye.active, false, "la espada no despierta el ojo")
 	assert_eq((level.get_node(^"CliffGate") as Gate).is_open, false, "el carcaj sigue encerrado")
 	setup[0].reset()
+
+
+func _shoot(tree: SceneTree, level: Node, player: PlayerCharacter, eye: EyeSwitch, from: Vector3) -> void:
+	var arrow: Projectile = ARROW.instantiate()
+	level.add_child(arrow)
+	var info := Items.get_item(&"bow").make_damage(player)
+	info.team = EntityConfig.Team.PLAYER
+	arrow.launch(from, (eye.eye.global_position - from).normalized() * 20.0, info)
+	await tree.create_timer(0.5).timeout
+
+
+func test_the_three_chullpa_eyes_raise_the_sandals_chest() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var setup: Array = await _load(tree, [[&"bow", 1], [&"arrow", 10]])
+	var level: Node = setup[1]
+	var player: PlayerCharacter = setup[2]
+	var chest := level.get_node(^"SandalsChest") as Chest
+	var center := chest.global_position + Vector3(0, 1.2, 0)
+	player.global_position = chest.global_position + Vector3(0, 0.1, 1.5)
+	await tree.physics_frame
+	assert_eq(chest.visible, false, "el cofre no está hasta flechar los ojos")
+	var eyes: Array[EyeSwitch] = []
+	for i in 3:
+		eyes.append(level.get_node(NodePath("NecroTomb%d/Eye" % (i + 1))) as EyeSwitch)
+	await _shoot(tree, level, player, eyes[0], center)
+	await _shoot(tree, level, player, eyes[1], center)
+	assert_eq([eyes[0].active, eyes[1].active], [true, true], "cada flecha prende su ojo")
+	assert_eq(chest.visible, false, "con dos no alcanza")
+	await tree.create_timer(8.0).timeout
+	assert_eq(eyes[0].active, false, "los ojos se apagan solos")
+	for eye in eyes:
+		await _shoot(tree, level, player, eye, center)
+	await tree.create_timer(0.6).timeout
+	assert_eq(chest.visible, true, "con los tres prendidos a la vez aparece el cofre")
+	setup[0].reset()

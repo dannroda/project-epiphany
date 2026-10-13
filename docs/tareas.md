@@ -1631,7 +1631,7 @@ Daniel (2026-10-12, con el mapa de Link's Awakening de referencia): el mundo se 
   Al día: test_overworld, test_jump, test_heart_pieces, test_secrets (nuevo), test_shrine, test_overworld_run, test_map, test_portal, test_temple_seal, test_grove_puzzle, test_enemy_ai, test_save_codec (escenarios re-firmados). test_zone_veil se borró. Flags nuevos en flag_registry. El puzzle de la Arboleda se corrió 2 m al norte: la orilla relajada del risco tapaba las placas. Pendiente: el texto de la tablilla del santuario habla del escudo espejo como premio. [[gdd#overworld-layout]]
 - [ ] Recorrerlo (Daniel)
 
-### 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · Pendiente
+### 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · En curso
 
 **Prioridad:** alta · **Etiquetas:** `overworld`, `nivel`
 
@@ -1639,6 +1639,7 @@ Daniel (2026-10-13): la angostura (Arboleda ↔ Cardonal) y los huecos de los is
 
 - [ ] Angostura e islotes a 4 m; abismo del Risco a 6 m
 - [ ] Mini quest de la Necrópolis (arco → sandalias)
+  Hecho: corral de pirca de la Necrópolis (X 24..36, Z -12..-3, nivel 1). Tres chullpas provisorias (src/world/chullpa_tumba.tscn: torre de piedra con un EyeSwitch de 8 s) miran al centro; con los tres ojos prendidos a la vez aparece el cofre grande SandalsChest (flag ow_sandals_chest). Falta: el ítem del cofre cuando 11.118 cree las sandalias, y el modelo de chullpa de arte. Test en test_secrets.
 - [ ] Tests del overworld al día (angostura, islotes, Risco, quest)
 - [ ] Recorrerlo (Daniel)
 
