@@ -11,8 +11,8 @@
       "text": "Queñoa: kit de árbol en estilo LA"
     },
     {
-      "detail": "En espera (Daniel, 2026-10-13): se hace junto con su rediseño (11.113 paso 3), todo de una vez.",
-      "done": false,
+      "detail": "Hecho el 2026-10-13 (d5df3c44), después del rediseño de diseño (-43). Estilo propio: sillares lavanda en hiladas con cornisa dorada, crestas de piedra clara, puertas de losa con metal dorado, piso de lajas frías (templo_la_kit) y luz violeta tenue. El bake separa las salas por las paredes dobles: SpawnStart pasa a (44, 0, 52), test_portal lo sigue. test_templo, test_walk_doors, test_dungeon_reach, test_drop_holes, test_portal, test_overworld_run, test_temple_seal y test_coop_camera pasan.",
+      "done": true,
       "text": "Templo del ojo en estilo LA"
     },
     {
@@ -53,5 +53,5 @@
   ],
   "test": "",
   "title": "Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos",
-  "updated_at": "2026-10-13T06:40:37.973Z"
+  "updated_at": "2026-10-13T18:37:39.847Z"
 }

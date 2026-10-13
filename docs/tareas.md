@@ -2576,7 +2576,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (69/121)
+## M11 — Pulido: contenido y feel  (70/121)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4515,9 +4515,9 @@ SecretRockChest (Cerros, solo empujar), SecretRavineChest (Quebrada, bombas) y S
 
 **Notas:** Daniel (2026-10-13): queda así. Desde 11.120 el cofre sigue cerrado y avisa que falta el arco; al volver con el arco da las flechas. Pociones y bombas descartadas (botellas máximo 4; hay cofres de bombas antes de la bolsa).
 
-### 11.122 Cofre de bombas de la cueva de la mata en el inicio · Pendiente
+### 11.122 Cofre de bombas de la cueva de la mata en el inicio · Hecho
 
-**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `bug`, `diseño`
+**Terminada:** 2026-10-13 · **Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `bug`, `diseño`
 
 BushCaveBush se corta con la espada desde el arranque y el cofre de bush_cave da 10 bombas: se llega antes de la Cueva de las bombas y aparece 'no tenés bolsa'. Cambiar el contenido o tapar el hoyo con algo que pida bombas.
 
@@ -4975,7 +4975,7 @@ Daniel (2026-10-13): la Chullpa real tiene la cámara vieja; el test LA (debug/l
   Hecho el 2026-10-13 (15b5a3e8, antes e8966e9b mueve el look a src/world/look). tools/la_walls.gd -- bake duplica las paredes entre salas en levels/chullpa.tscn (cada sala con la suya; marcadores, escaleras y portal se corren con su sala), pone las paredes LA, la cámara LA, luz por sala, piso, brillo y fuego; -- refresh vuelve a elegir piezas después de editar. El mapa lee los pasos LA. Navmesh rehecho; test_chullpa, test_dungeon_reach y test_map pasan.
 - [x] Queñoa: kit de árbol en estilo LA
   Hecho el 2026-10-13: bake con nueve formas nuevas (bf4d88b3); paredes bajas de 1,3 m con borde de hojas en nichos y reja del tronco (3b3aaa33, 11.113 paso 8); cofres en nicho mirando a la entrada y reja del tronco en la boca de la escalera (6566b7d6). El kit guarda los números de pieza al agregar formas. Navmesh rehecho; test_quenoa pasa.
-- [ ] Templo del ojo en estilo LA
+- [x] Templo del ojo en estilo LA
   En espera (Daniel, 2026-10-13): se hace junto con su rediseño (11.113 paso 3), todo de una vez.
 - [x] Puertas LA al ras de la pared
   Hecho el 2026-10-13 con Daniel en el recorrido (una puerta con llave parecía abierta). Puerta cerrada llena el paso, una hoja en cada cara (f25bdf02); hojas de madera de 3 m con bandas de hierro, cerradura, ojo de jefe/interruptor y persiana, inclinadas como su pared, bajan 3,2 m al abrir (3d08a58d). door.gd gana leaf_meshes y sink. El velo oscuro de los pasos ya no tapa al player (stencil).
