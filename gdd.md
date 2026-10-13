@@ -103,6 +103,7 @@ Las teclas se mapean por posición física (`physical_keycode`): WASD queda en e
 - **Espada:** combo corto (hoy: slash). Stab cargado / spin attack: post-MVP.
 - **Escudo:** mientras se bloquea, el golpe se anula si viene **de frente** (cono de ±60°). Con escudo espejo, los proyectiles bloqueados se reflejan hacia donde mira el player (o hacia el objetivo fijado).
 - **Qué frena cada escudo** (`ItemData.protects_against`, contra `DamageInfo.element`; vacío = `physical`): la madera frena daño físico (espadas, flechas, orbes) pero no explosiones ni fuego, que pasan aunque se bloquee de frente. El espejo frena lo físico y **refleja siempre** los proyectiles reflejables que intercepta.
+- **Retroceso al bloquear (Daniel, 2026-10-13):** un golpe cuerpo a cuerpo bloqueado corta el ataque del enemigo, lo empuja un poco y lo deja quieto 0,45 s (`Shield.block_recoil`, `Enemy.recoil`), sin el aturdimiento largo del árbol. Abre una ventana para pegarle aunque tenga escudo, sin buscarle la espalda ni medir su ataque. Los proyectiles bloqueados no lo provocan.
 - **Escudo en la espalda:** sin bloquear, frena los proyectiles que llegan por detrás (cono de ±45°, `back_shield_angle_deg`) si son de un tipo que protege; el espejo los devuelve a quien los tiró. Los golpes cuerpo a cuerpo por la espalda no se frenan.
 - **Golpe de escudo:** atacar mientras se bloquea (ya existe, `ShieldThrust`): aturde / empuja.
 - **Esquiva (roll):** i-frames cortos, usa las animaciones `Dodge_*` de KayKit.

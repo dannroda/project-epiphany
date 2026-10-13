@@ -37,6 +37,7 @@ var _facing_goal := Vector3.ZERO
 var _guard_down_left := 0.0
 var _guard_pose: PoseOverlay
 var _armor: Node3D
+var _recoil_left := 0.0
 
 var is_dead: bool:
 	get:
@@ -86,6 +87,11 @@ func _swap_model(scene: PackedScene) -> void:
 
 func _physics_process(delta: float) -> void:
 	_guard_down_left = maxf(_guard_down_left - delta, 0.0)
+	if _recoil_left > 0.0:
+		_recoil_left -= delta
+		if _recoil_left <= 0.0 and not is_dead:
+			bt_player.active = true
+			bt_player.restart()
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	_knockback.x = move_toward(_knockback.x, 0.0, KNOCKBACK_FRICTION * delta)
@@ -174,6 +180,24 @@ func _guard_stops(info: DamageInfo) -> bool:
 		_knockback = -to_source.normalized() * info.knockback * 0.3
 	Feel.burst(&"sparks", global_position + Vector3.UP * 1.1 + to_source.normalized() * 0.5, to_source.normalized())
 	return true
+
+
+## Su golpe chocó contra un escudo: corta el ataque, retrocede y queda quieto un instante.
+func recoil(seconds: float, from: Vector3) -> void:
+	if is_dead:
+		return
+	attack_runner.stop()
+	stop_moving()
+	bt_player.active = false
+	anim_player.play(&"General/Hit_B", 0.1)
+	var away := (global_position - from) * Vector3(1, 0, 1)
+	if not away.is_zero_approx():
+		_knockback = away.normalized() * 3.0
+	_recoil_left = seconds
+
+
+func is_recoiling() -> bool:
+	return _recoil_left > 0.0
 
 
 func is_armored() -> bool:

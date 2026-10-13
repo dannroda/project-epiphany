@@ -8,6 +8,8 @@ extends Node
 @export var block_cone: MeshInstance3D
 @export var block_angle_deg := 60.0
 @export var block_pushback := 0.3
+## Un golpe cuerpo a cuerpo bloqueado deja al atacante quieto este rato.
+@export var block_recoil := 0.45
 ## Sin bloquear, el escudo en la espalda frena los proyectiles que llegan dentro de este cono.
 @export var back_shield_angle_deg := 45.0
 ## Bloqueando con el haz en el escudo espejo, el stick derecho (o el mouse) gira al player (rad/s).
@@ -185,6 +187,8 @@ func _on_blocked(info: DamageInfo) -> void:
 	Feel.burst(&"sparks", _front_point(), player.model.global_basis.z)
 	Feel.sfx(&"block", player.global_position)
 	Feel.shake(Feel.settings.shake_block, Vector3.ZERO, player.controls.joypads)
+	if info.source is Enemy:
+		(info.source as Enemy).recoil(block_recoil, player.global_position)
 
 
 func _block_cone_mesh() -> Mesh:

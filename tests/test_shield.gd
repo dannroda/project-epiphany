@@ -72,6 +72,34 @@ func test_wood_shield_does_not_stop_explosions() -> void:
 	setup[1].reset()
 
 
+func test_a_blocked_sword_makes_the_attacker_recoil() -> void:
+	var setup: Array = await _setup(&"shield_wood")
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[2]
+	var shooter: Enemy = setup[3]
+	shooter.global_position = player.global_position + Vector3.RIGHT * 1.5
+	hold_block(player, true)
+	player.hurtbox.receive(shooter.config.make_damage(shooter))
+	assert_true(shooter.is_recoiling() and not shooter.bt_player.active, "el espadazo bloqueado lo deja quieto")
+	await tree.create_timer(player.shield.block_recoil + 0.15).timeout
+	assert_true(not shooter.is_recoiling() and shooter.bt_player.active, "un instante, y vuelve a pelear")
+	hold_block(player, false)
+	setup[1].reset()
+
+
+func test_a_blocked_arrow_does_not_make_the_archer_recoil() -> void:
+	var setup: Array = await _setup(&"shield_wood")
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[2]
+	hold_block(player, true)
+	_shoot_from(tree, setup[3], player.global_position + Vector3.RIGHT * 5.0, player.global_position, false)
+	await tree.create_timer(0.8).timeout
+	assert_eq(player.health.current, player.health.max_health, "la flecha se bloquea")
+	assert_true(not (setup[3] as Enemy).is_recoiling(), "y el que la tiró sigue en su lugar")
+	hold_block(player, false)
+	setup[1].reset()
+
+
 func test_sword_from_behind_hurts() -> void:
 	var setup: Array = await _setup(&"shield_wood")
 	var player: PlayerCharacter = setup[2]
