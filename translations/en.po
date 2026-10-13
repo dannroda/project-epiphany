@@ -519,6 +519,15 @@ msgstr "Assign it to a button to jump: clears one-tile gaps, hops up steps and d
 msgid "ITEM_FEATHER_GOT"
 msgstr "You got the Feather!"
 
+msgid "ITEM_SANDALS_NAME"
+msgstr "Sandals"
+
+msgid "ITEM_SANDALS_DESC"
+msgstr "Assign them to a button and hold it: you wind up and run straight until you let go or crash. The crash shakes trees and walls. Use the Feather mid-run to jump three tiles."
+
+msgid "ITEM_SANDALS_GOT"
+msgstr "You got the Sandals!"
+
 msgid "ITEM_BOMB_NAME"
 msgstr "Bombs"
 

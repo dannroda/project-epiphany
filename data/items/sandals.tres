@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://src/items/behaviors/dash_behavior.gd" id="1_dash"]
+[ext_resource type="Texture2D" uid="uid://be8lyxkfoyopv" path="res://assets/ui/items/feather.png" id="2_icon"]
+[ext_resource type="Script" uid="uid://bn5pjgpia5grm" path="res://src/items/item_data.gd" id="3_item"]
+
+[sub_resource type="Resource" id="Resource_dash"]
+script = ExtResource("1_dash")
+
+[resource]
+script = ExtResource("3_item")
+id = &"sandals"
+display_name = "ITEM_SANDALS_NAME"
+description = "ITEM_SANDALS_DESC"
+icon = ExtResource("2_icon")
+category = 3
+behavior = SubResource("Resource_dash")

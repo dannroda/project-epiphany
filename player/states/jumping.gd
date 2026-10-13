@@ -10,6 +10,8 @@ const ANIMATION := &"MovementBasic/Jump_Full_Short"
 @export var speed := 4.0
 ## Qué tan rápido el stick corrige la dirección en el aire (0 = nada).
 @export var air_control := 2.0
+## Salto largo (11.118): saltar en plena carrera de las sandalias sigue recto a esta velocidad, sin control en el aire.
+@export var long_jump_speed := 8.0
 ## Tamaño de la sombra en el piso y en lo más alto.
 @export var shadow_size := Vector2(0.9, 0.55)
 
@@ -18,6 +20,7 @@ var _start_y := 0.0
 var _left_floor := false
 var _elapsed := 0.0
 var _shadow: Decal
+var _long := false
 
 
 func _enter() -> void:
@@ -28,7 +31,10 @@ func _enter() -> void:
 	_elapsed = 0.0
 	_left_floor = false
 	_start_y = player.global_position.y
-	_velocity = _wanted()
+	var long_jump: Array = blackboard.get_var("long_jump", [])
+	_long = not long_jump.is_empty() and long_jump[1] == Engine.get_physics_frames()
+	blackboard.set_var("long_jump", [])
+	_velocity = long_jump[0] * long_jump_speed if _long else _wanted()
 	if not _velocity.is_zero_approx():
 		player.model.look_at(player.model.global_position - _velocity, Vector3.UP)
 	player.velocity = _velocity + Vector3.UP * sqrt(2.0 * player.get_gravity().length() * height)
@@ -44,7 +50,8 @@ func _enter() -> void:
 
 func _update(delta: float) -> void:
 	_elapsed += delta
-	_velocity = _velocity.lerp(_wanted(), 1.0 - exp(-air_control * delta))
+	if not _long:
+		_velocity = _velocity.lerp(_wanted(), 1.0 - exp(-air_control * delta))
 	player.velocity.x = _velocity.x
 	player.velocity.z = _velocity.z
 	player.move_and_slide()

@@ -519,6 +519,15 @@ msgstr "Asignala a un botón para saltar: cruza huecos de una baldosa, sube a es
 msgid "ITEM_FEATHER_GOT"
 msgstr "¡Conseguiste la Pluma!"
 
+msgid "ITEM_SANDALS_NAME"
+msgstr "Sandalias"
+
+msgid "ITEM_SANDALS_DESC"
+msgstr "Asignalas a un botón y mantenelo: toman impulso y corren recto hasta soltar o chocar. El choque sacude árboles y muros. Con la pluma en plena carrera, saltás tres baldosas."
+
+msgid "ITEM_SANDALS_GOT"
+msgstr "¡Conseguiste las Sandalias!"
+
 msgid "ITEM_BOMB_NAME"
 msgstr "Bombas"
 

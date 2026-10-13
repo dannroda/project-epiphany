@@ -41,6 +41,7 @@
 [ext_resource type="Gradient" path="res://data/materials/sword_trail_fade.tres" id="trail_fade"]
 [ext_resource type="Script" path="res://src/feel/hit_flash.gd" id="hf_hit_flash"]
 [ext_resource type="Script" path="res://player/states/jumping.gd" id="s_jumping"]
+[ext_resource type="Script" path="res://player/states/dashing.gd" id="s_dashing"]
 [ext_resource type="Script" path="res://player/components/dodge_ghosts.gd" id="c_dodge_ghosts"]
 [ext_resource type="PackedScene" path="res://src/feel/afterimage.tscn" id="dodge_afterimage"]
 
@@ -764,6 +765,9 @@ script = ExtResource("st_grabbed")
 
 [node name="Jumping" type="LimboState" parent="MovementState"]
 script = ExtResource("s_jumping")
+
+[node name="Dashing" type="LimboState" parent="MovementState"]
+script = ExtResource("s_dashing")
 
 [node name="Dead" type="LimboState" parent="MovementState" unique_id=1372512458]
 script = ExtResource("st_dead")
