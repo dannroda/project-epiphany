@@ -122,6 +122,16 @@ func _initialize() -> void:
 		quit(1)
 		return
 	var kit := _kit()
+	var missing := {}
+	for grid: GridMap in level.find_children("*", "GridMap", true, false):
+		for shape: Array in _shapes(grid).values():
+			if kit.find_item_by_name(KINDS[shape[0]][0] + shape[1]) < 0:
+				missing[KINDS[shape[0]][0] + shape[1]] = true
+	if not missing.is_empty():
+		push_error("faltan piezas en el kit (export y build_paredes_la.py): %s" % [missing.keys()])
+		level.free()
+		quit(1)
+		return
 	for grid: GridMap in level.find_children("*", "GridMap", true, false):
 		var cells := _shapes(grid)
 		grid.mesh_library = kit
