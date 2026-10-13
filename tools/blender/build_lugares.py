@@ -1053,8 +1053,100 @@ def quenoa_entrada(p):
 	p.paint(moss, "musgo", "DARK", vary=0.08)
 
 
+## Choza de la Totora (TotoraHut en el overworld): 4 × 4 m de planta y 3.5 m hasta el alero; la puerta mira a -Y.
+TOTORA_HUT = (2.0, 2.6)
+TOTORA_DOOR = (0.8, 2.2)
+
+
+def totora_entrada(p):
+	"""Entrada a la Totora: choza de los uros sobre una balsa de totora tejida, paredes de atados parados, techo de
+	totora a cuatro aguas amarrado con soga oscura y una borla roja en la punta; al frente dos columnas de atados con
+	cabeza de puma (como las proas de las balsas), una franja de aguayo sobre la puerta y totoras en flor alrededor.
+	Origen en el centro de la base."""
+	half, wall_h = TOTORA_HUT
+	door_half, door_h = TOTORA_DOOR
+	raft = p.lathe([(0.0, -0.05), (2.75, -0.05), (2.85, 0.04), (2.75, 0.13), (0.0, 0.13)], sides=24)
+	p.paint_bands(raft, [(0.06, 0.14, "paja", "MID")], default=(0, 0, "tierra", "MID"))
+	ring = p.lathe([(2.55, 0.1), (2.68, 0.17), (2.55, 0.24), (2.42, 0.17), (2.55, 0.1)], sides=24, caps=False)
+	p.paint(ring, "paja", "LIGHT", vary=0.06)
+	reeds = []
+	step = 0.22
+	for side in range(4):
+		turn = Matrix.Rotation(side * math.pi / 2, 4, "Z")
+		k = 0
+		x = -half + step / 2
+		while x < half:
+			front = side == 0
+			if front and abs(x) < door_half + 0.05:
+				x += step
+				continue
+			top = wall_h + 0.08 * math.sin(k * 1.7)
+			bundle = p.cylinder(0.12, 0.13, top, sides=6, radius_top=0.1, center=(x, -half + 0.12))
+			p.transform(bundle, turn)
+			reeds += bundle
+			x += step
+			k += 1
+	p.paint(reeds, "paja", z_range=(-1.5, wall_h + 2.5), vary=0.06)
+	lintel = []
+	for z in (door_h + 0.06, door_h + 0.24):
+		bar = p.cylinder(0.1, -door_half - 0.25, door_half + 0.25, sides=6)
+		p.transform(bar, Matrix.Translation((0, -half + 0.1, z)) @ Matrix.Rotation(math.pi / 2, 4, "Y"))
+		lintel += bar
+	p.paint(lintel, "paja", "DARK", vary=0.04)
+	inside = p.box(-half + 0.25, half - 0.25, -half + 0.25, half - 0.25, 0.13, wall_h)
+	p.paint(inside, "noche", "MID")
+	ties = []
+	for z in (0.7, 1.6):
+		for side in range(4):
+			if side == 0:
+				tie = p.box(-half - 0.02, -door_half - 0.05, -half - 0.02, -half + 0.05, z - 0.05, z + 0.05) + p.box(door_half + 0.05, half + 0.02, -half - 0.02, -half + 0.05, z - 0.05, z + 0.05)
+			else:
+				tie = p.box(-half - 0.02, half + 0.02, -half - 0.02, -half + 0.05, z - 0.05, z + 0.05)
+			p.transform(tie, Matrix.Rotation(side * math.pi / 2, 4, "Z"))
+			ties += tie
+	p.paint(ties, "madera_oscura", "MID")
+	roof = p.lathe([(0.0, wall_h - 0.3), (3.15, wall_h - 0.3), (3.1, wall_h - 0.1), (1.6, wall_h + 1.2), (0.25, wall_h + 2.05), (0.0, wall_h + 2.15)], sides=4, phase=math.pi / 4)
+	p.jitter(roof, 0.03)
+	p.paint_bands(roof, [(wall_h + 0.35, wall_h + 0.45, "madera_oscura", "MID"), (wall_h + 1.05, wall_h + 1.15, "madera_oscura", "MID")], default=(0, 0, "paja", "DARK"))
+	tassel = p.blob((0, 0, wall_h + 2.2), 0.18, squash=(1.0, 1.0, 1.3), subdiv=1, rough=0.1)
+	tassel += p.cylinder(0.05, wall_h + 2.05, wall_h + 2.55, sides=6, radius_top=0.0)
+	p.paint(tassel, "tela_roja", "MID")
+	cloth = p.box(-door_half - 0.3, door_half + 0.3, -half - 0.06, -half + 0.02, door_h + 0.38, door_h + 0.68)
+	p.paint_bands(cloth, [(door_h + 0.38, door_h + 0.45, "tela_roja", "MID"), (door_h + 0.45, door_h + 0.52, "flor_amarilla", "MID"),
+		(door_h + 0.52, door_h + 0.58, "tela_azul", "MID"), (door_h + 0.58, door_h + 0.68, "flor_rosa", "MID")], default=(0, 0, "tela_roja", "MID"))
+	for side in (-1, 1):
+		cx, cy = side * (door_half + 0.42), -half - 0.32
+		column = p.lathe([(0.0, 0.1), (0.24, 0.1), (0.22, 1.6), (0.18, 3.0), (0.22, 3.25), (0.0, 3.35)], sides=10, center=(cx, cy))
+		p.paint_bands(column, [(0.55, 0.65, "tela_roja", "MID"), (1.5, 1.6, "tela_roja", "MID"), (2.45, 2.55, "tela_roja", "MID")], default=(0, 0, "paja", "MID"))
+		head = p.blob((cx, cy - 0.12, 3.45), 0.3, squash=(0.85, 1.25, 0.8), subdiv=2, rough=0.05)
+		head += p.blob((cx, cy - 0.42, 3.38), 0.15, squash=(0.9, 1.1, 0.8), subdiv=1, rough=0.0)
+		for ear in (-1, 1):
+			head += p.cylinder(0.08, 3.62, 3.8, sides=5, radius_top=0.0, center=(cx + ear * 0.17, cy))
+		p.paint(head, "paja", "LIGHT", vary=0.05)
+		for eye in (-1, 1):
+			dot = p.blob((cx + eye * 0.13, cy - 0.36, 3.52), 0.045, subdiv=1, rough=0.0)
+			p.paint(dot, "noche", "MID")
+	plants, heads = [], []
+	for i in range(14):
+		a = -math.pi / 2 + 0.75 + i * (2 * math.pi - 1.5) / 13 + p.rng.uniform(-0.1, 0.1)
+		cx, cy = 2.95 * math.cos(a), 2.95 * math.sin(a)
+		for k in range(5):
+			length = p.rng.uniform(0.9, 1.7)
+			blade = p.cylinder(0.035, 0.0, length, sides=4, radius_top=0.005)
+			place = Matrix.Translation((cx + p.rng.uniform(-0.2, 0.2), cy + p.rng.uniform(-0.2, 0.2), -0.1)) @ Matrix.Rotation(p.rng.uniform(0.05, 0.3), 4, Vector((math.cos(k * 1.3), math.sin(k * 1.3), 0.0)))
+			p.transform(blade, place)
+			plants += blade
+			if k < 2:
+				spike = p.cylinder(0.06, length * 0.7, length * 0.88, sides=6)
+				p.transform(spike, place)
+				heads += spike
+	p.paint(plants, "follaje", vary=0.12)
+	p.paint(heads, "madera_oscura", "MID", vary=0.06)
+
+
 piece("chullpa_entrada", 48, chullpa_entrada, smooth=40)
 piece("quenoa_entrada", 49, quenoa_entrada, smooth=40)
+piece("totora_entrada", 50, totora_entrada, smooth=40)
 
 epi.layout(kit, columns=7, spacing=3.5)
 epi.publish("lugares", material="outdoor")
