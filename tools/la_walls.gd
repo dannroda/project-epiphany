@@ -56,9 +56,9 @@ const ROOM_LIGHT_COLOR := Color(1.0, 0.9, 0.78)
 const ROOM_LIGHT_ENERGY := 2.0
 const ROOM_LIGHT_ANGLE := 55.0
 const SUN_ENERGY := 0.45
-## Como en LA, lo que está parado se echa hacia atrás (la parte de arriba hacia el norte) para mostrarle la cara a la cámara.
-const LEAN := -20.0
-const LEANED := {"pot.tscn": "Body/Model", "chest.tscn": "Model", "wall_torch.tscn": "."}
+## Las vasijas, del ancho de la placa del botón (1.4 m, como en LA, que pueden reemplazar a un bloque sobre él) y algo
+## más bajas para no pasar a Kai. Solo el modelo.
+const POT_SCALE := Vector3(2.1, 1.5, 2.1)
 
 
 func _initialize() -> void:
@@ -164,18 +164,9 @@ func _dress(level: Node) -> void:
 			node.set("south_wall_reach", MASK_MARGIN - 0.3)
 			node.set("wall_height", FRAME_HEIGHT)
 			node.set("mask_margin", MASK_MARGIN)
-		if path.get_file() in LEANED:
-			_lean(node.get_node(LEANED[path.get_file()]) as Node3D)
+		if path.ends_with("pot.tscn"):
+			(node.get_node("Body/Model") as Node3D).scale = POT_SCALE
 			level.set_editable_instance(node, true)
-
-
-func _lean(model: Node3D) -> void:
-	var parent := Basis.IDENTITY
-	var node := model.get_parent() as Node3D
-	while node:
-		parent = node.basis * parent
-		node = node.get_parent() as Node3D
-	model.basis = parent.inverse() * Basis(Vector3.RIGHT, deg_to_rad(LEAN)) * parent * model.basis
 
 
 func _light(level: Node, room: Area3D) -> void:
