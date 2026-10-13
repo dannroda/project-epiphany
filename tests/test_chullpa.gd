@@ -361,3 +361,21 @@ func test_map_shows_the_current_floor() -> void:
 	var doors := MapData.doors(tree).filter(func(door: Array) -> bool: return MapData.near_room(_room("PlantaBaja/Entrada"), door[0]))
 	assert_eq(doors.size(), 4, "la entrada tiene sus tres puertas y la escalera (de las de arriba y abajo, ninguna)")
 	tree.root.get_node(^"GameState").reset()
+
+
+func test_a_skeleton_knocked_into_the_chest_hall_holes_lands_in_the_crypt() -> void:
+	tree = Engine.get_main_loop() as SceneTree
+	tree.root.get_node(^"GameState").reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	await tree.create_timer(0.3).timeout
+	level = tree.current_scene
+	player = tree.get_first_node_in_group(&"player") as PlayerCharacter
+	player.global_position = _in("PlantaBaja/SalaCofre", Vector3(-9, 0.3, 0))
+	await tree.create_timer(0.8).timeout
+	var skeleton := level.get_node(^"PlantaBaja/SalaCofreEnemy1") as Enemy
+	assert_true(_room("PlantaBaja/SalaCofre").contains(skeleton.global_position), "un esqueleto al borde de los huecos")
+	skeleton.global_position = _in("PlantaBaja/SalaCofre", Vector3(-2, 0.3, -4))
+	assert_true(await _until(func() -> bool: return skeleton.is_on_floor() and skeleton.global_position.y < -7.0, 3.0), "cae por el hueco al piso de abajo")
+	assert_true(_room("Sotano/Cripta").contains(skeleton.global_position) and not skeleton.is_dead, "y sigue vivo en la Cripta")
+	tree.root.get_node(^"GameState").reset()

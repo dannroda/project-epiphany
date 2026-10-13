@@ -2563,7 +2563,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (53/112)
+## M11 — Pulido: contenido y feel  (53/113)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4392,7 +4392,7 @@ Daniel (2026-10-12): el jefe del ojo se pensó como fin de demo, así que tiene 
 - [x] Templo: la Mano, sub-jefe
   Hecho el 2026-10-13 (f8bad885, Daniel: si): HandGuard (src/entities/hand_guard/) es una copia de la mano del jefe (boss_hand.gd, 12 de vida) que pelea sola en una ArenaFight: golpe al piso, agarre y barrido, sin repetir el último; rebota todo mientras está lista y queda aturdida tras el golpe al piso, ahí entra la espada. ManoFight (te_hand_defeated, BOSS_TE_HAND) cierra HandDoor y al ganar abre la combinada. templo_graph.tres apunta ya a levels/templo.tscn y pasa test_dungeon_reach; test_templo (8). Falta: que Daniel la pruebe y ajuste vida y descanso.
 - [ ] Templo: ala del gancho (con 11.30)
-- [ ] Templo: el portal del overworld al templo nuevo
+- [x] Templo: el portal del overworld al templo nuevo
   Hecho el 2026-10-13 (ca9d975d, Daniel: sigue): la puerta del templo del overworld (TempleDoor) lleva a levels/templo.tscn, spawn start en el vestíbulo; la mazmorra es te. levels/temple.tscn queda como nivel de prueba (sus tests lo cargan directo). test_portal, test_overworld_run, test_temple_seal y test_coop_camera al día.
 
 **Notas:** Sesión: diseño (-43 [a7e236]), con Daniel. Overworld (-eb) acomoda el boceto de 7.10 cuando esté la cadena.
@@ -4434,6 +4434,23 @@ Un SCRIPT ERROR corta la función del test pero el runner la cuenta como ok si y
 **Prueba:** A mano: un test con una lectura sobre null después de un assert da FALLA y muestra 'error de script (1): archivo:línea mensaje'.
 
 **Notas:** Sesión de bugs (-fd), pedido de Daniel vía -43. run_tests.gd registra un Logger (OS.add_logger) que junta los errores de tipo SCRIPT; cada error mientras corre un test (en el test o en el código del juego) lo marca FALLA con el primero y la cantidad. push_error y los errores del motor no cuentan. La suite completa destapó: dodge_ghosts.gd:53 (11.112, -eb: bake_mesh_from_current_skeleton_pose da null en headless) en 7 tests de player, lift, bombs, input e interaction; test_cave:46 y test_breakables:102 (overworld, -eb en 7.10); test_save_manager:23 (desde 14.9 cargar vuelve a entrar a la escena y el test leía el player viejo: arreglado acá). Aparte, sin error de script: templo.tscn sin uid (11.113, -43 [a7e236]) rompe test_portals. Después: arreglados acá dodge_ghosts.gd (salta la malla si el bake da null), bt_keep_away/bt_shoot_arrow (un player liberado deja de ser objetivo) y menu_stack.gd:74 (foco recordado ya liberado). test_boss › marks y test_audio › doom fallan a veces (pasan 3/3 solos).
+
+### 11.117 Huecos a otro piso se ven distintos de los fosos · En curso
+
+**Prioridad:** alta · **Etiquetas:** `diseno`, `arte`, `nivel`
+
+Daniel (2026-10-13): la mayoría no va a entender a la primera que hay que tirarse para bajar de piso, y no todos los huecos llevan a otro piso. Los que llevan a otro piso tienen que verse distintos: se ve la sala de abajo con blur y un poco oscurecida, con un haz de luz y polvo; los fosos quedan negros con niebla en el borde. Regla: un hueco sin Pit debajo cae al piso de abajo. Hoy los huecos a otro piso son: Chullpa, Sala de los saltos (al Osario) y Sala del cofre (a la Cripta); Queñoa, Nido (a la Rama) y Cámara del arco (al Tronco).
+
+- [x] Regla y test: cada hueco cae a un piso o tiene Pit (diseño)
+  Hecho el 2026-10-13 (cb8f4b78): DropHoles (src/world/drop_holes.gd, sin autoloads) lista los huecos sin Pit debajo. test_drop_holes: cada uno cae sobre el piso de abajo (piso firme o un foso, como el Mirador sobre el Abismo) y las salas son las del diseño: Chullpa Saltos, Sala del cofre, Mirador y Agrietada (bajo el piso agrietado); Queñoa Nido y Arco; el templo no tiene.
+- [ ] Aspecto: ventana con blur a la sala de abajo y fosos negros con niebla (arte)
+  Pasado a arte (-5d) el 2026-10-13 con la regla, la lista y DropHoles para la_walls.
+- [x] Enseñarlo en la Chullpa: la primera caída (diseño)
+  Hecho el 2026-10-13: en la Sala del cofre, al borde de los huecos, un esqueleto (SalaCofreEnemy1) que de un espadazo cae y aterriza vivo en la Cripta, y dos vasijas para tirar por el hueco. Se enseña sin texto; se ve del todo cuando arte abra la ventana del paso 2. test_chullpa lo cubre. GDD §8b.
+- [ ] Plano de las mazmorras: marcar los huecos a otro piso (diseño)
+- [ ] Recorrido de Daniel
+
+**Notas:** Sesión: diseño (-43 [a7e236]) con arte (-11 / -5d) para el aspecto.
 
 ## M12 — Assets propios (Blender)  (6/18)
 

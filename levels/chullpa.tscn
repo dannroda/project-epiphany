@@ -1517,6 +1517,18 @@ script = ExtResource("29_86iea")
 drops = ExtResource("30_4g78b")
 drop_height = 0.1
 
+[node name="SalaCofrePot1" type="Node3D" parent="PlantaBaja" unique_id=468871407 instance=ExtResource("19_7rkw0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, 0, 23)
+script = ExtResource("29_86iea")
+drops = ExtResource("30_4g78b")
+drop_height = 0.1
+
+[node name="SalaCofrePot2" type="Node3D" parent="PlantaBaja" unique_id=931344639 instance=ExtResource("19_7rkw0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, 0, 33)
+script = ExtResource("29_86iea")
+drops = ExtResource("30_4g78b")
+drop_height = 0.1
+
 [node name="FromUpper" type="Marker3D" parent="PlantaBaja" unique_id=824462020]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6, 0, 24)
 
@@ -2464,6 +2476,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 28)
 
 [node name="EntradaEnemy1" type="CharacterBody3D" parent="PlantaBaja" groups=["room_sleepers"] unique_id=1860673492 instance=ExtResource("30_gc68l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 25)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("47_lhowt")
+config = ExtResource("48_308dp")
+
+[node name="SalaCofreEnemy1" type="CharacterBody3D" parent="PlantaBaja" groups=["room_sleepers"] unique_id=991053095 instance=ExtResource("30_gc68l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.5, 0, 28)
 collision_layer = 5
 collision_mask = 5
 script = ExtResource("47_lhowt")

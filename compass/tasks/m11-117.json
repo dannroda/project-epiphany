@@ -1,0 +1,44 @@
+{
+  "checklist": [
+    {
+      "detail": "Hecho el 2026-10-13 (cb8f4b78): DropHoles (src/world/drop_holes.gd, sin autoloads) lista los huecos sin Pit debajo. test_drop_holes: cada uno cae sobre el piso de abajo (piso firme o un foso, como el Mirador sobre el Abismo) y las salas son las del diseño: Chullpa Saltos, Sala del cofre, Mirador y Agrietada (bajo el piso agrietado); Queñoa Nido y Arco; el templo no tiene.",
+      "done": true,
+      "text": "Regla y test: cada hueco cae a un piso o tiene Pit (diseño)"
+    },
+    {
+      "detail": "Pasado a arte (-5d) el 2026-10-13 con la regla, la lista y DropHoles para la_walls.",
+      "done": false,
+      "text": "Aspecto: ventana con blur a la sala de abajo y fosos negros con niebla (arte)"
+    },
+    {
+      "detail": "Hecho el 2026-10-13: en la Sala del cofre, al borde de los huecos, un esqueleto (SalaCofreEnemy1) que de un espadazo cae y aterriza vivo en la Cripta, y dos vasijas para tirar por el hueco. Se enseña sin texto; se ve del todo cuando arte abra la ventana del paso 2. test_chullpa lo cubre. GDD §8b.",
+      "done": true,
+      "text": "Enseñarlo en la Chullpa: la primera caída (diseño)"
+    },
+    {
+      "done": false,
+      "text": "Plano de las mazmorras: marcar los huecos a otro piso (diseño)"
+    },
+    {
+      "done": false,
+      "text": "Recorrido de Daniel"
+    }
+  ],
+  "code": "11.117",
+  "created_at": "2026-10-13T08:07:05.133Z",
+  "description": "Daniel (2026-10-13): la mayoría no va a entender a la primera que hay que tirarse para bajar de piso, y no todos los huecos llevan a otro piso. Los que llevan a otro piso tienen que verse distintos: se ve la sala de abajo con blur y un poco oscurecida, con un haz de luz y polvo; los fosos quedan negros con niebla en el borde. Regla: un hueco sin Pit debajo cae al piso de abajo. Hoy los huecos a otro piso son: Chullpa, Sala de los saltos (al Osario) y Sala del cofre (a la Cripta); Queñoa, Nido (a la Rama) y Cámara del arco (al Tronco).",
+  "milestone": "m11",
+  "notes": "Sesión: diseño (-43 [a7e236]) con arte (-11 / -5d) para el aspecto.",
+  "order": 114,
+  "priority": "high",
+  "refs": [],
+  "status": "doing",
+  "tags": [
+    "diseno",
+    "arte",
+    "nivel"
+  ],
+  "test": "",
+  "title": "Huecos a otro piso se ven distintos de los fosos",
+  "updated_at": "2026-10-13T08:11:54.138Z"
+}
