@@ -224,7 +224,19 @@ func _overworld_zone(zone: Area3D, cells: Array[Vector3i], group: Node3D) -> voi
 
 ## La fachada del templo detrás del sello de la entrada, con la puerta donde está el sello.
 func _facade(seal: Node3D, group: Node3D) -> void:
-	_mesh(group, "lugares/fachada_templo", seal.position + seal.basis.z * -0.3, seal.rotation.y, false)
+	var at := seal.position + seal.basis.z * -0.3
+	_mesh(group, "lugares/fachada_templo", at, seal.rotation.y, false)
+	var body := StaticBody3D.new()
+	body.name = "FachadaTemploMuros"
+	body.position = at
+	body.rotation.y = seal.rotation.y
+	_add(group, body)
+	for side in [-1.0, 1.0]:
+		var shape := CollisionShape3D.new()
+		shape.shape = BoxShape3D.new()
+		(shape.shape as BoxShape3D).size = Vector3(2.8, 3.0, 1.8)
+		shape.position = Vector3(side * 2.6, 1.5, 0.4)
+		_add(body, shape)
 
 
 func _cells_in(area: Area3D) -> Array[Vector3i]:
