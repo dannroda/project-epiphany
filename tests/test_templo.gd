@@ -196,3 +196,30 @@ func test_the_boss_uses_the_temple_flags() -> void:
 	assert_eq((level.get_node(^"BossExitPortal") as Portal).required_flag, &"te_boss_defeated")
 	assert_true(_room("Jefe").boss_room)
 	state.reset()
+
+
+func test_the_hand_fights_and_opens_the_combined_room() -> void:
+	await _start()
+	var fight := _node("ManoFight") as ArenaFight
+	var guard := fight.get_node(^"Hand") as HandGuard
+	player.health.reset(80)
+	await _drop(_in("Mano", Vector3(0, 0.5, 2)))
+	assert_eq(camera.room, _room("Mano"))
+	assert_true(await _until(func() -> bool: return guard.hand.striking, 15.0), "la Mano ataca")
+	assert_true(not (_node("HandDoor") as Door).is_open, "se cierra la puerta")
+	assert_true(not (_node("CombinedDoor") as Door).is_open, "la combinada sigue cerrada")
+	var before := guard.health.current
+	await _until(func() -> bool: return guard.hand.state == BossHand.State.READY, 15.0)
+	guard.hand.hurtbox.receive(DamageInfo.make(2, 0.0, player))
+	assert_eq(guard.health.current, before, "lista, la espada rebota")
+	while not guard.is_dead:
+		player.health.reset(80)
+		if guard.hand.state == BossHand.State.STUNNED:
+			guard.hand.hurtbox.receive(DamageInfo.make(2, 0.0, player))
+			await tree.create_timer(0.35).timeout
+		else:
+			await tree.physics_frame
+	assert_true(await _until(func() -> bool: return fight.active, 4.0), "pelea ganada")
+	assert_true(state.get_flag(&"te_hand_defeated") == true)
+	assert_true(await _until(func() -> bool: return (_node("CombinedDoor") as Door).is_open, 4.0), "se abre la sala combinada")
+	state.reset()

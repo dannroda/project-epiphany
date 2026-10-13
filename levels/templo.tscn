@@ -66,6 +66,9 @@
 [ext_resource type="PackedScene" path="res://src/world/doom_ambience.tscn" id="64_mhghd"]
 [ext_resource type="Script" path="res://src/world/doom_ambience.gd" id="65_qmvvc"]
 [ext_resource type="NavigationMesh" path="res://levels/nav/templo_navmesh.tres" id="nav_templo"]
+[ext_resource type="Script" path="res://src/world/arena_fight.gd" id="90_fight"]
+[ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="91_pflag"]
+[ext_resource type="PackedScene" path="res://src/entities/hand_guard/hand_guard.tscn" id="92_hand"]
 
 [sub_resource type="Environment" id="Environment_xib4i"]
 background_mode = 1
@@ -550,6 +553,20 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 32, 
 script = ExtResource("10_8q16s")
 kind = 3
 depth = 2.0
+switches = Array[NodePath]([NodePath("../ManoFight")])
+
+[node name="ManoFight" type="Node3D" parent="Planta" node_paths=PackedStringArray("room", "doors") unique_id=1468203517]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 0, 18)
+script = ExtResource("90_fight")
+room = NodePath("../Mano")
+flag = &"te_hand_defeated"
+display_name = "BOSS_TE_HAND"
+doors = [NodePath("../HandDoor")]
+
+[node name="PersistentFlag" type="Node" parent="Planta/ManoFight" unique_id=1468203518]
+script = ExtResource("91_pflag")
+
+[node name="Hand" parent="Planta/ManoFight" unique_id=1468203519 instance=ExtResource("92_hand")]
 
 [node name="CombinedCrackedWall" type="StaticBody3D" parent="Planta" unique_id=708827518 instance=ExtResource("22_22l1c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 16)

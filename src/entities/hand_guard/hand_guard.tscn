@@ -1,0 +1,127 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/entities/hand_guard/hand_guard.gd" id="1_guard"]
+[ext_resource type="Script" path="res://src/entities/boss/boss_hand.gd" id="2_hand"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_mano_izq.res" id="7_hand_l"]
+[ext_resource type="Script" path="res://src/components/health.gd" id="13_health"]
+[ext_resource type="Script" path="res://src/components/hurtbox.gd" id="14_hurtbox"]
+[ext_resource type="Script" path="res://src/components/hitbox.gd" id="15_hitbox"]
+[ext_resource type="Script" path="res://src/components/attack_runner.gd" id="16_runner"]
+[ext_resource type="Resource" path="res://data/boss/attack_slam.tres" id="19_slam"]
+[ext_resource type="Resource" path="res://data/boss/attack_grab.tres" id="20_grab"]
+[ext_resource type="Resource" path="res://data/boss/attack_sweep.tres" id="21_sweep"]
+[ext_resource type="Script" path="res://src/feel/hit_flash.gd" id="hf_hit_flash"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hand"]
+size = Vector3(1.4, 1, 1.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_strike"]
+size = Vector3(1.8, 1.4, 2)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_shockwave"]
+height = 1.0
+radius = 2.6
+
+[sub_resource type="Gradient" id="Gradient_shadow"]
+offsets = PackedFloat32Array(0, 0.7, 1)
+colors = PackedColorArray(0, 0, 0, 0.95, 0, 0, 0, 0.85, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_shadow"]
+gradient = SubResource("Gradient_shadow")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ring"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.85, 0.64, 0.25, 0.9)
+disable_fog = true
+
+[sub_resource type="TorusMesh" id="TorusMesh_ring"]
+material = SubResource("StandardMaterial3D_ring")
+inner_radius = 0.9
+outer_radius = 1.0
+rings = 32
+
+[node name="HandGuard" type="Node3D"]
+script = ExtResource("1_guard")
+attacks = [ExtResource("19_slam"), ExtResource("20_grab"), ExtResource("21_sweep")]
+
+[node name="Rest" type="Marker3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, -2.5)
+
+[node name="Hand" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, -2.5)
+script = ExtResource("2_hand")
+
+[node name="Mesh" type="MeshInstance3D" parent="Hand"]
+mesh = ExtResource("7_hand_l")
+
+[node name="Health" type="Node" parent="Hand"]
+script = ExtResource("13_health")
+max_health = 12
+invulnerability_time = 0.3
+
+[node name="Hurtbox" type="Area3D" parent="Hand"]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+script = ExtResource("14_hurtbox")
+surface = "metal"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hand/Hurtbox"]
+shape = SubResource("BoxShape3D_hand")
+
+[node name="Hitboxes" type="Node3D" parent="Hand"]
+
+[node name="Strike" type="Area3D" parent="Hand/Hitboxes"]
+collision_layer = 0
+collision_mask = 24
+monitoring = false
+monitorable = false
+script = ExtResource("15_hitbox")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hand/Hitboxes/Strike"]
+shape = SubResource("BoxShape3D_strike")
+
+[node name="Shockwave" type="Area3D" parent="Hand/Hitboxes"]
+top_level = true
+collision_layer = 0
+collision_mask = 24
+monitoring = false
+monitorable = false
+script = ExtResource("15_hitbox")
+ground_only = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hand/Hitboxes/Shockwave"]
+shape = SubResource("CylinderShape3D_shockwave")
+
+[node name="Shadow" type="Decal" parent="Hand"]
+top_level = true
+visible = false
+size = Vector3(1, 4, 1)
+texture_albedo = SubResource("GradientTexture2D_shadow")
+upper_fade = 0.0
+lower_fade = 0.0
+cull_mask = 1
+
+[node name="Ring" type="MeshInstance3D" parent="Hand"]
+top_level = true
+visible = false
+cast_shadow = 0
+mesh = SubResource("TorusMesh_ring")
+
+[node name="Grip" type="Marker3D" parent="Hand"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.1, 0.2)
+
+[node name="AttackRunner" type="Node" parent="Hand" node_paths=PackedStringArray("hitbox_root")]
+script = ExtResource("16_runner")
+hitbox_root = NodePath("../Hitboxes")
+
+[node name="HandFlash" type="Node" parent="Hand" node_paths=PackedStringArray("health", "visuals")]
+script = ExtResource("hf_hit_flash")
+health = NodePath("../Health")
+visuals = NodePath("..")
