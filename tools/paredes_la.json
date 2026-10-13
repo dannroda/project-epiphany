@@ -15,6 +15,7 @@
 		"e",
 		"e_pn",
 		"e_ps",
+		"eo",
 		"es",
 		"n",
 		"n_pe",
@@ -31,14 +32,16 @@
 		"so",
 		"x",
 		"x_ne",
+		"x_ne_no",
 		"x_no",
 		"x_se",
+		"x_se_so",
 		"x_so"
 	],
 	"paso": [
 		"e",
+		"eo",
 		"n",
-		"neso",
 		"o",
 		"s",
 		"x"

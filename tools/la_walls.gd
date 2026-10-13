@@ -206,6 +206,8 @@ func _initialize() -> void:
 		for node: Node in level.find_children("*", "", true, false):
 			if node.scene_file_path.ends_with("door.tscn"):
 				_door(level, node)
+			elif node is Area3D and "map_cell" in node and node.has_node(^"BordeOscuro"):
+				_fade(level, node as Area3D)
 	_look(level, look)
 	var packed := PackedScene.new()
 	packed.pack(level)
@@ -427,6 +429,22 @@ func _fade(level: Node, room: Area3D) -> void:
 		parent = parent.get_parent()
 	var center := to_level.origin
 	var floor_rect := Rect2(center.x - size.x / 2.0, center.z - size.z / 2.0, size.x, size.z)
+	var reach := Vector4(-INF, -INF, INF, INF)
+	for other: Node in level.find_children("*", "Area3D", true, false):
+		var box := _room_box(level, other)
+		if other == room or box.size == Vector3.ZERO or absf(box.get_center().y - center.y) > 1.0:
+			continue
+		var r := Rect2(box.position.x, box.position.z, box.size.x, box.size.z)
+		if r.position.y < floor_rect.end.y and r.end.y > floor_rect.position.y:
+			if r.position.x >= floor_rect.end.x:
+				reach.z = minf(reach.z, (floor_rect.end.x + r.position.x) / 2.0)
+			elif r.end.x <= floor_rect.position.x:
+				reach.x = maxf(reach.x, (floor_rect.position.x + r.end.x) / 2.0)
+		if r.position.x < floor_rect.end.x and r.end.x > floor_rect.position.x:
+			if r.position.y >= floor_rect.end.y:
+				reach.w = minf(reach.w, (floor_rect.end.y + r.position.y) / 2.0)
+			elif r.end.y <= floor_rect.position.y:
+				reach.y = maxf(reach.y, (floor_rect.position.y + r.end.y) / 2.0)
 	var material := ShaderMaterial.new()
 	material.shader = FADE
 	material.set_shader_parameter("inner", Vector4(floor_rect.position.x - FADE_START["o"], floor_rect.position.y - FADE_START["s"],
@@ -436,20 +454,70 @@ func _fade(level: Node, room: Area3D) -> void:
 	material.set_shader_parameter("floor_rect", Vector4(floor_rect.position.x, floor_rect.position.y, floor_rect.end.x, floor_rect.end.y))
 	var outer := floor_rect.grow(MASK_MARGIN)
 	var limit := outer.grow(0.2)
-	material.set_shader_parameter("limit", Vector4(limit.position.x, limit.position.y, limit.end.x, limit.end.y))
+	material.set_shader_parameter("limit", Vector4(maxf(limit.position.x, reach.x), maxf(limit.position.y, reach.y), minf(limit.end.x, reach.z), minf(limit.end.y, reach.w)))
 	var floor_y := center.y - size.y / 2.0
 	material.set_shader_parameter("plane_y", floor_y + WALL_HEIGHT)
 	var plane := PlaneMesh.new()
 	plane.size = outer.size + Vector2.ONE * PILLAR_HEIGHT * 2.0
 	plane.material = material
-	var veil := MeshInstance3D.new()
-	veil.name = "BordeOscuro"
+	var veil := room.get_node_or_null(^"BordeOscuro") as MeshInstance3D
+	if veil == null:
+		veil = MeshInstance3D.new()
+		veil.name = "BordeOscuro"
+		room.add_child(veil)
+		veil.owner = level
 	veil.mesh = plane
 	veil.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	room.add_child(veil)
-	veil.owner = level
 	var local := (to_level * shape.transform.affine_inverse()).affine_inverse()
 	veil.transform.origin = local * Vector3(center.x, floor_y + PILLAR_HEIGHT + 0.02, center.z)
+
+
+## Las salas en coordenadas de la grilla, achicadas medio metro: una pared fina con una sala distinta a cada lado es pared entera.
+func _room_rects(grid: GridMap) -> Array[Rect2]:
+	var level: Node = grid
+	while level.get_parent() != null:
+		level = level.get_parent()
+	var to_grid := Transform3D.IDENTITY
+	var node: Node = grid
+	while node != level:
+		to_grid = (node as Node3D).transform * to_grid
+		node = node.get_parent()
+	to_grid = to_grid.affine_inverse()
+	var rects: Array[Rect2] = []
+	for room: Node in level.find_children("*", "Area3D", true, false):
+		var shape := room.get_node_or_null(^"CollisionShape3D") as CollisionShape3D
+		if not "map_cell" in room or shape == null or not shape.shape is BoxShape3D:
+			continue
+		var to_level := shape.transform
+		node = room
+		while node != level:
+			to_level = (node as Node3D).transform * to_level
+			node = node.get_parent()
+		var center := to_grid * to_level.origin
+		var size := (shape.shape as BoxShape3D).size
+		rects.append(Rect2(center.x - size.x / 2.0, center.z - size.z / 2.0, size.x, size.z).grow(-0.5))
+	return rects
+
+
+## La caja de una sala en coordenadas del nivel (vacía si no es una sala).
+func _room_box(level: Node, room: Node) -> AABB:
+	var shape := room.get_node_or_null(^"CollisionShape3D") as CollisionShape3D
+	if not "map_cell" in room or shape == null or not shape.shape is BoxShape3D:
+		return AABB()
+	var to_level := shape.transform
+	var node: Node = room
+	while node != level:
+		to_level = (node as Node3D).transform * to_level
+		node = node.get_parent()
+	var size := (shape.shape as BoxShape3D).size
+	return AABB(to_level.origin - size / 2.0, size)
+
+
+func _room_of(rooms: Array[Rect2], at: Vector3) -> int:
+	for i in rooms.size():
+		if rooms[i].has_point(Vector2(at.x, at.z)):
+			return i
+	return -1
 
 
 func _stairs_kind(node: Node) -> String:
@@ -469,11 +537,15 @@ func _shapes(grid: GridMap) -> Dictionary:
 	var floor := func(cell: Vector3i) -> bool:
 		var item := grid.get_cell_item(cell)
 		return item != GridMap.INVALID_CELL_ITEM and _base_name(lib.get_item_name(item)) not in WALLS and _base_name(lib.get_item_name(item)) != DOOR and not stairs.has(cell)
+	var rooms := _room_rects(grid)
 	var thin := {}
 	for cell in grid.get_used_cells():
 		if _base_name(lib.get_item_name(grid.get_cell_item(cell))) in WALLS and not stairs.has(cell):
 			var code := _sides(cell, floor)
-			if (code.contains("e") and code.contains("o")) or (code.contains("n") and code.contains("s")):
+			var splits := func(a: String, b: String) -> bool:
+				var one := _room_of(rooms, grid.map_to_local(cell + SIDES[a]))
+				return code.contains(a) and code.contains(b) and one >= 0 and _room_of(rooms, grid.map_to_local(cell + SIDES[b])) not in [-1, one]
+			if ((code.contains("e") and code.contains("o")) or (code.contains("n") and code.contains("s"))) and not splits.call("e", "o") and not splits.call("n", "s"):
 				thin[cell] = code
 	var open := func(cell: Vector3i) -> bool:
 		return thin.has(cell) or floor.call(cell)
