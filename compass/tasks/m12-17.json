@@ -39,17 +39,18 @@
   "code": "12.17",
   "created_at": "2026-10-11T22:42:22.213Z",
   "description": "Cada mazmorra con su propio estilo sobre el mismo kit (mismas piezas y colisiones): piedra, muro, remate, piso, columnas y relieve. D1 Templo (piedra lavanda, chakana, ojos), D2 Chullpa (piedra de campo con barro, cornisa, nichos con cráneos, tierra apisonada), D3 Laguna (bloques grises con musgo, ondas, charcos), D4 Cumbre (basalto, nieve y carámbanos, soles de oro, escarcha). tools/blender/build_templo.py -- <estilo> publica templo_<estilo>.glb.",
+  "done_at": "2026-10-13T20:24:08.146Z",
   "milestone": "m12",
   "notes": "",
   "order": 17,
   "priority": "medium",
   "refs": [],
-  "status": "doing",
+  "status": "done",
   "tags": [
     "arte",
     "mazmorra"
   ],
   "test": "",
   "title": "Estilos por mazmorra",
-  "updated_at": "2026-10-13T17:47:12.225Z"
+  "updated_at": "2026-10-13T20:24:08.146Z"
 }

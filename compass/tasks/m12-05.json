@@ -35,16 +35,17 @@
   "code": "12.5",
   "created_at": "2026-10-09T21:05:36.486Z",
   "description": "Modelar cofres, pickups, bomba, flecha, orbe, llaves, mapa, brújula y contenedor de corazón con el estilo propio, y regenerar desde esos modelos los íconos que hoy son SVG planos.",
+  "done_at": "2026-10-13T20:23:50.555Z",
   "milestone": "m12",
   "notes": "",
   "order": 5,
   "priority": "medium",
   "refs": [],
-  "status": "review",
+  "status": "done",
   "tags": [
     "arte"
   ],
   "test": "Cofres, pickups, bomba, flecha y orbe usan los modelos nuevos; los íconos se regeneran con render_item_icons.gd.",
   "title": "Interactivos y pickups",
-  "updated_at": "2026-10-11T16:42:56.347Z"
+  "updated_at": "2026-10-13T20:23:50.555Z"
 }

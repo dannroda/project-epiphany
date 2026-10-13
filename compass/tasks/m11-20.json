@@ -44,6 +44,7 @@
   "code": "11.20",
   "created_at": "2026-10-10T05:28:27.913Z",
   "description": "Una cueva en el overworld con un ojo de agua de shader propio y cáusticas animadas del mismo patrón, con su luz y ambiente; el agua llena la botella de agua bendita y se puede recargar, lo que da razón para volver.",
+  "done_at": "2026-10-13T20:23:52.046Z",
   "milestone": "m11",
   "notes": "Skills: `disciplines:level-design`, `godot:godot-shaders`, `godot:godot-3d-essentials`. PR: https://github.com/godotengine/godot/pull/115653. Prototipo propio: /home/drod/Proyectos/Godot/caustics_demo (5 aguas comparadas, cada una con sus cáusticas; tecla 5 = Wind Waker).",
   "order": 20,
@@ -58,7 +59,7 @@
       "section": "arte"
     }
   ],
-  "status": "review",
+  "status": "done",
   "tags": [
     "arte",
     "overworld",
@@ -66,5 +67,5 @@
   ],
   "test": "Entrar a la cueva desde el overworld: a través del agua se ve el fondo con cáusticas que se mueven al mismo ritmo que el brillo de la superficie, hay espuma en la orilla, sin costuras, cortes ni parpadeos; el estilo combina con el resto (paleta, facetado); el rendimiento no cae respecto del overworld. Con la botella vacía, interactuar con la vertiente: se llena; usarla cura según lo definido.",
   "title": "Cueva con ojo de agua y cáusticas animadas",
-  "updated_at": "2026-10-11T07:51:01.253Z"
+  "updated_at": "2026-10-13T20:23:52.046Z"
 }

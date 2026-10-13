@@ -53,6 +53,7 @@
   "code": "12.3",
   "created_at": "2026-10-09T21:05:30.742Z",
   "description": "Modelar las piezas propias de cada lugar del overworld (claro del inicio, cuevas, santuario, puzzle de luz, entrada y sello del templo, risco del ojo), para que cada zona de [[gdd#overworld-layout]] se reconozca por cómo se ve.",
+  "done_at": "2026-10-13T20:23:46.011Z",
   "links": [
     {
       "task": "m11-04",
@@ -69,12 +70,12 @@
       "section": "overworld-layout"
     }
   ],
-  "status": "review",
+  "status": "done",
   "tags": [
     "arte",
     "puzzles"
   ],
   "test": "Cada zona de [[gdd#overworld-layout]] tiene sus piezas propias y se reconoce sin el nombre de zona.",
   "title": "Lugares del overworld",
-  "updated_at": "2026-10-11T16:45:49.179Z"
+  "updated_at": "2026-10-13T20:23:46.011Z"
 }

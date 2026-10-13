@@ -1976,7 +1976,7 @@ Una salida de la sala del jefe: un portal en el centro de la arena que lleva a l
 
 **Notas:** Sin flag por ahora porque no hay jefe; 9.6 le pone d1_boss_defeated.
 
-## M10 — Terminación  (21/30)
+## M10 — Terminación  (22/30)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -2454,9 +2454,9 @@ El Sun de overworld y temple usa el default de Godot (PSSM de 4 cascadas hasta 1
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 10.26 Paredes del GridMap más livianas · Revisión
+### 10.26 Paredes del GridMap más livianas · Hecho
 
-**Prioridad:** baja · **Etiquetas:** `rendimiento`, `arte`
+**Terminada:** 2026-10-13 · **Prioridad:** baja · **Etiquetas:** `rendimiento`, `arte`
 
 El 80 % de los triángulos son paredes: Acantilado 1224 tri por celda (211 celdas, 258 mil) y Pared del templo 816 (252 celdas, 206 mil). Bajar el detalle en build_lugares.py sin perder el look. Las mallas del GridMap no tienen LOD (se guardan a .res sin generarlo) y el GridMap agrupa en octantes de 8 celdas (16×16 m), así que el frustum culling es por bloque: medir también cell_octant_size 4. Occlusion culling no vale la pena con cámara cenital.
 
@@ -2576,7 +2576,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (70/122)
+## M11 — Pulido: contenido y feel  (73/122)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -2854,9 +2854,9 @@ Reportado por Daniel el 2026-10-09: en los pasos de puerta laterales del templo 
 
 **Notas:** Reportado por Daniel el 2026-10-09 (captura). Causa: las dos puertas laterales del templo, la (6, 24) y la (18, 24), tenían la pieza Puerta con orientación 0; el marco (3,1 m de alto, solo colisión de piso) quedaba cruzado en el paso. Se giraron 90° (orientación 16) y test_doorways_face_their_wall valida que cada marco siga a su pared.
 
-### 11.20 Cueva con ojo de agua y cáusticas animadas · Revisión
+### 11.20 Cueva con ojo de agua y cáusticas animadas · Hecho
 
-**Prioridad:** media · **Etiquetas:** `arte`, `overworld`, `items`
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Etiquetas:** `arte`, `overworld`, `items`
 
 Una cueva en el overworld con un ojo de agua de shader propio y cáusticas animadas del mismo patrón, con su luz y ambiente; el agua llena la botella de agua bendita y se puede recargar, lo que da razón para volver.
 
@@ -3024,7 +3024,7 @@ Un ítem post-MVP: gancho o algo que mueva objetos a distancia (GDD §6.1), con 
 - [ ] Jefe Yacumama
   Madre serpiente: asoma por los charcos y escupe; fase 1, el gancho a la argolla de su máscara la arrastra al piso y le pega la espada; fase 2, barrido de cola que se salta con la pluma. Hoy pelea un ojo vigía prestado (PisoBajo/BossFight/Yacumama).
 - [x] Entrada de D3 en el overworld (sesión del overworld)
-  Portal a levels/totora.tscn en la isla de la Laguna y SpawnPoint totora (la salida de D3 y el portal del jefe llevan ahí).
+  Hecho por el overworld (5e04f395): TotoraDoor en una choza provisoria de la isla de la Laguna, Spawn_totora afuera; las dos salidas de D3 vuelven ahí.
 - [ ] Arte: horneado LA de la totora
   Agregar totora a tools/la_walls.gd (kit propio de totora y agua) cuando arte pueda; los tests de test_totora ya son relativos a cada sala.
 - [ ] Recorrer D3 (Daniel)
@@ -4226,9 +4226,9 @@ Siempre que algo se desbloquea por una acción (puzzle resuelto, horda eliminada
 
 **Notas:** Sesión: overworld (-74).
 
-### 11.99 Torres de D1: cambio visual al activarse · Revisión
+### 11.99 Torres de D1: cambio visual al activarse · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `mazmorra`, `arte`
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `mazmorra`, `arte`
 
 Las torres que se activan al reflejarles el ataque de la torreta en D1 no cambian a la vista cuando quedan activas.
 
@@ -4237,9 +4237,9 @@ Las torres que se activan al reflejarles el ataque de la torreta en D1 no cambia
 
 **Notas:** Sesión: arte (-77).
 
-### 11.100 Qué se puede levantar se tiene que entender · Revisión
+### 11.100 Qué se puede levantar se tiene que entender · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `arte`, `ui`
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `arte`, `ui`
 
 Playtest 2026-10-12: levantar y tirar funciona, pero no se entiende qué objeto se puede levantar y cuál no.
 
@@ -4573,7 +4573,7 @@ test_grove_puzzle teletransporta los bloques a las placas; no prueba que se lleg
 
 GitHub rechaza el push: assets/epiphany/terreno_organico.glb (hasta 334 MB) y assets/epiphany/meshes/terreno_organico/riscos.res (170 MB) pasan el límite de 100 MB por archivo. Hay 24 versiones en los ~360 commits sin pushear (desde 985d9e56, origin/main del 2026-10-11). Los dos salen de tools/blender/build_terreno_organico.py. Plan probable (Daniel): partir el terreno en chunks de menos de 100 MB y después limpiar las versiones grandes del historial sin pushear (git filter-repo; cambia los hashes, con las otras sesiones quietas).
 
-## M12 — Assets propios (Blender)  (6/18)
+## M12 — Assets propios (Blender)  (13/19)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -4655,9 +4655,9 @@ Modelar en Blender el terreno del overworld (pasto, caminos, piso de plaza, acan
 
 **Relacionadas:** 11.4 Decorar el overworld
 
-### 12.3 Lugares del overworld · Revisión
+### 12.3 Lugares del overworld · Hecho
 
-**Prioridad:** alta · **Etiquetas:** `arte`, `puzzles`
+**Terminada:** 2026-10-13 · **Prioridad:** alta · **Etiquetas:** `arte`, `puzzles`
 
 Modelar las piezas propias de cada lugar del overworld (claro del inicio, cuevas, santuario, puzzle de luz, entrada y sello del templo, risco del ojo), para que cada zona de [[gdd#overworld-layout]] se reconozca por cómo se ve.
 
@@ -4689,9 +4689,9 @@ Modelar las piezas propias de cada lugar del overworld (claro del inicio, cuevas
 
 **Relacionadas:** 11.4 Decorar el overworld
 
-### 12.4 Vegetación y props del overworld · Revisión
+### 12.4 Vegetación y props del overworld · Hecho
 
-**Prioridad:** alta · **Etiquetas:** `arte`
+**Terminada:** 2026-10-13 · **Prioridad:** alta · **Etiquetas:** `arte`
 
 Modelar la vegetación y los props del overworld (árboles, pasto cortable, vasijas, rocas y cajas físicas, tablillas, decoración) con el estilo propio, para que reemplacen los de KayKit sin cambiar cómo se rompen o se mueven.
 
@@ -4716,9 +4716,9 @@ Modelar la vegetación y los props del overworld (árboles, pasto cortable, vasi
 
 **Relacionadas:** 11.4 Decorar el overworld
 
-### 12.5 Interactivos y pickups · Revisión
+### 12.5 Interactivos y pickups · Hecho
 
-**Prioridad:** media · **Etiquetas:** `arte`
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Etiquetas:** `arte`
 
 Modelar cofres, pickups, bomba, flecha, orbe, llaves, mapa, brújula y contenedor de corazón con el estilo propio, y regenerar desde esos modelos los íconos que hoy son SVG planos.
 
@@ -4756,9 +4756,9 @@ Modelar el equipo y los objetos del inventario (espada, escudos, cota reforzada,
 
 **Bloqueada por:** 12.1 Guía de estilo: paleta, escala y pieza de prueba
 
-### 12.7 Kit del templo propio · Revisión
+### 12.7 Kit del templo propio · Hecho
 
-**Prioridad:** baja · **Etiquetas:** `arte`, `mazmorra`
+**Terminada:** 2026-10-13 · **Prioridad:** baja · **Etiquetas:** `arte`, `mazmorra`
 
 Armar el kit propio del templo (piso, paredes, puertas por tipo, piezas de puzzle, torreta, antorchas, decoración, doom y sala del jefe) para que `temple_kit.tres` deje de usar piezas KayKit, sin romper el corte de la pared sur.
 
@@ -4805,9 +4805,9 @@ Modelar los personajes propios (player, esqueletos y jefe) con los mismos nombre
 
 **Relacionadas:** 11.47 Manos del jefe animadas (shape keys); 12.13 Reajuste de estilo toon de todos los assets
 
-### 12.9 Efectos con malla · Revisión
+### 12.9 Efectos con malla · Hecho
 
-**Prioridad:** baja · **Etiquetas:** `arte`
+**Terminada:** 2026-10-13 · **Prioridad:** baja · **Etiquetas:** `arte`
 
 Hacer con malla los efectos que lo piden (haz de luz, polvo y hojas, explosión, anillo del portal), con la paleta y el estilo de los assets propios.
 
@@ -4943,9 +4943,9 @@ Probar en una misma zona chica de prueba tres formas de que el overworld no se v
 
 **Bloquea a:** 11.61 Pluma en el overworld: lugares de salto
 
-### 12.15 Overworld orgánico con lomas (variante 6) · Revisión
+### 12.15 Overworld orgánico con lomas (variante 6) · Hecho
 
-**Prioridad:** alta · **Etiquetas:** `arte`
+**Terminada:** 2026-10-13 · **Prioridad:** alta · **Etiquetas:** `arte`
 
 Pasar el overworld real al estilo de la variante 6 de 12.14: bordes de andenes, riscos, abismo y camino con contornos orgánicos (no siguen la grilla) y el pasto con lomas suaves, sin perder colisiones, navegación ni los lugares de 12.3.
 
@@ -4970,9 +4970,9 @@ La variante 9 de 12.14 (volumen + marching cubes armado en Godot con tools/build
 
 - [ ] Preguntar al usuario qué corregir de la 9
 
-### 12.17 Estilos por mazmorra · En curso
+### 12.17 Estilos por mazmorra · Hecho
 
-**Prioridad:** media · **Etiquetas:** `arte`, `mazmorra`
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Etiquetas:** `arte`, `mazmorra`
 
 Cada mazmorra con su propio estilo sobre el mismo kit (mismas piezas y colisiones): piedra, muro, remate, piso, columnas y relieve. D1 Templo (piedra lavanda, chakana, ojos), D2 Chullpa (piedra de campo con barro, cornisa, nichos con cráneos, tierra apisonada), D3 Laguna (bloques grises con musgo, ondas, charcos), D4 Cumbre (basalto, nieve y carámbanos, soles de oro, escarcha). tools/blender/build_templo.py -- <estilo> publica templo_<estilo>.glb.
 
@@ -5013,6 +5013,17 @@ Daniel (2026-10-13): la Chullpa real tiene la cámara vieja; el test LA (debug/l
   En curso con Daniel: lo que salga del recorrido (paredes, puertas, props) lo arregla la sesión de arte con la-walls refresh; diseño (-43) hace el jefe de la Chullpa en B-NE y avisa antes si necesita tocar paredes.
 
 **Notas:** Sesión: arte (-11). Diseño (-43) revisa que el juego no cambie.
+
+### Totora (D3) en estilo Link's Awakening y su entrada · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `arte`, `mazmorra`
+
+Diseño (-43) armó levels/totora.tscn en el kit gris (a8d40e91, GDD §8d): dos pisos de 3×2 salas de 7×5 celdas, agua profunda (celdas vacías con Pit y agua water_la a -0.35). Estilo propio de agua y totora, como Chullpa, Queñoa y templo. Regla de juego: cada cruce del gancho son 4 celdas de agua con el HookPost 0.5 m pasada la orilla; test_totora es relativo a la sala. Overworld (-eb, 5e04f395): TotoraHut es un CSGBox3D provisorio en la isla de la Laguna; vestirlo de santuario de juncos sin mover TotoraDoor, avisando a -eb antes de tocar overworld.tscn.
+
+- [ ] Estilo de la Totora: paredes, piso, puertas y luz (LOOKS en la_walls)
+- [ ] Bake y refresh de levels/totora.tscn, con los cruces del gancho intactos
+- [ ] Santuario de totora en la isla (TotoraHut)
+- [ ] Recorrerla (Daniel)
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 

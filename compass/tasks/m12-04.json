@@ -42,6 +42,7 @@
   "code": "12.4",
   "created_at": "2026-10-09T21:05:33.880Z",
   "description": "Modelar la vegetación y los props del overworld (árboles, pasto cortable, vasijas, rocas y cajas físicas, tablillas, decoración) con el estilo propio, para que reemplacen los de KayKit sin cambiar cómo se rompen o se mueven.",
+  "done_at": "2026-10-13T20:23:50.076Z",
   "links": [
     {
       "task": "m11-04",
@@ -53,11 +54,11 @@
   "order": 4,
   "priority": "high",
   "refs": [],
-  "status": "review",
+  "status": "done",
   "tags": [
     "arte"
   ],
   "test": "Pasto, vasijas, rocas y cajas usan los modelos nuevos y se rompen o mueven como antes.",
   "title": "Vegetación y props del overworld",
-  "updated_at": "2026-10-11T16:50:08.361Z"
+  "updated_at": "2026-10-13T20:23:50.076Z"
 }
