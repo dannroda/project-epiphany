@@ -16,7 +16,8 @@
       "text": "Enseñarlo en la Chullpa: la primera caída (diseño)"
     },
     {
-      "done": false,
+      "detail": "Hecho el 2026-10-13: el plano (https://claude.ai/artifact/5KN21oAgw5LVR4oN1urFRp) marca con borde azul los huecos a otro piso, sobre la captura y en el esquema, con DropHoles.",
+      "done": true,
       "text": "Plano de las mazmorras: marcar los huecos a otro piso (diseño)"
     },
     {
@@ -40,5 +41,5 @@
   ],
   "test": "",
   "title": "Huecos a otro piso se ven distintos de los fosos",
-  "updated_at": "2026-10-13T08:11:54.138Z"
+  "updated_at": "2026-10-13T08:13:29.179Z"
 }

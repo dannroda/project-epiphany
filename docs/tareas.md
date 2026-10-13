@@ -4447,7 +4447,8 @@ Daniel (2026-10-13): la mayoría no va a entender a la primera que hay que tirar
   Pasado a arte (-5d) el 2026-10-13 con la regla, la lista y DropHoles para la_walls.
 - [x] Enseñarlo en la Chullpa: la primera caída (diseño)
   Hecho el 2026-10-13: en la Sala del cofre, al borde de los huecos, un esqueleto (SalaCofreEnemy1) que de un espadazo cae y aterriza vivo en la Cripta, y dos vasijas para tirar por el hueco. Se enseña sin texto; se ve del todo cuando arte abra la ventana del paso 2. test_chullpa lo cubre. GDD §8b.
-- [ ] Plano de las mazmorras: marcar los huecos a otro piso (diseño)
+- [x] Plano de las mazmorras: marcar los huecos a otro piso (diseño)
+  Hecho el 2026-10-13: el plano (https://claude.ai/artifact/5KN21oAgw5LVR4oN1urFRp) marca con borde azul los huecos a otro piso, sobre la captura y en el esquema, con DropHoles.
 - [ ] Recorrido de Daniel
 
 **Notas:** Sesión: diseño (-43 [a7e236]) con arte (-11 / -5d) para el aspecto.
