@@ -3031,8 +3031,8 @@ Un ítem post-MVP: gancho o algo que mueva objetos a distancia (GDD §6.1), con 
   Gancho y GanchoOjo en levels/templo.tscn: postes sobre el abismo y el acorazado del ojo. Editar el grid y correr tools/la_walls.gd -- refresh templo (avisar a arte).
 - [x] Sub-jefe Amaru
   Hecho el 2026-10-13: src/entities/amaru/ (Amaru, AmaruPool), data/entities/amaru.tres. Asoma por uno de cuatro charcos (asomada, todo rebota), marca una línea 1 s, se lanza recta (2 de daño) y queda tirada 2,2 s, vulnerable a espada, bombas y vasijas; vuelve reptando al charco más cercano. Con media vida escupe un Projectile antes del lanzazo. 10 de vida, modelo primitivo. Reemplaza a la momia prestada en PisoBajo/AmaruFight; las vasijas del Pozo pasan a las esquinas. test_amaru (4).
-- [ ] Jefe Yacumama
-  Madre serpiente: asoma por los charcos y escupe; fase 1, el gancho a la argolla de su máscara la arrastra al piso y le pega la espada; fase 2, barrido de cola que se salta con la pluma. Hoy pelea un ojo vigía prestado (PisoBajo/BossFight/Yacumama).
+- [x] Jefe Yacumama
+  Hecho el 2026-10-13: src/entities/yacumama/ (Yacumama hereda de Amaru), data/entities/yacumama.tres, 14 de vida. Asoma por uno de cuatro charcos, escupe dos bolas (reflejables) y queda asomada 2,5 s; asomada solo cuenta el gancho, que la tira al piso a 2 m del player: 3 s tirada, le pega la espada; vuelve reptando. Con media vida, antes de escupir barre la sala con la cola desde su charco (hasta la pared; pega 2 en el piso, se salta con la pluma). El gancho le pega en el cuerpo: la punta va a 0,9 m y la argolla de la máscara queda como detalle del modelo. Reemplaza al ojo vigía prestado; las vasijas del Nido van a las cuatro esquinas. test_yacumama (4).
 - [x] Entrada de D3 en el overworld (sesión del overworld)
   Hecho por el overworld (5e04f395): TotoraDoor en una choza provisoria de la isla de la Laguna, Spawn_totora afuera; las dos salidas de D3 vuelven ahí.
 - [ ] Arte: horneado LA de la totora

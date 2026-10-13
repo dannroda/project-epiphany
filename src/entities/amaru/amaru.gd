@@ -29,6 +29,8 @@ const ORB := preload("res://src/entities/projectile.tscn")
 @export var spit_damage := 1
 ## Alto del cuerpo asomado (la cabeza).
 @export var rise_height := 1.8
+## Dónde queda el cuello tirado en el piso, para que la cabeza caiga donde está ella.
+@export var flat_offset := Vector3(0, 0.4, 1.0)
 
 @onready var body: Node3D = %Body
 @onready var neck: Node3D = %Neck
@@ -172,6 +174,7 @@ func _spit() -> void:
 	get_tree().current_scene.add_child(orb)
 	var info := DamageInfo.make(spit_damage, config.attack_knockback * 0.5, self)
 	info.team = config.team
+	info.reflectable = true
 	orb.launch(mouth, (player.global_position + Vector3.UP - mouth).normalized() * spit_speed, info)
 	Feel.sfx(&"roll", mouth)
 
@@ -265,7 +268,7 @@ func _pose_risen() -> void:
 ## Tirada: el cuerpo largo sobre el piso, hacia adelante.
 func _pose_flat() -> void:
 	neck.rotation.x = -PI / 2.0
-	neck.position = Vector3(0, 0.4, 1.0)
+	neck.position = flat_offset
 	body.position.y = 0.0
 
 
