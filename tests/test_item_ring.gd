@@ -102,6 +102,24 @@ func test_solo_ring_nearly_stops_the_world_and_assigns() -> void:
 	await _done()
 
 
+func test_the_ring_does_not_open_while_a_cutscene_has_the_controls() -> void:
+	var setup: Array = await _level(false)
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[2]
+	var ring: ItemRing = setup[1].ring_of(player)
+	player.controls.captured = true
+	Input.action_press(&"item_ring")
+	await tree.process_frame
+	await tree.process_frame
+	assert_true(not ring.is_open(), "con los controles tomados por una cutscene, LB no abre el anillo")
+	assert_eq(Engine.time_scale, 1.0, "ni frena la cutscene")
+	Input.action_release(&"item_ring")
+	await tree.process_frame
+	assert_true(player.controls.captured, "y la cutscene sigue con los controles")
+	player.controls.captured = false
+	await _done()
+
+
 func test_coop_ring_does_not_pause_and_respects_owners() -> void:
 	var setup: Array = await _level(true)
 	var tree: SceneTree = setup[0]

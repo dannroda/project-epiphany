@@ -2576,7 +2576,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (57/114)
+## M11 — Pulido: contenido y feel  (58/114)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3606,18 +3606,18 @@ El reveal de cámara y `travel_to` ponen `paused` a mano, y `MenuStack._can_paus
 
 **Archivos:** `src/ui/menus/menu_stack.gd`, `player/states/dead.gd`
 
-### 11.67 El anillo de ítems se abre durante una cutscene · Pendiente
+### 11.67 El anillo de ítems se abre durante una cutscene · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `ui`, `input`
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `ui`, `input`
 
 `item_ring` es PROCESS_MODE_ALWAYS y `_can_open` no mira si otro sistema ya capturó los controles; `_close` siempre pone `captured = false`. Mantener LB en una cutscene abre un anillo invisible con `time_scale = 0.05` (la cutscene va al 5%) y al soltar el player puede moverse en mitad de la cutscene.
 
-- [ ] Respetar la captura ajena
+- [x] Respetar la captura ajena
   item_ring.gd `_can_open`: `(visible or not player.controls.captured)`; en `_open` guardar el `captured` previo y restaurarlo en `_close`.
 
-**Prueba:** Durante una cutscene, LB no hace nada; si el anillo estaba abierto al empezar, al cerrarlo el player sigue capturado.
+**Prueba:** test_item_ring › test_the_ring_does_not_open_while_a_cutscene_has_the_controls (falla sin el arreglo).
 
-**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+**Notas:** Sesión de bugs (-fd). ItemRing._can_open: cerrado no se abre si los controles ya están tomados (una cutscene); abierto sigue mientras se mantenga LB. Al abrir guarda si estaban tomados y al cerrar los deja así (_was_captured) en vez de soltarlos siempre.
 
 **Archivos:** `src/ui/hud/item_ring.gd`
 

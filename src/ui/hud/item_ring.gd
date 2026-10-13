@@ -28,6 +28,8 @@ var _colors: Array[Color] = []
 var _items: Array[ItemData] = []
 var _selected := 0
 var _slowed := false
+## Si otro (una cutscene) ya tenía los controles al abrir: al cerrar se los deja.
+var _was_captured := false
 
 
 func _ready() -> void:
@@ -74,9 +76,10 @@ func _input(event: InputEvent) -> void:
 			_assign(i)
 
 
+## Abierto, sigue mientras se mantenga; cerrado, no se abre si otro sistema (una cutscene) tiene los controles.
 func _can_open() -> bool:
 	return not MenuStack.is_open() and not player.is_dead and player.can_interact() \
-			and not Players.uses_shared_item_menu()
+			and not Players.uses_shared_item_menu() and (visible or not player.controls.captured)
 
 
 func _open() -> void:
@@ -87,6 +90,7 @@ func _open() -> void:
 	_build_slots()
 	var current := GameState.buttons_of(player.controls.slot)[0]
 	_selected = maxi(_items.find(Items.get_item(current)) if current != &"" else 0, 0)
+	_was_captured = player.controls.captured
 	player.controls.captured = true
 	visible = true
 	if Players.all.size() == 1 and Engine.time_scale >= 1.0:
@@ -99,7 +103,7 @@ func _open() -> void:
 func _close() -> void:
 	visible = false
 	if is_instance_valid(player):
-		player.controls.captured = false
+		player.controls.captured = _was_captured
 	if _slowed:
 		Engine.time_scale = 1.0
 		_slowed = false
