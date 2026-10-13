@@ -2586,7 +2586,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (75/124)
+## M11 — Pulido: contenido y feel  (75/125)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4602,6 +4602,28 @@ La etiqueta del piso (FloorTag, en mazmorras de varios pisos) tenía lugar para 
 Daniel: entrando al santuario por la puerta de atrás se salía por la de abajo atravesando el muro agrietado de la Explanada sin romperlo. Además Spawn_atajo (x 11) quedaba del lado de adentro de la reja del atajo, así que el atajo no hacía falta abrirlo. Ahora shrine_cave tiene su propio muro agrietado en la boca de la salida (EntranceCrackedWall, mismo flag ow_shrine_cracked_wall: romper uno rompe el otro), y Spawn_atajo pasa a x 13,4, afuera de la reja. Todos los muros agrietados del juego (14) tienen flag y quedan rotos.
 
 **Prueba:** test_shrine › test_the_back_door_skips_neither_the_shortcut_nor_the_cracked_wall: por atrás arranca afuera de la reja cerrada y no pasa; la salida está tapada por el muro de adentro; con el flag del muro de afuera, el de adentro está roto. test_overworld_run sigue pasando.
+
+### 11.129 D4, Intihuatana de la Cumbre · En curso
+
+**Prioridad:** media · **Tamaño:** L · **Etiquetas:** `mazmorra`, `puzzles`
+
+Mazmorra 4 (GDD §8e): el escudo espejo parte la Cumbre; el piso bajo sin él, el alto con él. Sub-jefe Kuntur joven, jefe Apu Kuntur. Plano aprobado por Daniel el 2026-10-13 (si, me gusta).
+
+- [x] Plano
+  Aprobado el 2026-10-13 (Daniel: si, me gusta). Doc de diseño actualizado (sección D4 y mapa).
+- [x] Blockout
+  Hecho el 2026-10-13: levels/cumbre.tscn (debug/tmp/design/build_cumbre.gd), 12 salas de 14 × 12 m en dos pisos y la Cima. Espejo que gira (src/world/light/rotating_mirror.tscn, gira 90° de un espadazo). Grafo data/dungeons/cumbre_graph.tres, flags cu_, nombres en es/en, escenario cumbre, test_cumbre (4). GDD §8e.
+- [ ] Sub-jefe Kuntur joven
+  Hoy una momia prestada en PisoBase/KunturFight. Se vence sin el escudo.
+- [ ] Jefe Apu Kuntur
+  Hoy un ojo vigía prestado en PisoCima/BossFight. Pide el escudo.
+- [ ] Entrada en el overworld (sesión del overworld)
+  Spawn_cumbre y la puerta; hasta entonces las salidas van a risco.
+- [ ] Horneado LA (arte)
+  El estilo cumbre ya está en la_walls; falta sumar levels/cumbre.tscn a LEVELS y hornearla.
+- [ ] Recorrerla (Daniel)
+
+**Prueba:** test_cumbre, test_dungeon_reach (cumbre_graph), test_walk_doors, test_drop_holes
 
 ## M12 — Assets propios (Blender)  (13/21)
 

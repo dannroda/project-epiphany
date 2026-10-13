@@ -1176,3 +1176,54 @@ msgstr "Amaru"
 
 msgid "BOSS_TT_YACUMAMA"
 msgstr "Yacumama"
+
+msgid "PLACE_FLOOR_TOP"
+msgstr "Cima"
+
+msgid "PLACE_CUMBRE"
+msgstr "Intihuatana de la Cumbre"
+
+msgid "PLACE_CU_CREVICE"
+msgstr "Grieta"
+
+msgid "PLACE_CU_NEST"
+msgstr "Nido del Kuntur"
+
+msgid "PLACE_CU_CHAMBER"
+msgstr "Cámara del escudo"
+
+msgid "PLACE_CU_COLUMNS"
+msgstr "Columnas"
+
+msgid "PLACE_CU_ATRIUM"
+msgstr "Atrio"
+
+msgid "PLACE_CU_SNOWDRIFT"
+msgstr "Ventisquero"
+
+msgid "PLACE_CU_TURRETS"
+msgstr "Torretas"
+
+msgid "PLACE_CU_MIRRORS"
+msgstr "Sala de los espejos"
+
+msgid "PLACE_CU_LANDING"
+msgstr "Llegada"
+
+msgid "PLACE_CU_SUN_EYE"
+msgstr "Ojo del Sol"
+
+msgid "PLACE_CU_HOLLOW"
+msgstr "Hueco"
+
+msgid "PLACE_CU_ANTECHAMBER"
+msgstr "Antesala"
+
+msgid "PLACE_CU_SUMMIT"
+msgstr "Cima del Intihuatana"
+
+msgid "BOSS_CU_KUNTUR"
+msgstr "Kuntur joven"
+
+msgid "BOSS_CU_APU_KUNTUR"
+msgstr "Apu Kuntur"

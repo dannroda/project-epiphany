@@ -1388,3 +1388,54 @@ msgstr "Amaru"
 
 msgid "BOSS_TT_YACUMAMA"
 msgstr "Yacumama"
+
+msgid "PLACE_FLOOR_TOP"
+msgstr "Summit"
+
+msgid "PLACE_CUMBRE"
+msgstr "Intihuatana of the Peak"
+
+msgid "PLACE_CU_CREVICE"
+msgstr "Crevice"
+
+msgid "PLACE_CU_NEST"
+msgstr "Kuntur's Nest"
+
+msgid "PLACE_CU_CHAMBER"
+msgstr "Shield Chamber"
+
+msgid "PLACE_CU_COLUMNS"
+msgstr "Columns"
+
+msgid "PLACE_CU_ATRIUM"
+msgstr "Atrium"
+
+msgid "PLACE_CU_SNOWDRIFT"
+msgstr "Snowdrift"
+
+msgid "PLACE_CU_TURRETS"
+msgstr "Turrets"
+
+msgid "PLACE_CU_MIRRORS"
+msgstr "Hall of Mirrors"
+
+msgid "PLACE_CU_LANDING"
+msgstr "Landing"
+
+msgid "PLACE_CU_SUN_EYE"
+msgstr "Eye of the Sun"
+
+msgid "PLACE_CU_HOLLOW"
+msgstr "Hollow"
+
+msgid "PLACE_CU_ANTECHAMBER"
+msgstr "Antechamber"
+
+msgid "PLACE_CU_SUMMIT"
+msgstr "Intihuatana Summit"
+
+msgid "BOSS_CU_KUNTUR"
+msgstr "Young Kuntur"
+
+msgid "BOSS_CU_APU_KUNTUR"
+msgstr "Apu Kuntur"

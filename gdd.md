@@ -597,6 +597,59 @@ Plano aprobado por Daniel el 2026-10-13 ("me parece bien la totora") y armado en
 
 **Pendiente:** el Amaru y Yacumama tienen modelos primitivos hasta que arte los haga. Diferencias con el plano aprobado (por las reglas del gancho y de la vasija grande): la vasija grande que se traía con el gancho hasta una placa no está, porque se levanta con las manos y el puzzle se resolvía sin el gancho; el Juncal usa una reja en lugar de un puente; el acorazado está en el Telar y no en los Tejedores; el Mirador son solo postes. Kit: el gris de la Chullpa hasta el horneado LA de arte. Escenario de debug: `totora`. La entrada en el overworld es de la sesión del overworld: `TotoraDoor`, en una choza provisoria de la isla, y `Spawn_totora`, adonde vuelven las dos salidas.
 
+## 8e. Mazmorra 4 — El Intihuatana de la Cumbre
+<!-- id: mazmorra-4 -->
+
+Plano aprobado por Daniel el 2026-10-13 ("si, me gusta") y armado en blockout (`levels/cumbre.tscn`, hecho con `debug/tmp/design/build_cumbre.gd`). Un observatorio inca en la cumbre nevada. Dos pisos de 3 × 2 salas de 14 × 12 m (7 × 6 celdas), 8 m uno del otro, y la Cima arriba de la Antesala. Ítem: el **escudo espejo**, guardado por el sub-jefe Kuntur joven. El escudo parte la mazmorra: el piso bajo se juega sin él, el alto con él. Trae la pluma, el arco, las bombas, las sandalias y el gancho. Grafo: `data/dungeons/cumbre_graph.tres` (con escena; pasa el test y las reglas del molde). Flags `cu_`.
+
+**La luz:** las fuentes de sol (`LightSource`) tiran un haz que rebota en los espejos y en el escudo espejo alzado, y enciende los cristales (`LightReceiver`, que quedan encendidos). Pieza nueva: el **espejo que gira** (`src/world/light/rotating_mirror.tscn`), que gira 90° de un espadazo; las flechas, las bombas y el gancho no lo mueven. Las rejas cortan el haz, así que una reja que se cierra sola sirve de persiana.
+
+```
+ PISO ALTO  ┌───────────┬───────────┬───────────┐
+            │Torretas   │Espejos    │Llegada    │
+            │abismo,    ├─(cristal)─┤           │
+            │postes; orbe│2 espejos ├─ abierta ──┤ escalera ▼
+            │→ ojo:LLAVE│que giran  │           │
+            ├─ abierta ─┼───────────┼───────────┤
+            │Ojo del Sol│Hueco      │Antesala   │
+            │ojo c/tiempo├─abierta──┤vasijas    │
+            │→ persiana;│hueco ↓    ├─[LLAVE]───┤ [JEFE] → escalera ▲ (Cima)
+            │LLAVE JEFE │pieza ♥    │           │
+            └───────────┴───────────┴───────────┘
+ PISO BAJO  ┌───────────┬───────────┬───────────┐
+            │Grieta     │Nido del   │Cámara del │
+            │pluma:     │Kuntur     ├─(kuntur)──┤ESCUDO
+            │brújula    │sub-jefe   │cristal →  │ escalera ▲
+            ├─(bomba)───┼─[LLAVE]───┼───────────┤
+            │Columnas   │Atrio      │Ventisquero│
+            │abismo,    ├─abierta───┤torretas;  │
+            │postes:    │entrada;   ├─abierta───┤ojo → mapa
+            │LLAVE      │cristal    │           │
+            └───────────┴───────────┴───────────┘
+```
+
+| Sala | Qué pasa |
+|---|---|
+| Atrio (bajo, centro sur) | Entrada desde el overworld. Un rayo de sol cruza la sala pegado a la pared norte, al lado de un cristal: sin escudo es la promesa del ítem; con él, el cristal abre el nicho de las vasijas (bombas). Abierto a las Columnas y al Ventisquero; al norte, puerta con llave al Nido |
+| Columnas (bajo, SO) | Abismo de 4 celdas con un poste a cada lado: con el gancho, la **llave chica**. Pared rajada (bomba) a la Grieta |
+| Grieta (bajo, NO) | Dos grietas de una celda (pluma) hasta la **brújula** |
+| Ventisquero (bajo, SE) | Dos torretas y columnas de basalto para cubrirse. Del otro lado de un abismo, un ojo en la pared sur (arco) abre la reja del nicho del **mapa** |
+| Nido del Kuntur (bajo, centro norte) | Sub-jefe **Kuntur joven** (`KunturFight`, `cu_kuntur_defeated`; por ahora una momia prestada). Sala sin obstáculos, una vasija en cada esquina. Se vence sin el escudo. Vencido, abre la Cámara |
+| Cámara del escudo (bajo, NE) | Cofre grande del **escudo espejo**. Primer uso: el sol cae del norte, el escudo lo manda al cristal del oeste y se abre la reja de la escalera a la Llegada |
+| Llegada (alto, NE) | Escalera a la Cámara. Abierta a los Espejos |
+| Espejos (alto, centro norte) | El sol entra por el este hacia el oeste. Dos espejos que giran, de un espadazo cada uno, lo llevan al sur y lo devuelven al este por el lado sur de la sala; ahí el escudo lo baja al cristal, que abre la puerta de las Torretas. Una columna de basalto tapa el atajo desde el primer tramo. Un esqueleto con escudo |
+| Torretas (alto, NO) | Abismo de 4 celdas. En la cornisa oeste, una torreta tira orbes; devuelto con el escudo, un orbe pega en el ojo de la cornisa y abre la reja de la **llave chica**. Al lado de la llave, el gancho cruza de poste a poste |
+| Ojo del Sol (alto, SO) | Un sol en un nicho, tras una persiana (reja que se cierra sola). Una flecha al ojo de la pared norte la abre 6 s: con el escudo, el rayo va al receptor del sur, que abre el nicho de la **llave del jefe**. Un arquero |
+| Hueco (alto, centro sur) | Un hueco cae al Atrio (atajo). Un abismo con un islote en la esquina: con el salto largo, la **pieza de corazón** (`cu_heart_piece`). Al este, puerta con llave a la Antesala |
+| Antesala (alto, SE) | Vasijas. En un recoveco del este, la puerta del jefe y la escalera a la Cima |
+| Cima (arriba de la Antesala) | Jefe **Apu Kuntur** (`BossFight`, `cu_boss_defeated`; por ahora un ojo vigía prestado). Sala sin obstáculos, una vasija en cada esquina. Vencido, aparecen el contenedor de corazón (`cu_heart_container`) y el portal de salida |
+
+**Recorrido:**
+1. Sin escudo: Atrio → Columnas (gancho: llave) → Grieta (bomba, pluma: brújula) → Ventisquero (arco: mapa) → Atrio → Nido (llave: Kuntur joven) → Cámara (escudo).
+2. Con escudo: cristal de la Cámara → Llegada → Espejos (espada y escudo) → Torretas (escudo y gancho: llave) → Ojo del Sol (arco y escudo con tiempo: llave del jefe) → Hueco (pieza de corazón; el hueco es el atajo al Atrio) → Antesala → Cima.
+
+**Pendiente:** el Kuntur joven y el Apu Kuntur (hoy prestados). Kit: el gris de la Chullpa hasta el horneado LA de arte (el estilo `cumbre` ya está en `la_walls`). Escenario de debug: `cumbre`. La entrada en el overworld es de la sesión del overworld (`Spawn_cumbre` y la puerta); hasta entonces las dos salidas van al punto `risco`. A probar en el recorrido: si el escudo, apuntado en diagonal, salta el atajo de la columna de los Espejos; el hueco del Hueco queda pegado al abismo del islote.
+
 ## 9. Jefe — El Ojo con manos
 <!-- id: jefe -->
 
