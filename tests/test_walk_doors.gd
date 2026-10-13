@@ -2,7 +2,7 @@ extends "res://tests/test_case.gd"
 ## Cada puerta y reja de las mazmorras, abierta, deja pasar la cápsula del player en los dos sentidos y tiene suelo
 ## en el umbral: los demás tests teletransportan al player entre salas y no verían un paso tapado por un muro del kit.
 
-const LEVELS := ["res://levels/chullpa.tscn", "res://levels/quenoa.tscn", "res://levels/templo.tscn"]
+const LEVELS := ["res://levels/chullpa.tscn", "res://levels/quenoa.tscn", "res://levels/templo.tscn", "res://levels/totora.tscn"]
 const REACH := 2.4
 
 

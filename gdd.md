@@ -544,6 +544,59 @@ Propuesta el 2026-10-12 y armada en blockout (`levels/quenoa.tscn`). Una queñoa
 
 Los ojos son `WatcherEye` (`src/entities/watcher_eye/`). Los maneja un `ArenaFight` (`src/world/arena_fight.gd`, el mismo de la momia de la Chullpa) en la sala, como una oleada: cierra las puertas, hace la intro con la cámara y el nombre, muestra la barra del HUD, deja barrer a un ojo por vez y, si el player sale, la pelea vuelve a empezar. Al ganar pone el flag y hace de interruptor. Molde de todas las mazmorras: las peleas de sub-jefe y jefe van en salas sin obstáculos (solo objetos como vasijas), y el cofre del ítem va en una sala contigua que se abre al vencer al sub-jefe. El kit es el de la Chullpa hasta que haya uno de árbol. Escenario de debug: `quenoa`. La puerta en el overworld la pone la sesión del overworld (7.10); mientras, la salida lleva al punto `arboleda`.
 
+## 8d. Mazmorra 3 — El Santuario de Totora (11.30)
+<!-- id: mazmorra-3 -->
+
+Plano aprobado por Daniel el 2026-10-13 ("me parece bien la totora") y armado en blockout (`levels/totora.tscn`, hecho con `debug/tmp/build_totora.gd`). Un santuario de islas de totora en la isla de la Laguna. Dos pisos de 3 × 2 salas de 14 × 10 m (7 × 5 celdas), 8 m uno del otro, para que la cámara de LA quede fija. Ítem: el **gancho**, guardado por el sub-jefe Amaru. Trae la pluma (D1), el arco (D2), las bombas y las sandalias (los islotes de la Laguna piden el salto largo). Grafo: `data/dungeons/totora_graph.tres` (con escena; pasa el test y las reglas del molde). Flags `tt_`.
+
+**El agua honda es un pozo:** celdas sin piso con un `Pit` debajo y la superficie de agua de LA. El que cae salpica, pierde 2 y vuelve a la entrada de la sala. Con las sandalias la pluma cruza 3 celdas, así que **todo cruce que pide el gancho mide 4 celdas de agua**, y su poste está en la celda siguiente, a 0.5 m del borde. Por eso el gancho llega a 10 m. Los postes se fijan con el targeting (Z): así se elige uno entre varios. El agua de 1 celda (Embarcadero, Balsas, el estanque del Juncal) se salta con la pluma.
+
+```
+ PISO ALTO  ┌───────────┬───────────┬───────────┐
+            │Tejedores  │Estanque   │Mirador    │
+            │ojo c/tiempo├─[LLAVE]───┤del lago   │
+            │→ reja,    │postes al  ├ abierta ──┤ postes →
+            │LLAVE JEFE │islote:    │           │ pieza ♥
+            │hueco ↓    │llave chica│           │
+            ├───────────┼──agua─────┼───────────┤
+            │ (macizo)  │Telar      │Garita     │
+            │           │agua ancha ├─(bomba)───┤
+            │           │postes ↑   │brújula    │
+            │           │acorazado  │escalera ▼ │
+            └───────────┴───────────┴───────────┘
+ PISO BAJO  ┌───────────┬───────────┬───────────┐
+            │Cámara del │Pozo del   │Nido de    │
+            │GANCHO     ├─[AMARU]   │Yacumama   │
+            │postes ↓   │sub-jefe   │JEFE       │
+            ├──agua─────┼─[LLAVE]───┼─[JEFE]────┤
+            │Balsas     │Embarcadero│Juncal     │
+            │pluma      ├─ abierta ─┤arquero en │
+            │llave chica│ entrada   │islote; ojo│
+            │           │           │→ reja: mapa,
+            │           │           │escalera ▲ │
+            └───────────┴───────────┴───────────┘
+```
+
+| Sala | Qué pasa |
+|---|---|
+| Embarcadero (bajo, centro sur) | Entrada desde el overworld (punto `totora`). Dos charcos de 1 celda a los costados de un paso enseñan que el agua es un pozo. Abierta a las Balsas y al Juncal; al norte, puerta con llave al Pozo del Amaru |
+| Balsas (bajo, SO) | Dos balsas de totora en fila, separadas por agua de 1 celda: con la pluma se llega a la **llave chica**. En la balsa del medio hay un poste (`BalsasPost`) frente a 4 celdas de agua que siguen por la puerta hasta la Cámara del gancho: hoy se ven, con el gancho son el atajo |
+| Juncal (bajo, SE) | Un arquero en un islote de un estanque (pluma) y un esqueleto. Un ojo en la pared norte (arco) abre la reja (`JuncalGate`) de la parte este, con el **mapa** y la escalera a la Garita. Al norte, la puerta del jefe |
+| Garita (alto, SE) | Escalera al Juncal. **Brújula**. Muro agrietado (bomba) al Telar |
+| Telar (alto, centro sur) | Agua ancha hacia el norte: 4 celdas hasta el poste del Estanque, que pasa por la puerta. Sin gancho solo se ve: es la promesa del ítem. Un esqueleto acorazado (bomba o gancho) |
+| Pozo del Amaru (bajo, centro norte) | Sub-jefe **Amaru**, una serpiente joven (`AmaruFight`, `tt_amaru_defeated`). Sala sin obstáculos, solo vasijas. Se vence sin el gancho. Vencido, abre la puerta (`GanchoDoor`) de la Cámara del gancho |
+| Cámara del gancho (bajo, NO) | Cofre grande del **gancho**. Primer uso: el poste de las Balsas, 4 celdas al sur por la puerta, es la vuelta (atajo al Embarcadero) |
+| Estanque (alto, centro norte) | Con gancho, desde el Telar. Tierra al oeste, un islote al este con 4 celdas de agua en el medio, y un poste de cada lado. En el islote, la **llave chica**; de ahí, una puerta abierta al Mirador. Al oeste, la puerta con llave a los Tejedores |
+| Mirador del lago (alto, NE; opcional) | Postes de una orilla a la otra hasta la **pieza de corazón** (`tt_heart_piece`) |
+| Tejedores (alto, NO) | Con llave. Una franja de entrada y, del otro lado de 4 celdas de agua, una franja oeste con un poste. Un ojo con tiempo (`open_time` 6 s, sin flag) en la pared oeste se flecha desde la entrada; con el gancho se cruza y hay que pasar la reja (`BossKeyGate`) antes de que se cierre, hasta el nicho de la **llave del jefe**. En el nicho, un hueco cae a la Cámara del gancho: si la reja se cerró, esa es la salida. Si se cruza antes de flechar el ojo, desde la franja oeste también se le pega |
+| Nido de Yacumama (bajo, NE) | Jefe **Yacumama**, la madre serpiente (`BossFight`, `tt_boss_defeated`). Sala sin obstáculos, solo vasijas. Fase 1: asoma por los charcos y escupe; el gancho a la argolla de su máscara la arrastra al piso y ahí le pega la espada. Fase 2: además barre la sala con la cola, que se salta con la pluma. Vencida, aparecen el contenedor de corazón (`tt_heart_container`) y el portal de salida |
+
+**Recorrido:**
+1. Primera mitad, sin gancho: Embarcadero → Balsas (llave) → Juncal (arco: mapa) → Garita (brújula) → Telar (bomba; los postes a la vista) → Embarcadero → Pozo del Amaru (llave) → gancho.
+2. Segunda mitad, con gancho: atajo a las Balsas → Juncal → Garita → Telar → Estanque (llave en el islote; Mirador) → Tejedores (arco y gancho con tiempo: llave del jefe) → hueco a la Cámara → atajo → Juncal → jefe.
+
+**Pendiente:** el Amaru y Yacumama no existen todavía. En el blockout pelean una momia (`MummyGuard`) y un ojo vigía (`WatcherEye`) prestados de D1 y D2, con los nombres de D3. Los charcos de las dos salas vienen con esos enemigos. Diferencias con el plano aprobado (por las reglas del gancho y de la vasija grande): la vasija grande que se traía con el gancho hasta una placa no está, porque se levanta con las manos y el puzzle se resolvía sin el gancho; el Juncal usa una reja en lugar de un puente; el acorazado está en el Telar y no en los Tejedores; el Mirador son solo postes. Kit: el gris de la Chullpa hasta el horneado LA de arte. Escenario de debug: `totora`. La entrada en el overworld (portal en la isla, punto `totora`) es de la sesión del overworld; mientras, la salida lleva al punto `quenoa`, el más cercano a la Laguna.
+
 ## 9. Jefe — El Ojo con manos
 <!-- id: jefe -->
 

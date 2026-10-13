@@ -3008,17 +3008,27 @@ Un ítem post-MVP: gancho o algo que mueva objetos a distancia (GDD §6.1), con 
 - [x] Elegir el ítem
   Gancho. Decidido el 2026-10-11 para D2; el 2026-10-12 (11.90) pasa a ser el ítem de D3 (Laguna), y la pluma va a D2. Se engancha a postes y cofres y lleva al player; a enemigos livianos los trae; cruza abismos de 4 m; también quita la armadura del esqueleto acorazado (la bomba sigue sirviendo).
 - [x] Comportamiento del gancho
-  Hecho el 2026-10-13 (Daniel: si, me gusta). HookBehavior: el botón pasa al estado Hooking del player y dispara Hook (src/items/hookshot/hook.tscn), que sale recto 8 m (4 baldosas). En un HookPost (src/world/hook_post.tscn) o un cofre se clava y el player vuela hasta ahí a 14 m/s sin gravedad: cruza agua y huecos. Trae vasijas (se rompen a los pies), rocas y recolectables; la vasija grande viene de a una celda. Golpea con el elemento hook: 1 de daño y aturde 1,2 s, le baja el escudo al esqueleto con escudo y le arranca la coraza al acorazado sin dañarlo. Contra paredes rebota. test_hookshot (7).
+  Hecho el 2026-10-13 (Daniel: si, me gusta). HookBehavior: el botón pasa al estado Hooking del player y dispara Hook (src/items/hookshot/hook.tscn), que sale recto 10 m (5 baldosas; era 8, se alargó para los cruces de 4 celdas de D3). En un HookPost (src/world/hook_post.tscn) o un cofre se clava y el player vuela hasta ahí a 14 m/s sin gravedad: cruza agua y huecos; a un poste llega siempre al lado, sobre piso. Con el gancho en un botón, los postes a su alcance se fijan con el targeting, aunque estén a otra altura (Daniel, por la Cumbre): la cadena va derecho y el player sube o baja a su piso. Trae vasijas (se rompen a los pies), rocas y recolectables; la vasija grande viene de a una celda. Golpea con el elemento hook: 1 de daño y aturde 1,2 s, le baja el escudo al esqueleto con escudo y le arranca la coraza al acorazado sin dañarlo. Contra paredes rebota. test_hookshot (10).
 - [ ] Probarlo en el banco de pruebas (Daniel)
   Escenario gancho (debug/scenarios/gancho.cfg): sandbox de ítems, zona GANCHO al sur: hueco de 6 m con un poste, isla con una vasija y una vasija grande, y otro poste para volver. Ajustar a ojo alcance, velocidades y aturdimiento.
-- [ ] Arte: modelo del gancho, del poste e ícono
-  Hoy son primitivas (punta de cobre, cuerda, poste de madera con argolla) y el ícono es el de la pluma.
-- [ ] D3, Santuario de Totora: plano y blockout
-  Aprobado el 2026-10-13: islas de totora sobre agua honda (el agua hace de pozo), unas 12 salas de 14 × 10 m en dos pisos. Primera mitad con pluma, arco y bombas; sub-jefe Amaru (serpiente joven, se vence sin el gancho) guarda el gancho; segunda mitad con postes, vasija grande, llave en un islote, acorazados y un ojo con tiempo. Jefe Yacumama: el gancho le arrastra la máscara a la orilla; fase 2, barrido de cola que se salta con la pluma.
-- [ ] Usos en el overworld (sesión del overworld)
-  Postes de la Quebrada Explanada ↔ Cumbre (D4) y la franja del Risco del ojo (carcaj grande), con src/world/hook_post.tscn.
+- [x] Arte: modelo del gancho, del poste e ícono
+  Hecho por arte (712c8029): lanzador, punta, eslabón de cadena de 0.16 m (la cadena lo repite, 0e28489a), poste con argolla e ícono.
+- [x] D3, Santuario de Totora: plano y blockout
+  Hecho el 2026-10-13: levels/totora.tscn (debug/tmp/build_totora.gd), 11 salas de 14 × 10 m en dos pisos, GDD §8d. El agua es celda vacía con Pit; los cruces del gancho miden 4 celdas (el salto largo cruza 3). Grafo data/dungeons/totora_graph.tres, test_totora (6), escenario totora. Diferencias con el plano: sin la vasija grande (se levanta con las manos), reja en lugar de puente en el Juncal, el acorazado en el Telar, el Mirador solo con postes.
+- [x] Usos en el overworld (sesión del overworld)
+  Hecho por el overworld (6910e214, a598979a): CumbrePost y RiscoPost en el borde, se suben fijándolos; test_overworld_hook.
 - [ ] Ala del gancho del templo
   Gancho y GanchoOjo en levels/templo.tscn: postes sobre el abismo y el acorazado del ojo. Editar el grid y correr tools/la_walls.gd -- refresh templo (avisar a arte).
+- [ ] Sub-jefe Amaru
+  Serpiente joven: asoma por cuatro charcos a ras del piso, se lanza recta, cae sobre la totora y queda expuesta a la espada (también bombas y vasijas). Se vence sin el gancho. Hoy pelea una momia prestada (PisoBajo/AmaruFight/Amaru).
+- [ ] Jefe Yacumama
+  Madre serpiente: asoma por los charcos y escupe; fase 1, el gancho a la argolla de su máscara la arrastra al piso y le pega la espada; fase 2, barrido de cola que se salta con la pluma. Hoy pelea un ojo vigía prestado (PisoBajo/BossFight/Yacumama).
+- [ ] Entrada de D3 en el overworld (sesión del overworld)
+  Portal a levels/totora.tscn en la isla de la Laguna y SpawnPoint totora (la salida de D3 y el portal del jefe llevan ahí).
+- [ ] Arte: horneado LA de la totora
+  Agregar totora a tools/la_walls.gd (kit propio de totora y agua) cuando arte pueda; los tests de test_totora ya son relativos a cada sala.
+- [ ] Recorrer D3 (Daniel)
+  Escenario totora: pluma, arco, bombas y sandalias. Ajustar a ojo los cruces, el ojo con tiempo de los Tejedores (6 s) y la posición de los postes.
 
 **Prueba:** El ítem tiene un uso en combate y abre al menos dos lugares que antes no se podían.
 

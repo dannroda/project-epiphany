@@ -1,0 +1,196 @@
+[gd_resource type="Resource" script_class="DungeonGraph" format=3]
+
+[ext_resource type="Script" uid="uid://fuoosewf8un4" path="res://src/world/dungeon_graph/dungeon_graph.gd" id="1_graph"]
+[ext_resource type="Script" uid="uid://djven2p0k3w1i" path="res://src/world/dungeon_graph/dungeon_link.gd" id="2_link"]
+[ext_resource type="Script" uid="uid://2kgujv7wu8l3" path="res://src/world/dungeon_graph/dungeon_spot.gd" id="3_spot"]
+
+[sub_resource type="Resource" id="Link_1"]
+script = ExtResource("2_link")
+from = &"Embarcadero"
+to = &"Balsas"
+
+[sub_resource type="Resource" id="Link_2"]
+script = ExtResource("2_link")
+from = &"Balsas"
+to = &"Balsas:Balsa"
+needs = Array[StringName]([&"feather"])
+
+[sub_resource type="Resource" id="Link_3"]
+script = ExtResource("2_link")
+from = &"Balsas:Balsa"
+to = &"Balsas:Llave"
+needs = Array[StringName]([&"feather"])
+
+[sub_resource type="Resource" id="Link_4"]
+script = ExtResource("2_link")
+from = &"Embarcadero"
+to = &"Juncal"
+
+[sub_resource type="Resource" id="Link_5"]
+script = ExtResource("2_link")
+from = &"Juncal"
+to = &"Juncal:E"
+through = Array[NodePath]([NodePath("PisoBajo/JuncalGate")])
+
+[sub_resource type="Resource" id="Link_6"]
+script = ExtResource("2_link")
+from = &"Juncal:E"
+to = &"Garita"
+
+[sub_resource type="Resource" id="Link_7"]
+script = ExtResource("2_link")
+from = &"Garita"
+to = &"Telar"
+through = Array[NodePath]([NodePath("PisoAlto/GaritaCrackedWall")])
+
+[sub_resource type="Resource" id="Link_8"]
+script = ExtResource("2_link")
+from = &"Embarcadero"
+to = &"Pozo"
+through = Array[NodePath]([NodePath("PisoBajo/AmaruLocked")])
+locked = true
+
+[sub_resource type="Resource" id="Link_9"]
+script = ExtResource("2_link")
+from = &"Pozo"
+to = &"Gancho"
+through = Array[NodePath]([NodePath("PisoBajo/GanchoDoor")])
+
+[sub_resource type="Resource" id="Link_10"]
+script = ExtResource("2_link")
+from = &"Gancho"
+to = &"Balsas:Balsa"
+needs = Array[StringName]([&"hookshot"])
+
+[sub_resource type="Resource" id="Link_11"]
+script = ExtResource("2_link")
+from = &"Telar"
+to = &"Estanque"
+needs = Array[StringName]([&"hookshot"])
+
+[sub_resource type="Resource" id="Link_12"]
+script = ExtResource("2_link")
+from = &"Estanque"
+to = &"Estanque:Islote"
+needs = Array[StringName]([&"hookshot"])
+
+[sub_resource type="Resource" id="Link_13"]
+script = ExtResource("2_link")
+from = &"Estanque:Islote"
+to = &"Mirador"
+
+[sub_resource type="Resource" id="Link_14"]
+script = ExtResource("2_link")
+from = &"Mirador"
+to = &"Mirador:E"
+needs = Array[StringName]([&"hookshot"])
+
+[sub_resource type="Resource" id="Link_15"]
+script = ExtResource("2_link")
+from = &"Estanque"
+to = &"Tejedores"
+through = Array[NodePath]([NodePath("PisoAlto/TejedoresLocked")])
+locked = true
+
+[sub_resource type="Resource" id="Link_16"]
+script = ExtResource("2_link")
+from = &"Tejedores"
+to = &"Tejedores:O"
+needs = Array[StringName]([&"hookshot"])
+one_way = true
+
+[sub_resource type="Resource" id="Link_17"]
+script = ExtResource("2_link")
+from = &"Tejedores:O"
+to = &"Tejedores:Nicho"
+through = Array[NodePath]([NodePath("PisoAlto/BossKeyGate")])
+
+[sub_resource type="Resource" id="Link_18"]
+script = ExtResource("2_link")
+from = &"Tejedores:Nicho"
+to = &"Gancho"
+one_way = true
+
+[sub_resource type="Resource" id="Link_19"]
+script = ExtResource("2_link")
+from = &"Juncal"
+to = &"Jefe"
+through = Array[NodePath]([NodePath("PisoBajo/BossDoor")])
+
+[sub_resource type="Resource" id="Spot_1"]
+script = ExtResource("3_spot")
+area = &"Balsas:Llave"
+node = NodePath("PisoBajo/BalsasKeyChest")
+key = true
+
+[sub_resource type="Resource" id="Spot_2"]
+script = ExtResource("3_spot")
+area = &"Juncal"
+node = NodePath("PisoBajo/JuncalEye")
+needs = Array[StringName]([&"bow"])
+
+[sub_resource type="Resource" id="Spot_3"]
+script = ExtResource("3_spot")
+area = &"Juncal:E"
+node = NodePath("PisoBajo/MapChest")
+
+[sub_resource type="Resource" id="Spot_4"]
+script = ExtResource("3_spot")
+area = &"Garita"
+node = NodePath("PisoAlto/CompassChest")
+
+[sub_resource type="Resource" id="Spot_5"]
+script = ExtResource("3_spot")
+area = &"Pozo"
+node = NodePath("PisoBajo/AmaruFight")
+
+[sub_resource type="Resource" id="Spot_6"]
+script = ExtResource("3_spot")
+area = &"Gancho"
+node = NodePath("PisoBajo/HookshotChest")
+
+[sub_resource type="Resource" id="Spot_7"]
+script = ExtResource("3_spot")
+area = &"Estanque:Islote"
+node = NodePath("PisoAlto/StripKeyChest")
+key = true
+
+[sub_resource type="Resource" id="Spot_8"]
+script = ExtResource("3_spot")
+area = &"Mirador:E"
+node = NodePath("PisoAlto/HeartPieceMirador")
+
+[sub_resource type="Resource" id="Spot_9"]
+script = ExtResource("3_spot")
+area = &"Tejedores"
+node = NodePath("PisoAlto/TejedoresEye")
+needs = Array[StringName]([&"bow"])
+
+[sub_resource type="Resource" id="Spot_10"]
+script = ExtResource("3_spot")
+area = &"Tejedores:Nicho"
+node = NodePath("PisoAlto/BossKeyChest")
+
+[sub_resource type="Resource" id="Spot_11"]
+script = ExtResource("3_spot")
+area = &"Jefe"
+node = NodePath("PisoBajo/BossFight")
+needs = Array[StringName]([&"hookshot"])
+gives = &"tt_boss_defeated"
+
+[sub_resource type="Resource" id="Spot_12"]
+script = ExtResource("3_spot")
+area = &"Tejedores:O"
+node = NodePath("PisoAlto/TejedoresEye")
+needs = Array[StringName]([&"bow"])
+
+[resource]
+script = ExtResource("1_graph")
+scene = "res://levels/totora.tscn"
+start = &"Embarcadero"
+goal = &"tt_boss_defeated"
+brings = Array[StringName]([&"bomb_bag", &"feather", &"bow", &"sandals"])
+item = &"hookshot"
+guard = &"tt_amaru_defeated"
+links = Array[ExtResource("2_link")]([SubResource("Link_1"), SubResource("Link_2"), SubResource("Link_3"), SubResource("Link_4"), SubResource("Link_5"), SubResource("Link_6"), SubResource("Link_7"), SubResource("Link_8"), SubResource("Link_9"), SubResource("Link_10"), SubResource("Link_11"), SubResource("Link_12"), SubResource("Link_13"), SubResource("Link_14"), SubResource("Link_15"), SubResource("Link_16"), SubResource("Link_17"), SubResource("Link_18"), SubResource("Link_19")])
+spots = Array[ExtResource("3_spot")]([SubResource("Spot_1"), SubResource("Spot_2"), SubResource("Spot_3"), SubResource("Spot_4"), SubResource("Spot_5"), SubResource("Spot_6"), SubResource("Spot_7"), SubResource("Spot_8"), SubResource("Spot_9"), SubResource("Spot_10"), SubResource("Spot_11"), SubResource("Spot_12")])

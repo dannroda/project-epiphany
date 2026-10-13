@@ -1346,3 +1346,45 @@ msgstr "You have no bag to carry bombs. You leave them in the chest."
 msgctxt "chest_missing_bow_1"
 msgid "No tenés un arco para usar flechas. Las dejás en el cofre."
 msgstr "You have no bow to use arrows. You leave them in the chest."
+
+msgid "PLACE_TOTORA"
+msgstr "Reed Sanctuary"
+
+msgid "PLACE_TT_LANDING"
+msgstr "Landing"
+
+msgid "PLACE_TT_RAFTS"
+msgstr "Rafts"
+
+msgid "PLACE_TT_REEDS"
+msgstr "Reed Bed"
+
+msgid "PLACE_TT_AMARU"
+msgstr "Amaru's Pool"
+
+msgid "PLACE_TT_HOOK"
+msgstr "Hookshot Chamber"
+
+msgid "PLACE_TT_BOSS"
+msgstr "Yacumama's Nest"
+
+msgid "PLACE_TT_GUARDHOUSE"
+msgstr "Guardhouse"
+
+msgid "PLACE_TT_LOOM"
+msgstr "Loom"
+
+msgid "PLACE_TT_POND"
+msgstr "Pond"
+
+msgid "PLACE_TT_WEAVERS"
+msgstr "Weavers"
+
+msgid "PLACE_TT_LOOKOUT"
+msgstr "Lake Lookout"
+
+msgid "BOSS_TT_AMARU"
+msgstr "Amaru"
+
+msgid "BOSS_TT_YACUMAMA"
+msgstr "Yacumama"

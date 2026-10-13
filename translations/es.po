@@ -1134,3 +1134,45 @@ msgstr "Hace mucho que nadie vuelve."
 
 msgid "INTRO_4"
 msgstr "El Ojo despierta."
+
+msgid "PLACE_TOTORA"
+msgstr "Santuario de Totora"
+
+msgid "PLACE_TT_LANDING"
+msgstr "Embarcadero"
+
+msgid "PLACE_TT_RAFTS"
+msgstr "Balsas"
+
+msgid "PLACE_TT_REEDS"
+msgstr "Juncal"
+
+msgid "PLACE_TT_AMARU"
+msgstr "Pozo del Amaru"
+
+msgid "PLACE_TT_HOOK"
+msgstr "Cámara del gancho"
+
+msgid "PLACE_TT_BOSS"
+msgstr "Nido de Yacumama"
+
+msgid "PLACE_TT_GUARDHOUSE"
+msgstr "Garita"
+
+msgid "PLACE_TT_LOOM"
+msgstr "Telar"
+
+msgid "PLACE_TT_POND"
+msgstr "Estanque"
+
+msgid "PLACE_TT_WEAVERS"
+msgstr "Tejedores"
+
+msgid "PLACE_TT_LOOKOUT"
+msgstr "Mirador del lago"
+
+msgid "BOSS_TT_AMARU"
+msgstr "Amaru"
+
+msgid "BOSS_TT_YACUMAMA"
+msgstr "Yacumama"

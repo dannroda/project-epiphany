@@ -1,0 +1,768 @@
+[gd_scene format=3 uid="uid://onafwgem6uli"]
+
+[ext_resource type="Script" path="res://src/world/dungeon.gd" id="1_oj4pd"]
+[ext_resource type="NavigationMesh" path="res://levels/nav/totora_navmesh.tres" id="nav_totora"]
+[ext_resource type="Script" path="res://src/world/dungeon_floor.gd" id="2_bx33l"]
+[ext_resource type="MeshLibrary" path="res://data/kits/chullpa_kit.tres" id="3_u7cnv"]
+[ext_resource type="Script" path="res://src/world/room.gd" id="4_4j2rd"]
+[ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="5_wr5m1"]
+[ext_resource type="Script" path="res://src/world/breakable.gd" id="6_s7pp0"]
+[ext_resource type="Resource" path="res://data/drops/pot.tres" id="7_mlgyq"]
+[ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="8_ne4in"]
+[ext_resource type="Script" path="res://src/world/chest.gd" id="9_np5b4"]
+[ext_resource type="Resource" path="res://data/items/small_key.tres" id="10_kh0fu"]
+[ext_resource type="PackedScene" path="res://src/world/hook_post.tscn" id="11_3yydx"]
+[ext_resource type="Script" path="res://src/world/hook_post.gd" id="12_dtnl1"]
+[ext_resource type="Resource" path="res://data/items/hookshot.tres" id="13_8gv3t"]
+[ext_resource type="PackedScene" path="res://src/entities/archer_skeleton.tscn" id="14_ok4xl"]
+[ext_resource type="Script" path="res://src/entities/enemy.gd" id="15_lqaqr"]
+[ext_resource type="Resource" path="res://data/entities/archer_skeleton.tres" id="16_2llkb"]
+[ext_resource type="PackedScene" path="res://src/entities/enemy.tscn" id="17_mtxks"]
+[ext_resource type="Resource" path="res://data/entities/skeleton.tres" id="18_v5awg"]
+[ext_resource type="PackedScene" path="res://src/world/eye_switch.tscn" id="19_kd5y0"]
+[ext_resource type="Script" path="res://src/world/eye_switch.gd" id="20_o5umy"]
+[ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="21_5uynx"]
+[ext_resource type="Script" path="res://src/world/gate.gd" id="22_h5tew"]
+[ext_resource type="Resource" path="res://data/items/dungeon_map.tres" id="23_bf1ls"]
+[ext_resource type="PackedScene" path="res://src/world/door.tscn" id="24_ctf4b"]
+[ext_resource type="Script" path="res://src/world/door.gd" id="25_8kq17"]
+[ext_resource type="Script" path="res://src/world/arena_fight.gd" id="26_ta07f"]
+[ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="27_ir4ow"]
+[ext_resource type="PackedScene" path="res://src/entities/mummy_guard/mummy_guard.tscn" id="28_pbras"]
+[ext_resource type="Script" path="res://src/entities/mummy_guard/mummy_guard.gd" id="29_plbht"]
+[ext_resource type="Resource" path="res://data/entities/mummy_guard.tres" id="30_u5j68"]
+[ext_resource type="PackedScene" path="res://src/entities/watcher_eye/watcher_eye.tscn" id="31_1aybm"]
+[ext_resource type="Script" path="res://src/entities/watcher_eye/watcher_eye.gd" id="32_e33tn"]
+[ext_resource type="Resource" path="res://data/entities/watcher_eye_boss.tres" id="33_8q2lw"]
+[ext_resource type="PackedScene" path="res://src/world/pickup.tscn" id="34_0sq8t"]
+[ext_resource type="Script" path="res://src/world/pickup.gd" id="35_6ch0c"]
+[ext_resource type="Resource" path="res://data/items/heart_container.tres" id="36_in1hu"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/corazon.res" id="37_oqocf"]
+[ext_resource type="PackedScene" path="res://src/world/warp_portal.tscn" id="38_607qk"]
+[ext_resource type="Script" path="res://src/world/portal.gd" id="39_056xl"]
+[ext_resource type="Material" path="res://src/world/water/water_la.tres" id="40_vrfs0"]
+[ext_resource type="Script" path="res://src/world/pit.gd" id="41_4rcne"]
+[ext_resource type="PackedScene" path="res://src/world/stairs.tscn" id="42_dmyaj"]
+[ext_resource type="Script" path="res://src/world/stairs.gd" id="43_630up"]
+[ext_resource type="PackedScene" path="res://src/world/wall_torch.tscn" id="44_4mqq5"]
+[ext_resource type="Resource" path="res://data/items/compass.tres" id="45_w5jcx"]
+[ext_resource type="PackedScene" path="res://src/world/cracked_wall.tscn" id="46_ynv2o"]
+[ext_resource type="Script" path="res://src/world/cracked_wall.gd" id="47_mv4qb"]
+[ext_resource type="PackedScene" path="res://src/entities/armored_skeleton.tscn" id="48_dsabl"]
+[ext_resource type="Resource" path="res://data/entities/armored_skeleton.tres" id="49_lbgvp"]
+[ext_resource type="PackedScene" path="res://src/world/heart_piece.tscn" id="50_4rg4j"]
+[ext_resource type="Script" path="res://src/world/heart_piece.gd" id="51_ryy8k"]
+[ext_resource type="Resource" path="res://data/items/heart_piece.tres" id="52_k0vpb"]
+[ext_resource type="Resource" path="res://data/items/boss_key.tres" id="53_qeqm7"]
+[ext_resource type="PackedScene" path="res://src/world/stairs_down.tscn" id="54_kk3t3"]
+[ext_resource type="PackedScene" path="res://player/player.tscn" id="55_h1m6d"]
+[ext_resource type="Script" path="res://player/player.gd" id="56_k4wy0"]
+[ext_resource type="Resource" path="res://data/entities/player.tres" id="57_6wymq"]
+[ext_resource type="Script" path="res://src/world/spawn_point.gd" id="58_gtsey"]
+[ext_resource type="Script" path="res://src/tools/top_down_camera.gd" id="59_uscax"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="60_km5gt"]
+[ext_resource type="Script" path="res://src/ui/hud/hud.gd" id="61_trvnj"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/player_panel_solo.tscn" id="62_fka85"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/player_panel.tscn" id="63_wgk8o"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/item_ring.tscn" id="64_kje25"]
+
+[sub_resource type="Environment" id="Environment_qy1p7"]
+background_mode = 1
+ambient_light_source = 2
+ambient_light_color = Color(0.56, 0.7, 0.8, 1)
+ambient_light_energy = 1.35
+glow_enabled = true
+glow_intensity = 0.2
+glow_blend_mode = 0
+glow_hdr_threshold = 0.25
+fog_light_color = Color(0.25, 0.08, 0.06, 1)
+fog_density = 0.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vm0iq"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gn6ps"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bsx6e"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pikwi"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cxrnh"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qqpmk"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ej705"]
+material = ExtResource("40_vrfs0")
+size = Vector2(50, 26)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_iqimp"]
+size = Vector3(50, 2.4, 26)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nrriy"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vw888"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tbtoj"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7lrgh"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3kldj"]
+size = Vector3(14, 2.4, 10)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_fwxao"]
+material = ExtResource("40_vrfs0")
+size = Vector2(12, 8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4sd85"]
+size = Vector3(12, 2.4, 8)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_re012"]
+material = ExtResource("40_vrfs0")
+size = Vector2(8, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jcswt"]
+size = Vector3(8, 2.4, 10)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_wnqry"]
+material = ExtResource("40_vrfs0")
+size = Vector2(8, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2nldq"]
+size = Vector3(8, 2.4, 10)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ib12e"]
+material = ExtResource("40_vrfs0")
+size = Vector2(8, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_np1ir"]
+size = Vector3(8, 2.4, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x275d"]
+size = Vector3(2, 2.4, 1.2)
+
+[node name="Totora" type="Node3D" unique_id=628508757]
+
+[node name="Dungeon" type="Node" parent="." unique_id=513675430]
+script = ExtResource("1_oj4pd")
+id = &"tt"
+display_name = "PLACE_TOTORA"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=651004774]
+environment = SubResource("Environment_qy1p7")
+
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=285997108]
+transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 0, 0, 0)
+light_color = Color(0.6, 0.8, 0.98, 1)
+light_energy = 0.75
+directional_shadow_mode = 1
+directional_shadow_max_distance = 32.0
+
+[node name="PisoBajo" type="Node3D" parent="." unique_id=1506658584]
+script = ExtResource("2_bx33l")
+display_name = "PLACE_FLOOR_GROUND"
+
+[node name="GridMap" type="GridMap" parent="PisoBajo" unique_id=751542889 groups=["navmesh_source"]]
+mesh_library = ExtResource("3_u7cnv")
+cell_size = Vector3(2, 1, 2)
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+data = {
+"cells": PackedInt32Array(0, 0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 6, 1, 0, 7, 1, 0, 8, 1, 0, 9, 1, 0, 10, 1, 0, 11, 1, 0, 12, 1, 1, 0, 1, 1, 1, 0, 1, 2, 0, 1, 3, 0, 1, 6, 1, 1, 12, 1, 2, 0, 1, 2, 1, 0, 2, 2, 0, 2, 3, 0, 2, 6, 1, 2, 8, 0, 2, 9, 0, 2, 10, 0, 2, 11, 0, 2, 12, 1, 3, 0, 1, 3, 1, 0, 3, 2, 0, 3, 3, 0, 3, 6, 1, 3, 12, 1, 4, 0, 1, 4, 1, 0, 4, 2, 0, 4, 3, 0, 4, 8, 0, 4, 9, 0, 4, 10, 0, 4, 11, 0, 4, 12, 1, 5, 0, 1, 5, 1, 0, 5, 2, 0, 5, 3, 0, 5, 6, 1, 5, 12, 1, 6, 0, 1, 6, 1, 0, 6, 2, 0, 6, 3, 0, 6, 6, 1, 6, 8, 0, 6, 9, 0, 6, 10, 0, 6, 11, 0, 6, 12, 1, 7, 0, 1, 7, 1, 0, 7, 2, 0, 7, 3, 0, 7, 6, 1, 7, 8, 0, 7, 9, 0, 7, 10, 0, 7, 11, 0, 7, 12, 1, 8, 0, 1, 8, 1, 1, 8, 2, 1, 8, 3, 1048580, 8, 4, 1, 8, 5, 1, 8, 6, 1, 8, 7, 1, 8, 8, 1, 8, 9, 1048580, 8, 10, 1, 8, 11, 1, 8, 12, 1, 9, 0, 1, 9, 1, 0, 9, 2, 0, 9, 3, 0, 9, 4, 0, 9, 5, 0, 9, 6, 1, 9, 7, 0, 9, 9, 0, 9, 10, 0, 9, 11, 0, 9, 12, 1, 10, 0, 1, 10, 1, 0, 10, 2, 0, 10, 3, 0, 10, 4, 0, 10, 5, 0, 10, 6, 1, 10, 7, 0, 10, 9, 0, 10, 10, 0, 10, 11, 0, 10, 12, 1, 11, 0, 1, 11, 1, 0, 11, 2, 0, 11, 3, 0, 11, 4, 0, 11, 5, 0, 11, 6, 1, 11, 7, 0, 11, 9, 0, 11, 10, 0, 11, 11, 0, 11, 12, 1, 12, 0, 1, 12, 1, 0, 12, 2, 0, 12, 3, 0, 12, 4, 0, 12, 5, 0, 12, 6, 4, 12, 7, 0, 12, 8, 0, 12, 9, 0, 12, 10, 0, 12, 11, 0, 12, 12, 4, 13, 0, 1, 13, 1, 0, 13, 2, 0, 13, 3, 0, 13, 4, 0, 13, 5, 0, 13, 6, 1, 13, 7, 0, 13, 9, 0, 13, 10, 0, 13, 11, 0, 13, 12, 1, 14, 0, 1, 14, 1, 0, 14, 2, 0, 14, 3, 0, 14, 4, 0, 14, 5, 0, 14, 6, 1, 14, 7, 0, 14, 9, 0, 14, 10, 0, 14, 11, 0, 14, 12, 1, 15, 0, 1, 15, 1, 0, 15, 2, 0, 15, 3, 0, 15, 4, 0, 15, 5, 0, 15, 6, 1, 15, 7, 0, 15, 9, 0, 15, 10, 0, 15, 11, 0, 15, 12, 1, 16, 0, 1, 16, 1, 1, 16, 2, 1, 16, 3, 1, 16, 4, 1, 16, 5, 1, 16, 6, 1, 16, 7, 1, 16, 8, 1, 16, 9, 1048580, 16, 10, 1, 16, 11, 1, 16, 12, 1, 17, 0, 1, 17, 1, 0, 17, 2, 0, 17, 3, 0, 17, 4, 0, 17, 5, 0, 17, 6, 1, 17, 7, 0, 17, 8, 0, 17, 9, 0, 17, 10, 0, 17, 11, 0, 17, 12, 1, 18, 0, 1, 18, 1, 0, 18, 2, 0, 18, 3, 0, 18, 4, 0, 18, 5, 0, 18, 6, 1, 18, 7, 0, 18, 11, 0, 18, 12, 1, 19, 0, 1, 19, 1, 0, 19, 2, 0, 19, 3, 0, 19, 4, 0, 19, 5, 0, 19, 6, 1, 19, 7, 0, 19, 11, 0, 19, 12, 1, 20, 0, 1, 20, 1, 0, 20, 2, 0, 20, 3, 0, 20, 4, 0, 20, 5, 0, 20, 6, 4, 20, 7, 0, 20, 11, 0, 20, 12, 1, 21, 0, 1, 21, 1, 0, 21, 2, 0, 21, 3, 0, 21, 4, 0, 21, 5, 0, 21, 6, 1, 21, 7, 1, 21, 8, 1, 21, 9, 0, 21, 10, 1, 21, 11, 1, 21, 12, 1, 22, 0, 1, 22, 1, 0, 22, 2, 0, 22, 3, 0, 22, 4, 0, 22, 5, 0, 22, 6, 1, 22, 7, 0, 22, 8, 0, 22, 9, 0, 22, 10, 0, 22, 11, 0, 22, 12, 1, 23, 0, 1, 23, 1, 0, 23, 2, 0, 23, 3, 0, 23, 4, 0, 23, 5, 0, 23, 6, 1, 23, 7, 0, 23, 8, 0, 23, 9, 0, 23, 10, 0, 23, 11, 0, 23, 12, 1, 24, 0, 1, 24, 1, 1, 24, 2, 1, 24, 3, 1, 24, 4, 1, 24, 5, 1, 24, 6, 1, 24, 7, 1, 24, 8, 1048580, 24, 9, 1, 24, 10, 1, 24, 11, 1, 24, 12, 1, 19, 9, 0)
+}
+
+[node name="Gancho" type="Area3D" parent="PisoBajo" unique_id=409348261]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.2, 6)
+script = ExtResource("4_4j2rd")
+display_name = "PLACE_TT_HOOK"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoBajo/Gancho" unique_id=1404752949]
+shape = SubResource("BoxShape3D_vm0iq")
+
+[node name="Pozo" type="Area3D" parent="PisoBajo" unique_id=1949892451]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.2, 6)
+script = ExtResource("4_4j2rd")
+room_index = 1
+display_name = "PLACE_TT_AMARU"
+map_cell = Vector2i(1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoBajo/Pozo" unique_id=1020230297]
+shape = SubResource("BoxShape3D_gn6ps")
+
+[node name="Jefe" type="Area3D" parent="PisoBajo" unique_id=517442592]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 6)
+script = ExtResource("4_4j2rd")
+room_index = 2
+display_name = "PLACE_TT_BOSS"
+map_cell = Vector2i(2, 0)
+boss_room = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoBajo/Jefe" unique_id=594112111]
+shape = SubResource("BoxShape3D_bsx6e")
+
+[node name="Balsas" type="Area3D" parent="PisoBajo" unique_id=1851435308]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.2, 18)
+script = ExtResource("4_4j2rd")
+room_index = 3
+display_name = "PLACE_TT_RAFTS"
+map_cell = Vector2i(0, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoBajo/Balsas" unique_id=1587219918]
+shape = SubResource("BoxShape3D_pikwi")
+
+[node name="Embarcadero" type="Area3D" parent="PisoBajo" unique_id=1088525259]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.2, 18)
+script = ExtResource("4_4j2rd")
+room_index = 4
+display_name = "PLACE_TT_LANDING"
+map_cell = Vector2i(1, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoBajo/Embarcadero" unique_id=768592755]
+shape = SubResource("BoxShape3D_cxrnh")
+
+[node name="Juncal" type="Area3D" parent="PisoBajo" unique_id=584233101]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 18)
+script = ExtResource("4_4j2rd")
+room_index = 5
+display_name = "PLACE_TT_REEDS"
+map_cell = Vector2i(2, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoBajo/Juncal" unique_id=1804376433]
+shape = SubResource("BoxShape3D_qqpmk")
+
+[node name="EmbarcaderoPot1" type="Node3D" parent="PisoBajo" unique_id=739413350 instance=ExtResource("5_wr5m1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 22)
+script = ExtResource("6_s7pp0")
+drops = ExtResource("7_mlgyq")
+drop_height = 0.1
+
+[node name="EmbarcaderoPot2" type="Node3D" parent="PisoBajo" unique_id=1781919500 instance=ExtResource("5_wr5m1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 22)
+script = ExtResource("6_s7pp0")
+drops = ExtResource("7_mlgyq")
+drop_height = 0.1
+
+[node name="BalsasKeyChest" type="StaticBody3D" parent="PisoBajo" unique_id=2024107155 instance=ExtResource("8_ne4in")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 20)
+script = ExtResource("9_np5b4")
+item = ExtResource("10_kh0fu")
+flag = &"tt_rafts_key_chest"
+
+[node name="BalsasPost" type="StaticBody3D" parent="PisoBajo" unique_id=1338858358 instance=ExtResource("11_3yydx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 15.5)
+script = ExtResource("12_dtnl1")
+
+[node name="GanchoPost" type="StaticBody3D" parent="PisoBajo" unique_id=53871819 instance=ExtResource("11_3yydx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 6.5)
+script = ExtResource("12_dtnl1")
+
+[node name="HookshotChest" type="StaticBody3D" parent="PisoBajo" unique_id=2043553913 instance=ExtResource("8_ne4in")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 2)
+script = ExtResource("9_np5b4")
+item = ExtResource("13_8gv3t")
+flag = &"tt_hookshot_chest"
+big = true
+
+[node name="JuncalArcher" type="CharacterBody3D" parent="PisoBajo" unique_id=1702915474 groups=["room_sleepers"] instance=ExtResource("14_ok4xl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, 18)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("15_lqaqr")
+config = ExtResource("16_2llkb")
+
+[node name="JuncalSkeleton" type="CharacterBody3D" parent="PisoBajo" unique_id=510737741 groups=["room_sleepers"] instance=ExtResource("17_mtxks")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 22)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("15_lqaqr")
+config = ExtResource("18_v5awg")
+
+[node name="JuncalEye" type="StaticBody3D" parent="PisoBajo" unique_id=720389874 instance=ExtResource("19_kd5y0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 13.6)
+script = ExtResource("20_o5umy")
+flag = &"tt_reeds_eye"
+
+[node name="JuncalGate" type="StaticBody3D" parent="PisoBajo" unique_id=1295619340 instance=ExtResource("21_5uynx")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 42, 0, 18)
+script = ExtResource("22_h5tew")
+switches = Array[NodePath]([NodePath("../JuncalEye")])
+depth = 2.0
+
+[node name="MapChest" type="StaticBody3D" parent="PisoBajo" unique_id=2004391156 instance=ExtResource("8_ne4in")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 0, 22)
+script = ExtResource("9_np5b4")
+item = ExtResource("23_bf1ls")
+flag = &"tt_map_chest"
+
+[node name="FromAbove" type="Marker3D" parent="PisoBajo" unique_id=1588996107]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 44, 0, 16)
+
+[node name="AmaruLocked" type="StaticBody3D" parent="PisoBajo" unique_id=1189057003 instance=ExtResource("24_ctf4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 12)
+script = ExtResource("25_8kq17")
+kind = 1
+flag = &"tt_amaru_locked_door"
+depth = 2.0
+
+[node name="GanchoDoor" type="StaticBody3D" parent="PisoBajo" unique_id=108791845 instance=ExtResource("24_ctf4b")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 16, 0, 6)
+script = ExtResource("25_8kq17")
+kind = 3
+switches = Array[NodePath]([NodePath("../AmaruFight")])
+depth = 2.0
+
+[node name="PozoPot193" type="Node3D" parent="PisoBajo" unique_id=1949407443 instance=ExtResource("5_wr5m1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, 3)
+script = ExtResource("6_s7pp0")
+drops = ExtResource("7_mlgyq")
+drop_height = 0.1
+
+[node name="PozoPot293" type="Node3D" parent="PisoBajo" unique_id=1565504912 instance=ExtResource("5_wr5m1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0, 3)
+script = ExtResource("6_s7pp0")
+drops = ExtResource("7_mlgyq")
+drop_height = 0.1
+
+[node name="PozoPot199" type="Node3D" parent="PisoBajo" unique_id=1614905900 instance=ExtResource("5_wr5m1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, 9)
+script = ExtResource("6_s7pp0")
+drops = ExtResource("7_mlgyq")
+drop_height = 0.1
+
+[node name="PozoPot299" type="Node3D" parent="PisoBajo" unique_id=666204955 instance=ExtResource("5_wr5m1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0, 9)
+script = ExtResource("6_s7pp0")
+drops = ExtResource("7_mlgyq")
+drop_height = 0.1
+
+[node name="AmaruFight" type="Node3D" parent="PisoBajo" unique_id=405355466 node_paths=PackedStringArray("room", "doors")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 6)
+script = ExtResource("26_ta07f")
+room = NodePath("../Pozo")
+flag = &"tt_amaru_defeated"
+display_name = "BOSS_TT_AMARU"
+doors = [NodePath("../AmaruLocked"), NodePath("../GanchoDoor")]
+
+[node name="PersistentFlag" type="Node" parent="PisoBajo/AmaruFight" unique_id=2118923969]
+script = ExtResource("27_ir4ow")
+
+[node name="Amaru" type="Node3D" parent="PisoBajo/AmaruFight" unique_id=2067729764 instance=ExtResource("28_pbras")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+script = ExtResource("29_plbht")
+config = ExtResource("30_u5j68")
+
+[node name="BossDoor" type="StaticBody3D" parent="PisoBajo" unique_id=1029127936 instance=ExtResource("24_ctf4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 12)
+script = ExtResource("25_8kq17")
+kind = 4
+flag = &"tt_boss_door"
+depth = 2.0
+
+[node name="JefePot35" type="Node3D" parent="PisoBajo" unique_id=940163324 instance=ExtResource("5_wr5m1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0, 3)
+script = ExtResource("6_s7pp0")
+drops = ExtResource("7_mlgyq")
+drop_height = 0.1
+
+[node name="JefePot45" type="Node3D" parent="PisoBajo" unique_id=812244763 instance=ExtResource("5_wr5m1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, 3)
+script = ExtResource("6_s7pp0")
+drops = ExtResource("7_mlgyq")
+drop_height = 0.1
+
+[node name="BossFight" type="Node3D" parent="PisoBajo" unique_id=222942408 node_paths=PackedStringArray("room", "doors", "reward")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 6)
+script = ExtResource("26_ta07f")
+room = NodePath("../Jefe")
+flag = &"tt_boss_defeated"
+display_name = "BOSS_TT_YACUMAMA"
+doors = [NodePath("../BossDoor")]
+reward = NodePath("HeartContainer")
+reward_flag = &"tt_heart_container"
+
+[node name="PersistentFlag" type="Node" parent="PisoBajo/BossFight" unique_id=26089139]
+script = ExtResource("27_ir4ow")
+
+[node name="Yacumama" type="Node3D" parent="PisoBajo/BossFight" unique_id=282999127 instance=ExtResource("31_1aybm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+script = ExtResource("32_e33tn")
+config = ExtResource("33_8q2lw")
+hover_height = 3.2
+
+[node name="HeartContainer" type="Area3D" parent="PisoBajo/BossFight" unique_id=1939312166 instance=ExtResource("34_0sq8t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+collision_layer = 0
+monitorable = false
+script = ExtResource("35_6ch0c")
+item = ExtResource("36_in1hu")
+lifetime = 0.0
+item_get = true
+magnet_radius = 0.0
+world_size = 1.4
+heart_mesh = ExtResource("37_oqocf")
+
+[node name="BossExitPortal" type="Area3D" parent="PisoBajo" unique_id=1851388071 instance=ExtResource("38_607qk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 9)
+script = ExtResource("39_056xl")
+target_scene = "res://levels/overworld.tscn"
+target_spawn = &"quenoa"
+required_flag = &"tt_boss_defeated"
+
+[node name="Agua" type="MeshInstance3D" parent="PisoBajo" unique_id=1824326796]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, -0.35, 12)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_ej705")
+
+[node name="AguaPit" type="Area3D" parent="PisoBajo" unique_id=589897382 node_paths=PackedStringArray("water")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, -1.8, 12)
+script = ExtResource("41_4rcne")
+water = NodePath("../Agua")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoBajo/AguaPit" unique_id=245576032]
+shape = SubResource("BoxShape3D_iqimp")
+
+[node name="JuncalStairs" type="Area3D" parent="PisoBajo" unique_id=1585649211 node_paths=PackedStringArray("to") instance=ExtResource("42_dmyaj")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 48, 0, 16)
+script = ExtResource("43_630up")
+to = NodePath("../../PisoAlto/FromBelow")
+
+[node name="Torch_Gancho_0" type="Node3D" parent="PisoBajo" unique_id=1408447208 instance=ExtResource("44_4mqq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.6, 1)
+
+[node name="Torch_Gancho_1" type="Node3D" parent="PisoBajo" unique_id=1909938682 instance=ExtResource("44_4mqq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.6, 1)
+
+[node name="Torch_Pozo_0" type="Node3D" parent="PisoBajo" unique_id=306712050 instance=ExtResource("44_4mqq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.6, 1)
+
+[node name="Torch_Pozo_1" type="Node3D" parent="PisoBajo" unique_id=1625696481 instance=ExtResource("44_4mqq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 1.6, 1)
+
+[node name="Torch_Jefe_0" type="Node3D" parent="PisoBajo" unique_id=1277222711 instance=ExtResource("44_4mqq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.6, 1)
+
+[node name="Torch_Jefe_1" type="Node3D" parent="PisoBajo" unique_id=1864252897 instance=ExtResource("44_4mqq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 1.6, 1)
+
+[node name="Torch_Balsas_0" type="Node3D" parent="PisoBajo" unique_id=1274141039 instance=ExtResource("44_4mqq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.6, 13)
+
+[node name="Torch_Balsas_1" type="Node3D" parent="PisoBajo" unique_id=862836961 instance=ExtResource("44_4mqq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.6, 13)
+
+[node name="Torch_Embarcadero_0" type="Node3D" parent="PisoBajo" unique_id=50402178 instance=ExtResource("44_4mqq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.6, 13)
+
+[node name="Torch_Embarcadero_1" type="Node3D" parent="PisoBajo" unique_id=722717469 instance=ExtResource("44_4mqq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 1.6, 13)
+
+[node name="Torch_Juncal_0" type="Node3D" parent="PisoBajo" unique_id=2088877018 instance=ExtResource("44_4mqq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.6, 13)
+
+[node name="Torch_Juncal_1" type="Node3D" parent="PisoBajo" unique_id=1754821139 instance=ExtResource("44_4mqq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 1.6, 13)
+
+[node name="PisoAlto" type="Node3D" parent="." unique_id=466847567]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
+script = ExtResource("2_bx33l")
+level = 1
+display_name = "PLACE_FLOOR_UPPER"
+
+[node name="GridMap" type="GridMap" parent="PisoAlto" unique_id=1476317549 groups=["navmesh_source"]]
+mesh_library = ExtResource("3_u7cnv")
+cell_size = Vector3(2, 1, 2)
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+data = {
+"cells": PackedInt32Array(0, 0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 6, 1, 0, 7, 1, 0, 8, 1, 0, 9, 1, 0, 10, 1, 0, 11, 1, 0, 12, 1, 1, 0, 1, 1, 1, 0, 1, 2, 0, 1, 3, 1, 1, 4, 0, 1, 5, 0, 1, 6, 1, 1, 7, 1, 1, 8, 1, 1, 9, 1, 1, 10, 1, 1, 11, 1, 1, 12, 1, 2, 0, 1, 2, 1, 10, 2, 2, 0, 2, 3, 0, 2, 4, 0, 2, 5, 0, 2, 6, 1, 2, 7, 1, 2, 8, 1, 2, 9, 1, 2, 10, 1, 2, 11, 1, 2, 12, 1, 3, 0, 1, 3, 6, 1, 3, 7, 1, 3, 8, 1, 3, 9, 1, 3, 10, 1, 3, 11, 1, 3, 12, 1, 4, 0, 1, 4, 6, 1, 4, 7, 1, 4, 8, 1, 4, 9, 1, 4, 10, 1, 4, 11, 1, 4, 12, 1, 5, 0, 1, 5, 6, 1, 5, 7, 1, 5, 8, 1, 5, 9, 1, 5, 10, 1, 5, 11, 1, 5, 12, 1, 6, 0, 1, 6, 6, 1, 6, 7, 1, 6, 8, 1, 6, 9, 1, 6, 10, 1, 6, 11, 1, 6, 12, 1, 7, 0, 1, 7, 1, 0, 7, 2, 0, 7, 3, 0, 7, 4, 0, 7, 5, 0, 7, 6, 1, 7, 7, 1, 7, 8, 1, 7, 9, 1, 7, 10, 1, 7, 11, 1, 7, 12, 1, 8, 0, 1, 8, 1, 1, 8, 2, 1, 8, 3, 1048580, 8, 4, 1, 8, 5, 1, 8, 6, 1, 8, 7, 1, 8, 8, 1, 8, 9, 1, 8, 10, 1, 8, 11, 1, 8, 12, 1, 9, 0, 1, 9, 1, 0, 9, 2, 0, 9, 3, 0, 9, 4, 0, 9, 5, 0, 9, 6, 1, 9, 10, 0, 9, 11, 0, 9, 12, 1, 10, 0, 1, 10, 1, 0, 10, 2, 0, 10, 3, 0, 10, 4, 0, 10, 5, 0, 10, 10, 0, 10, 11, 0, 10, 12, 1, 11, 0, 1, 11, 6, 1, 11, 10, 0, 11, 11, 0, 11, 12, 1, 12, 0, 1, 12, 6, 1, 12, 10, 0, 12, 11, 0, 12, 12, 1, 13, 0, 1, 13, 6, 1, 13, 10, 0, 13, 11, 0, 13, 12, 1, 14, 0, 1, 14, 6, 1, 14, 10, 0, 14, 11, 0, 14, 12, 1, 15, 0, 1, 15, 1, 0, 15, 2, 0, 15, 3, 0, 15, 4, 0, 15, 5, 0, 15, 6, 1, 15, 7, 0, 15, 8, 0, 15, 9, 0, 15, 10, 0, 15, 11, 0, 15, 12, 1, 16, 0, 1, 16, 1, 1, 16, 2, 1, 16, 3, 1048580, 16, 4, 1, 16, 5, 1, 16, 6, 1, 16, 7, 1, 16, 8, 1, 16, 9, 1048580, 16, 10, 1, 16, 11, 1, 16, 12, 1, 17, 0, 1, 17, 1, 0, 17, 2, 0, 17, 3, 0, 17, 4, 0, 17, 5, 0, 17, 6, 1, 17, 7, 0, 17, 8, 0, 17, 9, 0, 17, 10, 0, 17, 11, 0, 17, 12, 1, 18, 0, 1, 18, 6, 1, 18, 7, 0, 18, 8, 0, 18, 9, 0, 18, 10, 0, 18, 11, 0, 18, 12, 1, 19, 0, 1, 19, 6, 1, 19, 7, 0, 19, 8, 0, 19, 9, 0, 19, 10, 0, 19, 11, 0, 19, 12, 1, 20, 0, 1, 20, 6, 1, 20, 7, 0, 20, 8, 0, 20, 9, 0, 20, 10, 0, 20, 11, 0, 20, 12, 1, 21, 0, 1, 21, 6, 1, 21, 7, 0, 21, 8, 0, 21, 9, 0, 21, 10, 0, 21, 11, 0, 21, 12, 1, 22, 0, 1, 22, 1, 0, 22, 2, 0, 22, 3, 0, 22, 4, 0, 22, 5, 0, 22, 6, 1, 22, 7, 0, 22, 8, 0, 22, 9, 0, 22, 10, 0, 22, 11, 0, 22, 12, 1, 23, 0, 1, 23, 1, 0, 23, 2, 0, 23, 3, 0, 23, 4, 0, 23, 5, 0, 23, 6, 1, 23, 7, 0, 23, 8, 0, 23, 9, 0, 23, 10, 0, 23, 11, 0, 23, 12, 1, 24, 0, 1, 24, 1, 1, 24, 2, 1, 24, 3, 1, 24, 4, 1, 24, 5, 1, 24, 6, 1, 24, 7, 1, 24, 8, 1048580, 24, 9, 1, 24, 10, 1, 24, 11, 1, 24, 12, 1)
+}
+
+[node name="Tejedores" type="Area3D" parent="PisoAlto" unique_id=403815859]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.2, 6)
+script = ExtResource("4_4j2rd")
+room_index = 6
+display_name = "PLACE_TT_WEAVERS"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoAlto/Tejedores" unique_id=911957882]
+shape = SubResource("BoxShape3D_nrriy")
+
+[node name="Estanque" type="Area3D" parent="PisoAlto" unique_id=239582986]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.2, 6)
+script = ExtResource("4_4j2rd")
+room_index = 7
+display_name = "PLACE_TT_POND"
+map_cell = Vector2i(1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoAlto/Estanque" unique_id=1851737064]
+shape = SubResource("BoxShape3D_vw888")
+
+[node name="Mirador" type="Area3D" parent="PisoAlto" unique_id=1782660260]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 6)
+script = ExtResource("4_4j2rd")
+room_index = 8
+display_name = "PLACE_TT_LOOKOUT"
+map_cell = Vector2i(2, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoAlto/Mirador" unique_id=525329916]
+shape = SubResource("BoxShape3D_tbtoj")
+
+[node name="Telar" type="Area3D" parent="PisoAlto" unique_id=621913814]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.2, 18)
+script = ExtResource("4_4j2rd")
+room_index = 9
+display_name = "PLACE_TT_LOOM"
+map_cell = Vector2i(1, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoAlto/Telar" unique_id=1374545502]
+shape = SubResource("BoxShape3D_7lrgh")
+
+[node name="Garita" type="Area3D" parent="PisoAlto" unique_id=1659097549]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 18)
+script = ExtResource("4_4j2rd")
+room_index = 10
+display_name = "PLACE_TT_GUARDHOUSE"
+map_cell = Vector2i(2, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoAlto/Garita" unique_id=636670577]
+shape = SubResource("BoxShape3D_3kldj")
+
+[node name="FromBelow" type="Marker3D" parent="PisoAlto" unique_id=1520038603]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 44, 0, 16)
+
+[node name="CompassChest" type="StaticBody3D" parent="PisoAlto" unique_id=1985107750 instance=ExtResource("8_ne4in")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 14)
+script = ExtResource("9_np5b4")
+item = ExtResource("45_w5jcx")
+flag = &"tt_compass_chest"
+
+[node name="GaritaSkeleton1" type="CharacterBody3D" parent="PisoAlto" unique_id=1163955229 groups=["room_sleepers"] instance=ExtResource("17_mtxks")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, 18)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("15_lqaqr")
+config = ExtResource("18_v5awg")
+
+[node name="GaritaSkeleton2" type="CharacterBody3D" parent="PisoAlto" unique_id=2008519272 groups=["room_sleepers"] instance=ExtResource("17_mtxks")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 20)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("15_lqaqr")
+config = ExtResource("18_v5awg")
+
+[node name="GaritaCrackedWall" type="StaticBody3D" parent="PisoAlto" unique_id=28574400 instance=ExtResource("46_ynv2o")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 32, 0, 18)
+script = ExtResource("47_mv4qb")
+flag = &"tt_guardhouse_cracked_wall"
+
+[node name="TelarPost" type="StaticBody3D" parent="PisoAlto" unique_id=1703003856 instance=ExtResource("11_3yydx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 19.5)
+script = ExtResource("12_dtnl1")
+
+[node name="TelarArmored" type="CharacterBody3D" parent="PisoAlto" unique_id=1871883843 groups=["room_sleepers"] instance=ExtResource("48_dsabl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 22)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("15_lqaqr")
+config = ExtResource("49_lbgvp")
+
+[node name="TelarAgua" type="MeshInstance3D" parent="PisoAlto" unique_id=333450294]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, -0.35, 15)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_fwxao")
+
+[node name="TelarPit" type="Area3D" parent="PisoAlto" unique_id=1978939878 node_paths=PackedStringArray("water")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, -1.8, 15)
+script = ExtResource("41_4rcne")
+water = NodePath("../TelarAgua")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoAlto/TelarPit" unique_id=2008397278]
+shape = SubResource("BoxShape3D_4sd85")
+
+[node name="EstanquePost" type="StaticBody3D" parent="PisoAlto" unique_id=2026189431 instance=ExtResource("11_3yydx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 10.5)
+script = ExtResource("12_dtnl1")
+
+[node name="EstanqueWestPost" type="StaticBody3D" parent="PisoAlto" unique_id=412329471 instance=ExtResource("11_3yydx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.5, 0, 4)
+script = ExtResource("12_dtnl1")
+
+[node name="EstanqueStripPost" type="StaticBody3D" parent="PisoAlto" unique_id=483451638 instance=ExtResource("11_3yydx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5, 0, 4)
+script = ExtResource("12_dtnl1")
+
+[node name="StripKeyChest" type="StaticBody3D" parent="PisoAlto" unique_id=78005077 instance=ExtResource("8_ne4in")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 10)
+script = ExtResource("9_np5b4")
+item = ExtResource("10_kh0fu")
+flag = &"tt_pond_key_chest"
+
+[node name="EstanqueAgua" type="MeshInstance3D" parent="PisoAlto" unique_id=475144595]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -0.35, 6)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_re012")
+
+[node name="EstanquePit" type="Area3D" parent="PisoAlto" unique_id=369862776 node_paths=PackedStringArray("water")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -1.8, 6)
+script = ExtResource("41_4rcne")
+water = NodePath("../EstanqueAgua")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoAlto/EstanquePit" unique_id=1217624560]
+shape = SubResource("BoxShape3D_jcswt")
+
+[node name="TejedoresLocked" type="StaticBody3D" parent="PisoAlto" unique_id=1599871608 instance=ExtResource("24_ctf4b")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 16, 0, 6)
+script = ExtResource("25_8kq17")
+kind = 1
+flag = &"tt_weavers_locked_door"
+depth = 2.0
+
+[node name="MiradorBackPost" type="StaticBody3D" parent="PisoAlto" unique_id=344783186 instance=ExtResource("11_3yydx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.5, 0, 8)
+script = ExtResource("12_dtnl1")
+
+[node name="MiradorPost" type="StaticBody3D" parent="PisoAlto" unique_id=922987034 instance=ExtResource("11_3yydx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.5, 0, 8)
+script = ExtResource("12_dtnl1")
+
+[node name="HeartPieceMirador" type="Area3D" parent="PisoAlto" unique_id=1945679201 instance=ExtResource("50_4rg4j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 0, 2)
+collision_layer = 0
+monitorable = false
+script = ExtResource("51_ryy8k")
+flag = &"tt_heart_piece"
+item = ExtResource("52_k0vpb")
+heal = 4
+lifetime = 0.0
+item_get = true
+magnet_radius = 0.0
+world_size = 1.0
+heart_mesh = ExtResource("37_oqocf")
+
+[node name="MiradorAgua" type="MeshInstance3D" parent="PisoAlto" unique_id=1602022630]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, -0.35, 6)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_wnqry")
+
+[node name="MiradorPit" type="Area3D" parent="PisoAlto" unique_id=1308484931 node_paths=PackedStringArray("water")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, -1.8, 6)
+script = ExtResource("41_4rcne")
+water = NodePath("../MiradorAgua")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoAlto/MiradorPit" unique_id=595318298]
+shape = SubResource("BoxShape3D_2nldq")
+
+[node name="TejedoresPost" type="StaticBody3D" parent="PisoAlto" unique_id=1705612227 instance=ExtResource("11_3yydx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 10)
+script = ExtResource("12_dtnl1")
+
+[node name="TejedoresEye" type="StaticBody3D" parent="PisoAlto" unique_id=346487195 instance=ExtResource("19_kd5y0")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.6, 0, 8)
+script = ExtResource("20_o5umy")
+open_time = 6.0
+
+[node name="BossKeyGate" type="StaticBody3D" parent="PisoAlto" unique_id=25343917 instance=ExtResource("21_5uynx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 6)
+script = ExtResource("22_h5tew")
+switches = Array[NodePath]([NodePath("../TejedoresEye")])
+stays_open = false
+depth = 2.0
+
+[node name="BossKeyChest" type="StaticBody3D" parent="PisoAlto" unique_id=1702299754 instance=ExtResource("8_ne4in")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
+script = ExtResource("9_np5b4")
+item = ExtResource("53_qeqm7")
+flag = &"tt_boss_key_chest"
+big = true
+
+[node name="TejedoresAgua" type="MeshInstance3D" parent="PisoAlto" unique_id=2023305187]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, -0.35, 6)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_ib12e")
+
+[node name="TejedoresPit" type="Area3D" parent="PisoAlto" unique_id=488741089 node_paths=PackedStringArray("water")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, -1.8, 6)
+script = ExtResource("41_4rcne")
+water = NodePath("../TejedoresAgua")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoAlto/TejedoresPit" unique_id=1379135239]
+shape = SubResource("BoxShape3D_np1ir")
+
+[node name="GaritaStairs" type="Area3D" parent="PisoAlto" unique_id=1796479984 node_paths=PackedStringArray("to") instance=ExtResource("54_kk3t3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 48, 0, 16)
+script = ExtResource("43_630up")
+to = NodePath("../../PisoBajo/FromAbove")
+
+[node name="Torch_Tejedores_0" type="Node3D" parent="PisoAlto" unique_id=1077288470 instance=ExtResource("44_4mqq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.6, 1)
+
+[node name="Torch_Tejedores_1" type="Node3D" parent="PisoAlto" unique_id=113213517 instance=ExtResource("44_4mqq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.6, 1)
+
+[node name="Torch_Estanque_0" type="Node3D" parent="PisoAlto" unique_id=1066234024 instance=ExtResource("44_4mqq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.6, 1)
+
+[node name="Torch_Estanque_1" type="Node3D" parent="PisoAlto" unique_id=2084903639 instance=ExtResource("44_4mqq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 1.6, 1)
+
+[node name="Torch_Mirador_0" type="Node3D" parent="PisoAlto" unique_id=559682001 instance=ExtResource("44_4mqq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.6, 1)
+
+[node name="Torch_Mirador_1" type="Node3D" parent="PisoAlto" unique_id=903474457 instance=ExtResource("44_4mqq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 1.6, 1)
+
+[node name="Torch_Telar_0" type="Node3D" parent="PisoAlto" unique_id=1999187369 instance=ExtResource("44_4mqq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.6, 13)
+
+[node name="Torch_Telar_1" type="Node3D" parent="PisoAlto" unique_id=1738839552 instance=ExtResource("44_4mqq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 1.6, 13)
+
+[node name="Torch_Garita_0" type="Node3D" parent="PisoAlto" unique_id=444457452 instance=ExtResource("44_4mqq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.6, 13)
+
+[node name="Torch_Garita_1" type="Node3D" parent="PisoAlto" unique_id=1126304184 instance=ExtResource("44_4mqq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 1.6, 13)
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=1694148988 instance=ExtResource("55_h1m6d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 20)
+script = ExtResource("56_k4wy0")
+config = ExtResource("57_6wymq")
+
+[node name="SpawnStart" type="Marker3D" parent="." unique_id=1405857973]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 20)
+script = ExtResource("58_gtsey")
+
+[node name="ExitPortal" type="Area3D" parent="." unique_id=1735500810]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.2, 25.4)
+script = ExtResource("39_056xl")
+target_scene = "res://levels/overworld.tscn"
+target_spawn = &"quenoa"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPortal" unique_id=476630338]
+shape = SubResource("BoxShape3D_x275d")
+
+[node name="TopDownCamera" type="Camera3D" parent="." unique_id=192864954 node_paths=PackedStringArray("target_node")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 13.4, 27.7)
+fov = 40.0
+script = ExtResource("59_uscax")
+target_node = NodePath("../Player")
+mask_margin = 2.0
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1798461747 instance=ExtResource("60_km5gt")]
+layer = 10
+script = ExtResource("61_trvnj")
+solo_panel = ExtResource("62_fka85")
+coop_panel = ExtResource("63_wgk8o")
+item_ring = ExtResource("64_kje25")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=903882642]
+navigation_mesh = ExtResource("nav_totora")
