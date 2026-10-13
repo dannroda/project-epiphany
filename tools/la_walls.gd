@@ -32,6 +32,7 @@ const FADE_START := {"n": 0.9, "s": 0.4, "e": 0.3, "o": 0.3}
 ## Y llega al negro a esta distancia (abajo la cresta se ve poco: la máscara la tapa antes).
 const FADE_END := {"n": 1.8, "s": 1.8, "e": 1.8, "o": 1.8}
 const FADE := preload("res://debug/la/borde_oscuro.gdshader")
+const FOCUS := preload("res://debug/la/enfoque_la.gd")
 const BRAZIER_SCALE := 0.55
 ## Colgados de la cara de la pared, como en LA: a este alto y esto por delante de la roca.
 const BRAZIER_HEIGHT := 1.9
@@ -39,8 +40,22 @@ const BRAZIER_SETBACK := 0.25
 const BRAZIER_FLAME := 1.07
 const DOOR_LEAF_SCALE := Vector3(0.7, 0.8, 1.0)
 ## Cámara con perspectiva como LA: la sala se ve en trapecio (abajo más ancha) y asoman las caras de los costados.
-const CAMERA_OFFSET := Vector3(0, 17.6, 14.8)
-const FIELD_OF_VIEW := 42.0
+## Como la cámara de LA: 52° sobre el horizonte y 30° de campo (casi maqueta), alejada hasta que entra la sala.
+const CAMERA_PITCH := 52.0
+const CAMERA_DISTANCE := 30.0
+const FIELD_OF_VIEW := 30.0
+## Desenfoque arriba y abajo de la pantalla, solo fuera del piso: el borde sur (con Kai parado) queda a ~5.5 m más cerca y
+## la cresta norte a ~2 m más lejos.
+const FOCUS_NEAR := 7.0
+const FOCUS_FAR := 2.5
+## Un foco por sala que baja desde arriba, un poco desde el sur para que dé en la pared norte.
+const ROOM_LIGHT_HEIGHT := 7.0
+const ROOM_LIGHT_SOUTH := 1.5
+const ROOM_LIGHT_TILT := 13.0
+const ROOM_LIGHT_COLOR := Color(1.0, 0.9, 0.78)
+const ROOM_LIGHT_ENERGY := 2.0
+const ROOM_LIGHT_ANGLE := 55.0
+const SUN_ENERGY := 0.45
 ## Como en LA, lo que está parado se echa hacia atrás (la parte de arriba hacia el norte) para mostrarle la cara a la cámara.
 const LEAN := -20.0
 const LEANED := {"pot.tscn": "Body/Model", "chest.tscn": "Model", "wall_torch.tscn": "."}
@@ -108,8 +123,40 @@ func _dress(level: Node) -> void:
 			level.set_editable_instance(node, true)
 		elif node is Area3D and "map_cell" in node:
 			_fade(level, node as Area3D)
+			_light(level, node as Area3D)
+		elif node is WorldEnvironment:
+			var env := (node as WorldEnvironment).environment.duplicate() as Environment
+			env.background_color = Color.BLACK
+			env.glow_enabled = true
+			env.glow_intensity = 0.6
+			env.glow_bloom = 0.05
+			env.glow_hdr_threshold = 0.9
+			env.glow_blend_mode = Environment.GLOW_BLEND_MODE_SOFTLIGHT
+			env.ssao_enabled = true
+			env.ssao_radius = 0.8
+			env.ssao_intensity = 1.5
+			(node as WorldEnvironment).environment = env
+		elif node is DirectionalLight3D:
+			(node as DirectionalLight3D).light_energy = SUN_ENERGY
 		elif node is Camera3D and "cuts_south_wall" in node:
-			node.set("offset", CAMERA_OFFSET)
+			var pitch := deg_to_rad(CAMERA_PITCH)
+			node.set("offset", Vector3(0, sin(pitch), cos(pitch)) * CAMERA_DISTANCE)
+			var blur := CameraAttributesPractical.new()
+			blur.dof_blur_far_enabled = true
+			blur.dof_blur_far_distance = CAMERA_DISTANCE + FOCUS_FAR
+			blur.dof_blur_far_transition = 6.0
+			blur.dof_blur_near_enabled = true
+			blur.dof_blur_near_distance = CAMERA_DISTANCE - FOCUS_NEAR
+			blur.dof_blur_near_transition = 3.0
+			blur.dof_blur_amount = 0.12
+			(node as Camera3D).attributes = blur
+			var focus := Node.new()
+			focus.name = "EnfoqueLA"
+			focus.set_script(FOCUS)
+			focus.set("near_margin", FOCUS_NEAR)
+			focus.set("far_margin", FOCUS_FAR)
+			node.add_child(focus)
+			focus.owner = level
 			node.set("orthographic", false)
 			node.set("field_of_view", FIELD_OF_VIEW)
 			node.set("cuts_south_wall", true)
@@ -129,6 +176,24 @@ func _lean(model: Node3D) -> void:
 		parent = node.basis * parent
 		node = node.get_parent() as Node3D
 	model.basis = parent.inverse() * Basis(Vector3.RIGHT, deg_to_rad(LEAN)) * parent * model.basis
+
+
+func _light(level: Node, room: Area3D) -> void:
+	var shape := room.get_node("CollisionShape3D") as CollisionShape3D
+	var floor_y := shape.position.y - (shape.shape as BoxShape3D).size.y / 2.0
+	var spot := SpotLight3D.new()
+	spot.name = "LuzSala"
+	spot.light_color = ROOM_LIGHT_COLOR
+	spot.light_energy = ROOM_LIGHT_ENERGY
+	spot.spot_range = ROOM_LIGHT_HEIGHT * 2.5
+	spot.spot_angle = ROOM_LIGHT_ANGLE
+	spot.spot_attenuation = 0.0
+	spot.spot_angle_attenuation = 1.2
+	spot.light_specular = 0.6
+	room.add_child(spot)
+	spot.owner = level
+	spot.position = shape.position + Vector3(0, floor_y - shape.position.y + ROOM_LIGHT_HEIGHT, ROOM_LIGHT_SOUTH)
+	spot.rotation = Vector3(deg_to_rad(-90.0 + ROOM_LIGHT_TILT), 0, 0)
 
 
 func _fade(level: Node, room: Area3D) -> void:
