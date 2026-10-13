@@ -2576,7 +2576,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (68/116)
+## M11 — Pulido: contenido y feel  (68/121)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4506,6 +4506,36 @@ SceneFlow.enter_saved_scene no pausaba como travel_to: mientras el nivel nuevo c
 Abrir un cofre con bombas sin la bolsa (o flechas sin el arco) gastaba el cofre y la munición quedaba sin uso. Ahora el cofre avisa qué falta ("No tenés una bolsa para llevar bombas") y queda cerrado con el contenido: GameState.missing_holder(item) busca el ítem cuyo behavior usa esa munición.
 
 **Prueba:** test_chest › test_ammo_without_its_holder_stays_in_the_chest: sin bolsa no da bombas, abre el aviso y el cofre queda cerrado; con la bolsa, las da.
+
+### 11.121 Secretos de flechas antes del arco · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `diseño`
+
+SecretRockChest (Cerros, solo empujar), SecretRavineChest (Quebrada, bombas) y SecretLedgeChest (Quebrada, pluma) dan 10 flechas y se alcanzan antes del arco (D2). Con 11.120 el cofre no las pierde, pero el premio del secreto es 'no tenés arco'. Propuesta: roca y muro dan bombas o poción; la repisa queda en flechas o también cambia.
+
+### 11.122 Cofre de bombas de la cueva de la mata en el inicio · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `bug`, `diseño`
+
+BushCaveBush se corta con la espada desde el arranque y el cofre de bush_cave da 10 bombas: se llega antes de la Cueva de las bombas y aparece 'no tenés bolsa'. Cambiar el contenido o tapar el hoyo con algo que pida bombas.
+
+### 11.123 Tablilla del Risco desactualizada · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `bug`, `texto`
+
+cliff_heart (overworld.dialogue) dice que el corazón se partió en cuatro: una pieza en el pasto alto, dos tras la piedra herida y una junto al carcaj. Ahora hay 6 piezas en el overworld (escalón de la Pradera, Cerros, Islote, queñoa, Risco, Cumbre); solo una tras muro agrietado y ninguna en el pasto. Reescribir la pista (y en.po).
+
+### 11.124 Piezas de corazón: 10, no múltiplo de 4 · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `diseño`
+
+Overworld 6 + Gruta, Santuario, Chullpa y Queñoa = 10 piezas con PIECES_PER_HEART = 4: dos contenedores y dos piezas que nunca completan uno. Agregar o quitar dos (o cambiar la regla).
+
+### 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `test`, `diseño`
+
+test_grove_puzzle teletransporta los bloques a las placas; no prueba que se llegue empujando (B: este y sur desde (-33,2); A: 4 m al sur). Además el puzzle (x -41..-31, z -5..4) está en la zona Pradera/Claro, no en la Arboleda que pide la pluma: confirmar que es donde se quería.
 
 ## M12 — Assets propios (Blender)  (6/18)
 

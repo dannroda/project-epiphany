@@ -1,0 +1,20 @@
+{
+  "checklist": [],
+  "code": "11.125",
+  "created_at": "2026-10-13T17:30:45.668Z",
+  "description": "test_grove_puzzle teletransporta los bloques a las placas; no prueba que se llegue empujando (B: este y sur desde (-33,2); A: 4 m al sur). Además el puzzle (x -41..-31, z -5..4) está en la zona Pradera/Claro, no en la Arboleda que pide la pluma: confirmar que es donde se quería.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 122,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "test",
+    "diseño"
+  ],
+  "test": "",
+  "title": "Puzzle de bloques de la cota: probar empujando y ubicar región",
+  "updated_at": "2026-10-13T17:31:02.251Z"
+}
