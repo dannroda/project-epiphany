@@ -263,6 +263,13 @@ func test_meadow_heart_piece_sits_on_a_step() -> void:
 	state = setup[2]
 	await _try(tree, player, Vector3(-47.2, 0, -10), &"move_left", true)
 	assert_eq(state.get_flag(&"ow_heart_piece_meadow"), true, "con la pluma sube al escalón y toma la pieza")
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	for i in 120:
+		if stack.is_open():
+			break
+		await tree.process_frame
+	while stack.is_open():
+		stack.pop()
 	state.reset()
 
 

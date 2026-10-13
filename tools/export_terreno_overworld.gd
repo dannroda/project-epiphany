@@ -85,7 +85,10 @@ func _initialize() -> void:
 				cracked.append({"name": String(child.name), "x": at.x, "z": at.z, "yaw": t.basis.get_euler().y})
 			if "solved_position" in child:
 				fixed.append([child.solved_position.x, child.solved_position.z, 1.6])
+	var plants := level.get_node_or_null("Decor/Plantas")
 	for piece in level.get_node("Decor").find_children("*", "MeshInstance3D", true, false):
+		if plants and plants.is_ancestor_of(piece):
+			continue
 		var at := _placed(piece, level)
 		decor.append([at.x, at.z, 0.8])
 	var file := FileAccess.open(OUT, FileAccess.WRITE)
