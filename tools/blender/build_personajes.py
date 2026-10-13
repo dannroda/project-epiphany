@@ -264,16 +264,16 @@ def chullpa_head(head, hz, guardian):
 	"""Calavera con casco de cobre escalonado, visor y ojos de doom; el guardián lleva aletas como el jugador."""
 	skull = head.blob((0, 0, hz), 0.4, squash=(1.0, 0.95, 1.05), subdiv=3, rough=0.02)
 	head.paint(skull, "hueso", z_range=(hz - 0.5, hz + 0.6))
-	jaw = head.rounded_box(-0.24, 0.24, -0.34, 0.1, hz - 0.5, hz - 0.3, radius=0.06, segments=2)
+	jaw = head.rounded_box(-0.24, 0.24, -0.34, 0.1, hz - 0.5, hz - 0.3, radius=0.09, segments=3)
 	head.paint(jaw, "hueso", "LOW")
 	for x in (-0.07, 0.0, 0.07):
-		head.paint(head.box(x - 0.02, x + 0.02, -0.355, -0.33, hz - 0.36, hz - 0.3), "noche", "MID")
+		head.paint(head.rounded_box(x - 0.022, x + 0.022, -0.36, -0.32, hz - 0.37, hz - 0.3, radius=0.012, segments=1), "noche", "MID")
 	shell = head.rounded_box(-0.44, 0.44, -0.28, 0.42, hz + 0.02, hz + 0.44, radius=0.14, segments=3)
 	head.paint(shell, RUST, "LOW", vary=0.08)
-	visor = head.rounded_box(-0.44, 0.44, -0.42, -0.28, hz - 0.12, hz + 0.16, radius=0.05, segments=2)
+	visor = head.rounded_box(-0.44, 0.44, -0.42, -0.28, hz - 0.12, hz + 0.16, radius=0.1, segments=3)
 	head.paint(visor, RUST, "DARK", vary=0.06)
 	for x in (-0.16, 0.16):
-		head.paint(head.rounded_box(x - 0.09, x + 0.09, -0.44, -0.415, hz - 0.06, hz + 0.04, radius=0.012, segments=1), GLOW, "MID")
+		head.paint(head.blob((x, -0.42, hz - 0.01), 0.085, squash=(1.0, 0.45, 1.0), subdiv=3, rough=0.0), GLOW, "LIGHT")
 	epi.chakana_plate(head, Vector((0, -0.43, hz + 0.28)), 0.24, "dorado" if guardian else "cobre_verde")
 	if guardian:
 		for side in (-1, 1):
@@ -289,9 +289,8 @@ def chullpa_head(head, hz, guardian):
 		head.paint(crest, RUST, "LOW", vary=0.1)
 	# jirones que cuelgan atrás, como la trenza del jugador
 	for i, x in enumerate((-0.18, 0.0, 0.18)):
-		strip = head.box(x - 0.07, x + 0.07, 0.36, 0.42, hz - 0.9 + i % 2 * 0.15, hz + 0.1, taper=0.0)
+		strip = head.rounded_box(x - 0.07, x + 0.07, 0.36, 0.42, hz - 0.9 + i % 2 * 0.15, hz + 0.1, radius=0.025, segments=2)
 		head.transform(strip, Matrix.Translation((0, 0.42, hz + 0.1)) @ Matrix.Rotation(-0.35, 4, "X") @ Matrix.Translation((0, -0.42, -hz - 0.1)))
-		head.jitter(strip, 0.02)
 		head.paint(strip, "tela_roja" if guardian else WRAP, "LOW", vary=0.12)
 
 
@@ -300,9 +299,8 @@ def chullpa(name, guardian):
 	bp = bone_points(rig)
 	body = Body(rig, name, 20 if guardian else 30)
 	hips = body.part("hips")
-	hips.paint(hips.box(-0.2, 0.2, -0.13, 0.13, 0.42, 0.62), "hueso", "LOW")
-	wrap = hips.lathe([(0.25, 0.28), (0.28, 0.34), (0.28, 0.58), (0.25, 0.62), (0.0, 0.62)], sides=14)
-	hips.jitter(wrap, 0.015)
+	hips.paint(hips.rounded_box(-0.2, 0.2, -0.13, 0.13, 0.42, 0.62, radius=0.05, segments=2), "hueso", "LOW")
+	wrap = hips.lathe([(0.24, 0.28), (0.28, 0.33), (0.29, 0.45), (0.29, 0.5), (0.29, 0.54), (0.28, 0.58), (0.25, 0.62), (0.0, 0.62)], sides=18)
 	hips.paint_bands(wrap, [(0.5, 0.54, GLOW, "MID")] if guardian else [], default=(0, 0, "tela_roja" if guardian else WRAP, "LOW"))
 	hips.paint(hips.rounded_box(-0.3, 0.3, -0.21, 0.21, 0.56, 0.63, radius=0.03, segments=1), "madera_oscura", "MID")
 	spine = body.part("spine")
@@ -324,7 +322,6 @@ def chullpa(name, guardian):
 		chest.transform(strap, Matrix.Translation((0, 0, 0.9)) @ Matrix.Rotation(0.6, 4, "Y") @ Matrix.Translation((0, 0, -0.9)))
 		chest.paint(strap, WRAP, "LOW", vary=0.1)
 	collar = chest.lathe([(0.24, 1.12), (0.28, 1.17), (0.27, 1.22), (0.0, 1.23)], sides=14)
-	chest.jitter(collar, 0.01)
 	chest.paint(collar, "dorado" if guardian else WRAP, "MID" if guardian else "DARK", vary=0.1)
 	chullpa_head(body.part("head"), 1.66, guardian)
 	for side in ("l", "r"):
@@ -356,11 +353,11 @@ def chullpa(name, guardian):
 		ll.paint(limb(ll, a - (b - a) * 0.05, a + (b - a) * 0.12, 0.16, 0.155, sides=14), "madera_oscura", "MID")
 		foot = body.part(f"foot.{side}")
 		f0, _ = bp[f"foot.{side}"]
-		boot = foot.rounded_box(f0.x - 0.12, f0.x + 0.12, f0.y - 0.22, f0.y + 0.09, 0.0, 0.15, radius=0.05, segments=2)
+		boot = foot.rounded_box(f0.x - 0.12, f0.x + 0.12, f0.y - 0.22, f0.y + 0.09, 0.0, 0.15, radius=0.07, segments=3)
 		foot.paint(boot, RUST if guardian else "madera_oscura", "LOW")
 		if guardian:
-			foot.paint(foot.box(f0.x - 0.125, f0.x + 0.125, f0.y - 0.225, f0.y + 0.095, 0.0, 0.03), GLOW, "MID")
-	body.build(smooth=40)
+			foot.paint(foot.rounded_box(f0.x - 0.125, f0.x + 0.125, f0.y - 0.225, f0.y + 0.095, 0.0, 0.035, radius=0.012, segments=1), GLOW, "MID")
+	body.build(smooth=55)
 	save(name)
 
 
