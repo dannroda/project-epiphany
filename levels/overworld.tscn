@@ -638,6 +638,8 @@ sun = NodePath("../Sun")
 awake = [NodePath("../TempleEyeGlow")]
 tremors = NodePath("../TempleTremors")
 summit_gate = NodePath("../SummitGate")
+dawn_color = Color(1, 0.68, 0.44, 1)
+dawn_energy = 1.4
 
 [node name="MeadowStep" parent="." unique_id=1329145424 instance=ExtResource("ow_escalon_alto")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0, -10)
