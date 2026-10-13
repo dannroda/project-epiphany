@@ -7,8 +7,6 @@ extends Control
 const MapData := preload("res://src/ui/menus/map_data.gd")
 const COLUMNS := 4
 const SLOT_COUNT := 8
-const BUTTON_ACTIONS: Array[StringName] = [&"item_1", &"item_2"]
-const BUTTON_NAMES := ["X", "Y"]
 const LOCK := preload("res://assets/ui/lock.svg")
 const SLOT := preload("res://src/ui/menus/item_slot.tscn")
 const CHIP := preload("res://src/ui/menus/dungeon_chip.tscn")
@@ -77,8 +75,8 @@ func _input(event: InputEvent) -> void:
 			_move_cursor(slot, DIRECTIONS[action])
 			get_viewport().set_input_as_handled()
 			return
-	for i in BUTTON_ACTIONS.size():
-		if event.is_action_pressed(BUTTON_ACTIONS[i]):
+	for i in PlayerCharacter.ITEM_ACTIONS.size():
+		if event.is_action_pressed(PlayerCharacter.ITEM_ACTIONS[i]):
 			_assign_at(slot, i)
 			get_viewport().set_input_as_handled()
 			return
@@ -89,8 +87,8 @@ func _input(event: InputEvent) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_visible_in_tree() or not _can_assign():
 		return
-	for i in BUTTON_ACTIONS.size():
-		if event.is_action_pressed(BUTTON_ACTIONS[i]) and _assign_focused(i):
+	for i in PlayerCharacter.ITEM_ACTIONS.size():
+		if event.is_action_pressed(PlayerCharacter.ITEM_ACTIONS[i]) and _assign_focused(i):
 			get_viewport().set_input_as_handled()
 			return
 
@@ -170,7 +168,7 @@ func _refresh() -> void:
 		var badge := slot.get_node(^"Badge") as TextureRect
 		badge.visible = owned and button != -1
 		if badge.visible:
-			badge.texture = InputPrompts.icon_for(BUTTON_ACTIONS[button], holder) if holder else InputPrompts.icon_for_current(BUTTON_ACTIONS[button])
+			badge.texture = InputPrompts.icon_for(PlayerCharacter.ITEM_ACTIONS[button], holder) if holder else InputPrompts.icon_for_current(PlayerCharacter.ITEM_ACTIONS[button])
 		var owner_tag := slot.get_node(^"Owner") as PanelContainer
 		owner_tag.visible = owned and owner_slot != -1 and Players.all.size() > 1
 		if owner_tag.visible:
@@ -228,14 +226,14 @@ func _show_detail(slot: Button) -> void:
 	var ammo := _ammo(item)
 	if ammo:
 		detail.add_stat(ammo.display_name, "%d / %d" % [GameState.inventory.count(ammo.id), GameState.inventory.capacity(ammo.id)])
-	for i in BUTTON_ACTIONS.size():
+	for i in PlayerCharacter.ITEM_ACTIONS.size():
 		detail.actions.add_child(_assign_button(i, GameState.item_buttons[i] == item.id))
 
 
 func _assign_button(index: int, assigned: bool) -> Button:
 	var button: Button = ASSIGN_BUTTON.instantiate()
-	button.text = tr("ITEMS_ASSIGNED" if assigned else "ITEMS_ASSIGN").format({button = BUTTON_NAMES[index]})
-	button.icon = InputPrompts.icon_for_current(BUTTON_ACTIONS[index])
+	button.text = "ITEMS_ASSIGNED" if assigned else "ITEMS_ASSIGN"
+	button.icon = InputPrompts.icon_for_current(PlayerCharacter.ITEM_ACTIONS[index])
 	button.theme_type_variation = &"AssignButtonActive" if assigned else &"AssignButton"
 	button.pressed.connect(_assign_focused.bind(index))
 	return button
@@ -263,10 +261,10 @@ func _card(player: PlayerCharacter) -> Control:
 	tag.self_modulate = _color(slot)
 	(tag.get_node(^"Label") as Label).text = "P%d" % (slot + 1)
 	var buttons := GameState.buttons_of(slot)
-	for i in BUTTON_ACTIONS.size():
+	for i in PlayerCharacter.ITEM_ACTIONS.size():
 		var row := card.get_node(^"Row/Buttons").get_child(i)
 		var item := GameState.item_for(buttons[i])
-		(row.get_node(^"Badge") as TextureRect).texture = InputPrompts.icon_for(BUTTON_ACTIONS[i], player)
+		(row.get_node(^"Badge") as TextureRect).texture = InputPrompts.icon_for(PlayerCharacter.ITEM_ACTIONS[i], player)
 		(row.get_node(^"Icon") as TextureRect).texture = item.icon if item else null
 		(row.get_node(^"Name") as Label).text = tr(item.display_name) if item else "—"
 	return card
@@ -310,7 +308,7 @@ func _player(slot: int) -> PlayerCharacter:
 
 
 func _color(slot: int) -> Color:
-	var hud := get_tree().get_first_node_in_group(&"hud")
+	var hud := get_tree().get_first_node_in_group(Hud.GROUP)
 	var colors: Array = hud.player_colors if hud else []
 	return colors[slot] if slot < colors.size() else Color.WHITE
 

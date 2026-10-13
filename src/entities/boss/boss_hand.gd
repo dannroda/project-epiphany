@@ -209,11 +209,11 @@ func perform(attack: BossAttack, target: Node3D, area: Rect2) -> void:
 	striking = true
 	pose = attack.pose
 	match attack.id:
-		&"slam":
+		BossAttack.SLAM:
 			await _slam(attack, target, area)
-		&"grab":
+		BossAttack.GRAB:
 			await _grab(attack, target, area)
-		&"sweep":
+		BossAttack.SWEEP:
 			await _sweep(attack, target, area)
 	striking = false
 	_hide_shadow()

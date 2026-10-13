@@ -4,7 +4,6 @@ extends Control
 ## player_panel.tscn compacto por player en co-op (mockup HUD_Coop).
 
 const HP_PER_HEART := 4
-const BUTTON_ACTIONS: Array[StringName] = [&"item_1", &"item_2"]
 
 @export var pulse_scale := 1.3
 @export var pulse_time := 0.18
@@ -50,7 +49,7 @@ func bind(who: PlayerCharacter, color: Color) -> void:
 func refresh_item_slots() -> void:
 	if not is_instance_valid(player):
 		return
-	for i in BUTTON_ACTIONS.size():
+	for i in PlayerCharacter.ITEM_ACTIONS.size():
 		var body := item_slots.get_child(i).get_node(^"Body")
 		var id := GameState.buttons_of(player.controls.slot)[i]
 		var item := GameState.item_for(id)
@@ -58,7 +57,7 @@ func refresh_item_slots() -> void:
 		var icon := body.get_node(^"Icon") as TextureRect
 		icon.texture = item.icon if item else null
 		icon.modulate.a = 1.0 if item and GameState.inventory.has(id) else 0.35
-		(body.get_node(^"Badge") as TextureRect).texture = InputPrompts.icon_for(BUTTON_ACTIONS[i], player)
+		(body.get_node(^"Badge") as TextureRect).texture = InputPrompts.icon_for(PlayerCharacter.ITEM_ACTIONS[i], player)
 		var ammo_label := body.get_node(^"Ammo") as Label
 		var ammo: ItemData = item.behavior.ammo if item and item.behavior else null
 		ammo_label.visible = ammo != null

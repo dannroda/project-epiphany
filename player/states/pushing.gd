@@ -10,8 +10,8 @@ var _held := 0.0
 
 
 func _enter() -> void:
-	_block = blackboard.get_var("push_block")
-	_direction = blackboard.get_var("push_dir", Vector3.FORWARD)
+	_block = blackboard.get_var(BB_PUSH_BLOCK)
+	_direction = blackboard.get_var(BB_PUSH_DIR, Vector3.FORWARD)
 	_held = 0.0
 	player.velocity.x = 0.0
 	player.velocity.z = 0.0
@@ -23,7 +23,7 @@ func _enter() -> void:
 
 
 func _update(delta: float) -> void:
-	var input: Vector2 = blackboard.get_var("input_dir", Vector2.ZERO)
+	var input: Vector2 = blackboard.get_var(BB_INPUT_DIR, Vector2.ZERO)
 	var wanted := Vector3(input.x, 0.0, input.y)
 	if not is_instance_valid(_block) or wanted.length() < 0.3 or wanted.normalized().dot(_direction) < 0.7:
 		dispatch("finished")

@@ -2,6 +2,7 @@
 class_name Chest
 extends StaticBody3D
 
+const GROUP := &"chests"
 const OPEN_ANGLE := -110.0
 const BIG_BASE := preload("res://assets/epiphany/meshes/objetos/cofre_grande.res")
 const BIG_LID := preload("res://assets/epiphany/meshes/objetos/cofre_grande_tapa.res")
@@ -33,7 +34,7 @@ func _ready() -> void:
 		_make_big()
 	if Engine.is_editor_hint():
 		return
-	add_to_group(&"chests")
+	add_to_group(GROUP)
 	if big:
 		scale = Vector3.ONE * BIG_SCALE
 	persistent = $PersistentFlag

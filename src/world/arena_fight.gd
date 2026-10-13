@@ -78,13 +78,13 @@ func _begin() -> void:
 	in_intro = false
 	if not started:
 		return
-	get_tree().call_group(&"hud", &"show_boss", self)
+	get_tree().call_group(Hud.GROUP, &"show_boss", self)
 	for fighter in _fighters:
 		fighter.start()
 
 
 func _awaken() -> void:
-	get_tree().call_group(&"hud", &"show_area_name", tr(display_name))
+	get_tree().call_group(Hud.GROUP, &"show_area_name", tr(display_name))
 	Feel.sfx(&"rumble", _fighters[0].body.global_position)
 	Feel.shake(0.35)
 
@@ -94,7 +94,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	for action in SKIP_ACTIONS:
 		if event.is_action_pressed(action):
-			get_tree().call_group(&"room_camera", &"skip_reveal")
+			get_tree().call_group(TopDownCamera.GROUP, &"skip_reveal")
 			get_viewport().set_input_as_handled()
 			return
 
@@ -106,7 +106,7 @@ func _reset() -> void:
 	started = false
 	_attacker = null
 	Music.boss_fight = false
-	get_tree().call_group(&"hud", &"hide_boss")
+	get_tree().call_group(Hud.GROUP, &"hide_boss")
 	for fighter in _fighters:
 		fighter.reset()
 	for door in doors:
@@ -140,7 +140,7 @@ func _win(announce: bool) -> void:
 	started = false
 	_persistent.value = true
 	Music.boss_fight = false
-	get_tree().call_group(&"hud", &"hide_boss")
+	get_tree().call_group(Hud.GROUP, &"hide_boss")
 	for door in doors:
 		door.open()
 	_show_reward()

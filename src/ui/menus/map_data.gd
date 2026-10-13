@@ -8,7 +8,7 @@ const DOOR_MERGE_DISTANCE := 2.5
 
 
 static func current_room(tree: SceneTree) -> Room:
-	var camera := tree.get_first_node_in_group(&"room_camera") as TopDownCamera
+	var camera := tree.get_first_node_in_group(TopDownCamera.GROUP) as TopDownCamera
 	return camera.room if camera else null
 
 
@@ -23,7 +23,7 @@ static func find(tree: SceneTree, type: Variant) -> Node:
 
 
 static func chests_in(tree: SceneTree, room: Room) -> Array:
-	return tree.get_nodes_in_group(&"chests").filter(func(chest: Chest) -> bool: return room.contains(chest.global_position))
+	return tree.get_nodes_in_group(Chest.GROUP).filter(func(chest: Chest) -> bool: return room.contains(chest.global_position))
 
 
 ## Puertas con nodo Door (con llave, jefe, persianas, interruptor), escaleras y pasos libres del kit: [[posición, MapMark.Kind], …].

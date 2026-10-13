@@ -65,13 +65,13 @@ func _begin() -> void:
 	Music.boss_fight = true
 	await TopDownCamera.reveal(boss.eye, _awaken, intro_hold)
 	in_intro = false
-	get_tree().call_group(&"hud", &"show_boss", boss)
+	get_tree().call_group(Hud.GROUP, &"show_boss", boss)
 	boss.start_fight()
 	fight_started.emit()
 
 
 func _awaken() -> void:
-	get_tree().call_group(&"hud", &"show_area_name", tr(boss.display_name))
+	get_tree().call_group(Hud.GROUP, &"show_area_name", tr(boss.display_name))
 	Feel.sfx(&"rumble", boss.eye.global_position)
 	Feel.shake(0.35)
 	var player := Players.nearest(boss.eye.global_position)
@@ -87,14 +87,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	for action in SKIP_ACTIONS:
 		if event.is_action_pressed(action):
-			get_tree().call_group(&"room_camera", &"skip_reveal")
+			get_tree().call_group(TopDownCamera.GROUP, &"skip_reveal")
 			get_viewport().set_input_as_handled()
 			return
 
 
 func _on_defeated() -> void:
 	Music.boss_fight = false
-	get_tree().call_group(&"hud", &"hide_boss")
+	get_tree().call_group(Hud.GROUP, &"hide_boss")
 
 
 func _on_death_finished() -> void:

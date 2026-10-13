@@ -44,8 +44,8 @@ func _show() -> void:
 	_flash(hands)
 	Feel.ui(&"item_get")
 	var popup := ITEM_GET.instantiate()
-	popup.item = blackboard.get_var("got_item")
-	popup.amount = blackboard.get_var("got_amount", 1)
+	popup.item = blackboard.get_var(BB_GOT_ITEM)
+	popup.amount = blackboard.get_var(BB_GOT_AMOUNT, 1)
 	var camera := player.get_viewport().get_camera_3d()
 	if camera:
 		popup.anchor = camera.unproject_position(player.carrier.socket.global_position) + rings_offset

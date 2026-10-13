@@ -8,6 +8,8 @@ extends StaticBody3D
 signal opened
 signal closed
 
+const GROUP := &"doors"
+
 enum Kind { OPEN, LOCKED, SHUTTER, SWITCH, BOSS }
 
 const LEAVES := {
@@ -71,7 +73,7 @@ var south_cut := 0.0:
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
-	add_to_group(&"doors")
+	add_to_group(GROUP)
 	_closed_y = leaf.position.y
 	%LeafMesh.mesh = load(leaf_meshes % LEAVES[kind])
 	_fill_depth()

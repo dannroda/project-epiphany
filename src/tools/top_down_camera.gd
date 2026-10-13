@@ -1,6 +1,8 @@
 class_name TopDownCamera
 extends Camera3D
 
+const GROUP := &"room_camera"
+
 @export var target_node: PlayerCharacter
 ## FOV 40 y unos 60° de inclinación; una pantalla abarca ≈ 26 × 14.5 m, una sala entera del templo con sus puertas.
 @export var offset: Vector3 = Vector3(0, 17.4, 10.0)
@@ -106,7 +108,7 @@ func _ready() -> void:
 	if not target_node and get_parent() is PlayerCharacter:
 		target_node = get_parent()
 	look_at_from_position(global_position, global_position - offset, Vector3.UP)
-	add_to_group(&"room_camera")
+	add_to_group(GROUP)
 	Players.joined.connect(_forget_player_rids)
 	Players.left.connect(_forget_player_rids)
 	process_physics_priority = 100
@@ -317,7 +319,7 @@ func _cut_south_wall(cut_room: Room) -> void:
 		area = Vector4(bounds.position.x - SOUTH_WALL_DEPTH, bounds.end.x + SOUTH_WALL_DEPTH, bounds.end.y - SOUTH_WALL_RELIEF, bounds.end.y + SOUTH_WALL_DEPTH + south_wall_reach)
 		height = cut_room.floor_y() + south_wall_cut
 		lip = bounds.end.y + SOUTH_WALL_RELIEF + south_wall_reach
-	for door: Door in get_tree().get_nodes_in_group(&"doors"):
+	for door: Door in get_tree().get_nodes_in_group(Door.GROUP):
 		var inside := cut_room != null and absf(door.global_position.y - cut_room.floor_y()) < 1.0 \
 				and door.global_position.z > area.z and door.global_position.z < area.w \
 				and door.global_position.x > area.x and door.global_position.x < area.y
@@ -467,7 +469,7 @@ static func reveal_unlock(target: Node3D, action: Callable) -> void:
 ## Pausa, lleva la cámara a `target`, corre `action` (abrir la puerta…), espera (`hold`, o `reveal_hold` si es
 ## negativo) y vuelve al player. Si no hay cámara o el juego ya está en pausa, solo corre `action`.
 static func reveal(target: Node3D, action: Callable, hold := -1.0) -> void:
-	var camera := target.get_tree().get_first_node_in_group(&"room_camera") as TopDownCamera
+	var camera := target.get_tree().get_first_node_in_group(GROUP) as TopDownCamera
 	if camera == null or camera.revealing or camera.transitioning or target.get_tree().paused or SaveManager.loading:
 		action.call()
 		return

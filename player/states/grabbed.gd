@@ -12,7 +12,7 @@ var _presses := 0
 func _enter() -> void:
 	player.attack_runner.stop()
 	if player.is_blocking():
-		blackboard.set_var("is_blocking", false)
+		blackboard.set_var(BB_IS_BLOCKING, false)
 		player.set_guard(false)
 	player.velocity = Vector3.ZERO
 	_presses = 0
@@ -20,7 +20,7 @@ func _enter() -> void:
 
 
 func _update(_delta: float) -> void:
-	var grip: Node3D = blackboard.get_var("grabbed_by", null)
+	var grip: Node3D = blackboard.get_var(BB_GRABBED_BY, null)
 	if grip == null or not is_instance_valid(grip):
 		dispatch("finished")
 		return
@@ -30,6 +30,6 @@ func _update(_delta: float) -> void:
 			_presses += 1
 			player.model.rotation.y += 0.25 * (1 if _presses % 2 else -1)
 	if _presses >= presses_to_escape:
-		blackboard.set_var("grabbed_by", null)
+		blackboard.set_var(BB_GRABBED_BY, null)
 		player.escaped.emit()
 		dispatch("finished")

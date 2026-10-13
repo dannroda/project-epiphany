@@ -1,40 +1,42 @@
 {
+  "assignee": "Claude",
   "checklist": [
     {
       "detail": "Constantes StringName en PlayerState (generic.gd) y en Enemy; una sola lista de acciones de ítem.",
-      "done": false,
+      "done": true,
       "text": "Blackboard y acciones de ítem"
     },
     {
       "detail": "Constante `GROUP` en la clase dueña de cada grupo (hud, room_camera, enemies, doors, wave_spawners, chests), como ya tienen Room y SpawnPoint; `spawn_point` con `is PlayerCharacter`, `room.gd` con el spawner tipado.",
-      "done": false,
+      "done": true,
       "text": "Grupos"
     },
     {
       "detail": "Ids en constantes compartidas con los .tres.",
-      "done": false,
+      "done": true,
       "text": "Ataques del jefe"
     },
     {
       "detail": "items_page.gd `BUTTON_NAMES` X/Y → icono de InputPrompts (en teclado no es X/Y).",
-      "done": false,
+      "done": true,
       "text": "Etiquetas de botón"
     }
   ],
   "code": "11.76",
   "created_at": "2026-10-12T00:05:59.212Z",
   "description": "Claves del blackboard (`\"target\"`, `\"is_blocking\"`, `\"is_hit\"`, `\"stunned\"`, …) en ~20 lugares, `ITEM_ACTIONS` / `[&\"item_1\", &\"item_2\"]` copiado en 8 archivos, grupos y métodos de `call_group` como literales, ids de ataque del jefe que tienen que coincidir con los .tres. Un typo devuelve el default o no hace nada, sin error.",
+  "done_at": "2026-10-13T14:46:07.938Z",
   "milestone": "m11",
-  "notes": "Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).",
+  "notes": "Sale de la revisión de código general del 2026-10-11 (skill godot-code-review). Claves: PlayerState.BB_* y Enemy.BB_*; acciones: PlayerCharacter.ITEM_ACTIONS; grupos: Hud/TopDownCamera/Enemy/Door/WaveSpawner/Chest.GROUP (Hud es class_name nuevo); ataques: BossAttack.SLAM… e IDS. Las etiquetas Asignar/Asignado ya no dicen X/Y: el botón va como ícono de InputPrompts.",
   "order": 73,
   "priority": "low",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "done",
   "tags": [
     "arquitectura"
   ],
-  "test": "Buscar los literales: cada clave/acción/grupo aparece definida una sola vez.",
+  "test": "Buscar los literales: cada clave/acción/grupo aparece definida una sola vez. test_boss › test_attack_ids_match_the_code revisa que cada data/boss/attack_*.tres use un id de BossAttack.IDS; los tests siguen usando los grupos como literales (prueban el contrato).",
   "title": "Constantes en vez de strings sueltos",
-  "updated_at": "2026-10-12T00:06:00.690Z"
+  "updated_at": "2026-10-13T14:46:07.938Z"
 }

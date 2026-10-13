@@ -80,7 +80,7 @@ func _ready() -> void:
 func start() -> void:
 	if state != State.IDLE or is_dead:
 		return
-	add_to_group(&"enemies")
+	add_to_group(Enemy.GROUP)
 	config.apply_to(self)
 	_run()
 
@@ -90,7 +90,7 @@ func reset() -> void:
 	_interrupt()
 	state = State.IDLE
 	pace = 1.0
-	remove_from_group(&"enemies")
+	remove_from_group(Enemy.GROUP)
 	health.reset(config.max_health)
 	hurtbox.set_deferred(&"monitorable", true)
 	global_position = _home

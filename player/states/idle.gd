@@ -12,7 +12,7 @@ func _update(delta: float) -> void:
 	player.velocity.z = move_toward(player.velocity.z, 0, SPEED)
 	player.move_and_slide()
 
-	var target: Node3D = blackboard.get_var("target", null)
+	var target: Node3D = blackboard.get_var(BB_TARGET, null)
 	var combat_anim_state = player.anim_tree.get(&"parameters/Combat/current_state")
 
 	if target and is_instance_valid(target):

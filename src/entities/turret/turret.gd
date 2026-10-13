@@ -27,7 +27,7 @@ var _glow := StandardMaterial3D.new()
 
 func _ready() -> void:
 	config.apply_to(self)
-	add_to_group(&"enemies")
+	add_to_group(Enemy.GROUP)
 	health.max_health = config.max_health
 	health.current = config.max_health
 	health.invulnerability_time = 0.3

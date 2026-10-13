@@ -101,7 +101,7 @@ func _apply_level() -> void:
 
 func _room_camera() -> TopDownCamera:
 	if not is_instance_valid(_camera):
-		_camera = get_tree().get_first_node_in_group(&"room_camera") as TopDownCamera
+		_camera = get_tree().get_first_node_in_group(TopDownCamera.GROUP) as TopDownCamera
 	return _camera
 
 

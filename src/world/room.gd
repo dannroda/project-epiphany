@@ -81,7 +81,7 @@ func mark_entered() -> void:
 		dungeon.visit(room_index)
 	_announced = true
 	if first and not display_name.is_empty():
-		get_tree().call_group(&"hud", &"show_area_name", tr(display_name))
+		get_tree().call_group(Hud.GROUP, &"show_area_name", tr(display_name))
 	player_entered.emit(self)
 	if autosave_on_enter:
 		SaveManager.autosave.call_deferred()
@@ -90,12 +90,12 @@ func mark_entered() -> void:
 
 
 func enemies_inside() -> Array:
-	return get_tree().get_nodes_in_group(&"enemies").filter(func(enemy: Node) -> bool:
+	return get_tree().get_nodes_in_group(Enemy.GROUP).filter(func(enemy: Node) -> bool:
 		return not enemy.get(&"is_dead") and contains(enemy.global_position))
 
 
 func shutters() -> Array:
-	return get_tree().get_nodes_in_group(&"doors").filter(func(door: Door) -> bool:
+	return get_tree().get_nodes_in_group(Door.GROUP).filter(func(door: Door) -> bool:
 		return door.kind == Door.Kind.SHUTTER and door.room == self)
 
 
@@ -110,8 +110,8 @@ func _lock_after_entering() -> void:
 
 ## Oleadas en curso: entre una y otra no queda nadie, pero la sala sigue cerrada.
 func waves_running() -> bool:
-	return get_tree().get_nodes_in_group(&"wave_spawners").any(func(spawner: Node) -> bool:
-		return spawner.get(&"room") == self and spawner.get(&"running") == true)
+	return get_tree().get_nodes_in_group(WaveSpawner.GROUP).any(func(spawner: WaveSpawner) -> bool:
+		return spawner.room == self and spawner.running)
 
 
 func has_player() -> bool:

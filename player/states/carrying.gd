@@ -13,7 +13,7 @@ var _thrown_at := -1.0
 
 
 func _enter() -> void:
-	var liftable: Liftable = blackboard.get_var("liftable")
+	var liftable: Liftable = blackboard.get_var(BB_LIFTABLE)
 	_body = liftable.make_body()
 	_elapsed = 0.0
 	_thrown_at = -1.0
@@ -38,7 +38,7 @@ func _update(delta: float) -> void:
 		dispatch("finished")
 		return
 	var lifting := _elapsed < _lift_time
-	var input_dir: Vector2 = blackboard.get_var("input_dir", Vector2.ZERO)
+	var input_dir: Vector2 = blackboard.get_var(BB_INPUT_DIR, Vector2.ZERO)
 	var direction := Vector3(input_dir.x, 0, input_dir.y).normalized() if not lifting else Vector3.ZERO
 	player.velocity.x = direction.x * CARRY_SPEED * player.ground_speed
 	player.velocity.z = direction.z * CARRY_SPEED * player.ground_speed

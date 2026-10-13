@@ -18,7 +18,6 @@ enum Style { ITEM, STONE }
 ## `{btn:move}`, el stick o las cuatro teclas; `{item:id}`, el botón al que está asignado ese ítem.
 const BUTTON_TOKEN := "\\{(btn|item):(\\w+)\\}"
 const MOVE_ACTIONS: Array[StringName] = [&"move_forward", &"move_left", &"move_backward", &"move_right"]
-const ITEM_ACTIONS: Array[StringName] = [&"item_1", &"item_2"]
 const BUTTON_ICON_SIZE := 32
 
 @export var chars_per_second := 45.0
@@ -199,7 +198,7 @@ func _set_body(text: String) -> void:
 func _token_actions(kind: String, value: String) -> Array[StringName]:
 	if kind == "item":
 		var button := GameState.item_buttons.find(StringName(value))
-		return [ITEM_ACTIONS[maxi(button, 0)]]
+		return [PlayerCharacter.ITEM_ACTIONS[maxi(button, 0)]]
 	if value == "move":
 		return MOVE_ACTIONS.slice(0, 1) if InputDevice.current == InputDevice.Device.GAMEPAD else MOVE_ACTIONS
 	return [StringName(value)]

@@ -10,7 +10,7 @@ func _enter() -> void:
 	player.attack_runner.stop()
 	_left = duration
 	player.anim_tree.set(&"parameters/Hurt/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
-	var info: DamageInfo = blackboard.get_var("last_hit", null)
+	var info: DamageInfo = blackboard.get_var(BB_LAST_HIT, null)
 	if info == null or info.source == null:
 		return
 	var away := player.global_position - info.source.global_position

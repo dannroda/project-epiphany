@@ -725,3 +725,10 @@ func test_stunning_the_eye_cuts_the_orb_charge() -> void:
 	assert_true(not boss.get_node(^"%Charge").visible)
 	assert_eq(orbs.call(), before, "ni dispara")
 	boss.free()
+
+
+func test_attack_ids_match_the_code() -> void:
+	for file in DirAccess.get_files_at("res://data/boss"):
+		if file.begins_with("attack_") and file.ends_with(".tres"):
+			var attack: BossAttack = load("res://data/boss/" + file)
+			assert_true(attack.id in BossAttack.IDS, "%s: id %s es uno de BossAttack.IDS" % [file, attack.id])

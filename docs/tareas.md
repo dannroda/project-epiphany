@@ -2576,7 +2576,7 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-## M11 — Pulido: contenido y feel  (64/115)
+## M11 — Pulido: contenido y feel  (65/115)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3773,24 +3773,24 @@ Los datos cargados no se validan por tipo: una clave con tipo inesperado (por un
 
 **Archivos:** `src/world/area_zone.gd`, `src/world/zone_veil.gd`, `levels/overworld.tscn`
 
-### 11.76 Constantes en vez de strings sueltos · Pendiente
+### 11.76 Constantes en vez de strings sueltos · Hecho
 
-**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `arquitectura`
+**Terminada:** 2026-10-13 · **Prioridad:** baja · **Tamaño:** M · **Responsable:** Claude · **Etiquetas:** `arquitectura`
 
 Claves del blackboard (`"target"`, `"is_blocking"`, `"is_hit"`, `"stunned"`, …) en ~20 lugares, `ITEM_ACTIONS` / `[&"item_1", &"item_2"]` copiado en 8 archivos, grupos y métodos de `call_group` como literales, ids de ataque del jefe que tienen que coincidir con los .tres. Un typo devuelve el default o no hace nada, sin error.
 
-- [ ] Blackboard y acciones de ítem
+- [x] Blackboard y acciones de ítem
   Constantes StringName en PlayerState (generic.gd) y en Enemy; una sola lista de acciones de ítem.
-- [ ] Grupos
+- [x] Grupos
   Constante `GROUP` en la clase dueña de cada grupo (hud, room_camera, enemies, doors, wave_spawners, chests), como ya tienen Room y SpawnPoint; `spawn_point` con `is PlayerCharacter`, `room.gd` con el spawner tipado.
-- [ ] Ataques del jefe
+- [x] Ataques del jefe
   Ids en constantes compartidas con los .tres.
-- [ ] Etiquetas de botón
+- [x] Etiquetas de botón
   items_page.gd `BUTTON_NAMES` X/Y → icono de InputPrompts (en teclado no es X/Y).
 
-**Prueba:** Buscar los literales: cada clave/acción/grupo aparece definida una sola vez.
+**Prueba:** Buscar los literales: cada clave/acción/grupo aparece definida una sola vez. test_boss › test_attack_ids_match_the_code revisa que cada data/boss/attack_*.tres use un id de BossAttack.IDS; los tests siguen usando los grupos como literales (prueban el contrato).
 
-**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review).
+**Notas:** Sale de la revisión de código general del 2026-10-11 (skill godot-code-review). Claves: PlayerState.BB_* y Enemy.BB_*; acciones: PlayerCharacter.ITEM_ACTIONS; grupos: Hud/TopDownCamera/Enemy/Door/WaveSpawner/Chest.GROUP (Hud es class_name nuevo); ataques: BossAttack.SLAM… e IDS. Las etiquetas Asignar/Asignado ya no dicen X/Y: el botón va como ícono de InputPrompts.
 
 ### 11.77 Player: escudo como componente y PlayerControls sin nodo · Pendiente
 

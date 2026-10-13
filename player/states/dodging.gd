@@ -14,11 +14,11 @@ var _iframes_given := false
 func _enter() -> void:
 	player.attack_runner.stop()
 	if player.is_blocking():
-		blackboard.set_var("is_blocking", false)
+		blackboard.set_var(BB_IS_BLOCKING, false)
 		player.set_guard(false)
 	_elapsed = 0.0
 	_iframes_given = false
-	var input: Vector2 = blackboard.get_var("input_dir", Vector2.ZERO)
+	var input: Vector2 = blackboard.get_var(BB_INPUT_DIR, Vector2.ZERO)
 	_direction = Vector3(input.x, 0.0, input.y).normalized()
 	if _direction.is_zero_approx():
 		_direction = player.model.global_basis.z

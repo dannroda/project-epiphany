@@ -2,7 +2,6 @@ extends PlayerState
 ## Usa el ítem del botón X/Y: reproduce su animación y llama a use() en behavior.use_at.
 
 const DEFAULT_ANIMATION := &"General/Use_Item"
-const ITEM_ACTIONS: Array[StringName] = [&"item_1", &"item_2"]
 
 var _item: ItemData
 ## El ítem del botón: la botella, si _item es su contenido.
@@ -16,14 +15,14 @@ var _waiting := false
 
 
 func _enter() -> void:
-	_button = blackboard.get_var("item_button", 0)
+	_button = blackboard.get_var(BB_ITEM_BUTTON, 0)
 	_source = GameState.buttons_of(player.controls.slot)[_button]
 	_item = GameState.item_for(_source)
 	_elapsed = 0.0
 	_used = false
 	var tween := create_tween()
 	tween.tween_property(player, "velocity", Vector3.ZERO, 0.15)
-	_waiting = _item.behavior.get(&"hold_time") != null and player.controls.pressed(ITEM_ACTIONS[_button])
+	_waiting = _item.behavior.get(&"hold_time") != null and player.controls.pressed(PlayerCharacter.ITEM_ACTIONS[_button])
 	if not _waiting:
 		_start()
 
@@ -44,7 +43,7 @@ func _update(delta: float) -> void:
 	_elapsed += delta
 	player.move_and_slide()
 	if _waiting:
-		if not player.controls.pressed(ITEM_ACTIONS[_button]):
+		if not player.controls.pressed(PlayerCharacter.ITEM_ACTIONS[_button]):
 			_start()
 		elif _elapsed >= _item.behavior.hold_time:
 			_waiting = false

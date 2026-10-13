@@ -412,7 +412,7 @@ func _place_overworld() -> void:
 	for portal in TravelPortal.all(get_tree()):
 		if portal.lit:
 			marks.add_child(MapMark.create(MapMark.Kind.PORTAL, _portal_point(portal)))
-	for chest: Chest in get_tree().get_nodes_in_group(&"chests"):
+	for chest: Chest in get_tree().get_nodes_in_group(Chest.GROUP):
 		if not chest.interactable.enabled:
 			_add_mark(MapMark.Kind.CHEST_OPEN, chest.global_position)
 	_cache_scene()
@@ -544,7 +544,7 @@ func _focus_zone(zone: AreaZone) -> void:
 		return
 	var region := _zones().filter(func(other: AreaZone) -> bool: return other.display_name == zone.display_name and other.is_visited())
 	var inside := func(point: Vector3) -> bool: return region.any(func(other: AreaZone) -> bool: return other.contains(point))
-	var chests := get_tree().get_nodes_in_group(&"chests").filter(func(chest: Chest) -> bool: return inside.call(chest.global_position))
+	var chests := get_tree().get_nodes_in_group(Chest.GROUP).filter(func(chest: Chest) -> bool: return inside.call(chest.global_position))
 	_count_row("MAP_CHESTS", chests.filter(func(chest: Chest) -> bool: return not chest.interactable.enabled).size(), chests.size())
 	var tablets := _tablets.filter(func(tablet: Tablet) -> bool: return inside.call(tablet.global_position))
 	_count_row("MAP_TABLETS_READ", tablets.filter(func(tablet: Tablet) -> bool: return tablet.is_read()).size(), tablets.size())

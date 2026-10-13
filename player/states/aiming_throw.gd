@@ -2,7 +2,6 @@ extends PlayerState
 ## Bomba sobre la cabeza: mientras se mantiene el botón se apunta como con el arco (la mecha sigue corriendo) y al
 ## soltar se tira en arco al punto de la retícula. Rodar o recibir un golpe la deja caer.
 
-const ITEM_ACTIONS: Array[StringName] = [&"item_1", &"item_2"]
 
 var _button := 0
 var _behavior: PlaceBehavior
@@ -12,7 +11,7 @@ var _reticle_distance := 0.0
 
 
 func _enter() -> void:
-	_button = blackboard.get_var("item_button", 0)
+	_button = blackboard.get_var(BB_ITEM_BUTTON, 0)
 	_behavior = GameState.item_for(GameState.buttons_of(player.controls.slot)[_button]).behavior
 	_elapsed = 0.0
 	_released_at = -1.0
@@ -35,7 +34,7 @@ func _update(delta: float) -> void:
 	if _released_at < 0.0:
 		if not player.carrier.is_carrying():
 			dispatch("finished")
-		elif not player.controls.pressed(ITEM_ACTIONS[_button]):
+		elif not player.controls.pressed(PlayerCharacter.ITEM_ACTIONS[_button]):
 			_start_throw()
 	elif player.carrier.is_carrying() and _elapsed - _released_at >= player.carrier.throw_delay():
 		player.carrier.throw(_behavior.landing(_throw_point()), _behavior.flight_time)

@@ -35,7 +35,7 @@ func _fall(player: PlayerCharacter) -> void:
 		back = point.global_position if point else player.global_position + Vector3.UP * 3.0
 	player.global_position = back
 	player.velocity = Vector3.ZERO
-	get_tree().call_group(&"room_camera", &"snap_to_target")
+	get_tree().call_group(TopDownCamera.GROUP, &"snap_to_target")
 
 
 func _nearest_respawn(from: Vector3) -> Vector3:

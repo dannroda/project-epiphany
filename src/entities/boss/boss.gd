@@ -260,7 +260,7 @@ func perform_chosen() -> void:
 		return
 	if attacker is BossHand:
 		attacker.perform(chosen_attack, target, arena)
-	elif attacker == eye and chosen_attack.id == &"mark":
+	elif attacker == eye and chosen_attack.id == BossAttack.MARK:
 		_mark_floor()
 	elif attacker == eye:
 		_fire_orb()
@@ -335,7 +335,7 @@ func _combo_hand() -> void:
 	for hand in [hand_left, hand_right]:
 		if hand.is_available() and is_instance_valid(target):
 			for attack in attacks:
-				if attack.id == &"slam":
+				if attack.id == BossAttack.SLAM:
 					hand.perform(attack, target, arena)
 					return
 

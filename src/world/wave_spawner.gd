@@ -6,6 +6,8 @@ extends Node3D
 
 signal activated
 
+const GROUP := &"wave_spawners"
+
 @export var room: Room
 @export var flag: StringName:
 	set(value):
@@ -22,7 +24,7 @@ var _persistent: PersistentFlag
 
 
 func _ready() -> void:
-	add_to_group(&"wave_spawners")
+	add_to_group(GROUP)
 	if flag != &"":
 		_persistent = $PersistentFlag
 		_persistent.flag = flag

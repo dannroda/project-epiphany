@@ -293,7 +293,7 @@ func _draw_marks() -> void:
 	var world_view := Rect2(here - center / OVERWORLD_SCALE, marks.size / OVERWORLD_SCALE)
 	for portal: Portal in _portals.filter(is_instance_valid):
 		_draw_mark(func() -> void: MapRoomCell.draw_entrance(marks, Vector2.ZERO, MapRoomCell.TEXT), portal.global_position, here, world_view)
-	for chest: Chest in get_tree().get_nodes_in_group(&"chests"):
+	for chest: Chest in get_tree().get_nodes_in_group(Chest.GROUP):
 		if not chest.interactable.enabled:
 			_draw_mark(func() -> void: MapRoomCell.draw_chest(marks, Vector2.ZERO, MapRoomCell.GREY), chest.global_position, here, world_view)
 	for tablet: Tablet in _tablets.filter(is_instance_valid):

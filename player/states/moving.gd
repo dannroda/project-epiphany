@@ -7,8 +7,8 @@ func _enter() -> void:
 	pass
 
 func _update(delta: float) -> void:
-	var input_dir: Vector2 = blackboard.get_var("input_dir", Vector2.ZERO)
-	var target: Node3D = blackboard.get_var("target", null)
+	var input_dir: Vector2 = blackboard.get_var(BB_INPUT_DIR, Vector2.ZERO)
+	var target: Node3D = blackboard.get_var(BB_TARGET, null)
 	var direction := Vector3(input_dir.x, 0, input_dir.y).normalized()
 	var combat_anim_state = player.anim_tree.get(&"parameters/Combat/current_state")
 
@@ -23,11 +23,11 @@ func _update(delta: float) -> void:
 		_free_move(direction, delta)
 
 func _locked_move(input: Vector2, _delta: float, target: Node3D) -> void:
-	var is_blocking: bool = blackboard.get_var("is_blocking", false)
+	var is_blocking: bool = blackboard.get_var(BB_IS_BLOCKING, false)
 	move_locked(input, BLOCK_SPEED if is_blocking else SPEED, target)
 
 func _free_move(dir: Vector3, _delta: float) -> void:
-	var is_blocking: bool = blackboard.get_var("is_blocking", false)
+	var is_blocking: bool = blackboard.get_var(BB_IS_BLOCKING, false)
 	var holding_light := is_blocking and player.is_catching_light()
 	var speed := (BLOCK_SPEED if is_blocking else SPEED) * player.ground_speed
 	
@@ -36,8 +36,8 @@ func _free_move(dir: Vector3, _delta: float) -> void:
 	player.move_and_slide()
 	var block := player.block_ahead(dir)
 	if block:
-		blackboard.set_var("push_block", block)
-		blackboard.set_var("push_dir", PushBlock.axis(dir))
+		blackboard.set_var(BB_PUSH_BLOCK, block)
+		blackboard.set_var(BB_PUSH_DIR, PushBlock.axis(dir))
 		dispatch("push")
 		return
 	if not player.velocity.is_zero_approx() and not player.aim.aiming and not holding_light:

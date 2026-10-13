@@ -1,6 +1,5 @@
 extends LimboHSM
 
-const ITEM_ACTIONS: Array[StringName] = [&"item_1", &"item_2"]
 
 var player: PlayerCharacter
 
@@ -9,8 +8,8 @@ var player: PlayerCharacter
 
 func _setup() -> void:
 	player = agent
-	blackboard.set_var("target", null)
-	blackboard.set_var("is_blocking", false)
+	blackboard.set_var(PlayerState.BB_TARGET, null)
+	blackboard.set_var(PlayerState.BB_IS_BLOCKING, false)
 
 	add_transition($Spawning, $Idle, "idle")
 	add_transition($Idle, $Moving, "move")
@@ -70,7 +69,7 @@ func _update(delta: float) -> void:
 		player.velocity += player.get_gravity() * delta
 
 	var input_dir := player.controls.move()
-	blackboard.set_var("input_dir", input_dir)
+	blackboard.set_var(PlayerState.BB_INPUT_DIR, input_dir)
 
 	var buffer := player.input_buffer
 	if buffer.has(&"dodge") and dispatch("dodge"):
@@ -88,24 +87,24 @@ func _update(delta: float) -> void:
 ## El escudo sigue al botón mantenido, no a sus eventos: con el player congelado (hit-stop, pausa) se perderían.
 func _sync_guard() -> void:
 	var guard := player.controls.pressed(&"block") and get_active_state() in _guard_states
-	if guard != blackboard.get_var("is_blocking", false):
-		blackboard.set_var("is_blocking", guard)
+	if guard != blackboard.get_var(PlayerState.BB_IS_BLOCKING, false):
+		blackboard.set_var(PlayerState.BB_IS_BLOCKING, guard)
 		player.set_guard(guard)
 
 
 ## Si el botón no tiene nada usable, avisa enseguida; si sí, espera en el buffer a que el estado lo permita.
 func _try_item(buffer: InputBuffer) -> bool:
-	for i in ITEM_ACTIONS.size():
-		if not buffer.has(ITEM_ACTIONS[i]):
+	for i in PlayerCharacter.ITEM_ACTIONS.size():
+		if not buffer.has(PlayerCharacter.ITEM_ACTIONS[i]):
 			continue
 		if player.usable_item(i) == null:
-			buffer.consume(ITEM_ACTIONS[i])
+			buffer.consume(PlayerCharacter.ITEM_ACTIONS[i])
 			player.deny_item(i)
 			return true
-		blackboard.set_var("item_button", i)
+		blackboard.set_var(PlayerState.BB_ITEM_BUTTON, i)
 		var behavior := player.usable_item(i).behavior
 		var event := "jump" if behavior is JumpBehavior else "dash" if behavior is DashBehavior else "aim_item" if behavior.hold_to_aim else "use_item"
 		if dispatch(event):
-			buffer.consume(ITEM_ACTIONS[i])
+			buffer.consume(PlayerCharacter.ITEM_ACTIONS[i])
 			return true
 	return false

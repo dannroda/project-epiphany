@@ -20,7 +20,7 @@ func _ready() -> void:
 
 
 func _on_body_entered(body: Node3D) -> void:
-	if body.is_in_group(&"player") and GameState.spawn_point != id and not SceneFlow.traveling:
+	if body is PlayerCharacter and GameState.spawn_point != id and not SceneFlow.traveling:
 		GameState.spawn_point = id
 		Log.info(&"world", "Checkpoint:", id)
 

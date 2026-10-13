@@ -2,6 +2,8 @@ class_name PlayerCharacter
 extends CharacterBody3D
 
 const PlayerControls := preload("res://player/components/controls.gd")
+## Los botones de ítem (X, Y), en orden.
+const ITEM_ACTIONS: Array[StringName] = [&"item_1", &"item_2"]
 
 const SHIELD_THRUST: AttackData = preload("res://data/attacks/shield_thrust.tres")
 const SILHOUETTE := preload("res://src/feel/occluded_silhouette.gdshader")
@@ -90,7 +92,7 @@ func _ready() -> void:
 		GameState.set_ward_of(controls.slot, 0.0)
 		health.ward(ward)
 		Blessing.attach(self, health)
-	targeting.target_changed.connect(func(target: Node3D) -> void: movement_state.blackboard.set_var("target", target))
+	targeting.target_changed.connect(func(target: Node3D) -> void: movement_state.blackboard.set_var(PlayerState.BB_TARGET, target))
 	movement_state.initialize(self)
 	movement_state.set_active(true)
 	_block_cone.mesh = _block_cone_mesh()
@@ -163,8 +165,8 @@ func make_item_context() -> ItemUseContext:
 func begin_room_transition(direction: Vector3, duration: float) -> void:
 	if is_dead:
 		return
-	movement_state.blackboard.set_var("transition_dir", direction)
-	movement_state.blackboard.set_var("transition_time", duration)
+	movement_state.blackboard.set_var(PlayerState.BB_TRANSITION_DIR, direction)
+	movement_state.blackboard.set_var(PlayerState.BB_TRANSITION_TIME, duration)
 	movement_state.dispatch("transition")
 
 
@@ -180,7 +182,7 @@ func block_ahead(direction: Vector3) -> PushBlock:
 
 ## Lo llama un Liftable al interactuar: lo levanta sobre la cabeza.
 func lift(liftable: Liftable) -> void:
-	movement_state.blackboard.set_var("liftable", liftable)
+	movement_state.blackboard.set_var(PlayerState.BB_LIFTABLE, liftable)
 	movement_state.dispatch("lift")
 
 
@@ -204,8 +206,8 @@ func can_interact() -> bool:
 
 ## Lo llaman cofres y recompensas después de GameState.give().
 func play_item_get(item: ItemData, amount: int = 1) -> void:
-	movement_state.blackboard.set_var("got_item", item)
-	movement_state.blackboard.set_var("got_amount", amount)
+	movement_state.blackboard.set_var(PlayerState.BB_GOT_ITEM, item)
+	movement_state.blackboard.set_var(PlayerState.BB_GOT_AMOUNT, amount)
 	movement_state.dispatch("item_get")
 
 
@@ -218,13 +220,13 @@ func deny_item(button: int) -> void:
 func grab(grip: Node3D) -> bool:
 	if is_dead or health.is_invulnerable() or is_grabbed():
 		return false
-	movement_state.blackboard.set_var("grabbed_by", grip)
+	movement_state.blackboard.set_var(PlayerState.BB_GRABBED_BY, grip)
 	movement_state.dispatch("grabbed")
 	return is_grabbed()
 
 
 func release() -> void:
-	movement_state.blackboard.set_var("grabbed_by", null)
+	movement_state.blackboard.set_var(PlayerState.BB_GRABBED_BY, null)
 
 
 func is_grabbed() -> bool:
@@ -237,7 +239,7 @@ func blocks_from(point: Vector3) -> bool:
 
 
 func is_blocking() -> bool:
-	return movement_state.blackboard.get_var("is_blocking", false)
+	return movement_state.blackboard.get_var(PlayerState.BB_IS_BLOCKING, false)
 
 
 ## El ataque que toca según lo que tiene en la mano y si está bloqueando.
@@ -297,7 +299,7 @@ func _on_hit(info: DamageInfo) -> void:
 	if not health.damage(amount, info.unavoidable):
 		return
 	Log.info(&"combat", "El player recibió", amount, "de daño de", info.source.name if info.source else "?", "· Vida:", health.current)
-	movement_state.blackboard.set_var("last_hit", info)
+	movement_state.blackboard.set_var(PlayerState.BB_LAST_HIT, info)
 	Feel.shake(Feel.settings.shake_take, Vector3.ZERO, controls.joypads)
 	Feel.sfx(&"hurt", global_position)
 	Feel.hit_stop([self, info.source], Feel.settings.hit_stop_take)

@@ -59,7 +59,7 @@ func targets() -> Dictionary[StringName, float]:
 
 
 func current_doom() -> float:
-	var camera := get_tree().get_first_node_in_group(&"room_camera") as TopDownCamera
+	var camera := get_tree().get_first_node_in_group(TopDownCamera.GROUP) as TopDownCamera
 	return camera.room.doom if camera and camera.room else 0.0
 
 

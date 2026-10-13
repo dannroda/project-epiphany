@@ -33,7 +33,7 @@ func _update(delta: float) -> void:
 	player.move_and_slide()
 	if not can_cancel():
 		return
-	var input_dir: Vector2 = blackboard.get_var("input_dir", Vector2.ZERO)
+	var input_dir: Vector2 = blackboard.get_var(BB_INPUT_DIR, Vector2.ZERO)
 	if input_dir or (player.is_blocking() and _attack != player.SHIELD_THRUST):
 		dispatch("finished")
 
@@ -53,7 +53,7 @@ func _face_attack_direction() -> void:
 	if target and is_instance_valid(target):
 		direction = target.global_position - player.global_position
 	else:
-		var input: Vector2 = blackboard.get_var("input_dir", Vector2.ZERO)
+		var input: Vector2 = blackboard.get_var(BB_INPUT_DIR, Vector2.ZERO)
 		direction = Vector3(input.x, 0.0, input.y)
 	direction.y = 0.0
 	if not direction.is_zero_approx():

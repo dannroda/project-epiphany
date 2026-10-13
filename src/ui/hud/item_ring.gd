@@ -8,7 +8,6 @@ signal opened
 signal closed
 
 const SLOT := preload("res://src/ui/hud/ring_slot.tscn")
-const BUTTON_ACTIONS: Array[StringName] = [&"item_1", &"item_2"]
 
 @export var radius := 98.0
 @export var solo_time_scale := 0.05
@@ -70,8 +69,8 @@ func _process(_delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if not visible or not is_instance_valid(player):
 		return
-	for i in BUTTON_ACTIONS.size():
-		if event.is_action_pressed(player.controls.action(BUTTON_ACTIONS[i])):
+	for i in PlayerCharacter.ITEM_ACTIONS.size():
+		if event.is_action_pressed(player.controls.action(PlayerCharacter.ITEM_ACTIONS[i])):
 			get_viewport().set_input_as_handled()
 			_assign(i)
 
@@ -159,7 +158,7 @@ func _refresh() -> void:
 		var button := buttons.find(item.id)
 		badge.visible = button != -1
 		if badge.visible:
-			badge.texture = InputPrompts.icon_for(BUTTON_ACTIONS[button], player)
+			badge.texture = InputPrompts.icon_for(PlayerCharacter.ITEM_ACTIONS[button], player)
 		var owner_tag := slot.get_node(^"Owner") as PanelContainer
 		owner_tag.visible = taken
 		if taken:
@@ -175,8 +174,8 @@ func _refresh() -> void:
 		detail.text = "%d / %d" % [GameState.inventory.count(ammo.id), GameState.inventory.capacity(ammo.id)]
 	else:
 		detail.text = ""
-	hint_x.texture = InputPrompts.icon_for(BUTTON_ACTIONS[0], player)
-	hint_y.texture = InputPrompts.icon_for(BUTTON_ACTIONS[1], player)
+	hint_x.texture = InputPrompts.icon_for(PlayerCharacter.ITEM_ACTIONS[0], player)
+	hint_y.texture = InputPrompts.icon_for(PlayerCharacter.ITEM_ACTIONS[1], player)
 
 
 func _on_inventory_changed(_id: StringName, _count: int) -> void:

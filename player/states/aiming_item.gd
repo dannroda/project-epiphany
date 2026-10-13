@@ -3,7 +3,6 @@ extends PlayerState
 ## izquierdo apunta (OoT); fijado, la flecha va al objetivo y el stick izquierdo camina (strafe).
 
 const LOCKED_SPEED := 2.5
-const ITEM_ACTIONS: Array[StringName] = [&"item_1", &"item_2"]
 
 ## Lo mínimo que hay que mantener antes de que soltar dispare.
 @export var min_draw := 0.15
@@ -22,7 +21,7 @@ var _blend: Tween
 
 
 func _enter() -> void:
-	_button = blackboard.get_var("item_button", 0)
+	_button = blackboard.get_var(BB_ITEM_BUTTON, 0)
 	_item = GameState.item_for(GameState.buttons_of(player.controls.slot)[_button])
 	_elapsed = 0.0
 	_released_at = -1.0
@@ -46,7 +45,7 @@ func _update(delta: float) -> void:
 	if _released_at < 0.0:
 		if _elapsed >= _draw_length and player.anim_tree.get(&"parameters/BowPhase/current_state") == "Draw":
 			player.anim_tree.set(&"parameters/BowPhase/transition_request", "Idle")
-		if _elapsed >= min_draw and not player.controls.pressed(ITEM_ACTIONS[_button]):
+		if _elapsed >= min_draw and not player.controls.pressed(PlayerCharacter.ITEM_ACTIONS[_button]):
 			_release()
 	elif _elapsed - _released_at >= release_time:
 		dispatch("finished")
@@ -82,7 +81,7 @@ func _move() -> void:
 	player.aim.move_aims = not locked
 	set_locked_legs(locked)
 	if locked:
-		move_locked(blackboard.get_var("input_dir", Vector2.ZERO), LOCKED_SPEED, target, false)
+		move_locked(blackboard.get_var(BB_INPUT_DIR, Vector2.ZERO), LOCKED_SPEED, target, false)
 	else:
 		player.velocity.x = 0.0
 		player.velocity.z = 0.0

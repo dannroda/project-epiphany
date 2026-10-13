@@ -1,7 +1,10 @@
+class_name Hud
 extends CanvasLayer
 ## HUD del juego: un panel por player (corazones, slots X/Y, prompt), llaves (solo en mazmorra) y la barra del
 ## jefe (mockup HUD_Boss). Jugando solo, el panel de siempre; en co-op uno compacto por player en cada esquina de
 ## arriba (mockup HUD_Coop), con las llaves compartidas al medio.
+
+const GROUP := &"hud"
 
 @export var solo_panel: PackedScene
 @export var coop_panel: PackedScene
@@ -43,7 +46,7 @@ var _boss_tween: Tween
 
 
 func _ready() -> void:
-	add_to_group(&"hud")
+	add_to_group(GROUP)
 	SaveManager.saved.connect(func(_slot: int) -> void: _flash_saved())
 	GameState.dungeon_changed.connect(_bind_dungeon)
 	GameState.loaded.connect(_bind_dungeon)

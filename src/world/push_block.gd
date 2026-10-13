@@ -79,7 +79,7 @@ func can_move(direction: Vector3) -> bool:
 
 
 func in_doorway(target: Vector3) -> bool:
-	return get_tree().get_nodes_in_group(&"doors").any(func(door: Node3D) -> bool:
+	return get_tree().get_nodes_in_group(Door.GROUP).any(func(door: Node3D) -> bool:
 		return Vector2(door.global_position.x - target.x, door.global_position.z - target.z).length() < CELL * 0.75)
 
 

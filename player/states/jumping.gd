@@ -26,14 +26,14 @@ var _long := false
 func _enter() -> void:
 	player.attack_runner.stop()
 	if player.is_blocking():
-		blackboard.set_var("is_blocking", false)
+		blackboard.set_var(BB_IS_BLOCKING, false)
 		player.set_guard(false)
 	_elapsed = 0.0
 	_left_floor = false
 	_start_y = player.global_position.y
-	var long_jump: Array = blackboard.get_var("long_jump", [])
+	var long_jump: Array = blackboard.get_var(BB_LONG_JUMP, [])
 	_long = not long_jump.is_empty() and long_jump[1] == Engine.get_physics_frames()
-	blackboard.set_var("long_jump", [])
+	blackboard.set_var(BB_LONG_JUMP, [])
 	_velocity = long_jump[0] * long_jump_speed if _long else _wanted()
 	if not _velocity.is_zero_approx():
 		player.model.look_at(player.model.global_position - _velocity, Vector3.UP)
@@ -74,7 +74,7 @@ func airborne_height() -> float:
 
 
 func _wanted() -> Vector3:
-	var input: Vector2 = blackboard.get_var("input_dir", Vector2.ZERO)
+	var input: Vector2 = blackboard.get_var(BB_INPUT_DIR, Vector2.ZERO)
 	return Vector3(input.x, 0.0, input.y).limit_length(1.0) * speed
 
 

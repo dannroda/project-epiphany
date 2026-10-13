@@ -4,6 +4,14 @@ extends Resource
 
 enum User { HAND, EYE }
 
+## Los `id` que usa el código; cada data/boss/attack_*.tres lleva uno de estos (test_boss lo revisa).
+const SLAM := &"slam"
+const GRAB := &"grab"
+const SWEEP := &"sweep"
+const ORB := &"orb"
+const MARK := &"mark"
+const IDS: Array[StringName] = [SLAM, GRAB, SWEEP, ORB, MARK]
+
 @export var id: StringName
 @export var user := User.HAND
 ## Fases en las que se puede elegir.

@@ -120,11 +120,11 @@ func _restore() -> void:
 
 
 func _game_camera() -> Camera3D:
-	return get_tree().get_first_node_in_group(&"room_camera") as Camera3D
+	return get_tree().get_first_node_in_group(TopDownCamera.GROUP) as Camera3D
 
 
 func _set_gameplay(on: bool) -> void:
 	for each in Players.all:
 		each.controls.captured = not on
-	for hud in get_tree().get_nodes_in_group(&"hud"):
+	for hud in get_tree().get_nodes_in_group(Hud.GROUP):
 		hud.visible = on

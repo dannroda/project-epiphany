@@ -4,6 +4,21 @@ extends LimboState
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 const ROTATION_SPEED = 10
+## Claves del blackboard de la máquina de estados del player.
+const BB_TARGET := &"target"
+const BB_IS_BLOCKING := &"is_blocking"
+const BB_INPUT_DIR := &"input_dir"
+const BB_ITEM_BUTTON := &"item_button"
+const BB_GRABBED_BY := &"grabbed_by"
+const BB_LONG_JUMP := &"long_jump"
+const BB_TRANSITION_TIME := &"transition_time"
+const BB_TRANSITION_DIR := &"transition_dir"
+const BB_PUSH_DIR := &"push_dir"
+const BB_PUSH_BLOCK := &"push_block"
+const BB_LIFTABLE := &"liftable"
+const BB_LAST_HIT := &"last_hit"
+const BB_GOT_ITEM := &"got_item"
+const BB_GOT_AMOUNT := &"got_amount"
 
 var velocity:Vector3 :
 	get:

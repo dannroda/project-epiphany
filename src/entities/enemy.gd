@@ -1,10 +1,16 @@
 class_name Enemy
 extends CharacterBody3D
 
+const GROUP := &"enemies"
 const ARMOR_PIECE := preload("res://src/entities/armor_piece.tscn")
 const KNOCKBACK_FRICTION: float = 18.0
 const KNOCKBACK_LIFT: float = 4.0
 const DEAD_COLLISION_LAYER: int = 4
+## Claves del blackboard que leen los árboles de comportamiento (BTCheckVar en los .tres).
+const BB_IS_HIT := &"is_hit"
+const BB_IS_DEAD := &"is_dead"
+const BB_STUNNED := &"stunned"
+const BB_TARGET := &"target"
 
 signal defeated(enemy: Enemy)
 
@@ -41,7 +47,7 @@ func _ready() -> void:
 	config.apply_to(self)
 	if config.model:
 		_swap_model(config.model)
-	add_to_group(&"enemies")
+	add_to_group(GROUP)
 	_register_monitors()
 	health.max_health = config.max_health
 	health.current = config.max_health
@@ -60,10 +66,10 @@ func _ready() -> void:
 		flash.cover(held)
 	health.damaged.connect(_on_damaged)
 	health.died.connect(_on_died)
-	bt_player.blackboard.set_var("is_hit", false)
-	bt_player.blackboard.set_var("is_dead", false)
-	bt_player.blackboard.set_var("stunned", false)
-	bt_player.blackboard.set_var("target", null)
+	bt_player.blackboard.set_var(BB_IS_HIT, false)
+	bt_player.blackboard.set_var(BB_IS_DEAD, false)
+	bt_player.blackboard.set_var(BB_STUNNED, false)
+	bt_player.blackboard.set_var(BB_TARGET, null)
 	for body in model.find_children("*", "StaticBody3D", true, false):
 		for shape in body.find_children("*", "CollisionShape3D", true, false):
 			(shape as CollisionShape3D).disabled = true
@@ -195,7 +201,7 @@ func _break_armor() -> void:
 	_armor = null
 	Feel.burst(&"shards", global_position + Vector3.UP * 1.3, Vector3.UP)
 	Feel.sfx(&"boom", global_position)
-	bt_player.blackboard.set_var("stunned", true)
+	bt_player.blackboard.set_var(BB_STUNNED, true)
 	Log.debug(&"combat", name, "perdió la coraza")
 
 
@@ -222,7 +228,7 @@ func _on_hit(info: DamageInfo) -> void:
 		return
 	Log.info(&"combat", name, "recibió", info.amount, "de daño. Vida:", health.current)
 	if info.stun_time > 0.0 and not is_dead:
-		bt_player.blackboard.set_var("stunned", true)
+		bt_player.blackboard.set_var(BB_STUNNED, true)
 		Log.debug(&"combat", name, "quedó aturdido")
 	if info.source == null:
 		return
@@ -240,7 +246,7 @@ func _on_hit(info: DamageInfo) -> void:
 func _on_damaged(_amount: int) -> void:
 	if is_dead:
 		return
-	bt_player.blackboard.set_var("is_hit", true)
+	bt_player.blackboard.set_var(BB_IS_HIT, true)
 	bt_player.restart()
 
 
@@ -251,7 +257,7 @@ func _on_died() -> void:
 	stop_moving()
 	hurtbox.set_deferred(&"monitorable", false)
 	defeated.emit(self)
-	bt_player.blackboard.set_var("is_dead", true)
+	bt_player.blackboard.set_var(BB_IS_DEAD, true)
 	bt_player.restart()
 
 
@@ -280,4 +286,4 @@ static func _register_monitors() -> void:
 		return
 	Performance.add_custom_monitor("epiphany/enemies_alive", func() -> int:
 		var tree := Engine.get_main_loop() as SceneTree
-		return tree.get_nodes_in_group(&"enemies").filter(func(e: Node) -> bool: return e is Enemy and not e.is_dead).size())
+		return tree.get_nodes_in_group(GROUP).filter(func(e: Node) -> bool: return e is Enemy and not e.is_dead).size())

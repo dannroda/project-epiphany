@@ -4,7 +4,6 @@ extends PlayerState
 ## Hurtbox decide (los árboles y muros agrietados se sacuden). Con la pluma en plena carrera, salto largo (Jumping).
 
 const ELEMENT := &"dash"
-const Machine := preload("res://player/state_machine.gd")
 
 @export var windup := 0.5
 @export var speed := 9.5
@@ -26,12 +25,12 @@ var _button := &""
 func _enter() -> void:
 	player.attack_runner.stop()
 	if player.is_blocking():
-		blackboard.set_var("is_blocking", false)
+		blackboard.set_var(BB_IS_BLOCKING, false)
 		player.set_guard(false)
 	_phase = Phase.WINDUP
 	_elapsed = 0.0
 	_dust = 0.0
-	_button = Machine.ITEM_ACTIONS[blackboard.get_var("item_button", 0)]
+	_button = PlayerCharacter.ITEM_ACTIONS[blackboard.get_var(BB_ITEM_BUTTON, 0)]
 	_direction = player.model.global_basis.z
 	_direction.y = 0.0
 	_direction = _direction.normalized()
@@ -72,7 +71,7 @@ func _update(delta: float) -> void:
 
 func _exit() -> void:
 	if _phase == Phase.RUN:
-		blackboard.set_var("long_jump", [_direction, Engine.get_physics_frames()])
+		blackboard.set_var(BB_LONG_JUMP, [_direction, Engine.get_physics_frames()])
 
 
 func running() -> bool:
@@ -80,7 +79,7 @@ func running() -> bool:
 
 
 func _aim() -> void:
-	var input: Vector2 = blackboard.get_var("input_dir", Vector2.ZERO)
+	var input: Vector2 = blackboard.get_var(BB_INPUT_DIR, Vector2.ZERO)
 	if input.length() > 0.3:
 		_direction = Vector3(input.x, 0.0, input.y).normalized()
 	player.model.look_at(player.model.global_position - _direction, Vector3.UP)

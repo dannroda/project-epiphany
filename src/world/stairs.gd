@@ -30,8 +30,8 @@ func _climb(crosser: PlayerCharacter) -> void:
 			i += 1
 		player.global_position = to.global_position + spot
 		player.velocity = Vector3.ZERO
-	get_tree().call_group(&"room_camera", &"reset_room")
+	get_tree().call_group(TopDownCamera.GROUP, &"reset_room")
 	await get_tree().physics_frame
-	get_tree().call_group(&"room_camera", &"snap_to_target")
+	get_tree().call_group(TopDownCamera.GROUP, &"snap_to_target")
 	await SceneFlow.fade_in(fade_time)
 	_busy = false

@@ -24,7 +24,7 @@ func _ready() -> void:
 			var same_region := _current != null and _current.display_name == display_name
 			_current = self
 			if not display_name.is_empty() and not same_region:
-				get_tree().call_group(&"hud", &"show_area_name", tr(display_name)))
+				get_tree().call_group(Hud.GROUP, &"show_area_name", tr(display_name)))
 
 
 ## Si el punto (en XZ) cae dentro de la zona.

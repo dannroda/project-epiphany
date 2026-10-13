@@ -314,7 +314,7 @@ msgid "ITEMS_KIND"
 msgstr "Ítem"
 
 msgid "ITEMS_ASSIGNED"
-msgstr "Asignado a {button}"
+msgstr "Asignado"
 
 msgid "ITEMS_COOP_TITLE"
 msgstr "CADA UNO CON SU X E Y"
@@ -326,7 +326,7 @@ msgid "ITEMS_COOP_RING_HINT"
 msgstr "Para cambiar los tuyos, mantené LB jugando (anillo de ítems)."
 
 msgid "ITEMS_ASSIGN"
-msgstr "Asignar a {button}"
+msgstr "Asignar"
 
 msgid "MAP_TITLE_DUNGEON"
 msgstr "Mazmorra"

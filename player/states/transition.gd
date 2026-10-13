@@ -9,8 +9,8 @@ var _elapsed := 0.0
 
 
 func _enter() -> void:
-	_direction = blackboard.get_var("transition_dir", Vector3.FORWARD)
-	_duration = blackboard.get_var("transition_time", 0.5)
+	_direction = blackboard.get_var(BB_TRANSITION_DIR, Vector3.FORWARD)
+	_duration = blackboard.get_var(BB_TRANSITION_TIME, 0.5)
 	_elapsed = 0.0
 	player.attack_runner.stop()
 	player.input_buffer.clear()

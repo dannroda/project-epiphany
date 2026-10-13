@@ -39,7 +39,7 @@ func _ready() -> void:
 	hand.health.changed.connect(func(_current: int, _max_value: int) -> void: health_changed.emit())
 	hand.downed.connect(func() -> void:
 		_turn += 1
-		remove_from_group(&"enemies")
+		remove_from_group(Enemy.GROUP)
 		defeated.emit(self))
 
 
@@ -47,14 +47,14 @@ func start() -> void:
 	if _running or is_dead:
 		return
 	_running = true
-	add_to_group(&"enemies")
+	add_to_group(Enemy.GROUP)
 	_run()
 
 
 func reset() -> void:
 	_turn += 1
 	_running = false
-	remove_from_group(&"enemies")
+	remove_from_group(Enemy.GROUP)
 	hand.regenerate()
 
 
