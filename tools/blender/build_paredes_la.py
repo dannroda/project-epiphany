@@ -9,7 +9,7 @@ import os
 import random
 import sys
 
-from mathutils import Vector, noise
+from mathutils import Matrix, Vector, noise
 
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -383,5 +383,82 @@ for code in shapes.get("muro", []):
 for kind in ("paso", "sube", "baja"):
 	for code in shapes[kind]:
 		piece(kind, code, kind)
+## Hojas de puerta del alto de la pared, para el corte del paso (2 HALF de ancho); el frente mira a -Y y el código la
+## inclina como la cara de la pared de cada sala.
+DOOR_WIDTH = HALF + 0.03
+DOOR_THICK = 0.15
+DOOR_PLANKS = 4
+
+
+def door_leaf(p, wood, bands=(0.55, 2.45)):
+	planks = []
+	w = 2 * DOOR_WIDTH / DOOR_PLANKS
+	for k in range(DOOR_PLANKS):
+		x0 = -DOOR_WIDTH + k * w
+		faces = p.rounded_box(x0 + 0.012, x0 + w - 0.012, -DOOR_THICK, DOOR_THICK, 0.0, HEIGHT - 0.02 * (k % 2), radius=0.03, segments=1)
+		p.paint(faces, wood, z_range=(-1.0 - 0.6 * (k % 3), HEIGHT + 1.5), vary=0.03)
+		planks += faces
+	iron = []
+	for z in bands:
+		iron += p.rounded_box(-DOOR_WIDTH - 0.01, DOOR_WIDTH + 0.01, -DOOR_THICK - 0.04, -DOOR_THICK + 0.01, z - 0.09, z + 0.09, radius=0.02, segments=1)
+		for x in (-DOOR_WIDTH + 0.12, DOOR_WIDTH - 0.12):
+			stud = p.cylinder(0.045, 0.0, 0.035, sides=8)
+			p.transform(stud, Matrix.Translation((x, -DOOR_THICK - 0.04, z)) @ Matrix.Rotation(math.pi / 2, 4, "X"))
+			iron += stud
+	p.paint(iron, "hierro", "DARK", vary=0.03)
+
+
+def lock_plate(p, z, size, metal):
+	plate = p.rounded_box(-size * 0.55, size * 0.55, -DOOR_THICK - 0.07, -DOOR_THICK + 0.01, z - size * 0.75, z + size * 0.75, radius=0.04, segments=1)
+	p.paint(plate, metal, "MID", vary=0.03)
+	hole = p.cylinder(size * 0.17, 0.0, 0.02, sides=12)
+	slot = p.box(-size * 0.07, size * 0.07, -0.01, 0.01, -size * 0.45, 0.0)
+	p.transform(hole, Matrix.Translation((0, -DOOR_THICK - 0.07, z + size * 0.12)) @ Matrix.Rotation(math.pi / 2, 4, "X"))
+	p.transform(slot, Matrix.Translation((0, -DOOR_THICK - 0.075, z + size * 0.12)))
+	p.paint(hole + slot, "noche", "MID")
+
+
+def door(name, seed, fn):
+	p = epi.Piece(seed)
+	fn(p)
+	p.build("puerta_%s_la" % name, kit, smooth=35)
+
+
+def door_switch(p):
+	door_leaf(p, "madera_oscura")
+	emblem = epi.eye(p, Vector((0, -DOOR_THICK - 0.01, 1.5)), 0.42, depth=0.05, pupil_swatch="noche")
+	p.paint(emblem, "sello", "LIGHT")
+
+
+def door_boss(p):
+	door_leaf(p, "madera_oscura", bands=(0.4, 2.6))
+	frame = []
+	for x0, x1, z0, z1 in ((-DOOR_WIDTH, DOOR_WIDTH, HEIGHT - 0.16, HEIGHT), (-DOOR_WIDTH, -DOOR_WIDTH + 0.14, 0.0, HEIGHT), (DOOR_WIDTH - 0.14, DOOR_WIDTH, 0.0, HEIGHT)):
+		frame += p.rounded_box(x0, x1, -DOOR_THICK - 0.06, -DOOR_THICK + 0.01, z0, z1, radius=0.03, segments=1)
+	p.paint(frame, "dorado", "MID", vary=0.03)
+	emblem = epi.eye(p, Vector((0, -DOOR_THICK - 0.01, 2.05)), 0.4, depth=0.05, pupil_swatch="noche")
+	p.paint(emblem, "doom", "MID")
+	lock_plate(p, 1.15, 0.6, "dorado")
+
+
+def door_shutter(p):
+	slats = []
+	n = 9
+	for k in range(n):
+		z0 = HEIGHT * k / n
+		slats += p.rounded_box(-DOOR_WIDTH, DOOR_WIDTH, -DOOR_THICK - 0.03 * (k % 2), DOOR_THICK, z0 + 0.015, z0 + HEIGHT / n - 0.015, radius=0.03, segments=1)
+	p.paint(slats, "madera_oscura", z_range=(-1.0, HEIGHT + 1.0), vary=0.04)
+	posts = []
+	for x in (-DOOR_WIDTH + 0.1, DOOR_WIDTH - 0.1):
+		posts += p.rounded_box(x - 0.06, x + 0.06, -DOOR_THICK - 0.08, -DOOR_THICK, 0.0, HEIGHT, radius=0.02, segments=1)
+	p.paint(posts, "hierro", "DARK", vary=0.03)
+
+
+door("madera", 61, lambda p: door_leaf(p, "madera"))
+door("llave", 62, lambda p: (door_leaf(p, "madera_oscura"), lock_plate(p, 1.3, 0.5, "hierro")))
+door("jefe", 63, door_boss)
+door("interruptor", 64, door_switch)
+door("persiana", 65, door_shutter)
+
 epi.layout(kit, columns=6, spacing=3.0)
 epi.publish("paredes_la")

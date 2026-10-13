@@ -15,10 +15,9 @@
 [ext_resource type="PackedScene" path="res://src/world/stairs.tscn" id="13_52yo1"]
 [ext_resource type="Script" path="res://src/world/door.gd" id="13_crkrm"]
 [ext_resource type="Material" path="res://src/world/look/marca_visible.tres" id="14_ht767"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo/puerta_madera.res" id="14_j20n3"]
 [ext_resource type="Texture2D" path="res://assets/ui/lock.svg" id="15_ht767"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_jefe_la.res" id="15_j20n3"]
 [ext_resource type="PackedScene" path="res://src/world/wall_torch.tscn" id="15_mw81a"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo/puerta_jefe.res" id="16_iyg24"]
 [ext_resource type="Script" path="res://src/components/interactable.gd" id="16_mo6ti"]
 [ext_resource type="Resource" path="res://data/items/feather.tres" id="16_syx8m"]
 [ext_resource type="PackedScene" path="res://src/world/floor_switch.tscn" id="17_rjinf"]
@@ -34,12 +33,13 @@
 [ext_resource type="PackedScene" path="res://src/world/heart_piece.tscn" id="26_ht767"]
 [ext_resource type="Script" path="res://src/world/floor_switch.gd" id="27_iuiyr"]
 [ext_resource type="Script" path="res://src/world/breakable.gd" id="29_86iea"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_interruptor_la.res" id="29_ht767"]
 [ext_resource type="Resource" path="res://data/drops/pot.tres" id="30_4g78b"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo/puerta_interruptor.res" id="30_e541c"]
 [ext_resource type="PackedScene" path="res://src/entities/enemy.tscn" id="30_gc68l"]
 [ext_resource type="Script" path="res://src/world/cracked_wall.gd" id="33_3iwqa"]
 [ext_resource type="PackedScene" path="res://player/player.tscn" id="33_iuiyr"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo/puerta_llave.res" id="35_gc68l"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_llave_la.res" id="34_mo6ti"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_madera_la.res" id="35_iyg24"]
 [ext_resource type="Script" path="res://src/world/big_pot.gd" id="35_q5kf3"]
 [ext_resource type="Script" path="res://src/world/spawn_point.gd" id="36_3iwqa"]
 [ext_resource type="Script" path="res://src/world/portal.gd" id="37_q5kf3"]
@@ -903,20 +903,22 @@ script = ExtResource("13_crkrm")
 kind = 4
 flag = &"ch_boss_door"
 depth = 4.0
+leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_la.res"
+sink = 3.2
 
 [node name="Leaf" parent="Sotano/BossDoor" index="0"]
 unique_name_in_owner = true
 
 [node name="LeafMesh" parent="Sotano/BossDoor/Leaf" index="0"]
 unique_name_in_owner = true
-transform = Transform3D(0.7, 0, 0, 0, 0.8, 0, 0, 0, 1, 0, 0, 1.742)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.75)
 material_overlay = ExtResource("14_ht767")
-mesh = ExtResource("14_j20n3")
+mesh = ExtResource("15_j20n3")
 
 [node name="LeafBackLA" type="MeshInstance3D" parent="Sotano/BossDoor/Leaf" index="1" unique_id=133905942]
-transform = Transform3D(-0.7, 0, -6.119594e-08, 0, 0.8, 0, 8.742278e-08, 0, -1, 0, 0, -1.742)
+transform = Transform3D(-1, 1.4570463e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.16666667, -1, -1.5298986e-07, 0, -1.75)
 material_overlay = ExtResource("14_ht767")
-mesh = ExtResource("16_iyg24")
+mesh = ExtResource("15_j20n3")
 
 [node name="SouthMark" parent="Sotano/BossDoor" index="1"]
 unique_name_in_owner = true
@@ -1402,20 +1404,22 @@ script = ExtResource("13_crkrm")
 kind = 3
 switches = Array[NodePath]([NodePath("../OsarioSwitch")])
 depth = 4.0
+leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_la.res"
+sink = 3.2
 
 [node name="Leaf" parent="PlantaBaja/OsarioDoor" index="0"]
 unique_name_in_owner = true
 
 [node name="LeafMesh" parent="PlantaBaja/OsarioDoor/Leaf" index="0"]
 unique_name_in_owner = true
-transform = Transform3D(0.7, 0, 0, 0, 0.8, 0, 0, 0, 1, 0, 0, 1.808)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.75)
 material_overlay = ExtResource("14_ht767")
-mesh = ExtResource("14_j20n3")
+mesh = ExtResource("29_ht767")
 
 [node name="LeafBackLA" type="MeshInstance3D" parent="PlantaBaja/OsarioDoor/Leaf" index="1" unique_id=934705364]
-transform = Transform3D(-0.7, 0, -6.119594e-08, 0, 0.8, 0, 8.742278e-08, 0, -1, 0, 0, -1.808)
+transform = Transform3D(-1, 4.0797296e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.46666667, -1, -1.5298986e-07, 0, -1.75)
 material_overlay = ExtResource("14_ht767")
-mesh = ExtResource("30_e541c")
+mesh = ExtResource("29_ht767")
 
 [node name="SouthMark" parent="PlantaBaja/OsarioDoor" index="1"]
 unique_name_in_owner = true
@@ -1903,20 +1907,22 @@ script = ExtResource("13_crkrm")
 kind = 1
 flag = &"ch_leaps_locked_door"
 depth = 4.0
+leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_la.res"
+sink = 3.2
 
 [node name="Leaf" parent="PisoAlto/SaltosLocked" index="0"]
 unique_name_in_owner = true
 
 [node name="LeafMesh" parent="PisoAlto/SaltosLocked/Leaf" index="0"]
 unique_name_in_owner = true
-transform = Transform3D(0.7, 0, 0, 0, 0.8, 0, 0, 0, 1, 0, 0, 1.78)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.76)
 material_overlay = ExtResource("14_ht767")
-mesh = ExtResource("14_j20n3")
+mesh = ExtResource("34_mo6ti")
 
 [node name="LeafBackLA" type="MeshInstance3D" parent="PisoAlto/SaltosLocked/Leaf" index="1" unique_id=1944795030]
-transform = Transform3D(-0.7, 0, -6.119594e-08, 0, 0.8, 0, 8.742278e-08, 0, -1, 0, 0, -1.78)
+transform = Transform3D(-1, 4.0797296e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.46666667, -1, -1.538641e-07, 0, -1.76)
 material_overlay = ExtResource("14_ht767")
-mesh = ExtResource("35_gc68l")
+mesh = ExtResource("34_mo6ti")
 
 [node name="SouthMark" parent="PisoAlto/SaltosLocked" index="1"]
 unique_name_in_owner = true
@@ -1949,20 +1955,22 @@ script = ExtResource("13_crkrm")
 kind = 3
 switches = Array[NodePath]([NodePath("../RellanoWeight"), NodePath("../RellanoStep")])
 depth = 4.0
+leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_la.res"
+sink = 3.2
 
 [node name="Leaf" parent="PisoAlto/AgrietadaDoor" index="0"]
 unique_name_in_owner = true
 
 [node name="LeafMesh" parent="PisoAlto/AgrietadaDoor/Leaf" index="0"]
 unique_name_in_owner = true
-transform = Transform3D(0.7, 0, 0, 0, 0.8, 0, 0, 0, 1, 0, 0, 1.808)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.75)
 material_overlay = ExtResource("14_ht767")
-mesh = ExtResource("14_j20n3")
+mesh = ExtResource("29_ht767")
 
 [node name="LeafBackLA" type="MeshInstance3D" parent="PisoAlto/AgrietadaDoor/Leaf" index="1" unique_id=1636819224]
-transform = Transform3D(-0.7, 0, -6.119594e-08, 0, 0.8, 0, 8.742278e-08, 0, -1, 0, 0, -1.808)
+transform = Transform3D(-1, 1.4570463e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.16666667, -1, -1.5298986e-07, 0, -1.75)
 material_overlay = ExtResource("14_ht767")
-mesh = ExtResource("30_e541c")
+mesh = ExtResource("29_ht767")
 
 [node name="SouthMark" parent="PisoAlto/AgrietadaDoor" index="1"]
 unique_name_in_owner = true
@@ -1993,20 +2001,22 @@ script = ExtResource("41_pflag")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 19)
 script = ExtResource("13_crkrm")
 depth = 4.0
+leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_la.res"
+sink = 3.2
 
 [node name="Leaf" parent="PisoAlto/MiradorDoor" index="0"]
 unique_name_in_owner = true
 
 [node name="LeafMesh" parent="PisoAlto/MiradorDoor/Leaf" index="0"]
 unique_name_in_owner = true
-transform = Transform3D(0.7, 0, 0, 0, 0.8, 0, 0, 0, 1, 0, 0, 1.81)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.775)
 material_overlay = ExtResource("14_ht767")
-mesh = ExtResource("14_j20n3")
+mesh = ExtResource("35_iyg24")
 
 [node name="LeafBackLA" type="MeshInstance3D" parent="PisoAlto/MiradorDoor/Leaf" index="1" unique_id=1021151656]
-transform = Transform3D(-0.7, 0, -6.119594e-08, 0, 0.8, 0, 8.742278e-08, 0, -1, 0, 0, -1.81)
+transform = Transform3D(-1, 4.0797296e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.46666667, -1, -1.5517543e-07, 0, -1.775)
 material_overlay = ExtResource("14_ht767")
-mesh = ExtResource("14_j20n3")
+mesh = ExtResource("35_iyg24")
 
 [node name="SouthMark" parent="PisoAlto/MiradorDoor" index="1"]
 unique_name_in_owner = true

@@ -46,6 +46,9 @@ const BOSS_TINT := Color(1.0, 0.45, 0.4)
 @export var open_time := 0.5
 ## Fondo del paso en el que está: la colisión lo cubre entero; la hoja es una sola, en el medio.
 @export var depth := 0.0
+## Ruta de las hojas (con %s el nombre de LEAVES) y cuánto bajan al abrirse.
+@export var leaf_meshes := LEAF_MESH
+@export var sink := 2.5
 
 @onready var leaf: Node3D = %Leaf
 @onready var shape: CollisionShape3D = $CollisionShape3D
@@ -70,7 +73,7 @@ func _ready() -> void:
 		return
 	add_to_group(&"doors")
 	_closed_y = leaf.position.y
-	%LeafMesh.mesh = load(LEAF_MESH % LEAVES[kind])
+	%LeafMesh.mesh = load(leaf_meshes % LEAVES[kind])
 	_fill_depth()
 	interactable.enabled = false
 	match kind:
@@ -153,7 +156,7 @@ func open(animate: bool = true) -> void:
 	if is_open:
 		return
 	is_open = true
-	_move_leaf(_closed_y - 2.5, animate, true)
+	_move_leaf(_closed_y - sink, animate, true)
 	_update_south_mark()
 	opened.emit()
 

@@ -65,10 +65,9 @@ const FIRE_RANGE := 4.0
 const FLAME := preload("res://src/world/look/llama_la.gdshader")
 const GLOSS := preload("res://src/world/look/brillo_la.gd")
 const FLAME_SIZE := Vector2(0.45, 0.8)
-const DOOR_LEAF_SCALE := Vector3(0.7, 0.8, 1.0)
 ## Largo del pasillo de una puerta entre dos salas (las dos paredes de 2 m).
 const DOOR_PASSAGE := 4.0
-const LEAF_MESHES := "res://assets/epiphany/meshes/templo/%s.res"
+const DOOR_LEAVES := "res://assets/epiphany/meshes/paredes_la/%s_la.res"
 ## Cámara con perspectiva como LA: la sala se ve en trapecio (abajo más ancha) y asoman las caras de los costados.
 ## La cámara de LA, calibrada en el visor de LA contra capturas: 65° sobre el horizonte, 28° de campo, a 23 m. La sala
 ## es más grande que la pantalla y la cámara se mueve adentro.
@@ -446,25 +445,30 @@ func _shapes(grid: GridMap) -> Dictionary:
 	return out
 
 
-## La puerta llena el pasillo de la pared doble: la colisión lo cubre entero y la hoja está al ras de la pared de cada
-## sala (una por lado, la de atrás girada).
+## La puerta llena el pasillo de la pared doble: la colisión lo cubre entero y hay una hoja LA del alto de la pared en la
+## cara de cada sala (la de atrás girada), inclinada como esa pared.
 func _door(level: Node, door: Node) -> void:
 	door.set("depth", DOOR_PASSAGE)
-	var front := door.get_node("Leaf/LeafMesh") as MeshInstance3D
-	front.scale = DOOR_LEAF_SCALE
+	door.set("leaf_meshes", DOOR_LEAVES)
+	door.set("sink", WALL_HEIGHT + 0.2)
 	var leaves: Dictionary = door.get_script().get_script_constant_map()["LEAVES"]
-	var mesh: Mesh = load(LEAF_MESHES % leaves[door.get("kind")])
+	var mesh: Mesh = load(DOOR_LEAVES % leaves[door.get("kind")])
 	var face := DOOR_PASSAGE / 2.0 - mesh.get_aabb().end.z
-	front.position = Vector3(0, 0, face)
+	var front := door.get_node("Leaf/LeafMesh") as MeshInstance3D
 	var back := door.get_node_or_null("Leaf/LeafBackLA") as MeshInstance3D
 	if back == null:
 		back = MeshInstance3D.new()
 		back.name = "LeafBackLA"
 		door.get_node("Leaf").add_child(back)
 		back.owner = level
-	back.mesh = mesh
 	back.material_overlay = front.material_overlay
-	back.transform = Transform3D(Basis(Vector3.UP, PI).scaled(DOOR_LEAF_SCALE), Vector3(0, 0, -face))
+	for leaf: MeshInstance3D in [front, back]:
+		var turn := Basis() if leaf == front else Basis(Vector3.UP, PI)
+		var out := ((door as Node3D).transform.basis * turn * Vector3.BACK).normalized()
+		var side := "s" if out.z > 0.5 else "n" if out.z < -0.5 else "e" if out.x > 0.5 else "o"
+		var lean := Basis(Vector3.RIGHT, Vector3(0, 1, -WALL_RUN[side] / WALL_HEIGHT), Vector3.BACK)
+		leaf.mesh = mesh
+		leaf.transform = Transform3D(turn * lean, turn * Vector3(0, 0, face))
 	level.set_editable_instance(door, true)
 
 
