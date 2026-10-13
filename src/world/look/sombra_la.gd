@@ -9,6 +9,8 @@ var rd: RenderingDevice
 var sh_ao: RID
 var sh_blur: RID
 var sh_mul: RID
+var sh_box: RID
+var p_box: RID
 var p_ao: RID
 var p_blur: RID
 var p_mul: RID
@@ -85,6 +87,28 @@ void main() {
 }
 """
 
+## Promedio 4x4 del AO crudo: cancela justo las 16 rotaciones intercaladas (si no, queda un damero en los degradés).
+const BOX_SRC := """
+#version 450
+layout(local_size_x = 8, local_size_y = 8) in;
+layout(set = 0, binding = 0) uniform sampler2D src;
+layout(r16f, set = 0, binding = 1) uniform writeonly image2D dst;
+layout(push_constant, std430) uniform P {
+	vec2 size;
+	vec2 pad;
+} p;
+void main() {
+	ivec2 px = ivec2(gl_GlobalInvocationID.xy);
+	if (px.x >= int(p.size.x) || px.y >= int(p.size.y)) return;
+	ivec2 hi = ivec2(p.size) - 1;
+	float s = 0.0;
+	for (int j = -2; j < 2; j++)
+		for (int i = -2; i < 2; i++)
+			s += texelFetch(src, clamp(px + ivec2(i, j), ivec2(0), hi), 0).r;
+	imageStore(dst, px, vec4(s / 16.0));
+}
+"""
+
 const MUL_SRC := """
 #version 450
 layout(local_size_x = 8, local_size_y = 8) in;
@@ -116,7 +140,7 @@ func _init() -> void:
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE and rd:
-		for r in tex.values() + [sh_ao, sh_blur, sh_mul, sampler_nearest, sampler_linear]:
+		for r in tex.values() + [sh_ao, sh_blur, sh_mul, sh_box, sampler_nearest, sampler_linear]:
 			if r.is_valid(): rd.free_rid(r)
 
 
@@ -134,12 +158,13 @@ func _compile(src: String) -> RID:
 func _init_shaders() -> void:
 	if not rd:
 		return
-	sh_ao = _compile(AO_SRC); sh_blur = _compile(BLUR_SRC); sh_mul = _compile(MUL_SRC)
-	if not (sh_ao.is_valid() and sh_blur.is_valid() and sh_mul.is_valid()):
+	sh_ao = _compile(AO_SRC); sh_blur = _compile(BLUR_SRC); sh_mul = _compile(MUL_SRC); sh_box = _compile(BOX_SRC)
+	if not (sh_ao.is_valid() and sh_blur.is_valid() and sh_mul.is_valid() and sh_box.is_valid()):
 		return
 	p_ao = rd.compute_pipeline_create(sh_ao)
 	p_blur = rd.compute_pipeline_create(sh_blur)
 	p_mul = rd.compute_pipeline_create(sh_mul)
+	p_box = rd.compute_pipeline_create(sh_box)
 	var ss := RDSamplerState.new()
 	sampler_nearest = rd.sampler_create(ss)
 	ss.min_filter = RenderingDevice.SAMPLER_FILTER_LINEAR
@@ -170,7 +195,7 @@ func _ensure_textures(size: Vector2i) -> void:
 	tex_size = size
 	var q := Vector2i(maxi(size.x / 4, 1), maxi(size.y / 4, 1))
 	var e := Vector2i(maxi(size.x / 8, 1), maxi(size.y / 8, 1))
-	tex = {"raw": _make_tex(q), "qa": _make_tex(q), "q": _make_tex(q), "ea": _make_tex(e), "e": _make_tex(e)}
+	tex = {"raw": _make_tex(q), "box": _make_tex(q), "qa": _make_tex(q), "q": _make_tex(q), "ea": _make_tex(e), "e": _make_tex(e)}
 
 
 func _sampler_uniform(binding: int, sampler: RID, t: RID) -> RDUniform:
@@ -230,7 +255,9 @@ func _render_callback(_type: int, render_data: RenderData) -> void:
 		m.append_array([q.x, q.y, absf(proj[1][1]), 0.0, 1.0 / 480.0, 1.0 / 270.0, 0.0, 0.0])   # cot(fov/2); Godot's RD projection may carry a Y flip
 		_dispatch(p_ao, sh_ao, [_sampler_uniform(0, sampler_nearest, buffers.get_depth_layer(view)), _image_uniform(1, tex["raw"])],
 				m.to_byte_array(), q)
-		_blur(tex["raw"], tex["qa"], q, h1, h2)
+		_dispatch(p_box, sh_box, [_sampler_uniform(0, sampler_nearest, tex["raw"]), _image_uniform(1, tex["box"])],
+				PackedFloat32Array([q.x, q.y, 0.0, 0.0]).to_byte_array(), q)
+		_blur(tex["box"], tex["qa"], q, h1, h2)
 		_blur(tex["qa"], tex["q"], q, v1, v2)
 		_blur(tex["q"], tex["ea"], e, h1, h2)
 		_blur(tex["ea"], tex["e"], e, v1, v2)
