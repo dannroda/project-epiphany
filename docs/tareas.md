@@ -3473,26 +3473,26 @@ Feedback de playtest: hoy el cuerpo queda en el piso para siempre (Enemy.on_deat
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 11.59 Limpieza de assets sin uso · Pendiente
+### 11.59 Limpieza de assets sin uso · En curso
 
 **Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `arte`
 
 Assets propios y packs de terceros que ninguna escena, script ni builder referencia (barrido del 2026-10-11). Revisar a mano: abrir el juego y las escenas de prueba tras mover cada grupo fuera del proyecto, por si algo se carga con una ruta armada en runtime (falso positivo).
 
-- [ ] Mallas viejas del templo
+- [x] Mallas viejas del templo
   assets/epiphany/meshes/templo/: jefe_mano, jefe_ojo, jefe_parpado (el jefe usa meshes/jefe/*) y tablilla (la tablilla usa objetos/estela). Si se borran, sacarlas también de build_templo.py, que las sigue generando.
-- [ ] Mallas sueltas de objetos, equipo y lugares
+- [x] Mallas sueltas de objetos, equipo y lugares
   equipo/poncho; lugares/escombro_b, lugares/pedestal, lugares/santuario_pared, lugares/santuario_piso. Sacarlas también de su build_<kit>.py. objetos/corazon, bombas_x3 y orbe NO: son los modelos de 12.5 (pickups y orbe) que todavía no se conectaron.
-- [ ] Textura vieja del Knight
+- [x] Textura vieja del Knight
   assets/epiphany/textures/knight_texture.png
-- [ ] Packs KayKit sin uso (≈42M)
-  kaykit_adventure (24M), kaykit_dungeon_remastered (14M), kaykit_skeletons (1.8M), kaykit_medieval (1.6M), kaykit_dungeon (1M): nada los referencia. Ojo: gdd.md §10 todavía los nombra (templo y personajes KayKit), corregir esos párrafos si se van.
-- [ ] kenney_development-essentials (1.3M)
+- [x] Packs KayKit sin uso (≈42M)
+  Hecho (1ae3b5df): fuera dungeon, dungeon_remastered, skeletons, medieval; de kaykit_adventure queda solo Characters/gltf/Knight.glb y su textura (fuente del rig de build_personajes y make_template). gdd.md lo anota.
+- [x] kenney_development-essentials (1.3M)
   Nada lo referencia.
 - [ ] Decidir los packs que son fuente
   kaykit_charanim (56M): solo es la fuente de player/animation/libs/*.res (ya extraídas). kenney_fantasy-ui-borders (1.6M): original de assets/ui/frames/ (tools/build_ui_frames.sh). Sacarlos del repo o dejarlos para poder regenerar.
-- [ ] Recortar packs que se usan en parte
-  kenney_skyboxes: solo skybox-morning.png (5M el pack). Prototype Textures: solo 8 de 107 (kit gris, data/kits/materials/*.tres). kenney_input-prompts (23M) se usa por rutas armadas en src/ui/input_prompts.gd: no recortar sin revisar qué nombres pide.
+- [x] Recortar packs que se usan en parte
+  Hecho (1ae3b5df): kenney_skyboxes solo skybox-morning; Prototype Textures solo las 8 del kit gris (src/tools/build_gray_kit.gd). kenney_input-prompts sin tocar.
 - [ ] Probar que nada se rompa
   Abrir el editor (sin dependencias rotas), correr los tests y recorrer overworld, templo y escenas de prueba.
 
