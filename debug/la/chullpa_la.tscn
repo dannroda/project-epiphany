@@ -452,7 +452,7 @@ display_name = "PLACE_CH_MAUSOLEUM"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Sotano/Mausoleo" unique_id=1736954339]
 shape = SubResource("BoxShape3D_308dp")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/Mausoleo" unique_id=1247195257]
+[node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/Mausoleo" unique_id=1812105527]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_jhuhl")
@@ -468,7 +468,7 @@ boss_room = true
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Sotano/Guardian" unique_id=355475746]
 shape = SubResource("BoxShape3D_ier5i")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/Guardian" unique_id=1506701647]
+[node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/Guardian" unique_id=955056122]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_47ejy")
@@ -483,7 +483,7 @@ map_cell = Vector2i(0, 1)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Sotano/CriptaOscura" unique_id=849526528]
 shape = SubResource("BoxShape3D_yesgf")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/CriptaOscura" unique_id=145131707]
+[node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/CriptaOscura" unique_id=8640863]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_jg02x")
@@ -498,7 +498,7 @@ map_cell = Vector2i(1, 1)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Sotano/Cripta" unique_id=2011139786]
 shape = SubResource("BoxShape3D_bkpqy")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/Cripta" unique_id=1511336176]
+[node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/Cripta" unique_id=1867351018]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_nnhrc")
@@ -964,7 +964,7 @@ display_name = "PLACE_CH_OSSUARY"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlantaBaja/Osario" unique_id=1034137515]
 shape = SubResource("BoxShape3D_8asnb")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/Osario" unique_id=784304688]
+[node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/Osario" unique_id=1403173266]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_n2kpp")
@@ -979,7 +979,7 @@ map_cell = Vector2i(1, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlantaBaja/Abismo" unique_id=1273304869]
 shape = SubResource("BoxShape3D_tfrkv")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/Abismo" unique_id=2059395825]
+[node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/Abismo" unique_id=1467062125]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_sd55r")
@@ -994,7 +994,7 @@ map_cell = Vector2i(0, 1)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlantaBaja/Entrada" unique_id=525827890]
 shape = SubResource("BoxShape3D_pucgk")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/Entrada" unique_id=1747754527]
+[node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/Entrada" unique_id=1864465664]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_ex805")
@@ -1009,7 +1009,7 @@ map_cell = Vector2i(1, 1)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlantaBaja/SalaCofre" unique_id=1182654310]
 shape = SubResource("BoxShape3D_uu46w")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/SalaCofre" unique_id=2044394816]
+[node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/SalaCofre" unique_id=502986506]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_wl76a")
@@ -1495,7 +1495,7 @@ display_name = "PLACE_CH_LEAPS"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PisoAlto/Saltos" unique_id=1281431642]
 shape = SubResource("BoxShape3D_qwhhl")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Saltos" unique_id=175352719]
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Saltos" unique_id=2090042586]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_r8ubj")
@@ -1510,7 +1510,7 @@ map_cell = Vector2i(1, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PisoAlto/Mirador" unique_id=958131720]
 shape = SubResource("BoxShape3D_uwrga")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Mirador" unique_id=2005010223]
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Mirador" unique_id=1679748625]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_p5xdt")
@@ -1525,7 +1525,7 @@ map_cell = Vector2i(0, 1)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PisoAlto/Rellano" unique_id=685165382]
 shape = SubResource("BoxShape3D_5ecsj")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Rellano" unique_id=1549942155]
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Rellano" unique_id=1774674876]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_iixbe")
@@ -1540,7 +1540,7 @@ map_cell = Vector2i(1, 1)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PisoAlto/Agrietada" unique_id=2024558862]
 shape = SubResource("BoxShape3D_eafar")
 
-[node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Agrietada" unique_id=1549783168]
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Agrietada" unique_id=1085980661]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_14841")

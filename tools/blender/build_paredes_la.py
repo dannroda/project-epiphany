@@ -9,6 +9,8 @@ import os
 import random
 import sys
 
+from mathutils import Vector
+
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import epi  # noqa: E402
@@ -177,7 +179,60 @@ def piece(kind, code, cut=None):
 		r = p.rng.uniform(0.1, 0.16)
 		rocks += p.blob((c.x, c.y, c.z), r, squash=(1.1, 1.0, 0.6), subdiv=1, rough=0.25, flat_bottom=c.z)
 	p.paint(rocks, "piedra", "MID", vary=0.12)
+	if cut == "paso":
+		for side in sides:
+			sill(p, side)
 	p.build("%s_la_%s" % (kind, code), kit)
+
+
+## Umbral de las puertas, como en LA: sobre el piso de la sala, una U de bloques de piedra que rodea la boca del pasillo
+## y una losa adentro.
+SILL_DEPTH = 1.1
+SILL_BLOCK = 0.55
+SILL_HEIGHT = 0.15
+
+
+def sill(p, side):
+	sign = 1 if side in "ne" else -1
+
+	def at(along, across):
+		return (across, sign * along) if side in "ns" else (sign * along, across)
+
+	def block(a0, a1, c0, c1, z1, round=True):
+		(x0, y0), (x1, y1) = at(a0, c0), at(a1, c1)
+		box = (min(x0, x1), max(x0, x1), min(y0, y1), max(y0, y1), 0.0, z1)
+		faces = p.rounded_box(*box, radius=0.07, segments=2) if round else p.box(*box)
+		mid = sum((f.calc_center_median() for f in faces), Vector()) / len(faces)
+		for f in faces:
+			f.normal_update()
+			if f.normal.dot(f.calc_center_median() - mid) < 0:
+				f.normal_flip()
+		p.fixed.update(faces)
+		return faces
+
+	gap = 0.03
+	inner = HALF + 0.04
+	slab = block(1.0, 1.0 + SILL_DEPTH, -inner, inner, 0.03, round=False)
+	for f in slab:
+		shade(p, f, STONE, 0.55)
+	blocks = []
+	rows = round((SILL_DEPTH + SILL_BLOCK) / SILL_BLOCK)
+	length = (SILL_DEPTH + SILL_BLOCK) / rows
+	for k in range(rows):
+		a0 = 1.0 + k * length + gap
+		for c0 in (-inner - SILL_BLOCK, inner):
+			blocks.append(block(a0, a0 + length - gap * 2, c0 + gap, c0 + SILL_BLOCK - gap, SILL_HEIGHT * p.rng.uniform(0.85, 1.1)))
+	across = 2 * inner
+	cols = max(1, round(across / SILL_BLOCK))
+	width = across / cols
+	a0 = 1.0 + SILL_DEPTH + gap
+	for k in range(cols):
+		c0 = -inner + k * width
+		blocks.append(block(a0, a0 + SILL_BLOCK - gap * 2, c0 + gap, c0 + width - gap, SILL_HEIGHT * p.rng.uniform(0.85, 1.1)))
+	for faces in blocks:
+		t = p.rng.uniform(0.25, 0.4)
+		for f in faces:
+			shade(p, f, STONE, t if f.normal.z > 0.7 else t - 0.12)
 
 
 def shade(p, f, swatch, t):
