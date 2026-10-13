@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/world/push_block.gd" id="1_block"]
 [ext_resource type="Script" path="res://src/components/interactable.gd" id="2_interactable"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/bloque_empujable.res" id="m0_bloque_empujable"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/bloque_empujable.res" id="m0_bloque_empujable"]
 
 [sub_resource type="BoxShape3D" id="Shape"]
 size = Vector3(1.8, 1.8, 1.8)

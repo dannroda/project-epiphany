@@ -1,8 +1,8 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://src/world/floor_switch.gd" id="1_switch"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/interruptor_marco.res" id="m0_interruptor_marco"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/interruptor_placa.res" id="3_plate"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/interruptor_marco.res" id="m0_interruptor_marco"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/interruptor_placa.res" id="3_plate"]
 [ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="pf_persistent_flag"]
 
 [sub_resource type="BoxShape3D" id="Shape"]

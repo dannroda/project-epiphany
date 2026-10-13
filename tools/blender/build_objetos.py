@@ -454,5 +454,42 @@ piece("orbe", 21, orbe, smooth=40)
 piece("explosion", 22, explosion)
 piece("piedra_levantable", 23, piedra_levantable, smooth=50)
 
+
+def bloque_empujable(p):
+	"""Cubo de 1.8 m de piedra labrada con los cantos redondeados y la chakana tallada en cada lado."""
+	body = p.rounded_box(-0.9, 0.9, -0.9, 0.9, 0.0, 1.8, radius=0.14, segments=2)
+	p.paint(body, "acantilado", z_range=(-0.4, 2.4), vary=0.04)
+	relief = []
+	for k in range(4):
+		faces = []
+		for w, h in ((0.9, 0.3), (0.6, 0.6), (0.3, 0.9)):
+			faces += p.rounded_box(-w / 2, w / 2, -0.94, -0.88, 0.9 - h / 2, 0.9 + h / 2, radius=0.02, segments=1)
+		p.transform(faces, Matrix.Rotation(math.pi / 2 * k, 4, "Z"))
+		relief += faces
+	p.paint(relief, "madera_oscura", "MID", vary=0.03)
+
+
+def interruptor_marco(p):
+	"""Marco de 1.9 m al ras del piso; la placa va aparte."""
+	ring = []
+	for x0, x1, y0, y1 in ((-0.95, 0.95, -0.95, -0.72), (-0.95, 0.95, 0.72, 0.95), (-0.95, -0.72, -0.72, 0.72), (0.72, 0.95, -0.72, 0.72)):
+		ring += p.rounded_box(x0, x1, y0, y1, -0.02, 0.07, radius=0.03, segments=1)
+	p.paint(ring, "acantilado", "DARK", vary=0.05)
+	pit = p.box(-0.72, 0.72, -0.72, 0.72, -0.1, -0.05)
+	p.paint(pit, "noche", "MID")
+
+
+def interruptor_placa(p):
+	plate = p.rounded_box(-0.68, 0.68, -0.68, 0.68, 0.0, 0.1, radius=0.04, segments=1)
+	p.paint(plate, "madera", "MID", vary=0.03)
+	glyph = epi.eye(p, Vector((0, 0, 0)), 0.38, depth=0.02)
+	p.transform(glyph, Matrix.Translation((0, 0, 0.1)) @ Matrix.Rotation(-math.pi / 2, 4, "X"))
+	p.paint(glyph, "dorado", "MID")
+
+
+piece("bloque_empujable", 24, bloque_empujable, smooth=40)
+piece("interruptor_marco", 25, interruptor_marco, smooth=40)
+piece("interruptor_placa", 26, interruptor_placa, smooth=40)
+
 epi.layout(kit, columns=6, spacing=2.0)
 epi.publish("objetos")
