@@ -5,6 +5,7 @@
 # Cerca de los puntos fijos (lo jugable, la decoración, las piezas que quedan en el GridMap) los bordes siguen la grilla
 # y el piso queda plano; en los pasos de una celda la roca solo se mete, no se come el paso.
 # blender -b -P tools/blender/build_terreno_organico.py
+import bisect
 import json
 import math
 import os
@@ -38,7 +39,10 @@ BANK = 0.9
 WATER_AMP = 1.0
 AMP = 0.4
 LOMAS = 0.3
-STRATA = (0.0, 0.12, 0.03, 0.16, 0.06, 0.13, 0.02)
+## Hileras del risco, de abajo arriba: (z desde, z hasta (None: la tapa), cuánto sale, radio del canto). Los bloques del
+## medio miden CLIFF_BLOCK de ancho; los ladrillos de abajo parten cada uno en 2 o 3 y el labio de arriba no se corta.
+CLIFF_TIERS = ((-0.5, 0.35, (-0.04, 0.02), 0.07), (0.35, TOP - CAP - 0.3, (0.0, 0.08), 0.25), (TOP - CAP - 0.3, None, (0.1, 0.14), 0.1))
+CLIFF_BLOCK = (1.3, 2.3)
 ## Pasadas de relajación del contorno: vuelven diagonales y curvas las escaleras de celdas.
 RELAX = 24
 ## Distancia (m) desde el borde de un punto fijo en la que el terreno pasa de quieto a orgánico.
@@ -50,21 +54,21 @@ REGIONS = [(r["style"], r["rect"][0], -r["rect"][3], r["rect"][2], -r["rect"][1]
 ## Estilo de terreno de cada región (AreaZone.terrain_style): papel → (franja, tono); lo que falta sale de DEFAULT.
 DEFAULT = {
 	"ground": ("pasto", "MID"), "path": ("tierra", "MID"), "cap": ("pasto", "MID"), "hang": ("pasto", "DARK"),
-	"ledge": ("musgo", "MID"), "under": ("acantilado", "DARK"), "base": ("acantilado", "DARK"), "band": ("tierra", None),
+	"ledge": ("musgo", "MID"), "under": ("acantilado", "DARK"), "base": ("acantilado", "DARK"), "lip": ("acantilado", "LIGHT"),
 	"rock": ("acantilado", None), "abyss_top": ("acantilado", "MID"), "abyss_mid": ("gris_4", "MID"), "abyss_low": ("gris_5", "DARK"),
 }
 STYLES = {
 	"necropolis": {"ground": ("tierra", "MID"), "path": ("acantilado", "LIGHT"), "cap": ("tierra", "MID"), "hang": ("acantilado", "DARK"),
-		"ledge": ("tierra", "LIGHT"), "band": ("roca_naranja", None)},
+		"ledge": ("tierra", "LIGHT"), "lip": ("tierra", "LIGHT")},
 	"laguna": {"ground": ("musgo", "MID"), "path": ("tierra", "LOW"), "cap": ("musgo", "MID"), "hang": ("musgo", "DARK"),
-		"band": ("piedra", "LOW"), "rock": ("piedra", None), "under": ("piedra", "DARK"), "base": ("piedra", "DARK"),
+		"lip": ("piedra", "LIGHT"), "rock": ("piedra", None), "under": ("piedra", "DARK"), "base": ("piedra", "DARK"),
 		"abyss_top": ("piedra", "MID"), "abyss_mid": ("musgo", "DARK"), "abyss_low": ("musgo", "DARK")},
 	"cumbre": {"ground": ("cristal", "LIGHT"), "path": ("piedra", "MID"), "cap": ("cristal", "LIGHT"), "hang": ("cristal", "MID"),
-		"ledge": ("cristal", "LIGHT"), "under": ("ladrillo", "DARK"), "base": ("ladrillo", "DARK"), "band": ("piedra", "MID"), "rock": ("ladrillo", None)},
+		"ledge": ("cristal", "LIGHT"), "under": ("ladrillo", "DARK"), "base": ("ladrillo", "DARK"), "lip": ("piedra", "LIGHT"), "rock": ("ladrillo", None)},
 	"explanada": {"path": ("piedra_templo", "LOW")},
 	"cardonal": {"ground": ("tierra", "LIGHT"), "path": ("acantilado", "LIGHT"), "cap": ("tierra", "MID"), "hang": ("acantilado", "MID"),
-		"ledge": ("tierra", "MID"), "band": ("roca_naranja", None), "rock": ("roca_naranja", None)},
-	"quebrada": {"abyss_top": ("roca_naranja", "MID"), "abyss_mid": ("acantilado", "DARK"), "band": ("roca_naranja", None)},
+		"ledge": ("tierra", "MID"), "lip": ("tierra", "LIGHT"), "rock": ("roca_naranja", None)},
+	"quebrada": {"abyss_top": ("roca_naranja", "MID"), "abyss_mid": ("acantilado", "DARK")},
 }
 STEPS = [((X0 + c) * CELL, (Z0 + r) * CELL, 1.4) for r in range(len(GRID)) for c in range(len(GRID[0])) if GRID[r][c] in "Sv"]
 FIXED = np.array([(x, -z, r) for x, z, r in DATA["fixed"] + STEPS]).reshape(-1, 3)
@@ -321,46 +325,102 @@ def lomas(x, y):
 
 # --- piezas ---
 
+def _ticks(lo, hi, r, step=0.45):
+	"""Cortes de lo a hi, con uno a r de cada punta para que el canto se vea redondo."""
+	inner = max(1, math.ceil((hi - lo - 2 * r) / step))
+	return [lo, hi] + [lo + r + (hi - lo - 2 * r) * k / inner for k in range(inner + 1)]
+
+
 def cliff_wall(p, loop, z0=0.0):
-	"""Roca en estratos a lo largo del contorno, de z0 - 0.5 a la tapa, mirando hacia afuera."""
+	"""Risco de bloques redondeados como en LA, de z0 - 0.5 a la tapa, mirando hacia afuera: ladrillos chicos metidos
+	abajo, bloques grandes en el medio y un labio claro arriba."""
 	points, flags = loop
 	z1 = TOP - CAP
+	n_pts = len(points)
+	cum = [0.0]
+	for i in range(n_pts):
+		cum.append(cum[-1] + (points[(i + 1) % n_pts] - points[i]).length)
+	length = cum[-1]
 	nrm = normals(points)
-	rows = len(STRATA) - 1
-	ring = []
-	for pt, n in zip(points, nrm):
+	main = [p.rng.random() * CLIFF_BLOCK[1]]
+	while main[-1] < length + CLIFF_BLOCK[1]:
+		main.append(main[-1] + p.rng.uniform(*CLIFF_BLOCK))
+	small = []
+	for a, b in zip(main, main[1:]):
+		parts = p.rng.choice((2, 3))
+		small += [a + (b - a) * (k + p.rng.uniform(-0.15, 0.15) * (k > 0)) / parts for k in range(parts)]
+	small.append(main[-1])
+	tiers = []
+	for (lo, hi, depth, r), seams in zip(CLIFF_TIERS, (small, main, None)):
+		hi = z1 if hi is None else hi
+		count = len(seams) if seams else 2
+		tiers.append((lo, hi, r, seams, [p.rng.uniform(*depth) for _ in range(count)], [p.rng.random() < 0.25 for _ in range(count)]))
+	cols = sorted({round(t % length, 2) for seams, r in ((small, CLIFF_TIERS[0][3]), (main, CLIFF_TIERS[1][3])) for a, b in zip(seams, seams[1:]) for t in _ticks(a, b, r)})
+	rows = sorted({round(t, 3) for lo, hi, r, *_ in tiers for t in _ticks(lo, hi, r)})
+
+	def block(tier, s, z):
+		lo, hi, r, seams, depths, variant = tier
+		e, j = min(z - lo, hi - z), 0
+		if seams:
+			s = s if s >= seams[0] else s + length
+			j = max(0, min(len(seams) - 2, bisect.bisect_right(seams, s) - 1))
+			e = min(e, s - seams[j], seams[j + 1] - s)
+		t = min(max(e, 0.0) / r, 1.0)
+		return depths[j] + 0.9 * r * math.sqrt(1.0 - (1.0 - t) ** 2), t, variant[j]
+
+	ring, shade, col_flags = [], {}, []
+	for s in cols:
+		i = max(0, min(n_pts - 1, bisect.bisect_right(cum, s) - 1))
+		f = (s - cum[i]) / max(cum[i + 1] - cum[i], 1e-9)
+		pt = points[i].lerp(points[(i + 1) % n_pts], f)
+		n = nrm[i].lerp(nrm[(i + 1) % n_pts], f).normalized()
 		col = []
-		for k in range(rows + 1):
-			z = -0.5 + (z1 + 0.5) * k / rows
-			out = 0.0
-			if 0 < k < rows:
-				out = 0.03 + STRATA[k] + 0.08 * (0.5 + 0.5 * noise.noise(Vector((pt.x * 1.7, pt.y * 1.7, z * 1.7))))
-				z += 0.025 * noise.noise(Vector((pt.x * 5.3, pt.y * 5.3, k * 1.9)))
-			col.append(p.bm.verts.new((pt.x + n.x * out, pt.y + n.y * out, z)))
+		for z in rows:
+			hits = [block(tier, s, z) for tier in tiers if tier[0] - 1e-6 <= z <= tier[1] + 1e-6]
+			out, t, variant = min(hits)
+			if z <= -0.5 + 1e-6:
+				out = 0.0
+			out += 0.03 * noise.noise(Vector((pt.x * 2.3, pt.y * 2.3, z * 2.3)))
+			v = p.bm.verts.new((pt.x + n.x * out, pt.y + n.y * out, z))
+			shade[v] = (t, variant)
+			col.append(v)
 		ring.append(col)
+		col_flags.append(flags[i])
 	faces = []
-	for i in range(len(points)):
-		if not flags[i]:
+	for c in range(len(cols)):
+		if not col_flags[c]:
 			continue
-		a, b = ring[i], ring[(i + 1) % len(points)]
-		for k in range(rows):
+		a, b = ring[c], ring[(c + 1) % len(cols)]
+		for k in range(len(rows) - 1):
 			for tri in ((a[k], b[k], b[k + 1]), (a[k], b[k + 1], a[k + 1])):
 				faces.append(p.bm.faces.new(tri))
 	for f in faces:
 		f.normal_update()
-	row_height = (z1 + 0.5) / 6
-	paint_role(p, [f for f in faces if f.normal.z > 0.35], "ledge", vary=0.1)
-	paint_role(p, [f for f in faces if f.normal.z < -0.15], "under")
-	sides = [f for f in faces if -0.15 <= f.normal.z <= 0.35]
-	row = lambda f: int((f.calc_center_median().z + 0.5) / row_height)  # noqa: E731
-	paint_role(p, [f for f in sides if row(f) < 2], "base", vary=0.12)
-	paint_role(p, [f for f in sides if row(f) == 3], "band", z_range=(row_height * 2 - 0.5, row_height * 5 - 0.5), vary=0.15)
-	paint_role(p, [f for f in sides if row(f) not in (0, 1, 3)], "rock", z_range=(-0.5, z1), vary=0.12)
+	groups = {"ledge": [], "under": [], "base": [], "lip": [], "rock": [], "dim": []}
+	for f in faces:
+		z = f.calc_center_median().z
+		groove = sum(shade[v][0] for v in f.verts) / 3 < 0.25
+		if f.normal.z > 0.6:
+			groups["ledge"].append(f)
+		elif f.normal.z < -0.4 or groove:
+			groups["under"].append(f)
+		elif z < CLIFF_TIERS[0][1]:
+			groups["base"].append(f)
+		elif z > CLIFF_TIERS[2][0]:
+			groups["lip"].append(f)
+		else:
+			groups["dim" if all(shade[v][1] for v in f.verts) else "rock"].append(f)
+	paint_role(p, groups["ledge"], "ledge", vary=0.1)
+	paint_role(p, groups["under"], "under")
+	paint_role(p, groups["base"], "base", vary=0.12)
+	paint_role(p, groups["lip"], "lip", vary=0.06)
+	paint_role(p, groups["rock"], "rock", z_range=(CLIFF_TIERS[1][0], CLIFF_TIERS[1][1]), vary=0.08)
+	paint_role(p, groups["dim"], "rock", "LOW", vary=0.05)
 	p.fixed.update(faces)
 
 
 def cap(p, high_loops, holes=()):
-	"""Tapa de pasto sobre todo lo alto, un poco más ancha que la roca, con el borde que cuelga en puntas; holes son los
+	"""Tapa de pasto sobre todo lo alto, un poco más ancha que la roca y con el canto liso; holes son los
 	pozos, caminos y agua de ese nivel."""
 	rims = []
 	for points, flags in high_loops:
@@ -373,13 +433,8 @@ def cap(p, high_loops, holes=()):
 			if not flags[i]:
 				continue
 			b = points[(i + 1) % len(points)]
-			d = b - a
-			out = Vector((d.y, -d.x)).normalized()
 			v = [p.bm.verts.new((a.x, a.y, TOP)), p.bm.verts.new((b.x, b.y, TOP)), p.bm.verts.new((b.x, b.y, TOP - CAP)), p.bm.verts.new((a.x, a.y, TOP - CAP))]
 			hang.append(p.bm.faces.new((v[0], v[3], v[2], v[1])))
-			drop = CAP + 0.06 + 0.22 * (0.5 + 0.5 * noise.noise(Vector((a.x * 3.1 + b.x, a.y * 3.1 + b.y, 8.0))))
-			mid = (a + b) / 2 + out * 0.25 * drop
-			hang.append(p.bm.faces.new((v[3], p.bm.verts.new((mid.x, mid.y, TOP - drop)), v[2])))
 	for f in hang:
 		f.normal_update()
 	paint_role(p, hang, "hang")
