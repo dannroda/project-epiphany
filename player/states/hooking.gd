@@ -8,8 +8,6 @@ const ANIMATION := &"General/Use_Item"
 ## A esta distancia del punto donde se clavó, llega.
 @export var stop_distance := 0.9
 @export var max_pull_time := 1.5
-## Un poste con más desnivel que esto lleva al player a su piso.
-@export var step_height := 0.5
 
 var _hook: Hook
 var _direction := Vector3.ZERO
@@ -72,8 +70,8 @@ func pulling() -> bool:
 func _pull(delta: float) -> void:
 	_pull_time += delta
 	var post := _hook.anchor as HookPost
-	if post and absf(post.global_position.y - player.global_position.y) > step_height:
-		_pull_to_level(post, delta)
+	if post:
+		_pull_to_post(post, delta)
 		return
 	var to := (_hook.global_position - player.global_position) * Vector3(1, 0, 1)
 	if to.length() <= stop_distance or _pull_time >= max_pull_time or _blocked(to.normalized()):
@@ -85,9 +83,9 @@ func _pull(delta: float) -> void:
 	player.move_and_slide()
 
 
-## Un poste más alto o más bajo: vuela derecho hasta su piso, al lado del poste, sin chocar en el borde del desnivel
-## (para fijarlo tenía que estar a la vista).
-func _pull_to_level(post: HookPost, delta: float) -> void:
+## Vuela derecho hasta el piso del poste, al lado de él, sin chocar en el borde de un desnivel (la punta llegó, así que
+## estaba a la vista).
+func _pull_to_post(post: HookPost, delta: float) -> void:
 	if _landing == Vector3.INF:
 		_landing = _landing_by(post)
 	player.velocity = Vector3.ZERO

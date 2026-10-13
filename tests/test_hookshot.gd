@@ -1,5 +1,5 @@
 extends "res://tests/test_case.gd"
-## El gancho (11.30): sale cuatro baldosas; en un poste o un cofre se clava y lleva al player por encima de un hueco;
+## El gancho (11.30): sale cinco baldosas; en un poste o un cofre se clava y lleva al player por encima de un hueco;
 ## contra una pared rebota; trae vasijas y la vasija grande de a una celda; le arranca la coraza al acorazado.
 
 const LEVEL := "res://levels/test.tscn"
@@ -117,7 +117,7 @@ func test_a_post_out_of_reach_does_not_pull() -> void:
 	var tree: SceneTree = setup[0]
 	var player: PlayerCharacter = setup[1]
 	_box(tree, FAR + Vector3(0, -0.5, 0), Vector3(30, 1, 10))
-	_add(tree, POST, FAR + Vector3(9.5, 0, 0))
+	_add(tree, POST, FAR + Vector3(11.5, 0, 0))
 	await _place(tree, player, FAR, Vector3.RIGHT)
 	await _fire(tree, player)
 	assert_true(player.global_position.distance_to(FAR) < 0.3, "a más de cuatro baldosas no llega (%s)" % player.global_position)
@@ -252,7 +252,7 @@ func test_posts_are_targets_only_with_the_hookshot_and_in_reach() -> void:
 	var state: Node = setup[2]
 	_cliff(tree)
 	var post := _add(tree, POST, FAR + Vector3(3.4, 5.2, 0)) as HookPost
-	var far_post := _add(tree, POST, FAR + Vector3(9.5, 5.2, 0)) as HookPost
+	var far_post := _add(tree, POST, FAR + Vector3(11.5, 5.2, 0)) as HookPost
 	state.buttons_of(0).fill(&"")
 	await _place(tree, player, FAR, Vector3.RIGHT)
 	assert_true(not post in player.targeting.possible_targets, "sin el gancho en un botón el poste no se fija")
