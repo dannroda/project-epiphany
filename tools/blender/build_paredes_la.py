@@ -1,4 +1,4 @@
-# Publica assets/epiphany/paredes_la.glb: paredes de mazmorra a lo Link's Awakening (prueba sobre la Chullpa).
+# Publica assets/epiphany/paredes_la.<estilo>.glb: paredes de mazmorra a lo Link's Awakening (prueba sobre la Chullpa).
 # Cada pieza es una celda de pared que baja en rampa hacia los lados con piso, igual en las cuatro caras de la sala.
 # Las formas salen de tools/paredes_la.json (godot ... tools/la_walls.gd -- export): lados con piso (n e s o) y esquinas sueltas.
 # Las puertas (paso) son la misma pared con un corte de 1.4 m; las escaleras (sube, baja) un corte ciego con escalones.
@@ -767,5 +767,12 @@ for DOOR_STYLE in (None, "chullpa", "quenoa", "templo", "totora", "cumbre"):
 	door("interruptor", 64, door_switch)
 	door("persiana", 65, door_shutter)
 
+
+
+def style_of(obj):
+	"""Parte de paredes_la (un .glb por estilo, para que ninguno pase los 100 MB de GitHub)."""
+	return next((style for style in ("chullpa", "quenoa", "cueva", "templo", "totora", "cumbre") if "_%s_la" % style in obj.name), "la")
+
+
 epi.layout(kit, columns=6, spacing=3.0)
-epi.publish("paredes_la")
+epi.publish("paredes_la", part=style_of)

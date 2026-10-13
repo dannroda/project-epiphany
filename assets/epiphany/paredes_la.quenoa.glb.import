@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://6qpmuecc48o8"
-path="res://.godot/imported/paredes_la.glb-ffeb0d1449eb05918571f93e724e91c2.scn"
+uid="uid://b0wnw4cmhf0g4"
+path="res://.godot/imported/paredes_la.quenoa.glb-8394cdf10ea052bf57d0b2c7f1459732.scn"
 
 [deps]
 
-source_file="res://assets/epiphany/paredes_la.glb"
-dest_files=["res://.godot/imported/paredes_la.glb-ffeb0d1449eb05918571f93e724e91c2.scn"]
+source_file="res://assets/epiphany/paredes_la.quenoa.glb"
+dest_files=["res://.godot/imported/paredes_la.quenoa.glb-8394cdf10ea052bf57d0b2c7f1459732.scn"]
 
 [params]
 

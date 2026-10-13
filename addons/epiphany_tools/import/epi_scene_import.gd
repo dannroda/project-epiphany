@@ -1,7 +1,8 @@
 @tool
 extends EditorScenePostImportPlugin
 ## Importa los .glb que publica tools/blender (epi.publish) en assets/epiphany/: la paleta compartida en lugar del
-## material de Blender, cada malla guardada en assets/epiphany/meshes/<archivo>/<pieza>.res y las custom properties:
+## material de Blender, cada malla guardada en assets/epiphany/meshes/<archivo>/<pieza>.res (las partes <archivo>.<parte>.glb
+## también ahí) y las custom properties:
 ## col=box|sphere|capsule|convex en una malla → StaticBody3D; socket en un empty → Marker3D; spring en un hueso → cadena
 ## de SpringBoneSimulator3D desde ese hueso (el valor es la rigidez).
 
@@ -19,7 +20,7 @@ const TAGGED := {
 
 func _get_import_options(path: String) -> void:
 	var ours := path.begins_with(ROOT) and path.get_extension() == "glb"
-	add_import_option(MESH_DIR, MESHES % path.get_file().get_basename() if ours else "")
+	add_import_option(MESH_DIR, MESHES % path.get_file().get_slice(".", 0) if ours else "")
 
 
 func _post_process(scene: Node) -> void:

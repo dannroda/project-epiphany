@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cp5a2q0nsa2uj"
-path="res://.godot/imported/terreno_organico.glb-5431dbac05e9d512a0cd9db3117d1dbd.scn"
+uid="uid://c5yrl6k7cbwrn"
+path="res://.godot/imported/terreno_organico.2.glb-c819dc204de9ee21a99831b34dead617.scn"
 
 [deps]
 
-source_file="res://assets/epiphany/terreno_organico.glb"
-dest_files=["res://.godot/imported/terreno_organico.glb-5431dbac05e9d512a0cd9db3117d1dbd.scn"]
+source_file="res://assets/epiphany/terreno_organico.2.glb"
+dest_files=["res://.godot/imported/terreno_organico.2.glb-c819dc204de9ee21a99831b34dead617.scn"]
 
 [params]
 

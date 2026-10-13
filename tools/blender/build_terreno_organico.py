@@ -810,6 +810,38 @@ def cracked_walls(collection, holes, rail):
 	return terrain, plugs
 
 
+## Franjas de X en que se parte el terreno: cada una sale en su terreno_organico.<k>.glb (ningún archivo pasa los 100 MB
+## de GitHub); assets/epiphany/terreno_organico.tscn las junta.
+STRIPS = 12
+
+
+def strip_of(x):
+	width = (BOUNDS[1].x - BOUNDS[0].x) / STRIPS
+	return min(STRIPS - 1, max(0, math.floor((x - BOUNDS[0].x) / width)))
+
+
+def _split(piece, name, material, collection):
+	"""Una pieza por franja con las caras de la pieza cuyo centro cae en ella; name lleva el número antes del sufijo. Las
+	normales se orientan en la pieza entera: por franja, un pedazo suelto puede quedar dado vuelta."""
+	bmesh.ops.recalc_face_normals(piece.bm, faces=[f for f in piece.bm.faces if f not in piece.fixed])
+	base, _, suffix = name.partition("-")
+	objects = []
+	for k in range(STRIPS):
+		part = epi.Piece()
+		part.bm.free()
+		part.bm = piece.bm.copy()
+		part.uv = part.bm.loops.layers.uv.verify()
+		bmesh.ops.delete(part.bm, geom=[f for f in part.bm.faces if strip_of(f.calc_center_median().x) != k], context="FACES")
+		part.fixed = set(part.bm.faces)
+		objects.append(_build(part, "%s_%d-%s" % (base, k, suffix), material, collection))
+	return objects
+
+
+def _part(obj):
+	xs = [(obj.matrix_world @ v.co).x for v in obj.data.vertices]
+	return str(strip_of(sum(xs) / len(xs)) if xs else 0)
+
+
 def _build(piece, name, material, collection):
 	bmesh.ops.delete(piece.bm, geom=[v for v in piece.bm.verts if not v.link_faces], context="VERTS")
 	obj = piece.build(name, collection)
@@ -832,7 +864,7 @@ def main():
 	objects = []
 	rail = epi.Piece(40)
 	terrain, walls = cracked_walls(collection, holes, rail)
-	objects.append(_build(terrain, "riscos-col", "wall", collection))
+	objects += _split(terrain, "riscos-col", "wall", collection)
 	objects.append(_build(rail, "baranda-colonly", None, collection))
 	ground = epi.Piece(12)
 	outer = [Vector((BOUNDS[0].x, BOUNDS[0].y)), Vector((BOUNDS[1].x, BOUNDS[0].y)), Vector((BOUNDS[1].x, BOUNDS[1].y)), Vector((BOUNDS[0].x, BOUNDS[1].y))]
@@ -844,9 +876,9 @@ def main():
 		for lp in waters[level]:
 			shallow(ground, lp)
 		paint_role(ground, fill(ground, [pt for pt, _f in paths[level]], z, ground_height if level == 0 else None), "path", vary=0.015)
-	objects.append(_build(ground, "suelo-col", "outdoor", collection))
+	objects += _split(ground, "suelo-col", "outdoor", collection)
 	objects += decor(load_meshes(), collection)
-	epi.publish("terreno_organico", objects=objects)
+	epi.publish("terreno_organico", objects=objects, part=_part)
 	for wall in walls:
 		wall.location.z = 0.0
 	epi.publish("muros_organicos", objects=walls)
