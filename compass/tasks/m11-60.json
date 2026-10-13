@@ -26,7 +26,7 @@
       "text": "UI: selector de pisos"
     },
     {
-      "detail": "Falta decidir dónde está la chullpa en el overworld; el portal de salida apunta a un punto 'chullpa' que todavía no existe. Mientras, escenario de debug 'chullpa'.",
+      "detail": "Decidido por Daniel el 2026-10-13 (vía la sesión del overworld): la Chullpa (D1) va en los Cerros del oeste, cerca de la Cueva de las bombas, accesible desde el inicio con espada y bombas. La Arboleda pasa a ser una meseta a la que solo se entra con un salto de pluma (la Queñoa, D2, pide la pluma); la Necrópolis queda sin mazmorra. -eb lo arma en 7.10 y pone un Spawn 'chullpa' frente a la torre (el portal de salida ya apunta ahí).",
       "done": false,
       "text": "Entrada desde el overworld"
     },
@@ -70,5 +70,5 @@
   ],
   "test": "",
   "title": "Mazmorra nueva de varios pisos",
-  "updated_at": "2026-10-13T04:13:39.967Z"
+  "updated_at": "2026-10-13T04:16:53.390Z"
 }
