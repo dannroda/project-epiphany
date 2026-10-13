@@ -4,7 +4,7 @@
   "created_at": "2026-10-13T17:30:45.368Z",
   "description": "Overworld 6 + Gruta, Santuario, Chullpa y Queñoa = 10 piezas con PIECES_PER_HEART = 4: dos contenedores y dos piezas que nunca completan uno. Agregar o quitar dos (o cambiar la regla).",
   "milestone": "m11",
-  "notes": "",
+  "notes": "Daniel (2026-10-13): de momento no importa; se revisa cuando se cierre el total de piezas.",
   "order": 121,
   "priority": "medium",
   "refs": [],
@@ -16,5 +16,5 @@
   ],
   "test": "",
   "title": "Piezas de corazón: 10, no múltiplo de 4",
-  "updated_at": "2026-10-13T17:31:02.019Z"
+  "updated_at": "2026-10-13T17:40:23.478Z"
 }

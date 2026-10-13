@@ -4,17 +4,17 @@
   "created_at": "2026-10-13T17:30:45.668Z",
   "description": "test_grove_puzzle teletransporta los bloques a las placas; no prueba que se llegue empujando (B: este y sur desde (-33,2); A: 4 m al sur). Además el puzzle (x -41..-31, z -5..4) está en la zona Pradera/Claro, no en la Arboleda que pide la pluma: confirmar que es donde se quería.",
   "milestone": "m11",
-  "notes": "",
+  "notes": "Hecho: test_grove_puzzle empuja los bloques caminando contra ellos (A dos celdas al sur; B una al este y una al sur) y verifica que cada uno llega a su placa. Ubicación: el puzzle no pide ningún ítem y da la cota, así que queda en la Pradera; 'Grove' es el nombre del mapa viejo.",
   "order": 122,
   "priority": "low",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "test",
     "diseño"
   ],
   "test": "",
   "title": "Puzzle de bloques de la cota: probar empujando y ubicar región",
-  "updated_at": "2026-10-13T17:31:02.251Z"
+  "updated_at": "2026-10-13T17:40:22.462Z"
 }

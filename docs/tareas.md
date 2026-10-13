@@ -4525,17 +4525,23 @@ BushCaveBush se corta con la espada desde el arranque y el cofre de bush_cave da
 
 cliff_heart (overworld.dialogue) dice que el corazón se partió en cuatro: una pieza en el pasto alto, dos tras la piedra herida y una junto al carcaj. Ahora hay 6 piezas en el overworld (escalón de la Pradera, Cerros, Islote, queñoa, Risco, Cumbre); solo una tras muro agrietado y ninguna en el pasto. Reescribir la pista (y en.po).
 
+**Notas:** Daniel (2026-10-13): muy temprano para fijar cuántas piezas hay; la tablilla se ajusta cuando el total esté cerrado.
+
 ### 11.124 Piezas de corazón: 10, no múltiplo de 4 · Pendiente
 
 **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `diseño`
 
 Overworld 6 + Gruta, Santuario, Chullpa y Queñoa = 10 piezas con PIECES_PER_HEART = 4: dos contenedores y dos piezas que nunca completan uno. Agregar o quitar dos (o cambiar la regla).
 
-### 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · Pendiente
+**Notas:** Daniel (2026-10-13): de momento no importa; se revisa cuando se cierre el total de piezas.
+
+### 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · Revisión
 
 **Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `test`, `diseño`
 
 test_grove_puzzle teletransporta los bloques a las placas; no prueba que se llegue empujando (B: este y sur desde (-33,2); A: 4 m al sur). Además el puzzle (x -41..-31, z -5..4) está en la zona Pradera/Claro, no en la Arboleda que pide la pluma: confirmar que es donde se quería.
+
+**Notas:** Hecho: test_grove_puzzle empuja los bloques caminando contra ellos (A dos celdas al sur; B una al este y una al sur) y verifica que cada uno llega a su placa. Ubicación: el puzzle no pide ningún ítem y da la cota, así que queda en la Pradera; 'Grove' es el nombre del mapa viejo.
 
 ## M12 — Assets propios (Blender)  (6/18)
 

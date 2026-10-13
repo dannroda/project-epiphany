@@ -20,6 +20,23 @@ func _stand(tree: SceneTree, player: PlayerCharacter, at: Vector3) -> void:
 		await tree.physics_frame
 
 
+func _push_until(tree: SceneTree, action: StringName, done: Callable) -> void:
+	var event := InputEventAction.new()
+	event.action = action
+	event.pressed = true
+	event.strength = 1.0
+	Input.parse_input_event(event)
+	var until := Time.get_ticks_msec() + 5000
+	while Time.get_ticks_msec() < until and not done.call():
+		await tree.physics_frame
+	event = event.duplicate()
+	event.pressed = false
+	event.strength = 0.0
+	Input.parse_input_event(event)
+	for i in 10:
+		await tree.physics_frame
+
+
 func test_stepping_on_the_plates_does_not_open_the_gate() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state: Node = tree.root.get_node(^"GameState")
@@ -39,16 +56,26 @@ func test_stepping_on_the_plates_does_not_open_the_gate() -> void:
 	state.reset()
 
 
-func test_blocks_on_the_plates_open_the_gate_and_stay_there() -> void:
+func test_pushing_the_blocks_onto_the_plates_opens_the_gate_and_they_stay() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state: Node = tree.root.get_node(^"GameState")
 	state.reset()
 	var level := await _enter()
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	var a := level.get_node(^"GroveSwitchA") as FloorSwitch
 	var b := level.get_node(^"GroveSwitchB") as FloorSwitch
-	for pair in [[^"GroveBlockA", a], [^"GroveBlockB", b]]:
-		var block := level.get_node(pair[0] as NodePath) as PushBlock
-		block.global_position = (pair[1] as FloorSwitch).global_position
+	var block_a := level.get_node(^"GroveBlockA") as PushBlock
+	var block_b := level.get_node(^"GroveBlockB") as PushBlock
+	for push: Array in [
+		[block_a, Vector3(0, 0, -2), &"move_backward", a.global_position],
+		[block_b, Vector3(-2, 0, 0), &"move_right", Vector3(-31, 0, 2)],
+		[block_b, Vector3(0, 0, -2), &"move_backward", b.global_position],
+	]:
+		var block := push[0] as PushBlock
+		var target := push[3] as Vector3
+		await _stand(tree, player, block.global_position + push[1])
+		await _push_until(tree, push[2], func() -> bool: return not block.moving and block.global_position.distance_to(target) < 0.05)
+		assert_true(block.global_position.distance_to(target) < 0.05, "%s llega empujando a %s (quedó en %s)" % [block.name, target, block.global_position])
 	for i in 6:
 		await tree.physics_frame
 	var gate := level.get_node(^"GroveGate") as Gate
