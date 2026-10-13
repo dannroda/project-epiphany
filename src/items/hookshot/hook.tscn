@@ -3,13 +3,13 @@
 [ext_resource type="Script" path="res://src/items/hookshot/hook.gd" id="1_hook"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/equipo/gancho_punta.res" id="2_punta"]
 
-[sub_resource type="StandardMaterial3D" id="Rope"]
-albedo_color = Color(0.55, 0.45, 0.3, 1)
-roughness = 0.9
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/equipo/gancho_cadena.res" id="3_cadena"]
 
-[sub_resource type="BoxMesh" id="ChainMesh"]
-material = SubResource("Rope")
-size = Vector3(0.05, 0.05, 1)
+[sub_resource type="MultiMesh" id="ChainLinks"]
+resource_local_to_scene = true
+transform_format = 1
+instance_count = 64
+mesh = ExtResource("3_cadena")
 
 [node name="Hook" type="Node3D"]
 top_level = true
@@ -21,6 +21,6 @@ script = ExtResource("1_hook")
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0.1)
 mesh = ExtResource("2_punta")
 
-[node name="Chain" type="MeshInstance3D" parent="."]
+[node name="Chain" type="MultiMeshInstance3D" parent="."]
 top_level = true
-mesh = SubResource("ChainMesh")
+multimesh = SubResource("ChainLinks")

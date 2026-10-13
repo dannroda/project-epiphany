@@ -9,6 +9,7 @@ enum Phase { OUT, LATCHED, BACK, DRAG, DONE }
 const ELEMENT := &"hook"
 ## Altura de la punta sobre los pies del player.
 const HEIGHT := 0.9
+const LINK := 0.16
 
 @export var speed := 26.0
 @export var return_speed := 32.0
@@ -16,7 +17,7 @@ const HEIGHT := 0.9
 @export var stun_time := 1.2
 
 @onready var head: Node3D = $Head
-@onready var chain: MeshInstance3D = $Chain
+@onready var chain: MultiMeshInstance3D = $Chain
 
 var phase := Phase.OUT
 var user: PlayerCharacter
@@ -26,6 +27,12 @@ var _travelled := 0.0
 var _damage := 1
 var _carried: Node3D
 var _block: PushBlock
+
+
+func _ready() -> void:
+	for i in chain.multimesh.instance_count:
+		chain.multimesh.set_instance_transform(i, Transform3D(Basis(), Vector3(0, 0, -LINK * i)))
+	chain.multimesh.visible_instance_count = 0
 
 
 func fire(by: PlayerCharacter, direction: Vector3, reach: float, damage: int) -> void:
@@ -211,4 +218,5 @@ func _draw_chain() -> void:
 	chain.visible = length > 0.05
 	if not chain.visible:
 		return
-	chain.global_transform = Transform3D(Basis.looking_at(to - from) * Basis.from_scale(Vector3(1, 1, length)), (from + to) * 0.5)
+	chain.global_transform = Transform3D(Basis.looking_at(to - from), from)
+	chain.multimesh.visible_instance_count = mini(ceili(length / LINK), chain.multimesh.instance_count)
