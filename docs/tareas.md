@@ -4465,16 +4465,20 @@ Daniel (2026-10-13): la mayoría no va a entender a la primera que hay que tirar
 
 **Notas:** Sesión: diseño (-43 [a7e236]) con arte (-11 / -5d) para el aspecto.
 
-### 11.118 Sandalias: correr manteniendo y salto largo con la pluma · Pendiente
+### 11.118 Sandalias: correr manteniendo y salto largo con la pluma · En curso
 
 **Prioridad:** alta · **Etiquetas:** `diseno`, `items`
 
-Daniel (2026-10-13): con la pluma de D1, los islotes llevaban a D3 sin el arco y la angostura abría el este sin el puente. Ítem nuevo, las sandalias (como las botas de Pegaso): se mantiene el botón, el player toma impulso medio segundo y corre recto hasta soltar o chocar; chocar sacude árboles y muros agrietados. Saltar con la pluma en plena carrera da el salto largo (≈5,5 m contra ≈3 m de la pluma sola). Se ganan en una mini quest de la Necrópolis que pide el arco (7.11). [[gdd#progresion-gating]]
+Daniel (2026-10-13): con la pluma de D1, los islotes llevaban a D3 sin el arco y la angostura abría el este sin el puente. Ítem nuevo, las sandalias (como las botas de Pegaso): se mantiene el botón, el player toma impulso medio segundo y corre recto hasta soltar o chocar; chocar sacude árboles y muros agrietados. Saltar con la pluma en plena carrera da el salto largo (Daniel: 3 celdas, 6 m, contra 1 celda, 2 m, de la pluma sola; nunca 4 celdas, el abismo del Risco). Se ganan en una mini quest de la Necrópolis que pide el arco (7.11). [[gdd#progresion-gating]]
 
-- [ ] Ítem sandalias (data/items, ícono, item get)
-- [ ] Estado de carrera: mantener, impulso, correr recto, chocar
-- [ ] Salto largo: la pluma en plena carrera salta ≈5,5 m
-- [ ] Tests (carrera, choque, salto largo vs. hueco de 4 m)
+- [x] Ítem sandalias (data/items, ícono, item get)
+  Hecho el 2026-10-13 (b5c13e2b): data/items/sandals.tres (USABLE, DashBehavior), en item_database y con textos ITEM_SANDALS_*. Usa el ícono de la pluma hasta que arte haga el suyo y el modelo para el cofre (pedido a -5d).
+- [x] Estado de carrera: mantener, impulso, correr recto, chocar
+  Hecho el 2026-10-13 (b5c13e2b): estado Dashing. Mantener toma impulso 0,5 s en el lugar (el stick apunta), después corre recto a 9,5 m/s hasta soltar o chocar. El choque rebota, sacude el encuadre y manda a la Hurtbox de adelante un DamageInfo con elemento dash; árboles y muros agrietados se sacuden (ramas de -eb en Breakable y CrackedWall).
+- [x] Salto largo: la pluma en plena carrera cruza 3 baldosas
+  Hecho el 2026-10-13 (b5c13e2b). Daniel: la pluma cruza 1 baldosa y sandalias + pluma 3. Jumping sigue la dirección de la carrera a long_jump_speed 8, sin control en el aire: cruza 6 m y no 8.
+- [ ] Tests (carrera, choque, salto largo: 3 baldosas sí, 4 no)
+  Hecho en test_sandals (5 tests, en cajas planas). Faltan los del overworld (angostura, islotes, Risco) cuando -eb termine de regenerar.
 
 ## M12 — Assets propios (Blender)  (6/18)
 

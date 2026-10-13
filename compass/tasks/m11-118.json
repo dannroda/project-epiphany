@@ -1,20 +1,24 @@
 {
   "checklist": [
     {
-      "done": false,
+      "detail": "Hecho el 2026-10-13 (b5c13e2b): data/items/sandals.tres (USABLE, DashBehavior), en item_database y con textos ITEM_SANDALS_*. Usa el ícono de la pluma hasta que arte haga el suyo y el modelo para el cofre (pedido a -5d).",
+      "done": true,
       "text": "Ítem sandalias (data/items, ícono, item get)"
     },
     {
-      "done": false,
+      "detail": "Hecho el 2026-10-13 (b5c13e2b): estado Dashing. Mantener toma impulso 0,5 s en el lugar (el stick apunta), después corre recto a 9,5 m/s hasta soltar o chocar. El choque rebota, sacude el encuadre y manda a la Hurtbox de adelante un DamageInfo con elemento dash; árboles y muros agrietados se sacuden (ramas de -eb en Breakable y CrackedWall).",
+      "done": true,
       "text": "Estado de carrera: mantener, impulso, correr recto, chocar"
     },
     {
-      "done": false,
-      "text": "Salto largo: la pluma en plena carrera salta ≈5,5 m"
+      "detail": "Hecho el 2026-10-13 (b5c13e2b). Daniel: la pluma cruza 1 baldosa y sandalias + pluma 3. Jumping sigue la dirección de la carrera a long_jump_speed 8, sin control en el aire: cruza 6 m y no 8.",
+      "done": true,
+      "text": "Salto largo: la pluma en plena carrera cruza 3 baldosas"
     },
     {
+      "detail": "Hecho en test_sandals (5 tests, en cajas planas). Faltan los del overworld (angostura, islotes, Risco) cuando -eb termine de regenerar.",
       "done": false,
-      "text": "Tests (carrera, choque, salto largo vs. hueco de 4 m)"
+      "text": "Tests (carrera, choque, salto largo: 3 baldosas sí, 4 no)"
     }
   ],
   "code": "11.118",
@@ -25,12 +29,12 @@
   "order": 115,
   "priority": "high",
   "refs": [],
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "diseno",
     "items"
   ],
   "test": "",
   "title": "Sandalias: correr manteniendo y salto largo con la pluma",
-  "updated_at": "2026-10-13T08:27:33.129Z"
+  "updated_at": "2026-10-13T08:32:27.730Z"
 }
