@@ -51,6 +51,67 @@ def vasija(p):
 	cordon(p, 0.115, 0.6, width=0.04)
 
 
+def _surface_radius(profile, z):
+	for (r0, z0), (r1, z1) in zip(profile, profile[1:]):
+		if z0 <= z <= z1:
+			return r0 + (r1 - r0) * (z - z0) / max(z1 - z0, 1e-6)
+	return profile[-1][0]
+
+
+def _burn_line(p, profile, z_of, width=0.014, steps=80):
+	"""Línea quemada apenas por fuera de la calabaza, a la altura z_of(vuelta de 0 a 1)."""
+	faces = []
+	ring = []
+	for i in range(steps + 1):
+		t = i / steps
+		z = z_of(t)
+		r = _surface_radius(profile, z) + 0.004
+		a = 2 * math.pi * t
+		ring.append([p.bm.verts.new((math.cos(a) * r, math.sin(a) * r, z + dz)) for dz in (-width / 2, width / 2)])
+	for (a0, a1), (b0, b1) in zip(ring, ring[1:]):
+		faces.append(p.bm.faces.new((a0, b0, b1, a1)))
+	return faces
+
+
+def mate(p):
+	"""Mate burilado de la Queñoa: calabaza seca de dos panzas, con guardas quemadas (zigzag entre dos líneas), cabito
+	y el cordón."""
+	profile = [(0.1, 0.0), (0.2, 0.03), (0.27, 0.1), (0.3, 0.2), (0.29, 0.3), (0.24, 0.39), (0.18, 0.45), (0.17, 0.5), (0.2, 0.56), (0.21, 0.62), (0.18, 0.68), (0.1, 0.72), (0.0, 0.73)]
+	body = p.lathe(profile, sides=24)
+	p.paint(body, "madera", z_range=(-0.2, 0.73), vary=0.04)
+	burned = []
+	for z0 in (0.16, 0.3):
+		burned += _burn_line(p, profile, lambda t, z0=z0: z0)
+	burned += _burn_line(p, profile, lambda t: 0.19 + 0.08 * abs((t * 12) % 1.0 - 0.5), steps=144)
+	burned += _burn_line(p, profile, lambda t: 0.62, width=0.012)
+	p.paint(burned, "madera_oscura", "DARK")
+	stem = p.cylinder(0.025, 0.71, 0.8, sides=6, radius_top=0.018)
+	p.paint(stem, "madera_oscura", "MID")
+	cordon(p, 0.175, 0.48, width=0.04)
+
+
+def brasero_quenoa(p):
+	"""Brasero de la Queñoa, colgado de la pared: un muñón de tronco de corteza rojiza que se pela, angosto abajo, con un
+	cuenco de barro y brasas arriba."""
+	z = 0.82
+	trunk = p.lathe([(0.0, 0.05), (0.1, 0.06), (0.18, 0.18), (0.23, 0.38), (0.25, z - 0.08), (0.29, z), (0.0, z)], sides=12)
+	p.jitter(trunk, 0.015)
+	p.paint(trunk, "madera_oscura", z_range=(0, z), vary=0.12)
+	peel = []
+	for i in range(6):
+		a = 2 * math.pi * i / 6 + p.rng.random() * 0.5
+		h = p.rng.uniform(0.16, 0.26)
+		z0 = p.rng.uniform(0.4, z - 0.1 - h)
+		strip = p.box(-0.025, 0.025, -0.006, 0.006, 0.0, h, taper=0.01)
+		p.transform(strip, Matrix.Translation((math.cos(a) * 0.245, math.sin(a) * 0.245, z0)) @ Matrix.Rotation(a + math.pi / 2, 4, "Z") @ Matrix.Rotation(0.1, 4, "X"))
+		peel += strip
+	p.paint(peel, "madera", "MID", vary=0.06)
+	bowl = p.lathe([(0.2, z), (0.27, z + 0.04), (0.36, z + 0.12), (0.42, z + 0.19), (0.44, z + 0.215), (0.42, z + 0.235), (0.38, z + 0.2), (0.0, z + 0.12)], sides=20)
+	p.paint(bowl, "roca_naranja", "MID")
+	coals = p.blob((0, 0, z + 0.16), 0.3, squash=(1, 1, 0.35), subdiv=2, rough=0.3)
+	p.paint(coals, "fuego", "DARK", vary=0.1)
+
+
 def piedra_levantable(p):
 	"""Piedra que se levanta: más clara y redonda que las de adorno, atada con el cordón."""
 	rock = p.blob((0, 0, 0.25), 0.28, squash=(1.0, 0.95, 0.9), subdiv=3, rough=0.06, flat_bottom=0.0)
@@ -150,6 +211,8 @@ def fogata(p):
 
 piece("vasija", 1, vasija, smooth=50)
 piece("vasija_pedazos", 2, vasija_pedazos, smooth=30)
+piece("mate", 30, mate, smooth=50)
+piece("brasero_quenoa", 31, brasero_quenoa, smooth=40)
 piece("estela", 3, estela, smooth=35)
 piece("apacheta", 4, apacheta, smooth=60)
 piece("cajon", 5, cajon, smooth=35)

@@ -31,7 +31,7 @@
 [ext_resource type="PackedScene" path="res://src/world/heart_piece.tscn" id="27_qikql"]
 [ext_resource type="Script" path="res://src/world/chest.gd" id="27_wlgwi"]
 [ext_resource type="Script" path="res://src/world/cracked_wall.gd" id="30_0a0he"]
-[ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="31_4k5gr"]
+[ext_resource type="PackedScene" path="res://src/world/pot_quenoa.tscn" id="31_4k5gr"]
 [ext_resource type="Script" path="res://src/entities/enemy.gd" id="33_dfq0f"]
 [ext_resource type="Resource" path="res://data/entities/skeleton.tres" id="34_2hnwo"]
 [ext_resource type="PackedScene" path="res://src/world/stairs_down.tscn" id="34_dfq0f"]
@@ -39,7 +39,6 @@
 [ext_resource type="Resource" path="res://data/items/compass.tres" id="36_8syh8"]
 [ext_resource type="Script" path="res://src/world/stairs.gd" id="36_nit5u"]
 [ext_resource type="Script" path="res://src/world/arena_fight.gd" id="37_fight"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo_chullpa/brasero.res" id="38_a6a4g"]
 [ext_resource type="PackedScene" path="res://src/entities/watcher_eye/watcher_eye.tscn" id="38_eye"]
 [ext_resource type="Shader" path="res://src/world/look/llama_la.gdshader" id="39_66c0e"]
 [ext_resource type="Resource" path="res://data/items/bow.tres" id="39_vhlen"]
@@ -51,6 +50,7 @@
 [ext_resource type="Script" path="res://src/world/portal.gd" id="44_d82md"]
 [ext_resource type="Script" path="res://src/tools/top_down_camera.gd" id="45_d6a2c"]
 [ext_resource type="Script" path="res://src/world/push_block.gd" id="45_kifxg"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/brasero_quenoa.res" id="45_lvm7h"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="46_kifxg"]
 [ext_resource type="Script" path="res://src/world/heart_piece.gd" id="47_d6b3u"]
 [ext_resource type="Resource" path="res://data/entities/watcher_eye_boss.tres" id="47_eyeboss"]
@@ -1081,7 +1081,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.9, 2.9333334)
 
 [node name="Model" parent="PisoRaices/Torch_Raices_0" index="0"]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
-mesh = ExtResource("38_a6a4g")
+mesh = ExtResource("45_lvm7h")
 
 [node name="Flame" parent="PisoRaices/Torch_Raices_0" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
@@ -1107,7 +1107,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.9, 2.9333334)
 
 [node name="Model" parent="PisoRaices/Torch_Raices_1" index="0"]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
-mesh = ExtResource("38_a6a4g")
+mesh = ExtResource("45_lvm7h")
 
 [node name="Flame" parent="PisoRaices/Torch_Raices_1" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
@@ -1133,7 +1133,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 1.9, 2.9333334)
 
 [node name="Model" parent="PisoRaices/Torch_Ojos_0" index="0"]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
-mesh = ExtResource("38_a6a4g")
+mesh = ExtResource("45_lvm7h")
 
 [node name="Flame" parent="PisoRaices/Torch_Ojos_0" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
@@ -1159,7 +1159,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 1.9, 2.9333334)
 
 [node name="Model" parent="PisoRaices/Torch_Ojos_1" index="0"]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
-mesh = ExtResource("38_a6a4g")
+mesh = ExtResource("45_lvm7h")
 
 [node name="Flame" parent="PisoRaices/Torch_Ojos_1" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
@@ -1185,7 +1185,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 1.9, 20.933332)
 
 [node name="Model" parent="PisoRaices/Torch_Jefe_0" index="0"]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
-mesh = ExtResource("38_a6a4g")
+mesh = ExtResource("45_lvm7h")
 
 [node name="Flame" parent="PisoRaices/Torch_Jefe_0" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
@@ -1211,7 +1211,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 1.9, 20.933332)
 
 [node name="Model" parent="PisoRaices/Torch_Jefe_1" index="0"]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
-mesh = ExtResource("38_a6a4g")
+mesh = ExtResource("45_lvm7h")
 
 [node name="Flame" parent="PisoRaices/Torch_Jefe_1" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
@@ -1601,7 +1601,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.9, 2.9333334)
 
 [node name="Model" parent="PisoTronco/Torch_Rama_0" index="0"]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
-mesh = ExtResource("38_a6a4g")
+mesh = ExtResource("45_lvm7h")
 
 [node name="Flame" parent="PisoTronco/Torch_Rama_0" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
@@ -1627,7 +1627,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.9, 2.9333334)
 
 [node name="Model" parent="PisoTronco/Torch_Rama_1" index="0"]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
-mesh = ExtResource("38_a6a4g")
+mesh = ExtResource("45_lvm7h")
 
 [node name="Flame" parent="PisoTronco/Torch_Rama_1" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
@@ -1653,7 +1653,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 1.9, 2.9333334)
 
 [node name="Model" parent="PisoTronco/Torch_Escalera_0" index="0"]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
-mesh = ExtResource("38_a6a4g")
+mesh = ExtResource("45_lvm7h")
 
 [node name="Flame" parent="PisoTronco/Torch_Escalera_0" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
@@ -1679,7 +1679,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 1.9, 2.9333334)
 
 [node name="Model" parent="PisoTronco/Torch_Escalera_1" index="0"]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
-mesh = ExtResource("38_a6a4g")
+mesh = ExtResource("45_lvm7h")
 
 [node name="Flame" parent="PisoTronco/Torch_Escalera_1" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
@@ -1705,7 +1705,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.9, 20.933332)
 
 [node name="Model" parent="PisoTronco/Torch_Tronco_0" index="0"]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
-mesh = ExtResource("38_a6a4g")
+mesh = ExtResource("45_lvm7h")
 
 [node name="Flame" parent="PisoTronco/Torch_Tronco_0" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
@@ -1731,7 +1731,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.9, 20.933332)
 
 [node name="Model" parent="PisoTronco/Torch_Tronco_1" index="0"]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
-mesh = ExtResource("38_a6a4g")
+mesh = ExtResource("45_lvm7h")
 
 [node name="Flame" parent="PisoTronco/Torch_Tronco_1" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
@@ -1757,7 +1757,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 1.9, 20.933332)
 
 [node name="Model" parent="PisoTronco/Torch_Entrada_0" index="0"]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
-mesh = ExtResource("38_a6a4g")
+mesh = ExtResource("45_lvm7h")
 
 [node name="Flame" parent="PisoTronco/Torch_Entrada_0" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
@@ -1783,7 +1783,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 1.9, 20.933332)
 
 [node name="Model" parent="PisoTronco/Torch_Entrada_1" index="0"]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
-mesh = ExtResource("38_a6a4g")
+mesh = ExtResource("45_lvm7h")
 
 [node name="Flame" parent="PisoTronco/Torch_Entrada_1" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
@@ -2184,7 +2184,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.9, 2.9333334)
 
 [node name="Model" parent="PisoCopa/Torch_Nido_0" index="0"]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
-mesh = ExtResource("38_a6a4g")
+mesh = ExtResource("45_lvm7h")
 
 [node name="Flame" parent="PisoCopa/Torch_Nido_0" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
@@ -2210,7 +2210,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.9, 2.9333334)
 
 [node name="Model" parent="PisoCopa/Torch_Nido_1" index="0"]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
-mesh = ExtResource("38_a6a4g")
+mesh = ExtResource("45_lvm7h")
 
 [node name="Flame" parent="PisoCopa/Torch_Nido_1" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
@@ -2236,7 +2236,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 1.9, 2.9333334)
 
 [node name="Model" parent="PisoCopa/Torch_Copa_0" index="0"]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
-mesh = ExtResource("38_a6a4g")
+mesh = ExtResource("45_lvm7h")
 
 [node name="Flame" parent="PisoCopa/Torch_Copa_0" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
@@ -2262,7 +2262,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 1.9, 2.9333334)
 
 [node name="Model" parent="PisoCopa/Torch_Copa_1" index="0"]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
-mesh = ExtResource("38_a6a4g")
+mesh = ExtResource("45_lvm7h")
 
 [node name="Flame" parent="PisoCopa/Torch_Copa_1" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
@@ -2288,7 +2288,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.9, 20.933332)
 
 [node name="Model" parent="PisoCopa/Torch_Arco_0" index="0"]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
-mesh = ExtResource("38_a6a4g")
+mesh = ExtResource("45_lvm7h")
 
 [node name="Flame" parent="PisoCopa/Torch_Arco_0" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
@@ -2314,7 +2314,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.9, 20.933332)
 
 [node name="Model" parent="PisoCopa/Torch_Arco_1" index="0"]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
-mesh = ExtResource("38_a6a4g")
+mesh = ExtResource("45_lvm7h")
 
 [node name="Flame" parent="PisoCopa/Torch_Arco_1" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
@@ -2340,7 +2340,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 1.9, 20.933332)
 
 [node name="Model" parent="PisoCopa/Torch_Vigia_0" index="0"]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
-mesh = ExtResource("38_a6a4g")
+mesh = ExtResource("45_lvm7h")
 
 [node name="Flame" parent="PisoCopa/Torch_Vigia_0" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
@@ -2366,7 +2366,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 1.9, 20.933332)
 
 [node name="Model" parent="PisoCopa/Torch_Vigia_1" index="0"]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
-mesh = ExtResource("38_a6a4g")
+mesh = ExtResource("45_lvm7h")
 
 [node name="Flame" parent="PisoCopa/Torch_Vigia_1" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
@@ -2387,11 +2387,11 @@ script = ExtResource("41_5ia7f")
 color = Color(1.35, 1.15, 0.9, 1)
 radius = 3.0
 
-[node name="CaidaLA30" type="Node3D" parent="PisoCopa" unique_id=1286149212 instance=ExtResource("63_borgw")]
+[node name="CaidaLA30" type="Node3D" parent="PisoCopa" unique_id=1568608498 instance=ExtResource("63_borgw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 14)
 script = ExtResource("64_lvm7h")
 
-[node name="CaidaLA31" type="Node3D" parent="PisoCopa" unique_id=1342588774 instance=ExtResource("63_borgw")]
+[node name="CaidaLA31" type="Node3D" parent="PisoCopa" unique_id=1862653851 instance=ExtResource("63_borgw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 28)
 script = ExtResource("64_lvm7h")
 
@@ -2430,7 +2430,7 @@ south_wall_reach = 1.7
 script = ExtResource("62_b5g6x")
 near_margin = 3.5
 
-[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1899554999 instance=ExtResource("71_lvm7h")]
+[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1567232833 instance=ExtResource("71_lvm7h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=960326471 instance=ExtResource("46_kifxg")]

@@ -2039,27 +2039,27 @@ collision_mask = 5
 script = ExtResource("47_lhowt")
 config = ExtResource("48_308dp")
 
-[node name="CaidaLA34" type="Node3D" parent="PlantaBaja" unique_id=1053018440 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA34" type="Node3D" parent="PlantaBaja" unique_id=1683645483 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 22)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA35" type="Node3D" parent="PlantaBaja" unique_id=867083213 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA35" type="Node3D" parent="PlantaBaja" unique_id=1156845153 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 28)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA36" type="Node3D" parent="PlantaBaja" unique_id=1965654111 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA36" type="Node3D" parent="PlantaBaja" unique_id=941155238 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 34)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA37" type="Node3D" parent="PlantaBaja" unique_id=1792660427 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA37" type="Node3D" parent="PlantaBaja" unique_id=1925542000 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 22)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA38" type="Node3D" parent="PlantaBaja" unique_id=547202170 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA38" type="Node3D" parent="PlantaBaja" unique_id=394486234 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 28)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA39" type="Node3D" parent="PlantaBaja" unique_id=1383027585 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA39" type="Node3D" parent="PlantaBaja" unique_id=238908599 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 34)
 script = ExtResource("61_308dp")
 
@@ -2698,39 +2698,39 @@ collision_mask = 5
 script = ExtResource("47_lhowt")
 config = ExtResource("46_baen8")
 
-[node name="CaidaLA31" type="Node3D" parent="PisoAlto" unique_id=799625099 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA31" type="Node3D" parent="PisoAlto" unique_id=664709864 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 8)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA32" type="Node3D" parent="PisoAlto" unique_id=245951936 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA32" type="Node3D" parent="PisoAlto" unique_id=1547969966 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 8)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA33" type="Node3D" parent="PisoAlto" unique_id=1544584022 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA33" type="Node3D" parent="PisoAlto" unique_id=934101859 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 8)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA34" type="Node3D" parent="PisoAlto" unique_id=2000176420 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA34" type="Node3D" parent="PisoAlto" unique_id=760706715 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 8)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA35" type="Node3D" parent="PisoAlto" unique_id=1936160685 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA35" type="Node3D" parent="PisoAlto" unique_id=980748081 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 12)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA36" type="Node3D" parent="PisoAlto" unique_id=339435897 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA36" type="Node3D" parent="PisoAlto" unique_id=8289912 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 12)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA37" type="Node3D" parent="PisoAlto" unique_id=1715644592 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA37" type="Node3D" parent="PisoAlto" unique_id=630752297 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 30)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA38" type="Node3D" parent="PisoAlto" unique_id=1933732673 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA38" type="Node3D" parent="PisoAlto" unique_id=1324799588 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 12)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA39" type="Node3D" parent="PisoAlto" unique_id=2110835819 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA39" type="Node3D" parent="PisoAlto" unique_id=519857695 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 12)
 script = ExtResource("61_308dp")
 
@@ -2769,7 +2769,7 @@ south_wall_reach = 1.7
 script = ExtResource("55_bkpqy")
 near_margin = 3.5
 
-[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1007597103 instance=ExtResource("80_308dp")]
+[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1058892314 instance=ExtResource("80_308dp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1439023435 instance=ExtResource("39_iq7xx")]

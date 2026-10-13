@@ -16,7 +16,6 @@ const BAKED := "BrilloLA"
 const SHAPES := "res://tools/paredes_la.json"
 const MESHES := "res://assets/epiphany/meshes/paredes_la/%s_la_%s.res"
 const STONE := preload("res://data/kits/materials/epiphany_stone.tres")
-const BRAZIER := preload("res://assets/epiphany/meshes/templo_chullpa/brasero.res")
 const WALLS := ["Pared", "Pared nicho", "Pared ojo"]
 const DOOR := "Puerta"
 ## kind de la pieza → [nombre del ítem, ítem del kit de donde copia colisión y navmesh].
@@ -97,12 +96,14 @@ const ROOM_LIGHT_SOFTNESS := 0.5
 ## En lugar del sol, la luz de LA que llega del lado de la cámara (el sur, en alto) y aclara las caras de las paredes.
 const SUN_ELEVATION := 40.0
 ## Luz de cada mazmorra: ambiente de relleno, la luz del lado de la cámara (sun), el foco de cada sala (room) y el polvo que
-## flota delante de la cámara. La Chullpa, cálida y polvorienta; la Queñoa, fría y húmeda.
+## flota delante de la cámara, y sus braseros (las vasijas van por escena: pot_quenoa.tscn). La Chullpa, cálida y polvorienta; la Queñoa, fría y húmeda.
 const LOOKS := {
 	"chullpa": {"ambient": Color(0.76, 0.7, 0.66), "ambient_energy": 1.25, "sun": Color(0.85, 0.8, 0.74), "sun_energy": 0.65,
-		"room": Color(1.0, 0.87, 0.7), "room_energy": 2.3, "dust": "res://src/world/look/polvo_chullpa.tscn"},
+		"room": Color(1.0, 0.87, 0.7), "room_energy": 2.3, "dust": "res://src/world/look/polvo_chullpa.tscn",
+		"brazier": "res://assets/epiphany/meshes/templo_chullpa/brasero.res"},
 	"quenoa": {"ambient": Color(0.56, 0.7, 0.8), "ambient_energy": 1.35, "sun": Color(0.6, 0.8, 0.98), "sun_energy": 0.75,
-		"room": Color(0.9, 0.96, 0.94), "room_energy": 2.1, "dust": "res://src/world/look/polvo_quenoa.tscn"},
+		"room": Color(0.9, 0.96, 0.94), "room_energy": 2.1, "dust": "res://src/world/look/polvo_quenoa.tscn",
+		"brazier": "res://assets/epiphany/meshes/objetos/brasero_quenoa.res"},
 }
 ## El polvo va colgado de la cámara, a esta distancia por delante (más cerca que el player).
 const DUST_AHEAD := 20.0
@@ -197,7 +198,6 @@ func _dress(level: Node) -> void:
 			torch.position = torch.position - facing * (WALL_RUN[side] * BRAZIER_HEIGHT / WALL_HEIGHT - BRAZIER_SETBACK)
 			torch.position.y = BRAZIER_HEIGHT
 			var model := torch.get_node("Model") as MeshInstance3D
-			model.mesh = BRAZIER
 			model.position = Vector3.ZERO
 			model.scale = Vector3.ONE * BRAZIER_SCALE
 			for part: String in ["Flame", "Light"]:
@@ -333,6 +333,8 @@ func _look(level: Node, look: Dictionary) -> void:
 			(node as SpotLight3D).light_energy = look.room_energy
 		elif node is Camera3D and "cuts_south_wall" in node:
 			cameras.append(node)
+		elif node.scene_file_path.ends_with("wall_torch.tscn"):
+			(node.get_node("Model") as MeshInstance3D).mesh = load(look.brazier)
 	for camera: Node in cameras:
 		var old := camera.get_node_or_null("Polvo")
 		if old:
