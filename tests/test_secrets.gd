@@ -166,3 +166,80 @@ func test_the_three_chullpa_eyes_raise_the_sandals_chest() -> void:
 	await tree.create_timer(0.6).timeout
 	assert_eq(chest.visible, true, "con los tres prendidos a la vez aparece el cofre")
 	setup[0].reset()
+
+
+func test_the_sandals_crash_shakes_the_heart_piece_out_of_the_quenoa() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var setup: Array = await _load(tree, [])
+	var level: Node = setup[1]
+	var player: PlayerCharacter = setup[2]
+	var quenoa := level.get_node(^"SecretTree") as Breakable
+	var piece := level.get_node(^"HeartPieceTree") as HeartPiece
+	assert_eq(piece.visible, false, "la pieza no está a la vista")
+	var slash := Items.get_item(&"sword_basic").make_damage(player)
+	slash.team = EntityConfig.Team.PLAYER
+	quenoa.hurtbox.receive(slash)
+	await tree.physics_frame
+	assert_eq([quenoa.broken, piece.visible], [false, false], "la espada no la voltea ni suelta nada")
+	var crash := DamageInfo.make(1, 6.0, player, &"dash")
+	crash.team = EntityConfig.Team.PLAYER
+	quenoa.hurtbox.receive(crash)
+	await tree.create_timer(1.2).timeout
+	assert_eq([quenoa.broken, piece.visible], [false, true], "el choque de las sandalias la sacude y cae la pieza")
+	player.global_position = piece.global_position
+	await tree.create_timer(0.6).timeout
+	assert_eq(setup[0].get_flag(&"ow_heart_piece_tree"), true, "y se puede tomar")
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	while stack.is_open():
+		stack.pop()
+	setup[0].reset()
+
+
+func test_the_hills_rock_slides_off_its_niche() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var setup: Array = await _load(tree, [])
+	var state: Node = setup[0]
+	var level: Node = setup[1]
+	var player: PlayerCharacter = setup[2]
+	var rock := level.get_node(^"SecretRockBlock") as PushBlock
+	var chest := level.get_node(^"SecretRockChest") as Chest
+	player.global_position = rock.global_position + Vector3(0, 0, -2)
+	await tree.physics_frame
+	assert_eq(rock.try_push(Vector3.LEFT), false, "la roca no entra al nicho")
+	assert_true(rock.try_push(Vector3.BACK), "se corre a un costado")
+	await tree.create_timer(0.8).timeout
+	assert_true(rock.global_position.distance_to(chest.global_position) > 2.5, "y deja libre el nicho")
+	var before: int = state.inventory.count(&"arrow")
+	await _open_chest(tree, chest, player)
+	assert_eq(state.inventory.count(&"arrow"), mini(before + 10, state.inventory.capacity(&"arrow")), "el cofre del nicho tiene flechas")
+	state.reset()
+
+
+func test_cutting_the_bush_opens_the_stairs_to_a_cave() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var setup: Array = await _load(tree, [[&"bomb_bag", 1]])
+	var state: Node = setup[0]
+	var level: Node = setup[1]
+	var player: PlayerCharacter = setup[2]
+	var bush := level.get_node(^"BushCaveBush") as Breakable
+	var door := level.get_node(^"BushCaveDoor") as Portal
+	var slash := Items.get_item(&"sword_basic").make_damage(player)
+	slash.team = EntityConfig.Team.PLAYER
+	bush.hurtbox.receive(slash)
+	await tree.create_timer(0.6).timeout
+	assert_true(not is_instance_valid(bush) or bush.broken, "la espada corta la mata")
+	player.global_position = door.global_position + Vector3(0, 0.1, 0)
+	await tree.scene_changed
+	await tree.create_timer(0.5).timeout
+	assert_eq(String(tree.current_scene.name), "BushCave", "debajo hay una escalera a una cuevita")
+	player = tree.get_first_node_in_group(&"player") as PlayerCharacter
+	var before: int = state.inventory.count(&"bomb")
+	await _open_chest(tree, tree.current_scene.get_node(^"BushCaveChest"), player)
+	assert_eq(state.get_flag(&"ow_secret_bush_chest"), true, "con un cofre")
+	assert_eq(state.inventory.count(&"bomb"), mini(before + 10, state.inventory.capacity(&"bomb")), "de bombas")
+	player.global_position = tree.current_scene.get_node(^"ExitPortal").global_position
+	await tree.scene_changed
+	await tree.create_timer(0.5).timeout
+	player = tree.get_first_node_in_group(&"player") as PlayerCharacter
+	assert_true(player.global_position.distance_to(tree.current_scene.get_node(^"BushCaveDoor").global_position) < 3.5, "y se sale al lado de la mata")
+	state.reset()

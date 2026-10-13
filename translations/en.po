@@ -684,6 +684,9 @@ msgstr "Grove"
 msgid "PLACE_HIDDEN_GROTTO"
 msgstr "Hidden Grotto"
 
+msgid "PLACE_BUSH_CAVE"
+msgstr "Cave under the Bush"
+
 msgid "PLACE_FIRST_CLEARING"
 msgstr "First Clearing"
 

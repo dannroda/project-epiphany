@@ -2915,7 +2915,7 @@ Tablillas de historia repartidas por el overworld y el templo que, leídas en cu
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura; 11.34 Combos y técnicas especiales (Minish Cap / Wind Waker)
 
-### 11.24 Más secretos en el overworld · En curso
+### 11.24 Más secretos en el overworld · Revisión
 
 **Prioridad:** baja · **Etiquetas:** `overworld`, `puzzles`
 
@@ -2923,8 +2923,9 @@ Sumar 4 a 6 secretos chicos al overworld (cuevitas con cofre, pasto que esconde 
 
 - [x] Lista de 4–6 secretos chicos
   Daniel (2026-10-13): 1) queñoa sola que, chocada con las sandalias, se sacude y suelta una pieza de corazón; 2) mata en el Claro/Arboleda que al cortarla destapa una escalera a una cuevita con cofre; 3) roca empujable en los Cerros que destapa un cofre chico; 4) repisa en la Quebrada a una celda, con la pluma, con cofre de flechas.
-- [ ] Armarlos
-  Recompensas: flechas, bombas, piezas de corazón.
+- [x] Armarlos
+  Hecho: mata del Claro (-74, 27) con hoyo a levels/bush_cave.tscn (10 bombas); roca empujable en el nicho de los Cerros (-76, 4; 10 flechas); repisa de la Quebrada (-6, -34; pluma; 10 flechas); queñoa de la Pradera (-43, -13; sandalias; pieza de corazón). Tests en test_secrets y test_jump.
+- [ ] Recorrerlo (Daniel)
 
 **Prueba:** Cada secreto se encuentra con las herramientas que el player tiene en ese momento y queda resuelto al cargar.
 
@@ -4908,7 +4909,7 @@ Cada mazmorra con su propio estilo sobre el mismo kit (mismas piezas y colisione
 - [x] Luz y ambiente por mazmorra
   Hecho el 2026-10-13 (d5384189), arte -11: LOOKS en la_walls.gd (ambiente, luz del lado de la cámara, foco de sala y polvo), se aplica en bake y en cada refresh. Chullpa cálida y polvorienta (polvo_chullpa.tscn), Queñoa fría y húmeda (polvo_quenoa.tscn). Las escenas de polvo se ajustan a ojo en el editor; los colores, en LOOKS.
 - [ ] Props por estilo
-  Braseros, estandartes, puertas y vasijas con la piedra y los motivos de cada mazmorra.
+  En curso. 2026-10-13 (70d206ae), arte -11: Queñoa con brasero propio (brasero_quenoa: muñón de tronco colgado de la pared, lo pone la_walls LOOKS) y vasijas mate burilado (pot_quenoa.tscn, escena heredada de pot.tscn). Chullpa sigue con el brasero de piedra y el aríbalo. Falta: puertas por estilo y estandartes (no hay ninguno puesto en las mazmorras).
 - [x] Estilo del terreno del overworld por región
   AreaZone.terrain_style (necropolis, laguna, cumbre, explanada, cardonal, quebrada); el build pinta suelo, riscos y abismo por región con borde ondulado y cambia la decoración. Puestos en overworld.tscn: Templo explanada, Quebrada, Necrópolis + Mirador, Cumbre + Risco, Laguna + Bañado, Cardonal. Falta que el usuario lo vea.
 

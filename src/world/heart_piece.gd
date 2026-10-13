@@ -4,8 +4,11 @@ extends Pickup
 ## oculta (no se borra) así el mapa puede contar cuántas hay por zona.
 
 @export var flag: StringName
+## No está a la vista hasta que algo la suelta con reveal() (la queñoa que se sacude), en cada visita.
+@export var hidden_until_revealed := false
 
 var taken := false
+var _revealed := false
 
 
 func _ready() -> void:
@@ -19,11 +22,21 @@ func _ready() -> void:
 func _sync() -> void:
 	if GameState.get_flag(flag) == true:
 		_consume()
-	elif taken:
-		taken = false
-		visible = true
-		set_physics_process(true)
-		set_deferred(&"monitoring", true)
+		return
+	taken = false
+	var shown := _revealed or not hidden_until_revealed
+	visible = shown
+	set_physics_process(shown)
+	set_deferred(&"monitoring", shown)
+
+
+func reveal() -> void:
+	if taken or _revealed:
+		return
+	_revealed = true
+	_age = 0.0
+	_vertical_speed = 6.0
+	_sync()
 
 
 func collect(player: PlayerCharacter) -> void:

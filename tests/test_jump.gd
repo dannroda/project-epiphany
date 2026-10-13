@@ -289,3 +289,21 @@ func test_the_narrows_are_too_wide_for_the_feather_alone() -> void:
 	assert_true(jumped[1] < -0.5, "con la pluma sola tampoco: son tres celdas (y mín %.2f)" % jumped[1])
 	assert_true(jumped[0].x < -5.0, "y vuelve del lado de la Arboleda (%s)" % jumped[0])
 	(setup[2] as Node).reset()
+
+func test_the_ravine_ledge_takes_one_feather_jump() -> void:
+	var setup: Array = await _overworld(true)
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	var state: Node = setup[2]
+	var landed := await _jump_right(tree, player, Vector3(-9.6, 0, -32.4))
+	assert_true(landed.y > -0.5 and landed.x > -7.2 and landed.x < -4.8, "un salto de pluma llega a la repisa (%s)" % landed)
+	var chest := tree.current_scene.get_node(^"SecretLedgeChest") as Chest
+	var before: int = state.inventory.count(&"arrow")
+	chest.interactable.interact(player)
+	await tree.create_timer(1.0).timeout
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	while stack.is_open():
+		stack.pop()
+	await tree.create_timer(1.2).timeout
+	assert_true(state.inventory.count(&"arrow") > before, "y su cofre tiene flechas")
+	state.reset()

@@ -195,11 +195,17 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
   - Risco.
   - Islotes de la Laguna: `HeartPieceIslet`.
   - Cerros: detrás de un muro agrietado.
+  - Pradera: la queñoa que se sacude con las sandalias (ver abajo).
 - *Secretos:* muescas en la cara de un risco tapadas por un muro agrietado, con un cofre atrás. No hay rupias en el juego, así que los cofres traen esto:
   - Cumbre: 5 bombas.
   - Quebrada: 10 flechas.
   - Mirador: una poción con su botella.
   - Cardonal: 5 bombas.
+- *Secretos chicos (11.24):* cada uno con otra herramienta.
+  - Claro: una mata más grande tapa un hoyo con escalera (`BushCaveBush`); cortada, baja a `levels/bush_cave.tscn` con un cofre de 10 bombas (`ow_secret_bush_chest`).
+  - Cerros: una roca empujable (`SecretRockBlock`) tapa un nicho de una celda; corrida a un costado deja el cofre de 10 flechas (`ow_secret_rock_chest`). No guarda dónde quedó: al volver está otra vez en su lugar.
+  - Quebrada: una repisa a una celda de la orilla oeste, con la pluma, con 10 flechas (`ow_secret_ledge_chest`).
+  - Pradera: una queñoa sola (`SecretTree`) que ningún golpe voltea; el choque de las sandalias la sacude y cae una pieza de corazón (`HeartPieceTree`, `ow_heart_piece_tree`).
 
 **Rediseño (7.9), decidido el 2026-10-11:** variante D, *la mezcla*, de la propuesta https://claude.ai/artifact/8N6Sst4jMsTDTgKLWdqm4B. Toma la referencia del análisis del Light World de *A Link to the Past* (*Overworld Overload*, partes 1 y 2):
 - regiones núcleo con una mazmorra o un ítem importante, unidas por zonas de conexión que también tienen secretos y peleas;

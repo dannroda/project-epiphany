@@ -1,14 +1,18 @@
 {
   "checklist": [
     {
-      "detail": "Cuevitas con cofre, pasto que esconde algo, roca que se empuja, muro agrietado extra.",
-      "done": false,
+      "detail": "Daniel (2026-10-13): 1) queñoa sola que, chocada con las sandalias, se sacude y suelta una pieza de corazón; 2) mata en el Claro/Arboleda que al cortarla destapa una escalera a una cuevita con cofre; 3) roca empujable en los Cerros que destapa un cofre chico; 4) repisa en la Quebrada a una celda, con la pluma, con cofre de flechas.",
+      "done": true,
       "text": "Lista de 4–6 secretos chicos"
     },
     {
-      "detail": "Recompensas: flechas, bombas, piezas de corazón.",
-      "done": false,
+      "detail": "Hecho: mata del Claro (-74, 27) con hoyo a levels/bush_cave.tscn (10 bombas); roca empujable en el nicho de los Cerros (-76, 4; 10 flechas); repisa de la Quebrada (-6, -34; pluma; 10 flechas); queñoa de la Pradera (-43, -13; sandalias; pieza de corazón). Tests en test_secrets y test_jump.",
+      "done": true,
       "text": "Armarlos"
+    },
+    {
+      "done": false,
+      "text": "Recorrerlo (Daniel)"
     }
   ],
   "code": "11.24",
@@ -19,12 +23,12 @@
   "order": 24,
   "priority": "low",
   "refs": [],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "overworld",
     "puzzles"
   ],
   "test": "Cada secreto se encuentra con las herramientas que el player tiene en ese momento y queda resuelto al cargar.",
   "title": "Más secretos en el overworld",
-  "updated_at": "2026-10-11T07:51:02.707Z"
+  "updated_at": "2026-10-13T16:22:43.485Z"
 }

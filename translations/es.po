@@ -684,6 +684,9 @@ msgstr "Arboleda"
 msgid "PLACE_HIDDEN_GROTTO"
 msgstr "Gruta oculta"
 
+msgid "PLACE_BUSH_CAVE"
+msgstr "Cueva bajo la mata"
+
 msgid "PLACE_FIRST_CLEARING"
 msgstr "Claro del inicio"
 
