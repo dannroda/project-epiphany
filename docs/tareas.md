@@ -4406,7 +4406,7 @@ Daniel (2026-10-13): los enemigos que no te detectaron no se quedan quietos. Tod
 - [ ] Tests
   Deambula sin salirse del radio ni trabarse; el centinela alerta, persigue, busca y vuelve.
 
-## M12 — Assets propios (Blender)  (6/17)
+## M12 — Assets propios (Blender)  (6/18)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -4821,6 +4821,21 @@ Cada mazmorra con su propio estilo sobre el mismo kit (mismas piezas y colisione
   Braseros, estandartes, puertas y vasijas con la piedra y los motivos de cada mazmorra.
 - [x] Estilo del terreno del overworld por región
   AreaZone.terrain_style (necropolis, laguna, cumbre, explanada, cardonal, quebrada); el build pinta suelo, riscos y abismo por región con borde ondulado y cambia la decoración. Puestos en overworld.tscn: Templo explanada, Quebrada, Necrópolis + Mirador, Cumbre + Risco, Laguna + Bañado, Cardonal. Falta que el usuario lo vea.
+
+### Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `arte`, `mazmorra`, `camara`
+
+Daniel (2026-10-13): la Chullpa real tiene la cámara vieja; el test LA (debug/la/chullpa_la.tscn) ya tiene la cámara de Link's Awakening, paredes, puertas y props nuevos. Llevar eso a las mazmorras jugables cuando la sesión de arte tenga los assets nuevos. El juego no cambia: no se mueven nodos de juego (puertas, placas, cofres, peleas, huecos, escaleras).
+
+- [ ] Chullpa: cámara LA y kit nuevo
+  La escena jugable levels/chullpa.tscn toma la cámara (pitch, fov, distancia, tilt-shift, luces por sala) y el kit del test LA. Correr test_chullpa, test_dungeon_reach y test_map.
+- [ ] Queñoa: kit de árbol en estilo LA
+  Junto con 11.113 paso 8 (piezas de nicho y pared baja propias del árbol).
+- [ ] Templo del ojo en estilo LA
+- [ ] Recorrerlas (Daniel)
+
+**Notas:** Sesión: arte (-11). Diseño (-43) revisa que el juego no cambie.
 
 ## M13 — Co-op local (estilo Four Swords)  (0/16)
 

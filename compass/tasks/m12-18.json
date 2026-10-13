@@ -1,0 +1,40 @@
+{
+  "checklist": [
+    {
+      "detail": "La escena jugable levels/chullpa.tscn toma la cámara (pitch, fov, distancia, tilt-shift, luces por sala) y el kit del test LA. Correr test_chullpa, test_dungeon_reach y test_map.",
+      "done": false,
+      "text": "Chullpa: cámara LA y kit nuevo"
+    },
+    {
+      "detail": "Junto con 11.113 paso 8 (piezas de nicho y pared baja propias del árbol).",
+      "done": false,
+      "text": "Queñoa: kit de árbol en estilo LA"
+    },
+    {
+      "done": false,
+      "text": "Templo del ojo en estilo LA"
+    },
+    {
+      "done": false,
+      "text": "Recorrerlas (Daniel)"
+    }
+  ],
+  "code": "",
+  "created_at": "2026-10-13T04:56:01.992Z",
+  "description": "Daniel (2026-10-13): la Chullpa real tiene la cámara vieja; el test LA (debug/la/chullpa_la.tscn) ya tiene la cámara de Link's Awakening, paredes, puertas y props nuevos. Llevar eso a las mazmorras jugables cuando la sesión de arte tenga los assets nuevos. El juego no cambia: no se mueven nodos de juego (puertas, placas, cofres, peleas, huecos, escaleras).",
+  "milestone": "m12",
+  "notes": "Sesión: arte (-11). Diseño (-43) revisa que el juego no cambie.",
+  "order": 18,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "arte",
+    "mazmorra",
+    "camara"
+  ],
+  "test": "",
+  "title": "Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos",
+  "updated_at": "2026-10-13T04:56:04.996Z"
+}
