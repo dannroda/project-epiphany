@@ -61,6 +61,8 @@ const BRAZIER_FLAME := 1.07
 const FIRE_OFFSET := Vector3(0, 0.3, 0.3)
 const FIRE_ENERGY := 3.5
 const FIRE_RANGE := 4.0
+const FLAME := preload("res://debug/la/llama_la.gdshader")
+const FLAME_SIZE := Vector2(0.45, 0.8)
 const DOOR_LEAF_SCALE := Vector3(0.7, 0.8, 1.0)
 ## Cámara con perspectiva como LA: la sala se ve en trapecio (abajo más ancha) y asoman las caras de los costados.
 ## La cámara de LA, calibrada en el visor de LA contra capturas: 65° sobre el horizonte, 28° de campo, a 23 m. La sala
@@ -144,6 +146,14 @@ func _dress(level: Node) -> void:
 			model.scale = Vector3.ONE * BRAZIER_SCALE
 			for part: String in ["Flame", "Light"]:
 				torch.get_node(part).position = Vector3(0, BRAZIER_FLAME * BRAZIER_SCALE, 0)
+			var flame := torch.get_node("Flame") as MeshInstance3D
+			var quad := QuadMesh.new()
+			quad.size = FLAME_SIZE
+			quad.center_offset = Vector3(0, FLAME_SIZE.y * 0.4, 0)
+			var flame_material := ShaderMaterial.new()
+			flame_material.shader = FLAME
+			quad.material = flame_material
+			flame.mesh = quad
 			var fire := torch.get_node("Light") as OmniLight3D
 			fire.position += FIRE_OFFSET
 			fire.light_energy = FIRE_ENERGY
