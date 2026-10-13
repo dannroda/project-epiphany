@@ -4454,8 +4454,8 @@ Daniel (2026-10-13): la mayoría no va a entender a la primera que hay que tirar
 
 - [x] Regla y test: cada hueco cae a un piso o tiene Pit (diseño)
   Hecho el 2026-10-13 (cb8f4b78): DropHoles (src/world/drop_holes.gd, sin autoloads) lista los huecos sin Pit debajo. test_drop_holes: cada uno cae sobre el piso de abajo (piso firme o un foso, como el Mirador sobre el Abismo) y las salas son las del diseño: Chullpa Saltos, Sala del cofre, Mirador y Agrietada (bajo el piso agrietado); Queñoa Nido y Arco; el templo no tiene.
-- [ ] Aspecto: ventana con blur a la sala de abajo y fosos negros con niebla (arte)
-  Pasado a arte (-5d) el 2026-10-13 con la regla, la lista y DropHoles para la_walls.
+- [x] Aspecto: ventana con blur a la sala de abajo y fosos negros con niebla (arte)
+  Hecho el 2026-10-13 (ff55af4a), por arte (-5d): la_walls crea una pieza gemela 'Hueco caída' por cada hueco, con el fondo cambiado por una ventana (ventana_caida.gdshader: la sala de abajo con blur y más oscura) y la pone en las celdas que da DropHoles.of_floor (vuelve a la de foso si un hueco deja de caer). CaidaLA (haz de luz cálido y polvo que cae) cada 6 m de hueco. Los fosos: fondo negro puro y niebla que se mueve en el borde (niebla_foso.gdshader). La piedrita que cae no está. Daniel ajusta a ojo.
 - [x] Enseñarlo en la Chullpa: la primera caída (diseño)
   Hecho el 2026-10-13: en la Sala del cofre, al borde de los huecos, un esqueleto (SalaCofreEnemy1) que de un espadazo cae y aterriza vivo en la Cripta, y dos vasijas para tirar por el hueco. Se enseña sin texto; se ve del todo cuando arte abra la ventana del paso 2. test_chullpa lo cubre. GDD §8b.
 - [x] Plano de las mazmorras: marcar los huecos a otro piso (diseño)

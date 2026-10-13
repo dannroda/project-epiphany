@@ -6,8 +6,8 @@
       "text": "Regla y test: cada hueco cae a un piso o tiene Pit (diseño)"
     },
     {
-      "detail": "Pasado a arte (-5d) el 2026-10-13 con la regla, la lista y DropHoles para la_walls.",
-      "done": false,
+      "detail": "Hecho el 2026-10-13 (ff55af4a), por arte (-5d): la_walls crea una pieza gemela 'Hueco caída' por cada hueco, con el fondo cambiado por una ventana (ventana_caida.gdshader: la sala de abajo con blur y más oscura) y la pone en las celdas que da DropHoles.of_floor (vuelve a la de foso si un hueco deja de caer). CaidaLA (haz de luz cálido y polvo que cae) cada 6 m de hueco. Los fosos: fondo negro puro y niebla que se mueve en el borde (niebla_foso.gdshader). La piedrita que cae no está. Daniel ajusta a ojo.",
+      "done": true,
       "text": "Aspecto: ventana con blur a la sala de abajo y fosos negros con niebla (arte)"
     },
     {
@@ -41,5 +41,5 @@
   ],
   "test": "",
   "title": "Huecos a otro piso se ven distintos de los fosos",
-  "updated_at": "2026-10-13T08:13:29.179Z"
+  "updated_at": "2026-10-13T08:18:45.591Z"
 }
