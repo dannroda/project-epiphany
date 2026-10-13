@@ -6,9 +6,13 @@
       "text": "Partir los archivos grandes en partes de menos de 100 MB"
     },
     {
-      "detail": "29 objetos, ~5,3 GB (terreno_organico.glb, paredes_la.glb, riscos.res). git filter-repo cambia los hashes: con todas las sesiones quietas, lo coordina -fd con Daniel.",
-      "done": false,
+      "detail": "Hecho el 2026-10-13: git filter-repo --refs main wt/* ^985d9e56 --invert-paths con terreno_organico.glb, paredes_la.glb y meshes/terreno_organico/riscos.res. Mismos commits (429) y mismos árboles en las puntas, nuevos hashes; ningún blob de más de 100 MB entre origin/main y main. Respaldo previo: /home/ssd_disk/epiphany-backup-pre-filter.git.",
+      "done": true,
       "text": "Limpiar del historial sin pushear las versiones de más de 100 MB"
+    },
+    {
+      "done": false,
+      "text": "Pushear (Daniel)"
     }
   ],
   "code": "11.126",
@@ -28,5 +32,5 @@
   ],
   "test": "",
   "title": "Push bloqueado: terreno del overworld pasa 100 MB",
-  "updated_at": "2026-10-13T23:12:40.289Z"
+  "updated_at": "2026-10-13T23:42:11.928Z"
 }
