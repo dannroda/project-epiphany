@@ -12,7 +12,7 @@ const LEVELS := {"chullpa": "res://levels/chullpa.tscn", "quenoa": "res://levels
 const KIT := "res://data/kits/chullpa_kit.tres"
 const OUT_KIT := "res://data/kits/chullpa_la_kit.tres"
 ## Marca de que el nivel ya tiene el look (bake no se repite).
-const BAKED := "VinetaLA"
+const BAKED := "BrilloLA"
 const SHAPES := "res://tools/paredes_la.json"
 const MESHES := "res://assets/epiphany/meshes/paredes_la/%s_la_%s.res"
 const STONE := preload("res://data/kits/materials/epiphany_stone.tres")
@@ -37,7 +37,6 @@ const FADE_START := {"n": 0.9, "s": 0.4, "e": 0.3, "o": 0.3}
 const FADE_END := {"n": 1.8, "s": 1.8, "e": 1.8, "o": 1.8}
 const FADE := preload("res://src/world/look/borde_oscuro.gdshader")
 const FOCUS := preload("res://src/world/look/enfoque_la.gd")
-const VIGNETTE := preload("res://src/world/look/vineta_la.gdshader")
 const FLOOR := preload("res://src/world/look/piso_la.gdshader")
 ## Veta de las paredes: la franja "acantilado" de la paleta (columna 3, fila 0).
 const GRAIN_AMOUNT := 0.5
@@ -52,7 +51,6 @@ const AMBIENT_ENERGY := 1.3
 const GLOSS_ROUGHNESS := 0.5
 const GLOSS_SPECULAR := 0.4
 const EXPOSURE := 1.0
-const VIGNETTE_STRENGTH := 0.7
 const BRAZIER_SCALE := 0.55
 ## Colgados de la cara de la pared, como en LA: a este alto y esto por delante de la roca.
 const BRAZIER_HEIGHT := 1.9
@@ -156,7 +154,6 @@ func _load(path: String) -> Node:
 
 ## Antorchas a braseros sobre el borde, puertas a la medida del corte, sin los escalones viejos y la cámara casi sin perspectiva.
 func _dress(level: Node) -> void:
-	_vignette(level)
 	var gloss := Node.new()
 	gloss.name = "BrilloLA"
 	gloss.set_script(GLOSS)
@@ -314,23 +311,6 @@ func _tone_curve() -> GradientTexture1D:
 
 func _toe(x: float) -> float:
 	return TOE_PIVOT * pow(x / TOE_PIVOT, TOE_POWER) if x < TOE_PIVOT else x
-
-
-func _vignette(level: Node) -> void:
-	var layer := CanvasLayer.new()
-	layer.name = "VinetaLA"
-	var rect := ColorRect.new()
-	rect.name = "Vineta"
-	rect.set_anchors_preset(Control.PRESET_FULL_RECT)
-	rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var material := ShaderMaterial.new()
-	material.shader = VIGNETTE
-	material.set_shader_parameter("strength", VIGNETTE_STRENGTH)
-	rect.material = material
-	level.add_child(layer)
-	layer.owner = level
-	layer.add_child(rect)
-	rect.owner = level
 
 
 func _light(level: Node, room: Area3D) -> void:

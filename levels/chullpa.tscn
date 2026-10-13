@@ -64,7 +64,6 @@
 [ext_resource type="PackedScene" path="res://src/ui/hud/player_panel_solo.tscn" id="58_8asnb"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/player_panel.tscn" id="59_tfrkv"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/item_ring.tscn" id="60_pucgk"]
-[ext_resource type="Shader" path="res://src/world/look/vineta_la.gdshader" id="62_uu46w"]
 [ext_resource type="Script" path="res://src/world/look/brillo_la.gd" id="63_n1d8o"]
 [ext_resource type="NavigationMesh" path="res://levels/nav/chullpa_navmesh.tres" id="nav_chullpa"]
 
@@ -704,12 +703,6 @@ dof_blur_near_enabled = true
 dof_blur_near_distance = 30.5
 dof_blur_near_transition = 3.0
 dof_blur_amount = 0.12
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6wt3o"]
-shader = ExtResource("62_uu46w")
-shader_parameter/strength = 0.7
-shader_parameter/inner = null
-shader_parameter/power = null
 
 [node name="Chullpa" type="Node3D" unique_id=1737278281]
 
@@ -2429,15 +2422,6 @@ item_ring = ExtResource("60_pucgk")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=574871214]
 navigation_mesh = ExtResource("nav_chullpa")
-
-[node name="VinetaLA" type="CanvasLayer" parent="." unique_id=1425123600]
-
-[node name="Vineta" type="ColorRect" parent="VinetaLA" unique_id=2044733196]
-material = SubResource("ShaderMaterial_6wt3o")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
 
 [node name="BrilloLA" type="Node" parent="." unique_id=1158021510]
 script = ExtResource("63_n1d8o")

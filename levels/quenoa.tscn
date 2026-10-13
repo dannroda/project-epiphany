@@ -69,7 +69,6 @@
 [ext_resource type="PackedScene" path="res://src/ui/hud/player_panel_solo.tscn" id="65_orgj2"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/player_panel.tscn" id="66_dxo2p"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/item_ring.tscn" id="67_owgnv"]
-[ext_resource type="Shader" path="res://src/world/look/vineta_la.gdshader" id="69_hiqku"]
 [ext_resource type="Script" path="res://src/world/look/brillo_la.gd" id="70_0sl1j"]
 [ext_resource type="NavigationMesh" path="res://levels/nav/quenoa_navmesh.tres" id="nav_quenoa"]
 [ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="persistent_flag"]
@@ -661,12 +660,6 @@ dof_blur_near_enabled = true
 dof_blur_near_distance = 30.5
 dof_blur_near_transition = 3.0
 dof_blur_amount = 0.12
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xyjbk"]
-shader = ExtResource("69_hiqku")
-shader_parameter/strength = 0.7
-shader_parameter/inner = null
-shader_parameter/power = null
 
 [node name="Quenoa" type="Node3D" unique_id=213387850]
 
@@ -2388,15 +2381,6 @@ item_ring = ExtResource("67_owgnv")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1214710855]
 navigation_mesh = ExtResource("nav_quenoa")
-
-[node name="VinetaLA" type="CanvasLayer" parent="." unique_id=545335536]
-
-[node name="Vineta" type="ColorRect" parent="VinetaLA" unique_id=655179970]
-material = SubResource("ShaderMaterial_xyjbk")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
 
 [node name="BrilloLA" type="Node" parent="." unique_id=1399842527]
 script = ExtResource("70_0sl1j")
