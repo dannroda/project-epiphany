@@ -71,6 +71,7 @@
 [ext_resource type="Resource" path="res://data/items/heart_container.tres" id="72_heart"]
 [ext_resource type="PackedScene" path="res://src/world/warp_portal.tscn" id="73_warp"]
 [ext_resource type="Resource" path="res://data/entities/mummy_guardian.tres" id="74_guardcfg"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/mallqui/mallqui.res" id="75_mallqui"]
 
 [sub_resource type="Gradient" id="Gradient_qwhhl"]
 offsets = PackedFloat32Array(0, 0.03125, 0.0625, 0.09375, 0.125, 0.15625, 0.1875, 0.21875, 0.25, 0.28125, 0.3125, 0.34375, 0.375, 0.40625, 0.4375, 0.46875, 0.5, 0.53125, 0.5625, 0.59375, 0.625, 0.65625, 0.6875, 0.71875, 0.75, 0.78125, 0.8125, 0.84375, 0.875, 0.90625, 0.9375, 0.96875, 1)
@@ -972,6 +973,9 @@ wave_width = 1.2
 wave_damage = 4
 stuck_time = 2.2
 rage_leaps = 2
+
+[node name="Model" parent="Sotano/BossFight/Mallqui/Body" index="0"]
+mesh = ExtResource("75_mallqui")
 
 [node name="HeartContainer" type="Area3D" parent="Sotano/BossFight" unique_id=1991647320 instance=ExtResource("70_pickup")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
