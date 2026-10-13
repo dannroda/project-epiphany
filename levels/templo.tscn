@@ -2693,7 +2693,7 @@ south_wall_reach = 1.7
 script = ExtResource("79_ank0x")
 near_margin = 3.5
 
-[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=953290076 instance=ExtResource("80_eppxl")]
+[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=920401014 instance=ExtResource("80_eppxl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=613354597 instance=ExtResource("59_07stk")]

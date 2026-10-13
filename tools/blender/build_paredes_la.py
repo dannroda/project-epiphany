@@ -51,7 +51,8 @@ kit = epi.start()
 ## campo en hiladas asentadas en barro, cornisa de barro con matas de ichu) o "quenoa" (la madera del tronco por dentro,
 ## con vetas que bajan, musgo y hojas arriba) y "cueva" (la roca de LA más oscura, sin hojas: la cresta es de piedra
 ## y cada tanto cuelga una estalactita) y "templo" (sillares de piedra lavanda bien encajados con cornisa clara, sin
-## hojas). La chullpa, la queñoa y el templo van sin el bulto de las rocas.
+## hojas) y "totora" (atados de totora apilados y amarrados con soga, húmedos al pie, con juncos y totoras en flor
+## arriba). La chullpa, la queñoa, el templo y la totora van sin el bulto de las rocas.
 WALL_STYLE = None
 PIRCA_ROW = 0.42
 PIRCA_JOINT = 0.04
@@ -74,6 +75,20 @@ def pirca(a, z):
 	cuts = _pirca_rows[row]
 	k = min(len(cuts) - 2, max(i for i in range(len(cuts) - 1) if a >= cuts[i] or i == 0))
 	return row, k, min(a - cuts[k], cuts[k + 1] - a, z - row * PIRCA_ROW, (row + 1) * PIRCA_ROW - z)
+
+
+## Atados de totora: amarres cada TIE_SPACING a lo largo de cada hilada (corridos media vuelta en la de arriba).
+TIE_SPACING = 0.55
+TIE_HALF = 0.07
+
+
+def bundle(a, z):
+	"""Hilada, redondez del atado (0 en la junta, 1 en el medio) y distancia al amarre más cercano."""
+	row = math.floor(z / PIRCA_ROW)
+	t = (z - row * PIRCA_ROW) / PIRCA_ROW
+	shift = (row % 2) * TIE_SPACING / 2
+	along = (a + 1.0 + shift) % TIE_SPACING
+	return row, math.sqrt(max(0.0, 1.0 - (2.0 * t - 1.0) ** 2)), min(along, TIE_SPACING - along)
 
 
 def grain(a, z):
@@ -142,6 +157,9 @@ def relief(p):
 		a = x if abs(v.normal.y) > abs(v.normal.x) else y
 		if WALL_STYLE in COURSES:
 			bump = min(1.0, pirca(a, z)[2] / 0.1) * 0.08 + noise.noise(Vector((a, z, 5.0)) * 4.0) * 0.015
+		elif WALL_STYLE == "totora":
+			row, round_, tie = bundle(a, z)
+			bump = round_ * 0.09 - 0.04 - (0.025 if tie < TIE_HALF and row % 2 == 0 else 0.0) + noise.noise(Vector((a * 6.0, z * 0.6, 11.0))) * 0.01
 		elif WALL_STYLE == "quenoa":
 			bump = grain(a, z) * 0.025 + noise.noise(Vector((a * 1.5, z * 0.2, 9.0))) * 0.07
 		else:
@@ -222,10 +240,10 @@ def axes(sides, corners, cut):
 					(xs if side in "ns" else ys).add(b)
 	for side, d in pillar_edges(sides, corners, cut):
 		(ys if side in "ns" else xs).add(coord(side, d))
-	if WALL_STYLE in COURSES:
+	if WALL_STYLE in COURSES or WALL_STYLE == "totora":
 		for side in sides:
 			for k in range(1, math.ceil(HEIGHT / PIRCA_ROW)):
-				for dz in (-PIRCA_JOINT / 2, PIRCA_JOINT / 2, PIRCA_ROW / 2):
+				for dz in (-PIRCA_JOINT / 2, PIRCA_JOINT / 2, PIRCA_ROW / 2) + ((PIRCA_ROW / 4, PIRCA_ROW * 3 / 4) if WALL_STYLE == "totora" else ()):
 					d = RUN[side] * (k * PIRCA_ROW + dz) / HEIGHT
 					if 0.0 < d < 2.0:
 						(ys if side in "ns" else xs).add(coord(side, d))
@@ -311,6 +329,15 @@ def piece(kind, code, cut=None):
 				p.paint([f], "tierra", "LOW", vary=0.1)
 			else:
 				shade(p, f, STONE, rock_tone(c, sides, kind) * 0.55)
+		elif WALL_STYLE == "totora":
+			a = c.x if abs(f.normal.y) > abs(f.normal.x) else c.y
+			row, round_, tie = bundle(a, c.z)
+			if c.z < 0.35 * (0.6 + 0.4 * noise.noise(Vector((a * 1.5, 0.0, 8.0)))):
+				p.paint([f], "musgo", "LOW", vary=0.08)
+			elif tie < TIE_HALF and row % 2 == 0:
+				shade(p, f, "madera", 0.12)
+			else:
+				shade(p, f, "madera", 0.2 + 0.32 * round_ + 0.1 * random.Random(row * 7919 + 3).random())
 		elif WALL_STYLE == "quenoa" and not moss(c, seed):
 			a = c.x if abs(f.normal.y) > abs(f.normal.x) else c.y
 			g = grain(a, c.z)
@@ -325,7 +352,7 @@ def piece(kind, code, cut=None):
 				shade(p, f, MOSS, min(0.8, 0.3 + 0.5 * (c.z - top + MOSS_TOP) / MOSS_TOP))
 		else:
 			shade(p, f, STONE, rock_tone(c, sides, kind))
-	crest_swatch = {"chullpa": ("tierra", "MID"), "cueva": ("gris_4", "MID"), "templo": ("piedra_templo", "LIGHT")}.get(WALL_STYLE, (LEAF, "DARK"))
+	crest_swatch = {"chullpa": ("tierra", "MID"), "totora": ("paja", "MID"), "cueva": ("gris_4", "MID"), "templo": ("piedra_templo", "LIGHT")}.get(WALL_STYLE, (LEAF, "DARK"))
 	p.paint(crest, crest_swatch[0], crest_swatch[1], vary=0.08)
 	hedge(p, xs, ys, h)
 	if cut:
@@ -428,6 +455,10 @@ def hedge(p, xs, ys, h):
 	if WALL_STYLE == "templo":
 		p.paint(leaves, "piedra_templo", "LIGHT", vary=0.05)
 		return
+	if WALL_STYLE == "totora":
+		p.paint(leaves, "paja", "MID", vary=0.1)
+		reeds(p, spots)
+		return
 	if WALL_STYLE == "cueva":
 		p.paint(leaves, "gris_4", vary=0.15)
 		stalactites(p, spots, h)
@@ -465,6 +496,27 @@ def ichu(p, spots):
 	p.paint(blades, "paja", vary=0.12)
 
 
+def reeds(p, spots):
+	"""Juncos verdes sobre la cresta de la totora, algunos con la espiga marrón de la totora en flor."""
+	blades, heads = [], []
+	for lx, ly, ox, oy in spots:
+		if p.rng.random() > 0.35:
+			continue
+		for i in range(5):
+			length = p.rng.uniform(0.45, 0.9)
+			blade = p.cylinder(0.022, 0.0, length, sides=4, radius_top=0.004)
+			lean = Matrix.Rotation(p.rng.uniform(0.05, 0.35), 4, Vector((math.cos(i * 1.3), math.sin(i * 1.3), 0.0)))
+			place = Matrix.Translation((lx - ox * 0.15, ly - oy * 0.15, top - 0.02)) @ lean
+			p.transform(blade, place)
+			blades += blade
+			if i < 2:
+				head = p.cylinder(0.035, length * 0.72, length * 0.9, sides=6)
+				p.transform(head, place)
+				heads += head
+	p.paint(blades, "follaje", vary=0.12)
+	p.paint(heads, "madera_oscura", "MID", vary=0.06)
+
+
 def stalactites(p, spots, h):
 	"""Estalactitas que cuelgan del borde de la cresta de la cueva, pegadas a la cara."""
 	drops = []
@@ -490,8 +542,8 @@ def shade(p, f, swatch, t):
 
 
 shapes = json.load(open(os.path.join(ROOT, "tools", "paredes_la.json")))
-for WALL_STYLE, BULGE, STONE in ((None, 0.7, "acantilado"), ("chullpa", 0.0, "acantilado"), ("quenoa", 0.0, "madera"), ("cueva", 0.7, "acantilado"), ("templo", 0.0, "piedra_templo")):
-	PIRCA_ROW = 0.48 if WALL_STYLE == "templo" else 0.42
+for WALL_STYLE, BULGE, STONE in ((None, 0.7, "acantilado"), ("chullpa", 0.0, "acantilado"), ("quenoa", 0.0, "madera"), ("cueva", 0.7, "acantilado"), ("templo", 0.0, "piedra_templo"), ("totora", 0.0, "paja")):
+	PIRCA_ROW = {"templo": 0.48, "totora": 0.36}.get(WALL_STYLE, 0.42)
 	_pirca_rows.clear()
 	for code in shapes["pared"]:
 		piece("pared", code)
@@ -508,9 +560,12 @@ DOOR_PLANKS = 4
 
 
 ## Estilo de las hojas que se están armando: None (madera con flejes de hierro), "chullpa" (losas de piedra con un
-## escalonado en relieve y herrajes de cobre) o "quenoa" (tablones atados con soga y musgo arriba).
+## escalonado en relieve y herrajes de cobre), "quenoa" (tablones atados con soga y musgo arriba) o "totora" (atados de
+## totora parados, amarrados con soga oscura).
 DOOR_STYLE = None
-METAL = {None: "hierro", "chullpa": "cobre_verde", "quenoa": "paja", "templo": "dorado"}
+METAL = {None: "hierro", "chullpa": "cobre_verde", "quenoa": "paja", "templo": "dorado", "totora": "cobre_verde"}
+## Atados de las hojas de totora: el color de cada madera.
+REED = {"madera": "paja", "madera_oscura": "tierra"}
 ## Piedra de las hojas de losa (chullpa y templo).
 SLAB = {"chullpa": "acantilado", "templo": "piedra_templo"}
 
@@ -536,12 +591,20 @@ def door_leaf(p, wood, bands=(0.55, 2.45)):
 		stone_leaf(p, wood == "madera_oscura")
 		return
 	planks = []
-	w = 2 * DOOR_WIDTH / DOOR_PLANKS
-	for k in range(DOOR_PLANKS):
+	reed = DOOR_STYLE == "totora"
+	count = DOOR_PLANKS + 2 if reed else DOOR_PLANKS
+	w = 2 * DOOR_WIDTH / count
+	for k in range(count):
 		x0 = -DOOR_WIDTH + k * w
-		faces = p.rounded_box(x0 + 0.012, x0 + w - 0.012, -DOOR_THICK, DOOR_THICK, 0.0, HEIGHT - 0.02 * (k % 2), radius=0.03, segments=1)
-		p.paint(faces, wood, z_range=(-1.0 - 0.6 * (k % 3), HEIGHT + 1.5), vary=0.03)
+		faces = p.rounded_box(x0 + 0.012, x0 + w - 0.012, -DOOR_THICK, DOOR_THICK, 0.0, HEIGHT - 0.02 * (k % 2), radius=w * 0.45 if reed else 0.03, segments=2 if reed else 1)
+		p.paint(faces, REED[wood] if reed else wood, z_range=(-1.0 - 0.6 * (k % 3), HEIGHT + 1.5), vary=0.03)
 		planks += faces
+	if reed:
+		rope = []
+		for z in bands + (1.5,):
+			rope += p.rounded_box(-DOOR_WIDTH - 0.01, DOOR_WIDTH + 0.01, -DOOR_THICK - 0.04, -DOOR_THICK + 0.02, z - 0.04, z + 0.04, radius=0.03, segments=1)
+		p.paint(rope, "madera_oscura", "MID", vary=0.04)
+		return
 	if DOOR_STYLE == "quenoa":
 		rope = []
 		for z in bands:
@@ -610,7 +673,7 @@ def door_shutter(p):
 	p.paint(posts, METAL[DOOR_STYLE], "DARK", vary=0.03)
 
 
-for DOOR_STYLE in (None, "chullpa", "quenoa", "templo"):
+for DOOR_STYLE in (None, "chullpa", "quenoa", "templo", "totora"):
 	door("madera", 61, lambda p: door_leaf(p, "madera"))
 	door("llave", 62, lambda p: (door_leaf(p, "madera_oscura"), lock_plate(p, 1.3, 0.5, METAL[DOOR_STYLE] if DOOR_STYLE in SLAB else "hierro")))
 	door("jefe", 63, door_boss)
