@@ -41,10 +41,13 @@ const FLOOR := preload("res://src/world/look/piso_la.gdshader")
 ## Veta de las paredes: la franja "acantilado" de la paleta (columna 3, fila 0).
 const GRAIN_AMOUNT := 0.5
 const GRAIN_RECT := Vector4(0.42, 0.455, 0.0, 0.25)
-## Curva de tono: entre la del visor de LA (0.3 / 1.2) y la vieja (0.28 / 2.23), por contraste; por debajo de TOE_PIVOT
-## (lineal) oscurece con esta potencia, arriba queda igual.
-const TOE_PIVOT := 0.3
-const TOE_POWER := 1.7
+## Tono y AO del juego (RenderDoc); Godot hace el glow después, sobre valores ya tonemapeados.
+const TONE := preload("res://src/world/look/tono_la.gd")
+const AO := preload("res://src/world/look/sombra_la.gd")
+## El juego usa 2, pero nuestras luces se ajustaron con exposición 1.
+const TONE_EXPOSURE := 1.0
+const GLOW_THRESHOLD := 0.25
+const GLOW_INTENSITY := 0.2
 ## Luz de relleno fría, como el ambiente de las salas de LA.
 const AMBIENT_COLOR := Color(0.62, 0.72, 0.85)
 const AMBIENT_ENERGY := 1.3
@@ -215,18 +218,19 @@ func _dress(level: Node) -> void:
 			env.tonemap_mode = Environment.TONE_MAPPER_LINEAR
 			env.tonemap_exposure = EXPOSURE
 			env.reflected_light_source = Environment.REFLECTION_SOURCE_BG
-			env.adjustment_enabled = true
-			env.adjustment_saturation = 0.9
-			env.adjustment_color_correction = _tone_curve()
+			env.adjustment_enabled = false
 			env.glow_enabled = true
-			env.glow_intensity = 0.8
+			env.glow_intensity = GLOW_INTENSITY
 			env.glow_bloom = 0.0
-			env.glow_hdr_threshold = 1.2
+			env.glow_hdr_threshold = GLOW_THRESHOLD
 			env.glow_blend_mode = Environment.GLOW_BLEND_MODE_ADDITIVE
-			env.ssao_enabled = true
-			env.ssao_radius = 0.8
-			env.ssao_intensity = 1.5
+			env.ssao_enabled = false
 			(node as WorldEnvironment).environment = env
+			var compositor := Compositor.new()
+			var tone := TONE.new()
+			tone.exposure = TONE_EXPOSURE
+			compositor.compositor_effects = [AO.new(), tone]
+			(node as WorldEnvironment).compositor = compositor
 		elif node is DirectionalLight3D:
 			var sun := node as DirectionalLight3D
 			sun.light_energy = SUN_ENERGY
@@ -299,28 +303,6 @@ func _floor(material: Material) -> Material:
 		tiles.set_shader_parameter("specular", GLOSS_SPECULAR)
 		_glossy_cache[material] = tiles
 	return _glossy_cache[material]
-
-
-func _tone_curve() -> GradientTexture1D:
-	const N := 33
-	var offsets := PackedFloat32Array()
-	var colors := PackedColorArray()
-	for i in N:
-		var x := i / float(N - 1)
-		var y := _toe(Color(x, x, x).srgb_to_linear().r)
-		offsets.append(x)
-		colors.append(Color(y, y, y).linear_to_srgb())
-	var gradient := Gradient.new()
-	gradient.offsets = offsets
-	gradient.colors = colors
-	var curve := GradientTexture1D.new()
-	curve.gradient = gradient
-	curve.width = 256
-	return curve
-
-
-func _toe(x: float) -> float:
-	return TOE_PIVOT * pow(x / TOE_PIVOT, TOE_POWER) if x < TOE_PIVOT else x
 
 
 func _light(level: Node, room: Area3D) -> void:

@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://ccn88kav7u1vk"]
 
+[ext_resource type="Script" path="res://src/world/look/tono_la.gd" id="tono_la"]
+[ext_resource type="Script" path="res://src/world/look/sombra_la.gd" id="sombra_la"]
 [ext_resource type="Script" path="res://src/world/dungeon.gd" id="1_p48v1"]
 [ext_resource type="Script" path="res://src/world/dungeon_floor.gd" id="2_c7ykk"]
 [ext_resource type="MeshLibrary" path="res://data/kits/chullpa_la_kit.tres" id="3_xafiw"]
@@ -80,30 +82,27 @@
 [ext_resource type="PackedScene" path="res://src/entities/shield_skeleton.tscn" id="81_shield"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/mallqui/mallqui.res" id="75_mallqui"]
 
-[sub_resource type="Gradient" id="Gradient_qwhhl"]
-offsets = PackedFloat32Array(0, 0.03125, 0.0625, 0.09375, 0.125, 0.15625, 0.1875, 0.21875, 0.25, 0.28125, 0.3125, 0.34375, 0.375, 0.40625, 0.4375, 0.46875, 0.5, 0.53125, 0.5625, 0.59375, 0.625, 0.65625, 0.6875, 0.71875, 0.75, 0.78125, 0.8125, 0.84375, 0.875, 0.90625, 0.9375, 0.96875, 1)
-colors = PackedColorArray(0, 0, 0, 1, 0.0010699818, 0.0010699818, 0.0010699818, 1, 0.0038740204, 0.0038740204, 0.0038740204, 1, 0.010139859, 0.010139859, 0.010139859, 1, 0.022075947, 0.022075947, 0.022075947, 1, 0.04236076, 0.04236076, 0.04236076, 1, 0.068094745, 0.068094745, 0.068094745, 1, 0.09626258, 0.09626258, 0.09626258, 1, 0.12677714, 0.12677714, 0.12677714, 1, 0.15956329, 0.15956329, 0.15956329, 1, 0.19455545, 0.19455545, 0.19455545, 1, 0.2316954, 0.2316954, 0.2316954, 1, 0.2709312, 0.2709312, 0.2709312, 1, 0.31221583, 0.31221583, 0.31221583, 1, 0.35550666, 0.35550666, 0.35550666, 1, 0.40076444, 0.40076444, 0.40076444, 1, 0.4479533, 0.4479533, 0.4479533, 1, 0.4970398, 0.4970398, 0.4970398, 1, 0.5479932, 0.5479932, 0.5479932, 1, 0.59375, 0.59375, 0.59375, 1, 0.625, 0.625, 0.625, 1, 0.65625, 0.65625, 0.65625, 1, 0.68749994, 0.68749994, 0.68749994, 1, 0.71875, 0.71875, 0.71875, 1, 0.75, 0.75, 0.75, 1, 0.78125, 0.78125, 0.78125, 1, 0.8125, 0.8125, 0.8125, 1, 0.84375, 0.84375, 0.84375, 1, 0.875, 0.875, 0.875, 1, 0.90625, 0.90625, 0.90625, 1, 0.9375, 0.9375, 0.9375, 1, 0.96875, 0.96875, 0.96875, 1, 1, 1, 1, 1)
+[sub_resource type="CompositorEffect" id="CompositorEffect_sombra"]
+script = ExtResource("sombra_la")
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_uwrga"]
-gradient = SubResource("Gradient_qwhhl")
+[sub_resource type="CompositorEffect" id="CompositorEffect_tono"]
+script = ExtResource("tono_la")
+exposure = 1.0
+
+[sub_resource type="Compositor" id="Compositor_la"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_sombra"), SubResource("CompositorEffect_tono")])
 
 [sub_resource type="Environment" id="Environment_5ecsj"]
 background_mode = 1
 ambient_light_source = 2
 ambient_light_color = Color(0.62, 0.72, 0.85, 1)
 ambient_light_energy = 1.3
-ssao_enabled = true
-ssao_radius = 0.8
-ssao_intensity = 1.5
 glow_enabled = true
-glow_intensity = 0.8
+glow_intensity = 0.2
 glow_blend_mode = 0
-glow_hdr_threshold = 1.2
+glow_hdr_threshold = 0.25
 fog_light_color = Color(0.25, 0.08, 0.06, 1)
 fog_density = 0.0
-adjustment_enabled = true
-adjustment_saturation = 0.9
-adjustment_color_correction = SubResource("GradientTexture1D_uwrga")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_308dp"]
 size = Vector3(22, 2.4, 14)
@@ -726,6 +725,7 @@ display_name = "PLACE_CHULLPA"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=471664082]
 environment = SubResource("Environment_5ecsj")
+compositor = SubResource("Compositor_la")
 
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=647760322]
 transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 0, 0, 0)
