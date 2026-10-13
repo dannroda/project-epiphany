@@ -144,6 +144,8 @@
 
 [ext_resource type="PackedScene" path="res://src/world/terrazas/salto_medio.tscn" id="terr_salto_medio"]
 [ext_resource type="Resource" path="res://data/items/sandals.tres" id="ow_sandals"]
+[ext_resource type="Script" uid="uid://c3gjwha8na3yi" path="res://src/world/look/sombra_la.gd" id="sombra_la"]
+[ext_resource type="Script" uid="uid://bw0kh7whsb1qf" path="res://src/world/look/tono_la.gd" id="tono_la"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7se6l"]
 panorama = ExtResource("1_qyxw2")
@@ -151,10 +153,31 @@ panorama = ExtResource("1_qyxw2")
 [sub_resource type="Sky" id="Sky_iip2e"]
 sky_material = SubResource("PanoramaSkyMaterial_7se6l")
 
+[sub_resource type="CompositorEffect" id="CompositorEffect_sombra"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("sombra_la")
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_tono"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("tono_la")
+exposure = 1.0
+
+[sub_resource type="Compositor" id="Compositor_la"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_sombra"), SubResource("CompositorEffect_tono")])
+
 [sub_resource type="Environment" id="Environment_0v7po"]
 background_mode = 2
 sky = SubResource("Sky_iip2e")
-tonemap_mode = 4
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1rjbp"]
 size = Vector3(2, 2.4, 1.4)
@@ -278,6 +301,7 @@ size = Vector3(24, 14, 24)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1045124328]
 environment = SubResource("Environment_0v7po")
+compositor = SubResource("Compositor_la")
 
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=1305411689]
 transform = Transform3D(0.8660254, -0.40957603, 0.28678823, 0, 0.57357645, 0.81915206, -0.5, -0.7094065, 0.49673176, 0, 0, 0)
