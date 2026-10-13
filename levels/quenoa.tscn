@@ -72,6 +72,7 @@
 [ext_resource type="PackedScene" path="res://src/ui/hud/player_panel.tscn" id="66_dxo2p"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/item_ring.tscn" id="67_owgnv"]
 [ext_resource type="Script" path="res://src/world/look/brillo_la.gd" id="70_0sl1j"]
+[ext_resource type="PackedScene" path="res://src/world/look/polvo_quenoa.tscn" id="71_lvm7h"]
 [ext_resource type="Script" path="res://src/world/pit.gd" id="90_pit"]
 [ext_resource type="NavigationMesh" path="res://levels/nav/quenoa_navmesh.tres" id="nav_quenoa"]
 [ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="persistent_flag"]
@@ -81,8 +82,8 @@
 [sub_resource type="Environment" id="Environment_w3lyb"]
 background_mode = 1
 ambient_light_source = 2
-ambient_light_color = Color(0.62, 0.72, 0.85, 1)
-ambient_light_energy = 1.3
+ambient_light_color = Color(0.56, 0.7, 0.8, 1)
+ambient_light_energy = 1.35
 glow_enabled = true
 glow_intensity = 0.2
 glow_blend_mode = 0
@@ -694,8 +695,8 @@ compositor = SubResource("Compositor_la")
 
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=1704964901]
 transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 0, 0, 0)
-light_color = Color(0.62, 0.78, 1, 1)
-light_energy = 0.7
+light_color = Color(0.6, 0.8, 0.98, 1)
+light_energy = 0.75
 directional_shadow_mode = 1
 directional_shadow_max_distance = 32.0
 
@@ -731,8 +732,8 @@ mesh = SubResource("PlaneMesh_i5dwr")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoRaices/Raices" unique_id=51831298]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
-light_color = Color(1, 0.9, 0.78, 1)
-light_energy = 2.2
+light_color = Color(0.9, 0.96, 0.94, 1)
+light_energy = 2.1
 light_specular = 0.6
 spot_range = 17.5
 spot_attenuation = 0.0
@@ -763,8 +764,8 @@ mesh = SubResource("PlaneMesh_kgmjf")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoRaices/Ojos" unique_id=2101351393]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
-light_color = Color(1, 0.9, 0.78, 1)
-light_energy = 2.2
+light_color = Color(0.9, 0.96, 0.94, 1)
+light_energy = 2.1
 light_specular = 0.6
 spot_range = 17.5
 spot_attenuation = 0.0
@@ -796,8 +797,8 @@ mesh = SubResource("PlaneMesh_8yinp")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoRaices/Jefe" unique_id=1994714526]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
-light_color = Color(1, 0.9, 0.78, 1)
-light_energy = 2.2
+light_color = Color(0.9, 0.96, 0.94, 1)
+light_energy = 2.1
 light_specular = 0.6
 spot_range = 17.5
 spot_attenuation = 0.0
@@ -1260,8 +1261,8 @@ mesh = SubResource("PlaneMesh_n6xjq")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoTronco/Rama" unique_id=109818629]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
-light_color = Color(1, 0.9, 0.78, 1)
-light_energy = 2.2
+light_color = Color(0.9, 0.96, 0.94, 1)
+light_energy = 2.1
 light_specular = 0.6
 spot_range = 17.5
 spot_attenuation = 0.0
@@ -1292,8 +1293,8 @@ mesh = SubResource("PlaneMesh_m7rie")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoTronco/Escalera" unique_id=1276063755]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
-light_color = Color(1, 0.9, 0.78, 1)
-light_energy = 2.2
+light_color = Color(0.9, 0.96, 0.94, 1)
+light_energy = 2.1
 light_specular = 0.6
 spot_range = 17.5
 spot_attenuation = 0.0
@@ -1324,8 +1325,8 @@ mesh = SubResource("PlaneMesh_bo0qj")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoTronco/Tronco" unique_id=1460573170]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
-light_color = Color(1, 0.9, 0.78, 1)
-light_energy = 2.2
+light_color = Color(0.9, 0.96, 0.94, 1)
+light_energy = 2.1
 light_specular = 0.6
 spot_range = 17.5
 spot_attenuation = 0.0
@@ -1356,8 +1357,8 @@ mesh = SubResource("PlaneMesh_ntgrw")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoTronco/Entrada" unique_id=966126248]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
-light_color = Color(1, 0.9, 0.78, 1)
-light_energy = 2.2
+light_color = Color(0.9, 0.96, 0.94, 1)
+light_energy = 2.1
 light_specular = 0.6
 spot_range = 17.5
 spot_attenuation = 0.0
@@ -1835,8 +1836,8 @@ mesh = SubResource("PlaneMesh_7khdi")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoCopa/Nido" unique_id=147352840]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
-light_color = Color(1, 0.9, 0.78, 1)
-light_energy = 2.2
+light_color = Color(0.9, 0.96, 0.94, 1)
+light_energy = 2.1
 light_specular = 0.6
 spot_range = 17.5
 spot_attenuation = 0.0
@@ -1867,8 +1868,8 @@ mesh = SubResource("PlaneMesh_cq2t5")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoCopa/Copa" unique_id=1976530936]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
-light_color = Color(1, 0.9, 0.78, 1)
-light_energy = 2.2
+light_color = Color(0.9, 0.96, 0.94, 1)
+light_energy = 2.1
 light_specular = 0.6
 spot_range = 17.5
 spot_attenuation = 0.0
@@ -1899,8 +1900,8 @@ mesh = SubResource("PlaneMesh_wnesm")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoCopa/Arco" unique_id=74569496]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
-light_color = Color(1, 0.9, 0.78, 1)
-light_energy = 2.2
+light_color = Color(0.9, 0.96, 0.94, 1)
+light_energy = 2.1
 light_specular = 0.6
 spot_range = 17.5
 spot_attenuation = 0.0
@@ -1931,8 +1932,8 @@ mesh = SubResource("PlaneMesh_184fl")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoCopa/Vigia" unique_id=1703030277]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
-light_color = Color(1, 0.9, 0.78, 1)
-light_energy = 2.2
+light_color = Color(0.9, 0.96, 0.94, 1)
+light_energy = 2.1
 light_specular = 0.6
 spot_range = 17.5
 spot_attenuation = 0.0
@@ -2386,11 +2387,11 @@ script = ExtResource("41_5ia7f")
 color = Color(1.35, 1.15, 0.9, 1)
 radius = 3.0
 
-[node name="CaidaLA30" type="Node3D" parent="PisoCopa" unique_id=988927801 instance=ExtResource("63_borgw")]
+[node name="CaidaLA30" type="Node3D" parent="PisoCopa" unique_id=1286149212 instance=ExtResource("63_borgw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 14)
 script = ExtResource("64_lvm7h")
 
-[node name="CaidaLA31" type="Node3D" parent="PisoCopa" unique_id=1418240881 instance=ExtResource("63_borgw")]
+[node name="CaidaLA31" type="Node3D" parent="PisoCopa" unique_id=1342588774 instance=ExtResource("63_borgw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 28)
 script = ExtResource("64_lvm7h")
 
@@ -2428,6 +2429,9 @@ south_wall_reach = 1.7
 [node name="EnfoqueLA" type="Node" parent="TopDownCamera" unique_id=1778193251]
 script = ExtResource("62_b5g6x")
 near_margin = 3.5
+
+[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1899554999 instance=ExtResource("71_lvm7h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=960326471 instance=ExtResource("46_kifxg")]
 layer = 10

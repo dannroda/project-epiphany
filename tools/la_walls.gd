@@ -59,9 +59,6 @@ const CELL := 2.0
 ## Un haz cada tantos metros de hueco.
 const SHAFT_SPACING := 6.0
 const GLOW_INTENSITY := 0.2
-## Luz de relleno fría, como el ambiente de las salas de LA.
-const AMBIENT_COLOR := Color(0.62, 0.72, 0.85)
-const AMBIENT_ENERGY := 1.3
 const GLOSS_ROUGHNESS := 0.5
 const GLOSS_SPECULAR := 0.4
 const EXPOSURE := 1.0
@@ -94,15 +91,21 @@ const FOCUS_FAR := 2.5
 const ROOM_LIGHT_HEIGHT := 7.0
 const ROOM_LIGHT_SOUTH := 1.5
 const ROOM_LIGHT_TILT := 13.0
-const ROOM_LIGHT_COLOR := Color(1.0, 0.9, 0.78)
-const ROOM_LIGHT_ENERGY := 2.2
 const ROOM_LIGHT_ANGLE := 75.0
 ## Menos de 1: el borde del foco se esfuma de a poco en vez de cortar.
 const ROOM_LIGHT_SOFTNESS := 0.5
-## En lugar del sol, la luz fría de LA que llega del lado de la cámara (el sur, en alto) y aclara las caras de las paredes.
-const SUN_ENERGY := 0.7
-const SUN_COLOR := Color(0.62, 0.78, 1.0)
+## En lugar del sol, la luz de LA que llega del lado de la cámara (el sur, en alto) y aclara las caras de las paredes.
 const SUN_ELEVATION := 40.0
+## Luz de cada mazmorra: ambiente de relleno, la luz del lado de la cámara (sun), el foco de cada sala (room) y el polvo que
+## flota delante de la cámara. La Chullpa, cálida y polvorienta; la Queñoa, fría y húmeda.
+const LOOKS := {
+	"chullpa": {"ambient": Color(0.76, 0.7, 0.66), "ambient_energy": 1.25, "sun": Color(0.85, 0.8, 0.74), "sun_energy": 0.65,
+		"room": Color(1.0, 0.87, 0.7), "room_energy": 2.3, "dust": "res://src/world/look/polvo_chullpa.tscn"},
+	"quenoa": {"ambient": Color(0.56, 0.7, 0.8), "ambient_energy": 1.35, "sun": Color(0.6, 0.8, 0.98), "sun_energy": 0.75,
+		"room": Color(0.9, 0.96, 0.94), "room_energy": 2.1, "dust": "res://src/world/look/polvo_quenoa.tscn"},
+}
+## El polvo va colgado de la cámara, a esta distancia por delante (más cerca que el player).
+const DUST_AHEAD := 20.0
 func _initialize() -> void:
 	var args := OS.get_cmdline_user_args()
 	var mode := args[0] if not args.is_empty() else "export"
@@ -160,6 +163,7 @@ func _initialize() -> void:
 		for node: Node in level.find_children("*", "", true, false):
 			if node.scene_file_path.ends_with("door.tscn"):
 				_door(level, node)
+	_look(level, LOOKS[args[1]])
 	var packed := PackedScene.new()
 	packed.pack(level)
 	var uid := ResourceLoader.get_resource_uid(path)
@@ -225,8 +229,6 @@ func _dress(level: Node) -> void:
 			var env := (node as WorldEnvironment).environment.duplicate() as Environment
 			env.background_color = Color.BLACK
 			env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-			env.ambient_light_color = AMBIENT_COLOR
-			env.ambient_light_energy = AMBIENT_ENERGY
 			env.tonemap_mode = Environment.TONE_MAPPER_LINEAR
 			env.tonemap_exposure = EXPOSURE
 			env.reflected_light_source = Environment.REFLECTION_SOURCE_BG
@@ -245,8 +247,6 @@ func _dress(level: Node) -> void:
 			(node as WorldEnvironment).compositor = compositor
 		elif node is DirectionalLight3D:
 			var sun := node as DirectionalLight3D
-			sun.light_energy = SUN_ENERGY
-			sun.light_color = SUN_COLOR
 			sun.rotation = Vector3(deg_to_rad(-SUN_ELEVATION), 0, 0)
 			sun.shadow_enabled = false
 		elif node is Camera3D and "cuts_south_wall" in node:
@@ -317,13 +317,38 @@ func _floor(material: Material) -> Material:
 	return _glossy_cache[material]
 
 
+## Colores y fuerza de las luces de la mazmorra y el polvo (una escena por mazmorra, para ajustarla a ojo); se vuelve a aplicar en cada refresh.
+func _look(level: Node, look: Dictionary) -> void:
+	var cameras: Array[Node] = []
+	for node: Node in level.find_children("*", "", true, false):
+		if node is WorldEnvironment:
+			var env := (node as WorldEnvironment).environment
+			env.ambient_light_color = look.ambient
+			env.ambient_light_energy = look.ambient_energy
+		elif node is DirectionalLight3D:
+			(node as DirectionalLight3D).light_color = look.sun
+			(node as DirectionalLight3D).light_energy = look.sun_energy
+		elif node is SpotLight3D and node.name == "LuzSala":
+			(node as SpotLight3D).light_color = look.room
+			(node as SpotLight3D).light_energy = look.room_energy
+		elif node is Camera3D and "cuts_south_wall" in node:
+			cameras.append(node)
+	for camera: Node in cameras:
+		var old := camera.get_node_or_null("Polvo")
+		if old:
+			camera.remove_child(old)
+			old.free()
+		var dust := (load(look.dust) as PackedScene).instantiate() as Node3D
+		dust.position = Vector3(0, 0, -DUST_AHEAD)
+		camera.add_child(dust)
+		dust.owner = level
+
+
 func _light(level: Node, room: Area3D) -> void:
 	var shape := room.get_node("CollisionShape3D") as CollisionShape3D
 	var floor_y := shape.position.y - (shape.shape as BoxShape3D).size.y / 2.0
 	var spot := SpotLight3D.new()
 	spot.name = "LuzSala"
-	spot.light_color = ROOM_LIGHT_COLOR
-	spot.light_energy = ROOM_LIGHT_ENERGY
 	spot.spot_range = ROOM_LIGHT_HEIGHT * 2.5
 	spot.spot_angle = ROOM_LIGHT_ANGLE
 	spot.spot_attenuation = 0.0
