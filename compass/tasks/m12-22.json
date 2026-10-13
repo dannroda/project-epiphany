@@ -1,0 +1,22 @@
+{
+  "assignee": "Claude",
+  "checklist": [],
+  "code": "12.22",
+  "created_at": "2026-10-13T21:54:18.124Z",
+  "description": "Daniel aprobó el logo de 12.20 y lo quiere también en el splash. El boot splash de Godot pasa a mostrar assets/ui/logo/epiphany_splash.png (el logo a 600 px, sin estirar) sobre el mismo fondo oscuro de la pantalla de título (Color(0.043, 0.051, 0.063)), así el paso del splash al título no se nota.",
+  "done_at": "2026-10-13T21:54:18.463Z",
+  "milestone": "m12",
+  "notes": "",
+  "order": 22,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "done",
+  "tags": [
+    "arte",
+    "ui"
+  ],
+  "test": "",
+  "title": "Splash con el logo y la paleta del theme",
+  "updated_at": "2026-10-13T21:54:18.463Z"
+}

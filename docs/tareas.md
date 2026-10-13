@@ -4603,7 +4603,7 @@ Daniel: entrando al santuario por la puerta de atrás se salía por la de abajo 
 
 **Prueba:** test_shrine › test_the_back_door_skips_neither_the_shortcut_nor_the_cracked_wall: por atrás arranca afuera de la reja cerrada y no pasa; la salida está tapada por el muro de adentro; con el flag del muro de afuera, el de adentro está roto. test_overworld_run sigue pasando.
 
-## M12 — Assets propios (Blender)  (13/21)
+## M12 — Assets propios (Blender)  (14/22)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -5079,6 +5079,12 @@ Para después de terminar los assets (Daniel). El ojo de los interruptores de fl
 - [ ] Rediseñar ojo_globo con la forma del ojo del jefe final (iris, pupila separada, brillo)
 - [ ] La pupila mira al player más cercano en eye_switch.gd, suave y con límite de ángulo; quieta cuando el ojo está apagado o ya resuelto
 - [ ] Probar que siga funcionando como blanco de flecha (test_secrets, test_overworld)
+
+### 12.22 Splash con el logo y la paleta del theme · Hecho
+
+**Terminada:** 2026-10-13 · **Prioridad:** baja · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `arte`, `ui`
+
+Daniel aprobó el logo de 12.20 y lo quiere también en el splash. El boot splash de Godot pasa a mostrar assets/ui/logo/epiphany_splash.png (el logo a 600 px, sin estirar) sobre el mismo fondo oscuro de la pantalla de título (Color(0.043, 0.051, 0.063)), así el paso del splash al título no se nota.
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 
