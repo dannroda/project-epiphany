@@ -483,9 +483,28 @@ def heart_points(size, steps=20):
 	return pts
 
 
-def heart(p, size, thick, swatch="tela_roja", layers=6):
+def clip(points, keep):
+	"""El polígono recortado al semiplano keep(punto) >= 0 (Sutherland-Hodgman)."""
+	out = []
+	for a, b in zip(points, points[1:] + points[:1]):
+		ka, kb = keep(a), keep(b)
+		if ka >= 0:
+			out.append(a)
+		if (ka >= 0) != (kb >= 0):
+			t = ka / (ka - kb)
+			out.append((a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t))
+	return out
+
+
+## Donde se cruzan los cortes de la pieza de corazón (un cuarto: el lóbulo de arriba a la derecha).
+QUARTER_Y = -0.25
+
+
+def heart(p, size, thick, swatch="tela_roja", layers=6, quarter=False):
 	"""Corazón parado y abombado (el contorno se achica hacia el frente y la espalda), mirando a -Y."""
-	outline = heart_points(size, steps=36)
+	outline = heart_points(size, steps=72 if quarter else 36)
+	if quarter:
+		outline = clip(clip(outline, lambda q: q[0]), lambda q: q[1] - QUARTER_Y * size)
 	rings = []
 	for k in range(-layers, layers + 1):
 		t = k / layers
@@ -510,6 +529,21 @@ def contenedor(p):
 		b = p.blob((math.cos(a) * 0.42, 0, 0.36 + math.sin(a) * 0.42), 0.045, subdiv=2, rough=0.0)
 		ring += b
 	p.paint(ring, "dorado", "LIGHT")
+
+
+def pieza_corazon(p):
+	"""La pieza de corazón: un cuarto del corazón del contenedor (el lóbulo de arriba a la derecha) con un filete dorado
+	en los dos cortes."""
+	size = 0.32
+	heart(p, size, 0.14, quarter=True)
+	beads = []
+	cx, cz = 0.0, size * 1.05 + QUARTER_Y * size
+	notch = (5 / 16 - QUARTER_Y) * size
+	for k in range(6):
+		beads += p.blob((0.02 + k * 0.052, 0.0, cz), 0.022, subdiv=1, rough=0.0)
+	for k in range(4):
+		beads += p.blob((cx, 0.0, cz + 0.02 + k * (notch - 0.04) / 3), 0.022, subdiv=1, rough=0.0)
+	p.paint(beads, "dorado", "LIGHT")
 
 
 piece("corazon", 15, lambda p: heart(p, 0.2, 0.1), smooth=70)
@@ -704,6 +738,7 @@ piece("interruptor_peso_marco", 35, interruptor_peso_marco, smooth=40)
 piece("interruptor_peso_placa", 36, interruptor_peso_placa, smooth=40)
 piece("poste_gancho", 37, poste_gancho, smooth=40)
 piece("poste_gancho_anillo", 38, poste_gancho_anillo, smooth=40)
+piece("pieza_corazon", 39, pieza_corazon, smooth=70)
 
 epi.layout(kit, columns=6, spacing=2.0)
 epi.publish("objetos")

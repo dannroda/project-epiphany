@@ -3,13 +3,29 @@
     {
       "done": false,
       "text": "Propuesta"
+    },
+    {
+      "done": false,
+      "text": "Listar las mecánicas nuevas y dónde aparecen por primera vez: cada ítem (pluma, arco, sandalias, gancho, escudo espejo, bombas) y sus usos no obvios (flecha al ojo, salto largo, reflejar el haz), además de levantar, empujar, placas, etc."
+    },
+    {
+      "done": false,
+      "text": "Mini tutorial al agarrar un ítem: después del item get, un aviso corto con el botón del dispositivo actual y la mecánica que abre (p. ej. arco: 'dispará a los ojos de piedra')"
+    },
+    {
+      "done": false,
+      "text": "Una situación para probarlo enseguida, cerca de donde se consigue (el primer ojo justo después del sub-jefe, etc.), en la línea de 11.90"
+    },
+    {
+      "done": false,
+      "text": "Revisar las tablitas del claro: cuáles quedan y cuáles reemplaza el mini tutorial"
     }
   ],
   "code": "11.105",
   "created_at": "2026-10-12T08:17:06.289Z",
-  "description": "Playtest 2026-10-12: las tablitas del claro (11.45) funcionan, pero no son la mejor forma de enseñar los controles. Buscar otra.",
+  "description": "Playtest 2026-10-12: las tablitas del claro (11.45) funcionan, pero no son la mejor forma de enseñar los controles. Buscar otra. 2026-10-13 (Daniel): un mini tutorial cada vez que aparece una mecánica nueva, empezando por agarrar un ítem: qué hace, con qué botón y una situación para probarlo enseguida. Ejemplo: con el arco Daniel se olvidó de que dispararle al ojo era una mecánica; el juego tiene que mostrarlo.",
   "milestone": "m11",
-  "notes": "Con 11.90 (cada mazmorra enseña su ítem).",
+  "notes": "Con 11.90 (cada mazmorra enseña su ítem). Daniel 2026-10-13: queda para el final, porque va a involucrar bastante rediseño.",
   "order": 102,
   "priority": "low",
   "refs": [],
@@ -21,5 +37,5 @@
   ],
   "test": "",
   "title": "Repensar el tutorial",
-  "updated_at": "2026-10-12T08:17:07.228Z"
+  "updated_at": "2026-10-13T21:28:57.143Z"
 }

@@ -8,7 +8,7 @@ extends SceneTree
 ## Las paredes finitas sueltas (piso a los dos lados) son paredes bajas (muro). Las celdas Puerta llevan un corte (paso) o, si tienen escalera, un corte ciego con escalones (sube, baja).
 ## godot --headless --path . --script res://tools/la_walls.gd -- export | bake <nivel> | refresh <nivel>
 
-const LEVELS := {"chullpa": "res://levels/chullpa.tscn", "quenoa": "res://levels/quenoa.tscn", "templo": "res://levels/templo.tscn", "totora": "res://levels/totora.tscn",
+const LEVELS := {"chullpa": "res://levels/chullpa.tscn", "quenoa": "res://levels/quenoa.tscn", "templo": "res://levels/templo.tscn", "totora": "res://levels/totora.tscn", "cumbre": "res://levels/cumbre.tscn",
 	"bomb_cave": "res://levels/bomb_cave.tscn", "bush_cave": "res://levels/bush_cave.tscn", "grotto_cave": "res://levels/grotto_cave.tscn",
 	"shrine_cave": "res://levels/shrine_cave.tscn", "spring_cave": "res://levels/spring_cave.tscn"}
 ## Niveles que comparten el look de otro (LOOKS).
@@ -128,6 +128,13 @@ const LOOKS := {
 		"walls": "res://assets/epiphany/meshes/paredes_la/%s_totora_la_%s.res", "kit": "res://data/kits/totora_la_kit.tres", "grain": [0.0, GRAIN_RECT],
 		"spread": false, "water": true,
 		"floor": {"plank_width": 0.24, "plank_length": 2.6, "floor_color": Color(0.6, 0.55, 0.4, 1.0), "grout_width": 0.02, "grout_shade": 0.45, "tone_spread": 0.12}},
+	"cumbre": {"ambient": Color(0.66, 0.72, 0.84), "ambient_energy": 1.3, "sun": Color(0.86, 0.92, 1.0), "sun_energy": 0.8,
+		"room": Color(1.0, 0.94, 0.82), "room_energy": 2.0, "dust": "res://src/world/look/polvo_cumbre.tscn",
+		"brazier": "res://assets/epiphany/meshes/templo/brasero.res",
+		"doors": "res://assets/epiphany/meshes/paredes_la/%s_cumbre_la.res",
+		"walls": "res://assets/epiphany/meshes/paredes_la/%s_cumbre_la_%s.res", "kit": "res://data/kits/cumbre_la_kit.tres", "grain": [0.0, GRAIN_RECT],
+		"spread": false,
+		"floor": {"tile_size": 1.0, "jitter": 0.22, "grout_width": 0.05, "grout_shade": 0.42, "floor_color": Color(0.34, 0.37, 0.43, 1.0)}},
 	"cueva": {"ambient": Color(0.48, 0.5, 0.6), "ambient_energy": 0.85, "sun": Color(0.66, 0.7, 0.82), "sun_energy": 0.4,
 		"room": Color(0.98, 0.86, 0.7), "room_energy": 1.6, "dust": "res://src/world/look/polvo_quenoa.tscn",
 		"brazier": "res://assets/epiphany/meshes/templo_chullpa/brasero.res",

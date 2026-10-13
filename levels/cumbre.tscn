@@ -1,0 +1,2868 @@
+[gd_scene format=3 uid="uid://d3dpm2jurwutg"]
+
+[ext_resource type="Script" path="res://src/world/dungeon.gd" id="1_13f58"]
+[ext_resource type="Script" path="res://src/world/look/sombra_la.gd" id="2_7g75p"]
+[ext_resource type="Script" path="res://src/world/dungeon_floor.gd" id="2_14otx"]
+[ext_resource type="Script" path="res://src/world/look/tono_la.gd" id="3_brl33"]
+[ext_resource type="Script" path="res://src/world/room.gd" id="4_q0gdl"]
+[ext_resource type="MeshLibrary" path="res://data/kits/cumbre_la_kit.tres" id="5_4jd4h"]
+[ext_resource type="PackedScene" path="res://src/world/light/light_source.tscn" id="5_ku7rw"]
+[ext_resource type="PackedScene" path="res://src/world/light/light_receiver.tscn" id="6_4jevl"]
+[ext_resource type="Shader" path="res://src/world/look/borde_oscuro.gdshader" id="7_gxog7"]
+[ext_resource type="Script" path="res://src/world/light/light_receiver.gd" id="7_klotd"]
+[ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="8_fwfcf"]
+[ext_resource type="Script" path="res://src/world/gate.gd" id="9_438do"]
+[ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="10_rdvwa"]
+[ext_resource type="Script" path="res://src/world/breakable.gd" id="11_24ve7"]
+[ext_resource type="Resource" path="res://data/drops/pot_bombs.tres" id="12_yg4lr"]
+[ext_resource type="PackedScene" path="res://src/entities/enemy.tscn" id="13_jmy4b"]
+[ext_resource type="Script" path="res://src/entities/enemy.gd" id="14_go6dy"]
+[ext_resource type="Resource" path="res://data/entities/skeleton.tres" id="15_o126x"]
+[ext_resource type="Script" path="res://src/world/pit.gd" id="16_exwn3"]
+[ext_resource type="PackedScene" path="res://src/world/hook_post.tscn" id="17_oj03r"]
+[ext_resource type="Script" path="res://src/world/hook_post.gd" id="18_68f12"]
+[ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="19_7ysid"]
+[ext_resource type="Script" path="res://src/world/chest.gd" id="20_7g75p"]
+[ext_resource type="Resource" path="res://data/items/small_key.tres" id="21_brl33"]
+[ext_resource type="PackedScene" path="res://src/world/cracked_wall.tscn" id="22_4jd4h"]
+[ext_resource type="Script" path="res://src/world/cracked_wall.gd" id="23_gxog7"]
+[ext_resource type="Resource" path="res://data/items/compass.tres" id="24_kw1ob"]
+[ext_resource type="PackedScene" path="res://src/entities/turret/turret.tscn" id="25_dhxby"]
+[ext_resource type="Script" path="res://src/entities/turret/turret.gd" id="26_cse1y"]
+[ext_resource type="Resource" path="res://data/entities/turret.tres" id="27_xnqix"]
+[ext_resource type="PackedScene" path="res://src/world/eye_switch.tscn" id="28_torf6"]
+[ext_resource type="Script" path="res://src/world/eye_switch.gd" id="29_xckga"]
+[ext_resource type="Resource" path="res://data/items/dungeon_map.tres" id="30_76gtr"]
+[ext_resource type="PackedScene" path="res://src/world/door.tscn" id="31_kvxlt"]
+[ext_resource type="Script" path="res://src/world/door.gd" id="32_t0ubp"]
+[ext_resource type="Resource" path="res://data/drops/pot.tres" id="33_62nxm"]
+[ext_resource type="Script" path="res://src/world/arena_fight.gd" id="34_j1npm"]
+[ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="35_ckdpb"]
+[ext_resource type="Material" path="res://src/world/look/marca_visible.tres" id="36_kw1ob"]
+[ext_resource type="PackedScene" path="res://src/entities/mummy_guard/mummy_guard.tscn" id="36_pio1q"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_llave_cumbre_la.res" id="37_dhxby"]
+[ext_resource type="Script" path="res://src/entities/mummy_guard/mummy_guard.gd" id="37_e6m1n"]
+[ext_resource type="Texture2D" path="res://assets/ui/lock.svg" id="38_cse1y"]
+[ext_resource type="Resource" path="res://data/entities/mummy_guard.tres" id="38_l3lwn"]
+[ext_resource type="Resource" path="res://data/items/shield_mirror.tres" id="39_23rcs"]
+[ext_resource type="Script" path="res://src/components/interactable.gd" id="39_xnqix"]
+[ext_resource type="PackedScene" path="res://src/world/stairs.tscn" id="40_pku4l"]
+[ext_resource type="Script" path="res://src/world/stairs.gd" id="41_l2pft"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_interruptor_cumbre_la.res" id="41_torf6"]
+[ext_resource type="PackedScene" path="res://src/world/wall_torch.tscn" id="42_ef7sn"]
+[ext_resource type="PackedScene" path="res://src/world/light/rotating_mirror.tscn" id="43_mllp2"]
+[ext_resource type="Script" path="res://src/world/light/rotating_mirror.gd" id="44_kfpir"]
+[ext_resource type="PackedScene" path="res://src/entities/shield_skeleton.tscn" id="45_gdvd1"]
+[ext_resource type="Resource" path="res://data/entities/shield_skeleton.tres" id="46_qyx7g"]
+[ext_resource type="Resource" path="res://data/items/boss_key.tres" id="47_nsu1x"]
+[ext_resource type="PackedScene" path="res://src/entities/archer_skeleton.tscn" id="48_85p4s"]
+[ext_resource type="Resource" path="res://data/entities/archer_skeleton.tres" id="49_26eur"]
+[ext_resource type="PackedScene" path="res://src/world/heart_piece.tscn" id="50_3sus1"]
+[ext_resource type="Script" path="res://src/world/heart_piece.gd" id="51_g60oh"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo/brasero.res" id="51_xckga"]
+[ext_resource type="Resource" path="res://data/items/heart_piece.tres" id="52_7jck0"]
+[ext_resource type="Shader" path="res://src/world/look/llama_la.gdshader" id="52_76gtr"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/corazon.res" id="53_j23tx"]
+[ext_resource type="Script" path="res://src/world/torch_flicker.gd" id="53_kvxlt"]
+[ext_resource type="PackedScene" path="res://src/world/stairs_down.tscn" id="54_rnlef"]
+[ext_resource type="Script" path="res://src/feel/stencil_light/stencil_light.gd" id="54_t0ubp"]
+[ext_resource type="PackedScene" path="res://src/entities/watcher_eye/watcher_eye.tscn" id="55_4msbc"]
+[ext_resource type="Script" path="res://src/entities/watcher_eye/watcher_eye.gd" id="56_ogo5c"]
+[ext_resource type="Resource" path="res://data/entities/watcher_eye_boss.tres" id="57_5qx8i"]
+[ext_resource type="PackedScene" path="res://src/world/pickup.tscn" id="58_g0mo4"]
+[ext_resource type="Script" path="res://src/world/pickup.gd" id="59_8xsdw"]
+[ext_resource type="Resource" path="res://data/items/heart_container.tres" id="60_fyak5"]
+[ext_resource type="PackedScene" path="res://src/world/warp_portal.tscn" id="61_2o8gx"]
+[ext_resource type="Script" path="res://src/world/portal.gd" id="62_281cb"]
+[ext_resource type="PackedScene" path="res://player/player.tscn" id="63_j6pnl"]
+[ext_resource type="Script" path="res://player/player.gd" id="64_v1lp2"]
+[ext_resource type="Resource" path="res://data/entities/player.tres" id="65_ilu4u"]
+[ext_resource type="Script" path="res://src/world/spawn_point.gd" id="66_2bu1c"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_jefe_cumbre_la.res" id="66_62nxm"]
+[ext_resource type="Script" path="res://src/tools/top_down_camera.gd" id="67_fxe5v"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="68_diwyx"]
+[ext_resource type="PackedScene" path="res://src/world/look/caida_la.tscn" id="68_j1npm"]
+[ext_resource type="Script" path="res://src/world/look/caida_la.gd" id="69_ckdpb"]
+[ext_resource type="Script" path="res://src/ui/hud/hud.gd" id="69_o6c27"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/player_panel_solo.tscn" id="70_5pw4d"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/player_panel.tscn" id="71_o4cut"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/item_ring.tscn" id="72_e8ugc"]
+[ext_resource type="Script" path="res://src/world/look/enfoque_la.gd" id="83_pio1q"]
+[ext_resource type="PackedScene" path="res://src/world/look/polvo_cumbre.tscn" id="84_e6m1n"]
+[ext_resource type="Script" path="res://src/world/look/brillo_la.gd" id="91_l3lwn"]
+[ext_resource type="NavigationMesh" path="res://levels/nav/cumbre_navmesh.tres" id="nav_cumbre"]
+
+[sub_resource type="Environment" id="Environment_23rcs"]
+background_mode = 1
+ambient_light_source = 2
+ambient_light_color = Color(0.66, 0.72, 0.84, 1)
+ambient_light_energy = 1.3
+glow_enabled = true
+glow_intensity = 0.2
+glow_blend_mode = 0
+glow_hdr_threshold = 0.25
+fog_light_color = Color(0.25, 0.08, 0.06, 1)
+fog_density = 0.0
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_pku4l"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("2_7g75p")
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_l2pft"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("3_brl33")
+exposure = 1.0
+
+[sub_resource type="Compositor" id="Compositor_ef7sn"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_pku4l"), SubResource("CompositorEffect_l2pft")])
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_54876"]
+size = Vector3(14, 2.4, 12)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mllp2"]
+render_priority = 0
+shader = ExtResource("7_gxog7")
+shader_parameter/inner = Vector4(0.7, 0.6, 15.3, 13.9)
+shader_parameter/outer = Vector4(-0.8, -0.8, 16.8, 14.8)
+shader_parameter/limit = Vector4(-1.2, -1.2, 16, 14)
+shader_parameter/plane_y = 3.0
+shader_parameter/floor_rect = Vector4(1, 1, 15, 13)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_kfpir"]
+material = SubResource("ShaderMaterial_mllp2")
+size = Vector2(25.2, 23.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7nkmh"]
+size = Vector3(14, 2.4, 12)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gdvd1"]
+render_priority = 0
+shader = ExtResource("7_gxog7")
+shader_parameter/inner = Vector4(16.7, 0.6, 31.3, 13.9)
+shader_parameter/outer = Vector4(15.2, -0.8, 32.8, 14.8)
+shader_parameter/limit = Vector4(16, -1.2, 32, 14)
+shader_parameter/plane_y = 3.0
+shader_parameter/floor_rect = Vector4(17, 1, 31, 13)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_qyx7g"]
+material = SubResource("ShaderMaterial_gdvd1")
+size = Vector2(25.2, 23.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gvpcf"]
+size = Vector3(14, 2.4, 12)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nsu1x"]
+render_priority = 0
+shader = ExtResource("7_gxog7")
+shader_parameter/inner = Vector4(32.7, 0.6, 47.3, 13.9)
+shader_parameter/outer = Vector4(31.2, -0.8, 48.8, 14.8)
+shader_parameter/limit = Vector4(32, -1.2, 49.199997, 14)
+shader_parameter/plane_y = 3.0
+shader_parameter/floor_rect = Vector4(33, 1, 47, 13)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_85p4s"]
+material = SubResource("ShaderMaterial_nsu1x")
+size = Vector2(25.2, 23.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vbt54"]
+size = Vector3(14, 2.4, 12)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_26eur"]
+render_priority = 0
+shader = ExtResource("7_gxog7")
+shader_parameter/inner = Vector4(0.7, 14.6, 15.3, 27.9)
+shader_parameter/outer = Vector4(-0.8, 13.2, 16.8, 28.8)
+shader_parameter/limit = Vector4(-1.2, 14, 16, 29.2)
+shader_parameter/plane_y = 3.0
+shader_parameter/floor_rect = Vector4(1, 15, 15, 27)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_3sus1"]
+material = SubResource("ShaderMaterial_26eur")
+size = Vector2(25.2, 23.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lvhhx"]
+size = Vector3(14, 2.4, 12)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g60oh"]
+render_priority = 0
+shader = ExtResource("7_gxog7")
+shader_parameter/inner = Vector4(16.7, 14.6, 31.3, 27.9)
+shader_parameter/outer = Vector4(15.2, 13.2, 32.8, 28.8)
+shader_parameter/limit = Vector4(16, 14, 32, 29.2)
+shader_parameter/plane_y = 3.0
+shader_parameter/floor_rect = Vector4(17, 15, 31, 27)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_7jck0"]
+material = SubResource("ShaderMaterial_g60oh")
+size = Vector2(25.2, 23.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1sq4v"]
+size = Vector3(14, 2.4, 12)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j23tx"]
+render_priority = 0
+shader = ExtResource("7_gxog7")
+shader_parameter/inner = Vector4(32.7, 14.6, 47.3, 27.9)
+shader_parameter/outer = Vector4(31.2, 13.2, 48.8, 28.8)
+shader_parameter/limit = Vector4(32, 14, 49.199997, 29.2)
+shader_parameter/plane_y = 3.0
+shader_parameter/floor_rect = Vector4(33, 15, 47, 27)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_rnlef"]
+material = SubResource("ShaderMaterial_j23tx")
+size = Vector2(25.2, 23.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vd0qd"]
+size = Vector3(8, 2.4, 12)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2t8pu"]
+size = Vector3(14, 2.4, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_smahj"]
+size = Vector3(14, 2.4, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0so67"]
+size = Vector3(14, 2.4, 2)
+
+[sub_resource type="BoxShape3D" id="Shape"]
+size = Vector3(2, 2.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="InteractShape"]
+size = Vector3(2, 1.6, 2.6)
+
+[sub_resource type="BoxShape3D" id="Trigger"]
+size = Vector3(1.6, 1.5, 0.8)
+
+[sub_resource type="BoxShape3D" id="Back"]
+size = Vector3(1.8, 2.4, 0.7)
+
+[sub_resource type="BoxMesh" id="Step1"]
+size = Vector3(1.5, 0.2, 1.6)
+
+[sub_resource type="StandardMaterial3D" id="Stone1"]
+albedo_color = Color(0.42, 0.37, 0.33, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="Step2"]
+size = Vector3(1.5, 0.4, 1.2)
+
+[sub_resource type="StandardMaterial3D" id="Stone2"]
+albedo_color = Color(0.3, 0.26, 0.23, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="Step3"]
+size = Vector3(1.5, 0.6, 0.8)
+
+[sub_resource type="StandardMaterial3D" id="Stone3"]
+albedo_color = Color(0.18, 0.16, 0.14, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="Step4"]
+size = Vector3(1.5, 0.8, 0.4)
+
+[sub_resource type="StandardMaterial3D" id="Stone4"]
+albedo_color = Color(0.09, 0.08, 0.08, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="Void"]
+size = Vector3(1.8, 2.4, 0.05)
+
+[sub_resource type="StandardMaterial3D" id="Dark"]
+shading_mode = 0
+albedo_color = Color(0.02, 0.02, 0.03, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4msbc"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_ogo5c"]
+material = SubResource("ShaderMaterial_4msbc")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5qx8i"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_g0mo4"]
+material = SubResource("ShaderMaterial_5qx8i")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8xsdw"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_fyak5"]
+material = SubResource("ShaderMaterial_8xsdw")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2o8gx"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_281cb"]
+material = SubResource("ShaderMaterial_2o8gx")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j6pnl"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_v1lp2"]
+material = SubResource("ShaderMaterial_j6pnl")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ilu4u"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_2bu1c"]
+material = SubResource("ShaderMaterial_ilu4u")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fxe5v"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_diwyx"]
+material = SubResource("ShaderMaterial_fxe5v")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o6c27"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_5pw4d"]
+material = SubResource("ShaderMaterial_o6c27")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o4cut"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_e8ugc"]
+material = SubResource("ShaderMaterial_o4cut")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_muntt"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_54876"]
+material = SubResource("ShaderMaterial_muntt")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7nkmh"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_gvpcf"]
+material = SubResource("ShaderMaterial_7nkmh")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vbt54"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_lvhhx"]
+material = SubResource("ShaderMaterial_vbt54")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j50qt"]
+size = Vector3(14, 2.4, 12)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1sq4v"]
+render_priority = 0
+shader = ExtResource("7_gxog7")
+shader_parameter/inner = Vector4(0.7, 0.6, 15.3, 13.9)
+shader_parameter/outer = Vector4(-0.8, -0.8, 16.8, 14.8)
+shader_parameter/limit = Vector4(-1.2, -1.2, 16, 14)
+shader_parameter/plane_y = 10.999999761581421
+shader_parameter/floor_rect = Vector4(1, 1, 15, 13)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_vd0qd"]
+material = SubResource("ShaderMaterial_1sq4v")
+size = Vector2(25.2, 23.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yv2nd"]
+size = Vector3(14, 2.4, 12)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2t8pu"]
+render_priority = 0
+shader = ExtResource("7_gxog7")
+shader_parameter/inner = Vector4(16.7, 0.6, 31.3, 13.9)
+shader_parameter/outer = Vector4(15.2, -0.8, 32.8, 14.8)
+shader_parameter/limit = Vector4(16, -1.2, 32, 14)
+shader_parameter/plane_y = 10.999999761581421
+shader_parameter/floor_rect = Vector4(17, 1, 31, 13)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_smahj"]
+material = SubResource("ShaderMaterial_2t8pu")
+size = Vector2(25.2, 23.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tqev7"]
+size = Vector3(14, 2.4, 12)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0so67"]
+render_priority = 0
+shader = ExtResource("7_gxog7")
+shader_parameter/inner = Vector4(32.7, 0.6, 47.3, 13.9)
+shader_parameter/outer = Vector4(31.2, -0.8, 48.8, 14.8)
+shader_parameter/limit = Vector4(32, -1.2, 49.199997, 14)
+shader_parameter/plane_y = 10.999999761581421
+shader_parameter/floor_rect = Vector4(33, 1, 47, 13)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_j50qt"]
+material = SubResource("ShaderMaterial_0so67")
+size = Vector2(25.2, 23.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8jp2h"]
+size = Vector3(14, 2.4, 12)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yv2nd"]
+render_priority = 0
+shader = ExtResource("7_gxog7")
+shader_parameter/inner = Vector4(0.7, 14.6, 15.3, 27.9)
+shader_parameter/outer = Vector4(-0.8, 13.2, 16.8, 28.8)
+shader_parameter/limit = Vector4(-1.2, 14, 16, 29.2)
+shader_parameter/plane_y = 10.999999761581421
+shader_parameter/floor_rect = Vector4(1, 15, 15, 27)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_tqev7"]
+material = SubResource("ShaderMaterial_yv2nd")
+size = Vector2(25.2, 23.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0evnq"]
+size = Vector3(14, 2.4, 12)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8jp2h"]
+render_priority = 0
+shader = ExtResource("7_gxog7")
+shader_parameter/inner = Vector4(16.7, 14.6, 31.3, 27.9)
+shader_parameter/outer = Vector4(15.2, 13.2, 32.8, 28.8)
+shader_parameter/limit = Vector4(16, 14, 32, 29.2)
+shader_parameter/plane_y = 10.999999761581421
+shader_parameter/floor_rect = Vector4(17, 15, 31, 27)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_0evnq"]
+material = SubResource("ShaderMaterial_8jp2h")
+size = Vector2(25.2, 23.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kmwtg"]
+size = Vector3(14, 2.4, 12)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kmwtg"]
+render_priority = 0
+shader = ExtResource("7_gxog7")
+shader_parameter/inner = Vector4(32.7, 14.6, 47.3, 27.9)
+shader_parameter/outer = Vector4(31.2, 13.2, 48.8, 28.8)
+shader_parameter/limit = Vector4(32, 14, 49.199997, 29.2)
+shader_parameter/plane_y = 10.999999761581421
+shader_parameter/floor_rect = Vector4(33, 15, 47, 27)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ci860"]
+material = SubResource("ShaderMaterial_kmwtg")
+size = Vector2(25.2, 23.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ci860"]
+size = Vector3(8, 2.4, 12)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3ey7r"]
+size = Vector3(6, 2.4, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_22y3b"]
+size = Vector3(8, 2.4, 6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k1vaf"]
+size = Vector3(1.6, 1.5, 0.8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_usmjl"]
+size = Vector3(1.8, 2.4, 0.7)
+
+[sub_resource type="BoxMesh" id="Opening"]
+size = Vector3(1.5, 0.02, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s8mxc"]
+shading_mode = 0
+albedo_color = Color(0.02, 0.02, 0.03, 1)
+
+[sub_resource type="BoxMesh" id="Step"]
+size = Vector3(1.5, 0.03, 0.22)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_atjnw"]
+albedo_color = Color(0.42, 0.37, 0.33, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n15gd"]
+albedo_color = Color(0.27, 0.24, 0.21, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1owpr"]
+albedo_color = Color(0.14, 0.12, 0.11, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_x4n6r"]
+size = Vector3(1.8, 2.4, 0.05)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fvqkw"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_4vut8"]
+material = SubResource("ShaderMaterial_fvqkw")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gecex"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_rw1ab"]
+material = SubResource("ShaderMaterial_gecex")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s4252"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_ckeau"]
+material = SubResource("ShaderMaterial_s4252")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5wqpm"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_5tp6c"]
+material = SubResource("ShaderMaterial_5wqpm")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bouvq"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_ijljl"]
+material = SubResource("ShaderMaterial_bouvq")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ci7uy"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_g4tu7"]
+material = SubResource("ShaderMaterial_ci7uy")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jd6yd"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_mj1qn"]
+material = SubResource("ShaderMaterial_jd6yd")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rbgcr"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_5cshr"]
+material = SubResource("ShaderMaterial_rbgcr")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ppg8r"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_6i1qi"]
+material = SubResource("ShaderMaterial_ppg8r")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kv663"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_uj6fr"]
+material = SubResource("ShaderMaterial_kv663")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fomyw"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_vgtog"]
+material = SubResource("ShaderMaterial_fomyw")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ovu3t"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_o8x28"]
+material = SubResource("ShaderMaterial_ovu3t")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xgonm"]
+size = Vector3(14, 2.4, 12)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2coyo"]
+render_priority = 0
+shader = ExtResource("7_gxog7")
+shader_parameter/inner = Vector4(32.7, 14.6, 47.3, 27.9)
+shader_parameter/outer = Vector4(31.2, 13.2, 48.8, 28.8)
+shader_parameter/limit = Vector4(30.8, 12.8, 49.199997, 29.2)
+shader_parameter/plane_y = 19.000000715255737
+shader_parameter/floor_rect = Vector4(33, 15, 47, 27)
+shader_parameter/hole_fade = null
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ixgep"]
+material = SubResource("ShaderMaterial_2coyo")
+size = Vector2(25.2, 23.2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oerog"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_t2rrj"]
+material = SubResource("ShaderMaterial_oerog")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_brsee"]
+render_priority = 0
+shader = ExtResource("52_76gtr")
+shader_parameter/core_color = null
+shader_parameter/edge_color = null
+shader_parameter/intensity = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_qclsk"]
+material = SubResource("ShaderMaterial_brsee")
+size = Vector2(0.45, 0.8)
+center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xbu6j"]
+size = Vector3(2, 2.4, 1.2)
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_ojknh"]
+dof_blur_far_enabled = true
+dof_blur_far_distance = 36.5
+dof_blur_far_transition = 6.0
+dof_blur_near_enabled = true
+dof_blur_near_distance = 30.5
+dof_blur_near_transition = 3.0
+dof_blur_amount = 0.12
+
+[node name="Cumbre" type="Node3D" unique_id=1563270906]
+
+[node name="Dungeon" type="Node" parent="." unique_id=1774830842]
+script = ExtResource("1_13f58")
+id = &"cu"
+display_name = "PLACE_CUMBRE"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=987746546]
+environment = SubResource("Environment_23rcs")
+compositor = SubResource("Compositor_ef7sn")
+
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=1907530480]
+transform = Transform3D(1, 0, 0, 0, 0.7660443, 0.6427875, 0, -0.6427875, 0.7660443, 0, 0, 0)
+light_color = Color(0.86, 0.92, 1, 1)
+light_energy = 0.8
+directional_shadow_mode = 1
+directional_shadow_max_distance = 32.0
+
+[node name="PisoBase" type="Node3D" parent="." unique_id=1002520350]
+script = ExtResource("2_14otx")
+display_name = "PLACE_FLOOR_GROUND"
+
+[node name="GridMap" type="GridMap" parent="PisoBase" unique_id=814848455 groups=["navmesh_source"]]
+mesh_library = ExtResource("5_4jd4h")
+cell_size = Vector3(2, 1, 2)
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+data = {
+"cells": PackedInt32Array(0, 0, 39, 0, 1, 22, 0, 2, 22, 0, 3, 22, 0, 4, 22, 0, 5, 22, 0, 6, 22, 0, 7, 56, 0, 8, 22, 0, 9, 22, 0, 10, 22, 0, 11, 22, 0, 12, 22, 0, 13, 22, 0, 14, 37, 1, 0, 33, 1, 1, 0, 1, 2, 10, 1, 3, 0, 1, 4, 10, 1, 5, 0, 1, 6, 0, 1, 7, 71, 1, 8, 0, 1, 9, 0, 1, 10, 0, 1, 11, 0, 1, 12, 0, 1, 13, 0, 1, 14, 26, 2, 0, 33, 2, 1, 0, 2, 2, 10, 2, 3, 0, 2, 4, 10, 2, 5, 0, 2, 6, 0, 2, 7, 71, 2, 8, 10, 2, 9, 10, 2, 10, 10, 2, 11, 10, 2, 12, 10, 2, 13, 10, 2, 14, 26, 3, 0, 33, 3, 1, 0, 3, 2, 10, 3, 3, 0, 3, 4, 10, 3, 5, 0, 3, 6, 0, 3, 7, 71, 3, 8, 10, 3, 9, 10, 3, 10, 10, 3, 11, 10, 3, 12, 10, 3, 13, 10, 3, 14, 26, 4, 0, 33, 4, 1, 0, 4, 2, 10, 4, 3, 0, 4, 4, 10, 4, 5, 0, 4, 6, 0, 4, 7, 71, 4, 8, 10, 4, 9, 10, 4, 10, 10, 4, 11, 10, 4, 12, 10, 4, 13, 10, 4, 14, 26, 5, 0, 33, 5, 1, 0, 5, 2, 10, 5, 3, 0, 5, 4, 10, 5, 5, 0, 5, 6, 0, 5, 7, 71, 5, 8, 10, 5, 9, 10, 5, 10, 10, 5, 11, 10, 5, 12, 10, 5, 13, 10, 5, 14, 26, 6, 0, 33, 6, 1, 0, 6, 2, 10, 6, 3, 0, 6, 4, 10, 6, 5, 0, 6, 6, 0, 6, 7, 79, 6, 8, 0, 6, 9, 0, 6, 10, 0, 6, 11, 0, 6, 12, 0, 6, 13, 0, 6, 14, 26, 7, 0, 33, 7, 1, 0, 7, 2, 10, 7, 3, 0, 7, 4, 10, 7, 5, 0, 7, 6, 0, 7, 7, 71, 7, 8, 0, 7, 9, 0, 7, 10, 0, 7, 11, 0, 7, 12, 0, 7, 13, 0, 7, 14, 26, 8, 0, 57, 8, 1, 50, 8, 2, 50, 8, 3, 50, 8, 4, 50, 8, 5, 50, 8, 6, 50, 8, 7, 74, 8, 8, 50, 8, 9, 50, 8, 10, 78, 8, 11, 50, 8, 12, 50, 8, 13, 50, 8, 14, 55, 9, 0, 33, 9, 1, 0, 9, 2, 0, 9, 3, 0, 9, 4, 0, 9, 5, 0, 9, 6, 0, 9, 7, 71, 9, 8, 0, 9, 9, 0, 9, 10, 0, 9, 11, 0, 9, 12, 0, 9, 13, 0, 9, 14, 26, 10, 0, 33, 10, 1, 0, 10, 2, 0, 10, 3, 0, 10, 4, 0, 10, 5, 0, 10, 6, 0, 10, 7, 71, 10, 8, 0, 10, 9, 0, 10, 10, 0, 10, 11, 0, 10, 12, 61, 10, 13, 59, 10, 14, 26, 11, 0, 33, 11, 1, 0, 11, 2, 0, 11, 3, 0, 11, 4, 0, 11, 5, 0, 11, 6, 0, 11, 7, 71, 11, 8, 0, 11, 9, 0, 11, 10, 0, 11, 11, 0, 11, 12, 0, 11, 13, 0, 11, 14, 27, 12, 0, 33, 12, 1, 0, 12, 2, 0, 12, 3, 0, 12, 4, 0, 12, 5, 0, 12, 6, 0, 12, 7, 79, 12, 8, 0, 12, 9, 0, 12, 10, 0, 12, 11, 0, 12, 12, 0, 12, 13, 0, 12, 14, 42, 13, 0, 33, 13, 1, 0, 13, 2, 0, 13, 3, 0, 13, 4, 0, 13, 5, 0, 13, 6, 0, 13, 7, 71, 13, 8, 0, 13, 9, 0, 13, 10, 0, 13, 11, 0, 13, 12, 0, 13, 13, 0, 13, 14, 28, 14, 0, 33, 14, 1, 0, 14, 2, 0, 14, 3, 0, 14, 4, 0, 14, 5, 0, 14, 6, 0, 14, 7, 71, 14, 8, 0, 14, 9, 0, 14, 10, 0, 14, 11, 0, 14, 12, 0, 14, 13, 0, 14, 14, 26, 15, 0, 33, 15, 1, 0, 15, 2, 0, 15, 3, 0, 15, 4, 0, 15, 5, 0, 15, 6, 0, 15, 7, 71, 15, 8, 0, 15, 9, 0, 15, 10, 0, 15, 11, 0, 15, 12, 0, 15, 13, 0, 15, 14, 26, 16, 0, 57, 16, 1, 50, 16, 2, 50, 16, 3, 78, 16, 4, 50, 16, 5, 50, 16, 6, 50, 16, 7, 74, 16, 8, 50, 16, 9, 50, 16, 10, 78, 16, 11, 50, 16, 12, 50, 16, 13, 50, 16, 14, 55, 17, 0, 33, 17, 1, 0, 17, 2, 0, 17, 3, 0, 17, 4, 0, 17, 5, 0, 17, 6, 0, 17, 7, 71, 17, 8, 0, 17, 9, 0, 17, 10, 0, 17, 11, 0, 17, 12, 0, 17, 13, 10, 17, 14, 26, 18, 0, 33, 18, 1, 0, 18, 2, 0, 18, 3, 0, 18, 4, 0, 18, 5, 0, 18, 6, 0, 18, 7, 71, 18, 8, 0, 18, 9, 0, 18, 10, 0, 18, 11, 0, 18, 12, 0, 18, 13, 10, 18, 14, 26, 19, 0, 33, 19, 1, 0, 19, 2, 0, 19, 3, 0, 19, 4, 0, 19, 5, 0, 19, 6, 0, 19, 7, 71, 19, 8, 0, 19, 9, 0, 19, 10, 76, 19, 11, 0, 19, 12, 0, 19, 13, 10, 19, 14, 26, 20, 0, 33, 20, 1, 0, 20, 2, 0, 20, 3, 0, 20, 4, 0, 20, 5, 0, 20, 6, 0, 20, 7, 71, 20, 8, 0, 20, 9, 0, 20, 10, 0, 20, 11, 0, 20, 12, 76, 20, 13, 10, 20, 14, 26, 21, 0, 33, 21, 1, 0, 21, 2, 0, 21, 3, 0, 21, 4, 0, 21, 5, 0, 21, 6, 0, 21, 7, 71, 21, 8, 0, 21, 9, 76, 21, 10, 0, 21, 11, 0, 21, 12, 0, 21, 13, 10, 21, 14, 26, 22, 0, 33, 22, 1, 0, 22, 2, 0, 22, 3, 0, 22, 4, 0, 22, 5, 0, 22, 6, 0, 22, 7, 82, 22, 8, 54, 22, 9, 0, 22, 10, 77, 22, 11, 0, 22, 12, 0, 22, 13, 10, 22, 14, 26, 23, 0, 33, 23, 1, 0, 23, 2, 77, 23, 3, 0, 23, 4, 77, 23, 5, 0, 23, 6, 0, 23, 7, 26, 23, 8, 33, 23, 9, 0, 23, 10, 81, 23, 11, 0, 23, 12, 0, 23, 13, 10, 23, 14, 26, 24, 0, 40, 24, 1, 30, 24, 2, 32, 24, 3, 47, 24, 4, 31, 24, 5, 30, 24, 6, 30, 24, 7, 38, 24, 8, 40, 24, 9, 30, 24, 10, 30, 24, 11, 30, 24, 12, 30, 24, 13, 30, 24, 14, 38)
+}
+
+[node name="Grieta" type="Area3D" parent="PisoBase" unique_id=1771456260]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.2, 7)
+script = ExtResource("4_q0gdl")
+display_name = "PLACE_CU_CREVICE"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoBase/Grieta" unique_id=707589150]
+shape = SubResource("BoxShape3D_54876")
+
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoBase/Grieta" unique_id=2002536149]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_kfpir")
+
+[node name="LuzSala" type="SpotLight3D" parent="PisoBase/Grieta" unique_id=1197827531]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(1, 0.94, 0.82, 1)
+light_energy = 2.0
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoBase/Grieta" unique_id=1199528686]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(18, 5, 16)
+box_projection = true
+interior = true
+ambient_mode = 0
+
+[node name="Nido" type="Area3D" parent="PisoBase" unique_id=1854752070]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.2, 7)
+script = ExtResource("4_q0gdl")
+room_index = 1
+display_name = "PLACE_CU_NEST"
+map_cell = Vector2i(1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoBase/Nido" unique_id=29812857]
+shape = SubResource("BoxShape3D_7nkmh")
+
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoBase/Nido" unique_id=1459433667]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_qyx7g")
+
+[node name="LuzSala" type="SpotLight3D" parent="PisoBase/Nido" unique_id=1059850984]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(1, 0.94, 0.82, 1)
+light_energy = 2.0
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoBase/Nido" unique_id=981206181]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(18, 5, 16)
+box_projection = true
+interior = true
+ambient_mode = 0
+
+[node name="Camara" type="Area3D" parent="PisoBase" unique_id=2097556896]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 7)
+script = ExtResource("4_q0gdl")
+room_index = 2
+display_name = "PLACE_CU_CHAMBER"
+map_cell = Vector2i(2, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoBase/Camara" unique_id=1982932514]
+shape = SubResource("BoxShape3D_gvpcf")
+
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoBase/Camara" unique_id=27705737]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_85p4s")
+
+[node name="LuzSala" type="SpotLight3D" parent="PisoBase/Camara" unique_id=1835841653]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(1, 0.94, 0.82, 1)
+light_energy = 2.0
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoBase/Camara" unique_id=223172876]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(18, 5, 16)
+box_projection = true
+interior = true
+ambient_mode = 0
+
+[node name="Columnas" type="Area3D" parent="PisoBase" unique_id=361881861]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.2, 21)
+script = ExtResource("4_q0gdl")
+room_index = 3
+display_name = "PLACE_CU_COLUMNS"
+map_cell = Vector2i(0, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoBase/Columnas" unique_id=745034267]
+shape = SubResource("BoxShape3D_vbt54")
+
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoBase/Columnas" unique_id=56452415]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_3sus1")
+
+[node name="LuzSala" type="SpotLight3D" parent="PisoBase/Columnas" unique_id=1608671798]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(1, 0.94, 0.82, 1)
+light_energy = 2.0
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoBase/Columnas" unique_id=883108264]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(18, 5, 16)
+box_projection = true
+interior = true
+ambient_mode = 0
+
+[node name="Atrio" type="Area3D" parent="PisoBase" unique_id=2072328956]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.2, 21)
+script = ExtResource("4_q0gdl")
+room_index = 4
+display_name = "PLACE_CU_ATRIUM"
+map_cell = Vector2i(1, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoBase/Atrio" unique_id=229019485]
+shape = SubResource("BoxShape3D_lvhhx")
+
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoBase/Atrio" unique_id=1236957297]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_7jck0")
+
+[node name="LuzSala" type="SpotLight3D" parent="PisoBase/Atrio" unique_id=1692305608]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(1, 0.94, 0.82, 1)
+light_energy = 2.0
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoBase/Atrio" unique_id=2077284147]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(18, 5, 16)
+box_projection = true
+interior = true
+ambient_mode = 0
+
+[node name="Ventisquero" type="Area3D" parent="PisoBase" unique_id=49368517]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 21)
+script = ExtResource("4_q0gdl")
+room_index = 5
+display_name = "PLACE_CU_SNOWDRIFT"
+map_cell = Vector2i(2, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoBase/Ventisquero" unique_id=676731364]
+shape = SubResource("BoxShape3D_1sq4v")
+
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoBase/Ventisquero" unique_id=1334240851]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_rnlef")
+
+[node name="LuzSala" type="SpotLight3D" parent="PisoBase/Ventisquero" unique_id=468686804]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(1, 0.94, 0.82, 1)
+light_energy = 2.0
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoBase/Ventisquero" unique_id=2074212083]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(18, 5, 16)
+box_projection = true
+interior = true
+ambient_mode = 0
+
+[node name="AtrioSun" type="StaticBody3D" parent="PisoBase" unique_id=1535922984 instance=ExtResource("5_ku7rw")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 18, 0, 16)
+
+[node name="AtrioCrystal" type="StaticBody3D" parent="PisoBase" unique_id=1795410918 instance=ExtResource("6_4jevl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0, 25)
+script = ExtResource("7_klotd")
+latch = true
+flag = &"cu_atrio_crystal"
+
+[node name="AtrioNicheGate" type="StaticBody3D" parent="PisoBase" unique_id=1416847570 instance=ExtResource("8_fwfcf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 24)
+script = ExtResource("9_438do")
+switches = Array[NodePath]([NodePath("../AtrioCrystal")])
+depth = 2.0
+
+[node name="AtrioNichePot" type="Node3D" parent="PisoBase" unique_id=1031829881 instance=ExtResource("10_rdvwa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 26)
+script = ExtResource("11_24ve7")
+drops = ExtResource("12_yg4lr")
+drop_height = 0.1
+
+[node name="AtrioSkeleton" type="CharacterBody3D" parent="PisoBase" unique_id=510737741 groups=["room_sleepers"] instance=ExtResource("13_jmy4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 19)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("14_go6dy")
+config = ExtResource("15_o126x")
+
+[node name="ColumnasPit" type="Area3D" parent="PisoBase" unique_id=729053607]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -1.8, 21)
+script = ExtResource("16_exwn3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoBase/ColumnasPit" unique_id=212393305]
+shape = SubResource("BoxShape3D_vd0qd")
+
+[node name="ColumnasWestPost" type="StaticBody3D" parent="PisoBase" unique_id=690808234 instance=ExtResource("17_oj03r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 24)
+script = ExtResource("18_68f12")
+
+[node name="ColumnasEastPost" type="StaticBody3D" parent="PisoBase" unique_id=1506570968 instance=ExtResource("17_oj03r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 0, 18)
+script = ExtResource("18_68f12")
+
+[node name="ColumnasKeyChest" type="StaticBody3D" parent="PisoBase" unique_id=1894046048 instance=ExtResource("19_7ysid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 16)
+script = ExtResource("20_7g75p")
+item = ExtResource("21_brl33")
+flag = &"cu_columnas_key_chest"
+
+[node name="ColumnasSkeleton" type="CharacterBody3D" parent="PisoBase" unique_id=12201240 groups=["room_sleepers"] instance=ExtResource("13_jmy4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 25)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("14_go6dy")
+config = ExtResource("15_o126x")
+
+[node name="GrietaCrackedWall" type="StaticBody3D" parent="PisoBase" unique_id=1410771246 instance=ExtResource("22_4jd4h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 14)
+script = ExtResource("23_gxog7")
+flag = &"cu_grieta_cracked_wall"
+
+[node name="GrietaPitA" type="Area3D" parent="PisoBase" unique_id=1566079891]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, -1.8, 8)
+script = ExtResource("16_exwn3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoBase/GrietaPitA" unique_id=1778888734]
+shape = SubResource("BoxShape3D_2t8pu")
+
+[node name="GrietaPitB" type="Area3D" parent="PisoBase" unique_id=1103448505]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, -1.8, 4)
+script = ExtResource("16_exwn3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoBase/GrietaPitB" unique_id=338028414]
+shape = SubResource("BoxShape3D_smahj")
+
+[node name="CompassChest" type="StaticBody3D" parent="PisoBase" unique_id=794977600 instance=ExtResource("19_7ysid")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4, 0, 2)
+script = ExtResource("20_7g75p")
+item = ExtResource("24_kw1ob")
+flag = &"cu_compass_chest"
+
+[node name="GrietaSkeleton" type="CharacterBody3D" parent="PisoBase" unique_id=1545990142 groups=["room_sleepers"] instance=ExtResource("13_jmy4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 10)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("14_go6dy")
+config = ExtResource("15_o126x")
+
+[node name="VentisqueroTurretA" type="StaticBody3D" parent="PisoBase" unique_id=1315889448 groups=["room_sleepers"] instance=ExtResource("25_dhxby")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 16)
+collision_layer = 5
+script = ExtResource("26_cse1y")
+config = ExtResource("27_xnqix")
+
+[node name="VentisqueroTurretB" type="StaticBody3D" parent="PisoBase" unique_id=1678947772 groups=["room_sleepers"] instance=ExtResource("25_dhxby")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 16)
+collision_layer = 5
+script = ExtResource("26_cse1y")
+config = ExtResource("27_xnqix")
+
+[node name="VentisqueroPit" type="Area3D" parent="PisoBase" unique_id=1308201705]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, -1.8, 26)
+script = ExtResource("16_exwn3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoBase/VentisqueroPit" unique_id=155065085]
+shape = SubResource("BoxShape3D_0so67")
+
+[node name="VentisqueroEye" type="StaticBody3D" parent="PisoBase" unique_id=900405442 instance=ExtResource("28_torf6")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 40, 0, 26.4)
+script = ExtResource("29_xckga")
+flag = &"cu_ventisquero_eye"
+
+[node name="MapGate" type="StaticBody3D" parent="PisoBase" unique_id=1833719843 instance=ExtResource("8_fwfcf")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 44, 0, 18)
+script = ExtResource("9_438do")
+switches = Array[NodePath]([NodePath("../VentisqueroEye")])
+depth = 2.0
+
+[node name="MapChest" type="StaticBody3D" parent="PisoBase" unique_id=982042439 instance=ExtResource("19_7ysid")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46, 0, 18)
+script = ExtResource("20_7g75p")
+item = ExtResource("30_76gtr")
+flag = &"cu_map_chest"
+
+[node name="NidoLocked" parent="PisoBase" unique_id=72951512 instance=ExtResource("31_kvxlt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 14)
+script = ExtResource("32_t0ubp")
+kind = 1
+flag = &"cu_nido_locked_door"
+depth = 4.0
+leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_cumbre_la.res"
+sink = 3.2
+
+[node name="Leaf" parent="PisoBase/NidoLocked" index="0"]
+unique_name_in_owner = true
+
+[node name="LeafMesh" parent="PisoBase/NidoLocked/Leaf" index="0"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.76)
+material_overlay = ExtResource("36_kw1ob")
+mesh = ExtResource("37_dhxby")
+
+[node name="LeafBackLA" type="MeshInstance3D" parent="PisoBase/NidoLocked/Leaf" index="1" unique_id=1294480302]
+transform = Transform3D(-1, 4.0797296e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.46666667, -1, -1.538641e-07, 0, -1.76)
+material_overlay = ExtResource("36_kw1ob")
+mesh = ExtResource("37_dhxby")
+
+[node name="SouthMark" parent="PisoBase/NidoLocked" index="1"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.03, -1.8)
+visible = false
+pixel_size = 0.009
+shaded = true
+texture = ExtResource("38_cse1y")
+
+[node name="CollisionShape3D" parent="PisoBase/NidoLocked" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = SubResource("Shape")
+
+[node name="Interactable" parent="PisoBase/NidoLocked" index="3"]
+collision_layer = 32
+collision_mask = 0
+monitoring = false
+script = ExtResource("39_xnqix")
+
+[node name="CollisionShape3D" parent="PisoBase/NidoLocked/Interactable" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("InteractShape")
+
+[node name="PersistentFlag" parent="PisoBase/NidoLocked" index="4"]
+script = ExtResource("35_ckdpb")
+
+[node name="CamaraDoor" parent="PisoBase" unique_id=1627685885 instance=ExtResource("31_kvxlt")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 32, 0, 6)
+script = ExtResource("32_t0ubp")
+kind = 3
+switches = Array[NodePath]([NodePath("../KunturFight")])
+depth = 4.0
+leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_cumbre_la.res"
+sink = 3.2
+
+[node name="Leaf" parent="PisoBase/CamaraDoor" index="0"]
+unique_name_in_owner = true
+
+[node name="LeafMesh" parent="PisoBase/CamaraDoor/Leaf" index="0"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.75)
+material_overlay = ExtResource("36_kw1ob")
+mesh = ExtResource("41_torf6")
+
+[node name="LeafBackLA" type="MeshInstance3D" parent="PisoBase/CamaraDoor/Leaf" index="1" unique_id=1970130351]
+transform = Transform3D(-1, 1.4570463e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.16666667, -1, -1.5298986e-07, 0, -1.75)
+material_overlay = ExtResource("36_kw1ob")
+mesh = ExtResource("41_torf6")
+
+[node name="SouthMark" parent="PisoBase/CamaraDoor" index="1"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.03, -1.8)
+visible = false
+pixel_size = 0.009
+shaded = true
+texture = ExtResource("38_cse1y")
+
+[node name="CollisionShape3D" parent="PisoBase/CamaraDoor" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = SubResource("Shape")
+
+[node name="Interactable" parent="PisoBase/CamaraDoor" index="3"]
+collision_layer = 32
+collision_mask = 0
+monitoring = false
+script = ExtResource("39_xnqix")
+
+[node name="CollisionShape3D" parent="PisoBase/CamaraDoor/Interactable" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("InteractShape")
+
+[node name="PersistentFlag" parent="PisoBase/CamaraDoor" index="4"]
+script = ExtResource("35_ckdpb")
+
+[node name="NidoPot18_2" type="Node3D" parent="PisoBase" unique_id=929143969 instance=ExtResource("10_rdvwa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 2)
+script = ExtResource("11_24ve7")
+drops = ExtResource("33_62nxm")
+drop_height = 0.1
+
+[node name="NidoPot30_2" type="Node3D" parent="PisoBase" unique_id=1961114383 instance=ExtResource("10_rdvwa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 2)
+script = ExtResource("11_24ve7")
+drops = ExtResource("33_62nxm")
+drop_height = 0.1
+
+[node name="NidoPot18_12" type="Node3D" parent="PisoBase" unique_id=1621097399 instance=ExtResource("10_rdvwa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 12)
+script = ExtResource("11_24ve7")
+drops = ExtResource("33_62nxm")
+drop_height = 0.1
+
+[node name="NidoPot30_12" type="Node3D" parent="PisoBase" unique_id=1238948188 instance=ExtResource("10_rdvwa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 12)
+script = ExtResource("11_24ve7")
+drops = ExtResource("33_62nxm")
+drop_height = 0.1
+
+[node name="KunturFight" type="Node3D" parent="PisoBase" unique_id=1884547672 node_paths=PackedStringArray("room", "doors")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 7)
+script = ExtResource("34_j1npm")
+room = NodePath("../Nido")
+flag = &"cu_kuntur_defeated"
+display_name = "BOSS_CU_KUNTUR"
+doors = [NodePath("../NidoLocked"), NodePath("../CamaraDoor")]
+
+[node name="PersistentFlag" type="Node" parent="PisoBase/KunturFight" unique_id=1806953609]
+script = ExtResource("35_ckdpb")
+
+[node name="KunturJoven" type="Node3D" parent="PisoBase/KunturFight" unique_id=1796272161 instance=ExtResource("36_pio1q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+script = ExtResource("37_e6m1n")
+config = ExtResource("38_l3lwn")
+
+[node name="ShieldChest" type="StaticBody3D" parent="PisoBase" unique_id=1868769395 instance=ExtResource("19_7ysid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 4)
+script = ExtResource("20_7g75p")
+item = ExtResource("39_23rcs")
+flag = &"cu_shield_chest"
+big = true
+
+[node name="CamaraSun" type="StaticBody3D" parent="PisoBase" unique_id=1998697294 instance=ExtResource("5_ku7rw")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 40, 0, 2.6)
+
+[node name="CamaraCrystal" type="StaticBody3D" parent="PisoBase" unique_id=1756425992 instance=ExtResource("6_4jevl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.5, 0, 10)
+script = ExtResource("7_klotd")
+latch = true
+flag = &"cu_camara_crystal"
+
+[node name="CamaraStairsGate" type="StaticBody3D" parent="PisoBase" unique_id=1017743973 instance=ExtResource("8_fwfcf")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 45, 0, 6)
+script = ExtResource("9_438do")
+switches = Array[NodePath]([NodePath("../CamaraCrystal")])
+depth = 2.0
+
+[node name="FromAbove" type="Marker3D" parent="PisoBase" unique_id=1154761723]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 44, 0, 6)
+
+[node name="CamaraStairs" parent="PisoBase" unique_id=881040384 node_paths=PackedStringArray("to") instance=ExtResource("40_pku4l")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 48, 0, 6)
+script = ExtResource("41_l2pft")
+to = NodePath("../../PisoCornisa/FromBelow")
+
+[node name="CollisionShape3D" parent="PisoBase/CamaraStairs" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0.5)
+shape = SubResource("Trigger")
+
+[node name="CollisionShape3D" parent="PisoBase/CamaraStairs/Back" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.65)
+shape = SubResource("Back")
+
+[node name="Visual" parent="PisoBase/CamaraStairs" index="2"]
+visible = false
+
+[node name="Step1" parent="PisoBase/CamaraStairs/Visual" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -0.2)
+mesh = SubResource("Step1")
+surface_material_override/0 = SubResource("Stone1")
+
+[node name="Step2" parent="PisoBase/CamaraStairs/Visual" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -0.4)
+mesh = SubResource("Step2")
+surface_material_override/0 = SubResource("Stone2")
+
+[node name="Step3" parent="PisoBase/CamaraStairs/Visual" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, -0.6)
+mesh = SubResource("Step3")
+surface_material_override/0 = SubResource("Stone3")
+
+[node name="Step4" parent="PisoBase/CamaraStairs/Visual" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -0.8)
+mesh = SubResource("Step4")
+surface_material_override/0 = SubResource("Stone4")
+
+[node name="Void" parent="PisoBase/CamaraStairs/Visual" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.97)
+mesh = SubResource("Void")
+surface_material_override/0 = SubResource("Dark")
+
+[node name="Torch_Grieta_0" parent="PisoBase" unique_id=715729122 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.9, 0.93333334)
+
+[node name="Model" parent="PisoBase/Torch_Grieta_0" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoBase/Torch_Grieta_0" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_ogo5c")
+
+[node name="Light" parent="PisoBase/Torch_Grieta_0" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoBase/Torch_Grieta_0" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="Torch_Grieta_1" parent="PisoBase" unique_id=1926211904 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.9, 0.93333334)
+
+[node name="Model" parent="PisoBase/Torch_Grieta_1" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoBase/Torch_Grieta_1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_g0mo4")
+
+[node name="Light" parent="PisoBase/Torch_Grieta_1" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoBase/Torch_Grieta_1" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="Torch_Nido_0" parent="PisoBase" unique_id=875509331 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.9, 0.93333334)
+
+[node name="Model" parent="PisoBase/Torch_Nido_0" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoBase/Torch_Nido_0" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_fyak5")
+
+[node name="Light" parent="PisoBase/Torch_Nido_0" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoBase/Torch_Nido_0" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="Torch_Nido_1" parent="PisoBase" unique_id=607323152 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 1.9, 0.93333334)
+
+[node name="Model" parent="PisoBase/Torch_Nido_1" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoBase/Torch_Nido_1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_281cb")
+
+[node name="Light" parent="PisoBase/Torch_Nido_1" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoBase/Torch_Nido_1" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="Torch_Camara_0" parent="PisoBase" unique_id=1864947252 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.9, 0.93333334)
+
+[node name="Model" parent="PisoBase/Torch_Camara_0" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoBase/Torch_Camara_0" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_v1lp2")
+
+[node name="Light" parent="PisoBase/Torch_Camara_0" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoBase/Torch_Camara_0" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="Torch_Camara_1" parent="PisoBase" unique_id=849938235 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 1.9, 0.93333334)
+
+[node name="Model" parent="PisoBase/Torch_Camara_1" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoBase/Torch_Camara_1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_2bu1c")
+
+[node name="Light" parent="PisoBase/Torch_Camara_1" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoBase/Torch_Camara_1" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="Torch_Columnas_0" parent="PisoBase" unique_id=305737523 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.9, 14.933333)
+
+[node name="Model" parent="PisoBase/Torch_Columnas_0" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoBase/Torch_Columnas_0" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_diwyx")
+
+[node name="Light" parent="PisoBase/Torch_Columnas_0" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoBase/Torch_Columnas_0" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="Torch_Columnas_1" parent="PisoBase" unique_id=1626611923 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.9, 14.933333)
+
+[node name="Model" parent="PisoBase/Torch_Columnas_1" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoBase/Torch_Columnas_1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_5pw4d")
+
+[node name="Light" parent="PisoBase/Torch_Columnas_1" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoBase/Torch_Columnas_1" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="Torch_Atrio_0" parent="PisoBase" unique_id=86481109 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.9, 14.933333)
+
+[node name="Model" parent="PisoBase/Torch_Atrio_0" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoBase/Torch_Atrio_0" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_e8ugc")
+
+[node name="Light" parent="PisoBase/Torch_Atrio_0" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoBase/Torch_Atrio_0" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="Torch_Atrio_1" parent="PisoBase" unique_id=131964546 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 1.9, 14.933333)
+
+[node name="Model" parent="PisoBase/Torch_Atrio_1" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoBase/Torch_Atrio_1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_54876")
+
+[node name="Light" parent="PisoBase/Torch_Atrio_1" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoBase/Torch_Atrio_1" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="Torch_Ventisquero_0" parent="PisoBase" unique_id=139842520 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.9, 14.933333)
+
+[node name="Model" parent="PisoBase/Torch_Ventisquero_0" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoBase/Torch_Ventisquero_0" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_gvpcf")
+
+[node name="Light" parent="PisoBase/Torch_Ventisquero_0" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoBase/Torch_Ventisquero_0" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="Torch_Ventisquero_1" parent="PisoBase" unique_id=966678134 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 1.9, 14.933333)
+
+[node name="Model" parent="PisoBase/Torch_Ventisquero_1" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoBase/Torch_Ventisquero_1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_lvhhx")
+
+[node name="Light" parent="PisoBase/Torch_Ventisquero_1" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoBase/Torch_Ventisquero_1" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="PisoCornisa" type="Node3D" parent="." unique_id=618956238]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
+script = ExtResource("2_14otx")
+level = 1
+display_name = "PLACE_FLOOR_UPPER"
+
+[node name="GridMap" type="GridMap" parent="PisoCornisa" unique_id=1050508224 groups=["navmesh_source"]]
+mesh_library = ExtResource("5_4jd4h")
+cell_size = Vector3(2, 1, 2)
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+data = {
+"cells": PackedInt32Array(0, 0, 39, 0, 1, 22, 0, 2, 22, 0, 3, 22, 0, 4, 22, 0, 5, 22, 0, 6, 22, 0, 7, 56, 0, 8, 22, 0, 9, 22, 0, 10, 22, 0, 11, 22, 0, 12, 22, 0, 13, 22, 0, 14, 37, 1, 0, 33, 1, 1, 0, 1, 2, 0, 1, 3, 0, 1, 4, 0, 1, 5, 0, 1, 6, 0, 1, 7, 71, 1, 8, 0, 1, 9, 81, 1, 10, 0, 1, 11, 81, 1, 12, 0, 1, 13, 0, 1, 14, 26, 2, 0, 33, 2, 1, 10, 2, 2, 10, 2, 3, 10, 2, 4, 10, 2, 5, 10, 2, 6, 10, 2, 7, 71, 2, 8, 0, 2, 9, 62, 2, 10, 0, 2, 11, 62, 2, 12, 0, 2, 13, 0, 2, 14, 26, 3, 0, 33, 3, 1, 10, 3, 2, 10, 3, 3, 10, 3, 4, 10, 3, 5, 10, 3, 6, 10, 3, 7, 71, 3, 8, 0, 3, 9, 0, 3, 10, 0, 3, 11, 0, 3, 12, 0, 3, 13, 0, 3, 14, 26, 4, 0, 33, 4, 1, 10, 4, 2, 10, 4, 3, 10, 4, 4, 10, 4, 5, 10, 4, 6, 10, 4, 7, 71, 4, 8, 0, 4, 9, 0, 4, 10, 0, 4, 11, 0, 4, 12, 0, 4, 13, 0, 4, 14, 26, 5, 0, 33, 5, 1, 10, 5, 2, 10, 5, 3, 10, 5, 4, 10, 5, 5, 10, 5, 6, 10, 5, 7, 71, 5, 8, 0, 5, 9, 0, 5, 10, 0, 5, 11, 0, 5, 12, 0, 5, 13, 0, 5, 14, 26, 6, 0, 33, 6, 1, 0, 6, 2, 0, 6, 3, 0, 6, 4, 0, 6, 5, 0, 6, 6, 0, 6, 7, 79, 6, 8, 0, 6, 9, 77, 6, 10, 0, 6, 11, 0, 6, 12, 0, 6, 13, 0, 6, 14, 26, 7, 0, 33, 7, 1, 0, 7, 2, 0, 7, 3, 0, 7, 4, 0, 7, 5, 0, 7, 6, 0, 7, 7, 71, 7, 8, 0, 7, 9, 81, 7, 10, 0, 7, 11, 0, 7, 12, 0, 7, 13, 0, 7, 14, 26, 8, 0, 57, 8, 1, 50, 8, 2, 50, 8, 3, 78, 8, 4, 50, 8, 5, 50, 8, 6, 50, 8, 7, 74, 8, 8, 50, 8, 9, 50, 8, 10, 78, 8, 11, 50, 8, 12, 50, 8, 13, 50, 8, 14, 55, 9, 0, 33, 9, 1, 0, 9, 2, 0, 9, 3, 0, 9, 4, 0, 9, 5, 0, 9, 6, 0, 9, 7, 71, 9, 8, 0, 9, 9, 0, 9, 10, 0, 9, 11, 0, 9, 12, 0, 9, 13, 0, 9, 14, 26, 10, 0, 33, 10, 1, 0, 10, 2, 0, 10, 3, 0, 10, 4, 0, 10, 5, 0, 10, 6, 0, 10, 7, 71, 10, 8, 0, 10, 9, 0, 10, 10, 0, 10, 11, 0, 10, 12, 0, 10, 13, 0, 10, 14, 26, 11, 0, 33, 11, 1, 0, 11, 2, 0, 11, 3, 0, 11, 4, 0, 11, 5, 0, 11, 6, 0, 11, 7, 71, 11, 8, 0, 11, 9, 0, 11, 10, 0, 11, 11, 0, 11, 12, 0, 11, 13, 0, 11, 14, 26, 12, 0, 33, 12, 1, 0, 12, 2, 0, 12, 3, 0, 12, 4, 0, 12, 5, 0, 12, 6, 0, 12, 7, 71, 12, 8, 10, 12, 9, 10, 12, 10, 10, 12, 11, 10, 12, 12, 63, 12, 13, 0, 12, 14, 26, 13, 0, 33, 13, 1, 0, 13, 2, 0, 13, 3, 0, 13, 4, 0, 13, 5, 0, 13, 6, 0, 13, 7, 71, 13, 8, 10, 13, 9, 10, 13, 10, 10, 13, 11, 10, 13, 12, 63, 13, 13, 0, 13, 14, 26, 14, 0, 33, 14, 1, 0, 14, 2, 0, 14, 3, 0, 14, 4, 76, 14, 5, 0, 14, 6, 0, 14, 7, 71, 14, 8, 10, 14, 9, 10, 14, 10, 10, 14, 11, 10, 14, 12, 0, 14, 13, 0, 14, 14, 26, 15, 0, 33, 15, 1, 0, 15, 2, 0, 15, 3, 0, 15, 4, 0, 15, 5, 0, 15, 6, 0, 15, 7, 71, 15, 8, 0, 15, 9, 10, 15, 10, 10, 15, 11, 10, 15, 12, 0, 15, 13, 0, 15, 14, 26, 16, 0, 57, 16, 1, 50, 16, 2, 50, 16, 3, 78, 16, 4, 50, 16, 5, 50, 16, 6, 50, 16, 7, 74, 16, 8, 50, 16, 9, 50, 16, 10, 50, 16, 11, 50, 16, 12, 78, 16, 13, 50, 16, 14, 55, 17, 0, 33, 17, 1, 0, 17, 2, 0, 17, 3, 0, 17, 4, 0, 17, 5, 0, 17, 6, 0, 17, 7, 71, 17, 8, 0, 17, 9, 0, 17, 10, 0, 17, 11, 0, 17, 12, 0, 17, 13, 0, 17, 14, 26, 18, 0, 33, 18, 1, 0, 18, 2, 0, 18, 3, 0, 18, 4, 0, 18, 5, 0, 18, 6, 0, 18, 7, 71, 18, 8, 0, 18, 9, 0, 18, 10, 0, 18, 11, 0, 18, 12, 0, 18, 13, 0, 18, 14, 26, 19, 0, 33, 19, 1, 0, 19, 2, 0, 19, 3, 0, 19, 4, 0, 19, 5, 0, 19, 6, 0, 19, 7, 71, 19, 8, 0, 19, 9, 0, 19, 10, 0, 19, 11, 0, 19, 12, 0, 19, 13, 0, 19, 14, 26, 20, 0, 33, 20, 1, 0, 20, 2, 0, 20, 3, 0, 20, 4, 0, 20, 5, 0, 20, 6, 0, 20, 7, 71, 20, 8, 0, 20, 9, 0, 20, 10, 0, 20, 11, 0, 20, 12, 0, 20, 13, 0, 20, 14, 26, 21, 0, 33, 21, 1, 0, 21, 2, 0, 21, 3, 0, 21, 4, 0, 21, 5, 0, 21, 6, 0, 21, 7, 71, 21, 8, 0, 21, 9, 0, 21, 10, 0, 21, 11, 0, 21, 12, 0, 21, 13, 0, 21, 14, 26, 22, 0, 33, 22, 1, 0, 22, 2, 0, 22, 3, 0, 22, 4, 0, 22, 5, 0, 22, 6, 0, 22, 7, 71, 22, 8, 0, 22, 9, 0, 22, 10, 0, 22, 11, 0, 22, 12, 0, 22, 13, 0, 22, 14, 26, 23, 0, 33, 23, 1, 0, 23, 2, 0, 23, 3, 0, 23, 4, 0, 23, 5, 0, 23, 6, 0, 23, 7, 71, 23, 8, 0, 23, 9, 77, 23, 10, 0, 23, 11, 77, 23, 12, 0, 23, 13, 0, 23, 14, 26, 24, 0, 40, 24, 1, 30, 24, 2, 32, 24, 3, 80, 24, 4, 31, 24, 5, 30, 24, 6, 30, 24, 7, 75, 24, 8, 30, 24, 9, 32, 24, 10, 47, 24, 11, 31, 24, 12, 30, 24, 13, 30, 24, 14, 38)
+}
+
+[node name="Torretas" type="Area3D" parent="PisoCornisa" unique_id=1567386918]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.2, 7)
+script = ExtResource("4_q0gdl")
+room_index = 6
+display_name = "PLACE_CU_TURRETS"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoCornisa/Torretas" unique_id=1429223488]
+shape = SubResource("BoxShape3D_j50qt")
+
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoCornisa/Torretas" unique_id=1377319707]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_vd0qd")
+
+[node name="LuzSala" type="SpotLight3D" parent="PisoCornisa/Torretas" unique_id=300943340]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(1, 0.94, 0.82, 1)
+light_energy = 2.0
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoCornisa/Torretas" unique_id=159316553]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(18, 5, 16)
+box_projection = true
+interior = true
+ambient_mode = 0
+
+[node name="Espejos" type="Area3D" parent="PisoCornisa" unique_id=134417125]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.2, 7)
+script = ExtResource("4_q0gdl")
+room_index = 7
+display_name = "PLACE_CU_MIRRORS"
+map_cell = Vector2i(1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoCornisa/Espejos" unique_id=1234745155]
+shape = SubResource("BoxShape3D_yv2nd")
+
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoCornisa/Espejos" unique_id=1416180909]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_smahj")
+
+[node name="LuzSala" type="SpotLight3D" parent="PisoCornisa/Espejos" unique_id=1695266188]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(1, 0.94, 0.82, 1)
+light_energy = 2.0
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoCornisa/Espejos" unique_id=1982257353]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(18, 5, 16)
+box_projection = true
+interior = true
+ambient_mode = 0
+
+[node name="Llegada" type="Area3D" parent="PisoCornisa" unique_id=1725531718]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 7)
+script = ExtResource("4_q0gdl")
+room_index = 8
+display_name = "PLACE_CU_LANDING"
+map_cell = Vector2i(2, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoCornisa/Llegada" unique_id=909381450]
+shape = SubResource("BoxShape3D_tqev7")
+
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoCornisa/Llegada" unique_id=1030954048]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_j50qt")
+
+[node name="LuzSala" type="SpotLight3D" parent="PisoCornisa/Llegada" unique_id=1102238580]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(1, 0.94, 0.82, 1)
+light_energy = 2.0
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoCornisa/Llegada" unique_id=97198572]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(18, 5, 16)
+box_projection = true
+interior = true
+ambient_mode = 0
+
+[node name="OjoDelSol" type="Area3D" parent="PisoCornisa" unique_id=789460151]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.2, 21)
+script = ExtResource("4_q0gdl")
+room_index = 9
+display_name = "PLACE_CU_SUN_EYE"
+map_cell = Vector2i(0, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoCornisa/OjoDelSol" unique_id=425681367]
+shape = SubResource("BoxShape3D_8jp2h")
+
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoCornisa/OjoDelSol" unique_id=1827852448]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_tqev7")
+
+[node name="LuzSala" type="SpotLight3D" parent="PisoCornisa/OjoDelSol" unique_id=1471029942]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(1, 0.94, 0.82, 1)
+light_energy = 2.0
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoCornisa/OjoDelSol" unique_id=715876614]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(18, 5, 16)
+box_projection = true
+interior = true
+ambient_mode = 0
+
+[node name="Hueco" type="Area3D" parent="PisoCornisa" unique_id=291679677]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.2, 21)
+script = ExtResource("4_q0gdl")
+room_index = 10
+display_name = "PLACE_CU_HOLLOW"
+map_cell = Vector2i(1, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoCornisa/Hueco" unique_id=2145756245]
+shape = SubResource("BoxShape3D_0evnq")
+
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoCornisa/Hueco" unique_id=1041567229]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_0evnq")
+
+[node name="LuzSala" type="SpotLight3D" parent="PisoCornisa/Hueco" unique_id=1586059116]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(1, 0.94, 0.82, 1)
+light_energy = 2.0
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoCornisa/Hueco" unique_id=2127839403]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(18, 5, 16)
+box_projection = true
+interior = true
+ambient_mode = 0
+
+[node name="Antesala" type="Area3D" parent="PisoCornisa" unique_id=765331535]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 21)
+script = ExtResource("4_q0gdl")
+room_index = 11
+display_name = "PLACE_CU_ANTECHAMBER"
+map_cell = Vector2i(2, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoCornisa/Antesala" unique_id=2121201299]
+shape = SubResource("BoxShape3D_kmwtg")
+
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoCornisa/Antesala" unique_id=874471132]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_ci860")
+
+[node name="LuzSala" type="SpotLight3D" parent="PisoCornisa/Antesala" unique_id=515776639]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(1, 0.94, 0.82, 1)
+light_energy = 2.0
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoCornisa/Antesala" unique_id=947285551]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(18, 5, 16)
+box_projection = true
+interior = true
+ambient_mode = 0
+
+[node name="FromBelow" type="Marker3D" parent="PisoCornisa" unique_id=1779794563]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 44, 0, 6)
+
+[node name="EspejosSun" type="StaticBody3D" parent="PisoCornisa" unique_id=20870001 instance=ExtResource("5_ku7rw")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 30.5, 0, 3)
+
+[node name="EspejosMirrorA" type="StaticBody3D" parent="PisoCornisa" unique_id=1760663542 groups=["light_mirror"] instance=ExtResource("43_mllp2")]
+transform = Transform3D(-0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, -0.70710677, 20, 0, 3)
+script = ExtResource("44_kfpir")
+
+[node name="EspejosMirrorB" type="StaticBody3D" parent="PisoCornisa" unique_id=806289755 groups=["light_mirror"] instance=ExtResource("43_mllp2")]
+transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 20, 0, 10)
+script = ExtResource("44_kfpir")
+
+[node name="EspejosCrystal" type="StaticBody3D" parent="PisoCornisa" unique_id=870867287 instance=ExtResource("6_4jevl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 12.6)
+script = ExtResource("7_klotd")
+latch = true
+flag = &"cu_espejos_crystal"
+
+[node name="TorretasDoor" parent="PisoCornisa" unique_id=1421807762 instance=ExtResource("31_kvxlt")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 16, 0, 6)
+script = ExtResource("32_t0ubp")
+kind = 3
+switches = Array[NodePath]([NodePath("../EspejosCrystal")])
+depth = 4.0
+leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_cumbre_la.res"
+sink = 3.2
+
+[node name="Leaf" parent="PisoCornisa/TorretasDoor" index="0"]
+unique_name_in_owner = true
+
+[node name="LeafMesh" parent="PisoCornisa/TorretasDoor/Leaf" index="0"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.75)
+material_overlay = ExtResource("36_kw1ob")
+mesh = ExtResource("41_torf6")
+
+[node name="LeafBackLA" type="MeshInstance3D" parent="PisoCornisa/TorretasDoor/Leaf" index="1" unique_id=2083007206]
+transform = Transform3D(-1, 1.4570463e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.16666667, -1, -1.5298986e-07, 0, -1.75)
+material_overlay = ExtResource("36_kw1ob")
+mesh = ExtResource("41_torf6")
+
+[node name="SouthMark" parent="PisoCornisa/TorretasDoor" index="1"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.03, -1.8)
+visible = false
+pixel_size = 0.009
+shaded = true
+texture = ExtResource("38_cse1y")
+
+[node name="CollisionShape3D" parent="PisoCornisa/TorretasDoor" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = SubResource("Shape")
+
+[node name="Interactable" parent="PisoCornisa/TorretasDoor" index="3"]
+collision_layer = 32
+collision_mask = 0
+monitoring = false
+script = ExtResource("39_xnqix")
+
+[node name="CollisionShape3D" parent="PisoCornisa/TorretasDoor/Interactable" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("InteractShape")
+
+[node name="PersistentFlag" parent="PisoCornisa/TorretasDoor" index="4"]
+script = ExtResource("35_ckdpb")
+
+[node name="EspejosShield" type="CharacterBody3D" parent="PisoCornisa" unique_id=166951625 groups=["room_sleepers"] instance=ExtResource("45_gdvd1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 7)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("14_go6dy")
+config = ExtResource("46_qyx7g")
+
+[node name="TorretasPit" type="Area3D" parent="PisoCornisa" unique_id=1021504603]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -1.8, 7)
+script = ExtResource("16_exwn3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoCornisa/TorretasPit" unique_id=1427876401]
+shape = SubResource("BoxShape3D_ci860")
+
+[node name="TorretasTurret" type="StaticBody3D" parent="PisoCornisa" unique_id=632571746 groups=["room_sleepers"] instance=ExtResource("25_dhxby")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
+collision_layer = 5
+script = ExtResource("26_cse1y")
+config = ExtResource("27_xnqix")
+
+[node name="TorretasEye" type="StaticBody3D" parent="PisoCornisa" unique_id=122081097 instance=ExtResource("28_torf6")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.6, 0, 12)
+script = ExtResource("29_xckga")
+flag = &"cu_torretas_crystal"
+
+[node name="TorretasKeyGate" type="StaticBody3D" parent="PisoCornisa" unique_id=1062979568 instance=ExtResource("8_fwfcf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 6)
+script = ExtResource("9_438do")
+switches = Array[NodePath]([NodePath("../TorretasEye")])
+depth = 2.0
+
+[node name="TorretasKeyChest" type="StaticBody3D" parent="PisoCornisa" unique_id=7030190 instance=ExtResource("19_7ysid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4)
+script = ExtResource("20_7g75p")
+item = ExtResource("21_brl33")
+flag = &"cu_torretas_key_chest"
+
+[node name="TorretasWestPost" type="StaticBody3D" parent="PisoCornisa" unique_id=1512850930 instance=ExtResource("17_oj03r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 10)
+script = ExtResource("18_68f12")
+
+[node name="TorretasEastPost" type="StaticBody3D" parent="PisoCornisa" unique_id=1513687552 instance=ExtResource("17_oj03r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 0, 4)
+script = ExtResource("18_68f12")
+
+[node name="SolEye" type="StaticBody3D" parent="PisoCornisa" unique_id=444154823 instance=ExtResource("28_torf6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 15.6)
+script = ExtResource("29_xckga")
+open_time = 6.0
+
+[node name="SolSun" type="StaticBody3D" parent="PisoCornisa" unique_id=580416877 instance=ExtResource("5_ku7rw")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2, 0, 20)
+
+[node name="SolShutter" type="StaticBody3D" parent="PisoCornisa" unique_id=1678865822 instance=ExtResource("8_fwfcf")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4, 0, 20)
+script = ExtResource("9_438do")
+switches = Array[NodePath]([NodePath("../SolEye")])
+stays_open = false
+depth = 2.0
+
+[node name="SolReceiver" type="StaticBody3D" parent="PisoCornisa" unique_id=1775349797 instance=ExtResource("6_4jevl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 26.6)
+script = ExtResource("7_klotd")
+latch = true
+flag = &"cu_sol_receiver"
+
+[node name="BossKeyGate" type="StaticBody3D" parent="PisoCornisa" unique_id=1658532241 instance=ExtResource("8_fwfcf")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 12, 0, 16)
+script = ExtResource("9_438do")
+switches = Array[NodePath]([NodePath("../SolReceiver")])
+depth = 2.0
+
+[node name="BossKeyChest" type="StaticBody3D" parent="PisoCornisa" unique_id=2059940444 instance=ExtResource("19_7ysid")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 14, 0, 16)
+script = ExtResource("20_7g75p")
+item = ExtResource("47_nsu1x")
+flag = &"cu_boss_key_chest"
+big = true
+
+[node name="SolArcher" type="CharacterBody3D" parent="PisoCornisa" unique_id=1129162817 groups=["room_sleepers"] instance=ExtResource("48_85p4s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 22)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("14_go6dy")
+config = ExtResource("49_26eur")
+
+[node name="HuecoPitA" type="Area3D" parent="PisoCornisa" unique_id=265738104]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, -1.8, 16)
+script = ExtResource("16_exwn3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoCornisa/HuecoPitA" unique_id=1627229146]
+shape = SubResource("BoxShape3D_3ey7r")
+
+[node name="HuecoPitB" type="Area3D" parent="PisoCornisa" unique_id=1661856979]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, -1.8, 20)
+script = ExtResource("16_exwn3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoCornisa/HuecoPitB" unique_id=1778120737]
+shape = SubResource("BoxShape3D_22y3b")
+
+[node name="HeartPieceHueco" type="Area3D" parent="PisoCornisa" unique_id=240916850 instance=ExtResource("50_3sus1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 16)
+collision_layer = 0
+monitorable = false
+script = ExtResource("51_g60oh")
+flag = &"cu_heart_piece"
+item = ExtResource("52_7jck0")
+heal = 4
+lifetime = 0.0
+item_get = true
+magnet_radius = 0.0
+world_size = 1.0
+heart_mesh = ExtResource("53_j23tx")
+
+[node name="HuecoSkeleton1" type="CharacterBody3D" parent="PisoCornisa" unique_id=436755412 groups=["room_sleepers"] instance=ExtResource("13_jmy4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 25)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("14_go6dy")
+config = ExtResource("15_o126x")
+
+[node name="HuecoSkeleton2" type="CharacterBody3D" parent="PisoCornisa" unique_id=1842092483 groups=["room_sleepers"] instance=ExtResource("13_jmy4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 24)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("14_go6dy")
+config = ExtResource("15_o126x")
+
+[node name="AntesalaLocked" parent="PisoCornisa" unique_id=1904425710 instance=ExtResource("31_kvxlt")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 32, 0, 24)
+script = ExtResource("32_t0ubp")
+kind = 1
+flag = &"cu_antesala_locked_door"
+depth = 4.0
+leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_cumbre_la.res"
+sink = 3.2
+
+[node name="Leaf" parent="PisoCornisa/AntesalaLocked" index="0"]
+unique_name_in_owner = true
+
+[node name="LeafMesh" parent="PisoCornisa/AntesalaLocked/Leaf" index="0"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.76)
+material_overlay = ExtResource("36_kw1ob")
+mesh = ExtResource("37_dhxby")
+
+[node name="LeafBackLA" type="MeshInstance3D" parent="PisoCornisa/AntesalaLocked/Leaf" index="1" unique_id=667676138]
+transform = Transform3D(-1, 1.4570463e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.16666667, -1, -1.538641e-07, 0, -1.76)
+material_overlay = ExtResource("36_kw1ob")
+mesh = ExtResource("37_dhxby")
+
+[node name="SouthMark" parent="PisoCornisa/AntesalaLocked" index="1"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.03, -1.8)
+visible = false
+pixel_size = 0.009
+shaded = true
+texture = ExtResource("38_cse1y")
+
+[node name="CollisionShape3D" parent="PisoCornisa/AntesalaLocked" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = SubResource("Shape")
+
+[node name="Interactable" parent="PisoCornisa/AntesalaLocked" index="3"]
+collision_layer = 32
+collision_mask = 0
+monitoring = false
+script = ExtResource("39_xnqix")
+
+[node name="CollisionShape3D" parent="PisoCornisa/AntesalaLocked/Interactable" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("InteractShape")
+
+[node name="PersistentFlag" parent="PisoCornisa/AntesalaLocked" index="4"]
+script = ExtResource("35_ckdpb")
+
+[node name="AntesalaPot36_16" type="Node3D" parent="PisoCornisa" unique_id=1246800293 instance=ExtResource("10_rdvwa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 16)
+script = ExtResource("11_24ve7")
+drops = ExtResource("33_62nxm")
+drop_height = 0.1
+
+[node name="AntesalaPot36_26" type="Node3D" parent="PisoCornisa" unique_id=1016321729 instance=ExtResource("10_rdvwa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 26)
+script = ExtResource("11_24ve7")
+drops = ExtResource("33_62nxm")
+drop_height = 0.1
+
+[node name="AntesalaPot44_26" type="Node3D" parent="PisoCornisa" unique_id=6432621 instance=ExtResource("10_rdvwa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 26)
+script = ExtResource("11_24ve7")
+drops = ExtResource("33_62nxm")
+drop_height = 0.1
+
+[node name="BossDoor" parent="PisoCornisa" unique_id=1580862304 instance=ExtResource("31_kvxlt")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 46, 0, 20)
+script = ExtResource("32_t0ubp")
+kind = 4
+flag = &"cu_boss_door"
+depth = 2.0
+leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_cumbre_la.res"
+sink = 3.2
+
+[node name="Leaf" parent="PisoCornisa/BossDoor" index="0"]
+unique_name_in_owner = true
+
+[node name="LeafMesh" parent="PisoCornisa/BossDoor/Leaf" index="0"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 0.75)
+material_overlay = ExtResource("36_kw1ob")
+mesh = ExtResource("66_62nxm")
+
+[node name="LeafBackLA" type="MeshInstance3D" parent="PisoCornisa/BossDoor/Leaf" index="1" unique_id=1367810900]
+transform = Transform3D(-1, 1.4570463e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.16666667, -1, -6.556708e-08, 0, -0.75)
+material_overlay = ExtResource("36_kw1ob")
+mesh = ExtResource("66_62nxm")
+
+[node name="SouthMark" parent="PisoCornisa/BossDoor" index="1"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.03, -1.8)
+visible = false
+pixel_size = 0.009
+shaded = true
+texture = ExtResource("38_cse1y")
+
+[node name="CollisionShape3D" parent="PisoCornisa/BossDoor" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = SubResource("Shape")
+
+[node name="Interactable" parent="PisoCornisa/BossDoor" index="3"]
+collision_layer = 32
+collision_mask = 0
+monitoring = false
+script = ExtResource("39_xnqix")
+
+[node name="CollisionShape3D" parent="PisoCornisa/BossDoor/Interactable" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("InteractShape")
+
+[node name="PersistentFlag" parent="PisoCornisa/BossDoor" index="4"]
+script = ExtResource("35_ckdpb")
+
+[node name="FromCima" type="Marker3D" parent="PisoCornisa" unique_id=50294034]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 42, 0, 20)
+
+[node name="LlegadaStairs" parent="PisoCornisa" unique_id=213512410 node_paths=PackedStringArray("to") instance=ExtResource("54_rnlef")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 48, 0, 6)
+script = ExtResource("41_l2pft")
+to = NodePath("../../PisoBase/FromAbove")
+
+[node name="CollisionShape3D" parent="PisoCornisa/LlegadaStairs" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0.5)
+shape = SubResource("BoxShape3D_k1vaf")
+
+[node name="CollisionShape3D" parent="PisoCornisa/LlegadaStairs/Back" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.65)
+shape = SubResource("BoxShape3D_usmjl")
+
+[node name="Visual" parent="PisoCornisa/LlegadaStairs" index="2"]
+visible = false
+
+[node name="Opening" parent="PisoCornisa/LlegadaStairs/Visual" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
+mesh = SubResource("Opening")
+surface_material_override/0 = SubResource("StandardMaterial3D_s8mxc")
+
+[node name="Step1" parent="PisoCornisa/LlegadaStairs/Visual" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0.75)
+mesh = SubResource("Step")
+surface_material_override/0 = SubResource("StandardMaterial3D_atjnw")
+
+[node name="Step2" parent="PisoCornisa/LlegadaStairs/Visual" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0.3)
+mesh = SubResource("Step")
+surface_material_override/0 = SubResource("StandardMaterial3D_n15gd")
+
+[node name="Step3" parent="PisoCornisa/LlegadaStairs/Visual" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, -0.15)
+mesh = SubResource("Step")
+surface_material_override/0 = SubResource("StandardMaterial3D_1owpr")
+
+[node name="Void" parent="PisoCornisa/LlegadaStairs/Visual" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.97)
+mesh = SubResource("BoxMesh_x4n6r")
+surface_material_override/0 = SubResource("StandardMaterial3D_s8mxc")
+
+[node name="AntesalaStairs" parent="PisoCornisa" unique_id=963294793 node_paths=PackedStringArray("to") instance=ExtResource("40_pku4l")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 48, 0, 20)
+script = ExtResource("41_l2pft")
+to = NodePath("../../PisoCima/FromAntesala")
+
+[node name="CollisionShape3D" parent="PisoCornisa/AntesalaStairs" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0.5)
+shape = SubResource("Trigger")
+
+[node name="CollisionShape3D" parent="PisoCornisa/AntesalaStairs/Back" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.65)
+shape = SubResource("Back")
+
+[node name="Visual" parent="PisoCornisa/AntesalaStairs" index="2"]
+visible = false
+
+[node name="Step1" parent="PisoCornisa/AntesalaStairs/Visual" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -0.2)
+mesh = SubResource("Step1")
+surface_material_override/0 = SubResource("Stone1")
+
+[node name="Step2" parent="PisoCornisa/AntesalaStairs/Visual" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -0.4)
+mesh = SubResource("Step2")
+surface_material_override/0 = SubResource("Stone2")
+
+[node name="Step3" parent="PisoCornisa/AntesalaStairs/Visual" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, -0.6)
+mesh = SubResource("Step3")
+surface_material_override/0 = SubResource("Stone3")
+
+[node name="Step4" parent="PisoCornisa/AntesalaStairs/Visual" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -0.8)
+mesh = SubResource("Step4")
+surface_material_override/0 = SubResource("Stone4")
+
+[node name="Void" parent="PisoCornisa/AntesalaStairs/Visual" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.97)
+mesh = SubResource("Void")
+surface_material_override/0 = SubResource("Dark")
+
+[node name="Torch_Torretas_0" parent="PisoCornisa" unique_id=1958190473 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.9, 0.93333334)
+
+[node name="Model" parent="PisoCornisa/Torch_Torretas_0" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoCornisa/Torch_Torretas_0" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_4vut8")
+
+[node name="Light" parent="PisoCornisa/Torch_Torretas_0" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoCornisa/Torch_Torretas_0" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="Torch_Torretas_1" parent="PisoCornisa" unique_id=2064912549 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.9, 0.93333334)
+
+[node name="Model" parent="PisoCornisa/Torch_Torretas_1" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoCornisa/Torch_Torretas_1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_rw1ab")
+
+[node name="Light" parent="PisoCornisa/Torch_Torretas_1" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoCornisa/Torch_Torretas_1" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="Torch_Espejos_0" parent="PisoCornisa" unique_id=1036029826 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.9, 0.93333334)
+
+[node name="Model" parent="PisoCornisa/Torch_Espejos_0" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoCornisa/Torch_Espejos_0" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_ckeau")
+
+[node name="Light" parent="PisoCornisa/Torch_Espejos_0" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoCornisa/Torch_Espejos_0" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="Torch_Espejos_1" parent="PisoCornisa" unique_id=1966527123 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 1.9, 0.93333334)
+
+[node name="Model" parent="PisoCornisa/Torch_Espejos_1" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoCornisa/Torch_Espejos_1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_5tp6c")
+
+[node name="Light" parent="PisoCornisa/Torch_Espejos_1" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoCornisa/Torch_Espejos_1" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="Torch_Llegada_0" parent="PisoCornisa" unique_id=1165986125 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.9, 0.93333334)
+
+[node name="Model" parent="PisoCornisa/Torch_Llegada_0" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoCornisa/Torch_Llegada_0" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_ijljl")
+
+[node name="Light" parent="PisoCornisa/Torch_Llegada_0" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoCornisa/Torch_Llegada_0" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="Torch_Llegada_1" parent="PisoCornisa" unique_id=1376074958 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 1.9, 0.93333334)
+
+[node name="Model" parent="PisoCornisa/Torch_Llegada_1" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoCornisa/Torch_Llegada_1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_g4tu7")
+
+[node name="Light" parent="PisoCornisa/Torch_Llegada_1" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoCornisa/Torch_Llegada_1" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="Torch_OjoDelSol_0" parent="PisoCornisa" unique_id=2049903277 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.9, 14.933333)
+
+[node name="Model" parent="PisoCornisa/Torch_OjoDelSol_0" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoCornisa/Torch_OjoDelSol_0" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_mj1qn")
+
+[node name="Light" parent="PisoCornisa/Torch_OjoDelSol_0" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoCornisa/Torch_OjoDelSol_0" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="Torch_OjoDelSol_1" parent="PisoCornisa" unique_id=213871324 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.9, 14.933333)
+
+[node name="Model" parent="PisoCornisa/Torch_OjoDelSol_1" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoCornisa/Torch_OjoDelSol_1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_5cshr")
+
+[node name="Light" parent="PisoCornisa/Torch_OjoDelSol_1" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoCornisa/Torch_OjoDelSol_1" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="Torch_Hueco_0" parent="PisoCornisa" unique_id=2036371575 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.9, 14.933333)
+
+[node name="Model" parent="PisoCornisa/Torch_Hueco_0" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoCornisa/Torch_Hueco_0" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_6i1qi")
+
+[node name="Light" parent="PisoCornisa/Torch_Hueco_0" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoCornisa/Torch_Hueco_0" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="Torch_Hueco_1" parent="PisoCornisa" unique_id=1477250445 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 1.9, 14.933333)
+
+[node name="Model" parent="PisoCornisa/Torch_Hueco_1" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoCornisa/Torch_Hueco_1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_uj6fr")
+
+[node name="Light" parent="PisoCornisa/Torch_Hueco_1" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoCornisa/Torch_Hueco_1" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="Torch_Antesala_0" parent="PisoCornisa" unique_id=1368503176 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.9, 14.933333)
+
+[node name="Model" parent="PisoCornisa/Torch_Antesala_0" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoCornisa/Torch_Antesala_0" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_vgtog")
+
+[node name="Light" parent="PisoCornisa/Torch_Antesala_0" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoCornisa/Torch_Antesala_0" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="Torch_Antesala_1" parent="PisoCornisa" unique_id=1686450088 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 1.9, 14.933333)
+
+[node name="Model" parent="PisoCornisa/Torch_Antesala_1" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoCornisa/Torch_Antesala_1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_o8x28")
+
+[node name="Light" parent="PisoCornisa/Torch_Antesala_1" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoCornisa/Torch_Antesala_1" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="CaidaLA53" type="Node3D" parent="PisoCornisa" unique_id=1391231308 instance=ExtResource("68_j1npm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 24)
+script = ExtResource("69_ckdpb")
+
+[node name="PisoCima" type="Node3D" parent="." unique_id=745226193]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16, 0)
+script = ExtResource("2_14otx")
+level = 2
+display_name = "PLACE_FLOOR_TOP"
+
+[node name="GridMap" type="GridMap" parent="PisoCima" unique_id=404779719 groups=["navmesh_source"]]
+mesh_library = ExtResource("5_4jd4h")
+cell_size = Vector3(2, 1, 2)
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+data = {
+"cells": PackedInt32Array(0, 0, 36, 0, 1, 36, 0, 2, 36, 0, 3, 36, 0, 4, 36, 0, 5, 36, 0, 6, 36, 0, 7, 36, 0, 8, 36, 0, 9, 36, 0, 10, 36, 0, 11, 36, 0, 12, 36, 0, 13, 36, 0, 14, 36, 1, 0, 36, 1, 1, 36, 1, 2, 36, 1, 3, 36, 1, 4, 36, 1, 5, 36, 1, 6, 36, 1, 7, 36, 1, 8, 36, 1, 9, 36, 1, 10, 36, 1, 11, 36, 1, 12, 36, 1, 13, 36, 1, 14, 36, 2, 0, 36, 2, 1, 36, 2, 2, 36, 2, 3, 36, 2, 4, 36, 2, 5, 36, 2, 6, 36, 2, 7, 36, 2, 8, 36, 2, 9, 36, 2, 10, 36, 2, 11, 36, 2, 12, 36, 2, 13, 36, 2, 14, 36, 3, 0, 36, 3, 1, 36, 3, 2, 36, 3, 3, 36, 3, 4, 36, 3, 5, 36, 3, 6, 36, 3, 7, 36, 3, 8, 36, 3, 9, 36, 3, 10, 36, 3, 11, 36, 3, 12, 36, 3, 13, 36, 3, 14, 36, 4, 0, 36, 4, 1, 36, 4, 2, 36, 4, 3, 36, 4, 4, 36, 4, 5, 36, 4, 6, 36, 4, 7, 36, 4, 8, 36, 4, 9, 36, 4, 10, 36, 4, 11, 36, 4, 12, 36, 4, 13, 36, 4, 14, 36, 5, 0, 36, 5, 1, 36, 5, 2, 36, 5, 3, 36, 5, 4, 36, 5, 5, 36, 5, 6, 36, 5, 7, 36, 5, 8, 36, 5, 9, 36, 5, 10, 36, 5, 11, 36, 5, 12, 36, 5, 13, 36, 5, 14, 36, 6, 0, 36, 6, 1, 36, 6, 2, 36, 6, 3, 36, 6, 4, 36, 6, 5, 36, 6, 6, 36, 6, 7, 36, 6, 8, 36, 6, 9, 36, 6, 10, 36, 6, 11, 36, 6, 12, 36, 6, 13, 36, 6, 14, 36, 7, 0, 36, 7, 1, 36, 7, 2, 36, 7, 3, 36, 7, 4, 36, 7, 5, 36, 7, 6, 36, 7, 7, 36, 7, 8, 36, 7, 9, 36, 7, 10, 36, 7, 11, 36, 7, 12, 36, 7, 13, 36, 7, 14, 36, 8, 0, 36, 8, 1, 36, 8, 2, 36, 8, 3, 36, 8, 4, 36, 8, 5, 36, 8, 6, 36, 8, 7, 36, 8, 8, 36, 8, 9, 36, 8, 10, 36, 8, 11, 36, 8, 12, 36, 8, 13, 36, 8, 14, 36, 9, 0, 36, 9, 1, 36, 9, 2, 36, 9, 3, 36, 9, 4, 36, 9, 5, 36, 9, 6, 36, 9, 7, 36, 9, 8, 36, 9, 9, 36, 9, 10, 36, 9, 11, 36, 9, 12, 36, 9, 13, 36, 9, 14, 36, 10, 0, 36, 10, 1, 36, 10, 2, 36, 10, 3, 36, 10, 4, 36, 10, 5, 36, 10, 6, 36, 10, 7, 36, 10, 8, 36, 10, 9, 36, 10, 10, 36, 10, 11, 36, 10, 12, 36, 10, 13, 36, 10, 14, 36, 11, 0, 36, 11, 1, 36, 11, 2, 36, 11, 3, 36, 11, 4, 36, 11, 5, 36, 11, 6, 36, 11, 7, 36, 11, 8, 36, 11, 9, 36, 11, 10, 36, 11, 11, 36, 11, 12, 36, 11, 13, 36, 11, 14, 36, 12, 0, 36, 12, 1, 36, 12, 2, 36, 12, 3, 36, 12, 4, 36, 12, 5, 36, 12, 6, 36, 12, 7, 36, 12, 8, 36, 12, 9, 36, 12, 10, 36, 12, 11, 36, 12, 12, 36, 12, 13, 36, 12, 14, 36, 13, 0, 36, 13, 1, 36, 13, 2, 36, 13, 3, 36, 13, 4, 36, 13, 5, 36, 13, 6, 36, 13, 7, 36, 13, 8, 36, 13, 9, 36, 13, 10, 36, 13, 11, 36, 13, 12, 36, 13, 13, 36, 13, 14, 36, 14, 0, 36, 14, 1, 36, 14, 2, 36, 14, 3, 36, 14, 4, 36, 14, 5, 36, 14, 6, 36, 14, 7, 36, 14, 8, 36, 14, 9, 36, 14, 10, 36, 14, 11, 36, 14, 12, 36, 14, 13, 36, 14, 14, 36, 15, 0, 36, 15, 1, 36, 15, 2, 36, 15, 3, 36, 15, 4, 36, 15, 5, 36, 15, 6, 36, 15, 7, 36, 15, 8, 36, 15, 9, 36, 15, 10, 36, 15, 11, 36, 15, 12, 36, 15, 13, 36, 15, 14, 36, 16, 0, 36, 16, 1, 36, 16, 2, 36, 16, 3, 36, 16, 4, 36, 16, 5, 36, 16, 6, 36, 16, 7, 39, 16, 8, 22, 16, 9, 22, 16, 10, 22, 16, 11, 22, 16, 12, 22, 16, 13, 22, 16, 14, 37, 17, 0, 36, 17, 1, 36, 17, 2, 36, 17, 3, 36, 17, 4, 36, 17, 5, 36, 17, 6, 36, 17, 7, 33, 17, 8, 0, 17, 9, 0, 17, 10, 0, 17, 11, 0, 17, 12, 0, 17, 13, 0, 17, 14, 26, 18, 0, 36, 18, 1, 36, 18, 2, 36, 18, 3, 36, 18, 4, 36, 18, 5, 36, 18, 6, 36, 18, 7, 33, 18, 8, 0, 18, 9, 0, 18, 10, 0, 18, 11, 0, 18, 12, 0, 18, 13, 0, 18, 14, 26, 19, 0, 36, 19, 1, 36, 19, 2, 36, 19, 3, 36, 19, 4, 36, 19, 5, 36, 19, 6, 36, 19, 7, 33, 19, 8, 0, 19, 9, 0, 19, 10, 0, 19, 11, 0, 19, 12, 0, 19, 13, 0, 19, 14, 26, 20, 0, 36, 20, 1, 36, 20, 2, 36, 20, 3, 36, 20, 4, 36, 20, 5, 36, 20, 6, 36, 20, 7, 33, 20, 8, 0, 20, 9, 0, 20, 10, 0, 20, 11, 0, 20, 12, 0, 20, 13, 0, 20, 14, 26, 21, 0, 36, 21, 1, 36, 21, 2, 36, 21, 3, 36, 21, 4, 36, 21, 5, 36, 21, 6, 36, 21, 7, 33, 21, 8, 0, 21, 9, 0, 21, 10, 0, 21, 11, 0, 21, 12, 0, 21, 13, 0, 21, 14, 26, 22, 0, 36, 22, 1, 36, 22, 2, 36, 22, 3, 36, 22, 4, 36, 22, 5, 36, 22, 6, 36, 22, 7, 33, 22, 8, 0, 22, 9, 0, 22, 10, 0, 22, 11, 0, 22, 12, 0, 22, 13, 0, 22, 14, 26, 23, 0, 36, 23, 1, 36, 23, 2, 36, 23, 3, 36, 23, 4, 36, 23, 5, 36, 23, 6, 36, 23, 7, 33, 23, 8, 0, 23, 9, 0, 23, 10, 0, 23, 11, 0, 23, 12, 0, 23, 13, 0, 23, 14, 26, 24, 0, 36, 24, 1, 36, 24, 2, 36, 24, 3, 36, 24, 4, 36, 24, 5, 36, 24, 6, 36, 24, 7, 40, 24, 8, 30, 24, 9, 32, 24, 10, 80, 24, 11, 31, 24, 12, 30, 24, 13, 30, 24, 14, 38)
+}
+
+[node name="Cima" type="Area3D" parent="PisoCima" unique_id=24464156]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.2, 21)
+script = ExtResource("4_q0gdl")
+room_index = 12
+display_name = "PLACE_CU_SUMMIT"
+map_cell = Vector2i(2, 1)
+boss_room = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoCima/Cima" unique_id=483933152]
+shape = SubResource("BoxShape3D_xgonm")
+
+[node name="BordeOscuro" type="MeshInstance3D" parent="PisoCima/Cima" unique_id=411543774]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_ixgep")
+
+[node name="LuzSala" type="SpotLight3D" parent="PisoCima/Cima" unique_id=1054262082]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(1, 0.94, 0.82, 1)
+light_energy = 2.0
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="PisoCima/Cima" unique_id=1985272941]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(18, 5, 16)
+box_projection = true
+interior = true
+ambient_mode = 0
+
+[node name="FromAntesala" type="Marker3D" parent="PisoCima" unique_id=1653692512]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 44, 0, 20)
+
+[node name="CimaStairs" parent="PisoCima" unique_id=181277799 node_paths=PackedStringArray("to") instance=ExtResource("54_rnlef")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 48, 0, 20)
+script = ExtResource("41_l2pft")
+to = NodePath("../../PisoCornisa/FromCima")
+
+[node name="CollisionShape3D" parent="PisoCima/CimaStairs" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0.5)
+shape = SubResource("BoxShape3D_k1vaf")
+
+[node name="CollisionShape3D" parent="PisoCima/CimaStairs/Back" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.65)
+shape = SubResource("BoxShape3D_usmjl")
+
+[node name="Visual" parent="PisoCima/CimaStairs" index="2"]
+visible = false
+
+[node name="Opening" parent="PisoCima/CimaStairs/Visual" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
+mesh = SubResource("Opening")
+surface_material_override/0 = SubResource("StandardMaterial3D_s8mxc")
+
+[node name="Step1" parent="PisoCima/CimaStairs/Visual" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0.75)
+mesh = SubResource("Step")
+surface_material_override/0 = SubResource("StandardMaterial3D_atjnw")
+
+[node name="Step2" parent="PisoCima/CimaStairs/Visual" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0.3)
+mesh = SubResource("Step")
+surface_material_override/0 = SubResource("StandardMaterial3D_n15gd")
+
+[node name="Step3" parent="PisoCima/CimaStairs/Visual" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, -0.15)
+mesh = SubResource("Step")
+surface_material_override/0 = SubResource("StandardMaterial3D_1owpr")
+
+[node name="Void" parent="PisoCima/CimaStairs/Visual" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.97)
+mesh = SubResource("BoxMesh_x4n6r")
+surface_material_override/0 = SubResource("StandardMaterial3D_s8mxc")
+
+[node name="CimaPot34_16" type="Node3D" parent="PisoCima" unique_id=1736609298 instance=ExtResource("10_rdvwa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 16)
+script = ExtResource("11_24ve7")
+drops = ExtResource("33_62nxm")
+drop_height = 0.1
+
+[node name="CimaPot46_16" type="Node3D" parent="PisoCima" unique_id=185822092 instance=ExtResource("10_rdvwa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 0, 16)
+script = ExtResource("11_24ve7")
+drops = ExtResource("33_62nxm")
+drop_height = 0.1
+
+[node name="CimaPot34_26" type="Node3D" parent="PisoCima" unique_id=167775201 instance=ExtResource("10_rdvwa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 26)
+script = ExtResource("11_24ve7")
+drops = ExtResource("33_62nxm")
+drop_height = 0.1
+
+[node name="CimaPot46_26" type="Node3D" parent="PisoCima" unique_id=1559402421 instance=ExtResource("10_rdvwa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 0, 26)
+script = ExtResource("11_24ve7")
+drops = ExtResource("33_62nxm")
+drop_height = 0.1
+
+[node name="BossFight" type="Node3D" parent="PisoCima" unique_id=2128765053 node_paths=PackedStringArray("room", "reward")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 21)
+script = ExtResource("34_j1npm")
+room = NodePath("../Cima")
+flag = &"cu_boss_defeated"
+display_name = "BOSS_CU_APU_KUNTUR"
+reward = NodePath("HeartContainer")
+reward_flag = &"cu_heart_container"
+
+[node name="PersistentFlag" type="Node" parent="PisoCima/BossFight" unique_id=829494355]
+script = ExtResource("35_ckdpb")
+
+[node name="ApuKuntur" type="Node3D" parent="PisoCima/BossFight" unique_id=689724525 instance=ExtResource("55_4msbc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+script = ExtResource("56_ogo5c")
+config = ExtResource("57_5qx8i")
+hover_height = 3.2
+
+[node name="HeartContainer" type="Area3D" parent="PisoCima/BossFight" unique_id=173432001 instance=ExtResource("58_g0mo4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+collision_layer = 0
+monitorable = false
+script = ExtResource("59_8xsdw")
+item = ExtResource("60_fyak5")
+lifetime = 0.0
+item_get = true
+magnet_radius = 0.0
+world_size = 1.4
+heart_mesh = ExtResource("53_j23tx")
+
+[node name="BossExitPortal" type="Area3D" parent="PisoCima" unique_id=1893113421 instance=ExtResource("61_2o8gx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 25)
+script = ExtResource("62_281cb")
+target_scene = "res://levels/overworld.tscn"
+target_spawn = &"risco"
+required_flag = &"cu_boss_defeated"
+
+[node name="Torch_Cima_0" parent="PisoCima" unique_id=510006866 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.9, 14.933333)
+
+[node name="Model" parent="PisoCima/Torch_Cima_0" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoCima/Torch_Cima_0" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_t2rrj")
+
+[node name="Light" parent="PisoCima/Torch_Cima_0" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoCima/Torch_Cima_0" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="Torch_Cima_1" parent="PisoCima" unique_id=1215861228 instance=ExtResource("42_ef7sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 1.9, 14.933333)
+
+[node name="Model" parent="PisoCima/Torch_Cima_1" index="0"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = ExtResource("51_xckga")
+
+[node name="Flame" parent="PisoCima/Torch_Cima_1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5885, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_qclsk")
+
+[node name="Light" parent="PisoCima/Torch_Cima_1" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88850003, 0.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 3.5
+omni_range = 4.0
+script = ExtResource("53_kvxlt")
+
+[node name="Glow" parent="PisoCima/Torch_Cima_1" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1.2)
+visible = false
+script = ExtResource("54_t0ubp")
+color = Color(1.35, 1.15, 0.9, 1)
+radius = 3.0
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=1694148988 instance=ExtResource("63_j6pnl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 25)
+script = ExtResource("64_v1lp2")
+config = ExtResource("65_ilu4u")
+
+[node name="SpawnStart" type="Marker3D" parent="." unique_id=355964417]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 25)
+script = ExtResource("66_2bu1c")
+
+[node name="ExitPortal" type="Area3D" parent="." unique_id=887388947]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.2, 27.4)
+script = ExtResource("62_281cb")
+target_scene = "res://levels/overworld.tscn"
+target_spawn = &"risco"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPortal" unique_id=2047061363]
+shape = SubResource("BoxShape3D_xbu6j")
+
+[node name="TopDownCamera" type="Camera3D" parent="." unique_id=1412292101 node_paths=PackedStringArray("target_node")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 13.4, 29.7)
+attributes = SubResource("CameraAttributesPractical_ojknh")
+fov = 40.0
+script = ExtResource("67_fxe5v")
+target_node = NodePath("../Player")
+offset = Vector3(0, 30.814466, 14.369021)
+field_of_view = 28.0
+wall_height = 5.4
+mask_margin = 2.0
+south_wall_cut = 3.6
+south_wall_reach = 1.7
+
+[node name="EnfoqueLA" type="Node" parent="TopDownCamera" unique_id=887135884]
+script = ExtResource("83_pio1q")
+near_margin = 3.5
+
+[node name="Nieve" type="Node3D" parent="TopDownCamera" unique_id=1366655404 instance=ExtResource("84_e6m1n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1695837931 instance=ExtResource("68_diwyx")]
+layer = 10
+script = ExtResource("69_o6c27")
+solo_panel = ExtResource("70_5pw4d")
+coop_panel = ExtResource("71_o4cut")
+item_ring = ExtResource("72_e8ugc")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=7583807]
+navigation_mesh = ExtResource("nav_cumbre")
+
+[node name="BrilloLA" type="Node" parent="." unique_id=1902298091]
+script = ExtResource("91_l3lwn")
+
+[editable path="PisoBase/NidoLocked"]
+[editable path="PisoBase/CamaraDoor"]
+[editable path="PisoBase/CamaraStairs"]
+[editable path="PisoBase/Torch_Grieta_0"]
+[editable path="PisoBase/Torch_Grieta_1"]
+[editable path="PisoBase/Torch_Nido_0"]
+[editable path="PisoBase/Torch_Nido_1"]
+[editable path="PisoBase/Torch_Camara_0"]
+[editable path="PisoBase/Torch_Camara_1"]
+[editable path="PisoBase/Torch_Columnas_0"]
+[editable path="PisoBase/Torch_Columnas_1"]
+[editable path="PisoBase/Torch_Atrio_0"]
+[editable path="PisoBase/Torch_Atrio_1"]
+[editable path="PisoBase/Torch_Ventisquero_0"]
+[editable path="PisoBase/Torch_Ventisquero_1"]
+[editable path="PisoCornisa/TorretasDoor"]
+[editable path="PisoCornisa/AntesalaLocked"]
+[editable path="PisoCornisa/BossDoor"]
+[editable path="PisoCornisa/LlegadaStairs"]
+[editable path="PisoCornisa/AntesalaStairs"]
+[editable path="PisoCornisa/Torch_Torretas_0"]
+[editable path="PisoCornisa/Torch_Torretas_1"]
+[editable path="PisoCornisa/Torch_Espejos_0"]
+[editable path="PisoCornisa/Torch_Espejos_1"]
+[editable path="PisoCornisa/Torch_Llegada_0"]
+[editable path="PisoCornisa/Torch_Llegada_1"]
+[editable path="PisoCornisa/Torch_OjoDelSol_0"]
+[editable path="PisoCornisa/Torch_OjoDelSol_1"]
+[editable path="PisoCornisa/Torch_Hueco_0"]
+[editable path="PisoCornisa/Torch_Hueco_1"]
+[editable path="PisoCornisa/Torch_Antesala_0"]
+[editable path="PisoCornisa/Torch_Antesala_1"]
+[editable path="PisoCima/CimaStairs"]
+[editable path="PisoCima/Torch_Cima_0"]
+[editable path="PisoCima/Torch_Cima_1"]

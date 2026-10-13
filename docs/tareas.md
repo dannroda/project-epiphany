@@ -2586,7 +2586,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (74/123)
+## M11 — Pulido: contenido y feel  (75/125)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3027,12 +3027,12 @@ Un ítem post-MVP: gancho o algo que mueva objetos a distancia (GDD §6.1), con 
   Hecho el 2026-10-13: levels/totora.tscn (debug/tmp/build_totora.gd), 11 salas de 14 × 10 m en dos pisos, GDD §8d. El agua es celda vacía con Pit; los cruces del gancho miden 4 celdas (el salto largo cruza 3). Grafo data/dungeons/totora_graph.tres, test_totora (6), escenario totora. Diferencias con el plano: sin la vasija grande (se levanta con las manos), reja en lugar de puente en el Juncal, el acorazado en el Telar, el Mirador solo con postes.
 - [x] Usos en el overworld (sesión del overworld)
   Hecho por el overworld (6910e214, a598979a): CumbrePost y RiscoPost en el borde, se suben fijándolos; test_overworld_hook.
-- [ ] Ala del gancho del templo
-  Gancho y GanchoOjo en levels/templo.tscn: postes sobre el abismo y el acorazado del ojo. Editar el grid y correr tools/la_walls.gd -- refresh templo (avisar a arte).
+- [x] Ala del gancho del templo
+  Hecho el 2026-10-13: el abismo del Gancho pasa de 3 a 4 celdas (x 12..15 del grid; el salto largo cruzaba 3) y su GanchoPit se ensancha a 8 m; GanchoWestPost (22.5, 0, 34) y GanchoEastPost (31.5, 0, 38), a 0,5 m del borde y corridos de la línea de las puertas. Editado como texto (sin re-guardar la escena); las paredes no cambian, así que no hizo falta el refresh de la_walls. El acorazado y el ojo del ala ya estaban. test_templo (nuevo test del cruce).
 - [x] Sub-jefe Amaru
   Hecho el 2026-10-13: src/entities/amaru/ (Amaru, AmaruPool), data/entities/amaru.tres. Asoma por uno de cuatro charcos (asomada, todo rebota), marca una línea 1 s, se lanza recta (2 de daño) y queda tirada 2,2 s, vulnerable a espada, bombas y vasijas; vuelve reptando al charco más cercano. Con media vida escupe un Projectile antes del lanzazo. 10 de vida, modelo primitivo. Reemplaza a la momia prestada en PisoBajo/AmaruFight; las vasijas del Pozo pasan a las esquinas. test_amaru (4).
-- [ ] Jefe Yacumama
-  Madre serpiente: asoma por los charcos y escupe; fase 1, el gancho a la argolla de su máscara la arrastra al piso y le pega la espada; fase 2, barrido de cola que se salta con la pluma. Hoy pelea un ojo vigía prestado (PisoBajo/BossFight/Yacumama).
+- [x] Jefe Yacumama
+  Hecho el 2026-10-13: src/entities/yacumama/ (Yacumama hereda de Amaru), data/entities/yacumama.tres, 14 de vida. Asoma por uno de cuatro charcos, escupe dos bolas (reflejables) y queda asomada 2,5 s; asomada solo cuenta el gancho, que la tira al piso a 2 m del player: 3 s tirada, le pega la espada; vuelve reptando. Con media vida, antes de escupir barre la sala con la cola desde su charco (hasta la pared; pega 2 en el piso, se salta con la pluma). El gancho le pega en el cuerpo: la punta va a 0,9 m y la argolla de la máscara queda como detalle del modelo. Reemplaza al ojo vigía prestado; las vasijas del Nido van a las cuatro esquinas. test_yacumama (4).
 - [x] Entrada de D3 en el overworld (sesión del overworld)
   Hecho por el overworld (5e04f395): TotoraDoor en una choza provisoria de la isla de la Laguna, Spawn_totora afuera; las dos salidas de D3 vuelven ahí.
 - [ ] Arte: horneado LA de la totora
@@ -4311,11 +4311,15 @@ Los ítems conseguidos en la mazmorra (mapa, brújula, llave del jefe, llaves ch
 
 **Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `diseno`, `ui`
 
-Playtest 2026-10-12: las tablitas del claro (11.45) funcionan, pero no son la mejor forma de enseñar los controles. Buscar otra.
+Playtest 2026-10-12: las tablitas del claro (11.45) funcionan, pero no son la mejor forma de enseñar los controles. Buscar otra. 2026-10-13 (Daniel): un mini tutorial cada vez que aparece una mecánica nueva, empezando por agarrar un ítem: qué hace, con qué botón y una situación para probarlo enseguida. Ejemplo: con el arco Daniel se olvidó de que dispararle al ojo era una mecánica; el juego tiene que mostrarlo.
 
 - [ ] Propuesta
+- [ ] Listar las mecánicas nuevas y dónde aparecen por primera vez: cada ítem (pluma, arco, sandalias, gancho, escudo espejo, bombas) y sus usos no obvios (flecha al ojo, salto largo, reflejar el haz), además de levantar, empujar, placas, etc.
+- [ ] Mini tutorial al agarrar un ítem: después del item get, un aviso corto con el botón del dispositivo actual y la mecánica que abre (p. ej. arco: 'dispará a los ojos de piedra')
+- [ ] Una situación para probarlo enseguida, cerca de donde se consigue (el primer ojo justo después del sub-jefe, etc.), en la línea de 11.90
+- [ ] Revisar las tablitas del claro: cuáles quedan y cuáles reemplaza el mini tutorial
 
-**Notas:** Con 11.90 (cada mazmorra enseña su ítem).
+**Notas:** Con 11.90 (cada mazmorra enseña su ítem). Daniel 2026-10-13: queda para el final, porque va a involucrar bastante rediseño.
 
 ### 11.106 Intro al día con el overworld nuevo · Revisión
 
@@ -4591,7 +4595,37 @@ La etiqueta del piso (FloorTag, en mazmorras de varios pisos) tenía lugar para 
 
 **Prueba:** test_minimap › test_the_floor_tag_sits_above_the_minimap: en la Chullpa la etiqueta se ve y termina arriba del minimapa.
 
-## M12 — Assets propios (Blender)  (13/19)
+### 11.128 Por atrás del santuario se salteaba el muro agrietado y el atajo · Hecho
+
+**Terminada:** 2026-10-13 · **Prioridad:** alta · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `overworld`
+
+Daniel: entrando al santuario por la puerta de atrás se salía por la de abajo atravesando el muro agrietado de la Explanada sin romperlo. Además Spawn_atajo (x 11) quedaba del lado de adentro de la reja del atajo, así que el atajo no hacía falta abrirlo. Ahora shrine_cave tiene su propio muro agrietado en la boca de la salida (EntranceCrackedWall, mismo flag ow_shrine_cracked_wall: romper uno rompe el otro), y Spawn_atajo pasa a x 13,4, afuera de la reja. Todos los muros agrietados del juego (14) tienen flag y quedan rotos.
+
+**Prueba:** test_shrine › test_the_back_door_skips_neither_the_shortcut_nor_the_cracked_wall: por atrás arranca afuera de la reja cerrada y no pasa; la salida está tapada por el muro de adentro; con el flag del muro de afuera, el de adentro está roto. test_overworld_run sigue pasando.
+
+### 11.129 D4, Intihuatana de la Cumbre · En curso
+
+**Prioridad:** media · **Tamaño:** L · **Etiquetas:** `mazmorra`, `puzzles`
+
+Mazmorra 4 (GDD §8e): el escudo espejo parte la Cumbre; el piso bajo sin él, el alto con él. Sub-jefe Kuntur joven, jefe Apu Kuntur. Plano aprobado por Daniel el 2026-10-13 (si, me gusta).
+
+- [x] Plano
+  Aprobado el 2026-10-13 (Daniel: si, me gusta). Doc de diseño actualizado (sección D4 y mapa).
+- [x] Blockout
+  Hecho el 2026-10-13: levels/cumbre.tscn (debug/tmp/design/build_cumbre.gd), 12 salas de 14 × 12 m en dos pisos y la Cima. Espejo que gira (src/world/light/rotating_mirror.tscn, gira 90° de un espadazo). Grafo data/dungeons/cumbre_graph.tres, flags cu_, nombres en es/en, escenario cumbre, test_cumbre (4). GDD §8e.
+- [ ] Sub-jefe Kuntur joven
+  Hoy una momia prestada en PisoBase/KunturFight. Se vence sin el escudo.
+- [ ] Jefe Apu Kuntur
+  Hoy un ojo vigía prestado en PisoCima/BossFight. Pide el escudo.
+- [ ] Entrada en el overworld (sesión del overworld)
+  Spawn_cumbre y la puerta; hasta entonces las salidas van a risco.
+- [ ] Horneado LA (arte)
+  El estilo cumbre ya está en la_walls; falta sumar levels/cumbre.tscn a LEVELS y hornearla.
+- [ ] Recorrerla (Daniel)
+
+**Prueba:** test_cumbre, test_dungeon_reach (cumbre_graph), test_walk_doors, test_drop_holes
+
+## M12 — Assets propios (Blender)  (15/22)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -4636,8 +4670,8 @@ Modelar en Blender el terreno del overworld (pasto, caminos, piso de plaza, acan
   Cubierto por las celdas de andén y risco (cada celda tiene las cuatro caras y su tope de pasto), con Andén/Risco borde para el borde del mundo.
 - [x] Aberturas en acantilado de 1 y 3 celdas
   Cubierto: las aberturas son celdas libres en la pared; las de 1 celda llevan cracked_wall_risco o reja.
-- [ ] Escalones y rampa (tierra y piedra)
-  Escalón: muro de piedra con lajas encastradas arriba (hecho). La escalinata está en el .blend pero no en el kit, y el overworld no tiene ningún desnivel que pida rampa: falta decidir si hacen falta.
+- [x] Escalones y rampa (tierra y piedra)
+  Escalón: muro de piedra con lajas encastradas arriba. Escalinata en estilo LA sin muros: bloques macizos de piedra redondeados hasta el piso, costado escalonado; el último escalón queda bajo el pasto (sin z-fighting). Las escenas escalinata_* sin choques de costado. No hace falta rampa.
 - [x] Abismo: borde recto, esquinas, fondo oscuro/niebla
   Hecho: abismo, abismo_borde/esquina/pasillo/punta/pozo en build_terreno_overworld.py (paredes de roca de 3 m con bandas pasto → acantilado → gris → casi negro, fondo oscuro). vary_overworld.gd elige la pieza y el giro según los vecinos; test_abyss_walls_face_the_ground. La niebla del fondo queda para Godot si hace falta.
 - [x] Cerco: recto, esquina, final, poste, roto
@@ -5045,6 +5079,34 @@ Diseño (-43) armó levels/totora.tscn en el kit gris (a8d40e91, GDD §8d): dos 
 - [ ] Santuario de totora en la isla (TotoraHut)
   Modelo hecho (41357968): src/world/totora_entrada.tscn, choza de los uros sobre balsa, techo con borla roja, columnas con cabeza de puma, aguayo y totoras; mismo colisionador que TotoraHut. Falta que overworld (-eb) la ponga en lugar del CSGBox3D, girada con la puerta al oeste.
 - [ ] Recorrerla (Daniel)
+
+### 12.20 Arte de la pantalla de título: logo y fondo del overworld · Hecho
+
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Tamaño:** M · **Etiquetas:** `arte`, `ui`
+
+La pantalla de título (src/ui/title/title_screen.tscn) sigue con arte provisorio: Background es un ColorRect, el título es un Label y hay un ojo dibujado por código (title_eye.gd). Idea de Daniel: un logo propio y, de fondo, un paneo lento del overworld, desenfocado, detrás del menú.
+
+- [x] Logo: wordmark de Epiphany con el motivo del ojo; exportar en PNG con alfa (y versión clara/oscura si hace falta)
+- [x] Fondo: paneo lento del overworld con una cámara sobre un recorrido (Path3D), en un SubViewport desenfocado detrás del menú. Medir la carga: si cargar el overworld entero demora el título, usar una versión liviana o un video pregrabado
+  Hecho como video pregrabado: cargar el overworld entero tardaba ~3,8 s. tools/title_flyover/flyover.tscn intercala la vista general con tomas de sectores (templo, laguna, Queñoa, Chullpa, Cumbre; marcadores From/To por toma) y se graba con --write-movie; assets/ui/title/flyover.ogv (88 s en loop, 7,4 MB), desenfocado con title_blur.gdshader.
+- [x] Integrar en title_screen.tscn (nodos en la escena, no por código) y decidir si el ojo de title_eye.gd queda o lo reemplaza el logo
+- [x] Actualizar el mockup de la pantalla de título en el canvas de diseño
+
+### 12.21 Ojo interruptor: la pupila sigue al player y se parece al ojo del jefe final · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `arte`, `detalle`
+
+Para después de terminar los assets (Daniel). El ojo de los interruptores de flecha (src/world/eye_switch.tscn: ojo_pilar + ojo_globo, p. ej. CliffEye, RavineEye, los ojos de la Necrópolis) tiene la pupila fija. La pupila tiene que seguir al player más cercano (girar el globo o mover la pupila, con límite de ángulo) y el ojo tiene que parecerse más al del jefe final (El Ojo con manos, src/entities/boss): iris, color y brillo.
+
+- [ ] Rediseñar ojo_globo con la forma del ojo del jefe final (iris, pupila separada, brillo)
+- [ ] La pupila mira al player más cercano en eye_switch.gd, suave y con límite de ángulo; quieta cuando el ojo está apagado o ya resuelto
+- [ ] Probar que siga funcionando como blanco de flecha (test_secrets, test_overworld)
+
+### 12.22 Splash con el logo y la paleta del theme · Hecho
+
+**Terminada:** 2026-10-13 · **Prioridad:** baja · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `arte`, `ui`
+
+Daniel aprobó el logo de 12.20 y lo quiere también en el splash. El boot splash de Godot pasa a mostrar assets/ui/logo/epiphany_splash.png (el logo a 600 px, sin estirar) sobre el mismo fondo oscuro de la pantalla de título (Color(0.043, 0.051, 0.063)), así el paso del splash al título no se nota.
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 

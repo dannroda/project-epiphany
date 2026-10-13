@@ -35,6 +35,7 @@
 [ext_resource type="Script" path="res://src/world/room.gd" id="c2_room"]
 [ext_resource type="PackedScene" path="res://player/player.tscn" id="c3_player"]
 [ext_resource type="Script" path="res://src/world/spawn_point.gd" id="c4_spawn"]
+[ext_resource type="PackedScene" path="res://src/world/cracked_wall.tscn" id="c8_cracked"]
 [ext_resource type="Script" path="res://src/tools/top_down_camera.gd" id="c5_camera"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="c6_hud"]
 [ext_resource type="Script" path="res://src/world/portal.gd" id="c7_portal"]
@@ -216,6 +217,10 @@ magnet_radius = 0.0
 world_size = 1.0
 heart_mesh = ExtResource("24_xlqr6")
 
+[node name="EntranceCrackedWall" parent="." instance=ExtResource("c8_cracked")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 7)
+flag = &"ow_shrine_cracked_wall"
+
 [node name="Spawn_entrada" type="Marker3D" parent="." unique_id=1369838862]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 script = ExtResource("c4_spawn")
@@ -231,7 +236,7 @@ target_spawn = &"santuario"
 shape = SubResource("PortalShape")
 
 [node name="Spawn_atajo" type="Marker3D" parent="." unique_id=438568649]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 11, 0, 0)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 13.4, 0, 0)
 script = ExtResource("c4_spawn")
 id = &"atajo"
 

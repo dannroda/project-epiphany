@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://src/world/dust_motes.tscn" id="1_dust"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nieve"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+albedo_color = Color(0.95, 0.98, 1, 0.7)
+billboard_mode = 3
+billboard_keep_scale = true
+
+[node name="Nieve" type="Node3D"]
+
+[node name="DustMotes" parent="." instance=ExtResource("1_dust")]
+material_override = SubResource("StandardMaterial3D_nieve")
+amount = 70

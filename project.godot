@@ -14,6 +14,9 @@ config/name="Project Epiphany"
 config/version="0.1"
 run/main_scene="res://src/ui/title/title_screen.tscn"
 config/features=PackedStringArray("4.8", "Forward Plus")
+boot_splash/bg_color=Color(0.043137256, 0.050980393, 0.0627451, 1)
+boot_splash/stretch_mode=0
+boot_splash/image="res://assets/ui/logo/epiphany_splash.png"
 config/icon="res://assets/branding/icon.png"
 
 [autoload]

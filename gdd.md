@@ -190,7 +190,7 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 <!-- id: overworld-layout -->
 
 **Forma Zelda 2D (7.10, 2026-10-12/13; donde contradice lo de abajo, manda esto):** 100 × 48 celdas (200 × 96 m) con terreno continuo, generado por `debug/tmp/ow2/layout.py` (celda (x, y) → mundo (2(x − 50), nivel · 2,6, 2(y − 24))). Terrazas reales de 2,6 m (niveles 0, 1 y 2): se sube por escalinatas y se baja por saltos. Cadena: **D1 Chullpa** en los Cerros (espada y bombas; da la pluma) → **D2 Queñoa** en la Arboleda, que se alcanza cruzando con la pluma un abismo de una celda (da el arco) → D3 (gancho) → D4 (escudo espejo) → el templo, último. Gruta, Santuario y Cueva de las bombas son cuevas interiores; afuera solo se ve la boca o la grieta en la cara del risco.
-- *Santuario:* queda para después de D4. El bloque al interruptor (`ow_shrine_switch`) abre el atajo al andén del templo; el cristal (`ow_shrine_crystal`), que solo prende el escudo espejo, baja la reja del cofre con un contenedor de corazón (`ow_shrine_chest`).
+- *Santuario:* queda para después de D4. El bloque al interruptor (`ow_shrine_switch`) abre el atajo al andén del templo; el cristal (`ow_shrine_crystal`), que solo prende el escudo espejo, baja la reja del cofre con un contenedor de corazón (`ow_shrine_chest`). Entrando por el atajo se queda del lado de afuera de su reja, y por dentro la salida a la Explanada tiene el mismo muro agrietado que afuera (`EntranceCrackedWall`, mismo flag `ow_shrine_cracked_wall`): romper uno deja roto el otro.
 - *Risco:* una escalinata sube a la cornisa (nivel 2). Frente a ella hay un abismo de 8 m (cuatro celdas, `RiscoPit`), más de lo que cruza el salto largo. Del otro lado, el ojo (`CliffEye`) abre con una flecha el nicho con el carcaj grande. La pieza de corazón (`HeartPieceCliff`) está del lado del ojo: se sube desde el pasillo bajo con el gancho, apuntando al poste del borde (`RiscoPost`).
 - *Piezas de corazón:*
   - Pradera: sobre un escalón de 0,6 m (`MeadowStep`), con la pluma.
@@ -314,7 +314,7 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 ## 8. Mazmorra — El Templo
 <!-- id: mazmorra -->
 
-**Rediseño (11.113, 2026-10-13, Daniel: si):** el templo es la última mazmorra y usa todos los ítems. No da ítem: el sub-jefe guarda la llave del jefe. Escena nueva `levels/templo.tscn`, flags `te_`; `levels/temple.tscn` (lo de abajo) queda como nivel de prueba hasta que el nuevo esté listo, y entonces el portal del overworld apunta al nuevo. Salas de 7 × 6 celdas (14 × 12 m), para que la cámara quede fija como en Link's Awakening. Grafo de diseño: `data/dungeons/templo_graph.tres` (pasa el test de alcanzabilidad y el molde, con `item` = llave del jefe y `guard` = la Mano). El ala del gancho se construye cuando exista el gancho (11.30, D3).
+**Rediseño (11.113, 2026-10-13, Daniel: si):** el templo es la última mazmorra y usa todos los ítems. No da ítem: el sub-jefe guarda la llave del jefe. Escena nueva `levels/templo.tscn`, flags `te_`; `levels/temple.tscn` (lo de abajo) queda como nivel de prueba hasta que el nuevo esté listo, y entonces el portal del overworld apunta al nuevo. Salas de 7 × 6 celdas (14 × 12 m), para que la cámara quede fija como en Link's Awakening. Grafo de diseño: `data/dungeons/templo_graph.tres` (pasa el test de alcanzabilidad y el molde, con `item` = llave del jefe y `guard` = la Mano). El ala del gancho está hecha (11.30): el abismo se ensanchó a 4 celdas y lleva dos postes.
 
 ```
                       ┌──────────┐
@@ -347,7 +347,7 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 | Arco | **Mapa**. Muro agrietado (bomba) al ojo del arco |
 | Ojo del arco | Ojos-interruptor sobre un abismo, solo con flechas: abren el nicho de la **llave chica** y encienden el ojo del ala (`te_eye_bow`) |
 | Hub | Esqueletos. Cuatro ojos tallados en el sello de la pared norte, uno por ala. Puertas con llave a las alas del gancho y del espejo |
-| Gancho | Postes sobre un abismo: se cruza con el gancho |
+| Gancho | Un abismo (foso) de 4 celdas a lo ancho de la sala, entre el hub y el ojo del gancho: el salto largo cruza 3, así que solo pasa el gancho. Un poste de cada lado, a 0,5 m del borde (`GanchoWestPost`, `GanchoEastPost`), corridos de la línea de las puertas para no tapar el paso |
 | Ojo del gancho | Esqueleto acorazado: el gancho le saca la armadura (11.90). Vencido, enciende el ojo del ala (`te_eye_hook`) |
 | Espejo | Torretas que disparan orbes: el escudo espejo los devuelve al cristal (`te_mirror_crystal`, de la galería de hoy) |
 | Ojo del espejo | Un haz de luz que se refleja con el escudo espejo hasta el receptor del ojo del ala (`te_eye_mirror`) |
@@ -589,13 +589,66 @@ Plano aprobado por Daniel el 2026-10-13 ("me parece bien la totora") y armado en
 | Estanque (alto, centro norte) | Con gancho, desde el Telar. Tierra al oeste, un islote al este con 4 celdas de agua en el medio, y un poste de cada lado. En el islote, la **llave chica**; de ahí, una puerta abierta al Mirador. Al oeste, la puerta con llave a los Tejedores |
 | Mirador del lago (alto, NE; opcional) | Postes de una orilla a la otra hasta la **pieza de corazón** (`tt_heart_piece`) |
 | Tejedores (alto, NO) | Con llave. Una franja de entrada y, del otro lado de 4 celdas de agua, una franja oeste con un poste. Un ojo con tiempo (`open_time` 6 s, sin flag) en la pared oeste se flecha desde la entrada; con el gancho se cruza y hay que pasar la reja (`BossKeyGate`) antes de que se cierre, hasta el nicho de la **llave del jefe**. En el nicho, un hueco cae a la Cámara del gancho: si la reja se cerró, esa es la salida. Si se cruza antes de flechar el ojo, desde la franja oeste también se le pega |
-| Nido de Yacumama (bajo, NE) | Jefe **Yacumama**, la madre serpiente (`BossFight`, `tt_boss_defeated`). Sala sin obstáculos, solo vasijas. Fase 1: asoma por los charcos y escupe; el gancho a la argolla de su máscara la arrastra al piso y ahí le pega la espada. Fase 2: además barre la sala con la cola, que se salta con la pluma. Vencida, aparecen el contenedor de corazón (`tt_heart_container`) y el portal de salida |
+| Nido de Yacumama (bajo, NE) | Jefe **Yacumama**, la madre serpiente (`BossFight`, `tt_boss_defeated`, `src/entities/yacumama/`, hereda del Amaru). Sala sin obstáculos: cuatro charcos y una vasija en cada esquina. Asoma por un charco, escupe dos bolas (el escudo las devuelve) y queda asomada 2,5 s; asomada, todo rebota menos el gancho, que la arranca del charco y la tira al piso a 2 m del player: ahí queda 3 s y le pega la espada (y las bombas). Después vuelve reptando y se hunde. El gancho le pega en el cuerpo (la punta va a 0,9 m del piso; la argolla de la máscara queda como detalle del modelo). Con la mitad de la vida o menos (14 en total), antes de escupir saca la cola de su charco y barre la sala en una vuelta: pega 2 a quien está en el piso y se salta con la pluma. Vencida, aparecen el contenedor de corazón (`tt_heart_container`) y el portal de salida. test_yacumama |
 
 **Recorrido:**
 1. Primera mitad, sin gancho: Embarcadero → Balsas (llave) → Juncal (arco: mapa) → Garita (brújula) → Telar (bomba; los postes a la vista) → Embarcadero → Pozo del Amaru (llave) → gancho.
 2. Segunda mitad, con gancho: atajo a las Balsas → Juncal → Garita → Telar → Estanque (llave en el islote; Mirador) → Tejedores (arco y gancho con tiempo: llave del jefe) → hueco a la Cámara → atajo → Juncal → jefe.
 
-**Pendiente:** Yacumama no existe todavía. En el blockout pelea un ojo vigía (`WatcherEye`) prestado de D2, con el nombre de D3. El Amaru tiene modelo primitivo hasta que arte lo haga. Diferencias con el plano aprobado (por las reglas del gancho y de la vasija grande): la vasija grande que se traía con el gancho hasta una placa no está, porque se levanta con las manos y el puzzle se resolvía sin el gancho; el Juncal usa una reja en lugar de un puente; el acorazado está en el Telar y no en los Tejedores; el Mirador son solo postes. Kit: el gris de la Chullpa hasta el horneado LA de arte. Escenario de debug: `totora`. La entrada en el overworld es de la sesión del overworld: `TotoraDoor`, en una choza provisoria de la isla, y `Spawn_totora`, adonde vuelven las dos salidas.
+**Pendiente:** el Amaru y Yacumama tienen modelos primitivos hasta que arte los haga. Diferencias con el plano aprobado (por las reglas del gancho y de la vasija grande): la vasija grande que se traía con el gancho hasta una placa no está, porque se levanta con las manos y el puzzle se resolvía sin el gancho; el Juncal usa una reja en lugar de un puente; el acorazado está en el Telar y no en los Tejedores; el Mirador son solo postes. Kit: el gris de la Chullpa hasta el horneado LA de arte. Escenario de debug: `totora`. La entrada en el overworld es de la sesión del overworld: `TotoraDoor`, en una choza provisoria de la isla, y `Spawn_totora`, adonde vuelven las dos salidas.
+
+## 8e. Mazmorra 4 — El Intihuatana de la Cumbre
+<!-- id: mazmorra-4 -->
+
+Plano aprobado por Daniel el 2026-10-13 ("si, me gusta") y armado en blockout (`levels/cumbre.tscn`, hecho con `debug/tmp/design/build_cumbre.gd`). Un observatorio inca en la cumbre nevada. Dos pisos de 3 × 2 salas de 14 × 12 m (7 × 6 celdas), 8 m uno del otro, y la Cima arriba de la Antesala. Ítem: el **escudo espejo**, guardado por el sub-jefe Kuntur joven. El escudo parte la mazmorra: el piso bajo se juega sin él, el alto con él. Trae la pluma, el arco, las bombas, las sandalias y el gancho. Grafo: `data/dungeons/cumbre_graph.tres` (con escena; pasa el test y las reglas del molde). Flags `cu_`.
+
+**La luz:** las fuentes de sol (`LightSource`) tiran un haz que rebota en los espejos y en el escudo espejo alzado, y enciende los cristales (`LightReceiver`, que quedan encendidos). Pieza nueva: el **espejo que gira** (`src/world/light/rotating_mirror.tscn`), que gira 90° de un espadazo; las flechas, las bombas y el gancho no lo mueven. Las rejas cortan el haz, así que una reja que se cierra sola sirve de persiana.
+
+```
+ PISO ALTO  ┌───────────┬───────────┬───────────┐
+            │Torretas   │Espejos    │Llegada    │
+            │abismo,    ├─(cristal)─┤           │
+            │postes; orbe│2 espejos ├─ abierta ──┤ escalera ▼
+            │→ ojo:LLAVE│que giran  │           │
+            ├─ abierta ─┼───────────┼───────────┤
+            │Ojo del Sol│Hueco      │Antesala   │
+            │ojo c/tiempo├─abierta──┤vasijas    │
+            │→ persiana;│hueco ↓    ├─[LLAVE]───┤ [JEFE] → escalera ▲ (Cima)
+            │LLAVE JEFE │pieza ♥    │           │
+            └───────────┴───────────┴───────────┘
+ PISO BAJO  ┌───────────┬───────────┬───────────┐
+            │Grieta     │Nido del   │Cámara del │
+            │pluma:     │Kuntur     ├─(kuntur)──┤ESCUDO
+            │brújula    │sub-jefe   │cristal →  │ escalera ▲
+            ├─(bomba)───┼─[LLAVE]───┼───────────┤
+            │Columnas   │Atrio      │Ventisquero│
+            │abismo,    ├─abierta───┤torretas;  │
+            │postes:    │entrada;   ├─abierta───┤ojo → mapa
+            │LLAVE      │cristal    │           │
+            └───────────┴───────────┴───────────┘
+```
+
+| Sala | Qué pasa |
+|---|---|
+| Atrio (bajo, centro sur) | Entrada desde el overworld. Un rayo de sol cruza la sala pegado a la pared norte, al lado de un cristal: sin escudo es la promesa del ítem; con él, el cristal abre el nicho de las vasijas (bombas). Abierto a las Columnas y al Ventisquero; al norte, puerta con llave al Nido |
+| Columnas (bajo, SO) | Abismo de 4 celdas con un poste a cada lado: con el gancho, la **llave chica**. Pared rajada (bomba) a la Grieta |
+| Grieta (bajo, NO) | Dos grietas de una celda (pluma) hasta la **brújula** |
+| Ventisquero (bajo, SE) | Dos torretas y columnas de basalto para cubrirse. Del otro lado de un abismo, un ojo en la pared sur (arco) abre la reja del nicho del **mapa** |
+| Nido del Kuntur (bajo, centro norte) | Sub-jefe **Kuntur joven** (`KunturFight`, `cu_kuntur_defeated`; por ahora una momia prestada). Sala sin obstáculos, una vasija en cada esquina. Se vence sin el escudo. Vencido, abre la Cámara |
+| Cámara del escudo (bajo, NE) | Cofre grande del **escudo espejo**. Primer uso: el sol cae del norte, el escudo lo manda al cristal del oeste y se abre la reja de la escalera a la Llegada |
+| Llegada (alto, NE) | Escalera a la Cámara. Abierta a los Espejos |
+| Espejos (alto, centro norte) | El sol entra por el este hacia el oeste. Dos espejos que giran, de un espadazo cada uno, lo llevan al sur y lo devuelven al este por el lado sur de la sala; ahí el escudo lo baja al cristal, que abre la puerta de las Torretas. Una columna de basalto tapa el atajo desde el primer tramo. Un esqueleto con escudo |
+| Torretas (alto, NO) | Abismo de 4 celdas. En la cornisa oeste, una torreta tira orbes; devuelto con el escudo, un orbe pega en el ojo de la cornisa y abre la reja de la **llave chica**. Al lado de la llave, el gancho cruza de poste a poste |
+| Ojo del Sol (alto, SO) | Un sol en un nicho, tras una persiana (reja que se cierra sola). Una flecha al ojo de la pared norte la abre 6 s: con el escudo, el rayo va al receptor del sur, que abre el nicho de la **llave del jefe**. Un arquero |
+| Hueco (alto, centro sur) | Un hueco cae al Atrio (atajo). Un abismo con un islote en la esquina: con el salto largo, la **pieza de corazón** (`cu_heart_piece`). Al este, puerta con llave a la Antesala |
+| Antesala (alto, SE) | Vasijas. En un recoveco del este, la puerta del jefe y la escalera a la Cima |
+| Cima (arriba de la Antesala) | Jefe **Apu Kuntur** (`BossFight`, `cu_boss_defeated`; por ahora un ojo vigía prestado). Sala sin obstáculos, una vasija en cada esquina. Vencido, aparecen el contenedor de corazón (`cu_heart_container`) y el portal de salida |
+
+**Recorrido:**
+1. Sin escudo: Atrio → Columnas (gancho: llave) → Grieta (bomba, pluma: brújula) → Ventisquero (arco: mapa) → Atrio → Nido (llave: Kuntur joven) → Cámara (escudo).
+2. Con escudo: cristal de la Cámara → Llegada → Espejos (espada y escudo) → Torretas (escudo y gancho: llave) → Ojo del Sol (arco y escudo con tiempo: llave del jefe) → Hueco (pieza de corazón; el hueco es el atajo al Atrio) → Antesala → Cima.
+
+**Pendiente:** el Kuntur joven y el Apu Kuntur (hoy prestados). Kit: el gris de la Chullpa hasta el horneado LA de arte (el estilo `cumbre` ya está en `la_walls`). Escenario de debug: `cumbre`. La entrada en el overworld es de la sesión del overworld (`Spawn_cumbre` y la puerta); hasta entonces las dos salidas van al punto `risco`. A probar en el recorrido: si el escudo, apuntado en diagonal, salta el atajo de la columna de los Espejos; el hueco del Hueco queda pegado al abismo del islote.
 
 ## 9. Jefe — El Ojo con manos
 <!-- id: jefe -->

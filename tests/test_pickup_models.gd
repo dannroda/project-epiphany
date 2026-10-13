@@ -14,10 +14,10 @@ func _shown(item: ItemData) -> Node3D:
 
 
 func test_hearts_arrows_and_bombs_lie_as_models() -> void:
-	for item in [null, Items.get_item(&"arrow"), Items.get_item(&"bomb")]:
+	for item in [null, Items.get_item(&"arrow"), Items.get_item(&"bomb"), Items.get_item(&"heart_piece")]:
 		var shown := _shown(item)
 		assert_true(shown is MeshInstance3D and (shown as MeshInstance3D).mesh != null, "%s con malla" % (item.id if item else &"corazón"))
-	assert_true(_shown(Items.get_item(&"heart_piece")) is Sprite3D, "sin malla, el ícono")
+	assert_true(_shown(Items.get_item(&"compass")) is Sprite3D, "sin malla, el ícono")
 
 
 func test_the_orb_uses_its_model() -> void:

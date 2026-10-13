@@ -1,0 +1,33 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Rediseñar ojo_globo con la forma del ojo del jefe final (iris, pupila separada, brillo)"
+    },
+    {
+      "done": false,
+      "text": "La pupila mira al player más cercano en eye_switch.gd, suave y con límite de ángulo; quieta cuando el ojo está apagado o ya resuelto"
+    },
+    {
+      "done": false,
+      "text": "Probar que siga funcionando como blanco de flecha (test_secrets, test_overworld)"
+    }
+  ],
+  "code": "12.21",
+  "created_at": "2026-10-13T21:26:06.251Z",
+  "description": "Para después de terminar los assets (Daniel). El ojo de los interruptores de flecha (src/world/eye_switch.tscn: ojo_pilar + ojo_globo, p. ej. CliffEye, RavineEye, los ojos de la Necrópolis) tiene la pupila fija. La pupila tiene que seguir al player más cercano (girar el globo o mover la pupila, con límite de ángulo) y el ojo tiene que parecerse más al del jefe final (El Ojo con manos, src/entities/boss): iris, color y brillo.",
+  "milestone": "m12",
+  "notes": "",
+  "order": 21,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "arte",
+    "detalle"
+  ],
+  "test": "",
+  "title": "Ojo interruptor: la pupila sigue al player y se parece al ojo del jefe final",
+  "updated_at": "2026-10-13T21:26:07.339Z"
+}
