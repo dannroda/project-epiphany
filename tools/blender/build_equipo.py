@@ -14,10 +14,10 @@ kit = epi.start()
 UPRIGHT = Matrix.Rotation(math.pi / 2, 4, "X")
 
 
-def piece(name, seed, fn):
+def piece(name, seed, fn, smooth=40):
 	p = epi.Piece(seed)
 	keys = fn(p) or {}
-	obj = p.build(name, kit)
+	obj = p.build(name, kit, smooth=smooth)
 	if keys:
 		obj.shape_key_add(name="Basis")
 	for key_name, move in keys.items():
@@ -43,14 +43,14 @@ def espada(p):
 	p.paint(ridge, "neon", "MID")
 	guard = []
 	for w, h, z in ((0.5, 0.07, 0.0), (0.32, 0.12, 0.0), (0.16, 0.18, 0.0)):
-		guard += p.box(-w / 2, w / 2, -0.05, 0.05, z - h / 2, z + h / 2)
+		guard += p.rounded_box(-w / 2, w / 2, -0.05, 0.05, z - h / 2, z + h / 2, radius=0.02, segments=2)
 	p.paint(guard, "cobre_verde", "MID", vary=0.05)
 	grip = []
 	for i in range(5):
 		z = -0.07 - i * 0.055
-		grip += p.box(-0.04, 0.04, -0.04, 0.04, z - 0.05, z)
+		grip += p.cylinder(0.042, z - 0.05, z, sides=12)
 	p.paint_bands(grip, [(-0.13, -0.07, "tela_roja", "MID"), (-0.24, -0.18, "tela_roja", "MID"), (-0.35, -0.29, "tela_roja", "MID")], default=(0, 0, "hueso", "MID"))
-	pommel = p.box(-0.07, 0.07, -0.06, 0.06, -0.37, -0.33) + p.box(-0.04, 0.04, -0.06, 0.06, -0.41, -0.37)
+	pommel = p.rounded_box(-0.07, 0.07, -0.06, 0.06, -0.37, -0.33, radius=0.015, segments=2) + p.blob((0, 0, -0.39), 0.05, subdiv=2, rough=0.0)
 	p.paint(pommel, "cobre_verde", "LIGHT")
 
 
@@ -65,7 +65,7 @@ def escudo_madera(p):
 		arc = [(x, math.sqrt(max(r * r - x * x, 0.0))) for x in xs]
 		boards += flat(p, [(x, -z) for x, z in arc] + [(x, z) for x, z in reversed(arc)], 0.06)
 	p.paint(boards, "madera", z_range=(-0.8, 0.8), vary=0.1)
-	rim = p.lathe([(r + 0.01, -0.035), (r + 0.03, 0.0), (r + 0.01, 0.035), (r - 0.03, 0.035), (r - 0.03, -0.035), (r + 0.01, -0.035)], sides=16, caps=False)
+	rim = p.lathe([(r + 0.01, -0.035), (r + 0.03, 0.0), (r + 0.01, 0.035), (r - 0.03, 0.035), (r - 0.03, -0.035), (r + 0.01, -0.035)], sides=28, caps=False)
 	p.transform(rim, UPRIGHT)
 	p.paint(rim, "madera_oscura", "MID")
 	steps = []
@@ -78,10 +78,10 @@ def escudo_madera(p):
 
 def escudo_espejo(p):
 	"""Disco solar: centro espejado, aro de bronce y doce rayos."""
-	disk = p.cylinder(0.36, 0.0, 0.04, sides=16)
+	disk = p.cylinder(0.36, 0.0, 0.04, sides=28)
 	p.transform(disk, UPRIGHT)
 	p.paint(disk, "cristal", "LIGHT", vary=0.03)
-	ring = p.lathe([(0.36, -0.05), (0.44, -0.04), (0.44, 0.03), (0.36, 0.03), (0.36, -0.05)], sides=16, caps=False)
+	ring = p.lathe([(0.36, -0.05), (0.44, -0.04), (0.44, 0.03), (0.36, 0.03), (0.36, -0.05)], sides=28, caps=False)
 	p.transform(ring, UPRIGHT)
 	p.paint(ring, "dorado", "MID")
 	rays = []
@@ -91,7 +91,7 @@ def escudo_espejo(p):
 		p.transform(ray, Matrix.Rotation(a, 4, "Y"))
 		rays += ray
 	p.paint(rays, "dorado", "LIGHT", vary=0.05)
-	back = p.cylinder(0.3, -0.1, -0.02, sides=10)
+	back = p.cylinder(0.3, -0.1, -0.02, sides=20)
 	p.transform(back, UPRIGHT)
 	p.paint(back, "madera_oscura", "MID")
 
@@ -111,16 +111,16 @@ def arco(p):
 			t = k / 8
 			cur = Vector((limb_x(t), side * half * t, 0.0))
 			seg = cur - prev
-			c = p.cylinder(0.035 - 0.017 * (t - 1 / 8), 0.0, seg.length, sides=6, radius_top=0.035 - 0.017 * t)
+			c = p.cylinder(0.035 - 0.017 * (t - 1 / 8), 0.0, seg.length, sides=10, radius_top=0.035 - 0.017 * t)
 			p.transform(c, Matrix.Translation(prev) @ seg.normalized().to_track_quat("Z", "Y").to_matrix().to_4x4())
 			limbs += c
 			prev = cur
 	p.paint(limbs, "madera_oscura", "MID", vary=0.08)
 	tips = []
 	for side in (-1, 1):
-		tips += p.box(-brace - 0.03, -brace + 0.03, side * half - 0.03, side * half + 0.03, -0.03, 0.03)
+		tips += p.blob((-brace, side * half, 0.0), 0.035, subdiv=2, rough=0.0)
 	p.paint(tips, "dorado", "MID")
-	wrap = p.box(-0.05, 0.05, -0.1, 0.1, -0.045, 0.045)
+	wrap = p.rounded_box(-0.05, 0.05, -0.1, 0.1, -0.045, 0.045, radius=0.02, segments=2)
 	p.paint(wrap, "tela_roja", "MID")
 	string = []
 	for side in (-1, 1):
@@ -142,7 +142,7 @@ def arco(p):
 
 
 def carcaj(p):
-	tube = p.cylinder(0.11, 0.0, 0.62, sides=8, radius_top=0.12)
+	tube = p.cylinder(0.11, 0.0, 0.62, sides=16, radius_top=0.12)
 	p.paint_bands(tube, [(0.1, 0.18, "tela_roja", "MID"), (0.45, 0.52, "tela_roja", "MID")], default=(0, 0, "madera", "DARK"))
 	shafts = []
 	for i in range(5):
@@ -158,7 +158,7 @@ def carcaj(p):
 
 def bolsa_bombas(p):
 	"""Bolsa tejida con franjas de aguayo y la boca atada."""
-	body = p.lathe([(0.0, 0.0), (0.18, 0.03), (0.24, 0.15), (0.22, 0.3), (0.12, 0.38), (0.06, 0.4), (0.1, 0.46), (0.0, 0.47)], sides=10)
+	body = p.lathe([(0.0, 0.0), (0.18, 0.03), (0.24, 0.15), (0.22, 0.3), (0.12, 0.38), (0.06, 0.4), (0.1, 0.46), (0.0, 0.47)], sides=18)
 	p.paint_bands(body, [(0.08, 0.13, "tela_azul", "MID"), (0.13, 0.17, "flor_amarilla", "MID"), (0.17, 0.22, "tela_azul", "MID"), (0.26, 0.3, "flor_rosa", "MID"), (0.36, 0.42, "paja", "DARK")], default=(0, 0, "tela_roja", "MID"))
 
 
@@ -170,7 +170,7 @@ LIQUID_TOP = 0.165
 
 def botella(p):
 	"""Lo opaco de la botella: tapón de madera y el cordel del cuello. El vidrio y el líquido son piezas aparte."""
-	cork = p.cylinder(0.04, 0.315, 0.4, sides=6, radius_top=0.045)
+	cork = p.cylinder(0.04, 0.315, 0.4, sides=12, radius_top=0.045)
 	p.paint(cork, "madera", "MID")
 	cord = p.lathe([(0.049, 0.255), (0.052, 0.27), (0.049, 0.285)], sides=10, caps=False)
 	p.paint(cord, "paja", "MID")
@@ -178,14 +178,14 @@ def botella(p):
 
 def botella_vidrio(p):
 	"""El frasco de vidrio (en Godot, con material transparente)."""
-	p.paint(p.lathe(FLASK, sides=12), "cristal", "LIGHT")
+	p.paint(p.lathe(FLASK, sides=20), "cristal", "LIGHT")
 
 
 def botella_liquido(p):
 	"""El contenido: la panza llena hasta LIQUID_TOP, en blanco; el material del ítem le da el color."""
 	inner = [(r * 0.9, z) for r, z in FLASK if z < LIQUID_TOP] + [(0.0, LIQUID_TOP)]
 	inner[0] = (0.0, 0.015)
-	p.paint(p.lathe(inner, sides=12), "blanco", "LIGHT")
+	p.paint(p.lathe(inner, sides=20), "blanco", "LIGHT")
 
 
 def armadura(p):
@@ -194,7 +194,7 @@ def armadura(p):
 	plate = p.box(-0.26, 0.26, -0.22, 0.12, 0.22, 0.58, taper=0.03)
 	p.paint_bands(plate, [(0.3, 0.33, "neon", "MID")], default=(0, 0, "tela_roja", "MID"))
 	epi.chakana_plate(p, Vector((0, -0.23, 0.45)), 0.16, "dorado")
-	p.paint(p.lathe([(0.2, 0.55), (0.22, 0.62), (0.0, 0.62)], sides=8), "dorado", "MID")
+	p.paint(p.lathe([(0.2, 0.55), (0.22, 0.62), (0.0, 0.62)], sides=16), "dorado", "MID")
 	for side in (-1, 1):
 		x = side * 0.36
 		p.paint(p.rounded_box(x - 0.17, x + 0.17, -0.17, 0.17, 0.38, 0.64, radius=0.07), "tela_roja", "MID")
