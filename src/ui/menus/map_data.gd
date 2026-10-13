@@ -1,9 +1,10 @@
 extends RefCounted
 ## Lo que leen del nivel la pestaña Mapa y el minimapa: sala actual, puertas, cofres y la distancia entre salas.
 
-## Puertas del kit sin nodo Door (pasos libres entre salas).
+## Puertas del kit sin nodo Door (pasos libres entre salas); con paredes LA, las piezas de corte (una por sala, juntas).
 const DOORWAY_ITEM := "Puerta"
-const DOOR_MERGE_DISTANCE := 2.0
+const DOORWAY_LA_PREFIX := "Paso LA "
+const DOOR_MERGE_DISTANCE := 2.5
 
 
 static func current_room(tree: SceneTree) -> Room:
@@ -38,7 +39,8 @@ static func doors(tree: SceneTree) -> Array:
 		if grid.mesh_library == null:
 			continue
 		for cell in grid.get_used_cells():
-			if grid.mesh_library.get_item_name(grid.get_cell_item(cell)) != DOORWAY_ITEM:
+			var item_name := grid.mesh_library.get_item_name(grid.get_cell_item(cell))
+			if item_name != DOORWAY_ITEM and not item_name.begins_with(DOORWAY_LA_PREFIX):
 				continue
 			var point := grid.to_global(grid.map_to_local(cell))
 			if found.any(func(other: Array) -> bool: return (other[0] as Vector3).distance_to(point) < DOOR_MERGE_DISTANCE):

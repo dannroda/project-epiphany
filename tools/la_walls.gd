@@ -1,14 +1,17 @@
 extends SceneTree
-## Prueba de paredes inclinadas a lo Link's Awakening sobre la Chullpa: cada celda de pared baja en rampa hacia los vecinos con piso.
+## Paredes inclinadas a lo Link's Awakening en la Chullpa: cada celda de pared baja en rampa hacia los vecinos con piso.
 ## export: tools/paredes_la.json con las formas que usa el nivel (luego blender -b -P tools/blender/build_paredes_la.py).
-## build: data/kits/chullpa_la_kit.tres (kit chullpa + piezas de paredes_la.glb) y debug/la/chullpa_la.tscn.
+## bake: una sola vez, sobre levels/chullpa.tscn: duplica las paredes entre salas (cada sala la suya; todo se corre con
+## su sala), pone las piezas de data/kits/chullpa_la_kit.tres (kit chullpa + paredes_la.glb) y el look de LA.
+## refresh: en el nivel ya hecho, vuelve a elegir la pieza de cada celda de pared (después de editar el nivel).
 ## Las celdas Puerta llevan un corte (paso) o, si tienen escalera, un corte ciego con escalones (sube, baja).
-## godot --headless --path . --script res://tools/la_walls.gd -- export|build
+## godot --headless --path . --script res://tools/la_walls.gd -- export|bake|refresh
 
 const LEVEL := "res://levels/chullpa.tscn"
 const KIT := "res://data/kits/chullpa_kit.tres"
 const OUT_KIT := "res://data/kits/chullpa_la_kit.tres"
-const OUT_LEVEL := "res://debug/la/chullpa_la.tscn"
+## Marca de que el nivel ya tiene el look (bake no se repite).
+const BAKED := "VinetaLA"
 const SHAPES := "res://tools/paredes_la.json"
 const MESHES := "res://assets/epiphany/meshes/paredes_la/%s_la_%s.res"
 const STONE := preload("res://data/kits/materials/epiphany_stone.tres")
@@ -38,9 +41,6 @@ const FLOOR := preload("res://src/world/look/piso_la.gdshader")
 ## Veta de las paredes: la franja "acantilado" de la paleta (columna 3, fila 0).
 const GRAIN_AMOUNT := 0.5
 const GRAIN_RECT := Vector4(0.42, 0.455, 0.0, 0.25)
-const BIG_POT := "res://src/world/big_pot.tscn"
-## Vasijas que pasan a ser las grandes que se empujan (big_pot.tscn).
-const BIG_POTS := ["OsarioPot1", "OsarioPot2"]
 ## Curva de tono: entre la del visor de LA (0.3 / 1.2) y la vieja (0.28 / 2.23), por contraste; por debajo de TOE_PIVOT
 ## (lineal) oscurece con esta potencia, arriba queda igual.
 const TOE_PIVOT := 0.3
@@ -88,15 +88,17 @@ const ROOM_LIGHT_SOFTNESS := 0.5
 const SUN_ENERGY := 0.7
 const SUN_COLOR := Color(0.62, 0.78, 1.0)
 const SUN_ELEVATION := 40.0
-## Las vasijas, del ancho de la placa del botón (1.4 m, como en LA, que pueden reemplazar a un bloque sobre él) y algo
-## más bajas para no pasar a Kai. Solo el modelo.
-const POT_SCALE := Vector3(2.1, 1.5, 2.1)
-
-
 func _initialize() -> void:
 	var mode := OS.get_cmdline_user_args()[0] if not OS.get_cmdline_user_args().is_empty() else "export"
 	var level: Node = (load(LEVEL) as PackedScene).instantiate()
-	_spread(level)
+	var baked := level.has_node(NodePath(BAKED))
+	if mode == "bake" and baked:
+		push_error("%s ya tiene el look de LA: usar refresh" % LEVEL)
+		level.free()
+		quit(1)
+		return
+	if not baked:
+		_spread(level)
 	var cells := {}
 	for grid: GridMap in level.find_children("*", "GridMap", true, false):
 		cells[grid] = _shapes(grid)
@@ -113,17 +115,20 @@ func _initialize() -> void:
 			out[kind].sort()
 		FileAccess.open(SHAPES, FileAccess.WRITE).store_string(JSON.stringify(out, "\t") + "\n")
 		print(SHAPES, ": ", out)
-	else:
+	elif mode == "bake" or mode == "refresh":
 		var kit := _kit()
 		for grid: GridMap in cells:
 			grid.mesh_library = kit
 			for cell: Vector3i in cells[grid]:
 				var shape: Array = cells[grid][cell]
 				grid.set_cell_item(cell, kit.find_item_by_name(KINDS[shape[0]][0] + shape[1]))
-		_dress(level)
+		if mode == "bake":
+			_dress(level)
 		var packed := PackedScene.new()
 		packed.pack(level)
-		print(OUT_LEVEL, ": ", error_string(ResourceSaver.save(packed, OUT_LEVEL)))
+		var uid := ResourceLoader.get_resource_uid(LEVEL)
+		print(LEVEL, ": ", error_string(ResourceSaver.save(packed, LEVEL)))
+		ResourceSaver.set_uid(LEVEL, uid)
 	level.free()
 	quit()
 
@@ -136,8 +141,6 @@ func _dress(level: Node) -> void:
 	gloss.set_script(GLOSS)
 	level.add_child(gloss)
 	gloss.owner = level
-	for pot: Node in level.find_children("*", "", true, false).filter(func(n: Node) -> bool: return n.name in BIG_POTS):
-		_big_pot(level, pot as Node3D)
 	for node: Node in level.find_children("*", "", true, false):
 		var path := node.scene_file_path
 		if path.ends_with("wall_torch.tscn"):
@@ -231,9 +234,6 @@ func _dress(level: Node) -> void:
 			node.set("south_wall_reach", MASK_MARGIN - 0.3)
 			node.set("wall_height", FRAME_HEIGHT)
 			node.set("mask_margin", MASK_MARGIN)
-		if path.get_file() == "pot.tscn":
-			(node.get_node("Body/Model") as Node3D).scale = POT_SCALE
-			level.set_editable_instance(node, true)
 
 
 ## Como en LA, la piedra y el piso brillan un poco y reflejan la sala (sondas de reflejo por sala).
@@ -313,17 +313,6 @@ func _vignette(level: Node) -> void:
 	layer.owner = level
 	layer.add_child(rect)
 	rect.owner = level
-
-
-func _big_pot(level: Node, pot: Node3D) -> void:
-	var big := (load(BIG_POT) as PackedScene).instantiate() as Node3D
-	big.name = pot.name
-	big.transform = pot.transform
-	var parent := pot.get_parent()
-	parent.remove_child(pot)
-	pot.free()
-	parent.add_child(big)
-	big.owner = level
 
 
 func _light(level: Node, room: Area3D) -> void:
@@ -406,10 +395,10 @@ func _shapes(grid: GridMap) -> Dictionary:
 			stairs[grid.local_to_map(grid.transform.affine_inverse() * (node as Node3D).position)] = _stairs_kind(node)
 	var open := func(cell: Vector3i) -> bool:
 		var item := grid.get_cell_item(cell)
-		return item != GridMap.INVALID_CELL_ITEM and lib.get_item_name(item) not in WALLS and lib.get_item_name(item) != DOOR and not stairs.has(cell)
+		return item != GridMap.INVALID_CELL_ITEM and _base_name(lib.get_item_name(item)) not in WALLS and _base_name(lib.get_item_name(item)) != DOOR and not stairs.has(cell)
 	var out := {}
 	for cell in grid.get_used_cells():
-		var item_name := lib.get_item_name(grid.get_cell_item(cell))
+		var item_name := _base_name(lib.get_item_name(grid.get_cell_item(cell)))
 		if item_name not in WALLS and item_name != DOOR and not stairs.has(cell):
 			continue
 		var code := ""
@@ -423,11 +412,21 @@ func _shapes(grid: GridMap) -> Dictionary:
 		if item_name in WALLS and code.length() == 1:
 			for side: String in SIDES:
 				var beside := grid.get_cell_item(cell + SIDES[side])
-				if not code.contains(side) and SIDES[side] != -SIDES[code] and beside != GridMap.INVALID_CELL_ITEM and lib.get_item_name(beside) == DOOR:
+				if not code.contains(side) and SIDES[side] != -SIDES[code] and beside != GridMap.INVALID_CELL_ITEM and _base_name(lib.get_item_name(beside)) == DOOR:
 					corners += "_p" + side
 		var kind: String = "pared" if item_name in WALLS else stairs.get(cell, "paso")
 		out[cell] = [kind, (code if code else "x") + corners]
 	return out
+
+
+## El ítem del kit chullpa que una pieza LA reemplaza: Pared LA … es una pared, Paso LA …, Sube LA … y Baja LA … una puerta.
+func _base_name(item_name: String) -> String:
+	if item_name.begins_with(KINDS["pared"][0]):
+		return WALLS[0]
+	for kind: String in ["paso", "sube", "baja"]:
+		if item_name.begins_with(KINDS[kind][0]):
+			return DOOR
+	return item_name
 
 
 func _kit() -> MeshLibrary:
@@ -502,6 +501,10 @@ func _spread(level: Node) -> void:
 			for x in _copies(seps[0], cell.x):
 				for z in _copies(seps[1], cell.z):
 					grid.set_cell_item(Vector3i(x, cell.y, z), old[cell][0], old[cell][1])
+	for node: Node in level.get_children():
+		if node is Node3D and not node is Camera3D and not node is Light3D and not node is NavigationRegion3D and not node.get_children().any(func(n: Node) -> bool: return n is GridMap):
+			(node as Node3D).position.x = 2.0 * _shift(seps[0], (node as Node3D).position.x / 2.0, 0.0)
+			(node as Node3D).position.z = 2.0 * _shift(seps[1], (node as Node3D).position.z / 2.0, 0.0)
 	for floor_node: Node in level.get_children():
 		for node: Node in floor_node.get_children() if floor_node.get_children().any(func(n: Node) -> bool: return n is GridMap) else []:
 			if node is GridMap or not node is Node3D:
