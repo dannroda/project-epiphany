@@ -5064,9 +5064,10 @@ Diseño (-43) armó levels/totora.tscn en el kit gris (a8d40e91, GDD §8d): dos 
 
 La pantalla de título (src/ui/title/title_screen.tscn) sigue con arte provisorio: Background es un ColorRect, el título es un Label y hay un ojo dibujado por código (title_eye.gd). Idea de Daniel: un logo propio y, de fondo, un paneo lento del overworld, desenfocado, detrás del menú.
 
-- [ ] Logo: wordmark de Epiphany con el motivo del ojo; exportar en PNG con alfa (y versión clara/oscura si hace falta)
-- [ ] Fondo: paneo lento del overworld con una cámara sobre un recorrido (Path3D), en un SubViewport desenfocado detrás del menú. Medir la carga: si cargar el overworld entero demora el título, usar una versión liviana o un video pregrabado
-- [ ] Integrar en title_screen.tscn (nodos en la escena, no por código) y decidir si el ojo de title_eye.gd queda o lo reemplaza el logo
+- [x] Logo: wordmark de Epiphany con el motivo del ojo; exportar en PNG con alfa (y versión clara/oscura si hace falta)
+- [x] Fondo: paneo lento del overworld con una cámara sobre un recorrido (Path3D), en un SubViewport desenfocado detrás del menú. Medir la carga: si cargar el overworld entero demora el título, usar una versión liviana o un video pregrabado
+  Hecho como video pregrabado: cargar el overworld entero tardaba ~3,8 s. tools/title_flyover/flyover.tscn intercala la vista general con tomas de sectores (templo, laguna, Queñoa, Chullpa, Cumbre; marcadores From/To por toma) y se graba con --write-movie; assets/ui/title/flyover.ogv (88 s en loop, 7,4 MB), desenfocado con title_blur.gdshader.
+- [x] Integrar en title_screen.tscn (nodos en la escena, no por código) y decidir si el ojo de title_eye.gd queda o lo reemplaza el logo
 - [ ] Actualizar el mockup de la pantalla de título en el canvas de diseño
 
 ### 12.21 Ojo interruptor: la pupila sigue al player y se parece al ojo del jefe final · Pendiente
