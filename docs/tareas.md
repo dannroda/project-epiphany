@@ -3029,8 +3029,8 @@ Un ítem post-MVP: gancho o algo que mueva objetos a distancia (GDD §6.1), con 
   Hecho por el overworld (6910e214, a598979a): CumbrePost y RiscoPost en el borde, se suben fijándolos; test_overworld_hook.
 - [ ] Ala del gancho del templo
   Gancho y GanchoOjo en levels/templo.tscn: postes sobre el abismo y el acorazado del ojo. Editar el grid y correr tools/la_walls.gd -- refresh templo (avisar a arte).
-- [ ] Sub-jefe Amaru
-  Serpiente joven: asoma por cuatro charcos a ras del piso, se lanza recta, cae sobre la totora y queda expuesta a la espada (también bombas y vasijas). Se vence sin el gancho. Hoy pelea una momia prestada (PisoBajo/AmaruFight/Amaru).
+- [x] Sub-jefe Amaru
+  Hecho el 2026-10-13: src/entities/amaru/ (Amaru, AmaruPool), data/entities/amaru.tres. Asoma por uno de cuatro charcos (asomada, todo rebota), marca una línea 1 s, se lanza recta (2 de daño) y queda tirada 2,2 s, vulnerable a espada, bombas y vasijas; vuelve reptando al charco más cercano. Con media vida escupe un Projectile antes del lanzazo. 10 de vida, modelo primitivo. Reemplaza a la momia prestada en PisoBajo/AmaruFight; las vasijas del Pozo pasan a las esquinas. test_amaru (4).
 - [ ] Jefe Yacumama
   Madre serpiente: asoma por los charcos y escupe; fase 1, el gancho a la argolla de su máscara la arrastra al piso y le pega la espada; fase 2, barrido de cola que se salta con la pluma. Hoy pelea un ojo vigía prestado (PisoBajo/BossFight/Yacumama).
 - [x] Entrada de D3 en el overworld (sesión del overworld)

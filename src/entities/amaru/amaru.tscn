@@ -1,0 +1,122 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/entities/amaru/amaru.gd" id="1_amaru"]
+[ext_resource type="Resource" path="res://data/entities/amaru.tres" id="2_config"]
+[ext_resource type="Script" path="res://src/components/health.gd" id="3_health"]
+[ext_resource type="Script" path="res://src/components/hurtbox.gd" id="4_hurtbox"]
+[ext_resource type="Script" path="res://src/components/hitbox.gd" id="5_hitbox"]
+[ext_resource type="Script" path="res://src/feel/hit_flash.gd" id="6_flash"]
+
+[sub_resource type="StandardMaterial3D" id="SkinMat"]
+albedo_color = Color(0.22, 0.46, 0.3, 1)
+roughness = 0.6
+
+[sub_resource type="StandardMaterial3D" id="BellyMat"]
+albedo_color = Color(0.78, 0.7, 0.36, 1)
+
+[sub_resource type="StandardMaterial3D" id="EyeMat"]
+shading_mode = 0
+albedo_color = Color(1, 0.85, 0.2, 1)
+
+[sub_resource type="StandardMaterial3D" id="AimMat"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.1, 0.05, 0.02, 0.55)
+
+[sub_resource type="CapsuleMesh" id="NeckMesh"]
+material = SubResource("SkinMat")
+radius = 0.4
+height = 2.0
+
+[sub_resource type="SphereMesh" id="HeadMesh"]
+material = SubResource("SkinMat")
+radius = 0.55
+height = 0.8
+
+[sub_resource type="BoxMesh" id="JawMesh"]
+material = SubResource("BellyMat")
+size = Vector3(0.6, 0.12, 0.7)
+
+[sub_resource type="SphereMesh" id="EyeMesh"]
+material = SubResource("EyeMat")
+radius = 0.09
+height = 0.18
+
+[sub_resource type="BoxMesh" id="AimMesh"]
+material = SubResource("AimMat")
+size = Vector3(0.9, 0.02, 1)
+
+[sub_resource type="SphereShape3D" id="ImpactShape"]
+radius = 0.9
+
+[sub_resource type="CapsuleShape3D" id="HurtShape"]
+radius = 0.6
+height = 2.6
+
+[node name="Amaru" type="Node3D"]
+script = ExtResource("1_amaru")
+config = ExtResource("2_config")
+
+[node name="Body" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="Neck" type="Node3D" parent="Body"]
+unique_name_in_owner = true
+
+[node name="Model" type="MeshInstance3D" parent="Body/Neck"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("NeckMesh")
+
+[node name="Head" type="MeshInstance3D" parent="Body/Neck"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -0.2)
+mesh = SubResource("HeadMesh")
+
+[node name="Jaw" type="MeshInstance3D" parent="Body/Neck/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, -0.3)
+mesh = SubResource("JawMesh")
+
+[node name="EyeL" type="MeshInstance3D" parent="Body/Neck/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28, 0.12, -0.42)
+mesh = SubResource("EyeMesh")
+
+[node name="EyeR" type="MeshInstance3D" parent="Body/Neck/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28, 0.12, -0.42)
+mesh = SubResource("EyeMesh")
+
+[node name="Hurtbox" type="Area3D" parent="Body/Neck"]
+unique_name_in_owner = true
+top_level = true
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+script = ExtResource("4_hurtbox")
+surface = "stone"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body/Neck/Hurtbox"]
+shape = SubResource("HurtShape")
+
+[node name="AimLine" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+top_level = true
+cast_shadow = 0
+mesh = SubResource("AimMesh")
+
+[node name="Impact" type="Area3D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 24
+monitorable = false
+script = ExtResource("5_hitbox")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Impact"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("ImpactShape")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("3_health")
+invulnerability_time = 0.25
+
+[node name="HitFlash" type="Node" parent="." node_paths=PackedStringArray("health", "visuals")]
+script = ExtResource("6_flash")
+health = NodePath("../Health")
+visuals = NodePath("../Body")

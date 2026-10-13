@@ -1,0 +1,21 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="PoolMat"]
+albedo_color = Color(0.08, 0.2, 0.24, 1)
+metallic_specular = 0.9
+roughness = 0.08
+
+[sub_resource type="CylinderMesh" id="PoolMesh"]
+material = SubResource("PoolMat")
+top_radius = 0.9
+bottom_radius = 0.9
+height = 0.02
+radial_segments = 24
+rings = 1
+
+[node name="AmaruPool" type="Node3D"]
+
+[node name="Water" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
+cast_shadow = 0
+mesh = SubResource("PoolMesh")

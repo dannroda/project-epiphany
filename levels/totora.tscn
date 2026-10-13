@@ -28,9 +28,8 @@
 [ext_resource type="Script" path="res://src/world/door.gd" id="25_8kq17"]
 [ext_resource type="Script" path="res://src/world/arena_fight.gd" id="26_ta07f"]
 [ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="27_ir4ow"]
-[ext_resource type="PackedScene" path="res://src/entities/mummy_guard/mummy_guard.tscn" id="28_pbras"]
-[ext_resource type="Script" path="res://src/entities/mummy_guard/mummy_guard.gd" id="29_plbht"]
-[ext_resource type="Resource" path="res://data/entities/mummy_guard.tres" id="30_u5j68"]
+[ext_resource type="PackedScene" path="res://src/entities/amaru/amaru.tscn" id="28_pbras"]
+[ext_resource type="PackedScene" path="res://src/entities/amaru/amaru_pool.tscn" id="29_plbht"]
 [ext_resource type="PackedScene" path="res://src/entities/watcher_eye/watcher_eye.tscn" id="31_1aybm"]
 [ext_resource type="Script" path="res://src/entities/watcher_eye/watcher_eye.gd" id="32_e33tn"]
 [ext_resource type="Resource" path="res://data/entities/watcher_eye_boss.tres" id="33_8q2lw"]
@@ -346,25 +345,25 @@ switches = Array[NodePath]([NodePath("../AmaruFight")])
 depth = 2.0
 
 [node name="PozoPot193" type="Node3D" parent="PisoBajo" unique_id=1949407443 instance=ExtResource("5_wr5m1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, 3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 2)
 script = ExtResource("6_s7pp0")
 drops = ExtResource("7_mlgyq")
 drop_height = 0.1
 
 [node name="PozoPot293" type="Node3D" parent="PisoBajo" unique_id=1565504912 instance=ExtResource("5_wr5m1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0, 3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 2)
 script = ExtResource("6_s7pp0")
 drops = ExtResource("7_mlgyq")
 drop_height = 0.1
 
 [node name="PozoPot199" type="Node3D" parent="PisoBajo" unique_id=1614905900 instance=ExtResource("5_wr5m1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, 9)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 10)
 script = ExtResource("6_s7pp0")
 drops = ExtResource("7_mlgyq")
 drop_height = 0.1
 
 [node name="PozoPot299" type="Node3D" parent="PisoBajo" unique_id=666204955 instance=ExtResource("5_wr5m1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0, 9)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 10)
 script = ExtResource("6_s7pp0")
 drops = ExtResource("7_mlgyq")
 drop_height = 0.1
@@ -380,10 +379,21 @@ doors = [NodePath("../AmaruLocked"), NodePath("../GanchoDoor")]
 [node name="PersistentFlag" type="Node" parent="PisoBajo/AmaruFight" unique_id=2118923969]
 script = ExtResource("27_ir4ow")
 
-[node name="Amaru" type="Node3D" parent="PisoBajo/AmaruFight" unique_id=2067729764 instance=ExtResource("28_pbras")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
-script = ExtResource("29_plbht")
-config = ExtResource("30_u5j68")
+[node name="Charco0" type="Node3D" parent="PisoBajo/AmaruFight" instance=ExtResource("29_plbht")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, -2)
+
+[node name="Charco1" type="Node3D" parent="PisoBajo/AmaruFight" instance=ExtResource("29_plbht")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, -2)
+
+[node name="Charco2" type="Node3D" parent="PisoBajo/AmaruFight" instance=ExtResource("29_plbht")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, 2)
+
+[node name="Charco3" type="Node3D" parent="PisoBajo/AmaruFight" instance=ExtResource("29_plbht")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 2)
+
+[node name="Amaru" type="Node3D" parent="PisoBajo/AmaruFight" unique_id=2067729764 node_paths=PackedStringArray("pools") instance=ExtResource("28_pbras")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, -2)
+pools = [NodePath("../Charco0"), NodePath("../Charco1"), NodePath("../Charco2"), NodePath("../Charco3")]
 
 [node name="BossDoor" type="StaticBody3D" parent="PisoBajo" unique_id=1029127936 instance=ExtResource("24_ctf4b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 12)

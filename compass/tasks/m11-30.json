@@ -36,8 +36,8 @@
       "text": "Ala del gancho del templo"
     },
     {
-      "detail": "Serpiente joven: asoma por cuatro charcos a ras del piso, se lanza recta, cae sobre la totora y queda expuesta a la espada (también bombas y vasijas). Se vence sin el gancho. Hoy pelea una momia prestada (PisoBajo/AmaruFight/Amaru).",
-      "done": false,
+      "detail": "Hecho el 2026-10-13: src/entities/amaru/ (Amaru, AmaruPool), data/entities/amaru.tres. Asoma por uno de cuatro charcos (asomada, todo rebota), marca una línea 1 s, se lanza recta (2 de daño) y queda tirada 2,2 s, vulnerable a espada, bombas y vasijas; vuelve reptando al charco más cercano. Con media vida escupe un Projectile antes del lanzazo. 10 de vida, modelo primitivo. Reemplaza a la momia prestada en PisoBajo/AmaruFight; las vasijas del Pozo pasan a las esquinas. test_amaru (4).",
+      "done": true,
       "text": "Sub-jefe Amaru"
     },
     {
@@ -86,5 +86,5 @@
   ],
   "test": "El ítem tiene un uso en combate y abre al menos dos lugares que antes no se podían.",
   "title": "Ítem de D3: el gancho",
-  "updated_at": "2026-10-13T19:52:46.609Z"
+  "updated_at": "2026-10-13T20:33:19.678Z"
 }
