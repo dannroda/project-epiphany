@@ -11,7 +11,6 @@
 [ext_resource type="PackedScene" path="res://src/world/heart_piece.tscn" id="6_piece"]
 [ext_resource type="PackedScene" path="res://src/entities/shield_skeleton.tscn" id="6_shield"]
 [ext_resource type="PackedScene" path="res://src/world/physics_box.tscn" id="9_axpip"]
-[ext_resource type="PackedScene" path="res://src/world/physics_rock.tscn" id="10_vrnmo"]
 [ext_resource type="PackedScene" path="res://src/world/overworld_map.tscn" id="11_gsck2"]
 [ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="13_gd0nv"]
 [ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="14_5vrew"]
@@ -22,8 +21,6 @@
 [ext_resource type="Resource" uid="uid://b353kh0linjkb" path="res://data/dialogue/overworld.dialogue" id="20_gd0nv"]
 [ext_resource type="PackedScene" path="res://src/world/cracked_wall.tscn" id="21_uay0b"]
 [ext_resource type="PackedScene" path="res://src/world/floor_switch.tscn" id="22_gvf0k"]
-[ext_resource type="PackedScene" path="res://src/world/floor_switch_weight.tscn" id="ow_switch_weight"]
-[ext_resource type="PackedScene" path="res://src/world/hook_post.tscn" id="ow_hook_post"]
 [ext_resource type="PackedScene" path="res://src/world/push_block.tscn" id="24_v1yde"]
 [ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="26_iip2e"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_mirror.tscn" id="28_gvf0k"]
@@ -45,22 +42,26 @@
 [ext_resource type="ArrayMesh" uid="uid://ij7qmaakhaks" path="res://assets/epiphany/meshes/muros_organicos/muro_ShrineCrackedWall.res" id="97_wall_shrine"]
 [ext_resource type="ArrayMesh" uid="uid://dfsvws2sr3ejo" path="res://assets/epiphany/meshes/muros_organicos/muro_GrottoCrackedWall.res" id="98_wall_grotto"]
 [ext_resource type="NavigationMesh" uid="uid://dt15fxrx36bkw" path="res://levels/nav/overworld_navmesh.tres" id="99_nav"]
-[ext_resource type="PackedScene" path="res://src/world/bridge.tscn" id="100_bridge"]
+[ext_resource type="PackedScene" path="res://src/world/ravine_bridge.tscn" id="100_bridge"]
 [ext_resource type="Script" uid="uid://ndtlourc01db" path="res://src/world/map_place.gd" id="101_place"]
 [ext_resource type="PackedScene" path="res://src/world/water/shallow_water.tscn" id="102_shallow"]
 [ext_resource type="Material" path="res://src/world/water/water_la.tres" id="103_water_la"]
 [ext_resource type="PackedScene" path="res://src/world/travel_portal.tscn" id="110_travel"]
+[ext_resource type="PackedScene" path="res://src/world/chullpa_entrada.tscn" id="ent_chullpa"]
+[ext_resource type="PackedScene" path="res://src/world/quenoa_entrada.tscn" id="ent_quenoa"]
 [ext_resource type="Script" uid="uid://c8w1y48q1dcuh" path="res://src/world/after_the_eye.gd" id="ow_after_eye"]
 [ext_resource type="Resource" path="res://data/items/arrow.tres" id="ow_arrow"]
 [ext_resource type="Resource" path="res://data/items/bomb.tres" id="ow_bomb"]
 [ext_resource type="PackedScene" path="res://src/world/chullpa_tumba.tscn" id="ow_chullpa_tumba"]
 [ext_resource type="PackedScene" path="res://src/world/escalon_alto.tscn" id="ow_escalon_alto"]
 [ext_resource type="PackedScene" path="res://src/world/temple_eye_glow.tscn" id="ow_eye_glow"]
+[ext_resource type="PackedScene" path="res://src/world/hook_post.tscn" id="ow_hook_post"]
 [ext_resource type="PackedScene" path="res://src/world/hoyo_escalera.tscn" id="ow_hoyo"]
 [ext_resource type="PackedScene" path="res://src/world/plants/mata_tapa.tscn" id="ow_mata_tapa"]
 [ext_resource type="PackedScene" path="res://src/world/rope_ladder.tscn" id="ow_rope_ladder"]
 [ext_resource type="Resource" uid="uid://dfbkawgboncax" path="res://data/items/sandals.tres" id="ow_sandals"]
 [ext_resource type="PackedScene" path="res://src/world/plants/quenoa_secreta.tscn" id="ow_secret_tree"]
+[ext_resource type="PackedScene" path="res://src/world/floor_switch_weight.tscn" id="ow_switch_weight"]
 [ext_resource type="Script" uid="uid://c3gjwha8na3yi" path="res://src/world/look/sombra_la.gd" id="sombra_la"]
 [ext_resource type="PackedScene" path="res://src/world/terrazas/escalinata_e.tscn" id="terr_escalinata_e"]
 [ext_resource type="PackedScene" path="res://src/world/terrazas/escalinata_medio.tscn" id="terr_escalinata_medio"]
@@ -75,8 +76,6 @@
 [ext_resource type="ArrayMesh" uid="uid://c7lvusadu8l35" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretLookoutWall.res" id="wall_SecretLookoutWall"]
 [ext_resource type="ArrayMesh" uid="uid://e178snsf1sk0" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretRavineWall.res" id="wall_SecretRavineWall"]
 [ext_resource type="ArrayMesh" uid="uid://xj64yut5ifba" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretSummitWall.res" id="wall_SecretSummitWall"]
-[ext_resource type="PackedScene" path="res://src/world/chullpa_entrada.tscn" id="ent_chullpa"]
-[ext_resource type="PackedScene" path="res://src/world/quenoa_entrada.tscn" id="ent_quenoa"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7se6l"]
 panorama = ExtResource("1_qyxw2")
@@ -112,6 +111,9 @@ compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_somb
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_zone_arboleda"]
 size = Vector3(32, 14, 24)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jamb"]
+size = Vector3(0.45, 2.6, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_springportal"]
 size = Vector3(0.8, 2.4, 1.4)
@@ -213,12 +215,6 @@ size = Vector3(2, 2.4, 1.4)
 [sub_resource type="BoxShape3D" id="BoxShape3D_7se6l"]
 size = Vector3(22, 2.4, 14)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_jamb"]
-size = Vector3(0.45, 2.6, 2)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ravine_bridge"]
-size = Vector3(13, 0.5, 6)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_chullpa_door"]
 size = Vector3(2.4, 2.4, 1.4)
 
@@ -254,19 +250,19 @@ region_label = true
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_arboleda" unique_id=1767809719]
 shape = SubResource("BoxShape3D_zone_arboleda")
 
-[node name="ShrineBackMouth" type="Node3D" parent="."]
+[node name="ShrineBackMouth" type="Node3D" parent="." unique_id=354472368]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -79.1, 2.6, -34)
 
-[node name="Model" type="MeshInstance3D" parent="ShrineBackMouth"]
+[node name="Model" type="MeshInstance3D" parent="ShrineBackMouth" unique_id=517341782]
 mesh = ExtResource("93_mouth")
 
-[node name="Jambs" type="StaticBody3D" parent="ShrineBackMouth"]
+[node name="Jambs" type="StaticBody3D" parent="ShrineBackMouth" unique_id=141911410]
 
-[node name="North" type="CollisionShape3D" parent="ShrineBackMouth/Jambs"]
+[node name="North" type="CollisionShape3D" parent="ShrineBackMouth/Jambs" unique_id=918613278]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 1.3, 0)
 shape = SubResource("BoxShape3D_jamb")
 
-[node name="South" type="CollisionShape3D" parent="ShrineBackMouth/Jambs"]
+[node name="South" type="CollisionShape3D" parent="ShrineBackMouth/Jambs" unique_id=690650819]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 1.3, 0)
 shape = SubResource("BoxShape3D_jamb")
 
@@ -637,11 +633,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 9.55, -36.35)
 [node name="AfterTheEye" type="Node" parent="." unique_id=389178266 node_paths=PackedStringArray("sun", "awake", "tremors", "summit_gate")]
 script = ExtResource("ow_after_eye")
 sun = NodePath("../Sun")
+dawn_color = Color(1, 0.68, 0.44, 1)
+dawn_energy = 1.4
 awake = [NodePath("../TempleEyeGlow")]
 tremors = NodePath("../TempleTremors")
 summit_gate = NodePath("../SummitGate")
-dawn_color = Color(1, 0.68, 0.44, 1)
-dawn_energy = 1.4
 
 [node name="MeadowStep" parent="." unique_id=1329145424 instance=ExtResource("ow_escalon_alto")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0, -10)
@@ -1066,7 +1062,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 10)
 [node name="Shore8" type="Marker3D" parent="RiscoPit/Respawn" unique_id=2058135278]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 10)
 
-[node name="QuebradaWater" type="MeshInstance3D" parent="."]
+[node name="QuebradaWater" type="MeshInstance3D" parent="." unique_id=1776041533]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, -0.35, -5)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_quebrada")
@@ -1242,7 +1238,6 @@ flag = &"ow_tablet_lift"
 
 [node name="LiftSwitch" parent="." unique_id=51521915 instance=ExtResource("ow_switch_weight")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.5, 0, 21.5)
-mode = 3
 flag = &"ow_start_lift_switch"
 
 [node name="LiftStone" parent="." unique_id=1753049093 instance=ExtResource("42_stone")]
@@ -1317,10 +1312,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0.6, -10)
 flag = &"ow_heart_piece_meadow"
 hidden_until_revealed = false
 
-[node name="CumbrePost" parent="." instance=ExtResource("ow_hook_post")]
+[node name="CumbrePost" parent="." unique_id=150953130 instance=ExtResource("ow_hook_post")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.35, 5.2, -36)
 
-[node name="RiscoPost" parent="." instance=ExtResource("ow_hook_post")]
+[node name="RiscoPost" parent="." unique_id=170350593 instance=ExtResource("ow_hook_post")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.3, 5.2, -35)
 
 [node name="HeartPieceCliff" parent="." unique_id=997712761 instance=ExtResource("6_piece")]
@@ -1404,12 +1399,6 @@ switches = Array[NodePath]([NodePath("../RavineEye")])
 drop = 4.0
 duration = 1.4
 
-[node name="Model" parent="RavineBridge" index="0"]
-transform = Transform3D(0, 0, 3.2, 0, 1, 0, -3, 0, 0, 0, 0, 0)
-
-[node name="CollisionShape3D" parent="RavineBridge" index="1"]
-shape = SubResource("BoxShape3D_ravine_bridge")
-
 [node name="NavigationLink3D" type="NavigationLink3D" parent="RavineBridge" unique_id=1026935801]
 start_position = Vector3(-8, 0.5, 0)
 end_position = Vector3(8, 0.5, 0)
@@ -1449,26 +1438,26 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 2.6, 25.4)
 script = ExtResource("4_cr2by")
 id = &"quenoa"
 
-[node name="TotoraHut" type="CSGBox3D" parent="."]
+[node name="TotoraHut" type="CSGBox3D" parent="." unique_id=1016848953]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 1.75, 41)
 use_collision = true
 size = Vector3(4, 3.5, 4)
 
-[node name="TotoraDoor" type="Area3D" parent="."]
+[node name="TotoraDoor" type="Area3D" parent="." unique_id=310433449]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -28.4, 1.2, 41)
 script = ExtResource("14_5vrew")
 target_scene = "res://levels/totora.tscn"
 target_spawn = &"start"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TotoraDoor"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TotoraDoor" unique_id=1237138451]
 shape = SubResource("BoxShape3D_chullpa_door")
 
-[node name="Spawn_totora" type="Marker3D" parent="."]
+[node name="Spawn_totora" type="Marker3D" parent="." unique_id=1408059154]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -30.6, 0, 41)
 script = ExtResource("4_cr2by")
 id = &"totora"
 
-[node name="PlaceTotora" type="Marker3D" parent="."]
+[node name="PlaceTotora" type="Marker3D" parent="." unique_id=1788595549]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 0, 41)
 script = ExtResource("101_place")
 display_name = "PLACE_TOTORA"
