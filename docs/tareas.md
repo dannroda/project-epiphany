@@ -5024,15 +5024,18 @@ Daniel (2026-10-13): la Chullpa real tiene la cámara vieja; el test LA (debug/l
 
 **Notas:** Sesión: arte (-11). Diseño (-43) revisa que el juego no cambie.
 
-### Totora (D3) en estilo Link's Awakening y su entrada · Pendiente
+### Totora (D3) en estilo Link's Awakening y su entrada · En curso
 
 **Prioridad:** media · **Tamaño:** M · **Etiquetas:** `arte`, `mazmorra`
 
 Diseño (-43) armó levels/totora.tscn en el kit gris (a8d40e91, GDD §8d): dos pisos de 3×2 salas de 7×5 celdas, agua profunda (celdas vacías con Pit y agua water_la a -0.35). Estilo propio de agua y totora, como Chullpa, Queñoa y templo. Regla de juego: cada cruce del gancho son 4 celdas de agua con el HookPost 0.5 m pasada la orilla; test_totora es relativo a la sala. Overworld (-eb, 5e04f395): TotoraHut es un CSGBox3D provisorio en la isla de la Laguna; vestirlo de santuario de juncos sin mover TotoraDoor, avisando a -eb antes de tocar overworld.tscn.
 
-- [ ] Estilo de la Totora: paredes, piso, puertas y luz (LOOKS en la_walls)
-- [ ] Bake y refresh de levels/totora.tscn, con los cruces del gancho intactos
+- [x] Estilo de la Totora: paredes, piso, puertas y luz (LOOKS en la_walls)
+  Hecho el 2026-10-13 (41357968, wt/art). build_paredes_la: estilo totora (atados apilados amarrados con soga, musgo húmedo al pie, juncos y totoras en flor arriba; puertas de atados parados con soga oscura). LOOKS totora: luz fresca de lago, piso de estera de totora (totora_la_kit).
+- [x] Bake y refresh de levels/totora.tscn, con los cruces del gancho intactos
+  Hecho el 2026-10-13 (41357968). Sin separar las salas: la pared de 2 m que comparten sale entera con cara a cada lado, así los cruces del gancho siguen de 4 celdas y test_totora no cambia. El agua honda cuenta como piso (LOOKS water). Las puertas en pared fina tienen paso de 2 m (también el templo). test_totora, test_amaru, test_walk_doors, test_dungeon_reach, test_hookshot y otros pasan.
 - [ ] Santuario de totora en la isla (TotoraHut)
+  Modelo hecho (41357968): src/world/totora_entrada.tscn, choza de los uros sobre balsa, techo con borla roja, columnas con cabeza de puma, aguayo y totoras; mismo colisionador que TotoraHut. Falta que overworld (-eb) la ponga en lugar del CSGBox3D, girada con la puerta al oeste.
 - [ ] Recorrerla (Daniel)
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
