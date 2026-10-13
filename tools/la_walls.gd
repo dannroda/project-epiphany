@@ -128,6 +128,7 @@ func _initialize() -> void:
 		for cell: Vector3i in cells:
 			var shape: Array = cells[cell]
 			grid.set_cell_item(cell, kit.find_item_by_name(KINDS[shape[0]][0] + shape[1]))
+		_face_chests(grid)
 	if mode == "bake":
 		_dress(level)
 	var packed := PackedScene.new()
@@ -438,6 +439,22 @@ func _shapes(grid: GridMap) -> Dictionary:
 		var kind: String = "pared" if item_name in WALLS else stairs.get(cell, "paso")
 		out[cell] = [kind, (code if code else "x") + corners]
 	return out
+
+
+## Los cofres miran al sur (a la cámara); el que tiene pared al sur (en un nicho) mira al lado por donde se llega.
+func _face_chests(grid: GridMap) -> void:
+	for node: Node in grid.get_parent().get_children():
+		if not (node is Node3D and node.scene_file_path.ends_with("chest.tscn")):
+			continue
+		var chest := node as Node3D
+		var cell := grid.local_to_map(grid.transform.affine_inverse() * chest.position)
+		var side := "s"
+		for candidate: String in ["s", "n", "e", "o"]:
+			var item := grid.get_cell_item(cell + SIDES[candidate])
+			if item != GridMap.INVALID_CELL_ITEM and grid.mesh_library.get_item_name(item).begins_with("Piso"):
+				side = candidate
+				break
+		chest.basis = Basis(Vector3.UP, Vector3.BACK.signed_angle_to(Vector3(SIDES[side]), Vector3.UP))
 
 
 func _sides(cell: Vector3i, open: Callable) -> String:
