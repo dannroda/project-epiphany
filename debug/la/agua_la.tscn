@@ -1,0 +1,151 @@
+[gd_scene format=3]
+
+[ext_resource type="Material" path="res://src/world/water/water_la.tres" id="1_xy8qa"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l4ypn"]
+albedo_color = Color(0.78, 0.76, 0.7, 1)
+roughness = 0.85
+
+[sub_resource type="BoxMesh" id="BoxMesh_vp8ni"]
+material = SubResource("StandardMaterial3D_l4ypn")
+size = Vector3(15, 0.4, 4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_aywkq"]
+material = SubResource("StandardMaterial3D_l4ypn")
+size = Vector3(15, 0.4, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_n5eil"]
+material = SubResource("StandardMaterial3D_l4ypn")
+size = Vector3(15, 0.4, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2upmb"]
+material = SubResource("StandardMaterial3D_l4ypn")
+size = Vector3(15, 0.4, 4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_n1vvy"]
+material = SubResource("StandardMaterial3D_l4ypn")
+size = Vector3(2, 2.2, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3je33"]
+material = SubResource("StandardMaterial3D_l4ypn")
+size = Vector3(15, 1.8, 0.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ho7fj"]
+material = SubResource("StandardMaterial3D_l4ypn")
+size = Vector3(15, 2.2, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kju1y"]
+albedo_color = Color(0.16, 0.2, 0.34, 1)
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_g643g"]
+material = SubResource("StandardMaterial3D_kju1y")
+size = Vector3(15, 3, 0.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_my6dw"]
+material = SubResource("StandardMaterial3D_kju1y")
+size = Vector3(0.6, 3, 12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6ssgs"]
+material = SubResource("StandardMaterial3D_kju1y")
+size = Vector3(0.6, 3, 12)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_osaqv"]
+size = Vector2(15, 6)
+subdivide_width = 1
+
+[sub_resource type="Environment" id="Environment_igah1"]
+background_mode = 1
+ambient_light_source = 2
+ambient_light_color = Color(0.8433892, 1.0216668, 1.0591991, 1)
+ambient_light_energy = 0.5
+tonemap_exposure = 0.88
+ssao_enabled = true
+ssao_radius = 0.8
+ssao_intensity = 1.5
+glow_enabled = true
+glow_intensity = 0.8
+glow_blend_mode = 0
+glow_hdr_threshold = 1.2
+adjustment_enabled = true
+adjustment_saturation = 0.8
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_kqq2r"]
+dof_blur_far_enabled = true
+dof_blur_far_distance = 25.5
+dof_blur_near_enabled = true
+dof_blur_near_distance = 19.5
+dof_blur_near_transition = 3.0
+
+[node name="AguaLA" type="Node3D" unique_id=1548367949]
+
+[node name="Piso" type="MeshInstance3D" parent="." unique_id=439924601]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, -4)
+mesh = SubResource("BoxMesh_vp8ni")
+
+[node name="PisoSur" type="MeshInstance3D" parent="." unique_id=1787526069]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 5)
+mesh = SubResource("BoxMesh_aywkq")
+
+[node name="Bajo" type="MeshInstance3D" parent="." unique_id=161865126]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, -1)
+mesh = SubResource("BoxMesh_n5eil")
+
+[node name="Hondo" type="MeshInstance3D" parent="." unique_id=309498858]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.4, 1)
+mesh = SubResource("BoxMesh_2upmb")
+
+[node name="Isla" type="MeshInstance3D" parent="." unique_id=177006813]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, -1.1, 1)
+mesh = SubResource("BoxMesh_n1vvy")
+
+[node name="Escalon" type="MeshInstance3D" parent="." unique_id=873416742]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.3, 0.1)
+mesh = SubResource("BoxMesh_3je33")
+
+[node name="EscalonSur" type="MeshInstance3D" parent="." unique_id=181293466]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.1, 3.9)
+mesh = SubResource("BoxMesh_ho7fj")
+
+[node name="ParedN" type="MeshInstance3D" parent="." unique_id=950459709]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -6.3)
+mesh = SubResource("BoxMesh_g643g")
+
+[node name="ParedO" type="MeshInstance3D" parent="." unique_id=196550962]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.8, 1.5, 0)
+mesh = SubResource("BoxMesh_my6dw")
+
+[node name="ParedE" type="MeshInstance3D" parent="." unique_id=1908984335]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.8, 1.5, 0)
+mesh = SubResource("BoxMesh_6ssgs")
+
+[node name="Agua" type="MeshInstance3D" parent="." unique_id=1168521900]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+material_override = ExtResource("1_xy8qa")
+mesh = SubResource("PlaneMesh_osaqv")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=736532100]
+environment = SubResource("Environment_igah1")
+
+[node name="Foco" type="SpotLight3D" parent="." unique_id=526265717]
+transform = Transform3D(1, 0, 0, 0, 0.23004976, 0.97317886, 0, -0.97317886, 0.23004976, -3, 6, 1.5)
+light_color = Color(0.6, 0.7, 1, 1)
+light_energy = 2.0
+spot_range = 9.0
+spot_attenuation = 0.0
+spot_angle = 35.0
+spot_angle_attenuation = 1.14
+
+[node name="@SpotLight3D@2" type="SpotLight3D" parent="." unique_id=34645528]
+transform = Transform3D(1, 0, 0, 0, 0.23004976, 0.97317886, 0, -0.97317886, 0.23004976, 3, 6, 1.5)
+light_color = Color(0.6, 0.7, 1, 1)
+light_energy = 2.0
+spot_range = 9.0
+spot_attenuation = 0.0
+spot_angle = 35.0
+spot_angle_attenuation = 1.14
+
+[node name="Camara" type="Camera3D" parent="." unique_id=1253873964]
+transform = Transform3D(1, 0, 0, 0, 0.42261824, 0.9063078, 0, -0.9063078, 0.42261824, 0, 21.34508, 8.650221)
+attributes = SubResource("CameraAttributesPractical_kqq2r")
+fov = 28.0

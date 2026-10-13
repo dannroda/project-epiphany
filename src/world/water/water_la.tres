@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://src/world/water/water_la.gdshader" id="1_shader"]
+[ext_resource type="NoiseTexture2D" path="res://src/world/water/water_la_waves.tres" id="2_waves"]
+[ext_resource type="NoiseTexture2D" path="res://src/world/water/water_la_indirect.tres" id="3_indirect"]
+[ext_resource type="NoiseTexture2D" path="res://src/world/water/water_la_caustics.tres" id="4_caustics"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_shader")
+shader_parameter/wave_normal = ExtResource("2_waves")
+shader_parameter/indirect_normal = ExtResource("3_indirect")
+shader_parameter/caustics_tex = ExtResource("4_caustics")
