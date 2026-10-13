@@ -255,7 +255,7 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 | **Cardonal** | Secretos; escalinata a la Necrópolis y bajada de una vía desde ella | Pluma (angostura) o desde la Necrópolis | 2 |
 | **Bañado** | Orilla este de la Laguna. Portal | Desde el Cardonal | 2 |
 | **Laguna** | Agua entre las dos orillas; islotes hasta la isla de **D3** | Pluma (islotes) | 3 |
-| **Cumbre** | **D4**: la región se alcanza con el gancho (ítem de D3), desde la franja al pie del risco apuntando al poste del borde (`CumbrePost`; los postes se apuntan aunque estén a otra altura). Portal | Gancho | 4 |
+| **Cumbre** | **D4**: la región se alcanza con el gancho (ítem de D3), desde la franja al pie del risco apuntando al poste del borde (`CumbrePost`; los postes se apuntan aunque estén a otra altura). La entrada al Intihuatana es una boca tallada en el risco norte (`CumbreDoor`, vuelta a `Spawn_cumbre`). Portal | Gancho | 4 |
 
 **Cadena de mazmorras (11.90):** D1 Templo (escudo espejo para entrar; da el arco) → arco → D2 Chullpa (da la pluma) → pluma → D3 Laguna (da el gancho) → gancho → D4 Cumbre (da los guantes de fuerza). Para el primer playtest externo, D3 y D4 se ven pero están cerradas.
 

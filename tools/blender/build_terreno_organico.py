@@ -26,8 +26,11 @@ LEVELS = [[int(ch) for ch in row] for row in DATA["levels"]]
 MOUNTAIN = 3
 ## Alto de la baranda invisible sobre el borde de cada terraza (m).
 RAIL = 1.6
+## Sin baranda a esta distancia (m) de un poste del gancho.
+POST_GAP = 1.2
 X0, Z0 = DATA["origin"]
 CELL = DATA["cell"]
+POSTS = [(x, -z) for x, z in DATA.get("posts", [])]
 GW, GH = len(GRID[0]), len(GRID)
 TOP = 2.6
 CAP = 0.15
@@ -73,7 +76,9 @@ STYLES = {
 STEPS = [((X0 + c) * CELL, (Z0 + r) * CELL, 1.4) for r in range(len(GRID)) for c in range(len(GRID[0])) if GRID[r][c] in "Sv"]
 FIXED = np.array([(x, -z, r) for x, z, r in DATA["fixed"] + STEPS]).reshape(-1, 3)
 DECOR = np.array([(x, -z, r) for x, z, r in DATA["decor"]]).reshape(-1, 3)
-FLAT = np.concatenate([FIXED, DECOR])
+## Delante y dentro de cada boca de cueva el piso queda sin lomas, así no asoma sobre el piso del túnel.
+MOUTH_FLAT = np.array([(m["x"] - d * math.sin(m["yaw"]), -m["z"] + d * math.cos(m["yaw"]), 1.4) for m in DATA.get("mouths", []) for d in (-1.5, 0.5, 2.5)]).reshape(-1, 3)
+FLAT = np.concatenate([FIXED, DECOR, MOUTH_FLAT])
 ## Celdas de agua baja: alrededor el piso queda sin lomas, así la superficie del agua no asoma sobre el pasto.
 WET = np.array([[(X0 + c) * CELL, -(Z0 + r) * CELL, CELL / 2 + WATER_AMP + 0.6] for r in range(GH) for c in range(GW) if GRID[r][c] == "w"]).reshape(-1, 3)
 
@@ -726,7 +731,8 @@ def rocks(levels, seed, holes=None, rail=None):
 
 def railing(p, high, level):
 	"""Pared invisible sobre el borde de la terraza, salvo donde se baja a propósito: un salto (v) arriba o la boca de una
-	escalinata (S) abajo, o donde un abismo de una celda separa dos terrazas del mismo nivel (se cruza con la pluma)."""
+	escalinata (S) abajo, donde un abismo de una celda separa dos terrazas del mismo nivel (se cruza con la pluma) o junto a un
+	poste del gancho, que se apunta desde abajo."""
 	z = level * TOP
 	for points, flags in high:
 		nrm = normals(points)
@@ -737,6 +743,8 @@ def railing(p, high, level):
 			mid, n = (a + b) / 2, (nrm[i] + nrm[(i + 1) % len(points)]).normalized()
 			up, down = mid - n * 0.6, mid + n * 1.0
 			if cell_at(up.x, up.y) == "v" or cell_at(down.x, down.y) == "S" or level_at(down.x, down.y) >= level:
+				continue
+			if any((mid - Vector(post)).length < POST_GAP for post in POSTS):
 				continue
 			far = mid + n * (CELL + 1.0)
 			if cell_at(down.x, down.y) in "~W" and level_at(far.x, far.y) >= level:
@@ -810,6 +818,85 @@ def cracked_walls(collection, holes, rail):
 	return terrain, plugs
 
 
+## Vano de las bocas de cueva, como paso_puerta del templo: medio ancho abajo, medio ancho arriba y alto (m); el marco
+## que sale del risco (ancho de jamba, alto del dintel, cuánto sale) y cuánto se mete el túnel detrás de la cara.
+MOUTH = (0.75, 0.6, 1.95)
+FRAME = (0.28, 0.4, 0.18)
+TUNNEL = 1.6
+
+
+def _half(z, grow=0.0):
+	bot, top, h = MOUTH
+	return bot + (top - bot) * min(z, h) / h + grow
+
+
+def cave_mouths(p):
+	"""Las bocas de cueva se tallan en el risco: el vano trapezoidal con su túnel oscuro y, alrededor, el mismo risco
+	sale como jambas y dintel."""
+	bot, top, h = MOUTH
+	jamb, lintel, out = FRAME
+	for mouth in DATA.get("mouths", []):
+		to = Matrix.Translation(Vector((0.0, 0.0, -mouth["y"]))) @ _to_wall(mouth)
+		back, turn = to.inverted(), to.to_3x3()
+		near = lambda f: (to @ f.calc_center_median()).xy.length < 3.5  # noqa: E731
+		front = [(to @ f.calc_center_median()).y for f in p.bm.faces if near(f) and (turn @ f.normal).y < -0.5
+			and abs((to @ f.calc_center_median()).x) < 0.4 and 0.3 < (to @ f.calc_center_median()).z < 1.6]
+		if not front:
+			print("boca", mouth["name"], "sin cara de risco delante")
+			continue
+		face = sorted(front)[len(front) // 2]
+		print("boca", mouth["name"], "cara en y", round(face, 2))
+		planes = [(Vector((0, 0, h)), Vector((0, 0, 1))), (Vector((0, 0, h + lintel)), Vector((0, 0, 1)))]
+		planes += [(Vector((s * (bot + g), 0, 0)), Vector((s * h, 0, -(top - bot))).normalized()) for g in (0.0, jamb) for s in (1, -1)]
+		for co, no in planes:
+			faces = [f for f in p.bm.faces if near(f)]
+			edges = list({e for f in faces for e in f.edges})
+			verts = list({v for f in faces for v in f.verts})
+			bmesh.ops.bisect_plane(p.bm, geom=verts + edges + faces, plane_co=back @ co, plane_no=(back.to_3x3() @ no).normalized())
+		hole, frame = [], []
+		for f in p.bm.faces:
+			if not near(f):
+				continue
+			c, n = to @ f.calc_center_median(), turn @ f.normal
+			if abs(c.y - face) > 0.7 or (abs(n.z) > 0.9 and abs(c.z) < 0.1):
+				continue
+			if c.z < h and abs(c.x) < _half(c.z):
+				hole.append(f)
+			elif c.z < h + lintel and abs(c.x) < _half(c.z, jamb) and n.y < -0.3:
+				frame.append(f)
+		bmesh.ops.delete(p.bm, geom=hole, context="FACES")
+
+		def inside(v):
+			c = to @ v.co
+			return abs(c.y - face) < 0.8 and -0.6 < c.z < h + 0.01 and abs(c.x) < _half(c.z) + 0.01
+		rim = [e for e in p.bm.edges if len(e.link_faces) == 1 and all(inside(v) for v in e.verts)]
+		ext = bmesh.ops.extrude_edge_only(p.bm, edges=rim)
+		for v in ext["geom"]:
+			if isinstance(v, bmesh.types.BMVert):
+				c = to @ v.co
+				v.co = back @ Vector((c.x * 0.9, face + TUNNEL, c.z * 0.95))
+		tunnel = [f for f in ext["geom"] if isinstance(f, bmesh.types.BMFace)]
+		ext = bmesh.ops.extrude_face_region(p.bm, geom=frame)
+		moved = {v for v in ext["geom"] if isinstance(v, bmesh.types.BMVert)}
+		bmesh.ops.translate(p.bm, verts=list(moved), vec=back.to_3x3() @ Vector((0.0, -out, 0.0)))
+		lit = [f for f in ext["geom"] if isinstance(f, bmesh.types.BMFace)]
+		sides = list({f for v in moved for f in v.link_faces} - set(lit))
+		paint_role(p, lit, "lip", vary=0.06)
+		paint_role(p, sides, "under")
+		far = [p.bm.verts.new(back @ Vector(q)) for q in ((-bot, face + TUNNEL, -0.5), (bot, face + TUNNEL, -0.5), (top, face + TUNNEL, h), (-top, face + TUNNEL, h))]
+		floor = [p.bm.verts.new(back @ Vector(q)) for q in ((-bot, face, 0.02), (bot, face, 0.02), (bot, face + TUNNEL, 0.02), (-bot, face + TUNNEL, 0.02))]
+		dark = [p.bm.faces.new(far), p.bm.faces.new(floor)]
+		for f in tunnel + dark:
+			f.normal_update()
+			c, n = to @ f.calc_center_median(), turn @ f.normal
+			want = Vector((-c.x, -1.0 if f is dark[0] else 0.0, h / 2 - c.z if f is not dark[1] else 1.0))
+			if n.dot(want) < 0:
+				f.normal_flip()
+		p.paint(tunnel, "noche", "LIGHT", vary=0.05)
+		p.paint(dark, "noche", "DARK")
+	p.fixed = set(p.bm.faces)
+
+
 def _build(piece, name, material, collection):
 	bmesh.ops.delete(piece.bm, geom=[v for v in piece.bm.verts if not v.link_faces], context="VERTS")
 	obj = piece.build(name, collection)
@@ -832,6 +919,7 @@ def main():
 	objects = []
 	rail = epi.Piece(40)
 	terrain, walls = cracked_walls(collection, holes, rail)
+	cave_mouths(terrain)
 	objects.append(_build(terrain, "riscos-col", "wall", collection))
 	objects.append(_build(rail, "baranda-colonly", None, collection))
 	ground = epi.Piece(12)

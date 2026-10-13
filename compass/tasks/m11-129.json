@@ -22,7 +22,7 @@
     },
     {
       "detail": "Spawn_cumbre y la puerta; hasta entonces las salidas van a risco.",
-      "done": false,
+      "done": true,
       "text": "Entrada en el overworld (sesión del overworld)"
     },
     {
@@ -51,5 +51,5 @@
   ],
   "test": "test_cumbre, test_dungeon_reach (cumbre_graph), test_walk_doors, test_drop_holes",
   "title": "D4, Intihuatana de la Cumbre",
-  "updated_at": "2026-10-13T21:59:45.460Z"
+  "updated_at": "2026-10-13T22:52:47.991Z"
 }
