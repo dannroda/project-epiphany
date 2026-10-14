@@ -5063,7 +5063,7 @@ Daniel 2026-10-14 (playtest, Chullpa, Rellano): la pared agrietada ya llena el h
 
 **Capturas:** `compass/images/m11-164-20261014-033804.png`
 
-**Relacionadas:** 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista; 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la)
+**Relacionadas:** 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista; 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la); 12.29 Muro agrietado LA de cueva (muro_agrietado_cueva_la)
 
 ## M12 — Assets propios (Blender)  (16/29)
 
@@ -5620,7 +5620,7 @@ Daniel 2026-10-14 (playtest, cueva de las bombas): el muro de práctica (CavePra
 
 **Capturas:** `compass/images/m12-29-20261014-034608.png`
 
-**Relacionadas:** 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la)
+**Relacionadas:** 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la); 11.164 Lo que esconde una pared agrietada no se ve desde arriba
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 
