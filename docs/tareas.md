@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (95/160)
+## M11 — Pulido: contenido y feel  (95/161)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4717,6 +4717,8 @@ Playtest 2026-10-13 (mejora, no bug): cuando el player queda detrás de un acant
 
 **Capturas:** `compass/images/m11-134-20261013-224604.png`, `compass/images/m11-134-20261014-021123.png`
 
+**Relacionadas:** 11.165 La cámara cenital se activa en bordes y muros bajos de una sala
+
 ### 11.135 Al caer, el player se inclina hacia el piso · Pendiente
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`, `player`
@@ -5072,6 +5074,16 @@ Mazmorras (-43): la_walls refresh arma el techo (<Pared>NicheRoof, hermano de la
 **Capturas:** `compass/images/m11-164-20261014-033804.png`, `compass/images/m11-164-20261014-034700.png`, `compass/images/m11-164-20261014-041025.png`
 
 **Relacionadas:** 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista; 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la); 12.29 Muro agrietado LA de cueva (muro_agrietado_cueva_la)
+
+### 11.165 La cámara cenital se activa en bordes y muros bajos de una sala · Revisión
+
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`, `camara`
+
+Daniel 2026-10-14 (cueva de las bombas): acercándose a la pared de la sala o parándose delante de un muro bajo, la cámara sube a cenital (11.134). En una sala no tiene que pasar: está hecha para verse entera desde su cámara fija. Hecho: TopDownCamera solo busca oclusión cuando no hay sala (overworld); test_player_hole › test_rooms_never_turn_the_camera_overhead (busca en la cueva un lugar donde una pared lo taparía y comprueba que no sube).
+
+**Prueba:** tests/test_player_hole.gd
+
+**Relacionadas:** 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player
 
 ## M12 — Assets propios (Blender)  (16/29)
 
@@ -6236,18 +6248,13 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 ### Revisión: lo listo para probar  (25/27 probadas)
 
-1. [ ] 11.130 Bocas de cueva talladas en el risco · Revisión · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. 
-   No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. 
-   D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
-2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
-   El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
+1. [ ] 11.130 Bocas de cueva talladas en el risco · Revisión · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
+2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player. El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
 3. [x] 11.111 Cactus, árboles y matas se cortan como el pasto · Hecho · anda
 4. [x] 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · Hecho · anda
 5. [x] 11.118 Sandalias: correr manteniendo y salto largo con la pluma · Hecho · anda
 6. [x] 11.24 Más secretos en el overworld · Hecho · anda
-7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente
-   si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell"
-   no hay asset correcto para la pared quebrable
+7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell" no hay asset correcto para la pared quebrable
 8. [x] 11.30 Ítem de D3: el gancho · Hecho · anda
 9. [x] 11.28 Atajos que se abren al volver · Hecho · anda — anda, pero no debería hacer un fade. Debería haber una animacion del player subiendo y bajando
 10. [x] 11.46 Jefe: game juice · Hecho · anda
