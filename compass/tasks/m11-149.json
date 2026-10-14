@@ -2,7 +2,7 @@
   "assignee": "project-epiphany-fd",
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "Segundo caso: Totora 2P Upper Floor, sala oeste (pasarela angosta junto al estanque, entrando por la puerta este): apenas se entra uno se puede caer y reaparece arriba del agua, cae en bucle hasta perder."
     },
     {
@@ -10,7 +10,7 @@
       "text": "Arreglo general: el punto de reaparición tras caer al agua/pozo tiene que estar sobre piso firme (validarlo al guardarlo, no la posición cruda al entrar a la sala)."
     },
     {
-      "done": false,
+      "done": true,
       "text": "Idea de Daniel: un cooldown al cruzar de sala, para el input del player y para los enemigos, así no se cae ni lo golpean apenas entra."
     },
     {
@@ -35,5 +35,5 @@
   ],
   "test": "Totora 1P sala este y 2P sala oeste: entrar manteniendo el stick y caer al agua: vuelve a la puerta sobre piso, quieto medio segundo, y no vuelve a caer solo. test_room_entry (todas las puertas de las 5 mazmorras)",
   "title": "Al entrar a una sala se puede caer al agua y reaparecer sobre el agua (softlock)",
-  "updated_at": "2026-10-14T02:58:24.927Z"
+  "updated_at": "2026-10-14T04:20:18.247Z"
 }

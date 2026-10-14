@@ -24,11 +24,11 @@
   "priority": "high",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "arte"
   ],
   "test": "",
   "title": "Muros agrietados LA por estilo (muro_agrietado_<estilo>_la)",
-  "updated_at": "2026-10-14T03:11:46.769Z"
+  "updated_at": "2026-10-14T04:20:18.521Z"
 }
