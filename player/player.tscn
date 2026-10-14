@@ -842,9 +842,10 @@ script = ExtResource("c_shield")
 player = NodePath("..")
 block_cone = NodePath("../ModelController/BlockCone")
 
-[node name="Carrier" type="Node" parent="." unique_id=1157206663 node_paths=PackedStringArray("socket", "anim_tree", "hide_while_carrying")]
+[node name="Carrier" type="Node" parent="." unique_id=1157206663 node_paths=PackedStringArray("socket", "anim_tree", "hide_while_carrying", "flash")]
 script = ExtResource("c_carrier")
 socket = NodePath("../ModelController/CarrySocket")
+flash = NodePath("../ModelController/Visuals/HitFlash")
 anim_tree = NodePath("../ModelController/AnimationTree")
 hide_while_carrying = [NodePath("../ModelController/Skeleton3D/Hand_R/WeaponSocket"), NodePath("../ModelController/Skeleton3D/Hand_L/ShieldSocket")]
 

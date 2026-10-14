@@ -345,6 +345,23 @@ func test_silhouette_only_on_the_player() -> void:
 			assert_eq(mesh.material_overlay.next_pass, null, "los enemigos no")
 
 
+func test_what_the_player_carries_has_the_silhouette() -> void:
+	var setup: Array = await _load_level()
+	var player: PlayerCharacter = setup[1]
+	var shader := preload("res://src/feel/occluded_silhouette.gdshader")
+	var body := RigidBody3D.new()
+	var mesh := MeshInstance3D.new()
+	mesh.mesh = SphereMesh.new()
+	body.add_child(mesh)
+	player.get_parent().add_child(body)
+	player.carrier.carry(body)
+	var silhouette := mesh.material_overlay.next_pass as ShaderMaterial if mesh.material_overlay else null
+	assert_true(silhouette != null and silhouette.shader == shader, "la vasija cargada se ve tras las paredes")
+	player.carrier.drop()
+	assert_eq(mesh.material_overlay, null, "soltada vuelve a ser normal")
+	body.queue_free()
+
+
 func test_sword_trail_only_while_the_blade_cuts() -> void:
 	var setup: Array = await _load_level()
 	var tree: SceneTree = setup[0]
