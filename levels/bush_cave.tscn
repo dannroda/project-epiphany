@@ -30,6 +30,7 @@
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/rocas_rincon.res" id="d2_rincon"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/estalactitas_borde.res" id="d3_estalactitas"]
 [ext_resource type="PackedScene" path="res://src/world/look/caida_la.tscn" id="d4_caida"]
+[ext_resource type="NavigationMesh" path="res://levels/nav/bush_cave_navmesh.tres" id="nav_cave"]
 
 [sub_resource type="Environment" id="Environment_qv6ik"]
 background_mode = 1
@@ -309,3 +310,6 @@ item_ring = ExtResource("29_s5dto")
 
 [node name="BrilloLA" type="Node" parent="." unique_id=1239269541]
 script = ExtResource("30_xbf1i")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = ExtResource("nav_cave")

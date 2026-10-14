@@ -35,6 +35,7 @@
 [ext_resource type="PackedScene" path="res://src/ui/hud/player_panel.tscn" id="31_p4xk7"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/item_ring.tscn" id="32_gtxvu"]
 [ext_resource type="Script" path="res://src/world/look/brillo_la.gd" id="34_3ky5r"]
+[ext_resource type="NavigationMesh" path="res://levels/nav/spring_cave_navmesh.tres" id="nav_cave"]
 
 [sub_resource type="Environment" id="Environment_yg4ep"]
 background_mode = 1
@@ -410,3 +411,6 @@ shape = SubResource("PortalShape")
 
 [node name="BrilloLA" type="Node" parent="." unique_id=386180983]
 script = ExtResource("34_3ky5r")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = ExtResource("nav_cave")

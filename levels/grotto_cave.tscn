@@ -32,6 +32,7 @@
 [ext_resource type="Script" path="res://src/tools/top_down_camera.gd" id="c5_camera"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="c6_hud"]
 [ext_resource type="Script" path="res://src/world/portal.gd" id="c7_portal"]
+[ext_resource type="NavigationMesh" path="res://levels/nav/grotto_cave_navmesh.tres" id="nav_cave"]
 
 [sub_resource type="Environment" id="Environment_8v2mt"]
 background_mode = 1
@@ -236,3 +237,6 @@ item_ring = ExtResource("31_7nlxw")
 
 [node name="BrilloLA" type="Node" parent="." unique_id=625819403]
 script = ExtResource("32_rbjts")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = ExtResource("nav_cave")
