@@ -1,6 +1,12 @@
 {
   "assignee": "sesión del overworld",
-  "checklist": [],
+  "checklist": [
+    {
+      "detail": "Daniel 2026-10-14: rompió el muro agrietado y detrás quedó la muesca lisa del risco, sin boca de cueva. GrottoCrackedWall (-84,0,14 → GrottoDoor) y ShrineCrackedWall (-88,2.6,-22 → ShrineDoor) no tienen nodo *Mouth, así que cave_mouths() no las talla.",
+      "done": false,
+      "text": "Bocas detrás de los muros agrietados: Gruta y Santuario"
+    }
+  ],
   "code": "11.130",
   "created_at": "2026-10-13T22:52:35.062Z",
   "description": "Daniel: las bocas de cueva del overworld (la entrada trasera de la ermita, la cueva de las bombas, el manantial) eran una caja marrón con una puerta negra pegada al risco. Pidió darles detalle como a las puertas, pero hecho con el terreno.",
@@ -11,7 +17,8 @@
     "compass/images/m11-130-3.jpg",
     "compass/images/m11-130-4.jpg",
     "compass/images/m11-130-20261013-221755.png",
-    "compass/images/m11-130-20261013-221902.png"
+    "compass/images/m11-130-20261013-221902.png",
+    "compass/images/m11-130-20261014-034842.png"
   ],
   "milestone": "m11",
   "notes": "build_terreno_organico.py › cave_mouths(): cada nodo *Mouth del overworld (exportado a terreno_overworld.json › mouths) se talla en riscos: se busca la cara del risco delante, se corta el vano (como paso_puerta del templo: 1.5 abajo, 1.2 arriba, 1.95 de alto), las aristas del borde se extruyen 1.6 m hacia adentro como túnel (noche) con fondo y piso oscuros, y el risco alrededor sale 0.18 m como jambas y dintel. Sin lomas delante ni dentro. Se quitó cueva_boca de las tres; SpringCaveMouth estaba girada hacia la montaña. De paso: el risco ya no pone baranda a 1.2 m de un poste del gancho (POSTS en el json), porque tapaba la vista desde abajo (fallaban los dos tests de test_overworld_hook).",
@@ -20,5 +27,5 @@
   "status": "doing",
   "test": "En el overworld, las tres bocas (y la de la Cumbre) son un vano trapezoidal en el risco con jambas y dintel del mismo risco y un túnel oscuro; se entra caminando y el portal lleva a la cueva. test_portals, test_cave, test_shrine, test_spring, test_overworld",
   "title": "Bocas de cueva talladas en el risco",
-  "updated_at": "2026-10-14T01:26:09.116Z"
+  "updated_at": "2026-10-14T06:48:42.684Z"
 }

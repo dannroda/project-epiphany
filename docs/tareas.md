@@ -4664,6 +4664,9 @@ Mazmorra 4 (GDD §8e): el escudo espejo parte la Cumbre; el piso bajo sin él, e
 
 Daniel: las bocas de cueva del overworld (la entrada trasera de la ermita, la cueva de las bombas, el manantial) eran una caja marrón con una puerta negra pegada al risco. Pidió darles detalle como a las puertas, pero hecho con el terreno.
 
+- [ ] Bocas detrás de los muros agrietados: Gruta y Santuario
+  Daniel 2026-10-14: rompió el muro agrietado y detrás quedó la muesca lisa del risco, sin boca de cueva. GrottoCrackedWall (-84,0,14 → GrottoDoor) y ShrineCrackedWall (-88,2.6,-22 → ShrineDoor) no tienen nodo *Mouth, así que cave_mouths() no las talla.
+
 **Prueba:** En el overworld, las tres bocas (y la de la Cumbre) son un vano trapezoidal en el risco con jambas y dintel del mismo risco y un túnel oscuro; se entra caminando y el portal lleva a la cueva. test_portals, test_cave, test_shrine, test_spring, test_overworld
 
 **Notas:** build_terreno_organico.py › cave_mouths(): cada nodo *Mouth del overworld (exportado a terreno_overworld.json › mouths) se talla en riscos: se busca la cara del risco delante, se corta el vano (como paso_puerta del templo: 1.5 abajo, 1.2 arriba, 1.95 de alto), las aristas del borde se extruyen 1.6 m hacia adentro como túnel (noche) con fondo y piso oscuros, y el risco alrededor sale 0.18 m como jambas y dintel. Sin lomas delante ni dentro. Se quitó cueva_boca de las tres; SpringCaveMouth estaba girada hacia la montaña. De paso: el risco ya no pone baranda a 1.2 m de un poste del gancho (POSTS en el json), porque tapaba la vista desde abajo (fallaban los dos tests de test_overworld_hook).
@@ -5061,7 +5064,7 @@ Daniel 2026-10-14 (playtest, Chullpa, Rellano): la pared agrietada ya llena el h
 
 **Notas:** CrackedWall.covers (fd): lista de nodos que se ven mientras la pared está entera y se ocultan al romperse (también al cargar rota). Cada nivel pone su techo y lo agrega a covers. Mazmorras: -43; overworld: -eb.
 
-**Capturas:** `compass/images/m11-164-20261014-033804.png`
+**Capturas:** `compass/images/m11-164-20261014-033804.png`, `compass/images/m11-164-20261014-034700.png`
 
 **Relacionadas:** 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista; 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la); 12.29 Muro agrietado LA de cueva (muro_agrietado_cueva_la)
 
