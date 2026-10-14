@@ -1,100 +1,92 @@
-[gd_scene format=4 uid="uid://ccn88kav7u1vk"]
+[gd_scene format=3 uid="uid://ccn88kav7u1vk"]
 
-[ext_resource type="Script" uid="uid://c5hiaqs0y4egi" path="res://src/world/dungeon.gd" id="1_p48v1"]
-[ext_resource type="Script" uid="uid://dxfmc58bemc3t" path="res://src/world/dungeon_floor.gd" id="2_c7ykk"]
-[ext_resource type="MeshLibrary" uid="uid://c1tw5c0a0ibgc" path="res://data/kits/chullpa_la_kit.tres" id="3_xafiw"]
-[ext_resource type="Script" uid="uid://nqxfiofg56dy" path="res://src/world/room.gd" id="4_m6qph"]
-[ext_resource type="Shader" uid="uid://d05shkhoyhpkk" path="res://src/world/look/borde_oscuro.gdshader" id="5_1wqbm"]
-[ext_resource type="Script" uid="uid://b5m7kta46hqrv" path="res://src/world/pit.gd" id="5_d3wa8"]
+[ext_resource type="Script" path="res://src/world/dungeon.gd" id="1_p48v1"]
+[ext_resource type="Script" path="res://src/world/dungeon_floor.gd" id="2_c7ykk"]
+[ext_resource type="MeshLibrary" path="res://data/kits/chullpa_la_kit.tres" id="3_xafiw"]
+[ext_resource type="Script" path="res://src/world/room.gd" id="4_m6qph"]
+[ext_resource type="Shader" path="res://src/world/look/borde_oscuro.gdshader" id="5_1wqbm"]
+[ext_resource type="Script" path="res://src/world/pit.gd" id="5_d3wa8"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="6_ufxwh"]
 [ext_resource type="Resource" path="res://data/items/boss_key.tres" id="8_0rnpi"]
-[ext_resource type="Script" uid="uid://byp4dkpucnvmo" path="res://src/world/chest.gd" id="8_2g4bn"]
+[ext_resource type="Script" path="res://src/world/chest.gd" id="8_2g4bn"]
 [ext_resource type="Resource" path="res://data/items/dungeon_map.tres" id="9_7e1xe"]
 [ext_resource type="Resource" path="res://data/items/compass.tres" id="10_tu8eq"]
 [ext_resource type="PackedScene" path="res://src/world/door.tscn" id="11_e5qux"]
 [ext_resource type="PackedScene" path="res://src/world/stairs.tscn" id="13_52yo1"]
-[ext_resource type="Script" uid="uid://5iyuo3cn8lus" path="res://src/world/door.gd" id="13_crkrm"]
+[ext_resource type="Script" path="res://src/world/door.gd" id="13_crkrm"]
 [ext_resource type="Material" path="res://src/world/look/marca_visible.tres" id="14_ht767"]
-[ext_resource type="Texture2D" uid="uid://ddhjwybdg1ah2" path="res://assets/ui/lock.svg" id="15_ht767"]
+[ext_resource type="Texture2D" path="res://assets/ui/lock.svg" id="15_ht767"]
 [ext_resource type="PackedScene" path="res://src/world/wall_torch.tscn" id="15_mw81a"]
-[ext_resource type="Script" uid="uid://jstc1x28c0kx" path="res://src/components/interactable.gd" id="16_mo6ti"]
-[ext_resource type="Resource" uid="uid://ixwq86ig77xp" path="res://data/items/feather.tres" id="16_syx8m"]
-[ext_resource type="ArrayMesh" uid="uid://tln2juqyry8c" path="res://assets/epiphany/meshes/paredes_la/puerta_jefe_chullpa_la.res" id="17_308dp"]
+[ext_resource type="Script" path="res://src/components/interactable.gd" id="16_mo6ti"]
+[ext_resource type="Resource" path="res://data/items/feather.tres" id="16_syx8m"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_jefe_chullpa_la.res" id="17_308dp"]
 [ext_resource type="PackedScene" path="res://src/world/floor_switch.tscn" id="17_rjinf"]
 [ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="19_7rkw0"]
-[ext_resource type="Script" uid="uid://d3mljv5i1j87j" path="res://src/world/stairs.gd" id="19_iyg24"]
-[ext_resource type="ArrayMesh" uid="uid://3450f8b4aw7b" path="res://assets/epiphany/meshes/templo_chullpa/brasero.res" id="21_e541c"]
+[ext_resource type="Script" path="res://src/world/stairs.gd" id="19_iyg24"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo_chullpa/brasero.res" id="21_e541c"]
 [ext_resource type="PackedScene" path="res://src/world/stairs_down.tscn" id="22_1wqbm"]
-[ext_resource type="Shader" uid="uid://crwycv8bukd6m" path="res://src/world/look/llama_la.gdshader" id="22_gc68l"]
+[ext_resource type="Shader" path="res://src/world/look/llama_la.gdshader" id="22_gc68l"]
 [ext_resource type="Resource" path="res://data/items/small_key.tres" id="23_2g4bn"]
-[ext_resource type="Script" uid="uid://u2jhwu4cb42s" path="res://src/world/torch_flicker.gd" id="23_g5ban"]
+[ext_resource type="Script" path="res://src/world/torch_flicker.gd" id="23_g5ban"]
 [ext_resource type="PackedScene" path="res://src/world/cracked_floor.tscn" id="24_crkrm"]
-[ext_resource type="Script" uid="uid://cgr3l68kk102e" path="res://src/feel/stencil_light/stencil_light.gd" id="24_d27po"]
+[ext_resource type="Script" path="res://src/feel/stencil_light/stencil_light.gd" id="24_d27po"]
 [ext_resource type="PackedScene" path="res://src/world/heart_piece.tscn" id="26_ht767"]
-[ext_resource type="Script" uid="uid://87brg8xm8dtt" path="res://src/world/floor_switch.gd" id="27_iuiyr"]
-[ext_resource type="Script" uid="uid://ukpcr815ja3d" path="res://src/world/breakable.gd" id="29_86iea"]
-[ext_resource type="Resource" uid="uid://bjostbekjp6du" path="res://data/drops/pot.tres" id="30_4g78b"]
-[ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="30_gc68l"]
-[ext_resource type="Script" uid="uid://vmcv83ug4a0m" path="res://src/world/cracked_wall.gd" id="33_3iwqa"]
-[ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="33_iuiyr"]
-[ext_resource type="Script" uid="uid://g2wcplbv3183" path="res://src/world/big_pot.gd" id="35_q5kf3"]
-[ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="36_3iwqa"]
-[ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="37_q5kf3"]
-[ext_resource type="Script" uid="uid://bdk0acke8h87u" path="res://src/entities/mummy_guard/mummy_guard.gd" id="38_iq7xx"]
-[ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="38_yjg8d"]
+[ext_resource type="Script" path="res://src/world/floor_switch.gd" id="27_iuiyr"]
+[ext_resource type="Script" path="res://src/world/breakable.gd" id="29_86iea"]
+[ext_resource type="Resource" path="res://data/drops/pot.tres" id="30_4g78b"]
+[ext_resource type="PackedScene" path="res://src/entities/enemy.tscn" id="30_gc68l"]
+[ext_resource type="Script" path="res://src/world/cracked_wall.gd" id="33_3iwqa"]
+[ext_resource type="PackedScene" path="res://player/player.tscn" id="33_iuiyr"]
+[ext_resource type="Script" path="res://src/world/big_pot.gd" id="35_q5kf3"]
+[ext_resource type="Script" path="res://src/world/spawn_point.gd" id="36_3iwqa"]
+[ext_resource type="Script" path="res://src/world/portal.gd" id="37_q5kf3"]
+[ext_resource type="Script" path="res://src/entities/mummy_guard/mummy_guard.gd" id="38_iq7xx"]
+[ext_resource type="Script" path="res://src/tools/top_down_camera.gd" id="38_yjg8d"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="39_iq7xx"]
 [ext_resource type="Resource" path="res://data/entities/mummy_guard.tres" id="39_kbmgj"]
-[ext_resource type="Script" uid="uid://bccprbredple8" path="res://src/world/arena_fight.gd" id="40_fight"]
-[ext_resource type="Script" uid="uid://dcy0hg6ygxqg1" path="res://src/components/persistent_flag.gd" id="41_pflag"]
-[ext_resource type="PackedScene" path="res://src/entities/mummy_guard/mummy_guard.tscn" id="42_mummy"]
+[ext_resource type="Script" path="res://src/world/arena_fight.gd" id="40_fight"]
+[ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="41_pflag"]
 [ext_resource type="PackedScene" path="res://src/entities/mummy_guard/mallqui.tscn" id="42_mallqui"]
-[ext_resource type="Script" uid="uid://dq2xk4sts8nfn" path="res://src/world/heart_piece.gd" id="43_1cuov"]
-[ext_resource type="Script" uid="uid://xvggaagxljdf" path="res://src/world/spike_trap.gd" id="43_3lpbq"]
+[ext_resource type="PackedScene" path="res://src/entities/mummy_guard/mummy_guard.tscn" id="42_mummy"]
+[ext_resource type="Script" path="res://src/world/heart_piece.gd" id="43_1cuov"]
+[ext_resource type="Script" path="res://src/world/spike_trap.gd" id="43_3lpbq"]
 [ext_resource type="PackedScene" path="res://src/world/big_pot.tscn" id="43_bigpot"]
 [ext_resource type="Resource" path="res://data/items/heart_piece.tres" id="44_3lpbq"]
-[ext_resource type="PackedScene" path="res://src/world/cracked_wall_templo.tscn" id="44_crackwall"]
-[ext_resource type="ArrayMesh" uid="uid://jlluubdbax4r" path="res://assets/epiphany/meshes/objetos/corazon.res" id="45_baen8"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/corazon.res" id="45_baen8"]
 [ext_resource type="Resource" path="res://data/entities/archer_skeleton.tres" id="46_baen8"]
-[ext_resource type="Script" uid="uid://c48gjyuwv6u3x" path="res://src/entities/enemy.gd" id="47_lhowt"]
+[ext_resource type="Script" path="res://src/entities/enemy.gd" id="47_lhowt"]
 [ext_resource type="Resource" path="res://data/entities/skeleton.tres" id="48_308dp"]
-[ext_resource type="Script" uid="uid://ckkibjv0y6axx" path="res://player/player.gd" id="50_ier5i"]
-[ext_resource type="ArrayMesh" uid="uid://d3wijfc3hro4g" path="res://assets/epiphany/meshes/paredes_la/puerta_interruptor_chullpa_la.res" id="50_yesgf"]
-[ext_resource type="Resource" uid="uid://cooy3l0hm4jv0" path="res://data/entities/player.tres" id="51_yesgf"]
-[ext_resource type="Script" uid="uid://c238aeb6gn6ka" path="res://src/world/look/enfoque_la.gd" id="55_bkpqy"]
-[ext_resource type="Script" uid="uid://cj2nsvfg6j7av" path="res://src/world/gate.gd" id="56_lhowt"]
-[ext_resource type="Script" uid="uid://dbmfkcf8x5ids" path="res://src/ui/hud/hud.gd" id="57_6dghf"]
+[ext_resource type="Script" path="res://player/player.gd" id="50_ier5i"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_interruptor_chullpa_la.res" id="50_yesgf"]
+[ext_resource type="Resource" path="res://data/entities/player.tres" id="51_yesgf"]
+[ext_resource type="Script" path="res://src/world/look/enfoque_la.gd" id="55_bkpqy"]
+[ext_resource type="Script" path="res://src/world/gate.gd" id="56_lhowt"]
+[ext_resource type="Script" path="res://src/ui/hud/hud.gd" id="57_6dghf"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/player_panel_solo.tscn" id="58_8asnb"]
-[ext_resource type="Script" uid="uid://do026c5mdat2y" path="res://src/world/push_block.gd" id="58_308dp"]
+[ext_resource type="Script" path="res://src/world/push_block.gd" id="58_308dp"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/player_panel.tscn" id="59_tfrkv"]
 [ext_resource type="PackedScene" path="res://src/world/look/caida_la.tscn" id="60_lhowt"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/item_ring.tscn" id="60_pucgk"]
-[ext_resource type="Script" uid="uid://cpj0lhdoljshc" path="res://src/world/look/caida_la.gd" id="61_308dp"]
-[ext_resource type="ArrayMesh" uid="uid://b3gk041whpvab" path="res://assets/epiphany/meshes/paredes_la/puerta_llave_chullpa_la.res" id="62_bkpqy"]
-[ext_resource type="ArrayMesh" uid="uid://cv36sgxctc7od" path="res://assets/epiphany/meshes/paredes_la/puerta_madera_chullpa_la.res" id="63_6dghf"]
-[ext_resource type="Script" uid="uid://dlf8bqdycw2kg" path="res://src/world/look/brillo_la.gd" id="63_n1d8o"]
+[ext_resource type="Script" path="res://src/world/look/caida_la.gd" id="61_308dp"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_llave_chullpa_la.res" id="62_bkpqy"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_madera_chullpa_la.res" id="63_6dghf"]
+[ext_resource type="Script" path="res://src/world/look/brillo_la.gd" id="63_n1d8o"]
 [ext_resource type="PackedScene" path="res://src/world/pickup.tscn" id="70_pickup"]
-[ext_resource type="Script" uid="uid://ckysqr8ximkn0" path="res://src/world/pickup.gd" id="71_pickupgd"]
-[ext_resource type="ArrayMesh" uid="uid://b7ouu6fas5ytk" path="res://assets/epiphany/meshes/paredes_la/muro_agrietado_chullpa_la_2.res" id="71_tfrkv"]
+[ext_resource type="Script" path="res://src/world/pickup.gd" id="71_pickupgd"]
 [ext_resource type="Resource" path="res://data/items/heart_container.tres" id="72_heart"]
-[ext_resource type="ArrayMesh" uid="uid://bs5mwr1yuehrf" path="res://assets/epiphany/meshes/naturaleza/piedra_chica_a.res" id="72_pucgk"]
-[ext_resource type="Script" uid="uid://rcd8a41l0m7" path="res://src/components/hurtbox.gd" id="73_uu46w"]
 [ext_resource type="PackedScene" path="res://src/world/warp_portal.tscn" id="73_warp"]
 [ext_resource type="Resource" path="res://data/entities/mummy_guardian.tres" id="74_guardcfg"]
 [ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="75_gate"]
 [ext_resource type="PackedScene" path="res://src/world/push_block.tscn" id="76_block"]
 [ext_resource type="PackedScene" path="res://src/world/spike_trap.tscn" id="77_spikes"]
-[ext_resource type="Script" uid="uid://cpa78s7g8p1jd" path="res://src/world/wave_spawner.gd" id="78_waves"]
-[ext_resource type="Script" uid="uid://osa5pl45qand" path="res://src/world/wave_spawn.gd" id="79_spawn"]
+[ext_resource type="Script" path="res://src/world/wave_spawner.gd" id="78_waves"]
+[ext_resource type="Script" path="res://src/world/wave_spawn.gd" id="79_spawn"]
 [ext_resource type="PackedScene" path="res://src/world/look/polvo_chullpa.tscn" id="80_308dp"]
 [ext_resource type="PackedScene" path="res://src/entities/archer_skeleton.tscn" id="80_archer"]
-[ext_resource type="Shader" uid="uid://bkyqia8y2pf" path="res://data/kits/shaders/cutaway.gdshader" id="80_uu46w"]
-[ext_resource type="Texture2D" uid="uid://duanovtf2px6i" path="res://assets/epiphany/palette.png" id="81_n1d8o"]
 [ext_resource type="PackedScene" path="res://src/entities/shield_skeleton.tscn" id="81_shield"]
-[ext_resource type="Resource" path="res://data/items/bomb.tres" id="ch_bomb"]
-[ext_resource type="Resource" uid="uid://cqv3w1wloauuu" path="res://data/drops/pot_bombs.tres" id="ch_pot_bombs"]
 [ext_resource type="NavigationMesh" path="res://levels/nav/chullpa_navmesh.tres" id="nav_chullpa"]
-[ext_resource type="Script" uid="uid://c3gjwha8na3yi" path="res://src/world/look/sombra_la.gd" id="sombra_la"]
-[ext_resource type="Script" uid="uid://bw0kh7whsb1qf" path="res://src/world/look/tono_la.gd" id="tono_la"]
+[ext_resource type="Script" path="res://src/world/look/sombra_la.gd" id="sombra_la"]
+[ext_resource type="Script" path="res://src/world/look/tono_la.gd" id="tono_la"]
 [ext_resource type="PackedScene" path="res://src/world/floor_switch_weight.tscn" id="weight_switch"]
 
 [sub_resource type="Environment" id="Environment_5ecsj"]
@@ -134,7 +126,7 @@ compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_somb
 [sub_resource type="BoxShape3D" id="BoxShape3D_308dp"]
 size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_uu46w"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yesgf"]
 render_priority = 0
 shader = ExtResource("5_1wqbm")
 shader_parameter/inner = Vector4(2.7, 2.6, 25.3, 17.9)
@@ -144,17 +136,18 @@ shader_parameter/plane_y = -5.000000238418579
 shader_parameter/floor_rect = Vector4(3, 3, 25, 17)
 shader_parameter/hole_fade = null
 shader_parameter/interior = Vector4(3, 3, 25, 17)
+shader_parameter/reach = Vector4(100, 100, 100, 100)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_n1d8o"]
-material = SubResource("ShaderMaterial_uu46w")
+[sub_resource type="PlaneMesh" id="PlaneMesh_bkpqy"]
+material = SubResource("ShaderMaterial_yesgf")
 size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ier5i"]
 size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qwhhl"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6dghf"]
 render_priority = 0
 shader = ExtResource("5_1wqbm")
 shader_parameter/inner = Vector4(28.7, 2.6, 51.3, 17.9)
@@ -164,17 +157,18 @@ shader_parameter/plane_y = -5.000000238418579
 shader_parameter/floor_rect = Vector4(29, 3, 51, 17)
 shader_parameter/hole_fade = null
 shader_parameter/interior = Vector4(29, 3, 51, 17)
+shader_parameter/reach = Vector4(100, 100, 100, 100)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_uwrga"]
-material = SubResource("ShaderMaterial_qwhhl")
+[sub_resource type="PlaneMesh" id="PlaneMesh_8asnb"]
+material = SubResource("ShaderMaterial_6dghf")
 size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yesgf"]
 size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ecsj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tfrkv"]
 render_priority = 0
 shader = ExtResource("5_1wqbm")
 shader_parameter/inner = Vector4(2.7, 20.6, 25.3, 35.9)
@@ -184,17 +178,18 @@ shader_parameter/plane_y = -5.000000238418579
 shader_parameter/floor_rect = Vector4(3, 21, 25, 35)
 shader_parameter/hole_fade = null
 shader_parameter/interior = Vector4(3, 21, 25, 35)
+shader_parameter/reach = Vector4(100, 100, 100, 100)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_eafar"]
-material = SubResource("ShaderMaterial_5ecsj")
+[sub_resource type="PlaneMesh" id="PlaneMesh_pucgk"]
+material = SubResource("ShaderMaterial_tfrkv")
 size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bkpqy"]
 size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_h8srf"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uu46w"]
 render_priority = 0
 shader = ExtResource("5_1wqbm")
 shader_parameter/inner = Vector4(28.7, 20.6, 51.3, 35.9)
@@ -204,11 +199,12 @@ shader_parameter/plane_y = -5.000000238418579
 shader_parameter/floor_rect = Vector4(29, 21, 51, 35)
 shader_parameter/hole_fade = null
 shader_parameter/interior = Vector4(29, 21, 51, 35)
+shader_parameter/reach = Vector4(100, 100, 100, 100)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_mftrw"]
-material = SubResource("ShaderMaterial_h8srf")
+[sub_resource type="PlaneMesh" id="PlaneMesh_n1d8o"]
+material = SubResource("ShaderMaterial_uu46w")
 size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="Shape"]
@@ -357,7 +353,7 @@ center_offset = Vector3(0, 0.32, 0)
 [sub_resource type="BoxShape3D" id="BoxShape3D_8asnb"]
 size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_btrel"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qwhhl"]
 render_priority = 0
 shader = ExtResource("5_1wqbm")
 shader_parameter/inner = Vector4(2.7, 2.6, 25.3, 17.9)
@@ -367,17 +363,18 @@ shader_parameter/plane_y = 3.0
 shader_parameter/floor_rect = Vector4(3, 3, 25, 17)
 shader_parameter/hole_fade = null
 shader_parameter/interior = Vector4(3, 3, 25, 17)
+shader_parameter/reach = Vector4(100, 100, 100, 100)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_2kxi8"]
-material = SubResource("ShaderMaterial_btrel")
+[sub_resource type="PlaneMesh" id="PlaneMesh_uwrga"]
+material = SubResource("ShaderMaterial_qwhhl")
 size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tfrkv"]
 size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_3x6cc"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ecsj"]
 render_priority = 0
 shader = ExtResource("5_1wqbm")
 shader_parameter/inner = Vector4(28.7, 2.6, 51.3, 17.9)
@@ -387,17 +384,18 @@ shader_parameter/plane_y = 3.0
 shader_parameter/floor_rect = Vector4(29, 3, 51, 17)
 shader_parameter/hole_fade = null
 shader_parameter/interior = Vector4(29, 3, 51, 17)
+shader_parameter/reach = Vector4(100, 100, 100, 100)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_vbpod"]
-material = SubResource("ShaderMaterial_3x6cc")
+[sub_resource type="PlaneMesh" id="PlaneMesh_eafar"]
+material = SubResource("ShaderMaterial_5ecsj")
 size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pucgk"]
 size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8k7sa"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h8srf"]
 render_priority = 0
 shader = ExtResource("5_1wqbm")
 shader_parameter/inner = Vector4(2.7, 20.6, 25.3, 35.9)
@@ -407,17 +405,18 @@ shader_parameter/plane_y = 3.0
 shader_parameter/floor_rect = Vector4(3, 21, 25, 35)
 shader_parameter/hole_fade = null
 shader_parameter/interior = Vector4(3, 21, 25, 35)
+shader_parameter/reach = Vector4(100, 100, 100, 100)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_2jkfb"]
-material = SubResource("ShaderMaterial_8k7sa")
+[sub_resource type="PlaneMesh" id="PlaneMesh_mftrw"]
+material = SubResource("ShaderMaterial_h8srf")
 size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uu46w"]
 size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0fo3g"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_btrel"]
 render_priority = 0
 shader = ExtResource("5_1wqbm")
 shader_parameter/inner = Vector4(28.7, 20.6, 51.3, 35.9)
@@ -427,11 +426,12 @@ shader_parameter/plane_y = 3.0
 shader_parameter/floor_rect = Vector4(29, 21, 51, 35)
 shader_parameter/hole_fade = null
 shader_parameter/interior = Vector4(29, 21, 51, 35)
+shader_parameter/reach = Vector4(100, 100, 100, 100)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_38dd7"]
-material = SubResource("ShaderMaterial_0fo3g")
+[sub_resource type="PlaneMesh" id="PlaneMesh_2kxi8"]
+material = SubResource("ShaderMaterial_btrel")
 size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_n1d8o"]
@@ -567,88 +567,86 @@ center_offset = Vector3(0, 0.32, 0)
 [sub_resource type="BoxShape3D" id="BoxShape3D_qwhhl"]
 size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2atix"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3x6cc"]
 render_priority = 0
 shader = ExtResource("5_1wqbm")
 shader_parameter/inner = Vector4(2.7, 2.6, 25.3, 17.9)
 shader_parameter/outer = Vector4(1.2, 1.2, 26.8, 18.8)
 shader_parameter/limit = Vector4(0.8, 0.8, 27, 19)
-shader_parameter/plane_y = 10.999999761581421
+shader_parameter/plane_y = 10.99999976158142
 shader_parameter/floor_rect = Vector4(3, 3, 25, 17)
 shader_parameter/hole_fade = null
 shader_parameter/interior = Vector4(3, 3, 25, 17)
+shader_parameter/reach = Vector4(100, 100, 100, 100)
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_vbpod"]
+material = SubResource("ShaderMaterial_3x6cc")
+size = Vector2(33.2, 25.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uwrga"]
+size = Vector3(22, 2.4, 14)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8k7sa"]
+render_priority = 0
+shader = ExtResource("5_1wqbm")
+shader_parameter/inner = Vector4(28.7, 2.6, 51.3, 17.9)
+shader_parameter/outer = Vector4(27.2, 1.2, 52.8, 18.8)
+shader_parameter/limit = Vector4(27, 0.8, 53.199997, 19)
+shader_parameter/plane_y = 10.99999976158142
+shader_parameter/floor_rect = Vector4(29, 3, 51, 17)
+shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(29, 3, 51, 17)
+shader_parameter/reach = Vector4(100, 100, 100, 100)
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2jkfb"]
+material = SubResource("ShaderMaterial_8k7sa")
+size = Vector2(33.2, 25.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5ecsj"]
+size = Vector3(26, 2.4, 14)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0fo3g"]
+render_priority = 0
+shader = ExtResource("5_1wqbm")
+shader_parameter/inner = Vector4(-1.3, 20.6, 25.3, 35.9)
+shader_parameter/outer = Vector4(-2.8, 19.2, 26.8, 36.8)
+shader_parameter/limit = Vector4(-3.2, 19, 27, 37.199997)
+shader_parameter/plane_y = 10.99999976158142
+shader_parameter/floor_rect = Vector4(-1, 21, 25, 35)
+shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(3, 21, 25, 35)
+shader_parameter/reach = Vector4(100, 100, 100, 100)
+shader_parameter/wobble = null
+shader_parameter/wobble_scale = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_38dd7"]
+material = SubResource("ShaderMaterial_0fo3g")
+size = Vector2(37.2, 25.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eafar"]
+size = Vector3(22, 2.4, 14)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2atix"]
+render_priority = 0
+shader = ExtResource("5_1wqbm")
+shader_parameter/inner = Vector4(28.7, 20.6, 51.3, 35.9)
+shader_parameter/outer = Vector4(27.2, 19.2, 52.8, 36.8)
+shader_parameter/limit = Vector4(27, 19, 53.199997, 37.199997)
+shader_parameter/plane_y = 10.99999976158142
+shader_parameter/floor_rect = Vector4(29, 21, 51, 35)
+shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(29, 21, 51, 35)
+shader_parameter/reach = Vector4(100, 100, 100, 100)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_0qy4e"]
 material = SubResource("ShaderMaterial_2atix")
 size = Vector2(33.2, 25.2)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_uwrga"]
-size = Vector3(22, 2.4, 14)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_s6egf"]
-render_priority = 0
-shader = ExtResource("5_1wqbm")
-shader_parameter/inner = Vector4(28.7, 2.6, 51.3, 17.9)
-shader_parameter/outer = Vector4(27.2, 1.2, 52.8, 18.8)
-shader_parameter/limit = Vector4(27, 0.8, 53.199997, 19)
-shader_parameter/plane_y = 10.999999761581421
-shader_parameter/floor_rect = Vector4(29, 3, 51, 17)
-shader_parameter/hole_fade = null
-shader_parameter/interior = Vector4(29, 3, 51, 17)
-shader_parameter/wobble = null
-shader_parameter/wobble_scale = null
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_uy08u"]
-material = SubResource("ShaderMaterial_s6egf")
-size = Vector2(33.2, 25.2)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_5ecsj"]
-size = Vector3(26, 2.4, 14)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6ruom"]
-render_priority = 0
-shader = ExtResource("5_1wqbm")
-shader_parameter/inner = Vector4(-1.3, 20.6, 25.3, 35.9)
-shader_parameter/outer = Vector4(-2.8, 19.2, 26.8, 36.8)
-shader_parameter/limit = Vector4(-3.2, 19, 27, 37.199997)
-shader_parameter/plane_y = 10.999999761581421
-shader_parameter/floor_rect = Vector4(-1, 21, 25, 35)
-shader_parameter/hole_fade = null
-shader_parameter/interior = Vector4(3, 21, 25, 35)
-shader_parameter/wobble = null
-shader_parameter/wobble_scale = null
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_rvl8q"]
-material = SubResource("ShaderMaterial_6ruom")
-size = Vector2(37.2, 25.2)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_eafar"]
-size = Vector3(22, 2.4, 14)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_isafg"]
-render_priority = 0
-shader = ExtResource("5_1wqbm")
-shader_parameter/inner = Vector4(28.7, 20.6, 51.3, 35.9)
-shader_parameter/outer = Vector4(27.2, 19.2, 52.8, 36.8)
-shader_parameter/limit = Vector4(27, 19, 53.199997, 37.199997)
-shader_parameter/plane_y = 10.999999761581421
-shader_parameter/floor_rect = Vector4(29, 21, 51, 35)
-shader_parameter/hole_fade = null
-shader_parameter/interior = Vector4(29, 21, 51, 35)
-shader_parameter/wobble = null
-shader_parameter/wobble_scale = null
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_fl6ng"]
-material = SubResource("ShaderMaterial_isafg")
-size = Vector2(33.2, 25.2)
-
-[sub_resource type="BoxShape3D" id="WallShape"]
-size = Vector3(2, 3.1, 2)
-
-[sub_resource type="BoxShape3D" id="HurtShape"]
-size = Vector3(2.4, 2.6, 2.4)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4611i"]
 render_priority = 0
@@ -746,39 +744,6 @@ material = SubResource("ShaderMaterial_16v7n")
 size = Vector2(0.45, 0.8)
 center_offset = Vector3(0, 0.32, 0)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_waoqk"]
-render_priority = 0
-shader = ExtResource("80_uu46w")
-shader_parameter/hole_radius = null
-shader_parameter/hole_floor = null
-shader_parameter/albedo_color = Color(0.72, 0.72, 0.72, 1)
-shader_parameter/albedo_texture = ExtResource("81_n1d8o")
-shader_parameter/uv_scale = null
-shader_parameter/uv_offset = null
-shader_parameter/use_uv = true
-shader_parameter/cut_area = null
-shader_parameter/cut_height = null
-shader_parameter/cut_lip = null
-shader_parameter/back_shade = null
-shader_parameter/cap_shade = null
-shader_parameter/roughness = 0.5
-shader_parameter/specular = 0.4
-shader_parameter/grain_amount = 0.0
-shader_parameter/grain_rect = Vector4(0.42, 0.455, 0, 0.25)
-shader_parameter/grain_spacing = null
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_t6ch3"]
-_surfaces = [{
-"aabb": AABB(-1.55, 3.02, 28.45, 4.05, 1e-05, 4),
-"attribute_data": PackedByteArray("AACgPvDtET4AAKA+8O0RPgAAoD7w7RE+AACgPvDtET4AAKA+8O0RPgAAoD7w7RE+AACgPvDtET4AAKA+8O0RPgAAoD7w7RE+AACgPvDtET4AAKA+8O0RPgAAoD7w7RE+"),
-"format": 34359738391,
-"material": SubResource("ShaderMaterial_waoqk"),
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 12,
-"vertex_data": PackedByteArray("ZmbGv65HQUCameNBZmbGP65HQUCameNBZmbGP65HQUDNzAFCZmbGv65HQUCameNBZmbGP65HQUDNzAFCZmbGv65HQUDNzAFCAACAP65HQUCamedBAAAgQK5HQUCamedBAAAgQK5HQUBmZvhBAACAP65HQUCamedBAAAgQK5HQUBmZvhBAACAP65HQUBmZvhB/3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+/")
-}]
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_h8srf"]
 size = Vector3(2, 2.4, 1.2)
 
@@ -836,7 +801,7 @@ shape = SubResource("BoxShape3D_308dp")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/Mausoleo" unique_id=1209428967]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_n1d8o")
+mesh = SubResource("PlaneMesh_bkpqy")
 
 [node name="LuzSala" type="SpotLight3D" parent="Sotano/Mausoleo" unique_id=732142435]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -869,7 +834,7 @@ shape = SubResource("BoxShape3D_ier5i")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/Guardian" unique_id=1552921901]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_uwrga")
+mesh = SubResource("PlaneMesh_8asnb")
 
 [node name="LuzSala" type="SpotLight3D" parent="Sotano/Guardian" unique_id=1748127098]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -901,7 +866,7 @@ shape = SubResource("BoxShape3D_yesgf")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/CriptaOscura" unique_id=751682746]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_eafar")
+mesh = SubResource("PlaneMesh_pucgk")
 
 [node name="LuzSala" type="SpotLight3D" parent="Sotano/CriptaOscura" unique_id=1091762929]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -933,7 +898,7 @@ shape = SubResource("BoxShape3D_bkpqy")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Sotano/Cripta" unique_id=1409439279]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_mftrw")
+mesh = SubResource("PlaneMesh_n1d8o")
 
 [node name="LuzSala" type="SpotLight3D" parent="Sotano/Cripta" unique_id=1615495334]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1026,7 +991,7 @@ reward_flag = &"ch_heart_container"
 [node name="PersistentFlag" type="Node" parent="Sotano/BossFight" unique_id=1288311402]
 script = ExtResource("41_pflag")
 
-[node name="Mallqui" type="Node3D" parent="Sotano/BossFight" unique_id=873195260 instance=ExtResource("42_mallqui")]
+[node name="Mallqui" type="Node3D" parent="Sotano/BossFight" unique_id=873195260 groups=["enfoque_alto"] instance=ExtResource("42_mallqui")]
 transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 4, 0, -2)
 script = ExtResource("38_iq7xx")
 config = ExtResource("74_guardcfg")
@@ -1042,6 +1007,7 @@ wave_damage = 4
 stuck_time = 2.2
 aim_size = 1.7
 rage_leaps = 2
+metadata/focus_height = 3.3
 
 [node name="HeartContainer" type="Area3D" parent="Sotano/BossFight" unique_id=1991647320 instance=ExtResource("70_pickup")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
@@ -1522,7 +1488,7 @@ shape = SubResource("BoxShape3D_8asnb")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/Osario" unique_id=691288425]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_2kxi8")
+mesh = SubResource("PlaneMesh_uwrga")
 
 [node name="LuzSala" type="SpotLight3D" parent="PlantaBaja/Osario" unique_id=1099295449]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1554,7 +1520,7 @@ shape = SubResource("BoxShape3D_tfrkv")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/Abismo" unique_id=1244450717]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_vbpod")
+mesh = SubResource("PlaneMesh_eafar")
 
 [node name="LuzSala" type="SpotLight3D" parent="PlantaBaja/Abismo" unique_id=1172902010]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1586,7 +1552,7 @@ shape = SubResource("BoxShape3D_pucgk")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/Entrada" unique_id=595729378]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_2jkfb")
+mesh = SubResource("PlaneMesh_mftrw")
 
 [node name="LuzSala" type="SpotLight3D" parent="PlantaBaja/Entrada" unique_id=1558081408]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1618,7 +1584,7 @@ shape = SubResource("BoxShape3D_uu46w")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PlantaBaja/SalaCofre" unique_id=1026244508]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_38dd7")
+mesh = SubResource("PlaneMesh_2kxi8")
 
 [node name="LuzSala" type="SpotLight3D" parent="PlantaBaja/SalaCofre" unique_id=2138201759]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -2083,23 +2049,23 @@ collision_mask = 5
 script = ExtResource("47_lhowt")
 config = ExtResource("48_308dp")
 
-[node name="CaidaLA34" type="Node3D" parent="PlantaBaja" unique_id=978161775 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA34" type="Node3D" parent="PlantaBaja" unique_id=1504146234 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 22)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA35" type="Node3D" parent="PlantaBaja" unique_id=1283321821 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA35" type="Node3D" parent="PlantaBaja" unique_id=2137794569 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 28)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA36" type="Node3D" parent="PlantaBaja" unique_id=2113834441 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA36" type="Node3D" parent="PlantaBaja" unique_id=1871710426 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 34)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA37" type="Node3D" parent="PlantaBaja" unique_id=1074271918 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA37" type="Node3D" parent="PlantaBaja" unique_id=336451059 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 22)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA38" type="Node3D" parent="PlantaBaja" unique_id=937697293 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA38" type="Node3D" parent="PlantaBaja" unique_id=1034471736 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 32)
 script = ExtResource("61_308dp")
 
@@ -2115,7 +2081,7 @@ mesh_library = ExtResource("3_xafiw")
 cell_size = Vector3(2, 1, 2)
 cell_center_y = false
 data = {
-"cells": PackedInt32Array(1, 0, 36, 1, 1, 39, 1, 2, 22, 1, 3, 22, 1, 4, 22, 1, 5, 22, 1, 6, 22, 1, 7, 22, 1, 8, 22, 1, 9, 37, 1, 10, 39, 1, 11, 24, 1, 12, 48, 1, 13, 23, 1, 14, 25, 1, 15, 0, 1, 16, 29, 1, 17, 22, 1, 18, 37, 1, 19, 36, 2, 0, 36, 2, 1, 33, 2, 2, 0, 2, 3, 0, 2, 4, 1441859, 2, 5, 0, 2, 6, 1441859, 2, 7, 0, 2, 8, 0, 2, 9, 26, 2, 10, 33, 2, 11, 0, 2, 12, 0, 2, 13, 0, 2, 14, 0, 2, 15, 0, 2, 16, 0, 2, 17, 0, 2, 18, 26, 2, 19, 36, 3, 0, 36, 3, 1, 33, 3, 2, 0, 3, 3, 0, 3, 4, 1048642, 3, 5, 0, 3, 6, 1048642, 3, 7, 0, 3, 8, 0, 3, 9, 26, 3, 10, 33, 3, 11, 0, 3, 12, 0, 3, 13, 0, 3, 14, 0, 3, 15, 0, 3, 16, 0, 3, 17, 0, 3, 18, 26, 3, 19, 36, 4, 0, 36, 4, 1, 33, 4, 2, 0, 4, 3, 0, 4, 4, 1048642, 4, 5, 0, 4, 6, 1048642, 4, 7, 0, 4, 8, 0, 4, 9, 26, 4, 10, 33, 4, 11, 0, 4, 12, 0, 4, 13, 0, 4, 14, 0, 4, 15, 0, 4, 16, 0, 4, 17, 0, 4, 18, 26, 4, 19, 36, 5, 0, 36, 5, 1, 33, 5, 2, 0, 5, 3, 0, 5, 4, 1048642, 5, 5, 0, 5, 6, 1048642, 5, 7, 0, 5, 8, 0, 5, 9, 26, 5, 10, 33, 5, 11, 0, 5, 12, 0, 5, 13, 0, 5, 14, 0, 5, 15, 0, 5, 16, 0, 5, 17, 0, 5, 18, 26, 5, 19, 36, 6, 0, 36, 6, 1, 33, 6, 2, 0, 6, 3, 0, 6, 4, 1048642, 6, 5, 0, 6, 6, 1048642, 6, 7, 0, 6, 8, 0, 6, 9, 27, 6, 10, 34, 6, 11, 0, 6, 12, 0, 6, 13, 0, 6, 14, 0, 6, 15, 0, 6, 16, 0, 6, 17, 0, 6, 18, 26, 6, 19, 36, 7, 0, 36, 7, 1, 33, 7, 2, 0, 7, 3, 0, 7, 4, 1048642, 7, 5, 0, 7, 6, 1048642, 7, 7, 0, 7, 8, 0, 7, 9, 42, 7, 10, 44, 7, 11, 0, 7, 12, 0, 7, 13, 0, 7, 14, 0, 7, 15, 0, 7, 16, 0, 7, 17, 0, 7, 18, 26, 7, 19, 36, 8, 0, 36, 8, 1, 33, 8, 2, 0, 8, 3, 0, 8, 4, 1048642, 8, 5, 0, 8, 6, 1048642, 8, 7, 0, 8, 8, 0, 8, 9, 28, 8, 10, 35, 8, 11, 0, 8, 12, 0, 8, 13, 0, 8, 14, 0, 8, 15, 0, 8, 16, 0, 8, 17, 0, 8, 18, 26, 8, 19, 36, 9, 0, 36, 9, 1, 33, 9, 2, 0, 9, 3, 0, 9, 4, 1048642, 9, 5, 0, 9, 6, 1048642, 9, 7, 0, 9, 8, 0, 9, 9, 26, 9, 10, 33, 9, 11, 0, 9, 12, 0, 9, 13, 0, 9, 14, 0, 9, 15, 0, 9, 16, 0, 9, 17, 0, 9, 18, 26, 9, 19, 36, 10, 0, 36, 10, 1, 33, 10, 2, 0, 10, 3, 0, 10, 4, 1048642, 10, 5, 0, 10, 6, 1048642, 10, 7, 0, 10, 8, 0, 10, 9, 26, 10, 10, 33, 10, 11, 0, 10, 12, 0, 10, 13, 0, 10, 14, 0, 10, 15, 0, 10, 16, 0, 10, 17, 0, 10, 18, 26, 10, 19, 36, 11, 0, 36, 11, 1, 33, 11, 2, 0, 11, 3, 0, 11, 4, 1048642, 11, 5, 0, 11, 6, 1048642, 11, 7, 0, 11, 8, 0, 11, 9, 26, 11, 10, 33, 11, 11, 0, 11, 12, 0, 11, 13, 0, 11, 14, 0, 11, 15, 0, 11, 16, 0, 11, 17, 0, 11, 18, 26, 11, 19, 36, 12, 0, 36, 12, 1, 33, 12, 2, 0, 12, 3, 0, 12, 4, 1048643, 12, 5, 0, 12, 6, 1048643, 12, 7, 0, 12, 8, 0, 12, 9, 26, 12, 10, 33, 12, 11, 0, 12, 12, 0, 12, 13, 0, 12, 14, 0, 12, 15, 0, 12, 16, 0, 12, 17, 0, 12, 18, 26, 12, 19, 36, 13, 0, 36, 13, 1, 40, 14, 0, 36, 14, 1, 39, 13, 2, 30, 14, 2, 22, 13, 3, 30, 14, 3, 22, 13, 4, 30, 14, 4, 22, 13, 5, 30, 14, 5, 22, 13, 6, 30, 14, 6, 22, 13, 7, 30, 14, 7, 22, 13, 8, 30, 14, 8, 22, 13, 9, 38, 13, 10, 40, 14, 9, 37, 14, 10, 39, 13, 11, 30, 14, 11, 22, 13, 12, 30, 14, 12, 22, 13, 13, 32, 14, 13, 24, 13, 14, 43, 14, 14, 41, 13, 15, 31, 14, 15, 23, 13, 16, 30, 14, 16, 22, 13, 17, 30, 14, 17, 22, 13, 18, 38, 13, 19, 36, 14, 18, 37, 14, 19, 36, 15, 0, 36, 15, 1, 33, 15, 2, 0, 15, 3, 0, 15, 4, 0, 15, 5, 0, 15, 6, 1441859, 15, 7, 0, 15, 8, 0, 15, 9, 26, 15, 10, 33, 15, 11, 0, 15, 12, 0, 15, 13, 0, 15, 14, 0, 15, 15, 0, 15, 16, 0, 15, 17, 0, 15, 18, 26, 15, 19, 36, 16, 0, 36, 16, 1, 33, 16, 2, 0, 16, 3, 0, 16, 4, 0, 16, 5, 0, 16, 6, 1048642, 16, 7, 0, 16, 8, 0, 16, 9, 26, 16, 10, 33, 16, 11, 0, 16, 12, 0, 16, 13, 0, 16, 14, 0, 16, 15, 0, 16, 16, 0, 16, 17, 0, 16, 18, 26, 16, 19, 36, 17, 0, 36, 17, 1, 33, 17, 2, 0, 17, 3, 0, 17, 4, 0, 17, 5, 0, 17, 6, 1048642, 17, 7, 0, 17, 8, 0, 17, 9, 26, 17, 10, 33, 17, 11, 0, 17, 12, 0, 17, 13, 0, 17, 14, 0, 17, 15, 0, 17, 16, 0, 17, 17, 0, 17, 18, 26, 17, 19, 36, 18, 0, 36, 18, 1, 33, 18, 2, 0, 18, 3, 0, 18, 4, 0, 18, 5, 0, 18, 6, 1048642, 18, 7, 0, 18, 8, 0, 18, 9, 26, 18, 10, 33, 18, 11, 0, 18, 12, 0, 18, 13, 0, 18, 14, 0, 18, 15, 0, 18, 16, 0, 18, 17, 0, 18, 18, 26, 18, 19, 36, 19, 0, 36, 19, 1, 33, 19, 2, 0, 19, 3, 0, 19, 4, 0, 19, 5, 0, 19, 6, 1048642, 19, 7, 0, 19, 8, 0, 19, 9, 27, 19, 10, 34, 19, 11, 0, 19, 12, 0, 19, 13, 0, 19, 14, 0, 19, 15, 0, 19, 16, 0, 19, 17, 0, 19, 18, 26, 19, 19, 36, 20, 0, 36, 20, 1, 33, 20, 2, 0, 20, 3, 2, 20, 4, 0, 20, 5, 0, 20, 6, 1048642, 20, 7, 0, 20, 8, 0, 20, 9, 42, 20, 10, 44, 20, 11, 0, 20, 12, 0, 20, 13, 0, 20, 14, 0, 20, 15, 68, 20, 16, 0, 20, 17, 0, 20, 18, 26, 20, 19, 36, 21, 0, 36, 21, 1, 33, 21, 2, 0, 21, 3, 0, 21, 4, 0, 21, 5, 0, 21, 6, 1048642, 21, 7, 0, 21, 8, 0, 21, 9, 28, 21, 10, 35, 21, 11, 0, 21, 12, 0, 21, 13, 0, 21, 14, 0, 21, 15, 0, 21, 16, 0, 21, 17, 0, 21, 18, 26, 21, 19, 36, 22, 0, 36, 22, 1, 33, 22, 2, 0, 22, 3, 0, 22, 4, 0, 22, 5, 0, 22, 6, 1048642, 22, 7, 0, 22, 8, 0, 22, 9, 26, 22, 10, 33, 22, 11, 0, 22, 12, 0, 22, 13, 0, 22, 14, 0, 22, 15, 0, 22, 16, 0, 22, 17, 0, 22, 18, 26, 22, 19, 36, 23, 0, 36, 23, 1, 33, 23, 2, 0, 23, 3, 0, 23, 4, 0, 23, 5, 0, 23, 6, 1048642, 23, 7, 0, 23, 8, 0, 23, 9, 26, 23, 10, 33, 23, 11, 0, 23, 12, 0, 23, 13, 0, 23, 14, 0, 23, 15, 0, 23, 16, 0, 23, 17, 0, 23, 18, 26, 23, 19, 36, 24, 0, 36, 24, 1, 33, 24, 2, 0, 24, 3, 0, 24, 4, 0, 24, 5, 0, 24, 6, 1048642, 24, 7, 0, 24, 8, 0, 24, 9, 26, 24, 10, 33, 24, 11, 0, 24, 12, 0, 24, 13, 0, 24, 14, 0, 24, 15, 0, 24, 16, 0, 24, 17, 0, 24, 18, 26, 24, 19, 36, 25, 0, 36, 25, 1, 33, 25, 2, 0, 25, 3, 0, 25, 4, 0, 25, 5, 0, 25, 6, 1048643, 25, 7, 0, 25, 8, 0, 25, 9, 26, 25, 10, 33, 25, 11, 0, 25, 12, 0, 25, 13, 0, 25, 14, 0, 25, 15, 0, 25, 16, 0, 25, 17, 0, 25, 18, 26, 25, 19, 36, 26, 0, 36, 26, 1, 40, 27, 0, 36, 27, 1, 36, 26, 2, 30, 27, 2, 36, 26, 3, 30, 27, 3, 36, 26, 4, 30, 27, 4, 36, 26, 5, 30, 27, 5, 36, 26, 6, 30, 27, 6, 36, 26, 7, 30, 27, 7, 36, 26, 8, 30, 27, 8, 36, 26, 9, 38, 26, 10, 40, 27, 9, 36, 27, 10, 36, 26, 11, 30, 27, 11, 36, 26, 12, 30, 27, 12, 36, 26, 13, 30, 27, 13, 36, 26, 14, 30, 27, 14, 36, 26, 15, 30, 27, 15, 36, 26, 16, 30, 27, 16, 36, 26, 17, 30, 27, 17, 36, 26, 18, 38, 26, 19, 36, 27, 18, 36, 27, 19, 36, 0, 15, 0, 0, 14, 33, 0, 16, 26, 65534, 15, 36, 65535, 15, 22, 65534, 14, 36, 65535, 14, 39, 65534, 16, 36, 65535, 16, 37, 0, 12, 36)
+"cells": PackedInt32Array(1, 0, 36, 1, 1, 39, 1, 2, 22, 1, 3, 22, 1, 4, 22, 1, 5, 22, 1, 6, 22, 1, 7, 22, 1, 8, 22, 1, 9, 37, 1, 10, 39, 1, 11, 24, 1, 12, 48, 1, 13, 23, 1, 14, 22, 1, 15, 22, 1, 16, 22, 1, 17, 22, 1, 18, 37, 1, 19, 36, 2, 0, 36, 2, 1, 33, 2, 2, 0, 2, 3, 0, 2, 4, 1441859, 2, 5, 0, 2, 6, 1441859, 2, 7, 0, 2, 8, 0, 2, 9, 26, 2, 10, 33, 2, 11, 0, 2, 12, 0, 2, 13, 0, 2, 14, 0, 2, 15, 0, 2, 16, 0, 2, 17, 0, 2, 18, 26, 2, 19, 36, 3, 0, 36, 3, 1, 33, 3, 2, 0, 3, 3, 0, 3, 4, 1048642, 3, 5, 0, 3, 6, 1048642, 3, 7, 0, 3, 8, 0, 3, 9, 26, 3, 10, 33, 3, 11, 0, 3, 12, 0, 3, 13, 0, 3, 14, 0, 3, 15, 0, 3, 16, 0, 3, 17, 0, 3, 18, 26, 3, 19, 36, 4, 0, 36, 4, 1, 33, 4, 2, 0, 4, 3, 0, 4, 4, 1048642, 4, 5, 0, 4, 6, 1048642, 4, 7, 0, 4, 8, 0, 4, 9, 26, 4, 10, 33, 4, 11, 0, 4, 12, 0, 4, 13, 0, 4, 14, 0, 4, 15, 0, 4, 16, 0, 4, 17, 0, 4, 18, 26, 4, 19, 36, 5, 0, 36, 5, 1, 33, 5, 2, 0, 5, 3, 0, 5, 4, 1048642, 5, 5, 0, 5, 6, 1048642, 5, 7, 0, 5, 8, 0, 5, 9, 26, 5, 10, 33, 5, 11, 0, 5, 12, 0, 5, 13, 0, 5, 14, 0, 5, 15, 0, 5, 16, 0, 5, 17, 0, 5, 18, 26, 5, 19, 36, 6, 0, 36, 6, 1, 33, 6, 2, 0, 6, 3, 0, 6, 4, 1048642, 6, 5, 0, 6, 6, 1048642, 6, 7, 0, 6, 8, 0, 6, 9, 27, 6, 10, 34, 6, 11, 0, 6, 12, 0, 6, 13, 0, 6, 14, 0, 6, 15, 0, 6, 16, 0, 6, 17, 0, 6, 18, 26, 6, 19, 36, 7, 0, 36, 7, 1, 33, 7, 2, 0, 7, 3, 0, 7, 4, 1048642, 7, 5, 0, 7, 6, 1048642, 7, 7, 0, 7, 8, 0, 7, 9, 42, 7, 10, 44, 7, 11, 0, 7, 12, 0, 7, 13, 0, 7, 14, 0, 7, 15, 0, 7, 16, 0, 7, 17, 0, 7, 18, 26, 7, 19, 36, 8, 0, 36, 8, 1, 33, 8, 2, 0, 8, 3, 0, 8, 4, 1048642, 8, 5, 0, 8, 6, 1048642, 8, 7, 0, 8, 8, 0, 8, 9, 28, 8, 10, 35, 8, 11, 0, 8, 12, 0, 8, 13, 0, 8, 14, 0, 8, 15, 0, 8, 16, 0, 8, 17, 0, 8, 18, 26, 8, 19, 36, 9, 0, 36, 9, 1, 33, 9, 2, 0, 9, 3, 0, 9, 4, 1048642, 9, 5, 0, 9, 6, 1048642, 9, 7, 0, 9, 8, 0, 9, 9, 26, 9, 10, 33, 9, 11, 0, 9, 12, 0, 9, 13, 0, 9, 14, 0, 9, 15, 0, 9, 16, 0, 9, 17, 0, 9, 18, 26, 9, 19, 36, 10, 0, 36, 10, 1, 33, 10, 2, 0, 10, 3, 0, 10, 4, 1048642, 10, 5, 0, 10, 6, 1048642, 10, 7, 0, 10, 8, 0, 10, 9, 26, 10, 10, 33, 10, 11, 0, 10, 12, 0, 10, 13, 0, 10, 14, 0, 10, 15, 0, 10, 16, 0, 10, 17, 0, 10, 18, 26, 10, 19, 36, 11, 0, 36, 11, 1, 33, 11, 2, 0, 11, 3, 0, 11, 4, 1048642, 11, 5, 0, 11, 6, 1048642, 11, 7, 0, 11, 8, 0, 11, 9, 26, 11, 10, 33, 11, 11, 0, 11, 12, 0, 11, 13, 0, 11, 14, 0, 11, 15, 0, 11, 16, 0, 11, 17, 0, 11, 18, 26, 11, 19, 36, 12, 0, 36, 12, 1, 33, 12, 2, 0, 12, 3, 0, 12, 4, 1048643, 12, 5, 0, 12, 6, 1048643, 12, 7, 0, 12, 8, 0, 12, 9, 26, 12, 10, 33, 12, 11, 0, 12, 12, 0, 12, 13, 0, 12, 14, 0, 12, 15, 0, 12, 16, 0, 12, 17, 0, 12, 18, 26, 12, 19, 36, 13, 0, 36, 13, 1, 40, 14, 0, 36, 14, 1, 39, 13, 2, 30, 14, 2, 22, 13, 3, 30, 14, 3, 22, 13, 4, 30, 14, 4, 22, 13, 5, 30, 14, 5, 22, 13, 6, 30, 14, 6, 22, 13, 7, 30, 14, 7, 22, 13, 8, 30, 14, 8, 22, 13, 9, 38, 13, 10, 40, 14, 9, 37, 14, 10, 39, 13, 11, 30, 14, 11, 22, 13, 12, 30, 14, 12, 22, 13, 13, 32, 14, 13, 24, 13, 14, 43, 14, 14, 41, 13, 15, 31, 14, 15, 23, 13, 16, 30, 14, 16, 22, 13, 17, 30, 14, 17, 22, 13, 18, 38, 13, 19, 36, 14, 18, 37, 14, 19, 36, 15, 0, 36, 15, 1, 33, 15, 2, 0, 15, 3, 0, 15, 4, 0, 15, 5, 0, 15, 6, 1441859, 15, 7, 0, 15, 8, 0, 15, 9, 26, 15, 10, 33, 15, 11, 0, 15, 12, 0, 15, 13, 0, 15, 14, 0, 15, 15, 0, 15, 16, 0, 15, 17, 0, 15, 18, 26, 15, 19, 36, 16, 0, 36, 16, 1, 33, 16, 2, 0, 16, 3, 0, 16, 4, 0, 16, 5, 0, 16, 6, 1048642, 16, 7, 0, 16, 8, 0, 16, 9, 26, 16, 10, 33, 16, 11, 0, 16, 12, 0, 16, 13, 0, 16, 14, 0, 16, 15, 0, 16, 16, 0, 16, 17, 0, 16, 18, 26, 16, 19, 36, 17, 0, 36, 17, 1, 33, 17, 2, 0, 17, 3, 0, 17, 4, 0, 17, 5, 0, 17, 6, 1048642, 17, 7, 0, 17, 8, 0, 17, 9, 26, 17, 10, 33, 17, 11, 0, 17, 12, 0, 17, 13, 0, 17, 14, 0, 17, 15, 0, 17, 16, 0, 17, 17, 0, 17, 18, 26, 17, 19, 36, 18, 0, 36, 18, 1, 33, 18, 2, 0, 18, 3, 0, 18, 4, 0, 18, 5, 0, 18, 6, 1048642, 18, 7, 0, 18, 8, 0, 18, 9, 26, 18, 10, 33, 18, 11, 0, 18, 12, 0, 18, 13, 0, 18, 14, 0, 18, 15, 0, 18, 16, 0, 18, 17, 0, 18, 18, 26, 18, 19, 36, 19, 0, 36, 19, 1, 33, 19, 2, 0, 19, 3, 0, 19, 4, 0, 19, 5, 0, 19, 6, 1048642, 19, 7, 0, 19, 8, 0, 19, 9, 27, 19, 10, 34, 19, 11, 0, 19, 12, 0, 19, 13, 0, 19, 14, 0, 19, 15, 0, 19, 16, 0, 19, 17, 0, 19, 18, 26, 19, 19, 36, 20, 0, 36, 20, 1, 33, 20, 2, 0, 20, 3, 2, 20, 4, 0, 20, 5, 0, 20, 6, 1048642, 20, 7, 0, 20, 8, 0, 20, 9, 42, 20, 10, 44, 20, 11, 0, 20, 12, 0, 20, 13, 0, 20, 14, 0, 20, 15, 68, 20, 16, 0, 20, 17, 0, 20, 18, 26, 20, 19, 36, 21, 0, 36, 21, 1, 33, 21, 2, 0, 21, 3, 0, 21, 4, 0, 21, 5, 0, 21, 6, 1048642, 21, 7, 0, 21, 8, 0, 21, 9, 28, 21, 10, 35, 21, 11, 0, 21, 12, 0, 21, 13, 0, 21, 14, 0, 21, 15, 0, 21, 16, 0, 21, 17, 0, 21, 18, 26, 21, 19, 36, 22, 0, 36, 22, 1, 33, 22, 2, 0, 22, 3, 0, 22, 4, 0, 22, 5, 0, 22, 6, 1048642, 22, 7, 0, 22, 8, 0, 22, 9, 26, 22, 10, 33, 22, 11, 0, 22, 12, 0, 22, 13, 0, 22, 14, 0, 22, 15, 0, 22, 16, 0, 22, 17, 0, 22, 18, 26, 22, 19, 36, 23, 0, 36, 23, 1, 33, 23, 2, 0, 23, 3, 0, 23, 4, 0, 23, 5, 0, 23, 6, 1048642, 23, 7, 0, 23, 8, 0, 23, 9, 26, 23, 10, 33, 23, 11, 0, 23, 12, 0, 23, 13, 0, 23, 14, 0, 23, 15, 0, 23, 16, 0, 23, 17, 0, 23, 18, 26, 23, 19, 36, 24, 0, 36, 24, 1, 33, 24, 2, 0, 24, 3, 0, 24, 4, 0, 24, 5, 0, 24, 6, 1048642, 24, 7, 0, 24, 8, 0, 24, 9, 26, 24, 10, 33, 24, 11, 0, 24, 12, 0, 24, 13, 0, 24, 14, 0, 24, 15, 0, 24, 16, 0, 24, 17, 0, 24, 18, 26, 24, 19, 36, 25, 0, 36, 25, 1, 33, 25, 2, 0, 25, 3, 0, 25, 4, 0, 25, 5, 0, 25, 6, 1048643, 25, 7, 0, 25, 8, 0, 25, 9, 26, 25, 10, 33, 25, 11, 0, 25, 12, 0, 25, 13, 0, 25, 14, 0, 25, 15, 0, 25, 16, 0, 25, 17, 0, 25, 18, 26, 25, 19, 36, 26, 0, 36, 26, 1, 40, 27, 0, 36, 27, 1, 36, 26, 2, 30, 27, 2, 36, 26, 3, 30, 27, 3, 36, 26, 4, 30, 27, 4, 36, 26, 5, 30, 27, 5, 36, 26, 6, 30, 27, 6, 36, 26, 7, 30, 27, 7, 36, 26, 8, 30, 27, 8, 36, 26, 9, 38, 26, 10, 40, 27, 9, 36, 27, 10, 36, 26, 11, 30, 27, 11, 36, 26, 12, 30, 27, 12, 36, 26, 13, 30, 27, 13, 36, 26, 14, 30, 27, 14, 36, 26, 15, 30, 27, 15, 36, 26, 16, 30, 27, 16, 36, 26, 17, 30, 27, 17, 36, 26, 18, 38, 26, 19, 36, 27, 18, 36, 27, 19, 36, 0, 15, 36, 0, 14, 36, 0, 16, 36, 65534, 15, 36, 65535, 15, 36, 65534, 14, 36, 65535, 14, 36, 65534, 16, 36, 65535, 16, 36, 0, 12, 36)
 }
 
 [node name="Saltos" type="Area3D" parent="PisoAlto" unique_id=650146699]
@@ -2130,7 +2096,7 @@ shape = SubResource("BoxShape3D_qwhhl")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Saltos" unique_id=930258668]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_0qy4e")
+mesh = SubResource("PlaneMesh_vbpod")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoAlto/Saltos" unique_id=1916269260]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -2162,7 +2128,7 @@ shape = SubResource("BoxShape3D_uwrga")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Mirador" unique_id=1120368772]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_uy08u")
+mesh = SubResource("PlaneMesh_2jkfb")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoAlto/Mirador" unique_id=698604205]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -2195,7 +2161,7 @@ shape = SubResource("BoxShape3D_5ecsj")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Rellano" unique_id=589642714]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_rvl8q")
+mesh = SubResource("PlaneMesh_38dd7")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoAlto/Rellano" unique_id=688365727]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, -2, 5.8, 1.5)
@@ -2227,7 +2193,7 @@ shape = SubResource("BoxShape3D_eafar")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Agrietada" unique_id=1878522056]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_fl6ng")
+mesh = SubResource("PlaneMesh_0qy4e")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoAlto/Agrietada" unique_id=1783886440]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -2393,77 +2359,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, 31)
 script = ExtResource("27_iuiyr")
 mode = 3
 flag = &"ch_landing_weight"
-
-[node name="RellanoNicheChest" type="StaticBody3D" parent="PisoAlto" unique_id=1748203391 instance=ExtResource("6_ufxwh")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 30)
-script = ExtResource("8_2g4bn")
-item = ExtResource("ch_bomb")
-amount = 5
-flag = &"ch_landing_niche_chest"
-
-[node name="RellanoBombPot" type="Node3D" parent="PisoAlto" unique_id=1530927746 instance=ExtResource("19_7rkw0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 34)
-script = ExtResource("29_86iea")
-drops = ExtResource("ch_pot_bombs")
-drop_height = 0.1
-
-[node name="RellanoCrackedWall" parent="PisoAlto" unique_id=1246005233 instance=ExtResource("44_crackwall")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.6, 0, 30)
-script = ExtResource("33_3iwqa")
-flag = &"ch_landing_cracked_wall"
-covers = Array[NodePath]([NodePath("../RellanoNicheRoof")])
-
-[node name="Wall" parent="PisoAlto/RellanoCrackedWall" index="0"]
-unique_name_in_owner = true
-
-[node name="Model" parent="PisoAlto/RellanoCrackedWall/Wall" index="0"]
-mesh = ExtResource("71_tfrkv")
-
-[node name="Rubble" parent="PisoAlto/RellanoCrackedWall" index="1"]
-unique_name_in_owner = true
-visible = false
-
-[node name="Rock0" parent="PisoAlto/RellanoCrackedWall/Rubble" index="0"]
-transform = Transform3D(0.9397, 0, -0.342, 0, 1, 0, 0.342, 0, 0.9397, -1.28, 0, 0.72)
-mesh = ExtResource("72_pucgk")
-
-[node name="Rock1" parent="PisoAlto/RellanoCrackedWall/Rubble" index="1"]
-transform = Transform3D(0.7727, 0, 0.2071, 0, 0.8, 0, -0.2071, 0, 0.7727, -0.32, 0, 1.2)
-mesh = ExtResource("72_pucgk")
-
-[node name="Rock2" parent="PisoAlto/RellanoCrackedWall/Rubble" index="2"]
-transform = Transform3D(0.9362, 0, -0.6555, 0, 1.1429, 0, 0.6555, 0, 0.9362, 0.64, 0, 0.6)
-mesh = ExtResource("72_pucgk")
-
-[node name="Rock3" parent="PisoAlto/RellanoCrackedWall/Rubble" index="3"]
-transform = Transform3D(0.7034, 0, -0.124, 0, 0.7143, 0, 0.124, 0, 0.7034, 1.44, 0, 1.32)
-mesh = ExtResource("72_pucgk")
-
-[node name="Rock4" parent="PisoAlto/RellanoCrackedWall/Rubble" index="4"]
-transform = Transform3D(0.7918, 0, 0.4571, 0, 0.9143, 0, -0.4571, 0, 0.7918, 0.08, 0, -0.24)
-mesh = ExtResource("72_pucgk")
-
-[node name="Rock5" parent="PisoAlto/RellanoCrackedWall/Rubble" index="5"]
-transform = Transform3D(0.404, 0, -0.4815, 0, 0.6286, 0, 0.4815, 0, 0.404, -0.88, 0, -0.6)
-mesh = ExtResource("72_pucgk")
-
-[node name="CollisionShape3D" parent="PisoAlto/RellanoCrackedWall" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)
-shape = SubResource("WallShape")
-
-[node name="Hurtbox" parent="PisoAlto/RellanoCrackedWall" index="3"]
-collision_layer = 16
-collision_mask = 0
-monitoring = false
-script = ExtResource("73_uu46w")
-surface = "none"
-
-[node name="CollisionShape3D" parent="PisoAlto/RellanoCrackedWall/Hurtbox" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
-shape = SubResource("HurtShape")
-
-[node name="PersistentFlag" parent="PisoAlto/RellanoCrackedWall" index="4"]
-script = ExtResource("41_pflag")
 
 [node name="RellanoPot" type="AnimatableBody3D" parent="PisoAlto" unique_id=2048567083 instance=ExtResource("43_bigpot")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, 27)
@@ -2805,43 +2700,39 @@ collision_mask = 5
 script = ExtResource("47_lhowt")
 config = ExtResource("46_baen8")
 
-[node name="RellanoNicheRoof" type="MeshInstance3D" parent="PisoAlto" unique_id=534681916]
-cast_shadow = 0
-mesh = SubResource("ArrayMesh_t6ch3")
-
-[node name="CaidaLA34" type="Node3D" parent="PisoAlto" unique_id=2140353979 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA31" type="Node3D" parent="PisoAlto" unique_id=972622987 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 8)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA35" type="Node3D" parent="PisoAlto" unique_id=2105304781 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA32" type="Node3D" parent="PisoAlto" unique_id=781026791 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 8)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA36" type="Node3D" parent="PisoAlto" unique_id=2118385031 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA33" type="Node3D" parent="PisoAlto" unique_id=833121444 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 8)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA37" type="Node3D" parent="PisoAlto" unique_id=218323324 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA34" type="Node3D" parent="PisoAlto" unique_id=1607264594 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 8)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA38" type="Node3D" parent="PisoAlto" unique_id=2019833346 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA35" type="Node3D" parent="PisoAlto" unique_id=962152582 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 12)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA39" type="Node3D" parent="PisoAlto" unique_id=1868457634 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA36" type="Node3D" parent="PisoAlto" unique_id=1801324168 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 12)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA40" type="Node3D" parent="PisoAlto" unique_id=917334643 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA37" type="Node3D" parent="PisoAlto" unique_id=793052879 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 30)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA41" type="Node3D" parent="PisoAlto" unique_id=484575215 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA38" type="Node3D" parent="PisoAlto" unique_id=1489719178 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 12)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA42" type="Node3D" parent="PisoAlto" unique_id=2124436410 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA39" type="Node3D" parent="PisoAlto" unique_id=124350008 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 12)
 script = ExtResource("61_308dp")
 
@@ -2880,7 +2771,7 @@ south_wall_reach = 1.7
 script = ExtResource("55_bkpqy")
 near_margin = 3.5
 
-[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1283331836 instance=ExtResource("80_308dp")]
+[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=770092828 instance=ExtResource("80_308dp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1439023435 instance=ExtResource("39_iq7xx")]
@@ -2921,7 +2812,6 @@ script = ExtResource("63_n1d8o")
 [editable path="PisoAlto/SaltosDoor"]
 [editable path="PisoAlto/AgrietadaDoor"]
 [editable path="PisoAlto/MiradorDoor"]
-[editable path="PisoAlto/RellanoCrackedWall"]
 [editable path="PisoAlto/RellanoStairs"]
 [editable path="PisoAlto/Torch_Saltos_0"]
 [editable path="PisoAlto/Torch_Saltos_1"]
