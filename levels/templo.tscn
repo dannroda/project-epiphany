@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://8jgi0alvfkq4"]
+[gd_scene format=4 uid="uid://8jgi0alvfkq4"]
 
 [ext_resource type="Script" uid="uid://c5hiaqs0y4egi" path="res://src/world/dungeon.gd" id="1_gppge"]
 [ext_resource type="Script" uid="uid://c3gjwha8na3yi" path="res://src/world/look/sombra_la.gd" id="2_qyap5"]
@@ -85,8 +85,11 @@
 [ext_resource type="Script" uid="uid://u2jhwu4cb42s" path="res://src/world/torch_flicker.gd" id="65_srmr6"]
 [ext_resource type="ArrayMesh" uid="uid://r5oje0isvpt7" path="res://assets/epiphany/meshes/paredes_la/muro_agrietado_templo_la_2n.res" id="65_ycq0f"]
 [ext_resource type="Script" uid="uid://cgr3l68kk102e" path="res://src/feel/stencil_light/stencil_light.gd" id="66_pcqlr"]
+[ext_resource type="Shader" uid="uid://bkyqia8y2pf" path="res://data/kits/shaders/cutaway.gdshader" id="73_ypy2f"]
+[ext_resource type="Texture2D" uid="uid://duanovtf2px6i" path="res://assets/epiphany/palette.png" id="74_s4egn"]
 [ext_resource type="Script" uid="uid://c238aeb6gn6ka" path="res://src/world/look/enfoque_la.gd" id="79_ank0x"]
 [ext_resource type="PackedScene" path="res://src/world/look/polvo_chullpa.tscn" id="80_eppxl"]
+[ext_resource type="Script" uid="uid://cykrw2tv878bn" path="res://src/world/tablet.gd" id="82_m888e"]
 [ext_resource type="Script" uid="uid://dlf8bqdycw2kg" path="res://src/world/look/brillo_la.gd" id="89_l2qle"]
 [ext_resource type="Script" uid="uid://bccprbredple8" path="res://src/world/arena_fight.gd" id="90_fight"]
 [ext_resource type="Script" uid="uid://dcy0hg6ygxqg1" path="res://src/components/persistent_flag.gd" id="91_pflag"]
@@ -756,6 +759,39 @@ shader_parameter/intensity = null
 material = SubResource("ShaderMaterial_3dowb")
 size = Vector2(0.45, 0.8)
 center_offset = Vector3(0, 0.32, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5u8mu"]
+render_priority = 0
+shader = ExtResource("73_ypy2f")
+shader_parameter/hole_radius = null
+shader_parameter/hole_floor = null
+shader_parameter/albedo_color = Color(0.72, 0.72, 0.72, 1)
+shader_parameter/albedo_texture = ExtResource("74_s4egn")
+shader_parameter/uv_scale = null
+shader_parameter/uv_offset = null
+shader_parameter/use_uv = true
+shader_parameter/cut_area = null
+shader_parameter/cut_height = null
+shader_parameter/cut_lip = null
+shader_parameter/back_shade = null
+shader_parameter/cap_shade = null
+shader_parameter/roughness = 0.5
+shader_parameter/specular = 0.4
+shader_parameter/grain_amount = 0.0
+shader_parameter/grain_rect = Vector4(0.42, 0.455, 0, 0.25)
+shader_parameter/grain_spacing = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_mhghd"]
+_surfaces = [{
+"aabb": AABB(32.45, 3.02, 16.45, 3.0999985, 1e-05, 4.049999),
+"attribute_data": PackedByteArray("AABQPyA+Bj0AAFA/ID4GPQAAUD8gPgY9AABQPyA+Bj0AAFA/ID4GPQAAUD8gPgY9AABQPyA+Bj0AAFA/ID4GPQAAUD8gPgY9AABQPyA+Bj0AAFA/ID4GPQAAUD8gPgY9"),
+"format": 34359738391,
+"material": SubResource("ShaderMaterial_5u8mu"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 12,
+"vertex_data": PackedByteArray("zcwBQq5HQUCamYNBMzMOQq5HQUCamYNBMzMOQq5HQUCZmaNBzcwBQq5HQUCamYNBMzMOQq5HQUCZmaNBzcwBQq5HQUCZmaNBzcwDQq5HQUAAAJhBMzMMQq5HQUAAAJhBMzMMQq5HQUAAAKRBzcwDQq5HQUAAAJhBMzMMQq5HQUAAAKRBzcwDQq5HQUAAAKRB/3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+/")
+}]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xctfo"]
 size = Vector3(2, 2.4, 1.2)
@@ -1911,6 +1947,7 @@ attacks = Array[ExtResource("45_vrfyu")]([ExtResource("46_6btj5"), ExtResource("
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 20)
 script = ExtResource("23_eh8au")
 flag = &"te_combined_cracked_wall"
+covers = Array[NodePath]([NodePath("../CombinedNicheRoof")])
 
 [node name="Wall" parent="Planta/CombinedCrackedWall" index="0"]
 unique_name_in_owner = true
@@ -2774,6 +2811,10 @@ script = ExtResource("66_pcqlr")
 color = Color(1.35, 1.15, 0.9, 1)
 radius = 3.0
 
+[node name="CombinedNicheRoof" type="MeshInstance3D" parent="Planta" unique_id=231847136]
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_mhghd")
+
 [node name="Boss" type="Node3D" parent="." unique_id=285360790 instance=ExtResource("43_l2qle")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 4.5)
 script = ExtResource("44_tiw1f")
@@ -2787,26 +2828,30 @@ target_spawn = &"templo"
 required_flag = &"te_boss_defeated"
 travels = false
 
-[node name="VestibuleTablet" parent="." instance=ExtResource("tablet")]
+[node name="VestibuleTablet" type="StaticBody3D" parent="." unique_id=1746223641 instance=ExtResource("tablet")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 47)
+script = ExtResource("82_m888e")
 dialogue = ExtResource("temple_dialogue")
 cue = "temple_entrance"
 flag = &"te_tablet_vestibule"
 
-[node name="HubTablet" parent="." instance=ExtResource("tablet")]
+[node name="HubTablet" type="StaticBody3D" parent="." unique_id=1738455643 instance=ExtResource("tablet")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, 32)
+script = ExtResource("82_m888e")
 dialogue = ExtResource("temple_dialogue")
 cue = "hub_promise"
 flag = &"te_tablet_hub"
 
-[node name="EyesTablet" parent="." instance=ExtResource("tablet")]
+[node name="EyesTablet" type="StaticBody3D" parent="." unique_id=817034019 instance=ExtResource("tablet")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 74, 0, 53.5)
+script = ExtResource("82_m888e")
 dialogue = ExtResource("temple_dialogue")
 cue = "eyes_servants"
 flag = &"te_tablet_eyes"
 
-[node name="AntechamberTablet" parent="." instance=ExtResource("tablet")]
+[node name="AntechamberTablet" type="StaticBody3D" parent="." unique_id=162274860 instance=ExtResource("tablet")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 20)
+script = ExtResource("82_m888e")
 dialogue = ExtResource("temple_dialogue")
 cue = "antechamber"
 flag = &"te_tablet_antechamber"
@@ -2814,8 +2859,6 @@ flag = &"te_tablet_antechamber"
 [node name="BossArena" type="Node" parent="." unique_id=1442482810 node_paths=PackedStringArray("room", "boss", "door", "exit_portal")]
 script = ExtResource("53_2dht2")
 room = NodePath("../Planta/Jefe")
-defeated_flag = &"te_boss_defeated"
-container_flag = &"te_heart_container"
 boss = NodePath("../Boss")
 door = NodePath("../Planta/BossDoor")
 exit_portal = NodePath("../BossExitPortal")
@@ -2855,7 +2898,7 @@ south_wall_reach = 1.7
 script = ExtResource("79_ank0x")
 near_margin = 3.5
 
-[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=2103675685 instance=ExtResource("80_eppxl")]
+[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1432475211 instance=ExtResource("80_eppxl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=613354597 instance=ExtResource("59_07stk")]

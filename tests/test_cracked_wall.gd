@@ -74,3 +74,39 @@ func test_covers_hide_what_it_hides_until_it_breaks() -> void:
 	assert_eq(roof.visible, false, "al romperse se va")
 	roof.free()
 	state.reset()
+
+
+## 11.164: el nicho de atrás de cada pared agrietada lleva techo (lo pone la_walls) y la pared lo tiene en `covers`.
+func test_dungeon_niches_are_roofed() -> void:
+	for spec: Array in [["chullpa", "PisoAlto/RellanoCrackedWall"], ["quenoa", "PisoRaices/OjosCrackedWall"], ["templo", "Planta/CombinedCrackedWall"]]:
+		var level := (load("res://levels/%s.tscn" % spec[0]) as PackedScene).instantiate()
+		var wall := level.get_node(NodePath(spec[1])) as CrackedWall
+		assert_eq(wall.covers.size(), 1, "%s tiene techo" % wall.name)
+		var roof := wall.get_node_or_null(wall.covers[0]) as MeshInstance3D
+		assert_true(roof != null, "%s: el techo existe" % wall.name)
+		if roof:
+			var box := roof.transform * roof.mesh.get_aabb()
+			var behind := wall.position + wall.basis * Vector3.FORWARD * 2.0
+			var deeper := wall.position + wall.basis * Vector3.FORWARD * 4.0
+			var covered := func(at: Vector3) -> bool: return Rect2(box.position.x, box.position.z, box.size.x, box.size.z).has_point(Vector2(at.x, at.z))
+			assert_true(covered.call(behind) or covered.call(deeper), "%s: tapa el nicho de atrás" % wall.name)
+			assert_true(box.position.y >= 3.0, "%s: a la altura de las crestas" % wall.name)
+			if spec[0] == "chullpa":
+				var chests := wall.get_parent().get_children().filter(func(n: Node) -> bool: return n is Chest and covered.call(n.position))
+				assert_eq(chests.size(), 1, "el cofre del Rellano queda bajo el techo")
+		level.free()
+
+
+func test_the_landing_niche_roof_goes_when_the_wall_breaks() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	state.reset()
+	tree.change_scene_to_file("res://levels/chullpa.tscn")
+	await tree.scene_changed
+	await tree.physics_frame
+	var wall := tree.current_scene.get_node(^"PisoAlto/RellanoCrackedWall") as CrackedWall
+	var roof := tree.current_scene.get_node(^"PisoAlto/RellanoNicheRoof") as Node3D
+	assert_true(roof.visible, "con la pared entera el nicho está tapado")
+	wall.smash()
+	assert_true(not roof.visible, "rota, se destapa")
+	state.reset()

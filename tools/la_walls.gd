@@ -82,6 +82,8 @@ const FLAME_SIZE := Vector2(0.45, 0.8)
 const CRACKED_WALL := "res://src/world/cracked_wall"
 ## Nombre de la media pared agrietada en las hojas de puerta de cada estilo (LOOKS doors).
 const CRACKED_LEAF := "muro_agrietado"
+## Más que esto detrás de una pared agrietada ya no es un nicho.
+const NICHE_MAX_CELLS := 6
 ## Largo del pasillo de una puerta entre dos salas (las dos paredes de 2 m).
 const DOOR_PASSAGE := 4.0
 ## Cámara con perspectiva como LA: la sala se ve en trapecio (abajo más ancha) y asoman las caras de los costados.
@@ -678,6 +680,143 @@ func _cracked_wall(level: Node, wall: Node) -> void:
 	model.mesh = load(path)
 	model.transform = Transform3D(turn, Vector3.ZERO)
 	level.set_editable_instance(wall, true)
+	_niche_roof(level, wall as Node3D)
+
+
+## Techo del color de las crestas sobre el nicho que esconde (piso encerrado detrás, en la misma sala): la pared lo
+## lleva en `covers` y se va al romperla. Si atrás hay otra sala o un paso, no hace falta.
+func _niche_roof(level: Node, wall: Node3D) -> void:
+	var parent := wall.get_parent() as Node3D
+	var roof_name := String(wall.name).trim_suffix("CrackedWall") + "NicheRoof"
+	var roof := parent.get_node_or_null(NodePath(roof_name)) as MeshInstance3D
+	var path := NodePath("../" + roof_name)
+	var covers: Array[NodePath] = []
+	for cover: NodePath in wall.get(&"covers"):
+		if cover != path:
+			covers.append(cover)
+	wall.set(&"covers", covers)
+	var grids := parent.find_children("*", "GridMap", false, false)
+	if grids.is_empty():
+		return
+	var grid := grids[0] as GridMap
+	var cells := _niche_cells(level, wall, grid)
+	if cells.is_empty():
+		if roof:
+			roof.mesh = null
+			roof.visible = false
+		return
+	var crest := _crest(grid.mesh_library)
+	var tool := SurfaceTool.new()
+	tool.begin(Mesh.PRIMITIVE_TRIANGLES)
+	tool.set_normal(Vector3.UP)
+	tool.set_uv(crest[1])
+	var height := grid.transform.origin.y + WALL_HEIGHT + 0.02
+	var half := CELL / 2.0 + 0.05
+	var quads: Array[Rect2] = []
+	for cell: Vector3i in cells:
+		var center := grid.transform * grid.map_to_local(cell)
+		var lo := center - Vector3(half, 0, half)
+		var hi := center + Vector3(half, 0, half)
+		for side: Vector3i in SIDES.values():
+			if cell + side in cells or grid.get_cell_item(cell + side) == GridMap.INVALID_CELL_ITEM:
+				continue
+			var run: float = WALL_RUN[_facing(-Vector3(side))]
+			lo = lo.min(lo + Vector3(side) * run)
+			hi = hi.max(hi + Vector3(side) * run)
+		quads.append(Rect2(lo.x, lo.z, hi.x - lo.x, hi.z - lo.z))
+	var out := (wall.transform.basis * Vector3.BACK).normalized().round()
+	var niche_edge := grid.transform * grid.map_to_local(cells[0]) + out * CELL / 2.0
+	var at := grid.transform * grid.map_to_local(grid.local_to_map(grid.transform.affine_inverse() * wall.position))
+	var face_top: Vector3 = at + out * (CELL / 2.0 - WALL_RUN[_facing(out)])
+	var side := Vector3(absf(out.z), 0, absf(out.x)) * half
+	var lo := niche_edge.min(face_top) - side
+	var hi := niche_edge.max(face_top) + side
+	quads.append(Rect2(lo.x, lo.z, hi.x - lo.x, hi.z - lo.z))
+	for quad in quads:
+		var a := Vector3(quad.position.x, height, quad.position.y)
+		var b := Vector3(quad.end.x, height, quad.position.y)
+		var c := Vector3(quad.end.x, height, quad.end.y)
+		var d := Vector3(quad.position.x, height, quad.end.y)
+		for v: Vector3 in [a, b, c, a, c, d]:
+			tool.add_vertex(v)
+	tool.set_material(crest[0])
+	if roof == null:
+		roof = MeshInstance3D.new()
+		roof.name = roof_name
+		parent.add_child(roof)
+		roof.owner = level
+	roof.mesh = tool.commit()
+	roof.visible = true
+	roof.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	covers.append(path)
+	wall.set(&"covers", covers)
+
+
+## El piso encerrado detrás de la pared, si está en la misma sala que el frente (un bolsillo de la sala).
+func _niche_cells(level: Node, wall: Node3D, grid: GridMap) -> Array[Vector3i]:
+	var none: Array[Vector3i] = []
+	var lib := grid.mesh_library
+	var is_floor := func(cell: Vector3i) -> bool:
+		var item := grid.get_cell_item(cell)
+		if item == GridMap.INVALID_CELL_ITEM:
+			return false
+		var piece := lib.get_item_name(item)
+		return not (piece.begins_with("Pared") or piece.begins_with("Muro") or piece.begins_with("Paso"))
+	var at := grid.local_to_map(grid.transform.affine_inverse() * wall.position)
+	var back := Vector3i((wall.transform.basis * Vector3.FORWARD).normalized().round())
+	var start := at + back
+	if not is_floor.call(start):
+		start += back
+	if not is_floor.call(start):
+		return none
+	var to_level := _level_transform(level, grid.get_parent() as Node3D)
+	var rooms := _rooms_at(level, to_level * (grid.transform * grid.map_to_local(start)))
+	var front := _rooms_at(level, to_level * (wall.position + wall.transform.basis * Vector3.BACK * CELL))
+	if rooms.is_empty() or rooms != front:
+		return none
+	var cells: Array[Vector3i] = [start]
+	var index := 0
+	while index < cells.size():
+		for side: Vector3i in SIDES.values():
+			var next: Vector3i = cells[index] + side
+			if next != at and not next in cells and is_floor.call(next):
+				cells.append(next)
+		index += 1
+		if cells.size() > NICHE_MAX_CELLS:
+			return none
+	return cells
+
+
+func _rooms_at(level: Node, at: Vector3) -> Array[Node]:
+	var out: Array[Node] = []
+	for room: Node in level.find_children("*", "Area3D", true, false):
+		var box := _room_box(level, room)
+		if box.size != Vector3.ZERO and absf(box.position.y - at.y) < 1.5 and Rect2(box.position.x, box.position.z, box.size.x, box.size.z).has_point(Vector2(at.x, at.z)):
+			out.append(room)
+	return out
+
+
+func _level_transform(level: Node, node: Node3D) -> Transform3D:
+	var out := Transform3D.IDENTITY
+	while node != level:
+		out = node.transform * out
+		node = node.get_parent() as Node3D
+	return out
+
+
+## Material de las paredes y la UV de su cresta (la cara de arriba).
+func _crest(kit: MeshLibrary) -> Array:
+	var mesh := kit.get_item_mesh(kit.find_item_by_name(KINDS["pared"][0] + "n")) as ArrayMesh
+	var arrays := mesh.surface_get_arrays(0)
+	var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+	var normals: PackedVector3Array = arrays[Mesh.ARRAY_NORMAL]
+	var uvs: PackedVector2Array = arrays[Mesh.ARRAY_TEX_UV]
+	var uv := Vector2.ZERO
+	for i in vertices.size():
+		if normals[i].y > 0.9 and vertices[i].y > WALL_HEIGHT - 0.05:
+			uv = uvs[i]
+			break
+	return [mesh.surface_get_material(0), uv]
 
 
 ## Está en un hueco de una pared baja (los setos de la Queñoa): a los costados hay Muro LA.
