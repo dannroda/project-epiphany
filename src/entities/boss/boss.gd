@@ -270,8 +270,10 @@ func perform_chosen() -> void:
 		attacker.perform(chosen_attack, target, arena)
 	elif attacker == eye and chosen_attack.id == BossAttack.MARK:
 		_mark_floor()
-	elif attacker == eye:
+	elif attacker == eye and chosen_attack.id == BossAttack.ORB:
 		_fire_orb()
+	else:
+		push_error("Boss: %s no sabe hacer %s" % [attacker.name, chosen_attack.id])
 
 
 ## El BT espera a que la mano termine de golpear (no a que se reponga): la otra puede atacar mientras.

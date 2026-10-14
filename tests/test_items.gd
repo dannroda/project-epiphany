@@ -29,12 +29,26 @@ func test_get_item() -> void:
 	assert_eq(Items.get_item(&"no_existe"), null)
 
 
-func test_sword_combo() -> void:
+func test_sword_attack() -> void:
 	var melee := Items.get_item(&"sword_basic").behavior as MeleeBehavior
 	assert_true(melee != null)
 	if melee:
-		assert_eq(melee.get_attack(0).animation, &"CombatMelee/Melee_1H_Attack_Slice_Diagonal")
-		assert_eq(melee.get_attack(3), melee.get_attack(0))
+		assert_eq(melee.attack.animation, &"CombatMelee/Melee_1H_Attack_Slice_Diagonal")
+
+
+## 11.85: la animación que suena es la del AttackData (su tree_state), no una elegida aparte: si no, la hitbox se
+## desincroniza.
+func test_player_attacks_play_their_own_animation() -> void:
+	const NODE_OF := {&"Slash": "SwordSlice", &"ShieldThrust": "ShieldThrust"}
+	var player: Node = load("res://player/player.tscn").instantiate()
+	var tree_root := (player.get_node(^"ModelController/AnimationTree") as AnimationTree).tree_root as AnimationNodeBlendTree
+	var types := tree_root.get_node(&"AttackType") as AnimationNodeTransition
+	for attack: AttackData in [(Items.get_item(&"sword_basic").behavior as MeleeBehavior).attack, PlayerCharacter.SHIELD_THRUST]:
+		var inputs := range(types.input_count).map(func(i: int) -> StringName: return types.get_input_name(i))
+		assert_true(attack.tree_state in inputs, "%s: AttackType tiene la entrada %s" % [attack.resource_path, attack.tree_state])
+		var node := tree_root.get_node(NODE_OF[attack.tree_state]) as AnimationNodeAnimation
+		assert_eq(node.animation, attack.animation, "%s: la entrada %s reproduce su animación" % [attack.resource_path, attack.tree_state])
+	player.free()
 
 
 func test_inventory_respects_max_stack() -> void:

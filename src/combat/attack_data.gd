@@ -2,6 +2,8 @@ class_name AttackData
 extends Resource
 
 @export var animation: StringName
+## La entrada de AttackType en el AnimationTree del player que reproduce `animation` (test_items revisa que coincidan).
+@export var tree_state: StringName = &"Slash"
 @export_range(0.0, 1.0) var active_from: float = 0.3
 @export_range(0.0, 1.0) var active_to: float = 0.55
 ## Desde qué punto (0..1) se puede cortar con otro golpe, rodar, cubrirse o moverse.

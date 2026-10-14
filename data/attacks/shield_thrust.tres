@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_2351l")
 animation = &"CombatMelee/Melee_Block_Attack"
+tree_state = &"ShieldThrust"
 active_from = 0.25
 active_to = 0.5
 damage_multiplier = 0.5

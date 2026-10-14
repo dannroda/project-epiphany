@@ -740,3 +740,25 @@ func test_attack_ids_match_the_code() -> void:
 		if file.begins_with("attack_") and file.ends_with(".tres"):
 			var attack: BossAttack = load("res://data/boss/" + file)
 			assert_true(attack.id in BossAttack.IDS, "%s: id %s es uno de BossAttack.IDS" % [file, attack.id])
+
+
+## 11.85: un id que el ojo no conoce no dispara un orbe por defecto.
+func test_unknown_eye_attack_does_nothing() -> void:
+	var boss := _spawn()
+	var tree := Engine.get_main_loop() as SceneTree
+	await _frames(2)
+	var target := Node3D.new()
+	tree.root.add_child(target)
+	target.global_position = boss.global_position + Vector3(0, 0, 6)
+	var unknown := BossAttack.new()
+	unknown.id = &"nope"
+	unknown.user = BossAttack.User.EYE
+	boss.chosen_attack = unknown
+	boss.attacker = boss.eye
+	boss.target = target
+	var before := Spawns.root(boss).find_children("*", "Projectile", false, false).size()
+	boss.perform_chosen()
+	await _frames(2)
+	assert_eq(Spawns.root(boss).find_children("*", "Projectile", false, false).size(), before, "sin orbe")
+	target.free()
+	boss.free()
