@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (85/144)
+## M11 — Pulido: contenido y feel  (85/145)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4844,6 +4844,12 @@ Playtest 2026-10-13: en Ravine el minimapa (foto cenital del overworld) muestra 
 
 **Capturas:** `compass/images/m11-148-20261013-232758.png`, `compass/images/m11-148-20261013-232828.png`
 
+### 11.149 Totora 1P: al entrar a la sala este se cae al agua en bucle (softlock) · Pendiente
+
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `totora`
+
+Playtest 2026-10-13: en la Totora (D3), piso 1P Ground Floor, apenas se entra a la sala del este (la del estanque central con la isla, la reja con ojo y llave al norte y las matas de totora) por la puerta oeste, el player cae al agua y vuelve a caer infinitamente: softlock. Probable: el punto de reaparición de la caída al agua (la entrada de la sala) queda sobre el agua o la transición de sala empuja al player hacia el estanque, que empieza a ~1 celda de la puerta. Revisar el Pit/respawn de la sala y que la entrada tenga piso firme; agregar un test que entre por cada puerta de la Totora y no caiga.
+
 ## M12 — Assets propios (Blender)  (15/23)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
@@ -5298,6 +5304,8 @@ Diseño (-43) armó levels/totora.tscn en el kit gris (a8d40e91, GDD §8d): dos 
 - [ ] Santuario de totora en la isla (TotoraHut)
   Modelo hecho (41357968): src/world/totora_entrada.tscn, choza de los uros sobre balsa, techo con borla roja, columnas con cabeza de puma, aguayo y totoras; mismo colisionador que TotoraHut. Falta que overworld (-eb) la ponga en lugar del CSGBox3D, girada con la puerta al oeste.
 - [ ] Recorrerla (Daniel)
+
+**Capturas:** `compass/images/m12-19-20261013-232857.png`, `compass/images/m12-19-20261013-233009.png`
 
 ### 12.20 Arte de la pantalla de título: logo y fondo del overworld · Hecho
 
@@ -5943,7 +5951,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 ## Playtest
 
-### Revisión: lo listo para probar  (17/27 probadas)
+### Revisión: lo listo para probar  (18/27 probadas)
 
 1. [ ] 11.130 Bocas de cueva talladas en el risco · En curso · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. 
    No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. 
@@ -5954,7 +5962,8 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 4. [ ] 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · En curso
 5. [ ] 11.118 Sandalias: correr manteniendo y salto largo con la pluma · En curso
 6. [ ] 11.24 Más secretos en el overworld · Revisión
-7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso
+7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — la puerta sobresale y se ven la pared de la sala siguente
+   si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell"
 8. [ ] 11.30 Ítem de D3: el gancho · En curso
 9. [ ] 11.28 Atajos que se abren al volver · Revisión
 10. [x] 11.46 Jefe: game juice · Hecho · anda

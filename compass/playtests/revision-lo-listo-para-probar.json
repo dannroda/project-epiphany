@@ -25,6 +25,8 @@
       "task": "m11-24"
     },
     {
+      "note": "la puerta sobresale y se ven la pared de la sala siguente\nsi me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de \"You Fell\"",
+      "result": "fail",
       "task": "m12-19"
     },
     {
@@ -106,5 +108,5 @@
   ],
   "order": 1,
   "title": "Revisión: lo listo para probar",
-  "updated_at": "2026-10-14T02:10:18.036Z"
+  "updated_at": "2026-10-14T02:30:59.518Z"
 }
