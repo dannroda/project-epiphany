@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (107/172)
+## M11 — Pulido: contenido y feel  (107/176)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4767,10 +4767,11 @@ Playtest 2026-10-13, en la Chullpa (las tres cosas salen en la misma captura):
 3) Lo que esconde la pared agrietada (el nicho con el cofre/barril) se ve antes de romperla. Debería estar oculto y descubrirse al romper la pared.
 
 **Notas:** 2) y 3) hechos (provisorio hasta 12.24): RellanoCrackedWall queda al ras de la pared LA y de su altura; una tapa del color de las crestas (NicheCap, hija de Wall) cubre el nicho y desaparece al romper el muro. 1) pasó a 11.156 (arte).
+Daniel (2026-10-14): la parte de la pared agrietada se descarta: la D1 queda sin paredes agrietadas (11.177). Los techos visibles pasan a 12.32 (topes del color del muro).
 
 **Capturas:** `compass/images/m11-137-20261013-224905.png`, `compass/images/m11-137-20261014-143652.png`, `compass/images/m11-137-20261014-143745.png`
 
-**Relacionadas:** 11.151 Totora 2P: se ve la sala del piso de abajo; 11.164 Lo que esconde una pared agrietada no se ve desde arriba; 11.175 Cámara de sala: centrar en lo que se ve de la sala, no en su rectángulo; 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la)
+**Relacionadas:** 11.151 Totora 2P: se ve la sala del piso de abajo; 11.164 Lo que esconde una pared agrietada no se ve desde arriba; 11.175 Cámara de sala: centrar en lo que se ve de la sala, no en su rectángulo; 11.177 Chullpa sin pared agrietada (fuera el nicho del Rellano); 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la)
 
 ### 11.138 Chullpa sub-boss: asset para el cuadrado donde después se salta · Revisión
 
@@ -5006,6 +5007,8 @@ Separada de 11.137 (punto 1). Playtest 2026-10-13: en la Chullpa se ven las tapa
 
 **Notas:** Hecho (-5d, 4aa49f97): borde_oscuro pinta de negro toda superficie a altura de cresta fuera del interior de la sala y los topes planos dentro; la_walls pasa un uniform interior (piso de la sala sin las filas que son casi todo pared). Chullpa refrescada.
 
+**Relacionadas:** 12.32 Look LA: topes de pared del color del muro y viñeta borrosa en vez del velo negro; desenfoque solo cerca de la cámara
+
 ### 11.157 Mazmorras: los tiles del GridMap no se alinean con la grilla del editor · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`, `herramientas`
@@ -5227,7 +5230,33 @@ Daniel 2026-10-14: en la Chullpa se salteaba el 90% (la vasija de la placa está
 
 **Notas:** Hecho (2026-10-14). Camino nuevo: Entrada → caer por 1SE → Cripta (oleadas, mapa) → Cripta oscura (pinchos, llave chica) → escalera de mano → bloques → Rellano → puerta con llave → Momia → pluma → volver al Rellano → vasija en la placa → 2NO, huecos con la pluma → llave del jefe → 1NE → Mausoleo → jefe. AgrietadaDoor pasa a puerta con llave (ch_mummy_locked_door, ex ch_leaps_locked_door) y SaltosLocked pasa a SaltosDoor, de interruptor (RellanoWeight). La brújula está de este lado de los huecos de 2NO y la llave del jefe del otro. El Mausoleo queda sin huecos, sin MausoleoPit y sin cofre. El molde de test_dungeon_reach suma dos reglas, que hoy cumplen las cinco mazmorras: cada llave chica hace falta para llegar al jefe, y la llave del jefe pide el ítem. Escena armada con un script (debug/tmp/design/chullpa_1176.gd) y la_walls refresh sobre main con 11.156.
 
-## M12 — Assets propios (Blender)  (17/31)
+### 11.177 Chullpa sin pared agrietada (fuera el nicho del Rellano) · En curso
+
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `chullpa`, `diseno`
+
+Daniel (2026-10-14): en la D1 no hay paredes agrietadas. Sacar RellanoCrackedWall, su nicho y el cofre de 5 bombas (flag ch_landing_niche_chest). Reemplaza la parte de la pared agrietada de 11.137.
+
+**Relacionadas:** 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista
+
+### 11.178 Totora: salas de 14 de alto y al menos 22 de ancho · Pendiente
+
+**Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `mazmorra`
+
+Daniel (2026-10-14): todas las salas de las mazmorras miden 14 de alto y al menos 22 de ancho, como la Chullpa y la Queñoa. Totora tiene salas de 14 × 10 / 14 × 12 y hay que rediseñarla.
+
+### 11.179 Cumbre: salas de 14 de alto y al menos 22 de ancho · Pendiente
+
+**Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `mazmorra`
+
+Daniel (2026-10-14): todas las salas de las mazmorras miden 14 de alto y al menos 22 de ancho, como la Chullpa y la Queñoa. Cumbre tiene salas de 14 × 10 / 14 × 12 y hay que rediseñarla.
+
+### 11.180 Templo: salas de 14 de alto y al menos 22 de ancho · Pendiente
+
+**Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `mazmorra`
+
+Daniel (2026-10-14): todas las salas de las mazmorras miden 14 de alto y al menos 22 de ancho, como la Chullpa y la Queñoa. Templo tiene salas de 14 × 10 / 14 × 12 y hay que rediseñarla.
+
+## M12 — Assets propios (Blender)  (17/32)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -5811,6 +5840,14 @@ Daniel (2026-10-14): en la Chullpa hay que acomodar el jefe final de la momia pa
 **Prueba:** test_chullpa; en juego, el jefe de la Chullpa es Mallqui, no la momia del sub-jefe agrandada
 
 **Notas:** Daniel (2026-10-14): prioridad, va a grabar la Chullpa. Hecho (-5d, 17350524): el jefe ya tenía modelo propio, Mallqui (mantos rojo y azul, máscara de oro, corona de sol), pero un refresh de la_walls perdió el override de la malla. Ahora el jefe instancia src/entities/mummy_guard/mallqui.tscn (heredada de mummy_guard con mallqui.res), así sobrevive a los refresh. Juego y mummy_guardian.tres sin cambios.
+
+### 12.32 Look LA: topes de pared del color del muro y viñeta borrosa en vez del velo negro; desenfoque solo cerca de la cámara · Pendiente
+
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `arte`, `render`, `mazmorra`
+
+Daniel (2026-10-14): en todas las mazmorras LA los topes de las paredes se ven del color del tile de la pared, no negros: se va el velo negro (borde_oscuro, 11.156). Lo de más allá lo tapa una viñeta borrosa en el borde de la pantalla. Menos desenfoque: solo lo muy alto o muy cerca de la cámara (DOF de enfoque_la). Toca la_walls, borde_oscuro y enfoque_la.
+
+**Relacionadas:** 11.156 Chullpa: se ven los techos (crestas) de las paredes LA horneadas
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 

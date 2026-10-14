@@ -1,0 +1,28 @@
+{
+  "assignee": "project-epiphany-43",
+  "checklist": [],
+  "code": "12.32",
+  "created_at": "2026-10-14T19:05:07.994Z",
+  "description": "Daniel (2026-10-14): en todas las mazmorras LA los topes de las paredes se ven del color del tile de la pared, no negros: se va el velo negro (borde_oscuro, 11.156). Lo de más allá lo tapa una viñeta borrosa en el borde de la pantalla. Menos desenfoque: solo lo muy alto o muy cerca de la cámara (DOF de enfoque_la). Toca la_walls, borde_oscuro y enfoque_la.",
+  "links": [
+    {
+      "task": "m11-156",
+      "type": "related"
+    }
+  ],
+  "milestone": "m12",
+  "notes": "",
+  "order": 32,
+  "priority": "high",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "arte",
+    "render",
+    "mazmorra"
+  ],
+  "test": "",
+  "title": "Look LA: topes de pared del color del muro y viñeta borrosa en vez del velo negro; desenfoque solo cerca de la cámara",
+  "updated_at": "2026-10-14T19:05:10.017Z"
+}

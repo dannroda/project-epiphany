@@ -1,0 +1,27 @@
+{
+  "assignee": "project-epiphany-43",
+  "checklist": [],
+  "code": "11.177",
+  "created_at": "2026-10-14T19:05:07.698Z",
+  "description": "Daniel (2026-10-14): en la D1 no hay paredes agrietadas. Sacar RellanoCrackedWall, su nicho y el cofre de 5 bombas (flag ch_landing_niche_chest). Reemplaza la parte de la pared agrietada de 11.137.",
+  "links": [
+    {
+      "task": "m11-137",
+      "type": "related"
+    }
+  ],
+  "milestone": "m11",
+  "notes": "",
+  "order": 174,
+  "priority": "high",
+  "refs": [],
+  "size": "s",
+  "status": "doing",
+  "tags": [
+    "chullpa",
+    "diseno"
+  ],
+  "test": "",
+  "title": "Chullpa sin pared agrietada (fuera el nicho del Rellano)",
+  "updated_at": "2026-10-14T19:05:09.718Z"
+}
