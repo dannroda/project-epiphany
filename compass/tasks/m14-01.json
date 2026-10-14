@@ -49,12 +49,12 @@
       "section": "fuera-mvp"
     }
   ],
-  "status": "todo",
+  "status": "paused",
   "tags": [
     "online",
     "arquitectura"
   ],
   "test": "Documento corto con la arquitectura elegida, qué corre en el host y qué en el cliente.",
   "title": "Arquitectura de red",
-  "updated_at": "2026-10-11T07:50:21.320Z"
+  "updated_at": "2026-10-14T00:53:56.960Z"
 }

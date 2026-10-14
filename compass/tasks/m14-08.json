@@ -35,12 +35,12 @@
   "priority": "high",
   "refs": [],
   "size": "l",
-  "status": "todo",
+  "status": "paused",
   "tags": [
     "online",
     "arquitectura"
   ],
   "test": "Cambiar de nivel no destruye players, cámara ni HUD; P1 e invitados se crean por el mismo camino.",
   "title": "Escena raíz de gameplay que persiste entre niveles",
-  "updated_at": "2026-10-12T00:20:12.254Z"
+  "updated_at": "2026-10-14T00:53:59.557Z"
 }

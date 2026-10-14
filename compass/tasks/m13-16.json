@@ -9,12 +9,12 @@
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "paused",
   "tags": [
     "bug",
     "coop"
   ],
   "test": "",
   "title": "Co-op: la puerta del vestíbulo de D1 se cierra con P2 afuera",
-  "updated_at": "2026-10-12T18:03:32.598Z"
+  "updated_at": "2026-10-14T00:53:56.648Z"
 }

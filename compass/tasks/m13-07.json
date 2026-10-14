@@ -33,12 +33,12 @@
       "section": "fuera-mvp"
     }
   ],
-  "status": "todo",
+  "status": "paused",
   "tags": [
     "coop",
     "ia"
   ],
   "test": "Con dos players, los enemigos se reparten y el jefe ataca a los dos; con uno, igual que siempre.",
   "title": "Enemigos y jefe con varios objetivos",
-  "updated_at": "2026-10-12T00:06:35.181Z"
+  "updated_at": "2026-10-14T00:53:54.144Z"
 }

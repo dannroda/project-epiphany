@@ -36,12 +36,12 @@
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "paused",
   "tags": [
     "bug",
     "coop"
   ],
   "test": "Con P2 como objetivo del jefe agarrado o en caída entre pisos, P2 se va con Start: sin errores y el juego sigue con P1.",
   "title": "Referencias colgadas cuando un invitado se va",
-  "updated_at": "2026-10-12T00:06:19.029Z"
+  "updated_at": "2026-10-14T00:53:55.521Z"
 }
