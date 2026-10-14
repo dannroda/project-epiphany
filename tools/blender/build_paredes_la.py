@@ -3,6 +3,7 @@
 # Las formas salen de tools/paredes_la.json (godot ... tools/la_walls.gd -- export): lados con piso (n e s o) y esquinas sueltas.
 # Las puertas (paso) son la misma pared con un corte de 1.4 m; las escaleras (sube, baja) un corte ciego con escalones.
 # blender -b -P tools/blender/build_paredes_la.py
+import bmesh
 import json
 import math
 import os
@@ -292,6 +293,67 @@ def low(x, y, sides):
 	return LOW * max(0.0, min(1.0, d / LOW_BEVEL))
 
 
+CREST = {"chullpa": ("tierra", "MID"), "totora": ("paja", "MID"), "cueva": ("gris_4", "MID"), "templo": ("piedra_templo", "LIGHT"), "cumbre": ("blanco", "LIGHT")}
+
+
+def wall_face(p, f, c, sides, kind, seed):
+	"""Pinta una cara del frente de la pared con el estilo de WALL_STYLE."""
+	if c.z > top:
+		shade(p, f, "piedra", course_tone(c))
+	elif WALL_STYLE in COURSES:
+		stone, joint, cornice, dusty = COURSES[WALL_STYLE]
+		a = c.x if abs(f.normal.y) > abs(f.normal.x) else c.y
+		row, k, edge = pirca(a, c.z)
+		if c.z > top - 0.22:
+			shade(p, f, cornice, 0.42 if dusty else 0.7)
+		elif edge < PIRCA_JOINT * 0.75:
+			shade(p, f, joint, 0.16 if dusty else 0.3)
+		elif dusty and c.z < 0.3 * (0.5 + 0.5 * noise.noise(Vector((c.x + c.y, 0.0, 2.0)) * 2.0)):
+			p.paint([f], "tierra", "LOW", vary=0.1)
+		else:
+			tone = 0.32 + 0.33 * random.Random(row * 104729 + k * 7919 + round(a * 0.5)).random()
+			shade(p, f, stone, tone + 0.15 * min(1.0, edge / 0.12) - 0.08)
+	elif WALL_STYLE == "cueva":
+		if c.z < MOSS_FOOT * (0.5 + noise.noise(Vector((c.x + c.y, 0.0, 6.0)) * 2.0)):
+			p.paint([f], "tierra", "LOW", vary=0.1)
+		else:
+			shade(p, f, STONE, rock_tone(c, sides, kind) * 0.55)
+	elif WALL_STYLE == "totora":
+		a = c.x if abs(f.normal.y) > abs(f.normal.x) else c.y
+		row, round_, tie = bundle(a, c.z)
+		if c.z < 0.35 * (0.6 + 0.4 * noise.noise(Vector((a * 1.5, 0.0, 8.0)))):
+			p.paint([f], "musgo", "LOW", vary=0.08)
+		elif tie < TIE_HALF and row % 2 == 0:
+			shade(p, f, "madera", 0.12)
+		else:
+			shade(p, f, "madera", 0.2 + 0.32 * round_ + 0.1 * random.Random(row * 7919 + 3).random())
+	elif WALL_STYLE == "cumbre":
+		a = c.x if abs(f.normal.y) > abs(f.normal.x) else c.y
+		k, facet, joint = column(a, c.z)
+		frost = noise.noise(Vector((a * 2.0, c.z, 15.0)))
+		if c.z < 0.22 * (0.6 + frost):
+			p.paint([f], "blanco", "LOW", vary=0.04)
+		elif facet < 0.12 or joint < 0.04:
+			shade(p, f, "gris_4", 0.3)
+		elif c.z > top - 0.6 * (0.7 + 0.5 * frost):
+			shade(p, f, "cristal", 0.75 + 0.15 * frost)
+		else:
+			shade(p, f, STONE, 0.3 + 0.25 * random.Random(k * 104729 + 5).random() + 0.1 * facet)
+	elif WALL_STYLE == "quenoa" and not moss(c, seed):
+		a = c.x if abs(f.normal.y) > abs(f.normal.x) else c.y
+		g = grain(a, c.z)
+		if g < -0.93:
+			shade(p, f, "roca_naranja", 0.12)
+		else:
+			shade(p, f, "roca_naranja", 0.3 + 0.08 * g + 0.12 * noise.noise(Vector((a * 1.2, c.z * 0.25, 4.0))))
+	elif moss(c, seed):
+		if c.z < 1.0:
+			p.paint([f], MOSS, "LOW", vary=0.15)
+		else:
+			shade(p, f, MOSS, min(0.8, 0.3 + 0.5 * (c.z - top + MOSS_TOP) / MOSS_TOP))
+	else:
+		shade(p, f, STONE, rock_tone(c, sides, kind))
+
 def piece(kind, code, cut=None):
 	global top
 	parts = code.split("_")
@@ -336,62 +398,9 @@ def piece(kind, code, cut=None):
 			shade(p, f, "piedra" if cut != "baja" else "gris_5", max(0.05, 0.3 - 0.2 * inside[0] / 1.7))
 		elif c.z > 0.3 and f.normal.z > 0.95:
 			crest.append(f)
-		elif c.z > top:
-			shade(p, f, "piedra", course_tone(c))
-		elif WALL_STYLE in COURSES:
-			stone, joint, cornice, dusty = COURSES[WALL_STYLE]
-			a = c.x if abs(f.normal.y) > abs(f.normal.x) else c.y
-			row, k, edge = pirca(a, c.z)
-			if c.z > top - 0.22:
-				shade(p, f, cornice, 0.42 if dusty else 0.7)
-			elif edge < PIRCA_JOINT * 0.75:
-				shade(p, f, joint, 0.16 if dusty else 0.3)
-			elif dusty and c.z < 0.3 * (0.5 + 0.5 * noise.noise(Vector((c.x + c.y, 0.0, 2.0)) * 2.0)):
-				p.paint([f], "tierra", "LOW", vary=0.1)
-			else:
-				tone = 0.32 + 0.33 * random.Random(row * 104729 + k * 7919 + round(a * 0.5)).random()
-				shade(p, f, stone, tone + 0.15 * min(1.0, edge / 0.12) - 0.08)
-		elif WALL_STYLE == "cueva":
-			if c.z < MOSS_FOOT * (0.5 + noise.noise(Vector((c.x + c.y, 0.0, 6.0)) * 2.0)):
-				p.paint([f], "tierra", "LOW", vary=0.1)
-			else:
-				shade(p, f, STONE, rock_tone(c, sides, kind) * 0.55)
-		elif WALL_STYLE == "totora":
-			a = c.x if abs(f.normal.y) > abs(f.normal.x) else c.y
-			row, round_, tie = bundle(a, c.z)
-			if c.z < 0.35 * (0.6 + 0.4 * noise.noise(Vector((a * 1.5, 0.0, 8.0)))):
-				p.paint([f], "musgo", "LOW", vary=0.08)
-			elif tie < TIE_HALF and row % 2 == 0:
-				shade(p, f, "madera", 0.12)
-			else:
-				shade(p, f, "madera", 0.2 + 0.32 * round_ + 0.1 * random.Random(row * 7919 + 3).random())
-		elif WALL_STYLE == "cumbre":
-			a = c.x if abs(f.normal.y) > abs(f.normal.x) else c.y
-			k, facet, joint = column(a, c.z)
-			frost = noise.noise(Vector((a * 2.0, c.z, 15.0)))
-			if c.z < 0.22 * (0.6 + frost):
-				p.paint([f], "blanco", "LOW", vary=0.04)
-			elif facet < 0.12 or joint < 0.04:
-				shade(p, f, "gris_4", 0.3)
-			elif c.z > top - 0.6 * (0.7 + 0.5 * frost):
-				shade(p, f, "cristal", 0.75 + 0.15 * frost)
-			else:
-				shade(p, f, STONE, 0.3 + 0.25 * random.Random(k * 104729 + 5).random() + 0.1 * facet)
-		elif WALL_STYLE == "quenoa" and not moss(c, seed):
-			a = c.x if abs(f.normal.y) > abs(f.normal.x) else c.y
-			g = grain(a, c.z)
-			if g < -0.93:
-				shade(p, f, "roca_naranja", 0.12)
-			else:
-				shade(p, f, "roca_naranja", 0.3 + 0.08 * g + 0.12 * noise.noise(Vector((a * 1.2, c.z * 0.25, 4.0))))
-		elif moss(c, seed):
-			if c.z < 1.0:
-				p.paint([f], MOSS, "LOW", vary=0.15)
-			else:
-				shade(p, f, MOSS, min(0.8, 0.3 + 0.5 * (c.z - top + MOSS_TOP) / MOSS_TOP))
 		else:
-			shade(p, f, STONE, rock_tone(c, sides, kind))
-	crest_swatch = {"chullpa": ("tierra", "MID"), "totora": ("paja", "MID"), "cueva": ("gris_4", "MID"), "templo": ("piedra_templo", "LIGHT"), "cumbre": ("blanco", "LIGHT")}.get(WALL_STYLE, (LEAF, "DARK"))
+			wall_face(p, f, c, sides, kind, seed)
+	crest_swatch = CREST.get(WALL_STYLE, (LEAF, "DARK"))
 	p.paint(crest, crest_swatch[0], crest_swatch[1], vary=0.08)
 	hedge(p, xs, ys, h)
 	if cut:
@@ -611,9 +620,18 @@ def shade(p, f, swatch, t):
 
 
 shapes = json.load(open(os.path.join(ROOT, "tools", "paredes_la.json")))
-for WALL_STYLE, BULGE, STONE in ((None, 0.7, "acantilado"), ("chullpa", 0.0, "acantilado"), ("quenoa", 0.0, "madera"), ("cueva", 0.7, "acantilado"), ("templo", 0.0, "piedra_templo"), ("totora", 0.0, "paja"), ("cumbre", 0.0, "ladrillo")):
+WALL_STYLES = ((None, 0.7, "acantilado"), ("chullpa", 0.0, "acantilado"), ("quenoa", 0.0, "madera"), ("cueva", 0.7, "acantilado"), ("templo", 0.0, "piedra_templo"), ("totora", 0.0, "paja"), ("cumbre", 0.0, "ladrillo"))
+
+
+def wall_style(style):
+	global WALL_STYLE, BULGE, STONE, PIRCA_ROW
+	WALL_STYLE, BULGE, STONE = next(w for w in WALL_STYLES if w[0] == style)
 	PIRCA_ROW = {"templo": 0.48, "totora": 0.36}.get(WALL_STYLE, 0.42)
 	_pirca_rows.clear()
+
+
+for style in [w[0] for w in WALL_STYLES]:
+	wall_style(style)
 	for code in shapes["pared"]:
 		piece("pared", code)
 	for code in shapes.get("muro", []):
@@ -767,6 +785,51 @@ for DOOR_STYLE in (None, "chullpa", "quenoa", "templo", "totora", "cumbre"):
 	door("interruptor", 64, door_switch)
 	door("persiana", 65, door_shutter)
 
+
+## Pared agrietada LA: tapa el paso entero (el frente mira a -Y), con el relieve y la pintura de su pared y grietas en
+## las dos caras, cada una inclinada como su pared y el medio derecho. Va por fondo del paso (2 o 4 m) y con la cara de
+## atrás igual de inclinada o como la cara norte (_n); la_walls elige y la gira.
+CRACK_STEP = 0.06
+CRACKS = {"chullpa": ("acantilado", "tierra"), "quenoa": ("roca_naranja", "roca_naranja"), "templo": ("piedra_templo", "gris_5"), "totora": ("madera", "madera"), "cumbre": ("ladrillo", "gris_4")}
+
+
+def cracked_wall(style, depth, back):
+	global top
+	wall_style(style)
+	top = HEIGHT
+	half = depth / 2
+	p = epi.Piece(71)
+	nx = round(2 * DOOR_WIDTH / CRACK_STEP)
+	nz = round(HEIGHT / CRACK_STEP)
+	grid = [[p.bm.verts.new((-DOOR_WIDTH + 2 * DOOR_WIDTH * i / nx, 0.0, HEIGHT * j / nz)) for i in range(nx + 1)] for j in range(nz + 1)]
+	front = [p.bm.faces.new((grid[j][i], grid[j][i + 1], grid[j + 1][i + 1], grid[j + 1][i])) for j in range(nz) for i in range(nx)]
+	relief(p)
+	seed = sum(map(ord, style)) % 97 * 0.37
+	for f in front:
+		wall_face(p, f, f.calc_center_median(), [], "muro", seed)
+	dup = bmesh.ops.duplicate(p.bm, geom=front)["geom"]
+	rear = [f for f in dup if isinstance(f, bmesh.types.BMFace)]
+	for v in {v for f in rear for v in f.verts}:
+		v.co.y = half - v.co.y
+	bmesh.ops.reverse_faces(p.bm, faces=rear)
+	for v in {v for f in front for v in f.verts}:
+		v.co.y -= half
+	body = p.box(-DOOR_WIDTH, DOOR_WIDTH, -half + 0.03, half - 0.03, 0.0, HEIGHT)
+	crest = CREST.get(style, (LEAF, "DARK"))
+	p.paint(body, crest[0], crest[1], vary=0.06)
+	stone, gap = CRACKS[style]
+	epi.cracks_both_faces(p, half, (0.0, 1.35), DOOR_WIDTH - 0.08, 0.12, HEIGHT - 0.2, stone, gap)
+	runs = (RUN["s"], RUN["n"] if back == "n" else RUN["s"])
+	for v in p.bm.verts:
+		t = max(-1.0, min(1.0, v.co.y / half))
+		v.co.y += (runs[0] * -t if t < 0 else -runs[1] * t) * v.co.z / HEIGHT
+	p.build("muro_agrietado_%s_la_%d%s" % (style, depth, back), kit, smooth=35)
+
+
+for style in CRACKS:
+	for depth in (2.0, 4.0):
+		for back in ("", "n"):
+			cracked_wall(style, depth, back)
 
 
 def style_of(obj):

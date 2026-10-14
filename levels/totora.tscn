@@ -1,87 +1,92 @@
 [gd_scene format=3 uid="uid://onafwgem6uli"]
 
-[ext_resource type="Script" path="res://src/world/dungeon.gd" id="1_oj4pd"]
-[ext_resource type="Script" path="res://src/world/look/sombra_la.gd" id="2_5uynx"]
-[ext_resource type="Script" path="res://src/world/dungeon_floor.gd" id="2_bx33l"]
-[ext_resource type="Script" path="res://src/world/look/tono_la.gd" id="3_h5tew"]
-[ext_resource type="Script" path="res://src/world/room.gd" id="4_4j2rd"]
-[ext_resource type="MeshLibrary" path="res://data/kits/totora_la_kit.tres" id="5_bf1ls"]
+[ext_resource type="Script" uid="uid://c5hiaqs0y4egi" path="res://src/world/dungeon.gd" id="1_oj4pd"]
+[ext_resource type="Script" uid="uid://c3gjwha8na3yi" path="res://src/world/look/sombra_la.gd" id="2_5uynx"]
+[ext_resource type="Script" uid="uid://dxfmc58bemc3t" path="res://src/world/dungeon_floor.gd" id="2_bx33l"]
+[ext_resource type="Script" uid="uid://bw0kh7whsb1qf" path="res://src/world/look/tono_la.gd" id="3_h5tew"]
+[ext_resource type="Script" uid="uid://nqxfiofg56dy" path="res://src/world/room.gd" id="4_4j2rd"]
+[ext_resource type="MeshLibrary" uid="uid://dbe1tsi5vunwn" path="res://data/kits/totora_la_kit.tres" id="5_bf1ls"]
 [ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="5_wr5m1"]
-[ext_resource type="Script" path="res://src/world/breakable.gd" id="6_s7pp0"]
-[ext_resource type="Resource" uid="uid://bd60rgriyt0r5" path="res://data/drops/pot_arrows.tres" id="arrows_pot"]
-[ext_resource type="Shader" path="res://src/world/look/borde_oscuro.gdshader" id="7_ctf4b"]
-[ext_resource type="Resource" path="res://data/drops/pot.tres" id="7_mlgyq"]
+[ext_resource type="Script" uid="uid://ukpcr815ja3d" path="res://src/world/breakable.gd" id="6_s7pp0"]
+[ext_resource type="Shader" uid="uid://d05shkhoyhpkk" path="res://src/world/look/borde_oscuro.gdshader" id="7_ctf4b"]
+[ext_resource type="Resource" uid="uid://bjostbekjp6du" path="res://data/drops/pot.tres" id="7_mlgyq"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="8_ne4in"]
-[ext_resource type="Script" path="res://src/world/chest.gd" id="9_np5b4"]
+[ext_resource type="Script" uid="uid://byp4dkpucnvmo" path="res://src/world/chest.gd" id="9_np5b4"]
 [ext_resource type="Resource" path="res://data/items/small_key.tres" id="10_kh0fu"]
 [ext_resource type="PackedScene" path="res://src/world/hook_post.tscn" id="11_3yydx"]
-[ext_resource type="Script" path="res://src/world/hook_post.gd" id="12_dtnl1"]
-[ext_resource type="Resource" path="res://data/items/hookshot.tres" id="13_8gv3t"]
+[ext_resource type="Script" uid="uid://cxw24v4u275yn" path="res://src/world/hook_post.gd" id="12_dtnl1"]
+[ext_resource type="Resource" uid="uid://5wk2pgb80t03" path="res://data/items/hookshot.tres" id="13_8gv3t"]
 [ext_resource type="PackedScene" path="res://src/entities/archer_skeleton.tscn" id="14_ok4xl"]
-[ext_resource type="Script" path="res://src/entities/enemy.gd" id="15_lqaqr"]
+[ext_resource type="Script" uid="uid://c48gjyuwv6u3x" path="res://src/entities/enemy.gd" id="15_lqaqr"]
 [ext_resource type="Resource" path="res://data/entities/archer_skeleton.tres" id="16_2llkb"]
-[ext_resource type="PackedScene" path="res://src/entities/enemy.tscn" id="17_mtxks"]
+[ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="17_mtxks"]
 [ext_resource type="Resource" path="res://data/entities/skeleton.tres" id="18_v5awg"]
 [ext_resource type="PackedScene" path="res://src/world/eye_switch.tscn" id="19_kd5y0"]
-[ext_resource type="Script" path="res://src/world/eye_switch.gd" id="20_o5umy"]
+[ext_resource type="Script" uid="uid://n1p8wmv8inqn" path="res://src/world/eye_switch.gd" id="20_o5umy"]
 [ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="21_5uynx"]
-[ext_resource type="Script" path="res://src/world/gate.gd" id="22_h5tew"]
+[ext_resource type="Script" uid="uid://cj2nsvfg6j7av" path="res://src/world/gate.gd" id="22_h5tew"]
 [ext_resource type="Resource" path="res://data/items/dungeon_map.tres" id="23_bf1ls"]
 [ext_resource type="PackedScene" path="res://src/world/door.tscn" id="24_ctf4b"]
-[ext_resource type="Script" path="res://src/world/door.gd" id="25_8kq17"]
-[ext_resource type="Script" path="res://src/world/arena_fight.gd" id="26_ta07f"]
-[ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="27_ir4ow"]
+[ext_resource type="Script" uid="uid://5iyuo3cn8lus" path="res://src/world/door.gd" id="25_8kq17"]
+[ext_resource type="Script" uid="uid://bccprbredple8" path="res://src/world/arena_fight.gd" id="26_ta07f"]
+[ext_resource type="Script" uid="uid://dcy0hg6ygxqg1" path="res://src/components/persistent_flag.gd" id="27_ir4ow"]
 [ext_resource type="PackedScene" path="res://src/entities/amaru/amaru.tscn" id="28_pbras"]
 [ext_resource type="Material" path="res://src/world/look/marca_visible.tres" id="29_8kq17"]
 [ext_resource type="PackedScene" path="res://src/entities/amaru/amaru_pool.tscn" id="29_plbht"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_llave_totora_la.res" id="30_ta07f"]
+[ext_resource type="ArrayMesh" uid="uid://bgn4bpnpd4nas" path="res://assets/epiphany/meshes/paredes_la/puerta_llave_totora_la.res" id="30_ta07f"]
 [ext_resource type="PackedScene" path="res://src/entities/yacumama/yacumama.tscn" id="31_1aybm"]
-[ext_resource type="Texture2D" path="res://assets/ui/lock.svg" id="31_ir4ow"]
-[ext_resource type="Script" path="res://src/components/interactable.gd" id="32_pbras"]
+[ext_resource type="Texture2D" uid="uid://ddhjwybdg1ah2" path="res://assets/ui/lock.svg" id="31_ir4ow"]
+[ext_resource type="Script" uid="uid://jstc1x28c0kx" path="res://src/components/interactable.gd" id="32_pbras"]
 [ext_resource type="PackedScene" path="res://src/world/pickup.tscn" id="34_0sq8t"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_interruptor_totora_la.res" id="34_plbht"]
-[ext_resource type="Script" path="res://src/world/pickup.gd" id="35_6ch0c"]
+[ext_resource type="ArrayMesh" uid="uid://1ov0vq4dkmep" path="res://assets/epiphany/meshes/paredes_la/puerta_interruptor_totora_la.res" id="34_plbht"]
+[ext_resource type="Script" uid="uid://ckysqr8ximkn0" path="res://src/world/pickup.gd" id="35_6ch0c"]
 [ext_resource type="Resource" path="res://data/items/heart_container.tres" id="36_in1hu"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/corazon.res" id="37_oqocf"]
+[ext_resource type="ArrayMesh" uid="uid://jlluubdbax4r" path="res://assets/epiphany/meshes/objetos/corazon.res" id="37_oqocf"]
 [ext_resource type="PackedScene" path="res://src/world/warp_portal.tscn" id="38_607qk"]
-[ext_resource type="Script" path="res://src/entities/amaru/amaru.gd" id="38_u5j68"]
+[ext_resource type="Script" uid="uid://bkhgqwl6ldwbf" path="res://src/entities/amaru/amaru.gd" id="38_u5j68"]
 [ext_resource type="Resource" path="res://data/entities/amaru.tres" id="39_1aybm"]
-[ext_resource type="Script" path="res://src/world/portal.gd" id="39_056xl"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_jefe_totora_la.res" id="40_e33tn"]
+[ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="39_056xl"]
+[ext_resource type="ArrayMesh" uid="uid://b52ws11t6r47q" path="res://assets/epiphany/meshes/paredes_la/puerta_jefe_totora_la.res" id="40_e33tn"]
 [ext_resource type="Material" path="res://src/world/water/water_la.tres" id="40_vrfs0"]
-[ext_resource type="Script" path="res://src/world/pit.gd" id="41_4rcne"]
+[ext_resource type="Script" uid="uid://b5m7kta46hqrv" path="res://src/world/pit.gd" id="41_4rcne"]
 [ext_resource type="PackedScene" path="res://src/world/stairs.tscn" id="42_dmyaj"]
-[ext_resource type="Script" path="res://src/world/stairs.gd" id="43_630up"]
+[ext_resource type="Script" uid="uid://bvi8ixcjlomhj" path="res://src/entities/yacumama/yacumama.gd" id="43_8kq17"]
+[ext_resource type="Script" uid="uid://d3mljv5i1j87j" path="res://src/world/stairs.gd" id="43_630up"]
 [ext_resource type="PackedScene" path="res://src/world/wall_torch.tscn" id="44_4mqq5"]
+[ext_resource type="Resource" path="res://data/entities/yacumama.tres" id="44_ta07f"]
 [ext_resource type="Resource" path="res://data/items/compass.tres" id="45_w5jcx"]
 [ext_resource type="PackedScene" path="res://src/world/cracked_wall.tscn" id="46_ynv2o"]
-[ext_resource type="Script" path="res://src/world/cracked_wall.gd" id="47_mv4qb"]
+[ext_resource type="Script" uid="uid://vmcv83ug4a0m" path="res://src/world/cracked_wall.gd" id="47_mv4qb"]
 [ext_resource type="PackedScene" path="res://src/entities/armored_skeleton.tscn" id="48_dsabl"]
 [ext_resource type="Resource" path="res://data/entities/armored_skeleton.tres" id="49_lbgvp"]
 [ext_resource type="PackedScene" path="res://src/world/heart_piece.tscn" id="50_4rg4j"]
-[ext_resource type="Script" path="res://src/world/heart_piece.gd" id="51_ryy8k"]
+[ext_resource type="Script" uid="uid://dq2xk4sts8nfn" path="res://src/world/heart_piece.gd" id="51_ryy8k"]
 [ext_resource type="Resource" path="res://data/items/heart_piece.tres" id="52_k0vpb"]
 [ext_resource type="Resource" path="res://data/items/boss_key.tres" id="53_qeqm7"]
 [ext_resource type="PackedScene" path="res://src/world/stairs_down.tscn" id="54_kk3t3"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo_chullpa/brasero.res" id="55_8q2lw"]
-[ext_resource type="PackedScene" path="res://player/player.tscn" id="55_h1m6d"]
-[ext_resource type="Shader" path="res://src/world/look/llama_la.gdshader" id="56_0sq8t"]
-[ext_resource type="Script" path="res://player/player.gd" id="56_k4wy0"]
-[ext_resource type="Script" path="res://src/world/torch_flicker.gd" id="57_6ch0c"]
-[ext_resource type="Resource" path="res://data/entities/player.tres" id="57_6wymq"]
-[ext_resource type="Script" path="res://src/world/spawn_point.gd" id="58_gtsey"]
-[ext_resource type="Script" path="res://src/feel/stencil_light/stencil_light.gd" id="58_in1hu"]
-[ext_resource type="Script" path="res://src/tools/top_down_camera.gd" id="59_uscax"]
+[ext_resource type="ArrayMesh" uid="uid://3450f8b4aw7b" path="res://assets/epiphany/meshes/templo_chullpa/brasero.res" id="55_8q2lw"]
+[ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="55_h1m6d"]
+[ext_resource type="Shader" uid="uid://crwycv8bukd6m" path="res://src/world/look/llama_la.gdshader" id="56_0sq8t"]
+[ext_resource type="Script" uid="uid://ckkibjv0y6axx" path="res://player/player.gd" id="56_k4wy0"]
+[ext_resource type="Script" uid="uid://u2jhwu4cb42s" path="res://src/world/torch_flicker.gd" id="57_6ch0c"]
+[ext_resource type="Resource" uid="uid://cooy3l0hm4jv0" path="res://data/entities/player.tres" id="57_6wymq"]
+[ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="58_gtsey"]
+[ext_resource type="Script" uid="uid://cgr3l68kk102e" path="res://src/feel/stencil_light/stencil_light.gd" id="58_in1hu"]
+[ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="59_uscax"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="60_km5gt"]
-[ext_resource type="Script" path="res://src/ui/hud/hud.gd" id="61_trvnj"]
+[ext_resource type="Script" uid="uid://dbmfkcf8x5ids" path="res://src/ui/hud/hud.gd" id="61_trvnj"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/player_panel_solo.tscn" id="62_fka85"]
+[ext_resource type="ArrayMesh" uid="uid://cgee2fyftblhk" path="res://assets/epiphany/meshes/paredes_la/muro_agrietado_totora_la_2.res" id="63_ir4ow"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/player_panel.tscn" id="63_wgk8o"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/item_ring.tscn" id="64_kje25"]
+[ext_resource type="ArrayMesh" uid="uid://bs5mwr1yuehrf" path="res://assets/epiphany/meshes/naturaleza/piedra_chica_a.res" id="64_pbras"]
+[ext_resource type="Script" uid="uid://rcd8a41l0m7" path="res://src/components/hurtbox.gd" id="65_plbht"]
 [ext_resource type="PackedScene" path="res://src/world/look/caida_la.tscn" id="69_oqocf"]
-[ext_resource type="Script" path="res://src/world/look/caida_la.gd" id="70_607qk"]
-[ext_resource type="Script" path="res://src/world/look/enfoque_la.gd" id="76_056xl"]
+[ext_resource type="Script" uid="uid://cpj0lhdoljshc" path="res://src/world/look/caida_la.gd" id="70_607qk"]
+[ext_resource type="Script" uid="uid://c238aeb6gn6ka" path="res://src/world/look/enfoque_la.gd" id="76_056xl"]
 [ext_resource type="PackedScene" path="res://src/world/look/polvo_quenoa.tscn" id="77_vrfs0"]
-[ext_resource type="Script" path="res://src/world/look/brillo_la.gd" id="84_4rcne"]
+[ext_resource type="Script" uid="uid://dlf8bqdycw2kg" path="res://src/world/look/brillo_la.gd" id="84_4rcne"]
+[ext_resource type="Resource" uid="uid://bd60rgriyt0r5" path="res://data/drops/pot_arrows.tres" id="arrows_pot"]
 [ext_resource type="NavigationMesh" path="res://levels/nav/totora_navmesh.tres" id="nav_totora"]
 
 [sub_resource type="Environment" id="Environment_dmyaj"]
@@ -121,7 +126,7 @@ compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_630u
 [sub_resource type="BoxShape3D" id="BoxShape3D_vm0iq"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5uynx"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u5j68"]
 render_priority = 0
 shader = ExtResource("7_ctf4b")
 shader_parameter/inner = Vector4(0.7, 0.6, 15.3, 11.9)
@@ -133,14 +138,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_h5tew"]
-material = SubResource("ShaderMaterial_5uynx")
+[sub_resource type="PlaneMesh" id="PlaneMesh_1aybm"]
+material = SubResource("ShaderMaterial_u5j68")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gn6ps"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bf1ls"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e33tn"]
 render_priority = 0
 shader = ExtResource("7_ctf4b")
 shader_parameter/inner = Vector4(16.7, 0.6, 31.3, 11.9)
@@ -152,14 +157,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_ctf4b"]
-material = SubResource("ShaderMaterial_bf1ls")
+[sub_resource type="PlaneMesh" id="PlaneMesh_8q2lw"]
+material = SubResource("ShaderMaterial_e33tn")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bsx6e"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8kq17"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0sq8t"]
 render_priority = 0
 shader = ExtResource("7_ctf4b")
 shader_parameter/inner = Vector4(32.7, 0.6, 47.3, 11.9)
@@ -171,14 +176,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_ta07f"]
-material = SubResource("ShaderMaterial_8kq17")
+[sub_resource type="PlaneMesh" id="PlaneMesh_6ch0c"]
+material = SubResource("ShaderMaterial_0sq8t")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pikwi"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ir4ow"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_in1hu"]
 render_priority = 0
 shader = ExtResource("7_ctf4b")
 shader_parameter/inner = Vector4(0.7, 12.6, 15.3, 23.9)
@@ -190,14 +195,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_pbras"]
-material = SubResource("ShaderMaterial_ir4ow")
+[sub_resource type="PlaneMesh" id="PlaneMesh_oqocf"]
+material = SubResource("ShaderMaterial_in1hu")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cxrnh"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_plbht"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_607qk"]
 render_priority = 0
 shader = ExtResource("7_ctf4b")
 shader_parameter/inner = Vector4(16.7, 12.6, 31.3, 23.9)
@@ -209,14 +214,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_u5j68"]
-material = SubResource("ShaderMaterial_plbht")
+[sub_resource type="PlaneMesh" id="PlaneMesh_056xl"]
+material = SubResource("ShaderMaterial_607qk")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qqpmk"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1aybm"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vrfs0"]
 render_priority = 0
 shader = ExtResource("7_ctf4b")
 shader_parameter/inner = Vector4(32.7, 12.6, 47.3, 23.9)
@@ -228,8 +233,8 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_e33tn"]
-material = SubResource("ShaderMaterial_1aybm")
+[sub_resource type="PlaneMesh" id="PlaneMesh_4rcne"]
+material = SubResource("ShaderMaterial_vrfs0")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="Shape"]
@@ -441,7 +446,7 @@ center_offset = Vector3(0, 0.32, 0)
 [sub_resource type="BoxShape3D" id="BoxShape3D_nrriy"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8q2lw"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dmyaj"]
 render_priority = 0
 shader = ExtResource("7_ctf4b")
 shader_parameter/inner = Vector4(0.7, 0.6, 15.3, 11.9)
@@ -453,14 +458,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_0sq8t"]
-material = SubResource("ShaderMaterial_8q2lw")
+[sub_resource type="PlaneMesh" id="PlaneMesh_630up"]
+material = SubResource("ShaderMaterial_dmyaj")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vw888"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6ch0c"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4mqq5"]
 render_priority = 0
 shader = ExtResource("7_ctf4b")
 shader_parameter/inner = Vector4(16.7, 0.6, 31.3, 11.9)
@@ -472,14 +477,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_in1hu"]
-material = SubResource("ShaderMaterial_6ch0c")
+[sub_resource type="PlaneMesh" id="PlaneMesh_w5jcx"]
+material = SubResource("ShaderMaterial_4mqq5")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tbtoj"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_oqocf"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ynv2o"]
 render_priority = 0
 shader = ExtResource("7_ctf4b")
 shader_parameter/inner = Vector4(32.7, 0.6, 47.3, 11.9)
@@ -491,14 +496,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_607qk"]
-material = SubResource("ShaderMaterial_oqocf")
+[sub_resource type="PlaneMesh" id="PlaneMesh_mv4qb"]
+material = SubResource("ShaderMaterial_ynv2o")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7lrgh"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_056xl"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dsabl"]
 render_priority = 0
 shader = ExtResource("7_ctf4b")
 shader_parameter/inner = Vector4(16.7, 12.6, 31.3, 23.9)
@@ -510,14 +515,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_vrfs0"]
-material = SubResource("ShaderMaterial_056xl")
+[sub_resource type="PlaneMesh" id="PlaneMesh_lbgvp"]
+material = SubResource("ShaderMaterial_dsabl")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3kldj"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4rcne"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4rg4j"]
 render_priority = 0
 shader = ExtResource("7_ctf4b")
 shader_parameter/inner = Vector4(32.7, 12.6, 47.3, 23.9)
@@ -529,9 +534,15 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_dmyaj"]
-material = SubResource("ShaderMaterial_4rcne")
+[sub_resource type="PlaneMesh" id="PlaneMesh_ryy8k"]
+material = SubResource("ShaderMaterial_4rg4j")
 size = Vector2(25.2, 21.2)
+
+[sub_resource type="BoxShape3D" id="WallShape"]
+size = Vector3(2, 3.1, 2)
+
+[sub_resource type="BoxShape3D" id="HurtShape"]
+size = Vector3(2.4, 2.6, 2.4)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_fwxao"]
 material = ExtResource("40_vrfs0")
@@ -783,7 +794,7 @@ shape = SubResource("BoxShape3D_vm0iq")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoBajo/Gancho" unique_id=133715160]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_h5tew")
+mesh = SubResource("PlaneMesh_1aybm")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoBajo/Gancho" unique_id=1755869926]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -815,7 +826,7 @@ shape = SubResource("BoxShape3D_gn6ps")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoBajo/Pozo" unique_id=321429657]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_ctf4b")
+mesh = SubResource("PlaneMesh_8q2lw")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoBajo/Pozo" unique_id=2128711190]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -848,7 +859,7 @@ shape = SubResource("BoxShape3D_bsx6e")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoBajo/Jefe" unique_id=821643434]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_ta07f")
+mesh = SubResource("PlaneMesh_6ch0c")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoBajo/Jefe" unique_id=969934302]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -880,7 +891,7 @@ shape = SubResource("BoxShape3D_pikwi")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoBajo/Balsas" unique_id=1025817369]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_pbras")
+mesh = SubResource("PlaneMesh_oqocf")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoBajo/Balsas" unique_id=776471666]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -912,7 +923,7 @@ shape = SubResource("BoxShape3D_cxrnh")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoBajo/Embarcadero" unique_id=980956612]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_u5j68")
+mesh = SubResource("PlaneMesh_056xl")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoBajo/Embarcadero" unique_id=1894575727]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -944,7 +955,7 @@ shape = SubResource("BoxShape3D_qqpmk")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoBajo/Juncal" unique_id=120274758]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_e33tn")
+mesh = SubResource("PlaneMesh_4rcne")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoBajo/Juncal" unique_id=2097633239]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -975,13 +986,13 @@ script = ExtResource("6_s7pp0")
 drops = ExtResource("7_mlgyq")
 drop_height = 0.1
 
-[node name="JuncalArrowPot1" type="Node3D" parent="PisoBajo" instance=ExtResource("5_wr5m1")]
+[node name="JuncalArrowPot1" type="Node3D" parent="PisoBajo" unique_id=1989156397 instance=ExtResource("5_wr5m1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 22)
 script = ExtResource("6_s7pp0")
 drops = ExtResource("arrows_pot")
 drop_height = 0.1
 
-[node name="JuncalArrowPot2" type="Node3D" parent="PisoBajo" instance=ExtResource("5_wr5m1")]
+[node name="JuncalArrowPot2" type="Node3D" parent="PisoBajo" unique_id=880974009 instance=ExtResource("5_wr5m1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 22)
 script = ExtResource("6_s7pp0")
 drops = ExtResource("arrows_pot")
@@ -1251,13 +1262,13 @@ script = ExtResource("6_s7pp0")
 drops = ExtResource("7_mlgyq")
 drop_height = 0.1
 
-[node name="JefePot3410" type="Node3D" parent="PisoBajo" instance=ExtResource("5_wr5m1")]
+[node name="JefePot3410" type="Node3D" parent="PisoBajo" unique_id=1367855609 instance=ExtResource("5_wr5m1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 10)
 script = ExtResource("6_s7pp0")
 drops = ExtResource("7_mlgyq")
 drop_height = 0.1
 
-[node name="JefePot4610" type="Node3D" parent="PisoBajo" instance=ExtResource("5_wr5m1")]
+[node name="JefePot4610" type="Node3D" parent="PisoBajo" unique_id=165456869 instance=ExtResource("5_wr5m1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 0, 10)
 script = ExtResource("6_s7pp0")
 drops = ExtResource("7_mlgyq")
@@ -1276,21 +1287,25 @@ reward_flag = &"tt_heart_container"
 [node name="PersistentFlag" type="Node" parent="PisoBajo/BossFight" unique_id=26089139]
 script = ExtResource("27_ir4ow")
 
-[node name="Charco0" type="Node3D" parent="PisoBajo/BossFight" instance=ExtResource("29_plbht")]
+[node name="Charco0" type="Node3D" parent="PisoBajo/BossFight" unique_id=1982276633 instance=ExtResource("29_plbht")]
 transform = Transform3D(1.3, 0, 0, 0, 1, 0, 0, 0, 1.3, -3.5, 0, -2)
 
-[node name="Charco1" type="Node3D" parent="PisoBajo/BossFight" instance=ExtResource("29_plbht")]
+[node name="Charco1" type="Node3D" parent="PisoBajo/BossFight" unique_id=318701045 instance=ExtResource("29_plbht")]
 transform = Transform3D(1.3, 0, 0, 0, 1, 0, 0, 0, 1.3, 3.5, 0, -2)
 
-[node name="Charco2" type="Node3D" parent="PisoBajo/BossFight" instance=ExtResource("29_plbht")]
+[node name="Charco2" type="Node3D" parent="PisoBajo/BossFight" unique_id=967419308 instance=ExtResource("29_plbht")]
 transform = Transform3D(1.3, 0, 0, 0, 1, 0, 0, 0, 1.3, -3.5, 0, 2)
 
-[node name="Charco3" type="Node3D" parent="PisoBajo/BossFight" instance=ExtResource("29_plbht")]
+[node name="Charco3" type="Node3D" parent="PisoBajo/BossFight" unique_id=1898950521 instance=ExtResource("29_plbht")]
 transform = Transform3D(1.3, 0, 0, 0, 1, 0, 0, 0, 1.3, 3.5, 0, 2)
 
 [node name="Yacumama" type="Node3D" parent="PisoBajo/BossFight" unique_id=282999127 node_paths=PackedStringArray("pools") instance=ExtResource("31_1aybm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, -2)
+script = ExtResource("43_8kq17")
+config = ExtResource("44_ta07f")
 pools = [NodePath("../Charco0"), NodePath("../Charco1"), NodePath("../Charco2"), NodePath("../Charco3")]
+rise_height = 3.0
+flat_offset = Vector3(0, 0.6, 1.6)
 
 [node name="HeartContainer" type="Area3D" parent="PisoBajo/BossFight" unique_id=1939312166 instance=ExtResource("34_0sq8t")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
@@ -1710,7 +1725,7 @@ shape = SubResource("BoxShape3D_nrriy")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Tejedores" unique_id=639570491]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_0sq8t")
+mesh = SubResource("PlaneMesh_630up")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoAlto/Tejedores" unique_id=1990313569]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1742,7 +1757,7 @@ shape = SubResource("BoxShape3D_vw888")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Estanque" unique_id=931346924]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_in1hu")
+mesh = SubResource("PlaneMesh_w5jcx")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoAlto/Estanque" unique_id=371948259]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1774,7 +1789,7 @@ shape = SubResource("BoxShape3D_tbtoj")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Mirador" unique_id=1381190704]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_607qk")
+mesh = SubResource("PlaneMesh_mv4qb")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoAlto/Mirador" unique_id=2048260443]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1806,7 +1821,7 @@ shape = SubResource("BoxShape3D_7lrgh")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Telar" unique_id=1802990776]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_vrfs0")
+mesh = SubResource("PlaneMesh_lbgvp")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoAlto/Telar" unique_id=1592596947]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1838,7 +1853,7 @@ shape = SubResource("BoxShape3D_3kldj")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoAlto/Garita" unique_id=1185746853]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_dmyaj")
+mesh = SubResource("PlaneMesh_ryy8k")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoAlto/Garita" unique_id=1952125372]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1880,10 +1895,62 @@ collision_mask = 5
 script = ExtResource("15_lqaqr")
 config = ExtResource("18_v5awg")
 
-[node name="GaritaCrackedWall" type="StaticBody3D" parent="PisoAlto" unique_id=28574400 instance=ExtResource("46_ynv2o")]
+[node name="GaritaCrackedWall" parent="PisoAlto" unique_id=28574400 instance=ExtResource("46_ynv2o")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 32, 0, 18)
 script = ExtResource("47_mv4qb")
 flag = &"tt_guardhouse_cracked_wall"
+
+[node name="Wall" parent="PisoAlto/GaritaCrackedWall" index="0"]
+unique_name_in_owner = true
+
+[node name="Model" parent="PisoAlto/GaritaCrackedWall/Wall" index="0"]
+mesh = ExtResource("63_ir4ow")
+
+[node name="Rubble" parent="PisoAlto/GaritaCrackedWall" index="1"]
+unique_name_in_owner = true
+visible = false
+
+[node name="Rock0" parent="PisoAlto/GaritaCrackedWall/Rubble" index="0"]
+transform = Transform3D(0.9397, 0, -0.342, 0, 1, 0, 0.342, 0, 0.9397, -1.28, 0, 0.72)
+mesh = ExtResource("64_pbras")
+
+[node name="Rock1" parent="PisoAlto/GaritaCrackedWall/Rubble" index="1"]
+transform = Transform3D(0.7727, 0, 0.2071, 0, 0.8, 0, -0.2071, 0, 0.7727, -0.32, 0, 1.2)
+mesh = ExtResource("64_pbras")
+
+[node name="Rock2" parent="PisoAlto/GaritaCrackedWall/Rubble" index="2"]
+transform = Transform3D(0.9362, 0, -0.6555, 0, 1.1429, 0, 0.6555, 0, 0.9362, 0.64, 0, 0.6)
+mesh = ExtResource("64_pbras")
+
+[node name="Rock3" parent="PisoAlto/GaritaCrackedWall/Rubble" index="3"]
+transform = Transform3D(0.7034, 0, -0.124, 0, 0.7143, 0, 0.124, 0, 0.7034, 1.44, 0, 1.32)
+mesh = ExtResource("64_pbras")
+
+[node name="Rock4" parent="PisoAlto/GaritaCrackedWall/Rubble" index="4"]
+transform = Transform3D(0.7918, 0, 0.4571, 0, 0.9143, 0, -0.4571, 0, 0.7918, 0.08, 0, -0.24)
+mesh = ExtResource("64_pbras")
+
+[node name="Rock5" parent="PisoAlto/GaritaCrackedWall/Rubble" index="5"]
+transform = Transform3D(0.404, 0, -0.4815, 0, 0.6286, 0, 0.4815, 0, 0.404, -0.88, 0, -0.6)
+mesh = ExtResource("64_pbras")
+
+[node name="CollisionShape3D" parent="PisoAlto/GaritaCrackedWall" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)
+shape = SubResource("WallShape")
+
+[node name="Hurtbox" parent="PisoAlto/GaritaCrackedWall" index="3"]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+script = ExtResource("65_plbht")
+surface = "none"
+
+[node name="CollisionShape3D" parent="PisoAlto/GaritaCrackedWall/Hurtbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = SubResource("HurtShape")
+
+[node name="PersistentFlag" parent="PisoAlto/GaritaCrackedWall" index="4"]
+script = ExtResource("27_ir4ow")
 
 [node name="TelarArmored" type="CharacterBody3D" parent="PisoAlto" unique_id=1871883843 groups=["room_sleepers"] instance=ExtResource("48_dsabl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 22)
@@ -2046,13 +2113,13 @@ switches = Array[NodePath]([NodePath("../TejedoresEye")])
 stays_open = false
 depth = 2.0
 
-[node name="TejedoresArrowPot1" type="Node3D" parent="PisoAlto" instance=ExtResource("5_wr5m1")]
+[node name="TejedoresArrowPot1" type="Node3D" parent="PisoAlto" unique_id=1736552888 instance=ExtResource("5_wr5m1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 2)
 script = ExtResource("6_s7pp0")
 drops = ExtResource("arrows_pot")
 drop_height = 0.1
 
-[node name="TejedoresArrowPot2" type="Node3D" parent="PisoAlto" instance=ExtResource("5_wr5m1")]
+[node name="TejedoresArrowPot2" type="Node3D" parent="PisoAlto" unique_id=67575880 instance=ExtResource("5_wr5m1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 10)
 script = ExtResource("6_s7pp0")
 drops = ExtResource("arrows_pot")
@@ -2384,7 +2451,7 @@ script = ExtResource("58_in1hu")
 color = Color(1.35, 1.15, 0.9, 1)
 radius = 3.0
 
-[node name="CaidaLA44" type="Node3D" parent="PisoAlto" unique_id=1681541757 instance=ExtResource("69_oqocf")]
+[node name="CaidaLA44" type="Node3D" parent="PisoAlto" unique_id=1091374313 instance=ExtResource("69_oqocf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 2)
 script = ExtResource("70_607qk")
 
@@ -2423,7 +2490,7 @@ south_wall_reach = 1.7
 script = ExtResource("76_056xl")
 near_margin = 3.5
 
-[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=2065124158 instance=ExtResource("77_vrfs0")]
+[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=361646111 instance=ExtResource("77_vrfs0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1798461747 instance=ExtResource("60_km5gt")]
@@ -2455,6 +2522,7 @@ script = ExtResource("84_4rcne")
 [editable path="PisoBajo/Torch_Embarcadero_1"]
 [editable path="PisoBajo/Torch_Juncal_0"]
 [editable path="PisoBajo/Torch_Juncal_1"]
+[editable path="PisoAlto/GaritaCrackedWall"]
 [editable path="PisoAlto/TejedoresLocked"]
 [editable path="PisoAlto/GaritaStairs"]
 [editable path="PisoAlto/Torch_Tejedores_0"]

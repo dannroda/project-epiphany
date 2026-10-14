@@ -1,95 +1,98 @@
 [gd_scene format=3 uid="uid://d3dpm2jurwutg"]
 
-[ext_resource type="Script" path="res://src/world/dungeon.gd" id="1_13f58"]
-[ext_resource type="Script" path="res://src/world/look/sombra_la.gd" id="2_7g75p"]
-[ext_resource type="Script" path="res://src/world/dungeon_floor.gd" id="2_14otx"]
-[ext_resource type="Script" path="res://src/world/look/tono_la.gd" id="3_brl33"]
-[ext_resource type="Script" path="res://src/world/room.gd" id="4_q0gdl"]
+[ext_resource type="Script" uid="uid://c5hiaqs0y4egi" path="res://src/world/dungeon.gd" id="1_13f58"]
+[ext_resource type="Script" uid="uid://c3gjwha8na3yi" path="res://src/world/look/sombra_la.gd" id="2_7g75p"]
+[ext_resource type="Script" uid="uid://dxfmc58bemc3t" path="res://src/world/dungeon_floor.gd" id="2_14otx"]
+[ext_resource type="Script" uid="uid://bw0kh7whsb1qf" path="res://src/world/look/tono_la.gd" id="3_brl33"]
+[ext_resource type="Script" uid="uid://nqxfiofg56dy" path="res://src/world/room.gd" id="4_q0gdl"]
 [ext_resource type="MeshLibrary" uid="uid://cmbcau4lq23e8" path="res://data/kits/cumbre_la_kit.tres" id="5_4jd4h"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_source.tscn" id="5_ku7rw"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_receiver.tscn" id="6_4jevl"]
-[ext_resource type="Shader" path="res://src/world/look/borde_oscuro.gdshader" id="7_gxog7"]
-[ext_resource type="Script" path="res://src/world/light/light_receiver.gd" id="7_klotd"]
+[ext_resource type="Shader" uid="uid://d05shkhoyhpkk" path="res://src/world/look/borde_oscuro.gdshader" id="7_gxog7"]
+[ext_resource type="Script" uid="uid://djcb44ujalpa3" path="res://src/world/light/light_receiver.gd" id="7_klotd"]
 [ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="8_fwfcf"]
-[ext_resource type="Script" path="res://src/world/gate.gd" id="9_438do"]
+[ext_resource type="Script" uid="uid://cj2nsvfg6j7av" path="res://src/world/gate.gd" id="9_438do"]
 [ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="10_rdvwa"]
-[ext_resource type="Script" path="res://src/world/breakable.gd" id="11_24ve7"]
-[ext_resource type="Resource" path="res://data/drops/pot_bombs.tres" id="12_yg4lr"]
-[ext_resource type="PackedScene" path="res://src/entities/enemy.tscn" id="13_jmy4b"]
-[ext_resource type="Script" path="res://src/entities/enemy.gd" id="14_go6dy"]
+[ext_resource type="Script" uid="uid://ukpcr815ja3d" path="res://src/world/breakable.gd" id="11_24ve7"]
+[ext_resource type="Resource" uid="uid://cqv3w1wloauuu" path="res://data/drops/pot_bombs.tres" id="12_yg4lr"]
+[ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="13_jmy4b"]
+[ext_resource type="Script" uid="uid://c48gjyuwv6u3x" path="res://src/entities/enemy.gd" id="14_go6dy"]
 [ext_resource type="Resource" path="res://data/entities/skeleton.tres" id="15_o126x"]
-[ext_resource type="Script" path="res://src/world/pit.gd" id="16_exwn3"]
+[ext_resource type="Script" uid="uid://b5m7kta46hqrv" path="res://src/world/pit.gd" id="16_exwn3"]
 [ext_resource type="PackedScene" path="res://src/world/hook_post.tscn" id="17_oj03r"]
-[ext_resource type="Script" path="res://src/world/hook_post.gd" id="18_68f12"]
+[ext_resource type="Script" uid="uid://cxw24v4u275yn" path="res://src/world/hook_post.gd" id="18_68f12"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="19_7ysid"]
-[ext_resource type="Script" path="res://src/world/chest.gd" id="20_7g75p"]
+[ext_resource type="Script" uid="uid://byp4dkpucnvmo" path="res://src/world/chest.gd" id="20_7g75p"]
 [ext_resource type="Resource" path="res://data/items/small_key.tres" id="21_brl33"]
 [ext_resource type="PackedScene" path="res://src/world/cracked_wall.tscn" id="22_4jd4h"]
-[ext_resource type="Script" path="res://src/world/cracked_wall.gd" id="23_gxog7"]
+[ext_resource type="Script" uid="uid://vmcv83ug4a0m" path="res://src/world/cracked_wall.gd" id="23_gxog7"]
 [ext_resource type="Resource" path="res://data/items/compass.tres" id="24_kw1ob"]
 [ext_resource type="PackedScene" path="res://src/entities/turret/turret.tscn" id="25_dhxby"]
-[ext_resource type="Script" path="res://src/entities/turret/turret.gd" id="26_cse1y"]
+[ext_resource type="Script" uid="uid://716itsag4vk1" path="res://src/entities/turret/turret.gd" id="26_cse1y"]
+[ext_resource type="ArrayMesh" uid="uid://jhxp8umlqgep" path="res://assets/epiphany/meshes/paredes_la/muro_agrietado_cumbre_la_2n.res" id="27_gxog7"]
 [ext_resource type="Resource" path="res://data/entities/turret.tres" id="27_xnqix"]
+[ext_resource type="ArrayMesh" uid="uid://bs5mwr1yuehrf" path="res://assets/epiphany/meshes/naturaleza/piedra_chica_a.res" id="28_kw1ob"]
 [ext_resource type="PackedScene" path="res://src/world/eye_switch.tscn" id="28_torf6"]
-[ext_resource type="Script" path="res://src/world/eye_switch.gd" id="29_xckga"]
+[ext_resource type="Script" uid="uid://rcd8a41l0m7" path="res://src/components/hurtbox.gd" id="29_dhxby"]
+[ext_resource type="Script" uid="uid://n1p8wmv8inqn" path="res://src/world/eye_switch.gd" id="29_xckga"]
 [ext_resource type="Resource" path="res://data/items/dungeon_map.tres" id="30_76gtr"]
 [ext_resource type="PackedScene" path="res://src/world/door.tscn" id="31_kvxlt"]
-[ext_resource type="Script" path="res://src/world/door.gd" id="32_t0ubp"]
-[ext_resource type="Resource" path="res://data/drops/pot.tres" id="33_62nxm"]
-[ext_resource type="Script" path="res://src/world/arena_fight.gd" id="34_j1npm"]
-[ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="35_ckdpb"]
+[ext_resource type="Script" uid="uid://5iyuo3cn8lus" path="res://src/world/door.gd" id="32_t0ubp"]
+[ext_resource type="Resource" uid="uid://bjostbekjp6du" path="res://data/drops/pot.tres" id="33_62nxm"]
+[ext_resource type="Script" uid="uid://bccprbredple8" path="res://src/world/arena_fight.gd" id="34_j1npm"]
+[ext_resource type="Script" uid="uid://dcy0hg6ygxqg1" path="res://src/components/persistent_flag.gd" id="35_ckdpb"]
 [ext_resource type="Material" path="res://src/world/look/marca_visible.tres" id="36_kw1ob"]
 [ext_resource type="PackedScene" path="res://src/entities/mummy_guard/mummy_guard.tscn" id="36_pio1q"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_llave_cumbre_la.res" id="37_dhxby"]
-[ext_resource type="Script" path="res://src/entities/mummy_guard/mummy_guard.gd" id="37_e6m1n"]
-[ext_resource type="Texture2D" path="res://assets/ui/lock.svg" id="38_cse1y"]
+[ext_resource type="ArrayMesh" uid="uid://bht4m4jgyvg6i" path="res://assets/epiphany/meshes/paredes_la/puerta_llave_cumbre_la.res" id="37_dhxby"]
+[ext_resource type="Script" uid="uid://bdk0acke8h87u" path="res://src/entities/mummy_guard/mummy_guard.gd" id="37_e6m1n"]
+[ext_resource type="Texture2D" uid="uid://ddhjwybdg1ah2" path="res://assets/ui/lock.svg" id="38_cse1y"]
 [ext_resource type="Resource" path="res://data/entities/mummy_guard.tres" id="38_l3lwn"]
 [ext_resource type="Resource" path="res://data/items/shield_mirror.tres" id="39_23rcs"]
-[ext_resource type="Script" path="res://src/components/interactable.gd" id="39_xnqix"]
+[ext_resource type="Script" uid="uid://jstc1x28c0kx" path="res://src/components/interactable.gd" id="39_xnqix"]
 [ext_resource type="PackedScene" path="res://src/world/stairs.tscn" id="40_pku4l"]
-[ext_resource type="Script" path="res://src/world/stairs.gd" id="41_l2pft"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_interruptor_cumbre_la.res" id="41_torf6"]
+[ext_resource type="Script" uid="uid://d3mljv5i1j87j" path="res://src/world/stairs.gd" id="41_l2pft"]
+[ext_resource type="ArrayMesh" uid="uid://btxuenqatqakc" path="res://assets/epiphany/meshes/paredes_la/puerta_interruptor_cumbre_la.res" id="41_torf6"]
 [ext_resource type="PackedScene" path="res://src/world/wall_torch.tscn" id="42_ef7sn"]
 [ext_resource type="PackedScene" path="res://src/world/light/rotating_mirror.tscn" id="43_mllp2"]
-[ext_resource type="Script" path="res://src/world/light/rotating_mirror.gd" id="44_kfpir"]
+[ext_resource type="Script" uid="uid://dykxmlylqlb2h" path="res://src/world/light/rotating_mirror.gd" id="44_kfpir"]
 [ext_resource type="PackedScene" path="res://src/entities/shield_skeleton.tscn" id="45_gdvd1"]
 [ext_resource type="Resource" path="res://data/entities/shield_skeleton.tres" id="46_qyx7g"]
 [ext_resource type="Resource" path="res://data/items/boss_key.tres" id="47_nsu1x"]
 [ext_resource type="PackedScene" path="res://src/entities/archer_skeleton.tscn" id="48_85p4s"]
 [ext_resource type="Resource" path="res://data/entities/archer_skeleton.tres" id="49_26eur"]
 [ext_resource type="PackedScene" path="res://src/world/heart_piece.tscn" id="50_3sus1"]
-[ext_resource type="Script" path="res://src/world/heart_piece.gd" id="51_g60oh"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo/brasero.res" id="51_xckga"]
+[ext_resource type="Script" uid="uid://dq2xk4sts8nfn" path="res://src/world/heart_piece.gd" id="51_g60oh"]
+[ext_resource type="ArrayMesh" uid="uid://cjinn7xmelh2r" path="res://assets/epiphany/meshes/templo/brasero.res" id="51_xckga"]
 [ext_resource type="Resource" path="res://data/items/heart_piece.tres" id="52_7jck0"]
-[ext_resource type="Shader" path="res://src/world/look/llama_la.gdshader" id="52_76gtr"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/corazon.res" id="53_j23tx"]
-[ext_resource type="Script" path="res://src/world/torch_flicker.gd" id="53_kvxlt"]
+[ext_resource type="Shader" uid="uid://crwycv8bukd6m" path="res://src/world/look/llama_la.gdshader" id="52_76gtr"]
+[ext_resource type="ArrayMesh" uid="uid://jlluubdbax4r" path="res://assets/epiphany/meshes/objetos/corazon.res" id="53_j23tx"]
+[ext_resource type="Script" uid="uid://u2jhwu4cb42s" path="res://src/world/torch_flicker.gd" id="53_kvxlt"]
 [ext_resource type="PackedScene" path="res://src/world/stairs_down.tscn" id="54_rnlef"]
-[ext_resource type="Script" path="res://src/feel/stencil_light/stencil_light.gd" id="54_t0ubp"]
+[ext_resource type="Script" uid="uid://cgr3l68kk102e" path="res://src/feel/stencil_light/stencil_light.gd" id="54_t0ubp"]
 [ext_resource type="PackedScene" path="res://src/entities/watcher_eye/watcher_eye.tscn" id="55_4msbc"]
-[ext_resource type="Script" path="res://src/entities/watcher_eye/watcher_eye.gd" id="56_ogo5c"]
+[ext_resource type="Script" uid="uid://bc7ljpofw81dv" path="res://src/entities/watcher_eye/watcher_eye.gd" id="56_ogo5c"]
 [ext_resource type="Resource" path="res://data/entities/watcher_eye_boss.tres" id="57_5qx8i"]
 [ext_resource type="PackedScene" path="res://src/world/pickup.tscn" id="58_g0mo4"]
-[ext_resource type="Script" path="res://src/world/pickup.gd" id="59_8xsdw"]
+[ext_resource type="Script" uid="uid://ckysqr8ximkn0" path="res://src/world/pickup.gd" id="59_8xsdw"]
 [ext_resource type="Resource" path="res://data/items/heart_container.tres" id="60_fyak5"]
 [ext_resource type="PackedScene" path="res://src/world/warp_portal.tscn" id="61_2o8gx"]
-[ext_resource type="Script" path="res://src/world/portal.gd" id="62_281cb"]
-[ext_resource type="PackedScene" path="res://player/player.tscn" id="63_j6pnl"]
-[ext_resource type="Script" path="res://player/player.gd" id="64_v1lp2"]
-[ext_resource type="Resource" path="res://data/entities/player.tres" id="65_ilu4u"]
-[ext_resource type="Script" path="res://src/world/spawn_point.gd" id="66_2bu1c"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_jefe_cumbre_la.res" id="66_62nxm"]
-[ext_resource type="Script" path="res://src/tools/top_down_camera.gd" id="67_fxe5v"]
+[ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="62_281cb"]
+[ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="63_j6pnl"]
+[ext_resource type="Script" uid="uid://ckkibjv0y6axx" path="res://player/player.gd" id="64_v1lp2"]
+[ext_resource type="Resource" uid="uid://cooy3l0hm4jv0" path="res://data/entities/player.tres" id="65_ilu4u"]
+[ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="66_2bu1c"]
+[ext_resource type="ArrayMesh" uid="uid://c133y6v4an5xu" path="res://assets/epiphany/meshes/paredes_la/puerta_jefe_cumbre_la.res" id="66_62nxm"]
+[ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="67_fxe5v"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="68_diwyx"]
 [ext_resource type="PackedScene" path="res://src/world/look/caida_la.tscn" id="68_j1npm"]
-[ext_resource type="Script" path="res://src/world/look/caida_la.gd" id="69_ckdpb"]
-[ext_resource type="Script" path="res://src/ui/hud/hud.gd" id="69_o6c27"]
+[ext_resource type="Script" uid="uid://cpj0lhdoljshc" path="res://src/world/look/caida_la.gd" id="69_ckdpb"]
+[ext_resource type="Script" uid="uid://dbmfkcf8x5ids" path="res://src/ui/hud/hud.gd" id="69_o6c27"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/player_panel_solo.tscn" id="70_5pw4d"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/player_panel.tscn" id="71_o4cut"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/item_ring.tscn" id="72_e8ugc"]
-[ext_resource type="Script" path="res://src/world/look/enfoque_la.gd" id="83_pio1q"]
+[ext_resource type="Script" uid="uid://c238aeb6gn6ka" path="res://src/world/look/enfoque_la.gd" id="83_pio1q"]
 [ext_resource type="PackedScene" path="res://src/world/look/polvo_cumbre.tscn" id="84_e6m1n"]
-[ext_resource type="Script" path="res://src/world/look/brillo_la.gd" id="91_l3lwn"]
+[ext_resource type="Script" uid="uid://dlf8bqdycw2kg" path="res://src/world/look/brillo_la.gd" id="91_l3lwn"]
 [ext_resource type="NavigationMesh" path="res://levels/nav/cumbre_navmesh.tres" id="nav_cumbre"]
 
 [sub_resource type="Environment" id="Environment_23rcs"]
@@ -129,7 +132,7 @@ compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_pku4
 [sub_resource type="BoxShape3D" id="BoxShape3D_54876"]
 size = Vector3(14, 2.4, 12)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mllp2"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cse1y"]
 render_priority = 0
 shader = ExtResource("7_gxog7")
 shader_parameter/inner = Vector4(0.7, 0.6, 15.3, 13.9)
@@ -141,14 +144,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_kfpir"]
-material = SubResource("ShaderMaterial_mllp2")
+[sub_resource type="PlaneMesh" id="PlaneMesh_xnqix"]
+material = SubResource("ShaderMaterial_cse1y")
 size = Vector2(25.2, 23.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7nkmh"]
 size = Vector3(14, 2.4, 12)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gdvd1"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_torf6"]
 render_priority = 0
 shader = ExtResource("7_gxog7")
 shader_parameter/inner = Vector4(16.7, 0.6, 31.3, 13.9)
@@ -160,14 +163,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_qyx7g"]
-material = SubResource("ShaderMaterial_gdvd1")
+[sub_resource type="PlaneMesh" id="PlaneMesh_xckga"]
+material = SubResource("ShaderMaterial_torf6")
 size = Vector2(25.2, 23.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gvpcf"]
 size = Vector3(14, 2.4, 12)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_nsu1x"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_76gtr"]
 render_priority = 0
 shader = ExtResource("7_gxog7")
 shader_parameter/inner = Vector4(32.7, 0.6, 47.3, 13.9)
@@ -179,14 +182,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_85p4s"]
-material = SubResource("ShaderMaterial_nsu1x")
+[sub_resource type="PlaneMesh" id="PlaneMesh_kvxlt"]
+material = SubResource("ShaderMaterial_76gtr")
 size = Vector2(25.2, 23.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vbt54"]
 size = Vector3(14, 2.4, 12)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_26eur"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t0ubp"]
 render_priority = 0
 shader = ExtResource("7_gxog7")
 shader_parameter/inner = Vector4(0.7, 14.6, 15.3, 27.9)
@@ -198,14 +201,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_3sus1"]
-material = SubResource("ShaderMaterial_26eur")
+[sub_resource type="PlaneMesh" id="PlaneMesh_62nxm"]
+material = SubResource("ShaderMaterial_t0ubp")
 size = Vector2(25.2, 23.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lvhhx"]
 size = Vector3(14, 2.4, 12)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_g60oh"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j1npm"]
 render_priority = 0
 shader = ExtResource("7_gxog7")
 shader_parameter/inner = Vector4(16.7, 14.6, 31.3, 27.9)
@@ -217,14 +220,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_7jck0"]
-material = SubResource("ShaderMaterial_g60oh")
+[sub_resource type="PlaneMesh" id="PlaneMesh_ckdpb"]
+material = SubResource("ShaderMaterial_j1npm")
 size = Vector2(25.2, 23.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1sq4v"]
 size = Vector3(14, 2.4, 12)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_j23tx"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pio1q"]
 render_priority = 0
 shader = ExtResource("7_gxog7")
 shader_parameter/inner = Vector4(32.7, 14.6, 47.3, 27.9)
@@ -236,12 +239,18 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_rnlef"]
-material = SubResource("ShaderMaterial_j23tx")
+[sub_resource type="PlaneMesh" id="PlaneMesh_e6m1n"]
+material = SubResource("ShaderMaterial_pio1q")
 size = Vector2(25.2, 23.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vd0qd"]
 size = Vector3(8, 2.4, 12)
+
+[sub_resource type="BoxShape3D" id="WallShape"]
+size = Vector3(2, 3.1, 2)
+
+[sub_resource type="BoxShape3D" id="HurtShape"]
+size = Vector3(2.4, 2.6, 2.4)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2t8pu"]
 size = Vector3(14, 2.4, 2)
@@ -446,7 +455,7 @@ center_offset = Vector3(0, 0.32, 0)
 [sub_resource type="BoxShape3D" id="BoxShape3D_j50qt"]
 size = Vector3(14, 2.4, 12)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1sq4v"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l3lwn"]
 render_priority = 0
 shader = ExtResource("7_gxog7")
 shader_parameter/inner = Vector4(0.7, 0.6, 15.3, 13.9)
@@ -458,14 +467,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_vd0qd"]
-material = SubResource("ShaderMaterial_1sq4v")
+[sub_resource type="PlaneMesh" id="PlaneMesh_23rcs"]
+material = SubResource("ShaderMaterial_l3lwn")
 size = Vector2(25.2, 23.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yv2nd"]
 size = Vector3(14, 2.4, 12)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2t8pu"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pku4l"]
 render_priority = 0
 shader = ExtResource("7_gxog7")
 shader_parameter/inner = Vector4(16.7, 0.6, 31.3, 13.9)
@@ -477,14 +486,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_smahj"]
-material = SubResource("ShaderMaterial_2t8pu")
+[sub_resource type="PlaneMesh" id="PlaneMesh_l2pft"]
+material = SubResource("ShaderMaterial_pku4l")
 size = Vector2(25.2, 23.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tqev7"]
 size = Vector3(14, 2.4, 12)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0so67"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ef7sn"]
 render_priority = 0
 shader = ExtResource("7_gxog7")
 shader_parameter/inner = Vector4(32.7, 0.6, 47.3, 13.9)
@@ -496,14 +505,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_j50qt"]
-material = SubResource("ShaderMaterial_0so67")
+[sub_resource type="PlaneMesh" id="PlaneMesh_mllp2"]
+material = SubResource("ShaderMaterial_ef7sn")
 size = Vector2(25.2, 23.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8jp2h"]
 size = Vector3(14, 2.4, 12)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yv2nd"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kfpir"]
 render_priority = 0
 shader = ExtResource("7_gxog7")
 shader_parameter/inner = Vector4(0.7, 14.6, 15.3, 27.9)
@@ -515,14 +524,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_tqev7"]
-material = SubResource("ShaderMaterial_yv2nd")
+[sub_resource type="PlaneMesh" id="PlaneMesh_gdvd1"]
+material = SubResource("ShaderMaterial_kfpir")
 size = Vector2(25.2, 23.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0evnq"]
 size = Vector3(14, 2.4, 12)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8jp2h"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qyx7g"]
 render_priority = 0
 shader = ExtResource("7_gxog7")
 shader_parameter/inner = Vector4(16.7, 14.6, 31.3, 27.9)
@@ -534,14 +543,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_0evnq"]
-material = SubResource("ShaderMaterial_8jp2h")
+[sub_resource type="PlaneMesh" id="PlaneMesh_nsu1x"]
+material = SubResource("ShaderMaterial_qyx7g")
 size = Vector2(25.2, 23.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kmwtg"]
 size = Vector3(14, 2.4, 12)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kmwtg"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_85p4s"]
 render_priority = 0
 shader = ExtResource("7_gxog7")
 shader_parameter/inner = Vector4(32.7, 14.6, 47.3, 27.9)
@@ -553,8 +562,8 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_ci860"]
-material = SubResource("ShaderMaterial_kmwtg")
+[sub_resource type="PlaneMesh" id="PlaneMesh_26eur"]
+material = SubResource("ShaderMaterial_85p4s")
 size = Vector2(25.2, 23.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ci860"]
@@ -744,7 +753,7 @@ center_offset = Vector3(0, 0.32, 0)
 [sub_resource type="BoxShape3D" id="BoxShape3D_xgonm"]
 size = Vector3(14, 2.4, 12)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2coyo"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3sus1"]
 render_priority = 0
 shader = ExtResource("7_gxog7")
 shader_parameter/inner = Vector4(32.7, 14.6, 47.3, 27.9)
@@ -756,8 +765,8 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_ixgep"]
-material = SubResource("ShaderMaterial_2coyo")
+[sub_resource type="PlaneMesh" id="PlaneMesh_g60oh"]
+material = SubResource("ShaderMaterial_3sus1")
 size = Vector2(25.2, 23.2)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_oerog"]
@@ -839,7 +848,7 @@ shape = SubResource("BoxShape3D_54876")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoBase/Grieta" unique_id=2002536149]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_kfpir")
+mesh = SubResource("PlaneMesh_xnqix")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoBase/Grieta" unique_id=1197827531]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -871,7 +880,7 @@ shape = SubResource("BoxShape3D_7nkmh")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoBase/Nido" unique_id=1459433667]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_qyx7g")
+mesh = SubResource("PlaneMesh_xckga")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoBase/Nido" unique_id=1059850984]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -903,7 +912,7 @@ shape = SubResource("BoxShape3D_gvpcf")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoBase/Camara" unique_id=27705737]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_85p4s")
+mesh = SubResource("PlaneMesh_kvxlt")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoBase/Camara" unique_id=1835841653]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -935,7 +944,7 @@ shape = SubResource("BoxShape3D_vbt54")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoBase/Columnas" unique_id=56452415]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_3sus1")
+mesh = SubResource("PlaneMesh_62nxm")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoBase/Columnas" unique_id=1608671798]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -967,7 +976,7 @@ shape = SubResource("BoxShape3D_lvhhx")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoBase/Atrio" unique_id=1236957297]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_7jck0")
+mesh = SubResource("PlaneMesh_ckdpb")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoBase/Atrio" unique_id=1692305608]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -999,7 +1008,7 @@ shape = SubResource("BoxShape3D_1sq4v")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoBase/Ventisquero" unique_id=1334240851]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_rnlef")
+mesh = SubResource("PlaneMesh_e6m1n")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoBase/Ventisquero" unique_id=468686804]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1074,10 +1083,62 @@ collision_mask = 5
 script = ExtResource("14_go6dy")
 config = ExtResource("15_o126x")
 
-[node name="GrietaCrackedWall" type="StaticBody3D" parent="PisoBase" unique_id=1410771246 instance=ExtResource("22_4jd4h")]
+[node name="GrietaCrackedWall" parent="PisoBase" unique_id=1410771246 instance=ExtResource("22_4jd4h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 14)
 script = ExtResource("23_gxog7")
 flag = &"cu_grieta_cracked_wall"
+
+[node name="Wall" parent="PisoBase/GrietaCrackedWall" index="0"]
+unique_name_in_owner = true
+
+[node name="Model" parent="PisoBase/GrietaCrackedWall/Wall" index="0"]
+mesh = ExtResource("27_gxog7")
+
+[node name="Rubble" parent="PisoBase/GrietaCrackedWall" index="1"]
+unique_name_in_owner = true
+visible = false
+
+[node name="Rock0" parent="PisoBase/GrietaCrackedWall/Rubble" index="0"]
+transform = Transform3D(0.9397, 0, -0.342, 0, 1, 0, 0.342, 0, 0.9397, -1.28, 0, 0.72)
+mesh = ExtResource("28_kw1ob")
+
+[node name="Rock1" parent="PisoBase/GrietaCrackedWall/Rubble" index="1"]
+transform = Transform3D(0.7727, 0, 0.2071, 0, 0.8, 0, -0.2071, 0, 0.7727, -0.32, 0, 1.2)
+mesh = ExtResource("28_kw1ob")
+
+[node name="Rock2" parent="PisoBase/GrietaCrackedWall/Rubble" index="2"]
+transform = Transform3D(0.9362, 0, -0.6555, 0, 1.1429, 0, 0.6555, 0, 0.9362, 0.64, 0, 0.6)
+mesh = ExtResource("28_kw1ob")
+
+[node name="Rock3" parent="PisoBase/GrietaCrackedWall/Rubble" index="3"]
+transform = Transform3D(0.7034, 0, -0.124, 0, 0.7143, 0, 0.124, 0, 0.7034, 1.44, 0, 1.32)
+mesh = ExtResource("28_kw1ob")
+
+[node name="Rock4" parent="PisoBase/GrietaCrackedWall/Rubble" index="4"]
+transform = Transform3D(0.7918, 0, 0.4571, 0, 0.9143, 0, -0.4571, 0, 0.7918, 0.08, 0, -0.24)
+mesh = ExtResource("28_kw1ob")
+
+[node name="Rock5" parent="PisoBase/GrietaCrackedWall/Rubble" index="5"]
+transform = Transform3D(0.404, 0, -0.4815, 0, 0.6286, 0, 0.4815, 0, 0.404, -0.88, 0, -0.6)
+mesh = ExtResource("28_kw1ob")
+
+[node name="CollisionShape3D" parent="PisoBase/GrietaCrackedWall" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)
+shape = SubResource("WallShape")
+
+[node name="Hurtbox" parent="PisoBase/GrietaCrackedWall" index="3"]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+script = ExtResource("29_dhxby")
+surface = "none"
+
+[node name="CollisionShape3D" parent="PisoBase/GrietaCrackedWall/Hurtbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = SubResource("HurtShape")
+
+[node name="PersistentFlag" parent="PisoBase/GrietaCrackedWall" index="4"]
+script = ExtResource("35_ckdpb")
 
 [node name="GrietaPitA" type="Area3D" parent="PisoBase" unique_id=1566079891]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, -1.8, 8)
@@ -1684,7 +1745,7 @@ shape = SubResource("BoxShape3D_j50qt")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoCornisa/Torretas" unique_id=1377319707]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_vd0qd")
+mesh = SubResource("PlaneMesh_23rcs")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoCornisa/Torretas" unique_id=300943340]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1716,7 +1777,7 @@ shape = SubResource("BoxShape3D_yv2nd")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoCornisa/Espejos" unique_id=1416180909]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_smahj")
+mesh = SubResource("PlaneMesh_l2pft")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoCornisa/Espejos" unique_id=1695266188]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1748,7 +1809,7 @@ shape = SubResource("BoxShape3D_tqev7")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoCornisa/Llegada" unique_id=1030954048]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_j50qt")
+mesh = SubResource("PlaneMesh_mllp2")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoCornisa/Llegada" unique_id=1102238580]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1780,7 +1841,7 @@ shape = SubResource("BoxShape3D_8jp2h")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoCornisa/OjoDelSol" unique_id=1827852448]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_tqev7")
+mesh = SubResource("PlaneMesh_gdvd1")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoCornisa/OjoDelSol" unique_id=1471029942]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1812,7 +1873,7 @@ shape = SubResource("BoxShape3D_0evnq")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoCornisa/Hueco" unique_id=1041567229]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_0evnq")
+mesh = SubResource("PlaneMesh_nsu1x")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoCornisa/Hueco" unique_id=1586059116]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1844,7 +1905,7 @@ shape = SubResource("BoxShape3D_kmwtg")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoCornisa/Antesala" unique_id=874471132]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_ci860")
+mesh = SubResource("PlaneMesh_26eur")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoCornisa/Antesala" unique_id=515776639]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -2570,7 +2631,7 @@ script = ExtResource("54_t0ubp")
 color = Color(1.35, 1.15, 0.9, 1)
 radius = 3.0
 
-[node name="CaidaLA53" type="Node3D" parent="PisoCornisa" unique_id=1391231308 instance=ExtResource("68_j1npm")]
+[node name="CaidaLA53" type="Node3D" parent="PisoCornisa" unique_id=1604282089 instance=ExtResource("68_j1npm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 24)
 script = ExtResource("69_ckdpb")
 
@@ -2604,7 +2665,7 @@ shape = SubResource("BoxShape3D_xgonm")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoCima/Cima" unique_id=411543774]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_ixgep")
+mesh = SubResource("PlaneMesh_g60oh")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoCima/Cima" unique_id=1054262082]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -2818,6 +2879,9 @@ near_margin = 3.5
 [node name="Nieve" type="Node3D" parent="TopDownCamera" unique_id=1366655404 instance=ExtResource("84_e6m1n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
+[node name="@Node3D@2" type="Node3D" parent="TopDownCamera" unique_id=2132277743 instance=ExtResource("84_e6m1n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
+
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1695837931 instance=ExtResource("68_diwyx")]
 layer = 10
 script = ExtResource("69_o6c27")
@@ -2831,6 +2895,7 @@ navigation_mesh = ExtResource("nav_cumbre")
 [node name="BrilloLA" type="Node" parent="." unique_id=1902298091]
 script = ExtResource("91_l3lwn")
 
+[editable path="PisoBase/GrietaCrackedWall"]
 [editable path="PisoBase/NidoLocked"]
 [editable path="PisoBase/CamaraDoor"]
 [editable path="PisoBase/CamaraStairs"]
