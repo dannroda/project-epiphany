@@ -4967,14 +4967,14 @@ Playtest 2026-10-13, Totora (D3): en la sala del estanque con ojos (interruptore
 
 **Notas:** Hecho: dos vasijas de flechas (data/drops/pot_arrows.tres, 5 flechas si tiene el arco) en cada sala de Totora con un ojo: Juncal (esquina SO, cerca de donde se le tira al ojo) y Tejedores (franja este, de donde se tira por encima del agua). Y en cualquier DropTable las filas de munición (flechas, bombas) pesan 4 veces más con un cuarto o menos de lo que entra (drop_table.gd). Tests: test_totora test_every_eye_room_has_an_arrow_pot, test_drops test_arrows_drop_more_often_when_the_quiver_runs_low.
 
-### 11.155 Chullpa: la momia aparece en vez de saltar hacia el player; onda expansiva con shader vistoso · Pendiente
+### 11.155 Chullpa: la momia aparece en vez de saltar hacia el player; onda expansiva con shader vistoso · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `chullpa`, `jefe`
 
 Playtest 2026-10-13: en la pelea de la momia (MummyGuard), cuando 'salta' no se ve que siga al player: simplemente aparece en el punto de caída. Debería verse el salto (arco hacia la marca) siguiendo al player mientras apunta. Además, Daniel quiere que la onda expansiva del aterrizaje sea un shader vistoso (anillo con distorsión/brillo) en lugar del efecto actual.
 
-- [ ] El salto se ve: la momia viaja en arco hasta la marca (que sigue al player hasta fijarse).
-- [ ] Onda expansiva del aterrizaje con un shader vistoso (anillo que se expande, distorsión/brillo).
+- [x] El salto se ve: la momia viaja en arco hasta la marca (que sigue al player hasta fijarse).
+- [x] Onda expansiva del aterrizaje con un shader vistoso (anillo que se expande, distorsión/brillo).
 
 ### 11.156 Chullpa: se ven los techos (crestas) de las paredes LA horneadas · Pendiente
 
