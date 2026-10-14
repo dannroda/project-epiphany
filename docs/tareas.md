@@ -5754,3 +5754,35 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 - [ ] Música de verdad para overworld y templo (hoy: capas sintetizadas por src/tools/render_music.gd)
 - [ ] SFX de explosión, secreto, curación y temblor (hoy sintetizados en Feel)
 - [ ] Pasos (footsteps) y ambiente del templo (Kenney Impact Sounds trae pasos; falta el evento)
+
+## Playtest
+
+### Revisión: lo listo para probar  (0/27 probadas)
+
+1. [ ] 11.130 Bocas de cueva talladas en el risco · Revisión
+2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · Revisión
+3. [ ] 11.111 Cactus, árboles y matas se cortan como el pasto · Revisión
+4. [ ] 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · En curso
+5. [ ] 11.118 Sandalias: correr manteniendo y salto largo con la pluma · En curso
+6. [ ] 11.24 Más secretos en el overworld · Revisión
+7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso
+8. [ ] 11.30 Ítem de D3: el gancho · En curso
+9. [ ] 11.28 Atajos que se abren al volver · Revisión
+10. [ ] 11.46 Jefe: game juice · Revisión
+11. [ ] 11.29 Overworld después del jefe · Revisión
+12. [ ] 7.9 Rediseño del overworld como hub de varias mazmorras · En curso
+13. [ ] 7.10 Overworld con forma de Zelda 2D, no cuadrado · En curso
+14. [ ] Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos · En curso
+15. [ ] 11.117 Huecos a otro piso se ven distintos de los fosos · En curso
+16. [ ] 11.5 Galería de trampas: pinchos · Revisión
+17. [ ] 11.98 La cámara muestra lo que se desbloquea · Revisión
+18. [ ] 11.112 Fantasmas al esquivar · Revisión
+19. [ ] 11.102 Mapa: nombres de zona chicos y solo los que importan · Revisión
+20. [ ] 11.103 El minimapa se transparenta con el player debajo · Revisión
+21. [ ] 11.104 Ítems de la mazmorra en la pantalla del mapa · Revisión
+22. [ ] 11.114 Botellas en su propia fila de la pestaña Ítems · Revisión
+23. [ ] 11.106 Intro al día con el overworld nuevo · Revisión
+24. [ ] 11.107 Mejorar la ambientación · Revisión
+25. [ ] 10.19 Fin de la demo · Revisión
+26. [ ] 10.24 Tope de FPS · Revisión
+27. [ ] 10.25 Sombras del sol acordes a la cámara cenital · Revisión
