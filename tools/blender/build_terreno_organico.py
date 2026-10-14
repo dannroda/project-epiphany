@@ -34,6 +34,8 @@ POSTS = [(x, -z) for x, z in DATA.get("posts", [])]
 # Sin decoración delante de cada ojo (largo, medio ancho en m): la flecha vuela recta a 1 m y una planta la frena.
 EYES = [(Vector((e["x"], -e["z"])), Vector((e["dx"], -e["dz"])).normalized()) for e in DATA.get("eyes", [])]
 FIRE_LINE = (16.0, 1.0)
+# Los caminos de las terrazas, sobre la tapa: si el contorno del camino toca el borde, la tapa no le abre el agujero.
+PATH_LIFT = 0.02
 GW, GH = len(GRID[0]), len(GRID)
 TOP = 2.6
 CAP = 0.15
@@ -975,7 +977,7 @@ def main():
 			abyss(ground, lp, z)
 		for lp in waters[level]:
 			shallow(ground, lp)
-		paint_role(ground, fill(ground, [pt for pt, _f in paths[level]], z, ground_height if level == 0 else None), "path", vary=0.015)
+		paint_role(ground, fill(ground, [pt for pt, _f in paths[level]], z + (PATH_LIFT if level else 0.0), ground_height if level == 0 else None), "path", vary=0.015)
 	objects += _split(ground, "suelo-col", "outdoor", collection)
 	objects += decor(load_meshes(), collection)
 	epi.publish("terreno_organico", objects=objects, part=_part)
