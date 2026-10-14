@@ -1,6 +1,6 @@
 class_name Pit
 extends Area3D
-## Debajo de un hueco: el player que cae pierde vida y vuelve a la entrada de la sala.
+## Debajo de un hueco: el player que cae pierde vida y vuelve a la entrada de la sala (también si muere: no sigue cayendo).
 
 @export var damage := 2
 ## Adónde vuelve el que cae: el más cercano entre él y sus hijos a donde pisó suelo por última vez; si no hay, a la entrada de la
@@ -29,8 +29,6 @@ func _fall(player: PlayerCharacter) -> void:
 	var info := DamageInfo.make(damage, 0.0, self)
 	info.unavoidable = true
 	player.hurtbox.receive(info)
-	if player.is_dead:
-		return
 	var back: Variant = _nearest_respawn(player.last_ground) if respawn else GameState.room_entry
 	if back == null:
 		var point := SpawnPoint.find(get_tree(), GameState.spawn_point)
