@@ -43,7 +43,7 @@ func _ready() -> void:
 
 
 func _get_configuration_warnings() -> PackedStringArray:
-	return PersistentFlag.warnings_for(flag, false) if id != &"" else PackedStringArray(["Falta el id."])
+	return PersistentFlag.warnings_for(flag, false, self) if id != &"" else PackedStringArray(["Falta el id."])
 
 
 func spawn_id() -> StringName:

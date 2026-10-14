@@ -68,7 +68,7 @@ func _process(delta: float) -> void:
 
 
 func _get_configuration_warnings() -> PackedStringArray:
-	return PersistentFlag.warnings_for(flag, true)
+	return PersistentFlag.warnings_for(flag, true, self)
 
 
 func _on_hit(info: DamageInfo) -> void:

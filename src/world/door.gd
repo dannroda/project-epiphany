@@ -110,7 +110,7 @@ func _ready() -> void:
 
 
 func _get_configuration_warnings() -> PackedStringArray:
-	var warnings := PersistentFlag.warnings_for(flag, kind not in [Kind.LOCKED, Kind.BOSS])
+	var warnings := PersistentFlag.warnings_for(flag, kind not in [Kind.LOCKED, Kind.BOSS], self)
 	if kind == Kind.SHUTTER and room == null:
 		warnings.append("Una persiana necesita su Room.")
 	if kind == Kind.SWITCH and switches.is_empty():

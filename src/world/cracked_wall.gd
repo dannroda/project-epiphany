@@ -45,7 +45,7 @@ func _ready() -> void:
 
 
 func _get_configuration_warnings() -> PackedStringArray:
-	return PersistentFlag.warnings_for(flag, false)
+	return PersistentFlag.warnings_for(flag, false, self)
 
 
 func _on_hit(info: DamageInfo) -> void:

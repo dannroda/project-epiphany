@@ -2,7 +2,6 @@ class_name DropTable
 extends Resource
 ## Tabla ponderada de drops. La usan enemigos, vasijas y pasto.
 
-const PICKUP := preload("res://src/world/pickup.tscn")
 ## Con un cuarto o menos de la munición que entra (flechas, bombas), su fila pesa tanto más.
 const LOW_AMMO_SHARE := 0.25
 const LOW_AMMO_BOOST := 4.0
@@ -43,10 +42,7 @@ func drop_at(position: Vector3, parent: Node, rng: RandomNumberGenerator = null)
 	var entry := roll(rng)
 	if entry == null or entry.is_nothing():
 		return null
-	var pickup: Pickup = PICKUP.instantiate()
-	pickup.item = entry.item
-	pickup.amount = entry.amount
-	pickup.heal = entry.heal
+	var pickup := Pickup.make(entry.item, entry.amount, entry.heal)
 	parent.add_child(pickup)
 	pickup.global_position = position
 	return pickup

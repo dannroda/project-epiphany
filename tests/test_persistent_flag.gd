@@ -25,7 +25,20 @@ func _finish_text(tree: SceneTree) -> void:
 func test_warnings_for_bad_flags() -> void:
 	assert_eq(PersistentFlag.warnings_for(&"ow_test_chest", false).size(), 0, "registrado y con prefijo")
 	assert_eq(PersistentFlag.warnings_for(&"ow_test_chets", false).size(), 1, "mal escrito: no está registrado")
-	assert_eq(PersistentFlag.warnings_for(&"test_chest", false).size(), 2, "sin registrar y sin prefijo")
+	assert_eq(PersistentFlag.warnings_for(&"test_chest", false).size(), 1, "sin registrar")
+	var level := Node3D.new()
+	var dungeon := Dungeon.new()
+	dungeon.id = &"ch"
+	level.add_child(dungeon)
+	dungeon.owner = level
+	var inside: Chest = preload("res://src/world/chest.tscn").instantiate()
+	level.add_child(inside)
+	inside.owner = level
+	inside.flag = &"ow_test_chest"
+	assert_eq(inside._get_configuration_warnings().size(), 1, "en la Chullpa un flag ow_ no sigue la convención")
+	inside.flag = &"ch_feather_chest"
+	assert_eq(inside._get_configuration_warnings().size(), 0, "ch_ sí")
+	level.free()
 	assert_eq(PersistentFlag.warnings_for(&"", true).size(), 0, "opcional y vacío: sin advertencia")
 	var chest: Chest = preload("res://src/world/chest.tscn").instantiate()
 	chest.flag = &"ow_test_chets"

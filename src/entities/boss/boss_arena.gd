@@ -1,3 +1,4 @@
+@tool
 class_name BossArena
 extends Node
 ## La guarida: al entrar se cierra la puerta, corre la intro (cámara al ojo, nombre, música) y arranca la pelea.
@@ -8,17 +9,30 @@ extends Node
 
 signal fight_started
 
-const PICKUP := preload("res://src/world/pickup.tscn")
-const HEART_CONTAINER := preload("res://data/items/heart_container.tres")
-const ENDING := preload("res://data/dialogue/ending.dialogue")
 ## El doom de la sala con el jefe vencido.
 const CALM_DOOM := 0.2
 
 const SKIP_ACTIONS: Array[StringName] = [&"ui_accept", &"attack", &"interact"]
 
 @export var room: Room
-@export var defeated_flag := &"te_boss_defeated"
-@export var container_flag := &"te_heart_container"
+@export var defeated_flag: StringName:
+	set(value):
+		defeated_flag = value
+		update_configuration_warnings()
+@export var container_flag: StringName:
+	set(value):
+		container_flag = value
+		update_configuration_warnings()
+## Lo que aparece al vencerlo (una vez, por `container_flag`).
+@export var reward: ItemData:
+	set(value):
+		reward = value
+		update_configuration_warnings()
+## El diálogo al entrar al portal de salida.
+@export var ending: DialogueResource:
+	set(value):
+		ending = value
+		update_configuration_warnings()
 @export var boss: Boss
 @export var door: Door
 @export var exit_portal: Portal
@@ -38,6 +52,8 @@ var ending_choice := ""
 
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
 	process_mode = PROCESS_MODE_ALWAYS
 	exit_portal.player_entered.connect(_on_exit)
 	if GameState.get_flag(defeated_flag) == true and not GameState.boss_rematch:
@@ -92,6 +108,16 @@ func _awaken() -> void:
 	blink.tween_property(boss, ^"eye_open", 0.0, 0.3).set_delay(0.8)
 
 
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings := PersistentFlag.warnings_for(defeated_flag, false, self)
+	warnings.append_array(PersistentFlag.warnings_for(container_flag, false, self))
+	if reward == null:
+		warnings.append("Falta el premio (reward).")
+	if ending == null:
+		warnings.append("Falta el diálogo de fin (ending).")
+	return warnings
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if not in_intro:
 		return
@@ -132,8 +158,7 @@ func _already_won() -> void:
 
 
 func _spawn_reward(point: Vector3) -> void:
-	var pickup: Pickup = PICKUP.instantiate()
-	pickup.item = HEART_CONTAINER
+	var pickup := Pickup.make(reward)
 	pickup.item_get = true
 	pickup.lifetime = 0.0
 	pickup.magnet_radius = 0.0
@@ -159,7 +184,7 @@ func _on_exit(_player: PlayerCharacter) -> void:
 		return
 	SaveManager.autosave(false)
 	ending_choice = ""
-	await TextBox.open(ENDING, "start", TextBox.Style.ITEM, [self]).finished
+	await TextBox.open(ending, "start", TextBox.Style.ITEM, [self]).finished
 	match ending_choice:
 		"keep_playing":
 			exit_portal.travel()
@@ -171,4 +196,5 @@ func _on_exit(_player: PlayerCharacter) -> void:
 
 
 func _exit_tree() -> void:
-	Music.boss_fight = false
+	if not Engine.is_editor_hint():
+		Music.boss_fight = false
