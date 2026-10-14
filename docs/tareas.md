@@ -4710,7 +4710,7 @@ Playtest 2026-10-13 (mejora, no bug): cuando el player queda detrás de un acant
 
 **Prueba:** tests/test_player_hole.gd
 
-**Notas:** Si una pared tapa a un jugador, la cámara gira hasta quedar cenital sobre el foco (overhead_time = 0.4 s, en el grupo Oclusión de TopDownCamera) y vuelve al ángulo normal cuando deja de taparlo. Ya no se abre el agujero. Probar: caminar detrás de un acantilado alto del overworld.
+**Notas:** Si una pared tapa a un jugador, la cámara gira hasta quedar cenital sobre el foco y vuelve cuando deja de taparlo; ya no se abre el agujero. Después del playtest del 2026-10-14: solo las paredes la hacen subir (la roca del terreno y las paredes del kit, lo que antes se recortaba); detrás de árboles, cardones y objetos queda la silueta x-ray. El giro ahora es un resorte amortiguado de 1 s (overhead_time) y se queda arriba 0,6 s más (overhead_hold) después de que la pared deja de taparlo, así no sube y baja a cada paso. Las dos cosas se ajustan en el grupo Oclusión de TopDownCamera. Probar: caminar detrás de un acantilado alto y bordearlo; después, detrás de un árbol (no tiene que subir).
 
 **Capturas:** `compass/images/m11-134-20261013-224604.png`
 
