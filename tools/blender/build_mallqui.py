@@ -14,7 +14,6 @@ import epi  # noqa: E402
 
 kit = epi.start()
 BODY = [(0.0, 0.0), (0.66, 0.0), (0.88, 0.12), (0.97, 0.4), (1.0, 0.8), (0.96, 1.2), (0.88, 1.6), (0.74, 1.95), (0.52, 2.15), (0.3, 2.25), (0.0, 2.28)]
-HEAD = [(0.0, 2.18), (0.32, 2.22), (0.47, 2.38), (0.52, 2.6), (0.49, 2.8), (0.36, 2.95), (0.0, 3.0)]
 SIDES = 28
 CLOTH = "tela_roja"
 GOLD = "dorado"
@@ -32,8 +31,9 @@ CHEST = 1.32
 CROWN_RADIUS = 0.95
 CROWN_RAYS = 11
 ## La cara mira hacia arriba (FACE_TILT rad desde el frente) para que se lea desde la cámara alta.
-FACE_Z = 2.6
-FACE_TILT = 0.55
+FACE_Z = 2.72
+FACE_TILT = 0.25
+HEAD = [(math.cos(a) * 0.52, FACE_Z + math.sin(a) * 0.52) for a in (math.radians(d) for d in range(-90, 91, 10))]
 
 
 def radius_at(profile, z):
@@ -92,6 +92,8 @@ def body(p):
 			col = int((math.atan2(c.y, c.x) + math.pi) / (2 * math.pi) * SIDES / 2)
 			row = int((c.z - TOCAPU[0]) / TOCAPU_ROW)
 			key = (TOCAPU_COLORS[(col + row * 3) % len(TOCAPU_COLORS)], "MID")
+		elif c.z > 2.05:
+			key = ("tela_azul", "MID")
 		else:
 			key = (CLOTH, "GRADIENT")
 		groups.setdefault(key, []).append(f)
@@ -127,56 +129,26 @@ def sun(p, center, radius, rays=12):
 		p.paint(ray, GOLD, "MID")
 
 
-def tilt_up(p, faces):
-	p.transform(faces, Matrix.Translation((0, 0, FACE_Z)) @ Matrix.Rotation(-FACE_TILT, 4, "X") @ Matrix.Translation((0, 0, -FACE_Z)))
-
-
 def head(p):
 	skull = p.lathe(refine(HEAD), sides=SIDES)
-	p.paint(skull, CLOTH, "DARK", vary=0.03)
-
-	face = p.rounded_box(-0.38, 0.38, -0.06, 0.06, -0.34, 0.3, radius=0.05, segments=2)
-	for v in {v for f in face for v in f.verts}:
-		v.co.y += 0.14 * (v.co.x / 0.38) ** 2
-	p.transform(face, Matrix.Translation((0, -0.52, FACE_Z)))
-	p.paint(face, GOLD, "MID", vary=0.03)
-	features = []
-	for side in (-1, 1):
-		eye = epi.eye(p, Vector((side * 0.17, -0.59, FACE_Z + 0.04)), 0.14, depth=0.03, pupil_swatch="doom", pupils=features)
-		p.paint(eye, "hueso", "LIGHT")
-		brow = p.box(side * 0.17 - 0.14, side * 0.17 + 0.14, -0.035, 0.0, -0.03, 0.03)
-		p.transform(brow, Matrix.Translation((0, -0.585, FACE_Z + 0.19)) @ Matrix.Rotation(-side * 0.3, 4, "Y"))
-		p.paint(brow, "noche", "MID")
-		features += eye + brow
-	nose = p.rounded_box(-0.055, 0.055, -0.08, 0.0, -0.12, 0.06, radius=0.02, segments=1)
-	p.transform(nose, Matrix.Translation((0, -0.58, FACE_Z - 0.12)))
-	p.paint(nose, GOLD, "LIGHT")
-	mouth = p.rounded_box(-0.16, 0.16, -0.02, 0.0, -0.035, 0.035, radius=0.015, segments=1)
-	p.transform(mouth, Matrix.Translation((0, -0.585, FACE_Z - 0.25)))
-	p.paint(mouth, "noche", "MID")
-	tassels = []
-	for i in range(9):
-		x = (i - 4) * 0.08
-		tassels += p.box(x - 0.03, x + 0.03, -0.025, 0.025, FACE_Z + 0.26, FACE_Z + 0.4)
-	p.transform(tassels, Matrix.Translation((0, -0.56, 0)))
-	p.paint(tassels, CLOTH, "MID", vary=0.05)
-	tilt_up(p, face + features + nose + mouth + tassels)
+	p.paint(skull, GOLD, "MID", vary=0.03)
+	epi.angry_face(p, Vector((0, 0, FACE_Z)), 0.52, FACE_TILT, size=1.3)
 	for side in (-1, 1):
 		spool = p.cylinder(0.17, -0.05, 0.05, sides=20)
-		p.transform(spool, Matrix.Translation((side * 0.53, -0.02, 2.58)) @ Matrix.Rotation(math.pi / 2, 4, "Y"))
+		p.transform(spool, Matrix.Translation((side * 0.53, -0.02, FACE_Z)) @ Matrix.Rotation(math.pi / 2, 4, "Y"))
 		p.paint(spool, GOLD, "LIGHT")
 		stud = p.cylinder(0.08, -0.06, 0.06, sides=14)
-		p.transform(stud, Matrix.Translation((side * 0.53, -0.02, 2.58)) @ Matrix.Rotation(math.pi / 2, 4, "Y"))
+		p.transform(stud, Matrix.Translation((side * 0.53, -0.02, FACE_Z)) @ Matrix.Rotation(math.pi / 2, 4, "Y"))
 		p.paint(stud, "tela_azul", "MID")
 
-	band = p.lathe([(0.47, 2.8), (0.52, 2.82), (0.52, 2.94), (0.44, 2.97)], sides=SIDES, caps=False)
-	p.paint(band, GOLD, "MID")
+	band = p.lathe([(radius_at(HEAD, z) + 0.03, z) for z in (FACE_Z + 0.34, FACE_Z + 0.39, FACE_Z + 0.44, FACE_Z + 0.48)], sides=SIDES, caps=False)
+	p.paint(band, CLOTH, "MID")
 
 	rays = 2 * CROWN_RAYS
 	edge = [(math.cos(math.pi * i / rays) * r, math.sin(math.pi * i / rays) * r) for i in range(rays + 1) for r in [CROWN_RADIUS * (1.0 if i % 2 else 0.78)]]
-	fan = upright(p, [(0.0, 0.0)] + edge, 0.03, Vector((0, 0.22, 2.78)), tilt=0.2)
+	fan = upright(p, [(0.0, 0.0)] + edge, 0.03, Vector((0, 0.22, FACE_Z + 0.06)), tilt=0.2)
 	p.paint(fan, GOLD, "GRADIENT")
-	sun(p, Vector((0, 0.12, 3.25)), 0.2, rays=10)
+	sun(p, Vector((0, 0.12, FACE_Z + 0.53)), 0.2, rays=10)
 
 p = epi.Piece(37)
 body(p)
