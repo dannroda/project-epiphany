@@ -111,10 +111,11 @@ func test_an_arrow_at_the_eye_raises_the_bridge_to_the_necropolis() -> void:
 	level.add_child(arrow)
 	var info := Items.get_item(&"bow").make_damage(player)
 	info.team = EntityConfig.Team.PLAYER
-	var from := Vector3(-9, 1.2, -6)
+	var from := player.global_position + Vector3(0, 1.0, 0)
 	var camera := tree.get_first_node_in_group(&"room_camera") as TopDownCamera
 	TopDownCamera.unlock_reveals = true
-	arrow.launch(from, (eye.eye.global_position - from).normalized() * 20.0, info)
+	assert_true(absf(eye.eye.global_position.z - from.z) < 0.4, "el ojo queda en la línea del puente")
+	arrow.launch(from, Vector3.RIGHT * 20.0, info)
 	var until := Time.get_ticks_msec() + 3000
 	while Time.get_ticks_msec() < until and not camera.revealing:
 		await tree.process_frame
