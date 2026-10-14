@@ -57,3 +57,20 @@ func test_warns_about_bad_flag() -> void:
 	wall.flag = &""
 	assert_eq(wall._get_configuration_warnings().size(), 1, "sin flag")
 	wall.free()
+
+
+func test_covers_hide_what_it_hides_until_it_breaks() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	state.reset()
+	await _load(tree)
+	var wall: CrackedWall = tree.current_scene.get_node(^"CrackedWall")
+	var roof := Node3D.new()
+	tree.current_scene.add_child(roof)
+	wall.covers = [wall.get_path_to(roof)]
+	wall._show(false)
+	assert_eq(roof.visible, true, "tapa el nicho")
+	wall.smash()
+	assert_eq(roof.visible, false, "al romperse se va")
+	roof.free()
+	state.reset()
