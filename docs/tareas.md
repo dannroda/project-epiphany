@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (91/154)
+## M11 — Pulido: contenido y feel  (91/155)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4751,7 +4751,7 @@ Playtest 2026-10-13, en la Chullpa (las tres cosas salen en la misma captura):
 
 **Relacionadas:** 11.151 Totora 2P: se ve la sala del piso de abajo; 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la)
 
-### 11.138 Chullpa sub-boss: asset para el cuadrado donde después se salta · Pendiente
+### 11.138 Chullpa sub-boss: asset para el cuadrado donde después se salta · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `chullpa`
 
@@ -4982,17 +4982,25 @@ Playtest 2026-10-13: en la pelea de la momia (MummyGuard), cuando 'salta' no se 
 
 Separada de 11.137 (punto 1). Playtest 2026-10-13: en la Chullpa se ven las tapas superiores de las paredes LA horneadas (la_walls) y no deberían verse. Es del look de la_walls, va con 11.151 (Totora 2P: se ve la sala de abajo).
 
-### 11.157 Mazmorras: los tiles del GridMap no se alinean con la grilla del editor · Pendiente
+### 11.157 Mazmorras: los tiles del GridMap no se alinean con la grilla del editor · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`, `herramientas`
 
 Daniel 2026-10-14: las piezas de los kits LA quedan corridas media celda de la grilla del editor. Causa: los GridMap de las mazmorras tienen cell_center_x/z = false y las mallas de los kits están centradas en su origen (−1..1), así la grilla pasa por el medio de los tiles. En el juego anda porque el código usa la misma convención. Arreglo: cell_center = true y correr cada GridMap −1 m en x y z (nada se mueve en el mundo), o mover el origen de las mallas; revisar la_walls, decorate_levels y los generadores que usan map_to_local. Las cinco mazmorras de una vez.
 
-### 11.158 Piso LA: patrón de tablones raro · Pendiente
+**Notas:** Hecho: los GridMap de mazmorras, cuevas y niveles de prueba centran la celda (cell_center x/z) y quedan 1 m atrás en x y z; nada se mueve en el mundo. El overworld queda como estaba (otro generador, lo lleva -eb). Ojo: con esto la_walls refresh mide bien la puerta (antes el punto de adelante caía en la propia celda Puerta y siempre daba 4 m); en la Totora TejedoresLocked y AmaruLocked pasarían a 2 m al volver a correr refresh (no está aplicado).
+
+### 11.158 Piso LA: patrón de tablones raro · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `render`
 
 Daniel 2026-10-14 (captura del piso de tablones, Queñoa/Totora): el patrón del piso se ve raro. piso_la.gdshader dibuja los tablones en espacio de mundo: cada fila arranca en un desfase al azar (las juntas no alternan), plank_length 1.7 no divide la celda de 2 m (el patrón no calza con los tiles) y crack_amount dibuja arcos oscuros sueltos sobre algunos tablones. Propuesta: filas alternadas a medio tablón, largos que dividan 2 m (1 o 2 m) y sacar o rehacer los arcos.
+
+### 11.159 Overworld con el arte de las mazmorras: brillo LA y más detalle en el piso · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `overworld`, `render`
+
+Daniel 2026-10-14 (por -5d): el overworld tiene que compartir el arte de las mazmorras. Brillo: el look BrilloLA (lo eligió tras comparar overworld base vs brillo vs Chullpa). Piso: más detalle, hoy se ve plano. Plan: epiphany_outdoor.gdshader con palette_surface brillo y patrón de piso por swatch (losas, textura de tierra, variación de tono del pasto), más BrilloLA y glow en overworld.tscn. Coordinar con -eb antes de tocar overworld.tscn; prototipo en debug/tmp.
 
 ## M12 — Assets propios (Blender)  (15/24)
 

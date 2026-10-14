@@ -13,12 +13,12 @@
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "arte",
     "chullpa"
   ],
   "test": "",
   "title": "Chullpa sub-boss: asset para el cuadrado donde después se salta",
-  "updated_at": "2026-10-14T02:27:21.847Z"
+  "updated_at": "2026-10-14T04:33:02.889Z"
 }

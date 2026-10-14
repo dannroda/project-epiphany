@@ -10,12 +10,12 @@
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "arte",
     "render"
   ],
   "test": "",
   "title": "Piso LA: patrón de tablones raro",
-  "updated_at": "2026-10-14T04:24:36.813Z"
+  "updated_at": "2026-10-14T04:33:03.135Z"
 }
