@@ -13,6 +13,9 @@ signal opened
 @export var stays_open := true
 ## La primera vez que la abren sus interruptores, el juego se pausa y la cámara la muestra.
 @export var reveal_on_open := true
+## Interruptores que, la primera vez que se activan, la muestran con la cámara aunque `reveal_on_open` esté apagado
+## (la placa lejos de la reja; el ojo con tiempo de la misma sala no la pausa).
+@export var reveal_from: Array[NodePath] = []
 ## Fondo del paso en el que está: la colisión lo cubre entero; la reja es una sola, en el medio.
 @export var depth := 0.0
 
@@ -28,6 +31,12 @@ func _ready() -> void:
 	_fill_depth()
 	if switches.is_empty():
 		return
+	for path in reveal_from:
+		var switch := get_node(path)
+		switch.activated.connect(func() -> void:
+			if switch.is_node_ready() and not _revealed:
+				_revealed = true
+				TopDownCamera.reveal(self, open))
 	_wiring = Wiring.create(self, switches, condition)
 	_wiring.changed.connect(func(satisfied: bool) -> void:
 		if satisfied and reveal_on_open and not _revealed:

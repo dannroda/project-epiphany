@@ -14,17 +14,17 @@
     }
   ],
   "milestone": "m11",
-  "notes": "",
+  "notes": "Hecho. 1) OjosStep sí abría la reja de las Raíces, pero fuera de cámara (la reja no se muestra porque también la abre el ojo con tiempo de su sala). Gate tiene reveal_from: la primera vez que se pisa la placa, la cámara muestra la reja abriéndose (test_quenoa). 2) El z-fighting era la tapa abierta del cofre de la llave del jefe contra la pared norte del nicho: el cofre va 0.15 m más al sur (sin tapar el paso de la reja, test_walk_doors). 3) El símbolo de la puerta sur es el mismo candado de 11.141, ya arreglado en door.gd.",
   "order": 142,
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug",
     "quenoa"
   ],
-  "test": "",
+  "test": "tests/test_quenoa.gd",
   "title": "Queñoa S1 (Sala de los ojos): placa que no hace nada, z-fighting en el cofre y símbolo raro en la puerta",
-  "updated_at": "2026-10-14T02:27:20.052Z"
+  "updated_at": "2026-10-14T03:21:30.236Z"
 }

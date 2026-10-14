@@ -4765,7 +4765,7 @@ Playtest 2026-10-13: en la zona Lagoon, arriba de la escalera de piedra, el cami
 
 **Capturas:** `compass/images/m11-140-20261013-225351.png`
 
-### 11.141 Queñoa 2P (Canopy): símbolo azul sin sentido y puerta bloqueada invisible · Pendiente
+### 11.141 Queñoa 2P (Canopy): símbolo azul sin sentido y puerta bloqueada invisible · Revisión
 
 **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `quenoa`
 
@@ -4773,6 +4773,10 @@ Playtest 2026-10-13: en la D2 (Queñoa), piso 2P "Canopy", hay en una pared un m
 
 - [ ] Misma sala: hay una puerta bloqueada que no se ve (el player choca contra algo invisible en el hueco de la pared). La puerta tiene que verse.
 - [ ] Causa probable: la "puerta bloqueada" del oeste de la Copa es NidoCrackedWall (muro agrietado → Nido, se abre con bomba), instancia de cracked_wall_templo.tscn, y no se ve. Sin verla, la Queñoa parece imposible sin arco (playtest: 'todos los caminos bloqueados'). Hacerla visible con el estilo de la Queñoa.
+
+**Prueba:** tests/test_quenoa.gd
+
+**Notas:** Hecho. 1) El símbolo azul era el candado (SouthMark) que door.gd dibuja en el piso cuando la cámara recorta la pared sur; con las paredes LA el recorte (3.6) pasa la hoja (3 m) y además la estiraba x1.5. door.gd usa ahora el alto real de la hoja: si el recorte no la corta, ni la estira ni muestra el candado (test_doors). 2) NidoCrackedWall estaba en el medio del paso LA, tapado por el velo negro del grosor de pared: ahora tiene una cara en cada lado del paso (como las hojas de las puertas), con la malla clara de muro agrietado, y colisión/hurtbox que llenan el paso (test_quenoa). El look final de madera LA llega con 12.24 (-5d).
 
 **Capturas:** `compass/images/m11-141-20261013-225533.png`, `compass/images/m11-141-20261013-225603.png`, `compass/images/m11-141-20261013-225858.png`
 
@@ -4804,7 +4808,7 @@ Playtest 2026-10-13, Queñoa piso S1 Roots, salida este de las Raíces a la Sala
 
 **Relacionadas:** 11.136 Chullpa: la reja de la entrada queda fuera de la pared
 
-### 11.145 Queñoa S1 (Sala de los ojos): placa que no hace nada, z-fighting en el cofre y símbolo raro en la puerta · Pendiente
+### 11.145 Queñoa S1 (Sala de los ojos): placa que no hace nada, z-fighting en el cofre y símbolo raro en la puerta · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `quenoa`
 
@@ -4812,6 +4816,10 @@ Playtest 2026-10-13, Queñoa piso S1, sala con los arbustos y el pozo (probablem
 1) La placa junto a la puerta oeste no hace nada visible. Si es OjosStep (deja abierta la reja de las Raíces para volver), el efecto pasa fuera de cámara: falta respuesta (sonido, cámara a la reja o que se vea), o no funciona.
 2) z-fighting en el cofre de la esquina noreste.
 3) Otra vez el símbolo raro (asa/candado) en el piso de la puerta sur, como en 11.141.
+
+**Prueba:** tests/test_quenoa.gd
+
+**Notas:** Hecho. 1) OjosStep sí abría la reja de las Raíces, pero fuera de cámara (la reja no se muestra porque también la abre el ojo con tiempo de su sala). Gate tiene reveal_from: la primera vez que se pisa la placa, la cámara muestra la reja abriéndose (test_quenoa). 2) El z-fighting era la tapa abierta del cofre de la llave del jefe contra la pared norte del nicho: el cofre va 0.15 m más al sur (sin tapar el paso de la reja, test_walk_doors). 3) El símbolo de la puerta sur es el mismo candado de 11.141, ya arreglado en door.gd.
 
 **Capturas:** `compass/images/m11-145-20261013-230436.png`
 

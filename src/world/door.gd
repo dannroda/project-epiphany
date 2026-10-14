@@ -21,7 +21,6 @@ const LEAVES := {
 }
 const LEAF_MESH := "res://assets/epiphany/meshes/templo/%s.res"
 const TEXTS: DialogueResource = preload("res://data/dialogue/doors.dialogue")
-const LEAF_HEIGHT := 2.4
 const BOSS_TINT := Color(1.0, 0.45, 0.4)
 
 @export var kind: Kind = Kind.OPEN:
@@ -191,9 +190,11 @@ func _move_leaf(y: float, animate: bool, opening: bool) -> void:
 func _update_south_mark() -> void:
 	if not is_node_ready():
 		return
-	leaf.scale.y = south_cut / LEAF_HEIGHT if south_cut > 0.0 else 1.0
+	var height := (%LeafMesh as MeshInstance3D).get_aabb().size.y
+	var cut := south_cut > 0.0 and south_cut < height
+	leaf.scale.y = south_cut / height if cut else 1.0
 	var mark := %SouthMark as Sprite3D
-	mark.visible = south_cut > 0.0 and not is_open and kind in [Kind.LOCKED, Kind.BOSS]
+	mark.visible = cut and not is_open and kind in [Kind.LOCKED, Kind.BOSS]
 	mark.modulate = BOSS_TINT if kind == Kind.BOSS else Color.WHITE
 	mark.position.z = -maxf(depth, 0.3) / 2.0 - 1.0
 

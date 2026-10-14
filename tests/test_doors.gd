@@ -194,3 +194,20 @@ func test_switch_door_opens_and_can_close_again() -> void:
 	first.set_on(false)
 	assert_eq(door.is_open, false, "y si no es permanente, se vuelve a cerrar")
 	setup[1].reset()
+
+
+## 11.141/11.145: con las paredes LA el recorte sur pasa la altura de la hoja; la hoja no se estira ni sale el candado.
+func test_a_south_cut_taller_than_the_leaf_leaves_the_door_alone() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.root.get_node(^"GameState").reset()
+	var door := DOOR.instantiate() as Door
+	door.kind = Door.Kind.LOCKED
+	door.flag = &"test_south_cut"
+	tree.root.add_child(door)
+	var mark := door.get_node(^"SouthMark") as Sprite3D
+	door.south_cut = 0.4
+	assert_true(door.leaf.scale.y < 1.0 and mark.visible, "un recorte bajo baja la hoja y muestra el candado")
+	door.south_cut = 3.6
+	assert_eq(door.leaf.scale.y, 1.0, "uno más alto que la hoja no la estira")
+	assert_true(not mark.visible, "ni muestra el candado")
+	door.free()

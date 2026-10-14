@@ -156,7 +156,9 @@ func test_the_timed_root_eye_opens_the_gate_for_a_feather_jump() -> void:
 	assert_true(await _until(func() -> bool: return not gate.is_open, 8.0), "a los segundos se vuelve a cerrar")
 	assert_true(not eye.active, "y el ojo se apaga")
 	tree.root.get_node(^"GameState").set_flag(&"qv_eyes_step", true)
-	assert_true(await _until(func() -> bool: return gate.is_open, 2.0), "la placa del otro lado la abre")
+	assert_true(await _until(func() -> bool: return camera.revealing, 1.0), "la placa del otro lado la muestra con la cámara (11.145)")
+	assert_true(await _until(func() -> bool: return gate.is_open, 4.0), "y la abre")
+	await _until(func() -> bool: return not camera.revealing, 6.0)
 	await tree.create_timer(7.0).timeout
 	assert_true(gate.is_open, "y queda abierta")
 	tree.root.get_node(^"GameState").reset()
@@ -277,4 +279,19 @@ func test_an_arrow_drops_an_open_eye_for_the_sword() -> void:
 	assert_true((level.get_node(^"PisoRaices/BossExitPortal") as Portal).visible, "aparece el portal de salida")
 	assert_true((fight.get_node_or_null(^"HeartContainer") as Node) != null, "y el contenedor de corazón")
 	arrow.free()
+	tree.root.get_node(^"GameState").reset()
+
+
+## 11.141: el muro agrietado llena el paso de pared LA y se ve en las dos caras; una bomba puesta en la cara de la sala lo rompe.
+func test_the_nest_cracked_wall_shows_on_both_faces_and_a_bomb_at_the_face_breaks_it() -> void:
+	await _start()
+	var wall := level.get_node(^"PisoCopa/NidoCrackedWall") as CrackedWall
+	var faces := wall.wall.get_children().filter(func(node: Node) -> bool: return node is MeshInstance3D)
+	assert_eq(faces.size(), 2, "una cara de cada lado del paso")
+	var east := wall.global_position + Vector3(2.2, 0.3, 0)
+	var bomb: Bomb = preload("res://src/items/bomb/bomb.tscn").instantiate()
+	level.add_child(bomb)
+	bomb.global_position = east
+	await tree.create_timer(2.4).timeout
+	assert_true(wall.is_broken, "la bomba en la cara de la Copa lo rompe")
 	tree.root.get_node(^"GameState").reset()
