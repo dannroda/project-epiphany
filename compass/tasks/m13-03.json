@@ -35,12 +35,12 @@
       "section": "fuera-mvp"
     }
   ],
-  "status": "review",
+  "status": "paused",
   "tags": [
     "coop",
     "camara"
   ],
   "test": "Recorrer el templo de punta a punta con dos players: nunca queda uno fuera de cuadro ni en otra sala.",
   "title": "Cámara y salas para dos",
-  "updated_at": "2026-10-11T07:50:18.242Z"
+  "updated_at": "2026-10-14T00:55:38.646Z"
 }

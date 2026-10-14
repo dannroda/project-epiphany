@@ -39,12 +39,12 @@
   "order": 15,
   "priority": "high",
   "refs": [],
-  "status": "paused",
+  "status": "todo",
   "tags": [
     "playtest",
     "coop"
   ],
   "test": "",
   "title": "Playtest de co-op",
-  "updated_at": "2026-10-14T00:53:56.246Z"
+  "updated_at": "2026-10-14T00:55:32.930Z"
 }

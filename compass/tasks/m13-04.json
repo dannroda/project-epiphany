@@ -40,12 +40,12 @@
       "section": "fuera-mvp"
     }
   ],
-  "status": "review",
+  "status": "paused",
   "tags": [
     "coop",
     "diseño"
   ],
   "test": "Morir con uno solo no termina la partida y se puede revivir; con los dos, game over.",
   "title": "Reglas del co-op",
-  "updated_at": "2026-10-11T07:50:18.750Z"
+  "updated_at": "2026-10-14T00:55:39.041Z"
 }

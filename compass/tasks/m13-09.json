@@ -48,7 +48,7 @@
   "order": 9,
   "priority": "medium",
   "refs": [],
-  "status": "review",
+  "status": "paused",
   "tags": [
     "coop",
     "ui",
@@ -56,5 +56,5 @@
   ],
   "test": "",
   "title": "Anillo de ítems por player",
-  "updated_at": "2026-10-11T07:51:46.658Z"
+  "updated_at": "2026-10-14T00:55:40.063Z"
 }

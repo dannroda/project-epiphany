@@ -4321,7 +4321,7 @@ Los ítems conseguidos en la mazmorra (mapa, brújula, llave del jefe, llaves ch
 
 **Notas:** Sesión: overworld (-74). Mockup primero.
 
-### 11.105 Repensar el tutorial · Pausado
+### 11.105 Repensar el tutorial · Pendiente
 
 **Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `diseno`, `ui`
 
@@ -5137,7 +5137,7 @@ La pantalla de título (src/ui/title/title_screen.tscn) sigue con arte provisori
 - [x] Integrar en title_screen.tscn (nodos en la escena, no por código) y decidir si el ojo de title_eye.gd queda o lo reemplaza el logo
 - [x] Actualizar el mockup de la pantalla de título en el canvas de diseño
 
-### 12.21 Ojo interruptor: la pupila sigue al player y se parece al ojo del jefe final · Pausado
+### 12.21 Ojo interruptor: la pupila sigue al player y se parece al ojo del jefe final · Pendiente
 
 **Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `arte`, `detalle`
 
@@ -5162,7 +5162,7 @@ Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con
 - Hay al menos tres puzzles que piden a los dos jugadores.
 - Un solo jugador puede seguir jugando como siempre.
 
-### 13.1 Código listo para varios players · Revisión
+### 13.1 Código listo para varios players · Pausado
 
 **Prioridad:** alta · **Etiquetas:** `coop`, `arquitectura`
 
@@ -5185,7 +5185,7 @@ Preparar el código para más de un player: un registro `Players` con señales q
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 13.2 Input por jugador y unirse a la partida · Revisión
+### 13.2 Input por jugador y unirse a la partida · Pausado
 
 **Prioridad:** alta · **Etiquetas:** `coop`, `input`
 
@@ -5210,7 +5210,7 @@ Que cada player lea su propio control (teclado+mouse cuenta como uno) con su buf
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 13.3 Cámara y salas para dos · Revisión
+### 13.3 Cámara y salas para dos · Pausado
 
 **Prioridad:** alta · **Etiquetas:** `coop`, `camara`
 
@@ -5235,7 +5235,7 @@ Que la cámara encuadre a los dos players y los frene si se alejan, y que los ca
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 13.4 Reglas del co-op · Revisión
+### 13.4 Reglas del co-op · Pausado
 
 **Prioridad:** media · **Etiquetas:** `coop`, `diseño`
 
@@ -5260,7 +5260,7 @@ Definir y aplicar las reglas del co-op: corazones por player, revivir al caído 
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión); 13.9 Anillo de ítems por player
 
-### 13.5 HUD de dos jugadores · Revisión
+### 13.5 HUD de dos jugadores · Pausado
 
 **Prioridad:** media · **Etiquetas:** `coop`, `ui`
 
@@ -5281,7 +5281,7 @@ Que el HUD muestre los corazones e ítems de cada player, con el P2 en la otra e
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 13.6 Player 2 con su color · Revisión
+### 13.6 Player 2 con su color · Pausado
 
 **Prioridad:** media · **Etiquetas:** `coop`, `arte`
 
@@ -5304,7 +5304,7 @@ Darle al P2 su propia variante de paleta (otra tela y otro neón, como los Links
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 13.7 Enemigos y jefe con varios objetivos · Pausado
+### 13.7 Enemigos y jefe con varios objetivos · Pendiente
 
 **Prioridad:** media · **Etiquetas:** `coop`, `ia`
 
@@ -5329,7 +5329,7 @@ Que enemigos y jefe sepan elegir entre varios players (el más cercano o el últ
 
 **Relacionadas:** 11.82 Daño que no pasa por el Hurtbox; 13.13 Referencias colgadas cuando un invitado se va
 
-### 13.8 Puzzles cooperativos · Pausado
+### 13.8 Puzzles cooperativos · Pendiente
 
 **Prioridad:** media · **Etiquetas:** `coop`, `puzzles`
 
@@ -5348,7 +5348,7 @@ Revisar que los puzzles actuales no se rompan ni queden triviales con dos y suma
 
 **Bloqueada por:** 13.1 Código listo para varios players
 
-### 13.9 Anillo de ítems por player · Revisión
+### 13.9 Anillo de ítems por player · Pausado
 
 **Prioridad:** media · **Etiquetas:** `coop`, `ui`, `input`
 
@@ -5368,7 +5368,7 @@ Mockups D en el canvas (Coop_Ring, Solo_Ring): mantener la cruceta abre un anill
 
 **Relacionadas:** 13.4 Reglas del co-op; 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 13.10 Un espíritu revive al coger un contenedor de corazón · Pausado
+### 13.10 Un espíritu revive al coger un contenedor de corazón · Pendiente
 
 **Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`, `coop`
 
@@ -5410,7 +5410,7 @@ Cosas que todavía son de todos o de P1: el `tree_root` del AnimationTree es un 
 
 **Archivos:** `player/player.tscn`, `player/states/jumping.gd`, `player/states/pushing.gd`, `player/states/using_item.gd`, `src/feel/feel.gd`, `player/components/aim.gd`, `src/world/tremor_zone.gd`, `src/items/behaviors/place_behavior.gd`, `src/world/area_zone.gd`
 
-### 13.12 El pad del invitado maneja los menús de P1 · Pausado
+### 13.12 El pad del invitado maneja los menús de P1 · Pendiente
 
 **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `coop`, `ui`
 
@@ -5427,7 +5427,7 @@ En el menú de ítems compartido, el `_input` del invitado solo se traga `ui_acc
 
 **Archivos:** `src/ui/menus/items_page.gd`, `src/ui/menus/menu_stack.gd`, `src/ui/text_box/text_box.gd`, `src/ui/menus/equipment_page.gd`
 
-### 13.13 Referencias colgadas cuando un invitado se va · Pausado
+### 13.13 Referencias colgadas cuando un invitado se va · Pendiente
 
 **Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`, `coop`
 
@@ -5448,7 +5448,7 @@ En el menú de ítems compartido, el `_input` del invitado solo se traga `ui_acc
 
 **Relacionadas:** 13.7 Enemigos y jefe con varios objetivos
 
-### 13.14 Las salas las decide un nodo del mundo, no la cámara · Pausado
+### 13.14 Las salas las decide un nodo del mundo, no la cámara · Pendiente
 
 **Prioridad:** alta · **Tamaño:** M · **Etiquetas:** `coop`, `arquitectura`, `camara`
 
@@ -5469,7 +5469,7 @@ En el menú de ítems compartido, el `_input` del invitado solo se traga `ui_acc
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-### 13.15 Playtest de co-op · Pausado
+### 13.15 Playtest de co-op · Pendiente
 
 **Prioridad:** alta · **Etiquetas:** `playtest`, `coop`
 
@@ -5488,7 +5488,7 @@ Los pasos de co-op del playtest de revisión (10.28), aparte: hacen falta dos co
 - [ ] Co-op: colores (13.6)
   Con dos controles: el P2 tiene otra tela y otro neón, también con la cota reforzada; los dos se distinguen de un vistazo.
 
-### 13.16 Co-op: la puerta del vestíbulo de D1 se cierra con P2 afuera · Pausado
+### 13.16 Co-op: la puerta del vestíbulo de D1 se cierra con P2 afuera · Pendiente
 
 **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `coop`
 
@@ -5502,7 +5502,7 @@ Llevar el co-op local a la red: host autoritativo, dos jugadores en distintas m�
 - Dos máquinas juegan juntas el templo entero con 100 ms de latencia sin desincronizar puertas, cofres, puzzles ni el jefe.
 - El combate se siente igual que en local para el host y casi igual para el cliente.
 
-### 14.1 Arquitectura de red · Pausado
+### 14.1 Arquitectura de red · Pendiente
 
 **Prioridad:** alta · **Etiquetas:** `online`, `arquitectura`
 
@@ -5522,7 +5522,7 @@ Decidir la arquitectura de red del co-op online (host autoritativo con ENet y St
 
 **Relacionadas:** 13.14 Las salas las decide un nodo del mundo, no la cámara; 14.8 Escena raíz de gameplay que persiste entre niveles; 14.9 SceneFlow: flujo de escenas aparte de SaveManager y pantalla de carga; 14.10 El gameplay emite intenciones y la UI escucha; 14.12 Identidad del player independiente del pad; 14.13 Frame de input por tick en Controls
 
-### 14.2 Players en red · Pausado
+### 14.2 Players en red · Pendiente
 
 **Prioridad:** alta · **Etiquetas:** `online`
 
@@ -5541,7 +5541,7 @@ Que el cliente mande su input al host, que simula y devuelve el estado, con pred
 
 **Bloqueada por:** 13.2 Input por jugador y unirse a la partida; 14.1 Arquitectura de red
 
-### 14.3 Mundo sincronizado · Pausado
+### 14.3 Mundo sincronizado · Pendiente
 
 **Prioridad:** alta · **Etiquetas:** `online`
 
@@ -5560,7 +5560,7 @@ Sincronizar en red los objetos con estado (puertas, cofres, interruptores, olead
 
 **Bloqueada por:** 13.3 Cámara y salas para dos; 14.1 Arquitectura de red
 
-### 14.4 Combate en red · Pausado
+### 14.4 Combate en red · Pendiente
 
 **Prioridad:** alta · **Etiquetas:** `online`, `combate`
 
@@ -5581,7 +5581,7 @@ Que el combate del cliente se sienta como en local: golpes validados en el host 
 
 **Bloqueada por:** 14.1 Arquitectura de red
 
-### 14.5 Lobby y conexión · Pausado
+### 14.5 Lobby y conexión · Pendiente
 
 **Prioridad:** media · **Etiquetas:** `online`, `ui`
 
@@ -5600,7 +5600,7 @@ Poder crear una partida y unirse (por IP o código en debug, invitación de Stea
 
 **Bloqueada por:** 14.1 Arquitectura de red
 
-### 14.6 Guardado en co-op · Pausado
+### 14.6 Guardado en co-op · Pendiente
 
 **Prioridad:** media · **Etiquetas:** `online`, `guardado`
 
@@ -5617,7 +5617,7 @@ Definir el guardado del co-op online: solo guarda el host y el cliente participa
 
 **Bloqueada por:** 14.1 Arquitectura de red
 
-### 14.7 Modo arena: hasta 8 jugadores peleando entre sí · Pausado
+### 14.7 Modo arena: hasta 8 jugadores peleando entre sí · Pendiente
 
 **Prioridad:** media · **Etiquetas:** `online`, `pruebas`
 
@@ -5625,7 +5625,7 @@ Decidido 2026-10-11: para probar el online, un modo arena aparte donde hasta 8 j
 
 **Bloqueada por:** 14.1 Arquitectura de red; 14.4 Combate en red
 
-### 14.8 Escena raíz de gameplay que persiste entre niveles · Pausado
+### 14.8 Escena raíz de gameplay que persiste entre niveles · Pendiente
 
 **Prioridad:** alta · **Tamaño:** L · **Etiquetas:** `online`, `arquitectura`
 
@@ -5646,7 +5646,7 @@ Cada nivel trae su Player, cámara y HUD; P1 viene instanciado en el .tscn y los
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-### 14.9 SceneFlow: flujo de escenas aparte de SaveManager y pantalla de carga · Revisión
+### 14.9 SceneFlow: flujo de escenas aparte de SaveManager y pantalla de carga · Pausado
 
 **Prioridad:** alta · **Tamaño:** M · **Etiquetas:** `online`, `arquitectura`
 
@@ -5666,7 +5666,7 @@ SaveManager además de slots y codec hace `travel_to`, `respawn`, `new_game` (co
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-### 14.10 El gameplay emite intenciones y la UI escucha · Pausado
+### 14.10 El gameplay emite intenciones y la UI escucha · Pendiente
 
 **Prioridad:** media · **Tamaño:** M · **Etiquetas:** `online`, `arquitectura`, `ui`
 
@@ -5685,7 +5685,7 @@ El estado Dead de un player abre GameOver (decide el fin de la partida por todos
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-### 14.11 Feel solo cosmético: hit-stop como estado de gameplay · Pausado
+### 14.11 Feel solo cosmético: hit-stop como estado de gameplay · Pendiente
 
 **Prioridad:** media · **Tamaño:** M · **Etiquetas:** `online`, `feel`
 
@@ -5704,7 +5704,7 @@ El estado Dead de un player abre GameOver (decide el fin de la partida por todos
 
 **Relacionadas:** 11.65 El escudo se queda levantado tras un hit-stop o la pausa
 
-### 14.12 Identidad del player independiente del pad · Pausado
+### 14.12 Identidad del player independiente del pad · Pendiente
 
 **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `online`, `coop`, `input`
 
@@ -5725,7 +5725,7 @@ El estado Dead de un player abre GameOver (decide el fin de la partida por todos
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-### 14.13 Frame de input por tick en Controls · Pausado
+### 14.13 Frame de input por tick en Controls · Pendiente
 
 **Prioridad:** media · **Tamaño:** M · **Etiquetas:** `online`, `input`
 

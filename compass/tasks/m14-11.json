@@ -32,12 +32,12 @@
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "paused",
+  "status": "todo",
   "tags": [
     "online",
     "feel"
   ],
   "test": "Durante un hit-stop el player sigue recibiendo input; los tests no dependen del timing del freeze.",
   "title": "Feel solo cosmético: hit-stop como estado de gameplay",
-  "updated_at": "2026-10-14T00:54:00.296Z"
+  "updated_at": "2026-10-14T00:55:36.900Z"
 }
