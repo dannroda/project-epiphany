@@ -5087,7 +5087,7 @@ Daniel 2026-10-14 (cueva de las bombas): acercándose a la pared de la sala o pa
 
 **Relacionadas:** 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player
 
-### 11.166 Santuario con una sola entrada: su muro agrietado · En curso
+### 11.166 Santuario con una sola entrada: su muro agrietado · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `overworld`, `diseno`
 
