@@ -793,15 +793,17 @@ CRACK_STEP = 0.06
 CRACKS = {"chullpa": ("acantilado", "tierra"), "quenoa": ("roca_naranja", "roca_naranja"), "templo": ("piedra_templo", "gris_5"), "totora": ("madera", "madera"), "cumbre": ("ladrillo", "gris_4")}
 
 
-def cracked_wall(style, depth, back):
+def cracked_wall(style, depth, back, low=False):
+	"""Con low, como un tramo de pared baja (seto): del alto y el grosor de LOW, todo el ancho de la celda y hojas arriba."""
 	global top
 	wall_style(style)
-	top = HEIGHT
-	half = depth / 2
+	top = LOW if low else HEIGHT
+	width = 2.0 - LOW_HALF + 0.05 if low else DOOR_WIDTH
+	half = LOW_HALF if low else depth / 2
 	p = epi.Piece(71)
-	nx = round(2 * DOOR_WIDTH / CRACK_STEP)
-	nz = round(HEIGHT / CRACK_STEP)
-	grid = [[p.bm.verts.new((-DOOR_WIDTH + 2 * DOOR_WIDTH * i / nx, 0.0, HEIGHT * j / nz)) for i in range(nx + 1)] for j in range(nz + 1)]
+	nx = round(2 * width / CRACK_STEP)
+	nz = round(top / CRACK_STEP)
+	grid = [[p.bm.verts.new((-width + 2 * width * i / nx, 0.0, top * j / nz)) for i in range(nx + 1)] for j in range(nz + 1)]
 	front = [p.bm.faces.new((grid[j][i], grid[j][i + 1], grid[j + 1][i + 1], grid[j + 1][i])) for j in range(nz) for i in range(nx)]
 	relief(p)
 	seed = sum(map(ord, style)) % 97 * 0.37
@@ -814,22 +816,27 @@ def cracked_wall(style, depth, back):
 	bmesh.ops.reverse_faces(p.bm, faces=rear)
 	for v in {v for f in front for v in f.verts}:
 		v.co.y -= half
-	body = p.box(-DOOR_WIDTH, DOOR_WIDTH, -half + 0.03, half - 0.03, 0.0, HEIGHT)
+	body = p.box(-width, width, -half + 0.03, half - 0.03, 0.0, top)
 	crest = CREST.get(style, (LEAF, "DARK"))
 	p.paint(body, crest[0], crest[1], vary=0.06)
 	stone, gap = CRACKS[style]
-	epi.cracks_both_faces(p, half, (0.0, 1.35), DOOR_WIDTH - 0.08, 0.12, HEIGHT - 0.2, stone, gap)
-	runs = (RUN["s"], RUN["n"] if back == "n" else RUN["s"])
+	epi.cracks_both_faces(p, half, (0.0, top * 0.45), width - 0.08, 0.12, top - 0.2 if not low else top - 0.1, stone, gap)
+	runs = (LOW_BEVEL, LOW_BEVEL) if low else (RUN["s"], RUN["n"] if back == "n" else RUN["s"])
 	for v in p.bm.verts:
 		t = max(-1.0, min(1.0, v.co.y / half))
-		v.co.y += (runs[0] * -t if t < 0 else -runs[1] * t) * v.co.z / HEIGHT
-	p.build("muro_agrietado_%s_la_%d%s" % (style, depth, back), kit, smooth=35)
+		v.co.y += (runs[0] * -t if t < 0 else -runs[1] * t) * v.co.z / top
+	if low:
+		xs = [-width + 2 * width * i / 8 for i in range(9)]
+		ys = [-half - 0.3] + [-half + 2 * half * j / 6 for j in range(7)] + [half + 0.3]
+		hedge(p, xs, ys, lambda x, y: top if abs(y) <= half + 0.01 else 0.0)
+	p.build("muro_agrietado_%s_la_%s" % (style, "bajo" if low else "%d%s" % (depth, back)), kit, smooth=35)
 
 
 for style in CRACKS:
 	for depth in (2.0, 4.0):
 		for back in ("", "n"):
 			cracked_wall(style, depth, back)
+	cracked_wall(style, 0.0, "", low=True)
 
 
 def style_of(obj):

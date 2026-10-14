@@ -661,7 +661,9 @@ func _cracked_wall(level: Node, wall: Node) -> void:
 	var back := _facing(-out)
 	var variant := "4" if depth > 3.0 else "2"
 	var turn := Basis()
-	if WALL_RUN[front] != WALL_RUN[back]:
+	if _between_low_walls(wall as Node3D):
+		variant = "bajo"
+	elif WALL_RUN[front] != WALL_RUN[back]:
 		variant += "n"
 		if WALL_RUN[front] > WALL_RUN[back]:
 			turn = Basis(Vector3.UP, PI)
@@ -673,6 +675,20 @@ func _cracked_wall(level: Node, wall: Node) -> void:
 	model.mesh = load(path)
 	model.transform = Transform3D(turn, Vector3.ZERO)
 	level.set_editable_instance(wall, true)
+
+
+## Está en un hueco de una pared baja (los setos de la Queñoa): a los costados hay Muro LA.
+func _between_low_walls(wall: Node3D) -> bool:
+	var grids := wall.get_parent().find_children("*", "GridMap", false, false)
+	if grids.is_empty():
+		return false
+	var grid := grids[0] as GridMap
+	var side := wall.transform.basis.x.normalized() * CELL
+	for at: Vector3 in [wall.position + side, wall.position - side]:
+		var item := grid.get_cell_item(grid.local_to_map(grid.transform.affine_inverse() * at))
+		if item == GridMap.INVALID_CELL_ITEM or not grid.mesh_library.get_item_name(item).begins_with(KINDS["muro"][0]):
+			return false
+	return true
 
 
 func _facing(out: Vector3) -> String:

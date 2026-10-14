@@ -39,7 +39,7 @@
 [ext_resource type="Resource" path="res://data/items/compass.tres" id="36_8syh8"]
 [ext_resource type="Script" uid="uid://d3mljv5i1j87j" path="res://src/world/stairs.gd" id="36_nit5u"]
 [ext_resource type="Script" uid="uid://bccprbredple8" path="res://src/world/arena_fight.gd" id="37_fight"]
-[ext_resource type="ArrayMesh" uid="uid://dtsslrqkgqxya" path="res://assets/epiphany/meshes/paredes_la/muro_agrietado_quenoa_la_2n.res" id="38_0a0he"]
+[ext_resource type="ArrayMesh" uid="uid://cnipaefj366g2" path="res://assets/epiphany/meshes/paredes_la/muro_agrietado_quenoa_la_bajo.res" id="38_0a0he"]
 [ext_resource type="PackedScene" path="res://src/entities/watcher_eye/watcher_eye.tscn" id="38_eye"]
 [ext_resource type="Shader" uid="uid://crwycv8bukd6m" path="res://src/world/look/llama_la.gdshader" id="39_66c0e"]
 [ext_resource type="ArrayMesh" uid="uid://bs5mwr1yuehrf" path="res://assets/epiphany/meshes/naturaleza/piedra_chica_a.res" id="39_dfq0f"]
@@ -126,7 +126,7 @@ compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_somb
 [sub_resource type="BoxShape3D" id="BoxShape3D_tw10w"]
 size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_nit5u"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dfq0f"]
 render_priority = 0
 shader = ExtResource("5_nm22u")
 shader_parameter/inner = Vector4(2.7, 2.6, 25.3, 17.9)
@@ -138,14 +138,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_a6a4g"]
-material = SubResource("ShaderMaterial_nit5u")
+[sub_resource type="PlaneMesh" id="PlaneMesh_2hnwo"]
+material = SubResource("ShaderMaterial_dfq0f")
 size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qfyna"]
 size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vhlen"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8syh8"]
 render_priority = 0
 shader = ExtResource("5_nm22u")
 shader_parameter/inner = Vector4(28.7, 2.6, 51.3, 17.9)
@@ -157,14 +157,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_66c0e"]
-material = SubResource("ShaderMaterial_vhlen")
+[sub_resource type="PlaneMesh" id="PlaneMesh_nit5u"]
+material = SubResource("ShaderMaterial_8syh8")
 size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_b5g6x"]
 size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_d5r2d"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a6a4g"]
 render_priority = 0
 shader = ExtResource("5_nm22u")
 shader_parameter/inner = Vector4(28.7, 20.6, 51.3, 35.9)
@@ -176,8 +176,8 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_5ia7f"]
-material = SubResource("ShaderMaterial_d5r2d")
+[sub_resource type="PlaneMesh" id="PlaneMesh_vhlen"]
+material = SubResource("ShaderMaterial_a6a4g")
 size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="Shape"]
@@ -314,7 +314,7 @@ center_offset = Vector3(0, 0.32, 0)
 [sub_resource type="BoxShape3D" id="BoxShape3D_1o0uj"]
 size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rqrax"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_66c0e"]
 render_priority = 0
 shader = ExtResource("5_nm22u")
 shader_parameter/inner = Vector4(2.7, 2.6, 25.3, 17.9)
@@ -326,14 +326,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_d82md"]
-material = SubResource("ShaderMaterial_rqrax")
+[sub_resource type="PlaneMesh" id="PlaneMesh_d5r2d"]
+material = SubResource("ShaderMaterial_66c0e")
 size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_orgj2"]
 size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_d6a2c"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ia7f"]
 render_priority = 0
 shader = ExtResource("5_nm22u")
 shader_parameter/inner = Vector4(28.7, 2.6, 51.3, 17.9)
@@ -345,14 +345,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_kifxg"]
-material = SubResource("ShaderMaterial_d6a2c")
+[sub_resource type="PlaneMesh" id="PlaneMesh_rqrax"]
+material = SubResource("ShaderMaterial_5ia7f")
 size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dxo2p"]
 size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_d6b3u"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d82md"]
 render_priority = 0
 shader = ExtResource("5_nm22u")
 shader_parameter/inner = Vector4(2.7, 20.6, 25.3, 35.9)
@@ -364,14 +364,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_e5cvg"]
-material = SubResource("ShaderMaterial_d6b3u")
+[sub_resource type="PlaneMesh" id="PlaneMesh_d6a2c"]
+material = SubResource("ShaderMaterial_d82md")
 size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_owgnv"]
 size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_nhcls"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kifxg"]
 render_priority = 0
 shader = ExtResource("5_nm22u")
 shader_parameter/inner = Vector4(28.7, 20.6, 51.3, 35.9)
@@ -383,8 +383,8 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_620bx"]
-material = SubResource("ShaderMaterial_nhcls")
+[sub_resource type="PlaneMesh" id="PlaneMesh_d6b3u"]
+material = SubResource("ShaderMaterial_kifxg")
 size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kfd5l"]
@@ -517,7 +517,7 @@ center_offset = Vector3(0, 0.32, 0)
 [sub_resource type="BoxShape3D" id="BoxShape3D_hiqku"]
 size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xuy7a"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e5cvg"]
 render_priority = 0
 shader = ExtResource("5_nm22u")
 shader_parameter/inner = Vector4(2.7, 2.6, 25.3, 17.9)
@@ -529,14 +529,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_tw10w"]
-material = SubResource("ShaderMaterial_xuy7a")
+[sub_resource type="PlaneMesh" id="PlaneMesh_nhcls"]
+material = SubResource("ShaderMaterial_e5cvg")
 size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0sl1j"]
 size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qfyna"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_620bx"]
 render_priority = 0
 shader = ExtResource("5_nm22u")
 shader_parameter/inner = Vector4(28.7, 2.6, 51.3, 17.9)
@@ -548,14 +548,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_b5g6x"]
-material = SubResource("ShaderMaterial_qfyna")
+[sub_resource type="PlaneMesh" id="PlaneMesh_xuy7a"]
+material = SubResource("ShaderMaterial_620bx")
 size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lby5b"]
 size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1o0uj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tw10w"]
 render_priority = 0
 shader = ExtResource("5_nm22u")
 shader_parameter/inner = Vector4(2.7, 20.6, 25.3, 35.9)
@@ -567,14 +567,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_orgj2"]
-material = SubResource("ShaderMaterial_1o0uj")
+[sub_resource type="PlaneMesh" id="PlaneMesh_qfyna"]
+material = SubResource("ShaderMaterial_tw10w")
 size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5q4hq"]
 size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dxo2p"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b5g6x"]
 render_priority = 0
 shader = ExtResource("5_nm22u")
 shader_parameter/inner = Vector4(28.7, 20.6, 51.3, 35.9)
@@ -586,8 +586,8 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_owgnv"]
-material = SubResource("ShaderMaterial_dxo2p")
+[sub_resource type="PlaneMesh" id="PlaneMesh_1o0uj"]
+material = SubResource("ShaderMaterial_b5g6x")
 size = Vector2(33.2, 25.2)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qbrgg"]
@@ -744,7 +744,7 @@ shape = SubResource("BoxShape3D_tw10w")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoRaices/Raices" unique_id=954919818]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_a6a4g")
+mesh = SubResource("PlaneMesh_2hnwo")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoRaices/Raices" unique_id=51831298]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -776,7 +776,7 @@ shape = SubResource("BoxShape3D_qfyna")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoRaices/Ojos" unique_id=1164848740]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_66c0e")
+mesh = SubResource("PlaneMesh_nit5u")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoRaices/Ojos" unique_id=2101351393]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -809,7 +809,7 @@ shape = SubResource("BoxShape3D_b5g6x")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoRaices/Jefe" unique_id=2109272761]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_5ia7f")
+mesh = SubResource("PlaneMesh_vhlen")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoRaices/Jefe" unique_id=1994714526]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1279,7 +1279,7 @@ shape = SubResource("BoxShape3D_1o0uj")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoTronco/Rama" unique_id=1780892489]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_d82md")
+mesh = SubResource("PlaneMesh_d5r2d")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoTronco/Rama" unique_id=109818629]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1311,7 +1311,7 @@ shape = SubResource("BoxShape3D_orgj2")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoTronco/Escalera" unique_id=1321013989]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_kifxg")
+mesh = SubResource("PlaneMesh_rqrax")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoTronco/Escalera" unique_id=1276063755]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1343,7 +1343,7 @@ shape = SubResource("BoxShape3D_dxo2p")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoTronco/Tronco" unique_id=1166912060]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_e5cvg")
+mesh = SubResource("PlaneMesh_d6a2c")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoTronco/Tronco" unique_id=1460573170]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1375,7 +1375,7 @@ shape = SubResource("BoxShape3D_owgnv")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoTronco/Entrada" unique_id=376928113]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_620bx")
+mesh = SubResource("PlaneMesh_d6b3u")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoTronco/Entrada" unique_id=966126248]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1854,7 +1854,7 @@ shape = SubResource("BoxShape3D_hiqku")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoCopa/Nido" unique_id=152479185]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_tw10w")
+mesh = SubResource("PlaneMesh_nhcls")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoCopa/Nido" unique_id=147352840]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1886,7 +1886,7 @@ shape = SubResource("BoxShape3D_0sl1j")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoCopa/Copa" unique_id=913818351]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_b5g6x")
+mesh = SubResource("PlaneMesh_xuy7a")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoCopa/Copa" unique_id=1976530936]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1918,7 +1918,7 @@ shape = SubResource("BoxShape3D_lby5b")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoCopa/Arco" unique_id=1333827537]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_orgj2")
+mesh = SubResource("PlaneMesh_qfyna")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoCopa/Arco" unique_id=74569496]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1950,7 +1950,7 @@ shape = SubResource("BoxShape3D_5q4hq")
 [node name="BordeOscuro" type="MeshInstance3D" parent="PisoCopa/Vigia" unique_id=600596538]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_owgnv")
+mesh = SubResource("PlaneMesh_1o0uj")
 
 [node name="LuzSala" type="SpotLight3D" parent="PisoCopa/Vigia" unique_id=1703030277]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -2461,11 +2461,11 @@ script = ExtResource("41_5ia7f")
 color = Color(1.35, 1.15, 0.9, 1)
 radius = 3.0
 
-[node name="CaidaLA30" type="Node3D" parent="PisoCopa" unique_id=1126198855 instance=ExtResource("63_borgw")]
+[node name="CaidaLA30" type="Node3D" parent="PisoCopa" unique_id=1460404959 instance=ExtResource("63_borgw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 14)
 script = ExtResource("64_lvm7h")
 
-[node name="CaidaLA31" type="Node3D" parent="PisoCopa" unique_id=2110644900 instance=ExtResource("63_borgw")]
+[node name="CaidaLA31" type="Node3D" parent="PisoCopa" unique_id=512940284 instance=ExtResource("63_borgw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 28)
 script = ExtResource("64_lvm7h")
 
@@ -2504,7 +2504,7 @@ south_wall_reach = 1.7
 script = ExtResource("62_b5g6x")
 near_margin = 3.5
 
-[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1812078117 instance=ExtResource("71_lvm7h")]
+[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1787980388 instance=ExtResource("71_lvm7h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=960326471 instance=ExtResource("46_kifxg")]
