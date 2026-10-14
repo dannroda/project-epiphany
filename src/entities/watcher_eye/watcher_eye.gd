@@ -12,6 +12,9 @@ signal attack_finished
 
 enum State { IDLE, DRIFT, CHARGE, SWEEP, LUNGE, STUCK, DOWN, DEAD }
 
+## Cuánto giran los párpados (en X, el de arriba hacia atrás y el de abajo hacia adelante) para abrir del todo.
+const LID_OPEN := 1.4
+
 @export var config: EntityConfig
 @export var lunges := false
 @export var hover_height := 3.0
@@ -27,7 +30,8 @@ enum State { IDLE, DRIFT, CHARGE, SWEEP, LUNGE, STUCK, DOWN, DEAD }
 @export var down_time := 3.5
 
 @onready var body: Node3D = %Body
-@onready var lid: Node3D = %Lid
+@onready var lid_top: Node3D = %LidTop
+@onready var lid_bottom: Node3D = %LidBottom
 @onready var iris: MeshInstance3D = %Iris
 @onready var glow: OmniLight3D = %Glow
 @onready var beam: MeshInstance3D = %Beam
@@ -315,8 +319,8 @@ func _die() -> void:
 
 
 func _set_open(amount: float) -> void:
-	lid.scale = Vector3.ONE * lerpf(1.0, 0.0001, amount)
-	lid.visible = amount < 0.99
+	lid_top.rotation.x = -LID_OPEN * amount
+	lid_bottom.rotation.x = LID_OPEN * amount
 	iris.visible = amount > 0.01
 	glow.light_energy = amount * 2.5
 
