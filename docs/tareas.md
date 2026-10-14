@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (95/157)
+## M11 — Pulido: contenido y feel  (95/158)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5019,6 +5019,18 @@ Playtest 2026-10-14 (probando la pelea del jefe final, 12.26): en la sala de lad
 **Notas:** La sala de la captura es la Antesala del templo viejo (levels/temple.tscn, flags d1_): el escenario pre_boss todavía cargaba ese nivel, que ya no está en el juego (el overworld lleva a levels/templo.tscn). En el templo actual la puerta del jefe (BossDoor, Antesala → Jefe) se ve bien: marco dorado, ojo y candado. Arreglo: pre_boss ahora carga templo.tscn en la Antesala con todos los ítems, la llave del jefe y las flags te_ de todo lo anterior al jefe (puerta del jefe cerrada). boss_key_door_locked y dungeon_no_bow siguen en el templo viejo.
 
 **Capturas:** `compass/images/m11-161-20261014-023958.png`
+
+### 11.162 Retirar el templo viejo (levels/temple.tscn) · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `limpieza`, `templo`
+
+Daniel 2026-10-14: lo obsoleto se borra. El juego usa templo.tscn; temple.tscn (flags d1_) solo confunde (11.161: un escenario de debug lo cargaba y Daniel vio su antesala). Pasar al templo actual o a otro nivel lo que todavía lo usa y borrarlo, con lo que solo sirve a él.
+
+- [ ] Escenarios de debug: boss_key_door_locked y dungeon_no_bow al templo actual
+- [ ] Tests que lo cargan: boss, coop_hud, doom, enemy_ai, jump, minimap, overworld, player_hole, players, portal, render_budget, spike_trap, tablet (al templo actual o a otro nivel)
+- [ ] test_temple.gd: pasar lo que siga valiendo a test_templo y borrar el resto
+- [ ] Borrar levels/temple.tscn, data/dungeons/temple_graph.tres y lo que solo lo usa (revisar tools/build_temple_kit.gd, vary_temple.gd, toon_preview.gd y decorate_levels.gd); actualizar gdd.md
+- [ ] Suite completa en verde
 
 ## M12 — Assets propios (Blender)  (16/27)
 

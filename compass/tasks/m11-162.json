@@ -1,0 +1,42 @@
+{
+  "assignee": "project-epiphany-43",
+  "checklist": [
+    {
+      "done": false,
+      "text": "Escenarios de debug: boss_key_door_locked y dungeon_no_bow al templo actual"
+    },
+    {
+      "done": false,
+      "text": "Tests que lo cargan: boss, coop_hud, doom, enemy_ai, jump, minimap, overworld, player_hole, players, portal, render_budget, spike_trap, tablet (al templo actual o a otro nivel)"
+    },
+    {
+      "done": false,
+      "text": "test_temple.gd: pasar lo que siga valiendo a test_templo y borrar el resto"
+    },
+    {
+      "done": false,
+      "text": "Borrar levels/temple.tscn, data/dungeons/temple_graph.tres y lo que solo lo usa (revisar tools/build_temple_kit.gd, vary_temple.gd, toon_preview.gd y decorate_levels.gd); actualizar gdd.md"
+    },
+    {
+      "done": false,
+      "text": "Suite completa en verde"
+    }
+  ],
+  "code": "11.162",
+  "created_at": "2026-10-14T05:48:54.511Z",
+  "description": "Daniel 2026-10-14: lo obsoleto se borra. El juego usa templo.tscn; temple.tscn (flags d1_) solo confunde (11.161: un escenario de debug lo cargaba y Daniel vio su antesala). Pasar al templo actual o a otro nivel lo que todavía lo usa y borrarlo, con lo que solo sirve a él.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 159,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "limpieza",
+    "templo"
+  ],
+  "test": "",
+  "title": "Retirar el templo viejo (levels/temple.tscn)",
+  "updated_at": "2026-10-14T05:48:56.332Z"
+}
