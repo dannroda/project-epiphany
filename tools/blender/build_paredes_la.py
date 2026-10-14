@@ -389,7 +389,7 @@ def piece(kind, code, cut=None):
 		if inside and f.normal.z > 0.9:
 			d = inside[0]
 			if cut == "paso":
-				shade(p, f, "tierra", 0.4)
+				shade(p, f, *PASS_FLOOR.get(WALL_STYLE, ("tierra", 0.4)))
 			elif d > STEP_START + STEPS * STEP_RUN:
 				p.paint([f], "noche", "DARK")
 			else:
@@ -411,6 +411,9 @@ def piece(kind, code, cut=None):
 
 ## Umbral de las puertas, como en LA: sobre el piso de la sala, una U de bloques de piedra que rodea la boca del pasillo
 ## y una losa adentro.
+## Piso del paso y tono de los bloques del umbral por estilo (el templo: el pasillo en sombra y bloques del lavanda del piso).
+PASS_FLOOR = {"templo": ("piedra_templo", 0.1)}
+SILL_TONE = {"templo": (0.62, 0.75, 0.7)}
 SILL_DEPTH = 1.1
 SILL_BLOCK = 0.55
 SILL_HEIGHT = 0.15
@@ -437,8 +440,9 @@ def sill(p, side):
 	gap = 0.03
 	inner = HALF + 0.04
 	slab = block(1.0, 1.0 + SILL_DEPTH, -inner, inner, 0.03, round=False)
+	low, high, flat = SILL_TONE.get(WALL_STYLE, (0.25, 0.4, 0.55))
 	for f in slab:
-		shade(p, f, STONE, 0.55)
+		shade(p, f, STONE, flat)
 	blocks = []
 	rows = round((SILL_DEPTH + SILL_BLOCK) / SILL_BLOCK)
 	length = (SILL_DEPTH + SILL_BLOCK) / rows
@@ -454,7 +458,7 @@ def sill(p, side):
 		c0 = -inner + k * width
 		blocks.append(block(a0, a0 + SILL_BLOCK - gap * 2, c0 + gap, c0 + width - gap, SILL_HEIGHT * p.rng.uniform(0.85, 1.1)))
 	for faces in blocks:
-		t = p.rng.uniform(0.25, 0.4)
+		t = p.rng.uniform(low, high)
 		for f in faces:
 			shade(p, f, STONE, t if f.normal.z > 0.7 else t - 0.12)
 

@@ -17,6 +17,8 @@ uniform vec4 floor_rect;
 uniform float hole_fade = 1.2;
 // El piso sin las filas de pared (sala estirada sobre un nicho): fuera de acá lo que llega a la cresta es negro.
 uniform vec4 interior;
+// Más allá de la pared (oeste, norte, este, sur, en metros desde el interior) todo es negro.
+uniform vec4 reach = vec4(100.0);
 
 uniform sampler2D depth_texture : hint_depth_texture, filter_nearest;
 
@@ -46,7 +48,9 @@ void fragment() {
 	vec4 walls = interior.z > interior.x ? interior : floor_rect;
 	bool inside_walls = all(greaterThan(seen.xz, walls.xy - 0.1)) && all(lessThan(seen.xz, walls.zw + 0.1));
 	vec3 facing = normalize(cross(dFdx(seen), dFdy(seen)));
-	if (!inside_walls && seen.y > plane_y - 0.25) {
+	if (any(lessThan(seen.xz, walls.xy - reach.xy)) || any(greaterThan(seen.xz, walls.zw + reach.zw))) {
+		a = 1.0;
+	} else if (!inside_walls && seen.y > plane_y - 0.25) {
 		a = 1.0;
 	} else if ((!over_floor || seen.y < plane_y + 0.05) && seen.y > plane_y - 0.25 && abs(facing.y) > 0.7) {
 		a = 1.0;

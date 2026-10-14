@@ -125,6 +125,7 @@ const LOOKS := {
 		"brazier": "res://assets/epiphany/meshes/templo/brasero.res",
 		"doors": "res://assets/epiphany/meshes/paredes_la/%s_templo_la.res",
 		"walls": "res://assets/epiphany/meshes/paredes_la/%s_templo_la_%s.res", "kit": "res://data/kits/templo_la_kit.tres", "grain": [0.0, GRAIN_RECT],
+		"camera": 25.0, "reach": Vector4(0.7, 1.5, 0.7, 0.6),
 		"floor": {"tile_size": 1.4, "jitter": 0.14, "grout_width": 0.04, "grout_shade": 0.5, "floor_color": Color(0.44, 0.41, 0.52, 0.95)}},
 	"totora": {"ambient": Color(0.6, 0.72, 0.74), "ambient_energy": 1.2, "sun": Color(0.78, 0.9, 0.94), "sun_energy": 0.7,
 		"room": Color(0.98, 0.95, 0.84), "room_energy": 2.0, "dust": "res://src/world/look/polvo_quenoa.tscn",
@@ -160,6 +161,9 @@ var _floor_params := {}
 var _grain: Array = [GRAIN_AMOUNT, GRAIN_RECT]
 ## Las celdas vacías dentro de una sala (o entre dos) son agua honda y cuentan como piso (LOOKS water).
 var _water := false
+## Distancia de la cámara (salas más chicas, cámara más cerca) y desde dónde todo es negro más allá de la pared (LOOKS).
+var _camera := CAMERA_DISTANCE
+var _reach := Vector4.ONE * 100.0
 
 
 func _initialize() -> void:
@@ -198,6 +202,8 @@ func _initialize() -> void:
 	_floor_params = look.floor
 	_grain = look.grain
 	_water = look.get("water", false)
+	_camera = look.get("camera", CAMERA_DISTANCE)
+	_reach = look.get("reach", _reach)
 	var level := _load(path)
 	if mode == "bake" and level.has_node(NodePath(BAKED)):
 		push_error("%s ya tiene el look de LA: usar refresh" % path)
@@ -328,13 +334,13 @@ func _dress(level: Node) -> void:
 			sun.shadow_enabled = false
 		elif node is Camera3D and "cuts_south_wall" in node:
 			var pitch := deg_to_rad(CAMERA_PITCH)
-			node.set("offset", Vector3(0, sin(pitch), cos(pitch)) * CAMERA_DISTANCE)
+			node.set("offset", Vector3(0, sin(pitch), cos(pitch)) * _camera)
 			var blur := CameraAttributesPractical.new()
 			blur.dof_blur_far_enabled = true
-			blur.dof_blur_far_distance = CAMERA_DISTANCE + FOCUS_FAR
+			blur.dof_blur_far_distance = _camera + FOCUS_FAR
 			blur.dof_blur_far_transition = 6.0
 			blur.dof_blur_near_enabled = true
-			blur.dof_blur_near_distance = CAMERA_DISTANCE - FOCUS_NEAR
+			blur.dof_blur_near_distance = _camera - FOCUS_NEAR
 			blur.dof_blur_near_transition = 3.0
 			blur.dof_blur_amount = 0.12
 			(node as Camera3D).attributes = blur
@@ -487,6 +493,7 @@ func _fade(level: Node, room: Area3D) -> void:
 	material.set_shader_parameter("floor_rect", Vector4(floor_rect.position.x, floor_rect.position.y, floor_rect.end.x, floor_rect.end.y))
 	var inside := _interior(level, room, floor_rect, center.y - size.y / 2.0)
 	material.set_shader_parameter("interior", Vector4(inside.position.x, inside.position.y, inside.end.x, inside.end.y))
+	material.set_shader_parameter("reach", _reach)
 	var outer := floor_rect.grow(MASK_MARGIN)
 	var limit := outer.grow(0.2)
 	material.set_shader_parameter("limit", Vector4(maxf(limit.position.x, reach.x), maxf(limit.position.y, reach.y), minf(limit.end.x, reach.z), minf(limit.end.y, reach.w)))
