@@ -485,19 +485,28 @@ func test_a_room_can_set_its_own_camera_and_environment() -> void:
 	var hall := _room("PlantaBaja/SalaCofre")
 	var level_distance := camera.offset.length()
 	var level_fov := camera.fov
-	var dim := Environment.new()
+	var world := level.find_children("*", "WorldEnvironment", true, false)[0] as WorldEnvironment
 	hall.camera_distance = 30.0
 	hall.camera_fov = 32.0
-	hall.environment = dim
+	var mood := AmbienteSala.new()
+	hall.add_child(mood)
+	mood.set(&"ambient_light_energy", 0.25)
+	mood.set(&"tono_frame", 0.2)
+	assert_eq(mood.get(&"glow_enabled"), world.environment.glow_enabled, "lo no tildado se lee del nodo del nivel")
 	player.global_position = _in("PlantaBaja/SalaCofre", Vector3(-8, 0.3, 4))
 	await tree.create_timer(1.2).timeout
 	assert_eq(camera.room, hall)
 	assert_true(absf(camera.offset.length() - 30.0) < 0.01, "la sala pone su distancia (%.2f)" % camera.offset.length())
 	assert_true(absf(camera.fov - 32.0) < 0.01, "y su campo de visión")
-	assert_eq(camera.environment, dim, "y su ambiente")
+	assert_true(camera.environment != null and is_equal_approx(camera.environment.ambient_light_energy, 0.25), "y lo tildado de su ambiente")
+	assert_eq(camera.environment.glow_enabled, world.environment.glow_enabled, "lo demás, del nivel")
+	var tone: Array = camera.compositor.compositor_effects.filter(func(effect: CompositorEffect) -> bool: return effect.get_script() == AmbienteSala.TONE)
+	assert_true(is_equal_approx(tone[0].frame, 0.2), "y su viñeta")
+	assert_true(not is_equal_approx(world.environment.ambient_light_energy, 0.25), "el nodo del nivel no se toca")
 	player.global_position = _in("PlantaBaja/Entrada", Vector3(0, 0.3, 0))
 	await tree.create_timer(1.2).timeout
 	assert_true(absf(camera.offset.length() - level_distance) < 0.01, "una sala sin nada vuelve a la del nivel")
 	assert_true(absf(camera.fov - level_fov) < 0.01)
 	assert_eq(camera.environment, null, "y al ambiente del nivel")
+	assert_eq(camera.compositor, null)
 	tree.root.get_node(^"GameState").reset()
