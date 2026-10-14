@@ -37,8 +37,11 @@ func _ready() -> void:
 	tree_exiting.connect(closed.emit)
 
 
-## La pieza de corazón cuenta cuántas lleva; la que completa un corazón tiene su propio texto.
+## Las piezas (de corazón, de la llave del jefe) cuentan cuántas lleva; la que completa tiene su propio texto.
 static func cue_for(given: ItemData) -> StringName:
+	if given.id == &"boss_key_piece":
+		var dungeon := GameState.current_dungeon_state()
+		return &"boss_key_piece_full" if dungeon.has_boss_key else StringName("boss_key_piece_%d" % dungeon.boss_key_pieces)
 	if given.id != &"heart_piece":
 		return given.id
 	var pieces := GameState.heart_pieces()

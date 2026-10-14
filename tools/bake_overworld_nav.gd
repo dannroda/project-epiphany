@@ -29,6 +29,9 @@ func _process(_delta: float) -> bool:
 	region.bake_navigation_mesh(false)
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(_out.get_base_dir()))
 	var uid := ResourceLoader.get_resource_uid(_out) if ResourceLoader.exists(_out) else ResourceUID.INVALID_ID
+	if uid == ResourceUID.INVALID_ID and FileAccess.file_exists(_out):
+		var header := RegEx.create_from_string('uid="(uid://[a-z0-9]+)"').search(FileAccess.open(_out, FileAccess.READ).get_line())
+		uid = ResourceUID.text_to_id(header.get_string(1)) if header else uid
 	var err := ResourceSaver.save(navmesh, _out)
 	if err == OK and uid != ResourceUID.INVALID_ID:
 		ResourceSaver.set_uid(_out, uid)

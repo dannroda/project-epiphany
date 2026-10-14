@@ -114,6 +114,13 @@ texture = ExtResource("3_boss_key")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="BossKeyPieces" type="Label" parent="CoopKeys/Box/Keys"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_type_variation = &"HudAmmo"
+theme_override_font_sizes/font_size = 20
+
 [node name="AreaName" type="HBoxContainer" parent="."]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)

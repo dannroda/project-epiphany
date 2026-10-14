@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Texture2D" uid="uid://beh1im0lmch3d" path="res://assets/ui/items/boss_key.png" id="1_icon"]
+[ext_resource type="Script" path="res://src/items/item_data.gd" id="2_item"]
+
+[resource]
+script = ExtResource("2_item")
+id = &"boss_key_piece"
+display_name = "ITEM_BOSS_KEY_PIECE_NAME"
+description = "ITEM_BOSS_KEY_PIECE_DESC"
+icon = ExtResource("1_icon")
+category = 5
+max_stack = 4
