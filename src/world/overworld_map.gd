@@ -13,6 +13,11 @@ const CAMERA_HEIGHT := 60.0
 const MAP_PIECE := preload("res://src/world/map_piece.tscn")
 ## Después de un cambio persistente (un flag), la foto se vuelve a sacar cuando terminó de moverse (el puente sube en 1,4 s).
 const RETAKE_DELAY := 2.0
+## Lo que cada player deja descubierto a su alrededor (m); el borde se funde en REVEAL_FADE.
+const REVEAL_RADIUS := 11.0
+const REVEAL_FADE := 5.0
+## Cuánto tiene que moverse un player para volver a pintar lo descubierto (m).
+const REVEAL_STEP := 1.0
 
 @export var display_name: String = ""
 @export var world_rect := Rect2(-20, -20, 40, 40)
@@ -24,6 +29,7 @@ const RETAKE_DELAY := 2.0
 
 var texture: Texture2D
 var _retake_pending := false
+var _painted_at: Dictionary[PlayerCharacter, Vector2] = {}
 
 @onready var _viewport: SubViewport = $Snapshot
 @onready var _camera: Camera3D = $Snapshot/Camera
@@ -44,6 +50,42 @@ func _ready() -> void:
 	_camera.far = CAMERA_HEIGHT * 2.0
 	texture = _viewport.get_texture()
 	GameState.flag_changed.connect(_on_flag_changed)
+	GameState.loaded.connect(func() -> void: _painted_at.clear())
+
+
+func _physics_process(_delta: float) -> void:
+	_reveal()
+
+
+## Lo descubierto es del mundo, no del HUD: se pinta en GameState.map_revealed (1 px por metro) aunque no haya minimapa.
+func _reveal() -> void:
+	GameState.ensure_map_revealed(Vector2i(world_rect.size.ceil()))
+	var veils := get_tree().get_nodes_in_group(&"zone_veils").filter(func(veil: ZoneVeil) -> bool: return veil.visible)
+	if veils.any(func(veil: ZoneVeil) -> bool: return veil.is_revealing()):
+		_painted_at.clear()
+	var changed := false
+	for player in Players.all:
+		var here := Vector2(player.global_position.x, player.global_position.z)
+		if _painted_at.has(player) and _painted_at[player].distance_to(here) < REVEAL_STEP:
+			continue
+		_painted_at[player] = here
+		_paint_reveal(GameState.map_revealed, here, world_rect.position, veils)
+		changed = true
+	if changed:
+		GameState.map_revealed_changed.emit()
+
+
+static func _paint_reveal(image: Image, here: Vector2, origin: Vector2, veils: Array) -> void:
+	var center := here - origin
+	var low := (center - Vector2.ONE * REVEAL_RADIUS).floor().max(Vector2.ZERO)
+	var high := (center + Vector2.ONE * REVEAL_RADIUS).ceil().min(Vector2(image.get_size()) - Vector2.ONE)
+	for y in range(int(low.y), int(high.y) + 1):
+		for x in range(int(low.x), int(high.x) + 1):
+			if not veils.is_empty() and veils.any(func(veil: ZoneVeil) -> bool: return veil.covers(origin + Vector2(x + 0.5, y + 0.5))):
+				continue
+			var value := 1.0 - smoothstep(REVEAL_RADIUS - REVEAL_FADE, REVEAL_RADIUS, center.distance_to(Vector2(x + 0.5, y + 0.5)))
+			if value > image.get_pixel(x, y).r:
+				image.set_pixel(x, y, Color(value, value, value))
 
 
 ## Saca la foto en el próximo frame, sin el agujero del player (la cámara del juego está en pausa con el mapa abierto).

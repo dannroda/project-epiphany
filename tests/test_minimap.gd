@@ -187,3 +187,24 @@ func test_a_persistent_change_retakes_the_photo() -> void:
 	await tree.create_timer(OverworldMap.RETAKE_DELAY).timeout
 	assert_true(taken[0], "y saca la foto de nuevo")
 	setup[1].reset()
+
+
+## 11.86: lo descubierto lo pinta el mundo (OverworldMap), no el minimapa: sin HUD también se registra.
+func test_the_world_reveals_the_map_without_a_hud() -> void:
+	var setup: Array = await _load("", "res://levels/overworld.tscn")
+	var tree: SceneTree = setup[0]
+	var state: Node = setup[1]
+	var map := tree.current_scene.find_children("*", "OverworldMap", true, false)[0] as OverworldMap
+	for hud in tree.get_nodes_in_group(&"hud"):
+		hud.queue_free()
+	await tree.process_frame
+	var player := tree.get_first_node_in_group(&"player") as Node3D
+	var far := player.global_position + Vector3(0, 0, -20)
+	var seen := func(point: Vector3) -> float:
+		return state.map_revealed.get_pixelv(Vector2i(Vector2(point.x, point.z) - map.world_rect.position)).r
+	assert_true(seen.call(far) < 0.1, "lejos todavía no")
+	player.global_position = far
+	for i in 3:
+		await tree.physics_frame
+	assert_true(seen.call(far) > 0.9, "sin HUD, al llegar se descubre")
+	state.reset()

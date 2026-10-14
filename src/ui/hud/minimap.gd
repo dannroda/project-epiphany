@@ -11,11 +11,6 @@ const GRID_ORIGIN := Vector2(10, 8)
 const DOOR_SIZE := 7.0
 ## Píxeles del minimapa por metro en el overworld.
 const OVERWORLD_SCALE := 5.0
-## Lo que cada player deja descubierto a su alrededor en el overworld (m); el borde se funde en REVEAL_FADE.
-const REVEAL_RADIUS := 11.0
-const REVEAL_FADE := 5.0
-## Cuánto tiene que moverse un player para volver a pintar lo descubierto (m).
-const REVEAL_STEP := 1.0
 
 ## Los marcos de la pestaña Mapa, a esta escala.
 @export var frame_scale := 0.5
@@ -49,7 +44,6 @@ var _portals: Array = []
 var _tablets: Array = []
 var _zones: Array = []
 var _revealed: ImageTexture
-var _painted_at: Dictionary[PlayerCharacter, Vector2] = {}
 
 
 func _ready() -> void:
@@ -57,6 +51,9 @@ func _ready() -> void:
 	marks.draw.connect(_draw_marks)
 	fog.set_shader_parameter(&"ink", MapRoomCell.INK)
 	GameState.loaded.connect(_setup_reveal)
+	GameState.map_revealed_changed.connect(func() -> void:
+		if _revealed and GameState.map_revealed:
+			_revealed.update(GameState.map_revealed))
 
 
 func _process(delta: float) -> void:
@@ -66,7 +63,6 @@ func _process(delta: float) -> void:
 	var room := MapData.current_room(tree)
 	visible = Settings.get_value(&"minimap") and not MenuStack.is_open() and Players.lead() != null \
 		and (_in_dungeon() and room != null or not _in_dungeon() and _map != null) and not (room and room.boss_room)
-	_reveal()
 	_show_floor(room if visible and _in_dungeon() else null)
 	if not visible:
 		return
@@ -120,51 +116,17 @@ func _bind(scene: Node) -> void:
 	_setup_reveal()
 
 
-## Lo descubierto del overworld (GameState.map_revealed, 1 px por metro): el shader funde la foto en tinta donde
+## Lo descubierto del overworld (GameState.map_revealed, lo pinta OverworldMap): el shader funde la foto en tinta donde
 ## todavía no se pasó.
 func _setup_reveal() -> void:
-	_painted_at.clear()
 	view.material = fog if is_instance_valid(_map) and not _in_dungeon() else null
 	if view.material == null:
 		return
 	var rect := _map.world_rect
-	var size := Vector2i(rect.size.ceil())
-	if GameState.map_revealed == null or GameState.map_revealed.get_size() != size:
-		GameState.map_revealed = Image.create_empty(size.x, size.y, false, Image.FORMAT_L8)
+	GameState.ensure_map_revealed(Vector2i(rect.size.ceil()))
 	_revealed = ImageTexture.create_from_image(GameState.map_revealed)
 	fog.set_shader_parameter(&"explored", _revealed)
 	fog.set_shader_parameter(&"world_rect", Vector4(rect.position.x, rect.position.y, rect.size.x, rect.size.y))
-
-
-func _reveal() -> void:
-	if view.material == null or GameState.map_revealed == null:
-		return
-	var veils := get_tree().get_nodes_in_group(&"zone_veils").filter(func(veil: ZoneVeil) -> bool: return veil.visible)
-	if veils.any(func(veil: ZoneVeil) -> bool: return veil.is_revealing()):
-		_painted_at.clear()
-	var changed := false
-	for player in Players.all:
-		var here := Vector2(player.global_position.x, player.global_position.z)
-		if _painted_at.has(player) and _painted_at[player].distance_to(here) < REVEAL_STEP:
-			continue
-		_painted_at[player] = here
-		_paint_reveal(GameState.map_revealed, here, _map.world_rect.position, veils)
-		changed = true
-	if changed:
-		_revealed.update(GameState.map_revealed)
-
-
-static func _paint_reveal(image: Image, here: Vector2, origin: Vector2, veils: Array) -> void:
-	var center := here - origin
-	var low := (center - Vector2.ONE * REVEAL_RADIUS).floor().max(Vector2.ZERO)
-	var high := (center + Vector2.ONE * REVEAL_RADIUS).ceil().min(Vector2(image.get_size()) - Vector2.ONE)
-	for y in range(int(low.y), int(high.y) + 1):
-		for x in range(int(low.x), int(high.x) + 1):
-			if not veils.is_empty() and veils.any(func(veil: ZoneVeil) -> bool: return veil.covers(origin + Vector2(x + 0.5, y + 0.5))):
-				continue
-			var value := 1.0 - smoothstep(REVEAL_RADIUS - REVEAL_FADE, REVEAL_RADIUS, center.distance_to(Vector2(x + 0.5, y + 0.5)))
-			if value > image.get_pixel(x, y).r:
-				image.set_pixel(x, y, Color(value, value, value))
 
 
 func _in_dungeon() -> bool:

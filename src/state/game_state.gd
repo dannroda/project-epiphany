@@ -11,6 +11,8 @@ signal dungeon_changed
 signal loaded
 ## Zonas del overworld visitadas o pines del mapa.
 signal map_changed
+## Se pintó más de lo descubierto del overworld (map_revealed).
+signal map_revealed_changed
 
 const FLAGS: FlagRegistry = preload("res://data/flag_registry.tres")
 const NEW_GAME_EQUIPMENT: Array[StringName] = [&"sword_basic", &"shield_wood", &"tunic"]
@@ -44,11 +46,14 @@ var visited_zones: Array[StringName] = []
 var map_pins: Array[Vector2] = []
 ## Lo recorrido del overworld para el minimapa: imagen L8 sobre OverworldMap.world_rect (0 = sin descubrir).
 var map_revealed: Image
+## Cargando en bloque (partida nueva o guardada): las señales finas se callan y solo sale `loaded`.
+var _bulk := false
 var current_dungeon: StringName = &"":
 	set(value):
 		if value != current_dungeon:
 			current_dungeon = value
-			dungeon_changed.emit()
+			if not _bulk:
+				dungeon_changed.emit()
 var spawn_scene: String = ""
 var spawn_point: StringName = &""
 var player_position: Variant = null ## Vector3 hasta que haya puntos de aparición con nombre
@@ -66,12 +71,19 @@ func _ready() -> void:
 
 
 func reset() -> void:
+	_set_bulk(true)
 	_clear()
 	for id in NEW_GAME_EQUIPMENT:
 		var item := Items.get_item(id)
 		inventory.add(id)
 		equipment[item.category] = id
+	_set_bulk(false)
 	loaded.emit()
+
+
+func _set_bulk(on: bool) -> void:
+	_bulk = on
+	inventory.quiet = on
 
 
 func get_flag(id: StringName) -> Variant:
@@ -96,8 +108,15 @@ func set_ward_of(slot: int, seconds: float) -> void:
 	player_ward[slot] = seconds
 
 
+func ensure_map_revealed(size: Vector2i) -> void:
+	if map_revealed == null or map_revealed.get_size() != size:
+		map_revealed = Image.create_empty(size.x, size.y, false, Image.FORMAT_L8)
+
+
 func set_flag(id: StringName, value: Variant) -> void:
 	assert(FLAGS.has(id), "Flag no registrada: %s" % id)
+	if flags.has(id) and typeof(flags[id]) == typeof(value) and flags[id] == value:
+		return
 	flags[id] = value
 	flag_changed.emit(id, value)
 
@@ -241,7 +260,8 @@ func bottle_with(content: StringName) -> StringName:
 
 func fill(bottle: StringName, content: StringName) -> void:
 	bottles[bottle] = content
-	inventory.changed.emit(bottle, inventory.count(bottle))
+	if not inventory.quiet:
+		inventory.changed.emit(bottle, inventory.count(bottle))
 
 
 ## Un contenido llena la primera botella vacía; si no hay, llega en una botella nueva (hasta cuatro).
@@ -342,6 +362,7 @@ func write_to(cfg: ConfigFile) -> void:
 
 
 func read_from(cfg: ConfigFile) -> void:
+	_set_bulk(true)
 	_clear()
 	var get_typed := func(section: String, key: String, default: Variant) -> Variant: return SaveCodec.typed(cfg, section, key, default)
 	max_health = get_typed.call("player", "max_health", NEW_GAME_MAX_HEALTH)
@@ -386,6 +407,7 @@ func read_from(cfg: ConfigFile) -> void:
 		dungeon.has_boss_key = get_typed.call(section, "has_boss_key", false)
 		dungeon.visited_rooms = get_typed.call(section, "visited_rooms", 0)
 		dungeons[StringName(section.trim_prefix(DUNGEON_PREFIX))] = dungeon
+	_set_bulk(false)
 	loaded.emit()
 
 

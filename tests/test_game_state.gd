@@ -83,3 +83,39 @@ func test_unknown_item_in_save_is_skipped() -> void:
 	assert_eq(state.inventory.count(&"bomb"), 4)
 	assert_eq(state.inventory.ids().size(), 1)
 	state.free()
+
+
+## 11.86: un flag que no cambia no avisa.
+func test_set_flag_only_emits_on_change() -> void:
+	var state := _new_state()
+	var emitted := [0]
+	state.flag_changed.connect(func(_id: StringName, _value: Variant) -> void: emitted[0] += 1)
+	state.set_flag(&"ow_test_chest", true)
+	state.set_flag(&"ow_test_chest", true)
+	assert_eq(emitted[0], 1, "la segunda vez no")
+	state.set_flag(&"ow_test_chest", false)
+	assert_eq(emitted[0], 2, "cambiar sí")
+	state.free()
+
+
+## 11.86: cargar avisa `loaded` y nada intermedio (ni la mazmorra ni ítem por ítem).
+func test_reading_a_save_only_emits_loaded() -> void:
+	var state := _new_state()
+	state.give(Items.get_item(&"bomb"), 3)
+	state.current_dungeon = &"ch"
+	state.give(Items.get_item(&"small_key"))
+	var cfg := ConfigFile.new()
+	state.write_to(cfg)
+	var heard: Array[String] = []
+	state.dungeon_changed.connect(func() -> void: heard.append("dungeon"))
+	state.inventory.changed.connect(func(_id: StringName, _count: int) -> void: heard.append("inventory"))
+	state.flag_changed.connect(func(_id: StringName, _value: Variant) -> void: heard.append("flag"))
+	state.loaded.connect(func() -> void: heard.append("loaded"))
+	state.read_from(cfg)
+	assert_eq(heard, ["loaded"] as Array[String])
+	assert_eq(state.inventory.count(&"bomb"), 3, "y el inventario quedó cargado")
+	assert_eq(state.current_dungeon, &"ch")
+	heard.clear()
+	state.give(Items.get_item(&"bomb"))
+	assert_eq(heard, ["inventory"] as Array[String], "después de cargar vuelve a avisar")
+	state.free()

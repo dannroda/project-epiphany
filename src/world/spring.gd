@@ -12,6 +12,7 @@ const DIALOGUE: DialogueResource = preload("res://data/dialogue/overworld.dialog
 func _ready() -> void:
 	interactable.interacted.connect(_use)
 	GameState.inventory.changed.connect(func(_id: StringName, _count: int) -> void: _update_prompt())
+	GameState.loaded.connect(_update_prompt)
 	_update_prompt()
 
 
