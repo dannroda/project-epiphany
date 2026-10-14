@@ -16,7 +16,9 @@ enum State { IDLE, HOP, AIM, FALL, STUCK, DEAD }
 @export var hops := 2
 @export var hop_distance := 3.0
 @export var hop_time := 0.45
-@export var leap_height := 7.0
+@export var leap_height := 4.0
+## En el aire viaja hacia su sombra a esta velocidad (m/s): el salto se ve seguir al player.
+@export var air_speed := 9.0
 @export var aim_time := 1.1
 @export var lock_time := 0.35
 @export var impact_damage := 4
@@ -100,6 +102,9 @@ func _physics_process(delta: float) -> void:
 			body.look_at(look, Vector3.UP, true)
 	if state == State.AIM and player and aim_mark.visible and not _aim_locked:
 		aim_mark.global_position = _clamp_to_arena(player.global_position) + Vector3.UP * 0.03
+	if state == State.AIM:
+		var shadow := Vector3(aim_mark.global_position.x, global_position.y, aim_mark.global_position.z)
+		global_position = global_position.move_toward(shadow, air_speed * pace * delta)
 	if not _rings.is_empty():
 		_spread_waves(delta)
 
@@ -165,7 +170,7 @@ func _leap(last := true) -> void:
 	state = State.FALL
 	var target := aim_mark.global_position
 	target.y = global_position.y
-	global_position = target
+	_tween_to(self, ^"global_position", target, 0.18)
 	_tween_to(body, ^"position:y", 0.0, 0.18).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
 	await _wait(0.18)
 	if state != State.FALL:
@@ -203,6 +208,7 @@ func _start_wave() -> void:
 	_rings.append({mesh = mesh, at = 0.0, center = global_position, hit = []})
 	mesh.global_position = global_position + Vector3.UP * 0.05
 	mesh.scale = Vector3.ONE * 0.01
+	mesh.set_instance_shader_parameter(&"width", wave_width)
 	mesh.show()
 
 
@@ -214,6 +220,8 @@ func _spread_waves(delta: float) -> void:
 			_rings.erase(ring)
 			continue
 		ring.mesh.scale = Vector3(ring.at, 1.0, ring.at)
+		ring.mesh.set_instance_shader_parameter(&"radius", ring.at)
+		ring.mesh.set_instance_shader_parameter(&"fade", 1.0 - ring.at / wave_radius)
 		for player in Players.alive():
 			if ring.hit.has(player) or not player.is_on_floor():
 				continue

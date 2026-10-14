@@ -2,11 +2,11 @@
   "assignee": "project-epiphany-43",
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "El salto se ve: la momia viaja en arco hasta la marca (que sigue al player hasta fijarse)."
     },
     {
-      "done": false,
+      "done": true,
       "text": "Onda expansiva del aterrizaje con un shader vistoso (anillo que se expande, distorsión/brillo)."
     }
   ],
@@ -19,7 +19,7 @@
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug",
     "chullpa",
@@ -27,5 +27,5 @@
   ],
   "test": "",
   "title": "Chullpa: la momia aparece en vez de saltar hacia el player; onda expansiva con shader vistoso",
-  "updated_at": "2026-10-14T03:11:47.802Z"
+  "updated_at": "2026-10-14T03:36:55.192Z"
 }
