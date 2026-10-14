@@ -188,6 +188,10 @@ func _initialize() -> void:
 		push_error("uso: -- export | bake <nivel> | refresh <nivel>, con nivel en %s" % [LEVELS.keys()])
 		quit(1)
 		return
+	if DisplayServer.get_name() == "headless":
+		push_error("bake y refresh necesitan el renderer (sin --headless): headless los shaders embebidos se guardan sin parámetros")
+		quit(1)
+		return
 	var look: Dictionary = LOOKS[LOOK_OF.get(args[1], args[1])]
 	_door_leaves = look.doors
 	_cracked_leaves = look.get("cracked", look.doors)
@@ -254,7 +258,7 @@ func _initialize() -> void:
 
 ## El nivel, con las paredes ya duplicadas (si todavía no tiene el look, las duplica en memoria).
 func _load(path: String) -> Node:
-	var level: Node = (load(path) as PackedScene).instantiate()
+	var level: Node = (load(path) as PackedScene).instantiate(PackedScene.GEN_EDIT_STATE_MAIN)
 	var key: String = LEVELS.find_key(path)
 	if not level.has_node(NodePath(BAKED)) and LOOKS[LOOK_OF.get(key, key)].get("spread", true):
 		_spread(level)
@@ -419,10 +423,12 @@ func _look(level: Node, look: Dictionary) -> void:
 			(node.get_node("Model") as MeshInstance3D).mesh = load(look.brazier)
 	for camera: Node in cameras:
 		var old := camera.get_node_or_null("Polvo")
+		if old and old.scene_file_path == look.dust:
+			continue
 		if old:
 			camera.remove_child(old)
 			old.free()
-		var dust := (load(look.dust) as PackedScene).instantiate() as Node3D
+		var dust := (load(look.dust) as PackedScene).instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE) as Node3D
 		dust.position = Vector3(0, 0, -DUST_AHEAD)
 		camera.add_child(dust)
 		dust.owner = level
@@ -551,8 +557,17 @@ func _prune(grid: GridMap) -> void:
 					touches = true
 		if not touches:
 			lone.append(cell)
+	var set := {}
 	for cell in lone:
-		grid.set_cell_item(cell, GridMap.INVALID_CELL_ITEM)
+		set[cell] = true
+	for cell in lone:
+		var rim := false
+		for dx in range(-1, 2):
+			for dz in range(-1, 2):
+				var next := cell + Vector3i(dx, 0, dz)
+				rim = rim or (wall.call(next) and not set.has(next))
+		if not rim:
+			grid.set_cell_item(cell, GridMap.INVALID_CELL_ITEM)
 
 
 func _shapes(grid: GridMap) -> Dictionary:
@@ -962,6 +977,9 @@ func _pin_ext_uids(path: String) -> void:
 	var pattern := RegEx.create_from_string('\\[ext_resource type="([^"]+)" path="([^"]+)"')
 	for m in pattern.search_all(text):
 		var id := ResourceLoader.get_resource_uid(m.get_string(2))
+		if id == ResourceUID.INVALID_ID and m.get_string(2).get_extension() in ["tres", "tscn"]:
+			var header := RegEx.create_from_string('uid="(uid://[a-z0-9]+)"').search(FileAccess.open(m.get_string(2), FileAccess.READ).get_line())
+			id = ResourceUID.text_to_id(header.get_string(1)) if header else id
 		if id != ResourceUID.INVALID_ID:
 			text = text.replace(m.get_string(), '[ext_resource type="%s" uid="%s" path="%s"' % [m.get_string(1), ResourceUID.id_to_text(id), m.get_string(2)])
 	FileAccess.open(path, FileAccess.WRITE).store_string(text)
@@ -1009,9 +1027,9 @@ func _with_window(mesh: Mesh, bottom_material: Material, fog: Material = null) -
 
 ## Los huecos que caen al piso de abajo usan la pieza con ventana; los demás (fosos), la de siempre.
 func _drops(level: Node, kit: MeshLibrary) -> void:
-	for old in level.find_children("*", "Node3D", true, false).filter(func(n: Node) -> bool: return n.scene_file_path == DROP_LOOK.resource_path and n.name.begins_with("CaidaLA")):
-		old.get_parent().remove_child(old)
-		old.free()
+	var old := {}
+	for look: Node3D in level.find_children("*", "Node3D", true, false).filter(func(n: Node) -> bool: return n.scene_file_path == DROP_LOOK.resource_path and n.name.begins_with("CaidaLA")):
+		old[[look.get_parent(), look.position.snappedf(0.01)]] = look
 	for floor in DropHoles.floors(level):
 		var drops := {}
 		var floor_y := 0.0
@@ -1025,11 +1043,14 @@ func _drops(level: Node, kit: MeshLibrary) -> void:
 			if shafts.all(func(other: Vector2) -> bool: return other.distance_to(at) >= SHAFT_SPACING):
 				shafts.append(at)
 		for at in shafts:
-			var look := DROP_LOOK.instantiate()
+			var position := DropHoles.transform_of(floor).affine_inverse() * Vector3(at.x, floor_y, at.y)
+			if old.erase([floor, position.snappedf(0.01)]):
+				continue
+			var look := DROP_LOOK.instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE)
 			look.name = "CaidaLA%d" % floor.get_child_count()
-			floor.add_child(look)
+			floor.add_child(look, true)
 			look.owner = level
-			look.position = DropHoles.transform_of(floor).affine_inverse() * Vector3(at.x, floor_y, at.y)
+			look.position = position
 		for grid: GridMap in floor.find_children("*", "GridMap", true, false):
 			for at_cell in grid.get_used_cells():
 				var hole := kit.get_item_name(grid.get_cell_item(at_cell))
@@ -1039,6 +1060,9 @@ func _drops(level: Node, kit: MeshLibrary) -> void:
 				var base := "Hueco" + hole.trim_prefix(DROP_PREFIX) if hole.begins_with(DROP_PREFIX) else hole
 				var want := DROP_PREFIX + base.trim_prefix("Hueco") if drops.has(Vector2(at.x, at.z).snapped(Vector2(0.01, 0.01))) else base
 				grid.set_cell_item(at_cell, kit.find_item_by_name(want), grid.get_cell_item_orientation(at_cell))
+	for look: Node in old.values():
+		look.get_parent().remove_child(look)
+		look.free()
 
 
 ## Duplica cada línea de pared entre salas (y la del borde), para que cada sala tenga su propia pared de 2 m: corre las celdas

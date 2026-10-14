@@ -583,7 +583,7 @@ Plano aprobado por Daniel el 2026-10-13 ("si, me gusta") y armado en blockout (`
 1. Sin escudo: Atrio → Columnas (gancho: llave) → Grieta (bomba, pluma: brújula) → Ventisquero (arco: mapa) → Atrio → Nido (llave: Kuntur joven) → Cámara (escudo).
 2. Con escudo: cristal de la Cámara → Llegada → Espejos (espada y escudo) → Torretas (escudo y gancho: llave) → Ojo del Sol (arco y escudo con tiempo: llave del jefe) → Hueco (pieza de corazón; el hueco es el atajo al Atrio) → Antesala → Cima.
 
-**Pendiente:** el Kuntur joven y el Apu Kuntur (hoy prestados). Horneada en estilo LA por arte, con las salas donde estaban (si se edita el grid: `la_walls.gd -- refresh cumbre`, sin rehornear). Escenario de debug: `cumbre`. Entrada en el overworld: `CumbreDoor`, en el risco norte de la Cumbre; las dos salidas vuelven a `Spawn_cumbre`. A probar en el recorrido: si el escudo, apuntado en diagonal, salta el atajo de la columna de los Espejos; el hueco del Hueco queda pegado al abismo del islote.
+**Pendiente:** el Kuntur joven y el Apu Kuntur (hoy prestados). Horneada en estilo LA por arte, con las salas donde estaban (si se edita el grid: `la_walls.gd -- refresh cumbre`, con renderer, sin `--headless`). Escenario de debug: `cumbre`. Entrada en el overworld: `CumbreDoor`, en el risco norte de la Cumbre; las dos salidas vuelven a `Spawn_cumbre`. A probar en el recorrido: si el escudo, apuntado en diagonal, salta el atajo de la columna de los Espejos; el hueco del Hueco queda pegado al abismo del islote.
 
 ## 9. Jefe — El Ojo con manos
 <!-- id: jefe -->
