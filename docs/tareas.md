@@ -4858,7 +4858,7 @@ Playtest 2026-10-13: en la Totora (D3), piso 1P Ground Floor, apenas se entra a 
 
 - [ ] Segundo caso: Totora 2P Upper Floor, sala oeste (pasarela angosta junto al estanque, entrando por la puerta este): apenas se entra uno se puede caer y reaparece arriba del agua, cae en bucle hasta perder.
 - [x] Arreglo general: el punto de reaparición tras caer al agua/pozo tiene que estar sobre piso firme (validarlo al guardarlo, no la posición cruda al entrar a la sala).
-- [x] Idea de Daniel: un cooldown al cruzar de sala, para el input del player y para los enemigos, así no se cae ni lo golpean apenas entra.
+- [ ] Idea de Daniel: un cooldown al cruzar de sala, para el input del player y para los enemigos, así no se cae ni lo golpean apenas entra.
 - [x] Test: entrar por cada puerta de cada mazmorra con agua/pozos, caer y comprobar que reaparece sobre piso.
 
 **Prueba:** Totora 1P sala este y 2P sala oeste: entrar manteniendo el stick y caer al agua: vuelve a la puerta sobre piso, quieto medio segundo, y no vuelve a caer solo. test_room_entry (todas las puertas de las 5 mazmorras)
