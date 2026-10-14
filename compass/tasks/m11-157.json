@@ -1,0 +1,21 @@
+{
+  "assignee": "project-epiphany-fd",
+  "checklist": [],
+  "code": "11.157",
+  "created_at": "2026-10-14T04:24:36.528Z",
+  "description": "Daniel 2026-10-14: las piezas de los kits LA quedan corridas media celda de la grilla del editor. Causa: los GridMap de las mazmorras tienen cell_center_x/z = false y las mallas de los kits están centradas en su origen (−1..1), así la grilla pasa por el medio de los tiles. En el juego anda porque el código usa la misma convención. Arreglo: cell_center = true y correr cada GridMap −1 m en x y z (nada se mueve en el mundo), o mover el origen de las mallas; revisar la_walls, decorate_levels y los generadores que usan map_to_local. Las cinco mazmorras de una vez.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 154,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "herramientas"
+  ],
+  "test": "",
+  "title": "Mazmorras: los tiles del GridMap no se alinean con la grilla del editor",
+  "updated_at": "2026-10-14T04:24:36.528Z"
+}
