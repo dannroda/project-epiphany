@@ -316,12 +316,17 @@ func enter_room(new_room: Room, crosser: PlayerCharacter = null) -> void:
 	fov = from_fov
 	var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(self, "global_position", focus + to_offset, transition_time)
-	tween.parallel().tween_property(self, "offset", to_offset, transition_time)
+	tween.parallel().tween_method(_slide_offset, from_offset, to_offset, transition_time)
 	tween.parallel().tween_property(self, "fov", to_fov, transition_time)
 	tween.tween_callback(func() -> void:
 		transitioning = false
 		_mask_around(room.bounds())
 		_remember_entry())
+
+
+func _slide_offset(value: Vector3) -> void:
+	offset = value
+	global_basis = Basis.looking_at(-_eye(), Vector3.FORWARD)
 
 
 ## Offset y campo de visión de la sala, y su AmbienteSala sobre el WorldEnvironment del nivel; lo que no pone queda

@@ -480,6 +480,23 @@ func test_the_feather_island_is_one_tile_from_the_east_floor() -> void:
 	tree.root.get_node(^"GameState").reset()
 
 
+func test_the_camera_turns_during_the_slide_into_a_room_with_its_own_offset() -> void:
+	await _start()
+	var hall := _room("PlantaBaja/SalaCofre")
+	hall.camera_offset = Vector3(0, 20, 20)
+	player.global_position = _in("PlantaBaja/SalaCofre", Vector3(-8, 0.3, 4))
+	var last := camera.global_basis.get_rotation_quaternion()
+	var worst := 0.0
+	for i in 90:
+		await tree.physics_frame
+		var now := camera.global_basis.get_rotation_quaternion()
+		worst = maxf(worst, rad_to_deg(last.angle_to(now)))
+		last = now
+	assert_eq(camera.room, hall)
+	assert_true(worst < 2.0,"la cámara gira de a poco al entrar, no de golpe (%.1f° en un cuadro)" % worst)
+	tree.root.get_node(^"GameState").reset()
+
+
 func test_a_room_can_set_its_own_camera_and_environment() -> void:
 	await _start()
 	var hall := _room("PlantaBaja/SalaCofre")
