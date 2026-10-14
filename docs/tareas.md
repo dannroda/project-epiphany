@@ -5094,9 +5094,9 @@ Daniel 2026-10-14 (cueva de las bombas): acercándose a la pared de la sala o pa
 Daniel 2026-10-14 (playtest de 11.130: no tiene sentido entrar a la ermita y que esté bloqueada solo por dentro): la cueva del santuario tiene una sola entrada, el muro agrietado del overworld. Se van la salida trasera y el atajo.
 
 - [x] shrine_cave: sin ShortcutGate, ShrineSwitch, ShrineBlock, BackPortal, Spawn_atajo ni EntranceCrackedWall; pasillo este tapiado; sin ow_shrine_switch; GDD (-5d, wt/art cebb8223)
-- [ ] Overworld: sin ShrineBackMouth, ShrineBackDoor ni Spawn_atajo; terreno, decor y navmesh (-eb)
+- [x] Overworld: sin ShrineBackMouth, ShrineBackDoor ni Spawn_atajo; terreno, decor y navmesh (-eb)
 
-**Relacionadas:** 11.130 Bocas de cueva talladas en el risco
+**Relacionadas:** 11.130 Bocas de cueva talladas en el risco; 12.29 Muro agrietado LA de cueva (muro_agrietado_cueva_la)
 
 ## M12 — Assets propios (Blender)  (16/29)
 
@@ -5653,7 +5653,7 @@ Daniel 2026-10-14 (playtest, cueva de las bombas): el muro de práctica (CavePra
 
 **Capturas:** `compass/images/m12-29-20261014-034608.png`
 
-**Relacionadas:** 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la); 11.164 Lo que esconde una pared agrietada no se ve desde arriba
+**Relacionadas:** 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la); 11.164 Lo que esconde una pared agrietada no se ve desde arriba; 11.166 Santuario con una sola entrada: su muro agrietado
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 
@@ -6261,13 +6261,18 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 ### Revisión: lo listo para probar  (25/27 probadas)
 
-1. [ ] 11.130 Bocas de cueva talladas en el risco · Revisión · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
-2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player. El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
+1. [ ] 11.130 Bocas de cueva talladas en el risco · Revisión · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. 
+   No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. 
+   D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
+2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
+   El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
 3. [x] 11.111 Cactus, árboles y matas se cortan como el pasto · Hecho · anda
 4. [x] 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · Hecho · anda
 5. [x] 11.118 Sandalias: correr manteniendo y salto largo con la pluma · Hecho · anda
 6. [x] 11.24 Más secretos en el overworld · Hecho · anda
-7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell" no hay asset correcto para la pared quebrable
+7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente
+   si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell"
+   no hay asset correcto para la pared quebrable
 8. [x] 11.30 Ítem de D3: el gancho · Hecho · anda
 9. [x] 11.28 Atajos que se abren al volver · Hecho · anda — anda, pero no debería hacer un fade. Debería haber una animacion del player subiendo y bajando
 10. [x] 11.46 Jefe: game juice · Hecho · anda

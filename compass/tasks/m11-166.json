@@ -6,7 +6,7 @@
       "text": "shrine_cave: sin ShortcutGate, ShrineSwitch, ShrineBlock, BackPortal, Spawn_atajo ni EntranceCrackedWall; pasillo este tapiado; sin ow_shrine_switch; GDD (-5d, wt/art cebb8223)"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Overworld: sin ShrineBackMouth, ShrineBackDoor ni Spawn_atajo; terreno, decor y navmesh (-eb)"
     }
   ],
@@ -36,5 +36,5 @@
   ],
   "test": "",
   "title": "Santuario con una sola entrada: su muro agrietado",
-  "updated_at": "2026-10-14T07:37:33.024Z"
+  "updated_at": "2026-10-14T07:48:41.884Z"
 }
