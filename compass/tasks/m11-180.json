@@ -1,0 +1,21 @@
+{
+  "assignee": "project-epiphany-43",
+  "checklist": [],
+  "code": "11.180",
+  "created_at": "2026-10-14T19:05:08.895Z",
+  "description": "Daniel (2026-10-14): todas las salas de las mazmorras miden 14 de alto y al menos 22 de ancho, como la Chullpa y la Queñoa. Templo tiene salas de 14 × 10 / 14 × 12 y hay que rediseñarla.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 177,
+  "priority": "medium",
+  "refs": [],
+  "size": "l",
+  "status": "todo",
+  "tags": [
+    "diseno",
+    "mazmorra"
+  ],
+  "test": "",
+  "title": "Templo: salas de 14 de alto y al menos 22 de ancho",
+  "updated_at": "2026-10-14T19:05:08.895Z"
+}
