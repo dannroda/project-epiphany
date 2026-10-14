@@ -2,7 +2,8 @@
 
 [ext_resource type="Script" path="res://src/world/cracked_wall.gd" id="1_wall"]
 [ext_resource type="Script" path="res://src/components/hurtbox.gd" id="2_hurtbox"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo/piso_grieta.res" id="3_floor"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/trampilla/trampilla_hoja.res" id="3_leaf"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/trampilla/trampilla_marco.res" id="5_frame"]
 [ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="pf_persistent_flag"]
 
 [sub_resource type="BoxShape3D" id="FloorShape"]
@@ -17,12 +18,28 @@ script = ExtResource("1_wall")
 [node name="Wall" type="Node3D" parent="."]
 unique_name_in_owner = true
 
-[node name="Model" type="MeshInstance3D" parent="Wall"]
-mesh = ExtResource("3_floor")
+[node name="LeafLeft" type="MeshInstance3D" parent="Wall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+mesh = ExtResource("3_leaf")
+
+[node name="LeafRight" type="MeshInstance3D" parent="Wall"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 1, 0, 0)
+mesh = ExtResource("3_leaf")
 
 [node name="Rubble" type="Node3D" parent="."]
 unique_name_in_owner = true
 visible = false
+
+[node name="LeafLeftOpen" type="MeshInstance3D" parent="Rubble"]
+transform = Transform3D(0.0907, 0.9959, 0, -0.9959, 0.0907, 0, 0, 0, 1, -1, 0, 0)
+mesh = ExtResource("3_leaf")
+
+[node name="LeafRightOpen" type="MeshInstance3D" parent="Rubble"]
+transform = Transform3D(-0.0907, -0.9959, 0, -0.9959, 0.0907, 0, 0, 0, -1, 1, 0, 0)
+mesh = ExtResource("3_leaf")
+
+[node name="Frame" type="MeshInstance3D" parent="."]
+mesh = ExtResource("5_frame")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
