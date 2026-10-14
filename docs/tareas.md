@@ -4782,11 +4782,15 @@ Playtest 2026-10-13: en la D2 (Queñoa), piso 2P "Canopy", hay en una pared un m
 
 **Relacionadas:** 11.145 Queñoa S1 (Sala de los ojos): placa que no hace nada, z-fighting en el cofre y símbolo raro en la puerta; 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la)
 
-### 11.142 Mapa de pausa: LT/RT van rapidísimo; mover con las flechitas · Pendiente
+### 11.142 Mapa de pausa: LT/RT van rapidísimo; mover con las flechitas · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`, `ui`
 
 Playtest 2026-10-13: en la pestaña Mapa del menú de pausa, LT y RT mueven el mapa rapidísimo y la velocidad depende del tipo de gatillo del gamepad (analógico/digital). Debería moverse con las flechitas (d-pad) en lugar de los gatillos, a una velocidad fija.
+
+**Prueba:** Mapa de la Chullpa en pausa: apretar LT despacio sube un solo piso; soltar y apretar de nuevo sube otro. test_map › test_floor_selector_in_a_dungeon_with_floors
+
+**Notas:** LT/RT son ejes del joystick ligados a map_floor_up/down (cambiar de piso en el mapa de una mazmorra); cada movimiento del gatillo pasado el umbral llegaba como apretado, así que un gatillo analógico saltaba varios pisos según el control. Ahora cuenta una vez por apretón hasta soltarlo. Pendiente con Daniel: si además quiere cambiar de piso con la cruceta.
 
 ### 11.143 Overworld: delineado/halo oscuro raro alrededor de árboles, cardones y bordes · Pendiente
 
