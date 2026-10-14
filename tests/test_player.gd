@@ -345,6 +345,21 @@ func test_silhouette_only_on_the_player() -> void:
 			assert_eq(mesh.material_overlay.next_pass, null, "los enemigos no")
 
 
+func test_falling_keeps_the_player_upright() -> void:
+	var setup: Array = await _load_level()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	player.global_position += Vector3.UP * 6.0
+	Input.action_press(&"move_right")
+	var tilt := 0.0
+	for i in 30:
+		await tree.physics_frame
+		tilt = maxf(tilt, player.model.global_basis.y.normalized().angle_to(Vector3.UP))
+	Input.action_release(&"move_right")
+	assert_true(player.velocity.y < -1.0, "está cayendo")
+	assert_true(tilt < 0.05, "cae parado (inclinación %.2f rad)" % tilt)
+
+
 func test_what_the_player_carries_has_the_silhouette() -> void:
 	var setup: Array = await _load_level()
 	var player: PlayerCharacter = setup[1]
