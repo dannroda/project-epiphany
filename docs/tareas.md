@@ -5057,7 +5057,7 @@ Daniel 2026-10-14 (playtest, Chullpa, Rellano): la pared agrietada ya llena el h
 - [ ] Revisar las demás paredes agrietadas (Queñoa, Totora, Cumbre, templo) con el mismo criterio
 - [ ] Test: el nicho está tapado antes y destapado después de romper la pared
 - [ ] Overworld: techos sobre las muescas de risco y nichos detrás de paredes agrietadas (-eb)
-- [ ] CrackedWall.covers: oculta los techos al romperse
+- [x] CrackedWall.covers: oculta los techos al romperse
 
 **Notas:** CrackedWall.covers (fd): lista de nodos que se ven mientras la pared está entera y se ocultan al romperse (también al cargar rota). Cada nivel pone su techo y lo agrega a covers. Mazmorras: -43; overworld: -eb.
 

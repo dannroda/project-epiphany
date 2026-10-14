@@ -10,7 +10,7 @@
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug",
     "chullpa",
@@ -18,5 +18,5 @@
   ],
   "test": "",
   "title": "Chullpa: se ven los techos (crestas) de las paredes LA horneadas",
-  "updated_at": "2026-10-14T03:33:18.894Z"
+  "updated_at": "2026-10-14T06:43:59.432Z"
 }
