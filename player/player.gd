@@ -228,6 +228,20 @@ func release() -> void:
 	movement_state.blackboard.set_var(PlayerState.BB_GRABBED_BY, null)
 
 
+## Sube o baja una escalera siguiendo path (puntos en el mundo); en los tramos verticales mira hacia face.
+func climb(path: PackedVector3Array, face: Vector3) -> bool:
+	if is_dead or is_climbing():
+		return false
+	movement_state.blackboard.set_var(PlayerState.BB_CLIMB_PATH, path)
+	movement_state.blackboard.set_var(PlayerState.BB_CLIMB_FACE, face)
+	movement_state.dispatch("climb")
+	return is_climbing()
+
+
+func is_climbing() -> bool:
+	return movement_state.get_active_state() == $MovementState/Climbing
+
+
 func is_grabbed() -> bool:
 	return movement_state.get_active_state() == $MovementState/Grabbed
 

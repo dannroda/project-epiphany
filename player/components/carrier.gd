@@ -65,6 +65,12 @@ func lower_item() -> void:
 	anim_tree.set(&"parameters/CarryPhase/transition_request", "ItemLower")
 
 
+## Climb en loop mientras trepa; drop() lo termina.
+func climb() -> void:
+	drop()
+	_play(&"Climb")
+
+
 ## Empieza Carry_Throw; quien llama tira con throw() a los `throw_delay()` segundos.
 func start_throw() -> void:
 	_play(&"Throw")

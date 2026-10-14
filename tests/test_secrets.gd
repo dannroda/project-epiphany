@@ -266,11 +266,15 @@ func test_the_cumbre_rope_ladder_is_lowered_from_above_and_stays() -> void:
 	assert_eq([state.get_flag(&"ow_cumbre_ladder"), ladder.ladder.visible], [true, true], "desde arriba se descuelga")
 	await tree.create_timer(0.8).timeout
 	player.global_position = (ladder.top.get_child(0) as Node3D).global_position + Vector3(0, -0.7, 0)
-	await tree.create_timer(1.2).timeout
+	await tree.create_timer(0.3).timeout
+	assert_true(player.is_climbing(), "se baja trepando, sin fundido")
+	await _until_off_the_ladder(tree, player)
 	assert_true(player.global_position.y < 1.0, "se baja por la soga (y %.2f)" % player.global_position.y)
 	await tree.create_timer(0.5).timeout
 	player.global_position = (ladder.bottom.get_child(0) as Node3D).global_position + Vector3(0, -0.7, 0)
-	await tree.create_timer(1.2).timeout
+	await tree.create_timer(0.3).timeout
+	assert_true(player.is_climbing(), "y se sube trepando")
+	await _until_off_the_ladder(tree, player)
 	assert_true(player.global_position.y > 4.5, "y se sube (y %.2f)" % player.global_position.y)
 	tree.change_scene_to_file(LEVEL)
 	await tree.scene_changed
@@ -321,3 +325,10 @@ func test_after_the_final_boss_the_dawn_comes_and_the_temple_top_opens() -> void
 	while stack.is_open():
 		stack.pop()
 	state.reset()
+
+
+func _until_off_the_ladder(tree: SceneTree, player: PlayerCharacter) -> void:
+	var until := Time.get_ticks_msec() + 6000
+	while player.is_climbing() and Time.get_ticks_msec() < until:
+		await tree.physics_frame
+	await tree.create_timer(0.2).timeout

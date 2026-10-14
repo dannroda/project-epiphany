@@ -24,6 +24,8 @@ const BB_LIFTABLE := &"liftable"
 const BB_LAST_HIT := &"last_hit"
 const BB_GOT_ITEM := &"got_item"
 const BB_GOT_AMOUNT := &"got_amount"
+const BB_CLIMB_PATH := &"climb_path"
+const BB_CLIMB_FACE := &"climb_face"
 
 var velocity:Vector3 :
 	get:
