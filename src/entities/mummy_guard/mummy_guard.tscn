@@ -7,16 +7,16 @@
 [ext_resource type="Script" path="res://src/components/hitbox.gd" id="5_hitbox"]
 [ext_resource type="Script" path="res://src/feel/hit_flash.gd" id="6_flash"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/momia/momia.res" id="7_model"]
+[ext_resource type="Shader" path="res://src/entities/mummy_guard/shockwave.gdshader" id="8_wave"]
 
 [sub_resource type="StandardMaterial3D" id="AimMat"]
 transparency = 1
 shading_mode = 0
 albedo_color = Color(0.1, 0.05, 0.02, 0.55)
 
-[sub_resource type="StandardMaterial3D" id="WaveMat"]
-transparency = 1
-shading_mode = 0
-albedo_color = Color(0.85, 0.7, 0.45, 0.7)
+[sub_resource type="ShaderMaterial" id="WaveMat"]
+render_priority = 1
+shader = ExtResource("8_wave")
 
 [sub_resource type="CylinderMesh" id="AimMesh"]
 material = SubResource("AimMat")
@@ -26,12 +26,9 @@ height = 0.02
 radial_segments = 24
 rings = 1
 
-[sub_resource type="TorusMesh" id="WaveMesh"]
+[sub_resource type="PlaneMesh" id="WaveMesh"]
 material = SubResource("WaveMat")
-inner_radius = 0.92
-outer_radius = 1.0
-rings = 48
-ring_segments = 4
+size = Vector2(2, 2)
 
 [sub_resource type="SphereShape3D" id="ImpactShape"]
 radius = 1.7
