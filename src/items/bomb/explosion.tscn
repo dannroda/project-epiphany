@@ -3,9 +3,18 @@
 [ext_resource type="Script" path="res://src/items/bomb/explosion.gd" id="1_explosion"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/explosion.res" id="2_fire"]
 [ext_resource type="Material" path="res://data/kits/materials/epiphany_fx.tres" id="3_fx"]
+[ext_resource type="Shader" path="res://src/world/vfx/anillo_fuego.gdshader" id="4_anillo"]
 
 [sub_resource type="SphereShape3D" id="Blast"]
 radius = 2.2
+
+[sub_resource type="ShaderMaterial" id="Anillo"]
+render_priority = 0
+shader = ExtResource("4_anillo")
+
+[sub_resource type="PlaneMesh" id="AnilloMesh"]
+material = SubResource("Anillo")
+size = Vector2(6, 6)
 
 [node name="Explosion" type="Area3D"]
 collision_layer = 0
@@ -23,6 +32,13 @@ transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0.6, 0)
 cast_shadow = 0
 material_override = ExtResource("3_fx")
 mesh = ExtResource("2_fire")
+
+[node name="AnilloFuego" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
+cast_shadow = 0
+instance_shader_parameters/progress = 0.0
+mesh = SubResource("AnilloMesh")
 
 [node name="Flash" type="OmniLight3D" parent="."]
 unique_name_in_owner = true

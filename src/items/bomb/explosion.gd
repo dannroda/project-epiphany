@@ -1,6 +1,9 @@
 extends Hitbox
 ## Un instante de daño en área: lastima a todos (incluido el player), empuja cuerpos físicos y detona otras bombas.
 
+## Lo que tarda el anillo de fuego del piso en abrirse y apagarse.
+const RING_TIME := 0.6
+
 @export var damage := 4
 @export var knockback := 9.0
 ## Cuadros de física que queda activa.
@@ -26,13 +29,15 @@ func _ready() -> void:
 	var grow := create_tween().set_parallel()
 	grow.tween_property(fireball, "scale", Vector3.ONE * radius, 0.18).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
 	grow.tween_property(material, "albedo_color:a", 0.0, 0.35).set_delay(0.08)
+	var ring := %AnilloFuego as MeshInstance3D
+	grow.tween_method(func(value: float) -> void: ring.set_instance_shader_parameter(&"progress", value), 0.0, 1.0, RING_TIME)
 
 
 func _physics_process(_delta: float) -> void:
 	_frames += 1
 	if _frames == active_frames:
 		set_deferred(&"monitoring", false)
-	if _frames > active_frames + 20:
+	if _frames > active_frames + ceili(RING_TIME * Engine.physics_ticks_per_second):
 		queue_free()
 
 
