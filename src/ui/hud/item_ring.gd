@@ -34,6 +34,7 @@ var _was_captured := false
 func _ready() -> void:
 	GameState.item_buttons_changed.connect(_refresh)
 	GameState.inventory.changed.connect(_on_inventory_changed)
+	GameState.loaded.connect(_refresh)
 
 
 func bind(who: PlayerCharacter, colors: Array[Color], coop: bool) -> void:

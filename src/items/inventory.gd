@@ -4,6 +4,8 @@ extends RefCounted
 signal changed(id: StringName, count: int)
 
 var _counts: Dictionary[StringName, int] = {}
+## Mientras GameState carga en bloque no avisa ítem por ítem: al final avisa `loaded`.
+var quiet := false
 
 
 func count(id: StringName) -> int:
@@ -29,7 +31,8 @@ func add(id: StringName, amount: int = 1) -> int:
 	if added <= 0:
 		return 0
 	_counts[id] = count(id) + added
-	changed.emit(id, _counts[id])
+	if not quiet:
+		changed.emit(id, _counts[id])
 	return added
 
 
@@ -39,13 +42,16 @@ func remove(id: StringName, amount: int = 1) -> bool:
 	_counts[id] -= amount
 	if _counts[id] == 0:
 		_counts.erase(id)
-	changed.emit(id, count(id))
+	if not quiet:
+		changed.emit(id, count(id))
 	return true
 
 
 func clear() -> void:
 	var previous := ids()
 	_counts.clear()
+	if quiet:
+		return
 	for id in previous:
 		changed.emit(id, 0)
 
