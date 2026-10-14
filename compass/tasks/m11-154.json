@@ -1,0 +1,21 @@
+{
+  "assignee": "project-epiphany-43",
+  "checklist": [],
+  "code": "11.154",
+  "created_at": "2026-10-14T02:40:37.249Z",
+  "description": "Playtest 2026-10-13, Totora (D3): en la sala del estanque con ojos (interruptores de flecha), si el player se queda sin flechas no tiene un lugar cercano para reabastecerse. Poner vasijas/pasto que suelten flechas en o cerca de las salas que piden arco (y que el drop de flechas sea más probable cuando quedan pocas).",
+  "milestone": "m11",
+  "notes": "",
+  "order": 151,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "diseño",
+    "totora"
+  ],
+  "test": "",
+  "title": "Totora: no hay dónde reponer flechas cerca",
+  "updated_at": "2026-10-14T02:40:37.249Z"
+}

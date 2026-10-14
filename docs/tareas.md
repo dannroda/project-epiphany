@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (85/149)
+## M11 — Pulido: contenido y feel  (85/150)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4850,11 +4850,16 @@ Playtest 2026-10-13: en Ravine el minimapa (foto cenital del overworld) muestra 
 
 **Capturas:** `compass/images/m11-148-20261013-232758.png`, `compass/images/m11-148-20261013-232828.png`
 
-### 11.149 Totora 1P: al entrar a la sala este se cae al agua en bucle (softlock) · Pendiente
+### 11.149 Al entrar a una sala se puede caer al agua y reaparecer sobre el agua (softlock) · Pendiente
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `totora`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`, `totora`, `player`
 
 Playtest 2026-10-13: en la Totora (D3), piso 1P Ground Floor, apenas se entra a la sala del este (la del estanque central con la isla, la reja con ojo y llave al norte y las matas de totora) por la puerta oeste, el player cae al agua y vuelve a caer infinitamente: softlock. Probable: el punto de reaparición de la caída al agua (la entrada de la sala) queda sobre el agua o la transición de sala empuja al player hacia el estanque, que empieza a ~1 celda de la puerta. Revisar el Pit/respawn de la sala y que la entrada tenga piso firme; agregar un test que entre por cada puerta de la Totora y no caiga.
+
+- [ ] Segundo caso: Totora 2P Upper Floor, sala oeste (pasarela angosta junto al estanque, entrando por la puerta este): apenas se entra uno se puede caer y reaparece arriba del agua, cae en bucle hasta perder.
+- [ ] Arreglo general: el punto de reaparición tras caer al agua/pozo tiene que estar sobre piso firme (validarlo al guardarlo, no la posición cruda al entrar a la sala).
+- [ ] Idea de Daniel: un cooldown al cruzar de sala, para el input del player y para los enemigos, así no se cae ni lo golpean apenas entra.
+- [ ] Test: entrar por cada puerta de cada mazmorra con agua/pozos, caer y comprobar que reaparece sobre piso.
 
 ### 11.150 Gancho: el targeting marca un poste de otra sala/piso · Pendiente
 
@@ -4885,6 +4890,12 @@ Playtest 2026-10-13: al apretar el z-target, el primer objetivo debería ser el 
 Playtest 2026-10-13, Totora (D3): en la sala del estanque grande con la puerta al norte sobre el agua, hay que usar el gancho hacia algo que está del otro lado de la puerta (en la otra sala), y no se entiende. Debería haber una plataforma (o poste visible) dentro de la propia sala, frente a la puerta, para que el cruce se lea. Relacionado con 11.150 (el targeting marca cosas de otras salas).
 
 **Relacionadas:** 11.150 Gancho: el targeting marca un poste de otra sala/piso
+
+### 11.154 Totora: no hay dónde reponer flechas cerca · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseño`, `totora`
+
+Playtest 2026-10-13, Totora (D3): en la sala del estanque con ojos (interruptores de flecha), si el player se queda sin flechas no tiene un lugar cercano para reabastecerse. Poner vasijas/pasto que suelten flechas en o cerca de las salas que piden arco (y que el drop de flechas sea más probable cuando quedan pocas).
 
 ## M12 — Assets propios (Blender)  (15/23)
 

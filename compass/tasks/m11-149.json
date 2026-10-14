@@ -1,6 +1,23 @@
 {
-  "assignee": "project-epiphany-43",
-  "checklist": [],
+  "assignee": "project-epiphany-fd",
+  "checklist": [
+    {
+      "done": false,
+      "text": "Segundo caso: Totora 2P Upper Floor, sala oeste (pasarela angosta junto al estanque, entrando por la puerta este): apenas se entra uno se puede caer y reaparece arriba del agua, cae en bucle hasta perder."
+    },
+    {
+      "done": false,
+      "text": "Arreglo general: el punto de reaparición tras caer al agua/pozo tiene que estar sobre piso firme (validarlo al guardarlo, no la posición cruda al entrar a la sala)."
+    },
+    {
+      "done": false,
+      "text": "Idea de Daniel: un cooldown al cruzar de sala, para el input del player y para los enemigos, así no se cae ni lo golpean apenas entra."
+    },
+    {
+      "done": false,
+      "text": "Test: entrar por cada puerta de cada mazmorra con agua/pozos, caer y comprobar que reaparece sobre piso."
+    }
+  ],
   "code": "11.149",
   "created_at": "2026-10-14T02:32:20.380Z",
   "description": "Playtest 2026-10-13: en la Totora (D3), piso 1P Ground Floor, apenas se entra a la sala del este (la del estanque central con la isla, la reja con ojo y llave al norte y las matas de totora) por la puerta oeste, el player cae al agua y vuelve a caer infinitamente: softlock. Probable: el punto de reaparición de la caída al agua (la entrada de la sala) queda sobre el agua o la transición de sala empuja al player hacia el estanque, que empieza a ~1 celda de la puerta. Revisar el Pit/respawn de la sala y que la entrada tenga piso firme; agregar un test que entre por cada puerta de la Totora y no caiga.",
@@ -13,9 +30,10 @@
   "status": "todo",
   "tags": [
     "bug",
-    "totora"
+    "totora",
+    "player"
   ],
   "test": "",
-  "title": "Totora 1P: al entrar a la sala este se cae al agua en bucle (softlock)",
-  "updated_at": "2026-10-14T02:32:20.380Z"
+  "title": "Al entrar a una sala se puede caer al agua y reaparecer sobre el agua (softlock)",
+  "updated_at": "2026-10-14T02:40:36.939Z"
 }
