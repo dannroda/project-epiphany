@@ -17,6 +17,15 @@ func test_ui_scripts_do_not_build_controls() -> void:
 	assert_eq(offenders, PackedStringArray(), "usar una escena .tscn")
 
 
+func test_every_eye_is_the_logo_eye() -> void:
+	var eye := load("res://assets/ui/logo/epiphany_eye.png")
+	for pair in [["res://src/ui/menus/game_over.tscn", ^"Eye"], ["res://src/ui/title/language_select.tscn", ^"Eye"], ["res://src/flow/scene_flow.tscn", ^"Loading/Busy/Eye"]]:
+		var root := (load(pair[0]) as PackedScene).instantiate()
+		var node := root.get_node(pair[1]) as TextureRect
+		assert_true(node != null and node.texture == eye, "%s usa el ojo del logo" % pair[0].get_file())
+		root.free()
+
+
 func _is_ui_type(type: StringName, bases: Dictionary) -> bool:
 	while bases.has(type):
 		type = bases[type]

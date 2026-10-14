@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://covrlpuexf2af" path="res://src/ui/theme.tres" id="1_theme"]
 [ext_resource type="Script" path="res://src/ui/title/language_select.gd" id="2_script"]
-[ext_resource type="Script" uid="uid://dea03f5unluxn" path="res://src/ui/title/title_eye.gd" id="3_eye"]
+[ext_resource type="Texture2D" uid="uid://d4gfe0tope11p" path="res://assets/ui/logo/epiphany_eye.png" id="3_eye"]
 [ext_resource type="PackedScene" uid="uid://pyyqflynppn5" path="res://src/ui/menus/menu_item.tscn" id="4_item"]
 [ext_resource type="Script" uid="uid://jou4nqurtyvf" path="res://src/ui/hint_bar.gd" id="5_hints"]
 
@@ -26,7 +26,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.043137256, 0.050980393, 0.0627451, 1)
 
-[node name="Eye" type="Control" parent="."]
+[node name="Eye" type="TextureRect" parent="."]
 modulate = Color(1, 1, 1, 0.35)
 layout_mode = 1
 anchors_preset = 5
@@ -37,7 +37,9 @@ offset_top = 70.0
 offset_right = 300.0
 offset_bottom = 320.0
 grow_horizontal = 2
-script = ExtResource("3_eye")
+texture = ExtResource("3_eye")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Heading" type="VBoxContainer" parent="."]
 layout_mode = 1
