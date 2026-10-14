@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (91/156)
+## M11 — Pulido: contenido y feel  (93/156)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4712,7 +4712,7 @@ Playtest 2026-10-13 (mejora, no bug): cuando el player queda detrás de un acant
 
 **Notas:** Si una pared tapa a un jugador, la cámara gira hasta quedar cenital sobre el foco (overhead_time = 0.4 s, en el grupo Oclusión de TopDownCamera) y vuelve al ángulo normal cuando deja de taparlo. Ya no se abre el agujero. Probar: caminar detrás de un acantilado alto del overworld.
 
-**Capturas:** `compass/images/m11-134-20261013-224604.png`
+**Capturas:** `compass/images/m11-134-20261013-224604.png`, `compass/images/m11-134-20261014-021123.png`
 
 ### 11.135 Al caer, el player se inclina hacia el piso · Pendiente
 
@@ -4771,9 +4771,9 @@ Playtest 2026-10-13: en la Chullpa hay un cofre sobre una plataforma/pilar en un
 
 **Capturas:** `compass/images/m11-139-20261013-225053.png`
 
-### 11.140 Overworld (Lagoon): z-fighting entre el pasto y el camino de tierra · Revisión
+### 11.140 Overworld (Lagoon): z-fighting entre el pasto y el camino de tierra · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`, `overworld`
+**Terminada:** 2026-10-14 · **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`, `overworld`
 
 Playtest 2026-10-13: en la zona Lagoon, arriba de la escalera de piedra, el camino de tierra y el pasto se pisan (z-fighting): franjas de tierra que parpadean sobre el pasto. Separar las capas (offset/decal/render priority) o unificar el terreno.
 
@@ -4810,9 +4810,9 @@ Playtest 2026-10-13: en la pestaña Mapa del menú de pausa, LT y RT mueven el m
 
 **Notas:** LT/RT son ejes del joystick ligados a map_floor_up/down (cambiar de piso en el mapa de una mazmorra); cada movimiento del gatillo pasado el umbral llegaba como apretado, así que un gatillo analógico saltaba varios pisos según el control. Ahora cuenta una vez por apretón hasta soltarlo. Pendiente con Daniel: si además quiere cambiar de piso con la cruceta.
 
-### 11.143 Overworld: delineado/halo oscuro raro alrededor de árboles, cardones y bordes · Revisión
+### 11.143 Overworld: delineado/halo oscuro raro alrededor de árboles, cardones y bordes · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`, `overworld`, `render`
+**Terminada:** 2026-10-14 · **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`, `overworld`, `render`
 
 Playtest 2026-10-13: en el overworld (meseta con cardones y árboles, sobre un risco) aparece un delineado raro: un halo oscuro difuso alrededor de los árboles, cardones y el borde del risco, que no corresponde a una sombra. Revisar SSAO/SSIL, el outline o la niebla/tinte de profundidad (puede venir del cambio de altura entre terrazas).
 
@@ -6172,9 +6172,9 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 26. [x] 10.24 Tope de FPS · Hecho · anda
 27. [x] 10.25 Sombras del sol acordes a la cámara cenital · Hecho · anda
 
-### Overworld: laguna, halos, minimapa y cámara  (0/4 probadas)
+### Overworld: laguna, halos, minimapa y cámara  (4/4 probadas)
 
-1. [ ] 11.140 Overworld (Lagoon): z-fighting entre el pasto y el camino de tierra · Revisión
-2. [ ] 11.143 Overworld: delineado/halo oscuro raro alrededor de árboles, cardones y bordes · Revisión
-3. [ ] 11.148 Minimapa del overworld desactualizado (la quebrada sale como abismo negro) · Revisión
-4. [ ] 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player · Revisión
+1. [x] 11.140 Overworld (Lagoon): z-fighting entre el pasto y el camino de tierra · Hecho · anda
+2. [x] 11.143 Overworld: delineado/halo oscuro raro alrededor de árboles, cardones y bordes · Hecho · anda
+3. [x] 11.148 Minimapa del overworld desactualizado (la quebrada sale como abismo negro) · Revisión · anda — Es un poco tosco como aparece en el minimapa, pero es detalle menor.
+4. [ ] 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player · Revisión · **falla** — Funciona, pero solo debería ser para las paredes. No para objetos/plantas, para eso está el x-ray. Y el movimiento es un poco nauseabundo.

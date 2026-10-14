@@ -119,7 +119,7 @@ scompass item task assets 3 --milestone m06         # pasa el ítem a una tarea 
 
 ## Playtest
 
-Una sesión de playtest (`compass/playtests/<id>.json`) junta tareas ya creadas en el orden en que se van a probar, para ordenar lo que está en Revisión. Cada ítem es `{ task, result?, note? }`: `task` es el id de la tarea, `result` `pass` (anda) o `fail` (falla; sin `result`, todavía no se probó) y `note` lo que se vio al probarla. La sesión no cambia el estado de las tareas: eso se hace aparte, con `move`.
+Una sesión de playtest (`compass/playtests/<id>.json`) junta tareas ya creadas en el orden en que se van a probar, para ordenar lo que está en Revisión. Cada ítem es `{ task, result?, note? }`: `task` es el id de la tarea, `result` `pass` (anda) o `fail` (falla; sin `result`, todavía no se probó) y `note` lo que se vio al probarla (puede tener varios renglones). La sesión no cambia el estado de las tareas: eso se hace aparte, con `move`.
 
 ```sh
 scompass playtest                                   # sesiones, con cuántas tareas faltan probar
