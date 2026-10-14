@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (107/176)
+## M11 — Pulido: contenido y feel  (107/177)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5259,6 +5259,16 @@ Daniel (2026-10-14): todas las salas de las mazmorras miden 14 de alto y al meno
 **Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `mazmorra`
 
 Daniel (2026-10-14): todas las salas de las mazmorras miden 14 de alto y al menos 22 de ancho, como la Chullpa y la Queñoa. Templo tiene salas de 14 × 10 / 14 × 12 y hay que rediseñarla.
+
+**Relacionadas:** 11.181 Paredes agrietadas: abren una sala, nunca un nicho (Queñoa y templo)
+
+### 11.181 Paredes agrietadas: abren una sala, nunca un nicho (Queñoa y templo) · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `mazmorra`
+
+Daniel (2026-10-14): en las mazmorras una pared agrietada siempre abre una sala entera, de cualquier tipo (puede hasta ser necesaria para terminar la mazmorra), nunca un nicho con cofre. Hoy son nichos OjosCrackedWall en la Queñoa y CombinedCrackedWall en el templo: pasarlos a salas. La del templo va con el rediseño 11.180.
+
+**Relacionadas:** 11.180 Templo: salas de 14 de alto y al menos 22 de ancho
 
 ## M12 — Assets propios (Blender)  (17/32)
 
