@@ -116,7 +116,10 @@ func _origin(node: Node, root: Node) -> Vector3:
 
 
 func test_solved_blocks_rest_on_their_switch() -> void:
-	for path in ["res://levels/overworld.tscn", "res://levels/temple.tscn", "res://levels/chullpa.tscn", "res://levels/dungeon_test.tscn"]:
+	for file in DirAccess.get_files_at("res://levels"):
+		if not file.ends_with(".tscn"):
+			continue
+		var path := "res://levels/" + file
 		var level: Node = load(path).instantiate()
 		var switches := level.find_children("*", "FloorSwitch", true, false)
 		for block: PushBlock in level.find_children("*", "PushBlock", true, false):

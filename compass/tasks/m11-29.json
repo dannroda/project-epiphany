@@ -18,6 +18,12 @@
   "code": "11.29",
   "created_at": "2026-10-10T05:29:44.322Z",
   "description": "Después de vencer al jefe, el overworld tiene que verse y sonar distinto (sin doom: luz, niebla y música calmas) y ofrecer algo nuevo que solo aparece entonces.",
+  "images": [
+    "compass/images/m11-29-mapa.jpg",
+    "compass/images/m11-29-1.jpg",
+    "compass/images/m11-29-2.jpg",
+    "compass/images/m11-29-3.jpg"
+  ],
   "links": [
     {
       "task": "m10-19",
@@ -36,5 +42,5 @@
   ],
   "test": "Vencer al jefe y salir: el overworld se ve y suena distinto, y hay algo nuevo para encontrar.",
   "title": "Overworld después del jefe",
-  "updated_at": "2026-10-13T17:09:49.679Z"
+  "updated_at": "2026-10-14T00:37:50.702Z"
 }

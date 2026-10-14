@@ -28,8 +28,14 @@
   "code": "11.110",
   "created_at": "2026-10-12T19:16:07.172Z",
   "description": "Playtest 2026-10-12: los puzzles de bloques solo se tienen que activar con los bloques; los que se activan con objetos o con un golpe fuerte son otros tipos de placa. Y la placa del santuario se veía apretada sin bloque encima.",
+  "images": [
+    "compass/images/m11-110-mapa.jpg",
+    "compass/images/m11-110-1.jpg",
+    "compass/images/m11-110-2.jpg",
+    "compass/images/m11-110-3.jpg"
+  ],
   "milestone": "m11",
-  "notes": "",
+  "notes": "Al sacar las capturas (2026-10-14) apareció que la placa del santuario seguía mal: ShrineBlock resuelto iba a (−78, −32), coordenadas del overworld, y la placa de shrine_cave está en (−6, 0); el test no revisaba shrine_cave. Ahora test_solved_blocks_rest_on_their_switch recorre todos los niveles, y encontró dos más corridos por el horneado LA: RamaBlock de la Queñoa (14, 10 → 16, 12) y VestibuleBlock del templo (44, 40 → 48, 48). Los tres van a su placa.",
   "order": 107,
   "priority": "medium",
   "refs": [],
@@ -40,5 +46,5 @@
   ],
   "test": "",
   "title": "Tipos de placa de piso: bloque, peso y golpe fuerte",
-  "updated_at": "2026-10-12T19:16:18.790Z"
+  "updated_at": "2026-10-14T00:39:25.219Z"
 }

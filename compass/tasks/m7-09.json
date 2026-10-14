@@ -63,6 +63,14 @@
   "code": "7.9",
   "created_at": "2026-10-11T22:11:02.822Z",
   "description": "El overworld de 3 × 3 pantallas quedó hecho para una sola mazmorra y se siente encajonado. Rediseñarlo como hub (referencia: análisis del Light World de A Link to the Past, Overworld Overload partes 1 y 2): regiones núcleo con su mazmorra unidas por zonas de conexión, paredes de terreno y puertas de ítem que abren atajos o regiones nuevas, recorrido y ritmo revisados. Entra la Chullpa (11.60) y quedan lugares para las que vengan.",
+  "images": [
+    "compass/images/m7-09-mapa.jpg",
+    "compass/images/m7-09-1.jpg",
+    "compass/images/m7-09-2.jpg",
+    "compass/images/m7-09-3.jpg",
+    "compass/images/m7-09-4.jpg",
+    "compass/images/m7-09-5.jpg"
+  ],
   "milestone": "m07",
   "notes": "",
   "order": 9,
@@ -75,5 +83,5 @@
   ],
   "test": "",
   "title": "Rediseño del overworld como hub de varias mazmorras",
-  "updated_at": "2026-10-12T19:29:37.141Z"
+  "updated_at": "2026-10-14T00:37:51.436Z"
 }

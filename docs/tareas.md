@@ -1606,6 +1606,8 @@ El overworld de 3 × 3 pantallas quedó hecho para una sola mazmorra y se siente
 - [x] Mapa: A viaja, X pone pin
   Daniel (2026-10-12): era contraintuitivo que el viaje fuera con X. Mockups Pause_Map_Travel, Pause_Map_Regions y Pause_Map_Overworld al día; map_page: ui_accept viaja (si hay portal enganchado), item_1 pone o quita pin; barra de ayudas en el orden del mockup.
 
+**Capturas:** `compass/images/m7-09-mapa.jpg`, `compass/images/m7-09-1.jpg`, `compass/images/m7-09-2.jpg`, `compass/images/m7-09-3.jpg`, `compass/images/m7-09-4.jpg`, `compass/images/m7-09-5.jpg`
+
 ### 7.10 Overworld con forma de Zelda 2D, no cuadrado · En curso
 
 **Prioridad:** alta · **Etiquetas:** `overworld`, `nivel`
@@ -1631,6 +1633,8 @@ Daniel (2026-10-12, con el mapa de Link's Awakening de referencia): el mundo se 
   Al día: test_overworld, test_jump, test_heart_pieces, test_secrets (nuevo), test_shrine, test_overworld_run, test_map, test_portal, test_temple_seal, test_grove_puzzle, test_enemy_ai, test_save_codec (escenarios re-firmados). test_zone_veil se borró. Flags nuevos en flag_registry. El puzzle de la Arboleda se corrió 2 m al norte: la orilla relajada del risco tapaba las placas. Pendiente: el texto de la tablilla del santuario habla del escudo espejo como premio. [[gdd#overworld-layout]]
 - [ ] Recorrerlo (Daniel)
 
+**Capturas:** `compass/images/m7-09-mapa.jpg`
+
 ### 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · En curso
 
 **Prioridad:** alta · **Etiquetas:** `overworld`, `nivel`
@@ -1643,6 +1647,8 @@ Daniel (2026-10-13): la pluma cruza 1 celda (2 m) y sandalias + pluma 3 (6 m). L
   Hecho: corral de pirca de la Necrópolis (X 24..36, Z -12..-3, nivel 1). Tres chullpas (src/world/chullpa_tumba.tscn: torre de piedra con un EyeSwitch de 8 s) miran al centro; con los tres ojos prendidos a la vez aparece el cofre grande SandalsChest (flag ow_sandals_chest) con las sandalias. Test en test_secrets.
 - [x] Tests del overworld al día (angostura, islotes, Risco, quest)
 - [ ] Recorrerlo (Daniel)
+
+**Capturas:** `compass/images/m7-11-mapa.jpg`, `compass/images/m7-11-1.jpg`, `compass/images/m7-11-2.jpg`, `compass/images/m7-11-3.jpg`, `compass/images/m7-11-4.jpg`, `compass/images/m7-11-5.jpg`
 
 ## M8 — Contenido de mazmorra  (8/8)
 
@@ -2939,6 +2945,8 @@ Sumar 4 a 6 secretos chicos al overworld (cuevitas con cofre, pasto que esconde 
 
 **Prueba:** Cada secreto se encuentra con las herramientas que el player tiene en ese momento y queda resuelto al cargar.
 
+**Capturas:** `compass/images/m11-24-mapa.jpg`, `compass/images/m11-24-1.jpg`, `compass/images/m11-24-2.jpg`, `compass/images/m11-24-3.jpg`, `compass/images/m11-24-4.jpg`
+
 ### 11.25 Nuevos enemigos con los modelos existentes · Hecho
 
 **Terminada:** 2026-10-12 · **Prioridad:** media · **Etiquetas:** `enemigos`, `ia`
@@ -2993,6 +3001,8 @@ Uno o dos atajos que se abren desde adentro (puente o escalera) y quedan abierto
 
 **Prueba:** Abrir el atajo desde adentro: queda abierto y acorta el recorrido al templo.
 
+**Capturas:** `compass/images/m11-28-mapa.jpg`, `compass/images/m11-28-1.jpg`
+
 ### 11.29 Overworld después del jefe · Revisión
 
 **Prioridad:** baja · **Etiquetas:** `overworld`, `audio`
@@ -3006,6 +3016,8 @@ Después de vencer al jefe, el overworld tiene que verse y sonar distinto (sin d
 - [ ] Recorrerlo (Daniel)
 
 **Prueba:** Vencer al jefe y salir: el overworld se ve y suena distinto, y hay algo nuevo para encontrar.
+
+**Capturas:** `compass/images/m11-29-mapa.jpg`, `compass/images/m11-29-1.jpg`, `compass/images/m11-29-2.jpg`, `compass/images/m11-29-3.jpg`
 
 **Relacionadas:** 10.19 Fin de la demo
 
@@ -3043,6 +3055,8 @@ Un ítem post-MVP: gancho o algo que mueva objetos a distancia (GDD §6.1), con 
 **Prueba:** El ítem tiene un uso en combate y abre al menos dos lugares que antes no se podían.
 
 **Referencias:** `gdd.md#items-mvp`
+
+**Capturas:** `compass/images/m11-30-mapa.jpg`, `compass/images/m11-30-1.jpg`, `compass/images/m11-30-2.jpg`
 
 **Relacionadas:** 11.60 Mazmorra nueva de varios pisos
 
@@ -4394,6 +4408,10 @@ Playtest 2026-10-12: los puzzles de bloques solo se tienen que activar con los b
   Se activa con un golpe fuerte (¿martillo / golpe cargado?); espera el ítem que lo dé (11.90).
 - [ ] Probarlo (Daniel)
 
+**Notas:** Al sacar las capturas (2026-10-14) apareció que la placa del santuario seguía mal: ShrineBlock resuelto iba a (−78, −32), coordenadas del overworld, y la placa de shrine_cave está en (−6, 0); el test no revisaba shrine_cave. Ahora test_solved_blocks_rest_on_their_switch recorre todos los niveles, y encontró dos más corridos por el horneado LA: RamaBlock de la Queñoa (14, 10 → 16, 12) y VestibuleBlock del templo (44, 40 → 48, 48). Los tres van a su placa.
+
+**Capturas:** `compass/images/m11-110-mapa.jpg`, `compass/images/m11-110-1.jpg`, `compass/images/m11-110-2.jpg`, `compass/images/m11-110-3.jpg`
+
 ### 11.111 Cactus, árboles y matas se cortan como el pasto · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Etiquetas:** `overworld`, `arte`
@@ -4405,6 +4423,8 @@ Playtest 2026-10-12: los cactus, árboles y similares deberían poder cortarse y
 - [ ] Probarlo (Daniel): cortar un árbol abre paso, ¿hay alguno que no debería?
 - [x] Animación al romperse
   Daniel: que tengan un poco de animación. Breakable.break_style: CUT (pasto y matas: saltan girando y se achican; el ichu deja la mata cortada), FELL (árboles y cardones: caen del lado contrario al golpe, polvo y rebote, se hunden; los árboles dejan tocón). Cuerpo y hurtbox se apagan en el acto. Tests en test_breakables.
+
+**Capturas:** `compass/images/m11-111-mapa.jpg`, `compass/images/m11-111-1.jpg`, `compass/images/m11-111-2.jpg`
 
 ### 11.112 Fantasmas al esquivar · Revisión
 
@@ -4523,6 +4543,8 @@ Daniel (2026-10-13): con la pluma de D1, los islotes llevaban a D3 sin el arco y
   Hecho el 2026-10-13: test_sandals (8): carrera, cancelar, choque con dash, 3 baldosas sí y 4 no en cajas planas (b5c13e2b); y en el overworld (09271dbb) cruza la angostura y los dos huecos de la Laguna hasta la isla de D3, y cae en el abismo del Risco. long_jump_speed 8,6.
 - [ ] Recorrido de Daniel (velocidades: corrida 9,5 m/s, salto largo 8,6 m/s)
 
+**Capturas:** `compass/images/m7-11-mapa.jpg`, `compass/images/m7-11-1.jpg`, `compass/images/m7-11-2.jpg`, `compass/images/m7-11-3.jpg`, `compass/images/m7-11-4.jpg`, `compass/images/m7-11-5.jpg`
+
 ### 11.119 Cargar partida: la escena vieja sigue corriendo mientras carga · Hecho
 
 **Terminada:** 2026-10-13 · **Prioridad:** media · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `guardado`
@@ -4581,6 +4603,8 @@ test_grove_puzzle teletransporta los bloques a las placas; no prueba que se lleg
 
 **Notas:** Hecho: test_grove_puzzle empuja los bloques caminando contra ellos (A dos celdas al sur; B una al este y una al sur) y verifica que cada uno llega a su placa. Ubicación: el puzzle no pide ningún ítem y da la cota, así que queda en la Pradera; 'Grove' es el nombre del mapa viejo.
 
+**Capturas:** `compass/images/m11-125-mapa.jpg`, `compass/images/m11-125-1.jpg`
+
 ### 11.126 Push bloqueado: terreno del overworld pasa 100 MB · Hecho
 
 **Terminada:** 2026-10-13 · **Prioridad:** alta · **Tamaño:** L · **Etiquetas:** `bug`, `arte`, `repo`
@@ -4632,6 +4656,8 @@ Mazmorra 4 (GDD §8e): el escudo espejo parte la Cumbre; el piso bajo sin él, e
 
 **Prueba:** test_cumbre, test_dungeon_reach (cumbre_graph), test_walk_doors, test_drop_holes
 
+**Capturas:** `compass/images/m11-129-mapa.jpg`, `compass/images/m11-129-1.jpg`
+
 ### 11.130 Bocas de cueva talladas en el risco · Revisión
 
 **Responsable:** sesión del overworld
@@ -4641,6 +4667,8 @@ Daniel: las bocas de cueva del overworld (la entrada trasera de la ermita, la cu
 **Prueba:** En el overworld, las tres bocas (y la de la Cumbre) son un vano trapezoidal en el risco con jambas y dintel del mismo risco y un túnel oscuro; se entra caminando y el portal lleva a la cueva. test_portals, test_cave, test_shrine, test_spring, test_overworld
 
 **Notas:** build_terreno_organico.py › cave_mouths(): cada nodo *Mouth del overworld (exportado a terreno_overworld.json › mouths) se talla en riscos: se busca la cara del risco delante, se corta el vano (como paso_puerta del templo: 1.5 abajo, 1.2 arriba, 1.95 de alto), las aristas del borde se extruyen 1.6 m hacia adentro como túnel (noche) con fondo y piso oscuros, y el risco alrededor sale 0.18 m como jambas y dintel. Sin lomas delante ni dentro. Se quitó cueva_boca de las tres; SpringCaveMouth estaba girada hacia la montaña. De paso: el risco ya no pone baranda a 1.2 m de un poste del gancho (POSTS en el json), porque tapaba la vista desde abajo (fallaban los dos tests de test_overworld_hook).
+
+**Capturas:** `compass/images/m11-130-mapa.jpg`, `compass/images/m11-130-1.jpg`, `compass/images/m11-130-2.jpg`, `compass/images/m11-130-3.jpg`, `compass/images/m11-130-4.jpg`
 
 ## M12 — Assets propios (Blender)  (15/22)
 
