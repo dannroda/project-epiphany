@@ -47,6 +47,7 @@
 [ext_resource type="Script" uid="uid://bccprbredple8" path="res://src/world/arena_fight.gd" id="40_fight"]
 [ext_resource type="Script" uid="uid://dcy0hg6ygxqg1" path="res://src/components/persistent_flag.gd" id="41_pflag"]
 [ext_resource type="PackedScene" path="res://src/entities/mummy_guard/mummy_guard.tscn" id="42_mummy"]
+[ext_resource type="PackedScene" path="res://src/entities/mummy_guard/mallqui.tscn" id="42_mallqui"]
 [ext_resource type="Script" uid="uid://dq2xk4sts8nfn" path="res://src/world/heart_piece.gd" id="43_1cuov"]
 [ext_resource type="Script" uid="uid://xvggaagxljdf" path="res://src/world/spike_trap.gd" id="43_3lpbq"]
 [ext_resource type="PackedScene" path="res://src/world/big_pot.tscn" id="43_bigpot"]
@@ -1025,7 +1026,7 @@ reward_flag = &"ch_heart_container"
 [node name="PersistentFlag" type="Node" parent="Sotano/BossFight" unique_id=1288311402]
 script = ExtResource("41_pflag")
 
-[node name="Mallqui" type="Node3D" parent="Sotano/BossFight" unique_id=873195260 instance=ExtResource("42_mummy")]
+[node name="Mallqui" type="Node3D" parent="Sotano/BossFight" unique_id=873195260 instance=ExtResource("42_mallqui")]
 transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 4, 0, -2)
 script = ExtResource("38_iq7xx")
 config = ExtResource("74_guardcfg")
