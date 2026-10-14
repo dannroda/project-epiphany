@@ -2,11 +2,9 @@
 
 [ext_resource type="Script" uid="uid://c3gjwha8na3yi" path="res://src/world/look/sombra_la.gd" id="1_0nei8"]
 [ext_resource type="Script" uid="uid://bw0kh7whsb1qf" path="res://src/world/look/tono_la.gd" id="2_vqq0k"]
-[ext_resource type="MeshLibrary" path="res://data/kits/cueva_la_kit.tres" id="3_2ky4v"]
+[ext_resource type="MeshLibrary" uid="uid://jx4n6b7helr3" path="res://data/kits/cueva_la_kit.tres" id="3_2ky4v"]
 [ext_resource type="Shader" uid="uid://d05shkhoyhpkk" path="res://src/world/look/borde_oscuro.gdshader" id="5_o45gf"]
 [ext_resource type="PackedScene" path="res://src/world/heart_piece.tscn" id="6_piece"]
-[ext_resource type="Script" uid="uid://87brg8xm8dtt" path="res://src/world/floor_switch.gd" id="7_ireil"]
-[ext_resource type="Script" uid="uid://do026c5mdat2y" path="res://src/world/push_block.gd" id="9_1fm1w"]
 [ext_resource type="Script" uid="uid://cj2nsvfg6j7av" path="res://src/world/gate.gd" id="11_ukr0n"]
 [ext_resource type="Script" uid="uid://byp4dkpucnvmo" path="res://src/world/chest.gd" id="13_fa1x1"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="15_3hrjb"]
@@ -15,19 +13,12 @@
 [ext_resource type="Script" uid="uid://cykrw2tv878bn" path="res://src/world/tablet.gd" id="19_6rd22"]
 [ext_resource type="Resource" uid="uid://b353kh0linjkb" path="res://data/dialogue/overworld.dialogue" id="20_gd0nv"]
 [ext_resource type="Script" uid="uid://dq2xk4sts8nfn" path="res://src/world/heart_piece.gd" id="22_chuuf"]
-[ext_resource type="PackedScene" path="res://src/world/floor_switch.tscn" id="22_gvf0k"]
 [ext_resource type="Resource" path="res://data/items/heart_piece.tres" id="23_iv4kd"]
-[ext_resource type="PackedScene" path="res://src/world/push_block.tscn" id="24_v1yde"]
 [ext_resource type="ArrayMesh" uid="uid://jlluubdbax4r" path="res://assets/epiphany/meshes/objetos/corazon.res" id="24_xlqr6"]
-[ext_resource type="Script" uid="uid://vmcv83ug4a0m" path="res://src/world/cracked_wall.gd" id="26_fa1x1"]
 [ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="26_iip2e"]
-[ext_resource type="ArrayMesh" uid="uid://qt6mg4km8qnq" path="res://assets/epiphany/meshes/paredes_la/muro_agrietado_cueva_la_2n.res" id="27_rr1ab"]
-[ext_resource type="ArrayMesh" uid="uid://bs5mwr1yuehrf" path="res://assets/epiphany/meshes/naturaleza/piedra_chica_a.res" id="28_6rd22"]
 [ext_resource type="Script" uid="uid://ckkibjv0y6axx" path="res://player/player.gd" id="28_67qrq"]
 [ext_resource type="Resource" uid="uid://cooy3l0hm4jv0" path="res://data/entities/player.tres" id="29_5o3ln"]
-[ext_resource type="Script" uid="uid://rcd8a41l0m7" path="res://src/components/hurtbox.gd" id="29_chuuf"]
 [ext_resource type="Resource" path="res://data/items/heart_container.tres" id="29_mweuj"]
-[ext_resource type="Script" uid="uid://dcy0hg6ygxqg1" path="res://src/components/persistent_flag.gd" id="30_iv4kd"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_source.tscn" id="30_xv8lf"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_receiver.tscn" id="31_fe77v"]
 [ext_resource type="Script" uid="uid://c238aeb6gn6ka" path="res://src/world/look/enfoque_la.gd" id="31_kffl2"]
@@ -43,7 +34,6 @@
 [ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="c5_camera"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="c6_hud"]
 [ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="c7_portal"]
-[ext_resource type="PackedScene" path="res://src/world/cracked_wall.tscn" id="c8_cracked"]
 [ext_resource type="NavigationMesh" path="res://levels/nav/shrine_cave_navmesh.tres" id="nav_cave"]
 
 [sub_resource type="Environment" id="Environment_foida"]
@@ -81,7 +71,7 @@ compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_co66
 [sub_resource type="BoxShape3D" id="RoomShape"]
 size = Vector3(26, 2.4, 16)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xlqr6"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_38b5p"]
 render_priority = 0
 shader = ExtResource("5_o45gf")
 shader_parameter/inner = Vector4(-13.3, -9.4, 13.3, 7.9)
@@ -93,15 +83,9 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_67qrq"]
-material = SubResource("ShaderMaterial_xlqr6")
+[sub_resource type="PlaneMesh" id="PlaneMesh_1eppo"]
+material = SubResource("ShaderMaterial_38b5p")
 size = Vector2(37.2, 27.2)
-
-[sub_resource type="BoxShape3D" id="WallShape"]
-size = Vector3(2, 3.1, 2)
-
-[sub_resource type="BoxShape3D" id="HurtShape"]
-size = Vector3(2.4, 2.6, 2.4)
 
 [sub_resource type="BoxShape3D" id="PortalShape"]
 size = Vector3(2, 2.4, 1.4)
@@ -132,7 +116,7 @@ mesh_library = ExtResource("3_2ky4v")
 cell_size = Vector3(2, 1, 2)
 cell_center_y = false
 data = {
-"cells": PackedInt32Array(65529, 65531, 36, 65529, 65532, 36, 65529, 65533, 36, 65529, 65534, 36, 65529, 65535, 36, 65529, 0, 36, 65529, 1, 36, 65529, 2, 36, 65529, 3, 36, 65529, 4, 36, 65530, 65531, 36, 65530, 65532, 39, 65530, 65533, 22, 65530, 65534, 22, 65530, 65535, 22, 65530, 0, 22, 65530, 1, 22, 65530, 2, 22, 65530, 3, 22, 65530, 4, 37, 65531, 65531, 36, 65531, 65532, 33, 65531, 65533, 0, 65531, 65534, 0, 65531, 65535, 0, 65531, 0, 0, 65531, 1, 0, 65531, 2, 0, 65531, 3, 0, 65531, 4, 26, 65532, 65531, 36, 65532, 65532, 33, 65532, 65533, 60, 65532, 65534, 0, 65532, 65535, 0, 65532, 0, 0, 65532, 1, 0, 65532, 2, 0, 65532, 3, 61, 65532, 4, 26, 65533, 65531, 36, 65533, 65532, 33, 65533, 65533, 0, 65533, 65534, 0, 65533, 65535, 0, 65533, 0, 0, 65533, 1, 0, 65533, 2, 0, 65533, 3, 0, 65533, 4, 26, 65534, 65531, 36, 65534, 65532, 33, 65534, 65533, 59, 65534, 65534, 59, 65534, 65535, 69, 65534, 0, 0, 65534, 1, 0, 65534, 2, 0, 65534, 3, 0, 65534, 4, 26, 65535, 65531, 36, 65535, 65532, 33, 65535, 65533, 0, 65535, 65534, 0, 65535, 65535, 62, 65535, 0, 0, 65535, 1, 0, 65535, 2, 0, 65535, 3, 0, 65535, 4, 29, 0, 65531, 36, 0, 65532, 33, 0, 65533, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 1, 65531, 36, 1, 65532, 33, 1, 65533, 0, 1, 65534, 0, 1, 65535, 72, 1, 0, 0, 1, 1, 0, 1, 2, 0, 1, 3, 0, 1, 4, 70, 2, 65531, 36, 2, 65532, 33, 2, 65533, 59, 2, 65534, 59, 2, 65535, 69, 2, 0, 0, 2, 1, 0, 2, 2, 0, 2, 3, 0, 2, 4, 26, 3, 65531, 36, 3, 65532, 33, 3, 65533, 0, 3, 65534, 0, 3, 65535, 0, 3, 0, 0, 3, 1, 0, 3, 2, 0, 3, 3, 0, 3, 4, 26, 4, 65531, 36, 4, 65532, 33, 4, 65533, 0, 4, 65534, 0, 4, 65535, 0, 4, 0, 0, 4, 1, 0, 4, 2, 0, 4, 3, 61, 4, 4, 26, 5, 65531, 36, 5, 65532, 33, 5, 65533, 0, 5, 65534, 0, 5, 65535, 0, 5, 0, 0, 5, 1, 0, 5, 2, 0, 5, 3, 0, 5, 4, 26, 6, 65531, 36, 6, 65532, 40, 6, 65533, 30, 6, 65534, 30, 6, 65535, 54, 6, 0, 0, 6, 1, 70, 6, 2, 30, 6, 3, 30, 6, 4, 38, 7, 65531, 36, 7, 65532, 36, 7, 65533, 36, 7, 65534, 36, 7, 65535, 33, 7, 0, 0, 7, 1, 26, 7, 2, 36, 7, 3, 36, 7, 4, 36)
+"cells": PackedInt32Array(65529, 65531, 36, 65529, 65532, 36, 65529, 65533, 36, 65529, 65534, 36, 65529, 65535, 36, 65529, 0, 36, 65529, 1, 36, 65529, 2, 36, 65529, 3, 36, 65529, 4, 36, 65530, 65531, 36, 65530, 65532, 39, 65530, 65533, 22, 65530, 65534, 22, 65530, 65535, 22, 65530, 0, 22, 65530, 1, 22, 65530, 2, 22, 65530, 3, 22, 65530, 4, 37, 65531, 65531, 36, 65531, 65532, 33, 65531, 65533, 0, 65531, 65534, 0, 65531, 65535, 0, 65531, 0, 0, 65531, 1, 0, 65531, 2, 0, 65531, 3, 0, 65531, 4, 26, 65532, 65531, 36, 65532, 65532, 33, 65532, 65533, 60, 65532, 65534, 0, 65532, 65535, 0, 65532, 0, 0, 65532, 1, 0, 65532, 2, 0, 65532, 3, 61, 65532, 4, 26, 65533, 65531, 36, 65533, 65532, 33, 65533, 65533, 0, 65533, 65534, 0, 65533, 65535, 0, 65533, 0, 0, 65533, 1, 0, 65533, 2, 0, 65533, 3, 0, 65533, 4, 26, 65534, 65531, 36, 65534, 65532, 33, 65534, 65533, 59, 65534, 65534, 59, 65534, 65535, 69, 65534, 0, 0, 65534, 1, 0, 65534, 2, 0, 65534, 3, 0, 65534, 4, 26, 65535, 65531, 36, 65535, 65532, 33, 65535, 65533, 0, 65535, 65534, 0, 65535, 65535, 62, 65535, 0, 0, 65535, 1, 0, 65535, 2, 0, 65535, 3, 0, 65535, 4, 29, 0, 65531, 36, 0, 65532, 33, 0, 65533, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 1, 65531, 36, 1, 65532, 33, 1, 65533, 0, 1, 65534, 0, 1, 65535, 72, 1, 0, 0, 1, 1, 0, 1, 2, 0, 1, 3, 0, 1, 4, 70, 2, 65531, 36, 2, 65532, 33, 2, 65533, 59, 2, 65534, 59, 2, 65535, 69, 2, 0, 0, 2, 1, 0, 2, 2, 0, 2, 3, 0, 2, 4, 26, 3, 65531, 36, 3, 65532, 33, 3, 65533, 0, 3, 65534, 0, 3, 65535, 0, 3, 0, 0, 3, 1, 0, 3, 2, 0, 3, 3, 0, 3, 4, 26, 4, 65531, 36, 4, 65532, 33, 4, 65533, 0, 4, 65534, 0, 4, 65535, 0, 4, 0, 0, 4, 1, 0, 4, 2, 0, 4, 3, 61, 4, 4, 26, 5, 65531, 36, 5, 65532, 33, 5, 65533, 0, 5, 65534, 0, 5, 65535, 0, 5, 0, 0, 5, 1, 0, 5, 2, 0, 5, 3, 0, 5, 4, 26, 6, 65531, 36, 6, 65532, 40, 6, 65533, 30, 6, 65534, 30, 6, 65535, 30, 6, 0, 30, 6, 1, 30, 6, 2, 30, 6, 3, 30, 6, 4, 38, 7, 65531, 36, 7, 65532, 36, 7, 65533, 36, 7, 65534, 36, 7, 65535, 36, 7, 0, 36, 7, 1, 36, 7, 2, 36, 7, 3, 36, 7, 4, 36)
 }
 
 [node name="Room" type="Area3D" parent="." unique_id=1114178853]
@@ -146,7 +130,7 @@ shape = SubResource("RoomShape")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Room" unique_id=100436489]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_67qrq")
+mesh = SubResource("PlaneMesh_1eppo")
 
 [node name="LuzSala" type="SpotLight3D" parent="Room" unique_id=1647739636]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -164,20 +148,6 @@ size = Vector3(30, 5, 20)
 box_projection = true
 interior = true
 ambient_mode = 0
-
-[node name="ShrineSwitch" type="Area3D" parent="." unique_id=455544807 instance=ExtResource("22_gvf0k")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
-script = ExtResource("7_ireil")
-mode = 2
-flag = &"ow_shrine_switch"
-
-[node name="ShrineBlock" type="AnimatableBody3D" parent="." unique_id=1795437620 instance=ExtResource("24_v1yde")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 4)
-collision_layer = 9
-collision_mask = 0
-script = ExtResource("9_1fm1w")
-solved_flag = &"ow_shrine_switch"
-solved_position = Vector3(-6, 0, 0)
 
 [node name="ChestGate" type="StaticBody3D" parent="." unique_id=386566849 instance=ExtResource("26_iip2e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
@@ -201,12 +171,6 @@ script = ExtResource("17_rr1ab")
 latch = true
 flag = &"ow_shrine_crystal"
 
-[node name="ShortcutGate" type="StaticBody3D" parent="." unique_id=1811513252 instance=ExtResource("26_iip2e")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 12, 0, 0)
-script = ExtResource("11_ukr0n")
-switches = Array[NodePath]([NodePath("../ShrineSwitch")])
-depth = 2.0
-
 [node name="ShrineTablet" type="StaticBody3D" parent="." unique_id=1199650090 instance=ExtResource("18_gsck2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 4)
 script = ExtResource("19_6rd22")
@@ -228,64 +192,6 @@ magnet_radius = 0.0
 world_size = 1.0
 heart_mesh = ExtResource("24_xlqr6")
 
-[node name="EntranceCrackedWall" parent="." unique_id=1453197350 instance=ExtResource("c8_cracked")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 7)
-script = ExtResource("26_fa1x1")
-flag = &"ow_shrine_cracked_wall"
-
-[node name="Wall" parent="EntranceCrackedWall" index="0"]
-unique_name_in_owner = true
-
-[node name="Model" parent="EntranceCrackedWall/Wall" index="0"]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
-mesh = ExtResource("27_rr1ab")
-
-[node name="Rubble" parent="EntranceCrackedWall" index="1"]
-unique_name_in_owner = true
-visible = false
-
-[node name="Rock0" parent="EntranceCrackedWall/Rubble" index="0"]
-transform = Transform3D(0.9397, 0, -0.342, 0, 1, 0, 0.342, 0, 0.9397, -1.28, 0, 0.72)
-mesh = ExtResource("28_6rd22")
-
-[node name="Rock1" parent="EntranceCrackedWall/Rubble" index="1"]
-transform = Transform3D(0.7727, 0, 0.2071, 0, 0.8, 0, -0.2071, 0, 0.7727, -0.32, 0, 1.2)
-mesh = ExtResource("28_6rd22")
-
-[node name="Rock2" parent="EntranceCrackedWall/Rubble" index="2"]
-transform = Transform3D(0.9362, 0, -0.6555, 0, 1.1429, 0, 0.6555, 0, 0.9362, 0.64, 0, 0.6)
-mesh = ExtResource("28_6rd22")
-
-[node name="Rock3" parent="EntranceCrackedWall/Rubble" index="3"]
-transform = Transform3D(0.7034, 0, -0.124, 0, 0.7143, 0, 0.124, 0, 0.7034, 1.44, 0, 1.32)
-mesh = ExtResource("28_6rd22")
-
-[node name="Rock4" parent="EntranceCrackedWall/Rubble" index="4"]
-transform = Transform3D(0.7918, 0, 0.4571, 0, 0.9143, 0, -0.4571, 0, 0.7918, 0.08, 0, -0.24)
-mesh = ExtResource("28_6rd22")
-
-[node name="Rock5" parent="EntranceCrackedWall/Rubble" index="5"]
-transform = Transform3D(0.404, 0, -0.4815, 0, 0.6286, 0, 0.4815, 0, 0.404, -0.88, 0, -0.6)
-mesh = ExtResource("28_6rd22")
-
-[node name="CollisionShape3D" parent="EntranceCrackedWall" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)
-shape = SubResource("WallShape")
-
-[node name="Hurtbox" parent="EntranceCrackedWall" index="3"]
-collision_layer = 16
-collision_mask = 0
-monitoring = false
-script = ExtResource("29_chuuf")
-surface = "none"
-
-[node name="CollisionShape3D" parent="EntranceCrackedWall/Hurtbox" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
-shape = SubResource("HurtShape")
-
-[node name="PersistentFlag" parent="EntranceCrackedWall" index="4"]
-script = ExtResource("30_iv4kd")
-
 [node name="Spawn_entrada" type="Marker3D" parent="." unique_id=1369838862]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 script = ExtResource("c4_spawn")
@@ -298,20 +204,6 @@ target_scene = "res://levels/overworld.tscn"
 target_spawn = &"santuario"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPortal" unique_id=867491923]
-shape = SubResource("PortalShape")
-
-[node name="Spawn_atajo" type="Marker3D" parent="." unique_id=438568649]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 13.4, 0, 0)
-script = ExtResource("c4_spawn")
-id = &"atajo"
-
-[node name="BackPortal" type="Area3D" parent="." unique_id=1867427264]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 14.6, 1.2, 0)
-script = ExtResource("c7_portal")
-target_scene = "res://levels/overworld.tscn"
-target_spawn = &"atajo"
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="BackPortal" unique_id=1583543177]
 shape = SubResource("PortalShape")
 
 [node name="Player" type="CharacterBody3D" parent="." unique_id=974841641 instance=ExtResource("c3_player")]
@@ -336,7 +228,7 @@ south_wall_reach = 1.7
 script = ExtResource("31_kffl2")
 near_margin = 3.5
 
-[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1483112118 instance=ExtResource("32_lpyv4")]
+[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1509094562 instance=ExtResource("32_lpyv4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1081973311 instance=ExtResource("c6_hud")]
@@ -351,5 +243,3 @@ script = ExtResource("38_supea")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1467829312]
 navigation_mesh = ExtResource("nav_cave")
-
-[editable path="EntranceCrackedWall"]

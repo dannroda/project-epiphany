@@ -31,7 +31,6 @@ func test_walk_every_zone_without_falling_or_sticking() -> void:
 	var state: Node = tree.root.get_node(^"GameState")
 	state.reset()
 	state.set_flag(&"ow_shrine_cracked_wall", true)
-	state.set_flag(&"ow_shrine_switch", true)
 	state.set_flag(&"ow_grotto_cracked_wall", true)
 	tree.change_scene_to_file(LEVEL)
 	await tree.scene_changed

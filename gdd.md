@@ -190,7 +190,7 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 <!-- id: overworld-layout -->
 
 **Forma Zelda 2D (7.10, 2026-10-12/13; donde contradice lo de abajo, manda esto):** 100 × 48 celdas (200 × 96 m) con terreno continuo, generado por `debug/tmp/ow2/layout.py` (celda (x, y) → mundo (2(x − 50), nivel · 2,6, 2(y − 24))). Terrazas reales de 2,6 m (niveles 0, 1 y 2): se sube por escalinatas y se baja por saltos. Cadena: **D1 Chullpa** en los Cerros (espada y bombas; da la pluma) → **D2 Queñoa** en la Arboleda, que se alcanza cruzando con la pluma un abismo de una celda (da el arco) → D3 (gancho) → D4 (escudo espejo) → el templo, último. Gruta, Santuario y Cueva de las bombas son cuevas interiores; afuera solo se ve la boca o la grieta en la cara del risco.
-- *Santuario:* queda para después de D4. El bloque al interruptor (`ow_shrine_switch`) abre el atajo al andén del templo; el cristal (`ow_shrine_crystal`), que solo prende el escudo espejo, baja la reja del cofre con un contenedor de corazón (`ow_shrine_chest`). Entrando por el atajo se queda del lado de afuera de su reja, y por dentro la salida a la Explanada tiene el mismo muro agrietado que afuera (`EntranceCrackedWall`, mismo flag `ow_shrine_cracked_wall`): romper uno deja roto el otro.
+- *Santuario:* queda para después de D4. El cristal (`ow_shrine_crystal`), que solo prende el escudo espejo, baja la reja del cofre con un contenedor de corazón (`ow_shrine_chest`). Es una cueva de una sola pantalla con una sola entrada, el muro agrietado de los Cerros: sin atajo ni reja de atajo (Daniel 2026-10-14).
 - *Risco:* una escalinata sube a la cornisa (nivel 2). Frente a ella hay un abismo de 8 m (cuatro celdas, `RiscoPit`), más de lo que cruza el salto largo. Del otro lado, el ojo (`CliffEye`) abre con una flecha el nicho con el carcaj grande. La pieza de corazón (`HeartPieceCliff`) está del lado del ojo: se sube desde el pasillo bajo con el gancho, apuntando al poste del borde (`RiscoPost`). Al pasillo bajo (la zanja al pie de la terraza de la Necrópolis) se baja por una escalinata desde la Necrópolis (x 62–64, z −18; 11.147).
 - *Piezas de corazón:*
   - Pradera: sobre un escalón de 0,6 m (`MeadowStep`), con la pluma.
@@ -243,7 +243,7 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 | **Claro del inicio** | Spawn, tablillas de controles y de combate, puzzle de levantar (como hoy). Portal | Libre | 1 |
 | **Pradera** (hub oeste) | Pasto, vasijas, tablilla de lore; se ven el templo sellado y la torre del otro lado de la quebrada. Portal | Libre | 1 |
 | **Cerros** | Cueva de las bombas con su muro de práctica | Libre | 1 |
-| **Santuario** | Puzzle de luz y cofre del escudo espejo; la reja de adentro abre el atajo a la Explanada | Bombas | 1 |
+| **Santuario** | Puzzle de luz y cofre del escudo espejo; una sola entrada, el muro agrietado | Bombas | 1 |
 | **Explanada del templo** | Sello de luz → **D1 Templo**. Portal. Del lado este, el cruce con postes a la Cumbre | Libre (el sello, con el escudo espejo) | 1 |
 | **Gruta** | Poción en botella, tablilla | Bombas, desde el Claro | 1 |
 | **Vertiente** | Boca de la cueva del agua bendita (11.20) | Desde la Gruta | 1 |
@@ -264,7 +264,7 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 | Para llegar a… | Hace falta | Dónde se consigue | ¿Hay otra forma? |
 |---|---|---|---|
 | Bombas | — | Cerros, libre | — |
-| Santuario / escudo espejo | Bombas | Cerros | La reja del atajo solo abre desde adentro |
+| Santuario / escudo espejo | Bombas | Cerros | Se entra solo rompiendo el muro agrietado |
 | D1 | Escudo espejo (sello) | Santuario | El escudo de madera no refleja |
 | Este (Necrópolis, D2) | Arco (puente) | D1 | La angostura pide la pluma, que es de D2: queda como atajo; la quebrada es más ancha que un salto en el resto |
 | Laguna, isla de D3 | Pluma (islotes) | D2 | El agua no se cruza nadando |
@@ -299,7 +299,7 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 
 **Cueva de las bombas (7.4):** el cofre (`ow_cave_bombs_chest`) da la bolsa con bombas y la tablilla de al lado enseña a ponerlas (`data/dialogue/overworld.dialogue`, cue `cave_bombs`). En la esquina suroeste, un recoveco tapado por un muro agrietado de práctica (`ow_cave_practice_wall`) guarda una vasija de corazones: se prueba la bomba enseguida y sin riesgo. El muro del paso al Santuario (`ow_shrine_cracked_wall`) queda a la vista desde la entrada de la cueva. Pendiente de pulido: las paredes altas del recoveco tapan al player cuando pasa justo detrás.
 
-**Santuario (7.5):** detrás del muro agrietado. Desafío corto: un bloque al interruptor (`ow_shrine_switch`) baja la reja del recoveco norte, donde está el cofre grande del escudo espejo (`ow_shrine_mirror_chest`; `equip_on_get` hace que se equipe solo aunque haya otro escudo, y su *item get* explica el reflejo). Haz de práctica: la fuente de la esquina noreste apunta al sur; bloqueando en diagonal (girando con el stick derecho o el mouse) el espejo lo manda al oeste, al cristal (`ow_shrine_shortcut`, con latch), que abre la reja del atajo a la Entrada del templo: solo se abre desde adentro. Las rejas (`Gate`) y los cristales con flag quedan como estaban al cargar la partida. Escenario `bombs_only`: inventario inicial + bombas, en la cueva.
+**Santuario (7.5):** detrás del muro agrietado. Desafío corto: la reja del recoveco norte guarda el cofre grande del escudo espejo (`ow_shrine_mirror_chest`; `equip_on_get` hace que se equipe solo aunque haya otro escudo, y su *item get* explica el reflejo). Haz de práctica: la fuente de la esquina noreste apunta al sur; bloqueando en diagonal (girando con el stick derecho o el mouse) el espejo lo manda al oeste, al cristal (`ow_shrine_crystal`, con latch), que abre esa reja. Una sola entrada, el muro agrietado: sin atajo a la Explanada. Las rejas (`Gate`) y los cristales con flag quedan como estaban al cargar la partida. Escenario `bombs_only`: inventario inicial + bombas, en la cueva.
 
 **Sello del templo (7.6):** la fuente del oeste apunta al sur, a un espejo fijo a 45° que manda el haz al este, cruzando la plaza. Atajándolo con el escudo espejo (bloqueo en diagonal, girando con el stick derecho o el mouse) va al norte, al cristal del sello (`ow_temple_seal_open`, con latch). `TempleSeal` (una `Gate` con el ojo) se hunde con sacudida fuerte, retumbo y polvo: el primer momento de *doom*. `TremorZone` cubre la entrada del templo: mientras el player está ahí, cada 6 s una sacudida suave con retumbo grave. Escenario `pre_temple`: todo lo del overworld hasta el escudo espejo, en la entrada del templo.
 
