@@ -1381,7 +1381,7 @@ big = true
 switches = Array[NodePath]([NodePath("../NecroTomb1/Eye"), NodePath("../NecroTomb2/Eye"), NodePath("../NecroTomb3/Eye")])
 
 [node name="RavineEye" parent="." unique_id=1820417731 instance=ExtResource("39_ailnf")]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 8, 2.6, -6)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 6, 0, -6)
 flag = &"ow_ravine_bridge_eye"
 
 [node name="RavineBridge" parent="." unique_id=1820417732 instance=ExtResource("100_bridge")]

@@ -2636,9 +2636,6 @@ transform = Transform3D(-0.03807958, 0, -0.99927473, 0, 1, 0, 0.99927473, 0, -0.
 [node name="Grass283" parent="Plantas" unique_id=127800480 instance=ExtResource("22_o8xrr")]
 transform = Transform3D(-0.9989738, 0, -0.045291748, 0, 1, 0, 0.045291748, 0, -0.9989738, -26.397, -0.073, -5.462)
 
-[node name="Grass284" parent="Plantas" unique_id=952772601 instance=ExtResource("22_o8xrr")]
-transform = Transform3D(-0.9842542, 0, 0.17675894, 0, 1, 0, -0.17675894, 0, -0.9842542, 3.887, -0.073, -6.039)
-
 [node name="CardonChico7" parent="Plantas" unique_id=964738898 instance=ExtResource("14_x1py8")]
 transform = Transform3D(-0.99961615, 0, -0.027703881, 0, 1, 0, 0.027703881, 0, -0.99961615, 25.907, 2.6, -5.431)
 
