@@ -5,18 +5,18 @@
   "created_at": "2026-10-14T02:38:05.166Z",
   "description": "Playtest 2026-10-13: al apretar el z-target, el primer objetivo debería ser el enemigo más cercano al player (hoy elige por cercanía al centro de pantalla, targeting.gd › distancia proyectada al centro). Los enemigos tienen prioridad sobre postes/ojos.",
   "milestone": "m11",
-  "notes": "",
+  "notes": "lock_best_target tomaba el más cercano al centro de pantalla; con la cámara de sala fija no suele ser el que está al lado. Ahora el enemigo más cercano al player; el más centrado solo si todos los candidatos son postes del gancho.",
   "order": 149,
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "mejora",
     "player",
     "camara"
   ],
-  "test": "",
+  "test": "Con dos enemigos, uno pegado y otro lejos pero más al centro de la pantalla: el z-target fija al pegado. test_targeting › test_locking_picks_the_nearest_enemy",
   "title": "Z-target: al activarlo, priorizar el enemigo más cercano",
-  "updated_at": "2026-10-14T02:38:05.166Z"
+  "updated_at": "2026-10-14T03:24:44.998Z"
 }

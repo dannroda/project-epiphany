@@ -4881,11 +4881,15 @@ Playtest 2026-10-13: en la Totora (D3), piso 1P Ground Floor, apenas se entra a 
 
 **Notas:** Causa general (no solo la Totora): GameState.room_entry se tomaba donde quedaba el player al terminar la transición de sala; si caía durante la caminata automática o la pasarela estaba a un paso del agua, la vuelta quedaba sobre el agua o bajo el piso y caía en bucle. Ahora: al cruzar se anota el umbral (last_ground) y al final solo se reemplaza pisando el piso de la sala; la caminata automática se frena en un borde; tras caer, 0.5 s sin caminar (cooldown de Daniel, en cuadros de física). test_room_entry encontró además casos en Queñoa (RaicesLocked), templo (CombinedDoor) y Cumbre.
 
-### 11.150 Gancho: el targeting marca un poste de otra sala/piso · Pendiente
+### 11.150 Gancho: el targeting marca un poste de otra sala/piso · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`, `totora`, `items`
 
 Playtest 2026-10-13, Totora: con el gancho, el targeting marca (rombo amarillo) algo que está arriba, en otra sala o piso, a través de la pared/techo. El targeting del gancho debería considerar solo objetivos de la sala actual (y del mismo piso), con línea de vista.
+
+**Prueba:** Totora PisoBajo debajo de un poste de PisoAlto, con el gancho: no aparece el rombo. test_hookshot › test_posts_on_another_floor_cannot_be_targeted
+
+**Notas:** Los postes se fijaban a cualquier altura dentro del alcance (10 m): desde un piso de la Totora se marcaban los del piso de arriba (8 m) a través del techo. Ahora un poste cuya sala está en otro piso que el del player no cuenta. Los cruces por una puerta del mismo piso siguen andando.
 
 **Relacionadas:** 11.153 Totora: cruce con gancho a través de la puerta no se entiende; poner plataforma/poste en la propia sala
 
@@ -4897,11 +4901,15 @@ Playtest 2026-10-13, Totora (D3) 2P Upper Floor, sala sureste: debajo del borde 
 
 **Relacionadas:** 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista; 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la)
 
-### 11.152 Z-target: al activarlo, priorizar el enemigo más cercano · Pendiente
+### 11.152 Z-target: al activarlo, priorizar el enemigo más cercano · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `mejora`, `player`, `camara`
 
 Playtest 2026-10-13: al apretar el z-target, el primer objetivo debería ser el enemigo más cercano al player (hoy elige por cercanía al centro de pantalla, targeting.gd › distancia proyectada al centro). Los enemigos tienen prioridad sobre postes/ojos.
+
+**Prueba:** Con dos enemigos, uno pegado y otro lejos pero más al centro de la pantalla: el z-target fija al pegado. test_targeting › test_locking_picks_the_nearest_enemy
+
+**Notas:** lock_best_target tomaba el más cercano al centro de pantalla; con la cámara de sala fija no suele ser el que está al lado. Ahora el enemigo más cercano al player; el más centrado solo si todos los candidatos son postes del gancho.
 
 ### 11.153 Totora: cruce con gancho a través de la puerta no se entiende; poner plataforma/poste en la propia sala · Revisión
 
