@@ -28,6 +28,18 @@ func test_only_hearts_without_bag_or_bow() -> void:
 	state.reset()
 
 
+func test_arrows_drop_more_often_when_the_quiver_runs_low() -> void:
+	var state: Node = (Engine.get_main_loop() as SceneTree).root.get_node(^"GameState")
+	state.reset()
+	state.give(Items.get_item(&"bow"))
+	state.inventory.add(&"arrow", state.inventory.capacity(&"arrow"))
+	var full: int = _kinds(400, 11).get("arrow", 0)
+	state.inventory.remove(&"arrow", state.inventory.count(&"arrow"))
+	var empty: int = _kinds(400, 11).get("arrow", 0)
+	assert_true(empty > full * 2, "con el carcaj vacío caen más flechas (%d contra %d)" % [empty, full])
+	state.reset()
+
+
 func test_pickup_heals_and_gives() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state: Node = tree.root.get_node(^"GameState")

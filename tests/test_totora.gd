@@ -185,6 +185,22 @@ func test_the_telar_pier_walks_through_the_north_door_to_the_pond() -> void:
 	tree.root.get_node(^"GameState").reset()
 
 
+## 11.154: donde un ojo pide flechas, una vasija de flechas en la misma sala.
+func test_every_eye_room_has_an_arrow_pot() -> void:
+	await _start()
+	var arrows := load("res://data/drops/pot_arrows.tres")
+	var rooms := level.find_children("*", "Room", true, false)
+	for eye: EyeSwitch in level.find_children("*", "EyeSwitch", true, false):
+		var room: Room = null
+		for candidate: Room in rooms:
+			if candidate.contains(eye.global_position + Vector3.UP):
+				room = candidate
+		var pots := level.find_children("*", "Breakable", true, false).filter(func(pot: Breakable) -> bool:
+			return pot.drops == arrows and room and room.contains(pot.global_position + Vector3.UP))
+		assert_true(pots.size() >= 1, "%s: hay vasijas de flechas en su sala" % eye.name)
+	tree.root.get_node(^"GameState").reset()
+
+
 func test_beating_amaru_opens_the_hookshot_room() -> void:
 	tree = Engine.get_main_loop() as SceneTree
 	tree.root.get_node(^"GameState").reset()

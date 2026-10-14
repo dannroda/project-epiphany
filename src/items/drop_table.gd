@@ -3,6 +3,9 @@ extends Resource
 ## Tabla ponderada de drops. La usan enemigos, vasijas y pasto.
 
 const PICKUP := preload("res://src/world/pickup.tscn")
+## Con un cuarto o menos de la munición que entra (flechas, bombas), su fila pesa tanto más.
+const LOW_AMMO_SHARE := 0.25
+const LOW_AMMO_BOOST := 4.0
 
 @export var entries: Array[DropEntry] = []
 
@@ -11,17 +14,27 @@ const PICKUP := preload("res://src/world/pickup.tscn")
 func roll(rng: RandomNumberGenerator) -> DropEntry:
 	var options := entries.filter(func(entry: DropEntry) -> bool:
 		return entry.requires == null or GameState.inventory.has(entry.requires.id))
+	var weights := options.map(_weight)
 	var total := 0.0
-	for entry: DropEntry in options:
-		total += entry.weight
+	for weight: float in weights:
+		total += weight
 	if total <= 0.0:
 		return null
 	var point := rng.randf() * total
-	for entry: DropEntry in options:
-		point -= entry.weight
+	for i in options.size():
+		point -= weights[i]
 		if point < 0.0:
-			return entry
+			return options[i]
 	return options.back()
+
+
+func _weight(entry: DropEntry) -> float:
+	if entry.requires == null or entry.item == null:
+		return entry.weight
+	var capacity := GameState.inventory.capacity(entry.item.id)
+	if capacity > 0 and GameState.inventory.count(entry.item.id) <= capacity * LOW_AMMO_SHARE:
+		return entry.weight * LOW_AMMO_BOOST
+	return entry.weight
 
 
 func drop_at(position: Vector3, parent: Node, rng: RandomNumberGenerator = null) -> Pickup:
