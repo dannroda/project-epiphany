@@ -12,11 +12,14 @@ const THROWER_GRACE := 0.4
 @export var anim_tree: AnimationTree
 ## Lo que tiene en las manos (espada, escudo): se guarda mientras carga.
 @export var hide_while_carrying: Array[Node3D] = []
+## Lo cargado destella y se ve tras las paredes como el cuerpo.
+@export var flash: HitFlash
 
 var carried: RigidBody3D
 var _layer := 0
 var _mask := 0
 var _blend: Tween
+var _overlays: Dictionary[MeshInstance3D, Material] = {}
 
 
 ## `lift` = agacharse a levantarlo del piso; sin eso aparece directo arriba (la bomba sale de la bolsa).
@@ -35,6 +38,7 @@ func carry(body: RigidBody3D, lift := false) -> void:
 	else:
 		socket.add_child(body)
 	body.transform = Transform3D.IDENTITY
+	_cover(body)
 	body.tree_exiting.connect(_on_gone, CONNECT_ONE_SHOT)
 
 
@@ -98,6 +102,7 @@ func _release() -> RigidBody3D:
 	var body := carried
 	carried = null
 	body.tree_exiting.disconnect(_on_gone)
+	_uncover()
 	body.reparent(get_tree().current_scene)
 	body.freeze = false
 	body.collision_layer = _layer
@@ -107,7 +112,23 @@ func _release() -> RigidBody3D:
 
 func _on_gone() -> void:
 	carried = null
+	_overlays.clear()
 	_fade(0.0)
+
+
+func _cover(body: Node3D) -> void:
+	if flash == null:
+		return
+	for mesh: MeshInstance3D in body.find_children("*", "MeshInstance3D", true, false):
+		_overlays[mesh] = mesh.material_overlay
+	flash.cover(body)
+
+
+func _uncover() -> void:
+	for mesh in _overlays:
+		if is_instance_valid(mesh):
+			mesh.material_overlay = _overlays[mesh]
+	_overlays.clear()
 
 
 func _play(phase: StringName) -> void:
