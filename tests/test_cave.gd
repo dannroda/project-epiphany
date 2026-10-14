@@ -70,3 +70,33 @@ func test_get_the_bombs_and_break_the_practice_wall() -> void:
 	assert_eq(state.get_flag(&"ow_cave_practice_wall"), true)
 	assert_true(level.get_node_or_null(^"CaveHeartPot") != null, "detrás espera la vasija de corazones")
 	state.reset()
+
+
+func test_cave_enemies_chase_the_player() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	for cave in [CAVE, "res://levels/grotto_cave.tscn"]:
+		state.reset()
+		tree.change_scene_to_file(cave)
+		await tree.scene_changed
+		await tree.create_timer(0.5).timeout
+		var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+		var space := player.get_world_3d().direct_space_state
+		var enemies := tree.get_nodes_in_group(&"enemies")
+		assert_true(not enemies.is_empty(), "%s tiene enemigos" % cave.get_file())
+		for enemy: Enemy in enemies:
+			var spot := Vector3.INF
+			for i in 16:
+				var at := enemy.global_position + Vector3(5.0, 0.0, 0.0).rotated(Vector3.UP, TAU * i / 16.0)
+				var sight := PhysicsRayQueryParameters3D.create(enemy.global_position + Vector3.UP, at + Vector3.UP, 1, [enemy.get_rid(), player.get_rid()])
+				var ground := PhysicsRayQueryParameters3D.create(at + Vector3.UP * 2.0, at + Vector3.DOWN, 1, [player.get_rid()])
+				var floor_hit := space.intersect_ray(ground)
+				if space.intersect_ray(sight).is_empty() and not floor_hit.is_empty() and absf(floor_hit.position.y - enemy.global_position.y) < 0.3:
+					spot = floor_hit.position
+					break
+			assert_true(spot != Vector3.INF, "%s en %s tiene lugar a la vista" % [enemy.name, cave.get_file()])
+			player.global_position = spot
+			var start := enemy.global_position
+			await tree.create_timer(2.0).timeout
+			assert_true(enemy.global_position.distance_to(start) > 1.0, "%s en %s va hacia el player" % [enemy.name, cave.get_file()])
+	state.reset()
