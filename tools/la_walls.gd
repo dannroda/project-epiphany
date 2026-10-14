@@ -546,7 +546,8 @@ func _stairs_kind(node: Node) -> String:
 	return ""
 
 
-## Saca las paredes de relleno que no dan a ningún piso (ni en diagonal): fuera de las salas queda el fondo negro.
+## Saca las paredes de relleno a más de dos celdas de cualquier piso: fuera de las salas queda el fondo negro, salvo el
+## reborde de una celda que rodea las paredes de afuera (el techo).
 func _prune(grid: GridMap) -> void:
 	var lib := grid.mesh_library
 	var rooms := _room_rects(grid)
@@ -562,8 +563,8 @@ func _prune(grid: GridMap) -> void:
 		if not wall.call(cell):
 			continue
 		var touches := false
-		for dx in [-1, 0, 1]:
-			for dz in [-1, 0, 1]:
+		for dx in range(-2, 3):
+			for dz in range(-2, 3):
 				var next := cell + Vector3i(dx, 0, dz)
 				if next == cell or wall.call(next):
 					continue
