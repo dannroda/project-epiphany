@@ -101,11 +101,10 @@ func test_find_the_secrets_with_everything() -> void:
 	await tree.physics_frame
 	var arrow: Projectile = ARROW.instantiate()
 	level.add_child(arrow)
-	var from := Vector3(80, 6.5, -22.6)
-	var target := eye.eye.global_position
+	var from := player.global_position + Vector3(0, 1.0, -0.6)
 	var info := Items.get_item(&"bow").make_damage(player)
 	info.team = EntityConfig.Team.PLAYER
-	arrow.launch(from, (target - from).normalized() * 20.0, info)
+	arrow.launch(from, _flat_to(from, eye) * 20.0, info)
 	await tree.create_timer(0.8).timeout
 	assert_eq(eye.active, true, "una flecha por encima del abismo despierta el ojo")
 	await tree.create_timer(0.8).timeout
@@ -137,8 +136,15 @@ func _shoot(tree: SceneTree, level: Node, player: PlayerCharacter, eye: EyeSwitc
 	level.add_child(arrow)
 	var info := Items.get_item(&"bow").make_damage(player)
 	info.team = EntityConfig.Team.PLAYER
-	arrow.launch(from, (eye.eye.global_position - from).normalized() * 20.0, info)
+	arrow.launch(from, _flat_to(from, eye) * 20.0, info)
 	await tree.create_timer(0.5).timeout
+
+
+## El arco dispara plano: solo apunta en el plano.
+func _flat_to(from: Vector3, eye: EyeSwitch) -> Vector3:
+	var to := eye.eye.global_position - from
+	to.y = 0.0
+	return to.normalized()
 
 
 func test_the_three_chullpa_eyes_raise_the_sandals_chest() -> void:

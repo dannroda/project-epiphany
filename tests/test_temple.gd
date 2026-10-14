@@ -265,7 +265,9 @@ func _shoot(from: Vector3, eye_name: NodePath) -> void:
 	level.add_child(arrow)
 	var info := Items.get_item(&"bow").make_damage(player)
 	info.team = EntityConfig.Team.PLAYER
-	arrow.launch(from, (eye.eye.global_position - from).normalized() * 20.0, info)
+	var to := eye.eye.global_position - from
+	to.y = 0.0
+	arrow.launch(from, to.normalized() * 20.0, info)
 	await tree.create_timer(1.0).timeout
 
 

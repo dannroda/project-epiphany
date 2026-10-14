@@ -27,6 +27,8 @@ const SLEEPERS := &"room_sleepers"
 ## Las persianas se cierran recién cuando terminó de entrar: algo más que el deslizamiento de la cámara
 ## (TopDownCamera.transition_time).
 @export var lock_delay := 0.6
+## Lo de la sala despierta este tiempo después de que entra un player: que no lo golpeen apenas cruza.
+@export var wake_delay := 0.5
 
 var _outline: MeshInstance3D
 var _announced := false
@@ -34,6 +36,9 @@ var _announced := false
 var locked := false
 ## Hay algún player adentro.
 var occupied := false
+
+var _wake_frame := 0
+var _checked := false
 
 static var _waking := false
 static var _outline_material: StandardMaterial3D
@@ -137,7 +142,7 @@ func _wake_rooms() -> void:
 		for room: Room in rooms:
 			if room.contains(sleeper.global_position):
 				inside = true
-				awake = awake or room.has_player()
+				awake = awake or (room.has_player() and room._wake_frame == 0)
 		awake = awake or not inside
 		if not sleeper.has_meta(&"awake_mode"):
 			sleeper.set_meta(&"awake_mode", sleeper.process_mode)
@@ -149,6 +154,12 @@ func _physics_process(_delta: float) -> void:
 		return
 	if has_player() != occupied:
 		occupied = not occupied
+		if occupied and _checked:
+			_wake_frame = Engine.get_physics_frames() + int(wake_delay * Engine.physics_ticks_per_second)
+		_request_wake()
+	_checked = true
+	if _wake_frame and Engine.get_physics_frames() >= _wake_frame:
+		_wake_frame = 0
 		_request_wake()
 	if not locked:
 		return
