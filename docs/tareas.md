@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (85/147)
+## M11 — Pulido: contenido y feel  (85/148)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4866,6 +4866,12 @@ Playtest 2026-10-13, Totora (D3) 2P Upper Floor, sala sureste: debajo del borde 
 
 **Relacionadas:** 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista
 
+### 11.152 Z-target: al activarlo, priorizar el enemigo más cercano · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `mejora`, `player`, `camara`
+
+Playtest 2026-10-13: al apretar el z-target, el primer objetivo debería ser el enemigo más cercano al player (hoy elige por cercanía al centro de pantalla, targeting.gd › distancia proyectada al centro). Los enemigos tienen prioridad sobre postes/ojos.
+
 ## M12 — Assets propios (Blender)  (15/23)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
@@ -5978,8 +5984,9 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 4. [ ] 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · En curso
 5. [ ] 11.118 Sandalias: correr manteniendo y salto largo con la pluma · En curso
 6. [ ] 11.24 Más secretos en el overworld · Revisión
-7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — la puerta sobresale y se ven la pared de la sala siguente
+7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente
    si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell"
+   no hay asset correcto para la pared quebrable
 8. [ ] 11.30 Ítem de D3: el gancho · En curso
 9. [ ] 11.28 Atajos que se abren al volver · Revisión
 10. [x] 11.46 Jefe: game juice · Hecho · anda

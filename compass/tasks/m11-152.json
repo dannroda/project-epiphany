@@ -1,0 +1,22 @@
+{
+  "assignee": "project-epiphany-fd",
+  "checklist": [],
+  "code": "11.152",
+  "created_at": "2026-10-14T02:38:05.166Z",
+  "description": "Playtest 2026-10-13: al apretar el z-target, el primer objetivo debería ser el enemigo más cercano al player (hoy elige por cercanía al centro de pantalla, targeting.gd › distancia proyectada al centro). Los enemigos tienen prioridad sobre postes/ojos.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 149,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "mejora",
+    "player",
+    "camara"
+  ],
+  "test": "",
+  "title": "Z-target: al activarlo, priorizar el enemigo más cercano",
+  "updated_at": "2026-10-14T02:38:05.166Z"
+}
