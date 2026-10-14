@@ -21,8 +21,16 @@ func _enter() -> void:
 
 func _update(delta: float) -> void:
 	_elapsed += delta
-	player.velocity.x = _direction.x * speed
-	player.velocity.z = _direction.z * speed
+	var walk := speed if _ground_ahead() else 0.0
+	player.velocity.x = _direction.x * walk
+	player.velocity.z = _direction.z * walk
 	player.move_and_slide()
 	if _elapsed >= _duration:
 		dispatch("finished")
+
+
+## Camina solo hasta el borde: un pozo o agua junto a la puerta no lo traga.
+func _ground_ahead() -> bool:
+	var ahead := player.global_position + _direction * 0.7
+	var query := PhysicsRayQueryParameters3D.create(ahead + Vector3.UP * 0.5, ahead + Vector3.DOWN * 0.6, 1, [player.get_rid()])
+	return not player.get_world_3d().direct_space_state.intersect_ray(query).is_empty()

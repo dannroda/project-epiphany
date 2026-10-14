@@ -8,6 +8,8 @@ extends Area3D
 @export var respawn: Node3D
 ## Si es agua: el que cae salpica en su superficie.
 @export var water: Node3D
+## Segundos que el player no camina al volver.
+@export var still_time := 0.5
 
 
 func _ready() -> void:
@@ -35,6 +37,7 @@ func _fall(player: PlayerCharacter) -> void:
 		back = point.global_position if point else player.global_position + Vector3.UP * 3.0
 	player.global_position = back
 	player.velocity = Vector3.ZERO
+	player.controls.hold_still(still_time)
 	get_tree().call_group(TopDownCamera.GROUP, &"snap_to_target")
 
 
