@@ -4009,7 +4009,7 @@ La lógica de ítems se escapa del ItemBehavior al FSM del player: `_try_item` p
 
 **Archivos:** `player/state_machine.gd`, `player/states/using_item.gd`, `player/states/aiming_item.gd`, `player/states/aiming_throw.gd`, `src/items/behaviors/item_behavior.gd`
 
-### 11.85 Combate y HSM: casos que fallan en silencio · Pendiente
+### 11.85 Combate y HSM: casos que fallan en silencio · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `combate`, `jefe`
 
@@ -4034,18 +4034,18 @@ Tres puntos que no dan error cuando algo no cuadra: (1) el ataque melee elige la
 
 Hay campos de GameState que se escriben a pelo desde afuera (`room_entry` desde la cámara y boss_arena, `boss_rematch`, `spawn_point`, `map_revealed` desde el minimapa), sin señal ni setter. El progreso del overworld lo pinta el minimapa del HUD: sin HUD no se registra lo explorado. `set_flag` emite aunque el valor no cambie. Cargar emite `dungeon_changed` dos veces y `inventory.changed` por ítem antes de `loaded` (el HUD crea un DungeonState fantasma; el mapa se reconstruye 2-3 veces).
 
-- [ ] Setters para los campos sueltos
+- [x] Setters para los campos sueltos
   `set_room_entry`, `set_spawn_point`, etc.
-- [ ] Revelar el mapa desde el mundo
+- [x] Revelar el mapa desde el mundo
   `GameState.reveal_at(xz)` dueño de la Image, llamado desde un nodo del overworld; el minimapa solo lee.
-- [ ] set_flag sin cambio no emite
+- [x] set_flag sin cambio no emite
   Salir si ya tiene ese valor.
-- [ ] Carga en bloque
+- [x] Carga en bloque
   Guard `_bulk` en `read_from`/`_clear` que suprime las señales finas; solo `loaded`.
 
-**Prueba:** Sin HUD, caminar el overworld revela el mapa; cargar una partida emite `loaded` y nada intermedio.
+**Prueba:** tests/test_game_state.gd
 
-**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+**Notas:** Hecho (fd, 2026-10-14): (1) Los campos sueltos (room_entry, spawn_point, boss_rematch) quedan como propiedades: nadie necesita enterarse de sus cambios, así que un setter con señal no agrega nada; se revisa si M14 lo pide. (2) OverworldMap pinta GameState.map_revealed en su _physics_process (el mundo, no el HUD) y emite GameState.map_revealed_changed; el minimapa solo lee y actualiza su textura; GameState.ensure_map_revealed crea la imagen. (3) set_flag sale si el valor no cambia. (4) reset y read_from cargan en bloque (_bulk, Inventory.quiet): solo emiten loaded; el anillo de ítems y la vertiente se refrescan con loaded. Tests: test_game_state › test_set_flag_only_emits_on_change, test_reading_a_save_only_emits_loaded; test_minimap › test_the_world_reveals_the_map_without_a_hud.
 
 **Archivos:** `src/state/game_state.gd`, `src/ui/hud/minimap.gd`, `src/tools/top_down_camera.gd`, `src/entities/boss/boss_arena.gd`, `src/world/spawn_point.gd`, `src/items/inventory.gd`
 

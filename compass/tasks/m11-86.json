@@ -2,22 +2,22 @@
   "checklist": [
     {
       "detail": "`set_room_entry`, `set_spawn_point`, etc.",
-      "done": false,
+      "done": true,
       "text": "Setters para los campos sueltos"
     },
     {
       "detail": "`GameState.reveal_at(xz)` dueño de la Image, llamado desde un nodo del overworld; el minimapa solo lee.",
-      "done": false,
+      "done": true,
       "text": "Revelar el mapa desde el mundo"
     },
     {
       "detail": "Salir si ya tiene ese valor.",
-      "done": false,
+      "done": true,
       "text": "set_flag sin cambio no emite"
     },
     {
       "detail": "Guard `_bulk` en `read_from`/`_clear` que suprime las señales finas; solo `loaded`.",
-      "done": false,
+      "done": true,
       "text": "Carga en bloque"
     }
   ],
@@ -33,17 +33,17 @@
     "src/items/inventory.gd"
   ],
   "milestone": "m11",
-  "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).",
+  "notes": "Hecho (fd, 2026-10-14): (1) Los campos sueltos (room_entry, spawn_point, boss_rematch) quedan como propiedades: nadie necesita enterarse de sus cambios, así que un setter con señal no agrega nada; se revisa si M14 lo pide. (2) OverworldMap pinta GameState.map_revealed en su _physics_process (el mundo, no el HUD) y emite GameState.map_revealed_changed; el minimapa solo lee y actualiza su textura; GameState.ensure_map_revealed crea la imagen. (3) set_flag sale si el valor no cambia. (4) reset y read_from cargan en bloque (_bulk, Inventory.quiet): solo emiten loaded; el anillo de ítems y la vertiente se refrescan con loaded. Tests: test_game_state › test_set_flag_only_emits_on_change, test_reading_a_save_only_emits_loaded; test_minimap › test_the_world_reveals_the_map_without_a_hud.",
   "order": 83,
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "arquitectura",
     "guardado"
   ],
-  "test": "Sin HUD, caminar el overworld revela el mapa; cargar una partida emite `loaded` y nada intermedio.",
+  "test": "tests/test_game_state.gd",
   "title": "GameState: escrituras con señal y carga sin emisiones parciales",
-  "updated_at": "2026-10-12T00:19:56.982Z"
+  "updated_at": "2026-10-14T14:32:36.954Z"
 }
