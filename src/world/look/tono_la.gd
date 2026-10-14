@@ -5,6 +5,11 @@ extends CompositorEffect
 
 @export var exposure := 2.0
 @export var vignette := 1.0
+## Marco negro alrededor de la pantalla (ancho en fracción del alto; frame_softness es la parte difuminada).
+@export var frame := 0.0
+@export var frame_softness := 0.6
+## Cuánto más se mete el marco a los costados arriba que abajo (fracción del alto), como las paredes en perspectiva.
+@export var frame_slant := 0.0
 
 var rd: RenderingDevice
 var shader: RID
@@ -18,6 +23,10 @@ layout(push_constant, std430) uniform Params {
 	vec2 size;
 	float exposure;
 	float vignette;
+	float frame;
+	float frame_softness;
+	float frame_slant;
+	float pad;
 } p;
 const float VIG[19] = float[](1.000, 1.000, 0.981, 0.954, 0.911, 0.860, 0.801, 0.740, 0.676, 0.616,
 		0.563, 0.509, 0.461, 0.413, 0.371, 0.333, 0.298, 0.265, 0.238);
@@ -34,6 +43,12 @@ void main() {
 	if (uv.x >= int(p.size.x) || uv.y >= int(p.size.y)) return;
 	vec4 c = imageLoad(color_image, uv);
 	float v = mix(1.0, vig((vec2(uv) + 0.5) / p.size), p.vignette);
+	if (p.frame > 0.0) {
+		vec2 px = vec2(uv) + 0.5;
+		float inset = p.frame_slant * (1.0 - px.y / p.size.y) * p.size.y;
+		float edge = min(min(px.x - inset, p.size.x - px.x - inset), min(px.y, p.size.y - px.y)) / p.size.y;
+		v *= smoothstep(1.0 - p.frame_softness, 1.0, edge / p.frame);
+	}
 	vec3 x = max(c.rgb * v * p.exposure - 0.004, vec3(0.0));
 	vec3 y = x * (6.2 * x + 0.5) / (x * (6.2 * x + 1.7) + 0.06);
 	imageStore(color_image, uv, vec4(clamp(pow(y, vec3(2.2)), 0.0, 1.0), c.a));
@@ -75,7 +90,7 @@ func _render_callback(_type: int, render_data: RenderData) -> void:
 	var size := buffers.get_internal_size()
 	if size.x == 0 or size.y == 0:
 		return
-	var push := PackedFloat32Array([size.x, size.y, exposure, vignette]).to_byte_array()
+	var push := PackedFloat32Array([size.x, size.y, exposure, vignette, frame, frame_softness, frame_slant, 0.0]).to_byte_array()
 	for view in buffers.get_view_count():
 		var u := RDUniform.new()
 		u.uniform_type = RenderingDevice.UNIFORM_TYPE_IMAGE

@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://c3gjwha8na3yi" path="res://src/world/look/sombra_la.gd" id="1_6nnpa"]
 [ext_resource type="Script" uid="uid://bw0kh7whsb1qf" path="res://src/world/look/tono_la.gd" id="2_3hhbb"]
 [ext_resource type="MeshLibrary" path="res://data/kits/cueva_la_kit.tres" id="3_bm5dh"]
-[ext_resource type="Shader" uid="uid://d05shkhoyhpkk" path="res://src/world/look/borde_oscuro.gdshader" id="5_jytbl"]
 [ext_resource type="PackedScene" path="res://src/entities/armored_skeleton.tscn" id="6_armored"]
 [ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="6_d356v"]
 [ext_resource type="Script" uid="uid://c48gjyuwv6u3x" path="res://src/entities/enemy.gd" id="7_ba5am"]
@@ -70,28 +69,15 @@ needs_motion_vectors = false
 needs_normal_roughness = false
 script = ExtResource("2_3hhbb")
 exposure = 1.0
+frame = 0.1
+frame_softness = 0.8
+frame_slant = 0.15
 
 [sub_resource type="Compositor" id="Compositor_5k1v0"]
 compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_iqcqt"), SubResource("CompositorEffect_gk526")])
 
 [sub_resource type="BoxShape3D" id="RoomShape"]
 size = Vector3(26, 2.4, 14)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_uten7"]
-render_priority = 0
-shader = ExtResource("5_jytbl")
-shader_parameter/inner = Vector4(-13.3, -7.4, 13.3, 7.9)
-shader_parameter/outer = Vector4(-14.8, -8.8, 14.8, 8.8)
-shader_parameter/limit = Vector4(-15.2, -9.2, 15.2, 9.2)
-shader_parameter/plane_y = 3.0
-shader_parameter/floor_rect = Vector4(-13, -7, 13, 7)
-shader_parameter/hole_fade = null
-shader_parameter/wobble = null
-shader_parameter/wobble_scale = null
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_8dsee"]
-material = SubResource("ShaderMaterial_uten7")
-size = Vector2(37.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="WallShape"]
 size = Vector3(2, 3.1, 2)
@@ -103,11 +89,10 @@ size = Vector3(2.4, 2.6, 2.4)
 size = Vector3(2, 2.4, 1.4)
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_3jciw"]
-dof_blur_far_enabled = true
 dof_blur_far_distance = 36.5
 dof_blur_far_transition = 6.0
 dof_blur_near_enabled = true
-dof_blur_near_distance = 30.5
+dof_blur_near_distance = 29.0
 dof_blur_near_transition = 3.0
 dof_blur_amount = 0.12
 
@@ -128,7 +113,7 @@ mesh_library = ExtResource("3_bm5dh")
 cell_size = Vector3(2, 1, 2)
 cell_center_y = false
 data = {
-"cells": PackedInt32Array(65529, 65532, 36, 65529, 65533, 36, 65529, 65534, 36, 65529, 65535, 36, 65529, 0, 36, 65529, 1, 36, 65529, 2, 36, 65529, 3, 36, 65529, 4, 36, 65530, 65532, 39, 65530, 65533, 22, 65530, 65534, 22, 65530, 65535, 22, 65530, 0, 22, 65530, 1, 22, 65530, 2, 22, 65530, 3, 22, 65530, 4, 37, 65531, 65532, 33, 65531, 65533, 0, 65531, 65534, 0, 65531, 65535, 0, 65531, 0, 0, 65531, 1, 62, 65531, 2, 0, 65531, 3, 0, 65531, 4, 26, 65532, 65532, 33, 65532, 65533, 0, 65532, 65534, 71, 65532, 65535, 0, 65532, 0, 0, 65532, 1, 0, 65532, 2, 0, 65532, 3, 0, 65532, 4, 26, 65533, 65532, 33, 65533, 65533, 0, 65533, 65534, 0, 65533, 65535, 0, 65533, 0, 0, 65533, 1, 61, 65533, 2, 59, 65533, 3, 59, 65533, 4, 26, 65534, 65532, 33, 65534, 65533, 0, 65534, 65534, 0, 65534, 65535, 0, 65534, 0, 0, 65534, 1, 0, 65534, 2, 0, 65534, 3, 0, 65534, 4, 26, 65535, 65532, 33, 65535, 65533, 0, 65535, 65534, 0, 65535, 65535, 0, 65535, 0, 0, 65535, 1, 0, 65535, 2, 0, 65535, 3, 0, 65535, 4, 26, 0, 65532, 33, 0, 65533, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 26, 1, 65532, 33, 1, 65533, 0, 1, 65534, 0, 1, 65535, 0, 1, 0, 0, 1, 1, 0, 1, 2, 0, 1, 3, 0, 1, 4, 26, 2, 65532, 33, 2, 65533, 0, 2, 65534, 0, 2, 65535, 0, 2, 0, 0, 2, 1, 0, 2, 2, 0, 2, 3, 0, 2, 4, 26, 3, 65532, 33, 3, 65533, 60, 3, 65534, 0, 3, 65535, 0, 3, 0, 0, 3, 1, 0, 3, 2, 0, 3, 3, 0, 3, 4, 26, 4, 65532, 33, 4, 65533, 0, 4, 65534, 0, 4, 65535, 0, 4, 0, 0, 4, 1, 0, 4, 2, 71, 4, 3, 0, 4, 4, 26, 5, 65532, 33, 5, 65533, 0, 5, 65534, 0, 5, 65535, 0, 5, 0, 0, 5, 1, 0, 5, 2, 0, 5, 3, 0, 5, 4, 26, 6, 65532, 40, 6, 65533, 30, 6, 65534, 54, 6, 65535, 0, 6, 0, 0, 6, 1, 0, 6, 2, 70, 6, 3, 30, 6, 4, 38, 7, 65532, 36, 7, 65533, 36, 7, 65534, 40, 7, 65535, 54, 7, 0, 0, 7, 1, 70, 7, 2, 38, 7, 3, 36, 7, 4, 36)
+"cells": PackedInt32Array(65530, 65532, 39, 65530, 65533, 22, 65530, 65534, 22, 65530, 65535, 22, 65530, 0, 22, 65530, 1, 22, 65530, 2, 22, 65530, 3, 22, 65530, 4, 37, 65531, 65532, 33, 65531, 65533, 0, 65531, 65534, 0, 65531, 65535, 0, 65531, 0, 0, 65531, 1, 62, 65531, 2, 0, 65531, 3, 0, 65531, 4, 26, 65532, 65532, 33, 65532, 65533, 0, 65532, 65534, 71, 65532, 65535, 0, 65532, 0, 0, 65532, 1, 0, 65532, 2, 0, 65532, 3, 0, 65532, 4, 26, 65533, 65532, 33, 65533, 65533, 0, 65533, 65534, 0, 65533, 65535, 0, 65533, 0, 0, 65533, 1, 61, 65533, 2, 59, 65533, 3, 59, 65533, 4, 26, 65534, 65532, 33, 65534, 65533, 0, 65534, 65534, 0, 65534, 65535, 0, 65534, 0, 0, 65534, 1, 0, 65534, 2, 0, 65534, 3, 0, 65534, 4, 26, 65535, 65532, 33, 65535, 65533, 0, 65535, 65534, 0, 65535, 65535, 0, 65535, 0, 0, 65535, 1, 0, 65535, 2, 0, 65535, 3, 0, 65535, 4, 26, 0, 65532, 33, 0, 65533, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 26, 1, 65532, 33, 1, 65533, 0, 1, 65534, 0, 1, 65535, 0, 1, 0, 0, 1, 1, 0, 1, 2, 0, 1, 3, 0, 1, 4, 26, 2, 65532, 33, 2, 65533, 0, 2, 65534, 0, 2, 65535, 0, 2, 0, 0, 2, 1, 0, 2, 2, 0, 2, 3, 0, 2, 4, 26, 3, 65532, 33, 3, 65533, 60, 3, 65534, 0, 3, 65535, 0, 3, 0, 0, 3, 1, 0, 3, 2, 0, 3, 3, 0, 3, 4, 26, 4, 65532, 33, 4, 65533, 0, 4, 65534, 0, 4, 65535, 0, 4, 0, 0, 4, 1, 0, 4, 2, 71, 4, 3, 0, 4, 4, 26, 5, 65532, 33, 5, 65533, 0, 5, 65534, 0, 5, 65535, 0, 5, 0, 0, 5, 1, 0, 5, 2, 0, 5, 3, 0, 5, 4, 26, 6, 65532, 40, 6, 65533, 30, 6, 65534, 54, 6, 65535, 0, 6, 0, 0, 6, 1, 0, 6, 2, 70, 6, 3, 30, 6, 4, 38, 7, 65534, 40, 7, 65535, 54, 7, 0, 0, 7, 1, 70, 7, 2, 38)
 }
 
 [node name="Room" type="Area3D" parent="." unique_id=1404213097]
@@ -138,11 +123,6 @@ display_name = "PLACE_BOMB_CAVE"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Room" unique_id=1399753870]
 shape = SubResource("RoomShape")
-
-[node name="BordeOscuro" type="MeshInstance3D" parent="Room" unique_id=1188972202]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
-cast_shadow = 0
-mesh = SubResource("PlaneMesh_8dsee")
 
 [node name="LuzSala" type="SpotLight3D" parent="Room" unique_id=2013864873]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -288,18 +268,19 @@ attributes = SubResource("CameraAttributesPractical_3jciw")
 fov = 40.0
 script = ExtResource("c5_camera")
 target_node = NodePath("../Player")
-offset = Vector3(0, 30.814466, 14.369021)
+offset = Vector3(0, 34.439697, 16.059494)
 field_of_view = 28.0
 wall_height = 5.4
 mask_margin = 2.0
 south_wall_cut = 3.6
 south_wall_reach = 1.7
+south_margin = 2.0
 
 [node name="EnfoqueLA" type="Node" parent="TopDownCamera" unique_id=301905042]
 script = ExtResource("29_1ne4j")
-near_margin = 3.5
+near_margin = 9.0
 
-[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=2026808572 instance=ExtResource("30_6vawk")]
+[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=65595925 instance=ExtResource("30_6vawk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=298862151 instance=ExtResource("c6_hud")]

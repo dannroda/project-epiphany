@@ -36,11 +36,12 @@ const PILLAR_HEIGHT := 3.6
 ## Para encuadrar, la cámara mira el tope de la pared norte en el borde del piso: con esto llega a ver también la cresta.
 const FRAME_HEIGHT := 5.4
 const MASK_MARGIN := 2.0
-## Velo que oscurece la parte de afuera de las paredes hasta el negro de la máscara: arranca a esta distancia del piso.
-const FADE_START := {"n": 0.9, "s": 0.4, "e": 0.3, "o": 0.3}
-## Y llega al negro a esta distancia (abajo la cresta se ve poco: la máscara la tapa antes).
-const FADE_END := {"n": 1.8, "s": 1.8, "e": 1.8, "o": 1.8}
-const FADE := preload("res://src/world/look/borde_oscuro.gdshader")
+## Lo de afuera de la sala lo tapa un marco negro difuminado (TonoLA) que se mete más arriba, como las paredes en perspectiva.
+const FRAME := 0.1
+const FRAME_SOFTNESS := 0.8
+const FRAME_SLANT := 0.15
+## La cámara encuadra también la cresta de la pared sur (metros de piso más allá del borde de la sala).
+const SOUTH_MARGIN := 2.0
 const FOCUS := preload("res://src/world/look/enfoque_la.gd")
 const FLOOR := preload("res://src/world/look/piso_la.gdshader")
 ## Veta de las paredes: la franja "acantilado" de la paleta (columna 3, fila 0).
@@ -90,11 +91,10 @@ const DOOR_PASSAGE := 4.0
 ## La cámara de LA, calibrada en el visor de LA contra capturas: 65° sobre el horizonte, 28° de campo, a 23 m. La sala
 ## es más grande que la pantalla y la cámara se mueve adentro.
 const CAMERA_PITCH := 65.0
-const CAMERA_DISTANCE := 34.0
+const CAMERA_DISTANCE := 38.0
 const FIELD_OF_VIEW := 28.0
-## Desenfoque arriba y abajo de la pantalla, solo fuera del piso: el borde sur (con Kai parado) queda a ~5.5 m más cerca y
-## la cresta norte a ~2 m más lejos.
-const FOCUS_NEAR := 3.5
+## Solo se desenfoca lo que está muy alto (cerca de la cámara); lo que está más abajo que el piso no.
+const FOCUS_NEAR := 9.0
 const FOCUS_FAR := 2.5
 ## Un foco por sala que baja desde arriba, un poco desde el sur para que dé en la pared norte.
 const ROOM_LIGHT_HEIGHT := 7.0
@@ -163,7 +163,6 @@ var _grain: Array = [GRAIN_AMOUNT, GRAIN_RECT]
 var _water := false
 ## Distancia de la cámara (salas más chicas, cámara más cerca) y desde dónde todo es negro más allá de la pared (LOOKS).
 var _camera := CAMERA_DISTANCE
-var _reach := Vector4.ONE * 100.0
 
 
 func _initialize() -> void:
@@ -203,7 +202,6 @@ func _initialize() -> void:
 	_grain = look.grain
 	_water = look.get("water", false)
 	_camera = look.get("camera", CAMERA_DISTANCE)
-	_reach = look.get("reach", _reach)
 	var level := _load(path)
 	if mode == "bake" and level.has_node(NodePath(BAKED)):
 		push_error("%s ya tiene el look de LA: usar refresh" % path)
@@ -222,6 +220,7 @@ func _initialize() -> void:
 		quit(1)
 		return
 	for grid: GridMap in level.find_children("*", "GridMap", true, false):
+		_prune(grid)
 		var cells := _shapes(grid)
 		for cell in grid.get_used_cells():
 			var adopted: String = ADOPT.get(grid.mesh_library.get_item_name(grid.get_cell_item(cell)), "")
@@ -236,13 +235,17 @@ func _initialize() -> void:
 	if mode == "bake":
 		_dress(level)
 	else:
+		var veils: Array[Node] = []
 		for node: Node in level.find_children("*", "", true, false):
 			if node.scene_file_path.ends_with("door.tscn"):
 				_door(level, node)
 			elif node.scene_file_path.begins_with(CRACKED_WALL):
 				_cracked_wall(level, node)
 			elif node is Area3D and "map_cell" in node and node.has_node(^"BordeOscuro"):
-				_fade(level, node as Area3D)
+				veils.append(node.get_node(^"BordeOscuro"))
+		for veil in veils:
+			veil.get_parent().remove_child(veil)
+			veil.free()
 	_look(level, look)
 	var packed := PackedScene.new()
 	packed.pack(level)
@@ -306,7 +309,6 @@ func _dress(level: Node) -> void:
 			(node.get_node("Visual") as Node3D).visible = false
 			level.set_editable_instance(node, true)
 		elif node is Area3D and "map_cell" in node:
-			_fade(level, node as Area3D)
 			_light(level, node as Area3D)
 		elif node is WorldEnvironment:
 			var env := (node as WorldEnvironment).environment.duplicate() as Environment
@@ -336,7 +338,7 @@ func _dress(level: Node) -> void:
 			var pitch := deg_to_rad(CAMERA_PITCH)
 			node.set("offset", Vector3(0, sin(pitch), cos(pitch)) * _camera)
 			var blur := CameraAttributesPractical.new()
-			blur.dof_blur_far_enabled = true
+			blur.dof_blur_far_enabled = false
 			blur.dof_blur_far_distance = _camera + FOCUS_FAR
 			blur.dof_blur_far_transition = 6.0
 			blur.dof_blur_near_enabled = true
@@ -410,6 +412,12 @@ func _look(level: Node, look: Dictionary) -> void:
 			var env := (node as WorldEnvironment).environment
 			env.ambient_light_color = look.ambient
 			env.ambient_light_energy = look.ambient_energy
+			var compositor := (node as WorldEnvironment).compositor
+			for effect in compositor.compositor_effects if compositor else []:
+				if effect.get_script() == TONE:
+					effect.frame = FRAME
+					effect.frame_softness = FRAME_SOFTNESS
+					effect.frame_slant = FRAME_SLANT
 		elif node is DirectionalLight3D:
 			(node as DirectionalLight3D).light_color = look.sun
 			(node as DirectionalLight3D).light_energy = look.sun_energy
@@ -421,6 +429,16 @@ func _look(level: Node, look: Dictionary) -> void:
 		elif node.scene_file_path.ends_with("wall_torch.tscn"):
 			(node.get_node("Model") as MeshInstance3D).mesh = load(look.brazier)
 	for camera: Node in cameras:
+		var pitch := deg_to_rad(CAMERA_PITCH)
+		camera.set("offset", Vector3(0, sin(pitch), cos(pitch)) * _camera)
+		camera.set("south_margin", SOUTH_MARGIN)
+		var blur := (camera as Camera3D).attributes as CameraAttributesPractical
+		if blur:
+			blur.dof_blur_far_enabled = false
+			blur.dof_blur_near_distance = _camera - FOCUS_NEAR
+		var focus := camera.get_node_or_null("EnfoqueLA")
+		if focus:
+			focus.set("near_margin", FOCUS_NEAR)
 		var old := camera.get_node_or_null("Polvo")
 		if old:
 			camera.remove_child(old)
@@ -458,103 +476,6 @@ func _light(level: Node, room: Area3D) -> void:
 	probe.position = shape.position + Vector3(0, floor_y - shape.position.y + 1.2, 0)
 
 
-func _fade(level: Node, room: Area3D) -> void:
-	var shape := room.get_node("CollisionShape3D") as CollisionShape3D
-	var size := (shape.shape as BoxShape3D).size
-	var to_level := shape.transform
-	var parent := shape.get_parent() as Node
-	while parent != level:
-		to_level = (parent as Node3D).transform * to_level
-		parent = parent.get_parent()
-	var center := to_level.origin
-	var floor_rect := Rect2(center.x - size.x / 2.0, center.z - size.z / 2.0, size.x, size.z)
-	var reach := Vector4(-INF, -INF, INF, INF)
-	for other: Node in level.find_children("*", "Area3D", true, false):
-		var box := _room_box(level, other)
-		if other == room or box.size == Vector3.ZERO or absf(box.get_center().y - center.y) > 1.0:
-			continue
-		var r := Rect2(box.position.x, box.position.z, box.size.x, box.size.z)
-		if r.position.y < floor_rect.end.y and r.end.y > floor_rect.position.y:
-			if r.position.x >= floor_rect.end.x:
-				reach.z = minf(reach.z, (floor_rect.end.x + r.position.x) / 2.0)
-			elif r.end.x <= floor_rect.position.x:
-				reach.x = maxf(reach.x, (floor_rect.position.x + r.end.x) / 2.0)
-		if r.position.x < floor_rect.end.x and r.end.x > floor_rect.position.x:
-			if r.position.y >= floor_rect.end.y:
-				reach.w = minf(reach.w, (floor_rect.end.y + r.position.y) / 2.0)
-			elif r.end.y <= floor_rect.position.y:
-				reach.y = maxf(reach.y, (floor_rect.position.y + r.end.y) / 2.0)
-	var material := ShaderMaterial.new()
-	material.shader = FADE
-	material.set_shader_parameter("inner", Vector4(floor_rect.position.x - FADE_START["o"], floor_rect.position.y - FADE_START["s"],
-			floor_rect.end.x + FADE_START["e"], floor_rect.end.y + FADE_START["n"]))
-	material.set_shader_parameter("outer", Vector4(floor_rect.position.x - FADE_END["o"], floor_rect.position.y - FADE_END["s"],
-			floor_rect.end.x + FADE_END["e"], floor_rect.end.y + FADE_END["n"]))
-	material.set_shader_parameter("floor_rect", Vector4(floor_rect.position.x, floor_rect.position.y, floor_rect.end.x, floor_rect.end.y))
-	var inside := _interior(level, room, floor_rect, center.y - size.y / 2.0)
-	material.set_shader_parameter("interior", Vector4(inside.position.x, inside.position.y, inside.end.x, inside.end.y))
-	material.set_shader_parameter("reach", _reach)
-	var outer := floor_rect.grow(MASK_MARGIN)
-	var limit := outer.grow(0.2)
-	material.set_shader_parameter("limit", Vector4(maxf(limit.position.x, reach.x), maxf(limit.position.y, reach.y), minf(limit.end.x, reach.z), minf(limit.end.y, reach.w)))
-	var floor_y := center.y - size.y / 2.0
-	material.set_shader_parameter("plane_y", floor_y + WALL_HEIGHT)
-	var plane := PlaneMesh.new()
-	plane.size = outer.size + Vector2.ONE * PILLAR_HEIGHT * 2.0
-	plane.material = material
-	var veil := room.get_node_or_null(^"BordeOscuro") as MeshInstance3D
-	if veil == null:
-		veil = MeshInstance3D.new()
-		veil.name = "BordeOscuro"
-		room.add_child(veil)
-		veil.owner = level
-	veil.mesh = plane
-	veil.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	var local := (to_level * shape.transform.affine_inverse()).affine_inverse()
-	veil.transform.origin = local * Vector3(center.x, floor_y + PILLAR_HEIGHT + 0.02, center.z)
-
-
-## El piso de la sala sin las filas de celdas que son casi todas pared (la sala que se estira sobre un nicho o un pasillo).
-func _interior(level: Node, room: Area3D, floor_rect: Rect2, floor_y: float) -> Rect2:
-	var grids := room.get_parent().find_children("*", "GridMap", false, false)
-	if grids.is_empty():
-		return floor_rect
-	var grid := grids[0] as GridMap
-	var to_level := grid.transform
-	var node: Node = room.get_parent()
-	while node != level:
-		to_level = (node as Node3D).transform * to_level
-		node = node.get_parent()
-	var to_grid := to_level.affine_inverse()
-	var walled := func(x: float, z: float) -> int:
-		var item := grid.get_cell_item(grid.local_to_map(to_grid * Vector3(x, floor_y + 0.5, z)))
-		if item == GridMap.INVALID_CELL_ITEM:
-			return 0
-		return 1 if _base_name(grid.mesh_library.get_item_name(item)) in WALLS else -1
-	var inside := floor_rect
-	for side: String in ["o", "e", "s", "n"]:
-		while inside.size.x > CELL * 2.0 and inside.size.y > CELL * 2.0:
-			var across := side in ["o", "e"]
-			var line: float = (inside.position.x if side == "o" else inside.end.x - CELL if side == "e" else inside.end.y - CELL if side == "s" else inside.position.y) + CELL / 2.0
-			var balance := 0
-			var t := (inside.position.y if across else inside.position.x) + CELL / 2.0
-			while t < (inside.end.y if across else inside.end.x):
-				balance += walled.call(line if across else t, t if across else line)
-				t += CELL
-			if balance <= 0:
-				break
-			if side == "o":
-				inside = inside.grow_individual(-CELL, 0, 0, 0)
-			elif side == "e":
-				inside = inside.grow_individual(0, 0, -CELL, 0)
-			elif side == "n":
-				inside = inside.grow_individual(0, -CELL, 0, 0)
-			else:
-				inside = inside.grow_individual(0, 0, 0, -CELL)
-	return inside
-
-
-## Las salas en coordenadas de la grilla, achicadas medio metro: una pared fina con una sala distinta a cada lado es pared entera.
 func _room_rects(grid: GridMap) -> Array[Rect2]:
 	var level: Node = grid
 	while level.get_parent() != null:
@@ -623,6 +544,35 @@ func _stairs_kind(node: Node) -> String:
 	if node.scene_file_path.ends_with("stairs.tscn"):
 		return "sube"
 	return ""
+
+
+## Saca las paredes de relleno que no dan a ningún piso (ni en diagonal): fuera de las salas queda el fondo negro.
+func _prune(grid: GridMap) -> void:
+	var lib := grid.mesh_library
+	var rooms := _room_rects(grid)
+	var stairs := {}
+	for node: Node in grid.get_parent().get_children():
+		if node is Node3D and _stairs_kind(node) != "":
+			stairs[grid.local_to_map(grid.transform.affine_inverse() * (node as Node3D).position)] = true
+	var wall := func(cell: Vector3i) -> bool:
+		var item := grid.get_cell_item(cell)
+		return item != GridMap.INVALID_CELL_ITEM and _base_name(lib.get_item_name(item)) in WALLS and not stairs.has(cell)
+	var lone: Array[Vector3i] = []
+	for cell in grid.get_used_cells():
+		if not wall.call(cell):
+			continue
+		var touches := false
+		for dx in [-1, 0, 1]:
+			for dz in [-1, 0, 1]:
+				var next := cell + Vector3i(dx, 0, dz)
+				if next == cell or wall.call(next):
+					continue
+				if grid.get_cell_item(next) != GridMap.INVALID_CELL_ITEM or stairs.has(next) or (_water and _room_of(rooms, grid.map_to_local(next)) >= 0):
+					touches = true
+		if not touches:
+			lone.append(cell)
+	for cell in lone:
+		grid.set_cell_item(cell, GridMap.INVALID_CELL_ITEM)
 
 
 func _shapes(grid: GridMap) -> Dictionary:
@@ -999,6 +949,8 @@ func _kit() -> MeshLibrary:
 	window.render_priority = -1
 	var fog := ShaderMaterial.new()
 	fog.shader = PIT_FOG
+	var dark_fog := fog.duplicate() as ShaderMaterial
+	dark_fog.set_shader_parameter("fog_color", Color.BLACK)
 	var black := StandardMaterial3D.new()
 	black.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	black.albedo_color = Color.BLACK
@@ -1014,7 +966,7 @@ func _kit() -> MeshLibrary:
 			next += 1
 		kit.create_item(id)
 		kit.set_item_name(id, item_name)
-		kit.set_item_mesh(id, _with_window(pit, window))
+		kit.set_item_mesh(id, _with_window(pit, window, dark_fog))
 		kit.set_item_shapes(id, kit.get_item_shapes(item))
 		kit.set_item_navigation_mesh(id, kit.get_item_navigation_mesh(item))
 	var uid := ResourceLoader.get_resource_uid(_out_kit) if ResourceLoader.exists(_out_kit) else ResourceUID.INVALID_ID
