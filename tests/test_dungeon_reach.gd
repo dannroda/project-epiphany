@@ -65,6 +65,17 @@ func test_the_item_must_gate_the_goal_and_sit_behind_the_sub_boss() -> void:
 	assert_eq(Reach.rules(graph, Reach.read(graph).model), PackedStringArray(["se llega a fin sin arco", "vigia pide arco", "arco se consigue sin vigia"]))
 
 
+## 11.176 (la Chullpa se salteaba casi entera): cada llave chica hace falta y la llave del jefe pide volver con el ítem.
+func test_optional_keys_and_a_boss_key_before_the_item_break_the_mold() -> void:
+	var graph := DungeonGraph.new()
+	graph.goal = &"fin"
+	graph.item = &"pluma"
+	var model := _model([_link("A", "B", "puerta_b")], [_key("A"), _spot("A", "boss_key"), _spot("A", "pluma"), _spot("A", "fin", ["pluma", "boss_key"])])
+	assert_eq(Reach.rules(graph, model), PackedStringArray(["se llega a fin sin la llave chica de llave en A", "la llave del jefe se consigue sin pluma (tiene que pedir volver con el ítem)"]))
+	model = _model([_link("A", "B", "puerta_b")], [_key("A"), _spot("B", "boss_key", ["pluma"]), _spot("A", "pluma"), _spot("A", "fin", ["pluma", "boss_key"])])
+	assert_eq(Reach.rules(graph, model), PackedStringArray(), "la llave abre el camino y la del jefe pide la pluma")
+
+
 func _design_link(from: String, to: String, locked := false) -> DungeonLink:
 	var link := DungeonLink.new()
 	link.from = from

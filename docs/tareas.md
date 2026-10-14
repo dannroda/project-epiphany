@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (107/171)
+## M11 — Pulido: contenido y feel  (107/172)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5210,6 +5210,22 @@ Playtest 2026-10-14: en la zona nevada, junto a la cornisa con el poste del ganc
 Playtest 2026-10-14 (11.137, Chullpa): en salas que no llenan su rectángulo (pasillos, salas en L) la cámara se centra en la caja entera de la sala y deja mucho negro. Debería encuadrar la parte de la sala que tiene piso (las celdas usadas del GridMap dentro de la sala).
 
 **Relacionadas:** 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista
+
+### 11.176 Chullpa: llave chica y sótano obligatorios, llave del jefe con vuelta atrás · Revisión
+
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `mazmorra`, `chullpa`
+
+Daniel 2026-10-14: en la Chullpa se salteaba el 90% (la vasija de la placa está en el Rellano, así que la puerta con llave, la llave chica y todo el sótano eran opcionales, y la llave del jefe estaba al lado del jefe). Regla: la llave del jefe pide vuelta atrás. Aprobado: la puerta a la Momia pasa a ser la de la llave chica (sótano obligatorio); la vasija en la placa abre 2NO; brújula de este lado de los huecos de 2NO y llave del jefe del otro (con la pluma); el Mausoleo queda sin huecos (Daniel: sala sin huecos).
+
+- [x] Puerta a la Momia con llave; la placa de la vasija abre 2NO
+- [x] 2NO: brújula de este lado, llave del jefe del otro lado de los huecos
+- [x] Mausoleo sin huecos (sin cofre)
+- [x] Grafo, test_dungeon_reach avisa salas con llave/acertijo que no hacen falta
+- [x] Tests (chullpa, drop_holes, walk_doors, map) y GDD §8b
+
+**Prueba:** tests/test_chullpa.gd (test_the_mummy_door_takes_the_crypt_key, test_the_boss_key_waits_across_the_leaps_holes, test_pushing_the_pot_onto_the_plate_opens_the_leaps_room), tests/test_dungeon_reach.gd (test_optional_keys_and_a_boss_key_before_the_item_break_the_mold)
+
+**Notas:** Hecho (2026-10-14). Camino nuevo: Entrada → caer por 1SE → Cripta (oleadas, mapa) → Cripta oscura (pinchos, llave chica) → escalera de mano → bloques → Rellano → puerta con llave → Momia → pluma → volver al Rellano → vasija en la placa → 2NO, huecos con la pluma → llave del jefe → 1NE → Mausoleo → jefe. AgrietadaDoor pasa a puerta con llave (ch_mummy_locked_door, ex ch_leaps_locked_door) y SaltosLocked pasa a SaltosDoor, de interruptor (RellanoWeight). La brújula está de este lado de los huecos de 2NO y la llave del jefe del otro. El Mausoleo queda sin huecos, sin MausoleoPit y sin cofre. El molde de test_dungeon_reach suma dos reglas, que hoy cumplen las cinco mazmorras: cada llave chica hace falta para llegar al jefe, y la llave del jefe pide el ítem. Escena armada con un script (debug/tmp/design/chullpa_1176.gd) y la_walls refresh sobre main con 11.156.
 
 ## M12 — Assets propios (Blender)  (17/31)
 

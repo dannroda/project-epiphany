@@ -97,6 +97,11 @@ static func rules(graph: DungeonGraph, model: Dictionary) -> PackedStringArray:
 			problems.append("%s pide %s" % [guard, item])
 		if not item.is_empty() and reaches(model, graph.brings, item, [guard]):
 			problems.append("%s se consigue sin %s" % [item, guard])
+	for spot in model.spots:
+		if spot.key and reaches(model, graph.brings, String(graph.goal), [spot.gives[0]]):
+			problems.append("se llega a %s sin la llave chica de %s" % [graph.goal, spot.label])
+	if not item.is_empty() and reaches(model, graph.brings, "boss_key", [item]):
+		problems.append("la llave del jefe se consigue sin %s (tiene que pedir volver con el ítem)" % item)
 	return problems
 
 

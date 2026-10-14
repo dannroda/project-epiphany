@@ -137,15 +137,15 @@ func _explode(at: Vector3) -> void:
 	await tree.create_timer(0.6).timeout
 
 
-func test_pushing_the_pot_onto_the_plate_opens_the_mummy_room() -> void:
+func test_pushing_the_pot_onto_the_plate_opens_the_leaps_room() -> void:
 	await _start()
-	var door := level.get_node(^"PisoAlto/AgrietadaDoor") as Door
+	var door := level.get_node(^"PisoAlto/SaltosDoor") as Door
 	var weight := level.get_node(^"PisoAlto/RellanoWeight") as FloorSwitch
 	var pot := level.get_node(^"PisoAlto/RellanoPot") as BigPot
 	await _drop(_in("PisoAlto/Rellano", Vector3(0, 0.5, 0)))
 	assert_eq(camera.room, _room("PisoAlto/Rellano"))
 	assert_true(_room("PisoAlto/Rellano").contains(pot.global_position), "la vasija está en el rellano")
-	assert_true(not door.is_open, "la puerta a la sala agrietada está cerrada")
+	assert_true(not door.is_open, "la puerta a la sala de los saltos está cerrada")
 	player.global_position = weight.global_position + Vector3(0, 0.5, 0)
 	await tree.create_timer(0.3).timeout
 	assert_true(not weight.active, "el player no aprieta la placa de peso")
@@ -156,6 +156,48 @@ func test_pushing_the_pot_onto_the_plate_opens_the_mummy_room() -> void:
 		await tree.create_timer(0.7).timeout
 	assert_true(await _until(func() -> bool: return weight.active, 2.0), "dos empujones y la vasija aprieta la placa")
 	assert_true(await _until(func() -> bool: return door.is_open, 8.0), "y se abre la puerta")
+	tree.root.get_node(^"GameState").reset()
+
+
+## 11.176: la llave chica de la Cripta oscura abre la sala de la Momia, así el sótano es obligatorio.
+func test_the_mummy_door_takes_the_crypt_key() -> void:
+	await _start()
+	var door := level.get_node(^"PisoAlto/AgrietadaDoor") as Door
+	var state: Node = tree.root.get_node(^"GameState")
+	assert_eq(door.kind, Door.Kind.LOCKED, "la puerta a la Momia es con llave")
+	assert_eq((level.get_node(^"Sotano/KeyChest") as Chest).item.id, &"small_key", "la llave chica está en la Cripta oscura")
+	assert_true(not door.is_open and door.interactable.enabled, "cerrada hasta usar la llave")
+	state.current_dungeon_state().small_keys = 1
+	assert_true(door.try_unlock(), "con la llave abre")
+	assert_eq(state.current_dungeon_state().small_keys, 0, "y la gasta")
+	state.reset()
+
+
+## 11.176: la llave del jefe espera del otro lado de los huecos de 2NO (volver con la pluma); el Mausoleo es de paso.
+func test_the_boss_key_waits_across_the_leaps_holes() -> void:
+	await _start()
+	var saltos := _room("PisoAlto/Saltos")
+	var boss_key := level.get_node(^"PisoAlto/BossKeyChest") as Chest
+	var compass := level.get_node(^"PisoAlto/CompassChest") as Chest
+	assert_eq(boss_key.item.id, &"boss_key")
+	assert_true(saltos.contains(boss_key.global_position) and saltos.contains(compass.global_position), "las dos en la sala de los saltos")
+	var grid := level.get_node(^"PisoAlto/GridMap") as GridMap
+	var holes := func(from: float, to: float) -> int:
+		var count := 0
+		for z in range(int(minf(from, to)), int(maxf(from, to)) + 1):
+			var item := grid.get_cell_item(grid.local_to_map(grid.to_local(Vector3(boss_key.global_position.x, grid.global_position.y, z))))
+			if item != -1 and grid.mesh_library.get_item_name(item).begins_with("Hueco"):
+				count += 1
+		return count
+	assert_true(holes.call(boss_key.global_position.z, saltos.global_position.z) > 0, "la llave del jefe está del otro lado de los huecos")
+	assert_eq(holes.call(compass.global_position.z, compass.global_position.z + 2.0), 0, "la brújula, de este lado")
+	var sotano := level.get_node(^"Sotano/GridMap") as GridMap
+	var mausoleo := _room("Sotano/Mausoleo")
+	for cell in sotano.get_used_cells():
+		var at := sotano.to_global(sotano.map_to_local(cell))
+		if mausoleo.contains(Vector3(at.x, mausoleo.global_position.y, at.z)):
+			assert_true(not sotano.mesh_library.get_item_name(sotano.get_cell_item(cell)).begins_with("Hueco"), "el Mausoleo no tiene huecos (%s)" % cell)
+	assert_true(level.get_node_or_null(^"Sotano/BossKeyChest") == null, "ni cofre")
 	tree.root.get_node(^"GameState").reset()
 
 
@@ -368,7 +410,7 @@ func test_the_feather_jumps_the_gaps() -> void:
 	var state: Node = tree.root.get_node(^"GameState")
 	state.give(Items.get_item(&"feather"))
 	state.assign_button(1, &"feather")
-	for gap: Array in [[_in("PlantaBaja/Abismo", Vector3(0, 0, 4.6)), "PlantaBaja/Abismo"], [_in("Sotano/Mausoleo", Vector3(0, 0, 2.6)), "Sotano/Mausoleo"], [_in("PisoAlto/Saltos", Vector3(0, 0, 4.6)), "PisoAlto/Saltos"], [_in("PisoAlto/Mirador", Vector3(0, 0, 4.6)), "PisoAlto/Mirador"]]:
+	for gap: Array in [[_in("PlantaBaja/Abismo", Vector3(0, 0, 4.6)), "PlantaBaja/Abismo"], [_in("PisoAlto/Saltos", Vector3(0, 0, 4.6)), "PisoAlto/Saltos"], [_in("PisoAlto/Mirador", Vector3(0, 0, 4.6)), "PisoAlto/Mirador"]]:
 		player.global_position = gap[0]
 		await tree.create_timer(0.3).timeout
 		var landed := await _jump(&"move_forward")
