@@ -170,12 +170,10 @@ func _spit() -> void:
 	if player == null:
 		return
 	var mouth := global_position + Vector3.UP * rise_height
-	var orb: Projectile = ORB.instantiate()
-	get_tree().current_scene.add_child(orb)
 	var info := DamageInfo.make(spit_damage, config.attack_knockback * 0.5, self)
 	info.team = config.team
 	info.reflectable = true
-	orb.launch(mouth, (player.global_position + Vector3.UP - mouth).normalized() * spit_speed, info)
+	Projectile.fire(ORB, self, mouth, (player.global_position + Vector3.UP - mouth).normalized() * spit_speed, info)
 	Feel.sfx(&"roll", mouth)
 
 

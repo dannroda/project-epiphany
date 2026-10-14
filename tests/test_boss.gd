@@ -470,7 +470,7 @@ func test_win_take_the_container_then_the_portal_ends_the_demo() -> void:
 	assert_true(await _wait_until(func() -> bool: return state.get_flag(&"te_boss_defeated") == true, 6.0), "flag te_boss_defeated")
 	assert_true(not is_instance_valid(boss) or not boss.visible, "el jefe ya no está")
 	assert_true(portal.visible, "aparece el portal de salida")
-	var rewards := level.get_node(^"BossArena").find_children("*", "Pickup", false, false)
+	var rewards := Spawns.root(level).find_children("*", "Pickup", false, false).filter(func(pickup: Pickup) -> bool: return pickup.item_get)
 	assert_eq(rewards.size(), 1, "aparece el contenedor de corazón")
 	var reward := rewards[0] as Pickup
 	await tree.create_timer(0.5).timeout

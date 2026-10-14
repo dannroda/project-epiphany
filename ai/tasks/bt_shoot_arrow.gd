@@ -63,13 +63,11 @@ func _shoot(target: Node3D) -> void:
 	_release_bow()
 	var info: DamageInfo = agent.config.make_damage(agent)
 	info.reflectable = true
-	var arrow: Projectile = ARROW.instantiate()
-	agent.get_tree().current_scene.add_child(arrow)
 	var from: Vector3 = agent.global_position + Vector3.UP * 1.2
 	var aim_point := target.global_position + Vector3.UP * 1.0
 	var direction := aim_point - from
 	direction.y = 0.0
-	arrow.launch(from + direction.normalized() * 0.6, direction.normalized() * arrow_speed, info)
+	Projectile.fire(ARROW, agent, from + direction.normalized() * 0.6, direction.normalized() * arrow_speed, info)
 	Feel.sfx(&"click", from)
 
 

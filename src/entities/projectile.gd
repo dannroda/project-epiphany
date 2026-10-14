@@ -18,6 +18,14 @@ var _stuck := false
 var _just_reflected := false
 
 
+## Instancia, cuelga de Spawns.root y lanza: el único camino para disparar.
+static func fire(scene: PackedScene, by: Node, from: Vector3, initial_velocity: Vector3, info: DamageInfo) -> Projectile:
+	var projectile := scene.instantiate() as Projectile
+	Spawns.root(by).add_child(projectile)
+	projectile.launch(from, initial_velocity, info)
+	return projectile
+
+
 func launch(from: Vector3, initial_velocity: Vector3, info: DamageInfo) -> void:
 	global_position = from
 	velocity = initial_velocity.limit_length(MAX_SPEED)

@@ -394,12 +394,10 @@ func _fire_orb() -> void:
 	var info := DamageInfo.make(orb_damage, 6.0, self)
 	info.team = EntityConfig.Team.ENEMY
 	info.reflectable = true
-	var orb: Projectile = ORB.instantiate()
-	get_tree().current_scene.add_child(orb)
 	var aim := target.global_position + Vector3.UP * 1.1
+	var orb := Projectile.fire(ORB, self, orb_muzzle.global_position, (aim - orb_muzzle.global_position).normalized() * orb_speed, info)
 	if phase() >= 3:
 		orb.tint(CORRUPT_GLOW)
-	orb.launch(orb_muzzle.global_position, (aim - orb_muzzle.global_position).normalized() * orb_speed, info)
 	Feel.sfx(&"click", orb_muzzle.global_position)
 
 

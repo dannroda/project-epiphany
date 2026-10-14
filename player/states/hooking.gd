@@ -35,7 +35,7 @@ func _enter() -> void:
 	player.model.look_at(player.model.global_position - _direction * Vector3(1, 0, 1), Vector3.UP)
 	player.velocity = Vector3.ZERO
 	_hook = behavior.hook_scene.instantiate() as Hook
-	player.get_tree().current_scene.add_child(_hook)
+	Spawns.root(player).add_child(_hook)
 	_hook.target = post
 	_hook.fire(player, _direction, behavior.reach, item.damage)
 	Feel.sfx(&"roll", player.global_position)

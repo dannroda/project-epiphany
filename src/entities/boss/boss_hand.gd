@@ -556,7 +556,7 @@ func _leave_crack(at: Vector3) -> void:
 		_crack = DoomAmbience.crack_texture()
 	var crack := SLAM_CRACK.instantiate() as Decal
 	crack.texture_albedo = _crack
-	get_tree().current_scene.add_child(crack)
+	Spawns.root(self).add_child(crack)
 	crack.global_position = Vector3(at.x, 0.1, at.z)
 	crack.rotation.y = randf() * TAU
 	var fade := crack.create_tween()

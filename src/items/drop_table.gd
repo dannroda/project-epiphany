@@ -36,13 +36,14 @@ func _weight(entry: DropEntry) -> float:
 	return entry.weight
 
 
-func drop_at(position: Vector3, parent: Node, rng: RandomNumberGenerator = null) -> Pickup:
+## `near` es cualquier nodo del nivel: el pickup cuelga de Spawns.root.
+func drop_at(position: Vector3, near: Node, rng: RandomNumberGenerator = null) -> Pickup:
 	if rng == null:
 		rng = RandomNumberGenerator.new()
 	var entry := roll(rng)
 	if entry == null or entry.is_nothing():
 		return null
 	var pickup := Pickup.make(entry.item, entry.amount, entry.heal)
-	parent.add_child(pickup)
+	Spawns.root(near).add_child(pickup)
 	pickup.global_position = position
 	return pickup
