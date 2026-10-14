@@ -28,6 +28,14 @@
   "code": "11.118",
   "created_at": "2026-10-13T08:16:06.922Z",
   "description": "Daniel (2026-10-13): con la pluma de D1, los islotes llevaban a D3 sin el arco y la angostura abría el este sin el puente. Ítem nuevo, las sandalias (como las botas de Pegaso): se mantiene el botón, el player toma impulso medio segundo y corre recto hasta soltar o chocar; chocar sacude árboles y muros agrietados. Saltar con la pluma en plena carrera da el salto largo (Daniel: 3 celdas, 6 m, contra 1 celda, 2 m, de la pluma sola; nunca 4 celdas, el abismo del Risco). Se ganan en una mini quest de la Necrópolis que pide el arco (7.11). [[gdd#progresion-gating]]",
+  "images": [
+    "compass/images/m7-11-mapa.jpg",
+    "compass/images/m7-11-1.jpg",
+    "compass/images/m7-11-2.jpg",
+    "compass/images/m7-11-3.jpg",
+    "compass/images/m7-11-4.jpg",
+    "compass/images/m7-11-5.jpg"
+  ],
   "milestone": "m11",
   "notes": "",
   "order": 115,
@@ -40,5 +48,5 @@
   ],
   "test": "",
   "title": "Sandalias: correr manteniendo y salto largo con la pluma",
-  "updated_at": "2026-10-13T08:50:52.888Z"
+  "updated_at": "2026-10-14T00:37:48.472Z"
 }

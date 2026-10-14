@@ -22,6 +22,14 @@
   "code": "7.11",
   "created_at": "2026-10-13T08:16:07.238Z",
   "description": "Daniel (2026-10-13): la pluma cruza 1 celda (2 m) y sandalias + pluma 3 (6 m). La angostura (Arboleda ↔ Cardonal) y los huecos de los islotes de la Laguna pasan a 3 celdas: solo se cruzan con el salto largo (11.118). El abismo del Risco pasa a 4 celdas (8 m). Mini quest en la Necrópolis, del otro lado del puente: tres ojos en las chullpas, prendidos a la vez con flechas, dan las sandalias. Depende de 11.118. [[gdd#progresion-gating]]",
+  "images": [
+    "compass/images/m7-11-mapa.jpg",
+    "compass/images/m7-11-1.jpg",
+    "compass/images/m7-11-2.jpg",
+    "compass/images/m7-11-3.jpg",
+    "compass/images/m7-11-4.jpg",
+    "compass/images/m7-11-5.jpg"
+  ],
   "milestone": "m07",
   "notes": "",
   "order": 11,
@@ -34,5 +42,5 @@
   ],
   "test": "",
   "title": "Overworld: huecos de salto largo y mini quest de las sandalias",
-  "updated_at": "2026-10-13T08:51:04.853Z"
+  "updated_at": "2026-10-14T00:37:52.207Z"
 }

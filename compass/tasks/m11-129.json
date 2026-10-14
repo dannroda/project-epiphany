@@ -38,6 +38,10 @@
   "code": "11.129",
   "created_at": "2026-10-13T21:59:41.600Z",
   "description": "Mazmorra 4 (GDD §8e): el escudo espejo parte la Cumbre; el piso bajo sin él, el alto con él. Sub-jefe Kuntur joven, jefe Apu Kuntur. Plano aprobado por Daniel el 2026-10-13 (si, me gusta).",
+  "images": [
+    "compass/images/m11-129-mapa.jpg",
+    "compass/images/m11-129-1.jpg"
+  ],
   "milestone": "m11",
   "notes": "",
   "order": 126,
@@ -51,5 +55,5 @@
   ],
   "test": "test_cumbre, test_dungeon_reach (cumbre_graph), test_walk_doors, test_drop_holes",
   "title": "D4, Intihuatana de la Cumbre",
-  "updated_at": "2026-10-13T22:52:47.991Z"
+  "updated_at": "2026-10-14T00:37:49.231Z"
 }
