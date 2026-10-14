@@ -5051,11 +5051,15 @@ Tras 11.162 (templo viejo borrado) quedaron sin uso las mallas de su decoración
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `chullpa`
 
-Daniel 2026-10-14 (playtest, Chullpa, Rellano): la pared agrietada ya llena el hueco (12.24), pero el nicho de atrás no tiene techo y la cámara cenital ve el cofre por encima del muro. Era el punto 3 de 11.137, resuelto con una tapa provisoria (NicheCap) que se sacó en 5eee5740 al llegar los tapones de 12.24. Regla para todas las mazmorras: lo que esconde una pared agrietada lleva techo (del color de las crestas) y el techo desaparece al romperse la pared.
+Daniel 2026-10-14 (playtest, Chullpa, Rellano): la pared agrietada ya llena el hueco (12.24), pero el nicho de atrás no tiene techo y la cámara cenital ve el cofre por encima del muro. Era el punto 3 de 11.137, resuelto con una tapa provisoria (NicheCap) que se sacó en 5eee5740 al llegar los tapones de 12.24. Regla para mazmorras y overworld: lo que esconde una pared agrietada lleva techo (del color de las crestas o del terreno) y el techo desaparece al romperse la pared.
 
-- [ ] Chullpa: techo sobre el nicho del Rellano que se va al romper la pared
+- [ ] Chullpa: techo sobre el nicho del Rellano en covers de su pared
 - [ ] Revisar las demás paredes agrietadas (Queñoa, Totora, Cumbre, templo) con el mismo criterio
 - [ ] Test: el nicho está tapado antes y destapado después de romper la pared
+- [ ] Overworld: techos sobre las muescas de risco y nichos detrás de paredes agrietadas (-eb)
+- [ ] CrackedWall.covers: oculta los techos al romperse
+
+**Notas:** CrackedWall.covers (fd): lista de nodos que se ven mientras la pared está entera y se ocultan al romperse (también al cargar rota). Cada nivel pone su techo y lo agrega a covers. Mazmorras: -43; overworld: -eb.
 
 **Capturas:** `compass/images/m11-164-20261014-033804.png`
 
