@@ -25,18 +25,19 @@
   "code": "12.26",
   "created_at": "2026-10-14T04:57:59.532Z",
   "description": "Daniel 2026-10-14 (por -5d): los ojos de la Queñoa (12.23) quedaron mucho mejor que el jefe final, así que se rediseña el look entero del jefe: cuerpo, ojo, párpados y manos. Primero bocetos de concepto para Daniel. El gameplay y la estructura de boss.gd no cambian: Body, Eye con las shape keys rendija/dilatada, Upper/LowerLid, manos con las shape keys GRIP y los anchors. 12.21 (ojo interruptor parecido al ojo del jefe) va después de esta.",
+  "done_at": "2026-10-14T05:41:11.499Z",
   "milestone": "m12",
   "notes": "Daniel 2026-10-14: dos formas. Fases 1-2 máscara de oro (boceto 3); al entrar a la fase 3, cinemática corta (grito, la máscara se agrieta y estalla) y queda el ojo orgánico corrupto (boceto 2) para la fase 3. Lo hace -5d entero, boss.gd incluido.",
   "order": 26,
   "priority": "medium",
   "refs": [],
   "size": "l",
-  "status": "review",
+  "status": "done",
   "tags": [
     "arte",
     "jefe"
   ],
   "test": "",
   "title": "Jefe final (Ojo): rediseño completo del look",
-  "updated_at": "2026-10-14T05:36:17.757Z"
+  "updated_at": "2026-10-14T05:41:11.499Z"
 }

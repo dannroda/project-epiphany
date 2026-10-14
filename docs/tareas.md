@@ -5016,7 +5016,7 @@ Playtest 2026-10-14 (probando la pelea del jefe final, 12.26): en la sala de lad
 
 **Capturas:** `compass/images/m11-161-20261014-023958.png`
 
-## M12 — Assets propios (Blender)  (15/27)
+## M12 — Assets propios (Blender)  (16/27)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -5527,9 +5527,9 @@ Pedido de -43 (playtest 2026-10-13): las paredes agrietadas de las mazmorras LA 
 
 Daniel 2026-10-14: con el logo en el menú principal, el ojo del logo va en el resto de lugares que usaban el ojo dibujado por código, pero solo el ojo. Hecho: art/logo/epiphany_eye.svg (solo el ojo: almendra, iris, pupila y contorno dorado, sin rayos, lágrimas ni letras) → assets/ui/logo/epiphany_eye.png; Eye de game_over, language_select y la carga (scene_flow) son TextureRect con esa textura. Game over y selección de idioma lo muestran tenue (alfa 0,35); el de carga parpadea achicando la escala. Se borraron title_eye.gd y loading_eye.gd. Test: test_every_eye_is_the_logo_eye.
 
-### 12.26 Jefe final (Ojo): rediseño completo del look · Revisión
+### 12.26 Jefe final (Ojo): rediseño completo del look · Hecho
 
-**Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `jefe`
+**Terminada:** 2026-10-14 · **Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `jefe`
 
 Daniel 2026-10-14 (por -5d): los ojos de la Queñoa (12.23) quedaron mucho mejor que el jefe final, así que se rediseña el look entero del jefe: cuerpo, ojo, párpados y manos. Primero bocetos de concepto para Daniel. El gameplay y la estructura de boss.gd no cambian: Body, Eye con las shape keys rendija/dilatada, Upper/LowerLid, manos con las shape keys GRIP y los anchors. 12.21 (ojo interruptor parecido al ojo del jefe) va después de esta.
 
