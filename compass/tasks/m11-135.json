@@ -13,12 +13,12 @@
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug",
     "player"
   ],
   "test": "",
   "title": "Al caer, el player se inclina hacia el piso",
-  "updated_at": "2026-10-14T02:27:22.855Z"
+  "updated_at": "2026-10-14T13:42:08.888Z"
 }
