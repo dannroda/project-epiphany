@@ -97,20 +97,29 @@ func _initialize() -> void:
 			continue
 		var at := _placed(piece, level)
 		decor.append([at.x, at.z, 0.8])
+	var eyes := []
+	for eye in level.find_children("*", "Node3D", true, false):
+		if eye.scene_file_path == "res://src/world/eye_switch.tscn":
+			var t := _xform(eye, level)
+			eyes.append({"x": t.origin.x, "z": t.origin.z, "dx": -t.basis.z.x, "dz": -t.basis.z.z})
 	var file := FileAccess.open(OUT, FileAccess.WRITE)
-	file.store_string(JSON.stringify({"origin": [lo.x, lo.y], "cell": 2.0, "rows": rows, "levels": levels, "fixed": fixed, "decor": decor, "cracked": cracked, "mouths": mouths, "posts": posts, "regions": regions}, "\t"))
+	file.store_string(JSON.stringify({"origin": [lo.x, lo.y], "cell": 2.0, "rows": rows, "levels": levels, "fixed": fixed, "decor": decor, "cracked": cracked, "mouths": mouths, "posts": posts, "eyes": eyes, "regions": regions}, "\t"))
 	print("export_terreno_overworld: %d × %d celdas, %d puntos fijos, %d de decoración, %d regiones" % [hi.x - lo.x + 1, hi.y - lo.y + 1, fixed.size(), decor.size(), regions.size()])
 	level.free()
 	quit()
 
 
 func _placed(node: Node3D, level: Node3D) -> Vector3:
+	return _xform(node, level).origin
+
+
+func _xform(node: Node3D, level: Node3D) -> Transform3D:
 	var at := node.transform
 	var parent := node.get_parent() as Node3D
 	while parent != level:
 		at = parent.transform * at
 		parent = parent.get_parent() as Node3D
-	return at.origin
+	return at
 
 
 ## Piso de una pieza que queda en el GridMap: el que más tiene alrededor.
