@@ -40,5 +40,6 @@ func _free_move(dir: Vector3, _delta: float) -> void:
 		blackboard.set_var(BB_PUSH_DIR, PushBlock.axis(dir))
 		dispatch("push")
 		return
-	if not player.velocity.is_zero_approx() and not player.aim.aiming and not holding_light:
-		player.model.look_at(player.global_position - player.velocity)
+	var flat := Vector3(player.velocity.x, 0.0, player.velocity.z)
+	if not flat.is_zero_approx() and not player.aim.aiming and not holding_light:
+		player.model.look_at(player.model.global_position - flat)
