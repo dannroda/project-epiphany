@@ -151,3 +151,39 @@ func test_dungeon_doors_are_read_once_and_follow_their_state() -> void:
 	at = minimap._doors.filter(func(mark: Array) -> bool: return mark[0] == door.global_position).front()
 	assert_eq(at[1], MapMark.Kind.DOOR_OPEN, "al abrirse, el minimapa lo muestra en el cuadro siguiente")
 	setup[1].reset()
+
+
+## Todo lo que se camina (el GridMap se copia aparte) y el agua salen en la foto (11.148: la quebrada salía como abismo).
+func test_the_photo_shows_the_ground_and_the_water() -> void:
+	var setup: Array = await _load("", "res://levels/overworld.tscn")
+	var tree: SceneTree = setup[0]
+	var missing: Array[String] = []
+	var sources: Array[Node] = tree.get_nodes_in_group(&"navmesh_source").filter(func(n: Node) -> bool: return not n is GridMap)
+	sources.append_array(tree.current_scene.find_children("*Water*", "VisualInstance3D", false, false))
+	for source in sources:
+		var visuals: Array[Node] = source.find_children("*", "VisualInstance3D", true, false)
+		if source is VisualInstance3D:
+			visuals.append(source)
+		for visual: VisualInstance3D in visuals:
+			if visual.visible and not visual.get_layer_mask_value(OverworldMap.MAP_LAYER):
+				missing.append(String(tree.current_scene.get_path_to(visual)))
+	assert_true(not sources.is_empty(), "hay suelo y agua")
+	assert_eq(missing.slice(0, 5), [], "%d piezas del suelo o del agua no salen en la foto" % missing.size())
+	setup[1].reset()
+
+
+## Lo que cambia y queda (el puente que sube) aparece en el minimapa: la foto se vuelve a sacar cuando terminó de moverse.
+func test_a_persistent_change_retakes_the_photo() -> void:
+	var setup: Array = await _load("", "res://levels/overworld.tscn")
+	var tree: SceneTree = setup[0]
+	var map := tree.current_scene.find_children("*", "OverworldMap", true, false)[0] as OverworldMap
+	var bridge := tree.current_scene.get_node(^"RavineBridge") as Node3D
+	assert_true(bridge.find_children("*", "VisualInstance3D", true, false).all(func(v: VisualInstance3D) -> bool: return v.get_layer_mask_value(OverworldMap.MAP_LAYER)), "el puente sale en la foto")
+	var taken := [false]
+	map.photo_requested.connect(func() -> void: taken[0] = true)
+	setup[1].set_flag(&"ow_ravine_bridge_eye", true)
+	await tree.create_timer(OverworldMap.RETAKE_DELAY * 0.5).timeout
+	assert_true(not taken[0], "espera a que termine de moverse")
+	await tree.create_timer(OverworldMap.RETAKE_DELAY).timeout
+	assert_true(taken[0], "y saca la foto de nuevo")
+	setup[1].reset()

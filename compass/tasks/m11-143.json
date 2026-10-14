@@ -8,18 +8,18 @@
     "compass/images/m11-143-20261013-230021.png"
   ],
   "milestone": "m11",
-  "notes": "",
+  "notes": "El halo era el AO de pantalla (sombra_la), que oscurecía hasta 5 m alrededor de árboles, cardones y bordes. sombra_la ahora exporta reach y max_radius; en el overworld reach = 1.5. El look de los demás niveles no cambia. Probar: meseta de cardones sobre el risco; queda la sombra de contacto, sin el halo difuso.",
   "order": 140,
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug",
     "overworld",
     "render"
   ],
-  "test": "",
+  "test": "tests/test_overworld.gd",
   "title": "Overworld: delineado/halo oscuro raro alrededor de árboles, cardones y bordes",
-  "updated_at": "2026-10-14T02:27:20.824Z"
+  "updated_at": "2026-10-14T03:26:52.749Z"
 }

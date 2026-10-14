@@ -3,12 +3,16 @@ extends Node
 ## Va en las escenas del overworld: el mapa de la zona y qué rectángulo del mundo (XZ) cubre. La imagen es una foto
 ## cenital ortográfica de `scenery` que se saca al abrir el mapa, así siempre muestra el layout y los assets actuales.
 
+signal photo_requested
+
 ## Capa de render que solo ve la cámara del mapa (player, enemigos y objetos quedan afuera de la foto).
 const MAP_LAYER := 20
 const PIXELS_PER_METER := 20.0
 const CAMERA_HEIGHT := 60.0
 ## Una malla del suelo copiada para la foto (en la capa del mapa).
 const MAP_PIECE := preload("res://src/world/map_piece.tscn")
+## Después de un cambio persistente (un flag), la foto se vuelve a sacar cuando terminó de moverse (el puente sube en 1,4 s).
+const RETAKE_DELAY := 2.0
 
 @export var display_name: String = ""
 @export var world_rect := Rect2(-20, -20, 40, 40)
@@ -19,6 +23,7 @@ const MAP_PIECE := preload("res://src/world/map_piece.tscn")
 @export var scenery: Array[Node3D] = []
 
 var texture: Texture2D
+var _retake_pending := false
 
 @onready var _viewport: SubViewport = $Snapshot
 @onready var _camera: Camera3D = $Snapshot/Camera
@@ -38,10 +43,12 @@ func _ready() -> void:
 	_camera.size = world_rect.size.y
 	_camera.far = CAMERA_HEIGHT * 2.0
 	texture = _viewport.get_texture()
+	GameState.flag_changed.connect(_on_flag_changed)
 
 
 ## Saca la foto en el próximo frame, sin el agujero del player (la cámara del juego está en pausa con el mapa abierto).
 func snapshot() -> void:
+	photo_requested.emit()
 	var camera := get_viewport().get_camera_3d()
 	var hole: Vector4 = camera.player_hole if camera is TopDownCamera else Vector4.ZERO
 	RenderingServer.global_shader_parameter_set(&"player_hole", Vector4.ZERO)
@@ -52,6 +59,16 @@ func snapshot() -> void:
 	if copied:
 		for piece in _grid_copy_root.get_children():
 			piece.queue_free()
+
+
+func _on_flag_changed(_id: StringName, _value: Variant) -> void:
+	if _retake_pending or not is_inside_tree():
+		return
+	_retake_pending = true
+	await get_tree().create_timer(RETAKE_DELAY).timeout
+	_retake_pending = false
+	if is_inside_tree():
+		snapshot()
 
 
 static func _add_to_map_layer(node: Node) -> void:

@@ -8,17 +8,17 @@
     "compass/images/m11-134-20261013-224604.png"
   ],
   "milestone": "m11",
-  "notes": "",
+  "notes": "Si una pared tapa a un jugador, la cámara gira hasta quedar cenital sobre el foco (overhead_time = 0.4 s, en el grupo Oclusión de TopDownCamera) y vuelve al ángulo normal cuando deja de taparlo. Ya no se abre el agujero. Probar: caminar detrás de un acantilado alto del overworld.",
   "order": 131,
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "camara",
     "mejora"
   ],
-  "test": "",
+  "test": "tests/test_player_hole.gd",
   "title": "Oclusión: reemplazar el agujero por cámara cenital sobre el player",
-  "updated_at": "2026-10-14T02:27:21.077Z"
+  "updated_at": "2026-10-14T03:26:53.195Z"
 }

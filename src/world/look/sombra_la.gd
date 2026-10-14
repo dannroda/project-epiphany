@@ -3,6 +3,10 @@ extends CompositorEffect
 ## AO de pantalla de Link's Awakening (RenderDoc): multiplica toda la escena HDR, no solo el ambiente.
 
 @export var strength := 1.0
+## Radio máximo de muestreo, en texeles del AO del juego (480 × 270).
+@export var max_radius := 30.0
+## Hasta qué distancia (m) un punto ocluye: más chico, menos halo de lo alto sobre el piso de abajo.
+@export var reach := 5.0
 @export var debug_view := false   # output the AO instead of the scene
 
 var rd: RenderingDevice
@@ -28,9 +32,10 @@ layout(push_constant, std430) uniform P {
 	mat4 inv_proj;
 	vec2 size;        // AO buffer size
 	float cot_half;   // cot(fov / 2)
-	float pad;
+	float reach;
 	vec2 game_texel;  // 1 / (480, 270): the game's AO buffer, which its radius is measured in
-	vec2 pad2;
+	float max_radius;
+	float pad2;
 } p;
 const vec2 KERNEL[4] = vec2[](vec2(0.0810819, 0.0192399), vec2(-0.207505, -0.139434),
 		vec2(0.149406, -0.563876), vec2(0.0471044, 0.748519));
@@ -48,7 +53,7 @@ void main() {
 	vec3 c = (l + r) * 0.5;
 	vec3 n = normalize(cross(r - l, d - u));
 	if (dot(n, -c) < 0.0) n = -n;
-	float rad = clamp(p.cot_half * 200.0 / max(-c.z, 1e-3), 1.0, 30.0);
+	float rad = clamp(p.cot_half * 200.0 / max(-c.z, 1e-3), 1.0, p.max_radius);
 	// 16 rotations, 4x4 interleaved (the game picks them from a table by pixel position).
 	int idx = (px.x & 3) * 4 + ((px.y & 3) ^ ((px.x >> 2) & 3));
 	float a = float((idx * 7) & 15) * 0.3926991;
@@ -59,7 +64,7 @@ void main() {
 	for (int i = 0; i < 4; i++) {
 		vec3 v = vpos(uv + KERNEL[i] * o) - c;
 		float dist = length(v);
-		if (dist < 5.0 && dist > 1e-4) sum += clamp(dot(n, v / dist) - 0.25, 0.0, 1.0);
+		if (dist < p.reach && dist > 1e-4) sum += clamp(dot(n, v / dist) - 0.25, 0.0, 1.0);
 	}
 	imageStore(ao_out, px, vec4(1.0 - 0.5 * clamp(sum * 0.25 * 5.0, 0.0, 1.0)));
 }
@@ -252,7 +257,7 @@ func _render_callback(_type: int, render_data: RenderData) -> void:
 		for c in 4:
 			for r in 4:
 				m.append(inv[c][r])
-		m.append_array([q.x, q.y, absf(proj[1][1]), 0.0, 1.0 / 480.0, 1.0 / 270.0, 0.0, 0.0])   # cot(fov/2); Godot's RD projection may carry a Y flip
+		m.append_array([q.x, q.y, absf(proj[1][1]), reach, 1.0 / 480.0, 1.0 / 270.0, max_radius, 0.0])   # cot(fov/2); Godot's RD projection may carry a Y flip
 		_dispatch(p_ao, sh_ao, [_sampler_uniform(0, sampler_nearest, buffers.get_depth_layer(view)), _image_uniform(1, tex["raw"])],
 				m.to_byte_array(), q)
 		_dispatch(p_box, sh_box, [_sampler_uniform(0, sampler_nearest, tex["raw"]), _image_uniform(1, tex["box"])],
