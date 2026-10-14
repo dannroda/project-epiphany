@@ -5211,7 +5211,7 @@ Playtest 2026-10-14 (11.137, Chullpa): en salas que no llenan su rectángulo (pa
 
 **Relacionadas:** 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista
 
-## M12 — Assets propios (Blender)  (17/29)
+## M12 — Assets propios (Blender)  (17/30)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -5652,6 +5652,8 @@ Daniel (2026-10-13): la Chullpa real tiene la cámara vieja; el test LA (debug/l
 
 **Notas:** Sesión: arte (-11). Diseño (-43) revisa que el juego no cambie.
 
+**Relacionadas:** 12.30 Templo: salas que se vean bien para grabar
+
 ### Totora (D3) en estilo Link's Awakening y su entrada · En curso
 
 **Prioridad:** media · **Tamaño:** M · **Etiquetas:** `arte`, `mazmorra`
@@ -5769,6 +5771,16 @@ Daniel 2026-10-14 (playtest, cueva de las bombas): el muro de práctica (CavePra
 **Capturas:** `compass/images/m12-29-20261014-034608.png`
 
 **Relacionadas:** 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la); 11.164 Lo que esconde una pared agrietada no se ve desde arriba; 11.166 Santuario con una sola entrada: su muro agrietado
+
+### 12.30 Templo: salas que se vean bien para grabar · Pendiente
+
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `templo`
+
+Daniel (2026-10-14) quiere grabar el templo completo y así no se puede: 1) cada puerta tiene alrededor una U de cubitos grises sueltos (resto del kit gris), fuera de estilo; 2) las puertas este y oeste dan a un vacío ocre plano y el corte de la pared muestra dientes negros fuera de la sala; 3) en las esquinas de arriba las puntas de las paredes inclinadas sobresalen en tiras; 4) abajo una franja oscura tapa la pared sur. Recorrer todas las salas del templo con el escenario templo_video y dejarlas al nivel de la Chullpa y la Queñoa.
+
+**Capturas:** `compass/images/m12-30-20261014-153143.png`
+
+**Relacionadas:** Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 

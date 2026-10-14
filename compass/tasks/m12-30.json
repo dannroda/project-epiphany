@@ -1,0 +1,30 @@
+{
+  "assignee": "project-epiphany-5d",
+  "checklist": [],
+  "code": "12.30",
+  "created_at": "2026-10-14T18:31:43.089Z",
+  "description": "Daniel (2026-10-14) quiere grabar el templo completo y así no se puede: 1) cada puerta tiene alrededor una U de cubitos grises sueltos (resto del kit gris), fuera de estilo; 2) las puertas este y oeste dan a un vacío ocre plano y el corte de la pared muestra dientes negros fuera de la sala; 3) en las esquinas de arriba las puntas de las paredes inclinadas sobresalen en tiras; 4) abajo una franja oscura tapa la pared sur. Recorrer todas las salas del templo con el escenario templo_video y dejarlas al nivel de la Chullpa y la Queñoa.",
+  "images": [
+    "compass/images/m12-30-20261014-153143.png"
+  ],
+  "links": [
+    {
+      "task": "m12-18",
+      "type": "related"
+    }
+  ],
+  "milestone": "m12",
+  "notes": "",
+  "order": 30,
+  "priority": "high",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "arte",
+    "templo"
+  ],
+  "test": "",
+  "title": "Templo: salas que se vean bien para grabar",
+  "updated_at": "2026-10-14T18:31:43.764Z"
+}
