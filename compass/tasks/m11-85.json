@@ -2,17 +2,17 @@
   "checklist": [
     {
       "detail": "`@export var tree_state` en AttackData; MeleeBehavior con un solo `attack` o avanzar el combo de verdad.",
-      "done": false,
+      "done": true,
       "text": "Animación desde AttackData"
     },
     {
       "detail": "Enum en BossAttack o rama `_:` con push_error; caso explícito `&\"orb\"`.",
-      "done": false,
+      "done": true,
       "text": "Ids de ataque del jefe"
     },
     {
       "detail": "`add_transition(anystate(), …, guard)` con un guard común, o `@export var interruptible` en PlayerState.",
-      "done": false,
+      "done": true,
       "text": "Interrupciones con anystate"
     }
   ],
@@ -28,17 +28,17 @@
     "player/state_machine.gd"
   ],
   "milestone": "m11",
-  "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).",
+  "notes": "Hecho (fd, 2026-10-14): (1) AttackData.tree_state (entrada de AttackType: Slash, ShieldThrust); attacking.gd la usa en vez de elegir por is_blocking; MeleeBehavior tiene un solo attack (el combo nunca avanzaba); test_items › test_player_attacks_play_their_own_animation revisa que la entrada exista y reproduzca la animación del AttackData. (2) BossHand.perform con rama _: push_error; Boss.perform_chosen con caso explícito ORB y push_error si no; test_boss › test_unknown_eye_attack_does_nothing. (3) PlayerState.follows_room_transition y can_be_grabbed (en player.tscn: no siguen el cruce Transition, Pushing, ItemGet, Grabbed, Dead, Spirit; no se agarran los mismos menos Pushing) con transiciones desde anystate; test_player › test_room_transition_and_grab_come_from_each_state.",
   "order": 82,
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "combate",
     "jefe"
   ],
-  "test": "Un BossAttack con id desconocido da push_error; un estado nuevo del player sigue la transición de sala sin tocar listas.",
+  "test": "tests/test_items.gd",
   "title": "Combate y HSM: casos que fallan en silencio",
-  "updated_at": "2026-10-12T00:19:53.699Z"
+  "updated_at": "2026-10-14T14:24:27.006Z"
 }

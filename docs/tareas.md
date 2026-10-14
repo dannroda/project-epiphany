@@ -3969,7 +3969,7 @@ El pozo (`pit.gd:26`) y el agarre del jefe (`boss_hand.gd` ~353) llaman a `healt
 
 **Relacionadas:** 13.7 Enemigos y jefe con varios objetivos
 
-### 11.83 Un solo camino para spawnear proyectiles, bombas y pickups · Pendiente
+### 11.83 Un solo camino para spawnear proyectiles, bombas y pickups · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `arquitectura`
 
@@ -4015,16 +4015,16 @@ La lógica de ítems se escapa del ItemBehavior al FSM del player: `_try_item` p
 
 Tres puntos que no dan error cuando algo no cuadra: (1) el ataque melee elige la animación con un bool (Slash/ShieldThrust) e ignora `AttackData.animation`, que solo se usa para la duración: un arma nueva desincroniza hitbox y animación; el combo de MeleeBehavior tiene una sola entrada y siempre se usa `get_attack(0)`. (2) Los ataques del jefe se despachan por id en `match` sin default: un .tres con id nuevo o mal escrito no hace nada (mano) o dispara un orbe (ojo). (3) Los estados interrumpibles por `transition` y `grabbed` están en dos listas a mano en state_machine.gd: un estado nuevo que falte se queda atrás en el cambio de sala.
 
-- [ ] Animación desde AttackData
+- [x] Animación desde AttackData
   `@export var tree_state` en AttackData; MeleeBehavior con un solo `attack` o avanzar el combo de verdad.
-- [ ] Ids de ataque del jefe
+- [x] Ids de ataque del jefe
   Enum en BossAttack o rama `_:` con push_error; caso explícito `&"orb"`.
-- [ ] Interrupciones con anystate
+- [x] Interrupciones con anystate
   `add_transition(anystate(), …, guard)` con un guard común, o `@export var interruptible` en PlayerState.
 
-**Prueba:** Un BossAttack con id desconocido da push_error; un estado nuevo del player sigue la transición de sala sin tocar listas.
+**Prueba:** tests/test_items.gd
 
-**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+**Notas:** Hecho (fd, 2026-10-14): (1) AttackData.tree_state (entrada de AttackType: Slash, ShieldThrust); attacking.gd la usa en vez de elegir por is_blocking; MeleeBehavior tiene un solo attack (el combo nunca avanzaba); test_items › test_player_attacks_play_their_own_animation revisa que la entrada exista y reproduzca la animación del AttackData. (2) BossHand.perform con rama _: push_error; Boss.perform_chosen con caso explícito ORB y push_error si no; test_boss › test_unknown_eye_attack_does_nothing. (3) PlayerState.follows_room_transition y can_be_grabbed (en player.tscn: no siguen el cruce Transition, Pushing, ItemGet, Grabbed, Dead, Spirit; no se agarran los mismos menos Pushing) con transiciones desde anystate; test_player › test_room_transition_and_grab_come_from_each_state.
 
 **Archivos:** `player/states/attacking.gd`, `src/items/behaviors/melee_behavior.gd`, `src/combat/attack_data.gd`, `src/entities/boss/boss.gd`, `src/entities/boss/boss_hand.gd`, `player/state_machine.gd`
 
