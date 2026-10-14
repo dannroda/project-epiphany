@@ -38,6 +38,8 @@ func _weight(entry: DropEntry) -> float:
 
 ## `near` es cualquier nodo del nivel: el pickup cuelga de Spawns.root.
 func drop_at(position: Vector3, near: Node, rng: RandomNumberGenerator = null) -> Pickup:
+	if not is_instance_valid(near) or not near.is_inside_tree():
+		return null
 	if rng == null:
 		rng = RandomNumberGenerator.new()
 	var entry := roll(rng)
