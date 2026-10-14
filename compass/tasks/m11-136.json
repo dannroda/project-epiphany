@@ -8,17 +8,17 @@
     "compass/images/m11-136-20261013-224757.png"
   ],
   "milestone": "m11",
-  "notes": "",
+  "notes": "Hecho: EntradaGate había quedado en la celda de piso delante del corte de la escalera (el horneado LA corre las paredes y no las rejas). Va en la boca del corte (x 2.9), dentro del marco; test_walk_doors y test_chullpa pasan.",
   "order": 133,
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug",
     "chullpa"
   ],
-  "test": "",
+  "test": "tests/test_walk_doors.gd",
   "title": "Chullpa: la reja de la entrada queda fuera de la pared",
-  "updated_at": "2026-10-14T02:27:19.279Z"
+  "updated_at": "2026-10-14T03:27:37.452Z"
 }

@@ -4718,11 +4718,15 @@ Playtest 2026-10-13: cada vez que el player cae (por un borde), el modelo se inc
 
 **Capturas:** `compass/images/m11-135-20261013-224716.png`
 
-### 11.136 Chullpa: la reja de la entrada queda fuera de la pared · Pendiente
+### 11.136 Chullpa: la reja de la entrada queda fuera de la pared · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `chullpa`
 
 Playtest 2026-10-13: en la sala de entrada de la primera mazmorra (Chullpa), la reja/puerta de barrotes aparece desplazada hacia afuera del hueco de la pared (flota junto a la abertura, en vez de estar dentro del marco). Revisar la posición de la puerta respecto a las paredes LA horneadas.
+
+**Prueba:** tests/test_walk_doors.gd
+
+**Notas:** Hecho: EntradaGate había quedado en la celda de piso delante del corte de la escalera (el horneado LA corre las paredes y no las rejas). Va en la boca del corte (x 2.9), dentro del marco; test_walk_doors y test_chullpa pasan.
 
 **Capturas:** `compass/images/m11-136-20261013-224757.png`
 
@@ -4800,13 +4804,17 @@ Playtest 2026-10-13: en el overworld (meseta con cardones y árboles, sobre un r
 
 **Capturas:** `compass/images/m11-143-20261013-230021.png`
 
-### 11.144 Queñoa S1 (Raíces): reja fuera de la pared y puerta con llave detrás de una reja de puzzle · Pendiente
+### 11.144 Queñoa S1 (Raíces): reja fuera de la pared y puerta con llave detrás de una reja de puzzle · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `quenoa`, `diseño`
 
 Playtest 2026-10-13, Queñoa piso S1 Roots, salida este de las Raíces a la Sala de los ojos:
 1) La reja (RaicesGate, la que abre el ojo con tiempo) queda afuera del hueco de la pared, igual que la de la Chullpa (11.136).
 2) Diseño: no tiene sentido que una puerta bloqueada por un puzzle (reja del ojo con tiempo + saltos con pluma) además pida llave. Elegir una sola cerradura: o la reja del puzzle o la puerta con llave, y mover la otra (actualizar quenoa_graph.tres y el GDD §8c; test_dungeon_reach).
+
+**Prueba:** tests/test_quenoa.gd
+
+**Notas:** Hecho (Daniel eligió quedarse con la reja del puzzle): RaicesLocked no está; RaicesGate pasa a la cara de las Raíces del paso LA (x 25.4), donde se ve y no queda afuera. La llave chica del nicho del primer ojo sobraba: ahora es un cofre con 10 flechas (RootArrowChest, flag qv_root_arrow_chest). Dos llaves para dos puertas. quenoa_graph, flag_registry, GDD §8c; test_dungeon_reach, test_walk_doors, test_quenoa.
 
 **Capturas:** `compass/images/m11-144-20261013-230258.png`
 
