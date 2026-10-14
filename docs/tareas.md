@@ -4694,7 +4694,7 @@ Playtest 2026-10-13: dentro de las cuevas del overworld los enemigos no se mueve
 
 **Notas:** Causa: las cinco cuevas del overworld no tenían NavigationRegion3D, así que el NavigationAgent3D de los enemigos nunca tenía camino. Cada cueva tiene ahora su navmesh (levels/nav/<cueva>_navmesh.tres, horneada con tools/bake_overworld_nav.gd -- <cueva>). El esqueleto de la cueva de las bombas arranca pegado a un pilar: desde la entrada no ve al player hasta que se le acerca (normal).
 
-### 11.133 Vasija chica cargada no se ve con el x-ray · Pendiente
+### 11.133 Vasija chica cargada no se ve con el x-ray · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`
 
@@ -4702,11 +4702,15 @@ Playtest 2026-10-13: al levantar una vasija chica, cuando el player queda tapado
 
 **Capturas:** `compass/images/m11-133-20261013-223150.png`
 
-### 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player · Pendiente
+### 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-eb · **Etiquetas:** `camara`, `mejora`
 
 Playtest 2026-10-13 (mejora, no bug): cuando el player queda detrás de un acantilado/pared y hoy se aplica el agujero (dither alrededor del player), en vez de eso rotar la cámara hasta quedar encima del player (cenital) mientras dure la oclusión, y volver al ángulo normal al salir. No cambia la cámara del resto del juego: solo en los casos donde hoy se usa el agujero.
+
+**Prueba:** tests/test_player_hole.gd
+
+**Notas:** Si una pared tapa a un jugador, la cámara gira hasta quedar cenital sobre el foco (overhead_time = 0.4 s, en el grupo Oclusión de TopDownCamera) y vuelve al ángulo normal cuando deja de taparlo. Ya no se abre el agujero. Probar: caminar detrás de un acantilado alto del overworld.
 
 **Capturas:** `compass/images/m11-134-20261013-224604.png`
 
@@ -4761,11 +4765,15 @@ Playtest 2026-10-13: en la Chullpa hay un cofre sobre una plataforma/pilar en un
 
 **Capturas:** `compass/images/m11-139-20261013-225053.png`
 
-### 11.140 Overworld (Lagoon): z-fighting entre el pasto y el camino de tierra · Pendiente
+### 11.140 Overworld (Lagoon): z-fighting entre el pasto y el camino de tierra · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`, `overworld`
 
 Playtest 2026-10-13: en la zona Lagoon, arriba de la escalera de piedra, el camino de tierra y el pasto se pisan (z-fighting): franjas de tierra que parpadean sobre el pasto. Separar las capas (offset/decal/render priority) o unificar el terreno.
+
+**Prueba:** tests/test_overworld.gd
+
+**Notas:** Los caminos de las terrazas altas quedan 2 cm sobre la tapa (PATH_LIFT en build_terreno_organico.py). Cuando el contorno del camino tocaba el borde, la tapa no le abría el agujero y las dos superficies quedaban en el mismo plano. Probar: Laguna, arriba de la escalera de piedra (-47, 23); la tierra no debe parpadear sobre el pasto.
 
 **Capturas:** `compass/images/m11-140-20261013-225351.png`
 
@@ -4796,11 +4804,15 @@ Playtest 2026-10-13: en la pestaña Mapa del menú de pausa, LT y RT mueven el m
 
 **Notas:** LT/RT son ejes del joystick ligados a map_floor_up/down (cambiar de piso en el mapa de una mazmorra); cada movimiento del gatillo pasado el umbral llegaba como apretado, así que un gatillo analógico saltaba varios pisos según el control. Ahora cuenta una vez por apretón hasta soltarlo. Pendiente con Daniel: si además quiere cambiar de piso con la cruceta.
 
-### 11.143 Overworld: delineado/halo oscuro raro alrededor de árboles, cardones y bordes · Pendiente
+### 11.143 Overworld: delineado/halo oscuro raro alrededor de árboles, cardones y bordes · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`, `overworld`, `render`
 
 Playtest 2026-10-13: en el overworld (meseta con cardones y árboles, sobre un risco) aparece un delineado raro: un halo oscuro difuso alrededor de los árboles, cardones y el borde del risco, que no corresponde a una sombra. Revisar SSAO/SSIL, el outline o la niebla/tinte de profundidad (puede venir del cambio de altura entre terrazas).
+
+**Prueba:** tests/test_overworld.gd
+
+**Notas:** El halo era el AO de pantalla (sombra_la), que oscurecía hasta 5 m alrededor de árboles, cardones y bordes. sombra_la ahora exporta reach y max_radius; en el overworld reach = 1.5. El look de los demás niveles no cambia. Probar: meseta de cardones sobre el risco; queda la sombra de contacto, sin el halo difuso.
 
 **Capturas:** `compass/images/m11-143-20261013-230021.png`
 
@@ -4867,14 +4879,18 @@ Playtest 2026-10-13 (con sandalias y pluma): en la zona de la captura (tierra co
 
 **Relacionadas:** 11.131 Pozo junto a la Chullpa: caer sin bombas deja softlock
 
-### 11.148 Minimapa del overworld desactualizado (la quebrada sale como abismo negro) · Pendiente
+### 11.148 Minimapa del overworld desactualizado (la quebrada sale como abismo negro) · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`, `overworld`, `ui`
 
 Playtest 2026-10-13: en Ravine el minimapa (foto cenital del overworld) muestra la quebrada como un abismo negro, pero en el juego ahora es un río. La foto no se regeneró después de los últimos cambios de terreno. Regenerarla y, si se puede, que un test compare su fecha/huella con la del terreno para que no vuelva a quedar vieja.
 
-- [ ] Regenerar la foto cenital del overworld con el terreno actual (la quebrada como río).
-- [ ] Lo que se activa tiene que aparecer en el minimapa: el puente de la quebrada una vez subido (la foto es estática y se saca con el puente abajo). Dibujarlo encima como marca/overlay según su estado, igual con otros cambios persistentes (paredes rotas, etc.).
+- [x] Regenerar la foto cenital del overworld con el terreno actual (la quebrada como río).
+- [x] Lo que se activa tiene que aparecer en el minimapa: el puente de la quebrada una vez subido (la foto es estática y se saca con el puente abajo). Dibujarlo encima como marca/overlay según su estado, igual con otros cambios persistentes (paredes rotas, etc.).
+
+**Prueba:** tests/test_minimap.gd
+
+**Notas:** La foto del minimapa es en vivo (OverworldMap fotografía el escenario en la capa 20). Faltaban el agua de la quebrada, las escalinatas, el puente, las rejas, la torre y las paredes rotas, y ahora están. Cuando cambia un flag persistente, la foto se vuelve a sacar a los 2 s, así que el puente subido o una pared rota aparecen solos. Probar: ver la quebrada en el minimapa, subir el puente y volver a mirarlo.
 
 **Capturas:** `compass/images/m11-148-20261013-232758.png`, `compass/images/m11-148-20261013-232828.png`
 

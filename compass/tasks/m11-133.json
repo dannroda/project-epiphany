@@ -13,11 +13,11 @@
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug"
   ],
   "test": "",
   "title": "Vasija chica cargada no se ve con el x-ray",
-  "updated_at": "2026-10-14T02:27:22.606Z"
+  "updated_at": "2026-10-14T03:29:28.818Z"
 }
