@@ -829,7 +829,62 @@ def cracked_walls(collection, holes, rail):
 		bpy.data.meshes.remove(mesh)
 		jamb.bm.free()
 	terrain.fixed = set(terrain.bm.faces)
-	return terrain, plugs
+	return terrain, plugs + list(niche_lids(walls, closed, collection).values())
+
+
+## Lo que la tapa de un nicho sale sobre el borde de su hueco (tapa el canto de pasto y su faldón) y cuánto la levanta.
+NICHE_LID = (0.12, 0.02)
+
+
+def _niche(c, r, low):
+	"""Las celdas bajas encerradas del otro lado de la pared (c, r): el vecino de su nivel que no da a una zona abierta."""
+	for dc, dr in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+		start = (c + dc, r + dr)
+		seen, todo = {start}, [start]
+		while todo and len(seen) <= 4:
+			cc, rr = todo.pop()
+			if not (0 <= cc < GW and 0 <= rr < GH) or LEVELS[rr][cc] != low:
+				seen = set()
+				break
+			for n in ((cc + 1, rr), (cc - 1, rr), (cc, rr + 1), (cc, rr - 1)):
+				if n != (c, r) and n not in seen and 0 <= n[0] < GW and 0 <= n[1] < GH and LEVELS[n[1]][n[0]] == low:
+					seen.add(n)
+					todo.append(n)
+		if seen and len(seen) <= 4:
+			return seen
+	return set()
+
+
+def niche_lids(walls, closed, collection):
+	"""Tapa del color de la terraza sobre el nicho que esconde cada pared, en el marco de la pared (11.164): el juego la
+	oculta al romperse. Las paredes que dan a una boca o a terreno alto no tienen nicho."""
+	grow, lift = NICHE_LID
+	lids = {}
+	for wall in walls:
+		c, r = round(wall["x"] / CELL) - X0, round(wall["z"] / CELL) - Z0
+		cells = _niche(c, r, wall["low"])
+		if not cells:
+			continue
+		lid = epi.Piece(33)
+		z = closed[r][c] * TOP + lift
+		faces = []
+		for cc, rr in cells:
+			at = cell_center(cc, rr)
+			x0, x1, y0, y1 = at.x - CELL / 2, at.x + CELL / 2, at.y - CELL / 2, at.y + CELL / 2
+			x0 -= 0 if (cc - 1, rr) in cells else grow
+			x1 += 0 if (cc + 1, rr) in cells else grow
+			y1 += 0 if (cc, rr - 1) in cells else grow
+			y0 -= 0 if (cc, rr + 1) in cells else grow
+			v = [lid.bm.verts.new((x, y, z)) for x, y in ((x0, y0), (x1, y0), (x1, y1), (x0, y1))]
+			faces.append(lid.bm.faces.new(v))
+		for f in faces:
+			f.normal_update()
+		paint_role(lid, faces, "cap")
+		lid.fixed.update(lid.bm.faces)
+		bmesh.ops.transform(lid.bm, matrix=Matrix.Translation(Vector((0.0, 0.0, -wall["low"] * TOP))) @ _to_wall(wall), verts=lid.bm.verts)
+		lids[wall["name"]] = _build(lid, "tapa_" + wall["name"], "wall", collection)
+		lids[wall["name"]].location.z = -1000.0
+	return lids
 
 
 ## Vano de las bocas de cueva, como paso_puerta del templo: medio ancho abajo, medio ancho arriba y alto (m); el marco
