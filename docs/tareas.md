@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (95/159)
+## M11 — Pulido: contenido y feel  (95/160)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4749,7 +4749,7 @@ Playtest 2026-10-13, en la Chullpa (las tres cosas salen en la misma captura):
 
 **Capturas:** `compass/images/m11-137-20261013-224905.png`
 
-**Relacionadas:** 11.151 Totora 2P: se ve la sala del piso de abajo; 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la)
+**Relacionadas:** 11.151 Totora 2P: se ve la sala del piso de abajo; 11.164 Lo que esconde una pared agrietada no se ve desde arriba; 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la)
 
 ### 11.138 Chullpa sub-boss: asset para el cuadrado donde después se salta · Revisión
 
@@ -5046,6 +5046,20 @@ Quedan sin uso (no borro arte): las mallas de la decoración vieja (escombros, e
 **Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `limpieza`, `arte`
 
 Tras 11.162 (templo viejo borrado) quedaron sin uso las mallas de su decoración: escombros, estandarte, venas_doom, vasija_pedazos. Confirmar que nada las usa (ni builders de Blender) y borrarlas con su pieza en el build. La tablilla bow_hint queda (la usa la Queñoa).
+
+### 11.164 Lo que esconde una pared agrietada no se ve desde arriba · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `chullpa`
+
+Daniel 2026-10-14 (playtest, Chullpa, Rellano): la pared agrietada ya llena el hueco (12.24), pero el nicho de atrás no tiene techo y la cámara cenital ve el cofre por encima del muro. Era el punto 3 de 11.137, resuelto con una tapa provisoria (NicheCap) que se sacó en 5eee5740 al llegar los tapones de 12.24. Regla para todas las mazmorras: lo que esconde una pared agrietada lleva techo (del color de las crestas) y el techo desaparece al romperse la pared.
+
+- [ ] Chullpa: techo sobre el nicho del Rellano que se va al romper la pared
+- [ ] Revisar las demás paredes agrietadas (Queñoa, Totora, Cumbre, templo) con el mismo criterio
+- [ ] Test: el nicho está tapado antes y destapado después de romper la pared
+
+**Capturas:** `compass/images/m11-164-20261014-033804.png`
+
+**Relacionadas:** 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista; 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la)
 
 ## M12 — Assets propios (Blender)  (16/28)
 
@@ -5550,7 +5564,7 @@ Playtest 2026-10-13: el jefe de la Queñoa (Eyes of the Queñoa) y el sub-jefe (
 
 Pedido de -43 (playtest 2026-10-13): las paredes agrietadas de las mazmorras LA usan cracked_wall_templo y no encajan (sobresalen, cara de arriba negra, o no se ven). Hace falta un tapón que llene el paso LA: alto y ancho como el corte, inclinado como la pared, con la veta de su pared y grietas en las dos caras. la_walls lo coloca como las hojas de puerta. Estilos: chullpa, quenoa, totora, cumbre. Cuando estén las mallas, -43 cambia las instancias y revisa la colisión. -11 (-5d) elige el orden con Daniel frente a 12.23 y 11.138.
 
-**Relacionadas:** 11.141 Queñoa 2P (Canopy): símbolo azul sin sentido y puerta bloqueada invisible; 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista; 11.151 Totora 2P: se ve la sala del piso de abajo
+**Relacionadas:** 11.141 Queñoa 2P (Canopy): símbolo azul sin sentido y puerta bloqueada invisible; 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista; 11.151 Totora 2P: se ve la sala del piso de abajo; 11.164 Lo que esconde una pared agrietada no se ve desde arriba
 
 ### 12.25 El ojo del logo en game over, selección de idioma y carga · Revisión
 
@@ -6196,18 +6210,13 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 ### Revisión: lo listo para probar  (25/27 probadas)
 
-1. [ ] 11.130 Bocas de cueva talladas en el risco · En curso · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. 
-   No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. 
-   D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
-2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
-   El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
+1. [ ] 11.130 Bocas de cueva talladas en el risco · En curso · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
+2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player. El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
 3. [x] 11.111 Cactus, árboles y matas se cortan como el pasto · Hecho · anda
 4. [x] 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · Hecho · anda
 5. [x] 11.118 Sandalias: correr manteniendo y salto largo con la pluma · Hecho · anda
 6. [x] 11.24 Más secretos en el overworld · Hecho · anda
-7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente
-   si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell"
-   no hay asset correcto para la pared quebrable
+7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell" no hay asset correcto para la pared quebrable
 8. [x] 11.30 Ítem de D3: el gancho · Hecho · anda
 9. [x] 11.28 Atajos que se abren al volver · Hecho · anda — anda, pero no debería hacer un fade. Debería haber una animacion del player subiendo y bajando
 10. [x] 11.46 Jefe: game juice · Hecho · anda
