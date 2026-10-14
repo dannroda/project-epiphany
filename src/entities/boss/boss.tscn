@@ -28,6 +28,7 @@
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_corrupto_mano_izq.res" id="c_hand_l"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_corrupto_mano_der.res" id="c_hand_r"]
 [ext_resource type="Shader" path="res://src/entities/boss/ondas.gdshader" id="ondas"]
+[ext_resource type="Shader" path="res://src/world/vfx/esfera_energia.gdshader" id="esfera"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_eye"]
 size = Vector3(2.4, 3.8, 1.6)
@@ -35,10 +36,9 @@ size = Vector3(2.4, 3.8, 1.6)
 [sub_resource type="SphereShape3D" id="SphereShape3D_body"]
 radius = 2.2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_charge"]
-shading_mode = 0
-albedo_color = Color(0.55, 0.95, 1, 1)
-disable_fog = true
+[sub_resource type="ShaderMaterial" id="StandardMaterial3D_charge"]
+render_priority = 0
+shader = ExtResource("esfera")
 
 [sub_resource type="SphereMesh" id="SphereMesh_charge"]
 material = SubResource("StandardMaterial3D_charge")
