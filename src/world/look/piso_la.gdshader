@@ -19,11 +19,12 @@ uniform float crack_amount : hint_range(0.0, 1.0) = 0.15;
 uniform float roughness : hint_range(0.0, 1.0) = 0.5;
 uniform float specular : hint_range(0.0, 1.0) = 0.4;
 uniform float normal_strength = 0.6;
-// Parte de las losas que son tierra (sin junta ni bisel, más oscura) y ancho de los tablones (0: losas).
+// Parte de las losas que son tierra (sin junta ni bisel, más oscura) y ancho de los tablones (0: losas). Ancho y largo
+// tienen que dividir la celda de 2 m; cada fila va corrida medio tablón.
 uniform float earth : hint_range(0.0, 1.0) = 0.0;
 uniform float earth_shade = 0.8;
 uniform float plank_width = 0.0;
-uniform float plank_length = 1.7;
+uniform float plank_length = 2.0;
 // Color propio del piso sobre el de la paleta (alfa = cuánto).
 uniform vec4 floor_color : source_color = vec4(0.0);
 
@@ -83,7 +84,7 @@ vec3 stones(vec2 p) {
 vec3 cells(vec2 p) {
 	if (plank_width > 0.0) {
 		float row = floor(p.y / plank_width);
-		float x = p.x + hash1(vec2(row, 3.0)) * plank_length;
+		float x = p.x + mod(row, 2.0) * 0.5 * plank_length;
 		float k = floor(x / plank_length);
 		float fx = x - k * plank_length;
 		float fy = p.y - row * plank_width;
@@ -128,7 +129,7 @@ void fragment() {
 			shade *= 0.88 + 0.24 * value_noise(vec2(p.x * 0.9, p.y * 18.0) + s.yz * 5.0);
 		}
 		float crack_line = abs(value_noise(p * 2.2 + s.yz * 3.1) - 0.5);
-		float crack = dirt ? 0.0 : step(hash1(s.yz + 7.0), crack_amount) * smoothstep(0.015, 0.0, crack_line) * smoothstep(grout_width, grout_width + 0.15, edge);
+		float crack = dirt || plank_width > 0.0 ? 0.0 : step(hash1(s.yz + 7.0), crack_amount) * smoothstep(0.015, 0.0, crack_line) * smoothstep(grout_width, grout_width + 0.15, edge);
 		float grout = dirt ? 0.0 : 1.0 - smoothstep(grout_width * 0.5, grout_width, edge);
 		vec3 color = base * shade;
 		color *= 1.0 - crack * 0.5;

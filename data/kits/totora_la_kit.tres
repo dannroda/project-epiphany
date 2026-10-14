@@ -30,8 +30,8 @@ shader_parameter/specular = 0.4
 shader_parameter/normal_strength = null
 shader_parameter/earth = null
 shader_parameter/earth_shade = null
-shader_parameter/plank_width = 0.24
-shader_parameter/plank_length = 2.6
+shader_parameter/plank_width = 0.25
+shader_parameter/plank_length = 2.0
 shader_parameter/floor_color = Color(0.6, 0.55, 0.4, 1)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_pskht"]
