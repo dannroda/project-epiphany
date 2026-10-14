@@ -5008,7 +5008,7 @@ Daniel 2026-10-14 (por -5d): el overworld tiene que compartir el arte de las maz
 
 Daniel 2026-10-14: ayuda visual en el combate. Al clavarse tras el salto, al ser derribado y al levantarse los párpados del WatcherEye saltaban de golpe; ahora todo cambio de párpados es una animación desde donde están (LID_SNAP 0,15 s para los rápidos, 0,3 s al cerrar). Test: test_the_warden_gets_stuck_in_the_roots_and_falls_to_the_sword.
 
-## M12 — Assets propios (Blender)  (15/26)
+## M12 — Assets propios (Blender)  (15/27)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -5519,19 +5519,29 @@ Pedido de -43 (playtest 2026-10-13): las paredes agrietadas de las mazmorras LA 
 
 Daniel 2026-10-14: con el logo en el menú principal, el ojo del logo va en el resto de lugares que usaban el ojo dibujado por código, pero solo el ojo. Hecho: art/logo/epiphany_eye.svg (solo el ojo: almendra, iris, pupila y contorno dorado, sin rayos, lágrimas ni letras) → assets/ui/logo/epiphany_eye.png; Eye de game_over, language_select y la carga (scene_flow) son TextureRect con esa textura. Game over y selección de idioma lo muestran tenue (alfa 0,35); el de carga parpadea achicando la escala. Se borraron title_eye.gd y loading_eye.gd. Test: test_every_eye_is_the_logo_eye.
 
-### 12.26 Jefe final (Ojo): rediseño completo del look · Pendiente
+### 12.26 Jefe final (Ojo): rediseño completo del look · Revisión
 
 **Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `jefe`
 
 Daniel 2026-10-14 (por -5d): los ojos de la Queñoa (12.23) quedaron mucho mejor que el jefe final, así que se rediseña el look entero del jefe: cuerpo, ojo, párpados y manos. Primero bocetos de concepto para Daniel. El gameplay y la estructura de boss.gd no cambian: Body, Eye con las shape keys rendija/dilatada, Upper/LowerLid, manos con las shape keys GRIP y los anchors. 12.21 (ojo interruptor parecido al ojo del jefe) va después de esta.
 
 - [x] Bocetos de concepto para Daniel
-- [ ] Forma 1 (fases 1-2): máscara de oro (boceto 3) en build_jefe.py: cuerpo, ojo con shape keys rendija/dilatada, párpados, manos con GRIP
-- [ ] Forma 2 (fase 3): ojo orgánico corrupto (boceto 2: nudo de corteza con raíces, hueso y venas rojas), mismas piezas y shape keys
-- [ ] Transformación en boss.tscn (AnimationPlayer): el ojo grita, la máscara se agrieta y estalla, aparece la forma 2
-- [ ] boss.gd: en _on_phase3_entered reproduce la transformación con el jefe invulnerable y en pausa mientras dura
+- [x] Forma 1 (fases 1-2): máscara de oro (boceto 3) en build_jefe.py: cuerpo, ojo con shape keys rendija/dilatada, párpados, manos con GRIP
+- [x] Forma 2 (fase 3): ojo orgánico corrupto (boceto 2: nudo de corteza con raíces, hueso y venas rojas), mismas piezas y shape keys
+- [x] Transformación en boss.tscn (AnimationPlayer): el ojo grita, la máscara se agrieta y estalla, aparece la forma 2
+- [x] boss.gd: en _on_phase3_entered reproduce la transformación con el jefe invulnerable y en pausa mientras dura
 
 **Notas:** Daniel 2026-10-14: dos formas. Fases 1-2 máscara de oro (boceto 3); al entrar a la fase 3, cinemática corta (grito, la máscara se agrieta y estalla) y queda el ojo orgánico corrupto (boceto 2) para la fase 3. Lo hace -5d entero, boss.gd incluido.
+
+### 12.27 VFX mágicos con shaders y partículas (sin texturas) · Pendiente
+
+**Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `vfx`
+
+Daniel 2026-10-14 (por -5d), con referencias suyas (esferas de energía, anillos de fuego, círculos mágicos). Todo con shaders y partículas, sin texturas.
+
+- [ ] Portales: anillo brillante o círculo mágico con un pilar de luz
+- [ ] Orbe del jefe: esfera de energía en vez de la bola brillante simple
+- [ ] Otros efectos brillantes donde encajen
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 

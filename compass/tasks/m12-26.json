@@ -6,19 +6,19 @@
       "text": "Bocetos de concepto para Daniel"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Forma 1 (fases 1-2): máscara de oro (boceto 3) en build_jefe.py: cuerpo, ojo con shape keys rendija/dilatada, párpados, manos con GRIP"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Forma 2 (fase 3): ojo orgánico corrupto (boceto 2: nudo de corteza con raíces, hueso y venas rojas), mismas piezas y shape keys"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Transformación en boss.tscn (AnimationPlayer): el ojo grita, la máscara se agrieta y estalla, aparece la forma 2"
     },
     {
-      "done": false,
+      "done": true,
       "text": "boss.gd: en _on_phase3_entered reproduce la transformación con el jefe invulnerable y en pausa mientras dura"
     }
   ],
@@ -31,12 +31,12 @@
   "priority": "medium",
   "refs": [],
   "size": "l",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "arte",
     "jefe"
   ],
   "test": "",
   "title": "Jefe final (Ojo): rediseño completo del look",
-  "updated_at": "2026-10-14T05:04:42.039Z"
+  "updated_at": "2026-10-14T05:36:17.757Z"
 }
