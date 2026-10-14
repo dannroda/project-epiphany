@@ -24,11 +24,11 @@
       "section": "fuera-mvp"
     }
   ],
-  "status": "paused",
+  "status": "todo",
   "tags": [
     "online"
   ],
   "test": "Recorrer el templo en red: nada queda desincronizado (puertas, cofres, bloques, puente).",
   "title": "Mundo sincronizado",
-  "updated_at": "2026-10-14T00:53:57.685Z"
+  "updated_at": "2026-10-14T00:55:34.299Z"
 }

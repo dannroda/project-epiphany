@@ -26,7 +26,7 @@
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "paused",
+  "status": "todo",
   "tags": [
     "bug",
     "coop",
@@ -34,5 +34,5 @@
   ],
   "test": "El invitado aprieta B y LB/RB en el menú de ítems: solo afecta a su cursor; un cartel con `{item:bow}` muestra el botón de quien tiene el arco.",
   "title": "El pad del invitado maneja los menús de P1",
-  "updated_at": "2026-10-14T00:53:55.201Z"
+  "updated_at": "2026-10-14T00:55:31.783Z"
 }

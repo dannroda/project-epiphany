@@ -36,7 +36,7 @@
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "paused",
+  "status": "todo",
   "tags": [
     "online",
     "coop",
@@ -44,5 +44,5 @@
   ],
   "test": "Cambiar el pad de un player no cambia su índice ni su estado guardado; `guest_joined` salta una vez por invitado.",
   "title": "Identidad del player independiente del pad",
-  "updated_at": "2026-10-14T00:54:00.607Z"
+  "updated_at": "2026-10-14T00:55:37.212Z"
 }

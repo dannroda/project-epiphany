@@ -33,7 +33,7 @@
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "paused",
+  "status": "todo",
   "tags": [
     "online",
     "arquitectura",
@@ -41,5 +41,5 @@
   ],
   "test": "dead.gd e item_get.gd no referencian escenas de UI; la UI se abre desde listeners.",
   "title": "El gameplay emite intenciones y la UI escucha",
-  "updated_at": "2026-10-14T00:53:59.888Z"
+  "updated_at": "2026-10-14T00:55:36.498Z"
 }

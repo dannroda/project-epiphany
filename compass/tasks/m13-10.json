@@ -24,12 +24,12 @@
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "paused",
+  "status": "todo",
   "tags": [
     "bug",
     "coop"
   ],
   "test": "Con P2 en espíritu, P1 coge un contenedor: P2 sigue siendo espíritu y solo revive con P1 cerca.",
   "title": "Un espíritu revive al coger un contenedor de corazón",
-  "updated_at": "2026-10-14T00:53:54.791Z"
+  "updated_at": "2026-10-14T00:55:31.474Z"
 }

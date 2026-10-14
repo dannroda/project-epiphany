@@ -24,12 +24,12 @@
       "section": "fuera-mvp"
     }
   ],
-  "status": "paused",
+  "status": "todo",
   "tags": [
     "coop",
     "puzzles"
   ],
   "test": "Hay al menos tres puzzles que piden a los dos; en solo siguen siendo resolubles.",
   "title": "Puzzles cooperativos",
-  "updated_at": "2026-10-14T00:53:54.469Z"
+  "updated_at": "2026-10-14T00:55:31.072Z"
 }

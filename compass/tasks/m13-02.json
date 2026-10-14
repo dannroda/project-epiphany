@@ -35,12 +35,12 @@
       "section": "fuera-mvp"
     }
   ],
-  "status": "review",
+  "status": "paused",
   "tags": [
     "coop",
     "input"
   ],
   "test": "Con dos controles, cada uno mueve solo a su player; el P2 entra y sale con Start sin pausar el juego.",
   "title": "Input por jugador y unirse a la partida",
-  "updated_at": "2026-10-11T07:50:17.721Z"
+  "updated_at": "2026-10-14T00:55:38.333Z"
 }

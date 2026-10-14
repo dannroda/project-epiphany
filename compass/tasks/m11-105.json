@@ -30,12 +30,12 @@
   "priority": "low",
   "refs": [],
   "size": "m",
-  "status": "paused",
+  "status": "todo",
   "tags": [
     "diseno",
     "ui"
   ],
   "test": "",
   "title": "Repensar el tutorial",
-  "updated_at": "2026-10-14T00:53:44.578Z"
+  "updated_at": "2026-10-14T00:55:30.035Z"
 }

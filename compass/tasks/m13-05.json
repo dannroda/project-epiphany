@@ -24,12 +24,12 @@
       "section": "fuera-mvp"
     }
   ],
-  "status": "review",
+  "status": "paused",
   "tags": [
     "coop",
     "ui"
   ],
   "test": "Con dos players, cada uno ve sus corazones e ítems; al salir el P2 su panel desaparece.",
   "title": "HUD de dos jugadores",
-  "updated_at": "2026-10-11T07:50:19.271Z"
+  "updated_at": "2026-10-14T00:55:39.348Z"
 }
