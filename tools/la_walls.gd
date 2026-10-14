@@ -749,9 +749,20 @@ func _kit() -> MeshLibrary:
 		kit.set_item_navigation_mesh(id, kit.get_item_navigation_mesh(item))
 	var uid := ResourceLoader.get_resource_uid(_out_kit) if ResourceLoader.exists(_out_kit) else ResourceUID.INVALID_ID
 	ResourceSaver.save(kit, _out_kit)
-	if uid != ResourceUID.INVALID_ID:
-		ResourceSaver.set_uid(_out_kit, uid)
+	ResourceSaver.set_uid(_out_kit, uid if uid != ResourceUID.INVALID_ID else ResourceUID.create_id())
+	_pin_ext_uids(_out_kit)
 	return ResourceLoader.load(_out_kit, "", ResourceLoader.CACHE_MODE_REPLACE)
+
+
+## Sin el editor, el saver deja los ext_resource sin uid y el editor después reescribe el kit.
+func _pin_ext_uids(path: String) -> void:
+	var text := FileAccess.get_file_as_string(path)
+	var pattern := RegEx.create_from_string('\\[ext_resource type="([^"]+)" path="([^"]+)"')
+	for m in pattern.search_all(text):
+		var id := ResourceLoader.get_resource_uid(m.get_string(2))
+		if id != ResourceUID.INVALID_ID:
+			text = text.replace(m.get_string(), '[ext_resource type="%s" uid="%s" path="%s"' % [m.get_string(1), ResourceUID.id_to_text(id), m.get_string(2)])
+	FileAccess.open(path, FileAccess.WRITE).store_string(text)
 
 
 ## La pieza de hueco con el fondo (lo que está más abajo que HOLE_BOTTOM) pasado a `bottom_material`; con `fog`, una copia de

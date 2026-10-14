@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://src/world/dungeon_floor.gd" id="2_14otx"]
 [ext_resource type="Script" path="res://src/world/look/tono_la.gd" id="3_brl33"]
 [ext_resource type="Script" path="res://src/world/room.gd" id="4_q0gdl"]
-[ext_resource type="MeshLibrary" path="res://data/kits/cumbre_la_kit.tres" id="5_4jd4h"]
+[ext_resource type="MeshLibrary" uid="uid://cmbcau4lq23e8" path="res://data/kits/cumbre_la_kit.tres" id="5_4jd4h"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_source.tscn" id="5_ku7rw"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_receiver.tscn" id="6_4jevl"]
 [ext_resource type="Shader" path="res://src/world/look/borde_oscuro.gdshader" id="7_gxog7"]
