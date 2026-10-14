@@ -1,11 +1,48 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://src/entities/projectile.gd" id="1_projectile"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/orbe.res" id="2_orb"]
-[ext_resource type="Material" path="res://data/kits/materials/epiphany_glow.tres" id="3_glow"]
+[ext_resource type="Shader" path="res://src/world/vfx/esfera_energia.gdshader" id="2_esfera"]
 
 [sub_resource type="SphereShape3D" id="Shape"]
 radius = 0.2
+
+[sub_resource type="ShaderMaterial" id="Esfera"]
+render_priority = 0
+shader = ExtResource("2_esfera")
+
+[sub_resource type="SphereMesh" id="EsferaMesh"]
+material = SubResource("Esfera")
+radius = 0.24
+height = 0.48
+radial_segments = 24
+rings = 12
+
+[sub_resource type="ParticleProcessMaterial" id="Estela"]
+emission_shape = 1
+emission_sphere_radius = 0.15
+spread = 180.0
+initial_velocity_min = 0.1
+initial_velocity_max = 0.4
+gravity = Vector3(0, 0, 0)
+scale_min = 0.4
+scale_max = 1.0
+
+[sub_resource type="StandardMaterial3D" id="Mota"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+albedo_color = Color(0.45, 0.95, 1, 1)
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+disable_fog = true
+
+[sub_resource type="SphereMesh" id="MotaMesh"]
+material = SubResource("Mota")
+radius = 0.035
+height = 0.07
+radial_segments = 6
+rings = 3
 
 [node name="Projectile" type="Area3D"]
 collision_layer = 0
@@ -14,10 +51,16 @@ monitorable = false
 script = ExtResource("1_projectile")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0)
 cast_shadow = 0
-material_override = ExtResource("3_glow")
-mesh = ExtResource("2_orb")
+mesh = SubResource("EsferaMesh")
+
+[node name="Estela" type="GPUParticles3D" parent="."]
+amount = 24
+lifetime = 0.45
+local_coords = false
+visibility_aabb = AABB(-4, -4, -4, 8, 8, 8)
+process_material = SubResource("Estela")
+draw_pass_1 = SubResource("MotaMesh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("Shape")
