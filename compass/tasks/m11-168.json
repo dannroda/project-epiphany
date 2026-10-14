@@ -4,6 +4,7 @@
   "code": "11.168",
   "created_at": "2026-10-14T13:43:31.624Z",
   "description": "Daniel (playtest de 11.130 y 7.9): la entrada de la D4 en el overworld parece una cueva normal. Tiene que tener una entrada exagerada que se lea como mazmorra, como la Chullpa, la Queñoa y la Totora (torre, árbol, choza).",
+  "done_at": "2026-10-14T17:25:23.063Z",
   "links": [
     {
       "task": "m11-130",
@@ -16,12 +17,12 @@
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "review",
+  "status": "done",
   "tags": [
     "overworld",
     "arte"
   ],
   "test": "test_overworld › test_the_condor_frames_the_cumbre_door_and_lets_the_player_in: del Spawn_cumbre se entra a la Cumbre por la portada.",
   "title": "D4 (Cumbre): entrada exagerada como las otras mazmorras",
-  "updated_at": "2026-10-14T17:07:27.058Z"
+  "updated_at": "2026-10-14T17:25:23.063Z"
 }

@@ -4,6 +4,7 @@
   "code": "11.147",
   "created_at": "2026-10-14T02:27:14.712Z",
   "description": "Playtest 2026-10-13 (con sandalias y pluma): en la zona de la captura (tierra con cardones, al pie de los riscos escalonados y la terraza clara), si el player se cae al sector de arriba de la captura (el claro de tierra entre los riscos, arriba a la izquierda del enemigo) no puede salir: softlock. Igual que 11.131: todo pozo/terraza al que se pueda caer necesita salida sin ítems que el player pueda no tener.",
+  "done_at": "2026-10-14T17:32:12.896Z",
   "images": [
     "compass/images/m11-147-20261013-232715.png"
   ],
@@ -19,12 +20,12 @@
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "review",
+  "status": "done",
   "tags": [
     "bug",
     "overworld"
   ],
   "test": "Bajar por la escalinata nueva desde la Necrópolis (x 63, z -14) a la zanja y volver a subir. Caminar por los bordes de la zanja desde arriba: la baranda frena. Tests: test_the_risco_low_corridor_has_stairs_up, test_every_rail_faces_its_terrace.",
   "title": "Overworld: caer al sector de arriba (entre riscos, junto a la meseta clara) deja softlock",
-  "updated_at": "2026-10-14T03:03:38.229Z"
+  "updated_at": "2026-10-14T17:32:12.896Z"
 }

@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (96/166)
+## M11 — Pulido: contenido y feel  (107/166)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4668,9 +4668,9 @@ Mazmorra 4 (GDD §8e): el escudo espejo parte la Cumbre; el piso bajo sin él, e
 
 **Capturas:** `compass/images/m11-129-mapa.jpg`, `compass/images/m11-129-1.jpg`
 
-### 11.130 Bocas de cueva talladas en el risco · Revisión
+### 11.130 Bocas de cueva talladas en el risco · Hecho
 
-**Responsable:** sesión del overworld
+**Terminada:** 2026-10-14 · **Responsable:** sesión del overworld
 
 Daniel: las bocas de cueva del overworld (la entrada trasera de la ermita, la cueva de las bombas, el manantial) eran una caja marrón con una puerta negra pegada al risco. Pidió darles detalle como a las puertas, pero hecho con el terreno.
 
@@ -4699,9 +4699,9 @@ Playtest 2026-10-13: en el overworld, al lado del primer nivel cerca de la cueva
 
 **Relacionadas:** 11.147 Overworld: caer al sector de arriba (entre riscos, junto a la meseta clara) deja softlock
 
-### 11.132 Cuevas: los enemigos se quedan quietos · Revisión
+### 11.132 Cuevas: los enemigos se quedan quietos · Hecho
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`
+**Terminada:** 2026-10-14 · **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`
 
 Playtest 2026-10-13: dentro de las cuevas del overworld los enemigos no se mueven ni atacan, quedan quietos en su lugar. Revisar si la IA (LimboAI) arranca en esas escenas (navmesh, activación por sala, process_mode).
 
@@ -4709,13 +4709,13 @@ Playtest 2026-10-13: dentro de las cuevas del overworld los enemigos no se mueve
 
 **Notas:** Causa: las cinco cuevas del overworld no tenían NavigationRegion3D, así que el NavigationAgent3D de los enemigos nunca tenía camino. Cada cueva tiene ahora su navmesh (levels/nav/<cueva>_navmesh.tres, horneada con tools/bake_overworld_nav.gd -- <cueva>). El esqueleto de la cueva de las bombas arranca pegado a un pilar: desde la entrada no ve al player hasta que se le acerca (normal).
 
-### 11.133 Vasija chica cargada no se ve con el x-ray · Revisión
+### 11.133 Vasija chica cargada no se ve con el x-ray · En curso
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`
 
 Playtest 2026-10-13: al levantar una vasija chica, cuando el player queda tapado y se ve con el x-ray (silueta), la vasija que lleva encima no aparece. El objeto cargado debería verse también con el x-ray.
 
-**Capturas:** `compass/images/m11-133-20261013-223150.png`
+**Capturas:** `compass/images/m11-133-20261013-223150.png`, `compass/images/m11-133-20261014-143518.png`
 
 ### 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player · Hecho
 
@@ -4731,17 +4731,17 @@ Playtest 2026-10-13 (mejora, no bug): cuando el player queda detrás de un acant
 
 **Relacionadas:** 11.165 La cámara cenital se activa en bordes y muros bajos de una sala
 
-### 11.135 Al caer, el player se inclina hacia el piso · Revisión
+### 11.135 Al caer, el player se inclina hacia el piso · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`, `player`
+**Terminada:** 2026-10-14 · **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`, `player`
 
 Playtest 2026-10-13: cada vez que el player cae (por un borde), el modelo se inclina hacia adelante/abajo durante la caída. Debería caer parado (sin inclinar el cuerpo; revisar la animación/pose de caída o la rotación que se aplica en el aire).
 
 **Capturas:** `compass/images/m11-135-20261013-224716.png`
 
-### 11.136 Chullpa: la reja de la entrada queda fuera de la pared · Revisión
+### 11.136 Chullpa: la reja de la entrada queda fuera de la pared · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `chullpa`
+**Terminada:** 2026-10-14 · **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `chullpa`
 
 Playtest 2026-10-13: en la sala de entrada de la primera mazmorra (Chullpa), la reja/puerta de barrotes aparece desplazada hacia afuera del hueco de la pared (flota junto a la abertura, en vez de estar dentro del marco). Revisar la posición de la puerta respecto a las paredes LA horneadas.
 
@@ -4753,7 +4753,7 @@ Playtest 2026-10-13: en la sala de entrada de la primera mazmorra (Chullpa), la 
 
 **Relacionadas:** 11.144 Queñoa S1 (Raíces): reja fuera de la pared y puerta con llave detrás de una reja de puzzle
 
-### 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista · Revisión
+### 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista · En curso
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `chullpa`
 
@@ -4764,7 +4764,7 @@ Playtest 2026-10-13, en la Chullpa (las tres cosas salen en la misma captura):
 
 **Notas:** 2) y 3) hechos (provisorio hasta 12.24): RellanoCrackedWall queda al ras de la pared LA y de su altura; una tapa del color de las crestas (NicheCap, hija de Wall) cubre el nicho y desaparece al romper el muro. 1) pasó a 11.156 (arte).
 
-**Capturas:** `compass/images/m11-137-20261013-224905.png`
+**Capturas:** `compass/images/m11-137-20261013-224905.png`, `compass/images/m11-137-20261014-143652.png`, `compass/images/m11-137-20261014-143745.png`
 
 **Relacionadas:** 11.151 Totora 2P: se ve la sala del piso de abajo; 11.164 Lo que esconde una pared agrietada no se ve desde arriba; 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la)
 
@@ -4776,7 +4776,7 @@ Playtest 2026-10-13: en la sala del sub-boss (Guardian) de la primera mazmorra, 
 
 **Capturas:** `compass/images/m11-138-20261013-225004.png`
 
-### 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · Revisión
+### 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · En curso
 
 **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `chullpa`
 
@@ -4786,7 +4786,7 @@ Playtest 2026-10-13: en la Chullpa hay un cofre sobre una plataforma/pilar en un
 
 **Notas:** Hecho: era la isla del cofre de la pluma (1SE), pensada para salir solo cayendo (huecos de 2 baldosas). La isla se ensancha una baldosa al este: de ese lado queda un hueco de 1 baldosa, que la pluma cruza en los dos sentidos. Sin pluma se sigue llegando solo cayendo desde 2SE. GDD §8b; test_chullpa test_the_feather_island_is_one_tile_from_the_east_floor.
 
-**Capturas:** `compass/images/m11-139-20261013-225053.png`
+**Capturas:** `compass/images/m11-139-20261013-225053.png`, `compass/images/m11-139-20261014-144014.png`
 
 ### 11.140 Overworld (Lagoon): z-fighting entre el pasto y el camino de tierra · Hecho
 
@@ -4873,9 +4873,9 @@ Playtest 2026-10-13, Queñoa piso S1, sala con los arbustos y el pozo (probablem
 
 **Relacionadas:** 11.141 Queñoa 2P (Canopy): símbolo azul sin sentido y puerta bloqueada invisible
 
-### 11.146 Overworld: el ojo del puente a la Necrópolis no se ve ni se puede flechar · Revisión
+### 11.146 Overworld: el ojo del puente a la Necrópolis no se ve ni se puede flechar · Hecho
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`, `overworld`
+**Terminada:** 2026-10-14 · **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`, `overworld`
 
 Playtest 2026-10-13: con arco y pluma, junto al río no hay forma visible de llegar al otro lado para buscar las sandalias. Por diseño (GDD, cadena del overworld) se cruza con una flecha al ojo del puente de la quebrada, que baja/abre el puente a la Necrópolis. Revisar: que el ojo del puente exista y funcione, y que se vea/entienda desde donde llega el player (señalizarlo; quizá el player busca en otro tramo del río).
 
@@ -4889,9 +4889,9 @@ Playtest 2026-10-13: con arco y pluma, junto al río no hay forma visible de lle
 
 **Capturas:** `compass/images/m11-146-20261013-230751.png`, `compass/images/m11-146-20261013-231129.png`
 
-### 11.147 Overworld: caer al sector de arriba (entre riscos, junto a la meseta clara) deja softlock · Revisión
+### 11.147 Overworld: caer al sector de arriba (entre riscos, junto a la meseta clara) deja softlock · Hecho
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`, `overworld`
+**Terminada:** 2026-10-14 · **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`, `overworld`
 
 Playtest 2026-10-13 (con sandalias y pluma): en la zona de la captura (tierra con cardones, al pie de los riscos escalonados y la terraza clara), si el player se cae al sector de arriba de la captura (el claro de tierra entre los riscos, arriba a la izquierda del enemigo) no puede salir: softlock. Igual que 11.131: todo pozo/terraza al que se pueda caer necesita salida sin ítems que el player pueda no tener.
 
@@ -4985,9 +4985,9 @@ Playtest 2026-10-13, Totora (D3): en la sala del estanque con ojos (interruptore
 
 **Notas:** Hecho: dos vasijas de flechas (data/drops/pot_arrows.tres, 5 flechas si tiene el arco) en cada sala de Totora con un ojo: Juncal (esquina SO, cerca de donde se le tira al ojo) y Tejedores (franja este, de donde se tira por encima del agua). Y en cualquier DropTable las filas de munición (flechas, bombas) pesan 4 veces más con un cuarto o menos de lo que entra (drop_table.gd). Tests: test_totora test_every_eye_room_has_an_arrow_pot, test_drops test_arrows_drop_more_often_when_the_quiver_runs_low.
 
-### 11.155 Chullpa: la momia aparece en vez de saltar hacia el player; onda expansiva con shader vistoso · Revisión
+### 11.155 Chullpa: la momia aparece en vez de saltar hacia el player; onda expansiva con shader vistoso · Hecho
 
-**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `chullpa`, `jefe`
+**Terminada:** 2026-10-14 · **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `chullpa`, `jefe`
 
 Playtest 2026-10-13: en la pelea de la momia (MummyGuard), cuando 'salta' no se ve que siga al player: simplemente aparece en el punto de caída. Debería verse el salto (arco hacia la marca) siguiendo al player mientras apunta. Además, Daniel quiere que la onda expansiva del aterrizaje sea un shader vistoso (anillo con distorsión/brillo) en lugar del efecto actual.
 
@@ -5014,9 +5014,9 @@ Daniel 2026-10-14: las piezas de los kits LA quedan corridas media celda de la g
 
 Daniel 2026-10-14 (captura del piso de tablones, Queñoa/Totora): el patrón del piso se ve raro. piso_la.gdshader dibuja los tablones en espacio de mundo: cada fila arranca en un desfase al azar (las juntas no alternan), plank_length 1.7 no divide la celda de 2 m (el patrón no calza con los tiles) y crack_amount dibuja arcos oscuros sueltos sobre algunos tablones. Propuesta: filas alternadas a medio tablón, largos que dividan 2 m (1 o 2 m) y sacar o rehacer los arcos.
 
-### 11.159 Overworld con el arte de las mazmorras: brillo LA y más detalle en el piso · Revisión
+### 11.159 Overworld con el arte de las mazmorras: brillo LA y más detalle en el piso · Hecho
 
-**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `overworld`, `render`
+**Terminada:** 2026-10-14 · **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `overworld`, `render`
 
 Daniel 2026-10-14 (por -5d): el overworld tiene que compartir el arte de las mazmorras. Brillo: el look BrilloLA (lo eligió tras comparar overworld base vs brillo vs Chullpa). Piso: más detalle, hoy se ve plano. Plan: epiphany_outdoor.gdshader con palette_surface brillo y patrón de piso por swatch (losas, textura de tierra, variación de tono del pasto), más BrilloLA y glow en overworld.tscn. Coordinar con -eb antes de tocar overworld.tscn; prototipo en debug/tmp.
 
@@ -5065,9 +5065,9 @@ Quedan sin uso (no borro arte): las mallas de la decoración vieja (escombros, e
 
 Tras 11.162 (templo viejo borrado) quedaron sin uso las mallas de su decoración: escombros, estandarte, venas_doom, vasija_pedazos. Confirmar que nada las usa (ni builders de Blender) y borrarlas con su pieza en el build. La tablilla bow_hint queda (la usa la Queñoa).
 
-### 11.164 Lo que esconde una pared agrietada no se ve desde arriba · Revisión
+### 11.164 Lo que esconde una pared agrietada no se ve desde arriba · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `chullpa`
+**Terminada:** 2026-10-14 · **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `chullpa`
 
 Daniel 2026-10-14 (playtest, Chullpa, Rellano): la pared agrietada ya llena el hueco (12.24), pero el nicho de atrás no tiene techo y la cámara cenital ve el cofre por encima del muro. Era el punto 3 de 11.137, resuelto con una tapa provisoria (NicheCap) que se sacó en 5eee5740 al llegar los tapones de 12.24. Regla para mazmorras y overworld: lo que esconde una pared agrietada lleva techo (del color de las crestas o del terreno) y el techo desaparece al romperse la pared.
 
@@ -5088,9 +5088,9 @@ Mazmorras (-43): la_walls refresh arma el techo (<Pared>NicheRoof, hermano de la
 
 **Relacionadas:** 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista; 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la); 12.29 Muro agrietado LA de cueva (muro_agrietado_cueva_la)
 
-### 11.165 La cámara cenital se activa en bordes y muros bajos de una sala · Revisión
+### 11.165 La cámara cenital se activa en bordes y muros bajos de una sala · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`, `camara`
+**Terminada:** 2026-10-14 · **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`, `camara`
 
 Daniel 2026-10-14 (cueva de las bombas): acercándose a la pared de la sala o parándose delante de un muro bajo, la cámara sube a cenital (11.134). En una sala no tiene que pasar: está hecha para verse entera desde su cámara fija. Hecho: TopDownCamera solo busca oclusión cuando no hay sala (overworld); test_player_hole › test_rooms_never_turn_the_camera_overhead (busca en la cueva un lugar donde una pared lo taparía y comprueba que no sube).
 
@@ -5098,9 +5098,9 @@ Daniel 2026-10-14 (cueva de las bombas): acercándose a la pared de la sala o pa
 
 **Relacionadas:** 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player
 
-### 11.166 Santuario con una sola entrada: su muro agrietado · Revisión
+### 11.166 Santuario con una sola entrada: su muro agrietado · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `overworld`, `diseno`
+**Terminada:** 2026-10-14 · **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `overworld`, `diseno`
 
 Daniel 2026-10-14 (playtest de 11.130: no tiene sentido entrar a la ermita y que esté bloqueada solo por dentro): la cueva del santuario tiene una sola entrada, el muro agrietado del overworld. Se van la salida trasera y el atajo.
 
@@ -5155,7 +5155,7 @@ Daniel (playtest de 11.28): los atajos andan, pero al usarlos hay un fundido. De
 
 **Relacionadas:** 11.28 Atajos que se abren al volver
 
-## M12 — Assets propios (Blender)  (16/29)
+## M12 — Assets propios (Blender)  (17/29)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -5700,9 +5700,9 @@ Daniel 2026-10-14 (por -5d), con referencias suyas (esferas de energía, anillos
 
 Aparcado por Daniel (2026-10-14). El banco de pruebas del tajo de 12.27 sirve de punto de partida: src/world/vfx/demo_tajo.tscn y sword_trail.gdshader (medialuna aditiva, ancha en la hoja, borde interno deshilachado, fade al dejar de emitir). La versión original de Daniel del shader y la demo está en debug/tmp/fd/daniel_demo/ (sin versionar).
 
-### 12.29 Muro agrietado LA de cueva (muro_agrietado_cueva_la) · Revisión
+### 12.29 Muro agrietado LA de cueva (muro_agrietado_cueva_la) · Hecho
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `bug`
+**Terminada:** 2026-10-14 · **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `bug`
 
 Daniel 2026-10-14 (playtest, cueva de las bombas): el muro de práctica (CavePracticeWall) sigue siendo el cracked_wall.tscn de siempre, un bloque con tapa de pasto verde que sobresale de la pared de roca de la cueva. 12.24 hizo los tapones LA de chullpa, quenoa, totora y cumbre; las cuevas pasaron al look LA (cueva, 7298dfb5) después y quedaron sin el suyo. Falta el estilo cueva: tapón que llene el paso LA con la roca oscura y la cresta gris de la cueva, grietas en las dos caras, colocado por la_walls como en las mazmorras. Usos: bomb_cave (CavePracticeWall) y shrine_cave. Lo que esconde va tapado con covers (11.164).
 
@@ -6320,18 +6320,13 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 ### Revisión: lo listo para probar  (25/27 probadas)
 
-1. [ ] 11.130 Bocas de cueva talladas en el risco · Revisión · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. 
-   No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. 
-   D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
-2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
-   El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
+1. [ ] 11.130 Bocas de cueva talladas en el risco · Hecho · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
+2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player. El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
 3. [x] 11.111 Cactus, árboles y matas se cortan como el pasto · Hecho · anda
 4. [x] 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · Hecho · anda
 5. [x] 11.118 Sandalias: correr manteniendo y salto largo con la pluma · Hecho · anda
 6. [x] 11.24 Más secretos en el overworld · Hecho · anda
-7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente
-   si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell"
-   no hay asset correcto para la pared quebrable
+7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell" no hay asset correcto para la pared quebrable
 8. [x] 11.30 Ítem de D3: el gancho · Hecho · anda
 9. [x] 11.28 Atajos que se abren al volver · Hecho · anda — anda, pero no debería hacer un fade. Debería haber una animacion del player subiendo y bajando
 10. [x] 11.46 Jefe: game juice · Hecho · anda
@@ -6360,29 +6355,29 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 3. [x] 11.148 Minimapa del overworld desactualizado (la quebrada sale como abismo negro) · Hecho · anda — Es un poco tosco como aparece en el minimapa, pero es detalle menor.
 4. [x] 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player · Hecho · anda — Funciona, pero solo debería ser para las paredes. No para objetos/plantas, para eso está el x-ray. Y el movimiento es un poco nauseabundo.
 
-### Revisión del 14 de octubre: overworld, mazmorras y sistemas  (1/57 probadas)
+### Revisión del 14 de octubre: overworld, mazmorras y sistemas  (19/57 probadas)
 
 1. [x] 11.168 D4 (Cumbre): entrada exagerada como las otras mazmorras · Hecho · anda
-2. [ ] 11.130 Bocas de cueva talladas en el risco · Revisión
-3. [ ] 11.166 Santuario con una sola entrada: su muro agrietado · Revisión
-4. [ ] 11.146 Overworld: el ojo del puente a la Necrópolis no se ve ni se puede flechar · Revisión
-5. [ ] 11.147 Overworld: caer al sector de arriba (entre riscos, junto a la meseta clara) deja softlock · Revisión
-6. [ ] 11.131 Pozo junto a la Chullpa: caer sin bombas deja softlock · Revisión
-7. [ ] 11.159 Overworld con el arte de las mazmorras: brillo LA y más detalle en el piso · Revisión
-8. [ ] 11.165 La cámara cenital se activa en bordes y muros bajos de una sala · Revisión
+2. [x] 11.130 Bocas de cueva talladas en el risco · Hecho · anda
+3. [x] 11.166 Santuario con una sola entrada: su muro agrietado · Hecho · anda
+4. [x] 11.146 Overworld: el ojo del puente a la Necrópolis no se ve ni se puede flechar · Hecho · anda
+5. [x] 11.147 Overworld: caer al sector de arriba (entre riscos, junto a la meseta clara) deja softlock · Hecho · anda
+6. [x] 11.131 Pozo junto a la Chullpa: caer sin bombas deja softlock · Revisión · anda
+7. [x] 11.159 Overworld con el arte de las mazmorras: brillo LA y más detalle en el piso · Hecho · anda
+8. [x] 11.165 La cámara cenital se activa en bordes y muros bajos de una sala · Hecho · anda
 9. [ ] 11.29 Overworld después del jefe · Revisión
-10. [ ] 12.29 Muro agrietado LA de cueva (muro_agrietado_cueva_la) · Revisión
-11. [ ] 11.132 Cuevas: los enemigos se quedan quietos · Revisión
-12. [ ] 11.133 Vasija chica cargada no se ve con el x-ray · Revisión
-13. [ ] 11.135 Al caer, el player se inclina hacia el piso · Revisión
-14. [ ] 11.164 Lo que esconde una pared agrietada no se ve desde arriba · Revisión
-15. [ ] 11.136 Chullpa: la reja de la entrada queda fuera de la pared · Revisión
-16. [ ] 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista · Revisión
-17. [ ] 11.156 Chullpa: se ven los techos (crestas) de las paredes LA horneadas · Revisión
-18. [ ] 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · Revisión
+10. [x] 12.29 Muro agrietado LA de cueva (muro_agrietado_cueva_la) · Hecho · anda
+11. [x] 11.132 Cuevas: los enemigos se quedan quietos · Hecho · anda
+12. [ ] 11.133 Vasija chica cargada no se ve con el x-ray · En curso · **falla** — Mejor, pero no tiene que haber x-ray cuando se levanta algo
+13. [x] 11.135 Al caer, el player se inclina hacia el piso · Hecho · anda
+14. [x] 11.164 Lo que esconde una pared agrietada no se ve desde arriba · Hecho · anda
+15. [x] 11.136 Chullpa: la reja de la entrada queda fuera de la pared · Hecho · anda
+16. [ ] 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista · En curso · **falla** — la pared quebrada sigue el estilo pero no el ancho. La parte negra debería verse como la parte superior. Y la camara debería centrarse mas en lo visible de la sala, no en su posible tamaño completo como rectangulo
+17. [ ] 11.156 Chullpa: se ven los techos (crestas) de las paredes LA horneadas · Revisión · **falla**
+18. [ ] 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · En curso · **falla** — se ve horrendo y no soluciona el mismo problema del lado izquierdo
 19. [ ] 11.138 Chullpa sub-boss: asset para el cuadrado donde después se salta · Revisión
-20. [ ] 11.155 Chullpa: la momia aparece en vez de saltar hacia el player; onda expansiva con shader vistoso · Revisión
-21. [ ] 11.169 Galería de trampas: la pluma no salta por encima de los pinchos · Revisión
+20. [x] 11.155 Chullpa: la momia aparece en vez de saltar hacia el player; onda expansiva con shader vistoso · Hecho · anda
+21. [x] 11.169 Galería de trampas: la pluma no salta por encima de los pinchos · Revisión · anda — necesita un poco de fine-tuning, por ahi invisibilidad por 2-4 frames al saltar y aterrizar
 22. [ ] 11.141 Queñoa 2P (Canopy): símbolo azul sin sentido y puerta bloqueada invisible · Revisión
 23. [ ] 11.144 Queñoa S1 (Raíces): reja fuera de la pared y puerta con llave detrás de una reja de puzzle · Revisión
 24. [ ] 11.145 Queñoa S1 (Sala de los ojos): placa que no hace nada, z-fighting en el cofre y símbolo raro en la puerta · Revisión

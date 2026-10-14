@@ -2,66 +2,89 @@
   "created_at": "2026-10-14T17:21:25.843Z",
   "items": [
     {
+      "result": "pass",
       "task": "m11-168"
     },
     {
+      "result": "pass",
       "task": "m11-130"
     },
     {
+      "result": "pass",
       "task": "m11-166"
     },
     {
+      "result": "pass",
       "task": "m11-146"
     },
     {
+      "result": "pass",
       "task": "m11-147"
     },
     {
+      "result": "pass",
       "task": "m11-131"
     },
     {
+      "result": "pass",
       "task": "m11-159"
     },
     {
+      "result": "pass",
       "task": "m11-165"
     },
     {
       "task": "m11-29"
     },
     {
+      "result": "pass",
       "task": "m12-29"
     },
     {
+      "result": "pass",
       "task": "m11-132"
     },
     {
+      "note": "Mejor, pero no tiene que haber x-ray cuando se levanta algo",
+      "result": "fail",
       "task": "m11-133"
     },
     {
+      "result": "pass",
       "task": "m11-135"
     },
     {
+      "result": "pass",
       "task": "m11-164"
     },
     {
+      "result": "pass",
       "task": "m11-136"
     },
     {
+      "note": "la pared quebrada sigue el estilo pero no el ancho. La parte negra debería verse como la parte superior. Y la camara debería centrarse mas en lo visible de la sala, no en su posible tamaño completo como rectangulo",
+      "result": "fail",
       "task": "m11-137"
     },
     {
+      "result": "fail",
       "task": "m11-156"
     },
     {
+      "note": "se ve horrendo y no soluciona el mismo problema del lado izquierdo",
+      "result": "fail",
       "task": "m11-139"
     },
     {
       "task": "m11-138"
     },
     {
+      "result": "pass",
       "task": "m11-155"
     },
     {
+      "note": "necesita un poco de fine-tuning, por ahi invisibilidad por 2-4 frames al saltar y aterrizar",
+      "result": "pass",
       "task": "m11-169"
     },
     {
@@ -175,5 +198,5 @@
   ],
   "order": 3,
   "title": "Revisión del 14 de octubre: overworld, mazmorras y sistemas",
-  "updated_at": "2026-10-14T17:21:36.587Z"
+  "updated_at": "2026-10-14T17:46:33.032Z"
 }

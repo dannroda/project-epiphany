@@ -17,6 +17,7 @@
   "code": "12.29",
   "created_at": "2026-10-14T06:46:06.763Z",
   "description": "Daniel 2026-10-14 (playtest, cueva de las bombas): el muro de práctica (CavePracticeWall) sigue siendo el cracked_wall.tscn de siempre, un bloque con tapa de pasto verde que sobresale de la pared de roca de la cueva. 12.24 hizo los tapones LA de chullpa, quenoa, totora y cumbre; las cuevas pasaron al look LA (cueva, 7298dfb5) después y quedaron sin el suyo. Falta el estilo cueva: tapón que llene el paso LA con la roca oscura y la cresta gris de la cueva, grietas en las dos caras, colocado por la_walls como en las mazmorras. Usos: bomb_cave (CavePracticeWall) y shrine_cave. Lo que esconde va tapado con covers (11.164).",
+  "done_at": "2026-10-14T17:33:53.597Z",
   "images": [
     "compass/images/m12-29-20261014-034608.png"
   ],
@@ -36,12 +37,12 @@
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "review",
+  "status": "done",
   "tags": [
     "arte",
     "bug"
   ],
   "test": "",
   "title": "Muro agrietado LA de cueva (muro_agrietado_cueva_la)",
-  "updated_at": "2026-10-14T07:12:28.602Z"
+  "updated_at": "2026-10-14T17:33:53.597Z"
 }

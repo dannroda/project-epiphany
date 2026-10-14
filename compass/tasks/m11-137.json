@@ -5,7 +5,9 @@
   "created_at": "2026-10-14T01:49:05.404Z",
   "description": "Playtest 2026-10-13, en la Chullpa (las tres cosas salen en la misma captura):\n1) Se ven los \"techos\" (las tapas superiores de las paredes LA horneadas). No deberían verse.\n2) La pared agrietada no encaja en el hueco de la pared: es un bloque que sobresale, con la cara de arriba negra.\n3) Lo que esconde la pared agrietada (el nicho con el cofre/barril) se ve antes de romperla. Debería estar oculto y descubrirse al romper la pared.",
   "images": [
-    "compass/images/m11-137-20261013-224905.png"
+    "compass/images/m11-137-20261013-224905.png",
+    "compass/images/m11-137-20261014-143652.png",
+    "compass/images/m11-137-20261014-143745.png"
   ],
   "milestone": "m11",
   "notes": "2) y 3) hechos (provisorio hasta 12.24): RellanoCrackedWall queda al ras de la pared LA y de su altura; una tapa del color de las crestas (NicheCap, hija de Wall) cubre el nicho y desaparece al romper el muro. 1) pasó a 11.156 (arte).",
@@ -13,12 +15,12 @@
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "review",
+  "status": "doing",
   "tags": [
     "bug",
     "chullpa"
   ],
   "test": "",
   "title": "Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista",
-  "updated_at": "2026-10-14T03:33:19.485Z"
+  "updated_at": "2026-10-14T17:37:47.036Z"
 }

@@ -4,13 +4,14 @@
   "code": "11.159",
   "created_at": "2026-10-14T04:33:03.399Z",
   "description": "Daniel 2026-10-14 (por -5d): el overworld tiene que compartir el arte de las mazmorras. Brillo: el look BrilloLA (lo eligió tras comparar overworld base vs brillo vs Chullpa). Piso: más detalle, hoy se ve plano. Plan: epiphany_outdoor.gdshader con palette_surface brillo y patrón de piso por swatch (losas, textura de tierra, variación de tono del pasto), más BrilloLA y glow en overworld.tscn. Coordinar con -eb antes de tocar overworld.tscn; prototipo en debug/tmp.",
+  "done_at": "2026-10-14T17:33:30.659Z",
   "milestone": "m11",
   "notes": "",
   "order": 156,
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "review",
+  "status": "done",
   "tags": [
     "arte",
     "overworld",
@@ -18,5 +19,5 @@
   ],
   "test": "",
   "title": "Overworld con el arte de las mazmorras: brillo LA y más detalle en el piso",
-  "updated_at": "2026-10-14T04:56:45.777Z"
+  "updated_at": "2026-10-14T17:33:30.659Z"
 }

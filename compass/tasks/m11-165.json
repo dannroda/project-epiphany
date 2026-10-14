@@ -4,6 +4,7 @@
   "code": "11.165",
   "created_at": "2026-10-14T07:23:11.507Z",
   "description": "Daniel 2026-10-14 (cueva de las bombas): acercándose a la pared de la sala o parándose delante de un muro bajo, la cámara sube a cenital (11.134). En una sala no tiene que pasar: está hecha para verse entera desde su cámara fija. Hecho: TopDownCamera solo busca oclusión cuando no hay sala (overworld); test_player_hole › test_rooms_never_turn_the_camera_overhead (busca en la cueva un lugar donde una pared lo taparía y comprueba que no sube).",
+  "done_at": "2026-10-14T17:33:33.675Z",
   "links": [
     {
       "task": "m11-134",
@@ -16,12 +17,12 @@
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "review",
+  "status": "done",
   "tags": [
     "bug",
     "camara"
   ],
   "test": "tests/test_player_hole.gd",
   "title": "La cámara cenital se activa en bordes y muros bajos de una sala",
-  "updated_at": "2026-10-14T07:23:12.663Z"
+  "updated_at": "2026-10-14T17:33:33.675Z"
 }
