@@ -73,7 +73,7 @@
 [ext_resource type="Script" uid="uid://dlf8bqdycw2kg" path="res://src/world/look/brillo_la.gd" id="63_n1d8o"]
 [ext_resource type="PackedScene" path="res://src/world/pickup.tscn" id="70_pickup"]
 [ext_resource type="Script" uid="uid://ckysqr8ximkn0" path="res://src/world/pickup.gd" id="71_pickupgd"]
-[ext_resource type="ArrayMesh" uid="uid://b7ouu6fas5ytk" path="res://assets/epiphany/meshes/paredes_la/muro_agrietado_chullpa_la_2.res" id="71_tfrkv"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/muro_agrietado_chullpa_la_2.res" id="71_tfrkv"]
 [ext_resource type="Resource" path="res://data/items/heart_container.tres" id="72_heart"]
 [ext_resource type="ArrayMesh" uid="uid://bs5mwr1yuehrf" path="res://assets/epiphany/meshes/naturaleza/piedra_chica_a.res" id="72_pucgk"]
 [ext_resource type="Script" uid="uid://rcd8a41l0m7" path="res://src/components/hurtbox.gd" id="73_uu46w"]
@@ -93,14 +93,6 @@
 [ext_resource type="Script" uid="uid://c3gjwha8na3yi" path="res://src/world/look/sombra_la.gd" id="sombra_la"]
 [ext_resource type="Script" uid="uid://bw0kh7whsb1qf" path="res://src/world/look/tono_la.gd" id="tono_la"]
 [ext_resource type="PackedScene" path="res://src/world/floor_switch_weight.tscn" id="weight_switch"]
-
-[sub_resource type="StandardMaterial3D" id="NicheCapTop"]
-shading_mode = 0
-albedo_color = Color(0.49, 0.34, 0.17, 1)
-
-[sub_resource type="BoxMesh" id="NicheCapMesh"]
-material = SubResource("NicheCapTop")
-size = Vector3(3.2, 0.04, 4.1)
 
 [sub_resource type="Environment" id="Environment_5ecsj"]
 background_mode = 1
@@ -2061,28 +2053,24 @@ collision_mask = 5
 script = ExtResource("47_lhowt")
 config = ExtResource("48_308dp")
 
-[node name="CaidaLA34" type="Node3D" parent="PlantaBaja" unique_id=621838852 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA34" type="Node3D" parent="PlantaBaja" unique_id=1456082377 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 22)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA35" type="Node3D" parent="PlantaBaja" unique_id=361156769 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA35" type="Node3D" parent="PlantaBaja" unique_id=750886836 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 28)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA36" type="Node3D" parent="PlantaBaja" unique_id=684585077 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA36" type="Node3D" parent="PlantaBaja" unique_id=1422278823 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 34)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA37" type="Node3D" parent="PlantaBaja" unique_id=1010476558 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA37" type="Node3D" parent="PlantaBaja" unique_id=1343349546 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 22)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA38" type="Node3D" parent="PlantaBaja" unique_id=394145832 instance=ExtResource("60_lhowt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 28)
-script = ExtResource("61_308dp")
-
-[node name="CaidaLA39" type="Node3D" parent="PlantaBaja" unique_id=2113109710 instance=ExtResource("60_lhowt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 34)
+[node name="CaidaLA38" type="Node3D" parent="PlantaBaja" unique_id=1702666709 instance=ExtResource("60_lhowt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 32)
 script = ExtResource("61_308dp")
 
 [node name="PisoAlto" type="Node3D" parent="." unique_id=1051391863]
@@ -2391,7 +2379,7 @@ drops = ExtResource("ch_pot_bombs")
 drop_height = 0.1
 
 [node name="RellanoCrackedWall" parent="PisoAlto" unique_id=1246005233 instance=ExtResource("44_crackwall")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, 0, 30)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.6, 0, 30)
 script = ExtResource("33_3iwqa")
 flag = &"ch_landing_cracked_wall"
 
@@ -2781,39 +2769,39 @@ collision_mask = 5
 script = ExtResource("47_lhowt")
 config = ExtResource("46_baen8")
 
-[node name="CaidaLA32" type="Node3D" parent="PisoAlto" unique_id=898511118 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA32" type="Node3D" parent="PisoAlto" unique_id=1188562492 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 8)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA33" type="Node3D" parent="PisoAlto" unique_id=775808111 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA33" type="Node3D" parent="PisoAlto" unique_id=1246065147 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 8)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA34" type="Node3D" parent="PisoAlto" unique_id=49144778 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA34" type="Node3D" parent="PisoAlto" unique_id=724052249 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 8)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA35" type="Node3D" parent="PisoAlto" unique_id=287767358 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA35" type="Node3D" parent="PisoAlto" unique_id=1501990636 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 8)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA36" type="Node3D" parent="PisoAlto" unique_id=1890387726 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA36" type="Node3D" parent="PisoAlto" unique_id=483178579 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 12)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA37" type="Node3D" parent="PisoAlto" unique_id=702663002 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA37" type="Node3D" parent="PisoAlto" unique_id=18972592 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 12)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA38" type="Node3D" parent="PisoAlto" unique_id=520760333 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA38" type="Node3D" parent="PisoAlto" unique_id=686963014 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 30)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA39" type="Node3D" parent="PisoAlto" unique_id=131121126 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA39" type="Node3D" parent="PisoAlto" unique_id=413681591 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 12)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA40" type="Node3D" parent="PisoAlto" unique_id=623577399 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA40" type="Node3D" parent="PisoAlto" unique_id=1664238033 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 12)
 script = ExtResource("61_308dp")
 
@@ -2852,7 +2840,7 @@ south_wall_reach = 1.7
 script = ExtResource("55_bkpqy")
 near_margin = 3.5
 
-[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=744033432 instance=ExtResource("80_308dp")]
+[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1555450685 instance=ExtResource("80_308dp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1439023435 instance=ExtResource("39_iq7xx")]

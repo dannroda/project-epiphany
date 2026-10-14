@@ -283,11 +283,11 @@ func test_an_arrow_drops_an_open_eye_for_the_sword() -> void:
 
 
 ## 11.141: el muro agrietado llena el paso de pared LA y se ve en las dos caras; una bomba puesta en la cara de la sala lo rompe.
-func test_the_nest_cracked_wall_shows_on_both_faces_and_a_bomb_at_the_face_breaks_it() -> void:
+func test_the_nest_cracked_wall_fills_the_passage_and_a_bomb_at_the_face_breaks_it() -> void:
 	await _start()
 	var wall := level.get_node(^"PisoCopa/NidoCrackedWall") as CrackedWall
-	var faces := wall.wall.get_children().filter(func(node: Node) -> bool: return node is MeshInstance3D)
-	assert_eq(faces.size(), 2, "una cara de cada lado del paso")
+	var plug := (wall.wall.get_node(^"Model") as MeshInstance3D).get_aabb()
+	assert_true(plug.size.z > 3.4, "el tapón llena los 4 m del paso doble (%.1f)" % plug.size.z)
 	var east := wall.global_position + Vector3(2.2, 0.3, 0)
 	var bomb: Bomb = preload("res://src/items/bomb/bomb.tscn").instantiate()
 	level.add_child(bomb)
