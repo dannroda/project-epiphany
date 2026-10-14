@@ -91,6 +91,13 @@ func test_clicking_a_tab_switches_the_page() -> void:
 	_close(stack)
 
 
+func _trigger(axis: JoyAxis, value: float) -> void:
+	var event := InputEventJoypadMotion.new()
+	event.axis = axis
+	event.axis_value = value
+	Input.parse_input_event(event)
+
+
 func _press(action: StringName) -> void:
 	var event := InputEventAction.new()
 	event.action = action
@@ -273,6 +280,15 @@ func test_floor_selector_in_a_dungeon_with_floors() -> void:
 	(page.floor_buttons.get_child(2) as MapFloorButton).pressed.emit()
 	await tree.process_frame
 	assert_eq(page.viewed_level(), -1, "con un clic se ve el sótano")
+	for value in [0.3, 0.5, 0.7, 0.9, 1.0]:
+		_trigger(JOY_AXIS_TRIGGER_LEFT, value)
+		await tree.process_frame
+	assert_eq(page.viewed_level(), 0, "un gatillo analógico apretado de a poco sube un solo piso")
+	_trigger(JOY_AXIS_TRIGGER_LEFT, 0.0)
+	_trigger(JOY_AXIS_TRIGGER_LEFT, 1.0)
+	await tree.process_frame
+	assert_eq(page.viewed_level(), 1, "soltarlo y volver a apretar sube otro")
+	_trigger(JOY_AXIS_TRIGGER_LEFT, 0.0)
 	_close(setup[2])
 	state.reset()
 
