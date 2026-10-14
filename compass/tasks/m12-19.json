@@ -25,7 +25,8 @@
   "description": "Diseño (-43) armó levels/totora.tscn en el kit gris (a8d40e91, GDD §8d): dos pisos de 3×2 salas de 7×5 celdas, agua profunda (celdas vacías con Pit y agua water_la a -0.35). Estilo propio de agua y totora, como Chullpa, Queñoa y templo. Regla de juego: cada cruce del gancho son 4 celdas de agua con el HookPost 0.5 m pasada la orilla; test_totora es relativo a la sala. Overworld (-eb, 5e04f395): TotoraHut es un CSGBox3D provisorio en la isla de la Laguna; vestirlo de santuario de juncos sin mover TotoraDoor, avisando a -eb antes de tocar overworld.tscn.",
   "images": [
     "compass/images/m12-19-20261013-232857.png",
-    "compass/images/m12-19-20261013-233009.png"
+    "compass/images/m12-19-20261013-233009.png",
+    "compass/images/m12-19-20261013-233439.png"
   ],
   "milestone": "m12",
   "notes": "",
@@ -40,5 +41,5 @@
   ],
   "test": "",
   "title": "Totora (D3) en estilo Link's Awakening y su entrada",
-  "updated_at": "2026-10-14T02:30:09.407Z"
+  "updated_at": "2026-10-14T02:34:39.133Z"
 }

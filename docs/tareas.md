@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (85/146)
+## M11 — Pulido: contenido y feel  (85/147)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4731,6 +4731,8 @@ Playtest 2026-10-13, en la Chullpa (las tres cosas salen en la misma captura):
 
 **Capturas:** `compass/images/m11-137-20261013-224905.png`
 
+**Relacionadas:** 11.151 Totora 2P: se ve la sala del piso de abajo
+
 ### 11.138 Chullpa sub-boss: asset para el cuadrado donde después se salta · Pendiente
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `chullpa`
@@ -4855,6 +4857,14 @@ Playtest 2026-10-13: en la Totora (D3), piso 1P Ground Floor, apenas se entra a 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`, `totora`, `items`
 
 Playtest 2026-10-13, Totora: con el gancho, el targeting marca (rombo amarillo) algo que está arriba, en otra sala o piso, a través de la pared/techo. El targeting del gancho debería considerar solo objetivos de la sala actual (y del mismo piso), con línea de vista.
+
+### 11.151 Totora 2P: se ve la sala del piso de abajo · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `bug`, `totora`, `render`
+
+Playtest 2026-10-13, Totora (D3) 2P Upper Floor, sala sureste: debajo del borde sur de la sala se ve la sala del piso de abajo (su piso y paredes). Los otros pisos no deberían verse (ocultar/fundir los pisos que no son el actual, como en las otras mazmorras LA). En la misma captura: la pared agrietada del oeste sobresale como bloque verde (como 11.137).
+
+**Relacionadas:** 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista
 
 ## M12 — Assets propios (Blender)  (15/23)
 
@@ -5311,7 +5321,7 @@ Diseño (-43) armó levels/totora.tscn en el kit gris (a8d40e91, GDD §8d): dos 
   Modelo hecho (41357968): src/world/totora_entrada.tscn, choza de los uros sobre balsa, techo con borla roja, columnas con cabeza de puma, aguayo y totoras; mismo colisionador que TotoraHut. Falta que overworld (-eb) la ponga en lugar del CSGBox3D, girada con la puerta al oeste.
 - [ ] Recorrerla (Daniel)
 
-**Capturas:** `compass/images/m12-19-20261013-232857.png`, `compass/images/m12-19-20261013-233009.png`
+**Capturas:** `compass/images/m12-19-20261013-232857.png`, `compass/images/m12-19-20261013-233009.png`, `compass/images/m12-19-20261013-233439.png`
 
 ### 12.20 Arte de la pantalla de título: logo y fondo del overworld · Hecho
 

@@ -1,0 +1,28 @@
+{
+  "assignee": "project-epiphany-5d",
+  "checklist": [],
+  "code": "11.151",
+  "created_at": "2026-10-14T02:34:40.305Z",
+  "description": "Playtest 2026-10-13, Totora (D3) 2P Upper Floor, sala sureste: debajo del borde sur de la sala se ve la sala del piso de abajo (su piso y paredes). Los otros pisos no deberían verse (ocultar/fundir los pisos que no son el actual, como en las otras mazmorras LA). En la misma captura: la pared agrietada del oeste sobresale como bloque verde (como 11.137).",
+  "links": [
+    {
+      "task": "m11-137",
+      "type": "related"
+    }
+  ],
+  "milestone": "m11",
+  "notes": "",
+  "order": 148,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "totora",
+    "render"
+  ],
+  "test": "",
+  "title": "Totora 2P: se ve la sala del piso de abajo",
+  "updated_at": "2026-10-14T02:34:40.636Z"
+}
