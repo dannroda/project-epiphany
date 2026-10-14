@@ -6,7 +6,7 @@ extends Node
 
 const TONE := preload("res://src/world/look/tono_la.gd")
 const TONE_PREFIX := "tono_"
-const TONE_PROPERTIES := ["exposure", "vignette", "frame", "frame_softness", "frame_slant"]
+const TONE_PROPERTIES := ["exposure", "vignette", "frame", "frame_softness", "frame_slant", "frame_sides", "frame_top", "frame_bottom"]
 
 ## Lo tildado: nombre de la propiedad del Environment (o tono_<propiedad> del TonoLA) → valor.
 @export_storage var valores: Dictionary = {}

@@ -10,6 +10,10 @@ extends CompositorEffect
 @export var frame_softness := 0.6
 ## Cuánto más se mete el marco a los costados arriba que abajo (fracción del alto), como las paredes en perspectiva.
 @export var frame_slant := 0.0
+## Cuánto más adentro empieza el marco en cada lado (fracción del alto), para una sala más chica que la pantalla.
+@export var frame_sides := 0.0
+@export var frame_top := 0.0
+@export var frame_bottom := 0.0
 
 var rd: RenderingDevice
 var shader: RID
@@ -26,6 +30,9 @@ layout(push_constant, std430) uniform Params {
 	float frame;
 	float frame_softness;
 	float frame_slant;
+	float frame_sides;
+	float frame_top;
+	float frame_bottom;
 	float pad;
 } p;
 const float VIG[19] = float[](1.000, 1.000, 0.981, 0.954, 0.911, 0.860, 0.801, 0.740, 0.676, 0.616,
@@ -45,8 +52,9 @@ void main() {
 	float v = mix(1.0, vig((vec2(uv) + 0.5) / p.size), p.vignette);
 	if (p.frame > 0.0) {
 		vec2 px = vec2(uv) + 0.5;
-		float inset = p.frame_slant * (1.0 - px.y / p.size.y) * p.size.y;
-		float edge = min(min(px.x - inset, p.size.x - px.x - inset), min(px.y, p.size.y - px.y)) / p.size.y;
+		float inset = (p.frame_slant * (1.0 - px.y / p.size.y) + p.frame_sides) * p.size.y;
+		float edge = min(min(px.x - inset, p.size.x - px.x - inset),
+				min(px.y - p.frame_top * p.size.y, p.size.y - px.y - p.frame_bottom * p.size.y)) / p.size.y;
 		v *= smoothstep(1.0 - p.frame_softness, 1.0, edge / p.frame);
 	}
 	vec3 x = max(c.rgb * v * p.exposure - 0.004, vec3(0.0));
@@ -90,7 +98,7 @@ func _render_callback(_type: int, render_data: RenderData) -> void:
 	var size := buffers.get_internal_size()
 	if size.x == 0 or size.y == 0:
 		return
-	var push := PackedFloat32Array([size.x, size.y, exposure, vignette, frame, frame_softness, frame_slant, 0.0]).to_byte_array()
+	var push := PackedFloat32Array([size.x, size.y, exposure, vignette, frame, frame_softness, frame_slant, frame_sides, frame_top, frame_bottom, 0.0]).to_byte_array()
 	for view in buffers.get_view_count():
 		var u := RDUniform.new()
 		u.uniform_type = RenderingDevice.UNIFORM_TYPE_IMAGE
