@@ -15,6 +15,7 @@ signal bar_changed
 const LID_OPEN_ANGLE := 70.0
 const PHASES := {&"Phase1": 1, &"Phase2": 2, &"Phase3": 3}
 const ORB := preload("res://src/entities/projectile.tscn")
+const CORRUPT_GLOW := Color(1.0, 0.3, 0.18)
 const EYE_STUN_TIME := 3.0
 ## La fase 3 arranca con el ojo a este tanto de su vida (la última marca de la barra).
 const ENRAGE_FRACTION := 1.0 / 3.0
@@ -396,6 +397,8 @@ func _fire_orb() -> void:
 	var orb: Projectile = ORB.instantiate()
 	get_tree().current_scene.add_child(orb)
 	var aim := target.global_position + Vector3.UP * 1.1
+	if phase() >= 3:
+		orb.tint(CORRUPT_GLOW)
 	orb.launch(orb_muzzle.global_position, (aim - orb_muzzle.global_position).normalized() * orb_speed, info)
 	Feel.sfx(&"click", orb_muzzle.global_position)
 
@@ -548,6 +551,8 @@ func _burst() -> void:
 	for hand in [hand_left, hand_right]:
 		Feel.burst(&"explosion", hand.global_position, Vector3.UP)
 		Feel.burst(&"shards", hand.global_position, Vector3.UP)
+		hand.glow_color = CORRUPT_GLOW
+	_charge.set_instance_shader_parameter(&"color", CORRUPT_GLOW)
 	_awaken_flash()
 
 

@@ -79,6 +79,12 @@ var striking := false
 var rest: Node3D
 ## Mientras el jefe se transforma: no empieza ataques ni recibe golpes.
 var held := false
+## El color del pulso del lomo (rojo con el jefe corrupto).
+var glow_color := Color(0.45, 0.95, 1.0):
+	set(value):
+		glow_color = value
+		if _pulse_material:
+			_pulse_material.set_shader_parameter(&"color", value)
 var _stun_left := 0.0
 var _fall: Tween
 var _motion: Tween
@@ -88,6 +94,7 @@ var _bounce: Tween
 var _shockwave_data := AttackData.new()
 var _flash: HitFlash
 var _material: StandardMaterial3D
+var _pulse_material: ShaderMaterial
 var _spark_left := 0.0
 var _stun_time := 0.0
 var _base_glow := 1.0
@@ -114,6 +121,7 @@ static var _crack: Texture2D
 @onready var ring: MeshInstance3D = $Ring
 @onready var grip_point: Marker3D = $Grip
 @onready var mesh: MeshInstance3D = $Mesh
+@onready var pulse: GPUParticles3D = $Mesh/Pulso
 
 
 func _ready() -> void:
@@ -134,6 +142,9 @@ func _ready() -> void:
 	_material = mesh.mesh.surface_get_material(0).duplicate()
 	_base_glow = _material.emission_energy_multiplier
 	mesh.material_override = _material
+	_pulse_material = pulse.material_override.duplicate()
+	pulse.material_override = _pulse_material
+	glow_color = glow_color
 	shadow.visible = false
 	ring.visible = false
 
@@ -170,9 +181,14 @@ func is_available() -> bool:
 func set_state(value: State) -> void:
 	if value == state:
 		return
-	if state == State.STUNNED:
+	if state == State.STUNNED or state == State.DOWN:
 		_steady()
 	state = value
+	if state == State.DOWN:
+		_material.emission_energy_multiplier = _base_glow * 0.2
+	_pulse_material.set_shader_parameter(&"stun", 1.0 if state == State.STUNNED else 0.0)
+	pulse.speed_scale = 1.8 if state == State.STUNNED else 1.0
+	pulse.emitting = state != State.DOWN
 	if state != State.BUSY:
 		if _attack_tween:
 			_attack_tween.kill()

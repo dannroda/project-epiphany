@@ -11,7 +11,21 @@
 [ext_resource type="Resource" path="res://data/boss/attack_grab.tres" id="20_grab"]
 [ext_resource type="Resource" path="res://data/boss/attack_sweep.tres" id="21_sweep"]
 [ext_resource type="Script" path="res://src/feel/hit_flash.gd" id="hf_hit_flash"]
-[ext_resource type="Shader" path="res://src/entities/boss/ondas.gdshader" id="ondas"]
+[ext_resource type="Shader" path="res://src/entities/boss/pulso.gdshader" id="pulso"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pulso"]
+render_priority = 0
+shader = ExtResource("pulso")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pulso"]
+direction = Vector3(0, 1, 0)
+spread = 0.0
+initial_velocity_min = 0.4
+initial_velocity_max = 0.4
+gravity = Vector3(0, 0.8, 0)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_pulso"]
+size = Vector2(1.2, 0.53)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hand"]
 size = Vector3(1.4, 1, 1.6)
@@ -45,14 +59,6 @@ inner_radius = 0.9
 outer_radius = 1.0
 rings = 32
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ondas"]
-render_priority = 0
-shader = ExtResource("ondas")
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_ondas"]
-width = 72
-height = 32
-
 [node name="HandGuard" type="Node3D"]
 script = ExtResource("1_guard")
 attacks = [ExtResource("19_slam"), ExtResource("20_grab"), ExtResource("21_sweep")]
@@ -69,13 +75,16 @@ script = ExtResource("2_hand")
 [node name="Mesh" type="MeshInstance3D" parent="Hand"]
 mesh = ExtResource("7_hand_l")
 
-[node name="Ondas" type="Sprite3D" parent="Hand/Mesh"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0.09)
-material_override = SubResource("ShaderMaterial_ondas")
+[node name="Pulso" type="GPUParticles3D" parent="Hand/Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.82, 0.09)
+material_override = SubResource("ShaderMaterial_pulso")
 cast_shadow = 0
-pixel_size = 0.025
-axis = 1
-texture = SubResource("GradientTexture2D_ondas")
+amount = 3
+lifetime = 1.2
+local_coords = false
+visibility_aabb = AABB(-3, -2, -3, 6, 6, 6)
+process_material = SubResource("ParticleProcessMaterial_pulso")
+draw_pass_1 = SubResource("PlaneMesh_pulso")
 
 [node name="Health" type="Node" parent="Hand"]
 script = ExtResource("13_health")

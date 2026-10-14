@@ -31,6 +31,14 @@ func launch(from: Vector3, initial_velocity: Vector3, info: DamageInfo) -> void:
 	landed.connect(_on_landed)
 
 
+## El orbe del jefe corrupto (y su estela) en otro color.
+func tint(color: Color) -> void:
+	$Mesh.set_instance_shader_parameter(&"color", color)
+	var trail := $Estela as GPUParticles3D
+	trail.process_material = trail.process_material.duplicate()
+	(trail.process_material as ParticleProcessMaterial).color = color
+
+
 ## Lo devuelve el escudo espejo: misma velocidad, nueva dirección y nuevo equipo.
 func reflect(direction: Vector3, new_team: EntityConfig.Team) -> void:
 	var flat := Vector3(direction.x, 0.0, direction.z)
