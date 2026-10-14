@@ -24,11 +24,11 @@
       "section": "fuera-mvp"
     }
   ],
-  "status": "todo",
+  "status": "paused",
   "tags": [
     "online"
   ],
   "test": "Con 100 ms de latencia simulada, el cliente se mueve sin retraso perceptible y sin tirones.",
   "title": "Players en red",
-  "updated_at": "2026-10-11T07:50:21.817Z"
+  "updated_at": "2026-10-14T00:53:57.368Z"
 }

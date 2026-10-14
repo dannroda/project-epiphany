@@ -34,6 +34,7 @@
     "status": {
       "enum": [
         "todo",
+        "paused",
         "doing",
         "review",
         "done"

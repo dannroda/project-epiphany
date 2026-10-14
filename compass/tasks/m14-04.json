@@ -30,12 +30,12 @@
       "section": "fuera-mvp"
     }
   ],
-  "status": "todo",
+  "status": "paused",
   "tags": [
     "online",
     "combate"
   ],
   "test": "Pelear contra chullpas y el jefe como cliente con 100 ms: los golpes se sienten y no hay daño fantasma.",
   "title": "Combate en red",
-  "updated_at": "2026-10-11T07:50:22.875Z"
+  "updated_at": "2026-10-14T00:53:58.099Z"
 }

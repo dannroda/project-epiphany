@@ -63,13 +63,14 @@
     },
     "views": {
       "type": "array",
-      "description": "Pestañas del proyecto en la web, en orden; la primera es la que abre. Sin views: board, lists, docs, files.",
+      "description": "Pestañas del proyecto en la web, en orden; la primera es la que abre. Sin views: board, lists, playtest, docs, files.",
       "minItems": 1,
       "uniqueItems": true,
       "items": {
         "enum": [
           "board",
           "lists",
+          "playtest",
           "docs",
           "files"
         ]

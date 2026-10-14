@@ -8,12 +8,12 @@
   "order": 7,
   "priority": "medium",
   "refs": [],
-  "status": "todo",
+  "status": "paused",
   "tags": [
     "online",
     "pruebas"
   ],
   "test": "",
   "title": "Modo arena: hasta 8 jugadores peleando entre sí",
-  "updated_at": "2026-10-11T06:39:30.277Z"
+  "updated_at": "2026-10-14T00:53:59.143Z"
 }

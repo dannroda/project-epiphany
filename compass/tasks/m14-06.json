@@ -19,12 +19,12 @@
       "section": "fuera-mvp"
     }
   ],
-  "status": "todo",
+  "status": "paused",
   "tags": [
     "online",
     "guardado"
   ],
   "test": "Terminar una sesión online, recargarla en el host: el progreso está y no se duplica nada.",
   "title": "Guardado en co-op",
-  "updated_at": "2026-10-11T07:50:23.831Z"
+  "updated_at": "2026-10-14T00:53:58.827Z"
 }

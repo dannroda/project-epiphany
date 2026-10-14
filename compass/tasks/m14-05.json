@@ -24,12 +24,12 @@
       "section": "fuera-mvp"
     }
   ],
-  "status": "todo",
+  "status": "paused",
   "tags": [
     "online",
     "ui"
   ],
   "test": "Crear partida, invitar, jugar y desconectar al cliente sin que el host pierda progreso.",
   "title": "Lobby y conexión",
-  "updated_at": "2026-10-11T07:50:23.358Z"
+  "updated_at": "2026-10-14T00:53:58.418Z"
 }

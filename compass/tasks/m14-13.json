@@ -33,12 +33,12 @@
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "paused",
   "tags": [
     "online",
     "input"
   ],
   "test": "El FSM, el buffer y el targeting leen solo del frame de Controls; se puede reproducir una partida corta a partir de los frames grabados.",
   "title": "Frame de input por tick en Controls",
-  "updated_at": "2026-10-12T00:20:24.940Z"
+  "updated_at": "2026-10-14T00:54:01.025Z"
 }

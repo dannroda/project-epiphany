@@ -38,7 +38,7 @@
   "priority": "high",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "paused",
   "tags": [
     "coop",
     "arquitectura",
@@ -46,5 +46,5 @@
   ],
   "test": "Con la cámara quitada, entrar a una sala la marca visitada y arranca la oleada; la cámara solo encuadra.",
   "title": "Las salas las decide un nodo del mundo, no la cámara",
-  "updated_at": "2026-10-12T00:20:10.098Z"
+  "updated_at": "2026-10-14T00:53:55.933Z"
 }
