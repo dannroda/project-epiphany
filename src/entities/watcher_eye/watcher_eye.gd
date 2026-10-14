@@ -14,6 +14,8 @@ enum State { IDLE, DRIFT, CHARGE, SWEEP, LUNGE, STUCK, DOWN, DEAD }
 
 ## Cuánto giran los párpados (en X, el de arriba hacia atrás y el de abajo hacia adelante) para abrir del todo.
 const LID_OPEN := 1.4
+## Lo que tardan los párpados en abrirse o cerrarse de golpe (al clavarse, al caer y al levantarse).
+const LID_SNAP := 0.15
 
 @export var config: EntityConfig
 @export var lunges := false
@@ -52,6 +54,7 @@ var may_attack: Callable
 ## Los otros ojos de la pelea: no se amontona con ellos.
 var peers: Array = []
 var _turn := 0
+var _open := 0.0
 var _tweens: Array[Tween] = []
 var _sweep_from := Vector3.ZERO
 var _sweep_to := Vector3.ZERO
@@ -183,7 +186,7 @@ func _charge() -> void:
 	path_mark.scale = Vector3(1, 1, _sweep_from.distance_to(_sweep_to))
 	path_mark.show()
 	Feel.sfx(&"click", body.global_position)
-	_tween_method(_set_open, 0.0, 1.0, charge_time * 0.4)
+	_lids(1.0, charge_time * 0.4)
 	await _wait(charge_time)
 
 
@@ -197,7 +200,7 @@ func _sweep() -> void:
 	_tween_to(spot, ^"global_position", _sweep_to, sweep_time / pace)
 	await _wait(sweep_time)
 	_end_sweep()
-	_tween_method(_set_open, 1.0, 0.0, 0.3)
+	_lids(0.0, 0.3)
 
 
 func _end_sweep() -> void:
@@ -232,7 +235,7 @@ func _lunge() -> void:
 	Feel.shake(0.4)
 	get_tree().create_timer(0.15, false).timeout.connect(func() -> void: impact.monitoring = false)
 	state = State.STUCK
-	_set_open(1.0)
+	_lids(1.0, LID_SNAP)
 	var wobble := _new_tween().set_loops(int(stuck_time / 0.3))
 	wobble.tween_property(body, ^"rotation:z", 0.25, 0.15)
 	wobble.tween_property(body, ^"rotation:z", -0.25, 0.15)
@@ -242,7 +245,7 @@ func _lunge() -> void:
 	wobble.kill()
 	body.rotation.z = 0.0
 	Feel.burst(&"leaves", global_position + Vector3.UP * 0.3, Vector3.UP)
-	_tween_method(_set_open, 1.0, 0.0, 0.3)
+	_lids(0.0, 0.3)
 	_tween_to(body, ^"position:y", hover_height, 0.6).set_ease(Tween.EASE_OUT)
 	await _wait(0.6)
 
@@ -252,7 +255,7 @@ func _knock_down() -> void:
 	state = State.DOWN
 	Feel.sfx(&"hit", body.global_position)
 	Feel.shake(0.3)
-	_set_open(0.6)
+	_lids(0.6, LID_SNAP)
 	_tween_to(body, ^"position:y", 0.8, 0.35).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BOUNCE)
 	var turn := _turn
 	await get_tree().create_timer(0.35, false).timeout
@@ -262,7 +265,7 @@ func _knock_down() -> void:
 	await get_tree().create_timer(down_time, false).timeout
 	if turn != _turn:
 		return
-	_set_open(0.0)
+	_lids(0.0, 0.3)
 	_tween_to(body, ^"position:y", hover_height, 0.6).set_ease(Tween.EASE_OUT)
 	await get_tree().create_timer(0.6, false).timeout
 	if turn == _turn:
@@ -318,7 +321,12 @@ func _die() -> void:
 	defeated.emit(self)
 
 
+func _lids(to: float, seconds: float) -> void:
+	_tween_method(_set_open, _open, to, seconds)
+
+
 func _set_open(amount: float) -> void:
+	_open = amount
 	lid_top.rotation.x = -LID_OPEN * amount
 	lid_bottom.rotation.x = LID_OPEN * amount
 	iris.visible = amount > 0.01
