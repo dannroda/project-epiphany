@@ -4658,14 +4658,14 @@ Mazmorra 4 (GDD §8e): el escudo espejo parte la Cumbre; el piso bajo sin él, e
 
 **Capturas:** `compass/images/m11-129-mapa.jpg`, `compass/images/m11-129-1.jpg`
 
-### 11.130 Bocas de cueva talladas en el risco · En curso
+### 11.130 Bocas de cueva talladas en el risco · Revisión
 
 **Responsable:** sesión del overworld
 
 Daniel: las bocas de cueva del overworld (la entrada trasera de la ermita, la cueva de las bombas, el manantial) eran una caja marrón con una puerta negra pegada al risco. Pidió darles detalle como a las puertas, pero hecho con el terreno.
 
-- [ ] Bocas detrás de los muros agrietados: Gruta y Santuario
-  Daniel 2026-10-14: rompió el muro agrietado y detrás quedó la muesca lisa del risco, sin boca de cueva. GrottoCrackedWall (-84,0,14 → GrottoDoor) y ShrineCrackedWall (-88,2.6,-22 → ShrineDoor) no tienen nodo *Mouth, así que cave_mouths() no las talla.
+- [x] Bocas detrás de los muros agrietados: Gruta y Santuario
+  Daniel 2026-10-14: rompió el muro agrietado y detrás quedó la muesca lisa del risco, sin boca de cueva. GrottoCrackedWall (-84,0,14 → GrottoDoor) y ShrineCrackedWall (-88,2.6,-22 → ShrineDoor) no tenían nodo *Mouth, así que cave_mouths() no las tallaba. Hecho (-eb): GrottoMouth (-83.97, 0, 14) y ShrineMouth (-88, 2.6, -23.55) en overworld.tscn, con Jambs como las demás; se tallan detrás del tapón de la pared y se ven al romperla. Probar: romper las paredes de la Gruta y del Santuario con una bomba.
 
 **Prueba:** En el overworld, las tres bocas (y la de la Cumbre) son un vano trapezoidal en el risco con jambas y dintel del mismo risco y un túnel oscuro; se entra caminando y el portal lleva a la cueva. test_portals, test_cave, test_shrine, test_spring, test_overworld
 
@@ -5059,10 +5059,10 @@ Daniel 2026-10-14 (playtest, Chullpa, Rellano): la pared agrietada ya llena el h
 - [ ] Chullpa: techo sobre el nicho del Rellano en covers de su pared
 - [ ] Revisar las demás paredes agrietadas (Queñoa, Totora, Cumbre, templo) con el mismo criterio
 - [ ] Test: el nicho está tapado antes y destapado después de romper la pared
-- [ ] Overworld: techos sobre las muescas de risco y nichos detrás de paredes agrietadas (-eb)
+- [x] Overworld: techos sobre las muescas de risco y nichos detrás de paredes agrietadas (-eb)
 - [x] CrackedWall.covers: oculta los techos al romperse
 
-**Notas:** CrackedWall.covers (fd): lista de nodos que se ven mientras la pared está entera y se ocultan al romperse (también al cargar rota). Cada nivel pone su techo y lo agrega a covers. Mazmorras: -43; overworld: -eb.
+**Notas:** CrackedWall.covers (fd): lista de nodos que se ven mientras la pared está entera y se ocultan al romperse (también al cargar rota). Cada nivel pone su techo y lo agrega a covers. Mazmorras: -43; overworld: -eb. Overworld (-eb): build_terreno_organico.py › niche_lids() genera una tapa (tapa_<pared>.res, del color de la tapa de la terraza y 2 cm sobre ella) sobre las celdas bajas encerradas detrás de cada pared agrietada: Cerros, Cardonal, Mirador, Quebrada y Cumbre. Gruta y Santuario dan a una boca de cueva, no a un nicho, y no llevan tapa. Cada tapa es el nodo Lid de su pared y está en sus covers. Test: test_overworld › test_cracked_wall_niches_are_roofed_until_the_wall_breaks.
 
 **Capturas:** `compass/images/m11-164-20261014-033804.png`, `compass/images/m11-164-20261014-034700.png`
 
@@ -5537,7 +5537,7 @@ La pantalla de título (src/ui/title/title_screen.tscn) sigue con arte provisori
 - [x] Integrar en title_screen.tscn (nodos en la escena, no por código) y decidir si el ojo de title_eye.gd queda o lo reemplaza el logo
 - [x] Actualizar el mockup de la pantalla de título en el canvas de diseño
 
-### 12.21 Ojo interruptor: la pupila sigue al player y se parece al ojo del jefe final · Pendiente
+### 12.21 Ojo interruptor: la pupila sigue al player y se parece al ojo del jefe final · Revisión
 
 **Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `arte`, `detalle`
 
@@ -6231,13 +6231,18 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 ### Revisión: lo listo para probar  (25/27 probadas)
 
-1. [ ] 11.130 Bocas de cueva talladas en el risco · En curso · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
-2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player. El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
+1. [ ] 11.130 Bocas de cueva talladas en el risco · Revisión · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. 
+   No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. 
+   D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
+2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
+   El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
 3. [x] 11.111 Cactus, árboles y matas se cortan como el pasto · Hecho · anda
 4. [x] 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · Hecho · anda
 5. [x] 11.118 Sandalias: correr manteniendo y salto largo con la pluma · Hecho · anda
 6. [x] 11.24 Más secretos en el overworld · Hecho · anda
-7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell" no hay asset correcto para la pared quebrable
+7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente
+   si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell"
+   no hay asset correcto para la pared quebrable
 8. [x] 11.30 Ítem de D3: el gancho · Hecho · anda
 9. [x] 11.28 Atajos que se abren al volver · Hecho · anda — anda, pero no debería hacer un fade. Debería haber una animacion del player subiendo y bajando
 10. [x] 11.46 Jefe: game juice · Hecho · anda

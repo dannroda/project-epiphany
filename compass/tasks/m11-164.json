@@ -14,7 +14,7 @@
       "text": "Test: el nicho está tapado antes y destapado después de romper la pared"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Overworld: techos sobre las muescas de risco y nichos detrás de paredes agrietadas (-eb)"
     },
     {
@@ -40,7 +40,7 @@
     }
   ],
   "milestone": "m11",
-  "notes": "CrackedWall.covers (fd): lista de nodos que se ven mientras la pared está entera y se ocultan al romperse (también al cargar rota). Cada nivel pone su techo y lo agrega a covers. Mazmorras: -43; overworld: -eb.",
+  "notes": "CrackedWall.covers (fd): lista de nodos que se ven mientras la pared está entera y se ocultan al romperse (también al cargar rota). Cada nivel pone su techo y lo agrega a covers. Mazmorras: -43; overworld: -eb. Overworld (-eb): build_terreno_organico.py › niche_lids() genera una tapa (tapa_<pared>.res, del color de la tapa de la terraza y 2 cm sobre ella) sobre las celdas bajas encerradas detrás de cada pared agrietada: Cerros, Cardonal, Mirador, Quebrada y Cumbre. Gruta y Santuario dan a una boca de cueva, no a un nicho, y no llevan tapa. Cada tapa es el nodo Lid de su pared y está en sus covers. Test: test_overworld › test_cracked_wall_niches_are_roofed_until_the_wall_breaks.",
   "order": 161,
   "priority": "medium",
   "refs": [],
@@ -52,5 +52,5 @@
   ],
   "test": "",
   "title": "Lo que esconde una pared agrietada no se ve desde arriba",
-  "updated_at": "2026-10-14T06:47:00.149Z"
+  "updated_at": "2026-10-14T07:06:21.587Z"
 }
