@@ -2,15 +2,15 @@
   "assignee": "project-epiphany-5d",
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "Portales: anillo brillante o círculo mágico con un pilar de luz"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Orbe del jefe: esfera de energía en vez de la bola brillante simple"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Otros efectos brillantes donde encajen"
     }
   ],
@@ -18,17 +18,17 @@
   "created_at": "2026-10-14T05:36:18.029Z",
   "description": "Daniel 2026-10-14 (por -5d), con referencias suyas (esferas de energía, anillos de fuego, círculos mágicos). Todo con shaders y partículas, sin texturas.",
   "milestone": "m12",
-  "notes": "",
+  "notes": "Hecho: portales (círculo mágico, pilar de luz, motas), proyectiles del jefe/torreta/Amaru como esfera de energía con estela, pulsos en las manos del jefe y La Mano, fase 3 en rojo, anillo de fuego de la bomba, círculo de la bendición. El tajo de espada (demo_tajo.tscn + sword_trail.gdshader) queda aparcado por Daniel: fue banco de pruebas para ataques elementales (12.28).",
   "order": 27,
   "priority": "medium",
   "refs": [],
   "size": "l",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "arte",
     "vfx"
   ],
   "test": "",
   "title": "VFX mágicos con shaders y partículas (sin texturas)",
-  "updated_at": "2026-10-14T05:36:18.842Z"
+  "updated_at": "2026-10-14T06:33:43.015Z"
 }

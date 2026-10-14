@@ -5047,7 +5047,7 @@ Quedan sin uso (no borro arte): las mallas de la decoración vieja (escombros, e
 
 Tras 11.162 (templo viejo borrado) quedaron sin uso las mallas de su decoración: escombros, estandarte, venas_doom, vasija_pedazos. Confirmar que nada las usa (ni builders de Blender) y borrarlas con su pieza en el build. La tablilla bow_hint queda (la usa la Queñoa).
 
-## M12 — Assets propios (Blender)  (16/27)
+## M12 — Assets propios (Blender)  (16/28)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -5572,15 +5572,23 @@ Daniel 2026-10-14 (por -5d): los ojos de la Queñoa (12.23) quedaron mucho mejor
 
 **Notas:** Daniel 2026-10-14: dos formas. Fases 1-2 máscara de oro (boceto 3); al entrar a la fase 3, cinemática corta (grito, la máscara se agrieta y estalla) y queda el ojo orgánico corrupto (boceto 2) para la fase 3. Lo hace -5d entero, boss.gd incluido.
 
-### 12.27 VFX mágicos con shaders y partículas (sin texturas) · Pendiente
+### 12.27 VFX mágicos con shaders y partículas (sin texturas) · Revisión
 
 **Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `vfx`
 
 Daniel 2026-10-14 (por -5d), con referencias suyas (esferas de energía, anillos de fuego, círculos mágicos). Todo con shaders y partículas, sin texturas.
 
-- [ ] Portales: anillo brillante o círculo mágico con un pilar de luz
-- [ ] Orbe del jefe: esfera de energía en vez de la bola brillante simple
-- [ ] Otros efectos brillantes donde encajen
+- [x] Portales: anillo brillante o círculo mágico con un pilar de luz
+- [x] Orbe del jefe: esfera de energía en vez de la bola brillante simple
+- [x] Otros efectos brillantes donde encajen
+
+**Notas:** Hecho: portales (círculo mágico, pilar de luz, motas), proyectiles del jefe/torreta/Amaru como esfera de energía con estela, pulsos en las manos del jefe y La Mano, fase 3 en rojo, anillo de fuego de la bomba, círculo de la bendición. El tajo de espada (demo_tajo.tscn + sword_trail.gdshader) queda aparcado por Daniel: fue banco de pruebas para ataques elementales (12.28).
+
+### 12.28 Ataques elementales · Pausado
+
+**Prioridad:** baja · **Tamaño:** L · **Etiquetas:** `arte`, `vfx`, `combate`
+
+Aparcado por Daniel (2026-10-14). El banco de pruebas del tajo de 12.27 sirve de punto de partida: src/world/vfx/demo_tajo.tscn y sword_trail.gdshader (medialuna aditiva, ancha en la hoja, borde interno deshilachado, fade al dejar de emitir). La versión original de Daniel del shader y la demo está en debug/tmp/fd/daniel_demo/ (sin versionar).
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 

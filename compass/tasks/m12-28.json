@@ -1,0 +1,21 @@
+{
+  "checklist": [],
+  "code": "12.28",
+  "created_at": "2026-10-14T06:33:43.289Z",
+  "description": "Aparcado por Daniel (2026-10-14). El banco de pruebas del tajo de 12.27 sirve de punto de partida: src/world/vfx/demo_tajo.tscn y sword_trail.gdshader (medialuna aditiva, ancha en la hoja, borde interno deshilachado, fade al dejar de emitir). La versión original de Daniel del shader y la demo está en debug/tmp/fd/daniel_demo/ (sin versionar).",
+  "milestone": "m12",
+  "notes": "",
+  "order": 28,
+  "priority": "low",
+  "refs": [],
+  "size": "l",
+  "status": "paused",
+  "tags": [
+    "arte",
+    "vfx",
+    "combate"
+  ],
+  "test": "",
+  "title": "Ataques elementales",
+  "updated_at": "2026-10-14T06:33:43.289Z"
+}
