@@ -59,7 +59,20 @@ PIRCA_ROW = 0.42
 PIRCA_JOINT = 0.04
 _pirca_rows = {}
 ## Piedra, junta y cornisa de las paredes de hiladas (chullpa: pirca en barro; templo: sillares lavanda).
-COURSES = {"chullpa": ("acantilado", "tierra", "tierra", True), "templo": ("piedra_templo", "gris_5", "piedra_templo", False)}
+COURSES = {"chullpa": ("acantilado", "tierra", "tierra", True), "templo": ("piedra_templo", "piedra_templo", "piedra_templo", False)}
+## Estilos de sillares parejos (como la cantería inca) en vez de pirca: ASHLAR_BLOCK de largo, cada hilada corrida media
+## piedra y las juntas sobre líneas de la grilla, para que salgan nítidas.
+ASHLAR = {"templo"}
+ASHLAR_BLOCK = 1.0
+
+
+def ashlar(a, z):
+	"""Hilada, piedra y distancia a la junta más cercana en los sillares."""
+	row = math.floor(z / PIRCA_ROW)
+	along = a + 1.0 + (row % 2) * ASHLAR_BLOCK / 2
+	k = math.floor(along / ASHLAR_BLOCK)
+	t = along - k * ASHLAR_BLOCK
+	return row, k, min(t, ASHLAR_BLOCK - t, z - row * PIRCA_ROW, (row + 1) * PIRCA_ROW - z)
 
 
 def pirca(a, z):
@@ -265,6 +278,12 @@ def axes(sides, corners, cut):
 					d = RUN[side] * (k * PIRCA_ROW + dz) / HEIGHT
 					if 0.0 < d < 2.0:
 						(ys if side in "ns" else xs).add(coord(side, d))
+	if WALL_STYLE in ASHLAR:
+		for side in sides:
+			for m in range(5):
+				for b in (-1.0 + m * ASHLAR_BLOCK / 2 + dt for dt in (-PIRCA_JOINT / 2, PIRCA_JOINT / 2, -0.1, 0.1)):
+					if -1.0 < b < 1.0:
+						(xs if side in "ns" else ys).add(b)
 	if WALL_STYLE == "cumbre":
 		for side in sides:
 			for k in range(7):
@@ -303,11 +322,14 @@ def wall_face(p, f, c, sides, kind, seed):
 	elif WALL_STYLE in COURSES:
 		stone, joint, cornice, dusty = COURSES[WALL_STYLE]
 		a = c.x if abs(f.normal.y) > abs(f.normal.x) else c.y
-		row, k, edge = pirca(a, c.z)
+		row, k, edge = (ashlar if WALL_STYLE in ASHLAR else pirca)(a, c.z)
 		if c.z > top - 0.22:
 			shade(p, f, cornice, 0.42 if dusty else 0.7)
 		elif edge < PIRCA_JOINT * 0.75:
-			shade(p, f, joint, 0.16 if dusty else 0.3)
+			shade(p, f, joint, 0.16 if dusty else 0.12 if joint == stone else 0.3)
+		elif WALL_STYLE in ASHLAR:
+			tone = 0.42 + 0.12 * random.Random(row * 104729 + k * 7919).random()
+			shade(p, f, stone, tone + 0.12 * min(1.0, edge / 0.1) - 0.06)
 		elif dusty and c.z < 0.3 * (0.5 + 0.5 * noise.noise(Vector((c.x + c.y, 0.0, 2.0)) * 2.0)):
 			p.paint([f], "tierra", "LOW", vary=0.1)
 		else:
@@ -674,6 +696,8 @@ def stone_leaf(p, dark, sun_top=True):
 		if sun_top:
 			sun(p, Vector((0, -DOOR_THICK, 2.55)))
 		return
+	if not sun_top:
+		return
 	steps = []
 	for k, (w, h) in enumerate(((0.9, 0.12), (0.62, 0.12), (0.34, 0.12))):
 		z0 = 2.32 + k * 0.12
@@ -754,8 +778,7 @@ def door(name, seed, fn):
 
 def door_switch(p):
 	door_leaf(p, "madera_oscura")
-	emblem = epi.eye(p, Vector((0, -DOOR_THICK - 0.01, 1.5)), 0.42, depth=0.05, pupil_swatch="noche")
-	p.paint(emblem, "sello", "LIGHT")
+	epi.logo_eye(p, Vector((0, -DOOR_THICK - 0.01, 1.6)), 0.8)
 
 
 def door_boss(p):
@@ -764,8 +787,7 @@ def door_boss(p):
 	for x0, x1, z0, z1 in ((-DOOR_WIDTH, DOOR_WIDTH, HEIGHT - 0.16, HEIGHT), (-DOOR_WIDTH, -DOOR_WIDTH + 0.14, 0.0, HEIGHT), (DOOR_WIDTH - 0.14, DOOR_WIDTH, 0.0, HEIGHT)):
 		frame += p.rounded_box(x0, x1, -DOOR_THICK - 0.06, -DOOR_THICK + 0.01, z0, z1, radius=0.03, segments=1)
 	p.paint(frame, "dorado", "MID", vary=0.03)
-	emblem = epi.eye(p, Vector((0, -DOOR_THICK - 0.01, 2.05)), 0.4, depth=0.05, pupil_swatch="noche")
-	p.paint(emblem, "doom", "MID")
+	epi.logo_eye(p, Vector((0, -DOOR_THICK - 0.01, 2.1)), 0.75)
 	lock_plate(p, 1.15, 0.6, "dorado")
 
 

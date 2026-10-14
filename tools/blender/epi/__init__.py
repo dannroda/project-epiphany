@@ -392,6 +392,65 @@ def angry_face(p, center, radius, tilt, eye_swatch="noche", brow_swatch="noche",
 	return faces
 
 
+LOGO_RAY = [(-13, -114), (13, -114), (13, -130), (8, -130), (8, -145), (3.5, -145), (3.5, -160), (-3.5, -160), (-3.5, -145),
+	(-8, -145), (-8, -130), (-13, -130)]
+LOGO_GOLD = [
+	[(372, 158), (398, 158), (398, 182), (372, 182), (372, 176), (352, 176), (352, 164), (372, 164)],
+	[(828, 158), (802, 158), (802, 182), (828, 182), (828, 176), (848, 176), (848, 164), (828, 164)],
+	[(552, 250), (564, 248), (564, 282), (572, 282), (572, 296), (544, 296), (544, 282), (552, 282)],
+	[(594, 252), (606, 252), (606, 300), (614, 300), (614, 314), (586, 314), (586, 300), (594, 300)],
+	[(636, 248), (648, 250), (648, 282), (656, 282), (656, 296), (628, 296), (628, 282), (636, 282)],
+]
+
+
+def logo_eye(p, center, width, depth=0.05):
+	"""El ojo de art/logo/epiphany_logo.svg en relieve, de frente a -Y y de width de ancho (sin los rayos ni adornos de oro
+	cuenta solo la almendra): rayos arriba, almendra de oro con el blanco, iris rojo con aro, pupila y brillo, barras a los
+	costados y tres colgantes."""
+	k = width / 380.0
+
+	def flat(points, z0, z1):
+		pts = [((x - 600) * k, (170 - y) * k) for x, y in points]
+		if sum(x0 * y1 - x1 * y0 for (x0, y0), (x1, y1) in zip(pts, pts[1:] + pts[:1])) < 0:
+			pts.reverse()
+		return p.polygon(pts, z0, z1)
+
+	def almond(half, peak, z0, z1):
+		pts = []
+		for i in range(17):
+			t = i / 16
+			pts.append((600 - half + 2 * half * t, 170 - 4 * t * (1 - t) * peak))
+		for i in range(1, 16):
+			t = i / 16
+			pts.append((600 + half - 2 * half * t, 170 + 4 * t * (1 - t) * peak))
+		return flat(pts, z0, z1)
+
+	def disc(r, z0, z1, x=600, y=170):
+		return p.cylinder(r * k, z0, z1, sides=24, center=((x - 600) * k, (170 - y) * k))
+
+	gold = almond(196, 72, 0.0, depth)
+	for side in LOGO_GOLD:
+		gold += flat(side, 0.0, depth)
+	for a in range(-60, 61, 20):
+		ray = flat([(600 + x, 170 + y) for x, y in LOGO_RAY], 0.0, depth)
+		p.transform(ray, Matrix.Rotation(math.radians(-a), 4, "Z"))
+		gold += ray
+	p.paint(gold, "dorado", "GRADIENT")
+	white = almond(186, 62, 0.0, depth * 1.3)
+	p.paint(white, "hueso", "LIGHT")
+	ring = disc(62, 0.0, depth * 1.5)
+	p.paint(ring, "dorado", "LIGHT")
+	iris = disc(57, 0.0, depth * 1.6)
+	p.paint(iris, "tela_roja", "DARK")
+	pupil = disc(25, 0.0, depth * 1.75)
+	p.paint(pupil, "noche", "MID")
+	glint = disc(9, 0.0, depth * 1.85, x=582, y=150)
+	p.paint(glint, "blanco", "LIGHT")
+	faces = gold + white + ring + iris + pupil + glint
+	p.transform(faces, Matrix.Translation(center) @ Matrix.Rotation(math.pi / 2, 4, "X"))
+	return faces
+
+
 def chakana_plate(p, center, size, swatch):
 	"""Placa escalonada (cruz andina) que mira a -Y."""
 	faces = []
