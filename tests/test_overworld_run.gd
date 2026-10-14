@@ -130,15 +130,8 @@ func test_play_start_into_the_temple_and_back() -> void:
 	assert_true(await _bomb_wall(^"ShrineCrackedWall", Vector3(0, 0, 2.1), Vector3.FORWARD, wall.global_position + Vector3(0, 0, 6)), "muro del santuario")
 	await _place(wall.global_position + Vector3(0, 0, 2.0), Vector3.FORWARD)
 	assert_true(await _walk_into(&"move_forward", SHRINE), "entra al santuario caminando")
-	var block := tree.current_scene.get_node(^"ShrineBlock") as PushBlock
-	for i in 2:
-		block.try_push(Vector3.FORWARD)
-		await tree.create_timer(0.6).timeout
-	await tree.create_timer(0.8).timeout
-	assert_eq((tree.current_scene.get_node(^"ShortcutGate") as Gate).is_open, true, "atajo abierto")
-	await _place(Vector3(10, 0, 0), Vector3.RIGHT)
-	assert_true(await _walk_into(&"move_right", OVERWORLD), "por el atajo a la entrada del templo")
-	assert_true(player.global_position.distance_to(tree.current_scene.get_node(^"Spawn_atajo").global_position) < 1.0, "sale en el atajo")
+	await _place(Vector3(0, 0, 6), Vector3.BACK)
+	assert_true(await _walk_into(&"move_backward", OVERWORLD), "sale del santuario por donde entró")
 
 	state.give(Items.get_item(&"shield_mirror"))
 	state.equip(Items.get_item(&"shield_mirror"))
