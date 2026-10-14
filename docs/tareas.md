@@ -4805,15 +4805,19 @@ Playtest 2026-10-13, Queñoa piso S1, sala con los arbustos y el pozo (probablem
 
 **Relacionadas:** 11.141 Queñoa 2P (Canopy): símbolo azul sin sentido y puerta bloqueada invisible
 
-### 11.146 Overworld: el ojo del puente a la Necrópolis no se ve ni se puede flechar · Pendiente
+### 11.146 Overworld: el ojo del puente a la Necrópolis no se ve ni se puede flechar · Revisión
 
 **Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`, `overworld`
 
 Playtest 2026-10-13: con arco y pluma, junto al río no hay forma visible de llegar al otro lado para buscar las sandalias. Por diseño (GDD, cadena del overworld) se cruza con una flecha al ojo del puente de la quebrada, que baja/abre el puente a la Necrópolis. Revisar: que el ojo del puente exista y funcione, y que se vea/entienda desde donde llega el player (señalizarlo; quizá el player busca en otro tramo del río).
 
-- [ ] Confirmado: el ojo está en la terraza alta del otro lado del río, fuera de cuadro (hay que mover el stick derecho para verlo).
-- [ ] Está en altura y la flecha no le llega desde la orilla (la flecha viaja plana o no apunta hacia arriba). Bajar el ojo a la altura del player, ponerlo en la cara del risco, o que la flecha apunte a ojos en altura.
+- [x] Confirmado: el ojo está en la terraza alta del otro lado del río, fuera de cuadro (hay que mover el stick derecho para verlo).
+- [x] Está en altura y la flecha no le llega desde la orilla (la flecha viaja plana o no apunta hacia arriba). Bajar el ojo a la altura del player, ponerlo en la cara del risco, o que la flecha apunte a ojos en altura.
 - [ ] Que se vea desde la orilla sin mover la cámara (acercarlo al río o encuadrarlo).
+
+**Prueba:** Desde la orilla oeste, tensar el arco mirando al este: el ojo al pie del risco entra en cuadro; una flecha lo prende y sube el puente. test_overworld (test_an_arrow_at_the_eye_raises_the_bridge_to_the_necropolis tira plano a 1 m)
+
+**Notas:** Causa: el arco siempre tira plano a la altura del player (aim.get_direction aplana) y el ojo estaba en la terraza a 2.6 m; el test pasaba porque apuntaba la flecha directo al ojo. Además una mata de ichu (hurtbox de 1.2 m) en la llegada del puente frenaba la flecha. Ojo bajado al pie del risco (6, 0, -6), mata quitada de overworld_decor.tscn y plantas_overworld.json. Visibilidad: con el arco tensado la cámara se adelanta 3 m y el ojo entra en cuadro, al borde; parado sin apuntar todavía no se ve.
 
 **Capturas:** `compass/images/m11-146-20261013-230751.png`, `compass/images/m11-146-20261013-231129.png`
 

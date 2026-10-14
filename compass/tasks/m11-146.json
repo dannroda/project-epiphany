@@ -1,11 +1,11 @@
 {
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "Confirmado: el ojo está en la terraza alta del otro lado del río, fuera de cuadro (hay que mover el stick derecho para verlo)."
     },
     {
-      "done": false,
+      "done": true,
       "text": "Está en altura y la flecha no le llega desde la orilla (la flecha viaja plana o no apunta hacia arriba). Bajar el ojo a la altura del player, ponerlo en la cara del risco, o que la flecha apunte a ojos en altura."
     },
     {
@@ -21,17 +21,17 @@
     "compass/images/m11-146-20261013-231129.png"
   ],
   "milestone": "m11",
-  "notes": "",
+  "notes": "Causa: el arco siempre tira plano a la altura del player (aim.get_direction aplana) y el ojo estaba en la terraza a 2.6 m; el test pasaba porque apuntaba la flecha directo al ojo. Además una mata de ichu (hurtbox de 1.2 m) en la llegada del puente frenaba la flecha. Ojo bajado al pie del risco (6, 0, -6), mata quitada de overworld_decor.tscn y plantas_overworld.json. Visibilidad: con el arco tensado la cámara se adelanta 3 m y el ojo entra en cuadro, al borde; parado sin apuntar todavía no se ve.",
   "order": 143,
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug",
     "overworld"
   ],
-  "test": "",
+  "test": "Desde la orilla oeste, tensar el arco mirando al este: el ojo al pie del risco entra en cuadro; una flecha lo prende y sube el puente. test_overworld (test_an_arrow_at_the_eye_raises_the_bridge_to_the_necropolis tira plano a 1 m)",
   "title": "Overworld: el ojo del puente a la Necrópolis no se ve ni se puede flechar",
-  "updated_at": "2026-10-14T02:11:29.318Z"
+  "updated_at": "2026-10-14T02:23:00.661Z"
 }
