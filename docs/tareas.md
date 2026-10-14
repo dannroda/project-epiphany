@@ -1,7 +1,7 @@
 # Tareas — Project Epiphany
 
 > Export de `compass/`, que es la fuente de verdad. No editar: los cambios se hacen en `compass/` o con `scompass`, y este archivo se regenera.
-> Generado: 2026-10-13
+> Generado: 2026-10-14
 
 ## M0 — Refactor del player + base de datos  (13/13)
 
@@ -4670,11 +4670,15 @@ Daniel: las bocas de cueva del overworld (la entrada trasera de la ermita, la cu
 
 **Capturas:** `compass/images/m11-130-mapa.jpg`, `compass/images/m11-130-1.jpg`, `compass/images/m11-130-2.jpg`, `compass/images/m11-130-3.jpg`, `compass/images/m11-130-4.jpg`, `compass/images/m11-130-20261013-221755.png`, `compass/images/m11-130-20261013-221902.png`
 
-### 11.131 Pozo junto a la Chullpa: caer sin bombas deja softlock · Pendiente
+### 11.131 Pozo junto a la Chullpa: caer sin bombas deja softlock · Revisión
 
 **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`
 
 Playtest 2026-10-13: en el overworld, al lado del primer nivel cerca de la cueva de las bombas, hay un pozo/foso con pared agrietada. Si el player cae ahí sin bombas no puede salir (softlock). Necesita una salida que no dependa de bombas (escalón, rampa, o que el pozo no sea accesible antes de tenerlas).
+
+**Prueba:** Caminar sobre el nivel 1 hacia el sur, desde (-74, -8) hacia el nicho del corazón de los Cerros (al lado de la Cueva de las bombas): la baranda frena y no se cae. Tests: test_the_hills_niche_is_fenced_from_above, test_every_rail_faces_its_terrace.
+
+**Notas:** Causa (compartida con 11.147): Piece.build recalcula las normales de las caras que no están en fixed, así que cada cuadrado suelto de la baranda quedaba mirando para cualquier lado. El colisionador importado choca solo de frente (backface_collision apagado), y por eso casi toda la baranda dejaba pasar desde la terraza. Se caía al nicho de HeartPieceHills, detrás de SecretHillsWall, en (-74, -4). railing() ahora arma cada cara mirando a su terraza y la marca fixed. Terreno, muros, decoración y navmesh regenerados.
 
 **Capturas:** `compass/images/m11-131-20261013-223001.png`
 
@@ -4829,11 +4833,15 @@ Playtest 2026-10-13: con arco y pluma, junto al río no hay forma visible de lle
 
 **Capturas:** `compass/images/m11-146-20261013-230751.png`, `compass/images/m11-146-20261013-231129.png`
 
-### 11.147 Overworld: caer al sector de arriba (entre riscos, junto a la meseta clara) deja softlock · Pendiente
+### 11.147 Overworld: caer al sector de arriba (entre riscos, junto a la meseta clara) deja softlock · Revisión
 
 **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`, `overworld`
 
 Playtest 2026-10-13 (con sandalias y pluma): en la zona de la captura (tierra con cardones, al pie de los riscos escalonados y la terraza clara), si el player se cae al sector de arriba de la captura (el claro de tierra entre los riscos, arriba a la izquierda del enemigo) no puede salir: softlock. Igual que 11.131: todo pozo/terraza al que se pueda caer necesita salida sin ítems que el player pueda no tener.
+
+**Prueba:** Bajar por la escalinata nueva desde la Necrópolis (x 63, z -14) a la zanja y volver a subir. Caminar por los bordes de la zanja desde arriba: la baranda frena. Tests: test_the_risco_low_corridor_has_stairs_up, test_every_rail_faces_its_terrace.
+
+**Notas:** Misma causa que 11.131 (baranda al revés; arreglada en el builder). Además, la zanja de nivel 0 al pie de la terraza clara de la Necrópolis es el pasillo bajo del Risco, desde donde se engancha RiscoPost (HeartPieceCliff), y no tenía entrada ni salida. Le agregué una escalinata al sur hacia la Necrópolis en x 62-64, z -18 (celdas Escalón en el GridMap y dos piezas de Terrazas giradas 180°). GDD 7.1, Risco.
 
 **Capturas:** `compass/images/m11-147-20261013-232715.png`
 
