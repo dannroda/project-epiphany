@@ -1,0 +1,27 @@
+{
+  "assignee": "project-epiphany-43",
+  "checklist": [],
+  "code": "11.153",
+  "created_at": "2026-10-14T02:38:48.277Z",
+  "description": "Playtest 2026-10-13, Totora (D3): en la sala del estanque grande con la puerta al norte sobre el agua, hay que usar el gancho hacia algo que está del otro lado de la puerta (en la otra sala), y no se entiende. Debería haber una plataforma (o poste visible) dentro de la propia sala, frente a la puerta, para que el cruce se lea. Relacionado con 11.150 (el targeting marca cosas de otras salas).",
+  "links": [
+    {
+      "task": "m11-150",
+      "type": "related"
+    }
+  ],
+  "milestone": "m11",
+  "notes": "",
+  "order": 150,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "diseño",
+    "totora"
+  ],
+  "test": "",
+  "title": "Totora: cruce con gancho a través de la puerta no se entiende; poner plataforma/poste en la propia sala",
+  "updated_at": "2026-10-14T02:38:48.619Z"
+}
