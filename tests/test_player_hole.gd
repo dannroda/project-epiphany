@@ -25,7 +25,8 @@ func test_overworld_walls_cut_a_hole_but_not_at_the_edge_of_the_world() -> void:
 	overworld.free()
 
 
-func test_the_camera_follows_the_player_with_the_hole() -> void:
+## 11.134: detrás de un risco la cámara se pone encima del player en vez de recortar un agujero, y vuelve al salir.
+func test_a_hidden_player_turns_the_camera_overhead() -> void:
 	assert_true(ProjectSettings.has_setting("shader_globals/player_hole"), "uniform global registrada")
 	var tree := Engine.get_main_loop() as SceneTree
 	tree.change_scene_to_file("res://levels/overworld.tscn")
@@ -36,16 +37,20 @@ func test_the_camera_follows_the_player_with_the_hole() -> void:
 		enemy.free()
 	var player := tree.get_first_node_in_group(&"player") as Node3D
 	var camera := tree.current_scene.get_node(^"TopDownCamera") as TopDownCamera
+	var tilt := func() -> float: return rad_to_deg(camera.global_basis.z.angle_to(Vector3.UP))
+	var normal_tilt: float = rad_to_deg(camera.offset.angle_to(Vector3.UP))
 	assert_true(Vector3(camera.player_hole.x, camera.player_hole.y, camera.player_hole.z).distance_to(player.global_position) < 0.5, "sigue al player")
-	assert_eq(camera.player_hole.w, 0.0, "en el claro nada lo tapa: sin agujero")
+	assert_true(not camera.occluded and absf(tilt.call() - normal_tilt) < 1.0, "en el claro, el ángulo normal (%.1f°)" % tilt.call())
 	player.global_position = Vector3(-88, 0.1, -37.8)
 	await tree.create_timer(0.1).timeout
-	assert_true(camera.player_hole.w > 0.0 and camera.player_hole.w < 1.0, "detrás del muro el agujero se va abriendo (%.2f)" % camera.player_hole.w)
-	await tree.create_timer(0.3).timeout
-	assert_eq(camera.player_hole.w, 1.0, "y queda abierto")
+	assert_true(camera.occluded, "detrás del muro lo tapa")
+	assert_true(tilt.call() < normal_tilt - 1.0, "y la cámara empieza a subir (%.1f°)" % tilt.call())
+	await tree.create_timer(0.6).timeout
+	assert_true(tilt.call() < 1.0, "hasta quedar encima (%.1f°)" % tilt.call())
+	assert_eq(camera.player_hole.w, 0.0, "sin agujero en las paredes")
 	player.global_position = Vector3(-88, 0.1, -41.0)
-	await tree.create_timer(0.4).timeout
-	assert_eq(camera.player_hole.w, 0.0, "lejos del muro se cierra")
+	await tree.create_timer(0.7).timeout
+	assert_true(not camera.occluded and absf(tilt.call() - normal_tilt) < 1.0, "lejos del muro vuelve al ángulo normal (%.1f°)" % tilt.call())
 
 
 func test_clouds_only_while_in_the_overworld() -> void:

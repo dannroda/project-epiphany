@@ -58,6 +58,10 @@ const GROUP := &"room_camera"
 ## Metros que la pared sur recortada sigue a la vista más allá del borde de la sala (una pared baja en rampa).
 @export var south_wall_reach := 0.0
 
+@export_group("Oclusión")
+## Si una pared tapa a un player, la cámara gira hasta quedar encima de él en este tiempo (s) y vuelve al salir.
+@export var overhead_time := 0.4
+
 @export_group("Co-op")
 ## Metros que quedan entre el borde de la pantalla y el player más alejado cuando el grupo no se puede abrir más.
 @export var leash_margin := 1.5
@@ -75,14 +79,15 @@ const SOUTH_WALL_DEPTH := 2.0
 const SOUTH_WALL_RELIEF := 0.3
 ## Alturas (sobre los pies) hacia donde se tiran rayos desde la cámara para saber si una pared tapa al player.
 const HOLE_PROBES: Array[float] = [0.8, 1.5]
-const HOLE_TIME := 0.2
 ## Un salto de más que esto en un cuadro es un teletransporte (reaparecer, pozo): el borde invisible no lo deshace.
 const TELEPORT_DISTANCE := 1.0
 
 var trauma := 0.0
-## Lo último que se le pasó a las paredes (pies del player, w: cuánto está abierto el agujero, 0–1).
+## Lo último que se le pasó a las paredes (pies del player; w, el agujero, queda en 0: la cámara se pone encima).
 var player_hole := Vector4.ZERO
-var _hole_open := 0.0
+## Alguna pared tapa a un player desde el ángulo normal: la cámara está cenital o yendo hacia ahí.
+var occluded := false
+var _overhead := 0.0
 ## Sala actual; null = overworld (seguimiento libre).
 var room: Room
 var transitioning := false
@@ -333,29 +338,33 @@ func _cut_south_wall(cut_room: Room) -> void:
 		material.set_shader_parameter(&"cut_lip", lip)
 
 
-## Las paredes (cutaway.gdshader, epiphany_wall.gdshader) recortan un agujero alrededor del player solo mientras
-## alguna tapa la vista hacia él; el agujero crece y se cierra en HOLE_TIME.
+## Si alguna pared tapa a un player desde el ángulo normal, en vez de recortarle un agujero (11.134) la cámara gira
+## hasta quedar encima en overhead_time, y vuelve al salir. Las paredes siguen leyendo player_hole, con w en 0.
 func _update_player_hole(delta: float) -> void:
-	var hidden: PlayerCharacter = null
+	occluded = false
 	if target_node:
 		for player in framed():
 			if _player_hidden(player):
-				hidden = player
+				occluded = true
 				break
-	var who := hidden if hidden else target_node
-	var feet := who.global_position if who else Vector3.ZERO
-	var goal := 1.0 if hidden else 0.0
-	_hole_open = move_toward(_hole_open, goal, delta / HOLE_TIME)
-	player_hole = Vector4(feet.x, feet.y, feet.z, _hole_open)
+	_overhead = move_toward(_overhead, 1.0 if occluded else 0.0, delta / overhead_time)
+	var feet := target_node.global_position if target_node else Vector3.ZERO
+	player_hole = Vector4(feet.x, feet.y, feet.z, 0.0)
 	RenderingServer.global_shader_parameter_set(&"player_hole", player_hole)
 
 
-## Solo cuentan las paredes (GridMap y cuerpos estáticos): players, enemigos y objetos sueltos no abren el agujero.
+## El offset de la cámara: el normal, o girado hasta quedar encima del foco mientras algo tapa a un player.
+func _eye() -> Vector3:
+	return offset.slerp(Vector3.UP * offset.length(), smoothstep(0.0, 1.0, _overhead))
+
+
+## Solo cuentan las paredes (GridMap y cuerpos estáticos): players, enemigos y objetos sueltos no tapan. Se mira desde
+## donde estaría la cámara normal: desde arriba ya no lo tapa nada y volvería enseguida.
 func _player_hidden(player: PlayerCharacter) -> bool:
 	var space := get_world_3d().direct_space_state
 	for height in HOLE_PROBES:
 		var point := player.global_position + Vector3.UP * height
-		var eye := point + global_basis.z * offset.length() if orthographic else global_position
+		var eye := point + offset if orthographic else focus + offset
 		var query := PhysicsRayQueryParameters3D.create(eye, point, 1)
 		if _player_rids.is_empty():
 			_player_rids.assign(Players.all.map(func(each: PlayerCharacter) -> RID: return each.get_rid()))
@@ -434,7 +443,9 @@ func _physics_process(delta: float) -> void:
 	focus = player_position + desired_offset + _look_ahead + _look
 	if room:
 		focus = _clamp(focus)
-	global_position = global_position.lerp(focus + offset, 1.0 - exp(-smooth_speed * delta))
+	var eye := _eye()
+	global_position = global_position.lerp(focus + eye, 1.0 - exp(-smooth_speed * delta))
+	global_basis = Basis.looking_at(-eye, Vector3.FORWARD)
 	if OS.is_debug_build():
 		DebugOverlay.watch("camera/focus_offset", (focus - player_position).snappedf(0.01))
 
