@@ -14,6 +14,8 @@ extends CompositorEffect
 @export var frame_sides := 0.0
 @export var frame_top := 0.0
 @export var frame_bottom := 0.0
+## En el editor el marco no se dibuja (molesta para editar el nivel), salvo que se tilde esto.
+@export var frame_in_editor := false
 
 var rd: RenderingDevice
 var shader: RID
@@ -98,7 +100,7 @@ func _render_callback(_type: int, render_data: RenderData) -> void:
 	var size := buffers.get_internal_size()
 	if size.x == 0 or size.y == 0:
 		return
-	var push := PackedFloat32Array([size.x, size.y, exposure, vignette, frame, frame_softness, frame_slant, frame_sides, frame_top, frame_bottom, 0.0]).to_byte_array()
+	var push := PackedFloat32Array([size.x, size.y, exposure, vignette, frame if frame_in_editor or not Engine.is_editor_hint() else 0.0, frame_softness, frame_slant, frame_sides, frame_top, frame_bottom, 0.0]).to_byte_array()
 	for view in buffers.get_view_count():
 		var u := RDUniform.new()
 		u.uniform_type = RenderingDevice.UNIFORM_TYPE_IMAGE
