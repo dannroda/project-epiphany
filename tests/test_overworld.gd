@@ -420,7 +420,9 @@ func test_every_rail_faces_its_terrace() -> void:
 	assert_eq(open.slice(0, 5), [], "%d caras de baranda no frenan desde arriba" % open.size())
 
 
-func test_the_hills_niche_is_fenced_from_above() -> void:
+## 11.164: con la pared entera se camina sobre la tapa del nicho de la pieza de corazón (sin baranda invisible ni caída
+## a un pozo sin salida); rota, la tapa y su piso se van y el nicho se sale por la pared.
+func test_the_hills_niche_is_walked_over_until_the_wall_breaks() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state: Node = tree.root.get_node(^"GameState")
 	state.reset()
@@ -432,8 +434,17 @@ func test_the_hills_niche_is_fenced_from_above() -> void:
 	player.global_position = Vector3(-74, 2.7, -8)
 	for i in 20:
 		await tree.physics_frame
-	var result: Array = await _walk_until(tree, player, &"move_backward", func() -> bool: return player.global_position.y < 2.0)
-	assert_true(not result[0], "la baranda no deja caer al nicho de la pieza de corazón (y %.2f)" % player.global_position.y)
+	var result: Array = await _walk_until(tree, player, &"move_backward", func() -> bool: return player.global_position.z > -3.6)
+	assert_true(result[0], "cruza por encima del nicho (quedó en %s)" % player.global_position)
+	assert_true(player.global_position.y > 2.4, "sobre la tapa, a la altura de la terraza (y %.2f)" % player.global_position.y)
+	player.global_position = Vector3(-74, 2.7, -8)
+	var space := player.get_world_3d().direct_space_state
+	var down := PhysicsRayQueryParameters3D.create(Vector3(-74, 4, -4.6), Vector3(-74, 1, -4.6), 1)
+	assert_true(not space.intersect_ray(down).is_empty(), "entera, hay piso sobre el nicho")
+	state.set_flag(&"ow_secret_hills_wall", true)
+	for i in 3:
+		await tree.physics_frame
+	assert_true(space.intersect_ray(down).is_empty(), "rota la pared, el nicho ya no tiene piso arriba")
 	state.reset()
 
 

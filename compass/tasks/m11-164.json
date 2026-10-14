@@ -22,8 +22,8 @@
       "text": "CrackedWall.covers: oculta los techos al romperse"
     },
     {
-      "detail": "Daniel 2026-10-14: con el nicho tapado, al caminar por la terraza el player choca con algo arriba de la tapa. La baranda invisible (rail) se arma con rocks(LEVELS, …, rail) en cracked_walls(), con el nicho abierto, así que rodea el hueco aunque la tapa lo cubra. Lo esperable: se camina por encima como por el resto de la terraza (sin baranda alrededor del nicho y con piso bajo la tapa, que siga ahí también con la pared rota para no caer a un hueco invisible).",
-      "done": false,
+      "detail": "Hecho (-eb): build_terreno_organico.py › _unfence_niches() saca la baranda alrededor de los nichos encerrados, y cada tapa lleva un piso (Lid/Floor, una caja a la altura de la terraza). CrackedWall ahora también apaga sus covers al romperse (process_mode DISABLED), así que el piso se va con la tapa: rota la pared, se puede caer al nicho y se sale por la pared rota (no queda un piso invisible sobre un hueco visible). Test: test_overworld › test_the_hills_niche_is_walked_over_until_the_wall_breaks.",
+      "done": true,
       "text": "Overworld: arriba de la tapa no hay pared invisible (-eb)"
     }
   ],
@@ -58,5 +58,5 @@
   ],
   "test": "tests/test_cracked_wall.gd (test_dungeon_niches_are_roofed, test_the_landing_niche_roof_goes_when_the_wall_breaks)",
   "title": "Lo que esconde una pared agrietada no se ve desde arriba",
-  "updated_at": "2026-10-14T07:17:18.618Z"
+  "updated_at": "2026-10-14T07:28:45.113Z"
 }

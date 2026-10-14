@@ -3,7 +3,7 @@ class_name CrackedWall
 extends StaticBody3D
 ## Pared con grietas: solo una explosión la rompe. Queda rota entre partidas por su flag.
 ## Con `switches` no la rompe una explosión sino sus interruptores (el piso que rompe un sub-jefe al caer).
-## `covers`: techos que tapan lo que esconde hasta que se rompe.
+## `covers`: techos que tapan lo que esconde hasta que se rompe; al romperse se ocultan y se apagan (con su piso, si tienen).
 
 signal broken
 
@@ -95,3 +95,4 @@ func _show(open: bool) -> void:
 		var cover := get_node_or_null(path) as Node3D
 		if cover:
 			cover.visible = not open
+			cover.set_deferred(&"process_mode", Node.PROCESS_MODE_DISABLED if open else Node.PROCESS_MODE_INHERIT)

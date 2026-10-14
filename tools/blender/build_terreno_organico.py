@@ -817,6 +817,7 @@ def cracked_walls(collection, holes, rail):
 		_inside, outside = _cut(terrain.bm, wall)
 		_keep(terrain, outside)
 	opened = rocks(LEVELS, 11, holes, rail)
+	_unfence_niches(rail, walls)
 	for wall in walls:
 		jamb = epi.Piece(32)
 		jamb.bm = opened.bm.copy()
@@ -853,6 +854,23 @@ def _niche(c, r, low):
 		if seen and len(seen) <= 4:
 			return seen
 	return set()
+
+
+def _unfence_niches(rail, walls):
+	"""Sin baranda alrededor de los nichos: con la pared entera se camina sobre su tapa; rota, se cae adentro y se sale
+	por la pared."""
+	grow = NICHE_LID[0] + 0.25
+	boxes = []
+	for wall in walls:
+		c, r = round(wall["x"] / CELL) - X0, round(wall["z"] / CELL) - Z0
+		for cc, rr in _niche(c, r, wall["low"]):
+			at = cell_center(cc, rr)
+			boxes.append((at.x - CELL / 2 - grow, at.x + CELL / 2 + grow, at.y - CELL / 2 - grow, at.y + CELL / 2 + grow))
+	inside = lambda q: any(x0 < q.x < x1 and y0 < q.y < y1 for x0, x1, y0, y1 in boxes)  # noqa: E731
+	gone = [f for f in rail.bm.faces if inside(f.calc_center_median())]
+	rail.fixed -= set(gone)
+	bmesh.ops.delete(rail.bm, geom=gone, context="FACES")
+	print("baranda: %d caras sacadas de los nichos" % len(gone))
 
 
 def niche_lids(walls, closed, collection):
