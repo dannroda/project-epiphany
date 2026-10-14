@@ -145,6 +145,31 @@ func test_deep_water_hurts_and_returns_to_the_room() -> void:
 	tree.root.get_node(^"GameState").reset()
 
 
+## 11.167: si el agua le saca el último corazón, muere en la orilla; no sigue cayendo al vacío hasta el game over.
+func test_drowning_on_the_last_heart_dies_on_the_floor() -> void:
+	await _start()
+	var spec := ["PisoBajo/Embarcadero", Vector3(-4, 0.5, -2)]
+	await _drop(_in(spec[0], Vector3(0, 0.5, 4)))
+	await tree.create_timer(0.8).timeout
+	player.health.restore(player.health.max_health, 1)
+	player.global_position = _in(spec[0], spec[1])
+	player.velocity = Vector3.ZERO
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	var lowest := INF
+	for i in 300:
+		lowest = minf(lowest, player.global_position.y)
+		if stack.top() is GameOver:
+			break
+		await tree.physics_frame
+	assert_true(player.is_dead, "el agua lo mata")
+	assert_true(stack.top() is GameOver, "game over")
+	assert_true(player.global_position.y > _in(spec[0], Vector3.ZERO).y - 0.5, "muere parado en el piso (%.1f)" % player.global_position.y)
+	assert_true(lowest > _in(spec[0], Vector3.ZERO).y - 6.0, "sin caer al vacío (%.1f)" % lowest)
+	(stack.top() as GameOver)._continue.pressed.emit()
+	await tree.create_timer(0.5).timeout
+	tree.root.get_node(^"GameState").reset()
+
+
 func test_every_hook_crossing_is_too_wide_to_jump_and_the_hook_crosses_it() -> void:
 	await _start()
 	_hookshot()
