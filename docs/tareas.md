@@ -4671,7 +4671,7 @@ Daniel: las bocas de cueva del overworld (la entrada trasera de la ermita, la cu
 
 **Notas:** build_terreno_organico.py › cave_mouths(): cada nodo *Mouth del overworld (exportado a terreno_overworld.json › mouths) se talla en riscos: se busca la cara del risco delante, se corta el vano (como paso_puerta del templo: 1.5 abajo, 1.2 arriba, 1.95 de alto), las aristas del borde se extruyen 1.6 m hacia adentro como túnel (noche) con fondo y piso oscuros, y el risco alrededor sale 0.18 m como jambas y dintel. Sin lomas delante ni dentro. Se quitó cueva_boca de las tres; SpringCaveMouth estaba girada hacia la montaña. De paso: el risco ya no pone baranda a 1.2 m de un poste del gancho (POSTS en el json), porque tapaba la vista desde abajo (fallaban los dos tests de test_overworld_hook).
 
-**Capturas:** `compass/images/m11-130-mapa.jpg`, `compass/images/m11-130-1.jpg`, `compass/images/m11-130-2.jpg`, `compass/images/m11-130-3.jpg`, `compass/images/m11-130-4.jpg`, `compass/images/m11-130-20261013-221755.png`, `compass/images/m11-130-20261013-221902.png`
+**Capturas:** `compass/images/m11-130-mapa.jpg`, `compass/images/m11-130-1.jpg`, `compass/images/m11-130-2.jpg`, `compass/images/m11-130-3.jpg`, `compass/images/m11-130-4.jpg`, `compass/images/m11-130-20261013-221755.png`, `compass/images/m11-130-20261013-221902.png`, `compass/images/m11-130-20261014-034842.png`
 
 ### 11.131 Pozo junto a la Chullpa: caer sin bombas deja softlock · Revisión
 

@@ -22,12 +22,12 @@
   "priority": "low",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "arte",
     "detalle"
   ],
   "test": "",
   "title": "Ojo interruptor: la pupila sigue al player y se parece al ojo del jefe final",
-  "updated_at": "2026-10-14T00:55:30.352Z"
+  "updated_at": "2026-10-14T06:54:10.446Z"
 }
