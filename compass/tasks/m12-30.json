@@ -14,17 +14,17 @@
     }
   ],
   "milestone": "m12",
-  "notes": "Hecho (-5d, d6a17c4f/0e2d6d34): cámara del templo a 25, velo con reach (negro pasado el grosor de pared), pasos de puerta en piedra lavanda oscura y umbrales lavanda. Quedan astillas de la pared vecina junto a las puertas este/oeste y en las esquinas. Rompe test_templo (gancho del ala del gancho y sala del jefe): ver con -5d.",
+  "notes": "Hecho (-5d, d6a17c4f/0e2d6d34): cámara del templo a 25, velo con reach (negro pasado el grosor de pared), pasos de puerta en piedra lavanda oscura y umbrales lavanda. Quedan astillas de la pared vecina junto a las puertas este/oeste y en las esquinas, y Mano y Jefe con su encuadre propio. test_templo pasa (una falla anterior era import viejo en main).",
   "order": 30,
   "priority": "high",
   "refs": [],
   "size": "m",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "arte",
     "templo"
   ],
-  "test": "",
+  "test": "Grabar el templo con el escenario templo_video: las salas llenan la pantalla y afuera es negro. test_templo, test_coop_camera, test_camera",
   "title": "Templo: salas que se vean bien para grabar",
-  "updated_at": "2026-10-14T18:47:57.824Z"
+  "updated_at": "2026-10-14T18:50:27.540Z"
 }
