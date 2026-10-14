@@ -11,10 +11,12 @@ uniform vec4 outer;
 uniform vec4 limit;
 uniform float plane_y;
 // Lo que queda fuera del piso y no está a la altura de la cresta (pasillos de las puertas, pilares) ya es negro a hole_fade del piso.
-// Sobre el piso, lo plano a la altura de la cresta (el tope de las paredes que entran en la sala: nichos, esquinas de las
-// puertas) es negro.
+// Lo plano a la altura de la cresta (el tope de las paredes, también las que entran en la sala) es negro, y fuera del piso
+// lo que pasa la cresta (pilares de las puertas) también.
 uniform vec4 floor_rect;
 uniform float hole_fade = 1.2;
+// El piso sin las filas de pared (sala estirada sobre un nicho): fuera de acá lo que llega a la cresta es negro.
+uniform vec4 interior;
 
 uniform sampler2D depth_texture : hint_depth_texture, filter_nearest;
 
@@ -41,8 +43,12 @@ void fragment() {
 	vec2 after = max(p - inner.zw, 0.0) / max(outer.zw - inner.zw, 0.001);
 	float a = clamp(max(max(before.x, before.y), max(after.x, after.y)), 0.0, 1.0);
 	bool over_floor = all(greaterThan(seen.xz, floor_rect.xy)) && all(lessThan(seen.xz, floor_rect.zw));
+	vec4 walls = interior.z > interior.x ? interior : floor_rect;
+	bool inside_walls = all(greaterThan(seen.xz, walls.xy - 0.1)) && all(lessThan(seen.xz, walls.zw + 0.1));
 	vec3 facing = normalize(cross(dFdx(seen), dFdy(seen)));
-	if (over_floor && seen.y > plane_y - 0.25 && seen.y < plane_y + 0.05 && abs(facing.y) > 0.9) {
+	if (!inside_walls && seen.y > plane_y - 0.25) {
+		a = 1.0;
+	} else if ((!over_floor || seen.y < plane_y + 0.05) && seen.y > plane_y - 0.25 && abs(facing.y) > 0.7) {
 		a = 1.0;
 	} else if (abs(seen.y - plane_y) > 0.3) {
 		vec2 out_before = max(floor_rect.xy - seen.xz, 0.0);

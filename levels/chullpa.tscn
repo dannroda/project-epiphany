@@ -142,6 +142,7 @@ shader_parameter/limit = Vector4(0.8, 0.8, 27, 19)
 shader_parameter/plane_y = -5.000000238418579
 shader_parameter/floor_rect = Vector4(3, 3, 25, 17)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(3, 3, 25, 17)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
@@ -161,6 +162,7 @@ shader_parameter/limit = Vector4(27, 0.8, 53.199997, 19)
 shader_parameter/plane_y = -5.000000238418579
 shader_parameter/floor_rect = Vector4(29, 3, 51, 17)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(29, 3, 51, 17)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
@@ -180,6 +182,7 @@ shader_parameter/limit = Vector4(0.8, 19, 27, 37.199997)
 shader_parameter/plane_y = -5.000000238418579
 shader_parameter/floor_rect = Vector4(3, 21, 25, 35)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(3, 21, 25, 35)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
@@ -199,6 +202,7 @@ shader_parameter/limit = Vector4(27, 19, 53.199997, 37.199997)
 shader_parameter/plane_y = -5.000000238418579
 shader_parameter/floor_rect = Vector4(29, 21, 51, 35)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(29, 21, 51, 35)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
@@ -364,6 +368,7 @@ shader_parameter/limit = Vector4(0.8, 0.8, 27, 19)
 shader_parameter/plane_y = 3.0
 shader_parameter/floor_rect = Vector4(3, 3, 25, 17)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(3, 3, 25, 17)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
@@ -383,6 +388,7 @@ shader_parameter/limit = Vector4(27, 0.8, 53.199997, 19)
 shader_parameter/plane_y = 3.0
 shader_parameter/floor_rect = Vector4(29, 3, 51, 17)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(29, 3, 51, 17)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
@@ -402,6 +408,7 @@ shader_parameter/limit = Vector4(0.8, 19, 27, 37.199997)
 shader_parameter/plane_y = 3.0
 shader_parameter/floor_rect = Vector4(3, 21, 25, 35)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(3, 21, 25, 35)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
@@ -421,6 +428,7 @@ shader_parameter/limit = Vector4(27, 19, 53.199997, 37.199997)
 shader_parameter/plane_y = 3.0
 shader_parameter/floor_rect = Vector4(29, 21, 51, 35)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(29, 21, 51, 35)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
@@ -570,6 +578,7 @@ shader_parameter/limit = Vector4(0.8, 0.8, 27, 19)
 shader_parameter/plane_y = 10.999999761581421
 shader_parameter/floor_rect = Vector4(3, 3, 25, 17)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(3, 3, 25, 17)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
@@ -589,6 +598,7 @@ shader_parameter/limit = Vector4(27, 0.8, 53.199997, 19)
 shader_parameter/plane_y = 10.999999761581421
 shader_parameter/floor_rect = Vector4(29, 3, 51, 17)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(29, 3, 51, 17)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
@@ -608,6 +618,7 @@ shader_parameter/limit = Vector4(-3.2, 19, 27, 37.199997)
 shader_parameter/plane_y = 10.999999761581421
 shader_parameter/floor_rect = Vector4(-1, 21, 25, 35)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(3, 21, 25, 35)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
@@ -627,6 +638,7 @@ shader_parameter/limit = Vector4(27, 19, 53.199997, 37.199997)
 shader_parameter/plane_y = 10.999999761581421
 shader_parameter/floor_rect = Vector4(29, 21, 51, 35)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(29, 21, 51, 35)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
@@ -2086,23 +2098,23 @@ collision_mask = 5
 script = ExtResource("47_lhowt")
 config = ExtResource("48_308dp")
 
-[node name="CaidaLA34" type="Node3D" parent="PlantaBaja" unique_id=1868850102 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA34" type="Node3D" parent="PlantaBaja" unique_id=427055295 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 22)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA35" type="Node3D" parent="PlantaBaja" unique_id=32388841 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA35" type="Node3D" parent="PlantaBaja" unique_id=844368776 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 28)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA36" type="Node3D" parent="PlantaBaja" unique_id=1852524129 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA36" type="Node3D" parent="PlantaBaja" unique_id=1625654683 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 34)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA37" type="Node3D" parent="PlantaBaja" unique_id=1822734121 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA37" type="Node3D" parent="PlantaBaja" unique_id=657616820 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 22)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA38" type="Node3D" parent="PlantaBaja" unique_id=535239748 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA38" type="Node3D" parent="PlantaBaja" unique_id=1567979697 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 32)
 script = ExtResource("61_308dp")
 
@@ -2806,39 +2818,39 @@ config = ExtResource("46_baen8")
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_t6ch3")
 
-[node name="CaidaLA33" type="Node3D" parent="PisoAlto" unique_id=490382684 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA33" type="Node3D" parent="PisoAlto" unique_id=1658125978 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 8)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA34" type="Node3D" parent="PisoAlto" unique_id=705508357 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA34" type="Node3D" parent="PisoAlto" unique_id=993188450 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 8)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA35" type="Node3D" parent="PisoAlto" unique_id=1527761516 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA35" type="Node3D" parent="PisoAlto" unique_id=1137822447 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 8)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA36" type="Node3D" parent="PisoAlto" unique_id=2100391040 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA36" type="Node3D" parent="PisoAlto" unique_id=249682747 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 8)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA37" type="Node3D" parent="PisoAlto" unique_id=2068653180 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA37" type="Node3D" parent="PisoAlto" unique_id=1646080262 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 12)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA38" type="Node3D" parent="PisoAlto" unique_id=1174666419 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA38" type="Node3D" parent="PisoAlto" unique_id=1934163784 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 12)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA39" type="Node3D" parent="PisoAlto" unique_id=1738142838 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA39" type="Node3D" parent="PisoAlto" unique_id=870835306 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 30)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA40" type="Node3D" parent="PisoAlto" unique_id=1545926071 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA40" type="Node3D" parent="PisoAlto" unique_id=1263332883 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 12)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA41" type="Node3D" parent="PisoAlto" unique_id=1017309971 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA41" type="Node3D" parent="PisoAlto" unique_id=1097385909 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 12)
 script = ExtResource("61_308dp")
 
@@ -2877,7 +2889,7 @@ south_wall_reach = 1.7
 script = ExtResource("55_bkpqy")
 near_margin = 3.5
 
-[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=865947068 instance=ExtResource("80_308dp")]
+[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=347263023 instance=ExtResource("80_308dp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1439023435 instance=ExtResource("39_iq7xx")]

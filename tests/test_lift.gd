@@ -122,13 +122,13 @@ func test_in_reach_it_gets_an_outline() -> void:
 	player.global_position = pot.global_position + Vector3(0, 0, 6.0)
 	for i in 3:
 		await tree.physics_frame
-	assert_eq(model.material_overlay, null, "lejos, sin contorno")
+	assert_eq(model.material_overlay, Liftable.STENCIL_MARK, "lejos, sin contorno: solo marca el stencil (no hace silueta al player)")
 	player.global_position = pot.global_position + Vector3(0, 0, 1.0)
 	player.model.look_at(player.model.global_position + Vector3.BACK, Vector3.UP)
 	for i in 3:
 		await tree.physics_frame
-	assert_true(model.material_overlay != null, "al alcance, con contorno")
+	assert_true(model.material_overlay != Liftable.STENCIL_MARK and model.material_overlay.next_pass == Liftable.STENCIL_MARK, "al alcance, con contorno, y sigue marcando el stencil")
 	await _tap(tree, &"interact")
 	await tree.create_timer(0.7).timeout
-	assert_eq(model.material_overlay, null, "levantada, sin contorno")
+	assert_true(model.material_overlay is ShaderMaterial and model.material_overlay.next_pass is ShaderMaterial and (model.material_overlay.next_pass as ShaderMaterial).shader == preload("res://src/feel/occluded_silhouette.gdshader"), "levantada, sin contorno: con el destello y la silueta del player")
 	setup[1].reset()
