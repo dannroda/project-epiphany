@@ -11,6 +11,8 @@ uniform vec4 outer;
 uniform vec4 limit;
 uniform float plane_y;
 // Lo que queda fuera del piso y no está a la altura de la cresta (pasillos de las puertas, pilares) ya es negro a hole_fade del piso.
+// Sobre el piso, lo plano a la altura de la cresta (el tope de las paredes que entran en la sala: nichos, esquinas de las
+// puertas) es negro.
 uniform vec4 floor_rect;
 uniform float hole_fade = 1.2;
 
@@ -38,7 +40,11 @@ void fragment() {
 	vec2 before = max(inner.xy - p, 0.0) / max(inner.xy - outer.xy, 0.001);
 	vec2 after = max(p - inner.zw, 0.0) / max(outer.zw - inner.zw, 0.001);
 	float a = clamp(max(max(before.x, before.y), max(after.x, after.y)), 0.0, 1.0);
-	if (abs(seen.y - plane_y) > 0.3) {
+	bool over_floor = all(greaterThan(seen.xz, floor_rect.xy)) && all(lessThan(seen.xz, floor_rect.zw));
+	vec3 facing = normalize(cross(dFdx(seen), dFdy(seen)));
+	if (over_floor && seen.y > plane_y - 0.25 && seen.y < plane_y + 0.05 && abs(facing.y) > 0.9) {
+		a = 1.0;
+	} else if (abs(seen.y - plane_y) > 0.3) {
 		vec2 out_before = max(floor_rect.xy - seen.xz, 0.0);
 		vec2 out_after = max(seen.xz - floor_rect.zw, 0.0);
 		a = max(a, clamp(max(max(out_before.x, out_before.y), max(out_after.x, out_after.y)) / hole_fade, 0.0, 1.0));
