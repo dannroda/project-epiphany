@@ -31,6 +31,9 @@ POST_GAP = 1.2
 X0, Z0 = DATA["origin"]
 CELL = DATA["cell"]
 POSTS = [(x, -z) for x, z in DATA.get("posts", [])]
+# Sin decoración delante de cada ojo (largo, medio ancho en m): la flecha vuela recta a 1 m y una planta la frena.
+EYES = [(Vector((e["x"], -e["z"])), Vector((e["dx"], -e["dz"])).normalized()) for e in DATA.get("eyes", [])]
+FIRE_LINE = (16.0, 1.0)
 GW, GH = len(GRID[0]), len(GRID)
 TOP = 2.6
 CAP = 0.15
@@ -659,7 +662,15 @@ def decor_spots():
 		return spots
 	far = gap(np.array([(s[1].x, s[1].y) for s in spots]), FLAT)
 	dry = [all(cell_at(s[1].x + dx, s[1].y + dy) != "w" for dx, dy in ((0.7, 0), (-0.7, 0), (0, 0.7), (0, -0.7))) for s in spots]
-	return [s for s, d, ok in zip(spots, far, dry) if d > 0.6 and ok]
+	return [s for s, d, ok in zip(spots, far, dry) if d > 0.6 and ok and not _in_fire_line(s[1])]
+
+
+def _in_fire_line(xy):
+	for at, ahead in EYES:
+		along = (xy - at).dot(ahead)
+		if -0.5 < along < FIRE_LINE[0] and abs((xy - at).cross(ahead)) < FIRE_LINE[1]:
+			return True
+	return False
 
 
 def decor(meshes, collection):

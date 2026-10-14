@@ -2426,9 +2426,6 @@ transform = Transform3D(0.98881805, 0, -0.14912687, 0, 1, 0, 0.14912687, 0, 0.98
 [node name="Grass239" parent="Plantas" unique_id=480138376 instance=ExtResource("22_o8xrr")]
 transform = Transform3D(0.9569807, 0, -0.2901516, 0, 1, 0, 0.2901516, 0, 0.9569807, 11.506, 2.6, -13.571)
 
-[node name="Grass240" parent="Plantas" unique_id=2109612603 instance=ExtResource("22_o8xrr")]
-transform = Transform3D(0.015210531, 0, -0.9998843, 0, 1, 0, 0.9998843, 0, 0.015210531, 38.576, 2.6, -13.598)
-
 [node name="Flores115" parent="Plantas" unique_id=1629512232 instance=ExtResource("4_o1qjm")]
 transform = Transform3D(0.33225775, 0, 0.9431886, 0, 1, 0, -0.9431886, 0, 0.33225775, -95.559, 2.6, -11.522)
 
@@ -2479,9 +2476,6 @@ transform = Transform3D(-0.39547873, 0, -0.91847515, 0, 1, 0, 0.91847515, 0, -0.
 
 [node name="Flores120" parent="Plantas" unique_id=636109351 instance=ExtResource("4_o1qjm")]
 transform = Transform3D(0.7220156, 0, -0.6918767, 0, 1, 0, 0.6918767, 0, 0.7220156, -9.908, 0.027, -11.914)
-
-[node name="Grass250" parent="Plantas" unique_id=998834683 instance=ExtResource("22_o8xrr")]
-transform = Transform3D(-0.9796286, 0, 0.20081784, 0, 1, 0, -0.20081784, 0, -0.9796286, 38.159, 2.6, -12.485)
 
 [node name="Grass251" parent="Plantas" unique_id=530305539 instance=ExtResource("22_o8xrr")]
 transform = Transform3D(-0.8083176, 0, -0.58874667, 0, 1, 0, 0.58874667, 0, -0.8083176, 40.329, 2.6, -11.677)
