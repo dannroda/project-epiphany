@@ -230,6 +230,9 @@ func test_the_warden_gets_stuck_in_the_roots_and_falls_to_the_sword() -> void:
 	warden.hurtbox.receive(DamageInfo.make(2, 0.0, player))
 	assert_eq(warden.health.current, warden.health.max_health, "flotando, la espada rebota")
 	assert_true(await _until(func() -> bool: return warden.state == WatcherEye.State.STUCK, 20.0), "se tira y queda enganchado")
+	assert_true(warden._open < 1.0, "los párpados se abren animados, no de golpe (%.2f)" % warden._open)
+	await tree.create_timer(0.3).timeout
+	assert_eq(warden._open, 1.0, "y quedan abiertos")
 	await _sword(warden)
 	assert_true(warden.is_dead, "enganchado, la espada lo vence sin arco")
 	assert_true(await _until(func() -> bool: return fight.active), "pelea ganada")
