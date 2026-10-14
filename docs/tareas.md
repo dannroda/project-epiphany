@@ -5002,7 +5002,7 @@ Daniel 2026-10-14 (captura del piso de tablones, Queñoa/Totora): el patrón del
 
 Daniel 2026-10-14 (por -5d): el overworld tiene que compartir el arte de las mazmorras. Brillo: el look BrilloLA (lo eligió tras comparar overworld base vs brillo vs Chullpa). Piso: más detalle, hoy se ve plano. Plan: epiphany_outdoor.gdshader con palette_surface brillo y patrón de piso por swatch (losas, textura de tierra, variación de tono del pasto), más BrilloLA y glow en overworld.tscn. Coordinar con -eb antes de tocar overworld.tscn; prototipo en debug/tmp.
 
-## M12 — Assets propios (Blender)  (15/25)
+## M12 — Assets propios (Blender)  (15/26)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -5512,6 +5512,12 @@ Pedido de -43 (playtest 2026-10-13): las paredes agrietadas de las mazmorras LA 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `arte`, `ui`
 
 Daniel 2026-10-14: con el logo en el menú principal, el ojo del logo va en el resto de lugares que usaban el ojo dibujado por código, pero solo el ojo. Hecho: art/logo/epiphany_eye.svg (solo el ojo: almendra, iris, pupila y contorno dorado, sin rayos, lágrimas ni letras) → assets/ui/logo/epiphany_eye.png; Eye de game_over, language_select y la carga (scene_flow) son TextureRect con esa textura. Game over y selección de idioma lo muestran tenue (alfa 0,35); el de carga parpadea achicando la escala. Se borraron title_eye.gd y loading_eye.gd. Test: test_every_eye_is_the_logo_eye.
+
+### 12.26 Jefe final (Ojo): rediseño completo del look · Pendiente
+
+**Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `jefe`
+
+Daniel 2026-10-14 (por -5d): los ojos de la Queñoa (12.23) quedaron mucho mejor que el jefe final, así que se rediseña el look entero del jefe: cuerpo, ojo, párpados y manos. Primero bocetos de concepto para Daniel. El gameplay y la estructura de boss.gd no cambian: Body, Eye con las shape keys rendija/dilatada, Upper/LowerLid, manos con las shape keys GRIP y los anchors. 12.21 (ojo interruptor parecido al ojo del jefe) va después de esta.
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 

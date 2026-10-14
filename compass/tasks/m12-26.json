@@ -1,0 +1,21 @@
+{
+  "assignee": "project-epiphany-5d",
+  "checklist": [],
+  "code": "12.26",
+  "created_at": "2026-10-14T04:57:59.532Z",
+  "description": "Daniel 2026-10-14 (por -5d): los ojos de la Queñoa (12.23) quedaron mucho mejor que el jefe final, así que se rediseña el look entero del jefe: cuerpo, ojo, párpados y manos. Primero bocetos de concepto para Daniel. El gameplay y la estructura de boss.gd no cambian: Body, Eye con las shape keys rendija/dilatada, Upper/LowerLid, manos con las shape keys GRIP y los anchors. 12.21 (ojo interruptor parecido al ojo del jefe) va después de esta.",
+  "milestone": "m12",
+  "notes": "",
+  "order": 26,
+  "priority": "medium",
+  "refs": [],
+  "size": "l",
+  "status": "todo",
+  "tags": [
+    "arte",
+    "jefe"
+  ],
+  "test": "",
+  "title": "Jefe final (Ojo): rediseño completo del look",
+  "updated_at": "2026-10-14T04:57:59.532Z"
+}
