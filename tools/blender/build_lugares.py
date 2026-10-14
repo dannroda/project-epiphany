@@ -389,6 +389,100 @@ def ojo_globo(p):
 	p.paint(pupil, "noche", "DARK")
 
 
+CUMBRE_DOOR = (0.75, 0.6, 2.7)
+
+
+def cumbre_entrada(p):
+	"""Entrada a la Cumbre: un cóndor gigante tallado en el risco (como el templo del Cóndor de Machu Picchu) con las alas
+	abiertas en capas de plumas de piedra y las primarias separadas como dedos, la gola blanca y la cabeza sobre el dintel
+	de una puerta inca trapezoidal de doble jamba. Nieve arriba de las plumas. Origen en el piso, al centro de la puerta,
+	con el frente en y = 0 (mira a -Y); lo de atrás se hunde en el risco."""
+	bottom, top_half, door_h = CUMBRE_DOOR
+
+	def slab(points, front, back):
+		"""Prisma de la planta points (x, z) entre y = front y y = back."""
+		if sum(points[i][0] * points[(i + 1) % len(points)][1] - points[(i + 1) % len(points)][0] * points[i][1] for i in range(len(points))) < 0:
+			points = points[::-1]
+		faces = p.polygon(points, -back, -front)
+		p.transform(faces, Matrix.Rotation(math.pi / 2, 4, "X"))
+		return faces
+
+	def feather(base, tip, width):
+		axis = (Vector(tip) - Vector(base)).normalized()
+		side = Vector((-axis.y, axis.x)) * width
+		b, t = Vector(base), Vector(tip)
+		pts = [b + side, b + (t - b) * 0.7 + side * 0.95]
+		for k in range(1, 4):
+			a = math.pi * k / 4
+			pts.append(t - axis * width * (1 - math.sin(a)) + side * math.cos(a))
+		pts += [b + (t - b) * 0.7 - side * 0.95, b - side]
+		return [tuple(q) for q in pts]
+
+	stone = []
+	frame = []
+	for s in (-1, 1):
+		for k, (z0, z1) in enumerate(((0.0, 0.95), (0.95, 1.85), (1.85, door_h))):
+			x0 = lambda z: bottom + (top_half - bottom) * z / door_h
+			inner = [(s * x0(z0), z0), (s * (x0(z0) + 0.75 - 0.05 * k), z0), (s * (x0(z1) + 0.7 - 0.05 * k), z1), (s * x0(z1), z1)]
+			frame += slab(inner, -0.35, 1.2)
+			outer = [(s * (x0(z0) + 0.75 - 0.05 * k), z0), (s * (x0(z0) + 1.35), z0), (s * (x0(z1) + 1.25), z1), (s * (x0(z1) + 0.7 - 0.05 * k), z1)]
+			stone += slab(outer, -0.15, 1.2)
+	lintel = slab([(-1.6, door_h), (1.6, door_h), (1.5, door_h + 0.55), (-1.5, door_h + 0.55)], -0.4, 1.2)
+	frame += lintel
+	p.jitter(frame, 0.025)
+	p.paint(frame, "piedra", "LIGHT", vary=0.08)
+	p.paint(stone, "piedra", "MID", vary=0.08)
+	step = p.rounded_box(-1.5, 1.5, -0.8, 0.0, 0.0, 0.16, radius=0.04, segments=1)
+	p.paint(step, "gris_4", "DARK", vary=0.05)
+	hole = slab([(-bottom, 0.0), (bottom, 0.0), (top_half, door_h), (-top_half, door_h)], 0.05, 2.0)
+	p.paint(hole, "noche", "DARK")
+
+	torso = p.blob((0.0, 0.35, 5.0), 1.35, squash=(0.95, 0.55, 1.2), subdiv=2, rough=0.06)
+	p.paint(torso, "gris_4", z_range=(2.5, 7.0), vary=0.05)
+	wings = []
+	band = []
+	for s in (-1, 1):
+		coverts = slab([(s * 0.8, 4.3), (s * 0.8, 5.8), (s * 2.4, 6.45), (s * 4.1, 6.55), (s * 4.5, 6.15), (s * 3.2, 5.45), (s * 1.9, 4.75)], -0.55, 1.0)
+		wings += coverts
+		for k in range(7):
+			t = k / 6
+			base = (s * (1.1 + 3.1 * t), 5.0 + 1.0 * t - 0.35 * t * t)
+			tip = (base[0] + s * (0.25 + 0.35 * t), base[1] - 1.25 + 0.35 * t)
+			band += slab(feather(base, tip, 0.27), -0.42 - 0.02 * k, 1.0)
+		for k in range(5):
+			a = math.radians(52 - 26 * k)
+			base = (s * 4.1, 6.1 - 0.12 * k)
+			tip = (base[0] + s * math.cos(a) * 1.35, base[1] + math.sin(a) * 1.35)
+			wings += slab(feather(base, tip, 0.17), -0.48 + 0.03 * k, 1.0)
+	p.jitter(wings + band, 0.02)
+	p.paint(wings, "gris_4", z_range=(3.0, 7.5), vary=0.06)
+	p.paint(band, "gris_2", z_range=(3.0, 7.5), vary=0.06)
+	wings += band
+
+	neck = p.cylinder(0.32, 0.0, 1.0, sides=8, radius_top=0.26)
+	p.transform(neck, Matrix.Translation((0, 0.05, 4.4)) @ Matrix.Rotation(math.radians(115), 4, "X"))
+	p.paint(neck, "gris_5", "MID")
+	ruff = []
+	for k in range(14):
+		a = 2 * math.pi * k / 14
+		ruff += p.blob((math.cos(a) * 0.6, -0.55 + 0.1 * math.sin(a), 4.05 + math.sin(a) * 0.42), 0.26, squash=(1.0, 0.8, 1.0), subdiv=1, rough=0.12)
+	p.paint(ruff, "blanco", "LIGHT", vary=0.05)
+	head = p.blob((0.0, -1.05, 4.15), 0.42, squash=(0.8, 1.15, 0.85), subdiv=2, rough=0.04)
+	head += p.blob((0.0, -1.1, 4.52), 0.17, squash=(0.45, 1.5, 0.9), subdiv=1, rough=0.1)
+	p.paint(head, "gris_5", "DARK")
+	beak = p.blob((0.0, -1.52, 4.02), 0.2, squash=(0.65, 1.5, 0.75), subdiv=1, rough=0.0)
+	beak += p.blob((0.0, -1.78, 3.9), 0.11, squash=(0.8, 1.0, 1.3), subdiv=1, rough=0.0)
+	p.paint(beak, "hueso", "MID")
+	eyes = []
+	for s in (-1, 1):
+		eyes += p.blob((s * 0.29, -1.22, 4.28), 0.075, subdiv=1, rough=0.0)
+	p.paint(eyes, "dorado", "LIGHT")
+
+	p.bm.normal_update()
+	snow = [f for f in wings + torso + frame + stone if f.normal.z > 0.6 and f.calc_center_median().z > 2.6]
+	p.paint(snow, "blanco", "LIGHT", vary=0.04)
+
+
 def puente(p):
 	"""Puente de soga (queswachaca): piso tejido de paja de 2 × 4 m a lo largo de Y, barandas de soga y postes."""
 	floor = []
@@ -1105,6 +1199,7 @@ def totora_entrada(p):
 piece("chullpa_entrada", 48, chullpa_entrada, smooth=40)
 piece("quenoa_entrada", 49, quenoa_entrada, smooth=40)
 piece("totora_entrada", 50, totora_entrada, smooth=40)
+piece("cumbre_entrada", 51, cumbre_entrada, smooth=40)
 
 epi.layout(kit, columns=7, spacing=3.5)
 epi.publish("lugares", material="outdoor")
