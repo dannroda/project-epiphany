@@ -5020,17 +5020,26 @@ Playtest 2026-10-14 (probando la pelea del jefe final, 12.26): en la sala de lad
 
 **Capturas:** `compass/images/m11-161-20261014-023958.png`
 
-### 11.162 Retirar el templo viejo (levels/temple.tscn) · Pendiente
+### 11.162 Retirar el templo viejo (levels/temple.tscn) · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `limpieza`, `templo`
 
 Daniel 2026-10-14: lo obsoleto se borra. El juego usa templo.tscn; temple.tscn (flags d1_) solo confunde (11.161: un escenario de debug lo cargaba y Daniel vio su antesala). Pasar al templo actual o a otro nivel lo que todavía lo usa y borrarlo, con lo que solo sirve a él.
 
-- [ ] Escenarios de debug: boss_key_door_locked y dungeon_no_bow al templo actual
-- [ ] Tests que lo cargan: boss, coop_hud, doom, enemy_ai, jump, minimap, overworld, player_hole, players, portal, render_budget, spike_trap, tablet (al templo actual o a otro nivel)
-- [ ] test_temple.gd: pasar lo que siga valiendo a test_templo y borrar el resto
-- [ ] Borrar levels/temple.tscn, data/dungeons/temple_graph.tres y lo que solo lo usa (revisar tools/build_temple_kit.gd, vary_temple.gd, toon_preview.gd y decorate_levels.gd); actualizar gdd.md
-- [ ] Suite completa en verde
+- [x] Escenarios de debug: boss_key_door_locked y dungeon_no_bow al templo actual
+- [x] Tests que lo cargan: boss, coop_hud, doom, enemy_ai, jump, minimap, overworld, player_hole, players, portal, render_budget, spike_trap, tablet (al templo actual o a otro nivel)
+- [x] test_temple.gd: pasar lo que siga valiendo a test_templo y borrar el resto
+- [x] Borrar levels/temple.tscn, data/dungeons/temple_graph.tres y lo que solo lo usa (revisar tools/build_temple_kit.gd, vary_temple.gd, toon_preview.gd y decorate_levels.gd); actualizar gdd.md
+- [x] Suite completa en verde
+
+**Prueba:** tests/test_templo.gd, test_boss.gd, test_doom.gd, test_portal.gd, test_slots.gd, test_map.gd, test_audio.gd (suite completa: 506 tests)
+
+**Notas:** Hecho (2026-10-14). Borrados: levels/temple.tscn, data/dungeons/temple_graph.tres, data/kits/temple_kit.tres, levels/decor/temple_decor.tscn, levels/nav/temple_navmesh.tres, tests/test_temple.gd y 23 flags d1_ del registro.
+Pasado al templo: la sala del Jefe crece a 22 x 14 m (la pelea de 12.26 no entraba en 22 x 10), doom por sala (0.1 en Pluma a 0.9 en la Antesala), autoguardado al entrar a la Antesala, las cuatro tablillas del doom (flags te_tablet_*), y de test_temple la puerta del jefe con su llave y morir ante el jefe (vuelve a la antesala con la puerta abierta).
+Escenarios: nuevo templo.cfg (vestíbulo); boss_key_door_locked al templo; dungeon_no_bow borrado.
+Arregla lo que rompió 11.161 (boss, temple, slots, map, audio). El cartel de piso del minimapa solo sale en mazmorras de más de un piso.
+El test de paredes de hueco pasa a la chullpa y mira las piezas orientadas: el Hueco suelto del kit LA tiene las paredes hundidas en los cuatro lados.
+Quedan sin uso (no borro arte): las mallas de la decoración vieja (escombros, estandarte, venas_doom, vasija_pedazos). La tablilla bow_hint queda para la Queñoa.
 
 ## M12 — Assets propios (Blender)  (16/27)
 

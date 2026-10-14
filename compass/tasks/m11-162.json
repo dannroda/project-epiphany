@@ -2,23 +2,23 @@
   "assignee": "project-epiphany-43",
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "Escenarios de debug: boss_key_door_locked y dungeon_no_bow al templo actual"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Tests que lo cargan: boss, coop_hud, doom, enemy_ai, jump, minimap, overworld, player_hole, players, portal, render_budget, spike_trap, tablet (al templo actual o a otro nivel)"
     },
     {
-      "done": false,
+      "done": true,
       "text": "test_temple.gd: pasar lo que siga valiendo a test_templo y borrar el resto"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Borrar levels/temple.tscn, data/dungeons/temple_graph.tres y lo que solo lo usa (revisar tools/build_temple_kit.gd, vary_temple.gd, toon_preview.gd y decorate_levels.gd); actualizar gdd.md"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Suite completa en verde"
     }
   ],
@@ -26,17 +26,17 @@
   "created_at": "2026-10-14T05:48:54.511Z",
   "description": "Daniel 2026-10-14: lo obsoleto se borra. El juego usa templo.tscn; temple.tscn (flags d1_) solo confunde (11.161: un escenario de debug lo cargaba y Daniel vio su antesala). Pasar al templo actual o a otro nivel lo que todavía lo usa y borrarlo, con lo que solo sirve a él.",
   "milestone": "m11",
-  "notes": "",
+  "notes": "Hecho (2026-10-14). Borrados: levels/temple.tscn, data/dungeons/temple_graph.tres, data/kits/temple_kit.tres, levels/decor/temple_decor.tscn, levels/nav/temple_navmesh.tres, tests/test_temple.gd y 23 flags d1_ del registro.\nPasado al templo: la sala del Jefe crece a 22 x 14 m (la pelea de 12.26 no entraba en 22 x 10), doom por sala (0.1 en Pluma a 0.9 en la Antesala), autoguardado al entrar a la Antesala, las cuatro tablillas del doom (flags te_tablet_*), y de test_temple la puerta del jefe con su llave y morir ante el jefe (vuelve a la antesala con la puerta abierta).\nEscenarios: nuevo templo.cfg (vestíbulo); boss_key_door_locked al templo; dungeon_no_bow borrado.\nArregla lo que rompió 11.161 (boss, temple, slots, map, audio). El cartel de piso del minimapa solo sale en mazmorras de más de un piso.\nEl test de paredes de hueco pasa a la chullpa y mira las piezas orientadas: el Hueco suelto del kit LA tiene las paredes hundidas en los cuatro lados.\nQuedan sin uso (no borro arte): las mallas de la decoración vieja (escombros, estandarte, venas_doom, vasija_pedazos). La tablilla bow_hint queda para la Queñoa.",
   "order": 159,
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "limpieza",
     "templo"
   ],
-  "test": "",
+  "test": "tests/test_templo.gd, test_boss.gd, test_doom.gd, test_portal.gd, test_slots.gd, test_map.gd, test_audio.gd (suite completa: 506 tests)",
   "title": "Retirar el templo viejo (levels/temple.tscn)",
-  "updated_at": "2026-10-14T05:48:56.332Z"
+  "updated_at": "2026-10-14T06:14:26.513Z"
 }
