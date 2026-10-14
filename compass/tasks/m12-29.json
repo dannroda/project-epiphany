@@ -2,15 +2,15 @@
   "assignee": "project-epiphany-5d",
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "Malla muro_agrietado_cueva_la (las medidas de paso que usen las cuevas)"
     },
     {
-      "done": false,
+      "done": true,
       "text": "la_walls: bomb_cave y shrine_cave usan el tapón de cueva"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Techo en covers sobre lo que esconde cada uno (11.164)"
     }
   ],
@@ -36,12 +36,12 @@
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "arte",
     "bug"
   ],
   "test": "",
   "title": "Muro agrietado LA de cueva (muro_agrietado_cueva_la)",
-  "updated_at": "2026-10-14T06:46:08.952Z"
+  "updated_at": "2026-10-14T07:12:28.602Z"
 }

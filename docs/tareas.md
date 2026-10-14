@@ -5066,7 +5066,7 @@ Daniel 2026-10-14 (playtest, Chullpa, Rellano): la pared agrietada ya llena el h
 
 **Notas:** CrackedWall.covers (fd): lista de nodos que se ven mientras la pared está entera y se ocultan al romperse (también al cargar rota). Cada nivel pone su techo y lo agrega a covers. Mazmorras: -43; overworld: -eb. Overworld (-eb): build_terreno_organico.py › niche_lids() genera una tapa (tapa_<pared>.res, del color de la tapa de la terraza y 2 cm sobre ella) sobre las celdas bajas encerradas detrás de cada pared agrietada: Cerros, Cardonal, Mirador, Quebrada y Cumbre. Gruta y Santuario dan a una boca de cueva, no a un nicho, y no llevan tapa. Cada tapa es el nodo Lid de su pared y está en sus covers. Test: test_overworld › test_cracked_wall_niches_are_roofed_until_the_wall_breaks.
 
-**Capturas:** `compass/images/m11-164-20261014-033804.png`, `compass/images/m11-164-20261014-034700.png`
+**Capturas:** `compass/images/m11-164-20261014-033804.png`, `compass/images/m11-164-20261014-034700.png`, `compass/images/m11-164-20261014-041025.png`
 
 **Relacionadas:** 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista; 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la); 12.29 Muro agrietado LA de cueva (muro_agrietado_cueva_la)
 
@@ -5613,15 +5613,15 @@ Daniel 2026-10-14 (por -5d), con referencias suyas (esferas de energía, anillos
 
 Aparcado por Daniel (2026-10-14). El banco de pruebas del tajo de 12.27 sirve de punto de partida: src/world/vfx/demo_tajo.tscn y sword_trail.gdshader (medialuna aditiva, ancha en la hoja, borde interno deshilachado, fade al dejar de emitir). La versión original de Daniel del shader y la demo está en debug/tmp/fd/daniel_demo/ (sin versionar).
 
-### 12.29 Muro agrietado LA de cueva (muro_agrietado_cueva_la) · Pendiente
+### 12.29 Muro agrietado LA de cueva (muro_agrietado_cueva_la) · Revisión
 
 **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `bug`
 
 Daniel 2026-10-14 (playtest, cueva de las bombas): el muro de práctica (CavePracticeWall) sigue siendo el cracked_wall.tscn de siempre, un bloque con tapa de pasto verde que sobresale de la pared de roca de la cueva. 12.24 hizo los tapones LA de chullpa, quenoa, totora y cumbre; las cuevas pasaron al look LA (cueva, 7298dfb5) después y quedaron sin el suyo. Falta el estilo cueva: tapón que llene el paso LA con la roca oscura y la cresta gris de la cueva, grietas en las dos caras, colocado por la_walls como en las mazmorras. Usos: bomb_cave (CavePracticeWall) y shrine_cave. Lo que esconde va tapado con covers (11.164).
 
-- [ ] Malla muro_agrietado_cueva_la (las medidas de paso que usen las cuevas)
-- [ ] la_walls: bomb_cave y shrine_cave usan el tapón de cueva
-- [ ] Techo en covers sobre lo que esconde cada uno (11.164)
+- [x] Malla muro_agrietado_cueva_la (las medidas de paso que usen las cuevas)
+- [x] la_walls: bomb_cave y shrine_cave usan el tapón de cueva
+- [x] Techo en covers sobre lo que esconde cada uno (11.164)
 
 **Capturas:** `compass/images/m12-29-20261014-034608.png`
 
