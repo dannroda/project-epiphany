@@ -88,6 +88,27 @@ func test_hole_drops_to_the_room_below() -> void:
 	tree.root.get_node(^"GameState").reset()
 
 
+func test_an_enemy_that_falls_to_the_floor_below_stays_visible() -> void:
+	await _start()
+	await _drop(_in("PlantaBaja/SalaCofre", Vector3(-4, 0.5, 0)))
+	var enemy: Enemy = load("res://src/entities/enemy.tscn").instantiate()
+	enemy.config = load("res://data/entities/skeleton.tres")
+	enemy.remove_from_group(Room.SLEEPERS)
+	_floor("PlantaBaja").add_child(enemy)
+	enemy.global_position = player.global_position + Vector3(1.5, 1.5, 0.0)
+	var airborne := false
+	for i in 120:
+		await tree.physics_frame
+		airborne = airborne or not enemy.is_on_floor()
+		if airborne and enemy.is_on_floor():
+			break
+	await tree.physics_frame
+	assert_eq(DungeonFloor.of(enemy), _floor("Sotano"), "un esqueleto de la planta baja que cae al sótano pasa a ese piso")
+	assert_true(enemy.is_visible_in_tree(), "así no queda invisible con la planta baja oculta")
+	enemy.free()
+	tree.root.get_node(^"GameState").reset()
+
+
 func test_crypt_ladder_only_goes_up_to_the_room_above() -> void:
 	await _start()
 	await _drop(_in("PlantaBaja/SalaCofre", Vector3(-4, 0.5, 0)))

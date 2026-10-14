@@ -32,3 +32,12 @@ static func of(node: Node) -> DungeonFloor:
 static func show_up_to(tree: SceneTree, level: int) -> void:
 	for node in tree.get_nodes_in_group(GROUP):
 		(node as DungeonFloor).visible = (node as DungeonFloor).level <= level
+
+
+## El piso que contiene esa altura del mundo (el que cae por un hueco ya cuenta en el de abajo).
+static func at_height(tree: SceneTree, y: float) -> DungeonFloor:
+	for node in tree.get_nodes_in_group(GROUP):
+		var bottom := (node as DungeonFloor).global_position.y - BELOW
+		if y >= bottom and y < bottom + HEIGHT:
+			return node
+	return null

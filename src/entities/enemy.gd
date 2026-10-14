@@ -38,6 +38,7 @@ var _guard_down_left := 0.0
 var _guard_pose: PoseOverlay
 var _armor: Node3D
 var _recoil_left := 0.0
+var _airborne := false
 
 var is_dead: bool:
 	get:
@@ -99,10 +100,25 @@ func _physics_process(delta: float) -> void:
 	velocity.x = desired_velocity.x + _knockback.x
 	velocity.z = desired_velocity.z + _knockback.z
 	move_and_slide()
+	if not is_on_floor():
+		_airborne = true
+	elif _airborne:
+		_airborne = false
+		_join_floor_below()
 	_turn(delta)
 	if _guard_pose:
 		var goal := 1.0 if is_guarding() and not _is_attacking() else 0.0
 		_guard_pose.influence = move_toward(_guard_pose.influence, goal, delta / 0.15)
+
+
+## Si cayó por un hueco pasa al piso de abajo: los pisos de arriba del player se ocultan y lo dejarían invisible.
+func _join_floor_below() -> void:
+	var here := DungeonFloor.of(self)
+	if here == null:
+		return
+	var landed := DungeonFloor.at_height(get_tree(), global_position.y)
+	if landed and landed != here:
+		reparent.call_deferred(landed)
 
 
 func move_toward_point(point: Vector3, speed: float) -> void:
