@@ -16,10 +16,11 @@
     },
     {
       "note": "Funciona, pero solo debería ser para las paredes. No para objetos/plantas, para eso está el x-ray. Y el movimiento es un poco nauseabundo.",
+      "result": "pass",
       "task": "m11-134"
     }
   ],
   "order": 2,
   "title": "Overworld: laguna, halos, minimapa y cámara",
-  "updated_at": "2026-10-14T05:18:36.912Z"
+  "updated_at": "2026-10-14T05:24:35.417Z"
 }

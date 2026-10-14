@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (93/156)
+## M11 — Pulido: contenido y feel  (95/156)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4702,9 +4702,9 @@ Playtest 2026-10-13: al levantar una vasija chica, cuando el player queda tapado
 
 **Capturas:** `compass/images/m11-133-20261013-223150.png`
 
-### 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player · Revisión
+### 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player · Hecho
 
-**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-eb · **Etiquetas:** `camara`, `mejora`
+**Terminada:** 2026-10-14 · **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-eb · **Etiquetas:** `camara`, `mejora`
 
 Playtest 2026-10-13 (mejora, no bug): cuando el player queda detrás de un acantilado/pared y hoy se aplica el agujero (dither alrededor del player), en vez de eso rotar la cámara hasta quedar encima del player (cenital) mientras dure la oclusión, y volver al ángulo normal al salir. No cambia la cámara del resto del juego: solo en los casos donde hoy se usa el agujero.
 
@@ -4885,9 +4885,9 @@ Playtest 2026-10-13 (con sandalias y pluma): en la zona de la captura (tierra co
 
 **Relacionadas:** 11.131 Pozo junto a la Chullpa: caer sin bombas deja softlock
 
-### 11.148 Minimapa del overworld desactualizado (la quebrada sale como abismo negro) · Revisión
+### 11.148 Minimapa del overworld desactualizado (la quebrada sale como abismo negro) · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`, `overworld`, `ui`
+**Terminada:** 2026-10-14 · **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`, `overworld`, `ui`
 
 Playtest 2026-10-13: en Ravine el minimapa (foto cenital del overworld) muestra la quebrada como un abismo negro, pero en el juego ahora es un río. La foto no se regeneró después de los últimos cambios de terreno. Regenerarla y, si se puede, que un test compare su fecha/huella con la del terreno para que no vuelva a quedar vieja.
 
@@ -6139,13 +6139,18 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 ### Revisión: lo listo para probar  (25/27 probadas)
 
-1. [ ] 11.130 Bocas de cueva talladas en el risco · En curso · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
-2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player. El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
+1. [ ] 11.130 Bocas de cueva talladas en el risco · En curso · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. 
+   No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. 
+   D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
+2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
+   El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
 3. [x] 11.111 Cactus, árboles y matas se cortan como el pasto · Hecho · anda
 4. [x] 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · Hecho · anda
 5. [x] 11.118 Sandalias: correr manteniendo y salto largo con la pluma · Hecho · anda
 6. [x] 11.24 Más secretos en el overworld · Hecho · anda
-7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell" no hay asset correcto para la pared quebrable
+7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente
+   si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell"
+   no hay asset correcto para la pared quebrable
 8. [x] 11.30 Ítem de D3: el gancho · Hecho · anda
 9. [x] 11.28 Atajos que se abren al volver · Hecho · anda — anda, pero no debería hacer un fade. Debería haber una animacion del player subiendo y bajando
 10. [x] 11.46 Jefe: game juice · Hecho · anda
@@ -6167,9 +6172,9 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 26. [x] 10.24 Tope de FPS · Hecho · anda
 27. [x] 10.25 Sombras del sol acordes a la cámara cenital · Hecho · anda
 
-### Overworld: laguna, halos, minimapa y cámara  (3/4 probadas)
+### Overworld: laguna, halos, minimapa y cámara  (4/4 probadas)
 
 1. [x] 11.140 Overworld (Lagoon): z-fighting entre el pasto y el camino de tierra · Hecho · anda
 2. [x] 11.143 Overworld: delineado/halo oscuro raro alrededor de árboles, cardones y bordes · Hecho · anda
-3. [x] 11.148 Minimapa del overworld desactualizado (la quebrada sale como abismo negro) · Revisión · anda — Es un poco tosco como aparece en el minimapa, pero es detalle menor.
-4. [ ] 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player · Revisión — Funciona, pero solo debería ser para las paredes. No para objetos/plantas, para eso está el x-ray. Y el movimiento es un poco nauseabundo.
+3. [x] 11.148 Minimapa del overworld desactualizado (la quebrada sale como abismo negro) · Hecho · anda — Es un poco tosco como aparece en el minimapa, pero es detalle menor.
+4. [x] 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player · Hecho · anda — Funciona, pero solo debería ser para las paredes. No para objetos/plantas, para eso está el x-ray. Y el movimiento es un poco nauseabundo.
