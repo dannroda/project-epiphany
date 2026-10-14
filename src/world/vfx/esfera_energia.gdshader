@@ -3,7 +3,7 @@
 shader_type spatial;
 render_mode unshaded, blend_add, depth_draw_never, shadows_disabled, fog_disabled;
 
-uniform vec4 color : source_color = vec4(0.45, 0.95, 1.0, 1.0);
+instance uniform vec4 color : source_color = vec4(0.45, 0.95, 1.0, 1.0);
 uniform float energy = 2.2;
 uniform float swirl = 2.5;
 

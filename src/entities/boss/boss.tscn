@@ -28,7 +28,22 @@
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_corrupto_mano_izq.res" id="c_hand_l"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_corrupto_mano_der.res" id="c_hand_r"]
 [ext_resource type="Shader" path="res://src/entities/boss/ondas.gdshader" id="ondas"]
+[ext_resource type="Shader" path="res://src/entities/boss/pulso.gdshader" id="pulso"]
 [ext_resource type="Shader" path="res://src/world/vfx/esfera_energia.gdshader" id="esfera"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pulso"]
+render_priority = 0
+shader = ExtResource("pulso")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pulso"]
+direction = Vector3(0, 1, 0)
+spread = 0.0
+initial_velocity_min = 0.4
+initial_velocity_max = 0.4
+gravity = Vector3(0, 0.8, 0)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_pulso"]
+size = Vector2(1.2, 0.53)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_eye"]
 size = Vector3(2.4, 3.8, 1.6)
@@ -150,10 +165,6 @@ height = 2.0
 render_priority = 0
 shader = ExtResource("ondas")
 shader_parameter/color = Color(0.45, 0.95, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_ondas_mano"]
-width = 72
-height = 32
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ondas_oreja"]
 width = 64
@@ -593,13 +604,16 @@ script = ExtResource("2_hand")
 [node name="Mesh" type="MeshInstance3D" parent="HandLeft"]
 mesh = ExtResource("7_hand_l")
 
-[node name="Ondas" type="Sprite3D" parent="HandLeft/Mesh"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0.09)
-material_override = SubResource("ShaderMaterial_ondas")
+[node name="Pulso" type="GPUParticles3D" parent="HandLeft/Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.82, 0.09)
+material_override = SubResource("ShaderMaterial_pulso")
 cast_shadow = 0
-pixel_size = 0.025
-axis = 1
-texture = SubResource("GradientTexture2D_ondas_mano")
+amount = 3
+lifetime = 1.2
+local_coords = false
+visibility_aabb = AABB(-3, -2, -3, 6, 6, 6)
+process_material = SubResource("ParticleProcessMaterial_pulso")
+draw_pass_1 = SubResource("PlaneMesh_pulso")
 
 [node name="Esquirlas" type="GPUParticles3D" parent="HandLeft"]
 emitting = false
@@ -679,13 +693,16 @@ script = ExtResource("2_hand")
 [node name="Mesh" type="MeshInstance3D" parent="HandRight"]
 mesh = ExtResource("10_hand_r")
 
-[node name="Ondas" type="Sprite3D" parent="HandRight/Mesh"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0.09)
-material_override = SubResource("ShaderMaterial_ondas")
+[node name="Pulso" type="GPUParticles3D" parent="HandRight/Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.82, 0.09)
+material_override = SubResource("ShaderMaterial_pulso")
 cast_shadow = 0
-pixel_size = 0.025
-axis = 1
-texture = SubResource("GradientTexture2D_ondas_mano")
+amount = 3
+lifetime = 1.2
+local_coords = false
+visibility_aabb = AABB(-3, -2, -3, 6, 6, 6)
+process_material = SubResource("ParticleProcessMaterial_pulso")
+draw_pass_1 = SubResource("PlaneMesh_pulso")
 
 [node name="Esquirlas" type="GPUParticles3D" parent="HandRight"]
 emitting = false

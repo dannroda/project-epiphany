@@ -597,18 +597,6 @@ def bombas_x3(p):
 		p.merge(q)
 
 
-def orbe(p):
-	core = p.blob((0, 0, 0), 0.22, subdiv=3, rough=0.0)
-	p.paint(core, "doom", "MID")
-	shell = []
-	for i in range(6):
-		a = 2 * math.pi * i / 6
-		s = p.polygon([(0, 0.0), (0.08, 0.02), (0.0, 0.16)], -0.01, 0.01)
-		p.transform(s, Matrix.Rotation(a, 4, "Y") @ Matrix.Translation((0, 0, 0.18)))
-		shell += s
-	p.paint(shell, "sello", "LIGHT")
-
-
 def explosion(p):
 	"""Bola de fuego de radio 1: núcleo facetado y puntas en cono hacia todos lados, clara al centro y naranja en las
 	puntas (la agranda y desvanece src/items/bomb/explosion.gd)."""
@@ -630,7 +618,6 @@ piece("flecha", 17, flecha, smooth=40)
 piece("flechas_x5", 18, flechas_x5, smooth=40)
 piece("bomba", 19, lambda p: bomb(p), smooth=50)
 piece("bombas_x3", 20, bombas_x3, smooth=50)
-piece("orbe", 21, orbe, smooth=40)
 piece("explosion", 22, explosion)
 piece("piedra_levantable", 23, piedra_levantable, smooth=70)
 
