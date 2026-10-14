@@ -8,8 +8,6 @@ const MapData := preload("res://src/ui/menus/map_data.gd")
 const CROSSINGS := [
 	["PisoBajo/Gancho", Vector3(-0.9, 0, 0.5), "PisoBajo/BalsasPost", "PisoBajo/Balsas"],
 	["PisoBajo/Balsas", Vector3(-0.9, 0, -2.5), "PisoBajo/GanchoPost", "PisoBajo/Gancho"],
-	["PisoAlto/Telar", Vector3(-2, 0, 2), "PisoAlto/EstanquePost", "PisoAlto/Estanque"],
-	["PisoAlto/Estanque", Vector3(-6, 0, 4), "PisoAlto/TelarPost", "PisoAlto/Telar"],
 	["PisoAlto/Estanque", Vector3(-4, 0, 0), "PisoAlto/EstanqueStripPost", "PisoAlto/Estanque"],
 	["PisoAlto/Estanque", Vector3(6, 0, 0), "PisoAlto/EstanqueWestPost", "PisoAlto/Estanque"],
 	["PisoAlto/Mirador", Vector3(-6, 0, 0), "PisoAlto/MiradorPost", "PisoAlto/Mirador"],
@@ -135,7 +133,7 @@ func test_the_reeds_stairs_go_up_to_the_guardhouse_and_back() -> void:
 
 func test_deep_water_hurts_and_returns_to_the_room() -> void:
 	await _start()
-	for spec: Array in [["PisoBajo/Embarcadero", Vector3(-4, 0.5, -2)], ["PisoAlto/Telar", Vector3(-4, 0.5, -2)]]:
+	for spec: Array in [["PisoBajo/Embarcadero", Vector3(-4, 0.5, -2)], ["PisoAlto/Telar", Vector3(-6, 0.5, -2)]]:
 		await _drop(_in(spec[0], Vector3(0, 0.5, 4)))
 		await tree.create_timer(0.8).timeout
 		var health := player.health.current
@@ -167,6 +165,23 @@ func test_every_hook_crossing_is_too_wide_to_jump_and_the_hook_crosses_it() -> v
 		player.targeting.clear()
 		assert_true(player.global_position.distance_to(post.global_position) < 1.5 and player.health.current == health, "%s: el gancho lleva hasta %s sin caer al agua (%s)" % [spec[0], post.name, player.global_position.snappedf(0.1)])
 		assert_eq(camera.room, _room(spec[3]), "%s: llega a %s" % [spec[0], spec[3]])
+	tree.root.get_node(^"GameState").reset()
+
+
+## 11.153: un cruce de gancho nunca pasa por una puerta (del otro lado el poste no se ve); al Estanque se va por un muelle.
+func test_the_telar_pier_walks_through_the_north_door_to_the_pond() -> void:
+	await _start()
+	var grid := level.get_node(^"PisoAlto/GridMap") as GridMap
+	var from := grid.local_to_map(grid.to_local(_in("PisoAlto/Telar", Vector3(-4, 0, 4))))
+	var to := grid.local_to_map(grid.to_local(_in("PisoAlto/Estanque", Vector3(-4, 0, 4))))
+	for z in range(to.z, from.z + 1):
+		assert_true(grid.get_cell_item(Vector3i(from.x, 0, z)) != GridMap.INVALID_CELL_ITEM, "hay piso en la celda (%d, %d) del muelle" % [from.x, z])
+	await _enter(_in("PisoAlto/Telar", Vector3(-4, 0, 4)))
+	var health := player.health.current
+	Input.action_press(&"move_forward")
+	var arrived := await _until(func() -> bool: return camera.room == _room("PisoAlto/Estanque") and player.is_on_floor(), 6.0)
+	Input.action_release(&"move_forward")
+	assert_true(arrived and player.health.current == health, "caminando por el muelle llega al Estanque sin caer (%s)" % player.global_position.snappedf(0.1))
 	tree.root.get_node(^"GameState").reset()
 
 

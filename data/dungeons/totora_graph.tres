@@ -66,7 +66,6 @@ needs = Array[StringName]([&"hookshot"])
 script = ExtResource("2_link")
 from = &"Telar"
 to = &"Estanque"
-needs = Array[StringName]([&"hookshot"])
 
 [sub_resource type="Resource" id="Link_12"]
 script = ExtResource("2_link")
@@ -151,7 +150,7 @@ node = NodePath("PisoBajo/HookshotChest")
 
 [sub_resource type="Resource" id="Spot_7"]
 script = ExtResource("3_spot")
-area = &"Estanque:Islote"
+area = &"Estanque"
 node = NodePath("PisoAlto/StripKeyChest")
 key = true
 
