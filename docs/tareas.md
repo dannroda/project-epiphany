@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (95/158)
+## M11 — Pulido: contenido y feel  (95/159)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5040,6 +5040,12 @@ Escenarios: nuevo templo.cfg (vestíbulo); boss_key_door_locked al templo; dunge
 Arregla lo que rompió 11.161 (boss, temple, slots, map, audio). El cartel de piso del minimapa solo sale en mazmorras de más de un piso.
 El test de paredes de hueco pasa a la chullpa y mira las piezas orientadas: el Hueco suelto del kit LA tiene las paredes hundidas en los cuatro lados.
 Quedan sin uso (no borro arte): las mallas de la decoración vieja (escombros, estandarte, venas_doom, vasija_pedazos). La tablilla bow_hint queda para la Queñoa.
+
+### 11.163 Borrar las mallas de la decoración del templo viejo · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `limpieza`, `arte`
+
+Tras 11.162 (templo viejo borrado) quedaron sin uso las mallas de su decoración: escombros, estandarte, venas_doom, vasija_pedazos. Confirmar que nada las usa (ni builders de Blender) y borrarlas con su pieza en el build. La tablilla bow_hint queda (la usa la Queñoa).
 
 ## M12 — Assets propios (Blender)  (16/27)
 
