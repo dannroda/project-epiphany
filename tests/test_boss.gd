@@ -174,11 +174,11 @@ func test_overlay_shows_the_fight() -> void:
 func test_boss_fits_its_room() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	tree.root.get_node(^"GameState").reset()
-	tree.change_scene_to_file("res://levels/temple.tscn")
+	tree.change_scene_to_file("res://levels/templo.tscn")
 	await tree.scene_changed
 	var level := tree.current_scene
 	var boss := level.get_node(^"Boss") as Boss
-	var bounds := (level.get_node(^"Jefe") as Room).bounds()
+	var bounds := (level.get_node(^"Planta/Jefe") as Room).bounds()
 	for mesh: MeshInstance3D in boss.find_children("*", "MeshInstance3D", true, false):
 		if not mesh.is_visible_in_tree():
 			continue
@@ -200,19 +200,19 @@ func _wait_until(done: Callable, seconds: float) -> bool:
 func test_arena_closes_skippable_intro_and_bar() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	tree.root.get_node(^"GameState").reset()
-	tree.change_scene_to_file("res://levels/temple.tscn")
+	tree.change_scene_to_file("res://levels/templo.tscn")
 	await tree.scene_changed
 	var level := tree.current_scene
 	var player := tree.get_first_node_in_group(&"player") as Node3D
-	var door := level.get_node(^"BossDoor") as Door
+	var door := level.get_node(^"Planta/BossDoor") as Door
 	var arena := level.get_node(^"BossArena") as BossArena
 	var boss := level.get_node(^"Boss") as Boss
 	var hud := level.get_node(^"HUD")
 	door.open(false)
-	player.global_position = Vector3(24, 0, 27)
+	player.global_position = Vector3(44, 0, 19)
 	for i in 10:
 		await tree.physics_frame
-	player.global_position = Vector3(24, 0, 21.5)
+	player.global_position = Vector3(44, 0, 11.5)
 	assert_true(await _wait_until(func() -> bool: return not door.is_open, 3.0), "al entrar se cierra la puerta")
 	assert_true(await _wait_until(func() -> bool: return arena.in_intro, 2.0), "arranca la intro")
 	assert_true(not boss.phases.is_active(), "durante la intro no pelea")
@@ -237,7 +237,7 @@ func test_arena_closes_skippable_intro_and_bar() -> void:
 	boss.health.damage(boss.health.max_health)
 	await tree.create_timer(1.6).timeout
 	assert_true(not hud.boss_bar.visible, "al ganar la barra se va")
-	assert_true(await _wait_until(func() -> bool: return tree.root.get_node(^"GameState").get_flag(&"d1_boss_defeated") == true, 5.0), "vencido")
+	assert_true(await _wait_until(func() -> bool: return tree.root.get_node(^"GameState").get_flag(&"te_boss_defeated") == true, 5.0), "vencido")
 	await tree.create_timer(0.6).timeout
 	assert_true(not door.is_open, "la puerta queda cerrada: el portal es la única salida")
 	tree.root.get_node(^"GameState").reset()
@@ -251,12 +251,12 @@ func _field(shield := &"") -> Array:
 	if shield != &"":
 		state.give(Items.get_item(shield))
 		state.equip(Items.get_item(shield))
-	tree.change_scene_to_file("res://levels/temple.tscn")
+	tree.change_scene_to_file("res://levels/templo.tscn")
 	await tree.scene_changed
 	var level := tree.current_scene
 	(level.get_node(^"BossArena") as BossArena).started = true
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
-	player.global_position = Vector3(24, 0, 21)
+	player.global_position = Vector3(44, 0, 11)
 	for i in 10:
 		await tree.physics_frame
 	return [tree, player, level.get_node(^"Boss") as Boss]
@@ -457,7 +457,7 @@ func test_win_take_the_container_then_the_portal_ends_the_demo() -> void:
 	var portal := level.get_node(^"BossExitPortal") as Portal
 	assert_true(not portal.visible, "el portal de salida no está hasta vencerlo")
 	(level.get_node(^"BossArena") as BossArena).started = true
-	player.global_position = Vector3(24, 0, 21)
+	player.global_position = Vector3(44, 0, 11)
 	player.health.make_invulnerable(999.0)
 	for i in 10:
 		await tree.physics_frame
@@ -467,7 +467,7 @@ func test_win_take_the_container_then_the_portal_ends_the_demo() -> void:
 	boss.health.invulnerability_time = 0.0
 	boss.health.damage(boss.health.max_health)
 	var max_before: int = state.max_health
-	assert_true(await _wait_until(func() -> bool: return state.get_flag(&"d1_boss_defeated") == true, 6.0), "flag d1_boss_defeated")
+	assert_true(await _wait_until(func() -> bool: return state.get_flag(&"te_boss_defeated") == true, 6.0), "flag te_boss_defeated")
 	assert_true(not is_instance_valid(boss) or not boss.visible, "el jefe ya no está")
 	assert_true(portal.visible, "aparece el portal de salida")
 	var rewards := level.get_node(^"BossArena").find_children("*", "Pickup", false, false)
@@ -482,7 +482,7 @@ func test_win_take_the_container_then_the_portal_ends_the_demo() -> void:
 	stack.pop()
 	await tree.create_timer(1.0).timeout
 	assert_true(not stack.is_open(), "tomar el contenedor no corta el juego")
-	assert_true(not (level.get_node(^"BossDoor") as Door).is_open, "la puerta sigue cerrada")
+	assert_true(not (level.get_node(^"Planta/BossDoor") as Door).is_open, "la puerta sigue cerrada")
 	player.global_position = portal.global_position
 	assert_true(await _wait_until(func() -> bool: return stack.top() is TextBox, 3.0), "el portal abre el diálogo de fin")
 	assert_eq(tree.current_scene, level, "sin viajar")
@@ -499,7 +499,7 @@ func test_win_take_the_container_then_the_portal_ends_the_demo() -> void:
 	await tree.process_frame
 	assert_true(level.get_node_or_null(^"Boss") == null, "cargando después, el jefe no reaparece")
 	assert_true((level.get_node(^"BossExitPortal") as Portal).visible, "y el portal sigue abierto")
-	assert_true(not (level.get_node(^"BossDoor") as Door).is_open, "con la puerta cerrada")
+	assert_true(not (level.get_node(^"Planta/BossDoor") as Door).is_open, "con la puerta cerrada")
 	assert_eq(level.get_node(^"BossArena").find_children("*", "Pickup", false, false).size(), 0, "ni el contenedor")
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(saves.slot_path(8)))
 	state.reset()
@@ -511,7 +511,7 @@ func test_keep_playing_finishes_the_trip_to_the_overworld() -> void:
 	var saves: Node = tree.root.get_node(^"SaveManager")
 	var stack: Node = tree.root.get_node(^"MenuStack")
 	assert_eq(await saves.load_scenario("pre_boss"), OK)
-	state.set_flag(&"d1_boss_defeated", true)
+	state.set_flag(&"te_boss_defeated", true)
 	tree.reload_current_scene()
 	await tree.scene_changed
 	await tree.create_timer(0.2).timeout
@@ -524,7 +524,7 @@ func test_keep_playing_finishes_the_trip_to_the_overworld() -> void:
 	(box.responses.get_child(0) as Button).pressed.emit()
 	await tree.scene_changed
 	assert_eq(tree.current_scene.scene_file_path, "res://levels/overworld.tscn", "seguir jugando lleva al overworld")
-	assert_true(state.get_flag(&"d1_boss_defeated") == true, "con el progreso")
+	assert_true(state.get_flag(&"te_boss_defeated") == true, "con el progreso")
 	await tree.create_timer(0.5).timeout
 	state.reset()
 
@@ -534,8 +534,8 @@ func test_rematch_brings_the_boss_back_without_another_container() -> void:
 	var state: Node = tree.root.get_node(^"GameState")
 	var saves: Node = tree.root.get_node(^"SaveManager")
 	assert_eq(await saves.load_scenario("pre_boss"), OK)
-	state.set_flag(&"d1_boss_defeated", true)
-	state.set_flag(&"d1_heart_container", true)
+	state.set_flag(&"te_boss_defeated", true)
+	state.set_flag(&"te_heart_container", true)
 	tree.reload_current_scene()
 	await tree.scene_changed
 	await tree.process_frame
@@ -551,7 +551,7 @@ func test_rematch_brings_the_boss_back_without_another_container() -> void:
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	assert_true(boss != null, "en la revancha el jefe vuelve")
 	assert_true(not portal.visible, "sin portal mientras pelea")
-	assert_true((level.get_node(^"Jefe") as Room).contains(player.global_position), "el player aparece en la arena")
+	assert_true((level.get_node(^"Planta/Jefe") as Room).contains(player.global_position), "el player aparece en la arena")
 	assert_true(await _wait_until(func() -> bool: return boss.phases.is_active() or arena.in_intro, 4.0), "arranca la pelea")
 	_skip_intro(tree)
 	assert_true(await _wait_until(func() -> bool: return boss.phases.is_active(), 6.0), "pelea")

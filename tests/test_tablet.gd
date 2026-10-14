@@ -58,7 +58,7 @@ func test_story_tablets_have_text_and_read_flag() -> void:
 	var state: Node = tree.root.get_node(^"GameState")
 	var flags := {}
 	var total := 0
-	for path in ["res://levels/overworld.tscn", "res://levels/temple.tscn"]:
+	for path in ["res://levels/overworld.tscn", "res://levels/templo.tscn"]:
 		state.reset()
 		tree.change_scene_to_file(path)
 		await tree.scene_changed

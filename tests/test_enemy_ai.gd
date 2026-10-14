@@ -113,7 +113,7 @@ func test_death_releases_lock_on() -> void:
 
 func test_enemies_do_not_spawn_inside_walls() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
-	for path in ["res://levels/overworld.tscn", "res://levels/temple.tscn"]:
+	for path in ["res://levels/overworld.tscn", "res://levels/templo.tscn"]:
 		tree.root.get_node(^"GameState").reset()
 		tree.change_scene_to_file(path)
 		await tree.scene_changed

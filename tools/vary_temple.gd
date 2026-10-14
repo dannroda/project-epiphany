@@ -3,7 +3,7 @@ extends SceneTree
 ## y reparte nichos y ojos tallados en las paredes que miran a la cámara, lejos de lo que ya cuelga o está delante.
 ## godot --headless --path . --script res://tools/vary_temple.gd
 
-const LEVELS := ["res://levels/temple.tscn", "res://levels/chullpa.tscn"]
+const LEVELS := ["res://levels/chullpa.tscn"]
 const Pieces := preload("res://tools/grid_pieces.gd")
 const PIT := 10
 ## Hueco según los lados que dan a algo que no es hueco (sin girar, en el orden de Pieces.SIDES).

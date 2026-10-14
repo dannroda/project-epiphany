@@ -41,8 +41,8 @@ func test_music_layers_follow_the_doom() -> void:
 	var wanted: Dictionary = music.targets()
 	assert_eq(wanted[&"calm"], 1.0, "overworld: calma")
 	assert_eq(wanted[&"dark"], 0.0)
-	await saves.load_scenario("dungeon_no_bow")
-	(tree.get_first_node_in_group(&"player") as Node3D).global_position = Vector3(24, 0, 68)
+	await saves.load_scenario("templo")
+	(tree.get_first_node_in_group(&"player") as Node3D).global_position = Vector3(44, 0, 50)
 	await tree.create_timer(1.5).timeout
 	wanted = music.targets()
 	assert_eq(wanted[&"dark"], 1.0, "templo: base oscura")

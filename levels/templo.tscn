@@ -1,95 +1,102 @@
 [gd_scene format=3 uid="uid://8jgi0alvfkq4"]
 
-[ext_resource type="Script" path="res://src/world/dungeon.gd" id="1_gppge"]
-[ext_resource type="Script" path="res://src/world/look/sombra_la.gd" id="2_qyap5"]
-[ext_resource type="Script" path="res://src/world/dungeon_floor.gd" id="2_v4a8r"]
-[ext_resource type="Script" path="res://src/world/look/tono_la.gd" id="3_5l3iu"]
-[ext_resource type="Script" path="res://src/world/room.gd" id="4_w4fgy"]
+[ext_resource type="Script" uid="uid://c5hiaqs0y4egi" path="res://src/world/dungeon.gd" id="1_gppge"]
+[ext_resource type="Script" uid="uid://c3gjwha8na3yi" path="res://src/world/look/sombra_la.gd" id="2_qyap5"]
+[ext_resource type="Script" uid="uid://dxfmc58bemc3t" path="res://src/world/dungeon_floor.gd" id="2_v4a8r"]
+[ext_resource type="Script" uid="uid://bw0kh7whsb1qf" path="res://src/world/look/tono_la.gd" id="3_5l3iu"]
+[ext_resource type="Script" uid="uid://nqxfiofg56dy" path="res://src/world/room.gd" id="4_w4fgy"]
 [ext_resource type="PackedScene" path="res://src/world/floor_switch.tscn" id="5_iwn1m"]
-[ext_resource type="MeshLibrary" path="res://data/kits/templo_la_kit.tres" id="5_nroec"]
-[ext_resource type="Script" path="res://src/world/floor_switch.gd" id="6_ue4tp"]
-[ext_resource type="Shader" path="res://src/world/look/borde_oscuro.gdshader" id="7_askxy"]
+[ext_resource type="MeshLibrary" uid="uid://bldlqo3fx44vq" path="res://data/kits/templo_la_kit.tres" id="5_nroec"]
+[ext_resource type="Script" uid="uid://87brg8xm8dtt" path="res://src/world/floor_switch.gd" id="6_ue4tp"]
+[ext_resource type="Shader" uid="uid://d05shkhoyhpkk" path="res://src/world/look/borde_oscuro.gdshader" id="7_askxy"]
 [ext_resource type="PackedScene" path="res://src/world/push_block.tscn" id="7_dx72k"]
-[ext_resource type="Script" path="res://src/world/push_block.gd" id="8_xabc2"]
+[ext_resource type="Script" uid="uid://do026c5mdat2y" path="res://src/world/push_block.gd" id="8_xabc2"]
 [ext_resource type="PackedScene" path="res://src/world/door.tscn" id="9_lb8sh"]
-[ext_resource type="Script" path="res://src/world/door.gd" id="10_8q16s"]
-[ext_resource type="Script" path="res://src/world/pit.gd" id="11_ilyv2"]
+[ext_resource type="Script" uid="uid://5iyuo3cn8lus" path="res://src/world/door.gd" id="10_8q16s"]
+[ext_resource type="Script" uid="uid://b5m7kta46hqrv" path="res://src/world/pit.gd" id="11_ilyv2"]
 [ext_resource type="PackedScene" path="res://src/world/spike_trap.tscn" id="12_fq8i4"]
-[ext_resource type="Script" path="res://src/world/spike_trap.gd" id="13_yxbmt"]
+[ext_resource type="Script" uid="uid://xvggaagxljdf" path="res://src/world/spike_trap.gd" id="13_yxbmt"]
 [ext_resource type="Material" path="res://src/world/look/marca_visible.tres" id="14_etxll"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="14_kwpl7"]
-[ext_resource type="Script" path="res://src/world/chest.gd" id="15_845xq"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_interruptor_templo_la.res" id="15_m6v74"]
+[ext_resource type="Script" uid="uid://byp4dkpucnvmo" path="res://src/world/chest.gd" id="15_845xq"]
+[ext_resource type="ArrayMesh" uid="uid://dih48tyvv30b4" path="res://assets/epiphany/meshes/paredes_la/puerta_interruptor_templo_la.res" id="15_m6v74"]
 [ext_resource type="Resource" path="res://data/items/small_key.tres" id="16_1ctrm"]
-[ext_resource type="Texture2D" path="res://assets/ui/lock.svg" id="16_befet"]
-[ext_resource type="Script" path="res://src/components/interactable.gd" id="17_nu3dp"]
+[ext_resource type="Texture2D" uid="uid://ddhjwybdg1ah2" path="res://assets/ui/lock.svg" id="16_befet"]
+[ext_resource type="Script" uid="uid://jstc1x28c0kx" path="res://src/components/interactable.gd" id="17_nu3dp"]
 [ext_resource type="Resource" path="res://data/items/compass.tres" id="17_ux04o"]
 [ext_resource type="Resource" path="res://data/items/dungeon_map.tres" id="18_jtvwk"]
 [ext_resource type="PackedScene" path="res://src/entities/shield_skeleton.tscn" id="19_6gut6"]
-[ext_resource type="Script" path="res://src/entities/enemy.gd" id="20_do24o"]
+[ext_resource type="Script" uid="uid://c48gjyuwv6u3x" path="res://src/entities/enemy.gd" id="20_do24o"]
 [ext_resource type="Resource" path="res://data/entities/shield_skeleton.tres" id="21_ewe6p"]
 [ext_resource type="PackedScene" path="res://src/world/cracked_wall_templo.tscn" id="22_22l1c"]
-[ext_resource type="Script" path="res://src/world/cracked_wall.gd" id="23_eh8au"]
+[ext_resource type="Script" uid="uid://vmcv83ug4a0m" path="res://src/world/cracked_wall.gd" id="23_eh8au"]
 [ext_resource type="PackedScene" path="res://src/world/eye_switch.tscn" id="24_2frbs"]
-[ext_resource type="Script" path="res://src/world/eye_switch.gd" id="25_qyap5"]
+[ext_resource type="Script" uid="uid://n1p8wmv8inqn" path="res://src/world/eye_switch.gd" id="25_qyap5"]
 [ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="26_5l3iu"]
-[ext_resource type="Script" path="res://src/world/gate.gd" id="27_nroec"]
-[ext_resource type="PackedScene" path="res://src/entities/enemy.tscn" id="28_askxy"]
+[ext_resource type="Script" uid="uid://cj2nsvfg6j7av" path="res://src/world/gate.gd" id="27_nroec"]
+[ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="28_askxy"]
 [ext_resource type="Resource" path="res://data/entities/skeleton.tres" id="29_etxll"]
 [ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="30_m6v74"]
-[ext_resource type="Script" path="res://src/world/breakable.gd" id="31_befet"]
-[ext_resource type="Resource" path="res://data/drops/pot.tres" id="32_nu3dp"]
+[ext_resource type="Script" uid="uid://ukpcr815ja3d" path="res://src/world/breakable.gd" id="31_befet"]
+[ext_resource type="ArrayMesh" uid="uid://cquubo28n6s87" path="res://assets/epiphany/meshes/paredes_la/muro_agrietado_templo_la_4.res" id="32_befet"]
+[ext_resource type="Resource" uid="uid://bjostbekjp6du" path="res://data/drops/pot.tres" id="32_nu3dp"]
 [ext_resource type="PackedScene" path="res://src/entities/armored_skeleton.tscn" id="33_1krf6"]
+[ext_resource type="ArrayMesh" uid="uid://bs5mwr1yuehrf" path="res://assets/epiphany/meshes/naturaleza/piedra_chica_a.res" id="33_nu3dp"]
+[ext_resource type="Script" uid="uid://rcd8a41l0m7" path="res://src/components/hurtbox.gd" id="34_1krf6"]
 [ext_resource type="Resource" path="res://data/entities/armored_skeleton.tres" id="34_cjedn"]
 [ext_resource type="PackedScene" path="res://src/entities/turret/turret.tscn" id="35_ycq0f"]
-[ext_resource type="Script" path="res://src/entities/turret/turret.gd" id="36_ypy2f"]
+[ext_resource type="Script" uid="uid://716itsag4vk1" path="res://src/entities/turret/turret.gd" id="36_ypy2f"]
 [ext_resource type="Resource" path="res://data/entities/turret.tres" id="37_s4egn"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_source.tscn" id="38_m888e"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_receiver.tscn" id="39_srmr6"]
-[ext_resource type="Script" path="res://src/world/light/light_receiver.gd" id="40_pcqlr"]
+[ext_resource type="Script" uid="uid://djcb44ujalpa3" path="res://src/world/light/light_receiver.gd" id="40_pcqlr"]
 [ext_resource type="Resource" path="res://data/items/boss_key.tres" id="41_ank0x"]
 [ext_resource type="PackedScene" path="res://src/world/wall_torch.tscn" id="42_eppxl"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_llave_templo_la.res" id="43_1krf6"]
+[ext_resource type="ArrayMesh" uid="uid://bdhv5ujjpkayv" path="res://assets/epiphany/meshes/paredes_la/puerta_llave_templo_la.res" id="43_1krf6"]
 [ext_resource type="PackedScene" path="res://src/entities/boss/boss.tscn" id="43_l2qle"]
-[ext_resource type="Script" path="res://src/entities/boss/boss.gd" id="44_tiw1f"]
-[ext_resource type="Script" path="res://src/entities/boss/boss_attack.gd" id="45_vrfyu"]
-[ext_resource type="Resource" path="res://data/boss/attack_slam.tres" id="46_6btj5"]
-[ext_resource type="Resource" path="res://data/boss/attack_grab.tres" id="47_nw8wq"]
-[ext_resource type="Resource" path="res://data/boss/attack_sweep.tres" id="48_ewur0"]
-[ext_resource type="Resource" path="res://data/boss/attack_orb.tres" id="49_7bncd"]
+[ext_resource type="Script" uid="uid://b68724gj4o2tj" path="res://src/entities/boss/boss.gd" id="44_tiw1f"]
+[ext_resource type="Script" uid="uid://byobqgwp5qte4" path="res://src/entities/boss/boss_attack.gd" id="45_vrfyu"]
+[ext_resource type="Resource" uid="uid://og1n6thyeewe" path="res://data/boss/attack_slam.tres" id="46_6btj5"]
+[ext_resource type="Resource" uid="uid://cbaxjonad3qxd" path="res://data/boss/attack_grab.tres" id="47_nw8wq"]
+[ext_resource type="Script" uid="uid://cxw24v4u275yn" path="res://src/world/hook_post.gd" id="48_cjedn"]
+[ext_resource type="Resource" uid="uid://g0s0thw43rno" path="res://data/boss/attack_sweep.tres" id="48_ewur0"]
+[ext_resource type="Resource" uid="uid://dedh3vthmgu5e" path="res://data/boss/attack_orb.tres" id="49_7bncd"]
 [ext_resource type="Resource" path="res://data/boss/attack_mark.tres" id="50_wgnm1"]
 [ext_resource type="PackedScene" path="res://src/world/warp_portal.tscn" id="51_43cnq"]
-[ext_resource type="Script" path="res://src/world/portal.gd" id="52_0i344"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_madera_templo_la.res" id="52_cjedn"]
-[ext_resource type="Script" path="res://src/entities/boss/boss_arena.gd" id="53_2dht2"]
-[ext_resource type="PackedScene" path="res://player/player.tscn" id="54_jhn6u"]
-[ext_resource type="Script" path="res://player/player.gd" id="55_m178d"]
-[ext_resource type="Script" path="res://src/entities/hand_guard/hand_guard.gd" id="55_ycq0f"]
-[ext_resource type="Resource" path="res://data/entities/player.tres" id="56_q50av"]
-[ext_resource type="Script" path="res://src/world/spawn_point.gd" id="57_5184v"]
-[ext_resource type="Script" path="res://src/tools/top_down_camera.gd" id="58_10kg3"]
+[ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="52_0i344"]
+[ext_resource type="ArrayMesh" uid="uid://d1wgxveey7xn" path="res://assets/epiphany/meshes/paredes_la/puerta_madera_templo_la.res" id="52_cjedn"]
+[ext_resource type="Script" uid="uid://biq7c248kwtba" path="res://src/entities/boss/boss_arena.gd" id="53_2dht2"]
+[ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="54_jhn6u"]
+[ext_resource type="Script" uid="uid://ckkibjv0y6axx" path="res://player/player.gd" id="55_m178d"]
+[ext_resource type="Script" uid="uid://bsl8lrbxe3r5y" path="res://src/entities/hand_guard/hand_guard.gd" id="55_ycq0f"]
+[ext_resource type="Resource" uid="uid://cooy3l0hm4jv0" path="res://data/entities/player.tres" id="56_q50av"]
+[ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="57_5184v"]
+[ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="58_10kg3"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="59_07stk"]
-[ext_resource type="Script" path="res://src/ui/hud/hud.gd" id="60_hnplg"]
+[ext_resource type="Script" uid="uid://dbmfkcf8x5ids" path="res://src/ui/hud/hud.gd" id="60_hnplg"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/player_panel_solo.tscn" id="61_6dq88"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_jefe_templo_la.res" id="61_ypy2f"]
+[ext_resource type="ArrayMesh" uid="uid://cra4bsvg2ghan" path="res://assets/epiphany/meshes/paredes_la/puerta_jefe_templo_la.res" id="61_ypy2f"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/player_panel.tscn" id="62_5bylj"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/item_ring.tscn" id="63_oqvbs"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo/brasero.res" id="63_s4egn"]
-[ext_resource type="Shader" path="res://src/world/look/llama_la.gdshader" id="64_m888e"]
+[ext_resource type="ArrayMesh" uid="uid://cjinn7xmelh2r" path="res://assets/epiphany/meshes/templo/brasero.res" id="63_s4egn"]
+[ext_resource type="Shader" uid="uid://crwycv8bukd6m" path="res://src/world/look/llama_la.gdshader" id="64_m888e"]
 [ext_resource type="PackedScene" path="res://src/world/doom_ambience.tscn" id="64_mhghd"]
-[ext_resource type="Script" path="res://src/world/doom_ambience.gd" id="65_qmvvc"]
-[ext_resource type="Script" path="res://src/world/torch_flicker.gd" id="65_srmr6"]
-[ext_resource type="Script" path="res://src/feel/stencil_light/stencil_light.gd" id="66_pcqlr"]
-[ext_resource type="Script" path="res://src/world/look/enfoque_la.gd" id="79_ank0x"]
+[ext_resource type="Script" uid="uid://cqtm1asamns1o" path="res://src/world/doom_ambience.gd" id="65_qmvvc"]
+[ext_resource type="Script" uid="uid://u2jhwu4cb42s" path="res://src/world/torch_flicker.gd" id="65_srmr6"]
+[ext_resource type="ArrayMesh" uid="uid://r5oje0isvpt7" path="res://assets/epiphany/meshes/paredes_la/muro_agrietado_templo_la_2n.res" id="65_ycq0f"]
+[ext_resource type="Script" uid="uid://cgr3l68kk102e" path="res://src/feel/stencil_light/stencil_light.gd" id="66_pcqlr"]
+[ext_resource type="Script" uid="uid://c238aeb6gn6ka" path="res://src/world/look/enfoque_la.gd" id="79_ank0x"]
 [ext_resource type="PackedScene" path="res://src/world/look/polvo_chullpa.tscn" id="80_eppxl"]
-[ext_resource type="Script" path="res://src/world/look/brillo_la.gd" id="89_l2qle"]
-[ext_resource type="Script" path="res://src/world/arena_fight.gd" id="90_fight"]
-[ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="91_pflag"]
+[ext_resource type="Script" uid="uid://dlf8bqdycw2kg" path="res://src/world/look/brillo_la.gd" id="89_l2qle"]
+[ext_resource type="Script" uid="uid://bccprbredple8" path="res://src/world/arena_fight.gd" id="90_fight"]
+[ext_resource type="Script" uid="uid://dcy0hg6ygxqg1" path="res://src/components/persistent_flag.gd" id="91_pflag"]
 [ext_resource type="PackedScene" path="res://src/entities/hand_guard/hand_guard.tscn" id="92_hand"]
-[ext_resource type="Resource" path="res://data/drops/pot_bombs.tres" id="93_bombs"]
-[ext_resource type="Resource" path="res://data/drops/pot_arrows.tres" id="94_arrows"]
-[ext_resource type="NavigationMesh" path="res://levels/nav/templo_navmesh.tres" id="nav_templo"]
 [ext_resource type="PackedScene" path="res://src/world/hook_post.tscn" id="92_hookpost"]
+[ext_resource type="Resource" uid="uid://cqv3w1wloauuu" path="res://data/drops/pot_bombs.tres" id="93_bombs"]
+[ext_resource type="Resource" uid="uid://bd60rgriyt0r5" path="res://data/drops/pot_arrows.tres" id="94_arrows"]
+[ext_resource type="NavigationMesh" path="res://levels/nav/templo_navmesh.tres" id="nav_templo"]
+[ext_resource type="PackedScene" path="res://src/world/tablet.tscn" id="tablet"]
+[ext_resource type="Resource" uid="uid://y6avu6sc2i5n" path="res://data/dialogue/temple.dialogue" id="temple_dialogue"]
 
 [sub_resource type="Environment" id="Environment_tiw1f"]
 background_mode = 1
@@ -125,28 +132,28 @@ exposure = 1.0
 compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_vrfyu"), SubResource("CompositorEffect_6btj5")])
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4oc56"]
-size = Vector3(22, 2.4, 10)
+size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qyap5"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ypy2f"]
 render_priority = 0
 shader = ExtResource("7_askxy")
-shader_parameter/inner = Vector4(32.7, 2.6, 55.3, 13.9)
-shader_parameter/outer = Vector4(31.2, 1.2, 56.8, 14.8)
-shader_parameter/limit = Vector4(30.8, 0.8, 57.199997, 15)
+shader_parameter/inner = Vector4(32.7, -1.4, 55.3, 13.9)
+shader_parameter/outer = Vector4(31.2, -2.8, 56.8, 14.8)
+shader_parameter/limit = Vector4(30.8, -3.2, 57.199997, 15)
 shader_parameter/plane_y = 3.0
-shader_parameter/floor_rect = Vector4(33, 3, 55, 13)
+shader_parameter/floor_rect = Vector4(33, -1, 55, 13)
 shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_5l3iu"]
-material = SubResource("ShaderMaterial_qyap5")
-size = Vector2(33.2, 21.2)
+[sub_resource type="PlaneMesh" id="PlaneMesh_s4egn"]
+material = SubResource("ShaderMaterial_ypy2f")
+size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ywg56"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_nroec"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m888e"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(20.7, 16.6, 35.3, 27.9)
@@ -158,14 +165,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_askxy"]
-material = SubResource("ShaderMaterial_nroec")
+[sub_resource type="PlaneMesh" id="PlaneMesh_srmr6"]
+material = SubResource("ShaderMaterial_m888e")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rg7ke"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_etxll"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pcqlr"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(36.7, 16.6, 51.3, 27.9)
@@ -177,14 +184,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_m6v74"]
-material = SubResource("ShaderMaterial_etxll")
+[sub_resource type="PlaneMesh" id="PlaneMesh_ank0x"]
+material = SubResource("ShaderMaterial_pcqlr")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_p8als"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_befet"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eppxl"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(52.7, 16.6, 67.3, 27.9)
@@ -196,14 +203,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_nu3dp"]
-material = SubResource("ShaderMaterial_befet")
+[sub_resource type="PlaneMesh" id="PlaneMesh_l2qle"]
+material = SubResource("ShaderMaterial_eppxl")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nioq2"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1krf6"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tiw1f"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(2.7, 30.6, 17.3, 41.9)
@@ -215,14 +222,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_cjedn"]
-material = SubResource("ShaderMaterial_1krf6")
+[sub_resource type="PlaneMesh" id="PlaneMesh_vrfyu"]
+material = SubResource("ShaderMaterial_tiw1f")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0jhvc"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ycq0f"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6btj5"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(20.7, 30.6, 35.3, 41.9)
@@ -234,14 +241,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_ypy2f"]
-material = SubResource("ShaderMaterial_ycq0f")
+[sub_resource type="PlaneMesh" id="PlaneMesh_nw8wq"]
+material = SubResource("ShaderMaterial_6btj5")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_utgfk"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_s4egn"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ewur0"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(36.7, 30.6, 51.3, 41.9)
@@ -253,14 +260,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_m888e"]
-material = SubResource("ShaderMaterial_s4egn")
+[sub_resource type="PlaneMesh" id="PlaneMesh_7bncd"]
+material = SubResource("ShaderMaterial_ewur0")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_p0rd1"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_srmr6"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wgnm1"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(52.7, 30.6, 67.3, 41.9)
@@ -272,14 +279,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_pcqlr"]
-material = SubResource("ShaderMaterial_srmr6")
+[sub_resource type="PlaneMesh" id="PlaneMesh_43cnq"]
+material = SubResource("ShaderMaterial_wgnm1")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a2862"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ank0x"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0i344"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(70.7, 30.6, 85.3, 41.9)
@@ -291,14 +298,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_eppxl"]
-material = SubResource("ShaderMaterial_ank0x")
+[sub_resource type="PlaneMesh" id="PlaneMesh_2dht2"]
+material = SubResource("ShaderMaterial_0i344")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qdtbt"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_l2qle"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jhn6u"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(2.7, 44.6, 17.3, 55.9)
@@ -310,14 +317,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_tiw1f"]
-material = SubResource("ShaderMaterial_l2qle")
+[sub_resource type="PlaneMesh" id="PlaneMesh_m178d"]
+material = SubResource("ShaderMaterial_jhn6u")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q1vmi"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vrfyu"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q50av"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(20.7, 44.6, 35.3, 55.9)
@@ -329,14 +336,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_6btj5"]
-material = SubResource("ShaderMaterial_vrfyu")
+[sub_resource type="PlaneMesh" id="PlaneMesh_5184v"]
+material = SubResource("ShaderMaterial_q50av")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sprnv"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_nw8wq"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_10kg3"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(36.7, 44.6, 51.3, 55.9)
@@ -348,14 +355,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_ewur0"]
-material = SubResource("ShaderMaterial_nw8wq")
+[sub_resource type="PlaneMesh" id="PlaneMesh_07stk"]
+material = SubResource("ShaderMaterial_10kg3")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6vpyr"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7bncd"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hnplg"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(52.7, 44.6, 67.3, 55.9)
@@ -367,14 +374,14 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_wgnm1"]
-material = SubResource("ShaderMaterial_7bncd")
+[sub_resource type="PlaneMesh" id="PlaneMesh_6dq88"]
+material = SubResource("ShaderMaterial_hnplg")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8xv7h"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_43cnq"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5bylj"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(70.7, 44.6, 85.3, 55.9)
@@ -386,8 +393,8 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_0i344"]
-material = SubResource("ShaderMaterial_43cnq")
+[sub_resource type="PlaneMesh" id="PlaneMesh_oqvbs"]
+material = SubResource("ShaderMaterial_5bylj")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="Shape"]
@@ -398,6 +405,12 @@ size = Vector3(2, 1.6, 2.6)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1kwkn"]
 size = Vector3(6, 1, 10)
+
+[sub_resource type="BoxShape3D" id="WallShape"]
+size = Vector3(2, 3.1, 2)
+
+[sub_resource type="BoxShape3D" id="HurtShape"]
+size = Vector3(2.4, 2.6, 2.4)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_v0vw2"]
 size = Vector3(14, 1, 4)
@@ -784,11 +797,11 @@ mesh_library = ExtResource("5_nroec")
 cell_size = Vector3(2, 1, 2)
 cell_center_y = false
 data = {
-"cells": PackedInt32Array(0, 0, 36, 0, 1, 36, 1, 0, 36, 1, 1, 36, 0, 2, 36, 1, 2, 36, 0, 3, 36, 1, 3, 36, 0, 4, 36, 1, 4, 36, 0, 5, 36, 1, 5, 36, 0, 6, 36, 1, 6, 36, 0, 7, 36, 0, 8, 36, 1, 7, 36, 1, 8, 36, 0, 9, 36, 1, 9, 36, 0, 10, 36, 1, 10, 36, 0, 11, 36, 1, 11, 36, 0, 12, 36, 1, 12, 36, 0, 13, 36, 1, 13, 36, 0, 14, 36, 0, 15, 36, 1, 14, 36, 1, 15, 39, 0, 16, 36, 1, 16, 22, 0, 17, 36, 1, 17, 22, 0, 18, 36, 1, 18, 22, 0, 19, 36, 1, 19, 22, 0, 20, 36, 1, 20, 22, 0, 21, 36, 0, 22, 36, 1, 21, 37, 1, 22, 39, 0, 23, 36, 1, 23, 22, 0, 24, 36, 1, 24, 22, 0, 25, 36, 1, 25, 22, 0, 26, 36, 1, 26, 22, 0, 27, 36, 1, 27, 22, 0, 28, 36, 0, 29, 36, 1, 28, 37, 1, 29, 36, 2, 0, 36, 2, 1, 36, 2, 2, 36, 2, 3, 36, 2, 4, 36, 2, 5, 36, 2, 6, 36, 2, 7, 36, 2, 8, 36, 2, 9, 36, 2, 10, 36, 2, 11, 36, 2, 12, 36, 2, 13, 36, 2, 14, 36, 2, 15, 33, 2, 16, 0, 2, 17, 0, 2, 18, 0, 2, 19, 0, 2, 20, 0, 2, 21, 26, 2, 22, 33, 2, 23, 0, 2, 24, 0, 2, 25, 0, 2, 26, 0, 2, 27, 0, 2, 28, 26, 2, 29, 36, 3, 0, 36, 3, 1, 36, 3, 2, 36, 3, 3, 36, 3, 4, 36, 3, 5, 36, 3, 6, 36, 3, 7, 36, 3, 8, 36, 3, 9, 36, 3, 10, 36, 3, 11, 36, 3, 12, 36, 3, 13, 36, 3, 14, 36, 3, 15, 33, 3, 16, 0, 3, 17, 0, 3, 18, 0, 3, 19, 0, 3, 20, 0, 3, 21, 26, 3, 22, 33, 3, 23, 0, 3, 24, 0, 3, 25, 0, 3, 26, 0, 3, 27, 0, 3, 28, 26, 3, 29, 36, 4, 0, 36, 4, 1, 36, 4, 2, 36, 4, 3, 36, 4, 4, 36, 4, 5, 36, 4, 6, 36, 4, 7, 36, 4, 8, 36, 4, 9, 36, 4, 10, 36, 4, 11, 36, 4, 12, 36, 4, 13, 36, 4, 14, 36, 4, 15, 33, 4, 16, 0, 4, 17, 0, 4, 18, 0, 4, 19, 0, 4, 20, 0, 4, 21, 26, 4, 22, 33, 4, 23, 0, 4, 24, 0, 4, 25, 0, 4, 26, 0, 4, 27, 0, 4, 28, 26, 4, 29, 36, 5, 0, 36, 5, 1, 36, 5, 2, 36, 5, 3, 36, 5, 4, 36, 5, 5, 36, 5, 6, 36, 5, 7, 36, 5, 8, 36, 5, 9, 36, 5, 10, 36, 5, 11, 36, 5, 12, 36, 5, 13, 36, 5, 14, 36, 5, 15, 33, 5, 16, 0, 5, 17, 0, 5, 18, 0, 5, 19, 0, 5, 20, 0, 5, 21, 26, 5, 22, 33, 5, 23, 0, 5, 24, 0, 5, 25, 0, 5, 26, 0, 5, 27, 0, 5, 28, 26, 5, 29, 36, 6, 0, 36, 6, 1, 36, 6, 2, 36, 6, 3, 36, 6, 4, 36, 6, 5, 36, 6, 6, 36, 6, 7, 36, 6, 8, 36, 6, 9, 36, 6, 10, 36, 6, 11, 36, 6, 12, 36, 6, 13, 36, 6, 14, 36, 6, 15, 33, 6, 16, 0, 6, 17, 0, 6, 18, 0, 6, 19, 0, 6, 20, 0, 6, 21, 26, 6, 22, 33, 6, 23, 0, 6, 24, 0, 6, 25, 0, 6, 26, 0, 6, 27, 0, 6, 28, 26, 6, 29, 36, 7, 0, 36, 7, 1, 36, 7, 2, 36, 7, 3, 36, 7, 4, 36, 7, 5, 36, 7, 6, 36, 7, 7, 36, 7, 8, 36, 7, 9, 36, 7, 10, 36, 7, 11, 36, 7, 12, 36, 7, 13, 36, 7, 14, 36, 7, 15, 33, 7, 16, 0, 7, 17, 0, 7, 18, 0, 7, 19, 0, 7, 20, 0, 7, 21, 26, 7, 22, 33, 7, 23, 0, 7, 24, 0, 7, 25, 0, 7, 26, 0, 7, 27, 0, 7, 28, 26, 7, 29, 36, 8, 0, 36, 8, 1, 36, 8, 2, 36, 8, 3, 36, 8, 4, 36, 8, 5, 36, 8, 6, 36, 8, 7, 36, 8, 8, 36, 8, 9, 36, 8, 10, 36, 8, 11, 36, 8, 12, 36, 8, 13, 36, 8, 14, 36, 8, 15, 33, 8, 16, 0, 8, 17, 0, 8, 18, 0, 8, 19, 0, 8, 20, 0, 8, 21, 26, 8, 22, 33, 8, 23, 0, 8, 24, 0, 8, 25, 0, 8, 26, 0, 8, 27, 0, 8, 28, 26, 8, 29, 36, 9, 0, 36, 9, 1, 36, 10, 0, 36, 10, 1, 36, 9, 2, 36, 10, 2, 36, 9, 3, 36, 10, 3, 36, 9, 4, 36, 10, 4, 36, 9, 5, 36, 10, 5, 36, 9, 6, 36, 10, 6, 36, 9, 7, 36, 9, 8, 36, 10, 7, 36, 10, 8, 39, 9, 9, 36, 10, 9, 22, 9, 10, 36, 10, 10, 22, 9, 11, 36, 10, 11, 22, 9, 12, 36, 10, 12, 22, 9, 13, 36, 10, 13, 22, 9, 14, 36, 9, 15, 40, 10, 14, 37, 10, 15, 39, 9, 16, 30, 10, 16, 22, 9, 17, 32, 10, 17, 24, 9, 18, 43, 10, 18, 41, 9, 19, 31, 10, 19, 23, 9, 20, 30, 10, 20, 22, 9, 21, 38, 9, 22, 40, 10, 21, 37, 10, 22, 39, 9, 23, 30, 10, 23, 22, 9, 24, 32, 10, 24, 24, 9, 25, 43, 10, 25, 41, 9, 26, 31, 10, 26, 23, 9, 27, 30, 10, 27, 22, 9, 28, 38, 9, 29, 36, 10, 28, 37, 10, 29, 36, 11, 0, 36, 11, 1, 36, 11, 2, 36, 11, 3, 36, 11, 4, 36, 11, 5, 36, 11, 6, 36, 11, 7, 36, 11, 8, 33, 11, 9, 0, 11, 10, 0, 11, 11, 0, 11, 12, 0, 11, 13, 0, 11, 14, 26, 11, 15, 33, 11, 16, 0, 11, 17, 0, 11, 18, 0, 11, 19, 0, 11, 20, 0, 11, 21, 26, 11, 22, 33, 11, 23, 0, 11, 24, 0, 11, 25, 0, 11, 26, 0, 11, 27, 0, 11, 28, 26, 11, 29, 36, 12, 0, 36, 12, 1, 36, 12, 2, 36, 12, 3, 36, 12, 4, 36, 12, 5, 36, 12, 6, 36, 12, 7, 36, 12, 8, 33, 12, 9, 0, 12, 10, 0, 12, 11, 10, 12, 12, 0, 12, 13, 0, 12, 14, 26, 12, 15, 33, 12, 16, 10, 12, 17, 10, 12, 18, 10, 12, 19, 10, 12, 20, 10, 12, 21, 26, 12, 22, 33, 12, 23, 0, 12, 24, 0, 12, 25, 0, 12, 26, 0, 12, 27, 0, 12, 28, 26, 12, 29, 36, 13, 0, 36, 13, 1, 36, 13, 2, 36, 13, 3, 36, 13, 4, 36, 13, 5, 36, 13, 6, 36, 13, 7, 36, 13, 8, 33, 13, 9, 59, 13, 10, 60, 13, 11, 10, 13, 12, 0, 13, 13, 0, 13, 14, 26, 13, 15, 33, 13, 16, 10, 13, 17, 10, 13, 18, 10, 13, 19, 10, 13, 20, 10, 13, 21, 26, 13, 22, 33, 13, 23, 10, 13, 24, 10, 13, 25, 10, 13, 26, 10, 13, 27, 10, 13, 28, 26, 13, 29, 36, 14, 0, 36, 14, 1, 36, 14, 2, 36, 14, 3, 36, 14, 4, 36, 14, 5, 36, 14, 6, 36, 14, 7, 36, 14, 8, 33, 14, 9, 0, 14, 10, 0, 14, 11, 10, 14, 12, 0, 14, 13, 0, 14, 14, 26, 14, 15, 33, 14, 16, 10, 14, 17, 10, 14, 18, 10, 14, 19, 10, 14, 20, 10, 14, 21, 26, 14, 22, 33, 14, 23, 0, 14, 24, 0, 14, 25, 0, 14, 26, 0, 14, 27, 0, 14, 28, 26, 14, 29, 36, 15, 0, 36, 15, 1, 36, 15, 2, 36, 15, 3, 36, 15, 4, 36, 15, 5, 36, 15, 6, 36, 15, 7, 36, 15, 8, 40, 15, 9, 30, 15, 10, 54, 15, 11, 10, 15, 12, 0, 15, 13, 0, 15, 14, 26, 15, 15, 33, 15, 16, 10, 15, 17, 10, 15, 18, 10, 15, 19, 10, 15, 20, 10, 15, 21, 26, 15, 22, 33, 15, 23, 10, 15, 24, 10, 15, 25, 10, 15, 26, 10, 15, 27, 10, 15, 28, 26, 15, 29, 36, 16, 0, 36, 16, 1, 39, 16, 2, 22, 16, 3, 22, 16, 4, 22, 16, 5, 22, 16, 6, 22, 16, 7, 37, 16, 8, 39, 16, 9, 22, 16, 10, 25, 16, 11, 10, 16, 12, 0, 16, 13, 0, 16, 14, 26, 16, 15, 33, 16, 16, 0, 16, 17, 0, 16, 18, 0, 16, 19, 0, 16, 20, 0, 16, 21, 26, 16, 22, 33, 16, 23, 0, 16, 24, 0, 16, 25, 0, 16, 26, 0, 16, 27, 0, 16, 28, 26, 16, 29, 36, 17, 0, 36, 17, 1, 33, 17, 2, 0, 17, 3, 0, 17, 4, 0, 17, 5, 0, 17, 6, 0, 17, 7, 26, 17, 8, 33, 17, 9, 0, 17, 10, 0, 17, 11, 0, 17, 12, 0, 17, 13, 0, 17, 14, 26, 17, 15, 33, 17, 16, 0, 17, 17, 0, 17, 18, 0, 17, 19, 0, 17, 20, 0, 17, 21, 26, 17, 22, 33, 17, 23, 0, 17, 24, 0, 17, 25, 0, 17, 26, 0, 17, 27, 0, 17, 28, 26, 17, 29, 36, 18, 0, 36, 18, 1, 33, 18, 2, 0, 18, 3, 0, 18, 4, 0, 18, 5, 0, 18, 6, 0, 18, 7, 26, 18, 8, 57, 18, 9, 50, 18, 10, 50, 18, 11, 74, 18, 12, 50, 18, 13, 50, 18, 14, 55, 18, 15, 57, 18, 16, 50, 18, 17, 50, 18, 18, 74, 18, 19, 50, 18, 20, 50, 18, 21, 55, 18, 22, 57, 18, 23, 50, 18, 24, 50, 18, 25, 74, 18, 26, 50, 18, 27, 50, 18, 28, 55, 18, 29, 36, 19, 0, 36, 19, 1, 33, 19, 2, 0, 19, 3, 0, 19, 4, 0, 19, 5, 0, 19, 6, 0, 19, 7, 26, 19, 8, 33, 19, 9, 0, 19, 10, 0, 19, 11, 0, 19, 12, 0, 19, 13, 0, 19, 14, 26, 19, 15, 33, 19, 16, 0, 19, 17, 0, 19, 18, 0, 19, 19, 0, 19, 20, 0, 19, 21, 26, 19, 22, 33, 19, 23, 0, 19, 24, 0, 19, 25, 0, 19, 26, 0, 19, 27, 0, 19, 28, 26, 19, 29, 36, 20, 0, 36, 20, 1, 33, 20, 2, 0, 20, 3, 0, 20, 4, 0, 20, 5, 0, 20, 6, 0, 20, 7, 26, 20, 8, 33, 20, 9, 0, 20, 10, 0, 20, 11, 0, 20, 12, 0, 20, 13, 0, 20, 14, 26, 20, 15, 33, 20, 16, 0, 20, 17, 0, 20, 18, 0, 20, 19, 0, 20, 20, 0, 20, 21, 26, 20, 22, 33, 20, 23, 0, 20, 24, 0, 20, 25, 0, 20, 26, 0, 20, 27, 0, 20, 28, 26, 20, 29, 36, 21, 0, 36, 21, 1, 33, 21, 2, 0, 21, 3, 0, 21, 4, 0, 21, 5, 0, 21, 6, 0, 21, 7, 27, 21, 8, 34, 21, 9, 0, 21, 10, 0, 21, 11, 0, 21, 12, 0, 21, 13, 0, 21, 14, 27, 21, 15, 34, 21, 16, 0, 21, 17, 0, 21, 18, 0, 21, 19, 0, 21, 20, 0, 21, 21, 27, 21, 22, 34, 21, 23, 0, 21, 24, 0, 21, 25, 0, 21, 26, 0, 21, 27, 0, 21, 28, 27, 21, 29, 36, 22, 0, 36, 22, 1, 33, 22, 2, 0, 22, 3, 0, 22, 4, 0, 22, 5, 0, 22, 6, 0, 22, 7, 42, 22, 8, 44, 22, 9, 0, 22, 10, 0, 22, 11, 0, 22, 12, 0, 22, 13, 0, 22, 14, 42, 22, 15, 44, 22, 16, 0, 22, 17, 0, 22, 18, 0, 22, 19, 0, 22, 20, 0, 22, 21, 42, 22, 22, 44, 22, 23, 0, 22, 24, 0, 22, 25, 0, 22, 26, 0, 22, 27, 0, 22, 28, 42, 22, 29, 45, 23, 0, 36, 23, 1, 33, 23, 2, 0, 23, 3, 0, 23, 4, 0, 23, 5, 0, 23, 6, 0, 23, 7, 28, 23, 8, 35, 23, 9, 0, 23, 10, 0, 23, 11, 0, 23, 12, 0, 23, 13, 0, 23, 14, 28, 23, 15, 35, 23, 16, 0, 23, 17, 0, 23, 18, 0, 23, 19, 0, 23, 20, 0, 23, 21, 28, 23, 22, 35, 23, 23, 0, 23, 24, 0, 23, 25, 0, 23, 26, 0, 23, 27, 0, 23, 28, 28, 23, 29, 36, 24, 0, 36, 24, 1, 33, 24, 2, 0, 24, 3, 0, 24, 4, 0, 24, 5, 0, 24, 6, 0, 24, 7, 26, 24, 8, 33, 24, 9, 0, 24, 10, 0, 24, 11, 0, 24, 12, 0, 24, 13, 0, 24, 14, 26, 24, 15, 33, 24, 16, 0, 24, 17, 0, 24, 18, 0, 24, 19, 0, 24, 20, 0, 24, 21, 26, 24, 22, 33, 24, 23, 0, 24, 24, 0, 24, 25, 0, 24, 26, 0, 24, 27, 0, 24, 28, 26, 24, 29, 36, 25, 0, 36, 25, 1, 33, 25, 2, 0, 25, 3, 0, 25, 4, 0, 25, 5, 0, 25, 6, 0, 25, 7, 26, 25, 8, 33, 25, 9, 0, 25, 10, 0, 25, 11, 0, 25, 12, 0, 25, 13, 0, 25, 14, 26, 25, 15, 33, 25, 16, 0, 25, 17, 0, 25, 18, 0, 25, 19, 0, 25, 20, 0, 25, 21, 26, 25, 22, 33, 25, 23, 0, 25, 24, 0, 25, 25, 0, 25, 26, 0, 25, 27, 0, 25, 28, 26, 25, 29, 36, 26, 0, 36, 26, 1, 33, 26, 2, 0, 26, 3, 0, 26, 4, 0, 26, 5, 0, 26, 6, 0, 26, 7, 26, 26, 8, 57, 26, 9, 50, 26, 10, 50, 26, 11, 74, 26, 12, 50, 26, 13, 50, 26, 14, 55, 26, 15, 57, 26, 16, 50, 26, 17, 50, 26, 18, 74, 26, 19, 50, 26, 20, 50, 26, 21, 55, 26, 22, 57, 26, 23, 50, 26, 24, 50, 26, 25, 74, 26, 26, 50, 26, 27, 50, 26, 28, 55, 26, 29, 36, 27, 0, 36, 27, 1, 33, 27, 2, 0, 27, 3, 0, 27, 4, 0, 27, 5, 0, 27, 6, 0, 27, 7, 26, 27, 8, 33, 27, 9, 0, 27, 10, 0, 27, 11, 0, 27, 12, 0, 27, 13, 0, 27, 14, 26, 27, 15, 33, 27, 16, 0, 27, 17, 0, 27, 18, 0, 27, 19, 0, 27, 20, 0, 27, 21, 26, 27, 22, 33, 27, 23, 0, 27, 24, 0, 27, 25, 0, 27, 26, 0, 27, 27, 0, 27, 28, 26, 27, 29, 36, 28, 0, 36, 28, 1, 40, 28, 2, 30, 28, 3, 30, 28, 4, 30, 28, 5, 30, 28, 6, 30, 28, 7, 38, 28, 8, 33, 28, 9, 0, 28, 10, 0, 28, 11, 0, 28, 12, 0, 28, 13, 0, 28, 14, 26, 28, 15, 33, 28, 16, 0, 28, 17, 0, 28, 18, 0, 28, 19, 0, 28, 20, 0, 28, 21, 26, 28, 22, 33, 28, 23, 0, 28, 24, 0, 28, 25, 0, 28, 26, 0, 28, 27, 0, 28, 28, 26, 28, 29, 36, 29, 0, 36, 29, 1, 36, 29, 2, 36, 29, 3, 36, 29, 4, 36, 29, 5, 36, 29, 6, 36, 29, 7, 36, 29, 8, 33, 29, 9, 0, 29, 10, 0, 29, 11, 0, 29, 12, 0, 29, 13, 0, 29, 14, 26, 29, 15, 33, 29, 16, 0, 29, 17, 0, 29, 18, 0, 29, 19, 0, 29, 20, 0, 29, 21, 26, 29, 22, 33, 29, 23, 0, 29, 24, 0, 29, 25, 0, 29, 26, 0, 29, 27, 0, 29, 28, 26, 29, 29, 36, 30, 0, 36, 30, 1, 36, 30, 2, 36, 30, 3, 36, 30, 4, 36, 30, 5, 36, 30, 6, 36, 30, 7, 36, 30, 8, 33, 30, 9, 0, 30, 10, 0, 30, 11, 0, 30, 12, 0, 30, 13, 0, 30, 14, 26, 30, 15, 33, 30, 16, 0, 30, 17, 0, 30, 18, 0, 30, 19, 0, 30, 20, 0, 30, 21, 26, 30, 22, 33, 30, 23, 0, 30, 24, 0, 30, 25, 0, 30, 26, 0, 30, 27, 0, 30, 28, 26, 30, 29, 36, 31, 0, 36, 31, 1, 36, 31, 2, 36, 31, 3, 36, 31, 4, 36, 31, 5, 36, 31, 6, 36, 31, 7, 36, 31, 8, 33, 31, 9, 0, 31, 10, 0, 31, 11, 0, 31, 12, 0, 31, 13, 0, 31, 14, 26, 31, 15, 33, 31, 16, 0, 31, 17, 0, 31, 18, 0, 31, 19, 0, 31, 20, 0, 31, 21, 26, 31, 22, 33, 31, 23, 0, 31, 24, 0, 31, 25, 0, 31, 26, 0, 31, 27, 0, 31, 28, 26, 31, 29, 36, 32, 0, 36, 32, 1, 36, 32, 2, 36, 32, 3, 36, 32, 4, 36, 32, 5, 36, 32, 6, 36, 32, 7, 36, 32, 8, 33, 32, 9, 0, 32, 10, 0, 32, 11, 0, 32, 12, 0, 32, 13, 0, 32, 14, 26, 32, 15, 33, 32, 16, 0, 32, 17, 0, 32, 18, 0, 32, 19, 0, 32, 20, 0, 32, 21, 26, 32, 22, 33, 32, 23, 0, 32, 24, 0, 32, 25, 0, 32, 26, 0, 32, 27, 0, 32, 28, 26, 32, 29, 36, 33, 0, 36, 33, 1, 36, 33, 2, 36, 33, 3, 36, 33, 4, 36, 33, 5, 36, 33, 6, 36, 33, 7, 36, 33, 8, 33, 33, 9, 0, 33, 10, 0, 33, 11, 0, 33, 12, 0, 33, 13, 0, 33, 14, 26, 33, 15, 33, 33, 16, 0, 33, 17, 0, 33, 18, 0, 33, 19, 0, 33, 20, 0, 33, 21, 26, 33, 22, 33, 33, 23, 0, 33, 24, 0, 33, 25, 0, 33, 26, 0, 33, 27, 0, 33, 28, 26, 33, 29, 36, 34, 0, 36, 34, 1, 36, 35, 0, 36, 35, 1, 36, 34, 2, 36, 35, 2, 36, 34, 3, 36, 35, 3, 36, 34, 4, 36, 35, 4, 36, 34, 5, 36, 35, 5, 36, 34, 6, 36, 35, 6, 36, 34, 7, 36, 34, 8, 40, 35, 7, 36, 35, 8, 36, 34, 9, 30, 35, 9, 36, 34, 10, 30, 35, 10, 36, 34, 11, 30, 35, 11, 36, 34, 12, 30, 35, 12, 36, 34, 13, 30, 35, 13, 36, 34, 14, 38, 34, 15, 40, 35, 14, 36, 35, 15, 39, 34, 16, 30, 35, 16, 22, 34, 17, 32, 35, 17, 24, 34, 18, 43, 35, 18, 41, 34, 19, 31, 35, 19, 23, 34, 20, 30, 35, 20, 22, 34, 21, 38, 34, 22, 40, 35, 21, 37, 35, 22, 39, 34, 23, 30, 35, 23, 22, 34, 24, 32, 35, 24, 24, 34, 25, 43, 35, 25, 41, 34, 26, 31, 35, 26, 23, 34, 27, 30, 35, 27, 22, 34, 28, 38, 34, 29, 36, 35, 28, 37, 35, 29, 36, 36, 0, 36, 36, 1, 36, 36, 2, 36, 36, 3, 36, 36, 4, 36, 36, 5, 36, 36, 6, 36, 36, 7, 36, 36, 8, 36, 36, 9, 36, 36, 10, 36, 36, 11, 36, 36, 12, 36, 36, 13, 36, 36, 14, 36, 36, 15, 33, 36, 16, 0, 36, 17, 0, 36, 18, 0, 36, 19, 0, 36, 20, 0, 36, 21, 26, 36, 22, 33, 36, 23, 10, 36, 24, 10, 36, 25, 0, 36, 26, 0, 36, 27, 0, 36, 28, 26, 36, 29, 36, 37, 0, 36, 37, 1, 36, 37, 2, 36, 37, 3, 36, 37, 4, 36, 37, 5, 36, 37, 6, 36, 37, 7, 36, 37, 8, 36, 37, 9, 36, 37, 10, 36, 37, 11, 36, 37, 12, 36, 37, 13, 36, 37, 14, 36, 37, 15, 33, 37, 16, 0, 37, 17, 0, 37, 18, 0, 37, 19, 0, 37, 20, 0, 37, 21, 26, 37, 22, 33, 37, 23, 10, 37, 24, 10, 37, 25, 0, 37, 26, 0, 37, 27, 0, 37, 28, 26, 37, 29, 36, 38, 0, 36, 38, 1, 36, 38, 2, 36, 38, 3, 36, 38, 4, 36, 38, 5, 36, 38, 6, 36, 38, 7, 36, 38, 8, 36, 38, 9, 36, 38, 10, 36, 38, 11, 36, 38, 12, 36, 38, 13, 36, 38, 14, 36, 38, 15, 33, 38, 16, 0, 38, 17, 0, 38, 18, 0, 38, 19, 0, 38, 20, 0, 38, 21, 26, 38, 22, 33, 38, 23, 10, 38, 24, 10, 38, 25, 0, 38, 26, 61, 38, 27, 59, 38, 28, 26, 38, 29, 36, 39, 0, 36, 39, 1, 36, 39, 2, 36, 39, 3, 36, 39, 4, 36, 39, 5, 36, 39, 6, 36, 39, 7, 36, 39, 8, 36, 39, 9, 36, 39, 10, 36, 39, 11, 36, 39, 12, 36, 39, 13, 36, 39, 14, 36, 39, 15, 33, 39, 16, 0, 39, 17, 0, 39, 18, 0, 39, 19, 0, 39, 20, 0, 39, 21, 26, 39, 22, 33, 39, 23, 10, 39, 24, 10, 39, 25, 0, 39, 26, 0, 39, 27, 0, 39, 28, 26, 39, 29, 36, 40, 0, 36, 40, 1, 36, 40, 2, 36, 40, 3, 36, 40, 4, 36, 40, 5, 36, 40, 6, 36, 40, 7, 36, 40, 8, 36, 40, 9, 36, 40, 10, 36, 40, 11, 36, 40, 12, 36, 40, 13, 36, 40, 14, 36, 40, 15, 33, 40, 16, 0, 40, 17, 0, 40, 18, 0, 40, 19, 0, 40, 20, 0, 40, 21, 26, 40, 22, 33, 40, 23, 10, 40, 24, 10, 40, 25, 0, 40, 26, 61, 40, 27, 59, 40, 28, 26, 40, 29, 36, 41, 0, 36, 41, 1, 36, 41, 2, 36, 41, 3, 36, 41, 4, 36, 41, 5, 36, 41, 6, 36, 41, 7, 36, 41, 8, 36, 41, 9, 36, 41, 10, 36, 41, 11, 36, 41, 12, 36, 41, 13, 36, 41, 14, 36, 41, 15, 33, 41, 16, 0, 41, 17, 0, 41, 18, 0, 41, 19, 0, 41, 20, 0, 41, 21, 26, 41, 22, 33, 41, 23, 10, 41, 24, 10, 41, 25, 0, 41, 26, 0, 41, 27, 0, 41, 28, 26, 41, 29, 36, 42, 0, 36, 42, 1, 36, 42, 2, 36, 42, 3, 36, 42, 4, 36, 42, 5, 36, 42, 6, 36, 42, 7, 36, 42, 8, 36, 42, 9, 36, 42, 10, 36, 42, 11, 36, 42, 12, 36, 42, 13, 36, 42, 14, 36, 42, 15, 33, 42, 16, 0, 42, 17, 0, 42, 18, 0, 42, 19, 0, 42, 20, 0, 42, 21, 26, 42, 22, 33, 42, 23, 10, 42, 24, 10, 42, 25, 0, 42, 26, 0, 42, 27, 0, 42, 28, 26, 42, 29, 36, 43, 0, 36, 43, 1, 36, 44, 0, 36, 44, 1, 36, 43, 2, 36, 44, 2, 36, 43, 3, 36, 44, 3, 36, 43, 4, 36, 44, 4, 36, 43, 5, 36, 44, 5, 36, 43, 6, 36, 44, 6, 36, 43, 7, 36, 43, 8, 36, 44, 7, 36, 44, 8, 36, 43, 9, 36, 44, 9, 36, 43, 10, 36, 44, 10, 36, 43, 11, 36, 44, 11, 36, 43, 12, 36, 44, 12, 36, 43, 13, 36, 44, 13, 36, 43, 14, 36, 43, 15, 40, 44, 14, 36, 44, 15, 36, 43, 16, 30, 44, 16, 36, 43, 17, 30, 44, 17, 36, 43, 18, 30, 44, 18, 36, 43, 19, 30, 44, 19, 36, 43, 20, 30, 44, 20, 36, 43, 21, 38, 43, 22, 40, 44, 21, 36, 44, 22, 36, 43, 23, 30, 44, 23, 36, 43, 24, 30, 44, 24, 36, 43, 25, 30, 44, 25, 36, 43, 26, 30, 44, 26, 36, 43, 27, 30, 44, 27, 36, 43, 28, 38, 43, 29, 36, 44, 28, 36, 44, 29, 36)
+"cells": PackedInt32Array(0, 0, 36, 0, 1, 36, 1, 0, 36, 1, 1, 36, 0, 2, 36, 1, 2, 36, 0, 3, 36, 1, 3, 36, 0, 4, 36, 1, 4, 36, 0, 5, 36, 1, 5, 36, 0, 6, 36, 1, 6, 36, 0, 7, 36, 0, 8, 36, 1, 7, 36, 1, 8, 36, 0, 9, 36, 1, 9, 36, 0, 10, 36, 1, 10, 36, 0, 11, 36, 1, 11, 36, 0, 12, 36, 1, 12, 36, 0, 13, 36, 1, 13, 36, 0, 14, 36, 0, 15, 36, 1, 14, 36, 1, 15, 39, 0, 16, 36, 1, 16, 22, 0, 17, 36, 1, 17, 22, 0, 18, 36, 1, 18, 22, 0, 19, 36, 1, 19, 22, 0, 20, 36, 1, 20, 22, 0, 21, 36, 0, 22, 36, 1, 21, 37, 1, 22, 39, 0, 23, 36, 1, 23, 22, 0, 24, 36, 1, 24, 22, 0, 25, 36, 1, 25, 22, 0, 26, 36, 1, 26, 22, 0, 27, 36, 1, 27, 22, 0, 28, 36, 0, 29, 36, 1, 28, 37, 1, 29, 36, 2, 0, 36, 2, 1, 36, 2, 2, 36, 2, 3, 36, 2, 4, 36, 2, 5, 36, 2, 6, 36, 2, 7, 36, 2, 8, 36, 2, 9, 36, 2, 10, 36, 2, 11, 36, 2, 12, 36, 2, 13, 36, 2, 14, 36, 2, 15, 33, 2, 16, 0, 2, 17, 0, 2, 18, 0, 2, 19, 0, 2, 20, 0, 2, 21, 26, 2, 22, 33, 2, 23, 0, 2, 24, 0, 2, 25, 0, 2, 26, 0, 2, 27, 0, 2, 28, 26, 2, 29, 36, 3, 0, 36, 3, 1, 36, 3, 2, 36, 3, 3, 36, 3, 4, 36, 3, 5, 36, 3, 6, 36, 3, 7, 36, 3, 8, 36, 3, 9, 36, 3, 10, 36, 3, 11, 36, 3, 12, 36, 3, 13, 36, 3, 14, 36, 3, 15, 33, 3, 16, 0, 3, 17, 0, 3, 18, 0, 3, 19, 0, 3, 20, 0, 3, 21, 26, 3, 22, 33, 3, 23, 0, 3, 24, 0, 3, 25, 0, 3, 26, 0, 3, 27, 0, 3, 28, 26, 3, 29, 36, 4, 0, 36, 4, 1, 36, 4, 2, 36, 4, 3, 36, 4, 4, 36, 4, 5, 36, 4, 6, 36, 4, 7, 36, 4, 8, 36, 4, 9, 36, 4, 10, 36, 4, 11, 36, 4, 12, 36, 4, 13, 36, 4, 14, 36, 4, 15, 33, 4, 16, 0, 4, 17, 0, 4, 18, 0, 4, 19, 0, 4, 20, 0, 4, 21, 26, 4, 22, 33, 4, 23, 0, 4, 24, 0, 4, 25, 0, 4, 26, 0, 4, 27, 0, 4, 28, 26, 4, 29, 36, 5, 0, 36, 5, 1, 36, 5, 2, 36, 5, 3, 36, 5, 4, 36, 5, 5, 36, 5, 6, 36, 5, 7, 36, 5, 8, 36, 5, 9, 36, 5, 10, 36, 5, 11, 36, 5, 12, 36, 5, 13, 36, 5, 14, 36, 5, 15, 33, 5, 16, 0, 5, 17, 0, 5, 18, 0, 5, 19, 0, 5, 20, 0, 5, 21, 26, 5, 22, 33, 5, 23, 0, 5, 24, 0, 5, 25, 0, 5, 26, 0, 5, 27, 0, 5, 28, 26, 5, 29, 36, 6, 0, 36, 6, 1, 36, 6, 2, 36, 6, 3, 36, 6, 4, 36, 6, 5, 36, 6, 6, 36, 6, 7, 36, 6, 8, 36, 6, 9, 36, 6, 10, 36, 6, 11, 36, 6, 12, 36, 6, 13, 36, 6, 14, 36, 6, 15, 33, 6, 16, 0, 6, 17, 0, 6, 18, 0, 6, 19, 0, 6, 20, 0, 6, 21, 26, 6, 22, 33, 6, 23, 0, 6, 24, 0, 6, 25, 0, 6, 26, 0, 6, 27, 0, 6, 28, 26, 6, 29, 36, 7, 0, 36, 7, 1, 36, 7, 2, 36, 7, 3, 36, 7, 4, 36, 7, 5, 36, 7, 6, 36, 7, 7, 36, 7, 8, 36, 7, 9, 36, 7, 10, 36, 7, 11, 36, 7, 12, 36, 7, 13, 36, 7, 14, 36, 7, 15, 33, 7, 16, 0, 7, 17, 0, 7, 18, 0, 7, 19, 0, 7, 20, 0, 7, 21, 26, 7, 22, 33, 7, 23, 0, 7, 24, 0, 7, 25, 0, 7, 26, 0, 7, 27, 0, 7, 28, 26, 7, 29, 36, 8, 0, 36, 8, 1, 36, 8, 2, 36, 8, 3, 36, 8, 4, 36, 8, 5, 36, 8, 6, 36, 8, 7, 36, 8, 8, 36, 8, 9, 36, 8, 10, 36, 8, 11, 36, 8, 12, 36, 8, 13, 36, 8, 14, 36, 8, 15, 33, 8, 16, 0, 8, 17, 0, 8, 18, 0, 8, 19, 0, 8, 20, 0, 8, 21, 26, 8, 22, 33, 8, 23, 0, 8, 24, 0, 8, 25, 0, 8, 26, 0, 8, 27, 0, 8, 28, 26, 8, 29, 36, 9, 0, 36, 9, 1, 36, 10, 0, 36, 10, 1, 36, 9, 2, 36, 10, 2, 36, 9, 3, 36, 10, 3, 36, 9, 4, 36, 10, 4, 36, 9, 5, 36, 10, 5, 36, 9, 6, 36, 10, 6, 36, 9, 7, 36, 9, 8, 36, 10, 7, 36, 10, 8, 39, 9, 9, 36, 10, 9, 22, 9, 10, 36, 10, 10, 22, 9, 11, 36, 10, 11, 22, 9, 12, 36, 10, 12, 22, 9, 13, 36, 10, 13, 22, 9, 14, 36, 9, 15, 40, 10, 14, 37, 10, 15, 39, 9, 16, 30, 10, 16, 22, 9, 17, 32, 10, 17, 24, 9, 18, 43, 10, 18, 41, 9, 19, 31, 10, 19, 23, 9, 20, 30, 10, 20, 22, 9, 21, 38, 9, 22, 40, 10, 21, 37, 10, 22, 39, 9, 23, 30, 10, 23, 22, 9, 24, 32, 10, 24, 24, 9, 25, 43, 10, 25, 41, 9, 26, 31, 10, 26, 23, 9, 27, 30, 10, 27, 22, 9, 28, 38, 9, 29, 36, 10, 28, 37, 10, 29, 36, 11, 0, 36, 11, 1, 36, 11, 2, 36, 11, 3, 36, 11, 4, 36, 11, 5, 36, 11, 6, 36, 11, 7, 36, 11, 8, 33, 11, 9, 0, 11, 10, 0, 11, 11, 0, 11, 12, 0, 11, 13, 0, 11, 14, 26, 11, 15, 33, 11, 16, 0, 11, 17, 0, 11, 18, 0, 11, 19, 0, 11, 20, 0, 11, 21, 26, 11, 22, 33, 11, 23, 0, 11, 24, 0, 11, 25, 0, 11, 26, 0, 11, 27, 0, 11, 28, 26, 11, 29, 36, 12, 0, 36, 12, 1, 36, 12, 2, 36, 12, 3, 36, 12, 4, 36, 12, 5, 36, 12, 6, 36, 12, 7, 36, 12, 8, 33, 12, 9, 0, 12, 10, 0, 12, 11, 10, 12, 12, 0, 12, 13, 0, 12, 14, 26, 12, 15, 33, 12, 16, 10, 12, 17, 10, 12, 18, 10, 12, 19, 10, 12, 20, 10, 12, 21, 26, 12, 22, 33, 12, 23, 0, 12, 24, 0, 12, 25, 0, 12, 26, 0, 12, 27, 0, 12, 28, 26, 12, 29, 36, 13, 0, 36, 13, 1, 36, 13, 2, 36, 13, 3, 36, 13, 4, 36, 13, 5, 36, 13, 6, 36, 13, 7, 36, 13, 8, 33, 13, 9, 59, 13, 10, 60, 13, 11, 10, 13, 12, 0, 13, 13, 0, 13, 14, 26, 13, 15, 33, 13, 16, 10, 13, 17, 10, 13, 18, 10, 13, 19, 10, 13, 20, 10, 13, 21, 26, 13, 22, 33, 13, 23, 10, 13, 24, 10, 13, 25, 10, 13, 26, 10, 13, 27, 10, 13, 28, 26, 13, 29, 36, 14, 0, 36, 14, 1, 36, 14, 2, 36, 14, 3, 36, 14, 4, 36, 14, 5, 36, 14, 6, 36, 14, 7, 36, 14, 8, 33, 14, 9, 0, 14, 10, 0, 14, 11, 10, 14, 12, 0, 14, 13, 0, 14, 14, 26, 14, 15, 33, 14, 16, 10, 14, 17, 10, 14, 18, 10, 14, 19, 10, 14, 20, 10, 14, 21, 26, 14, 22, 33, 14, 23, 0, 14, 24, 0, 14, 25, 0, 14, 26, 0, 14, 27, 0, 14, 28, 26, 14, 29, 36, 15, 0, 36, 15, 1, 36, 15, 2, 36, 15, 3, 36, 15, 4, 36, 15, 5, 36, 15, 6, 36, 15, 7, 36, 15, 8, 40, 15, 9, 30, 15, 10, 54, 15, 11, 10, 15, 12, 0, 15, 13, 0, 15, 14, 26, 15, 15, 33, 15, 16, 10, 15, 17, 10, 15, 18, 10, 15, 19, 10, 15, 20, 10, 15, 21, 26, 15, 22, 33, 15, 23, 10, 15, 24, 10, 15, 25, 10, 15, 26, 10, 15, 27, 10, 15, 28, 26, 15, 29, 36, 16, 0, 22, 16, 1, 22, 16, 2, 22, 16, 3, 22, 16, 4, 22, 16, 5, 22, 16, 6, 22, 16, 7, 37, 16, 8, 39, 16, 9, 22, 16, 10, 25, 16, 11, 10, 16, 12, 0, 16, 13, 0, 16, 14, 26, 16, 15, 33, 16, 16, 0, 16, 17, 0, 16, 18, 0, 16, 19, 0, 16, 20, 0, 16, 21, 26, 16, 22, 33, 16, 23, 0, 16, 24, 0, 16, 25, 0, 16, 26, 0, 16, 27, 0, 16, 28, 26, 16, 29, 36, 17, 0, 0, 17, 1, 0, 17, 2, 0, 17, 3, 0, 17, 4, 0, 17, 5, 0, 17, 6, 0, 17, 7, 26, 17, 8, 33, 17, 9, 0, 17, 10, 0, 17, 11, 0, 17, 12, 0, 17, 13, 0, 17, 14, 26, 17, 15, 33, 17, 16, 0, 17, 17, 0, 17, 18, 0, 17, 19, 0, 17, 20, 0, 17, 21, 26, 17, 22, 33, 17, 23, 0, 17, 24, 0, 17, 25, 0, 17, 26, 0, 17, 27, 0, 17, 28, 26, 17, 29, 36, 18, 0, 0, 18, 1, 0, 18, 2, 0, 18, 3, 0, 18, 4, 0, 18, 5, 0, 18, 6, 0, 18, 7, 26, 18, 8, 57, 18, 9, 50, 18, 10, 50, 18, 11, 74, 18, 12, 50, 18, 13, 50, 18, 14, 55, 18, 15, 57, 18, 16, 50, 18, 17, 50, 18, 18, 74, 18, 19, 50, 18, 20, 50, 18, 21, 55, 18, 22, 57, 18, 23, 50, 18, 24, 50, 18, 25, 74, 18, 26, 50, 18, 27, 50, 18, 28, 55, 18, 29, 36, 19, 0, 0, 19, 1, 0, 19, 2, 0, 19, 3, 0, 19, 4, 0, 19, 5, 0, 19, 6, 0, 19, 7, 26, 19, 8, 33, 19, 9, 0, 19, 10, 0, 19, 11, 0, 19, 12, 0, 19, 13, 0, 19, 14, 26, 19, 15, 33, 19, 16, 0, 19, 17, 0, 19, 18, 0, 19, 19, 0, 19, 20, 0, 19, 21, 26, 19, 22, 33, 19, 23, 0, 19, 24, 0, 19, 25, 0, 19, 26, 0, 19, 27, 0, 19, 28, 26, 19, 29, 36, 20, 0, 0, 20, 1, 0, 20, 2, 0, 20, 3, 0, 20, 4, 0, 20, 5, 0, 20, 6, 0, 20, 7, 26, 20, 8, 33, 20, 9, 0, 20, 10, 0, 20, 11, 0, 20, 12, 0, 20, 13, 0, 20, 14, 26, 20, 15, 33, 20, 16, 0, 20, 17, 0, 20, 18, 0, 20, 19, 0, 20, 20, 0, 20, 21, 26, 20, 22, 33, 20, 23, 0, 20, 24, 0, 20, 25, 0, 20, 26, 0, 20, 27, 0, 20, 28, 26, 20, 29, 36, 21, 0, 0, 21, 1, 0, 21, 2, 0, 21, 3, 0, 21, 4, 0, 21, 5, 0, 21, 6, 0, 21, 7, 27, 21, 8, 34, 21, 9, 0, 21, 10, 0, 21, 11, 0, 21, 12, 0, 21, 13, 0, 21, 14, 27, 21, 15, 34, 21, 16, 0, 21, 17, 0, 21, 18, 0, 21, 19, 0, 21, 20, 0, 21, 21, 27, 21, 22, 34, 21, 23, 0, 21, 24, 0, 21, 25, 0, 21, 26, 0, 21, 27, 0, 21, 28, 27, 21, 29, 36, 22, 0, 0, 22, 1, 0, 22, 2, 0, 22, 3, 0, 22, 4, 0, 22, 5, 0, 22, 6, 0, 22, 7, 42, 22, 8, 44, 22, 9, 0, 22, 10, 0, 22, 11, 0, 22, 12, 0, 22, 13, 0, 22, 14, 42, 22, 15, 44, 22, 16, 0, 22, 17, 0, 22, 18, 0, 22, 19, 0, 22, 20, 0, 22, 21, 42, 22, 22, 44, 22, 23, 0, 22, 24, 0, 22, 25, 0, 22, 26, 0, 22, 27, 0, 22, 28, 42, 22, 29, 45, 23, 0, 0, 23, 1, 0, 23, 2, 0, 23, 3, 0, 23, 4, 0, 23, 5, 0, 23, 6, 0, 23, 7, 28, 23, 8, 35, 23, 9, 0, 23, 10, 0, 23, 11, 0, 23, 12, 0, 23, 13, 0, 23, 14, 28, 23, 15, 35, 23, 16, 0, 23, 17, 0, 23, 18, 0, 23, 19, 0, 23, 20, 0, 23, 21, 28, 23, 22, 35, 23, 23, 0, 23, 24, 0, 23, 25, 0, 23, 26, 0, 23, 27, 0, 23, 28, 28, 23, 29, 36, 24, 0, 0, 24, 1, 0, 24, 2, 0, 24, 3, 0, 24, 4, 0, 24, 5, 0, 24, 6, 0, 24, 7, 26, 24, 8, 33, 24, 9, 0, 24, 10, 0, 24, 11, 0, 24, 12, 0, 24, 13, 0, 24, 14, 26, 24, 15, 33, 24, 16, 0, 24, 17, 0, 24, 18, 0, 24, 19, 0, 24, 20, 0, 24, 21, 26, 24, 22, 33, 24, 23, 0, 24, 24, 0, 24, 25, 0, 24, 26, 0, 24, 27, 0, 24, 28, 26, 24, 29, 36, 25, 0, 0, 25, 1, 0, 25, 2, 0, 25, 3, 0, 25, 4, 0, 25, 5, 0, 25, 6, 0, 25, 7, 26, 25, 8, 33, 25, 9, 0, 25, 10, 0, 25, 11, 0, 25, 12, 0, 25, 13, 0, 25, 14, 26, 25, 15, 33, 25, 16, 0, 25, 17, 0, 25, 18, 0, 25, 19, 0, 25, 20, 0, 25, 21, 26, 25, 22, 33, 25, 23, 0, 25, 24, 0, 25, 25, 0, 25, 26, 0, 25, 27, 0, 25, 28, 26, 25, 29, 36, 26, 0, 0, 26, 1, 0, 26, 2, 0, 26, 3, 0, 26, 4, 0, 26, 5, 0, 26, 6, 0, 26, 7, 26, 26, 8, 57, 26, 9, 50, 26, 10, 50, 26, 11, 74, 26, 12, 50, 26, 13, 50, 26, 14, 55, 26, 15, 57, 26, 16, 50, 26, 17, 50, 26, 18, 74, 26, 19, 50, 26, 20, 50, 26, 21, 55, 26, 22, 57, 26, 23, 50, 26, 24, 50, 26, 25, 74, 26, 26, 50, 26, 27, 50, 26, 28, 55, 26, 29, 36, 27, 0, 0, 27, 1, 0, 27, 2, 0, 27, 3, 0, 27, 4, 0, 27, 5, 0, 27, 6, 0, 27, 7, 26, 27, 8, 33, 27, 9, 0, 27, 10, 0, 27, 11, 0, 27, 12, 0, 27, 13, 0, 27, 14, 26, 27, 15, 33, 27, 16, 0, 27, 17, 0, 27, 18, 0, 27, 19, 0, 27, 20, 0, 27, 21, 26, 27, 22, 33, 27, 23, 0, 27, 24, 0, 27, 25, 0, 27, 26, 0, 27, 27, 0, 27, 28, 26, 27, 29, 36, 28, 0, 30, 28, 1, 30, 28, 2, 30, 28, 3, 30, 28, 4, 30, 28, 5, 30, 28, 6, 30, 28, 7, 38, 28, 8, 33, 28, 9, 0, 28, 10, 0, 28, 11, 0, 28, 12, 0, 28, 13, 0, 28, 14, 26, 28, 15, 33, 28, 16, 0, 28, 17, 0, 28, 18, 0, 28, 19, 0, 28, 20, 0, 28, 21, 26, 28, 22, 33, 28, 23, 0, 28, 24, 0, 28, 25, 0, 28, 26, 0, 28, 27, 0, 28, 28, 26, 28, 29, 36, 29, 0, 36, 29, 1, 36, 29, 2, 36, 29, 3, 36, 29, 4, 36, 29, 5, 36, 29, 6, 36, 29, 7, 36, 29, 8, 33, 29, 9, 0, 29, 10, 0, 29, 11, 0, 29, 12, 0, 29, 13, 0, 29, 14, 26, 29, 15, 33, 29, 16, 0, 29, 17, 0, 29, 18, 0, 29, 19, 0, 29, 20, 0, 29, 21, 26, 29, 22, 33, 29, 23, 0, 29, 24, 0, 29, 25, 0, 29, 26, 0, 29, 27, 0, 29, 28, 26, 29, 29, 36, 30, 0, 36, 30, 1, 36, 30, 2, 36, 30, 3, 36, 30, 4, 36, 30, 5, 36, 30, 6, 36, 30, 7, 36, 30, 8, 33, 30, 9, 0, 30, 10, 0, 30, 11, 0, 30, 12, 0, 30, 13, 0, 30, 14, 26, 30, 15, 33, 30, 16, 0, 30, 17, 0, 30, 18, 0, 30, 19, 0, 30, 20, 0, 30, 21, 26, 30, 22, 33, 30, 23, 0, 30, 24, 0, 30, 25, 0, 30, 26, 0, 30, 27, 0, 30, 28, 26, 30, 29, 36, 31, 0, 36, 31, 1, 36, 31, 2, 36, 31, 3, 36, 31, 4, 36, 31, 5, 36, 31, 6, 36, 31, 7, 36, 31, 8, 33, 31, 9, 0, 31, 10, 0, 31, 11, 0, 31, 12, 0, 31, 13, 0, 31, 14, 26, 31, 15, 33, 31, 16, 0, 31, 17, 0, 31, 18, 0, 31, 19, 0, 31, 20, 0, 31, 21, 26, 31, 22, 33, 31, 23, 0, 31, 24, 0, 31, 25, 0, 31, 26, 0, 31, 27, 0, 31, 28, 26, 31, 29, 36, 32, 0, 36, 32, 1, 36, 32, 2, 36, 32, 3, 36, 32, 4, 36, 32, 5, 36, 32, 6, 36, 32, 7, 36, 32, 8, 33, 32, 9, 0, 32, 10, 0, 32, 11, 0, 32, 12, 0, 32, 13, 0, 32, 14, 26, 32, 15, 33, 32, 16, 0, 32, 17, 0, 32, 18, 0, 32, 19, 0, 32, 20, 0, 32, 21, 26, 32, 22, 33, 32, 23, 0, 32, 24, 0, 32, 25, 0, 32, 26, 0, 32, 27, 0, 32, 28, 26, 32, 29, 36, 33, 0, 36, 33, 1, 36, 33, 2, 36, 33, 3, 36, 33, 4, 36, 33, 5, 36, 33, 6, 36, 33, 7, 36, 33, 8, 33, 33, 9, 0, 33, 10, 0, 33, 11, 0, 33, 12, 0, 33, 13, 0, 33, 14, 26, 33, 15, 33, 33, 16, 0, 33, 17, 0, 33, 18, 0, 33, 19, 0, 33, 20, 0, 33, 21, 26, 33, 22, 33, 33, 23, 0, 33, 24, 0, 33, 25, 0, 33, 26, 0, 33, 27, 0, 33, 28, 26, 33, 29, 36, 34, 0, 36, 34, 1, 36, 35, 0, 36, 35, 1, 36, 34, 2, 36, 35, 2, 36, 34, 3, 36, 35, 3, 36, 34, 4, 36, 35, 4, 36, 34, 5, 36, 35, 5, 36, 34, 6, 36, 35, 6, 36, 34, 7, 36, 34, 8, 40, 35, 7, 36, 35, 8, 36, 34, 9, 30, 35, 9, 36, 34, 10, 30, 35, 10, 36, 34, 11, 30, 35, 11, 36, 34, 12, 30, 35, 12, 36, 34, 13, 30, 35, 13, 36, 34, 14, 38, 34, 15, 40, 35, 14, 36, 35, 15, 39, 34, 16, 30, 35, 16, 22, 34, 17, 32, 35, 17, 24, 34, 18, 43, 35, 18, 41, 34, 19, 31, 35, 19, 23, 34, 20, 30, 35, 20, 22, 34, 21, 38, 34, 22, 40, 35, 21, 37, 35, 22, 39, 34, 23, 30, 35, 23, 22, 34, 24, 32, 35, 24, 24, 34, 25, 43, 35, 25, 41, 34, 26, 31, 35, 26, 23, 34, 27, 30, 35, 27, 22, 34, 28, 38, 34, 29, 36, 35, 28, 37, 35, 29, 36, 36, 0, 36, 36, 1, 36, 36, 2, 36, 36, 3, 36, 36, 4, 36, 36, 5, 36, 36, 6, 36, 36, 7, 36, 36, 8, 36, 36, 9, 36, 36, 10, 36, 36, 11, 36, 36, 12, 36, 36, 13, 36, 36, 14, 36, 36, 15, 33, 36, 16, 0, 36, 17, 0, 36, 18, 0, 36, 19, 0, 36, 20, 0, 36, 21, 26, 36, 22, 33, 36, 23, 10, 36, 24, 10, 36, 25, 0, 36, 26, 0, 36, 27, 0, 36, 28, 26, 36, 29, 36, 37, 0, 36, 37, 1, 36, 37, 2, 36, 37, 3, 36, 37, 4, 36, 37, 5, 36, 37, 6, 36, 37, 7, 36, 37, 8, 36, 37, 9, 36, 37, 10, 36, 37, 11, 36, 37, 12, 36, 37, 13, 36, 37, 14, 36, 37, 15, 33, 37, 16, 0, 37, 17, 0, 37, 18, 0, 37, 19, 0, 37, 20, 0, 37, 21, 26, 37, 22, 33, 37, 23, 10, 37, 24, 10, 37, 25, 0, 37, 26, 0, 37, 27, 0, 37, 28, 26, 37, 29, 36, 38, 0, 36, 38, 1, 36, 38, 2, 36, 38, 3, 36, 38, 4, 36, 38, 5, 36, 38, 6, 36, 38, 7, 36, 38, 8, 36, 38, 9, 36, 38, 10, 36, 38, 11, 36, 38, 12, 36, 38, 13, 36, 38, 14, 36, 38, 15, 33, 38, 16, 0, 38, 17, 0, 38, 18, 0, 38, 19, 0, 38, 20, 0, 38, 21, 26, 38, 22, 33, 38, 23, 10, 38, 24, 10, 38, 25, 0, 38, 26, 61, 38, 27, 59, 38, 28, 26, 38, 29, 36, 39, 0, 36, 39, 1, 36, 39, 2, 36, 39, 3, 36, 39, 4, 36, 39, 5, 36, 39, 6, 36, 39, 7, 36, 39, 8, 36, 39, 9, 36, 39, 10, 36, 39, 11, 36, 39, 12, 36, 39, 13, 36, 39, 14, 36, 39, 15, 33, 39, 16, 0, 39, 17, 0, 39, 18, 0, 39, 19, 0, 39, 20, 0, 39, 21, 26, 39, 22, 33, 39, 23, 10, 39, 24, 10, 39, 25, 0, 39, 26, 0, 39, 27, 0, 39, 28, 26, 39, 29, 36, 40, 0, 36, 40, 1, 36, 40, 2, 36, 40, 3, 36, 40, 4, 36, 40, 5, 36, 40, 6, 36, 40, 7, 36, 40, 8, 36, 40, 9, 36, 40, 10, 36, 40, 11, 36, 40, 12, 36, 40, 13, 36, 40, 14, 36, 40, 15, 33, 40, 16, 0, 40, 17, 0, 40, 18, 0, 40, 19, 0, 40, 20, 0, 40, 21, 26, 40, 22, 33, 40, 23, 10, 40, 24, 10, 40, 25, 0, 40, 26, 61, 40, 27, 59, 40, 28, 26, 40, 29, 36, 41, 0, 36, 41, 1, 36, 41, 2, 36, 41, 3, 36, 41, 4, 36, 41, 5, 36, 41, 6, 36, 41, 7, 36, 41, 8, 36, 41, 9, 36, 41, 10, 36, 41, 11, 36, 41, 12, 36, 41, 13, 36, 41, 14, 36, 41, 15, 33, 41, 16, 0, 41, 17, 0, 41, 18, 0, 41, 19, 0, 41, 20, 0, 41, 21, 26, 41, 22, 33, 41, 23, 10, 41, 24, 10, 41, 25, 0, 41, 26, 0, 41, 27, 0, 41, 28, 26, 41, 29, 36, 42, 0, 36, 42, 1, 36, 42, 2, 36, 42, 3, 36, 42, 4, 36, 42, 5, 36, 42, 6, 36, 42, 7, 36, 42, 8, 36, 42, 9, 36, 42, 10, 36, 42, 11, 36, 42, 12, 36, 42, 13, 36, 42, 14, 36, 42, 15, 33, 42, 16, 0, 42, 17, 0, 42, 18, 0, 42, 19, 0, 42, 20, 0, 42, 21, 26, 42, 22, 33, 42, 23, 10, 42, 24, 10, 42, 25, 0, 42, 26, 0, 42, 27, 0, 42, 28, 26, 42, 29, 36, 43, 0, 36, 43, 1, 36, 44, 0, 36, 44, 1, 36, 43, 2, 36, 44, 2, 36, 43, 3, 36, 44, 3, 36, 43, 4, 36, 44, 4, 36, 43, 5, 36, 44, 5, 36, 43, 6, 36, 44, 6, 36, 43, 7, 36, 43, 8, 36, 44, 7, 36, 44, 8, 36, 43, 9, 36, 44, 9, 36, 43, 10, 36, 44, 10, 36, 43, 11, 36, 44, 11, 36, 43, 12, 36, 44, 12, 36, 43, 13, 36, 44, 13, 36, 43, 14, 36, 43, 15, 40, 44, 14, 36, 44, 15, 36, 43, 16, 30, 44, 16, 36, 43, 17, 30, 44, 17, 36, 43, 18, 30, 44, 18, 36, 43, 19, 30, 44, 19, 36, 43, 20, 30, 44, 20, 36, 43, 21, 38, 43, 22, 40, 44, 21, 36, 44, 22, 36, 43, 23, 30, 44, 23, 36, 43, 24, 30, 44, 24, 36, 43, 25, 30, 44, 25, 36, 43, 26, 30, 44, 26, 36, 43, 27, 30, 44, 27, 36, 43, 28, 38, 43, 29, 36, 44, 28, 36, 44, 29, 36, 15, 65534, 36, 15, 65535, 36, 16, 65534, 36, 16, 65535, 39, 17, 65534, 36, 17, 65535, 33, 18, 65534, 36, 18, 65535, 33, 19, 65534, 36, 19, 65535, 33, 20, 65534, 36, 20, 65535, 33, 21, 65534, 36, 21, 65535, 33, 22, 65534, 36, 22, 65535, 33, 23, 65534, 36, 23, 65535, 33, 24, 65534, 36, 24, 65535, 33, 25, 65534, 36, 25, 65535, 33, 26, 65534, 36, 26, 65535, 33, 27, 65534, 36, 27, 65535, 33, 28, 65534, 36, 28, 65535, 40, 29, 65534, 36, 29, 65535, 36)
 }
 
 [node name="Jefe" type="Area3D" parent="Planta" unique_id=859488872]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 1.2, 8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 1.2, 6)
 script = ExtResource("4_w4fgy")
 display_name = "PLACE_TE_BOSS"
 map_cell = Vector2i(2, 0)
@@ -801,7 +814,7 @@ shape = SubResource("BoxShape3D_4oc56")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/Jefe" unique_id=2028260441]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_5l3iu")
+mesh = SubResource("PlaneMesh_s4egn")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/Jefe" unique_id=653280929]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -826,6 +839,7 @@ script = ExtResource("4_w4fgy")
 room_index = 1
 display_name = "PLACE_TE_COMBINED"
 map_cell = Vector2i(1, 1)
+doom = 0.8
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/Combinada" unique_id=1056956592]
 shape = SubResource("BoxShape3D_ywg56")
@@ -833,7 +847,7 @@ shape = SubResource("BoxShape3D_ywg56")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/Combinada" unique_id=1039003385]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_askxy")
+mesh = SubResource("PlaneMesh_srmr6")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/Combinada" unique_id=733608553]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -858,6 +872,8 @@ script = ExtResource("4_w4fgy")
 room_index = 2
 display_name = "PLACE_TE_ANTECHAMBER"
 map_cell = Vector2i(2, 1)
+autosave_on_enter = true
+doom = 0.9
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/Antesala" unique_id=289764520]
 shape = SubResource("BoxShape3D_rg7ke")
@@ -865,7 +881,7 @@ shape = SubResource("BoxShape3D_rg7ke")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/Antesala" unique_id=1268615110]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_m6v74")
+mesh = SubResource("PlaneMesh_ank0x")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/Antesala" unique_id=1017618337]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -890,6 +906,7 @@ script = ExtResource("4_w4fgy")
 room_index = 3
 display_name = "PLACE_TE_HAND"
 map_cell = Vector2i(3, 1)
+doom = 0.7
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/Mano" unique_id=613702311]
 shape = SubResource("BoxShape3D_p8als")
@@ -897,7 +914,7 @@ shape = SubResource("BoxShape3D_p8als")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/Mano" unique_id=1344521889]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_nu3dp")
+mesh = SubResource("PlaneMesh_l2qle")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/Mano" unique_id=2017596169]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -922,6 +939,7 @@ script = ExtResource("4_w4fgy")
 room_index = 4
 display_name = "PLACE_TE_HOOK_EYE"
 map_cell = Vector2i(0, 2)
+doom = 0.5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/GanchoOjo" unique_id=2071328545]
 shape = SubResource("BoxShape3D_nioq2")
@@ -929,7 +947,7 @@ shape = SubResource("BoxShape3D_nioq2")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/GanchoOjo" unique_id=453840641]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_cjedn")
+mesh = SubResource("PlaneMesh_vrfyu")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/GanchoOjo" unique_id=1696772388]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -954,6 +972,7 @@ script = ExtResource("4_w4fgy")
 room_index = 5
 display_name = "PLACE_TE_HOOK"
 map_cell = Vector2i(1, 2)
+doom = 0.45
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/Gancho" unique_id=1047983769]
 shape = SubResource("BoxShape3D_0jhvc")
@@ -961,7 +980,7 @@ shape = SubResource("BoxShape3D_0jhvc")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/Gancho" unique_id=156983109]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_ypy2f")
+mesh = SubResource("PlaneMesh_nw8wq")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/Gancho" unique_id=469526843]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -986,6 +1005,7 @@ script = ExtResource("4_w4fgy")
 room_index = 6
 display_name = "PLACE_TE_HUB"
 map_cell = Vector2i(2, 2)
+doom = 0.35
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/Hub" unique_id=438474002]
 shape = SubResource("BoxShape3D_utgfk")
@@ -993,7 +1013,7 @@ shape = SubResource("BoxShape3D_utgfk")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/Hub" unique_id=139936660]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_m888e")
+mesh = SubResource("PlaneMesh_7bncd")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/Hub" unique_id=897305440]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1018,6 +1038,7 @@ script = ExtResource("4_w4fgy")
 room_index = 7
 display_name = "PLACE_TE_MIRROR"
 map_cell = Vector2i(3, 2)
+doom = 0.55
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/Espejo" unique_id=61607580]
 shape = SubResource("BoxShape3D_p0rd1")
@@ -1025,7 +1046,7 @@ shape = SubResource("BoxShape3D_p0rd1")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/Espejo" unique_id=1384030074]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_pcqlr")
+mesh = SubResource("PlaneMesh_43cnq")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/Espejo" unique_id=682882333]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1050,6 +1071,7 @@ script = ExtResource("4_w4fgy")
 room_index = 8
 display_name = "PLACE_TE_MIRROR_EYE"
 map_cell = Vector2i(4, 2)
+doom = 0.6
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/EspejoOjo" unique_id=1188973237]
 shape = SubResource("BoxShape3D_a2862")
@@ -1057,7 +1079,7 @@ shape = SubResource("BoxShape3D_a2862")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/EspejoOjo" unique_id=1748934760]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_eppxl")
+mesh = SubResource("PlaneMesh_2dht2")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/EspejoOjo" unique_id=1125305267]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1082,6 +1104,7 @@ script = ExtResource("4_w4fgy")
 room_index = 9
 display_name = "PLACE_TE_FEATHER_EYE"
 map_cell = Vector2i(0, 3)
+doom = 0.15
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/PlumaOjo" unique_id=1814700505]
 shape = SubResource("BoxShape3D_qdtbt")
@@ -1089,7 +1112,7 @@ shape = SubResource("BoxShape3D_qdtbt")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/PlumaOjo" unique_id=263823928]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_tiw1f")
+mesh = SubResource("PlaneMesh_m178d")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/PlumaOjo" unique_id=212051459]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1114,6 +1137,7 @@ script = ExtResource("4_w4fgy")
 room_index = 10
 display_name = "PLACE_TE_FEATHER"
 map_cell = Vector2i(1, 3)
+doom = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/Pluma" unique_id=646064865]
 shape = SubResource("BoxShape3D_q1vmi")
@@ -1121,7 +1145,7 @@ shape = SubResource("BoxShape3D_q1vmi")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/Pluma" unique_id=1129250053]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_6btj5")
+mesh = SubResource("PlaneMesh_5184v")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/Pluma" unique_id=620917475]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1153,7 +1177,7 @@ shape = SubResource("BoxShape3D_sprnv")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/Vestibulo" unique_id=231566811]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_ewur0")
+mesh = SubResource("PlaneMesh_07stk")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/Vestibulo" unique_id=1287709005]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1178,6 +1202,7 @@ script = ExtResource("4_w4fgy")
 room_index = 12
 display_name = "PLACE_TE_BOW"
 map_cell = Vector2i(3, 3)
+doom = 0.2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/Arco" unique_id=1997757137]
 shape = SubResource("BoxShape3D_6vpyr")
@@ -1185,7 +1210,7 @@ shape = SubResource("BoxShape3D_6vpyr")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/Arco" unique_id=1140570017]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_wgnm1")
+mesh = SubResource("PlaneMesh_6dq88")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/Arco" unique_id=1949849285]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1210,6 +1235,7 @@ script = ExtResource("4_w4fgy")
 room_index = 13
 display_name = "PLACE_TE_BOW_EYE"
 map_cell = Vector2i(4, 3)
+doom = 0.25
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/ArcoOjo" unique_id=1135707956]
 shape = SubResource("BoxShape3D_8xv7h")
@@ -1217,7 +1243,7 @@ shape = SubResource("BoxShape3D_8xv7h")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/ArcoOjo" unique_id=123822830]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_0i344")
+mesh = SubResource("PlaneMesh_oqvbs")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/ArcoOjo" unique_id=1631484551]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1360,10 +1386,62 @@ collision_mask = 5
 script = ExtResource("20_do24o")
 config = ExtResource("21_ewe6p")
 
-[node name="ArcoCrackedWall" type="StaticBody3D" parent="Planta" unique_id=407522826 instance=ExtResource("22_22l1c")]
+[node name="ArcoCrackedWall" parent="Planta" unique_id=407522826 instance=ExtResource("22_22l1c")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 69, 0, 50)
 script = ExtResource("23_eh8au")
 flag = &"te_bow_cracked_wall"
+
+[node name="Wall" parent="Planta/ArcoCrackedWall" index="0"]
+unique_name_in_owner = true
+
+[node name="Model" parent="Planta/ArcoCrackedWall/Wall" index="0"]
+mesh = ExtResource("32_befet")
+
+[node name="Rubble" parent="Planta/ArcoCrackedWall" index="1"]
+unique_name_in_owner = true
+visible = false
+
+[node name="Rock0" parent="Planta/ArcoCrackedWall/Rubble" index="0"]
+transform = Transform3D(0.9397, 0, -0.342, 0, 1, 0, 0.342, 0, 0.9397, -1.28, 0, 0.72)
+mesh = ExtResource("33_nu3dp")
+
+[node name="Rock1" parent="Planta/ArcoCrackedWall/Rubble" index="1"]
+transform = Transform3D(0.7727, 0, 0.2071, 0, 0.8, 0, -0.2071, 0, 0.7727, -0.32, 0, 1.2)
+mesh = ExtResource("33_nu3dp")
+
+[node name="Rock2" parent="Planta/ArcoCrackedWall/Rubble" index="2"]
+transform = Transform3D(0.9362, 0, -0.6555, 0, 1.1429, 0, 0.6555, 0, 0.9362, 0.64, 0, 0.6)
+mesh = ExtResource("33_nu3dp")
+
+[node name="Rock3" parent="Planta/ArcoCrackedWall/Rubble" index="3"]
+transform = Transform3D(0.7034, 0, -0.124, 0, 0.7143, 0, 0.124, 0, 0.7034, 1.44, 0, 1.32)
+mesh = ExtResource("33_nu3dp")
+
+[node name="Rock4" parent="Planta/ArcoCrackedWall/Rubble" index="4"]
+transform = Transform3D(0.7918, 0, 0.4571, 0, 0.9143, 0, -0.4571, 0, 0.7918, 0.08, 0, -0.24)
+mesh = ExtResource("33_nu3dp")
+
+[node name="Rock5" parent="Planta/ArcoCrackedWall/Rubble" index="5"]
+transform = Transform3D(0.404, 0, -0.4815, 0, 0.6286, 0, 0.4815, 0, 0.404, -0.88, 0, -0.6)
+mesh = ExtResource("33_nu3dp")
+
+[node name="CollisionShape3D" parent="Planta/ArcoCrackedWall" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)
+shape = SubResource("WallShape")
+
+[node name="Hurtbox" parent="Planta/ArcoCrackedWall" index="3"]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+script = ExtResource("34_1krf6")
+surface = "none"
+
+[node name="CollisionShape3D" parent="Planta/ArcoCrackedWall/Hurtbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = SubResource("HurtShape")
+
+[node name="PersistentFlag" parent="Planta/ArcoCrackedWall" index="4"]
+script = ExtResource("91_pflag")
 
 [node name="ArcoOjoPit" type="Area3D" parent="Planta" unique_id=1498157519]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 78, -1.2, 47)
@@ -1461,7 +1539,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 36, 
 script = ExtResource("10_8q16s")
 kind = 1
 flag = &"te_hub_locked_w"
-depth = 4.0
+depth = 2.0
 leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_templo_la.res"
 sink = 3.2
 
@@ -1470,12 +1548,12 @@ unique_name_in_owner = true
 
 [node name="LeafMesh" parent="Planta/HubLockedW/Leaf" index="0"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.76)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 0.76)
 material_overlay = ExtResource("14_etxll")
 mesh = ExtResource("43_1krf6")
 
 [node name="LeafBackLA" type="MeshInstance3D" parent="Planta/HubLockedW/Leaf" index="1" unique_id=2007176481]
-transform = Transform3D(-1, 1.4570463e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.16666667, -1, -1.538641e-07, 0, -1.76)
+transform = Transform3D(-1, 1.4570463e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.16666667, -1, -6.644131e-08, 0, -0.76)
 material_overlay = ExtResource("14_etxll")
 mesh = ExtResource("43_1krf6")
 
@@ -1509,7 +1587,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 52, 
 script = ExtResource("10_8q16s")
 kind = 1
 flag = &"te_hub_locked_e"
-depth = 4.0
+depth = 2.0
 leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_templo_la.res"
 sink = 3.2
 
@@ -1518,12 +1596,12 @@ unique_name_in_owner = true
 
 [node name="LeafMesh" parent="Planta/HubLockedE/Leaf" index="0"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.76)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 0.76)
 material_overlay = ExtResource("14_etxll")
 mesh = ExtResource("43_1krf6")
 
 [node name="LeafBackLA" type="MeshInstance3D" parent="Planta/HubLockedE/Leaf" index="1" unique_id=419538199]
-transform = Transform3D(-1, 1.4570463e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.16666667, -1, -1.538641e-07, 0, -1.76)
+transform = Transform3D(-1, 1.4570463e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.16666667, -1, -6.644131e-08, 0, -0.76)
 material_overlay = ExtResource("14_etxll")
 mesh = ExtResource("43_1krf6")
 
@@ -1559,11 +1637,13 @@ script = ExtResource("11_ilyv2")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Planta/GanchoPit" unique_id=323096496]
 shape = SubResource("BoxShape3D_oc5q1")
 
-[node name="GanchoWestPost" type="StaticBody3D" parent="Planta" instance=ExtResource("92_hookpost")]
+[node name="GanchoWestPost" type="StaticBody3D" parent="Planta" unique_id=1000260743 instance=ExtResource("92_hookpost")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.5, 0, 34)
+script = ExtResource("48_cjedn")
 
-[node name="GanchoEastPost" type="StaticBody3D" parent="Planta" instance=ExtResource("92_hookpost")]
+[node name="GanchoEastPost" type="StaticBody3D" parent="Planta" unique_id=1492407891 instance=ExtResource("92_hookpost")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.5, 0, 38)
+script = ExtResource("48_cjedn")
 
 [node name="HookArmored" type="CharacterBody3D" parent="Planta" unique_id=343658103 groups=["room_sleepers"] instance=ExtResource("33_1krf6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 34)
@@ -1721,7 +1801,7 @@ drop_height = 0.1
 [node name="HandDoor" parent="Planta" unique_id=1994339639 instance=ExtResource("9_lb8sh")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 52, 0, 22)
 script = ExtResource("10_8q16s")
-depth = 4.0
+depth = 2.0
 leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_templo_la.res"
 sink = 3.2
 
@@ -1730,12 +1810,12 @@ unique_name_in_owner = true
 
 [node name="LeafMesh" parent="Planta/HandDoor/Leaf" index="0"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.815)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 0.815)
 material_overlay = ExtResource("14_etxll")
 mesh = ExtResource("52_cjedn")
 
 [node name="LeafBackLA" type="MeshInstance3D" parent="Planta/HandDoor/Leaf" index="1" unique_id=2078349474]
-transform = Transform3D(-1, 1.4570463e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.16666667, -1, -1.5867235e-07, 0, -1.815)
+transform = Transform3D(-1, 1.4570463e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.16666667, -1, -7.1249566e-08, 0, -0.815)
 material_overlay = ExtResource("14_etxll")
 mesh = ExtResource("52_cjedn")
 
@@ -1769,7 +1849,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 36, 
 script = ExtResource("10_8q16s")
 kind = 3
 switches = Array[NodePath]([NodePath("../ManoFight")])
-depth = 4.0
+depth = 2.0
 leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_templo_la.res"
 sink = 3.2
 
@@ -1778,12 +1858,12 @@ unique_name_in_owner = true
 
 [node name="LeafMesh" parent="Planta/CombinedDoor/Leaf" index="0"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.75)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 0.75)
 material_overlay = ExtResource("14_etxll")
 mesh = ExtResource("15_m6v74")
 
 [node name="LeafBackLA" type="MeshInstance3D" parent="Planta/CombinedDoor/Leaf" index="1" unique_id=246005962]
-transform = Transform3D(-1, 1.4570463e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.16666667, -1, -1.5298986e-07, 0, -1.75)
+transform = Transform3D(-1, 1.4570463e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.16666667, -1, -6.556708e-08, 0, -0.75)
 material_overlay = ExtResource("14_etxll")
 mesh = ExtResource("15_m6v74")
 
@@ -1827,10 +1907,62 @@ script = ExtResource("91_pflag")
 script = ExtResource("55_ycq0f")
 attacks = Array[ExtResource("45_vrfyu")]([ExtResource("46_6btj5"), ExtResource("47_nw8wq"), ExtResource("48_ewur0")])
 
-[node name="CombinedCrackedWall" type="StaticBody3D" parent="Planta" unique_id=708827518 instance=ExtResource("22_22l1c")]
+[node name="CombinedCrackedWall" parent="Planta" unique_id=708827518 instance=ExtResource("22_22l1c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 20)
 script = ExtResource("23_eh8au")
 flag = &"te_combined_cracked_wall"
+
+[node name="Wall" parent="Planta/CombinedCrackedWall" index="0"]
+unique_name_in_owner = true
+
+[node name="Model" parent="Planta/CombinedCrackedWall/Wall" index="0"]
+mesh = ExtResource("65_ycq0f")
+
+[node name="Rubble" parent="Planta/CombinedCrackedWall" index="1"]
+unique_name_in_owner = true
+visible = false
+
+[node name="Rock0" parent="Planta/CombinedCrackedWall/Rubble" index="0"]
+transform = Transform3D(0.9397, 0, -0.342, 0, 1, 0, 0.342, 0, 0.9397, -1.28, 0, 0.72)
+mesh = ExtResource("33_nu3dp")
+
+[node name="Rock1" parent="Planta/CombinedCrackedWall/Rubble" index="1"]
+transform = Transform3D(0.7727, 0, 0.2071, 0, 0.8, 0, -0.2071, 0, 0.7727, -0.32, 0, 1.2)
+mesh = ExtResource("33_nu3dp")
+
+[node name="Rock2" parent="Planta/CombinedCrackedWall/Rubble" index="2"]
+transform = Transform3D(0.9362, 0, -0.6555, 0, 1.1429, 0, 0.6555, 0, 0.9362, 0.64, 0, 0.6)
+mesh = ExtResource("33_nu3dp")
+
+[node name="Rock3" parent="Planta/CombinedCrackedWall/Rubble" index="3"]
+transform = Transform3D(0.7034, 0, -0.124, 0, 0.7143, 0, 0.124, 0, 0.7034, 1.44, 0, 1.32)
+mesh = ExtResource("33_nu3dp")
+
+[node name="Rock4" parent="Planta/CombinedCrackedWall/Rubble" index="4"]
+transform = Transform3D(0.7918, 0, 0.4571, 0, 0.9143, 0, -0.4571, 0, 0.7918, 0.08, 0, -0.24)
+mesh = ExtResource("33_nu3dp")
+
+[node name="Rock5" parent="Planta/CombinedCrackedWall/Rubble" index="5"]
+transform = Transform3D(0.404, 0, -0.4815, 0, 0.6286, 0, 0.4815, 0, 0.404, -0.88, 0, -0.6)
+mesh = ExtResource("33_nu3dp")
+
+[node name="CollisionShape3D" parent="Planta/CombinedCrackedWall" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)
+shape = SubResource("WallShape")
+
+[node name="Hurtbox" parent="Planta/CombinedCrackedWall" index="3"]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+script = ExtResource("34_1krf6")
+surface = "none"
+
+[node name="CollisionShape3D" parent="Planta/CombinedCrackedWall/Hurtbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = SubResource("HurtShape")
+
+[node name="PersistentFlag" parent="Planta/CombinedCrackedWall" index="4"]
+script = ExtResource("91_pflag")
 
 [node name="CombinedEye" type="StaticBody3D" parent="Planta" unique_id=384311694 instance=ExtResource("24_2frbs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 17.6)
@@ -1915,7 +2047,7 @@ shape = SubResource("InteractShape")
 script = ExtResource("91_pflag")
 
 [node name="Torch_Jefe_0" parent="Planta" unique_id=443925381 instance=ExtResource("42_eppxl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.9, 2.9333334)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.9, -1.0666666)
 
 [node name="Model" parent="Planta/Torch_Jefe_0" index="0"]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
@@ -1941,7 +2073,7 @@ color = Color(1.35, 1.15, 0.9, 1)
 radius = 3.0
 
 [node name="Torch_Jefe_1" parent="Planta" unique_id=1651687211 instance=ExtResource("42_eppxl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 1.9, 2.9333334)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 1.9, -1.0666666)
 
 [node name="Model" parent="Planta/Torch_Jefe_1" index="0"]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
@@ -2643,17 +2775,41 @@ color = Color(1.35, 1.15, 0.9, 1)
 radius = 3.0
 
 [node name="Boss" type="Node3D" parent="." unique_id=285360790 instance=ExtResource("43_l2qle")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 6.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 4.5)
 script = ExtResource("44_tiw1f")
 attacks = Array[ExtResource("45_vrfyu")]([ExtResource("46_6btj5"), ExtResource("47_nw8wq"), ExtResource("48_ewur0"), ExtResource("49_7bncd"), ExtResource("50_wgnm1")])
 
 [node name="BossExitPortal" type="Area3D" parent="." unique_id=1034165056 instance=ExtResource("51_43cnq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 9)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 6)
 script = ExtResource("52_0i344")
 target_scene = "res://levels/overworld.tscn"
 target_spawn = &"templo"
 required_flag = &"te_boss_defeated"
 travels = false
+
+[node name="VestibuleTablet" parent="." instance=ExtResource("tablet")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 47)
+dialogue = ExtResource("temple_dialogue")
+cue = "temple_entrance"
+flag = &"te_tablet_vestibule"
+
+[node name="HubTablet" parent="." instance=ExtResource("tablet")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, 32)
+dialogue = ExtResource("temple_dialogue")
+cue = "hub_promise"
+flag = &"te_tablet_hub"
+
+[node name="EyesTablet" parent="." instance=ExtResource("tablet")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 74, 0, 53.5)
+dialogue = ExtResource("temple_dialogue")
+cue = "eyes_servants"
+flag = &"te_tablet_eyes"
+
+[node name="AntechamberTablet" parent="." instance=ExtResource("tablet")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 20)
+dialogue = ExtResource("temple_dialogue")
+cue = "antechamber"
+flag = &"te_tablet_antechamber"
 
 [node name="BossArena" type="Node" parent="." unique_id=1442482810 node_paths=PackedStringArray("room", "boss", "door", "exit_portal")]
 script = ExtResource("53_2dht2")
@@ -2699,7 +2855,7 @@ south_wall_reach = 1.7
 script = ExtResource("79_ank0x")
 near_margin = 3.5
 
-[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=920401014 instance=ExtResource("80_eppxl")]
+[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=2103675685 instance=ExtResource("80_eppxl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=613354597 instance=ExtResource("59_07stk")]
@@ -2719,12 +2875,14 @@ navigation_mesh = ExtResource("nav_templo")
 script = ExtResource("89_l2qle")
 
 [editable path="Planta/VestibuleDoor"]
+[editable path="Planta/ArcoCrackedWall"]
 [editable path="Planta/HubLockedW"]
 [editable path="Planta/HubLockedE"]
 [editable path="Planta/MirrorDoor"]
 [editable path="Planta/HubSeal"]
 [editable path="Planta/HandDoor"]
 [editable path="Planta/CombinedDoor"]
+[editable path="Planta/CombinedCrackedWall"]
 [editable path="Planta/BossDoor"]
 [editable path="Planta/Torch_Jefe_0"]
 [editable path="Planta/Torch_Jefe_1"]

@@ -17,8 +17,8 @@ const CALM_DOOM := 0.2
 const SKIP_ACTIONS: Array[StringName] = [&"ui_accept", &"attack", &"interact"]
 
 @export var room: Room
-@export var defeated_flag := &"d1_boss_defeated"
-@export var container_flag := &"d1_heart_container"
+@export var defeated_flag := &"te_boss_defeated"
+@export var container_flag := &"te_heart_container"
 @export var boss: Boss
 @export var door: Door
 @export var exit_portal: Portal

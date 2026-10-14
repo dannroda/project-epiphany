@@ -70,19 +70,19 @@ func test_spikes_hurt_enemies_too_and_shields_do_not_stop_them() -> void:
 	trap.queue_free()
 
 
-func test_gallery_spikes_leave_a_gap_that_travels() -> void:
-	var level: Node3D = (load("res://levels/temple.tscn") as PackedScene).instantiate()
+func test_feather_wing_spikes_leave_a_gap_that_travels() -> void:
+	var level: Node3D = (load("res://levels/templo.tscn") as PackedScene).instantiate()
 	var traps: Array[SpikeTrap] = []
-	for node in level.get_node(^"GallerySpikes").get_children():
-		traps.append(node as SpikeTrap)
-	assert_eq(traps.size(), 14, "dos columnas de siete en la galería")
+	for node in level.get_node(^"Planta").get_children():
+		if node.name.begins_with("PlumaSpikes"):
+			traps.append(node as SpikeTrap)
+	assert_eq(traps.size(), 5, "una columna de cinco en el ala de la pluma")
 	for t in 24:
 		var clock := t * 0.1
-		var down_rows := 0
-		for row in 7:
-			var trap := traps[row]
+		var down := 0
+		for trap in traps:
 			var phase := fposmod(clock + trap.offset, trap.period)
 			if phase < trap.period - trap.up_time:
-				down_rows += 1
-		assert_true(down_rows >= 3, "siempre queda paso (%d filas abajo a los %.1f s)" % [down_rows, clock])
+				down += 1
+		assert_true(down >= 2, "siempre queda paso (%d abajo a los %.1f s)" % [down, clock])
 	level.free()

@@ -230,27 +230,29 @@ func test_the_marsh_water_slows_and_splashes_but_holds() -> void:
 	assert_eq(player.ground_speed, 1.0, "afuera vuelve a la velocidad de siempre")
 	tree.root.get_node(^"GameState").reset()
 
+## Las piezas de hueco orientadas (punta, pasillo…) tienen pared justo hacia los lados que dan a piso; el Hueco suelto del kit LA las tiene hundidas en los cuatro y el de caída no tiene.
 func test_pit_walls_face_the_ground() -> void:
-	var root := (load("res://levels/temple.tscn") as PackedScene).instantiate()
-	var grid := root.get_node(^"GridMap") as GridMap
-	var lib := grid.mesh_library
+	var root := (load("res://levels/chullpa.tscn") as PackedScene).instantiate()
 	var cells := 0
-	for cell in grid.get_used_cells():
-		if not lib.get_item_name(grid.get_cell_item(cell)).begins_with("Hueco"):
-			continue
-		cells += 1
-		var basis := grid.get_cell_item_basis(cell)
-		var faces := lib.get_item_mesh(grid.get_cell_item(cell)).get_faces()
-		for k in 4:
-			var neighbor := grid.get_cell_item(cell + SIDES[k])
-			var open := neighbor != -1 and lib.get_item_name(neighbor).begins_with("Hueco")
-			var wall := false
-			for t in range(0, faces.size(), 3):
-				var p := basis * ((faces[t] + faces[t + 1] + faces[t + 2]) / 3.0)
-				var along := Vector3(SIDES[k]) * p.dot(Vector3(SIDES[k]))
-				wall = wall or (p.y > -0.05 and along.length() > 0.8 and Vector2(p.x - along.x, p.z - along.z).length() < 0.5 and p.dot(Vector3(SIDES[k])) > 0)
-			assert_eq(wall, not open, "Hueco %s lado %d" % [cell, k])
-	assert_true(cells > 0, "el templo tiene huecos")
+	for grid: GridMap in root.find_children("GridMap", "GridMap", true, false):
+		var lib := grid.mesh_library
+		for cell in grid.get_used_cells():
+			var piece := lib.get_item_name(grid.get_cell_item(cell))
+			if not piece.begins_with("Hueco ") or piece.begins_with("Hueco caída"):
+				continue
+			cells += 1
+			var basis := grid.get_cell_item_basis(cell)
+			var faces := lib.get_item_mesh(grid.get_cell_item(cell)).get_faces()
+			for k in 4:
+				var neighbor := grid.get_cell_item(cell + SIDES[k])
+				var open := neighbor != -1 and lib.get_item_name(neighbor).begins_with("Hueco")
+				var wall := false
+				for t in range(0, faces.size(), 3):
+					var p := basis * ((faces[t] + faces[t + 1] + faces[t + 2]) / 3.0)
+					var along := Vector3(SIDES[k]) * p.dot(Vector3(SIDES[k]))
+					wall = wall or (p.y > -0.05 and along.length() > 0.8 and Vector2(p.x - along.x, p.z - along.z).length() < 0.5 and p.dot(Vector3(SIDES[k])) > 0)
+				assert_eq(wall, not open, "%s %s %s lado %d" % [grid.get_parent().name, lib.get_item_name(grid.get_cell_item(cell)), cell, k])
+	assert_true(cells > 0, "la chullpa tiene huecos orientados")
 	root.free()
 
 

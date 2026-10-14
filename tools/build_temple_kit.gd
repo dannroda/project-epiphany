@@ -1,7 +1,8 @@
 extends SceneTree
-## Arma data/kits/temple_kit.tres: los mismos ítems y colisiones que el kit gris, con las piezas de assets/epiphany/templo.glb.
-## godot --headless --path . --script res://tools/build_temple_kit.gd
-## Otro estilo de mazmorra (build_templo.py -- <estilo>): … -- chullpa (templo_chullpa.glb → data/kits/chullpa_kit.tres)
+## Arma el kit de un estilo de mazmorra: los mismos ítems y colisiones que el kit gris, con las piezas de
+## assets/epiphany/templo_<estilo>.glb (build_templo.py -- <estilo>) en data/kits/<estilo>_kit.tres.
+## godot --headless --path . --script res://tools/build_temple_kit.gd -- chullpa
+## Sin estilo arma temple_kit.tres (templo.glb), el kit del templo viejo, que ya no usa ningún nivel.
 
 const SOURCE := "res://data/kits/gray_kit.tres"
 const STONE := preload("res://data/kits/materials/epiphany_stone.tres")

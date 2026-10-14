@@ -59,7 +59,7 @@ func test_the_floor_tag_sits_above_the_minimap() -> void:
 
 
 func test_hidden_in_the_boss_room() -> void:
-	var setup: Array = await _load("", "res://levels/temple.tscn")
+	var setup: Array = await _load("", "res://levels/templo.tscn")
 	var tree: SceneTree = setup[0]
 	var minimap: Control = setup[3]
 	assert_true(minimap.visible, "se ve en el vestíbulo")
