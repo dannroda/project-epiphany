@@ -5230,11 +5230,15 @@ Daniel 2026-10-14: en la Chullpa se salteaba el 90% (la vasija de la placa está
 
 **Notas:** Hecho (2026-10-14). Camino nuevo: Entrada → caer por 1SE → Cripta (oleadas, mapa) → Cripta oscura (pinchos, llave chica) → escalera de mano → bloques → Rellano → puerta con llave → Momia → pluma → volver al Rellano → vasija en la placa → 2NO, huecos con la pluma → llave del jefe → 1NE → Mausoleo → jefe. AgrietadaDoor pasa a puerta con llave (ch_mummy_locked_door, ex ch_leaps_locked_door) y SaltosLocked pasa a SaltosDoor, de interruptor (RellanoWeight). La brújula está de este lado de los huecos de 2NO y la llave del jefe del otro. El Mausoleo queda sin huecos, sin MausoleoPit y sin cofre. El molde de test_dungeon_reach suma dos reglas, que hoy cumplen las cinco mazmorras: cada llave chica hace falta para llegar al jefe, y la llave del jefe pide el ítem. Escena armada con un script (debug/tmp/design/chullpa_1176.gd) y la_walls refresh sobre main con 11.156.
 
-### 11.177 Chullpa sin pared agrietada (fuera el nicho del Rellano) · En curso
+### 11.177 Chullpa sin pared agrietada (fuera el nicho del Rellano) · Revisión
 
 **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `chullpa`, `diseno`
 
 Daniel (2026-10-14): en la D1 no hay paredes agrietadas. Sacar RellanoCrackedWall, su nicho y el cofre de 5 bombas (flag ch_landing_niche_chest). Reemplaza la parte de la pared agrietada de 11.137.
+
+**Prueba:** tests/test_chullpa.gd, tests/test_cracked_wall.gd, tests/test_dungeon_reach.gd
+
+**Notas:** Sin RellanoCrackedWall, nicho, cofre de 5 bombas (ch_landing_niche_chest) ni RellanoBombPot; la pared oeste del Rellano sigue recta. Spot del grafo y flag quitados, GDD 8b. Regla: en mazmorras un muro agrietado abre una sala entera, nunca un nicho.
 
 **Relacionadas:** 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista
 
