@@ -1,0 +1,22 @@
+{
+  "assignee": "project-epiphany-5d",
+  "checklist": [],
+  "code": "12.31",
+  "created_at": "2026-10-14T18:39:30.677Z",
+  "description": "Daniel (2026-10-14): en la Chullpa hay que acomodar el jefe final de la momia para que no sea simplemente la del sub-jefe pero más grande. Hoy el jefe es el modelo del sub-jefe escalado; necesita su propio aspecto (modelo, silueta, detalles) que se lea como jefe.",
+  "milestone": "m12",
+  "notes": "",
+  "order": 31,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "arte",
+    "chullpa",
+    "jefe"
+  ],
+  "test": "",
+  "title": "Chullpa: jefe final momia con aspecto propio",
+  "updated_at": "2026-10-14T18:39:30.677Z"
+}

@@ -5211,7 +5211,7 @@ Playtest 2026-10-14 (11.137, Chullpa): en salas que no llenan su rectángulo (pa
 
 **Relacionadas:** 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista
 
-## M12 — Assets propios (Blender)  (17/30)
+## M12 — Assets propios (Blender)  (17/31)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -5781,6 +5781,12 @@ Daniel (2026-10-14) quiere grabar el templo completo y así no se puede: 1) cada
 **Capturas:** `compass/images/m12-30-20261014-153143.png`
 
 **Relacionadas:** Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos
+
+### 12.31 Chullpa: jefe final momia con aspecto propio · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `chullpa`, `jefe`
+
+Daniel (2026-10-14): en la Chullpa hay que acomodar el jefe final de la momia para que no sea simplemente la del sub-jefe pero más grande. Hoy el jefe es el modelo del sub-jefe escalado; necesita su propio aspecto (modelo, silueta, detalles) que se lea como jefe.
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 
