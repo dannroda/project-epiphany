@@ -1057,7 +1057,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 12)
 script = ExtResource("25_8kq17")
 kind = 1
 flag = &"tt_amaru_locked_door"
-depth = 4.0
+depth = 2.0
 leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_totora_la.res"
 sink = 3.2
 
@@ -1066,12 +1066,12 @@ unique_name_in_owner = true
 
 [node name="LeafMesh" parent="PisoBajo/AmaruLocked/Leaf" index="0"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.76)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 0.76)
 material_overlay = ExtResource("29_8kq17")
 mesh = ExtResource("30_ta07f")
 
 [node name="LeafBackLA" type="MeshInstance3D" parent="PisoBajo/AmaruLocked/Leaf" index="1" unique_id=2049992463]
-transform = Transform3D(-1, 4.0797296e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.46666667, -1, -1.538641e-07, 0, -1.76)
+transform = Transform3D(-1, 4.0797296e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.46666667, -1, -6.644131e-08, 0, -0.76)
 material_overlay = ExtResource("29_8kq17")
 mesh = ExtResource("30_ta07f")
 
@@ -1105,7 +1105,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 16, 
 script = ExtResource("25_8kq17")
 kind = 3
 switches = Array[NodePath]([NodePath("../AmaruFight")])
-depth = 4.0
+depth = 2.0
 leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_totora_la.res"
 sink = 3.2
 
@@ -1114,12 +1114,12 @@ unique_name_in_owner = true
 
 [node name="LeafMesh" parent="PisoBajo/GanchoDoor/Leaf" index="0"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.75)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 0.75)
 material_overlay = ExtResource("29_8kq17")
 mesh = ExtResource("34_plbht")
 
 [node name="LeafBackLA" type="MeshInstance3D" parent="PisoBajo/GanchoDoor/Leaf" index="1" unique_id=1854642170]
-transform = Transform3D(-1, 1.4570463e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.16666667, -1, -1.5298986e-07, 0, -1.75)
+transform = Transform3D(-1, 1.4570463e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.16666667, -1, -6.556708e-08, 0, -0.75)
 material_overlay = ExtResource("29_8kq17")
 mesh = ExtResource("34_plbht")
 
@@ -1206,7 +1206,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 12)
 script = ExtResource("25_8kq17")
 kind = 4
 flag = &"tt_boss_door"
-depth = 4.0
+depth = 2.0
 leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_totora_la.res"
 sink = 3.2
 
@@ -1215,12 +1215,12 @@ unique_name_in_owner = true
 
 [node name="LeafMesh" parent="PisoBajo/BossDoor/Leaf" index="0"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.75)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 0.75)
 material_overlay = ExtResource("29_8kq17")
 mesh = ExtResource("40_e33tn")
 
 [node name="LeafBackLA" type="MeshInstance3D" parent="PisoBajo/BossDoor/Leaf" index="1" unique_id=1907719482]
-transform = Transform3D(-1, 4.0797296e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.46666667, -1, -1.5298986e-07, 0, -1.75)
+transform = Transform3D(-1, 4.0797296e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.46666667, -1, -6.556708e-08, 0, -0.75)
 material_overlay = ExtResource("29_8kq17")
 mesh = ExtResource("40_e33tn")
 
@@ -2012,7 +2012,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 16, 
 script = ExtResource("25_8kq17")
 kind = 1
 flag = &"tt_weavers_locked_door"
-depth = 4.0
+depth = 2.0
 leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_totora_la.res"
 sink = 3.2
 
@@ -2021,12 +2021,12 @@ unique_name_in_owner = true
 
 [node name="LeafMesh" parent="PisoAlto/TejedoresLocked/Leaf" index="0"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.76)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 0.76)
 material_overlay = ExtResource("29_8kq17")
 mesh = ExtResource("30_ta07f")
 
 [node name="LeafBackLA" type="MeshInstance3D" parent="PisoAlto/TejedoresLocked/Leaf" index="1" unique_id=1102110205]
-transform = Transform3D(-1, 1.4570463e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.16666667, -1, -1.538641e-07, 0, -1.76)
+transform = Transform3D(-1, 1.4570463e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.16666667, -1, -6.644131e-08, 0, -0.76)
 material_overlay = ExtResource("29_8kq17")
 mesh = ExtResource("30_ta07f")
 
@@ -2449,7 +2449,7 @@ script = ExtResource("58_in1hu")
 color = Color(1.35, 1.15, 0.9, 1)
 radius = 3.0
 
-[node name="CaidaLA44" type="Node3D" parent="PisoAlto" unique_id=993752134 instance=ExtResource("69_oqocf")]
+[node name="CaidaLA44" type="Node3D" parent="PisoAlto" unique_id=856435438 instance=ExtResource("69_oqocf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 2)
 script = ExtResource("70_607qk")
 
@@ -2488,7 +2488,7 @@ south_wall_reach = 1.7
 script = ExtResource("76_056xl")
 near_margin = 3.5
 
-[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1790775392 instance=ExtResource("77_vrfs0")]
+[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1173783104 instance=ExtResource("77_vrfs0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1798461747 instance=ExtResource("60_km5gt")]
