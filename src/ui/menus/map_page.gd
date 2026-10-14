@@ -78,6 +78,7 @@ var _zoomed := false
 var _floor_held: Dictionary[StringName, bool] = {}
 ## Overworld: dónde está el cursor antes de engancharse a un portal, y el portal enganchado.
 var _cursor_point := Vector2.ZERO
+var _cursor_world := Vector2.INF
 var _focused_portal: TravelPortal
 ## Lo que muestra el panel (zona y portal): mover el cursor dentro de la misma zona no lo rehace.
 var _focus_key: Array = []
@@ -398,11 +399,12 @@ func _show_overworld() -> void:
 	var portals := TravelPortal.all(get_tree())
 	if not portals.is_empty():
 		subtitle.text += " · " + tr("MAP_PORTALS_LIT").format({done = portals.filter(func(portal: TravelPortal) -> bool: return portal.lit).size(), total = portals.size()})
-	_place_overworld()
+	_place_overworld(true)
 
 
-## Marcas, pines, flecha y cursor sobre la foto; se rehace cuando la foto cambia de tamaño.
-func _place_overworld() -> void:
+## Marcas, pines, flecha y cursor sobre la foto; se rehace cuando la foto cambia de tamaño (el panel de al lado crece con
+## el texto), y ahí el cursor queda en el mismo lugar del mundo.
+func _place_overworld(on_player := false) -> void:
 	if not is_instance_valid(_map) or _in_dungeon() or not is_inside_tree() or get_tree().current_scene == null:
 		return
 	_clear(marks)
@@ -447,6 +449,9 @@ func _place_overworld() -> void:
 		var forward := player.model.global_basis.z
 		marker.rotation = atan2(forward.x, -forward.z)
 		marker.queue_redraw()
+	if not on_player and _cursor_world != Vector2.INF:
+		_move_cursor(world_to_map(_cursor_world))
+	elif player:
 		_move_cursor(marker.position)
 	else:
 		_move_cursor(_image_rect().get_center())
@@ -482,6 +487,7 @@ func _set_zoom(zoomed: bool) -> void:
 func _move_cursor(point: Vector2) -> void:
 	var image := _image_rect()
 	_cursor_point = point.clamp(image.position, image.end)
+	_cursor_world = map_to_world(_cursor_point)
 	var portal := _portal_near(_cursor_point)
 	cursor.place(_portal_point(portal) if portal else _cursor_point)
 	_follow_cursor()
