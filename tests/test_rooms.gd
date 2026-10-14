@@ -144,6 +144,10 @@ func test_only_rooms_with_a_player_run() -> void:
 			await tree.physics_frame
 		var running: bool = pair[1]
 		var label := "con el player en %s" % room.name
+		if running:
+			assert_eq(skeleton.process_mode, Node.PROCESS_MODE_DISABLED, "apenas entra, lo de la sala sigue quieto")
+			for i in int(room.wake_delay * Engine.physics_ticks_per_second) + 2:
+				await tree.physics_frame
 		assert_eq(skeleton.process_mode != Node.PROCESS_MODE_DISABLED, running, "el enemigo de %s corre solo %s" % [home.name, label])
 		assert_eq(spikes.process_mode != Node.PROCESS_MODE_DISABLED, running, "los pinchos también")
 	assert_true(home.occupied == false and away.occupied, "la sala sabe si tiene un player")
