@@ -357,6 +357,41 @@ def eye(p, center, size, depth=0.03, pupil_swatch=None, pupils=None):
 	return almond + pupil
 
 
+def angry_face(p, center, radius, tilt, eye_swatch="noche", brow_swatch="noche", teeth_swatch="hueso", size=1.0):
+	"""Cara enojada pegada a una cabeza esférica (centro, radio) que mira a -Y, subida tilt rad hacia arriba: cejas
+	gruesas caídas hacia el medio, ojos chicos y boca de dientes apretados."""
+	k = radius / 0.5 * size
+	faces = []
+
+	def stick(item, u, v, roll=0.0, lift=0.0):
+		d = Vector((u, -math.sqrt(max(radius * radius - u * u - v * v, 0.01)), v)).normalized()
+		d = Matrix.Rotation(-tilt, 3, "X") @ d
+		turn = Vector((0, -1, 0)).rotation_difference(d).to_matrix().to_4x4()
+		p.transform(item, Matrix.Translation(center + d * (radius + lift)) @ turn @ Matrix.Rotation(roll, 4, "Y"))
+		faces.extend(item)
+
+	for side in (-1, 1):
+		brow = p.rounded_box(-0.13 * k, 0.13 * k, -0.04 * k, 0.02 * k, -0.04 * k, 0.04 * k, radius=0.015 * k, segments=1)
+		p.paint(brow, brow_swatch, "MID")
+		stick(brow, side * 0.16 * k, 0.16 * k, roll=side * 0.4)
+		eye = p.cylinder(0.042 * k, -0.02 * k, 0.02 * k, sides=12)
+		p.transform(eye, Matrix.Scale(1.35, 4, Vector((0, 0, 1))) @ Matrix.Rotation(math.pi / 2, 4, "X"))
+		p.paint(eye, eye_swatch, "MID")
+		stick(eye, side * 0.13 * k, 0.05 * k)
+	lip = p.rounded_box(-0.17 * k, 0.17 * k, -0.02 * k, 0.02 * k, -0.065 * k, 0.065 * k, radius=0.02 * k, segments=1)
+	p.paint(lip, "noche", "MID")
+	stick(lip, 0.0, -0.14 * k)
+	teeth = p.box(-0.15 * k, 0.15 * k, -0.03 * k, 0.0, -0.048 * k, 0.048 * k)
+	p.paint(teeth, teeth_swatch, "LIGHT")
+	stick(teeth, 0.0, -0.14 * k)
+	gaps = p.box(-0.15 * k, 0.15 * k, -0.035 * k, 0.0, -0.007 * k, 0.007 * k)
+	for x in (-0.075, 0.0, 0.075):
+		gaps += p.box((x - 0.007) * k, (x + 0.007) * k, -0.035 * k, 0.0, -0.048 * k, 0.048 * k)
+	p.paint(gaps, "noche", "MID")
+	stick(gaps, 0.0, -0.14 * k)
+	return faces
+
+
 def chakana_plate(p, center, size, swatch):
 	"""Placa escalonada (cruz andina) que mira a -Y."""
 	faces = []
