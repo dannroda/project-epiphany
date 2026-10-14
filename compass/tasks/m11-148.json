@@ -2,11 +2,11 @@
   "assignee": "project-epiphany-eb",
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "Regenerar la foto cenital del overworld con el terreno actual (la quebrada como río)."
     },
     {
-      "done": false,
+      "done": true,
       "text": "Lo que se activa tiene que aparecer en el minimapa: el puente de la quebrada una vez subido (la foto es estática y se saca con el puente abajo). Dibujarlo encima como marca/overlay según su estado, igual con otros cambios persistentes (paredes rotas, etc.)."
     }
   ],
@@ -18,18 +18,18 @@
     "compass/images/m11-148-20261013-232828.png"
   ],
   "milestone": "m11",
-  "notes": "",
+  "notes": "La foto del minimapa es en vivo (OverworldMap fotografía el escenario en la capa 20). Faltaban el agua de la quebrada, las escalinatas, el puente, las rejas, la torre y las paredes rotas, y ahora están. Cuando cambia un flag persistente, la foto se vuelve a sacar a los 2 s, así que el puente subido o una pared rota aparecen solos. Probar: ver la quebrada en el minimapa, subir el puente y volver a mirarlo.",
   "order": 145,
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug",
     "overworld",
     "ui"
   ],
-  "test": "",
+  "test": "tests/test_minimap.gd",
   "title": "Minimapa del overworld desactualizado (la quebrada sale como abismo negro)",
-  "updated_at": "2026-10-14T02:28:28.094Z"
+  "updated_at": "2026-10-14T03:26:54.453Z"
 }
