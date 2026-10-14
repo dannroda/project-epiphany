@@ -23,5 +23,5 @@
   ],
   "test": "tests/test_chullpa.gd, tests/test_cracked_wall.gd, tests/test_dungeon_reach.gd",
   "title": "Chullpa sin pared agrietada (fuera el nicho del Rellano)",
-  "updated_at": "2026-10-14T19:08:29.955Z"
+  "updated_at": "2026-10-14T19:09:36.726Z"
 }
