@@ -8,8 +8,6 @@ extends ItemBehavior
 @export var place_distance := 0.9
 ## Cuánto tarda en caer al punto apuntado.
 @export var flight_time := 0.7
-## Mantener el botón más que esto la levanta para apuntar.
-@export var hold_time := 0.25
 
 
 func get_animation(_item: ItemData) -> StringName:

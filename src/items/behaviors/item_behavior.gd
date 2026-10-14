@@ -9,6 +9,19 @@ extends Resource
 @export_range(0.0, 1.0) var end_at := 1.0
 ## Mantener el botón apunta (estado AimingItem) y soltarlo lo usa, como el arco.
 @export var hold_to_aim := false
+## Mantenerlo más que esto (s) lo levanta para apuntar y tirarlo (AimingThrow, las bombas); 0 = no se mantiene.
+@export var hold_time := 0.0
+
+@export_group("Apuntar")
+## La animación de tensar mientras se apunta (AimingItem); su largo es lo que tarda en cargar.
+@export var aim_animation: StringName
+## Cuánto se gira el modelo para que el disparo salga hacia la mira (la animación del arco tensa 62° a la izquierda).
+@export var aim_yaw_offset_deg := 0.0
+
+
+## El evento de la máquina de estados del player con el que arranca: el ítem decide, no la HSM.
+func entry_event() -> StringName:
+	return &"aim_item" if hold_to_aim else &"use_item"
 
 
 func get_animation(_item: ItemData) -> StringName:

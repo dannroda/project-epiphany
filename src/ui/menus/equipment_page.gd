@@ -4,7 +4,6 @@ extends Control
 const SECTIONS := { ^"Sword": ItemData.Category.SWORD, ^"Shield": ItemData.Category.SHIELD, ^"Armor": ItemData.Category.ARMOR }
 const CATEGORY_NAMES := { ItemData.Category.SWORD: "EQUIP_CATEGORY_SWORD", ItemData.Category.SHIELD: "EQUIP_CATEGORY_SHIELD", ItemData.Category.ARMOR: "EQUIP_CATEGORY_ARMOR" }
 const LOCK := preload("res://assets/ui/lock.svg")
-const HP_PER_HEART := 4
 
 ## Lo lee el menú de pausa para la ayuda del botón de aceptar.
 var accept_label := "EQUIP_ACCEPT"
@@ -120,9 +119,9 @@ func _refresh_stats() -> void:
 		child.queue_free()
 	var player := Players.lead()
 	var current: int = player.health.current if player else GameState.max_health
-	var count := ceili(GameState.max_health / float(HP_PER_HEART))
+	var count := ceili(GameState.max_health / float(GameState.HP_PER_HEART))
 	for i in count:
-		var filled := clampi(current - i * HP_PER_HEART, 0, HP_PER_HEART)
+		var filled := clampi(current - i * GameState.HP_PER_HEART, 0, GameState.HP_PER_HEART)
 		hearts.add_child(HeartIcon.create(filled, HeartIcon.SIZE * (1.0 if count <= 8 else 0.8)))
 
 
@@ -132,7 +131,7 @@ func _equipped_item(category: ItemData.Category) -> ItemData:
 
 
 func _hearts_text(hp: int) -> String:
-	var hearts_count := hp / float(HP_PER_HEART)
+	var hearts_count := hp / float(GameState.HP_PER_HEART)
 	if is_equal_approx(hearts_count, 1.0):
 		return tr("EQUIP_HEARTS_ONE")
 	if hearts_count < 1.0:

@@ -3,7 +3,6 @@ extends Control
 ## Corazones, slots X/Y y prompt de un player (13.5). El HUD instancia player_panel_solo.tscn jugando solo y un
 ## player_panel.tscn compacto por player en co-op (mockup HUD_Coop).
 
-const HP_PER_HEART := 4
 
 @export var pulse_scale := 1.3
 @export var pulse_time := 0.18
@@ -96,7 +95,7 @@ func _shake_slot(button: int) -> void:
 
 
 func _on_health_changed(current: int, max_value: int) -> void:
-	var count := ceili(max_value / float(HP_PER_HEART))
+	var count := ceili(max_value / float(GameState.HP_PER_HEART))
 	while hearts.get_child_count() < count:
 		hearts.add_child(HeartIcon.create(0, heart_size))
 	while hearts.get_child_count() > count:
@@ -105,7 +104,7 @@ func _on_health_changed(current: int, max_value: int) -> void:
 		extra.queue_free()
 	for i in count:
 		var heart := hearts.get_child(i) as HeartIcon
-		var quarters := clampi(current - i * HP_PER_HEART, 0, HP_PER_HEART)
+		var quarters := clampi(current - i * GameState.HP_PER_HEART, 0, GameState.HP_PER_HEART)
 		if heart.quarters != quarters and _shown_hp >= 0:
 			_pulse(heart)
 		heart.quarters = quarters

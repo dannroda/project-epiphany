@@ -38,4 +38,4 @@ func _layout() -> void:
 		return
 	empty.size = icon_size
 	full.size = icon_size
-	clip.size = Vector2(icon_size.x * quarters / 4.0, icon_size.y)
+	clip.size = Vector2(icon_size.x * quarters / float(GameState.HP_PER_HEART), icon_size.y)

@@ -40,7 +40,7 @@ func show_summary(data: Dictionary) -> void:
 	for child in hearts.get_children():
 		child.queue_free()
 	if not data.is_empty():
-		for i in int(data.max_health) / 4:
+		for i in int(data.max_health) / GameState.HP_PER_HEART:
 			hearts.add_child(HeartIcon.create(4, heart_size))
 		location.text = place_text(data.location)
 		time.text = format_time(data.play_time)

@@ -49,6 +49,6 @@ func test_doom_rises_room_by_room() -> void:
 	ambience._next_tremor = 0.0
 	await tree.process_frame
 	await tree.process_frame
-	assert_true(camera.trauma > 0.0 or not tree.root.get_node(^"Feel").settings.shake_enabled, "tiembla")
+	assert_true(camera.trauma > 0.0 or not tree.root.get_node(^"Feel").shakes(), "tiembla")
 	assert_true(ambience._next_tremor < ambience.tremor_interval.x * 0.7, "en el clímax, temblores más seguidos que en calma (próximo en %.1f s)" % ambience._next_tremor)
 	state.reset()

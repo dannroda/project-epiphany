@@ -7,6 +7,5 @@ var direction: Vector3
 var inventory: Inventory
 ## El ítem del inventario desde el que se usa: la botella, si se usa su contenido.
 var source: StringName
-var equipped: Node3D
 ## Apuntando: el punto del suelo hacia donde lanzar (bombas). null = colocar delante.
 var throw_to: Variant = null

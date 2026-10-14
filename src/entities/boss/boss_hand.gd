@@ -15,15 +15,8 @@ enum State { READY, BUSY, STUNNED, DOWN }
 ## Alto del centro de la mano apoyada en el piso.
 const SLAM_CRACK := preload("res://src/entities/boss/slam_crack.tscn")
 const FLOOR_HEIGHT := 0.6
-const SLAM_HEIGHT := 4.5
-const GRAB_REACH := 1.2
-## Cuánto sube de más antes de caer y cuánto rebota al pegar.
-const SLAM_OVERSHOOT := 0.7
-const SLAM_BOUNCE := 0.35
 const SQUASH := Vector3(1.25, 0.7, 1.25)
 const TREMBLE := 0.06
-const IMPACT_HIT_STOP := 0.06
-const CRACK_LIFETIME := 8.0
 const STUN_WOBBLE := 0.18
 ## grip de cada pose: 0 abierta, 0,5 garra, 1 puño; menos de 0 estira los dedos.
 const POSE_GRIP := {Pose.OPEN: 0.0, Pose.FIST: 1.0, Pose.CLAW: 0.5}
@@ -36,6 +29,16 @@ const BREATH := Vector2(0.07, 0.06)
 const LEAN := 0.06
 const LEAN_MAX := 0.45
 const TURN_SPEED := 9.0
+
+@export_group("Ajuste")
+@export var slam_height := 4.5
+@export var grab_reach := 1.2
+## Cuánto sube de más antes de caer y cuánto rebota al pegar.
+@export var slam_overshoot := 0.7
+@export var slam_bounce := 0.35
+@export var impact_hit_stop := 0.06
+@export var crack_lifetime := 8.0
+@export_group("")
 
 @export var pose := Pose.OPEN:
 	set(value):
@@ -244,7 +247,7 @@ func perform(attack: BossAttack, target: Node3D, area: Rect2) -> void:
 
 
 func _slam(attack: BossAttack, target: Node3D, area: Rect2) -> void:
-	var above := _floor_point(target.global_position, area) + Vector3.UP * SLAM_HEIGHT
+	var above := _floor_point(target.global_position, area) + Vector3.UP * slam_height
 	_show_shadow(above, 3.6, 0.3)
 	_tilt_goal = Vector3(-0.55, 0.0, 0.0)
 	await _move(above, slam_rise_time)
@@ -255,14 +258,14 @@ func _slam(attack: BossAttack, target: Node3D, area: Rect2) -> void:
 			return
 		var delta := get_physics_process_delta_time()
 		left -= delta
-		var wanted := _floor_point(target.global_position, area) + Vector3.UP * SLAM_HEIGHT
+		var wanted := _floor_point(target.global_position, area) + Vector3.UP * slam_height
 		global_position = global_position.lerp(wanted, 1.0 - exp(-6.0 * delta))
 		var t := 1.0 - left / slam_track_time
 		_show_shadow(global_position, lerpf(3.6, 2.6, t), lerpf(0.3, 0.75, t))
 	_show_shadow(global_position, 2.4, 1.0)
 	_flash.warn(slam_lock_time)
 	var hold := _new_attack_tween()
-	hold.tween_property(self, ^"position:y", position.y + SLAM_OVERSHOOT, slam_lock_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	hold.tween_property(self, ^"position:y", position.y + slam_overshoot, slam_lock_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	hold.parallel().tween_method(_tremble.bind(position), 0.0, 1.0, slam_lock_time)
 	hold.parallel().tween_method(_flash_shadow, 0.0, 1.0, slam_lock_time)
 	await hold.finished
@@ -301,7 +304,7 @@ func _impact() -> void:
 	Feel.burst(&"shards", floor_point + Vector3.UP * 0.2, Vector3.UP)
 	Feel.shake(0.5)
 	_leave_crack(floor_point)
-	Feel.freeze(IMPACT_HIT_STOP)
+	Feel.freeze(impact_hit_stop)
 
 
 func _grab(_attack: BossAttack, target: Node3D, area: Rect2) -> void:
@@ -339,7 +342,7 @@ func _grab(_attack: BossAttack, target: Node3D, area: Rect2) -> void:
 		elapsed += get_physics_process_delta_time()
 		global_position = from.lerp(to, ease(elapsed / grab_lunge_time, 0.5))
 		_show_shadow(global_position, 1.6, 0.4)
-		if Vector2(global_position.x, global_position.z).distance_to(Vector2(target.global_position.x, target.global_position.z)) < GRAB_REACH:
+		if Vector2(global_position.x, global_position.z).distance_to(Vector2(target.global_position.x, target.global_position.z)) < grab_reach:
 			var player := target as PlayerCharacter
 			if player == null:
 				continue
@@ -548,7 +551,7 @@ func _squash_and_bounce() -> void:
 	var back := mesh.create_tween()
 	back.tween_property(mesh, ^"scale", Vector3.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	_bounce = create_tween()
-	_bounce.tween_property(self, ^"position:y", position.y + SLAM_BOUNCE, 0.12).set_ease(Tween.EASE_OUT).set_delay(0.08)
+	_bounce.tween_property(self, ^"position:y", position.y + slam_bounce, 0.12).set_ease(Tween.EASE_OUT).set_delay(0.08)
 	_bounce.tween_property(self, ^"position:y", position.y, 0.14).set_ease(Tween.EASE_IN)
 
 
@@ -562,7 +565,7 @@ func _leave_crack(at: Vector3) -> void:
 	crack.global_position = Vector3(at.x, 0.1, at.z)
 	crack.rotation.y = randf() * TAU
 	var fade := crack.create_tween()
-	fade.tween_property(crack, ^"modulate:a", 0.0, 2.0).set_delay(CRACK_LIFETIME)
+	fade.tween_property(crack, ^"modulate:a", 0.0, 2.0).set_delay(crack_lifetime)
 	fade.tween_callback(crack.queue_free)
 
 
