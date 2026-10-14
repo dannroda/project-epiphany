@@ -111,6 +111,7 @@ var _last_positions: Dictionary[PlayerCharacter, Vector3] = {}
 var _player_rids: Array[RID] = []
 var _level_offset := Vector3.ZERO
 var _level_fov := 0.0
+var _mood: AmbienteSala
 
 
 func _ready() -> void:
@@ -333,12 +334,13 @@ func _apply_room_view(target: Room) -> void:
 	for child in target.get_children():
 		if child is AmbienteSala:
 			mood = child
-	var world: WorldEnvironment = null
+	if is_instance_valid(_mood) and _mood != mood:
+		_mood.restore()
+	_mood = mood
 	if mood:
 		var found := get_tree().current_scene.find_children("*", "WorldEnvironment", true, false)
-		world = found[0] as WorldEnvironment if not found.is_empty() else null
-	environment = mood.environment_over(world.environment) if world else null
-	compositor = mood.compositor_over(world.compositor) if world else null
+		if not found.is_empty():
+			mood.apply(found[0])
 
 
 ## Los demás pasan a la sala nueva junto al que cruzó: a sus costados y, si son más, detrás.
