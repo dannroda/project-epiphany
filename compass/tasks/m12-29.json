@@ -1,0 +1,47 @@
+{
+  "assignee": "project-epiphany-5d",
+  "checklist": [
+    {
+      "done": false,
+      "text": "Malla muro_agrietado_cueva_la (las medidas de paso que usen las cuevas)"
+    },
+    {
+      "done": false,
+      "text": "la_walls: bomb_cave y shrine_cave usan el tapón de cueva"
+    },
+    {
+      "done": false,
+      "text": "Techo en covers sobre lo que esconde cada uno (11.164)"
+    }
+  ],
+  "code": "12.29",
+  "created_at": "2026-10-14T06:46:06.763Z",
+  "description": "Daniel 2026-10-14 (playtest, cueva de las bombas): el muro de práctica (CavePracticeWall) sigue siendo el cracked_wall.tscn de siempre, un bloque con tapa de pasto verde que sobresale de la pared de roca de la cueva. 12.24 hizo los tapones LA de chullpa, quenoa, totora y cumbre; las cuevas pasaron al look LA (cueva, 7298dfb5) después y quedaron sin el suyo. Falta el estilo cueva: tapón que llene el paso LA con la roca oscura y la cresta gris de la cueva, grietas en las dos caras, colocado por la_walls como en las mazmorras. Usos: bomb_cave (CavePracticeWall) y shrine_cave. Lo que esconde va tapado con covers (11.164).",
+  "images": [
+    "compass/images/m12-29-20261014-034608.png"
+  ],
+  "links": [
+    {
+      "task": "m12-24",
+      "type": "related"
+    },
+    {
+      "task": "m11-164",
+      "type": "related"
+    }
+  ],
+  "milestone": "m12",
+  "notes": "",
+  "order": 29,
+  "priority": "high",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "arte",
+    "bug"
+  ],
+  "test": "",
+  "title": "Muro agrietado LA de cueva (muro_agrietado_cueva_la)",
+  "updated_at": "2026-10-14T06:46:08.952Z"
+}

@@ -4976,7 +4976,7 @@ Playtest 2026-10-13: en la pelea de la momia (MummyGuard), cuando 'salta' no se 
 - [x] El salto se ve: la momia viaja en arco hasta la marca (que sigue al player hasta fijarse).
 - [x] Onda expansiva del aterrizaje con un shader vistoso (anillo que se expande, distorsión/brillo).
 
-### 11.156 Chullpa: se ven los techos (crestas) de las paredes LA horneadas · Pendiente
+### 11.156 Chullpa: se ven los techos (crestas) de las paredes LA horneadas · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-5d · **Etiquetas:** `bug`, `chullpa`, `arte`
 
@@ -5065,7 +5065,7 @@ Daniel 2026-10-14 (playtest, Chullpa, Rellano): la pared agrietada ya llena el h
 
 **Relacionadas:** 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista; 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la)
 
-## M12 — Assets propios (Blender)  (16/28)
+## M12 — Assets propios (Blender)  (16/29)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -5568,7 +5568,7 @@ Playtest 2026-10-13: el jefe de la Queñoa (Eyes of the Queñoa) y el sub-jefe (
 
 Pedido de -43 (playtest 2026-10-13): las paredes agrietadas de las mazmorras LA usan cracked_wall_templo y no encajan (sobresalen, cara de arriba negra, o no se ven). Hace falta un tapón que llene el paso LA: alto y ancho como el corte, inclinado como la pared, con la veta de su pared y grietas en las dos caras. la_walls lo coloca como las hojas de puerta. Estilos: chullpa, quenoa, totora, cumbre. Cuando estén las mallas, -43 cambia las instancias y revisa la colisión. -11 (-5d) elige el orden con Daniel frente a 12.23 y 11.138.
 
-**Relacionadas:** 11.141 Queñoa 2P (Canopy): símbolo azul sin sentido y puerta bloqueada invisible; 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista; 11.151 Totora 2P: se ve la sala del piso de abajo; 11.164 Lo que esconde una pared agrietada no se ve desde arriba
+**Relacionadas:** 11.141 Queñoa 2P (Canopy): símbolo azul sin sentido y puerta bloqueada invisible; 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista; 11.151 Totora 2P: se ve la sala del piso de abajo; 11.164 Lo que esconde una pared agrietada no se ve desde arriba; 12.29 Muro agrietado LA de cueva (muro_agrietado_cueva_la)
 
 ### 12.25 El ojo del logo en game over, selección de idioma y carga · Revisión
 
@@ -5607,6 +5607,20 @@ Daniel 2026-10-14 (por -5d), con referencias suyas (esferas de energía, anillos
 **Prioridad:** baja · **Tamaño:** L · **Etiquetas:** `arte`, `vfx`, `combate`
 
 Aparcado por Daniel (2026-10-14). El banco de pruebas del tajo de 12.27 sirve de punto de partida: src/world/vfx/demo_tajo.tscn y sword_trail.gdshader (medialuna aditiva, ancha en la hoja, borde interno deshilachado, fade al dejar de emitir). La versión original de Daniel del shader y la demo está en debug/tmp/fd/daniel_demo/ (sin versionar).
+
+### 12.29 Muro agrietado LA de cueva (muro_agrietado_cueva_la) · Pendiente
+
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `bug`
+
+Daniel 2026-10-14 (playtest, cueva de las bombas): el muro de práctica (CavePracticeWall) sigue siendo el cracked_wall.tscn de siempre, un bloque con tapa de pasto verde que sobresale de la pared de roca de la cueva. 12.24 hizo los tapones LA de chullpa, quenoa, totora y cumbre; las cuevas pasaron al look LA (cueva, 7298dfb5) después y quedaron sin el suyo. Falta el estilo cueva: tapón que llene el paso LA con la roca oscura y la cresta gris de la cueva, grietas en las dos caras, colocado por la_walls como en las mazmorras. Usos: bomb_cave (CavePracticeWall) y shrine_cave. Lo que esconde va tapado con covers (11.164).
+
+- [ ] Malla muro_agrietado_cueva_la (las medidas de paso que usen las cuevas)
+- [ ] la_walls: bomb_cave y shrine_cave usan el tapón de cueva
+- [ ] Techo en covers sobre lo que esconde cada uno (11.164)
+
+**Capturas:** `compass/images/m12-29-20261014-034608.png`
+
+**Relacionadas:** 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la)
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 
