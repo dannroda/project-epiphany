@@ -1,5 +1,6 @@
 # Arma assets/epiphany/anim/carry.glb: animaciones de cargar algo sobre la cabeza para el Rig_Medium de KayKit
-# (Carry_Lift, Carry_Idle, Carry_Walk, Carry_Throw) y de levantar un ítem recién conseguido (ItemGet_Raise, _Hold, _Lower). Parten de Idle_A y Walking_A; los brazos van por IK a puntos
+# (Carry_Lift, Carry_Idle, Carry_Walk, Carry_Throw), de levantar un ítem recién conseguido (ItemGet_Raise, _Hold, _Lower)
+# y de trepar la escalera de soga (Climb). Parten de Idle_A y Walking_A; los brazos van por IK a puntos
 # fijos y el torso se dobla a mano (las piernas siguen la base). Se hornea todo a claves FK por hueso. El frente del rig mira a -Y.
 # Con la cabeza chibi las manos no llegan arriba del casco: quedan levantadas a los costados de la cabeza y el objeto
 # va apoyado arriba. Después: tools/build_carry_library.gd arma player/animation/libs/Carry.res.
@@ -98,7 +99,8 @@ def bake(rig, ik, name, base, frames, pose_at, loop=False):
 			bpy.context.view_layer.update()
 		for bone_name, (t, p, c) in ik.items():
 			c.influence = edit.get("arms", 1.0)
-			t.location = mirror(edit["hands"], 1 if bone_name.endswith(".l") else -1)
+			left = bone_name.endswith(".l")
+			t.location = mirror(edit["hands"] if left else edit.get("hands_r", edit["hands"]), 1 if left else -1)
 		bpy.context.view_layer.update()
 		for b in bones:
 			result[b.name].append(rig.convert_space(pose_bone=b, matrix=b.matrix, from_space="POSE", to_space="LOCAL"))
@@ -173,6 +175,27 @@ def lower_pose(f, chest):
 	}
 
 
+CLIMB_REACH = (Vector((0.2, -0.32, 1.78)), Vector((0.24, -0.3, 1.3)))
+
+
+def climb_pose(f, chest):
+	"""Trepando de cara a la escalera (el frente del rig): cada mano sube cuando baja la otra y la rodilla del mismo
+	lado sube con ella."""
+	up = 0.5 - 0.5 * math.cos(2 * math.pi * f)
+	high, low = CLIMB_REACH
+	return {
+		"hands": low.lerp(high, up),
+		"hands_r": low.lerp(high, 1.0 - up),
+		"bend": {
+			"spine": (Vector((1, 0, 0)), -0.12),
+			"upperleg.l": (Vector((1, 0, 0)), -0.85 * up),
+			"lowerleg.l": (Vector((1, 0, 0)), 1.2 * up),
+			"upperleg.r": (Vector((1, 0, 0)), -0.85 * (1.0 - up)),
+			"lowerleg.r": (Vector((1, 0, 0)), 1.2 * (1.0 - up)),
+		},
+	}
+
+
 rig = load_rig()
 rig.animation_data_create()
 ik = add_ik(rig)
@@ -195,6 +218,7 @@ made = [
 	bake(rig, ik, "ItemGet_Raise", idle, int(0.4 * FPS), raise_pose),
 	bake(rig, ik, "ItemGet_Hold", idle, frames_of(idle), hold_pose, loop=True),
 	bake(rig, ik, "ItemGet_Lower", idle, int(0.3 * FPS), lower_pose),
+	bake(rig, ik, "Climb", idle, int(0.9 * FPS), climb_pose, loop=True),
 ]
 for b in rig.pose.bones:
 	for c in list(b.constraints):

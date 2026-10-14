@@ -6,7 +6,7 @@ extends SceneTree
 
 const SOURCE := "res://assets/epiphany/anim/carry.glb"
 const OUTPUT := "res://player/animation/libs/Carry.res"
-const LOOPS: Array[StringName] = [&"Carry_Idle", &"Carry_Walk", &"ItemGet_Hold"]
+const LOOPS: Array[StringName] = [&"Carry_Idle", &"Carry_Walk", &"ItemGet_Hold", &"Climb"]
 
 
 func _initialize() -> void:

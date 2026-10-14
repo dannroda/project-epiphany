@@ -409,6 +409,6 @@ func test_room_transition_and_grab_come_from_each_state() -> void:
 			skip_grab.append(String(state.name))
 	skip_transition.sort()
 	skip_grab.sort()
-	assert_eq(skip_transition, ["Dead", "Grabbed", "ItemGet", "Pushing", "Spirit", "Transition"])
-	assert_eq(skip_grab, ["Dead", "Grabbed", "ItemGet", "Spirit", "Transition"])
+	assert_eq(skip_transition, ["Climbing", "Dead", "Grabbed", "ItemGet", "Pushing", "Spirit", "Transition"])
+	assert_eq(skip_grab, ["Climbing", "Dead", "Grabbed", "ItemGet", "Spirit", "Transition"])
 	player.free()

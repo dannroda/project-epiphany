@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" path="res://src/world/rope_ladder.gd" id="1_ladder"]
 [ext_resource type="Script" path="res://src/components/interactable.gd" id="2_interact"]
-[ext_resource type="Script" path="res://src/world/stairs.gd" id="3_stairs"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/escalera_soga.res" id="4_ladder"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/escalera_soga_estacas.res" id="5_stakes"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/escalera_soga_rollo.res" id="6_coil"]
@@ -35,17 +34,19 @@ prompt = "PROMPT_UNROLL"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -0.4)
 shape = SubResource("Use")
 
-[node name="Top" type="Area3D" parent="." node_paths=PackedStringArray("to")]
-script = ExtResource("3_stairs")
-to = NodePath("../BottomSpot")
+[node name="Top" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 3
+monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Top"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -0.3)
 shape = SubResource("Step")
 
-[node name="Bottom" type="Area3D" parent="." node_paths=PackedStringArray("to")]
-script = ExtResource("3_stairs")
-to = NodePath("../TopSpot")
+[node name="Bottom" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 3
+monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Bottom"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.45, 1.9)
@@ -56,3 +57,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.8)
 
 [node name="BottomSpot" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.20, 3.1)
+
+[node name="Lip" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.6)
+
+[node name="RungTop" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.7, 1.55)
+
+[node name="RungBottom" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.2, 1.55)

@@ -59,6 +59,9 @@ func _setup() -> void:
 	add_transition($ItemGet, $Idle, "finished")
 	add_transition(anystate(), $Grabbed, "grabbed", func() -> bool: return (get_active_state() as PlayerState).can_be_grabbed)
 	add_transition($Grabbed, $Idle, "finished")
+	add_transition($Idle, $Climbing, "climb")
+	add_transition($Moving, $Climbing, "climb")
+	add_transition($Climbing, $Idle, "finished")
 
 	initial_state = $Idle
 
