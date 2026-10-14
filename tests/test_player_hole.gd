@@ -45,12 +45,52 @@ func test_a_hidden_player_turns_the_camera_overhead() -> void:
 	await tree.create_timer(0.1).timeout
 	assert_true(camera.occluded, "detrás del muro lo tapa")
 	assert_true(tilt.call() < normal_tilt - 1.0, "y la cámara empieza a subir (%.1f°)" % tilt.call())
-	await tree.create_timer(0.6).timeout
+	await tree.create_timer(1.2).timeout
 	assert_true(tilt.call() < 1.0, "hasta quedar encima (%.1f°)" % tilt.call())
 	assert_eq(camera.player_hole.w, 0.0, "sin agujero en las paredes")
 	player.global_position = Vector3(-88, 0.1, -41.0)
-	await tree.create_timer(0.7).timeout
+	await tree.create_timer(0.3).timeout
+	assert_true(camera.occluded and tilt.call() < 1.0, "recién salido sigue encima un rato (%.1f°)" % tilt.call())
+	await tree.create_timer(1.8).timeout
 	assert_true(not camera.occluded and absf(tilt.call() - normal_tilt) < 1.0, "lejos del muro vuelve al ángulo normal (%.1f°)" % tilt.call())
+
+
+## Playtest de 11.134: los árboles, cardones y objetos no suben la cámara (detrás de esos está la silueta); solo las paredes.
+func test_only_walls_turn_the_camera_overhead() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.change_scene_to_file("res://levels/overworld.tscn")
+	await tree.scene_changed
+	await tree.process_frame
+	await tree.process_frame
+	for enemy in tree.get_nodes_in_group(&"enemies"):
+		enemy.free()
+	var level := tree.current_scene
+	var camera := level.get_node(^"TopDownCamera") as TopDownCamera
+	var risco := level.get_node(^"Terreno/Parte0/riscos_0").find_children("*", "StaticBody3D", true, false)
+	assert_true(not risco.is_empty() and camera.call(&"_is_wall", risco[0]), "la roca del terreno es pared")
+	var props := 0
+	for body in level.find_children("Body", "StaticBody3D", true, false):
+		if String(body.get_parent().name).rstrip("0123456789_") in ["Arbol", "Cardon", "QuenoaChica"]:
+			assert_true(not camera.call(&"_is_wall", body), "%s no es pared" % body.get_parent().name)
+			props += 1
+	assert_true(props > 100, "revisó los árboles y cardones (%d)" % props)
+	var player := tree.get_first_node_in_group(&"player") as Node3D
+	var space := camera.get_world_3d().direct_space_state
+	var behind := Vector3.INF
+	for body in level.find_children("Body", "StaticBody3D", true, false):
+		if not String(body.get_parent().name).begins_with("Arbol"):
+			continue
+		var at := (body as Node3D).global_position + Vector3(0, 0, -1.0)
+		var query := PhysicsRayQueryParameters3D.create(at + Vector3.UP * 0.8 + camera.offset, at + Vector3.UP * 0.8, 1)
+		var hit := space.intersect_ray(query)
+		if not hit.is_empty() and hit.collider == body:
+			behind = at
+			break
+	assert_true(behind != Vector3.INF, "hay un árbol que tapa a alguien parado detrás")
+	player.global_position = behind + Vector3.UP * 0.1
+	camera.snap_to_target()
+	await tree.create_timer(0.4).timeout
+	assert_true(not camera.occluded, "detrás del árbol la cámara no sube")
 
 
 func test_clouds_only_while_in_the_overworld() -> void:
