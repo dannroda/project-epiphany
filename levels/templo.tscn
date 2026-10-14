@@ -66,8 +66,6 @@
 [ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="52_0i344"]
 [ext_resource type="ArrayMesh" uid="uid://d1wgxveey7xn" path="res://assets/epiphany/meshes/paredes_la/puerta_madera_templo_la.res" id="52_cjedn"]
 [ext_resource type="Script" uid="uid://biq7c248kwtba" path="res://src/entities/boss/boss_arena.gd" id="53_2dht2"]
-[ext_resource type="Resource" path="res://data/items/heart_container.tres" id="te_heart_container_item"]
-[ext_resource type="Resource" path="res://data/dialogue/ending.dialogue" id="te_ending_dialogue"]
 [ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="54_jhn6u"]
 [ext_resource type="Script" uid="uid://ckkibjv0y6axx" path="res://player/player.gd" id="55_m178d"]
 [ext_resource type="Script" uid="uid://bsl8lrbxe3r5y" path="res://src/entities/hand_guard/hand_guard.gd" id="55_ycq0f"]
@@ -102,6 +100,8 @@
 [ext_resource type="NavigationMesh" path="res://levels/nav/templo_navmesh.tres" id="nav_templo"]
 [ext_resource type="PackedScene" path="res://src/world/tablet.tscn" id="tablet"]
 [ext_resource type="Resource" uid="uid://y6avu6sc2i5n" path="res://data/dialogue/temple.dialogue" id="temple_dialogue"]
+[ext_resource type="Resource" uid="uid://ch8msmkf3u388" path="res://data/dialogue/ending.dialogue" id="te_ending_dialogue"]
+[ext_resource type="Resource" path="res://data/items/heart_container.tres" id="te_heart_container_item"]
 
 [sub_resource type="Environment" id="Environment_tiw1f"]
 background_mode = 1
@@ -139,7 +139,7 @@ compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_vrfy
 [sub_resource type="BoxShape3D" id="BoxShape3D_4oc56"]
 size = Vector3(22, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ypy2f"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m888e"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(32.7, -1.4, 55.3, 13.9)
@@ -148,17 +148,19 @@ shader_parameter/limit = Vector4(30.8, -3.2, 57.199997, 15)
 shader_parameter/plane_y = 3.0
 shader_parameter/floor_rect = Vector4(33, -1, 55, 13)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(33, -1, 55, 13)
+shader_parameter/reach = Vector4(0.7, 1.5, 0.7, 0.6)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_s4egn"]
-material = SubResource("ShaderMaterial_ypy2f")
+[sub_resource type="PlaneMesh" id="PlaneMesh_srmr6"]
+material = SubResource("ShaderMaterial_m888e")
 size = Vector2(33.2, 25.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ywg56"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_m888e"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pcqlr"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(20.7, 16.6, 35.3, 27.9)
@@ -167,17 +169,19 @@ shader_parameter/limit = Vector4(18.8, 15, 36, 29)
 shader_parameter/plane_y = 3.0
 shader_parameter/floor_rect = Vector4(21, 17, 35, 27)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(21, 17, 35, 27)
+shader_parameter/reach = Vector4(0.7, 1.5, 0.7, 0.6)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_srmr6"]
-material = SubResource("ShaderMaterial_m888e")
+[sub_resource type="PlaneMesh" id="PlaneMesh_ank0x"]
+material = SubResource("ShaderMaterial_pcqlr")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rg7ke"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_pcqlr"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eppxl"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(36.7, 16.6, 51.3, 27.9)
@@ -186,17 +190,19 @@ shader_parameter/limit = Vector4(36, 15, 52, 29)
 shader_parameter/plane_y = 3.0
 shader_parameter/floor_rect = Vector4(37, 17, 51, 27)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(37, 17, 51, 27)
+shader_parameter/reach = Vector4(0.7, 1.5, 0.7, 0.6)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_ank0x"]
-material = SubResource("ShaderMaterial_pcqlr")
+[sub_resource type="PlaneMesh" id="PlaneMesh_l2qle"]
+material = SubResource("ShaderMaterial_eppxl")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_p8als"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_eppxl"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tiw1f"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(52.7, 16.6, 67.3, 27.9)
@@ -205,17 +211,19 @@ shader_parameter/limit = Vector4(52, 15, 69.2, 29)
 shader_parameter/plane_y = 3.0
 shader_parameter/floor_rect = Vector4(53, 17, 67, 27)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(53, 17, 67, 27)
+shader_parameter/reach = Vector4(0.7, 1.5, 0.7, 0.6)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_l2qle"]
-material = SubResource("ShaderMaterial_eppxl")
+[sub_resource type="PlaneMesh" id="PlaneMesh_vrfyu"]
+material = SubResource("ShaderMaterial_tiw1f")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nioq2"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tiw1f"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6btj5"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(2.7, 30.6, 17.3, 41.9)
@@ -224,17 +232,19 @@ shader_parameter/limit = Vector4(0.8, 28.8, 19, 43)
 shader_parameter/plane_y = 3.0
 shader_parameter/floor_rect = Vector4(3, 31, 17, 41)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(3, 31, 17, 41)
+shader_parameter/reach = Vector4(0.7, 1.5, 0.7, 0.6)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_vrfyu"]
-material = SubResource("ShaderMaterial_tiw1f")
+[sub_resource type="PlaneMesh" id="PlaneMesh_nw8wq"]
+material = SubResource("ShaderMaterial_6btj5")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0jhvc"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6btj5"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ewur0"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(20.7, 30.6, 35.3, 41.9)
@@ -243,17 +253,19 @@ shader_parameter/limit = Vector4(19, 29, 36, 43)
 shader_parameter/plane_y = 3.0
 shader_parameter/floor_rect = Vector4(21, 31, 35, 41)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(21, 31, 35, 41)
+shader_parameter/reach = Vector4(0.7, 1.5, 0.7, 0.6)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_nw8wq"]
-material = SubResource("ShaderMaterial_6btj5")
+[sub_resource type="PlaneMesh" id="PlaneMesh_7bncd"]
+material = SubResource("ShaderMaterial_ewur0")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_utgfk"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ewur0"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wgnm1"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(36.7, 30.6, 51.3, 41.9)
@@ -262,17 +274,19 @@ shader_parameter/limit = Vector4(36, 29, 52, 43)
 shader_parameter/plane_y = 3.0
 shader_parameter/floor_rect = Vector4(37, 31, 51, 41)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(37, 31, 51, 41)
+shader_parameter/reach = Vector4(0.7, 1.5, 0.7, 0.6)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_7bncd"]
-material = SubResource("ShaderMaterial_ewur0")
+[sub_resource type="PlaneMesh" id="PlaneMesh_43cnq"]
+material = SubResource("ShaderMaterial_wgnm1")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_p0rd1"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wgnm1"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0i344"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(52.7, 30.6, 67.3, 41.9)
@@ -281,17 +295,19 @@ shader_parameter/limit = Vector4(52, 29, 69, 43)
 shader_parameter/plane_y = 3.0
 shader_parameter/floor_rect = Vector4(53, 31, 67, 41)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(53, 31, 67, 41)
+shader_parameter/reach = Vector4(0.7, 1.5, 0.7, 0.6)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_43cnq"]
-material = SubResource("ShaderMaterial_wgnm1")
+[sub_resource type="PlaneMesh" id="PlaneMesh_2dht2"]
+material = SubResource("ShaderMaterial_0i344")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a2862"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0i344"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jhn6u"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(70.7, 30.6, 85.3, 41.9)
@@ -300,17 +316,19 @@ shader_parameter/limit = Vector4(69, 28.8, 87.200005, 43)
 shader_parameter/plane_y = 3.0
 shader_parameter/floor_rect = Vector4(71, 31, 85, 41)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(71, 31, 85, 41)
+shader_parameter/reach = Vector4(0.7, 1.5, 0.7, 0.6)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_2dht2"]
-material = SubResource("ShaderMaterial_0i344")
+[sub_resource type="PlaneMesh" id="PlaneMesh_m178d"]
+material = SubResource("ShaderMaterial_jhn6u")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qdtbt"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jhn6u"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q50av"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(2.7, 44.6, 17.3, 55.9)
@@ -319,17 +337,19 @@ shader_parameter/limit = Vector4(0.8, 43, 19, 57.199997)
 shader_parameter/plane_y = 3.0
 shader_parameter/floor_rect = Vector4(3, 45, 17, 55)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(3, 45, 17, 55)
+shader_parameter/reach = Vector4(0.7, 1.5, 0.7, 0.6)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_m178d"]
-material = SubResource("ShaderMaterial_jhn6u")
+[sub_resource type="PlaneMesh" id="PlaneMesh_5184v"]
+material = SubResource("ShaderMaterial_q50av")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q1vmi"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_q50av"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_10kg3"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(20.7, 44.6, 35.3, 55.9)
@@ -338,17 +358,19 @@ shader_parameter/limit = Vector4(19, 43, 36, 57.199997)
 shader_parameter/plane_y = 3.0
 shader_parameter/floor_rect = Vector4(21, 45, 35, 55)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(21, 45, 35, 55)
+shader_parameter/reach = Vector4(0.7, 1.5, 0.7, 0.6)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_5184v"]
-material = SubResource("ShaderMaterial_q50av")
+[sub_resource type="PlaneMesh" id="PlaneMesh_07stk"]
+material = SubResource("ShaderMaterial_10kg3")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sprnv"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_10kg3"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hnplg"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(36.7, 44.6, 51.3, 55.9)
@@ -357,17 +379,19 @@ shader_parameter/limit = Vector4(36, 43, 52, 57.199997)
 shader_parameter/plane_y = 3.0
 shader_parameter/floor_rect = Vector4(37, 45, 51, 55)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(37, 45, 51, 55)
+shader_parameter/reach = Vector4(0.7, 1.5, 0.7, 0.6)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_07stk"]
-material = SubResource("ShaderMaterial_10kg3")
+[sub_resource type="PlaneMesh" id="PlaneMesh_6dq88"]
+material = SubResource("ShaderMaterial_hnplg")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6vpyr"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hnplg"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5bylj"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(52.7, 44.6, 67.3, 55.9)
@@ -376,17 +400,19 @@ shader_parameter/limit = Vector4(52, 43, 69, 57.199997)
 shader_parameter/plane_y = 3.0
 shader_parameter/floor_rect = Vector4(53, 45, 67, 55)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(53, 45, 67, 55)
+shader_parameter/reach = Vector4(0.7, 1.5, 0.7, 0.6)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_6dq88"]
-material = SubResource("ShaderMaterial_hnplg")
+[sub_resource type="PlaneMesh" id="PlaneMesh_oqvbs"]
+material = SubResource("ShaderMaterial_5bylj")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8xv7h"]
 size = Vector3(14, 2.4, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5bylj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mhghd"]
 render_priority = 0
 shader = ExtResource("7_askxy")
 shader_parameter/inner = Vector4(70.7, 44.6, 85.3, 55.9)
@@ -395,11 +421,13 @@ shader_parameter/limit = Vector4(69, 43, 87.200005, 57.199997)
 shader_parameter/plane_y = 3.0
 shader_parameter/floor_rect = Vector4(71, 45, 85, 55)
 shader_parameter/hole_fade = null
+shader_parameter/interior = Vector4(71, 45, 85, 55)
+shader_parameter/reach = Vector4(0.7, 1.5, 0.7, 0.6)
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_oqvbs"]
-material = SubResource("ShaderMaterial_5bylj")
+[sub_resource type="PlaneMesh" id="PlaneMesh_qmvvc"]
+material = SubResource("ShaderMaterial_mhghd")
 size = Vector2(25.2, 21.2)
 
 [sub_resource type="BoxShape3D" id="Shape"]
@@ -783,7 +811,7 @@ shader_parameter/grain_amount = 0.0
 shader_parameter/grain_rect = Vector4(0.42, 0.455, 0, 0.25)
 shader_parameter/grain_spacing = null
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_mhghd"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_xib4i"]
 _surfaces = [{
 "aabb": AABB(32.45, 3.02, 16.45, 3.0999985, 1e-05, 4.049999),
 "attribute_data": PackedByteArray("AABQPyA+Bj0AAFA/ID4GPQAAUD8gPgY9AABQPyA+Bj0AAFA/ID4GPQAAUD8gPgY9AABQPyA+Bj0AAFA/ID4GPQAAUD8gPgY9AABQPyA+Bj0AAFA/ID4GPQAAUD8gPgY9"),
@@ -852,7 +880,7 @@ shape = SubResource("BoxShape3D_4oc56")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/Jefe" unique_id=2028260441]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_s4egn")
+mesh = SubResource("PlaneMesh_srmr6")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/Jefe" unique_id=653280929]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -885,7 +913,7 @@ shape = SubResource("BoxShape3D_ywg56")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/Combinada" unique_id=1039003385]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_srmr6")
+mesh = SubResource("PlaneMesh_ank0x")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/Combinada" unique_id=733608553]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -919,7 +947,7 @@ shape = SubResource("BoxShape3D_rg7ke")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/Antesala" unique_id=1268615110]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_ank0x")
+mesh = SubResource("PlaneMesh_l2qle")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/Antesala" unique_id=1017618337]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -952,7 +980,7 @@ shape = SubResource("BoxShape3D_p8als")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/Mano" unique_id=1344521889]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_l2qle")
+mesh = SubResource("PlaneMesh_vrfyu")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/Mano" unique_id=2017596169]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -985,7 +1013,7 @@ shape = SubResource("BoxShape3D_nioq2")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/GanchoOjo" unique_id=453840641]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_vrfyu")
+mesh = SubResource("PlaneMesh_nw8wq")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/GanchoOjo" unique_id=1696772388]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1018,7 +1046,7 @@ shape = SubResource("BoxShape3D_0jhvc")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/Gancho" unique_id=156983109]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_nw8wq")
+mesh = SubResource("PlaneMesh_7bncd")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/Gancho" unique_id=469526843]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1051,7 +1079,7 @@ shape = SubResource("BoxShape3D_utgfk")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/Hub" unique_id=139936660]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_7bncd")
+mesh = SubResource("PlaneMesh_43cnq")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/Hub" unique_id=897305440]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1084,7 +1112,7 @@ shape = SubResource("BoxShape3D_p0rd1")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/Espejo" unique_id=1384030074]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_43cnq")
+mesh = SubResource("PlaneMesh_2dht2")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/Espejo" unique_id=682882333]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1117,7 +1145,7 @@ shape = SubResource("BoxShape3D_a2862")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/EspejoOjo" unique_id=1748934760]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_2dht2")
+mesh = SubResource("PlaneMesh_m178d")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/EspejoOjo" unique_id=1125305267]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1150,7 +1178,7 @@ shape = SubResource("BoxShape3D_qdtbt")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/PlumaOjo" unique_id=263823928]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_m178d")
+mesh = SubResource("PlaneMesh_5184v")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/PlumaOjo" unique_id=212051459]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1183,7 +1211,7 @@ shape = SubResource("BoxShape3D_q1vmi")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/Pluma" unique_id=1129250053]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_5184v")
+mesh = SubResource("PlaneMesh_07stk")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/Pluma" unique_id=620917475]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1215,7 +1243,7 @@ shape = SubResource("BoxShape3D_sprnv")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/Vestibulo" unique_id=231566811]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_07stk")
+mesh = SubResource("PlaneMesh_6dq88")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/Vestibulo" unique_id=1287709005]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1248,7 +1276,7 @@ shape = SubResource("BoxShape3D_6vpyr")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/Arco" unique_id=1140570017]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_6dq88")
+mesh = SubResource("PlaneMesh_oqvbs")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/Arco" unique_id=1949849285]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -1281,7 +1309,7 @@ shape = SubResource("BoxShape3D_8xv7h")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Planta/ArcoOjo" unique_id=123822830]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_oqvbs")
+mesh = SubResource("PlaneMesh_qmvvc")
 
 [node name="LuzSala" type="SpotLight3D" parent="Planta/ArcoOjo" unique_id=1631484551]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -2815,7 +2843,7 @@ radius = 3.0
 
 [node name="CombinedNicheRoof" type="MeshInstance3D" parent="Planta" unique_id=231847136]
 cast_shadow = 0
-mesh = SubResource("ArrayMesh_mhghd")
+mesh = SubResource("ArrayMesh_xib4i")
 
 [node name="Boss" type="Node3D" parent="." unique_id=285360790 instance=ExtResource("43_l2qle")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 4.5)
@@ -2860,11 +2888,11 @@ flag = &"te_tablet_antechamber"
 
 [node name="BossArena" type="Node" parent="." unique_id=1442482810 node_paths=PackedStringArray("room", "boss", "door", "exit_portal")]
 script = ExtResource("53_2dht2")
+room = NodePath("../Planta/Jefe")
 defeated_flag = &"te_boss_defeated"
 container_flag = &"te_heart_container"
 reward = ExtResource("te_heart_container_item")
 ending = ExtResource("te_ending_dialogue")
-room = NodePath("../Planta/Jefe")
 boss = NodePath("../Boss")
 door = NodePath("../Planta/BossDoor")
 exit_portal = NodePath("../BossExitPortal")
@@ -2893,7 +2921,7 @@ attributes = SubResource("CameraAttributesPractical_mckgn")
 fov = 40.0
 script = ExtResource("58_10kg3")
 target_node = NodePath("../Player")
-offset = Vector3(0, 30.814466, 14.369021)
+offset = Vector3(0, 22.657698, 10.565457)
 field_of_view = 28.0
 wall_height = 5.4
 mask_margin = 2.0
@@ -2904,7 +2932,7 @@ south_wall_reach = 1.7
 script = ExtResource("79_ank0x")
 near_margin = 3.5
 
-[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1432475211 instance=ExtResource("80_eppxl")]
+[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1654496943 instance=ExtResource("80_eppxl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=613354597 instance=ExtResource("59_07stk")]
