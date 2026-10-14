@@ -95,13 +95,13 @@ func _jump(action: StringName) -> void:
 		await tree.physics_frame
 
 
-func test_fourteen_rooms_that_fit_the_camera() -> void:
+func test_fourteen_rooms_of_22_by_14() -> void:
 	await _start()
 	var rooms := level.find_children("*", "Room", true, false)
 	assert_eq(rooms.size(), 14, "catorce salas")
 	for room: Room in rooms:
 		var size := room.bounds().size
-		assert_true(room.boss_room or size.y <= 10.0 and size.x <= 14.0, "%s entra en pantalla (%s)" % [room.name, size])
+		assert_eq(size, Vector2(22, 14), "%s mide 22 × 14 (11.180)" % room.name)
 	assert_eq(camera.room, _room("Vestibulo"), "se entra al vestíbulo")
 	state.reset()
 
@@ -178,13 +178,14 @@ func _hook_to(post: HookPost) -> void:
 func test_the_hook_wing_abyss_is_crossed_only_with_the_hookshot() -> void:
 	await _start()
 	var grid := level.get_node(^"Planta/GridMap") as GridMap
-	var holes := range(10, 18).filter(func(x: int) -> bool: return grid.get_cell_item(Vector3i(x, 0, 18)) == 10)
+	var center := grid.local_to_map(grid.to_local(_in("Gancho", Vector3.ZERO)))
+	var holes := range(center.x - 6, center.x + 7).filter(func(x: int) -> bool: return grid.get_cell_item(Vector3i(x, 0, center.z)) == 10)
 	assert_eq(holes.size(), 4, "el abismo mide 4 celdas: el salto largo cruza 3")
 	state.give(Items.get_item(&"hookshot"))
 	state.assign_button(0, &"hookshot")
 	var west := _node("GanchoWestPost") as HookPost
 	var east := _node("GanchoEastPost") as HookPost
-	for spec: Array in [[Vector3(32.4, 0.2, 34), west], [Vector3(22, 0.2, 38), east]]:
+	for spec: Array in [[_in("Gancho", Vector3(4.4, 0.2, -2)), west], [_in("Gancho", Vector3(-6, 0.2, 2)), east]]:
 		await _drop(spec[0])
 		var health := player.health.current
 		var post: HookPost = spec[1]

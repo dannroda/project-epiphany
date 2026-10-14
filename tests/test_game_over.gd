@@ -39,7 +39,7 @@ func test_continue_in_the_overworld_and_in_a_room() -> void:
 	await tree.create_timer(1.0).timeout
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	assert_eq(player.is_dead, false, "continuar: de pie")
-	assert_true(player.global_position.distance_to(Vector3(44, 0, 50)) < 2.5, "en la entrada de la sala donde cayó (%s)" % player.global_position)
+	assert_true(player.global_position.distance_to(Vector3(66, 0, 60)) < 2.5, "en la entrada de la sala donde cayó (%s)" % player.global_position)
 	state.reset()
 
 
