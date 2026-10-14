@@ -790,7 +790,58 @@ for DOOR_STYLE in (None, "chullpa", "quenoa", "templo", "totora", "cumbre"):
 ## las dos caras, cada una inclinada como su pared y el medio derecho. Va por fondo del paso (2 o 4 m) y con la cara de
 ## atrás igual de inclinada o como la cara norte (_n); la_walls elige y la gira.
 CRACK_STEP = 0.06
-CRACKS = {"chullpa": ("acantilado", "tierra"), "quenoa": ("roca_naranja", "roca_naranja"), "templo": ("piedra_templo", "gris_5"), "totora": ("madera", "madera"), "cumbre": ("ladrillo", "gris_4")}
+## Estilos con placas (plates) en lugar de grietas dibujadas, y el ancho de la canaleta entre placas.
+PLATED = {"cueva"}
+PLATE_SEAM = 0.07
+CRACKS = {"chullpa": ("acantilado", "tierra"), "quenoa": ("roca_naranja", "roca_naranja"), "templo": ("piedra_templo", "gris_5"), "totora": ("madera", "madera"), "cumbre": ("ladrillo", "gris_4"), "cueva": ("acantilado", "noche")}
+
+
+def plates(p, faces, width, lo, hi, stone, gap):
+	"""Como la pared agrietada de LA: la cara partida en placas que salen, cada una con su inclinación y su tono, alrededor de
+	un golpe en el medio, con canaletas oscuras entre placas. Las placas no salen en el borde de la cara, que sigue cerrando."""
+	rng = random.Random(83)
+	hit = Vector((rng.uniform(-0.15, 0.15) * width, lo + (hi - lo) * rng.uniform(0.42, 0.55)))
+	seeds = [hit]
+	for count, radius in ((5, 0.32), (8, 0.78)):
+		a0 = rng.uniform(0, 2 * math.pi)
+		for k in range(count):
+			a = a0 + 2 * math.pi * (k + rng.uniform(-0.2, 0.2)) / count
+			seeds.append(hit + Vector((math.cos(a) * width, math.sin(a) * (hi - lo) / 2)) * radius * rng.uniform(0.85, 1.15))
+	plate = [(rng.uniform(0.05, 0.11), Vector((rng.uniform(-0.12, 0.12), rng.uniform(-0.12, 0.12))), rng.uniform(0.2, 0.8)) for _ in seeds]
+
+	def cell(q):
+		order = sorted(range(len(seeds)), key=lambda i: (q - seeds[i]).length_squared)
+		i, j = order[0], order[1]
+		gap_to = ((q - seeds[j]).length_squared - (q - seeds[i]).length_squared) / (2.0 * (seeds[j] - seeds[i]).length)
+		return i, gap_to
+
+	for v in {v for f in faces for v in f.verts}:
+		q = Vector((v.co.x, v.co.z))
+		i, edge = cell(q)
+		bulge, tilt, _ = plate[i]
+		out = bulge + tilt.dot(q - seeds[i])
+		out *= min(1.0, edge / PLATE_SEAM) ** 0.7
+		out *= min(1.0, (width - abs(q.x)) / 0.12, (q.y - lo) / 0.12, (hi - q.y) / 0.12)
+		v.co.y -= max(0.0, out)
+	for f in faces:
+		c = f.calc_center_median()
+		i, edge = cell(Vector((c.x, c.z)))
+		if edge < PLATE_SEAM * 0.55:
+			p.paint([f], gap, "DARK")
+		else:
+			shade(p, f, stone, plate[i][2] + 0.25 * min(1.0, edge / 0.3))
+
+
+def plated_top(p, width, y0, y1, stone, gap):
+	"""La cara de arriba del muro bajo también en placas (es la que ve la cámara): una grilla parada como el frente, con
+	sus placas, que después se acuesta arriba."""
+	nx = round(2 * width / CRACK_STEP)
+	ny = round((y1 - y0) / CRACK_STEP)
+	grid = [[p.bm.verts.new((-width + 2 * width * i / nx, 0.0, y0 + (y1 - y0) * j / ny)) for i in range(nx + 1)] for j in range(ny + 1)]
+	faces = [p.bm.faces.new((grid[j][i], grid[j][i + 1], grid[j + 1][i + 1], grid[j + 1][i])) for j in range(ny) for i in range(nx)]
+	plates(p, faces, width, y0, y1, stone, gap)
+	lay = Matrix(((1, 0, 0, 0), (0, 0, 1, 0), (0, -1, 0, top + 0.005), (0, 0, 0, 1)))
+	bmesh.ops.transform(p.bm, matrix=lay, verts=list({v for f in faces for v in f.verts}))
 
 
 def cracked_wall(style, depth, back, low=False):
@@ -809,6 +860,8 @@ def cracked_wall(style, depth, back, low=False):
 	seed = sum(map(ord, style)) % 97 * 0.37
 	for f in front:
 		wall_face(p, f, f.calc_center_median(), [], "muro", seed)
+	if style in PLATED:
+		plates(p, front, width, 0.0, top, *CRACKS[style])
 	dup = bmesh.ops.duplicate(p.bm, geom=front)["geom"]
 	rear = [f for f in dup if isinstance(f, bmesh.types.BMFace)]
 	for v in {v for f in rear for v in f.verts}:
@@ -820,12 +873,15 @@ def cracked_wall(style, depth, back, low=False):
 	crest = CREST.get(style, (LEAF, "DARK"))
 	p.paint(body, crest[0], crest[1], vary=0.06)
 	stone, gap = CRACKS[style]
-	epi.cracks_both_faces(p, half, (0.0, top * 0.45), width - 0.08, 0.12, top - 0.2 if not low else top - 0.1, stone, gap)
+	if style not in PLATED:
+		epi.cracks_both_faces(p, half, (0.0, top * 0.45), width - 0.08, 0.12, top - 0.2 if not low else top - 0.1, stone, gap)
 	runs = (LOW_BEVEL, LOW_BEVEL) if low else (RUN["s"], RUN["n"] if back == "n" else RUN["s"])
 	for v in p.bm.verts:
 		t = max(-1.0, min(1.0, v.co.y / half))
 		v.co.y += (runs[0] * -t if t < 0 else -runs[1] * t) * v.co.z / top
-	if low:
+	if low and style in PLATED:
+		plated_top(p, width, -half + runs[0], half - runs[1], CREST[style][0], gap)
+	elif low:
 		xs = [-width + 2 * width * i / 8 for i in range(9)]
 		ys = [-half - 0.3] + [-half + 2 * half * j / 6 for j in range(7)] + [half + 0.3]
 		hedge(p, xs, ys, lambda x, y: top if abs(y) <= half + 0.01 else 0.0)

@@ -141,7 +141,7 @@ const LOOKS := {
 	"cueva": {"ambient": Color(0.48, 0.5, 0.6), "ambient_energy": 0.85, "sun": Color(0.66, 0.7, 0.82), "sun_energy": 0.4,
 		"room": Color(0.98, 0.86, 0.7), "room_energy": 1.6, "dust": "res://src/world/look/polvo_quenoa.tscn",
 		"brazier": "res://assets/epiphany/meshes/templo_chullpa/brasero.res",
-		"doors": "res://assets/epiphany/meshes/paredes_la/%s_la.res",
+		"doors": "res://assets/epiphany/meshes/paredes_la/%s_la.res", "cracked": "res://assets/epiphany/meshes/paredes_la/%s_cueva_la.res",
 		"walls": "res://assets/epiphany/meshes/paredes_la/%s_cueva_la_%s.res", "kit": "res://data/kits/cueva_la_kit.tres", "grain": [0.0, GRAIN_RECT],
 		"floor": {"tile_size": 0.6, "jitter": 0.4, "grout_width": 0.04, "bevel": 0.06, "earth": 0.78, "earth_shade": 0.55,
 			"floor_color": Color(0.32, 0.27, 0.24, 1.0)}},
@@ -150,6 +150,8 @@ const LOOKS := {
 const DUST_AHEAD := 20.0
 ## Hojas de las puertas de la mazmorra que se está armando (LOOKS); %s es el nombre de Door.LEAVES.
 var _door_leaves := ""
+## Lo mismo para la pared agrietada, si el look no la saca de las puertas (cracked).
+var _cracked_leaves := ""
 var _walls := MESHES
 var _out_kit := OUT_KIT
 var _floor_params := {}
@@ -188,6 +190,7 @@ func _initialize() -> void:
 		return
 	var look: Dictionary = LOOKS[LOOK_OF.get(args[1], args[1])]
 	_door_leaves = look.doors
+	_cracked_leaves = look.get("cracked", look.doors)
 	_walls = look.walls
 	_out_kit = look.kit
 	_floor_params = look.floor
@@ -667,7 +670,7 @@ func _cracked_wall(level: Node, wall: Node) -> void:
 		variant += "n"
 		if WALL_RUN[front] > WALL_RUN[back]:
 			turn = Basis(Vector3.UP, PI)
-	var path := (_door_leaves % CRACKED_LEAF).trim_suffix(".res") + "_%s.res" % variant
+	var path := (_cracked_leaves % CRACKED_LEAF).trim_suffix(".res") + "_%s.res" % variant
 	if not ResourceLoader.exists(path):
 		push_warning("%s: falta %s" % [wall.name, path])
 		return

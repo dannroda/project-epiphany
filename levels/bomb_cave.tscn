@@ -1,41 +1,45 @@
 [gd_scene format=3 uid="uid://dsfu175y388sk"]
 
-[ext_resource type="Script" path="res://src/world/look/sombra_la.gd" id="1_6nnpa"]
-[ext_resource type="Script" path="res://src/world/look/tono_la.gd" id="2_3hhbb"]
+[ext_resource type="Script" uid="uid://c3gjwha8na3yi" path="res://src/world/look/sombra_la.gd" id="1_6nnpa"]
+[ext_resource type="Script" uid="uid://bw0kh7whsb1qf" path="res://src/world/look/tono_la.gd" id="2_3hhbb"]
 [ext_resource type="MeshLibrary" path="res://data/kits/cueva_la_kit.tres" id="3_bm5dh"]
-[ext_resource type="Shader" path="res://src/world/look/borde_oscuro.gdshader" id="5_jytbl"]
+[ext_resource type="Shader" uid="uid://d05shkhoyhpkk" path="res://src/world/look/borde_oscuro.gdshader" id="5_jytbl"]
 [ext_resource type="PackedScene" path="res://src/entities/armored_skeleton.tscn" id="6_armored"]
-[ext_resource type="PackedScene" path="res://src/entities/enemy.tscn" id="6_d356v"]
-[ext_resource type="Script" path="res://src/entities/enemy.gd" id="7_ba5am"]
+[ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="6_d356v"]
+[ext_resource type="Script" uid="uid://c48gjyuwv6u3x" path="res://src/entities/enemy.gd" id="7_ba5am"]
 [ext_resource type="Resource" path="res://data/entities/skeleton.tres" id="8_64tjh"]
 [ext_resource type="Resource" path="res://data/entities/armored_skeleton.tres" id="10_rjfdo"]
 [ext_resource type="PackedScene" path="res://src/world/physics_rock.tscn" id="10_vrnmo"]
-[ext_resource type="Script" path="res://src/world/chest.gd" id="13_7udpn"]
+[ext_resource type="Script" uid="uid://byp4dkpucnvmo" path="res://src/world/chest.gd" id="13_7udpn"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="15_3hrjb"]
-[ext_resource type="Script" path="res://src/world/tablet.gd" id="16_f6pj4"]
-[ext_resource type="Resource" path="res://data/items/bomb_bag.tres" id="17_vrnmo"]
+[ext_resource type="Script" uid="uid://cykrw2tv878bn" path="res://src/world/tablet.gd" id="16_f6pj4"]
+[ext_resource type="Resource" uid="uid://dwsn6cvxqrfpa" path="res://data/items/bomb_bag.tres" id="17_vrnmo"]
 [ext_resource type="PackedScene" path="res://src/world/tablet.tscn" id="18_gsck2"]
-[ext_resource type="Script" path="res://src/world/cracked_wall.gd" id="19_uten7"]
-[ext_resource type="Resource" path="res://data/dialogue/overworld.dialogue" id="20_gd0nv"]
-[ext_resource type="Script" path="res://src/world/breakable.gd" id="21_8dsee"]
+[ext_resource type="Script" uid="uid://vmcv83ug4a0m" path="res://src/world/cracked_wall.gd" id="19_uten7"]
+[ext_resource type="ArrayMesh" uid="uid://dv5m3cfws7pkd" path="res://assets/epiphany/meshes/paredes_la/muro_agrietado_cueva_la_bajo.res" id="20_64tjh"]
+[ext_resource type="Resource" uid="uid://b353kh0linjkb" path="res://data/dialogue/overworld.dialogue" id="20_gd0nv"]
+[ext_resource type="Script" uid="uid://ukpcr815ja3d" path="res://src/world/breakable.gd" id="21_8dsee"]
+[ext_resource type="ArrayMesh" uid="uid://bs5mwr1yuehrf" path="res://assets/epiphany/meshes/naturaleza/piedra_chica_a.res" id="21_rjfdo"]
 [ext_resource type="PackedScene" path="res://src/world/cracked_wall.tscn" id="21_uay0b"]
+[ext_resource type="Script" uid="uid://rcd8a41l0m7" path="res://src/components/hurtbox.gd" id="22_7udpn"]
 [ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="23_372gu"]
-[ext_resource type="Resource" path="res://data/drops/pot_hearts.tres" id="25_v1yde"]
-[ext_resource type="Script" path="res://player/player.gd" id="26_u8ndl"]
-[ext_resource type="Resource" path="res://data/entities/player.tres" id="27_euck1"]
-[ext_resource type="Script" path="res://src/world/look/enfoque_la.gd" id="29_1ne4j"]
+[ext_resource type="Script" uid="uid://dcy0hg6ygxqg1" path="res://src/components/persistent_flag.gd" id="23_f6pj4"]
+[ext_resource type="Resource" uid="uid://dteshjodcq26c" path="res://data/drops/pot_hearts.tres" id="25_v1yde"]
+[ext_resource type="Script" uid="uid://ckkibjv0y6axx" path="res://player/player.gd" id="26_u8ndl"]
+[ext_resource type="Resource" uid="uid://cooy3l0hm4jv0" path="res://data/entities/player.tres" id="27_euck1"]
+[ext_resource type="Script" uid="uid://c238aeb6gn6ka" path="res://src/world/look/enfoque_la.gd" id="29_1ne4j"]
 [ext_resource type="PackedScene" path="res://src/world/look/polvo_quenoa.tscn" id="30_6vawk"]
-[ext_resource type="Script" path="res://src/ui/hud/hud.gd" id="32_aiyon"]
+[ext_resource type="Script" uid="uid://dbmfkcf8x5ids" path="res://src/ui/hud/hud.gd" id="32_aiyon"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/player_panel_solo.tscn" id="33_6ttxc"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/player_panel.tscn" id="34_5icvi"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/item_ring.tscn" id="35_7muvr"]
-[ext_resource type="Script" path="res://src/world/look/brillo_la.gd" id="36_14fn2"]
-[ext_resource type="Script" path="res://src/world/room.gd" id="c2_room"]
-[ext_resource type="PackedScene" path="res://player/player.tscn" id="c3_player"]
-[ext_resource type="Script" path="res://src/world/spawn_point.gd" id="c4_spawn"]
-[ext_resource type="Script" path="res://src/tools/top_down_camera.gd" id="c5_camera"]
+[ext_resource type="Script" uid="uid://dlf8bqdycw2kg" path="res://src/world/look/brillo_la.gd" id="36_14fn2"]
+[ext_resource type="Script" uid="uid://nqxfiofg56dy" path="res://src/world/room.gd" id="c2_room"]
+[ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="c3_player"]
+[ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="c4_spawn"]
+[ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="c5_camera"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="c6_hud"]
-[ext_resource type="Script" path="res://src/world/portal.gd" id="c7_portal"]
+[ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="c7_portal"]
 [ext_resource type="NavigationMesh" path="res://levels/nav/bomb_cave_navmesh.tres" id="nav_cave"]
 
 [sub_resource type="Environment" id="Environment_t4e2t"]
@@ -73,7 +77,7 @@ compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_iqcq
 [sub_resource type="BoxShape3D" id="RoomShape"]
 size = Vector3(26, 2.4, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_01rmw"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uten7"]
 render_priority = 0
 shader = ExtResource("5_jytbl")
 shader_parameter/inner = Vector4(-13.3, -7.4, 13.3, 7.9)
@@ -85,9 +89,15 @@ shader_parameter/hole_fade = null
 shader_parameter/wobble = null
 shader_parameter/wobble_scale = null
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_olelr"]
-material = SubResource("ShaderMaterial_01rmw")
+[sub_resource type="PlaneMesh" id="PlaneMesh_8dsee"]
+material = SubResource("ShaderMaterial_uten7")
 size = Vector2(37.2, 25.2)
+
+[sub_resource type="BoxShape3D" id="WallShape"]
+size = Vector3(2, 3.1, 2)
+
+[sub_resource type="BoxShape3D" id="HurtShape"]
+size = Vector3(2.4, 2.6, 2.4)
 
 [sub_resource type="BoxShape3D" id="PortalShape"]
 size = Vector3(2, 2.4, 1.4)
@@ -132,7 +142,7 @@ shape = SubResource("RoomShape")
 [node name="BordeOscuro" type="MeshInstance3D" parent="Room" unique_id=1188972202]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_olelr")
+mesh = SubResource("PlaneMesh_8dsee")
 
 [node name="LuzSala" type="SpotLight3D" parent="Room" unique_id=2013864873]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -190,10 +200,62 @@ dialogue = ExtResource("20_gd0nv")
 cue = "cave_bombs"
 flag = &"ow_tablet_cave"
 
-[node name="CavePracticeWall" type="StaticBody3D" parent="." unique_id=1116865501 instance=ExtResource("21_uay0b")]
+[node name="CavePracticeWall" parent="." unique_id=1116865501 instance=ExtResource("21_uay0b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 2)
 script = ExtResource("19_uten7")
 flag = &"ow_cave_practice_wall"
+
+[node name="Wall" parent="CavePracticeWall" index="0"]
+unique_name_in_owner = true
+
+[node name="Model" parent="CavePracticeWall/Wall" index="0"]
+mesh = ExtResource("20_64tjh")
+
+[node name="Rubble" parent="CavePracticeWall" index="1"]
+unique_name_in_owner = true
+visible = false
+
+[node name="Rock0" parent="CavePracticeWall/Rubble" index="0"]
+transform = Transform3D(0.9397, 0, -0.342, 0, 1, 0, 0.342, 0, 0.9397, -1.28, 0, 0.72)
+mesh = ExtResource("21_rjfdo")
+
+[node name="Rock1" parent="CavePracticeWall/Rubble" index="1"]
+transform = Transform3D(0.7727, 0, 0.2071, 0, 0.8, 0, -0.2071, 0, 0.7727, -0.32, 0, 1.2)
+mesh = ExtResource("21_rjfdo")
+
+[node name="Rock2" parent="CavePracticeWall/Rubble" index="2"]
+transform = Transform3D(0.9362, 0, -0.6555, 0, 1.1429, 0, 0.6555, 0, 0.9362, 0.64, 0, 0.6)
+mesh = ExtResource("21_rjfdo")
+
+[node name="Rock3" parent="CavePracticeWall/Rubble" index="3"]
+transform = Transform3D(0.7034, 0, -0.124, 0, 0.7143, 0, 0.124, 0, 0.7034, 1.44, 0, 1.32)
+mesh = ExtResource("21_rjfdo")
+
+[node name="Rock4" parent="CavePracticeWall/Rubble" index="4"]
+transform = Transform3D(0.7918, 0, 0.4571, 0, 0.9143, 0, -0.4571, 0, 0.7918, 0.08, 0, -0.24)
+mesh = ExtResource("21_rjfdo")
+
+[node name="Rock5" parent="CavePracticeWall/Rubble" index="5"]
+transform = Transform3D(0.404, 0, -0.4815, 0, 0.6286, 0, 0.4815, 0, 0.404, -0.88, 0, -0.6)
+mesh = ExtResource("21_rjfdo")
+
+[node name="CollisionShape3D" parent="CavePracticeWall" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)
+shape = SubResource("WallShape")
+
+[node name="Hurtbox" parent="CavePracticeWall" index="3"]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+script = ExtResource("22_7udpn")
+surface = "none"
+
+[node name="CollisionShape3D" parent="CavePracticeWall/Hurtbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = SubResource("HurtShape")
+
+[node name="PersistentFlag" parent="CavePracticeWall" index="4"]
+script = ExtResource("23_f6pj4")
 
 [node name="CaveHeartPot" type="Node3D" parent="." unique_id=367695656 instance=ExtResource("23_372gu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 5)
@@ -237,7 +299,7 @@ south_wall_reach = 1.7
 script = ExtResource("29_1ne4j")
 near_margin = 3.5
 
-[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1308863542 instance=ExtResource("30_6vawk")]
+[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=2026808572 instance=ExtResource("30_6vawk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=298862151 instance=ExtResource("c6_hud")]
@@ -250,5 +312,7 @@ item_ring = ExtResource("35_7muvr")
 [node name="BrilloLA" type="Node" parent="." unique_id=1906375924]
 script = ExtResource("36_14fn2")
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=251860215]
 navigation_mesh = ExtResource("nav_cave")
+
+[editable path="CavePracticeWall"]
