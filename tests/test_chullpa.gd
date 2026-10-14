@@ -410,3 +410,21 @@ func test_a_skeleton_knocked_into_the_chest_hall_holes_lands_in_the_crypt() -> v
 	assert_true(await _until(func() -> bool: return skeleton.is_on_floor() and skeleton.global_position.y < -7.0, 3.0), "cae por el hueco al piso de abajo")
 	assert_true(_room("Sotano/Cripta").contains(skeleton.global_position) and not skeleton.is_dead, "y sigue vivo en la Cripta")
 	tree.root.get_node(^"GameState").reset()
+
+
+## 11.139: la isla de la pluma queda a un hueco de una baldosa del piso del este: con la pluma se sale (y se vuelve) saltando.
+func test_the_feather_island_is_one_tile_from_the_east_floor() -> void:
+	await _start()
+	var grid := level.get_node(^"PlantaBaja/GridMap") as GridMap
+	var chest := level.get_node(^"PlantaBaja/FeatherChest") as Node3D
+	var cell := grid.local_to_map(grid.to_local(chest.global_position))
+	var island := cell
+	while grid.get_cell_item(island + Vector3i.RIGHT) != GridMap.INVALID_CELL_ITEM and grid.mesh_library.get_item_name(grid.get_cell_item(island + Vector3i.RIGHT)) == "Piso":
+		island += Vector3i.RIGHT
+	var gap := 0
+	var at := island + Vector3i.RIGHT
+	while grid.mesh_library.get_item_name(grid.get_cell_item(at)) != "Piso":
+		gap += 1
+		at += Vector3i.RIGHT
+	assert_eq(gap, 1, "del borde este de la isla al piso hay %d baldosas de hueco" % gap)
+	tree.root.get_node(^"GameState").reset()
