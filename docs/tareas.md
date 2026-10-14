@@ -2675,6 +2675,8 @@ Pinchos de piso a ritmo para la sala 3: avisan asomando, suben de golpe, lastima
 
 **Prueba:** En la Galería, cruzar las dos columnas de pinchos: se ve venir cada fila (asoma y tintinea), siempre queda un paso, pinchan al player y al esqueleto, y el puzzle de la torreta sigue igual.
 
+**Relacionadas:** 11.169 Galería de trampas: la pluma no salta por encima de los pinchos
+
 ### 11.6 Más enemigos en el overworld y el templo · Hecho
 
 **Prioridad:** alta · **Etiquetas:** `ia`
@@ -5106,6 +5108,10 @@ Daniel 2026-10-14 (playtest de 11.130: no tiene sentido entrar a la ermita y que
 
 Daniel (playtest de 12.19): en la Totora, si el player cae al agua y pierde, se lo ve caer al vacío y recién después aparece la pantalla de 'You Fell'. Al caer al agua tendría que hundirse/salpicar y reaparecer (o la pantalla al instante), sin ver la caída por debajo del nivel.
 
+**Prueba:** tests/test_totora.gd
+
+**Notas:** Pit._fall devolvía antes de llevarlo a la orilla si el daño lo mataba, y el estado Dead seguía aplicando gravedad 1,8 s (bajaba a y −119). Ahora lo lleva a la orilla igual: muere parado ahí y en co-op el espíritu arranca en piso. Vale para todos los pozos y aguas.
+
 **Relacionadas:** Totora (D3) en estilo Link's Awakening y su entrada
 
 ### 11.168 D4 (Cumbre): entrada exagerada como las otras mazmorras · Pendiente
@@ -5121,6 +5127,8 @@ Daniel (playtest de 11.130 y 7.9): la entrada de la D4 en el overworld parece un
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `player`, `mazmorra`
 
 Daniel (playtest de 11.5): saltando con la pluma los pinchos igual llegan al player. O la pluma salta más alto o los pinchos son más bajos / el hurtbox no alcanza en el aire. Cuidado: el alto del salto (player/states/jumping.gd) lo usan todos los huecos y tests de salto.
+
+**Relacionadas:** 11.5 Galería de trampas: pinchos
 
 ### 11.170 Atajos: animación del player subiendo y bajando en vez del fundido · Pendiente
 

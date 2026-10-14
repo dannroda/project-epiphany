@@ -11,18 +11,18 @@
     }
   ],
   "milestone": "m11",
-  "notes": "",
+  "notes": "Pit._fall devolvía antes de llevarlo a la orilla si el daño lo mataba, y el estado Dead seguía aplicando gravedad 1,8 s (bajaba a y −119). Ahora lo lleva a la orilla igual: muere parado ahí y en co-op el espíritu arranca en piso. Vale para todos los pozos y aguas.",
   "order": 164,
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "bug",
     "totora",
     "player"
   ],
-  "test": "",
+  "test": "tests/test_totora.gd",
   "title": "Totora: caer al agua y perder deja al player cayendo al vacío antes de \"You Fell\"",
-  "updated_at": "2026-10-14T13:43:33.398Z"
+  "updated_at": "2026-10-14T13:48:09.355Z"
 }
