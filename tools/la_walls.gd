@@ -79,6 +79,9 @@ const FIRE_RANGE := 4.0
 const FLAME := preload("res://src/world/look/llama_la.gdshader")
 const GLOSS := preload("res://src/world/look/brillo_la.gd")
 const FLAME_SIZE := Vector2(0.45, 0.8)
+const CRACKED_WALL := "res://src/world/cracked_wall"
+## Nombre de la media pared agrietada en las hojas de puerta de cada estilo (LOOKS doors).
+const CRACKED_LEAF := "muro_agrietado"
 ## Largo del pasillo de una puerta entre dos salas (las dos paredes de 2 m).
 const DOOR_PASSAGE := 4.0
 ## Cámara con perspectiva como LA: la sala se ve en trapecio (abajo más ancha) y asoman las caras de los costados.
@@ -225,6 +228,8 @@ func _initialize() -> void:
 		for node: Node in level.find_children("*", "", true, false):
 			if node.scene_file_path.ends_with("door.tscn"):
 				_door(level, node)
+			elif node.scene_file_path.begins_with(CRACKED_WALL):
+				_cracked_wall(level, node)
 			elif node is Area3D and "map_cell" in node and node.has_node(^"BordeOscuro"):
 				_fade(level, node as Area3D)
 	_look(level, look)
@@ -233,6 +238,7 @@ func _initialize() -> void:
 	var uid := ResourceLoader.get_resource_uid(path)
 	print(path, ": ", error_string(ResourceSaver.save(packed, path)))
 	ResourceSaver.set_uid(path, uid)
+	_pin_ext_uids(path)
 	level.free()
 	quit()
 
@@ -283,6 +289,8 @@ func _dress(level: Node) -> void:
 			level.set_editable_instance(torch, true)
 		elif path.ends_with("door.tscn"):
 			_door(level, node)
+		elif path.begins_with(CRACKED_WALL):
+			_cracked_wall(level, node)
 		elif _stairs_kind(node) != "":
 			(node.get_node("Visual") as Node3D).visible = false
 			level.set_editable_instance(node, true)
@@ -644,6 +652,61 @@ func _door(level: Node, door: Node) -> void:
 	level.set_editable_instance(door, true)
 
 
+## La pared agrietada tapa el paso entero, inclinada en cada cara como su pared (así no se ve el nicho de atrás): la
+## variante del fondo del paso y, si una cara mira al norte, con esa cara atrás.
+func _cracked_wall(level: Node, wall: Node) -> void:
+	var depth := _wall_depth(level, wall as Node3D)
+	var out := ((wall as Node3D).transform.basis * Vector3.BACK).normalized()
+	var front := _facing(out)
+	var back := _facing(-out)
+	var variant := "4" if depth > 3.0 else "2"
+	var turn := Basis()
+	if WALL_RUN[front] != WALL_RUN[back]:
+		variant += "n"
+		if WALL_RUN[front] > WALL_RUN[back]:
+			turn = Basis(Vector3.UP, PI)
+	var path := (_door_leaves % CRACKED_LEAF).trim_suffix(".res") + "_%s.res" % variant
+	if not ResourceLoader.exists(path):
+		push_warning("%s: falta %s" % [wall.name, path])
+		return
+	var model := wall.get_node("Wall/Model") as MeshInstance3D
+	model.mesh = load(path)
+	model.transform = Transform3D(turn, Vector3.ZERO)
+	level.set_editable_instance(wall, true)
+
+
+func _facing(out: Vector3) -> String:
+	return "s" if out.z > 0.5 else "n" if out.z < -0.5 else "e" if out.x > 0.5 else "o"
+
+
+## Fondo de la pared en la que está: el doble de lo que hay hasta la cara de la sala más cercana a lo largo del paso.
+func _wall_depth(level: Node, wall: Node3D) -> float:
+	var to_level := wall.transform
+	var node := wall.get_parent()
+	while node != level:
+		to_level = (node as Node3D).transform * to_level
+		node = node.get_parent()
+	var at := to_level.origin
+	var across_x := absf(to_level.basis.z.x) > absf(to_level.basis.z.z)
+	var nearest := INF
+	for room: Node in level.find_children("*", "Area3D", true, false):
+		var box := _room_box(level, room)
+		if box.size == Vector3.ZERO or absf(box.position.y - at.y) > 1.0:
+			continue
+		var along := at.z if across_x else at.x
+		var lo := box.position.z if across_x else box.position.x
+		if along < lo or along > lo + (box.size.z if across_x else box.size.x):
+			continue
+		var c := at.x if across_x else at.z
+		var start := box.position.x if across_x else box.position.z
+		var end := box.end.x if across_x else box.end.z
+		if c < start:
+			nearest = minf(nearest, start - c)
+		elif c > end:
+			nearest = minf(nearest, c - end)
+	return nearest * 2.0 if nearest < DOOR_PASSAGE else _passage(wall)
+
+
 ## Los cofres miran al sur (a la cámara); el que tiene pared al sur (en un nicho) mira al lado por donde se llega.
 func _face_chests(grid: GridMap) -> void:
 	for node: Node in grid.get_parent().get_children():
@@ -754,7 +817,7 @@ func _kit() -> MeshLibrary:
 	return ResourceLoader.load(_out_kit, "", ResourceLoader.CACHE_MODE_REPLACE)
 
 
-## Sin el editor, el saver deja los ext_resource sin uid y el editor después reescribe el kit.
+## Sin el editor, el saver deja los ext_resource sin uid y el editor después reescribe el archivo.
 func _pin_ext_uids(path: String) -> void:
 	var text := FileAccess.get_file_as_string(path)
 	var pattern := RegEx.create_from_string('\\[ext_resource type="([^"]+)" path="([^"]+)"')
