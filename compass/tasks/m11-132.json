@@ -5,16 +5,16 @@
   "created_at": "2026-10-14T01:31:35.168Z",
   "description": "Playtest 2026-10-13: dentro de las cuevas del overworld los enemigos no se mueven ni atacan, quedan quietos en su lugar. Revisar si la IA (LimboAI) arranca en esas escenas (navmesh, activación por sala, process_mode).",
   "milestone": "m11",
-  "notes": "",
+  "notes": "Causa: las cinco cuevas del overworld no tenían NavigationRegion3D, así que el NavigationAgent3D de los enemigos nunca tenía camino. Cada cueva tiene ahora su navmesh (levels/nav/<cueva>_navmesh.tres, horneada con tools/bake_overworld_nav.gd -- <cueva>). El esqueleto de la cueva de las bombas arranca pegado a un pilar: desde la entrada no ve al player hasta que se le acerca (normal).",
   "order": 129,
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug"
   ],
-  "test": "",
+  "test": "Entrar a la cueva de las bombas y a la gruta y acercarse a un enemigo: viene hacia el player. test_cave › test_cave_enemies_chase_the_player",
   "title": "Cuevas: los enemigos se quedan quietos",
-  "updated_at": "2026-10-14T02:27:22.359Z"
+  "updated_at": "2026-10-14T02:39:18.714Z"
 }

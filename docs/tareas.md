@@ -4680,11 +4680,15 @@ Playtest 2026-10-13: en el overworld, al lado del primer nivel cerca de la cueva
 
 **Relacionadas:** 11.147 Overworld: caer al sector de arriba (entre riscos, junto a la meseta clara) deja softlock
 
-### 11.132 Cuevas: los enemigos se quedan quietos · Pendiente
+### 11.132 Cuevas: los enemigos se quedan quietos · Revisión
 
 **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`
 
 Playtest 2026-10-13: dentro de las cuevas del overworld los enemigos no se mueven ni atacan, quedan quietos en su lugar. Revisar si la IA (LimboAI) arranca en esas escenas (navmesh, activación por sala, process_mode).
+
+**Prueba:** Entrar a la cueva de las bombas y a la gruta y acercarse a un enemigo: viene hacia el player. test_cave › test_cave_enemies_chase_the_player
+
+**Notas:** Causa: las cinco cuevas del overworld no tenían NavigationRegion3D, así que el NavigationAgent3D de los enemigos nunca tenía camino. Cada cueva tiene ahora su navmesh (levels/nav/<cueva>_navmesh.tres, horneada con tools/bake_overworld_nav.gd -- <cueva>). El esqueleto de la cueva de las bombas arranca pegado a un pilar: desde la entrada no ve al player hasta que se le acerca (normal).
 
 ### 11.133 Vasija chica cargada no se ve con el x-ray · Pendiente
 
