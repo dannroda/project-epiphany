@@ -16,7 +16,8 @@
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_llave_quenoa_la.res" id="11_lvm7h"]
 [ext_resource type="Resource" path="res://data/items/small_key.tres" id="13_vcwjq"]
 [ext_resource type="Script" path="res://src/entities/watcher_eye/watcher_eye.gd" id="14_qikql"]
-[ext_resource type="PackedScene" path="res://src/world/cracked_wall_templo.tscn" id="14_y54qy"]
+[ext_resource type="PackedScene" path="res://src/world/cracked_wall.tscn" id="14_y54qy"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/muro_agrietado.res" id="crack_mesh"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/paredes_la/puerta_jefe_quenoa_la.res" id="15_3db8p"]
 [ext_resource type="Resource" path="res://data/items/boss_key.tres" id="16_8x4vj"]
 [ext_resource type="Script" path="res://src/world/pickup.gd" id="17_borgw"]
@@ -78,6 +79,12 @@
 [ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="persistent_flag"]
 [ext_resource type="Script" path="res://src/world/look/sombra_la.gd" id="sombra_la"]
 [ext_resource type="Script" path="res://src/world/look/tono_la.gd" id="tono_la"]
+
+[sub_resource type="BoxShape3D" id="CrackPlug"]
+size = Vector3(2, 3.1, 4.4)
+
+[sub_resource type="BoxShape3D" id="CrackPlugHurt"]
+size = Vector3(2.4, 2.6, 4.8)
 
 [sub_resource type="Environment" id="Environment_w3lyb"]
 background_mode = 1
@@ -995,6 +1002,7 @@ switches = Array[NodePath]([NodePath("../RootEyeB"), NodePath("../OjosStep")])
 condition = 1
 stays_open = false
 reveal_on_open = false
+reveal_from = Array[NodePath]([NodePath("../OjosStep")])
 
 [node name="OjosStep" type="Area3D" parent="PisoRaices" unique_id=1755330892 instance=ExtResource("23_wvyc0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 14)
@@ -1022,7 +1030,7 @@ switches = Array[NodePath]([NodePath("../HiddenEye")])
 depth = 2.0
 
 [node name="BossKeyChest" type="StaticBody3D" parent="PisoRaices" unique_id=1495581339 instance=ExtResource("11_5ogbh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 4.15)
 script = ExtResource("27_wlgwi")
 item = ExtResource("16_8x4vj")
 flag = &"qv_boss_key_chest"
@@ -1951,6 +1959,19 @@ ambient_mode = 0
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 27, 0, 10)
 script = ExtResource("30_0a0he")
 flag = &"qv_nest_cracked_wall"
+
+[node name="Model" parent="PisoCopa/NidoCrackedWall/Wall" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.74)
+
+[node name="ModelBack" type="MeshInstance3D" parent="PisoCopa/NidoCrackedWall/Wall" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.74)
+mesh = ExtResource("crack_mesh")
+
+[node name="CollisionShape3D" parent="PisoCopa/NidoCrackedWall" index="2"]
+shape = SubResource("CrackPlug")
+
+[node name="CollisionShape3D" parent="PisoCopa/NidoCrackedWall/Hurtbox" index="0"]
+shape = SubResource("CrackPlugHurt")
 
 [node name="CopaLocked" parent="PisoCopa" unique_id=191687561 instance=ExtResource("5_gq5qp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 19)

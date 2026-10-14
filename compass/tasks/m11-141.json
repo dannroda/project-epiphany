@@ -19,17 +19,17 @@
     "compass/images/m11-141-20261013-225858.png"
   ],
   "milestone": "m11",
-  "notes": "",
+  "notes": "Hecho. 1) El símbolo azul era el candado (SouthMark) que door.gd dibuja en el piso cuando la cámara recorta la pared sur; con las paredes LA el recorte (3.6) pasa la hoja (3 m) y además la estiraba x1.5. door.gd usa ahora el alto real de la hoja: si el recorte no la corta, ni la estira ni muestra el candado (test_doors). 2) NidoCrackedWall estaba en el medio del paso LA, tapado por el velo negro del grosor de pared: ahora tiene una cara en cada lado del paso (como las hojas de las puertas), con la malla clara de muro agrietado, y colisión/hurtbox que llenan el paso (test_quenoa). El look final de madera LA llega con 12.24 (-5d).",
   "order": 138,
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug",
     "quenoa"
   ],
-  "test": "",
+  "test": "tests/test_quenoa.gd",
   "title": "Queñoa 2P (Canopy): símbolo azul sin sentido y puerta bloqueada invisible",
-  "updated_at": "2026-10-14T02:27:18.769Z"
+  "updated_at": "2026-10-14T03:21:29.250Z"
 }
