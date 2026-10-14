@@ -5278,6 +5278,18 @@ Daniel (2026-10-14): en las mazmorras una pared agrietada siempre abre una sala 
 
 Daniel (2026-10-14): el templo, como mazmorra final, es un boss-rush: cada una de las cuatro alas (pluma, arco, gancho, espejo) termina con la revancha de un jefe anterior (Mallqui de la Chullpa, Ojos de la Queñoa, jefe de la Totora, jefe de la Cumbre), y ganarla enciende el ojo del sello del hub. Decidir qué jefe va en qué ala y si reemplaza o acompaña al puzzle del ala. Ojo: el jefe de la Cumbre es hoy un placeholder prestado (11.129). La Mano sigue de sub-jefe de la combinada.
 
+- [ ] Salas 14×≥22 (con 11.180); las Ojo pasan a arenas 22×14 sin obstáculos, vasijas en las esquinas
+- [ ] Mini puzzles: pluma huecos+pinchos corto; arco dos ojos-interruptor tras un abismo; gancho abismo de 4 con postes; espejo una torreta y el cristal
+  Resolverlo abre la puerta de la arena y queda abierta (si perdés no se repite). Se sacan el haz del Ojo del espejo, el acorazado del Ojo del gancho y los muros agrietados entre salas; la brújula pasa a la sala de la pluma.
+- [ ] Revanchas: Mallqui, Ojos de la Queñoa, Yacumama, Apu Kuntur
+  ~2/3 de la vida, conducta de media vida desde el arranque, sin contenedor; morir vuelve a la entrada de la sala.
+- [ ] Pieza de llave del jefe por revancha (item get, HUD/ítems 1/4..4/4); 4 piezas = llave del jefe; enciende el ojo del ala
+- [ ] La Mano y la Combinada opcionales; la Combinada da la espada mejorada (tarjeta aparte)
+- [ ] Grafo del templo y test_dungeon_reach: el objetivo pide las 4 piezas; molde sin item/guard de llave
+- [ ] GDD §8 templo
+
+**Notas:** Diseño acordado con Daniel (2026-10-14). Cada ala son dos salas: un mini puzzle corto con el ítem del ala, que abre la arena, y la revancha. Pluma: Mallqui; Arco: los Ojos de la Queñoa; Gancho: Yacumama; Espejo: Apu Kuntur (placeholder hasta 11.129). Cada revancha ganada da una pieza de la llave del jefe (item get) y enciende el ojo del ala en el sello; con las 4 piezas se arma la llave del jefe. El sello sigue abriendo la Antesala. La Mano y la Combinada quedan opcionales, con premio: espada mejorada (Daniel eligió la opción 1).
+
 ## M12 — Assets propios (Blender)  (17/34)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
