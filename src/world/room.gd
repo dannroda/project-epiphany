@@ -30,8 +30,9 @@ const SLEEPERS := &"room_sleepers"
 ## Lo de la sala despierta este tiempo después de que entra un player: que no lo golpeen apenas cruza.
 @export var wake_delay := 0.5
 @export_group("Cámara y ambiente")
-## Distancia de la cámara en esta sala (0 = la del nivel): para una sala más grande o más chica que las otras.
-@export var camera_distance := 0.0
+## Offset de la cámara en esta sala, como el `offset` de la cámara (cero = el del nivel): para una sala más grande o
+## más chica que las otras.
+@export var camera_offset := Vector3.ZERO
 ## Campo de visión de la cámara en esta sala (0 = el del nivel).
 @export var camera_fov := 0.0
 
