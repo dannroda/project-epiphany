@@ -5,12 +5,11 @@
 [ext_resource type="Script" path="res://src/components/health.gd" id="3_health"]
 [ext_resource type="Script" path="res://src/components/hurtbox.gd" id="4_hurtbox"]
 [ext_resource type="Script" path="res://src/components/hitbox.gd" id="5_hitbox"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/ojo_globo.res" id="6_globe"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/ojo_vigia/ojo_vigia_globo.res" id="6_globe"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/ojo_vigia/ojo_vigia_nudo.res" id="8_knot"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/ojo_vigia/ojo_vigia_parpado.res" id="9_lid"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/ojo_vigia/ojo_vigia_parpado_inf.res" id="10_lid_low"]
 [ext_resource type="Script" path="res://src/feel/hit_flash.gd" id="7_flash"]
-
-[sub_resource type="StandardMaterial3D" id="Bark"]
-albedo_color = Color(0.32, 0.22, 0.14, 1)
-roughness = 1.0
 
 [sub_resource type="StandardMaterial3D" id="Glow"]
 shading_mode = 0
@@ -26,17 +25,18 @@ transparency = 1
 shading_mode = 0
 albedo_color = Color(0.2, 0.02, 0.02, 0.55)
 
-[sub_resource type="SphereMesh" id="LidMesh"]
-material = SubResource("Bark")
-radius = 0.95
-height = 1.9
+[sub_resource type="StandardMaterial3D" id="IrisGlow"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+albedo_color = Color(1, 0.3, 0.2, 0.6)
 
 [sub_resource type="SphereMesh" id="IrisMesh"]
-material = SubResource("Glow")
-radius = 0.28
-height = 0.56
-radial_segments = 12
-rings = 6
+material = SubResource("IrisGlow")
+radius = 0.3
+height = 0.6
+radial_segments = 16
+rings = 8
 
 [sub_resource type="CylinderMesh" id="BeamMesh"]
 material = SubResource("Glow")
@@ -85,17 +85,24 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 
 [node name="Globe" type="MeshInstance3D" parent="Body"]
-transform = Transform3D(3.4, 0, 0, 0, 3.4, 0, 0, 0, 3.4, 0, 0, 0)
 mesh = ExtResource("6_globe")
+
+[node name="Knot" type="MeshInstance3D" parent="Body"]
+mesh = ExtResource("8_knot")
 
 [node name="Iris" type="MeshInstance3D" parent="Body"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 0, 0.85)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.3, 0, 0, 0.74)
+cast_shadow = 0
 mesh = SubResource("IrisMesh")
 
-[node name="Lid" type="MeshInstance3D" parent="Body"]
+[node name="LidTop" type="MeshInstance3D" parent="Body"]
 unique_name_in_owner = true
-mesh = SubResource("LidMesh")
+mesh = ExtResource("9_lid")
+
+[node name="LidBottom" type="MeshInstance3D" parent="Body"]
+unique_name_in_owner = true
+mesh = ExtResource("10_lid_low")
 
 [node name="Glow" type="OmniLight3D" parent="Body"]
 unique_name_in_owner = true
