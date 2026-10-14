@@ -14,18 +14,18 @@
     }
   ],
   "milestone": "m11",
-  "notes": "",
+  "notes": "Hecho (Daniel eligió quedarse con la reja del puzzle): RaicesLocked no está; RaicesGate pasa a la cara de las Raíces del paso LA (x 25.4), donde se ve y no queda afuera. La llave chica del nicho del primer ojo sobraba: ahora es un cofre con 10 flechas (RootArrowChest, flag qv_root_arrow_chest). Dos llaves para dos puertas. quenoa_graph, flag_registry, GDD §8c; test_dungeon_reach, test_walk_doors, test_quenoa.",
   "order": 141,
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug",
     "quenoa",
     "diseño"
   ],
-  "test": "",
+  "test": "tests/test_quenoa.gd",
   "title": "Queñoa S1 (Raíces): reja fuera de la pared y puerta con llave detrás de una reja de puzzle",
-  "updated_at": "2026-10-14T02:27:19.781Z"
+  "updated_at": "2026-10-14T03:27:36.782Z"
 }

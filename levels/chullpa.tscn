@@ -1992,7 +1992,7 @@ color = Color(1.35, 1.15, 0.9, 1)
 radius = 3.0
 
 [node name="EntradaGate" type="StaticBody3D" parent="PlantaBaja" unique_id=1156281756 instance=ExtResource("75_gate")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4, 0, 24)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2.9, 0, 24)
 script = ExtResource("56_lhowt")
 switches = Array[NodePath]([NodePath("../EntradaPlate")])
 

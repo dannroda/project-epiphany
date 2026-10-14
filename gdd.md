@@ -521,8 +521,8 @@ Propuesta el 2026-10-12 y armada en blockout (`levels/quenoa.tscn`). Una queñoa
           └────────┴────────┘
  RAÍCES   ┌────────┬────────┐
           │Raíces  │Ojos    │
-          │2 ojos →├[LLAVE]─┤ ojo tras muro
-          │llave   │llave j.│ agrietado
+          │2 ojos →├[REJA]──┤ ojo tras muro
+          │flechas │llave j.│ agrietado
           │(macizo)├[JEFE]──┤
           │        │Jefe    │
           └────────┴────────┘
@@ -538,8 +538,8 @@ Propuesta el 2026-10-12 y armada en blockout (`levels/quenoa.tscn`). Una queñoa
 | Nido (NO) | **Llave chica** y **brújula**. Un hueco cae a la Rama: atajo de vuelta |
 | Guarida del vigía (SE) | Sub-jefe, el **Ojo Vigía** (`WardenFight`, `qv_warden_defeated`). Sala sin obstáculos, solo vasijas. Al entrar se cierra la puerta. El ojo flota, se abre, marca una línea en el piso y la barre con un rayo; después se tira sobre el player y queda enganchado en las raíces, y ahí le pegan la espada, las bombas y las vasijas. Vencido, abre la puerta de la cámara del arco |
 | Cámara del arco (SO) | Solo se abre al vencer al sub-jefe. Cofre del **arco**. Un hueco cae al Tronco, que es la vuelta |
-| Raíces (NO) | Con el arco, desde el Tronco. Un ojo abre el nicho de la **llave chica**. El otro es un ojo con tiempo (`open_time` 6 s, sin flag): abre unos segundos la reja `RaicesGate`, rodeada de huecos frente a la puerta con llave a la Sala de los ojos. Hay que flechar el ojo, saltar los huecos con la pluma y pasar antes de que se cierre. Caer al hueco devuelve a la entrada de la sala |
-| Sala de los ojos (NE) | Con llave, saltando desde las Raíces. Junto a la entrada, una placa (`OjosStep`, `qv_eyes_step`) deja abierta la reja de las Raíces para volver. Un ojo detrás de un muro agrietado (bomba y flecha) abre el nicho de la **llave del jefe**, que queda del otro lado de una fila de huecos (pluma): la llave del jefe pide bomba, arco y pluma |
+| Raíces (NO) | Con el arco, desde el Tronco. Un ojo abre el nicho de un cofre con 10 flechas. El otro es un ojo con tiempo (`open_time` 6 s, sin flag): abre unos segundos la reja `RaicesGate`, rodeada de huecos, en el paso a la Sala de los ojos (sin puerta con llave: una sola cerradura por paso, 11.144). Hay que flechar el ojo, saltar los huecos con la pluma y pasar antes de que se cierre. Caer al hueco devuelve a la entrada de la sala |
+| Sala de los ojos (NE) | Saltando desde las Raíces por la reja con tiempo. Junto a la entrada, una placa (`OjosStep`, `qv_eyes_step`) deja abierta la reja de las Raíces para volver. Un ojo detrás de un muro agrietado (bomba y flecha) abre el nicho de la **llave del jefe**, que queda del otro lado de una fila de huecos (pluma): la llave del jefe pide bomba, arco y pluma |
 | Corazón del árbol (SE) | Jefe, **Los Ojos de la Queñoa** (`BossFight`, `qv_boss_defeated`). Sala sin obstáculos. Dos ojos que flotan y barren con rayos, de a uno por vez. Cerrados, todo les rebota. Una flecha mientras se abren para cargar los derriba, y en el piso les pega la espada. Al caer uno, el otro se apura. Vencidos: se abre la puerta, aparecen el contenedor de corazón (`qv_heart_container`) y el portal de salida |
 
 Los ojos son `WatcherEye` (`src/entities/watcher_eye/`). Los maneja un `ArenaFight` (`src/world/arena_fight.gd`, el mismo de la momia de la Chullpa) en la sala, como una oleada: cierra las puertas, hace la intro con la cámara y el nombre, muestra la barra del HUD, deja barrer a un ojo por vez y, si el player sale, la pelea vuelve a empezar. Al ganar pone el flag y hace de interruptor. Molde de todas las mazmorras: las peleas de sub-jefe y jefe van en salas sin obstáculos (solo objetos como vasijas), y el cofre del ítem va en una sala contigua que se abre al vencer al sub-jefe. El kit es el de la Chullpa hasta que haya uno de árbol. Escenario de debug: `quenoa`. La puerta en el overworld la pone la sesión del overworld (7.10); mientras, la salida lleva al punto `arboleda`.

@@ -68,8 +68,7 @@ script = ExtResource("2_link")
 from = &"Raices"
 to = &"Ojos"
 needs = Array[StringName]([&"feather"])
-through = Array[NodePath]([NodePath("PisoRaices/RaicesGate"), NodePath("PisoRaices/RaicesLocked")])
-locked = true
+through = Array[NodePath]([NodePath("PisoRaices/RaicesGate")])
 
 [sub_resource type="Resource" id="Link_12"]
 script = ExtResource("2_link")
@@ -148,9 +147,8 @@ needs = Array[StringName]([&"bow"])
 [sub_resource type="Resource" id="Spot_13"]
 script = ExtResource("3_spot")
 area = &"Raices"
-node = NodePath("PisoRaices/RootKeyChest")
+node = NodePath("PisoRaices/RootArrowChest")
 through = Array[NodePath]([NodePath("PisoRaices/RootKeyGate")])
-key = true
 
 [sub_resource type="Resource" id="Spot_14"]
 script = ExtResource("3_spot")
