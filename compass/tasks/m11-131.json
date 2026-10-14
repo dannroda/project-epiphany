@@ -8,16 +8,16 @@
     "compass/images/m11-131-20261013-223001.png"
   ],
   "milestone": "m11",
-  "notes": "",
+  "notes": "Causa (compartida con 11.147): Piece.build recalcula las normales de las caras que no están en fixed, así que cada cuadrado suelto de la baranda quedaba mirando para cualquier lado. El colisionador importado choca solo de frente (backface_collision apagado), y por eso casi toda la baranda dejaba pasar desde la terraza. Se caía al nicho de HeartPieceHills, detrás de SecretHillsWall, en (-74, -4). railing() ahora arma cada cara mirando a su terraza y la marca fixed. Terreno, muros, decoración y navmesh regenerados.",
   "order": 128,
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug"
   ],
-  "test": "",
+  "test": "Caminar sobre el nivel 1 hacia el sur, desde (-74, -8) hacia el nicho del corazón de los Cerros (al lado de la Cueva de las bombas): la baranda frena y no se cae. Tests: test_the_hills_niche_is_fenced_from_above, test_every_rail_faces_its_terrace.",
   "title": "Pozo junto a la Chullpa: caer sin bombas deja softlock",
-  "updated_at": "2026-10-14T02:27:20.306Z"
+  "updated_at": "2026-10-14T03:03:37.578Z"
 }

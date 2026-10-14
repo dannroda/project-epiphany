@@ -743,7 +743,8 @@ def rocks(levels, seed, holes=None, rail=None):
 def railing(p, high, level):
 	"""Pared invisible sobre el borde de la terraza, salvo donde se baja a propósito: un salto (v) arriba o la boca de una
 	escalinata (S) abajo, donde un abismo de una celda separa dos terrazas del mismo nivel (se cruza con la pluma) o junto a un
-	poste del gancho, que se apunta desde abajo."""
+	poste del gancho, que se apunta desde abajo. Las caras miran a la terraza y no se recalculan: el colisionador solo choca
+	de frente."""
 	z = level * TOP
 	for points, flags in high:
 		nrm = normals(points)
@@ -760,8 +761,8 @@ def railing(p, high, level):
 			far = mid + n * (CELL + 1.0)
 			if cell_at(down.x, down.y) in "~W" and level_at(far.x, far.y) >= level:
 				continue
-			v = [p.bm.verts.new((q.x, q.y, h)) for q, h in ((a, z - 0.3), (b, z - 0.3), (b, z + RAIL), (a, z + RAIL))]
-			p.bm.faces.new(v)
+			v = [p.bm.verts.new((q.x, q.y, h)) for q, h in ((a, z - 0.3), (a, z + RAIL), (b, z + RAIL), (b, z - 0.3))]
+			p.fixed.add(p.bm.faces.new(v))
 
 
 ACROSS = 1.7

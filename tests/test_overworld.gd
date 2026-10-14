@@ -367,3 +367,87 @@ func test_every_region_is_reachable_except_the_item_gated() -> void:
 	all.sort()
 	assert_eq(_reachable_zones(tree), all, "con el puente, todo menos la Arboleda (pluma) y la Cumbre (gancho; salvo el pasillo bajo de su pantalla sur)")
 	state.reset()
+
+
+func _floor_at(space: PhysicsDirectSpaceState3D, at: Vector3) -> float:
+	var hit := space.intersect_ray(PhysicsRayQueryParameters3D.create(at + Vector3.UP * 3.0, at + Vector3.DOWN * 6.0))
+	return (hit.position as Vector3).y if hit else -INF
+
+
+## La baranda choca solo de frente (11.131, 11.147): cada cara tiene que frenar a quien viene de su terraza.
+func test_every_rail_faces_its_terrace() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.root.get_node(^"GameState").reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	for i in 5:
+		await tree.physics_frame
+	var space := (tree.current_scene as Node3D).get_world_3d().direct_space_state
+	var rails := tree.current_scene.find_children("baranda", "", true, false)
+	assert_true(not rails.is_empty(), "el terreno tiene baranda")
+	var checked := 0
+	var open: Array[Vector3] = []
+	for shape: CollisionShape3D in rails[0].find_children("*", "CollisionShape3D", true, false):
+		var faces := (shape.shape as ConcavePolygonShape3D).get_faces()
+		for i in range(0, faces.size(), 3):
+			var a := shape.global_transform * faces[i]
+			var b := shape.global_transform * faces[i + 1]
+			var c := shape.global_transform * faces[i + 2]
+			var across := (b - a).cross(c - a)
+			across.y = 0.0
+			if across.length() < 0.001:
+				continue
+			across = across.normalized()
+			var mid := (a + b + c) / 3.0
+			var ahead := _floor_at(space, mid + across * 0.6)
+			var behind := _floor_at(space, mid - across * 0.6)
+			if absf(ahead - behind) < 1.0:
+				continue
+			var side := 1.0 if ahead > behind else -1.0
+			var query := PhysicsRayQueryParameters3D.create(mid + across * side * 0.6, mid - across * side * 0.3)
+			query.hit_back_faces = false
+			query.exclude = []
+			var hit := space.intersect_ray(query)
+			while hit and hit.collider != rails[0]:
+				query.exclude = query.exclude + [hit.rid]
+				hit = space.intersect_ray(query)
+			checked += 1
+			if not hit:
+				open.append(mid)
+	assert_true(checked > 1000, "revisó la baranda entera (%d caras)" % checked)
+	assert_eq(open.slice(0, 5), [], "%d caras de baranda no frenan desde arriba" % open.size())
+
+
+func test_the_hills_niche_is_fenced_from_above() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	state.reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	for enemy in tree.get_nodes_in_group(&"enemies"):
+		enemy.free()
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	player.global_position = Vector3(-74, 2.7, -8)
+	for i in 20:
+		await tree.physics_frame
+	var result: Array = await _walk_until(tree, player, &"move_backward", func() -> bool: return player.global_position.y < 2.0)
+	assert_true(not result[0], "la baranda no deja caer al nicho de la pieza de corazón (y %.2f)" % player.global_position.y)
+	state.reset()
+
+
+func test_the_risco_low_corridor_has_stairs_up() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	state.reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	for enemy in tree.get_nodes_in_group(&"enemies"):
+		enemy.free()
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	player.global_position = Vector3(63, 0.2, -21)
+	for i in 20:
+		await tree.physics_frame
+	var result: Array = await _walk_until(tree, player, &"move_backward", func() -> bool: return player.global_position.z > -12.0)
+	assert_true(result[0], "sale de la zanja por la escalinata (quedó en %s)" % player.global_position)
+	assert_true(player.global_position.y > 2.4, "arriba, en la Necrópolis (y %.2f)" % player.global_position.y)
+	state.reset()
