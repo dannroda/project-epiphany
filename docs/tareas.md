@@ -4899,11 +4899,15 @@ Playtest 2026-10-13, Totora (D3): en la sala del estanque grande con la puerta a
 
 **Relacionadas:** 11.150 Gancho: el targeting marca un poste de otra sala/piso
 
-### 11.154 Totora: no hay dónde reponer flechas cerca · Pendiente
+### 11.154 Totora: no hay dónde reponer flechas cerca · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseño`, `totora`
 
 Playtest 2026-10-13, Totora (D3): en la sala del estanque con ojos (interruptores de flecha), si el player se queda sin flechas no tiene un lugar cercano para reabastecerse. Poner vasijas/pasto que suelten flechas en o cerca de las salas que piden arco (y que el drop de flechas sea más probable cuando quedan pocas).
+
+**Prueba:** tests/test_totora.gd
+
+**Notas:** Hecho: dos vasijas de flechas (data/drops/pot_arrows.tres, 5 flechas si tiene el arco) en cada sala de Totora con un ojo: Juncal (esquina SO, cerca de donde se le tira al ojo) y Tejedores (franja este, de donde se tira por encima del agua). Y en cualquier DropTable las filas de munición (flechas, bombas) pesan 4 veces más con un cuarto o menos de lo que entra (drop_table.gd). Tests: test_totora test_every_eye_room_has_an_arrow_pot, test_drops test_arrows_drop_more_often_when_the_quiver_runs_low.
 
 ## M12 — Assets propios (Blender)  (15/23)
 
