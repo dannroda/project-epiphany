@@ -66,7 +66,7 @@
 [sub_resource type="Environment" id="Environment_tiw1f"]
 background_mode = 1
 ambient_light_source = 2
-ambient_light_color = Color(0.62, 0.58, 0.74, 1)
+ambient_light_color = Color(0.72, 0.67, 0.6, 1)
 glow_enabled = true
 glow_intensity = 0.2
 glow_blend_mode = 0
@@ -561,7 +561,7 @@ compositor = SubResource("Compositor_nw8wq")
 
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=1076534433]
 transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 0, 0, 0)
-light_color = Color(0.84, 0.8, 0.94, 1)
+light_color = Color(0.98, 0.93, 0.82, 1)
 light_energy = 0.6
 directional_shadow_mode = 1
 directional_shadow_max_distance = 32.0

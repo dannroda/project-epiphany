@@ -21,7 +21,7 @@ SWATCHES = [
 	("acantilado", "baa084", "6c5844"),
 	("roca_naranja", "e39e5e", "9e5530"),
 	("piedra", "b8b6ae", "6c6b67"),
-	("piedra_templo", "aaa4be", "585370"),
+	("piedra_templo", "e6cc94", "7a5830"),
 	("musgo", "93b46c", "4c6a3a"),
 	("madera", "d6a46c", "8c5c34"),
 	("madera_oscura", "8c5c3c", "48301f"),
