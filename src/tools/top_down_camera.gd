@@ -60,7 +60,9 @@ const GROUP := &"room_camera"
 
 @export_group("Oclusión")
 ## Si una pared tapa a un player, la cámara gira hasta quedar encima de él en este tiempo (s) y vuelve al salir.
-@export var overhead_time := 0.4
+@export var overhead_time := 1.0
+## Segundos que sigue encima después de que la pared deja de taparlo: bordeando un risco no sube y baja a cada paso.
+@export var overhead_hold := 0.6
 
 @export_group("Co-op")
 ## Metros que quedan entre el borde de la pantalla y el player más alejado cuando el grupo no se puede abrir más.
@@ -88,6 +90,9 @@ var player_hole := Vector4.ZERO
 ## Alguna pared tapa a un player desde el ángulo normal: la cámara está cenital o yendo hacia ahí.
 var occluded := false
 var _overhead := 0.0
+var _overhead_speed := 0.0
+var _clear_time := 0.0
+var _walls: Dictionary[int, bool] = {}
 ## Sala actual; null = overworld (seguimiento libre).
 var room: Room
 var transitioning := false
@@ -341,25 +346,38 @@ func _cut_south_wall(cut_room: Room) -> void:
 ## Si alguna pared tapa a un player desde el ángulo normal, en vez de recortarle un agujero (11.134) la cámara gira
 ## hasta quedar encima en overhead_time, y vuelve al salir. Las paredes siguen leyendo player_hole, con w en 0.
 func _update_player_hole(delta: float) -> void:
-	occluded = false
+	var hidden := false
 	if target_node:
 		for player in framed():
 			if _player_hidden(player):
-				occluded = true
+				hidden = true
 				break
-	_overhead = move_toward(_overhead, 1.0 if occluded else 0.0, delta / overhead_time)
+	_clear_time = 0.0 if hidden else _clear_time + delta
+	occluded = hidden or (occluded and _clear_time < overhead_hold)
+	_damp_overhead(1.0 if occluded else 0.0, delta)
 	var feet := target_node.global_position if target_node else Vector3.ZERO
 	player_hole = Vector4(feet.x, feet.y, feet.z, 0.0)
 	RenderingServer.global_shader_parameter_set(&"player_hole", player_hole)
 
 
+## Resorte críticamente amortiguado: arranca y frena sin tirones aunque cambie de idea a mitad de camino.
+func _damp_overhead(target: float, delta: float) -> void:
+	var omega := 2.5 * 2.0 / maxf(overhead_time, 0.01)
+	var x := omega * delta
+	var decay := 1.0 / (1.0 + x + 0.48 * x * x + 0.235 * x * x * x)
+	var change := _overhead - target
+	var step := (_overhead_speed + omega * change) * delta
+	_overhead_speed = (_overhead_speed - omega * step) * decay
+	_overhead = clampf(target + (change + step) * decay, 0.0, 1.0)
+
+
 ## El offset de la cámara: el normal, o girado hasta quedar encima del foco mientras algo tapa a un player.
 func _eye() -> Vector3:
-	return offset.slerp(Vector3.UP * offset.length(), smoothstep(0.0, 1.0, _overhead))
+	return offset.slerp(Vector3.UP * offset.length(), _overhead)
 
 
-## Solo cuentan las paredes (GridMap y cuerpos estáticos): players, enemigos y objetos sueltos no tapan. Se mira desde
-## donde estaría la cámara normal: desde arriba ya no lo tapa nada y volvería enseguida.
+## Solo tapan las paredes: lo que antes se recortaba con el agujero (GridMap y mallas con el shader de pared). Árboles,
+## cardones y objetos no: detrás de esos queda la silueta. Se mira desde donde estaría la cámara normal.
 func _player_hidden(player: PlayerCharacter) -> bool:
 	var space := get_world_3d().direct_space_state
 	for height in HOLE_PROBES:
@@ -373,9 +391,37 @@ func _player_hidden(player: PlayerCharacter) -> bool:
 			var hit := space.intersect_ray(query)
 			if hit.is_empty():
 				break
-			if hit.collider is GridMap or hit.collider is StaticBody3D:
+			if _is_wall(hit.collider):
 				return true
 			query.exclude += [hit.rid]
+	return false
+
+
+func _is_wall(collider: Object) -> bool:
+	if collider is GridMap:
+		return true
+	if not collider is StaticBody3D:
+		return false
+	var id := collider.get_instance_id()
+	if not _walls.has(id):
+		var body := collider as StaticBody3D
+		var meshes := body.find_children("*", "GeometryInstance3D", true, false)
+		if body.get_parent() is GeometryInstance3D:
+			meshes.append(body.get_parent())
+		_walls[id] = meshes.any(_reads_player_hole)
+	return _walls[id]
+
+
+static func _reads_player_hole(geometry: GeometryInstance3D) -> bool:
+	var materials: Array[Material] = [geometry.material_override]
+	if geometry is MeshInstance3D:
+		var mesh_instance := geometry as MeshInstance3D
+		for surface in mesh_instance.get_surface_override_material_count():
+			materials.append(mesh_instance.get_active_material(surface))
+	for material in materials:
+		var shader_material := material as ShaderMaterial
+		if shader_material and shader_material.shader and shader_material.shader.code.contains("player_hole"):
+			return true
 	return false
 
 
