@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (85/143)
+## M11 — Pulido: contenido y feel  (85/144)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4832,6 +4832,14 @@ Playtest 2026-10-13 (con sandalias y pluma): en la zona de la captura (tierra co
 **Capturas:** `compass/images/m11-147-20261013-232715.png`
 
 **Relacionadas:** 11.131 Pozo junto a la Chullpa: caer sin bombas deja softlock
+
+### 11.148 Minimapa del overworld desactualizado (la quebrada sale como abismo negro) · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`, `overworld`, `ui`
+
+Playtest 2026-10-13: en Ravine el minimapa (foto cenital del overworld) muestra la quebrada como un abismo negro, pero en el juego ahora es un río. La foto no se regeneró después de los últimos cambios de terreno. Regenerarla y, si se puede, que un test compare su fecha/huella con la del terreno para que no vuelva a quedar vieja.
+
+**Capturas:** `compass/images/m11-148-20261013-232758.png`
 
 ## M12 — Assets propios (Blender)  (15/23)
 
