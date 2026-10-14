@@ -1,0 +1,43 @@
+{
+  "assignee": "project-epiphany-43",
+  "checklist": [
+    {
+      "done": false,
+      "text": "Puerta a la Momia con llave; la placa de la vasija abre 2NO"
+    },
+    {
+      "done": false,
+      "text": "2NO: brújula de este lado, llave del jefe del otro lado de los huecos"
+    },
+    {
+      "done": false,
+      "text": "Mausoleo sin huecos (sin cofre)"
+    },
+    {
+      "done": false,
+      "text": "Grafo, test_dungeon_reach avisa salas con llave/acertijo que no hacen falta"
+    },
+    {
+      "done": false,
+      "text": "Tests (chullpa, drop_holes, walk_doors, map) y GDD §8b"
+    }
+  ],
+  "code": "11.176",
+  "created_at": "2026-10-14T18:01:58.293Z",
+  "description": "Daniel 2026-10-14: en la Chullpa se salteaba el 90% (la vasija de la placa está en el Rellano, así que la puerta con llave, la llave chica y todo el sótano eran opcionales, y la llave del jefe estaba al lado del jefe). Regla: la llave del jefe pide vuelta atrás. Aprobado: la puerta a la Momia pasa a ser la de la llave chica (sótano obligatorio); la vasija en la placa abre 2NO; brújula de este lado de los huecos de 2NO y llave del jefe del otro (con la pluma); el Mausoleo queda sin huecos (Daniel: sala sin huecos).",
+  "milestone": "m11",
+  "notes": "",
+  "order": 173,
+  "priority": "high",
+  "refs": [],
+  "size": "m",
+  "status": "doing",
+  "tags": [
+    "diseno",
+    "mazmorra",
+    "chullpa"
+  ],
+  "test": "",
+  "title": "Chullpa: llave chica y sótano obligatorios, llave del jefe con vuelta atrás",
+  "updated_at": "2026-10-14T18:02:00.039Z"
+}

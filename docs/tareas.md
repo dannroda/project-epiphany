@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (107/171)
+## M11 — Pulido: contenido y feel  (107/172)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5204,6 +5204,18 @@ Playtest 2026-10-14: en la zona nevada, junto a la cornisa con el poste del ganc
 Playtest 2026-10-14 (11.137, Chullpa): en salas que no llenan su rectángulo (pasillos, salas en L) la cámara se centra en la caja entera de la sala y deja mucho negro. Debería encuadrar la parte de la sala que tiene piso (las celdas usadas del GridMap dentro de la sala).
 
 **Relacionadas:** 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista
+
+### 11.176 Chullpa: llave chica y sótano obligatorios, llave del jefe con vuelta atrás · En curso
+
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `mazmorra`, `chullpa`
+
+Daniel 2026-10-14: en la Chullpa se salteaba el 90% (la vasija de la placa está en el Rellano, así que la puerta con llave, la llave chica y todo el sótano eran opcionales, y la llave del jefe estaba al lado del jefe). Regla: la llave del jefe pide vuelta atrás. Aprobado: la puerta a la Momia pasa a ser la de la llave chica (sótano obligatorio); la vasija en la placa abre 2NO; brújula de este lado de los huecos de 2NO y llave del jefe del otro (con la pluma); el Mausoleo queda sin huecos (Daniel: sala sin huecos).
+
+- [ ] Puerta a la Momia con llave; la placa de la vasija abre 2NO
+- [ ] 2NO: brújula de este lado, llave del jefe del otro lado de los huecos
+- [ ] Mausoleo sin huecos (sin cofre)
+- [ ] Grafo, test_dungeon_reach avisa salas con llave/acertijo que no hacen falta
+- [ ] Tests (chullpa, drop_holes, walk_doors, map) y GDD §8b
 
 ## M12 — Assets propios (Blender)  (17/29)
 
