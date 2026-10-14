@@ -1,0 +1,21 @@
+{
+  "assignee": "project-epiphany-5d",
+  "checklist": [],
+  "code": "11.163",
+  "created_at": "2026-10-14T06:14:54.618Z",
+  "description": "Tras 11.162 (templo viejo borrado) quedaron sin uso las mallas de su decoración: escombros, estandarte, venas_doom, vasija_pedazos. Confirmar que nada las usa (ni builders de Blender) y borrarlas con su pieza en el build. La tablilla bow_hint queda (la usa la Queñoa).",
+  "milestone": "m11",
+  "notes": "",
+  "order": 160,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "limpieza",
+    "arte"
+  ],
+  "test": "",
+  "title": "Borrar las mallas de la decoración del templo viejo",
+  "updated_at": "2026-10-14T06:14:54.618Z"
+}
