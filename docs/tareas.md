@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (107/170)
+## M11 — Pulido: contenido y feel  (107/171)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4766,7 +4766,7 @@ Playtest 2026-10-13, en la Chullpa (las tres cosas salen en la misma captura):
 
 **Capturas:** `compass/images/m11-137-20261013-224905.png`, `compass/images/m11-137-20261014-143652.png`, `compass/images/m11-137-20261014-143745.png`
 
-**Relacionadas:** 11.151 Totora 2P: se ve la sala del piso de abajo; 11.164 Lo que esconde una pared agrietada no se ve desde arriba; 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la)
+**Relacionadas:** 11.151 Totora 2P: se ve la sala del piso de abajo; 11.164 Lo que esconde una pared agrietada no se ve desde arriba; 11.175 Cámara de sala: centrar en lo que se ve de la sala, no en su rectángulo; 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la)
 
 ### 11.138 Chullpa sub-boss: asset para el cuadrado donde después se salta · Revisión
 
@@ -4994,7 +4994,7 @@ Playtest 2026-10-13: en la pelea de la momia (MummyGuard), cuando 'salta' no se 
 - [x] El salto se ve: la momia viaja en arco hasta la marca (que sigue al player hasta fijarse).
 - [x] Onda expansiva del aterrizaje con un shader vistoso (anillo que se expande, distorsión/brillo).
 
-### 11.156 Chullpa: se ven los techos (crestas) de las paredes LA horneadas · Revisión
+### 11.156 Chullpa: se ven los techos (crestas) de las paredes LA horneadas · En curso
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-5d · **Etiquetas:** `bug`, `chullpa`, `arte`
 
@@ -5196,6 +5196,14 @@ Playtest 2026-10-14: en la zona nevada, junto a la cornisa con el poste del ganc
 **Prueba:** test_overworld_hook › test_the_hookshot_crosses_the_invisible_rail_from_the_far_edge
 
 **Notas:** Causa (-eb, a2924bd2): la baranda invisible del terreno (1,6 m en cada borde caminable, sin malla) frenaba el gancho tirado desde la nieve de la Cumbre al RiscoPost por encima del pasillo bajo. Ahora la baranda está en el grupo walk_guard: el gancho y las flechas la atraviesan, a los que caminan los sigue frenando.
+
+### 11.175 Cámara de sala: centrar en lo que se ve de la sala, no en su rectángulo · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-fd · **Etiquetas:** `camara`, `bug`
+
+Playtest 2026-10-14 (11.137, Chullpa): en salas que no llenan su rectángulo (pasillos, salas en L) la cámara se centra en la caja entera de la sala y deja mucho negro. Debería encuadrar la parte de la sala que tiene piso (las celdas usadas del GridMap dentro de la sala).
+
+**Relacionadas:** 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista
 
 ## M12 — Assets propios (Blender)  (17/29)
 
@@ -6420,7 +6428,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 14. [x] 11.164 Lo que esconde una pared agrietada no se ve desde arriba · Hecho · anda
 15. [x] 11.136 Chullpa: la reja de la entrada queda fuera de la pared · Hecho · anda
 16. [ ] 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista · En curso · **falla** — la pared quebrada sigue el estilo pero no el ancho. La parte negra debería verse como la parte superior. Y la camara debería centrarse mas en lo visible de la sala, no en su posible tamaño completo como rectangulo
-17. [ ] 11.156 Chullpa: se ven los techos (crestas) de las paredes LA horneadas · Revisión · **falla**
+17. [ ] 11.156 Chullpa: se ven los techos (crestas) de las paredes LA horneadas · En curso · **falla**
 18. [ ] 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · En curso · **falla** — se ve horrendo y no soluciona el mismo problema del lado izquierdo
 19. [ ] 11.138 Chullpa sub-boss: asset para el cuadrado donde después se salta · Revisión
 20. [x] 11.155 Chullpa: la momia aparece en vez de saltar hacia el player; onda expansiva con shader vistoso · Hecho · anda
