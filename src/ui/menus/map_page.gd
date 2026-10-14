@@ -15,6 +15,10 @@ const PLACE_NAME_SCENE := preload("res://src/ui/menus/map_place_name.tscn")
 const ZOOM := 2.0
 const PORTAL_SNAP := 14.0
 const TRAVEL_DIALOG := "res://src/ui/menus/travel_dialog.tscn"
+const FLOOR_ACTIONS := [
+	[&"map_floor_up", 1], [&"map_floor_down", -1],
+	[&"move_forward", 1], [&"move_backward", -1], [&"ui_up", 1], [&"ui_down", -1],
+]
 const DIRECTIONS := [
 	[&"move_left", Vector2i.LEFT], [&"move_right", Vector2i.RIGHT], [&"move_forward", Vector2i.UP], [&"move_backward", Vector2i.DOWN],
 	[&"ui_left", Vector2i.LEFT], [&"ui_right", Vector2i.RIGHT], [&"ui_up", Vector2i.UP], [&"ui_down", Vector2i.DOWN],
@@ -28,7 +32,7 @@ var extra_hints: Array:
 	get:
 		var move := [[&"move_left", &"move_right"], "MAP_HINT_MOVE"]
 		if _in_dungeon():
-			return [move, [[&"map_floor_up", &"map_floor_down"], "MAP_HINT_FLOOR"]] if _levels().size() > 1 else [move]
+			return [move, [[&"move_forward", &"move_backward"], "MAP_HINT_FLOOR"]] if _levels().size() > 1 else [move]
 		var hints := [move]
 		if can_travel():
 			hints.append([&"ui_accept", "MAP_HINT_TRAVEL"])
@@ -235,8 +239,8 @@ func _show_floors(levels: Array, current: Room) -> void:
 
 
 func _refresh_floor_icons() -> void:
-	up_icon.texture = InputPrompts.icon_for_current(&"map_floor_up")
-	down_icon.texture = InputPrompts.icon_for_current(&"map_floor_down")
+	up_icon.texture = InputPrompts.icon_for_current(&"move_forward")
+	down_icon.texture = InputPrompts.icon_for_current(&"move_backward")
 
 
 ## Pisos de la mazmorra, de arriba abajo.
@@ -280,7 +284,10 @@ func _show_doors(low: Vector2i) -> void:
 
 
 func _dungeon_input(event: InputEvent) -> void:
-	for pair in [[&"map_floor_up", 1], [&"map_floor_down", -1]]:
+	var floors := _levels().size() > 1
+	for pair in FLOOR_ACTIONS:
+		if not floors and pair[0] not in [&"map_floor_up", &"map_floor_down"]:
+			continue
 		if event.is_action_released(pair[0]):
 			_floor_held[pair[0]] = false
 		if event.is_action_pressed(pair[0]):
@@ -292,7 +299,6 @@ func _dungeon_input(event: InputEvent) -> void:
 			var next: int = levels.find(_view_level) - pair[1]
 			if next >= 0 and next < levels.size():
 				view_floor(levels[next])
-			get_viewport().set_input_as_handled()
 			return
 	if _focused_room == null:
 		return
@@ -301,7 +307,7 @@ func _dungeon_input(event: InputEvent) -> void:
 		if event.is_action_pressed(pair[0], true):
 			direction = pair[1]
 	if direction:
-		var next := _neighbor(_focused_room, direction)
+		var next := _next_in_reading_order(_focused_room, direction.x) if floors else _neighbor(_focused_room, direction)
 		if next:
 			_focus_room(next)
 			Feel.ui(&"ui_move")
@@ -311,6 +317,13 @@ func _dungeon_input(event: InputEvent) -> void:
 			var cell := _room_cells[room]
 			if Rect2(cell.global_position, cell.size).has_point(event.global_position) and room != _focused_room:
 				_focus_room(room)
+
+
+## Con pisos, arriba y abajo cambian de piso, así que izquierda y derecha recorren todas las salas del piso.
+func _next_in_reading_order(from: Room, step: int) -> Room:
+	var rooms := _room_cells.keys()
+	rooms.sort_custom(func(a: Room, b: Room) -> bool: return a.map_cell.y < b.map_cell.y or (a.map_cell.y == b.map_cell.y and a.map_cell.x < b.map_cell.x))
+	return rooms[posmod(rooms.find(from) + step, rooms.size())] if rooms.size() > 1 else null
 
 
 ## La sala visible más cercana en esa dirección.
