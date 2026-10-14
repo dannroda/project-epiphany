@@ -3,6 +3,7 @@ class_name CrackedWall
 extends StaticBody3D
 ## Pared con grietas: solo una explosión la rompe. Queda rota entre partidas por su flag.
 ## Con `switches` no la rompe una explosión sino sus interruptores (el piso que rompe un sub-jefe al caer).
+## `covers`: techos que tapan lo que esconde hasta que se rompe.
 
 signal broken
 
@@ -12,6 +13,7 @@ signal broken
 		update_configuration_warnings()
 @export var switches: Array[NodePath] = []
 @export var condition: Wiring.Condition = Wiring.Condition.ALL
+@export var covers: Array[NodePath] = []
 
 @onready var wall: Node3D = %Wall
 @onready var rubble: Node3D = %Rubble
@@ -89,3 +91,7 @@ func _show(open: bool) -> void:
 	rubble.visible = open
 	shape.set_deferred(&"disabled", open)
 	hurtbox.set_deferred(&"monitorable", not open)
+	for path in covers:
+		var cover := get_node_or_null(path) as Node3D
+		if cover:
+			cover.visible = not open
