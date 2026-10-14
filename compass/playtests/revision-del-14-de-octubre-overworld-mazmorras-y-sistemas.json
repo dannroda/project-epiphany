@@ -46,7 +46,6 @@
     },
     {
       "note": "Mejor, pero no tiene que haber x-ray cuando se levanta algo",
-      "result": "fail",
       "task": "m11-133"
     },
     {
@@ -67,7 +66,6 @@
       "task": "m11-137"
     },
     {
-      "result": "fail",
       "task": "m11-156"
     },
     {
@@ -213,5 +211,5 @@
   ],
   "order": 3,
   "title": "Revisión del 14 de octubre: overworld, mazmorras y sistemas",
-  "updated_at": "2026-10-14T17:57:45.688Z"
+  "updated_at": "2026-10-14T18:18:32.411Z"
 }

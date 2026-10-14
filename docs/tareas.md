@@ -4709,11 +4709,15 @@ Playtest 2026-10-13: dentro de las cuevas del overworld los enemigos no se mueve
 
 **Notas:** Causa: las cinco cuevas del overworld no tenían NavigationRegion3D, así que el NavigationAgent3D de los enemigos nunca tenía camino. Cada cueva tiene ahora su navmesh (levels/nav/<cueva>_navmesh.tres, horneada con tools/bake_overworld_nav.gd -- <cueva>). El esqueleto de la cueva de las bombas arranca pegado a un pilar: desde la entrada no ve al player hasta que se le acerca (normal).
 
-### 11.133 Vasija chica cargada no se ve con el x-ray · En curso
+### 11.133 Vasija chica cargada no se ve con el x-ray · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`
 
 Playtest 2026-10-13: al levantar una vasija chica, cuando el player queda tapado y se ve con el x-ray (silueta), la vasija que lleva encima no aparece. El objeto cargado debería verse también con el x-ray.
+
+**Prueba:** Levantar una vasija con el player detrás: no aparece la silueta; detrás de una pared sí. test_lift › test_in_reach_it_gets_an_outline, test_player › test_what_the_player_carries_has_the_silhouette
+
+**Notas:** Playtest 2026-10-14: cargada ya se ve; faltaba que una vasija en el piso delante del player no lo pase a silueta. Hecho: los Liftable marcan el stencil como el cuerpo del player (src/feel/stencil_mark.tres, también debajo del contorno de alcance); en las manos el contorno ya no pisa el destello y la silueta del Carrier.
 
 **Capturas:** `compass/images/m11-133-20261013-223150.png`, `compass/images/m11-133-20261014-143518.png`
 
@@ -4994,11 +4998,13 @@ Playtest 2026-10-13: en la pelea de la momia (MummyGuard), cuando 'salta' no se 
 - [x] El salto se ve: la momia viaja en arco hasta la marca (que sigue al player hasta fijarse).
 - [x] Onda expansiva del aterrizaje con un shader vistoso (anillo que se expande, distorsión/brillo).
 
-### 11.156 Chullpa: se ven los techos (crestas) de las paredes LA horneadas · En curso
+### 11.156 Chullpa: se ven los techos (crestas) de las paredes LA horneadas · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-5d · **Etiquetas:** `bug`, `chullpa`, `arte`
 
 Separada de 11.137 (punto 1). Playtest 2026-10-13: en la Chullpa se ven las tapas superiores de las paredes LA horneadas (la_walls) y no deberían verse. Es del look de la_walls, va con 11.151 (Totora 2P: se ve la sala de abajo).
+
+**Notas:** Hecho (-5d, 4aa49f97): borde_oscuro pinta de negro toda superficie a altura de cresta fuera del interior de la sala y los topes planos dentro; la_walls pasa un uniform interior (piso de la sala sin las filas que son casi todo pared). Chullpa refrescada.
 
 ### 11.157 Mazmorras: los tiles del GridMap no se alinean con la grilla del editor · Revisión
 
@@ -6410,7 +6416,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 3. [x] 11.148 Minimapa del overworld desactualizado (la quebrada sale como abismo negro) · Hecho · anda — Es un poco tosco como aparece en el minimapa, pero es detalle menor.
 4. [x] 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player · Hecho · anda — Funciona, pero solo debería ser para las paredes. No para objetos/plantas, para eso está el x-ray. Y el movimiento es un poco nauseabundo.
 
-### Revisión del 14 de octubre: overworld, mazmorras y sistemas  (19/62 probadas)
+### Revisión del 14 de octubre: overworld, mazmorras y sistemas  (17/62 probadas)
 
 1. [x] 11.168 D4 (Cumbre): entrada exagerada como las otras mazmorras · Hecho · anda
 2. [x] 11.130 Bocas de cueva talladas en el risco · Hecho · anda
@@ -6423,12 +6429,12 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 9. [ ] 11.29 Overworld después del jefe · Revisión
 10. [x] 12.29 Muro agrietado LA de cueva (muro_agrietado_cueva_la) · Hecho · anda
 11. [x] 11.132 Cuevas: los enemigos se quedan quietos · Hecho · anda
-12. [ ] 11.133 Vasija chica cargada no se ve con el x-ray · En curso · **falla** — Mejor, pero no tiene que haber x-ray cuando se levanta algo
+12. [ ] 11.133 Vasija chica cargada no se ve con el x-ray · Revisión — Mejor, pero no tiene que haber x-ray cuando se levanta algo
 13. [x] 11.135 Al caer, el player se inclina hacia el piso · Hecho · anda
 14. [x] 11.164 Lo que esconde una pared agrietada no se ve desde arriba · Hecho · anda
 15. [x] 11.136 Chullpa: la reja de la entrada queda fuera de la pared · Hecho · anda
 16. [ ] 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista · En curso · **falla** — la pared quebrada sigue el estilo pero no el ancho. La parte negra debería verse como la parte superior. Y la camara debería centrarse mas en lo visible de la sala, no en su posible tamaño completo como rectangulo
-17. [ ] 11.156 Chullpa: se ven los techos (crestas) de las paredes LA horneadas · En curso · **falla**
+17. [ ] 11.156 Chullpa: se ven los techos (crestas) de las paredes LA horneadas · Revisión
 18. [ ] 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · En curso · **falla** — se ve horrendo y no soluciona el mismo problema del lado izquierdo
 19. [ ] 11.138 Chullpa sub-boss: asset para el cuadrado donde después se salta · Revisión
 20. [x] 11.155 Chullpa: la momia aparece en vez de saltar hacia el player; onda expansiva con shader vistoso · Hecho · anda

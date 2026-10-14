@@ -5,12 +5,12 @@
   "created_at": "2026-10-14T03:33:18.894Z",
   "description": "Separada de 11.137 (punto 1). Playtest 2026-10-13: en la Chullpa se ven las tapas superiores de las paredes LA horneadas (la_walls) y no deberían verse. Es del look de la_walls, va con 11.151 (Totora 2P: se ve la sala de abajo).",
   "milestone": "m11",
-  "notes": "",
+  "notes": "Hecho (-5d, 4aa49f97): borde_oscuro pinta de negro toda superficie a altura de cresta fuera del interior de la sala y los topes planos dentro; la_walls pasa un uniform interior (piso de la sala sin las filas que son casi todo pared). Chullpa refrescada.",
   "order": 153,
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "bug",
     "chullpa",
@@ -18,5 +18,5 @@
   ],
   "test": "",
   "title": "Chullpa: se ven los techos (crestas) de las paredes LA horneadas",
-  "updated_at": "2026-10-14T18:01:30.250Z"
+  "updated_at": "2026-10-14T18:18:31.853Z"
 }
