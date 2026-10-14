@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (95/166)
+## M11 — Pulido: contenido y feel  (96/166)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5121,9 +5121,9 @@ Daniel (playtest de 12.19): en la Totora, si el player cae al agua y pierde, se 
 
 **Relacionadas:** Totora (D3) en estilo Link's Awakening y su entrada
 
-### 11.168 D4 (Cumbre): entrada exagerada como las otras mazmorras · Revisión
+### 11.168 D4 (Cumbre): entrada exagerada como las otras mazmorras · Hecho
 
-**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-eb · **Etiquetas:** `overworld`, `arte`
+**Terminada:** 2026-10-14 · **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-eb · **Etiquetas:** `overworld`, `arte`
 
 Daniel (playtest de 11.130 y 7.9): la entrada de la D4 en el overworld parece una cueva normal. Tiene que tener una entrada exagerada que se lea como mazmorra, como la Chullpa, la Queñoa y la Totora (torre, árbol, choza).
 
@@ -5147,9 +5147,11 @@ Daniel (playtest de 11.5): saltando con la pluma los pinchos igual llegan al pla
 
 ### 11.170 Atajos: animación del player subiendo y bajando en vez del fundido · Pendiente
 
-**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `overworld`, `animacion`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `overworld`, `animacion`
 
 Daniel (playtest de 11.28): los atajos andan, pero al usarlos hay un fundido. Debería verse al player subiendo y bajando (escalera de soga, rope_ladder).
+
+**Notas:** Daniel (2026-10-14, playtest): sigue el fundido en la escalera de soga del Ravine; pedido de nuevo.
 
 **Relacionadas:** 11.28 Atajos que se abren al volver
 
@@ -6358,9 +6360,9 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 3. [x] 11.148 Minimapa del overworld desactualizado (la quebrada sale como abismo negro) · Hecho · anda — Es un poco tosco como aparece en el minimapa, pero es detalle menor.
 4. [x] 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player · Hecho · anda — Funciona, pero solo debería ser para las paredes. No para objetos/plantas, para eso está el x-ray. Y el movimiento es un poco nauseabundo.
 
-### Revisión del 14 de octubre: overworld, mazmorras y sistemas  (0/57 probadas)
+### Revisión del 14 de octubre: overworld, mazmorras y sistemas  (1/57 probadas)
 
-1. [ ] 11.168 D4 (Cumbre): entrada exagerada como las otras mazmorras · Revisión
+1. [x] 11.168 D4 (Cumbre): entrada exagerada como las otras mazmorras · Hecho · anda
 2. [ ] 11.130 Bocas de cueva talladas en el risco · Revisión
 3. [ ] 11.166 Santuario con una sola entrada: su muro agrietado · Revisión
 4. [ ] 11.146 Overworld: el ojo del puente a la Necrópolis no se ve ni se puede flechar · Revisión
