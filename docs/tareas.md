@@ -1,7 +1,7 @@
 # Tareas — Project Epiphany
 
 > Export de `compass/`, que es la fuente de verdad. No editar: los cambios se hacen en `compass/` o con `scompass`, y este archivo se regenera.
-> Generado: 2026-10-13
+> Generado: 2026-10-14
 
 ## M0 — Refactor del player + base de datos  (13/13)
 
@@ -4887,11 +4887,15 @@ Playtest 2026-10-13, Totora (D3) 2P Upper Floor, sala sureste: debajo del borde 
 
 Playtest 2026-10-13: al apretar el z-target, el primer objetivo debería ser el enemigo más cercano al player (hoy elige por cercanía al centro de pantalla, targeting.gd › distancia proyectada al centro). Los enemigos tienen prioridad sobre postes/ojos.
 
-### 11.153 Totora: cruce con gancho a través de la puerta no se entiende; poner plataforma/poste en la propia sala · Pendiente
+### 11.153 Totora: cruce con gancho a través de la puerta no se entiende; poner plataforma/poste en la propia sala · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseño`, `totora`
 
 Playtest 2026-10-13, Totora (D3): en la sala del estanque grande con la puerta al norte sobre el agua, hay que usar el gancho hacia algo que está del otro lado de la puerta (en la otra sala), y no se entiende. Debería haber una plataforma (o poste visible) dentro de la propia sala, frente a la puerta, para que el cruce se lea. Relacionado con 11.150 (el targeting marca cosas de otras salas).
+
+**Prueba:** tests/test_totora.gd
+
+**Notas:** Hecho (Daniel eligió 'muelle seco'): el agua del Telar la cruza un muelle de totora hasta la puerta norte, y al Estanque se llega caminando; los postes que cruzaban la puerta (TelarPost, EstanquePost) no están. El gancho se estrena en el propio Estanque (franja oeste ↔ islote, 4 celdas, poste a la vista). Para que no haya softlock de llaves (la puerta de los Tejedores ahora se alcanza sin gancho), la llave chica del islote pasa a la esquina NO de la franja oeste: dos llaves y dos puertas antes del gancho. Grafo, GDD §8d y test_totora (test_the_telar_pier_walks_through_the_north_door_to_the_pond). Aparte: el cruce Gancho↔Balsas de PisoBajo también pasa por una puerta.
 
 **Relacionadas:** 11.150 Gancho: el targeting marca un poste de otra sala/piso
 
