@@ -2,7 +2,7 @@
 extends Node3D
 ## Prueba del tajo de espada (tajo.gdshader): una hoja barre en loop y la media luna la sigue desde donde arrancó hasta
 ## la punta, después se apaga. Corre también en el editor.
-
+@export var enable: bool = false
 @export var swing_time := 0.16
 @export_range(0.0, 6.0) var swing_angle := 2.6
 @export var fade_time := 0.22
@@ -14,10 +14,17 @@ var _time := 0.0
 @onready var tip: Marker3D = $Hoja/Punta
 @onready var slash: MeshInstance3D = $Tajo
 @onready var sparks: GPUParticles3D = $Tajo/Chispas
+@onready var sword_trail: Trail3D = $Hoja/Center/SwordTrail
 
 
 func _process(delta: float) -> void:
+	if not enable: return
+	var restart := _time + delta >= swing_time + fade_time + pause
 	_time = fmod(_time + delta, swing_time + fade_time + pause)
+	if restart:
+		sword_trail.clear()
+	sword_trail.emitting = _time < swing_time
+	(sword_trail.material as ShaderMaterial).set_shader_parameter(&"fade", clampf((_time - swing_time) / fade_time, 0.0, 1.0))
 	var from := swing_angle * 0.5
 	var angle := lerpf(from, -from, ease(clampf(_time / swing_time, 0.0, 1.0), 0.6))
 	blade.rotation.y = angle
