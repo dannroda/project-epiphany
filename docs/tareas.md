@@ -4321,7 +4321,7 @@ Los ítems conseguidos en la mazmorra (mapa, brújula, llave del jefe, llaves ch
 
 **Notas:** Sesión: overworld (-74). Mockup primero.
 
-### 11.105 Repensar el tutorial · Pendiente
+### 11.105 Repensar el tutorial · Pausado
 
 **Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `diseno`, `ui`
 
@@ -5137,7 +5137,7 @@ La pantalla de título (src/ui/title/title_screen.tscn) sigue con arte provisori
 - [x] Integrar en title_screen.tscn (nodos en la escena, no por código) y decidir si el ojo de title_eye.gd queda o lo reemplaza el logo
 - [x] Actualizar el mockup de la pantalla de título en el canvas de diseño
 
-### 12.21 Ojo interruptor: la pupila sigue al player y se parece al ojo del jefe final · Pendiente
+### 12.21 Ojo interruptor: la pupila sigue al player y se parece al ojo del jefe final · Pausado
 
 **Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `arte`, `detalle`
 
