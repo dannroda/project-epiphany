@@ -101,7 +101,7 @@ func _fire() -> void:
 func _water_run(floor_path: String, from: Vector3, toward: Vector3) -> int:
 	var grid := level.get_node(floor_path + "/GridMap") as GridMap
 	var local := grid.to_local(from)
-	var cell := Vector3i(roundi(local.x / 2.0), 0, roundi(local.z / 2.0))
+	var cell := grid.local_to_map(local) * Vector3i(1, 0, 1)
 	var step := Vector3i(roundi(toward.x), 0, roundi(toward.z))
 	var count := 0
 	for i in 8:
