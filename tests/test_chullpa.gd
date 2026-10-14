@@ -478,3 +478,26 @@ func test_the_feather_island_is_one_tile_from_the_east_floor() -> void:
 		at += Vector3i.RIGHT
 	assert_eq(gap, 1, "del borde este de la isla al piso hay %d baldosas de hueco" % gap)
 	tree.root.get_node(^"GameState").reset()
+
+
+func test_a_room_can_set_its_own_camera_and_environment() -> void:
+	await _start()
+	var hall := _room("PlantaBaja/SalaCofre")
+	var level_distance := camera.offset.length()
+	var level_fov := camera.fov
+	var dim := Environment.new()
+	hall.camera_distance = 30.0
+	hall.camera_fov = 32.0
+	hall.environment = dim
+	player.global_position = _in("PlantaBaja/SalaCofre", Vector3(-8, 0.3, 4))
+	await tree.create_timer(1.2).timeout
+	assert_eq(camera.room, hall)
+	assert_true(absf(camera.offset.length() - 30.0) < 0.01, "la sala pone su distancia (%.2f)" % camera.offset.length())
+	assert_true(absf(camera.fov - 32.0) < 0.01, "y su campo de visión")
+	assert_eq(camera.environment, dim, "y su ambiente")
+	player.global_position = _in("PlantaBaja/Entrada", Vector3(0, 0.3, 0))
+	await tree.create_timer(1.2).timeout
+	assert_true(absf(camera.offset.length() - level_distance) < 0.01, "una sala sin nada vuelve a la del nivel")
+	assert_true(absf(camera.fov - level_fov) < 0.01)
+	assert_eq(camera.environment, null, "y al ambiente del nivel")
+	tree.root.get_node(^"GameState").reset()

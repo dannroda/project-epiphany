@@ -109,10 +109,14 @@ var _mask: Node3D
 var _skip := false
 var _last_positions: Dictionary[PlayerCharacter, Vector3] = {}
 var _player_rids: Array[RID] = []
+var _level_offset := Vector3.ZERO
+var _level_fov := 0.0
 
 
 func _ready() -> void:
 	fov = field_of_view
+	_level_offset = offset
+	_level_fov = field_of_view
 	if orthographic:
 		projection = PROJECTION_ORTHOGONAL
 		size = ortho_size
@@ -280,12 +284,14 @@ func enter_room(new_room: Room, crosser: PlayerCharacter = null) -> void:
 	_cut_south_wall(room)
 	DungeonFloor.show_up_to(get_tree(), room.floor_level())
 	if previous == null:
+		_apply_room_view(room)
 		_mask_around(room.bounds())
 		focus = _clamp(group_center())
 		global_position = focus + offset
 		_remember_entry()
 		return
 	if previous.floor_level() != room.floor_level():
+		_apply_room_view(room)
 		_change_floor(crosser)
 		return
 	var step := room.bounds().get_center() - previous.bounds().get_center()
@@ -299,13 +305,31 @@ func enter_room(new_room: Room, crosser: PlayerCharacter = null) -> void:
 	_bring_along(crosser, direction)
 	for player in framed():
 		player.begin_room_transition(direction, transition_time)
+	var from_offset := offset
+	var from_fov := fov
+	_apply_room_view(room)
 	focus = _clamp(crosser.global_position + direction * transition_walk)
+	var to_offset := offset
+	var to_fov := fov
+	offset = from_offset
+	fov = from_fov
 	var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	tween.tween_property(self, "global_position", focus + offset, transition_time)
+	tween.tween_property(self, "global_position", focus + to_offset, transition_time)
+	tween.parallel().tween_property(self, "offset", to_offset, transition_time)
+	tween.parallel().tween_property(self, "fov", to_fov, transition_time)
 	tween.tween_callback(func() -> void:
 		transitioning = false
 		_mask_around(room.bounds())
 		_remember_entry())
+
+
+## Distancia, campo de visión, ambiente y efectos de pantalla de la sala; lo que no completa queda como el del nivel.
+func _apply_room_view(target: Room) -> void:
+	offset = _level_offset.normalized() * (target.camera_distance if target.camera_distance > 0.0 else _level_offset.length())
+	if not orthographic:
+		fov = target.camera_fov if target.camera_fov > 0.0 else _level_fov
+	environment = target.environment
+	compositor = target.compositor
 
 
 ## Los demás pasan a la sala nueva junto al que cruzó: a sus costados y, si son más, detrás.

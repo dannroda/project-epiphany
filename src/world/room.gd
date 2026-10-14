@@ -29,6 +29,15 @@ const SLEEPERS := &"room_sleepers"
 @export var lock_delay := 0.6
 ## Lo de la sala despierta este tiempo después de que entra un player: que no lo golpeen apenas cruza.
 @export var wake_delay := 0.5
+@export_group("Cámara y ambiente")
+## Distancia de la cámara en esta sala (0 = la del nivel): para una sala más grande o más chica que las otras.
+@export var camera_distance := 0.0
+## Campo de visión de la cámara en esta sala (0 = el del nivel).
+@export var camera_fov := 0.0
+## Ambiente de esta sala (vacío = el WorldEnvironment del nivel).
+@export var environment: Environment
+## Efectos de pantalla de esta sala, como la viñeta (vacío = los del WorldEnvironment del nivel).
+@export var compositor: Compositor
 
 var _outline: MeshInstance3D
 var _announced := false
