@@ -4741,6 +4741,8 @@ Playtest 2026-10-13, en la Chullpa (las tres cosas salen en la misma captura):
 2) La pared agrietada no encaja en el hueco de la pared: es un bloque que sobresale, con la cara de arriba negra.
 3) Lo que esconde la pared agrietada (el nicho con el cofre/barril) se ve antes de romperla. Debería estar oculto y descubrirse al romper la pared.
 
+**Notas:** 2) y 3) hechos (provisorio hasta 12.24): RellanoCrackedWall se corre 0.4 m hacia el nicho y se estira a la altura de la pared LA, así ya no sobresale del hueco; una tapa del color de las crestas (NicheCap, hija de Wall) cubre el nicho desde arriba y desaparece al romper el muro, así el nicho no se ve antes. 1) Los techos visibles (las crestas de las paredes LA) son del look de la_walls: lo dejo para arte (junto con 11.151).
+
 **Capturas:** `compass/images/m11-137-20261013-224905.png`
 
 **Relacionadas:** 11.151 Totora 2P: se ve la sala del piso de abajo; 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la)

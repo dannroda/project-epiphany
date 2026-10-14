@@ -91,6 +91,14 @@
 [ext_resource type="Script" path="res://src/world/look/tono_la.gd" id="tono_la"]
 [ext_resource type="PackedScene" path="res://src/world/floor_switch_weight.tscn" id="weight_switch"]
 
+[sub_resource type="StandardMaterial3D" id="NicheCapTop"]
+shading_mode = 0
+albedo_color = Color(0.49, 0.34, 0.17, 1)
+
+[sub_resource type="BoxMesh" id="NicheCapMesh"]
+material = SubResource("NicheCapTop")
+size = Vector3(3.2, 0.04, 4.1)
+
 [sub_resource type="Environment" id="Environment_5ecsj"]
 background_mode = 1
 ambient_light_source = 2
@@ -2374,9 +2382,17 @@ drops = ExtResource("ch_pot_bombs")
 drop_height = 0.1
 
 [node name="RellanoCrackedWall" type="StaticBody3D" parent="PisoAlto" unique_id=1246005233 instance=ExtResource("44_crackwall")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, 0, 30)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.6, 0, 30)
 script = ExtResource("33_3iwqa")
 flag = &"ch_landing_cracked_wall"
+
+[node name="Model" parent="PisoAlto/RellanoCrackedWall/Wall" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1.3043478, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="NicheCap" type="MeshInstance3D" parent="PisoAlto/RellanoCrackedWall/Wall" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.02, -1.05)
+cast_shadow = 0
+mesh = SubResource("NicheCapMesh")
 
 [node name="RellanoPot" type="AnimatableBody3D" parent="PisoAlto" unique_id=2048567083 instance=ExtResource("43_bigpot")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, 27)
