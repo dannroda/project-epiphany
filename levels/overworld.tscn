@@ -76,6 +76,11 @@
 [ext_resource type="ArrayMesh" uid="uid://c7lvusadu8l35" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretLookoutWall.res" id="wall_SecretLookoutWall"]
 [ext_resource type="ArrayMesh" uid="uid://e178snsf1sk0" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretRavineWall.res" id="wall_SecretRavineWall"]
 [ext_resource type="ArrayMesh" uid="uid://xj64yut5ifba" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretSummitWall.res" id="wall_SecretSummitWall"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/muros_organicos/tapa_SecretHillsWall.res" id="lid_SecretHillsWall"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/muros_organicos/tapa_SecretCactusWall.res" id="lid_SecretCactusWall"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/muros_organicos/tapa_SecretLookoutWall.res" id="lid_SecretLookoutWall"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/muros_organicos/tapa_SecretRavineWall.res" id="lid_SecretRavineWall"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/muros_organicos/tapa_SecretSummitWall.res" id="lid_SecretSummitWall"]
 [ext_resource type="Script" uid="uid://dlf8bqdycw2kg" path="res://src/world/look/brillo_la.gd" id="brillo_la"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7se6l"]
@@ -300,6 +305,19 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -69.
 script = ExtResource("4_cr2by")
 id = &"cueva"
 
+[node name="GrottoMouth" type="Node3D" parent="." unique_id=250931739]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -83.97, 0, 14)
+
+[node name="Jambs" type="StaticBody3D" parent="GrottoMouth" unique_id=1513579944]
+
+[node name="North" type="CollisionShape3D" parent="GrottoMouth/Jambs" unique_id=202754613]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 1.3, 0)
+shape = SubResource("BoxShape3D_jamb")
+
+[node name="South" type="CollisionShape3D" parent="GrottoMouth/Jambs" unique_id=1797954888]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 1.3, 0)
+shape = SubResource("BoxShape3D_jamb")
+
 [node name="GrottoDoor" type="Area3D" parent="." unique_id=1418966855]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -84.75, 1.2, 14)
 script = ExtResource("14_5vrew")
@@ -313,6 +331,19 @@ shape = SubResource("BoxShape3D_springportal")
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -81.6, 0, 14)
 script = ExtResource("4_cr2by")
 id = &"gruta"
+
+[node name="ShrineMouth" type="Node3D" parent="." unique_id=1386575311]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -88, 2.6, -23.55)
+
+[node name="Jambs" type="StaticBody3D" parent="ShrineMouth" unique_id=1558102465]
+
+[node name="East" type="CollisionShape3D" parent="ShrineMouth/Jambs" unique_id=1748129100]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 1.3, 0)
+shape = SubResource("BoxShape3D_jamb")
+
+[node name="West" type="CollisionShape3D" parent="ShrineMouth/Jambs" unique_id=686388680]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 1.3, 0)
+shape = SubResource("BoxShape3D_jamb")
 
 [node name="ShrineDoor" type="Area3D" parent="." unique_id=1224957378]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -88, 3.8, -22.75)
@@ -656,9 +687,13 @@ hidden_until_revealed = false
 [node name="SecretHillsWall" parent="." unique_id=859565622 instance=ExtResource("21_uay0b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74, 0, -2)
 flag = &"ow_secret_hills_wall"
+covers = Array[NodePath]([NodePath("Lid")])
 
 [node name="Model" parent="SecretHillsWall/Wall" index="0"]
 mesh = ExtResource("wall_SecretHillsWall")
+
+[node name="Lid" type="MeshInstance3D" parent="SecretHillsWall" unique_id=476817055]
+mesh = ExtResource("lid_SecretHillsWall")
 
 [node name="SecretCactusChest" parent="." unique_id=1574385334 instance=ExtResource("15_3hrjb")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 92, 0, 24)
@@ -669,9 +704,13 @@ flag = &"ow_secret_cactus_chest"
 [node name="SecretCactusWall" parent="." unique_id=1199083833 instance=ExtResource("21_uay0b")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 90, 0, 24)
 flag = &"ow_secret_cactus_wall"
+covers = Array[NodePath]([NodePath("Lid")])
 
 [node name="Model" parent="SecretCactusWall/Wall" index="0"]
 mesh = ExtResource("wall_SecretCactusWall")
+
+[node name="Lid" type="MeshInstance3D" parent="SecretCactusWall" unique_id=1546033767]
+mesh = ExtResource("lid_SecretCactusWall")
 
 [node name="SecretLookoutChest" parent="." unique_id=249068360 instance=ExtResource("15_3hrjb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 0, 6)
@@ -681,9 +720,13 @@ flag = &"ow_secret_lookout_chest"
 [node name="SecretLookoutWall" parent="." unique_id=114446066 instance=ExtResource("21_uay0b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 0, 8)
 flag = &"ow_secret_lookout_wall"
+covers = Array[NodePath]([NodePath("Lid")])
 
 [node name="Model" parent="SecretLookoutWall/Wall" index="0"]
 mesh = ExtResource("wall_SecretLookoutWall")
+
+[node name="Lid" type="MeshInstance3D" parent="SecretLookoutWall" unique_id=321056920]
+mesh = ExtResource("lid_SecretLookoutWall")
 
 [node name="SecretRavineChest" parent="." unique_id=954095082 instance=ExtResource("15_3hrjb")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, 0, -28)
@@ -694,9 +737,13 @@ flag = &"ow_secret_ravine_chest"
 [node name="SecretRavineWall" parent="." unique_id=716008109 instance=ExtResource("21_uay0b")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -18, 0, -28)
 flag = &"ow_secret_ravine_wall"
+covers = Array[NodePath]([NodePath("Lid")])
 
 [node name="Model" parent="SecretRavineWall/Wall" index="0"]
 mesh = ExtResource("wall_SecretRavineWall")
+
+[node name="Lid" type="MeshInstance3D" parent="SecretRavineWall" unique_id=1843155857]
+mesh = ExtResource("lid_SecretRavineWall")
 
 [node name="SecretSummitChest" parent="." unique_id=1838852146 instance=ExtResource("15_3hrjb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -28)
@@ -707,9 +754,13 @@ flag = &"ow_secret_summit_chest"
 [node name="SecretSummitWall" parent="." unique_id=631678416 instance=ExtResource("21_uay0b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -26)
 flag = &"ow_secret_summit_wall"
+covers = Array[NodePath]([NodePath("Lid")])
 
 [node name="Model" parent="SecretSummitWall/Wall" index="0"]
 mesh = ExtResource("wall_SecretSummitWall")
+
+[node name="Lid" type="MeshInstance3D" parent="SecretSummitWall" unique_id=634463152]
+mesh = ExtResource("lid_SecretSummitWall")
 
 [node name="Spawn_templo" type="Marker3D" parent="." unique_id=511527969]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 5.2, -33)

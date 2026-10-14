@@ -453,3 +453,31 @@ func test_the_risco_low_corridor_has_stairs_up() -> void:
 	assert_true(result[0], "sale de la zanja por la escalinata (quedó en %s)" % player.global_position)
 	assert_true(player.global_position.y > 2.4, "arriba, en la Necrópolis (y %.2f)" % player.global_position.y)
 	state.reset()
+
+
+## 11.164: lo que esconde una pared agrietada del overworld no se ve desde arriba hasta romperla.
+func test_cracked_wall_niches_are_roofed_until_the_wall_breaks() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	state.reset()
+	tree.change_scene_to_file("res://levels/overworld.tscn")
+	await tree.scene_changed
+	await tree.process_frame
+	var level := tree.current_scene
+	var hidden := {"SecretHillsWall": "HeartPieceHills", "SecretCactusWall": "SecretCactusChest", "SecretLookoutWall": "SecretLookoutChest",
+		"SecretRavineWall": "SecretRavineChest", "SecretSummitWall": "SecretSummitChest"}
+	for wall_name: String in hidden:
+		var wall := level.get_node(wall_name) as CrackedWall
+		var prize := level.get_node(hidden[wall_name]) as Node3D
+		assert_eq(wall.covers.size(), 1, "%s tapa su nicho" % wall_name)
+		var lid := wall.get_node_or_null(wall.covers[0]) as MeshInstance3D if wall.covers.size() == 1 else null
+		if lid == null:
+			continue
+		var box := lid.global_transform * lid.get_aabb()
+		var at := prize.global_position
+		assert_true(lid.visible and box.position.x < at.x and at.x < box.end.x and box.position.z < at.z and at.z < box.end.z,
+			"la tapa de %s está sobre %s" % [wall_name, prize.name])
+		assert_true(box.position.y > at.y + 2.0, "a la altura de la terraza (%.2f)" % box.position.y)
+		wall.smash()
+		assert_true(not lid.visible, "rota %s, el nicho se ve" % wall_name)
+	state.reset()
