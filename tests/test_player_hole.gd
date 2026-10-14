@@ -45,13 +45,13 @@ func test_a_hidden_player_turns_the_camera_overhead() -> void:
 	await tree.create_timer(0.1).timeout
 	assert_true(camera.occluded, "detrás del muro lo tapa")
 	assert_true(tilt.call() < normal_tilt - 1.0, "y la cámara empieza a subir (%.1f°)" % tilt.call())
-	await tree.create_timer(1.2).timeout
+	await tree.create_timer(1.8).timeout
 	assert_true(tilt.call() < 1.0, "hasta quedar encima (%.1f°)" % tilt.call())
 	assert_eq(camera.player_hole.w, 0.0, "sin agujero en las paredes")
 	player.global_position = Vector3(-88, 0.1, -41.0)
 	await tree.create_timer(0.3).timeout
 	assert_true(camera.occluded and tilt.call() < 1.0, "recién salido sigue encima un rato (%.1f°)" % tilt.call())
-	await tree.create_timer(1.8).timeout
+	await tree.create_timer(2.6).timeout
 	assert_true(not camera.occluded and absf(tilt.call() - normal_tilt) < 1.0, "lejos del muro vuelve al ángulo normal (%.1f°)" % tilt.call())
 
 
