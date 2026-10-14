@@ -15,6 +15,8 @@ var keyboard := true
 var joypads: Array[int] = []
 ## Con el anillo de ítems abierto (13.9) el player no lee nada; el anillo lee con `action()`.
 var captured := false
+## Hasta qué cuadro de física no camina: al volver de una caída, para que soltar el stick llegue antes que la próxima caída.
+var _still_until := 0
 
 
 func action(name: StringName) -> StringName:
@@ -79,7 +81,13 @@ func vector(negative_x: StringName, positive_x: StringName, negative_y: StringNa
 
 
 func move() -> Vector2:
+	if Engine.get_physics_frames() < _still_until:
+		return Vector2.ZERO
 	return vector(&"move_left", &"move_right", &"move_forward", &"move_backward")
+
+
+func hold_still(seconds: float) -> void:
+	_still_until = Engine.get_physics_frames() + int(seconds * Engine.physics_ticks_per_second)
 
 
 func look(deadzone := -1.0) -> Vector2:

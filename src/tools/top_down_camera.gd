@@ -278,6 +278,8 @@ func enter_room(new_room: Room, crosser: PlayerCharacter = null) -> void:
 	var step := room.bounds().get_center() - previous.bounds().get_center()
 	var direction := Vector3(signf(step.x), 0.0, 0.0) if absf(step.x) > absf(step.y) else Vector3(0.0, 0.0, signf(step.y))
 	transitioning = true
+	if not room.boss_room:
+		GameState.room_entry = crosser.last_ground
 	_mask_around(room.bounds().merge(previous.bounds()))
 	for player in Players.all:
 		player.revive()
@@ -386,9 +388,13 @@ func _floor_y() -> float:
 	return room.floor_y() if room else target_node.global_position.y
 
 
+## Solo pisando el suelo de la sala: si cayó a un pozo o al agua mientras entraba, queda el umbral que se anotó al cruzar.
 func _remember_entry() -> void:
-	if not room.boss_room:
-		GameState.room_entry = target_node.global_position
+	if room.boss_room or not target_node.is_on_floor() or not room.contains(target_node.global_position):
+		return
+	if target_node.global_position.y < room.floor_y() - 0.3:
+		return
+	GameState.room_entry = target_node.global_position
 
 
 func _physics_process(delta: float) -> void:
