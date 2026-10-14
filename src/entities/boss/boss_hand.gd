@@ -77,6 +77,8 @@ var state := State.READY
 ## Telegrafiando o golpeando; el jefe espera a que termine (no a que se reponga).
 var striking := false
 var rest: Node3D
+## Mientras el jefe se transforma: no empieza ataques ni recibe golpes.
+var held := false
 var _stun_left := 0.0
 var _fall: Tween
 var _motion: Tween
@@ -162,7 +164,7 @@ func _physics_process(delta: float) -> void:
 
 
 func is_available() -> bool:
-	return state == State.READY
+	return state == State.READY and not held
 
 
 func set_state(value: State) -> void:
@@ -464,6 +466,9 @@ func _make_damage() -> DamageInfo:
 
 func _on_hit(info: DamageInfo) -> void:
 	if state == State.DOWN:
+		return
+	if held:
+		Feel.sfx(&"block", global_position)
 		return
 	if state != State.STUNNED:
 		if info.stun_time > 0.0 and state == State.READY:
