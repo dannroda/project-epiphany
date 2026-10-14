@@ -790,7 +790,7 @@ for DOOR_STYLE in (None, "chullpa", "quenoa", "templo", "totora", "cumbre"):
 ## las dos caras, cada una inclinada como su pared y el medio derecho. Va por fondo del paso (2 o 4 m) y con la cara de
 ## atrás igual de inclinada o como la cara norte (_n); la_walls elige y la gira.
 CRACK_STEP = 0.06
-CRACKS = {"chullpa": ("acantilado", "tierra"), "quenoa": ("roca_naranja", "roca_naranja"), "templo": ("piedra_templo", "gris_5"), "totora": ("madera", "madera"), "cumbre": ("ladrillo", "gris_4")}
+CRACKS = {"chullpa": ("acantilado", "tierra"), "quenoa": ("roca_naranja", "roca_naranja"), "templo": ("piedra_templo", "gris_5"), "totora": ("madera", "madera"), "cumbre": ("ladrillo", "gris_4"), "cueva": ("acantilado", "noche")}
 
 
 def cracked_wall(style, depth, back, low=False):
