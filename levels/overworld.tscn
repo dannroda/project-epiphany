@@ -95,6 +95,7 @@ effect_callback_type = 4
 needs_motion_vectors = false
 needs_normal_roughness = false
 script = ExtResource("sombra_la")
+reach = 1.5
 
 [sub_resource type="CompositorEffect" id="CompositorEffect_tono"]
 resource_local_to_scene = false
