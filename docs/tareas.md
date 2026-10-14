@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (91/155)
+## M11 — Pulido: contenido y feel  (91/156)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5001,6 +5001,12 @@ Daniel 2026-10-14 (captura del piso de tablones, Queñoa/Totora): el patrón del
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `overworld`, `render`
 
 Daniel 2026-10-14 (por -5d): el overworld tiene que compartir el arte de las mazmorras. Brillo: el look BrilloLA (lo eligió tras comparar overworld base vs brillo vs Chullpa). Piso: más detalle, hoy se ve plano. Plan: epiphany_outdoor.gdshader con palette_surface brillo y patrón de piso por swatch (losas, textura de tierra, variación de tono del pasto), más BrilloLA y glow en overworld.tscn. Coordinar con -eb antes de tocar overworld.tscn; prototipo en debug/tmp.
+
+### 11.160 Ojos de la Queñoa: los párpados siempre se abren y cierran animados · Revisión
+
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `combate`, `jefe`
+
+Daniel 2026-10-14: ayuda visual en el combate. Al clavarse tras el salto, al ser derribado y al levantarse los párpados del WatcherEye saltaban de golpe; ahora todo cambio de párpados es una animación desde donde están (LID_SNAP 0,15 s para los rápidos, 0,3 s al cerrar). Test: test_the_warden_gets_stuck_in_the_roots_and_falls_to_the_sword.
 
 ## M12 — Assets propios (Blender)  (15/26)
 
