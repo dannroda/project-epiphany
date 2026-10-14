@@ -5800,9 +5800,11 @@ Daniel (2026-10-14) quiere grabar el templo completo y así no se puede: 1) cada
 
 ### 12.31 Chullpa: jefe final momia con aspecto propio · Pendiente
 
-**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `chullpa`, `jefe`
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `chullpa`, `jefe`
 
 Daniel (2026-10-14): en la Chullpa hay que acomodar el jefe final de la momia para que no sea simplemente la del sub-jefe pero más grande. Hoy el jefe es el modelo del sub-jefe escalado; necesita su propio aspecto (modelo, silueta, detalles) que se lea como jefe.
+
+**Notas:** Daniel (2026-10-14): prioridad; va a grabar la Chullpa completa. Antes que 12.30.
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 
