@@ -1,5 +1,5 @@
 extends SceneTree
-## Arma la decoración de cada nivel (11.3 templo, 11.4 overworld) en levels/decor/<nivel>_decor.tscn, que el nivel
+## Arma la decoración de cada nivel (11.4 overworld) en levels/decor/<nivel>_decor.tscn, que el nivel
 ## instancia como "Decor". Lee el GridMap, las salas o zonas y lo jugable (los otros hijos del nivel) y reparte, según la
 ## receta de cada sala o zona, piezas contra las paredes, en las esquinas y en el piso, lejos del paso, de las puertas, de
 ## los pozos y de lo jugable. Determinístico (semilla por sala): se puede correr de nuevo después de tocar un nivel.
@@ -8,7 +8,6 @@ extends SceneTree
 const TERRACE_HEIGHT := 2.6
 const MESH := "res://assets/epiphany/meshes/%s.res"
 const OUT := "res://levels/decor/%s_decor.tscn"
-const BRAZIER := preload("res://src/world/brazier.tscn")
 ## Plantas que se cortan como el pasto (Breakable): las celdas del kit, las que el terreno orgánico dejó en el piso
 ## jugable (tools/plantas_overworld.json) y las piezas de la decoración.
 const PLANT_CELLS := {
@@ -41,19 +40,6 @@ const NORTH := Vector2i(0, -1)
 ## Hijos del nivel que no son jugables (no reservan lugar).
 const IGNORED := ["GridMap", "WorldEnvironment", "DirectionalLight3D", "NavigationRegion3D", "Camera3D", "Decor"]
 
-## Templo, por sala: estandartes en la pared norte y en las laterales, braseros en las esquinas del norte, escombros
-## contra las paredes, vasijas rotas y venas del doom en el piso. Más ruina cuanto más cerca del jefe.
-const TEMPLE := {
-	"Vestibulo": {"banners": 2, "side_banners": 2, "braziers": 2, "rubble": 1},
-	"Hub": {"banners": 2, "side_banners": 2, "braziers": 2, "rubble": 2},
-	"Galeria": {"banners": 2, "side_banners": 1, "rubble": 2, "shards": 1},
-	"Agrietada": {"banners": 1, "rubble": 4, "shards": 1, "veins": 1},
-	"Arena": {"banners": 1, "side_banners": 1, "rubble": 4, "veins": 2},
-	"Ojos": {"banners": 1, "rubble": 3, "veins": 3},
-	"Puzzle": {"banners": 1, "rubble": 4, "shards": 1, "veins": 3},
-	"Antesala": {"banners": 2, "braziers": 2, "rubble": 3, "shards": 2, "veins": 4},
-	"Jefe": {"banners": 2, "braziers": 2, "rubble": 2, "veins": 5},
-}
 ## Overworld, por zona: hitos cerca del centro y piezas contra los riscos y los muros, cada una [malla, cuántas];
 ## props: [malla, nodo del nivel, corrimiento] van pegadas a algo jugable (la cornisa bajo el ojo, el nicho del cofre).
 const OVERWORLD := {
@@ -80,7 +66,6 @@ var _rng := RandomNumberGenerator.new()
 
 func _initialize() -> void:
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path("res://levels/decor"))
-	_decorate("temple", "room.gd", _temple_room)
 	_decorate("overworld", "area_zone.gd", _overworld_zone)
 	quit()
 
@@ -148,50 +133,6 @@ func _plants() -> void:
 
 func _scene(path: String) -> Node3D:
 	return (load(path) as PackedScene).instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE) as Node3D
-
-
-func _temple_room(room: Area3D, cells: Array[Vector3i], group: Node3D) -> void:
-	var recipe: Dictionary = TEMPLE.get(String(room.name), {})
-	var floors := cells.filter(_is_floor)
-	if recipe.get("braziers", 0) > 0:
-		_brazier_pair(room, floors, group)
-	var north := _wall_faces(floors, [NORTH])
-	var sides := _wall_faces(floors, [Vector2i(1, 0), Vector2i(-1, 0)])
-	for spot in _pick(north, recipe.get("banners", 0), 3.0, 1.4):
-		_banner(group, spot)
-	for spot in _pick(sides, recipe.get("side_banners", 0), 3.0, 1.4):
-		_banner(group, spot)
-	var hugging := floors.filter(func(c: Vector3i) -> bool: return _toward_walls(c) != Vector3.ZERO and not _near_hole(c))
-	for spot in _pick(hugging.map(func(c: Vector3i) -> Array: return [_center(c) + _toward_walls(c) * 0.45, _rng.randf() * TAU]), recipe.get("rubble", 0), 2.0, CLEARANCE):
-		_mesh(group, "templo/escombros" if _rng.randf() < 0.6 else "lugares/escombro_a", spot[0], spot[1], false)
-	var open := floors.filter(func(c: Vector3i) -> bool: return not _near_hole(c))
-	for spot in _pick(open.map(func(c: Vector3i) -> Array: return [_center(c) + _jitter(0.5), _rng.randf() * TAU]), recipe.get("shards", 0), 3.0, CLEARANCE):
-		_mesh(group, "objetos/vasija_pedazos", spot[0], spot[1], false)
-	for spot in _pick(open.map(func(c: Vector3i) -> Array: return [_center(c) + _jitter(0.4) + Vector3.UP * 0.02, _rng.randf() * TAU]), recipe.get("veins", 0), 3.5, 1.2):
-		_mesh(group, "templo/venas_doom", spot[0], spot[1], false)
-
-
-## Despegado de la pared lo que sobresale el relieve de los ladrillos, si no lo atraviesan.
-func _banner(group: Node3D, spot: Array) -> void:
-	var normal := Vector3(sin(spot[1]), 0, cos(spot[1]))
-	_mesh(group, "templo/estandarte", spot[0] + normal * 0.07 + Vector3.UP * 0.3, spot[1], false)
-
-
-## Dos braseros espejados contra la pared norte, lo más afuera posible.
-func _brazier_pair(room: Area3D, floors: Array, group: Node3D) -> void:
-	var mid := room.position.x + (room.get_node("CollisionShape3D") as Node3D).position.x
-	var north := floors.filter(func(c: Vector3i) -> bool: return _is_wall(c + Vector3i(0, 0, -1)) and _center(c).x < mid)
-	north.sort_custom(func(a: Vector3i, b: Vector3i) -> bool: return a.x < b.x)
-	for cell: Vector3i in north:
-		var left := _center(cell) + Vector3(0.2, 0, -0.35)
-		var right := Vector3(2.0 * mid - left.x, 0, left.z)
-		if _is_floor(_grid.local_to_map(right - _grid.position)) and _free(left, 1.4, 2.0) and _free(right, 1.4, 2.0):
-			for at in [left, right]:
-				var brazier := BRAZIER.instantiate() as Node3D
-				brazier.position = at
-				_add(group, brazier)
-				_placed.append(at)
-			return
 
 
 func _overworld_zone(zone: Area3D, cells: Array[Vector3i], group: Node3D) -> void:

@@ -96,10 +96,10 @@ func test_without_flag_is_always_open() -> void:
 
 func test_flag_opens_it() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
-	var portal := await _spawn(&"d1_boss_door")
+	var portal := await _spawn(&"te_boss_door")
 	assert_true(not portal.visible, "cerrado hasta el flag")
 	assert_true(not portal.monitoring)
-	tree.root.get_node(^"GameState").set_flag(&"d1_boss_door", true)
+	tree.root.get_node(^"GameState").set_flag(&"te_boss_door", true)
 	await tree.physics_frame
 	assert_true(portal.visible, "aparece con el flag")
 	assert_true(portal.monitoring)
@@ -107,15 +107,15 @@ func test_flag_opens_it() -> void:
 
 
 func test_boss_room_has_exit_to_temple_entrance() -> void:
-	var temple: Node = load("res://levels/temple.tscn").instantiate()
+	var temple: Node = load("res://levels/templo.tscn").instantiate()
 	var portal := temple.get_node(^"BossExitPortal") as Portal
 	assert_true(portal != null)
 	assert_eq(portal.target_scene, "res://levels/overworld.tscn")
 	assert_eq(portal.target_spawn, &"templo")
-	assert_eq(portal.required_flag, &"d1_boss_defeated", "aparece al vencer al jefe")
-	var boss_room := temple.get_node(^"Jefe") as Room
+	assert_eq(portal.required_flag, &"te_boss_defeated", "aparece al vencer al jefe")
+	var boss_room := temple.get_node(^"Planta/Jefe") as Room
 	var shape := boss_room.get_node(^"CollisionShape3D") as CollisionShape3D
 	var size := (shape.shape as BoxShape3D).size
-	var local := portal.position - boss_room.position
+	var local := portal.position - boss_room.position - (boss_room.get_parent() as Node3D).position
 	assert_true(absf(local.x) < size.x / 2.0 and absf(local.z) < size.z / 2.0, "adentro de la sala del jefe")
 	temple.free()

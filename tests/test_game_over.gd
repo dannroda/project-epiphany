@@ -25,7 +25,7 @@ func test_continue_in_the_overworld_and_in_a_room() -> void:
 	assert_eq(caption[0].text, "GAMEOVER_FROM_CHECKPOINT", "en el overworld")
 	tree.root.get_node(^"MenuStack").pop()
 
-	await saves.load_scenario("dungeon_no_bow")
+	await saves.load_scenario("templo")
 	await tree.create_timer(0.5).timeout
 	screen = await _die(tree)
 	var event := InputEventAction.new()
@@ -39,7 +39,7 @@ func test_continue_in_the_overworld_and_in_a_room() -> void:
 	await tree.create_timer(1.0).timeout
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	assert_eq(player.is_dead, false, "continuar: de pie")
-	assert_true(player.global_position.distance_to(Vector3(24, 0, 50)) < 2.5, "en la entrada de la sala donde cayó (%s)" % player.global_position)
+	assert_true(player.global_position.distance_to(Vector3(44, 0, 50)) < 2.5, "en la entrada de la sala donde cayó (%s)" % player.global_position)
 	state.reset()
 
 

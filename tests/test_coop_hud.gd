@@ -14,7 +14,7 @@ func test_each_player_gets_a_panel_and_it_goes_when_they_leave() -> void:
 	var state: Node = tree.root.get_node(^"GameState")
 	var players: Node = tree.root.get_node(^"Players")
 	state.reset()
-	tree.change_scene_to_file("res://levels/temple.tscn")
+	tree.change_scene_to_file("res://levels/templo.tscn")
 	await tree.scene_changed
 	for i in 5:
 		await tree.process_frame

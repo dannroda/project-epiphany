@@ -96,6 +96,8 @@ func covers_a_player() -> bool:
 ## Etiqueta del piso arriba del minimapa (solo en mazmorras de varios pisos).
 func _show_floor(room: Room) -> void:
 	var dungeon_floor := DungeonFloor.of(room) if room else null
+	if get_tree().get_nodes_in_group(DungeonFloor.GROUP).size() < 2:
+		dungeon_floor = null
 	floor_tag.visible = dungeon_floor != null
 	if dungeon_floor:
 		floor_code.text = dungeon_floor.code()

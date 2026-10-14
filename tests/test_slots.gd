@@ -119,14 +119,14 @@ func test_autosave_on_big_chests_and_the_antechamber() -> void:
 	var count := [0]
 	saves.saved.connect(func(_slot: int) -> void: count[0] += 1)
 	var level := tree.current_scene
-	(level.get_node(^"Antesala") as Room).mark_entered()
+	(level.get_node(^"Planta/Antesala") as Room).mark_entered()
 	await tree.process_frame
 	assert_eq(count[0], 1, "entrar a la antesala guarda")
 	var chest: Chest = load("res://src/world/chest.tscn").instantiate()
 	chest.item = Items.get_item(&"compass")
 	chest.big = true
 	level.add_child(chest)
-	chest.global_position = Vector3(20, 0, 30)
+	chest.global_position = Vector3(40, 0, 24)
 	chest.interactable.interact(tree.get_first_node_in_group(&"player"))
 	await tree.process_frame
 	assert_eq(count[0], 2, "abrir un cofre grande guarda")

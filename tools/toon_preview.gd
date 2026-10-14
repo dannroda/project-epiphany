@@ -3,7 +3,7 @@ extends SceneTree
 ## jugador y en cada Spawn*: <nivel>_<lugar>_base.png y _toon.png. Necesita ventana (no headless).
 ## godot --path . --script res://tools/toon_preview.gd --resolution 960x540 -- <carpeta>
 const TOON := preload("res://src/shaders/toon/epiphany_toon.tres")
-var levels := ["res://levels/overworld.tscn", "res://levels/temple.tscn"]
+var levels := ["res://levels/overworld.tscn", "res://levels/templo.tscn"]
 var level: Node
 var player: Node3D
 var spots: Array = []

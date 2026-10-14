@@ -67,7 +67,7 @@ func test_spawn_places_everyone_side_by_side() -> void:
 
 
 func test_two_players_in_the_overworld_and_the_temple() -> void:
-	for level in ["res://levels/overworld.tscn", "res://levels/temple.tscn"]:
+	for level in ["res://levels/overworld.tscn", "res://levels/templo.tscn"]:
 		var setup: Array = await _load(level)
 		var tree: SceneTree = setup[0]
 		var second: PlayerCharacter = setup[3]

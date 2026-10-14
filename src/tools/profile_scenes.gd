@@ -12,9 +12,9 @@ func _initialize() -> void:
 	await _measure("overworld · pradera con pasto", func() -> void:
 		await saves.load_scenario("start")
 		Players.lead().global_position = Vector3(0, 0, 2))
-	await _measure("templo · arena con oleadas", func() -> void:
-		await saves.load_scenario("dungeon_no_bow")
-		Players.lead().global_position = Vector3(48, 0, 37))
+	await _measure("templo · hub", func() -> void:
+		await saves.load_scenario("templo")
+		Players.lead().global_position = Vector3(44, 0, 36))
 	await _measure("templo · antesala (doom 0.9)", func() -> void:
 		await saves.load_scenario("pre_boss"))
 	quit()

@@ -33,7 +33,7 @@ El tema *Imminent Doom* sigue siendo el tono: el fin se siente por ambientación
 
 **Narrativa ambiental:** sin NPCs con diálogo. El texto vive en **tablillas/inscripciones** de piedra (overworld y mazmorra), que además resuelven pistas de puzzles.
 
-**Tablillas (11.22):** cuentan la opción A en orden suelto; cada una tiene su flag de leída (`ow_tablet_*`, `d1_tablet_*`). Textos en `data/dialogue/overworld.dialogue` y `temple.dialogue`.
+**Tablillas (11.22):** cuentan la opción A en orden suelto; cada una tiene su flag de leída (`ow_tablet_*`, `te_tablet_*`). Textos en `data/dialogue/overworld.dialogue` y `temple.dialogue`.
 
 | Dónde | Cue | Qué cuenta |
 |---|---|---|
@@ -175,7 +175,7 @@ Es el orden decidido en 11.90 y cambiado en 11.113 (2026-10-12, Daniel): el temp
 
 **Ítem y sub-jefe (11.113):** el ítem de cada mazmorra lo guarda un sub-jefe basado en el jefe de esa mazmorra, que se vence sin ese ítem (con los anteriores, sí). La segunda mitad de la mazmorra se resuelve con el ítem, y los ítems de mazmorras anteriores se combinan con él para abrirla. Por ejemplo, en la Queñoa (D2) la segunda mitad combina el arco con los saltos de la pluma.
 
-**Molde de cada mazmorra (11.90):** prueba en el overworld → mazmorra con una mecánica que la recorre entera → ítem a mitad, guardado por un sub-jefe → el jefe se vence con ese ítem → el ítem abre la zona siguiente del overworld y 2–3 secretos en zonas ya visitadas. Cada mazmorra se diseña primero como grafo llave-cerradura (`DungeonGraph` en `data/dungeons/`: zonas, pasos y qué pide cada lugar), y `test_dungeon_reach` lo cruza con la escena (tipo de puerta, interruptores de cada reja, contenido de los cofres, que no falte ninguna puerta, reja, cofre o interruptor) y recorre todos los órdenes de juego: falla si algo pide un ítem que nadie da o si hay un estado desde el que ya no se llega al objetivo, y muestra el camino hasta ahí. Un grafo sin escena es de diseño: las cerraduras (`locked`, `needs`) y lo que da cada lugar (`gives`, `key`) se declaran en él y se prueba antes de construir; con escena, la escena tiene que coincidir. El test también revisa el molde: sin el ítem (`item`) no se llega al objetivo, y el ítem pide vencer al sub-jefe (`guard`), que se vence sin él. `tools/dungeon_graph_mermaid.gd -- <grafo>` lo dibuja como diagrama Mermaid. La Chullpa (`chullpa_graph.tres`), la Queñoa (`quenoa_graph.tres`) y el templo (`temple_graph.tres`) tienen el suyo. Cada mazmorra tiene un prefijo propio para su id y sus flags, que no depende de su número: `ch_` la Chullpa, `qv_` la Queñoa, `d1_` el templo (de cuando era D1).
+**Molde de cada mazmorra (11.90):** prueba en el overworld → mazmorra con una mecánica que la recorre entera → ítem a mitad, guardado por un sub-jefe → el jefe se vence con ese ítem → el ítem abre la zona siguiente del overworld y 2–3 secretos en zonas ya visitadas. Cada mazmorra se diseña primero como grafo llave-cerradura (`DungeonGraph` en `data/dungeons/`: zonas, pasos y qué pide cada lugar), y `test_dungeon_reach` lo cruza con la escena (tipo de puerta, interruptores de cada reja, contenido de los cofres, que no falte ninguna puerta, reja, cofre o interruptor) y recorre todos los órdenes de juego: falla si algo pide un ítem que nadie da o si hay un estado desde el que ya no se llega al objetivo, y muestra el camino hasta ahí. Un grafo sin escena es de diseño: las cerraduras (`locked`, `needs`) y lo que da cada lugar (`gives`, `key`) se declaran en él y se prueba antes de construir; con escena, la escena tiene que coincidir. El test también revisa el molde: sin el ítem (`item`) no se llega al objetivo, y el ítem pide vencer al sub-jefe (`guard`), que se vence sin él. `tools/dungeon_graph_mermaid.gd -- <grafo>` lo dibuja como diagrama Mermaid. La Chullpa (`chullpa_graph.tres`), la Queñoa (`quenoa_graph.tres`) y el templo (`templo_graph.tres`) tienen el suyo. Cada mazmorra tiene un prefijo propio para su id y sus flags, que no depende de su número: `ch_` la Chullpa, `qv_` la Queñoa, `d1_` el templo (de cuando era D1).
 
 **Alcance por entregas:** el primer playtest externo lleva D1 y D2. D3, D4 y el templo se ven en el overworld pero están cerrados y llegan después como actualización (sirve para probar un sistema de parches).
 
@@ -314,7 +314,7 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 ## 8. Mazmorra — El Templo
 <!-- id: mazmorra -->
 
-**Rediseño (11.113, 2026-10-13, Daniel: si):** el templo es la última mazmorra y usa todos los ítems. No da ítem: el sub-jefe guarda la llave del jefe. Escena nueva `levels/templo.tscn`, flags `te_`; `levels/temple.tscn` (lo de abajo) queda como nivel de prueba hasta que el nuevo esté listo, y entonces el portal del overworld apunta al nuevo. Salas de 7 × 6 celdas (14 × 12 m), para que la cámara quede fija como en Link's Awakening. Grafo de diseño: `data/dungeons/templo_graph.tres` (pasa el test de alcanzabilidad y el molde, con `item` = llave del jefe y `guard` = la Mano). El ala del gancho está hecha (11.30): el abismo se ensanchó a 4 celdas y lleva dos postes.
+**Rediseño (11.113, 2026-10-13, Daniel: si):** el templo es la última mazmorra y usa todos los ítems. No da ítem: el sub-jefe guarda la llave del jefe. Escena `levels/templo.tscn` (id `te`, flags `te_`); el templo viejo de 9 salas (`levels/temple.tscn`, flags `d1_`) se retiró en 11.162 (2026-10-14, Daniel: lo obsoleto se borra), con su grafo, su kit, su decoración y su navmesh. Salas de 7 × 6 celdas (14 × 12 m), para que la cámara quede fija como en Link's Awakening. Grafo de diseño: `data/dungeons/templo_graph.tres` (pasa el test de alcanzabilidad y el molde, con `item` = llave del jefe y `guard` = la Mano). El ala del gancho está hecha (11.30): el abismo se ensanchó a 4 celdas y lleva dos postes.
 
 ```
                       ┌──────────┐
@@ -358,85 +358,16 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 **Munición (11.109 S7):** cada sala que gasta munición tiene vasijas que siempre la dan (`data/drops/pot_bombs.tres`, `pot_arrows.tres`; vuelven al salir de la sala): dos de bombas en el Arco, dos de flechas en el Ojo del arco, y una de cada en la combinada.
 | Jefe | El Ojo con manos (§9) |
 
-**Templo viejo (nivel de prueba):**
-
-9 salas + jefe. Hub central con puertas que se van abriendo.
-
-**Sin pluma (11.90, 2026-10-12):** la pluma pasó a D2. Se quitaron la sala de la pluma (era la 10, debajo de la agrietada: su puerta quedó tapiada), la fila de huecos de la entrada del puzzle y el escalón de la vasija de la antesala. Pendiente: el arco lo guarda un sub-jefe (11.31) en vez de solo oleadas.
-
-| # | Sala | Puzzle / mecánica | Combate | Obtiene | Doom |
-|---|---|---|---|---|---|
-| 1 | Vestíbulo | Bloque por grilla → interruptor de piso abre persiana | — | — | Calma, luz natural |
-| 2 | Hub central | 4 salidas: con llave, con persiana, del jefe (sellada), libre | Esqueletos | — | Primeras grietas |
-| 3 | Galería de trampas | Torretas disparan orbes → reflejar con escudo espejo a un cristal; entre la entrada y el puzzle, dos columnas de pinchos (`SpikeTrap`) que suben en ola de norte a sur y se cruzan con timing | Torretas, pinchos | Llave chica | Polvo cae al resolver |
-| 4 | Sala agrietada | Muro bombable; bombas empujan bloques físicos a un interruptor | — | Mapa | Temblor breve |
-| 5 | Arena | Puerta se cierra hasta limpiar la sala | Oleada con esqueleto con escudo | **Cofre grande: ARCO** | Rugido lejano |
-| 6 | Sala de ojos | Ojos-interruptor sobre un abismo, solo alcanzables con flechas | Torreta | Brújula + llave chica | Luz vira a rojizo |
-| 7 | Puzzle combinado | Bloques + reflejo + flechas en secuencia | Mixto | **Llave del jefe** | Murmullo audible |
-| 8 | Antesala | Vasijas con corazones, tablilla, puerta del jefe | — | — | Latido constante |
-| 9 | **Jefe** | Ver §9 | — | Contenedor de corazón | Clímax |
-
 ### 8.1 Layout
 <!-- id: mazmorra-layout -->
 
-Decidido el 2026-10-08 con la metodología de [[gdd#overworld-layout]] (artículo "The Ultimate Methodology of creating Zelda-Like Dungeon Level"): hub con "lados primero, centro al final", candado y llave con ramas obligatorias, y el ítem clave (arco) a mitad de camino para volver a salas ya vistas con algo nuevo.
+El layout es el del diagrama de arriba: alas de a dos salas a los lados del vestíbulo y del hub, centro al final (sello de cuatro ojos), la Mano y la combinada a los lados de la antesala. Salas de 14 × 10 m con la cámara fija; la del **jefe** mide 22 × 14 m (11.162: el Ojo con manos de 12.26 no entraba en 10 m de fondo, y el portal de salida quedaba encima del player), como la guarida del templo viejo.
 
-```
-                 ┌───────────┐
-                 │ 9 JEFE    │
-                 └─────▲─────┘
-                    [JEFE]
-┌───────────┐    ┌─────┴─────┐    ┌───────────┐
-│ 7 PUZZLE  │    │ 8 ANTESALA│    │ 5 ARENA   │
-│ llave jefe│    │ vasijas,  │    │ oleadas → │
-│ + abre el │    │ tablilla  │    │ ARCO      │
-│ sello del │    └─────▲─────┘    └─────▲─────┘
-│ hub       │      [SELLO]          [GRIETA]
-└─────▲─────┘          │                │
-   [LLAVE]             │                │
-┌─────┴─────┐    ┌─────┴─────┐    ┌─────┴─────┐
-│ 6 OJOS    │    │ 2 HUB     │    │ 4 AGRIET. │
-│ brújula + │    │ esqueletos│◄───┤ bombas →  │
-│ llave 2   │    │           │LLAVE  MAPA    │
-└─────▲─────┘    └─────▲─────┘    └───────────┘
-   [OJO→flecha]        │
-┌─────┴─────┐          │
-│ 3 GALERÍA ├─[PERSIANA]┘
-│ torreta → │    ┌─────┴─────┐
-│ llave 1   │    │ 1 VESTÍB. │
-└───────────┘    │ bloque →  │
-                 │ interrup. │
-                 └───────────┘  ← entrada desde el overworld (vestíbulo)
-```
+**Doom (10.6, 11.162):** cada `Room` tiene `doom` (0..1) y sube con el recorrido: Vestíbulo 0, Pluma 0.1, Ojo de la pluma 0.15, Arco 0.2, Ojo del arco 0.25, Hub 0.35, Gancho 0.45, Ojo del gancho 0.5, Espejo 0.55, Ojo del espejo 0.6, La Mano 0.7, Combinada 0.8, Antesala 0.9, Jefe 1. `DoomAmbience` (un nodo en la escena del templo) lo sigue suavizado: la luz ambiente y el sol viran de frío a rojo, sube una niebla rojiza, cae polvo alrededor de la cámara, el piso se agrieta (más cuanto más doom; el vestíbulo queda intacto) y desde 0.3 el templo tiembla cada vez más seguido, con retumbo. La música suma capas con el mismo valor (10.5). **Legibilidad (11.7):** el player y los objetos no se tiñen (capa visual 2, `LegibleLight`, materiales sin niebla).
 
-| Puerta | Tipo | Se abre con |
-|---|---|---|
-| Vestíbulo → Hub | Interruptor | Bloque por grilla en el interruptor del vestíbulo |
-| Hub → Galería (O) | Persiana | Vencer a los esqueletos del hub |
-| Hub → Sala agrietada (E) | Con llave | Llave 1 (Galería) |
-| Agrietada → Arena (N) | Muro agrietado | Bomba |
-| Galería → Ojos (N) | Interruptor | Ojo sobre la puerta: **solo con flecha** (vuelta a una sala vista con el arco) |
-| Ojos → Puzzle (N) | Con llave | Llave 2 (Ojos) |
-| Hub → Antesala (N) | Sellada (interruptor) | Resolver el puzzle combinado: se ve cerrada desde el principio |
-| Antesala → Jefe (N) | Del jefe | Llave del jefe (Puzzle) |
+**Tablillas (11.162):** cuatro, con los textos de `data/dialogue/temple.dialogue`: la entrada en el Vestíbulo (`te_tablet_vestibule`), la promesa del sello en el Hub (`te_tablet_hub`), los ojos menores en el Ojo del arco (`te_tablet_eyes`) y el guardián en la Antesala (`te_tablet_antechamber`). La del arco (`bow_hint`) era un tutorial y queda para la Queñoa.
 
-**Llaves:** 2 llaves chicas y 2 puertas con llave. La llave 1 solo puede gastarse en la puerta este del hub, porque la otra puerta con llave (Ojos → Puzzle) queda detrás del arco, que está detrás de la puerta este. La llave 2 aparece recién en Ojos. En ningún orden quedan menos llaves que puertas.
-
-**Pluma (11.35):** estuvo en la sala 10 hasta el 2026-10-12; desde 11.90 es el ítem de D2. El grafo llave-cerradura del templo está en `data/dungeons/temple_graph.tres` (`test_dungeon_reach`).
-
-**Arco a mitad de camino:** sin arco se recorren Vestíbulo, Hub, Galería, Agrietada y Arena (5 de 9). Con el arco se vuelve a la Galería, cuyo ojo sobre la puerta norte se vio desde el principio (cebo), y empieza la segunda mitad: Ojos y Puzzle giran alrededor de las flechas, combinadas con bloques y el escudo espejo.
-
-**Munición:** las vasijas sueltan flechas y bombas (solo si ya se tiene el arco o la bolsa); hay vasijas en el hub y en la antesala.
-
-**Curva de tensión y *doom*:** calma (Vestíbulo) → combate (Hub) → puzzle con presión (Galería) → puzzle (Agrietada) → clímax de la primera mitad (Arena, oleadas) → descubrimiento con el arco (Ojos) → prueba combinada (Puzzle) → respiro antes del jefe (Antesala) → Jefe. El *doom* de cada sala es la columna de la tabla de arriba.
-
-**Construcción:** `levels/temple.tscn` (id `d1`, flags `d1_*`, diálogos en `data/dialogue/temple.dialogue`) con el kit gris: 9 salas de 11 × 7 celdas (22 × 14 m, apenas más que una pantalla) con paredes compartidas y la puerta en el centro de cada pared; la sala (cx, cz) del mapa tiene su centro en (24 cx, 16 cz) m. La puerta del templo del overworld lleva al vestíbulo (spawn `start`) y la salida sur vuelve al spawn `templo`. *Vestíbulo:* bloque → interruptor (`d1_vestibule_switch`) → puerta al hub. *Hub:* dos esqueletos cierran la persiana oeste hasta vencerlos; este con llave (`d1_hub_locked_door`); norte, el sello; vasijas con munición. *Galería:* una torreta al norte; bloqueando en diagonal con el escudo espejo, el orbe entra de frente y sale hacia el ojo del noroeste (`d1_gallery_eye`), que baja la reja del nicho con la llave 1. El ojo sobre la puerta norte (`d1_ojos_door_eye`) solo se despierta con flecha. *Sala agrietada:* una pared cruza la sala con un hueco tapado por una caja liviana (masa 0.3): el player no la empuja, una bomba la vuela. Del otro lado, el mapa (`d1_map_chest`) y el muro agrietado hacia la arena (`d1_arena_cracked_wall`). Si la caja queda trabando la salida, otra bomba la saca (las vasijas dan bombas). *Arena:* `WaveSpawner` (cada hijo es una oleada; sus `WaveSpawn` dicen qué enemigo y dónde) arranca al entrar y retiene cerrada la persiana entre oleadas (`Room.waves_running`). Dos oleadas: dos esqueletos; después el esqueleto con escudo y dos esqueletos. Al ganar (`d1_arena_cleared`) baja la reja del cofre grande del arco (`d1_chest_bow`, trae 10 flechas). Morir a mitad recarga la sala y las oleadas empiezan de cero. *Sala de ojos:* un hueco (pieza Hueco del kit, sin colisión) cruza la sala; caer lastima medio corazón y devuelve a la entrada de la sala (`Pit`). Del otro lado, dos ojos que solo despiertan con flecha: el oeste (`d1_ojos_eye_a`) abre el nicho de la brújula, el este (`d1_ojos_eye_b`) sube un `Bridge` sobre el hueco; cruzando, la llave 2 y la puerta con llave al puzzle. *Sala del puzzle*: en secuencia: 1) el bloque, al este del interruptor, empujado dos veces al oeste, baja la reja que corta el haz; 2) atajando el haz con el escudo espejo se enciende el cristal, que baja la reja delante del ojo; 3) una flecha al ojo (`d1_puzzle_eye`) abre el nicho de la llave del jefe y el sello del hub. *Antesala:* cuatro vasijas de corazones, una tablilla que anticipa al jefe (cue `antechamber`: flechas y reflejo) y la puerta del jefe (`d1_boss_door`; la llave del jefe no se gasta). Checkpoint: la cámara no anota la entrada de la sala del jefe (`Room.boss_room`), así que morir ahí devuelve a la antesala. *Guarida del ojo:* sala vacía; el jefe es M9.
-
-**Doom (10.6):** cada `Room` tiene `doom` (0..1): Vestíbulo 0, Hub 0.15, Galería 0.3, Agrietada 0.4, Arena 0.55, Ojos 0.65, Puzzle 0.75, Antesala 0.9, Jefe 1. `DoomAmbience` (un nodo en la escena del templo) lo sigue suavizado: la luz ambiente y el sol viran de frío a rojo, sube una niebla rojiza, cae polvo alrededor de la cámara, el piso se agrieta (decals generados, más cuanto más doom; el vestíbulo queda intacto) y desde 0.3 el templo tiembla cada vez más seguido (de cada ~14 s a cada ~4 s) con retumbo. La música suma capas con el mismo valor (10.5). **Legibilidad (11.7):** el player y los objetos (cofres, pickups, vasijas, bloques, bombas, tablillas, interruptores; `DoomAmbience.is_legible`) no se tiñen: van en la capa visual 2, que el sol rojo no ilumina (pero sí proyectan sombra, `shadow_caster_mask`), los ilumina `LegibleLight`, una luz neutra con la dirección del sol, y sus materiales no reciben niebla (copias con `disable_fog`). Las grietas no se proyectan sobre ellos. La luz ambiente sí les llega.
-
-**Escenarios y recorrido (8.8):** `dungeon_no_bow` (en el hub, con escudo espejo y bombas), `pre_boss` (en la antesala, todo resuelto y la llave del jefe) y `boss_key_door_locked` (inconsistente a propósito: la puerta del jefe abierta sin la llave; `SaveCodec.validate` lo marca). `tests/test_temple.gd › test_full_run_from_the_entrance_to_the_boss_door` recorre de la entrada a la puerta del jefe desde un único estado inicial e imprime el tiempo por tramo (simulado, sin pelear de verdad); el recorrido real queda para la prueba a mano.
-
-**Softlocks revisados:** *munición*: las vasijas sueltan flechas y bombas solo si se tiene el arco o la bolsa, y vuelven al recargar la escena (salir y entrar al templo); hacen falta 2 bombas y 4 flechas. *Bloques*: los que no están resueltos vuelven a su lugar al salir de la sala (el del vestíbulo, saliendo al overworld). *Caja de la sala agrietada*: si cae trabando la salida, otra bomba la saca (las vasijas de esa mitad dan bombas). *Puertas*: las persianas solo encierran al entrar a su sala y se abren al vencer; las puertas con llave se abren desde el lado por el que se llega y no hay otro camino. *Hueco*: caer devuelve a la entrada de la sala.
+**Escenarios (8.8):** `templo` (en el vestíbulo, con todos los ítems), `pre_boss` (en la antesala, todo resuelto y la llave del jefe; la Antesala guarda al entrar) y `boss_key_door_locked` (inconsistente a propósito: la puerta del jefe abierta sin la llave; `SaveCodec.validate` lo marca).
 
 **Kit gris y medidas (6.7):** las salas se arman con un `GridMap` sobre `data/kits/gray_kit.tres` (lo genera `src/tools/build_gray_kit.gd` con las texturas de prototipo de Kenney): Piso, Pared, Columna, Escalón y Puerta (piso + dintel; la `Door` va en el medio de esa celda). Celdas de 2 m centradas en (2i, 2k), piso en y = 0, paredes de 2.6 m y una celda de grosor; la cámara de esas escenas usa `mask_margin` = 2 para que se vean las paredes enteras. Una sala de una pantalla tiene 7 × 5 celdas de interior (14 × 10 m); las más grandes se recorren. El bloque de empuje usa la misma grilla.
 
@@ -726,7 +657,7 @@ Decidido el 2026-10-09: **KayKit + prototipo, pulido.** Personajes y armas de Ka
 | Templo | Piedra gris fría (luz ambiente `#8c85a6`) | Antorchas cálidas `#ffad61`; con el *doom*, todo vira a rojo `#cc4d40` con niebla `#401410` |
 | Interactivos | Cofres de madera con herrajes (grandes: dorados), muros agrietados de ladrillo gris con musgo (se distinguen del acantilado), puertas de color por tipo, cristales celestes, sello violeta con el ojo | — |
 
-**Kit del templo** (M11): `data/kits/temple_kit.tres`, que arma `tools/build_temple_kit.gd` a partir del kit gris. Los ítems, las colisiones y la navegación son los mismos; cambian las mallas KayKit. Piso: `floor_tile_small`, más cuatro variantes (rota A/B y yuyos A/B, ítems 11–14) repartidas en ~15 % de las celdas. Pared: cuatro `wall_half` estiradas a la celda de 2 × 2 m. Columna: `pillar`. Paso de puerta: con dintel; el marco mira a ±Z, así que en las paredes este/oeste la celda va girada 90° (orientación 16 del GridMap). Si no, el marco queda cruzado en el paso como una losa del alto de la pared sin colisión (test `test_doorways_face_their_wall`). Las piedras usan `kaykit_stone.tres`, que es el shader de corte con `use_uv`, para que el muro sur se siga recortando. Para cambiar una pieza se edita el script y se vuelve a correr (`godot --headless --path . --script res://tools/build_temple_kit.gd`). El overworld sigue con el kit gris.
+**Kit del templo** (M11, histórico: el kit y el templo viejo que lo usaba se borraron en 11.162; el templo nuevo usa `templo_la_kit.tres`): `data/kits/temple_kit.tres`, que arma `tools/build_temple_kit.gd` a partir del kit gris. Los ítems, las colisiones y la navegación son los mismos; cambian las mallas KayKit. Piso: `floor_tile_small`, más cuatro variantes (rota A/B y yuyos A/B, ítems 11–14) repartidas en ~15 % de las celdas. Pared: cuatro `wall_half` estiradas a la celda de 2 × 2 m. Columna: `pillar`. Paso de puerta: con dintel; el marco mira a ±Z, así que en las paredes este/oeste la celda va girada 90° (orientación 16 del GridMap). Si no, el marco queda cruzado en el paso como una losa del alto de la pared sin colisión (test `test_doorways_face_their_wall`). Las piedras usan `kaykit_stone.tres`, que es el shader de corte con `use_uv`, para que el muro sur se siga recortando. Para cambiar una pieza se edita el script y se vuelve a correr (`godot --headless --path . --script res://tools/build_temple_kit.gd`). El overworld sigue con el kit gris.
 
 **Personajes** (M11): el player es el Knight de KayKit Adventurers, y los enemigos son de KayKit Skeletons 1.1 (CC0, `assets/kaykit_skeletons/`): el esqueleto común es el Minion y el de escudo, el Warrior. (Después pasaron a los modelos propios de `build_personajes.py`; el pack se retiró el 2026-10-13.) Todos usan el Rig_Medium, así que comparten el Skeleton3D y las librerías de animación de `player/animation/libs/`; los packs no traen animaciones nuevas. `tools/build_character_models.gd` arma una escena `Visuals` por personaje en `src/entities/models/` (mallas, piel y material; los cascos y capuchas van en BoneAttachment3D con esqueleto externo), y esa escena se instancia bajo el `ModelController`. Para otro modelo en un enemigo, `EntityConfig.model` reemplaza el `Visuals` de la escena al arrancar. Rogue y Mage están listos para cuando haya más tipos de enemigo.
 
@@ -2067,7 +1998,7 @@ Plugin en `addons/epiphany_tools/` (dock). Funcionalidades:
 
 Código: `addons/epiphany_tools/save_inspector/` (`save_inspector.gd` + una pestaña por script en `tabs/`).
 
-Escenarios iniciales sugeridos: `start`, `bombs_only`, `pre_temple`, `dungeon_no_bow`, `pre_boss`, `full_inventory`, `boss_key_door_locked` (inconsistente a propósito).
+Escenarios iniciales sugeridos: `start`, `bombs_only`, `pre_temple`, `templo`, `pre_boss`, `full_inventory`, `boss_key_door_locked` (inconsistente a propósito).
 
 ### 11.9 Depuración
 <!-- id: depuracion -->

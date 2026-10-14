@@ -205,7 +205,7 @@ func test_zoom_follows_the_cursor() -> void:
 
 
 func test_dungeon_doors_and_room_cursor() -> void:
-	var setup: Array = await _open_map("dungeon_no_bow")
+	var setup: Array = await _open_map("templo")
 	var tree: SceneTree = setup[0]
 	var state: Node = setup[1]
 	var page: Control = setup[3]

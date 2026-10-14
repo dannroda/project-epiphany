@@ -155,12 +155,12 @@ func _slam_beside(jump_before: float) -> int:
 	var state := tree.root.get_node(^"GameState")
 	state.reset()
 	_give_feather(state)
-	tree.change_scene_to_file("res://levels/temple.tscn")
+	tree.change_scene_to_file("res://levels/templo.tscn")
 	await tree.scene_changed
 	var level := tree.current_scene
 	(level.get_node(^"BossArena") as BossArena).started = true
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
-	player.global_position = Vector3(24, 0, 21)
+	player.global_position = Vector3(44, 0, 11)
 	for i in 10:
 		await tree.physics_frame
 	var hand := (level.get_node(^"Boss") as Boss).hand_left

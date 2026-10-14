@@ -102,6 +102,6 @@ func test_clouds_only_while_in_the_overworld() -> void:
 		var shade: Vector4 = clouds.value()
 		assert_true(shade.x > 0.0 and shade.y > 0.0, "fuerza y tamaño")
 	overworld.free()
-	var temple: Node = load("res://levels/temple.tscn").instantiate()
+	var temple: Node = load("res://levels/templo.tscn").instantiate()
 	assert_true(temple.get_node_or_null(^"CloudShadows") == null, "el templo no")
 	temple.free()
