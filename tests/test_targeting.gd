@@ -115,3 +115,16 @@ func test_range_is_the_detector_radius() -> void:
 	for i in 60:
 		await tree.physics_frame
 	assert_eq(_name(targeting), "-", "fuera del radio se suelta")
+
+
+func test_locking_picks_the_nearest_enemy() -> void:
+	var setup: Array = await _load()
+	var tree: SceneTree = setup[0]
+	var targeting: Targeting = setup[1]
+	var level: Node = setup[2]
+	var right := level.get_node(^"Right") as Node3D
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	player.global_position = right.global_position + Vector3(0, 0, 2.5)
+	await tree.physics_frame
+	targeting.lock_best_target()
+	assert_eq(_name(targeting), "Right", "al fijar, el enemigo más cercano y no el más centrado")

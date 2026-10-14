@@ -86,7 +86,8 @@ func lock_best_target() -> void:
 	if candidates.is_empty():
 		clear()
 		return
-	set_target(_most_centered(candidates, camera))
+	var foes := candidates.filter(func(candidate: Node3D) -> bool: return not candidate is HookPost)
+	set_target(_nearest(foes) if not foes.is_empty() else _most_centered(candidates, camera))
 
 
 ## Fija al candidato que está en la dirección `world_dir` desde el player (el stick derecho apunta).
@@ -208,6 +209,14 @@ func _most_centered(candidates: Array[Node3D], camera: Camera3D) -> Node3D:
 	return best
 
 
+func _nearest(candidates: Array) -> Node3D:
+	var best: Node3D = null
+	for candidate: Node3D in candidates:
+		if best == null or player.global_position.distance_squared_to(candidate.global_position) < player.global_position.distance_squared_to(best.global_position):
+			best = candidate
+	return best
+
+
 func _in_sight(target: Node3D) -> bool:
 	var query := PhysicsRayQueryParameters3D.create(player.global_position + Vector3.UP, target.global_position + Vector3.UP)
 	var exclude: Array[RID] = [player.get_rid()]
@@ -219,16 +228,28 @@ func _in_sight(target: Node3D) -> bool:
 	return player.get_world_3d().direct_space_state.intersect_ray(query).is_empty()
 
 
-## Los postes no entran por el detector: con el gancho en un botón se fijan los que están a su alcance, a cualquier altura.
+## Los postes no entran por el detector: con el gancho en un botón se fijan los que están a su alcance, a cualquier altura,
+## salvo los de otro piso de la mazmorra.
 func _sync_posts() -> void:
 	var reach := player.hook_reach()
 	var hand := player.global_position + Vector3.UP * Hook.HEIGHT
+	var here := _room_of(player.global_position)
 	for post: HookPost in get_tree().get_nodes_in_group(HookPost.GROUP):
 		var near := reach > 0.0 and hand.distance_to(post.ring()) <= reach
+		if near and here:
+			var there := _room_of(post.global_position)
+			near = there == null or there.floor_level() == here.floor_level()
 		if near and not possible_targets.has(post):
 			possible_targets.append(post)
 		elif not near:
 			possible_targets.erase(post)
+
+
+func _room_of(point: Vector3) -> Room:
+	for room: Room in get_tree().get_nodes_in_group(Room.GROUP):
+		if room.contains(point):
+			return room
+	return null
 
 
 func _on_detector_body_entered(body: Node3D) -> void:
