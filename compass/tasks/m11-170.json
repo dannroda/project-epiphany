@@ -11,17 +11,17 @@
     }
   ],
   "milestone": "m11",
-  "notes": "Daniel (2026-10-14, playtest): sigue el fundido en la escalera de soga del Ravine; pedido de nuevo.",
+  "notes": "Hecho (-5d, ecb1de13): estado Climbing que sigue los marcadores Lip/RungTop/RungBottom de la escalera de soga con la animación Carry/Climb; Top y Bottom solo arrancan cerca de su punta (antes al desenrollar arriba disparaba Bottom). test_secrets sube y baja.",
   "order": 167,
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "overworld",
     "animacion"
   ],
-  "test": "",
+  "test": "test_secrets: la escalera de soga se sube y se baja con la animación, sin fundido",
   "title": "Atajos: animación del player subiendo y bajando en vez del fundido",
-  "updated_at": "2026-10-14T17:25:44.650Z"
+  "updated_at": "2026-10-14T17:52:40.760Z"
 }

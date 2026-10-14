@@ -1,0 +1,21 @@
+{
+  "assignee": "project-epiphany-fd",
+  "checklist": [],
+  "code": "11.171",
+  "created_at": "2026-10-14T17:52:29.294Z",
+  "description": "Playtest 2026-10-14: en la pestaña Mapa del overworld el cursor se queda pegado: hacia algún lado siempre vuelve sobre el ícono del player.",
+  "milestone": "m11",
+  "notes": "Causa: el mapa y el panel de al lado comparten fila; un nombre largo agranda el panel, la foto se achica y al rehacerse (resized) ponía el cursor sobre el player. Ahora conserva su punto del mundo (aabc388a).",
+  "order": 168,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "review",
+  "tags": [
+    "bug",
+    "ui"
+  ],
+  "test": "test_map › test_the_overworld_cursor_stays_put_when_the_map_resizes",
+  "title": "Mapa del overworld: el cursor vuelve al player al moverlo hacia un lado",
+  "updated_at": "2026-10-14T17:52:39.753Z"
+}

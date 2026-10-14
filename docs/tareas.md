@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (107/166)
+## M11 — Pulido: contenido y feel  (107/170)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5145,15 +5145,53 @@ Daniel (playtest de 11.5): saltando con la pluma los pinchos igual llegan al pla
 
 **Relacionadas:** 11.5 Galería de trampas: pinchos
 
-### 11.170 Atajos: animación del player subiendo y bajando en vez del fundido · Pendiente
+### 11.170 Atajos: animación del player subiendo y bajando en vez del fundido · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `overworld`, `animacion`
 
 Daniel (playtest de 11.28): los atajos andan, pero al usarlos hay un fundido. Debería verse al player subiendo y bajando (escalera de soga, rope_ladder).
 
-**Notas:** Daniel (2026-10-14, playtest): sigue el fundido en la escalera de soga del Ravine; pedido de nuevo.
+**Prueba:** test_secrets: la escalera de soga se sube y se baja con la animación, sin fundido
+
+**Notas:** Hecho (-5d, ecb1de13): estado Climbing que sigue los marcadores Lip/RungTop/RungBottom de la escalera de soga con la animación Carry/Climb; Top y Bottom solo arrancan cerca de su punta (antes al desenrollar arriba disparaba Bottom). test_secrets sube y baja.
 
 **Relacionadas:** 11.28 Atajos que se abren al volver
+
+### 11.171 Mapa del overworld: el cursor vuelve al player al moverlo hacia un lado · Revisión
+
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`, `ui`
+
+Playtest 2026-10-14: en la pestaña Mapa del overworld el cursor se queda pegado: hacia algún lado siempre vuelve sobre el ícono del player.
+
+**Prueba:** test_map › test_the_overworld_cursor_stays_put_when_the_map_resizes
+
+**Notas:** Causa: el mapa y el panel de al lado comparten fila; un nombre largo agranda el panel, la foto se achica y al rehacerse (resized) ponía el cursor sobre el player. Ahora conserva su punto del mundo (aabc388a).
+
+### 11.172 Viaje rápido: el foco no va al botón y A abre la pregunta una y otra vez · Revisión
+
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`, `ui`
+
+Playtest 2026-10-14: al elegir un portal en el mapa, el foco no pasa al botón de confirmar y cada A abre otra confirmación de viaje.
+
+**Prueba:** test_map › test_travel_portals_light_up_and_the_map_travels: A con el control confirma y no abre otra pregunta
+
+**Notas:** Causa: las páginas Mapa, Ítems y Equipo tenían process_mode ALWAYS (resto de antes de MenuStack), así que tapadas por la pregunta seguían leyendo A. Sacado de las tres (aabc388a).
+
+### 11.173 Esqueleto invisible en una mazmorra · Revisión
+
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`, `enemigos`
+
+Playtest 2026-10-14: en la planta baja (1P) de una mazmorra hay un esqueleto que no se ve.
+
+**Prueba:** test_chullpa › test_an_enemy_that_falls_to_the_floor_below_stays_visible
+
+**Notas:** Causa probable: un enemigo que cae por un hueco al piso de abajo seguía siendo hijo de su piso, y los pisos de arriba del player se ocultan. Ahora al aterrizar pasa al piso de su altura (02ccb681). Si vuelve a pasar: anotar mazmorra y sala.
+
+### 11.174 Overworld (Cumbre): el gancho choca contra una pared invisible · Pendiente
+
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`, `overworld`, `items`
+
+Playtest 2026-10-14: en la zona nevada, junto a la cornisa con el poste del gancho (franja verde entre riscos), el gancho choca contra una pared invisible antes de llegar al poste.
 
 ## M12 — Assets propios (Blender)  (17/29)
 
@@ -6320,13 +6358,18 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 ### Revisión: lo listo para probar  (25/27 probadas)
 
-1. [ ] 11.130 Bocas de cueva talladas en el risco · Hecho · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
-2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player. El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
+1. [ ] 11.130 Bocas de cueva talladas en el risco · Hecho · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. 
+   No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. 
+   D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
+2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
+   El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
 3. [x] 11.111 Cactus, árboles y matas se cortan como el pasto · Hecho · anda
 4. [x] 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · Hecho · anda
 5. [x] 11.118 Sandalias: correr manteniendo y salto largo con la pluma · Hecho · anda
 6. [x] 11.24 Más secretos en el overworld · Hecho · anda
-7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell" no hay asset correcto para la pared quebrable
+7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente
+   si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell"
+   no hay asset correcto para la pared quebrable
 8. [x] 11.30 Ítem de D3: el gancho · Hecho · anda
 9. [x] 11.28 Atajos que se abren al volver · Hecho · anda — anda, pero no debería hacer un fade. Debería haber una animacion del player subiendo y bajando
 10. [x] 11.46 Jefe: game juice · Hecho · anda
@@ -6355,7 +6398,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 3. [x] 11.148 Minimapa del overworld desactualizado (la quebrada sale como abismo negro) · Hecho · anda — Es un poco tosco como aparece en el minimapa, pero es detalle menor.
 4. [x] 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player · Hecho · anda — Funciona, pero solo debería ser para las paredes. No para objetos/plantas, para eso está el x-ray. Y el movimiento es un poco nauseabundo.
 
-### Revisión del 14 de octubre: overworld, mazmorras y sistemas  (19/57 probadas)
+### Revisión del 14 de octubre: overworld, mazmorras y sistemas  (19/61 probadas)
 
 1. [x] 11.168 D4 (Cumbre): entrada exagerada como las otras mazmorras · Hecho · anda
 2. [x] 11.130 Bocas de cueva talladas en el risco · Hecho · anda
@@ -6414,3 +6457,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 55. [ ] 11.87 Valores de ajuste al inspector · Revisión
 56. [ ] 10.23 Tests en paralelo · Revisión
 57. [ ] 10.27 Nodos creados por código pasan a sus .tscn · Revisión
+58. [ ] 11.171 Mapa del overworld: el cursor vuelve al player al moverlo hacia un lado · Revisión
+59. [ ] 11.172 Viaje rápido: el foco no va al botón y A abre la pregunta una y otra vez · Revisión
+60. [ ] 11.173 Esqueleto invisible en una mazmorra · Revisión
+61. [ ] 11.170 Atajos: animación del player subiendo y bajando en vez del fundido · Revisión
