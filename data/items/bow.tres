@@ -12,6 +12,8 @@ script = ExtResource("1_hiqf6")
 projectile_scene = ExtResource("5_arrow_scene")
 ammo = ExtResource("4_ammo")
 hold_to_aim = true
+aim_animation = &"CombatRanged/Ranged_Bow_Draw"
+aim_yaw_offset_deg = 62.0
 
 [resource]
 script = ExtResource("3_ca8yi")

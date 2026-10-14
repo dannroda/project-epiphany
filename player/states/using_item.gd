@@ -22,7 +22,7 @@ func _enter() -> void:
 	_used = false
 	var tween := create_tween()
 	tween.tween_property(player, "velocity", Vector3.ZERO, 0.15)
-	_waiting = _item.behavior.get(&"hold_time") != null and player.controls.pressed(PlayerCharacter.ITEM_ACTIONS[_button])
+	_waiting = _item.behavior.hold_time > 0.0 and player.controls.pressed(PlayerCharacter.ITEM_ACTIONS[_button])
 	if not _waiting:
 		_start()
 
@@ -64,7 +64,7 @@ func _use() -> void:
 	_used = true
 	var ctx := player.make_item_context()
 	ctx.source = _source
-	if not GameState.inventory.has(_source) or not _item.behavior.can_use(ctx, _item):
+	if not ctx.inventory.has(_source) or not _item.behavior.can_use(ctx, _item):
 		player.deny_item(_button)
 		return
 	_item.behavior.use(ctx, _item)

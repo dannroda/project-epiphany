@@ -68,3 +68,21 @@ func test_inventory_respects_max_stack() -> void:
 func test_every_item_has_an_icon() -> void:
 	for item in Items.database.items:
 		assert_true(item.icon != null, "%s sin ícono" % item.id)
+
+
+## 11.84: cada ítem dice con qué evento arranca; la máquina de estados no pregunta tipos.
+func test_items_choose_how_they_start() -> void:
+	const EVENTS := [&"use_item", &"aim_item", &"jump", &"dash", &"hook"]
+	var expected := {&"bow": &"aim_item", &"bomb_bag": &"use_item", &"feather": &"jump", &"sandals": &"dash", &"hookshot": &"hook"}
+	for item in Items.database.items:
+		if item.behavior == null:
+			continue
+		assert_true(item.behavior.entry_event() in EVENTS, "%s: %s es un evento de la HSM" % [item.id, item.behavior.entry_event()])
+		if expected.has(item.id):
+			assert_eq(item.behavior.entry_event(), expected[item.id], String(item.id))
+	var new_aimer := ItemBehavior.new()
+	new_aimer.hold_to_aim = true
+	assert_eq(new_aimer.entry_event(), &"aim_item", "un ítem nuevo de apuntar es solo data")
+	var bow := Items.get_item(&"bow").behavior
+	assert_eq(bow.aim_animation, &"CombatRanged/Ranged_Bow_Draw", "la animación del arco sale de su .tres")
+	assert_eq(Items.get_item(&"bomb_bag").behavior.hold_time, 0.25, "las bombas se mantienen para apuntar")

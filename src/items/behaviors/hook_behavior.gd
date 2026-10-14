@@ -5,3 +5,7 @@ extends ItemBehavior
 @export var hook_scene: PackedScene
 ## Hasta dónde llega la punta (m): 4 baldosas.
 @export var reach := 10.0
+
+
+func entry_event() -> StringName:
+	return &"hook"

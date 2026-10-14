@@ -102,9 +102,7 @@ func _try_item(buffer: InputBuffer) -> bool:
 			player.deny_item(i)
 			return true
 		blackboard.set_var(PlayerState.BB_ITEM_BUTTON, i)
-		var behavior := player.usable_item(i).behavior
-		var event := "jump" if behavior is JumpBehavior else "dash" if behavior is DashBehavior else "hook" if behavior is HookBehavior else "aim_item" if behavior.hold_to_aim else "use_item"
-		if dispatch(event):
+		if dispatch(player.usable_item(i).behavior.entry_event()):
 			buffer.consume(PlayerCharacter.ITEM_ACTIONS[i])
 			return true
 	return false

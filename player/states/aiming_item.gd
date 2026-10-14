@@ -1,5 +1,5 @@
 extends PlayerState
-## Arco y similares: mantener el botón tensa y soltarlo dispara. Sin objetivo fijado el player se planta y el stick
+## Ítems de apuntar (el arco): mantener el botón tensa y soltarlo dispara; la animación y el giro salen del behavior. Sin objetivo fijado el player se planta y el stick
 ## izquierdo apunta (OoT); fijado, la flecha va al objetivo y el stick izquierdo camina (strafe).
 
 const LOCKED_SPEED := 2.5
@@ -9,11 +9,10 @@ const LOCKED_SPEED := 2.5
 ## Cuánto dura el estado después de disparar.
 @export var release_time := 0.4
 @export var blend_time := 0.12
-## La animación de KayKit tensa el arco 62° a la izquierda del frente del modelo: se compensa para que la flecha salga hacia la mira.
-@export var bow_yaw_offset_deg := 62.0
 
 var _button := 0
 var _item: ItemData
+var _inventory: Inventory
 var _elapsed := 0.0
 var _draw_length := 1.0
 var _released_at := -1.0
@@ -25,9 +24,13 @@ func _enter() -> void:
 	_item = GameState.item_for(GameState.buttons_of(player.controls.slot)[_button])
 	_elapsed = 0.0
 	_released_at = -1.0
-	_draw_length = player.anim_player.get_animation(&"CombatRanged/Ranged_Bow_Draw").length
+	_inventory = player.make_item_context().inventory
+	var draw := _item.behavior.aim_animation
+	_draw_length = player.anim_player.get_animation(draw).length if player.anim_player.has_animation(draw) else min_draw
+	if player.anim_player.has_animation(draw):
+		((player.anim_tree.tree_root as AnimationNodeBlendTree).get_node(&"BowDraw") as AnimationNodeAnimation).animation = draw
 	player.aim.aiming = true
-	player.aim.yaw_offset = deg_to_rad(bow_yaw_offset_deg)
+	player.aim.yaw_offset = deg_to_rad(_item.behavior.aim_yaw_offset_deg)
 	player.velocity = Vector3.ZERO
 	player.anim_tree.set(&"parameters/Movement/transition_request", "Idle")
 	player.equipment.hold(_item)
@@ -40,7 +43,7 @@ func _update(delta: float) -> void:
 	_move()
 	var bow = _bow()
 	if bow and _released_at < 0.0:
-		bow.nocked = GameState.inventory.has(_item.behavior.ammo.id) if _item.behavior.ammo else true
+		bow.nocked = _inventory.has(_item.behavior.ammo.id) if _item.behavior.ammo else true
 		bow.draw = _elapsed / _draw_length
 	if _released_at < 0.0:
 		if _elapsed >= _draw_length and player.anim_tree.get(&"parameters/BowPhase/current_state") == "Draw":
@@ -68,7 +71,7 @@ func _release() -> void:
 	player.anim_tree.set(&"parameters/BowPhase/transition_request", "Release")
 	var ctx := player.make_item_context()
 	ctx.origin = player.global_position + Vector3.UP * 1.2 + ctx.direction * 0.7
-	if GameState.inventory.has(_item.id) and _item.behavior.can_use(ctx, _item):
+	if ctx.inventory.has(_item.id) and _item.behavior.can_use(ctx, _item):
 		_item.behavior.use(ctx, _item)
 		Feel.sfx(&"click", player.global_position)
 	else:
