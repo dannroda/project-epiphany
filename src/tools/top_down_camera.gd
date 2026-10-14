@@ -323,13 +323,22 @@ func enter_room(new_room: Room, crosser: PlayerCharacter = null) -> void:
 		_remember_entry())
 
 
-## Distancia, campo de visión, ambiente y efectos de pantalla de la sala; lo que no completa queda como el del nivel.
+## Distancia y campo de visión de la sala, y su AmbienteSala sobre el WorldEnvironment del nivel; lo que no pone queda
+## como el del nivel.
 func _apply_room_view(target: Room) -> void:
 	offset = _level_offset.normalized() * (target.camera_distance if target.camera_distance > 0.0 else _level_offset.length())
 	if not orthographic:
 		fov = target.camera_fov if target.camera_fov > 0.0 else _level_fov
-	environment = target.environment
-	compositor = target.compositor
+	var mood: AmbienteSala = null
+	for child in target.get_children():
+		if child is AmbienteSala:
+			mood = child
+	var world: WorldEnvironment = null
+	if mood:
+		var found := get_tree().current_scene.find_children("*", "WorldEnvironment", true, false)
+		world = found[0] as WorldEnvironment if not found.is_empty() else null
+	environment = mood.environment_over(world.environment) if world else null
+	compositor = mood.compositor_over(world.compositor) if world else null
 
 
 ## Los demás pasan a la sala nueva junto al que cruzó: a sus costados y, si son más, detrás.
