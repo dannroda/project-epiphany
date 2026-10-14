@@ -1,11 +1,32 @@
 {
   "assignee": "project-epiphany-5d",
-  "checklist": [],
+  "checklist": [
+    {
+      "done": true,
+      "text": "Bocetos de concepto para Daniel"
+    },
+    {
+      "done": false,
+      "text": "Forma 1 (fases 1-2): máscara de oro (boceto 3) en build_jefe.py: cuerpo, ojo con shape keys rendija/dilatada, párpados, manos con GRIP"
+    },
+    {
+      "done": false,
+      "text": "Forma 2 (fase 3): ojo orgánico corrupto (boceto 2: nudo de corteza con raíces, hueso y venas rojas), mismas piezas y shape keys"
+    },
+    {
+      "done": false,
+      "text": "Transformación en boss.tscn (AnimationPlayer): el ojo grita, la máscara se agrieta y estalla, aparece la forma 2"
+    },
+    {
+      "done": false,
+      "text": "boss.gd: en _on_phase3_entered reproduce la transformación con el jefe invulnerable y en pausa mientras dura"
+    }
+  ],
   "code": "12.26",
   "created_at": "2026-10-14T04:57:59.532Z",
   "description": "Daniel 2026-10-14 (por -5d): los ojos de la Queñoa (12.23) quedaron mucho mejor que el jefe final, así que se rediseña el look entero del jefe: cuerpo, ojo, párpados y manos. Primero bocetos de concepto para Daniel. El gameplay y la estructura de boss.gd no cambian: Body, Eye con las shape keys rendija/dilatada, Upper/LowerLid, manos con las shape keys GRIP y los anchors. 12.21 (ojo interruptor parecido al ojo del jefe) va después de esta.",
   "milestone": "m12",
-  "notes": "",
+  "notes": "Daniel 2026-10-14: dos formas. Fases 1-2 máscara de oro (boceto 3); al entrar a la fase 3, cinemática corta (grito, la máscara se agrieta y estalla) y queda el ojo orgánico corrupto (boceto 2) para la fase 3. Lo hace -5d entero, boss.gd incluido.",
   "order": 26,
   "priority": "medium",
   "refs": [],
@@ -17,5 +38,5 @@
   ],
   "test": "",
   "title": "Jefe final (Ojo): rediseño completo del look",
-  "updated_at": "2026-10-14T04:57:59.532Z"
+  "updated_at": "2026-10-14T05:04:42.039Z"
 }

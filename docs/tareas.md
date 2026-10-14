@@ -5525,6 +5525,14 @@ Daniel 2026-10-14: con el logo en el menú principal, el ojo del logo va en el r
 
 Daniel 2026-10-14 (por -5d): los ojos de la Queñoa (12.23) quedaron mucho mejor que el jefe final, así que se rediseña el look entero del jefe: cuerpo, ojo, párpados y manos. Primero bocetos de concepto para Daniel. El gameplay y la estructura de boss.gd no cambian: Body, Eye con las shape keys rendija/dilatada, Upper/LowerLid, manos con las shape keys GRIP y los anchors. 12.21 (ojo interruptor parecido al ojo del jefe) va después de esta.
 
+- [x] Bocetos de concepto para Daniel
+- [ ] Forma 1 (fases 1-2): máscara de oro (boceto 3) en build_jefe.py: cuerpo, ojo con shape keys rendija/dilatada, párpados, manos con GRIP
+- [ ] Forma 2 (fase 3): ojo orgánico corrupto (boceto 2: nudo de corteza con raíces, hueso y venas rojas), mismas piezas y shape keys
+- [ ] Transformación en boss.tscn (AnimationPlayer): el ojo grita, la máscara se agrieta y estalla, aparece la forma 2
+- [ ] boss.gd: en _on_phase3_entered reproduce la transformación con el jefe invulnerable y en pausa mientras dura
+
+**Notas:** Daniel 2026-10-14: dos formas. Fases 1-2 máscara de oro (boceto 3); al entrar a la fase 3, cinemática corta (grito, la máscara se agrieta y estalla) y queda el ojo orgánico corrupto (boceto 2) para la fase 3. Lo hace -5d entero, boss.gd incluido.
+
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 
 Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con progreso compartido y puzzles que aprovechan a los dos.
