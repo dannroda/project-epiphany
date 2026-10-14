@@ -2,23 +2,23 @@
   "assignee": "project-epiphany-43",
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "Puerta a la Momia con llave; la placa de la vasija abre 2NO"
     },
     {
-      "done": false,
+      "done": true,
       "text": "2NO: brújula de este lado, llave del jefe del otro lado de los huecos"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Mausoleo sin huecos (sin cofre)"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Grafo, test_dungeon_reach avisa salas con llave/acertijo que no hacen falta"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Tests (chullpa, drop_holes, walk_doors, map) y GDD §8b"
     }
   ],
@@ -26,18 +26,18 @@
   "created_at": "2026-10-14T18:01:58.293Z",
   "description": "Daniel 2026-10-14: en la Chullpa se salteaba el 90% (la vasija de la placa está en el Rellano, así que la puerta con llave, la llave chica y todo el sótano eran opcionales, y la llave del jefe estaba al lado del jefe). Regla: la llave del jefe pide vuelta atrás. Aprobado: la puerta a la Momia pasa a ser la de la llave chica (sótano obligatorio); la vasija en la placa abre 2NO; brújula de este lado de los huecos de 2NO y llave del jefe del otro (con la pluma); el Mausoleo queda sin huecos (Daniel: sala sin huecos).",
   "milestone": "m11",
-  "notes": "",
+  "notes": "Hecho (2026-10-14). Camino nuevo: Entrada → caer por 1SE → Cripta (oleadas, mapa) → Cripta oscura (pinchos, llave chica) → escalera de mano → bloques → Rellano → puerta con llave → Momia → pluma → volver al Rellano → vasija en la placa → 2NO, huecos con la pluma → llave del jefe → 1NE → Mausoleo → jefe. AgrietadaDoor pasa a puerta con llave (ch_mummy_locked_door, ex ch_leaps_locked_door) y SaltosLocked pasa a SaltosDoor, de interruptor (RellanoWeight). La brújula está de este lado de los huecos de 2NO y la llave del jefe del otro. El Mausoleo queda sin huecos, sin MausoleoPit y sin cofre. El molde de test_dungeon_reach suma dos reglas, que hoy cumplen las cinco mazmorras: cada llave chica hace falta para llegar al jefe, y la llave del jefe pide el ítem. Escena armada con un script (debug/tmp/design/chullpa_1176.gd) y la_walls refresh sobre main con 11.156.",
   "order": 173,
   "priority": "high",
   "refs": [],
   "size": "m",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "diseno",
     "mazmorra",
     "chullpa"
   ],
-  "test": "",
+  "test": "tests/test_chullpa.gd (test_the_mummy_door_takes_the_crypt_key, test_the_boss_key_waits_across_the_leaps_holes, test_pushing_the_pot_onto_the_plate_opens_the_leaps_room), tests/test_dungeon_reach.gd (test_optional_keys_and_a_boss_key_before_the_item_break_the_mold)",
   "title": "Chullpa: llave chica y sótano obligatorios, llave del jefe con vuelta atrás",
-  "updated_at": "2026-10-14T18:02:00.039Z"
+  "updated_at": "2026-10-14T18:43:33.247Z"
 }
