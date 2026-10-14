@@ -1,0 +1,22 @@
+{
+  "assignee": "project-epiphany-43",
+  "checklist": [],
+  "code": "11.169",
+  "created_at": "2026-10-14T13:43:31.913Z",
+  "description": "Daniel (playtest de 11.5): saltando con la pluma los pinchos igual llegan al player. O la pluma salta más alto o los pinchos son más bajos / el hurtbox no alcanza en el aire. Cuidado: el alto del salto (player/states/jumping.gd) lo usan todos los huecos y tests de salto.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 166,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "diseno",
+    "player",
+    "mazmorra"
+  ],
+  "test": "",
+  "title": "Galería de trampas: la pluma no salta por encima de los pinchos",
+  "updated_at": "2026-10-14T13:43:31.913Z"
+}

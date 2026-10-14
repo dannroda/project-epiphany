@@ -1,0 +1,27 @@
+{
+  "assignee": "project-epiphany-5d",
+  "checklist": [],
+  "code": "11.170",
+  "created_at": "2026-10-14T13:43:32.198Z",
+  "description": "Daniel (playtest de 11.28): los atajos andan, pero al usarlos hay un fundido. Debería verse al player subiendo y bajando (escalera de soga, rope_ladder).",
+  "links": [
+    {
+      "task": "m11-28",
+      "type": "related"
+    }
+  ],
+  "milestone": "m11",
+  "notes": "",
+  "order": 167,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "overworld",
+    "animacion"
+  ],
+  "test": "",
+  "title": "Atajos: animación del player subiendo y bajando en vez del fundido",
+  "updated_at": "2026-10-14T13:43:32.810Z"
+}

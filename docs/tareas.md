@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (95/162)
+## M11 — Pulido: contenido y feel  (95/166)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3002,6 +3002,8 @@ Uno o dos atajos que se abren desde adentro (puente o escalera) y quedan abierto
 **Prueba:** Abrir el atajo desde adentro: queda abierto y acorta el recorrido al templo.
 
 **Capturas:** `compass/images/m11-28-mapa.jpg`, `compass/images/m11-28-1.jpg`
+
+**Relacionadas:** 11.170 Atajos: animación del player subiendo y bajando en vez del fundido
 
 ### 11.29 Overworld después del jefe · Revisión
 
@@ -4673,7 +4675,7 @@ Daniel: las bocas de cueva del overworld (la entrada trasera de la ermita, la cu
 
 **Capturas:** `compass/images/m11-130-mapa.jpg`, `compass/images/m11-130-1.jpg`, `compass/images/m11-130-2.jpg`, `compass/images/m11-130-3.jpg`, `compass/images/m11-130-4.jpg`, `compass/images/m11-130-20261013-221755.png`, `compass/images/m11-130-20261013-221902.png`, `compass/images/m11-130-20261014-034842.png`
 
-**Relacionadas:** 11.166 Santuario con una sola entrada: su muro agrietado
+**Relacionadas:** 11.166 Santuario con una sola entrada: su muro agrietado; 11.168 D4 (Cumbre): entrada exagerada como las otras mazmorras
 
 ### 11.131 Pozo junto a la Chullpa: caer sin bombas deja softlock · Revisión
 
@@ -4721,7 +4723,7 @@ Playtest 2026-10-13 (mejora, no bug): cuando el player queda detrás de un acant
 
 **Relacionadas:** 11.165 La cámara cenital se activa en bordes y muros bajos de una sala
 
-### 11.135 Al caer, el player se inclina hacia el piso · Pendiente
+### 11.135 Al caer, el player se inclina hacia el piso · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`, `player`
 
@@ -5097,6 +5099,34 @@ Daniel 2026-10-14 (playtest de 11.130: no tiene sentido entrar a la ermita y que
 - [x] Overworld: sin ShrineBackMouth, ShrineBackDoor ni Spawn_atajo; terreno, decor y navmesh (-eb)
 
 **Relacionadas:** 11.130 Bocas de cueva talladas en el risco; 12.29 Muro agrietado LA de cueva (muro_agrietado_cueva_la)
+
+### 11.167 Totora: caer al agua y perder deja al player cayendo al vacío antes de "You Fell" · En curso
+
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`, `totora`, `player`
+
+Daniel (playtest de 12.19): en la Totora, si el player cae al agua y pierde, se lo ve caer al vacío y recién después aparece la pantalla de 'You Fell'. Al caer al agua tendría que hundirse/salpicar y reaparecer (o la pantalla al instante), sin ver la caída por debajo del nivel.
+
+### 11.168 D4 (Cumbre): entrada exagerada como las otras mazmorras · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-eb · **Etiquetas:** `overworld`, `arte`
+
+Daniel (playtest de 11.130 y 7.9): la entrada de la D4 en el overworld parece una cueva normal. Tiene que tener una entrada exagerada que se lea como mazmorra, como la Chullpa, la Queñoa y la Totora (torre, árbol, choza).
+
+**Relacionadas:** 11.130 Bocas de cueva talladas en el risco
+
+### 11.169 Galería de trampas: la pluma no salta por encima de los pinchos · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `player`, `mazmorra`
+
+Daniel (playtest de 11.5): saltando con la pluma los pinchos igual llegan al player. O la pluma salta más alto o los pinchos son más bajos / el hurtbox no alcanza en el aire. Cuidado: el alto del salto (player/states/jumping.gd) lo usan todos los huecos y tests de salto.
+
+### 11.170 Atajos: animación del player subiendo y bajando en vez del fundido · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `overworld`, `animacion`
+
+Daniel (playtest de 11.28): los atajos andan, pero al usarlos hay un fundido. Debería verse al player subiendo y bajando (escalera de soga, rope_ladder).
+
+**Relacionadas:** 11.28 Atajos que se abren al volver
 
 ## M12 — Assets propios (Blender)  (16/29)
 

@@ -1,0 +1,28 @@
+{
+  "assignee": "project-epiphany-fd",
+  "checklist": [],
+  "code": "11.167",
+  "created_at": "2026-10-14T13:43:31.330Z",
+  "description": "Daniel (playtest de 12.19): en la Totora, si el player cae al agua y pierde, se lo ve caer al vacío y recién después aparece la pantalla de 'You Fell'. Al caer al agua tendría que hundirse/salpicar y reaparecer (o la pantalla al instante), sin ver la caída por debajo del nivel.",
+  "links": [
+    {
+      "task": "m12-19",
+      "type": "related"
+    }
+  ],
+  "milestone": "m11",
+  "notes": "",
+  "order": 164,
+  "priority": "high",
+  "refs": [],
+  "size": "s",
+  "status": "doing",
+  "tags": [
+    "bug",
+    "totora",
+    "player"
+  ],
+  "test": "",
+  "title": "Totora: caer al agua y perder deja al player cayendo al vacío antes de \"You Fell\"",
+  "updated_at": "2026-10-14T13:43:33.398Z"
+}
