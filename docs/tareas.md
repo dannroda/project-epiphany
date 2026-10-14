@@ -5002,7 +5002,7 @@ Daniel 2026-10-14 (captura del piso de tablones, Queñoa/Totora): el patrón del
 
 Daniel 2026-10-14 (por -5d): el overworld tiene que compartir el arte de las mazmorras. Brillo: el look BrilloLA (lo eligió tras comparar overworld base vs brillo vs Chullpa). Piso: más detalle, hoy se ve plano. Plan: epiphany_outdoor.gdshader con palette_surface brillo y patrón de piso por swatch (losas, textura de tierra, variación de tono del pasto), más BrilloLA y glow en overworld.tscn. Coordinar con -eb antes de tocar overworld.tscn; prototipo en debug/tmp.
 
-## M12 — Assets propios (Blender)  (15/24)
+## M12 — Assets propios (Blender)  (15/25)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -5506,6 +5506,12 @@ Playtest 2026-10-13: el jefe de la Queñoa (Eyes of the Queñoa) y el sub-jefe (
 Pedido de -43 (playtest 2026-10-13): las paredes agrietadas de las mazmorras LA usan cracked_wall_templo y no encajan (sobresalen, cara de arriba negra, o no se ven). Hace falta un tapón que llene el paso LA: alto y ancho como el corte, inclinado como la pared, con la veta de su pared y grietas en las dos caras. la_walls lo coloca como las hojas de puerta. Estilos: chullpa, quenoa, totora, cumbre. Cuando estén las mallas, -43 cambia las instancias y revisa la colisión. -11 (-5d) elige el orden con Daniel frente a 12.23 y 11.138.
 
 **Relacionadas:** 11.141 Queñoa 2P (Canopy): símbolo azul sin sentido y puerta bloqueada invisible; 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista; 11.151 Totora 2P: se ve la sala del piso de abajo
+
+### 12.25 El ojo del logo en game over, selección de idioma y carga · Revisión
+
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `arte`, `ui`
+
+Daniel 2026-10-14: con el logo en el menú principal, el ojo del logo va en el resto de lugares que usaban el ojo dibujado por código, pero solo el ojo. Hecho: art/logo/epiphany_eye.svg (solo el ojo: almendra, iris, pupila y contorno dorado, sin rayos, lágrimas ni letras) → assets/ui/logo/epiphany_eye.png; Eye de game_over, language_select y la carga (scene_flow) son TextureRect con esa textura. Game over y selección de idioma lo muestran tenue (alfa 0,35); el de carga parpadea achicando la escala. Se borraron title_eye.gd y loading_eye.gd. Test: test_every_eye_is_the_logo_eye.
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 
