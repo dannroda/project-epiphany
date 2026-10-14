@@ -12,6 +12,8 @@ const GROUP := &"rooms"
 ## Lo que solo corre mientras haya algún player en su sala (enemigos, trampas); fuera de toda sala corre siempre.
 const SLEEPERS := &"room_sleepers"
 
+@export var debug_disble:bool = false
+
 @export var room_index: int = 0 ## Bit en DungeonState.visited_rooms
 @export var display_name: String = ""
 ## Lugar en la grilla de la pantalla de mapa (columna, fila). El mapa se arma leyendo las salas.
@@ -93,7 +95,7 @@ func mark_entered() -> void:
 	_announced = true
 	if first and not display_name.is_empty():
 		get_tree().call_group(Hud.GROUP, &"show_area_name", tr(display_name))
-	return
+	if debug_disble: return
 	player_entered.emit(self)
 	if autosave_on_enter:
 		SaveManager.autosave.call_deferred()
