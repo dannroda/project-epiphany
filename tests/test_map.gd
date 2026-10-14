@@ -12,6 +12,12 @@ func _open_map(scenario := "test_rooms", level := "") -> Array:
 		await tree.scene_changed
 	for i in 4:
 		await tree.physics_frame
+	var camera := tree.get_first_node_in_group(TopDownCamera.GROUP) as TopDownCamera
+	var player := tree.get_first_node_in_group(&"player") as Node3D
+	for i in 120:
+		if camera == null or player == null or camera.room == null or camera.room.contains(player.global_position):
+			break
+		await tree.physics_frame
 	var stack: Node = tree.root.get_node(^"MenuStack")
 	var menu: Control = load("res://src/ui/menus/pause_menu.tscn").instantiate()
 	stack.push(menu)
@@ -96,6 +102,14 @@ func _trigger(axis: JoyAxis, value: float) -> void:
 	event.axis = axis
 	event.axis_value = value
 	Input.parse_input_event(event)
+
+
+func _joy_a() -> void:
+	for pressed in [true, false]:
+		var event := InputEventJoypadButton.new()
+		event.button_index = JOY_BUTTON_A
+		event.pressed = pressed
+		Input.parse_input_event(event)
 
 
 func _press(action: StringName) -> void:
@@ -368,7 +382,7 @@ func test_travel_portals_light_up_and_the_map_travels() -> void:
 	assert_true(page.can_travel() and page.travel_button.visible, "a la Necrópolis se puede viajar")
 	assert_eq(page.portal_name.text, tr("MAP_PORTAL").format({name = tr("PLACE_NECROPOLIS")}))
 	assert_true(page.extra_hints.any(func(hint: Array) -> bool: return hint == [&"ui_accept", "MAP_HINT_TRAVEL"]), "la barra de ayudas dice A Viajar")
-	_press(&"ui_accept")
+	_joy_a()
 	await tree.process_frame
 	await tree.process_frame
 	var dialog := stack.top() as ConfirmDialog
@@ -377,7 +391,10 @@ func test_travel_portals_light_up_and_the_map_travels() -> void:
 		_close(stack)
 		return
 	assert_true(dialog.yes.has_focus(), "arranca en Viajar (A confirma, como el mockup)")
-	dialog.yes.pressed.emit()
+	_joy_a()
+	await tree.process_frame
+	await tree.process_frame
+	assert_eq(tree.root.get_node(^"MenuStack").get_children().filter(func(screen: Node) -> bool: return screen is ConfirmDialog).size(), 0, "A con el control confirma; el mapa tapado no abre otra pregunta")
 	var saves: Node = tree.root.get_node(^"SaveManager")
 	var until := Time.get_ticks_msec() + 5000
 	while Time.get_ticks_msec() < until and (not tree.root.get_node(^"SceneFlow").traveling or tree.paused):
@@ -404,4 +421,21 @@ func test_renaming_a_zone_keeps_it_visited() -> void:
 	risk.name = &"Zone_risco_renombrada"
 	assert_eq(risk.is_visited(), true, "la clave es el id, no el nombre del nodo")
 	assert_true(tree.current_scene.find_children("Zone_*", "AreaZone", false, false).all(func(zone: AreaZone) -> bool: return not zone.id.is_empty()), "todas las zonas del overworld tienen id")
+	state.reset()
+
+
+func test_the_overworld_cursor_stays_put_when_the_map_resizes() -> void:
+	var setup: Array = await _open_map("", "res://levels/overworld.tscn")
+	var tree: SceneTree = setup[0]
+	var state: Node = setup[1]
+	var page: Control = setup[3]
+	var spot: Vector2 = page.map_to_world(page._cursor_point) + Vector2(12.0, -8.0)
+	page._move_cursor(page.world_to_map(spot))
+	var size: Vector2 = page.overworld_image.size
+	page.overworld_image.offset_right -= 60.0
+	await tree.process_frame
+	assert_true(page.overworld_image.size != size, "el mapa se achica (el panel de al lado creció)")
+	assert_true(page.map_to_world(page._cursor_point).distance_to(spot) < 0.1, "el cursor queda en el mismo lugar del mundo, no vuelve al player")
+	page.overworld_image.offset_right += 60.0
+	_close(setup[2])
 	state.reset()
