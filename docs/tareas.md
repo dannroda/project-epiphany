@@ -4809,7 +4809,7 @@ Playtest 2026-10-13, Queñoa piso S1, sala con los arbustos y el pozo (probablem
 
 ### 11.146 Overworld: el ojo del puente a la Necrópolis no se ve ni se puede flechar · Revisión
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`, `overworld`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`, `overworld`
 
 Playtest 2026-10-13: con arco y pluma, junto al río no hay forma visible de llegar al otro lado para buscar las sandalias. Por diseño (GDD, cadena del overworld) se cruza con una flecha al ojo del puente de la quebrada, que baja/abre el puente a la Necrópolis. Revisar: que el ojo del puente exista y funcione, y que se vea/entienda desde donde llega el player (señalizarlo; quizá el player busca en otro tramo del río).
 
