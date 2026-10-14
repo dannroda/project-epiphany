@@ -2,13 +2,16 @@
 ## Reparte los test_*.gd entre varios procesos headless (por defecto, los núcleos, hasta 4), parejos según cuánto
 ## tardó cada archivo la última vez, y junta los resultados. Cada proceso tiene sus partidas y opciones en user://.
 ## Los procesos corren con --fixed-fps 60: cada frame avanza 1/60 s de juego aunque la máquina esté cargada.
-## Lo que imprime cada proceso queda entero en user://test_logs/.
+## Lo que imprime cada proceso queda entero en user://tests/<copia>/test_logs/. Cada copia del proyecto (los worktrees comparten
+## user://) tiene su carpeta, así dos copias pueden correr tests a la vez.
 extends SceneTree
 
 const DIR := "res://tests"
 const TestCase := preload("res://tests/test_case.gd")
-const TIMES := "user://test_times.cfg"
-const LOGS := "user://test_logs/"
+## La carpeta de esta copia del proyecto.
+static var ROOT := "user://tests/%s/" % ProjectSettings.globalize_path("res://").md5_text().left(8)
+static var TIMES := ROOT + "test_times.cfg"
+static var LOGS := ROOT + "test_logs/"
 const MAX_JOBS := 4
 ## Lo que se supone que tarda un archivo que nunca se midió (s).
 const UNKNOWN_TIME := 20.0
@@ -142,13 +145,14 @@ func _pump(pipe: FileAccess, pid: int, log_file: FileAccess, mutex: Mutex) -> vo
 
 
 func _result_path(index: int) -> String:
-	return "user://test_result_%d.cfg" % index
+	return ROOT + "test_result_%d.cfg" % index
 
 
 func _work(index: int, files: PackedStringArray) -> void:
-	TestCase.saves_dir = "user://test_saves_%d/" % index
-	TestCase.settings_path = "user://test_settings_%d.cfg" % index
-	TestCase.tmp_dir = "user://tests_tmp_%d" % index
+	DirAccess.make_dir_recursive_absolute(ROOT)
+	TestCase.saves_dir = ROOT + "test_saves_%d/" % index
+	TestCase.settings_path = ROOT + "test_settings_%d.cfg" % index
+	TestCase.tmp_dir = ROOT + "tests_tmp_%d" % index
 	var result := await _run_here(files)
 	var out := ConfigFile.new()
 	for key: String in result:
