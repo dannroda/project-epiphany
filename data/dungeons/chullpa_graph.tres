@@ -42,7 +42,6 @@ to = &"CriptaOscura"
 script = ExtResource("2_link")
 from = &"Cripta"
 to = &"Entrada"
-one_way = true
 
 [sub_resource type="Resource" id="Link_8"]
 script = ExtResource("2_link")
