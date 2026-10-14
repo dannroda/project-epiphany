@@ -289,6 +289,21 @@ func test_floor_selector_in_a_dungeon_with_floors() -> void:
 	await tree.process_frame
 	assert_eq(page.viewed_level(), 1, "soltarlo y volver a apretar sube otro")
 	_trigger(JOY_AXIS_TRIGGER_LEFT, 0.0)
+	_press(&"ui_down")
+	await tree.process_frame
+	assert_eq(page.viewed_level(), 0, "la cruceta abajo baja un piso")
+	for value in [-0.3, -0.6, -0.9, -1.0]:
+		_trigger(JOY_AXIS_LEFT_Y, value)
+		await tree.process_frame
+	assert_eq(page.viewed_level(), 1, "el stick izquierdo arriba sube un solo piso")
+	_trigger(JOY_AXIS_LEFT_Y, 0.0)
+	assert_true(page.extra_hints.any(func(hint: Array) -> bool: return hint[0] == [&"move_forward", &"move_backward"]), "la ayuda muestra arriba y abajo")
+	var seen := {}
+	for i in page._room_cells.size():
+		seen[page.focused_room()] = true
+		_press(&"ui_right")
+		await tree.process_frame
+	assert_eq(seen.size(), page._room_cells.size(), "izquierda y derecha recorren todas las salas del piso")
 	_close(setup[2])
 	state.reset()
 
