@@ -233,6 +233,8 @@ func perform(attack: BossAttack, target: Node3D, area: Rect2) -> void:
 			await _grab(attack, target, area)
 		BossAttack.SWEEP:
 			await _sweep(attack, target, area)
+		_:
+			push_error("BossHand: ataque desconocido %s" % attack.id)
 	striking = false
 	_hide_shadow()
 	if state == State.BUSY:

@@ -1,14 +1,9 @@
 class_name MeleeBehavior
 extends ItemBehavior
+## Un golpe por botón: un combo de verdad sería una lista que avanza, y hoy no la hay.
 
-@export var combo: Array[AttackData] = []
-
-
-func get_attack(combo_index: int) -> AttackData:
-	if combo.is_empty():
-		return null
-	return combo[combo_index % combo.size()]
+@export var attack: AttackData
 
 
 func get_animation(_item: ItemData) -> StringName:
-	return combo[0].animation if not combo.is_empty() else &""
+	return attack.animation if attack else &""

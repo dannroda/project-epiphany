@@ -395,3 +395,20 @@ func test_sword_trail_only_while_the_blade_cuts() -> void:
 	assert_true(trailed > 0, "el tajo deja estela")
 	assert_true(stray <= 1, "solo mientras la hitbox está activa (a lo sumo un cuadro de desfase con la física)")
 	assert_true(not player.sword_trail.emitting, "y se apaga al terminar")
+
+
+## 11.85: qué estados siguen el cruce de sala y cuáles se pueden agarrar lo dice cada estado, no una lista en la HSM.
+func test_room_transition_and_grab_come_from_each_state() -> void:
+	var player: Node = load("res://player/player.tscn").instantiate()
+	var skip_transition := []
+	var skip_grab := []
+	for state in player.get_node(^"MovementState").get_children():
+		if state is PlayerState and not state.follows_room_transition:
+			skip_transition.append(String(state.name))
+		if state is PlayerState and not state.can_be_grabbed:
+			skip_grab.append(String(state.name))
+	skip_transition.sort()
+	skip_grab.sort()
+	assert_eq(skip_transition, ["Dead", "Grabbed", "ItemGet", "Pushing", "Spirit", "Transition"])
+	assert_eq(skip_grab, ["Dead", "Grabbed", "ItemGet", "Spirit", "Transition"])
+	player.free()

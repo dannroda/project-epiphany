@@ -50,16 +50,14 @@ func _setup() -> void:
 	add_transition($Idle, $Hooking, "hook")
 	add_transition($Moving, $Hooking, "hook")
 	add_transition($Hooking, $Idle, "finished")
-	for state in [$Idle, $Moving, $Attacking, $Dodging, $UsingItem, $AimingItem, $AimingThrow, $Carrying, $Hurt, $Jumping, $Dashing, $Hooking]:
-		add_transition(state, $Transition, "transition")
+	add_transition(anystate(), $Transition, "transition", func() -> bool: return (get_active_state() as PlayerState).follows_room_transition)
 	add_transition($Transition, $Idle, "finished")
 	add_transition($Moving, $Pushing, "push")
 	add_transition($Pushing, $Idle, "finished")
 	add_transition($Idle, $ItemGet, "item_get")
 	add_transition($Moving, $ItemGet, "item_get")
 	add_transition($ItemGet, $Idle, "finished")
-	for state in [$Idle, $Moving, $Attacking, $Dodging, $UsingItem, $AimingItem, $AimingThrow, $Carrying, $Hurt, $Pushing, $Jumping, $Dashing, $Hooking]:
-		add_transition(state, $Grabbed, "grabbed")
+	add_transition(anystate(), $Grabbed, "grabbed", func() -> bool: return (get_active_state() as PlayerState).can_be_grabbed)
 	add_transition($Grabbed, $Idle, "finished")
 
 	initial_state = $Idle

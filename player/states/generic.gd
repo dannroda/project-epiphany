@@ -10,6 +10,11 @@ const BB_IS_BLOCKING := &"is_blocking"
 const BB_INPUT_DIR := &"input_dir"
 const BB_ITEM_BUTTON := &"item_button"
 const BB_GRABBED_BY := &"grabbed_by"
+
+## Al cruzar de sala pasa a Transition.
+@export var follows_room_transition := true
+## Una mano del jefe lo puede agarrar.
+@export var can_be_grabbed := true
 const BB_LONG_JUMP := &"long_jump"
 const BB_TRANSITION_TIME := &"transition_time"
 const BB_TRANSITION_DIR := &"transition_dir"

@@ -242,7 +242,7 @@ func current_attack() -> AttackData:
 		return SHIELD_THRUST
 	var weapon := equipment.weapon
 	if weapon and weapon.behavior is MeleeBehavior:
-		return (weapon.behavior as MeleeBehavior).get_attack(0)
+		return (weapon.behavior as MeleeBehavior).attack
 	return null
 
 

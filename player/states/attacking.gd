@@ -19,8 +19,7 @@ func _enter() -> void:
 	player.velocity.x = forward.x
 	player.velocity.z = forward.z
 
-	var attack_type := "ShieldThrust" if player.is_blocking() else "Slash"
-	player.anim_tree.set(&"parameters/AttackType/transition_request", attack_type)
+	player.anim_tree.set(&"parameters/AttackType/transition_request", _attack.tree_state if _attack else &"Slash")
 	player.anim_tree.set(&"parameters/Attack/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 	if _attack and player.anim_player.has_animation(_attack.animation):
 		player.attack_runner.start(_attack, player.anim_player.get_animation(_attack.animation).length)
