@@ -147,6 +147,32 @@ func test_the_chullpa_door_leads_into_the_dungeon_and_back() -> void:
 	level.free()
 
 
+func test_the_condor_frames_the_cumbre_door_and_lets_the_player_in() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	state.reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	for enemy in tree.get_nodes_in_group(&"enemies"):
+		enemy.free()
+	var condor := tree.current_scene.get_node(^"CumbreCondor") as Node3D
+	var door := tree.current_scene.get_node(^"CumbreDoor") as Node3D
+	assert_true(absf(condor.global_position.x - door.global_position.x) < 0.1, "el cóndor está centrado en la puerta")
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	player.global_position = (tree.current_scene.get_node(^"Spawn_cumbre") as Node3D).global_position
+	for i in 20:
+		await tree.physics_frame
+	_walk(&"move_forward", true)
+	var until := Time.get_ticks_msec() + 8000
+	while Time.get_ticks_msec() < until and tree.current_scene and tree.current_scene.scene_file_path == LEVEL:
+		await tree.physics_frame
+	_walk(&"move_forward", false)
+	while Time.get_ticks_msec() < until and not (tree.current_scene and tree.current_scene.scene_file_path != LEVEL):
+		await tree.physics_frame
+	assert_eq(tree.current_scene.scene_file_path if tree.current_scene else "", "res://levels/cumbre.tscn", "entre las alas se entra a la Cumbre")
+	state.reset()
+
+
 func _walk_route(tree: SceneTree, player: PlayerCharacter, route: Array) -> void:
 	for leg in route:
 		var result: Array = await _walk_until(tree, player, leg[0], leg[1])

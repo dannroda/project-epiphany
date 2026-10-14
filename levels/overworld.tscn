@@ -49,6 +49,7 @@
 [ext_resource type="PackedScene" path="res://src/world/chullpa_entrada.tscn" id="ent_chullpa"]
 [ext_resource type="PackedScene" path="res://src/world/quenoa_entrada.tscn" id="ent_quenoa"]
 [ext_resource type="PackedScene" path="res://src/world/totora_entrada.tscn" id="ent_totora"]
+[ext_resource type="PackedScene" path="res://src/world/cumbre_entrada.tscn" id="ent_cumbre"]
 [ext_resource type="Script" uid="uid://c8w1y48q1dcuh" path="res://src/world/after_the_eye.gd" id="ow_after_eye"]
 [ext_resource type="Resource" path="res://data/items/arrow.tres" id="ow_arrow"]
 [ext_resource type="Resource" path="res://data/items/bomb.tres" id="ow_bomb"]
@@ -1530,6 +1531,9 @@ shape = SubResource("BoxShape3D_jamb")
 [node name="West" type="CollisionShape3D" parent="CumbreMouth/Jambs" unique_id=829797032]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 1.3, 0)
 shape = SubResource("BoxShape3D_jamb")
+
+[node name="CumbreCondor" parent="." unique_id=1468320577 instance=ExtResource("ent_cumbre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 5.2, -44.8)
 
 [node name="CumbreDoor" type="Area3D" parent="." unique_id=1279155434]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 6.4, -45.2)
