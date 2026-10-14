@@ -3988,24 +3988,25 @@ Instanciar → `current_scene.add_child` → `launch` está copiado en projectil
 
 **Archivos:** `src/world/wave_spawner.gd`, `src/entities/turret/turret.gd`, `src/items/behaviors/projectile_behavior.gd`, `src/items/behaviors/place_behavior.gd`, `ai/tasks/bt_shoot_arrow.gd`, `src/entities/boss/boss.gd`
 
-### 11.84 Ítems: que la estrategia decida, no la máquina de estados · Pendiente
+### 11.84 Ítems: que la estrategia decida, no la máquina de estados · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Etiquetas:** `items`, `arquitectura`
 
 La lógica de ítems se escapa del ItemBehavior al FSM del player: `_try_item` pregunta `is JumpBehavior` y `hold_to_aim`; using_item duck-typea `hold_time` y `leaves` (este último redundante: ConsumableBehavior ya llama a `swap_item`); aiming_throw castea a PlaceBehavior; AimingItem es solo-arco (animaciones, BowPhase, yaw). Un segundo ítem de apuntar (gancho, bumerán) usaría las animaciones del arco. Los estados leen `GameState.inventory` en vez de `ctx.inventory`; `ItemUseContext.equipped` no se usa.
 
-- [ ] entry_event() en ItemBehavior
+- [x] entry_event() en ItemBehavior
   Por defecto `&"use_item"`; Jump → `&"jump"`; hold_to_aim → `&"aim_item"`. Borrar JumpBehavior como etiqueta de tipo si queda vacía.
-- [ ] hold_time en la base
+- [x] hold_time en la base
   0 = sin mantener; quitar el bloque `leaves`.
-- [ ] AimingItem genérico
+- [x] AimingItem genérico
   Animaciones y yaw desde exports del behavior.
-- [ ] ctx.inventory
+- [x] ctx.inventory
   Los estados usan el contexto; quitar `equipped`.
 
 **Prueba:** Agregar un ítem nuevo de apuntar es un .tres + su behavior, sin tocar state_machine.gd.
 
 **Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+Hecho (2a69be2d): ItemBehavior.entry_event() (Jump/Dash/Hook lo pisan) y _try_item despacha eso; hold_time en la base (bomb_bag.tres 0.25); grupo Apuntar con aim_animation y aim_yaw_offset_deg (bow.tres: Ranged_Bow_Draw, 62°), AimingItem ya no sabe del arco; los estados leen ctx.inventory; ItemUseContext sin equipped. Test: test_items › test_items_choose_how_they_start.
 
 **Archivos:** `player/state_machine.gd`, `player/states/using_item.gd`, `player/states/aiming_item.gd`, `player/states/aiming_throw.gd`, `src/items/behaviors/item_behavior.gd`
 
@@ -4028,7 +4029,7 @@ Tres puntos que no dan error cuando algo no cuadra: (1) el ataque melee elige la
 
 **Archivos:** `player/states/attacking.gd`, `src/items/behaviors/melee_behavior.gd`, `src/combat/attack_data.gd`, `src/entities/boss/boss.gd`, `src/entities/boss/boss_hand.gd`, `player/state_machine.gd`
 
-### 11.86 GameState: escrituras con señal y carga sin emisiones parciales · Pendiente
+### 11.86 GameState: escrituras con señal y carga sin emisiones parciales · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `arquitectura`, `guardado`
 
@@ -4049,28 +4050,29 @@ Hay campos de GameState que se escriben a pelo desde afuera (`room_entry` desde 
 
 **Archivos:** `src/state/game_state.gd`, `src/ui/hud/minimap.gd`, `src/tools/top_down_camera.gd`, `src/entities/boss/boss_arena.gd`, `src/world/spawn_point.gd`, `src/items/inventory.gd`
 
-### 11.87 Valores de ajuste al inspector · Pendiente
+### 11.87 Valores de ajuste al inspector · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Etiquetas:** `feel`, `combate`
 
 Varios valores de juego están como const o en sitios compartidos y no se pueden tunear a ojo en el editor.
 
-- [ ] Jefe
+- [x] Jefe
   boss.gd: 24 const (EYE_STUN_TIME, ENRAGE_FRACTION, MARK_*, REPEAT_PENALTY, SAME_HAND_PENALTY); boss_hand.gd: SLAM_HEIGHT, GRAB_REACH, IMPACT_HIT_STOP, SLAM_OVERSHOOT/BOUNCE → `@export_group`. Lo cosmético (bob, parpadeo) puede quedar const.
-- [ ] Player
+- [x] Player
   carrying.gd CARRY_SPEED/THROW_DISTANCE/FLIGHT_TIME, aiming_item.gd LOCKED_SPEED, carrier.gd → `@export`. Mantener la multiplicación por `player.ground_speed` (agua poco profunda, 11169f5): moving, generic `move_locked` y carrying la aplican.
-- [ ] Timing de ataque de enemigos
+- [x] Timing de ataque de enemigos
   windup_time, windup_pose, recovery_time de bt_attack a AttackData; `attack` en EntityConfig; enemy_bt.tres deja de fijar skeleton_slash.
-- [ ] Vida inicial y HP por corazón
+- [x] Vida inicial y HP por corazón
   player.tres `max_health` se ignora (manda NEW_GAME_MAX_HEALTH); HP_PER_HEART copiado en game_state, player_panel, equipment_page y un `/ 4` en slot_card → una sola fuente.
-- [ ] Opciones fuera de feel.tres
+- [x] Opciones fuera de feel.tres
   settings.gd escribe `shake_enabled` en el recurso de diseño; que Feel lo lea de Settings.
-- [ ] Rangos y test de ítems
+- [x] Rangos y test de ítems
   `@export_range` en EntityConfig, ItemData, DropEntry; test_items compara archivos de data/items con la base en vez de ITEM_COUNT.
 
 **Prueba:** Cada valor listado aparece en el inspector o en un .tres; cambiar el windup del esqueleto acorazado no cambia a los otros.
 
 **Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+Hecho (ec556751): const → exports en el grupo Ajuste (boss, boss_hand, carrying, aiming_item, carrier); lo cosmético (bob, parpadeo) quedó const. AttackData tiene el grupo Aviso (windup_time, windup_pose, recovery_time) y EntityConfig.attack lo elige; el esqueleto acorazado usa armored_slash.tres. enemy_bt.tres conserva skeleton_slash como respaldo (lo pisa EntityConfig.attack). GameState.new_game_max_health() lee player.tres y HP_PER_HEART vive solo en GameState. Feel.shakes() lee la opción de Settings (feel.tres ya no tiene shake_enabled). Rangos en EntityConfig, ItemData y DropEntry; test_items compara data/items con la base.
 
 **Archivos:** `src/entities/boss/boss.gd`, `src/entities/boss/boss_hand.gd`, `player/states/carrying.gd`, `player/states/aiming_item.gd`, `player/components/carrier.gd`, `ai/tasks/bt_attack.gd`, `src/entities/enemy_bt.tres`, `src/state/game_state.gd`, `src/settings/settings.gd`, `tests/test_items.gd`
 
@@ -6307,13 +6309,18 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 ### Revisión: lo listo para probar  (25/27 probadas)
 
-1. [ ] 11.130 Bocas de cueva talladas en el risco · Revisión · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
-2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player. El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
+1. [ ] 11.130 Bocas de cueva talladas en el risco · Revisión · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. 
+   No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. 
+   D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
+2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
+   El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
 3. [x] 11.111 Cactus, árboles y matas se cortan como el pasto · Hecho · anda
 4. [x] 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · Hecho · anda
 5. [x] 11.118 Sandalias: correr manteniendo y salto largo con la pluma · Hecho · anda
 6. [x] 11.24 Más secretos en el overworld · Hecho · anda
-7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell" no hay asset correcto para la pared quebrable
+7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente
+   si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell"
+   no hay asset correcto para la pared quebrable
 8. [x] 11.30 Ítem de D3: el gancho · Hecho · anda
 9. [x] 11.28 Atajos que se abren al volver · Hecho · anda — anda, pero no debería hacer un fade. Debería haber una animacion del player subiendo y bajando
 10. [x] 11.46 Jefe: game juice · Hecho · anda

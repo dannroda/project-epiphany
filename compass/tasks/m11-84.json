@@ -2,22 +2,22 @@
   "checklist": [
     {
       "detail": "Por defecto `&\"use_item\"`; Jump → `&\"jump\"`; hold_to_aim → `&\"aim_item\"`. Borrar JumpBehavior como etiqueta de tipo si queda vacía.",
-      "done": false,
+      "done": true,
       "text": "entry_event() en ItemBehavior"
     },
     {
       "detail": "0 = sin mantener; quitar el bloque `leaves`.",
-      "done": false,
+      "done": true,
       "text": "hold_time en la base"
     },
     {
       "detail": "Animaciones y yaw desde exports del behavior.",
-      "done": false,
+      "done": true,
       "text": "AimingItem genérico"
     },
     {
       "detail": "Los estados usan el contexto; quitar `equipped`.",
-      "done": false,
+      "done": true,
       "text": "ctx.inventory"
     }
   ],
@@ -32,17 +32,17 @@
     "src/items/behaviors/item_behavior.gd"
   ],
   "milestone": "m11",
-  "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).",
+  "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).\nHecho (2a69be2d): ItemBehavior.entry_event() (Jump/Dash/Hook lo pisan) y _try_item despacha eso; hold_time en la base (bomb_bag.tres 0.25); grupo Apuntar con aim_animation y aim_yaw_offset_deg (bow.tres: Ranged_Bow_Draw, 62°), AimingItem ya no sabe del arco; los estados leen ctx.inventory; ItemUseContext sin equipped. Test: test_items › test_items_choose_how_they_start.",
   "order": 81,
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "items",
     "arquitectura"
   ],
   "test": "Agregar un ítem nuevo de apuntar es un .tres + su behavior, sin tocar state_machine.gd.",
   "title": "Ítems: que la estrategia decida, no la máquina de estados",
-  "updated_at": "2026-10-12T00:19:50.367Z"
+  "updated_at": "2026-10-14T16:07:20.734Z"
 }
