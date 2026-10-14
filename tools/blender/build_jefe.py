@@ -435,6 +435,52 @@ def hand(p, form, curl, mirror):
 	p.transform(list(p.bm.faces), Matrix.Scale(-HAND if mirror else HAND, 4, (1, 0, 0)) @ Matrix.Scale(HAND, 4, (0, 1, 0)) @ Matrix.Scale(HAND, 4, (0, 0, 1)))
 
 
+def guard_hand(p, curl):
+	"""La Mano del templo (sub-jefe): un ídolo de piedra oscura de tres dedos gruesos y pulgar, con grietas de fuego, uñas
+	de oro, una chakana que brilla en el lomo (dónde pegar) y la muñeca vendada de rojo con un aro de oro."""
+	palm = p.rounded_box(-0.62, 0.62, -0.62, 0.48, 0.0, 0.46, radius=0.12, segments=2)
+	p.paint(palm, "gris_4", z_range=(0, 0.5), vary=0.05)
+	back = p.rounded_box(-0.52, 0.52, -0.52, 0.38, 0.46, 0.6, radius=0.06, segments=1)
+	p.paint(back, "piedra", "LOW", vary=0.06)
+	glyph = epi.chakana_plate(p, Vector((0, 0, 0)), 0.5, GLOW)
+	p.transform(glyph, Matrix.Translation((0, -0.07, 0.6)) @ Matrix.Rotation(-math.pi / 2, 4, "X"))
+	cracks = []
+	for x0, y0, x1, y1 in ((-0.45, -0.3, -0.2, 0.05), (0.25, 0.2, 0.5, -0.1), (-0.1, 0.3, 0.15, 0.45)):
+		length = math.hypot(x1 - x0, y1 - y0)
+		c = p.box(-0.02, 0.02, 0.0, length, 0.0, 0.02)
+		p.transform(c, Matrix.Translation((x0, y0, 0.6)) @ Matrix.Rotation(math.atan2(x0 - x1, y1 - y0), 4, "Z"))
+		cracks += c
+	p.paint(cracks, "fuego", "MID")
+	fingers, knuckles, nails = [], [], []
+	for x in (-0.4, 0.0, 0.4):
+		base = 0.42 if x == 0.0 else 0.38
+		s, k, cl = finger(p, x, (base, base * 0.8, base * 0.6), curl, width=0.17, height=0.36)
+		fingers += s
+		knuckles += k
+		nails += cl
+	s, k, cl = finger(p, 0.0, (0.36, 0.3), curl[:2], width=0.15, height=0.3)
+	p.transform(s + k + cl, Matrix.Translation((-0.62, -0.15, 0.0)) @ Matrix.Rotation(-0.6, 4, "Z") @ Matrix.Translation((0, 0.55, 0)))
+	fingers += s
+	knuckles += k
+	nails += cl
+	p.paint(fingers, "gris_4", z_range=(-0.6, 0.5), vary=0.06)
+	p.paint(knuckles, "piedra", "LOW")
+	p.paint(nails, GOLD, "LIGHT")
+	wrap = []
+	for k in range(3):
+		w = p.cylinder(0.4 - k * 0.02, 0.0, 0.11, sides=10, phase=k * 0.3)
+		p.transform(w, Matrix.Translation((0, 0.44 + k * 0.12, 0.24)) @ Matrix.Rotation(-math.pi / 2, 4, "X") @ Matrix.Rotation(0.12 * (k - 1), 4, "Y"))
+		wrap += w
+	p.paint(wrap, RED, "MID", vary=0.05)
+	ring = p.cylinder(0.42, 0.0, 0.07, sides=10)
+	p.transform(ring, Matrix.Translation((0, 0.8, 0.24)) @ Matrix.Rotation(-math.pi / 2, 4, "X"))
+	p.paint(ring, GOLD, "MID")
+	core = p.cylinder(0.26, 0.0, 0.06, sides=10)
+	p.transform(core, Matrix.Translation((0, 0.87, 0.24)) @ Matrix.Rotation(-math.pi / 2, 4, "X"))
+	p.paint(core, GLOW, "MID")
+	p.transform(list(p.bm.faces), Matrix.Scale(HAND, 4))
+
+
 def keyed(name, seed, build, keys):
 	"""Pieza con shape keys: build(p, valor) arma cada pose (None la base) y keys = {nombre: valor}."""
 	obj = piece(name, seed, lambda p: build(p, None))
@@ -458,6 +504,8 @@ for form in FORMS:
 	piece("jefe_" + form + "parpado_inf", 3, lambda p, form=form: parpado(p, form, upper=False))
 	for side, mirror in (("izq", False), ("der", True)):
 		keyed("jefe_" + form + "mano_" + side, 4, lambda p, curl, form=form, mirror=mirror: hand(p, form, curl or OPEN, mirror), GRIP)
+
+keyed("jefe_guardia_mano", 6, lambda p, curl: guard_hand(p, curl or OPEN), GRIP)
 
 epi.layout(kit, columns=6, spacing=5.5)
 epi.publish("jefe")
