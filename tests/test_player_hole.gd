@@ -105,3 +105,31 @@ func test_clouds_only_while_in_the_overworld() -> void:
 	var temple: Node = load("res://levels/templo.tscn").instantiate()
 	assert_true(temple.get_node_or_null(^"CloudShadows") == null, "el templo no")
 	temple.free()
+
+
+## Playtest 2026-10-14: en una sala (cueva de las bombas) los bordes y los muros bajos no suben la cámara.
+func test_rooms_never_turn_the_camera_overhead() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.change_scene_to_file("res://levels/bomb_cave.tscn")
+	await tree.scene_changed
+	await tree.process_frame
+	await tree.process_frame
+	for enemy in tree.get_nodes_in_group(&"enemies"):
+		enemy.free()
+	var camera := tree.get_first_node_in_group(TopDownCamera.GROUP) as TopDownCamera
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	assert_true(camera.room != null, "la cámara está en la sala")
+	var bounds := camera.room.bounds()
+	var spot := Vector3.INF
+	for x in range(int(bounds.position.x), int(bounds.end.x)):
+		for z in range(int(bounds.position.y), int(bounds.end.y)):
+			player.global_position = Vector3(x + 0.5, camera.room.floor_y() + 0.1, z + 0.5)
+			if camera.call(&"_player_hidden", player):
+				spot = player.global_position
+				break
+		if spot != Vector3.INF:
+			break
+	assert_true(spot != Vector3.INF, "hay un lugar donde una pared lo taparía")
+	player.global_position = spot
+	await tree.create_timer(0.4).timeout
+	assert_true(not camera.occluded, "en la sala la cámara no sube")

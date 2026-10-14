@@ -345,9 +345,10 @@ func _cut_south_wall(cut_room: Room) -> void:
 
 ## Si alguna pared tapa a un player desde el ángulo normal, en vez de recortarle un agujero (11.134) la cámara gira
 ## hasta quedar encima en overhead_time, y vuelve al salir. Las paredes siguen leyendo player_hole, con w en 0.
+## Dentro de una sala no: está hecha para verse entera desde su cámara, y sus bordes y muros bajos no cuentan.
 func _update_player_hole(delta: float) -> void:
 	var hidden := false
-	if target_node:
+	if target_node and room == null:
 		for player in framed():
 			if _player_hidden(player):
 				hidden = true
