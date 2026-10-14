@@ -1432,7 +1432,7 @@ collision_layer = 9
 collision_mask = 0
 script = ExtResource("45_kifxg")
 solved_flag = &"qv_west_switch"
-solved_position = Vector3(14, 0, 10)
+solved_position = Vector3(16, 0, 12)
 
 [node name="RamaKeyGate" type="StaticBody3D" parent="PisoTronco" unique_id=759443533 instance=ExtResource("9_i77fr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 6)

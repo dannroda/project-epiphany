@@ -4408,6 +4408,8 @@ Playtest 2026-10-12: los puzzles de bloques solo se tienen que activar con los b
   Se activa con un golpe fuerte (¿martillo / golpe cargado?); espera el ítem que lo dé (11.90).
 - [ ] Probarlo (Daniel)
 
+**Notas:** Al sacar las capturas (2026-10-14) apareció que la placa del santuario seguía mal: ShrineBlock resuelto iba a (−78, −32), coordenadas del overworld, y la placa de shrine_cave está en (−6, 0); el test no revisaba shrine_cave. Ahora test_solved_blocks_rest_on_their_switch recorre todos los niveles, y encontró dos más corridos por el horneado LA: RamaBlock de la Queñoa (14, 10 → 16, 12) y VestibuleBlock del templo (44, 40 → 48, 48). Los tres van a su placa.
+
 **Capturas:** `compass/images/m11-110-mapa.jpg`, `compass/images/m11-110-1.jpg`, `compass/images/m11-110-2.jpg`, `compass/images/m11-110-3.jpg`
 
 ### 11.111 Cactus, árboles y matas se cortan como el pasto · Revisión
