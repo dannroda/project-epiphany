@@ -70,6 +70,8 @@ var _map: OverworldMap
 var _room_cells: Dictionary[Room, MapRoomCell] = {}
 var _focused_room: Room
 var _zoomed := false
+## Gatillos analógicos: cada movimiento pasado el umbral llega como "pressed"; un piso por apretón hasta soltarlo.
+var _floor_held: Dictionary[StringName, bool] = {}
 ## Overworld: dónde está el cursor antes de engancharse a un portal, y el portal enganchado.
 var _cursor_point := Vector2.ZERO
 var _focused_portal: TravelPortal
@@ -279,7 +281,13 @@ func _show_doors(low: Vector2i) -> void:
 
 func _dungeon_input(event: InputEvent) -> void:
 	for pair in [[&"map_floor_up", 1], [&"map_floor_down", -1]]:
+		if event.is_action_released(pair[0]):
+			_floor_held[pair[0]] = false
 		if event.is_action_pressed(pair[0]):
+			get_viewport().set_input_as_handled()
+			if _floor_held.get(pair[0], false):
+				return
+			_floor_held[pair[0]] = true
 			var levels := _levels()
 			var next: int = levels.find(_view_level) - pair[1]
 			if next >= 0 and next < levels.size():
