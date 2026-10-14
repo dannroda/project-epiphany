@@ -5106,6 +5106,8 @@ Daniel 2026-10-14 (playtest de 11.130: no tiene sentido entrar a la ermita y que
 
 Daniel (playtest de 12.19): en la Totora, si el player cae al agua y pierde, se lo ve caer al vacío y recién después aparece la pantalla de 'You Fell'. Al caer al agua tendría que hundirse/salpicar y reaparecer (o la pantalla al instante), sin ver la caída por debajo del nivel.
 
+**Relacionadas:** Totora (D3) en estilo Link's Awakening y su entrada
+
 ### 11.168 D4 (Cumbre): entrada exagerada como las otras mazmorras · Pendiente
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-eb · **Etiquetas:** `overworld`, `arte`
@@ -5584,6 +5586,8 @@ Diseño (-43) armó levels/totora.tscn en el kit gris (a8d40e91, GDD §8d): dos 
 - [ ] Recorrerla (Daniel)
 
 **Capturas:** `compass/images/m12-19-20261013-232857.png`, `compass/images/m12-19-20261013-233009.png`, `compass/images/m12-19-20261013-233439.png`
+
+**Relacionadas:** 11.167 Totora: caer al agua y perder deja al player cayendo al vacío antes de "You Fell"
 
 ### 12.20 Arte de la pantalla de título: logo y fondo del overworld · Hecho
 
