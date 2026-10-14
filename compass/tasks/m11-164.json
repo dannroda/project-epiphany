@@ -2,15 +2,15 @@
   "assignee": "project-epiphany-43",
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "Chullpa: techo sobre el nicho del Rellano en covers de su pared"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Revisar las demás paredes agrietadas (Queñoa, Totora, Cumbre, templo) con el mismo criterio"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Test: el nicho está tapado antes y destapado después de romper la pared"
     },
     {
@@ -46,7 +46,7 @@
     }
   ],
   "milestone": "m11",
-  "notes": "CrackedWall.covers (fd): lista de nodos que se ven mientras la pared está entera y se ocultan al romperse (también al cargar rota). Cada nivel pone su techo y lo agrega a covers. Mazmorras: -43; overworld: -eb. Overworld (-eb): build_terreno_organico.py › niche_lids() genera una tapa (tapa_<pared>.res, del color de la tapa de la terraza y 2 cm sobre ella) sobre las celdas bajas encerradas detrás de cada pared agrietada: Cerros, Cardonal, Mirador, Quebrada y Cumbre. Gruta y Santuario dan a una boca de cueva, no a un nicho, y no llevan tapa. Cada tapa es el nodo Lid de su pared y está en sus covers. Test: test_overworld › test_cracked_wall_niches_are_roofed_until_the_wall_breaks.",
+  "notes": "CrackedWall.covers (fd): lista de nodos que se ven mientras la pared está entera y se ocultan al romperse (también al cargar rota). Cada nivel pone su techo y lo agrega a covers. Mazmorras: -43; overworld: -eb. Overworld (-eb): build_terreno_organico.py › niche_lids() genera una tapa (tapa_<pared>.res, del color de la tapa de la terraza y 2 cm sobre ella) sobre las celdas bajas encerradas detrás de cada pared agrietada: Cerros, Cardonal, Mirador, Quebrada y Cumbre. Gruta y Santuario dan a una boca de cueva, no a un nicho, y no llevan tapa. Cada tapa es el nodo Lid de su pared y está en sus covers. Test: test_overworld › test_cracked_wall_niches_are_roofed_until_the_wall_breaks.\nMazmorras (-43): la_walls refresh arma el techo (<Pared>NicheRoof, hermano de la pared, en sus covers). Cubre el piso encerrado detrás de la pared cuando está en la misma sala que el frente; si atrás hay un paso u otra sala, no lleva (la máscara de sala ya lo tapa). El techo llega hasta donde empiezan las crestas de las paredes que lo rodean y pasa por encima del paso de la propia pared: con la cámara en perspectiva, sin eso se veía el piso del nicho por el borde (el cofre del Rellano, el ojo de Combined). Usa el material de las paredes con la UV de la cresta, así que el velo de 11.156 lo oscurece igual que a las crestas. Con techo: Chullpa Rellano, Queñoa Ojos y templo Combined. Sin techo: Queñoa Nido y templo Arco (dan a un paso), Totora Garita y Cumbre Grieta (dan a otra sala). Al hacerse en el refresh, ya no se pierde cuando se vuelve a correr (lo que pasó con NicheCap en 5eee5740).",
   "order": 161,
   "priority": "medium",
   "refs": [],
@@ -56,7 +56,7 @@
     "bug",
     "chullpa"
   ],
-  "test": "",
+  "test": "tests/test_cracked_wall.gd (test_dungeon_niches_are_roofed, test_the_landing_niche_roof_goes_when_the_wall_breaks)",
   "title": "Lo que esconde una pared agrietada no se ve desde arriba",
-  "updated_at": "2026-10-14T07:10:25.220Z"
+  "updated_at": "2026-10-14T07:17:18.618Z"
 }
