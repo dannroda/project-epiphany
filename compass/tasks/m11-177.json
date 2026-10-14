@@ -11,7 +11,7 @@
     }
   ],
   "milestone": "m11",
-  "notes": "Sin RellanoCrackedWall, nicho, cofre de 5 bombas (ch_landing_niche_chest) ni RellanoBombPot; la pared oeste del Rellano sigue recta. Spot del grafo y flag quitados, GDD 8b. Regla: en mazmorras un muro agrietado abre una sala entera, nunca un nicho.\n2026-10-14 (-43, 4b3b4724): cambios de Daniel en el editor (borde de una celda de pared alrededor de cada piso, huecos de pasillo a los lados de la isla) pasados al grid sin el ruido del guardado; la escalera de la cripta sale en la mitad oeste del Salón del Cofre (32, 22), que llega a la entrada: antes salía en la mitad este y sin pluma quedabas trabado. la_walls solo poda paredes a más de 2 celdas de un piso.",
+  "notes": "Sin RellanoCrackedWall, nicho, cofre de 5 bombas (ch_landing_niche_chest) ni RellanoBombPot; la pared oeste del Rellano sigue recta. Spot del grafo y flag quitados, GDD 8b. Regla: en mazmorras un muro agrietado abre una sala entera, nunca un nicho.\n2026-10-14 (-43, 4b3b4724): cambios de Daniel en el editor (borde de una celda de pared alrededor de cada piso, huecos de pasillo a los lados de la isla) pasados al grid sin el ruido del guardado; la escalera de la cripta sale en la mitad oeste del Salón del Cofre (32, 22), que llega a la entrada: antes salía en la mitad este y sin pluma quedabas trabado. la_walls solo poda paredes a más de 2 celdas de un piso.\nDaniel: ¿por qué hay escalera abajo y nada arriba? (-43, 5a85d8f4): la escalera de la cripta es de ida y vuelta; el Salón del Cofre tiene una bajada en su pared norte (SalaCofreStairs) a FromChestHall en la cripta.",
   "order": 174,
   "priority": "high",
   "refs": [],
@@ -23,5 +23,5 @@
   ],
   "test": "tests/test_chullpa.gd, tests/test_cracked_wall.gd, tests/test_dungeon_reach.gd",
   "title": "Chullpa sin pared agrietada (fuera el nicho del Rellano)",
-  "updated_at": "2026-10-14T20:04:03.167Z"
+  "updated_at": "2026-10-14T20:06:28.714Z"
 }
