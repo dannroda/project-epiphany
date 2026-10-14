@@ -209,10 +209,10 @@ func test_arena_closes_skippable_intro_and_bar() -> void:
 	var boss := level.get_node(^"Boss") as Boss
 	var hud := level.get_node(^"HUD")
 	door.open(false)
-	player.global_position = Vector3(44, 0, 19)
+	player.global_position = Vector3(66, 0, 19)
 	for i in 10:
 		await tree.physics_frame
-	player.global_position = Vector3(44, 0, 11.5)
+	player.global_position = Vector3(66, 0, 11.5)
 	assert_true(await _wait_until(func() -> bool: return not door.is_open, 3.0), "al entrar se cierra la puerta")
 	assert_true(await _wait_until(func() -> bool: return arena.in_intro, 2.0), "arranca la intro")
 	assert_true(not boss.phases.is_active(), "durante la intro no pelea")
@@ -256,7 +256,7 @@ func _field(shield := &"") -> Array:
 	var level := tree.current_scene
 	(level.get_node(^"BossArena") as BossArena).started = true
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
-	player.global_position = Vector3(44, 0, 11)
+	player.global_position = Vector3(66, 0, 11)
 	for i in 10:
 		await tree.physics_frame
 	return [tree, player, level.get_node(^"Boss") as Boss]
@@ -457,7 +457,7 @@ func test_win_take_the_container_then_the_portal_ends_the_demo() -> void:
 	var portal := level.get_node(^"BossExitPortal") as Portal
 	assert_true(not portal.visible, "el portal de salida no está hasta vencerlo")
 	(level.get_node(^"BossArena") as BossArena).started = true
-	player.global_position = Vector3(44, 0, 11)
+	player.global_position = Vector3(66, 0, 11)
 	player.health.make_invulnerable(999.0)
 	for i in 10:
 		await tree.physics_frame

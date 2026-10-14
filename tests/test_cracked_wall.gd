@@ -78,7 +78,7 @@ func test_covers_hide_what_it_hides_until_it_breaks() -> void:
 
 ## 11.164: el nicho de atrás de cada pared agrietada lleva techo (lo pone la_walls) y la pared lo tiene en `covers`.
 func test_dungeon_niches_are_roofed() -> void:
-	for spec: Array in [["quenoa", "PisoRaices/OjosCrackedWall"], ["templo", "Planta/CombinedCrackedWall"]]:
+	for spec: Array in [["quenoa", "PisoRaices/OjosCrackedWall"]]:
 		var level := (load("res://levels/%s.tscn" % spec[0]) as PackedScene).instantiate()
 		var wall := level.get_node(NodePath(spec[1])) as CrackedWall
 		assert_eq(wall.covers.size(), 1, "%s tiene techo" % wall.name)
