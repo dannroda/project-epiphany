@@ -1,0 +1,22 @@
+{
+  "assignee": "project-epiphany-43",
+  "checklist": [],
+  "code": "11.182",
+  "created_at": "2026-10-14T22:51:16.343Z",
+  "description": "Daniel (2026-10-14): el templo, como mazmorra final, es un boss-rush: cada una de las cuatro alas (pluma, arco, gancho, espejo) termina con la revancha de un jefe anterior (Mallqui de la Chullpa, Ojos de la Queñoa, jefe de la Totora, jefe de la Cumbre), y ganarla enciende el ojo del sello del hub. Decidir qué jefe va en qué ala y si reemplaza o acompaña al puzzle del ala. Ojo: el jefe de la Cumbre es hoy un placeholder prestado (11.129). La Mano sigue de sub-jefe de la combinada.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 179,
+  "priority": "medium",
+  "refs": [],
+  "size": "l",
+  "status": "todo",
+  "tags": [
+    "diseno",
+    "templo",
+    "jefe"
+  ],
+  "test": "",
+  "title": "Templo boss-rush: un jefe anterior por ala",
+  "updated_at": "2026-10-14T22:51:16.343Z"
+}

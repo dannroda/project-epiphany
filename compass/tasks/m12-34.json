@@ -1,0 +1,21 @@
+{
+  "assignee": "project-epiphany-5d",
+  "checklist": [],
+  "code": "12.34",
+  "created_at": "2026-10-14T22:51:15.944Z",
+  "description": "Daniel (2026-10-14): que el color del templo se parezca más al dorado del jefe final y no tanto al celeste actual (kit templo_la, piso, luces/ambiente del nivel). Respetar sus valores de TonoLA/AmbienteSala; si hace falta refresh, avisar a -fd antes (regla del reborde y navmesh).",
+  "milestone": "m12",
+  "notes": "",
+  "order": 34,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "arte",
+    "templo"
+  ],
+  "test": "",
+  "title": "Templo: paleta más dorada, como el jefe final, menos celeste",
+  "updated_at": "2026-10-14T22:51:15.944Z"
+}

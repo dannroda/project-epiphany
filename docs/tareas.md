@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (107/177)
+## M11 — Pulido: contenido y feel  (107/178)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5272,7 +5272,13 @@ Daniel (2026-10-14): en las mazmorras una pared agrietada siempre abre una sala 
 
 **Relacionadas:** 11.180 Templo: salas de 14 de alto y al menos 22 de ancho
 
-## M12 — Assets propios (Blender)  (17/32)
+### 11.182 Templo boss-rush: un jefe anterior por ala · Pendiente
+
+**Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `templo`, `jefe`
+
+Daniel (2026-10-14): el templo, como mazmorra final, es un boss-rush: cada una de las cuatro alas (pluma, arco, gancho, espejo) termina con la revancha de un jefe anterior (Mallqui de la Chullpa, Ojos de la Queñoa, jefe de la Totora, jefe de la Cumbre), y ganarla enciende el ojo del sello del hub. Decidir qué jefe va en qué ala y si reemplaza o acompaña al puzzle del ala. Ojo: el jefe de la Cumbre es hoy un placeholder prestado (11.129). La Mano sigue de sub-jefe de la combinada.
+
+## M12 — Assets propios (Blender)  (17/34)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -5868,6 +5874,18 @@ Daniel (2026-10-14): en todas las mazmorras LA los topes de las paredes se ven d
 **Notas:** Sin velos (BordeOscuro y borde_oscuro.gdshader fuera). Viñeta TonoLA: frame 0.1, softness 0.8, slant 0.15. la_walls saca paredes de relleno que no dan a piso. Cámara a 38 con south_margin 2: sala de 14 entera y fija. DOF solo cerca de la cámara (9 m), sin desenfoque lejano. Huecos de caída más oscuros con niebla negra. _look reaplica todo en cada refresh. Chullpa: Rellano 22x14, isla de la Sala del Cofre 3x3.
 
 **Relacionadas:** 11.156 Chullpa: se ven los techos (crestas) de las paredes LA horneadas
+
+### 12.33 Templo: la Mano sub-jefe con modelo propio · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `templo`, `jefe`
+
+Daniel (2026-10-14): la Mano suelta (HandGuard, sub-jefe del templo) usa hoy el mismo modelo que las manos del jefe final; quiere un modelo diferente para que no sea idéntica. Mismas animaciones/ataques (golpe al piso, agarre, barrido), colisión y hitbox sin cambios.
+
+### 12.34 Templo: paleta más dorada, como el jefe final, menos celeste · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `templo`
+
+Daniel (2026-10-14): que el color del templo se parezca más al dorado del jefe final y no tanto al celeste actual (kit templo_la, piso, luces/ambiente del nivel). Respetar sus valores de TonoLA/AmbienteSala; si hace falta refresh, avisar a -fd antes (regla del reborde y navmesh).
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 
