@@ -6151,3 +6151,10 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 25. [ ] 10.19 Fin de la demo · Revisión
 26. [x] 10.24 Tope de FPS · Hecho · anda
 27. [x] 10.25 Sombras del sol acordes a la cámara cenital · Hecho · anda
+
+### Overworld: laguna, halos, minimapa y cámara  (0/4 probadas)
+
+1. [ ] 11.140 Overworld (Lagoon): z-fighting entre el pasto y el camino de tierra · Revisión
+2. [ ] 11.143 Overworld: delineado/halo oscuro raro alrededor de árboles, cardones y bordes · Revisión
+3. [ ] 11.148 Minimapa del overworld desactualizado (la quebrada sale como abismo negro) · Revisión
+4. [ ] 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player · Revisión
