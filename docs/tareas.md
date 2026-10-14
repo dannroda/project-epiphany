@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (91/150)
+## M11 — Pulido: contenido y feel  (91/151)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4739,7 +4739,7 @@ Playtest 2026-10-13, en la Chullpa (las tres cosas salen en la misma captura):
 
 **Capturas:** `compass/images/m11-137-20261013-224905.png`
 
-**Relacionadas:** 11.151 Totora 2P: se ve la sala del piso de abajo
+**Relacionadas:** 11.151 Totora 2P: se ve la sala del piso de abajo; 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la)
 
 ### 11.138 Chullpa sub-boss: asset para el cuadrado donde después se salta · Pendiente
 
@@ -4776,7 +4776,7 @@ Playtest 2026-10-13: en la D2 (Queñoa), piso 2P "Canopy", hay en una pared un m
 
 **Capturas:** `compass/images/m11-141-20261013-225533.png`, `compass/images/m11-141-20261013-225603.png`, `compass/images/m11-141-20261013-225858.png`
 
-**Relacionadas:** 11.145 Queñoa S1 (Sala de los ojos): placa que no hace nada, z-fighting en el cofre y símbolo raro en la puerta
+**Relacionadas:** 11.145 Queñoa S1 (Sala de los ojos): placa que no hace nada, z-fighting en el cofre y símbolo raro en la puerta; 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la)
 
 ### 11.142 Mapa de pausa: LT/RT van rapidísimo; mover con las flechitas · Pendiente
 
@@ -4887,7 +4887,7 @@ Playtest 2026-10-13, Totora: con el gancho, el targeting marca (rombo amarillo) 
 
 Playtest 2026-10-13, Totora (D3) 2P Upper Floor, sala sureste: debajo del borde sur de la sala se ve la sala del piso de abajo (su piso y paredes). Los otros pisos no deberían verse (ocultar/fundir los pisos que no son el actual, como en las otras mazmorras LA). En la misma captura: la pared agrietada del oeste sobresale como bloque verde (como 11.137).
 
-**Relacionadas:** 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista
+**Relacionadas:** 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista; 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la)
 
 ### 11.152 Z-target: al activarlo, priorizar el enemigo más cercano · Pendiente
 
@@ -4917,7 +4917,16 @@ Playtest 2026-10-13, Totora (D3): en la sala del estanque con ojos (interruptore
 
 **Notas:** Hecho: dos vasijas de flechas (data/drops/pot_arrows.tres, 5 flechas si tiene el arco) en cada sala de Totora con un ojo: Juncal (esquina SO, cerca de donde se le tira al ojo) y Tejedores (franja este, de donde se tira por encima del agua). Y en cualquier DropTable las filas de munición (flechas, bombas) pesan 4 veces más con un cuarto o menos de lo que entra (drop_table.gd). Tests: test_totora test_every_eye_room_has_an_arrow_pot, test_drops test_arrows_drop_more_often_when_the_quiver_runs_low.
 
-## M12 — Assets propios (Blender)  (15/23)
+### 11.155 Chullpa: la momia aparece en vez de saltar hacia el player; onda expansiva con shader vistoso · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `chullpa`, `jefe`
+
+Playtest 2026-10-13: en la pelea de la momia (MummyGuard), cuando 'salta' no se ve que siga al player: simplemente aparece en el punto de caída. Debería verse el salto (arco hacia la marca) siguiendo al player mientras apunta. Además, Daniel quiere que la onda expansiva del aterrizaje sea un shader vistoso (anillo con distorsión/brillo) en lugar del efecto actual.
+
+- [ ] El salto se ve: la momia viaja en arco hasta la marca (que sigue al player hasta fijarse).
+- [ ] Onda expansiva del aterrizaje con un shader vistoso (anillo que se expande, distorsión/brillo).
+
+## M12 — Assets propios (Blender)  (15/24)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -5413,6 +5422,14 @@ Playtest 2026-10-13: el jefe de la Queñoa (Eyes of the Queñoa) y el sub-jefe (
 **Capturas:** `compass/images/m12-23-20261013-230533.png`
 
 **Relacionadas:** 12.21 Ojo interruptor: la pupila sigue al player y se parece al ojo del jefe final
+
+### 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la) · Pendiente
+
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`
+
+Pedido de -43 (playtest 2026-10-13): las paredes agrietadas de las mazmorras LA usan cracked_wall_templo y no encajan (sobresalen, cara de arriba negra, o no se ven). Hace falta un tapón que llene el paso LA: alto y ancho como el corte, inclinado como la pared, con la veta de su pared y grietas en las dos caras. la_walls lo coloca como las hojas de puerta. Estilos: chullpa, quenoa, totora, cumbre. Cuando estén las mallas, -43 cambia las instancias y revisa la colisión. -11 (-5d) elige el orden con Daniel frente a 12.23 y 11.138.
+
+**Relacionadas:** 11.141 Queñoa 2P (Canopy): símbolo azul sin sentido y puerta bloqueada invisible; 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista; 11.151 Totora 2P: se ve la sala del piso de abajo
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 

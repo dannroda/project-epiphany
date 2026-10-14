@@ -1,0 +1,31 @@
+{
+  "assignee": "project-epiphany-43",
+  "checklist": [
+    {
+      "done": false,
+      "text": "El salto se ve: la momia viaja en arco hasta la marca (que sigue al player hasta fijarse)."
+    },
+    {
+      "done": false,
+      "text": "Onda expansiva del aterrizaje con un shader vistoso (anillo que se expande, distorsión/brillo)."
+    }
+  ],
+  "code": "11.155",
+  "created_at": "2026-10-14T03:11:47.114Z",
+  "description": "Playtest 2026-10-13: en la pelea de la momia (MummyGuard), cuando 'salta' no se ve que siga al player: simplemente aparece en el punto de caída. Debería verse el salto (arco hacia la marca) siguiendo al player mientras apunta. Además, Daniel quiere que la onda expansiva del aterrizaje sea un shader vistoso (anillo con distorsión/brillo) en lugar del efecto actual.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 152,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "chullpa",
+    "jefe"
+  ],
+  "test": "",
+  "title": "Chullpa: la momia aparece en vez de saltar hacia el player; onda expansiva con shader vistoso",
+  "updated_at": "2026-10-14T03:11:47.802Z"
+}
