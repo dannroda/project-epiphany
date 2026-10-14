@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://src/feel/blessing.gd" id="1_blessing"]
 [ext_resource type="PackedScene" path="res://src/feel/stencil_light/stencil_light.tscn" id="2_glow"]
+[ext_resource type="Shader" path="res://src/world/vfx/circulo_magico.gdshader" id="3_circulo"]
 
 [sub_resource type="StandardMaterial3D" id="Spark"]
 shading_mode = 0
@@ -11,6 +12,17 @@ albedo_color = Color(0.72, 0.99, 1, 1)
 [sub_resource type="PrismMesh" id="SparkMesh"]
 material = SubResource("Spark")
 size = Vector3(0.08, 0.12, 0.08)
+
+[sub_resource type="ShaderMaterial" id="Circulo"]
+render_priority = 0
+shader = ExtResource("3_circulo")
+shader_parameter/color = Color(0.55, 0.95, 1, 1)
+shader_parameter/energy = 2.2
+shader_parameter/spin = 0.12
+
+[sub_resource type="PlaneMesh" id="CirculoMesh"]
+material = SubResource("Circulo")
+size = Vector2(2.4, 2.4)
 
 [sub_resource type="Curve" id="Shrink"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -36,6 +48,11 @@ initial_velocity_min = 0.6
 initial_velocity_max = 1.1
 scale_amount_curve = SubResource("Shrink")
 color = Color(0.72, 0.99, 1, 1)
+
+[node name="Circulo" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.06, 0)
+cast_shadow = 0
+mesh = SubResource("CirculoMesh")
 
 [node name="Glow" parent="." instance=ExtResource("2_glow")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
