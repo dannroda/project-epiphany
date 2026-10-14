@@ -5855,11 +5855,15 @@ Daniel (2026-10-14): en la Chullpa hay que acomodar el jefe final de la momia pa
 
 **Notas:** Daniel (2026-10-14): prioridad, va a grabar la Chullpa. Hecho (-5d, 17350524): el jefe ya tenía modelo propio, Mallqui (mantos rojo y azul, máscara de oro, corona de sol), pero un refresh de la_walls perdió el override de la malla. Ahora el jefe instancia src/entities/mummy_guard/mallqui.tscn (heredada de mummy_guard con mallqui.res), así sobrevive a los refresh. Juego y mummy_guardian.tres sin cambios.
 
-### 12.32 Look LA: topes de pared del color del muro y viñeta borrosa en vez del velo negro; desenfoque solo cerca de la cámara · Pendiente
+### 12.32 Look LA: topes de pared del color del muro y viñeta borrosa en vez del velo negro; desenfoque solo cerca de la cámara · Revisión
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `arte`, `render`, `mazmorra`
 
 Daniel (2026-10-14): en todas las mazmorras LA los topes de las paredes se ven del color del tile de la pared, no negros: se va el velo negro (borde_oscuro, 11.156). Lo de más allá lo tapa una viñeta borrosa en el borde de la pantalla. Menos desenfoque: solo lo muy alto o muy cerca de la cámara (DOF de enfoque_la). Toca la_walls, borde_oscuro y enfoque_la.
+
+**Prueba:** tests/test_quenoa.gd, tests/test_chullpa.gd, tests/test_camera.gd, tests/test_coop_camera.gd
+
+**Notas:** Sin velos (BordeOscuro y borde_oscuro.gdshader fuera). Viñeta TonoLA: frame 0.1, softness 0.8, slant 0.15. la_walls saca paredes de relleno que no dan a piso. Cámara a 38 con south_margin 2: sala de 14 entera y fija. DOF solo cerca de la cámara (9 m), sin desenfoque lejano. Huecos de caída más oscuros con niebla negra. _look reaplica todo en cada refresh. Chullpa: Rellano 22x14, isla de la Sala del Cofre 3x3.
 
 **Relacionadas:** 11.156 Chullpa: se ven los techos (crestas) de las paredes LA horneadas
 
