@@ -6,6 +6,8 @@ signal landed(hurtbox: Hurtbox)
 
 ## Ondas por el piso (golpe de las manos del jefe): no le pegan a quien está en el aire (salto de la pluma).
 @export var ground_only := false
+## Con ground_only: el que entró en el aire y cae adentro también recibe (pinchos).
+@export var hits_on_landing := false
 
 var team: EntityConfig.Team = EntityConfig.Team.NEUTRAL
 ## () -> DamageInfo. Player: ItemData del arma equipada. Enemigo: su EntityConfig.
@@ -19,11 +21,23 @@ var active_attack: AttackData:
 		_already_hit.clear()
 
 var _already_hit: Array[Hurtbox] = []
+## hits_on_landing: los que entraron en el aire; les pega si tocan el piso adentro.
+var _airborne: Array[Hurtbox] = []
 
 
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
+	area_exited.connect(func(area: Area3D) -> void: _airborne.erase(area))
 	body_entered.connect(_on_body_entered)
+
+
+func _physics_process(_delta: float) -> void:
+	for hurtbox in _airborne.duplicate():
+		if not is_instance_valid(hurtbox) or not monitoring:
+			_airborne.erase(hurtbox)
+		elif (hurtbox.get_parent() as PlayerCharacter).is_on_floor():
+			_airborne.erase(hurtbox)
+			_on_area_entered(hurtbox)
 
 
 func build_damage() -> DamageInfo:
@@ -42,8 +56,10 @@ func _on_area_entered(area: Area3D) -> void:
 		return
 	if hurtbox in _already_hit:
 		return
-	var body := hurtbox.get_parent() as CharacterBody3D
+	var body := hurtbox.get_parent() as PlayerCharacter
 	if ground_only and body and not body.is_on_floor():
+		if hits_on_landing and not hurtbox in _airborne:
+			_airborne.append(hurtbox)
 		return
 	_already_hit.append(hurtbox)
 	hurtbox.receive(build_damage())

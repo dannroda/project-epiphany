@@ -317,3 +317,25 @@ func test_the_grove_gap_takes_one_feather_jump() -> void:
 	var landed := await _jump_right(tree, player, Vector3(-43.6, 2.7, 23))
 	assert_true(landed.y > 2.0 and landed.x > -41.0, "un salto de pluma cruza de la cornisa del claro a la Arboleda (%s)" % landed)
 	(setup[2] as Node).reset()
+
+
+## 11.169: en el aire los pinchos no lastiman (como en LA); caer encima de unos levantados, sí.
+func test_jumping_over_raised_spikes_is_safe_but_landing_on_them_hurts() -> void:
+	var setup: Array = await _level()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	_give_feather(setup[2])
+	player.health.invulnerability_time = 0.0
+	_box(tree, FAR + Vector3(0, -0.5, 0), Vector3(30, 1, 10))
+	var trap := (load("res://src/world/spike_trap.tscn") as PackedScene).instantiate() as SpikeTrap
+	trap.period = 0.0
+	tree.current_scene.add_child(trap)
+	trap.global_position = FAR + Vector3(1.5, 0, 0)
+	var full := player.health.current
+	var landed := await _jump_right(tree, player, FAR)
+	assert_true(landed.x - FAR.x > 2.8, "pasó por encima (x %.2f)" % (landed.x - FAR.x))
+	assert_eq(player.health.current, full, "en el aire no lo tocan")
+	trap.global_position = FAR + Vector3(6, 0, 0) + Vector3(landed.x - FAR.x, 0, 0)
+	await _jump_right(tree, player, FAR + Vector3(6, 0, 0))
+	assert_true(player.health.current < full, "cayendo encima lastiman")
+	trap.queue_free()

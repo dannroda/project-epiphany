@@ -5102,7 +5102,7 @@ Daniel 2026-10-14 (playtest de 11.130: no tiene sentido entrar a la ermita y que
 
 **Relacionadas:** 11.130 Bocas de cueva talladas en el risco; 12.29 Muro agrietado LA de cueva (muro_agrietado_cueva_la)
 
-### 11.167 Totora: caer al agua y perder deja al player cayendo al vacío antes de "You Fell" · En curso
+### 11.167 Totora: caer al agua y perder deja al player cayendo al vacío antes de "You Fell" · Revisión
 
 **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`, `totora`, `player`
 
@@ -5122,11 +5122,15 @@ Daniel (playtest de 11.130 y 7.9): la entrada de la D4 en el overworld parece un
 
 **Relacionadas:** 11.130 Bocas de cueva talladas en el risco
 
-### 11.169 Galería de trampas: la pluma no salta por encima de los pinchos · Pendiente
+### 11.169 Galería de trampas: la pluma no salta por encima de los pinchos · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `player`, `mazmorra`
 
 Daniel (playtest de 11.5): saltando con la pluma los pinchos igual llegan al player. O la pluma salta más alto o los pinchos son más bajos / el hurtbox no alcanza en el aire. Cuidado: el alto del salto (player/states/jumping.gd) lo usan todos los huecos y tests de salto.
+
+**Prueba:** tests/test_jump.gd › test_jumping_over_raised_spikes_is_safe_but_landing_on_them_hurts
+
+**Notas:** Hecho (2026-10-14): no toqué el alto del salto ni los pinchos. Los pinchos ahora son ground_only, como la onda del golpe del jefe: en el aire no lastiman (como en LA). Nuevo hits_on_landing en Hitbox: si el player cae encima de pinchos levantados, lastiman al tocar el piso. ground_only solo perdona a players en el aire; los enemigos se pinchan igual que antes. Por qué no las otras opciones: la caja de los pinchos llega a 0.8 m y el salto sube 0.68, y achicarlos no alcanzaba, porque el salto no dura lo suficiente para cruzar la caja más el radio de la cápsula del player.
 
 **Relacionadas:** 11.5 Galería de trampas: pinchos
 
@@ -6303,13 +6307,18 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 ### Revisión: lo listo para probar  (25/27 probadas)
 
-1. [ ] 11.130 Bocas de cueva talladas en el risco · Revisión · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
-2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player. El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
+1. [ ] 11.130 Bocas de cueva talladas en el risco · Revisión · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. 
+   No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. 
+   D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
+2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
+   El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
 3. [x] 11.111 Cactus, árboles y matas se cortan como el pasto · Hecho · anda
 4. [x] 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · Hecho · anda
 5. [x] 11.118 Sandalias: correr manteniendo y salto largo con la pluma · Hecho · anda
 6. [x] 11.24 Más secretos en el overworld · Hecho · anda
-7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell" no hay asset correcto para la pared quebrable
+7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente
+   si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell"
+   no hay asset correcto para la pared quebrable
 8. [x] 11.30 Ítem de D3: el gancho · Hecho · anda
 9. [x] 11.28 Atajos que se abren al volver · Hecho · anda — anda, pero no debería hacer un fade. Debería haber una animacion del player subiendo y bajando
 10. [x] 11.46 Jefe: game juice · Hecho · anda
