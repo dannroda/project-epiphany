@@ -64,6 +64,7 @@
   "code": "11.30",
   "created_at": "2026-10-10T05:29:45.382Z",
   "description": "Un ítem post-MVP: gancho o algo que mueva objetos a distancia (GDD §6.1), con uso en combate y que abra lugares que antes no se podían.",
+  "done_at": "2026-10-14T02:52:16.151Z",
   "images": [
     "compass/images/m11-30-mapa.jpg",
     "compass/images/m11-30-1.jpg",
@@ -85,11 +86,11 @@
       "section": "items-mvp"
     }
   ],
-  "status": "doing",
+  "status": "done",
   "tags": [
     "items"
   ],
   "test": "El ítem tiene un uso en combate y abre al menos dos lugares que antes no se podían.",
   "title": "Ítem de D3: el gancho",
-  "updated_at": "2026-10-14T00:37:51.127Z"
+  "updated_at": "2026-10-14T02:52:16.151Z"
 }

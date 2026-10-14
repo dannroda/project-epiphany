@@ -38,6 +38,7 @@
   "code": "7.10",
   "created_at": "2026-10-12T20:23:37.792Z",
   "description": "Daniel (2026-10-12, con el mapa de Link's Awakening de referencia): el mundo se ve cuadriculado, regiones rectangulares de una pantalla. Que se parezca más a los Zelda 2D: bordes de riscos que zigzaguean, hileras de árboles como paredes, caminos que serpentean, regiones de tamaños y formas distintas, rincones y entradas escondidas. Los secretos se esconden por diseño (entrada en un risco, detrás de una hilera de árboles, cueva interior) y no con ZoneVeil, que en el overworld delata que hay algo oculto; el velo queda para otros usos. Se mantienen las regiones, la cadena de mazmorras y el gating de §7 (variante D).",
+  "done_at": "2026-10-14T02:52:19.357Z",
   "images": [
     "compass/images/m7-09-mapa.jpg"
   ],
@@ -46,12 +47,12 @@
   "order": 10,
   "priority": "high",
   "refs": [],
-  "status": "doing",
+  "status": "done",
   "tags": [
     "overworld",
     "nivel"
   ],
   "test": "",
   "title": "Overworld con forma de Zelda 2D, no cuadrado",
-  "updated_at": "2026-10-14T00:37:51.859Z"
+  "updated_at": "2026-10-14T02:52:19.357Z"
 }

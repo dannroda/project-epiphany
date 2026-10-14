@@ -13,18 +13,19 @@
   "code": "11.104",
   "created_at": "2026-10-12T08:17:04.585Z",
   "description": "Los ítems conseguidos en la mazmorra (mapa, brújula, llave del jefe, llaves chicas) se ven en la pantalla del mapa.",
+  "done_at": "2026-10-14T02:52:22.251Z",
   "milestone": "m11",
   "notes": "Sesión: overworld (-74). Mockup primero.",
   "order": 101,
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "review",
+  "status": "done",
   "tags": [
     "ui",
     "mazmorra"
   ],
   "test": "",
   "title": "Ítems de la mazmorra en la pantalla del mapa",
-  "updated_at": "2026-10-12T18:19:47.835Z"
+  "updated_at": "2026-10-14T02:52:22.251Z"
 }

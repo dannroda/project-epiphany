@@ -1393,7 +1393,7 @@ Hecho 2026-10-08: kit `data/kits/gray_kit.tres` (lo arma `src/tools/build_gray_k
 
 **Bloqueada por:** 6.2 Puertas; 6.3 Llaves de mazmorra y HUD; 6.4 Bloques por grilla; 6.5 Interruptores y cableado
 
-## M7 — Overworld  (8/11)
+## M7 — Overworld  (11/11)
 
 Zona chica con el gating bombas → escudo espejo → sello del templo, y los secretos.
 
@@ -1576,9 +1576,9 @@ Hecho 2026-10-08: `start` ahora arranca en el overworld (escena principal del ju
 
 **Bloqueada por:** 7.6 Sello del templo
 
-### 7.9 Rediseño del overworld como hub de varias mazmorras · En curso
+### 7.9 Rediseño del overworld como hub de varias mazmorras · Hecho
 
-**Prioridad:** alta · **Etiquetas:** `overworld`, `nivel`
+**Terminada:** 2026-10-13 · **Prioridad:** alta · **Etiquetas:** `overworld`, `nivel`
 
 El overworld de 3 × 3 pantallas quedó hecho para una sola mazmorra y se siente encajonado. Rediseñarlo como hub (referencia: análisis del Light World de A Link to the Past, Overworld Overload partes 1 y 2): regiones núcleo con su mazmorra unidas por zonas de conexión, paredes de terreno y puertas de ítem que abren atajos o regiones nuevas, recorrido y ritmo revisados. Entra la Chullpa (11.60) y quedan lugares para las que vengan.
 
@@ -1608,9 +1608,9 @@ El overworld de 3 × 3 pantallas quedó hecho para una sola mazmorra y se siente
 
 **Capturas:** `compass/images/m7-09-mapa.jpg`, `compass/images/m7-09-1.jpg`, `compass/images/m7-09-2.jpg`, `compass/images/m7-09-3.jpg`, `compass/images/m7-09-4.jpg`, `compass/images/m7-09-5.jpg`
 
-### 7.10 Overworld con forma de Zelda 2D, no cuadrado · En curso
+### 7.10 Overworld con forma de Zelda 2D, no cuadrado · Hecho
 
-**Prioridad:** alta · **Etiquetas:** `overworld`, `nivel`
+**Terminada:** 2026-10-13 · **Prioridad:** alta · **Etiquetas:** `overworld`, `nivel`
 
 Daniel (2026-10-12, con el mapa de Link's Awakening de referencia): el mundo se ve cuadriculado, regiones rectangulares de una pantalla. Que se parezca más a los Zelda 2D: bordes de riscos que zigzaguean, hileras de árboles como paredes, caminos que serpentean, regiones de tamaños y formas distintas, rincones y entradas escondidas. Los secretos se esconden por diseño (entrada en un risco, detrás de una hilera de árboles, cueva interior) y no con ZoneVeil, que en el overworld delata que hay algo oculto; el velo queda para otros usos. Se mantienen las regiones, la cadena de mazmorras y el gating de §7 (variante D).
 
@@ -1635,9 +1635,9 @@ Daniel (2026-10-12, con el mapa de Link's Awakening de referencia): el mundo se 
 
 **Capturas:** `compass/images/m7-09-mapa.jpg`
 
-### 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · En curso
+### 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · Hecho
 
-**Prioridad:** alta · **Etiquetas:** `overworld`, `nivel`
+**Terminada:** 2026-10-13 · **Prioridad:** alta · **Etiquetas:** `overworld`, `nivel`
 
 Daniel (2026-10-13): la pluma cruza 1 celda (2 m) y sandalias + pluma 3 (6 m). La angostura (Arboleda ↔ Cardonal) y los huecos de los islotes de la Laguna pasan a 3 celdas: solo se cruzan con el salto largo (11.118). El abismo del Risco pasa a 4 celdas (8 m). Mini quest en la Necrópolis, del otro lado del puente: tres ojos en las chullpas, prendidos a la vez con flechas, dan las sandalias. Depende de 11.118. [[gdd#progresion-gating]]
 
@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (85/150)
+## M11 — Pulido: contenido y feel  (91/150)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -2931,9 +2931,9 @@ Tablillas de historia repartidas por el overworld y el templo que, leídas en cu
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura; 11.34 Combos y técnicas especiales (Minish Cap / Wind Waker)
 
-### 11.24 Más secretos en el overworld · Revisión
+### 11.24 Más secretos en el overworld · Hecho
 
-**Prioridad:** baja · **Etiquetas:** `overworld`, `puzzles`
+**Terminada:** 2026-10-13 · **Prioridad:** baja · **Etiquetas:** `overworld`, `puzzles`
 
 Sumar 4 a 6 secretos chicos al overworld (cuevitas con cofre, pasto que esconde algo, rocas que se empujan, muros agrietados) con recompensas útiles, para que explorar valga la pena.
 
@@ -2989,9 +2989,9 @@ Un mini-santuario de 3–4 salas que se resuelven solo con el escudo espejo, cad
 
 **Prueba:** Se completa solo con el escudo espejo; cada sala enseña una variante del reflejo.
 
-### 11.28 Atajos que se abren al volver · Revisión
+### 11.28 Atajos que se abren al volver · Hecho
 
-**Prioridad:** baja · **Etiquetas:** `overworld`
+**Terminada:** 2026-10-13 · **Prioridad:** baja · **Etiquetas:** `overworld`
 
 Uno o dos atajos que se abren desde adentro (puente o escalera) y quedan abiertos, para acortar el camino de vuelta al templo.
 
@@ -3021,9 +3021,9 @@ Después de vencer al jefe, el overworld tiene que verse y sonar distinto (sin d
 
 **Relacionadas:** 10.19 Fin de la demo
 
-### 11.30 Ítem de D3: el gancho · En curso
+### 11.30 Ítem de D3: el gancho · Hecho
 
-**Prioridad:** alta · **Etiquetas:** `items`
+**Terminada:** 2026-10-13 · **Prioridad:** alta · **Etiquetas:** `items`
 
 Un ítem post-MVP: gancho o algo que mueva objetos a distancia (GDD §6.1), con uso en combate y que abra lugares que antes no se podían.
 
@@ -4309,9 +4309,9 @@ Cuando el player está debajo del minimapa en pantalla, el minimapa se transpare
 
 **Notas:** Sesión: overworld (-74). Con varios players: cualquiera de ellos.
 
-### 11.104 Ítems de la mazmorra en la pantalla del mapa · Revisión
+### 11.104 Ítems de la mazmorra en la pantalla del mapa · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `ui`, `mazmorra`
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `ui`, `mazmorra`
 
 Los ítems conseguidos en la mazmorra (mapa, brújula, llave del jefe, llaves chicas) se ven en la pantalla del mapa.
 
@@ -4509,9 +4509,9 @@ Un SCRIPT ERROR corta la función del test pero el runner la cuenta como ok si y
 
 **Notas:** Sesión de bugs (-fd), pedido de Daniel vía -43. run_tests.gd registra un Logger (OS.add_logger) que junta los errores de tipo SCRIPT; cada error mientras corre un test (en el test o en el código del juego) lo marca FALLA con el primero y la cantidad. push_error y los errores del motor no cuentan. La suite completa destapó: dodge_ghosts.gd:53 (11.112, -eb: bake_mesh_from_current_skeleton_pose da null en headless) en 7 tests de player, lift, bombs, input e interaction; test_cave:46 y test_breakables:102 (overworld, -eb en 7.10); test_save_manager:23 (desde 14.9 cargar vuelve a entrar a la escena y el test leía el player viejo: arreglado acá). Aparte, sin error de script: templo.tscn sin uid (11.113, -43 [a7e236]) rompe test_portals. Después: arreglados acá dodge_ghosts.gd (salta la malla si el bake da null), bt_keep_away/bt_shoot_arrow (un player liberado deja de ser objetivo) y menu_stack.gd:74 (foco recordado ya liberado). test_boss › marks y test_audio › doom fallan a veces (pasan 3/3 solos).
 
-### 11.117 Huecos a otro piso se ven distintos de los fosos · En curso
+### 11.117 Huecos a otro piso se ven distintos de los fosos · Hecho
 
-**Prioridad:** alta · **Etiquetas:** `diseno`, `arte`, `nivel`
+**Terminada:** 2026-10-13 · **Prioridad:** alta · **Etiquetas:** `diseno`, `arte`, `nivel`
 
 Daniel (2026-10-13): la mayoría no va a entender a la primera que hay que tirarse para bajar de piso, y no todos los huecos llevan a otro piso. Los que llevan a otro piso tienen que verse distintos: se ve la sala de abajo con blur y un poco oscurecida, con un haz de luz y polvo; los fosos quedan negros con niebla en el borde. Regla: un hueco sin Pit debajo cae al piso de abajo. Hoy los huecos a otro piso son: Chullpa, Sala de los saltos (al Osario) y Sala del cofre (a la Cripta); Queñoa, Nido (a la Rama) y Cámara del arco (al Tronco).
 
@@ -4527,9 +4527,9 @@ Daniel (2026-10-13): la mayoría no va a entender a la primera que hay que tirar
 
 **Notas:** Sesión: diseño (-43 [a7e236]) con arte (-11 / -5d) para el aspecto.
 
-### 11.118 Sandalias: correr manteniendo y salto largo con la pluma · En curso
+### 11.118 Sandalias: correr manteniendo y salto largo con la pluma · Hecho
 
-**Prioridad:** alta · **Etiquetas:** `diseno`, `items`
+**Terminada:** 2026-10-13 · **Prioridad:** alta · **Etiquetas:** `diseno`, `items`
 
 Daniel (2026-10-13): con la pluma de D1, los islotes llevaban a D3 sin el arco y la angostura abría el este sin el puente. Ítem nuevo, las sandalias (como las botas de Pegaso): se mantiene el botón, el player toma impulso medio segundo y corre recto hasta soltar o chocar; chocar sacude árboles y muros agrietados. Saltar con la pluma en plena carrera da el salto largo (Daniel: 3 celdas, 6 m, contra 1 celda, 2 m, de la pluma sola; nunca 4 celdas, el abismo del Risco). Se ganan en una mini quest de la Necrópolis que pide el arco (7.11). [[gdd#progresion-gating]]
 
@@ -4850,16 +4850,20 @@ Playtest 2026-10-13: en Ravine el minimapa (foto cenital del overworld) muestra 
 
 **Capturas:** `compass/images/m11-148-20261013-232758.png`, `compass/images/m11-148-20261013-232828.png`
 
-### 11.149 Al entrar a una sala se puede caer al agua y reaparecer sobre el agua (softlock) · Pendiente
+### 11.149 Al entrar a una sala se puede caer al agua y reaparecer sobre el agua (softlock) · Revisión
 
 **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`, `totora`, `player`
 
 Playtest 2026-10-13: en la Totora (D3), piso 1P Ground Floor, apenas se entra a la sala del este (la del estanque central con la isla, la reja con ojo y llave al norte y las matas de totora) por la puerta oeste, el player cae al agua y vuelve a caer infinitamente: softlock. Probable: el punto de reaparición de la caída al agua (la entrada de la sala) queda sobre el agua o la transición de sala empuja al player hacia el estanque, que empieza a ~1 celda de la puerta. Revisar el Pit/respawn de la sala y que la entrada tenga piso firme; agregar un test que entre por cada puerta de la Totora y no caiga.
 
 - [ ] Segundo caso: Totora 2P Upper Floor, sala oeste (pasarela angosta junto al estanque, entrando por la puerta este): apenas se entra uno se puede caer y reaparece arriba del agua, cae en bucle hasta perder.
-- [ ] Arreglo general: el punto de reaparición tras caer al agua/pozo tiene que estar sobre piso firme (validarlo al guardarlo, no la posición cruda al entrar a la sala).
-- [ ] Idea de Daniel: un cooldown al cruzar de sala, para el input del player y para los enemigos, así no se cae ni lo golpean apenas entra.
-- [ ] Test: entrar por cada puerta de cada mazmorra con agua/pozos, caer y comprobar que reaparece sobre piso.
+- [x] Arreglo general: el punto de reaparición tras caer al agua/pozo tiene que estar sobre piso firme (validarlo al guardarlo, no la posición cruda al entrar a la sala).
+- [x] Idea de Daniel: un cooldown al cruzar de sala, para el input del player y para los enemigos, así no se cae ni lo golpean apenas entra.
+- [x] Test: entrar por cada puerta de cada mazmorra con agua/pozos, caer y comprobar que reaparece sobre piso.
+
+**Prueba:** Totora 1P sala este y 2P sala oeste: entrar manteniendo el stick y caer al agua: vuelve a la puerta sobre piso, quieto medio segundo, y no vuelve a caer solo. test_room_entry (todas las puertas de las 5 mazmorras)
+
+**Notas:** Causa general (no solo la Totora): GameState.room_entry se tomaba donde quedaba el player al terminar la transición de sala; si caía durante la caminata automática o la pasarela estaba a un paso del agua, la vuelta quedaba sobre el agua o bajo el piso y caía en bucle. Ahora: al cruzar se anota el umbral (last_ground) y al final solo se reemplaza pisando el piso de la sala; la caminata automática se frena en un borde; tras caer, 0.5 s sin caminar (cooldown de Daniel, en cuadros de física). test_room_entry encontró además casos en Queñoa (RaicesLocked), templo (CombinedDoor) y Cumbre.
 
 ### 11.150 Gancho: el targeting marca un poste de otra sala/piso · Pendiente
 
@@ -5998,7 +6002,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 ## Playtest
 
-### Revisión: lo listo para probar  (18/27 probadas)
+### Revisión: lo listo para probar  (25/27 probadas)
 
 1. [ ] 11.130 Bocas de cueva talladas en el risco · En curso · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. 
    No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. 
@@ -6006,26 +6010,26 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
    El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
 3. [x] 11.111 Cactus, árboles y matas se cortan como el pasto · Hecho · anda
-4. [ ] 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · En curso
-5. [ ] 11.118 Sandalias: correr manteniendo y salto largo con la pluma · En curso
-6. [ ] 11.24 Más secretos en el overworld · Revisión
+4. [x] 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · Hecho · anda
+5. [x] 11.118 Sandalias: correr manteniendo y salto largo con la pluma · Hecho · anda
+6. [x] 11.24 Más secretos en el overworld · Hecho · anda
 7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente
    si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell"
    no hay asset correcto para la pared quebrable
-8. [ ] 11.30 Ítem de D3: el gancho · En curso
-9. [ ] 11.28 Atajos que se abren al volver · Revisión
+8. [x] 11.30 Ítem de D3: el gancho · Hecho · anda
+9. [x] 11.28 Atajos que se abren al volver · Hecho · anda — anda, pero no debería hacer un fade. Debería haber una animacion del player subiendo y bajando
 10. [x] 11.46 Jefe: game juice · Hecho · anda
 11. [ ] 11.29 Overworld después del jefe · Revisión
-12. [x] 7.9 Rediseño del overworld como hub de varias mazmorras · En curso · anda — La D4 parece mas una cueva que una dungeon
-13. [x] 7.10 Overworld con forma de Zelda 2D, no cuadrado · En curso · anda
-14. [ ] Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos · En curso
-15. [x] 11.117 Huecos a otro piso se ven distintos de los fosos · En curso · anda
+12. [x] 7.9 Rediseño del overworld como hub de varias mazmorras · Hecho · anda — La D4 parece mas una cueva que una dungeon
+13. [x] 7.10 Overworld con forma de Zelda 2D, no cuadrado · Hecho · anda
+14. [ ] Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos · En curso · **falla** — Hay cosas que no tienen estilo
+15. [x] 11.117 Huecos a otro piso se ven distintos de los fosos · Hecho · anda
 16. [ ] 11.5 Galería de trampas: pinchos · En curso · **falla** — Hay que hacer que la pluma salte mas alto porque los pinchos llegan igual
 17. [x] 11.98 La cámara muestra lo que se desbloquea · Hecho · anda
 18. [x] 11.112 Fantasmas al esquivar · Hecho · anda
 19. [x] 11.102 Mapa: nombres de zona chicos y solo los que importan · Hecho · anda
 20. [x] 11.103 El minimapa se transparenta con el player debajo · Hecho · anda
-21. [ ] 11.104 Ítems de la mazmorra en la pantalla del mapa · Revisión
+21. [x] 11.104 Ítems de la mazmorra en la pantalla del mapa · Hecho · anda
 22. [x] 11.114 Botellas en su propia fila de la pestaña Ítems · Hecho · anda
 23. [x] 11.106 Intro al día con el overworld nuevo · Hecho · anda
 24. [x] 11.107 Mejorar la ambientación · Hecho · anda

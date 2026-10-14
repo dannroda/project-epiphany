@@ -28,12 +28,13 @@
   "code": "11.117",
   "created_at": "2026-10-13T08:07:05.133Z",
   "description": "Daniel (2026-10-13): la mayoría no va a entender a la primera que hay que tirarse para bajar de piso, y no todos los huecos llevan a otro piso. Los que llevan a otro piso tienen que verse distintos: se ve la sala de abajo con blur y un poco oscurecida, con un haz de luz y polvo; los fosos quedan negros con niebla en el borde. Regla: un hueco sin Pit debajo cae al piso de abajo. Hoy los huecos a otro piso son: Chullpa, Sala de los saltos (al Osario) y Sala del cofre (a la Cripta); Queñoa, Nido (a la Rama) y Cámara del arco (al Tronco).",
+  "done_at": "2026-10-14T02:52:20.519Z",
   "milestone": "m11",
   "notes": "Sesión: diseño (-43 [a7e236]) con arte (-11 / -5d) para el aspecto.",
   "order": 114,
   "priority": "high",
   "refs": [],
-  "status": "doing",
+  "status": "done",
   "tags": [
     "diseno",
     "arte",
@@ -41,5 +42,5 @@
   ],
   "test": "",
   "title": "Huecos a otro piso se ven distintos de los fosos",
-  "updated_at": "2026-10-13T08:18:45.591Z"
+  "updated_at": "2026-10-14T02:52:20.519Z"
 }

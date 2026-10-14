@@ -16,12 +16,15 @@
       "task": "m11-111"
     },
     {
+      "result": "pass",
       "task": "m7-11"
     },
     {
+      "result": "pass",
       "task": "m11-118"
     },
     {
+      "result": "pass",
       "task": "m11-24"
     },
     {
@@ -30,9 +33,12 @@
       "task": "m12-19"
     },
     {
+      "result": "pass",
       "task": "m11-30"
     },
     {
+      "note": "anda, pero no debería hacer un fade. Debería haber una animacion del player subiendo y bajando",
+      "result": "pass",
       "task": "m11-28"
     },
     {
@@ -52,6 +58,8 @@
       "task": "m7-10"
     },
     {
+      "note": "Hay cosas que no tienen estilo",
+      "result": "fail",
       "task": "m12-18"
     },
     {
@@ -80,6 +88,7 @@
       "task": "m11-103"
     },
     {
+      "result": "pass",
       "task": "m11-104"
     },
     {
@@ -108,5 +117,5 @@
   ],
   "order": 1,
   "title": "Revisión: lo listo para probar",
-  "updated_at": "2026-10-14T02:35:03.637Z"
+  "updated_at": "2026-10-14T02:52:10.154Z"
 }
