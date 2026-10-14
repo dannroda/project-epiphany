@@ -5256,11 +5256,13 @@ Daniel (2026-10-14): todas las salas de las mazmorras miden 14 de alto y al meno
 
 Daniel (2026-10-14): todas las salas de las mazmorras miden 14 de alto y al menos 22 de ancho, como la Chullpa y la Queñoa. Cumbre tiene salas de 14 × 10 / 14 × 12 y hay que rediseñarla.
 
-### 11.180 Templo: salas de 14 de alto y al menos 22 de ancho · Pendiente
+### 11.180 Templo: salas de 14 de alto y al menos 22 de ancho · Revisión
 
 **Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `mazmorra`
 
 Daniel (2026-10-14): todas las salas de las mazmorras miden 14 de alto y al menos 22 de ancho, como la Chullpa y la Queñoa. Templo tiene salas de 14 × 10 / 14 × 12 y hay que rediseñarla.
+
+**Notas:** Hecho en 9dfa381a: las 14 salas del templo pasan a 22 × 14 en la misma grilla, con paredes dobles y reborde; contenido corrido con su sala; navmesh rehorneado; la cámara y la viñeta del nivel toman los valores que Daniel puso para la sala del jefe. El contenido de las alas se rearma en 11.182.
 
 **Relacionadas:** 11.181 Paredes agrietadas: abren una sala, nunca un nicho (Queñoa y templo)
 
