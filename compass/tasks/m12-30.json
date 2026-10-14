@@ -14,17 +14,17 @@
     }
   ],
   "milestone": "m12",
-  "notes": "",
+  "notes": "Hecho (-5d, d6a17c4f/0e2d6d34): cámara del templo a 25, velo con reach (negro pasado el grosor de pared), pasos de puerta en piedra lavanda oscura y umbrales lavanda. Quedan astillas de la pared vecina junto a las puertas este/oeste y en las esquinas. Rompe test_templo (gancho del ala del gancho y sala del jefe): ver con -5d.",
   "order": 30,
   "priority": "high",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "arte",
     "templo"
   ],
   "test": "",
   "title": "Templo: salas que se vean bien para grabar",
-  "updated_at": "2026-10-14T18:31:43.764Z"
+  "updated_at": "2026-10-14T18:47:57.824Z"
 }
