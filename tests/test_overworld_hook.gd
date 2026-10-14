@@ -78,3 +78,17 @@ func test_the_hookshot_climbs_from_the_corridor_to_the_risco_heart_piece() -> vo
 
 func test_the_hookshot_climbs_from_the_strip_to_the_cumbre() -> void:
 	await _climb(^"CumbrePost", Vector3(3.8, 0.1, -36))
+
+
+func test_the_hookshot_crosses_the_invisible_rail_from_the_far_edge() -> void:
+	var setup: Array = await _level()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	var rails := tree.current_scene.find_children("baranda", "", true, false)
+	assert_true(not rails.is_empty() and rails.all(func(r: Node) -> bool: return r.is_in_group(&"walk_guard")), "la baranda invisible solo frena al que camina")
+	var post := tree.current_scene.get_node(^"RiscoPost") as HookPost
+	await _place(tree, player, Vector3(62.5, 5.2, -35), Vector3.RIGHT)
+	player.targeting.clear()
+	await _fire(tree, player)
+	assert_true(player.global_position.distance_to(post.global_position) < 1.5, "desde la nieve, sin fijar, el gancho cruza el pasillo hasta el poste (%s)" % player.global_position.snappedf(0.1))
+	setup[2].reset()
