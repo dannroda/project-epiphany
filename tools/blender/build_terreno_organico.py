@@ -474,15 +474,40 @@ def islands(outlines):
 	return list(groups.values())
 
 
+def _slice(bm, axis, first, last):
+	"""Corta bm cada 1 m en ese eje, de first a last - 1, pasándole a cada plano solo las caras que lo cruzan: las que
+	empiezan antes y terminan después. Lo que queda a la izquierda de un corte ya no se vuelve a mirar."""
+	starts = {}
+	for f in bm.faces:
+		starts.setdefault(math.floor(min(v.co[axis] for v in f.verts)), []).append(f)
+	keys = sorted(starts)
+	active, i = [], 0
+	for k in range(first, last):
+		while i < len(keys) and keys[i] < k:
+			active += starts[keys[i]]
+			i += 1
+		cross = [f for f in active if f.is_valid and max(v.co[axis] for v in f.verts) > k + 1e-6]
+		if not cross:
+			active = []
+			continue
+		co, no = Vector((0, 0, 0)), Vector((0, 0, 0))
+		co[axis], no[axis] = k, 1
+		res = bmesh.ops.bisect_plane(bm, geom=list({v for f in cross for v in f.verts}) + list({e for f in cross for e in f.edges}) + cross, plane_co=co, plane_no=no)
+		pieces = set(cross) | {g for g in res["geom"] if isinstance(g, bmesh.types.BMFace)}
+		active = [f for f in pieces if f.is_valid and max(v.co[axis] for v in f.verts) > k + 1e-6]
+
+
 def fill(p, outlines, z, height=None):
-	"""Tapa plana (con agujeros por paridad) de los contornos; height la deforma después de cortarla en 1 m."""
+	"""Tapa plana (con agujeros por paridad) de los contornos; height la deforma después de cortarla en 1 m. Se arma y se
+	corta en una malla aparte, así cada corte recorre solo esta tapa, y después se suma a p."""
+	bm = bmesh.new()
 	faces = []
 	for group in islands(outlines):
 		flat = [[Vector((pt.x, pt.y, z)) for pt in outlines[i]] for i in group]
-		verts = [p.bm.verts.new(v) for o in flat for v in o]
+		verts = [bm.verts.new(v) for o in flat for v in o]
 		for tri in geometry.tessellate_polygon(flat):
 			try:
-				faces.append(p.bm.faces.new([verts[i] for i in reversed(tri)]))
+				faces.append(bm.faces.new([verts[i] for i in reversed(tri)]))
 			except ValueError:
 				pass
 	for f in faces:
@@ -490,19 +515,23 @@ def fill(p, outlines, z, height=None):
 		if f.normal.z < 0:
 			f.normal_flip()
 	if height:
-		geom = list({e for f in faces for e in f.edges}) + faces + list({v for f in faces for v in f.verts})
 		for axis, lo, hi in ((0, BOUNDS[0].x, BOUNDS[1].x), (1, BOUNDS[0].y, BOUNDS[1].y)):
-			for k in range(int(lo) + 1, int(hi)):
-				co, no = Vector((0, 0, 0)), Vector((0, 0, 0))
-				co[axis], no[axis] = k, 1
-				res = bmesh.ops.bisect_plane(p.bm, geom=geom, plane_co=co, plane_no=no)
-				geom = list({g for g in geom if g.is_valid} | set(res["geom"]))
-		faces = [g for g in geom if isinstance(g, bmesh.types.BMFace)]
-		verts = list({v for f in faces for v in f.verts})
+			_slice(bm, axis, int(lo) + 1, int(hi))
+		verts = bm.verts[:]
 		for v, h in zip(verts, height(np.array([(v.co.x, v.co.y) for v in verts]))):
 			v.co.z = z + h
-		for f in faces:
+		for f in bm.faces:
 			f.normal_update()
+	for f in bm.faces:
+		f.material_index = 1
+	mesh = bpy.data.meshes.new("fill")
+	bm.to_mesh(mesh)
+	bm.free()
+	p.bm.from_mesh(mesh)
+	bpy.data.meshes.remove(mesh)
+	faces = [f for f in p.bm.faces if f.material_index == 1]
+	for f in faces:
+		f.material_index = 0
 	p.fixed.update(faces)
 	return faces
 
@@ -768,29 +797,64 @@ def railing(p, high, level):
 
 
 ACROSS = 1.7
+## Hasta dónde (m, en cuadro alrededor de la pared) se mira al cortar su celda: las caras del risco son chicas.
+NEAR_WALL = 6.0
 
 
 def _to_wall(wall):
 	return Matrix.Rotation(-wall["yaw"], 4, "Z") @ Matrix.Translation(Vector((-wall["x"], wall["z"], 0.0)))
 
 
-def _cut(bm, wall):
-	"""Corta bm por los bordes de la celda de la pared (en su marco: ±CELL/2 a lo largo, ±ACROSS de frente)."""
+def _near_verts(bm, wall, radius=NEAR_WALL):
+	x, y = wall["x"], -wall["z"]
+	return [v for v in bm.verts if abs(v.co.x - x) < radius and abs(v.co.y - y) < radius]
+
+
+def _cut(bm, wall, near=None):
+	"""Corta bm por los bordes de la celda de la pared (en su marco: ±CELL/2 a lo largo, ±ACROSS de frente) y devuelve
+	las caras de adentro. Con near (vértices), corta y busca solo entre las caras que tienen todos sus vértices ahí."""
 	to_wall = _to_wall(wall)
 	back = to_wall.inverted()
+	if near is None:
+		faces = bm.faces[:]
+	else:
+		close = set(near)
+		faces = list({f for v in near for f in v.link_faces if all(w in close for w in f.verts)})
 	for axis, limit in ((0, CELL / 2), (1, ACROSS)):
 		for sign in (1, -1):
 			co, no = Vector((0, 0, 0)), Vector((0, 0, 0))
 			co[axis], no[axis] = sign * limit, sign
-			bmesh.ops.bisect_plane(bm, geom=bm.verts[:] + bm.edges[:] + bm.faces[:], plane_co=back @ co, plane_no=(back.to_3x3() @ no).normalized())
+			edges = list({e for f in faces for e in f.edges})
+			verts = list({v for f in faces for v in f.verts})
+			res = bmesh.ops.bisect_plane(bm, geom=verts + edges + faces, plane_co=back @ co, plane_no=(back.to_3x3() @ no).normalized())
+			faces = list({f for f in faces if f.is_valid} | {g for g in res["geom"] if isinstance(g, bmesh.types.BMFace)})
 	inside = lambda f: abs((to_wall @ f.calc_center_median()).x) < CELL / 2 and abs((to_wall @ f.calc_center_median()).y) < ACROSS  # noqa: E731
-	return [f for f in bm.faces if inside(f)], [f for f in bm.faces if not inside(f)]
+	return [f for f in faces if inside(f)]
 
 
 def _keep(p, faces):
 	keep = set(faces)
 	bmesh.ops.delete(p.bm, geom=[f for f in p.bm.faces if f not in keep], context="FACES")
+	_compact(p)
+
+
+def _compact(p):
+	"""Copia la malla: después de borrar mucho, Blender sigue recorriendo lo borrado en cada operación."""
+	bm = p.bm.copy()
+	p.bm.free()
+	p.bm, p.uv = bm, bm.loops.layers.uv.verify()
 	p.fixed = set(p.bm.faces)
+
+
+def _cell_of(source, wall, seed):
+	"""Lo de source en la celda de la pared, como pieza aparte: primero se recorta lo lejano, así el corte es chico."""
+	piece = epi.Piece(seed)
+	piece.bm = source.bm.copy()
+	x, y = wall["x"], -wall["z"]
+	bmesh.ops.delete(piece.bm, geom=[v for v in piece.bm.verts if abs(v.co.x - x) >= NEAR_WALL or abs(v.co.y - y) >= NEAR_WALL], context="VERTS")
+	_compact(piece)
+	_keep(piece, _cut(piece.bm, wall))
+	return piece
 
 
 def cracked_walls(collection, holes, rail):
@@ -805,25 +869,17 @@ def cracked_walls(collection, holes, rail):
 	terrain = rocks(closed, 11, holes)
 	plugs = []
 	for wall in walls:
-		plug = epi.Piece(31)
-		plug.bm = terrain.bm.copy()
-		plug.uv = plug.bm.loops.layers.uv.verify()
-		inside, _outside = _cut(plug.bm, wall)
-		_keep(plug, inside)
+		plug = _cell_of(terrain, wall, 31)
 		bmesh.ops.transform(plug.bm, matrix=Matrix.Translation(Vector((0.0, 0.0, -wall["low"] * TOP))) @ _to_wall(wall), verts=plug.bm.verts)
 		epi.cracks_both_faces(plug, CELL / 2, (0.0, 1.2), 0.92, 0.05, TOP - CAP - 0.05, "acantilado", "tierra")
 		plugs.append(_build(plug, "muro_" + wall["name"], "wall", collection))
 		plugs[-1].location.z = -1000.0
-		_inside, outside = _cut(terrain.bm, wall)
-		_keep(terrain, outside)
+		bmesh.ops.delete(terrain.bm, geom=_cut(terrain.bm, wall, _near_verts(terrain.bm, wall)), context="FACES")
+	_compact(terrain)
 	opened = rocks(LEVELS, 11, holes, rail)
 	_unfence_niches(rail, walls)
 	for wall in walls:
-		jamb = epi.Piece(32)
-		jamb.bm = opened.bm.copy()
-		jamb.uv = jamb.bm.loops.layers.uv.verify()
-		inside, _outside = _cut(jamb.bm, wall)
-		_keep(jamb, inside)
+		jamb = _cell_of(opened, wall, 32)
 		mesh = bpy.data.meshes.new("tmp")
 		jamb.bm.to_mesh(mesh)
 		terrain.bm.from_mesh(mesh)
@@ -926,7 +982,8 @@ def cave_mouths(p):
 		to = Matrix.Translation(Vector((0.0, 0.0, -mouth["y"]))) @ _to_wall(mouth)
 		back, turn = to.inverted(), to.to_3x3()
 		near = lambda f: (to @ f.calc_center_median()).xy.length < 3.5  # noqa: E731
-		front = [(to @ f.calc_center_median()).y for f in p.bm.faces if near(f) and (turn @ f.normal).y < -0.5
+		pool = {f for v in _near_verts(p.bm, mouth) for f in v.link_faces}
+		front = [(to @ f.calc_center_median()).y for f in pool if near(f) and (turn @ f.normal).y < -0.5
 			and abs((to @ f.calc_center_median()).x) < 0.4 and 0.3 < (to @ f.calc_center_median()).z < 1.6]
 		if not front:
 			print("boca", mouth["name"], "sin cara de risco delante")
@@ -936,12 +993,13 @@ def cave_mouths(p):
 		planes = [(Vector((0, 0, h)), Vector((0, 0, 1))), (Vector((0, 0, h + lintel)), Vector((0, 0, 1)))]
 		planes += [(Vector((s * (bot + g), 0, 0)), Vector((s * h, 0, -(top - bot))).normalized()) for g in (0.0, jamb) for s in (1, -1)]
 		for co, no in planes:
-			faces = [f for f in p.bm.faces if near(f)]
+			faces = [f for f in pool if near(f)]
 			edges = list({e for f in faces for e in f.edges})
 			verts = list({v for f in faces for v in f.verts})
-			bmesh.ops.bisect_plane(p.bm, geom=verts + edges + faces, plane_co=back @ co, plane_no=(back.to_3x3() @ no).normalized())
+			res = bmesh.ops.bisect_plane(p.bm, geom=verts + edges + faces, plane_co=back @ co, plane_no=(back.to_3x3() @ no).normalized())
+			pool = {f for f in pool if f.is_valid} | {g for g in res["geom"] if isinstance(g, bmesh.types.BMFace)}
 		hole, frame = [], []
-		for f in p.bm.faces:
+		for f in pool:
 			if not near(f):
 				continue
 			c, n = to @ f.calc_center_median(), turn @ f.normal
@@ -956,7 +1014,7 @@ def cave_mouths(p):
 		def inside(v):
 			c = to @ v.co
 			return abs(c.y - face) < 0.8 and -0.6 < c.z < h + 0.01 and abs(c.x) < _half(c.z) + 0.01
-		rim = [e for e in p.bm.edges if len(e.link_faces) == 1 and all(inside(v) for v in e.verts)]
+		rim = [e for e in {e for f in pool if f.is_valid for e in f.edges} if len(e.link_faces) == 1 and all(inside(v) for v in e.verts)]
 		ext = bmesh.ops.extrude_edge_only(p.bm, edges=rim)
 		for v in ext["geom"]:
 			if isinstance(v, bmesh.types.BMVert):
