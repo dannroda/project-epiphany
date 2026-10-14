@@ -8,17 +8,17 @@
     "compass/images/m11-137-20261013-224905.png"
   ],
   "milestone": "m11",
-  "notes": "2) y 3) hechos (provisorio hasta 12.24): RellanoCrackedWall se corre 0.4 m hacia el nicho y se estira a la altura de la pared LA, así ya no sobresale del hueco; una tapa del color de las crestas (NicheCap, hija de Wall) cubre el nicho desde arriba y desaparece al romper el muro, así el nicho no se ve antes. 1) Los techos visibles (las crestas de las paredes LA) son del look de la_walls: lo dejo para arte (junto con 11.151).",
+  "notes": "2) y 3) hechos (provisorio hasta 12.24): RellanoCrackedWall queda al ras de la pared LA y de su altura; una tapa del color de las crestas (NicheCap, hija de Wall) cubre el nicho y desaparece al romper el muro. 1) pasó a 11.156 (arte).",
   "order": 134,
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug",
     "chullpa"
   ],
   "test": "",
   "title": "Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista",
-  "updated_at": "2026-10-14T03:32:31.316Z"
+  "updated_at": "2026-10-14T03:33:19.485Z"
 }

@@ -1,0 +1,22 @@
+{
+  "assignee": "project-epiphany-5d",
+  "checklist": [],
+  "code": "11.156",
+  "created_at": "2026-10-14T03:33:18.894Z",
+  "description": "Separada de 11.137 (punto 1). Playtest 2026-10-13: en la Chullpa se ven las tapas superiores de las paredes LA horneadas (la_walls) y no deberían verse. Es del look de la_walls, va con 11.151 (Totora 2P: se ve la sala de abajo).",
+  "milestone": "m11",
+  "notes": "",
+  "order": 153,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "chullpa",
+    "arte"
+  ],
+  "test": "",
+  "title": "Chullpa: se ven los techos (crestas) de las paredes LA horneadas",
+  "updated_at": "2026-10-14T03:33:18.894Z"
+}

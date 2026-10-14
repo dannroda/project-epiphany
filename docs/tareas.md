@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (91/151)
+## M11 — Pulido: contenido y feel  (91/152)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4736,7 +4736,7 @@ Playtest 2026-10-13: en la sala de entrada de la primera mazmorra (Chullpa), la 
 
 **Relacionadas:** 11.144 Queñoa S1 (Raíces): reja fuera de la pared y puerta con llave detrás de una reja de puzzle
 
-### 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista · Pendiente
+### 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `chullpa`
 
@@ -4745,7 +4745,7 @@ Playtest 2026-10-13, en la Chullpa (las tres cosas salen en la misma captura):
 2) La pared agrietada no encaja en el hueco de la pared: es un bloque que sobresale, con la cara de arriba negra.
 3) Lo que esconde la pared agrietada (el nicho con el cofre/barril) se ve antes de romperla. Debería estar oculto y descubrirse al romper la pared.
 
-**Notas:** 2) y 3) hechos (provisorio hasta 12.24): RellanoCrackedWall se corre 0.4 m hacia el nicho y se estira a la altura de la pared LA, así ya no sobresale del hueco; una tapa del color de las crestas (NicheCap, hija de Wall) cubre el nicho desde arriba y desaparece al romper el muro, así el nicho no se ve antes. 1) Los techos visibles (las crestas de las paredes LA) son del look de la_walls: lo dejo para arte (junto con 11.151).
+**Notas:** 2) y 3) hechos (provisorio hasta 12.24): RellanoCrackedWall queda al ras de la pared LA y de su altura; una tapa del color de las crestas (NicheCap, hija de Wall) cubre el nicho y desaparece al romper el muro. 1) pasó a 11.156 (arte).
 
 **Capturas:** `compass/images/m11-137-20261013-224905.png`
 
@@ -4975,6 +4975,12 @@ Playtest 2026-10-13: en la pelea de la momia (MummyGuard), cuando 'salta' no se 
 
 - [ ] El salto se ve: la momia viaja en arco hasta la marca (que sigue al player hasta fijarse).
 - [ ] Onda expansiva del aterrizaje con un shader vistoso (anillo que se expande, distorsión/brillo).
+
+### 11.156 Chullpa: se ven los techos (crestas) de las paredes LA horneadas · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-5d · **Etiquetas:** `bug`, `chullpa`, `arte`
+
+Separada de 11.137 (punto 1). Playtest 2026-10-13: en la Chullpa se ven las tapas superiores de las paredes LA horneadas (la_walls) y no deberían verse. Es del look de la_walls, va con 11.151 (Totora 2P: se ve la sala de abajo).
 
 ## M12 — Assets propios (Blender)  (15/24)
 
