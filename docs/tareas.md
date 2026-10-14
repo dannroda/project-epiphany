@@ -4996,7 +4996,7 @@ Daniel 2026-10-14: las piezas de los kits LA quedan corridas media celda de la g
 
 Daniel 2026-10-14 (captura del piso de tablones, Queñoa/Totora): el patrón del piso se ve raro. piso_la.gdshader dibuja los tablones en espacio de mundo: cada fila arranca en un desfase al azar (las juntas no alternan), plank_length 1.7 no divide la celda de 2 m (el patrón no calza con los tiles) y crack_amount dibuja arcos oscuros sueltos sobre algunos tablones. Propuesta: filas alternadas a medio tablón, largos que dividan 2 m (1 o 2 m) y sacar o rehacer los arcos.
 
-### 11.159 Overworld con el arte de las mazmorras: brillo LA y más detalle en el piso · Pendiente
+### 11.159 Overworld con el arte de las mazmorras: brillo LA y más detalle en el piso · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `overworld`, `render`
 

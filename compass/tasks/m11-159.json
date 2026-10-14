@@ -10,7 +10,7 @@
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "arte",
     "overworld",
@@ -18,5 +18,5 @@
   ],
   "test": "",
   "title": "Overworld con el arte de las mazmorras: brillo LA y más detalle en el piso",
-  "updated_at": "2026-10-14T04:33:03.399Z"
+  "updated_at": "2026-10-14T04:56:45.777Z"
 }
