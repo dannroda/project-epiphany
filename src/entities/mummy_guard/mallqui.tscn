@@ -3,7 +3,8 @@
 [ext_resource type="PackedScene" path="res://src/entities/mummy_guard/mummy_guard.tscn" id="1_mummy"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/mallqui/mallqui.res" id="2_model"]
 
-[node name="Mallqui" instance=ExtResource("1_mummy")]
+[node name="Mallqui" groups=["enfoque_alto"] instance=ExtResource("1_mummy")]
+metadata/focus_height = 3.3
 
 [node name="Model" parent="Body" index="0"]
 mesh = ExtResource("2_model")

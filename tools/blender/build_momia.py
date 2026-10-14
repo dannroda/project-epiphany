@@ -23,6 +23,9 @@ ROPE_RINGS = (0.86, 2.08)
 ROPE_MERIDIANS = 8
 ROPE_TWIST = 1.1
 COTTON = "hueso"
+## La cara mira hacia arriba (FACE_TILT rad desde el frente) para que se lea desde la cámara alta.
+FACE_Z = 2.6
+FACE_TILT = 0.55
 ROPE = "madera_oscura"
 
 
@@ -67,6 +70,10 @@ def rope_meridian(p, angle, twist=0.0, z0=0.86, z1=2.08, width=0.035, steps=24):
 	return faces
 
 
+def tilt_up(p, faces):
+	p.transform(faces, Matrix.Translation((0, 0, FACE_Z)) @ Matrix.Rotation(-FACE_TILT, 4, "X") @ Matrix.Translation((0, 0, -FACE_Z)))
+
+
 def momia(p):
 	body = p.lathe(refine(BODY), sides=SIDES)
 	p.paint_bands(body, STRIPES, default=(0, 0, COTTON, "MID"))
@@ -83,25 +90,33 @@ def momia(p):
 	collar = p.lathe([(0.34, 2.14), (0.52, 2.2), (0.5, 2.28), (0.3, 2.3)], sides=SIDES, caps=False)
 	p.paint(collar, "tela_roja", "DARK")
 
-	mask = p.rounded_box(-0.3, 0.3, -0.06, 0.06, -0.27, 0.27, radius=0.04, segments=2)
-	for v in {v for f in mask for v in f.verts}:
-		v.co.y += 0.12 * (v.co.x / 0.3) ** 2
-	p.transform(mask, Matrix.Translation((0, -0.47, 2.6)))
-	p.paint(mask, "dorado", "MID", vary=0.03)
+	face = p.rounded_box(-0.36, 0.36, -0.06, 0.06, -0.32, 0.32, radius=0.05, segments=2)
+	for v in {v for f in face for v in f.verts}:
+		v.co.y += 0.14 * (v.co.x / 0.36) ** 2
+	p.transform(face, Matrix.Translation((0, -0.5, FACE_Z)))
+	p.paint(face, "dorado", "MID", vary=0.03)
+	features = []
 	for side in (-1, 1):
-		p.paint(epi.eye(p, Vector((side * 0.13, -0.535, 2.66)), 0.085, depth=0.025, pupil_swatch="noche"), "hueso", "LIGHT")
-		spool = p.cylinder(0.13, -0.05, 0.05, sides=20)
+		eye = epi.eye(p, Vector((side * 0.16, -0.57, FACE_Z + 0.06)), 0.13, depth=0.03, pupil_swatch="noche", pupils=features)
+		p.paint(eye, "hueso", "LIGHT")
+		brow = p.box(side * 0.16 - 0.13, side * 0.16 + 0.13, -0.03, 0.0, -0.025, 0.025)
+		p.transform(brow, Matrix.Translation((0, -0.56, FACE_Z + 0.22)) @ Matrix.Rotation(side * 0.25, 4, "Y"))
+		p.paint(brow, "tela_roja", "DARK")
+		features += eye + brow
+	nose = p.rounded_box(-0.05, 0.05, -0.08, 0.0, -0.12, 0.06, radius=0.02, segments=1)
+	p.transform(nose, Matrix.Translation((0, -0.56, FACE_Z - 0.1)))
+	p.paint(nose, "dorado", "LIGHT")
+	mouth = p.rounded_box(-0.14, 0.14, -0.02, 0.0, -0.03, 0.03, radius=0.015, segments=1)
+	p.transform(mouth, Matrix.Translation((0, -0.565, FACE_Z - 0.22)))
+	p.paint(mouth, "noche", "MID")
+	tilt_up(p, face + features + nose + mouth)
+	for side in (-1, 1):
+		spool = p.cylinder(0.15, -0.05, 0.05, sides=20)
 		p.transform(spool, Matrix.Translation((side * 0.5, -0.02, 2.6)) @ Matrix.Rotation(math.pi / 2, 4, "Y"))
 		p.paint(spool, "dorado", "LIGHT")
-		stud = p.cylinder(0.06, -0.06, 0.06, sides=14)
+		stud = p.cylinder(0.07, -0.06, 0.06, sides=14)
 		p.transform(stud, Matrix.Translation((side * 0.5, -0.02, 2.6)) @ Matrix.Rotation(math.pi / 2, 4, "Y"))
 		p.paint(stud, "doom", "MID")
-	nose = p.rounded_box(-0.045, 0.045, -0.07, 0.0, -0.11, 0.06, radius=0.02, segments=1)
-	p.transform(nose, Matrix.Translation((0, -0.54, 2.56)))
-	p.paint(nose, "dorado", "LIGHT")
-	mouth = p.box(-0.1, 0.1, -0.012, 0.0, -0.012, 0.012)
-	p.transform(mouth, Matrix.Translation((0, -0.545, 2.45)))
-	p.paint(mouth, "noche", "MID")
 
 	band = p.lathe([(0.44, 2.82), (0.47, 2.85), (0.45, 2.93), (0.4, 2.95)], sides=SIDES, caps=False)
 	p.paint(band, "tela_roja", "MID")

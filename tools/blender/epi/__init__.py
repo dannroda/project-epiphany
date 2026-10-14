@@ -335,7 +335,7 @@ def hanging_face(p, facing, top, half, bottom, lean=0.25):
 	return face
 
 
-def eye(p, center, size, depth=0.03, pupil_swatch=None):
+def eye(p, center, size, depth=0.03, pupil_swatch=None, pupils=None):
 	"""Ojo en relieve: la almendra (dos arcos) y la pupila, sobre el plano que mira a -Y."""
 	pts = []
 	for i in range(12):
@@ -351,6 +351,8 @@ def eye(p, center, size, depth=0.03, pupil_swatch=None):
 		p.transform(f, Matrix.Translation(center) @ rot)
 	if pupil_swatch:
 		p.paint(pupil, pupil_swatch, "MID")
+		if pupils is not None:
+			pupils += pupil
 		return almond
 	return almond + pupil
 
