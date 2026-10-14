@@ -1,0 +1,30 @@
+{
+  "assignee": "project-epiphany-eb",
+  "checklist": [],
+  "code": "11.147",
+  "created_at": "2026-10-14T02:27:14.712Z",
+  "description": "Playtest 2026-10-13 (con sandalias y pluma): en la zona de la captura (tierra con cardones, al pie de los riscos escalonados y la terraza clara), si el player se cae al sector de arriba de la captura (el claro de tierra entre los riscos, arriba a la izquierda del enemigo) no puede salir: softlock. Igual que 11.131: todo pozo/terraza al que se pueda caer necesita salida sin ítems que el player pueda no tener.",
+  "images": [
+    "compass/images/m11-147-20261013-232715.png"
+  ],
+  "links": [
+    {
+      "task": "m11-131",
+      "type": "related"
+    }
+  ],
+  "milestone": "m11",
+  "notes": "",
+  "order": 144,
+  "priority": "high",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "overworld"
+  ],
+  "test": "",
+  "title": "Overworld: caer al sector de arriba (entre riscos, junto a la meseta clara) deja softlock",
+  "updated_at": "2026-10-14T02:27:21.332Z"
+}

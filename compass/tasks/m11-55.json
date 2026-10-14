@@ -3,16 +3,17 @@
   "code": "10.24",
   "created_at": "2026-10-11T05:36:52.083Z",
   "description": "Medido 2026-10-11: con monitor de 200 Hz y vsync sin tope el juego dibuja 200 FPS aunque cada cuadro le cueste ~1,2 ms a la GPU (RX 580: 82 W promedio, picos de 120 W, contra 68 W con tope 60). Engine.max_fps 60 por defecto y opción en el menú (30/60/120/sin límite) armada en la escena de opciones.",
+  "done_at": "2026-10-14T02:27:17.995Z",
   "milestone": "m10",
   "notes": "",
   "order": 55,
   "priority": "high",
   "refs": [],
-  "status": "review",
+  "status": "done",
   "tags": [
     "rendimiento"
   ],
   "test": "",
   "title": "Tope de FPS",
-  "updated_at": "2026-10-11T08:27:45.529Z"
+  "updated_at": "2026-10-14T02:27:17.995Z"
 }

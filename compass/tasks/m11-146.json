@@ -1,4 +1,5 @@
 {
+  "assignee": "project-epiphany-eb",
   "checklist": [
     {
       "done": true,
@@ -33,5 +34,5 @@
   ],
   "test": "Desde la orilla oeste, tensar el arco mirando al este: el ojo al pie del risco entra en cuadro; una flecha lo prende y sube el puente. test_overworld (test_an_arrow_at_the_eye_raises_the_bridge_to_the_necropolis tira plano a 1 m)",
   "title": "Overworld: el ojo del puente a la Necrópolis no se ve ni se puede flechar",
-  "updated_at": "2026-10-14T02:23:00.661Z"
+  "updated_at": "2026-10-14T02:27:21.592Z"
 }

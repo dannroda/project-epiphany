@@ -1,4 +1,5 @@
 {
+  "assignee": "project-epiphany-43",
   "checklist": [
     {
       "done": false,
@@ -30,5 +31,5 @@
   ],
   "test": "",
   "title": "Queñoa 2P (Canopy): símbolo azul sin sentido y puerta bloqueada invisible",
-  "updated_at": "2026-10-14T02:05:31.742Z"
+  "updated_at": "2026-10-14T02:27:18.769Z"
 }

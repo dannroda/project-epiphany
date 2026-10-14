@@ -17,18 +17,19 @@
   "code": "11.98",
   "created_at": "2026-10-12T08:16:54.652Z",
   "description": "Siempre que algo se desbloquea por una acción (puzzle resuelto, horda eliminada, interruptores activados) la cámara va a mostrar qué se abrió y vuelve, como en Zelda.",
+  "done_at": "2026-10-14T02:27:16.197Z",
   "milestone": "m11",
   "notes": "Sesión: overworld (-74).",
   "order": 95,
   "priority": "high",
   "refs": [],
   "size": "m",
-  "status": "review",
+  "status": "done",
   "tags": [
     "camara",
     "feel"
   ],
   "test": "",
   "title": "La cámara muestra lo que se desbloquea",
-  "updated_at": "2026-10-12T17:57:20.784Z"
+  "updated_at": "2026-10-14T02:27:16.197Z"
 }

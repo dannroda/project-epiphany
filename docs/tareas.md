@@ -1982,7 +1982,7 @@ Una salida de la sala del jefe: un portal en el centro de la arena que lleva a l
 
 **Notas:** Sin flag por ahora porque no hay jefe; 9.6 le pone d1_boss_defeated.
 
-## M10 — Terminación  (22/31)
+## M10 — Terminación  (24/31)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -2444,17 +2444,17 @@ La suite de tests tarda unos 9 minutos en serie. Correrla en varios procesos hea
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 10.24 Tope de FPS · Revisión
+### 10.24 Tope de FPS · Hecho
 
-**Prioridad:** alta · **Etiquetas:** `rendimiento`
+**Terminada:** 2026-10-13 · **Prioridad:** alta · **Etiquetas:** `rendimiento`
 
 Medido 2026-10-11: con monitor de 200 Hz y vsync sin tope el juego dibuja 200 FPS aunque cada cuadro le cueste ~1,2 ms a la GPU (RX 580: 82 W promedio, picos de 120 W, contra 68 W con tope 60). Engine.max_fps 60 por defecto y opción en el menú (30/60/120/sin límite) armada en la escena de opciones.
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 10.25 Sombras del sol acordes a la cámara cenital · Revisión
+### 10.25 Sombras del sol acordes a la cámara cenital · Hecho
 
-**Prioridad:** media · **Etiquetas:** `rendimiento`
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Etiquetas:** `rendimiento`
 
 El Sun de overworld y temple usa el default de Godot (PSSM de 4 cascadas hasta 100 m): la geometría se vuelve a dibujar por cada cascada y el overworld llega a ~900 mil triángulos por cuadro con 418 mil en escena. Probar 2 cascadas (u ortogonal) con distancia máxima acorde a la cámara; comparar capturas antes/después.
 
@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (76/142)
+## M11 — Pulido: contenido y feel  (85/143)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -2658,7 +2658,7 @@ Decorar cada zona del overworld con piezas propias de su ambiente y enmarcar la 
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión); 12.2 Terreno del overworld; 12.3 Lugares del overworld; 12.4 Vegetación y props del overworld
 
-### 11.5 Galería de trampas: pinchos · Revisión
+### 11.5 Galería de trampas: pinchos · En curso
 
 **Prioridad:** media · **Etiquetas:** `mazmorra`
 
@@ -3320,9 +3320,9 @@ Enseñar los controles al empezar con tablitas en el claro del inicio y un mini 
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 11.46 Jefe: game juice · Revisión
+### 11.46 Jefe: game juice · Hecho
 
-**Prioridad:** alta · **Etiquetas:** `jefe`, `feel`
+**Terminada:** 2026-10-13 · **Prioridad:** alta · **Etiquetas:** `jefe`, `feel`
 
 Game juice para el jefe: cuerpo y ojo que reaccionan, anticipación y peso en las manos, impactos con hit-stop, grietas y vibración, y una muerte que se sienta como final.
 
@@ -4237,9 +4237,9 @@ Hoy todo lo de la mazmorra corre a la vez: por ejemplo la línea de pinchos est�
 
 **Notas:** Sesión de bugs (-fd). Cada Room sabe si tiene algún player adentro (`occupied`, mira todos los players: en co-op corre toda sala con alguno). Cuando cambia, lo del grupo `room_sleepers` que está en una sala sin players pasa a PROCESS_MODE_DISABLED (se pausa y sigue donde quedó al volver; sus colisiones salen de la física mientras tanto); fuera de toda sala (overworld) siempre corre, y sin ningún player también. Están en el grupo, desde su .tscn: enemy.tscn (todos los enemigos), turret.tscn y spike_trap.tscn. Las oleadas no hace falta: arrancan al entrar. El jefe tampoco: su pelea arranca con la arena.
 
-### 11.98 La cámara muestra lo que se desbloquea · Revisión
+### 11.98 La cámara muestra lo que se desbloquea · Hecho
 
-**Prioridad:** alta · **Tamaño:** M · **Etiquetas:** `camara`, `feel`
+**Terminada:** 2026-10-13 · **Prioridad:** alta · **Tamaño:** M · **Etiquetas:** `camara`, `feel`
 
 Siempre que algo se desbloquea por una acción (puzzle resuelto, horda eliminada, interruptores activados) la cámara va a mostrar qué se abrió y vuelve, como en Zelda.
 
@@ -4285,9 +4285,9 @@ Playtest 2026-10-12: las zonas tapadas (11.52, 11.54) no deberían verse como un
 
 **Notas:** Sesión: arte (-77) el overworld; overworld (-74) el minimapa.
 
-### 11.102 Mapa: nombres de zona chicos y solo los que importan · Revisión
+### 11.102 Mapa: nombres de zona chicos y solo los que importan · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `ui`
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `ui`
 
 Playtest 2026-10-12: los nombres de zona en el mapa son muy grandes y no hace falta que cada área tenga nombre.
 
@@ -4298,9 +4298,9 @@ Playtest 2026-10-12: los nombres de zona en el mapa son muy grandes y no hace fa
 
 **Notas:** Sesión: overworld (-74). Ajustar el mockup del canvas primero.
 
-### 11.103 El minimapa se transparenta con el player debajo · Revisión
+### 11.103 El minimapa se transparenta con el player debajo · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `ui`
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `ui`
 
 Cuando el player está debajo del minimapa en pantalla, el minimapa se transparenta para no taparlo.
 
@@ -4335,9 +4335,9 @@ Playtest 2026-10-12: las tablitas del claro (11.45) funcionan, pero no son la me
 
 **Notas:** Con 11.90 (cada mazmorra enseña su ítem). Daniel 2026-10-13: queda para el final, porque va a involucrar bastante rediseño.
 
-### 11.106 Intro al día con el overworld nuevo · Revisión
+### 11.106 Intro al día con el overworld nuevo · Hecho
 
-**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `camara`
+**Terminada:** 2026-10-13 · **Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `camara`
 
 La intro (10.20) funciona, pero sus planos son del overworld viejo. Rehacer los planos sobre el layout D.
 
@@ -4346,9 +4346,9 @@ La intro (10.20) funciona, pero sus planos son del overworld viejo. Rehacer los 
 
 **Notas:** Sesión: overworld (-74), después de 7.9 paso 4. Junto con 10.30.
 
-### 11.107 Mejorar la ambientación · Revisión
+### 11.107 Mejorar la ambientación · Hecho
 
-**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `arte`, `audio`
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Tamaño:** M · **Etiquetas:** `arte`, `audio`
 
 Playtest 2026-10-12: hay que mejorar la ambientación del overworld y las mazmorras: luz, niebla, partículas, sonido ambiente.
 
@@ -4412,9 +4412,9 @@ Playtest 2026-10-12: los puzzles de bloques solo se tienen que activar con los b
 
 **Capturas:** `compass/images/m11-110-mapa.jpg`, `compass/images/m11-110-1.jpg`, `compass/images/m11-110-2.jpg`, `compass/images/m11-110-3.jpg`
 
-### 11.111 Cactus, árboles y matas se cortan como el pasto · Revisión
+### 11.111 Cactus, árboles y matas se cortan como el pasto · Hecho
 
-**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `overworld`, `arte`
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Tamaño:** M · **Etiquetas:** `overworld`, `arte`
 
 Playtest 2026-10-12: los cactus, árboles y similares deberían poder cortarse y funcionar como el pasto.
 
@@ -4426,9 +4426,9 @@ Playtest 2026-10-12: los cactus, árboles y similares deberían poder cortarse y
 
 **Capturas:** `compass/images/m11-111-mapa.jpg`, `compass/images/m11-111-1.jpg`, `compass/images/m11-111-2.jpg`
 
-### 11.112 Fantasmas al esquivar · Revisión
+### 11.112 Fantasmas al esquivar · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `feel`
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `feel`
 
 Daniel 2026-10-12: al dash/esquivar ponerle un efecto similar al trail de la espada, como el ghosting del dash de Mega Man Zero.
 
@@ -4471,9 +4471,9 @@ Daniel (2026-10-12): el jefe del ojo se pensó como fin de demo, así que tiene 
 
 **Notas:** Sesión: diseño (-43 [a7e236]), con Daniel. Overworld (-eb) acomoda el boceto de 7.10 cuando esté la cadena.
 
-### 11.114 Botellas en su propia fila de la pestaña Ítems · Revisión
+### 11.114 Botellas en su propia fila de la pestaña Ítems · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `ui`
+**Terminada:** 2026-10-13 · **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `ui`
 
 Daniel (2026-10-12): las botellas tienen su fila fija, separada de los ítems comunes, en la misma pestaña.
 
@@ -4672,21 +4672,23 @@ Daniel: las bocas de cueva del overworld (la entrada trasera de la ermita, la cu
 
 ### 11.131 Pozo junto a la Chullpa: caer sin bombas deja softlock · Pendiente
 
-**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`
 
 Playtest 2026-10-13: en el overworld, al lado del primer nivel cerca de la cueva de las bombas, hay un pozo/foso con pared agrietada. Si el player cae ahí sin bombas no puede salir (softlock). Necesita una salida que no dependa de bombas (escalón, rampa, o que el pozo no sea accesible antes de tenerlas).
 
 **Capturas:** `compass/images/m11-131-20261013-223001.png`
 
+**Relacionadas:** 11.147 Overworld: caer al sector de arriba (entre riscos, junto a la meseta clara) deja softlock
+
 ### 11.132 Cuevas: los enemigos se quedan quietos · Pendiente
 
-**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`
 
 Playtest 2026-10-13: dentro de las cuevas del overworld los enemigos no se mueven ni atacan, quedan quietos en su lugar. Revisar si la IA (LimboAI) arranca en esas escenas (navmesh, activación por sala, process_mode).
 
 ### 11.133 Vasija chica cargada no se ve con el x-ray · Pendiente
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`
 
 Playtest 2026-10-13: al levantar una vasija chica, cuando el player queda tapado y se ve con el x-ray (silueta), la vasija que lleva encima no aparece. El objeto cargado debería verse también con el x-ray.
 
@@ -4694,7 +4696,7 @@ Playtest 2026-10-13: al levantar una vasija chica, cuando el player queda tapado
 
 ### 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player · Pendiente
 
-**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `camara`, `mejora`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-eb · **Etiquetas:** `camara`, `mejora`
 
 Playtest 2026-10-13 (mejora, no bug): cuando el player queda detrás de un acantilado/pared y hoy se aplica el agujero (dither alrededor del player), en vez de eso rotar la cámara hasta quedar encima del player (cenital) mientras dure la oclusión, y volver al ángulo normal al salir. No cambia la cámara del resto del juego: solo en los casos donde hoy se usa el agujero.
 
@@ -4702,7 +4704,7 @@ Playtest 2026-10-13 (mejora, no bug): cuando el player queda detrás de un acant
 
 ### 11.135 Al caer, el player se inclina hacia el piso · Pendiente
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `player`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`, `player`
 
 Playtest 2026-10-13: cada vez que el player cae (por un borde), el modelo se inclina hacia adelante/abajo durante la caída. Debería caer parado (sin inclinar el cuerpo; revisar la animación/pose de caída o la rotación que se aplica en el aire).
 
@@ -4710,7 +4712,7 @@ Playtest 2026-10-13: cada vez que el player cae (por un borde), el modelo se inc
 
 ### 11.136 Chullpa: la reja de la entrada queda fuera de la pared · Pendiente
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `chullpa`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `chullpa`
 
 Playtest 2026-10-13: en la sala de entrada de la primera mazmorra (Chullpa), la reja/puerta de barrotes aparece desplazada hacia afuera del hueco de la pared (flota junto a la abertura, en vez de estar dentro del marco). Revisar la posición de la puerta respecto a las paredes LA horneadas.
 
@@ -4720,7 +4722,7 @@ Playtest 2026-10-13: en la sala de entrada de la primera mazmorra (Chullpa), la 
 
 ### 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista · Pendiente
 
-**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `bug`, `chullpa`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `chullpa`
 
 Playtest 2026-10-13, en la Chullpa (las tres cosas salen en la misma captura):
 1) Se ven los "techos" (las tapas superiores de las paredes LA horneadas). No deberían verse.
@@ -4731,7 +4733,7 @@ Playtest 2026-10-13, en la Chullpa (las tres cosas salen en la misma captura):
 
 ### 11.138 Chullpa sub-boss: asset para el cuadrado donde después se salta · Pendiente
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `arte`, `chullpa`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `chullpa`
 
 Playtest 2026-10-13: en la sala del sub-boss (Guardian) de la primera mazmorra, el cuadrado del piso (el lugar por donde uno se tira después) es un placeholder: un cuadrado liso con una línea, sin sentido visual. Falta un asset que se lea como lo que es (losa/trampilla/hueco que se abre al vencer al guardián).
 
@@ -4739,7 +4741,7 @@ Playtest 2026-10-13: en la sala del sub-boss (Guardian) de la primera mazmorra, 
 
 ### 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · Pendiente
 
-**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`, `chullpa`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `chullpa`
 
 Playtest 2026-10-13: en la Chullpa hay un cofre sobre una plataforma/pilar en un pozo, al lado de una sala con borde. No hay forma de llegar saltando (con la pluma) desde el borde: la distancia o la altura no da. Ajustar la plataforma o el borde para que el salto alcance.
 
@@ -4747,7 +4749,7 @@ Playtest 2026-10-13: en la Chullpa hay un cofre sobre una plataforma/pilar en un
 
 ### 11.140 Overworld (Lagoon): z-fighting entre el pasto y el camino de tierra · Pendiente
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `overworld`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`, `overworld`
 
 Playtest 2026-10-13: en la zona Lagoon, arriba de la escalera de piedra, el camino de tierra y el pasto se pisan (z-fighting): franjas de tierra que parpadean sobre el pasto. Separar las capas (offset/decal/render priority) o unificar el terreno.
 
@@ -4755,7 +4757,7 @@ Playtest 2026-10-13: en la zona Lagoon, arriba de la escalera de piedra, el cami
 
 ### 11.141 Queñoa 2P (Canopy): símbolo azul sin sentido y puerta bloqueada invisible · Pendiente
 
-**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`, `quenoa`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `quenoa`
 
 Playtest 2026-10-13: en la D2 (Queñoa), piso 2P "Canopy", hay en una pared un marco de bloques con un símbolo azul (parece un candado/asa) que no se entiende qué es. Identificar qué elemento es (¿puerta con llave, puerta de jefe, interruptor?) y darle un asset/lectura clara; si es un placeholder o algo sobrante, sacarlo.
 
@@ -4768,13 +4770,13 @@ Playtest 2026-10-13: en la D2 (Queñoa), piso 2P "Canopy", hay en una pared un m
 
 ### 11.142 Mapa de pausa: LT/RT van rapidísimo; mover con las flechitas · Pendiente
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `ui`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`, `ui`
 
 Playtest 2026-10-13: en la pestaña Mapa del menú de pausa, LT y RT mueven el mapa rapidísimo y la velocidad depende del tipo de gatillo del gamepad (analógico/digital). Debería moverse con las flechitas (d-pad) en lugar de los gatillos, a una velocidad fija.
 
 ### 11.143 Overworld: delineado/halo oscuro raro alrededor de árboles, cardones y bordes · Pendiente
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `overworld`, `render`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`, `overworld`, `render`
 
 Playtest 2026-10-13: en el overworld (meseta con cardones y árboles, sobre un risco) aparece un delineado raro: un halo oscuro difuso alrededor de los árboles, cardones y el borde del risco, que no corresponde a una sombra. Revisar SSAO/SSIL, el outline o la niebla/tinte de profundidad (puede venir del cambio de altura entre terrazas).
 
@@ -4782,7 +4784,7 @@ Playtest 2026-10-13: en el overworld (meseta con cardones y árboles, sobre un r
 
 ### 11.144 Queñoa S1 (Raíces): reja fuera de la pared y puerta con llave detrás de una reja de puzzle · Pendiente
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `quenoa`, `diseño`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `quenoa`, `diseño`
 
 Playtest 2026-10-13, Queñoa piso S1 Roots, salida este de las Raíces a la Sala de los ojos:
 1) La reja (RaicesGate, la que abre el ojo con tiempo) queda afuera del hueco de la pared, igual que la de la Chullpa (11.136).
@@ -4794,7 +4796,7 @@ Playtest 2026-10-13, Queñoa piso S1 Roots, salida este de las Raíces a la Sala
 
 ### 11.145 Queñoa S1 (Sala de los ojos): placa que no hace nada, z-fighting en el cofre y símbolo raro en la puerta · Pendiente
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `quenoa`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `quenoa`
 
 Playtest 2026-10-13, Queñoa piso S1, sala con los arbustos y el pozo (probablemente la Sala de los ojos):
 1) La placa junto a la puerta oeste no hace nada visible. Si es OjosStep (deja abierta la reja de las Raíces para volver), el efecto pasa fuera de cámara: falta respuesta (sonido, cámara a la reja o que se vea), o no funciona.
@@ -4807,7 +4809,7 @@ Playtest 2026-10-13, Queñoa piso S1, sala con los arbustos y el pozo (probablem
 
 ### 11.146 Overworld: el ojo del puente a la Necrópolis no se ve ni se puede flechar · Revisión
 
-**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`, `overworld`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`, `overworld`
 
 Playtest 2026-10-13: con arco y pluma, junto al río no hay forma visible de llegar al otro lado para buscar las sandalias. Por diseño (GDD, cadena del overworld) se cruza con una flecha al ojo del puente de la quebrada, que baja/abre el puente a la Necrópolis. Revisar: que el ojo del puente exista y funcione, y que se vea/entienda desde donde llega el player (señalizarlo; quizá el player busca en otro tramo del río).
 
@@ -4820,6 +4822,16 @@ Playtest 2026-10-13: con arco y pluma, junto al río no hay forma visible de lle
 **Notas:** Causa: el arco siempre tira plano a la altura del player (aim.get_direction aplana) y el ojo estaba en la terraza a 2.6 m; el test pasaba porque apuntaba la flecha directo al ojo. Además una mata de ichu (hurtbox de 1.2 m) en la llegada del puente frenaba la flecha. Ojo bajado al pie del risco (6, 0, -6), mata quitada de overworld_decor.tscn y plantas_overworld.json. Visibilidad: con el arco tensado la cámara se adelanta 3 m y el ojo entra en cuadro, al borde; parado sin apuntar todavía no se ve.
 
 **Capturas:** `compass/images/m11-146-20261013-230751.png`, `compass/images/m11-146-20261013-231129.png`
+
+### 11.147 Overworld: caer al sector de arriba (entre riscos, junto a la meseta clara) deja softlock · Pendiente
+
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`, `overworld`
+
+Playtest 2026-10-13 (con sandalias y pluma): en la zona de la captura (tierra con cardones, al pie de los riscos escalonados y la terraza clara), si el player se cae al sector de arriba de la captura (el claro de tierra entre los riscos, arriba a la izquierda del enemigo) no puede salir: softlock. Igual que 11.131: todo pozo/terraza al que se pueda caer necesita salida sin ítems que el player pueda no tener.
+
+**Capturas:** `compass/images/m11-147-20261013-232715.png`
+
+**Relacionadas:** 11.131 Pozo junto a la Chullpa: caer sin bombas deja softlock
 
 ## M12 — Assets propios (Blender)  (15/23)
 
@@ -5308,7 +5320,7 @@ Daniel aprobó el logo de 12.20 y lo quiere también en el splash. El boot splas
 
 ### 12.23 Ojos de la Queñoa y Ojo Vigía: modelo propio parecido al ojo del jefe final, más simple · Pendiente
 
-**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `arte`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`
 
 Playtest 2026-10-13: el jefe de la Queñoa (Eyes of the Queñoa) y el sub-jefe (Ojo Vigía) hoy son esferas lisas marrones (WatcherEye, placeholder). Deberían parecerse al ojo del jefe final pero más simples (párpado, iris/pupila, venas o raíces de la corteza). Ver también 12.21 (ojo interruptor).
 
@@ -5927,28 +5939,28 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
    D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
 2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
    El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
-3. [x] 11.111 Cactus, árboles y matas se cortan como el pasto · Revisión · anda
+3. [x] 11.111 Cactus, árboles y matas se cortan como el pasto · Hecho · anda
 4. [ ] 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · En curso
 5. [ ] 11.118 Sandalias: correr manteniendo y salto largo con la pluma · En curso
 6. [ ] 11.24 Más secretos en el overworld · Revisión
 7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso
 8. [ ] 11.30 Ítem de D3: el gancho · En curso
 9. [ ] 11.28 Atajos que se abren al volver · Revisión
-10. [x] 11.46 Jefe: game juice · Revisión · anda
+10. [x] 11.46 Jefe: game juice · Hecho · anda
 11. [ ] 11.29 Overworld después del jefe · Revisión
 12. [x] 7.9 Rediseño del overworld como hub de varias mazmorras · En curso · anda — La D4 parece mas una cueva que una dungeon
 13. [x] 7.10 Overworld con forma de Zelda 2D, no cuadrado · En curso · anda
 14. [ ] Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos · En curso
 15. [x] 11.117 Huecos a otro piso se ven distintos de los fosos · En curso · anda
-16. [ ] 11.5 Galería de trampas: pinchos · Revisión · **falla** — Hay que hacer que la pluma salte mas alto porque los pinchos llegan igual
-17. [x] 11.98 La cámara muestra lo que se desbloquea · Revisión · anda
-18. [x] 11.112 Fantasmas al esquivar · Revisión · anda
-19. [x] 11.102 Mapa: nombres de zona chicos y solo los que importan · Revisión · anda
-20. [x] 11.103 El minimapa se transparenta con el player debajo · Revisión · anda
+16. [ ] 11.5 Galería de trampas: pinchos · En curso · **falla** — Hay que hacer que la pluma salte mas alto porque los pinchos llegan igual
+17. [x] 11.98 La cámara muestra lo que se desbloquea · Hecho · anda
+18. [x] 11.112 Fantasmas al esquivar · Hecho · anda
+19. [x] 11.102 Mapa: nombres de zona chicos y solo los que importan · Hecho · anda
+20. [x] 11.103 El minimapa se transparenta con el player debajo · Hecho · anda
 21. [ ] 11.104 Ítems de la mazmorra en la pantalla del mapa · Revisión
-22. [x] 11.114 Botellas en su propia fila de la pestaña Ítems · Revisión · anda
-23. [x] 11.106 Intro al día con el overworld nuevo · Revisión · anda
-24. [x] 11.107 Mejorar la ambientación · Revisión · anda
+22. [x] 11.114 Botellas en su propia fila de la pestaña Ítems · Hecho · anda
+23. [x] 11.106 Intro al día con el overworld nuevo · Hecho · anda
+24. [x] 11.107 Mejorar la ambientación · Hecho · anda
 25. [ ] 10.19 Fin de la demo · Revisión
-26. [x] 10.24 Tope de FPS · Revisión · anda
-27. [x] 10.25 Sombras del sol acordes a la cámara cenital · Revisión · anda
+26. [x] 10.24 Tope de FPS · Hecho · anda
+27. [x] 10.25 Sombras del sol acordes a la cámara cenital · Hecho · anda

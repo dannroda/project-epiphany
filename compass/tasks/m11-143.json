@@ -1,4 +1,5 @@
 {
+  "assignee": "project-epiphany-eb",
   "checklist": [],
   "code": "11.143",
   "created_at": "2026-10-14T02:00:21.134Z",
@@ -20,5 +21,5 @@
   ],
   "test": "",
   "title": "Overworld: delineado/halo oscuro raro alrededor de árboles, cardones y bordes",
-  "updated_at": "2026-10-14T02:05:32.241Z"
+  "updated_at": "2026-10-14T02:27:20.824Z"
 }

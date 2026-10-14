@@ -1,4 +1,5 @@
 {
+  "assignee": "project-epiphany-fd",
   "checklist": [],
   "code": "11.132",
   "created_at": "2026-10-14T01:31:35.168Z",
@@ -15,5 +16,5 @@
   ],
   "test": "",
   "title": "Cuevas: los enemigos se quedan quietos",
-  "updated_at": "2026-10-14T02:05:29.459Z"
+  "updated_at": "2026-10-14T02:27:22.359Z"
 }

@@ -14,18 +14,19 @@
   "code": "11.107",
   "created_at": "2026-10-12T08:17:08.729Z",
   "description": "Playtest 2026-10-12: hay que mejorar la ambientación del overworld y las mazmorras: luz, niebla, partículas, sonido ambiente.",
+  "done_at": "2026-10-14T02:27:17.741Z",
   "milestone": "m11",
   "notes": "Sesión: arte (-77). Definir con Daniel qué falta en cada zona.",
   "order": 104,
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "review",
+  "status": "done",
   "tags": [
     "arte",
     "audio"
   ],
   "test": "",
   "title": "Mejorar la ambientación",
-  "updated_at": "2026-10-12T17:25:24.622Z"
+  "updated_at": "2026-10-14T02:27:17.741Z"
 }

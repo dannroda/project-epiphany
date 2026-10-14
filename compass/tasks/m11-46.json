@@ -34,6 +34,7 @@
   "code": "11.46",
   "created_at": "2026-10-10T23:12:44.414Z",
   "description": "Game juice para el jefe: cuerpo y ojo que reaccionan, anticipación y peso en las manos, impactos con hit-stop, grietas y vibración, y una muerte que se sienta como final.",
+  "done_at": "2026-10-14T02:27:15.943Z",
   "milestone": "m11",
   "notes": "Skills: `disciplines:game-feel`, `godot:godot-animation`, `godot:godot-shaders`.",
   "order": 46,
@@ -44,12 +45,12 @@
       "section": "jefe"
     }
   ],
-  "status": "review",
+  "status": "done",
   "tags": [
     "jefe",
     "feel"
   ],
   "test": "Pelear contra el jefe de punta a punta: cada ataque se anticipa y se lee, los golpes al piso pesan (hit-stop, grietas, vibración), el ojo y el cuerpo reaccionan, y la muerte se siente como un final.",
   "title": "Jefe: game juice",
-  "updated_at": "2026-10-11T07:51:11.514Z"
+  "updated_at": "2026-10-14T02:27:15.943Z"
 }
