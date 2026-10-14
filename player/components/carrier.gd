@@ -2,11 +2,14 @@ class_name Carrier
 extends Node
 ## Lo que el player lleva sobre la cabeza (una bomba, una vasija): lo sostiene sin física, lo suelta o lo tira en arco.
 
-## Carry_Throw lo suelta en esta fracción de la animación.
-const THROW_RELEASE := 0.45
 const BLEND_TIME := 0.12
+
+@export_group("Ajuste")
+## Carry_Throw lo suelta en esta fracción de la animación.
+@export var throw_release := 0.45
 ## Lo tirado no choca con quien lo tiró hasta que se aleja.
-const THROWER_GRACE := 0.4
+@export var thrower_grace := 0.4
+@export_group("")
 
 @export var socket: Node3D
 @export var anim_tree: AnimationTree
@@ -68,7 +71,7 @@ func start_throw() -> void:
 
 
 func throw_delay() -> float:
-	return _length(&"Carry/Carry_Throw") * THROW_RELEASE
+	return _length(&"Carry/Carry_Throw") * throw_release
 
 
 func throw_length() -> float:
@@ -85,7 +88,7 @@ func throw(to: Vector3, flight_time: float) -> void:
 	var thrower := get_parent() as PhysicsBody3D
 	if thrower:
 		body.add_collision_exception_with(thrower)
-		get_tree().create_timer(THROWER_GRACE, false, true).timeout.connect(func() -> void:
+		get_tree().create_timer(thrower_grace, false, true).timeout.connect(func() -> void:
 			if is_instance_valid(body) and is_instance_valid(thrower):
 				body.remove_collision_exception_with(thrower))
 

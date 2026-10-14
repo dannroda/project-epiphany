@@ -16,26 +16,12 @@ const LID_OPEN_ANGLE := 70.0
 const PHASES := {&"Phase1": 1, &"Phase2": 2, &"Phase3": 3}
 const ORB := preload("res://src/entities/projectile.tscn")
 const CORRUPT_GLOW := Color(1.0, 0.3, 0.18)
-const EYE_STUN_TIME := 3.0
-## La fase 3 arranca con el ojo a este tanto de su vida (la última marca de la barra).
-const ENRAGE_FRACTION := 1.0 / 3.0
-const MARK_COUNT := 3
-const MARK_RADIUS := 1.6
-const MARK_SPACING := 3.2
-const MARK_TELEGRAPH := 1.4
-const MARK_DAMAGE := 4
 ## Cuadros de física en que la explosión de la marca lastima.
 const BLAST_FRAMES := 3
-## Las manos vuelven un rato después de que se abre el ojo.
-const HANDS_BACK_DELAY := 1.2
 ## Alto del cuerpo en la fase 2 (más cerca para mirarte) y aturdido (apoyado en el piso: lo más bajo del cuerpo queda
 ## 2,35 m debajo de su origen).
 const BODY_HEIGHT_OPEN := 2.6
 const BODY_HEIGHT_STUNNED := 2.4
-const REPEAT_PENALTY := 0.25
-const SAME_HAND_PENALTY := 0.7
-## Entran al sorteo los que tienen al menos esta fracción del mejor puntaje.
-const SHORTLIST := 0.75
 const BOB_HEIGHT := 0.12
 const BOB_SPEED := 1.3
 const LEAN_ANGLE := 9.0
@@ -50,6 +36,23 @@ const EYE_GLOW := 1.0
 const EYE_GLOW_CHARGED := 4.0
 const SLOW_MOTION := 0.25
 const SLOW_MOTION_TIME := 0.7
+
+@export_group("Ajuste")
+@export var eye_stun_time := 3.0
+## La fase 3 arranca con el ojo a este tanto de su vida (la última marca de la barra).
+@export var enrage_fraction := 1.0 / 3.0
+@export var mark_count := 3
+@export var mark_radius := 1.6
+@export var mark_spacing := 3.2
+@export var mark_telegraph := 1.4
+@export var mark_damage := 4
+## Las manos vuelven un rato después de que se abre el ojo.
+@export var hands_back_delay := 1.2
+@export var repeat_penalty := 0.25
+@export var same_hand_penalty := 0.7
+## Entran al sorteo los que tienen al menos esta fracción del mejor puntaje.
+@export var shortlist := 0.75
+@export_group("")
 
 ## 0 cerrado, 1 abierto.
 @export_range(0.0, 1.0) var eye_open := 0.0:
@@ -134,7 +137,7 @@ func _ready() -> void:
 	phases.add_transition($Phases/Phase3, $Phases/Defeated, &"died")
 	$Phases/Phase3.entered.connect(_on_phase3_entered)
 	health.changed.connect(func(current: int, max_value: int) -> void:
-		if phase() == 2 and current > 0 and current <= max_value * ENRAGE_FRACTION:
+		if phase() == 2 and current > 0 and current <= max_value * enrage_fraction:
 			phases.dispatch(&"enraged"))
 	$Phases/Phase1.entered.connect(func() -> void: phase_changed.emit(1))
 	$Phases/Phase2.entered.connect(_on_phase2_entered)
@@ -234,13 +237,13 @@ func choose_attack(for_phase: int) -> bool:
 		for user in _users(attack):
 			var score := attack.weight * compensated([
 				_distance_score(attack, user),
-				REPEAT_PENALTY if chosen_attack and attack.id == chosen_attack.id else 1.0,
-				SAME_HAND_PENALTY if user == attacker and user is BossHand else 1.0,
+				repeat_penalty if chosen_attack and attack.id == chosen_attack.id else 1.0,
+				same_hand_penalty if user == attacker and user is BossHand else 1.0,
 			])
 			if score > 0.0:
 				options.append([score, attack, user])
 				best_score = maxf(best_score, score)
-	options = options.filter(func(option: Array) -> bool: return option[0] >= best_score * SHORTLIST)
+	options = options.filter(func(option: Array) -> bool: return option[0] >= best_score * shortlist)
 	if options.is_empty():
 		return false
 	var total := 0.0
@@ -292,16 +295,16 @@ func _mark_floor() -> void:
 		var mark := %MarkTemplate.duplicate() as Decal
 		add_child(mark)
 		mark.global_position = point + Vector3.UP * 0.5
-		mark.scale = Vector3(MARK_RADIUS * 2.0, 1.0, MARK_RADIUS * 2.0)
+		mark.scale = Vector3(mark_radius * 2.0, 1.0, mark_radius * 2.0)
 		mark.modulate.a = 0.3
 		mark.visible = true
 		marks.append(mark)
-		create_tween().tween_property(mark, ^"modulate:a", 1.0, MARK_TELEGRAPH).set_ease(Tween.EASE_IN)
+		create_tween().tween_property(mark, ^"modulate:a", 1.0, mark_telegraph).set_ease(Tween.EASE_IN)
 	Feel.sfx(&"deny", eye.global_position)
 	_flare_body()
 	_snap_pupil()
 	_combo_hand()
-	await get_tree().create_timer(MARK_TELEGRAPH, false).timeout
+	await get_tree().create_timer(mark_telegraph, false).timeout
 	for mark in marks:
 		if is_instance_valid(mark):
 			if health.current > 0:
@@ -318,9 +321,9 @@ func _mark_points() -> Array[Vector3]:
 	for attempt in 8:
 		var points: Array[Vector3] = [first]
 		var angle := rng.randf() * TAU
-		for i in MARK_COUNT - 1:
-			points.append(_clamp_to_arena(center + Vector3(cos(angle), 0.0, sin(angle)) * MARK_SPACING))
-			angle += TAU / float(MARK_COUNT) * rng.randf_range(0.8, 1.1)
+		for i in mark_count - 1:
+			points.append(_clamp_to_arena(center + Vector3(cos(angle), 0.0, sin(angle)) * mark_spacing))
+			angle += TAU / float(mark_count) * rng.randf_range(0.8, 1.1)
 		if _has_way_out(points, center):
 			return points
 	return [first] as Array[Vector3]
@@ -332,7 +335,7 @@ func _has_way_out(points: Array[Vector3], center: Vector3) -> bool:
 		var spot := center + Vector3(cos(angle), 0.0, sin(angle)) * 2.4
 		if not arena.grow(0.5).has_point(Vector2(spot.x, spot.z)):
 			continue
-		if points.all(func(point: Vector3) -> bool: return point.distance_to(spot) > MARK_RADIUS + 0.3):
+		if points.all(func(point: Vector3) -> bool: return point.distance_to(spot) > mark_radius + 0.3):
 			return true
 	return false
 
@@ -354,7 +357,7 @@ func _blast(point: Vector3) -> void:
 	var blast := %BlastTemplate.duplicate() as MeshInstance3D
 	add_child(blast)
 	blast.global_position = point + Vector3.UP * 1.2
-	blast.scale = Vector3(MARK_RADIUS, 1.0, MARK_RADIUS)
+	blast.scale = Vector3(mark_radius, 1.0, mark_radius)
 	blast.visible = true
 	var fade := blast.create_tween()
 	fade.tween_property(blast, ^"transparency", 1.0, 0.4)
@@ -366,7 +369,7 @@ func _blast(point: Vector3) -> void:
 	add_child(hit)
 	hit.global_position = point + Vector3.UP * 1.2
 	hit.team = EntityConfig.Team.ENEMY
-	hit.damage_factory = func() -> DamageInfo: return DamageInfo.make(MARK_DAMAGE, 8.0, hit, &"blast")
+	hit.damage_factory = func() -> DamageInfo: return DamageInfo.make(mark_damage, 8.0, hit, &"blast")
 	hit.monitoring = true
 	for i in BLAST_FRAMES:
 		await get_tree().physics_frame
@@ -459,7 +462,7 @@ func _on_eye_hit(info: DamageInfo) -> void:
 
 ## Cae aturdido: el cuerpo baja a tiro de espada, el ojo mira al piso y deja de atacar.
 func _stun_eye() -> void:
-	_eye_stun_left = EYE_STUN_TIME
+	_eye_stun_left = eye_stun_time
 	Feel.sfx(&"deny", eye.global_position)
 	Feel.burst(&"sparks", eye.global_position, Vector3.BACK)
 	Feel.shake(0.3)
@@ -496,7 +499,7 @@ func _on_phase2_entered() -> void:
 	lids.tween_callback(_awaken_flash)
 	%Solid.add_to_group(&"targetable")
 	phase_changed.emit(2)
-	await get_tree().create_timer(HANDS_BACK_DELAY, false).timeout
+	await get_tree().create_timer(hands_back_delay, false).timeout
 	if phase() == 2:
 		for hand in [hand_left, hand_right]:
 			hand.regenerate()

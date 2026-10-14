@@ -100,8 +100,6 @@ func _apply(key := &"") -> void:
 		_volume(&"UI", get_value(&"sfx"))
 	if all or key == &"ambience":
 		_volume(&"Ambience", get_value(&"ambience"))
-	if all or key == &"shake":
-		Feel.settings.shake_enabled = get_value(&"shake")
 	if all or key == &"ui_scale":
 		get_tree().root.content_scale_factor = float(get_value(&"ui_scale")) / 100.0
 	if all or key == &"language":

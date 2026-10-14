@@ -107,7 +107,7 @@ func slot_summary(slot: int) -> Dictionary:
 		if cfg.get_value("inventory", id, 0) > 0:
 			items.append(id)
 	return {
-		max_health = cfg.get_value("player", "max_health", GameState.NEW_GAME_MAX_HEALTH),
+		max_health = cfg.get_value("player", "max_health", GameState.new_game_max_health()),
 		location = cfg.get_value("player", "location", ""),
 		play_time = cfg.get_value("player", "play_time", 0.0),
 		items = items,

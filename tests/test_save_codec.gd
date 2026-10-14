@@ -129,7 +129,7 @@ func test_a_key_of_the_wrong_type_falls_back_to_its_default() -> void:
 	cfg.set_value("dungeon_d1", "small_keys", true)
 	cfg.set_value("map", "visited_zones", "pradera")
 	state.read_from(cfg)
-	assert_eq(state.max_health, GameState.NEW_GAME_MAX_HEALTH, "un tipo inesperado vuelve al valor por defecto")
+	assert_eq(state.max_health, GameState.new_game_max_health(), "un tipo inesperado vuelve al valor por defecto")
 	assert_eq(state.play_time, 30.0, "un entero donde va un decimal pasa")
 	assert_eq(state.spawn_point, &"start", "un texto donde va un StringName pasa")
 	assert_eq(state.inventory.count(&"bomb"), 0)

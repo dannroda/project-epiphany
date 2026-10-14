@@ -29,7 +29,7 @@ func test_every_option_persists_and_applies() -> void:
 		assert_eq(settings.get_value(key), changes[key], "%s se mantiene al reiniciar" % key)
 	assert_true(absf(AudioServer.get_bus_volume_db(AudioServer.get_bus_index(&"Music")) - linear_to_db(0.3)) < 0.01, "volumen de música")
 	assert_eq(AudioServer.is_bus_mute(AudioServer.get_bus_index(&"Ambience")), true, "ambiente en 0: muteado")
-	assert_eq(tree.root.get_node(^"Feel").settings.shake_enabled, false, "sin temblor de cámara")
+	assert_eq(tree.root.get_node(^"Feel").shakes(), false, "sin temblor de cámara")
 	assert_true(is_equal_approx(tree.root.content_scale_factor, 1.25), "escala de la interfaz")
 	assert_eq(TranslationServer.get_locale(), "en", "idioma")
 

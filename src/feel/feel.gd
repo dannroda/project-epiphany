@@ -158,10 +158,15 @@ func freeze(duration: float, scale := 0.05) -> void:
 	Engine.time_scale = 1.0
 
 
+## La opción de accesibilidad (Opciones › temblor de cámara): la decide el jugador, no feel.tres.
+func shakes() -> bool:
+	return Settings.get_value(&"shake")
+
+
 ## `direction` (mundo): de dónde viene el golpe; el encuadre se empuja hacia ese lado.
 func shake(amount: float, direction := Vector3.ZERO, pads: Array[int] = []) -> void:
 	rumble(amount, pads)
-	if not settings.shake_enabled:
+	if not shakes():
 		return
 	var camera := get_viewport().get_camera_3d()
 	if camera and camera.has_method(&"add_trauma"):

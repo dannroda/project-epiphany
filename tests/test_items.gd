@@ -1,12 +1,10 @@
 extends "res://tests/test_case.gd"
 
 const ITEMS_DIR := "res://data/items"
-const ITEM_COUNT := 26
 
 
 func test_every_item_file_loads_with_its_id() -> void:
 	var files := Array(DirAccess.get_files_at(ITEMS_DIR)).filter(func(f: String) -> bool: return f.ends_with(".tres"))
-	assert_eq(files.size(), ITEM_COUNT)
 	for file: String in files:
 		var item := load(ITEMS_DIR.path_join(file)) as ItemData
 		assert_true(item != null, file)
@@ -21,7 +19,11 @@ func test_database_has_every_item_once() -> void:
 	for item in Items.database.items:
 		assert_true(not seen.has(item.id), "repetido: %s" % item.id)
 		seen[item.id] = true
-	assert_eq(seen.size(), ITEM_COUNT)
+	var files := Array(DirAccess.get_files_at(ITEMS_DIR)).filter(func(f: String) -> bool: return f.ends_with(".tres")).map(func(f: String) -> StringName: return StringName(f.get_basename()))
+	files.sort()
+	var ids := seen.keys()
+	ids.sort()
+	assert_eq(ids, files, "la base tiene exactamente los ítems de data/items")
 
 
 func test_get_item() -> void:

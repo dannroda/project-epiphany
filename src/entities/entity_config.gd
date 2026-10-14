@@ -15,28 +15,30 @@ const _GROUPS: Dictionary[Feature, StringName] = {
 @export_flags("Targetable:1", "Pushable:2", "Burnable:4", "Reflects:8", "Grabbable:16")
 var features: int = 0
 @export var team: Team = Team.ENEMY
-@export var max_health: int = 8 ## HP (1 corazón = 4)
-@export var target_height: float = 1.0 ## Dónde apunta el lock-on / indicador
-@export var knockback_resistance: float = 0.0 ## 0 = recibe todo, 1 = inamovible
-@export var attack_damage: int = 2 ## Daño base de sus ataques (sin arma equipada)
-@export var attack_knockback: float = 6.0
+@export_range(1, 400, 1, "or_greater") var max_health: int = 8 ## HP (1 corazón = 4)
+@export_range(0.0, 10.0, 0.05, "or_greater") var target_height: float = 1.0 ## Dónde apunta el lock-on / indicador
+@export_range(0.0, 1.0, 0.05) var knockback_resistance: float = 0.0 ## 0 = recibe todo, 1 = inamovible
+@export_range(0, 40, 1, "or_greater") var attack_damage: int = 2 ## Daño base de sus ataques (sin arma equipada)
+@export_range(0.0, 30.0, 0.1, "or_greater") var attack_knockback: float = 6.0
+## Su golpe cuerpo a cuerpo (timing y aviso); sin esto usa el de su árbol de comportamiento.
+@export var attack: AttackData
 @export var drops: DropTable
 ## Opcional: otro modelo (una escena "Visuals" de src/entities/models/) en lugar del de la escena.
 @export var model: PackedScene
 
 @export_group("IA")
-@export var move_speed: float = 3.0
-@export var vision_range: float = 12.0
-@export var attack_range: float = 1.6
+@export_range(0.0, 15.0, 0.1, "or_greater") var move_speed: float = 3.0
+@export_range(0.0, 40.0, 0.5, "or_greater") var vision_range: float = 12.0
+@export_range(0.0, 10.0, 0.05, "or_greater") var attack_range: float = 1.6
 ## Radianes por segundo; 0 = gira de golpe. Lento: se le puede rodar a la espalda.
-@export var turn_speed: float = 0.0
+@export_range(0.0, 30.0, 0.1, "or_greater") var turn_speed: float = 0.0
 
 @export_group("Escudo")
 ## Frena de frente golpes y proyectiles; las explosiones pasan.
 @export var guards_front := false
-@export var guard_angle_deg := 70.0
+@export_range(0.0, 180.0, 1.0) var guard_angle_deg := 70.0
 ## Un golpe que aturde (el golpe de escudo) le baja la guardia este tiempo.
-@export var guard_break_time := 1.5
+@export_range(0.0, 10.0, 0.1, "or_greater") var guard_break_time := 1.5
 
 @export_group("Coraza")
 ## Rebota todo menos las explosiones; la primera que lo alcanza le vuela la coraza (el nodo "Armor") y lo aturde.

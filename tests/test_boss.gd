@@ -611,7 +611,7 @@ func test_marks_keep_the_eye_busy_until_they_blast() -> void:
 	boss.target = target
 	var tree := Engine.get_main_loop() as SceneTree
 	boss._mark_floor()
-	await tree.create_timer(Boss.MARK_TELEGRAPH - 0.3).timeout
+	await tree.create_timer(boss.mark_telegraph - 0.3).timeout
 	assert_true(boss.is_attack_running(), "mientras se cargan las marcas no encadena otro ataque")
 	await tree.create_timer(0.5).timeout
 	assert_true(not boss.is_attack_running(), "después del estallido sí")
@@ -637,11 +637,11 @@ func test_marks_always_leave_a_way_out() -> void:
 			var point: Vector3 = target.global_position + Vector3(cos(angle), 0.0, sin(angle)) * 2.4
 			if not boss.arena.grow(0.5).has_point(Vector2(point.x, point.z)):
 				continue
-			if marks.all(func(mark: Vector3) -> bool: return mark.distance_to(point) > Boss.MARK_RADIUS + 0.3):
+			if marks.all(func(mark: Vector3) -> bool: return mark.distance_to(point) > boss.mark_radius + 0.3):
 				safe = true
 				break
 		assert_true(safe, "a 2,4 m del player (menos de medio segundo corriendo) hay piso sin marcar (semilla %d)" % seed)
-	assert_true(counts.get(Boss.MARK_COUNT, 0) >= 36, "casi siempre marca las tres (%s)" % counts)
+	assert_true(counts.get(boss.mark_count, 0) >= 36, "casi siempre marca las tres (%s)" % counts)
 	boss.free()
 
 
@@ -663,10 +663,10 @@ func test_marks_blast_whoever_stays_even_blocking() -> void:
 	var full := player.health.current
 	boss._mark_floor()
 	var marks := boss.get_children().filter(func(node: Node) -> bool: return node is Decal and node.visible)
-	assert_eq(marks.size(), Boss.MARK_COUNT, "marca el piso")
+	assert_eq(marks.size(), boss.mark_count, "marca el piso")
 	assert_true(marks.any(func(mark: Decal) -> bool: return Vector2(mark.global_position.x, mark.global_position.z).distance_to(Vector2(player.global_position.x, player.global_position.z)) < 0.1), "una marca bajo el player")
 	hold_block(player, true)
-	await tree.create_timer(Boss.MARK_TELEGRAPH + 0.2).timeout
+	await tree.create_timer(boss.mark_telegraph + 0.2).timeout
 	assert_true(player.health.current < full, "quedarse en la marca lastima, aunque bloquee")
 	hold_block(player, false)
 	await tree.create_timer(1.0).timeout
@@ -676,11 +676,11 @@ func test_marks_blast_whoever_stays_even_blocking() -> void:
 	var escape := player.global_position
 	for step in 24:
 		var candidate := player.global_position + Vector3(cos(TAU * step / 24.0), 0, sin(TAU * step / 24.0)) * 2.4
-		if points.all(func(p: Vector3) -> bool: return p.distance_to(Vector3(candidate.x, 0, candidate.z)) > Boss.MARK_RADIUS + 0.3) and boss.arena.has_point(Vector2(candidate.x, candidate.z)):
+		if points.all(func(p: Vector3) -> bool: return p.distance_to(Vector3(candidate.x, 0, candidate.z)) > boss.mark_radius + 0.3) and boss.arena.has_point(Vector2(candidate.x, candidate.z)):
 			escape = candidate
 			break
 	player.global_position = escape
-	await tree.create_timer(Boss.MARK_TELEGRAPH + 0.2).timeout
+	await tree.create_timer(boss.mark_telegraph + 0.2).timeout
 	assert_eq(player.health.current, before, "fuera de las marcas no pasa nada")
 	tree.root.get_node(^"GameState").reset()
 

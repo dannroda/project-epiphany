@@ -82,7 +82,7 @@ func test_a_save_from_a_newer_version_is_refused() -> void:
 	cfg.save(saves.slot_path(2))
 	assert_eq(await saves.load_game(2), ERR_FILE_UNRECOGNIZED, "no carga una partida de un juego más nuevo")
 	assert_eq(saves.current_slot, 1, "y no cambia de ranura")
-	assert_eq(state.max_health, GameState.NEW_GAME_MAX_HEALTH, "ni la aplica")
+	assert_eq(state.max_health, GameState.new_game_max_health(), "ni la aplica")
 	_teardown()
 
 

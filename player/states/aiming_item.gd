@@ -2,8 +2,10 @@ extends PlayerState
 ## Ítems de apuntar (el arco): mantener el botón tensa y soltarlo dispara; la animación y el giro salen del behavior. Sin objetivo fijado el player se planta y el stick
 ## izquierdo apunta (OoT); fijado, la flecha va al objetivo y el stick izquierdo camina (strafe).
 
-const LOCKED_SPEED := 2.5
 
+@export_group("Ajuste")
+@export var locked_speed := 2.5
+@export_group("")
 ## Lo mínimo que hay que mantener antes de que soltar dispare.
 @export var min_draw := 0.15
 ## Cuánto dura el estado después de disparar.
@@ -84,7 +86,7 @@ func _move() -> void:
 	player.aim.move_aims = not locked
 	set_locked_legs(locked)
 	if locked:
-		move_locked(blackboard.get_var(BB_INPUT_DIR, Vector2.ZERO), LOCKED_SPEED, target, false)
+		move_locked(blackboard.get_var(BB_INPUT_DIR, Vector2.ZERO), locked_speed, target, false)
 	else:
 		player.velocity.x = 0.0
 		player.velocity.z = 0.0

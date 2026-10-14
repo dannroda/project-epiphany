@@ -16,7 +16,8 @@ signal map_revealed_changed
 
 const FLAGS: FlagRegistry = preload("res://data/flag_registry.tres")
 const NEW_GAME_EQUIPMENT: Array[StringName] = [&"sword_basic", &"shield_wood", &"tunic"]
-const NEW_GAME_MAX_HEALTH := 12
+## La vida de una partida nueva es la de player.tres.
+const PLAYER_CONFIG := preload("res://data/entities/player.tres")
 const HP_PER_HEART := 4
 const PIECES_PER_HEART := 4
 const DUNGEON_PREFIX := "dungeon_"
@@ -32,7 +33,7 @@ var item_buttons: Array[StringName] = [&"", &""] ## X / Y del P1
 ## X / Y de los demás players (13.4): el inventario es de todos pero cada uno asigna los suyos y un ítem lo lleva uno
 ## solo (13.9). No se guardan.
 var guest_buttons: Dictionary[int, Array] = {}
-var max_health: int = NEW_GAME_MAX_HEALTH
+var max_health: int = PLAYER_CONFIG.max_health
 ## Vida actual de cada player por slot: es global, se mantiene al cambiar de escena y va en la partida.
 var player_health: Dictionary[int, int] = {}
 ## La bendición (agua bendita) que le quedaba a cada player al viajar: la retoma en la escena nueva.
@@ -64,6 +65,10 @@ var boss_rematch := false
 var save_tampered := false
 ## Segundos jugados (con player en escena y sin pausa).
 var play_time := 0.0
+
+
+static func new_game_max_health() -> int:
+	return PLAYER_CONFIG.max_health
 
 
 func _ready() -> void:
@@ -365,7 +370,7 @@ func read_from(cfg: ConfigFile) -> void:
 	_set_bulk(true)
 	_clear()
 	var get_typed := func(section: String, key: String, default: Variant) -> Variant: return SaveCodec.typed(cfg, section, key, default)
-	max_health = get_typed.call("player", "max_health", NEW_GAME_MAX_HEALTH)
+	max_health = get_typed.call("player", "max_health", new_game_max_health())
 	player_health.assign(get_typed.call("player", "health", {}))
 	play_time = get_typed.call("player", "play_time", 0.0)
 	spawn_scene = _scene_path(get_typed.call("player", "spawn_uid", ""), get_typed.call("player", "spawn_scene", ""))
@@ -416,7 +421,7 @@ func _clear() -> void:
 	equipment.clear()
 	item_buttons.assign([&"", &""])
 	guest_buttons.clear()
-	max_health = NEW_GAME_MAX_HEALTH
+	max_health = new_game_max_health()
 	player_health.clear()
 	player_ward.clear()
 	bottles.clear()

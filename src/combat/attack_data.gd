@@ -17,3 +17,11 @@ extends Resource
 @export var stun_time: float = 0.0
 ## Estela del arma (Trail) mientras la hitbox está activa.
 @export var trail := false
+
+@export_group("Aviso (enemigos)")
+## Cuánto dura el aviso antes del golpe.
+@export var windup_time := 0.45
+## En qué punto de la animación (0..1) se congela la pose del aviso.
+@export_range(0.0, 1.0) var windup_pose := 0.15
+## Quieto después del golpe: la ventana para contraatacar.
+@export var recovery_time := 0.4

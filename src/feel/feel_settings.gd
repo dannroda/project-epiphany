@@ -7,7 +7,6 @@ extends Resource
 @export var hit_stop_take := 0.08 ## Al recibir
 
 @export_group("Sacudida")
-@export var shake_enabled := true ## Opción de accesibilidad
 @export var shake_give := 0.25
 @export var shake_take := 0.5
 @export var shake_block := 0.15

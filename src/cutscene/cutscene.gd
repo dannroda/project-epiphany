@@ -65,7 +65,7 @@ func skip() -> void:
 ## Temblor (desde la animación): sacude esta cámara y hace vibrar el mando.
 func tremor(amount: float) -> void:
 	Feel.rumble(amount)
-	if Feel.settings.shake_enabled:
+	if Feel.shakes():
 		add_trauma(amount)
 	Feel.sfx(&"rumble", camera.global_position)
 
