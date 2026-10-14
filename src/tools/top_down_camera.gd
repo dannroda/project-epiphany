@@ -323,10 +323,10 @@ func enter_room(new_room: Room, crosser: PlayerCharacter = null) -> void:
 		_remember_entry())
 
 
-## Distancia y campo de visión de la sala, y su AmbienteSala sobre el WorldEnvironment del nivel; lo que no pone queda
+## Offset y campo de visión de la sala, y su AmbienteSala sobre el WorldEnvironment del nivel; lo que no pone queda
 ## como el del nivel.
 func _apply_room_view(target: Room) -> void:
-	offset = _level_offset.normalized() * (target.camera_distance if target.camera_distance > 0.0 else _level_offset.length())
+	offset = target.camera_offset if target.camera_offset != Vector3.ZERO else _level_offset
 	if not orthographic:
 		fov = target.camera_fov if target.camera_fov > 0.0 else _level_fov
 	var mood: AmbienteSala = null
