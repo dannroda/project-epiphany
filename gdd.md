@@ -383,11 +383,11 @@ Decidido el 2026-10-11. Torre funeraria de piedra (chullpa) con sótano de enter
 ```
  PISO ALTO    ┌────────┬────────┐
               │2NO     │2NE     │
-              │pluma → │pluma → │
-              │ brújula│ corazón│
-              ├─[LLAVE]┼────────┤
+              │brújula │pluma → │
+              │pluma →Ⓙ│ corazón│
+              ├─[placa]┼────────┤
               │2SO     │2SE     │
-              │placas  ├[placas]┤ MOMIA
+              │vasija  ├[LLAVE]─┤ MOMIA
               │nicho▒  │sub-jefe│
               └──▲─────┴────────┘
                  │ escalera
@@ -401,13 +401,15 @@ Decidido el 2026-10-11. Torre funeraria de piedra (chullpa) con sótano de enter
                   ▲ escalera de mano (solo sube)
  SÓTANO       ┌────────┬────────┐
               │B-NO    │B-NE    │
-              │pluma → ├[JEFE]──┤
-              │llave j.│ JEFE   │
+              │de paso ├[JEFE]──┤
+              │        │ JEFE   │
               ├────────┼────────┤
               │B-SO    │B-SE    │
               │llave   │mapa    │
               └────────┴────────┘
 ```
+
+**Camino obligatorio (11.176, Daniel 2026-10-14):** antes se salteaba casi toda la mazmorra (la llave chica, el sótano y 2NO eran opcionales y la llave del jefe estaba al lado del jefe). Regla para todas las mazmorras: cada llave chica hace falta y la llave del jefe pide volver con el ítem (`test_dungeon_reach` lo revisa). Camino: Entrada → caer por 1SE → Cripta (oleadas, mapa) → Cripta oscura (pinchos, llave chica) → escalera de mano a la Entrada → bloques → Rellano → puerta con llave → Momia → pluma → saltar fuera de la isla → volver al Rellano → vasija en la placa → 2NO, cruzar los huecos con la pluma → llave del jefe → 1NE (pluma) → Mausoleo → jefe.
 
 | Sala | Qué pasa |
 |---|---|
@@ -415,12 +417,12 @@ Decidido el 2026-10-11. Torre funeraria de piedra (chullpa) con sótano de enter
 | 1NO Osario | Donde se cae desde los huecos de 2NO. Un interruptor abre el atajo a la entrada (la puerta, del lado de la entrada, está sellada). Dos esqueletos. Como solo se llega cayendo y la única salida es el atajo, no lleva acertijo de bloques: un bloque trabado dejaría al player encerrado |
 | 1SE Sala del cofre | Cofre grande de la **pluma** en una isla de 2 × 3 baldosas (cofre al noroeste, la del sur queda libre para caer desde 2SE) rodeada de huecos: 2 baldosas al oeste, al norte y al sur, y 1 al este, así que con la pluma se sale (y se vuelve) saltando hacia el este (11.139); sin ella, se sale cayendo. Se ve desde el principio y se alcanza solo cayendo desde 2SE después de vencer a la momia. Caer lleva a B-SE. La puerta a 1NE está en la esquina noreste. **Primera caída (11.117):** caer es el primer paso obligatorio, así que se enseña sin texto: al borde de los huecos hay un esqueleto que, de un espadazo, cae y se lo ve aterrizar en la Cripta, y dos vasijas para tirar por el hueco |
 | B-SE Cripta | Donde se cae desde 1SE. Al caer empiezan dos oleadas (`CriptaWaves`, `ch_crypt_waves`): dos esqueletos, y después uno con escudo y dos esqueletos. Vencidas, aparece el cofre del **mapa** (`Chest.switches`: el cofre aparece cuando se cumplen sus interruptores). Escalera de mano que solo sube a la entrada. Caer enseña que los huecos llevan a algún lado |
-| B-SO Cripta oscura | **Llave chica** (la de 2NO), desde B-SE, sin ítems. Entre la entrada y el cofre, tres columnas de pinchos (7 trampas cada una, mismo ritmo y desfase de 0,6 s) arman una ola que avanza hacia el cofre: se cruza siguiéndola |
-| 2SO Rellano | Llegada del piso alto, con dos esqueletos. Puerta con llave a 2NO. La puerta a 2SE la abren dos placas: una de peso, que aprieta la **vasija grande** de 2NO, y otra en un nicho de la pared oeste, detrás de un muro agrietado (bomba), que se pisa |
-| 2NO | Con la llave. La **vasija grande** del acertijo está al lado de la puerta: se lleva a 2SO (se empuja o se carga). Dos filas de huecos de una baldosa: sin pluma, caer lleva al Osario (y a su atajo); con la pluma se cruzan hasta la **brújula** |
+| B-SO Cripta oscura | **Llave chica** (la de la puerta a la Momia), desde B-SE, sin ítems. Entre la entrada y el cofre, tres columnas de pinchos (7 trampas cada una, mismo ritmo y desfase de 0,6 s) arman una ola que avanza hacia el cofre: se cruza siguiéndola |
+| 2SO Rellano | Llegada del piso alto, con dos esqueletos. La **vasija grande** del Rellano, empujada dos veces sobre la placa de peso, abre la puerta a 2NO. La puerta a 2SE (la Momia) es con llave: la llave chica de la Cripta oscura. Detrás de un muro agrietado (bomba) de la pared oeste hay un nicho con un cofre de 5 bombas, con techo hasta que se rompe el muro (11.164) |
+| 2NO | La abre la placa de la vasija. La **brújula** está de este lado. Dos filas de huecos de una baldosa: sin pluma, caer lleva al Osario (y a su atajo); con la pluma se cruzan hasta la **llave del jefe**, que se ve desde que se entra (hay que volver con la pluma) |
 | 2SE Sala agrietada | Sub-jefe, la **Momia Guardiana** (`MummyFight`, `ch_mummy_defeated`). Sala sin obstáculos, solo vasijas; al entrar se cierran sus dos puertas. La momia se acerca a saltitos y después salta alto: su sombra sigue al player y se fija antes de caer. Al caer golpea donde cae y manda una onda corta por el piso, que se esquiva alejándose. Después queda trabada y ahí le pegan la espada, las bombas y las vasijas. Vencida, su caída rompe el piso agrietado justo encima de la isla de 1SE: se cae sobre el cofre de la pluma (el truco de la Torre de Hera). Las bombas no rompen ese piso |
 | 1NE Sala del abismo | Al pasar la puerta desde 1SE, una fila de huecos de una baldosa sobre un abismo (sin sala abajo: foso que lastima y vuelve): solo con la pluma. Escalera al sótano, que llega a B-NO |
-| B-NO Mausoleo | Llega la escalera de 1NE. **Llave del jefe** del otro lado de una fila de huecos sobre un foso (pluma). Puerta del jefe a B-NE, del lado de la escalera |
+| B-NO Mausoleo | Llega la escalera de 1NE. Sala de paso, sin huecos, con un arquero. Puerta del jefe a B-NE, del lado de la escalera |
 | B-NE Guardián | Jefe, **Mallqui, el Ancestro** (`BossFight`, `ch_boss_defeated`; la `MummyGuard` a 1,6× con `mummy_guardian.tres`, 24 de vida). Igual que la momia: tres saltitos, salto alto con la sombra fija y trabado al caer, que es cuando le pegan. Su onda cruza toda la sala (radio 24 m), así que caminando no se esquiva: hay que saltarla con la pluma. Con media vida o menos salta dos veces seguidas antes de trabarse, y las dos ondas se cruzan. Vencido da un contenedor de corazón (`ch_heart_container`) y abre el portal al overworld |
 | 2NE | Opcional, con la pluma: pieza de corazón del otro lado de una fila de huecos (caer va al foso de 1NE) |
 

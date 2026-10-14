@@ -210,9 +210,6 @@ shader_parameter/wobble_scale = null
 material = SubResource("ShaderMaterial_h8srf")
 size = Vector2(33.2, 25.2)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_6dghf"]
-size = Vector3(22, 1, 2)
-
 [sub_resource type="BoxShape3D" id="Shape"]
 size = Vector3(2, 2.4, 0.3)
 
@@ -823,7 +820,7 @@ mesh_library = ExtResource("3_xafiw")
 cell_size = Vector3(2, 1, 2)
 cell_center_y = false
 data = {
-"cells": PackedInt32Array(1, 0, 36, 1, 1, 39, 1, 2, 22, 1, 3, 22, 1, 4, 22, 1, 5, 22, 1, 6, 24, 1, 7, 46, 1, 8, 23, 1, 9, 37, 1, 10, 39, 1, 11, 22, 1, 12, 22, 1, 13, 22, 1, 14, 22, 1, 15, 22, 1, 16, 22, 1, 17, 22, 1, 18, 37, 1, 19, 36, 2, 0, 36, 2, 1, 33, 2, 2, 0, 2, 3, 0, 2, 4, 0, 2, 5, 1441812, 2, 6, 0, 2, 7, 0, 2, 8, 0, 2, 9, 26, 2, 10, 33, 2, 11, 0, 2, 12, 0, 2, 13, 0, 2, 14, 0, 2, 15, 0, 2, 16, 0, 2, 17, 0, 2, 18, 26, 2, 19, 36, 3, 0, 36, 3, 1, 33, 3, 2, 0, 3, 3, 0, 3, 4, 0, 3, 5, 1048595, 3, 6, 0, 3, 7, 0, 3, 8, 0, 3, 9, 26, 3, 10, 33, 3, 11, 0, 3, 12, 0, 3, 13, 0, 3, 14, 0, 3, 15, 0, 3, 16, 0, 3, 17, 0, 3, 18, 26, 3, 19, 36, 4, 0, 36, 4, 1, 33, 4, 2, 0, 4, 3, 0, 4, 4, 0, 4, 5, 1048595, 4, 6, 0, 4, 7, 0, 4, 8, 0, 4, 9, 26, 4, 10, 33, 4, 11, 0, 4, 12, 0, 4, 13, 0, 4, 14, 0, 4, 15, 0, 4, 16, 0, 4, 17, 0, 4, 18, 26, 4, 19, 36, 5, 0, 36, 5, 1, 33, 5, 2, 2, 5, 3, 0, 5, 4, 0, 5, 5, 1048595, 5, 6, 0, 5, 7, 0, 5, 8, 0, 5, 9, 26, 5, 10, 33, 5, 11, 0, 5, 12, 0, 5, 13, 0, 5, 14, 0, 5, 15, 0, 5, 16, 0, 5, 17, 0, 5, 18, 26, 5, 19, 36, 6, 0, 36, 6, 1, 33, 6, 2, 0, 6, 3, 0, 6, 4, 0, 6, 5, 1048595, 6, 6, 0, 6, 7, 0, 6, 8, 0, 6, 9, 26, 6, 10, 33, 6, 11, 0, 6, 12, 0, 6, 13, 0, 6, 14, 0, 6, 15, 0, 6, 16, 0, 6, 17, 0, 6, 18, 26, 6, 19, 36, 7, 0, 36, 7, 1, 33, 7, 2, 0, 7, 3, 0, 7, 4, 0, 7, 5, 1048595, 7, 6, 0, 7, 7, 0, 7, 8, 0, 7, 9, 26, 7, 10, 33, 7, 11, 0, 7, 12, 0, 7, 13, 0, 7, 14, 0, 7, 15, 0, 7, 16, 0, 7, 17, 0, 7, 18, 26, 7, 19, 36, 8, 0, 36, 8, 1, 33, 8, 2, 0, 8, 3, 0, 8, 4, 0, 8, 5, 1048595, 8, 6, 0, 8, 7, 0, 8, 8, 0, 8, 9, 26, 8, 10, 33, 8, 11, 0, 8, 12, 0, 8, 13, 0, 8, 14, 0, 8, 15, 0, 8, 16, 0, 8, 17, 0, 8, 18, 26, 8, 19, 36, 9, 0, 36, 9, 1, 33, 9, 2, 0, 9, 3, 0, 9, 4, 0, 9, 5, 1048595, 9, 6, 0, 9, 7, 0, 9, 8, 0, 9, 9, 26, 9, 10, 33, 9, 11, 0, 9, 12, 0, 9, 13, 0, 9, 14, 0, 9, 15, 0, 9, 16, 0, 9, 17, 0, 9, 18, 26, 9, 19, 36, 10, 0, 36, 10, 1, 33, 10, 2, 0, 10, 3, 0, 10, 4, 0, 10, 5, 1048595, 10, 6, 0, 10, 7, 0, 10, 8, 0, 10, 9, 26, 10, 10, 33, 10, 11, 0, 10, 12, 0, 10, 13, 0, 10, 14, 0, 10, 15, 0, 10, 16, 0, 10, 17, 0, 10, 18, 26, 10, 19, 36, 11, 0, 36, 11, 1, 33, 11, 2, 0, 11, 3, 0, 11, 4, 0, 11, 5, 1048595, 11, 6, 0, 11, 7, 0, 11, 8, 0, 11, 9, 26, 11, 10, 33, 11, 11, 0, 11, 12, 0, 11, 13, 0, 11, 14, 0, 11, 15, 0, 11, 16, 0, 11, 17, 0, 11, 18, 26, 11, 19, 36, 12, 0, 36, 12, 1, 33, 12, 2, 0, 12, 3, 0, 12, 4, 0, 12, 5, 1048596, 12, 6, 0, 12, 7, 0, 12, 8, 0, 12, 9, 26, 12, 10, 33, 12, 11, 0, 12, 12, 0, 12, 13, 0, 12, 14, 0, 12, 15, 0, 12, 16, 0, 12, 17, 0, 12, 18, 26, 12, 19, 36, 13, 0, 36, 13, 1, 40, 14, 0, 36, 14, 1, 39, 13, 2, 30, 14, 2, 22, 13, 3, 30, 14, 3, 22, 13, 4, 30, 14, 4, 22, 13, 5, 30, 14, 5, 22, 13, 6, 32, 14, 6, 24, 13, 7, 43, 14, 7, 41, 13, 8, 31, 14, 8, 23, 13, 9, 38, 13, 10, 40, 14, 9, 37, 14, 10, 39, 13, 11, 30, 14, 11, 22, 13, 12, 30, 14, 12, 22, 13, 13, 32, 14, 13, 24, 13, 14, 43, 14, 14, 41, 13, 15, 31, 14, 15, 23, 13, 16, 30, 14, 16, 22, 13, 17, 30, 14, 17, 22, 13, 18, 38, 13, 19, 36, 14, 18, 37, 14, 19, 36, 15, 0, 36, 15, 1, 33, 15, 2, 0, 15, 3, 0, 15, 4, 0, 15, 5, 0, 15, 6, 0, 15, 7, 0, 15, 8, 0, 15, 9, 26, 15, 10, 33, 15, 11, 0, 15, 12, 0, 15, 13, 0, 15, 14, 0, 15, 15, 0, 15, 16, 0, 15, 17, 0, 15, 18, 26, 15, 19, 36, 16, 0, 36, 16, 1, 33, 16, 2, 0, 16, 3, 0, 16, 4, 0, 16, 5, 0, 16, 6, 0, 16, 7, 0, 16, 8, 0, 16, 9, 26, 16, 10, 33, 16, 11, 0, 16, 12, 0, 16, 13, 0, 16, 14, 0, 16, 15, 0, 16, 16, 0, 16, 17, 0, 16, 18, 26, 16, 19, 36, 17, 0, 36, 17, 1, 33, 17, 2, 0, 17, 3, 0, 17, 4, 0, 17, 5, 0, 17, 6, 0, 17, 7, 0, 17, 8, 0, 17, 9, 26, 17, 10, 33, 17, 11, 0, 17, 12, 0, 17, 13, 0, 17, 14, 0, 17, 15, 0, 17, 16, 0, 17, 17, 0, 17, 18, 26, 17, 19, 36, 18, 0, 36, 18, 1, 33, 18, 2, 0, 18, 3, 0, 18, 4, 0, 18, 5, 0, 18, 6, 0, 18, 7, 0, 18, 8, 0, 18, 9, 26, 18, 10, 33, 18, 11, 0, 18, 12, 0, 18, 13, 0, 18, 14, 0, 18, 15, 0, 18, 16, 0, 18, 17, 0, 18, 18, 26, 18, 19, 36, 19, 0, 36, 19, 1, 33, 19, 2, 0, 19, 3, 0, 19, 4, 0, 19, 5, 0, 19, 6, 0, 19, 7, 0, 19, 8, 0, 19, 9, 26, 19, 10, 33, 19, 11, 0, 19, 12, 0, 19, 13, 0, 19, 14, 0, 19, 15, 0, 19, 16, 0, 19, 17, 0, 19, 18, 26, 19, 19, 36, 20, 0, 36, 20, 1, 33, 20, 2, 0, 20, 3, 0, 20, 4, 0, 20, 5, 0, 20, 6, 0, 20, 7, 0, 20, 8, 0, 20, 9, 26, 20, 10, 33, 20, 11, 0, 20, 12, 0, 20, 13, 0, 20, 14, 0, 20, 15, 0, 20, 16, 0, 20, 17, 0, 20, 18, 26, 20, 19, 36, 21, 0, 36, 21, 1, 33, 21, 2, 0, 21, 3, 0, 21, 4, 0, 21, 5, 0, 21, 6, 0, 21, 7, 0, 21, 8, 0, 21, 9, 26, 21, 10, 33, 21, 11, 0, 21, 12, 0, 21, 13, 0, 21, 14, 0, 21, 15, 0, 21, 16, 0, 21, 17, 0, 21, 18, 26, 21, 19, 36, 22, 0, 36, 22, 1, 33, 22, 2, 0, 22, 3, 0, 22, 4, 0, 22, 5, 0, 22, 6, 0, 22, 7, 0, 22, 8, 0, 22, 9, 26, 22, 10, 33, 22, 11, 0, 22, 12, 0, 22, 13, 0, 22, 14, 0, 22, 15, 0, 22, 16, 0, 22, 17, 0, 22, 18, 26, 22, 19, 36, 23, 0, 36, 23, 1, 33, 23, 2, 0, 23, 3, 0, 23, 4, 0, 23, 5, 0, 23, 6, 0, 23, 7, 0, 23, 8, 0, 23, 9, 26, 23, 10, 33, 23, 11, 0, 23, 12, 0, 23, 13, 0, 23, 14, 0, 23, 15, 0, 23, 16, 0, 23, 17, 0, 23, 18, 26, 23, 19, 36, 24, 0, 36, 24, 1, 33, 24, 2, 0, 24, 3, 0, 24, 4, 0, 24, 5, 0, 24, 6, 0, 24, 7, 0, 24, 8, 0, 24, 9, 26, 24, 10, 33, 24, 11, 0, 24, 12, 0, 24, 13, 0, 24, 14, 0, 24, 15, 0, 24, 16, 0, 24, 17, 0, 24, 18, 26, 24, 19, 36, 25, 0, 36, 25, 1, 33, 25, 2, 0, 25, 3, 0, 25, 4, 0, 25, 5, 0, 25, 6, 0, 25, 7, 0, 25, 8, 0, 25, 9, 26, 25, 10, 33, 25, 11, 0, 25, 12, 0, 25, 13, 0, 25, 14, 0, 25, 15, 0, 25, 16, 0, 25, 17, 0, 25, 18, 26, 25, 19, 36, 26, 0, 36, 26, 1, 40, 27, 0, 36, 27, 1, 36, 26, 2, 30, 27, 2, 36, 26, 3, 30, 27, 3, 36, 26, 4, 30, 27, 4, 36, 26, 5, 30, 27, 5, 36, 26, 6, 30, 27, 6, 36, 26, 7, 30, 27, 7, 36, 26, 8, 30, 27, 8, 36, 26, 9, 38, 26, 10, 40, 27, 9, 36, 27, 10, 36, 26, 11, 32, 27, 11, 36, 26, 12, 47, 27, 12, 36, 26, 13, 31, 27, 13, 36, 26, 14, 30, 27, 14, 36, 26, 15, 30, 27, 15, 36, 26, 16, 30, 27, 16, 36, 26, 17, 30, 27, 17, 36, 26, 18, 38, 26, 19, 36, 27, 18, 36, 27, 19, 36, 0, 7, 36)
+"cells": PackedInt32Array(1, 0, 36, 1, 1, 39, 1, 2, 22, 1, 3, 22, 1, 4, 22, 1, 5, 22, 1, 6, 24, 1, 7, 46, 1, 8, 23, 1, 9, 37, 1, 10, 39, 1, 11, 22, 1, 12, 22, 1, 13, 22, 1, 14, 22, 1, 15, 22, 1, 16, 22, 1, 17, 22, 1, 18, 37, 1, 19, 36, 2, 0, 36, 2, 1, 33, 2, 2, 0, 2, 3, 0, 2, 4, 0, 2, 5, 0, 2, 6, 0, 2, 7, 0, 2, 8, 0, 2, 9, 26, 2, 10, 33, 2, 11, 0, 2, 12, 0, 2, 13, 0, 2, 14, 0, 2, 15, 0, 2, 16, 0, 2, 17, 0, 2, 18, 26, 2, 19, 36, 3, 0, 36, 3, 1, 33, 3, 2, 0, 3, 3, 0, 3, 4, 0, 3, 5, 0, 3, 6, 0, 3, 7, 0, 3, 8, 0, 3, 9, 26, 3, 10, 33, 3, 11, 0, 3, 12, 0, 3, 13, 0, 3, 14, 0, 3, 15, 0, 3, 16, 0, 3, 17, 0, 3, 18, 26, 3, 19, 36, 4, 0, 36, 4, 1, 33, 4, 2, 0, 4, 3, 0, 4, 4, 0, 4, 5, 0, 4, 6, 0, 4, 7, 0, 4, 8, 0, 4, 9, 26, 4, 10, 33, 4, 11, 0, 4, 12, 0, 4, 13, 0, 4, 14, 0, 4, 15, 0, 4, 16, 0, 4, 17, 0, 4, 18, 26, 4, 19, 36, 5, 0, 36, 5, 1, 33, 5, 2, 2, 5, 3, 0, 5, 4, 0, 5, 5, 0, 5, 6, 0, 5, 7, 0, 5, 8, 0, 5, 9, 26, 5, 10, 33, 5, 11, 0, 5, 12, 0, 5, 13, 0, 5, 14, 0, 5, 15, 0, 5, 16, 0, 5, 17, 0, 5, 18, 26, 5, 19, 36, 6, 0, 36, 6, 1, 33, 6, 2, 0, 6, 3, 0, 6, 4, 0, 6, 5, 0, 6, 6, 0, 6, 7, 0, 6, 8, 0, 6, 9, 26, 6, 10, 33, 6, 11, 0, 6, 12, 0, 6, 13, 0, 6, 14, 0, 6, 15, 0, 6, 16, 0, 6, 17, 0, 6, 18, 26, 6, 19, 36, 7, 0, 36, 7, 1, 33, 7, 2, 0, 7, 3, 0, 7, 4, 0, 7, 5, 0, 7, 6, 0, 7, 7, 0, 7, 8, 0, 7, 9, 26, 7, 10, 33, 7, 11, 0, 7, 12, 0, 7, 13, 0, 7, 14, 0, 7, 15, 0, 7, 16, 0, 7, 17, 0, 7, 18, 26, 7, 19, 36, 8, 0, 36, 8, 1, 33, 8, 2, 0, 8, 3, 0, 8, 4, 0, 8, 5, 0, 8, 6, 0, 8, 7, 0, 8, 8, 0, 8, 9, 26, 8, 10, 33, 8, 11, 0, 8, 12, 0, 8, 13, 0, 8, 14, 0, 8, 15, 0, 8, 16, 0, 8, 17, 0, 8, 18, 26, 8, 19, 36, 9, 0, 36, 9, 1, 33, 9, 2, 0, 9, 3, 0, 9, 4, 0, 9, 5, 0, 9, 6, 0, 9, 7, 0, 9, 8, 0, 9, 9, 26, 9, 10, 33, 9, 11, 0, 9, 12, 0, 9, 13, 0, 9, 14, 0, 9, 15, 0, 9, 16, 0, 9, 17, 0, 9, 18, 26, 9, 19, 36, 10, 0, 36, 10, 1, 33, 10, 2, 0, 10, 3, 0, 10, 4, 0, 10, 5, 0, 10, 6, 0, 10, 7, 0, 10, 8, 0, 10, 9, 26, 10, 10, 33, 10, 11, 0, 10, 12, 0, 10, 13, 0, 10, 14, 0, 10, 15, 0, 10, 16, 0, 10, 17, 0, 10, 18, 26, 10, 19, 36, 11, 0, 36, 11, 1, 33, 11, 2, 0, 11, 3, 0, 11, 4, 0, 11, 5, 0, 11, 6, 0, 11, 7, 0, 11, 8, 0, 11, 9, 26, 11, 10, 33, 11, 11, 0, 11, 12, 0, 11, 13, 0, 11, 14, 0, 11, 15, 0, 11, 16, 0, 11, 17, 0, 11, 18, 26, 11, 19, 36, 12, 0, 36, 12, 1, 33, 12, 2, 0, 12, 3, 0, 12, 4, 0, 12, 5, 0, 12, 6, 0, 12, 7, 0, 12, 8, 0, 12, 9, 26, 12, 10, 33, 12, 11, 0, 12, 12, 0, 12, 13, 0, 12, 14, 0, 12, 15, 0, 12, 16, 0, 12, 17, 0, 12, 18, 26, 12, 19, 36, 13, 0, 36, 13, 1, 40, 14, 0, 36, 14, 1, 39, 13, 2, 30, 14, 2, 22, 13, 3, 30, 14, 3, 22, 13, 4, 30, 14, 4, 22, 13, 5, 30, 14, 5, 22, 13, 6, 32, 14, 6, 24, 13, 7, 43, 14, 7, 41, 13, 8, 31, 14, 8, 23, 13, 9, 38, 13, 10, 40, 14, 9, 37, 14, 10, 39, 13, 11, 30, 14, 11, 22, 13, 12, 30, 14, 12, 22, 13, 13, 32, 14, 13, 24, 13, 14, 43, 14, 14, 41, 13, 15, 31, 14, 15, 23, 13, 16, 30, 14, 16, 22, 13, 17, 30, 14, 17, 22, 13, 18, 38, 13, 19, 36, 14, 18, 37, 14, 19, 36, 15, 0, 36, 15, 1, 33, 15, 2, 0, 15, 3, 0, 15, 4, 0, 15, 5, 0, 15, 6, 0, 15, 7, 0, 15, 8, 0, 15, 9, 26, 15, 10, 33, 15, 11, 0, 15, 12, 0, 15, 13, 0, 15, 14, 0, 15, 15, 0, 15, 16, 0, 15, 17, 0, 15, 18, 26, 15, 19, 36, 16, 0, 36, 16, 1, 33, 16, 2, 0, 16, 3, 0, 16, 4, 0, 16, 5, 0, 16, 6, 0, 16, 7, 0, 16, 8, 0, 16, 9, 26, 16, 10, 33, 16, 11, 0, 16, 12, 0, 16, 13, 0, 16, 14, 0, 16, 15, 0, 16, 16, 0, 16, 17, 0, 16, 18, 26, 16, 19, 36, 17, 0, 36, 17, 1, 33, 17, 2, 0, 17, 3, 0, 17, 4, 0, 17, 5, 0, 17, 6, 0, 17, 7, 0, 17, 8, 0, 17, 9, 26, 17, 10, 33, 17, 11, 0, 17, 12, 0, 17, 13, 0, 17, 14, 0, 17, 15, 0, 17, 16, 0, 17, 17, 0, 17, 18, 26, 17, 19, 36, 18, 0, 36, 18, 1, 33, 18, 2, 0, 18, 3, 0, 18, 4, 0, 18, 5, 0, 18, 6, 0, 18, 7, 0, 18, 8, 0, 18, 9, 26, 18, 10, 33, 18, 11, 0, 18, 12, 0, 18, 13, 0, 18, 14, 0, 18, 15, 0, 18, 16, 0, 18, 17, 0, 18, 18, 26, 18, 19, 36, 19, 0, 36, 19, 1, 33, 19, 2, 0, 19, 3, 0, 19, 4, 0, 19, 5, 0, 19, 6, 0, 19, 7, 0, 19, 8, 0, 19, 9, 26, 19, 10, 33, 19, 11, 0, 19, 12, 0, 19, 13, 0, 19, 14, 0, 19, 15, 0, 19, 16, 0, 19, 17, 0, 19, 18, 26, 19, 19, 36, 20, 0, 36, 20, 1, 33, 20, 2, 0, 20, 3, 0, 20, 4, 0, 20, 5, 0, 20, 6, 0, 20, 7, 0, 20, 8, 0, 20, 9, 26, 20, 10, 33, 20, 11, 0, 20, 12, 0, 20, 13, 0, 20, 14, 0, 20, 15, 0, 20, 16, 0, 20, 17, 0, 20, 18, 26, 20, 19, 36, 21, 0, 36, 21, 1, 33, 21, 2, 0, 21, 3, 0, 21, 4, 0, 21, 5, 0, 21, 6, 0, 21, 7, 0, 21, 8, 0, 21, 9, 26, 21, 10, 33, 21, 11, 0, 21, 12, 0, 21, 13, 0, 21, 14, 0, 21, 15, 0, 21, 16, 0, 21, 17, 0, 21, 18, 26, 21, 19, 36, 22, 0, 36, 22, 1, 33, 22, 2, 0, 22, 3, 0, 22, 4, 0, 22, 5, 0, 22, 6, 0, 22, 7, 0, 22, 8, 0, 22, 9, 26, 22, 10, 33, 22, 11, 0, 22, 12, 0, 22, 13, 0, 22, 14, 0, 22, 15, 0, 22, 16, 0, 22, 17, 0, 22, 18, 26, 22, 19, 36, 23, 0, 36, 23, 1, 33, 23, 2, 0, 23, 3, 0, 23, 4, 0, 23, 5, 0, 23, 6, 0, 23, 7, 0, 23, 8, 0, 23, 9, 26, 23, 10, 33, 23, 11, 0, 23, 12, 0, 23, 13, 0, 23, 14, 0, 23, 15, 0, 23, 16, 0, 23, 17, 0, 23, 18, 26, 23, 19, 36, 24, 0, 36, 24, 1, 33, 24, 2, 0, 24, 3, 0, 24, 4, 0, 24, 5, 0, 24, 6, 0, 24, 7, 0, 24, 8, 0, 24, 9, 26, 24, 10, 33, 24, 11, 0, 24, 12, 0, 24, 13, 0, 24, 14, 0, 24, 15, 0, 24, 16, 0, 24, 17, 0, 24, 18, 26, 24, 19, 36, 25, 0, 36, 25, 1, 33, 25, 2, 0, 25, 3, 0, 25, 4, 0, 25, 5, 0, 25, 6, 0, 25, 7, 0, 25, 8, 0, 25, 9, 26, 25, 10, 33, 25, 11, 0, 25, 12, 0, 25, 13, 0, 25, 14, 0, 25, 15, 0, 25, 16, 0, 25, 17, 0, 25, 18, 26, 25, 19, 36, 26, 0, 36, 26, 1, 40, 27, 0, 36, 27, 1, 36, 26, 2, 30, 27, 2, 36, 26, 3, 30, 27, 3, 36, 26, 4, 30, 27, 4, 36, 26, 5, 30, 27, 5, 36, 26, 6, 30, 27, 6, 36, 26, 7, 30, 27, 7, 36, 26, 8, 30, 27, 8, 36, 26, 9, 38, 26, 10, 40, 27, 9, 36, 27, 10, 36, 26, 11, 32, 27, 11, 36, 26, 12, 47, 27, 12, 36, 26, 13, 31, 27, 13, 36, 26, 14, 30, 27, 14, 36, 26, 15, 30, 27, 15, 36, 26, 16, 30, 27, 16, 36, 26, 17, 30, 27, 17, 36, 26, 18, 38, 26, 19, 36, 27, 18, 36, 27, 19, 36, 0, 7, 36)
 }
 
 [node name="Mausoleo" type="Area3D" parent="Sotano" unique_id=320851630]
@@ -953,19 +950,6 @@ size = Vector3(26, 5, 18)
 box_projection = true
 interior = true
 ambient_mode = 0
-
-[node name="MausoleoPit" type="Area3D" parent="Sotano" unique_id=155934991]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, -1.2, 10)
-script = ExtResource("5_d3wa8")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Sotano/MausoleoPit" unique_id=733984244]
-shape = SubResource("BoxShape3D_6dghf")
-
-[node name="BossKeyChest" type="StaticBody3D" parent="Sotano" unique_id=301552816 instance=ExtResource("6_ufxwh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 4)
-script = ExtResource("8_2g4bn")
-item = ExtResource("8_0rnpi")
-flag = &"ch_boss_key_chest"
 
 [node name="MapChest" type="StaticBody3D" parent="Sotano" unique_id=2034294543 instance=ExtResource("6_ufxwh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 32)
@@ -2098,23 +2082,23 @@ collision_mask = 5
 script = ExtResource("47_lhowt")
 config = ExtResource("48_308dp")
 
-[node name="CaidaLA34" type="Node3D" parent="PlantaBaja" unique_id=427055295 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA34" type="Node3D" parent="PlantaBaja" unique_id=978161775 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 22)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA35" type="Node3D" parent="PlantaBaja" unique_id=844368776 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA35" type="Node3D" parent="PlantaBaja" unique_id=1283321821 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 28)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA36" type="Node3D" parent="PlantaBaja" unique_id=1625654683 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA36" type="Node3D" parent="PlantaBaja" unique_id=2113834441 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 34)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA37" type="Node3D" parent="PlantaBaja" unique_id=657616820 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA37" type="Node3D" parent="PlantaBaja" unique_id=1074271918 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 22)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA38" type="Node3D" parent="PlantaBaja" unique_id=1567979697 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA38" type="Node3D" parent="PlantaBaja" unique_id=937697293 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 32)
 script = ExtResource("61_308dp")
 
@@ -2261,30 +2245,30 @@ box_projection = true
 interior = true
 ambient_mode = 0
 
-[node name="SaltosLocked" parent="PisoAlto" unique_id=354031693 instance=ExtResource("11_e5qux")]
+[node name="SaltosDoor" parent="PisoAlto" unique_id=354031693 instance=ExtResource("11_e5qux")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 19)
 script = ExtResource("13_crkrm")
-kind = 1
-flag = &"ch_leaps_locked_door"
+kind = 3
+switches = Array[NodePath]([NodePath("../RellanoWeight")])
 depth = 4.0
 leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_chullpa_la.res"
 sink = 3.2
 
-[node name="Leaf" parent="PisoAlto/SaltosLocked" index="0"]
+[node name="Leaf" parent="PisoAlto/SaltosDoor" index="0"]
 unique_name_in_owner = true
 
-[node name="LeafMesh" parent="PisoAlto/SaltosLocked/Leaf" index="0"]
+[node name="LeafMesh" parent="PisoAlto/SaltosDoor/Leaf" index="0"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.76)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.75)
 material_overlay = ExtResource("14_ht767")
-mesh = ExtResource("62_bkpqy")
+mesh = ExtResource("50_yesgf")
 
-[node name="LeafBackLA" type="MeshInstance3D" parent="PisoAlto/SaltosLocked/Leaf" index="1" unique_id=1944795030]
-transform = Transform3D(-1, 4.0797296e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.46666667, -1, -1.538641e-07, 0, -1.76)
+[node name="LeafBackLA" type="MeshInstance3D" parent="PisoAlto/SaltosDoor/Leaf" index="1" unique_id=1944795030]
+transform = Transform3D(-1, 4.0797296e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.46666667, -1, -1.5298986e-07, 0, -1.75)
 material_overlay = ExtResource("14_ht767")
-mesh = ExtResource("62_bkpqy")
+mesh = ExtResource("50_yesgf")
 
-[node name="SouthMark" parent="PisoAlto/SaltosLocked" index="1"]
+[node name="SouthMark" parent="PisoAlto/SaltosDoor" index="1"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.03, -1.8)
 visible = false
@@ -2292,28 +2276,28 @@ pixel_size = 0.009
 shaded = true
 texture = ExtResource("15_ht767")
 
-[node name="CollisionShape3D" parent="PisoAlto/SaltosLocked" index="2"]
+[node name="CollisionShape3D" parent="PisoAlto/SaltosDoor" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
 shape = SubResource("Shape")
 
-[node name="Interactable" parent="PisoAlto/SaltosLocked" index="3"]
+[node name="Interactable" parent="PisoAlto/SaltosDoor" index="3"]
 collision_layer = 32
 collision_mask = 0
 monitoring = false
 script = ExtResource("16_mo6ti")
 
-[node name="CollisionShape3D" parent="PisoAlto/SaltosLocked/Interactable" index="0"]
+[node name="CollisionShape3D" parent="PisoAlto/SaltosDoor/Interactable" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 shape = SubResource("InteractShape")
 
-[node name="PersistentFlag" parent="PisoAlto/SaltosLocked" index="4"]
+[node name="PersistentFlag" parent="PisoAlto/SaltosDoor" index="4"]
 script = ExtResource("41_pflag")
 
 [node name="AgrietadaDoor" parent="PisoAlto" unique_id=660477150 instance=ExtResource("11_e5qux")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 27, 0, 28)
 script = ExtResource("13_crkrm")
-kind = 3
-switches = Array[NodePath]([NodePath("../RellanoWeight")])
+kind = 1
+flag = &"ch_mummy_locked_door"
 depth = 4.0
 leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_chullpa_la.res"
 sink = 3.2
@@ -2323,14 +2307,14 @@ unique_name_in_owner = true
 
 [node name="LeafMesh" parent="PisoAlto/AgrietadaDoor/Leaf" index="0"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.75)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 1.76)
 material_overlay = ExtResource("14_ht767")
-mesh = ExtResource("50_yesgf")
+mesh = ExtResource("62_bkpqy")
 
 [node name="LeafBackLA" type="MeshInstance3D" parent="PisoAlto/AgrietadaDoor/Leaf" index="1" unique_id=1636819224]
-transform = Transform3D(-1, 1.4570463e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.16666667, -1, -1.5298986e-07, 0, -1.75)
+transform = Transform3D(-1, 1.4570463e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.16666667, -1, -1.538641e-07, 0, -1.76)
 material_overlay = ExtResource("14_ht767")
-mesh = ExtResource("50_yesgf")
+mesh = ExtResource("62_bkpqy")
 
 [node name="SouthMark" parent="PisoAlto/AgrietadaDoor" index="1"]
 unique_name_in_owner = true
@@ -2503,8 +2487,14 @@ script = ExtResource("41_pflag")
 script = ExtResource("38_iq7xx")
 config = ExtResource("39_kbmgj")
 
-[node name="CompassChest" type="StaticBody3D" parent="PisoAlto" unique_id=1634173861 instance=ExtResource("6_ufxwh")]
+[node name="BossKeyChest" type="StaticBody3D" parent="PisoAlto" unique_id=1634173861 instance=ExtResource("6_ufxwh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 4)
+script = ExtResource("8_2g4bn")
+item = ExtResource("8_0rnpi")
+flag = &"ch_boss_key_chest"
+
+[node name="CompassChest" type="StaticBody3D" parent="PisoAlto" unique_id=13555860 instance=ExtResource("6_ufxwh")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 20, 0, 15)
 script = ExtResource("8_2g4bn")
 item = ExtResource("10_tu8eq")
 flag = &"ch_compass_chest"
@@ -2818,39 +2808,39 @@ config = ExtResource("46_baen8")
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_t6ch3")
 
-[node name="CaidaLA33" type="Node3D" parent="PisoAlto" unique_id=1658125978 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA34" type="Node3D" parent="PisoAlto" unique_id=2140353979 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 8)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA34" type="Node3D" parent="PisoAlto" unique_id=993188450 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA35" type="Node3D" parent="PisoAlto" unique_id=2105304781 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 8)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA35" type="Node3D" parent="PisoAlto" unique_id=1137822447 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA36" type="Node3D" parent="PisoAlto" unique_id=2118385031 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 8)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA36" type="Node3D" parent="PisoAlto" unique_id=249682747 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA37" type="Node3D" parent="PisoAlto" unique_id=218323324 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 8)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA37" type="Node3D" parent="PisoAlto" unique_id=1646080262 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA38" type="Node3D" parent="PisoAlto" unique_id=2019833346 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 12)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA38" type="Node3D" parent="PisoAlto" unique_id=1934163784 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA39" type="Node3D" parent="PisoAlto" unique_id=1868457634 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 12)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA39" type="Node3D" parent="PisoAlto" unique_id=870835306 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA40" type="Node3D" parent="PisoAlto" unique_id=917334643 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 30)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA40" type="Node3D" parent="PisoAlto" unique_id=1263332883 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA41" type="Node3D" parent="PisoAlto" unique_id=484575215 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 12)
 script = ExtResource("61_308dp")
 
-[node name="CaidaLA41" type="Node3D" parent="PisoAlto" unique_id=1097385909 instance=ExtResource("60_lhowt")]
+[node name="CaidaLA42" type="Node3D" parent="PisoAlto" unique_id=2124436410 instance=ExtResource("60_lhowt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 12)
 script = ExtResource("61_308dp")
 
@@ -2889,7 +2879,7 @@ south_wall_reach = 1.7
 script = ExtResource("55_bkpqy")
 near_margin = 3.5
 
-[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=347263023 instance=ExtResource("80_308dp")]
+[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1283331836 instance=ExtResource("80_308dp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1439023435 instance=ExtResource("39_iq7xx")]
@@ -2927,7 +2917,7 @@ script = ExtResource("63_n1d8o")
 [editable path="PlantaBaja/Torch_Entrada_1"]
 [editable path="PlantaBaja/Torch_SalaCofre_0"]
 [editable path="PlantaBaja/Torch_SalaCofre_1"]
-[editable path="PisoAlto/SaltosLocked"]
+[editable path="PisoAlto/SaltosDoor"]
 [editable path="PisoAlto/AgrietadaDoor"]
 [editable path="PisoAlto/MiradorDoor"]
 [editable path="PisoAlto/RellanoCrackedWall"]
