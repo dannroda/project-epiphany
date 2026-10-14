@@ -3910,22 +3910,22 @@ El estado del player (vida actual incluida) es global, no de la escena. Hoy Game
 
 **Relacionadas:** 13.10 Un espíritu revive al coger un contenedor de corazón
 
-### 11.80 BossArena tiene los flags y el premio de D1 fijos en el código · Pendiente
+### 11.80 BossArena tiene los flags y el premio de D1 fijos en el código · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `jefe`, `mazmorra`
 
 `boss_arena.gd` tiene `DEFEATED_FLAG := &"d1_boss_defeated"`, `CONTAINER_FLAG := &"d1_heart_container"`, el contenedor y `ending.dialogue` como const. Reusar la arena en D2 marcaría derrotado al jefe de D1 y pondría su final.
 
-- [ ] Exports
+- [x] Exports
   `defeated_flag`, `container_flag`, `reward: ItemData`, `ending: DialogueResource`; setearlos en temple.tscn.
-- [ ] Avisos en el editor
+- [x] Avisos en el editor
   `_get_configuration_warnings` con `PersistentFlag.warnings_for`.
-- [ ] Premio por DropTable
+- [x] Premio por DropTable
   `_spawn_reward` usa `DropTable.drop_at`/el helper de pickups en vez de su copia.
 
-**Prueba:** Una BossArena con los exports vacíos muestra aviso en el editor; temple sigue igual; una arena de D2 usa sus propios flags.
+**Prueba:** tests/test_flags.gd
 
-**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+**Notas:** Hecho (fd, 2026-10-14): los flags ya eran exports desde el templo nuevo; ahora también reward (ItemData) y ending (DialogueResource), seteados en templo.tscn (temple.tscn ya no existe). BossArena es @tool y avisa si falta algún flag, el premio o el fin. El premio sale de Pickup.make, el mismo que usa DropTable. Test: test_flags › test_boss_arena_takes_its_flags_and_reward_from_the_scene.
 
 **Archivos:** `src/entities/boss/boss_arena.gd`, `levels/temple.tscn`
 
@@ -3935,16 +3935,16 @@ El estado del player (vida actual incluida) es global, no de la escena. Hoy Game
 
 `Dungeon.id` vale `&"d1"` por defecto y temple.tscn depende de eso (no tiene `id =`). Una mazmorra nueva que olvide el id comparte llaves, mapa y brújula con D1 sin aviso. `PersistentFlag.PREFIXES` es una lista fija `ow_, d0_..d3_` y SaveCodec deriva la sección del prefijo: D4 requiere tocar código.
 
-- [ ] Id vacío por defecto + aviso
+- [x] Id vacío por defecto + aviso
   dungeon.gd: `&""` y config warning; poner `id = &"d1"` en temple.tscn.
-- [ ] Prefijos por regex
+- [x] Prefijos por regex
   `^(ow|d\\d+)_` en PersistentFlag y SaveCodec.
-- [ ] Opcional: avisar prefijo distinto
+- [x] Opcional: avisar prefijo distinto
   Un flag `dN_` en una escena cuyo Dungeon.id no es dN.
 
-**Prueba:** Un Dungeon sin id muestra aviso; temple tiene `id = &"d1"` explícito; un flag `d4_x` valida sin tocar código.
+**Prueba:** tests/test_flags.gd
 
-**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+**Notas:** Hecho (fd, 2026-10-14): Dungeon.id sin valor por defecto, @tool, avisa vacío o con _; todas las mazmorras ya tenían id explícito (ch, qv, tt, cu, te, d0). La lista fija de prefijos se fue (le faltaban tt_ y cu_, que avisaban de más): en una mazmorra el flag tiene que empezar con su Dungeon.id; afuera (overworld, cuevas) vale cualquiera registrado, porque el overworld lee flags de mazmorras. SaveCodec ya derivaba la sección del prefijo sin lista. Tests: test_flags › test_every_level_flag_has_its_dungeon_prefix, test_a_dungeon_without_id_warns; test_persistent_flag.
 
 **Archivos:** `src/world/dungeon.gd`, `levels/temple.tscn`, `src/save/save_codec.gd`
 
@@ -6307,18 +6307,13 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 ### Revisión: lo listo para probar  (25/27 probadas)
 
-1. [ ] 11.130 Bocas de cueva talladas en el risco · Revisión · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. 
-   No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. 
-   D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
-2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
-   El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
+1. [ ] 11.130 Bocas de cueva talladas en el risco · Revisión · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
+2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player. El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
 3. [x] 11.111 Cactus, árboles y matas se cortan como el pasto · Hecho · anda
 4. [x] 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · Hecho · anda
 5. [x] 11.118 Sandalias: correr manteniendo y salto largo con la pluma · Hecho · anda
 6. [x] 11.24 Más secretos en el overworld · Hecho · anda
-7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente
-   si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell"
-   no hay asset correcto para la pared quebrable
+7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell" no hay asset correcto para la pared quebrable
 8. [x] 11.30 Ítem de D3: el gancho · Hecho · anda
 9. [x] 11.28 Atajos que se abren al volver · Hecho · anda — anda, pero no debería hacer un fade. Debería haber una animacion del player subiendo y bajando
 10. [x] 11.46 Jefe: game juice · Hecho · anda

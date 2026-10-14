@@ -2,17 +2,17 @@
   "checklist": [
     {
       "detail": "`defeated_flag`, `container_flag`, `reward: ItemData`, `ending: DialogueResource`; setearlos en temple.tscn.",
-      "done": false,
+      "done": true,
       "text": "Exports"
     },
     {
       "detail": "`_get_configuration_warnings` con `PersistentFlag.warnings_for`.",
-      "done": false,
+      "done": true,
       "text": "Avisos en el editor"
     },
     {
       "detail": "`_spawn_reward` usa `DropTable.drop_at`/el helper de pickups en vez de su copia.",
-      "done": false,
+      "done": true,
       "text": "Premio por DropTable"
     }
   ],
@@ -24,18 +24,18 @@
     "levels/temple.tscn"
   ],
   "milestone": "m11",
-  "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).",
+  "notes": "Hecho (fd, 2026-10-14): los flags ya eran exports desde el templo nuevo; ahora también reward (ItemData) y ending (DialogueResource), seteados en templo.tscn (temple.tscn ya no existe). BossArena es @tool y avisa si falta algún flag, el premio o el fin. El premio sale de Pickup.make, el mismo que usa DropTable. Test: test_flags › test_boss_arena_takes_its_flags_and_reward_from_the_scene.",
   "order": 77,
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug",
     "jefe",
     "mazmorra"
   ],
-  "test": "Una BossArena con los exports vacíos muestra aviso en el editor; temple sigue igual; una arena de D2 usa sus propios flags.",
+  "test": "tests/test_flags.gd",
   "title": "BossArena tiene los flags y el premio de D1 fijos en el código",
-  "updated_at": "2026-10-12T00:19:26.211Z"
+  "updated_at": "2026-10-14T14:12:41.452Z"
 }

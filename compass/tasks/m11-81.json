@@ -2,17 +2,17 @@
   "checklist": [
     {
       "detail": "dungeon.gd: `&\"\"` y config warning; poner `id = &\"d1\"` en temple.tscn.",
-      "done": false,
+      "done": true,
       "text": "Id vacío por defecto + aviso"
     },
     {
       "detail": "`^(ow|d\\\\d+)_` en PersistentFlag y SaveCodec.",
-      "done": false,
+      "done": true,
       "text": "Prefijos por regex"
     },
     {
       "detail": "Un flag `dN_` en una escena cuyo Dungeon.id no es dN.",
-      "done": false,
+      "done": true,
       "text": "Opcional: avisar prefijo distinto"
     }
   ],
@@ -25,18 +25,18 @@
     "src/save/save_codec.gd"
   ],
   "milestone": "m11",
-  "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).",
+  "notes": "Hecho (fd, 2026-10-14): Dungeon.id sin valor por defecto, @tool, avisa vacío o con _; todas las mazmorras ya tenían id explícito (ch, qv, tt, cu, te, d0). La lista fija de prefijos se fue (le faltaban tt_ y cu_, que avisaban de más): en una mazmorra el flag tiene que empezar con su Dungeon.id; afuera (overworld, cuevas) vale cualquiera registrado, porque el overworld lee flags de mazmorras. SaveCodec ya derivaba la sección del prefijo sin lista. Tests: test_flags › test_every_level_flag_has_its_dungeon_prefix, test_a_dungeon_without_id_warns; test_persistent_flag.",
   "order": 78,
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug",
     "mazmorra",
     "guardado"
   ],
-  "test": "Un Dungeon sin id muestra aviso; temple tiene `id = &\"d1\"` explícito; un flag `d4_x` valida sin tocar código.",
+  "test": "tests/test_flags.gd",
   "title": "Dungeon.id por defecto d1 y prefijos de flags fijos",
-  "updated_at": "2026-10-12T00:19:28.399Z"
+  "updated_at": "2026-10-14T14:12:41.699Z"
 }
