@@ -262,3 +262,32 @@ func test_posts_are_targets_only_with_the_hookshot_and_in_reach() -> void:
 	assert_true(post in player.targeting.possible_targets, "con el gancho, sí")
 	assert_true(not far_post in player.targeting.possible_targets, "pero no uno fuera del alcance del gancho")
 	state.reset()
+
+
+func test_posts_on_another_floor_cannot_be_targeted() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state := tree.root.get_node(^"GameState")
+	state.reset()
+	tree.change_scene_to_file("res://levels/totora.tscn")
+	await tree.scene_changed
+	for enemy in tree.get_nodes_in_group(&"enemies"):
+		enemy.free()
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	state.give(Items.get_item(&"hookshot"))
+	state.assign_button(0, &"hookshot")
+	var space := player.get_world_3d().direct_space_state
+	var checked := 0
+	for post: HookPost in tree.current_scene.get_node(^"PisoAlto").find_children("*", "HookPost", false, false):
+		var below := PhysicsRayQueryParameters3D.create(Vector3(post.global_position.x, 5.0, post.global_position.z), Vector3(post.global_position.x, -2.0, post.global_position.z), 1, [player.get_rid()])
+		var hit := space.intersect_ray(below)
+		if hit.is_empty() or absf(hit.position.y) > 0.3:
+			continue
+		player.global_position = hit.position
+		player.velocity = Vector3.ZERO
+		for i in 4:
+			await tree.physics_frame
+		assert_true(player.global_position.distance_to(post.global_position) < player.hook_reach() + 2.0, "%s queda al alcance desde abajo" % post.name)
+		assert_eq(player.targeting.possible_targets.has(post), false, "%s, un piso arriba, no se puede fijar" % post.name)
+		checked += 1
+	assert_true(checked > 0, "hay postes del piso de arriba sobre suelo del de abajo")
+	state.reset()
