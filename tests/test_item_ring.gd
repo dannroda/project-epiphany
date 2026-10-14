@@ -8,7 +8,7 @@ const PAD_2 := 1
 func _level(coop: bool) -> Array:
 	var tree := Engine.get_main_loop() as SceneTree
 	var players: Node = tree.root.get_node(^"Players")
-	Settings.path = "user://test_settings.cfg"
+	Settings.path = settings_path
 	Settings.load_settings()
 	GameState.reset()
 	tree.change_scene_to_file("res://levels/test_rooms.tscn")
