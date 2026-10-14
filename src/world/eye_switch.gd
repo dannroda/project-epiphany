@@ -6,8 +6,14 @@ extends StaticBody3D
 signal activated
 signal deactivated
 
-const CLOSED := Color(0.55, 0.5, 0.6)
-const OPEN := Color(1.0, 0.78, 0.3)
+const CLOSED := Color(0.85, 0.82, 0.9)
+const OPEN := Color(1.25, 1.15, 1.0)
+## Los valores por defecto de epiphany_outdoor.gdshader.
+const GLOW := 1.5
+const ALBEDO := Color(0.72, 0.72, 0.72)
+const LOOK_RANGE := 10.0
+const LOOK_LIMIT := deg_to_rad(40.0)
+const LOOK_SPEED := 6.0
 
 @export var flag: StringName:
 	set(value):
@@ -23,16 +29,17 @@ const OPEN := Color(1.0, 0.78, 0.3)
 
 var active := false
 var _persistent: PersistentFlag
-var _material := StandardMaterial3D.new()
+var _material: ShaderMaterial
+var _rest: Quaternion
 
 
 func _ready() -> void:
-	_material.albedo_texture = preload("res://assets/epiphany/palette.png")
-	_material.roughness = 0.4
-	_material.emission_enabled = true
+	_material = eye.mesh.surface_get_material(0).duplicate()
 	eye.material_override = _material
+	_rest = eye.quaternion
 	_show(false)
 	if Engine.is_editor_hint():
+		set_process(false)
 		return
 	hurtbox.hit.connect(_on_hit)
 	if flag != &"":
@@ -44,6 +51,20 @@ func _ready() -> void:
 			if active and not was:
 				activated.emit())
 		_show(_persistent.value == true)
+
+
+func _process(delta: float) -> void:
+	var goal := _rest
+	var player := Players.nearest(eye.global_position)
+	if not active and player and player.global_position.distance_to(eye.global_position) < LOOK_RANGE:
+		var to := eye.get_parent_node_3d().global_basis.inverse() * (player.global_position + Vector3.UP * 0.8 - eye.global_position)
+		var ahead := _rest * Vector3.BACK
+		var turn := Quaternion(ahead, to.normalized()) if not to.is_zero_approx() else Quaternion.IDENTITY
+		var angle := turn.get_angle()
+		if angle > LOOK_LIMIT:
+			turn = Quaternion.IDENTITY.slerp(turn, LOOK_LIMIT / angle)
+		goal = turn * _rest
+	eye.quaternion = eye.quaternion.slerp(goal, 1.0 - exp(-LOOK_SPEED * delta))
 
 
 func _get_configuration_warnings() -> PackedStringArray:
@@ -78,8 +99,7 @@ func _count_down() -> void:
 
 func _show(open: bool) -> void:
 	active = open
-	_material.albedo_color = OPEN if open else CLOSED
-	_material.emission = OPEN if open else Color.BLACK
-	_material.emission_energy_multiplier = 1.5 if open else 0.0
+	_material.set_shader_parameter(&"albedo_color", ALBEDO * (OPEN if open else CLOSED))
+	_material.set_shader_parameter(&"emission_energy", GLOW * (2.0 if open else 0.4))
 	gem.visible = open
 	glow.visible = open
