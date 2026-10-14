@@ -93,6 +93,7 @@ func mark_entered() -> void:
 	_announced = true
 	if first and not display_name.is_empty():
 		get_tree().call_group(Hud.GROUP, &"show_area_name", tr(display_name))
+	return
 	player_entered.emit(self)
 	if autosave_on_enter:
 		SaveManager.autosave.call_deferred()

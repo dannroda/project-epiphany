@@ -21,18 +21,18 @@ shader_parameter/tile_size = 1.1
 shader_parameter/jitter = 0.38
 shader_parameter/grout_width = 0.05
 shader_parameter/grout_shade = 0.55
-shader_parameter/bevel = null
-shader_parameter/tone_spread = null
-shader_parameter/mottle = null
-shader_parameter/crack_amount = null
+shader_parameter/bevel = 0.09
+shader_parameter/tone_spread = 0.18
+shader_parameter/mottle = 0.12
+shader_parameter/crack_amount = 0.15
 shader_parameter/roughness = 0.5
 shader_parameter/specular = 0.4
-shader_parameter/normal_strength = null
+shader_parameter/normal_strength = 0.6
 shader_parameter/earth = 0.6
 shader_parameter/earth_shade = 0.64
-shader_parameter/plank_width = null
-shader_parameter/plank_length = null
-shader_parameter/floor_color = null
+shader_parameter/plank_width = 0.0
+shader_parameter/plank_length = 2.0
+shader_parameter/floor_color = Color(0, 0, 0, 0)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_4dyfx"]
 _surfaces = [{
@@ -54,23 +54,23 @@ size = Vector3(2, 0.5, 2)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2jvbo"]
 render_priority = 0
 shader = ExtResource("3_c73y3")
-shader_parameter/hole_radius = null
-shader_parameter/hole_floor = null
+shader_parameter/hole_radius = 1.4
+shader_parameter/hole_floor = 0.3
 shader_parameter/albedo_color = Color(0.72, 0.72, 0.72, 1)
 shader_parameter/albedo_texture = ExtResource("2_rvxix")
-shader_parameter/uv_scale = null
-shader_parameter/uv_offset = null
+shader_parameter/uv_scale = 0.5
+shader_parameter/uv_offset = 0.5
 shader_parameter/use_uv = true
-shader_parameter/cut_area = null
-shader_parameter/cut_height = null
-shader_parameter/cut_lip = null
-shader_parameter/back_shade = null
-shader_parameter/cap_shade = null
+shader_parameter/cut_area = Vector4(0, 0, 0, 0)
+shader_parameter/cut_height = 0.0
+shader_parameter/cut_lip = 1000000.0
+shader_parameter/back_shade = 0.12
+shader_parameter/cap_shade = 0.75
 shader_parameter/roughness = 0.5
 shader_parameter/specular = 0.4
-shader_parameter/grain_amount = null
-shader_parameter/grain_rect = null
-shader_parameter/grain_spacing = null
+shader_parameter/grain_amount = 0.0
+shader_parameter/grain_rect = Vector4(0, 0, 0, 0)
+shader_parameter/grain_spacing = 0.2
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ttt0q"]
 _surfaces = [{
@@ -192,13 +192,13 @@ _surfaces = [{
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_q5jql"]
 render_priority = 0
 shader = ExtResource("5_c73y3")
-shader_parameter/fog_color = null
-shader_parameter/fog_amount = null
-shader_parameter/fog_top = null
-shader_parameter/fog_peak = null
-shader_parameter/black_from = null
-shader_parameter/black_to = null
-shader_parameter/drift = null
+shader_parameter/fog_color = Color(0.62, 0.68, 0.8, 1)
+shader_parameter/fog_amount = 0.85
+shader_parameter/fog_top = -0.15
+shader_parameter/fog_peak = -0.6
+shader_parameter/black_from = -0.9
+shader_parameter/black_to = -2.2
+shader_parameter/drift = 0.08
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_d0h0o"]
 _surfaces = [{
@@ -368,23 +368,23 @@ _surfaces = [{
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_waoqk"]
 render_priority = 0
 shader = ExtResource("3_c73y3")
-shader_parameter/hole_radius = null
-shader_parameter/hole_floor = null
+shader_parameter/hole_radius = 1.4
+shader_parameter/hole_floor = 0.3
 shader_parameter/albedo_color = Color(0.72, 0.72, 0.72, 1)
 shader_parameter/albedo_texture = ExtResource("2_rvxix")
-shader_parameter/uv_scale = null
-shader_parameter/uv_offset = null
+shader_parameter/uv_scale = 0.5
+shader_parameter/uv_offset = 0.5
 shader_parameter/use_uv = true
-shader_parameter/cut_area = null
-shader_parameter/cut_height = null
-shader_parameter/cut_lip = null
-shader_parameter/back_shade = null
-shader_parameter/cap_shade = null
+shader_parameter/cut_area = Vector4(0, 0, 0, 0)
+shader_parameter/cut_height = 0.0
+shader_parameter/cut_lip = 1000000.0
+shader_parameter/back_shade = 0.12
+shader_parameter/cap_shade = 0.75
 shader_parameter/roughness = 0.5
 shader_parameter/specular = 0.4
 shader_parameter/grain_amount = 0.0
 shader_parameter/grain_rect = Vector4(0.42, 0.455, 0, 0.25)
-shader_parameter/grain_spacing = null
+shader_parameter/grain_spacing = 0.2
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_mtolk"]
 _surfaces = [{
@@ -1031,9 +1031,9 @@ _surfaces = [{
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ckcxt"]
 render_priority = -1
 shader = ExtResource("7_rvxix")
-shader_parameter/blur = null
-shader_parameter/darken = null
-shader_parameter/tint = null
+shader_parameter/blur = 1.5
+shader_parameter/darken = 0.25
+shader_parameter/tint = Color(0.86, 0.9, 1, 1)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_u0re7"]
 _surfaces = [{
@@ -1051,12 +1051,12 @@ _surfaces = [{
 render_priority = 0
 shader = ExtResource("5_c73y3")
 shader_parameter/fog_color = Color(0, 0, 0, 1)
-shader_parameter/fog_amount = null
-shader_parameter/fog_top = null
-shader_parameter/fog_peak = null
-shader_parameter/black_from = null
-shader_parameter/black_to = null
-shader_parameter/drift = null
+shader_parameter/fog_amount = 0.85
+shader_parameter/fog_top = -0.15
+shader_parameter/fog_peak = -0.6
+shader_parameter/black_from = -0.9
+shader_parameter/black_to = -2.2
+shader_parameter/drift = 0.08
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_1qpgy"]
 _surfaces = [{

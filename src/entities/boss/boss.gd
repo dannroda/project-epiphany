@@ -687,4 +687,3 @@ func _joint_blast() -> void:
 	Feel.burst(&"shards", spot, (spot - body.global_position).normalized() + Vector3.UP)
 	Feel.sfx(&"boom", spot)
 	Feel.shake(0.25)
-
