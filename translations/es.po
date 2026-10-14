@@ -292,6 +292,9 @@ msgstr "Brújula"
 msgid "ITEMS_BOSS_KEY"
 msgstr "Llave del jefe"
 
+msgid "ITEMS_BOSS_KEY_PIECES"
+msgstr "Llave del jefe: {count}/4"
+
 msgid "ITEMS_BOSS_KEY_NO"
 msgstr "Llave del jefe: no"
 
@@ -551,6 +554,15 @@ msgstr "Llave del jefe"
 
 msgid "ITEM_BOSS_KEY_DESC"
 msgstr "Abre la puerta del guardián de la mazmorra."
+
+msgid "ITEM_BOSS_KEY_PIECE_NAME"
+msgstr "Pieza de la llave del jefe"
+
+msgid "ITEM_BOSS_KEY_PIECE_DESC"
+msgstr "Un cuarto de la llave del jefe. Se gana en cada revancha del templo."
+
+msgid "ITEM_BOSS_KEY_PIECE_GOT"
+msgstr "¡Conseguiste una pieza de la llave del jefe!"
 
 msgid "ITEM_BOSS_KEY_GOT"
 msgstr "¡Conseguiste la Llave del jefe!"

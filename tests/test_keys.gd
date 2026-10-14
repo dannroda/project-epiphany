@@ -32,3 +32,28 @@ func test_key_counter_in_dungeon() -> void:
 	hud = tree.current_scene.get_node(^"HUD")
 	assert_eq(hud.keys.visible, false, "fuera de la mazmorra el contador no se ve")
 	state.reset()
+
+
+func test_four_boss_key_pieces_make_the_boss_key() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	state.reset()
+	await _load(tree, "res://levels/test_rooms.tscn")
+	var hud: Node = tree.current_scene.get_node(^"HUD")
+	var piece := Items.get_item(&"boss_key_piece")
+	assert_true(not hud.boss_key_pieces.visible, "sin piezas no se ve el contador")
+	for count in range(1, 4):
+		state.give(piece)
+		assert_eq(load("res://src/ui/item_get/item_get.gd").cue_for(piece), StringName("boss_key_piece_%d" % count), "el texto cuenta las piezas")
+		assert_eq(hud.boss_key_pieces.text, "%d/4" % count)
+		assert_true(not state.current_dungeon_state().has_boss_key, "con %d todavía no hay llave" % count)
+	state.give(piece)
+	assert_true(state.current_dungeon_state().has_boss_key, "la cuarta arma la llave del jefe")
+	assert_eq(load("res://src/ui/item_get/item_get.gd").cue_for(piece), &"boss_key_piece_full")
+	assert_true(not hud.boss_key_pieces.visible and hud.boss_key.modulate.a == 1.0, "y el HUD muestra la llave")
+	var cfg := ConfigFile.new()
+	state.write_to(cfg)
+	state.reset()
+	state.read_from(cfg)
+	assert_eq(state.dungeons[&"test_rooms"].boss_key_pieces, 4, "las piezas se guardan")
+	state.reset()

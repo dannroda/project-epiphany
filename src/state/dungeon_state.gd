@@ -20,6 +20,10 @@ var has_boss_key := false:
 	set(value):
 		has_boss_key = value
 		changed.emit()
+var boss_key_pieces: int = 0:
+	set(value):
+		boss_key_pieces = value
+		changed.emit()
 var visited_rooms: int = 0: ## Bitmask: bit N = sala con room_index N
 	set(value):
 		visited_rooms = value

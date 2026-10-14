@@ -27,6 +27,8 @@ const SKIP_ACTIONS: Array[StringName] = [&"ui_accept", &"attack", &"interact"]
 @export var intro_hold := 1.6
 ## Lo que se apuran los que quedan al caer uno.
 @export var enrage_pace := 1.4
+## Revancha (templo, 11.182): arrancan con media vida, así ya pelean como con media vida, y si son varios, apurados.
+@export var rematch := false
 
 var active := false
 var started := false
@@ -81,6 +83,11 @@ func _begin() -> void:
 	get_tree().call_group(Hud.GROUP, &"show_boss", self)
 	for fighter in _fighters:
 		fighter.start()
+		if rematch:
+			fighter.health.restore(fighter.health.max_health, ceili(fighter.health.max_health / 2.0))
+			if _fighters.size() > 1:
+				fighter.pace = enrage_pace
+	bar_changed.emit()
 
 
 func _awaken() -> void:
@@ -169,7 +176,7 @@ func bar_fraction() -> float:
 	var total := 0
 	var left := 0
 	for fighter in _fighters:
-		total += fighter.health.max_health
+		total += ceili(fighter.health.max_health / 2.0) if rematch else fighter.health.max_health
 		left += maxi(fighter.health.current, 0)
 	return float(left) / maxf(total, 1)
 

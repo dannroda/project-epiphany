@@ -21,6 +21,7 @@ const GROUP := &"hud"
 @onready var keys: HBoxContainer = %Keys
 @onready var small_key_count: Label = %SmallKeyCount
 @onready var boss_key: TextureRect = %BossKey
+@onready var boss_key_pieces: Label = %BossKeyPieces
 @onready var area_name: HBoxContainer = %AreaName
 @onready var area_label: Label = %AreaLabel
 @onready var saved_label: Label = %Saved
@@ -139,6 +140,8 @@ func _refresh_keys() -> void:
 	if _dungeon:
 		small_key_count.text = "×%d" % _dungeon.small_keys
 		boss_key.modulate.a = 1.0 if _dungeon.has_boss_key else 0.35
+		boss_key_pieces.visible = _dungeon.boss_key_pieces > 0 and not _dungeon.has_boss_key
+		boss_key_pieces.text = "%d/%d" % [_dungeon.boss_key_pieces, GameState.PIECES_PER_BOSS_KEY]
 
 
 func show_area_name(text: String) -> void:

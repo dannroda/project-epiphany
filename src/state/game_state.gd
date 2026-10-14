@@ -20,6 +20,7 @@ const NEW_GAME_EQUIPMENT: Array[StringName] = [&"sword_basic", &"shield_wood", &
 const PLAYER_CONFIG := preload("res://data/entities/player.tres")
 const HP_PER_HEART := 4
 const PIECES_PER_HEART := 4
+const PIECES_PER_BOSS_KEY := 4
 const DUNGEON_PREFIX := "dungeon_"
 const MAX_MAP_PINS := 4
 const BOTTLES: Array[StringName] = [&"bottle_1", &"bottle_2", &"bottle_3", &"bottle_4"]
@@ -214,6 +215,11 @@ func give(item: ItemData, amount: int = 1) -> void:
 	match item.id:
 		&"small_key": current_dungeon_state().small_keys += amount
 		&"boss_key": current_dungeon_state().has_boss_key = true
+		&"boss_key_piece":
+			var dungeon := current_dungeon_state()
+			dungeon.boss_key_pieces += amount
+			if dungeon.boss_key_pieces >= PIECES_PER_BOSS_KEY:
+				dungeon.has_boss_key = true
 		&"dungeon_map": current_dungeon_state().has_map = true
 		&"compass": current_dungeon_state().has_compass = true
 		&"heart_container":
@@ -363,6 +369,8 @@ func write_to(cfg: ConfigFile) -> void:
 		cfg.set_value(section, "has_map", dungeon.has_map)
 		cfg.set_value(section, "has_compass", dungeon.has_compass)
 		cfg.set_value(section, "has_boss_key", dungeon.has_boss_key)
+		if dungeon.boss_key_pieces > 0:
+			cfg.set_value(section, "boss_key_pieces", dungeon.boss_key_pieces)
 		cfg.set_value(section, "visited_rooms", dungeon.visited_rooms)
 
 
@@ -410,6 +418,7 @@ func read_from(cfg: ConfigFile) -> void:
 		dungeon.has_map = get_typed.call(section, "has_map", false)
 		dungeon.has_compass = get_typed.call(section, "has_compass", false)
 		dungeon.has_boss_key = get_typed.call(section, "has_boss_key", false)
+		dungeon.boss_key_pieces = get_typed.call(section, "boss_key_pieces", 0)
 		dungeon.visited_rooms = get_typed.call(section, "visited_rooms", 0)
 		dungeons[StringName(section.trim_prefix(DUNGEON_PREFIX))] = dungeon
 	_set_bulk(false)

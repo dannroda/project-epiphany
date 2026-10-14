@@ -199,7 +199,10 @@ func _refresh_dungeon() -> void:
 	_chip(&"small_key", tr("ITEMS_SMALL_KEYS").format({count = dungeon.small_keys}), dungeon.small_keys > 0)
 	_chip(&"dungeon_map", "ITEMS_MAP", dungeon.has_map)
 	_chip(&"compass", "ITEMS_COMPASS", dungeon.has_compass)
-	_chip(&"boss_key", "ITEMS_BOSS_KEY" if dungeon.has_boss_key else "ITEMS_BOSS_KEY_NO", dungeon.has_boss_key)
+	if dungeon.boss_key_pieces > 0 and not dungeon.has_boss_key:
+		_chip(&"boss_key_piece", tr("ITEMS_BOSS_KEY_PIECES").format({count = dungeon.boss_key_pieces}), true)
+	else:
+		_chip(&"boss_key", "ITEMS_BOSS_KEY" if dungeon.has_boss_key else "ITEMS_BOSS_KEY_NO", dungeon.has_boss_key)
 
 
 func _chip(item_id: StringName, text: String, owned: bool) -> void:
