@@ -1,0 +1,112 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/vfx/demo_tajo.gd" id="1_demo"]
+[ext_resource type="Shader" path="res://src/world/vfx/tajo.gdshader" id="2_tajo"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/equipo/espada.res" id="3_espada"]
+
+[sub_resource type="Environment" id="Environment_demo"]
+background_mode = 1
+background_color = Color(0.16, 0.14, 0.16, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.55, 0.52, 0.58, 1)
+glow_enabled = true
+glow_intensity = 0.4
+glow_hdr_threshold = 0.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_piso"]
+albedo_color = Color(0.58, 0.5, 0.6, 1)
+roughness = 0.9
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_piso"]
+material = SubResource("StandardMaterial3D_piso")
+size = Vector2(12, 12)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_cuerpo"]
+radius = 0.35
+height = 1.6
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tajo"]
+render_priority = 0
+shader = ExtResource("2_tajo")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_tajo"]
+material = SubResource("ShaderMaterial_tajo")
+size = Vector2(5.2, 5.2)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_chispas"]
+emission_shape = 1
+emission_sphere_radius = 0.1
+direction = Vector3(0, 1, 0)
+spread = 120.0
+initial_velocity_min = 0.6
+initial_velocity_max = 1.6
+gravity = Vector3(0, -4, 0)
+damping_min = 2.0
+damping_max = 3.0
+scale_min = 0.5
+scale_max = 1.0
+color = Color(0.75, 0.98, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_chispa"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+disable_fog = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_chispa"]
+material = SubResource("StandardMaterial3D_chispa")
+radius = 0.025
+height = 0.05
+radial_segments = 6
+rings = 3
+
+[node name="DemoTajo" type="Node3D"]
+script = ExtResource("1_demo")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_demo")
+
+[node name="Sol" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.906308, -0.296198, 0.301537, 0, 0.713251, 0.700909, -0.422618, -0.635207, 0.646654, 0, 6, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 5.2, 5.6)
+current = true
+fov = 40.0
+
+[node name="Piso" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_piso")
+
+[node name="Cuerpo" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+mesh = SubResource("CapsuleMesh_cuerpo")
+
+[node name="Hoja" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+
+[node name="Espada" type="MeshInstance3D" parent="Hoja"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0.64)
+mesh = ExtResource("3_espada")
+
+[node name="Punta" type="Marker3D" parent="Hoja"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.06)
+
+[node name="Tajo" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_tajo")
+
+[node name="Chispas" type="GPUParticles3D" parent="Tajo"]
+cast_shadow = 0
+emitting = false
+amount = 16
+lifetime = 0.35
+local_coords = false
+visibility_aabb = AABB(-3, -3, -3, 6, 6, 6)
+process_material = SubResource("ParticleProcessMaterial_chispas")
+draw_pass_1 = SubResource("SphereMesh_chispa")
