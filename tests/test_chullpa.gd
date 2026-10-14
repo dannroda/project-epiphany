@@ -109,7 +109,7 @@ func test_an_enemy_that_falls_to_the_floor_below_stays_visible() -> void:
 	tree.root.get_node(^"GameState").reset()
 
 
-func test_crypt_ladder_only_goes_up_to_the_room_above() -> void:
+func test_crypt_ladder_goes_up_to_the_room_above_and_back() -> void:
 	await _start()
 	await _drop(_in("PlantaBaja/SalaCofre", Vector3(-4, 0.5, 0)))
 	player.global_position = _in("Sotano/Cripta", Vector3(-8, 0, -7.4))
@@ -119,7 +119,11 @@ func test_crypt_ladder_only_goes_up_to_the_room_above() -> void:
 	assert_true(player.global_position.x < pit_west, "del lado oeste de los huecos, que sale a la entrada sin la pluma (x %.1f)" % player.global_position.x)
 	var ladder := level.get_node(^"Sotano/CriptaLadder") as Node3D
 	assert_true(Vector2(player.global_position.x - ladder.global_position.x, player.global_position.z - ladder.global_position.z).length() < 3.0, "justo encima de la escalera (%s)" % player.global_position.snappedf(0.1))
-	assert_true(level.find_children("*", "Stairs", true, false).all(func(stairs: Stairs) -> bool: return stairs.to != level.get_node(^"Sotano/CriptaLadder")), "nada baja por ella")
+	var down := level.get_node(^"PlantaBaja/SalaCofreStairs") as Node3D
+	assert_true(Vector2(down.global_position.x - ladder.global_position.x, down.global_position.z - ladder.global_position.z).length() < 0.5, "arriba se ve la bajada, justo encima de la escalera")
+	player.global_position = _in("PlantaBaja/SalaCofre", Vector3(-8, 0, -7.4))
+	await tree.create_timer(1.2).timeout
+	assert_eq(camera.room, _room("Sotano/Cripta"), "y por ahí se vuelve a bajar")
 	tree.root.get_node(^"GameState").reset()
 
 
