@@ -36,12 +36,6 @@ const PILLAR_HEIGHT := 3.6
 ## Para encuadrar, la cámara mira el tope de la pared norte en el borde del piso: con esto llega a ver también la cresta.
 const FRAME_HEIGHT := 5.4
 const MASK_MARGIN := 2.0
-## Lo de afuera de la sala lo tapa un marco negro difuminado (TonoLA) que se mete más arriba, como las paredes en perspectiva.
-const FRAME := 0.1
-const FRAME_SOFTNESS := 0.8
-const FRAME_SLANT := 0.15
-## La cámara encuadra también la cresta de la pared sur (metros de piso más allá del borde de la sala).
-const SOUTH_MARGIN := 2.0
 const FOCUS := preload("res://src/world/look/enfoque_la.gd")
 const FLOOR := preload("res://src/world/look/piso_la.gdshader")
 ## Veta de las paredes: la franja "acantilado" de la paleta (columna 3, fila 0).
@@ -412,12 +406,6 @@ func _look(level: Node, look: Dictionary) -> void:
 			var env := (node as WorldEnvironment).environment
 			env.ambient_light_color = look.ambient
 			env.ambient_light_energy = look.ambient_energy
-			var compositor := (node as WorldEnvironment).compositor
-			for effect in compositor.compositor_effects if compositor else []:
-				if effect.get_script() == TONE:
-					effect.frame = FRAME
-					effect.frame_softness = FRAME_SOFTNESS
-					effect.frame_slant = FRAME_SLANT
 		elif node is DirectionalLight3D:
 			(node as DirectionalLight3D).light_color = look.sun
 			(node as DirectionalLight3D).light_energy = look.sun_energy
@@ -429,16 +417,6 @@ func _look(level: Node, look: Dictionary) -> void:
 		elif node.scene_file_path.ends_with("wall_torch.tscn"):
 			(node.get_node("Model") as MeshInstance3D).mesh = load(look.brazier)
 	for camera: Node in cameras:
-		var pitch := deg_to_rad(CAMERA_PITCH)
-		camera.set("offset", Vector3(0, sin(pitch), cos(pitch)) * _camera)
-		camera.set("south_margin", SOUTH_MARGIN)
-		var blur := (camera as Camera3D).attributes as CameraAttributesPractical
-		if blur:
-			blur.dof_blur_far_enabled = false
-			blur.dof_blur_near_distance = _camera - FOCUS_NEAR
-		var focus := camera.get_node_or_null("EnfoqueLA")
-		if focus:
-			focus.set("near_margin", FOCUS_NEAR)
 		var old := camera.get_node_or_null("Polvo")
 		if old:
 			camera.remove_child(old)
