@@ -352,15 +352,41 @@ def ojo_pilar(p):
 
 
 def ojo_globo(p):
-	"""Globo de 0.24 de radio con el iris violeta y la pupila hacia -Y."""
-	ball = p.blob((0, 0, 0), 0.24, subdiv=2, rough=0.0)
-	white, iris, pupil = [], [], []
-	for f in ball:
-		c = f.calc_center_median().normalized()
-		(pupil if c.y < -0.93 else iris if c.y < -0.72 else white).append(f)
-	p.paint(white, "hueso", "LIGHT")
-	p.paint(iris, "sello", "MID")
-	p.paint(pupil, "noche", "MID")
+	"""Globo de 0.24 de radio como el ojo del jefe final: aro dorado, iris neón que brilla y pupila de rendija hacia -Y."""
+	eye = 0.24
+
+	def onto(faces, lift):
+		for v in {v for f in faces for v in f.verts}:
+			x, z = v.co.x, v.co.y
+			v.co = Vector((x, -math.sqrt(max(eye ** 2 - x * x - z * z, 0.0)), z)).normalized() * (eye + lift + v.co.z)
+
+	def poked(faces):
+		top = faces.pop(-2)
+		return faces + bmesh.ops.poke(p.bm, faces=[top])["faces"]
+
+	def disc(points):
+		return poked(p.polygon(points, -0.006, 0.004))
+
+	def circle(radius, sides=24):
+		return [(math.cos(2 * math.pi * k / sides) * radius, math.sin(2 * math.pi * k / sides) * radius) for k in range(sides)]
+
+	ball = p.blob((0, 0, 0), eye, subdiv=2, rough=0.0)
+	p.paint(ball, "hueso", "LIGHT")
+	ring = disc(circle(eye * 0.58))
+	onto(ring, 0.0)
+	p.paint(ring, "dorado", "LOW")
+	iris = disc(circle(eye * 0.5))
+	onto(iris, 0.003)
+	p.paint(iris, "neon", "MID")
+	inner = disc(circle(eye * 0.3))
+	onto(inner, 0.005)
+	p.paint(inner, "neon", "LIGHT")
+	wide, tall = 0.024, 0.1
+	slit = [(math.sin(math.pi * i / 8) * wide, -math.cos(math.pi * i / 8) * tall) for i in range(9)]
+	slit += [(-math.sin(math.pi * i / 8) * wide, math.cos(math.pi * i / 8) * tall) for i in range(1, 8)]
+	pupil = disc(slit)
+	onto(pupil, 0.012)
+	p.paint(pupil, "noche", "DARK")
 
 
 def puente(p):
