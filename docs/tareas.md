@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (95/161)
+## M11 — Pulido: contenido y feel  (95/162)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4673,6 +4673,8 @@ Daniel: las bocas de cueva del overworld (la entrada trasera de la ermita, la cu
 
 **Capturas:** `compass/images/m11-130-mapa.jpg`, `compass/images/m11-130-1.jpg`, `compass/images/m11-130-2.jpg`, `compass/images/m11-130-3.jpg`, `compass/images/m11-130-4.jpg`, `compass/images/m11-130-20261013-221755.png`, `compass/images/m11-130-20261013-221902.png`, `compass/images/m11-130-20261014-034842.png`
 
+**Relacionadas:** 11.166 Santuario con una sola entrada: su muro agrietado
+
 ### 11.131 Pozo junto a la Chullpa: caer sin bombas deja softlock · Revisión
 
 **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`
@@ -5052,7 +5054,7 @@ Quedan sin uso (no borro arte): las mallas de la decoración vieja (escombros, e
 
 Tras 11.162 (templo viejo borrado) quedaron sin uso las mallas de su decoración: escombros, estandarte, venas_doom, vasija_pedazos. Confirmar que nada las usa (ni builders de Blender) y borrarlas con su pieza en el build. La tablilla bow_hint queda (la usa la Queñoa).
 
-### 11.164 Lo que esconde una pared agrietada no se ve desde arriba · Pendiente
+### 11.164 Lo que esconde una pared agrietada no se ve desde arriba · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `chullpa`
 
@@ -5084,6 +5086,17 @@ Daniel 2026-10-14 (cueva de las bombas): acercándose a la pared de la sala o pa
 **Prueba:** tests/test_player_hole.gd
 
 **Relacionadas:** 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player
+
+### 11.166 Santuario con una sola entrada: su muro agrietado · En curso
+
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `overworld`, `diseno`
+
+Daniel 2026-10-14 (playtest de 11.130: no tiene sentido entrar a la ermita y que esté bloqueada solo por dentro): la cueva del santuario tiene una sola entrada, el muro agrietado del overworld. Se van la salida trasera y el atajo.
+
+- [x] shrine_cave: sin ShortcutGate, ShrineSwitch, ShrineBlock, BackPortal, Spawn_atajo ni EntranceCrackedWall; pasillo este tapiado; sin ow_shrine_switch; GDD (-5d, wt/art cebb8223)
+- [ ] Overworld: sin ShrineBackMouth, ShrineBackDoor ni Spawn_atajo; terreno, decor y navmesh (-eb)
+
+**Relacionadas:** 11.130 Bocas de cueva talladas en el risco
 
 ## M12 — Assets propios (Blender)  (16/29)
 
