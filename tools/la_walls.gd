@@ -485,6 +485,8 @@ func _fade(level: Node, room: Area3D) -> void:
 	material.set_shader_parameter("outer", Vector4(floor_rect.position.x - FADE_END["o"], floor_rect.position.y - FADE_END["s"],
 			floor_rect.end.x + FADE_END["e"], floor_rect.end.y + FADE_END["n"]))
 	material.set_shader_parameter("floor_rect", Vector4(floor_rect.position.x, floor_rect.position.y, floor_rect.end.x, floor_rect.end.y))
+	var inside := _interior(level, room, floor_rect, center.y - size.y / 2.0)
+	material.set_shader_parameter("interior", Vector4(inside.position.x, inside.position.y, inside.end.x, inside.end.y))
 	var outer := floor_rect.grow(MASK_MARGIN)
 	var limit := outer.grow(0.2)
 	material.set_shader_parameter("limit", Vector4(maxf(limit.position.x, reach.x), maxf(limit.position.y, reach.y), minf(limit.end.x, reach.z), minf(limit.end.y, reach.w)))
@@ -503,6 +505,46 @@ func _fade(level: Node, room: Area3D) -> void:
 	veil.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	var local := (to_level * shape.transform.affine_inverse()).affine_inverse()
 	veil.transform.origin = local * Vector3(center.x, floor_y + PILLAR_HEIGHT + 0.02, center.z)
+
+
+## El piso de la sala sin las filas de celdas que son casi todas pared (la sala que se estira sobre un nicho o un pasillo).
+func _interior(level: Node, room: Area3D, floor_rect: Rect2, floor_y: float) -> Rect2:
+	var grids := room.get_parent().find_children("*", "GridMap", false, false)
+	if grids.is_empty():
+		return floor_rect
+	var grid := grids[0] as GridMap
+	var to_level := grid.transform
+	var node: Node = room.get_parent()
+	while node != level:
+		to_level = (node as Node3D).transform * to_level
+		node = node.get_parent()
+	var to_grid := to_level.affine_inverse()
+	var walled := func(x: float, z: float) -> int:
+		var item := grid.get_cell_item(grid.local_to_map(to_grid * Vector3(x, floor_y + 0.5, z)))
+		if item == GridMap.INVALID_CELL_ITEM:
+			return 0
+		return 1 if _base_name(grid.mesh_library.get_item_name(item)) in WALLS else -1
+	var inside := floor_rect
+	for side: String in ["o", "e", "s", "n"]:
+		while inside.size.x > CELL * 2.0 and inside.size.y > CELL * 2.0:
+			var across := side in ["o", "e"]
+			var line: float = (inside.position.x if side == "o" else inside.end.x - CELL if side == "e" else inside.end.y - CELL if side == "s" else inside.position.y) + CELL / 2.0
+			var balance := 0
+			var t := (inside.position.y if across else inside.position.x) + CELL / 2.0
+			while t < (inside.end.y if across else inside.end.x):
+				balance += walled.call(line if across else t, t if across else line)
+				t += CELL
+			if balance <= 0:
+				break
+			if side == "o":
+				inside = inside.grow_individual(-CELL, 0, 0, 0)
+			elif side == "e":
+				inside = inside.grow_individual(0, 0, -CELL, 0)
+			elif side == "n":
+				inside = inside.grow_individual(0, -CELL, 0, 0)
+			else:
+				inside = inside.grow_individual(0, 0, 0, -CELL)
+	return inside
 
 
 ## Las salas en coordenadas de la grilla, achicadas medio metro: una pared fina con una sala distinta a cada lado es pared entera.
