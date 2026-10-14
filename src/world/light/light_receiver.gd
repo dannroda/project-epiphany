@@ -43,7 +43,7 @@ func _ready() -> void:
 
 
 func _get_configuration_warnings() -> PackedStringArray:
-	return PersistentFlag.warnings_for(flag, true)
+	return PersistentFlag.warnings_for(flag, true, self)
 
 
 ## La llama el haz cada cuadro que lo toca.

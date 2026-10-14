@@ -47,7 +47,7 @@ func _ready() -> void:
 
 
 func _get_configuration_warnings() -> PackedStringArray:
-	return PersistentFlag.warnings_for(solved_flag, true)
+	return PersistentFlag.warnings_for(solved_flag, true, self)
 
 
 static func axis(direction: Vector3) -> Vector3:

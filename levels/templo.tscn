@@ -66,6 +66,8 @@
 [ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="52_0i344"]
 [ext_resource type="ArrayMesh" uid="uid://d1wgxveey7xn" path="res://assets/epiphany/meshes/paredes_la/puerta_madera_templo_la.res" id="52_cjedn"]
 [ext_resource type="Script" uid="uid://biq7c248kwtba" path="res://src/entities/boss/boss_arena.gd" id="53_2dht2"]
+[ext_resource type="Resource" path="res://data/items/heart_container.tres" id="te_heart_container_item"]
+[ext_resource type="Resource" path="res://data/dialogue/ending.dialogue" id="te_ending_dialogue"]
 [ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="54_jhn6u"]
 [ext_resource type="Script" uid="uid://ckkibjv0y6axx" path="res://player/player.gd" id="55_m178d"]
 [ext_resource type="Script" uid="uid://bsl8lrbxe3r5y" path="res://src/entities/hand_guard/hand_guard.gd" id="55_ycq0f"]
@@ -2858,6 +2860,10 @@ flag = &"te_tablet_antechamber"
 
 [node name="BossArena" type="Node" parent="." unique_id=1442482810 node_paths=PackedStringArray("room", "boss", "door", "exit_portal")]
 script = ExtResource("53_2dht2")
+defeated_flag = &"te_boss_defeated"
+container_flag = &"te_heart_container"
+reward = ExtResource("te_heart_container_item")
+ending = ExtResource("te_ending_dialogue")
 room = NodePath("../Planta/Jefe")
 boss = NodePath("../Boss")
 door = NodePath("../Planta/BossDoor")

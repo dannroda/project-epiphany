@@ -74,7 +74,7 @@ func _appear(announce: bool) -> void:
 
 
 func _get_configuration_warnings() -> PackedStringArray:
-	return PersistentFlag.warnings_for(flag, false)
+	return PersistentFlag.warnings_for(flag, false, self)
 
 
 func _open(by: PlayerCharacter) -> void:

@@ -4,6 +4,7 @@ extends Area3D
 
 signal collected
 
+const SCENE_PATH := "res://src/world/pickup.tscn"
 const HEART_ICON := preload("res://assets/ui/heart_full.svg")
 const GRAVITY := 18.0
 
@@ -33,6 +34,15 @@ var _age := 0.0
 var _rest_height := 0.5
 var _vertical_speed := 5.0
 var _visual: Node3D
+
+
+## Sin agregar al árbol: el que llama ajusta lo que quiera y lo agrega.
+static func make(what: ItemData, how_many := 1, heals := 0) -> Pickup:
+	var pickup: Pickup = (load(SCENE_PATH) as PackedScene).instantiate()
+	pickup.item = what
+	pickup.amount = how_many
+	pickup.heal = heals
+	return pickup
 
 
 func _ready() -> void:
