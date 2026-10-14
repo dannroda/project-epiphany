@@ -57,7 +57,7 @@
 [ext_resource type="PackedScene" path="res://src/world/hook_post.tscn" id="92_hookpost"]
 [ext_resource type="Resource" uid="uid://cqv3w1wloauuu" path="res://data/drops/pot_bombs.tres" id="93_bombs"]
 [ext_resource type="Resource" uid="uid://bd60rgriyt0r5" path="res://data/drops/pot_arrows.tres" id="94_arrows"]
-[ext_resource type="NavigationMesh" path="res://levels/nav/templo_navmesh.tres" id="nav_templo"]
+[ext_resource type="NavigationMesh" uid="uid://dtlapsrevw4rc" path="res://levels/nav/templo_navmesh.tres" id="nav_templo"]
 [ext_resource type="PackedScene" path="res://src/world/tablet.tscn" id="tablet"]
 [ext_resource type="Resource" uid="uid://y6avu6sc2i5n" path="res://data/dialogue/temple.dialogue" id="temple_dialogue"]
 [ext_resource type="Resource" uid="uid://ch8msmkf3u388" path="res://data/dialogue/ending.dialogue" id="te_ending_dialogue"]
