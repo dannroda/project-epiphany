@@ -163,7 +163,7 @@ func _spawn_reward(point: Vector3) -> void:
 	pickup.lifetime = 0.0
 	pickup.magnet_radius = 0.0
 	pickup.world_size = 1.4
-	add_child(pickup)
+	Spawns.root(self).add_child(pickup)
 	pickup.global_position = point
 	pickup.collected.connect(_on_reward_taken)
 

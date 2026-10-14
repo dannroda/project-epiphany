@@ -17,6 +17,4 @@ func use(ctx: ItemUseContext, item: ItemData) -> void:
 	var config: EntityConfig = ctx.user.get(&"config")
 	if config:
 		info.team = config.team
-	var projectile: Projectile = projectile_scene.instantiate()
-	ctx.user.get_tree().current_scene.add_child(projectile)
-	projectile.launch(ctx.origin, ctx.direction * speed, info)
+	Projectile.fire(projectile_scene, ctx.user, ctx.origin, ctx.direction * speed, info)

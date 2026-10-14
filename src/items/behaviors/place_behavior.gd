@@ -25,7 +25,7 @@ func can_use(ctx: ItemUseContext, _item: ItemData) -> bool:
 
 func use(ctx: ItemUseContext, _item: ItemData) -> void:
 	var bomb := spawn(ctx)
-	ctx.user.get_tree().current_scene.add_child(bomb)
+	Spawns.root(ctx.user).add_child(bomb)
 	if ctx.throw_to == null:
 		bomb.global_position = ctx.user.global_position + ctx.direction * place_distance + Vector3.UP * 0.3
 		return

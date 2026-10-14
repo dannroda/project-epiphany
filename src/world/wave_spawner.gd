@@ -1,7 +1,8 @@
 class_name WaveSpawner
 extends Node3D
 ## Oleadas de una sala: empiezan al entrar el player y mantienen cerradas sus persianas hasta vencer la última.
-## Cada hijo directo es una oleada; sus hijos `WaveSpawn` dicen qué enemigo aparece y dónde.
+## Cada hijo directo es una oleada; sus hijos `WaveSpawn` dicen qué enemigo aparece y dónde: cualquier Node3D con
+## `defeated` e `is_dead` (Enemy, Turret).
 ## Hace de interruptor (`active`/`activated`) para lo que se abre al ganar. Con flag, ganada queda ganada.
 
 signal activated
@@ -19,7 +20,7 @@ var active := false
 ## Hay oleadas en curso: la sala no abre sus persianas.
 var running := false
 var wave := -1
-var _alive: Array[Enemy] = []
+var _alive: Array[Node3D] = []
 var _persistent: PersistentFlag
 
 
@@ -64,16 +65,16 @@ func _next_wave() -> void:
 			await get_tree().process_frame
 			if not is_inside_tree():
 				return
-		var enemy := (spawn as WaveSpawn).enemy.instantiate() as Enemy
+		var enemy := (spawn as WaveSpawn).enemy.instantiate() as Node3D
 		enemy.position = (get_parent() as Node3D).to_local((spawn as WaveSpawn).global_position)
 		get_parent().add_child(enemy)
 		_alive.append(enemy)
-		enemy.defeated.connect(_on_defeated)
+		enemy.connect(&"defeated", _on_defeated)
 		Feel.burst(&"dust", enemy.global_position, Vector3.UP)
 	Log.info(&"world", name, "oleada", wave + 1, "de", waves().size())
 
 
-func _on_defeated(_enemy: Enemy) -> void:
+func _on_defeated(_enemy: Node3D) -> void:
 	if _alive.any(func(enemy: Variant) -> bool: return is_instance_valid(enemy) and not enemy.is_dead):
 		return
 	if wave + 1 < waves().size():

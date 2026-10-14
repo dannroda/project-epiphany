@@ -3,6 +3,8 @@ extends StaticBody3D
 ## Ojo menor: gira hacia el player, se carga (brillo creciente) y dispara orbes reflejables.
 ## Solo lo dañan proyectiles del player (su propio orbe reflejado, flechas); la espada rebota.
 
+signal defeated(turret: Turret)
+
 const ORB := preload("res://src/entities/projectile.tscn")
 
 @export var config: EntityConfig
@@ -64,10 +66,8 @@ func set_charge(amount: float) -> void:
 func fire_at(target: Node3D) -> void:
 	var info := config.make_damage(self)
 	info.reflectable = true
-	var orb: Projectile = ORB.instantiate()
-	get_tree().current_scene.add_child(orb)
 	var aim_point := target.global_position + Vector3.UP * 1.1
-	orb.launch(muzzle.global_position, (aim_point - muzzle.global_position).normalized() * orb_speed, info)
+	Projectile.fire(ORB, self, muzzle.global_position, (aim_point - muzzle.global_position).normalized() * orb_speed, info)
 	Feel.sfx(&"click", muzzle.global_position)
 	set_charge(0.0)
 
@@ -84,6 +84,7 @@ func _on_hit(info: DamageInfo) -> void:
 
 func _on_died() -> void:
 	Log.info(&"combat", name, "destruida")
+	defeated.emit(self)
 	bt_player.active = false
 	remove_from_group(&"targetable")
 	hurtbox.set_deferred(&"monitorable", false)
