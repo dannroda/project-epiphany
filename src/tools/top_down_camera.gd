@@ -60,9 +60,9 @@ const GROUP := &"room_camera"
 
 @export_group("Oclusión")
 ## Si una pared tapa a un player, la cámara gira hasta quedar encima de él en este tiempo (s) y vuelve al salir.
-@export var overhead_time := 1.0
+@export var overhead_time := 1.5
 ## Segundos que sigue encima después de que la pared deja de taparlo: bordeando un risco no sube y baja a cada paso.
-@export var overhead_hold := 0.6
+@export var overhead_hold := 0.8
 
 @export_group("Co-op")
 ## Metros que quedan entre el borde de la pantalla y el player más alejado cuando el grupo no se puede abrir más.
