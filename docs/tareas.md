@@ -6167,9 +6167,9 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 26. [x] 10.24 Tope de FPS · Hecho · anda
 27. [x] 10.25 Sombras del sol acordes a la cámara cenital · Hecho · anda
 
-### Overworld: laguna, halos, minimapa y cámara  (4/4 probadas)
+### Overworld: laguna, halos, minimapa y cámara  (3/4 probadas)
 
 1. [x] 11.140 Overworld (Lagoon): z-fighting entre el pasto y el camino de tierra · Hecho · anda
 2. [x] 11.143 Overworld: delineado/halo oscuro raro alrededor de árboles, cardones y bordes · Hecho · anda
 3. [x] 11.148 Minimapa del overworld desactualizado (la quebrada sale como abismo negro) · Revisión · anda — Es un poco tosco como aparece en el minimapa, pero es detalle menor.
-4. [ ] 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player · Revisión · **falla** — Funciona, pero solo debería ser para las paredes. No para objetos/plantas, para eso está el x-ray. Y el movimiento es un poco nauseabundo.
+4. [ ] 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player · Revisión — Funciona, pero solo debería ser para las paredes. No para objetos/plantas, para eso está el x-ray. Y el movimiento es un poco nauseabundo.

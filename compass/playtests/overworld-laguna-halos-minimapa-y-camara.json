@@ -16,7 +16,6 @@
     },
     {
       "note": "Funciona, pero solo debería ser para las paredes. No para objetos/plantas, para eso está el x-ray. Y el movimiento es un poco nauseabundo.",
-      "result": "fail",
       "task": "m11-134"
     }
   ],
