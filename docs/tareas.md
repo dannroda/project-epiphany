@@ -6357,3 +6357,63 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 2. [x] 11.143 Overworld: delineado/halo oscuro raro alrededor de árboles, cardones y bordes · Hecho · anda
 3. [x] 11.148 Minimapa del overworld desactualizado (la quebrada sale como abismo negro) · Hecho · anda — Es un poco tosco como aparece en el minimapa, pero es detalle menor.
 4. [x] 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player · Hecho · anda — Funciona, pero solo debería ser para las paredes. No para objetos/plantas, para eso está el x-ray. Y el movimiento es un poco nauseabundo.
+
+### Revisión del 14 de octubre: overworld, mazmorras y sistemas  (0/57 probadas)
+
+1. [ ] 11.168 D4 (Cumbre): entrada exagerada como las otras mazmorras · Revisión
+2. [ ] 11.130 Bocas de cueva talladas en el risco · Revisión
+3. [ ] 11.166 Santuario con una sola entrada: su muro agrietado · Revisión
+4. [ ] 11.146 Overworld: el ojo del puente a la Necrópolis no se ve ni se puede flechar · Revisión
+5. [ ] 11.147 Overworld: caer al sector de arriba (entre riscos, junto a la meseta clara) deja softlock · Revisión
+6. [ ] 11.131 Pozo junto a la Chullpa: caer sin bombas deja softlock · Revisión
+7. [ ] 11.159 Overworld con el arte de las mazmorras: brillo LA y más detalle en el piso · Revisión
+8. [ ] 11.165 La cámara cenital se activa en bordes y muros bajos de una sala · Revisión
+9. [ ] 11.29 Overworld después del jefe · Revisión
+10. [ ] 12.29 Muro agrietado LA de cueva (muro_agrietado_cueva_la) · Revisión
+11. [ ] 11.132 Cuevas: los enemigos se quedan quietos · Revisión
+12. [ ] 11.133 Vasija chica cargada no se ve con el x-ray · Revisión
+13. [ ] 11.135 Al caer, el player se inclina hacia el piso · Revisión
+14. [ ] 11.164 Lo que esconde una pared agrietada no se ve desde arriba · Revisión
+15. [ ] 11.136 Chullpa: la reja de la entrada queda fuera de la pared · Revisión
+16. [ ] 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista · Revisión
+17. [ ] 11.156 Chullpa: se ven los techos (crestas) de las paredes LA horneadas · Revisión
+18. [ ] 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · Revisión
+19. [ ] 11.138 Chullpa sub-boss: asset para el cuadrado donde después se salta · Revisión
+20. [ ] 11.155 Chullpa: la momia aparece en vez de saltar hacia el player; onda expansiva con shader vistoso · Revisión
+21. [ ] 11.169 Galería de trampas: la pluma no salta por encima de los pinchos · Revisión
+22. [ ] 11.141 Queñoa 2P (Canopy): símbolo azul sin sentido y puerta bloqueada invisible · Revisión
+23. [ ] 11.144 Queñoa S1 (Raíces): reja fuera de la pared y puerta con llave detrás de una reja de puzzle · Revisión
+24. [ ] 11.145 Queñoa S1 (Sala de los ojos): placa que no hace nada, z-fighting en el cofre y símbolo raro en la puerta · Revisión
+25. [ ] 11.160 Ojos de la Queñoa: los párpados siempre se abren y cierran animados · Revisión
+26. [ ] 12.23 Ojos de la Queñoa y Ojo Vigía: modelo propio parecido al ojo del jefe final, más simple · Revisión
+27. [ ] 11.149 Al entrar a una sala se puede caer al agua y reaparecer sobre el agua (softlock) · Revisión
+28. [ ] 11.150 Gancho: el targeting marca un poste de otra sala/piso · Revisión
+29. [ ] 11.151 Totora 2P: se ve la sala del piso de abajo · Revisión
+30. [ ] 11.153 Totora: cruce con gancho a través de la puerta no se entiende; poner plataforma/poste en la propia sala · Revisión
+31. [ ] 11.154 Totora: no hay dónde reponer flechas cerca · Revisión
+32. [ ] 11.167 Totora: caer al agua y perder deja al player cayendo al vacío antes de "You Fell" · Revisión
+33. [ ] 11.161 Jefe final: la puerta norte de la sala queda escondida · Revisión
+34. [ ] 11.162 Retirar el templo viejo (levels/temple.tscn) · Revisión
+35. [ ] 11.93 Jefe: aflojar la fase 3 y el modelo que se hunde · Revisión
+36. [ ] 11.152 Z-target: al activarlo, priorizar el enemigo más cercano · Revisión
+37. [ ] 11.142 Mapa de pausa: LT/RT van rapidísimo; mover con las flechitas · Revisión
+38. [ ] 11.158 Piso LA: patrón de tablones raro · Revisión
+39. [ ] 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la) · Revisión
+40. [ ] 12.21 Ojo interruptor: la pupila sigue al player y se parece al ojo del jefe final · Revisión
+41. [ ] 11.157 Mazmorras: los tiles del GridMap no se alinean con la grilla del editor · Revisión
+42. [ ] 12.25 El ojo del logo en game over, selección de idioma y carga · Revisión
+43. [ ] 12.27 VFX mágicos con shaders y partículas (sin texturas) · Revisión
+44. [ ] 10.19 Fin de la demo · Revisión
+45. [ ] 11.108 Cargar en la misma escena desincroniza puertas y flags · Revisión
+46. [ ] 11.88 Niveles referenciados por ruta: saves y portales frágiles · Revisión
+47. [ ] 11.75 AreaZone: id estable para guardar las zonas visitadas · Revisión
+48. [ ] 11.80 BossArena tiene los flags y el premio de D1 fijos en el código · Revisión
+49. [ ] 11.81 Dungeon.id por defecto d1 y prefijos de flags fijos · Revisión
+50. [ ] 11.82 Daño que no pasa por el Hurtbox · Revisión
+51. [ ] 11.83 Un solo camino para spawnear proyectiles, bombas y pickups · Revisión
+52. [ ] 11.84 Ítems: que la estrategia decida, no la máquina de estados · Revisión
+53. [ ] 11.85 Combate y HSM: casos que fallan en silencio · Revisión
+54. [ ] 11.86 GameState: escrituras con señal y carga sin emisiones parciales · Revisión
+55. [ ] 11.87 Valores de ajuste al inspector · Revisión
+56. [ ] 10.23 Tests en paralelo · Revisión
+57. [ ] 10.27 Nodos creados por código pasan a sus .tscn · Revisión
