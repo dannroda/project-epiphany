@@ -229,6 +229,9 @@ size = Vector3(22, 2.4, 14)
 [sub_resource type="BoxShape3D" id="BoxShape3D_chullpa_door"]
 size = Vector3(2.4, 2.4, 1.4)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_lid"]
+size = Vector3(2.24, 0.4, 2.24)
+
 [node name="Overworld" type="Node3D" unique_id=295443412]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1045124328]
@@ -695,6 +698,12 @@ mesh = ExtResource("wall_SecretHillsWall")
 [node name="Lid" type="MeshInstance3D" parent="SecretHillsWall" unique_id=476817055]
 mesh = ExtResource("lid_SecretHillsWall")
 
+[node name="Floor" type="StaticBody3D" parent="SecretHillsWall/Lid" unique_id=1833163768]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SecretHillsWall/Lid/Floor" unique_id=965226165]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, -2)
+shape = SubResource("BoxShape3D_lid")
+
 [node name="SecretCactusChest" parent="." unique_id=1574385334 instance=ExtResource("15_3hrjb")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 92, 0, 24)
 item = ExtResource("ow_bomb")
@@ -712,6 +721,12 @@ mesh = ExtResource("wall_SecretCactusWall")
 [node name="Lid" type="MeshInstance3D" parent="SecretCactusWall" unique_id=1546033767]
 mesh = ExtResource("lid_SecretCactusWall")
 
+[node name="Floor" type="StaticBody3D" parent="SecretCactusWall/Lid" unique_id=1944851088]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SecretCactusWall/Lid/Floor" unique_id=111142978]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.6, -2)
+shape = SubResource("BoxShape3D_lid")
+
 [node name="SecretLookoutChest" parent="." unique_id=249068360 instance=ExtResource("15_3hrjb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 0, 6)
 item = ExtResource("33_yqe63")
@@ -727,6 +742,12 @@ mesh = ExtResource("wall_SecretLookoutWall")
 
 [node name="Lid" type="MeshInstance3D" parent="SecretLookoutWall" unique_id=321056920]
 mesh = ExtResource("lid_SecretLookoutWall")
+
+[node name="Floor" type="StaticBody3D" parent="SecretLookoutWall/Lid" unique_id=125445426]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SecretLookoutWall/Lid/Floor" unique_id=309785711]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, -2)
+shape = SubResource("BoxShape3D_lid")
 
 [node name="SecretRavineChest" parent="." unique_id=954095082 instance=ExtResource("15_3hrjb")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, 0, -28)
@@ -745,6 +766,12 @@ mesh = ExtResource("wall_SecretRavineWall")
 [node name="Lid" type="MeshInstance3D" parent="SecretRavineWall" unique_id=1843155857]
 mesh = ExtResource("lid_SecretRavineWall")
 
+[node name="Floor" type="StaticBody3D" parent="SecretRavineWall/Lid" unique_id=999023033]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SecretRavineWall/Lid/Floor" unique_id=954802897]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, -2)
+shape = SubResource("BoxShape3D_lid")
+
 [node name="SecretSummitChest" parent="." unique_id=1838852146 instance=ExtResource("15_3hrjb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -28)
 item = ExtResource("ow_bomb")
@@ -761,6 +788,12 @@ mesh = ExtResource("wall_SecretSummitWall")
 
 [node name="Lid" type="MeshInstance3D" parent="SecretSummitWall" unique_id=634463152]
 mesh = ExtResource("lid_SecretSummitWall")
+
+[node name="Floor" type="StaticBody3D" parent="SecretSummitWall/Lid" unique_id=1249480575]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SecretSummitWall/Lid/Floor" unique_id=695641419]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.0, -2)
+shape = SubResource("BoxShape3D_lid")
 
 [node name="Spawn_templo" type="Marker3D" parent="." unique_id=511527969]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 5.2, -33)
