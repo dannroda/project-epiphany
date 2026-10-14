@@ -3,8 +3,8 @@ shader_type spatial;
 render_mode unshaded, cull_disabled, shadows_disabled, depth_draw_never;
 
 uniform sampler2D screen : hint_screen_texture, filter_linear_mipmap;
-uniform float blur = 3.0;
-uniform float darken = 0.5;
+uniform float blur = 1.5;
+uniform float darken = 0.25;
 uniform vec3 tint : source_color = vec3(0.86, 0.9, 1.0);
 
 void fragment() {

@@ -2,8 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c3gjwha8na3yi" path="res://src/world/look/sombra_la.gd" id="1_0nei8"]
 [ext_resource type="Script" uid="uid://bw0kh7whsb1qf" path="res://src/world/look/tono_la.gd" id="2_vqq0k"]
-[ext_resource type="MeshLibrary" uid="uid://jx4n6b7helr3" path="res://data/kits/cueva_la_kit.tres" id="3_2ky4v"]
-[ext_resource type="Shader" uid="uid://d05shkhoyhpkk" path="res://src/world/look/borde_oscuro.gdshader" id="5_o45gf"]
+[ext_resource type="MeshLibrary" path="res://data/kits/cueva_la_kit.tres" id="3_2ky4v"]
 [ext_resource type="PackedScene" path="res://src/world/heart_piece.tscn" id="6_piece"]
 [ext_resource type="Script" uid="uid://cj2nsvfg6j7av" path="res://src/world/gate.gd" id="11_ukr0n"]
 [ext_resource type="Script" uid="uid://byp4dkpucnvmo" path="res://src/world/chest.gd" id="13_fa1x1"]
@@ -64,6 +63,9 @@ needs_motion_vectors = false
 needs_normal_roughness = false
 script = ExtResource("2_vqq0k")
 exposure = 1.0
+frame = 0.1
+frame_softness = 0.8
+frame_slant = 0.15
 
 [sub_resource type="Compositor" id="Compositor_4o460"]
 compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_co66w"), SubResource("CompositorEffect_lakqi")])
@@ -71,31 +73,14 @@ compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_co66
 [sub_resource type="BoxShape3D" id="RoomShape"]
 size = Vector3(26, 2.4, 16)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_38b5p"]
-render_priority = 0
-shader = ExtResource("5_o45gf")
-shader_parameter/inner = Vector4(-13.3, -9.4, 13.3, 7.9)
-shader_parameter/outer = Vector4(-14.8, -10.8, 14.8, 8.8)
-shader_parameter/limit = Vector4(-15.2, -11.2, 15.2, 9.2)
-shader_parameter/plane_y = 3.0
-shader_parameter/floor_rect = Vector4(-13, -9, 13, 7)
-shader_parameter/hole_fade = null
-shader_parameter/wobble = null
-shader_parameter/wobble_scale = null
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_1eppo"]
-material = SubResource("ShaderMaterial_38b5p")
-size = Vector2(37.2, 27.2)
-
 [sub_resource type="BoxShape3D" id="PortalShape"]
 size = Vector3(2, 2.4, 1.4)
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_aymj7"]
-dof_blur_far_enabled = true
 dof_blur_far_distance = 36.5
 dof_blur_far_transition = 6.0
 dof_blur_near_enabled = true
-dof_blur_near_distance = 30.5
+dof_blur_near_distance = 29.0
 dof_blur_near_transition = 3.0
 dof_blur_amount = 0.12
 
@@ -116,7 +101,7 @@ mesh_library = ExtResource("3_2ky4v")
 cell_size = Vector3(2, 1, 2)
 cell_center_y = false
 data = {
-"cells": PackedInt32Array(65529, 65531, 36, 65529, 65532, 36, 65529, 65533, 36, 65529, 65534, 36, 65529, 65535, 36, 65529, 0, 36, 65529, 1, 36, 65529, 2, 36, 65529, 3, 36, 65529, 4, 36, 65530, 65531, 36, 65530, 65532, 39, 65530, 65533, 22, 65530, 65534, 22, 65530, 65535, 22, 65530, 0, 22, 65530, 1, 22, 65530, 2, 22, 65530, 3, 22, 65530, 4, 37, 65531, 65531, 36, 65531, 65532, 33, 65531, 65533, 0, 65531, 65534, 0, 65531, 65535, 0, 65531, 0, 0, 65531, 1, 0, 65531, 2, 0, 65531, 3, 0, 65531, 4, 26, 65532, 65531, 36, 65532, 65532, 33, 65532, 65533, 60, 65532, 65534, 0, 65532, 65535, 0, 65532, 0, 0, 65532, 1, 0, 65532, 2, 0, 65532, 3, 61, 65532, 4, 26, 65533, 65531, 36, 65533, 65532, 33, 65533, 65533, 0, 65533, 65534, 0, 65533, 65535, 0, 65533, 0, 0, 65533, 1, 0, 65533, 2, 0, 65533, 3, 0, 65533, 4, 26, 65534, 65531, 36, 65534, 65532, 33, 65534, 65533, 59, 65534, 65534, 59, 65534, 65535, 69, 65534, 0, 0, 65534, 1, 0, 65534, 2, 0, 65534, 3, 0, 65534, 4, 26, 65535, 65531, 36, 65535, 65532, 33, 65535, 65533, 0, 65535, 65534, 0, 65535, 65535, 62, 65535, 0, 0, 65535, 1, 0, 65535, 2, 0, 65535, 3, 0, 65535, 4, 29, 0, 65531, 36, 0, 65532, 33, 0, 65533, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 1, 65531, 36, 1, 65532, 33, 1, 65533, 0, 1, 65534, 0, 1, 65535, 72, 1, 0, 0, 1, 1, 0, 1, 2, 0, 1, 3, 0, 1, 4, 70, 2, 65531, 36, 2, 65532, 33, 2, 65533, 59, 2, 65534, 59, 2, 65535, 69, 2, 0, 0, 2, 1, 0, 2, 2, 0, 2, 3, 0, 2, 4, 26, 3, 65531, 36, 3, 65532, 33, 3, 65533, 0, 3, 65534, 0, 3, 65535, 0, 3, 0, 0, 3, 1, 0, 3, 2, 0, 3, 3, 0, 3, 4, 26, 4, 65531, 36, 4, 65532, 33, 4, 65533, 0, 4, 65534, 0, 4, 65535, 0, 4, 0, 0, 4, 1, 0, 4, 2, 0, 4, 3, 61, 4, 4, 26, 5, 65531, 36, 5, 65532, 33, 5, 65533, 0, 5, 65534, 0, 5, 65535, 0, 5, 0, 0, 5, 1, 0, 5, 2, 0, 5, 3, 0, 5, 4, 26, 6, 65531, 36, 6, 65532, 40, 6, 65533, 30, 6, 65534, 30, 6, 65535, 30, 6, 0, 30, 6, 1, 30, 6, 2, 30, 6, 3, 30, 6, 4, 38, 7, 65531, 36, 7, 65532, 36, 7, 65533, 36, 7, 65534, 36, 7, 65535, 36, 7, 0, 36, 7, 1, 36, 7, 2, 36, 7, 3, 36, 7, 4, 36)
+"cells": PackedInt32Array(65530, 65532, 39, 65530, 65533, 22, 65530, 65534, 22, 65530, 65535, 22, 65530, 0, 22, 65530, 1, 22, 65530, 2, 22, 65530, 3, 22, 65530, 4, 37, 65531, 65532, 33, 65531, 65533, 0, 65531, 65534, 0, 65531, 65535, 0, 65531, 0, 0, 65531, 1, 0, 65531, 2, 0, 65531, 3, 0, 65531, 4, 26, 65532, 65532, 33, 65532, 65533, 60, 65532, 65534, 0, 65532, 65535, 0, 65532, 0, 0, 65532, 1, 0, 65532, 2, 0, 65532, 3, 61, 65532, 4, 26, 65533, 65532, 33, 65533, 65533, 0, 65533, 65534, 0, 65533, 65535, 0, 65533, 0, 0, 65533, 1, 0, 65533, 2, 0, 65533, 3, 0, 65533, 4, 26, 65534, 65532, 33, 65534, 65533, 59, 65534, 65534, 59, 65534, 65535, 69, 65534, 0, 0, 65534, 1, 0, 65534, 2, 0, 65534, 3, 0, 65534, 4, 26, 65535, 65532, 33, 65535, 65533, 0, 65535, 65534, 0, 65535, 65535, 62, 65535, 0, 0, 65535, 1, 0, 65535, 2, 0, 65535, 3, 0, 65535, 4, 29, 0, 65532, 33, 0, 65533, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 1, 65532, 33, 1, 65533, 0, 1, 65534, 0, 1, 65535, 72, 1, 0, 0, 1, 1, 0, 1, 2, 0, 1, 3, 0, 1, 4, 70, 2, 65532, 33, 2, 65533, 59, 2, 65534, 59, 2, 65535, 69, 2, 0, 0, 2, 1, 0, 2, 2, 0, 2, 3, 0, 2, 4, 26, 3, 65532, 33, 3, 65533, 0, 3, 65534, 0, 3, 65535, 0, 3, 0, 0, 3, 1, 0, 3, 2, 0, 3, 3, 0, 3, 4, 26, 4, 65532, 33, 4, 65533, 0, 4, 65534, 0, 4, 65535, 0, 4, 0, 0, 4, 1, 0, 4, 2, 0, 4, 3, 61, 4, 4, 26, 5, 65532, 33, 5, 65533, 0, 5, 65534, 0, 5, 65535, 0, 5, 0, 0, 5, 1, 0, 5, 2, 0, 5, 3, 0, 5, 4, 26, 6, 65532, 40, 6, 65533, 30, 6, 65534, 30, 6, 65535, 30, 6, 0, 30, 6, 1, 30, 6, 2, 30, 6, 3, 30, 6, 4, 38)
 }
 
 [node name="Room" type="Area3D" parent="." unique_id=1114178853]
@@ -126,11 +111,6 @@ display_name = "PLACE_SANCTUARY"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Room" unique_id=1686025108]
 shape = SubResource("RoomShape")
-
-[node name="BordeOscuro" type="MeshInstance3D" parent="Room" unique_id=100436489]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4199998, 0)
-cast_shadow = 0
-mesh = SubResource("PlaneMesh_1eppo")
 
 [node name="LuzSala" type="SpotLight3D" parent="Room" unique_id=1647739636]
 transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
@@ -217,18 +197,19 @@ attributes = SubResource("CameraAttributesPractical_aymj7")
 fov = 40.0
 script = ExtResource("c5_camera")
 target_node = NodePath("../Player")
-offset = Vector3(0, 30.814466, 14.369021)
+offset = Vector3(0, 34.439697, 16.059494)
 field_of_view = 28.0
 wall_height = 5.4
 mask_margin = 2.0
 south_wall_cut = 3.6
 south_wall_reach = 1.7
+south_margin = 2.0
 
 [node name="EnfoqueLA" type="Node" parent="TopDownCamera" unique_id=1243072761]
 script = ExtResource("31_kffl2")
-near_margin = 3.5
+near_margin = 9.0
 
-[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1509094562 instance=ExtResource("32_lpyv4")]
+[node name="Polvo" type="Node3D" parent="TopDownCamera" unique_id=1030584921 instance=ExtResource("32_lpyv4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1081973311 instance=ExtResource("c6_hud")]

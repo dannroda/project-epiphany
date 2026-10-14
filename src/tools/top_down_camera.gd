@@ -57,6 +57,8 @@ const GROUP := &"room_camera"
 @export var cuts_south_wall := true
 ## Metros que la pared sur recortada sigue a la vista más allá del borde de la sala (una pared baja en rampa).
 @export var south_wall_reach := 0.0
+## Metros de piso más allá del borde sur que entran en el encuadre de una sala fija (la cresta de la pared sur).
+@export var south_margin := 0.0
 
 @export_group("Oclusión")
 ## Si una pared tapa a un player, la cámara gira hasta quedar encima de él en este tiempo (s) y vuelve al salir.
@@ -214,11 +216,11 @@ func _clamp(point: Vector3) -> Vector3:
 	var view := view_extents()
 	point = room.clamp_focus(point, view)
 	var bounds := room.bounds()
-	if room.camera_limits.has_area() or bounds.size.y >= view.size.y:
+	if room.camera_limits.has_area() or bounds.size.y + south_margin >= view.size.y:
 		return point
 	var floor_y := _floor_y()
 	var north := Vector3(bounds.get_center().x, floor_y + wall_height, bounds.position.y)
-	var south := Vector3(bounds.get_center().x, floor_y, bounds.end.y)
+	var south := Vector3(bounds.get_center().x, floor_y, bounds.end.y + south_margin)
 	var low := bounds.position.y - view.size.y
 	var high := bounds.end.y + view.size.y
 	for i in 24:
