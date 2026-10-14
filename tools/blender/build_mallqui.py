@@ -27,6 +27,9 @@ ROPE_RINGS = (1.22, 1.9)
 ROPE_MERIDIANS = 8
 ROPE_TWIST = 0.8
 CHEST = 1.32
+## Manto azul: pliegues que bajan por su falda (por estos puntos) y entre ellos placas de chakana de oro.
+MANTLE_PLATES = 8
+MANTLE_SLOPE = [(0.54, 2.19), (0.68, 2.1), (0.82, 2.0), (0.92, 1.88), (1.0, 1.76)]
 ## Corona de sol detrás de la cabeza: abanico de rayos de este radio.
 CROWN_RADIUS = 0.95
 CROWN_RAYS = 11
@@ -112,6 +115,21 @@ def body(p):
 	p.paint(mantle, "tela_azul", "MID", vary=0.03)
 	fringe = p.lathe([(1.0, 1.75), (1.04, 1.7), (1.0, 1.64), (0.96, 1.68)], sides=SIDES, caps=False)
 	p.paint(fringe, GOLD, "LIGHT")
+	neck = p.lathe([(0.46, 2.2), (0.55, 2.2), (0.55, 2.26), (0.46, 2.27)], sides=SIDES, caps=False)
+	p.paint(neck, GOLD, "MID")
+	for i in range(MANTLE_PLATES):
+		b = 2 * math.pi * i / MANTLE_PLATES
+		pleat = []
+		rows = []
+		out, side = Vector((math.sin(b), -math.cos(b), 0)), Vector((math.cos(b), math.sin(b), 0))
+		for r, z in MANTLE_SLOPE:
+			rows.append([p.bm.verts.new(out * r + side * w + Vector((0, 0, z + 0.015 + (0.025 if w == 0 else 0.0)))) for w in (-0.04, 0.0, 0.04)])
+		for a, n in zip(rows, rows[1:]):
+			pleat.append(p.bm.faces.new((a[0], a[1], n[1], n[0])))
+			pleat.append(p.bm.faces.new((a[1], a[2], n[2], n[1])))
+		p.paint(pleat, "tela_azul", "DARK")
+		plate = epi.chakana_plate(p, Vector((0, 0, 0)), 0.2, GOLD)
+		p.transform(plate, Matrix.Rotation(b + math.pi / MANTLE_PLATES, 4, "Z") @ Matrix.Translation((0, -0.76, 2.05)) @ Matrix.Rotation(-0.97, 4, "X"))
 
 
 def sun(p, center, radius, rays=12):

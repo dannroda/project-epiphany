@@ -402,6 +402,7 @@ def chakana_plate(p, center, size, swatch):
 	p.transform(hole, Matrix.Translation(center))
 	p.paint(faces, swatch, "LIGHT", vary=0.05)
 	p.paint(hole, "noche", "MID")
+	return faces + hole
 
 
 def crack_web(p, face_y, center, half_w, z_lo, z_hi, stone, gap):
