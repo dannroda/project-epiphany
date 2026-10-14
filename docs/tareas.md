@@ -3929,7 +3929,7 @@ El estado del player (vida actual incluida) es global, no de la escena. Hoy Game
 
 **Archivos:** `src/entities/boss/boss_arena.gd`, `levels/temple.tscn`
 
-### 11.81 Dungeon.id por defecto d1 y prefijos de flags fijos · Pendiente
+### 11.81 Dungeon.id por defecto d1 y prefijos de flags fijos · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `mazmorra`, `guardado`
 
@@ -3975,16 +3975,16 @@ El pozo (`pit.gd:26`) y el agarre del jefe (`boss_hand.gd` ~353) llaman a `healt
 
 Instanciar → `current_scene.add_child` → `launch` está copiado en projectile_behavior, turret, boss y bt_shoot_arrow; bombas y la grieta del slam van a `current_scene`, pickups a `get_parent()` o a `self`. Hay tres raíces de spawn distintas, y M14 necesita una para el MultiplayerSpawner. Además WaveSpawner hace `as Enemy` y `.position`: una torreta en una oleada crashea.
 
-- [ ] Arreglar el cast de WaveSpawner
+- [x] Arreglar el cast de WaveSpawner
   Aceptar cualquier Node3D o tipar por una clase común; darle `signal defeated` a Turret.
-- [ ] Helper de disparo
+- [x] Helper de disparo
   `Projectile.fire(scene, from, velocity, info)` junto a `launch`.
-- [ ] Nodo raíz de spawn en los niveles
+- [x] Nodo raíz de spawn en los niveles
   Un nodo en el .tscn (grupo o export) que usan el helper, `DropTable.drop_at` y PlaceBehavior.
 
-**Prueba:** Una torreta dentro de un WaveSpawn funciona; todos los objetos de runtime cuelgan del mismo nodo raíz de spawn.
+**Prueba:** tests/test_spawns.gd
 
-**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+**Notas:** Hecho (fd, 2026-10-14): src/world/spawns.gd › Spawns.root(nodo): el nodo del grupo spawn_root del nivel o, si no hay, la escena actual. Lo usan Projectile.fire (torreta, jefe, Amaru, arquero, ítems de proyectil), PlaceBehavior (bombas), el gancho, DropTable.drop_at, el premio de BossArena y la grieta del golpe del jefe. Ningún nivel tiene todavía su nodo spawn_root: todo cae en la escena actual, que es lo mismo que antes; para M14 alcanza con agregar ese nodo al nivel. Los enemigos de las oleadas siguen colgando de la sala (los necesita para dormir/despertar). WaveSpawner acepta cualquier Node3D con defeated e is_dead; Turret emite defeated. Tests: test_spawns (raíz de spawn, torreta en una oleada).
 
 **Archivos:** `src/world/wave_spawner.gd`, `src/entities/turret/turret.gd`, `src/items/behaviors/projectile_behavior.gd`, `src/items/behaviors/place_behavior.gd`, `ai/tasks/bt_shoot_arrow.gd`, `src/entities/boss/boss.gd`
 
