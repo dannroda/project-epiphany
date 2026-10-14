@@ -2879,9 +2879,6 @@ near_margin = 3.5
 [node name="Nieve" type="Node3D" parent="TopDownCamera" unique_id=1366655404 instance=ExtResource("84_e6m1n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
-[node name="@Node3D@2" type="Node3D" parent="TopDownCamera" unique_id=2132277743 instance=ExtResource("84_e6m1n")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
-
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1695837931 instance=ExtResource("68_diwyx")]
 layer = 10
 script = ExtResource("69_o6c27")
