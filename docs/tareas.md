@@ -5121,11 +5121,15 @@ Daniel (playtest de 12.19): en la Totora, si el player cae al agua y pierde, se 
 
 **Relacionadas:** Totora (D3) en estilo Link's Awakening y su entrada
 
-### 11.168 D4 (Cumbre): entrada exagerada como las otras mazmorras · Pendiente
+### 11.168 D4 (Cumbre): entrada exagerada como las otras mazmorras · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-eb · **Etiquetas:** `overworld`, `arte`
 
 Daniel (playtest de 11.130 y 7.9): la entrada de la D4 en el overworld parece una cueva normal. Tiene que tener una entrada exagerada que se lea como mazmorra, como la Chullpa, la Queñoa y la Totora (torre, árbol, choza).
+
+**Prueba:** test_overworld › test_the_condor_frames_the_cumbre_door_and_lets_the_player_in: del Spawn_cumbre se entra a la Cumbre por la portada.
+
+**Notas:** Modelo (-5d, 26e73e96): un cóndor de piedra gigante tallado en el risco (como el Templo del Cóndor de Machu Picchu) sobre una portada inca de doble jamba; src/world/cumbre_entrada.tscn, colisión en jambas, cuerpo y alas, nada sobre la puerta. Colocado (-eb, 53593416): CumbreCondor en (39, 5.2, -44.8), 1,2 m delante de la boca para que la portada salga de la roca. Falta: que Daniel lo vea en juego.
 
 **Relacionadas:** 11.130 Bocas de cueva talladas en el risco
 

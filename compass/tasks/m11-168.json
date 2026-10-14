@@ -11,17 +11,17 @@
     }
   ],
   "milestone": "m11",
-  "notes": "",
+  "notes": "Modelo (-5d, 26e73e96): un cóndor de piedra gigante tallado en el risco (como el Templo del Cóndor de Machu Picchu) sobre una portada inca de doble jamba; src/world/cumbre_entrada.tscn, colisión en jambas, cuerpo y alas, nada sobre la puerta. Colocado (-eb, 53593416): CumbreCondor en (39, 5.2, -44.8), 1,2 m delante de la boca para que la portada salga de la roca. Falta: que Daniel lo vea en juego.",
   "order": 165,
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "overworld",
     "arte"
   ],
-  "test": "",
+  "test": "test_overworld › test_the_condor_frames_the_cumbre_door_and_lets_the_player_in: del Spawn_cumbre se entra a la Cumbre por la portada.",
   "title": "D4 (Cumbre): entrada exagerada como las otras mazmorras",
-  "updated_at": "2026-10-14T13:43:33.110Z"
+  "updated_at": "2026-10-14T17:07:27.058Z"
 }
