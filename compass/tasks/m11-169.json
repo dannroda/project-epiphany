@@ -11,18 +11,18 @@
     }
   ],
   "milestone": "m11",
-  "notes": "",
+  "notes": "Hecho (2026-10-14): no toqué el alto del salto ni los pinchos. Los pinchos ahora son ground_only, como la onda del golpe del jefe: en el aire no lastiman (como en LA). Nuevo hits_on_landing en Hitbox: si el player cae encima de pinchos levantados, lastiman al tocar el piso. ground_only solo perdona a players en el aire; los enemigos se pinchan igual que antes. Por qué no las otras opciones: la caja de los pinchos llega a 0.8 m y el salto sube 0.68, y achicarlos no alcanzaba, porque el salto no dura lo suficiente para cruzar la caja más el radio de la cápsula del player.",
   "order": 166,
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "diseno",
     "player",
     "mazmorra"
   ],
-  "test": "",
+  "test": "tests/test_jump.gd › test_jumping_over_raised_spikes_is_safe_but_landing_on_them_hurts",
   "title": "Galería de trampas: la pluma no salta por encima de los pinchos",
-  "updated_at": "2026-10-14T13:43:42.114Z"
+  "updated_at": "2026-10-14T13:54:16.845Z"
 }
