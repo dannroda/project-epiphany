@@ -973,7 +973,7 @@ func _spread(level: Node) -> void:
 			spot.position.z = 2.0 * _shift(seps[1], spot.position.z / 2.0, facing.z if stairs else 0.0)
 			if stairs:
 				var grid := floor_node.find_children("*", "GridMap", false, false)[0] as GridMap
-				var cell := grid.local_to_map(spot.position)
+				var cell := grid.local_to_map(grid.transform.affine_inverse() * spot.position)
 				grid.set_cell_item(cell - Vector3i(roundi(facing.x), 0, roundi(facing.z)), grid.mesh_library.find_item_by_name(WALLS[0]))
 
 

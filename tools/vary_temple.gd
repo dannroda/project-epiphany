@@ -58,7 +58,7 @@ func _walls(root: Node, grid: GridMap, ids: Dictionary) -> Dictionary:
 	for cell in grid.get_used_cells():
 		if not grid.get_cell_item(cell) in family or not grid.get_cell_item(cell + Vector3i(0, 0, 1)) in floors:
 			continue
-		var center := grid.map_to_local(cell)
+		var center := _global(grid, root) + grid.map_to_local(cell)
 		var front := Vector2(center.x, center.z + grid.cell_size.z * 0.5)
 		var target := WALL
 		if not taken.any(func(point: Vector2) -> bool: return point.distance_to(front) < CLEAR):
