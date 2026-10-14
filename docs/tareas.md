@@ -2586,7 +2586,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (75/126)
+## M11 — Pulido: contenido y feel  (76/126)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4581,9 +4581,9 @@ test_grove_puzzle teletransporta los bloques a las placas; no prueba que se lleg
 
 **Notas:** Hecho: test_grove_puzzle empuja los bloques caminando contra ellos (A dos celdas al sur; B una al este y una al sur) y verifica que cada uno llega a su placa. Ubicación: el puzzle no pide ningún ítem y da la cota, así que queda en la Pradera; 'Grove' es el nombre del mapa viejo.
 
-### 11.126 Push bloqueado: terreno del overworld pasa 100 MB · En curso
+### 11.126 Push bloqueado: terreno del overworld pasa 100 MB · Hecho
 
-**Prioridad:** alta · **Tamaño:** L · **Etiquetas:** `bug`, `arte`, `repo`
+**Terminada:** 2026-10-13 · **Prioridad:** alta · **Tamaño:** L · **Etiquetas:** `bug`, `arte`, `repo`
 
 GitHub rechaza el push: assets/epiphany/terreno_organico.glb (hasta 334 MB) y assets/epiphany/meshes/terreno_organico/riscos.res (170 MB) pasan el límite de 100 MB por archivo. Hay 24 versiones en los ~360 commits sin pushear (desde 985d9e56, origin/main del 2026-10-11). Los dos salen de tools/blender/build_terreno_organico.py. Plan probable (Daniel): partir el terreno en chunks de menos de 100 MB y después limpiar las versiones grandes del historial sin pushear (git filter-repo; cambia los hashes, con las otras sesiones quietas).
 
@@ -4591,7 +4591,8 @@ GitHub rechaza el push: assets/epiphany/terreno_organico.glb (hasta 334 MB) y as
   Hecho (b658b129): terreno_organico.0..11.glb (15-72 MB) juntados en terreno_organico.tscn, paredes_la.<estilo>.glb (18-40 MB); epi.publish(part=...).
 - [x] Limpiar del historial sin pushear las versiones de más de 100 MB
   Hecho el 2026-10-13: git filter-repo --refs main wt/* ^985d9e56 --invert-paths con terreno_organico.glb, paredes_la.glb y meshes/terreno_organico/riscos.res. Mismos commits (429) y mismos árboles en las puntas, nuevos hashes; ningún blob de más de 100 MB entre origin/main y main. Respaldo previo: /home/ssd_disk/epiphany-backup-pre-filter.git.
-- [ ] Pushear (Daniel)
+- [x] Pushear (Daniel)
+  Hecho el 2026-10-13 por -5d a pedido de Daniel: en tandas de 40 commits de first-parent (git push origin <sha>:refs/heads/main), porque el push entero pasaba el límite de 2 GB por pack de GitHub. origin/main = 7cc1240d.
 
 ### 11.127 Etiqueta del piso tapa el minimapa · Hecho
 
