@@ -27,6 +27,8 @@
 
 [node name="Parte5" parent="." instance=ExtResource("6_parte")]
 
+[node name="baranda" parent="Parte5" groups=["walk_guard"]]
+
 [node name="Parte6" parent="." instance=ExtResource("7_parte")]
 
 [node name="Parte7" parent="." instance=ExtResource("8_parte")]
