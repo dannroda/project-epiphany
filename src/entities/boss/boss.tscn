@@ -21,6 +21,13 @@
 [ext_resource type="Resource" path="res://data/boss/attack_mark.tres" id="23_mark"]
 [ext_resource type="BehaviorTree" path="res://data/boss/boss_phase3_bt.tres" id="24_bt3"]
 [ext_resource type="Script" path="res://src/feel/hit_flash.gd" id="hf_hit_flash"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_corrupto_cuerpo.res" id="c_body"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_corrupto_ojo.res" id="c_eye"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_corrupto_parpado.res" id="c_lid"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_corrupto_parpado_inf.res" id="c_lid_low"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_corrupto_mano_izq.res" id="c_hand_l"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_corrupto_mano_der.res" id="c_hand_r"]
+[ext_resource type="Shader" path="res://src/entities/boss/ondas.gdshader" id="ondas"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_eye"]
 size = Vector3(2.4, 3.8, 1.6)
@@ -101,6 +108,393 @@ rings = 1
 cap_top = false
 cap_bottom = false
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_esquirla"]
+albedo_color = Color(0.95, 0.72, 0.28, 1)
+metallic = 1.0
+roughness = 0.3
+emission_enabled = true
+emission = Color(1, 0.55, 0.2, 1)
+emission_energy_multiplier = 0.6
+
+[sub_resource type="PrismMesh" id="PrismMesh_esquirla"]
+material = SubResource("StandardMaterial3D_esquirla")
+size = Vector3(0.4, 0.45, 0.08)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_esquirlas"]
+emission_shape = 1
+emission_sphere_radius = 1.6
+direction = Vector3(0, 0.3, 1)
+spread = 75.0
+initial_velocity_min = 5.0
+initial_velocity_max = 10.0
+angular_velocity_min = -540.0
+angular_velocity_max = 540.0
+gravity = Vector3(0, -16, 0)
+scale_min = 0.6
+scale_max = 1.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_estallido"]
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(1, 0.5, 0.25, 1)
+disable_fog = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_estallido"]
+material = SubResource("StandardMaterial3D_estallido")
+radius = 1.0
+height = 2.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ondas"]
+render_priority = 0
+shader = ExtResource("ondas")
+shader_parameter/color = Color(0.45, 0.95, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ondas_mano"]
+width = 72
+height = 32
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ondas_oreja"]
+width = 64
+height = 64
+
+[sub_resource type="Animation" id="Animation_reset"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body/Mesh:mesh")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_body")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Body/Eye/Mesh:mesh")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("4_eye")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Body/UpperLid:mesh")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("5_lid")]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Body/LowerLid:mesh")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("6_lid_low")]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("HandLeft/Mesh:mesh")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("7_hand_l")]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("HandRight/Mesh:mesh")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("10_hand_r")]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Body/Mesh:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Body/OndasIzq:material_override:shader_parameter/color")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Color(0.45, 0.95, 1, 1)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Body/Estallido:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Body/Esquirlas:emitting")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("HandLeft/Esquirlas:emitting")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("HandRight/Esquirlas:emitting")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_transform"]
+resource_name = "transform"
+length = 3.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.9, 1.25, 1.6, 2.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"values": [{"args": [], "method": &"_scream"}, {"args": [], "method": &"_crack"}, {"args": [], "method": &"_crack"}, {"args": [], "method": &"_crack"}, {"args": [], "method": &"_burst"}, {"args": [], "method": &"_calm"}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Body/Mesh:mesh")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("3_body"), ExtResource("c_body")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Body/Eye/Mesh:mesh")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("4_eye"), ExtResource("c_eye")]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Body/UpperLid:mesh")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("5_lid"), ExtResource("c_lid")]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Body/LowerLid:mesh")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("6_lid_low"), ExtResource("c_lid_low")]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("HandLeft/Mesh:mesh")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("7_hand_l"), ExtResource("c_hand_l")]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("HandRight/Mesh:mesh")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 1.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("10_hand_r"), ExtResource("c_hand_r")]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Body/Mesh:scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.55, 0.9, 0.95, 1.25, 1.3, 1.55, 1.6, 1.85, 2.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1, 1, 1), Vector3(1.05, 1.05, 1.05), Vector3(1.03, 1.03, 1.03), Vector3(1.07, 1.07, 1.07), Vector3(1.05, 1.05, 1.05), Vector3(1.1, 1.1, 1.1), Vector3(1.1, 1.1, 1.1), Vector3(0.55, 0.55, 0.55), Vector3(1.12, 1.12, 1.12), Vector3(1, 1, 1)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Body/OndasIzq:material_override:shader_parameter/color")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 1.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Color(0.45, 0.95, 1, 1), Color(1, 0.3, 0.18, 1)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Body/Estallido:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 1.6, 2.0),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Body/Estallido:scale")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(1.6, 2.0),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.8, 0.8, 0.8), Vector3(4.5, 4.5, 4.5)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Body/Estallido:transparency")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(1.6, 2.0),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Body/Esquirlas:emitting")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(1.6),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("HandLeft/Esquirlas:emitting")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(1.6),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("HandRight/Esquirlas:emitting")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(1.6),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_boss"]
+_data = {
+&"RESET": SubResource("Animation_reset"),
+&"transform": SubResource("Animation_transform")
+}
+
 [node name="Boss" type="Node3D"]
 script = ExtResource("1_boss")
 attacks = [ExtResource("19_slam"), ExtResource("20_grab"), ExtResource("21_sweep"), ExtResource("22_orb"), ExtResource("23_mark")]
@@ -144,6 +538,38 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 1.38)
 mesh = ExtResource("6_lid_low")
 
+[node name="OndasIzq" type="Sprite3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.48, -0.1, -0.1)
+material_override = SubResource("ShaderMaterial_ondas")
+cast_shadow = 0
+pixel_size = 0.025
+axis = 0
+texture = SubResource("GradientTexture2D_ondas_oreja")
+
+[node name="OndasDer" type="Sprite3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.48, -0.1, -0.1)
+material_override = SubResource("ShaderMaterial_ondas")
+cast_shadow = 0
+pixel_size = 0.025
+axis = 0
+texture = SubResource("GradientTexture2D_ondas_oreja")
+
+[node name="Esquirlas" type="GPUParticles3D" parent="Body"]
+emitting = false
+amount = 48
+lifetime = 1.4
+one_shot = true
+explosiveness = 1.0
+visibility_aabb = AABB(-8, -8, -8, 16, 16, 16)
+process_material = SubResource("ParticleProcessMaterial_esquirlas")
+draw_pass_1 = SubResource("PrismMesh_esquirla")
+
+[node name="Estallido" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 1.38)
+visible = false
+cast_shadow = 0
+mesh = SubResource("SphereMesh_estallido")
+
 [node name="HandAnchorLeft" type="Marker3D" parent="Body"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.13, -0.1, -0.1)
@@ -166,6 +592,24 @@ script = ExtResource("2_hand")
 
 [node name="Mesh" type="MeshInstance3D" parent="HandLeft"]
 mesh = ExtResource("7_hand_l")
+
+[node name="Ondas" type="Sprite3D" parent="HandLeft/Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0.09)
+material_override = SubResource("ShaderMaterial_ondas")
+cast_shadow = 0
+pixel_size = 0.025
+axis = 1
+texture = SubResource("GradientTexture2D_ondas_mano")
+
+[node name="Esquirlas" type="GPUParticles3D" parent="HandLeft"]
+emitting = false
+amount = 16
+lifetime = 1.4
+one_shot = true
+explosiveness = 1.0
+visibility_aabb = AABB(-8, -8, -8, 16, 16, 16)
+process_material = SubResource("ParticleProcessMaterial_esquirlas")
+draw_pass_1 = SubResource("PrismMesh_esquirla")
 
 [node name="Health" type="Node" parent="HandLeft"]
 script = ExtResource("13_health")
@@ -234,6 +678,24 @@ script = ExtResource("2_hand")
 
 [node name="Mesh" type="MeshInstance3D" parent="HandRight"]
 mesh = ExtResource("10_hand_r")
+
+[node name="Ondas" type="Sprite3D" parent="HandRight/Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0.09)
+material_override = SubResource("ShaderMaterial_ondas")
+cast_shadow = 0
+pixel_size = 0.025
+axis = 1
+texture = SubResource("GradientTexture2D_ondas_mano")
+
+[node name="Esquirlas" type="GPUParticles3D" parent="HandRight"]
+emitting = false
+amount = 16
+lifetime = 1.4
+one_shot = true
+explosiveness = 1.0
+visibility_aabb = AABB(-8, -8, -8, 16, 16, 16)
+process_material = SubResource("ParticleProcessMaterial_esquirlas")
+draw_pass_1 = SubResource("PrismMesh_esquirla")
 
 [node name="Health" type="Node" parent="HandRight"]
 script = ExtResource("13_health")
@@ -369,3 +831,9 @@ visuals = NodePath("..")
 script = ExtResource("hf_hit_flash")
 health = NodePath("../Health")
 visuals = NodePath("..")
+
+[node name="Transform" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_boss")
+}

@@ -89,6 +89,8 @@ var _body_material: StandardMaterial3D
 var _flash: HitFlash
 var _eye_base_glow := 1.0
 var _body_base_glow := 1.0
+## Corre Transform (la máscara estalla al entrar a la fase 3): no ataca ni recibe daño.
+var _transforming := false
 
 @onready var body: Node3D = $Body
 @onready var eye: Node3D = %Eye
@@ -102,6 +104,7 @@ var _body_base_glow := 1.0
 @onready var _eye_mesh: MeshInstance3D = $Body/Eye/Mesh
 @onready var _upper_lid: Node3D = %UpperLid
 @onready var _lower_lid: Node3D = %LowerLid
+@onready var _transform: AnimationPlayer = %Transform
 
 
 func _ready() -> void:
@@ -166,6 +169,10 @@ func is_eye_stunned() -> bool:
 	return _eye_stun_left > 0.0
 
 
+func is_transforming() -> bool:
+	return _transforming
+
+
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint() or not _alive:
 		return
@@ -216,7 +223,7 @@ func _physics_process(delta: float) -> void:
 ## Puntúa cada ataque posible por cada pieza libre que lo puede hacer y sortea, por puntaje, entre los que quedan
 ## cerca del mejor: así no se vuelve un patrón fijo pero tampoco elige algo que no conviene.
 func choose_attack(for_phase: int) -> bool:
-	if is_eye_stunned():
+	if is_eye_stunned() or _transforming:
 		return false
 	var options: Array[Array] = []
 	var best_score := 0.0
@@ -434,7 +441,7 @@ func _distance_score(attack: BossAttack, user: Node3D) -> float:
 
 ## Cerrado rebota; abierto, una flecha o un orbe devuelto lo aturde y recién ahí la espada lastima.
 func _on_eye_hit(info: DamageInfo) -> void:
-	if eye_open < 0.5:
+	if eye_open < 0.5 or _transforming:
 		Feel.sfx(&"block", eye.global_position)
 		return
 	if is_eye_stunned():
@@ -492,18 +499,61 @@ func _on_phase2_entered() -> void:
 			hand.regenerate()
 
 
-## Las manos caen, el ojo se cierra, el cuerpo tiembla soltando polvo y se hunde.
-## Furia: temblor fuerte, se sacude el aturdimiento y vuelve a la altura de pelea.
+## Furia: el ojo grita, la máscara de oro se raja y estalla y queda el ojo corrupto, manos incluidas (Transform, que
+## llama a _scream, _crack, _burst y _calm y cambia las mallas). Mientras, ni el ojo ni las manos atacan o reciben daño.
 func _on_phase3_entered() -> void:
 	_eye_stun_left = 0.0
+	_cut_charge()
+	_transforming = true
+	for hand in [hand_left, hand_right]:
+		hand.held = true
+	_move_body(BODY_HEIGHT_OPEN, 0.4)
+	phase_changed.emit(3)
+	_transform.play(&"transform")
+	await _transform.animation_finished
+	_transforming = false
+	for hand in [hand_left, hand_right]:
+		hand.held = false
+
+
+func _scream() -> void:
 	Feel.sfx(&"rumble", eye.global_position)
 	Feel.shake(0.7)
-	_move_body(BODY_HEIGHT_OPEN, 0.4)
+	_pupil_goal = 1.0
+	_squint = 0.0
 	var lids := create_tween()
 	lids.tween_property(self, ^"eye_open", 0.3, 0.1)
 	lids.tween_property(self, ^"eye_open", 1.0, 0.1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	_flash.warn(1.4)
+	create_tween().tween_method(_set_eye_glow, EYE_GLOW, EYE_GLOW_CHARGED * 1.5, 1.5)
+
+
+func _crack() -> void:
+	var spot := body.to_global(Vector3(rng.randf_range(-1.6, 1.6), rng.randf_range(-1.2, 1.6), 1.7))
+	Feel.burst(&"sparks", spot, (spot - body.global_position).normalized())
+	Feel.burst(&"shards", spot, (spot - body.global_position).normalized() + Vector3.UP)
+	Feel.sfx(&"block", spot)
+	Feel.shake(0.3)
+	_flare_body()
+
+
+func _burst() -> void:
+	Feel.sfx(&"boom", eye.global_position)
+	Feel.shake(1.0)
+	Feel.freeze(0.2, 0.2)
+	for i in 6:
+		var spot := body.to_global(Vector3(rng.randf_range(-2.0, 2.0), rng.randf_range(-1.5, 2.0), rng.randf_range(0.5, 1.8)))
+		Feel.burst(&"explosion", spot, Vector3.UP)
+		Feel.burst(&"shards", spot, (spot - body.global_position).normalized() + Vector3.UP)
+	for hand in [hand_left, hand_right]:
+		Feel.burst(&"explosion", hand.global_position, Vector3.UP)
+		Feel.burst(&"shards", hand.global_position, Vector3.UP)
 	_awaken_flash()
-	phase_changed.emit(3)
+
+
+func _calm() -> void:
+	_pupil_goal = 0.0
+	_set_eye_glow(EYE_GLOW)
 
 
 ## Corta la carga del orbe a mitad (aturdido o vencido): no dispara y el BT ya puede seguir.

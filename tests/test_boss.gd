@@ -414,6 +414,8 @@ func test_arrow_flies_into_the_eye_and_the_sword_finishes() -> void:
 	var another := Projectile.new()
 	var hits := 0
 	while boss.health.current > 0 and hits < 40:
+		if boss.is_transforming():
+			assert_true(await _wait_until(func() -> bool: return not boss.is_transforming(), 5.0), "la transformación termina")
 		if not boss.is_eye_stunned():
 			boss.eye_hurtbox.receive(_hit(1, 0.0, another))
 		boss.eye_hurtbox.receive(_hit(2))
@@ -583,6 +585,12 @@ func test_phase_three_below_a_third() -> void:
 	assert_eq(boss.phase(), 3, "a un tercio de vida, fase 3")
 	assert_eq(phases_seen, [3] as Array[int])
 	boss.target = null
+	assert_true(boss.is_transforming() and not boss.choose_attack(3), "al entrar a la fase 3 se transforma y no ataca")
+	var hp := boss.health.current
+	boss.eye_hurtbox.receive(_hit(5))
+	assert_eq(boss.health.current, hp, "transformándose no recibe daño")
+	assert_true(await _wait_until(func() -> bool: return not boss.is_transforming(), 5.0), "la transformación termina")
+	assert_eq((boss.body.get_node(^"Mesh") as MeshInstance3D).mesh.resource_path.get_file(), "jefe_corrupto_cuerpo.res", "queda el ojo corrupto")
 	var seen := {}
 	for i in 20:
 		if boss.choose_attack(3):
