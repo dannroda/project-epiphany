@@ -114,6 +114,8 @@ func _release() -> RigidBody3D:
 	_uncover()
 	body.reparent(get_tree().current_scene)
 	body.freeze = false
+	if body is ThrownObject:
+		(body as ThrownObject).liftable.show_outline(false)
 	body.collision_layer = _layer
 	body.collision_mask = _mask
 	return body

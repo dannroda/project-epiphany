@@ -4,6 +4,8 @@ extends Interactable
 ## dentro de un ThrownObject (cuerpo físico) que sostiene el Carrier del player.
 
 const THROWN_OBJECT := preload("res://src/world/thrown_object.tscn")
+## Marca el stencil como el cuerpo del player: una vasija en el piso delante del player no lo pasa a silueta.
+const STENCIL_MARK := preload("res://src/feel/stencil_mark.tres")
 
 ## Tirado, se rompe al chocar (vasija: suelta lo suyo); si no, queda en el piso y se puede volver a levantar.
 @export var breaks := true
@@ -17,6 +19,7 @@ const THROWN_OBJECT := preload("res://src/world/thrown_object.tscn")
 @export var highlight: Material = preload("res://src/world/liftable_outline.tres")
 
 var target: Node3D
+var _lit: Material
 
 
 func _init() -> void:
@@ -26,13 +29,21 @@ func _init() -> void:
 
 func _ready() -> void:
 	target = get_parent()
+	if highlight:
+		_lit = highlight.duplicate()
+		_lit.next_pass = STENCIL_MARK
 	interacted.connect(func(by: PlayerCharacter) -> void: by.lift(self))
-	focused.connect(_highlight)
+	focused.connect(show_outline)
+	show_outline(false)
 
 
-func _highlight(on: bool) -> void:
+## En las manos lo viste el Carrier (destello y silueta del player): no se pisa.
+func show_outline(on: bool) -> void:
+	var body := target.get_parent() as ThrownObject
+	if body and body.freeze:
+		return
 	for mesh in target.find_children("*", "MeshInstance3D", true, false):
-		(mesh as MeshInstance3D).material_overlay = highlight if on else null
+		(mesh as MeshInstance3D).material_overlay = _lit if on and _lit else STENCIL_MARK
 
 
 ## El cuerpo que se lleva: lo crea la primera vez (el objeto deja de ser estático) y después lo reusa.

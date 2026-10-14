@@ -373,7 +373,7 @@ func test_what_the_player_carries_has_the_silhouette() -> void:
 	var silhouette := mesh.material_overlay.next_pass as ShaderMaterial if mesh.material_overlay else null
 	assert_true(silhouette != null and silhouette.shader == shader, "la vasija cargada se ve tras las paredes")
 	player.carrier.drop()
-	assert_eq(mesh.material_overlay, null, "soltada vuelve a ser normal")
+	assert_eq(mesh.material_overlay, null, "soltada vuelve a ser como era")
 	body.queue_free()
 
 
