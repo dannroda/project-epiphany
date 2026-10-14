@@ -20,7 +20,8 @@ func test_hearts_arrows_and_bombs_lie_as_models() -> void:
 	assert_true(_shown(Items.get_item(&"compass")) is Sprite3D, "sin malla, el ícono")
 
 
-func test_the_orb_uses_its_model() -> void:
+func test_the_orb_is_an_energy_sphere() -> void:
 	var orb: Node = preload("res://src/entities/projectile.tscn").instantiate()
-	assert_eq((orb.get_node(^"Mesh") as MeshInstance3D).mesh.resource_path, "res://assets/epiphany/meshes/objetos/orbe.res")
+	var material := (orb.get_node(^"Mesh") as MeshInstance3D).mesh.surface_get_material(0) as ShaderMaterial
+	assert_eq(material.shader.resource_path, "res://src/world/vfx/esfera_energia.gdshader")
 	orb.free()
