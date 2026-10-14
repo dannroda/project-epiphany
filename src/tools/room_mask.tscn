@@ -24,6 +24,10 @@ material = SubResource("Black")
 resource_local_to_scene = true
 material = SubResource("Black")
 
+[sub_resource type="BoxMesh" id="SouthUnder"]
+resource_local_to_scene = true
+material = SubResource("Black")
+
 [node name="RoomMask" type="Node3D"]
 top_level = true
 visible = false
@@ -47,3 +51,7 @@ mesh = SubResource("East")
 [node name="SouthLip" type="MeshInstance3D" parent="."]
 cast_shadow = 0
 mesh = SubResource("SouthLip")
+
+[node name="SouthUnder" type="MeshInstance3D" parent="."]
+cast_shadow = 0
+mesh = SubResource("SouthUnder")
