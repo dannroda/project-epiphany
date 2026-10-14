@@ -1,11 +1,21 @@
 {
   "assignee": "project-epiphany-eb",
-  "checklist": [],
+  "checklist": [
+    {
+      "done": false,
+      "text": "Regenerar la foto cenital del overworld con el terreno actual (la quebrada como río)."
+    },
+    {
+      "done": false,
+      "text": "Lo que se activa tiene que aparecer en el minimapa: el puente de la quebrada una vez subido (la foto es estática y se saca con el puente abajo). Dibujarlo encima como marca/overlay según su estado, igual con otros cambios persistentes (paredes rotas, etc.)."
+    }
+  ],
   "code": "11.148",
   "created_at": "2026-10-14T02:27:57.828Z",
   "description": "Playtest 2026-10-13: en Ravine el minimapa (foto cenital del overworld) muestra la quebrada como un abismo negro, pero en el juego ahora es un río. La foto no se regeneró después de los últimos cambios de terreno. Regenerarla y, si se puede, que un test compare su fecha/huella con la del terreno para que no vuelva a quedar vieja.",
   "images": [
-    "compass/images/m11-148-20261013-232758.png"
+    "compass/images/m11-148-20261013-232758.png",
+    "compass/images/m11-148-20261013-232828.png"
   ],
   "milestone": "m11",
   "notes": "",
@@ -21,5 +31,5 @@
   ],
   "test": "",
   "title": "Minimapa del overworld desactualizado (la quebrada sale como abismo negro)",
-  "updated_at": "2026-10-14T02:27:58.151Z"
+  "updated_at": "2026-10-14T02:28:28.094Z"
 }

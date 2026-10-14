@@ -4839,7 +4839,10 @@ Playtest 2026-10-13 (con sandalias y pluma): en la zona de la captura (tierra co
 
 Playtest 2026-10-13: en Ravine el minimapa (foto cenital del overworld) muestra la quebrada como un abismo negro, pero en el juego ahora es un río. La foto no se regeneró después de los últimos cambios de terreno. Regenerarla y, si se puede, que un test compare su fecha/huella con la del terreno para que no vuelva a quedar vieja.
 
-**Capturas:** `compass/images/m11-148-20261013-232758.png`
+- [ ] Regenerar la foto cenital del overworld con el terreno actual (la quebrada como río).
+- [ ] Lo que se activa tiene que aparecer en el minimapa: el puente de la quebrada una vez subido (la foto es estática y se saca con el puente abajo). Dibujarlo encima como marca/overlay según su estado, igual con otros cambios persistentes (paredes rotas, etc.).
+
+**Capturas:** `compass/images/m11-148-20261013-232758.png`, `compass/images/m11-148-20261013-232828.png`
 
 ## M12 — Assets propios (Blender)  (15/23)
 
