@@ -1,0 +1,22 @@
+{
+  "checklist": [],
+  "code": "11.133",
+  "created_at": "2026-10-14T01:31:50.114Z",
+  "description": "Playtest 2026-10-13: al levantar una vasija chica, cuando el player queda tapado y se ve con el x-ray (silueta), la vasija que lleva encima no aparece. El objeto cargado debería verse también con el x-ray.",
+  "images": [
+    "compass/images/m11-133-20261013-223150.png"
+  ],
+  "milestone": "m11",
+  "notes": "",
+  "order": 130,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug"
+  ],
+  "test": "",
+  "title": "Vasija chica cargada no se ve con el x-ray",
+  "updated_at": "2026-10-14T02:05:29.718Z"
+}

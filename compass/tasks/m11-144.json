@@ -1,0 +1,30 @@
+{
+  "checklist": [],
+  "code": "11.144",
+  "created_at": "2026-10-14T02:02:58.356Z",
+  "description": "Playtest 2026-10-13, Queñoa piso S1 Roots, salida este de las Raíces a la Sala de los ojos:\n1) La reja (RaicesGate, la que abre el ojo con tiempo) queda afuera del hueco de la pared, igual que la de la Chullpa (11.136).\n2) Diseño: no tiene sentido que una puerta bloqueada por un puzzle (reja del ojo con tiempo + saltos con pluma) además pida llave. Elegir una sola cerradura: o la reja del puzzle o la puerta con llave, y mover la otra (actualizar quenoa_graph.tres y el GDD §8c; test_dungeon_reach).",
+  "images": [
+    "compass/images/m11-144-20261013-230258.png"
+  ],
+  "links": [
+    {
+      "task": "m11-136",
+      "type": "related"
+    }
+  ],
+  "milestone": "m11",
+  "notes": "",
+  "order": 141,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "quenoa",
+    "diseño"
+  ],
+  "test": "",
+  "title": "Queñoa S1 (Raíces): reja fuera de la pared y puerta con llave detrás de una reja de puzzle",
+  "updated_at": "2026-10-14T02:05:32.506Z"
+}

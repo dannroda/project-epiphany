@@ -1,0 +1,20 @@
+{
+  "checklist": [],
+  "code": "11.142",
+  "created_at": "2026-10-14T01:58:59.133Z",
+  "description": "Playtest 2026-10-13: en la pestaña Mapa del menú de pausa, LT y RT mueven el mapa rapidísimo y la velocidad depende del tipo de gatillo del gamepad (analógico/digital). Debería moverse con las flechitas (d-pad) en lugar de los gatillos, a una velocidad fija.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 139,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "ui"
+  ],
+  "test": "",
+  "title": "Mapa de pausa: LT/RT van rapidísimo; mover con las flechitas",
+  "updated_at": "2026-10-14T02:05:31.987Z"
+}

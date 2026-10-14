@@ -1,0 +1,19 @@
+{
+  "checklist": [],
+  "code": "11.132",
+  "created_at": "2026-10-14T01:31:35.168Z",
+  "description": "Playtest 2026-10-13: dentro de las cuevas del overworld los enemigos no se mueven ni atacan, quedan quietos en su lugar. Revisar si la IA (LimboAI) arranca en esas escenas (navmesh, activación por sala, process_mode).",
+  "milestone": "m11",
+  "notes": "",
+  "order": 129,
+  "priority": "high",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug"
+  ],
+  "test": "",
+  "title": "Cuevas: los enemigos se quedan quietos",
+  "updated_at": "2026-10-14T02:05:29.459Z"
+}

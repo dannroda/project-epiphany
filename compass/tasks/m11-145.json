@@ -1,0 +1,29 @@
+{
+  "checklist": [],
+  "code": "11.145",
+  "created_at": "2026-10-14T02:04:36.560Z",
+  "description": "Playtest 2026-10-13, Queñoa piso S1, sala con los arbustos y el pozo (probablemente la Sala de los ojos):\n1) La placa junto a la puerta oeste no hace nada visible. Si es OjosStep (deja abierta la reja de las Raíces para volver), el efecto pasa fuera de cámara: falta respuesta (sonido, cámara a la reja o que se vea), o no funciona.\n2) z-fighting en el cofre de la esquina noreste.\n3) Otra vez el símbolo raro (asa/candado) en el piso de la puerta sur, como en 11.141.",
+  "images": [
+    "compass/images/m11-145-20261013-230436.png"
+  ],
+  "links": [
+    {
+      "task": "m11-141",
+      "type": "related"
+    }
+  ],
+  "milestone": "m11",
+  "notes": "",
+  "order": 142,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "quenoa"
+  ],
+  "test": "",
+  "title": "Queñoa S1 (Sala de los ojos): placa que no hace nada, z-fighting en el cofre y símbolo raro en la puerta",
+  "updated_at": "2026-10-14T02:05:32.754Z"
+}

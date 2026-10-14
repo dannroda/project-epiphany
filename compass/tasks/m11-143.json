@@ -1,0 +1,24 @@
+{
+  "checklist": [],
+  "code": "11.143",
+  "created_at": "2026-10-14T02:00:21.134Z",
+  "description": "Playtest 2026-10-13: en el overworld (meseta con cardones y árboles, sobre un risco) aparece un delineado raro: un halo oscuro difuso alrededor de los árboles, cardones y el borde del risco, que no corresponde a una sombra. Revisar SSAO/SSIL, el outline o la niebla/tinte de profundidad (puede venir del cambio de altura entre terrazas).",
+  "images": [
+    "compass/images/m11-143-20261013-230021.png"
+  ],
+  "milestone": "m11",
+  "notes": "",
+  "order": 140,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "overworld",
+    "render"
+  ],
+  "test": "",
+  "title": "Overworld: delineado/halo oscuro raro alrededor de árboles, cardones y bordes",
+  "updated_at": "2026-10-14T02:05:32.241Z"
+}

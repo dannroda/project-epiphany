@@ -1,0 +1,22 @@
+{
+  "checklist": [],
+  "code": "11.131",
+  "created_at": "2026-10-14T01:29:57.516Z",
+  "description": "Playtest 2026-10-13: en el overworld, al lado del primer nivel cerca de la cueva de las bombas, hay un pozo/foso con pared agrietada. Si el player cae ahí sin bombas no puede salir (softlock). Necesita una salida que no dependa de bombas (escalón, rampa, o que el pozo no sea accesible antes de tenerlas).",
+  "images": [
+    "compass/images/m11-131-20261013-223001.png"
+  ],
+  "milestone": "m11",
+  "notes": "",
+  "order": 128,
+  "priority": "high",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug"
+  ],
+  "test": "",
+  "title": "Pozo junto a la Chullpa: caer sin bombas deja softlock",
+  "updated_at": "2026-10-14T02:05:29.189Z"
+}

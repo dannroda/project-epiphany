@@ -1,0 +1,23 @@
+{
+  "checklist": [],
+  "code": "11.134",
+  "created_at": "2026-10-14T01:46:04.520Z",
+  "description": "Playtest 2026-10-13 (mejora, no bug): cuando el player queda detrás de un acantilado/pared y hoy se aplica el agujero (dither alrededor del player), en vez de eso rotar la cámara hasta quedar encima del player (cenital) mientras dure la oclusión, y volver al ángulo normal al salir. No cambia la cámara del resto del juego: solo en los casos donde hoy se usa el agujero.",
+  "images": [
+    "compass/images/m11-134-20261013-224604.png"
+  ],
+  "milestone": "m11",
+  "notes": "",
+  "order": 131,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "camara",
+    "mejora"
+  ],
+  "test": "",
+  "title": "Oclusión: reemplazar el agujero por cámara cenital sobre el player",
+  "updated_at": "2026-10-14T02:05:29.972Z"
+}

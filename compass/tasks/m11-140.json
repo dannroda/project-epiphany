@@ -1,0 +1,23 @@
+{
+  "checklist": [],
+  "code": "11.140",
+  "created_at": "2026-10-14T01:53:51.528Z",
+  "description": "Playtest 2026-10-13: en la zona Lagoon, arriba de la escalera de piedra, el camino de tierra y el pasto se pisan (z-fighting): franjas de tierra que parpadean sobre el pasto. Separar las capas (offset/decal/render priority) o unificar el terreno.",
+  "images": [
+    "compass/images/m11-140-20261013-225351.png"
+  ],
+  "milestone": "m11",
+  "notes": "",
+  "order": 137,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "overworld"
+  ],
+  "test": "",
+  "title": "Overworld (Lagoon): z-fighting entre el pasto y el camino de tierra",
+  "updated_at": "2026-10-14T02:05:31.498Z"
+}
