@@ -5,7 +5,7 @@
   "created_at": "2026-10-14T01:58:59.133Z",
   "description": "Playtest 2026-10-13: en la pestaña Mapa del menú de pausa, LT y RT mueven el mapa rapidísimo y la velocidad depende del tipo de gatillo del gamepad (analógico/digital). Debería moverse con las flechitas (d-pad) en lugar de los gatillos, a una velocidad fija.",
   "milestone": "m11",
-  "notes": "LT/RT son ejes del joystick ligados a map_floor_up/down (cambiar de piso en el mapa de una mazmorra); cada movimiento del gatillo pasado el umbral llegaba como apretado, así que un gatillo analógico saltaba varios pisos según el control. Ahora cuenta una vez por apretón hasta soltarlo. Pendiente con Daniel: si además quiere cambiar de piso con la cruceta.",
+  "notes": "LT/RT son ejes del joystick ligados a map_floor_up/down (cambiar de piso en el mapa de una mazmorra); cada movimiento del gatillo pasado el umbral llegaba como apretado, así que un gatillo analógico saltaba varios pisos según el control. Ahora cuenta una vez por apretón hasta soltarlo. Pendiente con Daniel: si además quiere cambiar de piso con la cruceta.\nDaniel (2026-10-14): la cruceta y el stick izquierdo arriba/abajo cambian de piso. Hecho (ff2a5f17): en mazmorras con pisos arriba/abajo (cruceta, stick, flechas) cambian de piso una vez por apretón, igual que LT/RT; izquierda/derecha recorren todas las salas del piso en orden de lectura; la ayuda y la columna de pisos muestran arriba/abajo. Con un solo piso el cursor sigue moviéndose en las cuatro direcciones.",
   "order": 139,
   "priority": "medium",
   "refs": [],
@@ -15,7 +15,7 @@
     "bug",
     "ui"
   ],
-  "test": "Mapa de la Chullpa en pausa: apretar LT despacio sube un solo piso; soltar y apretar de nuevo sube otro. test_map › test_floor_selector_in_a_dungeon_with_floors",
+  "test": "Mapa de la Chullpa en pausa: LT, la cruceta o el stick izquierdo cambian un solo piso por apretón; izquierda/derecha pasan por todas las salas del piso. test_map › test_floor_selector_in_a_dungeon_with_floors",
   "title": "Mapa de pausa: LT/RT van rapidísimo; mover con las flechitas",
-  "updated_at": "2026-10-14T03:26:52.208Z"
+  "updated_at": "2026-10-14T16:22:16.496Z"
 }

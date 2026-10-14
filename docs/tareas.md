@@ -4476,6 +4476,7 @@ Daniel (2026-10-12): el jefe del ojo se pensó como fin de demo, así que tiene 
   Hecho el 2026-10-13 (ca9d975d, Daniel: sigue): la puerta del templo del overworld (TempleDoor) lleva a levels/templo.tscn, spawn start en el vestíbulo; la mazmorra es te. levels/temple.tscn queda como nivel de prueba (sus tests lo cargan directo). test_portal, test_overworld_run, test_temple_seal y test_coop_camera al día.
 
 **Notas:** Sesión: diseño (-43 [a7e236]), con Daniel. Overworld (-eb) acomoda el boceto de 7.10 cuando esté la cadena.
+Daniel (2026-10-14) confirma: el templo del ojo con manos es la última mazmorra.
 
 ### 11.114 Botellas en su propia fila de la pestaña Ítems · Hecho
 
@@ -4501,6 +4502,9 @@ Daniel (2026-10-13): los enemigos que no te detectaron no se quedan quietos. Tod
   Al verte: pausa de alerta con un ! antes de atacar. Si te pierde: va al último lugar visto, mira alrededor y vuelve a su puesto.
 - [ ] Tests
   Deambula sin salirse del radio ni trabarse; el centinela alerta, persigue, busca y vuelve.
+
+**Notas:** 
+Daniel (2026-10-14): deambular es para que los enemigos no parezcan objetos quietos (paso 1 vale para todos).
 
 ### 11.116 Tests: un error de script cuenta como falla · Hecho
 
@@ -4819,9 +4823,10 @@ Playtest 2026-10-13: en la D2 (Queñoa), piso 2P "Canopy", hay en una pared un m
 
 Playtest 2026-10-13: en la pestaña Mapa del menú de pausa, LT y RT mueven el mapa rapidísimo y la velocidad depende del tipo de gatillo del gamepad (analógico/digital). Debería moverse con las flechitas (d-pad) en lugar de los gatillos, a una velocidad fija.
 
-**Prueba:** Mapa de la Chullpa en pausa: apretar LT despacio sube un solo piso; soltar y apretar de nuevo sube otro. test_map › test_floor_selector_in_a_dungeon_with_floors
+**Prueba:** Mapa de la Chullpa en pausa: LT, la cruceta o el stick izquierdo cambian un solo piso por apretón; izquierda/derecha pasan por todas las salas del piso. test_map › test_floor_selector_in_a_dungeon_with_floors
 
 **Notas:** LT/RT son ejes del joystick ligados a map_floor_up/down (cambiar de piso en el mapa de una mazmorra); cada movimiento del gatillo pasado el umbral llegaba como apretado, así que un gatillo analógico saltaba varios pisos según el control. Ahora cuenta una vez por apretón hasta soltarlo. Pendiente con Daniel: si además quiere cambiar de piso con la cruceta.
+Daniel (2026-10-14): la cruceta y el stick izquierdo arriba/abajo cambian de piso. Hecho (ff2a5f17): en mazmorras con pisos arriba/abajo (cruceta, stick, flechas) cambian de piso una vez por apretón, igual que LT/RT; izquierda/derecha recorren todas las salas del piso en orden de lectura; la ayuda y la columna de pisos muestran arriba/abajo. Con un solo piso el cursor sigue moviéndose en las cuatro direcciones.
 
 ### 11.143 Overworld: delineado/halo oscuro raro alrededor de árboles, cardones y bordes · Hecho
 

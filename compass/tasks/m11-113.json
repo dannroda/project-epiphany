@@ -73,7 +73,7 @@
   "created_at": "2026-10-12T20:36:35.429Z",
   "description": "Daniel (2026-10-12): el jefe del ojo se pensó como fin de demo, así que tiene sentido que sea el final del juego. El templo (hoy D1) pasa a ser D4, la última; el escudo espejo pasa a ser lo que se consigue para entrar a la última mazmorra (el sello de luz). Hay que ampliar el templo para que use todos los ítems. Cambia la cadena de 11.90 (qué es D1 ahora, de dónde sale el arco, qué pasa con la mazmorra de la Cumbre) y el reparto del overworld (7.10).",
   "milestone": "m11",
-  "notes": "Sesión: diseño (-43 [a7e236]), con Daniel. Overworld (-eb) acomoda el boceto de 7.10 cuando esté la cadena.",
+  "notes": "Sesión: diseño (-43 [a7e236]), con Daniel. Overworld (-eb) acomoda el boceto de 7.10 cuando esté la cadena.\nDaniel (2026-10-14) confirma: el templo del ojo con manos es la última mazmorra.",
   "order": 110,
   "priority": "high",
   "refs": [],
@@ -84,5 +84,5 @@
   ],
   "test": "",
   "title": "El templo del ojo pasa a ser la última mazmorra",
-  "updated_at": "2026-10-13T07:47:43.192Z"
+  "updated_at": "2026-10-14T16:22:16.975Z"
 }
