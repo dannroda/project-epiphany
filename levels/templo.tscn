@@ -582,7 +582,6 @@ data = {
 [node name="Jefe" type="Area3D" parent="Planta" unique_id=859488872]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 1.2, 6)
 script = ExtResource("4_w4fgy")
-debug_disble = null
 display_name = "PLACE_TE_BOSS"
 map_cell = Vector2i(2, 0)
 boss_room = true
@@ -623,7 +622,6 @@ metadata/_custom_type_script = "uid://b7iar3llh0wri"
 [node name="Combinada" type="Area3D" parent="Planta" unique_id=1338911824]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 1.2, 22)
 script = ExtResource("4_w4fgy")
-debug_disble = null
 room_index = 1
 display_name = "PLACE_TE_COMBINED"
 map_cell = Vector2i(1, 1)
@@ -652,7 +650,6 @@ ambient_mode = 0
 [node name="Antesala" type="Area3D" parent="Planta" unique_id=1449210510]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 1.2, 22)
 script = ExtResource("4_w4fgy")
-debug_disble = null
 room_index = 2
 display_name = "PLACE_TE_ANTECHAMBER"
 map_cell = Vector2i(2, 1)
@@ -682,7 +679,6 @@ ambient_mode = 0
 [node name="Mano" type="Area3D" parent="Planta" unique_id=1913402948]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 1.2, 22)
 script = ExtResource("4_w4fgy")
-debug_disble = null
 room_index = 3
 display_name = "PLACE_TE_HAND"
 map_cell = Vector2i(3, 1)
@@ -711,7 +707,6 @@ ambient_mode = 0
 [node name="GanchoOjo" type="Area3D" parent="Planta" unique_id=179655823]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.2, 36)
 script = ExtResource("4_w4fgy")
-debug_disble = null
 room_index = 4
 display_name = "PLACE_TE_HOOK_EYE"
 map_cell = Vector2i(0, 2)
@@ -740,7 +735,6 @@ ambient_mode = 0
 [node name="Gancho" type="Area3D" parent="Planta" unique_id=78467346]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 1.2, 36)
 script = ExtResource("4_w4fgy")
-debug_disble = null
 room_index = 5
 display_name = "PLACE_TE_HOOK"
 map_cell = Vector2i(1, 2)
@@ -769,7 +763,6 @@ ambient_mode = 0
 [node name="Hub" type="Area3D" parent="Planta" unique_id=223286347]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 1.2, 36)
 script = ExtResource("4_w4fgy")
-debug_disble = null
 room_index = 6
 display_name = "PLACE_TE_HUB"
 map_cell = Vector2i(2, 2)
@@ -798,7 +791,6 @@ ambient_mode = 0
 [node name="Espejo" type="Area3D" parent="Planta" unique_id=107480253]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 1.2, 36)
 script = ExtResource("4_w4fgy")
-debug_disble = null
 room_index = 7
 display_name = "PLACE_TE_MIRROR"
 map_cell = Vector2i(3, 2)
@@ -827,7 +819,6 @@ ambient_mode = 0
 [node name="EspejoOjo" type="Area3D" parent="Planta" unique_id=390396828]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 78, 1.2, 36)
 script = ExtResource("4_w4fgy")
-debug_disble = null
 room_index = 8
 display_name = "PLACE_TE_MIRROR_EYE"
 map_cell = Vector2i(4, 2)
@@ -856,7 +847,6 @@ ambient_mode = 0
 [node name="PlumaOjo" type="Area3D" parent="Planta" unique_id=678315277]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.2, 50)
 script = ExtResource("4_w4fgy")
-debug_disble = null
 room_index = 9
 display_name = "PLACE_TE_FEATHER_EYE"
 map_cell = Vector2i(0, 3)
@@ -885,7 +875,6 @@ ambient_mode = 0
 [node name="Pluma" type="Area3D" parent="Planta" unique_id=1499307236]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 1.2, 50)
 script = ExtResource("4_w4fgy")
-debug_disble = null
 room_index = 10
 display_name = "PLACE_TE_FEATHER"
 map_cell = Vector2i(1, 3)
@@ -914,7 +903,6 @@ ambient_mode = 0
 [node name="Vestibulo" type="Area3D" parent="Planta" unique_id=839127740]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 1.2, 50)
 script = ExtResource("4_w4fgy")
-debug_disble = null
 room_index = 11
 display_name = "PLACE_TE_VESTIBULE"
 map_cell = Vector2i(2, 3)
@@ -942,7 +930,6 @@ ambient_mode = 0
 [node name="Arco" type="Area3D" parent="Planta" unique_id=1472436037]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 1.2, 50)
 script = ExtResource("4_w4fgy")
-debug_disble = null
 room_index = 12
 display_name = "PLACE_TE_BOW"
 map_cell = Vector2i(3, 3)
@@ -971,7 +958,6 @@ ambient_mode = 0
 [node name="ArcoOjo" type="Area3D" parent="Planta" unique_id=1966556873]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 78, 1.2, 50)
 script = ExtResource("4_w4fgy")
-debug_disble = null
 room_index = 13
 display_name = "PLACE_TE_BOW_EYE"
 map_cell = Vector2i(4, 3)
