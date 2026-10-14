@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (95/156)
+## M11 — Pulido: contenido y feel  (95/157)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5007,6 +5007,14 @@ Daniel 2026-10-14 (por -5d): el overworld tiene que compartir el arte de las maz
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `combate`, `jefe`
 
 Daniel 2026-10-14: ayuda visual en el combate. Al clavarse tras el salto, al ser derribado y al levantarse los párpados del WatcherEye saltaban de golpe; ahora todo cambio de párpados es una animación desde donde están (LID_SNAP 0,15 s para los rápidos, 0,3 s al cerrar). Test: test_the_warden_gets_stuck_in_the_roots_and_falls_to_the_sword.
+
+### 11.161 Jefe final: la puerta norte de la sala queda escondida · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `templo`, `diseño`
+
+Playtest 2026-10-14 (probando la pelea del jefe final, 12.26): en la sala de ladrillos rojos con antorchas, la puerta del centro de la pared norte (hueco oscuro con el emblema del ojo) queda hundida en la pared y casi no se ve; Daniel: 'la puerta está escondida'. Revisar si es la salida del jefe, el portal o la puerta de entrada, y que se lea a simple vista.
+
+**Capturas:** `compass/images/m11-161-20261014-023958.png`
 
 ## M12 — Assets propios (Blender)  (15/27)
 

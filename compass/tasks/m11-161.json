@@ -1,0 +1,25 @@
+{
+  "assignee": "project-epiphany-43",
+  "checklist": [],
+  "code": "11.161",
+  "created_at": "2026-10-14T05:39:58.076Z",
+  "description": "Playtest 2026-10-14 (probando la pelea del jefe final, 12.26): en la sala de ladrillos rojos con antorchas, la puerta del centro de la pared norte (hueco oscuro con el emblema del ojo) queda hundida en la pared y casi no se ve; Daniel: 'la puerta está escondida'. Revisar si es la salida del jefe, el portal o la puerta de entrada, y que se lea a simple vista.",
+  "images": [
+    "compass/images/m11-161-20261014-023958.png"
+  ],
+  "milestone": "m11",
+  "notes": "",
+  "order": 158,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "templo",
+    "diseño"
+  ],
+  "test": "",
+  "title": "Jefe final: la puerta norte de la sala queda escondida",
+  "updated_at": "2026-10-14T05:39:58.359Z"
+}
