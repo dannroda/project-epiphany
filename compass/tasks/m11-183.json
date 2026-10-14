@@ -1,0 +1,22 @@
+{
+  "assignee": "project-epiphany-43",
+  "checklist": [],
+  "code": "11.183",
+  "created_at": "2026-10-14T23:13:58.806Z",
+  "description": "Daniel (2026-10-14) la eligió como premio de la Combinada (opcional) del templo en vez de una botella o un contenedor de corazón (11.182). Doble daño, estela del tajo dorada, quizás elemento luz que le pega más fuerte al Ojo. Necesita modelo o paleta para la espada (arte, -5d).",
+  "milestone": "m11",
+  "notes": "",
+  "order": 180,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "diseno",
+    "templo",
+    "items"
+  ],
+  "test": "",
+  "title": "Espada mejorada (premio de la Combinada del templo)",
+  "updated_at": "2026-10-14T23:13:58.806Z"
+}

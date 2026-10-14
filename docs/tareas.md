@@ -2592,7 +2592,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
 
-## M11 — Pulido: contenido y feel  (107/178)
+## M11 — Pulido: contenido y feel  (107/179)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5289,6 +5289,12 @@ Daniel (2026-10-14): el templo, como mazmorra final, es un boss-rush: cada una d
 - [ ] GDD §8 templo
 
 **Notas:** Diseño acordado con Daniel (2026-10-14). Cada ala son dos salas: un mini puzzle corto con el ítem del ala, que abre la arena, y la revancha. Pluma: Mallqui; Arco: los Ojos de la Queñoa; Gancho: Yacumama; Espejo: Apu Kuntur (placeholder hasta 11.129). Cada revancha ganada da una pieza de la llave del jefe (item get) y enciende el ojo del ala en el sello; con las 4 piezas se arma la llave del jefe. El sello sigue abriendo la Antesala. La Mano y la Combinada quedan opcionales, con premio: espada mejorada (Daniel eligió la opción 1).
+
+### 11.183 Espada mejorada (premio de la Combinada del templo) · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `templo`, `items`
+
+Daniel (2026-10-14) la eligió como premio de la Combinada (opcional) del templo en vez de una botella o un contenedor de corazón (11.182). Doble daño, estela del tajo dorada, quizás elemento luz que le pega más fuerte al Ojo. Necesita modelo o paleta para la espada (arte, -5d).
 
 ## M12 — Assets propios (Blender)  (17/34)
 
