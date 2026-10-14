@@ -226,6 +226,7 @@ func _overworld_zone(zone: Area3D, cells: Array[Vector3i], group: Node3D) -> voi
 func _facade(seal: Node3D, group: Node3D) -> void:
 	var at := seal.position + seal.basis.z * -0.3
 	_mesh(group, "lugares/fachada_templo", at, seal.rotation.y, false)
+	(group.get_node("FachadaTemplo") as GeometryInstance3D).set_instance_shader_parameter("floor_earth", 0.0)
 	var body := StaticBody3D.new()
 	body.name = "FachadaTemploMuros"
 	body.position = at

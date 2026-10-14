@@ -212,6 +212,7 @@ transform = Transform3D(-0.99747807, 0, 0.07097533, 0, 1, 0, -0.07097533, 0, -0.
 [node name="FachadaTemplo" type="MeshInstance3D" parent="Zone_templo" unique_id=169076986]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 5.2, -36.55)
 mesh = ExtResource("4_1xcut")
+instance_shader_parameters/floor_earth = 0.0
 
 [node name="FachadaTemploMuros" type="StaticBody3D" parent="Zone_templo" unique_id=46670540]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 5.2, -36.55)

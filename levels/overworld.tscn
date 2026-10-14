@@ -76,6 +76,7 @@
 [ext_resource type="ArrayMesh" uid="uid://c7lvusadu8l35" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretLookoutWall.res" id="wall_SecretLookoutWall"]
 [ext_resource type="ArrayMesh" uid="uid://e178snsf1sk0" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretRavineWall.res" id="wall_SecretRavineWall"]
 [ext_resource type="ArrayMesh" uid="uid://xj64yut5ifba" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretSummitWall.res" id="wall_SecretSummitWall"]
+[ext_resource type="Script" uid="uid://dlf8bqdycw2kg" path="res://src/world/look/brillo_la.gd" id="brillo_la"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7se6l"]
 panorama = ExtResource("1_qyxw2")
@@ -86,6 +87,10 @@ sky_material = SubResource("PanoramaSkyMaterial_7se6l")
 [sub_resource type="Environment" id="Environment_0v7po"]
 background_mode = 2
 sky = SubResource("Sky_iip2e")
+glow_enabled = true
+glow_intensity = 0.2
+glow_blend_mode = 0
+glow_hdr_threshold = 0.25
 
 [sub_resource type="CompositorEffect" id="CompositorEffect_sombra"]
 resource_local_to_scene = false
@@ -224,6 +229,9 @@ size = Vector3(2.4, 2.4, 1.4)
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1045124328]
 environment = SubResource("Environment_0v7po")
 compositor = SubResource("Compositor_la")
+
+[node name="BrilloLA" type="Node" parent="." unique_id=1759302214]
+script = ExtResource("brillo_la")
 
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=1305411689]
 transform = Transform3D(0.8660254, -0.40957603, 0.28678823, 0, 0.57357645, 0.81915206, -0.5, -0.7094065, 0.49673176, 0, 0, 0)
