@@ -1,0 +1,22 @@
+{
+  "assignee": "project-epiphany-fd",
+  "checklist": [],
+  "code": "11.150",
+  "created_at": "2026-10-14T02:33:30.483Z",
+  "description": "Playtest 2026-10-13, Totora: con el gancho, el targeting marca (rombo amarillo) algo que está arriba, en otra sala o piso, a través de la pared/techo. El targeting del gancho debería considerar solo objetivos de la sala actual (y del mismo piso), con línea de vista.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 147,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "totora",
+    "items"
+  ],
+  "test": "",
+  "title": "Gancho: el targeting marca un poste de otra sala/piso",
+  "updated_at": "2026-10-14T02:33:30.483Z"
+}
