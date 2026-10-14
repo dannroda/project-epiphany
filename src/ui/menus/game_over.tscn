@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/ui/menus/game_over.gd" id="1_over"]
 [ext_resource type="Theme" uid="uid://covrlpuexf2af" path="res://src/ui/theme.tres" id="2_theme"]
-[ext_resource type="Script" path="res://src/ui/title/title_eye.gd" id="3_eye"]
+[ext_resource type="Texture2D" uid="uid://d4gfe0tope11p" path="res://assets/ui/logo/epiphany_eye.png" id="3_eye"]
 [ext_resource type="PackedScene" path="res://src/ui/menus/menu_item.tscn" id="4_item"]
 [ext_resource type="Script" path="res://src/ui/hint_bar.gd" id="5_hints"]
 
@@ -26,7 +26,8 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.02745098, 0.03137255, 0.039215688, 1)
 
-[node name="Eye" type="Control" parent="."]
+[node name="Eye" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.35)
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -36,13 +37,9 @@ offset_top = 60.0
 offset_right = 250.0
 offset_bottom = 260.0
 grow_horizontal = 2
-script = ExtResource("3_eye")
-outline = Color(0.16470589, 0.101960786, 0.08627451, 1)
-iris = Color(0.16470589, 0.05882353, 0.043137256, 1)
-iris_border = Color(0.16470589, 0.05882353, 0.043137256, 1)
-pupil = Color(0.02745098, 0.03137255, 0.039215688, 1)
-iris_radius = 70.0
-pupil_radius = 24.0
+texture = ExtResource("3_eye")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Title" type="Label" parent="."]
 layout_mode = 1

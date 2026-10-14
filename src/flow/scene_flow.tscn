@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bm2ob0k4u5myd"]
 
 [ext_resource type="Script" uid="uid://4g204a6r2e53" path="res://src/flow/scene_flow.gd" id="1_flow"]
-[ext_resource type="Script" uid="uid://d2jvqrgyy3l6j" path="res://src/flow/loading_eye.gd" id="2_eye"]
+[ext_resource type="Texture2D" uid="uid://d4gfe0tope11p" path="res://assets/ui/logo/epiphany_eye.png" id="2_eye"]
 
 [sub_resource type="Animation" id="Blink"]
 resource_name = "blink"
@@ -10,14 +10,14 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Loading/Busy/Eye:open")
+tracks/0/path = NodePath("Loading/Busy/Eye:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 1.68, 1.87, 2.06),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [1.0, 1.0, 0.1, 1.0]
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(1, 0.1), Vector2(1, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -85,11 +85,14 @@ grow_vertical = 0
 theme_override_constants/separation = 12
 alignment = 2
 
-[node name="Eye" type="Control" parent="Loading/Busy" unique_id=515420321]
-custom_minimum_size = Vector2(36, 36)
+[node name="Eye" type="TextureRect" parent="Loading/Busy" unique_id=515420321]
+custom_minimum_size = Vector2(56, 36)
 layout_mode = 2
 mouse_filter = 2
-script = ExtResource("2_eye")
+pivot_offset = Vector2(28, 18)
+texture = ExtResource("2_eye")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Text" type="HBoxContainer" parent="Loading/Busy" unique_id=1395321640]
 layout_mode = 2

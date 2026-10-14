@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="320" viewBox="400 90 400 160">
+<!-- Solo el ojo del logo (epiphany_logo.svg). PNG: rsvg-convert art/logo/epiphany_eye.svg -o assets/ui/logo/epiphany_eye.png -->
+  <defs>
+    <linearGradient id="oro" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f5d67e"/>
+      <stop offset="1" stop-color="#b07a24"/>
+    </linearGradient>
+    <radialGradient id="iris" cx="0.42" cy="0.38" r="0.7">
+      <stop offset="0" stop-color="#b8432c"/>
+      <stop offset="0.7" stop-color="#6e2a1e"/>
+      <stop offset="1" stop-color="#3a140e"/>
+    </radialGradient>
+    <clipPath id="parpado"><path d="M 410 170 Q 600 36 790 170 Q 600 304 410 170 Z"/></clipPath>
+  </defs>
+  <path d="M 410 170 Q 600 36 790 170 Q 600 304 410 170 Z" fill="#efe6d2"/>
+  <g clip-path="url(#parpado)">
+    <circle cx="600" cy="170" r="66" fill="url(#iris)"/>
+    <circle cx="600" cy="170" r="66" fill="none" stroke="#d9a441" stroke-width="5"/>
+    <circle cx="600" cy="170" r="25" fill="#0b0d10"/>
+    <circle cx="582" cy="150" r="9" fill="#f8f1de"/>
+  </g>
+  <path d="M 410 170 Q 600 36 790 170 Q 600 304 410 170 Z" fill="none" stroke="url(#oro)" stroke-width="10" stroke-linejoin="round"/>
+</svg>
