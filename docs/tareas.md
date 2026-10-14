@@ -5187,11 +5187,15 @@ Playtest 2026-10-14: en la planta baja (1P) de una mazmorra hay un esqueleto que
 
 **Notas:** Causa probable: un enemigo que cae por un hueco al piso de abajo seguía siendo hijo de su piso, y los pisos de arriba del player se ocultan. Ahora al aterrizar pasa al piso de su altura (02ccb681). Si vuelve a pasar: anotar mazmorra y sala.
 
-### 11.174 Overworld (Cumbre): el gancho choca contra una pared invisible · Pendiente
+### 11.174 Overworld (Cumbre): el gancho choca contra una pared invisible · Revisión
 
 **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`, `overworld`, `items`
 
 Playtest 2026-10-14: en la zona nevada, junto a la cornisa con el poste del gancho (franja verde entre riscos), el gancho choca contra una pared invisible antes de llegar al poste.
+
+**Prueba:** test_overworld_hook › test_the_hookshot_crosses_the_invisible_rail_from_the_far_edge
+
+**Notas:** Causa (-eb, a2924bd2): la baranda invisible del terreno (1,6 m en cada borde caminable, sin malla) frenaba el gancho tirado desde la nieve de la Cumbre al RiscoPost por encima del pasillo bajo. Ahora la baranda está en el grupo walk_guard: el gancho y las flechas la atraviesan, a los que caminan los sigue frenando.
 
 ## M12 — Assets propios (Blender)  (17/29)
 
@@ -6398,7 +6402,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 3. [x] 11.148 Minimapa del overworld desactualizado (la quebrada sale como abismo negro) · Hecho · anda — Es un poco tosco como aparece en el minimapa, pero es detalle menor.
 4. [x] 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player · Hecho · anda — Funciona, pero solo debería ser para las paredes. No para objetos/plantas, para eso está el x-ray. Y el movimiento es un poco nauseabundo.
 
-### Revisión del 14 de octubre: overworld, mazmorras y sistemas  (19/61 probadas)
+### Revisión del 14 de octubre: overworld, mazmorras y sistemas  (19/62 probadas)
 
 1. [x] 11.168 D4 (Cumbre): entrada exagerada como las otras mazmorras · Hecho · anda
 2. [x] 11.130 Bocas de cueva talladas en el risco · Hecho · anda
@@ -6461,3 +6465,4 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 59. [ ] 11.172 Viaje rápido: el foco no va al botón y A abre la pregunta una y otra vez · Revisión
 60. [ ] 11.173 Esqueleto invisible en una mazmorra · Revisión
 61. [ ] 11.170 Atajos: animación del player subiendo y bajando en vez del fundido · Revisión
+62. [ ] 11.174 Overworld (Cumbre): el gancho choca contra una pared invisible · Revisión
