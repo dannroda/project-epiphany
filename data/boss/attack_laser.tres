@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="BossAttack" format=3]
+
+[ext_resource type="Script" uid="uid://byobqgwp5qte4" path="res://src/entities/boss/boss_attack.gd" id="1_attack"]
+[ext_resource type="Script" uid="uid://b6lm5gq15rbqw" path="res://src/combat/attack_data.gd" id="2_data"]
+
+[sub_resource type="Resource" id="Resource_data"]
+script = ExtResource("2_data")
+active_from = 0.0
+active_to = 0.0
+hitbox = &"strike"
+
+[resource]
+script = ExtResource("1_attack")
+id = &"laser"
+user = 1
+phases = Array[int]([2, 3])
+attack = SubResource("Resource_data")
+ideal_distance = Vector2(0, 20)
+falloff = 10.0
+weight = 1.2

@@ -152,7 +152,7 @@ func test_utility_varies_and_uses_free_pieces() -> void:
 	assert_true(not boss.choose_attack(1), "sin manos no hay ataque de fase 1")
 	boss.eye_open = 1.0
 	player.global_position = boss.eye.global_position + Vector3(0, -3, 9)
-	assert_true(boss.choose_attack(2) and boss.chosen_attack.id == &"orb" and boss.attacker == boss.eye, "en la fase 2 dispara el ojo")
+	assert_true(boss.choose_attack(2) and boss.chosen_attack.id in [BossAttack.ORB, BossAttack.LASER] and boss.attacker == boss.eye, "en la fase 2 dispara el ojo")
 	boss.free()
 
 
@@ -620,6 +620,45 @@ func test_marks_keep_the_eye_busy_until_they_blast() -> void:
 	assert_true(boss.is_attack_running(), "mientras se cargan las marcas no encadena otro ataque")
 	await tree.create_timer(0.5).timeout
 	assert_true(not boss.is_attack_running(), "después del estallido sí")
+	boss.free()
+
+
+## Con las dos manos fuera de juego en las fases 2 y 3, el ojo alterna orbe y rayo; con manos, nunca el rayo.
+func test_with_both_hands_out_the_eye_alternates_orb_and_laser() -> void:
+	var boss := _spawn()
+	var tree := Engine.get_main_loop() as SceneTree
+	await _frames(2)
+	var target := Node3D.new()
+	boss.add_child(target)
+	target.global_position = boss.global_position + Vector3(0, -boss.global_position.y, 6)
+	boss.target = target
+	boss.eye_open = 1.0
+	for i in 20:
+		if boss.choose_attack(2):
+			assert_true(boss.chosen_attack.id != BossAttack.LASER, "con las manos, sin rayo")
+	boss.hand_left.stun(5.0)
+	boss.hand_right.set_state(BossHand.State.DOWN)
+	assert_true(boss.hands_out(), "una aturdida y otra caída: fuera de juego")
+	var seen: Array[StringName] = []
+	for i in 6:
+		assert_true(boss.choose_attack(3), "elige")
+		assert_true(boss.attacker == boss.eye and boss.chosen_attack.id in [BossAttack.ORB, BossAttack.LASER], "solo el ojo, orbe o rayo")
+		seen.append(boss.chosen_attack.id)
+		boss._last_eye_attack = boss.chosen_attack.id
+	for i in range(1, seen.size()):
+		assert_true(seen[i] != seen[i - 1], "alterna: %s" % [seen])
+	boss._sweep_laser()
+	assert_true(boss.get_node(^"%LaserPath").visible and not boss.get_node(^"%LaserBeam").visible, "primero marca la línea")
+	await tree.create_timer(boss.laser_charge_time + 0.2).timeout
+	assert_true(boss.get_node(^"%LaserBeam").visible and boss.get_node(^"%LaserSpot").monitoring, "después barre con el rayo")
+	assert_true(boss.is_attack_running(), "mientras barre no encadena otro ataque")
+	await tree.create_timer(boss.laser_sweep_time).timeout
+	assert_true(not boss.is_attack_running() and not boss.get_node(^"%LaserBeam").visible, "termina y se apaga")
+	boss._sweep_laser()
+	boss._stun_eye()
+	assert_true(not boss.is_attack_running() and not boss.get_node(^"%LaserPath").visible, "aturdido, el rayo se corta")
+	await tree.create_timer(boss.laser_charge_time + 0.2).timeout
+	assert_true(not boss.get_node(^"%LaserBeam").visible, "y no barre después")
 	boss.free()
 
 

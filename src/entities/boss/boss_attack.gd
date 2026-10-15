@@ -10,7 +10,9 @@ const GRAB := &"grab"
 const SWEEP := &"sweep"
 const ORB := &"orb"
 const MARK := &"mark"
-const IDS: Array[StringName] = [SLAM, GRAB, SWEEP, ORB, MARK]
+## Con las dos manos fuera de juego (fases 2 y 3), el ojo barre el piso con un rayo, alternando con el orbe.
+const LASER := &"laser"
+const IDS: Array[StringName] = [SLAM, GRAB, SWEEP, ORB, MARK, LASER]
 
 @export var id: StringName
 @export var user := User.HAND

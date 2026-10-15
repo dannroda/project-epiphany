@@ -20,6 +20,7 @@
 [ext_resource type="Resource" path="res://data/boss/attack_sweep.tres" id="21_sweep"]
 [ext_resource type="Resource" path="res://data/boss/attack_orb.tres" id="22_orb"]
 [ext_resource type="Resource" path="res://data/boss/attack_mark.tres" id="23_mark"]
+[ext_resource type="Resource" path="res://data/boss/attack_laser.tres" id="23_laser"]
 [ext_resource type="BehaviorTree" path="res://data/boss/boss_phase3_bt.tres" id="24_bt3"]
 [ext_resource type="Script" path="res://src/feel/hit_flash.gd" id="hf_hit_flash"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_corrupto_cuerpo.res" id="c_body"]
@@ -169,6 +170,38 @@ shader_parameter/color = Color(0.45, 0.95, 1, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ondas_oreja"]
 width = 64
 height = 64
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_laser"]
+shading_mode = 0
+albedo_color = Color(1, 0.3, 0.2, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_laser_path"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 0.2, 0.15, 0.25)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_laser"]
+material = SubResource("StandardMaterial3D_laser")
+top_radius = 0.1
+bottom_radius = 0.1
+height = 1.0
+radial_segments = 8
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_laser_spot"]
+material = SubResource("StandardMaterial3D_laser")
+top_radius = 0.7
+bottom_radius = 0.7
+height = 0.05
+radial_segments = 16
+rings = 1
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_laser_spot"]
+radius = 0.7
+
+[sub_resource type="BoxMesh" id="BoxMesh_laser_path"]
+material = SubResource("StandardMaterial3D_laser_path")
+size = Vector3(0.12, 0.02, 1)
 
 [sub_resource type="Animation" id="Animation_reset"]
 length = 0.001
@@ -508,7 +541,7 @@ _data = {
 
 [node name="Boss" type="Node3D"]
 script = ExtResource("1_boss")
-attacks = [ExtResource("19_slam"), ExtResource("20_grab"), ExtResource("21_sweep"), ExtResource("22_orb"), ExtResource("23_mark")]
+attacks = [ExtResource("19_slam"), ExtResource("20_grab"), ExtResource("21_sweep"), ExtResource("22_orb"), ExtResource("23_mark"), ExtResource("23_laser")]
 
 [node name="Body" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 0)
@@ -842,6 +875,39 @@ script = ExtResource("15_hitbox")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BlastHitTemplate"]
 shape = SubResource("CylinderShape3D_blast")
+
+[node name="LaserPath" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+visible = false
+top_level = true
+cast_shadow = 0
+mesh = SubResource("BoxMesh_laser_path")
+
+[node name="LaserBeam" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+visible = false
+top_level = true
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_laser")
+
+[node name="LaserSpot" type="Area3D" parent="."]
+unique_name_in_owner = true
+visible = false
+top_level = true
+collision_layer = 0
+collision_mask = 24
+monitoring = false
+monitorable = false
+script = ExtResource("15_hitbox")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LaserSpot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("SphereShape3D_laser_spot")
+
+[node name="Mesh" type="MeshInstance3D" parent="LaserSpot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0)
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_laser_spot")
 
 [node name="HitFlash" type="Node" parent="." node_paths=PackedStringArray("health", "visuals")]
 unique_name_in_owner = true

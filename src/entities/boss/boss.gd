@@ -70,6 +70,13 @@ const PHASE_HOLD := 2.2
 @export var orb_damage := 4
 @export var orb_speed := 9.0
 @export var orb_charge_time := 0.8
+@export_group("Rayo")
+## Con las dos manos fuera de juego en las fases 2 y 3: marca una línea por el player, carga y la barre.
+@export var laser_damage := 4
+@export var laser_length := 12.0
+@export var laser_charge_time := 1.0
+@export var laser_sweep_time := 1.4
+@export_group("")
 
 var target: Node3D
 ## Piso de la pelea (XZ global); lo pone `BossArena` con la sala. Las manos no salen de acá.
@@ -79,6 +86,11 @@ var attacker: Node3D
 var rng := RandomNumberGenerator.new()
 var _eye_stun_left := 0.0
 var _eye_attacking := false
+## El último ataque del ojo: con las manos fuera de juego alterna orbe y rayo.
+var _last_eye_attack: StringName
+var _laser_tween: Tween
+var _laser_from := Vector3.ZERO
+var _laser_to := Vector3.ZERO
 var _body_tween: Tween
 var _charge_tween: Tween
 var _body_height := 0.0
@@ -121,6 +133,9 @@ var _presenting := false
 @onready var _upper_lid: Node3D = %UpperLid
 @onready var _lower_lid: Node3D = %LowerLid
 @onready var _transform: AnimationPlayer = %Transform
+@onready var _laser_path: MeshInstance3D = %LaserPath
+@onready var _laser_beam: MeshInstance3D = %LaserBeam
+@onready var _laser_spot: Hitbox = %LaserSpot
 
 
 func _ready() -> void:
@@ -221,6 +236,8 @@ func _physics_process(delta: float) -> void:
 		_eye_stun_left -= delta
 		if _eye_stun_left <= 0.0:
 			_move_body(BODY_HEIGHT_OPEN, 0.6)
+	if _laser_beam.visible:
+		_place_laser()
 	if is_instance_valid(target) and not is_eye_stunned():
 		var wanted := (gaze_point(target.global_position) - eye.global_position).normalized()
 		look_at_point(eye.global_position + eye.global_basis.z.normalized().slerp(wanted, 1.0 - exp(-4.0 * delta)))
@@ -243,8 +260,13 @@ func choose_attack(for_phase: int) -> bool:
 		return false
 	var options: Array[Array] = []
 	var best_score := 0.0
+	var hands_out := hands_out()
 	for attack in attacks:
 		if not for_phase in attack.phases:
+			continue
+		if attack.id == BossAttack.LASER and not hands_out:
+			continue
+		if hands_out and attack.user == BossAttack.User.EYE and (attack.id not in [BossAttack.ORB, BossAttack.LASER] or attack.id == _last_eye_attack):
 			continue
 		for user in _users(attack):
 			var score := attack.weight * compensated([
@@ -281,12 +303,16 @@ func choose_attack(for_phase: int) -> bool:
 func perform_chosen() -> void:
 	if chosen_attack == null or not is_instance_valid(target):
 		return
+	if attacker == eye:
+		_last_eye_attack = chosen_attack.id
 	if attacker is BossHand:
 		attacker.perform(chosen_attack, target, arena)
 	elif attacker == eye and chosen_attack.id == BossAttack.MARK:
 		_mark_floor()
 	elif attacker == eye and chosen_attack.id == BossAttack.ORB:
 		_fire_orb()
+	elif attacker == eye and chosen_attack.id == BossAttack.LASER:
+		_sweep_laser()
 	else:
 		push_error("Boss: %s no sabe hacer %s" % [attacker.name, chosen_attack.id])
 
@@ -386,6 +412,72 @@ func _blast(point: Vector3) -> void:
 	for i in BLAST_FRAMES:
 		await get_tree().physics_frame
 	hit.queue_free()
+
+
+## Las dos manos aturdidas o caídas: el ojo queda solo y suma el rayo.
+func hands_out() -> bool:
+	return [hand_left, hand_right].all(func(hand: BossHand) -> bool: return hand.state == BossHand.State.STUNNED or hand.state == BossHand.State.DOWN)
+
+
+## Como el Ojo Vigía: marca una línea que cruza al player, carga y la barre con el rayo; el escudo no lo frena.
+func _sweep_laser() -> void:
+	_eye_attacking = true
+	var center := Vector3(target.global_position.x, 0.0, target.global_position.z)
+	var across := (center - Vector3(eye.global_position.x, 0.0, eye.global_position.z))
+	across = Vector3.RIGHT if across.is_zero_approx() else across.normalized().cross(Vector3.UP)
+	if rng.randf() < 0.5:
+		across = -across
+	_laser_from = _clamp_to_arena(center - across * laser_length / 2.0)
+	_laser_to = _clamp_to_arena(center + across * laser_length / 2.0)
+	var mid := (_laser_from + _laser_to) / 2.0
+	_laser_path.global_position = Vector3(mid.x, target.global_position.y + 0.03, mid.z)
+	if not _laser_to.is_equal_approx(_laser_from):
+		_laser_path.global_basis = Basis.looking_at(_laser_to - _laser_from, Vector3.UP)
+	_laser_path.scale = Vector3(1, 1, _laser_from.distance_to(_laser_to))
+	_laser_path.visible = true
+	Feel.sfx(&"click", eye.global_position)
+	_laser_tween = create_tween()
+	_laser_tween.tween_property(self, ^"_squint", 1.0, 0.2)
+	_laser_tween.parallel().tween_method(_pulse_eye, 0.0, 1.0, laser_charge_time)
+	await _laser_tween.finished
+	if not _eye_attacking:
+		return
+	var floor_y := target.global_position.y if is_instance_valid(target) else 0.0
+	_laser_spot.global_position = Vector3(_laser_from.x, floor_y, _laser_from.z)
+	_laser_spot.team = EntityConfig.Team.ENEMY
+	_laser_spot.damage_factory = func() -> DamageInfo: return DamageInfo.make(laser_damage, 6.0, _laser_spot, &"blast")
+	_laser_spot.monitoring = true
+	_laser_spot.visible = true
+	_laser_beam.visible = true
+	_place_laser()
+	Feel.sfx(&"reflect", eye.global_position)
+	_laser_tween = create_tween()
+	_laser_tween.tween_property(_laser_spot, ^"global_position", Vector3(_laser_to.x, floor_y, _laser_to.z), laser_sweep_time)
+	await _laser_tween.finished
+	_end_laser()
+	var relax := create_tween().set_parallel()
+	relax.tween_property(self, ^"_squint", 0.0, 0.3)
+	relax.tween_method(_set_eye_glow, EYE_GLOW_CHARGED, EYE_GLOW, 0.3)
+
+
+func _end_laser() -> void:
+	if _laser_tween:
+		_laser_tween.kill()
+	_laser_spot.set_deferred(&"monitoring", false)
+	_laser_spot.visible = false
+	_laser_beam.visible = false
+	_laser_path.visible = false
+	_eye_attacking = false
+
+
+func _place_laser() -> void:
+	var from := orb_muzzle.global_position
+	var along := _laser_spot.global_position - from
+	if along.length() < 0.01:
+		return
+	var up := along.normalized()
+	var side := up.cross(Vector3.FORWARD if absf(up.z) < 0.9 else Vector3.RIGHT).normalized()
+	_laser_beam.global_transform = Transform3D(Basis(side, up * along.length(), side.cross(up)), (from + _laser_spot.global_position) / 2.0)
 
 
 func _fire_orb() -> void:
@@ -619,6 +711,7 @@ func _cut_charge() -> void:
 		_charge_tween.kill()
 	_charge.visible = false
 	_eye_attacking = false
+	_end_laser()
 
 
 func _on_defeated() -> void:
