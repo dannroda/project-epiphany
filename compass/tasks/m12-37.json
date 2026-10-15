@@ -4,6 +4,11 @@
     {
       "done": false,
       "text": "Reja por estilo y cada nivel usando la suya"
+    },
+    {
+      "detail": "Según -43: puerta_jefe_cumbre_la.res (108579 B) es la de la Chullpa renombrada (108580 B), con los mismos bosses; BossDoor de PisoCornisa (46,0,20). La persiana es la misma malla en las cuatro (¿a propósito?).",
+      "done": false,
+      "text": "Puerta del jefe de la Cumbre propia"
     }
   ],
   "code": "12.37",
@@ -22,5 +27,5 @@
   ],
   "test": "",
   "title": "Rejas con el estilo de cada mazmorra",
-  "updated_at": "2026-10-15T05:33:44.871Z"
+  "updated_at": "2026-10-15T05:34:18.141Z"
 }

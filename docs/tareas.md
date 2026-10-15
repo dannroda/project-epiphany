@@ -5986,6 +5986,8 @@ Daniel (2026-10-15, captura de la sala del jefe): los cuatro círculos por donde
 Daniel (2026-10-15): la reja de la Cumbre tiene los bosses de la Chullpa. Todas las mazmorras usan src/world/gate.tscn con el modelo de la Chullpa. Hace falta una reja por estilo (Queñoa, Totora, Cumbre, templo), como los kits LA, sin cambiar el tamaño ni la colisión.
 
 - [ ] Reja por estilo y cada nivel usando la suya
+- [ ] Puerta del jefe de la Cumbre propia
+  Según -43: puerta_jefe_cumbre_la.res (108579 B) es la de la Chullpa renombrada (108580 B), con los mismos bosses; BossDoor de PisoCornisa (46,0,20). La persiana es la misma malla en las cuatro (¿a propósito?).
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 
