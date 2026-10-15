@@ -2,11 +2,12 @@
   "assignee": "project-epiphany-43",
   "checklist": [
     {
-      "done": false,
+      "detail": "El cofre grande pasa a la esquina noroeste (2,0,16), con su reja al este (4,0,16) y los muros de basalto que ya estaban debajo; los dos muros del nicho viejo (celdas 6,9 y 7,9) quedan piso. Navmesh rehorneado.",
+      "done": true,
       "text": "Nicho de la llave del jefe aparte de la puerta, con su reja de frente"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Test: de la puerta de las Torretas se entra al Ojo del Sol sin chocar la reja"
     }
   ],
@@ -19,13 +20,13 @@
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug",
     "diseno",
     "mazmorra"
   ],
-  "test": "",
+  "test": "test_cumbre (test_the_door_from_the_turrets_lands_in_the_sun_eye_room_clear_of_the_boss_key_gate)",
   "title": "Cumbre: la reja de la llave del jefe tapa la puerta de las Torretas",
-  "updated_at": "2026-10-15T05:33:44.306Z"
+  "updated_at": "2026-10-15T05:36:56.059Z"
 }

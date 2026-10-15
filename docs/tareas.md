@@ -5343,14 +5343,17 @@ En algunas corridas de la suite completa, un worker muere con signal 11 justo de
 - [ ] Reproducirlo con un bucle de viajes (overworld ↔ cuevas) y aislar el recurso
 - [ ] Arreglar la causa o cargar ese recurso en el hilo principal
 
-### 11.186 Cumbre: la reja de la llave del jefe tapa la puerta de las Torretas · Pendiente
+### 11.186 Cumbre: la reja de la llave del jefe tapa la puerta de las Torretas · Revisión
 
 **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `diseno`, `mazmorra`
 
 Daniel (2026-10-15, captura): en PisoCornisa, la puerta sur de las Torretas (Paso LA ns, celda (6,7)) desemboca justo en la celda de BossKeyGate (12,0,16), que está girada a lo largo del paso y se ve atravesada en la puerta. Es la del nicho de BossKeyChest (14,0,16), que abre SolReceiver. Viene del blockout (4f360313) y nunca se rediseñó. Hay que separar el nicho de la llegada desde la puerta: que la reja cierre el nicho y no el paso.
 
-- [ ] Nicho de la llave del jefe aparte de la puerta, con su reja de frente
-- [ ] Test: de la puerta de las Torretas se entra al Ojo del Sol sin chocar la reja
+- [x] Nicho de la llave del jefe aparte de la puerta, con su reja de frente
+  El cofre grande pasa a la esquina noroeste (2,0,16), con su reja al este (4,0,16) y los muros de basalto que ya estaban debajo; los dos muros del nicho viejo (celdas 6,9 y 7,9) quedan piso. Navmesh rehorneado.
+- [x] Test: de la puerta de las Torretas se entra al Ojo del Sol sin chocar la reja
+
+**Prueba:** test_cumbre (test_the_door_from_the_turrets_lands_in_the_sun_eye_room_clear_of_the_boss_key_gate)
 
 ## M12 — Assets propios (Blender)  (17/37)
 

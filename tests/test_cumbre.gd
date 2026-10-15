@@ -159,3 +159,18 @@ func test_the_snowdrift_eye_is_on_the_north_wall_and_the_map_niche_can_be_walked
 	var path := NavigationServer3D.map_get_path(map, NavigationServer3D.map_get_closest_point(map, Vector3(40, 0, 21)), front, true)
 	assert_true(front.distance_to(gate.global_position + Vector3(-1.5, 0, 0)) < 0.6 and not path.is_empty() and path[-1].distance_to(front) < 0.1, "se llega caminando a la reja del nicho del mapa")
 	state.reset()
+
+
+func test_the_door_from_the_turrets_lands_in_the_sun_eye_room_clear_of_the_boss_key_gate() -> void:
+	await _start()
+	var map := player.get_world_3d().navigation_map
+	var landing := Vector3(12, 8, 17)
+	var gate := level.get_node(^"PisoCornisa/BossKeyGate") as Node3D
+	var chest := level.get_node(^"PisoCornisa/BossKeyChest") as Node3D
+	assert_true(Vector2(gate.global_position.x, gate.global_position.z).distance_to(Vector2(landing.x, landing.z)) > 4.0, "la reja no está donde cae la puerta")
+	assert_true(Vector2(chest.global_position.x, chest.global_position.z).distance_to(Vector2(landing.x, landing.z)) > 4.0, "ni el nicho de la llave del jefe")
+	var from := NavigationServer3D.map_get_closest_point(map, Vector3(12, 8, 11))
+	var to := NavigationServer3D.map_get_closest_point(map, Vector3(10, 8, 22))
+	var path := NavigationServer3D.map_get_path(map, from, to, true)
+	assert_true(not path.is_empty() and path[-1].distance_to(to) < 0.1 and Array(path).all(func(p: Vector3) -> bool: return Vector2(p.x, p.z).distance_to(Vector2(gate.global_position.x, gate.global_position.z)) > 1.5), "de las Torretas se entra caminando al Ojo del Sol sin pasar por la reja")
+	state.reset()
