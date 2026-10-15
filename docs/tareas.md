@@ -5289,11 +5289,20 @@ Daniel (2026-10-14): todas las salas de las mazmorras miden 14 de alto y al meno
 
 **Relacionadas:** 11.181 Paredes agrietadas: abren una sala, nunca un nicho (Queñoa y templo)
 
-### 11.181 Paredes agrietadas: abren una sala, nunca un nicho (Queñoa y templo) · Pendiente
+### 11.181 Paredes agrietadas: abren una sala, nunca un nicho (Queñoa y templo) · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `mazmorra`
 
 Daniel (2026-10-14): en las mazmorras una pared agrietada siempre abre una sala entera, de cualquier tipo (puede hasta ser necesaria para terminar la mazmorra), nunca un nicho con cofre. Hoy son nichos OjosCrackedWall en la Queñoa y CombinedCrackedWall en el templo: pasarlos a salas. La del templo va con el rediseño 11.180.
+
+- [x] Templo: CombinedCrackedWall
+  Ya no está: salió con la Combinada de oleadas (11.183).
+- [x] Queñoa: OjosCrackedWall
+  Sale el muro y su techo tapanicho (OjosNicheRoof) y el flag qv_hidden_cracked_wall: el ojo queda a la vista en su nicho de la pared norte. La llave del jefe pide arco y pluma. Sin cambio de grilla.
+- [x] Test: toda pared agrietada de mazmorra separa dos salas
+  test_cracked_wall: test_dungeon_cracked_walls_open_whole_rooms reemplaza al de los techos de nicho (11.164); la Chullpa sin ninguna. Falla con la Queñoa de antes.
+
+**Prueba:** test_cracked_wall (test_dungeon_cracked_walls_open_whole_rooms), test_quenoa, test_dungeon_reach
 
 **Relacionadas:** 11.180 Templo: salas de 14 de alto y al menos 22 de ancho
 

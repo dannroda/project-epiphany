@@ -24,7 +24,6 @@
 [ext_resource type="PackedScene" path="res://src/world/stairs_down.tscn" id="34_dfq0f"]
 [ext_resource type="Resource" path="res://data/items/dungeon_map.tres" id="35_2hnwo"]
 [ext_resource type="Resource" path="res://data/items/compass.tres" id="36_8syh8"]
-[ext_resource type="ArrayMesh" uid="uid://cnipaefj366g2" path="res://assets/epiphany/meshes/paredes_la/muro_agrietado_quenoa_la_bajo.res" id="37_2hnwo"]
 [ext_resource type="Script" uid="uid://bccprbredple8" path="res://src/world/arena_fight.gd" id="37_fight"]
 [ext_resource type="PackedScene" path="res://src/entities/watcher_eye/watcher_eye.tscn" id="38_eye"]
 [ext_resource type="Shader" uid="uid://crwycv8bukd6m" path="res://src/world/look/llama_la.gdshader" id="39_66c0e"]
@@ -111,12 +110,6 @@ size = Vector3(4, 1, 6)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ojospit"]
 size = Vector3(6, 1, 2)
-
-[sub_resource type="BoxShape3D" id="WallShape"]
-size = Vector3(2, 3.1, 2)
-
-[sub_resource type="BoxShape3D" id="HurtShape"]
-size = Vector3(2.4, 2.6, 2.4)
 
 [sub_resource type="BoxShape3D" id="Trigger"]
 size = Vector3(1.6, 1.5, 0.8)
@@ -251,18 +244,6 @@ shader_parameter/specular = 0.4
 shader_parameter/grain_amount = 0.6
 shader_parameter/grain_rect = Vector4(0.51, 0.615, 0, 0.25)
 shader_parameter/grain_spacing = 0.2
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_g2cit"]
-_surfaces = [{
-"aabb": AABB(38.45, 3.02, 2.45, 3.0999985, 1e-05, 4.05),
-"attribute_data": PackedByteArray("AABAPhzpXT4AAEA+HOldPgAAQD4c6V0+AABAPhzpXT4AAEA+HOldPgAAQD4c6V0+AABAPhzpXT4AAEA+HOldPgAAQD4c6V0+AABAPhzpXT4AAEA+HOldPgAAQD4c6V0+"),
-"format": 34359738391,
-"material": SubResource("ShaderMaterial_jojag"),
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 12,
-"vertex_data": PackedByteArray("zcwZQq5HQUDNzBxAMzMmQq5HQUDNzBxAMzMmQq5HQUBmZs5AzcwZQq5HQUDNzBxAMzMmQq5HQUBmZs5AzcwZQq5HQUBmZs5AzcwbQq5HQUAAAKBAMzMkQq5HQUAAAKBAMzMkQq5HQUAAANBAzcwbQq5HQUAAAKBAMzMkQq5HQUAAANBAzcwbQq5HQUAAANBA/3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+/")
-}]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1o0uj"]
 size = Vector3(22, 2.4, 14)
@@ -760,20 +741,6 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6, 0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 3.6)
 flag = &"qv_hidden_eye"
 
-[node name="OjosCrackedWall" parent="PisoRaices" unique_id=698424788 instance=ExtResource("14_y54qy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 6)
-flag = &"qv_hidden_cracked_wall"
-covers = Array[NodePath]([NodePath("../OjosNicheRoof")])
-
-[node name="Model" parent="PisoRaices/OjosCrackedWall/Wall" index="0"]
-mesh = ExtResource("37_2hnwo")
-
-[node name="CollisionShape3D" parent="PisoRaices/OjosCrackedWall" index="2"]
-shape = SubResource("WallShape")
-
-[node name="CollisionShape3D" parent="PisoRaices/OjosCrackedWall/Hurtbox" index="0"]
-shape = SubResource("HurtShape")
-
 [node name="BossKeyGate" parent="PisoRaices" unique_id=197594756 instance=ExtResource("9_i77fr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 6)
 switches = Array[NodePath]([NodePath("../HiddenEye")])
@@ -934,10 +901,6 @@ omni_range = 4.0
 
 [node name="Glow" parent="PisoRaices/Torch_Jefe_1" index="3"]
 visible = false
-
-[node name="OjosNicheRoof" type="MeshInstance3D" parent="PisoRaices" unique_id=946840476]
-cast_shadow = 0
-mesh = SubResource("ArrayMesh_g2cit")
 
 [node name="PisoTronco" type="Node3D" parent="." unique_id=893486123]
 script = ExtResource("2_u6itt")
@@ -1854,7 +1817,6 @@ navigation_mesh = ExtResource("nav_quenoa")
 script = ExtResource("70_0sl1j")
 
 [editable path="PisoRaices/BossDoor"]
-[editable path="PisoRaices/OjosCrackedWall"]
 [editable path="PisoRaices/RaicesStairs"]
 [editable path="PisoRaices/Torch_Raices_0"]
 [editable path="PisoRaices/Torch_Raices_1"]

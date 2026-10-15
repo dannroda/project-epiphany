@@ -155,7 +155,6 @@ script = ExtResource("3_spot")
 area = &"Ojos"
 node = NodePath("PisoRaices/HiddenEye")
 needs = Array[StringName]([&"bow"])
-through = Array[NodePath]([NodePath("PisoRaices/OjosCrackedWall")])
 
 [sub_resource type="Resource" id="Spot_15"]
 script = ExtResource("3_spot")
