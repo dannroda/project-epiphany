@@ -103,9 +103,7 @@ func _awaken() -> void:
 	var player := Players.nearest(boss.eye.global_position)
 	if player:
 		boss.look_at_point(player.global_position + Vector3.UP)
-	var blink := boss.eye.create_tween()
-	blink.tween_property(boss, ^"eye_open", 0.4, 0.5).set_delay(0.3)
-	blink.tween_property(boss, ^"eye_open", 0.0, 0.3).set_delay(0.8)
+	boss.roar()
 
 
 func _get_configuration_warnings() -> PackedStringArray:

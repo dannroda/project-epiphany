@@ -1,5 +1,6 @@
 [gd_scene format=3]
 
+[ext_resource type="Script" path="res://src/feel/roar.gd" id="20_roar"]
 [ext_resource type="Script" path="res://src/entities/hand_guard/hand_guard.gd" id="1_guard"]
 [ext_resource type="Script" path="res://src/entities/boss/boss_hand.gd" id="2_hand"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_guardia_mano.res" id="7_hand_l"]
@@ -86,6 +87,13 @@ local_coords = false
 visibility_aabb = AABB(-3, -2, -3, 6, 6, 6)
 process_material = SubResource("ParticleProcessMaterial_pulso")
 draw_pass_1 = SubResource("PlaneMesh_pulso")
+
+[node name="Roar" type="Node3D" parent="Hand"]
+unique_name_in_owner = true
+process_mode = 3
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0.3, 0.6)
+script = ExtResource("20_roar")
+color = Color(1, 0.4, 0.3, 0.55)
 
 [node name="Health" type="Node" parent="Hand"]
 script = ExtResource("13_health")

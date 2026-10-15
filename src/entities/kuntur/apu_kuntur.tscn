@@ -22,3 +22,9 @@ mesh = ExtResource("4_ala_izq")
 
 [node name="Wing" parent="Body/WingRight" index="0"]
 mesh = ExtResource("5_ala_der")
+
+[node name="Roar" parent="Body" index="2"]
+color = Color(1, 0.85, 0.4, 0.6)
+size = 3.0
+reach = 2.4
+shake = 0.7

@@ -42,6 +42,7 @@ const FEATHER_COLOR := Color(0.92, 0.9, 0.86)
 @onready var wing_left: Node3D = %WingLeft
 @onready var wing_right: Node3D = %WingRight
 @onready var muzzle: Marker3D = %Muzzle
+@onready var roar_fx: Roar = %Roar
 @onready var aim_mark: MeshInstance3D = %AimMark
 @onready var impact: Hitbox = %Impact
 @onready var light_catch: StaticBody3D = %LightCatch
@@ -115,9 +116,19 @@ func reset() -> void:
 	_set_suns(false)
 
 
+## Mira al player, abre las alas, levanta la cabeza y grita; anda también en la pausa de la presentación.
 func roar() -> void:
+	var player := Players.nearest(global_position)
+	if player:
+		_face(player.global_position - global_position)
 	_wings(1.0, 10.0, 0.6)
-	Feel.sfx(&"roar", body.global_position, true)
+	var tween := body.create_tween().set_parallel()
+	tween.tween_property(body, ^"rotation:x", -0.45, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.tween_property(wing_left, ^"rotation:z", 1.1, 0.2)
+	tween.tween_property(wing_right, ^"rotation:z", -1.1, 0.2)
+	tween.chain().tween_interval(roar_fx.duration)
+	tween.chain().tween_property(body, ^"rotation:x", 0.0, 0.3)
+	roar_fx.play()
 
 
 func _process(delta: float) -> void:

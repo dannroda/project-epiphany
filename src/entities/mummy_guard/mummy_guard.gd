@@ -32,6 +32,7 @@ enum State { IDLE, HOP, AIM, FALL, STUCK, DEAD }
 @export var rage_leaps := 1
 
 @onready var body: Node3D = %Body
+@onready var roar_fx: Roar = %Roar
 @onready var aim_mark: MeshInstance3D = %AimMark
 @onready var waves: Array[MeshInstance3D] = [%Wave, %Wave2]
 @onready var impact: Hitbox = %Impact
@@ -75,6 +76,23 @@ func start() -> void:
 	add_to_group(Enemy.GROUP)
 	config.apply_to(self)
 	_run()
+
+
+## Presentación: mira al player, se echa para atrás, se hincha y grita.
+func roar() -> void:
+	var player := Players.nearest(global_position)
+	if player:
+		var look := Vector3(player.global_position.x, body.global_position.y, player.global_position.z)
+		if not look.is_equal_approx(body.global_position):
+			body.look_at(look, Vector3.UP, true)
+	var rest := body.scale
+	var tween := body.create_tween()
+	tween.tween_property(body, ^"scale", rest * Vector3(1.12, 1.08, 1.12), 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(body, ^"rotation:x", -0.18, 0.18)
+	tween.tween_interval(roar_fx.duration)
+	tween.tween_property(body, ^"scale", rest, 0.3)
+	tween.parallel().tween_property(body, ^"rotation:x", 0.0, 0.3)
+	roar_fx.play()
 
 
 func reset() -> void:

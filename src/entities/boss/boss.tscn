@@ -1,5 +1,6 @@
 [gd_scene format=3]
 
+[ext_resource type="Script" path="res://src/feel/roar.gd" id="20_roar"]
 [ext_resource type="Script" path="res://src/entities/boss/boss.gd" id="1_boss"]
 [ext_resource type="Script" path="res://src/entities/boss/boss_hand.gd" id="2_hand"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_cuerpo.res" id="3_body"]
@@ -525,6 +526,17 @@ shape = SubResource("SphereShape3D_body")
 [node name="Eye" type="Node3D" parent="Body"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 1.38)
+
+[node name="Roar" type="Node3D" parent="Body/Eye"]
+unique_name_in_owner = true
+process_mode = 3
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 1.3)
+script = ExtResource("20_roar")
+color = Color(1, 0.45, 0.3, 0.6)
+size = 3.2
+reach = 2.5
+shake = 0.7
+rings = 5
 
 [node name="Mesh" type="MeshInstance3D" parent="Body/Eye"]
 mesh = ExtResource("4_eye")

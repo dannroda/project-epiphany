@@ -98,6 +98,7 @@ var _transforming := false
 
 @onready var body: Node3D = $Body
 @onready var eye: Node3D = %Eye
+@onready var roar_fx: Roar = %Roar
 @onready var orb_muzzle: Marker3D = %OrbMuzzle
 @onready var hand_left: BossHand = $HandLeft
 @onready var hand_right: BossHand = $HandRight
@@ -413,6 +414,15 @@ static func compensated(values: Array) -> float:
 	for value: float in values:
 		result *= value + (1.0 - value) * make_up * value
 	return result
+
+
+## Presentación: el ojo se abre de par en par y grita.
+func roar() -> void:
+	var open := eye.create_tween()
+	open.tween_property(self, ^"eye_open", 1.0, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	open.tween_interval(roar_fx.duration)
+	open.tween_property(self, ^"eye_open", 0.0, 0.4)
+	roar_fx.play()
 
 
 func look_at_point(point: Vector3) -> void:

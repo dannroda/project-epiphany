@@ -13,7 +13,6 @@ signal attack_finished
 enum State { IDLE, UNDER, RISE, AIM, LUNGE, STUCK, RETURN, DEAD }
 
 const ORB := preload("res://src/entities/projectile.tscn")
-const ROAR_RING := preload("res://src/entities/amaru/roar_ring.tscn")
 
 @export var config: EntityConfig
 ## Los charcos por donde asoma (en la sala).
@@ -30,8 +29,6 @@ const ROAR_RING := preload("res://src/entities/amaru/roar_ring.tscn")
 @export var spit_damage := 1
 ## Alto del cuerpo asomado (la cabeza).
 @export var rise_height := 1.8
-@export var roar_time := 1.0
-@export var roar_rings := 4
 ## Dónde queda el cuello tirado en el piso, para que la cabeza caiga donde está ella.
 @export var flat_offset := Vector3(0, 0.4, 1.0)
 
@@ -40,7 +37,7 @@ const ROAR_RING := preload("res://src/entities/amaru/roar_ring.tscn")
 @onready var head: Node3D = %Head
 @onready var _head_rest := head.position
 @onready var jaw: Node3D = %Jaw
-@onready var mouth: Node3D = %Mouth
+@onready var roar_fx: Roar = %Roar
 @onready var aim_line: MeshInstance3D = %AimLine
 @onready var impact: Hitbox = %Impact
 @onready var hurtbox: Hurtbox = %Hurtbox
@@ -99,8 +96,8 @@ func reset() -> void:
 	_pose_risen()
 
 
-## Al empezar la pelea: mira al player, abre la boca y grita, con ondas que salen de la boca. Corre durante la pausa
-## del acercamiento de la cámara, que deja andar solo a `body`.
+## Al empezar la pelea: mira al player, levanta la cabeza, abre la boca y grita. Corre durante la pausa del
+## acercamiento de la cámara, que deja andar solo a `body`.
 func roar() -> void:
 	var player := Players.nearest(global_position)
 	if player:
@@ -109,28 +106,10 @@ func roar() -> void:
 	var tween := body.create_tween()
 	tween.tween_property(jaw, ^"rotation:x", jaw_rest - 0.9, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tween.parallel().tween_property(head, ^"rotation:x", 0.6, 0.18)
-	tween.tween_interval(roar_time)
+	tween.tween_interval(roar_fx.duration)
 	tween.tween_property(jaw, ^"rotation:x", jaw_rest, 0.3)
 	tween.parallel().tween_property(head, ^"rotation:x", 0.0, 0.3)
-	Feel.sfx(&"roar", mouth.global_position, true)
-	Feel.shake(0.5)
-	for i in roar_rings:
-		get_tree().create_timer(0.12 + i * roar_time / roar_rings, true).timeout.connect(_roar_ring)
-
-
-func _roar_ring() -> void:
-	var ring := ROAR_RING.instantiate() as MeshInstance3D
-	ring.top_level = true
-	body.add_child(ring)
-	var forward := -mouth.global_basis.z
-	ring.global_transform = Transform3D(Basis.looking_at(forward) * Basis(Vector3.RIGHT, -PI / 2.0), mouth.global_position)
-	ring.scale = Vector3(0.3, 0.3, 0.3)
-	var material := (ring.mesh as PrimitiveMesh).material as StandardMaterial3D
-	var tween := ring.create_tween().set_parallel()
-	tween.tween_property(ring, ^"scale", Vector3(1.9, 0.5, 1.9), 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	tween.tween_property(ring, ^"global_position", mouth.global_position + forward * 1.6, 0.5)
-	tween.tween_property(material, ^"albedo_color:a", 0.0, 0.5)
-	tween.chain().tween_callback(ring.queue_free)
+	roar_fx.play()
 
 
 func is_vulnerable() -> bool:
