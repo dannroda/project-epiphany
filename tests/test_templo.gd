@@ -246,23 +246,43 @@ func test_the_four_rematches_open_the_seal() -> void:
 	state.reset()
 
 
-func test_the_combined_room_guards_its_prize() -> void:
+func test_the_combined_room_is_three_waves_with_mini_sub_bosses_and_the_golden_sword() -> void:
 	await _start()
-	_feather()
-	var gate := _node("BossKeyGate") as Gate
-	gate.reveal_on_open = false
-	state.set_flag(&"te_combined_eye", true)
+	var spawner := _node("CombinedWaves") as WaveSpawner
+	var chest := _node("CombinedChest") as Chest
+	var door := _node("CombinedDoor") as Door
+	assert_eq(spawner.waves().size(), 3, "tres oleadas")
+	assert_true(not chest.visible, "sin cofre hasta vencerlas")
+	assert_true(chest.big and chest.item.id == &"sword_golden", "cofre grande con la espada dorada")
+	door.open(false)
+	spawner.wave = 1
+	spawner.start()
+	await tree.create_timer(0.3).timeout
+	assert_true(not door.is_open, "la puerta se cierra durante las oleadas")
+	spawner.wave = 1
+	spawner._next_wave()
 	await tree.create_timer(0.5).timeout
-	assert_true(not gate.is_open, "falta el haz")
-	state.set_flag(&"te_combined_crystal", true)
-	assert_true(await _until(func() -> bool: return gate.is_open, 3.0), "ojo y cristal abren el nicho")
-	await _drop(_in("Combinada", Vector3(4, 0.5, 3)))
-	assert_eq(camera.room, _room("Combinada"))
-	await tree.create_timer(0.8).timeout
-	player.global_position = _in("Combinada", Vector3(0, 0.5, 2))
-	await tree.create_timer(0.4).timeout
-	await _jump(&"move_forward")
-	assert_true(player.global_position.z < _in("Combinada", Vector3(0, 0, -1)).z and player.global_position.y > -0.3, "con la pluma salta el hueco hasta el nicho (%s)" % player.global_position.snappedf(0.1))
+	var mummy: Node3D = spawner._alive.filter(func(enemy: Node3D) -> bool: return enemy is MummyGuard)[0]
+	assert_true(mummy.state != MummyGuard.State.IDLE, "la momia mini pelea sola en la oleada")
+	assert_true(mummy.scale.x < 1.0 and mummy.health.max_health < 12, "y es chica")
+	for enemy: Node3D in spawner._alive.duplicate():
+		enemy.health.damage(999)
+	assert_true(await _until(func() -> bool: return chest.visible, 6.0), "vencida la tercera aparece el cofre")
+	assert_true(door.is_open, "y se abre la puerta")
+	assert_true(state.get_flag(&"te_combined_waves") == true)
+	state.reset()
+
+
+func test_getting_the_golden_sword_equips_it_with_its_trail() -> void:
+	await _start()
+	var before := player.sword_trail.color_gradient
+	state.give(Items.get_item(&"sword_golden"))
+	await tree.process_frame
+	assert_eq(player.equipment.weapon.id, &"sword_golden", "se equipa sola")
+	assert_eq(player.sword_trail.color_gradient, Items.get_item(&"sword_golden").trail, "estela dorada")
+	state.equip(Items.get_item(&"sword_basic"))
+	await tree.process_frame
+	assert_eq(player.sword_trail.color_gradient, before, "con la común vuelve la de siempre")
 	state.reset()
 
 

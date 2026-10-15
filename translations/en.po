@@ -675,6 +675,15 @@ msgstr "A simple, trusty one-handed sword. Strikes ahead and pushes back."
 msgid "ITEM_SWORD_BASIC_GOT"
 msgstr "You got the Sword!"
 
+msgid "ITEM_SWORD_GOLDEN_NAME"
+msgstr "Golden Sword"
+
+msgid "ITEM_SWORD_GOLDEN_DESC"
+msgstr "A one-handed sword forged in gold. Hits twice as hard as the plain sword and leaves a golden trail."
+
+msgid "ITEM_SWORD_GOLDEN_GOT"
+msgstr "You got the Golden Sword!"
+
 msgid "ITEM_TUNIC_NAME"
 msgstr "Tunic"
 
@@ -961,6 +970,10 @@ msgstr "It's locked."
 msgctxt "door_boss_locked_1"
 msgid "Una cerradura enorme. Hace falta una llave especial."
 msgstr "A huge lock. It needs a special key."
+
+msgctxt "get_sword_golden_1"
+msgid "Se equipa sola. Pega el doble que la espada de siempre."
+msgstr "It equips itself. Hits twice as hard as your old sword."
 
 msgctxt "get_bow_1"
 msgid "Mantené el botón para tensar y apuntá con el stick izquierdo o el mouse; al soltar, dispara. Si tenés un objetivo fijado, la flecha va directo hacia él."

@@ -38,6 +38,7 @@ signal escaped
 
 ## Qué controles lee (13.2); existe desde que se instancia, así `Players` le asigna el slot antes de sumarlo.
 var controls := PlayerControls.new()
+var _default_trail: Gradient
 ## Lo que frena el suelo (agua baja): multiplica la velocidad al caminar.
 var ground_speed := 1.0
 ## Dónde pisó suelo por última vez (los pozos lo devuelven a esa orilla).
@@ -85,6 +86,7 @@ func _ready() -> void:
 	targeting.target_changed.connect(func(target: Node3D) -> void: movement_state.blackboard.set_var(PlayerState.BB_TARGET, target))
 	movement_state.initialize(self)
 	movement_state.set_active(true)
+	_default_trail = sword_trail.color_gradient
 	equipment.weapon_changed.connect(func(_item: ItemData) -> void: _fit_sword_trail())
 	_fit_sword_trail()
 
@@ -98,6 +100,7 @@ func _physics_process(delta: float) -> void:
 
 ## La estela cubre la hoja del arma: del 35 % al extremo del eje más largo de sus mallas (Trail3D abre el ancho en Z local).
 func _fit_sword_trail() -> void:
+	sword_trail.color_gradient = equipment.weapon.trail if equipment.weapon and equipment.weapon.trail else _default_trail
 	var socket := equipment.weapon_socket
 	var box := AABB()
 	var found := false
@@ -308,7 +311,7 @@ func _on_hit_landed(target: Hurtbox) -> void:
 	if Feel.settings.sparks_on_hit:
 		var away := target.global_position - global_position
 		away.y = 0.0
-		Feel.burst(&"sparks", target.global_position + Vector3.UP * 0.8, away.normalized() + Vector3.UP * 0.3)
+		Feel.burst(equipment.weapon.hit_burst if equipment.weapon else &"sparks", target.global_position + Vector3.UP * 0.8, away.normalized() + Vector3.UP * 0.3)
 
 
 func _on_died() -> void:

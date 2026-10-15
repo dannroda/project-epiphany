@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bn5pjgpia5grm" path="res://src/items/item_data.gd" id="1_p363h"]
 [ext_resource type="Resource" uid="uid://bi2c5w2j6fqyy" path="res://data/items/sword_basic.tres" id="2_jn4gg"]
+[ext_resource type="Resource" path="res://data/items/sword_golden.tres" id="2_golden"]
 [ext_resource type="Resource" path="res://data/items/shield_wood.tres" id="3_j1dr6"]
 [ext_resource type="Resource" path="res://data/items/shield_mirror.tres" id="4_2avqm"]
 [ext_resource type="Resource" path="res://data/items/tunic.tres" id="5_0jxo4"]
@@ -32,4 +33,4 @@
 
 [resource]
 script = ExtResource("19_0lh3u")
-items = Array[ExtResource("1_p363h")]([ExtResource("2_jn4gg"), ExtResource("3_j1dr6"), ExtResource("4_2avqm"), ExtResource("5_0jxo4"), ExtResource("6_fr6c6"), ExtResource("7_tf4ty"), ExtResource("8_hu1gi"), ExtResource("9_axpd1"), ExtResource("10_h10lr"), ExtResource("20_feather"), ExtResource("20_sandals"), ExtResource("20_hookshot"), ExtResource("21_bottle1"), ExtResource("21_bottle2"), ExtResource("21_bottle3"), ExtResource("21_bottle4"), ExtResource("11_qdb6h"), ExtResource("12_oejcp"), ExtResource("13_70lmf"), ExtResource("14_aber8"), ExtResource("14_piece"), ExtResource("15_fk3p1"), ExtResource("16_6khe1"), ExtResource("17_br7di"), ExtResource("18_rasc4"), ExtResource("18_piece"), ExtResource("19_holy")])
+items = Array[ExtResource("1_p363h")]([ExtResource("2_jn4gg"), ExtResource("2_golden"), ExtResource("3_j1dr6"), ExtResource("4_2avqm"), ExtResource("5_0jxo4"), ExtResource("6_fr6c6"), ExtResource("7_tf4ty"), ExtResource("8_hu1gi"), ExtResource("9_axpd1"), ExtResource("10_h10lr"), ExtResource("20_feather"), ExtResource("20_sandals"), ExtResource("20_hookshot"), ExtResource("21_bottle1"), ExtResource("21_bottle2"), ExtResource("21_bottle3"), ExtResource("21_bottle4"), ExtResource("11_qdb6h"), ExtResource("12_oejcp"), ExtResource("13_70lmf"), ExtResource("14_aber8"), ExtResource("14_piece"), ExtResource("15_fk3p1"), ExtResource("16_6khe1"), ExtResource("17_br7di"), ExtResource("18_rasc4"), ExtResource("18_piece"), ExtResource("19_holy")])

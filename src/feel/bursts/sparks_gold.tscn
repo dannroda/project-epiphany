@@ -1,0 +1,31 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8f0h1"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 0.7, 0.18, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_qgsc0"]
+material = SubResource("StandardMaterial3D_8f0h1")
+radius = 0.026
+height = 0.16
+radial_segments = 4
+rings = 1
+
+[sub_resource type="Curve" id="Curve_mxio3"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.6, 0.8), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="SparksGold" type="CPUParticles3D" unique_id=1842762189]
+emitting = false
+amount = 26
+lifetime = 0.25
+one_shot = true
+explosiveness = 0.9
+mesh = SubResource("SphereMesh_qgsc0")
+particle_flag_align_y = true
+spread = 70.0
+gravity = Vector3(0, -6, 0)
+initial_velocity_min = 4.5
+initial_velocity_max = 8.0
+scale_amount_curve = SubResource("Curve_mxio3")

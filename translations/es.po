@@ -675,6 +675,15 @@ msgstr "Una espada de una mano, sencilla y confiable. Pega de frente y empuja."
 msgid "ITEM_SWORD_BASIC_GOT"
 msgstr "¡Conseguiste la Espada!"
 
+msgid "ITEM_SWORD_GOLDEN_NAME"
+msgstr "Espada dorada"
+
+msgid "ITEM_SWORD_GOLDEN_DESC"
+msgstr "Una espada de una mano forjada en oro. Pega el doble que la espada común y deja una estela dorada."
+
+msgid "ITEM_SWORD_GOLDEN_GOT"
+msgstr "¡Conseguiste la Espada dorada!"
+
 msgid "ITEM_TUNIC_NAME"
 msgstr "Túnica"
 

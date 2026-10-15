@@ -5292,11 +5292,18 @@ Daniel (2026-10-14): el templo, como mazmorra final, es un boss-rush: cada una d
 
 **Notas:** Diseño acordado con Daniel (2026-10-14). Cada ala son dos salas: un mini puzzle corto con el ítem del ala, que abre la arena, y la revancha. Pluma: Mallqui; Arco: los Ojos de la Queñoa; Gancho: Yacumama; Espejo: Apu Kuntur (placeholder hasta 11.129). Cada revancha ganada da una pieza de la llave del jefe (item get) y enciende el ojo del ala en el sello; con las 4 piezas se arma la llave del jefe. El sello sigue abriendo la Antesala. La Mano y la Combinada quedan opcionales, con premio: espada mejorada (Daniel eligió la opción 1). Parte 1 en 7e75dd5d (piezas, HUD, rematch). Parte 2: las BossFight de las cuatro mazmorras copiadas a las salas Ojo, con su puerta; las revanchas de la pluma y del arco hacen aparecer las llaves chicas; brújula del otro lado de los huecos de la Pluma; los ojos sobre el abismo pasan al Arco y abren BowDoor; fuera el muro agrietado, el acorazado, el haz y los ojos-placa. El cofre de la Combinada tiene una pieza de corazón hasta 11.183.
 
-### 11.183 Espada mejorada (premio de la Combinada del templo) · Pendiente
+### 11.183 Espada mejorada (premio de la Combinada del templo) · En curso
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `templo`, `items`
 
 Daniel (2026-10-14) la eligió como premio de la Combinada (opcional) del templo en vez de una botella o un contenedor de corazón (11.182). Doble daño, estela del tajo dorada, quizás elemento luz que le pega más fuerte al Ojo. Necesita modelo o paleta para la espada (arte, -5d).
+
+- [x] Ítem sword_golden: doble daño, se equipa sola, item get
+- [x] Estela dorada y chispas doradas al pegar (ItemData.trail / hit_burst)
+- [x] Combinada: tres oleadas variadas con sub-jefes mini (Momia, Vigía); vencidas aparece el cofre grande con la espada
+  Daniel 2026-10-14: la sala combinada pasa a oleadas. WaveSpawner suelta sub-jefes (peleadores de ArenaFight) y cierra puertas que no son persianas (doors).
+- [ ] Modelo de la espada dorada (-5d) e ícono
+  Hasta entonces, la espada común con material dorado (assets/items/sword/sword_golden.tscn) y el ícono de la común.
 
 ## M12 — Assets propios (Blender)  (17/34)
 

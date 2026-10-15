@@ -22,6 +22,9 @@ enum Category { SWORD, SHIELD, ARMOR, USABLE, AMMO, DUNGEON, UPGRADE }
 @export_group("Combate")
 @export_range(0, 40, 1, "or_greater") var damage: int = 0 ## En HP (1 corazón = 4)
 @export_range(0.0, 30.0, 0.1, "or_greater") var knockback: float = 0.0
+## Estela del tajo (vacía: la de siempre) y ráfaga de chispas al pegar.
+@export var trail: Gradient
+@export var hit_burst: StringName = &"sparks"
 
 @export_group("Pasivos")
 @export_range(0.0, 1.0, 0.05) var damage_reduction: float = 0.0

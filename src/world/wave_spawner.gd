@@ -2,7 +2,7 @@ class_name WaveSpawner
 extends Node3D
 ## Oleadas de una sala: empiezan al entrar el player y mantienen cerradas sus persianas hasta vencer la última.
 ## Cada hijo directo es una oleada; sus hijos `WaveSpawn` dicen qué enemigo aparece y dónde: cualquier Node3D con
-## `defeated` e `is_dead` (Enemy, Turret).
+## `defeated` e `is_dead` (Enemy, Turret, o un sub-jefe en versión mini).
 ## Hace de interruptor (`active`/`activated`) para lo que se abre al ganar. Con flag, ganada queda ganada.
 
 signal activated
@@ -15,6 +15,8 @@ const GROUP := &"wave_spawners"
 		flag = value
 		update_configuration_warnings()
 @export var wave_delay := 1.0
+## Puertas que no son persianas de la sala: se cierran durante las oleadas y se abren al ganar.
+@export var doors: Array[Door] = []
 
 var active := false
 ## Hay oleadas en curso: la sala no abre sus persianas.
@@ -51,6 +53,8 @@ func start() -> void:
 		return
 	running = true
 	wave = -1
+	for door in doors:
+		door.close()
 	_next_wave()
 
 
@@ -68,10 +72,20 @@ func _next_wave() -> void:
 		var enemy := (spawn as WaveSpawn).enemy.instantiate() as Node3D
 		enemy.position = (get_parent() as Node3D).to_local((spawn as WaveSpawn).global_position)
 		get_parent().add_child(enemy)
+		if enemy.has_signal(&"attack_finished"):
+			_unleash(enemy)
 		_alive.append(enemy)
 		enemy.connect(&"defeated", _on_defeated)
 		Feel.burst(&"dust", enemy.global_position, Vector3.UP)
 	Log.info(&"world", name, "oleada", wave + 1, "de", waves().size())
+
+
+## Un sub-jefe (los peleadores de ArenaFight) en una oleada: pelea solo, dentro de la sala.
+func _unleash(fighter: Node3D) -> void:
+	fighter.arena = room.bounds().grow(-1.5) if room else Rect2(Vector2(fighter.global_position.x, fighter.global_position.z), Vector2.ZERO).grow(6.0)
+	fighter.may_attack = func(_who: Node3D) -> bool: return true
+	fighter.peers = [fighter]
+	fighter.start.call_deferred()
 
 
 func _on_defeated(_enemy: Node3D) -> void:
@@ -88,6 +102,8 @@ func _win(announce: bool) -> void:
 	active = true
 	if _persistent:
 		_persistent.value = true
+	for door in doors:
+		door.open()
 	if announce:
 		Feel.sfx(&"secret", global_position)
 	activated.emit()
