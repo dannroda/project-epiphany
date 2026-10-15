@@ -10,6 +10,8 @@ signal activated
 signal bar_changed
 
 @export var room: Room
+## Fuera de las mazmorras (overworld), en vez de `room`.
+@export var area: ArenaArea
 @export var flag: StringName:
 	set(value):
 		flag = value
@@ -20,6 +22,9 @@ signal bar_changed
 ## Aparece al ganar (el contenedor de corazón): queda fuera del árbol hasta entonces; tomado, no vuelve.
 @export var reward: Pickup
 @export var reward_flag: StringName
+## Monstruos que acompañan al jefe (instancias de escena): aparecen al arrancar la pelea, nuevos cada vez, y también hay
+## que vencerlos para ganar.
+@export var escorts: Array[Node3D] = []
 @export var arena_margin := 1.5
 @export var close_delay := 0.6
 @export var intro_hold := 1.6
@@ -34,6 +39,8 @@ var in_intro := false
 var _fighters: Array = []
 var _attacker = null
 var _persistent: PersistentFlag
+var _escort_spawns: Array[Array] = []
+var _escorts_alive: Array[Node3D] = []
 
 
 func _ready() -> void:
@@ -42,12 +49,17 @@ func _ready() -> void:
 			_fighters.append(child)
 	if reward:
 		remove_child(reward)
+	for escort in escorts:
+		_escort_spawns.append([load(escort.scene_file_path), escort.global_transform])
+		escort.get_parent().remove_child(escort)
+		escort.queue_free()
 	_persistent = $PersistentFlag
 	_persistent.flag = flag
 	if _persistent.value == true:
 		_already_won()
 		return
-	var bounds := room.bounds().grow(-arena_margin)
+	var zone: Node3D = room if room else area
+	var bounds: Rect2 = zone.bounds().grow(-arena_margin)
 	for fighter in _fighters:
 		fighter.arena = bounds
 		fighter.may_attack = _may_attack
@@ -55,8 +67,8 @@ func _ready() -> void:
 		fighter.attack_finished.connect(_on_attack_finished.bind(fighter))
 		fighter.defeated.connect(_on_defeated)
 		fighter.health_changed.connect(bar_changed.emit)
-	room.player_entered.connect(func(_room: Room) -> void: _begin())
-	room.player_left.connect(func(_room: Room) -> void: _reset())
+	zone.player_entered.connect(func(_zone: Node3D) -> void: _begin())
+	zone.player_left.connect(func(_zone: Node3D) -> void: _reset())
 
 
 func _get_configuration_warnings() -> PackedStringArray:
@@ -81,6 +93,7 @@ func _begin() -> void:
 	if not started:
 		return
 	get_tree().call_group(Hud.GROUP, &"show_boss", self)
+	_spawn_escorts()
 	for fighter in _fighters:
 		fighter.start()
 		if rematch:
@@ -108,6 +121,7 @@ func _reset() -> void:
 	get_tree().call_group(Hud.GROUP, &"hide_boss")
 	for fighter in _fighters:
 		fighter.reset()
+	_clear_escorts()
 	for door in doors:
 		door.open(false)
 
@@ -124,12 +138,31 @@ func _on_attack_finished(fighter) -> void:
 		_attacker = null
 
 
+func _spawn_escorts() -> void:
+	_clear_escorts()
+	for spawn in _escort_spawns:
+		var escort := (spawn[0] as PackedScene).instantiate() as Node3D
+		add_child(escort)
+		escort.global_transform = spawn[1]
+		escort.connect(&"defeated", func(_who: Node3D) -> void: _on_defeated(null))
+		_escorts_alive.append(escort)
+		Feel.burst(&"dust", escort.global_position, Vector3.UP)
+
+
+func _clear_escorts() -> void:
+	for escort in _escorts_alive:
+		if is_instance_valid(escort):
+			escort.queue_free()
+	_escorts_alive.clear()
+
+
 func _on_defeated(_fighter) -> void:
 	bar_changed.emit()
 	var left := _fighters.filter(func(fighter) -> bool: return not fighter.is_dead)
 	for fighter in left:
 		fighter.pace = enrage_pace
-	if left.is_empty():
+	var escorts_left := _escorts_alive.any(func(escort: Node3D) -> bool: return is_instance_valid(escort) and not escort.is_dead)
+	if left.is_empty() and not escorts_left and started:
 		await get_tree().create_timer(1.2, false).timeout
 		_win(true)
 

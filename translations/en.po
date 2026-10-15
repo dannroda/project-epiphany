@@ -924,6 +924,9 @@ msgstr "Mallqui, the Ancestor"
 msgid "BOSS_TE_HAND"
 msgstr "The Hand"
 
+msgid "BOSS_OW_CENTINELA"
+msgstr "Necropolis Sentinel"
+
 msgid "BOSS_QV_EYES"
 msgstr "Eyes of the Queñoa"
 
