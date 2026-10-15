@@ -2,14 +2,18 @@
 
 [ext_resource type="Theme" uid="uid://covrlpuexf2af" path="res://src/ui/theme.tres" id="1_theme"]
 [ext_resource type="Script" uid="uid://6pj48g1rapde" path="res://src/ui/title/title_screen.gd" id="2_script"]
-[ext_resource type="VideoStream" path="res://assets/ui/title/flyover.ogv" id="3_video"]
-[ext_resource type="Shader" path="res://src/ui/title/title_blur.gdshader" id="6_blur"]
-[ext_resource type="Texture2D" path="res://assets/ui/logo/epiphany_logo.png" id="7_logo"]
+[ext_resource type="VideoStream" uid="uid://cm67p7rw3vn5s" path="res://assets/ui/title/flyover.ogv" id="3_video"]
 [ext_resource type="PackedScene" uid="uid://pyyqflynppn5" path="res://src/ui/menus/menu_item.tscn" id="4_item"]
 [ext_resource type="Script" uid="uid://jou4nqurtyvf" path="res://src/ui/hint_bar.gd" id="5_hints"]
+[ext_resource type="Shader" uid="uid://dqijm07aajq4x" path="res://src/ui/title/title_blur.gdshader" id="6_blur"]
+[ext_resource type="Texture2D" uid="uid://bgwdparfxiwhe" path="res://assets/ui/logo/epiphany_logo.png" id="7_logo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_blur"]
 shader = ExtResource("6_blur")
+shader_parameter/radius = 4.0
+shader_parameter/dim = 0.55
+shader_parameter/vignette = 0.6
+shader_parameter/tint = Color(0.82, 0.86, 1, 1)
 
 [node name="TitleScreen" type="Control" unique_id=24387741]
 layout_mode = 3
