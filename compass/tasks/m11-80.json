@@ -1,7 +1,7 @@
 {
   "checklist": [
     {
-      "detail": "`defeated_flag`, `container_flag`, `reward: ItemData`, `ending: DialogueResource`; setearlos en temple.tscn.",
+      "detail": "`defeated_flag`, `container_flag`, `reward: ItemData`, `ending: DialogueResource`; setearlos en templo.tscn.",
       "done": true,
       "text": "Exports"
     },
@@ -21,7 +21,7 @@
   "description": "`boss_arena.gd` tiene `DEFEATED_FLAG := &\"d1_boss_defeated\"`, `CONTAINER_FLAG := &\"d1_heart_container\"`, el contenedor y `ending.dialogue` como const. Reusar la arena en D2 marcaría derrotado al jefe de D1 y pondría su final.",
   "files": [
     "src/entities/boss/boss_arena.gd",
-    "levels/temple.tscn"
+    "levels/templo.tscn"
   ],
   "milestone": "m11",
   "notes": "Hecho (fd, 2026-10-14): los flags ya eran exports desde el templo nuevo; ahora también reward (ItemData) y ending (DialogueResource), seteados en templo.tscn (temple.tscn ya no existe). BossArena es @tool y avisa si falta algún flag, el premio o el fin. El premio sale de Pickup.make, el mismo que usa DropTable. Test: test_flags › test_boss_arena_takes_its_flags_and_reward_from_the_scene.",
@@ -37,5 +37,5 @@
   ],
   "test": "tests/test_flags.gd",
   "title": "BossArena tiene los flags y el premio de D1 fijos en el código",
-  "updated_at": "2026-10-14T14:12:41.452Z"
+  "updated_at": "2026-10-15T19:53:47.709Z"
 }

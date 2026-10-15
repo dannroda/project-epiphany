@@ -3,9 +3,9 @@
   "checklist": [],
   "code": "11.180",
   "created_at": "2026-10-14T19:05:08.895Z",
-  "description": "Daniel (2026-10-14): todas las salas de las mazmorras miden 14 de alto y al menos 22 de ancho, como la Chullpa y la Queñoa. Templo tiene salas de 14 × 10 / 14 × 12 y hay que rediseñarla.",
+  "description": "Daniel (2026-10-14; regla que se dejó el 2026-10-15, ahora los tamaños son libres): todas las salas de las mazmorras miden 14 de alto y al menos 22 de ancho, como la Chullpa y la Queñoa. Templo tiene salas de 14 × 10 / 14 × 12 y hay que rediseñarla.",
   "milestone": "m11",
-  "notes": "Hecho en 9dfa381a: las 14 salas del templo pasan a 22 × 14 en la misma grilla, con paredes dobles y reborde; contenido corrido con su sala; navmesh rehorneado; la cámara y la viñeta del nivel toman los valores que Daniel puso para la sala del jefe. El contenido de las alas se rearma en 11.182.",
+  "notes": "Hecho en 9dfa381a: las 14 salas del templo pasan a 22 × 14 en la misma grilla, con paredes dobles y reborde; contenido corrido con su sala; navmesh rehorneado; la cámara y la viñeta del nivel toman los valores que Daniel puso para la sala del jefe. El contenido de las alas se rearma en 11.182.\nDesde el 2026-10-15 el tamaño de sala es libre (viñeta configurable, cada sala centrada en cámara): 22 × 14 queda como el tamaño elegido para el templo, no como regla.",
   "order": 177,
   "priority": "medium",
   "refs": [],
@@ -16,6 +16,6 @@
     "mazmorra"
   ],
   "test": "",
-  "title": "Templo: salas de 14 de alto y al menos 22 de ancho",
-  "updated_at": "2026-10-14T23:45:55.273Z"
+  "title": "Templo: salas rearmadas (22 × 14)",
+  "updated_at": "2026-10-15T19:54:46.894Z"
 }

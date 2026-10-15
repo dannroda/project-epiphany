@@ -11,7 +11,7 @@
     }
   ],
   "milestone": "m12",
-  "notes": "Sin velos (BordeOscuro y borde_oscuro.gdshader fuera). Viñeta TonoLA: frame 0.1, softness 0.8, slant 0.15. la_walls saca paredes de relleno que no dan a piso. Cámara a 38 con south_margin 2: sala de 14 entera y fija. DOF solo cerca de la cámara (9 m), sin desenfoque lejano. Huecos de caída más oscuros con niebla negra. _look reaplica todo en cada refresh. Chullpa: Rellano 22x14, isla de la Sala del Cofre 3x3.",
+  "notes": "Sin velos (BordeOscuro y borde_oscuro.gdshader fuera). Viñeta TonoLA y cámara: valores por nivel, y la viñeta también por sala (frame_sides/top/bottom, grupo Viñeta de AmbienteSala, a48ac690), que Daniel ajusta a ojo. la_walls saca paredes de relleno que no dan a piso. Desde el 2026-10-15 los tamaños de sala son libres (a72b6573): cada sala se centra en cámara y tapa las otras. DOF solo cerca de la cámara (9 m), sin desenfoque lejano. Huecos de caída más oscuros con niebla negra. _look reaplica el resto en cada refresh, sin pisar la viñeta ni la cámara (76336916). Chullpa: Rellano 22x14, isla de la Sala del Cofre 3x3.",
   "order": 32,
   "priority": "high",
   "refs": [],
@@ -24,5 +24,5 @@
   ],
   "test": "tests/test_quenoa.gd, tests/test_chullpa.gd, tests/test_camera.gd, tests/test_coop_camera.gd",
   "title": "Look LA: topes de pared del color del muro y viñeta borrosa en vez del velo negro; desenfoque solo cerca de la cámara",
-  "updated_at": "2026-10-14T19:27:00.361Z"
+  "updated_at": "2026-10-15T19:55:26.352Z"
 }

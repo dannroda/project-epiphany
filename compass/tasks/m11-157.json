@@ -5,7 +5,7 @@
   "created_at": "2026-10-14T04:24:36.528Z",
   "description": "Daniel 2026-10-14: las piezas de los kits LA quedan corridas media celda de la grilla del editor. Causa: los GridMap de las mazmorras tienen cell_center_x/z = false y las mallas de los kits están centradas en su origen (−1..1), así la grilla pasa por el medio de los tiles. En el juego anda porque el código usa la misma convención. Arreglo: cell_center = true y correr cada GridMap −1 m en x y z (nada se mueve en el mundo), o mover el origen de las mallas; revisar la_walls, decorate_levels y los generadores que usan map_to_local. Las cinco mazmorras de una vez.",
   "milestone": "m11",
-  "notes": "Hecho: los GridMap de mazmorras, cuevas y niveles de prueba centran la celda (cell_center x/z) y quedan 1 m atrás en x y z; nada se mueve en el mundo. El overworld queda como estaba (otro generador, lo lleva -eb). Ojo: con esto la_walls refresh mide bien la puerta (antes el punto de adelante caía en la propia celda Puerta y siempre daba 4 m); en la Totora TejedoresLocked y AmaruLocked pasarían a 2 m al volver a correr refresh (no está aplicado).",
+  "notes": "Hecho: los GridMap de mazmorras, cuevas y niveles de prueba centran la celda (cell_center x/z) y quedan 1 m atrás en x y z; nada se mueve en el mundo. El overworld queda como estaba (otro generador, lo lleva -eb). Ojo: con esto la_walls refresh mide bien la puerta (antes el punto de adelante caía en la propia celda Puerta y siempre daba 4 m); en la Totora TejedoresLocked y AmaruLocked pasarían a 2 m al volver a correr refresh; el refresh ya se aplicó en 761d59a4 (AmaruLocked, TejedoresLocked, GanchoDoor y BossDoor pasan a 2 m).",
   "order": 154,
   "priority": "medium",
   "refs": [],
@@ -17,5 +17,5 @@
   ],
   "test": "",
   "title": "Mazmorras: los tiles del GridMap no se alinean con la grilla del editor",
-  "updated_at": "2026-10-14T04:33:02.650Z"
+  "updated_at": "2026-10-15T19:54:34.736Z"
 }

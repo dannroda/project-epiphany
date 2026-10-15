@@ -14,17 +14,18 @@
   "code": "11.31",
   "created_at": "2026-10-10T05:29:46.683Z",
   "description": "Un sub-jefe a mitad del templo: un chullpa guardián gigante con patrón propio que custodia el arco; al vencerlo aparece el cofre.",
+  "done_at": "2026-10-15T19:55:31.669Z",
   "milestone": "m11",
-  "notes": "",
+  "notes": "Reemplazada por 11.113: el arco es de D2 (Ojo Vigía) y el sub-jefe del templo es La Mano",
   "order": 31,
   "priority": "low",
   "refs": [],
-  "status": "todo",
+  "status": "done",
   "tags": [
     "jefe",
     "enemigos"
   ],
   "test": "Llegar al sub-jefe, vencerlo con espada y escudo, y obtener el arco; al cargar no reaparece.",
   "title": "Sub-jefe del templo",
-  "updated_at": "2026-10-11T07:51:06.052Z"
+  "updated_at": "2026-10-15T19:55:31.669Z"
 }

@@ -6,14 +6,14 @@
       "text": "Softblocks de D1"
     },
     {
-      "detail": "Decidido con Daniel el 2026-10-12, cambiado en 11.113: D1 arco (mazmorra nueva), D2 pluma, D3 gancho (11.30), D4 escudo espejo; el templo del ojo es la última. Los guantes de fuerza quedan fuera. El disco solar queda como ítem opcional. Documento: https://claude.ai/code/artifact/4fce85f9-7f11-4285-9d2e-bb1d58b45b4e",
+      "detail": "Decidido con Daniel el 2026-10-12, cambiado en 11.113: D1 Chullpa (pluma), D2 Queñoa (arco), D3 Totora (gancho, 11.30), D4 Cumbre (escudo espejo); el templo del ojo es la última. Los guantes de fuerza quedan fuera. El disco solar queda como ítem opcional. Documento: https://claude.ai/code/artifact/4fce85f9-7f11-4285-9d2e-bb1d58b45b4e",
       "done": true,
       "text": "Ítem por mazmorra"
     },
     {
-      "detail": "Hecho el 2026-10-12. D1: sin sala de la pluma (puerta tapiada), sin la fila de huecos del Puzzle ni el escalón de la Antesala; navmesh del templo horneada de nuevo. D2: la isla de la Chullpa da la pluma y lo que pedía gancho pasa a pluma (11.60, paso 8). La pieza de la pradera y la angostura quedan para después de D2.",
+      "detail": "Hecho el 2026-10-12. Templo viejo: sin sala de la pluma (puerta tapiada), sin la fila de huecos del Puzzle ni el escalón de la Antesala. La isla de la Chullpa da la pluma (ch_feather_chest) y lo que pedía gancho pasa a pluma (11.60, paso 8). Con 11.113 la Chullpa pasó a ser D1. La pieza de la pradera y la angostura quedan para después de la Chullpa.",
       "done": true,
-      "text": "Mudar la pluma a D2"
+      "text": "Mudar la pluma a la Chullpa"
     },
     {
       "detail": "Hecho: se la quitan el gancho (sin dañarlo), la bomba y el martillazo (golpe fuerte); enemy.gd _armor_stops. Tests: test_hookshot, test_armored_skeleton.",
@@ -47,19 +47,19 @@
   ],
   "code": "11.90",
   "created_at": "2026-10-12T08:16:27.659Z",
-  "description": "Playtest del 2026-10-12: la primera mazmorra ya tiene varios softblocks, y la pluma está en D1 cuando debería ser de D2 (si no se mira el mapa, su sala pasa desapercibida). D1 tiene el arco como su ítem. Rediseñar qué ítem da cada mazmorra, cómo se enseña y prueba dentro de ella, y dónde gatea el overworld, respetando que un ítem de la mazmorra N no gatea nada de las anteriores.",
+  "description": "Playtest del 2026-10-12: la primera mazmorra ya tiene varios softblocks, y la pluma estaba en la mazmorra del arco (si no se mira el mapa, su sala pasa desapercibida). Rediseñar qué ítem da cada mazmorra, cómo se enseña y prueba dentro de ella, y dónde gatea el overworld, respetando que un ítem de la mazmorra N no gatea nada de las anteriores. Cadena actual (11.113): D1 Chullpa (pluma), D2 Queñoa (arco), D3 Totora (gancho), D4 Cumbre (escudo espejo), templo del ojo al final.",
   "milestone": "m11",
   "notes": "Sesión: diseño (-43), con Daniel; antes overworld (-74). Toca 11.35/11.61 (pluma en D1 y en el overworld), los angostos de la quebrada (7.9), 11.30 (gancho, pasa a D3), 11.31 (sub-jefe con el arco) y la armadura del esqueleto.",
   "order": 87,
   "priority": "high",
   "refs": [],
   "size": "l",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "diseno",
     "nivel"
   ],
   "test": "",
   "title": "Diseño de mazmorras, ítems y su reparto en el overworld",
-  "updated_at": "2026-10-15T18:20:08.408Z"
+  "updated_at": "2026-10-15T19:52:54.929Z"
 }

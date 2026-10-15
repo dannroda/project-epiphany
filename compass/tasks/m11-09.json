@@ -11,9 +11,9 @@
       "text": "Sacar las islas arriba de paredes y acantilados"
     },
     {
-      "detail": "Botón Bake de cada NavigationRegion3D (levels/overworld.tscn, temple.tscn, test.tscn, dungeon_test.tscn, test_rooms.tscn).",
+      "detail": "Botón Bake de cada NavigationRegion3D (levels/overworld.tscn, templo.tscn, chullpa.tscn, quenoa.tscn, totora.tscn, cumbre.tscn, test.tscn, dungeon_test.tscn, test_rooms.tscn).",
       "done": false,
-      "text": "Rehornear overworld, templo y niveles de prueba"
+      "text": "Rehornear overworld, mazmorras y niveles de prueba"
     },
     {
       "detail": "src/entities/enemy.tscn › NavigationAgent3D. Probar persecución alrededor de columnas y esquinas de puerta.",
@@ -32,7 +32,11 @@
   "files": [
     "src/entities/enemy.tscn",
     "levels/overworld.tscn",
-    "levels/temple.tscn"
+    "levels/templo.tscn",
+    "levels/chullpa.tscn",
+    "levels/quenoa.tscn",
+    "levels/totora.tscn",
+    "levels/cumbre.tscn"
   ],
   "milestone": "m11",
   "notes": "",
@@ -50,5 +54,5 @@
   ],
   "test": "Con Debug › Visible Navigation, la navmesh se ve pegada al piso y no hay islas arriba de las paredes; los enemigos persiguen alrededor de columnas y por las puertas sin quedarse girando en una esquina; test_enemy_ai pasa.",
   "title": "Navmesh sobre el piso",
-  "updated_at": "2026-10-11T08:02:57.240Z"
+  "updated_at": "2026-10-15T19:53:33.237Z"
 }

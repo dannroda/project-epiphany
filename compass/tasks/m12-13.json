@@ -63,15 +63,15 @@
     }
   ],
   "milestone": "m12",
-  "notes": "Con el estilo Wind Waker elegido (12.12), todo el juego tiene que convivir con el personaje nuevo. Primero se mide cuánto resuelve el shader: todas las piezas epi comparten el material de paleta (data/kits/materials/epiphany.tres), así que el cel shading se prueba en el mundo entero de una vez. Recién ahí se decide qué hay que remodelar. Lo que siga siendo KayKit va a desentonar más.",
+  "notes": "Con el estilo Wind Waker elegido (12.12), todo el juego tiene que convivir con el personaje nuevo. Primero se mide cuánto resuelve el shader: todas las piezas epi comparten el material de paleta (data/kits/materials/epiphany.tres), así que el cel shading se prueba en el mundo entero de una vez. Recién ahí se decide qué hay que remodelar. Lo que siga siendo KayKit va a desentonar más.\nEn pausa: depende del rumbo toon de 12.12, que se descartó (8cfecf85).",
   "order": 13,
   "priority": "medium",
   "refs": [],
-  "status": "todo",
+  "status": "paused",
   "tags": [
     "arte"
   ],
   "test": "",
   "title": "Reajuste de estilo toon de todos los assets",
-  "updated_at": "2026-10-11T07:50:16.636Z"
+  "updated_at": "2026-10-15T19:55:21.364Z"
 }

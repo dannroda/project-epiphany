@@ -13,7 +13,7 @@
   ],
   "code": "11.178",
   "created_at": "2026-10-14T19:05:08.294Z",
-  "description": "Daniel (2026-10-14): todas las salas de las mazmorras miden 14 de alto y al menos 22 de ancho, como la Chullpa y la Queñoa. Totora tiene salas de 14 × 10 / 14 × 12 y hay que rediseñarla.",
+  "description": "Daniel (2026-10-14, ajustado el 2026-10-15): cada sala de la Totora se centra en cámara y tapa las otras. Los tamaños son libres (viñeta y cámara configurables); ya no hace falta 14 × ≥22.",
   "milestone": "m11",
   "notes": "Daniel (2026-10-15): como en 11.179, con la viñeta y la cámara configurables ya no hace falta 14 × ≥22; las salas pueden medir distinto, pero cada una se centra en cámara y tapa las otras. Pasa de rediseño a revisión.",
   "order": 175,
@@ -27,5 +27,5 @@
   ],
   "test": "",
   "title": "Totora: cada sala centrada en cámara y tapando las otras",
-  "updated_at": "2026-10-15T03:58:26.076Z"
+  "updated_at": "2026-10-15T19:54:35.315Z"
 }

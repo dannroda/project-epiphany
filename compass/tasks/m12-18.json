@@ -26,9 +26,9 @@
       "text": "Bloque empujable y placa en estilo LA"
     },
     {
-      "detail": "Hecho el 2026-10-13 (9db90fc3). Comparado con Daniel contra la curva real de LA (RenderDoc) y un intermedio; eligió el actual sin viñeta. La marca de bake pasa a BrilloLA.",
+      "detail": "Hecho el 2026-10-13 (9db90fc3). Comparado con Daniel contra la curva real de LA (RenderDoc) y un intermedio; eligió el actual sin viñeta. La marca de bake pasa a BrilloLA. Después 12.32 trajo la viñeta borrosa, ajustable por nivel y por sala.",
       "done": true,
-      "text": "Look final: el actual sin viñeta"
+      "text": "Look final: el actual sin viñeta (reemplazado por 12.32)"
     },
     {
       "detail": "En curso con Daniel: lo que salga del recorrido (paredes, puertas, props) lo arregla la sesión de arte con la-walls refresh; diseño (-43) hace el jefe de la Chullpa en B-NE y avisa antes si necesita tocar paredes.",
@@ -57,5 +57,5 @@
   ],
   "test": "",
   "title": "Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos",
-  "updated_at": "2026-10-15T03:54:15.177Z"
+  "updated_at": "2026-10-15T19:55:27.200Z"
 }

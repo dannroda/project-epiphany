@@ -11,7 +11,7 @@
     }
   ],
   "milestone": "m11",
-  "notes": "",
+  "notes": "Hecha la primera mitad, la máscara de cámara que oculta el piso de abajo (d5e0d9a5, 2751c841). Después 12.32 cambió cómo se ven los pisos de abajo: por los huecos se ve la sala de abajo más oscura (86d81aef). El bloque verde de la pared agrietada lo cubre el muro agrietado LA de 12.24 (f269322c, 091f56e5).",
   "order": 148,
   "priority": "medium",
   "refs": [],
@@ -24,5 +24,5 @@
   ],
   "test": "",
   "title": "Totora 2P: se ve la sala del piso de abajo",
-  "updated_at": "2026-10-14T04:20:18.994Z"
+  "updated_at": "2026-10-15T19:54:37.600Z"
 }

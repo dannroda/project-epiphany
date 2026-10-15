@@ -11,7 +11,7 @@
       "text": "Vencer no reabre la puerta: el portal es la única salida"
     },
     {
-      "detail": "Al entrar al BossExitPortal (required_flag d1_boss_defeated) se abre la pantalla de fin en vez de viajar directo. Guardar checkpoint antes, así el progreso del jefe queda.",
+      "detail": "Al entrar al BossExitPortal (required_flag te_boss_defeated, en levels/templo.tscn) se abre la pantalla de fin en vez de viajar directo. Guardar checkpoint antes, así el progreso del jefe queda.",
       "done": true,
       "text": "El portal del jefe dispara el fin de la demo"
     },
@@ -26,7 +26,7 @@
       "text": "Diálogo de fin de demo: seguir, revancha o menú"
     },
     {
-      "detail": "Recarga la arena con el jefe vivo aunque d1_boss_defeated esté en true (modo revancha en BossArena, no se borra el flag ni se guarda nada a mitad). Puerta cerrada e intro como siempre; morir reinicia la revancha. Al ganar no reaparece el contenedor (d1_heart_container) y el portal vuelve a abrir el diálogo de fin.",
+      "detail": "Recarga la arena con el jefe vivo aunque te_boss_defeated esté en true (modo revancha en BossArena, no se borra el flag ni se guarda nada a mitad). Puerta cerrada e intro como siempre; morir reinicia la revancha. Al ganar no reaparece el contenedor (te_heart_container) y el portal vuelve a abrir el diálogo de fin.",
       "done": true,
       "text": "Revancha contra el jefe"
     },
@@ -66,5 +66,5 @@
   ],
   "test": "Desde pre_boss: vencer al jefe y tomar el contenedor no corta el juego ni reabre la puerta; el portal es la única salida y abre el diálogo de fin de demo. Seguir jugando lleva al overworld con el progreso guardado; Volver a retar recarga la pelea completa y al ganar no da otro contenedor; Volver al menú va al título y al cargar el jefe no reaparece.",
   "title": "Fin de la demo",
-  "updated_at": "2026-10-15T03:54:15.058Z"
+  "updated_at": "2026-10-15T19:53:46.855Z"
 }

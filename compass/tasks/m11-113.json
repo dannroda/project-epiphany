@@ -1,7 +1,7 @@
 {
   "checklist": [
     {
-      "detail": "Decidido con Daniel el 2026-10-12: D1 arco (mazmorra nueva), D2 pluma (Chullpa), D3 gancho, D4 escudo espejo, y el templo del ojo como última mazmorra (usa todos los ítems). Los guantes de fuerza quedan fuera. Cada ítem lo guarda un sub-jefe basado en el jefe de su mazmorra, que se vence sin ese ítem; la segunda mitad de la mazmorra se resuelve con el ítem, combinado con los de mazmorras anteriores (ej.: en D2 una torre pide un flechazo para activar el puzzle previo al sub-jefe de la pluma). Falta: qué es D1 y dónde está; qué da el santuario. GDD §6.2.",
+      "detail": "Decidido con Daniel el 2026-10-12 (D1 y D2 invertidos después, paso 9): D1 Chullpa (pluma), D2 Queñoa (arco), D3 Totora (gancho), D4 Cumbre (escudo espejo), y el templo del ojo como última mazmorra (usa todos los ítems, no da ítem). Los guantes de fuerza quedan fuera. Cada ítem lo guarda un sub-jefe basado en el jefe de su mazmorra, que se vence sin ese ítem; la segunda mitad de la mazmorra se resuelve con el ítem, combinado con los de mazmorras anteriores. GDD §6.2.",
       "done": true,
       "text": "Cadena nueva de mazmorras e ítems (con Daniel)"
     },
@@ -61,29 +61,30 @@
       "text": "Templo: la Mano, sub-jefe"
     },
     {
-      "done": false,
+      "detail": "Hecho (ec19eb0b, 30a2703c): ala del gancho con Gancho y GanchoPit en levels/templo.tscn.",
+      "done": true,
       "text": "Templo: ala del gancho (con 11.30)"
     },
     {
-      "detail": "Hecho el 2026-10-13 (ca9d975d, Daniel: sigue): la puerta del templo del overworld (TempleDoor) lleva a levels/templo.tscn, spawn start en el vestíbulo; la mazmorra es te. levels/temple.tscn queda como nivel de prueba (sus tests lo cargan directo). test_portal, test_overworld_run, test_temple_seal y test_coop_camera al día.",
+      "detail": "Hecho el 2026-10-13 (ca9d975d, Daniel: sigue): la puerta del templo del overworld (TempleDoor) lleva a levels/templo.tscn, spawn start en el vestíbulo; la mazmorra es te. levels/temple.tscn se borró después en 11.162 (072e1094). test_portal, test_overworld_run, test_temple_seal y test_coop_camera al día.",
       "done": true,
       "text": "Templo: el portal del overworld al templo nuevo"
     }
   ],
   "code": "11.113",
   "created_at": "2026-10-12T20:36:35.429Z",
-  "description": "Daniel (2026-10-12): el jefe del ojo se pensó como fin de demo, así que tiene sentido que sea el final del juego. El templo (hoy D1) pasa a ser D4, la última; el escudo espejo pasa a ser lo que se consigue para entrar a la última mazmorra (el sello de luz). Hay que ampliar el templo para que use todos los ítems. Cambia la cadena de 11.90 (qué es D1 ahora, de dónde sale el arco, qué pasa con la mazmorra de la Cumbre) y el reparto del overworld (7.10).",
+  "description": "Daniel (2026-10-12): el jefe del ojo se pensó como fin de demo, así que tiene sentido que sea el final del juego. El templo pasa a ser la última mazmorra, después de D4; el escudo espejo (ítem de D4) es lo que se consigue para entrar (el sello de luz). Cadena actual: D1 Chullpa (pluma), D2 Queñoa (arco), D3 Totora (gancho), D4 Cumbre (escudo espejo) y el templo del ojo al final (sin ítem). Hay que ampliar el templo para que use todos los ítems. Cambia la cadena de 11.90 y el reparto del overworld (7.10).",
   "milestone": "m11",
   "notes": "Sesión: diseño (-43 [a7e236]), con Daniel. Overworld (-eb) acomoda el boceto de 7.10 cuando esté la cadena.\nDaniel (2026-10-14) confirma: el templo del ojo con manos es la última mazmorra.",
   "order": 110,
   "priority": "high",
   "refs": [],
-  "status": "todo",
+  "status": "review",
   "tags": [
     "diseno",
     "nivel"
   ],
   "test": "",
   "title": "El templo del ojo pasa a ser la última mazmorra",
-  "updated_at": "2026-10-15T16:51:22.829Z"
+  "updated_at": "2026-10-15T19:52:53.874Z"
 }

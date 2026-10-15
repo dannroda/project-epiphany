@@ -2,11 +2,11 @@
   "assignee": "project-epiphany-43",
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "Misma sala: hay una puerta bloqueada que no se ve (el player choca contra algo invisible en el hueco de la pared). La puerta tiene que verse."
     },
     {
-      "done": false,
+      "done": true,
       "text": "Causa probable: la \"puerta bloqueada\" del oeste de la Copa es NidoCrackedWall (muro agrietado → Nido, se abre con bomba), instancia de cracked_wall_templo.tscn, y no se ve. Sin verla, la Queñoa parece imposible sin arco (playtest: 'todos los caminos bloqueados'). Hacerla visible con el estilo de la Queñoa."
     }
   ],
@@ -19,7 +19,7 @@
     "compass/images/m11-141-20261013-225858.png"
   ],
   "milestone": "m11",
-  "notes": "Hecho. 1) El símbolo azul era el candado (SouthMark) que door.gd dibuja en el piso cuando la cámara recorta la pared sur; con las paredes LA el recorte (3.6) pasa la hoja (3 m) y además la estiraba x1.5. door.gd usa ahora el alto real de la hoja: si el recorte no la corta, ni la estira ni muestra el candado (test_doors). 2) NidoCrackedWall estaba en el medio del paso LA, tapado por el velo negro del grosor de pared: ahora tiene una cara en cada lado del paso (como las hojas de las puertas), con la malla clara de muro agrietado, y colisión/hurtbox que llenan el paso (test_quenoa). El look final de madera LA llega con 12.24 (-5d).",
+  "notes": "Hecho. 1) El símbolo azul era el candado (SouthMark) que door.gd dibuja en el piso cuando la cámara recorta la pared sur; con las paredes LA el recorte (3.6) pasa la hoja (3 m) y además la estiraba x1.5. door.gd usa ahora el alto real de la hoja: si el recorte no la corta, ni la estira ni muestra el candado (test_doors). 2) NidoCrackedWall estaba en el medio del paso LA, tapado por el velo negro del grosor de pared: ahora tiene una cara en cada lado del paso (como las hojas de las puertas), con la malla clara de muro agrietado, y colisión/hurtbox que llenan el paso (test_quenoa). Después ese muro de dos caras se reemplazó por el muro agrietado LA de 12.24 (f269322c, 091f56e5).",
   "order": 138,
   "priority": "high",
   "refs": [],
@@ -31,5 +31,5 @@
   ],
   "test": "tests/test_quenoa.gd",
   "title": "Queñoa 2P (Canopy): símbolo azul sin sentido y puerta bloqueada invisible",
-  "updated_at": "2026-10-14T03:21:29.250Z"
+  "updated_at": "2026-10-15T19:54:34.158Z"
 }

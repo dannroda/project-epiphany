@@ -13,17 +13,18 @@
   "code": "11.185",
   "created_at": "2026-10-15T05:16:49.961Z",
   "description": "En algunas corridas de la suite completa, un worker muere con signal 11 justo después de 'ERROR: /root: The caller thread can't call the function propagate_notification() on this node' durante SceneFlow.travel_to (carga con load_threaded_request). Última vez el 2026-10-15, viajando overworld → shrine_cave (test_cave/test_portal); log en debug/tmp/fd/crash_propagate_2026-10-15.log. Pasa de vez en cuando (la corrida siguiente da 546/0). En el código del juego no hay set_locale ni propagate_notification durante la carga: falta encontrar qué recurso, al cargarse en el hilo, le avisa al árbol. Puede pasar también jugando.",
+  "done_at": "2026-10-15T19:55:32.752Z",
   "milestone": "m11",
   "notes": "2026-10-15 (-fd), with the symbols build (11.188), crash caught in a run with --jobs=6: signal 11 in AudioServer::_mix_step (audio_server.cpp:243), audio thread (AudioDriverDummy), StringName::hash() on a bus name already freed. The propagate_notification error is a consequence: Godot's crash handler sends NOTIFICATION_CRASH to the SceneTree from the thread that crashed. Cause: every volume_db change makes AudioServer swap the playback's bus_details and free the old one 2 main-thread frames later (graveyard in _cleanup_lists); at headless test speed (hundreds of fps) the mixer can still be using the old one. music.gd set the volume of its 5 layers every frame even without changes. Fix: only set it when it changes. Engine race (could be reported upstream).",
   "order": 182,
   "priority": "high",
   "refs": [],
   "size": "m",
-  "status": "review",
+  "status": "done",
   "tags": [
     "bug"
   ],
   "test": "",
   "title": "Crash intermitente al viajar: propagate_notification desde el hilo de carga",
-  "updated_at": "2026-10-15T12:20:54.283Z"
+  "updated_at": "2026-10-15T19:55:32.752Z"
 }

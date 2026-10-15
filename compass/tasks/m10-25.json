@@ -71,7 +71,7 @@
       "text": "Build en máquina limpia (10.9)"
     },
     {
-      "detail": "10.23 verificada (~16 s, estable). 10.8 la reemplazan 10.24–10.26: en Opciones, Tope de FPS (30/60/120/sin tope) cambia al instante y se guarda; las sombras del sol y las paredes se ven igual que antes, sin tirones.",
+      "detail": "10.23 verificada (~16 s, estable). 10.8 la reemplazan 10.24–10.26: en Opciones, Tope de FPS (30/60/120/sin tope) cambia al instante y se guarda; las sombras del sol y las paredes se ven igual que antes, sin tirones. Las tarjetas 10.8, 10.23 y 10.24–10.26 ya están cerradas; falta solo la pasada de Daniel.",
       "done": false,
       "text": "Cerrar 10.8 y 10.23; rendimiento (10.24–10.26)"
     },
@@ -81,7 +81,7 @@
       "text": "Cuerpos (11.58)"
     },
     {
-      "detail": "Opciones → Ver controles: el diagrama del control que estés usando; Y (o T) cambia entre gamepad y teclado. Pausa → Sistema: a la derecha los controles; Guardar pisa la partida cargada (pregunta antes); Cargar te deja elegir el último checkpoint o el guardado; volver al título pregunta. Los botones tienen recuadro.",
+      "detail": "Opciones → Ver controles: el diagrama del control que estés usando; Y (o T) cambia entre gamepad y teclado. Pausa → Sistema: a la derecha los controles; Guardar pisa la partida cargada (pregunta antes); Cargar te deja elegir el último checkpoint o el guardado; volver al título pregunta. Los botones tienen recuadro. La tarjeta 10.29 ya está cerrada; falta solo la pasada de Daniel.",
       "done": false,
       "text": "Controles y pestaña Sistema (10.29)"
     },
@@ -254,5 +254,5 @@
   ],
   "test": "",
   "title": "Playtest de revisión (lo que está en Revisión)",
-  "updated_at": "2026-10-12T17:32:56.383Z"
+  "updated_at": "2026-10-15T19:53:05.903Z"
 }

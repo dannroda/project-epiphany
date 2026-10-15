@@ -1,7 +1,7 @@
 {
   "checklist": [
     {
-      "detail": "tests/test_portals.gd: instancia cada levels/*.tscn, y cada Portal que viaja apunta a una escena que existe y que tiene un SpawnPoint con su target_spawn. Encontró la salida de la Chullpa sin punto de llegada: Spawn_chullpa provisorio en la Necrópolis (la entrada de verdad es 7.9 paso 4).",
+      "detail": "tests/test_portals.gd: instancia cada levels/*.tscn, y cada Portal que viaja apunta a una escena que existe y que tiene un SpawnPoint con su target_spawn. Encontró la salida de la Chullpa sin punto de llegada; hoy Spawn_chullpa está frente a la torre en los Cerros del oeste (1f791fc9, 93ee37e6).",
       "done": true,
       "text": "Test de todos los portales"
     },
@@ -37,5 +37,5 @@
   ],
   "test": "Un test recorre todos los portales de levels/ y comprueba escena y SpawnPoint; mover un nivel no rompe una partida guardada.",
   "title": "Niveles referenciados por ruta: saves y portales frágiles",
-  "updated_at": "2026-10-12T01:19:44.985Z"
+  "updated_at": "2026-10-15T19:53:48.273Z"
 }

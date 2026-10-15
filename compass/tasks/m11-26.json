@@ -6,14 +6,14 @@
       "text": "Sala de oleadas"
     },
     {
-      "detail": "Cota reforzada, carcaj o pieza de corazón.",
+      "detail": "Pieza de corazón u otra cosa (ver el total de 11.124). La cota reforzada y el carcaj ya se consiguen en otro lado (santuario, 11.113 paso 5; Risco, 11.90 paso 5).",
       "done": false,
       "text": "Recompensa"
     }
   ],
   "code": "11.26",
   "created_at": "2026-10-10T05:29:41.451Z",
-  "description": "Una sala de combate opcional: 3 oleadas mezclando enemigos con la puerta cerrada hasta terminar y una recompensa al final (cota reforzada, carcaj o pieza de corazón).",
+  "description": "Una sala de combate opcional: 3 oleadas mezclando enemigos con la puerta cerrada hasta terminar y una recompensa al final (pieza de corazón u otra; la cota reforzada ya la da el santuario después de D4 y el carcaj el Risco).",
   "milestone": "m11",
   "notes": "",
   "order": 26,
@@ -25,5 +25,5 @@
   ],
   "test": "Entrar, sobrevivir las 3 oleadas, la puerta abre y aparece la recompensa; no se repite al cargar.",
   "title": "Prueba de combate opcional",
-  "updated_at": "2026-10-11T07:51:03.667Z"
+  "updated_at": "2026-10-15T19:54:10.146Z"
 }

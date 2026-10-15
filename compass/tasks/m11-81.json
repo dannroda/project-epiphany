@@ -1,7 +1,7 @@
 {
   "checklist": [
     {
-      "detail": "dungeon.gd: `&\"\"` y config warning; poner `id = &\"d1\"` en temple.tscn.",
+      "detail": "dungeon.gd: `&\"\"` y config warning; cada mazmorra con su id explícito (templo.tscn: te).",
       "done": true,
       "text": "Id vacío por defecto + aviso"
     },
@@ -21,7 +21,7 @@
   "description": "`Dungeon.id` vale `&\"d1\"` por defecto y temple.tscn depende de eso (no tiene `id =`). Una mazmorra nueva que olvide el id comparte llaves, mapa y brújula con D1 sin aviso. `PersistentFlag.PREFIXES` es una lista fija `ow_, d0_..d3_` y SaveCodec deriva la sección del prefijo: D4 requiere tocar código.",
   "files": [
     "src/world/dungeon.gd",
-    "levels/temple.tscn",
+    "levels/templo.tscn",
     "src/save/save_codec.gd"
   ],
   "milestone": "m11",
@@ -38,5 +38,5 @@
   ],
   "test": "tests/test_flags.gd",
   "title": "Dungeon.id por defecto d1 y prefijos de flags fijos",
-  "updated_at": "2026-10-14T14:12:41.699Z"
+  "updated_at": "2026-10-15T19:53:47.992Z"
 }

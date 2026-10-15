@@ -11,7 +11,7 @@
   "created_at": "2026-10-15T16:57:34.641Z",
   "description": "Daniel (2026-10-15): un evento de mini jefe en el overworld, en una zona después de D2, hace aparecer el martillo. Definir el ítem: ItemData, el golpe fuerte (qué HitBox/AttackData lo marca como golpe fuerte, para que la placa STRIKE lea lo mismo), qué rompe o activa, su lugar en la cadena (después de D2: sirve en D3+ y el overworld, nunca gatea D1/D2) y GDD §6. Modelo listo: assets/epiphany/meshes/equipo/martillo.res (-5d).",
   "milestone": "m11",
-  "notes": "Hecho el 2026-10-15 (a124b61b): data/items/hammer.tres (id hammer, ítem de botón, 1 corazón de daño). StrikeBehavior: animación Melee_2H_Attack_Chop; en use_at clava src/items/hammer/hammer_strike.tscn (una Hitbox de 1,1 m de radio, 3 cuadros, polvo y temblor) a 1,2 m hacia donde mira el player, y el martillo se ve en la mano del arma mientras dura (assets/items/hammer/hammer.tscn, para ajustar a ojo). Golpe fuerte: DamageInfo.strong, que pone Hitbox.strong o AttackData.strong; lo leen Breakable.needs_strong (la espada rebota), las guardias de escudo y las corazas (como la bomba); la placa STRIKE (11.193) tiene que leer info.strong. Ícono, textos es/en, GDD §6.1, test_hammer. Falta: que Daniel lo pruebe (momento del impacto, pose en la mano) y el mini jefe que lo da (11.192, -eb).",
+  "notes": "Hecho el 2026-10-15 (a124b61b): data/items/hammer.tres (id hammer, ítem de botón, 1 corazón de daño). StrikeBehavior: animación Melee_2H_Attack_Chop; en use_at clava src/items/hammer/hammer_strike.tscn (una Hitbox de 1,1 m de radio, 3 cuadros, polvo y temblor) a 1,2 m hacia donde mira el player, y el martillo se ve en la mano del arma mientras dura (assets/items/hammer/hammer.tscn, para ajustar a ojo). Golpe fuerte: DamageInfo.strong, que pone Hitbox.strong o AttackData.strong; lo leen Breakable.needs_strong (la espada rebota), las guardias de escudo y las corazas (como la bomba); la placa STRIKE (11.193) también (19adbaeb). Ícono, textos es/en, GDD §6.1, test_hammer. El mini jefe que lo da ya está (11.192). Falta solo que Daniel lo pruebe (momento del impacto, pose en la mano).",
   "order": 188,
   "priority": "medium",
   "refs": [],
@@ -24,5 +24,5 @@
   ],
   "test": "",
   "title": "Martillo: ítem de golpe fuerte",
-  "updated_at": "2026-10-15T19:32:57.317Z"
+  "updated_at": "2026-10-15T19:55:23.730Z"
 }
