@@ -23,16 +23,16 @@ theme_override_constants/h_separation = 16
 theme_override_constants/v_separation = 16
 columns = 4
 
-[node name="Bottles" type="VBoxContainer" parent="Rows"]
+[node name="Bottles" type="VBoxContainer" parent="Rows" unique_id=176463145]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="BottlesTitle" type="Label" parent="Rows/Bottles"]
+[node name="BottlesTitle" type="Label" parent="Rows/Bottles" unique_id=1598545299]
 layout_mode = 2
 theme_type_variation = &"Caps"
 text = "ITEMS_BOTTLES"
 
-[node name="BottleGrid" type="GridContainer" parent="Rows/Bottles"]
+[node name="BottleGrid" type="GridContainer" parent="Rows/Bottles" unique_id=384864955]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/h_separation = 16
@@ -60,7 +60,7 @@ theme_override_constants/v_separation = 10
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Coop" type="VBoxContainer" parent="."]
+[node name="Coop" type="VBoxContainer" parent="." unique_id=851067855]
 unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(340, 0)
@@ -68,17 +68,17 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 14
 
-[node name="CoopTitle" type="Label" parent="Coop"]
+[node name="CoopTitle" type="Label" parent="Coop" unique_id=1406864632]
 layout_mode = 2
 theme_type_variation = &"Caps"
 text = "ITEMS_COOP_TITLE"
 
-[node name="Cards" type="VBoxContainer" parent="Coop"]
+[node name="Cards" type="VBoxContainer" parent="Coop" unique_id=1989933843]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 14
 
-[node name="CoopHint" type="Label" parent="Coop"]
+[node name="CoopHint" type="Label" parent="Coop" unique_id=547812148]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"Hint"
