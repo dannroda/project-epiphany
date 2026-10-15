@@ -1,7 +1,7 @@
 shader_type spatial;
 // El material de paleta (epiphany.tres) para lo de afuera: con sombras de nubes, viento (wind.gdshaderinc) y el brillo
 // de las mazmorras (palette_surface). En las caras de arriba, detalle en coordenadas de mundo según el color: losas
-// sueltas con tierra entre medio en la piedra (floor_earth por instancia: 0 = todo losas), piedritas en la tierra y
+// sueltas con tierra entre medio en la piedra (floor_earth: 0 = todo losas, epiphany_outdoor_losas.tres), piedritas en la tierra y
 // parches con matitas en el pasto.
 
 #include "cloud_shadows.gdshaderinc"
@@ -13,7 +13,7 @@ uniform sampler2D emission_texture : source_color, hint_default_black, filter_li
 uniform sampler2D surface_texture : hint_default_white, filter_nearest;
 uniform float emission_energy = 1.5;
 uniform float detail = 1.0;
-instance uniform float floor_earth = 0.6;
+uniform float floor_earth = 0.6;
 
 
 varying vec3 world_pos;

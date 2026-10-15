@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" path="res://src/world/grass.tscn" id="22_o8xrr"]
 [ext_resource type="PackedScene" path="res://src/world/plants/tola.tscn" id="23_o1qjm"]
 [ext_resource type="PackedScene" path="res://src/world/plants/yareta.tscn" id="23_o8xrr"]
+[ext_resource type="Material" path="res://data/kits/materials/epiphany_outdoor_losas.tres" id="24_losas"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lw88o"]
 size = Vector3(1.5914341, 0.55386245, 0.59775823)
@@ -211,8 +212,8 @@ transform = Transform3D(-0.99747807, 0, 0.07097533, 0, 1, 0, -0.07097533, 0, -0.
 
 [node name="FachadaTemplo" type="MeshInstance3D" parent="Zone_templo" unique_id=1413098228]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 5.2, -36.55)
-instance_shader_parameters/floor_earth = 0.0
 mesh = ExtResource("4_1xcut")
+material_override = ExtResource("24_losas")
 
 [node name="FachadaTemploMuros" type="StaticBody3D" parent="Zone_templo" unique_id=1457113940]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 5.2, -36.55)
