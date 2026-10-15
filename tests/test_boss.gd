@@ -527,7 +527,7 @@ func test_keep_playing_finishes_the_trip_to_the_overworld() -> void:
 	await tree.scene_changed
 	assert_eq(tree.current_scene.scene_file_path, "res://levels/overworld.tscn", "seguir jugando lleva al overworld")
 	assert_true(state.get_flag(&"te_boss_defeated") == true, "con el progreso")
-	await tree.create_timer(0.5).timeout
+	assert_true(await _wait_until(func() -> bool: return not tree.root.get_node(^"SceneFlow").traveling, 3.0), "termina el viaje")
 	state.reset()
 
 
