@@ -29,6 +29,7 @@ var active := false
 var _plate_y := 0.0
 var _persistent: PersistentFlag
 var _solved := false
+var _look: Array[Mesh] = []
 
 
 func _ready() -> void:
@@ -54,10 +55,14 @@ func _ready() -> void:
 
 
 func _apply_look() -> void:
-	if plate == null or mode != Mode.BLOCK or block_plate == null:
+	if plate == null:
 		return
-	($Model as MeshInstance3D).mesh = block_frame
-	(plate as MeshInstance3D).mesh = block_plate
+	var model := $Model as MeshInstance3D
+	if _look.is_empty():
+		_look = [model.mesh, (plate as MeshInstance3D).mesh]
+	var block := mode == Mode.BLOCK and block_plate != null
+	model.mesh = block_frame if block else _look[0]
+	(plate as MeshInstance3D).mesh = block_plate if block else _look[1]
 
 
 func _get_configuration_warnings() -> PackedStringArray:
