@@ -5311,15 +5311,15 @@ Daniel (2026-10-14) la eligió como premio de la Combinada (opcional) del templo
 - [x] Modelo de la espada dorada (-5d) e ícono
   Hasta entonces, la espada común con material dorado (assets/items/sword/sword_golden.tscn) y el ícono de la común.
 
-### 11.184 Risco: la franja del gancho no tiene bajada · Pendiente
+### 11.184 Risco: la franja del gancho no tiene bajada · Revisión
 
 **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`, `overworld`
 
 Daniel (2026-10-14, captura): arriba de la franja norte del Risco (nivel 2, x 70-88, z -38..-32, con RiscoPost y el ojo) no hay forma de bajar. Se sube solo con el gancho desde el pasillo bajo; al sur el RiscoPit, al norte y este la montaña, al oeste 5,2 m de caída al pasillo con la baranda invisible. La única salida es tirarse al abismo.
 
-- [ ] Poste del gancho en el borde de la Cumbre, frente a la franja
+- [x] Poste del gancho en el borde de la Cumbre, frente a la franja
   Daniel (2026-10-14): alcanza con el poste, es barato; sin salto.
-- [ ] Test: desde la franja se vuelve sin caer al abismo
+- [x] Test: desde la franja se vuelve sin caer al abismo
 
 ## M12 — Assets propios (Blender)  (17/34)
 
