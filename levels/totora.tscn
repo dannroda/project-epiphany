@@ -1102,7 +1102,7 @@ rise_height = 3.0
 flat_offset = Vector3(0, 0.6, 1.6)
 
 [node name="HeartContainer" type="Area3D" parent="PisoBajo/BossFight" unique_id=1939312166 instance=ExtResource("34_0sq8t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -3)
 collision_layer = 0
 monitorable = false
 script = ExtResource("35_6ch0c")
@@ -1114,7 +1114,7 @@ world_size = 1.4
 heart_mesh = ExtResource("37_oqocf")
 
 [node name="BossExitPortal" type="Area3D" parent="PisoBajo" unique_id=1851388071 instance=ExtResource("38_607qk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 9)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 6)
 script = ExtResource("39_056xl")
 target_scene = "res://levels/overworld.tscn"
 target_spawn = &"totora"

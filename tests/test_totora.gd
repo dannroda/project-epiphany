@@ -254,3 +254,14 @@ func test_the_timed_eye_opens_the_boss_key_gate_and_the_hole_is_the_way_out() ->
 	await _drop(_in("PisoAlto/Tejedores", Vector3(-4, 0.5, -4)))
 	assert_eq(camera.room, _room("PisoBajo/Gancho"), "el hueco junto al cofre cae a la cámara del gancho")
 	tree.root.get_node(^"GameState").reset()
+
+
+func test_the_boss_portal_opens_at_the_center_of_the_room() -> void:
+	var level := (load("res://levels/totora.tscn") as PackedScene).instantiate()
+	var room := level.get_node(^"PisoBajo/Jefe") as Node3D
+	var portal := level.get_node(^"PisoBajo/BossExitPortal") as Node3D
+	var fight := level.get_node(^"PisoBajo/BossFight") as Node3D
+	var heart := fight.position + (fight.get_node(^"HeartContainer") as Node3D).position
+	assert_true(Vector2(portal.position.x - room.position.x, portal.position.z - room.position.z).length() < 0.5, "el portal en el centro de la sala")
+	assert_true(Vector2(heart.x - portal.position.x, heart.z - portal.position.z).length() > 2.0, "y el corazón aparte, para no viajar al agarrarlo")
+	level.free()
