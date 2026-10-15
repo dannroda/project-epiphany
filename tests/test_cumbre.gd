@@ -146,3 +146,16 @@ func test_the_columns_chasm_is_crossed_only_with_the_hookshot() -> void:
 		player.targeting.clear()
 		assert_true(player.global_position.distance_to(post.global_position) < 1.5, "el gancho cruza hasta %s (%s)" % [post.name, player.global_position.snappedf(0.1)])
 	state.reset()
+
+
+func test_the_snowdrift_eye_is_on_the_north_wall_and_the_map_niche_can_be_walked_into() -> void:
+	await _start()
+	var room := level.get_node(^"PisoBase/Ventisquero") as Room
+	var eye := level.get_node(^"PisoBase/VentisqueroEye") as Node3D
+	assert_true(eye.global_position.z - room.bounds().position.y < 1.0, "el ojo está en la pared norte, a la vista")
+	var map := player.get_world_3d().navigation_map
+	var gate := level.get_node(^"PisoBase/MapGate") as Node3D
+	var front := NavigationServer3D.map_get_closest_point(map, gate.global_position + Vector3(-1.5, 0, 0))
+	var path := NavigationServer3D.map_get_path(map, NavigationServer3D.map_get_closest_point(map, Vector3(40, 0, 21)), front, true)
+	assert_true(front.distance_to(gate.global_position + Vector3(-1.5, 0, 0)) < 0.6 and not path.is_empty() and path[-1].distance_to(front) < 0.1, "se llega caminando a la reja del nicho del mapa")
+	state.reset()

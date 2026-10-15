@@ -570,7 +570,7 @@ Plano aprobado por Daniel el 2026-10-13 ("si, me gusta") y armado en blockout (`
 | Atrio (bajo, centro sur) | Entrada desde el overworld. Un rayo de sol cruza la sala pegado a la pared norte, al lado de un cristal: sin escudo es la promesa del ítem; con él, el cristal abre el nicho de las vasijas (bombas). Abierto a las Columnas y al Ventisquero; al norte, puerta con llave al Nido |
 | Columnas (bajo, SO) | Abismo de 4 celdas con un poste a cada lado: con el gancho, la **llave chica**. Pared rajada (bomba) a la Grieta |
 | Grieta (bajo, NO) | Dos grietas de una celda (pluma) hasta la **brújula** |
-| Ventisquero (bajo, SE) | Dos torretas y columnas de basalto para cubrirse. Del otro lado de un abismo, un ojo en la pared sur (arco) abre la reja del nicho del **mapa** |
+| Ventisquero (bajo, SE) | Dos torretas y columnas de basalto para cubrirse. Un abismo corre por la pared sur; un ojo en la pared norte, entre las torretas (arco), abre la reja del nicho del **mapa** |
 | Nido del Kuntur (bajo, centro norte) | Sub-jefe **Kuntur joven** (`KunturFight`, `cu_kuntur_defeated`; por ahora una momia prestada). Sala sin obstáculos, una vasija en cada esquina. Se vence sin el escudo. Vencido, abre la Cámara |
 | Cámara del escudo (bajo, NE) | Cofre grande del **escudo espejo**. Primer uso: el sol cae del norte, el escudo lo manda al cristal del oeste y se abre la reja de la escalera a la Llegada |
 | Llegada (alto, NE) | Escalera a la Cámara. Abierta a los Espejos |
