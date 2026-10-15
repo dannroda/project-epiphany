@@ -2594,7 +2594,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 
 Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
 
-## M11 — Pulido: contenido y feel  (115/192)
+## M11 — Pulido: contenido y feel  (116/192)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -2660,7 +2660,7 @@ Decorar cada zona del overworld con piezas propias de su ambiente y enmarcar la 
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión); 12.2 Terreno del overworld; 12.3 Lugares del overworld; 12.4 Vegetación y props del overworld
 
-### 11.5 Galería de trampas: pinchos · Revisión
+### 11.5 Galería de trampas: pinchos · En curso
 
 **Prioridad:** media · **Etiquetas:** `mazmorra`
 
@@ -4602,7 +4602,7 @@ Overworld 8 + Gruta, Santuario, Chullpa, Queñoa y templo = 13 piezas con PIECES
 **Notas:** Daniel (2026-10-13): de momento no importa; se revisa cuando se cierre el total de piezas.
 2026-10-15 (-43, 11.190): con la pieza del templo el total es 13 (8 overworld + 5 mazmorras): una de más sobre 12. Quitar una o agregar tres.
 
-### 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · Revisión
+### 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso
 
 **Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `test`, `diseño`
 
@@ -4684,9 +4684,9 @@ Daniel: las bocas de cueva del overworld (la entrada trasera de la ermita, la cu
 
 **Relacionadas:** 11.166 Santuario con una sola entrada: su muro agrietado; 11.168 D4 (Cumbre): entrada exagerada como las otras mazmorras
 
-### 11.131 Pozo junto a la Chullpa: caer sin bombas deja softlock · Revisión
+### 11.131 Pozo junto a la Chullpa: caer sin bombas deja softlock · Hecho
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`
+**Terminada:** 2026-10-15 · **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`
 
 Playtest 2026-10-13: en el overworld, al lado del primer nivel cerca de la cueva de las bombas, hay un pozo/foso con pared agrietada. Si el player cae ahí sin bombas no puede salir (softlock). Necesita una salida que no dependa de bombas (escalón, rampa, o que el pozo no sea accesible antes de tenerlas).
 
@@ -4781,7 +4781,7 @@ Playtest 2026-10-13: en la sala del sub-boss (Guardian) de la primera mazmorra, 
 
 **Capturas:** `compass/images/m11-138-20261013-225004.png`
 
-### 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · Revisión
+### 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · En curso
 
 **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `chullpa`
 
@@ -6727,7 +6727,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 1. [ ] 11.130 Bocas de cueva talladas en el risco · Hecho · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. 
    No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. 
    D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
-2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · Revisión · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
+2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
    El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
 3. [x] 11.111 Cactus, árboles y matas se cortan como el pasto · Hecho · anda
 4. [x] 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · Hecho · anda
@@ -6744,7 +6744,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 13. [x] 7.10 Overworld con forma de Zelda 2D, no cuadrado · Hecho · anda
 14. [ ] Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos · En curso · **falla** — Hay cosas que no tienen estilo
 15. [x] 11.117 Huecos a otro piso se ven distintos de los fosos · Hecho · anda
-16. [ ] 11.5 Galería de trampas: pinchos · Revisión · **falla** — Hay que hacer que la pluma salte mas alto porque los pinchos llegan igual
+16. [ ] 11.5 Galería de trampas: pinchos · En curso · **falla** — Hay que hacer que la pluma salte mas alto porque los pinchos llegan igual
 17. [x] 11.98 La cámara muestra lo que se desbloquea · Hecho · anda
 18. [x] 11.112 Fantasmas al esquivar · Hecho · anda
 19. [x] 11.102 Mapa: nombres de zona chicos y solo los que importan · Hecho · anda
@@ -6773,7 +6773,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 3. [x] 11.166 Santuario con una sola entrada: su muro agrietado · Hecho · anda
 4. [x] 11.146 Overworld: el ojo del puente a la Necrópolis no se ve ni se puede flechar · Hecho · anda
 5. [x] 11.147 Overworld: caer al sector de arriba (entre riscos, junto a la meseta clara) deja softlock · Hecho · anda
-6. [x] 11.131 Pozo junto a la Chullpa: caer sin bombas deja softlock · Revisión · anda
+6. [x] 11.131 Pozo junto a la Chullpa: caer sin bombas deja softlock · Hecho · anda
 7. [x] 11.159 Overworld con el arte de las mazmorras: brillo LA y más detalle en el piso · Hecho · anda
 8. [x] 11.165 La cámara cenital se activa en bordes y muros bajos de una sala · Hecho · anda
 9. [x] 11.29 Overworld después del jefe · Hecho · anda
@@ -6785,7 +6785,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 15. [x] 11.136 Chullpa: la reja de la entrada queda fuera de la pared · Hecho · anda
 16. [ ] 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista · Hecho · **falla** — la pared quebrada sigue el estilo pero no el ancho. La parte negra debería verse como la parte superior. Y la camara debería centrarse mas en lo visible de la sala, no en su posible tamaño completo como rectangulo
 17. [ ] 11.156 Chullpa: se ven los techos (crestas) de las paredes LA horneadas · Hecho
-18. [ ] 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · Revisión · **falla** — se ve horrendo y no soluciona el mismo problema del lado izquierdo
+18. [ ] 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · En curso · **falla** — se ve horrendo y no soluciona el mismo problema del lado izquierdo
 19. [ ] 11.138 Chullpa sub-boss: asset para el cuadrado donde después se salta · Revisión
 20. [x] 11.155 Chullpa: la momia aparece en vez de saltar hacia el player; onda expansiva con shader vistoso · Hecho · anda
 21. [x] 11.169 Galería de trampas: la pluma no salta por encima de los pinchos · Hecho · anda — necesita un poco de fine-tuning, por ahi invisibilidad por 2-4 frames al saltar y aterrizar
@@ -6830,3 +6830,85 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 60. [ ] 11.173 Esqueleto invisible en una mazmorra · Revisión
 61. [ ] 11.170 Atajos: animación del player subiendo y bajando en vez del fundido · Revisión
 62. [ ] 11.174 Overworld (Cumbre): el gancho choca contra una pared invisible · Revisión
+
+### Revisión del 15 de octubre: ruta completa  (5/78 probadas)
+
+1. [ ] 11.192 Overworld: mini jefe después de D2 que da el martillo · Revisión
+2. [ ] 11.191 Martillo: ítem de golpe fuerte · Revisión
+3. [ ] 11.193 Placa de golpe fuerte (modo STRIKE) · Revisión
+4. [ ] 11.196 Overworld: enemigo de montaña en la zona de D4 (atoq, zorro andino en manada) · Revisión
+5. [ ] 11.195 Overworld: entrada de la guarida de los guardias, del otro lado del agua (placeholder) · Revisión
+6. [ ] 11.184 Risco: la franja del gancho no tiene bajada · Revisión
+7. [ ] 11.174 Overworld (Cumbre): el gancho choca contra una pared invisible · Revisión
+8. [x] 11.131 Pozo junto a la Chullpa: caer sin bombas deja softlock · Hecho · anda
+9. [ ] 11.171 Mapa del overworld: el cursor vuelve al player al moverlo hacia un lado · Revisión
+10. [ ] 11.172 Viaje rápido: el foco no va al botón y A abre la pregunta una y otra vez · Revisión
+11. [ ] 12.2 Terreno del overworld · Revisión
+12. [ ] 11.133 Vasija chica cargada no se ve con el x-ray · Revisión — Mejor, pero no tiene que haber x-ray cuando se levanta algo
+13. [ ] 11.170 Atajos: animación del player subiendo y bajando en vez del fundido · Revisión
+14. [ ] 11.88 Niveles referenciados por ruta: saves y portales frágiles · Revisión
+15. [ ] 11.75 AreaZone: id estable para guardar las zonas visitadas · Revisión
+16. [ ] 11.176 Chullpa: llave chica y sótano obligatorios, llave del jefe con vuelta atrás · Revisión
+17. [ ] 11.177 Chullpa sin pared agrietada (fuera el nicho del Rellano) · Revisión
+18. [ ] 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · En curso · **falla** — se ve horrendo y no soluciona el mismo problema del lado izquierdo
+19. [ ] 11.138 Chullpa sub-boss: asset para el cuadrado donde después se salta · Revisión
+20. [ ] 12.31 Chullpa: jefe final momia con aspecto propio · Revisión
+21. [ ] 11.5 Galería de trampas: pinchos · En curso · **falla** — Hay que hacer que la pluma salte mas alto porque los pinchos llegan igual
+22. [ ] 11.173 Esqueleto invisible en una mazmorra · Revisión
+23. [ ] 11.141 Queñoa 2P (Canopy): símbolo azul sin sentido y puerta bloqueada invisible · Revisión
+24. [ ] 11.144 Queñoa S1 (Raíces): reja fuera de la pared y puerta con llave detrás de una reja de puzzle · Revisión
+25. [ ] 11.145 Queñoa S1 (Sala de los ojos): placa que no hace nada, z-fighting en el cofre y símbolo raro en la puerta · Revisión
+26. [ ] 11.160 Ojos de la Queñoa: los párpados siempre se abren y cierran animados · Revisión
+27. [ ] 12.23 Ojos de la Queñoa y Ojo Vigía: modelo propio parecido al ojo del jefe final, más simple · Revisión
+28. [ ] 12.21 Ojo interruptor: la pupila sigue al player y se parece al ojo del jefe final · Revisión
+29. [ ] 11.181 Paredes agrietadas: abren una sala, nunca un nicho (Queñoa y templo) · Revisión
+30. [ ] 11.178 Totora: cada sala centrada en cámara y tapando las otras · Revisión
+31. [ ] 11.149 Al entrar a una sala se puede caer al agua y reaparecer sobre el agua (softlock) · Revisión
+32. [ ] 11.150 Gancho: el targeting marca un poste de otra sala/piso · Revisión
+33. [ ] 11.151 Totora 2P: se ve la sala del piso de abajo · Revisión
+34. [ ] 11.153 Totora: cruce con gancho a través de la puerta no se entiende; poner plataforma/poste en la propia sala · Revisión
+35. [ ] 11.154 Totora: no hay dónde reponer flechas cerca · Revisión
+36. [ ] 11.167 Totora: caer al agua y perder deja al player cayendo al vacío antes de "You Fell" · Revisión
+37. [ ] 12.35 Totora: el hueco de salida de los Tejedores tiene que leerse como caída · Revisión
+38. [ ] 12.36 Totora: los charcos de Amaru y Yacumama, de agua · Revisión
+39. [ ] 11.179 Cumbre: cada sala centrada en cámara y tapando las otras · Revisión
+40. [ ] 11.186 Cumbre: la reja de la llave del jefe tapa la puerta de las Torretas · Revisión
+41. [ ] 11.189 D4: backtracking de la llave del jefe · Revisión
+42. [ ] 12.38 Cóndores de la D4: modelo de arte · Revisión
+43. [ ] 11.113 El templo del ojo pasa a ser la última mazmorra · Revisión
+44. [ ] 11.180 Templo: salas rearmadas (22 × 14) · Revisión
+45. [ ] 11.182 Templo boss-rush: un jefe anterior por ala · Revisión
+46. [ ] 11.183 Espada mejorada (premio de la Combinada del templo) · Revisión
+47. [ ] 11.190 Templo: una pieza de corazón · Revisión
+48. [ ] 11.161 Jefe final: la puerta norte de la sala queda escondida · Revisión
+49. [ ] 11.93 Jefe: aflojar la fase 3 y el modelo que se hunde · Revisión
+50. [ ] 11.194 Jefe final: rayo del ojo con las dos manos fuera de juego · Revisión
+51. [ ] 12.30 Templo: salas que se vean bien para grabar · Revisión
+52. [ ] 12.33 Templo: la Mano sub-jefe con modelo propio · Revisión
+53. [ ] 12.34 Templo: paleta más dorada, como el jefe final, menos celeste · Revisión
+54. [x] 10.19 Fin de la demo · Revisión · anda
+55. [ ] 11.90 Diseño de mazmorras, ítems y su reparto en el overworld · Revisión
+56. [ ] 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la) · Revisión
+57. [ ] 12.37 Rejas con el estilo de cada mazmorra · Revisión
+58. [ ] 12.32 Look LA: topes de pared del color del muro y viñeta borrosa en vez del velo negro; desenfoque solo cerca de la cámara · Revisión
+59. [ ] 11.157 Mazmorras: los tiles del GridMap no se alinean con la grilla del editor · Revisión
+60. [ ] 11.158 Piso LA: patrón de tablones raro · Revisión
+61. [ ] 12.27 VFX mágicos con shaders y partículas (sin texturas) · Revisión
+62. [ ] 12.25 El ojo del logo en game over, selección de idioma y carga · Revisión
+63. [ ] 11.152 Z-target: al activarlo, priorizar el enemigo más cercano · Revisión
+64. [ ] 11.142 Mapa de pausa: LT/RT van rapidísimo; mover con las flechitas · Revisión
+65. [ ] 11.108 Cargar en la misma escena desincroniza puertas y flags · Revisión
+66. [ ] 11.162 Retirar el templo viejo (levels/temple.tscn) · Revisión
+67. [ ] 11.163 Borrar las mallas de la decoración del templo viejo · Revisión
+68. [ ] 11.59 Limpieza de assets sin uso · Revisión
+69. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
+   El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
+70. [ ] 11.80 BossArena tiene los flags y el premio de D1 fijos en el código · Revisión
+71. [ ] 11.81 Dungeon.id por defecto d1 y prefijos de flags fijos · Revisión
+72. [ ] 11.82 Daño que no pasa por el Hurtbox · Revisión
+73. [ ] 11.83 Un solo camino para spawnear proyectiles, bombas y pickups · Revisión
+74. [ ] 11.84 Ítems: que la estrategia decida, no la máquina de estados · Revisión
+75. [ ] 11.85 Combate y HSM: casos que fallan en silencio · Revisión
+76. [ ] 11.86 GameState: escrituras con señal y carga sin emisiones parciales · Revisión
+77. [ ] 11.87 Valores de ajuste al inspector · Revisión
+78. [ ] 10.27 Nodos creados por código pasan a sus .tscn · Revisión

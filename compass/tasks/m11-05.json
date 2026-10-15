@@ -33,11 +33,11 @@
   },
   "priority": "medium",
   "refs": [],
-  "status": "review",
+  "status": "doing",
   "tags": [
     "mazmorra"
   ],
   "test": "En el ala de la pluma del templo (PlumaSpikes) y en la cripta oscura de la Chullpa (CriptaSpikes, B-SO), cruzar los pinchos: se ve venir cada fila (asoma y tintinea), siempre queda un paso y pinchan al player y a los enemigos.",
   "title": "Galería de trampas: pinchos",
-  "updated_at": "2026-10-15T19:53:32.965Z"
+  "updated_at": "2026-10-15T20:33:39.668Z"
 }

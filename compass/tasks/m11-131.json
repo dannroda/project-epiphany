@@ -4,6 +4,7 @@
   "code": "11.131",
   "created_at": "2026-10-14T01:29:57.516Z",
   "description": "Playtest 2026-10-13: en el overworld, al lado del primer nivel cerca de la cueva de las bombas, hay un pozo/foso con pared agrietada. Si el player cae ahí sin bombas no puede salir (softlock). Necesita una salida que no dependa de bombas (escalón, rampa, o que el pozo no sea accesible antes de tenerlas).",
+  "done_at": "2026-10-15T20:33:40.169Z",
   "images": [
     "compass/images/m11-131-20261013-223001.png"
   ],
@@ -16,11 +17,11 @@
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "review",
+  "status": "done",
   "tags": [
     "bug"
   ],
   "test": "Caminar sobre el nivel 1 hacia el sur, desde (-74, -8) hacia el nicho del corazón de los Cerros (al lado de la Cueva de las bombas): la baranda frena y no se cae. Tests: test_the_hills_niche_is_fenced_from_above, test_every_rail_faces_its_terrace.",
   "title": "Pozo junto a la Chullpa: caer sin bombas deja softlock",
-  "updated_at": "2026-10-15T03:54:14.923Z"
+  "updated_at": "2026-10-15T20:33:40.169Z"
 }
