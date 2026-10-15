@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://src/entities/yacumama/yacumama.tscn" id="1_yacumama"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/serpientes_templo/yacumama_templo_cuello.res" id="2_neck"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/serpientes_templo/yacumama_templo_cabeza.res" id="3_head"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/serpientes_templo/yacumama_templo_mandibula.res" id="4_jaw"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/serpientes_templo/yacumama_templo_cola.res" id="5_tail"]
+
+[node name="Yacumama" instance=ExtResource("1_yacumama")]
+
+[node name="Model" parent="Body/Neck"]
+mesh = ExtResource("2_neck")
+
+[node name="Head" parent="Body/Neck"]
+mesh = ExtResource("3_head")
+
+[node name="Jaw" parent="Body/Neck/Head"]
+mesh = ExtResource("4_jaw")
+
+[node name="Roar" parent="Body/Neck/Head"]
+color = Color(0.45, 0.95, 1, 1)
+inner = Color(0.92, 0.45, 0.36, 1)
+
+[node name="TailModel" parent="Tail"]
+mesh = ExtResource("5_tail")

@@ -1,0 +1,21 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://src/entities/kuntur/apu_kuntur.tscn" id="1_apu"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/kuntur_templo/apu_kuntur_templo_cuerpo.res" id="2_cuerpo"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/kuntur_templo/apu_kuntur_templo_ala_izq.res" id="3_ala_izq"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/kuntur_templo/apu_kuntur_templo_ala_der.res" id="4_ala_der"]
+
+[node name="ApuKuntur" instance=ExtResource("1_apu")]
+
+[node name="Model" parent="Body"]
+mesh = ExtResource("2_cuerpo")
+
+[node name="Wing" parent="Body/WingLeft"]
+mesh = ExtResource("3_ala_izq")
+
+[node name="Wing" parent="Body/WingRight"]
+mesh = ExtResource("4_ala_der")
+
+[node name="Roar" parent="Body"]
+color = Color(0.45, 0.95, 1, 1)
+inner = Color(0.92, 0.45, 0.36, 1)
