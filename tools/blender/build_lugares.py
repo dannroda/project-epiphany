@@ -750,22 +750,41 @@ def fachada_templo(p):
 MOUNTAIN_FRONT = 0.6
 
 
+## Subida a la cima al oeste del templo (11.29), en ejes del modelo: el pasillo de la escalera (x, y) sin peñascos y
+## la cornisa de arriba, donde los peñascos no pasan de la altura del pasto del terreno para que se vea plana.
+STAIRS = ((-8.2, -3.8), (-1.6, 2.45))
+LEDGE = ((-9.5, 9.5), (2.45, 4.45), 2.4)
+## Las filas desde la tercera se corren atrás para dejar la cornisa libre.
+LEDGE_PUSH = 1.2
+
+
 def mountain(p):
 	"""El cerro donde está tallado el templo: peñascos redondos apilados a los costados y detrás, más altos hacia
-	atrás, con pasto encima; deja libre el frente del templo (el templo sigue bajo tierra)."""
+	atrás, con pasto encima; deja libre el frente del templo (el templo sigue bajo tierra), el pasillo de la escalera
+	a la cima y la cornisa de arriba (STAIRS, LEDGE)."""
 	rock, grass = [], []
 	for gy in range(5):
 		for gx in range(-7, 8):
 			x = gx * 1.13 + p.rng.uniform(-0.15, 0.15)
 			if abs(x) < 3.9 and gy < 2:
 				continue
+			front = MOUNTAIN_FRONT + gy * 1.4 + (LEDGE_PUSH if gy >= 2 else 0.0)
+			if STAIRS[0][0] < x < STAIRS[0][1] and front < STAIRS[1][1]:
+				continue
 			top = 3.2 + 4.6 * max(0.0, 1.0 - abs(x) / 9.0) + gy * 0.6
 			if abs(x) < 3.0 and gy < 4:
 				top = max(top, 6.6)
+			capped = LEDGE[0][0] < x < LEDGE[0][1] and front + 2.0 > LEDGE[1][0] and front < LEDGE[1][1]
+			if capped:
+				top = LEDGE[2]
 			z = 0.0
 			while z < top:
 				r = p.rng.uniform(0.85, 1.25)
-				y = MOUNTAIN_FRONT + r + gy * 1.4 + (p.rng.uniform(0.0, 0.3) if gy else 0.0)
+				if capped and z + r * 1.3 > top:
+					r = (top - z) / 1.3
+					if r < 0.5:
+						break
+				y = front + r + (p.rng.uniform(0.0, 0.3) if gy else 0.0)
 				faces = p.blob((x, y, z + r * 0.55), r, squash=(1.1, 1.0, 0.75), subdiv=2, rough=0.12, flat_bottom=0.0 if z == 0.0 else None)
 				for f in faces:
 					(grass if f.normal.z > 0.75 and f.calc_center_median().z > top - 0.6 else rock).append(f)
@@ -827,6 +846,31 @@ def sello_ojo(p):
 def sello_iris(p):
 	"""El iris del ojo del sello, aparte para que siga al jugador."""
 	epi.logo_eye(p, Vector((0, 0, 0)), 1.1, depth=0.06, part="iris")
+
+
+def sello_cima(p):
+	"""Sello de la subida a la cima (11.29), el del templo en chico: losa de 2.0 × 2.2 × 0.3 con el origen al pie, marco
+	dorado, banda oscura y media chakana; el ojo (sello_ojo/sello_iris a 0.75) va aparte a 1.25 m."""
+	p.paint(p.box(-1.0, 1.0, -0.15, 0.15, 0.0, 2.2), "sello", z_range=(-0.6, 2.6), vary=0.04)
+	frame = []
+	for x0, x1, z0, z1 in ((-1.0, 1.0, 0.0, 0.1), (-1.0, 1.0, 2.1, 2.2), (-1.0, -0.9, 0.0, 2.2), (0.9, 1.0, 0.0, 2.2)):
+		frame += p.box(x0, x1, -0.19, -0.15, z0, z1)
+	p.paint(frame, "dorado", "MID")
+	band = []
+	for x0, x1, z0, z1 in ((-0.82, 0.82, 0.18, 0.26), (-0.82, 0.82, 1.94, 2.02), (-0.82, -0.74, 0.18, 2.02), (0.74, 0.82, 0.18, 2.02)):
+		band += p.box(x0, x1, -0.18, -0.15, z0, z1)
+	p.paint(band, "sello", "DARK")
+	steps = []
+	for k, w in enumerate((0.8, 0.54, 0.28)):
+		steps += p.box(-w / 2, w / 2, -0.18, -0.15, 0.42 + k * 0.09, 0.51 + k * 0.09 - 0.015)
+	p.paint(steps, "sello", "DARK")
+	gems = []
+	for sx in (-1, 1):
+		for k in range(3):
+			d = p.box(-0.06, 0.06, -0.185, -0.15, -0.06, 0.06)
+			p.transform(d, Matrix.Translation((sx * 0.6, 0, 0.95 + k * 0.28)) @ Matrix.Rotation(math.pi / 4, 4, "Y"))
+			gems += d
+	p.paint(gems, "sello", "LIGHT")
 
 
 def portal_disco(p):
@@ -949,6 +993,7 @@ piece("fachada_templo", 21, fachada_templo, smooth=60)
 piece("sello_losa", 22, sello_losa)
 piece("sello_ojo", 23, sello_ojo)
 piece("sello_iris", 52, sello_iris)
+piece("sello_cima", 53, sello_cima)
 piece("portal_disco", 24, portal_disco)
 piece("portal_anillo", 25, portal_anillo)
 piece("monolito", 26, monolito)
