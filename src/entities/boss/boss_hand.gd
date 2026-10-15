@@ -83,7 +83,7 @@ var rest: Node3D
 ## Mientras el jefe se transforma: no empieza ataques ni recibe golpes.
 var held := false
 ## El color del pulso del lomo (rojo con el jefe corrupto).
-var glow_color := Color(0.45, 0.95, 1.0):
+@export var glow_color := Color(0.45, 0.95, 1.0):
 	set(value):
 		glow_color = value
 		if _pulse_material:

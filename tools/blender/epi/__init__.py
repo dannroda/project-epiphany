@@ -403,7 +403,7 @@ LOGO_GOLD = [
 ]
 
 
-def logo_eye(p, center, width, depth=0.05):
+def logo_eye(p, center, width, depth=0.05, iris=("tela_roja", "DARK")):
 	"""El ojo de art/logo/epiphany_logo.svg en relieve, de frente a -Y y de width de ancho (sin los rayos ni adornos de oro
 	cuenta solo la almendra): rayos arriba, almendra de oro con el blanco, iris rojo con aro, pupila y brillo, barras a los
 	costados y tres colgantes."""
@@ -440,13 +440,13 @@ def logo_eye(p, center, width, depth=0.05):
 	p.paint(white, "hueso", "LIGHT")
 	ring = disc(62, 0.0, depth * 1.5)
 	p.paint(ring, "dorado", "LIGHT")
-	iris = disc(57, 0.0, depth * 1.6)
-	p.paint(iris, "tela_roja", "DARK")
+	iris_faces = disc(57, 0.0, depth * 1.6)
+	p.paint(iris_faces, *iris)
 	pupil = disc(25, 0.0, depth * 1.75)
 	p.paint(pupil, "noche", "MID")
 	glint = disc(9, 0.0, depth * 1.85, x=582, y=150)
 	p.paint(glint, "blanco", "LIGHT")
-	faces = gold + white + ring + iris + pupil + glint
+	faces = gold + white + ring + iris_faces + pupil + glint
 	p.transform(faces, Matrix.Translation(center) @ Matrix.Rotation(math.pi / 2, 4, "X"))
 	return faces
 

@@ -71,6 +71,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, -2.5)
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, -2.5)
 script = ExtResource("2_hand")
+glow_color = Color(1, 0.3, 0.18, 1)
 
 [node name="Mesh" type="MeshInstance3D" parent="Hand"]
 mesh = ExtResource("7_hand_l")
