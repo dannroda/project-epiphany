@@ -129,12 +129,7 @@ func _join_floor_below() -> void:
 ## Un punto al azar de la navmesh a `wander_radius` de su lugar y en su misma sala; INF si no hay (radio 0, navmesh
 ## sin sincronizar o todo cae fuera: un abismo, otra sala).
 func wander_point() -> Vector3:
-	if _home == Vector3.INF:
-		_home = global_position
-		_home_room = null
-		for room: Room in get_tree().get_nodes_in_group(Room.GROUP):
-			if room.contains(_home):
-				_home_room = room
+	home()
 	var map := nav_agent.get_navigation_map()
 	if config.wander_radius <= 0.0 or NavigationServer3D.map_get_iteration_id(map) == 0:
 		return Vector3.INF
@@ -148,6 +143,17 @@ func wander_point() -> Vector3:
 			continue
 		return point
 	return Vector3.INF
+
+
+## Su lugar: donde estaba la primera vez que se pidió (o donde cayó, si bajó de nivel).
+func home() -> Vector3:
+	if _home == Vector3.INF:
+		_home = global_position
+		_home_room = null
+		for room: Room in get_tree().get_nodes_in_group(Room.GROUP):
+			if room.contains(_home):
+				_home_room = room
+	return _home
 
 
 func move_toward_point(point: Vector3, speed: float) -> void:
