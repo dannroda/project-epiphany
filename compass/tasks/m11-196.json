@@ -7,8 +7,8 @@
       "text": "IA y ficha (diseño, -43)"
     },
     {
-      "detail": "Zorro andino low-poly con la paleta; correr, morder, aullar, quieto.",
-      "done": false,
+      "detail": "Hecho (-5d): 11fbebc4 modelo y biblioteca Atoq (idle, walk, run, bite, howl, hit, death); 7873a32b pelo con resortes como la trenza.",
+      "done": true,
       "text": "Modelo y animaciones (arte, -5d)"
     },
     {
@@ -38,5 +38,5 @@
   ],
   "test": "",
   "title": "Overworld: enemigo de montaña en la zona de D4 (atoq, zorro andino en manada)",
-  "updated_at": "2026-10-15T19:37:26.354Z"
+  "updated_at": "2026-10-15T19:37:35.196Z"
 }
