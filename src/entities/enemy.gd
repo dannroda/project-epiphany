@@ -39,6 +39,9 @@ var _guard_pose: PoseOverlay
 var _armor: Node3D
 var _recoil_left := 0.0
 var _airborne := false
+## Donde deambula: donde empezó (o donde cayó) y su sala.
+var _home := Vector3.INF
+var _home_room: Room
 
 var is_dead: bool:
 	get:
@@ -105,6 +108,8 @@ func _physics_process(delta: float) -> void:
 	elif _airborne:
 		_airborne = false
 		_join_floor_below()
+		if _home != Vector3.INF and absf(global_position.y - _home.y) > 1.0:
+			_home = Vector3.INF
 	_turn(delta)
 	if _guard_pose:
 		var goal := 1.0 if is_guarding() and not _is_attacking() else 0.0
@@ -119,6 +124,30 @@ func _join_floor_below() -> void:
 	var landed := DungeonFloor.at_height(get_tree(), global_position.y)
 	if landed and landed != here:
 		reparent.call_deferred(landed)
+
+
+## Un punto al azar de la navmesh a `wander_radius` de su lugar y en su misma sala; INF si no hay (radio 0, navmesh
+## sin sincronizar o todo cae fuera: un abismo, otra sala).
+func wander_point() -> Vector3:
+	if _home == Vector3.INF:
+		_home = global_position
+		_home_room = null
+		for room: Room in get_tree().get_nodes_in_group(Room.GROUP):
+			if room.contains(_home):
+				_home_room = room
+	var map := nav_agent.get_navigation_map()
+	if config.wander_radius <= 0.0 or NavigationServer3D.map_get_iteration_id(map) == 0:
+		return Vector3.INF
+	for i in 6:
+		var angle := randf() * TAU
+		var candidate := _home + Vector3(cos(angle), 0.0, sin(angle)) * randf_range(0.3, 1.0) * config.wander_radius
+		var point := NavigationServer3D.map_get_closest_point(map, candidate)
+		if Vector2(point.x - candidate.x, point.z - candidate.z).length() > 0.5 or absf(point.y - _home.y) > 1.0:
+			continue
+		if _home_room and not _home_room.contains(point):
+			continue
+		return point
+	return Vector3.INF
 
 
 func move_toward_point(point: Vector3, speed: float) -> void:

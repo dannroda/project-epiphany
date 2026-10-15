@@ -148,3 +148,25 @@ func test_meadow_skeletons_reach_the_player() -> void:
 		await tree.physics_frame
 	for enemy: Enemy in enemies:
 		assert_true(enemy.global_position.distance_to(player.global_position) <= enemy.config.attack_range + 0.5, "%s llega al player (quedó en %s)" % [enemy.name, enemy.global_position])
+
+
+func test_an_enemy_that_sees_nobody_wanders_near_its_spot() -> void:
+	var setup: Array = await _load_level()
+	var tree: SceneTree = setup[0]
+	var enemy: Enemy = setup[2]
+	enemy.config = enemy.config.duplicate()
+	enemy.config.vision_range = 0.0
+	enemy.config.wander_pause = Vector2(0.2, 0.4)
+	var home := enemy.global_position
+	var farthest := 0.0
+	var walked := false
+	for i in 600:
+		await tree.physics_frame
+		var away := Vector2(enemy.global_position.x - home.x, enemy.global_position.z - home.z).length()
+		farthest = maxf(farthest, away)
+		walked = walked or enemy.anim_player.current_animation == &"MovementBasic/Walking_A"
+	assert_true(farthest > 0.5, "deambula: se alejó %.2f m de donde empezó" % farthest)
+	assert_true(farthest <= enemy.config.wander_radius + 0.6, "sin pasarse del radio (%.2f m)" % farthest)
+	assert_true(walked, "camina, no corre")
+	assert_true(enemy.desired_velocity.length() <= enemy.config.wander_speed + 0.01, "a paso de paseo")
+	tree.root.get_node(^"GameState").reset()

@@ -32,6 +32,11 @@ var features: int = 0
 @export_range(0.0, 10.0, 0.05, "or_greater") var attack_range: float = 1.6
 ## Radianes por segundo; 0 = gira de golpe. Lento: se le puede rodar a la espalda.
 @export_range(0.0, 30.0, 0.1, "or_greater") var turn_speed: float = 0.0
+## Mientras no ve a nadie deambula a puntos al azar a esta distancia de donde empezó (0 = se queda quieto).
+@export_range(0.0, 15.0, 0.1, "or_greater") var wander_radius: float = 3.0
+@export_range(0.0, 10.0, 0.1, "or_greater") var wander_speed: float = 1.2
+## Pausa entre paseos, en segundos (mínimo y máximo).
+@export var wander_pause := Vector2(1.5, 3.5)
 
 @export_group("Escudo")
 ## Frena de frente golpes y proyectiles; las explosiones pasan.

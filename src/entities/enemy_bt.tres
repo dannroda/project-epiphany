@@ -5,6 +5,7 @@
 [ext_resource type="Resource" path="res://data/attacks/skeleton_slash.tres" id="3_2suu5"]
 [ext_resource type="Script" uid="uid://clwyjhi8fl4h0" path="res://ai/tasks/bt_attack.gd" id="4_sr5dr"]
 [ext_resource type="Script" uid="uid://dgotna37ipe2c" path="res://ai/tasks/bt_move_to_target.gd" id="5_orssr"]
+[ext_resource type="Script" uid="uid://cigrik1hqv1ag" path="res://ai/tasks/bt_wander.gd" id="6_wander"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_jgf0a"]
 
@@ -141,21 +142,12 @@ script = ExtResource("5_orssr")
 custom_name = "Perseguir"
 children = [SubResource("BTCondition_1uf30"), SubResource("BTAction_gfns8")]
 
-[sub_resource type="BBNode" id="BBNode_7bplq"]
-saved_value = NodePath("ModelController/AnimationPlayer")
-resource_name = "ModelController/AnimationPlayer"
-
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_tuwd0"]
-animation_player = SubResource("BBNode_7bplq")
-animation_name = &"General/Idle_A"
-blend = 0.15
-
-[sub_resource type="BTWait" id="BTWait_igf4x"]
-duration = 0.5
+[sub_resource type="BTAction" id="BTAction_wander"]
+script = ExtResource("6_wander")
 
 [sub_resource type="BTSequence" id="BTSequence_wc2m8"]
-custom_name = "Quieto"
-children = [SubResource("BTPlayAnimation_tuwd0"), SubResource("BTWait_igf4x")]
+custom_name = "Deambular"
+children = [SubResource("BTAction_wander")]
 
 [sub_resource type="BTDynamicSelector" id="BTDynamicSelector_mitb3"]
 children = [SubResource("BTSequence_jc67m"), SubResource("BTSequence_ea1ff"), SubResource("BTSequence_m2m87"), SubResource("BTSequence_0kvci"), SubResource("BTSequence_8062w"), SubResource("BTSequence_wc2m8")]
