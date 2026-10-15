@@ -531,6 +531,15 @@ msgstr "Asignalas a un botón y mantenelo: toman impulso y corren recto hasta so
 msgid "ITEM_SANDALS_GOT"
 msgstr "¡Conseguiste las Sandalias!"
 
+msgid "ITEM_HAMMER_NAME"
+msgstr "Martillo"
+
+msgid "ITEM_HAMMER_DESC"
+msgstr "Asignalo a un botón: un golpe de dos manos contra el piso. Rompe lo que la espada no puede, aprieta las placas de golpe y le baja la guardia a escudos y corazas."
+
+msgid "ITEM_HAMMER_GOT"
+msgstr "¡Conseguiste el Martillo!"
+
 msgid "ITEM_HOOKSHOT_NAME"
 msgstr "Gancho"
 

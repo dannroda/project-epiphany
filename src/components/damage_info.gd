@@ -10,6 +10,8 @@ var reflectable: bool = false
 var stun_time: float = 0.0
 ## Ni el escudo ni los i-frames la frenan (caer al pozo, los apretones del agarre).
 var unavoidable := false
+## Golpe fuerte (martillo, 11.191): lo leen la placa STRIKE, lo que solo se rompe a martillazos y las guardias.
+var strong := false
 
 
 static func make(amount_: int, knockback_: float, source_: Node3D, element_ := &"") -> DamageInfo:

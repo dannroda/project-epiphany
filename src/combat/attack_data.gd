@@ -17,6 +17,8 @@ extends Resource
 @export var stun_time: float = 0.0
 ## Estela del arma (Trail) mientras la hitbox está activa.
 @export var trail := false
+## Golpe fuerte (DamageInfo.strong).
+@export var strong := false
 
 @export_group("Aviso (enemigos)")
 ## Cuánto dura el aviso antes del golpe.

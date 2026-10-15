@@ -8,6 +8,8 @@ signal landed(hurtbox: Hurtbox)
 @export var ground_only := false
 ## Con ground_only: el que entró en el aire y cae adentro también recibe (pinchos).
 @export var hits_on_landing := false
+## Todo lo que pega es golpe fuerte (DamageInfo.strong), como el martillazo; un ataque lo pide con AttackData.strong.
+@export var strong := false
 
 var team: EntityConfig.Team = EntityConfig.Team.NEUTRAL
 ## () -> DamageInfo. Player: ItemData del arma equipada. Enemigo: su EntityConfig.
@@ -43,6 +45,7 @@ func _physics_process(_delta: float) -> void:
 func build_damage() -> DamageInfo:
 	var info: DamageInfo = damage_factory.call()
 	info.team = team
+	info.strong = info.strong or strong or (active_attack != null and active_attack.strong)
 	if active_attack:
 		info.amount = roundi(info.amount * active_attack.damage_multiplier)
 		info.knockback *= active_attack.knockback_multiplier

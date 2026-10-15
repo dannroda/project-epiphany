@@ -45,14 +45,19 @@ func refresh() -> void:
 	weapon_changed.emit(weapon)
 
 
-func hold(item: ItemData) -> void:
+## weapon_hand: en la mano del arma, en lugar de la espada (el martillo); si no, en la otra (el arco).
+func hold(item: ItemData, weapon_hand := false) -> void:
 	release_held()
 	if item.equip_scene == null:
 		return
 	held = item.equip_scene.instantiate() as Node3D
 	if held is EquippedItem:
 		held.item = item
-	(held_socket if held_socket else shield_hand_socket).add_child(held)
+	if weapon_hand:
+		weapon_socket.get_parent().add_child(held)
+		held.transform = weapon_socket.transform
+	else:
+		(held_socket if held_socket else shield_hand_socket).add_child(held)
 	if flash:
 		flash.cover(held)
 	weapon_socket.visible = false

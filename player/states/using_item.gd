@@ -36,6 +36,8 @@ func _start() -> void:
 	var root := player.anim_tree.tree_root as AnimationNodeBlendTree
 	(root.get_node(&"ItemAnim") as AnimationNodeAnimation).animation = animation
 	_duration = player.anim_player.get_animation(animation).length
+	if _item.equip_scene:
+		player.equipment.hold(_item, true)
 	player.anim_tree.set(&"parameters/UseItem/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
 
@@ -56,6 +58,8 @@ func _update(delta: float) -> void:
 
 
 func _exit() -> void:
+	if _item.equip_scene:
+		player.equipment.release_held()
 	if not _waiting and _elapsed < _duration:
 		player.anim_tree.set(&"parameters/UseItem/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FADE_OUT)
 
