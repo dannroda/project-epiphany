@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://c1ivye6mqa488" path="res://src/items/behaviors/melee_behavior.gd" id="2_melee"]
 [ext_resource type="PackedScene" path="res://assets/items/sword/sword_golden.tscn" id="3_scene"]
 [ext_resource type="Script" uid="uid://bn5pjgpia5grm" path="res://src/items/item_data.gd" id="4_item"]
-[ext_resource type="Texture2D" uid="uid://cimie55ffc3dg" path="res://assets/ui/items/sword_basic.png" id="5_icon"]
+[ext_resource type="Texture2D" uid="uid://dh8i8opdot1hr" path="res://assets/ui/items/sword_golden.png" id="5_icon"]
 [ext_resource type="Gradient" path="res://data/materials/sword_trail_gold.tres" id="6_trail"]
 
 [sub_resource type="Resource" id="Melee"]

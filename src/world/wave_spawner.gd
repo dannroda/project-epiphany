@@ -102,8 +102,8 @@ func _win(announce: bool) -> void:
 	active = true
 	if _persistent:
 		_persistent.value = true
-	for door in doors:
-		door.open()
 	if announce:
+		for door in doors:
+			door.open()
 		Feel.sfx(&"secret", global_position)
 	activated.emit()

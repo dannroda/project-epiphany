@@ -16,7 +16,7 @@
     },
     {
       "detail": "Hasta entonces, la espada común con material dorado (assets/items/sword/sword_golden.tscn) y el ícono de la común.",
-      "done": false,
+      "done": true,
       "text": "Modelo de la espada dorada (-5d) e ícono"
     }
   ],
@@ -29,7 +29,7 @@
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "diseno",
     "templo",
@@ -37,5 +37,5 @@
   ],
   "test": "",
   "title": "Espada mejorada (premio de la Combinada del templo)",
-  "updated_at": "2026-10-15T00:51:59.022Z"
+  "updated_at": "2026-10-15T01:03:04.046Z"
 }
