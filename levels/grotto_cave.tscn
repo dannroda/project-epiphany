@@ -3,10 +3,8 @@
 [ext_resource type="Script" uid="uid://c3gjwha8na3yi" path="res://src/world/look/sombra_la.gd" id="1_uso4h"]
 [ext_resource type="Script" uid="uid://bw0kh7whsb1qf" path="res://src/world/look/tono_la.gd" id="2_g7y6q"]
 [ext_resource type="MeshLibrary" path="res://data/kits/cueva_la_kit.tres" id="3_y3434"]
-[ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="6_d356v"]
 [ext_resource type="PackedScene" path="res://src/world/heart_piece.tscn" id="6_piece"]
 [ext_resource type="Script" uid="uid://c48gjyuwv6u3x" path="res://src/entities/enemy.gd" id="7_1qd7b"]
-[ext_resource type="Resource" path="res://data/entities/skeleton.tres" id="8_a0jfr"]
 [ext_resource type="Script" uid="uid://byp4dkpucnvmo" path="res://src/world/chest.gd" id="10_wh8bw"]
 [ext_resource type="Script" uid="uid://cykrw2tv878bn" path="res://src/world/tablet.gd" id="13_fwjdc"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="15_3hrjb"]
@@ -32,6 +30,7 @@
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="c6_hud"]
 [ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="c7_portal"]
 [ext_resource type="NavigationMesh" path="res://levels/nav/grotto_cave_navmesh.tres" id="nav_cave"]
+[ext_resource type="PackedScene" path="res://src/entities/guerreros/skeleton_chullpa.tscn" id="skeleton_chullpa"]
 
 [sub_resource type="Environment" id="Environment_8v2mt"]
 background_mode = 1
@@ -127,19 +126,17 @@ box_projection = true
 interior = true
 ambient_mode = 0
 
-[node name="GrottoSkeleton1" type="CharacterBody3D" parent="." unique_id=1256629823 groups=["room_sleepers"] instance=ExtResource("6_d356v")]
+[node name="GrottoSkeleton1" type="CharacterBody3D" parent="." unique_id=1256629823 groups=["room_sleepers"] instance=ExtResource("skeleton_chullpa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -3)
 collision_layer = 5
 collision_mask = 5
 script = ExtResource("7_1qd7b")
-config = ExtResource("8_a0jfr")
 
-[node name="GrottoSkeleton2" type="CharacterBody3D" parent="." unique_id=655140774 groups=["room_sleepers"] instance=ExtResource("6_d356v")]
+[node name="GrottoSkeleton2" type="CharacterBody3D" parent="." unique_id=655140774 groups=["room_sleepers"] instance=ExtResource("skeleton_chullpa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 5)
 collision_layer = 5
 collision_mask = 5
 script = ExtResource("7_1qd7b")
-config = ExtResource("8_a0jfr")
 
 [node name="GrottoChest" type="StaticBody3D" parent="." unique_id=113132407 instance=ExtResource("15_3hrjb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
