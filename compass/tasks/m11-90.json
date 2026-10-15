@@ -36,9 +36,9 @@
       "text": "Test de alcanzabilidad"
     },
     {
-      "detail": "Primer playtest externo con D1 y D2. D3 y D4 se ven en el overworld pero están cerradas y llegan como actualización: diseñar el bloqueo y el sistema de updates o parches.",
-      "done": false,
-      "text": "D3 y D4 visibles pero bloqueadas"
+      "detail": "Daniel (2026-10-15): D3 y D4 ya están terminadas o en los últimos detalles, así que no se bloquean; el primer playtest externo va con las cuatro. El sistema de actualizaciones (build nueva por itch o parches) queda para después.",
+      "done": true,
+      "text": "D3 y D4 abiertas en el playtest"
     },
     {
       "done": true,
@@ -61,5 +61,5 @@
   ],
   "test": "",
   "title": "Diseño de mazmorras, ítems y su reparto en el overworld",
-  "updated_at": "2026-10-12T20:42:21.626Z"
+  "updated_at": "2026-10-15T16:41:10.738Z"
 }

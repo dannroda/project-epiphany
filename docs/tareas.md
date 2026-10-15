@@ -2598,7 +2598,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 
 Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
 
-## M11 — Pulido: contenido y feel  (109/184)
+## M11 — Pulido: contenido y feel  (109/186)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4146,8 +4146,8 @@ Playtest del 2026-10-12: la primera mazmorra ya tiene varios softblocks, y la pl
   Hecho: data/dungeons/d1_graph.tres y d2_graph.tres, los dos pasan test_dungeon_reach.
 - [x] Test de alcanzabilidad
   Hecho: DungeonGraph (src/world/dungeon_graph/) por mazmorra en data/dungeons/; tests/dungeon_reach.gd lo cruza con la escena (cerraduras, interruptores, cofres, cobertura de puertas, rejas, cofres e interruptores, salas) y recorre todos los estados (zona, ítems, llaves, puertas abiertas). Falla si algo pide un ítem que nadie da o si hay un estado sin salida, con el camino. test_dungeon_reach: D1 pasa, más casos sintéticos (llave en la puerta equivocada, caída sin vuelta, ítem que falta). El overworld (7.9) queda para después.
-- [ ] D3 y D4 visibles pero bloqueadas
-  Primer playtest externo con D1 y D2. D3 y D4 se ven en el overworld pero están cerradas y llegan como actualización: diseñar el bloqueo y el sistema de updates o parches.
+- [x] D3 y D4 abiertas en el playtest
+  Daniel (2026-10-15): D3 y D4 ya están terminadas o en los últimos detalles, así que no se bloquean; el primer playtest externo va con las cuatro. El sistema de actualizaciones (build nueva por itch o parches) queda para después.
 - [x] GDD §6 y §7 al día
 
 **Notas:** Sesión: diseño (-43), con Daniel; antes overworld (-74). Toca 11.35/11.61 (pluma en D1 y en el overworld), los angostos de la quebrada (7.9), 11.30 (gancho, pasa a D3), 11.31 (sub-jefe con el arco) y la armadura del esqueleto.
@@ -5392,6 +5392,18 @@ El crash 11.185 pasa en un hilo del WorkerThreadPool que lee un StringName ya li
 - [x] Con el backtrace legible, identificar la causa y seguir en 11.185
 
 **Notas:** 2026-10-15 (-fd): built c971f93e7 (editor, debug_symbols=yes) at /home/ssd_disk/godot-c971 (worktree of godot-master), registered as 4.8-dev7-symbols in godot-select (symlink). 40 full suite runs (--jobs=3) in wt/bugs with that build, ~2.3 h: no crash. The only failures were test_input › test_shift_locks_and_wheel_switches (4 of 40), caused by test_chest leaving an item-get box on the way (fixed in main). Next: another loop with more load (--jobs=6).
+
+### 11.189 D4: backtracking de la llave del jefe · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `mazmorra`
+
+Daniel (2026-10-15): la llave del jefe de la Cumbre va al nicho del Atrio (escudo + sol); atajo de un solo sentido de la Antesala a la Llegada; las vasijas del Atrio pasan al nicho del Ojo del Sol. Regla boss-key-backtracking. Con rim y navmesh si cambia la grilla.
+
+### 11.190 Templo: una pieza de corazón · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `templo`
+
+Daniel (2026-10-15): agregar una pieza de corazón en el templo del ojo. Ver con 11.124 (piezas de corazón: 10, no múltiplo de 4).
 
 ## M12 — Assets propios (Blender)  (17/38)
 
