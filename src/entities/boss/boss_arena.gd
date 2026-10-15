@@ -12,7 +12,6 @@ signal fight_started
 ## El doom de la sala con el jefe vencido.
 const CALM_DOOM := 0.2
 
-const SKIP_ACTIONS: Array[StringName] = [&"ui_accept", &"attack", &"interact"]
 
 @export var room: Room
 @export var defeated_flag: StringName:
@@ -78,10 +77,13 @@ func _begin() -> void:
 	door.close()
 	await get_tree().create_timer(door.open_time, false).timeout
 	in_intro = true
+	var skippable := GameState.boss_rematch or GameState.seen_boss_intros.has(defeated_flag)
 	boss.presents_phases = true
+	boss.skippable_phases = skippable
 	Music.boss_fight = true
 	_sharpen()
-	await TopDownCamera.reveal(boss.eye, _awaken, intro_hold)
+	await TopDownCamera.reveal(boss.eye, _awaken, intro_hold, skippable)
+	GameState.seen_boss_intros[defeated_flag] = true
 	in_intro = false
 	get_tree().call_group(Hud.GROUP, &"show_boss", boss)
 	boss.start_fight()
@@ -115,16 +117,6 @@ func _get_configuration_warnings() -> PackedStringArray:
 	if ending == null:
 		warnings.append("Falta el diálogo de fin (ending).")
 	return warnings
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	if not in_intro:
-		return
-	for action in SKIP_ACTIONS:
-		if event.is_action_pressed(action):
-			get_tree().call_group(TopDownCamera.GROUP, &"skip_reveal")
-			get_viewport().set_input_as_handled()
-			return
 
 
 func _on_defeated() -> void:

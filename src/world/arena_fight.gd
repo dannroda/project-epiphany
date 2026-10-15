@@ -9,8 +9,6 @@ extends Node3D
 signal activated
 signal bar_changed
 
-const SKIP_ACTIONS: Array[StringName] = [&"ui_accept", &"attack", &"interact"]
-
 @export var room: Room
 @export var flag: StringName:
 	set(value):
@@ -76,7 +74,9 @@ func _begin() -> void:
 		door.close()
 	in_intro = true
 	Music.boss_fight = true
-	await TopDownCamera.reveal(_fighters[0].body, _awaken, intro_hold)
+	var seen_key: Variant = flag if flag != &"" else get_path()
+	await TopDownCamera.reveal(_fighters[0].body, _awaken, intro_hold, rematch or GameState.seen_boss_intros.has(seen_key))
+	GameState.seen_boss_intros[seen_key] = true
 	in_intro = false
 	if not started:
 		return
@@ -96,16 +96,6 @@ func _awaken() -> void:
 	Feel.shake(0.35)
 	if _fighters[0].has_method(&"roar"):
 		_fighters[0].roar()
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	if not in_intro:
-		return
-	for action in SKIP_ACTIONS:
-		if event.is_action_pressed(action):
-			get_tree().call_group(TopDownCamera.GROUP, &"skip_reveal")
-			get_viewport().set_input_as_handled()
-			return
 
 
 ## El player salió (cayó por un hueco): todo como al llegar.

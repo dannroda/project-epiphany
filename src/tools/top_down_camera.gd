@@ -2,6 +2,7 @@ class_name TopDownCamera
 extends Camera3D
 
 const GROUP := &"room_camera"
+const SKIP_ACTIONS: Array[StringName] = [&"ui_accept", &"attack", &"interact"]
 
 @export var target_node: PlayerCharacter
 ## FOV 40 y unos 60° de inclinación; una pantalla abarca ≈ 26 × 14.5 m, una sala entera del templo con sus puertas.
@@ -99,6 +100,7 @@ var _walls: Dictionary[int, bool] = {}
 var room: Room
 var transitioning := false
 var revealing := false
+var _skippable := false
 ## Dónde mira la cámara (sin la sacudida); lo usan los tests y el overlay.
 var focus := Vector3.ZERO
 var _shake_time := 0.0
@@ -582,19 +584,32 @@ static func reveal_unlock(target: Node3D, action: Callable) -> void:
 
 
 ## Pausa, lleva la cámara a `target`, corre `action` (abrir la puerta…), espera (`hold`, o `reveal_hold` si es
-## negativo) y vuelve al player. Si no hay cámara o el juego ya está en pausa, solo corre `action`.
-static func reveal(target: Node3D, action: Callable, hold := -1.0) -> void:
+## negativo) y vuelve al player. Si no hay cámara o el juego ya está en pausa, solo corre `action`. `skippable`: se
+## corta con SKIP_ACTIONS (la presentación de un jefe que ya viste).
+static func reveal(target: Node3D, action: Callable, hold := -1.0, skippable := false) -> void:
 	var camera := target.get_tree().get_first_node_in_group(GROUP) as TopDownCamera
 	if camera == null or camera.revealing or camera.transitioning or target.get_tree().paused or SaveManager.loading:
 		action.call()
 		return
+	camera._skippable = skippable
 	await camera._reveal(target, action, hold)
+	camera._skippable = false
 
 
 ## Corta lo que queda del acercamiento en curso (la intro del jefe se puede saltar).
 func skip_reveal() -> void:
 	if revealing:
 		_skip = true
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not revealing or not _skippable:
+		return
+	for action in SKIP_ACTIONS:
+		if event.is_action_pressed(action):
+			skip_reveal()
+			get_viewport().set_input_as_handled()
+			return
 
 
 func _exit_tree() -> void:

@@ -197,7 +197,7 @@ func _wait_until(done: Callable, seconds: float) -> bool:
 	return true
 
 
-func test_arena_closes_skippable_intro_and_bar() -> void:
+func test_arena_closes_intro_unskippable_the_first_time_and_bar() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	tree.root.get_node(^"GameState").reset()
 	tree.change_scene_to_file("res://levels/templo.tscn")
@@ -222,10 +222,10 @@ func test_arena_closes_skippable_intro_and_bar() -> void:
 	var skip := InputEventAction.new()
 	skip.action = &"ui_accept"
 	skip.pressed = true
-	var skipped_at := Time.get_ticks_msec()
 	tree.root.push_input(skip)
-	assert_true(await _wait_until(func() -> bool: return boss.phases.is_active(), 3.0), "después de la intro empieza la pelea")
-	assert_true(Time.get_ticks_msec() - skipped_at < 500, "la intro se salta")
+	await tree.create_timer(0.5, true).timeout
+	assert_true(arena.in_intro and not boss.phases.is_active(), "la primera vez la intro no se saltea")
+	assert_true(await _wait_until(func() -> bool: return boss.phases.is_active(), 6.0), "después de la intro empieza la pelea")
 	assert_true(not tree.paused, "el juego sigue")
 	assert_true(hud.boss_bar.visible and is_equal_approx(hud.boss_health.value, 1.0), "aparece la barra llena")
 	assert_eq(hud.get_node(^"%BossPhase").text, hud.tr("HUD_BOSS_PHASE").format({phase = 1}))
@@ -555,8 +555,11 @@ func test_rematch_brings_the_boss_back_without_another_container() -> void:
 	assert_true(not portal.visible, "sin portal mientras pelea")
 	assert_true((level.get_node(^"Planta/Jefe") as Room).contains(player.global_position), "el player aparece en la arena")
 	assert_true(await _wait_until(func() -> bool: return boss.phases.is_active() or arena.in_intro, 4.0), "arranca la pelea")
+	await tree.create_timer(0.8, true).timeout
+	var skipped_at := Time.get_ticks_msec()
 	_skip_intro(tree)
 	assert_true(await _wait_until(func() -> bool: return boss.phases.is_active(), 6.0), "pelea")
+	assert_true(Time.get_ticks_msec() - skipped_at < 1200, "en la revancha la intro se saltea")
 	player.health.make_invulnerable(999.0)
 	_knock_down(boss.hand_left)
 	_knock_down(boss.hand_right)
