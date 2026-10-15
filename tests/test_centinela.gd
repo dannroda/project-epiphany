@@ -84,15 +84,18 @@ func test_the_sentinel_falls_with_its_escort_and_leaves_the_hammer() -> void:
 	state.reset()
 
 
-func test_leaving_the_esplanade_resets_the_fight() -> void:
+## Daniel: una vez arrancada, la pelea sigue aunque el player se aleje de la explanada.
+func test_walking_away_keeps_the_fight_going() -> void:
 	await _start()
 	player.global_position = fight.global_position + Vector3(0, 0, 4)
 	assert_true(await _until(func() -> bool: return centinela.state != Centinela.State.IDLE), "arranca la pelea")
-	player.global_position = fight.global_position + Vector3(0, 0, 14)
-	assert_true(await _until(func() -> bool: return centinela.state == Centinela.State.IDLE, 3.0), "fuera de la explanada vuelve a esperar")
-	assert_true(await _until(func() -> bool: return _escorts().is_empty(), 2.0), "y los huancas se van")
-	player.global_position = fight.global_position + Vector3(0, 0, 4)
-	assert_true(await _until(func() -> bool: return _escorts().size() == 2), "al volver aparecen de nuevo")
+	assert_true(await _until(func() -> bool: return _escorts().size() == 2), "con sus dos huancas")
+	var hold := _hold_player(fight.global_position + Vector3(0, 0, 14))
+	await tree.create_timer(2.0).timeout
+	assert_true(fight.started, "lejos de la explanada sigue arrancada")
+	assert_eq(_escorts().size(), 2, "y los huancas siguen")
+	tree.physics_frame.disconnect(hold)
+	fight._reset()
 	tree.root.get_node(^"GameState").reset()
 
 

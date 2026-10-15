@@ -3,7 +3,7 @@ extends Node3D
 ## Pelea de sub-jefe o jefe en una sala. Sus hijos pelean dentro de ella (WatcherEye, MummyGuard: los que tienen
 ## `attack_finished`): al entrar el player se cierran las puertas, la cámara muestra al primero con el nombre y arranca,
 ## con la barra del HUD. De a uno ataca por vez; cuando cae uno, los demás se apuran. Si el player sale de la sala,
-## la pelea vuelve a empezar. Hace de interruptor (`active`/`activated`) para lo que se abre al ganar; con flag,
+## la pelea vuelve a empezar; en el overworld (`area`), una vez arrancada sigue aunque se aleje. Hace de interruptor (`active`/`activated`) para lo que se abre al ganar; con flag,
 ## ganada queda ganada.
 
 signal activated
@@ -68,7 +68,8 @@ func _ready() -> void:
 		fighter.defeated.connect(_on_defeated)
 		fighter.health_changed.connect(bar_changed.emit)
 	zone.player_entered.connect(func(_zone: Node3D) -> void: _begin())
-	zone.player_left.connect(func(_zone: Node3D) -> void: _reset())
+	if room:
+		room.player_left.connect(func(_zone: Node3D) -> void: _reset())
 
 
 func _get_configuration_warnings() -> PackedStringArray:
