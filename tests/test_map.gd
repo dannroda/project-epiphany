@@ -258,6 +258,26 @@ func test_overworld_photo_is_taken_from_the_current_level() -> void:
 	_close(setup[2])
 
 
+## Cada entrada de mazmorra (y las tumbas de la Necrópolis) sale en la foto del mapa, y cada mazmorra tiene su lugar.
+func test_every_dungeon_entrance_is_on_the_overworld_map() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.change_scene_to_file("res://levels/overworld.tscn")
+	await tree.scene_changed
+	var level := tree.current_scene
+	var map: OverworldMap = level.get_node(^"OverworldMap")
+	var places := level.get_children().filter(func(n: Node) -> bool: return n is MapPlace and n.kind == MapPlace.Kind.DUNGEON)
+	var shown := 0
+	for node: Node in level.get_children():
+		var path := node.scene_file_path
+		if path.ends_with("_entrada.tscn") or path.ends_with("_tumba.tscn"):
+			shown += 1
+			assert_true(map.scenery.has(node), "%s sale en la foto" % node.name)
+		if path.ends_with("_entrada.tscn"):
+			var at := (node as Node3D).global_position
+			assert_true(places.any(func(p: Node3D) -> bool: return Vector2(p.global_position.x - at.x, p.global_position.z - at.z).length() < 6.0), "%s tiene su lugar en el mapa" % node.name)
+	assert_true(shown >= 7, "las cuatro entradas y las tres tumbas (%d)" % shown)
+
+
 func test_floor_selector_in_a_dungeon_with_floors() -> void:
 	var setup: Array = await _open_map("chullpa")
 	var tree: SceneTree = setup[0]
