@@ -1,8 +1,8 @@
 class_name Centinela
 extends Node3D
-## Centinela de la Necrópolis, mini jefe del martillo (11.192): camina pesado hacia el player, levanta la maza (marca en el
+## Centinela del Bañado, mini jefe del martillo (11.192): camina pesado hacia el player, levanta la maza (marca en el
 ## piso dónde va a caer) y la baja. Cada pisada y el golpe mandan ondas por el piso (GroundWaves del modelo, que también
-## lastiman a los esqueletos). La maza queda clavada: ahí le pega todo (espada, bomba, vasija). Fuera de eso, todo rebota.
+## lastiman a sus huancas). La maza queda clavada: ahí le pega todo (espada, bomba, vasija). Fuera de eso, todo rebota.
 ## La maneja un ArenaFight.
 
 signal defeated(centinela: Centinela)

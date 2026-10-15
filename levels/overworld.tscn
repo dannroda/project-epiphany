@@ -53,6 +53,8 @@
 [ext_resource type="PackedScene" path="res://src/world/totora_entrada.tscn" id="ent_totora"]
 [ext_resource type="Script" uid="uid://cnuecr7682x4j" path="res://src/world/arena_area.gd" id="hm_area"]
 [ext_resource type="PackedScene" path="res://src/entities/centinela/centinela.tscn" id="hm_centinela"]
+[ext_resource type="PackedScene" path="res://src/entities/centinela/huanca.tscn" id="hm_huanca"]
+[ext_resource type="PackedScene" path="res://src/entities/centinela/huanca_escudo.tscn" id="hm_huanca_escudo"]
 [ext_resource type="Script" uid="uid://bccprbredple8" path="res://src/world/arena_fight.gd" id="hm_fight"]
 [ext_resource type="Resource" uid="uid://dab50dwcdwd6d" path="res://data/items/hammer.tres" id="hm_item"]
 [ext_resource type="ArrayMesh" uid="uid://du5bkew73nw6v" path="res://assets/epiphany/meshes/objetos/pedestal_martillo.res" id="hm_pedestal"]
@@ -241,7 +243,7 @@ size = Vector3(22, 2.4, 14)
 size = Vector3(2.4, 2.4, 1.4)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hammer_arena"]
-size = Vector3(18, 8, 14)
+size = Vector3(16, 8, 12)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_hammer_pedestal"]
 height = 1.0
@@ -1550,14 +1552,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 1.3, 0)
 shape = SubResource("BoxShape3D_jamb")
 
 [node name="HammerFight" type="Node3D" parent="." unique_id=778854511 node_paths=PackedStringArray("area", "reward", "escorts")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 2.6, -3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, 23)
 script = ExtResource("hm_fight")
 area = NodePath("Arena")
 flag = &"ow_hammer_guard"
 display_name = "BOSS_OW_CENTINELA"
 reward = NodePath("Hammer")
 reward_flag = &"ow_hammer_taken"
-escorts = [NodePath("Skeleton"), NodePath("ShieldSkeleton")]
+escorts = [NodePath("Huanca"), NodePath("HuancaEscudo")]
 
 [node name="PersistentFlag" type="Node" parent="HammerFight" unique_id=306763096]
 script = ExtResource("hm_pflag")
@@ -1572,10 +1574,10 @@ shape = SubResource("BoxShape3D_hammer_arena")
 [node name="Centinela" parent="HammerFight" unique_id=684706630 instance=ExtResource("hm_centinela")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
 
-[node name="Skeleton" parent="HammerFight" unique_id=1061939808 instance=ExtResource("6_d356v")]
+[node name="Huanca" parent="HammerFight" unique_id=1061939808 instance=ExtResource("hm_huanca")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 2)
 
-[node name="ShieldSkeleton" parent="HammerFight" unique_id=519784094 instance=ExtResource("6_shield")]
+[node name="HuancaEscudo" parent="HammerFight" unique_id=519784094 instance=ExtResource("hm_huanca_escudo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 2)
 
 [node name="Pedestal" type="StaticBody3D" parent="HammerFight" unique_id=550831424]
