@@ -2,7 +2,9 @@
 # *_cuello: el cuello parado, centrado en el origen a lo largo de Z, ondulado en S hacia los costados, con panza clara
 # hacia +Y (adelante) y aleta dorsal atrás. *_cabeza: la cabeza con el origen en su nodo y el hocico hacia +Y.
 # yacumama_cola: la cola que barre la sala, de y 0 a 9 con la aleta al final.
-# blender -b --factory-startup -P tools/blender/build_serpientes.py
+# Con "-- templo", serpientes_templo con solo yacumama_templo_*: la de la revancha del templo, de escamas de piedra del
+# templo, manchas de jade, aletas de cristal y el ojo del Ojo en la frente en lugar de la chakana.
+# blender -b --factory-startup -P tools/blender/build_serpientes.py [-- templo]
 import math
 import os
 import sys
@@ -18,6 +20,7 @@ AMARU = {"skin": "musgo", "belly": "paja", "fin": "cobre_verde", "eye": "neon", 
 	"length": 2.0, "radius": 0.4, "head": Vector((0, 0.2, 1.05)), "scale": 1.3, "sway": 0.22, "trail": 2.6}
 YACUMAMA = {"skin": "cobre_verde", "belly": "tierra", "fin": "tela_roja", "eye": "doom", "spots": "noche", "gold": "dorado",
 	"length": 3.2, "radius": 0.6, "head": Vector((0, 0.3, 1.6)), "scale": 1.9, "sway": 0.32, "trail": 3.6}
+YACUMAMA_TEMPLO = dict(YACUMAMA, skin="piedra_templo", belly="hueso", fin="cristal", spots="cobre_verde", emblem="logo")
 
 
 def piece(name, seed, fn, smooth=45):
@@ -171,7 +174,10 @@ def cabeza(p, c):
 		nostril = p.box(-0.02, 0.02, -0.025, 0.025, -0.01, 0.01)
 		p.transform(nostril, Matrix.Translation((s * 0.07, 0.5, 0.11)))
 		p.paint(nostril, "noche", "DARK")
-	if c["gold"]:
+	if c["gold"] and c.get("emblem") == "logo":
+		eye = epi.logo_eye(p, Vector((0, 0, 0)), 0.32, depth=0.03, iris=("doom", "MID"))
+		p.transform(eye, Matrix.Translation((0, 0.18, 0.27)) @ Matrix.Rotation(-math.pi / 2 - 0.25, 4, "X"))
+	elif c["gold"]:
 		plate = epi.chakana_plate(p, Vector((0, 0, 0)), 0.3, c["gold"])
 		p.transform(plate, Matrix.Translation((0, 0.18, 0.255)) @ Matrix.Rotation(math.pi / 2 - 0.25, 4, "X"))
 		horns = []
@@ -254,14 +260,21 @@ def charco(p):
 	p.paint(reeds, "follaje", "GRADIENT", vary=0.1)
 
 
-piece("charco", 6, charco, smooth=None)
-piece("amaru_cuello", 1, lambda p: cuello(p, AMARU))
-piece("amaru_cabeza", 2, lambda p: cabeza(p, AMARU))
-piece("yacumama_cuello", 3, lambda p: cuello(p, YACUMAMA))
-piece("yacumama_cabeza", 4, lambda p: cabeza(p, YACUMAMA))
-piece("amaru_mandibula", 7, lambda p: mandibula(p, AMARU))
-piece("yacumama_mandibula", 8, lambda p: mandibula(p, YACUMAMA))
-piece("yacumama_cola", 5, lambda p: cola(p, YACUMAMA))
-
-epi.layout(kit, columns=5, spacing=4.0)
-epi.publish("serpientes")
+if epi.variant() == "templo":
+	piece("yacumama_templo_cuello", 3, lambda p: cuello(p, YACUMAMA_TEMPLO))
+	piece("yacumama_templo_cabeza", 4, lambda p: cabeza(p, YACUMAMA_TEMPLO))
+	piece("yacumama_templo_mandibula", 8, lambda p: mandibula(p, YACUMAMA_TEMPLO))
+	piece("yacumama_templo_cola", 5, lambda p: cola(p, YACUMAMA_TEMPLO))
+	epi.layout(kit, columns=4, spacing=4.0)
+	epi.publish("serpientes_templo")
+else:
+	piece("charco", 6, charco, smooth=None)
+	piece("amaru_cuello", 1, lambda p: cuello(p, AMARU))
+	piece("amaru_cabeza", 2, lambda p: cabeza(p, AMARU))
+	piece("yacumama_cuello", 3, lambda p: cuello(p, YACUMAMA))
+	piece("yacumama_cabeza", 4, lambda p: cabeza(p, YACUMAMA))
+	piece("amaru_mandibula", 7, lambda p: mandibula(p, AMARU))
+	piece("yacumama_mandibula", 8, lambda p: mandibula(p, YACUMAMA))
+	piece("yacumama_cola", 5, lambda p: cola(p, YACUMAMA))
+	epi.layout(kit, columns=5, spacing=4.0)
+	epi.publish("serpientes")

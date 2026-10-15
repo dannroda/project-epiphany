@@ -2,7 +2,9 @@
 # collar blanco y la banda blanca de las alas. apu_kuntur_*: el Apu (jefe), con un sol de oro en la frente, pectoral de
 # oro y las alas con banda y puntas de oro. *_cuerpo: cuerpo, cabeza y cola, con el origen en el centro del cuerpo y
 # el pico hacia -Y. *_ala_izq / *_ala_der: el ala desde el hombro (el origen, donde gira) hacia +X / -X.
-# blender -b --factory-startup -P tools/blender/build_kuntur.py
+# Con "-- templo", kuntur_templo con solo apu_kuntur_templo_*: el de la revancha del templo, con la banda de las alas de
+# cristal y el ojo del Ojo en la frente en lugar del sol.
+# blender -b --factory-startup -P tools/blender/build_kuntur.py [-- templo]
 import math
 import os
 import sys
@@ -17,6 +19,7 @@ kit = epi.start()
 FEATHER = "gris_5"
 YOUNG = {"band": "blanco", "tip": FEATHER, "eye": "fuego", "gold": None}
 APU = {"band": "dorado", "tip": "dorado", "eye": "doom", "gold": "dorado"}
+APU_TEMPLO = dict(APU, band="cristal", emblem="logo")
 
 
 def piece(name, seed, fn, smooth=40):
@@ -88,14 +91,18 @@ def cuerpo(p, c):
 			p.transform(claw, Matrix.Translation((s * 0.16, 0.05, -0.38)) @ Matrix.Rotation(-math.pi / 2 + 0.4, 4, "X") @ Matrix.Rotation(k * 0.4, 4, "Y"))
 			talons += claw
 	p.paint(talons, "gris_4", "MID", vary=0.05)
+	if c.get("emblem") == "logo":
+		eye = epi.logo_eye(p, Vector((0, 0, 0)), 0.3, depth=0.03, iris=("doom", "MID"))
+		p.transform(eye, Matrix.Translation((0, -0.86, 0.43)) @ Matrix.Rotation(-0.5, 4, "X"))
 	if c["gold"]:
-		sun = p.cylinder(0.12, 0.0, 0.03, sides=12)
-		rays = []
-		for k in range(8):
-			ray = p.cylinder(0.04, 0.0, 0.025, sides=3)
-			p.transform(ray, Matrix.Rotation(k * math.pi / 4, 4, "Z") @ Matrix.Translation((0.17, 0, 0)) @ Matrix.Scale(1.6, 4, Vector((1, 0, 0))))
-			rays += ray
-		p.transform(sun + rays, Matrix.Translation((0, -0.84, 0.43)) @ Matrix.Rotation(math.pi / 2 - 0.5, 4, "X"))
+		sun, rays = [], []
+		if not c.get("emblem"):
+			sun = p.cylinder(0.12, 0.0, 0.03, sides=12)
+			for k in range(8):
+				ray = p.cylinder(0.04, 0.0, 0.025, sides=3)
+				p.transform(ray, Matrix.Rotation(k * math.pi / 4, 4, "Z") @ Matrix.Translation((0.17, 0, 0)) @ Matrix.Scale(1.6, 4, Vector((1, 0, 0))))
+				rays += ray
+			p.transform(sun + rays, Matrix.Translation((0, -0.84, 0.43)) @ Matrix.Rotation(math.pi / 2 - 0.5, 4, "X"))
 		chest = []
 		for w, z in ((0.44, 0.0), (0.3, -0.12), (0.16, -0.24)):
 			chest += p.box(-w / 2, w / 2, -0.03, 0.0, z - 0.06, z + 0.06)
@@ -160,10 +167,11 @@ def ala(p, c, mirror):
 	if mirror:
 		p.transform(list(p.bm.faces), Matrix.Scale(-1, 4, Vector((1, 0, 0))))
 
-for prefix, c, seed in (("kuntur", YOUNG, 1), ("apu_kuntur", APU, 11)):
+TEMPLE = epi.variant() == "templo"
+for prefix, c, seed in ((("apu_kuntur_templo", APU_TEMPLO, 11),) if TEMPLE else (("kuntur", YOUNG, 1), ("apu_kuntur", APU, 11))):
 	piece(prefix + "_cuerpo", seed, lambda p, c=c: cuerpo(p, c))
 	piece(prefix + "_ala_izq", seed + 1, lambda p, c=c: ala(p, c, False))
 	piece(prefix + "_ala_der", seed + 1, lambda p, c=c: ala(p, c, True))
 
 epi.layout(kit, columns=3, spacing=4.5)
-epi.publish("kuntur")
+epi.publish("kuntur_templo" if TEMPLE else "kuntur")

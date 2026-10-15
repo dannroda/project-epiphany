@@ -16,6 +16,15 @@ sys.path.insert(0, HERE)
 import epiphany_palette as palette  # noqa: E402
 
 NAMES = [s[0] for s in palette.SWATCHES]
+## Franja → franja con que se pinta en su lugar: una variante con otra paleta de la misma pieza (los jefes en el templo).
+REMAP = {}
+## La paleta del templo y del jefe final: telas de jade, azules de cristal, detalles de neón.
+TEMPLO = {"tela_roja": "cobre_verde", "tela_azul": "cristal", "flor_amarilla": "neon", "roca_naranja": "piedra_templo", "madera_oscura": "cobre_verde"}
+
+
+def variant():
+	"""El estilo pedido después de "--" (blender ... -P build_x.py -- templo), o None."""
+	return sys.argv[sys.argv.index("--") + 1] if "--" in sys.argv[:-1] else None
 SHADES = {"LIGHT": 0.85, "MID": 0.5, "LOW": 0.32, "DARK": 0.15}
 
 
@@ -194,7 +203,7 @@ class Piece:
 	def paint(self, faces, swatch, shade="GRADIENT", z_range=None, vary=0.0):
 		"""Pone las UV de las caras en la franja swatch. GRADIENT: claro arriba, según z_range (o la altura de las caras).
 		vary corre cada cara un poco dentro del degradé, para que no se vea plano."""
-		i = NAMES.index(swatch)
+		i = NAMES.index(REMAP.get(swatch, swatch))
 		col, row = i % palette.COLS, i // palette.COLS
 		u = (col + 0.5) / palette.COLS
 		lo = (palette.ROWS - 1 - row + palette.MARGIN) / palette.ROWS

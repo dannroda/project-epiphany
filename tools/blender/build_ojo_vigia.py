@@ -1,7 +1,8 @@
 # Publica assets/epiphany/ojo_vigia.glb (epi.publish): los ojos de la Queñoa (jefe y sub-jefe), como el ojo del jefe
 # final pero de madera: globo de hueso con iris y pupila de rendija, metido en un nudo de corteza con raíces, y dos
 # párpados de corteza que el código gira en X para abrir. Todo con el origen en el centro del ojo y mirando a -Y.
-# blender -b -P tools/blender/build_ojo_vigia.py
+# Con "-- templo", ojo_vigia_templo_*: los de la revancha del templo, con la paleta del templo (epi.TEMPLO) y el musgo de cristal.
+# blender -b -P tools/blender/build_ojo_vigia.py [-- templo]
 import math
 import os
 import sys
@@ -146,9 +147,13 @@ def parpado_inf(p):
 	p.transform(list(p.bm.faces), Matrix.Scale(-1, 4, (0, 0, 1)))
 
 
-piece("ojo_vigia_globo", 1, globo)
-piece("ojo_vigia_nudo", 2, nudo)
-piece("ojo_vigia_parpado", 3, parpado)
-piece("ojo_vigia_parpado_inf", 3, parpado_inf)
+TEMPLE = epi.variant() == "templo"
+NAME = "ojo_vigia_templo" if TEMPLE else "ojo_vigia"
+if TEMPLE:
+	epi.REMAP.update(epi.TEMPLO, musgo="cristal")
+piece(NAME + "_globo", 1, globo)
+piece(NAME + "_nudo", 2, nudo)
+piece(NAME + "_parpado", 3, parpado)
+piece(NAME + "_parpado_inf", 3, parpado_inf)
 epi.layout(kit, columns=4, spacing=3.0)
-epi.publish("ojo_vigia")
+epi.publish(NAME)

@@ -1,8 +1,9 @@
 # Publica assets/epiphany/mallqui.glb (epi.publish): Mallqui, el Ancestro, jefe de la Chullpa. El mismo fardo de 3 m que la
 # momia (la pelea lo escala) pero de rey: manto rojo con franja de tocapus, cuerdas de oro, pectoral de sol, manto azul
 # en los hombros, mascaipacha roja sobre la máscara de oro y una corona de sol con rayos detrás de la cabeza.
-# Origen en la base, la cara mira a -Y.
-# blender -b -P tools/blender/build_mallqui.py
+# Origen en la base, la cara mira a -Y. Con "-- templo", mallqui_templo: el de la revancha del templo, con la paleta del
+# templo (epi.TEMPLO) y el ojo del Ojo en el pecho en lugar del sol.
+# blender -b -P tools/blender/build_mallqui.py [-- templo]
 import math
 import os
 import sys
@@ -168,9 +169,17 @@ def head(p):
 	p.paint(fan, GOLD, "GRADIENT")
 	sun(p, Vector((0, 0.12, FACE_Z + 0.53)), 0.2, rays=10)
 
+TEMPLE = epi.variant() == "templo"
+NAME = "mallqui_templo" if TEMPLE else "mallqui"
+if TEMPLE:
+	epi.REMAP.update(epi.TEMPLO)
 p = epi.Piece(37)
 body(p)
-sun(p, Vector((0, -radius_at(BODY, CHEST) - 0.02, CHEST)), 0.34)
+chest = Vector((0, -radius_at(BODY, CHEST) - 0.02, CHEST))
+if TEMPLE:
+	epi.logo_eye(p, chest + Vector((0, -0.05, 0)), 0.8, depth=0.05, iris=("doom", "MID"))
+else:
+	sun(p, chest, 0.34)
 head(p)
-p.build("mallqui", kit, smooth=45)
-epi.publish("mallqui")
+p.build(NAME, kit, smooth=45)
+epi.publish(NAME)
