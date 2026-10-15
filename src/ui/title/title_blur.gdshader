@@ -1,5 +1,5 @@
 shader_type canvas_item;
-// Fondo del título: el video del overworld desenfocado, oscurecido y con viñeta para que el logo y el menú se lean.
+// Fondo del título: el overworld en vivo desenfocado, oscurecido y con viñeta para que el logo y el menú se lean.
 
 uniform float radius : hint_range(0.0, 8.0) = 4.0;
 uniform float dim : hint_range(0.0, 1.0) = 0.55;
@@ -18,5 +18,5 @@ void fragment() {
 	vec3 color = sum / 13.0 * tint * (1.0 - dim);
 	vec2 d = UV - 0.5;
 	color *= 1.0 - vignette * smoothstep(0.2, 0.75, length(d * vec2(1.0, 0.8)));
-	COLOR = vec4(color, 1.0);
+	COLOR = vec4(color, COLOR.a);
 }

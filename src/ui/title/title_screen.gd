@@ -11,6 +11,7 @@ const LANGUAGE_SELECT := preload("res://src/ui/title/language_select.gd")
 @onready var options_item: Button = %Options
 @onready var quit_item: Button = %Quit
 @onready var debug_scenarios: Button = %DebugScenarios
+@onready var flyover: TitleFlyover = %TitleFlyover
 
 
 func _ready() -> void:
@@ -28,9 +29,19 @@ func _ready() -> void:
 			_go(SaveManager.load_scenario.bind(scenario))))
 	visibility_changed.connect(_refresh)
 	_refresh()
-	if Settings.has_language():
-		focus_default.call_deferred()
-	else:
+	_start.call_deferred()
+
+
+## Al abrir el juego, la pantalla de carga tapa el título hasta que el overworld del fondo termina de cargar.
+func _start() -> void:
+	focus_default()
+	if not flyover.shown:
+		process_mode = PROCESS_MODE_DISABLED
+		SceneFlow.show_loading()
+		await flyover.ready_to_show
+		SceneFlow.hide_loading()
+		process_mode = PROCESS_MODE_INHERIT
+	if not Settings.has_language():
 		LANGUAGE_SELECT.open()
 
 

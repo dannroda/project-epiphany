@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://covrlpuexf2af" path="res://src/ui/theme.tres" id="1_theme"]
 [ext_resource type="Script" uid="uid://6pj48g1rapde" path="res://src/ui/title/title_screen.gd" id="2_script"]
-[ext_resource type="VideoStream" uid="uid://cm67p7rw3vn5s" path="res://assets/ui/title/flyover.ogv" id="3_video"]
+[ext_resource type="PackedScene" path="res://src/ui/title/title_flyover.tscn" id="3_flyover"]
 [ext_resource type="PackedScene" uid="uid://pyyqflynppn5" path="res://src/ui/menus/menu_item.tscn" id="4_item"]
 [ext_resource type="Script" uid="uid://jou4nqurtyvf" path="res://src/ui/hint_bar.gd" id="5_hints"]
 [ext_resource type="Shader" uid="uid://dqijm07aajq4x" path="res://src/ui/title/title_blur.gdshader" id="6_blur"]
@@ -34,8 +34,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.043137256, 0.050980393, 0.0627451, 1)
 
-[node name="Flyover" type="VideoStreamPlayer" parent="." unique_id=1907113420]
-texture_filter = 2
+[node name="Flyover" type="SubViewportContainer" parent="." unique_id=1907113420]
 material = SubResource("ShaderMaterial_blur")
 layout_mode = 1
 anchors_preset = 15
@@ -43,10 +42,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-stream = ExtResource("3_video")
-autoplay = true
-expand = true
-loop = true
+stretch = true
+stretch_shrink = 2
+
+[node name="Viewport" type="SubViewport" parent="Flyover" unique_id=1907113422]
+own_world_3d = true
+handle_input_locally = false
+size = Vector2i(960, 540)
+render_target_update_mode = 4
+
+[node name="TitleFlyover" parent="Flyover/Viewport" unique_id=1907113423 instance=ExtResource("3_flyover")]
+unique_name_in_owner = true
+process_mode = 3
 
 [node name="Logo" type="TextureRect" parent="." unique_id=1907113421]
 layout_mode = 1
