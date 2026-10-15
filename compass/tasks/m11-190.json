@@ -1,0 +1,21 @@
+{
+  "assignee": "project-epiphany-43",
+  "checklist": [],
+  "code": "11.190",
+  "created_at": "2026-10-15T16:41:11.350Z",
+  "description": "Daniel (2026-10-15): agregar una pieza de corazón en el templo del ojo. Ver con 11.124 (piezas de corazón: 10, no múltiplo de 4).",
+  "milestone": "m11",
+  "notes": "",
+  "order": 187,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "diseno",
+    "templo"
+  ],
+  "test": "",
+  "title": "Templo: una pieza de corazón",
+  "updated_at": "2026-10-15T16:41:11.350Z"
+}

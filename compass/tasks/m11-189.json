@@ -1,0 +1,21 @@
+{
+  "assignee": "project-epiphany-43",
+  "checklist": [],
+  "code": "11.189",
+  "created_at": "2026-10-15T16:41:11.038Z",
+  "description": "Daniel (2026-10-15): la llave del jefe de la Cumbre va al nicho del Atrio (escudo + sol); atajo de un solo sentido de la Antesala a la Llegada; las vasijas del Atrio pasan al nicho del Ojo del Sol. Regla boss-key-backtracking. Con rim y navmesh si cambia la grilla.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 186,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "diseno",
+    "mazmorra"
+  ],
+  "test": "",
+  "title": "D4: backtracking de la llave del jefe",
+  "updated_at": "2026-10-15T16:41:11.038Z"
+}
