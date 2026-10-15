@@ -128,7 +128,11 @@ func waves_running() -> bool:
 		return spawner.room == self and spawner.running)
 
 
+## También la sala de la cámara: en una puerta el player no está en ninguna, y sigue siendo la sala de la que viene.
 func has_player() -> bool:
+	var camera := get_tree().get_first_node_in_group(TopDownCamera.GROUP) as TopDownCamera
+	if camera and camera.room == self:
+		return true
 	return Players.all.any(func(player: PlayerCharacter) -> bool: return contains(player.global_position))
 
 
