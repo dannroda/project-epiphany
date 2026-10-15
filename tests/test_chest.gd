@@ -114,5 +114,9 @@ func test_ammo_without_its_holder_stays_in_the_chest() -> void:
 	chest.interactable.interact(player)
 	assert_eq(state.inventory.count(&"bomb"), 5, "con la bolsa, las saca")
 	assert_true(not chest.interactable.enabled, "y se abre")
-	stack.clear()
+	await tree.create_timer(1.0).timeout
+	assert_true(stack.top() != null and stack.top().has_signal(&"closed"), "caja de item get abierta")
+	stack.pop()
+	await tree.create_timer(1.2).timeout
+	assert_true(not tree.paused, "el mundo sigue al cerrar la caja")
 	state.reset()
