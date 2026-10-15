@@ -1,5 +1,5 @@
 extends "res://tests/test_case.gd"
-## El Centinela de la Necrópolis (11.192): mini jefe del overworld con dos esqueletos; vencidos todos, aparece el martillo.
+## El Centinela del Bañado (11.192): mini jefe del overworld en la playa del Bañado con dos esqueletos; vencidos todos, aparece el martillo.
 
 const LEVEL := "res://levels/overworld.tscn"
 
@@ -104,3 +104,17 @@ func test_won_the_hammer_waits_on_its_spot() -> void:
 	await _start([&"ow_hammer_guard", &"ow_hammer_taken"])
 	assert_true(fight.reward == null or not fight.reward.is_inside_tree(), "tomado, no vuelve")
 	tree.root.get_node(^"GameState").reset()
+
+
+func test_nothing_grows_in_the_beach_esplanade() -> void:
+	await _start()
+	var bounds := (fight.get_node(^"Arena") as ArenaArea).bounds()
+	var crowded := []
+	for decor: Node in level.find_children("Decor", "", true, false):
+		for piece: Node in decor.find_children("*", "Node3D", true, false):
+			if piece.get_parent() is Node3D and piece.get_parent().get_parent() == decor:
+				var at := (piece as Node3D).global_position
+				if bounds.has_point(Vector2(at.x, at.z)):
+					crowded.append(piece.name)
+	assert_eq(crowded, [], "la explanada de la playa queda limpia")
+	assert_true(bounds.size.x >= 14.0 and bounds.size.y >= 10.0, "y tiene lugar para pelear")

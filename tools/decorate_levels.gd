@@ -32,6 +32,7 @@ const SCATTERED := "res://tools/plantas_overworld.json"
 ## Ni plantas ni nada encima de los portales de viaje, con margen para que no asomen sobre el borde.
 const PORTAL_SCENE := "res://src/world/travel_portal.tscn"
 const PORTAL_CLEAR := 2.0
+const ARENA_SCRIPT := "res://src/world/arena_area.gd"
 const CELL := 2.0
 ## Lo jugable más cerca que esto (m) no deja decorar.
 const CLEARANCE := 1.8
@@ -64,6 +65,7 @@ var _keep_out: Array[Vector3] = []
 var _doors: Array[Vector3] = []
 var _placed: Array[Vector3] = []
 var _portals: Array[Vector3] = []
+var _arenas: Array[Rect2] = []
 var _root: Node3D
 var _rng := RandomNumberGenerator.new()
 
@@ -83,9 +85,16 @@ func _decorate(level_name: String, area_script: String, recipe: Callable) -> voi
 	_doors.clear()
 	_placed.clear()
 	_portals.clear()
+	_arenas.clear()
 	for node in level.find_children("*", "", true, false):
 		if node.scene_file_path == PORTAL_SCENE:
 			_portals.append(_origin_in(level, node as Node3D))
+		elif node.get_script() and (node.get_script() as Script).resource_path == ARENA_SCRIPT:
+			var shape := node.get_node_or_null(^"CollisionShape3D") as CollisionShape3D
+			if shape and shape.shape is BoxShape3D:
+				var center := _origin_in(level, shape)
+				var size := (shape.shape as BoxShape3D).size
+				_arenas.append(Rect2(center.x - size.x / 2.0, center.z - size.z / 2.0, size.x, size.z))
 	var areas: Array[Area3D] = []
 	for child in level.get_children():
 		var script: Script = child.get_script()
@@ -128,13 +137,13 @@ func _plants() -> void:
 	group.name = "Plantas"
 	_add(_root, group)
 	for cell in _grid.get_used_cells():
-		if PLANT_CELLS.has(_name(cell)) and not _on_portal(_center(cell)):
+		if PLANT_CELLS.has(_name(cell)) and not _kept_clear(_center(cell)):
 			var plant := _scene(PLANT_CELLS[_name(cell)])
 			plant.transform = Transform3D(_grid.get_cell_item_basis(cell), _center(cell))
 			_add(group, plant)
 	for spot: Dictionary in JSON.parse_string(FileAccess.get_file_as_string(SCATTERED)):
 		var at := Vector3(spot.at[0], spot.at[1], spot.at[2])
-		if _on_portal(at):
+		if _kept_clear(at):
 			continue
 		var plant := _scene(PLANTS[spot.kind])
 		plant.position = at
@@ -151,7 +160,10 @@ func _origin_in(level: Node3D, node: Node3D) -> Vector3:
 	return xform.origin
 
 
-func _on_portal(at: Vector3) -> bool:
+## Sobre los portales y en las arenas de las peleas del overworld no crece nada.
+func _kept_clear(at: Vector3) -> bool:
+	if _arenas.any(func(r: Rect2) -> bool: return r.has_point(Vector2(at.x, at.z))):
+		return true
 	return _portals.any(func(p: Vector3) -> bool: return Vector2(p.x - at.x, p.z - at.z).length() < PORTAL_CLEAR)
 
 
