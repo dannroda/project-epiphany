@@ -6,41 +6,13 @@
 [ext_resource type="Script" path="res://src/components/hurtbox.gd" id="4_hurtbox"]
 [ext_resource type="Script" path="res://src/components/hitbox.gd" id="5_hitbox"]
 [ext_resource type="Script" path="res://src/feel/hit_flash.gd" id="6_flash"]
-
-[sub_resource type="StandardMaterial3D" id="SkinMat"]
-albedo_color = Color(0.22, 0.46, 0.3, 1)
-roughness = 0.6
-
-[sub_resource type="StandardMaterial3D" id="BellyMat"]
-albedo_color = Color(0.78, 0.7, 0.36, 1)
-
-[sub_resource type="StandardMaterial3D" id="EyeMat"]
-shading_mode = 0
-albedo_color = Color(1, 0.85, 0.2, 1)
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/serpientes/amaru_cuello.res" id="7_neck"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/serpientes/amaru_cabeza.res" id="8_head"]
 
 [sub_resource type="StandardMaterial3D" id="AimMat"]
 transparency = 1
 shading_mode = 0
 albedo_color = Color(0.1, 0.05, 0.02, 0.55)
-
-[sub_resource type="CapsuleMesh" id="NeckMesh"]
-material = SubResource("SkinMat")
-radius = 0.4
-height = 2.0
-
-[sub_resource type="SphereMesh" id="HeadMesh"]
-material = SubResource("SkinMat")
-radius = 0.55
-height = 0.8
-
-[sub_resource type="BoxMesh" id="JawMesh"]
-material = SubResource("BellyMat")
-size = Vector3(0.6, 0.12, 0.7)
-
-[sub_resource type="SphereMesh" id="EyeMesh"]
-material = SubResource("EyeMat")
-radius = 0.09
-height = 0.18
 
 [sub_resource type="BoxMesh" id="AimMesh"]
 material = SubResource("AimMat")
@@ -65,23 +37,12 @@ unique_name_in_owner = true
 
 [node name="Model" type="MeshInstance3D" parent="Body/Neck"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-mesh = SubResource("NeckMesh")
+mesh = ExtResource("7_neck")
 
 [node name="Head" type="MeshInstance3D" parent="Body/Neck"]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -0.2)
-mesh = SubResource("HeadMesh")
-
-[node name="Jaw" type="MeshInstance3D" parent="Body/Neck/Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, -0.3)
-mesh = SubResource("JawMesh")
-
-[node name="EyeL" type="MeshInstance3D" parent="Body/Neck/Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28, 0.12, -0.42)
-mesh = SubResource("EyeMesh")
-
-[node name="EyeR" type="MeshInstance3D" parent="Body/Neck/Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28, 0.12, -0.42)
-mesh = SubResource("EyeMesh")
+mesh = ExtResource("8_head")
 
 [node name="Hurtbox" type="Area3D" parent="Body/Neck"]
 unique_name_in_owner = true
