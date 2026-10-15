@@ -33,6 +33,10 @@ shader_parameter/earth_shade = 0.64
 shader_parameter/plank_width = 0.0
 shader_parameter/plank_length = 2.0
 shader_parameter/floor_color = Color(0, 0, 0, 0)
+shader_parameter/snow = 0.0
+shader_parameter/snow_color = Color(0.93, 0.96, 1, 1)
+shader_parameter/ice = 0.0
+shader_parameter/ice_color = Color(0.62, 0.82, 0.95, 1)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_4dyfx"]
 _surfaces = [{
