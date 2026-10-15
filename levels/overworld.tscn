@@ -140,6 +140,33 @@ size = Vector3(0.8, 2.4, 1.4)
 [sub_resource type="BoxShape3D" id="BoxShape3D_jamb"]
 size = Vector3(0.45, 2.6, 2)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_summit_rail_0"]
+size = Vector3(18.2, 1.9, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_summit_rail_1"]
+size = Vector3(0.2, 1.9, 4.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_summit_rail_2"]
+size = Vector3(0.2, 1.9, 4.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_summit_rail_3"]
+size = Vector3(2.2, 1.9, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_summit_rail_4"]
+size = Vector3(2.2, 1.9, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_summit_rail_5"]
+size = Vector3(0.2, 1.9, 2.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_summit_rail_6"]
+size = Vector3(6.2, 1.9, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_summit_rail_7"]
+size = Vector3(0.2, 1.9, 2.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_summit_rail_8"]
+size = Vector3(6.2, 1.9, 0.2)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_zone_banado"]
 size = Vector3(56, 14, 16)
 
@@ -655,6 +682,45 @@ flag = &"ow_cumbre_ladder"
 [node name="SummitGate" parent="." unique_id=1173546068 instance=ExtResource("26_iip2e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 5.2, -35)
 reveal_on_open = false
+
+[node name="SummitRail" type="StaticBody3D" parent="." groups=["walk_guard"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.8, 0)
+
+[node name="Rail0" type="CollisionShape3D" parent="SummitRail"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 0.65, -41)
+shape = SubResource("BoxShape3D_summit_rail_0")
+
+[node name="Rail1" type="CollisionShape3D" parent="SummitRail"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51, 0.65, -39)
+shape = SubResource("BoxShape3D_summit_rail_1")
+
+[node name="Rail2" type="CollisionShape3D" parent="SummitRail"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0.65, -39)
+shape = SubResource("BoxShape3D_summit_rail_2")
+
+[node name="Rail3" type="CollisionShape3D" parent="SummitRail"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0.65, -37)
+shape = SubResource("BoxShape3D_summit_rail_3")
+
+[node name="Rail4" type="CollisionShape3D" parent="SummitRail"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 0.65, -37)
+shape = SubResource("BoxShape3D_summit_rail_4")
+
+[node name="Rail5" type="CollisionShape3D" parent="SummitRail"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 0.65, -38)
+shape = SubResource("BoxShape3D_summit_rail_5")
+
+[node name="Rail6" type="CollisionShape3D" parent="SummitRail"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 0.65, -39)
+shape = SubResource("BoxShape3D_summit_rail_6")
+
+[node name="Rail7" type="CollisionShape3D" parent="SummitRail"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39, 0.65, -38)
+shape = SubResource("BoxShape3D_summit_rail_7")
+
+[node name="Rail8" type="CollisionShape3D" parent="SummitRail"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0.65, -37)
+shape = SubResource("BoxShape3D_summit_rail_8")
 
 [node name="HeartPieceSummit" parent="." unique_id=764024030 instance=ExtResource("6_piece")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 7.8, -40)
