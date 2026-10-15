@@ -2598,7 +2598,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 
 Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
 
-## M11 — Pulido: contenido y feel  (109/186)
+## M11 — Pulido: contenido y feel  (109/189)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4417,7 +4417,7 @@ Playtest 2026-10-12: los puzzles de bloques solo se tienen que activar con los b
 - [x] Que cada tipo se distinga a la vista
   Hoy las cuatro placas son iguales. Marca o color por tipo (bloque, peso, golpe fuerte); pasa por el arte.
 - [ ] Placa de golpe fuerte
-  Se activa con un golpe fuerte (¿martillo / golpe cargado?); espera el ítem que lo dé (11.90).
+  El ítem es el martillo (Daniel, 2026-10-15): 11.191 lo define, 11.192 lo pone en el overworld, 11.193 hace el modo STRIKE.
 - [ ] Probarlo (Daniel)
 
 **Notas:** Al sacar las capturas (2026-10-14) apareció que la placa del santuario seguía mal: ShrineBlock resuelto iba a (−78, −32), coordenadas del overworld, y la placa de shrine_cave está en (−6, 0); el test no revisaba shrine_cave. Ahora test_solved_blocks_rest_on_their_switch recorre todos los niveles, y encontró dos más corridos por el horneado LA: RamaBlock de la Queñoa (14, 10 → 16, 12) y VestibuleBlock del templo (44, 40 → 48, 48). Los tres van a su placa.
@@ -5406,6 +5406,24 @@ Daniel (2026-10-15): la llave del jefe de la Cumbre va al nicho del Atrio (escud
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `templo`
 
 Daniel (2026-10-15): agregar una pieza de corazón en el templo del ojo. Ver con 11.124 (piezas de corazón: 10, no múltiplo de 4).
+
+### 11.191 Martillo: ítem de golpe fuerte · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `items`, `diseno`, `combate`
+
+Daniel (2026-10-15): un evento de mini jefe en el overworld, en una zona después de D2, hace aparecer el martillo. Definir el ítem: ItemData, el golpe fuerte (qué HitBox/AttackData lo marca como golpe fuerte, para que la placa STRIKE lea lo mismo), qué rompe o activa, su lugar en la cadena (después de D2: sirve en D3+ y el overworld, nunca gatea D1/D2) y GDD §6. Modelo listo: assets/epiphany/meshes/equipo/martillo.res (-5d).
+
+### 11.192 Overworld: mini jefe después de D2 que da el martillo · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-eb · **Etiquetas:** `overworld`, `enemigos`, `jefe`
+
+Daniel (2026-10-15): evento de mini jefe con un par de monstruos en una zona del overworld a la que solo se llega después de D2; al vencerlo aparece el martillo (cofre o pedestal). ArenaFight/WaveSpawner con flag. Depende del ítem de 11.191. Si el mini jefe necesita modelo propio, va a -5d.
+
+### 11.193 Placa de golpe fuerte (modo STRIKE) · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `puzzles`, `arte`
+
+Modo STRIKE de FloorSwitch con sus mallas (interruptor_golpe_marco/placa, ya hechas). Lee el mismo marcador de golpe fuerte que defina 11.191. Cierra el paso 4 de 11.110.
 
 ## M12 — Assets propios (Blender)  (17/38)
 

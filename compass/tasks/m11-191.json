@@ -1,0 +1,22 @@
+{
+  "assignee": "project-epiphany-43",
+  "checklist": [],
+  "code": "11.191",
+  "created_at": "2026-10-15T16:57:34.641Z",
+  "description": "Daniel (2026-10-15): un evento de mini jefe en el overworld, en una zona después de D2, hace aparecer el martillo. Definir el ítem: ItemData, el golpe fuerte (qué HitBox/AttackData lo marca como golpe fuerte, para que la placa STRIKE lea lo mismo), qué rompe o activa, su lugar en la cadena (después de D2: sirve en D3+ y el overworld, nunca gatea D1/D2) y GDD §6. Modelo listo: assets/epiphany/meshes/equipo/martillo.res (-5d).",
+  "milestone": "m11",
+  "notes": "",
+  "order": 188,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "items",
+    "diseno",
+    "combate"
+  ],
+  "test": "",
+  "title": "Martillo: ítem de golpe fuerte",
+  "updated_at": "2026-10-15T16:57:34.641Z"
+}

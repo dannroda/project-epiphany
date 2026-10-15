@@ -1,0 +1,22 @@
+{
+  "assignee": "project-epiphany-eb",
+  "checklist": [],
+  "code": "11.192",
+  "created_at": "2026-10-15T16:57:34.938Z",
+  "description": "Daniel (2026-10-15): evento de mini jefe con un par de monstruos en una zona del overworld a la que solo se llega después de D2; al vencerlo aparece el martillo (cofre o pedestal). ArenaFight/WaveSpawner con flag. Depende del ítem de 11.191. Si el mini jefe necesita modelo propio, va a -5d.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 189,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "overworld",
+    "enemigos",
+    "jefe"
+  ],
+  "test": "",
+  "title": "Overworld: mini jefe después de D2 que da el martillo",
+  "updated_at": "2026-10-15T16:57:34.938Z"
+}
