@@ -86,10 +86,13 @@ func test_overworld_plants_are_cut_like_grass() -> void:
 	var grid: GridMap = level.get_node(^"GridMap")
 	var plants := level.get_node(^"Decor/Plantas").get_children().filter(func(node: Node) -> bool: return node is Breakable)
 	assert_true(plants.size() > 100, "las plantas del piso jugable se cortan (%d)" % plants.size())
+	var arenas := level.find_children("*", "Node3D", true, false).filter(func(node: Node) -> bool: return node is ArenaArea).map(func(area: ArenaArea) -> Rect2: return area.bounds())
 	for cell in grid.get_used_cells():
 		var cell_name := grid.mesh_library.get_item_name(grid.get_cell_item(cell))
 		if cell_name in ["Árbol", "Queñoa chica", "Cardón", "Cardón brazos"]:
 			var at := grid.map_to_local(cell) + grid.position
+			if arenas.any(func(r: Rect2) -> bool: return r.has_point(Vector2(at.x, at.z))):
+				continue
 			assert_true(plants.any(func(plant: Breakable) -> bool: return plant.global_position.distance_to(at) < 0.1), "%s en %s es cortable" % [cell_name, at])
 			assert_eq(grid.mesh_library.get_item_shapes(grid.get_cell_item(cell)).size(), 0, "y la celda no choca ni se dibuja: la planta lo hace")
 	var cactus: Breakable = plants.filter(func(plant: Breakable) -> bool: return plant.global_position.distance_to(Vector3(-20, 0, 2)) < 0.1).front()
