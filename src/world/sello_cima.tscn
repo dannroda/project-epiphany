@@ -1,0 +1,28 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="1_gate"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/sello_cima.res" id="2_losa"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/sello_ojo.res" id="3_ojo"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/sello_iris.res" id="4_iris"]
+[ext_resource type="Script" path="res://src/world/eye_follow.gd" id="5_eye_follow"]
+
+[sub_resource type="BoxShape3D" id="Shape"]
+size = Vector3(2, 2.2, 0.3)
+
+[node name="SelloCima" instance=ExtResource("1_gate")]
+
+[node name="Model" parent="." index="0"]
+mesh = ExtResource("2_losa")
+
+[node name="CollisionShape3D" parent="." index="1"]
+shape = SubResource("Shape")
+
+[node name="Eye" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 1.25, 0.15)
+mesh = ExtResource("3_ojo")
+
+[node name="Iris" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 1.25, 0.15)
+mesh = ExtResource("4_iris")
+script = ExtResource("5_eye_follow")
+reach = Vector2(0.12, 0.026)
