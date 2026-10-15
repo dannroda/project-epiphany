@@ -88,7 +88,7 @@ func _begin() -> void:
 		return
 	started = true
 	await get_tree().create_timer(close_delay, false).timeout
-	if not started:
+	if not started or not is_inside_tree():
 		return
 	for door in doors:
 		door.close()
@@ -100,7 +100,7 @@ func _begin() -> void:
 	await TopDownCamera.reveal(self, _awaken, intro_hold, rematch or GameState.seen_boss_intros.has(seen_key))
 	GameState.seen_boss_intros[seen_key] = true
 	in_intro = false
-	if not started:
+	if not started or not is_inside_tree():
 		return
 	get_tree().call_group(Hud.GROUP, &"show_boss", self)
 	_spawn_escorts()
