@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" path="res://src/world/cracked_wall.tscn" id="14_y54qy"]
 [ext_resource type="ArrayMesh" uid="uid://c2j3nknlgxstj" path="res://assets/epiphany/meshes/paredes_la/puerta_jefe_quenoa_la.res" id="15_3db8p"]
 [ext_resource type="Resource" path="res://data/items/boss_key.tres" id="16_8x4vj"]
-[ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="17_r43r1"]
+[ext_resource type="PackedScene" path="res://src/entities/guerreros/skeleton_quenoa.tscn" id="17_r43r1"]
 [ext_resource type="PackedScene" path="res://src/world/stairs.tscn" id="20_ae6pq"]
 [ext_resource type="PackedScene" path="res://src/world/wall_torch.tscn" id="22_nm22u"]
 [ext_resource type="PackedScene" path="res://src/world/floor_switch.tscn" id="23_wvyc0"]
