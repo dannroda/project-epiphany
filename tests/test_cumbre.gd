@@ -86,8 +86,29 @@ func test_the_atrium_crystal_opens_the_pot_niche() -> void:
 	await _start(true)
 	var gate := level.get_node(^"PisoBase/AtrioNicheGate") as Gate
 	await _reflect_at(Vector3(29, 0.25, 16), Vector3(-1, 0, 1))
-	assert_true(await _until(func() -> bool: return gate.is_open, 3.0), "el rayo del Atrio abre el nicho de las vasijas")
+	assert_true(await _until(func() -> bool: return gate.is_open, 3.0), "el rayo del Atrio abre el nicho de la llave del jefe")
+	var chest := level.get_node(^"PisoBase/BossKeyChest") as Node3D
+	assert_true(chest.global_position.distance_to(gate.global_position) < 2.5, "la llave del jefe está detrás de esa reja")
 	hold_block(player, false)
+	state.reset()
+
+
+func test_the_antechamber_plate_opens_the_shortcut_back_to_the_arrival() -> void:
+	await _start()
+	var door := level.get_node(^"PisoCornisa/LlegadaShortcut") as Door
+	var step := level.get_node(^"PisoCornisa/AntesalaStep") as Node3D
+	var map := player.get_world_3d().navigation_map
+	var from := NavigationServer3D.map_get_closest_point(map, door.global_position + Vector3(0, 0, -3))
+	var to := NavigationServer3D.map_get_closest_point(map, step.global_position)
+	assert_true(not door.is_open, "el atajo empieza cerrado")
+	player.global_position = step.global_position + Vector3(0, 0.25, 0)
+	player.velocity = Vector3.ZERO
+	assert_true(await _until(func() -> bool: return door.is_open, 3.0), "la placa de la antesala abre la puerta a la Llegada")
+	player.global_position = from + Vector3(0, 0.25, 0)
+	await _frames(10)
+	assert_true(door.is_open and state.get_flag(&"cu_antesala_step"), "y queda abierta")
+	var path := NavigationServer3D.map_get_path(map, from, to, true)
+	assert_true(not path.is_empty() and path[-1].distance_to(to) < 0.1, "de la Llegada se camina a la antesala")
 	state.reset()
 
 
@@ -166,9 +187,9 @@ func test_the_door_from_the_turrets_lands_in_the_sun_eye_room_clear_of_the_boss_
 	var map := player.get_world_3d().navigation_map
 	var landing := Vector3(12, 8, 17)
 	var gate := level.get_node(^"PisoCornisa/BossKeyGate") as Node3D
-	var chest := level.get_node(^"PisoCornisa/BossKeyChest") as Node3D
+	var chest := level.get_node(^"PisoCornisa/SolNichePot") as Node3D
 	assert_true(Vector2(gate.global_position.x, gate.global_position.z).distance_to(Vector2(landing.x, landing.z)) > 4.0, "la reja no está donde cae la puerta")
-	assert_true(Vector2(chest.global_position.x, chest.global_position.z).distance_to(Vector2(landing.x, landing.z)) > 4.0, "ni el nicho de la llave del jefe")
+	assert_true(Vector2(chest.global_position.x, chest.global_position.z).distance_to(Vector2(landing.x, landing.z)) > 4.0, "ni el nicho del Ojo del Sol")
 	var from := NavigationServer3D.map_get_closest_point(map, Vector3(12, 8, 11))
 	var to := NavigationServer3D.map_get_closest_point(map, Vector3(10, 8, 22))
 	var path := NavigationServer3D.map_get_path(map, from, to, true)
