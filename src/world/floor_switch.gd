@@ -11,7 +11,13 @@ signal deactivated
 
 enum Mode { HOLD, ONCE, BLOCK, WEIGHT }
 
-@export var mode: Mode = Mode.HOLD
+@export var mode: Mode = Mode.HOLD:
+	set(value):
+		mode = value
+		_apply_look()
+## Marco y placa de BLOCK: con la chakana del bloque, para que no se confunda con la que pisa el player.
+@export var block_frame: Mesh
+@export var block_plate: Mesh
 @export var flag: StringName:
 	set(value):
 		flag = value
@@ -26,6 +32,7 @@ var _solved := false
 
 
 func _ready() -> void:
+	_apply_look()
 	if Engine.is_editor_hint():
 		set_physics_process(false)
 		return
@@ -44,6 +51,13 @@ func _ready() -> void:
 		if _persistent.value == true:
 			_solved = true
 			_set_active(true, false)
+
+
+func _apply_look() -> void:
+	if plate == null or mode != Mode.BLOCK or block_plate == null:
+		return
+	($Model as MeshInstance3D).mesh = block_frame
+	(plate as MeshInstance3D).mesh = block_plate
 
 
 func _get_configuration_warnings() -> PackedStringArray:

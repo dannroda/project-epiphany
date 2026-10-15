@@ -420,51 +420,6 @@ def brasero(p):
 	return {"llama": [0.0, z + 0.25, 0.0]}
 
 
-def estandarte(p):
-	"""Tela de aguayo colgada de una vara (contra la pared, mirando a -Y)."""
-	rod = p.cylinder(0.03, -0.55, 0.55, sides=6)
-	p.transform(rod, Matrix.Translation((0, -0.06, 2.2)) @ Matrix.Rotation(math.pi / 2, 4, "Y"))
-	p.paint(rod, "madera_oscura", "MID")
-	stripes = [("tela_roja", 0.32), ("flor_amarilla", 0.06), ("tela_azul", 0.12), ("hueso", 0.06), ("tela_roja", 0.38), ("hueso", 0.06), ("tela_azul", 0.12), ("flor_amarilla", 0.06), ("tela_roja", 0.32)]
-	z = 2.18
-	for swatch, h in stripes:
-		band = p.box(-0.45, 0.45, -0.05, -0.03, z - h, z)
-		p.paint(band, swatch, "MID")
-		z -= h
-	fringe = []
-	for i in range(9):
-		x = -0.4 + i * 0.1
-		fringe += p.box(x - 0.015, x + 0.015, -0.05, -0.03, z - 0.12, z)
-	p.paint(fringe, "paja", "MID")
-
-
-def escombros(p):
-	chunks = []
-	for _ in range(6):
-		x, y = p.rng.uniform(-0.7, 0.7), p.rng.uniform(-0.6, 0.6)
-		s = p.rng.uniform(0.1, 0.25)
-		c = p.box(x - s, x + s, y - s * 0.8, y + s * 0.8, 0.0, s, taper=0.03)
-		p.jitter(c, 0.04)
-		chunks += c
-	p.paint(chunks, STONE, vary=0.15)
-
-
-def venas_doom(p):
-	"""Raíces rojas que cruzan el piso (decoración del doom, sobre el piso)."""
-	veins = []
-	for _ in range(4):
-		pos = Vector((p.rng.uniform(-0.9, 0.9), p.rng.uniform(-0.9, 0.9), 0.0))
-		d = Vector((p.rng.uniform(-1, 1), p.rng.uniform(-1, 1), 0)).normalized()
-		for _ in range(4):
-			seg = d * p.rng.uniform(0.2, 0.35)
-			c = p.cylinder(0.04, 0.0, seg.length, sides=5, radius_top=0.025)
-			p.transform(c, Matrix.Translation(pos + Vector((0, 0, 0.02))) @ seg.normalized().to_track_quat("Z", "Y").to_matrix().to_4x4())
-			veins += c
-			pos = pos + seg
-			d = (d + Vector((p.rng.uniform(-0.6, 0.6), p.rng.uniform(-0.6, 0.6), 0))).normalized()
-	p.paint(veins, "doom", "MID", vary=0.1)
-
-
 SPIKE_GRID = (-0.6, 0.0, 0.6)
 
 
@@ -496,9 +451,6 @@ piece("pinchos_base", 22, pinchos_base)
 piece("pinchos", 23, pinchos)
 piece("antorcha_pared", 16, antorcha_pared)
 piece("brasero", 17, brasero, smooth=40)
-piece("estandarte", 18, estandarte)
-piece("escombros", 20, escombros)
-piece("venas_doom", 21, venas_doom)
 
 
 # --- enemigos fijos y jefe ---

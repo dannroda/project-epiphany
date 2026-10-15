@@ -50,10 +50,10 @@ ESCENAS = {
 			"pared pared pared pared paso_puerta pared pared pared pared",
 		],
 		"props": [
-			("brasero", -5.0, 4.6, 0.0), ("brasero", 5.0, 4.6, 0.0), ("estandarte", -2.2, 6.94, 0.0), ("estandarte", 2.2, 6.94, 0.0),
+			("brasero", -5.0, 4.6, 0.0), ("brasero", 5.0, 4.6, 0.0),
 			("bloque_empujable", -2.0, -2.0, 0.0), ("interruptor_marco", 4.0, -2.0, 0.0), ("interruptor_placa", 4.0, -2.0, 0.0),
 			("cofre", 6.0, 2.0, 0.0), ("cofre_tapa", 6.0, 1.65, 0.0), ("vasija", -6.0, -4.4, 0.0), ("vasija", -5.3, -4.8, 0.0),
-			("torreta", 0.0, 2.0, 0.0), ("escombros", 4.0, 2.4, 0.0), ("venas_doom", 0.0, -2.0, 0.0), ("tablilla", -6.0, 3.0, 0.0),
+			("torreta", 0.0, 2.0, 0.0), ("tablilla", -6.0, 3.0, 0.0),
 		],
 	},
 }
