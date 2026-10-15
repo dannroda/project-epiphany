@@ -7,7 +7,8 @@
       "text": "Modelos, armas y corazas por mazmorra (arte, -5d)"
     },
     {
-      "done": false,
+      "detail": "Hecho el 2026-10-15 (27f82209): en cada mazmorra los ext_resource de esqueleto, escudo, arquero y acorazado apuntan a guerreros/<tipo>_<mazmorra>.tscn, así cambian todas las instancias y los spawns de oleadas (cripta de la Chullpa, Combinada del templo) sin overrides. test_dungeon_enemies falla si un refresh vuelve a las escenas base.",
+      "done": true,
       "text": "Cambiar las instancias de cada mazmorra (diseño, -43)"
     },
     {
@@ -37,5 +38,5 @@
   ],
   "test": "",
   "title": "Enemigos comunes estilizados según el theme de cada mazmorra",
-  "updated_at": "2026-10-15T20:12:24.267Z"
+  "updated_at": "2026-10-15T20:20:07.309Z"
 }
