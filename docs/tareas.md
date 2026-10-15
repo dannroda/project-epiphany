@@ -4500,8 +4500,8 @@ Daniel (2026-10-12): las botellas tienen su fila fija, separada de los ítems co
 
 Daniel (2026-10-13): los enemigos que no te detectaron no se quedan quietos. Todos deambulan cerca de su lugar: caminan despacio a puntos al azar de la navmesh dentro de unos metros de donde empiezan, paran un rato y miran alrededor (reemplaza la rama Quieto de enemy_bt.tres; radio, velocidad y pausas en EntityConfig). Alerta y búsqueda solo para un tipo de enemigo nuevo: el centinela o guardia de una guarida de un grupo enemigo que no son monstruos. Al verte hace una pausa de alerta (un !) antes de atacar; si te pierde va a tu último lugar visto, mira alrededor y vuelve a su puesto. Descartados por ahora: rondas fijas y cono de visión.
 
-- [ ] Deambular cerca de su lugar para todos los enemigos
-  Rama nueva en enemy_bt.tres en lugar de Quieto: punto al azar de la navmesh dentro de wander_radius del lugar de inicio, caminar a wander_speed, pausa y mirar alrededor. Datos en EntityConfig. Que no salgan de su zona ni se tiren a un abismo.
+- [x] Deambular cerca de su lugar para todos los enemigos
+  Hecho el 2026-10-14 (-fd): ai/tasks/bt_wander.gd reemplaza la rama Quieto de enemy_bt.tres (ahora Deambular): punto al azar de la navmesh a wander_radius (3 m) de donde empezó, en su misma sala, caminando a wander_speed (1,2) con Walking_A; pausa wander_pause (1,5 a 3,5 s) con Idle_A. Ver al player lo corta (BTDynamicSelector). Si cae a otro nivel, su lugar pasa a ser donde cayó. Datos en EntityConfig. test_enemy_ai. Falta que Daniel lo vea y ajuste radio, velocidad y pausas.
 - [ ] Diseño del centinela: quién es el grupo enemigo no monstruo y cómo se ve
   Tipo de enemigo nuevo para guaridas (personaje humano o de una facción, no esqueleto). Lo decide Daniel con diseño y arte.
 - [ ] Alerta y búsqueda del centinela

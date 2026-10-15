@@ -2,8 +2,8 @@
   "assignee": "project-epiphany-fd",
   "checklist": [
     {
-      "detail": "Rama nueva en enemy_bt.tres en lugar de Quieto: punto al azar de la navmesh dentro de wander_radius del lugar de inicio, caminar a wander_speed, pausa y mirar alrededor. Datos en EntityConfig. Que no salgan de su zona ni se tiren a un abismo.",
-      "done": false,
+      "detail": "Hecho el 2026-10-14 (-fd): ai/tasks/bt_wander.gd reemplaza la rama Quieto de enemy_bt.tres (ahora Deambular): punto al azar de la navmesh a wander_radius (3 m) de donde empezó, en su misma sala, caminando a wander_speed (1,2) con Walking_A; pausa wander_pause (1,5 a 3,5 s) con Idle_A. Ver al player lo corta (BTDynamicSelector). Si cae a otro nivel, su lugar pasa a ser donde cayó. Datos en EntityConfig. test_enemy_ai. Falta que Daniel lo vea y ajuste radio, velocidad y pausas.",
+      "done": true,
       "text": "Deambular cerca de su lugar para todos los enemigos"
     },
     {
@@ -38,5 +38,5 @@
   ],
   "test": "",
   "title": "Enemigos que deambulan mientras no te ven; centinelas con alerta y búsqueda",
-  "updated_at": "2026-10-15T02:31:07.358Z"
+  "updated_at": "2026-10-15T02:43:17.628Z"
 }
