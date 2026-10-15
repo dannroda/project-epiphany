@@ -3,9 +3,13 @@
 [ext_resource type="PackedScene" path="res://src/entities/armored_skeleton.tscn" id="1_enemy"]
 [ext_resource type="Resource" path="res://data/entities/armored_skeleton_quenoa.tres" id="2_config"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/armas_guerreros/arma_quenoa.res" id="3_arma"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/armas_guerreros/armadura_quenoa.res" id="4_armadura"]
 
 [node name="ArmoredSkeletonQuenoa" instance=ExtResource("1_enemy")]
 config = ExtResource("2_config")
 
 [node name="Sword" parent="ModelController/Skeleton3D/Hand_R/Sword1H" index="0"]
 mesh = ExtResource("3_arma")
+
+[node name="Armor" parent="ModelController/Skeleton3D/Chest" index="0"]
+mesh = ExtResource("4_armadura")

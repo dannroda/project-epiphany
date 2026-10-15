@@ -1,7 +1,7 @@
 # Publica assets/epiphany/armas_guerreros.glb: las armas de los enemigos comunes de cada mazmorra (12.39), en los ejes
 # de build_equipo.py: arma_<mazmorra> sobre +Z con la empuñadura en el origen (la de espada), escudo_<mazmorra> en el
 # plano XZ con el frente a -Y y radio ~0.44 (el de escudo_madera), arco_<mazmorra> sobre Y con el lomo a +X, la cuerda
-# en x -0.2 y el shape key «tensado» de arco (BowModel).
+# en x -0.2 y el shape key «tensado» de arco (BowModel), y armadura_<mazmorra> en los ejes de armadura (la del acorazado).
 # blender -b --factory-startup -P tools/blender/build_armas_guerreros.py
 import math
 import os
@@ -324,6 +324,118 @@ def deco_sun(p, side):
 	p.paint(f, "dorado", "LIGHT")
 
 
+# --- armaduras (los ejes de build_equipo.armadura: el pecho desde z 0, frente a -Y, hombreras en x ±0.36) ---
+
+
+def torso(p, swatch, shade="MID"):
+	p.paint(p.box(-0.22, 0.22, -0.16, 0.16, 0.0, 0.58), swatch, shade)
+
+
+def shoulders(p, swatch, shade="MID", radius=0.07):
+	faces = []
+	for side in (-1, 1):
+		x = side * 0.36
+		faces += p.rounded_box(x - 0.17, x + 0.17, -0.17, 0.17, 0.38, 0.64, radius=radius)
+	p.paint(faces, swatch, shade, vary=0.05)
+	return faces
+
+
+def armadura_chullpa(p):
+	"""Cuero curtido con costillas de hueso al frente, hombreras de cobre y faldón rojo."""
+	torso(p, "tierra")
+	p.paint(p.box(-0.26, 0.26, -0.22, 0.12, 0.2, 0.58, taper=0.03), "tierra", "LOW", vary=0.06)
+	ribs = []
+	for k in range(4):
+		z = 0.26 + k * 0.08
+		w = 0.2 - abs(k - 1.5) * 0.02
+		for side in (-1, 1):
+			ribs += p.rounded_box(min(side * 0.03, side * (0.03 + w)), max(side * 0.03, side * (0.03 + w)), -0.26, -0.21, z, z + 0.045, radius=0.015, segments=1)
+	ribs += p.box(-0.03, 0.03, -0.26, -0.21, 0.22, 0.58)
+	p.paint(ribs, "hueso", "LIGHT", vary=0.05)
+	shoulders(p, "cobre_verde")
+	p.paint(p.box(-0.17, 0.17, -0.22, -0.18, -0.3, 0.02), "tela_roja", "MID")
+	p.paint(p.box(-0.26, 0.26, -0.19, 0.19, -0.04, 0.04), "cobre_verde", "DARK")
+
+
+def armadura_quenoa(p):
+	"""Placas de corteza roja de queñoa atadas, musgo sobre las hombreras y cinto de madera."""
+	torso(p, "madera_oscura")
+	plates = []
+	for i, (z0, z1) in enumerate(((0.2, 0.34), (0.33, 0.47), (0.46, 0.6))):
+		for side in (-1, 1):
+			plates += p.box(side * 0.005, side * 0.26, -0.22 - i * 0.005, 0.12, z0, z1, taper=0.015)
+	p.jitter(plates, 0.01)
+	p.paint(plates, "roca_naranja", z_range=(0.1, 0.7), vary=0.1)
+	shoulders(p, "roca_naranja", radius=0.05)
+	for side in (-1, 1):
+		moss = p.blob((side * 0.36, 0.0, 0.64), 0.13, squash=(1.2, 1.1, 0.5), subdiv=2, rough=0.2)
+		p.paint(moss, "musgo", "MID", vary=0.1)
+	p.paint(p.box(-0.26, 0.26, -0.19, 0.19, -0.04, 0.05), "madera", "MID")
+	p.paint(p.box(-0.15, 0.15, -0.22, -0.18, -0.28, 0.02), "follaje", "MID", vary=0.08)
+
+
+def armadura_totora(p):
+	"""Chaleco de varas de junco atado con tiento azul, hombreras de atados de junco."""
+	torso(p, "tela_azul", "DARK")
+	rods = []
+	for k in range(9):
+		z = 0.18 + k * 0.05
+		rod = p.cylinder(0.028, -0.26, 0.26, sides=6)
+		p.transform(rod, Matrix.Translation((0, -0.2, z)) @ Matrix.Rotation(math.pi / 2, 4, "Y"))
+		rods += rod
+	p.paint(rods, "paja", z_range=(0.1, 0.7), vary=0.1)
+	ties = []
+	for x in (-0.12, 0.12):
+		ties += p.box(x - 0.025, x + 0.025, -0.24, -0.17, 0.16, 0.62)
+	p.paint(ties, "tela_azul", "MID")
+	bundles = []
+	for side in (-1, 1):
+		for k in range(3):
+			b = p.cylinder(0.05, -0.17, 0.17, sides=6)
+			p.transform(b, Matrix.Translation((side * (0.27 + k * 0.08), 0, 0.6 - k * 0.04)) @ Matrix.Rotation(math.pi / 2, 4, "X"))
+			bundles += b
+	p.paint(bundles, "paja", "LIGHT", vary=0.08)
+	p.paint(p.box(-0.16, 0.16, -0.22, -0.18, -0.3, 0.02), "paja", "MID", vary=0.1)
+
+
+def armadura_cumbre(p):
+	"""Poncho de lana blanca con franjas azules y hombreras de hielo."""
+	torso(p, "gris_2")
+	cuts = (0.0, 0.12, 0.17, 0.3, 0.34, 0.46, 0.5, 0.6)
+	for k, (z0, z1) in enumerate(zip(cuts, cuts[1:])):
+		w = 0.28 - 0.04 * z0 / 0.6
+		p.paint(p.box(-w, w, -0.22, 0.2, z0, z1), "tela_azul" if k % 2 else "blanco", "MID")
+	ice = []
+	for side in (-1, 1):
+		x = side * 0.36
+		ice += p.cylinder(0.16, 0.42, 0.62, sides=6, radius_top=0.1, center=(x, 0.0))
+		for k in range(3):
+			c = p.cylinder(0.04, 0.0, 0.14, sides=4, radius_top=0.004, phase=math.pi / 4)
+			p.transform(c, Matrix.Translation((x + side * (k - 1) * 0.08, (k - 1) * 0.05, 0.6)) @ Matrix.Rotation(side * 0.4, 4, "Y"))
+			ice += c
+	p.paint(ice, "cristal", "LIGHT", vary=0.05)
+	p.paint(p.box(-0.18, 0.18, -0.23, -0.2, -0.3, 0.02), "blanco", "MID")
+
+
+def armadura_templo(p):
+	"""Peto de oro sobre negro con el ojo del logo (iris del doom), hombreras de sol con rayos."""
+	torso(p, "noche")
+	plate = p.box(-0.26, 0.26, -0.22, 0.12, 0.2, 0.58, taper=0.03)
+	p.paint_bands(plate, [(0.27, 0.3, GLOW, "MID")], default=(0, 0, "dorado", "MID"))
+	epi.logo_eye(p, Vector((0, -0.225, 0.44)), 0.24, depth=0.012, iris=(GLOW, "MID"))
+	shoulders(p, "dorado")
+	rays = []
+	for side in (-1, 1):
+		for k in range(5):
+			r = p.box(-0.02, 0.02, -0.02, 0.02, 0.0, 0.12, taper=0.015)
+			p.transform(r, Matrix.Translation((side * 0.36, 0, 0.62)) @ Matrix.Rotation(side * (k - 2) * 0.45, 4, "Y"))
+			rays += r
+	p.paint(rays, "dorado", "LIGHT")
+	p.paint(p.lathe([(0.2, 0.55), (0.22, 0.62), (0.0, 0.62)], sides=16), "dorado", "MID")
+	p.paint(p.box(-0.17, 0.17, -0.22, -0.18, -0.3, 0.02), "noche", "MID")
+	p.paint(p.box(-0.26, 0.26, -0.19, 0.19, -0.04, 0.04), "dorado", "MID")
+
+
 piece("arma_chullpa", 1, arma_chullpa)
 piece("arma_quenoa", 2, arma_quenoa)
 piece("arma_totora", 3, arma_totora)
@@ -339,5 +451,7 @@ piece("arco_quenoa", 12, lambda p: arco(p, ("roca_naranja", "MID"), ("madera_osc
 piece("arco_totora", 13, lambda p: arco(p, ("paja", "MID"), ("tela_azul", "MID"), "tela_azul", "paja", deco_feathers("tela_azul")))
 piece("arco_cumbre", 14, lambda p: arco(p, ("gris_2", "MID"), ("cristal", "LIGHT"), "blanco", "blanco", deco_ice))
 piece("arco_templo", 15, lambda p: arco(p, ("noche", "MID"), ("dorado", "MID"), "dorado", "dorado", deco_sun))
+for i, d in enumerate(("chullpa", "quenoa", "totora", "cumbre", "templo")):
+	piece("armadura_" + d, 16 + i, globals()["armadura_" + d])
 epi.layout(kit, columns=5, spacing=2.0)
 epi.publish("armas_guerreros")

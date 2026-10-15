@@ -20,5 +20,7 @@ func test_every_variant_wears_its_dungeon() -> void:
 			var label := "%s_%s" % [kind, dungeon]
 			assert_true(paths.any(func(p: String) -> bool: return p.contains("guerrero_" + dungeon)), label + " tiene su cuerpo")
 			assert_true(paths.any(func(p: String) -> bool: return p.contains("armas_guerreros") and p.ends_with("_%s.res" % dungeon)), label + " tiene su arma")
-			assert_true(not paths.any(func(p: String) -> bool: return p.contains("meshes/chullpa/") or p.ends_with("espada.res")), label + " no lleva la espada ni el cuerpo de siempre")
+			assert_true(not paths.any(func(p: String) -> bool: return p.contains("meshes/chullpa/") or p.ends_with("espada.res") or p.ends_with("equipo/armadura.res")), label + " no lleva la espada ni el cuerpo de siempre")
+			if kind == "armored_skeleton":
+				assert_true(paths.has("res://assets/epiphany/meshes/armas_guerreros/armadura_%s.res" % dungeon), label + " tiene su armadura")
 			enemy.free()
