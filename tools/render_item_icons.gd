@@ -17,6 +17,7 @@ const FLAT := Vector3(90, 0, 0)
 ## id: [modelo (escena o malla), rotación en grados (antes de la vista)]
 const ICONS := {
 	"sword_basic": ["res://assets/items/sword/sword_1h.tscn", Vector3(0, 0, -45)],
+	"sword_golden": [MESH % "equipo/espada_dorada", Vector3(0, 0, -45)],
 	"shield_wood": ["res://assets/items/shield/shield_round.tscn", Vector3(0, 0, 0)],
 	"shield_mirror": ["res://assets/items/shield/shield_mirror.tscn", Vector3(0, 0, 0)],
 	"bow": [MESH % "equipo/arco", Vector3(0, 0, -45)],
