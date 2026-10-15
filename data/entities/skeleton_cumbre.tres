@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="EntityConfig" format=3]
+
+[ext_resource type="Script" path="res://src/entities/entity_config.gd" id="1_qpbh5"]
+[ext_resource type="Resource" path="res://data/drops/skeleton.tres" id="2_drops"]
+[ext_resource type="PackedScene" path="res://src/entities/models/guerrero_cumbre.tscn" id="g_model"]
+
+[resource]
+script = ExtResource("1_qpbh5")
+features = 3
+target_height = 2.2
+drops = ExtResource("2_drops")
+model = ExtResource("g_model")

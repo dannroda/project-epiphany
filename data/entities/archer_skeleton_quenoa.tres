@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EntityConfig" format=3]
+
+[ext_resource type="Script" path="res://src/entities/entity_config.gd" id="1_config"]
+[ext_resource type="Resource" path="res://data/drops/skeleton.tres" id="2_drops"]
+[ext_resource type="PackedScene" path="res://src/entities/models/guerrero_quenoa.tscn" id="g_model"]
+
+[resource]
+script = ExtResource("1_config")
+features = 3
+max_health = 6
+target_height = 2.2
+attack_damage = 2
+drops = ExtResource("2_drops")
+move_speed = 2.4
+vision_range = 13.0
+attack_range = 9.0
+model = ExtResource("g_model")

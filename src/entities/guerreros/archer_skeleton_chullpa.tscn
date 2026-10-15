@@ -1,0 +1,11 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://src/entities/archer_skeleton.tscn" id="1_enemy"]
+[ext_resource type="Resource" path="res://data/entities/archer_skeleton_chullpa.tres" id="2_config"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/armas_guerreros/arco_chullpa.res" id="4_arco"]
+
+[node name="ArcherSkeletonChullpa" instance=ExtResource("1_enemy")]
+config = ExtResource("2_config")
+
+[node name="Model" parent="ModelController/Skeleton3D/Hand_L/BowSocket/Bow" index="0"]
+mesh = ExtResource("4_arco")
