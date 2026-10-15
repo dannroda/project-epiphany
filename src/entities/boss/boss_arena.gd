@@ -78,6 +78,7 @@ func _begin() -> void:
 	door.close()
 	await get_tree().create_timer(door.open_time, false).timeout
 	in_intro = true
+	boss.presents_phases = true
 	Music.boss_fight = true
 	_sharpen()
 	await TopDownCamera.reveal(boss.eye, _awaken, intro_hold)
