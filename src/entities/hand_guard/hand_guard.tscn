@@ -83,7 +83,6 @@ material_override = SubResource("ShaderMaterial_pulso")
 cast_shadow = 0
 amount = 3
 lifetime = 1.2
-local_coords = false
 visibility_aabb = AABB(-3, -2, -3, 6, 6, 6)
 process_material = SubResource("ParticleProcessMaterial_pulso")
 draw_pass_1 = SubResource("PlaneMesh_pulso")

@@ -102,7 +102,7 @@ func _awaken() -> void:
 	Feel.shake(0.35)
 	var player := Players.nearest(boss.eye.global_position)
 	if player:
-		boss.look_at_point(player.global_position + Vector3.UP)
+		boss.look_at_point(boss.gaze_point(player.global_position))
 	boss.roar()
 
 

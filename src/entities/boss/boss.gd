@@ -211,7 +211,7 @@ func _physics_process(delta: float) -> void:
 		if _eye_stun_left <= 0.0:
 			_move_body(BODY_HEIGHT_OPEN, 0.6)
 	if is_instance_valid(target) and not is_eye_stunned():
-		var wanted := (target.global_position + Vector3.UP - eye.global_position).normalized()
+		var wanted := (gaze_point(target.global_position) - eye.global_position).normalized()
 		look_at_point(eye.global_position + eye.global_basis.z.normalized().slerp(wanted, 1.0 - exp(-4.0 * delta)))
 	var blackboard := phases.blackboard
 	blackboard.set_var(&"target", target)
@@ -427,6 +427,12 @@ func roar() -> void:
 
 func look_at_point(point: Vector3) -> void:
 	eye.look_at(point, Vector3.UP, true)
+
+
+## Adónde mira la pupila: a mitad de camino entre el blanco y la cámara, para que desde arriba se lea mirando al jugador.
+func gaze_point(at: Vector3) -> Vector3:
+	var camera := get_viewport().get_camera_3d()
+	return (at + Vector3.UP).lerp(camera.global_position, 0.5) if camera else at + Vector3.UP
 
 
 func hand_rest(hand: BossHand) -> Marker3D:
