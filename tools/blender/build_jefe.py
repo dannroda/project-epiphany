@@ -392,7 +392,7 @@ def finger(p, x, lengths, curl, width=0.11, height=0.3):
 
 
 def hand(p, form, curl, mirror):
-	"""Mano flotando, la palma (plana, abajo) en el origen y los dedos hacia -Y. El lomo lleva un ojo que brilla (dónde
+	"""Mano flotando, la palma (plana, abajo) en el origen y los dedos hacia -Y. El lomo lleva el ojo del logo con el iris que brilla (dónde
 	pegar cuando la mano queda aturdida); la muñeca, el núcleo que la une al cuerpo. De oro con nudillos de jade, o de
 	corteza con garras de hueso y raíces en la muñeca."""
 	c = FORMS[form]
@@ -400,9 +400,8 @@ def hand(p, form, curl, mirror):
 	p.paint(palm, c["palm"], z_range=(0, 0.45), vary=0.04)
 	back = p.rounded_box(-0.5, 0.5, -0.5, 0.35, 0.42, 0.56, radius=0.05, segments=1)
 	p.paint(back, c["back"], "MID" if form else "LIGHT", vary=0.06)
-	glyph = epi.eye(p, Vector((0, 0, 0)), 0.26, depth=0.04, pupil_swatch="noche")
+	glyph = epi.logo_eye(p, Vector((0, 0, 0)), 0.76, depth=0.04, iris=(c["core"], "MID"))
 	p.transform(glyph, Matrix.Translation((0, -0.07, 0.56)) @ Matrix.Rotation(-math.pi / 2, 4, "X"))
-	p.paint(glyph, c["core"], "MID")
 	fingers, knuckles, claws = [], [], []
 	for i, x in enumerate((-0.43, -0.145, 0.145, 0.43)):
 		base = 0.36 + (0.06 if i in (1, 2) else 0.0)
@@ -437,12 +436,12 @@ def hand(p, form, curl, mirror):
 
 def guard_hand(p, curl):
 	"""La Mano del templo (sub-jefe): un ídolo de piedra oscura de tres dedos gruesos y pulgar, con grietas de fuego, uñas
-	de oro, una chakana que brilla en el lomo (dónde pegar) y la muñeca vendada de rojo con un aro de oro."""
+	de oro, el ojo del logo en el lomo (dónde pegar) y la muñeca vendada de rojo con un aro de oro."""
 	palm = p.rounded_box(-0.62, 0.62, -0.62, 0.48, 0.0, 0.46, radius=0.12, segments=2)
 	p.paint(palm, "gris_4", z_range=(0, 0.5), vary=0.05)
 	back = p.rounded_box(-0.52, 0.52, -0.52, 0.38, 0.46, 0.6, radius=0.06, segments=1)
 	p.paint(back, "piedra", "LOW", vary=0.06)
-	glyph = epi.chakana_plate(p, Vector((0, 0, 0)), 0.5, GLOW)
+	glyph = epi.logo_eye(p, Vector((0, 0, 0)), 0.76, depth=0.04, iris=(GLOW, "MID"))
 	p.transform(glyph, Matrix.Translation((0, -0.07, 0.6)) @ Matrix.Rotation(-math.pi / 2, 4, "X"))
 	cracks = []
 	for x0, y0, x1, y1 in ((-0.45, -0.3, -0.2, 0.05), (0.25, 0.2, 0.5, -0.1), (-0.1, 0.3, 0.15, 0.45)):
