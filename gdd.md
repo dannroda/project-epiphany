@@ -557,11 +557,11 @@ Plano aprobado por Daniel el 2026-10-13 ("si, me gusta") y armado en blockout (`
             │abismo,    ├─(cristal)─┤           │
             │postes; orbe│2 espejos ├─ abierta ──┤ escalera ▼
             │→ ojo:LLAVE│que giran  │           │
-            ├─ abierta ─┼───────────┼───────────┤
+            ├─ abierta ─┼───────────┼─(placa)───┤
             │Ojo del Sol│Hueco      │Antesala   │
             │ojo c/tiempo├─abierta──┤vasijas    │
             │→ persiana;│hueco ↓    ├─[LLAVE]───┤ [JEFE] → escalera ▲ (Cima)
-            │LLAVE JEFE │pieza ♥    │           │
+            │vasijas    │pieza ♥    │placa      │
             └───────────┴───────────┴───────────┘
  PISO BAJO  ┌───────────┬───────────┬───────────┐
             │Grieta     │Nido del   │Cámara del │
@@ -571,29 +571,31 @@ Plano aprobado por Daniel el 2026-10-13 ("si, me gusta") y armado en blockout (`
             │Columnas   │Atrio      │Ventisquero│
             │abismo,    ├─abierta───┤torretas;  │
             │postes:    │entrada;   ├─abierta───┤ojo → mapa
-            │LLAVE      │cristal    │           │
+            │LLAVE      │cristal:   │           │
+            │           │LLAVE JEFE │           │
             └───────────┴───────────┴───────────┘
 ```
 
 | Sala | Qué pasa |
 |---|---|
-| Atrio (bajo, centro sur) | Entrada desde el overworld. Un rayo de sol cruza la sala pegado a la pared norte, al lado de un cristal: sin escudo es la promesa del ítem; con él, el cristal abre el nicho de las vasijas (bombas). Abierto a las Columnas y al Ventisquero; al norte, puerta con llave al Nido |
+| Atrio (bajo, centro sur) | Entrada desde el overworld. Un rayo de sol cruza la sala pegado a la pared norte, al lado de un cristal: sin escudo es la promesa del ítem; con él, el cristal abre el nicho de la esquina suroeste, con la **llave del jefe** (11.189: hay que volver con el escudo). Abierto a las Columnas y al Ventisquero; al norte, puerta con llave al Nido |
 | Columnas (bajo, SO) | Abismo de 4 celdas con un poste a cada lado: con el gancho, la **llave chica**. Pared rajada (bomba) a la Grieta |
 | Grieta (bajo, NO) | Dos grietas de una celda (pluma) hasta la **brújula** |
 | Ventisquero (bajo, SE) | Dos torretas y columnas de basalto para cubrirse. Un abismo corre por la pared sur; un ojo en la pared norte, entre las torretas (arco), abre la reja del nicho del **mapa** |
 | Nido del Kuntur (bajo, centro norte) | Sub-jefe **Kuntur joven** (`KunturFight`, `cu_kuntur_defeated`). Sala sin obstáculos, una vasija en cada esquina. Se vence sin el escudo. Vencido, abre la Cámara |
 | Cámara del escudo (bajo, NE) | Cofre grande del **escudo espejo**. Primer uso: el sol cae del norte, el escudo lo manda al cristal del oeste y se abre la reja de la escalera a la Llegada |
-| Llegada (alto, NE) | Escalera a la Cámara. Abierta a los Espejos |
+| Llegada (alto, NE) | Escalera a la Cámara. Abierta a los Espejos. Al sur, una puerta a la Antesala que abre la placa de la Antesala y queda abierta (`cu_antesala_step`): el atajo de vuelta desde el piso bajo |
 | Espejos (alto, centro norte) | El sol entra por el este hacia el oeste. Dos espejos que giran, de un espadazo cada uno, lo llevan al sur y lo devuelven al este por el lado sur de la sala; ahí el escudo lo baja al cristal, que abre la puerta de las Torretas. Una columna de basalto tapa el atajo desde el primer tramo. Un esqueleto con escudo |
 | Torretas (alto, NO) | Abismo de 4 celdas. En la cornisa oeste, una torreta tira orbes; devuelto con el escudo, un orbe pega en el ojo de la cornisa y abre la reja de la **llave chica**. Al lado de la llave, el gancho cruza de poste a poste |
-| Ojo del Sol (alto, SO) | Un sol en un nicho, tras una persiana (reja que se cierra sola). Una flecha al ojo de la pared norte la abre 6 s: con el escudo, el rayo va al receptor del sur, que abre el nicho de la **llave del jefe**, en la esquina noroeste, lejos de la puerta de las Torretas. Un arquero |
+| Ojo del Sol (alto, SO) | Un sol en un nicho, tras una persiana (reja que se cierra sola). Una flecha al ojo de la pared norte la abre 6 s: con el escudo, el rayo va al receptor del sur, que abre el nicho de las vasijas, en la esquina noroeste, lejos de la puerta de las Torretas. Un arquero |
 | Hueco (alto, centro sur) | Un hueco cae al Atrio (atajo). Un abismo con un islote en la esquina: con el salto largo, la **pieza de corazón** (`cu_heart_piece`). Al este, puerta con llave a la Antesala |
-| Antesala (alto, SE) | Vasijas. En un recoveco del este, la puerta del jefe y la escalera a la Cima |
+| Antesala (alto, SE) | Vasijas. Al norte, la placa que abre el atajo a la Llegada. En un recoveco del este, la puerta del jefe y la escalera a la Cima |
 | Cima (arriba de la Antesala) | Jefe **Apu Kuntur** (`BossFight`, `cu_boss_defeated`). Sala sin obstáculos, una vasija en cada esquina y un sol apagado en la pared oeste y otro en la este (`SunWest`, `SunEast`), en filas distintas. Vencido, aparecen el contenedor de corazón (`cu_heart_container`) y el portal de salida |
 
 **Recorrido:**
 1. Sin escudo: Atrio → Columnas (gancho: llave) → Grieta (bomba, pluma: brújula) → Ventisquero (arco: mapa) → Atrio → Nido (llave: Kuntur joven) → Cámara (escudo).
-2. Con escudo: cristal de la Cámara → Llegada → Espejos (espada y escudo) → Torretas (escudo y gancho: llave) → Ojo del Sol (arco y escudo con tiempo: llave del jefe) → Hueco (pieza de corazón; el hueco es el atajo al Atrio) → Antesala → Cima.
+2. Con escudo: cristal de la Cámara → Llegada → Espejos (espada y escudo) → Torretas (escudo y gancho: llave) → Ojo del Sol (arco y escudo con tiempo: vasijas) → Hueco (pieza de corazón) → Antesala (llave; la placa abre el atajo a la Llegada) → la puerta del jefe pide la llave del jefe.
+3. Vuelta (11.189): el hueco cae al Atrio → cristal del Atrio con el escudo (llave del jefe) → Nido → Cámara → Llegada → atajo → Antesala → Cima. La llave también se puede sacar apenas se tiene el escudo, bajando de la Cámara.
 
 **Los cóndores (11.129, Daniel 2026-10-15: "los jefes me parecen bien"):** `Kuntur` (`src/entities/kuntur/`), una escena para los dos: `kuntur.tscn` (joven, 10 de vida) y `apu_kuntur.tscn` (hereda, `apu`, 1,6 veces más grande, 20 de vida). Pelean dentro de un `ArenaFight` como los demás. Vuelan en círculos sobre la sala (a 3,5 m; volando, todo rebota) y entre vuelta y vuelta atacan:
 - **Picada** (los dos): su sombra persigue al player 1 s, se queda quieta 0,4 s (destella) y cae en 0,25 s (2 de daño). El joven queda **clavado en la nieve** 2,4 s: le pega todo. El Apu se repone enseguida.

@@ -127,6 +127,12 @@ from = &"Antesala"
 to = &"Cima"
 through = Array[NodePath]([NodePath("PisoCornisa/BossDoor")])
 
+[sub_resource type="Resource" id="Link_22"]
+script = ExtResource("2_link")
+from = &"Antesala"
+to = &"Llegada"
+through = Array[NodePath]([NodePath("PisoCornisa/LlegadaShortcut")])
+
 [sub_resource type="Resource" id="Spot_1"]
 script = ExtResource("3_spot")
 area = &"Columnas:O"
@@ -205,8 +211,8 @@ through = Array[NodePath]([NodePath("PisoCornisa/SolShutter")])
 
 [sub_resource type="Resource" id="Spot_14"]
 script = ExtResource("3_spot")
-area = &"OjoDelSol:Nicho"
-node = NodePath("PisoCornisa/BossKeyChest")
+area = &"Atrio:Nicho"
+node = NodePath("PisoBase/BossKeyChest")
 
 [sub_resource type="Resource" id="Spot_15"]
 script = ExtResource("3_spot")
@@ -220,6 +226,11 @@ node = NodePath("PisoCima/BossFight")
 needs = Array[StringName]([&"shield_mirror"])
 gives = &"cu_boss_defeated"
 
+[sub_resource type="Resource" id="Spot_17"]
+script = ExtResource("3_spot")
+area = &"Antesala"
+node = NodePath("PisoCornisa/AntesalaStep")
+
 [resource]
 script = ExtResource("1_graph")
 scene = "res://levels/cumbre.tscn"
@@ -228,5 +239,5 @@ goal = &"cu_boss_defeated"
 brings = Array[StringName]([&"bomb_bag", &"feather", &"bow", &"sandals", &"hookshot"])
 item = &"shield_mirror"
 guard = &"cu_kuntur_defeated"
-links = Array[ExtResource("2_link")]([SubResource("Link_1"), SubResource("Link_2"), SubResource("Link_3"), SubResource("Link_4"), SubResource("Link_5"), SubResource("Link_6"), SubResource("Link_7"), SubResource("Link_8"), SubResource("Link_9"), SubResource("Link_10"), SubResource("Link_11"), SubResource("Link_12"), SubResource("Link_13"), SubResource("Link_14"), SubResource("Link_15"), SubResource("Link_16"), SubResource("Link_17"), SubResource("Link_18"), SubResource("Link_19"), SubResource("Link_20"), SubResource("Link_21")])
-spots = Array[ExtResource("3_spot")]([SubResource("Spot_1"), SubResource("Spot_2"), SubResource("Spot_3"), SubResource("Spot_4"), SubResource("Spot_5"), SubResource("Spot_6"), SubResource("Spot_7"), SubResource("Spot_8"), SubResource("Spot_9"), SubResource("Spot_10"), SubResource("Spot_11"), SubResource("Spot_12"), SubResource("Spot_13"), SubResource("Spot_14"), SubResource("Spot_15"), SubResource("Spot_16")])
+links = Array[ExtResource("2_link")]([SubResource("Link_1"), SubResource("Link_2"), SubResource("Link_3"), SubResource("Link_4"), SubResource("Link_5"), SubResource("Link_6"), SubResource("Link_7"), SubResource("Link_8"), SubResource("Link_9"), SubResource("Link_10"), SubResource("Link_11"), SubResource("Link_12"), SubResource("Link_13"), SubResource("Link_14"), SubResource("Link_15"), SubResource("Link_16"), SubResource("Link_17"), SubResource("Link_18"), SubResource("Link_19"), SubResource("Link_20"), SubResource("Link_21"), SubResource("Link_22")])
+spots = Array[ExtResource("3_spot")]([SubResource("Spot_1"), SubResource("Spot_2"), SubResource("Spot_3"), SubResource("Spot_4"), SubResource("Spot_5"), SubResource("Spot_6"), SubResource("Spot_7"), SubResource("Spot_8"), SubResource("Spot_9"), SubResource("Spot_10"), SubResource("Spot_11"), SubResource("Spot_12"), SubResource("Spot_13"), SubResource("Spot_14"), SubResource("Spot_15"), SubResource("Spot_16"), SubResource("Spot_17")])
