@@ -40,13 +40,14 @@ func spawn() -> Afterimage:
 	var ghost: Afterimage = ghost_scene.instantiate()
 	ghost.mesh = _bake()
 	scene.add_child(ghost)
-	ghost.set_instance_shader_parameter(&"body", _tint())
+	ghost.set_instance_shader_parameter(&"body", tint())
 	ghost.global_transform = model.global_transform
 	ghost.fade_out(lifetime)
 	return ghost
 
 
-func _tint() -> Color:
+## El color de la túnica puesta (lo usa también el teletransporte).
+func tint() -> Color:
 	for node in (body if body else model).find_children("*", "MeshInstance3D", true, false):
 		var piece := node as MeshInstance3D
 		if piece.mesh == null:

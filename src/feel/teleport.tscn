@@ -1,0 +1,44 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/feel/teleport.gd" id="1_script"]
+[ext_resource type="Shader" path="res://src/feel/teleport.gdshader" id="2_shader"]
+
+[sub_resource type="ShaderMaterial" id="Light"]
+resource_local_to_scene = true
+render_priority = 1
+shader = ExtResource("2_shader")
+
+[sub_resource type="CylinderMesh" id="BeamMesh"]
+resource_local_to_scene = true
+material = SubResource("Light")
+top_radius = 0.13
+bottom_radius = 0.13
+height = 3.0
+radial_segments = 16
+rings = 1
+
+[sub_resource type="SphereMesh" id="BloomMesh"]
+resource_local_to_scene = true
+material = SubResource("Light")
+radial_segments = 24
+rings = 12
+
+[node name="Teleport" type="Node3D"]
+process_mode = 3
+top_level = true
+script = ExtResource("1_script")
+
+[node name="Beam" type="MeshInstance3D" parent="."]
+visible = false
+cast_shadow = 0
+mesh = SubResource("BeamMesh")
+
+[node name="Bloom" type="MeshInstance3D" parent="."]
+visible = false
+cast_shadow = 0
+mesh = SubResource("BloomMesh")
+
+[node name="Light" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+light_energy = 0.0
+omni_range = 5.0

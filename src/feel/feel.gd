@@ -77,6 +77,8 @@ func _ready() -> void:
 		&"splash": [_synth(0.45, func(t: float) -> float: return ((randf() * 2.0 - 1.0) * 0.45 * exp(-t * 9.0) + sin(TAU * lerpf(160.0, 70.0, t / 0.45) * t) * 0.35 * exp(-t * 14.0)) * minf(1.0, t * 200.0))],
 		&"wade": [_synth(0.16, func(t: float) -> float: return (randf() * 2.0 - 1.0) * 0.18 * sin(PI * t / 0.16) * exp(-t * 8.0))],
 		&"roar": [_synth(1.4, func(t: float) -> float: return (fmod(lerpf(70.0, 125.0, sin(PI * t / 1.4)) * t, 1.0) * 0.7 - 0.35 + (randf() * 2.0 - 1.0) * 0.28) * (0.7 + 0.3 * sin(TAU * 27.0 * t)) * minf(1.0, t * 12.0) * minf(1.0, (1.4 - t) * 2.5))],
+		&"warp_out": [_synth(0.55, func(t: float) -> float: return signf(sin(TAU * lerpf(220.0, 1500.0, pow(t / 0.55, 1.5)) * t)) * 0.16 * (0.6 + 0.4 * sin(TAU * 30.0 * t)) * minf(1.0, (0.55 - t) * 8.0))],
+		&"warp_in": [_synth(0.5, func(t: float) -> float: return signf(sin(TAU * lerpf(1500.0, 260.0, minf(t / 0.2, 1.0)) * t)) * 0.16 * minf(1.0, t * 80.0) * exp(-maxf(t - 0.2, 0.0) * 9.0) + sin(TAU * 70.0 * t) * 0.35 * exp(-maxf(t - 0.18, 0.0) * 14.0) * (1.0 if t > 0.18 else 0.0))],
 		&"heal": [_synth(0.45, func(t: float) -> float: return sin(TAU * [523.0, 659.0, 784.0][mini(int(t / 0.15), 2)] * t) * 0.3 * exp(-fmod(t, 0.15) * 12.0))],
 	}
 	for sound in SAMPLES:
