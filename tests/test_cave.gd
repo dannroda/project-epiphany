@@ -97,6 +97,9 @@ func test_cave_enemies_chase_the_player() -> void:
 			assert_true(spot != Vector3.INF, "%s en %s tiene lugar a la vista" % [enemy.name, cave.get_file()])
 			player.global_position = spot
 			var start := enemy.global_position
-			await tree.create_timer(2.0).timeout
+			for i in 240:
+				if enemy.global_position.distance_to(start) > 1.0:
+					break
+				await tree.physics_frame
 			assert_true(enemy.global_position.distance_to(start) > 1.0, "%s en %s va hacia el player" % [enemy.name, cave.get_file()])
 	state.reset()
