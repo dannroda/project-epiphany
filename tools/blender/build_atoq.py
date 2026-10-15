@@ -1,9 +1,12 @@
 # Publica assets/epiphany/atoq.glb (epi.publish): el atoq, el zorro andino de la Cumbre (11.196). Piezas rígidas, cada
 # una con el origen donde gira, que atoq_model.tscn cuelga de sus pivotes y anima: atoq_cuerpo (centro del cuerpo),
 # atoq_cabeza (la nuca), atoq_mandibula (la bisagra), atoq_pata_del / atoq_pata_tras (hombro y cadera, hacia abajo) y
-# atoq_cola (la base, hacia atrás). El hocico mira a -Y (+Z en Godot, como los modelos de KayKit que usa Enemy). Pelaje gris con la cabeza y las patas rojizas, pecho y panza
+# atoq_cola (la base, hacia atrás). atoq_pelo_cuerpo (desde el centro del cuerpo) y atoq_pelo_cabeza (desde la nuca) son
+# los mechones que se mueven con resortes, como la trenza del jugador: cada mechón es una cadena de huesos que
+# tools/build_atoq_fur.gd lee de art/blender/atoq_pelo.json (la cola también es una cadena). El hocico mira a -Y (+Z en Godot, como los modelos de KayKit que usa Enemy). Pelaje gris con la cabeza y las patas rojizas, pecho y panza
 # blancos, la punta de la cola negra.
 # blender -b --factory-startup -P tools/blender/build_atoq.py
+import json
 import os
 import sys
 
@@ -94,7 +97,56 @@ def cola(p):
 	for faces in parts[:-1]:
 		p.paint(faces, BACK, "MID", vary=0.06)
 	p.paint(parts[-1], DARK, "MID")
+	for side in (-1, 1):
+		tuft(p, (side * 0.05, 0.3, -0.1), (side * 0.12, 0.44, -0.18), 0.06, BACK, "LOW")
+	tuft(p, (0, 0.45, -0.16), (0, 0.6, -0.22), 0.07, DARK, "MID")
+	CHAINS["atoq_cola"] = [[[0, 0, 0], godot(Vector((0, 0.2, -0.07))), godot(Vector((0, 0.38, -0.13))), godot(Vector((0, 0.6, -0.22)))]]
 
+
+
+CHAINS = {}
+
+
+def tuft(p, base, tip, radius, swatch, shade="MID", chain=None, flat=0.45):
+	"""Mechón: gota aplastada de base a tip; con chain, guarda su cadena de huesos (en ejes de Godot)."""
+	base, tip = Vector(base), Vector(tip)
+	d = tip - base
+	length = d.length
+	f = p.lathe([(radius * 0.6, 0.0), (radius, length * 0.3), (radius * 0.75, length * 0.65), (radius * 0.3, length * 0.9), (0.0, length)], sides=6)
+	p.transform(f, Matrix.Translation(base) @ d.to_track_quat("Z", "Y").to_matrix().to_4x4() @ Matrix.Scale(flat, 4, Vector((1, 0, 0))))
+	p.paint(f, swatch, shade, vary=0.06)
+	if chain is not None:
+		chain.append([godot(base), godot(tip)])
+	return f
+
+
+def godot(v):
+	return [round(v.x, 4), round(v.z, 4), round(-v.y, 4)]
+
+
+def pelo_cuerpo(p):
+	"""Melena del pecho (blanca al frente, rojiza a los costados), flecos en la panza y mechones grises acostados sobre
+	el lomo."""
+	chains = CHAINS.setdefault("atoq_pelo_cuerpo", [])
+	for x in (-0.06, 0.0, 0.06):
+		tuft(p, (x, -0.41, 0.03), (x * 1.6, -0.43, -0.16 + abs(x)), 0.06, BELLY, "LIGHT", chains)
+	for side in (-1, 1):
+		tuft(p, (side * 0.12, -0.36, 0.08), (side * 0.22, -0.28, -0.04), 0.06, BELLY, "MID", chains)
+		tuft(p, (side * 0.14, -0.28, 0.17), (side * 0.25, -0.16, 0.12), 0.06, RUST, "MID", chains)
+		for y in (-0.05, 0.12):
+			tuft(p, (side * 0.12, y, -0.12), (side * 0.15, y + 0.1, -0.24), 0.06, BELLY, "MID", chains)
+	for y in (-0.2, -0.06, 0.08, 0.22):
+		for side in (-1, 1):
+			tuft(p, (side * 0.05, y, 0.15), (side * 0.07, y + 0.2, 0.15), 0.06, BACK, "LOW", chains)
+
+
+def pelo_cabeza(p):
+	"""Mechones blancos en los cachetes y un copete rojizo entre las orejas."""
+	chains = CHAINS.setdefault("atoq_pelo_cabeza", [])
+	for side in (-1, 1):
+		tuft(p, (side * 0.11, -0.13, 0.0), (side * 0.22, -0.04, -0.05), 0.045, BELLY, "LIGHT", chains)
+		tuft(p, (side * 0.12, -0.08, -0.03), (side * 0.2, 0.02, -0.1), 0.04, BELLY, "MID", chains)
+	tuft(p, (0, -0.04, 0.17), (0, 0.06, 0.25), 0.05, RUST, "MID", chains)
 
 piece("atoq_cuerpo", 1, cuerpo)
 piece("atoq_cabeza", 2, cabeza)
@@ -102,6 +154,10 @@ piece("atoq_mandibula", 3, mandibula)
 piece("atoq_pata_del", 4, lambda p: pata(p, False))
 piece("atoq_pata_tras", 5, lambda p: pata(p, True))
 piece("atoq_cola", 6, cola)
+piece("atoq_pelo_cuerpo", 7, pelo_cuerpo)
+piece("atoq_pelo_cabeza", 8, pelo_cabeza)
+with open(os.path.join(epi.ROOT, "art", "blender", "atoq_pelo.json"), "w") as out:
+	json.dump(CHAINS, out, indent="\t")
 
-epi.layout(kit, columns=6, spacing=1.2)
+epi.layout(kit, columns=8, spacing=1.2)
 epi.publish("atoq")

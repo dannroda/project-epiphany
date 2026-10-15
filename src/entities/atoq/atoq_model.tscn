@@ -5,7 +5,9 @@
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/atoq/atoq_mandibula.res" id="3_mandibula"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/atoq/atoq_pata_del.res" id="4_pata_del"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/atoq/atoq_pata_tras.res" id="5_pata_tras"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/atoq/atoq_cola.res" id="6_cola"]
+[ext_resource type="PackedScene" path="res://src/entities/atoq/atoq_cola.tscn" id="6_cola"]
+[ext_resource type="PackedScene" path="res://src/entities/atoq/atoq_pelo_cuerpo.tscn" id="7_pelo_cuerpo"]
+[ext_resource type="PackedScene" path="res://src/entities/atoq/atoq_pelo_cabeza.tscn" id="8_pelo_cabeza"]
 
 [node name="Model" type="Node3D"]
 
@@ -20,6 +22,8 @@ mesh = ExtResource("2_cabeza")
 [node name="Jaw" type="MeshInstance3D" parent="Body/Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.03, 0.14)
 mesh = ExtResource("3_mandibula")
+
+[node name="Pelo" parent="Body/Head" instance=ExtResource("8_pelo_cabeza")]
 
 [node name="Mouth" type="Marker3D" parent="Body/Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.38)
@@ -40,6 +44,9 @@ mesh = ExtResource("5_pata_tras")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11, -0.05, -0.26)
 mesh = ExtResource("5_pata_tras")
 
-[node name="Tail" type="MeshInstance3D" parent="Body"]
+[node name="Tail" type="Node3D" parent="Body"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, -0.36)
-mesh = ExtResource("6_cola")
+
+[node name="Pelo" parent="Body/Tail" instance=ExtResource("6_cola")]
+
+[node name="Pelo" parent="Body" instance=ExtResource("7_pelo_cuerpo")]
