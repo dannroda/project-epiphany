@@ -283,6 +283,15 @@ func test_the_cumbre_rope_ladder_is_lowered_from_above_and_stays() -> void:
 	state.reset()
 
 
+func _hold(tree: SceneTree, action: StringName, frames: int) -> void:
+	Input.action_press(action)
+	for i in frames:
+		await tree.physics_frame
+	Input.action_release(action)
+	for i in 5:
+		await tree.physics_frame
+
+
 func _walk(tree: SceneTree, player: PlayerCharacter, from: Vector3, action: StringName, frames := 150) -> float:
 	player.global_position = from
 	for i in 10:
@@ -318,12 +327,23 @@ func test_after_the_final_boss_the_dawn_comes_and_the_temple_top_opens() -> void
 	assert_eq([gate.is_open, glow.visible], [true, false], "vencido el jefe, se abre la cima y el ojo se apaga")
 	assert_eq(after.sun.light_color, after.dawn_color, "y amanece")
 	assert_true(await _walk(tree, player, foot, &"move_forward") > 7.0, "la escalinata sube a la cima del templo")
-	player.global_position = level.get_node(^"HeartPieceSummit").global_position
-	await tree.create_timer(0.6).timeout
-	assert_eq(state.get_flag(&"ow_heart_piece_summit"), true, "donde hay una pieza de corazón")
+	await _hold(tree, &"move_right", 150)
+	assert_eq(state.get_flag(&"ow_heart_piece_summit"), true, "y por la cima se llega a la pieza de corazón")
 	var stack: Node = tree.root.get_node(^"MenuStack")
 	while stack.is_open():
 		stack.pop()
+	for action: StringName in [&"move_forward", &"move_right", &"move_left", &"move_backward"]:
+		await _hold(tree, action, 120)
+		assert_true(player.global_position.y > 7.0, "la baranda no deja caerse de la cima (%s, en %s)" % [action, player.global_position.snappedf(0.1)])
+	var toward := &"move_left" if player.global_position.x > -48.0 else &"move_right"
+	Input.action_press(toward)
+	for i in 400:
+		await tree.physics_frame
+		if absf(player.global_position.x + 48.0) < 0.3:
+			break
+	Input.action_release(toward)
+	await _hold(tree, &"move_backward", 150)
+	assert_true(player.global_position.y < 6.0, "y se vuelve a bajar por la escalinata (%s)" % player.global_position.snappedf(0.1))
 	state.reset()
 
 
