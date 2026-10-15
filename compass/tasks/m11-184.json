@@ -2,9 +2,9 @@
   "assignee": "project-epiphany-eb",
   "checklist": [
     {
-      "detail": "Opciones: un poste del gancho en el borde de la nieve de la Cumbre (x ~64.7, z -35) para volver cruzando, o un salto (v) de bajada al pasillo como en los Zelda. Decide el overworld.",
+      "detail": "Daniel (2026-10-14): alcanza con el poste, es barato; sin salto.",
       "done": false,
-      "text": "Una salida de la franja"
+      "text": "Poste del gancho en el borde de la Cumbre, frente a la franja"
     },
     {
       "done": false,
@@ -27,5 +27,5 @@
   ],
   "test": "",
   "title": "Risco: la franja del gancho no tiene bajada",
-  "updated_at": "2026-10-15T02:54:09.023Z"
+  "updated_at": "2026-10-15T02:55:35.494Z"
 }
