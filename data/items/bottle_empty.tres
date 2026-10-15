@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="ItemData" format=3]
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://c5yrsw5oa3ltj"]
 
 [ext_resource type="Texture2D" uid="uid://ch6y5kp4rnf73" path="res://assets/ui/items/bottle_empty.png" id="1_6btoj"]
-[ext_resource type="Script" path="res://src/items/item_data.gd" id="2_6btoj"]
-[ext_resource type="Script" path="res://src/items/behaviors/fill_behavior.gd" id="3_fill"]
+[ext_resource type="Script" uid="uid://bn5pjgpia5grm" path="res://src/items/item_data.gd" id="2_6btoj"]
+[ext_resource type="Script" uid="uid://bsa77wh1bpc64" path="res://src/items/behaviors/fill_behavior.gd" id="3_fill"]
 
 [sub_resource type="Resource" id="Fill"]
 script = ExtResource("3_fill")
