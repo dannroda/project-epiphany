@@ -74,8 +74,10 @@ var _map: OverworldMap
 var _room_cells: Dictionary[Room, MapRoomCell] = {}
 var _focused_room: Room
 var _zoomed := false
-## Gatillos analógicos: cada movimiento pasado el umbral llega como "pressed"; un piso por apretón hasta soltarlo.
-var _floor_held: Dictionary[StringName, bool] = {}
+## Stick y gatillos: cada movimiento pasado el umbral llega como "pressed"; un paso por empujón hasta soltar todas las
+## acciones de esa dirección (el stick aprieta move_* y ui_* a la vez).
+var _floor_held := {}
+var _room_held := {}
 ## Overworld: dónde está el cursor antes de engancharse a un portal, y el portal enganchado.
 var _cursor_point := Vector2.ZERO
 var _cursor_world := Vector2.INF
@@ -142,6 +144,8 @@ func refresh() -> void:
 
 
 func _process(delta: float) -> void:
+	_release(FLOOR_ACTIONS, _floor_held)
+	_release(DIRECTIONS, _room_held)
 	if not is_visible_in_tree() or _in_dungeon() or _map == null:
 		return
 	var direction := Input.get_vector(&"move_left", &"move_right", &"move_forward", &"move_backward")
@@ -286,28 +290,23 @@ func _show_doors(low: Vector2i) -> void:
 
 func _dungeon_input(event: InputEvent) -> void:
 	var floors := _levels().size() > 1
-	for pair in FLOOR_ACTIONS:
-		if not floors and pair[0] not in [&"map_floor_up", &"map_floor_down"]:
-			continue
-		if event.is_action_released(pair[0]):
-			_floor_held[pair[0]] = false
-		if event.is_action_pressed(pair[0]):
-			get_viewport().set_input_as_handled()
-			if _floor_held.get(pair[0], false):
-				return
-			_floor_held[pair[0]] = true
+	var floor_actions := FLOOR_ACTIONS.filter(func(pair: Array) -> bool: return floors or pair[0] in [&"map_floor_up", &"map_floor_down"])
+	if floor_actions.any(func(pair: Array) -> bool: return event.is_action_pressed(pair[0])):
+		get_viewport().set_input_as_handled()
+		var step: Variant = _fresh_step(event, floor_actions, _floor_held)
+		if step != null:
 			var levels := _levels()
-			var next: int = levels.find(_view_level) - pair[1]
+			var next: int = levels.find(_view_level) - step
 			if next >= 0 and next < levels.size():
 				view_floor(levels[next])
-			return
+		return
+	_release(floor_actions, _floor_held)
 	if _focused_room == null:
 		return
-	var direction := Vector2i.ZERO
-	for pair in DIRECTIONS:
-		if event.is_action_pressed(pair[0], true):
-			direction = pair[1]
-	if direction:
+	var direction: Variant = _fresh_step(event, DIRECTIONS, _room_held, true)
+	if direction == null and DIRECTIONS.any(func(pair: Array) -> bool: return event.is_action_pressed(pair[0], true)):
+		get_viewport().set_input_as_handled()
+	elif direction != null:
 		var next := _next_in_reading_order(_focused_room, direction.x) if floors else _neighbor(_focused_room, direction)
 		if next:
 			_focus_room(next)
@@ -318,6 +317,30 @@ func _dungeon_input(event: InputEvent) -> void:
 			var cell := _room_cells[room]
 			if Rect2(cell.global_position, cell.size).has_point(event.global_position) and room != _focused_room:
 				_focus_room(room)
+
+
+## El valor del par apretado si es un empujón nuevo (o la repetición de una tecla con `key_repeat`); null si esa
+## dirección ya estaba apretada.
+func _fresh_step(event: InputEvent, pairs: Array, held: Dictionary, key_repeat := false) -> Variant:
+	_release(pairs, held)
+	for pair: Array in pairs:
+		if not event.is_action_pressed(pair[0], key_repeat):
+			continue
+		if key_repeat and event is InputEventKey and event.is_echo():
+			return pair[1]
+		if held.has(pair[1]):
+			return null
+		held[pair[1]] = true
+		return pair[1]
+	return null
+
+
+## Suelta las direcciones que ya no aprieta ninguna acción. También por cuadro: un toque (apretar y soltar en el mismo
+## cuadro) todavía figura apretado mientras llega su evento de soltar.
+func _release(pairs: Array, held: Dictionary) -> void:
+	for value: Variant in held.keys():
+		if not pairs.any(func(pair: Array) -> bool: return pair[1] == value and Input.is_action_pressed(pair[0])):
+			held.erase(value)
 
 
 ## Con pisos, arriba y abajo cambian de piso, así que izquierda y derecha recorren todas las salas del piso.

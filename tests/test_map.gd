@@ -322,6 +322,37 @@ func test_floor_selector_in_a_dungeon_with_floors() -> void:
 	state.reset()
 
 
+func test_the_stick_moves_one_floor_and_one_room_per_push() -> void:
+	var setup: Array = await _open_map("chullpa")
+	var tree: SceneTree = setup[0]
+	var page: Control = setup[3]
+	(setup[1].current_dungeon_state() as DungeonState).has_map = true
+	await tree.process_frame
+	(page.floor_buttons.get_child(2) as MapFloorButton).pressed.emit()
+	await tree.process_frame
+	assert_eq(page.viewed_level(), -1)
+	for value in [-0.25, -0.4, -0.55, -0.7, -0.85, -0.95, -1.0, -0.98, -1.0, -0.99]:
+		_trigger(JOY_AXIS_LEFT_Y, value)
+		await tree.process_frame
+	assert_eq(page.viewed_level(), 0, "el stick arriba sube un solo piso aunque lleguen muchos eventos")
+	_trigger(JOY_AXIS_LEFT_Y, 0.0)
+	await tree.process_frame
+	var first: Room = page.focused_room()
+	for value in [0.25, 0.4, 0.55, 0.7, 0.85, 0.95, 1.0, 0.98, 1.0, 0.99]:
+		_trigger(JOY_AXIS_LEFT_X, value)
+		await tree.process_frame
+	assert_eq(page._next_in_reading_order(first, 1).name, page.focused_room().name, "el stick a la derecha pasa a la sala siguiente, una sola")
+	_trigger(JOY_AXIS_LEFT_X, 0.0)
+	await tree.process_frame
+	_trigger(JOY_AXIS_LEFT_X, 1.0)
+	await tree.process_frame
+	_trigger(JOY_AXIS_LEFT_X, 0.0)
+	await tree.process_frame
+	assert_eq(page._next_in_reading_order(page._next_in_reading_order(first, 1), 1).name, page.focused_room().name, "soltar y volver a empujar pasa otra")
+	_close(setup[2])
+	setup[1].reset()
+
+
 func test_minimap_names_the_floor() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state: Node = tree.root.get_node(^"GameState")
