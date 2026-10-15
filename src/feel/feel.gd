@@ -14,6 +14,7 @@ const SHOCKWAVE := preload("res://src/feel/shockwave.tscn")
 ## Una escena por ráfaga (src/feel/bursts/): ahí se tocan cantidad, vida, colores y forma.
 const BURSTS: Dictionary[StringName, PackedScene] = {
 	&"sparks": preload("res://src/feel/bursts/sparks.tscn"),
+	&"sparks_gold": preload("res://src/feel/bursts/sparks_gold.tscn"),
 	&"sparkle": preload("res://src/feel/bursts/sparkle.tscn"),
 	&"explosion": preload("res://src/feel/bursts/explosion.tscn"),
 	&"shards": preload("res://src/feel/bursts/shards.tscn"),
@@ -202,7 +203,7 @@ func set_trail(trail: Trail3D, on: bool) -> void:
 	trail.emitting = on
 
 
-## Partículas cortas, todas low poly con colores de la paleta y achicándose al morir: &"sparks" (bloqueo, rebote),
+## Partículas cortas, todas low poly con colores de la paleta y achicándose al morir: &"sparks" (bloqueo, rebote; &"sparks_gold" al pegar con la espada dorada),
 ## &"dust" (rodar, golpes contra el piso), &"shards" (algo que se rompe), &"leaves" (pasto), &"explosion" (bomba),
 ## &"sparkle" (destello del item get).
 func burst(kind: StringName, at: Vector3, direction: Vector3) -> void:

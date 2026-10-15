@@ -1,0 +1,11 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://src/entities/mummy_guard/mummy_guard.tscn" id="1_mummy"]
+[ext_resource type="Resource" path="res://data/entities/mummy_mini.tres" id="2_config"]
+
+[node name="MummyMini" instance=ExtResource("1_mummy")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
+config = ExtResource("2_config")
+hop_distance = 2.5
+impact_damage = 3
+wave_radius = 3.5

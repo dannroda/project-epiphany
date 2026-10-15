@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://src/entities/watcher_eye/watcher_eye.tscn" id="1_eye"]
+[ext_resource type="Resource" path="res://data/entities/watcher_eye_mini.tres" id="2_config"]
+
+[node name="WardenMini" instance=ExtResource("1_eye")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
+config = ExtResource("2_config")
+lunges = true
+hover_height = 2.2

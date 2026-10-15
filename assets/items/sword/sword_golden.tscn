@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://bv1cb4b8pu31r" path="res://src/items/equipped_item.gd" id="1_6jcfn"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/equipo/espada_dorada.res" id="2_sword"]
+
+[node name="SwordGolden" type="Node3D"]
+script = ExtResource("1_6jcfn")
+
+[node name="Sword" type="MeshInstance3D" parent="."]
+mesh = ExtResource("2_sword")

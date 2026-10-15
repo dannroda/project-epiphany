@@ -88,3 +88,13 @@ func test_items_choose_how_they_start() -> void:
 	var bow := Items.get_item(&"bow").behavior
 	assert_eq(bow.aim_animation, &"CombatRanged/Ranged_Bow_Draw", "la animación del arco sale de su .tres")
 	assert_eq(Items.get_item(&"bomb_bag").behavior.hold_time, 0.25, "las bombas se mantienen para apuntar")
+
+
+func test_the_golden_sword_hits_twice_as_hard_with_its_own_trail_and_sparks() -> void:
+	var basic := Items.get_item(&"sword_basic")
+	var golden := Items.get_item(&"sword_golden")
+	assert_eq(golden.damage, basic.damage * 2, "pega el doble")
+	assert_true(golden.equip_on_get, "se equipa sola")
+	assert_true(golden.trail != null and basic.trail == null, "estela propia; la común sigue con la del player")
+	assert_eq(golden.hit_burst, &"sparks_gold")
+	assert_eq(basic.hit_burst, &"sparks")

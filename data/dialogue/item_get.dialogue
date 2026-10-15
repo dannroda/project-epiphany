@@ -1,3 +1,7 @@
+~ sword_golden
+Se equipa sola. Pega el doble que la espada de siempre. [ID:get_sword_golden_1]
+=> END
+
 ~ bow
 Mantené el botón para tensar y apuntá con el stick izquierdo o el mouse; al soltar, dispara. Si tenés un objetivo fijado, la flecha va directo hacia él. [ID:get_bow_1]
 => END
