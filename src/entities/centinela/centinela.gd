@@ -17,7 +17,16 @@ enum State { IDLE, WALK, WINDUP, SLAM, STUCK, DEAD }
 ## Camina hasta tener al player a esta distancia, o hasta `walk_time`.
 @export var slam_reach := 2.6
 @export var walk_time := 2.5
-@export var windup_time := 0.9
+@export_group("Aviso del golpe")
+## Se planta y junta fuerza (temblor y ruido de tierra) antes de levantar la maza.
+@export var tell_time := 0.45
+## Con la maza arriba; la marca del piso se va llenando hasta el anillo.
+@export var windup_time := 1.3
+## Los últimos segundos del aviso la marca deja de seguir al player y titila: cae ahí.
+@export var aim_lock := 0.5
+## El silbido que sube termina justo en el golpe.
+@export var warn_lead := 0.55
+@export_group("")
 @export var stuck_time := 2.4
 ## Golpes seguidos con la mitad de la vida o menos (el último es el que lo deja trabado).
 @export var rage_slams := 2
@@ -34,9 +43,11 @@ enum State { IDLE, WALK, WINDUP, SLAM, STUCK, DEAD }
 
 @onready var body: Node3D = %Body
 @onready var roar_fx: Roar = %Roar
-@onready var aim_mark: MeshInstance3D = %AimMark
+@onready var aim_mark: Node3D = %AimMark
+@onready var aim_disc: MeshInstance3D = %AimDisc
 @onready var hurtbox: Hurtbox = %Hurtbox
 @onready var health: Health = $Health
+@onready var solid_shape: CollisionShape3D = %SolidShape
 @onready var tip: Marker3D = body.find_child("Punta", true, false) as Marker3D
 
 var state := State.IDLE
@@ -46,6 +57,7 @@ var pace := 1.0
 var may_attack: Callable
 var peers: Array = []
 var _turn := 0
+var _aim_locked := false
 var _tweens: Array[Tween] = []
 var _home := Vector3.ZERO
 var _anim: AnimationPlayer
@@ -97,14 +109,17 @@ func reset() -> void:
 	body.rotation = Vector3.ZERO
 	body.scale = Vector3.ONE
 	body.show()
+	solid_shape.set_deferred(&"disabled", false)
 	_play(anim_idle)
 
 
 func _physics_process(delta: float) -> void:
 	if state in [State.IDLE, State.DEAD]:
 		return
-	if state in [State.WALK, State.WINDUP]:
+	if state == State.WALK or (state == State.WINDUP and not _aim_locked):
 		_face_player()
+	if state == State.WINDUP and not _aim_locked:
+		aim_mark.global_position = _strike_point() + Vector3.UP * 0.03
 	if state == State.WALK:
 		var player := Players.nearest(global_position)
 		if player:
@@ -150,20 +165,31 @@ func _walk() -> void:
 
 func _slam(last := true) -> void:
 	state = State.WINDUP
-	var ahead := _strike_point()
-	aim_mark.global_position = ahead + Vector3.UP * 0.03
-	aim_mark.scale = Vector3.ONE * 0.4
+	_aim_locked = false
+	aim_mark.global_position = _strike_point() + Vector3.UP * 0.03
+	aim_disc.scale = Vector3.ONE * 0.3
+	aim_disc.transparency = 0.0
 	aim_mark.show()
-	_tween_to(aim_mark, ^"scale", Vector3.ONE, windup_time)
+	_play(anim_idle)
+	Feel.sfx(&"rumble", global_position)
+	Feel.shake(0.15)
+	_tween_to(body, ^"scale", Vector3(1.08, 0.92, 1.08), tell_time).set_trans(Tween.TRANS_SINE)
+	await _wait(tell_time)
+	if state != State.WINDUP:
+		return
+	_tween_to(body, ^"scale", Vector3.ONE, 0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	_tween_to(aim_disc, ^"scale", Vector3.ONE, windup_time)
 	_play(anim_slam)
 	_hold_at(anim_slam_raised * _slam_length())
 	Feel.sfx(&"roll", global_position)
 	_tween_to(body, ^"rotation:x", -0.15, windup_time * 0.6).set_ease(Tween.EASE_OUT)
+	var cues := _new_tween().set_parallel()
+	cues.tween_callback(_lock_aim).set_delay(maxf(windup_time - aim_lock, 0.0) / pace)
+	cues.tween_callback(func() -> void: Feel.sfx(&"warp_out", aim_mark.global_position)).set_delay(maxf(windup_time - warn_lead, 0.0) / pace)
 	await _wait(windup_time)
 	if state != State.WINDUP:
 		return
 	state = State.SLAM
-	aim_mark.global_position = _strike_point() + Vector3.UP * 0.03
 	_release()
 	_tween_to(body, ^"rotation:x", 0.12, 0.12).set_ease(Tween.EASE_IN)
 	await _wait(maxf((anim_slam_down - anim_slam_raised) * _slam_length(), 0.12))
@@ -193,6 +219,13 @@ func _slam(last := true) -> void:
 	await _wait(0.5)
 
 
+func _lock_aim() -> void:
+	_aim_locked = true
+	var blink := _new_tween().set_loops(maxi(int(aim_lock / pace / 0.12), 1))
+	blink.tween_property(aim_disc, ^"transparency", 0.7, 0.06)
+	blink.tween_property(aim_disc, ^"transparency", 0.0, 0.06)
+
+
 func _strike_point() -> Vector3:
 	var forward := body.global_transform.basis.z
 	forward.y = 0.0
@@ -206,7 +239,9 @@ func _interrupt() -> void:
 			tween.kill()
 	_tweens.clear()
 	aim_mark.hide()
+	_aim_locked = false
 	body.rotation = Vector3.ZERO
+	body.scale = Vector3.ONE
 	_release()
 	attack_finished.emit()
 
@@ -232,6 +267,7 @@ func _on_hit(info: DamageInfo) -> void:
 func _die() -> void:
 	_interrupt()
 	state = State.DEAD
+	solid_shape.set_deferred(&"disabled", true)
 	Log.info(&"combat", name, "murió")
 	remove_from_group(&"targetable")
 	hurtbox.set_deferred(&"monitorable", false)
