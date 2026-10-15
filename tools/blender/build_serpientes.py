@@ -217,6 +217,28 @@ def cola(p, c):
 	p.paint(tail_fin + low, c["fin"], "MID", vary=0.1)
 
 
+def charco(p):
+	"""El charco de donde asoman: fondo oscuro (el agua va arriba, a WATER), borde de piedras mojadas y matas de totora."""
+	bottom = p.cylinder(0.98, 0.0, 0.012, sides=24)
+	p.paint(bottom, "agua", "DARK")
+	stones = []
+	for k in range(16):
+		a = 2 * math.pi * (k + p.rng.random() * 0.4) / 16
+		rad = 0.13 + p.rng.random() * 0.06
+		stones += p.blob((math.cos(a) * 0.98, math.sin(a) * 0.98, 0.02), rad, squash=(1.2, 1.0, 0.55), rough=0.25, flat_bottom=0.0)
+	p.paint(stones, "piedra", "GRADIENT", vary=0.1)
+	reeds = []
+	for k in range(4):
+		a = 2 * math.pi * (k + 0.3) / 4 + p.rng.random() * 0.5
+		base = Vector((math.cos(a) * 1.08, math.sin(a) * 1.08, 0.0))
+		for j in range(4):
+			lean = Vector((math.cos(a + j), math.sin(a + j), 0)) * 0.12 + Vector((math.cos(a), math.sin(a), 0)) * 0.08
+			tip = base + lean + Vector((0, 0, 0.45 + p.rng.random() * 0.25))
+			reeds += tube(p, [base + lean * 0.1, (base + tip) / 2 + lean * 0.2, tip], [0.03, 0.022, 0.004], sides=4, ref=Vector((1, 0, 0)))
+	p.paint(reeds, "follaje", "GRADIENT", vary=0.1)
+
+
+piece("charco", 6, charco, smooth=None)
 piece("amaru_cuello", 1, lambda p: cuello(p, AMARU))
 piece("amaru_cabeza", 2, lambda p: cabeza(p, AMARU))
 piece("yacumama_cuello", 3, lambda p: cuello(p, YACUMAMA))

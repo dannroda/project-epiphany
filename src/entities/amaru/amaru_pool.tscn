@@ -1,21 +1,24 @@
 [gd_scene format=3]
 
-[sub_resource type="StandardMaterial3D" id="PoolMat"]
-albedo_color = Color(0.08, 0.2, 0.24, 1)
-metallic_specular = 0.9
-roughness = 0.08
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/serpientes/charco.res" id="1_rim"]
+[ext_resource type="Material" path="res://src/entities/amaru/pool_water.tres" id="2_water"]
 
 [sub_resource type="CylinderMesh" id="PoolMesh"]
-material = SubResource("PoolMat")
-top_radius = 0.9
-bottom_radius = 0.9
-height = 0.02
+material = ExtResource("2_water")
+top_radius = 0.95
+bottom_radius = 0.95
+height = 0.001
 radial_segments = 24
 rings = 1
+cap_bottom = false
 
 [node name="AmaruPool" type="Node3D"]
 
+[node name="Basin" type="MeshInstance3D" parent="."]
+cast_shadow = 0
+mesh = ExtResource("1_rim")
+
 [node name="Water" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 cast_shadow = 0
 mesh = SubResource("PoolMesh")
