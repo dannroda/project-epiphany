@@ -17,6 +17,9 @@ const LID_OPEN := 1.4
 ## Lo que tardan los párpados en abrirse o cerrarse de golpe (al clavarse, al caer y al levantarse).
 const LID_SNAP := 0.15
 
+## Cuánto se vuelve hacia la cámara al gritar: casi del todo, así grita a la pantalla esté donde esté el player.
+const ROAR_GAZE := 0.85
+
 @export var config: EntityConfig
 @export var lunges := false
 @export var hover_height := 3.0
@@ -94,11 +97,16 @@ func start() -> void:
 
 
 ## Vuelve a como estaba al llegar el player (la pelea se reinicia).
-## Presentación: mira al player y abre el ojo de par en par mientras grita.
+## Presentación: abre el ojo de par en par y grita mirando entre el player y la cámara, como el jefe del templo, así
+## desde arriba el grito sale hacia la pantalla.
 func roar() -> void:
 	var player := Players.nearest(global_position)
+	var camera := get_viewport().get_camera_3d()
 	if player:
-		body.look_at(player.global_position + Vector3.UP, Vector3.UP, true)
+		var gaze := player.global_position + Vector3.UP
+		if camera:
+			gaze = gaze.lerp(camera.global_position, ROAR_GAZE)
+		body.look_at(gaze, Vector3.UP, true)
 	var tween := body.create_tween()
 	tween.tween_method(_set_open, _open, 1.25, 0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tween.tween_interval(roar_fx.duration)
