@@ -683,18 +683,16 @@ def sello_losa(p):
 	for x0, x1, z0, z1 in ((-1.2, 1.2, 0.0, 0.12), (-1.2, 1.2, 2.48, 2.6), (-1.2, -1.08, 0.0, 2.6), (1.08, 1.2, 0.0, 2.6)):
 		frame += p.box(x0, x1, -0.29, -0.25, z0, z1)
 	p.paint(frame, "dorado", "MID")
-	socket = p.lathe([(0.55, 0.0), (0.55, 0.04), (0.47, 0.04), (0.47, 0.0)], sides=16, caps=False)
-	p.transform(socket, Matrix.Translation((0, -0.25, 1.4)) @ Matrix.Rotation(math.pi / 2, 4, "X"))
-	p.paint(socket, "dorado", "LIGHT")
 
 
 def sello_ojo(p):
-	"""El ojo del sello: almendra con iris y pupila, mirando a -Y, centrado en el origen."""
-	almond = epi.eye(p, Vector((0, 0, 0)), 0.45, depth=0.08, pupil_swatch="noche")
-	p.paint(almond, "hueso", "LIGHT")
-	iris = p.cylinder(0.2, 0.0, 0.1, sides=12)
-	p.transform(iris, Matrix.Rotation(math.pi / 2, 4, "X"))
-	p.paint(iris, "sello", "LIGHT")
+	"""El ojo del sello: el del logo (epi.logo_eye) sin el iris, mirando a -Y, centrado en el origen."""
+	epi.logo_eye(p, Vector((0, 0, 0)), 1.1, depth=0.06, part="frame")
+
+
+def sello_iris(p):
+	"""El iris del ojo del sello, aparte para que siga al jugador."""
+	epi.logo_eye(p, Vector((0, 0, 0)), 1.1, depth=0.06, part="iris")
 
 
 def portal_disco(p):
@@ -816,6 +814,7 @@ piece("hoyo_escalera", 39, hoyo_escalera, smooth=30)
 piece("fachada_templo", 21, fachada_templo, smooth=60)
 piece("sello_losa", 22, sello_losa)
 piece("sello_ojo", 23, sello_ojo)
+piece("sello_iris", 52, sello_iris)
 piece("portal_disco", 24, portal_disco)
 piece("portal_anillo", 25, portal_anillo)
 piece("monolito", 26, monolito)
