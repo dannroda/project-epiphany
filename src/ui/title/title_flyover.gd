@@ -25,7 +25,12 @@ var _loading := true
 
 func _ready() -> void:
 	_camera.make_current()
-	ResourceLoader.load_threaded_request(LEVEL, "", true)
+	# Sin ventana (tests, servidor) no hay fondo que mostrar.
+	if DisplayServer.get_name() == "headless":
+		_loading = false
+		_show.call_deferred()
+		return
+	ResourceLoader.load_threaded_request(LEVEL)
 
 
 func _process(delta: float) -> void:
