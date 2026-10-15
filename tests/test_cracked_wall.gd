@@ -76,19 +76,24 @@ func test_covers_hide_what_it_hides_until_it_breaks() -> void:
 	state.reset()
 
 
-## 11.164: el nicho de atrás de cada pared agrietada lleva techo (lo pone la_walls) y la pared lo tiene en `covers`.
-func test_dungeon_niches_are_roofed() -> void:
-	for spec: Array in [["quenoa", "PisoRaices/OjosCrackedWall"]]:
-		var level := (load("res://levels/%s.tscn" % spec[0]) as PackedScene).instantiate()
-		var wall := level.get_node(NodePath(spec[1])) as CrackedWall
-		assert_eq(wall.covers.size(), 1, "%s tiene techo" % wall.name)
-		var roof := wall.get_node_or_null(wall.covers[0]) as MeshInstance3D
-		assert_true(roof != null, "%s: el techo existe" % wall.name)
-		if roof:
-			var box := roof.transform * roof.mesh.get_aabb()
-			var behind := wall.position + wall.basis * Vector3.FORWARD * 2.0
-			var deeper := wall.position + wall.basis * Vector3.FORWARD * 4.0
-			var covered := func(at: Vector3) -> bool: return Rect2(box.position.x, box.position.z, box.size.x, box.size.z).has_point(Vector2(at.x, at.z))
-			assert_true(covered.call(behind) or covered.call(deeper), "%s: tapa el nicho de atrás" % wall.name)
-			assert_true(box.position.y >= 3.0, "%s: a la altura de las crestas" % wall.name)
+## 11.181: en las mazmorras una pared agrietada abre una sala entera, nunca un nicho; en la Chullpa no hay ninguna.
+func test_dungeon_cracked_walls_open_whole_rooms() -> void:
+	for level_name in ["chullpa", "quenoa", "totora", "cumbre", "templo"]:
+		var level := (load("res://levels/%s.tscn" % level_name) as PackedScene).instantiate()
+		var walls := level.find_children("*", "CrackedWall", true, false).filter(func(wall: Node) -> bool: return not wall.scene_file_path.ends_with("cracked_floor.tscn"))
+		if level_name == "chullpa":
+			assert_eq(walls.size(), 0, "la Chullpa no tiene paredes agrietadas")
+		var rooms := level.find_children("*", "Room", true, false)
+		for wall: CrackedWall in walls:
+			var sides: Array = []
+			for side: float in [-3.0, 3.0]:
+				var at: Vector3 = wall.position + wall.basis * Vector3.FORWARD * side
+				var found := rooms.filter(func(room: Room) -> bool: return room.get_parent() == wall.get_parent() and _room_rect(room).has_point(Vector2(at.x, at.z)))
+				sides.append(found[0] if not found.is_empty() else null)
+			assert_true(sides[0] != null and sides[1] != null and sides[0] != sides[1], "%s/%s separa dos salas" % [level_name, wall.name])
 		level.free()
+
+
+func _room_rect(room: Room) -> Rect2:
+	var box := (room.get_node(^"CollisionShape3D") as CollisionShape3D).shape as BoxShape3D
+	return Rect2(room.position.x - box.size.x / 2.0, room.position.z - box.size.z / 2.0, box.size.x, box.size.z)

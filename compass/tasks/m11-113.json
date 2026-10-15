@@ -16,7 +16,8 @@
       "text": "Ampliar el templo: salas que usen todos los ítems"
     },
     {
-      "done": false,
+      "detail": "Hecho el 2026-10-15: §6.1 (pluma, arco, escudo espejo con su mazmorra y sub-jefe; espada dorada; contenedor del santuario), §6.2 (árbol con nombres, sub-jefes y jefes; grafos y prefijos de las cinco), §7 (cadena de 7.1, boceto 7.10 nuevo con la forma real del overworld y las puertas, tabla de regiones, cadena, verificación del gating y curva de ritmo).",
+      "done": true,
       "text": "GDD §6 y §7, y el boceto de 7.10 al día"
     },
     {
@@ -84,5 +85,5 @@
   ],
   "test": "",
   "title": "El templo del ojo pasa a ser la última mazmorra",
-  "updated_at": "2026-10-14T16:22:16.975Z"
+  "updated_at": "2026-10-15T08:22:43.689Z"
 }

@@ -65,7 +65,7 @@ El tema *Imminent Doom* sigue siendo el tono: el fin se siente por ambientación
 
 **Cámara por sala (6.1, corregida el 2026-10-08), como el remake de Link's Awakening:** la cámara sigue siempre al player y se frena recién cuando el borde de la pantalla llega a la pared: el ancho se mide en la fila del player, abajo hasta el piso sur y arriba hasta el tope de la pared norte (`wall_height`). Si la sala es más chica que la pantalla en un eje, queda fija y centrada en pantalla. Todo lo de fuera de la sala actual queda en negro (una máscara a la altura de las paredes, `mask_margin` afuera para no tapar las paredes), así nunca se ve qué hay detrás de las puertas; durante el deslizamiento la máscara abarca las dos salas. La cámara usa FOV 40 y `offset` (0, 17.4, 10.0) en todo el juego, overworld incluido (alejada el 2026-10-09): una pantalla abarca ≈ 26 × 14.5 m en la fila del player, así que una sala del templo (22 × 14 m) se ve entera, con las puertas laterales y la sur, y queda fija. **Pared sur recortada:** las paredes y columnas del kit usan `data/kits/shaders/cutaway.gdshader`; al entrar a una sala la cámara le pasa el rectángulo de su pared sur y todo lo que está ahí por encima de `south_wall_cut` (0.4 m) se descarta; el rectángulo empieza `SOUTH_WALL_RELIEF` (0.3 m) dentro de la sala, porque los ladrillos de la pared del templo sobresalen de su celda (sin ese margen quedaba una lámina de ladrillos a toda altura, sin colisión, tapando la puerta sur). Lo que queda se pinta de un oscuro plano (emisión, sin luz), como un zócalo, así la puerta sur se ve de frente. Las colisiones no cambian. **Silueta del player (11.8):** donde algo tapa al player (el jefe, un dintel, la máscara de fuera de la sala), se dibuja su silueta dorada estilo x-ray (11.38): fresnel, brilla en los bordes y en el centro queda al 25 %, así se leen los brazos y el arma encimados. La pasada del destello de daño (`hit_flash.gdshader`, que ya cubre todas sus mallas) marca el stencil donde el player se ve; una pasada más, `src/feel/occluded_silhouette.gdshader`, con `render_priority` uno más alto (así va después del destello de todas las mallas), se dibuja sin prueba de profundidad solo donde el stencil no está marcado. La vista previa del equipo copia el modelo sin overlays. **Agujero en las paredes (11.40):** contra paredes, en vez de la silueta, se recorta un círculo (radio 1,4 m, borde con dither) alrededor del player en lo que esté más cerca de la cámara que él y por encima de sus pies + 0,3 m (el piso y el zócalo quedan). `TopDownCamera` pasa sus pies en la uniform global `player_hole` (w = 1 si hay player); el código vive en `data/kits/shaders/player_hole.gdshaderinc` y lo usan `cutaway.gdshader` (paredes y columnas del templo) y `epiphany_wall.gdshader` (`epiphany_wall.tres`: la paleta con el agujero, para Pared, Acantilado y Risco del overworld). En el borde del mundo el agujero mostraría el vacío: el kit tiene variantes "borde" sin agujero y `OverworldMap` cambia a ellas, al cargar, las paredes sin nada del lado de la cámara (al sur); ahí queda la silueta. **Desde 11.134 el agujero no se abre:** si una pared tapa a un player desde el ángulo normal, la cámara gira en `overhead_time` (1,5 s, con un resorte amortiguado que arranca y frena suave) hasta quedar cenital sobre el foco, y vuelve cuando lleva `overhead_hold` (0,8 s) sin taparlo, así bordeando un risco no sube y baja a cada paso (`TopDownCamera.occluded`). La oclusión se mide desde donde estaría la cámara normal, así no oscila al subir. Solo cuentan como pared el `GridMap` y los cuerpos cuyas mallas usan un shader con `player_hole` (lo que antes se recortaba: la roca del terreno, las paredes del kit); contra árboles, cardones, objetos y el jefe queda la silueta (playtest de 11.134). **Luces Wind Waker (11.39):** `StencilLight` (`src/feel/stencil_light/`) aclara con borde duro todo lo que queda dentro de una esfera, sin luz real: la cara de adelante marca en el stencil (ref 2) lo que está delante, la de atrás multiplica el color donde la escena queda dentro, y una última pasada limpia el stencil. Cada luz toma tres prioridades propias entre −127 y −1, así sus pasadas no se mezclan y todas terminan antes que el destello y la silueta del player. Técnica tomada de apples/godot-stencil-demo (sin copiar código: el repo no tiene licencia). Las antorchas del templo tienen una (`Glow`, radio 3 m, corrida 1,2 m hacia la sala para que el charco se vea en el piso) que titila con la antorcha; la `OmniLight3D` sigue para el sombreado. Así el cuerpo no se tapa a sí mismo. Es por player (va en su `HitFlash`): los enemigos no tienen silueta.
 
-**Mazmorras con el look de LA (12.32, Daniel 2026-10-14):** todas las salas miden 14 m de alto y al menos 22 de ancho. La cámara (a 38 m, 65°, FOV 28) encuadra una sala de 14 entera y fija, de la cresta de la pared norte a la de la sur (`south_margin`, 2 m más allá del piso). Los topes de las paredes se ven del color de la cresta, sin velo negro. Lo de afuera lo tapa una viñeta: un marco negro difuminado alrededor de la pantalla (`TonoLA.frame`, `frame_softness`), que se mete más a los costados arriba que abajo (`frame_slant`), como las paredes en perspectiva; `frame_sides`, `frame_top` y `frame_bottom` lo corren más adentro de cada lado para una sala más chica que la pantalla. Fuera de las salas no hay paredes de relleno: `la_walls` saca toda pared que no da a ningún piso y ahí queda el fondo negro. Solo se desenfoca lo muy alto, cerca de la cámara (`EnfoqueLA`, 9 m sobre el piso); lo que está más abajo que el piso no. El fondo de los huecos que caen al piso de abajo es la sala de abajo oscurecida, con niebla negra contra las paredes del hueco. Los muros agrietados siempre abren una sala entera, de cualquier tipo, nunca un nicho con un cofre. **Por sala:** cada `Room` puede pisar lo del nivel en su grupo "Cámara y ambiente": `camera_offset` y `camera_fov` (cero = los del nivel; la cámara pasa a esos valores durante el deslizamiento), y un hijo `AmbienteSala` con todas las propiedades del Environment del nodo `WorldEnvironment` del nivel y de su viñeta (grupo Viñeta); solo las tildadas se pisan en esa sala, lo demás sigue al nodo del nivel (se aplica en juego al entrar, el editor muestra el del nivel). Sirve para una sala más grande que las demás, como la del jefe final del templo.
+**Mazmorras con el look de LA (12.32, Daniel 2026-10-14):** todas las salas miden 14 m de alto y al menos 22 de ancho. La cámara (a 38 m, 65°, FOV 28) encuadra una sala de 14 entera y fija, de la cresta de la pared norte a la de la sur (`south_margin`, 2 m más allá del piso). Los topes de las paredes se ven del color de la cresta, sin velo negro. Lo de afuera lo tapa una viñeta: un marco negro difuminado alrededor de la pantalla (`TonoLA.frame`, `frame_softness`), que se mete más a los costados arriba que abajo (`frame_slant`), como las paredes en perspectiva; `frame_sides`, `frame_top` y `frame_bottom` lo corren más adentro de cada lado para una sala más chica que la pantalla. Fuera de las salas no hay paredes de relleno: `la_walls` saca toda pared que no da a ningún piso y ahí queda el fondo negro. Solo se desenfoca lo muy alto, cerca de la cámara (`EnfoqueLA`, 9 m sobre el piso); lo que está más abajo que el piso no. El fondo de los huecos que caen al piso de abajo es la sala de abajo oscurecida, con niebla negra contra las paredes del hueco. Los muros agrietados siempre abren una sala entera, de cualquier tipo, nunca un nicho con un cofre (`test_dungeon_cracked_walls_open_whole_rooms`: cada uno separa dos salas; la Chullpa no tiene ninguno). **Por sala:** cada `Room` puede pisar lo del nivel en su grupo "Cámara y ambiente": `camera_offset` y `camera_fov` (cero = los del nivel; la cámara pasa a esos valores durante el deslizamiento), y un hijo `AmbienteSala` con todas las propiedades del Environment del nodo `WorldEnvironment` del nivel y de su viñeta (grupo Viñeta); solo las tildadas se pisan en esa sala, lo demás sigue al nodo del nivel (se aplica en juego al entrar, el editor muestra el del nivel). Sirve para una sala más grande que las demás, como la del jefe final del templo.
 
 ### 4.2 Movimiento y combate
 <!-- id: movimiento-combate -->
@@ -133,25 +133,27 @@ Las teclas se mapean por posición física (`physical_keycode`): WASD queda en e
 |---|---|---|---|---|
 | Espada básica | Equipo | Melee | Inicio | Combate, cortar pasto |
 | Escudo de madera | Equipo | Bloqueo | Inicio | Bloqueo direccional |
-| **Escudo espejo** | Equipo | Bloqueo + reflejo | Overworld: santuario tras muro agrietado | **Abre el sello del templo** reflejando un haz de luz; puzzles de reflejo; alternativa en la fase 2 del jefe |
+| **Escudo espejo** | Equipo | Bloqueo + reflejo | **D4, Intihuatana de la Cumbre**, guardado por el sub-jefe Kuntur joven | **Abre el sello del templo** reflejando un haz de luz; puzzles de luz de la segunda mitad de D4; contra el Apu Kuntur devuelve plumas y rayos de sol; cristal del santuario (contenedor); alternativa en la fase 2 del jefe final |
 | Túnica | Equipo | Pasivo | Inicio | Armadura base: el Knight con su gris de siempre |
 | Cota reforzada | Equipo | Pasivo (−25% daño) | Overworld: cofre secreto (puzzle de bloques) | Armadura dorada con ribetes rojos, traje violeta y neón magenta: el cuerpo usa la paleta alternativa `palette_reforzada.png` (`data/materials/armor_reforzada.tres`) |
 | Bolsa de bombas + bombas | Ítems | Tocar: colocar; mantener: levantar, apuntar y tirar | Overworld: cueva | Muros agrietados, daño en área, empujar objetos físicos |
 | Botella (+ poción) | Ítems | Consumible | Overworld: secreto opcional | Cura; deja la botella vacía |
 | Agua bendita | Ítems | Consumible (en botella) | Overworld: vertiente de la gruta, se rellena siempre | 20 s de bendición: el daño entra a la mitad; deja la botella vacía |
-| **Arco + flechas** | Ítems | Proyectil | **Mazmorra (ítem de la mazmorra)** | Interruptores de ojo lejanos, punto débil del jefe |
+| **Pluma** | Ítems | Salto (§4.2): cruza huecos de una celda (2 m) | **D1, la Chullpa** (Cerros), guardada por el sub-jefe Momia Guardiana | Segunda mitad de D1; abismo de la cornisa del Claro hacia la Arboleda (D2); pieza de la Pradera; con las sandalias, salto largo |
+| **Arco + flechas** | Ítems | Proyectil | **D2, la Queñoa Vigía** (Arboleda), guardado por el sub-jefe Ojo Vigía | Interruptores de ojo lejanos, ojo del puente de la Quebrada, mini quest de las sandalias, punto débil de los jefes |
 | **Sandalias** | Ítems | Mantener: tomar impulso y correr recto hasta soltar o chocar (como las botas de Pegaso); chocar sacude árboles y muros agrietados | Overworld: mini quest en la Necrópolis, que pide el arco | Con la pluma en plena carrera, salto largo: cruza huecos de 3 celdas (6 m) contra 1 celda (2 m) de la pluma sola (Daniel); islotes de la Laguna y angostura |
 | **Gancho** | Ítems | Dispara una cadena recta de 10 m (5 baldosas: un cruce que pide el gancho mide 4 celdas, una más de lo que cruza el salto largo, y el poste va en la celda siguiente). En un poste (`HookPost`) o un cofre se clava y lleva al player a 14 m/s sin gravedad, por encima de agua y huecos; a un poste llega siempre al lado, sobre piso. Con el gancho en un botón, los postes a su alcance (10 m en 3D) se fijan como objetivo aunque estén más arriba o más abajo: la cadena va derecho al poste fijado y el player sube o baja a su piso, al lado del poste (el borde del desnivel no lo frena; el poste va al filo, a la vista desde abajo). Solo los postes se fijan así. Trae vasijas (se rompen a los pies), rocas y recolectables; la vasija grande viene de a una celda. Golpea con el elemento `hook`: 1 de daño y aturde 1,2 s, baja el escudo y arranca la coraza sin dañar. Contra paredes rebota | **D3, Santuario de Totora** (isla de la Laguna), guardado por el sub-jefe Amaru | Postes de la Quebrada hacia la Cumbre (D4), franja del Risco, segunda mitad de D3, ala del gancho del templo, desarmar acorazados |
 | Carcaj grande | Mejora | Pasivo (+max flechas) | Overworld, **post-mazmorra** (requiere arco) | Muestra el backtracking |
 | Llaves chicas, llave del jefe, mapa, brújula | Mazmorra | — | Mazmorra | Estructura de mazmorra |
-| Contenedor de corazón | Mejora | +1 corazón | Tras el jefe | Recompensa |
+| Espada dorada | Equipo | Melee, el doble de daño (4), estela y chispas doradas | Templo: cofre grande de la Combinada (opcional, tras tres oleadas) | Premio del templo (11.183) |
+| Contenedor de corazón | Mejora | +1 corazón | Tras cada jefe; santuario (escudo espejo) | Recompensa |
 | Pieza de corazón (×4) | Mejora | 4 piezas = +1 corazón | Overworld: arriba de un escalón de la pradera (con la pluma), fondo de la gruta (bombas), rincón del santuario (bombas), junto al cofre del carcaj (post-mazmorra) | Premia explorar |
 
 **Piezas de corazón (11.21):** `GameState.give` las guarda en el inventario (se guardan con la partida) y cada 4 suma un corazón y descuenta las 4. En el mundo son `HeartPiece` (`src/world/heart_piece.tscn`, un `Pickup` con item get y un flag `ow_heart_piece_*` para no volver). El item get dice cuántas lleva (cues `heart_piece_1..3` de `item_get.dialogue`) y la que completa el corazón usa `heart_piece_full` con el ícono del contenedor. La pantalla de Equipo muestra "Piezas de corazón" con un corazón en cuartos (`HeartPieceIcon`) y "n / 4".
 
 **Recolectables** (vasijas, pasto, enemigos): corazón, flechas ×5, bombas ×3. No hay moneda.
 
-**Un ítem por mazmorra (11.90, decidido el 2026-10-12; orden de D1 y D2 cambiado el 2026-10-13):** D1 pluma (la Chullpa; salto, §4.2), D2 arco (la Queñoa Vigía), D3 gancho (11.30), D4 escudo espejo; el templo del ojo es la última. La pluma va primero porque es mejor para el gameplay como primer ítem de mazmorra (Daniel). El disco solar (un haz de luz que se apunta como el arco) queda como ítem opcional, en una mini-mazmorra o escondido en el overworld. La armadura del esqueleto acorazado se quita con el gancho o con la bomba. Documento de diseño: https://claude.ai/code/artifact/4fce85f9-7f11-4285-9d2e-bb1d58b45b4e
+**Un ítem por mazmorra (11.90, decidido el 2026-10-12; orden de D1 y D2 cambiado el 2026-10-13):** D1 pluma (la Chullpa, en los Cerros; salto, §4.2), D2 arco (la Queñoa Vigía, en la Arboleda), D3 gancho (el Santuario de Totora, en una isla de la Laguna), D4 escudo espejo (el Intihuatana de la Cumbre); el templo del ojo es la última y no da ítem (la Combinada guarda la espada dorada, opcional). La pluma va primero porque es mejor para el gameplay como primer ítem de mazmorra (Daniel). El disco solar (un haz de luz que se apunta como el arco) queda como ítem opcional, en una mini-mazmorra o escondido en el overworld. La armadura del esqueleto acorazado se quita con el gancho o con la bomba. Documento de diseño: https://claude.ai/code/artifact/4fce85f9-7f11-4285-9d2e-bb1d58b45b4e
 
 **Post-MVP:** espada con elemento (fuego/rayo), spin attack.
 
@@ -162,12 +164,12 @@ Las teclas se mapean por posición física (`physical_keycode`): WASD queda en e
 Inicio (espada + escudo de madera)
   └─ Pradera: enemigos, pasto, tablilla
       └─ Cueva ──► BOMBAS
-          └─ CHULLPA (D1, Cerros) ──► sub-jefe ──► PLUMA ──► segunda mitad con la pluma ──► JEFE
-              └─ Abismo de la cornisa del claro, pieza de la pradera (pluma) ──► QUEÑOA VIGÍA (D2, Arboleda) ──► sub-jefe ──► ARCO ──► JEFE
+          └─ CHULLPA (D1, Cerros) ──► sub-jefe Momia Guardiana ──► PLUMA ──► segunda mitad con la pluma ──► JEFE Mallqui
+              └─ Abismo de la cornisa del claro, pieza de la pradera (pluma) ──► QUEÑOA VIGÍA (D2, Arboleda) ──► sub-jefe Ojo Vigía ──► ARCO ──► JEFE Los Ojos de la Queñoa
                   └─ Flecha al ojo del puente de la quebrada ──► Necrópolis ──► mini quest (arco) ──► SANDALIAS
-                      └─ Dash + pluma: islotes de la Laguna ──► D3 ──► GANCHO; angostura (atajo Arboleda ↔ Cardonal)
-                          └─ Postes ──► Cumbre ──► D4 ──► ESCUDO ESPEJO
-                              └─ Sello del templo (reflejar haz de luz) ──► TEMPLO DEL OJO (última) ──► EL OJO CON MANOS
+                      └─ Dash + pluma: islotes de la Laguna ──► SANTUARIO DE TOTORA (D3) ──► sub-jefe Amaru ──► GANCHO ──► JEFE Yacumama; angostura (atajo Arboleda ↔ Cardonal)
+                          └─ Postes ──► Cumbre ──► INTIHUATANA (D4) ──► sub-jefe Kuntur joven ──► ESCUDO ESPEJO ──► JEFE Apu Kuntur
+                              └─ Sello del templo (reflejar haz de luz) ──► TEMPLO DEL OJO (última: cuatro alas con revanchas) ──► EL OJO CON MANOS
 Opcionales: secretos de bombas, flechas y poción (muros agrietados), cota reforzada (puzzle de bloques), carcaj grande (arco), contenedor del santuario (escudo espejo), disco solar (por ubicar)
 ```
 
@@ -177,7 +179,7 @@ Es el orden decidido en 11.90 y cambiado en 11.113 (2026-10-12, Daniel): el temp
 
 **Ítem y sub-jefe (11.113):** el ítem de cada mazmorra lo guarda un sub-jefe basado en el jefe de esa mazmorra, que se vence sin ese ítem (con los anteriores, sí). La segunda mitad de la mazmorra se resuelve con el ítem, y los ítems de mazmorras anteriores se combinan con él para abrirla. Por ejemplo, en la Queñoa (D2) la segunda mitad combina el arco con los saltos de la pluma.
 
-**Molde de cada mazmorra (11.90):** prueba en el overworld → mazmorra con una mecánica que la recorre entera → ítem a mitad, guardado por un sub-jefe → el jefe se vence con ese ítem → el ítem abre la zona siguiente del overworld y 2–3 secretos en zonas ya visitadas. Cada mazmorra se diseña primero como grafo llave-cerradura (`DungeonGraph` en `data/dungeons/`: zonas, pasos y qué pide cada lugar), y `test_dungeon_reach` lo cruza con la escena (tipo de puerta, interruptores de cada reja, contenido de los cofres, que no falte ninguna puerta, reja, cofre o interruptor) y recorre todos los órdenes de juego: falla si algo pide un ítem que nadie da o si hay un estado desde el que ya no se llega al objetivo, y muestra el camino hasta ahí. Un grafo sin escena es de diseño: las cerraduras (`locked`, `needs`) y lo que da cada lugar (`gives`, `key`) se declaran en él y se prueba antes de construir; con escena, la escena tiene que coincidir. El test también revisa el molde: sin el ítem (`item`) no se llega al objetivo, y el ítem pide vencer al sub-jefe (`guard`), que se vence sin él. `tools/dungeon_graph_mermaid.gd -- <grafo>` lo dibuja como diagrama Mermaid. La Chullpa (`chullpa_graph.tres`), la Queñoa (`quenoa_graph.tres`) y el templo (`templo_graph.tres`) tienen el suyo. Cada mazmorra tiene un prefijo propio para su id y sus flags, que no depende de su número: `ch_` la Chullpa, `qv_` la Queñoa, `d1_` el templo (de cuando era D1).
+**Molde de cada mazmorra (11.90):** prueba en el overworld → mazmorra con una mecánica que la recorre entera → ítem a mitad, guardado por un sub-jefe → el jefe se vence con ese ítem → el ítem abre la zona siguiente del overworld y 2–3 secretos en zonas ya visitadas. Cada mazmorra se diseña primero como grafo llave-cerradura (`DungeonGraph` en `data/dungeons/`: zonas, pasos y qué pide cada lugar), y `test_dungeon_reach` lo cruza con la escena (tipo de puerta, interruptores de cada reja, contenido de los cofres, que no falte ninguna puerta, reja, cofre o interruptor) y recorre todos los órdenes de juego: falla si algo pide un ítem que nadie da o si hay un estado desde el que ya no se llega al objetivo, y muestra el camino hasta ahí. Un grafo sin escena es de diseño: las cerraduras (`locked`, `needs`) y lo que da cada lugar (`gives`, `key`) se declaran en él y se prueba antes de construir; con escena, la escena tiene que coincidir. El test también revisa el molde: sin el ítem (`item`) no se llega al objetivo, y el ítem pide vencer al sub-jefe (`guard`), que se vence sin él. `tools/dungeon_graph_mermaid.gd -- <grafo>` lo dibuja como diagrama Mermaid. La Chullpa (`chullpa_graph.tres`), la Queñoa (`quenoa_graph.tres`), Totora (`totora_graph.tres`), la Cumbre (`cumbre_graph.tres`) y el templo (`templo_graph.tres`) tienen el suyo. Cada mazmorra tiene un prefijo propio para su id y sus flags, que no depende de su número: `ch_` la Chullpa, `qv_` la Queñoa, `tt_` Totora, `cu_` la Cumbre y `te_` el templo (`d1_` quedó en lo del templo viejo, de cuando era D1).
 
 **Alcance por entregas:** el primer playtest externo lleva D1 y D2. D3, D4 y el templo se ven en el overworld pero están cerrados y llegan después como actualización (sirve para probar un sistema de parches).
 
@@ -186,12 +188,12 @@ Regla: un ítem que se consigue en una mazmorra no desbloquea nada nuevo en las 
 ## 7. Overworld (MVP)
 <!-- id: overworld -->
 
-Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin transiciones de sala: cámara de seguimiento libre. Lleva a cuatro mazmorras, y cada ítem nuevo abre algo afuera (§6.2). Objetos físicos (cajas, rocas) para mecánicas de empuje y explosión.
+Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin transiciones de sala: cámara de seguimiento libre. Lleva a cinco mazmorras (cuatro y el templo, la última), y cada ítem nuevo abre algo afuera (§6.2). Objetos físicos (cajas, rocas) para mecánicas de empuje y explosión.
 
 ### 7.1 Layout
 <!-- id: overworld-layout -->
 
-**Forma Zelda 2D (7.10, 2026-10-12/13; donde contradice lo de abajo, manda esto):** 100 × 48 celdas (200 × 96 m) con terreno continuo, generado por `debug/tmp/ow2/layout.py` (celda (x, y) → mundo (2(x − 50), nivel · 2,6, 2(y − 24))). Terrazas reales de 2,6 m (niveles 0, 1 y 2): se sube por escalinatas y se baja por saltos. Cadena: **D1 Chullpa** en los Cerros (espada y bombas; da la pluma) → **D2 Queñoa** en la Arboleda, que se alcanza cruzando con la pluma un abismo de una celda (da el arco) → D3 (gancho) → D4 (escudo espejo) → el templo, último. Gruta, Santuario y Cueva de las bombas son cuevas interiores; afuera solo se ve la boca o la grieta en la cara del risco.
+**Forma Zelda 2D (7.10, 2026-10-12/13; donde contradice lo de abajo, manda esto):** 100 × 48 celdas (200 × 96 m) con terreno continuo, generado por `debug/tmp/ow2/layout.py` (celda (x, y) → mundo (2(x − 50), nivel · 2,6, 2(y − 24))). Terrazas reales de 2,6 m (niveles 0, 1 y 2): se sube por escalinatas y se baja por saltos. Cadena: **D1 Chullpa** en los Cerros (espada y bombas; da la pluma) → **D2 Queñoa** en la Arboleda, que se alcanza cruzando con la pluma un abismo de una celda (da el arco) → **D3 Santuario de Totora**, en una isla de la Laguna, por los islotes con el salto largo (da el gancho) → **D4 Intihuatana de la Cumbre**, por los postes de la Quebrada (da el escudo espejo) → el templo, último, tras el sello de luz de la Explanada. Boceto al día más abajo. Gruta, Santuario y Cueva de las bombas son cuevas interiores; afuera solo se ve la boca o la grieta en la cara del risco.
 - *Santuario:* queda para después de D4. El cristal (`ow_shrine_crystal`), que solo prende el escudo espejo, baja la reja del cofre con un contenedor de corazón (`ow_shrine_chest`). Es una cueva de una sola pantalla con una sola entrada, el muro agrietado de los Cerros: sin atajo ni reja de atajo (Daniel 2026-10-14).
 - *Risco:* una escalinata sube a la cornisa (nivel 2). Frente a ella hay un abismo de 8 m (cuatro celdas, `RiscoPit`), más de lo que cruza el salto largo. Del otro lado, el ojo (`CliffEye`) abre con una flecha el nicho con el carcaj grande. La pieza de corazón (`HeartPieceCliff`) está del lado del ojo: se sube desde el pasillo bajo con el gancho, apuntando al poste del borde (`RiscoPost`). Al pasillo bajo (la zanja al pie de la terraza de la Necrópolis) se baja por una escalinata desde la Necrópolis (x 62–64, z −18; 11.147).
 - *Piezas de corazón:*
@@ -220,62 +222,70 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 - casi todo se puede pisar;
 - cada mazmorra se ve antes de poder entrar.
 
-7 × 5 pantallas (168 × 80 m). Una quebrada (abismo) corre de norte a sur y parte el mapa en dos actos. El **oeste** es el primer acto y tiene lo que ya existía. El **este** se abre con lo que da el templo; desde la Pradera se ve la torre de la Chullpa en la otra orilla. Cada orilla es un anillo chico alrededor de su hub, así se puede dar la vuelta sin repetir camino. El este tiene además tres niveles: Cardonal y Bañado abajo, Necrópolis en el medio, Cumbre y Risco arriba. Se sube por escalinatas y se baja por saltos de una sola vía, que cierran bucles.
+7 × 5 pantallas (168 × 80 m). Una quebrada (abismo) corre de norte a sur y parte el mapa en dos actos. El **oeste** es el primer acto y tiene lo que ya existía. El **este** se abre con el arco de D2 (el puente). Cada orilla es un anillo chico alrededor de su hub, así se puede dar la vuelta sin repetir camino. El este tiene además tres niveles: Cardonal y Bañado abajo, Necrópolis en el medio, Cumbre y Risco arriba. Se sube por escalinatas y se baja por saltos de una sola vía, que cierran bucles.
+
+**Boceto (7.10, al día con la cadena de 11.113, 2026-10-15):** la forma real del overworld (zonas `Zone_*` y puertas de `levels/overworld.tscn`), de oeste a este; el norte arriba.
 
 ```
-        OESTE (1er acto)                QUEBRADA     ESTE (2º acto)                   NIVEL
-   ┌──────────┬─────────────────────┬──────────┬─────────────────────┬──────────┐
-   │SANTUARIO │ EXPLANADA ◆   [D1]  ├══gancho══┤ CUMBRE ◆      [D4]  │ RISCO    │ alto
-   │esc.espejo│ templo, sello de luz│  abismo  │ guantes de fuerza   │ carcaj   │
-   ├──B───────┼─────────────────────┤          ├─────────────────────┤          │
-   │ CERROS   │ PRADERA ◆           ├═══arco═══┤ NECRÓPOLIS ◆  [D2]  │ MIRADOR  │ medio
-   │ bombas   │ hub del oeste       │ (puente) │ hub del este        │ corazón  │
-   │          │                     │          │ la Chullpa          │          │
-   ├──────────┼──────────┬──────────┤          ├──▼──────────────────┴──▼───────┤
-   │ GRUTA  B │ CLARO ◆  │ ARBOLEDA ├══pluma═══┤ CARDONAL                       │ bajo
-   │ botella  │ inicio   │ cota     │(angostura)│ secretos                       │
-   ├──────────┼──────────┴──────────┴──────────┴──────────┬─────────────────────┤
-   │VERTIENTE │ LAGUNA (islotes: pluma)              [D3] │ BAÑADO ◆            │ bajo
-   └──────────┴───────────────────────────────────────────┴─────────────────────┘
-   ◆ portal de viaje   B muro agrietado   ▼ bajada de una sola vía
+  OESTE                                               QUEBRADA    ESTE
+ ┌───────────┬──────────────────────────┬──────────┬──────────────────────────┬──────────┐
+ │ CERROS    │ EXPLANADA ◆   [TEMPLO]   │          │ CUMBRE ◆           [D4]  │ RISCO    │
+ │ cueva de  │ sello de luz (esc.espejo)├═gancho═══┤ Intihuatana, en el risco │ carcaj   │
+ │ las bombas├──────────────────────────┤ (postes) │ norte                    │ (arco)   │
+ │ santuario │ PRADERA ◆                │  abismo  ├──────────────────────────┤          │
+ │ B (cont.) │ hub del oeste            ├═══arco═══┤ NECRÓPOLIS ◆             │ MIRADOR  │
+ │ [D1]      │                          │ (puente) │ sandalias (arco)         │ corazón  │
+ │ Chullpa   ├──────────┬───────────────┤          ├──────────────────────────┴──────────┤
+ ├───────────┘ CLARO ◆  │ ARBOLEDA [D2] ├═salto════┤ CARDONAL                            │
+ │ GRUTA B     inicio   ├pluma Queñoa,  │ largo    │ secretos                            │
+ │             cornisa ─┘ cota          │angostura │                                     │
+ ├───────────┬──────────────────────────┴──────────┴──────┬──────────────────────────────┤
+ │ VERTIENTE │ LAGUNA   [D3] Totora (islotes: salto largo)│ BAÑADO ◆                     │
+ └───────────┴────────────────────────────────────────────┴──────────────────────────────┘
+ ◆ portal de viaje   B muro agrietado   [Dn] puerta de la mazmorra   ═ paso con ítem
 ```
+
+Puertas: `ChullpaDoor` (−86, −6) en los Cerros, `QuenoaDoor` (−24, 22) en la Arboleda, `TotoraDoor` (−28, 41) en la isla de la Laguna, `CumbreDoor` (39, −45) en el risco norte de la Cumbre y `TempleDoor` (−42, −38,5) en la Explanada. El boceto del layout D (7.9), de 7 × 5 pantallas, quedó reemplazado por este.
 
 | Región | Contenido | Se entra | Acto |
 |---|---|---|---|
 | **Claro del inicio** | Spawn, tablillas de controles y de combate, puzzle de levantar (como hoy). Portal | Libre | 1 |
 | **Pradera** (hub oeste) | Pasto, vasijas, tablilla de lore; se ven el templo sellado y la torre del otro lado de la quebrada. Portal | Libre | 1 |
-| **Cerros** | Cueva de las bombas con su muro de práctica | Libre | 1 |
-| **Santuario** | Puzzle de luz y cofre del escudo espejo; una sola entrada, el muro agrietado | Bombas | 1 |
-| **Explanada del templo** | Sello de luz → **D1 Templo**. Portal. Del lado este, el cruce con postes a la Cumbre | Libre (el sello, con el escudo espejo) | 1 |
+| **Cerros** | **D1 Chullpa**. Cueva de las bombas con su muro de práctica | Libre | 1 |
+| **Santuario** | Cristal que prende el escudo espejo → contenedor de corazón (después de D4); una sola entrada, el muro agrietado | Bombas | 1 |
+| **Explanada del templo** | Sello de luz → **el templo del ojo** (la última). Portal. Del lado este, el cruce con postes a la Cumbre | Libre (el sello, con el escudo espejo de D4) | 1 |
 | **Gruta** | Poción en botella, tablilla | Bombas, desde el Claro | 1 |
 | **Vertiente** | Boca de la cueva del agua bendita (11.20) | Desde la Gruta | 1 |
-| **Arboleda** | Puzzle de bloques → cota reforzada. Al este, la angostura de la quebrada | Libre | 1 |
+| **Arboleda** | **D2 Queñoa Vigía**. Puzzle de bloques → cota reforzada. Al este, la angostura de la quebrada | Pluma (abismo de la cornisa del Claro) | 1 |
 | **Quebrada** | Abismo de norte a sur. Puente levadizo (Pradera ↔ Necrópolis) que baja el ojo de la otra orilla con una flecha; angostura (Arboleda ↔ Cardonal) que se salta con la pluma; postes (Explanada ↔ Cumbre) para el gancho | Caer devuelve a la orilla | — |
-| **Necrópolis** (hub este) | **D2 Chullpa**. Portal | Arco (puente) | 2 |
+| **Necrópolis** (hub este) | Mini quest de las sandalias (tres chullpas con ojos, arco). Portal | Arco (puente) | 2 |
 | **Risco del ojo** | Ojo-interruptor → carcaj grande; franja que pide el gancho | Desde el Mirador | 2 |
 | **Mirador** | Pieza de corazón; bajada de una vía al Cardonal | Desde la Necrópolis | 2 |
 | **Cardonal** | Secretos; escalinata a la Necrópolis y bajada de una vía desde ella | Pluma (angostura) o desde la Necrópolis | 2 |
 | **Bañado** | Orilla este de la Laguna. Portal | Desde el Cardonal | 2 |
-| **Laguna** | Agua entre las dos orillas; islotes hasta la isla de **D3** | Pluma (islotes) | 3 |
+| **Laguna** | Agua entre las dos orillas; islotes hasta la isla de **D3 Santuario de Totora** | Salto largo (sandalias + pluma) | 3 |
 | **Cumbre** | **D4**: la región se alcanza con el gancho (ítem de D3), desde la franja al pie del risco apuntando al poste del borde (`CumbrePost`; los postes se apuntan aunque estén a otra altura). La entrada al Intihuatana es una boca tallada en el risco norte (`CumbreDoor`, vuelta a `Spawn_cumbre`). Portal | Gancho | 4 |
 
-**Cadena de mazmorras (11.90):** D1 Templo (escudo espejo para entrar; da el arco) → arco → D2 Chullpa (da la pluma) → pluma → D3 Laguna (da el gancho) → gancho → D4 Cumbre (da los guantes de fuerza). Para el primer playtest externo, D3 y D4 se ven pero están cerradas.
+**Cadena de mazmorras (11.90, cambiada en 11.113):** D1 Chullpa (Cerros, libre; da la pluma) → pluma → D2 Queñoa Vigía (Arboleda; da el arco) → arco → puente al este y sandalias → salto largo → D3 Santuario de Totora (Laguna; da el gancho) → gancho → D4 Intihuatana de la Cumbre (da el escudo espejo) → escudo espejo → el templo del ojo (la última). Los guantes de fuerza quedaron fuera. Para el primer playtest externo, D3, D4 y el templo se ven pero están cerrados.
 
 **Verificación del gating:**
 
 | Para llegar a… | Hace falta | Dónde se consigue | ¿Hay otra forma? |
 |---|---|---|---|
 | Bombas | — | Cerros, libre | — |
-| Santuario / escudo espejo | Bombas | Cerros | Se entra solo rompiendo el muro agrietado |
-| D1 | Escudo espejo (sello) | Santuario | El escudo de madera no refleja |
-| Este (Necrópolis, D2) | Arco (puente) | D1 | La angostura pide la pluma, que es de D2: queda como atajo; la quebrada es más ancha que un salto en el resto |
-| Laguna, isla de D3 | Pluma (islotes) | D2 | El agua no se cruza nadando |
-| Cumbre, D4 | Gancho (postes) | D3 | Desde el Risco no hay paso |
-| Carcaj | Arco | D1 | El ojo solo reacciona a proyectiles |
+| D1 Chullpa | — | — | Libre; adentro pide bombas |
+| Arboleda, D2 | Pluma (abismo de una celda de la cornisa del Claro) | D1 | — |
+| Este (Necrópolis) | Arco (ojo del puente) | D2 | La angostura pide el salto largo, que necesita las sandalias del este: queda como atajo de vuelta |
+| Sandalias | Arco (los ojos de las tres chullpas) | D2 | — |
+| Laguna, isla de D3 | Salto largo (sandalias + pluma) | Necrópolis y D1 | El agua no se cruza nadando |
+| Cumbre, D4 | Gancho (postes de la Quebrada) | D3 | Desde el Risco no hay paso; la escalera de soga (11.28) se descuelga desde arriba |
+| Templo | Escudo espejo (sello de luz) | D4 | El escudo de madera no refleja |
+| Santuario, contenedor | Bombas para entrar, escudo espejo para el cristal | Cerros, D4 | Se entra solo rompiendo el muro agrietado |
+| Carcaj | Arco | D2 | El ojo solo reacciona a proyectiles |
 
 **Viaje rápido (7.9):** seis portales (Claro, Pradera, Explanada, Necrópolis, Bañado, Cumbre), al lado de un hub o de la puerta de una mazmorra. Se prenden al pasar (flag por portal). El destino se elige en la pestaña Mapa del menú de pausa o parado en un portal; el viaje hace un fundido corto y lleva a todos los players. **Hecho (mockup Pause_Map_Travel):** `src/world/travel_portal.tscn` (`TravelPortal`: `id`, `display_name`; flag `ow_portal_<id>`, apagado gris, prendido celeste con haz y luz) bajo `TravelPortals` en `overworld.tscn`; su hijo `Arrival` es el `SpawnPoint` `portal_<id>`. Parado en uno prendido, *Viajar* abre el Mapa (`MenuStack.open_map()`). En el Mapa los prendidos se marcan, el cursor se engancha a 14 px de uno y la tarjeta dice "Portal: <región>" con lo que falta de la región; si es la región del player, "Ya estás en esta región"; si no, X (o el botón *Viajar*) pregunta (`travel_dialog.tscn`, variante de `ConfirmDialog` con ícono y "Viajan todos los jugadores") y `TravelPortal.travel()` usa `SceneFlow.travel_to` a la misma escena. El subtítulo suma "N de 6 portales". Los checkpoints (`SpawnPoint`) no se toman mientras dura un viaje: antes el player, que aparece un instante donde está en la escena, pisaba `Spawn_start` y pisaba el punto de llegada.
 
-**Curva de ritmo:** calma (Claro) → combate (Pradera) → descubrimiento (Cerros: bombas) → recompensa opcional (Gruta, Vertiente) → descubrimiento (Santuario) → prueba (sello) → D1 → el mundo se abre (puente) → hub nuevo con la torre a la vista → D2 → la pluma abre el Cardonal y los islotes de la Laguna → D3 → el gancho abre la Cumbre → D4.
+**Curva de ritmo:** calma (Claro) → combate (Pradera) → descubrimiento (Cerros: bombas) → recompensa opcional (Gruta, Vertiente) → D1 (Chullpa) → la pluma abre la Arboleda → D2 (Queñoa) → el arco baja el puente: el este y su hub → sandalias → el salto largo abre los islotes de la Laguna y la angostura → D3 (Totora) → el gancho abre la Cumbre → D4 (Intihuatana) → el escudo espejo abre el sello (y el cristal del santuario) → el templo del ojo.
 
 **Pendiente de mudar (7.9):** los párrafos que siguen describen cada lugar tal como quedó en el overworld de 3 × 3; el contenido se muda entero a su región nueva. La grieta de la pluma entre la Explanada y el Risco desaparece (ahora el Risco está del otro lado de la quebrada); su lugar lo toma la angostura.
 
@@ -458,8 +468,8 @@ Propuesta el 2026-10-12 y armada en blockout (`levels/quenoa.tscn`). Una queñoa
           └────────┴────────┘
  RAÍCES   ┌────────┬────────┐
           │Raíces  │Ojos    │
-          │2 ojos →├[REJA]──┤ ojo tras muro
-          │flechas │llave j.│ agrietado
+          │2 ojos →├[REJA]──┤ ojo en nicho
+          │flechas │llave j.│
           │(macizo)├[JEFE]──┤
           │        │Jefe    │
           └────────┴────────┘
@@ -476,7 +486,7 @@ Propuesta el 2026-10-12 y armada en blockout (`levels/quenoa.tscn`). Una queñoa
 | Guarida del vigía (SE) | Sub-jefe, el **Ojo Vigía** (`WardenFight`, `qv_warden_defeated`). Sala sin obstáculos, solo vasijas. Al entrar se cierra la puerta. El ojo flota, se abre, marca una línea en el piso y la barre con un rayo; después se tira sobre el player y queda enganchado en las raíces, y ahí le pegan la espada, las bombas y las vasijas. Vencido, abre la puerta de la cámara del arco |
 | Cámara del arco (SO) | Solo se abre al vencer al sub-jefe. Cofre del **arco**. Un hueco cae al Tronco, que es la vuelta |
 | Raíces (NO) | Con el arco, desde el Tronco. Un ojo abre el nicho de un cofre con 10 flechas. El otro es un ojo con tiempo (`open_time` 6 s, sin flag): abre unos segundos la reja `RaicesGate`, rodeada de huecos, en el paso a la Sala de los ojos (sin puerta con llave: una sola cerradura por paso, 11.144). Hay que flechar el ojo, saltar los huecos con la pluma y pasar antes de que se cierre. Caer al hueco devuelve a la entrada de la sala |
-| Sala de los ojos (NE) | Saltando desde las Raíces por la reja con tiempo. Junto a la entrada, una placa (`OjosStep`, `qv_eyes_step`) deja abierta la reja de las Raíces para volver. Un ojo detrás de un muro agrietado (bomba y flecha) abre el nicho de la **llave del jefe**, que queda del otro lado de una fila de huecos (pluma): la llave del jefe pide bomba, arco y pluma |
+| Sala de los ojos (NE) | Saltando desde las Raíces por la reja con tiempo. Junto a la entrada, una placa (`OjosStep`, `qv_eyes_step`) deja abierta la reja de las Raíces para volver. Un ojo en un nicho de la pared norte, entre los setos (arco), abre el nicho de la **llave del jefe**, que queda del otro lado de una fila de huecos (pluma): la llave del jefe pide arco y pluma. Hasta el 2026-10-15 el ojo estaba detrás de un muro agrietado; salió por la regla de 11.181 (una pared agrietada abre una sala entera, nunca un nicho) |
 | Corazón del árbol (SE) | Jefe, **Los Ojos de la Queñoa** (`BossFight`, `qv_boss_defeated`). Sala sin obstáculos. Dos ojos que flotan y barren con rayos, de a uno por vez. Cerrados, todo les rebota. Una flecha mientras se abren para cargar los derriba, y en el piso les pega la espada. Al caer uno, el otro se apura. Vencidos: se abre la puerta, aparecen el contenedor de corazón (`qv_heart_container`) y el portal de salida |
 
 Los ojos son `WatcherEye` (`src/entities/watcher_eye/`). Los maneja un `ArenaFight` (`src/world/arena_fight.gd`, el mismo de la momia de la Chullpa) en la sala, como una oleada: cierra las puertas, hace la intro con la cámara y el nombre, muestra la barra del HUD, deja barrer a un ojo por vez y, si el player sale, la pelea vuelve a empezar. Al ganar pone el flag y hace de interruptor. Molde de todas las mazmorras: las peleas de sub-jefe y jefe van en salas sin obstáculos (solo objetos como vasijas), y el cofre del ítem va en una sala contigua que se abre al vencer al sub-jefe. El kit es el de la Chullpa hasta que haya uno de árbol. Escenario de debug: `quenoa`. La puerta en el overworld la pone la sesión del overworld (7.10); mientras, la salida lleva al punto `arboleda`.

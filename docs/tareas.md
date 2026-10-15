@@ -4460,7 +4460,8 @@ Daniel (2026-10-12): el jefe del ojo se pensó como fin de demo, así que tiene 
   Decidido: es el ítem de D4 (la Cumbre). El santuario del primer acto ya no lo da.
 - [x] Ampliar el templo: salas que usen todos los ítems
   Diseño hecho el 2026-10-13 (Daniel: si): hub con cuatro alas, una por ítem (pluma, arco y bombas, gancho, escudo espejo); cada ala enciende un ojo del sello del hub, y los cuatro abren la antesala. Sub-jefe la Mano (un guantelete del jefe) guarda la sala combinada con la llave del jefe; el templo no da ítem. Salas de 14 × 12 m (cámara fija). Escena nueva levels/templo.tscn con flags te_; grafo de diseño data/dungeons/templo_graph.tres. GDD §8. Se construye en los pasos siguientes.
-- [ ] GDD §6 y §7, y el boceto de 7.10 al día
+- [x] GDD §6 y §7, y el boceto de 7.10 al día
+  Hecho el 2026-10-15: §6.1 (pluma, arco, escudo espejo con su mazmorra y sub-jefe; espada dorada; contenedor del santuario), §6.2 (árbol con nombres, sub-jefes y jefes; grafos y prefijos de las cinco), §7 (cadena de 7.1, boceto 7.10 nuevo con la forma real del overworld y las puertas, tabla de regiones, cadena, verificación del gating y curva de ritmo).
 - [ ] Qué es D1 (arco) y dónde está; qué da el santuario
   Hecho el 2026-10-12 (Daniel: sigue): La Queñoa Vigía en el claro de la Arboleda (boceto 7.10 v4). Blockout levels/quenoa.tscn: Raíces, Tronco y Copa de 2 × 2 salas, llaves, bloque, ojos, muros agrietados, sub-jefe como oleada que guarda el arco; d1_graph.tres con escena pasa el test y las reglas; test_quenoa (escaleras, caídas, reja del tronco, bloque); escenario quenoa. GDD §8c. Falta: qué da el santuario; puerta en el overworld (7.10).
 - [x] Chequeo de grafos de diseño y reglas del molde
@@ -5289,11 +5290,20 @@ Daniel (2026-10-14): todas las salas de las mazmorras miden 14 de alto y al meno
 
 **Relacionadas:** 11.181 Paredes agrietadas: abren una sala, nunca un nicho (Queñoa y templo)
 
-### 11.181 Paredes agrietadas: abren una sala, nunca un nicho (Queñoa y templo) · Pendiente
+### 11.181 Paredes agrietadas: abren una sala, nunca un nicho (Queñoa y templo) · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `mazmorra`
 
 Daniel (2026-10-14): en las mazmorras una pared agrietada siempre abre una sala entera, de cualquier tipo (puede hasta ser necesaria para terminar la mazmorra), nunca un nicho con cofre. Hoy son nichos OjosCrackedWall en la Queñoa y CombinedCrackedWall en el templo: pasarlos a salas. La del templo va con el rediseño 11.180.
+
+- [x] Templo: CombinedCrackedWall
+  Ya no está: salió con la Combinada de oleadas (11.183).
+- [x] Queñoa: OjosCrackedWall
+  Sale el muro y su techo tapanicho (OjosNicheRoof) y el flag qv_hidden_cracked_wall: el ojo queda a la vista en su nicho de la pared norte. La llave del jefe pide arco y pluma. Sin cambio de grilla.
+- [x] Test: toda pared agrietada de mazmorra separa dos salas
+  test_cracked_wall: test_dungeon_cracked_walls_open_whole_rooms reemplaza al de los techos de nicho (11.164); la Chullpa sin ninguna. Falla con la Queñoa de antes.
+
+**Prueba:** test_cracked_wall (test_dungeon_cracked_walls_open_whole_rooms), test_quenoa, test_dungeon_reach
 
 **Relacionadas:** 11.180 Templo: salas de 14 de alto y al menos 22 de ancho
 

@@ -1,6 +1,22 @@
 {
   "assignee": "project-epiphany-43",
-  "checklist": [],
+  "checklist": [
+    {
+      "detail": "Ya no está: salió con la Combinada de oleadas (11.183).",
+      "done": true,
+      "text": "Templo: CombinedCrackedWall"
+    },
+    {
+      "detail": "Sale el muro y su techo tapanicho (OjosNicheRoof) y el flag qv_hidden_cracked_wall: el ojo queda a la vista en su nicho de la pared norte. La llave del jefe pide arco y pluma. Sin cambio de grilla.",
+      "done": true,
+      "text": "Queñoa: OjosCrackedWall"
+    },
+    {
+      "detail": "test_cracked_wall: test_dungeon_cracked_walls_open_whole_rooms reemplaza al de los techos de nicho (11.164); la Chullpa sin ninguna. Falla con la Queñoa de antes.",
+      "done": true,
+      "text": "Test: toda pared agrietada de mazmorra separa dos salas"
+    }
+  ],
   "code": "11.181",
   "created_at": "2026-10-14T19:09:37.012Z",
   "description": "Daniel (2026-10-14): en las mazmorras una pared agrietada siempre abre una sala entera, de cualquier tipo (puede hasta ser necesaria para terminar la mazmorra), nunca un nicho con cofre. Hoy son nichos OjosCrackedWall en la Queñoa y CombinedCrackedWall en el templo: pasarlos a salas. La del templo va con el rediseño 11.180.",
@@ -16,12 +32,12 @@
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "diseno",
     "mazmorra"
   ],
-  "test": "",
+  "test": "test_cracked_wall (test_dungeon_cracked_walls_open_whole_rooms), test_quenoa, test_dungeon_reach",
   "title": "Paredes agrietadas: abren una sala, nunca un nicho (Queñoa y templo)",
-  "updated_at": "2026-10-14T19:09:37.343Z"
+  "updated_at": "2026-10-15T08:19:41.284Z"
 }
