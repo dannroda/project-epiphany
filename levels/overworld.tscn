@@ -20,11 +20,6 @@
 [ext_resource type="PackedScene" path="res://src/world/floor_switch.tscn" id="22_gvf0k"]
 [ext_resource type="PackedScene" path="res://src/world/push_block.tscn" id="24_v1yde"]
 [ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="26_iip2e"]
-[ext_resource type="PackedScene" path="res://src/world/sello_cima.tscn" id="sello_cima"]
-[ext_resource type="PackedScene" path="res://src/world/boca_cueva.tscn" id="boca_cueva"]
-[ext_resource type="PackedScene" path="res://src/entities/guerreros/skeleton_templo.tscn" id="skeleton_templo"]
-[ext_resource type="PackedScene" path="res://src/entities/guerreros/shield_skeleton_templo.tscn" id="shield_skeleton_templo"]
-[ext_resource type="PackedScene" path="res://src/entities/guerreros/archer_skeleton_templo.tscn" id="archer_skeleton_templo"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_mirror.tscn" id="28_gvf0k"]
 [ext_resource type="PackedScene" path="res://src/world/temple_seal.tscn" id="30_372gu"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_source.tscn" id="30_xv8lf"]
@@ -48,7 +43,9 @@
 [ext_resource type="PackedScene" path="res://src/world/water/shallow_water.tscn" id="102_shallow"]
 [ext_resource type="Material" path="res://src/world/water/water_la.tres" id="103_water_la"]
 [ext_resource type="PackedScene" path="res://src/world/travel_portal.tscn" id="110_travel"]
+[ext_resource type="PackedScene" path="res://src/entities/guerreros/archer_skeleton_templo.tscn" id="archer_skeleton_templo"]
 [ext_resource type="PackedScene" path="res://src/entities/atoq/atoq.tscn" id="atoq"]
+[ext_resource type="PackedScene" path="res://src/world/boca_cueva.tscn" id="boca_cueva"]
 [ext_resource type="Script" uid="uid://dlf8bqdycw2kg" path="res://src/world/look/brillo_la.gd" id="brillo_la"]
 [ext_resource type="PackedScene" path="res://src/world/chullpa_entrada.tscn" id="ent_chullpa"]
 [ext_resource type="PackedScene" path="res://src/world/cumbre_entrada.tscn" id="ent_cumbre"]
@@ -56,8 +53,8 @@
 [ext_resource type="PackedScene" path="res://src/world/totora_entrada.tscn" id="ent_totora"]
 [ext_resource type="Script" uid="uid://cnuecr7682x4j" path="res://src/world/arena_area.gd" id="hm_area"]
 [ext_resource type="PackedScene" path="res://src/entities/centinela/centinela.tscn" id="hm_centinela"]
-[ext_resource type="PackedScene" path="res://src/world/fire_ring/fire_ring.tscn" id="hm_fire_ring"]
 [ext_resource type="Script" uid="uid://bccprbredple8" path="res://src/world/arena_fight.gd" id="hm_fight"]
+[ext_resource type="PackedScene" path="res://src/world/fire_ring/fire_ring.tscn" id="hm_fire_ring"]
 [ext_resource type="PackedScene" path="res://src/entities/centinela/huanca.tscn" id="hm_huanca"]
 [ext_resource type="PackedScene" path="res://src/entities/centinela/huanca_escudo.tscn" id="hm_huanca_escudo"]
 [ext_resource type="Resource" uid="uid://dab50dwcdwd6d" path="res://data/items/hammer.tres" id="hm_item"]
@@ -71,6 +68,7 @@
 [ext_resource type="ArrayMesh" uid="uid://bc38ysj61gbld" path="res://assets/epiphany/meshes/muros_organicos/tapa_SecretSummitWall.res" id="lid_SecretSummitWall"]
 [ext_resource type="Script" uid="uid://c8w1y48q1dcuh" path="res://src/world/after_the_eye.gd" id="ow_after_eye"]
 [ext_resource type="Resource" path="res://data/items/arrow.tres" id="ow_arrow"]
+[ext_resource type="PackedScene" path="res://src/world/big_pot.tscn" id="ow_big_pot"]
 [ext_resource type="Resource" path="res://data/items/bomb.tres" id="ow_bomb"]
 [ext_resource type="PackedScene" path="res://src/world/chullpa_tumba.tscn" id="ow_chullpa_tumba"]
 [ext_resource type="PackedScene" path="res://src/world/escalon_alto.tscn" id="ow_escalon_alto"]
@@ -82,8 +80,13 @@
 [ext_resource type="Resource" uid="uid://dfbkawgboncax" path="res://data/items/sandals.tres" id="ow_sandals"]
 [ext_resource type="PackedScene" path="res://src/world/plants/quenoa_secreta.tscn" id="ow_secret_tree"]
 [ext_resource type="PackedScene" path="res://src/world/floor_switch_weight.tscn" id="ow_switch_weight"]
-[ext_resource type="PackedScene" path="res://src/world/big_pot.tscn" id="ow_big_pot"]
+[ext_resource type="PackedScene" path="res://src/world/sello_cima.tscn" id="sello_cima"]
+[ext_resource type="PackedScene" path="res://src/entities/guerreros/shield_skeleton_templo.tscn" id="shield_skeleton_templo"]
+[ext_resource type="PackedScene" path="res://src/entities/guerreros/skeleton_quenoa.tscn" id="skeleton_quenoa"]
+[ext_resource type="PackedScene" path="res://src/entities/guerreros/skeleton_templo.tscn" id="skeleton_templo"]
 [ext_resource type="Script" uid="uid://c3gjwha8na3yi" path="res://src/world/look/sombra_la.gd" id="sombra_la"]
+[ext_resource type="PackedScene" path="res://src/world/stairs.tscn" id="summit_stairs"]
+[ext_resource type="PackedScene" path="res://src/world/stairs_down.tscn" id="summit_stairs_down"]
 [ext_resource type="PackedScene" path="res://src/world/terrazas/escalinata_e.tscn" id="terr_escalinata_e"]
 [ext_resource type="PackedScene" path="res://src/world/terrazas/escalinata_medio.tscn" id="terr_escalinata_medio"]
 [ext_resource type="PackedScene" path="res://src/world/terrazas/escalinata_o.tscn" id="terr_escalinata_o"]
@@ -96,9 +99,6 @@
 [ext_resource type="ArrayMesh" uid="uid://c7lvusadu8l35" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretLookoutWall.res" id="wall_SecretLookoutWall"]
 [ext_resource type="ArrayMesh" uid="uid://e178snsf1sk0" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretRavineWall.res" id="wall_SecretRavineWall"]
 [ext_resource type="ArrayMesh" uid="uid://xj64yut5ifba" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretSummitWall.res" id="wall_SecretSummitWall"]
-[ext_resource type="PackedScene" path="res://src/world/stairs.tscn" id="summit_stairs"]
-[ext_resource type="PackedScene" path="res://src/world/stairs_down.tscn" id="summit_stairs_down"]
-[ext_resource type="PackedScene" path="res://src/entities/guerreros/skeleton_quenoa.tscn" id="skeleton_quenoa"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7se6l"]
 panorama = ExtResource("1_qyxw2")
@@ -145,18 +145,6 @@ size = Vector3(0.8, 2.4, 1.4)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jamb"]
 size = Vector3(0.45, 2.6, 2)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_summit_rail_0"]
-size = Vector3(8.2, 1.9, 0.2)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_summit_rail_1"]
-size = Vector3(8.2, 1.9, 0.2)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_summit_rail_2"]
-size = Vector3(0.2, 1.9, 2.2)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_summit_rail_3"]
-size = Vector3(0.2, 1.9, 2.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_zone_banado"]
 size = Vector3(56, 14, 16)
@@ -231,6 +219,18 @@ size = Vector3(24, 14, 24)
 size = Vector3(24, 14, 24)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bushdoor"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_summit_rail_0"]
+size = Vector3(8.2, 1.9, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_summit_rail_1"]
+size = Vector3(8.2, 1.9, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_summit_rail_2"]
+size = Vector3(0.2, 1.9, 2.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_summit_rail_3"]
+size = Vector3(0.2, 1.9, 2.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lid"]
 size = Vector3(2.24, 0.4, 2.24)
@@ -333,6 +333,9 @@ shape = SubResource("BoxShape3D_jamb")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 1.3, 0)
 shape = SubResource("BoxShape3D_jamb")
 
+[node name="BocaCueva" parent="GrottoMouth" unique_id=1316737283 instance=ExtResource("boca_cueva")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.77)
+
 [node name="GrottoDoor" type="Area3D" parent="." unique_id=1418966855]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -84.75, 1.2, 14)
 script = ExtResource("14_5vrew")
@@ -359,6 +362,9 @@ shape = SubResource("BoxShape3D_jamb")
 [node name="West" type="CollisionShape3D" parent="ShrineMouth/Jambs" unique_id=686388680]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 1.3, 0)
 shape = SubResource("BoxShape3D_jamb")
+
+[node name="BocaCueva" parent="ShrineMouth" unique_id=2025545001 instance=ExtResource("boca_cueva")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.77)
 
 [node name="ShrineDoor" type="Area3D" parent="." unique_id=1224957378]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -88, 3.8, -22.75)
@@ -674,50 +680,53 @@ flag = &"ow_cumbre_ladder"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 5.2, -37.25)
 reveal_on_open = false
 
-[node name="SummitMouth" type="Node3D" parent="."]
+[node name="SummitMouth" type="Node3D" parent="." unique_id=1895928823]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 5.2, -37)
 
-[node name="Jambs" type="StaticBody3D" parent="SummitMouth"]
+[node name="Jambs" type="StaticBody3D" parent="SummitMouth" unique_id=1862321257]
 
-[node name="East" type="CollisionShape3D" parent="SummitMouth/Jambs"]
+[node name="East" type="CollisionShape3D" parent="SummitMouth/Jambs" unique_id=324857055]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 1.3, 0)
 shape = SubResource("BoxShape3D_jamb")
 
-[node name="West" type="CollisionShape3D" parent="SummitMouth/Jambs"]
+[node name="West" type="CollisionShape3D" parent="SummitMouth/Jambs" unique_id=274584605]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 1.3, 0)
 shape = SubResource("BoxShape3D_jamb")
 
-[node name="SummitStairsUp" parent="." node_paths=PackedStringArray("to", "gate") instance=ExtResource("summit_stairs")]
+[node name="BocaCueva" parent="SummitMouth" unique_id=295801315 instance=ExtResource("boca_cueva")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.45)
+
+[node name="SummitStairsUp" parent="." unique_id=1333969766 node_paths=PackedStringArray("to", "gate") instance=ExtResource("summit_stairs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 5.2, -37.5)
 to = NodePath("../SummitTop")
 gate = NodePath("../SummitGate")
 
-[node name="SummitTop" type="Marker3D" parent="."]
+[node name="SummitTop" type="Marker3D" parent="." unique_id=1670558915]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46.3, 7.8, -40)
 
-[node name="SummitStairsDown" parent="." node_paths=PackedStringArray("to") instance=ExtResource("summit_stairs_down")]
+[node name="SummitStairsDown" parent="." unique_id=139992761 node_paths=PackedStringArray("to") instance=ExtResource("summit_stairs_down")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.5, 7.8, -40)
 to = NodePath("../SummitFoot")
 
-[node name="SummitFoot" type="Marker3D" parent="."]
+[node name="SummitFoot" type="Marker3D" parent="." unique_id=1430972611]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 5.2, -35.5)
 
-[node name="SummitRail" type="StaticBody3D" parent="." groups=["walk_guard"]]
+[node name="SummitRail" type="StaticBody3D" parent="." unique_id=267298922 groups=["walk_guard"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.8, 0)
 
-[node name="Rail0" type="CollisionShape3D" parent="SummitRail"]
+[node name="Rail0" type="CollisionShape3D" parent="SummitRail" unique_id=1982927539]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 0.65, -41)
 shape = SubResource("BoxShape3D_summit_rail_0")
 
-[node name="Rail1" type="CollisionShape3D" parent="SummitRail"]
+[node name="Rail1" type="CollisionShape3D" parent="SummitRail" unique_id=1807762179]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 0.65, -39)
 shape = SubResource("BoxShape3D_summit_rail_1")
 
-[node name="Rail2" type="CollisionShape3D" parent="SummitRail"]
+[node name="Rail2" type="CollisionShape3D" parent="SummitRail" unique_id=1419271410]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51, 0.65, -40)
 shape = SubResource("BoxShape3D_summit_rail_2")
 
-[node name="Rail3" type="CollisionShape3D" parent="SummitRail"]
+[node name="Rail3" type="CollisionShape3D" parent="SummitRail" unique_id=2130221531]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43, 0.65, -40)
 shape = SubResource("BoxShape3D_summit_rail_3")
 
@@ -1488,6 +1497,9 @@ shape = SubResource("BoxShape3D_jamb")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 1.3, 0)
 shape = SubResource("BoxShape3D_jamb")
 
+[node name="BocaCueva" parent="SpringCaveMouth" unique_id=1255237108 instance=ExtResource("boca_cueva")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.07)
+
 [node name="SpringCaveDoor" type="Area3D" parent="." unique_id=1561675824]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -98.7, 1.2, 38)
 script = ExtResource("14_5vrew")
@@ -1509,6 +1521,9 @@ shape = SubResource("BoxShape3D_jamb")
 [node name="South" type="CollisionShape3D" parent="BombCaveMouth/Jambs" unique_id=1884457635]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 1.3, 0)
 shape = SubResource("BoxShape3D_jamb")
+
+[node name="BocaCueva" parent="BombCaveMouth" unique_id=1393527744 instance=ExtResource("boca_cueva")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.81)
 
 [node name="Spawn_vertiente" type="Marker3D" parent="." unique_id=1545311424]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -96.4, 0, 38)
@@ -1601,7 +1616,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -30.
 script = ExtResource("4_cr2by")
 id = &"totora"
 
-[node name="PlaceQuenoa" type="Marker3D" parent="."]
+[node name="PlaceQuenoa" type="Marker3D" parent="." unique_id=1318113212]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 2.6, 18.5)
 script = ExtResource("101_place")
 display_name = "PLACE_QUENOA"
@@ -1625,6 +1640,9 @@ shape = SubResource("BoxShape3D_jamb")
 [node name="West" type="CollisionShape3D" parent="CumbreMouth/Jambs" unique_id=829797032]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 1.3, 0)
 shape = SubResource("BoxShape3D_jamb")
+
+[node name="BocaCueva" parent="CumbreMouth" unique_id=1280516259 instance=ExtResource("boca_cueva")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.23)
 
 [node name="AtoqA1" parent="." unique_id=1130261264 instance=ExtResource("atoq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57, 5.2, -31)
@@ -1667,6 +1685,9 @@ shape = SubResource("BoxShape3D_jamb")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, -0.4)
 shape = SubResource("BoxShape3D_lair_plug")
 
+[node name="BocaCueva" parent="LairMouth" unique_id=774732913 instance=ExtResource("boca_cueva")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.25)
+
 [node name="HammerFight" type="Node3D" parent="." unique_id=778854511 node_paths=PackedStringArray("area", "barrier", "reward", "escorts")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, 24)
 script = ExtResource("hm_fight")
@@ -1688,7 +1709,7 @@ script = ExtResource("hm_area")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 shape = SubResource("BoxShape3D_hammer_arena")
 
-[node name="FireRing" parent="HammerFight" instance=ExtResource("hm_fire_ring")]
+[node name="FireRing" parent="HammerFight" unique_id=1180646086 instance=ExtResource("hm_fire_ring")]
 
 [node name="Centinela" parent="HammerFight" unique_id=684706630 instance=ExtResource("hm_centinela")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
@@ -1880,24 +1901,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82, 2.6, 11)
 [editable path="SecretSummitWall"]
 [editable path="ShrineCrackedWall"]
 [editable path="GrottoCrackedWall"]
-
-[node name="BocaCueva" parent="GrottoMouth" instance=ExtResource("boca_cueva")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.77)
-
-[node name="BocaCueva" parent="ShrineMouth" instance=ExtResource("boca_cueva")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.77)
-
-[node name="BocaCueva" parent="SummitMouth" instance=ExtResource("boca_cueva")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.45)
-
-[node name="BocaCueva" parent="SpringCaveMouth" instance=ExtResource("boca_cueva")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.07)
-
-[node name="BocaCueva" parent="BombCaveMouth" instance=ExtResource("boca_cueva")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.81)
-
-[node name="BocaCueva" parent="CumbreMouth" instance=ExtResource("boca_cueva")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.23)
-
-[node name="BocaCueva" parent="LairMouth" instance=ExtResource("boca_cueva")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.25)
