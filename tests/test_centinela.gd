@@ -145,3 +145,17 @@ func test_nothing_grows_in_the_beach_esplanade() -> void:
 					crowded.append(piece.name)
 	assert_eq(crowded, [], "la explanada de la playa queda limpia")
 	assert_true(bounds.size.x >= 14.0 and bounds.size.y >= 10.0, "y tiene lugar para pelear")
+
+
+func test_the_sentinel_is_solid() -> void:
+	await _start()
+	player.global_position = centinela.global_position + Vector3(0, 0.1, 2.5)
+	Input.action_press(&"move_forward")
+	var closest := INF
+	for i in 60:
+		await tree.physics_frame
+		var gap := player.global_position - centinela.global_position
+		closest = minf(closest, Vector2(gap.x, gap.z).length())
+	Input.action_release(&"move_forward")
+	assert_true(closest > 1.1, "no se lo atraviesa caminando (%.2f m)" % closest)
+	tree.root.get_node(^"GameState").reset()
