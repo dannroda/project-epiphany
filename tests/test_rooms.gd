@@ -153,3 +153,33 @@ func test_only_rooms_with_a_player_run() -> void:
 	assert_true(home.occupied == false and away.occupied, "la sala sabe si tiene un player")
 	assert_true(not home.is_processing(), "en el juego no corre el _process del contorno del editor")
 	state.reset()
+
+
+func test_enemies_keep_running_while_the_player_stands_in_a_doorway() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	state.reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	var level := tree.current_scene
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	var rooms: Array[Room] = [level.get_node(^"RoomA"), level.get_node(^"RoomB")]
+	var skeleton := level.get_node(^"Skeleton") as Node3D
+	var home: Room = rooms[0] if rooms[0].contains(skeleton.global_position) else rooms[1]
+	var spot := home.bounds().get_center()
+	player.global_position = Vector3(spot.x, home.floor_y() + 0.1, spot.y)
+	for i in int(home.wake_delay * Engine.physics_ticks_per_second) + 30:
+		await tree.physics_frame
+	assert_true(skeleton.process_mode != Node.PROCESS_MODE_DISABLED, "con el player adentro, el enemigo corre")
+	var box := home.bounds()
+	var doorway := Vector3.INF
+	for edge: Vector2 in [Vector2(box.position.x - 0.5, spot.y), Vector2(box.end.x + 0.5, spot.y), Vector2(spot.x, box.position.y - 0.5), Vector2(spot.x, box.end.y + 0.5)]:
+		var point := Vector3(edge.x, home.floor_y() + 0.1, edge.y)
+		if tree.get_nodes_in_group(Room.GROUP).all(func(room: Room) -> bool: return not room.contains(point)):
+			doorway = point
+	assert_true(doorway != Vector3.INF, "hay un borde de la sala que no es de otra sala")
+	player.global_position = doorway
+	for i in 10:
+		await tree.physics_frame
+	assert_true(skeleton.process_mode != Node.PROCESS_MODE_DISABLED, "parado en la puerta, fuera de las dos salas, el enemigo sigue corriendo")
+	state.reset()
