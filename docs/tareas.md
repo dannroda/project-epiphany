@@ -5780,7 +5780,7 @@ La pantalla de título (src/ui/title/title_screen.tscn) sigue con arte provisori
 
 - [x] Logo: wordmark de Epiphany con el motivo del ojo; exportar en PNG con alfa (y versión clara/oscura si hace falta)
 - [x] Fondo: paneo lento del overworld con una cámara sobre un recorrido (Path3D), en un SubViewport desenfocado detrás del menú. Medir la carga: si cargar el overworld entero demora el título, usar una versión liviana o un video pregrabado
-  Hecho como video pregrabado: cargar el overworld entero tardaba ~3,8 s. tools/title_flyover/flyover.tscn intercala la vista general con tomas de sectores (templo, laguna, Queñoa, Chullpa, Cumbre; marcadores From/To por toma) y se graba con --write-movie; assets/ui/title/flyover.ogv (88 s en loop, 7,4 MB), desenfocado con title_blur.gdshader.
+  Primero como video pregrabado (flyover.ogv, 88 s). Daniel (2026-10-14) pidió el overworld en vivo: TitleFlyover (src/ui/title/title_flyover.tscn/.gd, b719c800) lo carga en un hilo sin Player, HUD ni TopDownCamera, en un SubViewport a media resolución bajo title_blur, y recorre las tomas de Shots (vista general intercalada con templo, laguna, Queñoa, Chullpa y Cumbre). Al arrancar tapa el título la pantalla de carga de SceneFlow hasta que está listo (~0,8 s de carga y ~3,6 s del _ready del overworld). Sigue corriendo mientras otras pantallas tapan el título. flyover.ogv se borró.
 - [x] Integrar en title_screen.tscn (nodos en la escena, no por código) y decidir si el ojo de title_eye.gd queda o lo reemplaza el logo
 - [x] Actualizar el mockup de la pantalla de título en el canvas de diseño
 
