@@ -200,19 +200,6 @@ def piedra_levantable(p):
 	cordon(p, 0.292, 0.26, width=0.05)
 
 
-def vasija_pedazos(p):
-	shards = []
-	for i in range(6):
-		w, h = p.rng.uniform(0.12, 0.22), p.rng.uniform(0.1, 0.18)
-		s = p.box(-w / 2, w / 2, -0.012, 0.012, 0, h, taper=0.0)
-		p.jitter(s, 0.02)
-		a = 2 * math.pi * i / 6 + p.rng.random()
-		m = Matrix.Translation((math.cos(a) * 0.3, math.sin(a) * 0.3, 0.012)) @ Matrix.Rotation(a, 4, "Z") @ Matrix.Rotation(math.pi / 2 - 0.15, 4, "X")
-		p.transform(s, m)
-		shards += s
-	p.paint(shards, "roca_naranja", "MID", vary=0.15)
-
-
 def estela(p):
 	"""Tablilla: monolito trapezoidal sobre una base, con un ojo y un escalonado en relieve en la cara de adelante."""
 	base = p.rounded_box(-0.55, 0.55, -0.22, 0.22, 0.0, 0.2, radius=0.06)
@@ -291,7 +278,6 @@ def fogata(p):
 
 
 piece("vasija", 1, vasija, smooth=50)
-piece("vasija_pedazos", 2, vasija_pedazos, smooth=30)
 piece("mate", 30, mate, smooth=50)
 piece("brasero_quenoa", 31, brasero_quenoa, smooth=40)
 piece("escalera_soga", 32, escalera_soga, smooth=40)
