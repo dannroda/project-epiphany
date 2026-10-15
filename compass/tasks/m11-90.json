@@ -16,8 +16,8 @@
       "text": "Mudar la pluma a D2"
     },
     {
-      "detail": "Decidido: se quita con el gancho o con la bomba (las dos). Se implementa junto con el gancho (11.30), que ahora es de D3.",
-      "done": false,
+      "detail": "Hecho: se la quitan el gancho (sin dañarlo), la bomba y el martillazo (golpe fuerte); enemy.gd _armor_stops. Tests: test_hookshot, test_armored_skeleton.",
+      "done": true,
       "text": "Armadura del esqueleto"
     },
     {
@@ -61,5 +61,5 @@
   ],
   "test": "",
   "title": "Diseño de mazmorras, ítems y su reparto en el overworld",
-  "updated_at": "2026-10-15T16:41:10.738Z"
+  "updated_at": "2026-10-15T18:20:08.408Z"
 }

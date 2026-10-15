@@ -4138,8 +4138,8 @@ Playtest del 2026-10-12: la primera mazmorra ya tiene varios softblocks, y la pl
   Decidido con Daniel el 2026-10-12, cambiado en 11.113: D1 arco (mazmorra nueva), D2 pluma, D3 gancho (11.30), D4 escudo espejo; el templo del ojo es la última. Los guantes de fuerza quedan fuera. El disco solar queda como ítem opcional. Documento: https://claude.ai/code/artifact/4fce85f9-7f11-4285-9d2e-bb1d58b45b4e
 - [x] Mudar la pluma a D2
   Hecho el 2026-10-12. D1: sin sala de la pluma (puerta tapiada), sin la fila de huecos del Puzzle ni el escalón de la Antesala; navmesh del templo horneada de nuevo. D2: la isla de la Chullpa da la pluma y lo que pedía gancho pasa a pluma (11.60, paso 8). La pieza de la pradera y la angostura quedan para después de D2.
-- [ ] Armadura del esqueleto
-  Decidido: se quita con el gancho o con la bomba (las dos). Se implementa junto con el gancho (11.30), que ahora es de D3.
+- [x] Armadura del esqueleto
+  Hecho: se la quitan el gancho (sin dañarlo), la bomba y el martillazo (golpe fuerte); enemy.gd _armor_stops. Tests: test_hookshot, test_armored_skeleton.
 - [x] Reparto en el overworld
   Arco: Quebrada, Necrópolis, carcaj del Risco. Pluma: Cardonal, angostura, pieza de la pradera, islotes de la Laguna (entrada a D3). Gancho: postes de la Cumbre (entrada a D4), Mirador, franja del Risco. Cada ítem abre 2–3 secretos en zonas ya visitadas.
 - [x] Grafos llave-cerradura de D1 y D2
