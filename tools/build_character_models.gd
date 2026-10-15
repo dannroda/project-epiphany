@@ -12,6 +12,7 @@ const CHARACTERS := {
 	"jugador": "res://assets/epiphany/personaje_jugador.glb",
 	"chullpa": "res://assets/epiphany/personaje_chullpa.glb",
 	"chullpa_guardian": "res://assets/epiphany/personaje_chullpa_guardian.glb",
+	"centinela": "res://assets/epiphany/personaje_centinela.glb",
 }
 ## El rig del proyecto no tiene los huesos de las armas; sus binds pasan a la mano (no pesan en ningún vértice).
 const BIND_RENAMES := {"handslot.l": "hand.l", "handslot.r": "hand.r"}
