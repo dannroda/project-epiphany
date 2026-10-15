@@ -353,12 +353,18 @@ def wall_face(p, f, c, sides, kind, seed):
 		a = c.x if abs(f.normal.y) > abs(f.normal.x) else c.y
 		k, facet, joint = column(a, c.z)
 		frost = noise.noise(Vector((a * 2.0, c.z, 15.0)))
-		if c.z < 0.22 * (0.6 + frost):
-			p.paint([f], "blanco", "LOW", vary=0.04)
+		rime = noise.noise(Vector((a * 3.5, c.z * 2.5, 21.0)))
+		if c.z < 0.42 * (0.6 + frost):
+			p.paint([f], "blanco", "LIGHT" if c.z < 0.25 else "LOW", vary=0.04)
 		elif facet < 0.12 or joint < 0.04:
-			shade(p, f, "gris_4", 0.3)
-		elif c.z > top - 0.6 * (0.7 + 0.5 * frost):
+			if rime > 0.05:
+				p.paint([f], "blanco", "LOW", vary=0.05)
+			else:
+				shade(p, f, "gris_4", 0.3)
+		elif c.z > top - 0.95 * (0.7 + 0.5 * frost):
 			shade(p, f, "cristal", 0.75 + 0.15 * frost)
+		elif rime > 0.38:
+			shade(p, f, "cristal", 0.6 + 0.2 * rime)
 		else:
 			shade(p, f, STONE, 0.3 + 0.25 * random.Random(k * 104729 + 5).random() + 0.1 * facet)
 	elif WALL_STYLE == "quenoa" and not moss(c, seed):
@@ -625,10 +631,10 @@ def icicles(p, spots, h):
 	drops = []
 	for spot in spots:
 		lx, ly, ox, oy = spot
-		if top < HEIGHT or p.rng.random() > 0.3:
+		if top < HEIGHT or p.rng.random() > 0.6:
 			continue
-		for i in range(p.rng.choice((2, 3))):
-			length = p.rng.uniform(0.25, 0.6)
+		for i in range(p.rng.choice((2, 3, 4))):
+			length = p.rng.uniform(0.3, 0.85)
 			t = face_at(spot, h, top - length * 0.4)
 			off = p.rng.uniform(-0.12, 0.12)
 			drop = p.cylinder(p.rng.uniform(0.035, 0.06), 0.0, length, sides=5, radius_top=0.0)

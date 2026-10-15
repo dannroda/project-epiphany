@@ -135,7 +135,7 @@ const LOOKS := {
 		"doors": "res://assets/epiphany/meshes/paredes_la/%s_cumbre_la.res",
 		"walls": "res://assets/epiphany/meshes/paredes_la/%s_cumbre_la_%s.res", "kit": "res://data/kits/cumbre_la_kit.tres", "grain": [0.0, GRAIN_RECT],
 		"spread": false,
-		"floor": {"tile_size": 1.0, "jitter": 0.22, "grout_width": 0.05, "grout_shade": 0.42, "floor_color": Color(0.34, 0.37, 0.43, 1.0)}},
+		"floor": {"tile_size": 1.0, "jitter": 0.22, "grout_width": 0.05, "grout_shade": 0.42, "floor_color": Color(0.34, 0.37, 0.43, 1.0), "snow": 0.4, "ice": 0.22}},
 	"cueva": {"ambient": Color(0.48, 0.5, 0.6), "ambient_energy": 0.85, "sun": Color(0.66, 0.7, 0.82), "sun_energy": 0.4,
 		"room": Color(0.98, 0.86, 0.7), "room_energy": 1.6, "dust": "res://src/world/look/polvo_quenoa.tscn",
 		"brazier": "res://assets/epiphany/meshes/templo_chullpa/brasero.res",
