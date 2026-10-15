@@ -2,7 +2,7 @@
   "assignee": "project-epiphany-fd",
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "Compilar Godot c971f93e7 (editor, linux) con debug_symbols=yes"
     },
     {
@@ -18,7 +18,7 @@
   "created_at": "2026-10-15T08:07:58.333Z",
   "description": "El crash 11.185 pasa en un hilo del WorkerThreadPool que lee un StringName ya liberado (parece la búsqueda de un grupo de un nodo, HashMap en node+0x1e8), después del error de propagate_notification sobre /root. El binario oficial viene sin símbolos, así que el backtrace no dice qué parte del motor es. Hace falta compilar el mismo commit (c971f93e7) con debug_symbols=yes (y si se puede dev_build o sanitizers) y correr la suite en bucle hasta que se repita.",
   "milestone": "m11",
-  "notes": "",
+  "notes": "2026-10-15 (-fd): built c971f93e7 (editor, debug_symbols=yes) at /home/ssd_disk/godot-c971 (worktree of godot-master), registered as 4.8-dev7-symbols in godot-select (symlink). 40 full suite runs (--jobs=3) in wt/bugs with that build, ~2.3 h: no crash. The only failures were test_input › test_shift_locks_and_wheel_switches (4 of 40), caused by test_chest leaving an item-get box on the way (fixed in main). Next: another loop with more load (--jobs=6).",
   "order": 185,
   "priority": "high",
   "refs": [],
@@ -29,5 +29,5 @@
   ],
   "test": "",
   "title": "Build de Godot 4.8-dev7 con símbolos para diagnosticar el crash 11.185",
-  "updated_at": "2026-10-15T08:18:04.134Z"
+  "updated_at": "2026-10-15T10:51:59.037Z"
 }

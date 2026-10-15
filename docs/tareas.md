@@ -5385,9 +5385,11 @@ Daniel (2026-10-15) preguntó por el texture streaming de Godot 4.8: descartado,
 
 El crash 11.185 pasa en un hilo del WorkerThreadPool que lee un StringName ya liberado (parece la búsqueda de un grupo de un nodo, HashMap en node+0x1e8), después del error de propagate_notification sobre /root. El binario oficial viene sin símbolos, así que el backtrace no dice qué parte del motor es. Hace falta compilar el mismo commit (c971f93e7) con debug_symbols=yes (y si se puede dev_build o sanitizers) y correr la suite en bucle hasta que se repita.
 
-- [ ] Compilar Godot c971f93e7 (editor, linux) con debug_symbols=yes
+- [x] Compilar Godot c971f93e7 (editor, linux) con debug_symbols=yes
 - [ ] Correr la suite completa en bucle con ese binario hasta reproducir el crash
 - [ ] Con el backtrace legible, identificar la causa y seguir en 11.185
+
+**Notas:** 2026-10-15 (-fd): built c971f93e7 (editor, debug_symbols=yes) at /home/ssd_disk/godot-c971 (worktree of godot-master), registered as 4.8-dev7-symbols in godot-select (symlink). 40 full suite runs (--jobs=3) in wt/bugs with that build, ~2.3 h: no crash. The only failures were test_input › test_shift_locks_and_wheel_switches (4 of 40), caused by test_chest leaving an item-get box on the way (fixed in main). Next: another loop with more load (--jobs=6).
 
 ## M12 — Assets propios (Blender)  (17/38)
 
