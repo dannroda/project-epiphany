@@ -5410,11 +5410,13 @@ Daniel (2026-10-15): agregar una pieza de corazón en el templo del ojo. Ver con
 
 **Notas:** Hecho el 2026-10-15 (2e11c8c2): en el ala del gancho, contra la pared norte, el abismo se abre a 6 celdas y queda un islote de 2 × 2 con la pieza (te_heart_piece). Se llega con el salto largo (2 celdas de cada lado; la pluma sola no alcanza) y se vuelve igual. Grilla: 8 celdas internas (el rim no cambia), Pit más ancho, navmesh rebakeada. test_sandals hace el salto de ida y vuelta. Con esta quedan 13 piezas (11.124: sobra una). Falta: que Daniel la pruebe.
 
-### 11.191 Martillo: ítem de golpe fuerte · Pendiente
+### 11.191 Martillo: ítem de golpe fuerte · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `items`, `diseno`, `combate`
 
 Daniel (2026-10-15): un evento de mini jefe en el overworld, en una zona después de D2, hace aparecer el martillo. Definir el ítem: ItemData, el golpe fuerte (qué HitBox/AttackData lo marca como golpe fuerte, para que la placa STRIKE lea lo mismo), qué rompe o activa, su lugar en la cadena (después de D2: sirve en D3+ y el overworld, nunca gatea D1/D2) y GDD §6. Modelo listo: assets/epiphany/meshes/equipo/martillo.res (-5d).
+
+**Notas:** Hecho el 2026-10-15 (a124b61b): data/items/hammer.tres (id hammer, ítem de botón, 1 corazón de daño). StrikeBehavior: animación Melee_2H_Attack_Chop; en use_at clava src/items/hammer/hammer_strike.tscn (una Hitbox de 1,1 m de radio, 3 cuadros, polvo y temblor) a 1,2 m hacia donde mira el player, y el martillo se ve en la mano del arma mientras dura (assets/items/hammer/hammer.tscn, para ajustar a ojo). Golpe fuerte: DamageInfo.strong, que pone Hitbox.strong o AttackData.strong; lo leen Breakable.needs_strong (la espada rebota), las guardias de escudo y las corazas (como la bomba); la placa STRIKE (11.193) tiene que leer info.strong. Ícono, textos es/en, GDD §6.1, test_hammer. Falta: que Daniel lo pruebe (momento del impacto, pose en la mano) y el mini jefe que lo da (11.192, -eb).
 
 ### 11.192 Overworld: mini jefe después de D2 que da el martillo · Pendiente
 
