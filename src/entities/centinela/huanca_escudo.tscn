@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://src/entities/shield_skeleton.tscn" id="1_enemy"]
+[ext_resource type="Resource" path="res://data/entities/huanca_escudo.tres" id="2_config"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/equipo/maza_huanca.res" id="4_maza"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/equipo/escudo_huanca.res" id="5_escudo"]
+
+[node name="HuancaEscudo" instance=ExtResource("1_enemy")]
+config = ExtResource("2_config")
+
+[node name="Sword" parent="ModelController/Skeleton3D/Hand_R/Sword1H" index="0"]
+mesh = ExtResource("4_maza")
+
+[node name="Model" parent="ModelController/Skeleton3D/Hand_L/Shield" index="0"]
+mesh = ExtResource("5_escudo")

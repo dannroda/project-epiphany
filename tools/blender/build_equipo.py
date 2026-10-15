@@ -437,6 +437,36 @@ def maza_centinela(p):
 	p.paint(cap, "dorado", "LIGHT")
 
 
+def maza_huanca(p):
+	"""La maza corta del huanca, en los ejes de la espada (+Z, empuñadura en el origen): mango con tiento y una cabeza de
+	piedra de cuatro puntas con aro de oro, la del centinela en chico."""
+	p.paint(p.cylinder(0.04, -0.28, 0.8, sides=8), "madera_oscura", "MID", vary=0.04)
+	p.paint(p.cylinder(0.05, -0.24, -0.04, sides=8), "tela_roja", "MID")
+	p.paint(p.cylinder(0.15, 0.72, 0.98, sides=8), "acantilado", "DARK", vary=0.05)
+	points = []
+	for k in range(4):
+		a = math.pi / 2 * k + math.pi / 4
+		spike = p.cylinder(0.08, 0.0, 0.14, sides=4, radius_top=0.015, phase=math.pi / 4)
+		p.transform(spike, Matrix.Translation((0.13 * math.cos(a), 0.13 * math.sin(a), 0.85)) @ Matrix.Rotation(a, 4, "Z") @ Matrix.Rotation(math.pi / 2, 4, "Y"))
+		points += spike
+	p.paint(points, "acantilado", "MID", vary=0.05)
+	p.paint(p.cylinder(0.16, 0.7, 0.74, sides=8), "dorado", "MID")
+	p.paint(p.cylinder(0.155, 0.84, 0.87, sides=8), "doom", "LIGHT")
+
+
+def escudo_huanca(p):
+	"""Escudo del huanca, en los ejes de escudo_madera (plano XZ, frente a -Y, radio 0.44): losa redonda de piedra con
+	borde de bronce y el ojo del logo."""
+	r = 0.44
+	slab = p.cylinder(r - 0.02, -0.04, 0.04, sides=12, phase=math.pi / 12)
+	p.transform(slab, UPRIGHT)
+	p.paint(slab, "acantilado", "MID", vary=0.05)
+	rim = p.lathe([(r + 0.01, -0.05), (r + 0.03, 0.0), (r + 0.01, 0.05), (r - 0.04, 0.05), (r - 0.04, -0.05), (r + 0.01, -0.05)], sides=12, caps=False)
+	p.transform(rim, UPRIGHT)
+	p.paint(rim, "cobre_verde", "MID")
+	epi.logo_eye(p, Vector((0, -0.045, 0.0)), 0.36, depth=0.015, iris=("doom", "MID"))
+
+
 piece("espada", 1, espada)
 piece("espada_dorada", 16, espada_dorada)
 piece("escudo_madera", 2, escudo_madera)
@@ -455,5 +485,7 @@ piece("gancho_punta", 14, gancho_punta)
 piece("gancho_cadena", 15, gancho_cadena)
 piece("martillo", 17, martillo)
 piece("maza_centinela", 18, maza_centinela)
+piece("maza_huanca", 19, maza_huanca)
+piece("escudo_huanca", 20, escudo_huanca)
 epi.layout(kit, columns=8, spacing=2.0)
 epi.publish("equipo")

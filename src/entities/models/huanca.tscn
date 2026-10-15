@@ -1,0 +1,11 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/huanca/Body.res" id="1_dle67"]
+[ext_resource type="Skin" path="res://src/entities/models/meshes/huanca/skin.tres" id="2_cchgg"]
+
+[node name="Visuals" type="Node3D" unique_id=1878376207]
+
+[node name="Body" type="MeshInstance3D" parent="." unique_id=89331022]
+mesh = ExtResource("1_dle67")
+skin = ExtResource("2_cchgg")
+skeleton = NodePath("../../Skeleton3D")
