@@ -3,7 +3,8 @@ extends Node3D
 ## Pelea de sub-jefe o jefe en una sala. Sus hijos pelean dentro de ella (WatcherEye, MummyGuard: los que tienen
 ## `attack_finished`): al entrar el player se cierran las puertas, la cámara los muestra a todos gritando con el nombre y arranca,
 ## con la barra del HUD. De a uno ataca por vez; cuando cae uno, los demás se apuran. Si el player sale de la sala,
-## la pelea vuelve a empezar; en el overworld (`area`), una vez arrancada sigue aunque se aleje. Hace de interruptor (`active`/`activated`) para lo que se abre al ganar; con flag,
+## la pelea vuelve a empezar; en el overworld (`area`), una vez arrancada sigue aunque se aleje, y también arranca si
+## le pegan desde lejos (una flecha). Hace de interruptor (`active`/`activated`) para lo que se abre al ganar; con flag,
 ## ganada queda ganada.
 
 signal activated
@@ -19,6 +20,8 @@ signal bar_changed
 @export var display_name := ""
 ## Se cierran durante la pelea y se abren al ganar.
 @export var doors: Array[Door] = []
+## En el overworld, lo que encierra la pelea en vez de las puertas (FireRing).
+@export var barrier: FireRing
 ## Aparece al ganar (el contenedor de corazón): queda fuera del árbol hasta entonces; tomado, no vuelve.
 @export var reward: Pickup
 @export var reward_flag: StringName
@@ -70,6 +73,10 @@ func _ready() -> void:
 	zone.player_entered.connect(func(_zone: Node3D) -> void: _begin())
 	if room:
 		room.player_left.connect(func(_zone: Node3D) -> void: _reset())
+	else:
+		for fighter in _fighters:
+			if &"hurtbox" in fighter:
+				fighter.hurtbox.hit.connect(func(_info: DamageInfo) -> void: _begin())
 
 
 func _get_configuration_warnings() -> PackedStringArray:
@@ -85,6 +92,8 @@ func _begin() -> void:
 		return
 	for door in doors:
 		door.close()
+	if barrier:
+		barrier.close()
 	in_intro = true
 	Music.boss_fight = true
 	var seen_key: Variant = flag if flag != &"" else get_path()
@@ -139,6 +148,8 @@ func _reset() -> void:
 	_clear_escorts()
 	for door in doors:
 		door.open(false)
+	if barrier:
+		barrier.open()
 
 
 func _may_attack(fighter) -> bool:
@@ -190,6 +201,8 @@ func _win(announce: bool) -> void:
 	get_tree().call_group(Hud.GROUP, &"hide_boss")
 	for door in doors:
 		door.open()
+	if barrier:
+		barrier.open()
 	_show_reward()
 	if announce:
 		Feel.sfx(&"secret", global_position)

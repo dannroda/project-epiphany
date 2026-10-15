@@ -244,6 +244,19 @@ func test_the_mummy_guardian_breaks_the_floor_onto_the_feather() -> void:
 	tree.root.get_node(^"GameState").reset()
 
 
+## Daniel: el player no atraviesa a la momia aunque solo lastime al caer; mientras salta encima no choca.
+func test_the_mummy_is_solid_except_while_it_leaps() -> void:
+	await _start()
+	var mummy := level.get_node(^"PisoAlto/MummyFight/Mummy") as MummyGuard
+	player.global_position = mummy.global_position + Vector3(2.5, 0.5, 0)
+	await tree.physics_frame
+	await tree.physics_frame
+	assert_true(player.test_move(player.global_transform, Vector3(-2.5, 0, 0)), "choca con la momia")
+	mummy.solid_shape.disabled = true
+	await tree.physics_frame
+	assert_true(not player.test_move(player.global_transform, Vector3(-2.5, 0, 0)), "sin su cuerpo, pasa")
+
+
 func test_the_mallqui_fills_its_room_with_waves_that_the_feather_jumps() -> void:
 	await _start()
 	var state: Node = tree.root.get_node(^"GameState")

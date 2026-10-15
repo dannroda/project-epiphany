@@ -40,6 +40,8 @@ enum State { IDLE, HOP, AIM, FALL, STUCK, DEAD }
 @onready var waves: Array[MeshInstance3D] = [%Wave, %Wave2]
 @onready var impact: Hitbox = %Impact
 @onready var hurtbox: Hurtbox = %Hurtbox
+## El cuerpo choca con el player; se apaga mientras salta encima (cae donde está el player).
+@onready var solid_shape: CollisionShape3D = %SolidShape
 @onready var health: Health = $Health
 
 var state := State.IDLE
@@ -172,6 +174,7 @@ func _hop() -> void:
 
 func _leap(last := true) -> void:
 	state = State.AIM
+	_set_solid(false)
 	_aim_locked = false
 	Feel.sfx(&"roll", global_position)
 	_tween_to(body, ^"position:y", leap_height, 0.4).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
@@ -200,6 +203,7 @@ func _leap(last := true) -> void:
 	impact.active_attack = null
 	impact.monitoring = true
 	get_tree().create_timer(0.15, false).timeout.connect(func() -> void: impact.monitoring = false)
+	_set_solid(true)
 	Feel.burst(&"dust", global_position + Vector3.UP * 0.1, Vector3.UP)
 	Feel.sfx(&"boom", global_position)
 	Feel.shake(0.45)
@@ -273,7 +277,12 @@ func _interrupt() -> void:
 	aim_mark.hide()
 	impact.set_deferred(&"monitoring", false)
 	body.rotation.z = 0.0
+	_set_solid(not is_dead)
 	attack_finished.emit()
+
+
+func _set_solid(on: bool) -> void:
+	solid_shape.set_deferred(&"disabled", not on)
 
 
 func is_vulnerable() -> bool:
@@ -297,6 +306,7 @@ func _on_hit(info: DamageInfo) -> void:
 func _die() -> void:
 	_interrupt()
 	state = State.DEAD
+	_set_solid(false)
 	Log.info(&"combat", name, "murió")
 	remove_from_group(&"targetable")
 	hurtbox.set_deferred(&"monitorable", false)

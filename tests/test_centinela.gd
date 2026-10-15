@@ -58,6 +58,11 @@ func test_the_sentinel_falls_with_its_escort_and_leaves_the_hammer() -> void:
 	var hold := _hold_player(fight.global_position + Vector3(0, 0, 4))
 	assert_true(await _until(func() -> bool: return centinela.state != Centinela.State.IDLE), "al entrar a la explanada arranca la pelea")
 	assert_eq(_escorts().size(), 2, "aparecen los dos huancas")
+	var ring := fight.get_node(^"FireRing") as FireRing
+	assert_true(await _until(func() -> bool: return ring.closed, 3.0), "se cierra el anillo de fuego")
+	await tree.physics_frame
+	var out := Vector3(0, 0, ring.radius + 2.0)
+	assert_true(player.test_move(player.global_transform, out), "y no deja salir")
 	centinela.hurtbox.receive(DamageInfo.make(2, 0.0, player))
 	assert_eq(centinela.health.current, centinela.health.max_health, "de pie, la espada rebota en la piedra")
 	while not centinela.is_dead:
@@ -70,6 +75,7 @@ func test_the_sentinel_falls_with_its_escort_and_leaves_the_hammer() -> void:
 	for escort in _escorts():
 		(escort as Enemy).health.damage(999)
 	assert_true(await _until(func() -> bool: return fight.active), "vencidos todos, pelea ganada")
+	assert_true(not ring.closed, "y el anillo se abre")
 	tree.physics_frame.disconnect(hold)
 	assert_eq(tree.root.get_node(^"GameState").get_flag(&"ow_hammer_guard"), true, "queda el flag")
 	assert_true(fight.reward.is_inside_tree(), "aparece el martillo")
@@ -94,6 +100,24 @@ func test_walking_away_keeps_the_fight_going() -> void:
 	await tree.create_timer(2.0).timeout
 	assert_true(fight.started, "lejos de la explanada sigue arrancada")
 	assert_eq(_escorts().size(), 2, "y los huancas siguen")
+	tree.physics_frame.disconnect(hold)
+	fight._reset()
+	tree.root.get_node(^"GameState").reset()
+
+
+## Daniel: pegarle desde lejos (una flecha) también arranca la pelea.
+func test_a_hit_from_afar_starts_the_fight() -> void:
+	await _start()
+	var hold := _hold_player(fight.global_position + Vector3(0, 0, 14))
+	await tree.create_timer(0.5).timeout
+	assert_true(not fight.started, "lejos, espera")
+	centinela.hurtbox.receive(DamageInfo.make(1, 0.0, player))
+	assert_true(await _until(func() -> bool: return centinela.state != Centinela.State.IDLE), "una flecha la arranca")
+	var ring := fight.get_node(^"FireRing") as FireRing
+	assert_true(not ring.closed, "con el player afuera el anillo espera")
+	tree.physics_frame.disconnect(hold)
+	hold = _hold_player(fight.global_position + Vector3(0, 0, 4))
+	assert_true(await _until(func() -> bool: return ring.closed, 3.0), "y se cierra cuando entra")
 	tree.physics_frame.disconnect(hold)
 	fight._reset()
 	tree.root.get_node(^"GameState").reset()
