@@ -392,7 +392,7 @@ def finger(p, x, lengths, curl, width=0.11, height=0.3):
 
 
 def hand(p, form, curl, mirror):
-	"""Mano flotando, la palma (plana, abajo) en el origen y los dedos hacia -Y. El lomo lleva un ojo que brilla (dónde
+	"""Mano flotando, la palma (plana, abajo) en el origen y los dedos hacia -Y. El lomo lleva una chakana que brilla (dónde
 	pegar cuando la mano queda aturdida); la muñeca, el núcleo que la une al cuerpo. De oro con nudillos de jade, o de
 	corteza con garras de hueso y raíces en la muñeca."""
 	c = FORMS[form]
@@ -400,9 +400,8 @@ def hand(p, form, curl, mirror):
 	p.paint(palm, c["palm"], z_range=(0, 0.45), vary=0.04)
 	back = p.rounded_box(-0.5, 0.5, -0.5, 0.35, 0.42, 0.56, radius=0.05, segments=1)
 	p.paint(back, c["back"], "MID" if form else "LIGHT", vary=0.06)
-	glyph = epi.eye(p, Vector((0, 0, 0)), 0.26, depth=0.04, pupil_swatch="noche")
+	glyph = epi.chakana_plate(p, Vector((0, 0, 0)), 0.5, c["core"])
 	p.transform(glyph, Matrix.Translation((0, -0.07, 0.56)) @ Matrix.Rotation(-math.pi / 2, 4, "X"))
-	p.paint(glyph, c["core"], "MID")
 	fingers, knuckles, claws = [], [], []
 	for i, x in enumerate((-0.43, -0.145, 0.145, 0.43)):
 		base = 0.36 + (0.06 if i in (1, 2) else 0.0)
