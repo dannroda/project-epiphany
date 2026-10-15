@@ -10,7 +10,7 @@
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "arte",
     "templo",
@@ -18,5 +18,5 @@
   ],
   "test": "",
   "title": "Templo: la Mano sub-jefe con modelo propio",
-  "updated_at": "2026-10-14T22:51:15.571Z"
+  "updated_at": "2026-10-15T08:16:17.829Z"
 }

@@ -5974,13 +5974,13 @@ Daniel (2026-10-14): en todas las mazmorras LA los topes de las paredes se ven d
 
 **Relacionadas:** 11.156 Chullpa: se ven los techos (crestas) de las paredes LA horneadas
 
-### 12.33 Templo: la Mano sub-jefe con modelo propio · Pendiente
+### 12.33 Templo: la Mano sub-jefe con modelo propio · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `templo`, `jefe`
 
 Daniel (2026-10-14): la Mano suelta (HandGuard, sub-jefe del templo) usa hoy el mismo modelo que las manos del jefe final; quiere un modelo diferente para que no sea idéntica. Mismas animaciones/ataques (golpe al piso, agarre, barrido), colisión y hitbox sin cambios.
 
-### 12.34 Templo: paleta más dorada, como el jefe final, menos celeste · Pendiente
+### 12.34 Templo: paleta más dorada, como el jefe final, menos celeste · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `templo`
 
