@@ -676,13 +676,48 @@ def mountain(p):
 
 
 def sello_losa(p):
-	"""Losa del sello, 2.4 × 2.6 × 0.5, violeta con marco dorado; el ojo va aparte (centro a 1.4 m)."""
+	"""Losa del sello, 2.4 × 2.6 × 0.5, violeta con marco dorado; el ojo va aparte (centro a 1.4 m). En relieve: una banda
+	oscura por dentro del marco con grecas escalonadas arriba y abajo, columnas de rombos a los costados del ojo, un
+	escalonado (media chakana) debajo y esquinas de oro."""
 	slab = p.box(-1.2, 1.2, -0.25, 0.25, 0.0, 2.6)
-	p.paint(slab, "sello", z_range=(-0.5, 3.2), vary=0.04)
+	p.paint(slab, "sello", z_range=(-0.8, 3.0), vary=0.04)
 	frame = []
 	for x0, x1, z0, z1 in ((-1.2, 1.2, 0.0, 0.12), (-1.2, 1.2, 2.48, 2.6), (-1.2, -1.08, 0.0, 2.6), (1.08, 1.2, 0.0, 2.6)):
 		frame += p.box(x0, x1, -0.29, -0.25, z0, z1)
+	for sx in (-1, 1):
+		for z, sz in ((0.12, 1), (2.48, -1)):
+			for k, (w, h) in enumerate(((0.16, 0.05), (0.1, 0.1), (0.05, 0.16))):
+				x0 = sx * 1.08
+				frame += p.box(min(x0, x0 - sx * w), max(x0, x0 - sx * w), -0.3, -0.25, min(z, z + sz * h), max(z, z + sz * h))
 	p.paint(frame, "dorado", "MID")
+	band = []
+	for x0, x1, z0, z1 in ((-1.0, 1.0, 0.2, 0.3), (-1.0, 1.0, 2.3, 2.4), (-1.0, -0.9, 0.2, 2.4), (0.9, 1.0, 0.2, 2.4)):
+		band += p.box(x0, x1, -0.28, -0.25, z0, z1)
+	p.paint(band, "sello", "DARK")
+	greca = []
+	for z0, up in ((2.12, 1), (0.48, -1)):
+		for k in range(7):
+			x = -0.78 + k * 0.26
+			hook = [(x, x + 0.18, z0, z0 + 0.04), (x + 0.14, x + 0.18, z0, z0 + 0.14), (x + 0.06, x + 0.18, z0 + 0.1, z0 + 0.14), (x + 0.06, x + 0.1, z0 + 0.06, z0 + 0.14)]
+			for x0, x1, a, b in hook:
+				if up < 0:
+					a, b = 2 * z0 - b, 2 * z0 - a
+				greca += p.box(x0, x1, -0.28, -0.25, a, b)
+	p.paint(greca, "sello", "LIGHT")
+	gems = []
+	for sx in (-1, 1):
+		for k in range(4):
+			z = 0.95 + k * 0.3
+			d = p.box(-0.07, 0.07, -0.285, -0.25, -0.07, 0.07)
+			p.transform(d, Matrix.Translation((sx * 0.8, 0, z)) @ Matrix.Rotation(math.pi / 4, 4, "Y"))
+			gems += d
+	p.paint(gems, "sello", "LIGHT")
+	steps = []
+	for k, w in enumerate((0.9, 0.62, 0.34)):
+		steps += p.box(-w / 2, w / 2, -0.28, -0.25, 0.62 + k * 0.1, 0.72 + k * 0.1 - 0.015)
+	p.paint(steps, "sello", "DARK")
+	core = p.box(-0.06, 0.06, -0.29, -0.25, 0.68, 0.8)
+	p.paint(core, "dorado", "LIGHT")
 
 
 def sello_ojo(p):
