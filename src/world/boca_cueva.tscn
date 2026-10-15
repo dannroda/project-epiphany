@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="Shader" path="res://src/world/look/boca_oscura.gdshader" id="1_boca"]
+
+[sub_resource type="ShaderMaterial" id="BocaMaterial"]
+render_priority = -1
+shader = ExtResource("1_boca")
+shader_parameter/size = Vector2(1.94, 2.17)
+shader_parameter/half_bottom = 0.75
+shader_parameter/half_top = 0.6
+shader_parameter/height = 1.95
+shader_parameter/arch = 0.0
+
+[sub_resource type="QuadMesh" id="BocaQuad"]
+material = SubResource("BocaMaterial")
+size = Vector2(1.94, 2.17)
+center_offset = Vector3(0, 1.085, 0)
+
+[node name="BocaCueva" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.2)
+cast_shadow = 0
+mesh = SubResource("BocaQuad")
