@@ -1982,7 +1982,7 @@ Una salida de la sala del jefe: un portal en el centro de la arena que lleva a l
 
 **Notas:** Sin flag por ahora porque no hay jefe; 9.6 le pone d1_boss_defeated.
 
-## M10 — Terminación  (24/31)
+## M10 — Terminación  (24/32)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -2591,6 +2591,12 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Elegir qué mostrar y armar un guion corto (30–60 s)
 - [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
 - [ ] Grabar los planos y editar el teaser
+
+### 10.32 Probar GUT para los tests (con nuestro runner por procesos arriba) · Pendiente
+
+**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `herramientas`, `tests`
+
+Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
 
 ## M11 — Pulido: contenido y feel  (107/179)
 
