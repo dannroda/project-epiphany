@@ -62,6 +62,8 @@ const TURN_SPEED := 9.0
 @export var slam_lock_time := 0.4
 @export var slam_fall_time := 0.09
 @export var slam_stun_time := 2.6
+## Golpes seguidos por ataque, cada uno siguiendo al player; queda aturdida recién después del último.
+@export var slam_count := 3
 @export var shockwave_radius := 2.6
 
 @export_group("Agarre")
@@ -247,15 +249,26 @@ func perform(attack: BossAttack, target: Node3D, area: Rect2) -> void:
 
 
 func _slam(attack: BossAttack, target: Node3D, area: Rect2) -> void:
+	for i in slam_count:
+		if not await _slam_once(attack, target, area):
+			return
+	if state == State.BUSY:
+		stun(slam_stun_time)
+
+
+## Sube, sigue al player, se traba y cae; false si lo cortaron (aturdida, caída).
+func _slam_once(attack: BossAttack, target: Node3D, area: Rect2) -> bool:
 	var above := _floor_point(target.global_position, area) + Vector3.UP * slam_height
 	_show_shadow(above, 3.6, 0.3)
 	_tilt_goal = Vector3(-0.55, 0.0, 0.0)
 	await _move(above, slam_rise_time)
+	if state != State.BUSY:
+		return false
 	var left := slam_track_time
 	while left > 0.0:
 		await get_tree().physics_frame
 		if state != State.BUSY:
-			return
+			return false
 		var delta := get_physics_process_delta_time()
 		left -= delta
 		var wanted := _floor_point(target.global_position, area) + Vector3.UP * slam_height
@@ -270,7 +283,7 @@ func _slam(attack: BossAttack, target: Node3D, area: Rect2) -> void:
 	hold.parallel().tween_method(_flash_shadow, 0.0, 1.0, slam_lock_time)
 	await hold.finished
 	if state != State.BUSY:
-		return
+		return false
 	_set_hitbox(strike, attack.attack)
 	_tilt_goal = Vector3(0.25, 0.0, 0.0)
 	_tilt = _tilt_goal
@@ -282,8 +295,7 @@ func _slam(attack: BossAttack, target: Node3D, area: Rect2) -> void:
 	_set_hitbox(strike, null)
 	await get_tree().create_timer(0.1, false).timeout
 	_set_hitbox(shockwave, null)
-	if state == State.BUSY:
-		stun(slam_stun_time)
+	return state == State.BUSY
 
 
 func _impact() -> void:

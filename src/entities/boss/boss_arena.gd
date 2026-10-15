@@ -58,9 +58,7 @@ func _ready() -> void:
 	if GameState.get_flag(defeated_flag) == true and not GameState.boss_rematch:
 		_already_won()
 		return
-	var bounds := room.bounds().grow(-1.5)
-	var north := boss.global_position.z - 1.0
-	boss.arena = Rect2(bounds.position.x, north, bounds.size.x, bounds.end.y - north)
+	boss.arena = room.bounds().grow(-1.5)
 	room.player_entered.connect(func(_room: Room) -> void: _begin())
 	boss.defeated.connect(_on_defeated)
 	boss.death_finished.connect(_on_death_finished)

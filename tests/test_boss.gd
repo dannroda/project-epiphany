@@ -8,7 +8,14 @@ func _spawn() -> Boss:
 	var tree := Engine.get_main_loop() as SceneTree
 	var boss := SCENE.instantiate() as Boss
 	tree.root.add_child(boss)
+	_single_slams(boss)
 	return boss
+
+
+## Las pruebas miden un golpe al piso por ataque; la tanda la prueba test_a_slam_chains_its_blows.
+func _single_slams(boss: Boss) -> void:
+	for hand: BossHand in [boss.hand_left, boss.hand_right]:
+		hand.slam_count = 1
 
 
 func _frames(count: int) -> void:
@@ -184,6 +191,8 @@ func test_boss_fits_its_room() -> void:
 			continue
 		var box := mesh.global_transform * mesh.get_aabb()
 		assert_true(bounds.grow(0.01).encloses(Rect2(box.position.x, box.position.z, box.size.x, box.size.z)), "%s dentro de la sala" % mesh.get_path())
+	var behind := Vector2(boss.global_position.x, boss.global_position.z - 2.5)
+	assert_true(bounds.has_point(behind) and boss.arena.has_point(behind), "detrás del jefe también lo alcanzan los ataques")
 	tree.root.get_node(^"GameState").reset()
 
 
@@ -258,6 +267,7 @@ func _field(shield := &"") -> Array:
 	(level.get_node(^"BossArena") as BossArena).started = true
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	player.global_position = Vector3(66, 0, 11)
+	_single_slams(level.get_node(^"Boss") as Boss)
 	for i in 10:
 		await tree.physics_frame
 	return [tree, player, level.get_node(^"Boss") as Boss]
@@ -300,6 +310,31 @@ func test_slam_shadow_shrinks_then_stuns() -> void:
 	assert_true(not hand.striking and not boss.is_attack_running(), "el jefe ya puede usar la otra mano")
 	assert_true(await _wait_until(func() -> bool: return hand.state == BossHand.State.READY, 2.0), "se repone")
 	assert_true(hand.global_position.distance_to(hand.rest.global_position) < 0.05, "y vuelve a su lugar")
+	boss.free()
+
+
+func test_a_slam_chains_its_blows() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var boss := SCENE.instantiate() as Boss
+	tree.root.add_child(boss)
+	var target := Node3D.new()
+	boss.add_child(target)
+	target.global_position = boss.global_position + Vector3(1, 0, 6)
+	var hand := boss.hand_left
+	assert_true(hand.slam_count > 1, "golpea más de una vez por ataque")
+	hand.slam_stun_time = 0.3
+	var impacts := 0
+	var was_visible := false
+	hand.perform(_attack(&"slam"), target, boss.arena)
+	var until := Time.get_ticks_msec() + 12000
+	while hand.state != BossHand.State.STUNNED and Time.get_ticks_msec() < until:
+		if hand.ring.visible and not was_visible:
+			impacts += 1
+			assert_true(hand.state == BossHand.State.BUSY, "entre golpes no queda aturdida")
+		was_visible = hand.ring.visible
+		await tree.process_frame
+	assert_eq(hand.state, BossHand.State.STUNNED, "después de la tanda queda aturdida")
+	assert_eq(impacts, hand.slam_count, "un impacto por golpe")
 	boss.free()
 
 
