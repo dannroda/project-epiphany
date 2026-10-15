@@ -154,3 +154,24 @@ func test_the_pool_has_the_la_water_and_the_wall_behind_the_waterfall_is_whole()
 			holes.append(x)
 	assert_eq(holes, [], "la pared norte, arriba de la cascada, sin huecos")
 	level.free()
+
+
+func test_the_empty_bottle_button_fills_it_at_the_spring_and_not_elsewhere() -> void:
+	var setup: Array = await _setup()
+	var tree: SceneTree = setup[0]
+	var state: Node = setup[1]
+	var player: PlayerCharacter = setup[2]
+	var spring: Spring = setup[3]
+	state.give(Items.get_item(&"bottle_empty"))
+	state.assign_button(1, &"bottle_1")
+	player.global_position = spring.global_position + Vector3(0, 0, 4)
+	await _press(tree, &"item_2")
+	await tree.create_timer(1.5).timeout
+	assert_eq(state.bottles[&"bottle_1"], &"bottle_empty", "lejos del agua no se llena")
+	player.global_position = spring.global_position + Vector3(0.5, 0, 0)
+	await _press(tree, &"item_2")
+	await tree.create_timer(1.5).timeout
+	assert_eq(state.bottles[&"bottle_1"], &"holy_water", "con su botón, al lado de la vertiente, se llena")
+	assert_eq(state.item_buttons[1], &"bottle_1", "y sigue en el mismo botón")
+	await _close_top(tree)
+	state.reset()
