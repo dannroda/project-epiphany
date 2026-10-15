@@ -2598,7 +2598,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 
 Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
 
-## M11 — Pulido: contenido y feel  (109/181)
+## M11 — Pulido: contenido y feel  (109/182)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5343,7 +5343,16 @@ En algunas corridas de la suite completa, un worker muere con signal 11 justo de
 - [ ] Reproducirlo con un bucle de viajes (overworld ↔ cuevas) y aislar el recurso
 - [ ] Arreglar la causa o cargar ese recurso en el hilo principal
 
-## M12 — Assets propios (Blender)  (17/36)
+### 11.186 Cumbre: la reja de la llave del jefe tapa la puerta de las Torretas · Pendiente
+
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `diseno`, `mazmorra`
+
+Daniel (2026-10-15, captura): en PisoCornisa, la puerta sur de las Torretas (Paso LA ns, celda (6,7)) desemboca justo en la celda de BossKeyGate (12,0,16), que está girada a lo largo del paso y se ve atravesada en la puerta. Es la del nicho de BossKeyChest (14,0,16), que abre SolReceiver. Viene del blockout (4f360313) y nunca se rediseñó. Hay que separar el nicho de la llegada desde la puerta: que la reja cierre el nicho y no el paso.
+
+- [ ] Nicho de la llave del jefe aparte de la puerta, con su reja de frente
+- [ ] Test: de la puerta de las Torretas se entra al Ojo del Sol sin chocar la reja
+
+## M12 — Assets propios (Blender)  (17/37)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -5969,6 +5978,14 @@ Daniel (2026-10-15, captura): el hueco de caída al lado del cofre de la llave d
 Daniel (2026-10-15, captura de la sala del jefe): los cuatro círculos por donde salen las anguilas tienen que ser agua. Hoy son src/entities/amaru/amaru_pool.tscn, un disco plano azul oscuro (placeholder de 349898f5), en el Pozo (AmaruFight), en el Jefe (BossFight) y en el templo (revancha). Ojo: water_la.gdshader colorea por profundidad, así que un disco sobre las tablas sale transparente; hace falta un fondo o un ajuste propio.
 
 - [x] Charco de agua que se lea desde la cámara del nivel, en Totora y en el templo
+
+### 12.37 Rejas con el estilo de cada mazmorra · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `mazmorra`
+
+Daniel (2026-10-15): la reja de la Cumbre tiene los bosses de la Chullpa. Todas las mazmorras usan src/world/gate.tscn con el modelo de la Chullpa. Hace falta una reja por estilo (Queñoa, Totora, Cumbre, templo), como los kits LA, sin cambiar el tamaño ni la colisión.
+
+- [ ] Reja por estilo y cada nivel usando la suya
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 

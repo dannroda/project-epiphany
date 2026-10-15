@@ -1,0 +1,31 @@
+{
+  "assignee": "project-epiphany-43",
+  "checklist": [
+    {
+      "done": false,
+      "text": "Nicho de la llave del jefe aparte de la puerta, con su reja de frente"
+    },
+    {
+      "done": false,
+      "text": "Test: de la puerta de las Torretas se entra al Ojo del Sol sin chocar la reja"
+    }
+  ],
+  "code": "11.186",
+  "created_at": "2026-10-15T05:33:43.748Z",
+  "description": "Daniel (2026-10-15, captura): en PisoCornisa, la puerta sur de las Torretas (Paso LA ns, celda (6,7)) desemboca justo en la celda de BossKeyGate (12,0,16), que está girada a lo largo del paso y se ve atravesada en la puerta. Es la del nicho de BossKeyChest (14,0,16), que abre SolReceiver. Viene del blockout (4f360313) y nunca se rediseñó. Hay que separar el nicho de la llegada desde la puerta: que la reja cierre el nicho y no el paso.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 183,
+  "priority": "high",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "diseno",
+    "mazmorra"
+  ],
+  "test": "",
+  "title": "Cumbre: la reja de la llave del jefe tapa la puerta de las Torretas",
+  "updated_at": "2026-10-15T05:33:44.306Z"
+}
