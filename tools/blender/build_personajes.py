@@ -367,7 +367,7 @@ STONE = "acantilado"
 BRONZE = "cobre_verde"
 
 
-def centinela_head(head, hz):
+def centinela_head(head, hz, blocks=7):
 	"""Cabeza de monolito de Tiwanaku: bloque de piedra con ojos cuadrados de doom, lágrimas de oro, boca rasgada y un
 	tocado de bloques con remates de oro."""
 	block = head.rounded_box(-0.36, 0.36, -0.32, 0.3, hz - 0.4, hz + 0.24, radius=0.06, segments=2)
@@ -382,28 +382,31 @@ def centinela_head(head, hz):
 	band = head.rounded_box(-0.4, 0.4, -0.34, 0.32, hz + 0.18, hz + 0.3, radius=0.03, segments=1)
 	head.paint(band, "dorado", "MID")
 	crown, caps = [], []
-	for i in range(7):
-		x = -0.33 + i * 0.11
-		h = 0.08 + 0.08 * (1 - abs(i - 3) / 3)
+	mid = (blocks - 1) / 2
+	for i in range(blocks):
+		x = (i - mid) * 0.11 * 7 / blocks
+		h = 0.08 + 0.08 * (1 - abs(i - mid) / max(mid, 1))
 		crown += head.box(x - 0.045, x + 0.045, -0.3, -0.16, hz + 0.3, hz + 0.3 + h)
 		caps += head.box(x - 0.05, x + 0.05, -0.31, -0.15, hz + 0.3 + h, hz + 0.34 + h)
 	head.paint(crown, STONE, "MID", vary=0.06)
 	head.paint(caps, "dorado", "LIGHT")
 
 
-def centinela():
+def centinela(name="centinela", minor=False):
 	"""El centinela de la Necrópolis: un monolito de piedra que guarda el martillo y pelea con una maza de estrella
 	(maza_centinela, en la mano derecha). Bloques de piedra por hueso, bronce en hombros y brazos y el doom en ojos,
-	pecho y rodillas."""
+	pecho y rodillas. minor: el huanca, el guerrero de piedra común que lo acompaña (tamaño de enemigo, tocado de tres
+	bloques y el ojo del logo en el pecho en lugar del núcleo)."""
 	rig = start()
 	bp = bone_points(rig)
-	body = Body(rig, "centinela", 50)
+	body = Body(rig, name, 60 if minor else 50)
 	hips = body.part("hips")
 	belt = hips.rounded_box(-0.32, 0.32, -0.22, 0.22, 0.4, 0.64, radius=0.05, segments=2)
 	hips.paint_bands(belt, [(0.56, 0.6, "dorado", "MID")], default=(0, 0, STONE, "MID"))
 	flap = hips.rounded_box(-0.16, 0.16, -0.27, -0.21, 0.24, 0.58, radius=0.02, segments=1)
 	hips.paint(flap, "tela_roja", "MID", vary=0.05)
-	epi.logo_eye(hips, Vector((0, -0.28, 0.44)), 0.17, depth=0.012, iris=(GLOW, "MID"))
+	if not minor:
+		epi.logo_eye(hips, Vector((0, -0.28, 0.44)), 0.17, depth=0.012, iris=(GLOW, "MID"))
 	spine = body.part("spine")
 	spine.paint(spine.rounded_box(-0.27, 0.27, -0.18, 0.18, 0.62, 0.92, radius=0.05, segments=2), STONE, "DARK", vary=0.04)
 	chest = body.part("chest")
@@ -411,12 +414,15 @@ def centinela():
 	chest.paint(torso, STONE, z_range=(0.6, 1.6), vary=0.05)
 	for z in (0.9, 1.22):
 		chest.paint(chest.box(-0.3, 0.3, -0.285, -0.26, z, z + 0.035), "dorado", "MID")
-	ring = chest.cylinder(0.15, 0.0, 0.04, sides=16)
-	chest.transform(ring, Matrix.Translation((0, -0.27, 1.06)) @ Matrix.Rotation(math.pi / 2, 4, "X"))
-	chest.paint(ring, "dorado", "MID")
-	core = chest.blob((0, -0.28, 1.06), 0.09, squash=(1, 0.5, 1), subdiv=2, rough=0.0)
-	chest.paint(core, GLOW, "LIGHT")
-	centinela_head(body.part("head"), 1.62)
+	if minor:
+		epi.logo_eye(chest, Vector((0, -0.27, 1.06)), 0.3, depth=0.015, iris=(GLOW, "MID"))
+	else:
+		ring = chest.cylinder(0.15, 0.0, 0.04, sides=16)
+		chest.transform(ring, Matrix.Translation((0, -0.27, 1.06)) @ Matrix.Rotation(math.pi / 2, 4, "X"))
+		chest.paint(ring, "dorado", "MID")
+		core = chest.blob((0, -0.28, 1.06), 0.09, squash=(1, 0.5, 1), subdiv=2, rough=0.0)
+		chest.paint(core, GLOW, "LIGHT")
+	centinela_head(body.part("head"), 1.62, 3 if minor else 7)
 	for side in ("l", "r"):
 		up = body.part(f"upperarm.{side}")
 		a, b = bp[f"upperarm.{side}"]
@@ -444,7 +450,7 @@ def centinela():
 		f0, _ = bp[f"foot.{side}"]
 		foot.paint(foot.rounded_box(f0.x - 0.15, f0.x + 0.15, f0.y - 0.26, f0.y + 0.1, 0.0, 0.16, radius=0.04, segments=1), STONE, "DARK", vary=0.04)
 	body.build(smooth=40)
-	save("centinela")
+	save(name)
 
 
 if __name__ == "__main__":
@@ -457,3 +463,5 @@ if __name__ == "__main__":
 		chullpa("chullpa_guardian", True)
 	if "centinela" in only:
 		centinela()
+	if "huanca" in only:
+		centinela("huanca", True)
