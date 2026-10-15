@@ -6104,11 +6104,18 @@ Daniel (2026-10-15): la reja de la Cumbre tiene los bosses de la Chullpa. Todas 
 
 Pedido de -43 (11.129 paso 8) y de Daniel: Kuntur joven y Apu Kuntur con modelo de cóndor en lugar de las primitivas. Hecho por -5d en 5520a17d (build_kuntur.py): Kuntur negro con collar blanco y banda en el ala, cabeza roja con cresta; Apu Kuntur con sol de oro en la frente, pectoral y alas de oro. Las alas tienen el origen en el hombro; los nodos del script no cambian.
 
-### 12.39 Enemigos comunes estilizados según el theme de cada mazmorra · Pendiente
+### 12.39 Enemigos comunes estilizados según el theme de cada mazmorra · En curso
 
 **Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `enemigos`, `mazmorra`
 
 Daniel (2026-10-15): es hora de que los enemigos normales de las mazmorras vayan con el theme de cada una. Hoy esqueleto, escudo, arquero y acorazado comparten un único modelo (models/chullpa.tscn) con armas genéricas (sword_1h, bow, shield_round) en todas las mazmorras, cuevas y el overworld. Una variante por mazmorra (Chullpa, Queñoa, Totora, Cumbre, Templo) con el mismo rig y animaciones, como .tscn heredados (no overrides en las instancias: el refresh LA los pierde). Primero propuestas para que Daniel elija; después se cambian las instancias de cada nivel.
+
+- [x] Modelos, armas y corazas por mazmorra (arte, -5d)
+  Hecho, aprobado por Daniel: b19ba666 (guerrero_<mazmorra>, armas, 20 escenas en src/entities/guerreros/<tipo>_<mazmorra>.tscn), ae1ed827 (armadura_<mazmorra>). test_guerreros.
+- [ ] Cambiar las instancias de cada mazmorra (diseño, -43)
+- [ ] Overworld y cuevas (-eb), si corresponde
+  El overworld y las cuevas no tienen theme de mazmorra: decidir con Daniel qué variante (o la base).
+- [ ] Probarlo (Daniel)
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 
