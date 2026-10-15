@@ -750,33 +750,40 @@ def fachada_templo(p):
 MOUNTAIN_FRONT = 0.6
 
 
-## Subida a la cima al oeste del templo (11.29), en ejes del modelo: el pasillo de la escalera (x, y) sin peñascos y
-## la cornisa de arriba, donde los peñascos no pasan de la altura del pasto del terreno para que se vea plana.
-STAIRS = ((-8.2, -3.8), (-1.6, 2.45))
-LEDGE = ((-9.5, 9.5), (2.45, 4.45), 2.4)
-## Las filas desde la tercera se corren atrás para dejar la cornisa libre.
-LEDGE_PUSH = 1.2
+## Subida a la cima al oeste del templo (11.29), en ejes del modelo: la escalera sube por una quebrada (x STAIR_X, las
+## dos primeras filas) con peñascos altos a los lados, hasta un nicho de pasto (NICHE: x, y, alto máximo de los peñascos).
+STAIR_X = -6.0
+STAIR_CUT = (1.0, 2.1)
+NICHE = ((-9.0, -1.0), (2.45, 4.45), 2.4)
 
 
 def mountain(p):
 	"""El cerro donde está tallado el templo: peñascos redondos apilados a los costados y detrás, más altos hacia
-	atrás, con pasto encima; deja libre el frente del templo (el templo sigue bajo tierra), el pasillo de la escalera
-	a la cima y la cornisa de arriba (STAIRS, LEDGE)."""
+	atrás, con pasto encima; deja libre el frente del templo (el templo sigue bajo tierra), la quebrada de la escalera a
+	la cima y el nicho de arriba."""
 	rock, grass = [], []
 	for gy in range(5):
 		for gx in range(-7, 8):
 			x = gx * 1.13 + p.rng.uniform(-0.15, 0.15)
 			if abs(x) < 3.9 and gy < 2:
 				continue
-			front = MOUNTAIN_FRONT + gy * 1.4 + (LEDGE_PUSH if gy >= 2 else 0.0)
-			if STAIRS[0][0] < x < STAIRS[0][1] and front < STAIRS[1][1]:
-				continue
+			off = x - STAIR_X
+			if gy < 2 and abs(off) < STAIR_CUT[1]:
+				if abs(off) < STAIR_CUT[0]:
+					if gy == 0:
+						continue
+				else:
+					x = STAIR_X + math.copysign(STAIR_CUT[1], off)
+			front = MOUNTAIN_FRONT + gy * 1.4
+			in_niche = NICHE[0][0] < x < NICHE[0][1]
+			if in_niche and gy == 2:
+				front = max(front, NICHE[1][1])
 			top = 3.2 + 4.6 * max(0.0, 1.0 - abs(x) / 9.0) + gy * 0.6
 			if abs(x) < 3.0 and gy < 4:
 				top = max(top, 6.6)
-			capped = LEDGE[0][0] < x < LEDGE[0][1] and front + 2.0 > LEDGE[1][0] and front < LEDGE[1][1]
+			capped = in_niche and gy == 1
 			if capped:
-				top = LEDGE[2]
+				top = NICHE[2]
 			z = 0.0
 			while z < top:
 				r = p.rng.uniform(0.85, 1.25)
