@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemData" format=3]
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dikx6skaitj7y"]
 
 [ext_resource type="Resource" path="res://data/attacks/sword_slash.tres" id="1_slash"]
 [ext_resource type="Script" uid="uid://c1ivye6mqa488" path="res://src/items/behaviors/melee_behavior.gd" id="2_melee"]
