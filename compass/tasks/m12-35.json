@@ -2,11 +2,12 @@
   "assignee": "project-epiphany-5d",
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "El hueco de los Tejedores se lee como caída desde la cámara del nivel"
     },
     {
-      "done": false,
+      "detail": "Chullpa y Queñoa bien; Cumbre (12,12) y (13,12) de PisoCornisa sin paredes a propósito (precipicio).",
+      "done": true,
       "text": "Revisar los otros CaidaLA (Chullpa, Queñoa, Cumbre) con el mismo criterio"
     }
   ],
@@ -19,12 +20,12 @@
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "arte",
     "mazmorra"
   ],
   "test": "",
   "title": "Totora: el hueco de salida de los Tejedores tiene que leerse como caída",
-  "updated_at": "2026-10-15T04:46:05.450Z"
+  "updated_at": "2026-10-15T04:56:20.617Z"
 }
