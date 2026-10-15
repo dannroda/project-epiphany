@@ -1,0 +1,159 @@
+[gd_resource type="BehaviorTree" format=3]
+
+[ext_resource type="Script" uid="uid://bw6i0a7bddx8n" path="res://ai/tasks/bt_find_player.gd" id="1_find"]
+[ext_resource type="Script" path="res://ai/tasks/bt_health_below.gd" id="2_health"]
+[ext_resource type="Script" path="res://ai/tasks/bt_flee.gd" id="3_flee"]
+[ext_resource type="Script" path="res://ai/tasks/bt_pack_turn.gd" id="4_turn"]
+[ext_resource type="Script" path="res://ai/tasks/bt_dart_bite.gd" id="5_bite"]
+[ext_resource type="Script" path="res://ai/tasks/bt_circle.gd" id="6_circle"]
+[ext_resource type="Script" uid="uid://cigrik1hqv1ag" path="res://ai/tasks/bt_wander.gd" id="7_wander"]
+[ext_resource type="Script" path="res://ai/tasks/bt_not_yet.gd" id="8_not_yet"]
+
+[sub_resource type="BlackboardPlan" id="Plan"]
+
+[sub_resource type="BBNode" id="AnimPlayer"]
+saved_value = NodePath("ModelController/AnimationPlayer")
+resource_name = "ModelController/AnimationPlayer"
+
+[sub_resource type="BBNode" id="Self"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BBVariant" id="True"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BBVariant" id="False"]
+type = 1
+saved_value = false
+resource_name = "false"
+
+[sub_resource type="BTCheckVar" id="IsDead"]
+variable = &"is_dead"
+value = SubResource("True")
+
+[sub_resource type="BTPlayAnimation" id="DeathAnim"]
+await_completion = 1.0
+animation_player = SubResource("AnimPlayer")
+animation_name = &"Atoq/death"
+blend = 0.1
+
+[sub_resource type="BTCallMethod" id="DeathDone"]
+node = SubResource("Self")
+method = &"on_death_finished"
+
+[sub_resource type="BTSequence" id="Dead"]
+custom_name = "Muerto"
+children = [SubResource("IsDead"), SubResource("DeathAnim"), SubResource("DeathDone")]
+
+[sub_resource type="BTCheckVar" id="IsHit"]
+variable = &"is_hit"
+value = SubResource("True")
+
+[sub_resource type="BTPlayAnimation" id="HitAnim"]
+await_completion = 0.3
+animation_player = SubResource("AnimPlayer")
+animation_name = &"Atoq/hit"
+blend = 0.05
+
+[sub_resource type="BTSetVar" id="ClearHit"]
+variable = &"is_hit"
+value = SubResource("False")
+
+[sub_resource type="BTSequence" id="Hit"]
+custom_name = "Golpeado"
+children = [SubResource("IsHit"), SubResource("HitAnim"), SubResource("ClearHit")]
+
+[sub_resource type="BTCheckVar" id="IsStunned"]
+variable = &"stunned"
+value = SubResource("True")
+
+[sub_resource type="BTPlayAnimation" id="StunAnim"]
+animation_player = SubResource("AnimPlayer")
+animation_name = &"Atoq/hit"
+blend = 0.05
+
+[sub_resource type="BTWait" id="StunWait"]
+duration = 1.2
+
+[sub_resource type="BTSetVar" id="ClearStun"]
+variable = &"stunned"
+value = SubResource("False")
+
+[sub_resource type="BTSequence" id="Stunned"]
+custom_name = "Aturdido"
+children = [SubResource("IsStunned"), SubResource("StunAnim"), SubResource("StunWait"), SubResource("ClearStun")]
+
+[sub_resource type="BTCondition" id="FindFlee"]
+script = ExtResource("1_find")
+
+[sub_resource type="BTCondition" id="Hurt"]
+script = ExtResource("2_health")
+
+[sub_resource type="BTAction" id="FleeAction"]
+script = ExtResource("3_flee")
+
+[sub_resource type="BTSequence" id="Flee"]
+custom_name = "Huir"
+children = [SubResource("FindFlee"), SubResource("Hurt"), SubResource("FleeAction")]
+
+[sub_resource type="BTCondition" id="FindHowl"]
+script = ExtResource("1_find")
+
+[sub_resource type="BTCondition" id="NotHowled"]
+script = ExtResource("8_not_yet")
+variable = &"howled"
+
+[sub_resource type="BTPlayAnimation" id="HowlAnim"]
+await_completion = 1.2
+animation_player = SubResource("AnimPlayer")
+animation_name = &"Atoq/howl"
+blend = 0.15
+
+[sub_resource type="BTSetVar" id="SetHowled"]
+variable = &"howled"
+value = SubResource("True")
+
+[sub_resource type="BTSequence" id="Howl"]
+custom_name = "Aullar"
+children = [SubResource("FindHowl"), SubResource("NotHowled"), SubResource("HowlAnim"), SubResource("SetHowled")]
+
+[sub_resource type="BTCondition" id="FindBite"]
+script = ExtResource("1_find")
+
+[sub_resource type="BTCondition" id="Turn"]
+script = ExtResource("4_turn")
+
+[sub_resource type="BTAction" id="BiteAction"]
+script = ExtResource("5_bite")
+
+[sub_resource type="BTSequence" id="Bite"]
+custom_name = "Morder"
+children = [SubResource("FindBite"), SubResource("Turn"), SubResource("BiteAction")]
+
+[sub_resource type="BTCondition" id="FindCircle"]
+script = ExtResource("1_find")
+
+[sub_resource type="BTAction" id="CircleAction"]
+script = ExtResource("6_circle")
+
+[sub_resource type="BTSequence" id="Circle"]
+custom_name = "Rodear"
+children = [SubResource("FindCircle"), SubResource("CircleAction")]
+
+[sub_resource type="BTAction" id="WanderAction"]
+script = ExtResource("7_wander")
+walk_animation = &"Atoq/walk"
+idle_animation = &"Atoq/idle"
+
+[sub_resource type="BTSequence" id="Wander"]
+custom_name = "Deambular"
+children = [SubResource("WanderAction")]
+
+[sub_resource type="BTDynamicSelector" id="Root"]
+children = [SubResource("Dead"), SubResource("Hit"), SubResource("Stunned"), SubResource("Flee"), SubResource("Howl"), SubResource("Bite"), SubResource("Circle"), SubResource("Wander")]
+
+[resource]
+blackboard_plan = SubResource("Plan")
+root_task = SubResource("Root")
