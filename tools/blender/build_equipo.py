@@ -384,6 +384,34 @@ def gancho(p):
 	p.transform(punta(p), Matrix.Translation((0, 0, 0.33)))
 
 
+def martillo(p):
+	"""El martillo del golpe fuerte, sobre +Z con la empuñadura en el origen como la espada: mango de madera con tiento
+	rojo, cabeza de piedra oscura con bocas de bronce, zunchos dorados y la chakana dorada en las dos caras."""
+	p.paint(p.cylinder(0.036, 0.05, 0.72, sides=10, radius_top=0.032), "madera", "MID")
+	grip = []
+	for i in range(6):
+		z = 0.05 - i * 0.058
+		grip += p.cylinder(0.043, z - 0.05, z, sides=10)
+	p.paint_bands(grip, [(-0.07, -0.01, "tela_roja", "MID"), (-0.19, -0.12, "tela_roja", "MID"), (-0.3, -0.24, "tela_roja", "MID")], default=(0, 0, "hueso", "MID"))
+	knob = p.blob((0, 0, -0.33), 0.055, subdiv=2, rough=0.0)
+	p.paint(knob, "cobre_verde", "MID")
+	head = p.rounded_box(-0.2, 0.2, -0.13, 0.13, 0.66, 0.92, radius=0.04, segments=2)
+	p.paint(head, "acantilado", "DARK", vary=0.05)
+	faces = []
+	for side in (-1, 1):
+		cap = p.cylinder(0.15, 0.0, 0.06, sides=8, phase=math.pi / 8)
+		p.transform(cap, Matrix.Translation((side * 0.2, 0, 0.79)) @ Matrix.Rotation(side * math.pi / 2, 4, "Y"))
+		faces += cap
+	p.paint(faces, "cobre_verde", "MID", vary=0.04)
+	bands = []
+	for x in (-0.13, 0.13):
+		bands += p.box(x - 0.025, x + 0.025, -0.14, 0.14, 0.65, 0.93)
+	p.paint(bands, "dorado", "MID")
+	front = epi.chakana_plate(p, Vector((0, -0.13, 0.79)), 0.13, "dorado")
+	back = epi.chakana_plate(p, Vector((0, -0.13, 0.79)), 0.13, "dorado")
+	p.transform(back, Matrix.Translation((0, 0, 0.79)) @ Matrix.Rotation(math.pi, 4, "Z") @ Matrix.Translation((0, 0, -0.79)))
+
+
 piece("espada", 1, espada)
 piece("espada_dorada", 16, espada_dorada)
 piece("escudo_madera", 2, escudo_madera)
@@ -400,5 +428,6 @@ piece("sandalias", 12, sandalias)
 piece("gancho", 13, gancho)
 piece("gancho_punta", 14, gancho_punta)
 piece("gancho_cadena", 15, gancho_cadena)
+piece("martillo", 17, martillo)
 epi.layout(kit, columns=8, spacing=2.0)
 epi.publish("equipo")
