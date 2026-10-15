@@ -11,13 +11,13 @@
       "text": "Blockout"
     },
     {
-      "detail": "Hoy una momia prestada en PisoBase/KunturFight. Se vence sin el escudo.",
-      "done": false,
+      "detail": "Hecho el 2026-10-15 (Daniel: los jefes me parecen bien): Kuntur (src/entities/kuntur/kuntur.tscn, 10 de vida). Picada que marca su sombra y lo deja clavado en la nieve (le pega todo); cada tercer ataque se posa y bate las alas, el viento empuja y una flecha lo voltea. Modelo provisorio de primitivas.",
+      "done": true,
       "text": "Sub-jefe Kuntur joven"
     },
     {
-      "detail": "Hoy un ojo vigía prestado en PisoCima/BossFight. Pide el escudo.",
-      "done": false,
+      "detail": "Hecho el 2026-10-15: apu_kuntur.tscn (hereda, apu, 20 de vida). Plumas reflejables (una devuelta lo voltea, las flechas rebotan) y picada; con media vida enciende SunWest y SunEast y se posa a cargar una ráfaga: un rayo devuelto con el escudo lo voltea (LightCatch). También en la revancha del templo (MirrorFight, con MirrorSunWest/East). test_kuntur (5), test_templo.",
+      "done": true,
       "text": "Jefe Apu Kuntur"
     },
     {
@@ -33,6 +33,11 @@
     {
       "done": false,
       "text": "Recorrerla (Daniel)"
+    },
+    {
+      "detail": "Hoy primitivas en kuntur.tscn: Body con Torso, Collar, Head/Beak, WingLeft/WingRight (pivotes que aletean por código), Tail; Muzzle al frente.",
+      "done": false,
+      "text": "Modelo de arte de los cóndores (arte)"
     }
   ],
   "code": "11.129",
@@ -53,7 +58,7 @@
     "mazmorra",
     "puzzles"
   ],
-  "test": "test_cumbre, test_dungeon_reach (cumbre_graph), test_walk_doors, test_drop_holes",
+  "test": "test_cumbre, test_kuntur, test_dungeon_reach (cumbre_graph), test_walk_doors, test_drop_holes",
   "title": "D4, Intihuatana de la Cumbre",
-  "updated_at": "2026-10-14T00:37:49.231Z"
+  "updated_at": "2026-10-15T05:51:11.210Z"
 }
