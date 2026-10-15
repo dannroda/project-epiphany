@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/ambiente_sala.gd" id="1_ambiente"]
+
+[node name="AmbienteZoom" type="Node"]
+script = ExtResource("1_ambiente")
+valores = {
+"tono_frame": 0.0,
+"tono_vignette": 0.15
+}

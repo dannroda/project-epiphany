@@ -38,8 +38,10 @@ const SKIP_ACTIONS: Array[StringName] = [&"ui_accept", &"attack", &"interact"]
 
 @export_group("Mostrar lo activado")
 @export var reveal_pan_time := 0.6
-## Lo que tarda el ambiente del acercamiento en entrar y en volver al de la sala. El ambiente es un AmbienteSala hijo de
-## lo mostrado (la pelea, la puerta) o, si no tiene, de la cámara; sin ninguno, REVEAL_MOOD.
+## Ambiente de todos los acercamientos: lo tildado de este AmbienteSala pisa al de la sala mientras dura. Un AmbienteSala
+## hijo de lo mostrado (la pelea, la puerta) o de la cámara lo reemplaza.
+@export var reveal_look: PackedScene = preload("res://src/world/look/ambiente_zoom.tscn")
+## Lo que tarda el ambiente del acercamiento en entrar y en volver al de la sala.
 @export var reveal_tone_time := 0.6
 ## Cuánto se queda mirando después de abrir.
 @export var reveal_hold := 0.9
@@ -578,7 +580,6 @@ static var unlock_reveals := true
 ## Cuadros que se queda mirando después de que termina de abrirse.
 const REVEAL_TAIL_FRAMES := 4
 const TONE := preload("res://src/world/look/tono_la.gd")
-const REVEAL_MOOD := {"tono_vignette": 0.15, "tono_frame": 0.0}
 
 ## Lo que se destraba por una acción (switches, puzzle, horda) se muestra con `reveal`.
 static func reveal_unlock(target: Node3D, action: Callable) -> void:
@@ -641,11 +642,12 @@ func _reveal(target: Node3D, action: Callable, hold: float) -> void:
 	tree.paused = true
 	var back := global_position
 	var zoom: float = target.call(&"reveal_zoom", reveal_zoom) if target.has_method(&"reveal_zoom") else reveal_zoom
-	var mood := _reveal_mood(target)
+	var values := _reveal_values(target)
+	var mood := _reveal_mood(values)
 	var mood_back := {}
 	for key: String in mood:
 		mood_back[key] = mood[key].get(key.trim_prefix(AmbienteSala.TONE_PREFIX))
-	_tween_mood(mood, _reveal_values(target))
+	_tween_mood(mood, values)
 	await _pan(reveal_focus(target) + _eye() * zoom)
 	if not is_inside_tree():
 		for key: String in mood_back:
@@ -676,11 +678,16 @@ func _reveal_values(target: Node) -> Dictionary:
 		for child in node.get_children():
 			if child is AmbienteSala:
 				return child.valores
-	return REVEAL_MOOD
+	if reveal_look == null:
+		return {}
+	var look := reveal_look.instantiate()
+	var values: Dictionary = look.get(&"valores") if look.get(&"valores") is Dictionary else {}
+	look.free()
+	return values
 
 
 ## Clave del ambiente del acercamiento → objeto que la tiene (el Environment o el TonoLA del nivel).
-func _reveal_mood(target: Node) -> Dictionary:
+func _reveal_mood(values: Dictionary) -> Dictionary:
 	var scene := get_tree().current_scene
 	var found := scene.find_children("*", "WorldEnvironment", true, false) if scene else []
 	if found.is_empty():
@@ -691,7 +698,7 @@ func _reveal_mood(target: Node) -> Dictionary:
 		if effect and effect.get_script() == TONE:
 			tone = effect
 	var mood := {}
-	for key: String in _reveal_values(target):
+	for key: String in values:
 		var holder: Object = tone if key.begins_with(AmbienteSala.TONE_PREFIX) else world.environment
 		if holder:
 			mood[key] = holder
