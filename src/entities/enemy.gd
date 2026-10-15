@@ -145,6 +145,12 @@ func wander_point() -> Vector3:
 	return Vector3.INF
 
 
+## En una sala de dungeon, el que ya persigue no suelta al player mientras sigan los dos adentro.
+func shares_room(point: Vector3) -> bool:
+	home()
+	return _home_room != null and _home_room.contains(point) and _home_room.contains(global_position)
+
+
 ## Su lugar: donde estaba la primera vez que se pidió (o donde cayó, si bajó de nivel).
 func home() -> Vector3:
 	if _home == Vector3.INF:

@@ -1,7 +1,7 @@
 @tool
 extends BTCondition
-## Fija `target` con el player a la vista (rango de la ficha + línea de visión): sigue al que ya tenía mientras lo vea;
-## si no, el más cercano que vea.
+## Fija `target` con el player a la vista (rango de la ficha + línea de visión): sigue al que ya tenía mientras lo vea
+## o mientras estén los dos en la misma sala de dungeon; si no, el más cercano que vea.
 
 @export var target_var: StringName = &"target"
 ## Una vez visto, lo sigue viendo hasta este múltiplo del rango.
@@ -17,7 +17,7 @@ func _generate_name() -> String:
 func _tick(_delta: float) -> Status:
 	var current: Variant = blackboard.get_var(target_var, null, false)
 	if is_instance_valid(current) and current is PlayerCharacter and not current.is_dead:
-		if _visible(current, agent.config.vision_range * lose_range_factor):
+		if _visible(current, agent.config.vision_range * lose_range_factor) or (agent is Enemy and agent.shares_room(current.global_position)):
 			blackboard.set_var(last_seen_var, current.global_position)
 			return SUCCESS
 	var candidates := Players.alive()
