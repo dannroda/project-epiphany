@@ -2594,7 +2594,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 
 Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
 
-## M11 — Pulido: contenido y feel  (116/192)
+## M11 — Pulido: contenido y feel  (117/192)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5203,9 +5203,9 @@ Playtest 2026-10-14: en la planta baja (1P) de una mazmorra hay un esqueleto que
 
 **Notas:** Causa probable: un enemigo que cae por un hueco al piso de abajo seguía siendo hijo de su piso, y los pisos de arriba del player se ocultan. Ahora al aterrizar pasa al piso de su altura (02ccb681). Si vuelve a pasar: anotar mazmorra y sala.
 
-### 11.174 Overworld (Cumbre): el gancho choca contra una pared invisible · Revisión
+### 11.174 Overworld (Cumbre): el gancho choca contra una pared invisible · Hecho
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`, `overworld`, `items`
+**Terminada:** 2026-10-15 · **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`, `overworld`, `items`
 
 Playtest 2026-10-14: en la zona nevada, junto a la cornisa con el poste del gancho (franja verde entre riscos), el gancho choca contra una pared invisible antes de llegar al poste.
 
@@ -6726,10 +6726,10 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 ## Playtest
 
-### Revisión: lo listo para probar  (27/27 probadas)
+### Revisión: lo listo para probar  (25/27 probadas)
 
 1. [x] 11.130 Bocas de cueva talladas en el risco · Hecho · anda — Falló (pared de la cueva de la bomba, ermita bloqueada solo por dentro, D4 como cueva común); se arregló en 12.29, 11.166 y 11.168, que andan.
-2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · Revisión · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
+2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · Revisión — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
    El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
 3. [x] 11.111 Cactus, árboles y matas se cortan como el pasto · Hecho · anda
 4. [x] 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · Hecho · anda
@@ -6746,7 +6746,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 13. [x] 7.10 Overworld con forma de Zelda 2D, no cuadrado · Hecho · anda
 14. [ ] Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos · En curso · **falla** — Hay cosas que no tienen estilo
 15. [x] 11.117 Huecos a otro piso se ven distintos de los fosos · Hecho · anda
-16. [ ] 11.5 Galería de trampas: pinchos · Revisión · **falla** — Hay que hacer que la pluma salte mas alto porque los pinchos llegan igual
+16. [ ] 11.5 Galería de trampas: pinchos · Revisión — Hay que hacer que la pluma salte mas alto porque los pinchos llegan igual
 17. [x] 11.98 La cámara muestra lo que se desbloquea · Hecho · anda
 18. [x] 11.112 Fantasmas al esquivar · Hecho · anda
 19. [x] 11.102 Mapa: nombres de zona chicos y solo los que importan · Hecho · anda
@@ -6783,7 +6783,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 13. [x] 11.135 Al caer, el player se inclina hacia el piso · Hecho · anda
 14. [x] 11.164 Lo que esconde una pared agrietada no se ve desde arriba · Hecho · anda
 15. [x] 11.136 Chullpa: la reja de la entrada queda fuera de la pared · Hecho · anda
-16. [ ] 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · Revisión · **falla** — se ve horrendo y no soluciona el mismo problema del lado izquierdo
+16. [ ] 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · Revisión — se ve horrendo y no soluciona el mismo problema del lado izquierdo
 17. [ ] 11.138 Chullpa sub-boss: asset para el cuadrado donde después se salta · Revisión
 18. [x] 11.155 Chullpa: la momia aparece en vez de saltar hacia el player; onda expansiva con shader vistoso · Hecho · anda
 19. [x] 11.169 Galería de trampas: la pluma no salta por encima de los pinchos · Hecho · anda — necesita un poco de fine-tuning, por ahi invisibilidad por 2-4 frames al saltar y aterrizar
@@ -6827,17 +6827,17 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 57. [ ] 11.172 Viaje rápido: el foco no va al botón y A abre la pregunta una y otra vez · Revisión
 58. [ ] 11.173 Esqueleto invisible en una mazmorra · Revisión
 59. [ ] 11.170 Atajos: animación del player subiendo y bajando en vez del fundido · Revisión
-60. [ ] 11.174 Overworld (Cumbre): el gancho choca contra una pared invisible · Revisión
+60. [x] 11.174 Overworld (Cumbre): el gancho choca contra una pared invisible · Hecho · anda
 
-### Revisión del 15 de octubre: ruta completa  (5/78 probadas)
+### Revisión del 15 de octubre: ruta completa  (4/78 probadas)
 
-1. [ ] 11.192 Overworld: mini jefe después de D2 que da el martillo · Revisión
+1. [ ] 11.192 Overworld: mini jefe después de D2 que da el martillo · Revisión · **falla** — No se entiende cuando el mini jefe va a usar el martillo y se desactiva a poca distancia. Debería mantenerse activado, y si uno le hace daño (con una flecha por ejemplo) se activa la pelea y te empieza a seguir.
 2. [ ] 11.191 Martillo: ítem de golpe fuerte · Revisión
 3. [ ] 11.193 Placa de golpe fuerte (modo STRIKE) · Revisión
 4. [ ] 11.196 Overworld: enemigo de montaña en la zona de D4 (atoq, zorro andino en manada) · Revisión
 5. [ ] 11.195 Overworld: entrada de la guarida de los guardias, del otro lado del agua (placeholder) · Revisión
 6. [ ] 11.184 Risco: la franja del gancho no tiene bajada · Revisión
-7. [ ] 11.174 Overworld (Cumbre): el gancho choca contra una pared invisible · Revisión
+7. [x] 11.174 Overworld (Cumbre): el gancho choca contra una pared invisible · Hecho · anda
 8. [x] 11.131 Pozo junto a la Chullpa: caer sin bombas deja softlock · Hecho · anda
 9. [ ] 11.171 Mapa del overworld: el cursor vuelve al player al moverlo hacia un lado · Revisión
 10. [ ] 11.172 Viaje rápido: el foco no va al botón y A abre la pregunta una y otra vez · Revisión
@@ -6848,10 +6848,10 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 15. [ ] 11.75 AreaZone: id estable para guardar las zonas visitadas · Revisión
 16. [ ] 11.176 Chullpa: llave chica y sótano obligatorios, llave del jefe con vuelta atrás · Revisión
 17. [ ] 11.177 Chullpa sin pared agrietada (fuera el nicho del Rellano) · Revisión
-18. [ ] 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · Revisión · **falla** — se ve horrendo y no soluciona el mismo problema del lado izquierdo
+18. [ ] 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · Revisión — se ve horrendo y no soluciona el mismo problema del lado izquierdo
 19. [ ] 11.138 Chullpa sub-boss: asset para el cuadrado donde después se salta · Revisión
 20. [ ] 12.31 Chullpa: jefe final momia con aspecto propio · Revisión
-21. [ ] 11.5 Galería de trampas: pinchos · Revisión · **falla** — Hay que hacer que la pluma salte mas alto porque los pinchos llegan igual
+21. [ ] 11.5 Galería de trampas: pinchos · Revisión — Hay que hacer que la pluma salte mas alto porque los pinchos llegan igual
 22. [ ] 11.173 Esqueleto invisible en una mazmorra · Revisión
 23. [ ] 11.141 Queñoa 2P (Canopy): símbolo azul sin sentido y puerta bloqueada invisible · Revisión
 24. [ ] 11.144 Queñoa S1 (Raíces): reja fuera de la pared y puerta con llave detrás de una reja de puzzle · Revisión
@@ -6899,7 +6899,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 66. [ ] 11.162 Retirar el templo viejo (levels/temple.tscn) · Revisión
 67. [ ] 11.163 Borrar las mallas de la decoración del templo viejo · Revisión
 68. [ ] 11.59 Limpieza de assets sin uso · Revisión
-69. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · Revisión · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
+69. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · Revisión — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
    El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
 70. [ ] 11.80 BossArena tiene los flags y el premio de D1 fijos en el código · Revisión
 71. [ ] 11.81 Dungeon.id por defecto d1 y prefijos de flags fijos · Revisión

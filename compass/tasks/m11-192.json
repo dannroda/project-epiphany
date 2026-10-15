@@ -12,6 +12,10 @@
   "milestone": "m11",
   "notes": "Hecho (198dca6c, 4470c9cb, 90e12cd9): el mini jefe es el Centinela del Bañado, en la playa del Bañado (HammerFight en ~(60, 0, 24)), con huancas de escolta; se mudó ahí desde la Necrópolis. Al vencerlo aparece el martillo.",
   "order": 189,
+  "playtest": {
+    "note": "No se entiende cuando el mini jefe va a usar el martillo y se desactiva a poca distancia. Debería mantenerse activado, y si uno le hace daño (con una flecha por ejemplo) se activa la pelea y te empieza a seguir.",
+    "result": "fail"
+  },
   "priority": "medium",
   "refs": [],
   "size": "m",
@@ -23,5 +27,5 @@
   ],
   "test": "",
   "title": "Overworld: mini jefe después de D2 que da el martillo",
-  "updated_at": "2026-10-15T19:55:24.622Z"
+  "updated_at": "2026-10-15T20:58:17.168Z"
 }

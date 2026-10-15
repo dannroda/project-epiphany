@@ -4,13 +4,17 @@
   "code": "11.174",
   "created_at": "2026-10-14T17:52:30.302Z",
   "description": "Playtest 2026-10-14: en la zona nevada, junto a la cornisa con el poste del gancho (franja verde entre riscos), el gancho choca contra una pared invisible antes de llegar al poste.",
+  "done_at": "2026-10-15T20:58:30.865Z",
   "milestone": "m11",
   "notes": "Causa (-eb, a2924bd2): la baranda invisible del terreno (1,6 m en cada borde caminable, sin malla) frenaba el gancho tirado desde la nieve de la Cumbre al RiscoPost por encima del pasillo bajo. Ahora la baranda está en el grupo walk_guard: el gancho y las flechas la atraviesan, a los que caminan los sigue frenando.",
   "order": 171,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "review",
+  "status": "done",
   "tags": [
     "bug",
     "overworld",
@@ -18,5 +22,5 @@
   ],
   "test": "test_overworld_hook › test_the_hookshot_crosses_the_invisible_rail_from_the_far_edge",
   "title": "Overworld (Cumbre): el gancho choca contra una pared invisible",
-  "updated_at": "2026-10-14T17:57:45.431Z"
+  "updated_at": "2026-10-15T20:58:30.865Z"
 }

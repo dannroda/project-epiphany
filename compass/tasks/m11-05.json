@@ -28,8 +28,7 @@
   "notes": " Playtest 15/10: la nota es del playtest del 13/10; lo arregló 11.169 el 14/10 (pinchos ground_only y hits_on_landing: saltando con la pluma ya no pegan en el aire). Vuelve a revisión para probarla de nuevo.",
   "order": 5,
   "playtest": {
-    "note": "Hay que hacer que la pluma salte mas alto porque los pinchos llegan igual",
-    "result": "fail"
+    "note": "Hay que hacer que la pluma salte mas alto porque los pinchos llegan igual"
   },
   "priority": "medium",
   "refs": [],
@@ -39,5 +38,5 @@
   ],
   "test": "En el ala de la pluma del templo (PlumaSpikes) y en la cripta oscura de la Chullpa (CriptaSpikes, B-SO), cruzar los pinchos: se ve venir cada fila (asoma y tintinea), siempre queda un paso y pinchan al player y a los enemigos.",
   "title": "Galería de trampas: pinchos",
-  "updated_at": "2026-10-15T20:40:08.567Z"
+  "updated_at": "2026-10-15T20:45:03.368Z"
 }
