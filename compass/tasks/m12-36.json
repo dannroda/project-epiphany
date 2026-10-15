@@ -1,0 +1,27 @@
+{
+  "assignee": "project-epiphany-5d",
+  "checklist": [
+    {
+      "done": false,
+      "text": "Charco de agua que se lea desde la cámara del nivel, en Totora y en el templo"
+    }
+  ],
+  "code": "12.36",
+  "created_at": "2026-10-15T04:47:01.524Z",
+  "description": "Daniel (2026-10-15, captura de la sala del jefe): los cuatro círculos por donde salen las anguilas tienen que ser agua. Hoy son src/entities/amaru/amaru_pool.tscn, un disco plano azul oscuro (placeholder de 349898f5), en el Pozo (AmaruFight), en el Jefe (BossFight) y en el templo (revancha). Ojo: water_la.gdshader colorea por profundidad, así que un disco sobre las tablas sale transparente; hace falta un fondo o un ajuste propio.",
+  "milestone": "m12",
+  "notes": "",
+  "order": 36,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "arte",
+    "mazmorra",
+    "jefe"
+  ],
+  "test": "",
+  "title": "Totora: los charcos de Amaru y Yacumama, de agua",
+  "updated_at": "2026-10-15T04:47:01.790Z"
+}

@@ -5334,7 +5334,7 @@ Daniel (2026-10-14, captura): arriba de la franja norte del Risco (nivel 2, x 70
   Daniel (2026-10-14): alcanza con el poste, es barato; sin salto.
 - [x] Test: desde la franja se vuelve sin caer al abismo
 
-## M12 — Assets propios (Blender)  (17/35)
+## M12 — Assets propios (Blender)  (17/36)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -5951,6 +5951,14 @@ Daniel (2026-10-15, captura): el hueco de caída al lado del cofre de la llave d
 
 - [ ] El hueco de los Tejedores se lee como caída desde la cámara del nivel
 - [ ] Revisar los otros CaidaLA (Chullpa, Queñoa, Cumbre) con el mismo criterio
+
+### 12.36 Totora: los charcos de Amaru y Yacumama, de agua · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `mazmorra`, `jefe`
+
+Daniel (2026-10-15, captura de la sala del jefe): los cuatro círculos por donde salen las anguilas tienen que ser agua. Hoy son src/entities/amaru/amaru_pool.tscn, un disco plano azul oscuro (placeholder de 349898f5), en el Pozo (AmaruFight), en el Jefe (BossFight) y en el templo (revancha). Ojo: water_la.gdshader colorea por profundidad, así que un disco sobre las tablas sale transparente; hace falta un fondo o un ajuste propio.
+
+- [ ] Charco de agua que se lea desde la cámara del nivel, en Totora y en el templo
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 
