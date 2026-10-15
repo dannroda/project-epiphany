@@ -4,12 +4,16 @@
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/interruptor_marco.res" id="m0_interruptor_marco"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/interruptor_placa.res" id="3_plate"]
 [ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="pf_persistent_flag"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/interruptor_bloque_marco.res" id="4_block_frame"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/interruptor_bloque_placa.res" id="5_block_plate"]
 
 [sub_resource type="BoxShape3D" id="Shape"]
 size = Vector3(1.2, 0.6, 1.2)
 
 [node name="FloorSwitch" type="Area3D"]
 script = ExtResource("1_switch")
+block_frame = ExtResource("4_block_frame")
+block_plate = ExtResource("5_block_plate")
 
 [node name="Model" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)

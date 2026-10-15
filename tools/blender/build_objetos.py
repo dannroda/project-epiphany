@@ -690,6 +690,62 @@ def interruptor_peso_placa(p):
 	p.paint(band, "noche", "MID")
 
 
+def interruptor_bloque_marco(p):
+	"""Marco de la placa de bloque: el de siempre con cuatro flechas doradas que apuntan al centro (ahí va un bloque)."""
+	interruptor_marco(p)
+	arrows = []
+	for k in range(4):
+		arrow = p.polygon([(-0.1, -0.9), (0.1, -0.9), (0.0, -0.76)], 0.07, 0.09)
+		p.transform(arrow, Matrix.Rotation(math.pi / 2 * k, 4, "Z"))
+		arrows += arrow
+	p.paint(arrows, "dorado", "MID")
+
+
+def interruptor_bloque_placa(p):
+	"""Losa de la piedra del bloque empujable con su chakana tallada encima: se lee que la aprieta un bloque."""
+	p.paint(p.rounded_box(-0.68, 0.68, -0.68, 0.68, 0.0, 0.1, radius=0.04, segments=1), "acantilado", "MID", vary=0.04)
+	quarter = [(0.45, -0.15), (0.45, 0.15), (0.3, 0.15), (0.3, 0.3), (0.15, 0.3)]
+	cross = []
+	for k in range(4):
+		c, s = round(math.cos(math.pi / 2 * k)), round(math.sin(math.pi / 2 * k))
+		cross += [(x * c - y * s, x * s + y * c) for x, y in quarter]
+	p.paint(p.polygon(cross, 0.1, 0.13), "madera_oscura", "MID")
+
+
+def interruptor_golpe_marco(p):
+	"""Marco de la placa de golpe fuerte: más grueso, con ocho remaches de cobre."""
+	ring = []
+	for x0, x1, y0, y1 in ((-1.0, 1.0, -1.0, -0.72), (-1.0, 1.0, 0.72, 1.0), (-1.0, -0.72, -0.72, 0.72), (0.72, 1.0, -0.72, 0.72)):
+		ring += p.rounded_box(x0, x1, y0, y1, -0.02, 0.1, radius=0.04, segments=1)
+	p.jitter(ring, 0.008)
+	p.paint(ring, "acantilado", "DARK", vary=0.05)
+	studs = []
+	for k in range(8):
+		a = math.pi / 4 * k
+		r = 0.86 / max(abs(math.cos(a)), abs(math.sin(a)))
+		studs += p.blob((r * math.cos(a), r * math.sin(a), 0.1), 0.06, squash=(1, 1, 0.6), subdiv=1, rough=0.0)
+	p.paint(studs, "cobre_verde", "MID")
+	p.paint(p.box(-0.72, 0.72, -0.72, 0.72, -0.1, -0.05), "noche", "MID")
+
+
+def interruptor_golpe_placa(p):
+	"""Losa de cobre con un estallido tallado y grietas que salen de él: se activa de un golpe fuerte."""
+	p.paint(p.rounded_box(-0.68, 0.68, -0.68, 0.68, 0.0, 0.1, radius=0.04, segments=1), "cobre_verde", "MID", vary=0.04)
+	star = []
+	for k in range(16):
+		a = 2 * math.pi * k / 16
+		r = 0.36 if k % 2 == 0 else 0.17
+		star.append((r * math.cos(a), r * math.sin(a)))
+	p.paint(p.polygon(star, 0.1, 0.13), "roca_naranja", "MID")
+	cracks = []
+	for k in range(8):
+		a = 2 * math.pi * (k + 0.5) / 8 + (p.rng.random() - 0.5) * 0.3
+		crack = p.box(0.2, 0.6, -0.012, 0.012, 0.1, 0.106)
+		p.transform(crack, Matrix.Rotation(a, 4, "Z"))
+		cracks += crack
+	p.paint(cracks, "noche", "MID")
+
+
 def aro(p, radius, thick, z=0.0, sides=16, segs=8):
 	"""Aro (toro) alrededor de Z a la altura z."""
 	profile = [(radius + thick * math.cos(a), z + thick * math.sin(a)) for a in (2 * math.pi * k / segs for k in range(segs + 1))]
@@ -723,6 +779,10 @@ piece("interruptor_marco", 25, interruptor_marco, smooth=40)
 piece("interruptor_placa", 26, interruptor_placa, smooth=40)
 piece("interruptor_peso_marco", 35, interruptor_peso_marco, smooth=40)
 piece("interruptor_peso_placa", 36, interruptor_peso_placa, smooth=40)
+piece("interruptor_bloque_marco", 40, interruptor_bloque_marco, smooth=40)
+piece("interruptor_bloque_placa", 41, interruptor_bloque_placa, smooth=40)
+piece("interruptor_golpe_marco", 42, interruptor_golpe_marco, smooth=40)
+piece("interruptor_golpe_placa", 43, interruptor_golpe_placa, smooth=40)
 piece("poste_gancho", 37, poste_gancho, smooth=40)
 piece("poste_gancho_anillo", 38, poste_gancho_anillo, smooth=40)
 piece("pieza_corazon", 39, pieza_corazon, smooth=70)
