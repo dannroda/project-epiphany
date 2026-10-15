@@ -4671,8 +4671,8 @@ Mazmorra 4 (GDD §8e): el escudo espejo parte la Cumbre; el piso bajo sin él, e
 - [x] Horneado LA (arte)
   Hecho por arte (b07155ba, en main 69115da1): cumbre en LEVELS de la_walls con spread false, las salas quedan donde estaban (espejos, haces, postes y el hueco del Hueco sin mover). Si se edita el grid: la_walls.gd -- refresh cumbre, sin rehornear.
 - [ ] Recorrerla (Daniel)
-- [ ] Modelo de arte de los cóndores (arte)
-  Hoy primitivas en kuntur.tscn: Body con Torso, Collar, Head/Beak, WingLeft/WingRight (pivotes que aletean por código), Tail; Muzzle al frente.
+- [x] Modelo de arte de los cóndores (arte)
+  Hecho (sesión de arte): 5520a17d modelos con build_kuntur.py (kuntur_cuerpo, ala_izq, ala_der y apu_kuntur_*), 5121afdc alas con plumas. kuntur.tscn: Body/Model, Muzzle, Roar, WingLeft/Wing, WingRight/Wing.
 
 **Prueba:** test_cumbre, test_kuntur, test_dungeon_reach (cumbre_graph), test_walk_doors, test_drop_holes
 
