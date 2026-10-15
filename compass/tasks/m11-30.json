@@ -79,6 +79,9 @@
   "milestone": "m11",
   "notes": "",
   "order": 30,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "high",
   "refs": [
     {
@@ -92,5 +95,5 @@
   ],
   "test": "El ítem tiene un uso en combate y abre al menos dos lugares que antes no se podían.",
   "title": "Ítem de D3: el gancho",
-  "updated_at": "2026-10-14T02:52:16.151Z"
+  "updated_at": "2026-10-15T03:54:15.143Z"
 }

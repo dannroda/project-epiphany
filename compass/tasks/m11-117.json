@@ -32,6 +32,9 @@
   "milestone": "m11",
   "notes": "Sesión: diseño (-43 [a7e236]) con arte (-11 / -5d) para el aspecto.",
   "order": 114,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "high",
   "refs": [],
   "status": "done",
@@ -42,5 +45,5 @@
   ],
   "test": "",
   "title": "Huecos a otro piso se ven distintos de los fosos",
-  "updated_at": "2026-10-14T02:52:20.519Z"
+  "updated_at": "2026-10-15T03:54:15.184Z"
 }

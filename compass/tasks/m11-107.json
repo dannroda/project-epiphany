@@ -18,6 +18,9 @@
   "milestone": "m11",
   "notes": "Sesión: arte (-77). Definir con Daniel qué falta en cada zona.",
   "order": 104,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "medium",
   "refs": [],
   "size": "m",
@@ -28,5 +31,5 @@
   ],
   "test": "",
   "title": "Mejorar la ambientación",
-  "updated_at": "2026-10-14T02:27:17.741Z"
+  "updated_at": "2026-10-15T03:54:15.237Z"
 }

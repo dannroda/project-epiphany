@@ -2,120 +2,88 @@
   "created_at": "2026-10-14T00:53:11.348Z",
   "items": [
     {
-      "note": "En la cueva de la bomba está mal el asset de la pared quebrada. \nNo entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. \nD4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons",
-      "result": "fail",
       "task": "m11-130"
     },
     {
-      "note": "De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.\nEl 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon",
-      "result": "fail",
       "task": "m11-125"
     },
     {
-      "result": "pass",
       "task": "m11-111"
     },
     {
-      "result": "pass",
       "task": "m7-11"
     },
     {
-      "result": "pass",
       "task": "m11-118"
     },
     {
-      "result": "pass",
       "task": "m11-24"
     },
     {
-      "note": "Todas las puerta sobresalen y se ven la pared de la sala siguente\nsi me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de \"You Fell\"\nno hay asset correcto para la pared quebrable",
-      "result": "fail",
       "task": "m12-19"
     },
     {
-      "result": "pass",
       "task": "m11-30"
     },
     {
-      "note": "anda, pero no debería hacer un fade. Debería haber una animacion del player subiendo y bajando",
-      "result": "pass",
       "task": "m11-28"
     },
     {
-      "result": "pass",
       "task": "m11-46"
     },
     {
       "task": "m11-29"
     },
     {
-      "note": "La D4 parece mas una cueva que una dungeon",
-      "result": "pass",
       "task": "m7-09"
     },
     {
-      "result": "pass",
       "task": "m7-10"
     },
     {
-      "note": "Hay cosas que no tienen estilo",
-      "result": "fail",
       "task": "m12-18"
     },
     {
-      "result": "pass",
       "task": "m11-117"
     },
     {
-      "note": "Hay que hacer que la pluma salte mas alto porque los pinchos llegan igual",
-      "result": "fail",
       "task": "m11-05"
     },
     {
-      "result": "pass",
       "task": "m11-98"
     },
     {
-      "result": "pass",
       "task": "m11-112"
     },
     {
-      "result": "pass",
       "task": "m11-102"
     },
     {
-      "result": "pass",
       "task": "m11-103"
     },
     {
-      "result": "pass",
       "task": "m11-104"
     },
     {
-      "result": "pass",
       "task": "m11-114"
     },
     {
-      "result": "pass",
       "task": "m11-106"
     },
     {
-      "result": "pass",
       "task": "m11-107"
     },
     {
       "task": "m10-19"
     },
     {
-      "result": "pass",
       "task": "m11-55"
     },
     {
-      "result": "pass",
       "task": "m11-56"
     }
   ],
   "order": 1,
   "title": "Revisión: lo listo para probar",
-  "updated_at": "2026-10-14T02:52:10.154Z"
+  "updated_at": "2026-10-15T03:44:27.146Z"
 }

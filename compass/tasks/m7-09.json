@@ -75,6 +75,10 @@
   "milestone": "m07",
   "notes": "",
   "order": 9,
+  "playtest": {
+    "note": "La D4 parece mas una cueva que una dungeon",
+    "result": "pass"
+  },
   "priority": "high",
   "refs": [],
   "status": "done",
@@ -84,5 +88,5 @@
   ],
   "test": "",
   "title": "Rediseño del overworld como hub de varias mazmorras",
-  "updated_at": "2026-10-14T02:52:18.254Z"
+  "updated_at": "2026-10-15T03:54:15.161Z"
 }

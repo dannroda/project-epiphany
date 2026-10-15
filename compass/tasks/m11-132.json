@@ -8,6 +8,9 @@
   "milestone": "m11",
   "notes": "Causa: las cinco cuevas del overworld no tenían NavigationRegion3D, así que el NavigationAgent3D de los enemigos nunca tenía camino. Cada cueva tiene ahora su navmesh (levels/nav/<cueva>_navmesh.tres, horneada con tools/bake_overworld_nav.gd -- <cueva>). El esqueleto de la cueva de las bombas arranca pegado a un pilar: desde la entrada no ve al player hasta que se le acerca (normal).",
   "order": 129,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "high",
   "refs": [],
   "size": "s",
@@ -17,5 +20,5 @@
   ],
   "test": "Entrar a la cueva de las bombas y a la gruta y acercarse a un enemigo: viene hacia el player. test_cave › test_cave_enemies_chase_the_player",
   "title": "Cuevas: los enemigos se quedan quietos",
-  "updated_at": "2026-10-14T17:33:56.744Z"
+  "updated_at": "2026-10-15T03:54:14.957Z"
 }

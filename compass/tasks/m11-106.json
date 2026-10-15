@@ -13,6 +13,9 @@
   "milestone": "m11",
   "notes": "Sesión: overworld (-74), después de 7.9 paso 4. Junto con 10.30.",
   "order": 103,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "low",
   "refs": [],
   "size": "s",
@@ -22,5 +25,5 @@
   ],
   "test": "",
   "title": "Intro al día con el overworld nuevo",
-  "updated_at": "2026-10-14T02:27:17.488Z"
+  "updated_at": "2026-10-15T03:54:15.231Z"
 }

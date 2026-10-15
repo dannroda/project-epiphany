@@ -10,6 +10,10 @@
   "milestone": "m11",
   "notes": "Hecho: test_grove_puzzle empuja los bloques caminando contra ellos (A dos celdas al sur; B una al este y una al sur) y verifica que cada uno llega a su placa. Ubicación: el puzzle no pide ningún ítem y da la cota, así que queda en la Pradera; 'Grove' es el nombre del mapa viejo.",
   "order": 122,
+  "playtest": {
+    "note": "De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.\nEl 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon",
+    "result": "fail"
+  },
   "priority": "low",
   "refs": [],
   "size": "s",
@@ -20,5 +24,5 @@
   ],
   "test": "",
   "title": "Puzzle de bloques de la cota: probar empujando y ubicar región",
-  "updated_at": "2026-10-14T01:26:07.063Z"
+  "updated_at": "2026-10-15T03:54:15.105Z"
 }

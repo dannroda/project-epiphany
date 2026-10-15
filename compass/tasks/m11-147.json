@@ -17,6 +17,9 @@
   "milestone": "m11",
   "notes": "Misma causa que 11.131 (baranda al revés; arreglada en el builder). Además, la zanja de nivel 0 al pie de la terraza clara de la Necrópolis es el pasillo bajo del Risco, desde donde se engancha RiscoPost (HeartPieceCliff), y no tenía entrada ni salida. Le agregué una escalinata al sur hacia la Necrópolis en x 62-64, z -18 (celdas Escalón en el GridMap y dos piezas de Terrazas giradas 180°). GDD 7.1, Risco.",
   "order": 144,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "high",
   "refs": [],
   "size": "s",
@@ -27,5 +30,5 @@
   ],
   "test": "Bajar por la escalinata nueva desde la Necrópolis (x 63, z -14) a la zanja y volver a subir. Caminar por los bordes de la zanja desde arriba: la baranda frena. Tests: test_the_risco_low_corridor_has_stairs_up, test_every_rail_faces_its_terrace.",
   "title": "Overworld: caer al sector de arriba (entre riscos, junto a la meseta clara) deja softlock",
-  "updated_at": "2026-10-14T17:32:12.896Z"
+  "updated_at": "2026-10-15T03:54:14.916Z"
 }

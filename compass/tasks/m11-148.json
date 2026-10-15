@@ -21,6 +21,10 @@
   "milestone": "m11",
   "notes": "La foto del minimapa es en vivo (OverworldMap fotografía el escenario en la capa 20). Faltaban el agua de la quebrada, las escalinatas, el puente, las rejas, la torre y las paredes rotas, y ahora están. Cuando cambia un flag persistente, la foto se vuelve a sacar a los 2 s, así que el puente subido o una pared rota aparecen solos. Probar: ver la quebrada en el minimapa, subir el puente y volver a mirarlo.",
   "order": 145,
+  "playtest": {
+    "note": "Es un poco tosco como aparece en el minimapa, pero es detalle menor.",
+    "result": "pass"
+  },
   "priority": "medium",
   "refs": [],
   "size": "s",
@@ -32,5 +36,5 @@
   ],
   "test": "tests/test_minimap.gd",
   "title": "Minimapa del overworld desactualizado (la quebrada sale como abismo negro)",
-  "updated_at": "2026-10-14T05:23:34.413Z"
+  "updated_at": "2026-10-15T03:54:14.871Z"
 }

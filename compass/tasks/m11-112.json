@@ -17,6 +17,9 @@
   "milestone": "m11",
   "notes": "",
   "order": 109,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "medium",
   "refs": [],
   "size": "s",
@@ -26,5 +29,5 @@
   ],
   "test": "",
   "title": "Fantasmas al esquivar",
-  "updated_at": "2026-10-14T02:27:16.463Z"
+  "updated_at": "2026-10-15T03:54:15.202Z"
 }

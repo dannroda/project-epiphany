@@ -32,19 +32,7 @@
           "task": {
             "type": "string",
             "minLength": 1,
-            "description": "Id de la tarea (compass/tasks/<id>.json)"
-          },
-          "result": {
-            "enum": [
-              "pass",
-              "fail"
-            ],
-            "description": "Cómo salió la prueba: pass (anda) o fail (falla). Sin result, todavía no se probó."
-          },
-          "note": {
-            "type": "string",
-            "minLength": 1,
-            "description": "Lo que se vio al probarla"
+            "description": "Id de la tarea (compass/tasks/<id>.json). Cómo salió la prueba vive en la tarea (playtest), así se ve igual en todas las sesiones (D40)."
           }
         }
       }

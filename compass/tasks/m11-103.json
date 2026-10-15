@@ -16,6 +16,9 @@
   "milestone": "m11",
   "notes": "Sesión: overworld (-74). Con varios players: cualquiera de ellos.",
   "order": 100,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "medium",
   "refs": [],
   "size": "s",
@@ -25,5 +28,5 @@
   ],
   "test": "",
   "title": "El minimapa se transparenta con el player debajo",
-  "updated_at": "2026-10-14T02:27:16.972Z"
+  "updated_at": "2026-10-15T03:54:15.212Z"
 }

@@ -34,6 +34,9 @@
   "milestone": "m07",
   "notes": "",
   "order": 11,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "high",
   "refs": [],
   "status": "done",
@@ -43,5 +46,5 @@
   ],
   "test": "",
   "title": "Overworld: huecos de salto largo y mini quest de las sandalias",
-  "updated_at": "2026-10-14T02:52:12.858Z"
+  "updated_at": "2026-10-15T03:54:15.118Z"
 }

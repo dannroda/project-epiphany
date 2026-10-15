@@ -31,6 +31,10 @@
   "milestone": "m12",
   "notes": "",
   "order": 19,
+  "playtest": {
+    "note": "Todas las puerta sobresalen y se ven la pared de la sala siguente\nsi me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de \"You Fell\"\nno hay asset correcto para la pared quebrable",
+    "result": "fail"
+  },
   "priority": "medium",
   "refs": [],
   "size": "m",
@@ -41,5 +45,5 @@
   ],
   "test": "",
   "title": "Totora (D3) en estilo Link's Awakening y su entrada",
-  "updated_at": "2026-10-14T02:34:39.133Z"
+  "updated_at": "2026-10-15T03:54:15.136Z"
 }

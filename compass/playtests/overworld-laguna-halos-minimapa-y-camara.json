@@ -2,21 +2,15 @@
   "created_at": "2026-10-14T05:08:56.530Z",
   "items": [
     {
-      "result": "pass",
       "task": "m11-140"
     },
     {
-      "result": "pass",
       "task": "m11-143"
     },
     {
-      "note": "Es un poco tosco como aparece en el minimapa, pero es detalle menor.",
-      "result": "pass",
       "task": "m11-148"
     },
     {
-      "note": "Funciona, pero solo debería ser para las paredes. No para objetos/plantas, para eso está el x-ray. Y el movimiento es un poco nauseabundo.",
-      "result": "pass",
       "task": "m11-134"
     }
   ],

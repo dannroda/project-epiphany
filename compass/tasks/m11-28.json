@@ -21,6 +21,10 @@
   "milestone": "m11",
   "notes": "",
   "order": 28,
+  "playtest": {
+    "note": "anda, pero no debería hacer un fade. Debería haber una animacion del player subiendo y bajando",
+    "result": "pass"
+  },
   "priority": "low",
   "refs": [],
   "status": "done",
@@ -29,5 +33,5 @@
   ],
   "test": "Abrir el atajo desde adentro: queda abierto y acorta el recorrido al templo.",
   "title": "Atajos que se abren al volver",
-  "updated_at": "2026-10-14T02:52:16.983Z"
+  "updated_at": "2026-10-15T03:54:15.149Z"
 }

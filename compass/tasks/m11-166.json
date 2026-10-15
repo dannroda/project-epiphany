@@ -27,6 +27,9 @@
   "milestone": "m11",
   "notes": "",
   "order": 163,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "medium",
   "refs": [],
   "size": "s",
@@ -37,5 +40,5 @@
   ],
   "test": "",
   "title": "Santuario con una sola entrada: su muro agrietado",
-  "updated_at": "2026-10-14T17:30:30.305Z"
+  "updated_at": "2026-10-15T03:54:14.903Z"
 }

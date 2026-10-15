@@ -11,6 +11,9 @@
   "milestone": "m11",
   "notes": "Los caminos de las terrazas altas quedan 2 cm sobre la tapa (PATH_LIFT en build_terreno_organico.py). Cuando el contorno del camino tocaba el borde, la tapa no le abría el agujero y las dos superficies quedaban en el mismo plano. Probar: Laguna, arriba de la escalera de piedra (-47, 23); la tierra no debe parpadear sobre el pasto.",
   "order": 137,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "medium",
   "refs": [],
   "size": "s",
@@ -21,5 +24,5 @@
   ],
   "test": "tests/test_overworld.gd",
   "title": "Overworld (Lagoon): z-fighting entre el pasto y el camino de tierra",
-  "updated_at": "2026-10-14T05:09:55.840Z"
+  "updated_at": "2026-10-15T03:54:14.849Z"
 }

@@ -27,6 +27,10 @@
   "milestone": "m11",
   "notes": "",
   "order": 5,
+  "playtest": {
+    "note": "Hay que hacer que la pluma salte mas alto porque los pinchos llegan igual",
+    "result": "fail"
+  },
   "priority": "medium",
   "refs": [],
   "status": "doing",
@@ -35,5 +39,5 @@
   ],
   "test": "En la Galería, cruzar las dos columnas de pinchos: se ve venir cada fila (asoma y tintinea), siempre queda un paso, pinchan al player y al esqueleto, y el puzzle de la torreta sigue igual.",
   "title": "Galería de trampas: pinchos",
-  "updated_at": "2026-10-14T02:27:18.504Z"
+  "updated_at": "2026-10-15T03:54:15.190Z"
 }

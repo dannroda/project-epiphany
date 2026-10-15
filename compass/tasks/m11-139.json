@@ -11,6 +11,10 @@
   "milestone": "m11",
   "notes": "Hecho: era la isla del cofre de la pluma (1SE), pensada para salir solo cayendo (huecos de 2 baldosas). La isla se ensancha una baldosa al este: de ese lado queda un hueco de 1 baldosa, que la pluma cruza en los dos sentidos. Sin pluma se sigue llegando solo cayendo desde 2SE. GDD §8b; test_chullpa test_the_feather_island_is_one_tile_from_the_east_floor.",
   "order": 136,
+  "playtest": {
+    "note": "se ve horrendo y no soluciona el mismo problema del lado izquierdo",
+    "result": "fail"
+  },
   "priority": "high",
   "refs": [],
   "size": "s",
@@ -21,5 +25,5 @@
   ],
   "test": "tests/test_chullpa.gd",
   "title": "Chullpa: el cofre sobre la plataforma no se alcanza saltando",
-  "updated_at": "2026-10-14T17:40:14.505Z"
+  "updated_at": "2026-10-15T03:54:14.996Z"
 }

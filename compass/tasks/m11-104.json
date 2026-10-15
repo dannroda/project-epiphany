@@ -17,6 +17,9 @@
   "milestone": "m11",
   "notes": "Sesión: overworld (-74). Mockup primero.",
   "order": 101,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "medium",
   "refs": [],
   "size": "s",
@@ -27,5 +30,5 @@
   ],
   "test": "",
   "title": "Ítems de la mazmorra en la pantalla del mapa",
-  "updated_at": "2026-10-14T02:52:22.251Z"
+  "updated_at": "2026-10-15T03:54:15.218Z"
 }

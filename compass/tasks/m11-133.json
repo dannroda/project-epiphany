@@ -11,6 +11,9 @@
   "milestone": "m11",
   "notes": "Playtest 2026-10-14: cargada ya se ve; faltaba que una vasija en el piso delante del player no lo pase a silueta. Hecho: los Liftable marcan el stencil como el cuerpo del player (src/feel/stencil_mark.tres, también debajo del contorno de alcance); en las manos el contorno ya no pisa el destello y la silueta del Carrier.",
   "order": 130,
+  "playtest": {
+    "note": "Mejor, pero no tiene que haber x-ray cuando se levanta algo"
+  },
   "priority": "medium",
   "refs": [],
   "size": "s",
@@ -20,5 +23,5 @@
   ],
   "test": "Levantar una vasija con el player detrás: no aparece la silueta; detrás de una pared sí. test_lift › test_in_reach_it_gets_an_outline, test_player › test_what_the_player_carries_has_the_silhouette",
   "title": "Vasija chica cargada no se ve con el x-ray",
-  "updated_at": "2026-10-14T18:18:31.251Z"
+  "updated_at": "2026-10-15T03:54:14.964Z"
 }

@@ -18,6 +18,9 @@
   "milestone": "m11",
   "notes": "Sesión: overworld (-74). Ajustar el mockup del canvas primero.",
   "order": 99,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "medium",
   "refs": [],
   "size": "s",
@@ -27,5 +30,5 @@
   ],
   "test": "",
   "title": "Mapa: nombres de zona chicos y solo los que importan",
-  "updated_at": "2026-10-14T02:27:16.715Z"
+  "updated_at": "2026-10-15T03:54:15.207Z"
 }

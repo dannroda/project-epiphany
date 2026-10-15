@@ -2598,7 +2598,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 
 Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
 
-## M11 — Pulido: contenido y feel  (108/180)
+## M11 — Pulido: contenido y feel  (109/180)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5148,9 +5148,9 @@ Daniel (playtest de 11.130 y 7.9): la entrada de la D4 en el overworld parece un
 
 **Relacionadas:** 11.130 Bocas de cueva talladas en el risco
 
-### 11.169 Galería de trampas: la pluma no salta por encima de los pinchos · Revisión
+### 11.169 Galería de trampas: la pluma no salta por encima de los pinchos · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `player`, `mazmorra`
+**Terminada:** 2026-10-15 · **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `player`, `mazmorra`
 
 Daniel (playtest de 11.5): saltando con la pluma los pinchos igual llegan al player. O la pluma salta más alto o los pinchos son más bajos / el hurtbox no alcanza en el aire. Cuidado: el alto del salto (player/states/jumping.gd) lo usan todos los huecos y tests de salto.
 
@@ -6537,19 +6537,24 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 ## Playtest
 
-### Revisión: lo listo para probar  (25/27 probadas)
+### Revisión: lo listo para probar  (27/27 probadas)
 
-1. [ ] 11.130 Bocas de cueva talladas en el risco · Hecho · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
-2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player. El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
+1. [ ] 11.130 Bocas de cueva talladas en el risco · Hecho · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. 
+   No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. 
+   D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
+2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
+   El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
 3. [x] 11.111 Cactus, árboles y matas se cortan como el pasto · Hecho · anda
 4. [x] 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · Hecho · anda
 5. [x] 11.118 Sandalias: correr manteniendo y salto largo con la pluma · Hecho · anda
 6. [x] 11.24 Más secretos en el overworld · Hecho · anda
-7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell" no hay asset correcto para la pared quebrable
+7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente
+   si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell"
+   no hay asset correcto para la pared quebrable
 8. [x] 11.30 Ítem de D3: el gancho · Hecho · anda
 9. [x] 11.28 Atajos que se abren al volver · Hecho · anda — anda, pero no debería hacer un fade. Debería haber una animacion del player subiendo y bajando
 10. [x] 11.46 Jefe: game juice · Hecho · anda
-11. [ ] 11.29 Overworld después del jefe · Hecho
+11. [x] 11.29 Overworld después del jefe · Hecho · anda
 12. [x] 7.9 Rediseño del overworld como hub de varias mazmorras · Hecho · anda — La D4 parece mas una cueva que una dungeon
 13. [x] 7.10 Overworld con forma de Zelda 2D, no cuadrado · Hecho · anda
 14. [ ] Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos · En curso · **falla** — Hay cosas que no tienen estilo
@@ -6563,7 +6568,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 22. [x] 11.114 Botellas en su propia fila de la pestaña Ítems · Hecho · anda
 23. [x] 11.106 Intro al día con el overworld nuevo · Hecho · anda
 24. [x] 11.107 Mejorar la ambientación · Hecho · anda
-25. [ ] 10.19 Fin de la demo · Revisión
+25. [x] 10.19 Fin de la demo · Revisión · anda
 26. [x] 10.24 Tope de FPS · Hecho · anda
 27. [x] 10.25 Sombras del sol acordes a la cámara cenital · Hecho · anda
 
@@ -6574,10 +6579,12 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 3. [x] 11.148 Minimapa del overworld desactualizado (la quebrada sale como abismo negro) · Hecho · anda — Es un poco tosco como aparece en el minimapa, pero es detalle menor.
 4. [x] 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player · Hecho · anda — Funciona, pero solo debería ser para las paredes. No para objetos/plantas, para eso está el x-ray. Y el movimiento es un poco nauseabundo.
 
-### Revisión del 14 de octubre: overworld, mazmorras y sistemas  (18/62 probadas)
+### Revisión del 14 de octubre: overworld, mazmorras y sistemas  (19/62 probadas)
 
 1. [x] 11.168 D4 (Cumbre): entrada exagerada como las otras mazmorras · Hecho · anda
-2. [x] 11.130 Bocas de cueva talladas en el risco · Hecho · anda
+2. [ ] 11.130 Bocas de cueva talladas en el risco · Hecho · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. 
+   No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. 
+   D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
 3. [x] 11.166 Santuario con una sola entrada: su muro agrietado · Hecho · anda
 4. [x] 11.146 Overworld: el ojo del puente a la Necrópolis no se ve ni se puede flechar · Hecho · anda
 5. [x] 11.147 Overworld: caer al sector de arriba (entre riscos, junto a la meseta clara) deja softlock · Hecho · anda
@@ -6596,7 +6603,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 18. [ ] 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · En curso · **falla** — se ve horrendo y no soluciona el mismo problema del lado izquierdo
 19. [ ] 11.138 Chullpa sub-boss: asset para el cuadrado donde después se salta · Revisión
 20. [x] 11.155 Chullpa: la momia aparece en vez de saltar hacia el player; onda expansiva con shader vistoso · Hecho · anda
-21. [x] 11.169 Galería de trampas: la pluma no salta por encima de los pinchos · Revisión · anda — necesita un poco de fine-tuning, por ahi invisibilidad por 2-4 frames al saltar y aterrizar
+21. [x] 11.169 Galería de trampas: la pluma no salta por encima de los pinchos · Hecho · anda — necesita un poco de fine-tuning, por ahi invisibilidad por 2-4 frames al saltar y aterrizar
 22. [ ] 11.141 Queñoa 2P (Canopy): símbolo azul sin sentido y puerta bloqueada invisible · Revisión
 23. [ ] 11.144 Queñoa S1 (Raíces): reja fuera de la pared y puerta con llave detrás de una reja de puzzle · Revisión
 24. [ ] 11.145 Queñoa S1 (Sala de los ojos): placa que no hace nada, z-fighting en el cofre y símbolo raro en la puerta · Revisión
@@ -6619,7 +6626,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 41. [ ] 11.157 Mazmorras: los tiles del GridMap no se alinean con la grilla del editor · Revisión
 42. [ ] 12.25 El ojo del logo en game over, selección de idioma y carga · Revisión
 43. [ ] 12.27 VFX mágicos con shaders y partículas (sin texturas) · Revisión
-44. [ ] 10.19 Fin de la demo · Revisión
+44. [x] 10.19 Fin de la demo · Revisión · anda
 45. [ ] 11.108 Cargar en la misma escena desincroniza puertas y flags · Revisión
 46. [ ] 11.88 Niveles referenciados por ruta: saves y portales frágiles · Revisión
 47. [ ] 11.75 AreaZone: id estable para guardar las zonas visitadas · Revisión

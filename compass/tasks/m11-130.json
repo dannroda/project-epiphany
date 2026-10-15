@@ -24,9 +24,13 @@
   "milestone": "m11",
   "notes": "build_terreno_organico.py › cave_mouths(): cada nodo *Mouth del overworld (exportado a terreno_overworld.json › mouths) se talla en riscos: se busca la cara del risco delante, se corta el vano (como paso_puerta del templo: 1.5 abajo, 1.2 arriba, 1.95 de alto), las aristas del borde se extruyen 1.6 m hacia adentro como túnel (noche) con fondo y piso oscuros, y el risco alrededor sale 0.18 m como jambas y dintel. Sin lomas delante ni dentro. Se quitó cueva_boca de las tres; SpringCaveMouth estaba girada hacia la montaña. De paso: el risco ya no pone baranda a 1.2 m de un poste del gancho (POSTS en el json), porque tapaba la vista desde abajo (fallaban los dos tests de test_overworld_hook).",
   "order": 127,
+  "playtest": {
+    "note": "En la cueva de la bomba está mal el asset de la pared quebrada. \nNo entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. \nD4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons",
+    "result": "fail"
+  },
   "refs": [],
   "status": "done",
   "test": "En el overworld, las tres bocas (y la de la Cumbre) son un vano trapezoidal en el risco con jambas y dintel del mismo risco y un túnel oscuro; se entra caminando y el portal lleva a la cueva. test_portals, test_cave, test_shrine, test_spring, test_overworld",
   "title": "Bocas de cueva talladas en el risco",
-  "updated_at": "2026-10-14T17:27:13.171Z"
+  "updated_at": "2026-10-15T03:54:14.896Z"
 }

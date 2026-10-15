@@ -17,6 +17,9 @@
   "milestone": "m11",
   "notes": "",
   "order": 152,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "medium",
   "refs": [],
   "size": "m",
@@ -28,5 +31,5 @@
   ],
   "test": "",
   "title": "Chullpa: la momia aparece en vez de saltar hacia el player; onda expansiva con shader vistoso",
-  "updated_at": "2026-10-14T17:40:37.718Z"
+  "updated_at": "2026-10-15T03:54:15.005Z"
 }

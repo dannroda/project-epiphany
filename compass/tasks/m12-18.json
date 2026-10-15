@@ -42,6 +42,10 @@
   "milestone": "m12",
   "notes": "Sesión: arte (-11). Diseño (-43) revisa que el juego no cambie.",
   "order": 18,
+  "playtest": {
+    "note": "Hay cosas que no tienen estilo",
+    "result": "fail"
+  },
   "priority": "medium",
   "refs": [],
   "size": "m",
@@ -53,5 +57,5 @@
   ],
   "test": "",
   "title": "Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos",
-  "updated_at": "2026-10-13T18:37:39.847Z"
+  "updated_at": "2026-10-15T03:54:15.177Z"
 }

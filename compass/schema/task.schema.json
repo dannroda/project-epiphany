@@ -138,6 +138,24 @@
         "pattern": "^(?!/)(?!.*(^|/)\\.\\.(/|$))[^\\\\]+$"
       }
     },
+    "playtest": {
+      "type": "object",
+      "description": "Cómo salió la última prueba de la tarea en un playtest (D40): result pass (anda) o fail (falla), y note, lo que se vio. Lo comparten todas las sesiones de compass/playtests/ que tienen la tarea.",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "result": {
+          "enum": [
+            "pass",
+            "fail"
+          ]
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
     "images": {
       "type": "array",
       "description": "Capturas de la tarea: rutas desde la raíz del proyecto a imágenes PNG, JPEG, GIF o WebP. Las que se pegan en la web van a compass/images/",

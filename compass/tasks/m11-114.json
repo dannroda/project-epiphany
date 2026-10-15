@@ -20,6 +20,9 @@
   "milestone": "m11",
   "notes": "",
   "order": 111,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "medium",
   "refs": [],
   "size": "s",
@@ -29,5 +32,5 @@
   ],
   "test": "",
   "title": "Botellas en su propia fila de la pestaña Ítems",
-  "updated_at": "2026-10-14T02:27:17.220Z"
+  "updated_at": "2026-10-15T03:54:15.224Z"
 }

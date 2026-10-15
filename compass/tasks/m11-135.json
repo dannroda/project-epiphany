@@ -11,6 +11,9 @@
   "milestone": "m11",
   "notes": "",
   "order": 132,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "medium",
   "refs": [],
   "size": "s",
@@ -21,5 +24,5 @@
   ],
   "test": "",
   "title": "Al caer, el player se inclina hacia el piso",
-  "updated_at": "2026-10-14T17:35:46.360Z"
+  "updated_at": "2026-10-15T03:54:14.971Z"
 }

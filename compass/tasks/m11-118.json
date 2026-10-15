@@ -40,6 +40,9 @@
   "milestone": "m11",
   "notes": "",
   "order": 115,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "high",
   "refs": [],
   "status": "done",
@@ -49,5 +52,5 @@
   ],
   "test": "",
   "title": "Sandalias: correr manteniendo y salto largo con la pluma",
-  "updated_at": "2026-10-14T02:52:12.328Z"
+  "updated_at": "2026-10-15T03:54:15.124Z"
 }

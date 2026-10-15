@@ -31,6 +31,7 @@ Las tareas y los hitos de este proyecto viven en `compass/`, en el formato de Sc
   - `files`: archivos del repo que la tarea toca (scripts, escenas, recursos), con la ruta desde la raíz del proyecto (`["player/player.gd"]`);
   - `images`: capturas de la tarea (PNG, JPEG, GIF o WebP), con la ruta desde la raíz; las pegadas en la web quedan en `compass/images/`;
   - `links`: vínculos con otras tareas (ver "Vínculos entre tareas");
+  - `playtest`: cómo salió al probarla, `{ result?, note? }` (ver "Playtest"); lo escriben `playtest pass`, `fail` y `reset`;
   - `created_at`, `updated_at` y `done_at` (cuándo pasó a Hecho): los pone la CLI; no hace falta escribirlos.
 - En los textos, `` `así` `` se muestra como código.
 
@@ -119,11 +120,11 @@ scompass item task assets 3 --milestone m06         # pasa el ítem a una tarea 
 
 ## Playtest
 
-Una sesión de playtest (`compass/playtests/<id>.json`) junta tareas ya creadas en el orden en que se van a probar, para ordenar lo que está en Revisión. Cada ítem es `{ task, result?, note? }`: `task` es el id de la tarea, `result` `pass` (anda) o `fail` (falla; sin `result`, todavía no se probó) y `note` lo que se vio al probarla (puede tener varios renglones). La sesión no cambia el estado de las tareas: eso se hace aparte, con `move`.
+Una sesión de playtest (`compass/playtests/<id>.json`) junta tareas ya creadas en el orden en que se van a probar, para ordenar lo que está en Revisión. Cada ítem es `{ task }`, el id de la tarea. Cómo salió la prueba vive en la tarea, en `playtest: { result?, note? }`: `result` `pass` (anda) o `fail` (falla; sin `result`, todavía no se probó) y `note` lo que se vio al probarla (puede tener varios renglones). Así una tarea que está en varias sesiones muestra lo mismo en todas. `pass`, `fail` y `reset` escriben eso en la tarea; no cambian su estado: eso se hace aparte, con `move`.
 
 ```sh
 scompass playtest                                   # sesiones, con cuántas tareas faltan probar
-scompass playtest show build-0-3 --json             # { "id", "etag", "title", "items": [ { "task", "result"?, "note"? } ] }
+scompass playtest show build-0-3 --json             # { "id", "etag", "title", "items": [ { "task" } ] }; el resultado, en cada tarea
 scompass playtest new "Build 0.3" --review          # el id sale del título; --review la carga con las tareas en Revisión
 scompass playtest add build-0-3 m5-02 m5-07 --at 1  # agrega tareas (desde la posición 1); las que ya están no se repiten
 scompass playtest add build-0-3 --review --milestone m05   # suma las de Revisión de ese hito
@@ -131,8 +132,10 @@ scompass playtest move build-0-3 m5-07 3            # la lleva a la posición 3 
 scompass playtest fail build-0-3 2 --note "Se traba al saltar"
 scompass playtest pass build-0-3 m5-02              # reset la vuelve a "sin probar"; drop la saca de la sesión
 scompass playtest rm build-0-3                      # borra la sesión; las tareas no se tocan
+scompass playtest migrate                           # sesiones viejas (result y note en la sesión) → las tareas
 ```
 
+- Si `playtest` avisa de sesiones del formato anterior, corré `scompass playtest migrate`: si una tarea estaba en varias, gana el resultado de la sesión más reciente que la probó y las notas distintas se juntan.
 - Si una prueba falla, dejá en `note` lo que se vio y, si hay que arreglarla, volvé la tarea a `doing`; si anda, pasala a `done`.
 
 ## Documentos y referencias

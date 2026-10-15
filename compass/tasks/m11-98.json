@@ -21,6 +21,9 @@
   "milestone": "m11",
   "notes": "Sesión: overworld (-74).",
   "order": 95,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "high",
   "refs": [],
   "size": "m",
@@ -31,5 +34,5 @@
   ],
   "test": "",
   "title": "La cámara muestra lo que se desbloquea",
-  "updated_at": "2026-10-14T02:27:16.197Z"
+  "updated_at": "2026-10-15T03:54:15.196Z"
 }

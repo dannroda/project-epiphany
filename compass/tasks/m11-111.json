@@ -27,6 +27,9 @@
   "milestone": "m11",
   "notes": "",
   "order": 108,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "medium",
   "refs": [],
   "size": "m",
@@ -37,5 +40,5 @@
   ],
   "test": "",
   "title": "Cactus, árboles y matas se cortan como el pasto",
-  "updated_at": "2026-10-14T02:27:15.690Z"
+  "updated_at": "2026-10-15T03:54:15.111Z"
 }

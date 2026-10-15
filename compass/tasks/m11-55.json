@@ -7,6 +7,9 @@
   "milestone": "m10",
   "notes": "",
   "order": 55,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "high",
   "refs": [],
   "status": "done",
@@ -15,5 +18,5 @@
   ],
   "test": "",
   "title": "Tope de FPS",
-  "updated_at": "2026-10-14T02:27:17.995Z"
+  "updated_at": "2026-10-15T03:54:15.243Z"
 }

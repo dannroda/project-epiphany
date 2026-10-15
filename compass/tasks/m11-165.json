@@ -14,6 +14,9 @@
   "milestone": "m11",
   "notes": "",
   "order": 162,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "medium",
   "refs": [],
   "size": "s",
@@ -24,5 +27,5 @@
   ],
   "test": "tests/test_player_hole.gd",
   "title": "La cámara cenital se activa en bordes y muros bajos de una sala",
-  "updated_at": "2026-10-14T17:33:33.675Z"
+  "updated_at": "2026-10-15T03:54:14.939Z"
 }

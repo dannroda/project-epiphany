@@ -34,6 +34,9 @@
   "milestone": "m12",
   "notes": "",
   "order": 29,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "high",
   "refs": [],
   "size": "s",
@@ -44,5 +47,5 @@
   ],
   "test": "",
   "title": "Muro agrietado LA de cueva (muro_agrietado_cueva_la)",
-  "updated_at": "2026-10-14T17:33:53.597Z"
+  "updated_at": "2026-10-15T03:54:14.951Z"
 }
