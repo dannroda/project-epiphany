@@ -2598,7 +2598,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 
 Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
 
-## M11 — Pulido: contenido y feel  (109/182)
+## M11 — Pulido: contenido y feel  (109/183)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5356,6 +5356,16 @@ Daniel (2026-10-15, captura): en PisoCornisa, la puerta sur de las Torretas (Pas
 - [x] Test: de la puerta de las Torretas se entra al Ojo del Sol sin chocar la reja
 
 **Prueba:** test_cumbre (test_the_door_from_the_turrets_lands_in_the_sun_eye_room_clear_of_the_boss_key_gate)
+
+### 11.187 Overworld: optimizar el dibujado (después de los assets) · Pendiente
+
+**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `optimizacion`, `overworld`
+
+Daniel (2026-10-15) preguntó por el texture streaming de Godot 4.8: descartado, el proyecto tiene 3422 PNG que suman ~5 MB (paleta y colores por vértice). Lo que pesa en el overworld es la geometría (terreno_organico.0..11 de 15-72 MB, paredes LA, decor, plantas) y la cantidad de mallas por cuadro. Va después de terminar los assets, junto con 11.126 y 11.59.
+
+- [ ] Medir con el profiler: vértices, draw calls, sombras
+- [ ] Rangos de visibilidad/LOD en decor y plantas
+- [ ] Terreno en bloques más chicos que se descarten fuera de cámara
 
 ## M12 — Assets propios (Blender)  (17/38)
 
