@@ -26,6 +26,9 @@ enum State { IDLE, HOP, AIM, FALL, STUCK, DEAD }
 @export var wave_speed := 7.0
 @export var wave_width := 0.9
 @export var wave_damage := 2
+## Colores del fuego de la onda (los de su mazmorra): el fuego y lo más caliente.
+@export var wave_glow := Color(0.95, 0.25, 0.08)
+@export var wave_core := Color(1.0, 0.8, 0.4)
 @export var stuck_time := 2.6
 @export var aim_size := 1.0
 ## Saltos seguidos (sin trabarse entre uno y otro) con la mitad de la vida o menos.
@@ -227,6 +230,8 @@ func _start_wave() -> void:
 	mesh.global_position = global_position + Vector3.UP * 0.05
 	mesh.scale = Vector3.ONE * 0.01
 	mesh.set_instance_shader_parameter(&"width", wave_width)
+	mesh.set_instance_shader_parameter(&"glow", wave_glow)
+	mesh.set_instance_shader_parameter(&"core", wave_core)
 	mesh.show()
 
 

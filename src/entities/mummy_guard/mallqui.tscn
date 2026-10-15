@@ -4,7 +4,13 @@
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/mallqui/mallqui.res" id="2_model"]
 
 [node name="Mallqui" groups=["enfoque_alto"] instance=ExtResource("1_mummy")]
+wave_glow = Color(1, 0.55, 0.1, 1)
+wave_core = Color(1, 0.95, 0.6, 1)
 metadata/focus_height = 3.3
 
 [node name="Model" parent="Body" index="0"]
 mesh = ExtResource("2_model")
+
+[node name="Roar" parent="Body" index="1"]
+color = Color(1, 0.8, 0.3, 1)
+inner = Color(1, 0.35, 0.3, 1)

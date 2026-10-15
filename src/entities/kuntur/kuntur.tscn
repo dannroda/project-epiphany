@@ -55,7 +55,8 @@ unique_name_in_owner = true
 process_mode = 3
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0.22, 1.15)
 script = ExtResource("20_roar")
-color = Color(0.92, 0.95, 1, 0.55)
+color = Color(0.55, 0.85, 1, 1)
+inner = Color(1, 1, 1, 1)
 
 [node name="WingLeft" type="Node3D" parent="Body"]
 unique_name_in_owner = true

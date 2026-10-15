@@ -63,6 +63,8 @@ var player_position: Variant = null ## Vector3 hasta que haya puntos de apariciÃ
 var room_entry: Variant = null
 ## Revancha contra el jefe ya vencido (10.19): la arena lo trae de vuelta hasta ganarle. No se guarda.
 var boss_rematch := false
+## Presentaciones de jefe ya vistas (por su flag): la prÃ³xima vez se pueden saltear. No se guarda.
+var seen_boss_intros := {}
 var save_tampered := false
 ## Segundos jugados (con player en escena y sin pausa).
 var play_time := 0.0
@@ -446,6 +448,7 @@ func _clear() -> void:
 	player_position = null
 	room_entry = null
 	boss_rematch = false
+	seen_boss_intros.clear()
 	save_tampered = false
 
 

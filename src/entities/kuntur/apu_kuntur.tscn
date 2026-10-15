@@ -24,7 +24,8 @@ mesh = ExtResource("4_ala_izq")
 mesh = ExtResource("5_ala_der")
 
 [node name="Roar" parent="Body" index="2"]
-color = Color(1, 0.85, 0.4, 0.6)
 size = 3.0
 reach = 2.4
 shake = 0.7
+color = Color(1, 0.8, 0.3, 1)
+inner = Color(0.8, 0.95, 1, 1)
