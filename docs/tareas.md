@@ -5250,18 +5250,28 @@ Daniel: ¿por qué hay escalera abajo y nada arriba? (-43, 5a85d8f4): la escaler
 
 **Relacionadas:** 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista
 
-### 11.178 Totora: salas de 14 de alto y al menos 22 de ancho · Pendiente
+### 11.178 Totora: cada sala centrada en cámara y tapando las otras · Revisión
 
-**Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `mazmorra`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `mazmorra`
 
 Daniel (2026-10-14): todas las salas de las mazmorras miden 14 de alto y al menos 22 de ancho, como la Chullpa y la Queñoa. Totora tiene salas de 14 × 10 / 14 × 12 y hay que rediseñarla.
 
-### 11.179 Cumbre: salas de 14 de alto y al menos 22 de ancho · Pendiente
+- [x] Captura de cada sala con la cámara del nivel
+- [x] Ajustar camera_offset/fov o AmbienteSala (viñeta) donde se ve otra sala o queda descentrada
+  Revisadas todas: cada sala queda centrada y las otras tapadas; no hizo falta tocar cámara ni viñeta.
 
-**Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `mazmorra`
+**Notas:** Daniel (2026-10-15): como en 11.179, con la viñeta y la cámara configurables ya no hace falta 14 × ≥22; las salas pueden medir distinto, pero cada una se centra en cámara y tapa las otras. Pasa de rediseño a revisión.
+
+### 11.179 Cumbre: cada sala centrada en cámara y tapando las otras · Revisión
+
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `mazmorra`
 
 Daniel (2026-10-14): todas las salas de las mazmorras miden 14 de alto y al menos 22 de ancho, como la Chullpa y la Queñoa. Cumbre tiene salas de 14 × 10 / 14 × 12 y hay que rediseñarla.
 
+
+- [x] Captura de cada sala con la cámara del nivel
+- [x] Ajustar camera_offset/fov o AmbienteSala (viñeta) donde se ve otra sala o queda descentrada
+  Revisadas todas: cada sala queda centrada y las otras tapadas; no hizo falta tocar cámara ni viñeta.
 
 **Notas:** Con el nuevo sistema configurable de la viñeta y camara, ya no es necesario. Eso si, cada sala debe poder centrarse en camara y ocultar las otras salas. Por consecuencia, permite salas con diferentes tamaños como se hace con el templo donde la sala del jefe final tiene un tamaño diferente
 

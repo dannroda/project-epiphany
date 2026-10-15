@@ -1,6 +1,16 @@
 {
   "assignee": "project-epiphany-43",
-  "checklist": [],
+  "checklist": [
+    {
+      "done": true,
+      "text": "Captura de cada sala con la cámara del nivel"
+    },
+    {
+      "detail": "Revisadas todas: cada sala queda centrada y las otras tapadas; no hizo falta tocar cámara ni viñeta.",
+      "done": true,
+      "text": "Ajustar camera_offset/fov o AmbienteSala (viñeta) donde se ve otra sala o queda descentrada"
+    }
+  ],
   "code": "11.179",
   "created_at": "2026-10-14T19:05:08.585Z",
   "description": "Daniel (2026-10-14): todas las salas de las mazmorras miden 14 de alto y al menos 22 de ancho, como la Chullpa y la Queñoa. Cumbre tiene salas de 14 × 10 / 14 × 12 y hay que rediseñarla.\n",
@@ -9,13 +19,13 @@
   "order": 176,
   "priority": "medium",
   "refs": [],
-  "size": "l",
-  "status": "todo",
+  "size": "m",
+  "status": "review",
   "tags": [
     "diseno",
     "mazmorra"
   ],
   "test": "",
-  "title": "Cumbre: salas de 14 de alto y al menos 22 de ancho",
-  "updated_at": "2026-10-15T03:09:13.732Z"
+  "title": "Cumbre: cada sala centrada en cámara y tapando las otras",
+  "updated_at": "2026-10-15T03:58:28.061Z"
 }
