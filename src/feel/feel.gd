@@ -76,6 +76,7 @@ func _ready() -> void:
 		&"drip": [_synth(0.12, func(t: float) -> float: return sin(TAU * lerpf(700.0, 1700.0, minf(t / 0.04, 1.0)) * t) * 0.3 * exp(-t * 35.0))],
 		&"splash": [_synth(0.45, func(t: float) -> float: return ((randf() * 2.0 - 1.0) * 0.45 * exp(-t * 9.0) + sin(TAU * lerpf(160.0, 70.0, t / 0.45) * t) * 0.35 * exp(-t * 14.0)) * minf(1.0, t * 200.0))],
 		&"wade": [_synth(0.16, func(t: float) -> float: return (randf() * 2.0 - 1.0) * 0.18 * sin(PI * t / 0.16) * exp(-t * 8.0))],
+		&"roar": [_synth(1.4, func(t: float) -> float: return (fmod(lerpf(70.0, 125.0, sin(PI * t / 1.4)) * t, 1.0) * 0.7 - 0.35 + (randf() * 2.0 - 1.0) * 0.28) * (0.7 + 0.3 * sin(TAU * 27.0 * t)) * minf(1.0, t * 12.0) * minf(1.0, (1.4 - t) * 2.5))],
 		&"heal": [_synth(0.45, func(t: float) -> float: return sin(TAU * [523.0, 659.0, 784.0][mini(int(t / 0.15), 2)] * t) * 0.3 * exp(-fmod(t, 0.15) * 12.0))],
 	}
 	for sound in SAMPLES:
@@ -174,7 +175,8 @@ func shake(amount: float, direction := Vector3.ZERO, pads: Array[int] = []) -> v
 		camera.add_trauma(amount, direction)
 
 
-func sfx(sound: StringName, at: Vector3) -> void:
+## `always`: suena aunque el juego esté en pausa (el acercamiento de la cámara a un jefe).
+func sfx(sound: StringName, at: Vector3, always := false) -> void:
 	var streams: Array = _sounds.get(sound, [])
 	var scene := get_tree().current_scene
 	if streams.is_empty() or scene == null:
@@ -185,6 +187,8 @@ func sfx(sound: StringName, at: Vector3) -> void:
 	player.pitch_scale = 1.0 + randf_range(-settings.pitch_variation, settings.pitch_variation)
 	scene.add_child(player)
 	player.global_position = at
+	if always:
+		player.process_mode = Node.PROCESS_MODE_ALWAYS
 	player.finished.connect(player.queue_free)
 	player.play()
 

@@ -136,10 +136,6 @@ def cabeza(p, c):
 		(mouth if f.normal.z < -0.55 and f.calc_center_median().y > -0.15 else back).append(f)
 	spine_paint(p, back, dict(c, spots=None), Vector((0, 0, -1)), Vector((0, 1, 0)), threshold=2.0)
 	p.paint(mouth, "tela_roja", "DARK", vary=0.05)
-	jaw = p.lathe([(0.0, -0.3), (0.2, -0.28), (0.28, -0.1), (0.25, 0.15), (0.15, 0.38), (0.0, 0.48)], sides=12)
-	p.transform(jaw, Matrix.Translation((0, -0.12, -0.1)) @ Matrix.Rotation(-0.2, 4, "X") @ Matrix.Translation((0, 0.12, 0))
-		@ Matrix.Diagonal((1, 1, 0.38, 1)) @ Matrix.Rotation(-math.pi / 2, 4, "X"))
-	p.paint(jaw, c["belly"], "MID", vary=0.08)
 	teeth = []
 	for s in (-1, 1):
 		for y, rad in ((0.1, 0.3), (0.24, 0.25), (0.37, 0.19), (0.48, 0.12)):
@@ -189,6 +185,26 @@ def cabeza(p, c):
 			root = Vector((s * 0.16, 0.4, -0.02))
 			barbels += tube(p, [root, root + Vector((s * 0.06, -0.05, -0.16)), root + Vector((s * 0.03, -0.18, -0.28))], [0.03, 0.02, 0.006], sides=5, ref=Vector((0, 1, 0)))
 		p.paint(barbels, c["fin"], "LIGHT")
+	p.transform(list(p.bm.faces), Matrix.Scale(c["scale"], 4))
+
+
+def mandibula(p, c):
+	"""La mandíbula, aparte para que abra la boca: el origen en la bisagra, en (0, -0.12, -0.1) de la cabeza sin escalar."""
+	jaw = p.lathe([(0.0, -0.3), (0.2, -0.28), (0.28, -0.1), (0.25, 0.15), (0.15, 0.38), (0.0, 0.48)], sides=12)
+	p.transform(jaw, Matrix.Rotation(-0.2, 4, "X") @ Matrix.Translation((0, 0.12, 0)) @ Matrix.Diagonal((1, 1, 0.38, 1)) @ Matrix.Rotation(-math.pi / 2, 4, "X"))
+	inside, outside = [], []
+	for f in jaw:
+		f.normal_update()
+		(inside if f.normal.z > 0.6 else outside).append(f)
+	p.paint(outside, c["belly"], "MID", vary=0.08)
+	p.paint(inside, "tela_roja", "MID", vary=0.05)
+	teeth = []
+	for s in (-1, 1):
+		for y, rad in ((0.16, 0.24), (0.3, 0.19), (0.42, 0.12)):
+			t = p.cylinder(0.022, 0.0, 0.07, sides=4, radius_top=0.0)
+			p.transform(t, Matrix.Rotation(-0.2, 4, "X") @ Matrix.Translation((s * rad * 0.8, y, 0.02)))
+			teeth += t
+	p.paint(teeth, "hueso", "LIGHT")
 	p.transform(list(p.bm.faces), Matrix.Scale(c["scale"], 4))
 
 
@@ -243,6 +259,8 @@ piece("amaru_cuello", 1, lambda p: cuello(p, AMARU))
 piece("amaru_cabeza", 2, lambda p: cabeza(p, AMARU))
 piece("yacumama_cuello", 3, lambda p: cuello(p, YACUMAMA))
 piece("yacumama_cabeza", 4, lambda p: cabeza(p, YACUMAMA))
+piece("amaru_mandibula", 7, lambda p: mandibula(p, AMARU))
+piece("yacumama_mandibula", 8, lambda p: mandibula(p, YACUMAMA))
 piece("yacumama_cola", 5, lambda p: cola(p, YACUMAMA))
 
 epi.layout(kit, columns=5, spacing=4.0)

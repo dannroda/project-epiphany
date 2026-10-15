@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://src/components/hurtbox.gd" id="4_hurtbox"]
 [ext_resource type="Script" path="res://src/components/hitbox.gd" id="5_hitbox"]
 [ext_resource type="Script" path="res://src/feel/hit_flash.gd" id="6_flash"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/serpientes/amaru_mandibula.res" id="9_jaw"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/serpientes/amaru_cuello.res" id="7_neck"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/serpientes/amaru_cabeza.res" id="8_head"]
 
@@ -43,6 +44,15 @@ mesh = ExtResource("7_neck")
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -0.2)
 mesh = ExtResource("8_head")
+
+[node name="Jaw" type="MeshInstance3D" parent="Body/Neck/Head"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.13, 0.156)
+mesh = ExtResource("9_jaw")
+
+[node name="Mouth" type="Marker3D" parent="Body/Neck/Head"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, -0.62)
 
 [node name="Hurtbox" type="Area3D" parent="Body/Neck"]
 unique_name_in_owner = true
