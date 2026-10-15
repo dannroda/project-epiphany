@@ -23,6 +23,10 @@
 [ext_resource type="PackedScene" path="res://src/world/floor_switch.tscn" id="22_gvf0k"]
 [ext_resource type="PackedScene" path="res://src/world/push_block.tscn" id="24_v1yde"]
 [ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="26_iip2e"]
+[ext_resource type="PackedScene" path="res://src/world/sello_cima.tscn" id="sello_cima"]
+[ext_resource type="PackedScene" path="res://src/entities/guerreros/skeleton_templo.tscn" id="skeleton_templo"]
+[ext_resource type="PackedScene" path="res://src/entities/guerreros/shield_skeleton_templo.tscn" id="shield_skeleton_templo"]
+[ext_resource type="PackedScene" path="res://src/entities/guerreros/archer_skeleton_templo.tscn" id="archer_skeleton_templo"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_mirror.tscn" id="28_gvf0k"]
 [ext_resource type="PackedScene" path="res://src/world/temple_seal.tscn" id="30_372gu"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_source.tscn" id="30_xv8lf"]
@@ -665,7 +669,7 @@ id = &"mata"
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7.6, 5.2, -33)
 flag = &"ow_cumbre_ladder"
 
-[node name="SummitGate" parent="." unique_id=1173546068 instance=ExtResource("26_iip2e")]
+[node name="SummitGate" parent="." unique_id=1173546068 instance=ExtResource("sello_cima")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 5.2, -37.25)
 reveal_on_open = false
 
@@ -1258,10 +1262,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 0, 1)
 [node name="Skeleton3" parent="." unique_id=844132866 instance=ExtResource("6_d356v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 0, -4)
 
-[node name="TempleSkeleton" parent="." unique_id=1940099285 instance=ExtResource("6_d356v")]
+[node name="TempleSkeleton" parent="." unique_id=1940099285 instance=ExtResource("skeleton_templo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43, 5.2, -28)
 
-[node name="TempleShieldSkeleton" parent="." unique_id=2084727110 instance=ExtResource("6_shield")]
+[node name="TempleShieldSkeleton" parent="." unique_id=2084727110 instance=ExtResource("shield_skeleton_templo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 5.2, -28)
 
 [node name="CliffSkeleton" parent="." unique_id=1777652994 instance=ExtResource("6_d356v")]
@@ -1270,7 +1274,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76, 5.2, -20)
 [node name="CliffShieldSkeleton" parent="." unique_id=1099975904 instance=ExtResource("6_shield")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 0, -22)
 
-[node name="TempleArcher" parent="." unique_id=1616350127 instance=ExtResource("6_archer")]
+[node name="TempleArcher" parent="." unique_id=1616350127 instance=ExtResource("archer_skeleton_templo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39, 5.2, -32)
 
 [node name="CliffArcher" parent="." unique_id=1383502219 instance=ExtResource("6_archer")]
