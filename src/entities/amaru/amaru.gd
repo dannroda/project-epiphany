@@ -34,6 +34,8 @@ const ORB := preload("res://src/entities/projectile.tscn")
 
 @onready var body: Node3D = %Body
 @onready var neck: Node3D = %Neck
+@onready var head: Node3D = %Head
+@onready var _head_rest := head.position
 @onready var aim_line: MeshInstance3D = %AimLine
 @onready var impact: Hitbox = %Impact
 @onready var hurtbox: Hurtbox = %Hurtbox
@@ -261,12 +263,16 @@ func _face(direction: Vector3) -> void:
 func _pose_risen() -> void:
 	neck.rotation.x = 0.0
 	neck.position = Vector3(0, rise_height / 2.0, 0)
+	head.rotation.x = 0.0
+	head.position = _head_rest
 
 
 ## Tirada: el cuerpo largo sobre el piso, hacia adelante.
 func _pose_flat() -> void:
 	neck.rotation.x = -PI / 2.0
 	neck.position = flat_offset
+	head.rotation.x = PI / 2.0
+	head.position = _head_rest * Vector3(1, 1, -1)
 	body.position.y = 0.0
 
 

@@ -19,7 +19,7 @@ extends Amaru
 @export var arena_wall := 1.0
 
 @onready var tail: Node3D = %Tail
-@onready var tail_length: float = (%TailModel.mesh as BoxMesh).size.z
+@onready var tail_length: float = (%TailModel as MeshInstance3D).get_aabb().size.z
 
 var _sweeping := false
 var _sweep_from := 0.0

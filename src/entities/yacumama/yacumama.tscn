@@ -6,52 +6,14 @@
 [ext_resource type="Script" path="res://src/components/hurtbox.gd" id="4_hurtbox"]
 [ext_resource type="Script" path="res://src/components/hitbox.gd" id="5_hitbox"]
 [ext_resource type="Script" path="res://src/feel/hit_flash.gd" id="6_flash"]
-
-[sub_resource type="StandardMaterial3D" id="SkinMat"]
-albedo_color = Color(0.16, 0.3, 0.36, 1)
-roughness = 0.5
-
-[sub_resource type="StandardMaterial3D" id="MaskMat"]
-albedo_color = Color(0.85, 0.66, 0.2, 1)
-metallic = 0.7
-roughness = 0.35
-
-[sub_resource type="StandardMaterial3D" id="EyeMat"]
-shading_mode = 0
-albedo_color = Color(0.95, 0.25, 0.15, 1)
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/serpientes/yacumama_cuello.res" id="7_neck"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/serpientes/yacumama_cabeza.res" id="8_head"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/serpientes/yacumama_cola.res" id="9_tail"]
 
 [sub_resource type="StandardMaterial3D" id="AimMat"]
 transparency = 1
 shading_mode = 0
 albedo_color = Color(0.1, 0.05, 0.02, 0.55)
-
-[sub_resource type="CapsuleMesh" id="NeckMesh"]
-material = SubResource("SkinMat")
-radius = 0.6
-height = 3.2
-
-[sub_resource type="SphereMesh" id="HeadMesh"]
-material = SubResource("SkinMat")
-radius = 0.8
-height = 1.1
-
-[sub_resource type="BoxMesh" id="MaskMesh"]
-material = SubResource("MaskMat")
-size = Vector3(1.1, 0.7, 0.12)
-
-[sub_resource type="TorusMesh" id="RingMesh"]
-material = SubResource("MaskMat")
-inner_radius = 0.12
-outer_radius = 0.2
-
-[sub_resource type="SphereMesh" id="EyeMesh"]
-material = SubResource("EyeMat")
-radius = 0.11
-height = 0.22
-
-[sub_resource type="BoxMesh" id="TailMesh"]
-material = SubResource("SkinMat")
-size = Vector3(0.6, 0.5, 9)
 
 [sub_resource type="BoxMesh" id="AimMesh"]
 material = SubResource("AimMat")
@@ -77,27 +39,12 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 
 [node name="Model" type="MeshInstance3D" parent="Body/Neck"]
-mesh = SubResource("NeckMesh")
+mesh = ExtResource("7_neck")
 
 [node name="Head" type="MeshInstance3D" parent="Body/Neck"]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, -0.3)
-mesh = SubResource("HeadMesh")
-
-[node name="Mask" type="MeshInstance3D" parent="Body/Neck/Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.72)
-mesh = SubResource("MaskMesh")
-
-[node name="Ring" type="MeshInstance3D" parent="Body/Neck/Head/Mask"]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -0.42, -0.06)
-mesh = SubResource("RingMesh")
-
-[node name="EyeL" type="MeshInstance3D" parent="Body/Neck/Head/Mask"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0.12, -0.07)
-mesh = SubResource("EyeMesh")
-
-[node name="EyeR" type="MeshInstance3D" parent="Body/Neck/Head/Mask"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0.12, -0.07)
-mesh = SubResource("EyeMesh")
+mesh = ExtResource("8_head")
 
 [node name="Hurtbox" type="Area3D" parent="Body/Neck"]
 unique_name_in_owner = true
@@ -117,8 +64,7 @@ top_level = true
 
 [node name="TailModel" type="MeshInstance3D" parent="Tail"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.5)
-mesh = SubResource("TailMesh")
+mesh = ExtResource("9_tail")
 
 [node name="AimLine" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
