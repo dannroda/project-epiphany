@@ -1,6 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/cumbre_entrada.res" id="1_model"]
+[ext_resource type="Shader" path="res://src/world/look/boca_oscura.gdshader" id="2_boca"]
 
 [sub_resource type="BoxShape3D" id="Jamb"]
 size = Vector3(1.3, 2.7, 1.6)
@@ -11,10 +12,29 @@ size = Vector3(3.2, 4.2, 1.8)
 [sub_resource type="BoxShape3D" id="Wing"]
 size = Vector3(4.6, 2.4, 1.4)
 
+[sub_resource type="ShaderMaterial" id="BocaMaterial"]
+render_priority = -1
+shader = ExtResource("2_boca")
+shader_parameter/size = Vector2(1.86, 2.88)
+shader_parameter/half_bottom = 0.75
+shader_parameter/half_top = 0.6
+shader_parameter/height = 2.7
+shader_parameter/arch = 0.0
+
+[sub_resource type="QuadMesh" id="BocaQuad"]
+material = SubResource("BocaMaterial")
+size = Vector2(1.86, 2.88)
+center_offset = Vector3(0, 1.44, 0)
+
 [node name="CumbreEntrada" type="StaticBody3D"]
 
 [node name="Model" type="MeshInstance3D" parent="."]
 mesh = ExtResource("1_model")
+
+[node name="Boca" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0, 0.0)
+cast_shadow = 0
+mesh = SubResource("BocaQuad")
 
 [node name="JambLeft" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4, 1.35, -0.4)

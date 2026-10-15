@@ -1,14 +1,34 @@
 [gd_scene format=3]
 
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/totora_entrada.res" id="1_model"]
+[ext_resource type="Shader" path="res://src/world/look/boca_oscura.gdshader" id="2_boca"]
 
 [sub_resource type="BoxShape3D" id="Hut"]
 size = Vector3(4, 3.5, 4)
+
+[sub_resource type="ShaderMaterial" id="BocaMaterial"]
+render_priority = -1
+shader = ExtResource("2_boca")
+shader_parameter/size = Vector2(1.96, 2.25)
+shader_parameter/half_bottom = 0.8
+shader_parameter/half_top = 0.8
+shader_parameter/height = 2.07
+shader_parameter/arch = 0.0
+
+[sub_resource type="QuadMesh" id="BocaQuad"]
+material = SubResource("BocaMaterial")
+size = Vector2(1.96, 2.25)
+center_offset = Vector3(0, 1.125, 0)
 
 [node name="TotoraEntrada" type="StaticBody3D"]
 
 [node name="Model" type="MeshInstance3D" parent="."]
 mesh = ExtResource("1_model")
+
+[node name="Boca" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13, 1.9)
+cast_shadow = 0
+mesh = SubResource("BocaQuad")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
