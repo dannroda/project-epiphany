@@ -37,6 +37,15 @@ const SLEEPERS := &"room_sleepers"
 @export var camera_offset := Vector3.ZERO
 ## Campo de visión de la cámara en esta sala (0 = el del nivel).
 @export var camera_fov := 0.0
+## Cámara, viñeta y luz de la sala (pisa a camera_offset y camera_fov). Uno de data/ambientes/ sirve para todas las
+## salas de ese tamaño.
+@export var ambiente: AmbientePreset
+## Pone el preset en la TopDownCamera y el WorldEnvironment del nivel y deja la cámara encuadrando esta sala (tildar
+## Preview en la vista 3D): se ajusta ahí, en sus propias propiedades, y se guarda con el botón de abajo.
+@export_tool_button("Editar en la cámara y el entorno", "Camera3D") var _editar_ambiente := editar_ambiente
+## Copia lo de la cámara y el entorno al preset (lo guarda en su .tres) y deja el nivel como estaba.
+@export_tool_button("Guardar en el preset", "Save") var _guardar_ambiente := guardar_ambiente
+@export_tool_button("Cancelar la edición", "Close") var _cancelar_ambiente := cancelar_ambiente
 
 var _outline: MeshInstance3D
 var _announced := false
@@ -50,6 +59,9 @@ var _checked := false
 
 static var _waking := false
 static var _outline_material: StandardMaterial3D
+## La sala cuyo preset se está editando en el editor y lo que tenían la cámara y el entorno antes.
+static var _editing: Room
+static var _stash := {}
 
 
 func _ready() -> void:
@@ -191,6 +203,88 @@ func _physics_process(_delta: float) -> void:
 
 func _process(_delta: float) -> void:
 	_draw_outline()
+	if _editing == self:
+		_frame_editor_camera()
+
+
+func editar_ambiente() -> void:
+	if is_instance_valid(_editing):
+		_editing.cancelar_ambiente()
+	var camera := _level_camera()
+	var world := _level_world()
+	if camera == null or world == null:
+		push_warning("%s: el nivel necesita una TopDownCamera y un WorldEnvironment" % name)
+		return
+	if ambiente == null:
+		ambiente = AmbientePreset.new()
+		ambiente.capture(camera, world)
+	_stash = {camera: _read(camera, ["global_transform", "offset", "field_of_view", "fov"])}
+	var tone := AmbientePreset.tone_of(world)
+	if tone:
+		_stash[tone] = _read(tone, AmbientePreset.TONE_PROPERTIES + ["frame_in_editor"])
+		tone.frame_in_editor = true
+	if world.environment:
+		_stash[world.environment] = _read(world.environment, AmbientePreset.LIGHT_PROPERTIES)
+	if ambiente.usar_camara:
+		camera.set(&"offset", ambiente.offset)
+		camera.set(&"field_of_view", ambiente.fov)
+	var targets := ambiente.targets(world)
+	for target: Object in targets:
+		for property: String in targets[target]:
+			target.set(property, targets[target][property])
+	_editing = self
+
+
+func guardar_ambiente() -> void:
+	if _editing != self or ambiente == null:
+		return
+	ambiente.capture(_level_camera(), _level_world())
+	if ambiente.resource_path != "" and not ambiente.resource_path.contains("::"):
+		ResourceSaver.save(ambiente)
+	cancelar_ambiente()
+
+
+func cancelar_ambiente() -> void:
+	for target: Object in _stash:
+		if is_instance_valid(target):
+			for property: String in _stash[target]:
+				target.set(property, _stash[target][property])
+	_stash.clear()
+	_editing = null
+
+
+func _frame_editor_camera() -> void:
+	var camera := _level_camera()
+	if camera == null:
+		return
+	var center := bounds().get_center()
+	var focus := Vector3(center.x, floor_y(), center.y)
+	var eye_offset: Vector3 = camera.get(&"offset")
+	camera.look_at_from_position(focus + eye_offset, focus, Vector3.UP)
+	camera.fov = camera.get(&"field_of_view")
+
+
+func _level_camera() -> Camera3D:
+	for camera: Camera3D in _level_root().find_children("*", "Camera3D", true, false):
+		if camera.get_script() and camera.get_script().get_global_name() == &"TopDownCamera":
+			return camera
+	return null
+
+
+func _level_world() -> WorldEnvironment:
+	var found := _level_root().find_children("*", "WorldEnvironment", true, false)
+	return found[0] if not found.is_empty() else null
+
+
+func _level_root() -> Node:
+	return owner if owner else get_tree().edited_scene_root if Engine.is_editor_hint() else get_tree().current_scene
+
+
+func _read(target: Object, properties: Array) -> Dictionary:
+	var out := {}
+	for property: String in properties:
+		out[property] = target.get(property)
+	return out
 
 
 ## Rectángulo global de la sala en XZ (x, z).

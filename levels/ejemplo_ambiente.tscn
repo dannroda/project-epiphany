@@ -2,16 +2,12 @@
 
 [ext_resource type="PackedScene" uid="uid://ccn88kav7u1vk" path="res://levels/chullpa.tscn" id="1_chullpa"]
 [ext_resource type="Script" uid="uid://b7iar3llh0wri" path="res://src/world/ambiente_sala.gd" id="2_ambiente"]
+[ext_resource type="Resource" path="res://data/ambientes/ejemplo_entrada.tres" id="3_entrada"]
 
 [node name="EjemploAmbiente" instance=ExtResource("1_chullpa")]
 
-[node name="AmbienteSala" type="Node" parent="PlantaBaja/Entrada"]
-script = ExtResource("2_ambiente")
-valores = {
-"ambient_light_energy": 0.4,
-"tono_frame": 0.16,
-"tono_vignette": 1.6
-}
+[node name="Entrada" parent="PlantaBaja"]
+ambiente = ExtResource("3_entrada")
 
 [node name="AmbienteZoom" type="Node" parent="PlantaBaja/EntradaGate"]
 script = ExtResource("2_ambiente")

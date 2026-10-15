@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AmbientePreset" format=3]
+
+[ext_resource type="Script" path="res://src/world/look/ambiente_preset.gd" id="1_preset"]
+
+[resource]
+script = ExtResource("1_preset")
+usar_camara = false
+vignette = 0.15
+frame = 0.0
