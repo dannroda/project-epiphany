@@ -183,11 +183,11 @@ func test_the_long_jump_does_not_clear_four_tiles() -> void:
 	assert_true(landed.y < FAR.y - 1.0, "4 baldosas no se cruzan: cae (x %.2f, y %.2f)" % [landed.x - FAR.x, landed.y - FAR.y])
 
 
-func _overworld() -> Array:
+func _overworld(level := "res://levels/overworld.tscn") -> Array:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state := tree.root.get_node(^"GameState")
 	state.reset()
-	tree.change_scene_to_file("res://levels/overworld.tscn")
+	tree.change_scene_to_file(level)
 	await tree.scene_changed
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	for i in 30:
@@ -250,3 +250,14 @@ func test_the_long_jump_does_not_cross_the_crag_abyss() -> void:
 	var result: Array = await _overworld_long_jump(setup[0], setup[1], Vector3(80, 5.3, -17.5), &"move_forward", Vector3.BACK * -1.0, 23.0)
 	assert_true(result[1] < 4.7, "el abismo del Risco (4 celdas) no se cruza ni con el salto largo: cae (y mín %.2f)" % result[1])
 	(setup[2] as Node).reset()
+
+
+func test_the_temple_heart_piece_islet_takes_a_long_jump_there_and_back() -> void:
+	var setup: Array = await _overworld("res://levels/templo.tscn")
+	var state: Node = setup[2]
+	var result: Array = await _overworld_long_jump(setup[0], setup[1], Vector3(30, 0, 37), &"move_right", Vector3.RIGHT, 33.0)
+	assert_true(result[1] > -0.6 and result[0].x > 37.0 and result[0].x < 41.0, "del oeste al islote del ala del gancho (%s, y mín %.2f)" % [result[0], result[1]])
+	assert_true(state.get_flag(&"te_heart_piece"), "la pieza de corazón del islote")
+	result = await _overworld_long_jump(setup[0], setup[1], Vector3(37.2, 0, 37), &"move_right", Vector3.RIGHT, 41.0)
+	assert_true(result[1] > -0.6 and result[0].x > 45.0, "del islote al este (%s, y mín %.2f)" % [result[0], result[1]])
+	state.reset()

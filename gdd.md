@@ -147,7 +147,7 @@ Las teclas se mapean por posición física (`physical_keycode`): WASD queda en e
 | Llaves chicas, llave del jefe, mapa, brújula | Mazmorra | — | Mazmorra | Estructura de mazmorra |
 | Espada dorada | Equipo | Melee, el doble de daño (4), estela y chispas doradas | Templo: cofre grande de la Combinada (opcional, tras tres oleadas) | Premio del templo (11.183) |
 | Contenedor de corazón | Mejora | +1 corazón | Tras cada jefe; Arboleda (puzzle de bloques) | Recompensa |
-| Pieza de corazón (×4) | Mejora | 4 piezas = +1 corazón | Overworld: arriba de un escalón de la pradera (con la pluma), fondo de la gruta (bombas), rincón del santuario (bombas), junto al cofre del carcaj (post-mazmorra) | Premia explorar |
+| Pieza de corazón (×4) | Mejora | 4 piezas = +1 corazón | 13 (11.124): overworld 8 (pradera, gruta, santuario, risco, cerros, islote, árbol, cumbre) y una por mazmorra (Chullpa, Queñoa, Totora, Cumbre, templo) | Premia explorar |
 
 **Piezas de corazón (11.21):** `GameState.give` las guarda en el inventario (se guardan con la partida) y cada 4 suma un corazón y descuenta las 4. En el mundo son `HeartPiece` (`src/world/heart_piece.tscn`, un `Pickup` con item get y un flag `ow_heart_piece_*` para no volver). El item get dice cuántas lleva (cues `heart_piece_1..3` de `item_get.dialogue`) y la que completa el corazón usa `heart_piece_full` con el ícono del contenedor. La pantalla de Equipo muestra "Piezas de corazón" con un corazón en cuartos (`HeartPieceIcon`) y "n / 4".
 
@@ -361,7 +361,7 @@ Puertas: `ChullpaDoor` (−86, −6) en los Cerros, `QuenoaDoor` (−24, 22) en 
 | Arco | **Mapa**. Dos ojos-interruptor en la pared norte, detrás de un abismo a lo ancho de la sala: solo con flechas; los dos abren la puerta del ojo del arco (`BowDoor`). Tablilla de los ojos menores |
 | Ojo del arco | Revancha con los Ojos de la Queñoa (`BowFight`, `te_eye_bow`): pieza de la llave del jefe y el cofre de la **llave chica**. Vasijas de flechas |
 | Hub | Esqueletos. Cuatro ojos tallados en el sello de la pared norte, uno por ala. Puertas con llave a las alas del gancho y del espejo |
-| Gancho | Un abismo (foso) de 4 celdas a lo ancho de la sala, entre el hub y el ojo del gancho: el salto largo cruza 3, así que solo pasa el gancho. Un poste de cada lado, a 0,5 m del borde (`GanchoWestPost`, `GanchoEastPost`), corridos de la línea de las puertas para no tapar el paso |
+| Gancho | Un abismo (foso) de 4 celdas a lo ancho de la sala, entre el hub y el ojo del gancho: el salto largo cruza 3, así que solo pasa el gancho. Un poste de cada lado, a 0,5 m del borde (`GanchoWestPost`, `GanchoEastPost`), corridos de la línea de las puertas para no tapar el paso. Contra la pared norte el abismo se abre a 6 celdas con un islote de 2 × 2 en el medio: con el salto largo (2 celdas de cada lado; la pluma sola no llega), la **pieza de corazón** (`te_heart_piece`, 11.190) |
 | Ojo del gancho | Revancha con la Yacumama y sus cuatro charcos (`HookFight`, `te_eye_hook`): pieza de la llave del jefe |
 | Espejo | Una torreta que dispara orbes: el escudo espejo los devuelve al cristal (`te_mirror_crystal`), que abre la puerta del ojo del espejo |
 | Ojo del espejo | Revancha con el Apu Kuntur (`MirrorFight`, `te_eye_mirror`), con dos soles en las paredes oeste y este (`MirrorSunWest`, `MirrorSunEast`) que enciende de entrada porque arranca con media vida: pieza de la llave del jefe |
