@@ -4494,9 +4494,9 @@ Daniel (2026-10-12): las botellas tienen su fila fija, separada de los ítems co
 - [x] items_page: grilla de 8 sin botellas y BottleGrid con bottle_1..4; el cursor de co-op recorre las dos
 - [x] Tests: test_bottles_have_their_own_fixed_row y test_item_ring al día
 
-### Enemigos que deambulan mientras no te ven; centinelas con alerta y búsqueda · Pendiente
+### 11.115 Enemigos que deambulan mientras no te ven; centinelas con alerta y búsqueda · En curso
 
-**Prioridad:** alta · **Etiquetas:** `ia`, `enemigos`
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-fd · **Etiquetas:** `ia`, `enemigos`
 
 Daniel (2026-10-13): los enemigos que no te detectaron no se quedan quietos. Todos deambulan cerca de su lugar: caminan despacio a puntos al azar de la navmesh dentro de unos metros de donde empiezan, paran un rato y miran alrededor (reemplaza la rama Quieto de enemy_bt.tres; radio, velocidad y pausas en EntityConfig). Alerta y búsqueda solo para un tipo de enemigo nuevo: el centinela o guardia de una guarida de un grupo enemigo que no son monstruos. Al verte hace una pausa de alerta (un !) antes de atacar; si te pierde va a tu último lugar visto, mira alrededor y vuelve a su puesto. Descartados por ahora: rondas fijas y cono de visión.
 
