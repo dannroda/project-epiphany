@@ -1,0 +1,21 @@
+{
+  "assignee": "project-epiphany-fd",
+  "checklist": [],
+  "code": "11.194",
+  "created_at": "2026-10-15T17:43:36.283Z",
+  "description": "Fases 2 y 3: si las dos manos están aturdidas o caídas, el ojo suma el barrido de rayo del Ojo Vigía (línea marcada, carga, barrido) alternando con el orbe. El aturdimiento y la derrota lo cortan. data/boss/attack_laser.tres; exports del grupo Rayo en boss.gd; test en test_boss.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 191,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "review",
+  "tags": [
+    "jefe",
+    "combate"
+  ],
+  "test": "",
+  "title": "Jefe final: rayo del ojo con las dos manos fuera de juego",
+  "updated_at": "2026-10-15T17:43:36.283Z"
+}

@@ -2598,7 +2598,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 
 Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
 
-## M11 — Pulido: contenido y feel  (109/189)
+## M11 — Pulido: contenido y feel  (109/190)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5424,11 +5424,17 @@ Daniel (2026-10-15): un evento de mini jefe en el overworld, en una zona despué
 
 Daniel (2026-10-15): evento de mini jefe con un par de monstruos en una zona del overworld a la que solo se llega después de D2; al vencerlo aparece el martillo (cofre o pedestal). ArenaFight/WaveSpawner con flag. Depende del ítem de 11.191. Si el mini jefe necesita modelo propio, va a -5d.
 
-### 11.193 Placa de golpe fuerte (modo STRIKE) · Pendiente
+### 11.193 Placa de golpe fuerte (modo STRIKE) · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `puzzles`, `arte`
 
 Modo STRIKE de FloorSwitch con sus mallas (interruptor_golpe_marco/placa, ya hechas). Lee el mismo marcador de golpe fuerte que defina 11.191. Cierra el paso 4 de 11.110.
+
+### 11.194 Jefe final: rayo del ojo con las dos manos fuera de juego · Revisión
+
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-fd · **Etiquetas:** `jefe`, `combate`
+
+Fases 2 y 3: si las dos manos están aturdidas o caídas, el ojo suma el barrido de rayo del Ojo Vigía (línea marcada, carga, barrido) alternando con el orbe. El aturdimiento y la derrota lo cortan. data/boss/attack_laser.tres; exports del grupo Rayo en boss.gd; test en test_boss.
 
 ## M12 — Assets propios (Blender)  (17/38)
 

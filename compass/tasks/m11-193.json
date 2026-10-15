@@ -10,12 +10,12 @@
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "puzzles",
     "arte"
   ],
   "test": "",
   "title": "Placa de golpe fuerte (modo STRIKE)",
-  "updated_at": "2026-10-15T16:57:35.243Z"
+  "updated_at": "2026-10-15T17:43:36.006Z"
 }
