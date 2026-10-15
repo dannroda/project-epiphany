@@ -3,6 +3,8 @@
 [ext_resource type="Script" path="res://src/world/temple_seal.gd" id="1_seal"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/sello_ojo.res" id="m0_sello_ojo"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/sello_losa.res" id="m1_sello_losa"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/sello_iris.res" id="m2_sello_iris"]
+[ext_resource type="Script" path="res://src/world/eye_follow.gd" id="s_eye_follow"]
 
 [sub_resource type="BoxShape3D" id="Shape"]
 size = Vector3(2.4, 2.6, 0.5)
@@ -19,6 +21,11 @@ mesh = ExtResource("m1_sello_losa")
 [node name="Eye" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0.25)
 mesh = ExtResource("m0_sello_ojo")
+
+[node name="Iris" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0.25)
+mesh = ExtResource("m2_sello_iris")
+script = ExtResource("s_eye_follow")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)

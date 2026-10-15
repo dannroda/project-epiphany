@@ -403,10 +403,10 @@ LOGO_GOLD = [
 ]
 
 
-def logo_eye(p, center, width, depth=0.05, iris=("tela_roja", "DARK")):
+def logo_eye(p, center, width, depth=0.05, iris=("tela_roja", "DARK"), part=None):
 	"""El ojo de art/logo/epiphany_logo.svg en relieve, de frente a -Y y de width de ancho (sin los rayos ni adornos de oro
-	cuenta solo la almendra): rayos arriba, almendra de oro con el blanco, iris rojo con aro, pupila y brillo, barras a los
-	costados y tres colgantes."""
+	cuenta solo la almendra): rayos arriba, almendra de oro con el blanco, iris con aro, pupila y brillo, barras a los
+	costados y tres colgantes. part "frame" deja el marco y el blanco; "iris", el iris solo (para moverlo aparte)."""
 	k = width / 380.0
 
 	def flat(points, z0, z1):
@@ -447,6 +447,10 @@ def logo_eye(p, center, width, depth=0.05, iris=("tela_roja", "DARK")):
 	glint = disc(9, 0.0, depth * 1.85, x=582, y=150)
 	p.paint(glint, "blanco", "LIGHT")
 	faces = gold + white + ring + iris_faces + pupil + glint
+	if part is not None:
+		drop = ring + iris_faces + pupil + glint if part == "frame" else gold + white
+		bmesh.ops.delete(p.bm, geom=list({v for f in drop for v in f.verts}), context="VERTS")
+		faces = [f for f in faces if f.is_valid]
 	p.transform(faces, Matrix.Translation(center) @ Matrix.Rotation(math.pi / 2, 4, "X"))
 	return faces
 
