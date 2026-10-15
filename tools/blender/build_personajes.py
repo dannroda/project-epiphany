@@ -361,6 +361,92 @@ def chullpa(name, guardian):
 	save(name)
 
 
+# --- centinela (sub-jefe del martillo) ---
+
+STONE = "acantilado"
+BRONZE = "cobre_verde"
+
+
+def centinela_head(head, hz):
+	"""Cabeza de monolito de Tiwanaku: bloque de piedra con ojos cuadrados de doom, lágrimas de oro, boca rasgada y un
+	tocado de bloques con remates de oro."""
+	block = head.rounded_box(-0.36, 0.36, -0.32, 0.3, hz - 0.4, hz + 0.24, radius=0.06, segments=2)
+	head.paint(block, STONE, z_range=(hz - 0.6, hz + 0.5), vary=0.05)
+	brow = head.rounded_box(-0.38, 0.38, -0.36, -0.3, hz - 0.02, hz + 0.08, radius=0.02, segments=1)
+	head.paint(brow, STONE, "DARK")
+	for x in (-0.16, 0.16):
+		head.paint(head.box(x - 0.1, x + 0.1, -0.35, -0.31, hz - 0.2, hz - 0.04), "noche", "MID")
+		head.paint(head.box(x - 0.06, x + 0.06, -0.37, -0.34, hz - 0.17, hz - 0.07), GLOW, "LIGHT")
+		head.paint(head.box(x - 0.025, x + 0.025, -0.35, -0.32, hz - 0.36, hz - 0.2), "dorado", "MID")
+	head.paint(head.box(-0.14, 0.14, -0.35, -0.31, hz - 0.33, hz - 0.29), "noche", "MID")
+	band = head.rounded_box(-0.4, 0.4, -0.34, 0.32, hz + 0.18, hz + 0.3, radius=0.03, segments=1)
+	head.paint(band, "dorado", "MID")
+	crown, caps = [], []
+	for i in range(7):
+		x = -0.33 + i * 0.11
+		h = 0.08 + 0.08 * (1 - abs(i - 3) / 3)
+		crown += head.box(x - 0.045, x + 0.045, -0.3, -0.16, hz + 0.3, hz + 0.3 + h)
+		caps += head.box(x - 0.05, x + 0.05, -0.31, -0.15, hz + 0.3 + h, hz + 0.34 + h)
+	head.paint(crown, STONE, "MID", vary=0.06)
+	head.paint(caps, "dorado", "LIGHT")
+
+
+def centinela():
+	"""El centinela de la Necrópolis: un monolito de piedra que guarda el martillo y pelea con una maza de estrella
+	(maza_centinela, en la mano derecha). Bloques de piedra por hueso, bronce en hombros y brazos y el doom en ojos,
+	pecho y rodillas."""
+	rig = start()
+	bp = bone_points(rig)
+	body = Body(rig, "centinela", 50)
+	hips = body.part("hips")
+	belt = hips.rounded_box(-0.32, 0.32, -0.22, 0.22, 0.4, 0.64, radius=0.05, segments=2)
+	hips.paint_bands(belt, [(0.56, 0.6, "dorado", "MID")], default=(0, 0, STONE, "MID"))
+	flap = hips.rounded_box(-0.16, 0.16, -0.27, -0.21, 0.24, 0.58, radius=0.02, segments=1)
+	hips.paint(flap, "tela_roja", "MID", vary=0.05)
+	epi.logo_eye(hips, Vector((0, -0.28, 0.44)), 0.17, depth=0.012, iris=(GLOW, "MID"))
+	spine = body.part("spine")
+	spine.paint(spine.rounded_box(-0.27, 0.27, -0.18, 0.18, 0.62, 0.92, radius=0.05, segments=2), STONE, "DARK", vary=0.04)
+	chest = body.part("chest")
+	torso = chest.rounded_box(-0.44, 0.44, -0.27, 0.25, 0.84, 1.3, radius=0.07, segments=2)
+	chest.paint(torso, STONE, z_range=(0.6, 1.6), vary=0.05)
+	for z in (0.9, 1.22):
+		chest.paint(chest.box(-0.3, 0.3, -0.285, -0.26, z, z + 0.035), "dorado", "MID")
+	ring = chest.cylinder(0.15, 0.0, 0.04, sides=16)
+	chest.transform(ring, Matrix.Translation((0, -0.27, 1.06)) @ Matrix.Rotation(math.pi / 2, 4, "X"))
+	chest.paint(ring, "dorado", "MID")
+	core = chest.blob((0, -0.28, 1.06), 0.09, squash=(1, 0.5, 1), subdiv=2, rough=0.0)
+	chest.paint(core, GLOW, "LIGHT")
+	centinela_head(body.part("head"), 1.62)
+	for side in ("l", "r"):
+		up = body.part(f"upperarm.{side}")
+		a, b = bp[f"upperarm.{side}"]
+		up.paint(limb(up, a, b, 0.12, 0.11, sides=8), STONE, "MID", vary=0.05)
+		pad = up.rounded_box(a.x - 0.22, a.x + 0.22, a.y - 0.22, a.y + 0.22, a.z - 0.06, a.z + 0.22, radius=0.08, segments=2)
+		up.paint_bands(pad, [(a.z - 0.06, a.z + 0.02, "dorado", "MID")], default=(0, 0, BRONZE, "MID"))
+		low = body.part(f"lowerarm.{side}")
+		a, b = bp[f"lowerarm.{side}"]
+		low.paint(limb(low, a, b, 0.11, 0.13, sides=8), STONE, "MID", vary=0.05)
+		low.paint(limb(low, a + (b - a) * 0.45, a + (b - a) * 0.95, 0.145, 0.15, sides=12), BRONZE, "MID", vary=0.04)
+		low.paint(limb(low, a + (b - a) * 0.66, a + (b - a) * 0.76, 0.155, 0.155, sides=12), GLOW, "MID")
+		wr = body.part(f"wrist.{side}")
+		wr.paint(limb(wr, *bp[f"wrist.{side}"], 0.09, 0.09, sides=8), STONE, "DARK")
+		hand = body.part(f"hand.{side}")
+		h0, h1 = bp[f"hand.{side}"]
+		hand.paint(hand.blob((h0 + h1) / 2, 0.13, squash=(1.1, 1.0, 1.0), subdiv=1, rough=0.08), STONE, "MID")
+		ul = body.part(f"upperleg.{side}")
+		ul.paint(limb(ul, *bp[f"upperleg.{side}"], 0.14, 0.13, sides=8), STONE, "DARK", vary=0.05)
+		ll = body.part(f"lowerleg.{side}")
+		a, b = bp[f"lowerleg.{side}"]
+		ll.paint(limb(ll, a + (b - a) * -0.3, b, 0.17, 0.16, sides=8), STONE, "MID", vary=0.05)
+		ll.paint(limb(ll, a - (b - a) * 0.3, a - (b - a) * 0.05, 0.185, 0.185, sides=12), BRONZE, "MID")
+		ll.paint(ll.blob(a + Vector((0, -0.17, 0.0)), 0.05, squash=(1, 0.5, 1), subdiv=1, rough=0.0), GLOW, "LIGHT")
+		foot = body.part(f"foot.{side}")
+		f0, _ = bp[f"foot.{side}"]
+		foot.paint(foot.rounded_box(f0.x - 0.15, f0.x + 0.15, f0.y - 0.26, f0.y + 0.1, 0.0, 0.16, radius=0.04, segments=1), STONE, "DARK", vary=0.04)
+	body.build(smooth=40)
+	save("centinela")
+
+
 if __name__ == "__main__":
 	only = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else ["jugador", "chullpa", "chullpa_guardian"]
 	if "jugador" in only:
@@ -369,3 +455,5 @@ if __name__ == "__main__":
 		chullpa("chullpa", False)
 	if "chullpa_guardian" in only:
 		chullpa("chullpa_guardian", True)
+	if "centinela" in only:
+		centinela()

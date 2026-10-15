@@ -732,6 +732,23 @@ def interruptor_golpe_placa(p):
 	p.paint(cracks, "noche", "MID")
 
 
+def pedestal_martillo(p):
+	"""Pedestal de piedra de 1 m donde aparece el martillo (11.192): base escalonada, fuste con el ojo del logo al
+	frente y una losa arriba con la ranura donde se clava el mango (centrada, a 1.0 m)."""
+	steps = []
+	for w, z0, z1 in ((0.62, 0.0, 0.12), (0.5, 0.12, 0.22)):
+		steps += p.rounded_box(-w, w, -w, w, z0, z1, radius=0.03, segments=1)
+	p.jitter(steps, 0.008)
+	p.paint(steps, "acantilado", "DARK", vary=0.05)
+	shaft = p.rounded_box(-0.32, 0.32, -0.32, 0.32, 0.22, 0.86, radius=0.04, segments=1)
+	p.paint(shaft, "acantilado", z_range=(0.0, 1.2), vary=0.04)
+	epi.logo_eye(p, Vector((0, -0.325, 0.54)), 0.36, depth=0.02, iris=("neon", "MID"))
+	top = p.rounded_box(-0.44, 0.44, -0.44, 0.44, 0.86, 1.0, radius=0.03, segments=1)
+	p.paint(top, "acantilado", "MID", vary=0.04)
+	p.paint(p.box(-0.45, 0.45, -0.45, 0.45, 0.88, 0.91), "dorado", "MID")
+	p.paint(p.box(-0.07, 0.07, -0.07, 0.07, 0.99, 1.005), "noche", "MID")
+
+
 def aro(p, radius, thick, z=0.0, sides=16, segs=8):
 	"""Aro (toro) alrededor de Z a la altura z."""
 	profile = [(radius + thick * math.cos(a), z + thick * math.sin(a)) for a in (2 * math.pi * k / segs for k in range(segs + 1))]
@@ -772,6 +789,7 @@ piece("interruptor_golpe_placa", 43, interruptor_golpe_placa, smooth=40)
 piece("poste_gancho", 37, poste_gancho, smooth=40)
 piece("poste_gancho_anillo", 38, poste_gancho_anillo, smooth=40)
 piece("pieza_corazon", 39, pieza_corazon, smooth=70)
+piece("pedestal_martillo", 44, pedestal_martillo, smooth=40)
 
 epi.layout(kit, columns=6, spacing=2.0)
 epi.publish("objetos")

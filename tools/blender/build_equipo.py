@@ -412,6 +412,31 @@ def martillo(p):
 		p.transform(eye, Matrix.Rotation(turn, 4, "Z") @ Matrix.Translation((0, -0.13, 0.78)))
 
 
+def maza_centinela(p):
+	"""La maza de estrella del centinela (un champi andino), sobre +Z con la empuñadura en el origen: mango de madera
+	con zunchos de bronce y una cabeza de piedra de seis puntas con aros de oro y grietas de doom."""
+	p.paint(p.cylinder(0.05, -0.28, 1.12, sides=10, radius_top=0.055), "madera_oscura", "MID", vary=0.04)
+	rings = []
+	for z in (-0.22, 0.12, 0.96):
+		rings += p.cylinder(0.07, z, z + 0.06, sides=10)
+	p.paint(rings, "cobre_verde", "MID")
+	core = p.cylinder(0.2, 1.08, 1.4, sides=12)
+	p.paint(core, "acantilado", "DARK", vary=0.05)
+	points = []
+	for k in range(6):
+		a = 2 * math.pi * k / 6
+		spike = p.cylinder(0.11, 0.0, 0.2, sides=4, radius_top=0.02, phase=math.pi / 4)
+		p.transform(spike, Matrix.Translation((0.17 * math.cos(a), 0.17 * math.sin(a), 1.24)) @ Matrix.Rotation(a, 4, "Z") @ Matrix.Rotation(math.pi / 2, 4, "Y"))
+		points += spike
+	p.paint(points, "acantilado", "MID", vary=0.05)
+	gold = p.cylinder(0.215, 1.06, 1.1, sides=12) + p.cylinder(0.215, 1.38, 1.42, sides=12)
+	p.paint(gold, "dorado", "MID")
+	glow = p.cylinder(0.205, 1.22, 1.26, sides=12)
+	p.paint(glow, "doom", "LIGHT")
+	cap = p.blob((0, 0, 1.44), 0.08, squash=(1, 1, 0.7), subdiv=1, rough=0.0)
+	p.paint(cap, "dorado", "LIGHT")
+
+
 piece("espada", 1, espada)
 piece("espada_dorada", 16, espada_dorada)
 piece("escudo_madera", 2, escudo_madera)
@@ -429,5 +454,6 @@ piece("gancho", 13, gancho)
 piece("gancho_punta", 14, gancho_punta)
 piece("gancho_cadena", 15, gancho_cadena)
 piece("martillo", 17, martillo)
+piece("maza_centinela", 18, maza_centinela)
 epi.layout(kit, columns=8, spacing=2.0)
 epi.publish("equipo")

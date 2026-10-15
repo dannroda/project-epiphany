@@ -1,0 +1,11 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/centinela/Body.res" id="1_yx1km"]
+[ext_resource type="Skin" path="res://src/entities/models/meshes/centinela/skin.tres" id="2_14qex"]
+
+[node name="Visuals" type="Node3D" unique_id=26322938]
+
+[node name="Body" type="MeshInstance3D" parent="." unique_id=964782230]
+mesh = ExtResource("1_yx1km")
+skin = ExtResource("2_14qex")
+skeleton = NodePath("../../Skeleton3D")
