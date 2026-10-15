@@ -15,9 +15,9 @@ import epi  # noqa: E402
 kit = epi.start()
 
 AMARU = {"skin": "musgo", "belly": "paja", "fin": "cobre_verde", "eye": "neon", "spots": None, "gold": None,
-	"length": 2.0, "radius": 0.4, "head": Vector((0, 0.2, 1.05)), "scale": 1.3, "sway": 0.22}
+	"length": 2.0, "radius": 0.4, "head": Vector((0, 0.2, 1.05)), "scale": 1.3, "sway": 0.22, "trail": 2.6}
 YACUMAMA = {"skin": "cobre_verde", "belly": "tierra", "fin": "tela_roja", "eye": "doom", "spots": "noche", "gold": "dorado",
-	"length": 3.2, "radius": 0.6, "head": Vector((0, 0.3, 1.6)), "scale": 1.9, "sway": 0.32}
+	"length": 3.2, "radius": 0.6, "head": Vector((0, 0.3, 1.6)), "scale": 1.9, "sway": 0.32, "trail": 3.6}
 
 
 def piece(name, seed, fn, smooth=45):
@@ -85,11 +85,19 @@ def spine_paint(p, faces, c, belly_axis, along, freq=1.6, threshold=0.35):
 
 
 def cuello(p, c):
+	"""Con la cola: parado queda bajo el piso; tirado, sigue el cuerpo por el piso con la panza apoyada."""
 	half = c["length"] / 2
 	r = c["radius"]
 	top = c["head"] + Vector((0, -0.15, -0.1)) * c["scale"]
 	n = 16
+	nt = 14
 	centers, radii = [], []
+	for i in range(nt):
+		u = i / nt
+		t = -(1.0 - u) * c["trail"] / (top.z + half)
+		rad = r * (0.12 + 0.88 * u ** 0.6)
+		centers.append(Vector((c["sway"] * math.sin(2 * math.pi * t), r - rad, -half - (1.0 - u) * c["trail"])))
+		radii.append(rad)
 	for i in range(n + 1):
 		t = i / n
 		z = -half + t * (top.z + half)
@@ -100,16 +108,19 @@ def cuello(p, c):
 	body = tube(p, centers, radii, sides=14)
 	spine_paint(p, body, c, Vector((0, 1, 0)), Vector((0, 0, 1)))
 	bases, tips = [], []
-	for i in range(3, n + 1):
-		t = i / n
+	for i in range(len(centers)):
+		t = (centers[i].z + half) / (top.z + half)
 		back = centers[i] + Vector((0, -1, 0)) * radii[i] * 0.75
-		h = r * (0.35 + 0.18 * math.sin(t * 14)) * min(1.0, (t - 0.15) * 4)
+		h = r * (0.35 + 0.18 * math.sin(t * 14)) * min(1.0, (1.0 - t) * 6)
+		if i < 3:
+			h = r * (0.9 - 0.25 * i)
 		bases.append(back)
-		tips.append(back + Vector((0, -h, h * 0.25)))
+		tips.append(back + Vector((0, -h, -h * 0.5 if i < 3 else h * 0.25)))
 	dorsal = fin(p, bases, tips, thick=0.03 * r / 0.4)
 	p.paint(dorsal, c["fin"], "MID", vary=0.1)
+	n = len(centers) - 1
 	for s in (-1, 1):
-		i = int(n * 0.72)
+		i = nt + int(16 * 0.72)
 		root = centers[i] + Vector((s * radii[i] * 0.85, 0, 0))
 		pts = [root + Vector((s * r * 0.9 * math.sin(a), -r * 0.4 * math.cos(a), -r * 0.6 * math.sin(a))) for a in (0.0, 0.6, 1.2, 1.7, 2.2)]
 		pec = fin(p, [root + Vector((0, 0.04, -0.06 * k)) for k in range(len(pts))], pts, thick=0.02, side=Vector((0, 1, 0.2)))
