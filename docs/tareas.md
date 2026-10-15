@@ -5401,11 +5401,13 @@ Daniel (2026-10-15): la llave del jefe de la Cumbre va al nicho del Atrio (escud
 
 **Notas:** Hecho el 2026-10-15 (b482f682): la llave del jefe pasa al nicho SO del Atrio, tras la reja que abre el cristal con el escudo; el nicho del Ojo del Sol guarda las vasijas; la Antesala tiene una placa (cu_antesala_step) que abre una puerta nueva a la Llegada y la deja abierta: de vuelta del Atrio se sube por Nido, Cámara y escalera. Grilla: una celda de pared interna de la cornisa pasa a paso (el rim no cambia); navmesh rebakeada. test_cumbre al día. Falta: que Daniel la recorra.
 
-### 11.190 Templo: una pieza de corazón · Pendiente
+### 11.190 Templo: una pieza de corazón · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `templo`
 
 Daniel (2026-10-15): agregar una pieza de corazón en el templo del ojo. Ver con 11.124 (piezas de corazón: 10, no múltiplo de 4).
+
+**Notas:** Hecho el 2026-10-15 (2e11c8c2): en el ala del gancho, contra la pared norte, el abismo se abre a 6 celdas y queda un islote de 2 × 2 con la pieza (te_heart_piece). Se llega con el salto largo (2 celdas de cada lado; la pluma sola no alcanza) y se vuelve igual. Grilla: 8 celdas internas (el rim no cambia), Pit más ancho, navmesh rebakeada. test_sandals hace el salto de ida y vuelta. Con esta quedan 13 piezas (11.124: sobra una). Falta: que Daniel la pruebe.
 
 ### 11.191 Martillo: ítem de golpe fuerte · Pendiente
 
