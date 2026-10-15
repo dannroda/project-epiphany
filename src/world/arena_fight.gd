@@ -1,7 +1,7 @@
 class_name ArenaFight
 extends Node3D
 ## Pelea de sub-jefe o jefe en una sala. Sus hijos pelean dentro de ella (WatcherEye, MummyGuard: los que tienen
-## `attack_finished`): al entrar el player se cierran las puertas, la cámara muestra al primero con el nombre y arranca,
+## `attack_finished`): al entrar el player se cierran las puertas, la cámara los muestra a todos gritando con el nombre y arranca,
 ## con la barra del HUD. De a uno ataca por vez; cuando cae uno, los demás se apuran. Si el player sale de la sala,
 ## la pelea vuelve a empezar. Hace de interruptor (`active`/`activated`) para lo que se abre al ganar; con flag,
 ## ganada queda ganada.
@@ -87,7 +87,7 @@ func _begin() -> void:
 	in_intro = true
 	Music.boss_fight = true
 	var seen_key: Variant = flag if flag != &"" else get_path()
-	await TopDownCamera.reveal(_fighters[0].body, _awaken, intro_hold, rematch or GameState.seen_boss_intros.has(seen_key))
+	await TopDownCamera.reveal(self, _awaken, intro_hold, rematch or GameState.seen_boss_intros.has(seen_key))
 	GameState.seen_boss_intros[seen_key] = true
 	in_intro = false
 	if not started:
@@ -107,8 +107,22 @@ func _awaken() -> void:
 	get_tree().call_group(Hud.GROUP, &"show_area_name", tr(display_name))
 	Feel.sfx(&"rumble", _fighters[0].body.global_position, true)
 	Feel.shake(0.35)
-	if _fighters[0].has_method(&"roar"):
-		_fighters[0].roar()
+	for fighter in _fighters:
+		if fighter.has_method(&"roar"):
+			fighter.roar()
+
+
+## Adónde mira la cámara en la presentación: al medio de los que pelean, así se ven todos gritando.
+func reveal_point() -> Vector3:
+	var sum := Vector3.ZERO
+	for fighter in _fighters:
+		sum += fighter.body.global_position
+	return sum / _fighters.size()
+
+
+## Si son varios, la cámara se acerca menos para que entren todos.
+func reveal_zoom(zoom: float) -> float:
+	return zoom if _fighters.size() < 2 else 1.0
 
 
 ## El player salió (cayó por un hueco): todo como al llegar.

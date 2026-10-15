@@ -38,6 +38,8 @@ const SKIP_ACTIONS: Array[StringName] = [&"ui_accept", &"attack", &"interact"]
 
 @export_group("Mostrar lo activado")
 @export var reveal_pan_time := 0.6
+## Viñeta y marco del TonoLA durante un acercamiento: casi nada, pegados al borde; al volver, los de antes.
+@export var reveal_tone := {"vignette": 0.15, "frame": 0.0}
 ## Cuánto se queda mirando después de abrir.
 @export var reveal_hold := 0.9
 ## Se acerca a lo activado: fracción del `offset` normal.
@@ -574,6 +576,7 @@ func _hold_together(players: Array[PlayerCharacter]) -> void:
 static var unlock_reveals := true
 ## Cuadros que se queda mirando después de que termina de abrirse.
 const REVEAL_TAIL_FRAMES := 4
+const TONE := preload("res://src/world/look/tono_la.gd")
 
 ## Lo que se destraba por una acción (switches, puzzle, horda) se muestra con `reveal`.
 static func reveal_unlock(target: Node3D, action: Callable) -> void:
@@ -619,9 +622,9 @@ func _exit_tree() -> void:
 		get_tree().paused = false
 
 
-## Foco del acercamiento: el objetivo, a la altura del player.
+## Foco del acercamiento: el objetivo (o su `reveal_point()`, si lo tiene), a la altura del player.
 func reveal_focus(target: Node3D) -> Vector3:
-	var point := target.global_position
+	var point: Vector3 = target.call(&"reveal_point") if target.has_method(&"reveal_point") else target.global_position
 	point.y = target_node.global_position.y
 	return point
 
@@ -635,8 +638,17 @@ func _reveal(target: Node3D, action: Callable, hold: float) -> void:
 	target.process_mode = PROCESS_MODE_ALWAYS
 	tree.paused = true
 	var back := global_position
-	await _pan(reveal_focus(target) + _eye() * reveal_zoom)
+	var zoom: float = target.call(&"reveal_zoom", reveal_zoom) if target.has_method(&"reveal_zoom") else reveal_zoom
+	var tone := _tone()
+	var tone_back := {}
+	if tone:
+		for property: String in reveal_tone:
+			tone_back[property] = tone.get(property)
+		_tween_tone(tone, reveal_tone)
+	await _pan(reveal_focus(target) + _eye() * zoom)
 	if not is_inside_tree():
+		for property: String in tone_back:
+			tone.set(property, tone_back[property])
 		return
 	var left := 0.0
 	if is_instance_valid(target):
@@ -649,12 +661,30 @@ func _reveal(target: Node3D, action: Callable, hold: float) -> void:
 		if _skip:
 			break
 		await tree.process_frame
+	if tone:
+		_tween_tone(tone, tone_back)
 	await _pan(back)
 	if is_instance_valid(target):
 		target.process_mode = target_mode
 	process_mode = PROCESS_MODE_INHERIT
 	tree.paused = false
 	revealing = false
+
+
+## El TonoLA del nivel (en el compositor de su WorldEnvironment), o null.
+func _tone() -> CompositorEffect:
+	var scene := get_tree().current_scene
+	for world: WorldEnvironment in scene.find_children("*", "WorldEnvironment", true, false) if scene else []:
+		for effect in world.compositor.compositor_effects if world.compositor else []:
+			if effect and effect.get_script() == TONE:
+				return effect
+	return null
+
+
+func _tween_tone(tone: CompositorEffect, values: Dictionary) -> void:
+	var tween := create_tween().set_parallel().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	for property: String in values:
+		tween.tween_property(tone, NodePath(property), values[property], reveal_pan_time)
 
 
 ## Lo que tarda en abrirse lo mostrado (puerta, reja, puente); sin animación conocida, `reveal_hold`.
