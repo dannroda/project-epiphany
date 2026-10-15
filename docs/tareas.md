@@ -2598,7 +2598,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 
 Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
 
-## M11 — Pulido: contenido y feel  (108/180)
+## M11 — Pulido: contenido y feel  (107/180)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3013,9 +3013,9 @@ Uno o dos atajos que se abren desde adentro (puente o escalera) y quedan abierto
 
 **Relacionadas:** 11.170 Atajos: animación del player subiendo y bajando en vez del fundido
 
-### 11.29 Overworld después del jefe · Hecho
+### 11.29 Overworld después del jefe · Revisión
 
-**Terminada:** 2026-10-15 · **Prioridad:** baja · **Etiquetas:** `overworld`, `audio`
+**Prioridad:** baja · **Etiquetas:** `overworld`, `audio`
 
 Después de vencer al jefe, el overworld tiene que verse y sonar distinto (sin doom: luz, niebla y música calmas) y ofrecer algo nuevo que solo aparece entonces.
 
@@ -5250,18 +5250,28 @@ Daniel: ¿por qué hay escalera abajo y nada arriba? (-43, 5a85d8f4): la escaler
 
 **Relacionadas:** 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista
 
-### 11.178 Totora: salas de 14 de alto y al menos 22 de ancho · Pendiente
+### 11.178 Totora: cada sala centrada en cámara y tapando las otras · Revisión
 
-**Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `mazmorra`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `mazmorra`
 
 Daniel (2026-10-14): todas las salas de las mazmorras miden 14 de alto y al menos 22 de ancho, como la Chullpa y la Queñoa. Totora tiene salas de 14 × 10 / 14 × 12 y hay que rediseñarla.
 
-### 11.179 Cumbre: salas de 14 de alto y al menos 22 de ancho · Pendiente
+- [x] Captura de cada sala con la cámara del nivel
+- [x] Ajustar camera_offset/fov o AmbienteSala (viñeta) donde se ve otra sala o queda descentrada
+  Revisadas todas: cada sala queda centrada y las otras tapadas; no hizo falta tocar cámara ni viñeta.
 
-**Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `mazmorra`
+**Notas:** Daniel (2026-10-15): como en 11.179, con la viñeta y la cámara configurables ya no hace falta 14 × ≥22; las salas pueden medir distinto, pero cada una se centra en cámara y tapa las otras. Pasa de rediseño a revisión.
+
+### 11.179 Cumbre: cada sala centrada en cámara y tapando las otras · Revisión
+
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `mazmorra`
 
 Daniel (2026-10-14): todas las salas de las mazmorras miden 14 de alto y al menos 22 de ancho, como la Chullpa y la Queñoa. Cumbre tiene salas de 14 × 10 / 14 × 12 y hay que rediseñarla.
 
+
+- [x] Captura de cada sala con la cámara del nivel
+- [x] Ajustar camera_offset/fov o AmbienteSala (viñeta) donde se ve otra sala o queda descentrada
+  Revisadas todas: cada sala queda centrada y las otras tapadas; no hizo falta tocar cámara ni viñeta.
 
 **Notas:** Con el nuevo sistema configurable de la viñeta y camara, ya no es necesario. Eso si, cada sala debe poder centrarse en camara y ocultar las otras salas. Por consecuencia, permite salas con diferentes tamaños como se hace con el templo donde la sala del jefe final tiene un tamaño diferente
 
@@ -6534,107 +6544,3 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 - [ ] Música de verdad para overworld y templo (hoy: capas sintetizadas por src/tools/render_music.gd)
 - [ ] SFX de explosión, secreto, curación y temblor (hoy sintetizados en Feel)
 - [ ] Pasos (footsteps) y ambiente del templo (Kenney Impact Sounds trae pasos; falta el evento)
-
-## Playtest
-
-### Revisión: lo listo para probar  (25/27 probadas)
-
-1. [ ] 11.130 Bocas de cueva talladas en el risco · Hecho · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
-2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player. El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
-3. [x] 11.111 Cactus, árboles y matas se cortan como el pasto · Hecho · anda
-4. [x] 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · Hecho · anda
-5. [x] 11.118 Sandalias: correr manteniendo y salto largo con la pluma · Hecho · anda
-6. [x] 11.24 Más secretos en el overworld · Hecho · anda
-7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell" no hay asset correcto para la pared quebrable
-8. [x] 11.30 Ítem de D3: el gancho · Hecho · anda
-9. [x] 11.28 Atajos que se abren al volver · Hecho · anda — anda, pero no debería hacer un fade. Debería haber una animacion del player subiendo y bajando
-10. [x] 11.46 Jefe: game juice · Hecho · anda
-11. [ ] 11.29 Overworld después del jefe · Hecho
-12. [x] 7.9 Rediseño del overworld como hub de varias mazmorras · Hecho · anda — La D4 parece mas una cueva que una dungeon
-13. [x] 7.10 Overworld con forma de Zelda 2D, no cuadrado · Hecho · anda
-14. [ ] Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos · En curso · **falla** — Hay cosas que no tienen estilo
-15. [x] 11.117 Huecos a otro piso se ven distintos de los fosos · Hecho · anda
-16. [ ] 11.5 Galería de trampas: pinchos · En curso · **falla** — Hay que hacer que la pluma salte mas alto porque los pinchos llegan igual
-17. [x] 11.98 La cámara muestra lo que se desbloquea · Hecho · anda
-18. [x] 11.112 Fantasmas al esquivar · Hecho · anda
-19. [x] 11.102 Mapa: nombres de zona chicos y solo los que importan · Hecho · anda
-20. [x] 11.103 El minimapa se transparenta con el player debajo · Hecho · anda
-21. [x] 11.104 Ítems de la mazmorra en la pantalla del mapa · Hecho · anda
-22. [x] 11.114 Botellas en su propia fila de la pestaña Ítems · Hecho · anda
-23. [x] 11.106 Intro al día con el overworld nuevo · Hecho · anda
-24. [x] 11.107 Mejorar la ambientación · Hecho · anda
-25. [ ] 10.19 Fin de la demo · Revisión
-26. [x] 10.24 Tope de FPS · Hecho · anda
-27. [x] 10.25 Sombras del sol acordes a la cámara cenital · Hecho · anda
-
-### Overworld: laguna, halos, minimapa y cámara  (4/4 probadas)
-
-1. [x] 11.140 Overworld (Lagoon): z-fighting entre el pasto y el camino de tierra · Hecho · anda
-2. [x] 11.143 Overworld: delineado/halo oscuro raro alrededor de árboles, cardones y bordes · Hecho · anda
-3. [x] 11.148 Minimapa del overworld desactualizado (la quebrada sale como abismo negro) · Hecho · anda — Es un poco tosco como aparece en el minimapa, pero es detalle menor.
-4. [x] 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player · Hecho · anda — Funciona, pero solo debería ser para las paredes. No para objetos/plantas, para eso está el x-ray. Y el movimiento es un poco nauseabundo.
-
-### Revisión del 14 de octubre: overworld, mazmorras y sistemas  (18/62 probadas)
-
-1. [x] 11.168 D4 (Cumbre): entrada exagerada como las otras mazmorras · Hecho · anda
-2. [x] 11.130 Bocas de cueva talladas en el risco · Hecho · anda
-3. [x] 11.166 Santuario con una sola entrada: su muro agrietado · Hecho · anda
-4. [x] 11.146 Overworld: el ojo del puente a la Necrópolis no se ve ni se puede flechar · Hecho · anda
-5. [x] 11.147 Overworld: caer al sector de arriba (entre riscos, junto a la meseta clara) deja softlock · Hecho · anda
-6. [x] 11.131 Pozo junto a la Chullpa: caer sin bombas deja softlock · Revisión · anda
-7. [x] 11.159 Overworld con el arte de las mazmorras: brillo LA y más detalle en el piso · Hecho · anda
-8. [x] 11.165 La cámara cenital se activa en bordes y muros bajos de una sala · Hecho · anda
-9. [x] 11.29 Overworld después del jefe · Hecho · anda
-10. [x] 12.29 Muro agrietado LA de cueva (muro_agrietado_cueva_la) · Hecho · anda
-11. [x] 11.132 Cuevas: los enemigos se quedan quietos · Hecho · anda
-12. [ ] 11.133 Vasija chica cargada no se ve con el x-ray · Revisión — Mejor, pero no tiene que haber x-ray cuando se levanta algo
-13. [x] 11.135 Al caer, el player se inclina hacia el piso · Hecho · anda
-14. [x] 11.164 Lo que esconde una pared agrietada no se ve desde arriba · Hecho · anda
-15. [x] 11.136 Chullpa: la reja de la entrada queda fuera de la pared · Hecho · anda
-16. [ ] 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista · En curso · **falla** — la pared quebrada sigue el estilo pero no el ancho. La parte negra debería verse como la parte superior. Y la camara debería centrarse mas en lo visible de la sala, no en su posible tamaño completo como rectangulo
-17. [ ] 11.156 Chullpa: se ven los techos (crestas) de las paredes LA horneadas · Revisión
-18. [ ] 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · En curso · **falla** — se ve horrendo y no soluciona el mismo problema del lado izquierdo
-19. [ ] 11.138 Chullpa sub-boss: asset para el cuadrado donde después se salta · Revisión
-20. [x] 11.155 Chullpa: la momia aparece en vez de saltar hacia el player; onda expansiva con shader vistoso · Hecho · anda
-21. [x] 11.169 Galería de trampas: la pluma no salta por encima de los pinchos · Revisión · anda — necesita un poco de fine-tuning, por ahi invisibilidad por 2-4 frames al saltar y aterrizar
-22. [ ] 11.141 Queñoa 2P (Canopy): símbolo azul sin sentido y puerta bloqueada invisible · Revisión
-23. [ ] 11.144 Queñoa S1 (Raíces): reja fuera de la pared y puerta con llave detrás de una reja de puzzle · Revisión
-24. [ ] 11.145 Queñoa S1 (Sala de los ojos): placa que no hace nada, z-fighting en el cofre y símbolo raro en la puerta · Revisión
-25. [ ] 11.160 Ojos de la Queñoa: los párpados siempre se abren y cierran animados · Revisión
-26. [ ] 12.23 Ojos de la Queñoa y Ojo Vigía: modelo propio parecido al ojo del jefe final, más simple · Revisión
-27. [ ] 11.149 Al entrar a una sala se puede caer al agua y reaparecer sobre el agua (softlock) · Revisión
-28. [ ] 11.150 Gancho: el targeting marca un poste de otra sala/piso · Revisión
-29. [ ] 11.151 Totora 2P: se ve la sala del piso de abajo · Revisión
-30. [ ] 11.153 Totora: cruce con gancho a través de la puerta no se entiende; poner plataforma/poste en la propia sala · Revisión
-31. [ ] 11.154 Totora: no hay dónde reponer flechas cerca · Revisión
-32. [ ] 11.167 Totora: caer al agua y perder deja al player cayendo al vacío antes de "You Fell" · Revisión
-33. [ ] 11.161 Jefe final: la puerta norte de la sala queda escondida · Revisión
-34. [ ] 11.162 Retirar el templo viejo (levels/temple.tscn) · Revisión
-35. [ ] 11.93 Jefe: aflojar la fase 3 y el modelo que se hunde · Revisión
-36. [ ] 11.152 Z-target: al activarlo, priorizar el enemigo más cercano · Revisión
-37. [ ] 11.142 Mapa de pausa: LT/RT van rapidísimo; mover con las flechitas · Revisión
-38. [ ] 11.158 Piso LA: patrón de tablones raro · Revisión
-39. [ ] 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la) · Revisión
-40. [ ] 12.21 Ojo interruptor: la pupila sigue al player y se parece al ojo del jefe final · Revisión
-41. [ ] 11.157 Mazmorras: los tiles del GridMap no se alinean con la grilla del editor · Revisión
-42. [ ] 12.25 El ojo del logo en game over, selección de idioma y carga · Revisión
-43. [ ] 12.27 VFX mágicos con shaders y partículas (sin texturas) · Revisión
-44. [ ] 10.19 Fin de la demo · Revisión
-45. [ ] 11.108 Cargar en la misma escena desincroniza puertas y flags · Revisión
-46. [ ] 11.88 Niveles referenciados por ruta: saves y portales frágiles · Revisión
-47. [ ] 11.75 AreaZone: id estable para guardar las zonas visitadas · Revisión
-48. [ ] 11.80 BossArena tiene los flags y el premio de D1 fijos en el código · Revisión
-49. [ ] 11.81 Dungeon.id por defecto d1 y prefijos de flags fijos · Revisión
-50. [ ] 11.82 Daño que no pasa por el Hurtbox · Revisión
-51. [ ] 11.83 Un solo camino para spawnear proyectiles, bombas y pickups · Revisión
-52. [ ] 11.84 Ítems: que la estrategia decida, no la máquina de estados · Revisión
-53. [ ] 11.85 Combate y HSM: casos que fallan en silencio · Revisión
-54. [ ] 11.86 GameState: escrituras con señal y carga sin emisiones parciales · Revisión
-55. [ ] 11.87 Valores de ajuste al inspector · Revisión
-56. [ ] 10.23 Tests en paralelo · Revisión
-57. [ ] 10.27 Nodos creados por código pasan a sus .tscn · Revisión
-58. [ ] 11.171 Mapa del overworld: el cursor vuelve al player al moverlo hacia un lado · Revisión
-59. [ ] 11.172 Viaje rápido: el foco no va al botón y A abre la pregunta una y otra vez · Revisión
-60. [ ] 11.173 Esqueleto invisible en una mazmorra · Revisión
-61. [ ] 11.170 Atajos: animación del player subiendo y bajando en vez del fundido · Revisión
-62. [ ] 11.174 Overworld (Cumbre): el gancho choca contra una pared invisible · Revisión
