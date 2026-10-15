@@ -433,6 +433,33 @@ func test_the_guard_lair_waits_across_the_water() -> void:
 	assert_true(not space.intersect_ray(walk_in).is_empty(), "la boca está tapada")
 
 
+## Manadas de atoq en la explanada de la D4 (11.196): de a 2-3 y lejos del camino del poste del gancho a la puerta del
+## cóndor y de los portales, más que lo que pasean (4 m), así no tapan el paso ni la llegada.
+func test_atoq_packs_roam_the_cumbre_beside_the_path() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.root.get_node(^"GameState").reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	await tree.physics_frame
+	var level := tree.current_scene
+	var foxes := level.get_children().filter(func(n: Node) -> bool: return n.scene_file_path == "res://src/entities/atoq/atoq.tscn")
+	assert_true(foxes.size() >= 4 and foxes.size() <= 9, "dos o tres manadas (%d atoq)" % foxes.size())
+	var space := (level as Node3D).get_world_3d().direct_space_state
+	var post := (level.get_node(^"RiscoBackPost") as Node3D).global_position
+	var door := (level.get_node(^"CumbreDoor") as Node3D).global_position
+	for fox: Node3D in foxes:
+		var at := fox.global_position
+		var down := PhysicsRayQueryParameters3D.create(at + Vector3.UP * 3.0, at + Vector3.DOWN * 6.0, 1, [(fox as CollisionObject3D).get_rid()])
+		var floor_hit := space.intersect_ray(down)
+		assert_true(floor_hit and absf((floor_hit.position as Vector3).y - 5.2) < 0.3, "%s parado en la nieve" % fox.name)
+		var mates := foxes.filter(func(other: Node3D) -> bool: return other != fox and other.global_position.distance_to(at) < 3.0)
+		assert_true(mates.size() >= 1 and mates.size() <= 2, "%s anda en manada" % fox.name)
+		var near := Geometry3D.get_closest_point_to_segment(at, post, door)
+		assert_true(Vector2(at.x - near.x, at.z - near.z).length() > 6.0, "%s lejos del camino a la puerta" % fox.name)
+		for portal: Node3D in level.get_node(^"TravelPortals").get_children():
+			assert_true(portal.global_position.distance_to(at) > 6.0, "%s lejos de %s" % [fox.name, portal.name])
+
+
 func _floor_at(space: PhysicsDirectSpaceState3D, at: Vector3) -> float:
 	var hit := space.intersect_ray(PhysicsRayQueryParameters3D.create(at + Vector3.UP * 3.0, at + Vector3.DOWN * 6.0))
 	return (hit.position as Vector3).y if hit else -INF
