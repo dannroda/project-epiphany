@@ -321,29 +321,22 @@ func test_after_the_final_boss_the_dawn_comes_and_the_temple_top_opens() -> void
 	var glow := level.get_node(^"TempleEyeGlow") as Node3D
 	var foot := Vector3(-48, 5.3, -33.5)
 	assert_eq([gate.is_open, glow.visible], [false, true], "con el ojo despierto la cima está cerrada y el ojo brilla")
-	assert_true(await _walk(tree, player, foot, &"move_forward") < 6.0, "la reja no deja subir")
+	assert_true(await _walk(tree, player, foot, &"move_forward") < 6.0, "el sello no deja entrar a la cueva")
 	state.set_flag(&"te_boss_defeated", true)
 	await tree.create_timer(0.8).timeout
 	assert_eq([gate.is_open, glow.visible], [true, false], "vencido el jefe, se abre la cima y el ojo se apaga")
 	assert_eq(after.sun.light_color, after.dawn_color, "y amanece")
-	assert_true(await _walk(tree, player, foot, &"move_forward") > 7.0, "la escalinata sube a la cima del templo")
+	assert_true(await _walk(tree, player, foot, &"move_forward") > 7.0, "la cueva sube a la cima del templo")
 	await _hold(tree, &"move_right", 150)
-	assert_eq(state.get_flag(&"ow_heart_piece_summit"), true, "y por la cima se llega a la pieza de corazón")
+	assert_eq(state.get_flag(&"ow_heart_piece_summit"), true, "y en la cima espera la pieza de corazón")
 	var stack: Node = tree.root.get_node(^"MenuStack")
 	while stack.is_open():
 		stack.pop()
-	for action: StringName in [&"move_forward", &"move_right", &"move_left", &"move_backward"]:
+	for action: StringName in [&"move_forward", &"move_right", &"move_backward"]:
 		await _hold(tree, action, 120)
 		assert_true(player.global_position.y > 7.0, "la baranda no deja caerse de la cima (%s, en %s)" % [action, player.global_position.snappedf(0.1)])
-	var toward := &"move_left" if player.global_position.x > -48.0 else &"move_right"
-	Input.action_press(toward)
-	for i in 400:
-		await tree.physics_frame
-		if absf(player.global_position.x + 48.0) < 0.3:
-			break
-	Input.action_release(toward)
-	await _hold(tree, &"move_backward", 150)
-	assert_true(player.global_position.y < 6.0, "y se vuelve a bajar por la escalinata (%s)" % player.global_position.snappedf(0.1))
+	await _hold(tree, &"move_left", 300)
+	assert_true(player.global_position.y < 6.0 and player.global_position.z > -37.0, "la escalera del nicho baja a la explanada (%s)" % player.global_position.snappedf(0.1))
 	state.reset()
 
 

@@ -4,6 +4,8 @@ extends Area3D
 ## llegada, así no vuelve a dispararse).
 
 @export var to: Node3D
+## Reja que la cierra: mientras no esté abierta, la escalera no lleva a ningún lado.
+@export var gate: Gate
 @export var fade_time := 0.2
 
 var _busy := false
@@ -14,7 +16,7 @@ func _ready() -> void:
 	collision_mask = 1 | 2
 	monitorable = false
 	body_entered.connect(func(body: Node3D) -> void:
-		if body is PlayerCharacter and to and not _busy and not SceneFlow.traveling:
+		if body is PlayerCharacter and to and not _busy and not SceneFlow.traveling and (gate == null or gate.is_open):
 			_climb(body))
 
 
