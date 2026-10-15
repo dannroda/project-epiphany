@@ -74,6 +74,15 @@ func test_shift_locks_and_wheel_switches() -> void:
 	for i in 10:
 		await tree.physics_frame
 	var targeting := (tree.get_first_node_in_group(&"player") as PlayerCharacter).targeting
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	while stack.is_open():
+		stack.pop()
+	for i in 120:
+		if targeting.possible_targets.size() >= 3 and not tree.paused:
+			break
+		await tree.physics_frame
+	assert_true(not tree.paused, "el árbol no quedó en pausa")
+	assert_eq(targeting.possible_targets.size(), 3, "los tres en el detector")
 	_key(KEY_SHIFT, true)
 	await _flush(tree)
 	assert_eq(String(targeting.current.name) if targeting.current else "-", "Middle", "Shift fija")
