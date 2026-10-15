@@ -46,6 +46,21 @@ func test_warnings_for_bad_flags() -> void:
 	chest.free()
 
 
+func test_a_flag_freed_before_its_first_announce_is_left_alone() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	for i in 20:
+		var node := PersistentFlag.new()
+		node.flag = &"ow_test_chest"
+		tree.root.add_child(node)
+		node.free()
+		var other := HitFlash.new()
+		tree.root.add_child(other)
+		other.queue_free()
+	await tree.process_frame
+	await tree.process_frame
+	assert_eq(tree.root.get_children().filter(func(n: Node) -> bool: return n is PersistentFlag).size(), 0, "el anuncio diferido no corre sobre un nodo liberado")
+
+
 func test_world_state_survives_save_reload_and_load() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state: Node = tree.root.get_node(^"GameState")

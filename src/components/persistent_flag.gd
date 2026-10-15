@@ -35,11 +35,18 @@ func _watch() -> void:
 	if Engine.is_editor_hint() or flag == &"" or _watching:
 		return
 	_watching = true
-	GameState.flag_changed.connect(func(id: StringName, new_value: Variant) -> void:
-		if id == flag:
-			changed.emit(new_value))
-	GameState.loaded.connect(func() -> void: changed.emit(value))
-	(func() -> void: changed.emit(value)).call_deferred()
+	GameState.flag_changed.connect(_on_flag_changed)
+	GameState.loaded.connect(_announce)
+	_announce.call_deferred()
+
+
+func _on_flag_changed(id: StringName, new_value: Variant) -> void:
+	if id == flag:
+		changed.emit(new_value)
+
+
+func _announce() -> void:
+	changed.emit(value)
 
 
 func _get_configuration_warnings() -> PackedStringArray:
