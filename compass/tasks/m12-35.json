@@ -1,0 +1,30 @@
+{
+  "assignee": "project-epiphany-5d",
+  "checklist": [
+    {
+      "done": false,
+      "text": "El hueco de los Tejedores se lee como caída desde la cámara del nivel"
+    },
+    {
+      "done": false,
+      "text": "Revisar los otros CaidaLA (Chullpa, Queñoa, Cumbre) con el mismo criterio"
+    }
+  ],
+  "code": "12.35",
+  "created_at": "2026-10-15T04:46:04.901Z",
+  "description": "Daniel (2026-10-15, captura): el hueco de caída al lado del cofre de la llave del jefe (PisoAlto, celda (2,1), CaidaLA44 en (4,0,2)) se ve como un cuadrado negro y parece que falta un bloque. Es la salida de una vía del rincón: la reja la baja el ojo con tiempo y se vuelve a cerrar con la llave adentro. Daniel eligió dejar el hueco como salida, pero que se lea: borde y caída visibles, no un cuadrado negro.",
+  "milestone": "m12",
+  "notes": "",
+  "order": 35,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "arte",
+    "mazmorra"
+  ],
+  "test": "",
+  "title": "Totora: el hueco de salida de los Tejedores tiene que leerse como caída",
+  "updated_at": "2026-10-15T04:46:05.450Z"
+}

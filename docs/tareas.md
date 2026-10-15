@@ -5334,7 +5334,7 @@ Daniel (2026-10-14, captura): arriba de la franja norte del Risco (nivel 2, x 70
   Daniel (2026-10-14): alcanza con el poste, es barato; sin salto.
 - [x] Test: desde la franja se vuelve sin caer al abismo
 
-## M12 — Assets propios (Blender)  (17/34)
+## M12 — Assets propios (Blender)  (17/35)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -5942,6 +5942,15 @@ Daniel (2026-10-14): la Mano suelta (HandGuard, sub-jefe del templo) usa hoy el 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `templo`
 
 Daniel (2026-10-14): que el color del templo se parezca más al dorado del jefe final y no tanto al celeste actual (kit templo_la, piso, luces/ambiente del nivel). Respetar sus valores de TonoLA/AmbienteSala; si hace falta refresh, avisar a -fd antes (regla del reborde y navmesh).
+
+### 12.35 Totora: el hueco de salida de los Tejedores tiene que leerse como caída · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `mazmorra`
+
+Daniel (2026-10-15, captura): el hueco de caída al lado del cofre de la llave del jefe (PisoAlto, celda (2,1), CaidaLA44 en (4,0,2)) se ve como un cuadrado negro y parece que falta un bloque. Es la salida de una vía del rincón: la reja la baja el ojo con tiempo y se vuelve a cerrar con la llave adentro. Daniel eligió dejar el hueco como salida, pero que se lea: borde y caída visibles, no un cuadrado negro.
+
+- [ ] El hueco de los Tejedores se lee como caída desde la cámara del nivel
+- [ ] Revisar los otros CaidaLA (Chullpa, Queñoa, Cumbre) con el mismo criterio
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 
