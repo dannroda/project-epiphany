@@ -393,6 +393,41 @@ script = ExtResource("1_ox7fe")
 id = &"te_hand_defeated"
 description = "Templo, sala de la Mano: sub-jefe vencido (abre la combinada)"
 
+[sub_resource type="Resource" id="R_te_bow_eye_w"]
+script = ExtResource("1_ox7fe")
+id = &"te_bow_eye_w"
+description = "Templo, ala del arco: ojo oeste sobre el abismo"
+
+[sub_resource type="Resource" id="R_te_bow_eye_e"]
+script = ExtResource("1_ox7fe")
+id = &"te_bow_eye_e"
+description = "Templo, ala del arco: ojo este sobre el abismo"
+
+[sub_resource type="Resource" id="R_te_piece_feather"]
+script = ExtResource("1_ox7fe")
+id = &"te_piece_feather"
+description = "Templo, ojo de la pluma: pieza de la llave del jefe tomada"
+
+[sub_resource type="Resource" id="R_te_piece_bow"]
+script = ExtResource("1_ox7fe")
+id = &"te_piece_bow"
+description = "Templo, ojo del arco: pieza de la llave del jefe tomada"
+
+[sub_resource type="Resource" id="R_te_piece_hook"]
+script = ExtResource("1_ox7fe")
+id = &"te_piece_hook"
+description = "Templo, ojo del gancho: pieza de la llave del jefe tomada"
+
+[sub_resource type="Resource" id="R_te_piece_mirror"]
+script = ExtResource("1_ox7fe")
+id = &"te_piece_mirror"
+description = "Templo, ojo del espejo: pieza de la llave del jefe tomada"
+
+[sub_resource type="Resource" id="R_te_combined_chest"]
+script = ExtResource("1_ox7fe")
+id = &"te_combined_chest"
+description = "Templo, sala combinada: cofre del premio"
+
 [sub_resource type="Resource" id="R_ch_key_chest"]
 script = ExtResource("1_ox7fe")
 id = &"ch_key_chest"
@@ -817,41 +852,6 @@ description = "Intihuatana de la Cumbre: Apu Kuntur vencido"
 script = ExtResource("1_ox7fe")
 id = &"cu_heart_container"
 description = "Intihuatana de la Cumbre: contenedor de corazón del Apu Kuntur"
-
-[sub_resource type="Resource" id="R_te_bow_eye_w"]
-script = ExtResource("1_ox7fe")
-id = &"te_bow_eye_w"
-description = "Templo, ala del arco: ojo oeste sobre el abismo"
-
-[sub_resource type="Resource" id="R_te_bow_eye_e"]
-script = ExtResource("1_ox7fe")
-id = &"te_bow_eye_e"
-description = "Templo, ala del arco: ojo este sobre el abismo"
-
-[sub_resource type="Resource" id="R_te_piece_feather"]
-script = ExtResource("1_ox7fe")
-id = &"te_piece_feather"
-description = "Templo, ojo de la pluma: pieza de la llave del jefe tomada"
-
-[sub_resource type="Resource" id="R_te_piece_bow"]
-script = ExtResource("1_ox7fe")
-id = &"te_piece_bow"
-description = "Templo, ojo del arco: pieza de la llave del jefe tomada"
-
-[sub_resource type="Resource" id="R_te_piece_hook"]
-script = ExtResource("1_ox7fe")
-id = &"te_piece_hook"
-description = "Templo, ojo del gancho: pieza de la llave del jefe tomada"
-
-[sub_resource type="Resource" id="R_te_piece_mirror"]
-script = ExtResource("1_ox7fe")
-id = &"te_piece_mirror"
-description = "Templo, ojo del espejo: pieza de la llave del jefe tomada"
-
-[sub_resource type="Resource" id="R_te_combined_chest"]
-script = ExtResource("1_ox7fe")
-id = &"te_combined_chest"
-description = "Templo, sala combinada: cofre del premio"
 
 [resource]
 script = ExtResource("2_3vvdp")
