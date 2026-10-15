@@ -38,8 +38,12 @@ const SKIP_ACTIONS: Array[StringName] = [&"ui_accept", &"attack", &"interact"]
 
 @export_group("Mostrar lo activado")
 @export var reveal_pan_time := 0.6
-## Viñeta y marco del TonoLA durante un acercamiento: casi nada, pegados al borde; al volver, los de antes.
-@export var reveal_tone := {"vignette": 0.15, "frame": 0.0}
+## Viñeta del TonoLA durante un acercamiento (0 = nada, 1 = la normal); al volver, la de la sala.
+@export_range(0.0, 1.0) var reveal_vignette := 0.15
+## Marco negro del TonoLA durante un acercamiento (fracción del alto; 0 = sin marco).
+@export_range(0.0, 0.5) var reveal_frame := 0.0
+## Lo que tardan la viñeta y el marco en irse y en volver.
+@export var reveal_tone_time := 0.6
 ## Cuánto se queda mirando después de abrir.
 @export var reveal_hold := 0.9
 ## Se acerca a lo activado: fracción del `offset` normal.
@@ -642,9 +646,8 @@ func _reveal(target: Node3D, action: Callable, hold: float) -> void:
 	var tone := _tone()
 	var tone_back := {}
 	if tone:
-		for property: String in reveal_tone:
-			tone_back[property] = tone.get(property)
-		_tween_tone(tone, reveal_tone)
+		tone_back = {"vignette": tone.vignette, "frame": tone.frame}
+		_tween_tone(tone, {"vignette": reveal_vignette, "frame": reveal_frame})
 	await _pan(reveal_focus(target) + _eye() * zoom)
 	if not is_inside_tree():
 		for property: String in tone_back:
@@ -684,7 +687,7 @@ func _tone() -> CompositorEffect:
 func _tween_tone(tone: CompositorEffect, values: Dictionary) -> void:
 	var tween := create_tween().set_parallel().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	for property: String in values:
-		tween.tween_property(tone, NodePath(property), values[property], reveal_pan_time)
+		tween.tween_property(tone, NodePath(property), values[property], reveal_tone_time)
 
 
 ## Lo que tarda en abrirse lo mostrado (puerta, reja, puente); sin animación conocida, `reveal_hold`.
