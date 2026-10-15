@@ -208,8 +208,9 @@ func view_extents() -> Rect2:
 
 
 func _offset_at_height(screen_point: Vector2, height: float) -> Vector2:
-	var origin := project_ray_origin(screen_point) - global_position + offset
-	var ray := project_ray_normal(screen_point)
+	var to_plain := _plain_basis() * global_basis.inverse()
+	var origin := to_plain * (project_ray_origin(screen_point) - global_position) + offset
+	var ray := to_plain * project_ray_normal(screen_point)
 	var t := (height - origin.y) / minf(ray.y, -0.01)
 	return Vector2(origin.x + ray.x * t, origin.z + ray.z * t)
 
@@ -241,8 +242,13 @@ func _clamp(point: Vector3) -> Vector3:
 
 ## Altura en pantalla (tangente, + = arriba) de un punto visto desde `eye` con la orientación de la cámara.
 func _screen_height(point: Vector3, eye: Vector3) -> float:
-	var local := global_basis.inverse() * (point - eye)
+	var local := _plain_basis().inverse() * (point - eye)
 	return local.y if orthographic else local.y / -local.z
+
+
+## El encuadre se calcula con la cámara de siempre, aunque esté pasando por arriba del player tapado.
+func _plain_basis() -> Basis:
+	return Basis.looking_at(-offset, Vector3.FORWARD)
 
 
 ## Tapa todo lo que queda fuera del rectángulo (XZ), desde el piso de abajo hasta el tope de las paredes.

@@ -56,3 +56,23 @@ func test_aim_look_ahead_eases_in_and_out() -> void:
 	for i in 120:
 		await tree.physics_frame
 	assert_true((camera.focus - player.global_position).length() < 0.1, "vuelve al player")
+
+
+func test_swinging_over_the_top_keeps_a_short_room_framed() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.root.get_node(^"GameState").reset()
+	tree.change_scene_to_file("res://levels/cumbre.tscn")
+	await tree.scene_changed
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	var camera := tree.get_first_node_in_group(TopDownCamera.GROUP) as TopDownCamera
+	player.global_position = Vector3(40, 0.25, 7)
+	for i in 30:
+		await tree.physics_frame
+	camera.room = tree.current_scene.get_node(^"PisoBase/Camara") as Room
+	var point := Vector3(40, camera.focus.y, 7)
+	camera.global_basis = Basis.looking_at(-camera.offset, Vector3.FORWARD)
+	var plain := camera._clamp(point)
+	camera.global_basis = Basis.looking_at(Vector3.DOWN, Vector3.FORWARD)
+	var over := camera._clamp(point)
+	assert_true(over.distance_to(plain) < 0.05, "mirando desde arriba el encuadre de la sala no se corre (%s y %s)" % [plain.snappedf(0.01), over.snappedf(0.01)])
+	tree.root.get_node(^"GameState").reset()
