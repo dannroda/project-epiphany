@@ -1,5 +1,5 @@
 extends "res://tests/test_case.gd"
-## El templo rediseñado (GDD §8, 11.113): hub con cuatro alas, salas de 14 × 10 m.
+## El templo rediseñado (GDD §8, 11.113 y 11.182): hub con cuatro alas de puzzle y revancha, salas de 22 × 14 m.
 
 const LEVEL := "res://levels/templo.tscn"
 
@@ -118,7 +118,7 @@ func test_the_vestibule_block_opens_the_hub() -> void:
 	state.reset()
 
 
-func test_the_feather_wing_pits_and_eye() -> void:
+func test_the_feather_wing_pits_and_compass() -> void:
 	await _start()
 	_feather()
 	await _drop(_in("Pluma", Vector3(5, 0.5, 0)))
@@ -136,24 +136,60 @@ func test_the_feather_wing_pits_and_eye() -> void:
 	await _jump(&"move_left")
 	await _jump(&"move_left")
 	assert_true(player.global_position.x < _in("Pluma", Vector3(-2.5, 0, 0)).x, "con la pluma cruza las dos filas (%s)" % player.global_position.snappedf(0.1))
-	state.set_flag(&"te_eye_feather", true)
-	assert_true((_node("FeatherEye") as FloorSwitch).active, "la placa del ojo de la pluma")
+	assert_true((_node("CompassChest") as Node3D).global_position.x < _in("Pluma", Vector3(-2.5, 0, 0)).x, "la brújula espera del otro lado")
 	state.reset()
 
 
-func test_the_bow_wing_needs_a_bomb_and_arrows() -> void:
+func test_the_bow_wing_eyes_over_the_abyss_open_the_arena() -> void:
 	await _start()
-	var wall := _node("ArcoCrackedWall") as CrackedWall
-	var explosion := (load("res://src/items/bomb/explosion.tscn") as PackedScene).instantiate() as Node3D
-	level.add_child(explosion)
-	explosion.global_position = wall.global_position + Vector3(-1, 0.3, 0)
-	assert_true(await _until(func() -> bool: return wall.is_broken, 2.0), "la bomba abre el paso al ojo del arco")
-	var gate := _node("BowKeyGate") as Gate
-	gate.reveal_on_open = false
-	_arrow(_node("BowKeyEye") as EyeSwitch)
-	assert_true(await _until(func() -> bool: return gate.is_open, 3.0), "la flecha al ojo abre el nicho de la llave")
-	_arrow(_node("BowEye") as EyeSwitch)
-	assert_true(state.get_flag(&"te_eye_bow") == true, "el otro ojo enciende el del sello")
+	var door := _node("BowDoor") as Door
+	door.reveal_on_open = false
+	var pit := _node("ArcoPit") as Node3D
+	for eye_name in ["ArcoEyeW", "ArcoEyeE"]:
+		assert_true((_node(eye_name) as Node3D).global_position.z < pit.global_position.z, "%s mira desde detrás del abismo" % eye_name)
+	_arrow(_node("ArcoEyeW") as EyeSwitch)
+	await tree.create_timer(0.5).timeout
+	assert_true(not door.is_open, "con un ojo sigue cerrada")
+	_arrow(_node("ArcoEyeE") as EyeSwitch)
+	assert_true(await _until(func() -> bool: return door.is_open, 3.0), "los dos ojos abren la arena del arco")
+	state.reset()
+
+
+func test_each_wing_ends_in_a_rematch_that_gives_a_boss_key_piece() -> void:
+	await _start()
+	for spec: Array in [["FeatherFight", "PlumaOjo", &"te_eye_feather", "FeatherKeyChest"], ["BowFight", "ArcoOjo", &"te_eye_bow", "BowKeyChest"],
+			["HookFight", "GanchoOjo", &"te_eye_hook", ""], ["MirrorFight", "EspejoOjo", &"te_eye_mirror", ""]]:
+		var fight := _node(spec[0]) as ArenaFight
+		assert_true(fight.rematch, "%s es revancha" % spec[0])
+		assert_eq(fight.room, _room(spec[1]))
+		assert_eq(fight.flag, spec[2])
+		assert_eq(fight.reward.item.id, &"boss_key_piece", "%s da una pieza de la llave" % spec[0])
+		assert_eq(fight.doors.size(), 1, "%s cierra su puerta" % spec[0])
+		assert_true(_node("HubSeal").switches.has(NodePath("../" + spec[0])), "%s enciende un ojo del sello" % spec[0])
+		if spec[3]:
+			assert_eq((_node(spec[3]) as Chest).switches, [NodePath("../" + spec[0])] as Array[NodePath], "%s aparece al ganar" % spec[3])
+	state.reset()
+
+
+func test_a_rematch_closes_its_door_and_starts_at_half_health() -> void:
+	tree = Engine.get_main_loop() as SceneTree
+	state = tree.root.get_node(^"GameState")
+	state.reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	await tree.create_timer(0.3).timeout
+	level = tree.current_scene
+	player = tree.get_first_node_in_group(&"player") as PlayerCharacter
+	camera = level.get_node(^"TopDownCamera") as TopDownCamera
+	player.health.reset(80)
+	var fight := _node("FeatherFight") as ArenaFight
+	var mallqui := fight.get_node(^"Mallqui")
+	await _drop(_in("PlumaOjo", Vector3(-8, 0.5, 0)))
+	assert_eq(camera.room, _room("PlumaOjo"))
+	assert_true(await _until(func() -> bool: return not (_node("FeatherDoor") as Door).is_open, 5.0), "se cierra la puerta de la arena")
+	assert_true(await _until(func() -> bool: return fight.started and not fight.in_intro and mallqui.health.current < mallqui.health.max_health, 10.0), "arranca la revancha")
+	assert_eq(mallqui.health.current, ceili(mallqui.health.max_health / 2.0), "el Mallqui vuelve con media vida")
+	assert_eq(fight.bar_fraction(), 1.0, "la barra cuenta desde ahí")
 	state.reset()
 
 
@@ -196,19 +232,21 @@ func test_the_hook_wing_abyss_is_crossed_only_with_the_hookshot() -> void:
 	state.reset()
 
 
-func test_the_four_eyes_open_the_seal() -> void:
+func test_the_four_rematches_open_the_seal() -> void:
 	await _start()
 	var seal := _node("HubSeal") as Door
-	for flag in [&"te_eye_feather", &"te_eye_bow", &"te_eye_hook"]:
-		state.set_flag(flag, true)
+	seal.reveal_on_open = false
+	for fight_name in ["FeatherFight", "BowFight", "HookFight"]:
+		(_node(fight_name) as ArenaFight)._win(false)
 	await tree.create_timer(0.5).timeout
-	assert_true(not seal.is_open, "con tres ojos sigue cerrado")
-	state.set_flag(&"te_eye_mirror", true)
-	assert_true(await _until(func() -> bool: return seal.is_open, 3.0), "con los cuatro se abre la antesala")
+	assert_true(not seal.is_open, "con tres revanchas sigue cerrado")
+	assert_true(state.get_flag(&"te_eye_hook") == true, "cada revancha ganada queda ganada")
+	(_node("MirrorFight") as ArenaFight)._win(false)
+	assert_true(await _until(func() -> bool: return seal.is_open, 3.0), "con las cuatro se abre la antesala")
 	state.reset()
 
 
-func test_the_combined_room_guards_the_boss_key() -> void:
+func test_the_combined_room_guards_its_prize() -> void:
 	await _start()
 	_feather()
 	var gate := _node("BossKeyGate") as Gate

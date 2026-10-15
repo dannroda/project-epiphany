@@ -17,66 +17,73 @@ to = &"Pluma"
 
 [sub_resource type="Resource" id="Link_3"]
 script = ExtResource("2_link")
-from = &"Vestibulo"
-to = &"Arco"
+from = &"Pluma"
+to = &"Pluma:O"
+needs = Array[StringName]([&"feather"])
 
 [sub_resource type="Resource" id="Link_4"]
 script = ExtResource("2_link")
-from = &"Pluma"
+from = &"Pluma:O"
 to = &"PlumaOjo"
-needs = Array[StringName]([&"feather"])
+through = Array[NodePath]([NodePath("Planta/FeatherDoor")])
 
 [sub_resource type="Resource" id="Link_5"]
 script = ExtResource("2_link")
-from = &"Arco"
-to = &"ArcoOjo"
-through = Array[NodePath]([NodePath("Planta/ArcoCrackedWall")])
+from = &"Vestibulo"
+to = &"Arco"
 
 [sub_resource type="Resource" id="Link_6"]
+script = ExtResource("2_link")
+from = &"Arco"
+to = &"ArcoOjo"
+through = Array[NodePath]([NodePath("Planta/BowDoor")])
+
+[sub_resource type="Resource" id="Link_7"]
 script = ExtResource("2_link")
 from = &"Hub"
 to = &"Gancho"
 through = Array[NodePath]([NodePath("Planta/HubLockedW")])
 locked = true
 
-[sub_resource type="Resource" id="Link_7"]
+[sub_resource type="Resource" id="Link_8"]
 script = ExtResource("2_link")
 from = &"Gancho"
 to = &"GanchoOjo"
+through = Array[NodePath]([NodePath("Planta/HookDoor")])
 needs = Array[StringName]([&"hookshot"])
 
-[sub_resource type="Resource" id="Link_8"]
+[sub_resource type="Resource" id="Link_9"]
 script = ExtResource("2_link")
 from = &"Hub"
 to = &"Espejo"
 through = Array[NodePath]([NodePath("Planta/HubLockedE")])
 locked = true
 
-[sub_resource type="Resource" id="Link_9"]
+[sub_resource type="Resource" id="Link_10"]
 script = ExtResource("2_link")
 from = &"Espejo"
 to = &"EspejoOjo"
 through = Array[NodePath]([NodePath("Planta/MirrorDoor")])
 
-[sub_resource type="Resource" id="Link_10"]
+[sub_resource type="Resource" id="Link_11"]
 script = ExtResource("2_link")
 from = &"Hub"
 to = &"Antesala"
 through = Array[NodePath]([NodePath("Planta/HubSeal")])
 
-[sub_resource type="Resource" id="Link_11"]
+[sub_resource type="Resource" id="Link_12"]
 script = ExtResource("2_link")
 from = &"Antesala"
 to = &"Mano"
 through = Array[NodePath]([NodePath("Planta/HandDoor")])
 
-[sub_resource type="Resource" id="Link_12"]
+[sub_resource type="Resource" id="Link_13"]
 script = ExtResource("2_link")
 from = &"Antesala"
 to = &"Combinada"
 through = Array[NodePath]([NodePath("Planta/CombinedDoor")])
 
-[sub_resource type="Resource" id="Link_13"]
+[sub_resource type="Resource" id="Link_14"]
 script = ExtResource("2_link")
 from = &"Antesala"
 to = &"Jefe"
@@ -89,19 +96,20 @@ node = NodePath("Planta/VestibuleSwitch")
 
 [sub_resource type="Resource" id="Spot_2"]
 script = ExtResource("3_spot")
-area = &"PlumaOjo"
-node = NodePath("Planta/FeatherKeyChest")
-key = true
+area = &"Pluma:O"
+node = NodePath("Planta/CompassChest")
 
 [sub_resource type="Resource" id="Spot_3"]
 script = ExtResource("3_spot")
 area = &"PlumaOjo"
-node = NodePath("Planta/CompassChest")
+node = NodePath("Planta/FeatherFight")
+needs = Array[StringName]([&"feather"])
 
 [sub_resource type="Resource" id="Spot_4"]
 script = ExtResource("3_spot")
 area = &"PlumaOjo"
-node = NodePath("Planta/FeatherEye")
+node = NodePath("Planta/FeatherKeyChest")
+key = true
 
 [sub_resource type="Resource" id="Spot_5"]
 script = ExtResource("3_spot")
@@ -110,67 +118,78 @@ node = NodePath("Planta/MapChest")
 
 [sub_resource type="Resource" id="Spot_6"]
 script = ExtResource("3_spot")
-area = &"ArcoOjo"
-node = NodePath("Planta/BowKeyEye")
+area = &"Arco"
+node = NodePath("Planta/ArcoEyeW")
 needs = Array[StringName]([&"bow"])
 
 [sub_resource type="Resource" id="Spot_7"]
 script = ExtResource("3_spot")
-area = &"ArcoOjo"
-node = NodePath("Planta/BowEye")
+area = &"Arco"
+node = NodePath("Planta/ArcoEyeE")
 needs = Array[StringName]([&"bow"])
 
 [sub_resource type="Resource" id="Spot_8"]
 script = ExtResource("3_spot")
 area = &"ArcoOjo"
-node = NodePath("Planta/BowKeyChest")
-through = Array[NodePath]([NodePath("Planta/BowKeyGate")])
-key = true
+node = NodePath("Planta/BowFight")
+needs = Array[StringName]([&"bow"])
 
 [sub_resource type="Resource" id="Spot_9"]
 script = ExtResource("3_spot")
-area = &"GanchoOjo"
-node = NodePath("Planta/HookEye")
-needs = Array[StringName]([&"hookshot"])
+area = &"ArcoOjo"
+node = NodePath("Planta/BowKeyChest")
+key = true
 
 [sub_resource type="Resource" id="Spot_10"]
+script = ExtResource("3_spot")
+area = &"GanchoOjo"
+node = NodePath("Planta/HookFight")
+needs = Array[StringName]([&"hookshot"])
+
+[sub_resource type="Resource" id="Spot_11"]
 script = ExtResource("3_spot")
 area = &"Espejo"
 node = NodePath("Planta/MirrorCrystal")
 needs = Array[StringName]([&"mirror_shield"])
 
-[sub_resource type="Resource" id="Spot_11"]
+[sub_resource type="Resource" id="Spot_12"]
 script = ExtResource("3_spot")
 area = &"EspejoOjo"
-node = NodePath("Planta/MirrorEye")
+node = NodePath("Planta/MirrorFight")
 needs = Array[StringName]([&"mirror_shield"])
 
-[sub_resource type="Resource" id="Spot_12"]
+[sub_resource type="Resource" id="Spot_13"]
+script = ExtResource("3_spot")
+area = &"Antesala"
+node = NodePath("Planta/HubSeal")
+gives = &"boss_key"
+
+[sub_resource type="Resource" id="Spot_14"]
 script = ExtResource("3_spot")
 area = &"Mano"
 node = NodePath("Planta/ManoFight")
 
-[sub_resource type="Resource" id="Spot_13"]
+[sub_resource type="Resource" id="Spot_15"]
 script = ExtResource("3_spot")
 area = &"Combinada"
 node = NodePath("Planta/CombinedEye")
 needs = Array[StringName]([&"bow"])
 through = Array[NodePath]([NodePath("Planta/CombinedCrackedWall")])
 
-[sub_resource type="Resource" id="Spot_14"]
+[sub_resource type="Resource" id="Spot_16"]
 script = ExtResource("3_spot")
 area = &"Combinada"
 node = NodePath("Planta/CombinedCrystal")
 needs = Array[StringName]([&"mirror_shield"])
 
-[sub_resource type="Resource" id="Spot_15"]
+[sub_resource type="Resource" id="Spot_17"]
 script = ExtResource("3_spot")
 area = &"Combinada"
-node = NodePath("Planta/BossKeyChest")
+node = NodePath("Planta/CombinedChest")
 needs = Array[StringName]([&"feather"])
 through = Array[NodePath]([NodePath("Planta/BossKeyGate")])
 
-[sub_resource type="Resource" id="Spot_16"]
+[sub_resource type="Resource" id="Spot_18"]
 script = ExtResource("3_spot")
 area = &"Jefe"
 node = NodePath("BossArena")
@@ -183,7 +202,6 @@ scene = "res://levels/templo.tscn"
 start = &"Vestibulo"
 goal = &"te_boss_defeated"
 item = &"boss_key"
-guard = &"te_hand_defeated"
 brings = Array[StringName]([&"bomb_bag", &"feather", &"bow", &"hookshot", &"mirror_shield"])
-links = Array[ExtResource("2_link")]([SubResource("Link_1"), SubResource("Link_2"), SubResource("Link_3"), SubResource("Link_4"), SubResource("Link_5"), SubResource("Link_6"), SubResource("Link_7"), SubResource("Link_8"), SubResource("Link_9"), SubResource("Link_10"), SubResource("Link_11"), SubResource("Link_12"), SubResource("Link_13")])
-spots = Array[ExtResource("3_spot")]([SubResource("Spot_1"), SubResource("Spot_2"), SubResource("Spot_3"), SubResource("Spot_4"), SubResource("Spot_5"), SubResource("Spot_6"), SubResource("Spot_7"), SubResource("Spot_8"), SubResource("Spot_9"), SubResource("Spot_10"), SubResource("Spot_11"), SubResource("Spot_12"), SubResource("Spot_13"), SubResource("Spot_14"), SubResource("Spot_15"), SubResource("Spot_16")])
+links = Array[ExtResource("2_link")]([SubResource("Link_1"), SubResource("Link_2"), SubResource("Link_3"), SubResource("Link_4"), SubResource("Link_5"), SubResource("Link_6"), SubResource("Link_7"), SubResource("Link_8"), SubResource("Link_9"), SubResource("Link_10"), SubResource("Link_11"), SubResource("Link_12"), SubResource("Link_13"), SubResource("Link_14")])
+spots = Array[ExtResource("3_spot")]([SubResource("Spot_1"), SubResource("Spot_2"), SubResource("Spot_3"), SubResource("Spot_4"), SubResource("Spot_5"), SubResource("Spot_6"), SubResource("Spot_7"), SubResource("Spot_8"), SubResource("Spot_9"), SubResource("Spot_10"), SubResource("Spot_11"), SubResource("Spot_12"), SubResource("Spot_13"), SubResource("Spot_14"), SubResource("Spot_15"), SubResource("Spot_16"), SubResource("Spot_17"), SubResource("Spot_18")])
