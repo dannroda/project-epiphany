@@ -1,43 +1,38 @@
-[gd_resource type="BehaviorTree" format=3]
+[gd_resource type="BehaviorTree" format=3 uid="uid://buk5xlpkoies4"]
 
 [ext_resource type="Script" uid="uid://bw6i0a7bddx8n" path="res://ai/tasks/bt_find_player.gd" id="1_find"]
-[ext_resource type="Script" path="res://ai/tasks/bt_health_below.gd" id="2_health"]
-[ext_resource type="Script" path="res://ai/tasks/bt_flee.gd" id="3_flee"]
-[ext_resource type="Script" path="res://ai/tasks/bt_pack_turn.gd" id="4_turn"]
-[ext_resource type="Script" path="res://ai/tasks/bt_dart_bite.gd" id="5_bite"]
-[ext_resource type="Script" path="res://ai/tasks/bt_circle.gd" id="6_circle"]
+[ext_resource type="Script" uid="uid://bt47cj1mos1t1" path="res://ai/tasks/bt_health_below.gd" id="2_health"]
+[ext_resource type="Script" uid="uid://bm4vy6q44javx" path="res://ai/tasks/bt_flee.gd" id="3_flee"]
+[ext_resource type="Script" uid="uid://cwm61pqd1jwyn" path="res://ai/tasks/bt_pack_turn.gd" id="4_turn"]
+[ext_resource type="Script" uid="uid://dygwr5gjxsofu" path="res://ai/tasks/bt_dart_bite.gd" id="5_bite"]
+[ext_resource type="Script" uid="uid://bivyucq1ajmna" path="res://ai/tasks/bt_circle.gd" id="6_circle"]
 [ext_resource type="Script" uid="uid://cigrik1hqv1ag" path="res://ai/tasks/bt_wander.gd" id="7_wander"]
-[ext_resource type="Script" path="res://ai/tasks/bt_not_yet.gd" id="8_not_yet"]
+[ext_resource type="Script" uid="uid://cu51lfpl353im" path="res://ai/tasks/bt_not_yet.gd" id="8_not_yet"]
 
 [sub_resource type="BlackboardPlan" id="Plan"]
-
-[sub_resource type="BBNode" id="AnimPlayer"]
-saved_value = NodePath("ModelController/AnimationPlayer")
-resource_name = "ModelController/AnimationPlayer"
-
-[sub_resource type="BBNode" id="Self"]
-saved_value = NodePath(".")
-resource_name = "."
 
 [sub_resource type="BBVariant" id="True"]
 type = 1
 saved_value = true
 resource_name = "true"
 
-[sub_resource type="BBVariant" id="False"]
-type = 1
-saved_value = false
-resource_name = "false"
-
 [sub_resource type="BTCheckVar" id="IsDead"]
 variable = &"is_dead"
 value = SubResource("True")
+
+[sub_resource type="BBNode" id="AnimPlayer"]
+saved_value = NodePath("ModelController/AnimationPlayer")
+resource_name = "ModelController/AnimationPlayer"
 
 [sub_resource type="BTPlayAnimation" id="DeathAnim"]
 await_completion = 1.0
 animation_player = SubResource("AnimPlayer")
 animation_name = &"Atoq/death"
 blend = 0.1
+
+[sub_resource type="BBNode" id="Self"]
+saved_value = NodePath(".")
+resource_name = "."
 
 [sub_resource type="BTCallMethod" id="DeathDone"]
 node = SubResource("Self")
@@ -56,6 +51,11 @@ await_completion = 0.3
 animation_player = SubResource("AnimPlayer")
 animation_name = &"Atoq/hit"
 blend = 0.05
+
+[sub_resource type="BBVariant" id="False"]
+type = 1
+saved_value = false
+resource_name = "false"
 
 [sub_resource type="BTSetVar" id="ClearHit"]
 variable = &"is_hit"
