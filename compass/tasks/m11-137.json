@@ -11,7 +11,7 @@
     "compass/images/m11-137-20261014-143745.png"
   ],
   "milestone": "m11",
-  "notes": "2) y 3) hechos (provisorio hasta 12.24): RellanoCrackedWall queda al ras de la pared LA y de su altura; una tapa del color de las crestas (NicheCap, hija de Wall) cubre el nicho y desaparece al romper el muro. 1) pasó a 11.156 (arte).\nDaniel (2026-10-14): la parte de la pared agrietada se descarta: la D1 queda sin paredes agrietadas (11.177). Los techos visibles pasan a 12.32 (topes del color del muro).\nCerrada: reemplazada por 11.156, 11.177 y 12.32 (NicheCap y RellanoCrackedWall ya no están).",
+  "notes": "2) y 3) hechos (provisorio hasta 12.24): RellanoCrackedWall queda al ras de la pared LA y de su altura; una tapa del color de las crestas (NicheCap, hija de Wall) cubre el nicho y desaparece al romper el muro. 1) pasó a 11.156 (arte).\nDaniel (2026-10-14): la parte de la pared agrietada se descarta: la D1 queda sin paredes agrietadas (11.177). Los techos visibles pasan a 12.32 (topes del color del muro).\nCerrada: reemplazada por 11.156, 11.177 y 12.32 (NicheCap y RellanoCrackedWall ya no están).\nSale de la sesión de playtest del 14 de octubre sin 'Anda': la reemplazan 11.177 y 12.32, que están en la del 15.",
   "order": 134,
   "playtest": {
     "note": "la pared quebrada sigue el estilo pero no el ancho. La parte negra debería verse como la parte superior. Y la camara debería centrarse mas en lo visible de la sala, no en su posible tamaño completo como rectangulo",
@@ -27,5 +27,5 @@
   ],
   "test": "",
   "title": "Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista",
-  "updated_at": "2026-10-15T19:55:30.141Z"
+  "updated_at": "2026-10-15T20:34:41.429Z"
 }

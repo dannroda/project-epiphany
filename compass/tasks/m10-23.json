@@ -23,6 +23,10 @@
   "milestone": "m10",
   "notes": "",
   "order": 23,
+  "playtest": {
+    "note": "Verificada en 10.28 (paso 15): ~16 s, estable.",
+    "result": "pass"
+  },
   "priority": "medium",
   "refs": [],
   "status": "done",
@@ -31,5 +35,5 @@
   ],
   "test": "Correr la suite completa: termina en menos de la mitad del tiempo en serie, con los mismos resultados, y dos corridas seguidas dan lo mismo.",
   "title": "Tests en paralelo",
-  "updated_at": "2026-10-15T19:55:31.932Z"
+  "updated_at": "2026-10-15T20:34:40.318Z"
 }
