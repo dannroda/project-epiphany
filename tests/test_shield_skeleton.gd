@@ -60,6 +60,20 @@ func test_shield_bash_lowers_the_guard_for_a_moment() -> void:
 	tree.root.get_node(^"GameState").reset()
 
 
+func test_a_blocked_swing_stuns_it_and_lowers_its_shield() -> void:
+	var setup: Array = await _setup()
+	var tree: SceneTree = setup[0]
+	var skeleton: Enemy = setup[1]
+	var attacker: Node3D = setup[2]
+	skeleton.recoil(0.9, skeleton.global_position + Vector3.BACK)
+	assert_true(skeleton.is_recoiling(), "chocó contra el escudo del player y quedó aturdido")
+	assert_eq(skeleton.is_guarding(), false, "con el escudo bajo")
+	assert_eq(_hit(skeleton, attacker, Vector3(0, 0, 2)), 2, "y la espada entra de frente")
+	await tree.create_timer(skeleton.config.guard_break_time + 0.2).timeout
+	assert_eq(skeleton.is_guarding(), true, "después vuelve a cubrirse")
+	tree.root.get_node(^"GameState").reset()
+
+
 func test_turns_slowly_so_you_can_roll_behind() -> void:
 	var setup: Array = await _setup()
 	var tree: SceneTree = setup[0]
