@@ -5,6 +5,22 @@
 [ext_resource type="AnimationLibrary" uid="uid://drilm8odwmi5s" path="res://player/animation/libs/MovementBasic.res" id="3_move"]
 [ext_resource type="PackedScene" path="res://src/entities/models/centinela.tscn" id="4_visuals"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/equipo/maza_centinela.res" id="5_maza"]
+[ext_resource type="Script" path="res://src/feel/ground_waves.gd" id="6_waves"]
+[ext_resource type="Shader" path="res://src/entities/mummy_guard/shockwave.gdshader" id="7_wave"]
+
+[sub_resource type="ShaderMaterial" id="WaveMat"]
+render_priority = 1
+shader = ExtResource("7_wave")
+
+[sub_resource type="CylinderMesh" id="WaveMesh"]
+material = SubResource("WaveMat")
+top_radius = 1.0
+bottom_radius = 1.0
+height = 1.0
+radial_segments = 72
+rings = 12
+cap_top = false
+cap_bottom = false
 
 [node name="ModelController" type="Node3D"]
 transform = Transform3D(2.3, 0, 0, 0, 2.3, 0, 0, 0, 2.3, 0, 0, 0)
@@ -205,3 +221,44 @@ libraries/MovementBasic = ExtResource("3_move")
 autoplay = &"CombatMelee/Melee_2H_Idle"
 
 [node name="Visuals" parent="." instance=ExtResource("4_visuals")]
+
+[node name="Ondas" type="Node3D" parent="." node_paths=PackedStringArray("skeleton", "punta")]
+script = ExtResource("6_waves")
+skeleton = NodePath("../Skeleton3D")
+punta = NodePath("../Skeleton3D/Hand_R/Maza/Punta")
+
+[node name="Wave1" type="MeshInstance3D" parent="Ondas"]
+top_level = true
+visible = false
+cast_shadow = 0
+mesh = SubResource("WaveMesh")
+
+[node name="Wave2" type="MeshInstance3D" parent="Ondas"]
+top_level = true
+visible = false
+cast_shadow = 0
+mesh = SubResource("WaveMesh")
+
+[node name="Wave3" type="MeshInstance3D" parent="Ondas"]
+top_level = true
+visible = false
+cast_shadow = 0
+mesh = SubResource("WaveMesh")
+
+[node name="Wave4" type="MeshInstance3D" parent="Ondas"]
+top_level = true
+visible = false
+cast_shadow = 0
+mesh = SubResource("WaveMesh")
+
+[node name="Wave5" type="MeshInstance3D" parent="Ondas"]
+top_level = true
+visible = false
+cast_shadow = 0
+mesh = SubResource("WaveMesh")
+
+[node name="Wave6" type="MeshInstance3D" parent="Ondas"]
+top_level = true
+visible = false
+cast_shadow = 0
+mesh = SubResource("WaveMesh")
