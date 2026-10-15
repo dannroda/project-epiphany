@@ -210,23 +210,28 @@ func set_trail(trail: Trail3D, on: bool) -> void:
 ## Partículas cortas, todas low poly con colores de la paleta y achicándose al morir: &"sparks" (bloqueo, rebote; &"sparks_gold" al pegar con la espada dorada),
 ## &"dust" (rodar, golpes contra el piso), &"shards" (algo que se rompe), &"leaves" (pasto), &"explosion" (bomba),
 ## &"sparkle" (destello del item get).
-func burst(kind: StringName, at: Vector3, direction: Vector3) -> void:
+## `always`: anda aunque el juego esté en pausa, como en `sfx`.
+func burst(kind: StringName, at: Vector3, direction: Vector3, always := false) -> void:
 	var scene := get_tree().current_scene
 	if scene == null:
 		return
 	var particles := BURSTS.get(kind, BURSTS[&"dust"]).instantiate() as CPUParticles3D
 	particles.direction = direction
+	if always:
+		particles.process_mode = Node.PROCESS_MODE_ALWAYS
 	scene.add_child(particles)
 	particles.global_position = at
 	particles.emitting = true
 	particles.finished.connect(particles.queue_free)
 	if kind == &"explosion":
-		_shockwave(scene, at)
+		_shockwave(scene, at, always)
 
 
 ## Anillo plano que se abre a ras del piso con la explosión.
-func _shockwave(scene: Node, at: Vector3) -> void:
+func _shockwave(scene: Node, at: Vector3, always := false) -> void:
 	var ring := SHOCKWAVE.instantiate() as MeshInstance3D
+	if always:
+		ring.process_mode = Node.PROCESS_MODE_ALWAYS
 	var material := (ring.mesh as PrimitiveMesh).material as StandardMaterial3D
 	scene.add_child(ring)
 	ring.global_position = Vector3(at.x, at.y - 0.3, at.z)

@@ -134,6 +134,25 @@ def jefe_cuerpo(p):
 	colgantes abajo y el propulsor."""
 	back = p.blob((0, 0.6, -0.2), 1.75, squash=(1.0, 0.8, 1.0), subdiv=2, rough=0.08)
 	p.paint(back, GOLD, "LOW", vary=0.05)
+	nape = []
+	for dy, band in ((0.45, JADE), (0.95, RED), (1.25, JADE)):
+		r = 1.75 * math.sqrt(1.0 - (dy / 1.4) ** 2)
+		b = ring(p, r - 0.04, 0.13, 0.1, sides=28)
+		p.transform(b, Matrix.Translation((0, 0.6 + dy, -0.2)) @ Matrix.Rotation(math.pi, 4, "Z"))
+		p.paint(b, band, "MID")
+	for k in range(14):
+		a = 2 * math.pi * k / 14
+		r = 1.75 * math.sqrt(1.0 - (0.7 / 1.4) ** 2)
+		nape += p.blob((math.cos(a) * r, 1.3, -0.2 + math.sin(a) * r), 0.1, subdiv=1, rough=0.0)
+	disc = p.cylinder(0.32, 0.0, 0.08, sides=16)
+	rays = []
+	for k in range(8):
+		ray = p.polygon([(-0.09, 0.0), (0.09, 0.0), (0.0, 0.3)], -0.03, 0.03)
+		p.transform(ray, Matrix.Rotation(k * math.pi / 4, 4, "Z") @ Matrix.Translation((0, 0.36, 0)))
+		rays += ray
+	p.transform(disc + rays, Matrix.Translation((0, 1.98, -0.2)) @ Matrix.Rotation(-math.pi / 2, 4, "X"))
+	p.paint(nape + rays, GOLD, "LIGHT", vary=0.04)
+	p.paint(disc, JADE, "LIGHT")
 	face, edges = shell(p, MASK, 0.14, (-0.7, 0.9), (-0.85, 0.85), steps=(12, 16))
 	p.transform(face + edges, Matrix.Translation((0, MASK_BACK, 0)))
 	p.paint(face, GOLD, z_range=(-2.2, 2.2), vary=0.04)

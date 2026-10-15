@@ -78,6 +78,7 @@ func _begin() -> void:
 	door.close()
 	await get_tree().create_timer(door.open_time, false).timeout
 	in_intro = true
+	boss.presents_phases = true
 	Music.boss_fight = true
 	_sharpen()
 	await TopDownCamera.reveal(boss.eye, _awaken, intro_hold)
@@ -102,7 +103,7 @@ func _awaken() -> void:
 	Feel.shake(0.35)
 	var player := Players.nearest(boss.eye.global_position)
 	if player:
-		boss.look_at_point(player.global_position + Vector3.UP)
+		boss.look_at_point(boss.gaze_point(player.global_position))
 	boss.roar()
 
 

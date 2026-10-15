@@ -237,8 +237,7 @@ func test_arena_closes_skippable_intro_and_bar() -> void:
 	_knock_down(boss.hand_left)
 	_knock_down(boss.hand_right)
 	boss.health.damage(boss.health.max_health)
-	await tree.create_timer(1.6).timeout
-	assert_true(not hud.boss_bar.visible, "al ganar la barra se va")
+	assert_true(await _wait_until(func() -> bool: return not hud.boss_bar.visible, 12.0), "al ganar la barra se va")
 	assert_true(await _wait_until(func() -> bool: return tree.root.get_node(^"GameState").get_flag(&"te_boss_defeated") == true, 5.0), "vencido")
 	await tree.create_timer(0.6).timeout
 	assert_true(not door.is_open, "la puerta queda cerrada: el portal es la única salida")
@@ -368,6 +367,7 @@ func _open_phase_two(boss: Boss) -> void:
 	_knock_down(boss.hand_left)
 	_knock_down(boss.hand_right)
 	await (Engine.get_main_loop() as SceneTree).create_timer(1.3).timeout
+	await _wait_until(func() -> bool: return boss.phase() != 2 or (boss.eye_open >= 1.0 and not boss.is_transforming()), 6.0)
 
 
 func test_phase_two_opens_the_eye_with_a_tremor() -> void:
@@ -656,6 +656,7 @@ func test_marks_blast_whoever_stays_even_blocking() -> void:
 	boss.health.invulnerability_time = 0.0
 	boss.health.damage(boss.health.max_health - 8)
 	assert_eq(boss.phase(), 3)
+	await _wait_until(func() -> bool: return not boss.is_transforming() and not tree.paused, 8.0)
 	boss.phases.set_active(false)
 	for hand in [boss.hand_left, boss.hand_right]:
 		hand.set_state(BossHand.State.DOWN)

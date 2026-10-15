@@ -36,6 +36,11 @@ const EYE_GLOW := 1.0
 const EYE_GLOW_CHARGED := 4.0
 const SLOW_MOTION := 0.25
 const SLOW_MOTION_TIME := 0.7
+## Qué tanto mira la pupila hacia la cámara en vez de al jugador: tranquilo y mientras dispara orbes.
+const GAZE_CALM := 0.5
+const GAZE_FIRING := 0.2
+## Cuánto se queda la cámara en el jefe al presentar la fase 2.
+const PHASE_HOLD := 2.2
 
 @export_group("Ajuste")
 @export var eye_stun_time := 3.0
@@ -93,8 +98,12 @@ var _body_material: StandardMaterial3D
 var _flash: HitFlash
 var _eye_base_glow := 1.0
 var _body_base_glow := 1.0
-## Corre Transform (la máscara estalla al entrar a la fase 3): no ataca ni recibe daño.
+## Corre Transform (la máscara estalla al entrar a la fase 3) o se presenta una fase: no ataca ni recibe daño.
 var _transforming := false
+## Lo prende BossArena al arrancar la pelea: cada fase nueva se presenta con la cámara, como el inicio.
+var presents_phases := false
+## La cámara se acercó a presentar la fase y el juego está en pausa: los efectos tienen que andar igual.
+var _presenting := false
 
 @onready var body: Node3D = $Body
 @onready var eye: Node3D = %Eye
@@ -211,7 +220,7 @@ func _physics_process(delta: float) -> void:
 		if _eye_stun_left <= 0.0:
 			_move_body(BODY_HEIGHT_OPEN, 0.6)
 	if is_instance_valid(target) and not is_eye_stunned():
-		var wanted := (target.global_position + Vector3.UP - eye.global_position).normalized()
+		var wanted := (gaze_point(target.global_position) - eye.global_position).normalized()
 		look_at_point(eye.global_position + eye.global_basis.z.normalized().slerp(wanted, 1.0 - exp(-4.0 * delta)))
 	var blackboard := phases.blackboard
 	blackboard.set_var(&"target", target)
@@ -429,6 +438,16 @@ func look_at_point(point: Vector3) -> void:
 	eye.look_at(point, Vector3.UP, true)
 
 
+## Adónde mira la pupila: entre el blanco y la cámara, para que desde arriba se lea mirando al jugador; cuando dispara
+## orbes (fases 2 y 3), más cerca del jugador.
+func gaze_point(at: Vector3) -> Vector3:
+	var camera := get_viewport().get_camera_3d()
+	if camera == null:
+		return at + Vector3.UP
+	var toward_camera := GAZE_FIRING if phases.is_active() and phase() >= 2 and not _presenting else GAZE_CALM
+	return (at + Vector3.UP).lerp(camera.global_position, toward_camera)
+
+
 func hand_rest(hand: BossHand) -> Marker3D:
 	return %HandRestLeft if hand == hand_left else %HandRestRight
 
@@ -496,23 +515,40 @@ func _on_hand_downed() -> void:
 		phases.dispatch(&"hands_down")
 
 
-## El ojo se abre con un temblor; el cuerpo baja un poco y ya se lo puede fijar.
+## Como el inicio de la pelea: la cámara se acerca, `action` arranca la fase y el jefe grita; mientras, no ataca.
+func _present(action: Callable, hold: float) -> void:
+	_transforming = true
+	if not presents_phases:
+		action.call()
+		return
+	_presenting = true
+	await TopDownCamera.reveal(self, action, hold)
+	_presenting = false
+
+
+## El ojo se abre de golpe con un grito; el cuerpo baja un poco y ya se lo puede fijar.
 func _on_phase2_entered() -> void:
 	chosen_attack = null
 	attacker = null
-	Feel.sfx(&"rumble", eye.global_position)
+	%Solid.add_to_group(&"targetable")
+	phase_changed.emit(2)
+	await _present(_open_eye, PHASE_HOLD)
+	_transforming = false
+	await get_tree().create_timer(hands_back_delay, false).timeout
+	if phase() == 2:
+		for hand in [hand_left, hand_right]:
+			hand.regenerate()
+
+
+func _open_eye() -> void:
+	Feel.sfx(&"rumble", eye.global_position, true)
 	Feel.shake(0.6)
 	_move_body(BODY_HEIGHT_OPEN, 0.8)
 	var lids := create_tween()
 	lids.tween_property(self, ^"eye_open", 0.15, 0.5).set_delay(0.3)
 	lids.tween_property(self, ^"eye_open", 1.0, 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	lids.tween_callback(_awaken_flash)
-	%Solid.add_to_group(&"targetable")
-	phase_changed.emit(2)
-	await get_tree().create_timer(hands_back_delay, false).timeout
-	if phase() == 2:
-		for hand in [hand_left, hand_right]:
-			hand.regenerate()
+	lids.tween_callback(roar_fx.play)
 
 
 ## Furia: el ojo grita, la máscara de oro se raja y estalla y queda el ojo corrupto, manos incluidas (Transform, que
@@ -520,21 +556,22 @@ func _on_phase2_entered() -> void:
 func _on_phase3_entered() -> void:
 	_eye_stun_left = 0.0
 	_cut_charge()
-	_transforming = true
 	for hand in [hand_left, hand_right]:
 		hand.held = true
 	_move_body(BODY_HEIGHT_OPEN, 0.4)
 	phase_changed.emit(3)
-	_transform.play(&"transform")
-	await _transform.animation_finished
+	await _present(_transform.play.bind(&"transform"), _transform.get_animation(&"transform").length + 0.3)
+	if _transform.is_playing():
+		await _transform.animation_finished
 	_transforming = false
 	for hand in [hand_left, hand_right]:
 		hand.held = false
 
 
 func _scream() -> void:
-	Feel.sfx(&"rumble", eye.global_position)
+	Feel.sfx(&"rumble", eye.global_position, _presenting)
 	Feel.shake(0.7)
+	roar_fx.play()
 	_pupil_goal = 1.0
 	_squint = 0.0
 	var lids := create_tween()
@@ -546,24 +583,24 @@ func _scream() -> void:
 
 func _crack() -> void:
 	var spot := body.to_global(Vector3(rng.randf_range(-1.6, 1.6), rng.randf_range(-1.2, 1.6), 1.7))
-	Feel.burst(&"sparks", spot, (spot - body.global_position).normalized())
-	Feel.burst(&"shards", spot, (spot - body.global_position).normalized() + Vector3.UP)
-	Feel.sfx(&"block", spot)
+	Feel.burst(&"sparks", spot, (spot - body.global_position).normalized(), _presenting)
+	Feel.burst(&"shards", spot, (spot - body.global_position).normalized() + Vector3.UP, _presenting)
+	Feel.sfx(&"block", spot, _presenting)
 	Feel.shake(0.3)
 	_flare_body()
 
 
 func _burst() -> void:
-	Feel.sfx(&"boom", eye.global_position)
+	Feel.sfx(&"boom", eye.global_position, _presenting)
 	Feel.shake(1.0)
 	Feel.freeze(0.2, 0.2)
 	for i in 6:
 		var spot := body.to_global(Vector3(rng.randf_range(-2.0, 2.0), rng.randf_range(-1.5, 2.0), rng.randf_range(0.5, 1.8)))
-		Feel.burst(&"explosion", spot, Vector3.UP)
-		Feel.burst(&"shards", spot, (spot - body.global_position).normalized() + Vector3.UP)
+		Feel.burst(&"explosion", spot, Vector3.UP, _presenting)
+		Feel.burst(&"shards", spot, (spot - body.global_position).normalized() + Vector3.UP, _presenting)
 	for hand in [hand_left, hand_right]:
-		Feel.burst(&"explosion", hand.global_position, Vector3.UP)
-		Feel.burst(&"shards", hand.global_position, Vector3.UP)
+		Feel.burst(&"explosion", hand.global_position, Vector3.UP, _presenting)
+		Feel.burst(&"shards", hand.global_position, Vector3.UP, _presenting)
 		hand.glow_color = CORRUPT_GLOW
 	_charge.set_instance_shader_parameter(&"color", CORRUPT_GLOW)
 	_awaken_flash()
@@ -687,8 +724,8 @@ func _awaken_flash() -> void:
 	Feel.shake(0.4)
 	for i in 6:
 		var spot := Vector3(rng.randf_range(arena.position.x, arena.end.x), 6.0, rng.randf_range(arena.position.y, arena.end.y))
-		Feel.burst(&"shards", spot, Vector3.DOWN)
-		Feel.burst(&"dust", spot, Vector3.DOWN)
+		Feel.burst(&"shards", spot, Vector3.DOWN, _presenting)
+		Feel.burst(&"dust", spot, Vector3.DOWN, _presenting)
 
 
 func _joint_blast() -> void:

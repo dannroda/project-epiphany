@@ -621,9 +621,13 @@ func _reveal(target: Node3D, action: Callable, hold: float) -> void:
 	tree.paused = true
 	var back := global_position
 	await _pan(reveal_focus(target) + _eye() * reveal_zoom)
-	action.call()
-	var left := _reveal_time(target, hold)
-	while left > 0.0 and not _skip:
+	if not is_inside_tree():
+		return
+	var left := 0.0
+	if is_instance_valid(target):
+		action.call()
+		left = _reveal_time(target, hold)
+	while left > 0.0 and not _skip and is_inside_tree():
 		await tree.process_frame
 		left -= get_process_delta_time()
 	for i in REVEAL_TAIL_FRAMES:
@@ -651,10 +655,11 @@ func _reveal_time(target: Node3D, hold: float) -> float:
 func _pan(to: Vector3) -> void:
 	var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(self, "global_position", to, reveal_pan_time)
-	while tween.is_running() and not _skip:
+	while tween.is_running() and not _skip and is_inside_tree():
 		await get_tree().process_frame
 	tween.kill()
-	global_position = to
+	if is_inside_tree():
+		global_position = to
 
 
 ## Sacudida por trauma: suma, decae sola y mueve solo el encuadre (h/v offset), no la cámara.

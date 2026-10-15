@@ -511,7 +511,7 @@ script = ExtResource("1_boss")
 attacks = [ExtResource("19_slam"), ExtResource("20_grab"), ExtResource("21_sweep"), ExtResource("22_orb"), ExtResource("23_mark")]
 
 [node name="Body" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.906308, -0.422618, 0, 0.422618, 0.906308, 0, 3, 0)
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="Body"]
 mesh = ExtResource("3_body")
@@ -602,11 +602,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.13, -0.1, -0.1)
 
 [node name="HandRestLeft" type="Marker3D" parent="Body"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6, -2, 1.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6, -2.375, -0.778)
 
 [node name="HandRestRight" type="Marker3D" parent="Body"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, -2, 1.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, -2.375, -0.778)
 
 [node name="HandLeft" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6, 1.821, 2.205)
@@ -621,7 +621,6 @@ material_override = SubResource("ShaderMaterial_pulso")
 cast_shadow = 0
 amount = 3
 lifetime = 1.2
-local_coords = false
 visibility_aabb = AABB(-3, -2, -3, 6, 6, 6)
 process_material = SubResource("ParticleProcessMaterial_pulso")
 draw_pass_1 = SubResource("PlaneMesh_pulso")
@@ -710,7 +709,6 @@ material_override = SubResource("ShaderMaterial_pulso")
 cast_shadow = 0
 amount = 3
 lifetime = 1.2
-local_coords = false
 visibility_aabb = AABB(-3, -2, -3, 6, 6, 6)
 process_material = SubResource("ParticleProcessMaterial_pulso")
 draw_pass_1 = SubResource("PlaneMesh_pulso")

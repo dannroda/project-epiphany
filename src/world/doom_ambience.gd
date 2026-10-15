@@ -2,7 +2,7 @@ class_name DoomAmbience
 extends Node
 ## El despertar del ojo, sala a sala: según el `Room.doom` de la sala actual (suavizado), la luz vira a rojo,
 ## sube la niebla, cae polvo, aparecen grietas en el piso y el templo tiembla cada vez más seguido.
-## El player y los objetos con los que se interactúa quedan sin teñir: van en su propia capa visual, que el sol rojo
+## El player, el jefe y los objetos con los que se interactúa quedan sin teñir: van en su propia capa visual, que el sol rojo
 ## no ilumina (sí proyectan sombra), los ilumina una luz neutra con la misma dirección y no les llega la niebla.
 
 ## Capa visual (bit) de lo que se tiene que leer con cualquier doom.
@@ -62,7 +62,7 @@ func _ready() -> void:
 
 static func is_legible(node: Node) -> bool:
 	return node is PlayerCharacter or node is Chest or node is Pickup or node is Breakable or node is PushBlock \
-		or node is Bomb or node is Tablet or node is EyeSwitch or node is FloorSwitch
+		or node is Bomb or node is Tablet or node is EyeSwitch or node is FloorSwitch or node is Boss
 
 
 func current_doom() -> float:
