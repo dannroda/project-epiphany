@@ -217,6 +217,8 @@ func test_arena_closes_skippable_intro_and_bar() -> void:
 	assert_true(await _wait_until(func() -> bool: return arena.in_intro, 2.0), "arranca la intro")
 	assert_true(not boss.phases.is_active(), "durante la intro no pelea")
 	await tree.create_timer(0.8, true).timeout
+	var sounding := level.get_children().filter(func(n: Node) -> bool: return n is AudioStreamPlayer3D and n.playing and n.can_process())
+	assert_true(not sounding.is_empty(), "el temblor de la intro suena durante la pausa del acercamiento")
 	var skip := InputEventAction.new()
 	skip.action = &"ui_accept"
 	skip.pressed = true
