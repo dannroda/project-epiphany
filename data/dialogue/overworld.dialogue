@@ -9,7 +9,7 @@ Inscripción: Con {btn:target_next} fijás la vista en un enemigo y lo rodeás s
 => END
 
 ~ start_lift
-Inscripción: Las piedras chicas se levantan con {btn:interact}. Con {btn:interact} o {btn:attack} se arrojan: la placa espera su peso. [ID:ow_start_lift_1]
+Inscripción: Las piedras chicas se levantan con {btn:interact} y se arrojan con {btn:interact} o {btn:attack}. La placa cede con solo pisarla. [ID:ow_start_lift_1]
 => END
 
 ~ cave_bombs
