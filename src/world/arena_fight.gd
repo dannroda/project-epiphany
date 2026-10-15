@@ -94,6 +94,8 @@ func _awaken() -> void:
 	get_tree().call_group(Hud.GROUP, &"show_area_name", tr(display_name))
 	Feel.sfx(&"rumble", _fighters[0].body.global_position)
 	Feel.shake(0.35)
+	if _fighters[0].has_method(&"roar"):
+		_fighters[0].roar()
 
 
 func _unhandled_input(event: InputEvent) -> void:
