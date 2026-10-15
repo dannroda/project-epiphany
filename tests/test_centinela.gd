@@ -99,6 +99,19 @@ func test_walking_away_keeps_the_fight_going() -> void:
 	tree.root.get_node(^"GameState").reset()
 
 
+## Daniel: pegarle desde lejos (una flecha) también arranca la pelea.
+func test_a_hit_from_afar_starts_the_fight() -> void:
+	await _start()
+	var hold := _hold_player(fight.global_position + Vector3(0, 0, 14))
+	await tree.create_timer(0.5).timeout
+	assert_true(not fight.started, "lejos, espera")
+	centinela.hurtbox.receive(DamageInfo.make(1, 0.0, player))
+	assert_true(await _until(func() -> bool: return centinela.state != Centinela.State.IDLE), "una flecha la arranca")
+	tree.physics_frame.disconnect(hold)
+	fight._reset()
+	tree.root.get_node(^"GameState").reset()
+
+
 func test_won_the_hammer_waits_on_its_spot() -> void:
 	await _start([&"ow_hammer_guard"])
 	assert_true(fight.active, "ganada queda ganada")
