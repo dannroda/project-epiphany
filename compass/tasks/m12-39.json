@@ -12,9 +12,9 @@
       "text": "Cambiar las instancias de cada mazmorra (diseño, -43)"
     },
     {
-      "detail": "El overworld y las cuevas no tienen theme de mazmorra: decidir con Daniel qué variante (o la base).",
+      "detail": "Daniel (2026-10-15): variantes. Cada enemigo del overworld y cada cueva toma la variante de la mazmorra de su región: Cerros → chullpa, Arboleda → quenoa, Laguna y Bañado → totora, Cumbre → cumbre, Necrópolis y explanada del templo → templo. Los guardias del templo ya están (569c5621).",
       "done": false,
-      "text": "Overworld y cuevas (-eb), si corresponde"
+      "text": "Overworld y cuevas con la variante de su zona (-eb)"
     },
     {
       "done": false,
@@ -38,5 +38,5 @@
   ],
   "test": "",
   "title": "Enemigos comunes estilizados según el theme de cada mazmorra",
-  "updated_at": "2026-10-15T20:20:07.309Z"
+  "updated_at": "2026-10-15T20:32:27.404Z"
 }
