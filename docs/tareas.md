@@ -5357,7 +5357,7 @@ Daniel (2026-10-15, captura): en PisoCornisa, la puerta sur de las Torretas (Pas
 
 **Prueba:** test_cumbre (test_the_door_from_the_turrets_lands_in_the_sun_eye_room_clear_of_the_boss_key_gate)
 
-## M12 — Assets propios (Blender)  (17/37)
+## M12 — Assets propios (Blender)  (17/38)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -5984,15 +5984,21 @@ Daniel (2026-10-15, captura de la sala del jefe): los cuatro círculos por donde
 
 - [x] Charco de agua que se lea desde la cámara del nivel, en Totora y en el templo
 
-### 12.37 Rejas con el estilo de cada mazmorra · Pendiente
+### 12.37 Rejas con el estilo de cada mazmorra · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `mazmorra`
 
 Daniel (2026-10-15): la reja de la Cumbre tiene los bosses de la Chullpa. Todas las mazmorras usan src/world/gate.tscn con el modelo de la Chullpa. Hace falta una reja por estilo (Queñoa, Totora, Cumbre, templo), como los kits LA, sin cambiar el tamaño ni la colisión.
 
-- [ ] Reja por estilo y cada nivel usando la suya
-- [ ] Puerta del jefe de la Cumbre propia
+- [x] Reja por estilo y cada nivel usando la suya
+- [x] Puerta del jefe de la Cumbre propia
   Según -43: puerta_jefe_cumbre_la.res (108579 B) es la de la Chullpa renombrada (108580 B), con los mismos bosses; BossDoor de PisoCornisa (46,0,20). La persiana es la misma malla en las cuatro (¿a propósito?).
+
+### 12.38 Cóndores de la D4: modelo de arte · Revisión
+
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `jefe`
+
+Pedido de -43 (11.129 paso 8) y de Daniel: Kuntur joven y Apu Kuntur con modelo de cóndor en lugar de las primitivas. Hecho por -5d en 5520a17d (build_kuntur.py): Kuntur negro con collar blanco y banda en el ala, cabeza roja con cresta; Apu Kuntur con sol de oro en la frente, pectoral y alas de oro. Las alas tienen el origen en el hombro; los nodos del script no cambian.
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 
