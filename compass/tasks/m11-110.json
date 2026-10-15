@@ -13,7 +13,7 @@
     },
     {
       "detail": "Hoy las cuatro placas son iguales. Marca o color por tipo (bloque, peso, golpe fuerte); pasa por el arte.",
-      "done": false,
+      "done": true,
       "text": "Que cada tipo se distinga a la vista"
     },
     {
@@ -47,5 +47,5 @@
   ],
   "test": "",
   "title": "Tipos de placa de piso: bloque, peso y golpe fuerte",
-  "updated_at": "2026-10-15T08:13:41.077Z"
+  "updated_at": "2026-10-15T08:31:23.886Z"
 }

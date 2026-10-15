@@ -4414,7 +4414,7 @@ Playtest 2026-10-12: los puzzles de bloques solo se tienen que activar con los b
   FloorSwitch: BLOCK lo aprieta solo un PushBlock (ni el player ni lo arrojado); WEIGHT, un objeto apoyado o arrojado (o un bloque), no el player; los dos quedan resueltos con flag. Santuario y mazmorra gris pasan de ONCE a BLOCK; la placa de levantar del Claro a WEIGHT. Tests: test_wiring, test_grove_puzzle. GDD §11 (interruptores) y §5 (tutorial).
 - [x] Placa del santuario apretada sin bloque
   ShrineBlock tenía solved_position del overworld viejo (−30, −16): al cargar con el puzzle resuelto el bloque aparecía lejos y la placa quedaba apretada sola. Ahora (−78, −32); test_solved_blocks_rest_on_their_switch revisa todos los niveles.
-- [ ] Que cada tipo se distinga a la vista
+- [x] Que cada tipo se distinga a la vista
   Hoy las cuatro placas son iguales. Marca o color por tipo (bloque, peso, golpe fuerte); pasa por el arte.
 - [ ] Placa de golpe fuerte
   Se activa con un golpe fuerte (¿martillo / golpe cargado?); espera el ítem que lo dé (11.90).
@@ -5076,7 +5076,7 @@ Arregla lo que rompió 11.161 (boss, temple, slots, map, audio). El cartel de pi
 El test de paredes de hueco pasa a la chullpa y mira las piezas orientadas: el Hueco suelto del kit LA tiene las paredes hundidas en los cuatro lados.
 Quedan sin uso (no borro arte): las mallas de la decoración vieja (escombros, estandarte, venas_doom, vasija_pedazos). La tablilla bow_hint queda para la Queñoa.
 
-### 11.163 Borrar las mallas de la decoración del templo viejo · Pendiente
+### 11.163 Borrar las mallas de la decoración del templo viejo · Revisión
 
 **Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `limpieza`, `arte`
 

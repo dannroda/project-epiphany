@@ -10,12 +10,12 @@
   "priority": "low",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "limpieza",
     "arte"
   ],
   "test": "",
   "title": "Borrar las mallas de la decoración del templo viejo",
-  "updated_at": "2026-10-14T06:14:54.618Z"
+  "updated_at": "2026-10-15T08:31:24.161Z"
 }
