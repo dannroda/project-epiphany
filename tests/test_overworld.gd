@@ -414,6 +414,25 @@ func test_every_region_is_reachable_except_the_item_gated() -> void:
 	state.reset()
 
 
+## La guarida de los guardias (11.195): un peñón con cueva sobre un descanso en la laguna, rodeado de agua honda; la boca
+## mira a la cámara y está tapada hasta que la cueva tenga interior.
+func test_the_guard_lair_waits_across_the_water() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.root.get_node(^"GameState").reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	await tree.physics_frame
+	var mouth := tree.current_scene.get_node(^"LairMouth") as Node3D
+	assert_true(mouth.global_basis.z.z > 0.9, "la boca mira al sur, a la cámara")
+	var space := (tree.current_scene as Node3D).get_world_3d().direct_space_state
+	var landing := mouth.global_position + Vector3(0, 0, 2)
+	assert_true(absf(_floor_at(space, landing)) < 0.5, "delante de la boca hay piso")
+	for side in [Vector3(-7, 0, 0), Vector3(7, 0, 0), Vector3(0, 0, -9)]:
+		assert_true(_floor_at(space, landing + side) < -2.0, "alrededor, agua honda (%s)" % (landing + side))
+	var walk_in := PhysicsRayQueryParameters3D.create(landing + Vector3.UP, mouth.global_position + Vector3(0, 1, -1.5))
+	assert_true(not space.intersect_ray(walk_in).is_empty(), "la boca está tapada")
+
+
 func _floor_at(space: PhysicsDirectSpaceState3D, at: Vector3) -> float:
 	var hit := space.intersect_ray(PhysicsRayQueryParameters3D.create(at + Vector3.UP * 3.0, at + Vector3.DOWN * 6.0))
 	return (hit.position as Vector3).y if hit else -INF
