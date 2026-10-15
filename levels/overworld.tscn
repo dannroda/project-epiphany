@@ -6,10 +6,7 @@
 [ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="4_cr2by"]
 [ext_resource type="PackedScene" path="res://src/world/spawn_point.tscn" id="4_spawn_scene"]
 [ext_resource type="Script" uid="uid://x60poi8g2tqu" path="res://src/world/grass_patch.gd" id="5_n78bg"]
-[ext_resource type="PackedScene" path="res://src/entities/archer_skeleton.tscn" id="6_archer"]
-[ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="6_d356v"]
 [ext_resource type="PackedScene" path="res://src/world/heart_piece.tscn" id="6_piece"]
-[ext_resource type="PackedScene" path="res://src/entities/shield_skeleton.tscn" id="6_shield"]
 [ext_resource type="PackedScene" path="res://src/world/physics_box.tscn" id="9_axpip"]
 [ext_resource type="PackedScene" path="res://src/world/overworld_map.tscn" id="11_gsck2"]
 [ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="13_gd0nv"]
@@ -100,6 +97,7 @@
 [ext_resource type="ArrayMesh" uid="uid://xj64yut5ifba" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretSummitWall.res" id="wall_SecretSummitWall"]
 [ext_resource type="PackedScene" path="res://src/world/stairs.tscn" id="summit_stairs"]
 [ext_resource type="PackedScene" path="res://src/world/stairs_down.tscn" id="summit_stairs_down"]
+[ext_resource type="PackedScene" path="res://src/entities/guerreros/skeleton_quenoa.tscn" id="skeleton_quenoa"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7se6l"]
 panorama = ExtResource("1_qyxw2")
@@ -1255,13 +1253,13 @@ columns = 6
 rows = 3
 random_seed = 2
 
-[node name="Skeleton1" parent="." unique_id=510737741 instance=ExtResource("6_d356v")]
+[node name="Skeleton1" parent="." unique_id=510737741 instance=ExtResource("skeleton_quenoa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0, -9)
 
-[node name="Skeleton2" parent="." unique_id=1094979658 instance=ExtResource("6_d356v")]
+[node name="Skeleton2" parent="." unique_id=1094979658 instance=ExtResource("skeleton_quenoa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 0, 1)
 
-[node name="Skeleton3" parent="." unique_id=844132866 instance=ExtResource("6_d356v")]
+[node name="Skeleton3" parent="." unique_id=844132866 instance=ExtResource("skeleton_quenoa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 0, -4)
 
 [node name="TempleSkeleton" parent="." unique_id=1940099285 instance=ExtResource("skeleton_templo")]
@@ -1270,19 +1268,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43, 5.2, -28)
 [node name="TempleShieldSkeleton" parent="." unique_id=2084727110 instance=ExtResource("shield_skeleton_templo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 5.2, -28)
 
-[node name="CliffSkeleton" parent="." unique_id=1777652994 instance=ExtResource("6_d356v")]
+[node name="CliffSkeleton" parent="." unique_id=1777652994 instance=ExtResource("skeleton_templo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76, 5.2, -20)
 
-[node name="CliffShieldSkeleton" parent="." unique_id=1099975904 instance=ExtResource("6_shield")]
+[node name="CliffShieldSkeleton" parent="." unique_id=1099975904 instance=ExtResource("shield_skeleton_templo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 0, -22)
 
 [node name="TempleArcher" parent="." unique_id=1616350127 instance=ExtResource("archer_skeleton_templo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39, 5.2, -32)
 
-[node name="CliffArcher" parent="." unique_id=1383502219 instance=ExtResource("6_archer")]
+[node name="CliffArcher" parent="." unique_id=1383502219 instance=ExtResource("archer_skeleton_templo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 74, 5.2, -19)
 
-[node name="GroveSkeleton" parent="." unique_id=1070302523 instance=ExtResource("6_d356v")]
+[node name="GroveSkeleton" parent="." unique_id=1070302523 instance=ExtResource("skeleton_quenoa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, 0, 1)
 
 [node name="Box1" parent="." unique_id=1372177849 instance=ExtResource("9_axpip")]
