@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://eakxksxvvpj8" path="res://src/items/behaviors/consumable_behavior.gd" id="1_behavior"]
 [ext_resource type="Texture2D" uid="uid://dsoy5b28aq0bg" path="res://assets/ui/items/holy_water.png" id="2_icon"]
 [ext_resource type="Script" uid="uid://bn5pjgpia5grm" path="res://src/items/item_data.gd" id="3_item"]
-[ext_resource type="Resource" path="res://data/items/bottle_empty.tres" id="4_bottle"]
+[ext_resource type="Resource" uid="uid://c5yrsw5oa3ltj" path="res://data/items/bottle_empty.tres" id="4_bottle"]
 
 [sub_resource type="Resource" id="Behavior"]
 script = ExtResource("1_behavior")

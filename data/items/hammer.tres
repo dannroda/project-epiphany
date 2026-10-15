@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="ItemData" format=3]
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dab50dwcdwd6d"]
 
-[ext_resource type="Script" path="res://src/items/behaviors/strike_behavior.gd" id="1_strike"]
+[ext_resource type="Script" uid="uid://bw07u5ndkdfjm" path="res://src/items/behaviors/strike_behavior.gd" id="1_strike"]
 [ext_resource type="PackedScene" path="res://src/items/hammer/hammer_strike.tscn" id="2_scene"]
 [ext_resource type="Script" uid="uid://bn5pjgpia5grm" path="res://src/items/item_data.gd" id="3_item"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/equipo/martillo.res" id="4_pickup"]
+[ext_resource type="ArrayMesh" uid="uid://cboebbt0ypy5c" path="res://assets/epiphany/meshes/equipo/martillo.res" id="4_pickup"]
 [ext_resource type="PackedScene" path="res://assets/items/hammer/hammer.tscn" id="5_held"]
 [ext_resource type="Texture2D" uid="uid://likkhba0sv63" path="res://assets/ui/items/hammer.png" id="6_icon"]
 

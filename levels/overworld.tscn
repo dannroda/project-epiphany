@@ -46,17 +46,23 @@
 [ext_resource type="PackedScene" path="res://src/world/water/shallow_water.tscn" id="102_shallow"]
 [ext_resource type="Material" path="res://src/world/water/water_la.tres" id="103_water_la"]
 [ext_resource type="PackedScene" path="res://src/world/travel_portal.tscn" id="110_travel"]
+[ext_resource type="Script" uid="uid://dlf8bqdycw2kg" path="res://src/world/look/brillo_la.gd" id="brillo_la"]
 [ext_resource type="PackedScene" path="res://src/world/chullpa_entrada.tscn" id="ent_chullpa"]
+[ext_resource type="PackedScene" path="res://src/world/cumbre_entrada.tscn" id="ent_cumbre"]
 [ext_resource type="PackedScene" path="res://src/world/quenoa_entrada.tscn" id="ent_quenoa"]
 [ext_resource type="PackedScene" path="res://src/world/totora_entrada.tscn" id="ent_totora"]
-[ext_resource type="PackedScene" path="res://src/world/cumbre_entrada.tscn" id="ent_cumbre"]
-[ext_resource type="Script" path="res://src/world/arena_fight.gd" id="hm_fight"]
-[ext_resource type="Script" path="res://src/world/arena_area.gd" id="hm_area"]
-[ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="hm_pflag"]
+[ext_resource type="Script" uid="uid://cnuecr7682x4j" path="res://src/world/arena_area.gd" id="hm_area"]
 [ext_resource type="PackedScene" path="res://src/entities/centinela/centinela.tscn" id="hm_centinela"]
+[ext_resource type="Script" uid="uid://bccprbredple8" path="res://src/world/arena_fight.gd" id="hm_fight"]
+[ext_resource type="Resource" uid="uid://dab50dwcdwd6d" path="res://data/items/hammer.tres" id="hm_item"]
+[ext_resource type="ArrayMesh" uid="uid://du5bkew73nw6v" path="res://assets/epiphany/meshes/objetos/pedestal_martillo.res" id="hm_pedestal"]
+[ext_resource type="Script" uid="uid://dcy0hg6ygxqg1" path="res://src/components/persistent_flag.gd" id="hm_pflag"]
 [ext_resource type="PackedScene" path="res://src/world/pickup.tscn" id="hm_pickup"]
-[ext_resource type="Resource" path="res://data/items/hammer.tres" id="hm_item"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/pedestal_martillo.res" id="hm_pedestal"]
+[ext_resource type="ArrayMesh" uid="uid://cqhfp51o6vhgm" path="res://assets/epiphany/meshes/muros_organicos/tapa_SecretCactusWall.res" id="lid_SecretCactusWall"]
+[ext_resource type="ArrayMesh" uid="uid://bfwtwbxjas50o" path="res://assets/epiphany/meshes/muros_organicos/tapa_SecretHillsWall.res" id="lid_SecretHillsWall"]
+[ext_resource type="ArrayMesh" uid="uid://cldky48h2hcrt" path="res://assets/epiphany/meshes/muros_organicos/tapa_SecretLookoutWall.res" id="lid_SecretLookoutWall"]
+[ext_resource type="ArrayMesh" uid="uid://dtqwea471fxl7" path="res://assets/epiphany/meshes/muros_organicos/tapa_SecretRavineWall.res" id="lid_SecretRavineWall"]
+[ext_resource type="ArrayMesh" uid="uid://bc38ysj61gbld" path="res://assets/epiphany/meshes/muros_organicos/tapa_SecretSummitWall.res" id="lid_SecretSummitWall"]
 [ext_resource type="Script" uid="uid://c8w1y48q1dcuh" path="res://src/world/after_the_eye.gd" id="ow_after_eye"]
 [ext_resource type="Resource" path="res://data/items/arrow.tres" id="ow_arrow"]
 [ext_resource type="Resource" path="res://data/items/bomb.tres" id="ow_bomb"]
@@ -84,12 +90,6 @@
 [ext_resource type="ArrayMesh" uid="uid://c7lvusadu8l35" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretLookoutWall.res" id="wall_SecretLookoutWall"]
 [ext_resource type="ArrayMesh" uid="uid://e178snsf1sk0" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretRavineWall.res" id="wall_SecretRavineWall"]
 [ext_resource type="ArrayMesh" uid="uid://xj64yut5ifba" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretSummitWall.res" id="wall_SecretSummitWall"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/muros_organicos/tapa_SecretHillsWall.res" id="lid_SecretHillsWall"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/muros_organicos/tapa_SecretCactusWall.res" id="lid_SecretCactusWall"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/muros_organicos/tapa_SecretLookoutWall.res" id="lid_SecretLookoutWall"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/muros_organicos/tapa_SecretRavineWall.res" id="lid_SecretRavineWall"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/muros_organicos/tapa_SecretSummitWall.res" id="lid_SecretSummitWall"]
-[ext_resource type="Script" uid="uid://dlf8bqdycw2kg" path="res://src/world/look/brillo_la.gd" id="brillo_la"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7se6l"]
 panorama = ExtResource("1_qyxw2")
@@ -131,11 +131,11 @@ compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_somb
 [sub_resource type="BoxShape3D" id="BoxShape3D_zone_arboleda"]
 size = Vector3(32, 14, 24)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_jamb"]
-size = Vector3(0.45, 2.6, 2)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_springportal"]
 size = Vector3(0.8, 2.4, 1.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jamb"]
+size = Vector3(0.45, 2.6, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_zone_banado"]
 size = Vector3(56, 14, 16)
@@ -211,6 +211,9 @@ size = Vector3(24, 14, 24)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bushdoor"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_lid"]
+size = Vector3(2.24, 0.4, 2.24)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_QuebradaPit"]
 size = Vector3(52, 2.4, 72)
 
@@ -237,15 +240,12 @@ size = Vector3(22, 2.4, 14)
 [sub_resource type="BoxShape3D" id="BoxShape3D_chullpa_door"]
 size = Vector3(2.4, 2.4, 1.4)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_lid"]
-size = Vector3(2.24, 0.4, 2.24)
+[sub_resource type="BoxShape3D" id="BoxShape3D_hammer_arena"]
+size = Vector3(18, 8, 14)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_hammer_pedestal"]
 height = 1.0
 radius = 0.45
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_hammer_arena"]
-size = Vector3(18, 8, 14)
 
 [node name="Overworld" type="Node3D" unique_id=295443412]
 
@@ -780,7 +780,7 @@ mesh = ExtResource("lid_SecretSummitWall")
 [node name="Floor" type="StaticBody3D" parent="SecretSummitWall/Lid" unique_id=1249480575]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SecretSummitWall/Lid/Floor" unique_id=695641419]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.0, -2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -2)
 shape = SubResource("BoxShape3D_lid")
 
 [node name="Spawn_templo" type="Marker3D" parent="." unique_id=511527969]
@@ -1734,10 +1734,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 0, 28)
 [node name="Escalinata_e_18" parent="Terrazas" unique_id=1271618914 instance=ExtResource("terr_escalinata_e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 0, 28)
 
-[node name="Escalinata_e_24" parent="Terrazas" instance=ExtResource("terr_escalinata_e")]
+[node name="Escalinata_e_24" parent="Terrazas" unique_id=1692773485 instance=ExtResource("terr_escalinata_e")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 62, 0, -18)
 
-[node name="Escalinata_o_25" parent="Terrazas" instance=ExtResource("terr_escalinata_o")]
+[node name="Escalinata_o_25" parent="Terrazas" unique_id=1100461293 instance=ExtResource("terr_escalinata_o")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 64, 0, -18)
 
 [node name="Salto_o_19" parent="Terrazas" unique_id=1668981719 instance=ExtResource("terr_salto_o")]
