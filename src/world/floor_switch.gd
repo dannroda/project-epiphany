@@ -4,12 +4,15 @@ extends Area3D
 ## Interruptor de piso.
 ## HOLD: activo mientras haya algo encima (player, bloque u objeto). ONCE: lo que sea lo deja activado (y, con flag, entre partidas).
 ## BLOCK: solo un bloque empujable; queda resuelto. WEIGHT: un objeto apoyado o arrojado (o un bloque); queda resuelto.
+## STRIKE: un golpe fuerte (DamageInfo.strong, el martillazo) sobre la placa; queda resuelto. Pisarla no hace nada.
 ## El player no aprieta ni BLOCK ni WEIGHT.
 
 signal activated
 signal deactivated
 
-enum Mode { HOLD, ONCE, BLOCK, WEIGHT }
+enum Mode { HOLD, ONCE, BLOCK, WEIGHT, STRIKE }
+
+const HURTBOX_LAYER := 16
 
 @export var mode: Mode = Mode.HOLD:
 	set(value):
@@ -18,6 +21,9 @@ enum Mode { HOLD, ONCE, BLOCK, WEIGHT }
 ## Marco y placa de BLOCK: con la chakana del bloque, para que no se confunda con la que pisa el player.
 @export var block_frame: Mesh
 @export var block_plate: Mesh
+## Marco y placa de STRIKE: cobre con el estallido.
+@export var strike_frame: Mesh
+@export var strike_plate: Mesh
 @export var flag: StringName:
 	set(value):
 		flag = value
@@ -41,6 +47,11 @@ func _ready() -> void:
 	collision_layer = 0
 	collision_mask = 1 | 8
 	monitorable = false
+	var hurtbox := $Hurtbox as Hurtbox
+	if mode == Mode.STRIKE:
+		hurtbox.collision_layer = HURTBOX_LAYER
+		hurtbox.hit.connect(_on_hit)
+		set_physics_process(false)
 	if flag != &"":
 		_persistent = $PersistentFlag
 		_persistent.flag = flag
@@ -60,9 +71,13 @@ func _apply_look() -> void:
 	var model := $Model as MeshInstance3D
 	if _look.is_empty():
 		_look = [model.mesh, (plate as MeshInstance3D).mesh]
-	var block := mode == Mode.BLOCK and block_plate != null
-	model.mesh = block_frame if block else _look[0]
-	(plate as MeshInstance3D).mesh = block_plate if block else _look[1]
+	var look: Array = _look
+	if mode == Mode.BLOCK and block_plate:
+		look = [block_frame, block_plate]
+	elif mode == Mode.STRIKE and strike_plate:
+		look = [strike_frame, strike_plate]
+	model.mesh = look[0]
+	(plate as MeshInstance3D).mesh = look[1]
 
 
 func _get_configuration_warnings() -> PackedStringArray:
@@ -83,8 +98,20 @@ func _physics_process(_delta: float) -> void:
 		set_physics_process(false)
 
 
+func _on_hit(info: DamageInfo) -> void:
+	if not info.strong or _solved:
+		return
+	_solved = true
+	if _persistent:
+		_persistent.value = true
+	_set_active(true, true)
+	Feel.shake(0.15)
+
+
 func _presses(body: Node3D) -> bool:
 	match mode:
+		Mode.STRIKE:
+			return false
 		Mode.BLOCK:
 			return body is PushBlock
 		Mode.WEIGHT:
