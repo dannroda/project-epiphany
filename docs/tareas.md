@@ -6112,7 +6112,8 @@ Daniel (2026-10-15): es hora de que los enemigos normales de las mazmorras vayan
 
 - [x] Modelos, armas y corazas por mazmorra (arte, -5d)
   Hecho, aprobado por Daniel: b19ba666 (guerrero_<mazmorra>, armas, 20 escenas en src/entities/guerreros/<tipo>_<mazmorra>.tscn), ae1ed827 (armadura_<mazmorra>). test_guerreros.
-- [ ] Cambiar las instancias de cada mazmorra (diseño, -43)
+- [x] Cambiar las instancias de cada mazmorra (diseño, -43)
+  Hecho el 2026-10-15 (27f82209): en cada mazmorra los ext_resource de esqueleto, escudo, arquero y acorazado apuntan a guerreros/<tipo>_<mazmorra>.tscn, así cambian todas las instancias y los spawns de oleadas (cripta de la Chullpa, Combinada del templo) sin overrides. test_dungeon_enemies falla si un refresh vuelve a las escenas base.
 - [ ] Overworld y cuevas (-eb), si corresponde
   El overworld y las cuevas no tienen theme de mazmorra: decidir con Daniel qué variante (o la base).
 - [ ] Probarlo (Daniel)
