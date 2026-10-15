@@ -1,7 +1,8 @@
 shader_type spatial;
 render_mode unshaded, depth_draw_never, cull_disabled, shadows_disabled;
-// Onda del aterrizaje: un anillo de fuego cortado en lenguas que titilan y doblan lo que tienen abajo, con los colores de
-// quien la larga (`glow` el fuego, `core` lo más caliente). El plano mide 2 (radio 1) y se escala al radio.
+// Onda del aterrizaje: un anillo de fuego entero (sin huecos: no hay por dónde pasar) con lenguas que titilan y doblan
+// lo que tienen abajo, en los colores de quien la larga (`glow` el fuego, `core` lo más caliente). El plano mide 2
+// (radio 1) y se escala al radio.
 
 uniform sampler2D screen: hint_screen_texture, filter_linear_mipmap;
 uniform float bend = 0.03;
@@ -33,9 +34,9 @@ void fragment() {
 	float flick = noise(dir * 11.0 + vec2(TIME * 6.0, 3.0));
 	float lick = d + 0.5 * (tongue - 0.5) + 0.25 * (flick - 0.5);
 	float body = 1.0 - smoothstep(0.0, mix(0.55, 1.2, tongue), abs(lick));
-	float gaps = smoothstep(0.2, 0.55, noise(dir * 4.0 + vec2(TIME * 1.3, 7.0)));
+	float pulse = mix(0.65, 1.0, noise(dir * 4.0 + vec2(TIME * 1.3, 7.0)));
 	float streaks = mix(0.55, 1.0, noise(vec2(atan(p.y, p.x) * 14.0, r * 6.0 - TIME * 4.0)));
-	float fire = body * gaps * streaks * fade;
+	float fire = max(body, 0.45 * (1.0 - smoothstep(0.0, 0.7, abs(d)))) * pulse * streaks * fade;
 	vec3 color = mix(glow.rgb, core.rgb, smoothstep(0.45, 0.95, fire));
 	vec2 push = dir * fire * bend;
 	vec3 below = texture(screen, SCREEN_UV - push).rgb;
