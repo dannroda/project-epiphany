@@ -227,10 +227,12 @@ func _guard_stops(info: DamageInfo) -> bool:
 	return true
 
 
-## Su golpe chocó contra un escudo: corta el ataque, retrocede y queda quieto un instante.
+## Su golpe chocó contra un escudo: corta el ataque, retrocede y queda aturdido un instante, con el escudo bajo.
 func recoil(seconds: float, from: Vector3) -> void:
 	if is_dead:
 		return
+	if config.guards_front:
+		_guard_down_left = maxf(_guard_down_left, maxf(seconds, config.guard_break_time))
 	attack_runner.stop()
 	stop_moving()
 	bt_player.active = false

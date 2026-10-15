@@ -564,6 +564,8 @@ func _hold_together(players: Array[PlayerCharacter]) -> void:
 
 ## Los tests la apagan (el runner, antes de cada test) salvo los que prueban el acercamiento.
 static var unlock_reveals := true
+## Cuadros que se queda mirando después de que termina de abrirse.
+const REVEAL_TAIL_FRAMES := 4
 
 ## Lo que se destraba por una acción (switches, puzzle, horda) se muestra con `reveal`.
 static func reveal_unlock(target: Node3D, action: Callable) -> void:
@@ -596,14 +598,11 @@ func _exit_tree() -> void:
 		get_tree().paused = false
 
 
-## Foco del acercamiento: el objetivo, pero con la vista acercada dentro de la sala (no se ve más allá de sus paredes).
+## Foco del acercamiento: el objetivo, a la altura del player.
 func reveal_focus(target: Node3D) -> Vector3:
 	var point := target.global_position
 	point.y = target_node.global_position.y
-	if room == null:
-		return point
-	var view := view_extents()
-	return room.clamp_focus(point, Rect2(view.position * reveal_zoom, view.size * reveal_zoom))
+	return point
 
 
 func _reveal(target: Node3D, action: Callable, hold: float) -> void:
@@ -615,18 +614,32 @@ func _reveal(target: Node3D, action: Callable, hold: float) -> void:
 	target.process_mode = PROCESS_MODE_ALWAYS
 	tree.paused = true
 	var back := global_position
-	await _pan(reveal_focus(target) + offset * reveal_zoom)
+	await _pan(reveal_focus(target) + _eye() * reveal_zoom)
 	action.call()
-	var left := reveal_hold if hold < 0.0 else hold
+	var left := _reveal_time(target, hold)
 	while left > 0.0 and not _skip:
 		await tree.process_frame
 		left -= get_process_delta_time()
+	for i in REVEAL_TAIL_FRAMES:
+		if _skip:
+			break
+		await tree.process_frame
 	await _pan(back)
 	if is_instance_valid(target):
 		target.process_mode = target_mode
 	process_mode = PROCESS_MODE_INHERIT
 	tree.paused = false
 	revealing = false
+
+
+## Lo que tarda en abrirse lo mostrado (puerta, reja, puente); sin animación conocida, `reveal_hold`.
+func _reveal_time(target: Node3D, hold: float) -> float:
+	if hold >= 0.0:
+		return hold
+	for property: StringName in [&"open_time", &"duration"]:
+		if property in target:
+			return target.get(property)
+	return reveal_hold
 
 
 func _pan(to: Vector3) -> void:

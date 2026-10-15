@@ -115,13 +115,19 @@ func test_reveal_pauses_and_shows_only_the_first_time() -> void:
 	while Time.get_ticks_msec() < until and not camera.revealing:
 		await tree.physics_frame
 	assert_true(camera.revealing, "la cámara muestra la puerta")
-	var view := camera.view_extents()
-	var focus := camera.reveal_focus(door)
-	var shown := Rect2(Vector2(focus.x, focus.z) + view.position * camera.reveal_zoom, view.size * camera.reveal_zoom)
-	assert_true(camera.room.bounds().grow(0.01).encloses(shown), "el acercamiento no sale de la sala: %s en %s" % [shown, camera.room.bounds()])
 	assert_true(tree.paused, "con el juego en pausa")
+	var elapsed := 0.0
+	while camera.revealing and elapsed < camera.reveal_pan_time + 0.05:
+		await tree.process_frame
+		elapsed += tree.root.get_process_delta_time()
+	var ahead := -camera.global_basis.z
+	var looked := camera.global_position + ahead * (player.global_position.y - camera.global_position.y) / ahead.y
+	assert_true(Vector2(looked.x - door.global_position.x, looked.z - door.global_position.z).length() < 0.3, "se acerca a la puerta, no hacia adelante (mira %s, la puerta en %s)" % [looked.snappedf(0.1), door.global_position.snappedf(0.1)])
 	while camera.revealing:
 		await tree.process_frame
+		elapsed += tree.root.get_process_delta_time()
+	var expected := camera.reveal_pan_time * 2.0 + door.open_time
+	assert_true(elapsed > expected and elapsed < expected + 0.25, "vuelve al terminar de abrirse (%.2f s; abrir e ir y volver, %.2f s)" % [elapsed, expected])
 	assert_eq(door.is_open, true, "la abrió")
 	assert_eq(tree.paused, false, "y sigue el juego")
 	player.global_position = player_switch.global_position + Vector3(0, 0, 3)

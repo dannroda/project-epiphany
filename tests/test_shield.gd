@@ -81,7 +81,10 @@ func test_a_blocked_sword_makes_the_attacker_recoil() -> void:
 	hold_block(player, true)
 	player.hurtbox.receive(shooter.config.make_damage(shooter))
 	assert_true(shooter.is_recoiling() and not shooter.bt_player.active, "el espadazo bloqueado lo deja quieto")
-	await tree.create_timer(player.shield.block_recoil + 0.15).timeout
+	assert_eq(shooter.anim_player.current_animation, &"General/Hit_B", "aturdido")
+	await tree.create_timer(0.7).timeout
+	assert_eq(shooter.anim_player.current_animation, &"General/Hit_B", "la animación de aturdido se ve entera")
+	await tree.create_timer(player.shield.block_recoil - 0.7 + 0.15).timeout
 	assert_true(not shooter.is_recoiling() and shooter.bt_player.active, "un instante, y vuelve a pelear")
 	hold_block(player, false)
 	setup[1].reset()
