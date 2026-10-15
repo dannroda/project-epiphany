@@ -39,7 +39,7 @@ const SKIP_ACTIONS: Array[StringName] = [&"ui_accept", &"attack", &"interact"]
 @export_group("Mostrar lo activado")
 @export var reveal_pan_time := 0.6
 ## Viñeta y luz de todos los acercamientos (la cámara del preset no se usa): pisan a las de la sala mientras dura. Un
-## AmbienteSala hijo de lo mostrado (la pelea, la puerta) o de la cámara lo reemplaza.
+## AmbienteZoom hijo de lo mostrado (la pelea, la puerta) o de la cámara lo reemplaza.
 @export var reveal_look: AmbientePreset = preload("res://data/ambientes/zoom.tres")
 ## Lo que tarda el ambiente del acercamiento en entrar y en volver al de la sala.
 @export var reveal_tone_time := 0.6
@@ -118,7 +118,6 @@ var _last_positions: Dictionary[PlayerCharacter, Vector3] = {}
 var _player_rids: Array[RID] = []
 var _level_offset := Vector3.ZERO
 var _level_fov := 0.0
-var _mood: AmbienteSala
 var _room_look_saved := {}
 
 
@@ -343,8 +342,8 @@ func _slide_offset(value: Vector3) -> void:
 	global_basis = Basis.looking_at(-_eye(), Vector3.FORWARD)
 
 
-## Offset y campo de visión de la sala (su AmbientePreset o camera_offset/camera_fov), y su viñeta y luz (el preset y
-## su AmbienteSala) sobre el WorldEnvironment del nivel; lo que no pone queda como el del nivel.
+## Offset y campo de visión de la sala (su AmbientePreset o camera_offset/camera_fov), y la viñeta y la luz del preset
+## sobre el WorldEnvironment del nivel; lo que no pone queda como el del nivel.
 func _apply_room_view(target: Room) -> void:
 	var preset := target.ambiente
 	if preset and preset.usar_camara:
@@ -356,17 +355,7 @@ func _apply_room_view(target: Room) -> void:
 			fov = preset.fov
 		else:
 			fov = target.camera_fov if target.camera_fov > 0.0 else _level_fov
-	if is_instance_valid(_mood):
-		_mood.restore()
-	_mood = null
 	_apply_room_look(preset)
-	var mood: AmbienteSala = null
-	for child in target.get_children():
-		if child is AmbienteSala:
-			mood = child
-	_mood = mood
-	if mood and _world():
-		mood.apply(_world())
 
 
 ## Pone la viñeta y la luz del preset de la sala, devolviendo antes las de la sala anterior.
@@ -674,16 +663,19 @@ func _reveal(target: Node3D, action: Callable, hold: float) -> void:
 	tree.paused = true
 	var back := global_position
 	var zoom: float = target.call(&"reveal_zoom", reveal_zoom) if target.has_method(&"reveal_zoom") else reveal_zoom
-	var values := _reveal_values(target)
-	var mood := _reveal_mood(values)
+	var look := _reveal_preset(target)
+	var mood := look.targets(_world()) if look else {}
 	var mood_back := {}
-	for key: String in mood:
-		mood_back[key] = mood[key].get(key.trim_prefix(AmbienteSala.TONE_PREFIX))
-	_tween_mood(mood, values)
+	for holder: Object in mood:
+		mood_back[holder] = {}
+		for property: String in mood[holder]:
+			mood_back[holder][property] = holder.get(property)
+	_tween_mood(mood)
 	await _pan(reveal_focus(target) + _eye() * zoom)
 	if not is_inside_tree():
-		for key: String in mood_back:
-			mood[key].set(key.trim_prefix(AmbienteSala.TONE_PREFIX), mood_back[key])
+		for holder: Object in mood_back:
+			for property: String in mood_back[holder]:
+				holder.set(property, mood_back[holder][property])
 		return
 	var left := 0.0
 	if is_instance_valid(target):
@@ -696,7 +688,7 @@ func _reveal(target: Node3D, action: Callable, hold: float) -> void:
 		if _skip:
 			break
 		await tree.process_frame
-	_tween_mood(mood, mood_back)
+	_tween_mood(mood_back)
 	await _pan(back)
 	if is_instance_valid(target):
 		target.process_mode = target_mode
@@ -705,45 +697,22 @@ func _reveal(target: Node3D, action: Callable, hold: float) -> void:
 	revealing = false
 
 
-func _reveal_values(target: Node) -> Dictionary:
+func _reveal_preset(target: Node) -> AmbientePreset:
 	for node: Node in [target, self]:
 		for child in node.get_children():
-			if child is AmbienteSala:
-				return child.valores
-	var values := {}
-	var targets := reveal_look.targets(_world()) if reveal_look else {}
-	for holder: Object in targets:
-		var prefix := AmbienteSala.TONE_PREFIX if holder is CompositorEffect else ""
-		for property: String in targets[holder]:
-			values[prefix + property] = targets[holder][property]
-	return values
+			if child is AmbienteZoom and child.preset:
+				return child.preset
+	return reveal_look
 
 
-## Clave del ambiente del acercamiento → objeto que la tiene (el Environment o el TonoLA del nivel).
-func _reveal_mood(values: Dictionary) -> Dictionary:
-	var world := _world()
-	if world == null:
-		return {}
-	var tone := AmbientePreset.tone_of(world)
-	var mood := {}
-	for key: String in values:
-		var holder: Object = tone if key.begins_with(AmbienteSala.TONE_PREFIX) else world.environment
-		if holder:
-			mood[key] = holder
-	return mood
-
-
-func _tween_mood(mood: Dictionary, values: Dictionary) -> void:
-	if mood.is_empty():
+## Lleva cada objeto (TonoLA, Environment) a sus valores {propiedad: valor}.
+func _tween_mood(values: Dictionary) -> void:
+	if values.is_empty():
 		return
 	var tween := create_tween().set_parallel().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	for key: String in mood:
-		var property := key.trim_prefix(AmbienteSala.TONE_PREFIX)
-		var value: Variant = values.get(key, mood[key].get(property))
-		if typeof(value) in [TYPE_FLOAT, TYPE_INT, TYPE_COLOR, TYPE_VECTOR3]:
-			tween.tween_property(mood[key], NodePath(property), value, reveal_tone_time)
-		else:
-			mood[key].set(property, value)
+	for holder: Object in values:
+		for property: String in values[holder]:
+			tween.tween_property(holder, NodePath(property), values[holder][property], reveal_tone_time)
 
 
 ## Lo que tarda en abrirse lo mostrado (puerta, reja, puente); sin animación conocida, `reveal_hold`.

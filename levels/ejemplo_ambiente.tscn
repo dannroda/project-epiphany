@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://bl0v2dlp842dn"]
 
 [ext_resource type="PackedScene" uid="uid://ccn88kav7u1vk" path="res://levels/chullpa.tscn" id="1_chullpa"]
-[ext_resource type="Script" uid="uid://b7iar3llh0wri" path="res://src/world/ambiente_sala.gd" id="2_ambiente"]
+[ext_resource type="Script" path="res://src/world/look/ambiente_zoom.gd" id="2_ambiente"]
+[ext_resource type="Resource" path="res://data/ambientes/ejemplo_resuelto.tres" id="4_resuelto"]
 [ext_resource type="Resource" path="res://data/ambientes/ejemplo_entrada.tres" id="3_entrada"]
 
 [node name="EjemploAmbiente" instance=ExtResource("1_chullpa")]
@@ -11,8 +12,4 @@ ambiente = ExtResource("3_entrada")
 
 [node name="AmbienteZoom" type="Node" parent="PlantaBaja/EntradaGate"]
 script = ExtResource("2_ambiente")
-valores = {
-"tono_exposure": 1.3,
-"tono_frame": 0.0,
-"tono_vignette": 0.0
-}
+preset = ExtResource("4_resuelto")

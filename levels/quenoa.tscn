@@ -52,7 +52,8 @@
 [ext_resource type="Script" uid="uid://dcy0hg6ygxqg1" path="res://src/components/persistent_flag.gd" id="persistent_flag"]
 [ext_resource type="Script" uid="uid://c3gjwha8na3yi" path="res://src/world/look/sombra_la.gd" id="sombra_la"]
 [ext_resource type="Script" uid="uid://bw0kh7whsb1qf" path="res://src/world/look/tono_la.gd" id="tono_la"]
-[ext_resource type="Script" uid="uid://b7iar3llh0wri" path="res://src/world/ambiente_sala.gd" id="ambiente_sala"]
+[ext_resource type="Script" path="res://src/world/look/ambiente_zoom.gd" id="ambiente_zoom"]
+[ext_resource type="Resource" path="res://data/ambientes/grito_d2.tres" id="grito_d2"]
 
 [sub_resource type="Environment" id="Environment_w3lyb"]
 background_mode = 1
@@ -684,11 +685,8 @@ magnet_radius = 0.0
 world_size = 1.4
 
 [node name="AmbienteGrito" type="Node" parent="PisoRaices/BossFight"]
-script = ExtResource("ambiente_sala")
-valores = {
-"tono_frame": 0.0,
-"tono_vignette": 0.15
-}
+script = ExtResource("ambiente_zoom")
+preset = ExtResource("grito_d2")
 
 [node name="BossExitPortal" parent="PisoRaices" unique_id=1612604094 instance=ExtResource("50_warp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 32)

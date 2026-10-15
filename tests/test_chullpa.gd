@@ -516,32 +516,28 @@ func test_a_room_can_set_its_own_camera_and_environment() -> void:
 	var level_offset := camera.offset
 	var level_fov := camera.fov
 	var world := level.find_children("*", "WorldEnvironment", true, false)[0] as WorldEnvironment
-	var tone: CompositorEffect = world.compositor.compositor_effects.filter(func(effect: CompositorEffect) -> bool: return effect.get_script() == AmbienteSala.TONE)[0]
+	var tone := AmbientePreset.tone_of(world)
 	var level_energy := world.environment.ambient_light_energy
 	var level_frame: float = tone.frame
-	hall.camera_offset = Vector3(0, 26, 12)
-	hall.camera_fov = 32.0
-	var mood := AmbienteSala.new()
-	hall.add_child(mood)
-	mood.set(&"ambient_light_energy", 0.25)
-	mood.set(&"tono_frame", 0.2)
-	assert_eq(mood.get(&"glow_enabled"), world.environment.glow_enabled, "lo no tildado se lee del nodo del nivel")
+	var preset := AmbientePreset.new()
+	preset.offset = Vector3(0, 26, 12)
+	preset.fov = 32.0
+	preset.frame = 0.2
+	preset.usar_luz = true
+	preset.ambient_light_energy = 0.25
+	hall.ambiente = preset
 	assert_true(is_equal_approx(world.environment.ambient_light_energy, level_energy), "fuera de la sala no se aplica")
 	player.global_position = _in("PlantaBaja/SalaCofre", Vector3(-8, 0.3, 4))
 	await tree.create_timer(1.2).timeout
 	assert_eq(camera.room, hall)
 	assert_true(camera.offset.is_equal_approx(Vector3(0, 26, 12)), "la sala pone su offset (%s)" % camera.offset)
 	assert_true(absf(camera.fov - 32.0) < 0.01, "y su campo de visión")
-	assert_true(is_equal_approx(world.environment.ambient_light_energy, 0.25), "y lo tildado de su ambiente")
+	assert_true(is_equal_approx(world.environment.ambient_light_energy, 0.25), "y su luz")
 	assert_true(is_equal_approx(tone.frame, 0.2), "y su viñeta")
-	assert_true(is_equal_approx(mood.get(&"ambient_light_energy"), 0.25))
-	mood.set(&"ambient_light_energy", 0.5)
-	assert_true(is_equal_approx(world.environment.ambient_light_energy, 0.5), "un cambio con la sala abierta se ve en el momento")
-	mood.set(&"tono_frame", null)
-	assert_true(is_equal_approx(tone.frame, level_frame), "destildar vuelve al valor del nivel")
 	player.global_position = _in("PlantaBaja/Entrada", Vector3(0, 0.3, 0))
 	await tree.create_timer(1.2).timeout
 	assert_true(camera.offset.is_equal_approx(level_offset), "una sala sin nada vuelve al del nivel")
 	assert_true(absf(camera.fov - level_fov) < 0.01)
 	assert_true(is_equal_approx(world.environment.ambient_light_energy, level_energy), "y al ambiente del nivel")
+	assert_true(is_equal_approx(tone.frame, level_frame), "y a su viñeta")
 	tree.root.get_node(^"GameState").reset()
