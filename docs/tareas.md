@@ -5445,7 +5445,7 @@ Fases 2 y 3: si las dos manos están aturdidas o caídas, el ojo suma el barrido
 
 Daniel (2026-10-15): más adelante se implementan las aletas para nadar; la guarida de los guardias (11.115) va en la orilla sur del lago grande, a la que solo se llega nadando. Por ahora: entrada de cueva decorativa (sin transición) y un poco de terreno para salir del agua antes de entrar. Captura de Daniel: debug/tmp/fd/guarida_orilla.png.
 
-### 11.196 Overworld: enemigo de montaña en la zona de D4 (atoq, zorro andino en manada) · Pendiente
+### 11.196 Overworld: enemigo de montaña en la zona de D4 (atoq, zorro andino en manada) · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `overworld`, `enemigos`, `ia`
 
@@ -5455,7 +5455,7 @@ Daniel (2026-10-15): la zona de D4 (la explanada frente a la puerta del cóndor)
   Hecho el 2026-10-15 (dddfe14e): src/entities/atoq/atoq.tscn es un Enemy con el modelo de -5d y la biblioteca Atoq (ficha data/entities/atoq.tres: 6 de vida, 5 m/s, mordisco data/attacks/atoq_bite.tres con salto). Árbol atoq_bt.tres: aúlla al verte, te rodea a 3,5 m (bt_circle), muerden de a uno (bt_pack_turn + PackTurns: un turno por objetivo; bt_dart_bite corre, avisa, salta y se aleja, y después descansa 2–3,5 s), con un tercio de vida huye a 8 m (bt_flee) y sin ver a nadie deambula (bt_wander). test_atoq. Para ponerlos: instanciar atoq.tscn en el nivel (no agregarlo encima del player y moverlo después: Jolt lo despide).
 - [ ] Modelo y animaciones (arte, -5d)
   Zorro andino low-poly con la paleta; correr, morder, aullar, quieto.
-- [ ] Ponerlos en la zona de D4 (overworld, -eb)
+- [x] Ponerlos en la zona de D4 (overworld, -eb)
   Dos o tres manadas en la explanada y el camino a la puerta del cóndor, sin cortar el paso.
 - [ ] Probarlo (Daniel)
 

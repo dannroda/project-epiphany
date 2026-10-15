@@ -13,7 +13,7 @@
     },
     {
       "detail": "Dos o tres manadas en la explanada y el camino a la puerta del cóndor, sin cortar el paso.",
-      "done": false,
+      "done": true,
       "text": "Ponerlos en la zona de D4 (overworld, -eb)"
     },
     {
@@ -30,7 +30,7 @@
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "overworld",
     "enemigos",
@@ -38,5 +38,5 @@
   ],
   "test": "",
   "title": "Overworld: enemigo de montaña en la zona de D4 (atoq, zorro andino en manada)",
-  "updated_at": "2026-10-15T19:17:04.060Z"
+  "updated_at": "2026-10-15T19:37:26.354Z"
 }
