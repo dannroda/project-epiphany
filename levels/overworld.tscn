@@ -1232,7 +1232,7 @@ script = ExtResource("92_clouds")
 display_name = "PLACE_TEMPLE_VALLEY"
 world_rect = Rect2(-101, -49, 200, 96)
 grid = NodePath("../GridMap")
-scenery = [NodePath("../Decor"), NodePath("../Terreno"), NodePath("../LagunaWater"), NodePath("../BanadoWater1"), NodePath("../BanadoWater2"), NodePath("../BanadoWater3"), NodePath("../BanadoWater4"), NodePath("../QuebradaWater"), NodePath("../Terrazas"), NodePath("../RavineBridge"), NodePath("../SummitGate"), NodePath("../CliffGate"), NodePath("../ChullpaTower"), NodePath("../SecretHillsWall"), NodePath("../SecretCactusWall"), NodePath("../SecretLookoutWall"), NodePath("../SecretRavineWall"), NodePath("../SecretSummitWall"), NodePath("../ShrineCrackedWall"), NodePath("../GrottoCrackedWall")]
+scenery = [NodePath("../Decor"), NodePath("../Terreno"), NodePath("../LagunaWater"), NodePath("../BanadoWater1"), NodePath("../BanadoWater2"), NodePath("../BanadoWater3"), NodePath("../BanadoWater4"), NodePath("../QuebradaWater"), NodePath("../Terrazas"), NodePath("../RavineBridge"), NodePath("../SummitGate"), NodePath("../CliffGate"), NodePath("../ChullpaTower"), NodePath("../QuenoaTree"), NodePath("../TotoraHut"), NodePath("../CumbreCondor"), NodePath("../NecroTomb1"), NodePath("../NecroTomb2"), NodePath("../NecroTomb3"), NodePath("../SecretHillsWall"), NodePath("../SecretCactusWall"), NodePath("../SecretLookoutWall"), NodePath("../SecretRavineWall"), NodePath("../SecretSummitWall"), NodePath("../ShrineCrackedWall"), NodePath("../GrottoCrackedWall")]
 
 [node name="Player" parent="." unique_id=1694148988 instance=ExtResource("13_gd0nv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -62, 0, 22)
@@ -1535,6 +1535,12 @@ shape = SubResource("BoxShape3D_chullpa_door")
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -30.6, 0, 41)
 script = ExtResource("4_cr2by")
 id = &"totora"
+
+[node name="PlaceQuenoa" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 2.6, 18.5)
+script = ExtResource("101_place")
+display_name = "PLACE_QUENOA"
+kind = 0
 
 [node name="PlaceTotora" type="Marker3D" parent="." unique_id=1788595549]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 0, 41)
