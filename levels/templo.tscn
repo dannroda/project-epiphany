@@ -23,7 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="28_askxy"]
 [ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="30_m6v74"]
 [ext_resource type="PackedScene" path="res://src/entities/turret/turret.tscn" id="35_ycq0f"]
-[ext_resource type="Resource" path="res://data/items/sword_golden.tres" id="37_v4a8r"]
+[ext_resource type="Resource" uid="uid://dikx6skaitj7y" path="res://data/items/sword_golden.tres" id="37_v4a8r"]
 [ext_resource type="PackedScene" path="res://src/entities/mummy_guard/mallqui.tscn" id="42_6wj7r"]
 [ext_resource type="PackedScene" path="res://src/world/wall_torch.tscn" id="42_eppxl"]
 [ext_resource type="ArrayMesh" uid="uid://bdhv5ujjpkayv" path="res://assets/epiphany/meshes/paredes_la/puerta_llave_templo_la.res" id="43_1krf6"]
