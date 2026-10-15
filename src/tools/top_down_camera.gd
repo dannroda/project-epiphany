@@ -611,16 +611,25 @@ static func reveal_unlock(target: Node3D, action: Callable) -> void:
 
 
 ## Pausa, lleva la cámara a `target`, corre `action` (abrir la puerta…), espera (`hold`, o `reveal_hold` si es
-## negativo) y vuelve al player. Si no hay cámara o el juego ya está en pausa, solo corre `action`. `skippable`: se
+## negativo) y vuelve al player. Si no hay cámara, el juego ya está en pausa o `target` está en una sala sin player
+## (oculta), solo corre `action`. `skippable`: se
 ## corta con SKIP_ACTIONS (la presentación de un jefe que ya viste).
 static func reveal(target: Node3D, action: Callable, hold := -1.0, skippable := false) -> void:
 	var camera := target.get_tree().get_first_node_in_group(GROUP) as TopDownCamera
-	if camera == null or camera.revealing or camera.transitioning or target.get_tree().paused or SaveManager.loading:
+	if camera == null or camera.revealing or camera.transitioning or target.get_tree().paused or SaveManager.loading \
+			or not _in_a_player_room(target):
 		action.call()
 		return
 	camera._skippable = skippable
 	await camera._reveal(target, action, hold)
 	camera._skippable = false
+
+
+## Las salas que no tienen player están ocultas: lo que se abre en otra sala no se muestra.
+static func _in_a_player_room(target: Node3D) -> bool:
+	var rooms := target.get_tree().get_nodes_in_group(Room.GROUP).filter(func(room: Room) -> bool:
+		return room.contains(target.global_position, 1.0))
+	return rooms.is_empty() or rooms.any(func(room: Room) -> bool: return room.has_player())
 
 
 ## Corta lo que queda del acercamiento en curso (la intro del jefe se puede saltar).

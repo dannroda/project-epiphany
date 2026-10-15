@@ -78,10 +78,11 @@ func _ready() -> void:
 	_request_wake()
 
 
-func contains(point: Vector3) -> bool:
+## `margin`: lo que está en sus paredes también cuenta (las puertas entre dos salas).
+func contains(point: Vector3, margin := 0.0) -> bool:
 	if DungeonFloor.of(self) and (point.y < floor_y() - DungeonFloor.BELOW or point.y >= floor_y() - DungeonFloor.BELOW + DungeonFloor.HEIGHT):
 		return false
-	return bounds().has_point(Vector2(point.x, point.z))
+	return bounds().grow(margin).has_point(Vector2(point.x, point.z))
 
 
 func floor_level() -> int:

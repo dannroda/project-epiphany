@@ -140,3 +140,34 @@ func test_reveal_pauses_and_shows_only_the_first_time() -> void:
 	assert_eq(camera.revealing, false, "la segunda vez no la muestra")
 	assert_eq(door.is_open, true)
 	state.reset()
+
+
+func test_what_opens_in_another_room_is_not_shown() -> void:
+	TopDownCamera.unlock_reveals = true
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.root.get_node(^"GameState").reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	var level := tree.current_scene
+	level.get_node(^"Skeleton").free()
+	var camera: TopDownCamera = level.get_node(^"TopDownCamera")
+	var door: Door = level.get_node(^"NicheDoor")
+	door.stays_open = true
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	var away: Room = null
+	for room: Room in tree.get_nodes_in_group(Room.GROUP):
+		if not room.contains(door.global_position, 1.0):
+			away = room
+	var center := away.bounds().get_center()
+	player.global_position = Vector3(center.x, 0.25, center.y)
+	while camera.room != away or camera.transitioning:
+		await tree.physics_frame
+	await tree.create_timer(0.2).timeout
+	TopDownCamera.reveal_unlock(door, door.open)
+	await tree.physics_frame
+	assert_eq(camera.revealing, false, "la puerta está en una sala oculta: no la muestra")
+	assert_eq(tree.paused, false, "ni pausa")
+	await tree.create_timer(door.open_time + 0.2).timeout
+	assert_eq(door.is_open, true, "pero la abre igual")
+	TopDownCamera.unlock_reveals = false
+	tree.root.get_node(^"GameState").reset()
