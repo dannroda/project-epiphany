@@ -91,9 +91,9 @@ func test_find_the_secrets_with_everything() -> void:
 		await tree.create_timer(0.6).timeout
 	await tree.create_timer(0.6).timeout
 	assert_eq((level.get_node(^"GroveChest") as Chest).visible, true, "los dos bloques en sus interruptores traen el cofre")
+	var hearts_before: int = state.max_health
 	await _open_chest(tree, level.get_node(^"GroveChest"), player)
-	assert_eq(state.inventory.has(&"armor_chainmail"), true, "el cofre guarda la cota")
-	assert_eq(state.equipment[ItemData.Category.ARMOR], &"tunic", "la cota no se equipa sola: hay que ir a Equipo")
+	assert_true(state.max_health > hearts_before, "el cofre guarda un contenedor de corazón")
 
 	var eye := level.get_node(^"CliffEye") as EyeSwitch
 	var cliff_gate := level.get_node(^"CliffGate") as Gate

@@ -79,18 +79,18 @@ func test_bombs_open_the_shrine_and_the_mirror_from_d4_lights_its_chest() -> voi
 	await tree.create_timer(0.8).timeout
 	assert_eq(chest_gate.is_open, true, "el cristal abre la reja del cofre")
 
-	var hearts_before: int = state.max_health
 	var chest := level.get_node(^"ShrineChest") as Chest
 	player.global_position = chest.global_position + Vector3(0, 0, 1.4)
 	_face(player, Vector3.FORWARD)
 	await _frames(tree, 2)
 	chest.interactable.interact(player)
 	await tree.create_timer(1.0).timeout
-	assert_true(stack.is_open() and stack.top().text_box.title_label.text == tr("ITEM_HEART_CONTAINER_GOT"), "item get del contenedor de corazón")
+	assert_true(stack.is_open() and stack.top().text_box.title_label.text == tr("ITEM_ARMOR_CHAINMAIL_GOT"), "item get de la cota reforzada")
 	while stack.is_open():
 		stack.pop()
 	await tree.create_timer(1.2).timeout
-	assert_true(state.max_health > hearts_before, "suma un corazón")
+	assert_true(state.inventory.has(&"armor_chainmail"), "el cofre guarda la cota")
+	assert_eq(state.equipment[ItemData.Category.ARMOR], &"tunic", "la cota no se equipa sola: hay que ir a Equipo")
 
 	assert_eq(saves.save_game(SLOT), OK)
 	state.reset()

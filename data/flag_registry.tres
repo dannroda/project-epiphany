@@ -76,7 +76,7 @@ description = "Muro agrietado entre la Cueva y el Santuario roto"
 [sub_resource type="Resource" id="Resource_shrine_chest"]
 script = ExtResource("1_ox7fe")
 id = &"ow_shrine_chest"
-description = "Santuario: cofre del contenedor de corazón abierto (después de D4)"
+description = "Santuario: cofre de la cota reforzada abierto (después de D4)"
 
 [sub_resource type="Resource" id="Resource_shrine_shortcut"]
 script = ExtResource("1_ox7fe")
@@ -111,7 +111,7 @@ description = "Arboleda: segundo bloque en su interruptor"
 [sub_resource type="Resource" id="Resource_grove_chest"]
 script = ExtResource("1_ox7fe")
 id = &"ow_grove_chest"
-description = "Arboleda: cofre de la cota reforzada abierto"
+description = "Arboleda: cofre del contenedor de corazón abierto"
 
 [sub_resource type="Resource" id="Resource_cliff_eye"]
 script = ExtResource("1_ox7fe")
