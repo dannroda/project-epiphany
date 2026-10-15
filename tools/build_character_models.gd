@@ -14,6 +14,11 @@ const CHARACTERS := {
 	"chullpa_guardian": "res://assets/epiphany/personaje_chullpa_guardian.glb",
 	"centinela": "res://assets/epiphany/personaje_centinela.glb",
 	"huanca": "res://assets/epiphany/personaje_huanca.glb",
+	"guerrero_chullpa": "res://assets/epiphany/personaje_guerrero_chullpa.glb",
+	"guerrero_quenoa": "res://assets/epiphany/personaje_guerrero_quenoa.glb",
+	"guerrero_totora": "res://assets/epiphany/personaje_guerrero_totora.glb",
+	"guerrero_cumbre": "res://assets/epiphany/personaje_guerrero_cumbre.glb",
+	"guerrero_templo": "res://assets/epiphany/personaje_guerrero_templo.glb",
 }
 ## El rig del proyecto no tiene los huesos de las armas; sus binds pasan a la mano (no pesan en ningún vértice).
 const BIND_RENAMES := {"handslot.l": "hand.l", "handslot.r": "hand.r"}

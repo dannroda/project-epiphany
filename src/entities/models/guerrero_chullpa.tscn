@@ -1,0 +1,11 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/guerrero_chullpa/Body.res" id="1_cuq0u"]
+[ext_resource type="Skin" path="res://src/entities/models/meshes/guerrero_chullpa/skin.tres" id="2_gagw6"]
+
+[node name="Visuals" type="Node3D" unique_id=629589479]
+
+[node name="Body" type="MeshInstance3D" parent="." unique_id=376522300]
+mesh = ExtResource("1_cuq0u")
+skin = ExtResource("2_gagw6")
+skeleton = NodePath("../../Skeleton3D")
