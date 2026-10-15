@@ -140,3 +140,17 @@ func test_cave_and_overworld_portals_meet() -> void:
 	assert_true(StringName(exit.target_spawn) in ids.call(overworld), "la salida vuelve al claro")
 	overworld.free()
 	cave.free()
+
+
+func test_the_pool_has_the_la_water_and_the_wall_behind_the_waterfall_is_whole() -> void:
+	var level := (load("res://levels/spring_cave.tscn") as PackedScene).instantiate()
+	var surface := level.get_node(^"WaterPool/Surface") as MeshInstance3D
+	assert_eq(surface.material_override.resource_path, "res://src/world/water/water_la.tres", "el agua del estanque es la de las mazmorras")
+	assert_true(not (level.get_node(^"WaterPool/Caustics") as Node3D).visible, "sin los proyectores viejos")
+	var grid := level.get_node(^"GridMap") as GridMap
+	var holes := []
+	for x in range(-2, 3):
+		if grid.get_cell_item(Vector3i(x, 0, -4)) == GridMap.INVALID_CELL_ITEM:
+			holes.append(x)
+	assert_eq(holes, [], "la pared norte, arriba de la cascada, sin huecos")
+	level.free()
