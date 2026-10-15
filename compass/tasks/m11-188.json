@@ -23,11 +23,11 @@
   "priority": "high",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "bug"
   ],
   "test": "",
   "title": "Build de Godot 4.8-dev7 con símbolos para diagnosticar el crash 11.185",
-  "updated_at": "2026-10-15T08:07:59.139Z"
+  "updated_at": "2026-10-15T08:18:04.134Z"
 }

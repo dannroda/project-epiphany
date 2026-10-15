@@ -5369,7 +5369,7 @@ Daniel (2026-10-15) preguntó por el texture streaming de Godot 4.8: descartado,
 - [ ] Rangos de visibilidad/LOD en decor y plantas
 - [ ] Terreno en bloques más chicos que se descarten fuera de cámara
 
-### 11.188 Build de Godot 4.8-dev7 con símbolos para diagnosticar el crash 11.185 · Pendiente
+### 11.188 Build de Godot 4.8-dev7 con símbolos para diagnosticar el crash 11.185 · En curso
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`
 
