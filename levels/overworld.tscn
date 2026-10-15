@@ -1552,7 +1552,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 1.3, 0)
 shape = SubResource("BoxShape3D_jamb")
 
 [node name="HammerFight" type="Node3D" parent="." unique_id=778854511 node_paths=PackedStringArray("area", "reward", "escorts")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, 23)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, 24)
 script = ExtResource("hm_fight")
 area = NodePath("Arena")
 flag = &"ow_hammer_guard"
