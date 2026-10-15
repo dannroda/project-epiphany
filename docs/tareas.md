@@ -4604,13 +4604,14 @@ cliff_heart (overworld.dialogue) dice que el corazón se partió en cuatro: una 
 
 **Notas:** Daniel (2026-10-13): muy temprano para fijar cuántas piezas hay; la tablilla se ajusta cuando el total esté cerrado.
 
-### 11.124 Piezas de corazón: 10, no múltiplo de 4 · Pendiente
+### 11.124 Piezas de corazón: 13, no múltiplo de 4 · Pendiente
 
 **Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `diseño`
 
 Overworld 6 + Gruta, Santuario, Chullpa y Queñoa = 10 piezas con PIECES_PER_HEART = 4: dos contenedores y dos piezas que nunca completan uno. Agregar o quitar dos (o cambiar la regla).
 
 **Notas:** Daniel (2026-10-13): de momento no importa; se revisa cuando se cierre el total de piezas.
+2026-10-15 (-43, 11.190): con la pieza del templo el total es 13 (8 overworld + 5 mazmorras): una de más sobre 12. Quitar una o agregar tres.
 
 ### 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · Revisión
 
