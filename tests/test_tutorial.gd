@@ -43,7 +43,7 @@ func test_tablets_in_the_clearing_have_their_cues() -> void:
 		assert_true(line != null and line.text.contains("{btn:"), "%s trae botones" % cue)
 
 
-func test_throwing_the_stone_on_the_plate_brings_the_chest() -> void:
+func test_stepping_on_the_plate_brings_the_chest() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state: Node = tree.root.get_node(^"GameState")
 	state.reset()
@@ -74,14 +74,10 @@ func test_throwing_the_stone_on_the_plate_brings_the_chest() -> void:
 	Input.parse_input_event(release)
 	await tree.create_timer(0.8).timeout
 	assert_eq(player.movement_state.get_active_state().name, &"Carrying", "levanta la piedra")
-	var distance := (plate.global_position - player.global_position) * Vector3(1, 0, 1)
-	player.global_position += toward * (distance.length() - 4.5)
-	await tree.physics_frame
-	Input.parse_input_event(press)
-	await tree.physics_frame
-	Input.parse_input_event(release)
-	await tree.create_timer(2.0).timeout
-	assert_true(plate.active, "la piedra cae en la placa (%s, placa %s, player %s)" % [stone.global_position, plate.global_position, player.global_position])
+	player.global_position = plate.global_position + Vector3(0, 0.2, 0)
+	player.velocity = Vector3.ZERO
+	await tree.create_timer(0.6).timeout
+	assert_true(plate.active, "pisarla basta (placa %s, player %s)" % [plate.global_position, player.global_position])
 	assert_eq(state.get_flag(&"ow_start_lift_switch"), true, "queda trabada")
 	assert_true(chest.visible and chest.interactable.enabled, "aparece el cofre")
 	state.reset()

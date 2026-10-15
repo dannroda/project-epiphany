@@ -83,7 +83,7 @@ func test_find_the_secrets_with_everything() -> void:
 	assert_true(level.get_node(^"HeartPieceHills").global_position.distance_to(hills.global_position) < 3.0, "y detrás está la pieza de corazón")
 
 	var block_a := level.get_node(^"GroveBlockA") as PushBlock
-	var block_b := level.get_node(^"GroveBlockB") as PushBlock
+	var block_b := level.get_node(^"GroveBigPot") as PushBlock
 	player.global_position = block_a.global_position + Vector3(4, 0, -4)
 	await tree.physics_frame
 	for push in [[block_a, Vector3.BACK], [block_a, Vector3.BACK], [block_b, Vector3.RIGHT], [block_b, Vector3.BACK]]:

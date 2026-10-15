@@ -65,7 +65,7 @@ func test_pushing_the_blocks_onto_the_plates_brings_the_chest_and_they_stay() ->
 	var a := level.get_node(^"GroveSwitchA") as FloorSwitch
 	var b := level.get_node(^"GroveSwitchB") as FloorSwitch
 	var block_a := level.get_node(^"GroveBlockA") as PushBlock
-	var block_b := level.get_node(^"GroveBlockB") as PushBlock
+	var block_b := level.get_node(^"GroveBigPot") as PushBlock
 	for push: Array in [
 		[block_a, Vector3(0, 0, -2), &"move_backward", a.global_position],
 		[block_b, Vector3(-2, 0, 0), &"move_right", Vector3(-31, 0, 2)],
@@ -81,7 +81,7 @@ func test_pushing_the_blocks_onto_the_plates_brings_the_chest_and_they_stay() ->
 	assert_true((level.get_node(^"GroveChest") as Chest).visible, "con un bloque en cada placa aparece el cofre")
 	level = await _enter()
 	assert_true((level.get_node(^"GroveChest") as Chest).visible, "y sigue ahí al volver")
-	for pair in [[^"GroveBlockA", ^"GroveSwitchA"], [^"GroveBlockB", ^"GroveSwitchB"]]:
+	for pair in [[^"GroveBlockA", ^"GroveSwitchA"], [^"GroveBigPot", ^"GroveSwitchB"]]:
 		var block := level.get_node(pair[0] as NodePath) as Node3D
 		var plate := level.get_node(pair[1] as NodePath) as Node3D
 		assert_true(block.global_position.distance_to(plate.global_position) < 0.5, "%s vuelve sobre su placa (%s)" % [pair[0], block.global_position])

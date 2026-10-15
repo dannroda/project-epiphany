@@ -84,6 +84,7 @@
 [ext_resource type="Resource" uid="uid://dfbkawgboncax" path="res://data/items/sandals.tres" id="ow_sandals"]
 [ext_resource type="PackedScene" path="res://src/world/plants/quenoa_secreta.tscn" id="ow_secret_tree"]
 [ext_resource type="PackedScene" path="res://src/world/floor_switch_weight.tscn" id="ow_switch_weight"]
+[ext_resource type="PackedScene" path="res://src/world/big_pot.tscn" id="ow_big_pot"]
 [ext_resource type="Script" uid="uid://c3gjwha8na3yi" path="res://src/world/look/sombra_la.gd" id="sombra_la"]
 [ext_resource type="PackedScene" path="res://src/world/terrazas/escalinata_e.tscn" id="terr_escalinata_e"]
 [ext_resource type="PackedScene" path="res://src/world/terrazas/escalinata_medio.tscn" id="terr_escalinata_medio"]
@@ -1385,8 +1386,9 @@ dialogue = ExtResource("20_gd0nv")
 cue = "start_lift"
 flag = &"ow_tablet_lift"
 
-[node name="LiftSwitch" parent="." unique_id=51521915 instance=ExtResource("ow_switch_weight")]
+[node name="LiftSwitch" parent="." unique_id=51521915 instance=ExtResource("22_gvf0k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.5, 0, 21.5)
+mode = 1
 flag = &"ow_start_lift_switch"
 
 [node name="LiftStone" parent="." unique_id=1753049093 instance=ExtResource("42_stone")]
@@ -1426,12 +1428,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0, 0)
 solved_flag = &"ow_grove_switch_a"
 solved_position = Vector3(-35, 0, 4)
 
-[node name="GroveSwitchB" parent="." unique_id=1337594160 instance=ExtResource("22_gvf0k")]
+[node name="GroveSwitchB" parent="." unique_id=1337594160 instance=ExtResource("ow_switch_weight")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0, 4)
-mode = 2
 flag = &"ow_grove_switch_b"
 
-[node name="GroveBlockB" parent="." unique_id=1861637916 instance=ExtResource("24_v1yde")]
+[node name="GroveBigPot" parent="." unique_id=1861637916 instance=ExtResource("ow_big_pot")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0, 2)
 solved_flag = &"ow_grove_switch_b"
 solved_position = Vector3(-31, 0, 4)

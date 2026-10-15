@@ -1032,8 +1032,8 @@ msgid "Andá con {btn:move}. Con {btn:dodge} se rueda: así se esquiva lo que no
 msgstr "Walk with {btn:move}. With {btn:dodge} you roll: so is dodged what cannot be stopped."
 
 msgctxt "ow_start_lift_1"
-msgid "Las piedras chicas se levantan con {btn:interact}. Con {btn:interact} o {btn:attack} se arrojan: la placa espera su peso."
-msgstr "Small stones are lifted with {btn:interact}. With {btn:interact} or {btn:attack} they are thrown: the plate awaits their weight."
+msgid "Las piedras chicas se levantan con {btn:interact} y se arrojan con {btn:interact} o {btn:attack}. La placa cede con solo pisarla."
+msgstr "Small stones are lifted with {btn:interact} and thrown with {btn:interact} or {btn:attack}. The plate yields to a single step."
 
 msgctxt "ow_cave_bombs_1"
 msgid "La piedra herida no cede al acero, ni el hueso que viste coraza."
