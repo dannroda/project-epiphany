@@ -43,15 +43,20 @@ func with_fade(action: Callable) -> void:
 
 
 ## Cambio de escena por un portal: fundido, carga en segundo plano (con pantalla de carga si tarda), los players en
-## `spawn` de la escena nueva y autosave. El juego queda en pausa mientras dura.
-func travel_to(scene_path: String, spawn: StringName) -> void:
+## `spawn` de la escena nueva y autosave. El juego queda en pausa mientras dura. `teleport`: se van y llegan en un rayo
+## de luz (Teleport), en los portales mágicos y los de viaje rápido.
+func travel_to(scene_path: String, spawn: StringName, teleport := false) -> void:
 	traveling = true
 	get_tree().paused = true
 	ResourceLoader.load_threaded_request(scene_path)
+	if teleport:
+		await _teleport_players(true)
 	await fade_out(0.3)
 	for player in Players.all:
 		GameState.set_ward_of(player.controls.slot, player.health.ward_left())
 	if not await _change_scene(scene_path):
+		for player in Players.all:
+			player.model.visible = not player.spirit.visible
 		get_tree().paused = false
 		await fade_in(0.3)
 		traveling = false
@@ -63,9 +68,28 @@ func travel_to(scene_path: String, spawn: StringName) -> void:
 	_place_at_spawn()
 	SaveManager.autosave()
 	Log.info(&"flow", "Viaje a", scene_path, spawn)
-	get_tree().paused = false
-	await fade_in(0.3)
+	if teleport:
+		for player in Players.all:
+			player.model.visible = false
+		await fade_in(0.3)
+		await _teleport_players(false)
+		get_tree().paused = false
+		await get_tree().physics_frame
+		await get_tree().physics_frame
+	else:
+		get_tree().paused = false
+		await fade_in(0.3)
 	traveling = false
+
+
+## Todos a la vez: se van (`leaving`) o llegan en el rayo.
+func _teleport_players(leaving: bool) -> void:
+	for player in Players.all.duplicate():
+		if leaving:
+			Teleport.depart(player)
+		else:
+			Teleport.arrive(player)
+	await get_tree().create_timer(Teleport.DEPART_TIME if leaving else Teleport.ARRIVE_TIME, true).timeout
 
 
 ## Carga `scene_path` en un hilo (pedido antes o acá) y cambia de escena. Si tarda más de `show_loading_after`,

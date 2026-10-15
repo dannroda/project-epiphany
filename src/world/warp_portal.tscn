@@ -99,6 +99,7 @@ _data = {
 
 [node name="WarpPortal" type="Area3D"]
 script = ExtResource("1_portal")
+teleports = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)

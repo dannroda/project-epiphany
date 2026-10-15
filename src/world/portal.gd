@@ -19,6 +19,9 @@ signal player_entered(player: PlayerCharacter)
 		travels = value
 		update_configuration_warnings()
 
+## Se va y llega en un rayo de luz (los portales mágicos); las puertas de mazmorra y cueva, no.
+@export var teleports := false
+
 ## Cerrado aunque su flag esté en true (la revancha del jefe).
 var held := false:
 	set(value):
@@ -53,7 +56,7 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 
 func travel() -> void:
-	SceneFlow.travel_to(target_scene, target_spawn)
+	SceneFlow.travel_to(target_scene, target_spawn, teleports)
 
 
 func _set_open(open: bool) -> void:

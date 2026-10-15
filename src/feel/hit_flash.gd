@@ -59,6 +59,14 @@ func warn(duration: float) -> void:
 	_tween.tween_method(_set_flash, strength, 0.0, 0.12)
 
 
+## Deja el destello fijo en `value` (la silueta del teletransporte), sin apagarse solo.
+func hold(value: float, color := Color.WHITE) -> void:
+	if _tween and _tween.is_valid():
+		_tween.kill()
+	_material.set_shader_parameter(&"color", color)
+	_set_flash(value)
+
+
 func flash_amount() -> float:
 	return _material.get_shader_parameter(&"flash")
 
