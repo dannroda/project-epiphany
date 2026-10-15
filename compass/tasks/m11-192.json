@@ -10,7 +10,7 @@
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "overworld",
     "enemigos",
@@ -18,5 +18,5 @@
   ],
   "test": "",
   "title": "Overworld: mini jefe después de D2 que da el martillo",
-  "updated_at": "2026-10-15T16:57:34.938Z"
+  "updated_at": "2026-10-15T18:35:59.195Z"
 }

@@ -12,13 +12,13 @@
       "text": "Diseño del centinela: quién es el grupo enemigo no monstruo y cómo se ve"
     },
     {
-      "detail": "Al verte: pausa de alerta con un ! antes de atacar. Si te pierde: va al último lugar visto, mira alrededor y vuelve a su puesto.",
-      "done": false,
+      "detail": "Hecho (-fd, 2026-10-15) con un guardia provisorio (src/entities/guard.tscn, esqueleto; guard_bt.tres): al verte se frena con un ! (bt_alert, 0,7 s) y después ataca o persigue; si te pierde corre a tu último lugar visto (FindPlayer guarda last_seen), mira a los lados (bt_search) y camina de vuelta a su puesto (Enemy.home) antes de calmarse. Cuando se decida el modelo (paso 2) se cambia la escena, no la IA.",
+      "done": true,
       "text": "Alerta y búsqueda del centinela"
     },
     {
-      "detail": "Deambula sin salirse del radio ni trabarse; el centinela alerta, persigue, busca y vuelve.",
-      "done": false,
+      "detail": "test_guard (alerta, persecución, búsqueda, vuelta y nueva alerta); deambular en test_enemy_ai.",
+      "done": true,
       "text": "Tests"
     }
   ],
@@ -38,5 +38,5 @@
   ],
   "test": "",
   "title": "Enemigos que deambulan mientras no te ven; centinelas con alerta y búsqueda",
-  "updated_at": "2026-10-15T02:43:17.628Z"
+  "updated_at": "2026-10-15T18:35:58.922Z"
 }

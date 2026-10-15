@@ -4416,8 +4416,8 @@ Playtest 2026-10-12: los puzzles de bloques solo se tienen que activar con los b
   ShrineBlock tenía solved_position del overworld viejo (−30, −16): al cargar con el puzzle resuelto el bloque aparecía lejos y la placa quedaba apretada sola. Ahora (−78, −32); test_solved_blocks_rest_on_their_switch revisa todos los niveles.
 - [x] Que cada tipo se distinga a la vista
   Hoy las cuatro placas son iguales. Marca o color por tipo (bloque, peso, golpe fuerte); pasa por el arte.
-- [ ] Placa de golpe fuerte
-  El ítem es el martillo (Daniel, 2026-10-15): 11.191 lo define, 11.192 lo pone en el overworld, 11.193 hace el modo STRIKE.
+- [x] Placa de golpe fuerte
+  Hecho: martillo 11.191 (-43), mini jefe que lo da 11.192 (-eb), modo STRIKE 11.193 (-5d).
 - [ ] Probarlo (Daniel)
 
 **Notas:** Al sacar las capturas (2026-10-14) apareció que la placa del santuario seguía mal: ShrineBlock resuelto iba a (−78, −32), coordenadas del overworld, y la placa de shrine_cave está en (−6, 0); el test no revisaba shrine_cave. Ahora test_solved_blocks_rest_on_their_switch recorre todos los niveles, y encontró dos más corridos por el horneado LA: RamaBlock de la Queñoa (14, 10 → 16, 12) y VestibuleBlock del templo (44, 40 → 48, 48). Los tres van a su placa.
@@ -4505,10 +4505,10 @@ Daniel (2026-10-13): los enemigos que no te detectaron no se quedan quietos. Tod
   Hecho el 2026-10-14 (-fd): ai/tasks/bt_wander.gd reemplaza la rama Quieto de enemy_bt.tres (ahora Deambular): punto al azar de la navmesh a wander_radius (3 m) de donde empezó, en su misma sala, caminando a wander_speed (1,2) con Walking_A; pausa wander_pause (1,5 a 3,5 s) con Idle_A. Ver al player lo corta (BTDynamicSelector). Si cae a otro nivel, su lugar pasa a ser donde cayó. Datos en EntityConfig. test_enemy_ai. Falta que Daniel lo vea y ajuste radio, velocidad y pausas.
 - [ ] Diseño del centinela: quién es el grupo enemigo no monstruo y cómo se ve
   Tipo de enemigo nuevo para guaridas (personaje humano o de una facción, no esqueleto). Lo decide Daniel con diseño y arte.
-- [ ] Alerta y búsqueda del centinela
-  Al verte: pausa de alerta con un ! antes de atacar. Si te pierde: va al último lugar visto, mira alrededor y vuelve a su puesto.
-- [ ] Tests
-  Deambula sin salirse del radio ni trabarse; el centinela alerta, persigue, busca y vuelve.
+- [x] Alerta y búsqueda del centinela
+  Hecho (-fd, 2026-10-15) con un guardia provisorio (src/entities/guard.tscn, esqueleto; guard_bt.tres): al verte se frena con un ! (bt_alert, 0,7 s) y después ataca o persigue; si te pierde corre a tu último lugar visto (FindPlayer guarda last_seen), mira a los lados (bt_search) y camina de vuelta a su puesto (Enemy.home) antes de calmarse. Cuando se decida el modelo (paso 2) se cambia la escena, no la IA.
+- [x] Tests
+  test_guard (alerta, persecución, búsqueda, vuelta y nueva alerta); deambular en test_enemy_ai.
 
 **Notas:** 
 Daniel (2026-10-14): deambular es para que los enemigos no parezcan objetos quietos (paso 1 vale para todos).
@@ -5418,7 +5418,7 @@ Daniel (2026-10-15): un evento de mini jefe en el overworld, en una zona despué
 
 **Notas:** Hecho el 2026-10-15 (a124b61b): data/items/hammer.tres (id hammer, ítem de botón, 1 corazón de daño). StrikeBehavior: animación Melee_2H_Attack_Chop; en use_at clava src/items/hammer/hammer_strike.tscn (una Hitbox de 1,1 m de radio, 3 cuadros, polvo y temblor) a 1,2 m hacia donde mira el player, y el martillo se ve en la mano del arma mientras dura (assets/items/hammer/hammer.tscn, para ajustar a ojo). Golpe fuerte: DamageInfo.strong, que pone Hitbox.strong o AttackData.strong; lo leen Breakable.needs_strong (la espada rebota), las guardias de escudo y las corazas (como la bomba); la placa STRIKE (11.193) tiene que leer info.strong. Ícono, textos es/en, GDD §6.1, test_hammer. Falta: que Daniel lo pruebe (momento del impacto, pose en la mano) y el mini jefe que lo da (11.192, -eb).
 
-### 11.192 Overworld: mini jefe después de D2 que da el martillo · Pendiente
+### 11.192 Overworld: mini jefe después de D2 que da el martillo · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-eb · **Etiquetas:** `overworld`, `enemigos`, `jefe`
 

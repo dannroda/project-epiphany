@@ -17,8 +17,8 @@
       "text": "Que cada tipo se distinga a la vista"
     },
     {
-      "detail": "El ítem es el martillo (Daniel, 2026-10-15): 11.191 lo define, 11.192 lo pone en el overworld, 11.193 hace el modo STRIKE.",
-      "done": false,
+      "detail": "Hecho: martillo 11.191 (-43), mini jefe que lo da 11.192 (-eb), modo STRIKE 11.193 (-5d).",
+      "done": true,
       "text": "Placa de golpe fuerte"
     },
     {
@@ -47,5 +47,5 @@
   ],
   "test": "",
   "title": "Tipos de placa de piso: bloque, peso y golpe fuerte",
-  "updated_at": "2026-10-15T16:57:35.515Z"
+  "updated_at": "2026-10-15T18:35:59.709Z"
 }
