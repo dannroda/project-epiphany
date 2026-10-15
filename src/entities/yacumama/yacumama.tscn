@@ -1,5 +1,6 @@
 [gd_scene format=3]
 
+[ext_resource type="Script" path="res://src/feel/roar.gd" id="20_roar"]
 [ext_resource type="Script" path="res://src/entities/yacumama/yacumama.gd" id="1_yacu"]
 [ext_resource type="Resource" path="res://data/entities/yacumama.tres" id="2_config"]
 [ext_resource type="Script" path="res://src/components/health.gd" id="3_health"]
@@ -52,9 +53,11 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.19, 0.228)
 mesh = ExtResource("10_jaw")
 
-[node name="Mouth" type="Marker3D" parent="Body/Neck/Head"]
+[node name="Roar" type="Node3D" parent="Body/Neck/Head"]
 unique_name_in_owner = true
+process_mode = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, -0.9)
+script = ExtResource("20_roar")
 
 [node name="Hurtbox" type="Area3D" parent="Body/Neck"]
 unique_name_in_owner = true

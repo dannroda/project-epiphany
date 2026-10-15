@@ -32,6 +32,7 @@ const LID_SNAP := 0.15
 @export var down_time := 3.5
 
 @onready var body: Node3D = %Body
+@onready var roar_fx: Roar = %Roar
 @onready var lid_top: Node3D = %LidTop
 @onready var lid_bottom: Node3D = %LidBottom
 @onready var iris: MeshInstance3D = %Iris
@@ -93,6 +94,18 @@ func start() -> void:
 
 
 ## Vuelve a como estaba al llegar el player (la pelea se reinicia).
+## Presentación: mira al player y abre el ojo de par en par mientras grita.
+func roar() -> void:
+	var player := Players.nearest(global_position)
+	if player:
+		body.look_at(player.global_position + Vector3.UP, Vector3.UP, true)
+	var tween := body.create_tween()
+	tween.tween_method(_set_open, _open, 1.25, 0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.tween_interval(roar_fx.duration)
+	tween.tween_method(_set_open, 1.25, 0.0, 0.3)
+	roar_fx.play()
+
+
 func reset() -> void:
 	_interrupt()
 	state = State.IDLE

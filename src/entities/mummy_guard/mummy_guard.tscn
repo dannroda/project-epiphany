@@ -1,5 +1,6 @@
 [gd_scene format=3]
 
+[ext_resource type="Script" path="res://src/feel/roar.gd" id="20_roar"]
 [ext_resource type="Script" path="res://src/entities/mummy_guard/mummy_guard.gd" id="1_mummy"]
 [ext_resource type="Resource" path="res://data/entities/mummy_guard.tres" id="2_config"]
 [ext_resource type="Script" path="res://src/components/health.gd" id="3_health"]
@@ -46,6 +47,13 @@ unique_name_in_owner = true
 
 [node name="Model" type="MeshInstance3D" parent="Body"]
 mesh = ExtResource("7_model")
+
+[node name="Roar" type="Node3D" parent="Body"]
+unique_name_in_owner = true
+process_mode = 3
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 2.8, 0.55)
+script = ExtResource("20_roar")
+color = Color(0.95, 0.85, 0.6, 0.55)
 
 [node name="AimMark" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true

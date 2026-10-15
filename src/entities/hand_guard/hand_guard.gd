@@ -12,6 +12,7 @@ signal attack_finished
 
 @onready var hand: BossHand = %Hand
 @onready var rest: Marker3D = %Rest
+@onready var roar_fx: Roar = %Roar
 
 var arena := Rect2()
 var pace := 1.0
@@ -49,6 +50,14 @@ func start() -> void:
 	_running = true
 	add_to_group(Enemy.GROUP)
 	_run()
+
+
+## Presentación: cierra el puño y lo abre de golpe con el grito.
+func roar() -> void:
+	hand.pose = BossHand.Pose.FIST
+	get_tree().create_timer(0.3, true).timeout.connect(func() -> void:
+		hand.pose = BossHand.Pose.OPEN
+		roar_fx.play())
 
 
 func reset() -> void:

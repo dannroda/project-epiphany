@@ -103,29 +103,62 @@ def cuerpo(p, c):
 		p.paint(sun + rays + chest, c["gold"], "MID", vary=0.03)
 
 
+def shaft(p, root, tip, z, width=0.018):
+	"""Raquis: la vara clara del medio de una pluma, apenas arriba de ella."""
+	d = (Vector(tip) - Vector(root)).normalized()
+	n = Vector((-d.y, d.x)) * width / 2
+	r, t = Vector(root), Vector(tip) - d * 0.06
+	return plate(p, [(v.x, v.y) for v in (r + n, r - n, t - n * 0.4, t + n * 0.4)], z, 0.012)
+
+
 def ala(p, c, mirror):
-	coverts = plate(p, [(0.0, -0.22), (1.25, -0.2), (1.3, 0.1), (0.0, 0.2)], 0.0, 0.07)
-	p.paint(coverts, FEATHER, "LIGHT", vary=0.08)
-	band = plate(p, [(0.1, -0.02), (1.2, -0.05), (1.22, 0.12), (0.1, 0.18)], 0.045, 0.03)
-	p.paint(band, c["band"], "MID", vary=0.05)
-	secondaries = []
-	for k in range(7):
-		x = 0.1 + k * 0.17
-		secondaries += feather(p, (x, 0.2), (x + 0.05, 0.62), 0.2, -0.04 - (k % 2) * 0.006)
+	"""Ala de plumas encimadas: hueso adelante, tres filas de cobertoras, la banda, secundarias y los dedos de las
+	primarias abiertos y curvados hacia arriba en la punta, cada pluma con su raquis."""
+	arm = []
+	for x0, x1, r0, r1, y in ((0.0, 0.62, 0.075, 0.06, -0.17), (0.6, 1.25, 0.06, 0.04, -0.15)):
+		bone = p.cylinder(r0, x0, x1, sides=7, radius_top=r1)
+		p.transform(bone, Matrix.Translation((0, y, 0.02)) @ Matrix.Rotation(math.pi / 2, 4, "Y"))
+		arm += bone
+	p.paint(arm, FEATHER, "LIGHT", vary=0.05)
+	coverts = []
+	for row in range(3):
+		count = 9 - row
+		for k in range(count):
+			x = 0.05 + (k + 0.5 * (row % 2)) * 1.2 / count
+			y = -0.2 + row * 0.11
+			coverts.append(feather(p, (x, y), (x + 0.03, y + 0.22), 0.2, 0.06 - row * 0.012, thick=0.025))
+	for k, f in enumerate(coverts):
+		p.paint(f, FEATHER, "LIGHT" if k % 3 else "MID", vary=0.06)
+	band = []
+	for k in range(9):
+		x = 0.06 + k * 0.135
+		band += feather(p, (x, 0.13), (x + 0.03, 0.36), 0.17, 0.07, thick=0.02)
+	p.paint(band, c["band"], "MID", vary=0.06)
+	secondaries, shafts = [], []
+	for k in range(10):
+		x = 0.06 + k * 0.125
+		root, tip = (x, 0.14), (x + 0.06, 0.64 + 0.04 * math.sin(k * 1.7))
+		secondaries += feather(p, root, tip, 0.17, -0.02 - (k % 2) * 0.008)
+		shafts += shaft(p, root, tip, -0.003 - (k % 2) * 0.008)
 	p.paint(secondaries, FEATHER, "MID", vary=0.08)
 	primaries, tips = [], []
-	for k in range(6):
-		a = -0.35 + k * 0.17
-		root = Vector((1.2, -0.12 + k * 0.06))
-		tip = root + Vector((math.cos(a), math.sin(a))) * (0.75 + 0.1 * math.sin(k))
-		primaries += feather(p, root, tip, 0.16, -0.01 - k * 0.006)
-		end = root + (tip - root) * 0.82
-		tips += feather(p, end, tip, 0.1, -0.005 - k * 0.006, thick=0.04)
+	for k in range(7):
+		a = -0.42 + k * 0.15
+		root = Vector((1.18, -0.14 + k * 0.05))
+		d = Vector((math.cos(a), math.sin(a)))
+		length = 0.8 + 0.12 * math.sin(k * 0.9 + 0.5)
+		mid = root + d * length * 0.7
+		z = -0.01 - k * 0.007
+		primaries += feather(p, root, mid + d * 0.05, 0.15, z)
+		shafts += shaft(p, root, mid, z + 0.016)
+		curl = feather(p, mid - d * 0.02, root + d * length, 0.11, 0.0, thick=0.025)
+		p.transform(curl, Matrix.Translation((mid.x, mid.y, z)) @ Matrix.Rotation(0.35, 4, Vector((-d.y, d.x, 0))) @ Matrix.Translation((-mid.x, -mid.y, 0)))
+		tips += curl
 	p.paint(primaries, FEATHER, "MID", vary=0.08)
-	p.paint(tips, c["tip"], "MID" if c["gold"] else "LOW", vary=0.05)
+	p.paint(tips, c["tip"], "MID" if c["gold"] else "LOW", vary=0.06)
+	p.paint(shafts, "gris_2" if not c["gold"] else c["gold"], "MID", vary=0.04)
 	if mirror:
 		p.transform(list(p.bm.faces), Matrix.Scale(-1, 4, Vector((1, 0, 0))))
-
 
 for prefix, c, seed in (("kuntur", YOUNG, 1), ("apu_kuntur", APU, 11)):
 	piece(prefix + "_cuerpo", seed, lambda p, c=c: cuerpo(p, c))
