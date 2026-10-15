@@ -29,7 +29,9 @@ var _airborne: Array[Hurtbox] = []
 
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
-	area_exited.connect(func(area: Area3D) -> void: _airborne.erase(area))
+	area_exited.connect(func(area: Area3D) -> void:
+		if area is Hurtbox:
+			_airborne.erase(area))
 	body_entered.connect(_on_body_entered)
 
 

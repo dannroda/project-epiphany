@@ -11,6 +11,11 @@ var _frames := 0
 func _ready() -> void:
 	super()
 	landed.connect(func(hurtbox: Hurtbox) -> void: Feel.hit_stop([hurtbox.get_parent()], stun_time))
+	_feel.call_deferred()
+
+
+## Diferido: la escena está ocupada agregando este nodo y no acepta más hijos.
+func _feel() -> void:
 	Feel.burst(&"dust", global_position + Vector3.UP * 0.1, Vector3.UP)
 	Feel.sfx(&"hit_stone", global_position)
 	Feel.shake(Feel.settings.shake_give * 1.5)

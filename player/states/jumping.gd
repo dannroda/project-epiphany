@@ -31,7 +31,7 @@ func _enter() -> void:
 	_elapsed = 0.0
 	_left_floor = false
 	_start_y = player.global_position.y
-	var long_jump: Array = blackboard.get_var(BB_LONG_JUMP, [])
+	var long_jump: Array = blackboard.get_var(BB_LONG_JUMP, [], false)
 	_long = not long_jump.is_empty() and long_jump[1] == Engine.get_physics_frames()
 	blackboard.set_var(BB_LONG_JUMP, [])
 	_velocity = long_jump[0] * long_jump_speed if _long else _wanted()
