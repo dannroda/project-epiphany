@@ -1,0 +1,31 @@
+{
+  "assignee": "project-epiphany-eb",
+  "checklist": [
+    {
+      "detail": "Opciones: un poste del gancho en el borde de la nieve de la Cumbre (x ~64.7, z -35) para volver cruzando, o un salto (v) de bajada al pasillo como en los Zelda. Decide el overworld.",
+      "done": false,
+      "text": "Una salida de la franja"
+    },
+    {
+      "done": false,
+      "text": "Test: desde la franja se vuelve sin caer al abismo"
+    }
+  ],
+  "code": "11.184",
+  "created_at": "2026-10-15T02:54:08.480Z",
+  "description": "Daniel (2026-10-14, captura): arriba de la franja norte del Risco (nivel 2, x 70-88, z -38..-32, con RiscoPost y el ojo) no hay forma de bajar. Se sube solo con el gancho desde el pasillo bajo; al sur el RiscoPit, al norte y este la montaña, al oeste 5,2 m de caída al pasillo con la baranda invisible. La única salida es tirarse al abismo.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 181,
+  "priority": "high",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "overworld"
+  ],
+  "test": "",
+  "title": "Risco: la franja del gancho no tiene bajada",
+  "updated_at": "2026-10-15T02:54:09.023Z"
+}

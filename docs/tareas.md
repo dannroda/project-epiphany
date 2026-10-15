@@ -2598,7 +2598,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 
 Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
 
-## M11 — Pulido: contenido y feel  (107/179)
+## M11 — Pulido: contenido y feel  (107/180)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5310,6 +5310,16 @@ Daniel (2026-10-14) la eligió como premio de la Combinada (opcional) del templo
   Daniel 2026-10-14: la sala combinada pasa a oleadas. WaveSpawner suelta sub-jefes (peleadores de ArenaFight) y cierra puertas que no son persianas (doors).
 - [x] Modelo de la espada dorada (-5d) e ícono
   Hasta entonces, la espada común con material dorado (assets/items/sword/sword_golden.tscn) y el ícono de la común.
+
+### 11.184 Risco: la franja del gancho no tiene bajada · Pendiente
+
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `bug`, `overworld`
+
+Daniel (2026-10-14, captura): arriba de la franja norte del Risco (nivel 2, x 70-88, z -38..-32, con RiscoPost y el ojo) no hay forma de bajar. Se sube solo con el gancho desde el pasillo bajo; al sur el RiscoPit, al norte y este la montaña, al oeste 5,2 m de caída al pasillo con la baranda invisible. La única salida es tirarse al abismo.
+
+- [ ] Una salida de la franja
+  Opciones: un poste del gancho en el borde de la nieve de la Cumbre (x ~64.7, z -35) para volver cruzando, o un salto (v) de bajada al pasillo como en los Zelda. Decide el overworld.
+- [ ] Test: desde la franja se vuelve sin caer al abismo
 
 ## M12 — Assets propios (Blender)  (17/34)
 
