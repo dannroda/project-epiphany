@@ -750,30 +750,32 @@ def fachada_templo(p):
 MOUNTAIN_FRONT = 0.6
 
 
-## Subida a la cima al oeste del templo (11.29), en ejes del modelo: la escalera sube por una quebrada (x STAIR_X, las
-## dos primeras filas) con peñascos altos a los lados, hasta un nicho de pasto (NICHE: x, y, alto máximo de los peñascos).
-STAIR_X = -6.0
-STAIR_CUT = (1.0, 2.1)
+## Cueva a la cima al oeste del templo (11.29), en ejes del modelo: la boca está en el risco del terreno en x CAVE_X
+## (1.5 m de ancho, hasta z CAVE_TOP); los peñascos de la primera fila que la taparían arrancan arriba de la boca o se
+## corren a los costados (CAVE_CUT). Arriba, un nicho de pasto (NICHE: x, y, alto máximo de los peñascos).
+CAVE_X = -6.0
+CAVE_TOP = 2.6
+CAVE_CUT = (1.0, 2.4)
 NICHE = ((-9.0, -1.0), (2.45, 4.45), 2.4)
 
 
 def mountain(p):
 	"""El cerro donde está tallado el templo: peñascos redondos apilados a los costados y detrás, más altos hacia
-	atrás, con pasto encima; deja libre el frente del templo (el templo sigue bajo tierra), la quebrada de la escalera a
-	la cima y el nicho de arriba."""
+	atrás, con pasto encima; deja libre el frente del templo (el templo sigue bajo tierra), la boca de la cueva
+	a la cima y el nicho de arriba."""
 	rock, grass = [], []
 	for gy in range(5):
 		for gx in range(-7, 8):
 			x = gx * 1.13 + p.rng.uniform(-0.15, 0.15)
 			if abs(x) < 3.9 and gy < 2:
 				continue
-			off = x - STAIR_X
-			if gy < 2 and abs(off) < STAIR_CUT[1]:
-				if abs(off) < STAIR_CUT[0]:
-					if gy == 0:
-						continue
+			off = x - CAVE_X
+			base = 0.0
+			if gy == 0 and abs(off) < CAVE_CUT[1]:
+				if abs(off) < CAVE_CUT[0]:
+					base = CAVE_TOP
 				else:
-					x = STAIR_X + math.copysign(STAIR_CUT[1], off)
+					x = CAVE_X + math.copysign(CAVE_CUT[1], off)
 			front = MOUNTAIN_FRONT + gy * 1.4
 			in_niche = NICHE[0][0] < x < NICHE[0][1]
 			if in_niche and gy == 2:
@@ -784,7 +786,7 @@ def mountain(p):
 			capped = in_niche and gy == 1
 			if capped:
 				top = NICHE[2]
-			z = 0.0
+			z = base
 			while z < top:
 				r = p.rng.uniform(0.85, 1.25)
 				if capped and z + r * 1.3 > top:
@@ -792,7 +794,7 @@ def mountain(p):
 					if r < 0.5:
 						break
 				y = front + r + (p.rng.uniform(0.0, 0.3) if gy else 0.0)
-				faces = p.blob((x, y, z + r * 0.55), r, squash=(1.1, 1.0, 0.75), subdiv=2, rough=0.12, flat_bottom=0.0 if z == 0.0 else None)
+				faces = p.blob((x, y, z + r * 0.55), r, squash=(1.1, 1.0, 0.75), subdiv=2, rough=0.12, flat_bottom=z if z == base else None)
 				for f in faces:
 					(grass if f.normal.z > 0.75 and f.calc_center_median().z > top - 0.6 else rock).append(f)
 				z += r * 1.1
