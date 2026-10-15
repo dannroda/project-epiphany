@@ -302,6 +302,101 @@ def reja(p):
 	p.paint(rails + crest, "cobre_verde", "DARK", vary=0.05)
 
 
+def reja_quenoa(p):
+	"""La reja de la Queñoa, del mismo tamaño: troncos con punta, dos travesaños atados con soga y musgo arriba."""
+	poles = []
+	for i in range(7):
+		x = -1.05 + i * 0.35
+		poles += p.cylinder(0.075, 0.0, 1.95, sides=7, phase=i)
+		p.transform(poles[-9:], Matrix.Translation((x, 0, 0)))
+		tip = p.cylinder(0.075, 1.95, 2.2, sides=7, radius_top=0.0, phase=i)
+		p.transform(tip, Matrix.Translation((x, 0, 0)))
+		poles += tip
+	p.paint(poles, "madera", z_range=(0, 2.2), vary=0.08)
+	rails = []
+	for z in (0.45, 1.6):
+		rail = p.cylinder(0.07, -1.2, 1.2, sides=7)
+		p.transform(rail, Matrix.Translation((0, -0.12, z)) @ Matrix.Rotation(math.pi / 2, 4, "Y"))
+		rails += rail
+	p.paint(rails, "madera_oscura", "MID", vary=0.06)
+	rope = []
+	for i in range(7):
+		for z in (0.45, 1.6):
+			rope += p.rounded_box(-1.05 + i * 0.35 - 0.06, -1.05 + i * 0.35 + 0.06, -0.2, -0.04, z - 0.05, z + 0.05, radius=0.02, segments=1)
+	p.paint(rope, "paja", "MID", vary=0.05)
+	moss = []
+	for i in range(0, 7, 2):
+		moss += p.blob((-1.05 + i * 0.35, -0.05, 1.62), 0.13, squash=(1.3, 1.0, 0.6), rough=0.25)
+	p.paint(moss, "musgo", "MID", vary=0.08)
+
+
+def reja_totora(p):
+	"""La reja de la Totora: atados de totora parados, amarrados con soga oscura, abiertos en penacho arriba."""
+	reeds = []
+	ties = []
+	for i in range(7):
+		x = -1.05 + i * 0.35
+		for k in range(4):
+			a = k * math.pi / 2 + i
+			cx, cy = x + 0.04 * math.cos(a), 0.04 * math.sin(a)
+			stalk = p.cylinder(0.035, 0.0, 2.0 + 0.08 * (k % 2), sides=5, radius_top=0.02)
+			p.transform(stalk, Matrix.Translation((cx, cy, 0)))
+			reeds += stalk
+			tuft = p.cylinder(0.02, 0.0, 0.22, sides=4, radius_top=0.0)
+			p.transform(tuft, Matrix.Translation((cx, cy, 2.0 + 0.08 * (k % 2))) @ Matrix.Rotation(0.35, 4, Vector((-math.sin(a), math.cos(a), 0))))
+			reeds += tuft
+		for z in (0.4, 1.1, 1.75):
+			ties += p.cylinder(0.1, z - 0.04, z + 0.04, sides=8)
+			p.transform(ties[-10:], Matrix.Translation((x, 0, 0)))
+	p.paint(reeds, "paja", z_range=(0, 2.3), vary=0.06)
+	rails = p.rounded_box(-1.2, 1.2, -0.13, -0.05, 0.36, 0.44, radius=0.03, segments=1) + p.rounded_box(-1.2, 1.2, -0.13, -0.05, 1.71, 1.79, radius=0.03, segments=1)
+	p.paint(ties + rails, "madera_oscura", "MID", vary=0.05)
+
+
+def reja_cumbre(p):
+	"""La reja de la Cumbre: barrotes de hierro oscuro escarchados arriba, travesaños con un sol de oro y carámbanos."""
+	bars = []
+	frost = []
+	for i in range(7):
+		x = -1.05 + i * 0.35
+		bars += p.box(x - 0.05, x + 0.05, -0.05, 0.05, 0.0, 1.55)
+		frost += p.box(x - 0.055, x + 0.055, -0.055, 0.055, 1.55, 2.05)
+		frost += p.cylinder(0.06, 2.05, 2.25, sides=4, radius_top=0.0, center=(x, 0.0), phase=math.pi / 4)
+	p.paint(bars, "hierro", "LOW", vary=0.05)
+	p.paint(frost, "cristal", z_range=(1.4, 2.3), vary=0.05)
+	rails = p.box(-1.2, 1.2, -0.08, 0.08, 0.35, 0.47) + p.box(-1.2, 1.2, -0.08, 0.08, 1.7, 1.82)
+	p.paint(rails, "gris_5", "MID", vary=0.05)
+	snow = p.box(-1.2, 1.2, -0.09, 0.09, 1.82, 1.88) + p.box(-1.2, 1.2, -0.09, 0.09, 0.47, 0.52)
+	p.paint(snow, "blanco", "LIGHT")
+	drops = []
+	for x in (-0.9, -0.55, -0.15, 0.3, 0.7, 1.0):
+		drops += p.cylinder(0.035, 1.7, 1.7 - 0.12 - 0.12 * ((x * 7) % 1), sides=4, radius_top=0.0, center=(x + 0.08, -0.06))
+	p.paint(drops, "cristal", "LIGHT")
+	disc = p.cylinder(0.22, 0.0, 0.06, sides=12)
+	rays = []
+	for k in range(8):
+		ray = p.cylinder(0.06, 0.0, 0.05, sides=3)
+		p.transform(ray, Matrix.Rotation(k * math.pi / 4, 4, "Z") @ Matrix.Translation((0.3, 0.0, 0.0)) @ Matrix.Scale(1.5, 4, Vector((1, 0, 0))))
+		rays += ray
+	p.transform(disc + rays, Matrix.Translation((0, -0.08, 1.12)) @ Matrix.Rotation(math.pi / 2, 4, "X"))
+	p.paint(disc + rays, "dorado", "MID", vary=0.03)
+
+
+def reja_templo(p):
+	"""La reja del templo: barrotes de oro entre travesaños de piedra del templo, con la chakana arriba."""
+	bars = []
+	for i in range(7):
+		x = -1.05 + i * 0.35
+		bars += p.box(x - 0.045, x + 0.045, -0.045, 0.045, 0.0, 2.0)
+	p.paint(bars, "dorado", z_range=(0, 2.2), vary=0.04)
+	rails = p.box(-1.2, 1.2, -0.1, 0.1, 0.32, 0.5) + p.box(-1.2, 1.2, -0.1, 0.1, 1.68, 1.86)
+	p.paint(rails, "piedra_templo", "MID", vary=0.05)
+	crest = []
+	for w, h in ((0.66, 0.22), (0.44, 0.44), (0.22, 0.66)):
+		crest += p.box(-w / 2, w / 2, -0.06, 0.06, 1.87 - h / 2, 1.87 + h / 2)
+	p.paint(crest, "dorado", "LIGHT", vary=0.03)
+
+
 def bloque_empujable(p):
 	"""Cubo de 1.8 m de piedra labrada con la chakana en relieve en cada lado."""
 	body = p.box(-0.9, 0.9, -0.9, 0.9, 0.0, 1.75)
@@ -567,6 +662,10 @@ def estela_carcaj(p):
 
 
 piece("reja", 14, reja)
+piece("reja_quenoa", 14, reja_quenoa)
+piece("reja_totora", 14, reja_totora)
+piece("reja_cumbre", 14, reja_cumbre)
+piece("reja_templo", 14, reja_templo)
 piece("bloque_empujable", 15, bloque_empujable)
 piece("interruptor_marco", 16, interruptor_marco)
 piece("interruptor_placa", 17, interruptor_placa)

@@ -2,6 +2,9 @@
 
 [ext_resource type="PackedScene" path="res://src/entities/kuntur/kuntur.tscn" id="1_kuntur"]
 [ext_resource type="Resource" path="res://data/entities/apu_kuntur.tres" id="2_config"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/kuntur/apu_kuntur_cuerpo.res" id="3_cuerpo"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/kuntur/apu_kuntur_ala_izq.res" id="4_ala_izq"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/kuntur/apu_kuntur_ala_der.res" id="5_ala_der"]
 
 [node name="ApuKuntur" instance=ExtResource("1_kuntur")]
 config = ExtResource("2_config")
@@ -10,3 +13,12 @@ hover_height = 3.8
 
 [node name="Body" parent="." index="0"]
 transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 3.8, 0)
+
+[node name="Model" parent="Body" index="0"]
+mesh = ExtResource("3_cuerpo")
+
+[node name="Wing" parent="Body/WingLeft" index="0"]
+mesh = ExtResource("4_ala_izq")
+
+[node name="Wing" parent="Body/WingRight" index="0"]
+mesh = ExtResource("5_ala_der")

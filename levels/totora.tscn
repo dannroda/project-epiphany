@@ -22,7 +22,7 @@
 [ext_resource type="Resource" path="res://data/entities/skeleton.tres" id="18_v5awg"]
 [ext_resource type="PackedScene" path="res://src/world/eye_switch.tscn" id="19_kd5y0"]
 [ext_resource type="Script" uid="uid://n1p8wmv8inqn" path="res://src/world/eye_switch.gd" id="20_o5umy"]
-[ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="21_5uynx"]
+[ext_resource type="PackedScene" path="res://src/world/gate_totora.tscn" id="21_5uynx"]
 [ext_resource type="Script" uid="uid://cj2nsvfg6j7av" path="res://src/world/gate.gd" id="22_h5tew"]
 [ext_resource type="Resource" path="res://data/items/dungeon_map.tres" id="23_bf1ls"]
 [ext_resource type="PackedScene" path="res://src/world/door.tscn" id="24_ctf4b"]

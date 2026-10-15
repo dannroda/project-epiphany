@@ -7,61 +7,14 @@
 [ext_resource type="Script" path="res://src/components/hitbox.gd" id="5_hitbox"]
 [ext_resource type="Script" path="res://src/feel/hit_flash.gd" id="6_flash"]
 [ext_resource type="Script" path="res://src/entities/kuntur/light_catch.gd" id="7_catch"]
-
-[sub_resource type="StandardMaterial3D" id="Black"]
-albedo_color = Color(0.08, 0.08, 0.1, 1)
-roughness = 0.9
-
-[sub_resource type="StandardMaterial3D" id="White"]
-albedo_color = Color(0.93, 0.92, 0.88, 1)
-roughness = 0.9
-
-[sub_resource type="StandardMaterial3D" id="Skin"]
-albedo_color = Color(0.62, 0.36, 0.34, 1)
-roughness = 0.8
-
-[sub_resource type="StandardMaterial3D" id="Bone"]
-albedo_color = Color(0.85, 0.8, 0.62, 1)
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/kuntur/kuntur_cuerpo.res" id="10_cuerpo"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/kuntur/kuntur_ala_izq.res" id="8_ala_izq"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/kuntur/kuntur_ala_der.res" id="9_ala_der"]
 
 [sub_resource type="StandardMaterial3D" id="AimMat"]
 transparency = 1
 shading_mode = 0
 albedo_color = Color(0.05, 0.05, 0.1, 0.55)
-
-[sub_resource type="CapsuleMesh" id="TorsoMesh"]
-material = SubResource("Black")
-radius = 0.36
-height = 1.4
-
-[sub_resource type="SphereMesh" id="CollarMesh"]
-material = SubResource("White")
-radius = 0.3
-height = 0.4
-
-[sub_resource type="SphereMesh" id="HeadMesh"]
-material = SubResource("Skin")
-radius = 0.2
-height = 0.36
-
-[sub_resource type="CylinderMesh" id="BeakMesh"]
-material = SubResource("Bone")
-top_radius = 0.0
-bottom_radius = 0.08
-height = 0.32
-radial_segments = 8
-rings = 1
-
-[sub_resource type="BoxMesh" id="WingMesh"]
-material = SubResource("Black")
-size = Vector3(1.7, 0.06, 0.7)
-
-[sub_resource type="BoxMesh" id="BandMesh"]
-material = SubResource("White")
-size = Vector3(1.1, 0.07, 0.18)
-
-[sub_resource type="BoxMesh" id="TailMesh"]
-material = SubResource("Black")
-size = Vector3(0.55, 0.05, 0.5)
 
 [sub_resource type="CylinderMesh" id="AimMesh"]
 material = SubResource("AimMat")
@@ -89,21 +42,8 @@ config = ExtResource("2_config")
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
 
-[node name="Torso" type="MeshInstance3D" parent="Body"]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
-mesh = SubResource("TorsoMesh")
-
-[node name="Collar" type="MeshInstance3D" parent="Body"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0.55)
-mesh = SubResource("CollarMesh")
-
-[node name="Head" type="MeshInstance3D" parent="Body"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0.85)
-mesh = SubResource("HeadMesh")
-
-[node name="Beak" type="MeshInstance3D" parent="Body/Head"]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -0.03, 0.3)
-mesh = SubResource("BeakMesh")
+[node name="Model" type="MeshInstance3D" parent="Body"]
+mesh = ExtResource("10_cuerpo")
 
 [node name="Muzzle" type="Marker3D" parent="Body"]
 unique_name_in_owner = true
@@ -114,28 +54,14 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0.1, 0.1)
 
 [node name="Wing" type="MeshInstance3D" parent="Body/WingLeft"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.85, 0, 0)
-mesh = SubResource("WingMesh")
-
-[node name="Band" type="MeshInstance3D" parent="Body/WingLeft"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, 0, -0.18)
-mesh = SubResource("BandMesh")
+mesh = ExtResource("8_ala_izq")
 
 [node name="WingRight" type="Node3D" parent="Body"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0.1, 0.1)
 
 [node name="Wing" type="MeshInstance3D" parent="Body/WingRight"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.85, 0, 0)
-mesh = SubResource("WingMesh")
-
-[node name="Band" type="MeshInstance3D" parent="Body/WingRight"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, 0, -0.18)
-mesh = SubResource("BandMesh")
-
-[node name="Tail" type="MeshInstance3D" parent="Body"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.85)
-mesh = SubResource("TailMesh")
+mesh = ExtResource("9_ala_der")
 
 [node name="AimMark" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true

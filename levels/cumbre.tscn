@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" path="res://src/world/light/light_source.tscn" id="5_ku7rw"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_receiver.tscn" id="6_4jevl"]
 [ext_resource type="Script" uid="uid://djcb44ujalpa3" path="res://src/world/light/light_receiver.gd" id="7_klotd"]
-[ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="8_fwfcf"]
+[ext_resource type="PackedScene" path="res://src/world/gate_cumbre.tscn" id="8_fwfcf"]
 [ext_resource type="Script" uid="uid://cj2nsvfg6j7av" path="res://src/world/gate.gd" id="9_438do"]
 [ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="10_rdvwa"]
 [ext_resource type="Script" uid="uid://ukpcr815ja3d" path="res://src/world/breakable.gd" id="11_24ve7"]

@@ -7,7 +7,7 @@
 [ext_resource type="MeshLibrary" uid="uid://brbn4wqx32g82" path="res://data/kits/quenoa_la_kit.tres" id="5_lvm7h"]
 [ext_resource type="PackedScene" path="res://src/world/eye_switch.tscn" id="7_crhmt"]
 [ext_resource type="Material" path="res://src/world/look/marca_visible.tres" id="8_41w6x"]
-[ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="9_i77fr"]
+[ext_resource type="PackedScene" path="res://src/world/gate_quenoa.tscn" id="9_i77fr"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="11_5ogbh"]
 [ext_resource type="ArrayMesh" uid="uid://clsxeujlrqc6t" path="res://assets/epiphany/meshes/paredes_la/puerta_llave_quenoa_la.res" id="11_lvm7h"]
 [ext_resource type="Resource" path="res://data/items/small_key.tres" id="13_vcwjq"]
