@@ -3,9 +3,9 @@
   "checklist": [],
   "code": "11.179",
   "created_at": "2026-10-14T19:05:08.585Z",
-  "description": "Daniel (2026-10-14): todas las salas de las mazmorras miden 14 de alto y al menos 22 de ancho, como la Chullpa y la Queñoa. Cumbre tiene salas de 14 × 10 / 14 × 12 y hay que rediseñarla.",
+  "description": "Daniel (2026-10-14): todas las salas de las mazmorras miden 14 de alto y al menos 22 de ancho, como la Chullpa y la Queñoa. Cumbre tiene salas de 14 × 10 / 14 × 12 y hay que rediseñarla.\n",
   "milestone": "m11",
-  "notes": "",
+  "notes": "Con el nuevo sistema configurable de la viñeta y camara, ya no es necesario. Eso si, cada sala debe poder centrarse en camara y ocultar las otras salas. Por consecuencia, permite salas con diferentes tamaños como se hace con el templo donde la sala del jefe final tiene un tamaño diferente",
   "order": 176,
   "priority": "medium",
   "refs": [],
@@ -17,5 +17,5 @@
   ],
   "test": "",
   "title": "Cumbre: salas de 14 de alto y al menos 22 de ancho",
-  "updated_at": "2026-10-14T19:05:08.585Z"
+  "updated_at": "2026-10-15T03:09:13.732Z"
 }

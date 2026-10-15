@@ -1,7 +1,7 @@
 # Tareas — Project Epiphany
 
 > Export de `compass/`, que es la fuente de verdad. No editar: los cambios se hacen en `compass/` o con `scompass`, y este archivo se regenera.
-> Generado: 2026-10-14
+> Generado: 2026-10-15
 
 ## M0 — Refactor del player + base de datos  (13/13)
 
@@ -2598,7 +2598,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 
 Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
 
-## M11 — Pulido: contenido y feel  (107/180)
+## M11 — Pulido: contenido y feel  (108/180)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3013,9 +3013,9 @@ Uno o dos atajos que se abren desde adentro (puente o escalera) y quedan abierto
 
 **Relacionadas:** 11.170 Atajos: animación del player subiendo y bajando en vez del fundido
 
-### 11.29 Overworld después del jefe · Revisión
+### 11.29 Overworld después del jefe · Hecho
 
-**Prioridad:** baja · **Etiquetas:** `overworld`, `audio`
+**Terminada:** 2026-10-15 · **Prioridad:** baja · **Etiquetas:** `overworld`, `audio`
 
 Después de vencer al jefe, el overworld tiene que verse y sonar distinto (sin doom: luz, niebla y música calmas) y ofrecer algo nuevo que solo aparece entonces.
 
@@ -5262,6 +5262,9 @@ Daniel (2026-10-14): todas las salas de las mazmorras miden 14 de alto y al meno
 
 Daniel (2026-10-14): todas las salas de las mazmorras miden 14 de alto y al menos 22 de ancho, como la Chullpa y la Queñoa. Cumbre tiene salas de 14 × 10 / 14 × 12 y hay que rediseñarla.
 
+
+**Notas:** Con el nuevo sistema configurable de la viñeta y camara, ya no es necesario. Eso si, cada sala debe poder centrarse en camara y ocultar las otras salas. Por consecuencia, permite salas con diferentes tamaños como se hace con el templo donde la sala del jefe final tiene un tamaño diferente
+
 ### 11.180 Templo: salas de 14 de alto y al menos 22 de ancho · Revisión
 
 **Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `mazmorra`
@@ -6536,22 +6539,17 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 ### Revisión: lo listo para probar  (25/27 probadas)
 
-1. [ ] 11.130 Bocas de cueva talladas en el risco · Hecho · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. 
-   No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. 
-   D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
-2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
-   El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
+1. [ ] 11.130 Bocas de cueva talladas en el risco · Hecho · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
+2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player. El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
 3. [x] 11.111 Cactus, árboles y matas se cortan como el pasto · Hecho · anda
 4. [x] 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · Hecho · anda
 5. [x] 11.118 Sandalias: correr manteniendo y salto largo con la pluma · Hecho · anda
 6. [x] 11.24 Más secretos en el overworld · Hecho · anda
-7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente
-   si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell"
-   no hay asset correcto para la pared quebrable
+7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell" no hay asset correcto para la pared quebrable
 8. [x] 11.30 Ítem de D3: el gancho · Hecho · anda
 9. [x] 11.28 Atajos que se abren al volver · Hecho · anda — anda, pero no debería hacer un fade. Debería haber una animacion del player subiendo y bajando
 10. [x] 11.46 Jefe: game juice · Hecho · anda
-11. [ ] 11.29 Overworld después del jefe · Revisión
+11. [ ] 11.29 Overworld después del jefe · Hecho
 12. [x] 7.9 Rediseño del overworld como hub de varias mazmorras · Hecho · anda — La D4 parece mas una cueva que una dungeon
 13. [x] 7.10 Overworld con forma de Zelda 2D, no cuadrado · Hecho · anda
 14. [ ] Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos · En curso · **falla** — Hay cosas que no tienen estilo
@@ -6576,7 +6574,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 3. [x] 11.148 Minimapa del overworld desactualizado (la quebrada sale como abismo negro) · Hecho · anda — Es un poco tosco como aparece en el minimapa, pero es detalle menor.
 4. [x] 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player · Hecho · anda — Funciona, pero solo debería ser para las paredes. No para objetos/plantas, para eso está el x-ray. Y el movimiento es un poco nauseabundo.
 
-### Revisión del 14 de octubre: overworld, mazmorras y sistemas  (17/62 probadas)
+### Revisión del 14 de octubre: overworld, mazmorras y sistemas  (18/62 probadas)
 
 1. [x] 11.168 D4 (Cumbre): entrada exagerada como las otras mazmorras · Hecho · anda
 2. [x] 11.130 Bocas de cueva talladas en el risco · Hecho · anda
@@ -6586,7 +6584,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 6. [x] 11.131 Pozo junto a la Chullpa: caer sin bombas deja softlock · Revisión · anda
 7. [x] 11.159 Overworld con el arte de las mazmorras: brillo LA y más detalle en el piso · Hecho · anda
 8. [x] 11.165 La cámara cenital se activa en bordes y muros bajos de una sala · Hecho · anda
-9. [ ] 11.29 Overworld después del jefe · Revisión
+9. [x] 11.29 Overworld después del jefe · Hecho · anda
 10. [x] 12.29 Muro agrietado LA de cueva (muro_agrietado_cueva_la) · Hecho · anda
 11. [x] 11.132 Cuevas: los enemigos se quedan quietos · Hecho · anda
 12. [ ] 11.133 Vasija chica cargada no se ve con el x-ray · Revisión — Mejor, pero no tiene que haber x-ray cuando se levanta algo
