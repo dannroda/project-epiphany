@@ -96,6 +96,10 @@ func _open(by: PlayerCharacter) -> void:
 
 ## Sin animación: al entrar a la escena o al cargar una partida.
 func _show(opened: bool) -> void:
+	if not visible:
+		if not opened:
+			return
+		_appear(false)
 	if opened == not interactable.enabled:
 		return
 	interactable.enabled = not opened

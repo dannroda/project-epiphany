@@ -156,7 +156,9 @@ func test_the_three_chullpa_eyes_raise_the_sandals_chest() -> void:
 	var center := chest.global_position + Vector3(0, 1.2, 0)
 	player.global_position = chest.global_position + Vector3(0, 0.1, 1.5)
 	await tree.physics_frame
+	await tree.physics_frame
 	assert_eq(chest.visible, false, "el cofre no está hasta flechar los ojos")
+	assert_true(not chest.interactable.enabled, "y escondido no se puede abrir")
 	var eyes: Array[EyeSwitch] = []
 	for i in 3:
 		eyes.append(level.get_node(NodePath("NecroTomb%d/Eye" % (i + 1))) as EyeSwitch)
@@ -170,6 +172,7 @@ func test_the_three_chullpa_eyes_raise_the_sandals_chest() -> void:
 		await _shoot(tree, level, player, eye, center)
 	await tree.create_timer(0.6).timeout
 	assert_eq(chest.visible, true, "con los tres prendidos a la vez aparece el cofre")
+	assert_true(chest.interactable.enabled, "y se puede abrir")
 	setup[0].reset()
 
 
