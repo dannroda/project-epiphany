@@ -69,4 +69,7 @@ func _process(delta: float) -> void:
 	var wanted := targets()
 	for layer in LAYERS:
 		levels[layer] = move_toward(levels[layer], wanted[layer], FADE_SPEED * delta)
-		players[layer].volume_db = linear_to_db(maxf(levels[layer], 0.0001)) + _duck
+		var volume := linear_to_db(maxf(levels[layer], 0.0001)) + _duck
+		# Cada cambio de volumen hace que el AudioServer reemplace los datos de bus del sonido; sin cambios, no se toca.
+		if not is_equal_approx(players[layer].volume_db, volume):
+			players[layer].volume_db = volume
