@@ -38,9 +38,9 @@ const SKIP_ACTIONS: Array[StringName] = [&"ui_accept", &"attack", &"interact"]
 
 @export_group("Mostrar lo activado")
 @export var reveal_pan_time := 0.6
-## Ambiente de todos los acercamientos: lo tildado de este AmbienteSala pisa al de la sala mientras dura. Un AmbienteSala
-## hijo de lo mostrado (la pelea, la puerta) o de la cámara lo reemplaza.
-@export var reveal_look: PackedScene = preload("res://src/world/look/ambiente_zoom.tscn")
+## Viñeta y luz de todos los acercamientos (la cámara del preset no se usa): pisan a las de la sala mientras dura. Un
+## AmbienteSala hijo de lo mostrado (la pelea, la puerta) o de la cámara lo reemplaza.
+@export var reveal_look: AmbientePreset = preload("res://data/ambientes/zoom.tres")
 ## Lo que tarda el ambiente del acercamiento en entrar y en volver al de la sala.
 @export var reveal_tone_time := 0.6
 ## Cuánto se queda mirando después de abrir.
@@ -119,6 +119,7 @@ var _player_rids: Array[RID] = []
 var _level_offset := Vector3.ZERO
 var _level_fov := 0.0
 var _mood: AmbienteSala
+var _room_look_saved := {}
 
 
 func _ready() -> void:
@@ -342,23 +343,55 @@ func _slide_offset(value: Vector3) -> void:
 	global_basis = Basis.looking_at(-_eye(), Vector3.FORWARD)
 
 
-## Offset y campo de visión de la sala, y su AmbienteSala sobre el WorldEnvironment del nivel; lo que no pone queda
-## como el del nivel.
+## Offset y campo de visión de la sala (su AmbientePreset o camera_offset/camera_fov), y su viñeta y luz (el preset y
+## su AmbienteSala) sobre el WorldEnvironment del nivel; lo que no pone queda como el del nivel.
 func _apply_room_view(target: Room) -> void:
-	offset = target.camera_offset if target.camera_offset != Vector3.ZERO else _level_offset
+	var preset := target.ambiente
+	if preset and preset.usar_camara:
+		offset = preset.offset
+	else:
+		offset = target.camera_offset if target.camera_offset != Vector3.ZERO else _level_offset
 	if not orthographic:
-		fov = target.camera_fov if target.camera_fov > 0.0 else _level_fov
+		if preset and preset.usar_camara:
+			fov = preset.fov
+		else:
+			fov = target.camera_fov if target.camera_fov > 0.0 else _level_fov
+	if is_instance_valid(_mood):
+		_mood.restore()
+	_mood = null
+	_apply_room_look(preset)
 	var mood: AmbienteSala = null
 	for child in target.get_children():
 		if child is AmbienteSala:
 			mood = child
-	if is_instance_valid(_mood) and _mood != mood:
-		_mood.restore()
 	_mood = mood
-	if mood:
-		var found := get_tree().current_scene.find_children("*", "WorldEnvironment", true, false)
-		if not found.is_empty():
-			mood.apply(found[0])
+	if mood and _world():
+		mood.apply(_world())
+
+
+## Pone la viñeta y la luz del preset de la sala, devolviendo antes las de la sala anterior.
+func _apply_room_look(preset: AmbientePreset) -> void:
+	for target: Object in _room_look_saved:
+		for property: String in _room_look_saved[target]:
+			target.set(property, _room_look_saved[target][property])
+	_room_look_saved.clear()
+	if preset == null:
+		return
+	var targets := preset.targets(_world())
+	for target: Object in targets:
+		var saved := {}
+		for property: String in targets[target]:
+			saved[property] = target.get(property)
+			target.set(property, targets[target][property])
+		_room_look_saved[target] = saved
+
+
+func _world() -> WorldEnvironment:
+	var scene := get_tree().current_scene
+	if scene == null:
+		return null
+	var found := scene.find_children("*", "WorldEnvironment", true, false)
+	return found[0] if not found.is_empty() else null
 
 
 ## Los demás pasan a la sala nueva junto al que cruzó: a sus costados y, si son más, detrás.
@@ -579,7 +612,6 @@ func _hold_together(players: Array[PlayerCharacter]) -> void:
 static var unlock_reveals := true
 ## Cuadros que se queda mirando después de que termina de abrirse.
 const REVEAL_TAIL_FRAMES := 4
-const TONE := preload("res://src/world/look/tono_la.gd")
 
 ## Lo que se destraba por una acción (switches, puzzle, horda) se muestra con `reveal`.
 static func reveal_unlock(target: Node3D, action: Callable) -> void:
@@ -678,25 +710,21 @@ func _reveal_values(target: Node) -> Dictionary:
 		for child in node.get_children():
 			if child is AmbienteSala:
 				return child.valores
-	if reveal_look == null:
-		return {}
-	var look := reveal_look.instantiate()
-	var values: Dictionary = look.get(&"valores") if look.get(&"valores") is Dictionary else {}
-	look.free()
+	var values := {}
+	var targets := reveal_look.targets(_world()) if reveal_look else {}
+	for holder: Object in targets:
+		var prefix := AmbienteSala.TONE_PREFIX if holder is CompositorEffect else ""
+		for property: String in targets[holder]:
+			values[prefix + property] = targets[holder][property]
 	return values
 
 
 ## Clave del ambiente del acercamiento → objeto que la tiene (el Environment o el TonoLA del nivel).
 func _reveal_mood(values: Dictionary) -> Dictionary:
-	var scene := get_tree().current_scene
-	var found := scene.find_children("*", "WorldEnvironment", true, false) if scene else []
-	if found.is_empty():
+	var world := _world()
+	if world == null:
 		return {}
-	var world: WorldEnvironment = found[0]
-	var tone: CompositorEffect = null
-	for effect in world.compositor.compositor_effects if world.compositor else []:
-		if effect and effect.get_script() == TONE:
-			tone = effect
+	var tone := AmbientePreset.tone_of(world)
 	var mood := {}
 	for key: String in values:
 		var holder: Object = tone if key.begins_with(AmbienteSala.TONE_PREFIX) else world.environment
