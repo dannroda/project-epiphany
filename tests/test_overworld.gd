@@ -173,6 +173,24 @@ func test_the_condor_frames_the_cumbre_door_and_lets_the_player_in() -> void:
 	state.reset()
 
 
+func test_nothing_grows_on_the_travel_portals() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	var level := tree.current_scene
+	var portals := level.find_children("*", "", true, false).filter(func(n: Node) -> bool: return n.scene_file_path == "res://src/world/travel_portal.tscn")
+	assert_eq(portals.size(), 6, "seis portales")
+	var crowded := []
+	for decor: Node in level.find_children("Decor", "", true, false):
+		for piece: Node in decor.find_children("*", "Node3D", true, false):
+			if piece.get_parent() is Node3D and piece.get_parent().get_parent() == decor:
+				for portal: Node3D in portals:
+					var at := (piece as Node3D).global_position
+					if Vector2(at.x - portal.global_position.x, at.z - portal.global_position.z).length() < 2.0 and absf(at.y - portal.global_position.y) < 2.0:
+						crowded.append("%s en %s" % [piece.name, portal.name])
+	assert_eq(crowded, [], "ni plantas ni decoración encima de un portal")
+
+
 func _walk_route(tree: SceneTree, player: PlayerCharacter, route: Array) -> void:
 	for leg in route:
 		var result: Array = await _walk_until(tree, player, leg[0], leg[1])

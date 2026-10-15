@@ -29,6 +29,9 @@ const PLANTS := {
 	"quenoa_chica": "res://src/world/plants/quenoa_chica.tscn",
 }
 const SCATTERED := "res://tools/plantas_overworld.json"
+## Ni plantas ni nada encima de los portales de viaje, con margen para que no asomen sobre el borde.
+const PORTAL_SCENE := "res://src/world/travel_portal.tscn"
+const PORTAL_CLEAR := 2.0
 const CELL := 2.0
 ## Lo jugable más cerca que esto (m) no deja decorar.
 const CLEARANCE := 1.8
@@ -60,6 +63,7 @@ var _shapes: MeshLibrary
 var _keep_out: Array[Vector3] = []
 var _doors: Array[Vector3] = []
 var _placed: Array[Vector3] = []
+var _portals: Array[Vector3] = []
 var _root: Node3D
 var _rng := RandomNumberGenerator.new()
 
@@ -78,6 +82,10 @@ func _decorate(level_name: String, area_script: String, recipe: Callable) -> voi
 	_keep_out.clear()
 	_doors.clear()
 	_placed.clear()
+	_portals.clear()
+	for node in level.find_children("*", "", true, false):
+		if node.scene_file_path == PORTAL_SCENE:
+			_portals.append(_origin_in(level, node as Node3D))
 	var areas: Array[Area3D] = []
 	for child in level.get_children():
 		var script: Script = child.get_script()
@@ -120,15 +128,31 @@ func _plants() -> void:
 	group.name = "Plantas"
 	_add(_root, group)
 	for cell in _grid.get_used_cells():
-		if PLANT_CELLS.has(_name(cell)):
+		if PLANT_CELLS.has(_name(cell)) and not _on_portal(_center(cell)):
 			var plant := _scene(PLANT_CELLS[_name(cell)])
 			plant.transform = Transform3D(_grid.get_cell_item_basis(cell), _center(cell))
 			_add(group, plant)
 	for spot: Dictionary in JSON.parse_string(FileAccess.get_file_as_string(SCATTERED)):
+		var at := Vector3(spot.at[0], spot.at[1], spot.at[2])
+		if _on_portal(at):
+			continue
 		var plant := _scene(PLANTS[spot.kind])
-		plant.position = Vector3(spot.at[0], spot.at[1], spot.at[2])
+		plant.position = at
 		plant.rotation.y = spot.yaw
 		_add(group, plant)
+
+
+func _origin_in(level: Node3D, node: Node3D) -> Vector3:
+	var xform := node.transform
+	var parent := node.get_parent() as Node3D
+	while parent and parent != level:
+		xform = parent.transform * xform
+		parent = parent.get_parent() as Node3D
+	return xform.origin
+
+
+func _on_portal(at: Vector3) -> bool:
+	return _portals.any(func(p: Vector3) -> bool: return Vector2(p.x - at.x, p.z - at.z).length() < PORTAL_CLEAR)
 
 
 func _scene(path: String) -> Node3D:
