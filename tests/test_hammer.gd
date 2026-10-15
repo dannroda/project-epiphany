@@ -63,6 +63,31 @@ func test_only_the_hammer_breaks_what_needs_a_strong_hit() -> void:
 	state.reset()
 
 
+func test_whoever_takes_the_hammer_freezes_for_an_instant() -> void:
+	tree = Engine.get_main_loop() as SceneTree
+	tree.root.get_node(^"GameState").reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	for i in 3:
+		await tree.physics_frame
+	var enemy := tree.get_first_node_in_group(&"enemies") as Enemy
+	var mode := enemy.process_mode
+	var strike := (Items.get_item(&"hammer").behavior as StrikeBehavior).strike_scene.instantiate() as Hitbox
+	strike.team = EntityConfig.Team.PLAYER
+	strike.damage_factory = func() -> DamageInfo: return DamageInfo.make(1, 0.0, null)
+	var stun_time: float = strike.stun_time
+	tree.current_scene.add_child(strike)
+	strike.global_position = enemy.global_position
+	var frozen := false
+	for i in 10:
+		await tree.physics_frame
+		frozen = frozen or enemy.process_mode == Node.PROCESS_MODE_DISABLED
+	assert_true(frozen, "el golpeado queda congelado")
+	await tree.create_timer(stun_time + 0.1).timeout
+	assert_eq(enemy.process_mode, mode, "y sigue al rato")
+	tree.root.get_node(^"GameState").reset()
+
+
 func test_an_attack_marked_strong_hits_strong() -> void:
 	var hitbox := Hitbox.new()
 	hitbox.damage_factory = func() -> DamageInfo: return DamageInfo.make(1, 0.0, null)
