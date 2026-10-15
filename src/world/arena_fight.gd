@@ -20,6 +20,8 @@ signal bar_changed
 @export var display_name := ""
 ## Se cierran durante la pelea y se abren al ganar.
 @export var doors: Array[Door] = []
+## En el overworld, lo que encierra la pelea en vez de las puertas (FireRing).
+@export var barrier: FireRing
 ## Aparece al ganar (el contenedor de corazón): queda fuera del árbol hasta entonces; tomado, no vuelve.
 @export var reward: Pickup
 @export var reward_flag: StringName
@@ -90,6 +92,8 @@ func _begin() -> void:
 		return
 	for door in doors:
 		door.close()
+	if barrier:
+		barrier.close()
 	in_intro = true
 	Music.boss_fight = true
 	var seen_key: Variant = flag if flag != &"" else get_path()
@@ -144,6 +148,8 @@ func _reset() -> void:
 	_clear_escorts()
 	for door in doors:
 		door.open(false)
+	if barrier:
+		barrier.open()
 
 
 func _may_attack(fighter) -> bool:
@@ -195,6 +201,8 @@ func _win(announce: bool) -> void:
 	get_tree().call_group(Hud.GROUP, &"hide_boss")
 	for door in doors:
 		door.open()
+	if barrier:
+		barrier.open()
 	_show_reward()
 	if announce:
 		Feel.sfx(&"secret", global_position)
