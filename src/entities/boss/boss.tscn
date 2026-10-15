@@ -531,11 +531,12 @@ unique_name_in_owner = true
 process_mode = 3
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 1.3)
 script = ExtResource("20_roar")
-color = Color(1, 0.45, 0.3, 0.6)
 size = 3.2
 reach = 2.5
 shake = 0.7
 rings = 5
+color = Color(1, 0.75, 0.3, 1)
+inner = Color(0.45, 0.95, 1, 1)
 
 [node name="Mesh" type="MeshInstance3D" parent="Body/Eye"]
 mesh = ExtResource("4_eye")

@@ -58,6 +58,8 @@ unique_name_in_owner = true
 process_mode = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, -0.9)
 script = ExtResource("20_roar")
+color = Color(0.3, 0.95, 0.6, 1)
+inner = Color(1, 0.4, 0.35, 1)
 
 [node name="Hurtbox" type="Area3D" parent="Body/Neck"]
 unique_name_in_owner = true

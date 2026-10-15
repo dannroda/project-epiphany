@@ -1,21 +1,15 @@
 [gd_scene format=3]
 
-[sub_resource type="StandardMaterial3D" id="Material"]
-resource_local_to_scene = true
-transparency = 1
-blend_mode = 1
-cull_mode = 2
-shading_mode = 0
-albedo_color = Color(0.75, 1, 0.95, 0.55)
+[ext_resource type="Shader" path="res://src/feel/roar_ring.gdshader" id="1_shader"]
 
-[sub_resource type="TorusMesh" id="Torus"]
-resource_local_to_scene = true
+[sub_resource type="ShaderMaterial" id="Material"]
+render_priority = 1
+shader = ExtResource("1_shader")
+
+[sub_resource type="PlaneMesh" id="Plane"]
 material = SubResource("Material")
-inner_radius = 0.82
-outer_radius = 1.0
-rings = 24
-ring_segments = 4
+size = Vector2(2, 2)
 
 [node name="RoarRing" type="MeshInstance3D"]
 cast_shadow = 0
-mesh = SubResource("Torus")
+mesh = SubResource("Plane")
