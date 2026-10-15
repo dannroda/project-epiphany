@@ -857,11 +857,12 @@ script = ExtResource("c_input_buffer")
 script = ExtResource("c_aim")
 player = NodePath("..")
 
-[node name="DodgeGhosts" type="Node" parent="." node_paths=PackedStringArray("model", "skip")]
+[node name="DodgeGhosts" type="Node" parent="." node_paths=PackedStringArray("model", "skip", "body")]
 script = ExtResource("c_dodge_ghosts")
 model = NodePath("../ModelController")
 ghost_scene = ExtResource("dodge_afterimage")
 skip = [NodePath("../ModelController/BlockCone")]
+body = NodePath("../ModelController/Visuals")
 
 [node name="Shield" type="Node" parent="." node_paths=PackedStringArray("player", "block_cone")]
 script = ExtResource("c_shield")

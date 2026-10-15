@@ -8,9 +8,14 @@ extends Node
 @export var lifetime := 0.3
 ## Mallas del modelo que no van en el fantasma.
 @export var skip: Array[Node] = []
+## Dónde mira la paleta del cuerpo para teñir el fantasma: la franja de la túnica (tela_roja), así sigue a la armadura y al jugador.
+## Las mallas del cuerpo (las que viste Equipment) de donde sale ese color.
+@export var body: Node3D
+@export var tint_uv := Vector2(0.3125, 0.575)
 
 var _left := 0.0
 var _next := 0.0
+var _tints := {}
 
 
 func start(duration: float) -> void:
@@ -35,9 +40,28 @@ func spawn() -> Afterimage:
 	var ghost: Afterimage = ghost_scene.instantiate()
 	ghost.mesh = _bake()
 	scene.add_child(ghost)
+	ghost.set_instance_shader_parameter(&"body", _tint())
 	ghost.global_transform = model.global_transform
 	ghost.fade_out(lifetime)
 	return ghost
+
+
+func _tint() -> Color:
+	for node in (body if body else model).find_children("*", "MeshInstance3D", true, false):
+		var piece := node as MeshInstance3D
+		if piece.mesh == null:
+			continue
+		var material := piece.get_active_material(0) as BaseMaterial3D
+		if material == null or material.albedo_texture == null:
+			continue
+		var texture := material.albedo_texture
+		if not _tints.has(texture):
+			var image := texture.get_image()
+			if image.is_compressed():
+				image.decompress()
+			_tints[texture] = image.get_pixelv(Vector2i(tint_uv * Vector2(image.get_size())))
+		return _tints[texture]
+	return Color(1.0, 0.3, 0.35)
 
 
 func _bake() -> ArrayMesh:
