@@ -1,0 +1,42 @@
+{
+  "assignee": "project-epiphany-43",
+  "checklist": [
+    {
+      "detail": "Cuadrúpedo con modelo provisorio; rodear, turnarse para atacar, retroceder, huir. Deambula como los demás. Tests.",
+      "done": false,
+      "text": "IA y ficha (diseño, -43)"
+    },
+    {
+      "detail": "Zorro andino low-poly con la paleta; correr, morder, aullar, quieto.",
+      "done": false,
+      "text": "Modelo y animaciones (arte, -5d)"
+    },
+    {
+      "detail": "Dos o tres manadas en la explanada y el camino a la puerta del cóndor, sin cortar el paso.",
+      "done": false,
+      "text": "Ponerlos en la zona de D4 (overworld, -eb)"
+    },
+    {
+      "done": false,
+      "text": "Probarlo (Daniel)"
+    }
+  ],
+  "code": "11.196",
+  "created_at": "2026-10-15T18:53:41.127Z",
+  "description": "Daniel (2026-10-15): la zona de D4 (la explanada frente a la puerta del cóndor) está muy vacía; hace falta un enemigo de montaña. Propuesta -fd: atoq, el zorro andino (animal de la puna y el pícaro de los mitos), en manadas de 2-3 que te rodean y se turnan para tirarse a morder y retroceder; huyen con poca vida. Captura: debug/tmp/fd/cumbre_explanada.png.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 193,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "overworld",
+    "enemigos",
+    "ia"
+  ],
+  "test": "",
+  "title": "Overworld: enemigo de montaña en la zona de D4 (atoq, zorro andino en manada)",
+  "updated_at": "2026-10-15T18:53:42.372Z"
+}

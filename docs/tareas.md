@@ -2598,7 +2598,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 
 Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
 
-## M11 — Pulido: contenido y feel  (109/191)
+## M11 — Pulido: contenido y feel  (109/192)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5441,6 +5441,20 @@ Fases 2 y 3: si las dos manos están aturdidas o caídas, el ojo suma el barrido
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `overworld`, `diseno`
 
 Daniel (2026-10-15): más adelante se implementan las aletas para nadar; la guarida de los guardias (11.115) va en la orilla sur del lago grande, a la que solo se llega nadando. Por ahora: entrada de cueva decorativa (sin transición) y un poco de terreno para salir del agua antes de entrar. Captura de Daniel: debug/tmp/fd/guarida_orilla.png.
+
+### 11.196 Overworld: enemigo de montaña en la zona de D4 (atoq, zorro andino en manada) · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `overworld`, `enemigos`, `ia`
+
+Daniel (2026-10-15): la zona de D4 (la explanada frente a la puerta del cóndor) está muy vacía; hace falta un enemigo de montaña. Propuesta -fd: atoq, el zorro andino (animal de la puna y el pícaro de los mitos), en manadas de 2-3 que te rodean y se turnan para tirarse a morder y retroceder; huyen con poca vida. Captura: debug/tmp/fd/cumbre_explanada.png.
+
+- [ ] IA y ficha (diseño, -43)
+  Cuadrúpedo con modelo provisorio; rodear, turnarse para atacar, retroceder, huir. Deambula como los demás. Tests.
+- [ ] Modelo y animaciones (arte, -5d)
+  Zorro andino low-poly con la paleta; correr, morder, aullar, quieto.
+- [ ] Ponerlos en la zona de D4 (overworld, -eb)
+  Dos o tres manadas en la explanada y el camino a la puerta del cóndor, sin cortar el paso.
+- [ ] Probarlo (Daniel)
 
 ## M12 — Assets propios (Blender)  (17/39)
 
