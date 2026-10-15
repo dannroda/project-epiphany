@@ -5952,13 +5952,13 @@ Daniel (2026-10-15, captura): el hueco de caída al lado del cofre de la llave d
 - [ ] El hueco de los Tejedores se lee como caída desde la cámara del nivel
 - [ ] Revisar los otros CaidaLA (Chullpa, Queñoa, Cumbre) con el mismo criterio
 
-### 12.36 Totora: los charcos de Amaru y Yacumama, de agua · Pendiente
+### 12.36 Totora: los charcos de Amaru y Yacumama, de agua · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `mazmorra`, `jefe`
 
 Daniel (2026-10-15, captura de la sala del jefe): los cuatro círculos por donde salen las anguilas tienen que ser agua. Hoy son src/entities/amaru/amaru_pool.tscn, un disco plano azul oscuro (placeholder de 349898f5), en el Pozo (AmaruFight), en el Jefe (BossFight) y en el templo (revancha). Ojo: water_la.gdshader colorea por profundidad, así que un disco sobre las tablas sale transparente; hace falta un fondo o un ajuste propio.
 
-- [ ] Charco de agua que se lea desde la cámara del nivel, en Totora y en el templo
+- [x] Charco de agua que se lea desde la cámara del nivel, en Totora y en el templo
 
 ## M13 — Co-op local (estilo Four Swords)  (1/16)
 
