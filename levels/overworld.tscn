@@ -53,6 +53,7 @@
 [ext_resource type="PackedScene" path="res://src/world/totora_entrada.tscn" id="ent_totora"]
 [ext_resource type="Script" uid="uid://cnuecr7682x4j" path="res://src/world/arena_area.gd" id="hm_area"]
 [ext_resource type="PackedScene" path="res://src/entities/centinela/centinela.tscn" id="hm_centinela"]
+[ext_resource type="PackedScene" path="res://src/entities/atoq/atoq.tscn" id="atoq"]
 [ext_resource type="PackedScene" path="res://src/entities/centinela/huanca.tscn" id="hm_huanca"]
 [ext_resource type="PackedScene" path="res://src/entities/centinela/huanca_escudo.tscn" id="hm_huanca_escudo"]
 [ext_resource type="Script" uid="uid://bccprbredple8" path="res://src/world/arena_fight.gd" id="hm_fight"]
@@ -1553,6 +1554,30 @@ shape = SubResource("BoxShape3D_jamb")
 [node name="West" type="CollisionShape3D" parent="CumbreMouth/Jambs" unique_id=829797032]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 1.3, 0)
 shape = SubResource("BoxShape3D_jamb")
+
+[node name="AtoqA1" parent="." instance=ExtResource("atoq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57, 5.2, -31)
+
+[node name="AtoqA2" parent="." instance=ExtResource("atoq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59, 5.2, -31.8)
+
+[node name="AtoqA3" parent="." instance=ExtResource("atoq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.2, 5.2, -29.6)
+
+[node name="AtoqB1" parent="." instance=ExtResource("atoq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 5.2, -34)
+
+[node name="AtoqB2" parent="." instance=ExtResource("atoq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 5.2, -35.2)
+
+[node name="AtoqB3" parent="." instance=ExtResource("atoq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.8, 5.2, -36.6)
+
+[node name="AtoqC1" parent="." instance=ExtResource("atoq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 5.2, -27.5)
+
+[node name="AtoqC2" parent="." instance=ExtResource("atoq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 5.2, -28.6)
 
 [node name="LairMouth" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 43)
