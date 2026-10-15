@@ -24,6 +24,7 @@
 [ext_resource type="PackedScene" path="res://src/world/push_block.tscn" id="24_v1yde"]
 [ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="26_iip2e"]
 [ext_resource type="PackedScene" path="res://src/world/sello_cima.tscn" id="sello_cima"]
+[ext_resource type="PackedScene" path="res://src/world/boca_cueva.tscn" id="boca_cueva"]
 [ext_resource type="PackedScene" path="res://src/entities/guerreros/skeleton_templo.tscn" id="skeleton_templo"]
 [ext_resource type="PackedScene" path="res://src/entities/guerreros/shield_skeleton_templo.tscn" id="shield_skeleton_templo"]
 [ext_resource type="PackedScene" path="res://src/entities/guerreros/archer_skeleton_templo.tscn" id="archer_skeleton_templo"]
@@ -1876,3 +1877,24 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82, 2.6, 11)
 [editable path="SecretSummitWall"]
 [editable path="ShrineCrackedWall"]
 [editable path="GrottoCrackedWall"]
+
+[node name="BocaCueva" parent="GrottoMouth" instance=ExtResource("boca_cueva")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.77)
+
+[node name="BocaCueva" parent="ShrineMouth" instance=ExtResource("boca_cueva")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.77)
+
+[node name="BocaCueva" parent="SummitMouth" instance=ExtResource("boca_cueva")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.45)
+
+[node name="BocaCueva" parent="SpringCaveMouth" instance=ExtResource("boca_cueva")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.07)
+
+[node name="BocaCueva" parent="BombCaveMouth" instance=ExtResource("boca_cueva")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.81)
+
+[node name="BocaCueva" parent="CumbreMouth" instance=ExtResource("boca_cueva")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.23)
+
+[node name="BocaCueva" parent="LairMouth" instance=ExtResource("boca_cueva")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.25)
