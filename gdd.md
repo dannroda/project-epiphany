@@ -316,9 +316,9 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 ## 8. Mazmorra — El Templo
 <!-- id: mazmorra -->
 
-**Rediseño (11.113, 2026-10-13, Daniel: si):** el templo es la última mazmorra y usa todos los ítems. No da ítem: el sub-jefe guarda la llave del jefe. Escena `levels/templo.tscn` (id `te`, flags `te_`); el templo viejo de 9 salas (`levels/temple.tscn`, flags `d1_`) se retiró en 11.162 (2026-10-14, Daniel: lo obsoleto se borra), con su grafo, su kit, su decoración y su navmesh. Salas de 11 × 7 celdas (22 × 14 m, 11.180), como todas las de las mazmorras LA, para que la cámara quede fija. Grafo de diseño: `data/dungeons/templo_graph.tres` (pasa el test de alcanzabilidad y el molde, con `item` = llave del jefe y `guard` = la Mano). El ala del gancho está hecha (11.30): el abismo se ensanchó a 4 celdas y lleva dos postes.
+**Rediseño (11.113, 2026-10-13, Daniel: si):** el templo es la última mazmorra y usa todos los ítems. No da ítem: la llave del jefe se arma con las cuatro piezas de las revanchas (11.182). Escena `levels/templo.tscn` (id `te`, flags `te_`); el templo viejo de 9 salas (`levels/temple.tscn`, flags `d1_`) se retiró en 11.162 (2026-10-14, Daniel: lo obsoleto se borra), con su grafo, su kit, su decoración y su navmesh. Salas de 11 × 7 celdas (22 × 14 m, 11.180), como todas las de las mazmorras LA, para que la cámara quede fija. Grafo de diseño: `data/dungeons/templo_graph.tres` (pasa el test de alcanzabilidad y el molde, con `item` = llave del jefe y sin `guard`: la Mano es opcional). El ala del gancho está hecha (11.30): el abismo se ensanchó a 4 celdas y lleva dos postes.
 
-**Boss rush (11.182, Daniel 2026-10-14, a construir):** como mazmorra final, cada ala termina en la revancha de un jefe anterior, el de la mazmorra que dio el ítem del ala: pluma → Mallqui, arco → los Ojos de la Queñoa, gancho → Yacumama, espejo → Apu Kuntur. Cada ala son dos salas: un mini puzzle corto con su ítem (huecos con pinchos; dos ojos-interruptor tras un abismo; el abismo de 4 con postes; una torreta y el cristal) que abre la arena y la deja abierta, y la arena sin obstáculos (la sala "Ojo" de hoy). La revancha es corta (unos 2/3 de la vida, con la conducta de media vida desde el arranque, sin contenedor; morir vuelve a la entrada de la sala). Ganarla da una **pieza de la llave del jefe** y enciende el ojo del ala en el sello del hub; con las cuatro piezas se arma la llave del jefe, y el sello sigue abriendo la Antesala. La Mano y la Combinada pasan a ser opcionales: la Combinada guarda la **espada mejorada**. Junto con las salas de 14 × ≥22 (11.180). La tabla de abajo es el templo de hoy.
+**Boss rush (11.182, Daniel 2026-10-14):** como mazmorra final, cada ala termina en la revancha de un jefe anterior, el de la mazmorra que dio el ítem del ala: pluma → Mallqui, arco → los Ojos de la Queñoa, gancho → Yacumama, espejo → Apu Kuntur. Cada ala son dos salas: un mini puzzle corto con su ítem (huecos con pinchos; dos ojos-interruptor tras un abismo; el abismo de 4 con postes; una torreta y el cristal) que abre la arena y la deja abierta, y la arena sin obstáculos (la sala "Ojo" de hoy). La revancha es corta: `ArenaFight.rematch` arranca a los peleadores con media vida, así ya pelean con la conducta de media vida, y si son varios, apurados; la barra cuenta desde ahí. Sin contenedor; morir vuelve a la entrada de la sala. Las arenas son las `BossFight` de cada mazmorra copiadas tal cual (`FeatherFight`, `BowFight`, `HookFight`, `MirrorFight`, con los flags `te_eye_*`), cada una con su puerta que se cierra durante la pelea. Ganarla da una **pieza de la llave del jefe** y enciende el ojo del ala en el sello del hub; con las cuatro piezas se arma la llave del jefe, y el sello sigue abriendo la Antesala. La Mano y la Combinada pasan a ser opcionales: la Combinada guarda la **espada mejorada**. Las revanchas de la pluma y del arco además hacen aparecer el cofre de la **llave chica** de las puertas del hub.
 
 ```
                       ┌──────────┐
@@ -327,18 +327,18 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
                         [JEFE]
            ┌──────────┐┌───┴──────┐┌──────────┐
            │COMBINADA ├┤ ANTESALA ├┤ LA MANO  │
-           │LLAVE JEFE││          ││ sub-jefe │
+           │ espada   ││          ││ sub-jefe │
            └──────────┘└───▲──────┘└──────────┘
                      [SELLO: 4 ojos]
 ┌──────────┐┌──────────┐┌───┴──────┐┌──────────┐┌──────────┐
 │ OJO DEL  ├┤ GANCHO   ├┤   HUB    ├┤ ESPEJO   ├┤ OJO DEL  │
-│ GANCHO   ││ postes   │[L]4 ojos [L]orbes →   ││ ESPEJO   │
-│acorazado ││          ││esqueletos││ cristal  ││ haz      │
+│ GANCHO   ││ postes   │[L]4 ojos [L]orbe →    ││ ESPEJO   │
+│ Yacumama ││          ││esqueletos││ cristal  ││Apu Kuntur│
 └──────────┘└──────────┘└───▲──────┘└──────────┘└──────────┘
 ┌──────────┐┌──────────┐┌───┴──────┐┌──────────┐┌──────────┐
 │ OJO DE   ├┤ PLUMA    ├┤VESTÍBULO ├┤ ARCO     ├┤ OJO DEL  │
-│ LA PLUMA ││ huecos y ││ bloque → ││ agrietada││ ARCO     │
-│llave,brúj││ pinchos  ││interrupt.││ mapa     ││ojos/abismo│
+│ LA PLUMA ││ huecos,  ││ bloque → ││ojos sobre││ ARCO     │
+│ Mallqui  ││ brújula  ││interrupt.││abismo,map││  Ojos    │
 └──────────┘└──────────┘└──────────┘└──────────┘└──────────┘
                               ▲ entrada (sello de afuera: escudo espejo)
 ```
@@ -346,30 +346,30 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 | Sala | Qué pasa |
 |---|---|
 | Vestíbulo | Bloque por grilla al interruptor que abre la puerta del hub (como hoy). Libre a las alas de la pluma y del arco |
-| Pluma | Filas de huecos de una baldosa con pinchos en ola: se saltan con la pluma siguiendo el ritmo |
-| Ojo de la pluma | Del otro lado de los huecos: **llave chica**, **brújula** y el ojo del ala (`te_eye_feather`) |
-| Arco | **Mapa**. Muro agrietado (bomba) al ojo del arco |
-| Ojo del arco | Ojos-interruptor sobre un abismo, solo con flechas: abren el nicho de la **llave chica** y encienden el ojo del ala (`te_eye_bow`) |
+| Pluma | Filas de huecos de una baldosa con pinchos en ola: se saltan con la pluma siguiendo el ritmo. Del otro lado, la **brújula** |
+| Ojo de la pluma | Revancha con el Mallqui (`FeatherFight`, `te_eye_feather`): pieza de la llave del jefe y el cofre de la **llave chica** |
+| Arco | **Mapa**. Dos ojos-interruptor en la pared norte, detrás de un abismo a lo ancho de la sala: solo con flechas; los dos abren la puerta del ojo del arco (`BowDoor`). Tablilla de los ojos menores |
+| Ojo del arco | Revancha con los Ojos de la Queñoa (`BowFight`, `te_eye_bow`): pieza de la llave del jefe y el cofre de la **llave chica**. Vasijas de flechas |
 | Hub | Esqueletos. Cuatro ojos tallados en el sello de la pared norte, uno por ala. Puertas con llave a las alas del gancho y del espejo |
 | Gancho | Un abismo (foso) de 4 celdas a lo ancho de la sala, entre el hub y el ojo del gancho: el salto largo cruza 3, así que solo pasa el gancho. Un poste de cada lado, a 0,5 m del borde (`GanchoWestPost`, `GanchoEastPost`), corridos de la línea de las puertas para no tapar el paso |
-| Ojo del gancho | Esqueleto acorazado: el gancho le saca la armadura (11.90). Vencido, enciende el ojo del ala (`te_eye_hook`) |
-| Espejo | Torretas que disparan orbes: el escudo espejo los devuelve al cristal (`te_mirror_crystal`, de la galería de hoy) |
-| Ojo del espejo | Un haz de luz que se refleja con el escudo espejo hasta el receptor del ojo del ala (`te_eye_mirror`) |
+| Ojo del gancho | Revancha con la Yacumama y sus cuatro charcos (`HookFight`, `te_eye_hook`): pieza de la llave del jefe |
+| Espejo | Una torreta que dispara orbes: el escudo espejo los devuelve al cristal (`te_mirror_crystal`), que abre la puerta del ojo del espejo |
+| Ojo del espejo | Revancha con el Apu Kuntur (`MirrorFight`, `te_eye_mirror`; placeholder hasta 11.129): pieza de la llave del jefe |
 | Antesala | Se abre con los cuatro ojos. Vasijas con corazones, tablilla, puerta del jefe |
-| La Mano | Sub-jefe: uno de los guanteletes del jefe, suelto (`te_hand_defeated`, `HandGuard`). Usa los tres ataques de las manos del jefe (golpe al piso, agarre, barrido); rebota todo mientras está lista y tras el golpe al piso queda aturdida, y ahí entra la espada. Sala sin obstáculos. Vencida, abre la combinada |
-| Combinada | Todos los ítems en secuencia (salto, flecha, gancho, reflejo, bomba) hasta el cofre de la **llave del jefe** |
+| La Mano | Sub-jefe: uno de los guanteletes del jefe, suelto (`te_hand_defeated`, `HandGuard`). Usa los tres ataques de las manos del jefe (golpe al piso, agarre, barrido); rebota todo mientras está lista y tras el golpe al piso queda aturdida, y ahí entra la espada. Sala sin obstáculos. Opcional; vencida, abre la combinada |
+| Combinada | Opcional. Todos los ítems en secuencia (salto, flecha, gancho, reflejo, bomba) hasta el cofre del premio (`CombinedChest`, `te_combined_chest`): la **espada mejorada** (11.183; hasta entonces una pieza de corazón) |
 
-**Munición (11.109 S7):** cada sala que gasta munición tiene vasijas que siempre la dan (`data/drops/pot_bombs.tres`, `pot_arrows.tres`; vuelven al salir de la sala): dos de bombas en el Arco, dos de flechas en el Ojo del arco, y una de cada en la combinada.
+**Munición (11.109 S7):** cada sala que gasta munición tiene vasijas que siempre la dan (`data/drops/pot_bombs.tres`, `pot_arrows.tres`; vuelven al salir de la sala): dos de bombas en el Arco, dos de flechas en el Ojo del arco (para la revancha de los Ojos), y una de cada en la combinada.
 | Jefe | El Ojo con manos (§9) |
 
 ### 8.1 Layout
 <!-- id: mazmorra-layout -->
 
-El layout es el del diagrama de arriba: alas de a dos salas a los lados del vestíbulo y del hub, centro al final (sello de cuatro ojos), la Mano y la combinada a los lados de la antesala. Todas las salas miden 22 × 14 m con la cámara fija (11.180, 2026-10-14; antes 14 × 10 y solo la del jefe 22 × 14), con paredes dobles entre salas y el reborde de "Pared LA x" alrededor. La cámara del nivel y la viñeta del TonoLA tomaron los valores que Daniel había puesto para la sala del jefe. Al agrandarlas, lo de adentro de cada sala quedó centrado (lo pegado a una pared sigue pegado a ella y lo que iba de pared a pared se estiró); el contenido de las alas se rearma con el boss rush (11.182).
+El layout es el del diagrama de arriba: alas de a dos salas a los lados del vestíbulo y del hub, centro al final (sello de cuatro ojos), la Mano y la combinada a los lados de la antesala. Todas las salas miden 22 × 14 m con la cámara fija (11.180, 2026-10-14; antes 14 × 10 y solo la del jefe 22 × 14), con paredes dobles entre salas y el reborde de "Pared LA x" alrededor. La cámara del nivel y la viñeta del TonoLA tomaron los valores que Daniel había puesto para la sala del jefe. Al agrandarlas, lo de adentro de cada sala quedó centrado (lo pegado a una pared sigue pegado a ella y lo que iba de pared a pared se estiró); el contenido de las alas se rearmó con el boss rush (11.182).
 
 **Doom (10.6, 11.162):** cada `Room` tiene `doom` (0..1) y sube con el recorrido: Vestíbulo 0, Pluma 0.1, Ojo de la pluma 0.15, Arco 0.2, Ojo del arco 0.25, Hub 0.35, Gancho 0.45, Ojo del gancho 0.5, Espejo 0.55, Ojo del espejo 0.6, La Mano 0.7, Combinada 0.8, Antesala 0.9, Jefe 1. `DoomAmbience` (un nodo en la escena del templo) lo sigue suavizado: la luz ambiente y el sol viran de frío a rojo, sube una niebla rojiza, cae polvo alrededor de la cámara, el piso se agrieta (más cuanto más doom; el vestíbulo queda intacto) y desde 0.3 el templo tiembla cada vez más seguido, con retumbo. La música suma capas con el mismo valor (10.5). **Legibilidad (11.7):** el player y los objetos no se tiñen (capa visual 2, `LegibleLight`, materiales sin niebla).
 
-**Tablillas (11.162):** cuatro, con los textos de `data/dialogue/temple.dialogue`: la entrada en el Vestíbulo (`te_tablet_vestibule`), la promesa del sello en el Hub (`te_tablet_hub`), los ojos menores en el Ojo del arco (`te_tablet_eyes`) y el guardián en la Antesala (`te_tablet_antechamber`). La del arco (`bow_hint`) era un tutorial y queda para la Queñoa.
+**Tablillas (11.162):** cuatro, con los textos de `data/dialogue/temple.dialogue`: la entrada en el Vestíbulo (`te_tablet_vestibule`), la promesa del sello en el Hub (`te_tablet_hub`), los ojos menores en el Arco, junto a los ojos sobre el abismo (`te_tablet_eyes`) y el guardián en la Antesala (`te_tablet_antechamber`). La del arco (`bow_hint`) era un tutorial y queda para la Queñoa.
 
 **Escenarios (8.8):** `templo` (en el vestíbulo, con todos los ítems), `pre_boss` (en la antesala, todo resuelto y la llave del jefe; la Antesala guarda al entrar) y `boss_key_door_locked` (inconsistente a propósito: la puerta del jefe abierta sin la llave; `SaveCodec.validate` lo marca).
 
