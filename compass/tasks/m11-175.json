@@ -11,17 +11,17 @@
     }
   ],
   "milestone": "m11",
-  "notes": "",
+  "notes": "2026-10-15 (-fd): measured every room in chullpa, quenoa, totora, cumbre and templo against the GridMap cells of its floor. Since 11.178/11.179 (rooms centered and sized to the camera) every room fills its box; the original problem (Chullpa corridors and L rooms) no longer exists. Only two rooms have a box larger than their cells, Totora's Gancho (south 4 m) and Balsas (between the rafts), and that empty part is water (the Agua mesh, not GridMap): the hookshot crossing and the rafts. Framing by cells would cut it out, so it was not changed. Proposal: close the card.",
   "order": 172,
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "camara",
     "bug"
   ],
   "test": "",
   "title": "Cámara de sala: centrar en lo que se ve de la sala, no en su rectángulo",
-  "updated_at": "2026-10-14T18:01:30.881Z"
+  "updated_at": "2026-10-15T08:17:33.559Z"
 }

@@ -5214,11 +5214,13 @@ Playtest 2026-10-14: en la zona nevada, junto a la cornisa con el poste del ganc
 
 **Notas:** Causa (-eb, a2924bd2): la baranda invisible del terreno (1,6 m en cada borde caminable, sin malla) frenaba el gancho tirado desde la nieve de la Cumbre al RiscoPost por encima del pasillo bajo. Ahora la baranda está en el grupo walk_guard: el gancho y las flechas la atraviesan, a los que caminan los sigue frenando.
 
-### 11.175 Cámara de sala: centrar en lo que se ve de la sala, no en su rectángulo · Pendiente
+### 11.175 Cámara de sala: centrar en lo que se ve de la sala, no en su rectángulo · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-fd · **Etiquetas:** `camara`, `bug`
 
 Playtest 2026-10-14 (11.137, Chullpa): en salas que no llenan su rectángulo (pasillos, salas en L) la cámara se centra en la caja entera de la sala y deja mucho negro. Debería encuadrar la parte de la sala que tiene piso (las celdas usadas del GridMap dentro de la sala).
+
+**Notas:** 2026-10-15 (-fd): measured every room in chullpa, quenoa, totora, cumbre and templo against the GridMap cells of its floor. Since 11.178/11.179 (rooms centered and sized to the camera) every room fills its box; the original problem (Chullpa corridors and L rooms) no longer exists. Only two rooms have a box larger than their cells, Totora's Gancho (south 4 m) and Balsas (between the rafts), and that empty part is water (the Agua mesh, not GridMap): the hookshot crossing and the rafts. Framing by cells would cut it out, so it was not changed. Proposal: close the card.
 
 **Relacionadas:** 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista
 
