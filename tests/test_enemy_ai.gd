@@ -170,3 +170,32 @@ func test_an_enemy_that_sees_nobody_wanders_near_its_spot() -> void:
 	assert_true(walked, "camina, no corre")
 	assert_true(enemy.desired_velocity.length() <= enemy.config.wander_speed + 0.01, "a paso de paseo")
 	tree.root.get_node(^"GameState").reset()
+
+
+func test_in_a_dungeon_room_the_chase_does_not_drop() -> void:
+	var setup: Array = await _load_level()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	var enemy: Enemy = setup[2]
+	var room := Room.new()
+	var shape := CollisionShape3D.new()
+	shape.name = "CollisionShape3D"
+	shape.shape = BoxShape3D.new()
+	(shape.shape as BoxShape3D).size = Vector3(60, 8, 60)
+	room.add_child(shape)
+	tree.current_scene.add_child(room)
+	room.global_position = enemy.global_position
+	enemy._home = Vector3.INF
+	player.global_position = enemy.global_position - Vector3(0, 0, 4)
+	await _frames(tree, 20)
+	var blackboard := enemy.bt_player.blackboard
+	assert_eq(blackboard.get_var(&"target", null, false), player, "lo vio y lo persigue")
+	enemy.config = enemy.config.duplicate()
+	enemy.config.vision_range = 0.0
+	await _frames(tree, 20)
+	assert_eq(blackboard.get_var(&"target", null, false), player, "en la misma sala no lo suelta aunque no lo vea")
+	room.free()
+	enemy._home = Vector3.INF
+	await _frames(tree, 20)
+	assert_eq(blackboard.get_var(&"target", null, false), null, "fuera de una sala lo pierde")
+	tree.root.get_node(^"GameState").reset()

@@ -86,8 +86,14 @@ static func validate(cfg: ConfigFile) -> PackedStringArray:
 			var count: int = typed(cfg, "inventory", id, 0)
 			if item == null:
 				errors.append("inventory/%s: ítem inexistente" % id)
-			elif count < 0 or count > item.max_stack:
-				errors.append("inventory/%s: %d fuera de rango (0..%d)" % [id, count, item.max_stack])
+				continue
+			var cap := item.max_stack
+			for other_id in cfg.get_section_keys("inventory"):
+				var other := db.get_item(other_id)
+				if other and other.capacity_for and other.capacity_for.id == item.id and typed(cfg, "inventory", other_id, 0) > 0:
+					cap += other.capacity_bonus
+			if count < 0 or count > cap:
+				errors.append("inventory/%s: %d fuera de rango (0..%d)" % [id, count, cap])
 	if cfg.has_section("flags"):
 		for id in cfg.get_section_keys("flags"):
 			if not flags.has(id):
