@@ -2598,7 +2598,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 
 Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
 
-## M11 — Pulido: contenido y feel  (109/183)
+## M11 — Pulido: contenido y feel  (109/184)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5366,6 +5366,16 @@ Daniel (2026-10-15) preguntó por el texture streaming de Godot 4.8: descartado,
 - [ ] Medir con el profiler: vértices, draw calls, sombras
 - [ ] Rangos de visibilidad/LOD en decor y plantas
 - [ ] Terreno en bloques más chicos que se descarten fuera de cámara
+
+### 11.188 Build de Godot 4.8-dev7 con símbolos para diagnosticar el crash 11.185 · Pendiente
+
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`
+
+El crash 11.185 pasa en un hilo del WorkerThreadPool que lee un StringName ya liberado (parece la búsqueda de un grupo de un nodo, HashMap en node+0x1e8), después del error de propagate_notification sobre /root. El binario oficial viene sin símbolos, así que el backtrace no dice qué parte del motor es. Hace falta compilar el mismo commit (c971f93e7) con debug_symbols=yes (y si se puede dev_build o sanitizers) y correr la suite en bucle hasta que se repita.
+
+- [ ] Compilar Godot c971f93e7 (editor, linux) con debug_symbols=yes
+- [ ] Correr la suite completa en bucle con ese binario hasta reproducir el crash
+- [ ] Con el backtrace legible, identificar la causa y seguir en 11.185
 
 ## M12 — Assets propios (Blender)  (17/38)
 

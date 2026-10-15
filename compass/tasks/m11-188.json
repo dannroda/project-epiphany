@@ -1,0 +1,33 @@
+{
+  "assignee": "project-epiphany-fd",
+  "checklist": [
+    {
+      "done": false,
+      "text": "Compilar Godot c971f93e7 (editor, linux) con debug_symbols=yes"
+    },
+    {
+      "done": false,
+      "text": "Correr la suite completa en bucle con ese binario hasta reproducir el crash"
+    },
+    {
+      "done": false,
+      "text": "Con el backtrace legible, identificar la causa y seguir en 11.185"
+    }
+  ],
+  "code": "11.188",
+  "created_at": "2026-10-15T08:07:58.333Z",
+  "description": "El crash 11.185 pasa en un hilo del WorkerThreadPool que lee un StringName ya liberado (parece la búsqueda de un grupo de un nodo, HashMap en node+0x1e8), después del error de propagate_notification sobre /root. El binario oficial viene sin símbolos, así que el backtrace no dice qué parte del motor es. Hace falta compilar el mismo commit (c971f93e7) con debug_symbols=yes (y si se puede dev_build o sanitizers) y correr la suite en bucle hasta que se repita.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 185,
+  "priority": "high",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "bug"
+  ],
+  "test": "",
+  "title": "Build de Godot 4.8-dev7 con símbolos para diagnosticar el crash 11.185",
+  "updated_at": "2026-10-15T08:07:59.139Z"
+}
