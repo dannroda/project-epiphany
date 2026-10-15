@@ -687,6 +687,8 @@ METAL = {None: "hierro", "chullpa": "cobre_verde", "quenoa": "paja", "templo": "
 REED = {"madera": "paja", "madera_oscura": "tierra"}
 ## Piedra de las hojas de losa (chullpa y templo).
 SLAB = {"chullpa": "acantilado", "templo": "piedra_templo", "cumbre": "ladrillo"}
+## Tablillas de la persiana en los estilos sin losa.
+SHUTTER = {"quenoa": "madera", "totora": "paja"}
 
 
 def stone_leaf(p, dark, sun_top=True):
@@ -793,6 +795,23 @@ def door_boss(p):
 	for x0, x1, z0, z1 in ((-DOOR_WIDTH, DOOR_WIDTH, HEIGHT - 0.16, HEIGHT), (-DOOR_WIDTH, -DOOR_WIDTH + 0.14, 0.0, HEIGHT), (DOOR_WIDTH - 0.14, DOOR_WIDTH, 0.0, HEIGHT)):
 		frame += p.rounded_box(x0, x1, -DOOR_THICK - 0.06, -DOOR_THICK + 0.01, z0, z1, radius=0.03, segments=1)
 	p.paint(frame, "dorado", "MID", vary=0.03)
+	if DOOR_STYLE == "cumbre":
+		rays = []
+		for k in range(12):
+			ray = p.cylinder(0.08, 0.0, 0.03, sides=3)
+			p.transform(ray, Matrix.Translation((0, -DOOR_THICK - 0.005, 2.1)) @ Matrix.Rotation(math.pi / 2, 4, "X") @ Matrix.Rotation(k * math.pi / 6, 4, "Z")
+				@ Matrix.Translation((0.5, 0.0, 0.0)) @ Matrix.Scale(2.0 if k % 2 else 1.3, 4, Vector((1, 0, 0))))
+			rays += ray
+		p.paint(rays, "dorado", "LIGHT", vary=0.03)
+		rime = p.rounded_box(-DOOR_WIDTH + 0.14, DOOR_WIDTH - 0.14, -DOOR_THICK - 0.03, -DOOR_THICK + 0.01, 0.0, 0.3, radius=0.03, segments=1)
+		p.jitter(rime, 0.015)
+		p.paint(rime, "blanco", "LOW", vary=0.05)
+		drops = []
+		for x in (-0.75, -0.45, -0.2, 0.25, 0.5, 0.8):
+			drop = p.cylinder(0.04, 0.0, 0.18 + 0.12 * ((x * 7.3) % 1), sides=5, radius_top=0.0)
+			p.transform(drop, Matrix.Translation((x, -DOOR_THICK - 0.04, HEIGHT - 0.16)) @ Matrix.Rotation(math.pi, 4, "X"))
+			drops += drop
+		p.paint(drops, "cristal", "LIGHT", vary=0.05)
 	epi.logo_eye(p, Vector((0, -DOOR_THICK - 0.01, 2.1)), 0.75)
 	lock_plate(p, 1.15, 0.6, "dorado")
 
@@ -803,7 +822,7 @@ def door_shutter(p):
 	for k in range(n):
 		z0 = HEIGHT * k / n
 		slats += p.rounded_box(-DOOR_WIDTH, DOOR_WIDTH, -DOOR_THICK - 0.03 * (k % 2), DOOR_THICK, z0 + 0.015, z0 + HEIGHT / n - 0.015, radius=0.03, segments=1)
-	p.paint(slats, SLAB.get(DOOR_STYLE, "madera_oscura"), z_range=(-1.0, HEIGHT + 1.0), vary=0.04)
+	p.paint(slats, SLAB.get(DOOR_STYLE, SHUTTER.get(DOOR_STYLE, "madera_oscura")), z_range=(-1.0, HEIGHT + 1.0), vary=0.04)
 	posts = []
 	for x in (-DOOR_WIDTH + 0.1, DOOR_WIDTH - 0.1):
 		posts += p.rounded_box(x - 0.06, x + 0.06, -DOOR_THICK - 0.08, -DOOR_THICK, 0.0, HEIGHT, radius=0.02, segments=1)

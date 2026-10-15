@@ -1,0 +1,9 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="1_gate"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/lugares/reja_templo.res" id="2_reja"]
+
+[node name="Gate" instance=ExtResource("1_gate")]
+
+[node name="Model" parent="." index="0"]
+mesh = ExtResource("2_reja")
