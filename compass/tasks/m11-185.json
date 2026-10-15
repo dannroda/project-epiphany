@@ -1,0 +1,29 @@
+{
+  "assignee": "project-epiphany-fd",
+  "checklist": [
+    {
+      "done": false,
+      "text": "Reproducirlo con un bucle de viajes (overworld ↔ cuevas) y aislar el recurso"
+    },
+    {
+      "done": false,
+      "text": "Arreglar la causa o cargar ese recurso en el hilo principal"
+    }
+  ],
+  "code": "11.185",
+  "created_at": "2026-10-15T05:16:49.961Z",
+  "description": "En algunas corridas de la suite completa, un worker muere con signal 11 justo después de 'ERROR: /root: The caller thread can't call the function propagate_notification() on this node' durante SceneFlow.travel_to (carga con load_threaded_request). Última vez el 2026-10-15, viajando overworld → shrine_cave (test_cave/test_portal); log en debug/tmp/fd/crash_propagate_2026-10-15.log. Pasa de vez en cuando (la corrida siguiente da 546/0). En el código del juego no hay set_locale ni propagate_notification durante la carga: falta encontrar qué recurso, al cargarse en el hilo, le avisa al árbol. Puede pasar también jugando.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 182,
+  "priority": "high",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "bug"
+  ],
+  "test": "",
+  "title": "Crash intermitente al viajar: propagate_notification desde el hilo de carga",
+  "updated_at": "2026-10-15T05:16:50.516Z"
+}

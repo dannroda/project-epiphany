@@ -2598,7 +2598,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 
 Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
 
-## M11 — Pulido: contenido y feel  (109/180)
+## M11 — Pulido: contenido y feel  (109/181)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5333,6 +5333,15 @@ Daniel (2026-10-14, captura): arriba de la franja norte del Risco (nivel 2, x 70
 - [x] Poste del gancho en el borde de la Cumbre, frente a la franja
   Daniel (2026-10-14): alcanza con el poste, es barato; sin salto.
 - [x] Test: desde la franja se vuelve sin caer al abismo
+
+### 11.185 Crash intermitente al viajar: propagate_notification desde el hilo de carga · Pendiente
+
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`
+
+En algunas corridas de la suite completa, un worker muere con signal 11 justo después de 'ERROR: /root: The caller thread can't call the function propagate_notification() on this node' durante SceneFlow.travel_to (carga con load_threaded_request). Última vez el 2026-10-15, viajando overworld → shrine_cave (test_cave/test_portal); log en debug/tmp/fd/crash_propagate_2026-10-15.log. Pasa de vez en cuando (la corrida siguiente da 546/0). En el código del juego no hay set_locale ni propagate_notification durante la carga: falta encontrar qué recurso, al cargarse en el hilo, le avisa al árbol. Puede pasar también jugando.
+
+- [ ] Reproducirlo con un bucle de viajes (overworld ↔ cuevas) y aislar el recurso
+- [ ] Arreglar la causa o cargar ese recurso en el hilo principal
 
 ## M12 — Assets propios (Blender)  (17/36)
 
