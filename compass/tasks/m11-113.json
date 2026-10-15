@@ -21,8 +21,8 @@
       "text": "GDD §6 y §7, y el boceto de 7.10 al día"
     },
     {
-      "detail": "Hecho el 2026-10-12 (Daniel: sigue): La Queñoa Vigía en el claro de la Arboleda (boceto 7.10 v4). Blockout levels/quenoa.tscn: Raíces, Tronco y Copa de 2 × 2 salas, llaves, bloque, ojos, muros agrietados, sub-jefe como oleada que guarda el arco; d1_graph.tres con escena pasa el test y las reglas; test_quenoa (escaleras, caídas, reja del tronco, bloque); escenario quenoa. GDD §8c. Falta: qué da el santuario; puerta en el overworld (7.10).",
-      "done": false,
+      "detail": "Hecho el 2026-10-12 (Daniel: sigue): La Queñoa Vigía en el claro de la Arboleda (boceto 7.10 v4). Blockout levels/quenoa.tscn: Raíces, Tronco y Copa de 2 × 2 salas, llaves, bloque, ojos, muros agrietados, sub-jefe como oleada que guarda el arco; d1_graph.tres con escena pasa el test y las reglas; test_quenoa (escaleras, caídas, reja del tronco, bloque); escenario quenoa. GDD §8c. Santuario (Daniel 2026-10-15): da la cota reforzada después de D4, con el cristal del escudo espejo; el contenedor que daba pasa al puzzle de bloques de la Arboleda (los dos cofres intercambian ítem, flags iguales).",
+      "done": true,
       "text": "Qué es D1 (arco) y dónde está; qué da el santuario"
     },
     {
@@ -85,5 +85,5 @@
   ],
   "test": "",
   "title": "El templo del ojo pasa a ser la última mazmorra",
-  "updated_at": "2026-10-15T08:22:43.689Z"
+  "updated_at": "2026-10-15T16:51:22.829Z"
 }

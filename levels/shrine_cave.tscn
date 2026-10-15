@@ -17,7 +17,7 @@
 [ext_resource type="PackedScene" path="res://src/world/gate.tscn" id="26_iip2e"]
 [ext_resource type="Script" uid="uid://ckkibjv0y6axx" path="res://player/player.gd" id="28_67qrq"]
 [ext_resource type="Resource" uid="uid://cooy3l0hm4jv0" path="res://data/entities/player.tres" id="29_5o3ln"]
-[ext_resource type="Resource" path="res://data/items/heart_container.tres" id="29_mweuj"]
+[ext_resource type="Resource" path="res://data/items/armor_chainmail.tres" id="29_mweuj"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_source.tscn" id="30_xv8lf"]
 [ext_resource type="PackedScene" path="res://src/world/light/light_receiver.tscn" id="31_fe77v"]
 [ext_resource type="Script" uid="uid://c238aeb6gn6ka" path="res://src/world/look/enfoque_la.gd" id="31_kffl2"]

@@ -4462,8 +4462,8 @@ Daniel (2026-10-12): el jefe del ojo se pensó como fin de demo, así que tiene 
   Diseño hecho el 2026-10-13 (Daniel: si): hub con cuatro alas, una por ítem (pluma, arco y bombas, gancho, escudo espejo); cada ala enciende un ojo del sello del hub, y los cuatro abren la antesala. Sub-jefe la Mano (un guantelete del jefe) guarda la sala combinada con la llave del jefe; el templo no da ítem. Salas de 14 × 12 m (cámara fija). Escena nueva levels/templo.tscn con flags te_; grafo de diseño data/dungeons/templo_graph.tres. GDD §8. Se construye en los pasos siguientes.
 - [x] GDD §6 y §7, y el boceto de 7.10 al día
   Hecho el 2026-10-15: §6.1 (pluma, arco, escudo espejo con su mazmorra y sub-jefe; espada dorada; contenedor del santuario), §6.2 (árbol con nombres, sub-jefes y jefes; grafos y prefijos de las cinco), §7 (cadena de 7.1, boceto 7.10 nuevo con la forma real del overworld y las puertas, tabla de regiones, cadena, verificación del gating y curva de ritmo).
-- [ ] Qué es D1 (arco) y dónde está; qué da el santuario
-  Hecho el 2026-10-12 (Daniel: sigue): La Queñoa Vigía en el claro de la Arboleda (boceto 7.10 v4). Blockout levels/quenoa.tscn: Raíces, Tronco y Copa de 2 × 2 salas, llaves, bloque, ojos, muros agrietados, sub-jefe como oleada que guarda el arco; d1_graph.tres con escena pasa el test y las reglas; test_quenoa (escaleras, caídas, reja del tronco, bloque); escenario quenoa. GDD §8c. Falta: qué da el santuario; puerta en el overworld (7.10).
+- [x] Qué es D1 (arco) y dónde está; qué da el santuario
+  Hecho el 2026-10-12 (Daniel: sigue): La Queñoa Vigía en el claro de la Arboleda (boceto 7.10 v4). Blockout levels/quenoa.tscn: Raíces, Tronco y Copa de 2 × 2 salas, llaves, bloque, ojos, muros agrietados, sub-jefe como oleada que guarda el arco; d1_graph.tres con escena pasa el test y las reglas; test_quenoa (escaleras, caídas, reja del tronco, bloque); escenario quenoa. GDD §8c. Santuario (Daniel 2026-10-15): da la cota reforzada después de D4, con el cristal del escudo espejo; el contenedor que daba pasa al puzzle de bloques de la Arboleda (los dos cofres intercambian ítem, flags iguales).
 - [x] Chequeo de grafos de diseño y reglas del molde
   Hecho: un DungeonGraph sin escena es de diseño (locked en los pasos, gives/key en los lugares) y test_dungeon_reach lo recorre igual; con escena, la escena tiene que coincidir con locked/key. Reglas: sin el ítem no se llega al objetivo; el ítem pide al sub-jefe (guard), que se vence sin él. tools/dungeon_graph_mermaid.gd lo dibuja. El grafo del templo pasa a temple_graph.tres.
 - [x] D1: sub-jefe ojo vigía y jefe de los dos ojos
@@ -5393,11 +5393,13 @@ El crash 11.185 pasa en un hilo del WorkerThreadPool que lee un StringName ya li
 
 **Notas:** 2026-10-15 (-fd): built c971f93e7 (editor, debug_symbols=yes) at /home/ssd_disk/godot-c971 (worktree of godot-master), registered as 4.8-dev7-symbols in godot-select (symlink). 40 full suite runs (--jobs=3) in wt/bugs with that build, ~2.3 h: no crash. The only failures were test_input › test_shift_locks_and_wheel_switches (4 of 40), caused by test_chest leaving an item-get box on the way (fixed in main). Next: another loop with more load (--jobs=6).
 
-### 11.189 D4: backtracking de la llave del jefe · Pendiente
+### 11.189 D4: backtracking de la llave del jefe · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `mazmorra`
 
 Daniel (2026-10-15): la llave del jefe de la Cumbre va al nicho del Atrio (escudo + sol); atajo de un solo sentido de la Antesala a la Llegada; las vasijas del Atrio pasan al nicho del Ojo del Sol. Regla boss-key-backtracking. Con rim y navmesh si cambia la grilla.
+
+**Notas:** Hecho el 2026-10-15 (b482f682): la llave del jefe pasa al nicho SO del Atrio, tras la reja que abre el cristal con el escudo; el nicho del Ojo del Sol guarda las vasijas; la Antesala tiene una placa (cu_antesala_step) que abre una puerta nueva a la Llegada y la deja abierta: de vuelta del Atrio se sube por Nido, Cámara y escalera. Grilla: una celda de pared interna de la cornisa pasa a paso (el rim no cambia); navmesh rebakeada. test_cumbre al día. Falta: que Daniel la recorra.
 
 ### 11.190 Templo: una pieza de corazón · Pendiente
 

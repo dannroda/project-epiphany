@@ -29,7 +29,7 @@
 [ext_resource type="PackedScene" path="res://src/world/light/light_receiver.tscn" id="31_fe77v"]
 [ext_resource type="Script" uid="uid://0xqmp1x84umd" path="res://src/world/tremor_zone.gd" id="32_v1yde"]
 [ext_resource type="Resource" uid="uid://cvf15473ufqvp" path="res://data/items/potion.tres" id="33_yqe63"]
-[ext_resource type="Resource" path="res://data/items/armor_chainmail.tres" id="38_khlv8"]
+[ext_resource type="Resource" path="res://data/items/heart_container.tres" id="38_khlv8"]
 [ext_resource type="PackedScene" path="res://src/world/eye_switch.tscn" id="39_ailnf"]
 [ext_resource type="Resource" path="res://data/items/quiver_big.tres" id="41_csg56"]
 [ext_resource type="PackedScene" path="res://src/world/stone.tscn" id="42_stone"]
