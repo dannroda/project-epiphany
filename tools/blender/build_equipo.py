@@ -386,7 +386,7 @@ def gancho(p):
 
 def martillo(p):
 	"""El martillo del golpe fuerte, sobre +Z con la empuñadura en el origen como la espada: mango de madera con tiento
-	rojo, cabeza de piedra oscura con bocas de bronce, zunchos dorados y la chakana dorada en las dos caras."""
+	rojo, cabeza de piedra oscura con bocas de bronce, zunchos dorados y el ojo del logo en las dos caras, como las manos del jefe."""
 	p.paint(p.cylinder(0.036, 0.05, 0.72, sides=10, radius_top=0.032), "madera", "MID")
 	grip = []
 	for i in range(6):
@@ -404,12 +404,12 @@ def martillo(p):
 		faces += cap
 	p.paint(faces, "cobre_verde", "MID", vary=0.04)
 	bands = []
-	for x in (-0.13, 0.13):
-		bands += p.box(x - 0.025, x + 0.025, -0.14, 0.14, 0.65, 0.93)
+	for x in (-0.17, 0.17):
+		bands += p.box(x - 0.02, x + 0.02, -0.14, 0.14, 0.65, 0.93)
 	p.paint(bands, "dorado", "MID")
-	front = epi.chakana_plate(p, Vector((0, -0.13, 0.79)), 0.13, "dorado")
-	back = epi.chakana_plate(p, Vector((0, -0.13, 0.79)), 0.13, "dorado")
-	p.transform(back, Matrix.Translation((0, 0, 0.79)) @ Matrix.Rotation(math.pi, 4, "Z") @ Matrix.Translation((0, 0, -0.79)))
+	for turn in (0.0, math.pi):
+		eye = epi.logo_eye(p, Vector((0, 0, 0)), 0.2, depth=0.012, iris=("neon", "MID"))
+		p.transform(eye, Matrix.Rotation(turn, 4, "Z") @ Matrix.Translation((0, -0.13, 0.78)))
 
 
 piece("espada", 1, espada)
