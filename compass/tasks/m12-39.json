@@ -1,0 +1,22 @@
+{
+  "assignee": "project-epiphany-5d",
+  "checklist": [],
+  "code": "12.39",
+  "created_at": "2026-10-15T18:49:16.998Z",
+  "description": "Daniel (2026-10-15): es hora de que los enemigos normales de las mazmorras vayan con el theme de cada una. Hoy esqueleto, escudo, arquero y acorazado comparten un único modelo (models/chullpa.tscn) con armas genéricas (sword_1h, bow, shield_round) en todas las mazmorras, cuevas y el overworld. Una variante por mazmorra (Chullpa, Queñoa, Totora, Cumbre, Templo) con el mismo rig y animaciones, como .tscn heredados (no overrides en las instancias: el refresh LA los pierde). Primero propuestas para que Daniel elija; después se cambian las instancias de cada nivel.",
+  "milestone": "m12",
+  "notes": "",
+  "order": 39,
+  "priority": "medium",
+  "refs": [],
+  "size": "l",
+  "status": "todo",
+  "tags": [
+    "arte",
+    "enemigos",
+    "mazmorra"
+  ],
+  "test": "",
+  "title": "Enemigos comunes estilizados según el theme de cada mazmorra",
+  "updated_at": "2026-10-15T18:49:16.998Z"
+}
