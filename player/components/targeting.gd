@@ -223,9 +223,17 @@ func _in_sight(target: Node3D) -> bool:
 	for candidate in possible_targets:
 		if is_instance_valid(candidate) and candidate is CollisionObject3D:
 			exclude.append(candidate.get_rid())
-	query.exclude = exclude
 	query.collision_mask = 1
-	return player.get_world_3d().direct_space_state.intersect_ray(query).is_empty()
+	var space := player.get_world_3d().direct_space_state
+	for i in 4:
+		query.exclude = exclude
+		var hit := space.intersect_ray(query)
+		if hit.is_empty():
+			return true
+		if not (hit.collider as Node).is_in_group(&"walk_guard"):
+			return false
+		exclude.append(hit.rid)
+	return false
 
 
 ## Los postes no entran por el detector: con el gancho en un botón se fijan los que están a su alcance, a cualquier altura,

@@ -92,3 +92,23 @@ func test_the_hookshot_crosses_the_invisible_rail_from_the_far_edge() -> void:
 	await _fire(tree, player)
 	assert_true(player.global_position.distance_to(post.global_position) < 1.5, "desde la nieve, sin fijar, el gancho cruza el pasillo hasta el poste (%s)" % player.global_position.snappedf(0.1))
 	setup[2].reset()
+
+
+func test_the_risco_strip_hooks_back_to_the_cumbre_snow() -> void:
+	var setup: Array = await _level()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	var post := tree.current_scene.get_node(^"RiscoBackPost") as HookPost
+	await _place(tree, player, Vector3(71, 5.2, -37.5), Vector3.LEFT)
+	player.targeting.lock_best_target()
+	player.targeting.point_at(Vector3.LEFT)
+	assert_true(player.targeting.current == post, "desde la franja, apuntando al oeste, se fija el poste de la nieve")
+	await _fire(tree, player)
+	assert_true(absf(player.global_position.y - post.global_position.y) < 0.3 and player.global_position.distance_to(post.global_position) < 1.5, "vuelve a la nieve sin caer (%s)" % player.global_position.snappedf(0.1))
+	player.targeting.clear()
+	await _place(tree, player, Vector3(71, 5.2, -37.5), Vector3.LEFT)
+	await _fire(tree, player)
+	assert_true(absf(player.global_position.y - post.global_position.y) < 0.3 and player.global_position.distance_to(post.global_position) < 1.5, "sin fijar, el gancho recto también vuelve (%s)" % player.global_position.snappedf(0.1))
+	assert_eq(_state(player), &"Idle", "y queda parado en la nieve")
+	player.targeting.clear()
+	setup[2].reset()
