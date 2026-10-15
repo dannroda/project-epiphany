@@ -54,6 +54,50 @@ def espada(p):
 	p.paint(pommel, "cobre_verde", "LIGHT")
 
 
+def espada_dorada(p):
+	"""La espada del templo: la misma empuñadura que espada, con hoja de oro más ancha y escalonada (media chakana) en la
+	base, filo claro, canal rojo que brilla, guarda de sol con el ojo del logo en las dos caras y pomo de chakana."""
+	blade_pts = [(0.0, 0.06), (0.11, 0.08), (0.11, 0.16), (0.085, 0.16), (0.085, 0.24), (0.095, 0.6), (0.11, 0.98), (0.07, 1.27), (0.0, 1.44),
+		(-0.07, 1.27), (-0.11, 0.98), (-0.095, 0.6), (-0.085, 0.24), (-0.085, 0.16), (-0.11, 0.16), (-0.11, 0.08)]
+	blade = flat(p, blade_pts, 0.045)
+	p.paint(blade, "dorado", z_range=(-0.2, 1.6), vary=0.03)
+	edge = []
+	for side in (-1, 1):
+		edge += flat(p, [(side * x, z) for x, z in ((0.07, 0.3), (0.094, 0.6), (0.108, 0.98), (0.068, 1.27), (0.0, 1.44), (0.05, 1.25), (0.08, 0.98), (0.066, 0.6), (0.05, 0.3))][::side], 0.05)
+	p.paint(edge, "hueso", "LIGHT")
+	ridge = flat(p, [(0.0, 0.2), (0.02, 0.28), (0.016, 1.18), (0.0, 1.3), (-0.016, 1.18), (-0.02, 0.28)], 0.06)
+	p.paint(ridge, "doom", "MID")
+	guard = p.rounded_box(-0.3, 0.3, -0.05, 0.05, -0.04, 0.04, radius=0.02, segments=2)
+	guard += p.rounded_box(-0.17, 0.17, -0.055, 0.055, -0.08, 0.06, radius=0.02, segments=2)
+	rays = []
+	for a in (-70, -40, 40, 70):
+		r = p.box(-0.022, 0.022, -0.04, 0.04, 0.0, 0.13, taper=0.012)
+		p.transform(r, Matrix.Translation((0.0, 0.0, 0.0)) @ Matrix.Rotation(math.radians(a), 4, "Y") @ Matrix.Translation((0, 0, 0.12)))
+		rays += r
+	for side in (-1, 1):
+		tip = p.blob((side * 0.32, 0, 0), 0.045, subdiv=1, rough=0.0)
+		guard += tip
+	p.paint(guard + rays, "dorado", "LOW", vary=0.04)
+	for turn in (0.0, math.pi):
+		eye = epi.logo_eye(p, Vector((0, -0.058, 0.0)), 0.26, depth=0.015)
+		p.transform(eye, Matrix.Rotation(turn, 4, "Z"))
+	grip = []
+	for i in range(5):
+		z = -0.07 - i * 0.055
+		grip += p.cylinder(0.042, z - 0.05, z, sides=12)
+	p.paint_bands(grip, [(-0.13, -0.07, "dorado", "MID"), (-0.24, -0.18, "dorado", "MID"), (-0.35, -0.29, "dorado", "MID")], default=(0, 0, "tela_roja", "MID"))
+	collar = p.cylinder(0.055, -0.38, -0.34, sides=12)
+	p.paint(collar, "dorado", "MID")
+	pommel = epi.chakana_plate(p, Vector((0, 0.0, -0.45)), 0.16, "dorado")
+	back = epi.chakana_plate(p, Vector((0, 0.0, 0.0)), 0.16, "dorado")
+	p.transform(back, Matrix.Translation((0, 0.0, -0.45)) @ Matrix.Rotation(math.pi, 4, "Z"))
+	core = p.cylinder(0.075, -0.025, 0.025, sides=12)
+	p.transform(core, Matrix.Translation((0, 0, -0.45)) @ Matrix.Rotation(math.pi / 2, 4, "X"))
+	p.paint(core, "dorado", "MID")
+	gem = p.blob((0, 0, -0.45), 0.04, squash=(1.0, 0.8, 1.0), subdiv=2, rough=0.0)
+	p.paint(gem, "doom", "MID")
+
+
 def escudo_madera(p):
 	"""Redondo, de tablas verticales con borde de cuero y un rombo escalonado pintado."""
 	r = 0.44
@@ -341,6 +385,7 @@ def gancho(p):
 
 
 piece("espada", 1, espada)
+piece("espada_dorada", 16, espada_dorada)
 piece("escudo_madera", 2, escudo_madera)
 piece("escudo_espejo", 3, escudo_espejo)
 piece("arco", 4, arco)
