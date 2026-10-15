@@ -134,9 +134,9 @@ func _wait(seconds: float) -> Signal:
 func _run() -> void:
 	var turn := _turn
 	await _wait(0.6)
-	while not is_dead and turn == _turn:
+	while not is_dead and turn == _turn and is_inside_tree():
 		await _walk()
-		if turn != _turn:
+		if turn != _turn or not is_inside_tree():
 			return
 		if may_attack.is_valid() and not may_attack.call(self):
 			await _wait(0.4)
@@ -144,7 +144,7 @@ func _run() -> void:
 		var slams := rage_slams if health.current * 2 <= health.max_health else 1
 		for i in slams:
 			await _slam(i == slams - 1)
-			if turn != _turn:
+			if turn != _turn or not is_inside_tree():
 				return
 		attack_finished.emit()
 
@@ -154,7 +154,7 @@ func _walk() -> void:
 	_play(anim_walk, anim_walk_speed * pace)
 	var until := Time.get_ticks_msec() + int(walk_time / pace * 1000.0)
 	var turn := _turn
-	while turn == _turn and Time.get_ticks_msec() < until:
+	while turn == _turn and is_inside_tree() and Time.get_ticks_msec() < until:
 		var player := Players.nearest(global_position)
 		if player and _flat(player.global_position - global_position).length() <= slam_reach:
 			break
