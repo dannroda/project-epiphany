@@ -5357,6 +5357,8 @@ En algunas corridas de la suite completa, un worker muere con signal 11 justo de
 - [ ] Reproducirlo con un bucle de viajes (overworld ↔ cuevas) y aislar el recurso
 - [ ] Arreglar la causa o cargar ese recurso en el hilo principal
 
+**Notas:** 2026-10-15 (-fd), with the symbols build (11.188), crash caught in a run with --jobs=6: signal 11 in AudioServer::_mix_step (audio_server.cpp:243), audio thread (AudioDriverDummy), StringName::hash() on a bus name already freed. The propagate_notification error is a consequence: Godot's crash handler sends NOTIFICATION_CRASH to the SceneTree from the thread that crashed. Cause: every volume_db change makes AudioServer swap the playback's bus_details and free the old one 2 main-thread frames later (graveyard in _cleanup_lists); at headless test speed (hundreds of fps) the mixer can still be using the old one. music.gd set the volume of its 5 layers every frame even without changes. Fix: only set it when it changes. Engine race (could be reported upstream).
+
 ### 11.186 Cumbre: la reja de la llave del jefe tapa la puerta de las Torretas · Revisión
 
 **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `diseno`, `mazmorra`
