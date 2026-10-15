@@ -1,6 +1,6 @@
 extends SceneTree
 ## Renderiza los íconos de los ítems desde sus modelos 3D (PNG con fondo transparente y contorno oscuro).
-## Necesita ventana (no --headless): godot --path . --script res://tools/render_item_icons.gd
+## Necesita ventana (no --headless): godot --path . --script res://tools/render_item_icons.gd [-- id id…]
 
 const OUTPUT := "res://assets/ui/items/%s.png"
 const SIZE := 256
@@ -39,6 +39,7 @@ const ICONS := {
 	"feather": [MESH % "equipo/pluma", Vector3(0, 0, -35)],
 	"sandals": [MESH % "equipo/sandalias", Vector3(40, 0, 0)],
 	"hookshot": [MESH % "equipo/gancho", Vector3(0, 0, -45)],
+	"hammer": [MESH % "equipo/martillo", Vector3(0, 0, -45)],
 }
 
 func _initialize() -> void:
@@ -77,7 +78,10 @@ func _run() -> void:
 	viewport.add_child(camera)
 
 	var failed := false
+	var only := OS.get_cmdline_user_args()
 	for id: String in ICONS:
+		if not only.is_empty() and not id in only:
+			continue
 		var entry: Array = ICONS[id]
 		var pivot := Node3D.new()
 		viewport.add_child(pivot)

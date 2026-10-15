@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://bv1cb4b8pu31r" path="res://src/items/equipped_item.gd" id="1_item"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/equipo/martillo.res" id="2_hammer"]
+
+[node name="Hammer" type="Node3D"]
+script = ExtResource("1_item")
+
+[node name="Model" type="MeshInstance3D" parent="."]
+mesh = ExtResource("2_hammer")

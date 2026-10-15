@@ -531,6 +531,15 @@ msgstr "Assign them to a button and hold it: you wind up and run straight until 
 msgid "ITEM_SANDALS_GOT"
 msgstr "You got the Sandals!"
 
+msgid "ITEM_HAMMER_NAME"
+msgstr "Hammer"
+
+msgid "ITEM_HAMMER_DESC"
+msgstr "Assign it to a button: a two-handed blow against the ground. It breaks what the sword can't, presses strike plates and knocks down shields and armor."
+
+msgid "ITEM_HAMMER_GOT"
+msgstr "You got the Hammer!"
+
 msgid "ITEM_HOOKSHOT_NAME"
 msgstr "Hookshot"
 

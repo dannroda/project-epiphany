@@ -208,9 +208,9 @@ func _is_attacking() -> bool:
 	return String(anim_player.current_animation).contains("Attack")
 
 
-## Escudo de frente: frena todo salvo explosiones; un golpe que aturde le baja la guardia.
+## Escudo de frente: frena todo salvo explosiones y martillazos; un golpe que aturde le baja la guardia.
 func _guard_stops(info: DamageInfo) -> bool:
-	if not shield_up() or info.source == null or info.element == &"explosive":
+	if not shield_up() or info.source == null or info.element == &"explosive" or info.strong:
 		return false
 	var to_source := info.source.global_position - global_position
 	to_source.y = 0.0
@@ -251,11 +251,11 @@ func is_armored() -> bool:
 	return config.armored and _armor != null and not is_dead
 
 
-## La coraza frena todo salvo explosiones; una explosión la vuela y lo deja aturdido. El gancho se la arranca sin dañarlo.
+## La coraza frena todo salvo explosiones y martillazos; una explosión o un martillazo la vuela y lo deja aturdido. El gancho se la arranca sin dañarlo.
 func _armor_stops(info: DamageInfo) -> bool:
 	if not is_armored():
 		return false
-	if info.element == &"explosive" or info.element == Hook.ELEMENT:
+	if info.element == &"explosive" or info.element == Hook.ELEMENT or info.strong:
 		_break_armor()
 		return info.element == Hook.ELEMENT
 	Feel.sfx(&"block", global_position)

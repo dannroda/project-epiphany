@@ -14,6 +14,8 @@ enum Break { SHATTER, CUT, FELL }
 @export var cut_time := 0.3
 @export var fall_time := 0.55
 @export var sink_time := 0.4
+## Solo la rompe un golpe fuerte (martillo); lo demás rebota.
+@export var needs_strong := false
 
 @onready var hurtbox: Hurtbox = $Hurtbox
 
@@ -28,6 +30,9 @@ func _ready() -> void:
 func _on_hit(info: DamageInfo) -> void:
 	if info.element == &"dash" and break_style == Break.FELL:
 		shake()
+		return
+	if needs_strong and not info.strong:
+		Feel.sfx(&"block", global_position)
 		return
 	smash(info.source.global_position if is_instance_valid(info.source) else Vector3.INF)
 
