@@ -18,12 +18,12 @@
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "bug",
     "chullpa"
   ],
   "test": "tests/test_chullpa.gd",
   "title": "Chullpa: el cofre sobre la plataforma no se alcanza saltando",
-  "updated_at": "2026-10-15T03:54:14.996Z"
+  "updated_at": "2026-10-15T08:13:26.550Z"
 }

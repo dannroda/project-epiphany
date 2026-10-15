@@ -37,7 +37,7 @@
     },
     {
       "detail": "Abrir el editor (sin dependencias rotas), correr los tests y recorrer overworld, templo y escenas de prueba.",
-      "done": false,
+      "done": true,
       "text": "Probar que nada se rompa"
     }
   ],
@@ -50,11 +50,11 @@
   "priority": "low",
   "refs": [],
   "size": "s",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "arte"
   ],
   "test": "",
   "title": "Limpieza de assets sin uso",
-  "updated_at": "2026-10-13T23:59:44.498Z"
+  "updated_at": "2026-10-15T08:13:27.044Z"
 }

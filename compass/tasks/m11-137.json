@@ -19,12 +19,12 @@
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "bug",
     "chullpa"
   ],
   "test": "",
   "title": "Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista",
-  "updated_at": "2026-10-15T03:54:14.989Z"
+  "updated_at": "2026-10-15T08:13:26.309Z"
 }

@@ -2664,7 +2664,7 @@ Decorar cada zona del overworld con piezas propias de su ambiente y enmarcar la 
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión); 12.2 Terreno del overworld; 12.3 Lugares del overworld; 12.4 Vegetación y props del overworld
 
-### 11.5 Galería de trampas: pinchos · En curso
+### 11.5 Galería de trampas: pinchos · Revisión
 
 **Prioridad:** media · **Etiquetas:** `mazmorra`
 
@@ -3497,7 +3497,7 @@ Feedback de playtest: hoy el cuerpo queda en el piso para siempre (Enemy.on_deat
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 11.59 Limpieza de assets sin uso · En curso
+### 11.59 Limpieza de assets sin uso · Revisión
 
 **Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `arte`
 
@@ -3517,7 +3517,7 @@ Assets propios y packs de terceros que ninguna escena, script ni builder referen
   Decidido (Daniel, 2026-10-13): se quedan los dos, kaykit_charanim (fuente de player/animation/libs) y kenney_fantasy-ui-borders (original de assets/ui/frames), para poder regenerar.
 - [x] Recortar packs que se usan en parte
   Hecho (1ae3b5df): kenney_skyboxes solo skybox-morning; Prototype Textures solo las 8 del kit gris (src/tools/build_gray_kit.gd). kenney_input-prompts sin tocar.
-- [ ] Probar que nada se rompa
+- [x] Probar que nada se rompa
   Abrir el editor (sin dependencias rotas), correr los tests y recorrer overworld, templo y escenas de prueba.
 
 ### 11.60 Mazmorra nueva de varios pisos · En curso
@@ -3536,7 +3536,7 @@ Segunda mazmorra con pisos (y quizás sótanos) apilados en la misma escena, en 
   Hecho: Room cuenta solo en la altura de su piso; visitadas, mapa y brújula de la mazmorra; mapa de pausa y minimapa muestran el piso de la sala actual y sus puertas. Tests en test_chullpa.
 - [x] UI: selector de pisos
   Hecho (mockup aprobado el 2026-10-11): columna de pisos en la pestaña Mapa (MapFloorButton: código, nombre, estás acá, cofres y jefe con brújula), LT/RT o RePág/AvPág (acciones map_floor_up/down) o clic; el cursor mantiene la celda; etiqueta del piso sobre el minimapa. Tests en test_map.
-- [ ] Entrada desde el overworld
+- [x] Entrada desde el overworld
   Decidido por Daniel el 2026-10-13 (vía la sesión del overworld): la Chullpa (D1) va en los Cerros del oeste, cerca de la Cueva de las bombas, accesible desde el inicio con espada y bombas. La Arboleda pasa a ser una meseta a la que solo se entra con un salto de pluma (la Queñoa, D2, pide la pluma); la Necrópolis queda sin mazmorra. -eb lo arma en 7.10 y pone un Spawn 'chullpa' frente a la torre (el portal de salida ya apunta ahí).
 - [ ] Recorrerla (Daniel)
   Con el escenario chullpa: escaleras, caer de 1SE a la cripta y la llave en B-SO, atajo del osario cayendo desde 2NO, bomba en 2SE sobre la isla (pluma), y con la pluma el abismo, el foso de la llave del jefe, la brújula y la pieza del Mirador.
@@ -4611,7 +4611,7 @@ Overworld 6 + Gruta, Santuario, Chullpa y Queñoa = 10 piezas con PIECES_PER_HEA
 
 **Notas:** Daniel (2026-10-13): de momento no importa; se revisa cuando se cierre el total de piezas.
 
-### 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso
+### 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · Revisión
 
 **Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `test`, `diseño`
 
@@ -4765,7 +4765,7 @@ Playtest 2026-10-13: en la sala de entrada de la primera mazmorra (Chullpa), la 
 
 **Relacionadas:** 11.144 Queñoa S1 (Raíces): reja fuera de la pared y puerta con llave detrás de una reja de puzzle
 
-### 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista · En curso
+### 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `chullpa`
 
@@ -4789,7 +4789,7 @@ Playtest 2026-10-13: en la sala del sub-boss (Guardian) de la primera mazmorra, 
 
 **Capturas:** `compass/images/m11-138-20261013-225004.png`
 
-### 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · En curso
+### 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · Revisión
 
 **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `chullpa`
 
@@ -5407,7 +5407,7 @@ Fijar la guía de estilo de los assets propios antes de modelar: una textura de 
 
 **Bloquea a:** 12.2 Terreno del overworld; 12.3 Lugares del overworld; 12.4 Vegetación y props del overworld; 12.5 Interactivos y pickups; 12.6 Equipo y objetos del inventario; 12.7 Kit del templo propio; 12.8 Personajes propios; 12.9 Efectos con malla
 
-### 12.2 Terreno del overworld · En curso
+### 12.2 Terreno del overworld · Revisión
 
 **Prioridad:** alta · **Etiquetas:** `arte`
 
@@ -5830,7 +5830,7 @@ Diseño (-43) armó levels/totora.tscn en el kit gris (a8d40e91, GDD §8d): dos 
   Hecho el 2026-10-13 (41357968, wt/art). build_paredes_la: estilo totora (atados apilados amarrados con soga, musgo húmedo al pie, juncos y totoras en flor arriba; puertas de atados parados con soga oscura). LOOKS totora: luz fresca de lago, piso de estera de totora (totora_la_kit).
 - [x] Bake y refresh de levels/totora.tscn, con los cruces del gancho intactos
   Hecho el 2026-10-13 (41357968). Sin separar las salas: la pared de 2 m que comparten sale entera con cara a cada lado, así los cruces del gancho siguen de 4 celdas y test_totora no cambia. El agua honda cuenta como piso (LOOKS water). Las puertas en pared fina tienen paso de 2 m (también el templo). test_totora, test_amaru, test_walk_doors, test_dungeon_reach, test_hookshot y otros pasan.
-- [ ] Santuario de totora en la isla (TotoraHut)
+- [x] Santuario de totora en la isla (TotoraHut)
   Modelo hecho (41357968): src/world/totora_entrada.tscn, choza de los uros sobre balsa, techo con borla roja, columnas con cabeza de puma, aguayo y totoras; mismo colisionador que TotoraHut. Falta que overworld (-eb) la ponga en lugar del CSGBox3D, girada con la puerta al oeste.
 - [ ] Recorrerla (Daniel)
 
@@ -6629,7 +6629,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 1. [ ] 11.130 Bocas de cueva talladas en el risco · Hecho · **falla** — En la cueva de la bomba está mal el asset de la pared quebrada. 
    No entiendo el sentido el sentido de poder entrar a la ermita y que esté bloqueada solo por dentro. Esto debería seguir el patron de las paredes quebradas que se sincronizan con el overworld, la reja debería estar en el overworld tambien. Y al querer salir luego de entrar a la cueva de la ermita se cae al vacio el personaje. 
    D4 parece una cueva normal, debería tener su entrada exagerada como las demas dungeons
-2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
+2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · Revisión · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
    El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
 3. [x] 11.111 Cactus, árboles y matas se cortan como el pasto · Hecho · anda
 4. [x] 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · Hecho · anda
@@ -6646,7 +6646,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 13. [x] 7.10 Overworld con forma de Zelda 2D, no cuadrado · Hecho · anda
 14. [ ] Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos · En curso · **falla** — Hay cosas que no tienen estilo
 15. [x] 11.117 Huecos a otro piso se ven distintos de los fosos · Hecho · anda
-16. [ ] 11.5 Galería de trampas: pinchos · En curso · **falla** — Hay que hacer que la pluma salte mas alto porque los pinchos llegan igual
+16. [ ] 11.5 Galería de trampas: pinchos · Revisión · **falla** — Hay que hacer que la pluma salte mas alto porque los pinchos llegan igual
 17. [x] 11.98 La cámara muestra lo que se desbloquea · Hecho · anda
 18. [x] 11.112 Fantasmas al esquivar · Hecho · anda
 19. [x] 11.102 Mapa: nombres de zona chicos y solo los que importan · Hecho · anda
@@ -6685,9 +6685,9 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 13. [x] 11.135 Al caer, el player se inclina hacia el piso · Hecho · anda
 14. [x] 11.164 Lo que esconde una pared agrietada no se ve desde arriba · Hecho · anda
 15. [x] 11.136 Chullpa: la reja de la entrada queda fuera de la pared · Hecho · anda
-16. [ ] 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista · En curso · **falla** — la pared quebrada sigue el estilo pero no el ancho. La parte negra debería verse como la parte superior. Y la camara debería centrarse mas en lo visible de la sala, no en su posible tamaño completo como rectangulo
+16. [ ] 11.137 Chullpa: techos visibles, pared agrietada que no encaja y sala secreta a la vista · Revisión · **falla** — la pared quebrada sigue el estilo pero no el ancho. La parte negra debería verse como la parte superior. Y la camara debería centrarse mas en lo visible de la sala, no en su posible tamaño completo como rectangulo
 17. [ ] 11.156 Chullpa: se ven los techos (crestas) de las paredes LA horneadas · Revisión
-18. [ ] 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · En curso · **falla** — se ve horrendo y no soluciona el mismo problema del lado izquierdo
+18. [ ] 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · Revisión · **falla** — se ve horrendo y no soluciona el mismo problema del lado izquierdo
 19. [ ] 11.138 Chullpa sub-boss: asset para el cuadrado donde después se salta · Revisión
 20. [x] 11.155 Chullpa: la momia aparece en vez de saltar hacia el player; onda expansiva con shader vistoso · Hecho · anda
 21. [x] 11.169 Galería de trampas: la pluma no salta por encima de los pinchos · Hecho · anda — necesita un poco de fine-tuning, por ahi invisibilidad por 2-4 frames al saltar y aterrizar

@@ -113,11 +113,11 @@
       "section": "overworld-layout"
     }
   ],
-  "status": "doing",
+  "status": "review",
   "tags": [
     "arte"
   ],
   "test": "El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.",
   "title": "Terreno del overworld",
-  "updated_at": "2026-10-13T21:18:42.374Z"
+  "updated_at": "2026-10-15T08:13:26.802Z"
 }

@@ -17,12 +17,12 @@
   "priority": "low",
   "refs": [],
   "size": "s",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "test",
     "diseño"
   ],
   "test": "",
   "title": "Puzzle de bloques de la cota: probar empujando y ubicar región",
-  "updated_at": "2026-10-15T03:54:15.105Z"
+  "updated_at": "2026-10-15T08:13:26.065Z"
 }

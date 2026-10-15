@@ -12,7 +12,7 @@
     },
     {
       "detail": "Modelo hecho (41357968): src/world/totora_entrada.tscn, choza de los uros sobre balsa, techo con borla roja, columnas con cabeza de puma, aguayo y totoras; mismo colisionador que TotoraHut. Falta que overworld (-eb) la ponga en lugar del CSGBox3D, girada con la puerta al oeste.",
-      "done": false,
+      "done": true,
       "text": "Santuario de totora en la isla (TotoraHut)"
     },
     {
@@ -45,5 +45,5 @@
   ],
   "test": "",
   "title": "Totora (D3) en estilo Link's Awakening y su entrada",
-  "updated_at": "2026-10-15T03:54:15.136Z"
+  "updated_at": "2026-10-15T08:13:25.564Z"
 }

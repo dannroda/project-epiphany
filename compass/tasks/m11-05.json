@@ -33,11 +33,11 @@
   },
   "priority": "medium",
   "refs": [],
-  "status": "doing",
+  "status": "review",
   "tags": [
     "mazmorra"
   ],
   "test": "En la Galería, cruzar las dos columnas de pinchos: se ve venir cada fila (asoma y tintinea), siempre queda un paso, pinchan al player y al esqueleto, y el puzzle de la torreta sigue igual.",
   "title": "Galería de trampas: pinchos",
-  "updated_at": "2026-10-15T03:54:15.190Z"
+  "updated_at": "2026-10-15T08:13:25.826Z"
 }
