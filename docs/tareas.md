@@ -4406,7 +4406,7 @@ Del análisis de D1 (11.90, S2, S4, S5, S6, S7). Los cuartos del análisis son d
 
 ### 11.110 Tipos de placa de piso: bloque, peso y golpe fuerte · En curso
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `puzzles`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `puzzles`
 
 Playtest 2026-10-12: los puzzles de bloques solo se tienen que activar con los bloques; los que se activan con objetos o con un golpe fuerte son otros tipos de placa. Y la placa del santuario se veía apretada sin bloque encima.
 
