@@ -27,6 +27,11 @@ uniform float plank_width = 0.0;
 uniform float plank_length = 2.0;
 // Color propio del piso sobre el de la paleta (alfa = cuánto).
 uniform vec4 floor_color : source_color = vec4(0.0);
+// Nieve en manchones (cuánto piso tapa; las juntas se llenan primero) y parte de las losas que son placas de hielo.
+uniform float snow : hint_range(0.0, 1.0) = 0.0;
+uniform vec4 snow_color : source_color = vec4(0.93, 0.96, 1.0, 1.0);
+uniform float ice : hint_range(0.0, 1.0) = 0.0;
+uniform vec4 ice_color : source_color = vec4(0.62, 0.82, 0.95, 1.0);
 
 varying vec3 world_pos;
 varying vec3 world_normal;
@@ -98,6 +103,10 @@ bool is_earth(vec2 id) {
 	return hash1(id + 11.0) < earth;
 }
 
+bool is_ice(vec2 id) {
+	return hash1(id + 23.0) < ice;
+}
+
 float stone_height(vec2 p) {
 	vec3 s = cells(p);
 	if (is_earth(s.yz)) {
@@ -134,13 +143,30 @@ void fragment() {
 		vec3 color = base * shade;
 		color *= 1.0 - crack * 0.5;
 		color = mix(color, base * grout_shade, grout);
+		float rough = mix(roughness, 1.0, grout);
+		float spec = specular * (1.0 - grout);
+		if (!dirt && is_ice(s.yz)) {
+			float streak = smoothstep(0.02, 0.0, abs(value_noise(p * 3.0 + s.yz * 5.0) - 0.5));
+			color = mix(color, ice_color.rgb * (0.85 + 0.3 * spots), 1.0 - grout);
+			color = mix(color, vec3(1.0), streak * 0.5 * (1.0 - grout));
+			rough = mix(0.08, 1.0, grout);
+			spec = mix(0.9, specular, grout);
+		}
+		if (snow > 0.0) {
+			float drift = value_noise(p * 0.45) * 0.65 + value_noise(p * 1.9) * 0.25 + value_noise(p * 7.0) * 0.1;
+			float cover = smoothstep(1.0 - snow - 0.06, 1.0 - snow + 0.06, drift);
+			cover = max(cover, grout * 0.55 * smoothstep(0.0, 0.3, snow));
+			color = mix(color, snow_color.rgb * (0.92 + 0.08 * spots), cover);
+			rough = mix(rough, 0.85, cover);
+			spec = mix(spec, 0.2, cover);
+		}
 		ALBEDO = color;
 		float e = 0.02;
 		float h = stone_height(p);
 		vec2 slope = vec2(stone_height(p + vec2(e, 0.0)) - h, stone_height(p + vec2(0.0, e)) - h) / e;
 		vec3 n = normalize(vec3(-slope.x * normal_strength * bevel, 1.0, -slope.y * normal_strength * bevel));
 		NORMAL = normalize((VIEW_MATRIX * vec4(n, 0.0)).xyz);
-		ROUGHNESS = mix(roughness, 1.0, grout);
-		SPECULAR = specular * (1.0 - grout);
+		ROUGHNESS = rough;
+		SPECULAR = spec;
 	}
 }
