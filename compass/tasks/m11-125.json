@@ -8,7 +8,7 @@
     "compass/images/m11-125-1.jpg"
   ],
   "milestone": "m11",
-  "notes": "Hecho: test_grove_puzzle empuja los bloques caminando contra ellos (A dos celdas al sur; B una al este y una al sur) y verifica que cada uno llega a su placa. Ubicación: el puzzle no pide ningún ítem y da la cota, así que queda en la Pradera; 'Grove' es el nombre del mapa viejo.",
+  "notes": "Hecho: test_grove_puzzle empuja los bloques caminando contra ellos (A dos celdas al sur; B una al este y una al sur) y verifica que cada uno llega a su placa. Ubicación: el puzzle no pide ningún ítem y da la cota, así que queda en la Pradera; 'Grove' es el nombre del mapa viejo. Playtest 15/10 (11.125): la placa de la piedra del Claro ahora se traba con solo pisarla (ONCE); la tablilla sigue enseñando a levantar y arrojar. En la Pradera el bloque B pasó a vasija grande (GroveBigPot) sobre una placa de peso con el ícono de la vasija; la otra placa ya tenía el ícono de bloque. La cota ya está en el santuario. test_tutorial, test_grove_puzzle, test_secrets.",
   "order": 122,
   "playtest": {
     "note": "De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.\nEl 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon",
@@ -17,12 +17,12 @@
   "priority": "low",
   "refs": [],
   "size": "s",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "test",
     "diseño"
   ],
   "test": "",
   "title": "Puzzle de bloques de la cota: probar empujando y ubicar región",
-  "updated_at": "2026-10-15T20:33:39.917Z"
+  "updated_at": "2026-10-15T20:40:06.422Z"
 }

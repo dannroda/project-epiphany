@@ -2660,7 +2660,7 @@ Decorar cada zona del overworld con piezas propias de su ambiente y enmarcar la 
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión); 12.2 Terreno del overworld; 12.3 Lugares del overworld; 12.4 Vegetación y props del overworld
 
-### 11.5 Galería de trampas: pinchos · En curso
+### 11.5 Galería de trampas: pinchos · Revisión
 
 **Prioridad:** media · **Etiquetas:** `mazmorra`
 
@@ -2676,6 +2676,8 @@ Pinchos de piso a ritmo: avisan asomando, suben de golpe, lastiman a player y en
   tests/test_spike_trap.gd; fila de la sala 3 en el GDD.
 
 **Prueba:** En el ala de la pluma del templo (PlumaSpikes) y en la cripta oscura de la Chullpa (CriptaSpikes, B-SO), cruzar los pinchos: se ve venir cada fila (asoma y tintinea), siempre queda un paso y pinchan al player y a los enemigos.
+
+**Notas:**  Playtest 15/10: la nota es del playtest del 13/10; lo arregló 11.169 el 14/10 (pinchos ground_only y hits_on_landing: saltando con la pluma ya no pegan en el aire). Vuelve a revisión para probarla de nuevo.
 
 **Relacionadas:** 11.169 Galería de trampas: la pluma no salta por encima de los pinchos
 
@@ -4602,13 +4604,13 @@ Overworld 8 + Gruta, Santuario, Chullpa, Queñoa y templo = 13 piezas con PIECES
 **Notas:** Daniel (2026-10-13): de momento no importa; se revisa cuando se cierre el total de piezas.
 2026-10-15 (-43, 11.190): con la pieza del templo el total es 13 (8 overworld + 5 mazmorras): una de más sobre 12. Quitar una o agregar tres.
 
-### 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso
+### 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · Revisión
 
 **Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `test`, `diseño`
 
 test_grove_puzzle teletransporta los bloques a las placas; no prueba que se llegue empujando (B: este y sur desde (-33,2); A: 4 m al sur). Además el puzzle (x -41..-31, z -5..4) está en la zona Pradera/Claro, no en la Arboleda que pide la pluma: confirmar que es donde se quería.
 
-**Notas:** Hecho: test_grove_puzzle empuja los bloques caminando contra ellos (A dos celdas al sur; B una al este y una al sur) y verifica que cada uno llega a su placa. Ubicación: el puzzle no pide ningún ítem y da la cota, así que queda en la Pradera; 'Grove' es el nombre del mapa viejo.
+**Notas:** Hecho: test_grove_puzzle empuja los bloques caminando contra ellos (A dos celdas al sur; B una al este y una al sur) y verifica que cada uno llega a su placa. Ubicación: el puzzle no pide ningún ítem y da la cota, así que queda en la Pradera; 'Grove' es el nombre del mapa viejo. Playtest 15/10 (11.125): la placa de la piedra del Claro ahora se traba con solo pisarla (ONCE); la tablilla sigue enseñando a levantar y arrojar. En la Pradera el bloque B pasó a vasija grande (GroveBigPot) sobre una placa de peso con el ícono de la vasija; la otra placa ya tenía el ícono de bloque. La cota ya está en el santuario. test_tutorial, test_grove_puzzle, test_secrets.
 
 **Capturas:** `compass/images/m11-125-mapa.jpg`, `compass/images/m11-125-1.jpg`
 
@@ -4782,7 +4784,7 @@ Playtest 2026-10-13: en la sala del sub-boss (Guardian) de la primera mazmorra, 
 
 **Capturas:** `compass/images/m11-138-20261013-225004.png`
 
-### 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · En curso
+### 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · Revisión
 
 **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-43 · **Etiquetas:** `bug`, `chullpa`
 
@@ -4790,7 +4792,7 @@ Playtest 2026-10-13: en la Chullpa hay un cofre sobre una plataforma/pilar en un
 
 **Prueba:** tests/test_chullpa.gd
 
-**Notas:** Hecho: era la isla del cofre de la pluma (1SE), pensada para salir solo cayendo (huecos de 2 baldosas). La isla se ensancha una baldosa al este: de ese lado queda un hueco de 1 baldosa, que la pluma cruza en los dos sentidos. Sin pluma se sigue llegando solo cayendo desde 2SE. GDD §8b; test_chullpa test_the_feather_island_is_one_tile_from_the_east_floor.
+**Notas:** Hecho: era la isla del cofre de la pluma (1SE), pensada para salir solo cayendo (huecos de 2 baldosas). La isla se ensancha una baldosa al este: de ese lado queda un hueco de 1 baldosa, que la pluma cruza en los dos sentidos. Sin pluma se sigue llegando solo cayendo desde 2SE. GDD §8b; test_chullpa test_the_feather_island_is_one_tile_from_the_east_floor. Playtest 15/10: la nota del playtest es anterior al arreglo de Daniel en el editor (4b3b4724, borde del techo y huecos de la isla): ahora la isla de 3x3 tiene huecos de 1 baldosa al oeste y al este, así que el lado izquierdo también se cruza con la pluma. Vuelve a revisión para probarla de nuevo.
 
 **Capturas:** `compass/images/m11-139-20261013-225053.png`, `compass/images/m11-139-20261014-144014.png`
 
@@ -6727,7 +6729,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 ### Revisión: lo listo para probar  (27/27 probadas)
 
 1. [x] 11.130 Bocas de cueva talladas en el risco · Hecho · anda — Falló (pared de la cueva de la bomba, ermita bloqueada solo por dentro, D4 como cueva común); se arregló en 12.29, 11.166 y 11.168, que andan.
-2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
+2. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · Revisión · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
    El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
 3. [x] 11.111 Cactus, árboles y matas se cortan como el pasto · Hecho · anda
 4. [x] 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · Hecho · anda
@@ -6744,7 +6746,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 13. [x] 7.10 Overworld con forma de Zelda 2D, no cuadrado · Hecho · anda
 14. [ ] Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos · En curso · **falla** — Hay cosas que no tienen estilo
 15. [x] 11.117 Huecos a otro piso se ven distintos de los fosos · Hecho · anda
-16. [ ] 11.5 Galería de trampas: pinchos · En curso · **falla** — Hay que hacer que la pluma salte mas alto porque los pinchos llegan igual
+16. [ ] 11.5 Galería de trampas: pinchos · Revisión · **falla** — Hay que hacer que la pluma salte mas alto porque los pinchos llegan igual
 17. [x] 11.98 La cámara muestra lo que se desbloquea · Hecho · anda
 18. [x] 11.112 Fantasmas al esquivar · Hecho · anda
 19. [x] 11.102 Mapa: nombres de zona chicos y solo los que importan · Hecho · anda
@@ -6781,7 +6783,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 13. [x] 11.135 Al caer, el player se inclina hacia el piso · Hecho · anda
 14. [x] 11.164 Lo que esconde una pared agrietada no se ve desde arriba · Hecho · anda
 15. [x] 11.136 Chullpa: la reja de la entrada queda fuera de la pared · Hecho · anda
-16. [ ] 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · En curso · **falla** — se ve horrendo y no soluciona el mismo problema del lado izquierdo
+16. [ ] 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · Revisión · **falla** — se ve horrendo y no soluciona el mismo problema del lado izquierdo
 17. [ ] 11.138 Chullpa sub-boss: asset para el cuadrado donde después se salta · Revisión
 18. [x] 11.155 Chullpa: la momia aparece en vez de saltar hacia el player; onda expansiva con shader vistoso · Hecho · anda
 19. [x] 11.169 Galería de trampas: la pluma no salta por encima de los pinchos · Hecho · anda — necesita un poco de fine-tuning, por ahi invisibilidad por 2-4 frames al saltar y aterrizar
@@ -6846,10 +6848,10 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 15. [ ] 11.75 AreaZone: id estable para guardar las zonas visitadas · Revisión
 16. [ ] 11.176 Chullpa: llave chica y sótano obligatorios, llave del jefe con vuelta atrás · Revisión
 17. [ ] 11.177 Chullpa sin pared agrietada (fuera el nicho del Rellano) · Revisión
-18. [ ] 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · En curso · **falla** — se ve horrendo y no soluciona el mismo problema del lado izquierdo
+18. [ ] 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · Revisión · **falla** — se ve horrendo y no soluciona el mismo problema del lado izquierdo
 19. [ ] 11.138 Chullpa sub-boss: asset para el cuadrado donde después se salta · Revisión
 20. [ ] 12.31 Chullpa: jefe final momia con aspecto propio · Revisión
-21. [ ] 11.5 Galería de trampas: pinchos · En curso · **falla** — Hay que hacer que la pluma salte mas alto porque los pinchos llegan igual
+21. [ ] 11.5 Galería de trampas: pinchos · Revisión · **falla** — Hay que hacer que la pluma salte mas alto porque los pinchos llegan igual
 22. [ ] 11.173 Esqueleto invisible en una mazmorra · Revisión
 23. [ ] 11.141 Queñoa 2P (Canopy): símbolo azul sin sentido y puerta bloqueada invisible · Revisión
 24. [ ] 11.144 Queñoa S1 (Raíces): reja fuera de la pared y puerta con llave detrás de una reja de puzzle · Revisión
@@ -6897,7 +6899,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 66. [ ] 11.162 Retirar el templo viejo (levels/temple.tscn) · Revisión
 67. [ ] 11.163 Borrar las mallas de la decoración del templo viejo · Revisión
 68. [ ] 11.59 Limpieza de assets sin uso · Revisión
-69. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · En curso · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
+69. [ ] 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · Revisión · **falla** — De andar anda, pero el 1 no se entiende que la piedra se puede levantar. Aparte es rarisimo tener que tirarla y apuntarle para que caiga sobre el boton. Este debería ser de presion de los que alcanza con que pisa el player.
    El 2 sería mas reconocible si el icono del plate sea el mismo que tienen los bloques, ademas uno se puede cambiar por el de la vasija y poner una vasija grande reemplazando uno de los bloques. Y la cota reforzada debería estar en otro lado, puede ser una recompensa de mitad de la ultima dungeon
 70. [ ] 11.80 BossArena tiene los flags y el premio de D1 fijos en el código · Revisión
 71. [ ] 11.81 Dungeon.id por defecto d1 y prefijos de flags fijos · Revisión
