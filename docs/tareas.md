@@ -5393,11 +5393,13 @@ El crash 11.185 pasa en un hilo del WorkerThreadPool que lee un StringName ya li
 
 **Notas:** 2026-10-15 (-fd): built c971f93e7 (editor, debug_symbols=yes) at /home/ssd_disk/godot-c971 (worktree of godot-master), registered as 4.8-dev7-symbols in godot-select (symlink). 40 full suite runs (--jobs=3) in wt/bugs with that build, ~2.3 h: no crash. The only failures were test_input › test_shift_locks_and_wheel_switches (4 of 40), caused by test_chest leaving an item-get box on the way (fixed in main). Next: another loop with more load (--jobs=6).
 
-### 11.189 D4: backtracking de la llave del jefe · Pendiente
+### 11.189 D4: backtracking de la llave del jefe · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-43 · **Etiquetas:** `diseno`, `mazmorra`
 
 Daniel (2026-10-15): la llave del jefe de la Cumbre va al nicho del Atrio (escudo + sol); atajo de un solo sentido de la Antesala a la Llegada; las vasijas del Atrio pasan al nicho del Ojo del Sol. Regla boss-key-backtracking. Con rim y navmesh si cambia la grilla.
+
+**Notas:** Hecho el 2026-10-15 (b482f682): la llave del jefe pasa al nicho SO del Atrio, tras la reja que abre el cristal con el escudo; el nicho del Ojo del Sol guarda las vasijas; la Antesala tiene una placa (cu_antesala_step) que abre una puerta nueva a la Llegada y la deja abierta: de vuelta del Atrio se sube por Nido, Cámara y escalera. Grilla: una celda de pared interna de la cornisa pasa a paso (el rim no cambia); navmesh rebakeada. test_cumbre al día. Falta: que Daniel la recorra.
 
 ### 11.190 Templo: una pieza de corazón · Pendiente
 
