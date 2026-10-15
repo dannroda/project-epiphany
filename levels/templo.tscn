@@ -32,6 +32,8 @@
 [ext_resource type="PackedScene" path="res://src/world/pickup.tscn" id="44_iwn1m"]
 [ext_resource type="Script" uid="uid://cpa78s7g8p1jd" path="res://src/world/wave_spawner.gd" id="45_6wj7r"]
 [ext_resource type="Resource" path="res://data/items/boss_key_piece.tres" id="45_ue4tp"]
+[ext_resource type="PackedScene" path="res://src/entities/kuntur/apu_kuntur.tscn" id="46_apu"]
+[ext_resource type="PackedScene" path="res://src/world/light/light_source.tscn" id="46_sun"]
 [ext_resource type="PackedScene" path="res://src/entities/watcher_eye/watcher_eye.tscn" id="46_dx72k"]
 [ext_resource type="Script" uid="uid://osa5pl45qand" path="res://src/world/wave_spawn.gd" id="46_w4fgy"]
 [ext_resource type="PackedScene" path="res://src/entities/archer_skeleton.tscn" id="47_iwn1m"]
@@ -2037,6 +2039,12 @@ magnet_radius = 0.0
 world_size = 1.4
 heart_mesh = null
 
+[node name="MirrorSunWest" parent="Planta" unique_id=1874310011 instance=ExtResource("46_sun")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 107.6, 0, 38)
+
+[node name="MirrorSunEast" parent="Planta" unique_id=1874310012 instance=ExtResource("46_sun")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 128.4, 0, 46)
+
 [node name="MirrorFight" type="Node3D" parent="Planta" unique_id=2128765053 node_paths=PackedStringArray("room", "doors", "reward")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 118, 0, 42)
 script = ExtResource("90_fight")
@@ -2051,10 +2059,9 @@ rematch = true
 [node name="PersistentFlag" type="Node" parent="Planta/MirrorFight" unique_id=829494355]
 script = ExtResource("91_pflag")
 
-[node name="ApuKuntur" parent="Planta/MirrorFight" unique_id=689724525 instance=ExtResource("46_dx72k")]
+[node name="ApuKuntur" parent="Planta/MirrorFight" unique_id=689724525 node_paths=PackedStringArray("suns") instance=ExtResource("46_apu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
-config = ExtResource("47_xabc2")
-hover_height = 3.2
+suns = [NodePath("../../MirrorSunWest"), NodePath("../../MirrorSunEast")]
 
 [node name="BossKeyPiece" parent="Planta/MirrorFight" unique_id=173432001 instance=ExtResource("44_iwn1m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)

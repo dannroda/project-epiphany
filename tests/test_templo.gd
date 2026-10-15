@@ -387,3 +387,24 @@ func test_dying_to_the_boss_returns_to_the_antechamber_with_its_door_open() -> v
 	assert_eq(camera.room, _room("Antesala"), "morir contra el jefe devuelve a la antesala")
 	assert_true((_node("BossDoor") as Door).is_open, "con la puerta del jefe abierta")
 	state.reset()
+
+
+func test_the_mirror_rematch_is_the_apu_with_the_suns_already_lit() -> void:
+	tree = Engine.get_main_loop() as SceneTree
+	state = tree.root.get_node(^"GameState")
+	state.reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	await tree.create_timer(0.3).timeout
+	level = tree.current_scene
+	player = tree.get_first_node_in_group(&"player") as PlayerCharacter
+	camera = level.get_node(^"TopDownCamera") as TopDownCamera
+	player.health.reset(80)
+	var fight := _node("MirrorFight") as ArenaFight
+	var apu := fight.get_node(^"ApuKuntur") as Kuntur
+	assert_true(apu.apu, "la revancha del espejo es el Apu Kuntur")
+	var beam := _node("MirrorSunWest").get_node(^"Beam") as LightBeam
+	assert_true(not beam.visible, "los soles esperan la pelea")
+	await _drop(_in("EspejoOjo", Vector3(-8, 0.5, 0)))
+	assert_true(await _until(func() -> bool: return beam.visible and not beam.segments.is_empty(), 15.0), "con media vida de entrada, enciende los soles")
+	state.reset()

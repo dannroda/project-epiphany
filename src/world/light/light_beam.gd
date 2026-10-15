@@ -46,7 +46,7 @@ func _physics_process(_delta: float) -> void:
 
 
 func _next_direction(collider: Object, direction: Vector3, normal: Vector3, point: Vector3) -> Variant:
-	if collider is LightReceiver:
+	if collider is LightReceiver or collider is LightCatch:
 		collider.receive_light()
 		return null
 	if collider is Node and (collider as Node).is_in_group(MIRROR_GROUP):

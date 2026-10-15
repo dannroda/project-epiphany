@@ -4660,17 +4660,19 @@ Mazmorra 4 (GDD §8e): el escudo espejo parte la Cumbre; el piso bajo sin él, e
   Aprobado el 2026-10-13 (Daniel: si, me gusta). Doc de diseño actualizado (sección D4 y mapa).
 - [x] Blockout
   Hecho el 2026-10-13: levels/cumbre.tscn (debug/tmp/design/build_cumbre.gd), 12 salas de 14 × 12 m en dos pisos y la Cima. Espejo que gira (src/world/light/rotating_mirror.tscn, gira 90° de un espadazo). Grafo data/dungeons/cumbre_graph.tres, flags cu_, nombres en es/en, escenario cumbre, test_cumbre (4). GDD §8e.
-- [ ] Sub-jefe Kuntur joven
-  Hoy una momia prestada en PisoBase/KunturFight. Se vence sin el escudo.
-- [ ] Jefe Apu Kuntur
-  Hoy un ojo vigía prestado en PisoCima/BossFight. Pide el escudo.
+- [x] Sub-jefe Kuntur joven
+  Hecho el 2026-10-15 (Daniel: los jefes me parecen bien): Kuntur (src/entities/kuntur/kuntur.tscn, 10 de vida). Picada que marca su sombra y lo deja clavado en la nieve (le pega todo); cada tercer ataque se posa y bate las alas, el viento empuja y una flecha lo voltea. Modelo provisorio de primitivas.
+- [x] Jefe Apu Kuntur
+  Hecho el 2026-10-15: apu_kuntur.tscn (hereda, apu, 20 de vida). Plumas reflejables (una devuelta lo voltea, las flechas rebotan) y picada; con media vida enciende SunWest y SunEast y se posa a cargar una ráfaga: un rayo devuelto con el escudo lo voltea (LightCatch). También en la revancha del templo (MirrorFight, con MirrorSunWest/East). test_kuntur (5), test_templo.
 - [x] Entrada en el overworld (sesión del overworld)
   Hecho por el overworld: CumbreDoor en el risco norte de la Cumbre (39, 6.4, -45.2) y Spawn_cumbre (39, 5.2, -42.4); ExitPortal y BossExitPortal de cumbre.tscn van a target_spawn cumbre.
 - [x] Horneado LA (arte)
   Hecho por arte (b07155ba, en main 69115da1): cumbre en LEVELS de la_walls con spread false, las salas quedan donde estaban (espejos, haces, postes y el hueco del Hueco sin mover). Si se edita el grid: la_walls.gd -- refresh cumbre, sin rehornear.
 - [ ] Recorrerla (Daniel)
+- [ ] Modelo de arte de los cóndores (arte)
+  Hoy primitivas en kuntur.tscn: Body con Torso, Collar, Head/Beak, WingLeft/WingRight (pivotes que aletean por código), Tail; Muzzle al frente.
 
-**Prueba:** test_cumbre, test_dungeon_reach (cumbre_graph), test_walk_doors, test_drop_holes
+**Prueba:** test_cumbre, test_kuntur, test_dungeon_reach (cumbre_graph), test_walk_doors, test_drop_holes
 
 **Capturas:** `compass/images/m11-129-mapa.jpg`, `compass/images/m11-129-1.jpg`
 

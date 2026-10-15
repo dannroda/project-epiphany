@@ -354,7 +354,7 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
 | Gancho | Un abismo (foso) de 4 celdas a lo ancho de la sala, entre el hub y el ojo del gancho: el salto largo cruza 3, así que solo pasa el gancho. Un poste de cada lado, a 0,5 m del borde (`GanchoWestPost`, `GanchoEastPost`), corridos de la línea de las puertas para no tapar el paso |
 | Ojo del gancho | Revancha con la Yacumama y sus cuatro charcos (`HookFight`, `te_eye_hook`): pieza de la llave del jefe |
 | Espejo | Una torreta que dispara orbes: el escudo espejo los devuelve al cristal (`te_mirror_crystal`), que abre la puerta del ojo del espejo |
-| Ojo del espejo | Revancha con el Apu Kuntur (`MirrorFight`, `te_eye_mirror`; placeholder hasta 11.129): pieza de la llave del jefe |
+| Ojo del espejo | Revancha con el Apu Kuntur (`MirrorFight`, `te_eye_mirror`), con dos soles en las paredes oeste y este (`MirrorSunWest`, `MirrorSunEast`) que enciende de entrada porque arranca con media vida: pieza de la llave del jefe |
 | Antesala | Se abre con los cuatro ojos. Vasijas con corazones, tablilla, puerta del jefe |
 | La Mano | Sub-jefe: uno de los guanteletes del jefe, suelto (`te_hand_defeated`, `HandGuard`). Usa los tres ataques de las manos del jefe (golpe al piso, agarre, barrido); rebota todo mientras está lista y tras el golpe al piso queda aturdida, y ahí entra la espada. Sala sin obstáculos. Opcional; vencida, abre la combinada |
 | Combinada | Opcional (la abre la Mano). Tres oleadas variadas (`CombinedWaves`, `te_combined_waves`): esqueletos y arqueros; escudos, un acorazado y un Vigía mini; una Momia mini con esqueletos. La puerta se cierra mientras duran; vencida la tercera aparece el cofre grande con la **espada dorada** (`sword_golden`, 11.183): pega el doble, se equipa sola, estela y chispas doradas |
@@ -571,7 +571,7 @@ Plano aprobado por Daniel el 2026-10-13 ("si, me gusta") y armado en blockout (`
 | Columnas (bajo, SO) | Abismo de 4 celdas con un poste a cada lado: con el gancho, la **llave chica**. Pared rajada (bomba) a la Grieta |
 | Grieta (bajo, NO) | Dos grietas de una celda (pluma) hasta la **brújula** |
 | Ventisquero (bajo, SE) | Dos torretas y columnas de basalto para cubrirse. Un abismo corre por la pared sur; un ojo en la pared norte, entre las torretas (arco), abre la reja del nicho del **mapa** |
-| Nido del Kuntur (bajo, centro norte) | Sub-jefe **Kuntur joven** (`KunturFight`, `cu_kuntur_defeated`; por ahora una momia prestada). Sala sin obstáculos, una vasija en cada esquina. Se vence sin el escudo. Vencido, abre la Cámara |
+| Nido del Kuntur (bajo, centro norte) | Sub-jefe **Kuntur joven** (`KunturFight`, `cu_kuntur_defeated`). Sala sin obstáculos, una vasija en cada esquina. Se vence sin el escudo. Vencido, abre la Cámara |
 | Cámara del escudo (bajo, NE) | Cofre grande del **escudo espejo**. Primer uso: el sol cae del norte, el escudo lo manda al cristal del oeste y se abre la reja de la escalera a la Llegada |
 | Llegada (alto, NE) | Escalera a la Cámara. Abierta a los Espejos |
 | Espejos (alto, centro norte) | El sol entra por el este hacia el oeste. Dos espejos que giran, de un espadazo cada uno, lo llevan al sur y lo devuelven al este por el lado sur de la sala; ahí el escudo lo baja al cristal, que abre la puerta de las Torretas. Una columna de basalto tapa el atajo desde el primer tramo. Un esqueleto con escudo |
@@ -579,13 +579,20 @@ Plano aprobado por Daniel el 2026-10-13 ("si, me gusta") y armado en blockout (`
 | Ojo del Sol (alto, SO) | Un sol en un nicho, tras una persiana (reja que se cierra sola). Una flecha al ojo de la pared norte la abre 6 s: con el escudo, el rayo va al receptor del sur, que abre el nicho de la **llave del jefe**, en la esquina noroeste, lejos de la puerta de las Torretas. Un arquero |
 | Hueco (alto, centro sur) | Un hueco cae al Atrio (atajo). Un abismo con un islote en la esquina: con el salto largo, la **pieza de corazón** (`cu_heart_piece`). Al este, puerta con llave a la Antesala |
 | Antesala (alto, SE) | Vasijas. En un recoveco del este, la puerta del jefe y la escalera a la Cima |
-| Cima (arriba de la Antesala) | Jefe **Apu Kuntur** (`BossFight`, `cu_boss_defeated`; por ahora un ojo vigía prestado). Sala sin obstáculos, una vasija en cada esquina. Vencido, aparecen el contenedor de corazón (`cu_heart_container`) y el portal de salida |
+| Cima (arriba de la Antesala) | Jefe **Apu Kuntur** (`BossFight`, `cu_boss_defeated`). Sala sin obstáculos, una vasija en cada esquina y un sol apagado en la pared oeste y otro en la este (`SunWest`, `SunEast`), en filas distintas. Vencido, aparecen el contenedor de corazón (`cu_heart_container`) y el portal de salida |
 
 **Recorrido:**
 1. Sin escudo: Atrio → Columnas (gancho: llave) → Grieta (bomba, pluma: brújula) → Ventisquero (arco: mapa) → Atrio → Nido (llave: Kuntur joven) → Cámara (escudo).
 2. Con escudo: cristal de la Cámara → Llegada → Espejos (espada y escudo) → Torretas (escudo y gancho: llave) → Ojo del Sol (arco y escudo con tiempo: llave del jefe) → Hueco (pieza de corazón; el hueco es el atajo al Atrio) → Antesala → Cima.
 
-**Pendiente:** el Kuntur joven y el Apu Kuntur (hoy prestados). Horneada en estilo LA por arte, con las salas donde estaban (si se edita el grid: `la_walls.gd -- refresh cumbre`, con renderer, sin `--headless`). Escenario de debug: `cumbre`. Entrada en el overworld: `CumbreDoor`, en el risco norte de la Cumbre; las dos salidas vuelven a `Spawn_cumbre`. A probar en el recorrido: si el escudo, apuntado en diagonal, salta el atajo de la columna de los Espejos; el hueco del Hueco queda pegado al abismo del islote.
+**Los cóndores (11.129, Daniel 2026-10-15: "los jefes me parecen bien"):** `Kuntur` (`src/entities/kuntur/`), una escena para los dos: `kuntur.tscn` (joven, 10 de vida) y `apu_kuntur.tscn` (hereda, `apu`, 1,6 veces más grande, 20 de vida). Pelean dentro de un `ArenaFight` como los demás. Vuelan en círculos sobre la sala (a 3,5 m; volando, todo rebota) y entre vuelta y vuelta atacan:
+- **Picada** (los dos): su sombra persigue al player 1 s, se queda quieta 0,4 s (destella) y cae en 0,25 s (2 de daño). El joven queda **clavado en la nieve** 2,4 s: le pega todo. El Apu se repone enseguida.
+- **Ráfaga** (joven, cada tercer ataque): se posa a 5 m del player y bate las alas 1,8 s; el viento lo empuja hacia atrás. Una **flecha** en la ráfaga lo voltea 3 s (le pega todo).
+- **Plumas** (Apu): baja a 1,4 m y tira un abanico de tres plumas reflejables a la altura del player. Una **pluma devuelta con el escudo** lo voltea; las flechas le rebotan.
+- **Soles** (Apu, desde media vida): ruge y enciende los soles de la sala (`suns`: los haces cruzan la sala). Cada tercer ataque **se posa en el centro** con las alas abiertas a cargar 3 s una ráfaga grande; posado, su `LightCatch` entra a la capa del haz: un **rayo devuelto con el escudo** lo encandila y lo voltea. Si no, la ráfaga empuja el doble. En la revancha del templo arranca con media vida, así que los soles se encienden de entrada.
+Modelos provisorios de primitivas (torso negro, collar blanco, cabeza roja, alas con franja blanca que aletean por código) hasta el modelo de arte.
+
+**Pendiente:** el modelo de arte de los cóndores. Horneada en estilo LA por arte, con las salas donde estaban (si se edita el grid: `la_walls.gd -- refresh cumbre`, con renderer, sin `--headless`). Escenario de debug: `cumbre`. Entrada en el overworld: `CumbreDoor`, en el risco norte de la Cumbre; las dos salidas vuelven a `Spawn_cumbre`. A probar en el recorrido: si el escudo, apuntado en diagonal, salta el atajo de la columna de los Espejos; el hueco del Hueco queda pegado al abismo del islote.
 
 ## 9. Jefe — El Ojo con manos
 <!-- id: jefe -->

@@ -41,11 +41,9 @@
 [ext_resource type="Script" uid="uid://bccprbredple8" path="res://src/world/arena_fight.gd" id="34_j1npm"]
 [ext_resource type="Script" uid="uid://dcy0hg6ygxqg1" path="res://src/components/persistent_flag.gd" id="35_ckdpb"]
 [ext_resource type="Material" path="res://src/world/look/marca_visible.tres" id="36_kw1ob"]
-[ext_resource type="PackedScene" path="res://src/entities/mummy_guard/mummy_guard.tscn" id="36_pio1q"]
+[ext_resource type="PackedScene" path="res://src/entities/kuntur/kuntur.tscn" id="36_pio1q"]
 [ext_resource type="ArrayMesh" uid="uid://bht4m4jgyvg6i" path="res://assets/epiphany/meshes/paredes_la/puerta_llave_cumbre_la.res" id="37_dhxby"]
-[ext_resource type="Script" uid="uid://bdk0acke8h87u" path="res://src/entities/mummy_guard/mummy_guard.gd" id="37_e6m1n"]
 [ext_resource type="Texture2D" uid="uid://ddhjwybdg1ah2" path="res://assets/ui/lock.svg" id="38_cse1y"]
-[ext_resource type="Resource" path="res://data/entities/mummy_guard.tres" id="38_l3lwn"]
 [ext_resource type="Resource" path="res://data/items/shield_mirror.tres" id="39_23rcs"]
 [ext_resource type="Script" uid="uid://jstc1x28c0kx" path="res://src/components/interactable.gd" id="39_xnqix"]
 [ext_resource type="PackedScene" path="res://src/world/stairs.tscn" id="40_pku4l"]
@@ -68,9 +66,7 @@
 [ext_resource type="Script" uid="uid://u2jhwu4cb42s" path="res://src/world/torch_flicker.gd" id="53_kvxlt"]
 [ext_resource type="PackedScene" path="res://src/world/stairs_down.tscn" id="54_rnlef"]
 [ext_resource type="Script" uid="uid://cgr3l68kk102e" path="res://src/feel/stencil_light/stencil_light.gd" id="54_t0ubp"]
-[ext_resource type="PackedScene" path="res://src/entities/watcher_eye/watcher_eye.tscn" id="55_4msbc"]
-[ext_resource type="Script" uid="uid://bc7ljpofw81dv" path="res://src/entities/watcher_eye/watcher_eye.gd" id="56_ogo5c"]
-[ext_resource type="Resource" path="res://data/entities/watcher_eye_boss.tres" id="57_5qx8i"]
+[ext_resource type="PackedScene" path="res://src/entities/kuntur/apu_kuntur.tscn" id="55_4msbc"]
 [ext_resource type="PackedScene" path="res://src/world/pickup.tscn" id="58_g0mo4"]
 [ext_resource type="Script" uid="uid://ckysqr8ximkn0" path="res://src/world/pickup.gd" id="59_8xsdw"]
 [ext_resource type="Resource" path="res://data/items/heart_container.tres" id="60_fyak5"]
@@ -1096,10 +1092,8 @@ doors = [NodePath("../NidoLocked"), NodePath("../CamaraDoor")]
 [node name="PersistentFlag" type="Node" parent="PisoBase/KunturFight" unique_id=1806953609]
 script = ExtResource("35_ckdpb")
 
-[node name="KunturJoven" type="Node3D" parent="PisoBase/KunturFight" unique_id=1796272161 instance=ExtResource("36_pio1q")]
+[node name="KunturJoven" parent="PisoBase/KunturFight" unique_id=1796272161 instance=ExtResource("36_pio1q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
-script = ExtResource("37_e6m1n")
-config = ExtResource("38_l3lwn")
 
 [node name="ShieldChest" type="StaticBody3D" parent="PisoBase" unique_id=1868769395 instance=ExtResource("19_7ysid")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 4)
@@ -2477,6 +2471,12 @@ script = ExtResource("11_24ve7")
 drops = ExtResource("33_62nxm")
 drop_height = 0.1
 
+[node name="SunWest" parent="PisoCima" unique_id=1874310001 instance=ExtResource("5_ku7rw")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 33.6, 0, 18)
+
+[node name="SunEast" parent="PisoCima" unique_id=1874310002 instance=ExtResource("5_ku7rw")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 46.4, 0, 24)
+
 [node name="BossFight" type="Node3D" parent="PisoCima" unique_id=2128765053 node_paths=PackedStringArray("room", "reward")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 21)
 script = ExtResource("34_j1npm")
@@ -2489,11 +2489,9 @@ reward_flag = &"cu_heart_container"
 [node name="PersistentFlag" type="Node" parent="PisoCima/BossFight" unique_id=829494355]
 script = ExtResource("35_ckdpb")
 
-[node name="ApuKuntur" type="Node3D" parent="PisoCima/BossFight" unique_id=689724525 instance=ExtResource("55_4msbc")]
+[node name="ApuKuntur" parent="PisoCima/BossFight" unique_id=689724525 node_paths=PackedStringArray("suns") instance=ExtResource("55_4msbc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
-script = ExtResource("56_ogo5c")
-config = ExtResource("57_5qx8i")
-hover_height = 3.2
+suns = [NodePath("../../SunWest"), NodePath("../../SunEast")]
 
 [node name="HeartContainer" type="Area3D" parent="PisoCima/BossFight" unique_id=173432001 instance=ExtResource("58_g0mo4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
