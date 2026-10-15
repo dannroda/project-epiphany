@@ -6,11 +6,11 @@
       "text": "Compilar Godot c971f93e7 (editor, linux) con debug_symbols=yes"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Correr la suite completa en bucle con ese binario hasta reproducir el crash"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Con el backtrace legible, identificar la causa y seguir en 11.185"
     }
   ],
@@ -23,11 +23,11 @@
   "priority": "high",
   "refs": [],
   "size": "m",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "bug"
   ],
   "test": "",
   "title": "Build de Godot 4.8-dev7 con símbolos para diagnosticar el crash 11.185",
-  "updated_at": "2026-10-15T10:51:59.037Z"
+  "updated_at": "2026-10-15T12:20:54.527Z"
 }

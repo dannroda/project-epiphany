@@ -2,11 +2,11 @@
   "assignee": "project-epiphany-fd",
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "Reproducirlo con un bucle de viajes (overworld ↔ cuevas) y aislar el recurso"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Arreglar la causa o cargar ese recurso en el hilo principal"
     }
   ],
@@ -19,11 +19,11 @@
   "priority": "high",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug"
   ],
   "test": "",
   "title": "Crash intermitente al viajar: propagate_notification desde el hilo de carga",
-  "updated_at": "2026-10-15T10:57:36.587Z"
+  "updated_at": "2026-10-15T12:20:54.283Z"
 }

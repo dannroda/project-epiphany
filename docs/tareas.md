@@ -5348,14 +5348,14 @@ Daniel (2026-10-14, captura): arriba de la franja norte del Risco (nivel 2, x 70
   Daniel (2026-10-14): alcanza con el poste, es barato; sin salto.
 - [x] Test: desde la franja se vuelve sin caer al abismo
 
-### 11.185 Crash intermitente al viajar: propagate_notification desde el hilo de carga · Pendiente
+### 11.185 Crash intermitente al viajar: propagate_notification desde el hilo de carga · Revisión
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`
 
 En algunas corridas de la suite completa, un worker muere con signal 11 justo después de 'ERROR: /root: The caller thread can't call the function propagate_notification() on this node' durante SceneFlow.travel_to (carga con load_threaded_request). Última vez el 2026-10-15, viajando overworld → shrine_cave (test_cave/test_portal); log en debug/tmp/fd/crash_propagate_2026-10-15.log. Pasa de vez en cuando (la corrida siguiente da 546/0). En el código del juego no hay set_locale ni propagate_notification durante la carga: falta encontrar qué recurso, al cargarse en el hilo, le avisa al árbol. Puede pasar también jugando.
 
-- [ ] Reproducirlo con un bucle de viajes (overworld ↔ cuevas) y aislar el recurso
-- [ ] Arreglar la causa o cargar ese recurso en el hilo principal
+- [x] Reproducirlo con un bucle de viajes (overworld ↔ cuevas) y aislar el recurso
+- [x] Arreglar la causa o cargar ese recurso en el hilo principal
 
 **Notas:** 2026-10-15 (-fd), with the symbols build (11.188), crash caught in a run with --jobs=6: signal 11 in AudioServer::_mix_step (audio_server.cpp:243), audio thread (AudioDriverDummy), StringName::hash() on a bus name already freed. The propagate_notification error is a consequence: Godot's crash handler sends NOTIFICATION_CRASH to the SceneTree from the thread that crashed. Cause: every volume_db change makes AudioServer swap the playback's bus_details and free the old one 2 main-thread frames later (graveyard in _cleanup_lists); at headless test speed (hundreds of fps) the mixer can still be using the old one. music.gd set the volume of its 5 layers every frame even without changes. Fix: only set it when it changes. Engine race (could be reported upstream).
 
@@ -5381,15 +5381,15 @@ Daniel (2026-10-15) preguntó por el texture streaming de Godot 4.8: descartado,
 - [ ] Rangos de visibilidad/LOD en decor y plantas
 - [ ] Terreno en bloques más chicos que se descarten fuera de cámara
 
-### 11.188 Build de Godot 4.8-dev7 con símbolos para diagnosticar el crash 11.185 · En curso
+### 11.188 Build de Godot 4.8-dev7 con símbolos para diagnosticar el crash 11.185 · Revisión
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`
 
 El crash 11.185 pasa en un hilo del WorkerThreadPool que lee un StringName ya liberado (parece la búsqueda de un grupo de un nodo, HashMap en node+0x1e8), después del error de propagate_notification sobre /root. El binario oficial viene sin símbolos, así que el backtrace no dice qué parte del motor es. Hace falta compilar el mismo commit (c971f93e7) con debug_symbols=yes (y si se puede dev_build o sanitizers) y correr la suite en bucle hasta que se repita.
 
 - [x] Compilar Godot c971f93e7 (editor, linux) con debug_symbols=yes
-- [ ] Correr la suite completa en bucle con ese binario hasta reproducir el crash
-- [ ] Con el backtrace legible, identificar la causa y seguir en 11.185
+- [x] Correr la suite completa en bucle con ese binario hasta reproducir el crash
+- [x] Con el backtrace legible, identificar la causa y seguir en 11.185
 
 **Notas:** 2026-10-15 (-fd): built c971f93e7 (editor, debug_symbols=yes) at /home/ssd_disk/godot-c971 (worktree of godot-master), registered as 4.8-dev7-symbols in godot-select (symlink). 40 full suite runs (--jobs=3) in wt/bugs with that build, ~2.3 h: no crash. The only failures were test_input › test_shift_locks_and_wheel_switches (4 of 40), caused by test_chest leaving an item-get box on the way (fixed in main). Next: another loop with more load (--jobs=6).
 
