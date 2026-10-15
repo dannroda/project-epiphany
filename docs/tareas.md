@@ -5416,6 +5416,9 @@ Daniel (2026-10-15): agregar una pieza de corazón en el templo del ojo. Ver con
 
 Daniel (2026-10-15): un evento de mini jefe en el overworld, en una zona después de D2, hace aparecer el martillo. Definir el ítem: ItemData, el golpe fuerte (qué HitBox/AttackData lo marca como golpe fuerte, para que la placa STRIKE lea lo mismo), qué rompe o activa, su lugar en la cadena (después de D2: sirve en D3+ y el overworld, nunca gatea D1/D2) y GDD §6. Modelo listo: assets/epiphany/meshes/equipo/martillo.res (-5d).
 
+- [x] Congelar al golpeado un instante
+  Daniel (2026-10-15): quien recibe el martillazo (no la onda) queda aturdido un par de cuadros. HammerStrike.stun_time 0,1 s con Feel.hit_stop; test_hammer.
+
 **Notas:** Hecho el 2026-10-15 (a124b61b): data/items/hammer.tres (id hammer, ítem de botón, 1 corazón de daño). StrikeBehavior: animación Melee_2H_Attack_Chop; en use_at clava src/items/hammer/hammer_strike.tscn (una Hitbox de 1,1 m de radio, 3 cuadros, polvo y temblor) a 1,2 m hacia donde mira el player, y el martillo se ve en la mano del arma mientras dura (assets/items/hammer/hammer.tscn, para ajustar a ojo). Golpe fuerte: DamageInfo.strong, que pone Hitbox.strong o AttackData.strong; lo leen Breakable.needs_strong (la espada rebota), las guardias de escudo y las corazas (como la bomba); la placa STRIKE (11.193) tiene que leer info.strong. Ícono, textos es/en, GDD §6.1, test_hammer. Falta: que Daniel lo pruebe (momento del impacto, pose en la mano) y el mini jefe que lo da (11.192, -eb).
 
 ### 11.192 Overworld: mini jefe después de D2 que da el martillo · Revisión
@@ -5436,7 +5439,7 @@ Modo STRIKE de FloorSwitch con sus mallas (interruptor_golpe_marco/placa, ya hec
 
 Fases 2 y 3: si las dos manos están aturdidas o caídas, el ojo suma el barrido de rayo del Ojo Vigía (línea marcada, carga, barrido) alternando con el orbe. El aturdimiento y la derrota lo cortan. data/boss/attack_laser.tres; exports del grupo Rayo en boss.gd; test en test_boss.
 
-### 11.195 Overworld: entrada de la guarida de los guardias, del otro lado del agua (placeholder) · Pendiente
+### 11.195 Overworld: entrada de la guarida de los guardias, del otro lado del agua (placeholder) · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-eb · **Etiquetas:** `overworld`, `diseno`
 
