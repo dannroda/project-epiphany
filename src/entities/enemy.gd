@@ -39,9 +39,10 @@ var _guard_pose: PoseOverlay
 var _armor: Node3D
 var _recoil_left := 0.0
 var _airborne := false
-## Donde deambula: donde empezó (o donde cayó) y su sala.
+## Donde deambula: donde empezó (o donde cayó), su sala y, en el overworld, las zonas de su región.
 var _home := Vector3.INF
 var _home_room: Room
+var _home_region: Array[AreaZone] = []
 
 var is_dead: bool:
 	get:
@@ -145,10 +146,13 @@ func wander_point() -> Vector3:
 	return Vector3.INF
 
 
-## En una sala de dungeon, el que ya persigue no suelta al player mientras sigan los dos adentro.
+## El que ya persigue no suelta al player mientras sigan los dos en su sala de dungeon, o mientras el player siga en
+## su región del overworld.
 func shares_room(point: Vector3) -> bool:
 	home()
-	return _home_room != null and _home_room.contains(point) and _home_room.contains(global_position)
+	if _home_room != null:
+		return _home_room.contains(point) and _home_room.contains(global_position)
+	return _home_region.any(func(zone: AreaZone) -> bool: return zone.contains(point))
 
 
 ## Su lugar: donde estaba la primera vez que se pidió (o donde cayó, si bajó de nivel).
@@ -159,6 +163,9 @@ func home() -> Vector3:
 		for room: Room in get_tree().get_nodes_in_group(Room.GROUP):
 			if room.contains(_home):
 				_home_room = room
+		_home_region.clear()
+		if _home_room == null:
+			_home_region = AreaZone.region_at(get_tree(), _home)
 	return _home
 
 
