@@ -17,7 +17,13 @@ const PLAYER_SPACING := 1.2
 @export var show_loading_after := 0.25
 @export var loading_min_time := 0.6
 
-var traveling := false
+## Un cambio de escena, un fundido o una escalera en curso: portales, escaleras, checkpoints y otro viaje esperan.
+var traveling: bool:
+	get:
+		return _transitions > 0
+
+var _transitions := 0
+var _fade_tween: Tween
 
 @onready var _rect: ColorRect = $Rect
 @onready var loading_screen: Control = $Loading
@@ -31,25 +37,43 @@ func fade_in(seconds: float = 0.4) -> void:
 	await _fade(0.0, seconds)
 
 
+## Uno solo a la vez: el nuevo corta al anterior, y el que quedó esperando el cortado sigue igual.
 func _fade(alpha: float, seconds: float) -> void:
-	var tween := create_tween()
-	tween.tween_property(_rect, "color:a", alpha, seconds)
-	await tween.finished
+	if _fade_tween:
+		_fade_tween.kill()
+	_fade_tween = create_tween()
+	_fade_tween.tween_property(_rect, "color:a", alpha, seconds)
+	await Tweens.ended(_fade_tween)
+
+
+## Para lo que se mueve tapado sin cambiar de escena (escaleras): mientras dura, nada más arranca un viaje.
+func begin_transition() -> void:
+	_transitions += 1
+
+
+func end_transition() -> void:
+	_transitions = maxi(_transitions - 1, 0)
 
 
 ## Fundido a negro, `action` (cargar, partida nueva…) y fundido de vuelta. Corre acá y no en la pantalla que la pide,
 ## porque esa pantalla se libera al cambiar de escena y el fundido de vuelta nunca llegaría.
 func with_fade(action: Callable) -> void:
+	if traveling:
+		return
+	begin_transition()
 	await fade_out(0.3)
 	await action.call()
 	await fade_in(0.3)
+	end_transition()
 
 
 ## Cambio de escena por un portal: fundido, carga en segundo plano (con pantalla de carga si tarda), los players en
 ## `spawn` de la escena nueva y autosave. El juego queda en pausa mientras dura. `teleport`: se van y llegan en un rayo
 ## de luz (Teleport), en los portales mágicos y los de viaje rápido.
 func travel_to(scene_path: String, spawn: StringName, teleport := false) -> void:
-	traveling = true
+	if traveling:
+		return
+	begin_transition()
 	get_tree().paused = true
 	ResourceLoader.load_threaded_request(scene_path)
 	if teleport:
@@ -62,7 +86,7 @@ func travel_to(scene_path: String, spawn: StringName, teleport := false) -> void
 			player.model.visible = not player.spirit.visible
 		get_tree().paused = false
 		await fade_in(0.3)
-		traveling = false
+		end_transition()
 		return
 	GameState.spawn_scene = scene_path
 	GameState.spawn_point = spawn
@@ -82,7 +106,7 @@ func travel_to(scene_path: String, spawn: StringName, teleport := false) -> void
 	else:
 		get_tree().paused = false
 		await fade_in(0.3)
-	traveling = false
+	end_transition()
 
 
 ## Todos a la vez: se van (`leaving`) o llegan en el rayo.
@@ -157,14 +181,28 @@ func hide_loading() -> void:
 	loading_screen.visible = false
 
 
-## Fundido, recarga la escena y pone al player en el punto de reaparición con la vida llena.
+## Fundido, recarga la escena y pone al player en el punto de reaparición con la vida llena. En pausa, como un viaje.
 func respawn() -> void:
+	if traveling:
+		return
+	begin_transition()
+	get_tree().paused = true
 	await fade_out()
-	get_tree().reload_current_scene()
-	await get_tree().scene_changed
+	var path := get_tree().current_scene.scene_file_path
+	if path.is_empty():
+		get_tree().reload_current_scene()
+		await get_tree().scene_changed
+		_sync_dungeon()
+	elif not await _change_scene(path):
+		get_tree().paused = MenuStack.is_open()
+		await fade_in()
+		end_transition()
+		return
 	_place_at_spawn()
 	Log.info(&"combat", "Reapareció en", GameState.spawn_point if GameState.spawn_point else &"(el primero)")
+	get_tree().paused = MenuStack.is_open()
 	await fade_in()
+	end_transition()
 
 
 ## Partida nueva: equipo inicial, en el claro del inicio del overworld. Ocupa su ranura enseguida.
@@ -180,23 +218,25 @@ func new_game(slot: int = -1, with_intro := false) -> Error:
 	if with_intro:
 		GameState.set_flag(&"ow_intro_seen", true)
 		get_tree().current_scene.add_child(INTRO.instantiate())
-	SaveManager.save_game()
 	SaveManager.autosave()
 	return OK
 
 
 func quit_to_title() -> void:
+	begin_transition()
 	while MenuStack.is_open():
 		MenuStack.pop()
 	get_tree().paused = false
 	get_tree().change_scene_to_file(TITLE)
 	await get_tree().scene_changed
+	_sync_dungeon()
+	end_transition()
 
 
 ## Una partida ya leída: la escena vieja se va antes de que la partida llegue a GameState, así ningún nodo de ella
 ## reacciona a los flags nuevos ni los vuelve a escribir. Sin escena en la partida, se queda en la actual.
 func enter_save(cfg: ConfigFile) -> void:
-	traveling = true
+	begin_transition()
 	get_tree().paused = true
 	var has_scene := not str(cfg.get_value("player", "spawn_uid", "")).is_empty() or not str(cfg.get_value("player", "spawn_scene", "")).is_empty()
 	var old := get_tree().current_scene
@@ -205,6 +245,7 @@ func enter_save(cfg: ConfigFile) -> void:
 		old.queue_free()
 	GameState.read_from(cfg)
 	await enter_saved_scene()
+	end_transition()
 
 
 ## La escena y el lugar que dice GameState (al cargar una partida o empezar una nueva).
@@ -216,21 +257,21 @@ func enter_saved_scene() -> void:
 		GameState.spawn_scene = NEW_GAME_SCENE
 		GameState.spawn_point = &"start"
 		GameState.player_position = null
-	traveling = true
+	begin_transition()
 	get_tree().paused = true
 	var changed := true
 	if not GameState.spawn_scene.is_empty():
 		changed = await _change_scene(GameState.spawn_scene)
 	get_tree().paused = MenuStack.is_open()
 	if not changed:
-		traveling = false
+		end_transition()
 		return
 	if not Players.all.is_empty() and GameState.player_position != null:
 		place_players(GameState.player_position)
 	elif GameState.spawn_point != &"":
 		_place_at_spawn()
 	await get_tree().physics_frame
-	traveling = false
+	end_transition()
 
 
 ## En mazmorra, en la entrada de la última sala; si no, en el punto de reaparición.

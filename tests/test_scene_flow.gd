@@ -128,3 +128,49 @@ func test_reloading_a_dungeon_announces_it_at_most_once() -> void:
 	saves.current_slot = 1
 	state.reset()
 
+
+## Un viaje a la vez: otro viaje o reaparecer en el medio se ignoran, y el mundo queda en pausa hasta llegar.
+func test_transitions_do_not_overlap() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var flow: Node = tree.root.get_node(^"SceneFlow")
+	tree.root.get_node(^"GameState").reset()
+	tree.change_scene_to_file("res://levels/test.tscn")
+	await tree.scene_changed
+	var changes := [0]
+	var on_changed := func() -> void: changes[0] += 1
+	tree.scene_changed.connect(on_changed)
+	flow.travel_to("res://levels/test.tscn", &"start")
+	await tree.process_frame
+	assert_true(flow.traveling and tree.paused, "viajando y en pausa")
+	flow.travel_to("res://levels/test_rooms.tscn", &"start")
+	flow.respawn()
+	while flow.traveling:
+		await tree.process_frame
+	tree.scene_changed.disconnect(on_changed)
+	assert_eq(changes[0], 1, "un solo cambio de escena")
+	assert_eq(tree.current_scene.scene_file_path, "res://levels/test.tscn", "el primer viaje gana")
+	flow.respawn()
+	await tree.process_frame
+	assert_true(flow.traveling and tree.paused, "reaparecer también pausa y cuenta como viaje")
+	while flow.traveling:
+		await tree.process_frame
+	assert_true(not tree.paused)
+	assert_eq(flow.get_node(^"Rect").color.a, 0.0, "termina destapado")
+	tree.root.get_node(^"GameState").reset()
+
+
+## Un fundido nuevo corta al anterior; el que esperaba el cortado no queda colgado.
+func test_a_new_fade_cuts_the_running_one() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var flow: Node = tree.root.get_node(^"SceneFlow")
+	var done := [false]
+	var slow := func() -> void:
+		await flow.fade_out(1.0)
+		done[0] = true
+	slow.call()
+	await tree.create_timer(0.1).timeout
+	await flow.fade_in(0.1)
+	await tree.process_frame
+	assert_true(done[0], "el fundido cortado vuelve")
+	assert_eq(flow.get_node(^"Rect").color.a, 0.0, "gana el último")
+

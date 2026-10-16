@@ -22,6 +22,7 @@ func _ready() -> void:
 
 func _climb(crosser: PlayerCharacter) -> void:
 	_busy = true
+	SceneFlow.begin_transition()
 	Feel.sfx(&"stairs", crosser.global_position)
 	await SceneFlow.fade_out(fade_time)
 	var side := to.global_basis.x.normalized()
@@ -36,4 +37,5 @@ func _climb(crosser: PlayerCharacter) -> void:
 	await get_tree().physics_frame
 	get_tree().call_group(TopDownCamera.GROUP, &"snap_to_target")
 	await SceneFlow.fade_in(fade_time)
+	SceneFlow.end_transition()
 	_busy = false

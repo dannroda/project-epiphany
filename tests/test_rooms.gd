@@ -112,7 +112,12 @@ func test_dying_in_dungeon_respawns_at_room_entrance() -> void:
 		await tree.process_frame
 	assert_true(stack.top() is GameOver, "game over")
 	(stack.top() as GameOver)._continue.pressed.emit()
-	await tree.create_timer(2.0).timeout
+	await tree.process_frame
+	var flow: Node = tree.root.get_node(^"SceneFlow")
+	var until := Time.get_ticks_msec() + 6000
+	while flow.traveling and Time.get_ticks_msec() < until:
+		await tree.process_frame
+	await tree.create_timer(0.3).timeout
 	player = tree.get_first_node_in_group(&"player")
 	assert_true(player.global_position.distance_to(entry) < 0.5, "reaparece en la entrada de la sala")
 	camera = tree.current_scene.get_node(^"TopDownCamera")

@@ -43,7 +43,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"debug_quicksave"):
 		autosave()
 	elif event.is_action_pressed(&"debug_quickload"):
-		load_game(auto_slot())
+		load_game(current_slot)
 
 
 func slot_path(slot: int) -> String:
@@ -76,7 +76,7 @@ func save_game(slot: int = -1, capture_player := true) -> Error:
 ## Al cambiar de escena, al abrir un cofre grande, al entrar a la antesala.
 ## capture_player false guarda en el punto de reaparición (el portal del jefe: al cargar no vuelve a dispararlo).
 func autosave(capture_player := true) -> void:
-	var slot := auto_slot()
+	var slot := current_slot
 	if not capture_player:
 		GameState.player_position = null
 	if save_game(slot, capture_player) == OK:
@@ -84,11 +84,6 @@ func autosave(capture_player := true) -> void:
 		if not legacy.is_empty() and legacy.origin == slot:
 			delete_slot(AUTO_SLOT)
 		saved.emit(slot)
-
-
-## Adónde va el autosave: la ranura de la partida en curso (también la de los escenarios y tests).
-func auto_slot() -> int:
-	return current_slot
 
 
 ## También cuenta una ranura con solo la copia de respaldo (un guardado cortado): al leerla se usa esa.

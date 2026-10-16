@@ -333,7 +333,7 @@ func _slam_once(attack: BossAttack, target: Node3D, area: Rect2) -> bool:
 	hold.tween_property(self, ^"position:y", position.y + slam_overshoot, slam_lock_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	hold.parallel().tween_method(_tremble.bind(position), 0.0, 1.0, slam_lock_time)
 	hold.parallel().tween_method(_flash_shadow, 0.0, 1.0, slam_lock_time)
-	if not await _ended(hold):
+	if not await Tweens.ended(hold):
 		return false
 	if state != State.BUSY:
 		return false
@@ -389,7 +389,7 @@ func _grab(_attack: BossAttack, target: Node3D, area: Rect2) -> void:
 		shake.tween_property(self, ^"rotation:z", 0.12 * (1 if i % 2 else -1), grab_windup_time / 6.0)
 	shake.tween_property(self, ^"rotation:z", 0.0, 0.05)
 	_show_shadow(global_position, 1.6, 0.4)
-	if not await _ended(shake):
+	if not await Tweens.ended(shake):
 		return
 	if state != State.BUSY:
 		return
@@ -485,7 +485,7 @@ func _sweep(attack: BossAttack, target: Node3D, area: Rect2) -> void:
 	var windup := _new_attack_tween()
 	windup.tween_property(self, ^"position:x", position.x + side * 0.9, sweep_windup_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	windup.parallel().tween_method(func(t: float) -> void: position.z += randf_range(-TREMBLE, TREMBLE) * t, 0.0, 1.0, sweep_windup_time)
-	if not await _ended(windup):
+	if not await Tweens.ended(windup):
 		return
 	if state != State.BUSY:
 		return
@@ -513,7 +513,7 @@ func _return_to_rest() -> bool:
 		var from := global_position
 		_motion = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 		_motion.tween_method(func(t: float) -> void: global_position = from.lerp(rest.global_position, t), 0.0, 1.0, 0.6)
-		if not await _ended(_motion):
+		if not await Tweens.ended(_motion):
 			return false
 	pose = Pose.OPEN
 	return true
@@ -529,16 +529,8 @@ func _recover() -> void:
 func _move(to: Vector3, seconds: float, ease_type := Tween.EASE_IN_OUT) -> bool:
 	_motion = create_tween().set_trans(Tween.TRANS_SINE).set_ease(ease_type)
 	_motion.tween_property(self, ^"global_position", to, seconds)
-	return await _ended(_motion)
+	return await Tweens.ended(_motion)
 
-
-## Como `await tween.finished`, pero también vuelve si lo matan (kill() no emite finished): false en ese caso.
-func _ended(tween: Tween) -> bool:
-	var done := [false]
-	tween.finished.connect(func() -> void: done[0] = true, CONNECT_ONE_SHOT)
-	while not done[0] and tween.is_valid() and is_inside_tree():
-		await get_tree().process_frame
-	return done[0]
 
 
 func _floor_point(point: Vector3, area: Rect2) -> Vector3:

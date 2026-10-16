@@ -450,7 +450,7 @@ func _sweep_laser() -> void:
 	_laser_tween = create_tween()
 	_laser_tween.tween_property(self, ^"_squint", 1.0, 0.2)
 	_laser_tween.parallel().tween_method(_pulse_eye, 0.0, 1.0, laser_charge_time)
-	if not await _ended(_laser_tween) or not _eye_attacking:
+	if not await Tweens.ended(_laser_tween) or not _eye_attacking:
 		return
 	var floor_y := target.global_position.y if is_instance_valid(target) else 0.0
 	_laser_spot.global_position = Vector3(_laser_from.x, floor_y, _laser_from.z)
@@ -463,7 +463,7 @@ func _sweep_laser() -> void:
 	Feel.sfx(&"reflect", eye.global_position)
 	_laser_tween = create_tween()
 	_laser_tween.tween_property(_laser_spot, ^"global_position", Vector3(_laser_to.x, floor_y, _laser_to.z), laser_sweep_time)
-	if not await _ended(_laser_tween):
+	if not await Tweens.ended(_laser_tween):
 		return
 	_end_laser()
 	var relax := create_tween().set_parallel()
@@ -501,7 +501,7 @@ func _fire_orb() -> void:
 	grow.parallel().tween_property(self, ^"_squint", 1.0, 0.2)
 	grow.parallel().tween_method(_pulse_eye, 0.0, 1.0, orb_charge_time)
 	grow.parallel().tween_property(self, ^"_pupil_goal", 1.0, orb_charge_time).set_ease(Tween.EASE_IN)
-	if not await _ended(grow):
+	if not await Tweens.ended(grow):
 		return
 	_charge.visible = false
 	_eye_attacking = false
@@ -735,14 +735,6 @@ func _calm() -> void:
 	_pupil_goal = 0.0
 	_set_eye_glow(EYE_GLOW)
 
-
-## Como `await tween.finished`, pero también vuelve si lo matan (kill() no emite finished): false en ese caso.
-func _ended(tween: Tween) -> bool:
-	var done := [false]
-	tween.finished.connect(func() -> void: done[0] = true, CONNECT_ONE_SHOT)
-	while not done[0] and tween.is_valid() and is_inside_tree():
-		await get_tree().process_frame
-	return done[0]
 
 
 ## Corta la carga del orbe a mitad (aturdido o vencido): no dispara y el BT ya puede seguir.
