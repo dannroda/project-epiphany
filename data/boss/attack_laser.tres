@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="BossAttack" format=3]
+[gd_resource type="Resource" script_class="BossAttack" format=3 uid="uid://dhn8yb7ssncvj"]
 
 [ext_resource type="Script" uid="uid://byobqgwp5qte4" path="res://src/entities/boss/boss_attack.gd" id="1_attack"]
 [ext_resource type="Script" uid="uid://b6lm5gq15rbqw" path="res://src/combat/attack_data.gd" id="2_data"]
