@@ -1,18 +1,19 @@
 {
+  "assignee": "project-epiphany-cb",
   "checklist": [
     {
       "detail": "test_boss hoy solo mira visible/monitoring.",
-      "done": false,
+      "done": true,
       "text": "Test: el segundo barrido del rayo también pega"
     },
     {
       "detail": "Limpian la lista y prenden/apagan monitoring; los usan AttackRunner, BossHand, sub-jefes, pinchos y el rayo.",
-      "done": false,
+      "done": true,
       "text": "Hitbox.activate(attack) y deactivate()"
     },
     {
       "detail": "boss_hand.gd:102,141; sacar el AttackRunner si ya no hace falta.",
-      "done": false,
+      "done": true,
       "text": "Onda de la mano a un .tres"
     }
   ],
@@ -26,16 +27,16 @@
     }
   ],
   "milestone": "m16",
-  "notes": "",
+  "notes": "wt/bugs cf83a4d5. Hitbox.activate/deactivate en todos los que prendían monitoring a mano; la onda de la mano en data/boss/hand_shockwave.tres. BossHand sigue usando AttackRunner como registro de hitboxes.",
   "order": 1,
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug"
   ],
   "test": "El rayo pega en cada barrido que toca al player (con sus i-frames); test_boss lo cubre.",
   "title": "Jefe final: el rayo del ojo pega una sola vez por pelea",
-  "updated_at": "2026-10-16T19:48:46.283Z"
+  "updated_at": "2026-10-16T20:37:16.173Z"
 }

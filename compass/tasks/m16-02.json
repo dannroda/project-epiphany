@@ -1,18 +1,19 @@
 {
+  "assignee": "project-epiphany-cb",
   "checklist": [
     {
       "detail": "Uno Espíritu, el otro agarra un contenedor: sigue Espíritu con 0 HP.",
-      "done": false,
+      "done": true,
       "text": "Test con dos players"
     },
     {
       "detail": "Algo como `health.restore(max, current)` cuando is_dead o Espíritu.",
-      "done": false,
+      "done": true,
       "text": "Subir el máximo sin curar a los muertos"
     },
     {
       "detail": "Guardia en el anystate→Hurt de state_machine.gd:19.",
-      "done": false,
+      "done": true,
       "text": "Hurt no sale de Dead ni de Spirit"
     }
   ],
@@ -20,17 +21,17 @@
   "created_at": "2026-10-16T19:47:34.441Z",
   "description": "`_on_max_health_changed` llama a `health.reset(max)` (player.gd:282), que llena la vida en cualquier estado. Si el otro player es Espíritu (o está en el Dead de 1,8 s), queda con `is_dead == false`: la IA lo vuelve a buscar, su Hurtbox sigue activo y el próximo golpe lo saca de Spirit por anystate→Hurt sin pasar por `revive()`.",
   "milestone": "m16",
-  "notes": "",
+  "notes": "wt/bugs 574da08e. El vivo se llena; el caído queda en 0 con el máximo nuevo.",
   "order": 2,
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug",
     "co-op"
   ],
   "test": "",
   "title": "Co-op: un contenedor de corazón revive al Espíritu con la vida llena",
-  "updated_at": "2026-10-16T19:47:35.416Z"
+  "updated_at": "2026-10-16T20:37:16.446Z"
 }

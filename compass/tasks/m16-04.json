@@ -1,12 +1,13 @@
 {
+  "assignee": "project-epiphany-cb",
   "checklist": [
     {
       "detail": "zone_veil, title_flyover y overworld_map.",
-      "done": false,
+      "done": true,
       "text": "ZoneVeil.GROUP y usarlo en los tres lados"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Constantes para bombs, targetable y walk_guard"
     }
   ],
@@ -14,16 +15,16 @@
   "created_at": "2026-10-16T19:47:37.101Z",
   "description": "`title_flyover.gd:57` busca el grupo `zone_veil`; ZoneVeil se agrega a `zone_veils` (zone_veil.gd:29). El vuelo del título nunca los esconde y nada avisa. Otros grupos que siguen como texto suelto: `bombs`, `targetable`, `walk_guard`.",
   "milestone": "m16",
-  "notes": "",
+  "notes": "wt/bugs 97bfef35. test_groups: todo grupo buscado por nombre literal lo agrega algún script o escena.",
   "order": 4,
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug"
   ],
   "test": "",
   "title": "Intro del título: no esconde los velos del overworld",
-  "updated_at": "2026-10-16T19:47:37.723Z"
+  "updated_at": "2026-10-16T20:37:16.980Z"
 }

@@ -1,17 +1,18 @@
 {
+  "assignee": "project-epiphany-cb",
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "read_from: botones a largo 2 y sin ids que no tenés"
     },
     {
       "detail": "game_state.gd:407 lee cualquier Variant.",
-      "done": false,
+      "done": true,
       "text": "Flags con el tipo de su default"
     },
     {
       "detail": "Sigue siendo aviso, no bloquea.",
-      "done": false,
+      "done": true,
       "text": "validate: equipo, botones, botellas y mazmorras"
     }
   ],
@@ -19,16 +20,16 @@
   "created_at": "2026-10-16T19:47:38.115Z",
   "description": "`item_buttons.assign(...)` (game_state.gd:399) acepta un array de cualquier largo y después se indexa [0] y [1] (player.gd, `assign_button`). `SaveCodec.validate` no lo mira, y los escenarios se editan a mano o desde el Save Inspector. Tampoco valida equipo (id, categoría, que lo tengas), botellas, `current_dungeon`, las secciones `dungeon_*` ni el tipo de cada flag contra su default.",
   "milestone": "m16",
-  "notes": "",
+  "notes": "wt/bugs 757407ae. read_from es conservador (no exige que tengas el ítem); validate sí lo avisa. Todos los escenarios validan salvo boss_key_door_locked (a propósito).",
   "order": 5,
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug"
   ],
   "test": "",
   "title": "Partida o escenario con botones de ítem mal formados crashea",
-  "updated_at": "2026-10-16T19:47:39.032Z"
+  "updated_at": "2026-10-16T20:37:17.246Z"
 }

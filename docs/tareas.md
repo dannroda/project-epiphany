@@ -6227,71 +6227,81 @@ Arreglar los bugs y la deuda técnica que salieron del análisis del 2026-10-16 
 - Un sub-jefe nuevo, un ítem nuevo o un cambio de formato del save no obligan a copiar código ni a tocar varios archivos a mano.
 - Los tests barren carpetas enteras (escenarios, flags de niveles, data, grafos) en vez de listas fijas.
 
-### 16.1 Jefe final: el rayo del ojo pega una sola vez por pelea · Pendiente
+### 16.1 Jefe final: el rayo del ojo pega una sola vez por pelea · Revisión
 
-**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `bug`
 
 `Hitbox._already_hit` solo se limpia en el setter de `active_attack` (hitbox.gd:20-23). `_sweep_laser` prende `%LaserSpot` sin limpiarlo (boss.gd:460) y `_end_laser` solo lo apaga: después del primer golpe el player queda en la lista toda la pelea y los barridos siguientes lo atraviesan. Los demás que prenden `monitoring` a mano (Ojo Vigía, Kuntur, Amaru, Momia, pinchos) dependen de acordarse de poner `active_attack = null`. BossHand guarda un AttackRunner que solo usa como registro de hitboxes y arma el AttackData de la onda en código.
 
-- [ ] Test: el segundo barrido del rayo también pega
+- [x] Test: el segundo barrido del rayo también pega
   test_boss hoy solo mira visible/monitoring.
-- [ ] Hitbox.activate(attack) y deactivate()
+- [x] Hitbox.activate(attack) y deactivate()
   Limpian la lista y prenden/apagan monitoring; los usan AttackRunner, BossHand, sub-jefes, pinchos y el rayo.
-- [ ] Onda de la mano a un .tres
+- [x] Onda de la mano a un .tres
   boss_hand.gd:102,141; sacar el AttackRunner si ya no hace falta.
 
 **Prueba:** El rayo pega en cada barrido que toca al player (con sus i-frames); test_boss lo cubre.
 
+**Notas:** wt/bugs cf83a4d5. Hitbox.activate/deactivate en todos los que prendían monitoring a mano; la onda de la mano en data/boss/hand_shockwave.tres. BossHand sigue usando AttackRunner como registro de hitboxes.
+
 **Relacionadas:** 16.15 Daño por fuera del Hitbox, tres formas de mirar si toca el piso y dos ondas iguales
 
-### 16.2 Co-op: un contenedor de corazón revive al Espíritu con la vida llena · Pendiente
+### 16.2 Co-op: un contenedor de corazón revive al Espíritu con la vida llena · Revisión
 
-**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`, `co-op`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `bug`, `co-op`
 
 `_on_max_health_changed` llama a `health.reset(max)` (player.gd:282), que llena la vida en cualquier estado. Si el otro player es Espíritu (o está en el Dead de 1,8 s), queda con `is_dead == false`: la IA lo vuelve a buscar, su Hurtbox sigue activo y el próximo golpe lo saca de Spirit por anystate→Hurt sin pasar por `revive()`.
 
-- [ ] Test con dos players
+- [x] Test con dos players
   Uno Espíritu, el otro agarra un contenedor: sigue Espíritu con 0 HP.
-- [ ] Subir el máximo sin curar a los muertos
+- [x] Subir el máximo sin curar a los muertos
   Algo como `health.restore(max, current)` cuando is_dead o Espíritu.
-- [ ] Hurt no sale de Dead ni de Spirit
+- [x] Hurt no sale de Dead ni de Spirit
   Guardia en el anystate→Hurt de state_machine.gd:19.
 
-### 16.3 Templo: el grafo pide `mirror_shield`, que no existe · Pendiente
+**Notas:** wt/bugs 574da08e. El vivo se llena; el caído queda en 0 con el máximo nuevo.
 
-**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`, `tests`
+### 16.3 Templo: el grafo pide `mirror_shield`, que no existe · Revisión
+
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `bug`, `tests`
 
 templo_graph.tres:153, 159, 186 y 195 usan `mirror_shield`; el ítem es `shield_mirror`. El test de alcanzabilidad pasa porque el mismo grafo lo trae en `brings`: el `_tokens()` de dungeon_reach.gd solo mira que alguien del grafo dé cada token.
 
-- [ ] Corregir el id en el grafo del templo
-- [ ] Test: cada token es un id de ItemDatabase o de FlagRegistry
+- [x] Corregir el id en el grafo del templo
+- [x] Test: cada token es un id de ItemDatabase o de FlagRegistry
   needs, brings, item, guard y goal; los tokens sintéticos (ch_rellano_pot) con prefijo o lista explícita.
 - [ ] Opcional: brings sale de los item de los grafos anteriores
   Hoy se copia a mano.
 
+**Notas:** wt/bugs 0abf56af. Derivar brings de los grafos anteriores quedó sin hacer (opcional).
+
 **Relacionadas:** 16.22 Tests que barren carpetas en vez de listas fijas
 
-### 16.4 Intro del título: no esconde los velos del overworld · Pendiente
+### 16.4 Intro del título: no esconde los velos del overworld · Revisión
 
-**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `bug`
 
 `title_flyover.gd:57` busca el grupo `zone_veil`; ZoneVeil se agrega a `zone_veils` (zone_veil.gd:29). El vuelo del título nunca los esconde y nada avisa. Otros grupos que siguen como texto suelto: `bombs`, `targetable`, `walk_guard`.
 
-- [ ] ZoneVeil.GROUP y usarlo en los tres lados
+- [x] ZoneVeil.GROUP y usarlo en los tres lados
   zone_veil, title_flyover y overworld_map.
-- [ ] Constantes para bombs, targetable y walk_guard
+- [x] Constantes para bombs, targetable y walk_guard
 
-### 16.5 Partida o escenario con botones de ítem mal formados crashea · Pendiente
+**Notas:** wt/bugs 97bfef35. test_groups: todo grupo buscado por nombre literal lo agrega algún script o escena.
 
-**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`
+### 16.5 Partida o escenario con botones de ítem mal formados crashea · Revisión
+
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `bug`
 
 `item_buttons.assign(...)` (game_state.gd:399) acepta un array de cualquier largo y después se indexa [0] y [1] (player.gd, `assign_button`). `SaveCodec.validate` no lo mira, y los escenarios se editan a mano o desde el Save Inspector. Tampoco valida equipo (id, categoría, que lo tengas), botellas, `current_dungeon`, las secciones `dungeon_*` ni el tipo de cada flag contra su default.
 
-- [ ] read_from: botones a largo 2 y sin ids que no tenés
-- [ ] Flags con el tipo de su default
+- [x] read_from: botones a largo 2 y sin ids que no tenés
+- [x] Flags con el tipo de su default
   game_state.gd:407 lee cualquier Variant.
-- [ ] validate: equipo, botones, botellas y mazmorras
+- [x] validate: equipo, botones, botellas y mazmorras
   Sigue siendo aviso, no bloquea.
+
+**Notas:** wt/bugs 757407ae. read_from es conservador (no exige que tengas el ítem); validate sí lo avisa. Todos los escenarios validan salvo boss_key_door_locked (a propósito).
 
 ### 16.6 Corrutinas que esperan un tween matado no vuelven nunca · Pendiente
 
