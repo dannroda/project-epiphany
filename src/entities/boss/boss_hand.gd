@@ -229,6 +229,31 @@ func regenerate() -> void:
 
 ## Cambio de fase: corta lo que esté haciendo (ataque, aturdida, caída), suelta al player y vuelve al reposo con la vida llena.
 func reset() -> void:
+	_drop_everything()
+	await get_tree().physics_frame
+	regenerate()
+
+
+## Muere el jefe: como el ojo, el neón se apaga titilando, tiembla y le estallan las juntas, y se hunde achicándose.
+func vanish() -> void:
+	_drop_everything()
+	hurtbox.set_deferred(&"monitorable", false)
+	_fall = create_tween()
+	_fall.tween_method(_set_glow, 1.0, 0.0, 1.4).set_trans(Tween.TRANS_BOUNCE)
+	var base := position
+	for i in 10:
+		_fall.tween_property(self, ^"position", base + Vector3(0.12 * (1 if i % 2 else -1), 0, 0), 0.08)
+		if i % 2 == 0:
+			_fall.tween_callback(_joint_blast)
+	_fall.tween_property(self, ^"global_position:y", FLOOR_HEIGHT * 0.3, 1.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	_fall.parallel().tween_property(self, ^"scale", Vector3.ONE * 0.6, 1.2)
+	_fall.tween_callback(func() -> void:
+		Feel.burst(&"dust", Vector3(global_position.x, 0.1, global_position.z), Vector3.UP)
+		visible = false)
+
+
+## Corta ataque, aturdida o caída en curso y suelta al player; queda DOWN.
+func _drop_everything() -> void:
 	_run += 1
 	for tween in [_motion, _attack_tween, _bounce, _fall]:
 		if tween:
@@ -239,8 +264,17 @@ func reset() -> void:
 	if is_instance_valid(_grabbed) and _grabbed.is_grabbed():
 		_grabbed.release()
 	set_state(State.DOWN)
-	await get_tree().physics_frame
-	regenerate()
+
+
+func _set_glow(value: float) -> void:
+	_material.emission_energy_multiplier = _base_glow * value
+
+
+func _joint_blast() -> void:
+	var spot := global_position + Vector3(randf_range(-0.6, 0.6), randf_range(-0.3, 0.6), randf_range(-0.6, 0.6))
+	Feel.burst(&"explosion", spot, Vector3.UP)
+	Feel.burst(&"shards", spot, (spot - global_position).normalized() + Vector3.UP)
+	Feel.sfx(&"boom", spot)
 
 
 ## Corre el ataque; `striking` queda en true hasta que golpea (o falla). `area`: el piso de la arena (XZ).
@@ -551,7 +585,7 @@ func _new_attack_tween() -> Tween:
 	return _attack_tween
 
 
-## Cae al piso y queda ahí (sin vida, o porque murió el jefe).
+## Sin vida: cae al piso y queda ahí.
 func collapse() -> void:
 	if state == State.DOWN:
 		return

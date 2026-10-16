@@ -124,8 +124,6 @@ var _body_base_glow := 1.0
 var _transforming := false
 ## Lo prende BossArena al arrancar la pelea: cada fase nueva se presenta con la cámara, como el inicio.
 var presents_phases := false
-## Revancha o reintento: esas presentaciones ya se vieron y se pueden saltear.
-var skippable_phases := false
 ## La cámara se acercó a presentar la fase y el juego está en pausa: los efectos tienen que andar igual.
 var _presenting := false
 
@@ -647,7 +645,7 @@ func _present(action: Callable, hold: float) -> void:
 		action.call()
 		return
 	_presenting = true
-	await TopDownCamera.reveal(self, action, hold, skippable_phases)
+	await TopDownCamera.reveal(self, action, hold)
 	_presenting = false
 
 
@@ -752,7 +750,7 @@ func _on_defeated() -> void:
 	_cut_charge()
 	eye_hurtbox.set_deferred(&"monitorable", false)
 	for hand in [hand_left, hand_right]:
-		hand.collapse()
+		hand.vanish()
 	Feel.sfx(&"rumble", eye.global_position)
 	Feel.shake(0.8)
 	Feel.freeze(SLOW_MOTION_TIME, SLOW_MOTION)

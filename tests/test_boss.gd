@@ -160,6 +160,27 @@ func test_a_reset_cuts_a_slam_in_the_middle() -> void:
 	boss.free()
 
 
+func test_the_hands_go_away_like_the_eye_when_the_boss_dies() -> void:
+	var boss := _spawn()
+	var tree := Engine.get_main_loop() as SceneTree
+	boss.start_fight()
+	_knock_down(boss.hand_left)
+	_knock_down(boss.hand_right)
+	await tree.create_timer(2.0).timeout
+	var heights := [boss.hand_left.global_position.y, boss.hand_right.global_position.y]
+	boss.health.invulnerability_time = 0.0
+	boss.health.damage(boss.health.max_health)
+	await tree.create_timer(1.0).timeout
+	for i in 2:
+		var hand: BossHand = [boss.hand_left, boss.hand_right][i]
+		assert_true(hand.visible and is_equal_approx(hand.global_position.y, heights[i]), "%s no cae de una: titila y tiembla primero" % hand.name)
+	await tree.create_timer(3.0).timeout
+	for hand: BossHand in [boss.hand_left, boss.hand_right]:
+		assert_true(not hand.visible, "%s desaparece" % hand.name)
+		assert_true(hand.scale.x < 0.7, "%s se hunde achicándose" % hand.name)
+	boss.free()
+
+
 func test_the_stunned_eye_droops_but_shows_its_pupil() -> void:
 	var boss := _spawn()
 	var tree := Engine.get_main_loop() as SceneTree
@@ -303,7 +324,7 @@ func _wait_until(done: Callable, seconds: float) -> bool:
 	return true
 
 
-func test_arena_closes_intro_unskippable_the_first_time_and_bar() -> void:
+func test_arena_closes_intro_never_skippable_and_bar() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	tree.root.get_node(^"GameState").reset()
 	tree.change_scene_to_file("res://levels/templo.tscn")
@@ -314,6 +335,7 @@ func test_arena_closes_intro_unskippable_the_first_time_and_bar() -> void:
 	var arena := level.get_node(^"BossArena") as BossArena
 	var boss := level.get_node(^"Boss") as Boss
 	var hud := level.get_node(^"HUD")
+	tree.root.get_node(^"GameState").seen_boss_intros[arena.defeated_flag] = true
 	door.open(false)
 	player.global_position = Vector3(66, 0, 19)
 	for i in 10:
@@ -330,7 +352,7 @@ func test_arena_closes_intro_unskippable_the_first_time_and_bar() -> void:
 	skip.pressed = true
 	tree.root.push_input(skip)
 	await tree.create_timer(0.5, true).timeout
-	assert_true(arena.in_intro and not boss.phases.is_active(), "la primera vez la intro no se saltea")
+	assert_true(arena.in_intro and not boss.phases.is_active(), "la intro del jefe final no se saltea, ni ya vista")
 	assert_true(await _wait_until(func() -> bool: return boss.phases.is_active(), 6.0), "después de la intro empieza la pelea")
 	assert_true(not tree.paused, "el juego sigue")
 	assert_true(hud.boss_bar.visible and is_equal_approx(hud.boss_health.value, 1.0), "aparece la barra llena")

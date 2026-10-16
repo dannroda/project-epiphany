@@ -75,13 +75,10 @@ func _begin() -> void:
 	door.close()
 	await get_tree().create_timer(door.open_time, false).timeout
 	in_intro = true
-	var skippable := GameState.boss_rematch or GameState.seen_boss_intros.has(defeated_flag)
 	boss.presents_phases = true
-	boss.skippable_phases = skippable
 	Music.boss_fight = true
 	_sharpen()
-	await TopDownCamera.reveal(boss.eye, _awaken, intro_hold, skippable)
-	GameState.seen_boss_intros[defeated_flag] = true
+	await TopDownCamera.reveal(boss.eye, _awaken, intro_hold)
 	in_intro = false
 	get_tree().call_group(Hud.GROUP, &"show_boss", boss)
 	boss.start_fight()
