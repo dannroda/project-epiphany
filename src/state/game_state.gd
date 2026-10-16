@@ -396,14 +396,19 @@ func read_from(cfg: ConfigFile) -> void:
 			inventory.add(id, count)
 	for key in _keys(cfg, "equipment"):
 		if key == &"buttons":
-			item_buttons.assign(get_typed.call("equipment", key, []))
+			_read_buttons(get_typed.call("equipment", key, []))
 		elif ItemData.Category.has(key):
 			equipment[ItemData.Category[key]] = get_typed.call("equipment", key, &"")
 	for bottle in _keys(cfg, "bottles"):
 		bottles[bottle] = get_typed.call("bottles", bottle, &"")
 	_migrate_bottles()
 	for id in _keys(cfg, "flags"):
-		flags[id] = cfg.get_value("flags", id)
+		var value: Variant = cfg.get_value("flags", id)
+		var default: Variant = FLAGS.default_of(id)
+		if default != null and typeof(value) != typeof(default):
+			Log.warning(&"save", "Flag con otro tipo en la partida:", id, value)
+			continue
+		flags[id] = value
 	visited_zones.assign(get_typed.call("map", "visited_zones", []))
 	map_pins.assign(get_typed.call("map", "pins", []))
 	var size: Vector2i = get_typed.call("map", "revealed_size", Vector2i.ZERO)
@@ -425,6 +430,17 @@ func read_from(cfg: ConfigFile) -> void:
 		dungeons[StringName(section.trim_prefix(DUNGEON_PREFIX))] = dungeon
 	_set_bulk(false)
 	loaded.emit()
+
+
+## Siempre dos botones; lo que no es un ítem ni una botella queda vacío (escenarios editados a mano).
+func _read_buttons(saved: Array) -> void:
+	item_buttons.assign([&"", &""])
+	for index in mini(saved.size(), 2):
+		var id: Variant = saved[index]
+		if (id is StringName or id is String) and Items.get_item(id) != null:
+			item_buttons[index] = StringName(id)
+		elif str(id) != "":
+			Log.warning(&"save", "Botón con algo que no es un ítem:", id)
 
 
 func _clear() -> void:

@@ -94,14 +94,44 @@ static func validate(cfg: ConfigFile) -> PackedStringArray:
 					cap += other.capacity_bonus
 			if count < 0 or count > cap:
 				errors.append("inventory/%s: %d fuera de rango (0..%d)" % [id, count, cap])
+	if cfg.has_section("equipment"):
+		for key in cfg.get_section_keys("equipment"):
+			if key == "buttons":
+				errors.append_array(_button_errors(cfg, db))
+				continue
+			var item := db.get_item(typed(cfg, "equipment", key, &""))
+			if not ItemData.Category.has(key):
+				errors.append("equipment/%s: categoría inexistente" % key)
+			elif item == null:
+				errors.append("equipment/%s: ítem inexistente" % key)
+			elif item.category != ItemData.Category[key]:
+				errors.append("equipment/%s: %s es de otra categoría" % [key, item.id])
 	if cfg.has_section("flags"):
 		for id in cfg.get_section_keys("flags"):
 			if not flags.has(id):
 				errors.append("flags/%s: flag no registrada" % id)
+			elif typeof(cfg.get_value("flags", id)) != typeof(flags.default_of(id)):
+				errors.append("flags/%s: no es del tipo de su valor por defecto" % id)
 			elif id.ends_with("_boss_door") and cfg.get_value("flags", id) == true:
 				var section := "dungeon_" + id.get_slice("_", 0)
 				if not cfg.get_value(section, "has_boss_key", false):
 					errors.append("flags/%s: la puerta del jefe está abierta pero %s no tiene la llave del jefe" % [id, section])
+	return errors
+
+
+static func _button_errors(cfg: ConfigFile, db: ItemDatabase) -> PackedStringArray:
+	var errors := PackedStringArray()
+	var buttons: Variant = cfg.get_value("equipment", "buttons")
+	if not buttons is Array or (buttons as Array).size() != 2:
+		return PackedStringArray(["equipment/buttons: tienen que ser dos"])
+	for id: Variant in buttons:
+		if str(id) == "":
+			continue
+		var item := db.get_item(id) if id is StringName or id is String else null
+		if item == null:
+			errors.append("equipment/buttons: %s no es un ítem" % [id])
+		elif typed(cfg, "inventory", item.id, 0) <= 0:
+			errors.append("equipment/buttons: %s no está en el inventario" % item.id)
 	return errors
 
 

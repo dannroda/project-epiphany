@@ -85,6 +85,31 @@ func test_unknown_item_in_save_is_skipped() -> void:
 	state.free()
 
 
+## Un escenario editado a mano con un solo botón, o con basura, no rompe al asignar.
+func test_malformed_buttons_are_read_as_two() -> void:
+	var state := _new_state()
+	for saved: Array in [[&"bow"], [], [&"bow", &"bomb_bag", &"feather"], [3, &"no_existe"]]:
+		var cfg := ConfigFile.new()
+		cfg.set_value("inventory", "bow", 1)
+		cfg.set_value("equipment", "buttons", saved)
+		state.read_from(cfg)
+		assert_eq(state.item_buttons.size(), 2, str(saved))
+		assert_true(state.item_buttons.all(func(id: StringName) -> bool: return id == &"" or Items.get_item(id) != null), str(state.item_buttons))
+		assert_true(state.assign_button(1, &"bow"), "se puede asignar con %s" % [saved])
+	state.free()
+
+
+## Una flag con otro tipo que su valor por defecto queda en el defecto.
+func test_a_flag_of_the_wrong_type_is_skipped() -> void:
+	var state := _new_state()
+	var cfg := ConfigFile.new()
+	var id: StringName = GameStateScript.FLAGS.definitions[0].id
+	cfg.set_value("flags", id, "abierta")
+	state.read_from(cfg)
+	assert_eq(state.get_flag(id), GameStateScript.FLAGS.default_of(id))
+	state.free()
+
+
 ## 11.86: un flag que no cambia no avisa.
 func test_set_flag_only_emits_on_change() -> void:
 	var state := _new_state()

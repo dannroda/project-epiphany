@@ -85,6 +85,15 @@ func test_validate() -> void:
 	cfg.set_value("flags", "flag_inventada", true)
 	assert_eq(SaveCodec.validate(cfg).size(), 3)
 	assert_eq(SaveCodec.validate(_cfg(3)).size(), 0)
+	var equipment := ConfigFile.new()
+	equipment.set_value("inventory", "bow", 1)
+	equipment.set_value("equipment", "SWORD", &"shield_wood")
+	equipment.set_value("equipment", "SHIELD", &"no_existe")
+	equipment.set_value("equipment", "buttons", [&"bow"])
+	equipment.set_value("flags", (load("res://data/flag_registry.tres") as FlagRegistry).definitions[0].id, 1)
+	assert_eq(SaveCodec.validate(equipment).size(), 4, str(SaveCodec.validate(equipment)))
+	equipment.set_value("equipment", "buttons", [&"bow", &"feather"])
+	assert_true(" feather no está en el inventario" in "|".join(SaveCodec.validate(equipment)), "un botón con algo que no tenés")
 
 
 func test_scenarios_are_valid() -> void:
