@@ -2594,7 +2594,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 
 Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
 
-## M11 — Pulido: contenido y feel  (117/199)
+## M11 — Pulido: contenido y feel  (117/200)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5547,6 +5547,21 @@ PRs de 4.8 que Daniel eligió: 118045 y 115426 (luz) activados; 113970, 121122 y
   Ya en uso: CausticsDecal dibuja una DrawableTexture2D y en 4.8 el atlas se actualiza en cada blit. Usarlo para decals animados nuevos (grieta del golpe, sombras de nubes si va por decal).
 - [ ] get_velocity_at_position en RigidBody3D (#121122)
   Sin caso hoy: los cuerpos (vasijas, bombas) vuelan sin girar, así que equivale a linear_velocity. Usarlo cuando haya cuerpos que giran y empujan/dañan por el punto de contacto (rocas rodantes, plataformas que giran).
+
+### 11.204 Jefe final: manos al cambiar de fase, aturdido, golpes y rayo · Revisión
+
+**Responsable:** project-epiphany-67
+
+Pedido de Daniel (2026-10-16) tras pelear con el jefe final.
+
+- [ ] Las manos no se reiniciaban al cambiar de fase (quedaban en el piso)
+  Hecho (82b7934a): al entrar a la fase 3, BossHand.reset corta ataque, aturdida o caída, suelta al player y la vuelve al reposo con la vida llena. Los ataques a medio esperar se cortan con un contador de corrida. test_the_third_phase_brings_every_hand_back, test_a_reset_cuts_a_slam_in_the_middle.
+- [ ] Aturdido, el ojo quedaba en blanco
+  Hecho (82b7934a): miraba casi al piso y desde la cámara se veía solo el blanco. Ahora el cuerpo cae para atrás con rebote y la mirada baja a medias entre la cámara y el frente, meciéndose: se ve la pupila dilatada, caída. test_the_stunned_eye_droops_but_shows_its_pupil (con cámara propia, 5f8bda31).
+- [ ] Cada golpe: el ojo cambia de color y se mueve
+  Hecho (82b7934a): tinte rojo (HitFlash.hold) y tirones al azar solo del globo del ojo (Body/Eye/Mesh); párpados y cuerpo quietos. test_each_hit_tints_and_jolts_only_the_eye.
+- [ ] Shader del rayo, como la onda pero rojo
+  Hecho (82b7934a): laser.gdshader, núcleo casi blanco, halo rojo que late y se ensancha, chispas que corren hacia la punta; el mismo shader en modo disc para la quemadura del piso. Radio del haz 0,26.
 
 ## M12 — Assets propios (Blender)  (17/39)
 
