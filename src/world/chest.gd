@@ -55,6 +55,11 @@ func _ready() -> void:
 				_appear(true))
 
 
+## Abierto de verdad (su flag), no solo sin poder abrirse: los que esperan a sus switches siguen cerrados.
+func is_opened() -> bool:
+	return persistent != null and persistent.value == true
+
+
 func _hide() -> void:
 	visible = false
 	_layer = collision_layer

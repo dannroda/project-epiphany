@@ -208,7 +208,7 @@ func _show_dungeon() -> void:
 		if _dungeon.has_compass:
 			cell.boss = room.boss_room
 			for chest in _chests_in(room):
-				if chest.interactable.enabled:
+				if not chest.is_opened():
 					cell.closed_chests += 1
 				else:
 					cell.opened_chests += 1
@@ -237,7 +237,7 @@ func _show_floors(levels: Array, current: Room) -> void:
 		if _dungeon.has_compass:
 			var rooms := MapData.rooms_on(get_tree(), level)
 			button.boss = rooms.any(func(room: Room) -> bool: return room.boss_room)
-			button.chest = rooms.any(func(room: Room) -> bool: return _chests_in(room).any(func(chest: Chest) -> bool: return chest.interactable.enabled))
+			button.chest = rooms.any(func(room: Room) -> bool: return _chests_in(room).any(func(chest: Chest) -> bool: return not chest.is_opened()))
 		button.pressed.connect(view_floor.bind(level))
 		floor_buttons.add_child(button)
 	_refresh_floor_icons()
@@ -386,7 +386,7 @@ func _focus_room(room: Room) -> void:
 	if room.boss_room and _dungeon.has_compass:
 		notes.append(tr("MAP_BOSS"))
 	if _dungeon.has_compass:
-		var closed := _chests_in(room).filter(func(chest: Chest) -> bool: return chest.interactable.enabled).size()
+		var closed := _chests_in(room).filter(func(chest: Chest) -> bool: return not chest.is_opened()).size()
 		if closed > 0:
 			notes.append(tr_n("MAP_CHESTS_CLOSED", "MAP_CHESTS_CLOSED_PLURAL", closed).format({count = closed}))
 	if notes.is_empty():
@@ -459,7 +459,7 @@ func _place_overworld(on_player := false) -> void:
 		if portal.lit:
 			marks.add_child(MapMark.create(MapMark.Kind.PORTAL, _portal_point(portal)))
 	for chest: Chest in get_tree().get_nodes_in_group(Chest.GROUP):
-		if not chest.interactable.enabled:
+		if chest.is_opened():
 			_add_mark(MapMark.Kind.CHEST_OPEN, chest.global_position)
 	_cache_scene()
 	for tablet: Tablet in _tablets:
@@ -595,7 +595,7 @@ func _focus_zone(zone: AreaZone) -> void:
 	var region := _zones().filter(func(other: AreaZone) -> bool: return other.display_name == zone.display_name and other.is_visited())
 	var inside := func(point: Vector3) -> bool: return region.any(func(other: AreaZone) -> bool: return other.contains(point))
 	var chests := get_tree().get_nodes_in_group(Chest.GROUP).filter(func(chest: Chest) -> bool: return inside.call(chest.global_position))
-	_count_row("MAP_CHESTS", chests.filter(func(chest: Chest) -> bool: return not chest.interactable.enabled).size(), chests.size())
+	_count_row("MAP_CHESTS", chests.filter(func(chest: Chest) -> bool: return chest.is_opened()).size(), chests.size())
 	var tablets := _tablets.filter(func(tablet: Tablet) -> bool: return inside.call(tablet.global_position))
 	_count_row("MAP_TABLETS_READ", tablets.filter(func(tablet: Tablet) -> bool: return tablet.is_read()).size(), tablets.size())
 	var pieces := _pieces.filter(func(piece: HeartPiece) -> bool: return inside.call(piece.global_position))

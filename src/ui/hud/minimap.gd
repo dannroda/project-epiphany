@@ -193,7 +193,7 @@ func _draw_room_icons(room: Room, rect: Rect2) -> void:
 	if room.boss_room:
 		_draw_small(view, func() -> void: MapRoomCell.draw_eye(view, Vector2.ZERO), center, 0.7)
 		return
-	var closed := MapData.chests_in(get_tree(), room).filter(func(chest: Chest) -> bool: return chest.interactable.enabled)
+	var closed := MapData.chests_in(get_tree(), room).filter(func(chest: Chest) -> bool: return not chest.is_opened())
 	if not closed.is_empty():
 		_draw_small(view, func() -> void: MapRoomCell.draw_chest(view, Vector2.ZERO, MapRoomCell.GOLD), center, 0.7)
 
@@ -258,7 +258,7 @@ func _draw_marks() -> void:
 	for portal: Portal in _portals.filter(is_instance_valid):
 		_draw_mark(func() -> void: MapRoomCell.draw_entrance(marks, Vector2.ZERO, MapRoomCell.TEXT), portal.global_position, here, world_view)
 	for chest: Chest in get_tree().get_nodes_in_group(Chest.GROUP):
-		if not chest.interactable.enabled:
+		if chest.is_opened():
 			_draw_mark(func() -> void: MapRoomCell.draw_chest(marks, Vector2.ZERO, MapRoomCell.GREY), chest.global_position, here, world_view)
 	for tablet: Tablet in _tablets.filter(is_instance_valid):
 		if tablet.is_read():

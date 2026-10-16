@@ -86,6 +86,7 @@ func test_slam_squashes_and_leaves_a_crack() -> void:
 	target.global_position = boss.global_position + Vector3(1, 0, 6)
 	var hand := boss.hand_left
 	hand.slam_stun_time = 1.0
+	hand.slam_count = 1
 	var decals := func() -> int: return tree.current_scene.find_children("*", "Decal", true, false).filter(func(d: Decal) -> bool: return not boss.is_ancestor_of(d)).size()
 	var before: int = decals.call()
 	hand.perform(load("res://data/boss/attack_slam.tres"), target, boss.arena)
