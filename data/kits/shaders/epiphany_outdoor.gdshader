@@ -4,7 +4,6 @@ shader_type spatial;
 // sueltas con tierra entre medio en la piedra (floor_earth: 0 = todo losas, epiphany_outdoor_losas.tres), piedritas en la tierra y
 // parches con matitas en el pasto.
 
-#include "cloud_shadows.gdshaderinc"
 #include "wind.gdshaderinc"
 
 uniform vec4 albedo_color : source_color = vec4(0.72, 0.72, 0.72, 1.0);
@@ -135,7 +134,7 @@ void fragment() {
 			color = mix(color, base * vec3(1.2, 1.25, 1.05), tufts * 0.7);
 		}
 	}
-	ALBEDO = color * cloud_shade(world_pos, TIME);
+	ALBEDO = color;
 	METALLIC = surface.r;
 	ROUGHNESS = rough;
 	EMISSION = texture(emission_texture, UV).rgb * emission_energy;

@@ -94,17 +94,17 @@ func test_only_walls_turn_the_camera_overhead() -> void:
 
 
 func test_clouds_only_while_in_the_overworld() -> void:
-	assert_true(ProjectSettings.has_setting("shader_globals/cloud_shadows"), "uniform global registrada")
-	var overworld: Node = load("res://levels/overworld.tscn").instantiate()
-	var clouds := overworld.get_node_or_null(^"CloudShadows")
-	assert_true(clouds != null, "el overworld tiene nubes")
-	if clouds:
-		var shade: Vector4 = clouds.value()
-		assert_true(shade.x > 0.0 and shade.y > 0.0, "fuerza y tamaño")
-	overworld.free()
-	var temple: Node = load("res://levels/templo.tscn").instantiate()
-	assert_true(temple.get_node_or_null(^"CloudShadows") == null, "el templo no")
-	temple.free()
+	var nubes := load("res://src/world/look/nubes_la.gd")
+	var has_clouds := func(path: String) -> bool:
+		var level: Node = load(path).instantiate()
+		var found := false
+		for world: WorldEnvironment in level.find_children("*", "WorldEnvironment", true, false):
+			for effect in world.compositor.compositor_effects if world.compositor else []:
+				found = found or (effect and effect.get_script() == nubes and effect.strength > 0.0)
+		level.free()
+		return found
+	assert_true(has_clouds.call("res://levels/overworld.tscn"), "el overworld tiene nubes")
+	assert_true(not has_clouds.call("res://levels/templo.tscn"), "el templo no")
 
 
 ## Playtest 2026-10-14: en una sala (cueva de las bombas) los bordes y los muros bajos no suben la cámara.

@@ -19,7 +19,7 @@ const SPECIAL := {"Escalón": "S", "Andén borde": "v", "Hueco": "W"}
 const MOUNTAIN := 3
 ## Las plantas de la grilla apenas aplanan el terreno: si no, una hilera de árboles deja el borde de la terraza en escalera.
 const PLANTS := ["Árbol", "Queñoa chica", "Cardón", "Cardón brazos"]
-const IGNORED := ["GridMap", "WorldEnvironment", "DirectionalLight3D", "NavigationRegion3D", "Camera3D", "Decor", "Player", "HUD", "OverworldMap", "CloudShadows", "TerrainStyles"]
+const IGNORED := ["GridMap", "WorldEnvironment", "DirectionalLight3D", "NavigationRegion3D", "Camera3D", "Decor", "Player", "HUD", "OverworldMap", "TerrainStyles"]
 
 
 func _initialize() -> void:

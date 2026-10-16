@@ -31,7 +31,7 @@
 [ext_resource type="PackedScene" path="res://src/world/eye_switch.tscn" id="39_ailnf"]
 [ext_resource type="Resource" path="res://data/items/quiver_big.tres" id="41_csg56"]
 [ext_resource type="PackedScene" path="res://src/world/stone.tscn" id="42_stone"]
-[ext_resource type="Script" uid="uid://bv7heb806mclu" path="res://src/world/cloud_shadows.gd" id="92_clouds"]
+[ext_resource type="Script" path="res://src/world/look/nubes_la.gd" id="92_nubes"]
 [ext_resource type="PackedScene" path="res://levels/decor/overworld_decor.tscn" id="92_decor"]
 [ext_resource type="PackedScene" path="res://src/world/dust_motes.tscn" id="93_dust"]
 [ext_resource type="Script" uid="uid://b5m7kta46hqrv" path="res://src/world/pit.gd" id="94_pit"]
@@ -126,6 +126,15 @@ needs_normal_roughness = false
 script = ExtResource("sombra_la")
 reach = 1.5
 
+[sub_resource type="CompositorEffect" id="CompositorEffect_nubes"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("92_nubes")
+
 [sub_resource type="CompositorEffect" id="CompositorEffect_tono"]
 resource_local_to_scene = false
 resource_name = ""
@@ -137,7 +146,7 @@ script = ExtResource("tono_la")
 exposure = 1.0
 
 [sub_resource type="Compositor" id="Compositor_la"]
-compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_sombra"), SubResource("CompositorEffect_tono")])
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_sombra"), SubResource("CompositorEffect_nubes"), SubResource("CompositorEffect_tono")])
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_zone_arboleda"]
 size = Vector3(28, 14, 20)
@@ -1497,9 +1506,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 0.5, -5.5)
 
 [node name="Box2" parent="." unique_id=982436721 instance=ExtResource("9_axpip")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49, 0.5, -5.5)
-
-[node name="CloudShadows" type="Node" parent="." unique_id=1184443777]
-script = ExtResource("92_clouds")
 
 [node name="OverworldMap" parent="." unique_id=259113020 node_paths=PackedStringArray("grid", "scenery") instance=ExtResource("11_gsck2")]
 display_name = "PLACE_TEMPLE_VALLEY"

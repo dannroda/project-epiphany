@@ -2,7 +2,6 @@ shader_type spatial;
 // El material de paleta (epiphany.tres) para las paredes del overworld, con el agujero alrededor del player.
 
 #include "player_hole.gdshaderinc"
-#include "cloud_shadows.gdshaderinc"
 #include "wind.gdshaderinc"
 
 uniform vec4 albedo_color : source_color = vec4(0.72, 0.72, 0.72, 1.0);
@@ -21,7 +20,7 @@ void fragment() {
 	if (in_player_hole(world_pos, VERTEX, VIEW_MATRIX, FRAGCOORD.xy)) {
 		discard;
 	}
-	ALBEDO = albedo_color.rgb * texture(albedo_texture, UV).rgb * cloud_shade(world_pos, TIME);
+	ALBEDO = albedo_color.rgb * texture(albedo_texture, UV).rgb;
 	ROUGHNESS = 1.0;
 	EMISSION = texture(emission_texture, UV).rgb * emission_energy;
 }

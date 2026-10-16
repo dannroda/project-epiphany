@@ -6,7 +6,6 @@
 [ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="4_camera"]
 [ext_resource type="PackedScene" path="res://src/world/dust_motes.tscn" id="5_dust"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="6_hud"]
-[ext_resource type="Script" uid="uid://bv7heb806mclu" path="res://src/world/cloud_shadows.gd" id="7_clouds"]
 [ext_resource type="PackedScene" path="res://assets/epiphany/prueba_terreno_cuadrado.glb" id="v0"]
 [ext_resource type="PackedScene" path="res://assets/epiphany/prueba_terreno_diagonal.glb" id="v1"]
 [ext_resource type="PackedScene" path="res://assets/epiphany/prueba_terreno_curva.glb" id="v2"]
@@ -39,9 +38,6 @@ transform = Transform3D(0.8660254, -0.40957603, 0.28678823, 0, 0.57357645, 0.819
 shadow_enabled = true
 directional_shadow_mode = 1
 directional_shadow_max_distance = 32.0
-
-[node name="CloudShadows" type="Node" parent="."]
-script = ExtResource("7_clouds")
 
 [node name="Variantes" type="Node3D" parent="."]
 

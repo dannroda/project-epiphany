@@ -4,7 +4,6 @@ shader_type spatial;
 // COLOR.r es un valor al azar por triángulo que corre un poco el tono (como el vary de los kits). Alturas y camino van
 // en coordenadas de la malla, así el terreno se puede mover.
 
-#include "cloud_shadows.gdshaderinc"
 #include "player_hole.gdshaderinc"
 
 uniform vec4 albedo_color : source_color = vec4(0.72, 0.72, 0.72, 1.0);
@@ -84,6 +83,6 @@ void fragment() {
 			color = swatch(ACANTILADO, (y + 0.5) / (top - cap + 0.5) + shift);
 		}
 	}
-	ALBEDO = albedo_color.rgb * color * cloud_shade(world_pos, TIME);
+	ALBEDO = albedo_color.rgb * color;
 	ROUGHNESS = 1.0;
 }

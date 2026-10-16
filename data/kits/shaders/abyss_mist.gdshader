@@ -2,7 +2,6 @@ shader_type spatial;
 render_mode unshaded, blend_mix, depth_draw_never, cull_disabled, shadows_disabled;
 // Niebla del abismo: capas que se corren despacio y tapan el fondo, más espesas cuanto más abajo.
 
-#include "cloud_shadows.gdshaderinc"
 
 uniform vec4 color : source_color = vec4(0.8, 0.82, 0.88, 1.0);
 uniform float density = 0.6;
