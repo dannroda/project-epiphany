@@ -5468,9 +5468,12 @@ Daniel (2026-10-15): la zona de D4 (la explanada frente a la puerta del cóndor)
 
 ### 11.197 Terreno del overworld: colisión simplificada (la carga congela la ventana 3,4 s) · Pendiente
 
-**Prioridad:** alta · **Tamaño:** M · **Etiquetas:** `optimizacion`, `overworld`, `arte`
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-d6 · **Etiquetas:** `optimizacion`, `overworld`, `arte`
 
 Daniel (2026-10-15): la pantalla de carga congela la ventana (no responde al resize). Medido: la carga en hilo tarda ~1 s, pero agregar el overworld al árbol bloquea 3,4 s y es casi todo el Terreno: sus 25 CollisionShape3D son la malla visual (~2,4 M triángulos) y Jolt las arma en el hilo principal. Sin cuerpos, 0 ms. Arreglo: mallas de colisión simplificadas (~10× menos) en el import de terreno_organico; también aliviana la física en juego.
+
+- [ ] Después de las zonas que pidió Daniel
+  Daniel (2026-10-15): va a -d6 apenas termine las zonas.
 
 ### 11.198 Jefe final: más golpes al piso y lo alcanza detrás · Revisión
 

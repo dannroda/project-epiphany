@@ -1,5 +1,12 @@
 {
-  "checklist": [],
+  "assignee": "project-epiphany-d6",
+  "checklist": [
+    {
+      "detail": "Daniel (2026-10-15): va a -d6 apenas termine las zonas.",
+      "done": false,
+      "text": "Después de las zonas que pidió Daniel"
+    }
+  ],
   "code": "11.197",
   "created_at": "2026-10-16T01:00:50.754Z",
   "description": "Daniel (2026-10-15): la pantalla de carga congela la ventana (no responde al resize). Medido: la carga en hilo tarda ~1 s, pero agregar el overworld al árbol bloquea 3,4 s y es casi todo el Terreno: sus 25 CollisionShape3D son la malla visual (~2,4 M triángulos) y Jolt las arma en el hilo principal. Sin cuerpos, 0 ms. Arreglo: mallas de colisión simplificadas (~10× menos) en el import de terreno_organico; también aliviana la física en juego.",
@@ -17,5 +24,5 @@
   ],
   "test": "",
   "title": "Terreno del overworld: colisión simplificada (la carga congela la ventana 3,4 s)",
-  "updated_at": "2026-10-16T01:01:07.816Z"
+  "updated_at": "2026-10-16T01:22:27.199Z"
 }
