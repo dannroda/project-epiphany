@@ -66,6 +66,11 @@ func test_hitbox_hits_each_hurtbox_once_per_attack() -> void:
 	hitbox.active_attack = attack
 	hitbox._on_area_entered(enemy)
 	assert_eq(received.size(), 2, "un swing nuevo vuelve a pegar")
+
+	hitbox.deactivate()
+	hitbox.activate()
+	hitbox._on_area_entered(enemy)
+	assert_eq(received.size(), 3, "activar sin AttackData también olvida a quién le pegó")
 	for node in [hitbox, enemy, ally]:
 		node.free()
 

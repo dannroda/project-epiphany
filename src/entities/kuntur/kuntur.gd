@@ -247,9 +247,8 @@ func _dive() -> void:
 	aim_mark.hide()
 	if state != State.DIVE:
 		return
-	impact.active_attack = null
-	impact.monitoring = true
-	get_tree().create_timer(0.15, false).timeout.connect(func() -> void: impact.monitoring = false)
+	impact.activate()
+	get_tree().create_timer(0.15, false).timeout.connect(impact.deactivate)
 	Feel.burst(&"dust", global_position + Vector3.UP * 0.1, Vector3.UP)
 	Feel.sfx(&"boom", global_position)
 	Feel.shake(0.4)
@@ -392,7 +391,7 @@ func _interrupt() -> void:
 	aim_mark.hide()
 	_push = 0.0
 	_catch_light(false)
-	impact.set_deferred(&"monitoring", false)
+	impact.deactivate()
 	body.rotation = Vector3(0.0, body.rotation.y, 0.0)
 	attack_finished.emit()
 

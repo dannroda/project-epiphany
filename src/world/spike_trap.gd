@@ -61,9 +61,10 @@ func time_to_rise() -> float:
 func _set_raised(up: bool, instant := false) -> void:
 	raised = up
 	_warned = false
-	hitbox.monitoring = up
 	if up:
-		hitbox.active_attack = null
+		hitbox.activate()
+	else:
+		hitbox.deactivate()
 	if instant:
 		spikes.position.y = 0.0 if up else HIDDEN
 		return

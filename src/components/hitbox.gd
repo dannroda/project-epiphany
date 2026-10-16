@@ -1,6 +1,6 @@
 class_name Hitbox
 extends Area3D
-## La enciende y apaga AttackRunner (ataques) o queda siempre activa (proyectiles, trampas).
+## Se prende con activate() y se apaga con deactivate() (AttackRunner, jefes, trampas) o queda siempre activa (proyectiles).
 
 signal landed(hurtbox: Hurtbox)
 
@@ -42,6 +42,20 @@ func _physics_process(_delta: float) -> void:
 		elif (hurtbox.get_parent() as PlayerCharacter).is_on_floor():
 			_airborne.erase(hurtbox)
 			_on_area_entered(hurtbox)
+
+
+## Cada activación es un golpe nuevo: olvida a quién le pegó la anterior.
+func activate(attack: AttackData = null, deferred := false) -> void:
+	active_attack = attack
+	if deferred:
+		set_deferred(&"monitoring", true)
+	else:
+		monitoring = true
+
+
+func deactivate() -> void:
+	active_attack = null
+	set_deferred(&"monitoring", false)
 
 
 func build_damage() -> DamageInfo:

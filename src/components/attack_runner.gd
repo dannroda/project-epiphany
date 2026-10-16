@@ -20,7 +20,7 @@ func _ready() -> void:
 				hitboxes[StringName(String(child.name).to_snake_case())] = child
 	for hitbox in hitboxes.values():
 		if hitbox:
-			hitbox.set_deferred(&"monitoring", false)
+			hitbox.deactivate()
 
 
 ## from_time: segundos ya transcurridos de la animación (si arrancó antes, como el aviso de BTAttack).
@@ -67,5 +67,7 @@ func _set_active(active: bool) -> void:
 	var hitbox: Hitbox = hitboxes.get(current.hitbox)
 	if hitbox == null or (hitbox.active_attack != null) == active:
 		return
-	hitbox.active_attack = current if active else null
-	hitbox.set_deferred(&"monitoring", active)
+	if active:
+		hitbox.activate(current, true)
+	else:
+		hitbox.deactivate()

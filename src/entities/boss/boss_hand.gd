@@ -30,6 +30,8 @@ const LEAN := 0.06
 const LEAN_MAX := 0.45
 const TURN_SPEED := 9.0
 
+@export var shockwave_attack: AttackData = preload("res://data/boss/hand_shockwave.tres")
+
 @export_group("Ajuste")
 @export var slam_height := 4.5
 @export var grab_reach := 1.2
@@ -99,7 +101,6 @@ var _bounce: Tween
 ## Sube con cada `reset`: los ataques que quedaron a medio esperar se cortan solos.
 var _run := 0
 var _grabbed: PlayerCharacter
-var _shockwave_data := AttackData.new()
 var _flash: HitFlash
 var _material: StandardMaterial3D
 var _pulse_material: ShaderMaterial
@@ -138,8 +139,6 @@ func _ready() -> void:
 		return
 	_time = randf() * TAU
 	_last_position = global_position
-	_shockwave_data.damage_multiplier = 0.5
-	_shockwave_data.hitbox = &"shockwave"
 	hurtbox.team = EntityConfig.Team.ENEMY
 	for hitbox: Hitbox in attack_runner.hitboxes.values():
 		hitbox.team = EntityConfig.Team.ENEMY
@@ -359,7 +358,7 @@ func _impact() -> void:
 	_hide_shadow()
 	var floor_point := Vector3(global_position.x, 0.05, global_position.z)
 	shockwave.global_position = floor_point
-	_set_hitbox(shockwave, _shockwave_data)
+	_set_hitbox(shockwave, shockwave_attack)
 	ring.global_position = floor_point
 	ring.scale = Vector3.ONE * 0.4
 	ring.transparency = 0.0
@@ -548,8 +547,10 @@ func _hide_shadow() -> void:
 func _set_hitbox(hitbox: Hitbox, data: AttackData) -> void:
 	if (hitbox.active_attack != null) == (data != null):
 		return
-	hitbox.active_attack = data
-	hitbox.set_deferred(&"monitoring", data != null)
+	if data:
+		hitbox.activate(data, true)
+	else:
+		hitbox.deactivate()
 
 
 func _make_damage() -> DamageInfo:

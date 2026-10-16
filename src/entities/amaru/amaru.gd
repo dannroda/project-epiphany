@@ -212,13 +212,12 @@ func _lunge() -> void:
 	var direction := _facing()
 	var target := _line_end(direction)
 	_pose_flat()
-	impact.active_attack = null
-	impact.monitoring = true
+	impact.activate()
 	Feel.sfx(&"roll", global_position)
 	var seconds := global_position.distance_to(target) / lunge_speed
 	_tween_to(self, ^"global_position", target, seconds).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	await _wait(seconds)
-	impact.set_deferred(&"monitoring", false)
+	impact.deactivate()
 	Feel.burst(&"dust", global_position + Vector3.UP * 0.1, Vector3.UP)
 	Feel.sfx(&"boom", global_position)
 	Feel.shake(0.25)
@@ -309,7 +308,7 @@ func _interrupt() -> void:
 			tween.kill()
 	_tweens.clear()
 	aim_line.hide()
-	impact.set_deferred(&"monitoring", false)
+	impact.deactivate()
 	body.rotation.z = 0.0
 	attack_finished.emit()
 

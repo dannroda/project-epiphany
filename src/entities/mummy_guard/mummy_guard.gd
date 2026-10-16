@@ -200,9 +200,8 @@ func _leap(last := true) -> void:
 	if state != State.FALL:
 		return
 	aim_mark.hide()
-	impact.active_attack = null
-	impact.monitoring = true
-	get_tree().create_timer(0.15, false).timeout.connect(func() -> void: impact.monitoring = false)
+	impact.activate()
+	get_tree().create_timer(0.15, false).timeout.connect(impact.deactivate)
 	_set_solid(true)
 	Feel.burst(&"dust", global_position + Vector3.UP * 0.1, Vector3.UP)
 	Feel.sfx(&"boom", global_position)
@@ -275,7 +274,7 @@ func _interrupt() -> void:
 	_tweens.clear()
 	_stop_waves()
 	aim_mark.hide()
-	impact.set_deferred(&"monitoring", false)
+	impact.deactivate()
 	body.rotation.z = 0.0
 	_set_solid(not is_dead)
 	attack_finished.emit()

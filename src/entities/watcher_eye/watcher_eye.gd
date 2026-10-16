@@ -214,8 +214,7 @@ func _charge() -> void:
 func _sweep() -> void:
 	state = State.SWEEP
 	spot.global_position = _sweep_from
-	spot.active_attack = null
-	spot.monitoring = true
+	spot.activate()
 	_show_beam(true)
 	Feel.sfx(&"reflect", body.global_position)
 	_tween_to(spot, ^"global_position", _sweep_to, sweep_time / pace)
@@ -225,7 +224,7 @@ func _sweep() -> void:
 
 
 func _end_sweep() -> void:
-	spot.set_deferred(&"monitoring", false)
+	spot.deactivate()
 	_show_beam(false)
 	path_mark.hide()
 
@@ -249,12 +248,11 @@ func _lunge() -> void:
 	aim_mark.hide()
 	if state != State.LUNGE:
 		return
-	impact.active_attack = null
-	impact.monitoring = true
+	impact.activate()
 	Feel.burst(&"dust", global_position + Vector3.UP * 0.1, Vector3.UP)
 	Feel.sfx(&"boom", global_position)
 	Feel.shake(0.4)
-	get_tree().create_timer(0.15, false).timeout.connect(func() -> void: impact.monitoring = false)
+	get_tree().create_timer(0.15, false).timeout.connect(impact.deactivate)
 	state = State.STUCK
 	_lids(1.0, LID_SNAP)
 	var wobble := _new_tween().set_loops(int(stuck_time / 0.3))
@@ -301,7 +299,7 @@ func _interrupt() -> void:
 	_tweens.clear()
 	_end_sweep()
 	aim_mark.hide()
-	impact.set_deferred(&"monitoring", false)
+	impact.deactivate()
 	body.rotation.z = 0.0
 	attack_finished.emit()
 

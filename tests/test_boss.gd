@@ -816,6 +816,30 @@ func test_with_both_hands_out_the_eye_alternates_orb_and_laser() -> void:
 	boss.free()
 
 
+## Cada barrido del rayo es un golpe nuevo: no solo el primero de la pelea.
+func test_every_laser_sweep_can_hit() -> void:
+	var boss := _spawn()
+	var tree := Engine.get_main_loop() as SceneTree
+	await _frames(2)
+	var target := Node3D.new()
+	boss.add_child(target)
+	target.global_position = boss.global_position + Vector3(0, -boss.global_position.y, 6)
+	boss.target = target
+	var player := Hurtbox.new()
+	player.team = EntityConfig.Team.PLAYER
+	boss.add_child(player)
+	var hits := [0]
+	player.hit.connect(func(_info: DamageInfo) -> void: hits[0] += 1)
+	var spot := boss.get_node(^"%LaserSpot") as Hitbox
+	for sweep in 2:
+		boss._sweep_laser()
+		await tree.create_timer(boss.laser_charge_time + 0.2).timeout
+		spot._on_area_entered(player)
+		assert_eq(hits[0], sweep + 1, "el barrido %d pega" % (sweep + 1))
+		await tree.create_timer(boss.laser_sweep_time).timeout
+	boss.free()
+
+
 func test_marks_always_leave_a_way_out() -> void:
 	var boss := _spawn()
 	var target := Node3D.new()
