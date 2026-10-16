@@ -219,7 +219,7 @@ func test_in_the_overworld_the_chase_lasts_while_the_player_stays_in_its_chase_r
 	await _frames(tree, 30)
 	assert_true(enemy.global_position.distance_to(player.global_position) > enemy.config.vision_range * 1.4, "el player quedó lejos")
 	assert_true(chasing.call(), "lejos pero en la Pradera, lo sigue persiguiendo")
-	player.global_position = Vector3(-90, 0.1, 12)
+	player.global_position = Vector3(-60, 0.1, 15)
 	await _frames(tree, 30)
 	assert_true(chasing.call(), "en el Primer Claro también: comparte la persecución con la Pradera")
 	player.global_position = Vector3(-30, 2.7, 15)
