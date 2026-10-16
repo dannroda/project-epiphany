@@ -6,6 +6,7 @@ extends Node
 ## Start en un control libre suma un player (13.2); mantener Start en el suyo lo saca. Los invitados vuelven a
 ## aparecer al lado del primero en cada escena.
 
+## El player ya pasó su _ready (vida, equipo y targeting listos); está en `all` desde que entra al árbol.
 signal joined(player: PlayerCharacter)
 signal left(player: PlayerCharacter)
 
@@ -36,7 +37,12 @@ func register(player: PlayerCharacter) -> void:
 		return
 	all.append(player)
 	all.sort_custom(func(a: PlayerCharacter, b: PlayerCharacter) -> bool: return a.controls.slot < b.controls.slot)
-	joined.emit(player)
+	if player.is_node_ready():
+		joined.emit(player)
+	else:
+		player.ready.connect(func() -> void:
+			if all.has(player):
+				joined.emit(player), CONNECT_ONE_SHOT)
 	if player.controls.slot == 0:
 		_assign_lead()
 		_spawn_guests.call_deferred()

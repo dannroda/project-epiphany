@@ -135,3 +135,22 @@ func test_the_current_zone_is_forgotten_with_its_scene() -> void:
 	AreaZone._current = zone
 	zone.free()
 	assert_true(AreaZone._current == null, "sin zona colgada")
+
+
+func test_joined_comes_once_the_player_is_ready() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var players: Node = tree.root.get_node(^"Players")
+	tree.root.get_node(^"GameState").reset()
+	tree.change_scene_to_file("res://levels/test_rooms.tscn")
+	await tree.scene_changed
+	await tree.physics_frame
+	var seen := []
+	var on_joined := func(player: PlayerCharacter) -> void:
+		seen.append(player.is_node_ready() and player.health != null and player.health.max_health > 0)
+	players.joined.connect(on_joined)
+	players.lead_pad = PAD_1
+	players.join(PAD_2)
+	await tree.physics_frame
+	players.joined.disconnect(on_joined)
+	assert_eq(seen, [true], "joined sale una vez, con el player listo")
+	await _done()
