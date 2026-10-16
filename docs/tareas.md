@@ -5547,6 +5547,10 @@ PRs de 4.8 que Daniel eligió: 118045 y 115426 (luz) activados; 113970, 121122 y
   Ya en uso: CausticsDecal dibuja una DrawableTexture2D y en 4.8 el atlas se actualiza en cada blit. Usarlo para decals animados nuevos (grieta del golpe, sombras de nubes si va por decal).
 - [ ] get_velocity_at_position en RigidBody3D (#121122)
   Sin caso hoy: los cuerpos (vasijas, bombas) vuelan sin girar, así que equivale a linear_velocity. Usarlo cuando haya cuerpos que giran y empujan/dañan por el punto de contacto (rocas rodantes, plataformas que giran).
+- [ ] Shader baker y tirones de pipelines (Linux)
+  Medido (2026-10-16, build debug, RX 580): overworld listo ~5,2 s con caché vacía vs ~2,6 s caliente; el baker en Linux ahorra ~0,15 s (ruido): el costo es el driver armando pipelines. El primer proyectil tiraba 48 ms; con pipeline_warmup.tscn (4e745df1) ningún efecto compila al aparecer. tools/pipeline_probe.gd mide. El baker encontró abyss_mist roto (f3335aef).
+- [ ] Medir el baker en Windows (D3D12)
+  Kit en tools/claude_windows (ee2b6ff8): setup.ps1 y measure_shaders.ps1. El bake de D3D12 solo se hace desde Windows. Resultados vuelven en tools/claude_windows/HANDOFF.md.
 
 ### 11.204 Jefe final: manos al cambiar de fase, aturdido, golpes y rayo · Revisión
 

@@ -20,6 +20,16 @@
       "detail": "Sin caso hoy: los cuerpos (vasijas, bombas) vuelan sin girar, así que equivale a linear_velocity. Usarlo cuando haya cuerpos que giran y empujan/dañan por el punto de contacto (rocas rodantes, plataformas que giran).",
       "done": false,
       "text": "get_velocity_at_position en RigidBody3D (#121122)"
+    },
+    {
+      "detail": "Medido (2026-10-16, build debug, RX 580): overworld listo ~5,2 s con caché vacía vs ~2,6 s caliente; el baker en Linux ahorra ~0,15 s (ruido): el costo es el driver armando pipelines. El primer proyectil tiraba 48 ms; con pipeline_warmup.tscn (4e745df1) ningún efecto compila al aparecer. tools/pipeline_probe.gd mide. El baker encontró abyss_mist roto (f3335aef).",
+      "done": false,
+      "text": "Shader baker y tirones de pipelines (Linux)"
+    },
+    {
+      "detail": "Kit en tools/claude_windows (ee2b6ff8): setup.ps1 y measure_shaders.ps1. El bake de D3D12 solo se hace desde Windows. Resultados vuelven en tools/claude_windows/HANDOFF.md.",
+      "done": false,
+      "text": "Medir el baker en Windows (D3D12)"
     }
   ],
   "code": "11.203",
@@ -32,5 +42,5 @@
   "status": "review",
   "test": "",
   "title": "Aprovechar las novedades de Godot 4.8",
-  "updated_at": "2026-10-16T02:08:44.992Z"
+  "updated_at": "2026-10-16T05:37:13.248Z"
 }
