@@ -96,12 +96,21 @@ func test_validate() -> void:
 	assert_true(" feather no está en el inventario" in "|".join(SaveCodec.validate(equipment)), "un botón con algo que no tenés")
 
 
+## Los que son inconsistentes a propósito (test_inconsistent_scenario_is_flagged).
+const INCONSISTENT_SCENARIOS := ["boss_key_door_locked.cfg"]
+
+
 func test_scenarios_are_valid() -> void:
-	for scenario in ["start", "full_inventory", "test_rooms", "templo", "templo_video", "dungeon_test", "bombs_only", "pre_temple", "pre_boss", "chullpa", "travel"]:
+	var checked := 0
+	for file in DirAccess.get_files_at("res://debug/scenarios"):
+		if not file.ends_with(".cfg") or file in INCONSISTENT_SCENARIOS:
+			continue
 		var cfg := ConfigFile.new()
-		assert_eq(SaveCodec.read("res://debug/scenarios/%s.cfg" % scenario, cfg), OK, scenario)
-		assert_eq(SaveCodec.validate(cfg).size(), 0, scenario)
-		assert_eq(SaveCodec.is_tampered(cfg), false, scenario)
+		assert_eq(SaveCodec.read("res://debug/scenarios/" + file, cfg), OK, file)
+		assert_eq(SaveCodec.validate(cfg), PackedStringArray(), file)
+		assert_eq(SaveCodec.is_tampered(cfg), false, file + " firmado")
+		checked += 1
+	assert_true(checked >= 17, "revisó todos los escenarios (%d)" % checked)
 
 
 func test_scenario_spawn_points_exist() -> void:
