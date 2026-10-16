@@ -163,15 +163,20 @@ func test_a_reset_cuts_a_slam_in_the_middle() -> void:
 func test_the_stunned_eye_droops_but_shows_its_pupil() -> void:
 	var boss := _spawn()
 	var tree := Engine.get_main_loop() as SceneTree
+	var camera := Camera3D.new()
+	tree.root.add_child(camera)
+	camera.global_position = boss.eye.global_position + Vector3(0, 28, 10.6)
+	camera.make_current()
 	boss.start_fight()
 	boss.eye_open = 1.0
 	boss._stun_eye()
 	for i in 10:
 		await tree.physics_frame
 	var forward := boss.eye.global_basis.z.normalized()
-	var up := Vector3(0, 0.9, 0.4).normalized()
+	var up := (camera.global_position - boss.eye.global_position).normalized()
 	assert_true(forward.dot(up) > 0.3, "la pupila sigue mirando hacia arriba, no queda el ojo en blanco (%.2f)" % forward.dot(up))
 	assert_true(forward.y < up.y - 0.2, "pero caída, más abajo que la cámara")
+	camera.free()
 	boss.free()
 
 
