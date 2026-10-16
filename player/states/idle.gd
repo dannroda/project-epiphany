@@ -13,11 +13,9 @@ func _update(delta: float) -> void:
 	player.move_and_slide()
 
 	var target: Node3D = blackboard.get_var(BB_TARGET, null)
-	var combat_anim_state = player.anim_tree.get(&"parameters/Combat/current_state")
-
-	if target and is_instance_valid(target):
-		if combat_anim_state == "Normal":
-			player.anim_tree.set(&"parameters/Combat/transition_request", "Targeting")
+	var locked := is_instance_valid(target)
+	set_locked_legs(locked)
+	if locked:
 		player.anim_tree["parameters/Targeting/blend_position"] = Vector2.ZERO
 		var forward := target.global_position - player.global_position
 		forward.y = 0
@@ -25,6 +23,3 @@ func _update(delta: float) -> void:
 			forward = forward.normalized()
 			player.look_at(player.global_position + forward, Vector3.UP)
 			player.model.rotation = Vector3(0, PI, 0)
-	else:
-		if combat_anim_state == "Targeting":
-			player.anim_tree.set(&"parameters/Combat/transition_request", "Normal")

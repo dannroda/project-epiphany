@@ -15,6 +15,12 @@ const BB_GRABBED_BY := &"grabbed_by"
 @export var follows_room_transition := true
 ## Una mano del jefe lo puede agarrar.
 @export var can_be_grabbed := true
+## Un golpe lo pasa a Hurt; si no, el daño entra igual pero sigue en este estado (cruce de sala, levantar un ítem).
+@export var can_be_hurt := true
+## Puede hablar, abrir cofres y levantar cosas.
+@export var can_interact := false
+## Manteniendo Z sube el escudo.
+@export var can_guard := false
 const BB_LONG_JUMP := &"long_jump"
 const BB_TRANSITION_TIME := &"transition_time"
 const BB_TRANSITION_DIR := &"transition_dir"
@@ -54,6 +60,11 @@ func move_locked(input: Vector2, speed: float, target: Node3D, face_model := tru
 		player.model.rotation = Vector3(0, PI, 0)
 	var character_right := Vector3.UP.cross(-fwd)
 	player.anim_tree["parameters/Targeting/blend_position"] = Vector2(move_dir.dot(character_right), -move_dir.dot(fwd))
+
+
+## Al cruzar de sala no camina hacia adentro (el gancho tirando de él termina al lado del poste).
+func blocks_room_transition() -> bool:
+	return false
 
 
 ## Piernas en modo strafe (fijado) o normal.

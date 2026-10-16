@@ -67,6 +67,10 @@ func pulling() -> bool:
 	return is_instance_valid(_hook) and _hook.phase == Hook.Phase.LATCHED
 
 
+func blocks_room_transition() -> bool:
+	return pulling()
+
+
 func _pull(delta: float) -> void:
 	_pull_time += delta
 	var post := _hook.anchor as HookPost

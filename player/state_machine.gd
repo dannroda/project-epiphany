@@ -3,8 +3,6 @@ extends LimboHSM
 
 var player: PlayerCharacter
 
-@onready var _guard_states: Array[LimboState] = [$Idle, $Moving, $Attacking, $Hurt, $Transition]
-
 
 func _setup() -> void:
 	player = agent
@@ -16,7 +14,7 @@ func _setup() -> void:
 	add_transition($Moving, $Idle, "idle")
 	add_transition($Moving, $Attacking, "attack")
 	add_transition($Attacking, $Idle, "finished")
-	add_transition(anystate(), $Hurt, "hurt", func() -> bool: return not player.is_dead)
+	add_transition(anystate(), $Hurt, "hurt", func() -> bool: return not player.is_dead and (get_active_state() as PlayerState).can_be_hurt)
 	add_transition(anystate(), $Dead, "die")
 	add_transition($Dead, $Spirit, "spirit")
 	add_transition($Spirit, $Idle, "revive")
@@ -92,7 +90,8 @@ func _update(delta: float) -> void:
 func _sync_guard() -> void:
 	var targeting := player.targeting
 	var holding := player.controls.pressed(&"z-lock") or (targeting.lock_mode == Targeting.LockMode.TOGGLE and targeting.current != null)
-	var guard := holding and get_active_state() in _guard_states
+	var state := get_active_state() as PlayerState
+	var guard := holding and state != null and state.can_guard
 	if guard != blackboard.get_var(PlayerState.BB_IS_BLOCKING, false):
 		blackboard.set_var(PlayerState.BB_IS_BLOCKING, guard)
 		player.shield.set_guard(guard)

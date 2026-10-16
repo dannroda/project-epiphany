@@ -10,15 +10,11 @@ func _update(delta: float) -> void:
 	var input_dir: Vector2 = blackboard.get_var(BB_INPUT_DIR, Vector2.ZERO)
 	var target: Node3D = blackboard.get_var(BB_TARGET, null)
 	var direction := Vector3(input_dir.x, 0, input_dir.y).normalized()
-	var combat_anim_state = player.anim_tree.get(&"parameters/Combat/current_state")
-
-	if target and is_instance_valid(target):
-		if combat_anim_state == "Normal":
-			player.anim_tree.set(&"parameters/Combat/transition_request", "Targeting")
+	var locked := is_instance_valid(target)
+	set_locked_legs(locked)
+	if locked:
 		_locked_move(input_dir, delta, target)
 	else:
-		if combat_anim_state == "Targeting":
-			player.anim_tree.set(&"parameters/Combat/transition_request", "Normal")
 		player.anim_tree.set(&"parameters/Movement/transition_request", "Running")
 		_free_move(direction, delta)
 

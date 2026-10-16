@@ -171,8 +171,8 @@ func make_item_context() -> ItemUseContext:
 func begin_room_transition(direction: Vector3, duration: float) -> void:
 	if is_dead:
 		return
-	var state := movement_state.get_active_state()
-	if state and state.has_method(&"pulling") and state.call(&"pulling"):
+	var state := movement_state.get_active_state() as PlayerState
+	if state and state.blocks_room_transition():
 		return
 	movement_state.blackboard.set_var(PlayerState.BB_TRANSITION_DIR, direction)
 	movement_state.blackboard.set_var(PlayerState.BB_TRANSITION_TIME, duration)
@@ -209,8 +209,8 @@ func revive() -> void:
 
 
 func can_interact() -> bool:
-	var state := movement_state.get_active_state()
-	return state != null and state.name in [&"Idle", &"Moving"]
+	var state := movement_state.get_active_state() as PlayerState
+	return state != null and state.can_interact
 
 
 ## Lo llaman cofres y recompensas después de GameState.give().

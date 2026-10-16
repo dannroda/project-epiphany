@@ -417,4 +417,32 @@ func test_room_transition_and_grab_come_from_each_state() -> void:
 	skip_grab.sort()
 	assert_eq(skip_transition, ["Climbing", "Dead", "Grabbed", "ItemGet", "Pushing", "Spirit", "Transition"])
 	assert_eq(skip_grab, ["Climbing", "Dead", "Grabbed", "ItemGet", "Spirit", "Transition"])
+	var flagged := {&"can_be_hurt": [], &"can_interact": [], &"can_guard": []}
+	for state in player.get_node(^"MovementState").get_children():
+		for flag: StringName in flagged:
+			if state is PlayerState and state.get(flag) == (flag != &"can_be_hurt"):
+				flagged[flag].append(String(state.name))
+	for flag: StringName in flagged:
+		flagged[flag].sort()
+	assert_eq(flagged[&"can_be_hurt"], ["Dead", "ItemGet", "Spirit", "Transition"], "sin Hurt")
+	assert_eq(flagged[&"can_interact"], ["Idle", "Moving"])
+	assert_eq(flagged[&"can_guard"], ["Attacking", "Hurt", "Idle", "Moving", "Transition"])
 	player.free()
+
+
+## Un golpe en medio del cruce de sala no frena la entrada: el daño entra, pero sigue caminando.
+func test_a_hit_during_a_room_crossing_does_not_stop_it() -> void:
+	var setup: Array = await _load_level()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	player.begin_room_transition(Vector3.FORWARD, 0.6)
+	await tree.physics_frame
+	assert_eq(_state(player), &"Transition")
+	var before := player.health.current
+	var hit := DamageInfo.make(2, 3.0, player)
+	hit.team = EntityConfig.Team.ENEMY
+	player.hurtbox.receive(hit)
+	await tree.physics_frame
+	await tree.physics_frame
+	assert_true(player.health.current < before, "el daño entra")
+	assert_eq(_state(player), &"Transition", "sigue cruzando")

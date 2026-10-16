@@ -741,15 +741,21 @@ script = ExtResource("15_c35mf")
 
 [node name="Idle" type="LimboState" parent="MovementState" unique_id=950358264]
 script = ExtResource("16_e7oew")
+can_interact = true
+can_guard = true
 
 [node name="Moving" type="LimboState" parent="MovementState" unique_id=907649833]
 script = ExtResource("17_c35mf")
+can_interact = true
+can_guard = true
 
 [node name="Attacking" type="LimboState" parent="MovementState" unique_id=1135687087]
 script = ExtResource("18_65viv")
+can_guard = true
 
 [node name="Hurt" type="LimboState" parent="MovementState" unique_id=199458395]
 script = ExtResource("22_rptt4")
+can_guard = true
 
 [node name="Dodging" type="LimboState" parent="MovementState" unique_id=345671969]
 script = ExtResource("st_dodging")
@@ -770,6 +776,8 @@ script = ExtResource("st_carrying")
 script = ExtResource("st_transition")
 follows_room_transition = false
 can_be_grabbed = false
+can_be_hurt = false
+can_guard = true
 
 [node name="Pushing" type="LimboState" parent="MovementState" unique_id=219895307]
 script = ExtResource("st_pushing")
@@ -779,6 +787,7 @@ follows_room_transition = false
 script = ExtResource("st_item_get")
 follows_room_transition = false
 can_be_grabbed = false
+can_be_hurt = false
 
 [node name="Grabbed" type="LimboState" parent="MovementState"]
 script = ExtResource("st_grabbed")
@@ -803,11 +812,13 @@ can_be_grabbed = false
 script = ExtResource("st_dead")
 follows_room_transition = false
 can_be_grabbed = false
+can_be_hurt = false
 
 [node name="Spirit" type="LimboState" parent="MovementState"]
 script = ExtResource("st_spirit")
 follows_room_transition = false
 can_be_grabbed = false
+can_be_hurt = false
 
 [node name="Spirit" type="Node3D" parent="."]
 visible = false
