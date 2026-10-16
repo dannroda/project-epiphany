@@ -59,7 +59,7 @@ CHUNK = 16.0
 ## Ancho (m) de la franja donde un estilo de región se mezcla con el de al lado.
 BAND = 4.0
 REGIONS = [(r["style"], r["rect"][0], -r["rect"][3], r["rect"][2], -r["rect"][1]) for r in DATA.get("regions", [])]
-## Estilo de terreno de cada región (AreaZone.terrain_style): papel → (franja, tono); lo que falta sale de DEFAULT.
+## Estilo de terreno de cada región (TerrainStyleArea.style): papel → (franja, tono); lo que falta sale de DEFAULT.
 DEFAULT = {
 	"ground": ("pasto", "MID"), "path": ("tierra", "MID"), "cap": ("pasto", "MID"), "hang": ("pasto", "DARK"),
 	"ledge": ("musgo", "MID"), "under": ("acantilado", "DARK"), "base": ("acantilado", "DARK"), "lip": ("acantilado", "LIGHT"),

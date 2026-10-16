@@ -201,7 +201,7 @@ func test_in_a_dungeon_room_the_chase_does_not_drop() -> void:
 	tree.root.get_node(^"GameState").reset()
 
 
-func test_in_the_overworld_the_chase_lasts_while_the_player_stays_in_its_region() -> void:
+func test_in_the_overworld_the_chase_lasts_while_the_player_stays_in_its_chase_region() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	tree.root.get_node(^"GameState").reset()
 	tree.change_scene_to_file("res://levels/overworld.tscn")
@@ -221,5 +221,8 @@ func test_in_the_overworld_the_chase_lasts_while_the_player_stays_in_its_region(
 	assert_true(chasing.call(), "lejos pero en la Pradera, lo sigue persiguiendo")
 	player.global_position = Vector3(-90, 0.1, 12)
 	await _frames(tree, 30)
-	assert_true(not chasing.call(), "en otra región lo suelta")
+	assert_true(chasing.call(), "en el Primer Claro también: comparte la persecución con la Pradera")
+	player.global_position = Vector3(-30, 2.7, 15)
+	await _frames(tree, 30)
+	assert_true(not chasing.call(), "en la Arboleda lo suelta")
 	tree.root.get_node(^"GameState").reset()

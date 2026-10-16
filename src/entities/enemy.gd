@@ -147,7 +147,7 @@ func wander_point() -> Vector3:
 
 
 ## El que ya persigue no suelta al player mientras sigan los dos en su sala de dungeon, o mientras el player siga en
-## su región del overworld.
+## su región de persecución del overworld.
 func shares_room(point: Vector3) -> bool:
 	home()
 	if _home_room != null:
