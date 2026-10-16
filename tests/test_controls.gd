@@ -47,7 +47,7 @@ func test_system_tab_saves_over_the_loaded_game_and_loads() -> void:
 	await tree.process_frame
 	SaveManager.current_slot = 2
 	SaveManager.save_game()
-	SaveManager.autosave()
+	SaveManager.save_game(SaveManager.AUTO_SLOT)
 	var before: float = SaveManager.slot_summary(2).timestamp
 	var menu: Control = load("res://src/ui/menus/pause_menu.tscn").instantiate()
 	MenuStack.push(menu)
