@@ -19,16 +19,46 @@ mouse_filter = 2
 texture = ExtResource("2_empty")
 expand_mode = 1
 
-[node name="Clip" type="Control" parent="."]
+[node name="TopLeft" type="Control" parent="."]
 clip_contents = true
 layout_mode = 0
-offset_bottom = 28.0
 mouse_filter = 2
 
-[node name="Full" type="TextureRect" parent="Clip"]
+[node name="Full" type="TextureRect" parent="TopLeft"]
 layout_mode = 0
-offset_right = 30.0
-offset_bottom = 28.0
+mouse_filter = 2
+texture = ExtResource("3_full")
+expand_mode = 1
+
+[node name="TopRight" type="Control" parent="."]
+clip_contents = true
+layout_mode = 0
+mouse_filter = 2
+
+[node name="Full" type="TextureRect" parent="TopRight"]
+layout_mode = 0
+mouse_filter = 2
+texture = ExtResource("3_full")
+expand_mode = 1
+
+[node name="BottomRight" type="Control" parent="."]
+clip_contents = true
+layout_mode = 0
+mouse_filter = 2
+
+[node name="Full" type="TextureRect" parent="BottomRight"]
+layout_mode = 0
+mouse_filter = 2
+texture = ExtResource("3_full")
+expand_mode = 1
+
+[node name="BottomLeft" type="Control" parent="."]
+clip_contents = true
+layout_mode = 0
+mouse_filter = 2
+
+[node name="Full" type="TextureRect" parent="BottomLeft"]
+layout_mode = 0
 mouse_filter = 2
 texture = ExtResource("3_full")
 expand_mode = 1
