@@ -35,6 +35,7 @@ signal escaped
 @onready var shield: Shield = $Shield
 ## Lo que se retoca en el inspector (duración, gradiente, material) es del nodo; el ancho y la posición se ajustan al arma.
 @onready var sword_trail: Trail3D = $ModelController/Skeleton3D/Hand_R/SwordTrail
+@onready var tip_trail: Trail3D = $ModelController/Skeleton3D/Hand_R/TipTrail
 
 ## Qué controles lee (13.2); existe desde que se instancia, así `Players` le asigna el slot antes de sumarlo.
 var controls := PlayerControls.new()
@@ -101,6 +102,7 @@ func _physics_process(delta: float) -> void:
 ## La estela cubre la hoja del arma: del 35 % al extremo del eje más largo de sus mallas (Trail3D abre el ancho en Z local).
 func _fit_sword_trail() -> void:
 	sword_trail.color_gradient = equipment.weapon.trail if equipment.weapon and equipment.weapon.trail else _default_trail
+	tip_trail.color_gradient = sword_trail.color_gradient
 	var socket := equipment.weapon_socket
 	var box := AABB()
 	var found := false
@@ -123,12 +125,17 @@ func _fit_sword_trail() -> void:
 	near = near.lerp(far, 0.35)
 	sword_trail.transform = socket.transform * Transform3D(Basis.looking_at(near - far, Vector3.UP if absf((near - far).normalized().y) < 0.9 else Vector3.RIGHT), (near + far) * 0.5)
 	sword_trail.width = near.distance_to(far)
+	tip_trail.position = socket.transform * far
 
 
 func _process(_delta: float) -> void:
-	var trailing := attack_runner.is_active() and attack_runner.current.trail
-	if trailing != sword_trail.emitting:
-		Feel.set_trail(sword_trail, trailing)
+	var attack := attack_runner.current if attack_runner.is_active() else null
+	var blade := attack != null and attack.trail and not attack.tip_trail
+	var tip := attack != null and attack.trail and attack.tip_trail
+	if blade != sword_trail.emitting:
+		Feel.set_trail(sword_trail, blade)
+	if tip != tip_trail.emitting:
+		Feel.set_trail(tip_trail, tip)
 
 
 ## El ítem asignado al botón, si lo tiene y se puede usar ahora.

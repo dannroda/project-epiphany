@@ -133,12 +133,17 @@ func test_stab_while_guarding_stuns() -> void:
 	release.action = &"attack"
 	Input.parse_input_event(release)
 	var stunned := false
+	var tip := false
+	var blade := false
 	for i in 90:
 		await tree.physics_frame
+		tip = tip or player.tip_trail.emitting
+		blade = blade or player.sword_trail.emitting
 		if enemy.bt_player.blackboard.get_var("stunned", false, false):
 			stunned = true
 			break
 	assert_true(stunned, "la estocada aturde")
+	assert_true(tip and not blade, "la estocada deja la estela de la punta, no la de la hoja")
 	assert_eq(player.movement_state.get_active_state().name, &"Attacking")
 	_block(player, false)
 

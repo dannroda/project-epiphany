@@ -13,3 +13,4 @@ stun_time = 1.2
 cancel_from = 0.5
 lunge = 3.0
 trail = true
+tip_trail = true

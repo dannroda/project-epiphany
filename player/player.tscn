@@ -414,6 +414,10 @@ no_depth_test = true
 shading_mode = 0
 albedo_color = Color(0.4, 0.8, 1, 0.8)
 
+[sub_resource type="Curve" id="TipTrailWidth"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [sub_resource type="Gradient" id="Gradient_jump_shadow"]
 offsets = PackedFloat32Array(0, 0.7, 1)
 colors = PackedColorArray(0, 0, 0, 0.8, 0, 0, 0, 0.6, 0, 0, 0, 0)
@@ -619,6 +623,15 @@ transform = Transform3D(-0.12969656, -0.9911532, 0.028182058, 0.9913636, -0.1290
 lifetime = 0.16
 emitting = false
 color_gradient = ExtResource("trail_fade")
+cast_shadow = 0
+
+[node name="TipTrail" type="Trail3D" parent="ModelController/Skeleton3D/Hand_R"]
+lifetime = 0.2
+width = 0.22
+width_curve = SubResource("TipTrailWidth")
+emitting = false
+color_gradient = ExtResource("trail_fade")
+mesh_alignment = 1
 cast_shadow = 0
 
 [node name="Hand_L" type="BoneAttachment3D" parent="ModelController/Skeleton3D" unique_id=632440802]
