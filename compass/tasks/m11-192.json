@@ -1,9 +1,24 @@
 {
-  "assignee": "project-epiphany-eb",
+  "assignee": "project-epiphany-d6",
   "checklist": [
     {
       "done": false,
       "text": "Probarlo (Daniel)"
+    },
+    {
+      "detail": "Hecho (7fcfda89): en el overworld la pelea ya no se resetea al salir de la zona (solo en salas de mazmorra); una flecha u otro golpe a un luchador la arranca. test_centinela.",
+      "done": true,
+      "text": "No se apaga al alejarse; un golpe de lejos la empieza"
+    },
+    {
+      "detail": "Hecho (2a8c2b07): FireRing se cierra cuando hay un player adentro y ninguno sobre la pared; se abre al ganar o resetear. Shader anillo_fuego.",
+      "done": true,
+      "text": "Anillo de fuego que encierra la pelea"
+    },
+    {
+      "detail": "Hecho por -eb (2b187bf1): aviso antes de cargar, marca en el piso que sigue y se traba parpadeando, silbido; cuerpo sólido (AnimatableBody3D). Tiempos en 'Aviso del golpe'.",
+      "done": true,
+      "text": "Golpe de la maza legible y Centinela sólido"
     }
   ],
   "code": "11.192",
@@ -13,8 +28,7 @@
   "notes": "Hecho (198dca6c, 4470c9cb, 90e12cd9): el mini jefe es el Centinela del Bañado, en la playa del Bañado (HammerFight en ~(60, 0, 24)), con huancas de escolta; se mudó ahí desde la Necrópolis. Al vencerlo aparece el martillo.",
   "order": 189,
   "playtest": {
-    "note": "No se entiende cuando el mini jefe va a usar el martillo y se desactiva a poca distancia. Debería mantenerse activado, y si uno le hace daño (con una flecha por ejemplo) se activa la pelea y te empieza a seguir.",
-    "result": "fail"
+    "note": "No se entiende cuando el mini jefe va a usar el martillo y se desactiva a poca distancia. Debería mantenerse activado, y si uno le hace daño (con una flecha por ejemplo) se activa la pelea y te empieza a seguir."
   },
   "priority": "medium",
   "refs": [],
@@ -27,5 +41,5 @@
   ],
   "test": "",
   "title": "Overworld: mini jefe después de D2 que da el martillo",
-  "updated_at": "2026-10-15T20:58:17.168Z"
+  "updated_at": "2026-10-16T01:00:33.341Z"
 }

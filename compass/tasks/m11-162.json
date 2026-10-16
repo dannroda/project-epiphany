@@ -1,5 +1,5 @@
 {
-  "assignee": "project-epiphany-43",
+  "assignee": "project-epiphany-05",
   "checklist": [
     {
       "done": true,
@@ -38,5 +38,5 @@
   ],
   "test": "tests/test_templo.gd, test_boss.gd, test_doom.gd, test_portal.gd, test_slots.gd, test_map.gd, test_audio.gd (suite completa: 506 tests)",
   "title": "Retirar el templo viejo (levels/temple.tscn)",
-  "updated_at": "2026-10-14T06:14:26.513Z"
+  "updated_at": "2026-10-16T01:02:37.701Z"
 }

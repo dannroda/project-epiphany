@@ -1,0 +1,71 @@
+{
+  "assignee": "project-epiphany-67",
+  "checklist": [
+    {
+      "detail": "Hecho (e152171b): floor_earth de epiphany_outdoor pasa a uniform común; la fachada del templo usa epiphany_outdoor_losas.tres. Verificado en la build: 0 errores.",
+      "done": true,
+      "text": "Lluvia de global_shader_parameters_instance_allocate al cargar el overworld"
+    },
+    {
+      "detail": "Hecho (65a8b172): los Feel de su _ready van diferidos.",
+      "done": true,
+      "text": "Martillazo y explosión agregaban efectos con la escena ocupada"
+    },
+    {
+      "detail": "Hecho (65a8b172).",
+      "done": true,
+      "text": "Hitbox borraba Areas que no son Hurtbox de un TypedArray"
+    },
+    {
+      "detail": "Hecho (65a8b172): se lee sin quejarse.",
+      "done": true,
+      "text": "Blackboard: long_jump no encontrado en cada salto"
+    },
+    {
+      "detail": "Hecho (8fd92be0, 81efb290).",
+      "done": true,
+      "text": "Cuelgue de la suite: Centinela y ArenaFight seguían fuera del árbol"
+    },
+    {
+      "detail": "Hecho (94f6c803): Chest.is_opened (su flag) en mapa y minimapa; venía del arreglo del cofre de las sandalias.",
+      "done": true,
+      "text": "El mapa contaba como abiertos los cofres ocultos tras switches"
+    },
+    {
+      "detail": "Hecho (f4263e4a): SaveCodec.validate suma las mejoras de capacidad; escenario templo_video al día (martillo, Centinela vencido) y revisado por test_save_codec.",
+      "done": true,
+      "text": "El validador de partidas no contaba el carcaj grande"
+    },
+    {
+      "detail": "No volvió en las corridas con la build beta1 (0.2.1392). Al salir quedan avisos sin costo: música y click del menú sonando, StringNames de LimboAI.",
+      "done": true,
+      "text": "Crash al cerrar (corrupted size vs. prev_size)"
+    },
+    {
+      "detail": "Del motor desde 4.8-beta1; nada nuestro usa esa señal. Reportar a Godot si sigue.",
+      "done": true,
+      "text": "skeleton_updated: desconexiones inexistentes en Skeleton3D"
+    },
+    {
+      "detail": "Pendiente: buscar quién.",
+      "done": false,
+      "text": "look_at() failed: origen y destino en el mismo punto (16 veces)"
+    }
+  ],
+  "code": "11.202",
+  "created_at": "2026-10-16T01:01:14.620Z",
+  "description": "Lo que salió en el log de Daniel con la build de Linux y lo que apareció al arreglarlo.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 199,
+  "priority": "high",
+  "refs": [],
+  "size": "m",
+  "status": "review",
+  "tags": [
+    "bug"
+  ],
+  "test": "",
+  "title": "Errores del log de la build 0.2 (playtest)",
+  "updated_at": "2026-10-16T01:01:54.446Z"
+}

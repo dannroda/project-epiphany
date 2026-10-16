@@ -1,5 +1,5 @@
 {
-  "assignee": "project-epiphany-5d",
+  "assignee": "project-epiphany-39",
   "checklist": [
     {
       "detail": "Hecho, aprobado por Daniel: b19ba666 (guerrero_<mazmorra>, armas, 20 escenas en src/entities/guerreros/<tipo>_<mazmorra>.tscn), ae1ed827 (armadura_<mazmorra>). test_guerreros.",
@@ -38,5 +38,5 @@
   ],
   "test": "",
   "title": "Enemigos comunes estilizados según el theme de cada mazmorra",
-  "updated_at": "2026-10-15T20:32:27.404Z"
+  "updated_at": "2026-10-16T01:03:40.747Z"
 }

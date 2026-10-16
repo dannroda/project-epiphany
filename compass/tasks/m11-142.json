@@ -1,5 +1,5 @@
 {
-  "assignee": "project-epiphany-fd",
+  "assignee": "project-epiphany-67",
   "checklist": [],
   "code": "11.142",
   "created_at": "2026-10-14T01:58:59.133Z",
@@ -17,5 +17,5 @@
   ],
   "test": "Mapa de la Chullpa en pausa: LT, la cruceta o el stick izquierdo cambian un solo piso por apretón; izquierda/derecha pasan por todas las salas del piso. test_map › test_floor_selector_in_a_dungeon_with_floors",
   "title": "Mapa de pausa: LT/RT van rapidísimo; mover con las flechitas",
-  "updated_at": "2026-10-14T16:22:16.496Z"
+  "updated_at": "2026-10-16T01:01:59.787Z"
 }

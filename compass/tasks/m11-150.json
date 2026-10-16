@@ -1,5 +1,5 @@
 {
-  "assignee": "project-epiphany-fd",
+  "assignee": "project-epiphany-67",
   "checklist": [],
   "code": "11.150",
   "created_at": "2026-10-14T02:33:30.483Z",
@@ -18,5 +18,5 @@
   ],
   "test": "Totora PisoBajo debajo de un poste de PisoAlto, con el gancho: no aparece el rombo. test_hookshot › test_posts_on_another_floor_cannot_be_targeted",
   "title": "Gancho: el targeting marca un poste de otra sala/piso",
-  "updated_at": "2026-10-14T03:24:44.489Z"
+  "updated_at": "2026-10-16T01:02:01.282Z"
 }
