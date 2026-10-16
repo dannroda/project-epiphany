@@ -29,7 +29,7 @@
   "tags": [
     "bug"
   ],
-  "test": "",
+  "test": "Abrir un escenario editado a mano o desde el Save Inspector con botones de ítem raros: no crashea, el Save Inspector lo marca.",
   "title": "Partida o escenario con botones de ítem mal formados crashea",
-  "updated_at": "2026-10-16T20:37:17.246Z"
+  "updated_at": "2026-10-16T23:39:06.947Z"
 }

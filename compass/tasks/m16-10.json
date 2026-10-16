@@ -30,7 +30,7 @@
     "bug",
     "refactor"
   ],
-  "test": "",
+  "test": "Recibir un proyectil justo al cruzar una puerta: termina de cruzar y la reja no se cierra encima. Que te peguen mientras levantás un ítem: el cartel sale igual.",
   "title": "Un golpe corta la transición entre salas o el levantar un ítem",
-  "updated_at": "2026-10-16T21:56:04.073Z"
+  "updated_at": "2026-10-16T23:39:09.984Z"
 }

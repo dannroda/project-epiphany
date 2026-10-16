@@ -6259,6 +6259,8 @@ Arreglar los bugs y la deuda técnica que salieron del análisis del 2026-10-16 
 - [x] Hurt no sale de Dead ni de Spirit
   Guardia en el anystate→Hurt de state_machine.gd:19.
 
+**Prueba:** Co-op: con el otro en Espíritu, agarrar un contenedor de corazón: el Espíritu sigue Espíritu (no revive lleno) y el vivo se llena.
+
 **Notas:** wt/bugs 574da08e. El vivo se llena; el caído queda en 0 con el máximo nuevo.
 
 ### 16.3 Templo: el grafo pide `mirror_shield`, que no existe · Revisión
@@ -6272,6 +6274,8 @@ templo_graph.tres:153, 159, 186 y 195 usan `mirror_shield`; el ítem es `shield_
   needs, brings, item, guard y goal; los tokens sintéticos (ch_rellano_pot) con prefijo o lista explícita.
 - [ ] Opcional: brings sale de los item de los grafos anteriores
   Hoy se copia a mano.
+
+**Prueba:** Templo: llegar al cuarto que pide el escudo espejo con el escudo espejo y que se pueda pasar.
 
 **Notas:** wt/bugs 0abf56af. Derivar brings de los grafos anteriores quedó sin hacer (opcional).
 
@@ -6287,6 +6291,8 @@ templo_graph.tres:153, 159, 186 y 195 usan `mirror_shield`; el ítem es `shield_
   zone_veil, title_flyover y overworld_map.
 - [x] Constantes para bombs, targetable y walk_guard
 
+**Prueba:** Pantalla de título: durante el vuelo sobre el overworld no se ven los velos de las zonas.
+
 **Notas:** wt/bugs 97bfef35. test_groups: todo grupo buscado por nombre literal lo agrega algún script o escena.
 
 ### 16.5 Partida o escenario con botones de ítem mal formados crashea · Revisión
@@ -6301,6 +6307,8 @@ templo_graph.tres:153, 159, 186 y 195 usan `mirror_shield`; el ítem es `shield_
 - [x] validate: equipo, botones, botellas y mazmorras
   Sigue siendo aviso, no bloquea.
 
+**Prueba:** Abrir un escenario editado a mano o desde el Save Inspector con botones de ítem raros: no crashea, el Save Inspector lo marca.
+
 **Notas:** wt/bugs 757407ae. read_from es conservador (no exige que tengas el ítem); validate sí lo avisa. Todos los escenarios validan salvo boss_key_door_locked (a propósito).
 
 ### 16.6 Corrutinas que esperan un tween matado no vuelven nunca · Revisión
@@ -6312,6 +6320,8 @@ templo_graph.tres:153, 159, 186 y 195 usan `mirror_shield`; el ítem es `shield_
 - [x] Esperar algo que siempre llega
   Señal propia de interrupción o el token de turno como Kuntur.
 - [x] Test: interrumpir un agarre no deja conexiones en escaped
+
+**Prueba:** Jefe final: aturdir el ojo a mitad del rayo y cortar un agarre de la mano: la pelea sigue normal después.
 
 **Notas:** c05390ff: Tweens.ended(tween) vuelve también si lo matan; _move/_return_to_rest devuelven bool y los que llaman cortan. test_boss: cortar un agarre no deja nada, aturdir el ojo a mitad del rayo termina la corrutina.
 
@@ -6331,6 +6341,8 @@ templo_graph.tres:153, 159, 186 y 195 usan `mirror_shield`; el ítem es `shield_
   No en _enter_tree/_exit_tree de Dungeon.
 - [x] Test: cargar no dispara changed en nodos de la escena vieja
 
+**Prueba:** En una mazmorra con rejas y switches, cargar otra partida desde el menú: la sala vieja no se mueve ni suena antes del fundido y la nueva aparece con sus rejas como quedaron.
+
 **Notas:** 2ab62f68: SceneFlow.enter_save saca la escena vieja (remove_child + queue_free) antes de read_from; _sync_dungeon una vez por cambio de escena; Music mantiene las capas sin escena. Paso 2 a medias: la carga ya es de SceneFlow, pero SaveManager todavía llama a SceneFlow.location().
 
 **Relacionadas:** 11.108 Cargar en la misma escena desincroniza puertas y flags
@@ -6344,6 +6356,8 @@ templo_graph.tres:153, 159, 186 y 195 usan `mirror_shield`; el ítem es `shield_
 - [x] Pause.hold(motivo) / release(motivo)
   paused = hay algún motivo; MenuStack, SceneFlow y la cámara piden el suyo.
 - [x] Test: cerrar un menú durante un reveal no despausa
+
+**Prueba:** Abrir y cerrar el menú o un cartel durante el paneo de una puerta revelada o en el fundido de una transición: el mundo no arranca antes de tiempo. Game Over → continuar funde sin que nada se mueva.
 
 **Notas:** 7de6965d: Pause.hold/release/clear con motivos (menu, travel, reveal); nadie más escribe tree.paused (test_pause lo revisa).
 
@@ -6360,6 +6374,8 @@ templo_graph.tres:153, 159, 186 y 195 usan `mirror_shield`; el ítem es `shield_
 - [x] new_game guarda una vez
   Y sacar `auto_slot()`, que ya devuelve current_slot.
 
+**Prueba:** Morir y entrar a una escalera o portal al mismo tiempo, o tocar dos salidas seguidas: una sola transición, sin fundidos que se cortan. Partida nueva arranca normal.
+
 **Notas:** 177feb58: SceneFlow.traveling es un contador (begin/end_transition), guardias en with_fade/travel_to/respawn, un solo _fade_tween, respawn por _change_scene, new_game guarda una vez.
 
 ### 16.10 Un golpe corta la transición entre salas o el levantar un ítem · Revisión
@@ -6373,6 +6389,8 @@ templo_graph.tres:153, 159, 186 y 195 usan `mirror_shield`; el ítem es `shield_
 - [x] can_interact y can_guard como exports
   Reemplazan `_guard_states` y los `name in [...]`.
 - [x] Idle y Moving usan set_locked_legs de la base
+
+**Prueba:** Recibir un proyectil justo al cruzar una puerta: termina de cruzar y la reja no se cierra encima. Que te peguen mientras levantás un ítem: el cartel sale igual.
 
 **Notas:** 0a5415d9: PlayerState.can_be_hurt/can_interact/can_guard y blocks_room_transition(); test_player cubre un golpe a mitad del cruce.
 
@@ -6414,6 +6432,8 @@ Centinela, Ojo Vigía, Kuntur, Amaru y la Momia repiten las mismas señales y ca
   Sin reescribir a LimboHSM; las corrutinas quedan.
 - [x] _fighters: Array[ArenaFighter] en ArenaFight y WaveSpawner
 
+**Prueba:** Pelear contra Centinela, Ojo Vigía, Kuntur, Amaru, la Momia y la mano guardiana: atacan por turno, rebotan con chispas fuera de su momento vulnerable, mueren y la arena se abre.
+
 **Notas:** 72ddc8a8: ArenaFighter (@abstract) es la base de los seis (también HandGuard): señales, arena, pace, may_attack, peers, _turn, start, _interrupt/_on_interrupt, _on_hit con _react_to, tweens y _clamp_to_arena. ArenaFight y WaveSpawner con Array[ArenaFighter]. Room.enemies_inside sigue con get(is_dead) (mezcla enemigos comunes).
 
 **Relacionadas:** 16.6 Corrutinas que esperan un tween matado no vuelven nunca; 16.12 Timers del árbol que reanudan corrutinas de nodos ya liberados
@@ -6432,6 +6452,8 @@ Centinela, Ojo Vigía, Kuntur, Amaru y la Momia repiten las mismas señales y ca
 - [x] Helper compartido del premio
 - [ ] Un solo origen para el rematch
 
+**Prueba:** En un sub-jefe y el jefe: la música de pelea entra y sale al terminar, también al irse de la sala a mitad; la barra del HUD aparece con nombre y baja; el premio sale una sola vez (volver a la sala no lo repite).
+
 **Notas:** 60fc771f: Music.hold_boss/release_boss con dueños (se suelta en tree_exiting); BossBar tipado para el HUD (ArenaFight sin phase()); Pickup.offer_once para el premio; arreglado que la barra mostrada justo después de esconderla se iba por el fundido viejo. Sin hacer, a propósito: room_changed (el doom cambia dentro de la sala, ej. BossArena calma la sala, así que Music igual tiene que leerlo; el costo es una búsqueda por grupo) y un solo rematch (ArenaFight.rematch es 'revancha a media vida' del diseño y GameState.boss_rematch es volver a pelear el jefe final: son dos cosas distintas).
 
 ### 16.15 Daño por fuera del Hitbox, tres formas de mirar si toca el piso y dos ondas iguales · Revisión
@@ -6446,6 +6468,8 @@ Siguen llamando a `hurtbox.receive()` a mano: mummy_guard, yacumama, ground_wave
   Con un `pulse(centro, radio, daño)`.
 - [x] Elementos como constantes
   Con @export_enum en protects_against; antes de los ataques elementales (12.28).
+
+**Prueba:** Momia: sus ondas te pegan en el piso y no si saltás con la pluma. Pinchos y explosiones pegan; la túnica o escudo que protege de algo sigue protegiendo.
 
 **Notas:** 1628aa2c: Hurtbox.is_grounded() lee un body exportado (el del player apunta al player; sin body cuenta como en el piso, porque un enemigo quieto da is_on_floor() false). La Momia usa GroundWaves.pulse(centro, radio, daño, empuje) solo contra el equipo del player; sus wave_* quedan como el ajuste que pisan Chullpa y Templo. DamageInfo.PHYSICAL/EXPLOSIVE/BLAST/DASH/HOOK/SPIKES; en vez de @export_enum, test_items revisa que protects_against use elementos conocidos. Los receive() a mano siguen (Hurtbox.receive es la API).
 
@@ -6466,6 +6490,8 @@ Las claves del save están escritas a mano en GameState.write_to/read_from, slot
 - [ ] Sacar AUTO_SLOT de la UI cuando no queden saves viejos
   file_select, slot_card, system_page y el Inspector.
 
+**Prueba:** Cargar un save de antes de hoy que tenga pociones o botellas vacías: carga sin avisos, las botellas aparecen con su contenido y el progreso (flags, ítems) es el mismo. Guardar y volver a cargar.
+
 **Notas:** 9773d09e: SaveKeys; DungeonState.write_to/read_from; SaveCodec.migrate(cfg) estático con VERSION 2 (botellas a nivel archivo), FLAG_RENAMES/ITEM_RENAMES, el Save Inspector migra al abrir; tampering se mira antes de migrar. Paso 5 queda: AUTO_SLOT sigue hasta que no queden saves viejos. La 'migración' del slot 0 es de archivos (origin), no del cfg, y quedó en SaveManager.
 
 ### 16.17 Configs de enemigos clonadas por mazmorra · Revisión
@@ -6478,6 +6504,8 @@ Las claves del save están escritas a mano en GameState.write_to/read_from, slot
   Coordinar con 12.39 (arte, en curso).
 - [x] _swap_model busca solo en el modelo nuevo
 - [x] test_guerreros mira que las variantes compartan config
+
+**Prueba:** Esqueletos, escudo, arquero y acorazado en Chullpa, Queñoa, Templo, Totora y Cumbre: cada uno con el cuerpo de su mazmorra, misma vida y daño que antes, sueltan lo de siempre.
 
 **Notas:** 28eab75d: sin los 20 .tres por mazmorra; cada variante de guerreros/ usa la config de su tipo y Enemy.visuals con el cuerpo de su mazmorra (gana sobre config.model). _swap_model saca el Visuals viejo del árbol enseguida. -2a dio el OK (12.39 no toca esos archivos).
 
@@ -6495,6 +6523,8 @@ Las claves del save están escritas a mano en GameState.write_to/read_from, slot
 - [x] Equipo de partida nueva en un .tres
 - [x] Una sola función de capacidad
 
+**Prueba:** Agarrar llave chica, llave del jefe, mapa, brújula, contenedor y pieza de corazón y un ítem nuevo: cada uno hace lo suyo (contador, minimapa, vida) y muestra su cartel. Partida nueva: espada, escudo de madera y túnica.
+
 **Notas:** 51e51746: ItemData.OnGet (enum) en GameState.give y en los textos de ItemGet; show_in_slot_summary (arco, bolsa de bombas); ItemDatabase.new_game_equipment; ItemDatabase.capacity para Inventory y SaveCodec. Los chips de items_page siguen buscando íconos por id (no es una regla, es una búsqueda).
 
 ### 16.19 Wiring como componente en la escena · Revisión
@@ -6508,6 +6538,8 @@ Door y Gate repiten los handlers changed/settled con reveal, abrir y cerrar (doo
 - [ ] Barrera que se hunde compartida entre Gate y Door
   Opcional.
 
+**Prueba:** Puertas y rejas con switches (de piso, ojo, antorcha): se abren al cumplir, las que no quedan abiertas se cierran al soltar, la que se revela hace el paneo solo la primera vez, y entrar a una sala con el switch ya cumplido la muestra abierta sin animar.
+
 **Notas:** e5441dc1: Wiring.drive(target, open, close) es lo compartido de Door y Gate (revelar la primera vez, abrir, cerrar si no stays_open, abrir sin animar si arranca cumplida; ignora un target liberado). Sin nodo SwitchInput a propósito: los switches están en cada instancia de los niveles y el refresh de la_walls pierde los overrides de hijos en instancias. La barrera que se hunde compartida (opcional) no se hizo.
 
 ### 16.20 Behavior trees: reacciones de muerte, golpe y aturdido copiadas · Revisión
@@ -6519,6 +6551,8 @@ Las ramas is_dead→Death_A→on_death_finished, is_hit→Hit_A y stunned→Hit_
 - [x] Un BTSubtree de reacciones
   Animaciones como parámetros del blackboard.
 - [x] Ver si el restart() hace falta
+
+**Prueba:** Pegarle a un esqueleto (se sacude), aturdirlo dos veces seguidas (con escudo o bumerán), matarlo (animación de muerte completa): lo mismo con arquero y guardia.
 
 **Notas:** 1150b37b: reactions_bt (BTSubtree) con Muerto/Golpeado/Aturdido para enemy_bt, archer_bt y guard_bt; los flags se limpian con Enemy.clear_reaction porque un BTSetVar dentro del subtree escribe en su propio scope. Atoq queda con sus ramas (otras animaciones). El restart() se queda: arranca la reacción en el mismo frame.
 
@@ -6533,6 +6567,8 @@ game_state.gd (473 líneas) tiene inventario, equipo, botones (con los de invita
 - [ ] ItemButtons, Bottles y MapProgress como RefCounted con su write/read
 - [x] Las botellas emiten su propia señal
 - [x] El tiempo de juego lo empuja la escena
+
+**Prueba:** Llenar una botella en la fuente: el aro del HUD, el panel del player y la página de ítems la muestran llena. Morir y reaparecer en la entrada de la sala; perder contra un jefe y que la revancha y la intro ya vista se respeten; cargar partida y que todo eso se olvide. El tiempo de juego avanza.
 
 **Notas:** 876b4303: SceneFlow.session (Session: room_entry, boss_rematch, seen_boss_intros) se limpia con la nueva señal GameState.cleared; las botellas emiten GameState.bottle_changed; el tiempo de juego lo suma Players. ItemButtons, Bottles y MapProgress como RefCounted no se hizo: GameState queda como lo que guarda el save y partirlo más no saca acoplamiento.
 
@@ -6579,6 +6615,8 @@ El player se registra en `_enter_tree` (player.gd:53) y `joined` se emite ahí, 
 
 - [x] Registrar en _ready o emitir diferido
   Documentar que joined = player listo.
+
+**Prueba:** Co-op: un invitado se une en medio de una sala: aparece con su vida, equipo y apuntado, y el HUD lo muestra.
 
 **Notas:** 9f51bd9c: el player se registra al entrar al árbol pero joined espera su ready. test_coop_state cubre un invitado que se une.
 
@@ -7579,3 +7617,26 @@ feel.gd:59-83 genera unos 22 sonidos en `_ready` (~10 s de audio a 22050 Hz, ~22
 84. [ ] 11.204 Jefe final: manos al cambiar de fase, aturdido, golpes y rayo · Revisión
 85. [ ] 11.202 Errores del log de la build 0.2 (playtest) · Revisión
 86. [ ] 11.197 Terreno del overworld: colisión simplificada (la carga congela la ventana 3,4 s) · Revisión
+
+### M16: salud del código  (0/20 probadas)
+
+1. [ ] 16.16 Formato del save con dueño y migraciones por versión · Revisión
+2. [ ] 16.7 Cargar partida: la escena vieja recibe el save nuevo antes de irse · Revisión
+3. [ ] 16.5 Partida o escenario con botones de ítem mal formados crashea · Revisión
+4. [ ] 16.18 Lo que hace un ítem al agarrarlo, por datos y no por id · Revisión
+5. [ ] 16.21 GameState: separar el estado de sesión y las piezas sueltas · Revisión
+6. [ ] 16.19 Wiring como componente en la escena · Revisión
+7. [ ] 16.17 Configs de enemigos clonadas por mazmorra · Revisión
+8. [ ] 16.20 Behavior trees: reacciones de muerte, golpe y aturdido copiadas · Revisión
+9. [ ] 16.15 Daño por fuera del Hitbox, tres formas de mirar si toca el piso y dos ondas iguales · Revisión
+10. [ ] 16.13 Clase base ArenaFighter para los sub-jefes · Revisión
+11. [ ] 16.14 Peleas de jefe: música, barra del HUD y premio con un solo camino · Revisión
+12. [ ] 16.1 Jefe final: el rayo del ojo pega una sola vez por pelea · Revisión
+13. [ ] 16.3 Templo: el grafo pide `mirror_shield`, que no existe · Revisión
+14. [ ] 16.8 Pausa con dueños: menús, transiciones y reveal no se despausan entre sí · Revisión
+15. [ ] 16.9 Cambios de escena y fundidos que se pisan · Revisión
+16. [ ] 16.10 Un golpe corta la transición entre salas o el levantar un ítem · Revisión
+17. [ ] 16.6 Corrutinas que esperan un tween matado no vuelven nunca · Revisión
+18. [ ] 16.4 Intro del título: no esconde los velos del overworld · Revisión
+19. [ ] 16.2 Co-op: un contenedor de corazón revive al Espíritu con la vida llena · Revisión
+20. [ ] 16.24 Players.joined sale antes del _ready del player · Revisión

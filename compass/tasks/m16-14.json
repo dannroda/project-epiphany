@@ -37,7 +37,7 @@
   "tags": [
     "refactor"
   ],
-  "test": "",
+  "test": "En un sub-jefe y el jefe: la música de pelea entra y sale al terminar, también al irse de la sala a mitad; la barra del HUD aparece con nombre y baja; el premio sale una sola vez (volver a la sala no lo repite).",
   "title": "Peleas de jefe: música, barra del HUD y premio con un solo camino",
-  "updated_at": "2026-10-16T21:56:06.257Z"
+  "updated_at": "2026-10-16T23:39:08.968Z"
 }

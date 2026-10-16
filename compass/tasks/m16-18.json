@@ -33,7 +33,7 @@
     "refactor",
     "datos"
   ],
-  "test": "",
+  "test": "Agarrar llave chica, llave del jefe, mapa, brújula, contenedor y pieza de corazón y un ítem nuevo: cada uno hace lo suyo (contador, minimapa, vida) y muestra su cartel. Partida nueva: espada, escudo de madera y túnica.",
   "title": "Lo que hace un ítem al agarrarlo, por datos y no por id",
-  "updated_at": "2026-10-16T22:28:43.064Z"
+  "updated_at": "2026-10-16T23:39:07.196Z"
 }

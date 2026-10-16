@@ -30,7 +30,7 @@
     "bug",
     "tests"
   ],
-  "test": "",
+  "test": "Templo: llegar al cuarto que pide el escudo espejo con el escudo espejo y que se pueda pasar.",
   "title": "Templo: el grafo pide `mirror_shield`, que no existe",
-  "updated_at": "2026-10-16T20:37:16.709Z"
+  "updated_at": "2026-10-16T23:39:09.230Z"
 }

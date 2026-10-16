@@ -24,7 +24,7 @@
   "tags": [
     "bug"
   ],
-  "test": "",
+  "test": "Pantalla de título: durante el vuelo sobre el overworld no se ven los velos de las zonas.",
   "title": "Intro del título: no esconde los velos del overworld",
-  "updated_at": "2026-10-16T20:37:16.980Z"
+  "updated_at": "2026-10-16T23:39:10.494Z"
 }

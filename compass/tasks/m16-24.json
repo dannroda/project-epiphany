@@ -21,7 +21,7 @@
     "bug",
     "co-op"
   ],
-  "test": "",
+  "test": "Co-op: un invitado se une en medio de una sala: aparece con su vida, equipo y apuntado, y el HUD lo muestra.",
   "title": "Players.joined sale antes del _ready del player",
-  "updated_at": "2026-10-16T23:09:47.377Z"
+  "updated_at": "2026-10-16T23:39:10.995Z"
 }

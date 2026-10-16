@@ -24,7 +24,7 @@
   "tags": [
     "refactor"
   ],
-  "test": "",
+  "test": "Pegarle a un esqueleto (se sacude), aturdirlo dos veces seguidas (con escudo o bumerán), matarlo (animación de muerte completa): lo mismo con arquero y guardia.",
   "title": "Behavior trees: reacciones de muerte, golpe y aturdido copiadas",
-  "updated_at": "2026-10-16T23:09:42.395Z"
+  "updated_at": "2026-10-16T23:39:08.202Z"
 }

@@ -33,7 +33,7 @@
   "tags": [
     "bug"
   ],
-  "test": "",
+  "test": "Morir y entrar a una escalera o portal al mismo tiempo, o tocar dos salidas seguidas: una sola transición, sin fundidos que se cortan. Partida nueva arranca normal.",
   "title": "Cambios de escena y fundidos que se pisan",
-  "updated_at": "2026-10-16T21:56:03.559Z"
+  "updated_at": "2026-10-16T23:39:09.735Z"
 }

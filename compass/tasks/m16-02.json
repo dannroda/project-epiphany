@@ -31,7 +31,7 @@
     "bug",
     "co-op"
   ],
-  "test": "",
+  "test": "Co-op: con el otro en Espíritu, agarrar un contenedor de corazón: el Espíritu sigue Espíritu (no revive lleno) y el vivo se llena.",
   "title": "Co-op: un contenedor de corazón revive al Espíritu con la vida llena",
-  "updated_at": "2026-10-16T20:37:16.446Z"
+  "updated_at": "2026-10-16T23:39:10.748Z"
 }

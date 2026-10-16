@@ -41,7 +41,7 @@
     "bug",
     "refactor"
   ],
-  "test": "",
+  "test": "En una mazmorra con rejas y switches, cargar otra partida desde el menú: la sala vieja no se mueve ni suena antes del fundido y la nueva aparece con sus rejas como quedaron.",
   "title": "Cargar partida: la escena vieja recibe el save nuevo antes de irse",
-  "updated_at": "2026-10-16T21:56:02.472Z"
+  "updated_at": "2026-10-16T23:39:06.701Z"
 }

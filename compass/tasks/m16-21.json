@@ -38,7 +38,7 @@
   "tags": [
     "refactor"
   ],
-  "test": "",
+  "test": "Llenar una botella en la fuente: el aro del HUD, el panel del player y la página de ítems la muestran llena. Morir y reaparecer en la entrada de la sala; perder contra un jefe y que la revancha y la intro ya vista se respeten; cargar partida y que todo eso se olvide. El tiempo de juego avanza.",
   "title": "GameState: separar el estado de sesión y las piezas sueltas",
-  "updated_at": "2026-10-16T23:09:43.763Z"
+  "updated_at": "2026-10-16T23:39:07.455Z"
 }

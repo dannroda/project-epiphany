@@ -29,7 +29,7 @@
   "tags": [
     "refactor"
   ],
-  "test": "",
+  "test": "Pelear contra Centinela, Ojo Vigía, Kuntur, Amaru, la Momia y la mano guardiana: atacan por turno, rebotan con chispas fuera de su momento vulnerable, mueren y la arena se abre.",
   "title": "Clase base ArenaFighter para los sub-jefes",
-  "updated_at": "2026-10-16T21:56:05.739Z"
+  "updated_at": "2026-10-16T23:39:08.716Z"
 }

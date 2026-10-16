@@ -38,7 +38,7 @@
   "tags": [
     "refactor"
   ],
-  "test": "",
+  "test": "Cargar un save de antes de hoy que tenga pociones o botellas vacías: carga sin avisos, las botellas aparecen con su contenido y el progreso (flags, ítems) es el mismo. Guardar y volver a cargar.",
   "title": "Formato del save con dueño y migraciones por versión",
-  "updated_at": "2026-10-16T22:28:41.908Z"
+  "updated_at": "2026-10-16T23:39:06.451Z"
 }
