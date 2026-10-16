@@ -1,5 +1,5 @@
 {
-  "assignee": "project-epiphany-fd",
+  "assignee": "project-epiphany-67",
   "checklist": [],
   "code": "11.173",
   "created_at": "2026-10-14T17:52:29.972Z",
@@ -17,5 +17,5 @@
   ],
   "test": "test_chullpa › test_an_enemy_that_falls_to_the_floor_below_stays_visible",
   "title": "Esqueleto invisible en una mazmorra",
-  "updated_at": "2026-10-14T17:52:40.266Z"
+  "updated_at": "2026-10-16T01:02:07.515Z"
 }

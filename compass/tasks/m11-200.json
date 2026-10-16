@@ -1,0 +1,21 @@
+{
+  "assignee": "project-epiphany-67",
+  "checklist": [],
+  "code": "11.200",
+  "created_at": "2026-10-16T01:01:11.767Z",
+  "description": "Daniel (2026-10-15): dentro de una sala no tiene sentido que el enemigo deje de perseguir una vez que empezó. Hecho (6ec22d03): FindPlayer sigue al objetivo mientras comparten la sala de origen del enemigo (Enemy.shares_room), aunque esté lejos o fuera de vista. En el overworld se pierde como antes. test_enemy_ai.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 197,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "review",
+  "tags": [
+    "ia",
+    "enemigos"
+  ],
+  "test": "",
+  "title": "Enemigos de sala de mazmorra no sueltan la persecución",
+  "updated_at": "2026-10-16T01:01:11.767Z"
+}

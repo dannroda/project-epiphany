@@ -1,5 +1,5 @@
 {
-  "assignee": "project-epiphany-5d",
+  "assignee": "project-epiphany-39",
   "checklist": [
     {
       "done": true,
@@ -30,5 +30,5 @@
   ],
   "test": "",
   "title": "VFX mágicos con shaders y partículas (sin texturas)",
-  "updated_at": "2026-10-14T06:33:43.015Z"
+  "updated_at": "2026-10-16T01:03:15.160Z"
 }

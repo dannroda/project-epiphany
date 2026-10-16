@@ -1,5 +1,5 @@
 {
-  "assignee": "project-epiphany-fd",
+  "assignee": "project-epiphany-67",
   "checklist": [],
   "code": "11.157",
   "created_at": "2026-10-14T04:24:36.528Z",
@@ -17,5 +17,5 @@
   ],
   "test": "",
   "title": "Mazmorras: los tiles del GridMap no se alinean con la grilla del editor",
-  "updated_at": "2026-10-15T19:54:34.736Z"
+  "updated_at": "2026-10-16T01:02:02.765Z"
 }

@@ -1,5 +1,5 @@
 {
-  "assignee": "project-epiphany-43",
+  "assignee": "project-epiphany-05",
   "checklist": [
     {
       "detail": "Ya no está: salió con la Combinada de oleadas (11.183).",
@@ -39,5 +39,5 @@
   ],
   "test": "test_cracked_wall (test_dungeon_cracked_walls_open_whole_rooms), test_quenoa, test_dungeon_reach",
   "title": "Paredes agrietadas: abren una sala, nunca un nicho (Queñoa y templo)",
-  "updated_at": "2026-10-15T08:19:41.284Z"
+  "updated_at": "2026-10-16T01:02:58.876Z"
 }

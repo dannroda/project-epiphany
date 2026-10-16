@@ -1,5 +1,5 @@
 {
-  "assignee": "project-epiphany-43",
+  "assignee": "project-epiphany-05",
   "checklist": [],
   "code": "11.177",
   "created_at": "2026-10-14T19:05:07.698Z",
@@ -23,5 +23,5 @@
   ],
   "test": "tests/test_chullpa.gd, tests/test_cracked_wall.gd, tests/test_dungeon_reach.gd",
   "title": "Chullpa sin pared agrietada (fuera el nicho del Rellano)",
-  "updated_at": "2026-10-14T20:06:28.714Z"
+  "updated_at": "2026-10-16T01:02:49.767Z"
 }
