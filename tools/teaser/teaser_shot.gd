@@ -14,6 +14,8 @@ enum View { GAME, RAIL }
 @export var rng_seed := 1
 @export var show_player := true
 @export var clear_enemies := false
+## Con el jefe final: apenas empieza la pelea, lo pasa a esta fase sin la presentación (la cámara no se mueve).
+@export var boss_phase := 1
 ## Nodos del nivel (nombres con comodines, como PlumaSpikes_*) que quedan quietos durante la toma.
 @export var freeze: PackedStringArray = []
 

@@ -44,6 +44,7 @@ func _process(delta: float) -> void:
 				_phase = 1
 		1:
 			_hide()
+			_advance_boss()
 			if _clock >= _settled_at:
 				_camera_for_shot()
 				_start = _clock
@@ -103,6 +104,24 @@ func _set_up() -> void:
 			camera.room = null
 		camera.snap_to_target()
 		camera.make_current()
+
+
+func _advance_boss() -> void:
+	var boss := get_tree().current_scene.find_children("*", "Boss", true, false).pop_front() as Boss
+	if not boss or not boss.phases.is_active() or boss.phase() >= _shot.boss_phase:
+		return
+	boss.presents_phases = false
+	if boss.phase() == 2:
+		boss.phases.dispatch(&"enraged")
+		return
+	for hand: BossHand in [boss.hand_left, boss.hand_right]:
+		if hand.state != BossHand.State.DOWN:
+			var hit := DamageInfo.new()
+			hit.amount = hand.health.max_health
+			hit.team = EntityConfig.Team.PLAYER
+			hand.health.invulnerability_time = 0.0
+			hand.stun(1.0)
+			hand.hurtbox.receive(hit)
 
 
 func _camera_for_shot() -> void:

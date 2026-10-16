@@ -414,3 +414,48 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 3.4, 12.5)
 
 [node name="Mira" type="Marker3D" parent="Shots/Ojo"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 2.9, 5.9)
+
+[node name="PunoFase2" type="Node3D" parent="Shots"]
+script = ExtResource("2_shot")
+scenario = "pre_boss"
+view = 1
+length = 14.0
+settle = 8.0
+fov = 40.0
+show_player = false
+rng_seed = 3
+boss_phase = 2
+
+[node name="Inicio" type="Marker3D" parent="Shots/PunoFase2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 0.2, 11)
+
+[node name="From" type="Marker3D" parent="Shots/PunoFase2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 4.2, 19)
+
+[node name="To" type="Marker3D" parent="Shots/PunoFase2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 3.6, 14.5)
+
+[node name="Mira" type="Marker3D" parent="Shots/PunoFase2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 2.9, 5.9)
+
+[node name="PunoFase3" type="Node3D" parent="Shots"]
+script = ExtResource("2_shot")
+scenario = "pre_boss"
+view = 1
+length = 6.0
+settle = 10.0
+fov = 40.0
+show_player = false
+boss_phase = 3
+
+[node name="Inicio" type="Marker3D" parent="Shots/PunoFase3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 0.2, 11)
+
+[node name="From" type="Marker3D" parent="Shots/PunoFase3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 4.2, 19)
+
+[node name="To" type="Marker3D" parent="Shots/PunoFase3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 3.6, 14.5)
+
+[node name="Mira" type="Marker3D" parent="Shots/PunoFase3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 2.9, 5.9)
