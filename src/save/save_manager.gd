@@ -17,7 +17,7 @@ const PLAYER_SLOTS: Array[int] = [1, 2, 3]
 ## Ranura de los escenarios de debug: su autosave nunca pisa una partida del jugador.
 const SCENARIO_SLOT := 98
 
-## Ranura del jugador de la partida en curso: ahí va Guardar; el autosave va a `AUTO_SLOT`.
+## Ranura del jugador de la partida en curso: ahí van Guardar y el autosave. `AUTO_SLOT` queda de partidas viejas.
 var current_slot := 1
 ## Mientras se aplica una partida: los objetos reciben sus flags pero no es algo que el jugador hizo.
 var loading := false
@@ -80,12 +80,15 @@ func autosave(capture_player := true) -> void:
 	if not capture_player:
 		GameState.player_position = null
 	if save_game(slot, capture_player) == OK:
+		var legacy := slot_summary(AUTO_SLOT)
+		if not legacy.is_empty() and legacy.origin == slot:
+			delete_slot(AUTO_SLOT)
 		saved.emit(slot)
 
 
-## Adónde va el autosave: la ranura Auto, salvo en los escenarios y tests, que tienen la suya.
+## Adónde va el autosave: la ranura de la partida en curso (también la de los escenarios y tests).
 func auto_slot() -> int:
-	return AUTO_SLOT if current_slot in PLAYER_SLOTS else current_slot
+	return current_slot
 
 
 ## También cuenta una ranura con solo la copia de respaldo (un guardado cortado): al leerla se usa esa.

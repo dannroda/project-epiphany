@@ -43,20 +43,30 @@ func test_two_slots_do_not_overwrite_each_other() -> void:
 	_teardown()
 
 
-func test_autosave_goes_to_the_auto_slot_and_remembers_its_game() -> void:
+func test_autosave_goes_to_the_slot_being_played() -> void:
 	await _setup()
 	await tree.root.get_node(^"SceneFlow").new_game(2)
 	state.give(Items.get_item(&"bomb_bag"))
 	saves.autosave()
-	assert_true(&"bomb_bag" in saves.slot_summary(saves.AUTO_SLOT).items, "el autosave va a la ranura Auto")
-	assert_eq(&"bomb_bag" in saves.slot_summary(2).items, false, "la del jugador no cambia hasta guardar a mano")
-	assert_eq(saves.slot_summary(saves.AUTO_SLOT).origin, 2, "y sabe de qué partida viene")
+	assert_true(&"bomb_bag" in saves.slot_summary(2).items, "el autosave guarda en la partida que se juega")
+	assert_eq(saves.has_save(saves.AUTO_SLOT), false, "no en una ranura aparte")
+	_teardown()
+
+
+func test_an_old_auto_save_still_loads_and_goes_away() -> void:
+	await _setup()
+	await tree.root.get_node(^"SceneFlow").new_game(2)
+	state.give(Items.get_item(&"bomb_bag"))
+	saves.save_game(saves.AUTO_SLOT)
+	assert_eq(saves.slot_summary(saves.AUTO_SLOT).origin, 2, "la Auto vieja sabe de qué partida viene")
 	state.reset()
 	saves.current_slot = 3
 	assert_eq(await saves.load_game(saves.AUTO_SLOT), OK)
-	assert_eq(saves.current_slot, 2, "cargar la Auto vuelve a la partida de origen")
-	saves.save_game()
-	assert_true(&"bomb_bag" in saves.slot_summary(2).items, "y Guardar va a esa ranura")
+	assert_eq(saves.current_slot, 2, "cargarla vuelve a la partida de origen")
+	assert_true(state.inventory.has(&"bomb_bag"))
+	saves.autosave()
+	assert_true(&"bomb_bag" in saves.slot_summary(2).items, "el autosave va a esa ranura")
+	assert_eq(saves.has_save(saves.AUTO_SLOT), false, "y la Auto vieja se borra")
 	assert_eq(saves.has_save(3), false)
 	_teardown()
 
@@ -130,8 +140,8 @@ func test_autosave_on_big_chests_and_the_antechamber() -> void:
 	chest.interactable.interact(tree.get_first_node_in_group(&"player"))
 	await tree.process_frame
 	assert_eq(count[0], 2, "abrir un cofre grande guarda")
-	assert_eq(saves.has_save(saves.AUTO_SLOT), true, "en la ranura Auto")
-	assert_eq(saves.has_save(2), false, "no en la del jugador")
+	assert_eq(saves.has_save(2), true, "en la partida que se juega")
+	assert_eq(saves.has_save(saves.AUTO_SLOT), false, "no en una ranura aparte")
 	var stack: Node = tree.root.get_node(^"MenuStack")
 	await tree.create_timer(1.0).timeout
 	while stack.is_open():
@@ -151,7 +161,7 @@ func test_play_time_counts_while_playing() -> void:
 	assert_eq(state.play_time, paused_at, "en pausa no cuenta")
 	tree.paused = false
 	saves.autosave()
-	assert_true(saves.slot_summary(saves.AUTO_SLOT).play_time > 0.3, "y se guarda")
+	assert_true(saves.slot_summary(1).play_time > 0.3, "y se guarda")
 	_teardown()
 
 
@@ -169,14 +179,13 @@ func test_file_select_screen() -> void:
 	await tree.process_frame
 	await tree.process_frame
 	var cards := screen.find_children("*", "SlotCard", true, false)
-	assert_eq(cards.size(), 4, "la Auto y tres ranuras")
+	assert_eq(cards.size(), 4, "la Auto (de partidas viejas) y tres ranuras")
 	var auto := cards[0] as SlotCard
 	assert_eq(auto.slot, saves.AUTO_SLOT, "la Auto arriba")
-	assert_true(auto.visible and not auto.summary.is_empty())
-	assert_eq((auto.find_child("Number", true, false) as Label).text, "AUTO")
+	assert_eq(auto.visible, false, "sin Auto vieja no aparece: el autosave va a la ranura")
 	assert_eq((cards[1] as SlotCard).summary.is_empty(), false)
 	assert_eq((cards[3] as SlotCard).summary.is_empty(), true, "las vacías ofrecen nueva partida")
-	assert_true(tree.root.gui_get_focus_owner() == auto, "la más reciente tiene el foco")
+	assert_true(tree.root.gui_get_focus_owner() == cards[1], "la más reciente tiene el foco")
 	screen._set_mode(FileSelect.Mode.DELETE)
 	(cards[1] as SlotCard).pressed.emit()
 	await tree.process_frame
