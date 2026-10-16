@@ -15,6 +15,8 @@ const BB_TARGET := &"target"
 signal defeated(enemy: Enemy)
 
 @export var config: EntityConfig
+## Variantes de mazmorra (guerreros/): el cuerpo de su mazmorra en vez de config.model; la config es la del tipo.
+@export var visuals: PackedScene
 ## El cuerpo queda en el piso este rato y después se hunde en una nube de polvo (11.58); el drop queda.
 @export var corpse_time := 4.0
 @export var sink_time := 1.0
@@ -51,8 +53,9 @@ var is_dead: bool:
 
 func _ready() -> void:
 	config.apply_to(self)
-	if config.model:
-		_swap_model(config.model)
+	var body_scene := visuals if visuals else config.model
+	if body_scene:
+		_swap_model(body_scene)
 	add_to_group(GROUP)
 	_register_monitors()
 	health.max_health = config.max_health
@@ -83,10 +86,12 @@ func _ready() -> void:
 
 func _swap_model(scene: PackedScene) -> void:
 	var old := $ModelController/Visuals
-	var visuals := scene.instantiate()
+	var fresh := scene.instantiate()
+	var parent := old.get_parent()
 	old.name = &"OldVisuals"
-	old.get_parent().add_child(visuals)
-	old.get_parent().move_child(visuals, old.get_index())
+	parent.add_child(fresh)
+	parent.move_child(fresh, old.get_index())
+	parent.remove_child(old)
 	old.queue_free()
 
 

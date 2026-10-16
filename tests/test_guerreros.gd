@@ -24,3 +24,16 @@ func test_every_variant_wears_its_dungeon() -> void:
 			if kind == "armored_skeleton":
 				assert_true(paths.has("res://assets/epiphany/meshes/armas_guerreros/armadura_%s.res" % dungeon), label + " tiene su armadura")
 			enemy.free()
+
+
+func test_variants_share_their_kind_config() -> void:
+	for kind: String in KINDS:
+		var base := load("res://data/entities/%s.tres" % kind)
+		for dungeon: String in DUNGEONS:
+			var enemy := (load("res://src/entities/guerreros/%s_%s.tscn" % [kind, dungeon]) as PackedScene).instantiate() as Enemy
+			assert_true(enemy.config == base, "%s_%s usa la config de %s" % [kind, dungeon, kind])
+			assert_true(enemy.visuals != null, "%s_%s trae el cuerpo de su mazmorra" % [kind, dungeon])
+			enemy.free()
+	for file in DirAccess.get_files_at("res://data/entities"):
+		for dungeon: String in DUNGEONS:
+			assert_true(not file.ends_with("_%s.tres" % dungeon), "%s: sin configs por mazmorra" % file)
