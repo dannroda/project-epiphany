@@ -45,6 +45,15 @@ static func make(what: ItemData, how_many := 1, heals := 0) -> Pickup:
 	return pickup
 
 
+## Premio de una sola vez (contenedor, pieza de llave): lo agrega a `parent` si `flag` no está y la marca al agarrarlo.
+static func offer_once(pickup: Pickup, flag: StringName, parent: Node) -> bool:
+	if pickup.is_inside_tree() or GameState.get_flag(flag) == true:
+		return false
+	parent.add_child(pickup)
+	pickup.collected.connect(func() -> void: GameState.set_flag(flag, true), CONNECT_ONE_SHOT)
+	return true
+
+
 func _ready() -> void:
 	var mesh := item.pickup_mesh if item else heart_mesh
 	if mesh:

@@ -76,11 +76,11 @@ func _begin() -> void:
 	await Tweens.wait(self, door.open_time)
 	in_intro = true
 	boss.presents_phases = true
-	Music.boss_fight = true
+	Music.hold_boss(self)
 	_sharpen()
 	await TopDownCamera.reveal(boss.eye, _awaken, intro_hold)
 	in_intro = false
-	get_tree().call_group(Hud.GROUP, &"show_boss", boss)
+	get_tree().call_group(Hud.GROUP, &"show_boss", BossBar.new(boss.display_name, boss.bar_changed, boss.bar_fraction, boss.phase))
 	boss.start_fight()
 	fight_started.emit()
 
@@ -115,7 +115,7 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 
 func _on_defeated() -> void:
-	Music.boss_fight = false
+	Music.release_boss(self)
 	get_tree().call_group(Hud.GROUP, &"hide_boss")
 
 
@@ -149,13 +149,10 @@ func _spawn_reward(point: Vector3) -> void:
 	pickup.lifetime = 0.0
 	pickup.magnet_radius = 0.0
 	pickup.world_size = 1.4
-	Spawns.root(self).add_child(pickup)
-	pickup.global_position = point
-	pickup.collected.connect(_on_reward_taken)
-
-
-func _on_reward_taken() -> void:
-	GameState.set_flag(container_flag, true)
+	if Pickup.offer_once(pickup, container_flag, Spawns.root(self)):
+		pickup.global_position = point
+	else:
+		pickup.free()
 
 
 ## Vuelve a cargar la arena con el jefe vivo; el player aparece adentro, junto a la puerta.
@@ -179,8 +176,3 @@ func _on_exit(_player: PlayerCharacter) -> void:
 		"to_title":
 			SaveManager.save_checkpoint()
 			SceneFlow.quit_to_title()
-
-
-func _exit_tree() -> void:
-	if not Engine.is_editor_hint():
-		Music.boss_fight = false

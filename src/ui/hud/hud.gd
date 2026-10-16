@@ -41,9 +41,9 @@ var prompt_text: Label:
 var _area_tween: Tween
 var _dungeon: DungeonState
 var _saved_tween: Tween
-## Boss o ArenaFight: display_name, bar_changed, bar_fraction() y phase().
-var _boss: Node
+var _boss: BossBar
 var _boss_tween: Tween
+var _boss_fade: Tween
 
 
 func _ready() -> void:
@@ -164,34 +164,41 @@ func _flash_saved() -> void:
 
 
 
-func show_boss(boss: Node) -> void:
-	_boss = boss
-	%BossName.text = tr(boss.display_name)
-	boss.bar_changed.connect(_refresh_boss)
-	boss_health.value = boss.bar_fraction()
+func show_boss(bar: BossBar) -> void:
+	if _boss and _boss.changed.is_connected(_refresh_boss):
+		_boss.changed.disconnect(_refresh_boss)
+	_boss = bar
+	%BossName.text = tr(bar.display_name)
+	bar.changed.connect(_refresh_boss)
+	boss_health.value = bar.fraction.call()
 	_refresh_boss()
 	boss_bar.visible = true
 	boss_bar.modulate.a = 0.0
-	create_tween().tween_property(boss_bar, "modulate:a", 1.0, 0.4)
+	if _boss_fade:
+		_boss_fade.kill()
+	_boss_fade = create_tween()
+	_boss_fade.tween_property(boss_bar, "modulate:a", 1.0, 0.4)
 
 
 func hide_boss() -> void:
-	if _boss and _boss.bar_changed.is_connected(_refresh_boss):
-		_boss.bar_changed.disconnect(_refresh_boss)
+	if _boss and _boss.changed.is_connected(_refresh_boss):
+		_boss.changed.disconnect(_refresh_boss)
 	_boss = null
-	var tween := create_tween()
-	tween.tween_interval(0.8)
-	tween.tween_property(boss_bar, "modulate:a", 0.0, 0.6)
-	tween.tween_callback(boss_bar.hide)
+	if _boss_fade:
+		_boss_fade.kill()
+	_boss_fade = create_tween()
+	_boss_fade.tween_interval(0.8)
+	_boss_fade.tween_property(boss_bar, "modulate:a", 0.0, 0.6)
+	_boss_fade.tween_callback(boss_bar.hide)
 
 
 func _refresh_boss() -> void:
 	if _boss == null:
 		return
-	var phase: int = _boss.phase()
+	var phase := _boss.phase()
 	%BossPhase.text = tr("HUD_BOSS_PHASE").format({phase = phase})
 	%BossPhase.visible = phase > 0
 	if _boss_tween:
 		_boss_tween.kill()
 	_boss_tween = create_tween()
-	_boss_tween.tween_property(boss_health, "value", _boss.bar_fraction(), 0.25).set_ease(Tween.EASE_OUT)
+	_boss_tween.tween_property(boss_health, "value", _boss.fraction.call(), 0.25).set_ease(Tween.EASE_OUT)

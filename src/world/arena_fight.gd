@@ -95,14 +95,14 @@ func _begin() -> void:
 	if barrier:
 		barrier.close()
 	in_intro = true
-	Music.boss_fight = true
+	Music.hold_boss(self)
 	var seen_key: Variant = flag if flag != &"" else get_path()
 	await TopDownCamera.reveal(self, _awaken, intro_hold, rematch or GameState.seen_boss_intros.has(seen_key))
 	GameState.seen_boss_intros[seen_key] = true
 	in_intro = false
 	if not started or not is_inside_tree():
 		return
-	get_tree().call_group(Hud.GROUP, &"show_boss", self)
+	get_tree().call_group(Hud.GROUP, &"show_boss", BossBar.new(display_name, bar_changed, bar_fraction))
 	_spawn_escorts()
 	for fighter in _fighters:
 		fighter.start()
@@ -140,7 +140,7 @@ func _reset() -> void:
 		return
 	started = false
 	_attacker = null
-	Music.boss_fight = false
+	Music.release_boss(self)
 	get_tree().call_group(Hud.GROUP, &"hide_boss")
 	for fighter in _fighters:
 		fighter.reset()
@@ -196,7 +196,7 @@ func _win(announce: bool) -> void:
 	active = true
 	started = false
 	_persistent.value = true
-	Music.boss_fight = false
+	Music.release_boss(self)
 	get_tree().call_group(Hud.GROUP, &"hide_boss")
 	for door in doors:
 		door.open()
@@ -217,10 +217,8 @@ func _already_won() -> void:
 
 
 func _show_reward() -> void:
-	if reward == null or reward.is_inside_tree() or GameState.get_flag(reward_flag) == true:
-		return
-	add_child(reward)
-	reward.collected.connect(func() -> void: GameState.set_flag(reward_flag, true))
+	if reward:
+		Pickup.offer_once(reward, reward_flag, self)
 
 
 ## Barra del HUD: la vida que les queda a todos.
@@ -233,12 +231,6 @@ func bar_fraction() -> float:
 	return float(left) / maxf(total, 1)
 
 
-func phase() -> int:
-	return 0
-
-
 func _exit_tree() -> void:
-	if started:
-		Music.boss_fight = false
 	if reward and not reward.is_inside_tree():
 		reward.queue_free()

@@ -14,8 +14,13 @@ var players: Dictionary[StringName, AudioStreamPlayer] = {}
 var levels: Dictionary[StringName, float] = {}
 var _duck := 0.0
 var _menu_open := false
-## Pelea con el jefe (placeholder hasta tener su tema): todas las capas del templo al máximo.
-var boss_fight := false
+var _boss_owners: Dictionary[Node, bool] = {}
+
+## Pelea con el jefe (placeholder hasta tener su tema): todas las capas del templo al máximo. Suena mientras alguna
+## arena la tenga (hold_boss); una que se va del árbol la suelta sola.
+var boss_fight: bool:
+	get:
+		return not _boss_owners.is_empty()
 
 
 ## Cada capa es un hijo con su nombre (music.tscn).
@@ -56,6 +61,19 @@ func targets() -> Dictionary[StringName, float]:
 	elif not Players.all.is_empty():
 		wanted[&"calm"] = 1.0
 	return wanted
+
+
+func hold_boss(owner: Node) -> void:
+	if _boss_owners.has(owner):
+		return
+	_boss_owners[owner] = true
+	var release := release_boss.bind(owner)
+	if not owner.tree_exiting.is_connected(release):
+		owner.tree_exiting.connect(release)
+
+
+func release_boss(owner: Node) -> void:
+	_boss_owners.erase(owner)
 
 
 func current_doom() -> float:

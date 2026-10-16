@@ -73,3 +73,41 @@ func test_music_ducks_when_a_menu_opens() -> void:
 	await tree.process_frame
 	assert_true(not music._menu_open, "y al cerrarse, también")
 	tree.paused = false
+
+
+func test_boss_music_is_held_by_each_arena() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var music: Node = tree.root.get_node(^"Music")
+	var first := Node.new()
+	var second := Node.new()
+	tree.root.add_child(first)
+	tree.root.add_child(second)
+	music.hold_boss(first)
+	music.hold_boss(second)
+	music.hold_boss(second)
+	music.release_boss(first)
+	assert_true(music.boss_fight, "la arena que termina no apaga la música de otra")
+	second.free()
+	assert_true(not music.boss_fight, "una arena que se va del árbol la suelta")
+	music.hold_boss(first)
+	music.release_boss(first)
+	music.hold_boss(first)
+	assert_true(music.boss_fight, "se puede volver a tomar")
+	first.free()
+	assert_true(not music.boss_fight)
+
+
+func test_boss_bar_shown_again_right_after_hiding_stays() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var hud := (load("res://src/ui/hud/hud.tscn") as PackedScene).instantiate() as Hud
+	tree.root.add_child(hud)
+	var fight := ArenaFight.new()
+	var bar := BossBar.new("X", fight.bar_changed, func() -> float: return 0.5)
+	hud.show_boss(bar)
+	hud.hide_boss()
+	hud.show_boss(bar)
+	await tree.create_timer(2.0).timeout
+	assert_true(hud.boss_bar.visible and is_equal_approx(hud.boss_bar.modulate.a, 1.0), "la barra no se esconde por el fundido anterior")
+	assert_eq(bar.phase(), 0, "sin fases, fase 0")
+	hud.free()
+	fight.free()
