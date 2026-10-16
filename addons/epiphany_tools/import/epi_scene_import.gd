@@ -5,6 +5,7 @@ extends EditorScenePostImportPlugin
 ## también ahí) y las custom properties:
 ## col=box|sphere|capsule|convex en una malla → StaticBody3D; socket en un empty → Marker3D; spring en un hueso → cadena
 ## de SpringBoneSimulator3D desde ese hueso (el valor es la rigidez).
+## Una malla <pieza>_col-colonly es la colisión simplificada de <pieza>: su cuerpo va adentro de la malla, como con -col.
 
 const ROOT := "res://assets/epiphany/"
 const MESH_DIR := "epiphany/mesh_dir"
@@ -36,6 +37,8 @@ func _post_process(scene: Node) -> void:
 		var col: String = _extras(node).get("col", "")
 		if not col.is_empty():
 			_add_collision(node, col)
+	for body: StaticBody3D in scene.find_children("*_col", "StaticBody3D", true, false):
+		_attach_collision(body)
 	for node: Node3D in scene.find_children("*", "Node3D", true, false):
 		if _extras(node).has("socket") and node.get_class() == "Node3D":
 			_to_marker(node)
@@ -91,6 +94,15 @@ func _add_collision(node: MeshInstance3D, kind: String) -> void:
 	node.add_child(body)
 	body.owner = node.owner
 	collider.owner = node.owner
+
+
+func _attach_collision(body: StaticBody3D) -> void:
+	var mesh := body.get_parent().get_node_or_null(NodePath(String(body.name).trim_suffix("_col"))) as MeshInstance3D
+	if mesh == null:
+		return
+	body.reparent(mesh)
+	for node: Node in [body] + body.get_children():
+		node.owner = mesh.owner
 
 
 func _to_marker(node: Node3D) -> void:

@@ -1053,10 +1053,9 @@ def strip_of(x):
 
 
 def _split(piece, name, material, collection):
-	"""Una pieza por franja con las caras de la pieza cuyo centro cae en ella; name lleva el número antes del sufijo. Las
-	normales se orientan en la pieza entera: por franja, un pedazo suelto puede quedar dado vuelta."""
+	"""Una pieza por franja con las caras de la pieza cuyo centro cae en ella, y su colisión aparte. Las normales se
+	orientan en la pieza entera: por franja, un pedazo suelto puede quedar dado vuelta."""
 	bmesh.ops.recalc_face_normals(piece.bm, faces=[f for f in piece.bm.faces if f not in piece.fixed])
-	base, _, suffix = name.partition("-")
 	objects = []
 	for k in range(STRIPS):
 		part = epi.Piece()
@@ -1065,8 +1064,38 @@ def _split(piece, name, material, collection):
 		part.uv = part.bm.loops.layers.uv.verify()
 		bmesh.ops.delete(part.bm, geom=[f for f in part.bm.faces if strip_of(f.calc_center_median().x) != k], context="FACES")
 		part.fixed = set(part.bm.faces)
-		objects.append(_build(part, "%s_%d-%s" % (base, k, suffix), material, collection))
+		visual = _build(part, "%s_%d" % (name, k), material, collection)
+		objects += [visual, _collision(visual, collection)]
 	return objects
+
+
+## La colisión de cada franja (-colonly) se queda con esta fracción de los triángulos de la malla: Jolt arma la colisión
+## en el hilo principal al entrar al overworld y con la malla entera tardaba 3,4 s. Antes se funden las caras coplanares
+## (pisos y paredes no cambian) y después se simplifica el resto.
+COLLISION_RATIO = 0.1
+
+
+def _collision(visual, collection):
+	mesh = visual.data.copy()
+	mesh.materials.clear()
+	bm = bmesh.new()
+	bm.from_mesh(mesh)
+	target = sum(len(f.verts) - 2 for f in bm.faces) * COLLISION_RATIO
+	bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=0.0005)
+	bmesh.ops.dissolve_limit(bm, angle_limit=math.radians(1.0), use_dissolve_boundaries=False, verts=bm.verts, edges=bm.edges)
+	bmesh.ops.triangulate(bm, faces=bm.faces)
+	bm.to_mesh(mesh)
+	bm.free()
+	obj = bpy.data.objects.new(visual.name + "_col-colonly", mesh)
+	collection.objects.link(obj)
+	if len(mesh.polygons) > target:
+		decimate = obj.modifiers.new("decimate", "DECIMATE")
+		decimate.ratio = target / len(mesh.polygons)
+		simple = bpy.data.meshes.new_from_object(obj.evaluated_get(bpy.context.evaluated_depsgraph_get()))
+		obj.modifiers.remove(decimate)
+		obj.data = simple
+		bpy.data.meshes.remove(mesh)
+	return obj
 
 
 def _part(obj):
@@ -1097,7 +1126,7 @@ def main():
 	rail = epi.Piece(40)
 	terrain, walls = cracked_walls(collection, holes, rail)
 	cave_mouths(terrain)
-	objects += _split(terrain, "riscos-col", "wall", collection)
+	objects += _split(terrain, "riscos", "wall", collection)
 	objects.append(_build(rail, "baranda-colonly", None, collection))
 	ground = epi.Piece(12)
 	outer = [Vector((BOUNDS[0].x, BOUNDS[0].y)), Vector((BOUNDS[1].x, BOUNDS[0].y)), Vector((BOUNDS[1].x, BOUNDS[1].y)), Vector((BOUNDS[0].x, BOUNDS[1].y))]
@@ -1109,7 +1138,7 @@ def main():
 		for lp in waters[level]:
 			shallow(ground, lp)
 		paint_role(ground, fill(ground, [pt for pt, _f in paths[level]], z + (PATH_LIFT if level else 0.0), ground_height if level == 0 else None), "path", vary=0.015)
-	objects += _split(ground, "suelo-col", "outdoor", collection)
+	objects += _split(ground, "suelo", "outdoor", collection)
 	objects += decor(load_meshes(), collection)
 	epi.publish("terreno_organico", objects=objects, part=_part)
 	for wall in walls:
