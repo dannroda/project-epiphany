@@ -1,8 +1,9 @@
 {
+  "assignee": "project-epiphany-cb",
   "checklist": [
     {
       "detail": "Pausar y descargarla detrás del fundido.",
-      "done": false,
+      "done": true,
       "text": "Sacar la escena vieja antes de leer el save"
     },
     {
@@ -12,11 +13,11 @@
     },
     {
       "detail": "No en _enter_tree/_exit_tree de Dungeon.",
-      "done": false,
+      "done": true,
       "text": "current_dungeon se pone una vez por cambio de escena"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Test: cargar no dispara changed en nodos de la escena vieja"
     }
   ],
@@ -30,17 +31,17 @@
     }
   ],
   "milestone": "m16",
-  "notes": "",
+  "notes": "2ab62f68: SceneFlow.enter_save saca la escena vieja (remove_child + queue_free) antes de read_from; _sync_dungeon una vez por cambio de escena; Music mantiene las capas sin escena. Paso 2 a medias: la carga ya es de SceneFlow, pero SaveManager todavía llama a SceneFlow.location().",
   "order": 7,
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug",
     "refactor"
   ],
   "test": "",
   "title": "Cargar partida: la escena vieja recibe el save nuevo antes de irse",
-  "updated_at": "2026-10-16T19:48:44.178Z"
+  "updated_at": "2026-10-16T21:56:02.472Z"
 }

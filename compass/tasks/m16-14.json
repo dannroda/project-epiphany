@@ -1,8 +1,9 @@
 {
+  "assignee": "project-epiphany-cb",
   "checklist": [
     {
       "detail": "Un set que suelta al dueño en tree_exiting.",
-      "done": false,
+      "done": true,
       "text": "Music.hold_boss(dueño) / release_boss(dueño)"
     },
     {
@@ -11,11 +12,11 @@
       "text": "La cámara emite room_changed y Music se suscribe"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Contrato tipado para la barra del jefe"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Helper compartido del premio"
     },
     {
@@ -27,16 +28,16 @@
   "created_at": "2026-10-16T19:47:49.550Z",
   "description": "`Music.boss_fight` es un bool global que prenden y apagan ArenaFight y BossArena (7 lugares): una arena que termina apaga la música de otra. Music además lee la escena, la mazmorra y la sala de la cámara cada frame. La barra del jefe se llama con `call_group(Hud.GROUP, \"show_boss\")` sin tipo y el HUD espera display_name, bar_changed, bar_fraction() y phase() (por eso ArenaFight.phase() devuelve 0). \"Aparece el premio y su flag se marca al agarrarlo\" está dos veces. BossArena tiene su propio rematch (GameState.boss_rematch vs ArenaFight.rematch).",
   "milestone": "m16",
-  "notes": "",
+  "notes": "60fc771f: Music.hold_boss/release_boss con dueños (se suelta en tree_exiting); BossBar tipado para el HUD (ArenaFight sin phase()); Pickup.offer_once para el premio; arreglado que la barra mostrada justo después de esconderla se iba por el fundido viejo. Sin hacer, a propósito: room_changed (el doom cambia dentro de la sala, ej. BossArena calma la sala, así que Music igual tiene que leerlo; el costo es una búsqueda por grupo) y un solo rematch (ArenaFight.rematch es 'revancha a media vida' del diseño y GameState.boss_rematch es volver a pelear el jefe final: son dos cosas distintas).",
   "order": 14,
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "refactor"
   ],
   "test": "",
   "title": "Peleas de jefe: música, barra del HUD y premio con un solo camino",
-  "updated_at": "2026-10-16T19:47:51.127Z"
+  "updated_at": "2026-10-16T21:56:06.257Z"
 }

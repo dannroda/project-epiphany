@@ -1,12 +1,13 @@
 {
+  "assignee": "project-epiphany-cb",
   "checklist": [
     {
       "detail": "Señal propia de interrupción o el token de turno como Kuntur.",
-      "done": false,
+      "done": true,
       "text": "Esperar algo que siempre llega"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Test: interrumpir un agarre no deja conexiones en escaped"
     }
   ],
@@ -20,16 +21,16 @@
     }
   ],
   "milestone": "m16",
-  "notes": "",
+  "notes": "c05390ff: Tweens.ended(tween) vuelve también si lo matan; _move/_return_to_rest devuelven bool y los que llaman cortan. test_boss: cortar un agarre no deja nada, aturdir el ojo a mitad del rayo termina la corrutina.",
   "order": 6,
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug"
   ],
   "test": "",
   "title": "Corrutinas que esperan un tween matado no vuelven nunca",
-  "updated_at": "2026-10-16T19:48:45.850Z"
+  "updated_at": "2026-10-16T21:56:01.943Z"
 }

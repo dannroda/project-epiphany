@@ -6303,118 +6303,136 @@ templo_graph.tres:153, 159, 186 y 195 usan `mirror_shield`; el ítem es `shield_
 
 **Notas:** wt/bugs 757407ae. read_from es conservador (no exige que tengas el ítem); validate sí lo avisa. Todos los escenarios validan salvo boss_key_door_locked (a propósito).
 
-### 16.6 Corrutinas que esperan un tween matado no vuelven nunca · Pendiente
+### 16.6 Corrutinas que esperan un tween matado no vuelven nunca · Revisión
 
-**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `bug`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-cb · **Etiquetas:** `bug`
 
 `Tween.kill()` no emite `finished`. El jefe espera `grow.finished` y `_laser_tween.finished` (boss.gd:453,467,504) y `_cut_charge` los mata: el `if not _eye_attacking: return` nunca corre. BossHand `_move` espera `_motion.finished` y `_drop_everything`/`collapse` lo matan: si se corta el primer `_move` de `_hold`, el lambda de `escaped` queda conectado al player para siempre (una fuga por agarre interrumpido).
 
-- [ ] Esperar algo que siempre llega
+- [x] Esperar algo que siempre llega
   Señal propia de interrupción o el token de turno como Kuntur.
-- [ ] Test: interrumpir un agarre no deja conexiones en escaped
+- [x] Test: interrumpir un agarre no deja conexiones en escaped
+
+**Notas:** c05390ff: Tweens.ended(tween) vuelve también si lo matan; _move/_return_to_rest devuelven bool y los que llaman cortan. test_boss: cortar un agarre no deja nada, aturdir el ojo a mitad del rayo termina la corrutina.
 
 **Relacionadas:** 16.13 Clase base ArenaFighter para los sub-jefes
 
-### 16.7 Cargar partida: la escena vieja recibe el save nuevo antes de irse · Pendiente
+### 16.7 Cargar partida: la escena vieja recibe el save nuevo antes de irse · Revisión
 
-**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `bug`, `refactor`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-cb · **Etiquetas:** `bug`, `refactor`
 
 `SaveManager._load_path` hace `GameState.read_from` (emite `loaded`) y recién después `SceneFlow.enter_saved_scene`, que igual recarga la escena (11.108). Mientras tanto la escena vieja, despausada, reacciona: PersistentFlag reemite, rejas y switches se mueven y algunos vuelven a escribir flags (wave_spawner.gd:104, floor_switch.gd:96/106, eye_switch.gd:79). `SaveManager.loading` existe para eso pero solo lo mira la cámara. SaveManager y SceneFlow además se llaman entre sí; `dungeon_changed` se emite dos veces al recargar una mazmorra.
 
-- [ ] Sacar la escena vieja antes de leer el save
+- [x] Sacar la escena vieja antes de leer el save
   Pausar y descargarla detrás del fundido.
 - [ ] SceneFlow es dueño de cargar y entrar; SaveManager solo lee y escribe
   La ubicación entra como parámetro.
-- [ ] current_dungeon se pone una vez por cambio de escena
+- [x] current_dungeon se pone una vez por cambio de escena
   No en _enter_tree/_exit_tree de Dungeon.
-- [ ] Test: cargar no dispara changed en nodos de la escena vieja
+- [x] Test: cargar no dispara changed en nodos de la escena vieja
+
+**Notas:** 2ab62f68: SceneFlow.enter_save saca la escena vieja (remove_child + queue_free) antes de read_from; _sync_dungeon una vez por cambio de escena; Music mantiene las capas sin escena. Paso 2 a medias: la carga ya es de SceneFlow, pero SaveManager todavía llama a SceneFlow.location().
 
 **Relacionadas:** 11.108 Cargar en la misma escena desincroniza puertas y flags
 
-### 16.8 Pausa con dueños: menús, transiciones y reveal no se despausan entre sí · Pendiente
+### 16.8 Pausa con dueños: menús, transiciones y reveal no se despausan entre sí · Revisión
 
-**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `bug`, `refactor`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-cb · **Etiquetas:** `bug`, `refactor`
 
 `get_tree().paused` lo escriben MenuStack (push pausa, pop siempre despausa), SceneFlow y la cámara (reveal); gana el último. Un TextBox o el Game Over que se cierran durante un reveal despausan el mundo a mitad del paneo; GameOver hace pop y después `respawn()` funde 0,4 s con el mundo corriendo.
 
-- [ ] Pause.hold(motivo) / release(motivo)
+- [x] Pause.hold(motivo) / release(motivo)
   paused = hay algún motivo; MenuStack, SceneFlow y la cámara piden el suyo.
-- [ ] Test: cerrar un menú durante un reveal no despausa
+- [x] Test: cerrar un menú durante un reveal no despausa
 
-### 16.9 Cambios de escena y fundidos que se pisan · Pendiente
+**Notas:** 7de6965d: Pause.hold/release/clear con motivos (menu, travel, reveal); nadie más escribe tree.paused (test_pause lo revisa).
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`
+### 16.9 Cambios de escena y fundidos que se pisan · Revisión
+
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `bug`
 
 `travel_to` pone `traveling` pero no lo mira; `respawn`, `new_game`, `with_fade`, `quit_to_title`, el portal de viaje rápido y las escaleras no lo ponen ni lo miran. `_fade` crea un tween nuevo sin matar el anterior (scene_flow.gd:413). `respawn` corre despausado y sin el calentado de pipelines. `new_game` escribe el mismo archivo dos veces (save_game + autosave).
 
-- [ ] Una guardia al principio de cada transición pública
-- [ ] Un solo tween de fundido
-- [ ] respawn por el mismo camino que _change_scene
+- [x] Una guardia al principio de cada transición pública
+- [x] Un solo tween de fundido
+- [x] respawn por el mismo camino que _change_scene
   Pone traveling, pausa y calienta pipelines.
-- [ ] new_game guarda una vez
+- [x] new_game guarda una vez
   Y sacar `auto_slot()`, que ya devuelve current_slot.
 
-### 16.10 Un golpe corta la transición entre salas o el levantar un ítem · Pendiente
+**Notas:** 177feb58: SceneFlow.traveling es un contador (begin/end_transition), guardias en with_fade/travel_to/respawn, un solo _fade_tween, respawn por _change_scene, new_game guarda una vez.
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `refactor`
+### 16.10 Un golpe corta la transición entre salas o el levantar un ítem · Revisión
+
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `bug`, `refactor`
 
 `anystate() -> Hurt` (state_machine.gd:19) no tiene guardia, a diferencia de transition y grabbed. Transition no da i-frames: un proyectil de la sala anterior frena la entrada en la puerta y `_lock_after_entering` puede cerrar la reja encima. En ItemGet saltea el cartel aunque el ítem ya se dio. Relacionado: las capacidades de cada estado se miran por nombre o ruta de nodo (player.gd:199,213,252) en vez de flags como `follows_room_transition`.
 
-- [ ] Export can_be_hurt en PlayerState
+- [x] Export can_be_hurt en PlayerState
   O i-frames en Transition._enter.
-- [ ] can_interact y can_guard como exports
+- [x] can_interact y can_guard como exports
   Reemplazan `_guard_states` y los `name in [...]`.
-- [ ] Idle y Moving usan set_locked_legs de la base
+- [x] Idle y Moving usan set_locked_legs de la base
 
-### 16.11 Estado estático que sobrevive al cambio de escena · Pendiente
+**Notas:** 0a5415d9: PlayerState.can_be_hurt/can_interact/can_guard y blocks_room_transition(); test_player cubre un golpe a mitad del cruce.
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`
+### 16.11 Estado estático que sobrevive al cambio de escena · Revisión
+
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `bug`
 
 `AreaZone._current` (area_zone.gd:8) queda apuntando a una zona liberada y se lee su display_name. `Room._waking` (room.gd:60) se limpia solo dentro de un call_deferred: si la sala que lo pidió se libera antes, queda en true y las salas dejan de despertar y dormir sus nodos en todas las escenas siguientes.
 
-- [ ] _current con is_instance_valid y limpio en tree_exiting
-- [ ] La agenda de despertar en un dueño por escena
+- [x] _current con is_instance_valid y limpio en tree_exiting
+- [x] La agenda de despertar en un dueño por escena
   La cámara, no un static de clase.
 
-### 16.12 Timers del árbol que reanudan corrutinas de nodos ya liberados · Pendiente
+**Notas:** c10b855d: Room._wake_rooms estático (la agenda no depende de la sala que la pidió); AreaZone olvida la zona al salir del árbol. El test de AreaZone también pasa con el código viejo.
 
-**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `bug`
+### 16.12 Timers del árbol que reanudan corrutinas de nodos ya liberados · Revisión
+
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `bug`
 
 `get_tree().create_timer(...)` sobrevive al cambio de escena: enemy.gd:364 (corpse_time), dead.gd:13, kuntur, watcher_eye, amaru, mummy_guard, centinela, boss_hand y boss_arena. Si el player muere a mitad de un patrón o viaja a los 4 s de matar algo, cada uno imprime "Resumed function after await, but class instance is gone", ruido que tapa errores reales.
 
-- [ ] Esperas atadas al nodo
+- [x] Esperas atadas al nodo
   Un helper `_wait(t)` con tween_interval del propio nodo (va en ArenaFighter, 16.13).
-- [ ] Test: viajar con patrones a medias no deja errores en el log
+- [x] Test: viajar con patrones a medias no deja errores en el log
+
+**Notas:** 72ddc8a8: Tweens.wait(nodo, s) para con la pausa como un timer del árbol pero muere con el nodo; reemplaza create_timer en sub-jefes, cadáver de enemigo, Dead del player, jefe, mano, BossArena, ArenaFight y EyeSwitch. test_arena_fighter.
 
 **Relacionadas:** 16.13 Clase base ArenaFighter para los sub-jefes
 
-### 16.13 Clase base ArenaFighter para los sub-jefes · Pendiente
+### 16.13 Clase base ArenaFighter para los sub-jefes · Revisión
 
-**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `refactor`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-cb · **Etiquetas:** `refactor`
 
 Centinela, Ojo Vigía, Kuntur, Amaru y la Momia repiten las mismas señales y campos (arena, may_attack, peers, pace), `start`/`reset`/`_interrupt`, `_wait`, `_new_tween`/`_tween_to`, `_clamp_to_arena`, el `_on_hit` de rebotar si no es vulnerable y el token `_turn`. ArenaFight los encuentra con `has_signal(&"attack_finished")` y los guarda en un Array sin tipo; WaveSpawner repite el cableado; `Room.enemies_inside` usa `enemy.get(&"is_dead")`. Cada sub-jefe nuevo (D3, D4, templo) copia todo otra vez.
 
-- [ ] ArenaFighter extends Node3D con lo compartido
+- [x] ArenaFighter extends Node3D con lo compartido
   Un solo nivel de herencia; `_on_hit` plantilla con is_vulnerable() y _on_hit_vulnerable().
-- [ ] Pasar los cinco sub-jefes
+- [x] Pasar los cinco sub-jefes
   Sin reescribir a LimboHSM; las corrutinas quedan.
-- [ ] _fighters: Array[ArenaFighter] en ArenaFight y WaveSpawner
+- [x] _fighters: Array[ArenaFighter] en ArenaFight y WaveSpawner
+
+**Notas:** 72ddc8a8: ArenaFighter (@abstract) es la base de los seis (también HandGuard): señales, arena, pace, may_attack, peers, _turn, start, _interrupt/_on_interrupt, _on_hit con _react_to, tweens y _clamp_to_arena. ArenaFight y WaveSpawner con Array[ArenaFighter]. Room.enemies_inside sigue con get(is_dead) (mezcla enemigos comunes).
 
 **Relacionadas:** 16.6 Corrutinas que esperan un tween matado no vuelven nunca; 16.12 Timers del árbol que reanudan corrutinas de nodos ya liberados
 
-### 16.14 Peleas de jefe: música, barra del HUD y premio con un solo camino · Pendiente
+### 16.14 Peleas de jefe: música, barra del HUD y premio con un solo camino · Revisión
 
-**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `refactor`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-cb · **Etiquetas:** `refactor`
 
 `Music.boss_fight` es un bool global que prenden y apagan ArenaFight y BossArena (7 lugares): una arena que termina apaga la música de otra. Music además lee la escena, la mazmorra y la sala de la cámara cada frame. La barra del jefe se llama con `call_group(Hud.GROUP, "show_boss")` sin tipo y el HUD espera display_name, bar_changed, bar_fraction() y phase() (por eso ArenaFight.phase() devuelve 0). "Aparece el premio y su flag se marca al agarrarlo" está dos veces. BossArena tiene su propio rematch (GameState.boss_rematch vs ArenaFight.rematch).
 
-- [ ] Music.hold_boss(dueño) / release_boss(dueño)
+- [x] Music.hold_boss(dueño) / release_boss(dueño)
   Un set que suelta al dueño en tree_exiting.
 - [ ] La cámara emite room_changed y Music se suscribe
   Sin polling.
-- [ ] Contrato tipado para la barra del jefe
-- [ ] Helper compartido del premio
+- [x] Contrato tipado para la barra del jefe
+- [x] Helper compartido del premio
 - [ ] Un solo origen para el rematch
+
+**Notas:** 60fc771f: Music.hold_boss/release_boss con dueños (se suelta en tree_exiting); BossBar tipado para el HUD (ArenaFight sin phase()); Pickup.offer_once para el premio; arreglado que la barra mostrada justo después de esconderla se iba por el fundido viejo. Sin hacer, a propósito: room_changed (el doom cambia dentro de la sala, ej. BossArena calma la sala, así que Music igual tiene que leerlo; el costo es una búsqueda por grupo) y un solo rematch (ArenaFight.rematch es 'revancha a media vida' del diseño y GameState.boss_rematch es volver a pelear el jefe final: son dos cosas distintas).
 
 ### 16.15 Daño por fuera del Hitbox, tres formas de mirar si toca el piso y dos ondas iguales · Pendiente
 

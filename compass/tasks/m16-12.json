@@ -1,12 +1,13 @@
 {
+  "assignee": "project-epiphany-cb",
   "checklist": [
     {
       "detail": "Un helper `_wait(t)` con tween_interval del propio nodo (va en ArenaFighter, 16.13).",
-      "done": false,
+      "done": true,
       "text": "Esperas atadas al nodo"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Test: viajar con patrones a medias no deja errores en el log"
     }
   ],
@@ -20,16 +21,16 @@
     }
   ],
   "milestone": "m16",
-  "notes": "",
+  "notes": "72ddc8a8: Tweens.wait(nodo, s) para con la pausa como un timer del árbol pero muere con el nodo; reemplaza create_timer en sub-jefes, cadáver de enemigo, Dead del player, jefe, mano, BossArena, ArenaFight y EyeSwitch. test_arena_fighter.",
   "order": 12,
   "priority": "low",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug"
   ],
   "test": "",
   "title": "Timers del árbol que reanudan corrutinas de nodos ya liberados",
-  "updated_at": "2026-10-16T19:48:45.276Z"
+  "updated_at": "2026-10-16T21:56:05.205Z"
 }
