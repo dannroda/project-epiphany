@@ -38,4 +38,5 @@ Arreglos a `measure_shaders.ps1` para PowerShell 5.1:
 
 ## Pendiente en el worktree de Windows
 
-- El primer export reimportó el proyecto y dejó ~530 archivos modificados (485 `.res` de meshes y 45 `.import`), todos binarios y sin cambios de texto. No se commitearon. Decidir si se descartan o si son el reimport correcto de 4.8.beta1.
+- El primer export reimportó el proyecto y cambió 531 archivos: 485 `.res` de meshes, 45 `.import` y `src/entities/guard_bt.tres`. Están en un commit aparte, 8dfae88, para que Linux decida si se mergean o se descartan; ese commit se puede revertir solo.
+- `guard_bt.tres` solo ganó los uid de `bt_alert.gd`, `bt_search.gd` y del recurso, y se movió de lugar el sub_resource `BTAction_wander`. El árbol es el mismo.
