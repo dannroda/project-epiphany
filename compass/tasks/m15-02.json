@@ -1,0 +1,30 @@
+{
+  "checklist": [
+    {
+      "detail": "pipeline_probe + profiler de Godot en el cuadro del pico.",
+      "done": false,
+      "text": "Reproducir y perfilar"
+    },
+    {
+      "done": false,
+      "text": "Arreglar (pool, preload o lo que se mida)"
+    }
+  ],
+  "code": "15.2",
+  "created_at": "2026-10-16T06:44:46.587Z",
+  "description": "Con caché caliente: 85,7 ms (D3D12 sin baker) y 63,6 ms (Vulkan) sin compilar pipelines; en frío 19,5 ms. No parece shaders: revisar instanciado, partículas o algo que se crea en vez de reusarse.",
+  "links": [
+    {
+      "task": "m11-203",
+      "type": "related"
+    }
+  ],
+  "milestone": "m15",
+  "notes": "",
+  "order": 2,
+  "refs": [],
+  "status": "todo",
+  "test": "",
+  "title": "Pico suelto de sparks_gold",
+  "updated_at": "2026-10-16T06:45:04.274Z"
+}

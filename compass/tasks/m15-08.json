@@ -1,0 +1,33 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Elegir la máquina y armar la build"
+    },
+    {
+      "done": false,
+      "text": "Medir con profile_scenes y pipeline_probe"
+    },
+    {
+      "done": false,
+      "text": "Pasar lo que falle a tarjetas de este hito"
+    }
+  ],
+  "code": "15.8",
+  "created_at": "2026-10-16T06:44:54.712Z",
+  "description": "Pendiente de 10.8: hasta ahora todo se midió en debug con la RX 580. Medir release en la máquina más floja de los playtesters: overworld, mazmorra, jefe y arranque.",
+  "links": [
+    {
+      "task": "m10-08",
+      "type": "related"
+    }
+  ],
+  "milestone": "m15",
+  "notes": "",
+  "order": 8,
+  "refs": [],
+  "status": "todo",
+  "test": "",
+  "title": "Medir la build release en la máquina más floja",
+  "updated_at": "2026-10-16T06:45:05.270Z"
+}

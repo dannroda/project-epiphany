@@ -1,0 +1,25 @@
+{
+  "checklist": [
+    {
+      "detail": "Según el diseño de los mockups de UI.",
+      "done": false,
+      "text": "Opción en la pantalla de Ajustes"
+    },
+    {
+      "detail": "scaling_3d_mode/scale del viewport.",
+      "done": false,
+      "text": "Aplicarla y guardarla"
+    }
+  ],
+  "code": "15.7",
+  "created_at": "2026-10-16T06:44:53.595Z",
+  "description": "Red de seguridad para GPUs integradas y Mac, donde no podemos medir: opción de escala 3D (FSR) en Ajustes, guardada con el resto de la configuración. La UI se dibuja a resolución completa.",
+  "milestone": "m15",
+  "notes": "",
+  "order": 7,
+  "refs": [],
+  "status": "todo",
+  "test": "",
+  "title": "Escala de resolución 3D en Ajustes",
+  "updated_at": "2026-10-16T06:44:54.402Z"
+}

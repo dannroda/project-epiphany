@@ -1,0 +1,36 @@
+{
+  "checklist": [
+    {
+      "detail": "Probablemente dependen de las luces/sombras activas en el momento del disparo (omni con sombra, contact shadows).",
+      "done": false,
+      "text": "Ver qué especializaciones faltan"
+    },
+    {
+      "detail": "Por ejemplo, una luz con sombra cerca de los efectos durante los dos cuadros.",
+      "done": false,
+      "text": "Cubrirlas en pipeline_warmup.tscn"
+    },
+    {
+      "detail": "measure_shaders.ps1 -SkipExport; cero compilaciones al aparecer.",
+      "done": false,
+      "text": "Volver a medir en Windows"
+    }
+  ],
+  "code": "15.1",
+  "created_at": "2026-10-16T06:44:44.482Z",
+  "description": "En Windows (D3D12 y Vulkan, con baker y caché caliente) explosion compila +7 especializaciones al aparecer, projectile +2 y roar_ring +1 (peor frame ~18 ms). En Linux el warm-up las cubre. Medido con tools/pipeline_probe.gd y measure_shaders.ps1 (11.203).",
+  "links": [
+    {
+      "task": "m11-203",
+      "type": "related"
+    }
+  ],
+  "milestone": "m15",
+  "notes": "",
+  "order": 1,
+  "refs": [],
+  "status": "todo",
+  "test": "",
+  "title": "Warm-up: variantes que faltan en Windows",
+  "updated_at": "2026-10-16T06:45:03.856Z"
+}

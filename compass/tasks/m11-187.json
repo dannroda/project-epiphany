@@ -13,10 +13,10 @@
       "text": "Terreno en bloques más chicos que se descarten fuera de cámara"
     }
   ],
-  "code": "11.187",
+  "code": "15.9",
   "created_at": "2026-10-15T06:31:31.409Z",
   "description": "Daniel (2026-10-15) preguntó por el texture streaming de Godot 4.8: descartado, el proyecto tiene 3422 PNG que suman ~5 MB (paleta y colores por vértice). Lo que pesa en el overworld es la geometría (terreno_organico.0..11 de 15-72 MB, paredes LA, decor, plantas) y la cantidad de mallas por cuadro. Va después de terminar los assets, junto con 11.126 y 11.59.",
-  "milestone": "m11",
+  "milestone": "m15",
   "notes": "",
   "order": 184,
   "priority": "low",
@@ -29,5 +29,5 @@
   ],
   "test": "",
   "title": "Overworld: optimizar el dibujado (después de los assets)",
-  "updated_at": "2026-10-15T06:31:32.237Z"
+  "updated_at": "2026-10-16T06:44:56.343Z"
 }

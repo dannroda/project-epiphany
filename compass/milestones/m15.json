@@ -1,0 +1,11 @@
+{
+  "code": "M15",
+  "done_when": [
+    "Primer arranque (caché vacía) hasta el overworld jugable en menos de 5 s en Windows D3D12.",
+    "Ningún efecto compila pipelines al aparecer ni tira un frame de más de 25 ms con caché caliente.",
+    "Build release a 60 FPS p95 en la máquina más floja en overworld, mazmorra y jefe."
+  ],
+  "goal": "Que el juego arranque rápido y corra estable a 60 FPS en la máquina más floja de los playtesters, en Linux y Windows, sin tirones al aparecer efectos.",
+  "order": 15,
+  "title": "Optimización"
+}

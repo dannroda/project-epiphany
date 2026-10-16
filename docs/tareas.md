@@ -2157,7 +2157,7 @@ Asegurar 60 FPS en la máquina más floja de los playtesters: perfilar las peore
 
 **Bloqueada por:** 8.8 Recorrido completo y escenarios de la mazmorra
 
-**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
+**Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión); 15.8 Medir la build release en la máquina más floja
 
 ### 10.9 Build para playtesters · Hecho
 
@@ -2594,7 +2594,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 
 Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
 
-## M11 — Pulido: contenido y feel  (117/200)
+## M11 — Pulido: contenido y feel  (117/199)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4627,6 +4627,8 @@ GitHub rechaza el push: assets/epiphany/terreno_organico.glb (hasta 334 MB) y as
 - [x] Pushear (Daniel)
   Hecho el 2026-10-13 por -5d a pedido de Daniel: en tandas de 40 commits de first-parent (git push origin <sha>:refs/heads/main), porque el push entero pasaba el límite de 2 GB por pack de GitHub. origin/main = 7cc1240d.
 
+**Relacionadas:** 15.5 Comprimir mallas al importar
+
 ### 11.127 Etiqueta del piso tapa el minimapa · Hecho
 
 **Terminada:** 2026-10-13 · **Prioridad:** media · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `ui`
@@ -5369,16 +5371,6 @@ Daniel (2026-10-15, captura): en PisoCornisa, la puerta sur de las Torretas (Pas
 
 **Prueba:** test_cumbre (test_the_door_from_the_turrets_lands_in_the_sun_eye_room_clear_of_the_boss_key_gate)
 
-### 11.187 Overworld: optimizar el dibujado (después de los assets) · Pendiente
-
-**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `optimizacion`, `overworld`
-
-Daniel (2026-10-15) preguntó por el texture streaming de Godot 4.8: descartado, el proyecto tiene 3422 PNG que suman ~5 MB (paleta y colores por vértice). Lo que pesa en el overworld es la geometría (terreno_organico.0..11 de 15-72 MB, paredes LA, decor, plantas) y la cantidad de mallas por cuadro. Va después de terminar los assets, junto con 11.126 y 11.59.
-
-- [ ] Medir con el profiler: vértices, draw calls, sombras
-- [ ] Rangos de visibilidad/LOD en decor y plantas
-- [ ] Terreno en bloques más chicos que se descarten fuera de cámara
-
 ### 11.188 Build de Godot 4.8-dev7 con símbolos para diagnosticar el crash 11.185 · Hecho
 
 **Terminada:** 2026-10-15 · **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-fd · **Etiquetas:** `bug`
@@ -5551,10 +5543,8 @@ PRs de 4.8 que Daniel eligió: 118045 y 115426 (luz) activados; 113970, 121122 y
   Medido (2026-10-16, build debug, RX 580): overworld listo ~5,2 s con caché vacía vs ~2,6 s caliente; el baker en Linux ahorra ~0,15 s (ruido): el costo es el driver armando pipelines. El primer proyectil tiraba 48 ms; con pipeline_warmup.tscn (4e745df1) ningún efecto compila al aparecer. tools/pipeline_probe.gd mide. El baker encontró abyss_mist roto (f3335aef).
 - [x] Medir el baker en Windows (D3D12)
   Medido (2026-10-16, RX 580, 3 corridas): overworld listo con caché vacía D3D12 10,3 s sin baker → 8,1 s con baker (-21 %), Vulkan sin baker 8,2 s; caliente todos ~2,7 s. Baker activado en el preset Windows (release). El bake de D3D12 solo sale exportando desde Windows: la release de Windows se exporta allá. Debug sigue sin baker. LimboAI: debug usa la dll editor, release la template_release.
-- [ ] Efectos que aún compilan al aparecer en Windows
-  Con baker y caché caliente: explosion +7 specialization, projectile +2, roar_ring +1 (peor frame ~18 ms, vsync 17 ms). El warm-up no cubre esas especializaciones en D3D12/Vulkan Windows; mirar qué variantes faltan (¿luces/sombras del momento del disparo?).
-- [ ] Pico suelto de sparks_gold con caché caliente
-  85,7 ms (D3D12 sin baker) y 63,6 ms (Vulkan), sin compilar pipelines; en frío 19,5 ms. No parece shaders; revisar instanciado/partículas.
+
+**Relacionadas:** 15.1 Warm-up: variantes que faltan en Windows; 15.2 Pico suelto de sparks_gold; 15.4 Contact shadows y SSAO en mazmorras
 
 ### 11.204 Jefe final: manos al cambiar de fase, aturdido, golpes y rayo · Revisión
 
@@ -6827,6 +6817,106 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 **Archivos:** `player/components/controls.gd`, `player/state_machine.gd`, `player/components/input_buffer.gd`, `player/components/targeting.gd`, `player/components/aim.gd`
 
 **Relacionadas:** 14.1 Arquitectura de red
+
+## M15 — Optimización  (0/9)
+
+Que el juego arranque rápido y corra estable a 60 FPS en la máquina más floja de los playtesters, en Linux y Windows, sin tirones al aparecer efectos.
+
+**Hecho cuando:**
+- Primer arranque (caché vacía) hasta el overworld jugable en menos de 5 s en Windows D3D12.
+- Ningún efecto compila pipelines al aparecer ni tira un frame de más de 25 ms con caché caliente.
+- Build release a 60 FPS p95 en la máquina más floja en overworld, mazmorra y jefe.
+
+### 15.1 Warm-up: variantes que faltan en Windows · Pendiente
+
+En Windows (D3D12 y Vulkan, con baker y caché caliente) explosion compila +7 especializaciones al aparecer, projectile +2 y roar_ring +1 (peor frame ~18 ms). En Linux el warm-up las cubre. Medido con tools/pipeline_probe.gd y measure_shaders.ps1 (11.203).
+
+- [ ] Ver qué especializaciones faltan
+  Probablemente dependen de las luces/sombras activas en el momento del disparo (omni con sombra, contact shadows).
+- [ ] Cubrirlas en pipeline_warmup.tscn
+  Por ejemplo, una luz con sombra cerca de los efectos durante los dos cuadros.
+- [ ] Volver a medir en Windows
+  measure_shaders.ps1 -SkipExport; cero compilaciones al aparecer.
+
+**Relacionadas:** 11.203 Aprovechar las novedades de Godot 4.8
+
+### 15.2 Pico suelto de sparks_gold · Pendiente
+
+Con caché caliente: 85,7 ms (D3D12 sin baker) y 63,6 ms (Vulkan) sin compilar pipelines; en frío 19,5 ms. No parece shaders: revisar instanciado, partículas o algo que se crea en vez de reusarse.
+
+- [ ] Reproducir y perfilar
+  pipeline_probe + profiler de Godot en el cuadro del pico.
+- [ ] Arreglar (pool, preload o lo que se mida)
+
+**Relacionadas:** 11.203 Aprovechar las novedades de Godot 4.8
+
+### 15.3 Sombras ajustadas a la cámara fija · Pendiente
+
+La cámara es cenital y fija por sala: la sombra direccional puede tener distancia máxima corta y 1-2 cascadas en vez de 4. Suele ser de lo más barato en GPU.
+
+- [ ] Medir el costo actual de sombras
+  Overworld y una sala de mazmorra, GPU 1080p en RX 580.
+- [ ] Ajustar distancia, cascadas y resolución del atlas
+  Que no se note el corte en el borde de pantalla ni en las salas grandes.
+- [ ] Revisar luces omni/spot con sombra
+  Cuántas proyectan sombra a la vez en las peores salas.
+
+### 15.4 Contact shadows y SSAO en mazmorras · Pendiente
+
+En el overworld (11.203) costaron ~0,8 ms GPU (7,8 → 8,6 ms). Falta decidir si van en las mazmorras: medir por sala y comparar a ojo.
+
+- [ ] Medir costo por sala
+- [ ] Decidir con Daniel por cómo se ve
+
+**Relacionadas:** 11.203 Aprovechar las novedades de Godot 4.8
+
+### 15.5 Comprimir mallas al importar · Pendiente
+
+Los terreno_organico pesan 15-72 MB cada uno. Comprimir atributos de vértice achica RAM, VRAM, .pck, tiempo de carga y el repo (ver 11.126). Va después de terminar los assets.
+
+- [ ] Medir tamaño y carga actuales
+- [ ] Activar compresión de mallas en el import
+  Revisar que no se vean artefactos en el terreno ni en los colores por vértice.
+- [ ] Volver a medir
+
+**Relacionadas:** 11.126 Push bloqueado: terreno del overworld pasa 100 MB
+
+### 15.6 Arranque hasta el menú · Pendiente
+
+Medir qué se carga antes del primer cuadro: autoloads, preloads grandes, recursos del menú. Bajar lo que no haga falta en el arranque.
+
+- [ ] Medir el tiempo hasta el primer cuadro y hasta el menú
+  Linux y Windows, caché vacía y caliente.
+- [ ] Mover a carga diferida lo que no haga falta
+
+### 15.7 Escala de resolución 3D en Ajustes · Pendiente
+
+Red de seguridad para GPUs integradas y Mac, donde no podemos medir: opción de escala 3D (FSR) en Ajustes, guardada con el resto de la configuración. La UI se dibuja a resolución completa.
+
+- [ ] Opción en la pantalla de Ajustes
+  Según el diseño de los mockups de UI.
+- [ ] Aplicarla y guardarla
+  scaling_3d_mode/scale del viewport.
+
+### 15.8 Medir la build release en la máquina más floja · Pendiente
+
+Pendiente de 10.8: hasta ahora todo se midió en debug con la RX 580. Medir release en la máquina más floja de los playtesters: overworld, mazmorra, jefe y arranque.
+
+- [ ] Elegir la máquina y armar la build
+- [ ] Medir con profile_scenes y pipeline_probe
+- [ ] Pasar lo que falle a tarjetas de este hito
+
+**Relacionadas:** 10.8 Pasada de rendimiento
+
+### 15.9 Overworld: optimizar el dibujado (después de los assets) · Pendiente
+
+**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `optimizacion`, `overworld`
+
+Daniel (2026-10-15) preguntó por el texture streaming de Godot 4.8: descartado, el proyecto tiene 3422 PNG que suman ~5 MB (paleta y colores por vértice). Lo que pesa en el overworld es la geometría (terreno_organico.0..11 de 15-72 MB, paredes LA, decor, plantas) y la cantidad de mallas por cuadro. Va después de terminar los assets, junto con 11.126 y 11.59.
+
+- [ ] Medir con el profiler: vértices, draw calls, sombras
+- [ ] Rangos de visibilidad/LOD en decor y plantas
+- [ ] Terreno en bloques más chicos que se descarten fuera de cámara
 
 ## Listas
 

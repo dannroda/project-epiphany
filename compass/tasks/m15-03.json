@@ -1,0 +1,30 @@
+{
+  "checklist": [
+    {
+      "detail": "Overworld y una sala de mazmorra, GPU 1080p en RX 580.",
+      "done": false,
+      "text": "Medir el costo actual de sombras"
+    },
+    {
+      "detail": "Que no se note el corte en el borde de pantalla ni en las salas grandes.",
+      "done": false,
+      "text": "Ajustar distancia, cascadas y resolución del atlas"
+    },
+    {
+      "detail": "Cuántas proyectan sombra a la vez en las peores salas.",
+      "done": false,
+      "text": "Revisar luces omni/spot con sombra"
+    }
+  ],
+  "code": "15.3",
+  "created_at": "2026-10-16T06:44:47.925Z",
+  "description": "La cámara es cenital y fija por sala: la sombra direccional puede tener distancia máxima corta y 1-2 cascadas en vez de 4. Suele ser de lo más barato en GPU.",
+  "milestone": "m15",
+  "notes": "",
+  "order": 3,
+  "refs": [],
+  "status": "todo",
+  "test": "",
+  "title": "Sombras ajustadas a la cámara fija",
+  "updated_at": "2026-10-16T06:44:49.184Z"
+}
