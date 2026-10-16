@@ -356,6 +356,11 @@ func _on_died() -> void:
 	bt_player.restart()
 
 
+## reactions_bt (un BTSubtree) apaga is_hit / stunned acá: un BTSetVar del subárbol escribiría en su propio scope.
+func clear_reaction(variable: StringName) -> void:
+	bt_player.blackboard.set_var(variable, false)
+
+
 func on_death_finished() -> void:
 	bt_player.active = false
 	collision_layer = DEAD_COLLISION_LAYER

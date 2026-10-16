@@ -1,5 +1,6 @@
 [gd_resource type="BehaviorTree" format=3]
 
+[ext_resource type="BehaviorTree" path="res://src/entities/reactions_bt.tres" id="r_react"]
 [ext_resource type="Script" uid="uid://bw6i0a7bddx8n" path="res://ai/tasks/bt_find_player.gd" id="1_caso1"]
 [ext_resource type="Script" uid="uid://dp1f7fgg0yk1l" path="res://ai/tasks/bt_in_attack_range.gd" id="2_0sm1c"]
 [ext_resource type="Resource" path="res://data/attacks/skeleton_slash.tres" id="3_2suu5"]
@@ -11,102 +12,9 @@
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_jgf0a"]
 
-[sub_resource type="BBVariant" id="BBVariant_jiw7p"]
-type = 1
-saved_value = true
-resource_name = "true"
-
-[sub_resource type="BTCheckVar" id="BTCheckVar_km1us"]
-variable = &"is_dead"
-value = SubResource("BBVariant_jiw7p")
-
-[sub_resource type="BBNode" id="BBNode_76c56"]
-saved_value = NodePath("ModelController/AnimationPlayer")
-resource_name = "ModelController/AnimationPlayer"
-
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_sj6bb"]
-await_completion = 1.6
-animation_player = SubResource("BBNode_76c56")
-animation_name = &"General/Death_A"
-blend = 0.15
-
-[sub_resource type="BBNode" id="BBNode_oilbr"]
-saved_value = NodePath(".")
-resource_name = "."
-
-[sub_resource type="BTCallMethod" id="BTCallMethod_n0grs"]
-node = SubResource("BBNode_oilbr")
-method = &"on_death_finished"
-
-[sub_resource type="BTSequence" id="BTSequence_jc67m"]
-custom_name = "Muerto"
-children = [SubResource("BTCheckVar_km1us"), SubResource("BTPlayAnimation_sj6bb"), SubResource("BTCallMethod_n0grs")]
-
-[sub_resource type="BBVariant" id="BBVariant_5gnj7"]
-type = 1
-saved_value = true
-resource_name = "true"
-
-[sub_resource type="BTCheckVar" id="BTCheckVar_kib5i"]
-variable = &"is_hit"
-value = SubResource("BBVariant_5gnj7")
-
-[sub_resource type="BBNode" id="BBNode_3218h"]
-saved_value = NodePath("ModelController/AnimationPlayer")
-resource_name = "ModelController/AnimationPlayer"
-
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_tv5kr"]
-await_completion = 1.0
-animation_player = SubResource("BBNode_3218h")
-animation_name = &"General/Hit_A"
-blend = 0.15
-
-[sub_resource type="BBVariant" id="BBVariant_viror"]
-type = 1
-saved_value = false
-resource_name = "false"
-
-[sub_resource type="BTSetVar" id="BTSetVar_fbro2"]
-variable = &"is_hit"
-value = SubResource("BBVariant_viror")
-
-[sub_resource type="BTSequence" id="BTSequence_ea1ff"]
-custom_name = "Golpeado"
-children = [SubResource("BTCheckVar_kib5i"), SubResource("BTPlayAnimation_tv5kr"), SubResource("BTSetVar_fbro2")]
-
-[sub_resource type="BBVariant" id="BBVariant_q4fk5"]
-type = 1
-saved_value = true
-resource_name = "true"
-
-[sub_resource type="BTCheckVar" id="BTCheckVar_lx1b6"]
-variable = &"stunned"
-value = SubResource("BBVariant_q4fk5")
-
-[sub_resource type="BBNode" id="BBNode_b5vex"]
-saved_value = NodePath("ModelController/AnimationPlayer")
-resource_name = "ModelController/AnimationPlayer"
-
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_fqs72"]
-animation_player = SubResource("BBNode_b5vex")
-animation_name = &"General/Hit_B"
-blend = 0.15
-
-[sub_resource type="BTWait" id="BTWait_hjooy"]
-duration = 1.2
-
-[sub_resource type="BBVariant" id="BBVariant_fqfvd"]
-type = 1
-saved_value = false
-resource_name = "false"
-
-[sub_resource type="BTSetVar" id="BTSetVar_66j55"]
-variable = &"stunned"
-value = SubResource("BBVariant_fqfvd")
-
-[sub_resource type="BTSequence" id="BTSequence_m2m87"]
-custom_name = "Aturdido"
-children = [SubResource("BTCheckVar_lx1b6"), SubResource("BTPlayAnimation_fqs72"), SubResource("BTWait_hjooy"), SubResource("BTSetVar_66j55")]
+[sub_resource type="BTSubtree" id="BTSubtree_react"]
+custom_name = "Reacciones"
+subtree = ExtResource("r_react")
 
 [sub_resource type="BTCondition" id="BTCondition_alert_find"]
 script = ExtResource("1_caso1")
@@ -169,7 +77,7 @@ custom_name = "Deambular"
 children = [SubResource("BTAction_wander")]
 
 [sub_resource type="BTDynamicSelector" id="BTDynamicSelector_mitb3"]
-children = [SubResource("BTSequence_jc67m"), SubResource("BTSequence_ea1ff"), SubResource("BTSequence_m2m87"), SubResource("BTSequence_alert"), SubResource("BTSequence_0kvci"), SubResource("BTSequence_8062w"), SubResource("BTSequence_search"), SubResource("BTSequence_wc2m8")]
+children = [SubResource("BTSubtree_react"), SubResource("BTSequence_alert"), SubResource("BTSequence_0kvci"), SubResource("BTSequence_8062w"), SubResource("BTSequence_search"), SubResource("BTSequence_wc2m8")]
 
 [resource]
 blackboard_plan = SubResource("BlackboardPlan_jgf0a")

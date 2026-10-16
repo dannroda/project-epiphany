@@ -226,3 +226,43 @@ func test_in_the_overworld_the_chase_lasts_while_the_player_stays_in_its_chase_r
 	await _frames(tree, 30)
 	assert_true(not chasing.call(), "en la Arboleda lo suelta")
 	tree.root.get_node(^"GameState").reset()
+
+
+func test_hit_reaction_plays_and_clears_its_flag() -> void:
+	var setup: Array = await _load_level()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	var enemy: Enemy = setup[2]
+	player.global_position = enemy.global_position - Vector3(0, 0, 8)
+	var info := DamageInfo.make(1, 0.0, player)
+	enemy.hurtbox.receive(info)
+	var played := false
+	for i in 20:
+		await tree.physics_frame
+		played = played or enemy.anim_player.current_animation == &"General/Hit_A"
+	assert_true(played, "el subárbol de reacciones pone Hit_A")
+	for i in 120:
+		if enemy.bt_player.blackboard.get_var(Enemy.BB_IS_HIT, true) == false:
+			break
+		await tree.physics_frame
+	assert_eq(enemy.bt_player.blackboard.get_var(Enemy.BB_IS_HIT, true), false, "y apaga is_hit en el blackboard del enemigo")
+
+
+func test_a_second_stun_plays_again() -> void:
+	var setup: Array = await _load_level()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	var enemy: Enemy = setup[2]
+	player.global_position = enemy.global_position - Vector3(0, 0, 8)
+	for turn in 2:
+		enemy.bt_player.blackboard.set_var(Enemy.BB_STUNNED, true)
+		var played := false
+		for i in 20:
+			await tree.physics_frame
+			played = played or enemy.anim_player.current_animation == &"General/Hit_B"
+		assert_true(played, "aturdido %d: Hit_B" % (turn + 1))
+		for i in 150:
+			if enemy.bt_player.blackboard.get_var(Enemy.BB_STUNNED, true) == false:
+				break
+			await tree.physics_frame
+		assert_eq(enemy.bt_player.blackboard.get_var(Enemy.BB_STUNNED, true), false, "aturdido %d se termina" % (turn + 1))
