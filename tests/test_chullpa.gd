@@ -84,7 +84,7 @@ func test_hole_drops_to_the_room_below() -> void:
 	assert_true(absf(player.global_position.y + 8.0) < 0.5, "en el sótano (y %.1f)" % player.global_position.y)
 	assert_eq(player.health.current, health, "caer a la sala de abajo no lastima")
 	assert_true(not _floor("PlantaBaja").visible, "los pisos de arriba se ocultan")
-	assert_true(absf(tree.root.get_node(^"GameState").room_entry.y + 8.0) < 0.5, "la entrada de la sala se anota al aterrizar")
+	assert_true(absf(tree.root.get_node(^"SceneFlow").session.room_entry.y + 8.0) < 0.5, "la entrada de la sala se anota al aterrizar")
 	tree.root.get_node(^"GameState").reset()
 
 

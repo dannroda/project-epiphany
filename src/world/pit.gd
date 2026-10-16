@@ -29,7 +29,7 @@ func _fall(player: PlayerCharacter) -> void:
 	var info := DamageInfo.make(damage, 0.0, self)
 	info.unavoidable = true
 	player.hurtbox.receive(info)
-	var back: Variant = _nearest_respawn(player.last_ground) if respawn else GameState.room_entry
+	var back: Variant = _nearest_respawn(player.last_ground) if respawn else SceneFlow.session.room_entry
 	if back == null:
 		var point := SpawnPoint.find(get_tree(), GameState.spawn_point)
 		back = point.global_position if point else player.global_position + Vector3.UP * 3.0

@@ -144,3 +144,30 @@ func test_reading_a_save_only_emits_loaded() -> void:
 	state.give(Items.get_item(&"bomb"))
 	assert_eq(heard, ["inventory"] as Array[String], "después de cargar vuelve a avisar")
 	state.free()
+
+
+func test_a_new_game_clears_the_session() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	var flow: Node = tree.root.get_node(^"SceneFlow")
+	flow.session.room_entry = Vector3.ONE
+	flow.session.boss_rematch = true
+	flow.session.seen_boss_intros[&"x"] = true
+	state.reset()
+	assert_eq(flow.session.room_entry, null)
+	assert_true(not flow.session.boss_rematch and flow.session.seen_boss_intros.is_empty(), "la revancha y las intros vistas se olvidan")
+
+
+func test_filling_a_bottle_says_so() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	state.reset()
+	state.give(Items.get_item(&"bottle_empty"))
+	var bottle: StringName = state.bottle_with(&"bottle_empty")
+	var heard := []
+	var listen := func(which: StringName, content: StringName) -> void: heard.append([which, content])
+	state.bottle_changed.connect(listen)
+	state.fill(bottle, &"potion")
+	state.bottle_changed.disconnect(listen)
+	assert_eq(heard, [[bottle, &"potion"]])
+	state.reset()

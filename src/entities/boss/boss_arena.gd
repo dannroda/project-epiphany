@@ -5,7 +5,7 @@ extends Node
 ## La intro se salta con aceptar/atacar/interactuar. Al morir el player se recarga la escena y todo vuelve a empezar.
 ## Vencido: `defeated_flag` (abre el portal de salida), la sala se calma y aparece el contenedor de corazón.
 ## La puerta queda cerrada: el portal es la única salida y entrar abre el fin de la demo. Al volver a cargar el jefe
-## ya no está, salvo en la revancha (`GameState.boss_rematch`): pelea completa, sin otro contenedor.
+## ya no está, salvo en la revancha (`SceneFlow.session.boss_rematch`): pelea completa, sin otro contenedor.
 
 signal fight_started
 
@@ -55,14 +55,14 @@ func _ready() -> void:
 		return
 	process_mode = PROCESS_MODE_ALWAYS
 	exit_portal.player_entered.connect(_on_exit)
-	if GameState.get_flag(defeated_flag) == true and not GameState.boss_rematch:
+	if GameState.get_flag(defeated_flag) == true and not SceneFlow.session.boss_rematch:
 		_already_won()
 		return
 	boss.arena = room.bounds().grow(-1.5)
 	room.player_entered.connect(func(_room: Room) -> void: _begin())
 	boss.defeated.connect(_on_defeated)
 	boss.death_finished.connect(_on_death_finished)
-	if GameState.boss_rematch:
+	if SceneFlow.session.boss_rematch:
 		exit_portal.held = true
 		_begin.call_deferred()
 
@@ -127,8 +127,8 @@ func _on_death_finished() -> void:
 	if GameState.get_flag(container_flag) != true:
 		_spawn_reward(reward_point)
 	Feel.sfx(&"secret", reward_point)
-	if GameState.boss_rematch:
-		GameState.boss_rematch = false
+	if SceneFlow.session.boss_rematch:
+		SceneFlow.session.boss_rematch = false
 		exit_portal.held = false
 	SaveManager.autosave()
 
@@ -157,8 +157,8 @@ func _spawn_reward(point: Vector3) -> void:
 
 ## Vuelve a cargar la arena con el jefe vivo; el player aparece adentro, junto a la puerta.
 func start_rematch() -> void:
-	GameState.boss_rematch = true
-	GameState.room_entry = door.global_position + Vector3.FORWARD * rematch_entry_depth
+	SceneFlow.session.boss_rematch = true
+	SceneFlow.session.room_entry = door.global_position + Vector3.FORWARD * rematch_entry_depth
 	SceneFlow.respawn()
 
 

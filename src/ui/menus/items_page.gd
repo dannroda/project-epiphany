@@ -39,6 +39,7 @@ func _ready() -> void:
 	grid.columns = COLUMNS
 	_build_slots()
 	GameState.inventory.changed.connect(_queue_refresh.unbind(2))
+	GameState.bottle_changed.connect(_queue_refresh.unbind(2))
 	GameState.item_buttons_changed.connect(_queue_refresh)
 	GameState.loaded.connect(_queue_refresh)
 	InputDevice.input_device_changed.connect(_queue_refresh.unbind(1))

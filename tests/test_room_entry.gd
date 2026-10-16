@@ -1,5 +1,5 @@
 extends "res://tests/test_case.gd"
-## Al caer al agua o a un pozo se vuelve a la entrada de la sala (GameState.room_entry): tiene que quedar sobre piso firme,
+## Al caer al agua o a un pozo se vuelve a la entrada de la sala (SceneFlow.session.room_entry): tiene que quedar sobre piso firme,
 ## o el player cae de nuevo en bucle (11.149).
 
 const LEVELS := ["res://levels/chullpa.tscn", "res://levels/quenoa.tscn", "res://levels/templo.tscn", "res://levels/totora.tscn", "res://levels/cumbre.tscn"]
@@ -66,20 +66,20 @@ func test_entering_any_room_leaves_the_return_point_on_solid_floor() -> void:
 				player.velocity = Vector3.ZERO
 				for i in 20:
 					await tree.physics_frame
-				state.room_entry = null
+				SceneFlow.session.room_entry = null
 				var hp := player.health.current
 				_walk(ACTIONS[way], true)
 				var until := Time.get_ticks_msec() + 2500
-				while Time.get_ticks_msec() < until and state.room_entry == null:
+				while Time.get_ticks_msec() < until and SceneFlow.session.room_entry == null:
 					await tree.physics_frame
 				_walk(ACTIONS[way], false)
-				if state.room_entry == null:
+				if SceneFlow.session.room_entry == null:
 					continue
 				var camera := tree.get_first_node_in_group(&"room_camera") as TopDownCamera
 				while camera.transitioning:
 					await tree.physics_frame
 				await tree.create_timer(0.3).timeout
-				var entry: Vector3 = state.room_entry
+				var entry: Vector3 = SceneFlow.session.room_entry
 				var floor_hit: Variant = _ground(space, entry, player)
 				var label := "%s › %s hacia %s" % [path.get_file(), door.get_path().get_name(door.get_path().get_name_count() - 1), way]
 				assert_true(floor_hit != null and absf(floor_hit.y - entry.y) < 0.3, "%s: la vuelta (%s) queda sobre piso" % [label, entry.snappedf(0.1)])

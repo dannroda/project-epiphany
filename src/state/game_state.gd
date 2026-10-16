@@ -9,6 +9,10 @@ signal item_buttons_changed
 ## Al entrar o salir de una mazmorra.
 signal dungeon_changed
 signal loaded
+## Empieza otra partida o se carga una (reset y read_from): SceneFlow borra su Session.
+signal cleared
+## Una botella cambió de contenido (la llenaron, la tomaron).
+signal bottle_changed(bottle: StringName, content: StringName)
 ## Zonas del overworld visitadas o pines del mapa.
 signal map_changed
 ## Se pintó más de lo descubierto del overworld (map_revealed).
@@ -57,14 +61,8 @@ var current_dungeon: StringName = &"":
 var spawn_scene: String = ""
 var spawn_point: StringName = &""
 var player_position: Variant = null ## Vector3 hasta que haya puntos de aparición con nombre
-## Mazmorra: dónde quedó el player al entrar a la sala actual; ahí reaparece al morir. No se guarda.
-var room_entry: Variant = null
-## Revancha contra el jefe ya vencido (10.19): la arena lo trae de vuelta hasta ganarle. No se guarda.
-var boss_rematch := false
-## Presentaciones de jefe ya vistas (por su flag): la próxima vez se pueden saltear. No se guarda.
-var seen_boss_intros := {}
 var save_tampered := false
-## Segundos jugados (con player en escena y sin pausa).
+## Segundos jugados (con player en escena y sin pausa): los suma Players.
 var play_time := 0.0
 
 
@@ -271,7 +269,7 @@ func bottle_with(content: StringName) -> StringName:
 func fill(bottle: StringName, content: StringName) -> void:
 	bottles[bottle] = content
 	if not inventory.quiet:
-		inventory.changed.emit(bottle, inventory.count(bottle))
+		bottle_changed.emit(bottle, content)
 
 
 ## Un contenido llena la primera botella vacía; si no hay, llega en una botella nueva (hasta cuatro).
@@ -424,10 +422,8 @@ func _clear() -> void:
 	spawn_scene = ""
 	spawn_point = &""
 	player_position = null
-	room_entry = null
-	boss_rematch = false
-	seen_boss_intros.clear()
 	save_tampered = false
+	cleared.emit()
 
 
 ## El uid sigue al nivel si se movió o se renombró; la ruta queda para saves viejos sin uid.
@@ -444,8 +440,3 @@ func _keys(cfg: ConfigFile, section: String) -> Array[StringName]:
 		for key in cfg.get_section_keys(section):
 			keys.append(StringName(key))
 	return keys
-
-
-func _process(delta: float) -> void:
-	if not get_tree().paused and not Players.all.is_empty():
-		play_time += delta

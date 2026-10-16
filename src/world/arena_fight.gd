@@ -97,8 +97,8 @@ func _begin() -> void:
 	in_intro = true
 	Music.hold_boss(self)
 	var seen_key: Variant = flag if flag != &"" else get_path()
-	await TopDownCamera.reveal(self, _awaken, intro_hold, rematch or GameState.seen_boss_intros.has(seen_key))
-	GameState.seen_boss_intros[seen_key] = true
+	await TopDownCamera.reveal(self, _awaken, intro_hold, rematch or SceneFlow.session.seen_boss_intros.has(seen_key))
+	SceneFlow.session.seen_boss_intros[seen_key] = true
 	in_intro = false
 	if not started or not is_inside_tree():
 		return

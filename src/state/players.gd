@@ -157,6 +157,8 @@ func uses_shared_item_menu() -> bool:
 
 
 func _process(delta: float) -> void:
+	if not all.is_empty() and not get_tree().paused:
+		GameState.play_time += delta
 	for pad in _start_held.keys():
 		_start_held[pad] += delta
 		if _start_held[pad] >= LEAVE_HOLD:

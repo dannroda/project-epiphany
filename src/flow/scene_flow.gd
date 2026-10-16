@@ -22,11 +22,16 @@ var traveling: bool:
 	get:
 		return _transitions > 0
 
+var session := Session.new()
 var _transitions := 0
 var _fade_tween: Tween
 
 @onready var _rect: ColorRect = $Rect
 @onready var loading_screen: Control = $Loading
+
+
+func _ready() -> void:
+	GameState.cleared.connect(session.clear)
 
 
 func fade_out(seconds: float = 0.4) -> void:
@@ -90,7 +95,7 @@ func travel_to(scene_path: String, spawn: StringName, teleport := false) -> void
 		return
 	GameState.spawn_scene = scene_path
 	GameState.spawn_point = spawn
-	GameState.room_entry = null
+	session.room_entry = null
 	GameState.player_position = null
 	_place_at_spawn()
 	SaveManager.autosave()
@@ -279,8 +284,8 @@ func _place_at_spawn() -> void:
 	if Players.all.is_empty():
 		return
 	get_tree().call_group(TopDownCamera.GROUP, &"reset_room")
-	if GameState.current_dungeon != &"" and GameState.room_entry != null:
-		place_players(GameState.room_entry)
+	if GameState.current_dungeon != &"" and session.room_entry != null:
+		place_players(session.room_entry)
 		get_tree().call_group(TopDownCamera.GROUP, &"snap_to_target")
 		return
 	var point := SpawnPoint.find(get_tree(), GameState.spawn_point)

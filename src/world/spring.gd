@@ -15,6 +15,7 @@ func _ready() -> void:
 	add_to_group(GROUP)
 	interactable.interacted.connect(_use)
 	GameState.inventory.changed.connect(func(_id: StringName, _count: int) -> void: _update_prompt())
+	GameState.bottle_changed.connect(func(_bottle: StringName, _content: StringName) -> void: _update_prompt())
 	GameState.loaded.connect(_update_prompt)
 	_update_prompt()
 

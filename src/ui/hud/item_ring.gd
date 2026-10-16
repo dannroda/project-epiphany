@@ -34,6 +34,7 @@ var _was_captured := false
 func _ready() -> void:
 	GameState.item_buttons_changed.connect(_refresh)
 	GameState.inventory.changed.connect(_on_inventory_changed)
+	GameState.bottle_changed.connect(func(bottle: StringName, _content: StringName) -> void: _on_inventory_changed(bottle, GameState.inventory.count(bottle)))
 	GameState.loaded.connect(_refresh)
 
 

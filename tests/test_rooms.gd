@@ -100,7 +100,7 @@ func test_dying_in_dungeon_respawns_at_room_entrance() -> void:
 	var camera: TopDownCamera = setup[3]
 	var room_b: Room = setup[5]
 	await _walk_until(tree, &"move_forward", func() -> bool: return camera.room == room_b and not camera.transitioning)
-	var entry: Vector3 = state.room_entry
+	var entry: Vector3 = SceneFlow.session.room_entry
 	assert_true(room_b.bounds().has_point(Vector2(entry.x, entry.z)), "la entrada queda dentro de la sala B")
 	player.global_position = Vector3(15, 0.25, -30)
 	player.health.invulnerability_time = 0.0

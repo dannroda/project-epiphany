@@ -324,7 +324,7 @@ func enter_room(new_room: Room, crosser: PlayerCharacter = null) -> void:
 	var direction := Vector3(signf(step.x), 0.0, 0.0) if absf(step.x) > absf(step.y) else Vector3(0.0, 0.0, signf(step.y))
 	transitioning = true
 	if not room.boss_room:
-		GameState.room_entry = crosser.last_ground
+		SceneFlow.session.room_entry = crosser.last_ground
 	_mask_around(room.bounds().merge(previous.bounds()))
 	for player in Players.all:
 		player.revive()
@@ -572,7 +572,7 @@ func _remember_entry() -> void:
 		return
 	if target_node.global_position.y < room.floor_y() - 0.3:
 		return
-	GameState.room_entry = target_node.global_position
+	SceneFlow.session.room_entry = target_node.global_position
 
 
 func _physics_process(delta: float) -> void:

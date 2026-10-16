@@ -26,6 +26,7 @@ var _shown_hp := -1
 func _ready() -> void:
 	GameState.item_buttons_changed.connect(refresh_item_slots)
 	GameState.inventory.changed.connect(_on_inventory_changed)
+	GameState.bottle_changed.connect(func(bottle: StringName, _content: StringName) -> void: _on_inventory_changed(bottle, GameState.inventory.count(bottle)))
 	GameState.loaded.connect(refresh_item_slots)
 	InputDevice.input_device_changed.connect(_on_device_changed)
 	MenuStack.changed.connect(_refresh_prompt)

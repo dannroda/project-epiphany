@@ -335,7 +335,7 @@ func test_arena_closes_intro_never_skippable_and_bar() -> void:
 	var arena := level.get_node(^"BossArena") as BossArena
 	var boss := level.get_node(^"Boss") as Boss
 	var hud := level.get_node(^"HUD")
-	tree.root.get_node(^"GameState").seen_boss_intros[arena.defeated_flag] = true
+	tree.root.get_node(^"SceneFlow").session.seen_boss_intros[arena.defeated_flag] = true
 	door.open(false)
 	player.global_position = Vector3(66, 0, 19)
 	for i in 10:
@@ -761,7 +761,7 @@ func test_rematch_brings_the_boss_back_without_another_container() -> void:
 	boss.health.invulnerability_time = 0.0
 	boss.health.damage(boss.health.max_health)
 	assert_true(await _wait_until(func() -> bool: return portal.visible, 8.0), "al ganar vuelve el portal")
-	assert_true(not state.boss_rematch, "termina la revancha")
+	assert_true(not SceneFlow.session.boss_rematch, "termina la revancha")
 	assert_eq(arena.find_children("*", "Pickup", false, false).size(), 0, "sin otro contenedor")
 	state.reset()
 
