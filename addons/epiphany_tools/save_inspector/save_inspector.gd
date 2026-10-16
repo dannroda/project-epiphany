@@ -23,6 +23,10 @@ var _scenario_name := LineEdit.new()
 var _reload := Button.new()
 var _new := Button.new()
 var _play := Button.new()
+var _copy := MenuButton.new()
+var _stale_pill := Button.new()
+var _confirm := ConfirmationDialog.new()
+var _on_confirm := Callable()
 
 var _cfg := ConfigFile.new()
 var _db: ItemDatabase
@@ -30,6 +34,8 @@ var _flags: FlagRegistry
 var _path := ""
 var _dirty := false
 var _problems := PackedStringArray()
+## El md5 del archivo cuando se abrió o guardó: si cambia, lo guardó otro (el juego).
+var _disk_md5 := ""
 
 
 func _init() -> void:
@@ -60,6 +66,12 @@ func _init() -> void:
 	_problems_pill.flat = true
 	_problems_pill.pressed.connect(_show_first_problem)
 	pills.add_child(_problems_pill)
+	_stale_pill.flat = true
+	_stale_pill.text = "Cambió en disco: recargar"
+	_stale_pill.tooltip_text = "El juego (u otro) guardó este archivo después de abrirlo. Recargar descarta lo que editaste acá."
+	_stale_pill.visible = false
+	_stale_pill.pressed.connect(func() -> void: _open(_path))
+	pills.add_child(_stale_pill)
 	add_child(pills)
 
 	var actions := HBoxContainer.new()
@@ -69,6 +81,12 @@ func _init() -> void:
 	actions.add_child(_play)
 	actions.add_child(_button("Guardar", _save))
 	actions.add_child(_button("Guardar como…", _ask_scenario_name))
+	_copy.text = "Copiar a…"
+	_copy.tooltip_text = "Copiar a una ranura del jugador: aparece en Cargar partida"
+	_copy.flat = false
+	_copy.about_to_popup.connect(_fill_copy_menu)
+	_copy.get_popup().id_pressed.connect(_ask_copy)
+	actions.add_child(_copy)
 	add_child(actions)
 
 	_tab_container.size_flags_vertical = SIZE_EXPAND_FILL
@@ -100,6 +118,9 @@ func _init() -> void:
 	_scenario_dialog.confirmed.connect(func() -> void: _save_as_scenario(_scenario_name.text.strip_edges()))
 	add_child(_scenario_dialog)
 
+	_confirm.confirmed.connect(func() -> void: _on_confirm.call())
+	add_child(_confirm)
+
 
 func _ready() -> void:
 	_reload.icon = get_theme_icon(&"Reload", &"EditorIcons")
@@ -109,12 +130,14 @@ func _ready() -> void:
 	_style_pill(_dirty_pill, &"warning_color")
 	_style_pill(_valid_pill, &"success_color")
 	_style_pill(_problems_pill, &"error_color")
+	_style_pill(_stale_pill, &"warning_color")
 	_refresh_files()
 
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_APPLICATION_FOCUS_IN and is_node_ready():
 		_refresh_files()
+		_check_disk()
 
 
 func _refresh_files() -> void:
@@ -159,6 +182,7 @@ func _open(path: String) -> void:
 	_replace_cfg(loaded)
 	_path = path
 	_dirty = false
+	_disk_md5 = FileAccess.get_md5(path)
 	_set_status("Partida modificada a mano" if SaveCodec.is_tampered(loaded) else "", false)
 	_after_change()
 
@@ -168,6 +192,7 @@ func _new_game() -> void:
 	SaveCodec.read(NEW_GAME, loaded)
 	_replace_cfg(loaded)
 	_path = ""
+	_disk_md5 = ""
 	_files.select(-1)
 	_dirty = true
 	_set_status("Partida nueva: guardala como escenario", false)
@@ -188,6 +213,7 @@ func _after_change() -> void:
 	_problems = SaveCodec.validate(_cfg)
 	_path_pill.text = _path if not _path.is_empty() else "(sin archivo)"
 	_dirty_pill.visible = _dirty
+	_stale_pill.visible = _changed_on_disk()
 	_valid_pill.visible = _problems.is_empty()
 	_problems_pill.visible = not _problems.is_empty()
 	_problems_pill.text = "1 problema" if _problems.size() == 1 else "%d problemas" % _problems.size()
@@ -213,7 +239,11 @@ func _save() -> void:
 	if _path.is_empty():
 		_ask_scenario_name()
 		return
-	_write(_path, not _path.begins_with(SaveManagerScript.SCENARIO_DIR))
+	var write := _write.bind(_path, not _path.begins_with(SaveManagerScript.SCENARIO_DIR))
+	if _changed_on_disk():
+		_ask("El archivo cambió en disco desde que lo abriste (¿lo guardó el juego?). Si guardás, se pierde esa versión.", "Pisar", write)
+	else:
+		write.call()
 
 
 func _ask_scenario_name() -> void:
@@ -237,11 +267,74 @@ func _write(path: String, keep_backup: bool) -> void:
 		return
 	_path = path
 	_dirty = false
+	_disk_md5 = FileAccess.get_md5(path)
 	if path.begins_with("res://"):
 		EditorInterface.get_resource_filesystem().scan()
 	var warning := "" if _problems.is_empty() else " con %d problemas" % _problems.size()
 	_set_status("Guardado%s" % warning, not _problems.is_empty())
 	_after_change()
+
+
+## Sin cambios propios se recarga sola; con cambios, avisa y no la pisa sin preguntar.
+func _check_disk() -> void:
+	if not _changed_on_disk():
+		return
+	if _dirty:
+		_after_change()
+		_set_status("El archivo cambió en disco y tenés cambios sin guardar", true)
+	else:
+		_open(_path)
+		_set_status("Recargada: cambió en disco", false)
+
+
+func _changed_on_disk() -> bool:
+	return not _path.is_empty() and FileAccess.file_exists(_path) and FileAccess.get_md5(_path) != _disk_md5
+
+
+func _fill_copy_menu() -> void:
+	var popup := _copy.get_popup()
+	popup.clear()
+	for slot in SaveManagerScript.PLAYER_SLOTS:
+		var path := _slot_path(slot)
+		var label := "Ranura %d · vacía" % slot
+		if FileAccess.file_exists(path):
+			var local: int = FileAccess.get_modified_time(path) + Time.get_time_zone_from_system().bias * 60
+			var t := Time.get_datetime_dict_from_unix_time(local)
+			label = "Ranura %d · %02d/%02d %02d:%02d (se pisa)" % [slot, t.day, t.month, t.hour, t.minute]
+		popup.add_item(label, slot)
+		popup.set_item_disabled(-1, path == _path)
+
+
+func _ask_copy(slot: int) -> void:
+	var copy := _copy_to.bind(slot)
+	if FileAccess.file_exists(_slot_path(slot)):
+		_ask("La ranura %d ya tiene una partida. ¿La pisás con esta?" % slot, "Pisar", copy)
+	else:
+		copy.call()
+
+
+func _copy_to(slot: int) -> void:
+	var copy := ConfigFile.new()
+	copy.parse(_cfg.encode_to_text())
+	copy.set_value("meta", "slot", slot)
+	var path := _slot_path(slot)
+	var err := SaveCodec.write(copy, path, true)
+	if err != OK:
+		_set_status("No se pudo copiar a la ranura %d (%s)" % [slot, error_string(err)], true)
+		return
+	_refresh_files()
+	_set_status("Copiada a la ranura %d: está en Cargar partida%s" % [slot, " (con lo que no guardaste acá)" if _dirty else ""], false)
+
+
+func _slot_path(slot: int) -> String:
+	return SaveManagerScript.SAVE_DIR + "slot_%d.cfg" % slot
+
+
+func _ask(text: String, ok_text: String, on_ok: Callable) -> void:
+	_confirm.dialog_text = text
+	_confirm.ok_button_text = ok_text
+	_on_confirm = on_ok
+	_confirm.popup_centered(Vector2i(360, 0))
 
 
 func _play_current() -> void:
