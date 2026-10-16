@@ -44,6 +44,9 @@ func test_keyboard_and_mouse_map() -> void:
 	var stack: Node = tree.root.get_node(^"MenuStack")
 	while stack.is_open():
 		stack.pop()
+	var flow: Node = tree.root.get_node(^"SceneFlow")
+	while flow.traveling:
+		await tree.process_frame
 
 
 func test_input_device_changes() -> void:

@@ -1,6 +1,7 @@
 extends "res://tests/test_case.gd"
 
 const LEVEL := "res://levels/test.tscn"
+const PAUSE_MENU := preload("res://src/ui/menus/pause_menu.tscn")
 
 
 func _key(tree: SceneTree, keycode: Key) -> void:
@@ -94,3 +95,45 @@ func test_dying_while_paused_waits_for_the_game_to_resume() -> void:
 	assert_true(stack.top() is GameOver, "al seguir, sí")
 	stack.clear()
 	tree.root.get_node(^"GameState").reset()
+
+
+## La pausa tiene dueños (Pause): cerrar un menú en medio de un acercamiento o de un viaje no despausa el mundo.
+
+func test_closing_a_menu_during_a_reveal_keeps_the_world_paused() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	Pause.hold(&"reveal")
+	stack.push(PAUSE_MENU.instantiate())
+	assert_true(tree.paused)
+	stack.pop()
+	assert_true(tree.paused, "el acercamiento sigue en pausa")
+	Pause.release(&"reveal")
+	assert_true(not tree.paused, "suelto el último, se despausa")
+
+
+func test_a_reveal_ending_under_an_open_menu_keeps_it_paused() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	stack.push(PAUSE_MENU.instantiate())
+	Pause.hold(&"reveal")
+	Pause.release(&"reveal")
+	assert_true(tree.paused, "el menú sigue abierto")
+	stack.clear()
+	await tree.process_frame
+	assert_true(not tree.paused)
+
+
+func test_nothing_writes_the_pause_by_hand() -> void:
+	var writers: Array[String] = []
+	for root: String in ["res://src", "res://player", "res://addons/epiphany_tools"]:
+		_scan(root, writers)
+	assert_eq(writers, [] as Array[String], "todo pasa por Pause")
+
+
+func _scan(dir: String, writers: Array[String]) -> void:
+	for sub in DirAccess.get_directories_at(dir):
+		_scan(dir.path_join(sub), writers)
+	for file in DirAccess.get_files_at(dir):
+		if file.ends_with(".gd") and dir.path_join(file) != "res://src/flow/pause.gd":
+			if RegEx.create_from_string("\\.paused\\s*=[^=]").search(FileAccess.get_file_as_string(dir.path_join(file))):
+				writers.append(dir.path_join(file))

@@ -52,7 +52,7 @@ func push(screen: UiScreen) -> void:
 	_stack.append(screen)
 	screen.process_mode = PROCESS_MODE_ALWAYS
 	add_child(screen)
-	get_tree().paused = true
+	Pause.hold(&"menu")
 	screen.screen_enter()
 	_focus(screen)
 	changed.emit()
@@ -66,7 +66,7 @@ func pop() -> void:
 	screen.screen_exit()
 	screen.queue_free()
 	if not is_open():
-		get_tree().paused = false
+		Pause.release(&"menu")
 	var uncovered: Control = top() if is_open() else _base
 	if uncovered:
 		uncovered.process_mode = PROCESS_MODE_ALWAYS if is_open() else PROCESS_MODE_INHERIT

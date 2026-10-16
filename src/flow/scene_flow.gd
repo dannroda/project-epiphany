@@ -74,7 +74,7 @@ func travel_to(scene_path: String, spawn: StringName, teleport := false) -> void
 	if traveling:
 		return
 	begin_transition()
-	get_tree().paused = true
+	Pause.hold(&"travel")
 	ResourceLoader.load_threaded_request(scene_path)
 	if teleport:
 		await _teleport_players(true)
@@ -84,7 +84,7 @@ func travel_to(scene_path: String, spawn: StringName, teleport := false) -> void
 	if not await _change_scene(scene_path):
 		for player in Players.all:
 			player.model.visible = not player.spirit.visible
-		get_tree().paused = false
+		Pause.release(&"travel")
 		await fade_in(0.3)
 		end_transition()
 		return
@@ -100,11 +100,11 @@ func travel_to(scene_path: String, spawn: StringName, teleport := false) -> void
 			player.model.visible = false
 		await fade_in(0.3)
 		await _teleport_players(false)
-		get_tree().paused = false
+		Pause.release(&"travel")
 		await get_tree().physics_frame
 		await get_tree().physics_frame
 	else:
-		get_tree().paused = false
+		Pause.release(&"travel")
 		await fade_in(0.3)
 	end_transition()
 
@@ -186,7 +186,7 @@ func respawn() -> void:
 	if traveling:
 		return
 	begin_transition()
-	get_tree().paused = true
+	Pause.hold(&"travel")
 	await fade_out()
 	var path := get_tree().current_scene.scene_file_path
 	if path.is_empty():
@@ -194,13 +194,13 @@ func respawn() -> void:
 		await get_tree().scene_changed
 		_sync_dungeon()
 	elif not await _change_scene(path):
-		get_tree().paused = MenuStack.is_open()
+		Pause.release(&"travel")
 		await fade_in()
 		end_transition()
 		return
 	_place_at_spawn()
 	Log.info(&"combat", "Reapareció en", GameState.spawn_point if GameState.spawn_point else &"(el primero)")
-	get_tree().paused = MenuStack.is_open()
+	Pause.release(&"travel")
 	await fade_in()
 	end_transition()
 
@@ -226,7 +226,7 @@ func quit_to_title() -> void:
 	begin_transition()
 	while MenuStack.is_open():
 		MenuStack.pop()
-	get_tree().paused = false
+	Pause.clear()
 	get_tree().change_scene_to_file(TITLE)
 	await get_tree().scene_changed
 	_sync_dungeon()
@@ -237,7 +237,7 @@ func quit_to_title() -> void:
 ## reacciona a los flags nuevos ni los vuelve a escribir. Sin escena en la partida, se queda en la actual.
 func enter_save(cfg: ConfigFile) -> void:
 	begin_transition()
-	get_tree().paused = true
+	Pause.hold(&"travel")
 	var has_scene := not str(cfg.get_value("player", "spawn_uid", "")).is_empty() or not str(cfg.get_value("player", "spawn_scene", "")).is_empty()
 	var old := get_tree().current_scene
 	if has_scene and old:
@@ -258,11 +258,11 @@ func enter_saved_scene() -> void:
 		GameState.spawn_point = &"start"
 		GameState.player_position = null
 	begin_transition()
-	get_tree().paused = true
+	Pause.hold(&"travel")
 	var changed := true
 	if not GameState.spawn_scene.is_empty():
 		changed = await _change_scene(GameState.spawn_scene)
-	get_tree().paused = MenuStack.is_open()
+	Pause.release(&"travel")
 	if not changed:
 		end_transition()
 		return

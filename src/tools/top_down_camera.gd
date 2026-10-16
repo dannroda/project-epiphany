@@ -696,7 +696,7 @@ func _exit_tree() -> void:
 	RenderingServer.global_shader_parameter_set(&"player_hole", Vector4.ZERO)
 	if revealing:
 		revealing = false
-		get_tree().paused = false
+		Pause.release(&"reveal")
 
 
 ## Foco del acercamiento: el objetivo (o su `reveal_point()`, si lo tiene), a la altura del player.
@@ -713,7 +713,7 @@ func _reveal(target: Node3D, action: Callable, hold: float) -> void:
 	_skip = false
 	process_mode = PROCESS_MODE_ALWAYS
 	target.process_mode = PROCESS_MODE_ALWAYS
-	tree.paused = true
+	Pause.hold(&"reveal")
 	var back := global_position
 	var zoom: float = target.call(&"reveal_zoom", reveal_zoom) if target.has_method(&"reveal_zoom") else reveal_zoom
 	var look := _reveal_preset(target)
@@ -741,7 +741,7 @@ func _reveal(target: Node3D, action: Callable, hold: float) -> void:
 	if is_instance_valid(target):
 		target.process_mode = target_mode
 	process_mode = PROCESS_MODE_INHERIT
-	tree.paused = false
+	Pause.release(&"reveal")
 	revealing = false
 
 
