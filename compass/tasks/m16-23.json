@@ -1,0 +1,39 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "const PATH en cada registro"
+    },
+    {
+      "detail": "Igual en ItemDatabase.",
+      "done": false,
+      "text": "Índice en FlagRegistry con chequeo de duplicados"
+    },
+    {
+      "done": false,
+      "text": "Flags solo bool, o tipo con @export_enum"
+    },
+    {
+      "detail": "id, escena por uid, grafo, prefijo y nombre; lo usan Dungeon y validate.",
+      "done": false,
+      "text": "Opcional: registro DungeonData"
+    }
+  ],
+  "code": "16.23",
+  "created_at": "2026-10-16T19:48:03.683Z",
+  "description": "`res://data/flag_registry.tres` está escrito en 5 lugares y la base de ítems en 3. `FlagRegistry._find` recorre las ~171 definiciones en cada get_flag/has. ItemDatabase no chequea duplicados y su caché @tool no se entera si se edita un id. `FlagDefinition.default_value` es Variant pero las 171 son bool. Las mazmorras (ch, qv, tt, cu, te) solo existen en el nodo Dungeon de cada nivel; DungeonGraph no tiene id y su `scene` es una ruta en texto.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 23,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "refactor",
+    "datos"
+  ],
+  "test": "",
+  "title": "Registros de flags e ítems: índice, ruta única y duplicados",
+  "updated_at": "2026-10-16T19:48:05.056Z"
+}

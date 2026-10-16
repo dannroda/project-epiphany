@@ -1,0 +1,38 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Una guardia al principio de cada transición pública"
+    },
+    {
+      "done": false,
+      "text": "Un solo tween de fundido"
+    },
+    {
+      "detail": "Pone traveling, pausa y calienta pipelines.",
+      "done": false,
+      "text": "respawn por el mismo camino que _change_scene"
+    },
+    {
+      "detail": "Y sacar `auto_slot()`, que ya devuelve current_slot.",
+      "done": false,
+      "text": "new_game guarda una vez"
+    }
+  ],
+  "code": "16.9",
+  "created_at": "2026-10-16T19:47:43.330Z",
+  "description": "`travel_to` pone `traveling` pero no lo mira; `respawn`, `new_game`, `with_fade`, `quit_to_title`, el portal de viaje rápido y las escaleras no lo ponen ni lo miran. `_fade` crea un tween nuevo sin matar el anterior (scene_flow.gd:413). `respawn` corre despausado y sin el calentado de pipelines. `new_game` escribe el mismo archivo dos veces (save_game + autosave).",
+  "milestone": "m16",
+  "notes": "",
+  "order": 9,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug"
+  ],
+  "test": "",
+  "title": "Cambios de escena y fundidos que se pisan",
+  "updated_at": "2026-10-16T19:47:44.580Z"
+}

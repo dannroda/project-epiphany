@@ -1,0 +1,43 @@
+{
+  "checklist": [
+    {
+      "detail": "room_entry, boss_rematch, seen_boss_intros.",
+      "done": false,
+      "text": "Session/Respawn propiedad de SceneFlow"
+    },
+    {
+      "done": false,
+      "text": "ItemButtons, Bottles y MapProgress como RefCounted con su write/read"
+    },
+    {
+      "done": false,
+      "text": "Las botellas emiten su propia señal"
+    },
+    {
+      "done": false,
+      "text": "El tiempo de juego lo empuja la escena"
+    }
+  ],
+  "code": "16.21",
+  "created_at": "2026-10-16T19:47:59.986Z",
+  "description": "game_state.gd (473 líneas) tiene inventario, equipo, botones (con los de invitados), botellas, corazones, mazmorras, el mapa revelado, spawn y respawn, tiempo de juego e intros del jefe; `_process` lee Players. `room_entry` lo escriben la cámara, boss_arena y SceneFlow, y `boss_rematch` y `seen_boss_intros` no se guardan: la regla \"estado del player global y en el save\" queda mezclada con estado de sesión. GameState emite `inventory.changed` desde afuera para las botellas. Sigue a 11.86.",
+  "links": [
+    {
+      "task": "m11-86",
+      "type": "related"
+    }
+  ],
+  "milestone": "m16",
+  "notes": "",
+  "order": 21,
+  "priority": "low",
+  "refs": [],
+  "size": "l",
+  "status": "todo",
+  "tags": [
+    "refactor"
+  ],
+  "test": "",
+  "title": "GameState: separar el estado de sesión y las piezas sueltas",
+  "updated_at": "2026-10-16T19:48:43.815Z"
+}

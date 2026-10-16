@@ -1,0 +1,38 @@
+{
+  "checklist": [
+    {
+      "detail": "INVENTARIO, LLAVE, LLAVE DEL JEFE, CORAZÓN…",
+      "done": false,
+      "text": "ItemData.on_get (enum o estrategia)"
+    },
+    {
+      "done": false,
+      "text": "show_in_slot_summary en ItemData"
+    },
+    {
+      "done": false,
+      "text": "Equipo de partida nueva en un .tres"
+    },
+    {
+      "done": false,
+      "text": "Una sola función de capacidad"
+    }
+  ],
+  "code": "16.18",
+  "created_at": "2026-10-16T19:47:56.217Z",
+  "description": "`GameState.give` hace match por small_key, boss_key, boss_key_piece, dungeon_map, compass, heart_container y heart_piece (game_state.gd:217-230); slot_summary, NEW_GAME_EQUIPMENT, item_get.gd:45 y los chips de items_page también tienen ids fijos. La regla de capacidad de munición está en inventory.gd y otra vez en save_codec.gd.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 18,
+  "priority": "low",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "refactor",
+    "datos"
+  ],
+  "test": "",
+  "title": "Lo que hace un ítem al agarrarlo, por datos y no por id",
+  "updated_at": "2026-10-16T19:47:57.579Z"
+}

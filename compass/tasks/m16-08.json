@@ -1,0 +1,30 @@
+{
+  "checklist": [
+    {
+      "detail": "paused = hay algún motivo; MenuStack, SceneFlow y la cámara piden el suyo.",
+      "done": false,
+      "text": "Pause.hold(motivo) / release(motivo)"
+    },
+    {
+      "done": false,
+      "text": "Test: cerrar un menú durante un reveal no despausa"
+    }
+  ],
+  "code": "16.8",
+  "created_at": "2026-10-16T19:47:42.229Z",
+  "description": "`get_tree().paused` lo escriben MenuStack (push pausa, pop siempre despausa), SceneFlow y la cámara (reveal); gana el último. Un TextBox o el Game Over que se cierran durante un reveal despausan el mundo a mitad del paneo; GameOver hace pop y después `respawn()` funde 0,4 s con el mundo corriendo.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 8,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "refactor"
+  ],
+  "test": "",
+  "title": "Pausa con dueños: menús, transiciones y reveal no se despausan entre sí",
+  "updated_at": "2026-10-16T19:47:42.894Z"
+}

@@ -1,0 +1,40 @@
+{
+  "checklist": [
+    {
+      "detail": "Coordinar con 12.39 (arte, en curso).",
+      "done": false,
+      "text": "Un EntityConfig por tipo; el modelo en la variante de escena"
+    },
+    {
+      "done": false,
+      "text": "_swap_model busca solo en el modelo nuevo"
+    },
+    {
+      "done": false,
+      "text": "test_guerreros mira que las variantes compartan config"
+    }
+  ],
+  "code": "16.17",
+  "created_at": "2026-10-16T19:47:54.877Z",
+  "description": "20 .tres de `data/entities/` ({skeleton, archer_skeleton, armored_skeleton, shield_skeleton}_{chullpa, cumbre, quenoa, templo, totora}) son iguales a su base salvo `model`. Cambiar la vida o la velocidad de un tipo son seis archivos que se van a desfasar. Las variantes .tscn ya existen. En `Enemy._swap_model` el Visuals viejo solo se `queue_free()` y las búsquedas siguientes todavía lo recorren.",
+  "links": [
+    {
+      "task": "m12-39",
+      "type": "related"
+    }
+  ],
+  "milestone": "m16",
+  "notes": "",
+  "order": 17,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "refactor",
+    "datos"
+  ],
+  "test": "",
+  "title": "Configs de enemigos clonadas por mazmorra",
+  "updated_at": "2026-10-16T19:48:44.550Z"
+}

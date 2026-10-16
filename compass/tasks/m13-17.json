@@ -1,0 +1,32 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Disparadores del mundo con el cuerpo que entró o Players.nearest"
+    },
+    {
+      "done": false,
+      "text": "UI con el slot del player que actúa"
+    },
+    {
+      "done": false,
+      "text": "Guardar solo la vida del slot 0 o documentar por qué no"
+    }
+  ],
+  "code": "13.17",
+  "created_at": "2026-10-16T19:48:11.280Z",
+  "description": "Del análisis del 2026-10-16. Solo el lead dispara los nombres de zona (area_zone.gd:28) y el sonido del temblor sale en su posición (tremor_zone.gd:40); text_box.gd:200 e items_page.gd:233 leen los botones de P1 en vez de `buttons_of(slot)`; los monitores de rendimiento solo miran al lead; `write_to` guarda la vida de los invitados aunque son de sesión.",
+  "milestone": "m13",
+  "notes": "",
+  "order": 17,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "co-op"
+  ],
+  "test": "",
+  "title": "Suposiciones de un solo player fuera de la UI",
+  "updated_at": "2026-10-16T19:48:12.255Z"
+}

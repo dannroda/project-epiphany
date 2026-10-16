@@ -1,0 +1,30 @@
+{
+  "checklist": [
+    {
+      "detail": "Y a Enemy.defeated / WaveSpawner para las cerradas.",
+      "done": false,
+      "text": "Room reacciona al cambio de sala de la cámara"
+    },
+    {
+      "detail": "Usa camera.room para la sala del player.",
+      "done": false,
+      "text": "_sync_posts sale si no hay alcance"
+    }
+  ],
+  "code": "15.10",
+  "created_at": "2026-10-16T19:48:07.459Z",
+  "description": "Cada Room llama a `has_player()` en cada frame de física (get_first_node_in_group de la cámara, Players.all.any con lambda, contains que sube por DungeonFloor.of); las cerradas además `enemies_inside()` y `waves_running()` (barrido de grupo + filter). `Targeting._sync_posts` corre cada frame aunque no tengas el gancho: hook_reach, grupo de postes y `_room_of` que recorre todas las salas, dos veces por poste.",
+  "milestone": "m15",
+  "notes": "",
+  "order": 185,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "rendimiento"
+  ],
+  "test": "",
+  "title": "Salas y targeting: dejar de consultar todo cada frame",
+  "updated_at": "2026-10-16T19:48:08.089Z"
+}

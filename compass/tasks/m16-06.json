@@ -1,0 +1,35 @@
+{
+  "checklist": [
+    {
+      "detail": "Señal propia de interrupción o el token de turno como Kuntur.",
+      "done": false,
+      "text": "Esperar algo que siempre llega"
+    },
+    {
+      "done": false,
+      "text": "Test: interrumpir un agarre no deja conexiones en escaped"
+    }
+  ],
+  "code": "16.6",
+  "created_at": "2026-10-16T19:47:39.426Z",
+  "description": "`Tween.kill()` no emite `finished`. El jefe espera `grow.finished` y `_laser_tween.finished` (boss.gd:453,467,504) y `_cut_charge` los mata: el `if not _eye_attacking: return` nunca corre. BossHand `_move` espera `_motion.finished` y `_drop_everything`/`collapse` lo matan: si se corta el primer `_move` de `_hold`, el lambda de `escaped` queda conectado al player para siempre (una fuga por agarre interrumpido).",
+  "links": [
+    {
+      "task": "m16-13",
+      "type": "related"
+    }
+  ],
+  "milestone": "m16",
+  "notes": "",
+  "order": 6,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "bug"
+  ],
+  "test": "",
+  "title": "Corrutinas que esperan un tween matado no vuelven nunca",
+  "updated_at": "2026-10-16T19:48:45.850Z"
+}

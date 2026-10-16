@@ -1,0 +1,35 @@
+{
+  "checklist": [
+    {
+      "detail": "O i-frames en Transition._enter.",
+      "done": false,
+      "text": "Export can_be_hurt en PlayerState"
+    },
+    {
+      "detail": "Reemplazan `_guard_states` y los `name in [...]`.",
+      "done": false,
+      "text": "can_interact y can_guard como exports"
+    },
+    {
+      "done": false,
+      "text": "Idle y Moving usan set_locked_legs de la base"
+    }
+  ],
+  "code": "16.10",
+  "created_at": "2026-10-16T19:47:44.917Z",
+  "description": "`anystate() -> Hurt` (state_machine.gd:19) no tiene guardia, a diferencia de transition y grabbed. Transition no da i-frames: un proyectil de la sala anterior frena la entrada en la puerta y `_lock_after_entering` puede cerrar la reja encima. En ItemGet saltea el cartel aunque el ítem ya se dio. Relacionado: las capacidades de cada estado se miran por nombre o ruta de nodo (player.gd:199,213,252) en vez de flags como `follows_room_transition`.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 10,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "refactor"
+  ],
+  "test": "",
+  "title": "Un golpe corta la transición entre salas o el levantar un ítem",
+  "updated_at": "2026-10-16T19:47:45.859Z"
+}

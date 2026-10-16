@@ -1,0 +1,41 @@
+{
+  "checklist": [
+    {
+      "detail": "test_boss hoy solo mira visible/monitoring.",
+      "done": false,
+      "text": "Test: el segundo barrido del rayo también pega"
+    },
+    {
+      "detail": "Limpian la lista y prenden/apagan monitoring; los usan AttackRunner, BossHand, sub-jefes, pinchos y el rayo.",
+      "done": false,
+      "text": "Hitbox.activate(attack) y deactivate()"
+    },
+    {
+      "detail": "boss_hand.gd:102,141; sacar el AttackRunner si ya no hace falta.",
+      "done": false,
+      "text": "Onda de la mano a un .tres"
+    }
+  ],
+  "code": "16.1",
+  "created_at": "2026-10-16T19:47:32.886Z",
+  "description": "`Hitbox._already_hit` solo se limpia en el setter de `active_attack` (hitbox.gd:20-23). `_sweep_laser` prende `%LaserSpot` sin limpiarlo (boss.gd:460) y `_end_laser` solo lo apaga: después del primer golpe el player queda en la lista toda la pelea y los barridos siguientes lo atraviesan. Los demás que prenden `monitoring` a mano (Ojo Vigía, Kuntur, Amaru, Momia, pinchos) dependen de acordarse de poner `active_attack = null`. BossHand guarda un AttackRunner que solo usa como registro de hitboxes y arma el AttackData de la onda en código.",
+  "links": [
+    {
+      "task": "m16-15",
+      "type": "related"
+    }
+  ],
+  "milestone": "m16",
+  "notes": "",
+  "order": 1,
+  "priority": "high",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug"
+  ],
+  "test": "El rayo pega en cada barrido que toca al player (con sus i-frames); test_boss lo cubre.",
+  "title": "Jefe final: el rayo del ojo pega una sola vez por pelea",
+  "updated_at": "2026-10-16T19:48:46.283Z"
+}

@@ -1,0 +1,35 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "Corregir el id en el grafo del templo"
+    },
+    {
+      "detail": "needs, brings, item, guard y goal; los tokens sintéticos (ch_rellano_pot) con prefijo o lista explícita.",
+      "done": false,
+      "text": "Test: cada token es un id de ItemDatabase o de FlagRegistry"
+    },
+    {
+      "detail": "Hoy se copia a mano.",
+      "done": false,
+      "text": "Opcional: brings sale de los item de los grafos anteriores"
+    }
+  ],
+  "code": "16.3",
+  "created_at": "2026-10-16T19:47:35.752Z",
+  "description": "templo_graph.tres:153, 159, 186 y 195 usan `mirror_shield`; el ítem es `shield_mirror`. El test de alcanzabilidad pasa porque el mismo grafo lo trae en `brings`: el `_tokens()` de dungeon_reach.gd solo mira que alguien del grafo dé cada token.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 3,
+  "priority": "high",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "tests"
+  ],
+  "test": "",
+  "title": "Templo: el grafo pide `mirror_shield`, que no existe",
+  "updated_at": "2026-10-16T19:47:36.741Z"
+}

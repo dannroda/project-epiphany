@@ -1,0 +1,37 @@
+{
+  "checklist": [
+    {
+      "detail": "Como render_music.gd.",
+      "done": false,
+      "text": "Renderizar los sintetizados a .wav una vez"
+    },
+    {
+      "detail": "StringName → Array[AudioStream].",
+      "done": false,
+      "text": "Banco de sfx en un .tres con carga perezosa"
+    }
+  ],
+  "code": "15.12",
+  "created_at": "2026-10-16T19:48:10.061Z",
+  "description": "feel.gd:59-83 genera unos 22 sonidos en `_ready` (~10 s de audio a 22050 Hz, ~220k llamadas a lambdas) en cada arranque y en cada proceso de tests; después reemplaza 11 por samples grabados que carga todos de una listando la carpeta. La lista de sonidos es un Dictionary en código.",
+  "links": [
+    {
+      "task": "m15-06",
+      "type": "related"
+    }
+  ],
+  "milestone": "m15",
+  "notes": "",
+  "order": 187,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "rendimiento",
+    "audio"
+  ],
+  "test": "",
+  "title": "Feel sintetiza sonidos al arrancar y tira la mitad",
+  "updated_at": "2026-10-16T19:48:36.034Z"
+}

@@ -1,0 +1,26 @@
+{
+  "checklist": [
+    {
+      "detail": "Documentar que joined = player listo.",
+      "done": false,
+      "text": "Registrar en _ready o emitir diferido"
+    }
+  ],
+  "code": "16.24",
+  "created_at": "2026-10-16T19:48:05.449Z",
+  "description": "El player se registra en `_enter_tree` (player.gd:53) y `joined` se emite ahí, cuando health, equipment y targeting todavía son null. Los que escuchan hoy sobreviven porque difieren o solo limpian una caché; reparentar un player emitiría left + joined.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 24,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "co-op"
+  ],
+  "test": "",
+  "title": "Players.joined sale antes del _ready del player",
+  "updated_at": "2026-10-16T19:48:05.774Z"
+}

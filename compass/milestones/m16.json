@@ -1,0 +1,12 @@
+{
+  "code": "M16",
+  "done_when": [
+    "Los bugs confirmados del análisis tienen arreglo y test que falla sin él.",
+    "Cargar partida, pausar y cambiar de escena tienen un solo dueño cada uno y no se pisan.",
+    "Un sub-jefe nuevo, un ítem nuevo o un cambio de formato del save no obligan a copiar código ni a tocar varios archivos a mano.",
+    "Los tests barren carpetas enteras (escenarios, flags de niveles, data, grafos) en vez de listas fijas."
+  ],
+  "goal": "Arreglar los bugs y la deuda técnica que salieron del análisis del 2026-10-16 (cinco revisiones con las skills: arquitectura, code review, comunicación, patrones y datos), antes de seguir sumando sub-jefes, mazmorras y el co-op. Lo de rendimiento va a M15; las suposiciones de un solo player, a M13.",
+  "order": 12.5,
+  "title": "Salud del código"
+}

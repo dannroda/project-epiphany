@@ -32,26 +32,52 @@
     {
       "done": false,
       "text": "Renombrar el .tres por defecto"
+    },
+    {
+      "detail": "export_presets.cfg solo saca tests/*, *.md y debug/scenarios/*; entran levels/test*, prueba_mc_godot, pruebas_terreno, ejemplo_ambiente, debug/la/ y los scripts de build.",
+      "done": false,
+      "text": "Excluir tools/, src/tools/build_*, debug/ y los niveles de prueba del release"
+    },
+    {
+      "detail": "El toon está rechazado y precarga epiphany_toon.tres en release; test_shinobi lo agrega solo si lo necesita.",
+      "done": false,
+      "text": "Sacar el autoload ToonToggle"
+    },
+    {
+      "done": false,
+      "text": "test_export mira las exclusiones"
+    },
+    {
+      "detail": "114 archivos sueltos; mover desde el editor.",
+      "done": false,
+      "text": "Partir src/world en puzzles/, dungeon/, props/ y overworld/"
     }
   ],
-  "code": "11.89",
+  "code": "16.26",
   "created_at": "2026-10-12T00:20:04.390Z",
   "description": "La cámara de juego (505 líneas) y target_indicator están en src/tools/ junto a scripts de build; un EditorScript en src/debug/; Log y DebugOverlay (autoloads de runtime) en un addon, y DebugOverlay arma su Label por código; los BT entre src/entities/ y data/boss/; las escenas de prueba (test*, prueba_mc_godot, pruebas_terreno, sandbox_items, test_shinobi) en levels/ se exportan porque el filtro solo excluye tests/*; `player/animation/new_animation_node_state_machine.tres` con nombre por defecto; Feel cargado antes que MenuStack (por eso lo busca diferido).",
   "files": [
     "export_presets.cfg",
     "project.godot"
   ],
-  "milestone": "m11",
+  "links": [
+    {
+      "task": "m11-59",
+      "type": "related"
+    }
+  ],
+  "milestone": "m16",
   "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).",
   "order": 86,
-  "priority": "low",
+  "priority": "medium",
   "refs": [],
-  "size": "s",
+  "size": "m",
   "status": "todo",
   "tags": [
-    "herramientas"
+    "refactor",
+    "build"
   ],
   "test": "El export no incluye escenas de prueba; tests verdes tras mover.",
-  "title": "Orden de carpetas y escenas de prueba en la build",
-  "updated_at": "2026-10-12T00:20:07.025Z"
+  "title": "Orden de carpetas y lo que entra en la build release",
+  "updated_at": "2026-10-16T19:48:47.022Z"
 }

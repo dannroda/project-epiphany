@@ -1,0 +1,35 @@
+{
+  "checklist": [
+    {
+      "detail": "Un helper `_wait(t)` con tween_interval del propio nodo (va en ArenaFighter, 16.13).",
+      "done": false,
+      "text": "Esperas atadas al nodo"
+    },
+    {
+      "done": false,
+      "text": "Test: viajar con patrones a medias no deja errores en el log"
+    }
+  ],
+  "code": "16.12",
+  "created_at": "2026-10-16T19:47:47.157Z",
+  "description": "`get_tree().create_timer(...)` sobrevive al cambio de escena: enemy.gd:364 (corpse_time), dead.gd:13, kuntur, watcher_eye, amaru, mummy_guard, centinela, boss_hand y boss_arena. Si el player muere a mitad de un patrón o viaja a los 4 s de matar algo, cada uno imprime \"Resumed function after await, but class instance is gone\", ruido que tapa errores reales.",
+  "links": [
+    {
+      "task": "m16-13",
+      "type": "related"
+    }
+  ],
+  "milestone": "m16",
+  "notes": "",
+  "order": 12,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug"
+  ],
+  "test": "",
+  "title": "Timers del árbol que reanudan corrutinas de nodos ya liberados",
+  "updated_at": "2026-10-16T19:48:45.276Z"
+}

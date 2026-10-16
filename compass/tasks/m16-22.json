@@ -1,0 +1,45 @@
+{
+  "checklist": [
+    {
+      "detail": "Con lista de los que son inconsistentes a propósito.",
+      "done": false,
+      "text": "Escenarios: todos los .cfg de la carpeta"
+    },
+    {
+      "done": false,
+      "text": "Flags de niveles: toda propiedad que termine en _flag, y registrada"
+    },
+    {
+      "detail": "active_from < active_to <= cancel_from; drops que resuelven.",
+      "done": false,
+      "text": "Ataques y configs: toda la carpeta"
+    },
+    {
+      "detail": "Y resave único de los que faltan.",
+      "done": false,
+      "text": "data/ sin ext_resource sin uid"
+    }
+  ],
+  "code": "16.22",
+  "created_at": "2026-10-16T19:48:01.934Z",
+  "description": "test_save_codec.gd:91 revisa 11 de los 20 escenarios firmados (faltan cumbre, quenoa, totora, gancho, chullpa_la, test_flags y los nuevos), así que la regla de \"al sacar flags, correr test_save_codec\" no cubre todo. test_flags mira 4 propiedades de flag (flag, solved_flag, defeated_flag, container_flag) y no reward_flag, reveal_flag ni required_flag, ni que estén registradas (en release el assert de set_flag no existe). test_attacks_load cubre 3 de 5 ataques y los configs solo player y test_box de 42; los AttackData del jefe no se revisan.",
+  "links": [
+    {
+      "task": "m16-03",
+      "type": "related"
+    }
+  ],
+  "milestone": "m16",
+  "notes": "",
+  "order": 22,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "tests"
+  ],
+  "test": "",
+  "title": "Tests que barren carpetas en vez de listas fijas",
+  "updated_at": "2026-10-16T19:48:46.646Z"
+}

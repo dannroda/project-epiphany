@@ -1,0 +1,43 @@
+{
+  "checklist": [
+    {
+      "detail": "La usan GameState, SaveCodec, slot_summary y el Inspector.",
+      "done": false,
+      "text": "SaveKeys: una constante por sección y clave"
+    },
+    {
+      "done": false,
+      "text": "DungeonState se escribe y lee solo"
+    },
+    {
+      "detail": "Lo llaman _load_path y el Inspector; botellas y slot 0 como pasos de la versión 2.",
+      "done": false,
+      "text": "SaveCodec.migrate(cfg, desde) estático"
+    },
+    {
+      "done": false,
+      "text": "Tablas de renombres de flags e ítems"
+    },
+    {
+      "detail": "file_select, slot_card, system_page y el Inspector.",
+      "done": false,
+      "text": "Sacar AUTO_SLOT de la UI cuando no queden saves viejos"
+    }
+  ],
+  "code": "16.16",
+  "created_at": "2026-10-16T19:47:52.822Z",
+  "description": "Las claves del save están escritas a mano en GameState.write_to/read_from, slot_summary (SWORD, SHIELD, bow, bomb_bag fijos), SaveCodec.validate (prefijo dungeon_, _boss_door) y unos 45 literales del Save Inspector; un campo olvidado falla en silencio porque `typed()` devuelve el default. `SaveCodec.VERSION` sigue en 1 y `_migrate` está vacío; la migración real de botellas corre en cada carga sin mirar versión y la del slot 0 está en SaveManager. El Save Inspector lee sin migrar: con VERSION 2 abriría un save viejo y lo guardaría como 2 sin migrar. Una flag o un ítem renombrado se descartan y la partida pierde ese progreso.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 16,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "refactor"
+  ],
+  "test": "",
+  "title": "Formato del save con dueño y migraciones por versión",
+  "updated_at": "2026-10-16T19:47:54.492Z"
+}

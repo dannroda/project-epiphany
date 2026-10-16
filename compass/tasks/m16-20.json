@@ -1,0 +1,29 @@
+{
+  "checklist": [
+    {
+      "detail": "Animaciones como parámetros del blackboard.",
+      "done": false,
+      "text": "Un BTSubtree de reacciones"
+    },
+    {
+      "done": false,
+      "text": "Ver si el restart() hace falta"
+    }
+  ],
+  "code": "16.20",
+  "created_at": "2026-10-16T19:47:58.969Z",
+  "description": "Las ramas is_dead→Death_A→on_death_finished, is_hit→Hit_A y stunned→Hit_B son iguales en enemy_bt, archer_bt y guard_bt, y atoq_bt las tiene con otras animaciones. Enemy._on_damaged/_on_died además de poner el flag del blackboard hacen `bt_player.restart()`: parece doble control con el selector dinámico.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 20,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "refactor"
+  ],
+  "test": "",
+  "title": "Behavior trees: reacciones de muerte, golpe y aturdido copiadas",
+  "updated_at": "2026-10-16T19:47:59.596Z"
+}

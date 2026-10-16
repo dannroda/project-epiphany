@@ -1,0 +1,30 @@
+{
+  "checklist": [
+    {
+      "detail": "Dueño de switches, condition, stays_open y reveal_on_open; emite satisfied(animate)/unsatisfied.",
+      "done": false,
+      "text": "Nodo SwitchInput en el .tscn"
+    },
+    {
+      "detail": "Opcional.",
+      "done": false,
+      "text": "Barrera que se hunde compartida entre Gate y Door"
+    }
+  ],
+  "code": "16.19",
+  "created_at": "2026-10-16T19:47:57.942Z",
+  "description": "Door y Gate repiten los handlers changed/settled con reveal, abrir y cerrar (door.gd:97-110, gate.gd:40-51); Bridge, CrackedWall y Chest repiten los exports switches/condition/reveal. Door (tipo switch) y Gate tienen el mismo `_fill_depth` y tween de hundirse. Los switches se reconocen por `active` + `activated` sin clase común.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 19,
+  "priority": "low",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "refactor"
+  ],
+  "test": "",
+  "title": "Wiring como componente en la escena",
+  "updated_at": "2026-10-16T19:47:58.610Z"
+}

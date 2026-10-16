@@ -1,0 +1,46 @@
+{
+  "checklist": [
+    {
+      "detail": "Pausar y descargarla detrás del fundido.",
+      "done": false,
+      "text": "Sacar la escena vieja antes de leer el save"
+    },
+    {
+      "detail": "La ubicación entra como parámetro.",
+      "done": false,
+      "text": "SceneFlow es dueño de cargar y entrar; SaveManager solo lee y escribe"
+    },
+    {
+      "detail": "No en _enter_tree/_exit_tree de Dungeon.",
+      "done": false,
+      "text": "current_dungeon se pone una vez por cambio de escena"
+    },
+    {
+      "done": false,
+      "text": "Test: cargar no dispara changed en nodos de la escena vieja"
+    }
+  ],
+  "code": "16.7",
+  "created_at": "2026-10-16T19:47:40.528Z",
+  "description": "`SaveManager._load_path` hace `GameState.read_from` (emite `loaded`) y recién después `SceneFlow.enter_saved_scene`, que igual recarga la escena (11.108). Mientras tanto la escena vieja, despausada, reacciona: PersistentFlag reemite, rejas y switches se mueven y algunos vuelven a escribir flags (wave_spawner.gd:104, floor_switch.gd:96/106, eye_switch.gd:79). `SaveManager.loading` existe para eso pero solo lo mira la cámara. SaveManager y SceneFlow además se llaman entre sí; `dungeon_changed` se emite dos veces al recargar una mazmorra.",
+  "links": [
+    {
+      "task": "m11-108",
+      "type": "related"
+    }
+  ],
+  "milestone": "m16",
+  "notes": "",
+  "order": 7,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "refactor"
+  ],
+  "test": "",
+  "title": "Cargar partida: la escena vieja recibe el save nuevo antes de irse",
+  "updated_at": "2026-10-16T19:48:44.178Z"
+}

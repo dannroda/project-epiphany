@@ -1,0 +1,42 @@
+{
+  "checklist": [
+    {
+      "detail": "Un set que suelta al dueño en tree_exiting.",
+      "done": false,
+      "text": "Music.hold_boss(dueño) / release_boss(dueño)"
+    },
+    {
+      "detail": "Sin polling.",
+      "done": false,
+      "text": "La cámara emite room_changed y Music se suscribe"
+    },
+    {
+      "done": false,
+      "text": "Contrato tipado para la barra del jefe"
+    },
+    {
+      "done": false,
+      "text": "Helper compartido del premio"
+    },
+    {
+      "done": false,
+      "text": "Un solo origen para el rematch"
+    }
+  ],
+  "code": "16.14",
+  "created_at": "2026-10-16T19:47:49.550Z",
+  "description": "`Music.boss_fight` es un bool global que prenden y apagan ArenaFight y BossArena (7 lugares): una arena que termina apaga la música de otra. Music además lee la escena, la mazmorra y la sala de la cámara cada frame. La barra del jefe se llama con `call_group(Hud.GROUP, \"show_boss\")` sin tipo y el HUD espera display_name, bar_changed, bar_fraction() y phase() (por eso ArenaFight.phase() devuelve 0). \"Aparece el premio y su flag se marca al agarrarlo\" está dos veces. BossArena tiene su propio rematch (GameState.boss_rematch vs ArenaFight.rematch).",
+  "milestone": "m16",
+  "notes": "",
+  "order": 14,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "refactor"
+  ],
+  "test": "",
+  "title": "Peleas de jefe: música, barra del HUD y premio con un solo camino",
+  "updated_at": "2026-10-16T19:47:51.127Z"
+}

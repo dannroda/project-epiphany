@@ -1,0 +1,45 @@
+{
+  "checklist": [
+    {
+      "detail": "El cuerpo dueño por export; lo usan Hitbox y GroundWaves.",
+      "done": false,
+      "text": "Hurtbox.is_grounded()"
+    },
+    {
+      "detail": "Con un `pulse(centro, radio, daño)`.",
+      "done": false,
+      "text": "La Momia usa un GroundWaves"
+    },
+    {
+      "detail": "Con @export_enum en protects_against; antes de los ataques elementales (12.28).",
+      "done": false,
+      "text": "Elementos como constantes"
+    }
+  ],
+  "code": "16.15",
+  "created_at": "2026-10-16T19:47:51.493Z",
+  "description": "Siguen llamando a `hurtbox.receive()` a mano: mummy_guard, yacumama, ground_waves, boss_hand, pit, thrown_object, dashing y hook, cada uno armando el equipo a su manera. \"Está en el piso\" se mira tres veces: Hitbox castea el padre a PlayerCharacter (un componente que asume quién es su dueño), GroundWaves a CharacterBody3D y la Momia/Yacumama recorren Players.alive() (sus ondas no tocan escoltas). El anillo de la Momia es una copia de GroundWaves. Los elementos (`explosive`, `blast`, `dash`, `spikes`, Hook.ELEMENT) y los `hit_burst` son texto libre, también en `protects_against` de los .tres.",
+  "links": [
+    {
+      "task": "m11-82",
+      "type": "related"
+    },
+    {
+      "task": "m12-28",
+      "type": "related"
+    }
+  ],
+  "milestone": "m16",
+  "notes": "",
+  "order": 15,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "refactor"
+  ],
+  "test": "",
+  "title": "Daño por fuera del Hitbox, tres formas de mirar si toca el piso y dos ondas iguales",
+  "updated_at": "2026-10-16T19:48:44.919Z"
+}

@@ -1982,7 +1982,7 @@ Una salida de la sala del jefe: un portal en el centro de la arena que lleva a l
 
 **Notas:** Sin flag por ahora porque no hay jefe; 9.6 le pone d1_boss_defeated.
 
-## M10 — Terminación  (25/32)
+## M10 — Terminación  (25/31)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -2591,13 +2591,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Grabar los planos y editar el teaser
   Primera versión (b343f5ce): tools/teaser/record.sh graba las 12 tomas de teaser.tscn (Movie Maker, 1080p60, ~4,5 min) y tools/teaser/edit.sh arma debug/tmp/teaser/teaser.mp4 (40,8 s: overworld 13,5 s con calma, templo 13 s con capas de mazmorra, jefe 11 s con todas, cierre con el título en Cinzel). Las tomas, el corte (CUTS en edit.sh) y la música se cambian y se vuelve a correr. Falta: que Daniel lo vea y ajustar; probar la misma secuencia con gpu-screen-recorder (no está instalado).
 
-### 10.32 Probar GUT para los tests (con nuestro runner por procesos arriba) · Pendiente
-
-**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-aa · **Etiquetas:** `herramientas`, `tests`
-
-Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
-
-## M11 — Pulido: contenido y feel  (117/200)
+## M11 — Pulido: contenido y feel  (117/199)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -3513,6 +3507,8 @@ Assets propios y packs de terceros que ninguna escena, script ni builder referen
 - [x] Probar que nada se rompa
   Abrir el editor (sin dependencias rotas), correr los tests y recorrer overworld, templo y escenas de prueba.
 
+**Relacionadas:** 16.26 Orden de carpetas y lo que entra en la build release
+
 ### 11.60 Mazmorra nueva de varios pisos · En curso
 
 **Prioridad:** media · **Etiquetas:** `mazmorra`, `ui`
@@ -3966,7 +3962,7 @@ El pozo (`pit.gd:26`) y el agarre del jefe (`boss_hand.gd` ~353) llaman a `healt
 
 **Archivos:** `src/world/pit.gd`, `src/entities/boss/boss_hand.gd`, `src/entities/boss/boss.gd`, `src/components/damage_info.gd`, `src/world/thrown_object.gd`
 
-**Relacionadas:** 13.7 Enemigos y jefe con varios objetivos
+**Relacionadas:** 13.7 Enemigos y jefe con varios objetivos; 16.15 Daño por fuera del Hitbox, tres formas de mirar si toca el piso y dos ondas iguales
 
 ### 11.83 Un solo camino para spawnear proyectiles, bombas y pickups · Revisión
 
@@ -4049,6 +4045,8 @@ Hay campos de GameState que se escriben a pelo desde afuera (`room_entry` desde 
 
 **Archivos:** `src/state/game_state.gd`, `src/ui/hud/minimap.gd`, `src/tools/top_down_camera.gd`, `src/entities/boss/boss_arena.gd`, `src/world/spawn_point.gd`, `src/items/inventory.gd`
 
+**Relacionadas:** 16.21 GameState: separar el estado de sesión y las piezas sueltas
+
 ### 11.87 Valores de ajuste al inspector · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Etiquetas:** `feel`, `combate`
@@ -4093,31 +4091,6 @@ Los saves guardan `spawn_scene` como ruta `res://` y los portales `target_scene`
 **Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
 
 **Archivos:** `src/world/portal.gd`, `src/save/save_manager.gd`, `src/state/game_state.gd`
-
-### 11.89 Orden de carpetas y escenas de prueba en la build · Pendiente
-
-**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `herramientas`
-
-La cámara de juego (505 líneas) y target_indicator están en src/tools/ junto a scripts de build; un EditorScript en src/debug/; Log y DebugOverlay (autoloads de runtime) en un addon, y DebugOverlay arma su Label por código; los BT entre src/entities/ y data/boss/; las escenas de prueba (test*, prueba_mc_godot, pruebas_terreno, sandbox_items, test_shinobi) en levels/ se exportan porque el filtro solo excluye tests/*; `player/animation/new_animation_node_state_machine.tres` con nombre por defecto; Feel cargado antes que MenuStack (por eso lo busca diferido).
-
-- [ ] Escenas de prueba a levels/test/
-  Y excluir la carpeta en export_presets.cfg.
-- [ ] Cámara a src/camera/
-  Mover desde el editor (puente) para que se actualicen uids y rutas.
-- [ ] Scripts de build a tools/
-  Los de src/tools/ que corren headless.
-- [ ] BT junto a su entidad o en data/ai/
-- [ ] Debug runtime a src/debug/
-  Log y DebugOverlay; el overlay como .tscn.
-- [ ] Orden de autoloads
-  MenuStack antes que Feel; conectar `MenuStack.changed` directo.
-- [ ] Renombrar el .tres por defecto
-
-**Prueba:** El export no incluye escenas de prueba; tests verdes tras mover.
-
-**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
-
-**Archivos:** `export_presets.cfg`, `project.godot`
 
 ### 11.90 Diseño de mazmorras, ítems y su reparto en el overworld · Revisión
 
@@ -4373,6 +4346,8 @@ Encontrado en el análisis de D1 (11.90, softblock S1). Cargar desde la pausa un
 - [x] SceneFlow.enter_saved_scene recarga siempre la escena, aunque sea la misma
   Mientras carga, traveling queda en verdadero para que el checkpoint donde aparece el player nuevo no pise el spawn_point de la partida (pasaba con bombs_only).
 - [x] Test: cargar en la misma escena da una instancia nueva con el muro entero
+
+**Relacionadas:** 16.7 Cargar partida: la escena vieja recibe el save nuevo antes de irse
 
 ### 11.109 Softblocks menores de D1 · Hecho
 
@@ -6125,6 +6100,8 @@ Daniel 2026-10-14 (por -5d), con referencias suyas (esferas de energía, anillos
 
 Aparcado por Daniel (2026-10-14). El banco de pruebas del tajo de 12.27 sirve de punto de partida: src/world/vfx/demo_tajo.tscn y sword_trail.gdshader (medialuna aditiva, ancha en la hoja, borde interno deshilachado, fade al dejar de emitir). La versión original de Daniel del shader y la demo está en debug/tmp/fd/daniel_demo/ (sin versionar).
 
+**Relacionadas:** 16.15 Daño por fuera del Hitbox, tres formas de mirar si toca el piso y dos ondas iguales
+
 ### 12.29 Muro agrietado LA de cueva (muro_agrietado_cueva_la) · Hecho
 
 **Terminada:** 2026-10-14 · **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `arte`, `bug`
@@ -6238,7 +6215,378 @@ Daniel (2026-10-15): es hora de que los enemigos normales de las mazmorras vayan
   Daniel (2026-10-15): variantes. Cada enemigo del overworld y cada cueva toma la variante de la mazmorra de su región: Cerros → chullpa, Arboleda → quenoa, Laguna y Bañado → totora, Cumbre → cumbre, Necrópolis y explanada del templo → templo. Los guardias del templo ya están (569c5621).
 - [ ] Probarlo (Daniel)
 
-## M13 — Co-op local (estilo Four Swords)  (1/16)
+**Relacionadas:** 16.17 Configs de enemigos clonadas por mazmorra
+
+## M16 — Salud del código  (0/27)
+
+Arreglar los bugs y la deuda técnica que salieron del análisis del 2026-10-16 (cinco revisiones con las skills: arquitectura, code review, comunicación, patrones y datos), antes de seguir sumando sub-jefes, mazmorras y el co-op. Lo de rendimiento va a M15; las suposiciones de un solo player, a M13.
+
+**Hecho cuando:**
+- Los bugs confirmados del análisis tienen arreglo y test que falla sin él.
+- Cargar partida, pausar y cambiar de escena tienen un solo dueño cada uno y no se pisan.
+- Un sub-jefe nuevo, un ítem nuevo o un cambio de formato del save no obligan a copiar código ni a tocar varios archivos a mano.
+- Los tests barren carpetas enteras (escenarios, flags de niveles, data, grafos) en vez de listas fijas.
+
+### 16.1 Jefe final: el rayo del ojo pega una sola vez por pelea · Pendiente
+
+**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`
+
+`Hitbox._already_hit` solo se limpia en el setter de `active_attack` (hitbox.gd:20-23). `_sweep_laser` prende `%LaserSpot` sin limpiarlo (boss.gd:460) y `_end_laser` solo lo apaga: después del primer golpe el player queda en la lista toda la pelea y los barridos siguientes lo atraviesan. Los demás que prenden `monitoring` a mano (Ojo Vigía, Kuntur, Amaru, Momia, pinchos) dependen de acordarse de poner `active_attack = null`. BossHand guarda un AttackRunner que solo usa como registro de hitboxes y arma el AttackData de la onda en código.
+
+- [ ] Test: el segundo barrido del rayo también pega
+  test_boss hoy solo mira visible/monitoring.
+- [ ] Hitbox.activate(attack) y deactivate()
+  Limpian la lista y prenden/apagan monitoring; los usan AttackRunner, BossHand, sub-jefes, pinchos y el rayo.
+- [ ] Onda de la mano a un .tres
+  boss_hand.gd:102,141; sacar el AttackRunner si ya no hace falta.
+
+**Prueba:** El rayo pega en cada barrido que toca al player (con sus i-frames); test_boss lo cubre.
+
+**Relacionadas:** 16.15 Daño por fuera del Hitbox, tres formas de mirar si toca el piso y dos ondas iguales
+
+### 16.2 Co-op: un contenedor de corazón revive al Espíritu con la vida llena · Pendiente
+
+**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`, `co-op`
+
+`_on_max_health_changed` llama a `health.reset(max)` (player.gd:282), que llena la vida en cualquier estado. Si el otro player es Espíritu (o está en el Dead de 1,8 s), queda con `is_dead == false`: la IA lo vuelve a buscar, su Hurtbox sigue activo y el próximo golpe lo saca de Spirit por anystate→Hurt sin pasar por `revive()`.
+
+- [ ] Test con dos players
+  Uno Espíritu, el otro agarra un contenedor: sigue Espíritu con 0 HP.
+- [ ] Subir el máximo sin curar a los muertos
+  Algo como `health.restore(max, current)` cuando is_dead o Espíritu.
+- [ ] Hurt no sale de Dead ni de Spirit
+  Guardia en el anystate→Hurt de state_machine.gd:19.
+
+### 16.3 Templo: el grafo pide `mirror_shield`, que no existe · Pendiente
+
+**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`, `tests`
+
+templo_graph.tres:153, 159, 186 y 195 usan `mirror_shield`; el ítem es `shield_mirror`. El test de alcanzabilidad pasa porque el mismo grafo lo trae en `brings`: el `_tokens()` de dungeon_reach.gd solo mira que alguien del grafo dé cada token.
+
+- [ ] Corregir el id en el grafo del templo
+- [ ] Test: cada token es un id de ItemDatabase o de FlagRegistry
+  needs, brings, item, guard y goal; los tokens sintéticos (ch_rellano_pot) con prefijo o lista explícita.
+- [ ] Opcional: brings sale de los item de los grafos anteriores
+  Hoy se copia a mano.
+
+**Relacionadas:** 16.22 Tests que barren carpetas en vez de listas fijas
+
+### 16.4 Intro del título: no esconde los velos del overworld · Pendiente
+
+**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`
+
+`title_flyover.gd:57` busca el grupo `zone_veil`; ZoneVeil se agrega a `zone_veils` (zone_veil.gd:29). El vuelo del título nunca los esconde y nada avisa. Otros grupos que siguen como texto suelto: `bombs`, `targetable`, `walk_guard`.
+
+- [ ] ZoneVeil.GROUP y usarlo en los tres lados
+  zone_veil, title_flyover y overworld_map.
+- [ ] Constantes para bombs, targetable y walk_guard
+
+### 16.5 Partida o escenario con botones de ítem mal formados crashea · Pendiente
+
+**Prioridad:** alta · **Tamaño:** S · **Etiquetas:** `bug`
+
+`item_buttons.assign(...)` (game_state.gd:399) acepta un array de cualquier largo y después se indexa [0] y [1] (player.gd, `assign_button`). `SaveCodec.validate` no lo mira, y los escenarios se editan a mano o desde el Save Inspector. Tampoco valida equipo (id, categoría, que lo tengas), botellas, `current_dungeon`, las secciones `dungeon_*` ni el tipo de cada flag contra su default.
+
+- [ ] read_from: botones a largo 2 y sin ids que no tenés
+- [ ] Flags con el tipo de su default
+  game_state.gd:407 lee cualquier Variant.
+- [ ] validate: equipo, botones, botellas y mazmorras
+  Sigue siendo aviso, no bloquea.
+
+### 16.6 Corrutinas que esperan un tween matado no vuelven nunca · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `bug`
+
+`Tween.kill()` no emite `finished`. El jefe espera `grow.finished` y `_laser_tween.finished` (boss.gd:453,467,504) y `_cut_charge` los mata: el `if not _eye_attacking: return` nunca corre. BossHand `_move` espera `_motion.finished` y `_drop_everything`/`collapse` lo matan: si se corta el primer `_move` de `_hold`, el lambda de `escaped` queda conectado al player para siempre (una fuga por agarre interrumpido).
+
+- [ ] Esperar algo que siempre llega
+  Señal propia de interrupción o el token de turno como Kuntur.
+- [ ] Test: interrumpir un agarre no deja conexiones en escaped
+
+**Relacionadas:** 16.13 Clase base ArenaFighter para los sub-jefes
+
+### 16.7 Cargar partida: la escena vieja recibe el save nuevo antes de irse · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `bug`, `refactor`
+
+`SaveManager._load_path` hace `GameState.read_from` (emite `loaded`) y recién después `SceneFlow.enter_saved_scene`, que igual recarga la escena (11.108). Mientras tanto la escena vieja, despausada, reacciona: PersistentFlag reemite, rejas y switches se mueven y algunos vuelven a escribir flags (wave_spawner.gd:104, floor_switch.gd:96/106, eye_switch.gd:79). `SaveManager.loading` existe para eso pero solo lo mira la cámara. SaveManager y SceneFlow además se llaman entre sí; `dungeon_changed` se emite dos veces al recargar una mazmorra.
+
+- [ ] Sacar la escena vieja antes de leer el save
+  Pausar y descargarla detrás del fundido.
+- [ ] SceneFlow es dueño de cargar y entrar; SaveManager solo lee y escribe
+  La ubicación entra como parámetro.
+- [ ] current_dungeon se pone una vez por cambio de escena
+  No en _enter_tree/_exit_tree de Dungeon.
+- [ ] Test: cargar no dispara changed en nodos de la escena vieja
+
+**Relacionadas:** 11.108 Cargar en la misma escena desincroniza puertas y flags
+
+### 16.8 Pausa con dueños: menús, transiciones y reveal no se despausan entre sí · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `bug`, `refactor`
+
+`get_tree().paused` lo escriben MenuStack (push pausa, pop siempre despausa), SceneFlow y la cámara (reveal); gana el último. Un TextBox o el Game Over que se cierran durante un reveal despausan el mundo a mitad del paneo; GameOver hace pop y después `respawn()` funde 0,4 s con el mundo corriendo.
+
+- [ ] Pause.hold(motivo) / release(motivo)
+  paused = hay algún motivo; MenuStack, SceneFlow y la cámara piden el suyo.
+- [ ] Test: cerrar un menú durante un reveal no despausa
+
+### 16.9 Cambios de escena y fundidos que se pisan · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`
+
+`travel_to` pone `traveling` pero no lo mira; `respawn`, `new_game`, `with_fade`, `quit_to_title`, el portal de viaje rápido y las escaleras no lo ponen ni lo miran. `_fade` crea un tween nuevo sin matar el anterior (scene_flow.gd:413). `respawn` corre despausado y sin el calentado de pipelines. `new_game` escribe el mismo archivo dos veces (save_game + autosave).
+
+- [ ] Una guardia al principio de cada transición pública
+- [ ] Un solo tween de fundido
+- [ ] respawn por el mismo camino que _change_scene
+  Pone traveling, pausa y calienta pipelines.
+- [ ] new_game guarda una vez
+  Y sacar `auto_slot()`, que ya devuelve current_slot.
+
+### 16.10 Un golpe corta la transición entre salas o el levantar un ítem · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `refactor`
+
+`anystate() -> Hurt` (state_machine.gd:19) no tiene guardia, a diferencia de transition y grabbed. Transition no da i-frames: un proyectil de la sala anterior frena la entrada en la puerta y `_lock_after_entering` puede cerrar la reja encima. En ItemGet saltea el cartel aunque el ítem ya se dio. Relacionado: las capacidades de cada estado se miran por nombre o ruta de nodo (player.gd:199,213,252) en vez de flags como `follows_room_transition`.
+
+- [ ] Export can_be_hurt en PlayerState
+  O i-frames en Transition._enter.
+- [ ] can_interact y can_guard como exports
+  Reemplazan `_guard_states` y los `name in [...]`.
+- [ ] Idle y Moving usan set_locked_legs de la base
+
+### 16.11 Estado estático que sobrevive al cambio de escena · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`
+
+`AreaZone._current` (area_zone.gd:8) queda apuntando a una zona liberada y se lee su display_name. `Room._waking` (room.gd:60) se limpia solo dentro de un call_deferred: si la sala que lo pidió se libera antes, queda en true y las salas dejan de despertar y dormir sus nodos en todas las escenas siguientes.
+
+- [ ] _current con is_instance_valid y limpio en tree_exiting
+- [ ] La agenda de despertar en un dueño por escena
+  La cámara, no un static de clase.
+
+### 16.12 Timers del árbol que reanudan corrutinas de nodos ya liberados · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `bug`
+
+`get_tree().create_timer(...)` sobrevive al cambio de escena: enemy.gd:364 (corpse_time), dead.gd:13, kuntur, watcher_eye, amaru, mummy_guard, centinela, boss_hand y boss_arena. Si el player muere a mitad de un patrón o viaja a los 4 s de matar algo, cada uno imprime "Resumed function after await, but class instance is gone", ruido que tapa errores reales.
+
+- [ ] Esperas atadas al nodo
+  Un helper `_wait(t)` con tween_interval del propio nodo (va en ArenaFighter, 16.13).
+- [ ] Test: viajar con patrones a medias no deja errores en el log
+
+**Relacionadas:** 16.13 Clase base ArenaFighter para los sub-jefes
+
+### 16.13 Clase base ArenaFighter para los sub-jefes · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `refactor`
+
+Centinela, Ojo Vigía, Kuntur, Amaru y la Momia repiten las mismas señales y campos (arena, may_attack, peers, pace), `start`/`reset`/`_interrupt`, `_wait`, `_new_tween`/`_tween_to`, `_clamp_to_arena`, el `_on_hit` de rebotar si no es vulnerable y el token `_turn`. ArenaFight los encuentra con `has_signal(&"attack_finished")` y los guarda en un Array sin tipo; WaveSpawner repite el cableado; `Room.enemies_inside` usa `enemy.get(&"is_dead")`. Cada sub-jefe nuevo (D3, D4, templo) copia todo otra vez.
+
+- [ ] ArenaFighter extends Node3D con lo compartido
+  Un solo nivel de herencia; `_on_hit` plantilla con is_vulnerable() y _on_hit_vulnerable().
+- [ ] Pasar los cinco sub-jefes
+  Sin reescribir a LimboHSM; las corrutinas quedan.
+- [ ] _fighters: Array[ArenaFighter] en ArenaFight y WaveSpawner
+
+**Relacionadas:** 16.6 Corrutinas que esperan un tween matado no vuelven nunca; 16.12 Timers del árbol que reanudan corrutinas de nodos ya liberados
+
+### 16.14 Peleas de jefe: música, barra del HUD y premio con un solo camino · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `refactor`
+
+`Music.boss_fight` es un bool global que prenden y apagan ArenaFight y BossArena (7 lugares): una arena que termina apaga la música de otra. Music además lee la escena, la mazmorra y la sala de la cámara cada frame. La barra del jefe se llama con `call_group(Hud.GROUP, "show_boss")` sin tipo y el HUD espera display_name, bar_changed, bar_fraction() y phase() (por eso ArenaFight.phase() devuelve 0). "Aparece el premio y su flag se marca al agarrarlo" está dos veces. BossArena tiene su propio rematch (GameState.boss_rematch vs ArenaFight.rematch).
+
+- [ ] Music.hold_boss(dueño) / release_boss(dueño)
+  Un set que suelta al dueño en tree_exiting.
+- [ ] La cámara emite room_changed y Music se suscribe
+  Sin polling.
+- [ ] Contrato tipado para la barra del jefe
+- [ ] Helper compartido del premio
+- [ ] Un solo origen para el rematch
+
+### 16.15 Daño por fuera del Hitbox, tres formas de mirar si toca el piso y dos ondas iguales · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `refactor`
+
+Siguen llamando a `hurtbox.receive()` a mano: mummy_guard, yacumama, ground_waves, boss_hand, pit, thrown_object, dashing y hook, cada uno armando el equipo a su manera. "Está en el piso" se mira tres veces: Hitbox castea el padre a PlayerCharacter (un componente que asume quién es su dueño), GroundWaves a CharacterBody3D y la Momia/Yacumama recorren Players.alive() (sus ondas no tocan escoltas). El anillo de la Momia es una copia de GroundWaves. Los elementos (`explosive`, `blast`, `dash`, `spikes`, Hook.ELEMENT) y los `hit_burst` son texto libre, también en `protects_against` de los .tres.
+
+- [ ] Hurtbox.is_grounded()
+  El cuerpo dueño por export; lo usan Hitbox y GroundWaves.
+- [ ] La Momia usa un GroundWaves
+  Con un `pulse(centro, radio, daño)`.
+- [ ] Elementos como constantes
+  Con @export_enum en protects_against; antes de los ataques elementales (12.28).
+
+**Relacionadas:** 11.82 Daño que no pasa por el Hurtbox; 12.28 Ataques elementales; 16.1 Jefe final: el rayo del ojo pega una sola vez por pelea
+
+### 16.16 Formato del save con dueño y migraciones por versión · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `refactor`
+
+Las claves del save están escritas a mano en GameState.write_to/read_from, slot_summary (SWORD, SHIELD, bow, bomb_bag fijos), SaveCodec.validate (prefijo dungeon_, _boss_door) y unos 45 literales del Save Inspector; un campo olvidado falla en silencio porque `typed()` devuelve el default. `SaveCodec.VERSION` sigue en 1 y `_migrate` está vacío; la migración real de botellas corre en cada carga sin mirar versión y la del slot 0 está en SaveManager. El Save Inspector lee sin migrar: con VERSION 2 abriría un save viejo y lo guardaría como 2 sin migrar. Una flag o un ítem renombrado se descartan y la partida pierde ese progreso.
+
+- [ ] SaveKeys: una constante por sección y clave
+  La usan GameState, SaveCodec, slot_summary y el Inspector.
+- [ ] DungeonState se escribe y lee solo
+- [ ] SaveCodec.migrate(cfg, desde) estático
+  Lo llaman _load_path y el Inspector; botellas y slot 0 como pasos de la versión 2.
+- [ ] Tablas de renombres de flags e ítems
+- [ ] Sacar AUTO_SLOT de la UI cuando no queden saves viejos
+  file_select, slot_card, system_page y el Inspector.
+
+### 16.17 Configs de enemigos clonadas por mazmorra · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `refactor`, `datos`
+
+20 .tres de `data/entities/` ({skeleton, archer_skeleton, armored_skeleton, shield_skeleton}_{chullpa, cumbre, quenoa, templo, totora}) son iguales a su base salvo `model`. Cambiar la vida o la velocidad de un tipo son seis archivos que se van a desfasar. Las variantes .tscn ya existen. En `Enemy._swap_model` el Visuals viejo solo se `queue_free()` y las búsquedas siguientes todavía lo recorren.
+
+- [ ] Un EntityConfig por tipo; el modelo en la variante de escena
+  Coordinar con 12.39 (arte, en curso).
+- [ ] _swap_model busca solo en el modelo nuevo
+- [ ] test_guerreros mira que las variantes compartan config
+
+**Relacionadas:** 12.39 Enemigos comunes estilizados según el theme de cada mazmorra
+
+### 16.18 Lo que hace un ítem al agarrarlo, por datos y no por id · Pendiente
+
+**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `refactor`, `datos`
+
+`GameState.give` hace match por small_key, boss_key, boss_key_piece, dungeon_map, compass, heart_container y heart_piece (game_state.gd:217-230); slot_summary, NEW_GAME_EQUIPMENT, item_get.gd:45 y los chips de items_page también tienen ids fijos. La regla de capacidad de munición está en inventory.gd y otra vez en save_codec.gd.
+
+- [ ] ItemData.on_get (enum o estrategia)
+  INVENTARIO, LLAVE, LLAVE DEL JEFE, CORAZÓN…
+- [ ] show_in_slot_summary en ItemData
+- [ ] Equipo de partida nueva en un .tres
+- [ ] Una sola función de capacidad
+
+### 16.19 Wiring como componente en la escena · Pendiente
+
+**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `refactor`
+
+Door y Gate repiten los handlers changed/settled con reveal, abrir y cerrar (door.gd:97-110, gate.gd:40-51); Bridge, CrackedWall y Chest repiten los exports switches/condition/reveal. Door (tipo switch) y Gate tienen el mismo `_fill_depth` y tween de hundirse. Los switches se reconocen por `active` + `activated` sin clase común.
+
+- [ ] Nodo SwitchInput en el .tscn
+  Dueño de switches, condition, stays_open y reveal_on_open; emite satisfied(animate)/unsatisfied.
+- [ ] Barrera que se hunde compartida entre Gate y Door
+  Opcional.
+
+### 16.20 Behavior trees: reacciones de muerte, golpe y aturdido copiadas · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `refactor`
+
+Las ramas is_dead→Death_A→on_death_finished, is_hit→Hit_A y stunned→Hit_B son iguales en enemy_bt, archer_bt y guard_bt, y atoq_bt las tiene con otras animaciones. Enemy._on_damaged/_on_died además de poner el flag del blackboard hacen `bt_player.restart()`: parece doble control con el selector dinámico.
+
+- [ ] Un BTSubtree de reacciones
+  Animaciones como parámetros del blackboard.
+- [ ] Ver si el restart() hace falta
+
+### 16.21 GameState: separar el estado de sesión y las piezas sueltas · Pendiente
+
+**Prioridad:** baja · **Tamaño:** L · **Etiquetas:** `refactor`
+
+game_state.gd (473 líneas) tiene inventario, equipo, botones (con los de invitados), botellas, corazones, mazmorras, el mapa revelado, spawn y respawn, tiempo de juego e intros del jefe; `_process` lee Players. `room_entry` lo escriben la cámara, boss_arena y SceneFlow, y `boss_rematch` y `seen_boss_intros` no se guardan: la regla "estado del player global y en el save" queda mezclada con estado de sesión. GameState emite `inventory.changed` desde afuera para las botellas. Sigue a 11.86.
+
+- [ ] Session/Respawn propiedad de SceneFlow
+  room_entry, boss_rematch, seen_boss_intros.
+- [ ] ItemButtons, Bottles y MapProgress como RefCounted con su write/read
+- [ ] Las botellas emiten su propia señal
+- [ ] El tiempo de juego lo empuja la escena
+
+**Relacionadas:** 11.86 GameState: escrituras con señal y carga sin emisiones parciales
+
+### 16.22 Tests que barren carpetas en vez de listas fijas · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `tests`
+
+test_save_codec.gd:91 revisa 11 de los 20 escenarios firmados (faltan cumbre, quenoa, totora, gancho, chullpa_la, test_flags y los nuevos), así que la regla de "al sacar flags, correr test_save_codec" no cubre todo. test_flags mira 4 propiedades de flag (flag, solved_flag, defeated_flag, container_flag) y no reward_flag, reveal_flag ni required_flag, ni que estén registradas (en release el assert de set_flag no existe). test_attacks_load cubre 3 de 5 ataques y los configs solo player y test_box de 42; los AttackData del jefe no se revisan.
+
+- [ ] Escenarios: todos los .cfg de la carpeta
+  Con lista de los que son inconsistentes a propósito.
+- [ ] Flags de niveles: toda propiedad que termine en _flag, y registrada
+- [ ] Ataques y configs: toda la carpeta
+  active_from < active_to <= cancel_from; drops que resuelven.
+- [ ] data/ sin ext_resource sin uid
+  Y resave único de los que faltan.
+
+**Relacionadas:** 16.3 Templo: el grafo pide `mirror_shield`, que no existe
+
+### 16.23 Registros de flags e ítems: índice, ruta única y duplicados · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `refactor`, `datos`
+
+`res://data/flag_registry.tres` está escrito en 5 lugares y la base de ítems en 3. `FlagRegistry._find` recorre las ~171 definiciones en cada get_flag/has. ItemDatabase no chequea duplicados y su caché @tool no se entera si se edita un id. `FlagDefinition.default_value` es Variant pero las 171 son bool. Las mazmorras (ch, qv, tt, cu, te) solo existen en el nodo Dungeon de cada nivel; DungeonGraph no tiene id y su `scene` es una ruta en texto.
+
+- [ ] const PATH en cada registro
+- [ ] Índice en FlagRegistry con chequeo de duplicados
+  Igual en ItemDatabase.
+- [ ] Flags solo bool, o tipo con @export_enum
+- [ ] Opcional: registro DungeonData
+  id, escena por uid, grafo, prefijo y nombre; lo usan Dungeon y validate.
+
+### 16.24 Players.joined sale antes del _ready del player · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `bug`, `co-op`
+
+El player se registra en `_enter_tree` (player.gd:53) y `joined` se emite ahí, cuando health, equipment y targeting todavía son null. Los que escuchan hoy sobreviven porque difieren o solo limpian una caché; reparentar un player emitiría left + joined.
+
+- [ ] Registrar en _ready o emitir diferido
+  Documentar que joined = player listo.
+
+### 16.25 Nombres: una regla de idioma y archivos huérfanos · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `refactor`
+
+Se mezclan español e inglés en identificadores y archivos: AmbientePreset/AmbienteZoom, anillo_fuego.gdshader, sello_cima.tscn junto a temple_seal.tscn, data/ambientes junto a data/materials. `player/player.tres` es un VisualShader que nadie usa y se confunde con data/entities/player.tres. El autoload Items va por uid y los otros 13 por ruta.
+
+- [ ] Regla: código en inglés, lugares como nombres propios en español
+  Anotarla en el GDD.
+- [ ] Renombrar desde el editor
+  Puente, para que se actualicen uids y rutas.
+- [ ] Borrar player/player.tres
+
+### 16.27 Probar GUT para los tests (con nuestro runner por procesos arriba) · Pendiente
+
+**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-aa · **Etiquetas:** `tests`
+
+Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
+
+### 16.26 Orden de carpetas y lo que entra en la build release · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `refactor`, `build`
+
+La cámara de juego (505 líneas) y target_indicator están en src/tools/ junto a scripts de build; un EditorScript en src/debug/; Log y DebugOverlay (autoloads de runtime) en un addon, y DebugOverlay arma su Label por código; los BT entre src/entities/ y data/boss/; las escenas de prueba (test*, prueba_mc_godot, pruebas_terreno, sandbox_items, test_shinobi) en levels/ se exportan porque el filtro solo excluye tests/*; `player/animation/new_animation_node_state_machine.tres` con nombre por defecto; Feel cargado antes que MenuStack (por eso lo busca diferido).
+
+- [ ] Escenas de prueba a levels/test/
+  Y excluir la carpeta en export_presets.cfg.
+- [ ] Cámara a src/camera/
+  Mover desde el editor (puente) para que se actualicen uids y rutas.
+- [ ] Scripts de build a tools/
+  Los de src/tools/ que corren headless.
+- [ ] BT junto a su entidad o en data/ai/
+- [ ] Debug runtime a src/debug/
+  Log y DebugOverlay; el overlay como .tscn.
+- [ ] Orden de autoloads
+  MenuStack antes que Feel; conectar `MenuStack.changed` directo.
+- [ ] Renombrar el .tres por defecto
+- [ ] Excluir tools/, src/tools/build_*, debug/ y los niveles de prueba del release
+  export_presets.cfg solo saca tests/*, *.md y debug/scenarios/*; entran levels/test*, prueba_mc_godot, pruebas_terreno, ejemplo_ambiente, debug/la/ y los scripts de build.
+- [ ] Sacar el autoload ToonToggle
+  El toon está rechazado y precarga epiphany_toon.tres en release; test_shinobi lo agrega solo si lo necesita.
+- [ ] test_export mira las exclusiones
+- [ ] Partir src/world en puzzles/, dungeon/, props/ y overworld/
+  114 archivos sueltos; mover desde el editor.
+
+**Prueba:** El export no incluye escenas de prueba; tests verdes tras mover.
+
+**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+
+**Archivos:** `export_presets.cfg`, `project.godot`
+
+**Relacionadas:** 11.59 Limpieza de assets sin uso
+
+## M13 — Co-op local (estilo Four Swords)  (1/17)
 
 Dos jugadores en la misma pantalla recorren el overworld y el templo juntos, con progreso compartido y puzzles que aprovechan a los dos.
 
@@ -6579,6 +6927,16 @@ Los pasos de co-op del playtest de revisión (10.28), aparte: hacen falta dos co
 
 Del análisis de D1 (11.90, S3). P2 aprieta la placa BLOCK del vestíbulo, P1 entra al hub y la cámara arrastra a P2 (top_down_camera.gd): la puerta (stays_open=false) se cierra, el bloque se resetea y nada del lado del hub la reabre. Encaja con 13.8 (puzzles co-op con alternativa solo).
 
+### 13.17 Suposiciones de un solo player fuera de la UI · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `co-op`
+
+Del análisis del 2026-10-16. Solo el lead dispara los nombres de zona (area_zone.gd:28) y el sonido del temblor sale en su posición (tremor_zone.gd:40); text_box.gd:200 e items_page.gd:233 leen los botones de P1 en vez de `buttons_of(slot)`; los monitores de rendimiento solo miran al lead; `write_to` guarda la vida de los invitados aunque son de sesión.
+
+- [ ] Disparadores del mundo con el cuerpo que entró o Players.nearest
+- [ ] UI con el slot del player que actúa
+- [ ] Guardar solo la vida del slot 0 o documentar por qué no
+
 ## M14 — Co-op online  (0/13)
 
 Llevar el co-op local a la red: host autoritativo, dos jugadores en distintas máquinas, con el combate igual de preciso.
@@ -6829,7 +7187,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-## M15 — Optimización  (0/9)
+## M15 — Optimización  (0/12)
 
 Que el juego arranque rápido y corra estable a 60 FPS en la máquina más floja de los playtesters, en Linux y Windows, sin tirones al aparecer efectos.
 
@@ -6900,6 +7258,8 @@ Medir qué se carga antes del primer cuadro: autoloads, preloads grandes, recurs
   Linux y Windows, caché vacía y caliente.
 - [ ] Mover a carga diferida lo que no haga falta
 
+**Relacionadas:** 15.12 Feel sintetiza sonidos al arrancar y tira la mitad
+
 ### 15.7 Escala de resolución 3D en Ajustes · Pendiente
 
 Red de seguridad para GPUs integradas y Mac, donde no podemos medir: opción de escala 3D (FSR) en Ajustes, guardada con el resto de la configuración. La UI se dibuja a resolución completa.
@@ -6928,6 +7288,41 @@ Daniel (2026-10-15) preguntó por el texture streaming de Godot 4.8: descartado,
 - [ ] Medir con el profiler: vértices, draw calls, sombras
 - [ ] Rangos de visibilidad/LOD en decor y plantas
 - [ ] Terreno en bloques más chicos que se descarten fuera de cámara
+
+### 15.10 Salas y targeting: dejar de consultar todo cada frame · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `rendimiento`
+
+Cada Room llama a `has_player()` en cada frame de física (get_first_node_in_group de la cámara, Players.all.any con lambda, contains que sube por DungeonFloor.of); las cerradas además `enemies_inside()` y `waves_running()` (barrido de grupo + filter). `Targeting._sync_posts` corre cada frame aunque no tengas el gancho: hook_reach, grupo de postes y `_room_of` que recorre todas las salas, dos veces por poste.
+
+- [ ] Room reacciona al cambio de sala de la cámara
+  Y a Enemy.defeated / WaveSpawner para las cerradas.
+- [ ] _sync_posts sale si no hay alcance
+  Usa camera.room para la sala del player.
+
+### 15.11 Memoria que se pide y se tira en cada frame · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `rendimiento`
+
+`Players.alive()` arma un array con filter en cada llamada y `nearest()` lo llama por frame (Kuntur, Spirit, cada Pickup; Pickup además `get_overlapping_bodies().has(player)` por frame). Cada Hitbox hace `_airborne.duplicate()` cada frame aunque esté vacío. Los DebugOverlay.watch del player y del jefe arman strings, snappedf y `State.keys()` cada frame también en release.
+
+- [ ] nearest sin array intermedio; Pickup por body_entered
+- [ ] Hitbox sin physics_process con _airborne vacío
+- [ ] watch solo con el overlay visible
+  Y el blackboard del jefe con el enum en int.
+
+### 15.12 Feel sintetiza sonidos al arrancar y tira la mitad · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `rendimiento`, `audio`
+
+feel.gd:59-83 genera unos 22 sonidos en `_ready` (~10 s de audio a 22050 Hz, ~220k llamadas a lambdas) en cada arranque y en cada proceso de tests; después reemplaza 11 por samples grabados que carga todos de una listando la carpeta. La lista de sonidos es un Dictionary en código.
+
+- [ ] Renderizar los sintetizados a .wav una vez
+  Como render_music.gd.
+- [ ] Banco de sfx en un .tres con carga perezosa
+  StringName → Array[AudioStream].
+
+**Relacionadas:** 15.6 Arranque hasta el menú
 
 ## Listas
 
@@ -7045,7 +7440,7 @@ Daniel (2026-10-15) preguntó por el texture streaming de Godot 4.8: descartado,
 59. [ ] 11.170 Atajos: animación del player subiendo y bajando en vez del fundido · Revisión
 60. [x] 11.174 Overworld (Cumbre): el gancho choca contra una pared invisible · Hecho · anda
 
-### Revisión del 15 de octubre: ruta completa  (3/82 probadas)
+### Revisión del 15 de octubre: ruta completa  (3/86 probadas)
 
 1. [ ] 11.192 Overworld: mini jefe después de D2 que da el martillo · Revisión — No se entiende cuando el mini jefe va a usar el martillo y se desactiva a poca distancia. Debería mantenerse activado, y si uno le hace daño (con una flecha por ejemplo) se activa la pelea y te empieza a seguir.
 2. [ ] 11.191 Martillo: ítem de golpe fuerte · Revisión
@@ -7130,3 +7525,7 @@ Daniel (2026-10-15) preguntó por el texture streaming de Godot 4.8: descartado,
 80. [ ] 11.199 Mazmorras: no hacer zoom a lo que se abre en otra sala · Revisión
 81. [ ] 11.200 Enemigos de sala de mazmorra no sueltan la persecución · Revisión
 82. [ ] 11.201 Autosave en la ranura de la partida · Revisión
+83. [ ] 11.205 Escudo siempre en la mano; la guardia es Z · Revisión
+84. [ ] 11.204 Jefe final: manos al cambiar de fase, aturdido, golpes y rayo · Revisión
+85. [ ] 11.202 Errores del log de la build 0.2 (playtest) · Revisión
+86. [ ] 11.197 Terreno del overworld: colisión simplificada (la carga congela la ventana 3,4 s) · Revisión

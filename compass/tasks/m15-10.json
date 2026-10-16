@@ -1,0 +1,33 @@
+{
+  "checklist": [
+    {
+      "done": false,
+      "text": "nearest sin array intermedio; Pickup por body_entered"
+    },
+    {
+      "done": false,
+      "text": "Hitbox sin physics_process con _airborne vacío"
+    },
+    {
+      "detail": "Y el blackboard del jefe con el enum en int.",
+      "done": false,
+      "text": "watch solo con el overlay visible"
+    }
+  ],
+  "code": "15.11",
+  "created_at": "2026-10-16T19:48:08.498Z",
+  "description": "`Players.alive()` arma un array con filter en cada llamada y `nearest()` lo llama por frame (Kuntur, Spirit, cada Pickup; Pickup además `get_overlapping_bodies().has(player)` por frame). Cada Hitbox hace `_airborne.duplicate()` cada frame aunque esté vacío. Los DebugOverlay.watch del player y del jefe arman strings, snappedf y `State.keys()` cada frame también en release.",
+  "milestone": "m15",
+  "notes": "",
+  "order": 186,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "rendimiento"
+  ],
+  "test": "",
+  "title": "Memoria que se pide y se tira en cada frame",
+  "updated_at": "2026-10-16T19:48:09.634Z"
+}
