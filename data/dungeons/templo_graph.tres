@@ -150,13 +150,13 @@ needs = Array[StringName]([&"hookshot"])
 script = ExtResource("3_spot")
 area = &"Espejo"
 node = NodePath("Planta/MirrorCrystal")
-needs = Array[StringName]([&"mirror_shield"])
+needs = Array[StringName]([&"shield_mirror"])
 
 [sub_resource type="Resource" id="Spot_12"]
 script = ExtResource("3_spot")
 area = &"EspejoOjo"
 node = NodePath("Planta/MirrorFight")
-needs = Array[StringName]([&"mirror_shield"])
+needs = Array[StringName]([&"shield_mirror"])
 
 [sub_resource type="Resource" id="Spot_13"]
 script = ExtResource("3_spot")
@@ -183,7 +183,7 @@ node = NodePath("Planta/CombinedChest")
 script = ExtResource("3_spot")
 area = &"Jefe"
 node = NodePath("BossArena")
-needs = Array[StringName]([&"bow|mirror_shield"])
+needs = Array[StringName]([&"bow|shield_mirror"])
 gives = &"te_boss_defeated"
 
 [resource]
@@ -192,6 +192,6 @@ scene = "res://levels/templo.tscn"
 start = &"Vestibulo"
 goal = &"te_boss_defeated"
 item = &"boss_key"
-brings = Array[StringName]([&"bomb_bag", &"feather", &"bow", &"hookshot", &"mirror_shield"])
+brings = Array[StringName]([&"bomb_bag", &"feather", &"bow", &"hookshot", &"shield_mirror"])
 links = Array[ExtResource("2_link")]([SubResource("Link_1"), SubResource("Link_2"), SubResource("Link_3"), SubResource("Link_4"), SubResource("Link_5"), SubResource("Link_6"), SubResource("Link_7"), SubResource("Link_8"), SubResource("Link_9"), SubResource("Link_10"), SubResource("Link_11"), SubResource("Link_12"), SubResource("Link_13"), SubResource("Link_14")])
 spots = Array[ExtResource("3_spot")]([SubResource("Spot_1"), SubResource("Spot_2"), SubResource("Spot_3"), SubResource("Spot_4"), SubResource("Spot_5"), SubResource("Spot_6"), SubResource("Spot_7"), SubResource("Spot_8"), SubResource("Spot_9"), SubResource("Spot_10"), SubResource("Spot_11"), SubResource("Spot_12"), SubResource("Spot_13"), SubResource("Spot_14"), SubResource("Spot_15"), SubResource("Spot_17"), SubResource("Spot_18")])

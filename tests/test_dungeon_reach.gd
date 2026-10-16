@@ -3,6 +3,8 @@ extends "res://tests/test_case.gd"
 
 const Reach := preload("res://tests/dungeon_reach.gd")
 const GRAPHS := "res://data/dungeons"
+## Tokens que no son ítem ni flag: los da y los pide el mismo grafo.
+const SYNTHETIC: Array[StringName] = [&"ch_rellano_pot"]
 
 
 func test_every_dungeon_graph_matches_its_scene_and_has_no_dead_end() -> void:
@@ -14,6 +16,27 @@ func test_every_dungeon_graph_matches_its_scene_and_has_no_dead_end() -> void:
 		assert_eq(read.problems, PackedStringArray(), "%s contra su escena" % file)
 		assert_eq(Reach.search(read.model, graph.brings), PackedStringArray(), "%s sin salidas trabadas" % file)
 		assert_eq(Reach.rules(graph, read.model), PackedStringArray(), "%s cumple el molde" % file)
+
+
+## Un token mal escrito en needs y brings a la vez pasa la alcanzabilidad: todos tienen que existir.
+func test_every_graph_token_is_an_item_or_a_flag() -> void:
+	var items := load("res://data/item_database.tres") as ItemDatabase
+	var flags := load("res://data/flag_registry.tres") as FlagRegistry
+	for file in DirAccess.get_files_at(GRAPHS):
+		if not file.ends_with(".tres"):
+			continue
+		var graph := load(GRAPHS.path_join(file)) as DungeonGraph
+		var tokens: Array[StringName] = [graph.goal, graph.item, graph.guard]
+		tokens.append_array(graph.brings)
+		for entry: Resource in graph.links + graph.spots:
+			for clause: StringName in entry.needs:
+				for token in String(clause).split("|"):
+					tokens.append(StringName(token))
+		for spot in graph.spots:
+			tokens.append(spot.gives)
+		for token in tokens:
+			if token != &"" and not token in SYNTHETIC:
+				assert_true(items.has_item(token) or flags.has(token), "%s: %s no es un ítem ni una flag" % [file, token])
 
 
 func test_a_key_spent_on_the_wrong_door_is_a_dead_end() -> void:
