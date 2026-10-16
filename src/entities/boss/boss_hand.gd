@@ -221,8 +221,7 @@ func regenerate() -> void:
 	rotation = Vector3.ZERO
 	set_state(State.BUSY)
 	_flex()
-	await _return_to_rest()
-	if state == State.BUSY:
+	if await _return_to_rest() and state == State.BUSY:
 		set_state(State.READY)
 
 
@@ -297,10 +296,8 @@ func perform(attack: BossAttack, target: Node3D, area: Rect2) -> void:
 		return
 	striking = false
 	_hide_shadow()
-	if state == State.BUSY:
-		await _return_to_rest()
-		if state == State.BUSY:
-			set_state(State.READY)
+	if state == State.BUSY and await _return_to_rest() and state == State.BUSY:
+		set_state(State.READY)
 
 
 func _slam(attack: BossAttack, target: Node3D, area: Rect2) -> void:
@@ -317,8 +314,7 @@ func _slam_once(attack: BossAttack, target: Node3D, area: Rect2) -> bool:
 	var above := _floor_point(target.global_position, area) + Vector3.UP * slam_height
 	_show_shadow(above, 3.6, 0.3)
 	_tilt_goal = Vector3(-0.55, 0.0, 0.0)
-	await _move(above, slam_rise_time)
-	if state != State.BUSY:
+	if not await _move(above, slam_rise_time) or state != State.BUSY:
 		return false
 	var left := slam_track_time
 	while left > 0.0:
@@ -337,13 +333,15 @@ func _slam_once(attack: BossAttack, target: Node3D, area: Rect2) -> bool:
 	hold.tween_property(self, ^"position:y", position.y + slam_overshoot, slam_lock_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	hold.parallel().tween_method(_tremble.bind(position), 0.0, 1.0, slam_lock_time)
 	hold.parallel().tween_method(_flash_shadow, 0.0, 1.0, slam_lock_time)
-	await hold.finished
+	if not await _ended(hold):
+		return false
 	if state != State.BUSY:
 		return false
 	_set_hitbox(strike, attack.attack)
 	_tilt_goal = Vector3(0.25, 0.0, 0.0)
 	_tilt = _tilt_goal
-	await _move(Vector3(global_position.x, FLOOR_HEIGHT, global_position.z), slam_fall_time, Tween.EASE_IN)
+	if not await _move(Vector3(global_position.x, FLOOR_HEIGHT, global_position.z), slam_fall_time, Tween.EASE_IN):
+		return false
 	_tilt_goal = Vector3.ZERO
 	_impact()
 	_squash_and_bounce()
@@ -381,8 +379,7 @@ func _grab(_attack: BossAttack, target: Node3D, area: Rect2) -> void:
 		side = 1.0
 	var start := _floor_point(target.global_position + Vector3(side * 3.5, 0.0, 0.0), area) + Vector3.UP * 1.4
 	_aim = target
-	await _move(start, 0.5)
-	if state != State.BUSY:
+	if not await _move(start, 0.5) or state != State.BUSY:
 		return
 	_flash.warn(grab_windup_time)
 	_grip_goal = -0.3
@@ -392,7 +389,8 @@ func _grab(_attack: BossAttack, target: Node3D, area: Rect2) -> void:
 		shake.tween_property(self, ^"rotation:z", 0.12 * (1 if i % 2 else -1), grab_windup_time / 6.0)
 	shake.tween_property(self, ^"rotation:z", 0.0, 0.05)
 	_show_shadow(global_position, 1.6, 0.4)
-	await shake.finished
+	if not await _ended(shake):
+		return
 	if state != State.BUSY:
 		return
 	var from := global_position
@@ -438,10 +436,10 @@ func _hold(target: PlayerCharacter) -> void:
 	_grip_goal = 0.85
 	_grip_speed = 6.0
 	_tilt_goal = Vector3.ZERO
-	await _move(global_position + Vector3.UP * 0.8, 0.3)
+	var lifted := await _move(global_position + Vector3.UP * 0.8, 0.3)
 	var left := grab_hold_time
 	var tick := grab_tick
-	while left > 0.0 and not escaped[0] and state == State.BUSY and target.is_grabbed():
+	while lifted and left > 0.0 and not escaped[0] and state == State.BUSY and target.is_grabbed():
 		await get_tree().physics_frame
 		var delta := get_physics_process_delta_time()
 		left -= delta
@@ -455,6 +453,8 @@ func _hold(target: PlayerCharacter) -> void:
 			target.hurtbox.receive(squeeze)
 	target.escaped.disconnect(on_escape)
 	_grabbed = null
+	if not lifted:
+		return
 	if escaped[0]:
 		stun(grab_escape_stun)
 		return
@@ -476,8 +476,7 @@ func _sweep(attack: BossAttack, target: Node3D, area: Rect2) -> void:
 	var z := clampf(target.global_position.z, area.position.y, area.end.y)
 	var start := Vector3(area.get_center().x + side * area.size.x * 0.5, FLOOR_HEIGHT + 0.2, z)
 	var finish := Vector3(area.get_center().x - side * area.size.x * 0.5, FLOOR_HEIGHT + 0.2, z)
-	await _move(start, 0.6)
-	if state != State.BUSY:
+	if not await _move(start, 0.6) or state != State.BUSY:
 		return
 	_show_shadow(global_position, 1.8, 0.5)
 	_flash.warn(sweep_windup_time)
@@ -486,7 +485,8 @@ func _sweep(attack: BossAttack, target: Node3D, area: Rect2) -> void:
 	var windup := _new_attack_tween()
 	windup.tween_property(self, ^"position:x", position.x + side * 0.9, sweep_windup_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	windup.parallel().tween_method(func(t: float) -> void: position.z += randf_range(-TREMBLE, TREMBLE) * t, 0.0, 1.0, sweep_windup_time)
-	await windup.finished
+	if not await _ended(windup):
+		return
 	if state != State.BUSY:
 		return
 	Feel.shake(0.25, finish - start)
@@ -505,28 +505,40 @@ func _sweep(attack: BossAttack, target: Node3D, area: Rect2) -> void:
 
 
 ## El reposo flota con el cuerpo: lo sigue mientras vuelve.
-func _return_to_rest() -> void:
+## False si lo cortaron a mitad de camino.
+func _return_to_rest() -> bool:
 	_aim = null
 	_tilt_goal = Vector3.ZERO
 	if rest:
 		var from := global_position
 		_motion = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 		_motion.tween_method(func(t: float) -> void: global_position = from.lerp(rest.global_position, t), 0.0, 1.0, 0.6)
-		await _motion.finished
+		if not await _ended(_motion):
+			return false
 	pose = Pose.OPEN
+	return true
 
 
 func _recover() -> void:
 	set_state(State.BUSY)
-	await _return_to_rest()
-	if state == State.BUSY:
+	if await _return_to_rest() and state == State.BUSY:
 		set_state(State.READY)
 
 
-func _move(to: Vector3, seconds: float, ease_type := Tween.EASE_IN_OUT) -> void:
+## False si lo cortaron (_drop_everything, collapse).
+func _move(to: Vector3, seconds: float, ease_type := Tween.EASE_IN_OUT) -> bool:
 	_motion = create_tween().set_trans(Tween.TRANS_SINE).set_ease(ease_type)
 	_motion.tween_property(self, ^"global_position", to, seconds)
-	await _motion.finished
+	return await _ended(_motion)
+
+
+## Como `await tween.finished`, pero también vuelve si lo matan (kill() no emite finished): false en ese caso.
+func _ended(tween: Tween) -> bool:
+	var done := [false]
+	tween.finished.connect(func() -> void: done[0] = true, CONNECT_ONE_SHOT)
+	while not done[0] and tween.is_valid() and is_inside_tree():
+		await get_tree().process_frame
+	return done[0]
 
 
 func _floor_point(point: Vector3, area: Rect2) -> Vector3:

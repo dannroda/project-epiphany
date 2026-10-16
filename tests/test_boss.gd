@@ -504,6 +504,47 @@ func test_grab_holds_and_mashing_frees() -> void:
 	tree.root.get_node(^"GameState").reset()
 
 
+## Cortar el agarre justo cuando atrapa (cambio de fase) no deja la mano colgada ni conectada al escape del player.
+func test_cutting_a_grab_leaves_nothing_behind() -> void:
+	var setup: Array = await _field()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	var boss: Boss = setup[2]
+	var hand := boss.hand_right
+	var listeners := player.escaped.get_connections().size()
+	hand.perform(_attack(&"grab"), player, boss.arena)
+	assert_true(await _wait_until(player.is_grabbed, 3.0), "la garra lo atrapa")
+	hand.reset()
+	assert_true(await _wait_until(func() -> bool: return hand.state == BossHand.State.READY, 3.0), "vuelve al reposo")
+	await tree.create_timer(0.5).timeout
+	assert_true(not player.is_grabbed(), "lo suelta")
+	assert_eq(player.escaped.get_connections().size(), listeners, "no queda escuchando el escape")
+	assert_eq(hand.state, BossHand.State.READY, "el ataque cortado no la vuelve a mover")
+	tree.root.get_node(^"GameState").reset()
+
+
+## Aturdir el ojo a mitad de la carga del rayo corta el ataque entero.
+func test_stunning_the_eye_mid_laser_ends_the_coroutine() -> void:
+	var boss := _spawn()
+	var tree := Engine.get_main_loop() as SceneTree
+	await _frames(2)
+	var target := Node3D.new()
+	boss.add_child(target)
+	target.global_position = boss.global_position + Vector3(0, -boss.global_position.y, 6)
+	boss.target = target
+	var done := [false]
+	var run := func() -> void:
+		await boss._sweep_laser()
+		done[0] = true
+	run.call()
+	await tree.create_timer(0.1).timeout
+	boss._stun_eye()
+	await _frames(3)
+	assert_true(done[0], "el barrido termina, no queda esperando un tween muerto")
+	assert_true(not boss.get_node(^"%LaserSpot").visible, "sin rayo")
+	boss.free()
+
+
 func test_roll_slips_the_grab() -> void:
 	var setup: Array = await _field()
 	var tree: SceneTree = setup[0]
