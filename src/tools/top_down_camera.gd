@@ -48,6 +48,12 @@ const SKIP_ACTIONS: Array[StringName] = [&"ui_accept", &"attack", &"interact"]
 ## Se acerca a lo activado: fracción del `offset` normal.
 @export_range(0.3, 1.0) var reveal_zoom := 0.6
 
+@export_group("Cinemática")
+## Viñeta y luz mientras otra cámara filma (cutscenes, tomas del teaser): sin el marco de la sala, que solo calza con
+## esta cámara. Al salir vuelve lo de la sala.
+@export var cinematic_look: AmbientePreset = preload("res://data/ambientes/cinematica.tres")
+@export var cinematic_tone_time := 0.6
+
 @export_group("Salas")
 ## Cuánto tarda el deslizamiento al pasar de una sala a otra.
 @export var transition_time := 0.5
@@ -120,7 +126,11 @@ var _ray := PhysicsRayQueryParameters3D.new()
 var _hit := PhysicsIntersectRayResult3D.new()
 var _level_offset := Vector3.ZERO
 var _level_fov := 0.0
-var _room_look_saved := {}
+var cinematic := false
+## Viñeta y luz del nivel antes de que un preset las tocara, la del preset de la sala y el fundido en curso.
+var _look_base := {}
+var _room_look := {}
+var _look_tween: Tween
 
 
 func _ready() -> void:
@@ -300,14 +310,14 @@ func enter_room(new_room: Room, crosser: PlayerCharacter = null) -> void:
 	_cut_south_wall(room)
 	DungeonFloor.show_up_to(get_tree(), room.floor_level())
 	if previous == null:
-		_apply_room_view(room)
+		_apply_room_view(room, 0.0)
 		_mask_around(room.bounds())
 		focus = _clamp(group_center())
 		global_position = focus + offset
 		_remember_entry()
 		return
 	if previous.floor_level() != room.floor_level():
-		_apply_room_view(room)
+		_apply_room_view(room, transition_time)
 		_change_floor(crosser)
 		return
 	var step := room.bounds().get_center() - previous.bounds().get_center()
@@ -323,7 +333,7 @@ func enter_room(new_room: Room, crosser: PlayerCharacter = null) -> void:
 		player.begin_room_transition(direction, transition_time)
 	var from_offset := offset
 	var from_fov := fov
-	_apply_room_view(room)
+	_apply_room_view(room, transition_time)
 	focus = _clamp(crosser.global_position + direction * transition_walk)
 	var to_offset := offset
 	var to_fov := fov
@@ -346,7 +356,7 @@ func _slide_offset(value: Vector3) -> void:
 
 ## Offset y campo de visión de la sala (su AmbientePreset o camera_offset/camera_fov), y la viñeta y la luz del preset
 ## sobre el WorldEnvironment del nivel; lo que no pone queda como el del nivel.
-func _apply_room_view(target: Room) -> void:
+func _apply_room_view(target: Room, look_time: float) -> void:
 	var preset := target.ambiente
 	if preset and preset.usar_camara:
 		offset = preset.offset
@@ -357,24 +367,55 @@ func _apply_room_view(target: Room) -> void:
 			fov = preset.fov
 		else:
 			fov = target.camera_fov if target.camera_fov > 0.0 else _level_fov
-	_apply_room_look(preset)
+	_room_look = target.ambiente.targets(_world()) if target.ambiente else {}
+	_fade_look(look_time)
 
 
-## Pone la viñeta y la luz del preset de la sala, devolviendo antes las de la sala anterior.
-func _apply_room_look(preset: AmbientePreset) -> void:
-	for target: Object in _room_look_saved:
-		for property: String in _room_look_saved[target]:
-			target.set(property, _room_look_saved[target][property])
-	_room_look_saved.clear()
-	if preset == null:
+## Modo cinemática: pone `cinematic_look` encima de lo de la sala (o lo saca), con fundido salvo `instant`.
+func set_cinematic(on: bool, instant := false) -> void:
+	if on == cinematic:
 		return
-	var targets := preset.targets(_world())
-	for target: Object in targets:
-		var saved := {}
-		for property: String in targets[target]:
-			saved[property] = target.get(property)
-			target.set(property, targets[target][property])
-		_room_look_saved[target] = saved
+	cinematic = on
+	_fade_look(0.0 if instant else cinematic_tone_time)
+
+
+## La viñeta y la luz que tocan ahora: las del nivel, encima las del preset de la sala y, en cinemática, las de
+## `cinematic_look`.
+func target_look() -> Dictionary:
+	var layers: Array[Dictionary] = [_room_look]
+	if cinematic and cinematic_look:
+		layers.append(cinematic_look.targets(_world()))
+	for layer in layers:
+		_remember_base(layer)
+	var look := {}
+	for holder: Object in _look_base:
+		look[holder] = (_look_base[holder] as Dictionary).duplicate()
+	for layer in layers:
+		for holder: Object in layer:
+			(look[holder] as Dictionary).merge(layer[holder], true)
+	return look
+
+
+## Anota lo del nivel de cada propiedad que `values` va a tocar, la primera vez.
+func _remember_base(values: Dictionary) -> void:
+	for holder: Object in values:
+		var base: Dictionary = _look_base.get_or_add(holder, {})
+		for property: String in values[holder]:
+			if not base.has(property):
+				base[property] = holder.get(property)
+
+
+## Va a `target_look()` en `time` segundos (0: de golpe).
+func _fade_look(time: float) -> void:
+	if _look_tween:
+		_look_tween.kill()
+	var look := target_look()
+	if time > 0.0:
+		_look_tween = _tween_mood(look, time)
+		return
+	for holder: Object in look:
+		for property: String in look[holder]:
+			holder.set(property, look[holder][property])
 
 
 func _world() -> WorldEnvironment:
@@ -677,17 +718,12 @@ func _reveal(target: Node3D, action: Callable, hold: float) -> void:
 	var zoom: float = target.call(&"reveal_zoom", reveal_zoom) if target.has_method(&"reveal_zoom") else reveal_zoom
 	var look := _reveal_preset(target)
 	var mood := look.targets(_world()) if look else {}
-	var mood_back := {}
-	for holder: Object in mood:
-		mood_back[holder] = {}
-		for property: String in mood[holder]:
-			mood_back[holder][property] = holder.get(property)
+	if _look_tween:
+		_look_tween.kill()
+	_remember_base(mood)
 	_tween_mood(mood)
 	await _pan(reveal_focus(target) + _eye() * zoom)
 	if not is_inside_tree():
-		for holder: Object in mood_back:
-			for property: String in mood_back[holder]:
-				holder.set(property, mood_back[holder][property])
 		return
 	var left := 0.0
 	if is_instance_valid(target):
@@ -700,7 +736,7 @@ func _reveal(target: Node3D, action: Callable, hold: float) -> void:
 		if _skip:
 			break
 		await tree.process_frame
-	_tween_mood(mood_back)
+	_fade_look(reveal_tone_time)
 	await _pan(back)
 	if is_instance_valid(target):
 		target.process_mode = target_mode
@@ -718,13 +754,14 @@ func _reveal_preset(target: Node) -> AmbientePreset:
 
 
 ## Lleva cada objeto (TonoLA, Environment) a sus valores {propiedad: valor}.
-func _tween_mood(values: Dictionary) -> void:
+func _tween_mood(values: Dictionary, time := reveal_tone_time) -> Tween:
 	if values.is_empty():
-		return
+		return null
 	var tween := create_tween().set_parallel().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	for holder: Object in values:
 		for property: String in values[holder]:
-			tween.tween_property(holder, NodePath(property), values[holder][property], reveal_tone_time)
+			tween.tween_property(holder, NodePath(property), values[holder][property], time)
+	return tween
 
 
 ## Lo que tarda en abrirse lo mostrado (puerta, reja, puente); sin animación conocida, `reveal_hold`.

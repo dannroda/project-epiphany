@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://tools/teaser/teaser.gd" id="1_director"]
 [ext_resource type="Script" path="res://tools/teaser/teaser_shot.gd" id="2_shot"]
 [ext_resource type="Script" path="res://tools/teaser/teaser_step.gd" id="3_step"]
+[ext_resource type="Script" path="res://tools/teaser/teaser_angle.gd" id="4_angle"]
 
 [node name="Teaser" type="Node3D"]
 script = ExtResource("1_director")
@@ -14,104 +15,444 @@ far = 400.0
 
 [node name="Vista" type="Node3D" parent="Shots"]
 script = ExtResource("2_shot")
-scenario = "templo_video"
-view = 1
 length = 4.5
 settle = 2.0
 show_player = false
 
-[node name="From" type="Marker3D" parent="Shots/Vista"]
+[node name="Riel" type="Node3D" parent="Shots/Vista"]
+script = ExtResource("4_angle")
+kind = 1
+
+[node name="From" type="Marker3D" parent="Shots/Vista/Riel"]
 transform = Transform3D(0.9979, 0.0508, -0.0395, -0.0000, 0.6134, 0.7898, 0.0644, -0.7882, 0.6121, -14.000, 80.000, 62.000)
 
-[node name="To" type="Marker3D" parent="Shots/Vista"]
+[node name="To" type="Marker3D" parent="Shots/Vista/Riel"]
 transform = Transform3D(0.9995, 0.0255, -0.0198, -0.0000, 0.6128, 0.7903, 0.0322, -0.7898, 0.6125, -4.000, 80.000, 60.000)
 
 [node name="Laguna" type="Node3D" parent="Shots"]
 script = ExtResource("2_shot")
-scenario = "templo_video"
-view = 1
 length = 3.5
 settle = 2.0
 show_player = false
 
-[node name="From" type="Marker3D" parent="Shots/Laguna"]
+[node name="Riel" type="Node3D" parent="Shots/Laguna"]
+script = ExtResource("4_angle")
+kind = 1
+
+[node name="From" type="Marker3D" parent="Shots/Laguna/Riel"]
 transform = Transform3D(0.9104, 0.2074, -0.3581, -0.0000, 0.8653, 0.5013, 0.4138, -0.4563, 0.7877, -40.000, 14.000, 62.000)
 
-[node name="To" type="Marker3D" parent="Shots/Laguna"]
+[node name="To" type="Marker3D" parent="Shots/Laguna/Riel"]
 transform = Transform3D(1.0000, 0.0000, -0.0000, -0.0000, 0.8503, 0.5264, 0.0000, -0.5264, 0.8503, -22.000, 13.000, 60.000)
 
-[node name="Camino" type="Node3D" parent="Shots"]
+[node name="Quenoa" type="Node3D" parent="Shots"]
 script = ExtResource("2_shot")
-scenario = "templo_video"
-length = 4.5
+length = 3.5
+settle = 2.0
+show_player = false
 
-[node name="Inicio" type="Marker3D" parent="Shots/Camino"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 5.4, -31)
-rotation = Vector3(0, 3.1416, 0)
-
-[node name="01Chase" type="Marker3D" parent="Shots/Camino"]
-script = ExtResource("3_step")
+[node name="Riel" type="Node3D" parent="Shots/Quenoa"]
+script = ExtResource("4_angle")
 kind = 1
-at = 0.3
-duration = 1.6
 
-[node name="02Press" type="Marker3D" parent="Shots/Camino"]
-script = ExtResource("3_step")
-kind = 2
-at = 1.4
-action = &"attack"
+[node name="From" type="Marker3D" parent="Shots/Quenoa/Riel"]
+transform = Transform3D(0.8944, 0.2248, -0.3866, -0.0000, 0.8645, 0.5026, 0.4472, -0.4495, 0.7732, -36.000, 15.000, 40.000)
 
-[node name="03Press" type="Marker3D" parent="Shots/Camino"]
-script = ExtResource("3_step")
-kind = 2
-at = 1.8
-action = &"attack"
+[node name="To" type="Marker3D" parent="Shots/Quenoa/Riel"]
+transform = Transform3D(0.9615, -0.1323, 0.2408, 0.0000, 0.8764, 0.4815, -0.2747, -0.4630, 0.8427, -16.000, 14.000, 40.000)
 
-[node name="04Press" type="Marker3D" parent="Shots/Camino"]
-script = ExtResource("3_step")
-kind = 2
-at = 2.3
-action = &"attack"
+[node name="Chullpa" type="Node3D" parent="Shots"]
+script = ExtResource("2_shot")
+length = 3.5
+settle = 2.0
+show_player = false
 
-[node name="05Chase" type="Marker3D" parent="Shots/Camino"]
-script = ExtResource("3_step")
+[node name="Riel" type="Node3D" parent="Shots/Chullpa"]
+script = ExtResource("4_angle")
 kind = 1
-at = 2.6
-duration = 1.0
 
-[node name="06Press" type="Marker3D" parent="Shots/Camino"]
-script = ExtResource("3_step")
-kind = 2
-at = 3.2
-action = &"attack"
+[node name="From" type="Marker3D" parent="Shots/Chullpa/Riel"]
+transform = Transform3D(0.8742, 0.2593, -0.4107, -0.0000, 0.8456, 0.5338, 0.4856, -0.4667, 0.7392, -98.000, 15.000, 12.000)
 
-[node name="07Press" type="Marker3D" parent="Shots/Camino"]
-script = ExtResource("3_step")
+[node name="To" type="Marker3D" parent="Shots/Chullpa/Riel"]
+transform = Transform3D(0.9734, -0.1297, 0.1888, 0.0000, 0.8242, 0.5663, -0.2290, -0.5513, 0.8023, -80.000, 14.000, 11.000)
+
+[node name="Cumbre" type="Node3D" parent="Shots"]
+script = ExtResource("2_shot")
+length = 3.5
+settle = 2.0
+show_player = false
+
+[node name="Riel" type="Node3D" parent="Shots/Cumbre"]
+script = ExtResource("4_angle")
+kind = 1
+
+[node name="From" type="Marker3D" parent="Shots/Cumbre/Riel"]
+transform = Transform3D(0.9345, 0.1976, -0.2961, -0.0000, 0.8317, 0.5552, 0.3560, -0.5188, 0.7772, 28.000, 18.000, -16.000)
+
+[node name="To" type="Marker3D" parent="Shots/Cumbre/Riel"]
+transform = Transform3D(0.9785, -0.1205, 0.1671, 0.0000, 0.8111, 0.5849, -0.2060, -0.5723, 0.7937, 46.000, 17.000, -18.000)
+
+[node name="MapaSur" type="Node3D" parent="Shots"]
+script = ExtResource("2_shot")
+length = 9.0
+settle = 2.0
+show_player = false
+
+[node name="Riel" type="Node3D" parent="Shots/MapaSur"]
+script = ExtResource("4_angle")
+kind = 1
+
+[node name="From" type="Marker3D" parent="Shots/MapaSur/Riel"]
+transform = Transform3D(0.9995, 0.0255, -0.0198, -0.0000, 0.6128, 0.7903, 0.0322, -0.7898, 0.6125, -100, 80, 62)
+
+[node name="To" type="Marker3D" parent="Shots/MapaSur/Riel"]
+transform = Transform3D(0.9995, 0.0255, -0.0198, -0.0000, 0.6128, 0.7903, 0.0322, -0.7898, 0.6125, 40, 80, 56)
+
+[node name="MapaNorte" type="Node3D" parent="Shots"]
+script = ExtResource("2_shot")
+length = 9.0
+settle = 2.0
+show_player = false
+
+[node name="Riel" type="Node3D" parent="Shots/MapaNorte"]
+script = ExtResource("4_angle")
+kind = 1
+
+[node name="From" type="Marker3D" parent="Shots/MapaNorte/Riel"]
+transform = Transform3D(0.9995, 0.0255, -0.0198, -0.0000, 0.6128, 0.7903, 0.0322, -0.7898, 0.6125, 60, 80, 8)
+
+[node name="To" type="Marker3D" parent="Shots/MapaNorte/Riel"]
+transform = Transform3D(0.9995, 0.0255, -0.0198, -0.0000, 0.6128, 0.7903, 0.0322, -0.7898, 0.6125, -80, 80, 14)
+
+[node name="Pradera" type="Node3D" parent="Shots"]
+script = ExtResource("2_shot")
+length = 6.0
+clear_enemies = true
+
+[node name="Inicio" type="Marker3D" parent="Shots/Pradera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 0.3, -4)
+rotation = Vector3(0, 3.9, 0)
+
+[node name="Juego" type="Node3D" parent="Shots/Pradera"]
+script = ExtResource("4_angle")
+
+[node name="Dron" type="Node3D" parent="Shots/Pradera"]
+script = ExtResource("4_angle")
 kind = 2
-at = 3.6
-action = &"attack"
+fov = 50.0
+offset = Vector3(0, 14, 12)
+look_height = 0.0
+smoothing = 2.0
+
+[node name="Lado" type="Node3D" parent="Shots/Pradera"]
+script = ExtResource("4_angle")
+kind = 2
+fov = 50.0
+offset = Vector3(7, 2.5, 0)
+smoothing = 3.0
+
+[node name="Seguir" type="Node3D" parent="Shots/Pradera"]
+script = ExtResource("4_angle")
+kind = 2
+fov = 50.0
+offset = Vector3(0, 3.5, 7)
+smoothing = 3.0
+
+[node name="Paso01Walk" type="Marker3D" parent="Shots/Pradera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -62, 0, 20)
+script = ExtResource("3_step")
+at = 0.2
+navigate = true
+
+[node name="Arboleda" type="Node3D" parent="Shots"]
+script = ExtResource("2_shot")
+length = 6.0
+clear_enemies = true
+
+[node name="Inicio" type="Marker3D" parent="Shots/Arboleda"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39, 0.3, 0)
+rotation = Vector3(0, 2.6, 0)
+
+[node name="Juego" type="Node3D" parent="Shots/Arboleda"]
+script = ExtResource("4_angle")
+
+[node name="Dron" type="Node3D" parent="Shots/Arboleda"]
+script = ExtResource("4_angle")
+kind = 2
+fov = 50.0
+offset = Vector3(0, 14, 12)
+look_height = 0.0
+smoothing = 2.0
+
+[node name="Lado" type="Node3D" parent="Shots/Arboleda"]
+script = ExtResource("4_angle")
+kind = 2
+fov = 50.0
+offset = Vector3(7, 2.5, 0)
+smoothing = 3.0
+
+[node name="Seguir" type="Node3D" parent="Shots/Arboleda"]
+script = ExtResource("4_angle")
+kind = 2
+fov = 50.0
+offset = Vector3(0, 3.5, 7)
+smoothing = 3.0
+
+[node name="Paso01Walk" type="Marker3D" parent="Shots/Arboleda"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 2.6, 25)
+script = ExtResource("3_step")
+at = 0.2
+navigate = true
+
+[node name="Laguna2" type="Node3D" parent="Shots"]
+script = ExtResource("2_shot")
+length = 6.0
+clear_enemies = true
+
+[node name="Inicio" type="Marker3D" parent="Shots/Laguna2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.6, 0.3, 41)
+rotation = Vector3(0, 1.6, 0)
+
+[node name="Juego" type="Node3D" parent="Shots/Laguna2"]
+script = ExtResource("4_angle")
+
+[node name="Dron" type="Node3D" parent="Shots/Laguna2"]
+script = ExtResource("4_angle")
+kind = 2
+fov = 50.0
+offset = Vector3(0, 14, 12)
+look_height = 0.0
+smoothing = 2.0
+
+[node name="Lado" type="Node3D" parent="Shots/Laguna2"]
+script = ExtResource("4_angle")
+kind = 2
+fov = 50.0
+offset = Vector3(7, 2.5, 0)
+smoothing = 3.0
+
+[node name="Seguir" type="Node3D" parent="Shots/Laguna2"]
+script = ExtResource("4_angle")
+kind = 2
+fov = 50.0
+offset = Vector3(0, 3.5, 7)
+smoothing = 3.0
+
+[node name="Paso01Walk" type="Marker3D" parent="Shots/Laguna2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0, 40)
+script = ExtResource("3_step")
+at = 0.2
+navigate = true
+
+[node name="ChullpaCamino" type="Node3D" parent="Shots"]
+script = ExtResource("2_shot")
+length = 6.0
+clear_enemies = true
+
+[node name="Inicio" type="Marker3D" parent="Shots/ChullpaCamino"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -86, 2.9, -2.6)
+rotation = Vector3(0, 2.3, 0)
+
+[node name="Juego" type="Node3D" parent="Shots/ChullpaCamino"]
+script = ExtResource("4_angle")
+
+[node name="Dron" type="Node3D" parent="Shots/ChullpaCamino"]
+script = ExtResource("4_angle")
+kind = 2
+fov = 50.0
+offset = Vector3(0, 14, 12)
+look_height = 0.0
+smoothing = 2.0
+
+[node name="Lado" type="Node3D" parent="Shots/ChullpaCamino"]
+script = ExtResource("4_angle")
+kind = 2
+fov = 50.0
+offset = Vector3(7, 2.5, 0)
+smoothing = 3.0
+
+[node name="Seguir" type="Node3D" parent="Shots/ChullpaCamino"]
+script = ExtResource("4_angle")
+kind = 2
+fov = 50.0
+offset = Vector3(0, 3.5, 7)
+smoothing = 3.0
+
+[node name="Paso01Walk" type="Marker3D" parent="Shots/ChullpaCamino"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70, 0, 12)
+script = ExtResource("3_step")
+at = 0.2
+navigate = true
+
+[node name="CumbreCamino" type="Node3D" parent="Shots"]
+script = ExtResource("2_shot")
+length = 6.0
+clear_enemies = true
+
+[node name="Inicio" type="Marker3D" parent="Shots/CumbreCamino"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 5.5, -42.4)
+rotation = Vector3(0, 2.1, 0)
+
+[node name="Juego" type="Node3D" parent="Shots/CumbreCamino"]
+script = ExtResource("4_angle")
+
+[node name="Dron" type="Node3D" parent="Shots/CumbreCamino"]
+script = ExtResource("4_angle")
+kind = 2
+fov = 50.0
+offset = Vector3(0, 14, 12)
+look_height = 0.0
+smoothing = 2.0
+
+[node name="Lado" type="Node3D" parent="Shots/CumbreCamino"]
+script = ExtResource("4_angle")
+kind = 2
+fov = 50.0
+offset = Vector3(7, 2.5, 0)
+smoothing = 3.0
+
+[node name="Seguir" type="Node3D" parent="Shots/CumbreCamino"]
+script = ExtResource("4_angle")
+kind = 2
+fov = 50.0
+offset = Vector3(0, 3.5, 7)
+smoothing = 3.0
+
+[node name="Paso01Walk" type="Marker3D" parent="Shots/CumbreCamino"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 5.2, -30)
+script = ExtResource("3_step")
+at = 0.2
+navigate = true
+
+[node name="Risco" type="Node3D" parent="Shots"]
+script = ExtResource("2_shot")
+length = 6.0
+clear_enemies = true
+
+[node name="Inicio" type="Marker3D" parent="Shots/Risco"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 5.5, -18)
+rotation = Vector3(0, -2.3, 0)
+
+[node name="Juego" type="Node3D" parent="Shots/Risco"]
+script = ExtResource("4_angle")
+
+[node name="Dron" type="Node3D" parent="Shots/Risco"]
+script = ExtResource("4_angle")
+kind = 2
+fov = 50.0
+offset = Vector3(0, 14, 12)
+look_height = 0.0
+smoothing = 2.0
+
+[node name="Lado" type="Node3D" parent="Shots/Risco"]
+script = ExtResource("4_angle")
+kind = 2
+fov = 50.0
+offset = Vector3(7, 2.5, 0)
+smoothing = 3.0
+
+[node name="Seguir" type="Node3D" parent="Shots/Risco"]
+script = ExtResource("4_angle")
+kind = 2
+fov = 50.0
+offset = Vector3(0, 3.5, 7)
+smoothing = 3.0
+
+[node name="Paso01Walk" type="Marker3D" parent="Shots/Risco"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 5.2, -5)
+script = ExtResource("3_step")
+at = 0.2
+navigate = true
+
+[node name="Llegada" type="Node3D" parent="Shots"]
+script = ExtResource("2_shot")
+length = 7.0
+clear_enemies = true
+
+[node name="Inicio" type="Marker3D" parent="Shots/Llegada"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 0.3, -6)
+
+[node name="Juego" type="Node3D" parent="Shots/Llegada"]
+script = ExtResource("4_angle")
+
+[node name="Dron" type="Node3D" parent="Shots/Llegada"]
+script = ExtResource("4_angle")
+kind = 2
+fov = 50.0
+offset = Vector3(0, 14, 12)
+look_height = 0.0
+smoothing = 2.0
+
+[node name="Lado" type="Node3D" parent="Shots/Llegada"]
+script = ExtResource("4_angle")
+kind = 2
+fov = 50.0
+offset = Vector3(7, 2.5, 0)
+smoothing = 3.0
+
+[node name="Seguir" type="Node3D" parent="Shots/Llegada"]
+script = ExtResource("4_angle")
+kind = 2
+fov = 50.0
+offset = Vector3(0, 3.5, 7)
+smoothing = 3.0
+
+[node name="Paso01Walk" type="Marker3D" parent="Shots/Llegada"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 5.2, -33)
+script = ExtResource("3_step")
+at = 0.2
+navigate = true
 
 [node name="Templo" type="Node3D" parent="Shots"]
 script = ExtResource("2_shot")
-scenario = "templo_video"
-view = 1
-length = 4.0
 settle = 2.0
 clear_enemies = true
 
 [node name="Inicio" type="Marker3D" parent="Shots/Templo"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 5.4, -31)
 
-[node name="From" type="Marker3D" parent="Shots/Templo"]
+[node name="Riel" type="Node3D" parent="Shots/Templo"]
+script = ExtResource("4_angle")
+kind = 1
+
+[node name="From" type="Marker3D" parent="Shots/Templo/Riel"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 7.5, -20)
 
-[node name="To" type="Marker3D" parent="Shots/Templo"]
+[node name="To" type="Marker3D" parent="Shots/Templo/Riel"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43, 8, -25)
 
-[node name="Mira" type="Marker3D" parent="Shots/Templo"]
+[node name="Mira" type="Marker3D" parent="Shots/Templo/Riel"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 9.55, -36.35)
 
-[node name="01Walk" type="Marker3D" parent="Shots/Templo"]
+[node name="Bajo" type="Node3D" parent="Shots/Templo"]
+script = ExtResource("4_angle")
+kind = 1
+fov = 55.0
+
+[node name="From" type="Marker3D" parent="Shots/Templo/Bajo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39, 5.8, -27)
+
+[node name="To" type="Marker3D" parent="Shots/Templo/Bajo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41, 6.0, -29.5)
+
+[node name="Mira" type="Marker3D" parent="Shots/Templo/Bajo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 9.55, -36.35)
+
+[node name="Juego" type="Node3D" parent="Shots/Templo"]
+script = ExtResource("4_angle")
+
+[node name="Orbita" type="Node3D" parent="Shots/Templo"]
+script = ExtResource("4_angle")
+kind = 3
+fov = 50.0
+look_height = 1.2
+radius = 4.0
+height = 1.6
+from_degrees = -70.0
+to_degrees = -20.0
+
+[node name="Paso01Walk" type="Marker3D" parent="Shots/Templo"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 5.4, -33.5)
 script = ExtResource("3_step")
 duration = 1.2
@@ -125,43 +466,46 @@ settle = 1.2
 [node name="Inicio" type="Marker3D" parent="Shots/Hub"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 0.5, 46)
 
-[node name="01Chase" type="Marker3D" parent="Shots/Hub"]
+[node name="Juego" type="Node3D" parent="Shots/Hub"]
+script = ExtResource("4_angle")
+
+[node name="Paso01Chase" type="Marker3D" parent="Shots/Hub"]
 script = ExtResource("3_step")
 kind = 1
-at = 0.2
-duration = 1.5
+at = 0.3
+duration = 1.6
 
-[node name="02Press" type="Marker3D" parent="Shots/Hub"]
+[node name="Paso02Press" type="Marker3D" parent="Shots/Hub"]
 script = ExtResource("3_step")
 kind = 2
 at = 1.0
 action = &"attack"
 
-[node name="03Press" type="Marker3D" parent="Shots/Hub"]
+[node name="Paso03Press" type="Marker3D" parent="Shots/Hub"]
 script = ExtResource("3_step")
 kind = 2
 at = 1.4
 action = &"attack"
 
-[node name="04Press" type="Marker3D" parent="Shots/Hub"]
+[node name="Paso04Press" type="Marker3D" parent="Shots/Hub"]
 script = ExtResource("3_step")
 kind = 2
 at = 1.9
 action = &"attack"
 
-[node name="05Chase" type="Marker3D" parent="Shots/Hub"]
+[node name="Paso05Chase" type="Marker3D" parent="Shots/Hub"]
 script = ExtResource("3_step")
 kind = 1
 at = 2.4
 duration = 1.2
 
-[node name="06Press" type="Marker3D" parent="Shots/Hub"]
+[node name="Paso06Press" type="Marker3D" parent="Shots/Hub"]
 script = ExtResource("3_step")
 kind = 2
 at = 2.9
 action = &"attack"
 
-[node name="07Press" type="Marker3D" parent="Shots/Hub"]
+[node name="Paso07Press" type="Marker3D" parent="Shots/Hub"]
 script = ExtResource("3_step")
 kind = 2
 at = 3.3
@@ -178,26 +522,29 @@ freeze = PackedStringArray("PlumaSpikes_*")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0.5, 60)
 rotation = Vector3(0, 1.5708, 0)
 
-[node name="01Equip" type="Marker3D" parent="Shots/Pluma"]
+[node name="Juego" type="Node3D" parent="Shots/Pluma"]
+script = ExtResource("4_angle")
+
+[node name="Paso01Equip" type="Marker3D" parent="Shots/Pluma"]
 script = ExtResource("3_step")
 kind = 4
 action = &"feather"
 button = 1
 
-[node name="02Hold" type="Marker3D" parent="Shots/Pluma"]
+[node name="Paso02Hold" type="Marker3D" parent="Shots/Pluma"]
 script = ExtResource("3_step")
 kind = 3
 at = 0.5
 action = &"move_left"
 duration = 2.5
 
-[node name="03Press" type="Marker3D" parent="Shots/Pluma"]
+[node name="Paso03Press" type="Marker3D" parent="Shots/Pluma"]
 script = ExtResource("3_step")
 kind = 2
 at = 0.6
 action = &"item_2"
 
-[node name="04Press" type="Marker3D" parent="Shots/Pluma"]
+[node name="Paso04Press" type="Marker3D" parent="Shots/Pluma"]
 script = ExtResource("3_step")
 kind = 2
 at = 1.0
@@ -214,25 +561,28 @@ settle = 1.2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.4, 0.2, 40)
 rotation = Vector3(0, 1.5708, 0)
 
-[node name="01Equip" type="Marker3D" parent="Shots/Gancho"]
+[node name="Juego" type="Node3D" parent="Shots/Gancho"]
+script = ExtResource("4_angle")
+
+[node name="Paso01Equip" type="Marker3D" parent="Shots/Gancho"]
 script = ExtResource("3_step")
 kind = 4
 action = &"hookshot"
 button = 0
 
-[node name="02Lock" type="Marker3D" parent="Shots/Gancho"]
+[node name="Paso02Lock" type="Marker3D" parent="Shots/Gancho"]
 script = ExtResource("3_step")
 kind = 5
 at = 0.6
 target = NodePath("Planta/GanchoWestPost")
 
-[node name="03Press" type="Marker3D" parent="Shots/Gancho"]
+[node name="Paso03Press" type="Marker3D" parent="Shots/Gancho"]
 script = ExtResource("3_step")
 kind = 2
 at = 0.9
 action = &"item_1"
 
-[node name="04Unlock" type="Marker3D" parent="Shots/Gancho"]
+[node name="Paso04Unlock" type="Marker3D" parent="Shots/Gancho"]
 script = ExtResource("3_step")
 kind = 6
 at = 2.4
@@ -246,42 +596,45 @@ settle = 2.0
 [node name="Inicio" type="Marker3D" parent="Shots/Combinada"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0.5, 28)
 
-[node name="01Chase" type="Marker3D" parent="Shots/Combinada"]
+[node name="Juego" type="Node3D" parent="Shots/Combinada"]
+script = ExtResource("4_angle")
+
+[node name="Paso01Chase" type="Marker3D" parent="Shots/Combinada"]
 script = ExtResource("3_step")
 kind = 1
 duration = 3.0
 
-[node name="02Press" type="Marker3D" parent="Shots/Combinada"]
+[node name="Paso02Press" type="Marker3D" parent="Shots/Combinada"]
 script = ExtResource("3_step")
 kind = 2
 at = 0.8
 action = &"attack"
 
-[node name="03Press" type="Marker3D" parent="Shots/Combinada"]
+[node name="Paso03Press" type="Marker3D" parent="Shots/Combinada"]
 script = ExtResource("3_step")
 kind = 2
 at = 1.2
 action = &"attack"
 
-[node name="04Press" type="Marker3D" parent="Shots/Combinada"]
+[node name="Paso04Press" type="Marker3D" parent="Shots/Combinada"]
 script = ExtResource("3_step")
 kind = 2
 at = 1.7
 action = &"attack"
 
-[node name="05Press" type="Marker3D" parent="Shots/Combinada"]
+[node name="Paso05Press" type="Marker3D" parent="Shots/Combinada"]
 script = ExtResource("3_step")
 kind = 2
 at = 2.3
 action = &"attack"
 
-[node name="06Press" type="Marker3D" parent="Shots/Combinada"]
+[node name="Paso06Press" type="Marker3D" parent="Shots/Combinada"]
 script = ExtResource("3_step")
 kind = 2
 at = 2.7
 action = &"attack"
 
-[node name="07Press" type="Marker3D" parent="Shots/Combinada"]
+[node name="Paso07Press" type="Marker3D" parent="Shots/Combinada"]
 script = ExtResource("3_step")
 kind = 2
 at = 3.1
@@ -296,35 +649,224 @@ settle = 0.5
 [node name="Inicio" type="Marker3D" parent="Shots/Mano"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 92, 0.5, 26)
 
-[node name="01Chase" type="Marker3D" parent="Shots/Mano"]
+[node name="Juego" type="Node3D" parent="Shots/Mano"]
+script = ExtResource("4_angle")
+
+[node name="Paso01Chase" type="Marker3D" parent="Shots/Mano"]
 script = ExtResource("3_step")
 kind = 1
 at = 2.5
 duration = 2.0
 
-[node name="02Press" type="Marker3D" parent="Shots/Mano"]
+[node name="Paso02Press" type="Marker3D" parent="Shots/Mano"]
 script = ExtResource("3_step")
 kind = 2
 at = 3.2
 action = &"attack"
 
-[node name="03Press" type="Marker3D" parent="Shots/Mano"]
+[node name="Paso03Press" type="Marker3D" parent="Shots/Mano"]
 script = ExtResource("3_step")
 kind = 2
 at = 3.6
 action = &"attack"
 
-[node name="04Press" type="Marker3D" parent="Shots/Mano"]
+[node name="Paso04Press" type="Marker3D" parent="Shots/Mano"]
 script = ExtResource("3_step")
 kind = 2
 at = 4.2
 action = &"attack"
 
-[node name="05Press" type="Marker3D" parent="Shots/Mano"]
+[node name="Paso05Press" type="Marker3D" parent="Shots/Mano"]
 script = ExtResource("3_step")
 kind = 2
 at = 4.8
 action = &"attack"
+
+[node name="Mallqui" type="Node3D" parent="Shots"]
+script = ExtResource("2_shot")
+scenario = "templo"
+length = 6.5
+settle = 0.5
+
+[node name="Inicio" type="Marker3D" parent="Shots/Mallqui"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.5, 60)
+rotation = Vector3(0, -1.5708, 0)
+
+[node name="Juego" type="Node3D" parent="Shots/Mallqui"]
+script = ExtResource("4_angle")
+
+[node name="Paso01Chase" type="Marker3D" parent="Shots/Mallqui"]
+script = ExtResource("3_step")
+kind = 1
+at = 3.0
+duration = 3.0
+reach = 2.0
+
+[node name="Paso02Press" type="Marker3D" parent="Shots/Mallqui"]
+script = ExtResource("3_step")
+kind = 2
+at = 3.5
+action = &"attack"
+
+[node name="Paso03Press" type="Marker3D" parent="Shots/Mallqui"]
+script = ExtResource("3_step")
+kind = 2
+at = 3.95
+action = &"attack"
+
+[node name="Paso04Press" type="Marker3D" parent="Shots/Mallqui"]
+script = ExtResource("3_step")
+kind = 2
+at = 4.4
+action = &"attack"
+
+[node name="Paso05Press" type="Marker3D" parent="Shots/Mallqui"]
+script = ExtResource("3_step")
+kind = 2
+at = 4.85
+action = &"attack"
+
+[node name="Paso06Press" type="Marker3D" parent="Shots/Mallqui"]
+script = ExtResource("3_step")
+kind = 2
+at = 5.3
+action = &"attack"
+
+[node name="Paso07Press" type="Marker3D" parent="Shots/Mallqui"]
+script = ExtResource("3_step")
+kind = 2
+at = 5.75
+action = &"attack"
+
+[node name="Paso08Press" type="Marker3D" parent="Shots/Mallqui"]
+script = ExtResource("3_step")
+kind = 2
+at = 6.3
+action = &"dodge"
+
+[node name="Yacumama" type="Node3D" parent="Shots"]
+script = ExtResource("2_shot")
+scenario = "templo"
+length = 6.5
+settle = 0.5
+
+[node name="Inicio" type="Marker3D" parent="Shots/Yacumama"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.5, 42)
+rotation = Vector3(0, -1.5708, 0)
+
+[node name="Juego" type="Node3D" parent="Shots/Yacumama"]
+script = ExtResource("4_angle")
+
+[node name="Paso01Chase" type="Marker3D" parent="Shots/Yacumama"]
+script = ExtResource("3_step")
+kind = 1
+at = 3.0
+duration = 3.0
+reach = 2.0
+
+[node name="Paso02Press" type="Marker3D" parent="Shots/Yacumama"]
+script = ExtResource("3_step")
+kind = 2
+at = 3.5
+action = &"attack"
+
+[node name="Paso03Press" type="Marker3D" parent="Shots/Yacumama"]
+script = ExtResource("3_step")
+kind = 2
+at = 3.95
+action = &"attack"
+
+[node name="Paso04Press" type="Marker3D" parent="Shots/Yacumama"]
+script = ExtResource("3_step")
+kind = 2
+at = 4.4
+action = &"attack"
+
+[node name="Paso05Press" type="Marker3D" parent="Shots/Yacumama"]
+script = ExtResource("3_step")
+kind = 2
+at = 4.85
+action = &"attack"
+
+[node name="Paso06Press" type="Marker3D" parent="Shots/Yacumama"]
+script = ExtResource("3_step")
+kind = 2
+at = 5.3
+action = &"attack"
+
+[node name="Paso07Press" type="Marker3D" parent="Shots/Yacumama"]
+script = ExtResource("3_step")
+kind = 2
+at = 5.75
+action = &"attack"
+
+[node name="Paso08Press" type="Marker3D" parent="Shots/Yacumama"]
+script = ExtResource("3_step")
+kind = 2
+at = 6.3
+action = &"dodge"
+
+[node name="ApuKuntur" type="Node3D" parent="Shots"]
+script = ExtResource("2_shot")
+scenario = "templo"
+length = 6.5
+settle = 0.5
+
+[node name="Inicio" type="Marker3D" parent="Shots/ApuKuntur"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 110, 0.5, 42)
+rotation = Vector3(0, -1.5708, 0)
+
+[node name="Juego" type="Node3D" parent="Shots/ApuKuntur"]
+script = ExtResource("4_angle")
+
+[node name="Paso01Chase" type="Marker3D" parent="Shots/ApuKuntur"]
+script = ExtResource("3_step")
+kind = 1
+at = 3.0
+duration = 3.0
+reach = 2.0
+
+[node name="Paso02Press" type="Marker3D" parent="Shots/ApuKuntur"]
+script = ExtResource("3_step")
+kind = 2
+at = 3.5
+action = &"attack"
+
+[node name="Paso03Press" type="Marker3D" parent="Shots/ApuKuntur"]
+script = ExtResource("3_step")
+kind = 2
+at = 3.95
+action = &"attack"
+
+[node name="Paso04Press" type="Marker3D" parent="Shots/ApuKuntur"]
+script = ExtResource("3_step")
+kind = 2
+at = 4.4
+action = &"attack"
+
+[node name="Paso05Press" type="Marker3D" parent="Shots/ApuKuntur"]
+script = ExtResource("3_step")
+kind = 2
+at = 4.85
+action = &"attack"
+
+[node name="Paso06Press" type="Marker3D" parent="Shots/ApuKuntur"]
+script = ExtResource("3_step")
+kind = 2
+at = 5.3
+action = &"attack"
+
+[node name="Paso07Press" type="Marker3D" parent="Shots/ApuKuntur"]
+script = ExtResource("3_step")
+kind = 2
+at = 5.75
+action = &"attack"
+
+[node name="Paso08Press" type="Marker3D" parent="Shots/ApuKuntur"]
+script = ExtResource("3_step")
+kind = 2
+at = 6.3
+action = &"dodge"
 
 [node name="JefeIntro" type="Node3D" parent="Shots"]
 script = ExtResource("2_shot")
@@ -335,6 +877,41 @@ settle = 0.3
 [node name="Inicio" type="Marker3D" parent="Shots/JefeIntro"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 0.2, 11)
 
+[node name="Juego" type="Node3D" parent="Shots/JefeIntro"]
+script = ExtResource("4_angle")
+
+[node name="Bajo" type="Node3D" parent="Shots/JefeIntro"]
+script = ExtResource("4_angle")
+kind = 1
+fov = 55.0
+
+[node name="From" type="Marker3D" parent="Shots/JefeIntro/Bajo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.5, 1.2, 13.5)
+
+[node name="To" type="Marker3D" parent="Shots/JefeIntro/Bajo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 1.4, 12)
+
+[node name="Mira" type="Marker3D" parent="Shots/JefeIntro/Bajo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 2.9, 5.9)
+
+[node name="Orbita" type="Node3D" parent="Shots/JefeIntro"]
+script = ExtResource("4_angle")
+kind = 3
+fov = 50.0
+look_height = 2.9
+radius = 6.5
+height = 1.5
+
+[node name="Mira" type="Marker3D" parent="Shots/JefeIntro/Orbita"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 0, 5.9)
+
+[node name="Espalda" type="Node3D" parent="Shots/JefeIntro"]
+script = ExtResource("4_angle")
+kind = 2
+fov = 55.0
+offset = Vector3(0.6, 1.5, 2.5)
+look_height = 2.5
+
 [node name="JefePelea" type="Node3D" parent="Shots"]
 script = ExtResource("2_shot")
 scenario = "pre_boss"
@@ -344,51 +921,85 @@ settle = 9.0
 [node name="Inicio" type="Marker3D" parent="Shots/JefePelea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 0.2, 11)
 
-[node name="01Hold" type="Marker3D" parent="Shots/JefePelea"]
+[node name="Juego" type="Node3D" parent="Shots/JefePelea"]
+script = ExtResource("4_angle")
+
+[node name="Seguir" type="Node3D" parent="Shots/JefePelea"]
+script = ExtResource("4_angle")
+kind = 2
+fov = 50.0
+offset = Vector3(0, 2.2, 5.5)
+
+[node name="Espalda" type="Node3D" parent="Shots/JefePelea"]
+script = ExtResource("4_angle")
+kind = 2
+fov = 55.0
+offset = Vector3(0, 2.4, 4.0)
+look_height = 2.5
+
+[node name="Sala" type="Node3D" parent="Shots/JefePelea"]
+script = ExtResource("4_angle")
+kind = 3
+fov = 55.0
+height = 4.0
+from_degrees = -50.0
+to_degrees = 50.0
+
+[node name="Mira" type="Marker3D" parent="Shots/JefePelea/Sala"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 0, 7)
+
+[node name="Lado" type="Node3D" parent="Shots/JefePelea"]
+script = ExtResource("4_angle")
+kind = 2
+fov = 55.0
+offset = Vector3(4.0, 1.5, 1.0)
+look_height = 1.5
+
+[node name="Paso01Hold" type="Marker3D" parent="Shots/JefePelea"]
 script = ExtResource("3_step")
 kind = 3
 action = &"move_left"
 duration = 0.8
 
-[node name="02Press" type="Marker3D" parent="Shots/JefePelea"]
+[node name="Paso02Press" type="Marker3D" parent="Shots/JefePelea"]
 script = ExtResource("3_step")
 kind = 2
 at = 0.5
 action = &"dodge"
 
-[node name="03Chase" type="Marker3D" parent="Shots/JefePelea"]
+[node name="Paso03Chase" type="Marker3D" parent="Shots/JefePelea"]
 script = ExtResource("3_step")
 kind = 1
 at = 1.0
 duration = 1.5
 reach = 2.0
 
-[node name="04Press" type="Marker3D" parent="Shots/JefePelea"]
+[node name="Paso04Press" type="Marker3D" parent="Shots/JefePelea"]
 script = ExtResource("3_step")
 kind = 2
 at = 2.0
 action = &"attack"
 
-[node name="05Press" type="Marker3D" parent="Shots/JefePelea"]
+[node name="Paso05Press" type="Marker3D" parent="Shots/JefePelea"]
 script = ExtResource("3_step")
 kind = 2
 at = 2.4
 action = &"attack"
 
-[node name="06Press" type="Marker3D" parent="Shots/JefePelea"]
+[node name="Paso06Press" type="Marker3D" parent="Shots/JefePelea"]
 script = ExtResource("3_step")
 kind = 2
 at = 2.8
 action = &"attack"
 
-[node name="07Hold" type="Marker3D" parent="Shots/JefePelea"]
+[node name="Paso07Hold" type="Marker3D" parent="Shots/JefePelea"]
 script = ExtResource("3_step")
 kind = 3
 at = 3.2
 action = &"move_right"
 duration = 0.8
 
-[node name="08Press" type="Marker3D" parent="Shots/JefePelea"]
+[node name="Paso08Press" type="Marker3D" parent="Shots/JefePelea"]
 script = ExtResource("3_step")
 kind = 2
 at = 3.4
@@ -397,65 +1008,155 @@ action = &"dodge"
 [node name="Ojo" type="Node3D" parent="Shots"]
 script = ExtResource("2_shot")
 scenario = "pre_boss"
-view = 1
 length = 3.2
 settle = 1.0
-fov = 40.0
 show_player = false
 
 [node name="Inicio" type="Marker3D" parent="Shots/Ojo"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 0.2, 11)
 
-[node name="From" type="Marker3D" parent="Shots/Ojo"]
+[node name="Riel" type="Node3D" parent="Shots/Ojo"]
+script = ExtResource("4_angle")
+kind = 1
+fov = 40.0
+
+[node name="From" type="Marker3D" parent="Shots/Ojo/Riel"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 3.8, 15.5)
 
-[node name="To" type="Marker3D" parent="Shots/Ojo"]
+[node name="To" type="Marker3D" parent="Shots/Ojo/Riel"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 3.4, 12.5)
 
-[node name="Mira" type="Marker3D" parent="Shots/Ojo"]
+[node name="Mira" type="Marker3D" parent="Shots/Ojo/Riel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 2.9, 5.9)
+
+[node name="Orbita" type="Node3D" parent="Shots/Ojo"]
+script = ExtResource("4_angle")
+kind = 3
+fov = 40.0
+look_height = 2.9
+radius = 6.5
+height = 2.6
+from_degrees = -35.0
+to_degrees = 35.0
+
+[node name="Mira" type="Marker3D" parent="Shots/Ojo/Orbita"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 0, 5.9)
+
+[node name="Bajo" type="Node3D" parent="Shots/Ojo"]
+script = ExtResource("4_angle")
+kind = 1
+fov = 50.0
+
+[node name="From" type="Marker3D" parent="Shots/Ojo/Bajo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64, 0.6, 11)
+
+[node name="To" type="Marker3D" parent="Shots/Ojo/Bajo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 0.8, 9.5)
+
+[node name="Mira" type="Marker3D" parent="Shots/Ojo/Bajo"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 2.9, 5.9)
 
 [node name="PunoFase2" type="Node3D" parent="Shots"]
 script = ExtResource("2_shot")
 scenario = "pre_boss"
-view = 1
 length = 14.0
 settle = 8.0
-fov = 40.0
-show_player = false
 rng_seed = 3
+show_player = false
 boss_phase = 2
 
 [node name="Inicio" type="Marker3D" parent="Shots/PunoFase2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 0.2, 11)
 
-[node name="From" type="Marker3D" parent="Shots/PunoFase2"]
+[node name="Riel" type="Node3D" parent="Shots/PunoFase2"]
+script = ExtResource("4_angle")
+kind = 1
+fov = 40.0
+
+[node name="From" type="Marker3D" parent="Shots/PunoFase2/Riel"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 4.2, 19)
 
-[node name="To" type="Marker3D" parent="Shots/PunoFase2"]
+[node name="To" type="Marker3D" parent="Shots/PunoFase2/Riel"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 3.6, 14.5)
 
-[node name="Mira" type="Marker3D" parent="Shots/PunoFase2"]
+[node name="Mira" type="Marker3D" parent="Shots/PunoFase2/Riel"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 2.9, 5.9)
+
+[node name="Orbita" type="Node3D" parent="Shots/PunoFase2"]
+script = ExtResource("4_angle")
+kind = 3
+fov = 50.0
+look_height = 2.9
+radius = 6.8
+height = 2.0
+from_degrees = -40.0
+to_degrees = 40.0
+
+[node name="Mira" type="Marker3D" parent="Shots/PunoFase2/Orbita"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 0, 5.9)
+
+[node name="Bajo" type="Node3D" parent="Shots/PunoFase2"]
+script = ExtResource("4_angle")
+kind = 1
+fov = 55.0
+
+[node name="From" type="Marker3D" parent="Shots/PunoFase2/Bajo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61, 0.8, 11.5)
+
+[node name="To" type="Marker3D" parent="Shots/PunoFase2/Bajo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 62.5, 1.0, 10.5)
+
+[node name="Mira" type="Marker3D" parent="Shots/PunoFase2/Bajo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 2.6, 5.9)
 
 [node name="PunoFase3" type="Node3D" parent="Shots"]
 script = ExtResource("2_shot")
 scenario = "pre_boss"
-view = 1
 length = 6.0
 settle = 10.0
-fov = 40.0
 show_player = false
 boss_phase = 3
 
 [node name="Inicio" type="Marker3D" parent="Shots/PunoFase3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 0.2, 11)
 
-[node name="From" type="Marker3D" parent="Shots/PunoFase3"]
+[node name="Riel" type="Node3D" parent="Shots/PunoFase3"]
+script = ExtResource("4_angle")
+kind = 1
+fov = 40.0
+
+[node name="From" type="Marker3D" parent="Shots/PunoFase3/Riel"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 4.2, 19)
 
-[node name="To" type="Marker3D" parent="Shots/PunoFase3"]
+[node name="To" type="Marker3D" parent="Shots/PunoFase3/Riel"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 3.6, 14.5)
 
-[node name="Mira" type="Marker3D" parent="Shots/PunoFase3"]
+[node name="Mira" type="Marker3D" parent="Shots/PunoFase3/Riel"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 2.9, 5.9)
+
+[node name="Orbita" type="Node3D" parent="Shots/PunoFase3"]
+script = ExtResource("4_angle")
+kind = 3
+fov = 50.0
+look_height = 2.9
+radius = 6.8
+height = 2.0
+from_degrees = 40.0
+to_degrees = -40.0
+
+[node name="Mira" type="Marker3D" parent="Shots/PunoFase3/Orbita"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 0, 5.9)
+
+[node name="Bajo" type="Node3D" parent="Shots/PunoFase3"]
+script = ExtResource("4_angle")
+kind = 1
+fov = 55.0
+
+[node name="From" type="Marker3D" parent="Shots/PunoFase3/Bajo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71, 0.8, 11.5)
+
+[node name="To" type="Marker3D" parent="Shots/PunoFase3/Bajo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.5, 1.0, 10.5)
+
+[node name="Mira" type="Marker3D" parent="Shots/PunoFase3/Bajo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 2.6, 5.9)

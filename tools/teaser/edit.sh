@@ -6,20 +6,29 @@ set -euo pipefail
 cd "$(dirname "$0")/../.."
 OUT=debug/tmp/teaser
 MUSIC=assets/audio/music
-# toma  desde  duración  tramo de música (0 overworld, 1 templo, 2 jefe)
+# toma-ángulo (si hay una versión -jugada, va esa)  desde  duración  tramo de música (0 overworld, 1 templo, 2 jefe)
 CUTS="
-01_Vista      0.0 3.5 0
-02_Laguna     0.0 3.0 0
-03_Camino     0.5 3.5 0
-04_Templo     0.0 3.5 0
-05_Hub        0.8 2.5 1
-06_Pluma      0.3 2.8 1
-07_Gancho     0.6 2.4 1
-08_Combinada  0.6 2.4 1
-09_Mano       2.0 3.0 1
-10_JefeIntro  1.0 4.5 2
-11_JefePelea  0.5 3.5 2
-12_Ojo        0.0 3.2 2
+01_Vista-Riel           0.0 3.0 0
+02_Laguna-Riel          0.0 2.2 0
+03_Quenoa-Riel          0.5 2.0 0
+06_Camino-Bajo          0.6 1.8 0
+06_Camino-Juego         1.6 1.4 0
+06_Camino-Orbita        2.8 1.5 0
+07_Templo-Orbita        0.2 2.0 0
+07_Templo-Riel          2.0 2.0 0
+08_Hub-Juego            0.8 2.0 1
+09_Pluma-Juego          0.4 2.2 1
+10_Gancho-Juego         0.6 2.0 1
+11_Combinada-Juego      0.5 2.2 1
+13_Mallqui-Juego        3.0 1.8 1
+15_ApuKuntur-Juego      3.2 1.6 1
+12_Mano-Juego           1.5 2.0 1
+16_JefeIntro-Espalda    0.5 2.0 2
+16_JefeIntro-Orbita     2.5 2.0 2
+19_PunoFase2-Riel       4.0 2.2 2
+17_JefePelea-Lado       0.5 1.6 2
+20_PunoFase3-Bajo       0.1 2.0 2
+18_Ojo-Riel             0.3 2.2 2
 "
 END=3.0
 TITLE="PROJECT EPIPHANY"
@@ -27,7 +36,9 @@ TITLE="PROJECT EPIPHANY"
 inputs=() filters="" n=0 total=0 bounds=(0 0 0)
 while read -r shot from length part; do
 	[[ -z "$shot" ]] && continue
-	inputs+=(-ss "$from" -t "$length" -i "$OUT/$shot.mp4")
+	file="$OUT/$shot.mp4"
+	[[ -f "$OUT/$shot-jugada.mp4" ]] && file="$OUT/$shot-jugada.mp4"
+	inputs+=(-ss "$from" -t "$length" -i "$file")
 	filters+="[$n:v]setpts=PTS-STARTPTS,fps=60,format=yuv420p[v$n];[$n:a]asetpts=PTS-STARTPTS,aresample=48000,apad,atrim=0:$length[a$n];"
 	total=$(awk "BEGIN{print $total + $length}")
 	bounds[$part]=$total
