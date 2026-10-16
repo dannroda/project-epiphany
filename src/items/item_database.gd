@@ -2,6 +2,10 @@
 class_name ItemDatabase
 extends Resource
 
+## Las botellas son ítems únicos; lo que llevan (bottled) va en GameState.bottles.
+const BOTTLES: Array[StringName] = [&"bottle_1", &"bottle_2", &"bottle_3", &"bottle_4"]
+const EMPTY_BOTTLE := &"bottle_empty"
+
 @export var items: Array[ItemData] = []:
 	set(value):
 		items = value

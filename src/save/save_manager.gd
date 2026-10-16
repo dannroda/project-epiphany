@@ -63,8 +63,8 @@ func save_game(slot: int = -1, capture_player := true) -> Error:
 		_capture_player()
 	var cfg := ConfigFile.new()
 	GameState.write_to(cfg)
-	cfg.set_value("player", "location", SceneFlow.location())
-	cfg.set_value("meta", "slot", current_slot)
+	cfg.set_value(SaveKeys.PLAYER, SaveKeys.LOCATION, SceneFlow.location())
+	cfg.set_value(SaveKeys.META, SaveKeys.SLOT, current_slot)
 	var err := SaveCodec.write(cfg, slot_path(slot))
 	if err == OK:
 		Log.success(&"save", "Partida guardada:", slot_path(slot))
@@ -98,19 +98,19 @@ func slot_summary(slot: int) -> Dictionary:
 		return {}
 	var items: Array[StringName] = []
 	for key in ["SWORD", "SHIELD"]:
-		var id: StringName = cfg.get_value("equipment", key, &"")
+		var id: StringName = cfg.get_value(SaveKeys.EQUIPMENT, key, &"")
 		if id != &"":
 			items.append(id)
 	for id in [&"bow", &"bomb_bag"]:
-		if cfg.get_value("inventory", id, 0) > 0:
+		if cfg.get_value(SaveKeys.INVENTORY, id, 0) > 0:
 			items.append(id)
 	return {
-		max_health = cfg.get_value("player", "max_health", GameState.new_game_max_health()),
-		location = cfg.get_value("player", "location", ""),
-		play_time = cfg.get_value("player", "play_time", 0.0),
+		max_health = cfg.get_value(SaveKeys.PLAYER, SaveKeys.MAX_HEALTH, GameState.new_game_max_health()),
+		location = cfg.get_value(SaveKeys.PLAYER, SaveKeys.LOCATION, ""),
+		play_time = cfg.get_value(SaveKeys.PLAYER, SaveKeys.PLAY_TIME, 0.0),
 		items = items,
-		timestamp = cfg.get_value("meta", "timestamp", 0.0),
-		origin = cfg.get_value("meta", "slot", slot),
+		timestamp = cfg.get_value(SaveKeys.META, SaveKeys.TIMESTAMP, 0.0),
+		origin = cfg.get_value(SaveKeys.META, SaveKeys.SLOT, slot),
 	}
 
 
@@ -159,32 +159,27 @@ func _load_path(path: String, slot: int) -> Error:
 	if err != OK:
 		Log.error(&"save", "No se pudo cargar", path, error_string(err))
 		return err
-	var version: int = SaveCodec.typed(cfg, "meta", "version", 0)
+	var version: int = SaveCodec.typed(cfg, SaveKeys.META, SaveKeys.VERSION, 0)
 	if version > SaveCodec.VERSION:
 		Log.error(&"save", "La partida es de una versión más nueva del juego:", path, version)
 		return ERR_FILE_UNRECOGNIZED
-	_migrate(cfg, version)
+	var tampered := SaveCodec.is_tampered(cfg)
+	SaveCodec.migrate(cfg)
 	for problem in SaveCodec.validate(cfg):
 		Log.warning(&"save", problem)
 	current_slot = slot
 	if current_slot == AUTO_SLOT:
-		var origin: int = cfg.get_value("meta", "slot", PLAYER_SLOTS[0])
+		var origin: int = cfg.get_value(SaveKeys.META, SaveKeys.SLOT, PLAYER_SLOTS[0])
 		current_slot = origin if origin in PLAYER_SLOTS else PLAYER_SLOTS[0]
 	loading = true
 	await SceneFlow.enter_save(cfg)
-	GameState.save_tampered = SaveCodec.is_tampered(cfg)
+	GameState.save_tampered = tampered
 	if GameState.save_tampered:
 		Log.warning(&"save", "La partida fue modificada a mano:", path)
 	loading = false
 	Log.success(&"save", "Partida cargada:", path)
 	Log.debug(&"save", "Inventario:", ", ".join(GameState.inventory.ids().map(func(id: StringName) -> String: return "%s=%d" % [id, GameState.inventory.count(id)])))
 	return OK
-
-
-func _migrate(_cfg: ConfigFile, from_version: int) -> void:
-	match from_version:
-		_:
-			pass
 
 
 func _capture_player() -> void:

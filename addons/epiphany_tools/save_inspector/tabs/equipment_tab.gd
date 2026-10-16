@@ -17,8 +17,8 @@ func refresh() -> void:
 		add_child(dim_label(slot[0]))
 		var key: String = C.find_key(slot[1])
 		var items := db.items.filter(func(item: ItemData) -> bool: return item.category == slot[1])
-		add_child(_picker(items, cfg.get_value("equipment", key, &""), NONE, func(id: StringName) -> void: _equip(key, id)))
-	var buttons: Array = cfg.get_value("equipment", "buttons", [&"", &""])
+		add_child(_picker(items, cfg.get_value(SaveKeys.EQUIPMENT, key, &""), NONE, func(id: StringName) -> void: _equip(key, id)))
+	var buttons: Array = cfg.get_value(SaveKeys.EQUIPMENT, SaveKeys.BUTTONS, [&"", &""])
 	var usables := db.items.filter(func(item: ItemData) -> bool: return item.category == C.USABLE)
 	var grid := GridContainer.new()
 	grid.columns = 2
@@ -46,21 +46,21 @@ func _picker(items: Array, selected: StringName, empty_text: String, on_pick: Ca
 
 
 func _equip(key: String, id: StringName) -> void:
-	set_or_erase("equipment", key, id, &"")
+	set_or_erase(SaveKeys.EQUIPMENT, key, id, &"")
 	_ensure_owned(id)
 	mark_edited()
 
 
 func _assign_button(index: int, id: StringName) -> void:
 	var buttons: Array[StringName] = [&"", &""]
-	buttons.assign(cfg.get_value("equipment", "buttons", [&"", &""]))
+	buttons.assign(cfg.get_value(SaveKeys.EQUIPMENT, SaveKeys.BUTTONS, [&"", &""]))
 	buttons.resize(2)
 	buttons[index] = id
-	cfg.set_value("equipment", "buttons", buttons)
+	cfg.set_value(SaveKeys.EQUIPMENT, SaveKeys.BUTTONS, buttons)
 	_ensure_owned(id)
 	mark_edited()
 
 
 func _ensure_owned(id: StringName) -> void:
-	if id != &"" and int(cfg.get_value("inventory", id, 0)) == 0:
-		cfg.set_value("inventory", id, 1)
+	if id != &"" and int(cfg.get_value(SaveKeys.INVENTORY, id, 0)) == 0:
+		cfg.set_value(SaveKeys.INVENTORY, id, 1)

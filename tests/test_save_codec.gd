@@ -147,3 +147,47 @@ func test_a_key_of_the_wrong_type_falls_back_to_its_default() -> void:
 	assert_true(state.visited_zones.is_empty())
 	state.reset()
 
+
+
+func test_version_one_bottles_migrate_into_unique_bottles() -> void:
+	var cfg := ConfigFile.new()
+	cfg.set_value(SaveKeys.META, SaveKeys.VERSION, 1)
+	cfg.set_value(SaveKeys.INVENTORY, "potion", 2)
+	cfg.set_value(SaveKeys.INVENTORY, "bottle_empty", 1)
+	cfg.set_value(SaveKeys.INVENTORY, "bomb", 5)
+	cfg.set_value(SaveKeys.EQUIPMENT, SaveKeys.BUTTONS, [&"potion", &"bomb"])
+	SaveCodec.migrate(cfg)
+	assert_eq(cfg.get_value(SaveKeys.META, SaveKeys.VERSION), SaveCodec.VERSION)
+	assert_true(not cfg.has_section_key(SaveKeys.INVENTORY, "potion") and not cfg.has_section_key(SaveKeys.INVENTORY, "bottle_empty"), "los contenidos salen del inventario")
+	var contents := []
+	for bottle in ItemDatabase.BOTTLES:
+		if cfg.has_section_key(SaveKeys.INVENTORY, bottle):
+			contents.append(cfg.get_value(SaveKeys.BOTTLES, bottle))
+	contents.sort()
+	assert_eq(contents, [&"bottle_empty", &"potion", &"potion"], "una botella por unidad")
+	var buttons: Array = cfg.get_value(SaveKeys.EQUIPMENT, SaveKeys.BUTTONS)
+	assert_true(String(buttons[0]) in ItemDatabase.BOTTLES and cfg.get_value(SaveKeys.BOTTLES, buttons[0]) == &"potion", "el botón pasa a una botella con poción")
+	assert_eq(buttons[1], &"bomb")
+	assert_eq(cfg.get_value(SaveKeys.INVENTORY, "bomb"), 5)
+	assert_eq(SaveCodec.validate(cfg), PackedStringArray(), "queda válida")
+
+
+func test_a_current_save_is_not_migrated_again() -> void:
+	var cfg := ConfigFile.new()
+	cfg.set_value(SaveKeys.META, SaveKeys.VERSION, SaveCodec.VERSION)
+	cfg.set_value(SaveKeys.INVENTORY, "bottle_1", 1)
+	cfg.set_value(SaveKeys.BOTTLES, "bottle_1", &"potion")
+	var before := cfg.encode_to_text()
+	SaveCodec.migrate(cfg)
+	assert_eq(cfg.encode_to_text(), before)
+
+
+func test_migrating_a_scenario_adds_no_problems() -> void:
+	for file in DirAccess.get_files_at("res://debug/scenarios"):
+		if not file.ends_with(".cfg"):
+			continue
+		var cfg := ConfigFile.new()
+		assert_eq(SaveCodec.read("res://debug/scenarios/" + file, cfg), OK, file)
+		var before := SaveCodec.validate(cfg)
+		SaveCodec.migrate(cfg)
+		assert_eq(SaveCodec.validate(cfg), before, file + ": migrar no agrega problemas")

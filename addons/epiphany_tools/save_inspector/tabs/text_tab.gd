@@ -22,8 +22,8 @@ func _ready() -> void:
 func refresh() -> void:
 	var copy := ConfigFile.new()
 	copy.parse(cfg.encode_to_text())
-	if copy.has_section("meta"):
-		copy.erase_section("meta")
+	if copy.has_section(SaveKeys.META):
+		copy.erase_section(SaveKeys.META)
 	_text.text = copy.encode_to_text()
 
 

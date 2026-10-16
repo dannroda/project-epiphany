@@ -238,7 +238,7 @@ func quit_to_title() -> void:
 func enter_save(cfg: ConfigFile) -> void:
 	begin_transition()
 	Pause.hold(&"travel")
-	var has_scene := not str(cfg.get_value("player", "spawn_uid", "")).is_empty() or not str(cfg.get_value("player", "spawn_scene", "")).is_empty()
+	var has_scene := not str(cfg.get_value(SaveKeys.PLAYER, SaveKeys.SPAWN_UID, "")).is_empty() or not str(cfg.get_value(SaveKeys.PLAYER, SaveKeys.SPAWN_SCENE, "")).is_empty()
 	var old := get_tree().current_scene
 	if has_scene and old:
 		old.get_parent().remove_child(old)

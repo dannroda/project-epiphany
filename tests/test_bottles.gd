@@ -64,6 +64,7 @@ func test_old_saves_move_their_potions_into_bottles() -> void:
 	cfg.set_value("inventory", "potion", 1)
 	cfg.set_value("inventory", "holy_water", 1)
 	cfg.set_value("equipment", "buttons", [&"holy_water", &""] as Array[StringName])
+	SaveCodec.migrate(cfg)
 	state.read_from(cfg)
 	assert_eq(state.bottles.size(), 2, "una botella por cada contenido")
 	assert_true(not state.inventory.has(&"potion") and not state.inventory.has(&"holy_water"), "los contenidos ya no van sueltos")

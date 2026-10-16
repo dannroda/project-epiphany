@@ -13,7 +13,7 @@ func _init() -> void:
 
 func refresh() -> void:
 	clear(self)
-	var health: int = cfg.get_value("player", "max_health", 12)
+	var health: int = cfg.get_value(SaveKeys.PLAYER, SaveKeys.MAX_HEALTH, 12)
 	add_child(dim_label("Vida máxima"))
 	var hearts := HBoxContainer.new()
 	hearts.add_child(button("−", func() -> void: _set_health(maxi(4, health - 4))))
@@ -29,21 +29,21 @@ func refresh() -> void:
 	add_child(dim_label("Escena"))
 	var scenes := OptionButton.new()
 	scenes.add_item(NO_SCENE)
-	var current: String = cfg.get_value("player", "spawn_scene", "")
+	var current: String = cfg.get_value(SaveKeys.PLAYER, SaveKeys.SPAWN_SCENE, "")
 	for file in DirAccess.get_files_at(LEVELS_DIR):
 		if file.get_extension() == "tscn":
 			scenes.add_item(LEVELS_DIR.path_join(file))
 			if LEVELS_DIR.path_join(file) == current:
 				scenes.select(scenes.item_count - 1)
 	scenes.item_selected.connect(func(index: int) -> void:
-		set_or_erase("player", "spawn_scene", "" if index == 0 else scenes.get_item_text(index), "")
-		cfg.set_value("player", "spawn_point", &"")
+		set_or_erase(SaveKeys.PLAYER, SaveKeys.SPAWN_SCENE, "" if index == 0 else scenes.get_item_text(index), "")
+		cfg.set_value(SaveKeys.PLAYER, SaveKeys.SPAWN_POINT, &"")
 		mark_edited())
 	add_child(scenes)
 
 	add_child(dim_label("Punto de aparición"))
 	var points := OptionButton.new()
-	var point: StringName = cfg.get_value("player", "spawn_point", &"")
+	var point: StringName = cfg.get_value(SaveKeys.PLAYER, SaveKeys.SPAWN_POINT, &"")
 	var ids := _spawn_ids(current)
 	if point != &"" and not ids.has(String(point)):
 		ids.append(String(point))
@@ -54,13 +54,13 @@ func refresh() -> void:
 			points.select(points.item_count - 1)
 	points.tooltip_text = "Los SpawnPoint de la escena (sus id); con la posición guardada, manda la posición"
 	points.item_selected.connect(func(index: int) -> void:
-		cfg.set_value("player", "spawn_point", &"" if index == 0 else StringName(points.get_item_text(index)))
+		cfg.set_value(SaveKeys.PLAYER, SaveKeys.SPAWN_POINT, &"" if index == 0 else StringName(points.get_item_text(index)))
 		mark_edited())
 	add_child(points)
 
 	add_child(dim_label("Posición del player"))
-	var has_position := cfg.has_section_key("player", "position")
-	var saved_position: Vector3 = cfg.get_value("player", "position", Vector3.ZERO)
+	var has_position := cfg.has_section_key(SaveKeys.PLAYER, SaveKeys.POSITION)
+	var saved_position: Vector3 = cfg.get_value(SaveKeys.PLAYER, SaveKeys.POSITION, Vector3.ZERO)
 	var axes := HBoxContainer.new()
 	for axis in 3:
 		var spin := SpinBox.new()
@@ -72,9 +72,9 @@ func refresh() -> void:
 		spin.editable = has_position
 		spin.size_flags_horizontal = SIZE_EXPAND_FILL
 		spin.value_changed.connect(func(value: float) -> void:
-			var p: Vector3 = cfg.get_value("player", "position", Vector3.ZERO)
+			var p: Vector3 = cfg.get_value(SaveKeys.PLAYER, SaveKeys.POSITION, Vector3.ZERO)
 			p[axis] = value
-			cfg.set_value("player", "position", p)
+			cfg.set_value(SaveKeys.PLAYER, SaveKeys.POSITION, p)
 			mark_edited())
 		axes.add_child(spin)
 	add_child(axes)
@@ -82,7 +82,7 @@ func refresh() -> void:
 	toggle.text = "Guardar posición (si no, aparece donde lo pone la escena)"
 	toggle.button_pressed = has_position
 	toggle.toggled.connect(func(on: bool) -> void:
-		set_or_erase("player", "position", saved_position if on else null, null)
+		set_or_erase(SaveKeys.PLAYER, SaveKeys.POSITION, saved_position if on else null, null)
 		mark_edited()
 		refresh())
 	add_child(toggle)
@@ -114,6 +114,6 @@ func _spawn_ids(scene: String) -> PackedStringArray:
 
 
 func _set_health(health: int) -> void:
-	cfg.set_value("player", "max_health", health)
+	cfg.set_value(SaveKeys.PLAYER, SaveKeys.MAX_HEALTH, health)
 	mark_edited()
 	refresh()

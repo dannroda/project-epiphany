@@ -39,7 +39,7 @@ func refresh() -> void:
 		for id in unknown:
 			var row := HBoxContainer.new()
 			var label := Label.new()
-			label.text = "%s = %s" % [id, cfg.get_value("inventory", id)]
+			label.text = "%s = %s" % [id, cfg.get_value(SaveKeys.INVENTORY, id)]
 			label.size_flags_horizontal = SIZE_EXPAND_FILL
 			label.add_theme_color_override(&"font_color", editor_color(&"error_color"))
 			row.add_child(label)
@@ -64,7 +64,7 @@ func _row(item: ItemData) -> HBoxContainer:
 	names.add_child(title)
 	names.add_child(dim_label(item.id))
 	row.add_child(names)
-	var count: int = cfg.get_value("inventory", item.id, 0)
+	var count: int = cfg.get_value(SaveKeys.INVENTORY, item.id, 0)
 	if item.max_stack == 1:
 		var toggle := CheckButton.new()
 		toggle.button_pressed = count > 0
@@ -76,7 +76,7 @@ func _row(item: ItemData) -> HBoxContainer:
 
 
 func _set_count(id: StringName, count: int) -> void:
-	set_or_erase("inventory", id, count, 0)
+	set_or_erase(SaveKeys.INVENTORY, id, count, 0)
 	mark_edited()
 	refresh()
 
@@ -85,22 +85,22 @@ func _fill_all() -> void:
 	for group in GROUPS:
 		for item in db.items:
 			if item.category in group[1]:
-				cfg.set_value("inventory", item.id, item.max_stack)
+				cfg.set_value(SaveKeys.INVENTORY, item.id, item.max_stack)
 	mark_edited()
 	refresh()
 
 
 func _clear_all() -> void:
-	if cfg.has_section("inventory"):
-		cfg.erase_section("inventory")
+	if cfg.has_section(SaveKeys.INVENTORY):
+		cfg.erase_section(SaveKeys.INVENTORY)
 	mark_edited()
 	refresh()
 
 
 func _unknown_ids() -> PackedStringArray:
 	var ids := PackedStringArray()
-	if cfg.has_section("inventory"):
-		for id in cfg.get_section_keys("inventory"):
+	if cfg.has_section(SaveKeys.INVENTORY):
+		for id in cfg.get_section_keys(SaveKeys.INVENTORY):
 			if not db.has_item(id):
 				ids.append(id)
 	return ids

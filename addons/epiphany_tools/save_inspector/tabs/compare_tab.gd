@@ -2,7 +2,7 @@
 extends "tab.gd"
 
 const SaveManagerScript := preload("res://src/save/save_manager.gd")
-const IGNORED := ["meta"]
+const IGNORED := [SaveKeys.META]
 
 var _other_files := OptionButton.new()
 var _list := VBoxContainer.new()
@@ -113,7 +113,7 @@ func _row(section: String, key: String, mine: Variant, theirs: Variant) -> HBoxC
 
 
 func _description(section: String, key: String) -> String:
-	if section != "flags":
+	if section != SaveKeys.FLAGS:
 		return ""
 	for definition in flags.definitions:
 		if definition and String(definition.id) == key:

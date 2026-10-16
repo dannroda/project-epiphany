@@ -1,7 +1,7 @@
 @tool
 extends "tab.gd"
 
-const PREFIX := "dungeon_"
+const PREFIX := SaveKeys.DUNGEON_PREFIX
 const ROOMS := 24
 const FLAGS := [["has_map", "Mapa"], ["has_compass", "Brújula"], ["has_boss_key", "Llave del jefe"]]
 
@@ -15,7 +15,7 @@ func _init() -> void:
 
 func refresh() -> void:
 	clear(self)
-	var current := String(cfg.get_value("player", "current_dungeon", &""))
+	var current := String(cfg.get_value(SaveKeys.PLAYER, SaveKeys.CURRENT_DUNGEON, &""))
 	var group := ButtonGroup.new()
 	group.allow_unpress = true
 	for section in cfg.get_sections():
@@ -44,7 +44,7 @@ func _card(section: String, id: String, current: String, group: ButtonGroup) -> 
 	is_current.button_group = group
 	is_current.button_pressed = id == current
 	is_current.toggled.connect(func(on: bool) -> void:
-		set_or_erase("player", "current_dungeon", StringName(id) if on else &"", &"")
+		set_or_erase(SaveKeys.PLAYER, SaveKeys.CURRENT_DUNGEON, StringName(id) if on else &"", &"")
 		mark_edited())
 	header.add_child(is_current)
 	header.add_child(button("Quitar", func() -> void:
@@ -60,10 +60,10 @@ func _card(section: String, id: String, current: String, group: ButtonGroup) -> 
 	keys_row.add_child(keys_label)
 	var key_item := db.get_item(&"small_key")
 	var set_keys := func(n: int) -> void:
-		cfg.set_value(section, "small_keys", n)
+		cfg.set_value(section, SaveKeys.SMALL_KEYS, n)
 		mark_edited()
 		refresh()
-	keys_row.add_child(stepper(cfg.get_value(section, "small_keys", 0), key_item.max_stack if key_item else 9, set_keys, false))
+	keys_row.add_child(stepper(cfg.get_value(section, SaveKeys.SMALL_KEYS, 0), key_item.max_stack if key_item else 9, set_keys, false))
 	box.add_child(keys_row)
 
 	var checks := HFlowContainer.new()
@@ -77,7 +77,7 @@ func _card(section: String, id: String, current: String, group: ButtonGroup) -> 
 		checks.add_child(check)
 	box.add_child(checks)
 
-	var visited: int = cfg.get_value(section, "visited_rooms", 0)
+	var visited: int = cfg.get_value(section, SaveKeys.VISITED_ROOMS, 0)
 	var count := 0
 	for n in ROOMS:
 		count += (visited >> n) & 1
@@ -92,9 +92,9 @@ func _card(section: String, id: String, current: String, group: ButtonGroup) -> 
 		room.tooltip_text = "Sala %d" % n
 		room.button_pressed = (visited >> n) & 1 == 1
 		room.toggled.connect(func(on: bool) -> void:
-			var bits: int = cfg.get_value(section, "visited_rooms", 0)
+			var bits: int = cfg.get_value(section, SaveKeys.VISITED_ROOMS, 0)
 			bits = (bits | (1 << n)) if on else (bits & ~(1 << n))
-			cfg.set_value(section, "visited_rooms", bits)
+			cfg.set_value(section, SaveKeys.VISITED_ROOMS, bits)
 			mark_edited()
 			refresh())
 		grid.add_child(room)

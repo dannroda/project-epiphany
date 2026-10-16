@@ -70,7 +70,7 @@ func _matches(definition: FlagDefinition, query: String) -> bool:
 
 
 func _changed(definition: FlagDefinition) -> bool:
-	return cfg.get_value("flags", definition.id, definition.default_value) != definition.default_value
+	return cfg.get_value(SaveKeys.FLAGS, definition.id, definition.default_value) != definition.default_value
 
 
 func _rank(order: Array, title: String) -> int:
@@ -104,8 +104,8 @@ func _group(title: String, definitions: Array, open: bool) -> FoldableContainer:
 
 func _add_unknown() -> void:
 	var unknown := PackedStringArray()
-	if cfg.has_section("flags"):
-		for id in cfg.get_section_keys("flags"):
+	if cfg.has_section(SaveKeys.FLAGS):
+		for id in cfg.get_section_keys(SaveKeys.FLAGS):
 			if not flags.has(id):
 				unknown.append(id)
 	if unknown.is_empty():
@@ -114,21 +114,21 @@ func _add_unknown() -> void:
 	for id in unknown:
 		var row := HBoxContainer.new()
 		var label := Label.new()
-		label.text = "%s = %s" % [id, var_to_str(cfg.get_value("flags", id))]
+		label.text = "%s = %s" % [id, var_to_str(cfg.get_value(SaveKeys.FLAGS, id))]
 		label.tooltip_text = "No está en flag_registry.tres. El juego la ignora."
 		label.mouse_filter = MOUSE_FILTER_PASS
 		label.size_flags_horizontal = SIZE_EXPAND_FILL
 		label.add_theme_color_override(&"font_color", editor_color(&"error_color"))
 		row.add_child(label)
 		row.add_child(button("Quitar", func() -> void:
-			cfg.erase_section_key("flags", id)
+			cfg.erase_section_key(SaveKeys.FLAGS, id)
 			mark_edited()))
 		_list.add_child(row)
 
 
 func _row(definition: FlagDefinition) -> HBoxContainer:
 	var row := HBoxContainer.new()
-	var value: Variant = cfg.get_value("flags", definition.id, definition.default_value)
+	var value: Variant = cfg.get_value(SaveKeys.FLAGS, definition.id, definition.default_value)
 	var names := VBoxContainer.new()
 	names.size_flags_horizontal = SIZE_EXPAND_FILL
 	names.add_theme_constant_override(&"separation", 0)
@@ -199,12 +199,12 @@ func _go_to(use: Dictionary) -> void:
 func _set_group(definitions: Array, on: bool) -> void:
 	for definition: FlagDefinition in definitions:
 		if not on:
-			set_or_erase("flags", definition.id, definition.default_value, definition.default_value)
+			set_or_erase(SaveKeys.FLAGS, definition.id, definition.default_value, definition.default_value)
 		elif typeof(definition.default_value) == TYPE_BOOL:
-			set_or_erase("flags", definition.id, true, definition.default_value)
+			set_or_erase(SaveKeys.FLAGS, definition.id, true, definition.default_value)
 	mark_edited()
 
 
 func _set_flag(definition: FlagDefinition, value: Variant) -> void:
-	set_or_erase("flags", definition.id, value, definition.default_value)
+	set_or_erase(SaveKeys.FLAGS, definition.id, value, definition.default_value)
 	mark_edited()

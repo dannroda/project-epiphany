@@ -9,7 +9,7 @@ const TABS: Array[Script] = [
 ]
 const PLAY_FILE := "user://debug/inspector_play.cfg"
 const NEW_GAME := "res://debug/scenarios/start.cfg"
-const SECTION_TABS := { "player": 0, "equipment": 1, "inventory": 2, "flags": 3 }
+const SECTION_TABS := { SaveKeys.PLAYER: 0, SaveKeys.EQUIPMENT: 1, SaveKeys.INVENTORY: 2, SaveKeys.FLAGS: 3 }
 const UNDO_LIMIT := 100
 
 var _files := OptionButton.new()
@@ -203,11 +203,13 @@ func _open(path: String) -> void:
 	if err != OK:
 		_set_status("No se pudo abrir %s (%s)" % [path, error_string(err)], true)
 		return
+	var tampered := SaveCodec.is_tampered(loaded)
+	SaveCodec.migrate(loaded)
 	_replace_cfg(loaded)
 	_path = path
 	_dirty = false
 	_disk_md5 = FileAccess.get_md5(path)
-	_set_status("Partida modificada a mano" if SaveCodec.is_tampered(loaded) else "", false)
+	_set_status("Partida modificada a mano" if tampered else "", false)
 	_after_change()
 
 
@@ -372,7 +374,7 @@ func _ask_copy(slot: int) -> void:
 func _copy_to(slot: int) -> void:
 	var copy := ConfigFile.new()
 	copy.parse(_cfg.encode_to_text())
-	copy.set_value("meta", "slot", slot)
+	copy.set_value(SaveKeys.META, SaveKeys.SLOT, slot)
 	var path := _slot_path(slot)
 	var err := SaveCodec.write(copy, path, true)
 	if err != OK:
