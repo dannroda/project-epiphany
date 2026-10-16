@@ -114,6 +114,7 @@ glow_enabled = true
 glow_intensity = 0.2
 glow_blend_mode = 0
 glow_hdr_threshold = 0.25
+ssao_enabled = true
 
 [sub_resource type="CompositorEffect" id="CompositorEffect_sombra"]
 resource_local_to_scene = false
@@ -313,6 +314,7 @@ transform = Transform3D(0.8660254, -0.40957603, 0.28678823, 0, 0.57357645, 0.819
 shadow_enabled = true
 directional_shadow_mode = 1
 directional_shadow_max_distance = 32.0
+shadow_contact_shadows_allow = true
 
 [node name="GridMap" type="GridMap" parent="." unique_id=303501798 groups=["navmesh_source"]]
 mesh_library = ExtResource("2_rqbxp")

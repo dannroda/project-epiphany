@@ -33,6 +33,7 @@ var _armed := {}
 var _rings: Array[Dictionary] = []
 var _query := PhysicsShapeQueryParameters3D.new()
 var _shape := CylinderShape3D.new()
+var _hits := PhysicsIntersectShapeResult3D.new()
 
 
 func _ready() -> void:
@@ -111,9 +112,11 @@ func _hurtboxes_near(center: Vector3, radius: float) -> Array[Hurtbox]:
 	_shape.height = 4.0
 	_query.transform = Transform3D(Basis.IDENTITY, center + Vector3.UP * 1.5)
 	var found: Array[Hurtbox] = []
-	for hit in get_world_3d().direct_space_state.intersect_shape(_query, 32):
-		if hit.collider is Hurtbox:
-			found.append(hit.collider)
+	_hits.max_intersections = 32
+	get_world_3d().direct_space_state.intersect_shape_into(_query, _hits)
+	for i in _hits.get_intersection_count():
+		if _hits.get_collider(i) is Hurtbox:
+			found.append(_hits.get_collider(i))
 	return found
 
 

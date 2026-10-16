@@ -116,6 +116,8 @@ var _mask: Node3D
 var _skip := false
 var _last_positions: Dictionary[PlayerCharacter, Vector3] = {}
 var _player_rids: Array[RID] = []
+var _ray := PhysicsRayQueryParameters3D.new()
+var _hit := PhysicsIntersectRayResult3D.new()
 var _level_offset := Vector3.ZERO
 var _level_fov := 0.0
 var _room_look_saved := {}
@@ -461,17 +463,18 @@ func _player_hidden(player: PlayerCharacter) -> bool:
 	for height in HOLE_PROBES:
 		var point := player.global_position + Vector3.UP * height
 		var eye := point + offset if orthographic else focus + offset
-		var query := PhysicsRayQueryParameters3D.create(eye, point, 1)
+		_ray.from = eye
+		_ray.to = point
+		_ray.collision_mask = 1
 		if _player_rids.is_empty():
 			_player_rids.assign(Players.all.map(func(each: PlayerCharacter) -> RID: return each.get_rid()))
-		query.exclude = _player_rids
+		_ray.exclude = _player_rids
 		for attempt in 4:
-			var hit := space.intersect_ray(query)
-			if hit.is_empty():
+			if not space.intersect_ray_into(_ray, _hit):
 				break
-			if _is_wall(hit.collider):
+			if _is_wall(_hit.collider):
 				return true
-			query.exclude += [hit.rid]
+			_ray.exclude += [_hit.collider_rid]
 	return false
 
 
