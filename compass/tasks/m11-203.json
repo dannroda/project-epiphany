@@ -1,0 +1,36 @@
+{
+  "assignee": "project-epiphany-67",
+  "checklist": [
+    {
+      "detail": "Hecho (26c38004): ajustes de proyecto + Sun del overworld con contact shadows + SSAO en su Environment. GPU 1080p overworld: 7.8 → 8.6 ms. Falta decidir si van también a las mazmorras.",
+      "done": false,
+      "text": "Sombras de contacto (#118045) y AO multi-rebote (#115426)"
+    },
+    {
+      "detail": "Hecho (887c7caf): las de cada frame (rayos de la cámara, haz de luz, ondas, gancho, vista de enemigos y del fijado) usan *_into con resultados reusados. Las de una vez quedan igual.",
+      "done": false,
+      "text": "Consultas de física sin asignar memoria (#113970)"
+    },
+    {
+      "detail": "Ya en uso: CausticsDecal dibuja una DrawableTexture2D y en 4.8 el atlas se actualiza en cada blit. Usarlo para decals animados nuevos (grieta del golpe, sombras de nubes si va por decal).",
+      "done": false,
+      "text": "Decals con DrawableTexture (#115653)"
+    },
+    {
+      "detail": "Sin caso hoy: los cuerpos (vasijas, bombas) vuelan sin girar, así que equivale a linear_velocity. Usarlo cuando haya cuerpos que giran y empujan/dañan por el punto de contacto (rocas rodantes, plataformas que giran).",
+      "done": false,
+      "text": "get_velocity_at_position en RigidBody3D (#121122)"
+    }
+  ],
+  "code": "11.203",
+  "created_at": "2026-10-16T02:08:19.300Z",
+  "description": "PRs de 4.8 que Daniel eligió: 118045 y 115426 (luz) activados; 113970, 121122 y 115653 se usan donde corresponda.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 200,
+  "refs": [],
+  "status": "review",
+  "test": "",
+  "title": "Aprovechar las novedades de Godot 4.8",
+  "updated_at": "2026-10-16T02:08:44.992Z"
+}

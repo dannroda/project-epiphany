@@ -2594,7 +2594,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 
 Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
 
-## M11 — Pulido: contenido y feel  (117/198)
+## M11 — Pulido: contenido y feel  (117/199)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5532,6 +5532,21 @@ Lo que salió en el log de Daniel con la build de Linux y lo que apareció al ar
   Pendiente: buscar quién.
 - [x] Basis sin normalizar en aim.gd (rotar al apuntar)
   Hecho (081692a0): slerp entre bases ortonormalizadas.
+
+### 11.203 Aprovechar las novedades de Godot 4.8 · Revisión
+
+**Responsable:** project-epiphany-67
+
+PRs de 4.8 que Daniel eligió: 118045 y 115426 (luz) activados; 113970, 121122 y 115653 se usan donde corresponda.
+
+- [ ] Sombras de contacto (#118045) y AO multi-rebote (#115426)
+  Hecho (26c38004): ajustes de proyecto + Sun del overworld con contact shadows + SSAO en su Environment. GPU 1080p overworld: 7.8 → 8.6 ms. Falta decidir si van también a las mazmorras.
+- [ ] Consultas de física sin asignar memoria (#113970)
+  Hecho (887c7caf): las de cada frame (rayos de la cámara, haz de luz, ondas, gancho, vista de enemigos y del fijado) usan *_into con resultados reusados. Las de una vez quedan igual.
+- [ ] Decals con DrawableTexture (#115653)
+  Ya en uso: CausticsDecal dibuja una DrawableTexture2D y en 4.8 el atlas se actualiza en cada blit. Usarlo para decals animados nuevos (grieta del golpe, sombras de nubes si va por decal).
+- [ ] get_velocity_at_position en RigidBody3D (#121122)
+  Sin caso hoy: los cuerpos (vasijas, bombas) vuelan sin girar, así que equivale a linear_velocity. Usarlo cuando haya cuerpos que giran y empujan/dañan por el punto de contacto (rocas rodantes, plataformas que giran).
 
 ## M12 — Assets propios (Blender)  (17/39)
 
