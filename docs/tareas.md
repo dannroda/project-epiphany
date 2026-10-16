@@ -1,7 +1,7 @@
 # Tareas — Project Epiphany
 
 > Export de `compass/`, que es la fuente de verdad. No editar: los cambios se hacen en `compass/` o con `scompass`, y este archivo se regenera.
-> Generado: 2026-10-15
+> Generado: 2026-10-16
 
 ## M0 — Refactor del player + base de datos  (13/13)
 
@@ -5466,7 +5466,7 @@ Daniel (2026-10-15): la zona de D4 (la explanada frente a la puerta del cóndor)
   Dos o tres manadas en la explanada y el camino a la puerta del cóndor, sin cortar el paso.
 - [ ] Probarlo (Daniel)
 
-### 11.197 Terreno del overworld: colisión simplificada (la carga congela la ventana 3,4 s) · Pendiente
+### 11.197 Terreno del overworld: colisión simplificada (la carga congela la ventana 3,4 s) · Revisión
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-d6 · **Etiquetas:** `optimizacion`, `overworld`, `arte`
 
