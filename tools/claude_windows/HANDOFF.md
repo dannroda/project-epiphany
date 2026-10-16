@@ -29,6 +29,7 @@ Arreglos a `measure_shaders.ps1` para PowerShell 5.1:
 - 11.203: anotar las mediciones de arriba. Recomendación: activar el baker en el preset de Windows, porque D3D12 es el driver por defecto.
 - Revisar: el export "Windows (debug)" incluye `liblimboai.windows.editor.x86_64.dll`. ¿El de release usa el template_release oficial de LimboAI 1.8.1?
 - Revisar el pico de `sparks_gold` con caché caliente (ver arriba).
+- Kit de Windows: `setup.ps1` crea `wt/windows` desde `origin/main` con ese upstream. Un "Sync" de VSCodium pusheó los 3 commits a main (Daniel lo revirtió a f2b8d2f). Crearla con `--no-track` y `git push -u origin wt/windows`. En esta PC ya se corrigió a mano.
 - Kit de Windows: el README da por hechos los export templates. En esta PC no estaban y hubo que instalarlos desde el editor (4.8.beta1). Podría verificarlo `setup.ps1`.
 
 ## Memorias nuevas
