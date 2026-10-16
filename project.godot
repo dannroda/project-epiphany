@@ -939,6 +939,8 @@ locale/fallback="es"
 [rendering]
 
 rendering_device/driver.windows="d3d12"
+lights_and_shadows/contact_shadow/enabled=true
+lights_and_shadows/multi_bounce_occlusion/enabled=true
 
 [shader_globals]
 
