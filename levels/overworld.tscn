@@ -181,7 +181,7 @@ size = Vector3(58, 14, 24)
 [sub_resource type="BoxShape3D" id="BoxShape3D_zone_templo"]
 size = Vector3(28, 14, 14)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_zone_templo_3"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_zone_pradera_13"]
 size = Vector3(68, 14, 8)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_zone_laguna"]
@@ -587,14 +587,15 @@ region_label = true
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_templo" unique_id=2043541398]
 shape = SubResource("BoxShape3D_zone_templo")
 
-[node name="Zone_templo_3" type="Area3D" parent="." unique_id=128565482]
+[node name="Zone_pradera_13" type="Area3D" parent="." unique_id=128565482]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 4, -45)
 script = ExtResource("3_rqerd")
 id = &"Zone_templo_3"
-display_name = "PLACE_TEMPLE_ESPLANADE"
+display_name = "PLACE_MEADOW"
+chase_region = &"oeste"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_templo_3" unique_id=415284755]
-shape = SubResource("BoxShape3D_zone_templo_3")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone_pradera_13" unique_id=415284755]
+shape = SubResource("BoxShape3D_zone_pradera_13")
 
 [node name="Zone_laguna" type="Area3D" parent="." unique_id=1687626085]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 4, 39)

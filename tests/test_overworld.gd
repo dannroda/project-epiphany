@@ -402,7 +402,7 @@ func test_every_region_is_reachable_except_the_item_gated() -> void:
 	await tree.scene_changed
 	for i in 10:
 		await tree.physics_frame
-	var west: Array[String] = ["Zone_cerros", "Zone_cerros_2", "Zone_cerros_3", "Zone_laguna", "Zone_pradera", "Zone_pradera_10", "Zone_pradera_11", "Zone_pradera_12", "Zone_pradera_2", "Zone_pradera_3", "Zone_pradera_4", "Zone_pradera_5", "Zone_pradera_6", "Zone_pradera_7", "Zone_pradera_8", "Zone_start", "Zone_start_2", "Zone_templo", "Zone_templo_3", "Zone_vertiente"]
+	var west: Array[String] = ["Zone_cerros", "Zone_cerros_2", "Zone_cerros_3", "Zone_laguna", "Zone_pradera", "Zone_pradera_10", "Zone_pradera_11", "Zone_pradera_12", "Zone_pradera_13", "Zone_pradera_2", "Zone_pradera_3", "Zone_pradera_4", "Zone_pradera_5", "Zone_pradera_6", "Zone_pradera_7", "Zone_pradera_8", "Zone_start", "Zone_start_2", "Zone_templo", "Zone_vertiente"]
 	assert_eq(_reachable_zones(tree), west, "sin el puente, solo el oeste de la quebrada, sin la Arboleda (pluma)")
 	(tree.current_scene.get_node(^"RavineBridge") as Bridge).raise(false)
 	for i in 4:
