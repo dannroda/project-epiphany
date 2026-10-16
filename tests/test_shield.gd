@@ -42,18 +42,45 @@ func _shoot_from(tree: SceneTree, shooter: Enemy, from: Vector3, at: Vector3, re
 	return orb
 
 
-func test_wood_shield_on_back_stops_arrows_from_behind_only() -> void:
+func test_arrows_from_behind_hurt() -> void:
 	var setup: Array = await _setup(&"shield_wood")
 	var tree: SceneTree = setup[0]
 	var player: PlayerCharacter = setup[2]
-	var orb := _shoot_from(tree, setup[3], player.global_position - Vector3.RIGHT * 5.0, player.global_position, false)
+	_shoot_from(tree, setup[3], player.global_position - Vector3.RIGHT * 5.0, player.global_position, false)
 	await tree.create_timer(0.8).timeout
-	assert_eq(is_instance_valid(orb), false, "se frena en el escudo de la espalda")
-	assert_eq(player.health.current, player.health.max_health, "sin daño por la espalda")
-	_shoot_from(tree, setup[3], player.global_position + Vector3.BACK * 5.0, player.global_position, false)
-	await tree.create_timer(0.8).timeout
-	assert_true(player.health.current < player.health.max_health, "de costado sí lastima")
+	assert_true(player.health.current < player.health.max_health, "ya no hay escudo en la espalda")
 	setup[1].reset()
+
+
+func test_guards_only_while_holding_z() -> void:
+	var setup: Array = await _setup(&"shield_wood")
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[2]
+	_face_the_clear_side(player)
+	assert_eq(InputMap.has_action(&"block"), false, "no hay botón de bloquear")
+	assert_eq(player.equipment.shield_in_hand.visible, true, "el escudo va en la mano")
+	_shoot_from(tree, setup[3], player.global_position - Vector3.RIGHT * 5.0, player.global_position, false)
+	await tree.create_timer(0.8).timeout
+	assert_true(player.health.current < player.health.max_health, "sin Z, de frente también lastima")
+	player.health.current = player.health.max_health
+	Input.action_press(&"z-lock")
+	await tree.process_frame
+	await tree.physics_frame
+	assert_eq(player.is_blocking(), true, "con Z mantenido se cubre, aunque no haya blanco")
+	_shoot_from(tree, setup[3], player.global_position - Vector3.RIGHT * 5.0, player.global_position, false)
+	await tree.create_timer(0.8).timeout
+	assert_eq(player.health.current, player.health.max_health, "y frena lo que viene de frente")
+	Input.action_release(&"z-lock")
+	await tree.process_frame
+	await tree.physics_frame
+	assert_eq(player.is_blocking(), false)
+	assert_eq(player.equipment.shield_in_hand.visible, true, "al soltar sigue en la mano")
+	setup[1].reset()
+
+
+## Por +X el orbe choca enseguida con el nivel; de frente se tira desde -X.
+func _face_the_clear_side(player: PlayerCharacter) -> void:
+	player.model.look_at(player.model.global_position + Vector3.RIGHT, Vector3.UP)
 
 
 func test_wood_shield_does_not_stop_explosions() -> void:
@@ -94,37 +121,14 @@ func test_a_blocked_arrow_does_not_make_the_archer_recoil() -> void:
 	var setup: Array = await _setup(&"shield_wood")
 	var tree: SceneTree = setup[0]
 	var player: PlayerCharacter = setup[2]
+	_face_the_clear_side(player)
 	hold_block(player, true)
-	_shoot_from(tree, setup[3], player.global_position + Vector3.RIGHT * 5.0, player.global_position, false)
+	var arrow := _shoot_from(tree, setup[3], player.global_position - Vector3.RIGHT * 5.0, player.global_position, false)
 	await tree.create_timer(0.8).timeout
+	assert_eq(is_instance_valid(arrow), false, "llegó hasta el player")
 	assert_eq(player.health.current, player.health.max_health, "la flecha se bloquea")
 	assert_true(not (setup[3] as Enemy).is_recoiling(), "y el que la tiró sigue en su lugar")
 	hold_block(player, false)
-	setup[1].reset()
-
-
-func test_sword_from_behind_hurts() -> void:
-	var setup: Array = await _setup(&"shield_wood")
-	var player: PlayerCharacter = setup[2]
-	var shooter: Enemy = setup[3]
-	shooter.global_position = player.global_position - Vector3.RIGHT * 1.5
-	player.hurtbox.receive(shooter.config.make_damage(shooter))
-	assert_true(player.health.current < player.health.max_health, "el escudo de la espalda no frena golpes cuerpo a cuerpo")
-	setup[1].reset()
-
-
-func test_mirror_on_back_returns_orb_to_shooter() -> void:
-	var setup: Array = await _setup(&"shield_mirror")
-	var tree: SceneTree = setup[0]
-	var player: PlayerCharacter = setup[2]
-	var shooter: Enemy = setup[3]
-	var before := shooter.health.current
-	var orb := _shoot_from(tree, shooter, player.global_position - Vector3.RIGHT * 5.0, player.global_position, true)
-	await tree.create_timer(0.6).timeout
-	assert_true(is_instance_valid(orb) and orb.team == EntityConfig.Team.PLAYER, "el espejo de la espalda lo refleja")
-	await tree.create_timer(0.8).timeout
-	assert_true(shooter.health.current < before, "vuelve y daña a quien lo tiró")
-	assert_eq(player.health.current, player.health.max_health)
 	setup[1].reset()
 
 
@@ -137,7 +141,7 @@ func test_releasing_block_while_frozen_lowers_the_shield() -> void:
 	assert_eq(player.is_blocking(), true, "con el botón mantenido bloquea")
 	var mode := player.process_mode
 	player.process_mode = Node.PROCESS_MODE_DISABLED
-	Input.action_release(player.controls.action(&"block"))
+	Input.action_release(player.controls.action(&"z-lock"))
 	await tree.physics_frame
 	player.process_mode = mode
 	await tree.physics_frame

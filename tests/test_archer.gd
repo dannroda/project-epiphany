@@ -24,7 +24,7 @@ func _setup(distance: float) -> Array:
 
 func _block(pressed: bool) -> void:
 	var event := InputEventAction.new()
-	event.action = &"block"
+	event.action = &"z-lock"
 	event.pressed = pressed
 	Input.parse_input_event(event)
 

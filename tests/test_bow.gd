@@ -219,15 +219,14 @@ func test_hidden_shield_has_no_collision() -> void:
 	var player: PlayerCharacter = setup[2]
 	await tree.physics_frame
 	var hand_shapes := player.equipment.shield_in_hand.find_children("*", "CollisionShape3D", true, false)
-	var back_shapes := player.equipment.shield_on_back.find_children("*", "CollisionShape3D", true, false)
-	assert_true(hand_shapes.all(func(s: CollisionShape3D) -> bool: return s.disabled), "escudo de la mano oculto: sin colisión")
-	assert_true(back_shapes.all(func(s: CollisionShape3D) -> bool: return not s.disabled), "escudo en la espalda: con colisión")
-	hold_block(player, true)
+	assert_true(hand_shapes.all(func(s: CollisionShape3D) -> bool: return not s.disabled), "escudo en la mano: con colisión")
+	player.equipment.hold(Items.get_item(&"bow"))
 	await tree.physics_frame
+	assert_eq(player.equipment.shield_in_hand.visible, false, "con el arco en esa mano no se ve")
+	assert_true(hand_shapes.all(func(s: CollisionShape3D) -> bool: return s.disabled), "y no colisiona")
+	player.equipment.release_held()
 	await tree.physics_frame
-	assert_true(hand_shapes.all(func(s: CollisionShape3D) -> bool: return not s.disabled), "al bloquear, el de la mano colisiona")
-	assert_true(back_shapes.all(func(s: CollisionShape3D) -> bool: return s.disabled), "y el de la espalda no")
-	hold_block(player, false)
+	assert_true(player.equipment.shield_in_hand.visible and hand_shapes.all(func(s: CollisionShape3D) -> bool: return not s.disabled), "al soltarlo vuelve")
 	setup[1].reset()
 
 

@@ -128,3 +128,6 @@ func _set_gameplay(on: bool) -> void:
 		each.controls.captured = not on
 	for hud in get_tree().get_nodes_in_group(Hud.GROUP):
 		hud.visible = on
+	var game_camera := _game_camera() as TopDownCamera
+	if game_camera:
+		game_camera.set_cinematic(not on)

@@ -652,7 +652,7 @@ msgid "ITEM_SHIELD_MIRROR_NAME"
 msgstr "Mirror Shield"
 
 msgid "ITEM_SHIELD_MIRROR_DESC"
-msgstr "Blocks blows from the front. Reflects projectiles and beams of light wherever you face or at your locked-on target."
+msgstr "While holding the lock-on button, blocks blows from the front. Reflects projectiles and beams of light wherever you face or at your locked-on target."
 
 msgid "ITEM_SHIELD_MIRROR_GOT"
 msgstr "You got the Mirror Shield!"
@@ -661,7 +661,7 @@ msgid "ITEM_SHIELD_WOOD_NAME"
 msgstr "Wooden Shield"
 
 msgid "ITEM_SHIELD_WOOD_DESC"
-msgstr "Blocks blows coming from the front. With your guard up, attacking makes a shield bash that stuns."
+msgstr "While holding the lock-on button, blocks blows coming from the front. Guarding, attacking makes a stab that stuns."
 
 msgid "ITEM_SHIELD_WOOD_GOT"
 msgstr "You got the Wooden Shield!"
@@ -1226,7 +1226,7 @@ msgid "CONTROLS_HINT_GAMEPAD"
 msgstr "Controller"
 
 msgid "CONTROLS_LOCK"
-msgstr "Lock on"
+msgstr "Lock on and guard"
 
 msgid "CONTROLS_RING"
 msgstr "Item ring"
@@ -1248,9 +1248,6 @@ msgstr "D-pad"
 
 msgid "CONTROLS_DPAD_NOTE"
 msgstr "unused for now"
-
-msgid "CONTROLS_BLOCK"
-msgstr "Block with the shield"
 
 msgid "CONTROLS_DODGE"
 msgstr "Roll"

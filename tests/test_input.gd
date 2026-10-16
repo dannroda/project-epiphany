@@ -35,7 +35,7 @@ func test_keyboard_and_mouse_map() -> void:
 		assert_true(Input.is_action_pressed(pair[1]), "%s → %s" % [OS.get_keycode_string(pair[0]), pair[1]])
 		_key(pair[0], false)
 		await tree.process_frame
-	for pair in [[MOUSE_BUTTON_LEFT, &"attack"], [MOUSE_BUTTON_RIGHT, &"block"]]:
+	for pair in [[MOUSE_BUTTON_LEFT, &"attack"]]:
 		_mouse(pair[0], true)
 		await tree.process_frame
 		assert_true(Input.is_action_pressed(pair[1]), str(pair[1]))

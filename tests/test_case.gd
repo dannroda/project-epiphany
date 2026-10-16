@@ -37,9 +37,9 @@ func use_gamepad() -> void:
 		Input.parse_input_event(motion)
 
 
-## Mantiene o suelta el bloqueo como si se apretara el botón: el escudo sigue al botón mantenido.
+## Mantiene o suelta el Z-target como si se apretara el botón: el escudo sigue al botón mantenido.
 func hold_block(player: Node, on: bool) -> void:
-	var action: StringName = player.controls.action(&"block")
+	var action: StringName = player.controls.action(&"z-lock")
 	if on:
 		Input.action_press(action)
 	else:

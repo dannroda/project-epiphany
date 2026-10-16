@@ -49,10 +49,10 @@ func test_equipment_follows_game_state() -> void:
 	var setup: Array = await _load_level()
 	var player: PlayerCharacter = setup[1]
 	var game_state: Node = setup[0].root.get_node(^"GameState")
-	assert_true(player.equipment.shield_on_back != null)
+	assert_true(player.equipment.shield_in_hand != null)
 	game_state.equip(Items.get_item(&"shield_mirror"))
-	assert_eq(player.equipment.shield_on_back.scene_file_path, "res://assets/items/shield/shield_mirror.tscn")
-	assert_eq(player.equipment.shield_in_hand.visible, false)
+	assert_eq(player.equipment.shield_in_hand.scene_file_path, "res://assets/items/shield/shield_mirror.tscn")
+	assert_eq(player.equipment.shield_in_hand.visible, true, "el escudo va siempre en la mano")
 	game_state.reset()
 
 
@@ -116,7 +116,7 @@ func test_block_from_front_only() -> void:
 	_block(player, false)
 
 
-func test_shield_thrust_stuns() -> void:
+func test_stab_while_guarding_stuns() -> void:
 	var setup: Array = await _load_level()
 	var tree: SceneTree = setup[0]
 	var player: PlayerCharacter = setup[1]
@@ -138,7 +138,8 @@ func test_shield_thrust_stuns() -> void:
 		if enemy.bt_player.blackboard.get_var("stunned", false, false):
 			stunned = true
 			break
-	assert_true(stunned, "el golpe de escudo aturde")
+	assert_true(stunned, "la estocada aturde")
+	assert_eq(player.movement_state.get_active_state().name, &"Attacking")
 	_block(player, false)
 
 

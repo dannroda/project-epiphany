@@ -1,7 +1,7 @@
 extends PlayerState
 ## Atrapado por una mano del jefe: sigue al agarre y se suelta apretando botones.
 
-const MASH_ACTIONS: Array[StringName] = [&"attack", &"interact", &"dodge", &"block"]
+const MASH_ACTIONS: Array[StringName] = [&"attack", &"interact", &"dodge", &"z-lock"]
 
 ## Apretones para soltarse.
 @export var presses_to_escape := 8
