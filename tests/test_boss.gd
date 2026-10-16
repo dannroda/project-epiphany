@@ -119,6 +119,80 @@ func test_both_hands_down_opens_phase_two() -> void:
 	boss.free()
 
 
+func test_the_third_phase_brings_every_hand_back() -> void:
+	var boss := _spawn()
+	var tree := Engine.get_main_loop() as SceneTree
+	boss.start_fight()
+	_knock_down(boss.hand_left)
+	_knock_down(boss.hand_right)
+	await tree.create_timer(2.0).timeout
+	_knock_down(boss.hand_left)
+	boss.hand_right.stun(30.0)
+	assert_eq(boss.hand_left.state, BossHand.State.DOWN, "en la fase 2 una mano vuelve a caer")
+	boss.phases.dispatch(&"enraged")
+	assert_eq(boss.phase(), 3)
+	await tree.create_timer(1.0).timeout
+	for hand: BossHand in [boss.hand_left, boss.hand_right]:
+		assert_eq(hand.state, BossHand.State.READY, "%s se repone al cambiar de fase" % hand.name)
+		assert_true(hand.health.is_full(), "%s vuelve con la vida llena" % hand.name)
+		assert_true(hand.global_position.distance_to(boss.hand_rest(hand).global_position) < 0.05, "%s vuelve a su reposo, no queda en el piso" % hand.name)
+	boss.free()
+
+
+func test_a_reset_cuts_a_slam_in_the_middle() -> void:
+	var boss := _spawn()
+	var tree := Engine.get_main_loop() as SceneTree
+	var target := Node3D.new()
+	tree.root.add_child(target)
+	target.global_position = boss.hand_left.global_position + Vector3(0, 0, 4)
+	var hand := boss.hand_left
+	hand.slam_count = 3
+	hand.perform(_attack(&"slam"), target, Rect2(-20, -20, 40, 40))
+	await tree.create_timer(0.3).timeout
+	hand.reset()
+	await tree.create_timer(1.0).timeout
+	assert_eq(hand.state, BossHand.State.READY, "la tanda se corta y la mano queda lista")
+	assert_true(not hand.striking and not hand.shadow.visible, "sin aviso colgado")
+	await tree.create_timer(2.5).timeout
+	assert_eq(hand.state, BossHand.State.READY, "la tanda vieja no sigue después")
+	assert_true(hand.global_position.distance_to(boss.hand_rest(hand).global_position) < 0.05, "en su reposo")
+	target.free()
+	boss.free()
+
+
+func test_the_stunned_eye_droops_but_shows_its_pupil() -> void:
+	var boss := _spawn()
+	var tree := Engine.get_main_loop() as SceneTree
+	boss.start_fight()
+	boss.eye_open = 1.0
+	boss._stun_eye()
+	for i in 10:
+		await tree.physics_frame
+	var forward := boss.eye.global_basis.z.normalized()
+	var up := Vector3(0, 0.9, 0.4).normalized()
+	assert_true(forward.dot(up) > 0.3, "la pupila sigue mirando hacia arriba, no queda el ojo en blanco (%.2f)" % forward.dot(up))
+	assert_true(forward.y < up.y - 0.2, "pero caída, más abajo que la cámara")
+	boss.free()
+
+
+func test_each_hit_tints_and_jolts_only_the_eye() -> void:
+	var boss := _spawn()
+	var tree := Engine.get_main_loop() as SceneTree
+	boss.eye_open = 1.0
+	boss._stun_eye()
+	var body_rotation := boss.body.rotation
+	boss.eye_hurtbox.receive(_hit(2))
+	await tree.process_frame
+	await tree.process_frame
+	var mesh := boss.get_node(^"Body/Eye/Mesh") as Node3D
+	assert_true(not mesh.rotation.is_zero_approx(), "el globo del ojo da un tirón")
+	assert_true(boss.body.rotation.y == body_rotation.y, "el cuerpo no se sacude")
+	assert_true((boss.get_node(^"%HitFlash") as HitFlash).flash_amount() > 0.3, "el ojo se tiñe")
+	await tree.create_timer(0.5).timeout
+	assert_true(mesh.rotation.is_zero_approx(), "y vuelve a su lugar")
+	boss.free()
+
+
 func test_eye_needs_a_projectile_to_open_the_window() -> void:
 	var boss := _spawn()
 	var arrow := Projectile.new()

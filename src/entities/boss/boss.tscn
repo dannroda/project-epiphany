@@ -31,6 +31,7 @@
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_corrupto_mano_der.res" id="c_hand_r"]
 [ext_resource type="Shader" path="res://src/entities/boss/ondas.gdshader" id="ondas"]
 [ext_resource type="Shader" path="res://src/entities/boss/pulso.gdshader" id="pulso"]
+[ext_resource type="Shader" path="res://src/entities/boss/laser.gdshader" id="laser"]
 [ext_resource type="Shader" path="res://src/world/vfx/esfera_energia.gdshader" id="esfera"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pulso"]
@@ -171,9 +172,14 @@ shader_parameter/color = Color(0.45, 0.95, 1, 1)
 width = 64
 height = 64
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_laser"]
-shading_mode = 0
-albedo_color = Color(1, 0.3, 0.2, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_laser"]
+render_priority = 0
+shader = ExtResource("laser")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_laser_spot"]
+render_priority = 0
+shader = ExtResource("laser")
+shader_parameter/disc = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_laser_path"]
 transparency = 1
@@ -181,15 +187,15 @@ shading_mode = 0
 albedo_color = Color(1, 0.2, 0.15, 0.25)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_laser"]
-material = SubResource("StandardMaterial3D_laser")
-top_radius = 0.1
-bottom_radius = 0.1
+material = SubResource("ShaderMaterial_laser")
+top_radius = 0.26
+bottom_radius = 0.26
 height = 1.0
 radial_segments = 8
 rings = 1
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_laser_spot"]
-material = SubResource("StandardMaterial3D_laser")
+material = SubResource("ShaderMaterial_laser_spot")
 top_radius = 0.7
 bottom_radius = 0.7
 height = 0.05
