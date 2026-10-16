@@ -96,6 +96,9 @@ var _motion: Tween
 ## El tween del aviso del ataque en curso (sostener, sacudir, cargar): se corta al dejar de atacar.
 var _attack_tween: Tween
 var _bounce: Tween
+## Sube con cada `reset`: los ataques que quedaron a medio esperar se cortan solos.
+var _run := 0
+var _grabbed: PlayerCharacter
 var _shockwave_data := AttackData.new()
 var _flash: HitFlash
 var _material: StandardMaterial3D
@@ -224,10 +227,27 @@ func regenerate() -> void:
 		set_state(State.READY)
 
 
+## Cambio de fase: corta lo que esté haciendo (ataque, aturdida, caída), suelta al player y vuelve al reposo con la vida llena.
+func reset() -> void:
+	_run += 1
+	for tween in [_motion, _attack_tween, _bounce, _fall]:
+		if tween:
+			tween.kill()
+	striking = false
+	_hide_shadow()
+	_set_hitbox(shockwave, null)
+	if is_instance_valid(_grabbed) and _grabbed.is_grabbed():
+		_grabbed.release()
+	set_state(State.DOWN)
+	await get_tree().physics_frame
+	regenerate()
+
+
 ## Corre el ataque; `striking` queda en true hasta que golpea (o falla). `area`: el piso de la arena (XZ).
 func perform(attack: BossAttack, target: Node3D, area: Rect2) -> void:
 	if not is_available():
 		return
+	var run := _run
 	set_state(State.BUSY)
 	striking = true
 	pose = attack.pose
@@ -240,6 +260,8 @@ func perform(attack: BossAttack, target: Node3D, area: Rect2) -> void:
 			await _sweep(attack, target, area)
 		_:
 			push_error("BossHand: ataque desconocido %s" % attack.id)
+	if run != _run:
+		return
 	striking = false
 	_hide_shadow()
 	if state == State.BUSY:
@@ -249,8 +271,9 @@ func perform(attack: BossAttack, target: Node3D, area: Rect2) -> void:
 
 
 func _slam(attack: BossAttack, target: Node3D, area: Rect2) -> void:
+	var run := _run
 	for i in slam_count:
-		if not await _slam_once(attack, target, area):
+		if not await _slam_once(attack, target, area) or run != _run:
 			return
 	if state == State.BUSY:
 		stun(slam_stun_time)
@@ -375,6 +398,7 @@ func _grab(_attack: BossAttack, target: Node3D, area: Rect2) -> void:
 
 func _hold(target: PlayerCharacter) -> void:
 	striking = false
+	_grabbed = target
 	var escaped := [false]
 	var on_escape := func() -> void: escaped[0] = true
 	target.escaped.connect(on_escape)
@@ -397,6 +421,7 @@ func _hold(target: PlayerCharacter) -> void:
 			squeeze.unavoidable = true
 			target.hurtbox.receive(squeeze)
 	target.escaped.disconnect(on_escape)
+	_grabbed = null
 	if escaped[0]:
 		stun(grab_escape_stun)
 		return

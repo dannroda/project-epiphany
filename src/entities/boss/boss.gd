@@ -41,6 +41,16 @@ const GAZE_CALM := 0.5
 const GAZE_FIRING := 0.2
 ## Cuánto se queda la cámara en el jefe al presentar la fase 2.
 const PHASE_HOLD := 2.2
+## Aturdido: el cuerpo se va para atrás y el ojo, sin fuerza, baja la mirada (a medias entre la cámara y el frente:
+## la pupila se sigue viendo, caída) y se mece.
+const STUN_SLUMP := -0.25
+const DAZED_DROOP := 0.5
+const DAZED_SWAY := Vector2(0.35, 0.08)
+## Cada golpe que recibe: el ojo se tiñe y la malla del globo da tirones al azar (los párpados y el cuerpo quietos).
+const HIT_TINT := Color(1.0, 0.18, 0.12)
+const HIT_TINT_TIME := 0.3
+const HIT_JOLT := 0.35
+const HIT_JOLTS := 4
 
 @export_group("Ajuste")
 @export var eye_stun_time := 3.0
@@ -214,6 +224,7 @@ func _process(delta: float) -> void:
 	if attacker is BossHand and attacker.striking:
 		lean = -signf(attacker.global_position.x - global_position.x) * deg_to_rad(LEAN_ANGLE)
 	body.rotation.z = lerpf(body.rotation.z, lean, 1.0 - exp(-4.0 * delta))
+	body.rotation.x = lerpf(body.rotation.x, STUN_SLUMP if is_eye_stunned() else 0.0, 1.0 - exp(-6.0 * delta))
 	if eye_open >= 1.0 and not is_eye_stunned() and not _charge.visible:
 		_next_blink -= delta
 		if _next_blink <= 0.0:
@@ -238,7 +249,9 @@ func _physics_process(delta: float) -> void:
 			_move_body(BODY_HEIGHT_OPEN, 0.6)
 	if _laser_beam.visible:
 		_place_laser()
-	if is_instance_valid(target) and not is_eye_stunned():
+	if is_eye_stunned():
+		look_at_point(eye.global_position + _dazed_gaze())
+	elif is_instance_valid(target):
 		var wanted := (gaze_point(target.global_position) - eye.global_position).normalized()
 		look_at_point(eye.global_position + eye.global_basis.z.normalized().slerp(wanted, 1.0 - exp(-4.0 * delta)))
 	var blackboard := phases.blackboard
@@ -542,6 +555,13 @@ func gaze_point(at: Vector3) -> Vector3:
 	return (at + Vector3.UP).lerp(camera.global_position, toward_camera)
 
 
+func _dazed_gaze() -> Vector3:
+	var camera := get_viewport().get_camera_3d()
+	var up := (camera.global_position - eye.global_position).normalized() if camera else Vector3(0, 0.9, 0.4).normalized()
+	var front := Vector3(up.x, 0.0, up.z).normalized() if not Vector2(up.x, up.z).is_zero_approx() else Vector3.BACK
+	return up.slerp(front, DAZED_DROOP) + Vector3(sin(_time * 1.7) * DAZED_SWAY.x, sin(_time * 2.9) * DAZED_SWAY.y, 0.0)
+
+
 func hand_rest(hand: BossHand) -> Marker3D:
 	return %HandRestLeft if hand == hand_left else %HandRestRight
 
@@ -576,8 +596,10 @@ func _on_eye_hit(info: DamageInfo) -> void:
 	if is_eye_stunned():
 		if health.damage(info.amount):
 			Feel.sfx(&"hit", eye.global_position)
+			_jolt_eye()
 	elif info.source is Projectile:
 		_stun_eye()
+		_jolt_eye()
 	else:
 		Feel.sfx(&"block", eye.global_position)
 		Feel.burst(&"sparks", eye.global_position, Vector3.BACK)
@@ -593,14 +615,23 @@ func _stun_eye() -> void:
 	_squint = 0.0
 	_pupil_goal = 0.0
 	_set_eye_glow(EYE_GLOW)
-	_move_body(BODY_HEIGHT_STUNNED, 0.35)
-	look_at_point(eye.global_position + Vector3(0, -1, 0.4))
+	_move_body(BODY_HEIGHT_STUNNED, 0.5, Tween.TRANS_BOUNCE, Tween.EASE_OUT)
 
 
-func _move_body(height: float, seconds: float) -> void:
+func _jolt_eye() -> void:
+	if Feel.settings.flash_enabled:
+		create_tween().tween_method(func(value: float) -> void: _flash.hold(value, HIT_TINT), 1.0, 0.0, HIT_TINT_TIME)
+	var jolt := create_tween()
+	for i in HIT_JOLTS:
+		var strength := HIT_JOLT * (1.0 - i / float(HIT_JOLTS))
+		jolt.tween_property(_eye_mesh, ^"rotation", Vector3(rng.randf_range(-1.0, 1.0), rng.randf_range(-1.0, 1.0), 0.0) * strength, 0.05)
+	jolt.tween_property(_eye_mesh, ^"rotation", Vector3.ZERO, 0.1)
+
+
+func _move_body(height: float, seconds: float, trans := Tween.TRANS_SINE, ease_type := Tween.EASE_IN_OUT) -> void:
 	if _body_tween:
 		_body_tween.kill()
-	_body_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_body_tween = create_tween().set_trans(trans).set_ease(ease_type)
 	_body_tween.tween_property(self, ^"_body_height", height, seconds)
 
 
@@ -652,6 +683,7 @@ func _on_phase3_entered() -> void:
 	_cut_charge()
 	for hand in [hand_left, hand_right]:
 		hand.held = true
+		hand.reset()
 	_move_body(BODY_HEIGHT_OPEN, 0.4)
 	phase_changed.emit(3)
 	await _present(_transform.play.bind(&"transform"), _transform.get_animation(&"transform").length + 0.3)
