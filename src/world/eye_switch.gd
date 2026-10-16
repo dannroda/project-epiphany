@@ -88,7 +88,7 @@ func _count_down() -> void:
 	var left := open_time
 	while left > 0.0:
 		var step := minf(left, 1.0 if left > 2.0 else 0.5)
-		await get_tree().create_timer(step, false).timeout
+		await Tweens.wait(self, step)
 		left -= step
 		if left > 0.0:
 			Feel.sfx(&"click", global_position)

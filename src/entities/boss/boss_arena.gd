@@ -71,9 +71,9 @@ func _begin() -> void:
 	if started:
 		return
 	started = true
-	await get_tree().create_timer(close_delay, false).timeout
+	await Tweens.wait(self, close_delay)
 	door.close()
-	await get_tree().create_timer(door.open_time, false).timeout
+	await Tweens.wait(self, door.open_time)
 	in_intro = true
 	boss.presents_phases = true
 	Music.boss_fight = true

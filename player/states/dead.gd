@@ -10,7 +10,7 @@ func _enter() -> void:
 	player.velocity = Vector3.ZERO
 	player.anim_tree.active = false
 	player.anim_player.play(animation, 0.1)
-	await player.get_tree().create_timer(delay, false).timeout
+	await Tweens.wait(player, delay)
 	if not is_active():
 		return
 	if Players.any_alive():

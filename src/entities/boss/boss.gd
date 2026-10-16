@@ -353,7 +353,7 @@ func _mark_floor() -> void:
 	_flare_body()
 	_snap_pupil()
 	_combo_hand()
-	await get_tree().create_timer(mark_telegraph, false).timeout
+	await Tweens.wait(self, mark_telegraph)
 	for mark in marks:
 		if is_instance_valid(mark):
 			if health.current > 0:
@@ -658,7 +658,7 @@ func _on_phase2_entered() -> void:
 	phase_changed.emit(2)
 	await _present(_open_eye, PHASE_HOLD)
 	_transforming = false
-	await get_tree().create_timer(hands_back_delay, false).timeout
+	await Tweens.wait(self, hands_back_delay)
 	if phase() == 2:
 		for hand in [hand_left, hand_right]:
 			hand.regenerate()

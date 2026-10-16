@@ -1,7 +1,7 @@
 class_name ArenaFight
 extends Node3D
-## Pelea de sub-jefe o jefe en una sala. Sus hijos pelean dentro de ella (WatcherEye, MummyGuard: los que tienen
-## `attack_finished`): al entrar el player se cierran las puertas, la cámara los muestra a todos gritando con el nombre y arranca,
+## Pelea de sub-jefe o jefe en una sala. Sus hijos ArenaFighter (WatcherEye, MummyGuard…) pelean dentro de ella:
+## al entrar el player se cierran las puertas, la cámara los muestra a todos gritando con el nombre y arranca,
 ## con la barra del HUD. De a uno ataca por vez; cuando cae uno, los demás se apuran. Si el player sale de la sala,
 ## la pelea vuelve a empezar; en el overworld (`area`), una vez arrancada sigue aunque se aleje, y también arranca si
 ## le pegan desde lejos (una flecha). Hace de interruptor (`active`/`activated`) para lo que se abre al ganar; con flag,
@@ -39,8 +39,8 @@ signal bar_changed
 var active := false
 var started := false
 var in_intro := false
-var _fighters: Array = []
-var _attacker = null
+var _fighters: Array[ArenaFighter] = []
+var _attacker: ArenaFighter
 var _persistent: PersistentFlag
 var _escort_spawns: Array[Array] = []
 var _escorts_alive: Array[Node3D] = []
@@ -48,7 +48,7 @@ var _escorts_alive: Array[Node3D] = []
 
 func _ready() -> void:
 	for child in get_children():
-		if child.has_signal(&"attack_finished"):
+		if child is ArenaFighter:
 			_fighters.append(child)
 	if reward:
 		remove_child(reward)
@@ -75,7 +75,7 @@ func _ready() -> void:
 		room.player_left.connect(func(_zone: Node3D) -> void: _reset())
 	else:
 		for fighter in _fighters:
-			if &"hurtbox" in fighter:
+			if fighter.hurtbox:
 				fighter.hurtbox.hit.connect(func(_info: DamageInfo) -> void: _begin())
 
 
@@ -87,7 +87,7 @@ func _begin() -> void:
 	if started or active:
 		return
 	started = true
-	await get_tree().create_timer(close_delay, false).timeout
+	await Tweens.wait(self, close_delay)
 	if not started or not is_inside_tree():
 		return
 	for door in doors:
@@ -118,8 +118,7 @@ func _awaken() -> void:
 	Feel.sfx(&"rumble", _fighters[0].body.global_position, true)
 	Feel.shake(0.35)
 	for fighter in _fighters:
-		if fighter.has_method(&"roar"):
-			fighter.roar()
+		fighter.roar()
 
 
 ## Adónde mira la cámara en la presentación: al medio de los que pelean, así se ven todos gritando.
@@ -152,14 +151,14 @@ func _reset() -> void:
 		barrier.open()
 
 
-func _may_attack(fighter) -> bool:
+func _may_attack(fighter: ArenaFighter) -> bool:
 	if is_instance_valid(_attacker) and _attacker != fighter and not _attacker.is_dead:
 		return false
 	_attacker = fighter
 	return true
 
 
-func _on_attack_finished(fighter) -> void:
+func _on_attack_finished(fighter: ArenaFighter) -> void:
 	if _attacker == fighter:
 		_attacker = null
 
@@ -182,14 +181,14 @@ func _clear_escorts() -> void:
 	_escorts_alive.clear()
 
 
-func _on_defeated(_fighter) -> void:
+func _on_defeated(_fighter: Node3D) -> void:
 	bar_changed.emit()
-	var left := _fighters.filter(func(fighter) -> bool: return not fighter.is_dead)
+	var left := _fighters.filter(func(fighter: ArenaFighter) -> bool: return not fighter.is_dead)
 	for fighter in left:
 		fighter.pace = enrage_pace
 	var escorts_left := _escorts_alive.any(func(escort: Node3D) -> bool: return is_instance_valid(escort) and not escort.is_dead)
 	if left.is_empty() and not escorts_left and started:
-		await get_tree().create_timer(1.2, false).timeout
+		await Tweens.wait(self, 1.2)
 		_win(true)
 
 

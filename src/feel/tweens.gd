@@ -10,3 +10,9 @@ static func ended(tween: Tween) -> bool:
 	while not done[0] and tween.is_valid():
 		await tree.process_frame
 	return done[0]
+
+
+## Como un timer del árbol (para con la pausa, no con el process_mode del nodo), pero si `node` se libera
+## quien espera no vuelve.
+static func wait(node: Node, seconds: float) -> Signal:
+	return node.create_tween().set_pause_mode(Tween.TWEEN_PAUSE_STOP).tween_interval(seconds).finished

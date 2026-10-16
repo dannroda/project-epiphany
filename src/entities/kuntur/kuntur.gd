@@ -1,22 +1,16 @@
 class_name Kuntur
-extends Node3D
+extends ArenaFighter
 ## Cóndor de la Cumbre (D4): vuela en círculos sobre la sala y entre vuelta y vuelta ataca. El joven (sub-jefe) se
 ## tira en picada (la sombra marca dónde) y queda clavado en la nieve, o se posa en un borde y bate las alas: la ráfaga
 ## empuja al player y una flecha ahí lo voltea. El Apu (`apu`, jefe) tira plumas que el escudo espejo devuelve (una
 ## devuelta lo voltea) y con media vida enciende los soles de la sala y se posa a cargar una ráfaga grande: un rayo
 ## devuelto con el escudo lo encandila y lo voltea. Clavado o volteado le pega todo; volando, todo rebota.
 
-signal defeated(kuntur: Kuntur)
-signal health_changed
-## Terminó (o se cortó) su ataque.
-signal attack_finished
-
 enum State { IDLE, CIRCLE, AIM, DIVE, STUCK, GUST, VOLLEY, PERCH, DOWN, DEAD }
 
 const FEATHER := preload("res://src/entities/projectile.tscn")
 const FEATHER_COLOR := Color(0.92, 0.9, 0.86)
 
-@export var config: EntityConfig
 @export var apu := false
 @export var hover_height := 3.5
 @export var circle_time := 2.4
@@ -38,7 +32,6 @@ const FEATHER_COLOR := Color(0.92, 0.9, 0.86)
 ## Los soles de la sala (LightSource): apagados hasta que el Apu llega a media vida.
 @export var suns: Array[Node3D] = []
 
-@onready var body: Node3D = %Body
 @onready var wing_left: Node3D = %WingLeft
 @onready var wing_right: Node3D = %WingRight
 @onready var muzzle: Marker3D = %Muzzle
@@ -46,18 +39,9 @@ const FEATHER_COLOR := Color(0.92, 0.9, 0.86)
 @onready var aim_mark: MeshInstance3D = %AimMark
 @onready var impact: Hitbox = %Impact
 @onready var light_catch: StaticBody3D = %LightCatch
-@onready var hurtbox: Hurtbox = $Hurtbox
-@onready var health: Health = $Health
 @onready var flash: HitFlash = $HitFlash
 
 var state := State.IDLE
-var arena := Rect2()
-var pace := 1.0
-var may_attack: Callable
-var peers: Array = []
-var _turn := 0
-var _tweens: Array[Tween] = []
-var _home := Vector3.ZERO
 var _angle := 0.0
 var _flap := 0.0
 var _flap_rate := 6.0
@@ -69,17 +53,9 @@ var _aim_locked := false
 var _push := 0.0
 var _scale := Vector3.ONE
 
-var is_dead: bool:
-	get:
-		return health.current <= 0
-
 
 func _ready() -> void:
-	health.max_health = config.max_health
-	health.current = config.max_health
-	hurtbox.team = config.team
-	hurtbox.hit.connect(_on_hit)
-	health.died.connect(_die)
+	super()
 	impact.team = config.team
 	impact.monitoring = false
 	impact.damage_factory = func() -> DamageInfo: return DamageInfo.make(dive_damage, config.attack_knockback, impact)
@@ -87,17 +63,8 @@ func _ready() -> void:
 	_catch_light(false)
 	body.position.y = hover_height
 	_scale = body.scale
-	_home = global_position
 	aim_mark.hide()
 	_set_suns(false)
-
-
-func start() -> void:
-	if state != State.IDLE or is_dead:
-		return
-	add_to_group(Enemy.GROUP)
-	config.apply_to(self)
-	_run()
 
 
 func reset() -> void:
@@ -153,7 +120,7 @@ func _physics_process(delta: float) -> void:
 			_face(step if step.length() > 0.05 else Vector3(-sin(_angle), 0.0, cos(_angle)))
 		State.AIM:
 			if player and not _aim_locked:
-				aim_mark.global_position = _clamp(player.global_position) + Vector3.UP * 0.03
+				aim_mark.global_position = _clamp_to_arena(player.global_position) + Vector3.UP * 0.03
 			var over := aim_mark.global_position - (aim_mark.global_position - global_position).normalized() * 3.0
 			global_position = global_position.move_toward(Vector3(over.x, global_position.y, over.z), fly_speed * 0.5 * delta)
 			_face(aim_mark.global_position - global_position)
@@ -166,10 +133,6 @@ func _physics_process(delta: float) -> void:
 		State.VOLLEY, State.PERCH:
 			if player:
 				_face(player.global_position - global_position)
-
-
-func _wait(seconds: float) -> Signal:
-	return get_tree().create_timer(seconds / pace, false).timeout
 
 
 func _run() -> void:
@@ -224,7 +187,7 @@ func _dive() -> void:
 	state = State.AIM
 	_aim_locked = false
 	var player := Players.nearest(global_position)
-	aim_mark.global_position = _clamp(player.global_position if player else global_position) + Vector3.UP * 0.03
+	aim_mark.global_position = _clamp_to_arena(player.global_position if player else global_position) + Vector3.UP * 0.03
 	aim_mark.scale = Vector3.ONE * 1.6
 	aim_mark.show()
 	_tween_to(aim_mark, ^"scale", Vector3.ONE, aim_time + lock_time)
@@ -248,7 +211,7 @@ func _dive() -> void:
 	if state != State.DIVE:
 		return
 	impact.activate()
-	get_tree().create_timer(0.15, false).timeout.connect(impact.deactivate)
+	_after(0.15, impact.deactivate)
 	Feel.burst(&"dust", global_position + Vector3.UP * 0.1, Vector3.UP)
 	Feel.sfx(&"boom", global_position)
 	Feel.shake(0.4)
@@ -258,7 +221,7 @@ func _dive() -> void:
 	state = State.STUCK
 	_wings(0.9, 14.0, 0.2)
 	body.rotation.x = 0.5
-	await get_tree().create_timer(stuck_time, false).timeout
+	await _wait(stuck_time, false)
 	if state != State.STUCK:
 		return
 	body.rotation.x = 0.0
@@ -272,7 +235,7 @@ func _gust(push: float) -> void:
 		_push = 0.0
 		var toward := (global_position - (player.global_position if player else _center())) * Vector3(1, 0, 1)
 		toward = Vector3.BACK if toward.is_zero_approx() else toward.normalized()
-		var spot := _clamp((player.global_position if player else _center()) + toward * 5.0)
+		var spot := _clamp_to_arena((player.global_position if player else _center()) + toward * 5.0)
 		spot.y = global_position.y
 		_tween_to(self, ^"global_position", spot, 0.6).set_trans(Tween.TRANS_SINE)
 		_tween_to(body, ^"position:y", 0.6, 0.6).set_trans(Tween.TRANS_SINE)
@@ -368,56 +331,44 @@ func _knock_down() -> void:
 	_tween_to(body, ^"position:y", 0.4, 0.35).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BOUNCE)
 	body.rotation.z = 0.4
 	var turn := _turn
-	await get_tree().create_timer(0.35, false).timeout
+	await _wait(0.35, false)
 	if turn != _turn:
 		return
 	Feel.burst(&"dust", global_position + Vector3.UP * 0.1, Vector3.UP)
-	await get_tree().create_timer(down_time, false).timeout
+	await _wait(down_time, false)
 	if turn != _turn:
 		return
 	body.rotation.z = 0.0
 	_tween_to(body, ^"position:y", hover_height, 0.6).set_ease(Tween.EASE_OUT)
-	await get_tree().create_timer(0.6, false).timeout
+	await _wait(0.6, false)
 	if turn == _turn:
 		_run()
 
 
-func _interrupt() -> void:
-	_turn += 1
-	for tween in _tweens:
-		if tween.is_valid():
-			tween.kill()
-	_tweens.clear()
+func _on_interrupt() -> void:
 	aim_mark.hide()
 	_push = 0.0
 	_catch_light(false)
 	impact.deactivate()
 	body.rotation = Vector3(0.0, body.rotation.y, 0.0)
-	attack_finished.emit()
 
 
 func is_vulnerable() -> bool:
 	return state in [State.STUCK, State.DOWN]
 
 
-func _on_hit(info: DamageInfo) -> void:
-	if is_dead or state == State.IDLE:
-		return
+func _is_idle() -> bool:
+	return state == State.IDLE
+
+
+func _react_to(info: DamageInfo) -> bool:
 	var projectile := info.source as Projectile
 	if projectile and not is_vulnerable():
 		var reflected := projectile.shooter == self
 		if (apu and reflected) or (not apu and state == State.GUST):
 			_knock_down()
-			return
-	if not is_vulnerable():
-		hurtbox.surface = "stone"
-		Feel.burst(&"sparks", body.global_position, Vector3.UP)
-		Feel.sfx(&"block", body.global_position)
-		return
-	hurtbox.surface = "flesh"
-	if health.damage(info.amount):
-		Log.info(&"combat", name, "recibió", info.amount, "de daño. Vida:", health.current)
-		health_changed.emit()
+			return true
+	return false
 
 
 func _die() -> void:
@@ -460,18 +411,3 @@ func _center() -> Vector3:
 
 func _radius() -> float:
 	return maxf(minf(arena.size.x, arena.size.y) / 2.0 - 0.5, 1.5)
-
-
-func _clamp(point: Vector3) -> Vector3:
-	return Vector3(clampf(point.x, arena.position.x, arena.end.x), global_position.y, clampf(point.z, arena.position.y, arena.end.y))
-
-
-func _new_tween() -> Tween:
-	_tweens = _tweens.filter(func(tween: Tween) -> bool: return tween.is_valid())
-	var tween := create_tween()
-	_tweens.append(tween)
-	return tween
-
-
-func _tween_to(target: Object, property: NodePath, value: Variant, seconds: float) -> PropertyTweener:
-	return _new_tween().tween_property(target, property, value, seconds / pace)

@@ -1,18 +1,12 @@
 class_name MummyGuard
-extends Node3D
+extends ArenaFighter
 ## Momia guardiana de la Chullpa (D1): se acerca a saltitos y después salta alto sobre el player (su sombra lo sigue
 ## y se fija antes de caer). Al caer golpea donde cae y manda una onda por el piso que lastima a quien esté parado en
 ## ella: el sub-jefe la tiene corta (se esquiva alejándose); el jefe, que llena la sala, se salta con la pluma.
 ## Después de caer queda trabada: ahí le pega todo (espada, bomba, vasija). Fuera de eso, todo rebota.
 
-signal defeated(mummy: MummyGuard)
-signal health_changed
-## Terminó (o se cortó) su ataque: otro puede atacar.
-signal attack_finished
-
 enum State { IDLE, HOP, AIM, FALL, STUCK, DEAD }
 
-@export var config: EntityConfig
 @export var hops := 2
 @export var hop_distance := 3.0
 @export var hop_time := 0.45
@@ -34,53 +28,25 @@ enum State { IDLE, HOP, AIM, FALL, STUCK, DEAD }
 ## Saltos seguidos (sin trabarse entre uno y otro) con la mitad de la vida o menos.
 @export var rage_leaps := 1
 
-@onready var body: Node3D = %Body
 @onready var roar_fx: Roar = %Roar
 @onready var aim_mark: MeshInstance3D = %AimMark
 @onready var waves: Array[MeshInstance3D] = [%Wave, %Wave2]
 @onready var impact: Hitbox = %Impact
-@onready var hurtbox: Hurtbox = %Hurtbox
 ## El cuerpo choca con el player; se apaga mientras salta encima (cae donde está el player).
 @onready var solid_shape: CollisionShape3D = %SolidShape
-@onready var health: Health = $Health
 
 var state := State.IDLE
-## La sala menos el borde, en XZ; la pone ArenaFight.
-var arena := Rect2()
-var pace := 1.0
-var may_attack: Callable
-var peers: Array = []
-var _turn := 0
-var _tweens: Array[Tween] = []
-var _home := Vector3.ZERO
 var _aim_locked := false
 var _rings: Array[Dictionary] = []
 
-var is_dead: bool:
-	get:
-		return health.current <= 0
-
 
 func _ready() -> void:
-	health.max_health = config.max_health
-	health.current = config.max_health
-	hurtbox.team = config.team
-	hurtbox.hit.connect(_on_hit)
-	health.died.connect(_die)
+	super()
 	impact.team = config.team
 	impact.monitoring = false
 	impact.damage_factory = func() -> DamageInfo: return DamageInfo.make(impact_damage, config.attack_knockback * 1.5, impact, &"blast")
-	_home = global_position
 	aim_mark.hide()
 	_stop_waves()
-
-
-func start() -> void:
-	if state != State.IDLE or is_dead:
-		return
-	add_to_group(Enemy.GROUP)
-	config.apply_to(self)
-	_run()
 
 
 ## Presentación: mira al player, se echa para atrás, se hincha y grita.
@@ -130,11 +96,6 @@ func _physics_process(delta: float) -> void:
 		global_position = global_position.move_toward(shadow, air_speed * pace * delta)
 	if not _rings.is_empty():
 		_spread_waves(delta)
-
-
-
-func _wait(seconds: float) -> Signal:
-	return get_tree().create_timer(seconds / pace, false).timeout
 
 
 func _run() -> void:
@@ -201,7 +162,7 @@ func _leap(last := true) -> void:
 		return
 	aim_mark.hide()
 	impact.activate()
-	get_tree().create_timer(0.15, false).timeout.connect(impact.deactivate)
+	_after(0.15, impact.deactivate)
 	_set_solid(true)
 	Feel.burst(&"dust", global_position + Vector3.UP * 0.1, Vector3.UP)
 	Feel.sfx(&"boom", global_position)
@@ -215,7 +176,7 @@ func _leap(last := true) -> void:
 	var wobble := _new_tween().set_loops(maxi(int(stuck_time / 0.3), 1))
 	wobble.tween_property(body, ^"rotation:z", 0.2, 0.15)
 	wobble.tween_property(body, ^"rotation:z", -0.2, 0.15)
-	await get_tree().create_timer(stuck_time, false).timeout
+	await _wait(stuck_time, false)
 	if state != State.STUCK:
 		return
 	wobble.kill()
@@ -266,18 +227,12 @@ func _stop_waves() -> void:
 		mesh.hide()
 
 
-func _interrupt() -> void:
-	_turn += 1
-	for tween in _tweens:
-		if tween.is_valid():
-			tween.kill()
-	_tweens.clear()
+func _on_interrupt() -> void:
 	_stop_waves()
 	aim_mark.hide()
 	impact.deactivate()
 	body.rotation.z = 0.0
 	_set_solid(not is_dead)
-	attack_finished.emit()
 
 
 func _set_solid(on: bool) -> void:
@@ -288,18 +243,12 @@ func is_vulnerable() -> bool:
 	return state == State.STUCK
 
 
-func _on_hit(info: DamageInfo) -> void:
-	if is_dead or state == State.IDLE:
-		return
-	if not is_vulnerable():
-		hurtbox.surface = "stone"
-		Feel.burst(&"sparks", body.global_position + Vector3.UP, Vector3.UP)
-		Feel.sfx(&"block", body.global_position)
-		return
-	hurtbox.surface = "flesh"
-	if health.damage(info.amount):
-		Log.info(&"combat", name, "recibió", info.amount, "de daño. Vida:", health.current)
-		health_changed.emit()
+func _is_idle() -> bool:
+	return state == State.IDLE
+
+
+func _spark_point() -> Vector3:
+	return body.global_position + Vector3.UP
 
 
 func _die() -> void:
@@ -316,18 +265,3 @@ func _die() -> void:
 	tween.tween_property(body, ^"scale", Vector3(1.2, 0.05, 1.2), 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
 	tween.tween_callback(body.hide)
 	defeated.emit(self)
-
-
-func _clamp_to_arena(point: Vector3) -> Vector3:
-	return Vector3(clampf(point.x, arena.position.x, arena.end.x), global_position.y, clampf(point.z, arena.position.y, arena.end.y))
-
-
-func _new_tween() -> Tween:
-	_tweens = _tweens.filter(func(tween: Tween) -> bool: return tween.is_valid())
-	var tween := create_tween()
-	_tweens.append(tween)
-	return tween
-
-
-func _tween_to(target: Object, property: NodePath, value: Variant, seconds: float) -> PropertyTweener:
-	return _new_tween().tween_property(target, property, value, seconds / pace)

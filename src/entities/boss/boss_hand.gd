@@ -345,9 +345,9 @@ func _slam_once(attack: BossAttack, target: Node3D, area: Rect2) -> bool:
 	_tilt_goal = Vector3.ZERO
 	_impact()
 	_squash_and_bounce()
-	await get_tree().create_timer(0.08, false).timeout
+	await Tweens.wait(self, 0.08)
 	_set_hitbox(strike, null)
-	await get_tree().create_timer(0.1, false).timeout
+	await Tweens.wait(self, 0.1)
 	_set_hitbox(shockwave, null)
 	return state == State.BUSY
 

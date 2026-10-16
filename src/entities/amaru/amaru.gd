@@ -1,20 +1,14 @@
 class_name Amaru
-extends Node3D
+extends ArenaFighter
 ## Amaru, la serpiente joven del Santuario de Totora (sub-jefe de D3). Asoma por uno de sus charcos, mira al player y
 ## marca una línea en el piso; se lanza recta por ella y cae sobre la totora, donde queda tirada y expuesta: ahí le
 ## pega todo (espada, bomba, vasija). Después vuelve reptando al charco más cercano y se hunde. Asomada, todo rebota.
 ## Con la mitad de la vida o menos, escupe antes de lanzarse.
 
-signal defeated(serpent: Amaru)
-signal health_changed
-## Terminó (o se cortó) su ataque: otro puede atacar.
-signal attack_finished
-
 enum State { IDLE, UNDER, RISE, AIM, LUNGE, STUCK, RETURN, DEAD }
 
 const ORB := preload("res://src/entities/projectile.tscn")
 
-@export var config: EntityConfig
 ## Los charcos por donde asoma (en la sala).
 @export var pools: Array[Node3D] = []
 @export var under_time := 0.8
@@ -32,7 +26,6 @@ const ORB := preload("res://src/entities/projectile.tscn")
 ## Dónde queda el cuello tirado en el piso, para que la cabeza caiga donde está ella.
 @export var flat_offset := Vector3(0, 0.4, 1.0)
 
-@onready var body: Node3D = %Body
 @onready var neck: Node3D = %Neck
 @onready var head: Node3D = %Head
 @onready var _head_rest := head.position
@@ -40,46 +33,19 @@ const ORB := preload("res://src/entities/projectile.tscn")
 @onready var roar_fx: Roar = %Roar
 @onready var aim_line: MeshInstance3D = %AimLine
 @onready var impact: Hitbox = %Impact
-@onready var hurtbox: Hurtbox = %Hurtbox
-@onready var health: Health = $Health
 
 var state := State.IDLE
-## La sala menos el borde, en XZ; la pone ArenaFight.
-var arena := Rect2()
-var pace := 1.0
-var may_attack: Callable
-var peers: Array = []
-var _turn := 0
-var _tweens: Array[Tween] = []
-var _home := Vector3.ZERO
 var _pool: Node3D
-
-var is_dead: bool:
-	get:
-		return health.current <= 0
 
 
 func _ready() -> void:
-	health.max_health = config.max_health
-	health.current = config.max_health
-	hurtbox.team = config.team
-	hurtbox.hit.connect(_on_hit)
-	health.died.connect(_die)
+	super()
 	impact.team = config.team
 	impact.monitoring = false
 	impact.damage_factory = func() -> DamageInfo: return DamageInfo.make(lunge_damage, config.attack_knockback, impact)
-	_home = global_position
 	_pool = _nearest_pool(global_position)
 	aim_line.hide()
 	_pose_risen()
-
-
-func start() -> void:
-	if state != State.IDLE or is_dead:
-		return
-	add_to_group(Enemy.GROUP)
-	config.apply_to(self)
-	_run()
 
 
 func reset() -> void:
@@ -126,10 +92,6 @@ func _physics_process(_delta: float) -> void:
 		var player := Players.nearest(global_position)
 		if player:
 			_face(player.global_position - global_position)
-
-
-func _wait(seconds: float) -> Signal:
-	return get_tree().create_timer(seconds / pace, false).timeout
 
 
 func _run() -> void:
@@ -228,7 +190,7 @@ func _lie() -> void:
 	var wobble := _new_tween().set_loops(maxi(int(stuck_time / 0.3), 1))
 	wobble.tween_property(body, ^"rotation:z", 0.15, 0.15)
 	wobble.tween_property(body, ^"rotation:z", -0.15, 0.15)
-	await get_tree().create_timer(stuck_time, false).timeout
+	await _wait(stuck_time, false)
 	if state != State.STUCK:
 		return
 	wobble.kill()
@@ -301,30 +263,18 @@ func _nearest_pool(from: Vector3) -> Node3D:
 	return best
 
 
-func _interrupt() -> void:
-	_turn += 1
-	for tween in _tweens:
-		if tween.is_valid():
-			tween.kill()
-	_tweens.clear()
+func _on_interrupt() -> void:
 	aim_line.hide()
 	impact.deactivate()
 	body.rotation.z = 0.0
-	attack_finished.emit()
 
 
-func _on_hit(info: DamageInfo) -> void:
-	if is_dead or state == State.IDLE:
-		return
-	if not is_vulnerable():
-		hurtbox.surface = "stone"
-		Feel.burst(&"sparks", body.global_position + Vector3.UP, Vector3.UP)
-		Feel.sfx(&"block", body.global_position)
-		return
-	hurtbox.surface = "flesh"
-	if health.damage(info.amount):
-		Log.info(&"combat", name, "recibió", info.amount, "de daño. Vida:", health.current)
-		health_changed.emit()
+func _is_idle() -> bool:
+	return state == State.IDLE
+
+
+func _spark_point() -> Vector3:
+	return body.global_position + Vector3.UP
 
 
 func _die() -> void:
@@ -340,14 +290,3 @@ func _die() -> void:
 	tween.tween_property(body, ^"scale", Vector3(1.2, 0.05, 1.2), 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
 	tween.tween_callback(body.hide)
 	defeated.emit(self)
-
-
-func _new_tween() -> Tween:
-	_tweens = _tweens.filter(func(tween: Tween) -> bool: return tween.is_valid())
-	var tween := create_tween()
-	_tweens.append(tween)
-	return tween
-
-
-func _tween_to(target: Object, property: NodePath, value: Variant, seconds: float) -> PropertyTweener:
-	return _new_tween().tween_property(target, property, value, seconds / pace)

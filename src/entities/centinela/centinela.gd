@@ -1,18 +1,12 @@
 class_name Centinela
-extends Node3D
+extends ArenaFighter
 ## Centinela del Bañado, mini jefe del martillo (11.192): camina pesado hacia el player, levanta la maza (marca en el
 ## piso dónde va a caer) y la baja. Cada pisada y el golpe mandan ondas por el piso (GroundWaves del modelo, que también
 ## lastiman a sus huancas). La maza queda clavada: ahí le pega todo (espada, bomba, vasija). Fuera de eso, todo rebota.
 ## La maneja un ArenaFight.
 
-signal defeated(centinela: Centinela)
-signal health_changed
-## Terminó (o se cortó) su ataque: otro puede atacar.
-signal attack_finished
-
 enum State { IDLE, WALK, WINDUP, SLAM, STUCK, DEAD }
 
-@export var config: EntityConfig
 @export var walk_speed := 1.8
 ## Camina hasta tener al player a esta distancia, o hasta `walk_time`.
 @export var slam_reach := 2.6
@@ -41,52 +35,24 @@ enum State { IDLE, WALK, WINDUP, SLAM, STUCK, DEAD }
 @export var anim_hit := &"General/Hit_A"
 @export var anim_death := &"General/Death_A"
 
-@onready var body: Node3D = %Body
 @onready var roar_fx: Roar = %Roar
 @onready var aim_mark: Node3D = %AimMark
 @onready var aim_disc: MeshInstance3D = %AimDisc
-@onready var hurtbox: Hurtbox = %Hurtbox
-@onready var health: Health = $Health
 @onready var solid_shape: CollisionShape3D = %SolidShape
 @onready var tip: Marker3D = body.find_child("Punta", true, false) as Marker3D
 
 var state := State.IDLE
-## La sala menos el borde, en XZ; la pone ArenaFight.
-var arena := Rect2()
-var pace := 1.0
-var may_attack: Callable
-var peers: Array = []
-var _turn := 0
 var _aim_locked := false
-var _tweens: Array[Tween] = []
-var _home := Vector3.ZERO
 var _anim: AnimationPlayer
-
-var is_dead: bool:
-	get:
-		return health.current <= 0
 
 
 func _ready() -> void:
-	health.max_health = config.max_health
-	health.current = config.max_health
-	hurtbox.team = config.team
-	hurtbox.hit.connect(_on_hit)
-	health.died.connect(_die)
-	_home = global_position
+	super()
 	_anim = body.find_child("AnimationPlayer", true, false) as AnimationPlayer
 	if _anim:
 		_anim.animation_finished.connect(_on_animation_finished)
 	aim_mark.hide()
 	_play.call_deferred(anim_idle)
-
-
-func start() -> void:
-	if state != State.IDLE or is_dead:
-		return
-	add_to_group(Enemy.GROUP)
-	config.apply_to(self)
-	_run()
 
 
 ## Presentación: mira al player, levanta la maza y la planta con el grito.
@@ -125,10 +91,6 @@ func _physics_process(delta: float) -> void:
 		if player:
 			var target := _clamp_to_arena(player.global_position)
 			global_position = global_position.move_toward(target, walk_speed * pace * delta)
-
-
-func _wait(seconds: float) -> Signal:
-	return get_tree().create_timer(seconds / pace, false).timeout
 
 
 func _run() -> void:
@@ -208,7 +170,7 @@ func _slam(last := true) -> void:
 	var wobble := _new_tween().set_loops(maxi(int(stuck_time / 0.3), 1))
 	wobble.tween_property(body, ^"rotation:z", 0.08, 0.15)
 	wobble.tween_property(body, ^"rotation:z", -0.08, 0.15)
-	await get_tree().create_timer(stuck_time, false).timeout
+	await _wait(stuck_time, false)
 	if state != State.STUCK:
 		return
 	wobble.kill()
@@ -232,36 +194,28 @@ func _strike_point() -> Vector3:
 	return _clamp_to_arena(global_position + forward.normalized() * slam_reach)
 
 
-func _interrupt() -> void:
-	_turn += 1
-	for tween in _tweens:
-		if tween.is_valid():
-			tween.kill()
-	_tweens.clear()
+func _on_interrupt() -> void:
 	aim_mark.hide()
 	_aim_locked = false
 	body.rotation = Vector3.ZERO
 	body.scale = Vector3.ONE
 	_release()
-	attack_finished.emit()
 
 
 func is_vulnerable() -> bool:
 	return state == State.STUCK
 
 
-func _on_hit(info: DamageInfo) -> void:
-	if is_dead or state == State.IDLE:
-		return
-	if not is_vulnerable():
-		hurtbox.surface = "stone"
-		Feel.burst(&"sparks", body.global_position + Vector3.UP * 1.5, Vector3.UP)
-		Feel.sfx(&"block", body.global_position)
-		return
-	hurtbox.surface = "stone"
-	if health.damage(info.amount):
-		Log.info(&"combat", name, "recibió", info.amount, "de daño. Vida:", health.current)
-		health_changed.emit()
+func _is_idle() -> bool:
+	return state == State.IDLE
+
+
+func _spark_point() -> Vector3:
+	return body.global_position + Vector3.UP * 1.5
+
+
+func _wound_surface() -> String:
+	return "stone"
 
 
 func _die() -> void:
@@ -321,20 +275,3 @@ func _release() -> void:
 
 func _flat(v: Vector3) -> Vector3:
 	return Vector3(v.x, 0.0, v.z)
-
-
-func _clamp_to_arena(point: Vector3) -> Vector3:
-	if arena.size == Vector2.ZERO:
-		return Vector3(point.x, global_position.y, point.z)
-	return Vector3(clampf(point.x, arena.position.x, arena.end.x), global_position.y, clampf(point.z, arena.position.y, arena.end.y))
-
-
-func _new_tween() -> Tween:
-	_tweens = _tweens.filter(func(tween: Tween) -> bool: return tween.is_valid())
-	var tween := create_tween()
-	_tweens.append(tween)
-	return tween
-
-
-func _tween_to(target: Object, property: NodePath, value: Variant, seconds: float) -> PropertyTweener:
-	return _new_tween().tween_property(target, property, value, seconds / pace)

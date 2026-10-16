@@ -72,7 +72,7 @@ func _next_wave() -> void:
 		var enemy := (spawn as WaveSpawn).enemy.instantiate() as Node3D
 		enemy.position = (get_parent() as Node3D).to_local((spawn as WaveSpawn).global_position)
 		get_parent().add_child(enemy)
-		if enemy.has_signal(&"attack_finished"):
+		if enemy is ArenaFighter:
 			_unleash(enemy)
 		_alive.append(enemy)
 		enemy.connect(&"defeated", _on_defeated)
@@ -81,9 +81,9 @@ func _next_wave() -> void:
 
 
 ## Un sub-jefe (los peleadores de ArenaFight) en una oleada: pelea solo, dentro de la sala.
-func _unleash(fighter: Node3D) -> void:
+func _unleash(fighter: ArenaFighter) -> void:
 	fighter.arena = room.bounds().grow(-1.5) if room else Rect2(Vector2(fighter.global_position.x, fighter.global_position.z), Vector2.ZERO).grow(6.0)
-	fighter.may_attack = func(_who: Node3D) -> bool: return true
+	fighter.may_attack = func(_who: ArenaFighter) -> bool: return true
 	fighter.peers = [fighter]
 	fighter.start.call_deferred()
 

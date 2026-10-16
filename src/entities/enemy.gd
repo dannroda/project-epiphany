@@ -361,7 +361,7 @@ func on_death_finished() -> void:
 
 
 func _sink_away() -> void:
-	await get_tree().create_timer(corpse_time, false).timeout
+	await Tweens.wait(self, corpse_time)
 	if not is_inside_tree():
 		return
 	Feel.burst(&"dust", global_position + Vector3.UP * 0.1, Vector3.UP)
