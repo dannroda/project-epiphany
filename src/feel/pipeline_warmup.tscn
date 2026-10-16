@@ -1,0 +1,31 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://src/entities/projectile.tscn" id="1_projectile"]
+[ext_resource type="PackedScene" path="res://src/items/bomb/explosion.tscn" id="2_explosion"]
+[ext_resource type="PackedScene" path="res://src/feel/blessing.tscn" id="3_blessing"]
+[ext_resource type="PackedScene" path="res://src/feel/roar_ring.tscn" id="4_roar_ring"]
+[ext_resource type="PackedScene" path="res://src/entities/boss/slam_crack.tscn" id="5_slam_crack"]
+[ext_resource type="PackedScene" path="res://src/feel/teleport.tscn" id="6_teleport"]
+[ext_resource type="PackedScene" path="res://src/feel/bursts/dust.tscn" id="7_dust"]
+
+[node name="PipelineWarmup" type="Node3D"]
+process_mode = 4
+visible = false
+
+[node name="Projectile" parent="." instance=ExtResource("1_projectile")]
+script = null
+
+[node name="Explosion" parent="." instance=ExtResource("2_explosion")]
+script = null
+
+[node name="Blessing" parent="." instance=ExtResource("3_blessing")]
+script = null
+
+[node name="RoarRing" parent="." instance=ExtResource("4_roar_ring")]
+
+[node name="SlamCrack" parent="." instance=ExtResource("5_slam_crack")]
+
+[node name="Teleport" parent="." instance=ExtResource("6_teleport")]
+script = null
+
+[node name="Dust" parent="." instance=ExtResource("7_dust")]

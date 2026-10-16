@@ -7,6 +7,9 @@ extends CanvasLayer
 const TITLE := "res://src/ui/title/title_screen.tscn"
 const NEW_GAME_SCENE := "res://levels/overworld.tscn"
 const INTRO := preload("res://src/cutscene/intro.tscn")
+## Efectos que aparecen recién jugando (proyectil, explosión…): se agregan ocultos a cada escena nueva mientras la
+## pantalla sigue tapada, para que sus pipelines se compilen ahí y no en el primer disparo.
+const PIPELINE_WARMUP := preload("res://src/feel/pipeline_warmup.tscn")
 ## Separación entre players al reaparecer juntos (co-op).
 const PLAYER_SPACING := 1.2
 
@@ -117,8 +120,21 @@ func _change_scene(scene_path: String) -> bool:
 		return false
 	get_tree().change_scene_to_packed(packed)
 	await get_tree().scene_changed
+	await _warm_up_pipelines()
 	hide_loading()
 	return true
+
+
+func _warm_up_pipelines() -> void:
+	var scene := get_tree().current_scene
+	if not scene is Node3D:
+		return
+	var warmup := PIPELINE_WARMUP.instantiate()
+	scene.add_child(warmup)
+	await get_tree().process_frame
+	await get_tree().process_frame
+	if is_instance_valid(warmup):
+		warmup.queue_free()
 
 
 func show_loading() -> void:
