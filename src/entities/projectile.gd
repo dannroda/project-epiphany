@@ -75,7 +75,7 @@ func _on_landed(_hurtbox: Hurtbox) -> void:
 
 ## Contra el mundo (paredes, piso, cajas).
 func _on_body_entered(body: Node3D) -> void:
-	if _stuck or _on_character(body) or body.is_in_group(&"walk_guard"):
+	if _stuck or _on_character(body) or body.is_in_group(&"walk_guard") or _from_shooter(body):
 		return
 	super(body)
 	Feel.burst(burst, global_position, -velocity.normalized())
@@ -103,3 +103,8 @@ func _on_character(body: Node) -> bool:
 			return true
 		node = node.get_parent()
 	return false
+
+
+## El cuerpo de quien lo disparó (el jefe tira el orbe desde adelante de su propio cuerpo).
+func _from_shooter(body: Node) -> bool:
+	return is_instance_valid(shooter) and (body == shooter or shooter.is_ancestor_of(body))

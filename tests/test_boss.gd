@@ -860,3 +860,17 @@ func test_unknown_eye_attack_does_nothing() -> void:
 	assert_eq(Spawns.root(boss).find_children("*", "Projectile", false, false).size(), before, "sin orbe")
 	target.free()
 	boss.free()
+
+
+func test_the_orb_goes_through_the_boss_own_body() -> void:
+	var boss := _spawn()
+	var info := DamageInfo.make(1, 1.0, boss)
+	var orb := Projectile.fire(Boss.ORB, boss, boss.orb_muzzle.global_position, Vector3.BACK, info)
+	orb._on_body_entered(boss.get_node(^"%Solid"))
+	assert_eq(orb.is_queued_for_deletion(), false, "con el player detrás del ojo, el orbe no choca contra el jefe")
+	var wall := StaticBody3D.new()
+	boss.get_parent().add_child(wall)
+	orb._on_body_entered(wall)
+	assert_eq(orb.is_queued_for_deletion(), true, "contra una pared sí")
+	wall.free()
+	boss.free()
