@@ -5,7 +5,7 @@ const PlayerControls := preload("res://player/components/controls.gd")
 ## Los botones de ítem (X, Y), en orden.
 const ITEM_ACTIONS: Array[StringName] = [&"item_1", &"item_2"]
 
-const SHIELD_THRUST: AttackData = preload("res://data/attacks/shield_thrust.tres")
+const SWORD_STAB: AttackData = preload("res://data/attacks/sword_stab.tres")
 const SILHOUETTE := preload("res://src/feel/occluded_silhouette.gdshader")
 
 ## El HUD sacude el slot del botón que no se pudo usar.
@@ -253,14 +253,12 @@ func is_blocking() -> bool:
 	return movement_state.blackboard.get_var(PlayerState.BB_IS_BLOCKING, false)
 
 
-## El ataque que toca según lo que tiene en la mano y si está bloqueando.
+## El ataque que toca según lo que tiene en la mano; cubriéndose con la espada, la estocada.
 func current_attack() -> AttackData:
-	if is_blocking():
-		return SHIELD_THRUST
 	var weapon := equipment.weapon
-	if weapon and weapon.behavior is MeleeBehavior:
-		return (weapon.behavior as MeleeBehavior).attack
-	return null
+	if weapon == null or not weapon.behavior is MeleeBehavior:
+		return null
+	return SWORD_STAB if is_blocking() else (weapon.behavior as MeleeBehavior).attack
 
 
 func _make_damage() -> DamageInfo:

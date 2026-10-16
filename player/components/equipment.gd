@@ -6,7 +6,6 @@ signal weapon_changed(item: ItemData)
 
 @export var weapon_socket: Node3D
 @export var shield_hand_socket: Node3D
-@export var shield_back_socket: Node3D
 ## Donde va lo que se sostiene al usarlo (el arco), en la mano del escudo.
 @export var held_socket: Node3D
 ## Co-op: el cuerpo de cada invitado (P2, P3…) sin armadura, con sus colores.
@@ -17,11 +16,10 @@ var weapon: ItemData
 var flash: HitFlash:
 	set(value):
 		flash = value
-		for socket in [weapon_socket, shield_hand_socket, shield_back_socket]:
+		for socket in [weapon_socket, shield_hand_socket]:
 			if socket:
 				flash.cover(socket)
 var shield_in_hand: Node3D
-var shield_on_back: Node3D
 ## Ítem a distancia que se sostiene mientras se usa (el arco), en la mano del escudo.
 var held: Node3D
 
@@ -35,12 +33,8 @@ func _ready() -> void:
 func refresh() -> void:
 	weapon = _equipped(ItemData.Category.SWORD)
 	_place(weapon_socket, weapon)
-	var shield := _equipped(ItemData.Category.SHIELD)
-	var hand_visible := shield_in_hand.visible if shield_in_hand else false
-	shield_in_hand = _place(shield_hand_socket, shield)
-	shield_on_back = _place(shield_back_socket, shield)
-	if shield_in_hand:
-		show_shield_in_hand(hand_visible)
+	shield_in_hand = _place(shield_hand_socket, _equipped(ItemData.Category.SHIELD))
+	show_shield_in_hand(not is_instance_valid(held))
 	_dress(_equipped(ItemData.Category.ARMOR))
 	weapon_changed.emit(weapon)
 
@@ -64,12 +58,10 @@ func hold(item: ItemData, weapon_hand := false) -> void:
 	show_shield_in_hand(false)
 
 
-## El escudo está en la mano o en la espalda; el que no se ve tampoco colisiona.
+## Sin el escudo en la mano (sostiene el arco) tampoco colisiona.
 func show_shield_in_hand(in_hand: bool) -> void:
-	if shield_in_hand == null:
-		return
-	_set_present(shield_in_hand, in_hand)
-	_set_present(shield_on_back, not in_hand)
+	if shield_in_hand:
+		_set_present(shield_in_hand, in_hand)
 
 
 func _dress(armor: ItemData) -> void:
@@ -98,6 +90,7 @@ func release_held() -> void:
 		held.queue_free()
 	held = null
 	weapon_socket.visible = true
+	show_shield_in_hand(true)
 
 
 func damage_reduction() -> float:

@@ -497,27 +497,6 @@ text = "CONTROLS_DPAD_NOTE"
 horizontal_alignment = 2
 autowrap_mode = 3
 
-[node name="Block" type="PanelContainer" parent="."]
-layout_mode = 0
-offset_left = 760.0
-offset_top = 10.0
-offset_right = 1050.0
-offset_bottom = 54.0
-theme_override_styles/panel = SubResource("Box")
-
-[node name="Rows" type="VBoxContainer" parent="Block"]
-layout_mode = 2
-theme_override_constants/separation = 4
-
-[node name="Row0" parent="Block/Rows" instance=ExtResource("1_row")]
-layout_mode = 2
-layout_direction = 3
-actions = Array[StringName]([&"block"])
-
-[node name="Label" parent="Block/Rows/Row0" index="0"]
-horizontal_alignment = 2
-text = "CONTROLS_BLOCK"
-
 [node name="Dodge" type="PanelContainer" parent="."]
 layout_mode = 0
 offset_left = 760.0

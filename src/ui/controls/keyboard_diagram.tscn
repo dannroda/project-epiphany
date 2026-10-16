@@ -123,14 +123,6 @@ actions = Array[StringName]([&"attack"])
 [node name="Label" parent="Right/Combat/Rows/Row0" index="0"]
 text = "CONTROLS_ATTACK"
 
-[node name="Row1" parent="Right/Combat/Rows" instance=ExtResource("1_row")]
-layout_mode = 2
-gamepad = false
-actions = Array[StringName]([&"block"])
-
-[node name="Label" parent="Right/Combat/Rows/Row1" index="0"]
-text = "CONTROLS_BLOCK"
-
 [node name="Row2" parent="Right/Combat/Rows" instance=ExtResource("1_row")]
 layout_mode = 2
 gamepad = false

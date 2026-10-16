@@ -652,7 +652,7 @@ msgid "ITEM_SHIELD_MIRROR_NAME"
 msgstr "Escudo espejo"
 
 msgid "ITEM_SHIELD_MIRROR_DESC"
-msgstr "Bloquea los golpes de frente. Refleja proyectiles y haces de luz hacia donde mirás o hacia el objetivo fijado."
+msgstr "Con el botón de fijar mantenido bloquea los golpes de frente. Refleja proyectiles y haces de luz hacia donde mirás o hacia el objetivo fijado."
 
 msgid "ITEM_SHIELD_MIRROR_GOT"
 msgstr "¡Conseguiste el Escudo espejo!"
@@ -661,7 +661,7 @@ msgid "ITEM_SHIELD_WOOD_NAME"
 msgstr "Escudo de madera"
 
 msgid "ITEM_SHIELD_WOOD_DESC"
-msgstr "Bloquea los golpes que vienen de frente. Con la guardia arriba, atacar da un golpe de escudo que aturde."
+msgstr "Con el botón de fijar mantenido bloquea los golpes que vienen de frente. Cubriéndote, atacar da una estocada que aturde."
 
 msgid "ITEM_SHIELD_WOOD_GOT"
 msgstr "¡Conseguiste el Escudo de madera!"
@@ -1022,7 +1022,7 @@ msgid "CONTROLS_HINT_GAMEPAD"
 msgstr "Mando"
 
 msgid "CONTROLS_LOCK"
-msgstr "Fijar objetivo"
+msgstr "Fijar objetivo y cubrirse"
 
 msgid "CONTROLS_RING"
 msgstr "Anillo de ítems"
@@ -1044,9 +1044,6 @@ msgstr "Cruceta"
 
 msgid "CONTROLS_DPAD_NOTE"
 msgstr "libre por ahora"
-
-msgid "CONTROLS_BLOCK"
-msgstr "Bloquear con el escudo"
 
 msgid "CONTROLS_DODGE"
 msgstr "Rodar"

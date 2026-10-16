@@ -1,6 +1,6 @@
 extends "res://tests/test_case.gd"
 
-const ACTIONS := [&"move_forward", &"attack", &"interact", &"dodge", &"item_1", &"item_2", &"block", &"z-lock",
+const ACTIONS := [&"move_forward", &"attack", &"interact", &"dodge", &"item_1", &"item_2", &"z-lock",
 	&"pause", &"map", &"ui_tab_left", &"ui_tab_right", &"ui_accept", &"ui_cancel"]
 
 

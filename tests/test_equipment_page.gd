@@ -50,7 +50,7 @@ func test_equip_from_the_screen() -> void:
 	assert_eq(mirror.get_node(^"Badge").visible, true, "marca E en el nuevo")
 	assert_eq(_slot_for(page, &"shield_wood").get_node(^"Badge").visible, false)
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
-	assert_eq(player.equipment.shield_on_back.scene_file_path, "res://assets/items/shield/shield_mirror.tscn", "el player cambió de escudo")
+	assert_eq(player.equipment.shield_in_hand.scene_file_path, "res://assets/items/shield/shield_mirror.tscn", "el player cambió de escudo")
 
 	var chainmail := _slot_for(page, &"armor_chainmail")
 	chainmail.grab_focus()

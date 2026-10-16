@@ -1,7 +1,7 @@
 class_name Shield
 extends Node
-## El escudo del player: bloquear de frente, el escudo de la espalda, el reflejo del espejo (proyectiles y haces de
-## luz) y el empujón al bloquear. Si bloquea lo decide la máquina de estados (`PlayerCharacter.is_blocking`).
+## El escudo del player, siempre en la mano: bloquear de frente, el reflejo del espejo (proyectiles y haces de luz) y el
+## empujón al bloquear. Se cubre mientras mantiene el Z-target (`PlayerCharacter.is_blocking`, en la máquina de estados).
 
 @export var player: PlayerCharacter
 ## Debug: el arco donde bloquea (`block_angle_deg`).
@@ -10,8 +10,6 @@ extends Node
 @export var block_pushback := 0.3
 ## Un golpe cuerpo a cuerpo bloqueado deja al atacante aturdido este rato (Hit_B entera dura 0,87 s).
 @export var block_recoil := 0.9
-## Sin bloquear, el escudo en la espalda frena los proyectiles que llegan dentro de este cono.
-@export var back_shield_angle_deg := 45.0
 ## Bloqueando con el haz en el escudo espejo, el stick derecho (o el mouse) gira al player (rad/s).
 @export var light_turn_speed := 2.2
 
@@ -56,70 +54,44 @@ func blocks_from(point: Vector3) -> bool:
 	return player.is_blocking() and item() != null and _is_in_front(point)
 
 
-## Sube o baja la guardia (la mezcla de la animación y el escudo en la mano).
+## Sube o baja la guardia (la mezcla de la animación).
 func set_guard(active: bool) -> void:
 	if _guard_tween and _guard_tween.is_valid():
 		_guard_tween.kill()
 	_guard_tween = create_tween()
-	if active:
-		_show_in_hand(true)
-		_guard_tween.tween_property(player.anim_tree, "parameters/GuardBlend/blend_amount", 1.0, 0.15)
-	else:
-		_guard_tween.tween_property(player.anim_tree, "parameters/GuardBlend/blend_amount", 0.0, 0.15)
-		_guard_tween.finished.connect(func() -> void:
-			if not player.is_blocking():
-				_show_in_hand(false))
+	_guard_tween.tween_property(player.anim_tree, "parameters/GuardBlend/blend_amount", 1.0 if active else 0.0, 0.15)
 
 
 ## De frente bloqueando: el espejo refleja lo reflejable y el escudo frena lo que protege; lo demás pasa.
-## En la espalda sin bloquear: solo proyectiles; el espejo los devuelve a quien los tiró.
 func stops(info: DamageInfo) -> bool:
 	if info.source == null:
 		return false
-	var projectile := info.source as Projectile
-	var blocking := player.is_blocking()
-	if blocking and _is_in_front(info.source.global_position):
-		if projectile and info.reflectable and reflects():
-			_reflect(projectile, player.aim.get_direction(), true)
-			return true
-		if protects(info):
-			_on_blocked(info)
-			return true
-		Log.debug(&"combat", "El escudo no frena", info.element)
-		Feel.burst(&"shards", _front_point(), player.model.global_basis.z)
+	if not (player.is_blocking() and _is_in_front(info.source.global_position)):
 		return false
-	if projectile and not blocking and _is_behind(projectile.global_position):
-		if info.reflectable and reflects():
-			var back := projectile.shooter.global_position - player.global_position if is_instance_valid(projectile.shooter) else -projectile.velocity
-			_reflect(projectile, back, false)
-			return true
-		if protects(info):
-			Log.debug(&"combat", "Frenado por el escudo de la espalda:", projectile.name)
-			Feel.burst(&"sparks", projectile.global_position, -projectile.velocity.normalized())
-			Feel.sfx(&"block", player.global_position)
-			return true
+	var projectile := info.source as Projectile
+	if projectile and info.reflectable and reflects():
+		_reflect(projectile, player.aim.get_direction())
+		return true
+	if protects(info):
+		_on_blocked(info)
+		return true
+	Log.debug(&"combat", "El escudo no frena", info.element)
+	Feel.burst(&"shards", _front_point(), player.model.global_basis.z)
 	return false
 
 
-## El haz de luz que toca al player: el escudo espejo lo refleja como un espejo (de frente bloqueando, según
-## hacia dónde mira el player; en la espalda, rebota). Con otro escudo o sin cubrirse, el haz se corta acá (null).
+## El haz de luz que toca al player: bloqueando de frente, el escudo espejo lo refleja según hacia dónde mira el
+## player. Con otro escudo o sin cubrirse, el haz se corta acá (null).
 ## Devuelve la nueva dirección y el punto de salida: el escudo, delante del centro del player.
 func light_hit(direction: Vector3, point: Vector3) -> Variant:
 	if not reflects():
 		return null
-	var from := point - direction
-	var out: Vector3
-	if player.is_blocking() and _is_in_front(from):
-		_light_frame = Engine.get_physics_frames()
-		var facing := player.model.global_basis.z
-		facing.y = 0.0
-		out = direction.bounce(facing.normalized()).normalized()
-	elif not player.is_blocking() and _is_behind(from):
-		var back := -player.model.global_basis.z
-		back.y = 0.0
-		out = direction.bounce(back.normalized()).normalized()
-	else:
+	if not (player.is_blocking() and _is_in_front(point - direction)):
 		return null
+	_light_frame = Engine.get_physics_frames()
+	var facing := player.model.global_basis.z
+	facing.y = 0.0
+	var out := direction.bounce(facing.normalized()).normalized()
 	var center := Vector3(player.global_position.x, point.y, player.global_position.z)
 	return {direction = out, origin = center + out * 0.6}
 
@@ -138,28 +110,15 @@ func turn_towards(direction: Vector3, delta: float) -> void:
 	model.global_rotation.y = rotate_toward(model.global_rotation.y, desired, light_turn_speed * Settings.stick_factor() * delta)
 
 
-func _show_in_hand(in_hand: bool) -> void:
-	if player.equipment.shield_in_hand:
-		player.equipment.show_shield_in_hand(in_hand)
-
-
-## El modelo KayKit mira a +Z local.
+## El modelo KayKit mira a +Z local. Sin dirección (encima del player) cuenta como de frente.
 func _is_in_front(point: Vector3) -> bool:
-	return _within(point, player.model.global_basis.z, block_angle_deg, true)
-
-
-func _is_behind(point: Vector3) -> bool:
-	return _within(point, -player.model.global_basis.z, back_shield_angle_deg, false)
-
-
-## Si `point` cae dentro del cono de `angle_deg` alrededor de `axis` (en XZ); `if_degenerate` cuando no hay dirección.
-func _within(point: Vector3, axis: Vector3, angle_deg: float, if_degenerate: bool) -> bool:
-	axis.y = 0.0
+	var facing := player.model.global_basis.z
+	facing.y = 0.0
 	var to_point := point - player.global_position
 	to_point.y = 0.0
-	if to_point.is_zero_approx() or axis.is_zero_approx():
-		return if_degenerate
-	return rad_to_deg(axis.angle_to(to_point)) <= angle_deg
+	if to_point.is_zero_approx() or facing.is_zero_approx():
+		return true
+	return rad_to_deg(facing.angle_to(to_point)) <= block_angle_deg
 
 
 func _front_point() -> Vector3:
@@ -167,12 +126,11 @@ func _front_point() -> Vector3:
 
 
 ## Escudo espejo: el proyectil vuelve en esa dirección y pasa a ser del player.
-func _reflect(projectile: Projectile, direction: Vector3, front: bool) -> void:
+func _reflect(projectile: Projectile, direction: Vector3) -> void:
 	projectile.reflect(direction, player.config.team)
 	Log.debug(&"combat", "Reflejado:", projectile.name, "hacia", direction)
-	if front:
-		player.anim_tree.set(&"parameters/BlockHit/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
-		Feel.shake(Feel.settings.shake_block, Vector3.ZERO, player.controls.joypads)
+	player.anim_tree.set(&"parameters/BlockHit/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	Feel.shake(Feel.settings.shake_block, Vector3.ZERO, player.controls.joypads)
 	Feel.burst(&"sparks", projectile.global_position, direction)
 	Feel.sfx(&"reflect", player.global_position)
 

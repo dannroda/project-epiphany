@@ -87,9 +87,12 @@ func _update(delta: float) -> void:
 		dispatch("idle")
 
 
-## El escudo sigue al botón mantenido, no a sus eventos: con el player congelado (hit-stop, pausa) se perderían.
+## Se cubre mientras mantiene el Z-target (con blanco o sin él; fijado en modo alternar). Sigue al botón mantenido,
+## no a sus eventos: con el player congelado (hit-stop, pausa) se perderían.
 func _sync_guard() -> void:
-	var guard := player.controls.pressed(&"block") and get_active_state() in _guard_states
+	var targeting := player.targeting
+	var holding := player.controls.pressed(&"z-lock") or (targeting.lock_mode == Targeting.LockMode.TOGGLE and targeting.current != null)
+	var guard := holding and get_active_state() in _guard_states
 	if guard != blackboard.get_var(PlayerState.BB_IS_BLOCKING, false):
 		blackboard.set_var(PlayerState.BB_IS_BLOCKING, guard)
 		player.shield.set_guard(guard)

@@ -112,10 +112,10 @@ func test_entity_config() -> void:
 
 
 func test_attacks_load() -> void:
-	for attack_name in ["sword_slash", "shield_thrust", "skeleton_slash"]:
+	for attack_name in ["sword_slash", "sword_stab", "skeleton_slash"]:
 		var attack := load("res://data/attacks/%s.tres" % attack_name) as AttackData
 		assert_true(attack != null, attack_name)
 		if attack:
 			assert_true(attack.active_from < attack.active_to, attack_name)
 			assert_true(String(attack.animation).begins_with("CombatMelee/"), attack_name)
-	assert_true((load("res://data/attacks/shield_thrust.tres") as AttackData).stun_time > 0.0, "el golpe de escudo aturde")
+	assert_true((load("res://data/attacks/sword_stab.tres") as AttackData).stun_time > 0.0, "la estocada aturde")

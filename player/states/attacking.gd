@@ -33,7 +33,7 @@ func _update(delta: float) -> void:
 	if not can_cancel():
 		return
 	var input_dir: Vector2 = blackboard.get_var(BB_INPUT_DIR, Vector2.ZERO)
-	if input_dir or (player.is_blocking() and _attack != player.SHIELD_THRUST):
+	if input_dir or (player.is_blocking() and _attack != player.SWORD_STAB):
 		dispatch("finished")
 
 
