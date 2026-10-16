@@ -279,8 +279,12 @@ func _sync_health() -> void:
 	health.restore(GameState.max_health, GameState.health_of(controls.slot))
 
 
+## Un contenedor llena la vida de los vivos; el caído (Espíritu) sigue en 0 hasta que lo reviven.
 func _on_max_health_changed(_value: int) -> void:
-	health.reset(GameState.max_health)
+	if is_dead:
+		health.restore(GameState.max_health, 0)
+	else:
+		health.reset(GameState.max_health)
 
 
 ## Diferido: el golpe llega en un callback de física y al lastimarse suelta lo que lleva (reparenta un cuerpo).

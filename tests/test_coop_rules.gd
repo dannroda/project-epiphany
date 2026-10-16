@@ -103,6 +103,28 @@ func test_the_fallen_floats_as_a_spirit_until_the_other_revives_them() -> void:
 	await _done()
 
 
+func test_a_heart_container_does_not_bring_the_spirit_back() -> void:
+	var setup: Array = await _rooms()
+	var tree: SceneTree = setup[0]
+	var first: PlayerCharacter = setup[2]
+	var second: PlayerCharacter = setup[3]
+	await _place(tree, {first: Vector3(-2, 0, -20), second: Vector3(4, 0, -20)})
+	first.health.damage(first.health.current)
+	await _settle(tree, 0.3)
+	assert_true(first.is_spirit())
+	second.health.damage(4)
+	GameState.give(Items.get_item(&"heart_container"))
+	await _settle(tree, 0.1)
+	assert_eq(second.health.current, GameState.max_health, "el vivo se llena")
+	assert_true(first.is_dead and first.is_spirit(), "el espíritu sigue caído")
+	assert_eq(first.health.max_health, GameState.max_health, "pero con el máximo nuevo")
+	assert_true(not (first in Players.alive()), "y los enemigos no lo buscan")
+	first.hurtbox.receive(DamageInfo.make(1, 0.0, second))
+	await _settle(tree, 0.1)
+	assert_true(first.is_spirit(), "un golpe no lo saca de espíritu")
+	await _done()
+
+
 func test_game_over_only_when_both_fall() -> void:
 	var setup: Array = await _rooms()
 	var tree: SceneTree = setup[0]

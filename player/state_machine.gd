@@ -16,7 +16,7 @@ func _setup() -> void:
 	add_transition($Moving, $Idle, "idle")
 	add_transition($Moving, $Attacking, "attack")
 	add_transition($Attacking, $Idle, "finished")
-	add_transition(anystate(), $Hurt, "hurt")
+	add_transition(anystate(), $Hurt, "hurt", func() -> bool: return not player.is_dead)
 	add_transition(anystate(), $Dead, "die")
 	add_transition($Dead, $Spirit, "spirit")
 	add_transition($Spirit, $Idle, "revive")
