@@ -42,8 +42,10 @@ func _init() -> void:
 	_files.clip_text = true
 	_files.item_selected.connect(func(index: int) -> void: _open(_files.get_item_metadata(index)))
 	files_row.add_child(_files)
-	_reload.tooltip_text = "Volver a leer el archivo"
-	_reload.pressed.connect(func() -> void: _open(_path))
+	_reload.tooltip_text = "Volver a leer la lista y el archivo"
+	_reload.pressed.connect(func() -> void:
+		_refresh_files()
+		_open(_path))
 	files_row.add_child(_reload)
 	_new.tooltip_text = "Partida nueva"
 	_new.pressed.connect(_new_game)
@@ -110,6 +112,11 @@ func _ready() -> void:
 	_refresh_files()
 
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_FOCUS_IN and is_node_ready():
+		_refresh_files()
+
+
 func _refresh_files() -> void:
 	_files.clear()
 	for entry in [[SaveManagerScript.SCENARIO_DIR, "Escenarios"], [SaveManagerScript.SAVE_DIR, "Partidas"]]:
@@ -118,18 +125,27 @@ func _refresh_files() -> void:
 			continue
 		_files.add_separator(entry[1])
 		for file: String in files:
-			_files.add_item(file.get_basename())
+			_files.add_item(_slot_label(file.get_basename()))
 			_files.set_item_metadata(_files.item_count - 1, String(entry[0]).path_join(file))
 	for i in _files.item_count:
 		if _files.get_item_metadata(i) == _path:
 			_files.select(i)
 			return
-	if _path.is_empty():
+	if _path.is_empty() and not _dirty:
 		for i in _files.item_count:
 			if not _files.is_item_separator(i):
 				_files.select(i)
 				_open(_files.get_item_metadata(i))
 				return
+
+
+func _slot_label(file_name: String) -> String:
+	match file_name:
+		"slot_%d" % SaveManagerScript.SCENARIO_SLOT:
+			return file_name + " · la de los escenarios y Jugar"
+		"slot_%d" % SaveManagerScript.AUTO_SLOT:
+			return file_name + " · autosave viejo"
+	return file_name
 
 
 func _open(path: String) -> void:
