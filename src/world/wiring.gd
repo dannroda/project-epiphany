@@ -13,6 +13,8 @@ enum Condition { ALL, ANY }
 
 var switches: Array[Node] = []
 var condition: Condition = Condition.ALL
+## drive: ya se mostró con la cámara la primera vez.
+var revealed := false
 var _satisfied := false
 
 
@@ -31,6 +33,25 @@ static func create(owner: Node, paths: Array[NodePath], when: Condition) -> Wiri
 	wiring._satisfied = wiring.is_satisfied()
 	wiring._settle.call_deferred()
 	return wiring
+
+
+## Lo que se abre con interruptores (Door, Gate): `open(animate)` al cumplirse (la primera vez, con la cámara si su
+## `reveal_on_open`), `close()` al dejar de cumplirse si su `stays_open` es false, y sin animar si ya arranca cumplida.
+func drive(target: Node3D, open: Callable, close: Callable) -> Wiring:
+	changed.connect(func(satisfied: bool) -> void:
+		if not is_instance_valid(target):
+			return
+		if satisfied and target.get(&"reveal_on_open") and not revealed:
+			revealed = true
+			TopDownCamera.reveal_unlock(target, open)
+		elif satisfied:
+			open.call()
+		elif not target.get(&"stays_open"):
+			close.call())
+	settled.connect(func(satisfied: bool) -> void:
+		if satisfied and is_instance_valid(target):
+			open.call(false))
+	return self
 
 
 func is_satisfied() -> bool:

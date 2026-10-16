@@ -60,7 +60,6 @@ var _closed_y := 0.0
 var _tween: Tween
 var _persistent: PersistentFlag
 var _wiring: Wiring
-var _revealed := false
 ## Alto al que la cámara recorta la pared sur de la sala si la puerta está en ella (0: no lo está). La hoja baja a
 ## ese alto como la pared y, si está cerrada con llave, el candado se muestra en el piso de adelante.
 var south_cut := 0.0:
@@ -95,18 +94,7 @@ func _ready() -> void:
 				open(false)
 				interactable.enabled = false
 		Kind.SWITCH:
-			_wiring = Wiring.create(self, switches, condition)
-			_wiring.changed.connect(func(satisfied: bool) -> void:
-				if satisfied and reveal_on_open and not _revealed:
-					_revealed = true
-					TopDownCamera.reveal_unlock(self, open)
-				elif satisfied:
-					open()
-				elif not stays_open:
-					close())
-			_wiring.settled.connect(func(satisfied: bool) -> void:
-				if satisfied:
-					open(false))
+			_wiring = Wiring.create(self, switches, condition).drive(self, open, close)
 
 
 func _get_configuration_warnings() -> PackedStringArray:

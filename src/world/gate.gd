@@ -23,7 +23,6 @@ var is_open := false
 var _wiring: Wiring
 var _closed_y := 0.0
 var _tween: Tween
-var _revealed := false
 
 
 func _ready() -> void:
@@ -34,21 +33,10 @@ func _ready() -> void:
 	for path in reveal_from:
 		var switch := get_node(path)
 		switch.activated.connect(func() -> void:
-			if switch.is_node_ready() and not _revealed:
-				_revealed = true
+			if switch.is_node_ready() and not _wiring.revealed:
+				_wiring.revealed = true
 				TopDownCamera.reveal(self, open))
-	_wiring = Wiring.create(self, switches, condition)
-	_wiring.changed.connect(func(satisfied: bool) -> void:
-		if satisfied and reveal_on_open and not _revealed:
-			_revealed = true
-			TopDownCamera.reveal_unlock(self, open)
-		elif satisfied:
-			open()
-		elif not stays_open:
-			close())
-	_wiring.settled.connect(func(satisfied: bool) -> void:
-		if satisfied:
-			open(false))
+	_wiring = Wiring.create(self, switches, condition).drive(self, open, close)
 
 
 func _fill_depth() -> void:
