@@ -2597,7 +2597,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 
 Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
 
-## M11 — Pulido: contenido y feel  (117/199)
+## M11 — Pulido: contenido y feel  (117/200)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5567,6 +5567,14 @@ Pedido de Daniel (2026-10-16) tras pelear con el jefe final.
   Hecho (dd212b4f): ni la intro ni las presentaciones de fase, aunque sea revancha o ya se haya visto. Los subjefes (ArenaFight) siguen salteables.
 - [x] Las manos desaparecen como el ojo al vencerlo
   Hecho (dd212b4f): BossHand.vanish, el neón se apaga titilando, tiemblan con estallidos y se hunden achicándose, al mismo tiempo que el ojo. test_the_hands_go_away_like_the_eye_when_the_boss_dies.
+
+### 11.205 Escudo siempre en la mano; la guardia es Z · Revisión
+
+**Etiquetas:** `combate`
+
+Pedido de Daniel (2026-10-16): el escudo va siempre en la mano y solo bloquea mientras se mantiene el Z-target, con blanco o sin él. Se saca el botón de bloquear (RT, click derecho) y el escudo de la espalda. Con Z el player camina lento. Atacar cubriéndose da una estocada con la espada en vez del golpe de escudo.
+
+**Notas:** Hecho (cb, 2026-10-16, d6417d81): Z (z-lock) levanta la guardia; en modo alternar, mientras hay un blanco fijado. Sin acción block ni escudo en la espalda: lo de atrás pega siempre. Estocada: sword_stab.tres (Melee_1H_Attack_Stab, hitbox 0,22–0,42, cancel 0,5, lunge 3, aturde 1,2 s y baja guardias). El escudo solo sale de la mano mientras sostiene el arco. Diagramas de controles sin la fila de bloquear; textos de escudos y CONTROLS_LOCK actualizados. Para revisar jugando: velocidad con Z, ritmo de la estocada (la animación dura 1,6 s), RT libre.
 
 ## M12 — Assets propios (Blender)  (17/39)
 
