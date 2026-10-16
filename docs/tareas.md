@@ -2578,15 +2578,18 @@ Ajustes de sensación de la intro de 10.20 (src/cutscene/intro.tscn), a ojo en e
 
 **Relacionadas:** 10.20 Intro / cutscene de apertura
 
-### 10.31 Videos de presentación y trailer/teaser · Pendiente
+### 10.31 Videos de presentación y trailer/teaser · Revisión
 
-**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `marketing`, `video`
+**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-cb · **Etiquetas:** `marketing`, `video`
 
 Grabar videos para presentar el juego. Pensar un trailer o teaser corto para generar expectativa (aunque muestre más de lo que hay todavía): planos del overworld, entradas de las mazmorras, pelea con un jefe, el templo del ojo.
 
-- [ ] Elegir qué mostrar y armar un guion corto (30–60 s)
-- [ ] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
+- [x] Elegir qué mostrar y armar un guion corto (30–60 s)
+  Daniel (2026-10-16): 30–45 s, misterio → acción. Overworld calmo con planos de cámara, título, cortes cada vez más rápidos en el templo (última mazmorra), cierra en el ojo del jefe y el logo. Música del juego (overworld, después templo/jefe). HUD visible solo en tomas con la cámara normal del juego; en otros ángulos, oculto.
+- [x] Modo de captura: sin HUD/debug, cámara libre o con rieles para planos
+  Daniel (2026-10-16): todo automático primero: la secuencia guionada como datos (tomas con escenario, cámara del juego o riel, HUD, acciones del player en el tiempo) y un director que la corre; cada toma se renderiza con Movie Maker (--write-movie, 60 fps fijos) en su propio archivo. Después, la misma secuencia en tiempo real con gpu-screen-recorder.
 - [ ] Grabar los planos y editar el teaser
+  Primera versión (b343f5ce): tools/teaser/record.sh graba las 12 tomas de teaser.tscn (Movie Maker, 1080p60, ~4,5 min) y tools/teaser/edit.sh arma debug/tmp/teaser/teaser.mp4 (40,8 s: overworld 13,5 s con calma, templo 13 s con capas de mazmorra, jefe 11 s con todas, cierre con el título en Cinzel). Las tomas, el corte (CUTS en edit.sh) y la música se cambian y se vuelve a correr. Falta: que Daniel lo vea y ajustar; probar la misma secuencia con gpu-screen-recorder (no está instalado).
 
 ### 10.32 Probar GUT para los tests (con nuestro runner por procesos arriba) · Pendiente
 

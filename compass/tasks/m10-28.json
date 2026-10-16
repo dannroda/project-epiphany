@@ -1,14 +1,18 @@
 {
+  "assignee": "project-epiphany-cb",
   "checklist": [
     {
-      "done": false,
+      "detail": "Daniel (2026-10-16): 30–45 s, misterio → acción. Overworld calmo con planos de cámara, título, cortes cada vez más rápidos en el templo (última mazmorra), cierra en el ojo del jefe y el logo. Música del juego (overworld, después templo/jefe). HUD visible solo en tomas con la cámara normal del juego; en otros ángulos, oculto.",
+      "done": true,
       "text": "Elegir qué mostrar y armar un guion corto (30–60 s)"
     },
     {
-      "done": false,
+      "detail": "Daniel (2026-10-16): todo automático primero: la secuencia guionada como datos (tomas con escenario, cámara del juego o riel, HUD, acciones del player en el tiempo) y un director que la corre; cada toma se renderiza con Movie Maker (--write-movie, 60 fps fijos) en su propio archivo. Después, la misma secuencia en tiempo real con gpu-screen-recorder.",
+      "done": true,
       "text": "Modo de captura: sin HUD/debug, cámara libre o con rieles para planos"
     },
     {
+      "detail": "Primera versión (b343f5ce): tools/teaser/record.sh graba las 12 tomas de teaser.tscn (Movie Maker, 1080p60, ~4,5 min) y tools/teaser/edit.sh arma debug/tmp/teaser/teaser.mp4 (40,8 s: overworld 13,5 s con calma, templo 13 s con capas de mazmorra, jefe 11 s con todas, cierre con el título en Cinzel). Las tomas, el corte (CUTS en edit.sh) y la música se cambian y se vuelve a correr. Falta: que Daniel lo vea y ajustar; probar la misma secuencia con gpu-screen-recorder (no está instalado).",
       "done": false,
       "text": "Grabar los planos y editar el teaser"
     }
@@ -22,12 +26,12 @@
   "priority": "low",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "marketing",
     "video"
   ],
   "test": "",
   "title": "Videos de presentación y trailer/teaser",
-  "updated_at": "2026-10-13T20:32:43.986Z"
+  "updated_at": "2026-10-16T07:24:54.490Z"
 }
