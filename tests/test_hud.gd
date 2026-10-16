@@ -72,10 +72,10 @@ func test_item_slots_follow_buttons_and_ammo() -> void:
 	state.reset()
 
 
-func test_a_heart_shows_whole_quarters_clockwise() -> void:
+func test_a_heart_shows_whole_quarters_counterclockwise() -> void:
 	var heart := HeartIcon.create(3)
 	(Engine.get_main_loop() as SceneTree).root.add_child(heart)
 	var shown: Array = heart.quarter_nodes.map(func(q: Control) -> bool: return q.visible)
-	assert_eq(shown, [true, true, true, false], "tres cuartos: falta el de abajo a la izquierda")
+	assert_eq(shown, [true, true, true, false], "tres cuartos: falta el de arriba a la derecha")
 	assert_eq(heart.quarter_nodes[2].position, HeartIcon.SIZE / 2.0, "el tercero es el de abajo a la derecha")
 	heart.free()

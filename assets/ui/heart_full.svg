@@ -1,1 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="60" height="56" viewBox="0 0 24 22"><path d="M12 20.5C5 15.8 1.5 12.3 1.5 7.6A5 5 0 0 1 12 5.2A5 5 0 0 1 22.5 7.6C22.5 12.3 19 15.8 12 20.5Z" fill="#e0483a" stroke="#3b0f0b" stroke-width="1.6"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="56" viewBox="0 0 24 22">
+<defs>
+<linearGradient id="r" x1="0" y1="0" x2="0.6" y2="1"><stop offset="0" stop-color="#f0544a"/><stop offset="0.55" stop-color="#c81e1e"/><stop offset="1" stop-color="#7a0c12"/></linearGradient>
+<clipPath id="c"><path d="M12 20.5C5 15.8 1.5 12.3 1.5 7.6A5 5 0 0 1 12 5.2A5 5 0 0 1 22.5 7.6C22.5 12.3 19 15.8 12 20.5Z"/></clipPath>
+</defs>
+<path d="M12 20.5C5 15.8 1.5 12.3 1.5 7.6A5 5 0 0 1 12 5.2A5 5 0 0 1 22.5 7.6C22.5 12.3 19 15.8 12 20.5Z" fill="none" stroke="#1a0906" stroke-width="2.6" stroke-linejoin="round"/>
+<path d="M12 20.5C5 15.8 1.5 12.3 1.5 7.6A5 5 0 0 1 12 5.2A5 5 0 0 1 22.5 7.6C22.5 12.3 19 15.8 12 20.5Z" fill="url(#r)"/>
+<g clip-path="url(#c)">
+<path d="M23 7C23 13 18.5 17 12 21.5L23 21.5Z" fill="#5e0810" opacity="0.55"/>
+<ellipse cx="7" cy="7.2" rx="2.6" ry="1.7" transform="rotate(-30 7 7.2)" fill="#ffd9cc" opacity="0.85"/>
+<circle cx="10" cy="5.8" r="0.7" fill="#fff2ea" opacity="0.9"/>
+</g>
+<path d="M12 20.5C5 15.8 1.5 12.3 1.5 7.6A5 5 0 0 1 12 5.2A5 5 0 0 1 22.5 7.6C22.5 12.3 19 15.8 12 20.5Z" fill="none" stroke="#d9a441" stroke-width="1" stroke-linejoin="round"/>
+</svg>

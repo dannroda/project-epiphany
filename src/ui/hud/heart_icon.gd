@@ -1,6 +1,6 @@
 class_name HeartIcon
 extends Control
-## Un corazón con 0..4 cuartos, que se llenan en sentido horario desde arriba a la izquierda.
+## Un corazón con 0..4 cuartos, que se llenan en sentido antihorario desde arriba a la izquierda (se pierde primero el de arriba a la derecha).
 
 const SIZE := Vector2(30, 28)
 const SCENE_PATH := "res://src/ui/hud/heart_icon.tscn"
@@ -16,7 +16,7 @@ var icon_size := SIZE:
 		_layout()
 
 @onready var empty: TextureRect = $Empty
-@onready var quarter_nodes: Array[Control] = [$TopLeft, $TopRight, $BottomRight, $BottomLeft]
+@onready var quarter_nodes: Array[Control] = [$TopLeft, $BottomLeft, $BottomRight, $TopRight]
 
 
 static func create(filled := 0, heart_size := SIZE) -> HeartIcon:
@@ -38,7 +38,7 @@ func _layout() -> void:
 	empty.size = icon_size
 	var half := icon_size / 2.0
 	for i in quarter_nodes.size():
-		var corner := Vector2(half.x if i in [1, 2] else 0.0, half.y if i >= 2 else 0.0)
+		var corner := Vector2(half.x if i >= 2 else 0.0, half.y if i in [1, 2] else 0.0)
 		var quarter := quarter_nodes[i]
 		quarter.position = corner
 		quarter.size = half

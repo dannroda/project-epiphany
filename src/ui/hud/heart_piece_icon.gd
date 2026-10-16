@@ -1,6 +1,6 @@
 class_name HeartPieceIcon
 extends Control
-## Corazón partido en cuartos: se llenan en sentido horario desde arriba a la izquierda.
+## Corazón partido en cuartos: se llenan en sentido antihorario desde arriba a la izquierda, como los de vida.
 
 var pieces := 0:
 	set(value):
@@ -8,7 +8,7 @@ var pieces := 0:
 		if is_node_ready():
 			_layout()
 
-@onready var quarters: Array[Control] = [$TopLeft, $TopRight, $BottomRight, $BottomLeft]
+@onready var quarters: Array[Control] = [$TopLeft, $BottomLeft, $BottomRight, $TopRight]
 
 
 func _ready() -> void:
