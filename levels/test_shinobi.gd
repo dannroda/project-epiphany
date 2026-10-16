@@ -29,7 +29,7 @@ func _ready() -> void:
 	_player.animation_finished.connect(func(_name: StringName) -> void: _play(_index))
 	_ground.mesh = _ground_mesh()
 	_camera.look_at(Vector3(0, 1.0, 0))
-	ToonToggle.set_enabled(true)
+	%ToonToggle.set_enabled(true)
 	_play(maxi(_anims.find("General/Idle_A"), 0))
 
 

@@ -1,4 +1,4 @@
-# Autoload, solo en debug: debug_toon (tecla 4) cambia en runtime el material de paleta por el toon en todo lo cargado
+# Nodo de test_shinobi, solo en debug: debug_toon (tecla 4) cambia en runtime el material de paleta por el toon en todo lo cargado
 # y en lo que se cargue después, sin tocar los .tres. Para probar el cel shading jugando (12.13).
 extends Node
 

@@ -88,10 +88,7 @@ func _ready() -> void:
 	get_viewport().gui_focus_changed.connect(func(control: Control) -> void:
 		if control is BaseButton or control is Range:
 			ui(&"ui_move"))
-	(func() -> void:
-		var stack := get_node_or_null(^"/root/MenuStack")
-		if stack:
-			stack.changed.connect(_on_menus_changed.bind(stack))).call_deferred()
+	MenuStack.changed.connect(_on_menus_changed)
 
 
 func _input(event: InputEvent) -> void:
@@ -102,8 +99,8 @@ func _input(event: InputEvent) -> void:
 		ui(&"ui_back")
 
 
-func _on_menus_changed(stack: Node) -> void:
-	var depth: int = stack.depth()
+func _on_menus_changed() -> void:
+	var depth := MenuStack.depth()
 	ui(&"ui_open" if depth > _menu_depth else &"ui_close")
 	_menu_depth = depth
 

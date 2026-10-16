@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://levels/test_shinobi.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://dsgd2x01c0kgg" path="res://assets/epiphany/personaje_shinobi.glb" id="2_model"]
 [ext_resource type="Texture2D" uid="uid://bs6ggwyw5mp2m" path="res://assets/kenney_skyboxes/Skyboxes/skybox-morning.png" id="3_sky"]
+[ext_resource type="Script" uid="uid://c6vua5q61f5jm" path="res://src/shaders/toon/toon_toggle.gd" id="4_toon"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_sky"]
 panorama = ExtResource("3_sky")
@@ -44,3 +45,7 @@ offset_right = 600.0
 offset_bottom = 80.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
+
+[node name="ToonToggle" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("4_toon")

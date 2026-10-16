@@ -2,6 +2,7 @@ extends "res://tests/test_case.gd"
 
 const TOON := preload("res://src/shaders/toon/epiphany_toon.tres")
 const PALETTE := preload("res://data/kits/materials/epiphany.tres")
+const TOGGLE := preload("res://src/shaders/toon/toon_toggle.gd")
 
 
 func _press() -> void:
@@ -18,6 +19,8 @@ func _press() -> void:
 
 func test_toggle_swaps_palette_material_and_restores_it() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
+	var toggle: Node = TOGGLE.new()
+	tree.root.add_child(toggle)
 	var mesh := BoxMesh.new()
 	mesh.material = PALETTE
 	var before := MeshInstance3D.new()
@@ -35,6 +38,7 @@ func test_toggle_swaps_palette_material_and_restores_it() -> void:
 	assert_eq(after.get_active_material(0), PALETTE)
 	before.queue_free()
 	after.queue_free()
+	toggle.queue_free()
 
 
 func test_bound_to_key_4() -> void:
