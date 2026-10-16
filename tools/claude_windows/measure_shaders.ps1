@@ -5,14 +5,20 @@
 #   powershell -ExecutionPolicy Bypass -File tools\claude_windows\measure_shaders.ps1 -Godot "C:\...\godot.exe" -ClearDriverCache
 param(
 	[Parameter(Mandatory = $true)][string]$Godot,
-	[string]$Project = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path,
+	[string]$Project,
 	[int]$Runs = 3,
 	[int]$Screen = 1,
 	# También borra la caché de shaders del driver (AMD/NVIDIA/D3D): es el primer arranque real de un jugador. Los
 	# demás juegos la rehacen solos la próxima vez que abren.
-	[switch]$ClearDriverCache
+	[switch]$ClearDriverCache,
+	# Reusa las builds ya exportadas en debug\tmp\shaders.
+	[switch]$SkipExport
 )
 $ErrorActionPreference = "Stop"
+# En PowerShell 5.1 $PSScriptRoot está vacío dentro de param().
+if (-not $Project) {
+	$Project = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
+}
 $out = Join-Path $Project "debug\tmp\shaders"
 $presets = Join-Path $Project "export_presets.cfg"
 $userDir = Join-Path $env:APPDATA "Godot\app_userdata\Project Epiphany"
@@ -56,7 +62,7 @@ function ClearCaches() {
 	}
 }
 
-function Measure([string]$Label, [string]$Exe, [string[]]$Extra) {
+function MeasureBuild([string]$Label, [string]$Exe, [string[]]$Extra) {
 	$override = "[display]`nwindow/size/no_focus=true`n[autoload]`nPipelineProbe=`"*res://tools/pipeline_probe.gd`"`n"
 	[IO.File]::WriteAllText((Join-Path (Split-Path $Exe) "override.cfg"), $override, $utf8)
 	Remove-Item -Force -ErrorAction SilentlyContinue $log
@@ -76,8 +82,12 @@ $builds = @{}
 try {
 	foreach ($bake in @($false, $true)) {
 		$name = if ($bake) { "bake" } else { "nobake" }
-		Preset $bake
 		$exe = Join-Path $out "$name\epi.exe"
+		if ($SkipExport -and (Test-Path $exe)) {
+			$builds[$name] = $exe
+			continue
+		}
+		Preset $bake
 		New-Item -ItemType Directory -Force (Split-Path $exe) | Out-Null
 		Write-Host "Exportando $name..."
 		Run $Godot @("--path", "`"$Project`"", "--export-debug", "`"Windows (debug)`"", "`"$exe`"") 1800
@@ -93,12 +103,12 @@ try {
 foreach ($k in 1..$Runs) {
 	foreach ($name in @("nobake", "bake")) {
 		ClearCaches
-		Measure "$name d3d12 frio $k" $builds[$name] @()
-		Measure "$name d3d12 caliente $k" $builds[$name] @()
+		MeasureBuild "$name d3d12 frio $k" $builds[$name] @()
+		MeasureBuild "$name d3d12 caliente $k" $builds[$name] @()
 	}
 	ClearCaches
-	Measure "nobake vulkan frio $k" $builds["nobake"] @("--rendering-driver", "vulkan")
-	Measure "nobake vulkan caliente $k" $builds["nobake"] @("--rendering-driver", "vulkan")
+	MeasureBuild "nobake vulkan frio $k" $builds["nobake"] @("--rendering-driver", "vulkan")
+	MeasureBuild "nobake vulkan caliente $k" $builds["nobake"] @("--rendering-driver", "vulkan")
 }
 Write-Host ""
 Write-Host "Resultados completos en $results" -ForegroundColor Green
