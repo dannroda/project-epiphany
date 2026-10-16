@@ -6434,64 +6434,72 @@ Centinela, Ojo Vigía, Kuntur, Amaru y la Momia repiten las mismas señales y ca
 
 **Notas:** 60fc771f: Music.hold_boss/release_boss con dueños (se suelta en tree_exiting); BossBar tipado para el HUD (ArenaFight sin phase()); Pickup.offer_once para el premio; arreglado que la barra mostrada justo después de esconderla se iba por el fundido viejo. Sin hacer, a propósito: room_changed (el doom cambia dentro de la sala, ej. BossArena calma la sala, así que Music igual tiene que leerlo; el costo es una búsqueda por grupo) y un solo rematch (ArenaFight.rematch es 'revancha a media vida' del diseño y GameState.boss_rematch es volver a pelear el jefe final: son dos cosas distintas).
 
-### 16.15 Daño por fuera del Hitbox, tres formas de mirar si toca el piso y dos ondas iguales · Pendiente
+### 16.15 Daño por fuera del Hitbox, tres formas de mirar si toca el piso y dos ondas iguales · Revisión
 
-**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `refactor`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-17 · **Etiquetas:** `refactor`
 
 Siguen llamando a `hurtbox.receive()` a mano: mummy_guard, yacumama, ground_waves, boss_hand, pit, thrown_object, dashing y hook, cada uno armando el equipo a su manera. "Está en el piso" se mira tres veces: Hitbox castea el padre a PlayerCharacter (un componente que asume quién es su dueño), GroundWaves a CharacterBody3D y la Momia/Yacumama recorren Players.alive() (sus ondas no tocan escoltas). El anillo de la Momia es una copia de GroundWaves. Los elementos (`explosive`, `blast`, `dash`, `spikes`, Hook.ELEMENT) y los `hit_burst` son texto libre, también en `protects_against` de los .tres.
 
-- [ ] Hurtbox.is_grounded()
+- [x] Hurtbox.is_grounded()
   El cuerpo dueño por export; lo usan Hitbox y GroundWaves.
-- [ ] La Momia usa un GroundWaves
+- [x] La Momia usa un GroundWaves
   Con un `pulse(centro, radio, daño)`.
-- [ ] Elementos como constantes
+- [x] Elementos como constantes
   Con @export_enum en protects_against; antes de los ataques elementales (12.28).
+
+**Notas:** 1628aa2c: Hurtbox.is_grounded() lee un body exportado (el del player apunta al player; sin body cuenta como en el piso, porque un enemigo quieto da is_on_floor() false). La Momia usa GroundWaves.pulse(centro, radio, daño, empuje) solo contra el equipo del player; sus wave_* quedan como el ajuste que pisan Chullpa y Templo. DamageInfo.PHYSICAL/EXPLOSIVE/BLAST/DASH/HOOK/SPIKES; en vez de @export_enum, test_items revisa que protects_against use elementos conocidos. Los receive() a mano siguen (Hurtbox.receive es la API).
 
 **Relacionadas:** 11.82 Daño que no pasa por el Hurtbox; 12.28 Ataques elementales; 16.1 Jefe final: el rayo del ojo pega una sola vez por pelea
 
-### 16.16 Formato del save con dueño y migraciones por versión · Pendiente
+### 16.16 Formato del save con dueño y migraciones por versión · Revisión
 
-**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `refactor`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-17 · **Etiquetas:** `refactor`
 
 Las claves del save están escritas a mano en GameState.write_to/read_from, slot_summary (SWORD, SHIELD, bow, bomb_bag fijos), SaveCodec.validate (prefijo dungeon_, _boss_door) y unos 45 literales del Save Inspector; un campo olvidado falla en silencio porque `typed()` devuelve el default. `SaveCodec.VERSION` sigue en 1 y `_migrate` está vacío; la migración real de botellas corre en cada carga sin mirar versión y la del slot 0 está en SaveManager. El Save Inspector lee sin migrar: con VERSION 2 abriría un save viejo y lo guardaría como 2 sin migrar. Una flag o un ítem renombrado se descartan y la partida pierde ese progreso.
 
-- [ ] SaveKeys: una constante por sección y clave
+- [x] SaveKeys: una constante por sección y clave
   La usan GameState, SaveCodec, slot_summary y el Inspector.
-- [ ] DungeonState se escribe y lee solo
-- [ ] SaveCodec.migrate(cfg, desde) estático
+- [x] DungeonState se escribe y lee solo
+- [x] SaveCodec.migrate(cfg, desde) estático
   Lo llaman _load_path y el Inspector; botellas y slot 0 como pasos de la versión 2.
-- [ ] Tablas de renombres de flags e ítems
+- [x] Tablas de renombres de flags e ítems
 - [ ] Sacar AUTO_SLOT de la UI cuando no queden saves viejos
   file_select, slot_card, system_page y el Inspector.
 
-### 16.17 Configs de enemigos clonadas por mazmorra · Pendiente
+**Notas:** 9773d09e: SaveKeys; DungeonState.write_to/read_from; SaveCodec.migrate(cfg) estático con VERSION 2 (botellas a nivel archivo), FLAG_RENAMES/ITEM_RENAMES, el Save Inspector migra al abrir; tampering se mira antes de migrar. Paso 5 queda: AUTO_SLOT sigue hasta que no queden saves viejos. La 'migración' del slot 0 es de archivos (origin), no del cfg, y quedó en SaveManager.
 
-**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `refactor`, `datos`
+### 16.17 Configs de enemigos clonadas por mazmorra · Revisión
+
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-17 · **Etiquetas:** `refactor`, `datos`
 
 20 .tres de `data/entities/` ({skeleton, archer_skeleton, armored_skeleton, shield_skeleton}_{chullpa, cumbre, quenoa, templo, totora}) son iguales a su base salvo `model`. Cambiar la vida o la velocidad de un tipo son seis archivos que se van a desfasar. Las variantes .tscn ya existen. En `Enemy._swap_model` el Visuals viejo solo se `queue_free()` y las búsquedas siguientes todavía lo recorren.
 
-- [ ] Un EntityConfig por tipo; el modelo en la variante de escena
+- [x] Un EntityConfig por tipo; el modelo en la variante de escena
   Coordinar con 12.39 (arte, en curso).
-- [ ] _swap_model busca solo en el modelo nuevo
-- [ ] test_guerreros mira que las variantes compartan config
+- [x] _swap_model busca solo en el modelo nuevo
+- [x] test_guerreros mira que las variantes compartan config
+
+**Notas:** 28eab75d: sin los 20 .tres por mazmorra; cada variante de guerreros/ usa la config de su tipo y Enemy.visuals con el cuerpo de su mazmorra (gana sobre config.model). _swap_model saca el Visuals viejo del árbol enseguida. -2a dio el OK (12.39 no toca esos archivos).
 
 **Relacionadas:** 12.39 Enemigos comunes estilizados según el theme de cada mazmorra
 
-### 16.18 Lo que hace un ítem al agarrarlo, por datos y no por id · Pendiente
+### 16.18 Lo que hace un ítem al agarrarlo, por datos y no por id · Revisión
 
-**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `refactor`, `datos`
+**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-17 · **Etiquetas:** `refactor`, `datos`
 
 `GameState.give` hace match por small_key, boss_key, boss_key_piece, dungeon_map, compass, heart_container y heart_piece (game_state.gd:217-230); slot_summary, NEW_GAME_EQUIPMENT, item_get.gd:45 y los chips de items_page también tienen ids fijos. La regla de capacidad de munición está en inventory.gd y otra vez en save_codec.gd.
 
-- [ ] ItemData.on_get (enum o estrategia)
+- [x] ItemData.on_get (enum o estrategia)
   INVENTARIO, LLAVE, LLAVE DEL JEFE, CORAZÓN…
-- [ ] show_in_slot_summary en ItemData
-- [ ] Equipo de partida nueva en un .tres
-- [ ] Una sola función de capacidad
+- [x] show_in_slot_summary en ItemData
+- [x] Equipo de partida nueva en un .tres
+- [x] Una sola función de capacidad
 
-### 16.19 Wiring como componente en la escena · Pendiente
+**Notas:** 51e51746: ItemData.OnGet (enum) en GameState.give y en los textos de ItemGet; show_in_slot_summary (arco, bolsa de bombas); ItemDatabase.new_game_equipment; ItemDatabase.capacity para Inventory y SaveCodec. Los chips de items_page siguen buscando íconos por id (no es una regla, es una búsqueda).
 
-**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `refactor`
+### 16.19 Wiring como componente en la escena · Revisión
+
+**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-17 · **Etiquetas:** `refactor`
 
 Door y Gate repiten los handlers changed/settled con reveal, abrir y cerrar (door.gd:97-110, gate.gd:40-51); Bridge, CrackedWall y Chest repiten los exports switches/condition/reveal. Door (tipo switch) y Gate tienen el mismo `_fill_depth` y tween de hundirse. Los switches se reconocen por `active` + `activated` sin clase común.
 
@@ -6499,6 +6507,8 @@ Door y Gate repiten los handlers changed/settled con reveal, abrir y cerrar (doo
   Dueño de switches, condition, stays_open y reveal_on_open; emite satisfied(animate)/unsatisfied.
 - [ ] Barrera que se hunde compartida entre Gate y Door
   Opcional.
+
+**Notas:** e5441dc1: Wiring.drive(target, open, close) es lo compartido de Door y Gate (revelar la primera vez, abrir, cerrar si no stays_open, abrir sin animar si arranca cumplida; ignora un target liberado). Sin nodo SwitchInput a propósito: los switches están en cada instancia de los niveles y el refresh de la_walls pierde los overrides de hijos en instancias. La barrera que se hunde compartida (opcional) no se hizo.
 
 ### 16.20 Behavior trees: reacciones de muerte, golpe y aturdido copiadas · Pendiente
 

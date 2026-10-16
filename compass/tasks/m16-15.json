@@ -1,18 +1,19 @@
 {
+  "assignee": "project-epiphany-17",
   "checklist": [
     {
       "detail": "El cuerpo dueño por export; lo usan Hitbox y GroundWaves.",
-      "done": false,
+      "done": true,
       "text": "Hurtbox.is_grounded()"
     },
     {
       "detail": "Con un `pulse(centro, radio, daño)`.",
-      "done": false,
+      "done": true,
       "text": "La Momia usa un GroundWaves"
     },
     {
       "detail": "Con @export_enum en protects_against; antes de los ataques elementales (12.28).",
-      "done": false,
+      "done": true,
       "text": "Elementos como constantes"
     }
   ],
@@ -30,16 +31,16 @@
     }
   ],
   "milestone": "m16",
-  "notes": "",
+  "notes": "1628aa2c: Hurtbox.is_grounded() lee un body exportado (el del player apunta al player; sin body cuenta como en el piso, porque un enemigo quieto da is_on_floor() false). La Momia usa GroundWaves.pulse(centro, radio, daño, empuje) solo contra el equipo del player; sus wave_* quedan como el ajuste que pisan Chullpa y Templo. DamageInfo.PHYSICAL/EXPLOSIVE/BLAST/DASH/HOOK/SPIKES; en vez de @export_enum, test_items revisa que protects_against use elementos conocidos. Los receive() a mano siguen (Hurtbox.receive es la API).",
   "order": 15,
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "refactor"
   ],
   "test": "",
   "title": "Daño por fuera del Hitbox, tres formas de mirar si toca el piso y dos ondas iguales",
-  "updated_at": "2026-10-16T19:48:44.919Z"
+  "updated_at": "2026-10-16T22:28:41.392Z"
 }

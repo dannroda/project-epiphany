@@ -1,21 +1,22 @@
 {
+  "assignee": "project-epiphany-17",
   "checklist": [
     {
       "detail": "La usan GameState, SaveCodec, slot_summary y el Inspector.",
-      "done": false,
+      "done": true,
       "text": "SaveKeys: una constante por sección y clave"
     },
     {
-      "done": false,
+      "done": true,
       "text": "DungeonState se escribe y lee solo"
     },
     {
       "detail": "Lo llaman _load_path y el Inspector; botellas y slot 0 como pasos de la versión 2.",
-      "done": false,
+      "done": true,
       "text": "SaveCodec.migrate(cfg, desde) estático"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Tablas de renombres de flags e ítems"
     },
     {
@@ -28,16 +29,16 @@
   "created_at": "2026-10-16T19:47:52.822Z",
   "description": "Las claves del save están escritas a mano en GameState.write_to/read_from, slot_summary (SWORD, SHIELD, bow, bomb_bag fijos), SaveCodec.validate (prefijo dungeon_, _boss_door) y unos 45 literales del Save Inspector; un campo olvidado falla en silencio porque `typed()` devuelve el default. `SaveCodec.VERSION` sigue en 1 y `_migrate` está vacío; la migración real de botellas corre en cada carga sin mirar versión y la del slot 0 está en SaveManager. El Save Inspector lee sin migrar: con VERSION 2 abriría un save viejo y lo guardaría como 2 sin migrar. Una flag o un ítem renombrado se descartan y la partida pierde ese progreso.",
   "milestone": "m16",
-  "notes": "",
+  "notes": "9773d09e: SaveKeys; DungeonState.write_to/read_from; SaveCodec.migrate(cfg) estático con VERSION 2 (botellas a nivel archivo), FLAG_RENAMES/ITEM_RENAMES, el Save Inspector migra al abrir; tampering se mira antes de migrar. Paso 5 queda: AUTO_SLOT sigue hasta que no queden saves viejos. La 'migración' del slot 0 es de archivos (origin), no del cfg, y quedó en SaveManager.",
   "order": 16,
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "refactor"
   ],
   "test": "",
   "title": "Formato del save con dueño y migraciones por versión",
-  "updated_at": "2026-10-16T19:47:54.492Z"
+  "updated_at": "2026-10-16T22:28:41.908Z"
 }

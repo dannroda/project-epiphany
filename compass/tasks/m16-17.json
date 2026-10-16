@@ -1,16 +1,17 @@
 {
+  "assignee": "project-epiphany-17",
   "checklist": [
     {
       "detail": "Coordinar con 12.39 (arte, en curso).",
-      "done": false,
+      "done": true,
       "text": "Un EntityConfig por tipo; el modelo en la variante de escena"
     },
     {
-      "done": false,
+      "done": true,
       "text": "_swap_model busca solo en el modelo nuevo"
     },
     {
-      "done": false,
+      "done": true,
       "text": "test_guerreros mira que las variantes compartan config"
     }
   ],
@@ -24,17 +25,17 @@
     }
   ],
   "milestone": "m16",
-  "notes": "",
+  "notes": "28eab75d: sin los 20 .tres por mazmorra; cada variante de guerreros/ usa la config de su tipo y Enemy.visuals con el cuerpo de su mazmorra (gana sobre config.model). _swap_model saca el Visuals viejo del árbol enseguida. -2a dio el OK (12.39 no toca esos archivos).",
   "order": 17,
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "refactor",
     "datos"
   ],
   "test": "",
   "title": "Configs de enemigos clonadas por mazmorra",
-  "updated_at": "2026-10-16T19:48:44.550Z"
+  "updated_at": "2026-10-16T22:28:42.429Z"
 }
