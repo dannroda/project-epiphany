@@ -6,7 +6,7 @@ extends Node3D
 
 enum Phase { OUT, LATCHED, BACK, DRAG, DONE }
 
-const ELEMENT := &"hook"
+const ELEMENT := DamageInfo.HOOK
 ## Altura de la punta sobre los pies del player.
 const HEIGHT := 0.9
 const LINK := 0.16

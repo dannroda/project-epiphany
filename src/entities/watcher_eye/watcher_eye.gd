@@ -50,8 +50,8 @@ func _ready() -> void:
 	for hitbox: Hitbox in [spot, impact]:
 		hitbox.team = config.team
 		hitbox.monitoring = false
-	spot.damage_factory = func() -> DamageInfo: return DamageInfo.make(beam_damage, config.attack_knockback, spot, &"blast")
-	impact.damage_factory = func() -> DamageInfo: return DamageInfo.make(lunge_damage, config.attack_knockback * 1.5, impact, &"blast")
+	spot.damage_factory = func() -> DamageInfo: return DamageInfo.make(beam_damage, config.attack_knockback, spot, DamageInfo.BLAST)
+	impact.damage_factory = func() -> DamageInfo: return DamageInfo.make(lunge_damage, config.attack_knockback * 1.5, impact, DamageInfo.BLAST)
 	body.position.y = hover_height
 	_show_beam(false)
 	path_mark.hide()

@@ -51,10 +51,10 @@ func _get_configuration_warnings() -> PackedStringArray:
 func _on_hit(info: DamageInfo) -> void:
 	if is_broken:
 		return
-	if info.element == &"dash":
+	if info.element == DamageInfo.DASH:
 		_shake()
 		return
-	if info.element != &"explosive" or not switches.is_empty():
+	if info.element != DamageInfo.EXPLOSIVE or not switches.is_empty():
 		Feel.burst(&"sparks", hurtbox.global_position, Vector3.UP)
 		Feel.sfx(&"hit_stone", global_position)
 		return

@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://src/feel/hit_flash.gd" id="6_flash"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/momia/momia.res" id="7_model"]
 [ext_resource type="Shader" path="res://src/entities/mummy_guard/shockwave.gdshader" id="8_wave"]
+[ext_resource type="Script" path="res://src/feel/ground_waves.gd" id="9_waves"]
 
 [sub_resource type="StandardMaterial3D" id="AimMat"]
 transparency = 1
@@ -72,13 +73,17 @@ top_level = true
 cast_shadow = 0
 mesh = SubResource("AimMesh")
 
-[node name="Wave" type="MeshInstance3D" parent="."]
+[node name="GroundWaves" type="Node3D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("9_waves")
+
+[node name="Wave" type="MeshInstance3D" parent="GroundWaves"]
 unique_name_in_owner = true
 top_level = true
 cast_shadow = 0
 mesh = SubResource("WaveMesh")
 
-[node name="Wave2" type="MeshInstance3D" parent="."]
+[node name="Wave2" type="MeshInstance3D" parent="GroundWaves"]
 unique_name_in_owner = true
 top_level = true
 cast_shadow = 0

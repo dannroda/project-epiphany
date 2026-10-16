@@ -418,7 +418,7 @@ func _blast(point: Vector3) -> void:
 	add_child(hit)
 	hit.global_position = point + Vector3.UP * 1.2
 	hit.team = EntityConfig.Team.ENEMY
-	hit.damage_factory = func() -> DamageInfo: return DamageInfo.make(mark_damage, 8.0, hit, &"blast")
+	hit.damage_factory = func() -> DamageInfo: return DamageInfo.make(mark_damage, 8.0, hit, DamageInfo.BLAST)
 	hit.activate()
 	for i in BLAST_FRAMES:
 		await get_tree().physics_frame
@@ -455,7 +455,7 @@ func _sweep_laser() -> void:
 	var floor_y := target.global_position.y if is_instance_valid(target) else 0.0
 	_laser_spot.global_position = Vector3(_laser_from.x, floor_y, _laser_from.z)
 	_laser_spot.team = EntityConfig.Team.ENEMY
-	_laser_spot.damage_factory = func() -> DamageInfo: return DamageInfo.make(laser_damage, 6.0, _laser_spot, &"blast")
+	_laser_spot.damage_factory = func() -> DamageInfo: return DamageInfo.make(laser_damage, 6.0, _laser_spot, DamageInfo.BLAST)
 	_laser_spot.activate()
 	_laser_spot.visible = true
 	_laser_beam.visible = true

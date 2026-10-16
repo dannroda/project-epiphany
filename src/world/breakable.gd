@@ -28,7 +28,7 @@ func _ready() -> void:
 
 
 func _on_hit(info: DamageInfo) -> void:
-	if info.element == &"dash" and break_style == Break.FELL:
+	if info.element == DamageInfo.DASH and break_style == Break.FELL:
 		shake()
 		return
 	if needs_strong and not info.strong:

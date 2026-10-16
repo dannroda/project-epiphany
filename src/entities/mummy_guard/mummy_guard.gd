@@ -30,23 +30,28 @@ enum State { IDLE, HOP, AIM, FALL, STUCK, DEAD }
 
 @onready var roar_fx: Roar = %Roar
 @onready var aim_mark: MeshInstance3D = %AimMark
-@onready var waves: Array[MeshInstance3D] = [%Wave, %Wave2]
+@onready var ground_waves: GroundWaves = %GroundWaves
 @onready var impact: Hitbox = %Impact
 ## El cuerpo choca con el player; se apaga mientras salta encima (cae donde está el player).
 @onready var solid_shape: CollisionShape3D = %SolidShape
 
 var state := State.IDLE
 var _aim_locked := false
-var _rings: Array[Dictionary] = []
 
 
 func _ready() -> void:
 	super()
 	impact.team = config.team
 	impact.monitoring = false
-	impact.damage_factory = func() -> DamageInfo: return DamageInfo.make(impact_damage, config.attack_knockback * 1.5, impact, &"blast")
+	impact.damage_factory = func() -> DamageInfo: return DamageInfo.make(impact_damage, config.attack_knockback * 1.5, impact, DamageInfo.BLAST)
 	aim_mark.hide()
-	_stop_waves()
+	ground_waves.emitter = self
+	ground_waves.team = config.team
+	ground_waves.only_teams = [EntityConfig.Team.PLAYER]
+	ground_waves.width = wave_width
+	ground_waves.glow = wave_glow
+	ground_waves.core = wave_core
+	ground_waves.stop()
 
 
 ## Presentación: mira al player, se echa para atrás, se hincha y grita.
@@ -94,8 +99,6 @@ func _physics_process(delta: float) -> void:
 	if state == State.AIM:
 		var shadow := Vector3(aim_mark.global_position.x, global_position.y, aim_mark.global_position.z)
 		global_position = global_position.move_toward(shadow, air_speed * pace * delta)
-	if not _rings.is_empty():
-		_spread_waves(delta)
 
 
 func _run() -> void:
@@ -187,48 +190,12 @@ func _leap(last := true) -> void:
 
 
 func _start_wave() -> void:
-	var free := waves.filter(func(mesh: MeshInstance3D) -> bool: return not mesh.visible)
-	var mesh: MeshInstance3D = waves[0] if free.is_empty() else free[0]
-	_rings = _rings.filter(func(ring: Dictionary) -> bool: return ring.mesh != mesh)
-	_rings.append({mesh = mesh, at = 0.0, center = global_position, hit = []})
-	mesh.global_position = global_position + Vector3.UP * 0.05
-	mesh.scale = Vector3.ONE * 0.01
-	mesh.set_instance_shader_parameter(&"width", wave_width)
-	mesh.set_instance_shader_parameter(&"glow", wave_glow)
-	mesh.set_instance_shader_parameter(&"core", wave_core)
-	mesh.show()
-
-
-func _spread_waves(delta: float) -> void:
-	for ring in _rings.duplicate():
-		ring.at += wave_speed * pace * delta
-		if ring.at > wave_radius:
-			ring.mesh.hide()
-			_rings.erase(ring)
-			continue
-		ring.mesh.scale = Vector3(ring.at, 1.0, ring.at)
-		ring.mesh.set_instance_shader_parameter(&"radius", ring.at)
-		ring.mesh.set_instance_shader_parameter(&"fade", 1.0 - ring.at / wave_radius)
-		for player in Players.alive():
-			if ring.hit.has(player) or not player.is_on_floor():
-				continue
-			var away: Vector3 = (player.global_position - ring.center) * Vector3(1, 0, 1)
-			if absf(away.length() - ring.at) > wave_width / 2.0:
-				continue
-			ring.hit.append(player)
-			var info := DamageInfo.make(wave_damage, config.attack_knockback, self, &"blast")
-			info.team = config.team
-			player.hurtbox.receive(info)
-
-
-func _stop_waves() -> void:
-	_rings.clear()
-	for mesh in waves:
-		mesh.hide()
+	ground_waves.speed = wave_speed * pace
+	ground_waves.pulse(global_position, wave_radius, wave_damage, config.attack_knockback)
 
 
 func _on_interrupt() -> void:
-	_stop_waves()
+	ground_waves.stop()
 	aim_mark.hide()
 	impact.deactivate()
 	body.rotation.z = 0.0

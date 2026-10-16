@@ -39,7 +39,7 @@ func _physics_process(_delta: float) -> void:
 	for hurtbox in _airborne.duplicate():
 		if not is_instance_valid(hurtbox) or not monitoring:
 			_airborne.erase(hurtbox)
-		elif (hurtbox.get_parent() as PlayerCharacter).is_on_floor():
+		elif hurtbox.is_grounded():
 			_airborne.erase(hurtbox)
 			_on_area_entered(hurtbox)
 
@@ -75,8 +75,7 @@ func _on_area_entered(area: Area3D) -> void:
 		return
 	if hurtbox in _already_hit:
 		return
-	var body := hurtbox.get_parent() as PlayerCharacter
-	if ground_only and body and not body.is_on_floor():
+	if ground_only and not hurtbox.is_grounded():
 		if hits_on_landing and not hurtbox in _airborne:
 			_airborne.append(hurtbox)
 		return

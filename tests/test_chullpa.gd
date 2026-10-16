@@ -274,7 +274,7 @@ func test_the_mallqui_fills_its_room_with_waves_that_the_feather_jumps() -> void
 	assert_true(await _until(func() -> bool: return player.health.current < before, 4.0), "la onda llega a %.1f m: no se esquiva caminando" % far)
 	assert_true(far > 8.0, "lejos del golpe")
 	assert_true(await _until(func() -> bool: return boss.state == MummyGuard.State.STUCK, 5.0), "queda trabado")
-	assert_true(await _until(func() -> bool: return boss._rings.is_empty(), 5.0))
+	assert_true(await _until(func() -> bool: return boss.ground_waves._rings.is_empty(), 5.0))
 	player.health.reset(80)
 	await _dodge_the_landing(boss)
 	before = player.health.current
@@ -331,7 +331,7 @@ func _dodge_the_landing(boss: MummyGuard) -> float:
 
 func _jump_the_wave(boss: MummyGuard) -> bool:
 	var near := func() -> bool:
-		for ring in boss._rings:
+		for ring in boss.ground_waves._rings:
 			var away: Vector3 = (player.global_position - ring.center) * Vector3(1, 0, 1)
 			if away.length() - ring.at < 1.6:
 				return true
@@ -345,7 +345,7 @@ func _jump_the_wave(boss: MummyGuard) -> bool:
 	var release := InputEventAction.new()
 	release.action = &"item_2"
 	Input.parse_input_event(release)
-	await _until(func() -> bool: return boss._rings.is_empty(), 5.0)
+	await _until(func() -> bool: return boss.ground_waves._rings.is_empty(), 5.0)
 	return true
 
 

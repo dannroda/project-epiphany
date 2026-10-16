@@ -1,6 +1,15 @@
 class_name DamageInfo
 extends RefCounted
 
+## Elementos (`element`); vacío es físico. Los escudos los nombran en ItemData.protects_against.
+const PHYSICAL := &"physical"
+const EXPLOSIVE := &"explosive"
+const BLAST := &"blast"
+const DASH := &"dash"
+const HOOK := &"hook"
+const SPIKES := &"spikes"
+const ELEMENTS: Array[StringName] = [PHYSICAL, EXPLOSIVE, BLAST, DASH, HOOK, SPIKES]
+
 var amount: int = 0
 var knockback: float = 0.0
 var source: Node3D

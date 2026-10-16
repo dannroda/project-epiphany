@@ -229,7 +229,7 @@ func _is_attacking() -> bool:
 
 ## Escudo de frente: frena todo salvo explosiones y martillazos; un golpe que aturde le baja la guardia.
 func _guard_stops(info: DamageInfo) -> bool:
-	if not shield_up() or info.source == null or info.element == &"explosive" or info.strong:
+	if not shield_up() or info.source == null or info.element == DamageInfo.EXPLOSIVE or info.strong:
 		return false
 	var to_source := info.source.global_position - global_position
 	to_source.y = 0.0
@@ -274,7 +274,7 @@ func is_armored() -> bool:
 func _armor_stops(info: DamageInfo) -> bool:
 	if not is_armored():
 		return false
-	if info.element == &"explosive" or info.element == Hook.ELEMENT or info.strong:
+	if info.element == DamageInfo.EXPLOSIVE or info.element == Hook.ELEMENT or info.strong:
 		_break_armor()
 		return info.element == Hook.ELEMENT
 	Feel.sfx(&"block", global_position)

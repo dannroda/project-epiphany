@@ -45,7 +45,7 @@ func reflects() -> bool:
 
 func protects(info: DamageInfo) -> bool:
 	var equipped := item()
-	var kind := info.element if info.element != &"" else &"physical"
+	var kind := info.element if info.element != &"" else DamageInfo.PHYSICAL
 	return equipped != null and kind in equipped.protects_against
 
 

@@ -47,7 +47,7 @@ func _physics_process(_delta: float) -> void:
 
 
 func _make_damage() -> DamageInfo:
-	return DamageInfo.make(damage, knockback, self, &"explosive")
+	return DamageInfo.make(damage, knockback, self, DamageInfo.EXPLOSIVE)
 
 
 func _on_body_entered(body: Node3D) -> void:

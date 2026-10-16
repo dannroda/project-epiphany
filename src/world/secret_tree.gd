@@ -6,7 +6,7 @@ extends Breakable
 
 
 func _on_hit(info: DamageInfo) -> void:
-	if info.element != &"dash":
+	if info.element != DamageInfo.DASH:
 		Feel.sfx(&"hit", global_position)
 		return
 	shake()

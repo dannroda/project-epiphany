@@ -26,6 +26,12 @@ func test_database_has_every_item_once() -> void:
 	assert_eq(ids, files, "la base tiene exactamente los ítems de data/items")
 
 
+func test_shields_protect_against_known_elements() -> void:
+	for item in Items.database.items:
+		for element in item.protects_against:
+			assert_true(element in DamageInfo.ELEMENTS, "%s: elemento desconocido %s" % [item.id, element])
+
+
 func test_get_item() -> void:
 	assert_eq(Items.get_item(&"sword_basic").display_name, "ITEM_SWORD_BASIC_NAME")
 	assert_eq(Items.get_item(&"no_existe"), null)

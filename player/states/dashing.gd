@@ -3,7 +3,7 @@ extends PlayerState
 ## hasta soltarlo o chocar. Al chocar rebota, sacude el encuadre y golpea lo de adelante con el elemento `dash`: cada
 ## Hurtbox decide (los árboles y muros agrietados se sacuden). Con la pluma en plena carrera, salto largo (Jumping).
 
-const ELEMENT := &"dash"
+const ELEMENT := DamageInfo.DASH
 
 @export var windup := 0.5
 @export var speed := 9.5

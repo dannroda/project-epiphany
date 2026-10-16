@@ -137,7 +137,7 @@ func _sweep(delta: float) -> void:
 		if angle < before or angle > _swept:
 			continue
 		_sweep_hit.append(player)
-		var info := DamageInfo.make(sweep_damage, config.attack_knockback, self, &"blast")
+		var info := DamageInfo.make(sweep_damage, config.attack_knockback, self, DamageInfo.BLAST)
 		info.team = config.team
 		player.hurtbox.receive(info)
 
