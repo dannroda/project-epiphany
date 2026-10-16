@@ -6,7 +6,6 @@ extends Node
 
 signal changed(value: Variant)
 
-const REGISTRY_PATH := "res://data/flag_registry.tres"
 const OVERWORLD_PREFIX := "ow"
 
 ## Puede llegar después de `_ready` (lo copia el objeto dueño del flag en su `_ready`).
@@ -61,7 +60,7 @@ static func warnings_for(id: StringName, optional: bool, node: Node = null) -> P
 	if id == &"":
 		return PackedStringArray() if optional else PackedStringArray(["Falta el flag."])
 	var warnings := PackedStringArray()
-	var registry := load(REGISTRY_PATH) as FlagRegistry
+	var registry := load(FlagRegistry.PATH) as FlagRegistry
 	if registry and not registry.has(id):
 		warnings.append("El flag \"%s\" no está en flag_registry.tres." % id)
 	var prefix := prefix_for(node) if node else OVERWORLD_PREFIX

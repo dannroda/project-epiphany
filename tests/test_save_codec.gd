@@ -90,7 +90,7 @@ func test_validate() -> void:
 	equipment.set_value("equipment", "SWORD", &"shield_wood")
 	equipment.set_value("equipment", "SHIELD", &"no_existe")
 	equipment.set_value("equipment", "buttons", [&"bow"])
-	equipment.set_value("flags", (load("res://data/flag_registry.tres") as FlagRegistry).definitions[0].id, 1)
+	equipment.set_value("flags", (load(FlagRegistry.PATH) as FlagRegistry).definitions[0].id, 1)
 	assert_eq(SaveCodec.validate(equipment).size(), 4, str(SaveCodec.validate(equipment)))
 	equipment.set_value("equipment", "buttons", [&"bow", &"feather"])
 	assert_true(" feather no está en el inventario" in "|".join(SaveCodec.validate(equipment)), "un botón con algo que no tenés")

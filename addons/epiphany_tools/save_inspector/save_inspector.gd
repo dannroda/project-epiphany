@@ -48,8 +48,8 @@ var _snapshot := ""
 
 func _init() -> void:
 	name = "SaveInspector"
-	_db = load("res://data/item_database.tres")
-	_flags = load("res://data/flag_registry.tres")
+	_db = load(ItemDatabase.PATH)
+	_flags = load(FlagRegistry.PATH)
 
 	var files_row := HBoxContainer.new()
 	_files.size_flags_horizontal = SIZE_EXPAND_FILL

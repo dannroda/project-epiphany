@@ -74,7 +74,7 @@ static func _rename(cfg: ConfigFile) -> void:
 static func _bottles_v2(cfg: ConfigFile) -> void:
 	if not cfg.has_section(SaveKeys.INVENTORY):
 		return
-	var db: ItemDatabase = load("res://data/item_database.tres")
+	var db: ItemDatabase = load(ItemDatabase.PATH)
 	var bottles := {}
 	if cfg.has_section(SaveKeys.BOTTLES):
 		for bottle in cfg.get_section_keys(SaveKeys.BOTTLES):
@@ -160,8 +160,8 @@ static func typed(cfg: ConfigFile, section: String, key: String, default: Varian
 ## No bloquea la carga: se pueden forzar escenarios imposibles a propósito.
 static func validate(cfg: ConfigFile) -> PackedStringArray:
 	var errors := PackedStringArray()
-	var db: ItemDatabase = load("res://data/item_database.tres")
-	var flags: FlagRegistry = load("res://data/flag_registry.tres")
+	var db: ItemDatabase = load(ItemDatabase.PATH)
+	var flags: FlagRegistry = load(FlagRegistry.PATH)
 	if cfg.has_section(SaveKeys.INVENTORY):
 		for id in cfg.get_section_keys(SaveKeys.INVENTORY):
 			var item := db.get_item(id)

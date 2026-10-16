@@ -1,6 +1,6 @@
 extends "res://tests/test_case.gd"
 
-const REGISTRY_PATH := "res://data/flag_registry.tres"
+const REGISTRY_PATH := FlagRegistry.PATH
 
 
 func test_registry_knows_its_flags() -> void:
@@ -13,10 +13,9 @@ func test_registry_knows_its_flags() -> void:
 
 
 func test_flag_ids_are_unique() -> void:
-	var seen := {}
-	for definition in (load(REGISTRY_PATH) as FlagRegistry).definitions:
-		assert_true(not seen.has(definition.id), "repetida: %s" % definition.id)
-		seen[definition.id] = true
+	assert_eq((load(REGISTRY_PATH) as FlagRegistry).duplicates(), [] as Array[StringName], "sin flags repetidas")
+	assert_eq((load(ItemDatabase.PATH) as ItemDatabase).duplicates(), [] as Array[StringName], "sin ítems repetidos")
+	assert_eq(Registries.duplicates([&"a", &"b", &"a", &"a"]), [&"a"] as Array[StringName])
 
 
 ## 11.81: en una mazmorra el prefijo de cada flag es el id de su Dungeon, sin lista fija en el código; afuera, ow_ o

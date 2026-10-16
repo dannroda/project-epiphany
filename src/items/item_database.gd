@@ -2,6 +2,7 @@
 class_name ItemDatabase
 extends Resource
 
+const PATH := "res://data/item_database.tres"
 ## Las botellas son ítems únicos; lo que llevan (bottled) va en GameState.bottles.
 const BOTTLES: Array[StringName] = [&"bottle_1", &"bottle_2", &"bottle_3", &"bottle_4"]
 const EMPTY_BOTTLE := &"bottle_empty"
@@ -28,7 +29,16 @@ func capacity(id: StringName, owns: Callable) -> int:
 	return total
 
 
+func duplicates() -> Array[StringName]:
+	return Registries.duplicates(items.map(func(item: ItemData) -> StringName: return item.id if item else &""))
+
+
 func get_item(id: StringName) -> ItemData:
+	if Engine.is_editor_hint():
+		for item in items:
+			if item and item.id == id:
+				return item
+		return null
 	if _by_id.is_empty():
 		for item in items:
 			if item:

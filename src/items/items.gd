@@ -1,13 +1,11 @@
 # Autoload
 extends Node
 
-const DATABASE_PATH := "res://data/item_database.tres"
-
 var database: ItemDatabase
 
 
 func _ready() -> void:
-	database = load(DATABASE_PATH)
+	database = load(ItemDatabase.PATH)
 
 
 func get_item(id: StringName) -> ItemData:

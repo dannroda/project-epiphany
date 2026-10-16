@@ -14,7 +14,7 @@ signal map_changed
 ## Se pintó más de lo descubierto del overworld (map_revealed).
 signal map_revealed_changed
 
-const FLAGS: FlagRegistry = preload("res://data/flag_registry.tres")
+const FLAGS: FlagRegistry = preload(FlagRegistry.PATH)
 ## La vida de una partida nueva es la de player.tres.
 const PLAYER_CONFIG := preload("res://data/entities/player.tres")
 const HP_PER_HEART := 4

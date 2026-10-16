@@ -11,7 +11,7 @@ func _files(dir: String, extension := ".tres") -> Array[String]:
 
 
 func test_every_level_flag_is_registered() -> void:
-	var registry: FlagRegistry = load("res://data/flag_registry.tres")
+	var registry: FlagRegistry = load(FlagRegistry.PATH)
 	var checked := 0
 	for path in _files("res://levels", ".tscn"):
 		var root: Node = load(path).instantiate()

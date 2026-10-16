@@ -5,7 +5,7 @@ extends RefCounted
 
 const ROOTS: Array[String] = ["res://levels", "res://src", "res://data", "res://tests"]
 const EXTENSIONS: Array[String] = ["tscn", "gd", "tres", "dialogue"]
-const SKIP := "res://data/flag_registry.tres"
+const SKIP := FlagRegistry.PATH
 ## Los .tres de mallas y texturas pesan megas y no tienen flags.
 const MAX_BYTES := 400_000
 

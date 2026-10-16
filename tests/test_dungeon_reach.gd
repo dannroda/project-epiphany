@@ -20,8 +20,8 @@ func test_every_dungeon_graph_matches_its_scene_and_has_no_dead_end() -> void:
 
 ## Un token mal escrito en needs y brings a la vez pasa la alcanzabilidad: todos tienen que existir.
 func test_every_graph_token_is_an_item_or_a_flag() -> void:
-	var items := load("res://data/item_database.tres") as ItemDatabase
-	var flags := load("res://data/flag_registry.tres") as FlagRegistry
+	var items := load(ItemDatabase.PATH) as ItemDatabase
+	var flags := load(FlagRegistry.PATH) as FlagRegistry
 	for file in DirAccess.get_files_at(GRAPHS):
 		if not file.ends_with(".tres"):
 			continue
