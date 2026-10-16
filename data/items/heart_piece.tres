@@ -7,6 +7,7 @@
 [resource]
 script = ExtResource("2_item")
 id = &"heart_piece"
+on_get = 7
 display_name = "ITEM_HEART_PIECE_NAME"
 description = "ITEM_HEART_PIECE_DESC"
 icon = ExtResource("1_icon")

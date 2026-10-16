@@ -17,6 +17,7 @@ hold_time = 0.25
 [resource]
 script = ExtResource("3_kgno8")
 id = &"bomb_bag"
+show_in_slot_summary = true
 display_name = "ITEM_BOMB_BAG_NAME"
 description = "ITEM_BOMB_BAG_DESC"
 icon = ExtResource("2_kgno8")

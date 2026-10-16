@@ -162,9 +162,9 @@ func test_version_one_bottles_migrate_into_unique_bottles() -> void:
 	var contents := []
 	for bottle in ItemDatabase.BOTTLES:
 		if cfg.has_section_key(SaveKeys.INVENTORY, bottle):
-			contents.append(cfg.get_value(SaveKeys.BOTTLES, bottle))
+			contents.append(str(cfg.get_value(SaveKeys.BOTTLES, bottle)))
 	contents.sort()
-	assert_eq(contents, [&"bottle_empty", &"potion", &"potion"], "una botella por unidad")
+	assert_eq(contents, ["bottle_empty", "potion", "potion"], "una botella por unidad")
 	var buttons: Array = cfg.get_value(SaveKeys.EQUIPMENT, SaveKeys.BUTTONS)
 	assert_true(String(buttons[0]) in ItemDatabase.BOTTLES and cfg.get_value(SaveKeys.BOTTLES, buttons[0]) == &"potion", "el botón pasa a una botella con poción")
 	assert_eq(buttons[1], &"bomb")

@@ -104,3 +104,17 @@ func test_the_golden_sword_hits_twice_as_hard_with_its_own_trail_and_sparks() ->
 	assert_true(golden.trail != null and basic.trail == null, "estela propia; la común sigue con la del player")
 	assert_eq(golden.hit_burst, &"sparks_gold")
 	assert_eq(basic.hit_burst, &"sparks")
+
+
+func test_what_an_item_does_when_got_is_data() -> void:
+	var expected := {
+		&"small_key": ItemData.OnGet.SMALL_KEY, &"boss_key": ItemData.OnGet.BOSS_KEY,
+		&"boss_key_piece": ItemData.OnGet.BOSS_KEY_PIECE, &"dungeon_map": ItemData.OnGet.DUNGEON_MAP,
+		&"compass": ItemData.OnGet.COMPASS, &"heart_container": ItemData.OnGet.HEART_CONTAINER,
+		&"heart_piece": ItemData.OnGet.HEART_PIECE,
+	}
+	for item in Items.database.items:
+		assert_eq(item.on_get, expected.get(item.id, ItemData.OnGet.INVENTORY), String(item.id))
+	assert_true(not Items.database.new_game_equipment.is_empty(), "hay equipo de partida nueva")
+	for item in Items.database.new_game_equipment:
+		assert_true(item.is_equipment(), "%s se puede llevar puesto" % item.id)

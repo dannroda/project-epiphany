@@ -6,12 +6,26 @@ extends Resource
 const BOTTLES: Array[StringName] = [&"bottle_1", &"bottle_2", &"bottle_3", &"bottle_4"]
 const EMPTY_BOTTLE := &"bottle_empty"
 
+## Lo que se tiene y se lleva puesto al empezar una partida.
+@export var new_game_equipment: Array[ItemData] = []
 @export var items: Array[ItemData] = []:
 	set(value):
 		items = value
 		_by_id.clear()
 
 var _by_id: Dictionary[StringName, ItemData] = {}
+
+
+## max_stack más lo que suman las mejoras de capacidad que `owns` (id -> bool) dice que se tienen.
+func capacity(id: StringName, owns: Callable) -> int:
+	var item := get_item(id)
+	if item == null:
+		return 0
+	var total := item.max_stack
+	for upgrade in items:
+		if upgrade.capacity_for and upgrade.capacity_for.id == id and owns.call(upgrade.id):
+			total += upgrade.capacity_bonus
+	return total
 
 
 func get_item(id: StringName) -> ItemData:

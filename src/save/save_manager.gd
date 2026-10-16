@@ -97,13 +97,13 @@ func slot_summary(slot: int) -> Dictionary:
 	if not has_save(slot) or SaveCodec.read(slot_path(slot), cfg) != OK:
 		return {}
 	var items: Array[StringName] = []
-	for key in ["SWORD", "SHIELD"]:
-		var id: StringName = cfg.get_value(SaveKeys.EQUIPMENT, key, &"")
+	for category: ItemData.Category in [ItemData.Category.SWORD, ItemData.Category.SHIELD]:
+		var id: StringName = cfg.get_value(SaveKeys.EQUIPMENT, ItemData.Category.find_key(category), &"")
 		if id != &"":
 			items.append(id)
-	for id in [&"bow", &"bomb_bag"]:
-		if cfg.get_value(SaveKeys.INVENTORY, id, 0) > 0:
-			items.append(id)
+	for item in Items.database.items:
+		if item.show_in_slot_summary and cfg.get_value(SaveKeys.INVENTORY, item.id, 0) > 0:
+			items.append(item.id)
 	return {
 		max_health = cfg.get_value(SaveKeys.PLAYER, SaveKeys.MAX_HEALTH, GameState.new_game_max_health()),
 		location = cfg.get_value(SaveKeys.PLAYER, SaveKeys.LOCATION, ""),

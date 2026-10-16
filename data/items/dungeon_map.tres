@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("2_1nikq")
 id = &"dungeon_map"
+on_get = 4
 display_name = "ITEM_DUNGEON_MAP_NAME"
 description = "ITEM_DUNGEON_MAP_DESC"
 icon = ExtResource("1_1nikq")

@@ -2,6 +2,8 @@ class_name ItemData
 extends Resource
 
 enum Category { SWORD, SHIELD, ARMOR, USABLE, AMMO, DUNGEON, UPGRADE }
+## Qué pasa al conseguirlo (GameState.give): va al inventario, o cuenta para la mazmorra o los corazones.
+enum OnGet { INVENTORY, SMALL_KEY, BOSS_KEY, BOSS_KEY_PIECE, DUNGEON_MAP, COMPASS, HEART_CONTAINER, HEART_PIECE }
 
 @export var id: StringName
 @export var display_name: String
@@ -15,6 +17,9 @@ enum Category { SWORD, SHIELD, ARMOR, USABLE, AMMO, DUNGEON, UPGRADE }
 ## Mejora de equipo: al conseguirla se equipa aunque la ranura ya tenga algo.
 @export var equip_on_get := false
 @export var behavior: ItemBehavior
+@export var on_get := OnGet.INVENTORY
+## Se ve en la tarjeta de la ranura (pantalla de partidas) si se tiene.
+@export var show_in_slot_summary := false
 ## Viene con munición al conseguirlo (la bolsa trae bombas, el arco flechas).
 @export var bundled: ItemData
 @export_range(0, 99, 1, "or_greater") var bundled_amount: int = 0

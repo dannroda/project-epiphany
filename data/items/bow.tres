@@ -18,6 +18,7 @@ aim_yaw_offset_deg = 62.0
 [resource]
 script = ExtResource("3_ca8yi")
 id = &"bow"
+show_in_slot_summary = true
 display_name = "ITEM_BOW_NAME"
 description = "ITEM_BOW_DESC"
 icon = ExtResource("2_ca8yi")

@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("2_nip8s")
 id = &"boss_key"
+on_get = 2
 display_name = "ITEM_BOSS_KEY_NAME"
 description = "ITEM_BOSS_KEY_DESC"
 icon = ExtResource("1_nip8s")

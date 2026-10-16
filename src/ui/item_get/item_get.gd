@@ -39,10 +39,10 @@ func _ready() -> void:
 
 ## Las piezas (de corazón, de la llave del jefe) cuentan cuántas lleva; la que completa tiene su propio texto.
 static func cue_for(given: ItemData) -> StringName:
-	if given.id == &"boss_key_piece":
+	if given.on_get == ItemData.OnGet.BOSS_KEY_PIECE:
 		var dungeon := GameState.current_dungeon_state()
 		return &"boss_key_piece_full" if dungeon.has_boss_key else StringName("boss_key_piece_%d" % dungeon.boss_key_pieces)
-	if given.id != &"heart_piece":
+	if given.on_get != ItemData.OnGet.HEART_PIECE:
 		return given.id
 	var pieces := GameState.heart_pieces()
 	return &"heart_piece_full" if pieces == 0 else StringName("heart_piece_%d" % pieces)

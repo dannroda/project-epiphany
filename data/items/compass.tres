@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("2_mbg3s")
 id = &"compass"
+on_get = 5
 display_name = "ITEM_COMPASS_NAME"
 description = "ITEM_COMPASS_DESC"
 icon = ExtResource("1_mbg3s")

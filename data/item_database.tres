@@ -34,4 +34,5 @@
 
 [resource]
 script = ExtResource("19_0lh3u")
+new_game_equipment = Array[ExtResource("1_p363h")]([ExtResource("2_jn4gg"), ExtResource("3_j1dr6"), ExtResource("5_0jxo4")])
 items = Array[ExtResource("1_p363h")]([ExtResource("2_jn4gg"), ExtResource("2_golden"), ExtResource("3_j1dr6"), ExtResource("4_2avqm"), ExtResource("5_0jxo4"), ExtResource("6_fr6c6"), ExtResource("7_tf4ty"), ExtResource("8_hu1gi"), ExtResource("9_axpd1"), ExtResource("10_h10lr"), ExtResource("20_feather"), ExtResource("20_sandals"), ExtResource("20_hookshot"), ExtResource("20_hammer"), ExtResource("21_bottle1"), ExtResource("21_bottle2"), ExtResource("21_bottle3"), ExtResource("21_bottle4"), ExtResource("11_qdb6h"), ExtResource("12_oejcp"), ExtResource("13_70lmf"), ExtResource("14_aber8"), ExtResource("14_piece"), ExtResource("15_fk3p1"), ExtResource("16_6khe1"), ExtResource("17_br7di"), ExtResource("18_rasc4"), ExtResource("18_piece"), ExtResource("19_holy")])

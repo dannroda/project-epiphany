@@ -17,12 +17,7 @@ func has(id: StringName, amount: int = 1) -> bool:
 
 
 func capacity(id: StringName) -> int:
-	var total := Items.get_item(id).max_stack
-	for owned in _counts:
-		var upgrade := Items.get_item(owned)
-		if upgrade and upgrade.capacity_for and upgrade.capacity_for.id == id:
-			total += upgrade.capacity_bonus
-	return total
+	return Items.database.capacity(id, has)
 
 
 ## Devuelve cuánto entró realmente.

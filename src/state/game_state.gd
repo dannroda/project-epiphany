@@ -15,7 +15,6 @@ signal map_changed
 signal map_revealed_changed
 
 const FLAGS: FlagRegistry = preload("res://data/flag_registry.tres")
-const NEW_GAME_EQUIPMENT: Array[StringName] = [&"sword_basic", &"shield_wood", &"tunic"]
 ## La vida de una partida nueva es la de player.tres.
 const PLAYER_CONFIG := preload("res://data/entities/player.tres")
 const HP_PER_HEART := 4
@@ -80,10 +79,9 @@ func _ready() -> void:
 func reset() -> void:
 	_set_bulk(true)
 	_clear()
-	for id in NEW_GAME_EQUIPMENT:
-		var item := Items.get_item(id)
-		inventory.add(id)
-		equipment[item.category] = id
+	for item in Items.database.new_game_equipment:
+		inventory.add(item.id)
+		equipment[item.category] = item.id
 	_set_bulk(false)
 	loaded.emit()
 
@@ -213,19 +211,19 @@ func give(item: ItemData, amount: int = 1) -> void:
 		for i in amount:
 			_bottle(item)
 		return
-	match item.id:
-		&"small_key": current_dungeon_state().small_keys += amount
-		&"boss_key": current_dungeon_state().has_boss_key = true
-		&"boss_key_piece":
+	match item.on_get:
+		ItemData.OnGet.SMALL_KEY: current_dungeon_state().small_keys += amount
+		ItemData.OnGet.BOSS_KEY: current_dungeon_state().has_boss_key = true
+		ItemData.OnGet.BOSS_KEY_PIECE:
 			var dungeon := current_dungeon_state()
 			dungeon.boss_key_pieces += amount
 			if dungeon.boss_key_pieces >= PIECES_PER_BOSS_KEY:
 				dungeon.has_boss_key = true
-		&"dungeon_map": current_dungeon_state().has_map = true
-		&"compass": current_dungeon_state().has_compass = true
-		&"heart_container":
+		ItemData.OnGet.DUNGEON_MAP: current_dungeon_state().has_map = true
+		ItemData.OnGet.COMPASS: current_dungeon_state().has_compass = true
+		ItemData.OnGet.HEART_CONTAINER:
 			_add_hearts(amount)
-		&"heart_piece":
+		ItemData.OnGet.HEART_PIECE:
 			inventory.add(item.id, amount)
 			var hearts := heart_pieces() / PIECES_PER_HEART
 			if hearts > 0:
