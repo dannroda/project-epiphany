@@ -5478,6 +5478,11 @@ Daniel (2026-10-15): la pantalla de carga congela la ventana (no responde al res
 
 Daniel (2026-10-15): aumentar las veces que las manos golpean el piso; detrás del jefe no lo puede atacar. Hecho (7a183320): cada golpe al piso es una tanda de slam_count (3) que sigue al player, aturdida recién después del último; el área del jefe cubre toda la sala (antes empezaba 1 m delante del cuerpo y todo lo de atrás quedaba en el borde). test_boss.
 
+- [x] Las manos casi nunca golpeaban el piso
+  Daniel (2026-10-15): fases 1 y 2, varios minutos esquivando, ningún golpe al piso. El golpe solo puntuaba a ~5 m del reposo de la mano y el barrido ganaba siempre la lista corta. Hecho (081692a0): distancia ideal 0-12 m, caída 8. test_the_hands_slam_wherever_the_player_dodges.
+- [x] Detrás del ojo, el orbe chocaba contra el propio jefe
+  Hecho (8c6061e7): los proyectiles ignoran los cuerpos de quien los disparó. test_the_orb_goes_through_the_boss_own_body.
+
 ### 11.199 Mazmorras: no hacer zoom a lo que se abre en otra sala · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-67 · **Etiquetas:** `camara`, `mazmorra`
@@ -5522,6 +5527,8 @@ Lo que salió en el log de Daniel con la build de Linux y lo que apareció al ar
   Del motor desde 4.8-beta1; nada nuestro usa esa señal. Reportar a Godot si sigue.
 - [ ] look_at() failed: origen y destino en el mismo punto (16 veces)
   Pendiente: buscar quién.
+- [x] Basis sin normalizar en aim.gd (rotar al apuntar)
+  Hecho (081692a0): slerp entre bases ortonormalizadas.
 
 ## M12 — Assets propios (Blender)  (17/39)
 

@@ -50,6 +50,11 @@
       "detail": "Pendiente: buscar quién.",
       "done": false,
       "text": "look_at() failed: origen y destino en el mismo punto (16 veces)"
+    },
+    {
+      "detail": "Hecho (081692a0): slerp entre bases ortonormalizadas.",
+      "done": true,
+      "text": "Basis sin normalizar en aim.gd (rotar al apuntar)"
     }
   ],
   "code": "11.202",
@@ -67,5 +72,5 @@
   ],
   "test": "",
   "title": "Errores del log de la build 0.2 (playtest)",
-  "updated_at": "2026-10-16T01:01:54.446Z"
+  "updated_at": "2026-10-16T01:14:05.419Z"
 }

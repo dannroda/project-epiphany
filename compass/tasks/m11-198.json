@@ -1,6 +1,17 @@
 {
   "assignee": "project-epiphany-67",
-  "checklist": [],
+  "checklist": [
+    {
+      "detail": "Daniel (2026-10-15): fases 1 y 2, varios minutos esquivando, ningún golpe al piso. El golpe solo puntuaba a ~5 m del reposo de la mano y el barrido ganaba siempre la lista corta. Hecho (081692a0): distancia ideal 0-12 m, caída 8. test_the_hands_slam_wherever_the_player_dodges.",
+      "done": true,
+      "text": "Las manos casi nunca golpeaban el piso"
+    },
+    {
+      "detail": "Hecho (8c6061e7): los proyectiles ignoran los cuerpos de quien los disparó. test_the_orb_goes_through_the_boss_own_body.",
+      "done": true,
+      "text": "Detrás del ojo, el orbe chocaba contra el propio jefe"
+    }
+  ],
   "code": "11.198",
   "created_at": "2026-10-16T01:01:09.209Z",
   "description": "Daniel (2026-10-15): aumentar las veces que las manos golpean el piso; detrás del jefe no lo puede atacar. Hecho (7a183320): cada golpe al piso es una tanda de slam_count (3) que sigue al player, aturdida recién después del último; el área del jefe cubre toda la sala (antes empezaba 1 m delante del cuerpo y todo lo de atrás quedaba en el borde). test_boss.",
@@ -17,5 +28,5 @@
   ],
   "test": "",
   "title": "Jefe final: más golpes al piso y lo alcanza detrás",
-  "updated_at": "2026-10-16T01:01:09.209Z"
+  "updated_at": "2026-10-16T01:14:01.201Z"
 }
