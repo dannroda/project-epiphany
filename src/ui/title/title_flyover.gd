@@ -54,7 +54,7 @@ func _poll() -> void:
 					level.remove_child(node)
 					node.free()
 			add_child(level)
-			for node in get_tree().get_nodes_in_group(&"zone_veil"):
+			for node in get_tree().get_nodes_in_group(ZoneVeil.GROUP):
 				if level.is_ancestor_of(node):
 					(node as Node3D).hide()
 			_camera.make_current()

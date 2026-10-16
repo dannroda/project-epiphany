@@ -122,7 +122,7 @@ func _react(collider: Object, point: Vector3) -> bool:
 		return false
 	if target and node != target and not target.is_ancestor_of(node):
 		return false
-	if node.is_in_group(&"walk_guard"):
+	if node.is_in_group(Targeting.WALK_GUARD):
 		return false
 	anchor = _anchor_of(node)
 	if anchor:

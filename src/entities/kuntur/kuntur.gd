@@ -424,7 +424,7 @@ func _die() -> void:
 	_interrupt()
 	state = State.DEAD
 	Log.info(&"combat", name, "murió")
-	remove_from_group(&"targetable")
+	remove_from_group(Targeting.GROUP)
 	hurtbox.set_deferred(&"monitorable", false)
 	_set_suns(false)
 	Feel.burst(&"shards", body.global_position, Vector3.UP)

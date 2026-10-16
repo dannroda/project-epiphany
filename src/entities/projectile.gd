@@ -75,7 +75,7 @@ func _on_landed(_hurtbox: Hurtbox) -> void:
 
 ## Contra el mundo (paredes, piso, cajas).
 func _on_body_entered(body: Node3D) -> void:
-	if _stuck or _on_character(body) or body.is_in_group(&"walk_guard") or _from_shooter(body):
+	if _stuck or _on_character(body) or body.is_in_group(Targeting.WALK_GUARD) or _from_shooter(body):
 		return
 	super(body)
 	Feel.burst(burst, global_position, -velocity.normalized())

@@ -16,7 +16,7 @@ func get_animation(_item: ItemData) -> StringName:
 
 func can_use(ctx: ItemUseContext, _item: ItemData) -> bool:
 	var has_ammo := ammo == null or ctx.inventory.has(ammo.id)
-	var own := ctx.user.get_tree().get_nodes_in_group(&"bombs").filter(func(bomb: Node) -> bool:
+	var own := ctx.user.get_tree().get_nodes_in_group(Bomb.GROUP).filter(func(bomb: Node) -> bool:
 		return bomb.get_meta(&"placed_by", null) == ctx.user)
 	return has_ammo and own.size() < max_active
 

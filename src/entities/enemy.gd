@@ -342,7 +342,7 @@ func _on_damaged(_amount: int) -> void:
 
 func _on_died() -> void:
 	Log.info(&"combat", name, "murió")
-	remove_from_group(&"targetable")
+	remove_from_group(Targeting.GROUP)
 	attack_runner.stop()
 	stop_moving()
 	hurtbox.set_deferred(&"monitorable", false)

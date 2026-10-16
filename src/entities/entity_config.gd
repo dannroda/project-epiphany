@@ -5,7 +5,7 @@ enum Team { PLAYER, ENEMY, NEUTRAL }
 enum Feature { TARGETABLE = 1, PUSHABLE = 2, BURNABLE = 4, REFLECTS = 8, GRABBABLE = 16 }
 
 const _GROUPS: Dictionary[Feature, StringName] = {
-	Feature.TARGETABLE: &"targetable",
+	Feature.TARGETABLE: Targeting.GROUP,
 	Feature.PUSHABLE: &"pushable",
 	Feature.BURNABLE: &"burnable",
 	Feature.REFLECTS: &"reflects",

@@ -6,6 +6,11 @@ signal target_changed(target: Node3D)
 
 enum LockMode { HOLD, TOGGLE }
 
+## Lo que se puede fijar con Z.
+const GROUP := &"targetable"
+## Barandas invisibles: frenan al que camina, no a los tiros, al gancho ni a la mira.
+const WALK_GUARD := &"walk_guard"
+
 @export var player: PlayerCharacter
 @export var target_indicator: TargetIndicator
 @export var lock_mode: LockMode = LockMode.HOLD
@@ -153,7 +158,7 @@ func valid_candidates(camera: Camera3D) -> Array[Node3D]:
 	var screen := get_viewport().get_visible_rect()
 	var result: Array[Node3D] = []
 	for candidate in possible_targets:
-		if not is_instance_valid(candidate) or not candidate.is_in_group(&"targetable"):
+		if not is_instance_valid(candidate) or not candidate.is_in_group(GROUP):
 			continue
 		if camera.is_position_behind(candidate.global_position):
 			continue
@@ -183,7 +188,7 @@ func clear() -> void:
 func _check_current(delta: float) -> void:
 	if current == null:
 		return
-	if is_instance_valid(current) and current.is_in_group(&"targetable") and possible_targets.has(current):
+	if is_instance_valid(current) and current.is_in_group(GROUP) and possible_targets.has(current):
 		_invalid_time = 0.0
 		return
 	_invalid_time += delta
@@ -232,7 +237,7 @@ func _in_sight(target: Node3D) -> bool:
 		_ray.exclude = exclude
 		if not space.intersect_ray_into(_ray, _hit):
 			return true
-		if not (_hit.collider as Node).is_in_group(&"walk_guard"):
+		if not (_hit.collider as Node).is_in_group(WALK_GUARD):
 			return false
 		exclude.append(_hit.collider_rid)
 	return false
@@ -263,7 +268,7 @@ func _room_of(point: Vector3) -> Room:
 
 
 func _on_detector_body_entered(body: Node3D) -> void:
-	if body.is_in_group(&"targetable") and not body is HookPost:
+	if body.is_in_group(GROUP) and not body is HookPost:
 		possible_targets.append(body)
 
 

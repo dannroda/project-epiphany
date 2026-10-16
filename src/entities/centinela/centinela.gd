@@ -269,7 +269,7 @@ func _die() -> void:
 	state = State.DEAD
 	solid_shape.set_deferred(&"disabled", true)
 	Log.info(&"combat", name, "murió")
-	remove_from_group(&"targetable")
+	remove_from_group(Targeting.GROUP)
 	hurtbox.set_deferred(&"monitorable", false)
 	_play(anim_death)
 	Feel.burst(&"dust", global_position + Vector3.UP, Vector3.UP)

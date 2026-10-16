@@ -653,7 +653,7 @@ func _present(action: Callable, hold: float) -> void:
 func _on_phase2_entered() -> void:
 	chosen_attack = null
 	attacker = null
-	%Solid.add_to_group(&"targetable")
+	%Solid.add_to_group(Targeting.GROUP)
 	phase_changed.emit(2)
 	await _present(_open_eye, PHASE_HOLD)
 	_transforming = false
@@ -745,7 +745,7 @@ func _cut_charge() -> void:
 
 
 func _on_defeated() -> void:
-	%Solid.remove_from_group(&"targetable")
+	%Solid.remove_from_group(Targeting.GROUP)
 	_eye_stun_left = 0.0
 	_cut_charge()
 	eye_hurtbox.set_deferred(&"monitorable", false)

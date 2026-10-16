@@ -60,7 +60,7 @@ func _physics_process(_delta: float) -> void:
 ## Lo descubierto es del mundo, no del HUD: se pinta en GameState.map_revealed (1 px por metro) aunque no haya minimapa.
 func _reveal() -> void:
 	GameState.ensure_map_revealed(Vector2i(world_rect.size.ceil()))
-	var veils := get_tree().get_nodes_in_group(&"zone_veils").filter(func(veil: ZoneVeil) -> bool: return veil.visible)
+	var veils := get_tree().get_nodes_in_group(ZoneVeil.GROUP).filter(func(veil: ZoneVeil) -> bool: return veil.visible)
 	if veils.any(func(veil: ZoneVeil) -> bool: return veil.is_revealing()):
 		_painted_at.clear()
 	var changed := false

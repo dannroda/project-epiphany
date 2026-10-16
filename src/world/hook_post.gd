@@ -9,7 +9,7 @@ const RING_HEIGHT := 0.9
 
 func _ready() -> void:
 	add_to_group(GROUP)
-	add_to_group(&"targetable")
+	add_to_group(Targeting.GROUP)
 
 
 func ring() -> Vector3:

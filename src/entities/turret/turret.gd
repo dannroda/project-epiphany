@@ -86,7 +86,7 @@ func _on_died() -> void:
 	Log.info(&"combat", name, "destruida")
 	defeated.emit(self)
 	bt_player.active = false
-	remove_from_group(&"targetable")
+	remove_from_group(Targeting.GROUP)
 	hurtbox.set_deferred(&"monitorable", false)
 	set_charge(0.0)
 	Feel.burst(&"shards", head.global_position, Vector3.UP)

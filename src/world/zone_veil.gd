@@ -5,6 +5,8 @@ extends MeshInstance3D
 ## Llega hasta la cara de afuera de las paredes que la rodean (`wall_margin`) y a la altura de su tapa
 ## (`top`), así del otro lado no se ve nada (11.54).
 
+const GROUP := &"zone_veils"
+
 ## CrackedWall o Gate que cierran la zona.
 @export var blockers: Array[NodePath] = []
 ## Grosor de la pared que rodea la zona (una celda del GridMap).
@@ -26,7 +28,7 @@ var _tween: Tween
 
 
 func _ready() -> void:
-	add_to_group(&"zone_veils")
+	add_to_group(GROUP)
 	_zone = get_parent() as AreaZone
 	_cover = _zone.bounds().grow(wall_margin)
 	_rect = _cover.grow(fringe_out)

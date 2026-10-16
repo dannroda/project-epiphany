@@ -3,6 +3,7 @@ extends RigidBody3D
 ## Mecha con parpadeo que se acelera; al final explota. La espada la patea; otra explosión la adelanta.
 
 const EXPLOSION := preload("res://src/items/bomb/explosion.tscn")
+const GROUP := &"bombs"
 
 @export var fuse := 2.0
 
@@ -14,7 +15,7 @@ var _exploded := false
 
 
 func _ready() -> void:
-	add_to_group(&"bombs")
+	add_to_group(GROUP)
 	_left = fuse
 	_flash.albedo_texture = preload("res://assets/epiphany/palette.png")
 	_flash.albedo_color = Color(0.72, 0.72, 0.72)
