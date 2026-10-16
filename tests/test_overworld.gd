@@ -402,15 +402,15 @@ func test_every_region_is_reachable_except_the_item_gated() -> void:
 	await tree.scene_changed
 	for i in 10:
 		await tree.physics_frame
-	var west: Array[String] = ["Zone_cerros", "Zone_cerros_2", "Zone_laguna", "Zone_pradera", "Zone_pradera_2", "Zone_pradera_3", "Zone_pradera_4", "Zone_pradera_5", "Zone_pradera_6", "Zone_pradera_7", "Zone_start", "Zone_start_2", "Zone_templo", "Zone_templo_2", "Zone_templo_3", "Zone_vertiente"]
+	var west: Array[String] = ["Zone_cerros", "Zone_cerros_2", "Zone_cerros_3", "Zone_laguna", "Zone_pradera", "Zone_pradera_10", "Zone_pradera_11", "Zone_pradera_12", "Zone_pradera_2", "Zone_pradera_3", "Zone_pradera_4", "Zone_pradera_5", "Zone_pradera_6", "Zone_pradera_7", "Zone_pradera_8", "Zone_start", "Zone_start_2", "Zone_templo", "Zone_templo_3", "Zone_vertiente"]
 	assert_eq(_reachable_zones(tree), west, "sin el puente, solo el oeste de la quebrada, sin la Arboleda (pluma)")
 	(tree.current_scene.get_node(^"RavineBridge") as Bridge).raise(false)
 	for i in 4:
 		await tree.physics_frame
 	var all := west.duplicate()
-	all.append_array(["Zone_banado", "Zone_cardonal", "Zone_mirador", "Zone_mirador_2", "Zone_necropolis", "Zone_necropolis_2", "Zone_risco"])
+	all.append_array(["Zone_banado", "Zone_cardonal", "Zone_mirador", "Zone_mirador_2", "Zone_mirador_3", "Zone_mirador_4", "Zone_mirador_5", "Zone_necropolis", "Zone_necropolis_2", "Zone_pradera_9", "Zone_risco"])
 	all.sort()
-	assert_eq(_reachable_zones(tree), all, "con el puente, todo menos la Arboleda (pluma) y la Cumbre (gancho; salvo el pasillo bajo de su pantalla sur)")
+	assert_eq(_reachable_zones(tree), all, "con el puente, todo menos la Arboleda (pluma) y la Cumbre (gancho o escalera)")
 	state.reset()
 
 
