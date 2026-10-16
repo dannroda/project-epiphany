@@ -52,10 +52,15 @@ if (-not (Test-Path $worktree)) {
 	} elseif (git -C $project branch -r --list "origin/wt/windows") {
 		git -C $project worktree add -b wt/windows $worktree origin/wt/windows
 	} else {
-		git -C $project worktree add -b wt/windows $worktree origin/main
+		git -C $project worktree add --no-track -b wt/windows $worktree origin/main
+		git -C $worktree push -u origin wt/windows
 	}
 }
 $kit = Join-Path $worktree "tools\claude_windows"
+$templates = Join-Path $env:APPDATA "Godot\export_templates\4.8.beta1\windows_release_x86_64.exe"
+if (-not (Test-Path $templates)) {
+	Write-Warning "Faltan los export templates de 4.8.beta1. Instalalos desde el editor: Editor > Manage Export Templates."
+}
 
 [Environment]::SetEnvironmentVariable("CLAUDE_CONFIG_DIR", $ClaudeProfile, "User")
 $env:CLAUDE_CONFIG_DIR = $ClaudeProfile
@@ -80,7 +85,7 @@ metadata:
 - Worktree to work in (branch wt/windows): ``$worktree``
 - Board, read only: ``node "$compass\hub\bin\scompass.js" --dir "$project" <command>``
 - Claude profile (CLAUDE_CONFIG_DIR): ``$ClaudeProfile``
-- HP monitor screen index for ``--screen``: not checked yet (see [[windows-session]])
+- HP monitor (N223, 1920x1080) is ``--screen 1``; 0 is the main ViewSonic 2560x1440 (checked 2026-10-16)
 "@
 foreach ($dir in @($project, $worktree)) {
 	$memory = Join-Path $ClaudeProfile ("projects\" + (ProjectKey $dir) + "\memory")

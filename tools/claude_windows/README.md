@@ -18,7 +18,7 @@ Después commiteá y pusheá. El integrador ya lo hace al mergear.
 ## En Windows, una sola vez
 
 1. Instalá Git, Node y Claude Code: `winget install Git.Git OpenJS.NodeJS.LTS`. Sumá la extensión de Claude Code en VS Code o VSCodium.
-2. Tené a mano Godot 4.8-beta1 para Windows, con sus export templates instalados.
+2. Tené a mano Godot 4.8-beta1 para Windows, con sus export templates instalados (Editor > Manage Export Templates). `setup.ps1` avisa si faltan.
 3. Si querés clonar por SSH, cargá tu clave en `~\.ssh`. Si no hay clave, el script prueba por HTTPS.
 4. Cloná el repo y corré el script desde el clon:
 
@@ -29,7 +29,7 @@ Después commiteá y pusheá. El integrador ya lo hace al mergear.
 
    Por defecto, `-Root` es `%USERPROFILE%\Proyectos\Godot`. El script hace esto:
    - Clona `project-epiphany` y `scope-compass`.
-   - Crea el worktree `epiphany-wt\windows` en la rama `wt/windows`.
+   - Crea el worktree `epiphany-wt\windows` en la rama `wt/windows`, con upstream `origin/wt/windows` (nunca main: un "Sync" de VS Code no puede pushear a main).
    - Fija `CLAUDE_CONFIG_DIR` en `%USERPROFILE%\.claude-profiles\personal`, como en Linux.
    - Copia los skills y un `settings.json` sin los hooks de Linux.
    - Copia la memoria para la carpeta del clon y la del worktree, más una memoria `windows-machine` con las rutas de esta PC.

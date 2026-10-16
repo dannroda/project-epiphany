@@ -5549,8 +5549,12 @@ PRs de 4.8 que Daniel eligió: 118045 y 115426 (luz) activados; 113970, 121122 y
   Sin caso hoy: los cuerpos (vasijas, bombas) vuelan sin girar, así que equivale a linear_velocity. Usarlo cuando haya cuerpos que giran y empujan/dañan por el punto de contacto (rocas rodantes, plataformas que giran).
 - [ ] Shader baker y tirones de pipelines (Linux)
   Medido (2026-10-16, build debug, RX 580): overworld listo ~5,2 s con caché vacía vs ~2,6 s caliente; el baker en Linux ahorra ~0,15 s (ruido): el costo es el driver armando pipelines. El primer proyectil tiraba 48 ms; con pipeline_warmup.tscn (4e745df1) ningún efecto compila al aparecer. tools/pipeline_probe.gd mide. El baker encontró abyss_mist roto (f3335aef).
-- [ ] Medir el baker en Windows (D3D12)
-  Kit en tools/claude_windows (ee2b6ff8): setup.ps1 y measure_shaders.ps1. El bake de D3D12 solo se hace desde Windows. Resultados vuelven en tools/claude_windows/HANDOFF.md.
+- [x] Medir el baker en Windows (D3D12)
+  Medido (2026-10-16, RX 580, 3 corridas): overworld listo con caché vacía D3D12 10,3 s sin baker → 8,1 s con baker (-21 %), Vulkan sin baker 8,2 s; caliente todos ~2,7 s. Baker activado en el preset Windows (release). El bake de D3D12 solo sale exportando desde Windows: la release de Windows se exporta allá. Debug sigue sin baker. LimboAI: debug usa la dll editor, release la template_release.
+- [ ] Efectos que aún compilan al aparecer en Windows
+  Con baker y caché caliente: explosion +7 specialization, projectile +2, roar_ring +1 (peor frame ~18 ms, vsync 17 ms). El warm-up no cubre esas especializaciones en D3D12/Vulkan Windows; mirar qué variantes faltan (¿luces/sombras del momento del disparo?).
+- [ ] Pico suelto de sparks_gold con caché caliente
+  85,7 ms (D3D12 sin baker) y 63,6 ms (Vulkan), sin compilar pipelines; en frío 19,5 ms. No parece shaders; revisar instanciado/partículas.
 
 ### 11.204 Jefe final: manos al cambiar de fase, aturdido, golpes y rayo · Revisión
 

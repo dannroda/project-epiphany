@@ -57,4 +57,5 @@
 - [Windowed Godot on HP monitor](windowed-godot-secondary-monitor.md) — screenshots/renders: --display-driver x11 --screen 1 + temp override.cfg no_focus
 - [Removing shader includes](removing-shader-includes.md) — grep all .gdshader for every function of a deleted .gdshaderinc; headless tests don't compile shaders
 - [Windows handoff](windows-handoff.md) — Windows session works in wt/windows; refresh kit (export_kit.sh) before he boots, read HANDOFF.md on merge
+- [powershell-alias-names](powershell-alias-names.md) — In Windows PowerShell 5.1 built-in aliases (measure, select, where, sort…) beat script functions of the same name; never name .ps1 functions like that
 - [windows-session](windows-session.md) — On Windows (dual boot) there is ONE session: it works in wt/windows, pushes that branch, and the Linux integrator merges; Linux paths/tools in other memories have Windows equivalents here
