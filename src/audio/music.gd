@@ -33,14 +33,14 @@ func _ready() -> void:
 	MenuStack.changed.connect(func() -> void: _menu_open = MenuStack.is_open())
 
 
-## Volumen (0..1) que debería tener cada capa ahora.
+## Volumen (0..1) que debería tener cada capa ahora. Sin escena (cargando una partida), cada una queda como está.
 func targets() -> Dictionary[StringName, float]:
 	var wanted: Dictionary[StringName, float] = {}
 	for layer in LAYERS:
 		wanted[layer] = 0.0
 	var scene := get_tree().current_scene
 	if scene == null:
-		return wanted
+		return levels.duplicate()
 	if scene.scene_file_path == TITLE:
 		wanted[&"dark"] = 0.6
 		wanted[&"murmur"] = 0.3

@@ -17,8 +17,9 @@ func _enter_tree() -> void:
 		GameState.current_dungeon = id
 
 
+## Viajando lo pone SceneFlow cuando entra la escena nueva.
 func _exit_tree() -> void:
-	if not Engine.is_editor_hint() and GameState.current_dungeon == id:
+	if not Engine.is_editor_hint() and not SceneFlow.traveling and GameState.current_dungeon == id:
 		GameState.current_dungeon = &""
 
 

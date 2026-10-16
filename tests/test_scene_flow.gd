@@ -78,3 +78,53 @@ func test_loading_a_save_of_the_same_scene_reloads_it() -> void:
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(saves.slot_path(9)))
 	saves.current_slot = 1
 	state.reset()
+
+
+## La escena vieja ya no está cuando la partida llega a GameState: nada de ella reacciona ni escribe flags.
+func test_the_old_scene_is_gone_before_the_save_is_read() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	var saves: Node = tree.root.get_node(^"SaveManager")
+	state.reset()
+	tree.change_scene_to_file("res://levels/test.tscn")
+	await tree.scene_changed
+	state.spawn_scene = "res://levels/test.tscn"
+	state.player_position = Vector3(2, 0, 2)
+	state.set_flag(&"ow_test_cracked_wall", true)
+	assert_eq(saves.save_game(9), OK)
+	state.set_flag(&"ow_test_cracked_wall", false)
+	var old := tree.current_scene
+	var reached := [false]
+	var on_loaded := func() -> void: reached[0] = is_instance_valid(old) and old.is_inside_tree()
+	state.loaded.connect(on_loaded)
+	var changes := [0]
+	var on_dungeon := func() -> void: changes[0] += 1
+	state.dungeon_changed.connect(on_dungeon)
+	assert_eq(await saves.load_game(9), OK)
+	state.loaded.disconnect(on_loaded)
+	state.dungeon_changed.disconnect(on_dungeon)
+	assert_true(not reached[0], "la escena vieja no recibe loaded")
+	assert_eq(changes[0], 0, "sin mazmorra antes ni después, current_dungeon no avisa")
+	assert_true((tree.current_scene.get_node(^"CrackedWall") as CrackedWall).is_broken, "la escena nueva arranca con la partida")
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(saves.slot_path(9)))
+	saves.current_slot = 1
+	state.reset()
+
+
+## Recargar la misma mazmorra avisa current_dungeon una sola vez, o ninguna.
+func test_reloading_a_dungeon_announces_it_at_most_once() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	var saves: Node = tree.root.get_node(^"SaveManager")
+	assert_eq(await saves.load_scenario("chullpa"), OK)
+	assert_eq(state.current_dungeon, &"ch")
+	var changes := [0]
+	var on_dungeon := func() -> void: changes[0] += 1
+	state.dungeon_changed.connect(on_dungeon)
+	assert_eq(await saves.load_scenario("chullpa"), OK)
+	state.dungeon_changed.disconnect(on_dungeon)
+	assert_eq(state.current_dungeon, &"ch")
+	assert_true(changes[0] <= 1, "avisó %d veces" % changes[0])
+	saves.current_slot = 1
+	state.reset()
+

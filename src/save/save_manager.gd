@@ -176,11 +176,10 @@ func _load_path(path: String, slot: int) -> Error:
 		var origin: int = cfg.get_value("meta", "slot", PLAYER_SLOTS[0])
 		current_slot = origin if origin in PLAYER_SLOTS else PLAYER_SLOTS[0]
 	loading = true
-	GameState.read_from(cfg)
+	await SceneFlow.enter_save(cfg)
 	GameState.save_tampered = SaveCodec.is_tampered(cfg)
 	if GameState.save_tampered:
 		Log.warning(&"save", "La partida fue modificada a mano:", path)
-	await SceneFlow.enter_saved_scene()
 	loading = false
 	Log.success(&"save", "Partida cargada:", path)
 	Log.debug(&"save", "Inventario:", ", ".join(GameState.inventory.ids().map(func(id: StringName) -> String: return "%s=%d" % [id, GameState.inventory.count(id)])))

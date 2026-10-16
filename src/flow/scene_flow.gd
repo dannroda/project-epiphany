@@ -120,9 +120,21 @@ func _change_scene(scene_path: String) -> bool:
 		return false
 	get_tree().change_scene_to_packed(packed)
 	await get_tree().scene_changed
+	_sync_dungeon()
 	await _warm_up_pipelines()
 	hide_loading()
 	return true
+
+
+## Una vez por cambio de escena: Dungeon no lo limpia al salir mientras se viaja (no avisa "" y enseguida el id).
+func _sync_dungeon() -> void:
+	var id := &""
+	var scene := get_tree().current_scene
+	if scene:
+		for child in scene.get_children():
+			if child is Dungeon:
+				id = child.id
+	GameState.current_dungeon = id
 
 
 func _warm_up_pipelines() -> void:
@@ -179,6 +191,20 @@ func quit_to_title() -> void:
 	get_tree().paused = false
 	get_tree().change_scene_to_file(TITLE)
 	await get_tree().scene_changed
+
+
+## Una partida ya leída: la escena vieja se va antes de que la partida llegue a GameState, así ningún nodo de ella
+## reacciona a los flags nuevos ni los vuelve a escribir. Sin escena en la partida, se queda en la actual.
+func enter_save(cfg: ConfigFile) -> void:
+	traveling = true
+	get_tree().paused = true
+	var has_scene := not str(cfg.get_value("player", "spawn_uid", "")).is_empty() or not str(cfg.get_value("player", "spawn_scene", "")).is_empty()
+	var old := get_tree().current_scene
+	if has_scene and old:
+		old.get_parent().remove_child(old)
+		old.queue_free()
+	GameState.read_from(cfg)
+	await enter_saved_scene()
 
 
 ## La escena y el lugar que dice GameState (al cargar una partida o empezar una nueva).
