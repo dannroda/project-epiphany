@@ -5562,6 +5562,10 @@ Pedido de Daniel (2026-10-16) tras pelear con el jefe final.
   Hecho (82b7934a): tinte rojo (HitFlash.hold) y tirones al azar solo del globo del ojo (Body/Eye/Mesh); párpados y cuerpo quietos. test_each_hit_tints_and_jolts_only_the_eye.
 - [ ] Shader del rayo, como la onda pero rojo
   Hecho (82b7934a): laser.gdshader, núcleo casi blanco, halo rojo que late y se ensancha, chispas que corren hacia la punta; el mismo shader en modo disc para la quemadura del piso. Radio del haz 0,26.
+- [ ] El grito del jefe final no se saltea
+  Hecho (dd212b4f): ni la intro ni las presentaciones de fase, aunque sea revancha o ya se haya visto. Los subjefes (ArenaFight) siguen salteables.
+- [ ] Las manos desaparecen como el ojo al vencerlo
+  Hecho (dd212b4f): BossHand.vanish, el neón se apaga titilando, tiemblan con estallidos y se hunden achicándose, al mismo tiempo que el ojo. test_the_hands_go_away_like_the_eye_when_the_boss_dies.
 
 ## M12 — Assets propios (Blender)  (17/39)
 

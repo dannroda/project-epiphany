@@ -20,6 +20,16 @@
       "detail": "Hecho (82b7934a): laser.gdshader, núcleo casi blanco, halo rojo que late y se ensancha, chispas que corren hacia la punta; el mismo shader en modo disc para la quemadura del piso. Radio del haz 0,26.",
       "done": false,
       "text": "Shader del rayo, como la onda pero rojo"
+    },
+    {
+      "detail": "Hecho (dd212b4f): ni la intro ni las presentaciones de fase, aunque sea revancha o ya se haya visto. Los subjefes (ArenaFight) siguen salteables.",
+      "done": false,
+      "text": "El grito del jefe final no se saltea"
+    },
+    {
+      "detail": "Hecho (dd212b4f): BossHand.vanish, el neón se apaga titilando, tiemblan con estallidos y se hunden achicándose, al mismo tiempo que el ojo. test_the_hands_go_away_like_the_eye_when_the_boss_dies.",
+      "done": false,
+      "text": "Las manos desaparecen como el ojo al vencerlo"
     }
   ],
   "code": "11.204",
@@ -32,5 +42,5 @@
   "status": "review",
   "test": "",
   "title": "Jefe final: manos al cambiar de fase, aturdido, golpes y rayo",
-  "updated_at": "2026-10-16T04:28:27.988Z"
+  "updated_at": "2026-10-16T04:39:55.834Z"
 }
