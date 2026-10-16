@@ -1,34 +1,34 @@
 {
-  "assignee": "project-epiphany-67",
+  "assignee": "project-epiphany-cb",
   "checklist": [
     {
       "detail": "Hecho (82b7934a): al entrar a la fase 3, BossHand.reset corta ataque, aturdida o caída, suelta al player y la vuelve al reposo con la vida llena. Los ataques a medio esperar se cortan con un contador de corrida. test_the_third_phase_brings_every_hand_back, test_a_reset_cuts_a_slam_in_the_middle.",
-      "done": false,
+      "done": true,
       "text": "Las manos no se reiniciaban al cambiar de fase (quedaban en el piso)"
     },
     {
       "detail": "Hecho (82b7934a): miraba casi al piso y desde la cámara se veía solo el blanco. Ahora el cuerpo cae para atrás con rebote y la mirada baja a medias entre la cámara y el frente, meciéndose: se ve la pupila dilatada, caída. test_the_stunned_eye_droops_but_shows_its_pupil (con cámara propia, 5f8bda31).",
-      "done": false,
+      "done": true,
       "text": "Aturdido, el ojo quedaba en blanco"
     },
     {
       "detail": "Hecho (82b7934a): tinte rojo (HitFlash.hold) y tirones al azar solo del globo del ojo (Body/Eye/Mesh); párpados y cuerpo quietos. test_each_hit_tints_and_jolts_only_the_eye.",
-      "done": false,
+      "done": true,
       "text": "Cada golpe: el ojo cambia de color y se mueve"
     },
     {
       "detail": "Hecho (82b7934a): laser.gdshader, núcleo casi blanco, halo rojo que late y se ensancha, chispas que corren hacia la punta; el mismo shader en modo disc para la quemadura del piso. Radio del haz 0,26.",
-      "done": false,
+      "done": true,
       "text": "Shader del rayo, como la onda pero rojo"
     },
     {
       "detail": "Hecho (dd212b4f): ni la intro ni las presentaciones de fase, aunque sea revancha o ya se haya visto. Los subjefes (ArenaFight) siguen salteables.",
-      "done": false,
+      "done": true,
       "text": "El grito del jefe final no se saltea"
     },
     {
       "detail": "Hecho (dd212b4f): BossHand.vanish, el neón se apaga titilando, tiemblan con estallidos y se hunden achicándose, al mismo tiempo que el ojo. test_the_hands_go_away_like_the_eye_when_the_boss_dies.",
-      "done": false,
+      "done": true,
       "text": "Las manos desaparecen como el ojo al vencerlo"
     }
   ],
@@ -42,5 +42,5 @@
   "status": "review",
   "test": "",
   "title": "Jefe final: manos al cambiar de fase, aturdido, golpes y rayo",
-  "updated_at": "2026-10-16T04:39:55.834Z"
+  "updated_at": "2026-10-16T06:48:23.883Z"
 }

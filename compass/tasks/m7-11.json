@@ -15,7 +15,7 @@
       "text": "Tests del overworld al día (angostura, islotes, Risco, quest)"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Recorrerlo (Daniel)"
     }
   ],
@@ -46,5 +46,5 @@
   ],
   "test": "",
   "title": "Overworld: huecos de salto largo y mini quest de las sandalias",
-  "updated_at": "2026-10-15T03:54:15.118Z"
+  "updated_at": "2026-10-16T06:47:59.612Z"
 }

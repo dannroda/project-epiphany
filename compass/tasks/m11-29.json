@@ -11,7 +11,7 @@
       "text": "Cima del templo"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Recorrerlo (Daniel)"
     }
   ],
@@ -46,5 +46,5 @@
   ],
   "test": "Vencer al jefe y salir: el overworld se ve y suena distinto, y hay algo nuevo para encontrar.",
   "title": "Overworld después del jefe",
-  "updated_at": "2026-10-15T03:54:14.946Z"
+  "updated_at": "2026-10-16T06:48:00.936Z"
 }

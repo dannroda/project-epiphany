@@ -31,7 +31,7 @@
       "text": "Tests y escenarios al día, puzzles y secretos puestos"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Recorrerlo (Daniel)"
     }
   ],
@@ -57,5 +57,5 @@
   ],
   "test": "",
   "title": "Overworld con forma de Zelda 2D, no cuadrado",
-  "updated_at": "2026-10-15T03:54:15.171Z"
+  "updated_at": "2026-10-16T06:47:59.222Z"
 }

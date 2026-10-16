@@ -1,5 +1,5 @@
 {
-  "assignee": "project-epiphany-39",
+  "assignee": "project-epiphany-dd",
   "checklist": [],
   "code": "12.30",
   "created_at": "2026-10-14T18:31:43.089Z",
@@ -26,5 +26,5 @@
   ],
   "test": "Grabar el templo con el escenario templo_video: las salas llenan la pantalla y afuera es negro. test_templo, test_coop_camera, test_camera",
   "title": "Templo: salas que se vean bien para grabar",
-  "updated_at": "2026-10-16T01:03:19.078Z"
+  "updated_at": "2026-10-16T06:48:25.608Z"
 }

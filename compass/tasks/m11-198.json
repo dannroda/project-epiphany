@@ -1,5 +1,5 @@
 {
-  "assignee": "project-epiphany-67",
+  "assignee": "project-epiphany-cb",
   "checklist": [
     {
       "detail": "Daniel (2026-10-15): fases 1 y 2, varios minutos esquivando, ningún golpe al piso. El golpe solo puntuaba a ~5 m del reposo de la mano y el barrido ganaba siempre la lista corta. Hecho (081692a0): distancia ideal 0-12 m, caída 8. test_the_hands_slam_wherever_the_player_dodges.",
@@ -28,5 +28,5 @@
   ],
   "test": "",
   "title": "Jefe final: más golpes al piso y lo alcanza detrás",
-  "updated_at": "2026-10-16T01:14:01.201Z"
+  "updated_at": "2026-10-16T06:48:17.676Z"
 }

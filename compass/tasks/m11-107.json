@@ -7,7 +7,7 @@
     },
     {
       "detail": "Anotar qué zona suena vacía o repetida; recién ahí agregar o cambiar.",
-      "done": false,
+      "done": true,
       "text": "Escuchar el sonido ambiente por zona en el próximo playtest"
     }
   ],
@@ -31,5 +31,5 @@
   ],
   "test": "",
   "title": "Mejorar la ambientación",
-  "updated_at": "2026-10-15T03:54:15.237Z"
+  "updated_at": "2026-10-16T06:48:02.271Z"
 }

@@ -21,7 +21,7 @@
       "text": "Tests (carrera, choque, salto largo: 3 baldosas sí, 4 no)"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Recorrido de Daniel (velocidades: corrida 9,5 m/s, salto largo 8,6 m/s)"
     }
   ],
@@ -52,5 +52,5 @@
   ],
   "test": "",
   "title": "Sandalias: correr manteniendo y salto largo con la pluma",
-  "updated_at": "2026-10-15T03:54:15.124Z"
+  "updated_at": "2026-10-16T06:48:04.322Z"
 }

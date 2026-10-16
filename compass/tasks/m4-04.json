@@ -6,8 +6,8 @@
       "text": "Vasija rompible"
     },
     {
-      "detail": "Estado `Carrying` del player. Si se complica, queda solo rompible: está en la lista de recortes.",
-      "done": false,
+      "detail": "Hecho más adelante: el player levanta y lanza vasijas (src/world/thrown_object.gd).",
+      "done": true,
       "text": "Levantar y lanzar vasijas (opcional)"
     },
     {
@@ -46,5 +46,5 @@
   "status": "done",
   "test": "Cortar un campo de 50 matas de pasto sin caídas de FPS (*Debugger › Monitors*). Romper vasijas: sueltan corazones y vuelven al recargar.",
   "title": "Vasijas y pasto",
-  "updated_at": "2026-10-11T07:50:44.249Z"
+  "updated_at": "2026-10-16T06:49:00.765Z"
 }

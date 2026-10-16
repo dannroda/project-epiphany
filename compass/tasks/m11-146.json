@@ -10,7 +10,7 @@
       "text": "Está en altura y la flecha no le llega desde la orilla (la flecha viaja plana o no apunta hacia arriba). Bajar el ojo a la altura del player, ponerlo en la cara del risco, o que la flecha apunte a ojos en altura."
     },
     {
-      "done": false,
+      "done": true,
       "text": "Que se vea desde la orilla sin mover la cámara (acercarlo al río o encuadrarlo)."
     }
   ],
@@ -38,5 +38,5 @@
   ],
   "test": "Desde la orilla oeste, tensar el arco mirando al este: el ojo al pie del risco entra en cuadro; una flecha lo prende y sube el puente. test_overworld (test_an_arrow_at_the_eye_raises_the_bridge_to_the_necropolis tira plano a 1 m)",
   "title": "Overworld: el ojo del puente a la Necrópolis no se ve ni se puede flechar",
-  "updated_at": "2026-10-15T03:54:14.910Z"
+  "updated_at": "2026-10-16T06:48:06.795Z"
 }

@@ -11,7 +11,7 @@
       "text": "Armarlos"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Recorrerlo (Daniel)"
     }
   ],
@@ -41,5 +41,5 @@
   ],
   "test": "Cada secreto se encuentra con las herramientas que el player tiene en ese momento y queda resuelto al cargar.",
   "title": "Más secretos en el overworld",
-  "updated_at": "2026-10-15T03:54:15.130Z"
+  "updated_at": "2026-10-16T06:48:00.348Z"
 }

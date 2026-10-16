@@ -21,7 +21,7 @@
       "text": "Plano de las mazmorras: marcar los huecos a otro piso (diseño)"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Recorrido de Daniel"
     }
   ],
@@ -45,5 +45,5 @@
   ],
   "test": "",
   "title": "Huecos a otro piso se ven distintos de los fosos",
-  "updated_at": "2026-10-15T03:54:15.184Z"
+  "updated_at": "2026-10-16T06:48:04.049Z"
 }

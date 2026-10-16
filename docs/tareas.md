@@ -966,8 +966,8 @@ Vasijas rompibles y pasto cortable que sueltan drops según su `DropTable` y rea
 
 - [x] Vasija rompible
   `Hurtbox` de equipo neutral: se rompe con espada, bomba o al tirarla. Suelta según su `DropTable`.
-- [ ] Levantar y lanzar vasijas (opcional)
-  Estado `Carrying` del player. Si se complica, queda solo rompible: está en la lista de recortes.
+- [x] Levantar y lanzar vasijas (opcional)
+  Hecho más adelante: el player levanta y lanza vasijas (src/world/thrown_object.gd).
 - [x] Pasto cortable
   Instancias livianas (MultiMesh o escena chica) que se cortan con la espada y a veces sueltan algo.
 - [x] Reaparecen al recargar la escena
@@ -1594,14 +1594,14 @@ El overworld de 3 × 3 pantallas quedó hecho para una sola mazmorra y se siente
   Rehecho con el puente y la Chullpa (945f45f); se repite cada vez que cambian el GridMap o los puntos fijos.
 - [x] Tests y escenarios al día
   Escenario travel (los 6 portales prendidos, puente subido, todo el mapa visitado; para recorrerlo) y test_scenario_spawn_points_exist: el punto de cada escenario existe en su escena.
-- [ ] Recorrerlo (Daniel)
+- [x] Recorrerlo (Daniel)
 - [x] Viaje rápido: mockup de la pantalla
   Artboard 'Pausa · Mapa (overworld nuevo) con portales de viaje' (Pause_Map_Travel) en https://claude.ai/artifact/UuD7d42rAXuYTBcMd9iZJy. Aprobado por Daniel.
 - [x] Viaje rápido: portales y viaje desde el Mapa
   travel_portal.tscn ×6 en overworld.tscn (ow_portal_<id>); Mapa: marcas, cursor que se engancha, tarjeta y X Viajar con travel_dialog; interactuar en un portal abre el Mapa. test_travel_portals_light_up_and_the_map_travels. Playtest 2026-10-12 'no puedo teletransportarme': el diálogo arrancaba en Cancelar (A cancelaba); ahora arranca en Viajar como el mockup (ConfirmDialog.confirm_first). El portal del Claro estaba pegado a la tablilla de controles y E podía leerla: se mudó a (−51, 17); el test pide que ningún portal tenga otro interactuable a menos de 3 m.
 - [x] Laguna de agua real y Bañado de agua baja
   Daniel (2026-10-11): la Laguna con el agua de la cueva de la vertiente (water.gdshader: espuma en la orilla, color por profundidad) sobre el hueco; cascada en el acantilado norte donde termina la quebrada; caer al agua salpica y vuelve a la orilla (no se nada); la isla de D3 con el gancho. El Bañado, agua baja que se camina.
-- [ ] Que todo se pueda alcanzar y cruzar
+- [x] Que todo se pueda alcanzar y cruzar
   Playtest 2026-10-12: áreas imposibles de alcanzar o cruzar. test_every_region_is_reachable_except_the_item_gated (navmesh + link del puente): con el puente se llega a todas las zonas menos la Cumbre y la isla de la Laguna (gancho) y las franjas de la Quebrada (angostura y bajadas, 11.90). Falta que Daniel diga qué lugares puntuales no pudo cruzar.
 - [x] Mapa: A viaja, X pone pin
   Daniel (2026-10-12): era contraintuitivo que el viaje fuera con X. Mockups Pause_Map_Travel, Pause_Map_Regions y Pause_Map_Overworld al día; map_page: ui_accept viaja (si hay portal enganchado), item_1 pone o quita pin; barra de ayudas en el orden del mockup.
@@ -1631,7 +1631,7 @@ Daniel (2026-10-12, con el mapa de Link's Awakening de referencia): el mundo se 
   - Piezas de corazón: Pradera (escalón de 0,6 m, con la pluma), Risco, Islotes de la Laguna y Cerros (muro agrietado).
   - Secretos en muescas de risco con muro agrietado: Cumbre 5 bombas, Quebrada 10 flechas, Mirador poción, Cardonal 5 bombas. No hay rupias en el juego.
   Al día: test_overworld, test_jump, test_heart_pieces, test_secrets (nuevo), test_shrine, test_overworld_run, test_map, test_portal, test_temple_seal, test_grove_puzzle, test_enemy_ai, test_save_codec (escenarios re-firmados). test_zone_veil se borró. Flags nuevos en flag_registry. El puzzle de la Arboleda se corrió 2 m al norte: la orilla relajada del risco tapaba las placas. Pendiente: el texto de la tablilla del santuario habla del escudo espejo como premio. [[gdd#overworld-layout]]
-- [ ] Recorrerlo (Daniel)
+- [x] Recorrerlo (Daniel)
 
 **Capturas:** `compass/images/m7-09-mapa.jpg`
 
@@ -1646,7 +1646,7 @@ Daniel (2026-10-13): la pluma cruza 1 celda (2 m) y sandalias + pluma 3 (6 m). L
 - [x] Mini quest de la Necrópolis (arco → sandalias)
   Hecho: corral de pirca de la Necrópolis (X 24..36, Z -12..-3, nivel 1). Tres chullpas (src/world/chullpa_tumba.tscn: torre de piedra con un EyeSwitch de 8 s) miran al centro; con los tres ojos prendidos a la vez aparece el cofre grande SandalsChest (flag ow_sandals_chest) con las sandalias. Test en test_secrets.
 - [x] Tests del overworld al día (angostura, islotes, Risco, quest)
-- [ ] Recorrerlo (Daniel)
+- [x] Recorrerlo (Daniel)
 
 **Capturas:** `compass/images/m7-11-mapa.jpg`, `compass/images/m7-11-1.jpg`, `compass/images/m7-11-2.jpg`, `compass/images/m7-11-3.jpg`, `compass/images/m7-11-4.jpg`, `compass/images/m7-11-5.jpg`
 
@@ -2590,7 +2590,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 
 ### 10.32 Probar GUT para los tests (con nuestro runner por procesos arriba) · Pendiente
 
-**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-05 · **Etiquetas:** `herramientas`, `tests`
+**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-aa · **Etiquetas:** `herramientas`, `tests`
 
 Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
 
@@ -2939,7 +2939,7 @@ Sumar 4 a 6 secretos chicos al overworld (cuevitas con cofre, pasto que esconde 
   Daniel (2026-10-13): 1) queñoa sola que, chocada con las sandalias, se sacude y suelta una pieza de corazón; 2) mata en el Claro/Arboleda que al cortarla destapa una escalera a una cuevita con cofre; 3) roca empujable en los Cerros que destapa un cofre chico; 4) repisa en la Quebrada a una celda, con la pluma, con cofre de flechas.
 - [x] Armarlos
   Hecho: mata del Claro (-74, 27) con hoyo a levels/bush_cave.tscn (10 bombas); roca empujable en el nicho de los Cerros (-76, 4; 10 flechas); repisa de la Quebrada (-6, -34; pluma; 10 flechas); queñoa de la Pradera (-43, -13; sandalias; pieza de corazón). Tests en test_secrets y test_jump.
-- [ ] Recorrerlo (Daniel)
+- [x] Recorrerlo (Daniel)
 
 **Prueba:** Cada secreto se encuentra con las herramientas que el player tiene en ese momento y queda resuelto al cargar.
 
@@ -2995,7 +2995,7 @@ Uno o dos atajos que se abren desde adentro (puente o escalera) y quedan abierto
 
 - [x] Uno o dos atajos de vuelta
   Daniel (2026-10-13): escalera de soga Cumbre → Explanada. Hecho: CumbreLadder en el borde oeste de la Cumbre (7.6, 5.2, -33), se descuelga desde arriba (flag ow_cumbre_ladder) y une la Cumbre con la orilla al pie, que por el norte de la Quebrada lleva a la Explanada. Test en test_secrets.
-- [ ] Recorrerlo (Daniel)
+- [x] Recorrerlo (Daniel)
 
 **Prueba:** Abrir el atajo desde adentro: queda abierto y acorta el recorrido al templo.
 
@@ -3013,7 +3013,7 @@ Después de vencer al jefe, el overworld tiene que verse y sonar distinto (sin d
   Daniel (2026-10-13): el jefe del templo (te_boss_defeated). El overworld ya no tiene doom; AfterTheEye pasa el sol a luz de amanecer, apaga el ojo de la fachada (TempleEyeGlow) y para los temblores. Valores de luz: arte.
 - [x] Cima del templo
   Escalinata de una celda (X -48, Z -36) cerrada por SummitGate hasta te_boss_defeated; arriba, HeartPieceSummit. Test en test_secrets.
-- [ ] Recorrerlo (Daniel)
+- [x] Recorrerlo (Daniel)
 
 **Prueba:** Vencer al jefe y salir: el overworld se ve y suena distinto, y hay algo nuevo para encontrar.
 
@@ -3031,7 +3031,7 @@ Un ítem post-MVP: gancho o algo que mueva objetos a distancia (GDD §6.1), con 
   Gancho. Decidido el 2026-10-11 para D2; el 2026-10-12 (11.90) pasa a ser el ítem de D3 (Laguna), y la pluma va a D2. Se engancha a postes y cofres y lleva al player; a enemigos livianos los trae; cruza abismos de 4 m; también quita la armadura del esqueleto acorazado (la bomba sigue sirviendo).
 - [x] Comportamiento del gancho
   Hecho el 2026-10-13 (Daniel: si, me gusta). HookBehavior: el botón pasa al estado Hooking del player y dispara Hook (src/items/hookshot/hook.tscn), que sale recto 10 m (5 baldosas; era 8, se alargó para los cruces de 4 celdas de D3). En un HookPost (src/world/hook_post.tscn) o un cofre se clava y el player vuela hasta ahí a 14 m/s sin gravedad: cruza agua y huecos; a un poste llega siempre al lado, sobre piso. Con el gancho en un botón, los postes a su alcance se fijan con el targeting, aunque estén a otra altura (Daniel, por la Cumbre): la cadena va derecho y el player sube o baja a su piso. Trae vasijas (se rompen a los pies), rocas y recolectables; la vasija grande viene de a una celda. Golpea con el elemento hook: 1 de daño y aturde 1,2 s, le baja el escudo al esqueleto con escudo y le arranca la coraza al acorazado sin dañarlo. Contra paredes rebota. test_hookshot (10).
-- [ ] Probarlo en el banco de pruebas (Daniel)
+- [x] Probarlo en el banco de pruebas (Daniel)
   Escenario gancho (debug/scenarios/gancho.cfg): sandbox de ítems, zona GANCHO al sur: hueco de 6 m con un poste, isla con una vasija y una vasija grande, y otro poste para volver. Ajustar a ojo alcance, velocidades y aturdimiento.
 - [x] Arte: modelo del gancho, del poste e ícono
   Hecho por arte (712c8029): lanzador, punta, eslabón de cadena de 0.16 m (la cadena lo repite, 0e28489a), poste con argolla e ícono.
@@ -3047,9 +3047,9 @@ Un ítem post-MVP: gancho o algo que mueva objetos a distancia (GDD §6.1), con 
   Hecho el 2026-10-13: src/entities/yacumama/ (Yacumama hereda de Amaru), data/entities/yacumama.tres, 14 de vida. Asoma por uno de cuatro charcos, escupe dos bolas (reflejables) y queda asomada 2,5 s; asomada solo cuenta el gancho, que la tira al piso a 2 m del player: 3 s tirada, le pega la espada; vuelve reptando. Con media vida, antes de escupir barre la sala con la cola desde su charco (hasta la pared; pega 2 en el piso, se salta con la pluma). El gancho le pega en el cuerpo: la punta va a 0,9 m y la argolla de la máscara queda como detalle del modelo. Reemplaza al ojo vigía prestado; las vasijas del Nido van a las cuatro esquinas. test_yacumama (4).
 - [x] Entrada de D3 en el overworld (sesión del overworld)
   Hecho por el overworld (5e04f395): TotoraDoor en una choza provisoria de la isla de la Laguna, Spawn_totora afuera; las dos salidas de D3 vuelven ahí.
-- [ ] Arte: horneado LA de la totora
+- [x] Arte: horneado LA de la totora
   Agregar totora a tools/la_walls.gd (kit propio de totora y agua) cuando arte pueda; los tests de test_totora ya son relativos a cada sala.
-- [ ] Recorrer D3 (Daniel)
+- [x] Recorrer D3 (Daniel)
   Escenario totora: pluma, arco, bombas y sandalias. Ajustar a ojo los cruces, el ojo con tiempo de los Tejedores (6 s) y la posición de los postes.
 
 **Prueba:** El ítem tiene un uso en combate y abre al menos dos lugares que antes no se podían.
@@ -4356,7 +4356,7 @@ Playtest 2026-10-12: hay que mejorar la ambientación del overworld y las mazmor
 
 - [x] Qué falta por zona (con Daniel)
   Daniel (2026-10-12): luz, niebla y partículas estuvieron bien; no hay que cambiarlas. El sonido anda; no se fijó si falta algo.
-- [ ] Escuchar el sonido ambiente por zona en el próximo playtest
+- [x] Escuchar el sonido ambiente por zona en el próximo playtest
   Anotar qué zona suena vacía o repetida; recién ahí agregar o cambiar.
 
 **Notas:** Sesión: arte (-77). Definir con Daniel qué falta en cada zona.
@@ -4396,7 +4396,7 @@ Del análisis de D1 (11.90, S2, S4, S5, S6, S7). Los cuartos del análisis son d
 
 ### 11.110 Tipos de placa de piso: bloque, peso y golpe fuerte · En curso
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-39 · **Etiquetas:** `puzzles`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-dd · **Etiquetas:** `puzzles`
 
 Playtest 2026-10-12: los puzzles de bloques solo se tienen que activar con los bloques; los que se activan con objetos o con un golpe fuerte son otros tipos de placa. Y la placa del santuario se veía apretada sin bloque encima.
 
@@ -4422,7 +4422,7 @@ Playtest 2026-10-12: los cactus, árboles y similares deberían poder cortarse y
 
 - [x] Escenas Breakable de cada planta y reparto en el overworld
   src/world/plants/*.tscn. Celdas del kit (Árbol, Queñoa chica, Cardón, Cardón brazos) sin malla ni colisión en el kit orgánico; decorate_levels.gd pone la escena en cada celda, en las 553 plantas que el terreno orgánico dejó en el piso jugable (tools/plantas_overworld.json) y en las piezas de planta de la decoración. Arriba de los riscos siguen en la malla. Terreno, kit, decoración y navmesh regenerados. 60 fps en la arboleda. Test test_overworld_plants_are_cut_like_grass. GDD §7.
-- [ ] Probarlo (Daniel): cortar un árbol abre paso, ¿hay alguno que no debería?
+- [x] Probarlo (Daniel): cortar un árbol abre paso, ¿hay alguno que no debería?
 - [x] Animación al romperse
   Daniel: que tengan un poco de animación. Breakable.break_style: CUT (pasto y matas: saltan girando y se achican; el ichu deja la mata cortada), FELL (árboles y cardones: caen del lado contrario al golpe, polvo y rebote, se hunden; los árboles dejan tocón). Cuerpo y hurtbox se apagan en el acto. Tests en test_breakables.
 
@@ -4436,7 +4436,7 @@ Daniel 2026-10-12: al dash/esquivar ponerle un efecto similar al trail de la esp
 
 - [x] Copias de la pose que se desvanecen
   DodgeGhosts (player.tscn) congela la pose cada 0,06 s mientras dura el roll; afterimage.tscn + ghost.gdshader (rosa translúcido con borde claro, depth prepass para que se lea la silueta) se desvanece en 0,3 s. Test test_roll_leaves_ghosts_that_fade. GDD §2 (feel).
-- [ ] Probarlo (Daniel): color, cantidad, duración
+- [x] Probarlo (Daniel): color, cantidad, duración
 
 ### 11.113 El templo del ojo pasa a ser la última mazmorra · Revisión
 
@@ -4488,7 +4488,7 @@ Daniel (2026-10-12): las botellas tienen su fila fija, separada de los ítems co
 
 ### 11.115 Enemigos que deambulan mientras no te ven; centinelas con alerta y búsqueda · En curso
 
-**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-67 · **Etiquetas:** `ia`, `enemigos`
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-cb · **Etiquetas:** `ia`, `enemigos`
 
 Daniel (2026-10-13): los enemigos que no te detectaron no se quedan quietos. Todos deambulan cerca de su lugar: caminan despacio a puntos al azar de la navmesh dentro de unos metros de donde empiezan, paran un rato y miran alrededor (reemplaza la rama Quieto de enemy_bt.tres; radio, velocidad y pausas en EntityConfig). Alerta y búsqueda solo para un tipo de enemigo nuevo: el centinela o guardia de una guarida de un grupo enemigo que no son monstruos. Al verte hace una pausa de alerta (un !) antes de atacar; si te pierde va a tu último lugar visto, mira alrededor y vuelve a su puesto. Descartados por ahora: rondas fijas y cono de visión.
 
@@ -4531,7 +4531,7 @@ Daniel (2026-10-13): la mayoría no va a entender a la primera que hay que tirar
   Hecho el 2026-10-13: en la Sala del cofre, al borde de los huecos, un esqueleto (SalaCofreEnemy1) que de un espadazo cae y aterriza vivo en la Cripta, y dos vasijas para tirar por el hueco. Se enseña sin texto; se ve del todo cuando arte abra la ventana del paso 2. test_chullpa lo cubre. GDD §8b.
 - [x] Plano de las mazmorras: marcar los huecos a otro piso (diseño)
   Hecho el 2026-10-13: el plano (https://claude.ai/artifact/5KN21oAgw5LVR4oN1urFRp) marca con borde azul los huecos a otro piso, sobre la captura y en el esquema, con DropHoles.
-- [ ] Recorrido de Daniel
+- [x] Recorrido de Daniel
 
 **Notas:** Sesión: diseño (-43 [a7e236]) con arte (-11 / -5d) para el aspecto.
 
@@ -4549,7 +4549,7 @@ Daniel (2026-10-13): con la pluma de D1, los islotes llevaban a D3 sin el arco y
   Hecho el 2026-10-13 (b5c13e2b). Daniel: la pluma cruza 1 baldosa y sandalias + pluma 3. Jumping sigue la dirección de la carrera a long_jump_speed 8, sin control en el aire: cruza 6 m y no 8.
 - [x] Tests (carrera, choque, salto largo: 3 baldosas sí, 4 no)
   Hecho el 2026-10-13: test_sandals (8): carrera, cancelar, choque con dash, 3 baldosas sí y 4 no en cajas planas (b5c13e2b); y en el overworld (09271dbb) cruza la angostura y los dos huecos de la Laguna hasta la isla de D3, y cae en el abismo del Risco. long_jump_speed 8,6.
-- [ ] Recorrido de Daniel (velocidades: corrida 9,5 m/s, salto largo 8,6 m/s)
+- [x] Recorrido de Daniel (velocidades: corrida 9,5 m/s, salto largo 8,6 m/s)
 
 **Capturas:** `compass/images/m7-11-mapa.jpg`, `compass/images/m7-11-1.jpg`, `compass/images/m7-11-2.jpg`, `compass/images/m7-11-3.jpg`, `compass/images/m7-11-4.jpg`, `compass/images/m7-11-5.jpg`
 
@@ -4714,7 +4714,7 @@ Playtest 2026-10-13: dentro de las cuevas del overworld los enemigos no se mueve
 
 ### 11.133 Vasija chica cargada no se ve con el x-ray · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-67 · **Etiquetas:** `bug`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `bug`
 
 Playtest 2026-10-13: al levantar una vasija chica, cuando el player queda tapado y se ve con el x-ray (silueta), la vasija que lleva encima no aparece. El objeto cargado debería verse también con el x-ray.
 
@@ -4780,7 +4780,7 @@ Sale de la sesión de playtest del 14 de octubre sin 'Anda': la reemplazan 11.17
 
 ### 11.138 Chullpa sub-boss: asset para el cuadrado donde después se salta · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-39 · **Etiquetas:** `arte`, `chullpa`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-dd · **Etiquetas:** `arte`, `chullpa`
 
 Playtest 2026-10-13: en la sala del sub-boss (Guardian) de la primera mazmorra, el cuadrado del piso (el lugar por donde uno se tira después) es un placeholder: un cuadrado liso con una línea, sin sentido visual. Falta un asset que se lea como lo que es (losa/trampilla/hueco que se abre al vencer al guardián).
 
@@ -4788,7 +4788,7 @@ Playtest 2026-10-13: en la sala del sub-boss (Guardian) de la primera mazmorra, 
 
 ### 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · Revisión
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-05 · **Etiquetas:** `bug`, `chullpa`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-aa · **Etiquetas:** `bug`, `chullpa`
 
 Playtest 2026-10-13: en la Chullpa hay un cofre sobre una plataforma/pilar en un pozo, al lado de una sala con borde. No hay forma de llegar saltando (con la pluma) desde el borde: la distancia o la altura no da. Ajustar la plataforma o el borde para que el salto alcance.
 
@@ -4812,7 +4812,7 @@ Playtest 2026-10-13: en la zona Lagoon, arriba de la escalera de piedra, el cami
 
 ### 11.141 Queñoa 2P (Canopy): símbolo azul sin sentido y puerta bloqueada invisible · Revisión
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-05 · **Etiquetas:** `bug`, `quenoa`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-aa · **Etiquetas:** `bug`, `quenoa`
 
 Playtest 2026-10-13: en la D2 (Queñoa), piso 2P "Canopy", hay en una pared un marco de bloques con un símbolo azul (parece un candado/asa) que no se entiende qué es. Identificar qué elemento es (¿puerta con llave, puerta de jefe, interruptor?) y darle un asset/lectura clara; si es un placeholder o algo sobrante, sacarlo.
 
@@ -4829,7 +4829,7 @@ Playtest 2026-10-13: en la D2 (Queñoa), piso 2P "Canopy", hay en una pared un m
 
 ### 11.142 Mapa de pausa: LT/RT van rapidísimo; mover con las flechitas · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-67 · **Etiquetas:** `bug`, `ui`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `bug`, `ui`
 
 Playtest 2026-10-13: en la pestaña Mapa del menú de pausa, LT y RT mueven el mapa rapidísimo y la velocidad depende del tipo de gatillo del gamepad (analógico/digital). Debería moverse con las flechitas (d-pad) en lugar de los gatillos, a una velocidad fija.
 
@@ -4852,7 +4852,7 @@ Playtest 2026-10-13: en el overworld (meseta con cardones y árboles, sobre un r
 
 ### 11.144 Queñoa S1 (Raíces): reja fuera de la pared y puerta con llave detrás de una reja de puzzle · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-05 · **Etiquetas:** `bug`, `quenoa`, `diseño`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-aa · **Etiquetas:** `bug`, `quenoa`, `diseño`
 
 Playtest 2026-10-13, Queñoa piso S1 Roots, salida este de las Raíces a la Sala de los ojos:
 1) La reja (RaicesGate, la que abre el ojo con tiempo) queda afuera del hueco de la pared, igual que la de la Chullpa (11.136).
@@ -4868,7 +4868,7 @@ Playtest 2026-10-13, Queñoa piso S1 Roots, salida este de las Raíces a la Sala
 
 ### 11.145 Queñoa S1 (Sala de los ojos): placa que no hace nada, z-fighting en el cofre y símbolo raro en la puerta · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-05 · **Etiquetas:** `bug`, `quenoa`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-aa · **Etiquetas:** `bug`, `quenoa`
 
 Playtest 2026-10-13, Queñoa piso S1, sala con los arbustos y el pozo (probablemente la Sala de los ojos):
 1) La placa junto a la puerta oeste no hace nada visible. Si es OjosStep (deja abierta la reja de las Raíces para volver), el efecto pasa fuera de cámara: falta respuesta (sonido, cámara a la reja o que se vea), o no funciona.
@@ -4891,7 +4891,7 @@ Playtest 2026-10-13: con arco y pluma, junto al río no hay forma visible de lle
 
 - [x] Confirmado: el ojo está en la terraza alta del otro lado del río, fuera de cuadro (hay que mover el stick derecho para verlo).
 - [x] Está en altura y la flecha no le llega desde la orilla (la flecha viaja plana o no apunta hacia arriba). Bajar el ojo a la altura del player, ponerlo en la cara del risco, o que la flecha apunte a ojos en altura.
-- [ ] Que se vea desde la orilla sin mover la cámara (acercarlo al río o encuadrarlo).
+- [x] Que se vea desde la orilla sin mover la cámara (acercarlo al río o encuadrarlo).
 
 **Prueba:** Desde la orilla oeste, tensar el arco mirando al este: el ojo al pie del risco entra en cuadro; una flecha lo prende y sube el puente. test_overworld (test_an_arrow_at_the_eye_raises_the_bridge_to_the_necropolis tira plano a 1 m)
 
@@ -4930,7 +4930,7 @@ Playtest 2026-10-13: en Ravine el minimapa (foto cenital del overworld) muestra 
 
 ### 11.149 Al entrar a una sala se puede caer al agua y reaparecer sobre el agua (softlock) · Revisión
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-67 · **Etiquetas:** `bug`, `totora`, `player`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `bug`, `totora`, `player`
 
 Playtest 2026-10-13: en la Totora (D3), piso 1P Ground Floor, apenas se entra a la sala del este (la del estanque central con la isla, la reja con ojo y llave al norte y las matas de totora) por la puerta oeste, el player cae al agua y vuelve a caer infinitamente: softlock. Probable: el punto de reaparición de la caída al agua (la entrada de la sala) queda sobre el agua o la transición de sala empuja al player hacia el estanque, que empieza a ~1 celda de la puerta. Revisar el Pit/respawn de la sala y que la entrada tenga piso firme; agregar un test que entre por cada puerta de la Totora y no caiga.
 
@@ -4945,7 +4945,7 @@ Playtest 2026-10-13: en la Totora (D3), piso 1P Ground Floor, apenas se entra a 
 
 ### 11.150 Gancho: el targeting marca un poste de otra sala/piso · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-67 · **Etiquetas:** `bug`, `totora`, `items`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `bug`, `totora`, `items`
 
 Playtest 2026-10-13, Totora: con el gancho, el targeting marca (rombo amarillo) algo que está arriba, en otra sala o piso, a través de la pared/techo. El targeting del gancho debería considerar solo objetivos de la sala actual (y del mismo piso), con línea de vista.
 
@@ -4957,7 +4957,7 @@ Playtest 2026-10-13, Totora: con el gancho, el targeting marca (rombo amarillo) 
 
 ### 11.151 Totora 2P: se ve la sala del piso de abajo · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-39 · **Etiquetas:** `bug`, `totora`, `render`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-dd · **Etiquetas:** `bug`, `totora`, `render`
 
 Playtest 2026-10-13, Totora (D3) 2P Upper Floor, sala sureste: debajo del borde sur de la sala se ve la sala del piso de abajo (su piso y paredes). Los otros pisos no deberían verse (ocultar/fundir los pisos que no son el actual, como en las otras mazmorras LA). En la misma captura: la pared agrietada del oeste sobresale como bloque verde (como 11.137).
 
@@ -4967,7 +4967,7 @@ Playtest 2026-10-13, Totora (D3) 2P Upper Floor, sala sureste: debajo del borde 
 
 ### 11.152 Z-target: al activarlo, priorizar el enemigo más cercano · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-67 · **Etiquetas:** `mejora`, `player`, `camara`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `mejora`, `player`, `camara`
 
 Playtest 2026-10-13: al apretar el z-target, el primer objetivo debería ser el enemigo más cercano al player (hoy elige por cercanía al centro de pantalla, targeting.gd › distancia proyectada al centro). Los enemigos tienen prioridad sobre postes/ojos.
 
@@ -4977,7 +4977,7 @@ Playtest 2026-10-13: al apretar el z-target, el primer objetivo debería ser el 
 
 ### 11.153 Totora: cruce con gancho a través de la puerta no se entiende; poner plataforma/poste en la propia sala · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-05 · **Etiquetas:** `diseño`, `totora`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-aa · **Etiquetas:** `diseño`, `totora`
 
 Playtest 2026-10-13, Totora (D3): en la sala del estanque grande con la puerta al norte sobre el agua, hay que usar el gancho hacia algo que está del otro lado de la puerta (en la otra sala), y no se entiende. Debería haber una plataforma (o poste visible) dentro de la propia sala, frente a la puerta, para que el cruce se lea. Relacionado con 11.150 (el targeting marca cosas de otras salas).
 
@@ -4989,7 +4989,7 @@ Playtest 2026-10-13, Totora (D3): en la sala del estanque grande con la puerta a
 
 ### 11.154 Totora: no hay dónde reponer flechas cerca · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-05 · **Etiquetas:** `diseño`, `totora`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-aa · **Etiquetas:** `diseño`, `totora`
 
 Playtest 2026-10-13, Totora (D3): en la sala del estanque con ojos (interruptores de flecha), si el player se queda sin flechas no tiene un lugar cercano para reabastecerse. Poner vasijas/pasto que suelten flechas en o cerca de las salas que piden arco (y que el drop de flechas sea más probable cuando quedan pocas).
 
@@ -5020,7 +5020,7 @@ Sale de la sesión de playtest del 14 de octubre sin 'Anda': la reemplazan 11.17
 
 ### 11.157 Mazmorras: los tiles del GridMap no se alinean con la grilla del editor · Revisión
 
-**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-67 · **Etiquetas:** `bug`, `herramientas`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-cb · **Etiquetas:** `bug`, `herramientas`
 
 Daniel 2026-10-14: las piezas de los kits LA quedan corridas media celda de la grilla del editor. Causa: los GridMap de las mazmorras tienen cell_center_x/z = false y las mallas de los kits están centradas en su origen (−1..1), así la grilla pasa por el medio de los tiles. En el juego anda porque el código usa la misma convención. Arreglo: cell_center = true y correr cada GridMap −1 m en x y z (nada se mueve en el mundo), o mover el origen de las mallas; revisar la_walls, decorate_levels y los generadores que usan map_to_local. Las cinco mazmorras de una vez.
 
@@ -5028,7 +5028,7 @@ Daniel 2026-10-14: las piezas de los kits LA quedan corridas media celda de la g
 
 ### 11.158 Piso LA: patrón de tablones raro · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-39 · **Etiquetas:** `arte`, `render`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-dd · **Etiquetas:** `arte`, `render`
 
 Daniel 2026-10-14 (captura del piso de tablones, Queñoa/Totora): el patrón del piso se ve raro. piso_la.gdshader dibuja los tablones en espacio de mundo: cada fila arranca en un desfase al azar (las juntas no alternan), plank_length 1.7 no divide la celda de 2 m (el patrón no calza con los tiles) y crack_amount dibuja arcos oscuros sueltos sobre algunos tablones. Propuesta: filas alternadas a medio tablón, largos que dividan 2 m (1 o 2 m) y sacar o rehacer los arcos.
 
@@ -5040,13 +5040,13 @@ Daniel 2026-10-14 (por -5d): el overworld tiene que compartir el arte de las maz
 
 ### 11.160 Ojos de la Queñoa: los párpados siempre se abren y cierran animados · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-67 · **Etiquetas:** `combate`, `jefe`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `combate`, `jefe`
 
 Daniel 2026-10-14: ayuda visual en el combate. Al clavarse tras el salto, al ser derribado y al levantarse los párpados del WatcherEye saltaban de golpe; ahora todo cambio de párpados es una animación desde donde están (LID_SNAP 0,15 s para los rápidos, 0,3 s al cerrar). Test: test_the_warden_gets_stuck_in_the_roots_and_falls_to_the_sword.
 
 ### 11.161 Jefe final: la puerta norte de la sala queda escondida · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-05 · **Etiquetas:** `bug`, `templo`, `diseño`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-aa · **Etiquetas:** `bug`, `templo`, `diseño`
 
 Playtest 2026-10-14 (probando la pelea del jefe final, 12.26): en la sala de ladrillos rojos con antorchas, la puerta del centro de la pared norte (hueco oscuro con el emblema del ojo) queda hundida en la pared y casi no se ve; Daniel: 'la puerta está escondida'. Revisar si es la salida del jefe, el portal o la puerta de entrada, y que se lea a simple vista.
 
@@ -5058,7 +5058,7 @@ Playtest 2026-10-14 (probando la pelea del jefe final, 12.26): en la sala de lad
 
 ### 11.162 Retirar el templo viejo (levels/temple.tscn) · Revisión
 
-**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-05 · **Etiquetas:** `limpieza`, `templo`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-aa · **Etiquetas:** `limpieza`, `templo`
 
 Daniel 2026-10-14: lo obsoleto se borra. El juego usa templo.tscn; temple.tscn (flags d1_) solo confunde (11.161: un escenario de debug lo cargaba y Daniel vio su antesala). Pasar al templo actual o a otro nivel lo que todavía lo usa y borrarlo, con lo que solo sirve a él.
 
@@ -5079,7 +5079,7 @@ Quedan sin uso (no borro arte): las mallas de la decoración vieja (escombros, e
 
 ### 11.163 Borrar las mallas de la decoración del templo viejo · Revisión
 
-**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-39 · **Etiquetas:** `limpieza`, `arte`
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-dd · **Etiquetas:** `limpieza`, `arte`
 
 Tras 11.162 (templo viejo borrado) quedaron sin uso las mallas de su decoración: escombros, estandarte, venas_doom, vasija_pedazos. Confirmar que nada las usa (ni builders de Blender) y borrarlas con su pieza en el build. La tablilla bow_hint queda (la usa la Queñoa).
 
@@ -5129,7 +5129,7 @@ Daniel 2026-10-14 (playtest de 11.130: no tiene sentido entrar a la ermita y que
 
 ### 11.167 Totora: caer al agua y perder deja al player cayendo al vacío antes de "You Fell" · Revisión
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-67 · **Etiquetas:** `bug`, `totora`, `player`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `bug`, `totora`, `player`
 
 Daniel (playtest de 12.19): en la Totora, si el player cae al agua y pierde, se lo ve caer al vacío y recién después aparece la pantalla de 'You Fell'. Al caer al agua tendría que hundirse/salpicar y reaparecer (o la pantalla al instante), sin ver la caída por debajo del nivel.
 
@@ -5137,7 +5137,7 @@ Daniel (playtest de 12.19): en la Totora, si el player cae al agua y pierde, se 
 
 **Notas:** Pit._fall devolvía antes de llevarlo a la orilla si el daño lo mataba, y el estado Dead seguía aplicando gravedad 1,8 s (bajaba a y −119). Ahora lo lleva a la orilla igual: muere parado ahí y en co-op el espíritu arranca en piso. Vale para todos los pozos y aguas.
 
-**Relacionadas:** Totora (D3) en estilo Link's Awakening y su entrada
+**Relacionadas:** 12.41 Totora (D3) en estilo Link's Awakening y su entrada
 
 ### 11.168 D4 (Cumbre): entrada exagerada como las otras mazmorras · Hecho
 
@@ -5165,7 +5165,7 @@ Daniel (playtest de 11.5): saltando con la pluma los pinchos igual llegan al pla
 
 ### 11.170 Atajos: animación del player subiendo y bajando en vez del fundido · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-39 · **Etiquetas:** `overworld`, `animacion`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-dd · **Etiquetas:** `overworld`, `animacion`
 
 Daniel (playtest de 11.28): los atajos andan, pero al usarlos hay un fundido. Debería verse al player subiendo y bajando (escalera de soga, rope_ladder).
 
@@ -5177,7 +5177,7 @@ Daniel (playtest de 11.28): los atajos andan, pero al usarlos hay un fundido. De
 
 ### 11.171 Mapa del overworld: el cursor vuelve al player al moverlo hacia un lado · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-67 · **Etiquetas:** `bug`, `ui`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `bug`, `ui`
 
 Playtest 2026-10-14: en la pestaña Mapa del overworld el cursor se queda pegado: hacia algún lado siempre vuelve sobre el ícono del player.
 
@@ -5187,7 +5187,7 @@ Playtest 2026-10-14: en la pestaña Mapa del overworld el cursor se queda pegado
 
 ### 11.172 Viaje rápido: el foco no va al botón y A abre la pregunta una y otra vez · Revisión
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-67 · **Etiquetas:** `bug`, `ui`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `bug`, `ui`
 
 Playtest 2026-10-14: al elegir un portal en el mapa, el foco no pasa al botón de confirmar y cada A abre otra confirmación de viaje.
 
@@ -5197,7 +5197,7 @@ Playtest 2026-10-14: al elegir un portal en el mapa, el foco no pasa al botón d
 
 ### 11.173 Esqueleto invisible en una mazmorra · Revisión
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-67 · **Etiquetas:** `bug`, `enemigos`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `bug`, `enemigos`
 
 Playtest 2026-10-14: en la planta baja (1P) de una mazmorra hay un esqueleto que no se ve.
 
@@ -5227,7 +5227,7 @@ Playtest 2026-10-14 (11.137, Chullpa): en salas que no llenan su rectángulo (pa
 
 ### 11.176 Chullpa: llave chica y sótano obligatorios, llave del jefe con vuelta atrás · Revisión
 
-**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-05 · **Etiquetas:** `diseno`, `mazmorra`, `chullpa`
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-aa · **Etiquetas:** `diseno`, `mazmorra`, `chullpa`
 
 Daniel 2026-10-14: en la Chullpa se salteaba el 90% (la vasija de la placa está en el Rellano, así que la puerta con llave, la llave chica y todo el sótano eran opcionales, y la llave del jefe estaba al lado del jefe). Regla: la llave del jefe pide vuelta atrás. Aprobado: la puerta a la Momia pasa a ser la de la llave chica (sótano obligatorio); la vasija en la placa abre 2NO; brújula de este lado de los huecos de 2NO y llave del jefe del otro (con la pluma); el Mausoleo queda sin huecos (Daniel: sala sin huecos).
 
@@ -5243,7 +5243,7 @@ Daniel 2026-10-14: en la Chullpa se salteaba el 90% (la vasija de la placa está
 
 ### 11.177 Chullpa sin pared agrietada (fuera el nicho del Rellano) · Revisión
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-05 · **Etiquetas:** `chullpa`, `diseno`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-aa · **Etiquetas:** `chullpa`, `diseno`
 
 Daniel (2026-10-14): en la D1 no hay paredes agrietadas. Sacar RellanoCrackedWall, su nicho y el cofre de 5 bombas (flag ch_landing_niche_chest). Reemplaza la parte de la pared agrietada de 11.137.
 
@@ -5257,7 +5257,7 @@ Daniel: ¿por qué hay escalera abajo y nada arriba? (-43, 5a85d8f4): la escaler
 
 ### 11.178 Totora: cada sala centrada en cámara y tapando las otras · Revisión
 
-**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-05 · **Etiquetas:** `diseno`, `mazmorra`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-aa · **Etiquetas:** `diseno`, `mazmorra`
 
 Daniel (2026-10-14, ajustado el 2026-10-15): cada sala de la Totora se centra en cámara y tapa las otras. Los tamaños son libres (viñeta y cámara configurables); ya no hace falta 14 × ≥22.
 
@@ -5269,7 +5269,7 @@ Daniel (2026-10-14, ajustado el 2026-10-15): cada sala de la Totora se centra en
 
 ### 11.179 Cumbre: cada sala centrada en cámara y tapando las otras · Revisión
 
-**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-05 · **Etiquetas:** `diseno`, `mazmorra`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-aa · **Etiquetas:** `diseno`, `mazmorra`
 
 Daniel (2026-10-14, ajustado el 2026-10-15): cada sala de la Cumbre se centra en cámara y tapa las otras. Los tamaños son libres (viñeta y cámara configurables); ya no hace falta 14 × ≥22.
 
@@ -5281,7 +5281,7 @@ Daniel (2026-10-14, ajustado el 2026-10-15): cada sala de la Cumbre se centra en
 
 ### 11.180 Templo: salas rearmadas (22 × 14) · Revisión
 
-**Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-05 · **Etiquetas:** `diseno`, `mazmorra`
+**Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-aa · **Etiquetas:** `diseno`, `mazmorra`
 
 Daniel (2026-10-14; regla que se dejó el 2026-10-15, ahora los tamaños son libres): todas las salas de las mazmorras miden 14 de alto y al menos 22 de ancho, como la Chullpa y la Queñoa. Templo tiene salas de 14 × 10 / 14 × 12 y hay que rediseñarla.
 
@@ -5292,7 +5292,7 @@ Desde el 2026-10-15 el tamaño de sala es libre (viñeta configurable, cada sala
 
 ### 11.181 Paredes agrietadas: abren una sala, nunca un nicho (Queñoa y templo) · Revisión
 
-**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-05 · **Etiquetas:** `diseno`, `mazmorra`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-aa · **Etiquetas:** `diseno`, `mazmorra`
 
 Daniel (2026-10-14): en las mazmorras una pared agrietada siempre abre una sala entera, de cualquier tipo (puede hasta ser necesaria para terminar la mazmorra), nunca un nicho con cofre. Hoy son nichos OjosCrackedWall en la Queñoa y CombinedCrackedWall en el templo: pasarlos a salas. La del templo va con el rediseño 11.180.
 
@@ -5309,7 +5309,7 @@ Daniel (2026-10-14): en las mazmorras una pared agrietada siempre abre una sala 
 
 ### 11.182 Templo boss-rush: un jefe anterior por ala · Revisión
 
-**Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-05 · **Etiquetas:** `diseno`, `templo`, `jefe`
+**Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-aa · **Etiquetas:** `diseno`, `templo`, `jefe`
 
 Daniel (2026-10-14): el templo, como mazmorra final, es un boss-rush: cada una de las cuatro alas (pluma, arco, gancho, espejo) termina con la revancha de un jefe anterior (Mallqui de la Chullpa, Ojos de la Queñoa, jefe de la Totora, jefe de la Cumbre), y ganarla enciende el ojo del sello del hub. Decidir qué jefe va en qué ala y si reemplaza o acompaña al puzzle del ala. Ojo: el jefe de la Cumbre es hoy un placeholder prestado (11.129). La Mano sigue de sub-jefe de la combinada.
 
@@ -5327,7 +5327,7 @@ Daniel (2026-10-14): el templo, como mazmorra final, es un boss-rush: cada una d
 
 ### 11.183 Espada mejorada (premio de la Combinada del templo) · Revisión
 
-**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-05 · **Etiquetas:** `diseno`, `templo`, `items`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-aa · **Etiquetas:** `diseno`, `templo`, `items`
 
 Daniel (2026-10-14) la eligió como premio de la Combinada (opcional) del templo en vez de una botella o un contenedor de corazón (11.182). Doble daño, estela del tajo dorada, quizás elemento luz que le pega más fuerte al Ojo. Necesita modelo o paleta para la espada (arte, -5d).
 
@@ -5340,7 +5340,7 @@ Daniel (2026-10-14) la eligió como premio de la Combinada (opcional) del templo
 
 ### 11.184 Risco: la franja del gancho no tiene bajada · Revisión
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-d6 · **Etiquetas:** `bug`, `overworld`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `bug`, `overworld`
 
 Daniel (2026-10-14, captura): arriba de la franja norte del Risco (nivel 2, x 70-88, z -38..-32, con RiscoPost y el ojo) no hay forma de bajar. Se sube solo con el gancho desde el pasillo bajo; al sur el RiscoPit, al norte y este la montaña, al oeste 5,2 m de caída al pasillo con la baranda invisible. La única salida es tirarse al abismo.
 
@@ -5361,7 +5361,7 @@ En algunas corridas de la suite completa, un worker muere con signal 11 justo de
 
 ### 11.186 Cumbre: la reja de la llave del jefe tapa la puerta de las Torretas · Revisión
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-05 · **Etiquetas:** `bug`, `diseno`, `mazmorra`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-aa · **Etiquetas:** `bug`, `diseno`, `mazmorra`
 
 Daniel (2026-10-15, captura): en PisoCornisa, la puerta sur de las Torretas (Paso LA ns, celda (6,7)) desemboca justo en la celda de BossKeyGate (12,0,16), que está girada a lo largo del paso y se ve atravesada en la puerta. Es la del nicho de BossKeyChest (14,0,16), que abre SolReceiver. Viene del blockout (4f360313) y nunca se rediseñó. Hay que separar el nicho de la llegada desde la puerta: que la reja cierre el nicho y no el paso.
 
@@ -5385,7 +5385,7 @@ El crash 11.185 pasa en un hilo del WorkerThreadPool que lee un StringName ya li
 
 ### 11.189 D4: backtracking de la llave del jefe · Revisión
 
-**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-05 · **Etiquetas:** `diseno`, `mazmorra`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-aa · **Etiquetas:** `diseno`, `mazmorra`
 
 Daniel (2026-10-15): la llave del jefe de la Cumbre va al nicho del Atrio (escudo + sol); atajo de un solo sentido de la Antesala a la Llegada; las vasijas del Atrio pasan al nicho del Ojo del Sol. Regla boss-key-backtracking. Con rim y navmesh si cambia la grilla.
 
@@ -5393,7 +5393,7 @@ Daniel (2026-10-15): la llave del jefe de la Cumbre va al nicho del Atrio (escud
 
 ### 11.190 Templo: una pieza de corazón · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-05 · **Etiquetas:** `diseno`, `templo`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-aa · **Etiquetas:** `diseno`, `templo`
 
 Daniel (2026-10-15): agregar una pieza de corazón en el templo del ojo. Ver con 11.124 (piezas de corazón: 13, no múltiplo de 4).
 
@@ -5401,7 +5401,7 @@ Daniel (2026-10-15): agregar una pieza de corazón en el templo del ojo. Ver con
 
 ### 11.191 Martillo: ítem de golpe fuerte · Revisión
 
-**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-05 · **Etiquetas:** `items`, `diseno`, `combate`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-aa · **Etiquetas:** `items`, `diseno`, `combate`
 
 Daniel (2026-10-15): un evento de mini jefe en el overworld, en una zona después de D2, hace aparecer el martillo. Definir el ítem: ItemData, el golpe fuerte (qué HitBox/AttackData lo marca como golpe fuerte, para que la placa STRIKE lea lo mismo), qué rompe o activa, su lugar en la cadena (después de D2: sirve en D3+ y el overworld, nunca gatea D1/D2) y GDD §6. Modelo listo: assets/epiphany/meshes/equipo/martillo.res (-5d).
 
@@ -5412,7 +5412,7 @@ Daniel (2026-10-15): un evento de mini jefe en el overworld, en una zona despué
 
 ### 11.192 Overworld: mini jefe después de D2 que da el martillo · Revisión
 
-**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-d6 · **Etiquetas:** `overworld`, `enemigos`, `jefe`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-5d · **Etiquetas:** `overworld`, `enemigos`, `jefe`
 
 Daniel (2026-10-15): evento de mini jefe con un par de monstruos en una zona del overworld a la que solo se llega después de D2; al vencerlo aparece el martillo (cofre o pedestal). ArenaFight/WaveSpawner con flag. Depende del ítem de 11.191. Si el mini jefe necesita modelo propio, va a -5d.
 
@@ -5428,25 +5428,25 @@ Daniel (2026-10-15): evento de mini jefe con un par de monstruos en una zona del
 
 ### 11.193 Placa de golpe fuerte (modo STRIKE) · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-39 · **Etiquetas:** `puzzles`, `arte`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-dd · **Etiquetas:** `puzzles`, `arte`
 
 Modo STRIKE de FloorSwitch con sus mallas (interruptor_golpe_marco/placa, ya hechas). Lee el mismo marcador de golpe fuerte que defina 11.191. Cierra el paso 4 de 11.110.
 
 ### 11.194 Jefe final: rayo del ojo con las dos manos fuera de juego · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-67 · **Etiquetas:** `jefe`, `combate`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `jefe`, `combate`
 
 Fases 2 y 3: si las dos manos están aturdidas o caídas, el ojo suma el barrido de rayo del Ojo Vigía (línea marcada, carga, barrido) alternando con el orbe. El aturdimiento y la derrota lo cortan. data/boss/attack_laser.tres; exports del grupo Rayo en boss.gd; test en test_boss.
 
 ### 11.195 Overworld: entrada de la guarida de los guardias, del otro lado del agua (placeholder) · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-d6 · **Etiquetas:** `overworld`, `diseno`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-5d · **Etiquetas:** `overworld`, `diseno`
 
 Daniel (2026-10-15): más adelante se implementan las aletas para nadar; la guarida de los guardias (11.115) va en la orilla sur del lago grande, a la que solo se llega nadando. Por ahora: entrada de cueva decorativa (sin transición) y un poco de terreno para salir del agua antes de entrar. Captura de Daniel: debug/tmp/fd/guarida_orilla.png.
 
 ### 11.196 Overworld: enemigo de montaña en la zona de D4 (atoq, zorro andino en manada) · Revisión
 
-**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-05 · **Etiquetas:** `overworld`, `enemigos`, `ia`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-aa · **Etiquetas:** `overworld`, `enemigos`, `ia`
 
 Daniel (2026-10-15): la zona de D4 (la explanada frente a la puerta del cóndor) está muy vacía; hace falta un enemigo de montaña. Propuesta -fd: atoq, el zorro andino (animal de la puna y el pícaro de los mitos), en manadas de 2-3 que te rodean y se turnan para tirarse a morder y retroceder; huyen con poca vida. Captura: debug/tmp/fd/cumbre_explanada.png.
 
@@ -5460,7 +5460,7 @@ Daniel (2026-10-15): la zona de D4 (la explanada frente a la puerta del cóndor)
 
 ### 11.197 Terreno del overworld: colisión simplificada (la carga congela la ventana 3,4 s) · Revisión
 
-**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-d6 · **Etiquetas:** `optimizacion`, `overworld`, `arte`
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-5d · **Etiquetas:** `optimizacion`, `overworld`, `arte`
 
 Daniel (2026-10-15): la pantalla de carga congela la ventana (no responde al resize). Medido: la carga en hilo tarda ~1 s, pero agregar el overworld al árbol bloquea 3,4 s y es casi todo el Terreno: sus 25 CollisionShape3D son la malla visual (~2,4 M triángulos) y Jolt las arma en el hilo principal. Sin cuerpos, 0 ms. Arreglo: mallas de colisión simplificadas (~10× menos) en el import de terreno_organico; también aliviana la física en juego.
 
@@ -5469,7 +5469,7 @@ Daniel (2026-10-15): la pantalla de carga congela la ventana (no responde al res
 
 ### 11.198 Jefe final: más golpes al piso y lo alcanza detrás · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-67 · **Etiquetas:** `jefe`, `combate`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `jefe`, `combate`
 
 Daniel (2026-10-15): aumentar las veces que las manos golpean el piso; detrás del jefe no lo puede atacar. Hecho (7a183320): cada golpe al piso es una tanda de slam_count (3) que sigue al player, aturdida recién después del último; el área del jefe cubre toda la sala (antes empezaba 1 m delante del cuerpo y todo lo de atrás quedaba en el borde). test_boss.
 
@@ -5480,25 +5480,25 @@ Daniel (2026-10-15): aumentar las veces que las manos golpean el piso; detrás d
 
 ### 11.199 Mazmorras: no hacer zoom a lo que se abre en otra sala · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-67 · **Etiquetas:** `camara`, `mazmorra`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `camara`, `mazmorra`
 
 Daniel (2026-10-15): al resolver algo que abre una puerta en otra sala (p. ej. las 4 piezas de la llave del jefe del templo) la cámara iba a la puerta, que está oculta. Hecho (0478f030): TopDownCamera.reveal solo corre la acción si el objetivo está en salas sin player (Room.contains con margen para las puertas entre dos salas). test_wiring.
 
 ### 11.200 Enemigos de sala de mazmorra no sueltan la persecución · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-67 · **Etiquetas:** `ia`, `enemigos`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `ia`, `enemigos`
 
 Daniel (2026-10-15): dentro de una sala no tiene sentido que el enemigo deje de perseguir una vez que empezó. Hecho (6ec22d03): FindPlayer sigue al objetivo mientras comparten la sala de origen del enemigo (Enemy.shares_room), aunque esté lejos o fuera de vista. En el overworld se pierde como antes. test_enemy_ai.
 
 ### 11.201 Autosave en la ranura de la partida · Revisión
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-67 · **Etiquetas:** `guardado`, `bug`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `guardado`, `bug`
 
 Daniel (2026-10-15): el autosave no guardaba sobre la partida (iba a la ranura Auto; la del jugador solo cambiaba al guardar a mano o salir). Opción 1 elegida: el autosave escribe en la ranura que se juega. Una Auto vieja sigue cargando y se borra con el próximo autosave de esa partida. Hecho (8b4aa0c2). test_slots.
 
 ### 11.202 Errores del log de la build 0.2 (playtest) · Revisión
 
-**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-67 · **Etiquetas:** `bug`
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-cb · **Etiquetas:** `bug`
 
 Lo que salió en el log de Daniel con la build de Linux y lo que apareció al arreglarlo.
 
@@ -5527,19 +5527,19 @@ Lo que salió en el log de Daniel con la build de Linux y lo que apareció al ar
 
 ### 11.203 Aprovechar las novedades de Godot 4.8 · Revisión
 
-**Responsable:** project-epiphany-67
+**Responsable:** project-epiphany-cb
 
 PRs de 4.8 que Daniel eligió: 118045 y 115426 (luz) activados; 113970, 121122 y 115653 se usan donde corresponda.
 
-- [ ] Sombras de contacto (#118045) y AO multi-rebote (#115426)
+- [x] Sombras de contacto (#118045) y AO multi-rebote (#115426)
   Hecho (26c38004): ajustes de proyecto + Sun del overworld con contact shadows + SSAO en su Environment. GPU 1080p overworld: 7.8 → 8.6 ms. Falta decidir si van también a las mazmorras.
-- [ ] Consultas de física sin asignar memoria (#113970)
+- [x] Consultas de física sin asignar memoria (#113970)
   Hecho (887c7caf): las de cada frame (rayos de la cámara, haz de luz, ondas, gancho, vista de enemigos y del fijado) usan *_into con resultados reusados. Las de una vez quedan igual.
-- [ ] Decals con DrawableTexture (#115653)
+- [x] Decals con DrawableTexture (#115653)
   Ya en uso: CausticsDecal dibuja una DrawableTexture2D y en 4.8 el atlas se actualiza en cada blit. Usarlo para decals animados nuevos (grieta del golpe, sombras de nubes si va por decal).
-- [ ] get_velocity_at_position en RigidBody3D (#121122)
+- [x] get_velocity_at_position en RigidBody3D (#121122)
   Sin caso hoy: los cuerpos (vasijas, bombas) vuelan sin girar, así que equivale a linear_velocity. Usarlo cuando haya cuerpos que giran y empujan/dañan por el punto de contacto (rocas rodantes, plataformas que giran).
-- [ ] Shader baker y tirones de pipelines (Linux)
+- [x] Shader baker y tirones de pipelines (Linux)
   Medido (2026-10-16, build debug, RX 580): overworld listo ~5,2 s con caché vacía vs ~2,6 s caliente; el baker en Linux ahorra ~0,15 s (ruido): el costo es el driver armando pipelines. El primer proyectil tiraba 48 ms; con pipeline_warmup.tscn (4e745df1) ningún efecto compila al aparecer. tools/pipeline_probe.gd mide. El baker encontró abyss_mist roto (f3335aef).
 - [x] Medir el baker en Windows (D3D12)
   Medido (2026-10-16, RX 580, 3 corridas): overworld listo con caché vacía D3D12 10,3 s sin baker → 8,1 s con baker (-21 %), Vulkan sin baker 8,2 s; caliente todos ~2,7 s. Baker activado en el preset Windows (release). El bake de D3D12 solo sale exportando desde Windows: la release de Windows se exporta allá. Debug sigue sin baker. LimboAI: debug usa la dll editor, release la template_release.
@@ -5548,21 +5548,21 @@ PRs de 4.8 que Daniel eligió: 118045 y 115426 (luz) activados; 113970, 121122 y
 
 ### 11.204 Jefe final: manos al cambiar de fase, aturdido, golpes y rayo · Revisión
 
-**Responsable:** project-epiphany-67
+**Responsable:** project-epiphany-cb
 
 Pedido de Daniel (2026-10-16) tras pelear con el jefe final.
 
-- [ ] Las manos no se reiniciaban al cambiar de fase (quedaban en el piso)
+- [x] Las manos no se reiniciaban al cambiar de fase (quedaban en el piso)
   Hecho (82b7934a): al entrar a la fase 3, BossHand.reset corta ataque, aturdida o caída, suelta al player y la vuelve al reposo con la vida llena. Los ataques a medio esperar se cortan con un contador de corrida. test_the_third_phase_brings_every_hand_back, test_a_reset_cuts_a_slam_in_the_middle.
-- [ ] Aturdido, el ojo quedaba en blanco
+- [x] Aturdido, el ojo quedaba en blanco
   Hecho (82b7934a): miraba casi al piso y desde la cámara se veía solo el blanco. Ahora el cuerpo cae para atrás con rebote y la mirada baja a medias entre la cámara y el frente, meciéndose: se ve la pupila dilatada, caída. test_the_stunned_eye_droops_but_shows_its_pupil (con cámara propia, 5f8bda31).
-- [ ] Cada golpe: el ojo cambia de color y se mueve
+- [x] Cada golpe: el ojo cambia de color y se mueve
   Hecho (82b7934a): tinte rojo (HitFlash.hold) y tirones al azar solo del globo del ojo (Body/Eye/Mesh); párpados y cuerpo quietos. test_each_hit_tints_and_jolts_only_the_eye.
-- [ ] Shader del rayo, como la onda pero rojo
+- [x] Shader del rayo, como la onda pero rojo
   Hecho (82b7934a): laser.gdshader, núcleo casi blanco, halo rojo que late y se ensancha, chispas que corren hacia la punta; el mismo shader en modo disc para la quemadura del piso. Radio del haz 0,26.
-- [ ] El grito del jefe final no se saltea
+- [x] El grito del jefe final no se saltea
   Hecho (dd212b4f): ni la intro ni las presentaciones de fase, aunque sea revancha o ya se haya visto. Los subjefes (ArenaFight) siguen salteables.
-- [ ] Las manos desaparecen como el ojo al vencerlo
+- [x] Las manos desaparecen como el ojo al vencerlo
   Hecho (dd212b4f): BossHand.vanish, el neón se apaga titilando, tiemblan con estallidos y se hunden achicándose, al mismo tiempo que el ojo. test_the_hands_go_away_like_the_eye_when_the_boss_dies.
 
 ## M12 — Assets propios (Blender)  (17/39)
@@ -5985,7 +5985,7 @@ Cada mazmorra con su propio estilo sobre el mismo kit (mismas piezas y colisione
 - [x] Paredes y piso propios de cada mazmorra
   Hecho el 2026-10-13 (6552966a), arte -11, pedido de Daniel. Chullpa: pirca de piedra de campo con juntas de barro, cornisa de barro con ichu, piso de tierra apisonada con losas sueltas. Queñoa: madera del tronco por dentro (vetas y nudos), musgo y hojas arriba, piso de tablones. Cada una con su kit (chullpa_la_kit / quenoa_la_kit). Los números del piso y la veta están en LOOKS de la_walls.gd para ajustarlos a ojo. Entradas del overworld vestidas en 472ad964.
 
-### Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos · En curso
+### 12.40 Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos · En curso
 
 **Prioridad:** media · **Tamaño:** M · **Etiquetas:** `arte`, `mazmorra`, `camara`
 
@@ -6010,7 +6010,7 @@ Daniel (2026-10-13): la Chullpa real tiene la cámara vieja; el test LA (debug/l
 
 **Relacionadas:** 12.30 Templo: salas que se vean bien para grabar
 
-### Totora (D3) en estilo Link's Awakening y su entrada · En curso
+### 12.41 Totora (D3) en estilo Link's Awakening y su entrada · En curso
 
 **Prioridad:** media · **Tamaño:** M · **Etiquetas:** `arte`, `mazmorra`
 
@@ -6060,7 +6060,7 @@ Daniel aprobó el logo de 12.20 y lo quiere también en el splash. El boot splas
 
 ### 12.23 Ojos de la Queñoa y Ojo Vigía: modelo propio parecido al ojo del jefe final, más simple · Revisión
 
-**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-39 · **Etiquetas:** `arte`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-dd · **Etiquetas:** `arte`
 
 Playtest 2026-10-13: el jefe de la Queñoa (Eyes of the Queñoa) y el sub-jefe (Ojo Vigía) hoy son esferas lisas marrones (WatcherEye, placeholder). Deberían parecerse al ojo del jefe final pero más simples (párpado, iris/pupila, venas o raíces de la corteza). Ver también 12.21 (ojo interruptor).
 
@@ -6070,7 +6070,7 @@ Playtest 2026-10-13: el jefe de la Queñoa (Eyes of the Queñoa) y el sub-jefe (
 
 ### 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la) · Revisión
 
-**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-39 · **Etiquetas:** `arte`
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-dd · **Etiquetas:** `arte`
 
 Pedido de -43 (playtest 2026-10-13): las paredes agrietadas de las mazmorras LA usan cracked_wall_templo y no encajan (sobresalen, cara de arriba negra, o no se ven). Hace falta un tapón que llene el paso LA: alto y ancho como el corte, inclinado como la pared, con la veta de su pared y grietas en las dos caras. la_walls lo coloca como las hojas de puerta. Estilos: chullpa, quenoa, totora, cumbre. Cuando estén las mallas, -43 cambia las instancias y revisa la colisión. -11 (-5d) elige el orden con Daniel frente a 12.23 y 11.138.
 
@@ -6078,7 +6078,7 @@ Pedido de -43 (playtest 2026-10-13): las paredes agrietadas de las mazmorras LA 
 
 ### 12.25 El ojo del logo en game over, selección de idioma y carga · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-67 · **Etiquetas:** `arte`, `ui`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `arte`, `ui`
 
 Daniel 2026-10-14: con el logo en el menú principal, el ojo del logo va en el resto de lugares que usaban el ojo dibujado por código, pero solo el ojo. Hecho: art/logo/epiphany_eye.svg (solo el ojo: almendra, iris, pupila y contorno dorado, sin rayos, lágrimas ni letras) → assets/ui/logo/epiphany_eye.png; Eye de game_over, language_select y la carga (scene_flow) son TextureRect con esa textura. Game over y selección de idioma lo muestran tenue (alfa 0,35); el de carga parpadea achicando la escala. Se borraron title_eye.gd y loading_eye.gd. Test: test_every_eye_is_the_logo_eye.
 
@@ -6098,7 +6098,7 @@ Daniel 2026-10-14 (por -5d): los ojos de la Queñoa (12.23) quedaron mucho mejor
 
 ### 12.27 VFX mágicos con shaders y partículas (sin texturas) · Revisión
 
-**Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-39 · **Etiquetas:** `arte`, `vfx`
+**Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-dd · **Etiquetas:** `arte`, `vfx`
 
 Daniel 2026-10-14 (por -5d), con referencias suyas (esferas de energía, anillos de fuego, círculos mágicos). Todo con shaders y partículas, sin texturas.
 
@@ -6130,7 +6130,7 @@ Daniel 2026-10-14 (playtest, cueva de las bombas): el muro de práctica (CavePra
 
 ### 12.30 Templo: salas que se vean bien para grabar · Revisión
 
-**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-39 · **Etiquetas:** `arte`, `templo`
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-dd · **Etiquetas:** `arte`, `templo`
 
 Daniel (2026-10-14) quiere grabar el templo completo y así no se puede: 1) cada puerta tiene alrededor una U de cubitos grises sueltos (resto del kit gris), fuera de estilo; 2) las puertas este y oeste dan a un vacío ocre plano y el corte de la pared muestra dientes negros fuera de la sala; 3) en las esquinas de arriba las puntas de las paredes inclinadas sobresalen en tiras; 4) abajo una franja oscura tapa la pared sur. Recorrer todas las salas del templo con el escenario templo_video y dejarlas al nivel de la Chullpa y la Queñoa.
 
@@ -6141,11 +6141,11 @@ Daniel (2026-10-14) quiere grabar el templo completo y así no se puede: 1) cada
 
 **Capturas:** `compass/images/m12-30-20261014-153143.png`
 
-**Relacionadas:** Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos
+**Relacionadas:** 12.40 Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos
 
 ### 12.31 Chullpa: jefe final momia con aspecto propio · Revisión
 
-**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-39 · **Etiquetas:** `arte`, `chullpa`, `jefe`
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-dd · **Etiquetas:** `arte`, `chullpa`, `jefe`
 
 Daniel (2026-10-14): en la Chullpa hay que acomodar el jefe final de la momia para que no sea simplemente la del sub-jefe pero más grande. Hoy el jefe es el modelo del sub-jefe escalado; necesita su propio aspecto (modelo, silueta, detalles) que se lea como jefe.
 
@@ -6155,7 +6155,7 @@ Daniel (2026-10-14): en la Chullpa hay que acomodar el jefe final de la momia pa
 
 ### 12.32 Look LA: topes de pared del color del muro y viñeta borrosa en vez del velo negro; desenfoque solo cerca de la cámara · Revisión
 
-**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-05 · **Etiquetas:** `arte`, `render`, `mazmorra`
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-aa · **Etiquetas:** `arte`, `render`, `mazmorra`
 
 Daniel (2026-10-14): en todas las mazmorras LA los topes de las paredes se ven del color del tile de la pared, no negros: se va el velo negro (borde_oscuro, 11.156). Lo de más allá lo tapa una viñeta borrosa en el borde de la pantalla. Menos desenfoque: solo lo muy alto o muy cerca de la cámara (DOF de enfoque_la). Toca la_walls, borde_oscuro y enfoque_la.
 
@@ -6167,19 +6167,19 @@ Daniel (2026-10-14): en todas las mazmorras LA los topes de las paredes se ven d
 
 ### 12.33 Templo: la Mano sub-jefe con modelo propio · Revisión
 
-**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-39 · **Etiquetas:** `arte`, `templo`, `jefe`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-dd · **Etiquetas:** `arte`, `templo`, `jefe`
 
 Daniel (2026-10-14): la Mano suelta (HandGuard, sub-jefe del templo) usa hoy el mismo modelo que las manos del jefe final; quiere un modelo diferente para que no sea idéntica. Mismas animaciones/ataques (golpe al piso, agarre, barrido), colisión y hitbox sin cambios.
 
 ### 12.34 Templo: paleta más dorada, como el jefe final, menos celeste · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-39 · **Etiquetas:** `arte`, `templo`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-dd · **Etiquetas:** `arte`, `templo`
 
 Daniel (2026-10-14): que el color del templo se parezca más al dorado del jefe final y no tanto al celeste actual (kit templo_la, piso, luces/ambiente del nivel). Respetar sus valores de TonoLA/AmbienteSala; si hace falta refresh, avisar a -fd antes (regla del reborde y navmesh).
 
 ### 12.35 Totora: el hueco de salida de los Tejedores tiene que leerse como caída · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-39 · **Etiquetas:** `arte`, `mazmorra`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-dd · **Etiquetas:** `arte`, `mazmorra`
 
 Daniel (2026-10-15, captura): el hueco de caída al lado del cofre de la llave del jefe (PisoAlto, celda (2,1), CaidaLA44 en (4,0,2)) se ve como un cuadrado negro y parece que falta un bloque. Es la salida de una vía del rincón: la reja la baja el ojo con tiempo y se vuelve a cerrar con la llave adentro. Daniel eligió dejar el hueco como salida, pero que se lea: borde y caída visibles, no un cuadrado negro.
 
@@ -6189,7 +6189,7 @@ Daniel (2026-10-15, captura): el hueco de caída al lado del cofre de la llave d
 
 ### 12.36 Totora: los charcos de Amaru y Yacumama, de agua · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-39 · **Etiquetas:** `arte`, `mazmorra`, `jefe`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-dd · **Etiquetas:** `arte`, `mazmorra`, `jefe`
 
 Daniel (2026-10-15, captura de la sala del jefe): los cuatro círculos por donde salen las anguilas tienen que ser agua. Hoy son src/entities/amaru/amaru_pool.tscn, un disco plano azul oscuro (placeholder de 349898f5), en el Pozo (AmaruFight), en el Jefe (BossFight) y en el templo (revancha). Ojo: water_la.gdshader colorea por profundidad, así que un disco sobre las tablas sale transparente; hace falta un fondo o un ajuste propio.
 
@@ -6197,7 +6197,7 @@ Daniel (2026-10-15, captura de la sala del jefe): los cuatro círculos por donde
 
 ### 12.37 Rejas con el estilo de cada mazmorra · Revisión
 
-**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-39 · **Etiquetas:** `arte`, `mazmorra`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-dd · **Etiquetas:** `arte`, `mazmorra`
 
 Daniel (2026-10-15): la reja de la Cumbre tiene los bosses de la Chullpa. Todas las mazmorras usan src/world/gate.tscn con el modelo de la Chullpa. Hace falta una reja por estilo (Queñoa, Totora, Cumbre, templo), como los kits LA, sin cambiar el tamaño ni la colisión.
 
@@ -6209,13 +6209,13 @@ Daniel (2026-10-15): la reja de la Cumbre tiene los bosses de la Chullpa. Todas 
 
 ### 12.38 Cóndores de la D4: modelo de arte · Revisión
 
-**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-39 · **Etiquetas:** `arte`, `jefe`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-dd · **Etiquetas:** `arte`, `jefe`
 
 Pedido de -43 (11.129 paso 8) y de Daniel: Kuntur joven y Apu Kuntur con modelo de cóndor en lugar de las primitivas. Hecho por -5d en 5520a17d (build_kuntur.py): Kuntur negro con collar blanco y banda en el ala, cabeza roja con cresta; Apu Kuntur con sol de oro en la frente, pectoral y alas de oro. Las alas tienen el origen en el hombro; los nodos del script no cambian.
 
 ### 12.39 Enemigos comunes estilizados según el theme de cada mazmorra · En curso
 
-**Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-39 · **Etiquetas:** `arte`, `enemigos`, `mazmorra`
+**Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-dd · **Etiquetas:** `arte`, `enemigos`, `mazmorra`
 
 Daniel (2026-10-15): es hora de que los enemigos normales de las mazmorras vayan con el theme de cada una. Hoy esqueleto, escudo, arquero y acorazado comparten un único modelo (models/chullpa.tscn) con armas genéricas (sword_1h, bow, shield_round) en todas las mazmorras, cuevas y el overworld. Una variante por mazmorra (Chullpa, Queñoa, Totora, Cumbre, Templo) con el mismo rig y animaciones, como .tscn heredados (no overrides en las instancias: el refresh LA los pierde). Primero propuestas para que Daniel elija; después se cambian las instancias de cada nivel.
 
@@ -6223,7 +6223,7 @@ Daniel (2026-10-15): es hora de que los enemigos normales de las mazmorras vayan
   Hecho, aprobado por Daniel: b19ba666 (guerrero_<mazmorra>, armas, 20 escenas en src/entities/guerreros/<tipo>_<mazmorra>.tscn), ae1ed827 (armadura_<mazmorra>). test_guerreros.
 - [x] Cambiar las instancias de cada mazmorra (diseño, -43)
   Hecho el 2026-10-15 (27f82209): en cada mazmorra los ext_resource de esqueleto, escudo, arquero y acorazado apuntan a guerreros/<tipo>_<mazmorra>.tscn, así cambian todas las instancias y los spawns de oleadas (cripta de la Chullpa, Combinada del templo) sin overrides. test_dungeon_enemies falla si un refresh vuelve a las escenas base.
-- [ ] Overworld y cuevas con la variante de su zona (-eb)
+- [ ] Overworld y cuevas con la variante de su zona (-5d)
   Daniel (2026-10-15): variantes. Cada enemigo del overworld y cada cueva toma la variante de la mazmorra de su región: Cerros → chullpa, Arboleda → quenoa, Laguna y Bañado → totora, Cumbre → cumbre, Necrópolis y explanada del templo → templo. Los guardias del templo ya están (569c5621).
 - [ ] Probarlo (Daniel)
 
@@ -6940,7 +6940,7 @@ Daniel (2026-10-15) preguntó por el texture streaming de Godot 4.8: descartado,
 4. [x] 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · Hecho · anda
 5. [x] 11.118 Sandalias: correr manteniendo y salto largo con la pluma · Hecho · anda
 6. [x] 11.24 Más secretos en el overworld · Hecho · anda
-7. [ ] Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente
+7. [ ] 12.41 Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente
    si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell"
    no hay asset correcto para la pared quebrable
 8. [x] 11.30 Ítem de D3: el gancho · Hecho · anda
@@ -6949,7 +6949,7 @@ Daniel (2026-10-15) preguntó por el texture streaming de Godot 4.8: descartado,
 11. [x] 11.29 Overworld después del jefe · Hecho · anda
 12. [x] 7.9 Rediseño del overworld como hub de varias mazmorras · Hecho · anda — La D4 parece mas una cueva que una dungeon
 13. [x] 7.10 Overworld con forma de Zelda 2D, no cuadrado · Hecho · anda
-14. [ ] Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos · En curso · **falla** — Hay cosas que no tienen estilo
+14. [ ] 12.40 Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos · En curso · **falla** — Hay cosas que no tienen estilo
 15. [x] 11.117 Huecos a otro piso se ven distintos de los fosos · Hecho · anda
 16. [ ] 11.5 Galería de trampas: pinchos · Revisión — Hay que hacer que la pluma salte mas alto porque los pinchos llegan igual
 17. [x] 11.98 La cámara muestra lo que se desbloquea · Hecho · anda

@@ -31,7 +31,7 @@
       "text": "Tests y escenarios al día"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Recorrerlo (Daniel)"
     },
     {
@@ -51,7 +51,7 @@
     },
     {
       "detail": "Playtest 2026-10-12: áreas imposibles de alcanzar o cruzar. test_every_region_is_reachable_except_the_item_gated (navmesh + link del puente): con el puente se llega a todas las zonas menos la Cumbre y la isla de la Laguna (gancho) y las franjas de la Quebrada (angostura y bajadas, 11.90). Falta que Daniel diga qué lugares puntuales no pudo cruzar.",
-      "done": false,
+      "done": true,
       "text": "Que todo se pueda alcanzar y cruzar"
     },
     {
@@ -88,5 +88,5 @@
   ],
   "test": "",
   "title": "Rediseño del overworld como hub de varias mazmorras",
-  "updated_at": "2026-10-15T03:54:15.161Z"
+  "updated_at": "2026-10-16T06:47:58.846Z"
 }

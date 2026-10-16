@@ -6,7 +6,7 @@
       "text": "Copias de la pose que se desvanecen"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Probarlo (Daniel): color, cantidad, duración"
     }
   ],
@@ -29,5 +29,5 @@
   ],
   "test": "",
   "title": "Fantasmas al esquivar",
-  "updated_at": "2026-10-15T03:54:15.202Z"
+  "updated_at": "2026-10-16T06:48:03.379Z"
 }

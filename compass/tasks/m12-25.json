@@ -1,5 +1,5 @@
 {
-  "assignee": "project-epiphany-67",
+  "assignee": "project-epiphany-cb",
   "checklist": [],
   "code": "12.25",
   "created_at": "2026-10-14T04:46:13.232Z",
@@ -17,5 +17,5 @@
   ],
   "test": "",
   "title": "El ojo del logo en game over, selección de idioma y carga",
-  "updated_at": "2026-10-16T01:02:09.587Z"
+  "updated_at": "2026-10-16T06:48:24.906Z"
 }

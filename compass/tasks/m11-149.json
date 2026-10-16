@@ -1,5 +1,5 @@
 {
-  "assignee": "project-epiphany-67",
+  "assignee": "project-epiphany-cb",
   "checklist": [
     {
       "done": true,
@@ -35,5 +35,5 @@
   ],
   "test": "Totora 1P sala este y 2P sala oeste: entrar manteniendo el stick y caer al agua: vuelve a la puerta sobre piso, quieto medio segundo, y no vuelve a caer solo. test_room_entry (todas las puertas de las 5 mazmorras)",
   "title": "Al entrar a una sala se puede caer al agua y reaparecer sobre el agua (softlock)",
-  "updated_at": "2026-10-16T01:02:00.275Z"
+  "updated_at": "2026-10-16T06:48:07.078Z"
 }

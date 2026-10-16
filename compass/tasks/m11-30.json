@@ -12,7 +12,7 @@
     },
     {
       "detail": "Escenario gancho (debug/scenarios/gancho.cfg): sandbox de ítems, zona GANCHO al sur: hueco de 6 m con un poste, isla con una vasija y una vasija grande, y otro poste para volver. Ajustar a ojo alcance, velocidades y aturdimiento.",
-      "done": false,
+      "done": true,
       "text": "Probarlo en el banco de pruebas (Daniel)"
     },
     {
@@ -52,12 +52,12 @@
     },
     {
       "detail": "Agregar totora a tools/la_walls.gd (kit propio de totora y agua) cuando arte pueda; los tests de test_totora ya son relativos a cada sala.",
-      "done": false,
+      "done": true,
       "text": "Arte: horneado LA de la totora"
     },
     {
       "detail": "Escenario totora: pluma, arco, bombas y sandalias. Ajustar a ojo los cruces, el ojo con tiempo de los Tejedores (6 s) y la posición de los postes.",
-      "done": false,
+      "done": true,
       "text": "Recorrer D3 (Daniel)"
     }
   ],
@@ -95,5 +95,5 @@
   ],
   "test": "El ítem tiene un uso en combate y abre al menos dos lugares que antes no se podían.",
   "title": "Ítem de D3: el gancho",
-  "updated_at": "2026-10-15T03:54:15.143Z"
+  "updated_at": "2026-10-16T06:48:01.993Z"
 }

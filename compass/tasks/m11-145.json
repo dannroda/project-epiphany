@@ -1,5 +1,5 @@
 {
-  "assignee": "project-epiphany-05",
+  "assignee": "project-epiphany-aa",
   "checklist": [],
   "code": "11.145",
   "created_at": "2026-10-14T02:04:36.560Z",
@@ -26,5 +26,5 @@
   ],
   "test": "tests/test_quenoa.gd",
   "title": "Queñoa S1 (Sala de los ojos): placa que no hace nada, z-fighting en el cofre y símbolo raro en la puerta",
-  "updated_at": "2026-10-16T01:02:30.550Z"
+  "updated_at": "2026-10-16T06:48:06.541Z"
 }

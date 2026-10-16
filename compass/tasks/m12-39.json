@@ -1,5 +1,5 @@
 {
-  "assignee": "project-epiphany-39",
+  "assignee": "project-epiphany-dd",
   "checklist": [
     {
       "detail": "Hecho, aprobado por Daniel: b19ba666 (guerrero_<mazmorra>, armas, 20 escenas en src/entities/guerreros/<tipo>_<mazmorra>.tscn), ae1ed827 (armadura_<mazmorra>). test_guerreros.",
@@ -14,7 +14,7 @@
     {
       "detail": "Daniel (2026-10-15): variantes. Cada enemigo del overworld y cada cueva toma la variante de la mazmorra de su región: Cerros → chullpa, Arboleda → quenoa, Laguna y Bañado → totora, Cumbre → cumbre, Necrópolis y explanada del templo → templo. Los guardias del templo ya están (569c5621).",
       "done": false,
-      "text": "Overworld y cuevas con la variante de su zona (-eb)"
+      "text": "Overworld y cuevas con la variante de su zona (-5d)"
     },
     {
       "done": false,
@@ -38,5 +38,5 @@
   ],
   "test": "",
   "title": "Enemigos comunes estilizados según el theme de cada mazmorra",
-  "updated_at": "2026-10-16T01:03:40.747Z"
+  "updated_at": "2026-10-16T06:48:29.185Z"
 }

@@ -6,7 +6,7 @@
       "text": "Uno o dos atajos de vuelta"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Recorrerlo (Daniel)"
     }
   ],
@@ -33,5 +33,5 @@
   ],
   "test": "Abrir el atajo desde adentro: queda abierto y acorta el recorrido al templo.",
   "title": "Atajos que se abren al volver",
-  "updated_at": "2026-10-15T03:54:15.149Z"
+  "updated_at": "2026-10-16T06:48:00.630Z"
 }

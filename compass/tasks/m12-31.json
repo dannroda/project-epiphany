@@ -1,5 +1,5 @@
 {
-  "assignee": "project-epiphany-39",
+  "assignee": "project-epiphany-dd",
   "checklist": [],
   "code": "12.31",
   "created_at": "2026-10-14T18:39:30.677Z",
@@ -18,5 +18,5 @@
   ],
   "test": "test_chullpa; en juego, el jefe de la Chullpa es Mallqui, no la momia del sub-jefe agrandada",
   "title": "Chullpa: jefe final momia con aspecto propio",
-  "updated_at": "2026-10-16T01:03:20.137Z"
+  "updated_at": "2026-10-16T06:48:25.914Z"
 }

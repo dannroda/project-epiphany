@@ -6,7 +6,7 @@
       "text": "Escenas Breakable de cada planta y reparto en el overworld"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Probarlo (Daniel): cortar un árbol abre paso, ¿hay alguno que no debería?"
     },
     {
@@ -40,5 +40,5 @@
   ],
   "test": "",
   "title": "Cactus, árboles y matas se cortan como el pasto",
-  "updated_at": "2026-10-15T03:54:15.111Z"
+  "updated_at": "2026-10-16T06:48:02.988Z"
 }

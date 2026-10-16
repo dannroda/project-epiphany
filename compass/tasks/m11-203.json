@@ -1,29 +1,29 @@
 {
-  "assignee": "project-epiphany-67",
+  "assignee": "project-epiphany-cb",
   "checklist": [
     {
       "detail": "Hecho (26c38004): ajustes de proyecto + Sun del overworld con contact shadows + SSAO en su Environment. GPU 1080p overworld: 7.8 → 8.6 ms. Falta decidir si van también a las mazmorras.",
-      "done": false,
+      "done": true,
       "text": "Sombras de contacto (#118045) y AO multi-rebote (#115426)"
     },
     {
       "detail": "Hecho (887c7caf): las de cada frame (rayos de la cámara, haz de luz, ondas, gancho, vista de enemigos y del fijado) usan *_into con resultados reusados. Las de una vez quedan igual.",
-      "done": false,
+      "done": true,
       "text": "Consultas de física sin asignar memoria (#113970)"
     },
     {
       "detail": "Ya en uso: CausticsDecal dibuja una DrawableTexture2D y en 4.8 el atlas se actualiza en cada blit. Usarlo para decals animados nuevos (grieta del golpe, sombras de nubes si va por decal).",
-      "done": false,
+      "done": true,
       "text": "Decals con DrawableTexture (#115653)"
     },
     {
       "detail": "Sin caso hoy: los cuerpos (vasijas, bombas) vuelan sin girar, así que equivale a linear_velocity. Usarlo cuando haya cuerpos que giran y empujan/dañan por el punto de contacto (rocas rodantes, plataformas que giran).",
-      "done": false,
+      "done": true,
       "text": "get_velocity_at_position en RigidBody3D (#121122)"
     },
     {
       "detail": "Medido (2026-10-16, build debug, RX 580): overworld listo ~5,2 s con caché vacía vs ~2,6 s caliente; el baker en Linux ahorra ~0,15 s (ruido): el costo es el driver armando pipelines. El primer proyectil tiraba 48 ms; con pipeline_warmup.tscn (4e745df1) ningún efecto compila al aparecer. tools/pipeline_probe.gd mide. El baker encontró abyss_mist roto (f3335aef).",
-      "done": false,
+      "done": true,
       "text": "Shader baker y tirones de pipelines (Linux)"
     },
     {
@@ -42,5 +42,5 @@
   "status": "review",
   "test": "",
   "title": "Aprovechar las novedades de Godot 4.8",
-  "updated_at": "2026-10-16T06:44:56.904Z"
+  "updated_at": "2026-10-16T06:48:21.235Z"
 }

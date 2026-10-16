@@ -1,5 +1,5 @@
 {
-  "assignee": "project-epiphany-67",
+  "assignee": "project-epiphany-cb",
   "checklist": [
     {
       "detail": "Hecho (e152171b): floor_earth de epiphany_outdoor pasa a uniform común; la fachada del templo usa epiphany_outdoor_losas.tres. Verificado en la build: 0 errores.",
@@ -72,5 +72,5 @@
   ],
   "test": "",
   "title": "Errores del log de la build 0.2 (playtest)",
-  "updated_at": "2026-10-16T01:14:05.419Z"
+  "updated_at": "2026-10-16T06:48:18.744Z"
 }
