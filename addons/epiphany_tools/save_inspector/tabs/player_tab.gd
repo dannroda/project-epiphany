@@ -3,6 +3,8 @@ extends "tab.gd"
 
 const LEVELS_DIR := "res://levels"
 const NO_SCENE := "(la escena de inicio)"
+const FIRST_POINT := "(el primero de la escena)"
+const SPAWN_SOURCES: Array[String] = ["res://src/world/spawn_point.gd", "res://src/world/spawn_point.tscn"]
 
 
 func _init() -> void:
@@ -35,8 +37,26 @@ func refresh() -> void:
 				scenes.select(scenes.item_count - 1)
 	scenes.item_selected.connect(func(index: int) -> void:
 		set_or_erase("player", "spawn_scene", "" if index == 0 else scenes.get_item_text(index), "")
+		cfg.set_value("player", "spawn_point", &"")
 		mark_edited())
 	add_child(scenes)
+
+	add_child(dim_label("Punto de aparición"))
+	var points := OptionButton.new()
+	var point: StringName = cfg.get_value("player", "spawn_point", &"")
+	var ids := _spawn_ids(current)
+	if point != &"" and not ids.has(String(point)):
+		ids.append(String(point))
+	points.add_item(FIRST_POINT)
+	for id in ids:
+		points.add_item(id)
+		if id == String(point):
+			points.select(points.item_count - 1)
+	points.tooltip_text = "Los SpawnPoint de la escena (sus id); con la posición guardada, manda la posición"
+	points.item_selected.connect(func(index: int) -> void:
+		cfg.set_value("player", "spawn_point", &"" if index == 0 else StringName(points.get_item_text(index)))
+		mark_edited())
+	add_child(points)
 
 	add_child(dim_label("Posición del player"))
 	var has_position := cfg.has_section_key("player", "position")
@@ -66,6 +86,31 @@ func refresh() -> void:
 		mark_edited()
 		refresh())
 	add_child(toggle)
+
+
+## Los id de los SpawnPoint escritos en la escena (no los de escenas instanciadas adentro).
+func _spawn_ids(scene: String) -> PackedStringArray:
+	var ids := PackedStringArray()
+	if scene.is_empty() or not FileAccess.file_exists(scene):
+		return ids
+	var sources: Array[String] = []
+	var uses_source := func(line: String) -> bool:
+		return sources.any(func(source: String) -> bool: return 'ExtResource("%s")' % source in line)
+	var point_id := ""
+	for line in FileAccess.get_file_as_string(scene).split("\n"):
+		if line.begins_with("[ext_resource") and SPAWN_SOURCES.any(func(path: String) -> bool: return 'path="%s"' % path in line):
+			sources.append(line.get_slice(' id="', 1).get_slice('"', 0))
+		elif line.begins_with("["):
+			if not point_id.is_empty() and not ids.has(point_id):
+				ids.append(point_id)
+			point_id = "start" if line.begins_with("[node ") and uses_source.call(line) else ""
+		elif line.begins_with("script = ExtResource(") and uses_source.call(line):
+			point_id = "start"
+		elif not point_id.is_empty() and line.begins_with('id = &"'):
+			point_id = line.get_slice('"', 1)
+	if not point_id.is_empty() and not ids.has(point_id):
+		ids.append(point_id)
+	return ids
 
 
 func _set_health(health: int) -> void:

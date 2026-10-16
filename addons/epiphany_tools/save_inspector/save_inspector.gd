@@ -4,11 +4,13 @@ extends VBoxContainer
 const SaveManagerScript := preload("res://src/save/save_manager.gd")
 const TABS: Array[Script] = [
 	preload("tabs/player_tab.gd"), preload("tabs/equipment_tab.gd"), preload("tabs/inventory_tab.gd"),
-	preload("tabs/flags_tab.gd"), preload("tabs/dungeons_tab.gd"), preload("tabs/text_tab.gd"),
+	preload("tabs/flags_tab.gd"), preload("tabs/dungeons_tab.gd"), preload("tabs/compare_tab.gd"),
+	preload("tabs/text_tab.gd"),
 ]
 const PLAY_FILE := "user://debug/inspector_play.cfg"
 const NEW_GAME := "res://debug/scenarios/start.cfg"
 const SECTION_TABS := { "player": 0, "equipment": 1, "inventory": 2, "flags": 3 }
+const UNDO_LIMIT := 100
 
 var _files := OptionButton.new()
 var _path_pill := Label.new()
@@ -22,6 +24,8 @@ var _scenario_dialog := ConfirmationDialog.new()
 var _scenario_name := LineEdit.new()
 var _reload := Button.new()
 var _new := Button.new()
+var _undo := Button.new()
+var _redo := Button.new()
 var _play := Button.new()
 var _copy := MenuButton.new()
 var _stale_pill := Button.new()
@@ -36,6 +40,10 @@ var _dirty := false
 var _problems := PackedStringArray()
 ## El md5 del archivo cuando se abrió o guardó: si cambia, lo guardó otro (el juego).
 var _disk_md5 := ""
+var _undo_stack: Array[String] = []
+var _redo_stack: Array[String] = []
+## El texto de la partida después del último cambio: lo que vuelve con Deshacer.
+var _snapshot := ""
 
 
 func _init() -> void:
@@ -50,9 +58,23 @@ func _init() -> void:
 	files_row.add_child(_files)
 	_reload.tooltip_text = "Volver a leer la lista y el archivo"
 	_reload.pressed.connect(func() -> void:
+		for tab in _tabs:
+			if tab.has_method(&"reindex"):
+				tab.reindex()
 		_refresh_files()
 		_open(_path))
 	files_row.add_child(_reload)
+	_undo.tooltip_text = "Deshacer (Ctrl+Z con el foco en el dock)"
+	_undo.shortcut = _shortcut(KEY_Z)
+	_undo.pressed.connect(_step_history.bind(_undo_stack, _redo_stack))
+	files_row.add_child(_undo)
+	_redo.tooltip_text = "Rehacer (Ctrl+Shift+Z)"
+	_redo.shortcut = _shortcut(KEY_Z, true)
+	_redo.pressed.connect(_step_history.bind(_redo_stack, _undo_stack))
+	files_row.add_child(_redo)
+	for history_button: Button in [_undo, _redo]:
+		history_button.shortcut_context = self
+		history_button.shortcut_in_tooltip = false
 	_new.tooltip_text = "Partida nueva"
 	_new.pressed.connect(_new_game)
 	files_row.add_child(_new)
@@ -125,6 +147,8 @@ func _init() -> void:
 func _ready() -> void:
 	_reload.icon = get_theme_icon(&"Reload", &"EditorIcons")
 	_new.icon = get_theme_icon(&"Add", &"EditorIcons")
+	_redo.icon = get_theme_icon(&"Redo", &"EditorIcons")
+	_undo.icon = get_theme_icon(&"Undo", &"EditorIcons")
 	_play.icon = get_theme_icon(&"Play", &"EditorIcons")
 	_style_pill(_path_pill, &"font_placeholder_color")
 	_style_pill(_dirty_pill, &"warning_color")
@@ -202,17 +226,49 @@ func _new_game() -> void:
 func _replace_cfg(source: ConfigFile) -> void:
 	_cfg.clear()
 	_cfg.parse(source.encode_to_text())
+	_undo_stack.clear()
+	_redo_stack.clear()
+	_snapshot = _cfg.encode_to_text()
 
 
 func _on_edited() -> void:
+	_undo_stack.append(_snapshot)
+	if _undo_stack.size() > UNDO_LIMIT:
+		_undo_stack.pop_front()
+	_redo_stack.clear()
+	_snapshot = _cfg.encode_to_text()
 	_dirty = true
 	_after_change()
+
+
+## Deshacer y Rehacer: saca de `from` el estado al que vuelve y guarda el actual en `to`.
+func _step_history(from: Array[String], to: Array[String]) -> void:
+	if from.is_empty():
+		return
+	to.append(_snapshot)
+	_snapshot = from.pop_back()
+	_cfg.clear()
+	_cfg.parse(_snapshot)
+	_dirty = true
+	_after_change()
+
+
+func _shortcut(key: Key, shift := false) -> Shortcut:
+	var event := InputEventKey.new()
+	event.keycode = key
+	event.command_or_control_autoremap = true
+	event.shift_pressed = shift
+	var shortcut := Shortcut.new()
+	shortcut.events = [event]
+	return shortcut
 
 
 func _after_change() -> void:
 	_problems = SaveCodec.validate(_cfg)
 	_path_pill.text = _path if not _path.is_empty() else "(sin archivo)"
 	_dirty_pill.visible = _dirty
+	_undo.disabled = _undo_stack.is_empty()
+	_redo.disabled = _redo_stack.is_empty()
 	_stale_pill.visible = _changed_on_disk()
 	_valid_pill.visible = _problems.is_empty()
 	_problems_pill.visible = not _problems.is_empty()
