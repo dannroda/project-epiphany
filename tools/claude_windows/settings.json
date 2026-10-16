@@ -1,0 +1,28 @@
+{
+  "enabledPlugins": {
+    "godot@awesome-gamedev-agent-skills": true,
+    "router@awesome-gamedev-agent-skills": true,
+    "workflows@awesome-gamedev-agent-skills": true,
+    "disciplines@awesome-gamedev-agent-skills": true,
+    "genres@awesome-gamedev-agent-skills": false,
+    "frontend-design@claude-plugins-official": true,
+    "superdesign@claude-plugins-official": true,
+    "design@anthropic-plugin-directory": true
+  },
+  "extraKnownMarketplaces": {
+    "awesome-gamedev-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "gamedev-skills/awesome-gamedev-agent-skills"
+      }
+    }
+  },
+  "effortLevel": "high",
+  "modelSettings": {
+    "claude-opus-5-5": {
+      "effortLevel": "medium",
+      "autoCompactWindow": 400000
+    }
+  },
+  "theme": "dark"
+}

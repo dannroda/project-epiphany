@@ -1,0 +1,60 @@
+- [No co-author trailer](no-coauthor-trailer.md) — never add Co-Authored-By/AI attribution to commits or PRs
+- [LimboAI patched build](limboai-patched-build.md) — editor libs = patched (UI only); export template_release = official 1.8.1, tested OK; locked to 4.8
+- [MVP direction](mvp-direction.md) — overworld + full dungeon, inventory 2 screens, save early, camera/z-target decisions
+- [UI mockups artifact](ui-mockups-artifact.md) — Design canvas UuD7d42rAXuYTBcMd9iZJy (copy in this account); build UI screens exactly from it (read project/*.dc.html)
+- [Task board](task-board-artifact.md) — Epiphany tasks live in compass/, edit with scompass CLI (--etag); artifact board archived
+- [Scope Compass](scope-compass.md) — user's own PM app repo (../scope-compass) + its board artifact; decisions log, spec
+- [Minimal code comments](minimal-code-comments.md) — keep comments in code to the bare minimum
+- [Commit per task](commit-per-task.md) — commit when a board task is done, only its files; board changes (compass/ + docs/tareas.md) always committed
+- [Editor bridge](editor-bridge.md) — drive the open Godot editor with curl localhost:4713; never open a 2nd editor
+- [GDScript reserved method names](gdscript-reserved-method-names.md) — never name helpers _set/_get (Object virtuals)
+- [UI: escenas + máquina de estado](ui-scenes-and-state-machine.md) — never build UI by code; screens are .tscn pushed on MenuStack (only top gets input)
+- [Blender MCP](blender-mcp.md) — official Blender Lab MCP (not ahujasid's); config + start server in Blender
+- [Co-op direction](coop-direction.md) — Four Swords co-op planned; on hold: don't work M13/M14 tasks unless asked; still don't assume one player
+- [Model exploration, no swap](model-exploration-no-swap.md) — restyles are exploration; never swap the in-game player model unless told
+- [Setting undecided](setting-undecided.md) — Andean setting not final (cyber-shinobi option); player stays the previous low-poly model (toon restyles rejected); shinobi kept for later
+- [Nodes in .tscn](nodes-in-tscn.md) — anything extending Node goes in the scene, never built by code; user tunes feel by eye
+- [Temp folder](temp-folder.md) — temporaries in debug/tmp/ (ignored, .gdignore); temp/ is the user's references
+- [Dungeon items, no backtrack](dungeon-items-no-backtrack.md) — an item from dungeon N never gates content in earlier dungeons
+- [Player state global](player-state-global.md) — player state (current HP…) is global, survives scene changes and goes in the save
+- [Session split](session-split.md) — which parallel session owns what (audit bugs / art / overworld) and the shared-file rule
+- [No early staging](no-early-staging.md) — never leave files staged in the shared tree; stage and commit in one step, check git diff --cached
+- [Check staging before commit](check-staging-before-commit.md) — git diff --cached --stat first; other sessions stage in the shared index
+- [Dungeon chain](dungeon-chain.md) — D1 feather (Chullpa), D2 bow (Queñoa), D3 hookshot, D4 mirror shield, temple last; item guarded by a sub-boss beatable without it
+- [tscn property order](tscn-property-order.md) — exported props before `script =` are dropped; --script tools: don't type game classes that use autoloads
+- [Boss rooms rule](boss-rooms-rule.md) — boss/sub-boss rooms without obstacles (only pots); item chest in an adjacent room opened by beating the sub-boss
+- [LA export](la-export-reference.md) — /home/ssd_disk/LA_export: D4, D7, overworld + viewer; viewer calibrated (other session owns it); roof y=3.12, fades; reference only
+- [Room size](rooms-fit-fixed-camera.md) — sizes free since 2026-10-15 (configurable vignette); each room centers on camera and hides the others; LA look: wall-colored tops + blurred vignette
+- [LA walls baked](la-walls-baked-levels.md) — chullpa baked with doubled walls; edit grid via la_walls.gd refresh, tests room-relative
+- [Editor resave drops overrides](editor-resave-drops-overrides.md) — diff overworld.tscn semantically (debug/tmp/ow2/tscn_diff.py) before committing
+- [Assets before optimizing](assets-before-optimizing.md) — finish assets first; push split (11.126) and old-asset cleanup (11.59) come after
+- [Worktrees + integration](worktrees-integration.md) — each session works in its own worktree (../epiphany-wt/<name>, branch wt/<name>); -fd merges into main
+- [Worktree per session](worktree-per-session.md) — who is who (67 integrator, d6 overworld, 39 art, 05 design since 10-15); names change on restart → roll call
+- [Compass in main](compass-in-main.md) — the board is managed in main; read it there (--dir main tree), not from the worktree copy
+- [Refresh levels after rebase](refresh-levels-after-rebase.md) — la_walls rewrites whole levels; rebase onto main right before refresh, send at once, warn -43
+- [Dungeon GridMap cells](dungeon-gridmap-cells.md) — since 11.157: cell_center + origin (-1,0,-1); use local_to_map/map_to_local, never cell*2
+- [Editor saves win](editor-churn-discard.md) — what the editor saves when Daniel opens it beats our versions; never discard/revert it; editor navmesh is the good one
+- [Boss key backtracking](boss-key-backtracking.md) — boss key needs backtracking with the item; keys/puzzles on the critical path (Chullpa was 90% skippable)
+- [Compass changes are Daniel's](compass-user-changes.md) — unexplained compass/ diffs come from his dashboard or a scompass upgrade; commit them
+- [Sword trail parked](sword-trail-elemental.md) — slash demo is a test bed for future elemental attacks; player keeps original Trail3D
+- [Removing flags](removing-flags.md) — also grep debug/scenarios (signed) and run test_save_codec
+- [LA kit embeds meshes](la-kit-embeds-meshes.md) — after a piece rebuild keep the <style>_la_kit.tres diff from refresh; build_paredes_la always full
+- [Refresh drops instance overrides](refresh-drops-instance-overrides.md) — la_walls repack loses child overrides on instances; use inherited .tscn variants
+- [Cracked walls reveal rooms](cracked-walls-reveal-rooms.md) — a crack opens a full room of any kind (even required), never a chest niche; none in D1
+- [Godot logs for provenance](godot-logs-for-provenance.md) — unexplained changes in main: check Godot log timestamps before asking peers
+- [Editor version wins](editor-version-wins.md) — Daniel's editor saves beat regenerated levels; keep outer Pared LA x rim; layout change ships with its rebake; ask -fd first
+- [Level rim + navmesh](level-rim-and-editor-navmesh.md) — every floor: "Pared LA x" rim outside outer walls (rule in debug/tmp/fd/rim.py); rebake navmesh after any layout change (tool = editor bake)
+- [Navmesh + rim](navmesh-and-rim-daniel.md) — rebake navmesh with every layout change (bake tool OK); keep the outer Pared LA x rim on every floor; his editor saves win
+- [Palette addon shadows worktree](blender-palette-addon-shadow.md) — Blender addon symlinks to MAIN palette; use blender --factory-startup when the worktree changes swatches
+- [Refresh on editor-saved levels](refresh-editor-saved-levels.md) — la_walls refresh nulls shader params headless + freezes instance props; hand-edit color lines instead
+- [Eyes easy to see](eyes-easy-to-see.md) — arrow eyes never on a south wall/pit; navmesh-check chests behind gates are walkable
+- [Logo eye for emblems](logo-eye-for-emblems.md) — ornament details on models/props use epi.logo_eye, not the chakana (gameplay symbols excepted)
+- [Headless tests + gamepad](headless-tests-gamepad.md) — run godot tests under bwrap --tmpfs /dev/input so Daniel's gamepad doesn't feed input
+- [Tests under bwrap](tests-bwrap-gamepad.md) — hide /dev/input so Daniel's gamepad doesn't drive headless tests; old-text failures = stale import
+- [Editor check, separate step](editor-check-separate-step.md) — pgrep for the editor in its own call, read it, then merge; chaining merged under his editor twice
+- [Game windows on HP screen](game-windows-secondary-screen.md) — windowed runs: --display-driver x11 --screen 1 + override.cfg no_focus; xvfb doesn't hide (Wayland)
+- [Windowed Godot on 2nd monitor](windowed-godot-second-monitor.md) — captures/renders: --display-driver x11 --screen 1 + temp override.cfg no_focus; never steal Daniel's focus
+- [Windowed Godot on HP monitor](windowed-godot-secondary-monitor.md) — screenshots/renders: --display-driver x11 --screen 1 + temp override.cfg no_focus
+- [Removing shader includes](removing-shader-includes.md) — grep all .gdshader for every function of a deleted .gdshaderinc; headless tests don't compile shaders
+- [Windows handoff](windows-handoff.md) — Windows session works in wt/windows; refresh kit (export_kit.sh) before he boots, read HANDOFF.md on merge
+- [windows-session](windows-session.md) — On Windows (dual boot) there is ONE session: it works in wt/windows, pushes that branch, and the Linux integrator merges; Linux paths/tools in other memories have Windows equivalents here
