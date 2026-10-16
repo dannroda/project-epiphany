@@ -163,6 +163,24 @@ func test_utility_varies_and_uses_free_pieces() -> void:
 	boss.free()
 
 
+func test_the_hands_slam_wherever_the_player_dodges() -> void:
+	var boss := _spawn()
+	boss.rng.seed = 11
+	var player := Node3D.new()
+	boss.add_child(player)
+	boss.target = player
+	for away in [2.0, 6.0, 10.0]:
+		player.global_position = boss.hand_rest(boss.hand_left).global_position + Vector3(0, 0, away)
+		var slams := 0
+		boss.chosen_attack = null
+		for i in 20:
+			boss.choose_attack(1)
+			if boss.chosen_attack.id == BossAttack.SLAM:
+				slams += 1
+		assert_true(slams >= 4, "a %.0f m de la mano también golpea el piso (%d de 20)" % [away, slams])
+	boss.free()
+
+
 func test_overlay_shows_the_fight() -> void:
 	var boss := _spawn()
 	boss.start_fight()

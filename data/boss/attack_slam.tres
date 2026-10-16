@@ -15,5 +15,5 @@ id = &"slam"
 phases = Array[int]([1, 2, 3])
 pose = 1
 attack = SubResource("Resource_data")
-ideal_distance = Vector2(0, 3)
-falloff = 5.0
+ideal_distance = Vector2(0, 12)
+falloff = 8.0

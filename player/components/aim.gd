@@ -109,7 +109,8 @@ func _physics_process(delta: float) -> void:
 		_held = direction
 		var facing := direction.rotated(Vector3.UP, -yaw_offset)
 		var desired := player.model.global_transform.looking_at(player.model.global_position - facing, Vector3.UP).basis
-		player.model.global_basis = player.model.global_basis.slerp(desired, clampf(turn_speed * Settings.stick_factor() * delta, 0.0, 1.0)).orthonormalized()
+		var from := player.model.global_basis.orthonormalized()
+		player.model.global_basis = from.slerp(desired.orthonormalized(), clampf(turn_speed * Settings.stick_factor() * delta, 0.0, 1.0)).orthonormalized()
 	_update_debug(direction)
 
 
