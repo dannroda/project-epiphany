@@ -131,7 +131,7 @@ func test_overworld_names_appear_as_zones_are_visited() -> void:
 	assert_eq(state.visited_zones, [&"Zone_start"] as Array[StringName], "partida nueva: solo el claro del inicio")
 	var explored: Texture2D = (page.overworld_image.material as ShaderMaterial).get_shader_parameter(&"explored")
 	assert_true(explored != null and explored.get_size() == Vector2(state.map_revealed.get_size()), "la foto se revela con lo descubierto del minimapa")
-	assert_eq(page.subtitle.text, tr("MAP_ZONES_EXPLORED").format({done = 1, total = 14}) + " · " + tr("MAP_PORTALS_LIT").format({done = 0, total = 6}), "cuenta regiones grandes, no pantallas, y portales")
+	assert_eq(page.subtitle.text, tr("MAP_ZONES_EXPLORED").format({done = 1, total = 13}) + " · " + tr("MAP_PORTALS_LIT").format({done = 0, total = 6}), "cuenta regiones grandes, no pantallas, y portales")
 	var names := func() -> Array: return page.marks.get_children().filter(func(mark: Node) -> bool: return mark is Label).map(func(label: Label) -> String: return label.text)
 	assert_eq(names.call(), [tr("PLACE_FIRST_CLEARING")], "solo el nombre de la región visitada, una vez")
 	state.set_flag(&"ow_grotto_cracked_wall", true)

@@ -4,8 +4,8 @@ extends SceneTree
 ## S escalinata, v salto, : tierra, . pasto, w agua baja: las celdas bajo un ShallowWater), los puntos fijos (lo jugable y las piezas que quedan en el GridMap), donde
 ## el terreno no se mueve ni tiene lomas, la decoración, donde el piso queda plano y la roca no avanza, y las paredes
 ## rompibles, que se arman con la misma roca.
-## También las regiones: el rectángulo de cada AreaZone con terrain_style. Para probar sin tocar la escena, los estilos
-## se pueden pasar por zona: … -- Zone_pradera=necropolis Zone_risco=cumbre
+## También las regiones: cada TerrainStyleArea de TerrainStyles. Para probar sin tocar la escena, los estilos se pueden
+## pasar por nombre: … -- quebrada=necropolis risco=cumbre
 ## godot --headless --path . --script res://tools/export_terreno_overworld.gd
 
 const LEVEL := "res://levels/overworld.tscn"
@@ -19,7 +19,7 @@ const SPECIAL := {"Escalón": "S", "Andén borde": "v", "Hueco": "W"}
 const MOUNTAIN := 3
 ## Las plantas de la grilla apenas aplanan el terreno: si no, una hilera de árboles deja el borde de la terraza en escalera.
 const PLANTS := ["Árbol", "Queñoa chica", "Cardón", "Cardón brazos"]
-const IGNORED := ["GridMap", "WorldEnvironment", "DirectionalLight3D", "NavigationRegion3D", "Camera3D", "Decor", "Player", "HUD", "OverworldMap", "CloudShadows"]
+const IGNORED := ["GridMap", "WorldEnvironment", "DirectionalLight3D", "NavigationRegion3D", "Camera3D", "Decor", "Player", "HUD", "OverworldMap", "CloudShadows", "TerrainStyles"]
 
 
 func _initialize() -> void:
@@ -68,16 +68,13 @@ func _initialize() -> void:
 	var forced := {}
 	for arg in OS.get_cmdline_user_args():
 		forced[arg.get_slice("=", 0)] = arg.get_slice("=", 1)
-	for zone in level.get_children():
-		if not "terrain_style" in zone:
+	for area in level.get_node("TerrainStyles").get_children():
+		var style := String(forced.get(String(area.name), area.style))
+		if style.is_empty():
 			continue
-		var style := String(forced.get(String(zone.name), zone.terrain_style))
-		var shape := zone.get_node_or_null(^"CollisionShape3D") as CollisionShape3D
-		if style.is_empty() or shape == null or not shape.shape is BoxShape3D:
-			continue
-		var center := (zone as Node3D).transform * shape.position
-		var half := (shape.shape as BoxShape3D).size / 2.0
-		regions.append({"style": style, "rect": [center.x - half.x, center.z - half.z, center.x + half.x, center.z + half.z]})
+		var center: Vector3 = area.position
+		var half: Vector2 = area.size / 2.0
+		regions.append({"style": style, "rect": [center.x - half.x, center.z - half.y, center.x + half.x, center.z + half.y]})
 	for child in level.get_children():
 		if child is Node3D and not (child.get_class() in IGNORED or child.name in IGNORED) and not String(child.name).begins_with("Zone_") and not "wade_speed" in child:
 			var at := (child as Node3D).position

@@ -1,7 +1,8 @@
 @tool
 extends BTCondition
 ## Fija `target` con el player a la vista (rango de la ficha + línea de visión): sigue al que ya tenía mientras lo vea
-## o mientras estén los dos en la misma sala de dungeon; si no, el más cercano que vea.
+## o mientras estén los dos en la misma sala de dungeon (en el overworld, mientras el player siga en su región); si no,
+## el más cercano que vea.
 
 @export var target_var: StringName = &"target"
 ## Una vez visto, lo sigue viendo hasta este múltiplo del rango.

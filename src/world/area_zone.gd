@@ -3,19 +3,22 @@ extends Area3D
 ## Zona del overworld (una o más pantallas): las zonas de una misma región grande comparten `display_name`; al entrar
 ## el player, el HUD muestra el nombre solo si viene de otra región.
 
+const GROUP := &"area_zones"
+
 static var _current: AreaZone
 
 ## Clave de la zona en las partidas (visitada o no); vacío, el nombre del nodo. Renombrar el nodo no la cambia.
 @export var id: StringName = &""
 @export var display_name: String = ""
-## Estilo del terreno orgánico en la zona (STYLES de tools/blender/build_terreno_organico.py): necropolis, laguna, cumbre,
-## explanada, cardonal o quebrada; vacío, el de siempre.
-@export var terrain_style: StringName = &""
+## Las zonas con la misma región de persecución no sueltan al player al pasar de una a otra; vacía, la de su
+## `display_name`.
+@export var chase_region: StringName = &""
 ## El nombre de la región va en el mapa sobre esta zona (una por región).
 @export var region_label := false
 
 
 func _ready() -> void:
+	add_to_group(GROUP)
 	collision_layer = 0
 	collision_mask = 1 | 2
 	monitorable = false
@@ -47,6 +50,22 @@ func bounds() -> Rect2:
 	var size := (shape.shape as BoxShape3D).size
 	var center := shape.global_position
 	return Rect2(center.x - size.x / 2.0, center.z - size.z / 2.0, size.x, size.z)
+
+
+## Las zonas de la región de persecución del punto; vacío si no cae en ninguna.
+static func region_at(tree: SceneTree, point: Vector3) -> Array[AreaZone]:
+	var region: Array[AreaZone] = []
+	for zone: AreaZone in tree.get_nodes_in_group(GROUP):
+		if not zone.chase_key().is_empty() and zone.contains(point):
+			for other: AreaZone in tree.get_nodes_in_group(GROUP):
+				if other.chase_key() == zone.chase_key():
+					region.append(other)
+			break
+	return region
+
+
+func chase_key() -> StringName:
+	return chase_region if not chase_region.is_empty() else StringName(display_name)
 
 
 func key() -> StringName:
