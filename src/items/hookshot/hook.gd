@@ -31,6 +31,10 @@ var _travelled := 0.0
 var _damage := 1
 var _carried: Node3D
 var _block: PushBlock
+var _ray := PhysicsRayQueryParameters3D.new()
+var _hit := PhysicsIntersectRayResult3D.new()
+var _touch := PhysicsShapeQueryParameters3D.new()
+var _touches := PhysicsIntersectShapeResult3D.new()
 
 
 func _ready() -> void:
@@ -92,21 +96,22 @@ func _probe(from: Vector3, to: Vector3) -> Array:
 	var space := get_world_3d().direct_space_state
 	var exclude: Array[RID] = [user.get_rid(), user.hurtbox.get_rid()]
 	var found := []
-	var ray := PhysicsRayQueryParameters3D.create(from, to)
-	ray.collide_with_areas = true
-	ray.exclude = exclude
-	var hit := space.intersect_ray(ray)
-	if hit:
-		found.append([hit.collider, hit.position])
-	var query := PhysicsShapeQueryParameters3D.new()
-	var sphere := SphereShape3D.new()
-	sphere.radius = radius
-	query.shape = sphere
-	query.transform = Transform3D(Basis.IDENTITY, to)
-	query.collide_with_areas = true
-	query.exclude = exclude
-	for touch in space.intersect_shape(query, 16):
-		found.append([touch.collider, to])
+	_ray.from = from
+	_ray.to = to
+	_ray.collide_with_areas = true
+	_ray.exclude = exclude
+	if space.intersect_ray_into(_ray, _hit):
+		found.append([_hit.collider, _hit.position])
+	if _touch.shape == null:
+		_touch.shape = SphereShape3D.new()
+		_touch.collide_with_areas = true
+		_touches.max_intersections = 16
+	(_touch.shape as SphereShape3D).radius = radius
+	_touch.transform = Transform3D(Basis.IDENTITY, to)
+	_touch.exclude = exclude
+	space.intersect_shape_into(_touch, _touches)
+	for i in _touches.get_intersection_count():
+		found.append([_touches.get_collider(i), to])
 	return found
 
 

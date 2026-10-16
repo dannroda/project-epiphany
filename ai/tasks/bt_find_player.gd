@@ -10,6 +10,9 @@ extends BTCondition
 ## Dónde lo vio por última vez (lo usa la búsqueda del centinela).
 @export var last_seen_var: StringName = &"last_seen"
 
+var _ray := PhysicsRayQueryParameters3D.new()
+var _hit := PhysicsIntersectRayResult3D.new()
+
 
 func _generate_name() -> String:
 	return "FindPlayer ➜ %s" % LimboUtility.decorate_var(target_var)
@@ -36,8 +39,8 @@ func _tick(_delta: float) -> Status:
 func _visible(player: Node3D, max_range: float) -> bool:
 	if agent.global_position.distance_to(player.global_position) > max_range:
 		return false
-	var query := PhysicsRayQueryParameters3D.create(agent.global_position + Vector3.UP, player.global_position + Vector3.UP)
-	query.exclude = [agent.get_rid()]
-	query.collision_mask = 1
-	var hit: Dictionary = agent.get_world_3d().direct_space_state.intersect_ray(query)
-	return hit.is_empty() or hit.collider == player
+	_ray.from = agent.global_position + Vector3.UP
+	_ray.to = player.global_position + Vector3.UP
+	_ray.exclude = [agent.get_rid()]
+	_ray.collision_mask = 1
+	return not agent.get_world_3d().direct_space_state.intersect_ray_into(_ray, _hit) or _hit.collider == player

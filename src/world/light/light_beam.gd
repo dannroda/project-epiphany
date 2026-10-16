@@ -14,6 +14,8 @@ const SEGMENT := preload("res://src/world/light/beam_segment.tscn")
 var segments: Array[PackedVector3Array] = []
 
 var _meshes: Array[MeshInstance3D] = []
+var _ray := PhysicsRayQueryParameters3D.new()
+var _hit := PhysicsIntersectRayResult3D.new()
 
 @onready var _tip: MeshInstance3D = %Tip
 
@@ -25,15 +27,17 @@ func _physics_process(_delta: float) -> void:
 	var remaining := max_length
 	var exclude: Array[RID] = []
 	for bounce in max_bounces + 1:
-		var query := PhysicsRayQueryParameters3D.create(from, from + direction * remaining, 1, exclude)
-		var hit := get_world_3d().direct_space_state.intersect_ray(query)
-		if hit.is_empty():
+		_ray.from = from
+		_ray.to = from + direction * remaining
+		_ray.collision_mask = 1
+		_ray.exclude = exclude
+		if not get_world_3d().direct_space_state.intersect_ray_into(_ray, _hit):
 			segments.append(PackedVector3Array([from, from + direction * remaining]))
 			break
-		var point: Vector3 = hit.position
+		var point := _hit.position
 		segments.append(PackedVector3Array([from, point]))
 		remaining -= from.distance_to(point)
-		var next: Variant = _next_direction(hit.collider, direction, hit.normal, point)
+		var next: Variant = _next_direction(_hit.collider, direction, _hit.normal, point)
 		if next == null or remaining <= 0.0:
 			break
 		from = point
@@ -41,7 +45,7 @@ func _physics_process(_delta: float) -> void:
 			from = next.origin
 			next = next.direction
 		direction = next
-		exclude = [hit.rid]
+		exclude = [_hit.collider_rid]
 	_draw()
 
 

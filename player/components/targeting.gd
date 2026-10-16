@@ -32,6 +32,8 @@ var possible_targets: Array[Node3D] = []
 
 var _last_dir := Vector2.ZERO
 var _invalid_time := 0.0
+var _ray := PhysicsRayQueryParameters3D.new()
+var _hit := PhysicsIntersectRayResult3D.new()
 
 
 ## Cambiar de objetivo con un flick del stick derecho (Opciones).
@@ -218,21 +220,21 @@ func _nearest(candidates: Array) -> Node3D:
 
 
 func _in_sight(target: Node3D) -> bool:
-	var query := PhysicsRayQueryParameters3D.create(player.global_position + Vector3.UP, target.global_position + Vector3.UP)
+	_ray.from = player.global_position + Vector3.UP
+	_ray.to = target.global_position + Vector3.UP
 	var exclude: Array[RID] = [player.get_rid()]
 	for candidate in possible_targets:
 		if is_instance_valid(candidate) and candidate is CollisionObject3D:
 			exclude.append(candidate.get_rid())
-	query.collision_mask = 1
+	_ray.collision_mask = 1
 	var space := player.get_world_3d().direct_space_state
 	for i in 4:
-		query.exclude = exclude
-		var hit := space.intersect_ray(query)
-		if hit.is_empty():
+		_ray.exclude = exclude
+		if not space.intersect_ray_into(_ray, _hit):
 			return true
-		if not (hit.collider as Node).is_in_group(&"walk_guard"):
+		if not (_hit.collider as Node).is_in_group(&"walk_guard"):
 			return false
-		exclude.append(hit.rid)
+		exclude.append(_hit.collider_rid)
 	return false
 
 
