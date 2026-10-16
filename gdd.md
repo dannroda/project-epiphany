@@ -1133,7 +1133,7 @@ func receive(info: DamageInfo) -> void:
 # src/components/hitbox.gd
 class_name Hitbox
 extends Area3D
-## La enciende/apaga AttackRunner (ataques) o queda siempre activa (proyectiles, trampas).
+## Se prende con activate() y se apaga con deactivate() (AttackRunner, jefes, trampas) o queda siempre activa (proyectiles).
 
 signal landed(hurtbox: Hurtbox)
 
