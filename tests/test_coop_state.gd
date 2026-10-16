@@ -125,3 +125,13 @@ func test_the_zone_banner_follows_the_lead_player() -> void:
 	zone.free()
 	AreaZone._current = null
 	await _done()
+
+
+## La zona actual se olvida al irse de la escena: la siguiente no compara contra una zona liberada.
+func test_the_current_zone_is_forgotten_with_its_scene() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var zone := AreaZone.new()
+	tree.root.add_child(zone)
+	AreaZone._current = zone
+	zone.free()
+	assert_true(AreaZone._current == null, "sin zona colgada")

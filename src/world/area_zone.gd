@@ -5,6 +5,7 @@ extends Area3D
 
 const GROUP := &"area_zones"
 
+## La última zona en la que entró el lead; se olvida al salir del árbol (cambio de escena).
 static var _current: AreaZone
 
 ## Clave de la zona en las partidas (visitada o no); vacío, el nombre del nodo. Renombrar el nodo no la cambia.
@@ -19,6 +20,9 @@ static var _current: AreaZone
 
 func _ready() -> void:
 	add_to_group(GROUP)
+	tree_exiting.connect(func() -> void:
+		if _current == self:
+			_current = null)
 	collision_layer = 0
 	collision_mask = 1 | 2
 	monitorable = false
@@ -26,7 +30,7 @@ func _ready() -> void:
 		if body is PlayerCharacter:
 			GameState.visit_zone(key())
 		if body == Players.lead() and _current != self:
-			var same_region := _current != null and _current.display_name == display_name
+			var same_region := is_instance_valid(_current) and _current.display_name == display_name
 			_current = self
 			if not display_name.is_empty() and not same_region:
 				get_tree().call_group(Hud.GROUP, &"show_area_name", tr(display_name)))

@@ -188,3 +188,15 @@ func test_enemies_keep_running_while_the_player_stands_in_a_doorway() -> void:
 		await tree.physics_frame
 	assert_true(skeleton.process_mode != Node.PROCESS_MODE_DISABLED, "parado en la puerta, fuera de las dos salas, el enemigo sigue corriendo")
 	state.reset()
+
+
+## La sala que pidió despertar a las demás se libera antes de que corra el pedido: no queda trabado para las siguientes.
+func test_a_room_freed_before_its_wake_does_not_block_the_next_ones() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var room := Room.new()
+	tree.root.add_child(room)
+	room._request_wake()
+	room.free()
+	await tree.process_frame
+	await tree.process_frame
+	assert_true(not Room._waking, "el pedido corrió aunque la sala ya no está")

@@ -156,12 +156,12 @@ func _request_wake() -> void:
 
 
 ## Despierta lo de las salas con algún player y duerme lo de las demás (en pausa: sigue donde quedó al volver).
-func _wake_rooms() -> void:
+## Estática: si la sala que lo pidió se libera antes (cambio de escena), el pedido igual corre y _waking se limpia.
+static func _wake_rooms() -> void:
 	_waking = false
-	if not is_inside_tree():
-		return
-	var rooms := get_tree().get_nodes_in_group(GROUP)
-	for node in get_tree().get_nodes_in_group(SLEEPERS):
+	var tree := Engine.get_main_loop() as SceneTree
+	var rooms := tree.get_nodes_in_group(GROUP)
+	for node in tree.get_nodes_in_group(SLEEPERS):
 		var sleeper := node as Node3D
 		var awake := Players.all.is_empty()
 		var inside := false
