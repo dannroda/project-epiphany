@@ -1,8 +1,9 @@
 {
+  "assignee": "project-epiphany-17",
   "checklist": [
     {
       "detail": "room_entry, boss_rematch, seen_boss_intros.",
-      "done": false,
+      "done": true,
       "text": "Session/Respawn propiedad de SceneFlow"
     },
     {
@@ -10,11 +11,11 @@
       "text": "ItemButtons, Bottles y MapProgress como RefCounted con su write/read"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Las botellas emiten su propia señal"
     },
     {
-      "done": false,
+      "done": true,
       "text": "El tiempo de juego lo empuja la escena"
     }
   ],
@@ -28,16 +29,16 @@
     }
   ],
   "milestone": "m16",
-  "notes": "",
+  "notes": "876b4303: SceneFlow.session (Session: room_entry, boss_rematch, seen_boss_intros) se limpia con la nueva señal GameState.cleared; las botellas emiten GameState.bottle_changed; el tiempo de juego lo suma Players. ItemButtons, Bottles y MapProgress como RefCounted no se hizo: GameState queda como lo que guarda el save y partirlo más no saca acoplamiento.",
   "order": 21,
   "priority": "low",
   "refs": [],
   "size": "l",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "refactor"
   ],
   "test": "",
   "title": "GameState: separar el estado de sesión y las piezas sueltas",
-  "updated_at": "2026-10-16T19:48:43.815Z"
+  "updated_at": "2026-10-16T23:09:43.763Z"
 }

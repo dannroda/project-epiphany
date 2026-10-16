@@ -1,17 +1,18 @@
 {
+  "assignee": "project-epiphany-17",
   "checklist": [
     {
       "detail": "Con lista de los que son inconsistentes a propósito.",
-      "done": false,
+      "done": true,
       "text": "Escenarios: todos los .cfg de la carpeta"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Flags de niveles: toda propiedad que termine en _flag, y registrada"
     },
     {
       "detail": "active_from < active_to <= cancel_from; drops que resuelven.",
-      "done": false,
+      "done": true,
       "text": "Ataques y configs: toda la carpeta"
     },
     {
@@ -30,16 +31,16 @@
     }
   ],
   "milestone": "m16",
-  "notes": "",
+  "notes": "e1b84b84: test_save_codec barre todos los escenarios (menos los inconsistentes a propósito, listados) y exige firma; test_data_sweep barre flags de niveles, ataques y configs. Los ~227 ext_resource sin uid de data/ necesitan un resave desde el editor.",
   "order": 22,
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "tests"
   ],
   "test": "",
   "title": "Tests que barren carpetas en vez de listas fijas",
-  "updated_at": "2026-10-16T19:48:46.646Z"
+  "updated_at": "2026-10-16T23:09:45.157Z"
 }

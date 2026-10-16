@@ -1,8 +1,9 @@
 {
+  "assignee": "project-epiphany-17",
   "checklist": [
     {
       "detail": "Anotarla en el GDD.",
-      "done": false,
+      "done": true,
       "text": "Regla: código en inglés, lugares como nombres propios en español"
     },
     {
@@ -11,7 +12,7 @@
       "text": "Renombrar desde el editor"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Borrar player/player.tres"
     }
   ],
@@ -19,7 +20,7 @@
   "created_at": "2026-10-16T19:48:06.123Z",
   "description": "Se mezclan español e inglés en identificadores y archivos: AmbientePreset/AmbienteZoom, anillo_fuego.gdshader, sello_cima.tscn junto a temple_seal.tscn, data/ambientes junto a data/materials. `player/player.tres` es un VisualShader que nadie usa y se confunde con data/entities/player.tres. El autoload Items va por uid y los otros 13 por ruta.",
   "milestone": "m16",
-  "notes": "",
+  "notes": "40e4d76d: la regla está en gdd.md §11.1 y player/player.tres se borró. Falta renombrar desde el editor (con el puente) para que sigan uids y rutas; el autoload Items sigue por uid.",
   "order": 25,
   "priority": "low",
   "refs": [],
@@ -30,5 +31,5 @@
   ],
   "test": "",
   "title": "Nombres: una regla de idioma y archivos huérfanos",
-  "updated_at": "2026-10-16T19:48:07.086Z"
+  "updated_at": "2026-10-16T23:09:48.208Z"
 }

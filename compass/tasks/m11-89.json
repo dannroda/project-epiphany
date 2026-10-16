@@ -1,4 +1,5 @@
 {
+  "assignee": "project-epiphany-17",
   "checklist": [
     {
       "detail": "Y excluir la carpeta en export_presets.cfg.",
@@ -26,7 +27,7 @@
     },
     {
       "detail": "MenuStack antes que Feel; conectar `MenuStack.changed` directo.",
-      "done": false,
+      "done": true,
       "text": "Orden de autoloads"
     },
     {
@@ -35,16 +36,16 @@
     },
     {
       "detail": "export_presets.cfg solo saca tests/*, *.md y debug/scenarios/*; entran levels/test*, prueba_mc_godot, pruebas_terreno, ejemplo_ambiente, debug/la/ y los scripts de build.",
-      "done": false,
+      "done": true,
       "text": "Excluir tools/, src/tools/build_*, debug/ y los niveles de prueba del release"
     },
     {
       "detail": "El toon está rechazado y precarga epiphany_toon.tres en release; test_shinobi lo agrega solo si lo necesita.",
-      "done": false,
+      "done": true,
       "text": "Sacar el autoload ToonToggle"
     },
     {
-      "done": false,
+      "done": true,
       "text": "test_export mira las exclusiones"
     },
     {
@@ -67,7 +68,7 @@
     }
   ],
   "milestone": "m16",
-  "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).",
+  "notes": "ce108f6c: los presets release (Linux, Windows, macOS, Web) excluyen debug/, tools/, src/tools/build_*, profile_scenes, render_music y los niveles de prueba por nombre; test_export lo mira y chequea que título, overworld y SceneFlow no dependan de nada excluido. ToonToggle ya no es autoload (nodo en test_shinobi). MenuStack carga antes que Feel. Lo que es mover archivos (levels/test/, cámara, BT, debug runtime, src/world, el .tres por defecto) queda para hacerlo desde el editor.",
   "order": 86,
   "priority": "medium",
   "refs": [],
@@ -79,5 +80,5 @@
   ],
   "test": "El export no incluye escenas de prueba; tests verdes tras mover.",
   "title": "Orden de carpetas y lo que entra en la build release",
-  "updated_at": "2026-10-16T19:48:47.022Z"
+  "updated_at": "2026-10-16T23:09:49.602Z"
 }

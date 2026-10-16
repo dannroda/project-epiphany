@@ -6510,79 +6510,91 @@ Door y Gate repiten los handlers changed/settled con reveal, abrir y cerrar (doo
 
 **Notas:** e5441dc1: Wiring.drive(target, open, close) es lo compartido de Door y Gate (revelar la primera vez, abrir, cerrar si no stays_open, abrir sin animar si arranca cumplida; ignora un target liberado). Sin nodo SwitchInput a propósito: los switches están en cada instancia de los niveles y el refresh de la_walls pierde los overrides de hijos en instancias. La barrera que se hunde compartida (opcional) no se hizo.
 
-### 16.20 Behavior trees: reacciones de muerte, golpe y aturdido copiadas · Pendiente
+### 16.20 Behavior trees: reacciones de muerte, golpe y aturdido copiadas · Revisión
 
-**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `refactor`
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-17 · **Etiquetas:** `refactor`
 
 Las ramas is_dead→Death_A→on_death_finished, is_hit→Hit_A y stunned→Hit_B son iguales en enemy_bt, archer_bt y guard_bt, y atoq_bt las tiene con otras animaciones. Enemy._on_damaged/_on_died además de poner el flag del blackboard hacen `bt_player.restart()`: parece doble control con el selector dinámico.
 
-- [ ] Un BTSubtree de reacciones
+- [x] Un BTSubtree de reacciones
   Animaciones como parámetros del blackboard.
-- [ ] Ver si el restart() hace falta
+- [x] Ver si el restart() hace falta
 
-### 16.21 GameState: separar el estado de sesión y las piezas sueltas · Pendiente
+**Notas:** 1150b37b: reactions_bt (BTSubtree) con Muerto/Golpeado/Aturdido para enemy_bt, archer_bt y guard_bt; los flags se limpian con Enemy.clear_reaction porque un BTSetVar dentro del subtree escribe en su propio scope. Atoq queda con sus ramas (otras animaciones). El restart() se queda: arranca la reacción en el mismo frame.
 
-**Prioridad:** baja · **Tamaño:** L · **Etiquetas:** `refactor`
+### 16.21 GameState: separar el estado de sesión y las piezas sueltas · Revisión
+
+**Prioridad:** baja · **Tamaño:** L · **Responsable:** project-epiphany-17 · **Etiquetas:** `refactor`
 
 game_state.gd (473 líneas) tiene inventario, equipo, botones (con los de invitados), botellas, corazones, mazmorras, el mapa revelado, spawn y respawn, tiempo de juego e intros del jefe; `_process` lee Players. `room_entry` lo escriben la cámara, boss_arena y SceneFlow, y `boss_rematch` y `seen_boss_intros` no se guardan: la regla "estado del player global y en el save" queda mezclada con estado de sesión. GameState emite `inventory.changed` desde afuera para las botellas. Sigue a 11.86.
 
-- [ ] Session/Respawn propiedad de SceneFlow
+- [x] Session/Respawn propiedad de SceneFlow
   room_entry, boss_rematch, seen_boss_intros.
 - [ ] ItemButtons, Bottles y MapProgress como RefCounted con su write/read
-- [ ] Las botellas emiten su propia señal
-- [ ] El tiempo de juego lo empuja la escena
+- [x] Las botellas emiten su propia señal
+- [x] El tiempo de juego lo empuja la escena
+
+**Notas:** 876b4303: SceneFlow.session (Session: room_entry, boss_rematch, seen_boss_intros) se limpia con la nueva señal GameState.cleared; las botellas emiten GameState.bottle_changed; el tiempo de juego lo suma Players. ItemButtons, Bottles y MapProgress como RefCounted no se hizo: GameState queda como lo que guarda el save y partirlo más no saca acoplamiento.
 
 **Relacionadas:** 11.86 GameState: escrituras con señal y carga sin emisiones parciales
 
-### 16.22 Tests que barren carpetas en vez de listas fijas · Pendiente
+### 16.22 Tests que barren carpetas en vez de listas fijas · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `tests`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-17 · **Etiquetas:** `tests`
 
 test_save_codec.gd:91 revisa 11 de los 20 escenarios firmados (faltan cumbre, quenoa, totora, gancho, chullpa_la, test_flags y los nuevos), así que la regla de "al sacar flags, correr test_save_codec" no cubre todo. test_flags mira 4 propiedades de flag (flag, solved_flag, defeated_flag, container_flag) y no reward_flag, reveal_flag ni required_flag, ni que estén registradas (en release el assert de set_flag no existe). test_attacks_load cubre 3 de 5 ataques y los configs solo player y test_box de 42; los AttackData del jefe no se revisan.
 
-- [ ] Escenarios: todos los .cfg de la carpeta
+- [x] Escenarios: todos los .cfg de la carpeta
   Con lista de los que son inconsistentes a propósito.
-- [ ] Flags de niveles: toda propiedad que termine en _flag, y registrada
-- [ ] Ataques y configs: toda la carpeta
+- [x] Flags de niveles: toda propiedad que termine en _flag, y registrada
+- [x] Ataques y configs: toda la carpeta
   active_from < active_to <= cancel_from; drops que resuelven.
 - [ ] data/ sin ext_resource sin uid
   Y resave único de los que faltan.
 
+**Notas:** e1b84b84: test_save_codec barre todos los escenarios (menos los inconsistentes a propósito, listados) y exige firma; test_data_sweep barre flags de niveles, ataques y configs. Los ~227 ext_resource sin uid de data/ necesitan un resave desde el editor.
+
 **Relacionadas:** 16.3 Templo: el grafo pide `mirror_shield`, que no existe
 
-### 16.23 Registros de flags e ítems: índice, ruta única y duplicados · Pendiente
+### 16.23 Registros de flags e ítems: índice, ruta única y duplicados · Revisión
 
-**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `refactor`, `datos`
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-17 · **Etiquetas:** `refactor`, `datos`
 
 `res://data/flag_registry.tres` está escrito en 5 lugares y la base de ítems en 3. `FlagRegistry._find` recorre las ~171 definiciones en cada get_flag/has. ItemDatabase no chequea duplicados y su caché @tool no se entera si se edita un id. `FlagDefinition.default_value` es Variant pero las 171 son bool. Las mazmorras (ch, qv, tt, cu, te) solo existen en el nodo Dungeon de cada nivel; DungeonGraph no tiene id y su `scene` es una ruta en texto.
 
-- [ ] const PATH en cada registro
-- [ ] Índice en FlagRegistry con chequeo de duplicados
+- [x] const PATH en cada registro
+- [x] Índice en FlagRegistry con chequeo de duplicados
   Igual en ItemDatabase.
-- [ ] Flags solo bool, o tipo con @export_enum
+- [x] Flags solo bool, o tipo con @export_enum
 - [ ] Opcional: registro DungeonData
   id, escena por uid, grafo, prefijo y nombre; lo usan Dungeon y validate.
 
-### 16.24 Players.joined sale antes del _ready del player · Pendiente
+**Notas:** 8b91ea50: FlagRegistry.PATH e ItemDatabase.PATH, índice por id en runtime (lineal en el editor para ver ids editados), Registries.duplicates chequeado en test_flags, FlagDefinition.default_value bool. DungeonData (opcional) no se hizo.
 
-**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `bug`, `co-op`
+### 16.24 Players.joined sale antes del _ready del player · Revisión
+
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-17 · **Etiquetas:** `bug`, `co-op`
 
 El player se registra en `_enter_tree` (player.gd:53) y `joined` se emite ahí, cuando health, equipment y targeting todavía son null. Los que escuchan hoy sobreviven porque difieren o solo limpian una caché; reparentar un player emitiría left + joined.
 
-- [ ] Registrar en _ready o emitir diferido
+- [x] Registrar en _ready o emitir diferido
   Documentar que joined = player listo.
+
+**Notas:** 9f51bd9c: el player se registra al entrar al árbol pero joined espera su ready. test_coop_state cubre un invitado que se une.
 
 ### 16.25 Nombres: una regla de idioma y archivos huérfanos · Pendiente
 
-**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `refactor`
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-17 · **Etiquetas:** `refactor`
 
 Se mezclan español e inglés en identificadores y archivos: AmbientePreset/AmbienteZoom, anillo_fuego.gdshader, sello_cima.tscn junto a temple_seal.tscn, data/ambientes junto a data/materials. `player/player.tres` es un VisualShader que nadie usa y se confunde con data/entities/player.tres. El autoload Items va por uid y los otros 13 por ruta.
 
-- [ ] Regla: código en inglés, lugares como nombres propios en español
+- [x] Regla: código en inglés, lugares como nombres propios en español
   Anotarla en el GDD.
 - [ ] Renombrar desde el editor
   Puente, para que se actualicen uids y rutas.
-- [ ] Borrar player/player.tres
+- [x] Borrar player/player.tres
+
+**Notas:** 40e4d76d: la regla está en gdd.md §11.1 y player/player.tres se borró. Falta renombrar desde el editor (con el puente) para que sigan uids y rutas; el autoload Items sigue por uid.
 
 ### 16.27 Probar GUT para los tests (con nuestro runner por procesos arriba) · Pendiente
 
@@ -6592,7 +6604,7 @@ Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8
 
 ### 16.26 Orden de carpetas y lo que entra en la build release · Pendiente
 
-**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `refactor`, `build`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-17 · **Etiquetas:** `refactor`, `build`
 
 La cámara de juego (505 líneas) y target_indicator están en src/tools/ junto a scripts de build; un EditorScript en src/debug/; Log y DebugOverlay (autoloads de runtime) en un addon, y DebugOverlay arma su Label por código; los BT entre src/entities/ y data/boss/; las escenas de prueba (test*, prueba_mc_godot, pruebas_terreno, sandbox_items, test_shinobi) en levels/ se exportan porque el filtro solo excluye tests/*; `player/animation/new_animation_node_state_machine.tres` con nombre por defecto; Feel cargado antes que MenuStack (por eso lo busca diferido).
 
@@ -6605,20 +6617,20 @@ La cámara de juego (505 líneas) y target_indicator están en src/tools/ junto 
 - [ ] BT junto a su entidad o en data/ai/
 - [ ] Debug runtime a src/debug/
   Log y DebugOverlay; el overlay como .tscn.
-- [ ] Orden de autoloads
+- [x] Orden de autoloads
   MenuStack antes que Feel; conectar `MenuStack.changed` directo.
 - [ ] Renombrar el .tres por defecto
-- [ ] Excluir tools/, src/tools/build_*, debug/ y los niveles de prueba del release
+- [x] Excluir tools/, src/tools/build_*, debug/ y los niveles de prueba del release
   export_presets.cfg solo saca tests/*, *.md y debug/scenarios/*; entran levels/test*, prueba_mc_godot, pruebas_terreno, ejemplo_ambiente, debug/la/ y los scripts de build.
-- [ ] Sacar el autoload ToonToggle
+- [x] Sacar el autoload ToonToggle
   El toon está rechazado y precarga epiphany_toon.tres en release; test_shinobi lo agrega solo si lo necesita.
-- [ ] test_export mira las exclusiones
+- [x] test_export mira las exclusiones
 - [ ] Partir src/world en puzzles/, dungeon/, props/ y overworld/
   114 archivos sueltos; mover desde el editor.
 
 **Prueba:** El export no incluye escenas de prueba; tests verdes tras mover.
 
-**Notas:** Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).
+**Notas:** ce108f6c: los presets release (Linux, Windows, macOS, Web) excluyen debug/, tools/, src/tools/build_*, profile_scenes, render_music y los niveles de prueba por nombre; test_export lo mira y chequea que título, overworld y SceneFlow no dependan de nada excluido. ToonToggle ya no es autoload (nodo en test_shinobi). MenuStack carga antes que Feel. Lo que es mover archivos (levels/test/, cámara, BT, debug runtime, src/world, el .tres por defecto) queda para hacerlo desde el editor.
 
 **Archivos:** `export_presets.cfg`, `project.godot`
 
