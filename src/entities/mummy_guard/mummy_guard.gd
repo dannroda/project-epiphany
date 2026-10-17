@@ -36,6 +36,15 @@ enum State { IDLE, HOP, AIM, FALL, STUCK, DEAD }
 @onready var solid_shape: CollisionShape3D = %SolidShape
 
 var state := State.IDLE
+## Lo animan los clips: cuánto subió del salto (1 = `leap_height`) y cuánto creció la sombra (1 = `aim_size`).
+var lift := 0.0:
+	set(value):
+		lift = value
+		body.position.y = leap_height * value
+var aim_grow := 0.0:
+	set(value):
+		aim_grow = value
+		aim_mark.scale = Vector3.ONE * aim_size * lerpf(0.4, 1.0, value)
 var _aim_locked := false
 
 
@@ -61,13 +70,7 @@ func roar() -> void:
 		var look := Vector3(player.global_position.x, body.global_position.y, player.global_position.z)
 		if not look.is_equal_approx(body.global_position):
 			body.look_at(look, Vector3.UP, true)
-	var rest := body.scale
-	var tween := body.create_tween()
-	tween.tween_property(body, ^"scale", rest * Vector3(1.12, 1.08, 1.12), 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tween.parallel().tween_property(body, ^"rotation:x", -0.18, 0.18)
-	tween.tween_interval(roar_fx.duration)
-	tween.tween_property(body, ^"scale", rest, 0.3)
-	tween.parallel().tween_property(body, ^"rotation:x", 0.0, 0.3)
+	_clip(&"roar", false)
 	roar_fx.play()
 
 
@@ -128,9 +131,7 @@ func _hop() -> void:
 		target += toward.limit_length(hop_distance)
 	target = _clamp_to_arena(target)
 	_tween_to(self, ^"global_position", target, hop_time)
-	var arc := _new_tween()
-	arc.tween_property(body, ^"position:y", 0.8, hop_time / pace / 2.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
-	arc.tween_property(body, ^"position:y", 0.0, hop_time / pace / 2.0).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+	_clip(&"hop", true, hop_time)
 	await _wait(hop_time)
 	Feel.burst(&"dust", global_position + Vector3.UP * 0.1, Vector3.UP)
 	await _wait(0.25)
@@ -141,12 +142,11 @@ func _leap(last := true) -> void:
 	_set_solid(false)
 	_aim_locked = false
 	Feel.sfx(&"roll", global_position)
-	_tween_to(body, ^"position:y", leap_height, 0.4).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	var player := Players.nearest(global_position)
 	aim_mark.global_position = _clamp_to_arena(player.global_position if player else global_position) + Vector3.UP * 0.03
-	aim_mark.scale = Vector3.ONE * 0.4 * aim_size
+	aim_grow = 0.0
 	aim_mark.show()
-	_tween_to(aim_mark, ^"scale", Vector3.ONE * aim_size, aim_time)
+	_clip(&"leap", true, aim_time)
 	await _wait(aim_time)
 	if state != State.AIM:
 		return
@@ -159,7 +159,7 @@ func _leap(last := true) -> void:
 	var target := aim_mark.global_position
 	target.y = global_position.y
 	_tween_to(self, ^"global_position", target, 0.18)
-	_tween_to(body, ^"position:y", 0.0, 0.18).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+	_clip(&"fall")
 	await _wait(0.18)
 	if state != State.FALL:
 		return
@@ -175,17 +175,12 @@ func _leap(last := true) -> void:
 		await _wait(0.35)
 		return
 	state = State.STUCK
-	body.position.y = -0.35
-	var wobble := _new_tween().set_loops(maxi(int(stuck_time / 0.3), 1))
-	wobble.tween_property(body, ^"rotation:z", 0.2, 0.15)
-	wobble.tween_property(body, ^"rotation:z", -0.2, 0.15)
+	_clip(&"stuck", false)
 	await _wait(stuck_time, false)
 	if state != State.STUCK:
 		return
-	wobble.kill()
-	body.rotation.z = 0.0
 	Feel.burst(&"dust", global_position + Vector3.UP * 0.3, Vector3.UP)
-	_tween_to(body, ^"position:y", 0.0, 0.4).set_ease(Tween.EASE_OUT)
+	_clip(&"recover")
 	await _wait(0.5)
 
 
@@ -228,7 +223,5 @@ func _die() -> void:
 	Feel.burst(&"dust", global_position + Vector3.UP, Vector3.UP)
 	Feel.sfx(&"break", global_position)
 	Feel.shake(0.6)
-	var tween := create_tween()
-	tween.tween_property(body, ^"scale", Vector3(1.2, 0.05, 1.2), 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
-	tween.tween_callback(body.hide)
+	_clip(&"die", false)
 	defeated.emit(self)

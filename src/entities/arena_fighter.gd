@@ -13,6 +13,8 @@ signal attack_finished
 @onready var body: Node3D = get_node_or_null(^"%Body")
 @onready var hurtbox: Hurtbox = get_node_or_null(^"%Hurtbox")
 @onready var health: Health = get_node_or_null(^"Health")
+## Los movimientos dibujados (rugido, saltos, temblar, morir); el código elige cuál y cuándo.
+@onready var moves: AnimationPlayer = get_node_or_null(^"%Moves")
 
 var arena := Rect2()
 var pace := 1.0
@@ -65,6 +67,8 @@ func _interrupt() -> void:
 		if tween.is_valid():
 			tween.kill()
 	_tweens.clear()
+	if moves:
+		moves.stop()
 	_on_interrupt()
 	attack_finished.emit()
 
@@ -104,6 +108,14 @@ func _wound_surface() -> String:
 
 func _wait(seconds: float, paced := true) -> Signal:
 	return Tweens.wait(self, seconds / pace if paced else seconds)
+
+
+## Corre un clip de %Moves desde el principio: `paced` lo acelera con la pelea; `seconds` lo estira a esa duración.
+func _clip(clip: StringName, paced := true, seconds := 0.0) -> void:
+	var length := moves.get_animation(clip).length
+	moves.speed_scale = (pace if paced else 1.0) * (length / seconds if seconds > 0.0 else 1.0)
+	moves.stop()
+	moves.play(clip)
 
 
 func _after(seconds: float, callback: Callable) -> void:
