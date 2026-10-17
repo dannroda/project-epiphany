@@ -2591,7 +2591,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Grabar los planos y editar el teaser
   Primera versión (b343f5ce): tools/teaser/record.sh graba las 12 tomas de teaser.tscn (Movie Maker, 1080p60, ~4,5 min) y tools/teaser/edit.sh arma debug/tmp/teaser/teaser.mp4 (40,8 s: overworld 13,5 s con calma, templo 13 s con capas de mazmorra, jefe 11 s con todas, cierre con el título en Cinzel). Las tomas, el corte (CUTS en edit.sh) y la música se cambian y se vuelve a correr. Falta: que Daniel lo vea y ajustar; probar la misma secuencia con gpu-screen-recorder (no está instalado).
 
-## M11 — Pulido: contenido y feel  (117/199)
+## M11 — Pulido: contenido y feel  (119/199)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4690,9 +4690,9 @@ Playtest 2026-10-13: dentro de las cuevas del overworld los enemigos no se mueve
 
 **Notas:** Causa: las cinco cuevas del overworld no tenían NavigationRegion3D, así que el NavigationAgent3D de los enemigos nunca tenía camino. Cada cueva tiene ahora su navmesh (levels/nav/<cueva>_navmesh.tres, horneada con tools/bake_overworld_nav.gd -- <cueva>). El esqueleto de la cueva de las bombas arranca pegado a un pilar: desde la entrada no ve al player hasta que se le acerca (normal).
 
-### 11.133 Vasija chica cargada no se ve con el x-ray · Revisión
+### 11.133 Vasija chica cargada no se ve con el x-ray · Hecho
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `bug`
+**Terminada:** 2026-10-17 · **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `bug`
 
 Playtest 2026-10-13: al levantar una vasija chica, cuando el player queda tapado y se ve con el x-ray (silueta), la vasija que lleva encima no aparece. El objeto cargado debería verse también con el x-ray.
 
@@ -4764,9 +4764,9 @@ Playtest 2026-10-13: en la sala del sub-boss (Guardian) de la primera mazmorra, 
 
 **Capturas:** `compass/images/m11-138-20261013-225004.png`
 
-### 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · Revisión
+### 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · Hecho
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-aa · **Etiquetas:** `bug`, `chullpa`
+**Terminada:** 2026-10-17 · **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-aa · **Etiquetas:** `bug`, `chullpa`
 
 Playtest 2026-10-13: en la Chullpa hay un cofre sobre una plataforma/pilar en un pozo, al lado de una sala con borde. No hay forma de llegar saltando (con la pluma) desde el borde: la distancia o la altura no da. Ajustar la plataforma o el borde para que el salto alcance.
 
@@ -6682,11 +6682,13 @@ Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTre
 
 **Notas:** f436841e: nombre de zona, cartel de guardado y barra del jefe con su AnimationPlayer cada uno en hud.tscn; sacudida del slot (hud_item_slot.tscn), pop del corazón (heart_icon.tscn), flecha del cuadro de texto e indicador de objetivo en clips en bucle. Quedan en código: la vida de la barra del jefe (sigue un valor), el fundido de SceneFlow (duración por llamada) y el giro del modelo en Equipo.
 
-### 16.29 Animaciones a AnimationPlayer: props del mundo · Pendiente
+### 16.29 Animaciones a AnimationPlayer: props del mundo · Revisión
 
-**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `refactor`, `animacion`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-17 · **Etiquetas:** `refactor`, `animacion`
 
 Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTree cuando hay estados o mezclas), para verlo y ajustarlo en el editor. Los tweens quedan solo para destinos calculados en runtime y esperas. Puerta, reja, puente, cofre, pinchos, pared agrietada, escalera de soga, anillo de fuego y rompibles (sacudida, corte, caída). Reja y puente animan su raíz: pasar a un hijo. sink/drop se cambian por instancia (puerta sink 3.2 en 30 instancias): llave normalizada 0..1 multiplicada por el export.
+
+**Notas:** c2af15d3: puerta, reja (y sello del templo), puente, tapa del cofre, pinchos (asomar, subir, bajar), sacudida de la pared agrietada, escalera de soga y anillo de fuego en clips de su escena. Puerta, reja y puente animan un 0..1 (openness/height) que multiplica su sink/drop: los valores por instancia siguen valiendo. Clips.run corre un clip en la duración de cada instancia, para adelante o para atrás desde donde esté. Quedan en código los rompibles (pasto y plantas se instancian por cientos y la caída sigue al golpe), el bloque empujable y el espejo giratorio (destino calculado).
 
 ### 16.30 Animaciones a AnimationPlayer: efectos de feel · Pendiente
 
@@ -7503,7 +7505,7 @@ feel.gd:59-83 genera unos 22 sonidos en `_ready` (~10 s de audio a 22050 Hz, ~22
 3. [x] 11.148 Minimapa del overworld desactualizado (la quebrada sale como abismo negro) · Hecho · anda — Es un poco tosco como aparece en el minimapa, pero es detalle menor.
 4. [x] 11.134 Oclusión: reemplazar el agujero por cámara cenital sobre el player · Hecho · anda — Funciona, pero solo debería ser para las paredes. No para objetos/plantas, para eso está el x-ray. Y el movimiento es un poco nauseabundo.
 
-### Revisión del 14 de octubre: overworld, mazmorras y sistemas  (19/60 probadas)
+### Revisión del 14 de octubre: overworld, mazmorras y sistemas  (21/60 probadas)
 
 1. [x] 11.168 D4 (Cumbre): entrada exagerada como las otras mazmorras · Hecho · anda
 2. [x] 11.130 Bocas de cueva talladas en el risco · Hecho · anda — Falló (pared de la cueva de la bomba, ermita bloqueada solo por dentro, D4 como cueva común); se arregló en 12.29, 11.166 y 11.168, que andan.
@@ -7516,11 +7518,11 @@ feel.gd:59-83 genera unos 22 sonidos en `_ready` (~10 s de audio a 22050 Hz, ~22
 9. [x] 11.29 Overworld después del jefe · Hecho · anda
 10. [x] 12.29 Muro agrietado LA de cueva (muro_agrietado_cueva_la) · Hecho · anda
 11. [x] 11.132 Cuevas: los enemigos se quedan quietos · Hecho · anda
-12. [ ] 11.133 Vasija chica cargada no se ve con el x-ray · Revisión — Mejor, pero no tiene que haber x-ray cuando se levanta algo
+12. [x] 11.133 Vasija chica cargada no se ve con el x-ray · Hecho · anda — Mejor, pero no tiene que haber x-ray cuando se levanta algo
 13. [x] 11.135 Al caer, el player se inclina hacia el piso · Hecho · anda
 14. [x] 11.164 Lo que esconde una pared agrietada no se ve desde arriba · Hecho · anda
 15. [x] 11.136 Chullpa: la reja de la entrada queda fuera de la pared · Hecho · anda
-16. [ ] 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · Revisión — se ve horrendo y no soluciona el mismo problema del lado izquierdo
+16. [x] 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · Hecho · anda — se ve horrendo y no soluciona el mismo problema del lado izquierdo
 17. [ ] 11.138 Chullpa sub-boss: asset para el cuadrado donde después se salta · Revisión
 18. [x] 11.155 Chullpa: la momia aparece en vez de saltar hacia el player; onda expansiva con shader vistoso · Hecho · anda
 19. [x] 11.169 Galería de trampas: la pluma no salta por encima de los pinchos · Hecho · anda — necesita un poco de fine-tuning, por ahi invisibilidad por 2-4 frames al saltar y aterrizar
@@ -7566,7 +7568,7 @@ feel.gd:59-83 genera unos 22 sonidos en `_ready` (~10 s de audio a 22050 Hz, ~22
 59. [ ] 11.170 Atajos: animación del player subiendo y bajando en vez del fundido · Revisión
 60. [x] 11.174 Overworld (Cumbre): el gancho choca contra una pared invisible · Hecho · anda
 
-### Revisión del 15 de octubre: ruta completa  (3/86 probadas)
+### Revisión del 15 de octubre: ruta completa  (5/86 probadas)
 
 1. [ ] 11.192 Overworld: mini jefe después de D2 que da el martillo · Revisión — No se entiende cuando el mini jefe va a usar el martillo y se desactiva a poca distancia. Debería mantenerse activado, y si uno le hace daño (con una flecha por ejemplo) se activa la pelea y te empieza a seguir.
 2. [ ] 11.191 Martillo: ítem de golpe fuerte · Revisión
@@ -7579,13 +7581,13 @@ feel.gd:59-83 genera unos 22 sonidos en `_ready` (~10 s de audio a 22050 Hz, ~22
 9. [ ] 11.171 Mapa del overworld: el cursor vuelve al player al moverlo hacia un lado · Revisión
 10. [ ] 11.172 Viaje rápido: el foco no va al botón y A abre la pregunta una y otra vez · Revisión
 11. [ ] 12.2 Terreno del overworld · Revisión
-12. [ ] 11.133 Vasija chica cargada no se ve con el x-ray · Revisión — Mejor, pero no tiene que haber x-ray cuando se levanta algo
+12. [x] 11.133 Vasija chica cargada no se ve con el x-ray · Hecho · anda — Mejor, pero no tiene que haber x-ray cuando se levanta algo
 13. [ ] 11.170 Atajos: animación del player subiendo y bajando en vez del fundido · Revisión
 14. [ ] 11.88 Niveles referenciados por ruta: saves y portales frágiles · Revisión
 15. [ ] 11.75 AreaZone: id estable para guardar las zonas visitadas · Revisión
 16. [ ] 11.176 Chullpa: llave chica y sótano obligatorios, llave del jefe con vuelta atrás · Revisión
 17. [ ] 11.177 Chullpa sin pared agrietada (fuera el nicho del Rellano) · Revisión
-18. [ ] 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · Revisión — se ve horrendo y no soluciona el mismo problema del lado izquierdo
+18. [x] 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · Hecho · anda — se ve horrendo y no soluciona el mismo problema del lado izquierdo
 19. [ ] 11.138 Chullpa sub-boss: asset para el cuadrado donde después se salta · Revisión
 20. [ ] 12.31 Chullpa: jefe final momia con aspecto propio · Revisión
 21. [ ] 11.5 Galería de trampas: pinchos · Revisión — Hay que hacer que la pluma salte mas alto porque los pinchos llegan igual

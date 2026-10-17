@@ -1,20 +1,21 @@
 {
+  "assignee": "project-epiphany-17",
   "checklist": [],
   "code": "16.29",
   "created_at": "2026-10-17T05:58:30.576Z",
   "description": "Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTree cuando hay estados o mezclas), para verlo y ajustarlo en el editor. Los tweens quedan solo para destinos calculados en runtime y esperas. Puerta, reja, puente, cofre, pinchos, pared agrietada, escalera de soga, anillo de fuego y rompibles (sacudida, corte, caída). Reja y puente animan su raíz: pasar a un hijo. sink/drop se cambian por instancia (puerta sink 3.2 en 30 instancias): llave normalizada 0..1 multiplicada por el export.",
   "milestone": "m16",
-  "notes": "",
+  "notes": "c2af15d3: puerta, reja (y sello del templo), puente, tapa del cofre, pinchos (asomar, subir, bajar), sacudida de la pared agrietada, escalera de soga y anillo de fuego en clips de su escena. Puerta, reja y puente animan un 0..1 (openness/height) que multiplica su sink/drop: los valores por instancia siguen valiendo. Clips.run corre un clip en la duración de cada instancia, para adelante o para atrás desde donde esté. Quedan en código los rompibles (pasto y plantas se instancian por cientos y la caída sigue al golpe), el bloque empujable y el espejo giratorio (destino calculado).",
   "order": 88,
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "refactor",
     "animacion"
   ],
   "test": "",
   "title": "Animaciones a AnimationPlayer: props del mundo",
-  "updated_at": "2026-10-17T05:58:30.576Z"
+  "updated_at": "2026-10-17T06:28:22.819Z"
 }
