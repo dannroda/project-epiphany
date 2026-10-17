@@ -24,6 +24,38 @@ radius = 0.6
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_turret"]
 
+[sub_resource type="Animation" id="HeadDie"]
+resource_name = "die"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.25),
+"transitions": PackedFloat32Array(1, 2, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1, 1.08, 1), Vector3(1, 0.1, 1)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Head")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.25),
+"transitions": PackedFloat32Array(1),
+"values": [{"args": [], "method": &"hide"}]
+}
+
+[sub_resource type="AnimationLibrary" id="TurretLib"]
+_data = {
+&"die": SubResource("HeadDie")
+}
+
 [node name="Turret" type="StaticBody3D" groups=["room_sleepers"]]
 collision_layer = 5
 script = ExtResource("1_turret")
@@ -84,3 +116,10 @@ unique_name_in_owner = true
 script = ExtResource("hf_hit_flash")
 health = NodePath("../Health")
 visuals = NodePath("../Head")
+
+[node name="Moves" type="AnimationPlayer" parent="."]
+deterministic = false
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("TurretLib")
+}

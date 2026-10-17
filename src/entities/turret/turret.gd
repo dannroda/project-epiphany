@@ -92,9 +92,7 @@ func _on_died() -> void:
 	Feel.burst(&"shards", head.global_position, Vector3.UP)
 	Feel.sfx(&"break", global_position)
 	Feel.shake(Feel.settings.shake_give)
-	var tween := create_tween()
-	tween.tween_property(head, "scale", Vector3(1.0, 0.1, 1.0), 0.25).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
-	tween.tween_callback(head.hide)
+	(%Moves as AnimationPlayer).play(&"die")
 	if config.drops:
 		config.drops.drop_at.call_deferred(global_position + Vector3.UP * 0.2, get_parent())
 

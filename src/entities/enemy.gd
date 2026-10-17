@@ -25,6 +25,8 @@ signal defeated(enemy: Enemy)
 @onready var anim_player: AnimationPlayer = $ModelController/AnimationPlayer
 @onready var bt_player: BTPlayer = $BTPlayer
 @onready var model: Node3D = $ModelController
+## El hundimiento después de morir (clip sink, que al final lo libera).
+@onready var sink: AnimationPlayer = $Sink
 @onready var health: Health = $Health
 @onready var hurtbox: Hurtbox = $Hurtbox
 @onready var hitbox: Hitbox = $ModelController/Hitboxes/Front
@@ -45,6 +47,13 @@ var _airborne := false
 var _home := Vector3.INF
 var _home_room: Room
 var _home_region: Array[AreaZone] = []
+
+## 0 en el piso, 1 hundido `sink_depth`; lo anima el clip sink.
+var sunk := 0.0:
+	set(value):
+		sunk = value
+		if model:
+			model.position.y = -sink_depth * value
 
 var is_dead: bool:
 	get:
@@ -375,10 +384,8 @@ func _sink_away() -> void:
 	if not is_inside_tree():
 		return
 	Feel.burst(&"dust", global_position + Vector3.UP * 0.1, Vector3.UP)
-	var tween := create_tween()
-	tween.tween_property(model, ^"position:y", model.position.y - sink_depth, sink_time) \
-			.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
-	tween.tween_callback(queue_free)
+	sink.speed_scale = sink.get_animation(&"sink").length / sink_time
+	sink.play(&"sink")
 
 
 static func _register_monitors() -> void:
