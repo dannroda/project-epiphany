@@ -14,12 +14,9 @@ enum State { IDLE, WALK, WINDUP, SLAM, STUCK, DEAD }
 @export_group("Aviso del golpe")
 ## Se planta y junta fuerza (temblor y ruido de tierra) antes de levantar la maza.
 @export var tell_time := 0.45
-## Con la maza arriba; la marca del piso se va llenando hasta el anillo.
+## Con la maza arriba; la marca del piso se va llenando hasta el anillo. En el clip windup, la marca deja de seguir
+## al player y titila al final (_lock_aim), y el silbido (_warn) termina justo en el golpe.
 @export var windup_time := 1.3
-## Los últimos segundos del aviso la marca deja de seguir al player y titila: cae ahí.
-@export var aim_lock := 0.5
-## El silbido que sube termina justo en el golpe.
-@export var warn_lead := 0.55
 @export_group("")
 @export var stuck_time := 2.4
 ## Golpes seguidos con la mitad de la vida o menos (el último es el que lo deja trabado).
@@ -135,25 +132,20 @@ func _slam(last := true) -> void:
 	_play(anim_idle)
 	Feel.sfx(&"rumble", global_position)
 	Feel.shake(0.15)
-	_tween_to(body, ^"scale", Vector3(1.08, 0.92, 1.08), tell_time).set_trans(Tween.TRANS_SINE)
+	_clip(&"tell", true, tell_time)
 	await _wait(tell_time)
 	if state != State.WINDUP:
 		return
-	_tween_to(body, ^"scale", Vector3.ONE, 0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	_tween_to(aim_disc, ^"scale", Vector3.ONE, windup_time)
+	_clip(&"windup", true, windup_time)
 	_play(anim_slam)
 	_hold_at(anim_slam_raised * _slam_length())
 	Feel.sfx(&"roll", global_position)
-	_tween_to(body, ^"rotation:x", -0.15, windup_time * 0.6).set_ease(Tween.EASE_OUT)
-	var cues := _new_tween().set_parallel()
-	cues.tween_callback(_lock_aim).set_delay(maxf(windup_time - aim_lock, 0.0) / pace)
-	cues.tween_callback(func() -> void: Feel.sfx(&"warp_out", aim_mark.global_position)).set_delay(maxf(windup_time - warn_lead, 0.0) / pace)
 	await _wait(windup_time)
 	if state != State.WINDUP:
 		return
 	state = State.SLAM
 	_release()
-	_tween_to(body, ^"rotation:x", 0.12, 0.12).set_ease(Tween.EASE_IN)
+	_clip(&"strike")
 	await _wait(maxf((anim_slam_down - anim_slam_raised) * _slam_length(), 0.12))
 	if state != State.SLAM:
 		return
@@ -167,13 +159,11 @@ func _slam(last := true) -> void:
 		body.rotation.x = 0.0
 		return
 	state = State.STUCK
-	var wobble := _new_tween().set_loops(maxi(int(stuck_time / 0.3), 1))
-	wobble.tween_property(body, ^"rotation:z", 0.08, 0.15)
-	wobble.tween_property(body, ^"rotation:z", -0.08, 0.15)
+	_clip(&"stuck", false)
 	await _wait(stuck_time, false)
 	if state != State.STUCK:
 		return
-	wobble.kill()
+	moves.stop(true)
 	body.rotation = Vector3.ZERO
 	Feel.burst(&"dust", aim_mark.global_position + Vector3.UP * 0.3, Vector3.UP)
 	_release()
@@ -183,9 +173,10 @@ func _slam(last := true) -> void:
 
 func _lock_aim() -> void:
 	_aim_locked = true
-	var blink := _new_tween().set_loops(maxi(int(aim_lock / pace / 0.12), 1))
-	blink.tween_property(aim_disc, ^"transparency", 0.7, 0.06)
-	blink.tween_property(aim_disc, ^"transparency", 0.0, 0.06)
+
+
+func _warn() -> void:
+	Feel.sfx(&"warp_out", aim_mark.global_position)
 
 
 func _strike_point() -> Vector3:
@@ -229,10 +220,7 @@ func _die() -> void:
 	Feel.burst(&"dust", global_position + Vector3.UP, Vector3.UP)
 	Feel.sfx(&"break", global_position)
 	Feel.shake(0.6)
-	var tween := create_tween()
-	tween.tween_interval(1.2)
-	tween.tween_property(body, ^"scale", Vector3(1.15, 0.05, 1.15), 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
-	tween.tween_callback(body.hide)
+	_clip(&"die", false)
 	defeated.emit(self)
 
 

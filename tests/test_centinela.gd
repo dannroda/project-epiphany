@@ -105,6 +105,21 @@ func test_walking_away_keeps_the_fight_going() -> void:
 	tree.root.get_node(^"GameState").reset()
 
 
+## La marca deja de seguir al player antes del golpe (lo dispara el clip windup) y el golpe cae ahí.
+func test_the_mark_locks_before_the_slam() -> void:
+	await _start()
+	var hold := _hold_player(fight.global_position + Vector3(0, 0, 4))
+	assert_true(await _until(func() -> bool: return centinela.state == Centinela.State.WINDUP, 12.0), "levanta la maza")
+	assert_true(await _until(func() -> bool: return centinela._aim_locked or centinela.state != Centinela.State.WINDUP), "algo pasa en el aviso")
+	assert_true(centinela._aim_locked and centinela.state == Centinela.State.WINDUP, "la marca se traba con la maza todavía arriba")
+	var mark := centinela.aim_mark.global_position
+	await tree.create_timer(0.2).timeout
+	assert_true(centinela.aim_mark.global_position.distance_to(mark) < 0.01 or centinela.state != Centinela.State.WINDUP, "trabada no se mueve")
+	tree.physics_frame.disconnect(hold)
+	fight._reset()
+	tree.root.get_node(^"GameState").reset()
+
+
 ## Daniel: pegarle desde lejos (una flecha) también arranca la pelea.
 func test_a_hit_from_afar_starts_the_fight() -> void:
 	await _start()

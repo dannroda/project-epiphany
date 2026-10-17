@@ -41,6 +41,154 @@ radius = 0.8
 height = 3.4
 radius = 0.9
 
+[sub_resource type="Animation" id="CentiTell"]
+resource_name = "tell"
+length = 0.45
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.45),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1.08, 0.92, 1.08)]
+}
+
+[sub_resource type="Animation" id="CentiWindup"]
+resource_name = "windup"
+length = 1.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.15),
+"transitions": PackedFloat32Array(0.5, 1, 1),
+"update": 0,
+"values": [Vector3(1.08, 0.92, 1.08), Vector3(0.97, 1.04, 0.97), Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Body:rotation:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.78),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [0.0, -0.15]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AimMark/AimDisc:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.3, 0.3, 0.3), Vector3(1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AimMark/AimDisc:transparency")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.8, 0.86, 0.92, 0.98, 1.04, 1.1, 1.16, 1.22, 1.28, 1.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0.0, 0.0, 0.7, 0.0, 0.7, 0.0, 0.7, 0.0, 0.7, 0.0, 0.0]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.75, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{"args": [], "method": &"_warn"}, {"args": [], "method": &"_lock_aim"}]
+}
+
+[sub_resource type="Animation" id="CentiStrike"]
+resource_name = "strike"
+length = 0.12
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.12),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [-0.15, 0.12]
+}
+
+[sub_resource type="Animation" id="CentiStuck"]
+resource_name = "stuck"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:rotation:z")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.075, 0.225, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.08, -0.08, 0.0]
+}
+
+[sub_resource type="Animation" id="CentiDie"]
+resource_name = "die"
+length = 1.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.2, 1.35, 1.7),
+"transitions": PackedFloat32Array(1, 1, 2, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1, 1, 1), Vector3(0.96, 1.06, 0.96), Vector3(1.15, 0.05, 1.15)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Body")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.7),
+"transitions": PackedFloat32Array(1),
+"values": [{"args": [], "method": &"hide"}]
+}
+
+[sub_resource type="AnimationLibrary" id="CentiLib"]
+_data = {
+&"tell": SubResource("CentiTell"),
+&"windup": SubResource("CentiWindup"),
+&"strike": SubResource("CentiStrike"),
+&"stuck": SubResource("CentiStuck"),
+&"die": SubResource("CentiDie")
+}
+
 [node name="Centinela" type="Node3D"]
 script = ExtResource("1_script")
 config = ExtResource("2_config")
@@ -102,3 +250,10 @@ invulnerability_time = 0.25
 script = ExtResource("6_flash")
 health = NodePath("../Health")
 visuals = NodePath("../Body/Model/Visuals")
+
+[node name="Moves" type="AnimationPlayer" parent="."]
+deterministic = false
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("CentiLib")
+}
