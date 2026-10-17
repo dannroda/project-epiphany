@@ -2657,7 +2657,7 @@ Decorar cada zona del overworld con piezas propias de su ambiente y enmarcar la 
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión); 12.2 Terreno del overworld; 12.3 Lugares del overworld; 12.4 Vegetación y props del overworld
 
-### 11.5 Galería de trampas: pinchos · En curso
+### 11.5 Galería de trampas: pinchos · Revisión
 
 **Prioridad:** media · **Etiquetas:** `mazmorra`
 
@@ -2674,7 +2674,7 @@ Pinchos de piso a ritmo: avisan asomando, suben de golpe, lastiman a player y en
 
 **Prueba:** En el ala de la pluma del templo (PlumaSpikes) y en la cripta oscura de la Chullpa (CriptaSpikes, B-SO), cruzar los pinchos: se ve venir cada fila (asoma y tintinea), siempre queda un paso y pinchan al player y a los enemigos.
 
-**Notas:**  Playtest 15/10: la nota es del playtest del 13/10; lo arregló 11.169 el 14/10 (pinchos ground_only y hits_on_landing: saltando con la pluma ya no pegan en el aire). Vuelve a revisión para probarla de nuevo.
+**Notas:**  Playtest 15/10: la nota es del playtest del 13/10; lo arregló 11.169 el 14/10 (pinchos ground_only y hits_on_landing: saltando con la pluma ya no pegan en el aire). Vuelve a revisión para probarla de nuevo. Playtest 17/10 (Daniel): el cofre de la llave chica de la Cripta oscura estaba detrás de los pinchos y se necesita antes de la pluma. af52d33e: el cofre pasó al lado de la entrada (22, 33), antes de los pinchos; test_chullpa camina la navmesh desde la Cripta sin pasar por ellos.
 
 **Relacionadas:** 11.169 Galería de trampas: la pluma no salta por encima de los pinchos
 
@@ -7489,7 +7489,7 @@ feel.gd:59-83 genera unos 22 sonidos en `_ready` (~10 s de audio a 22050 Hz, ~22
 13. [x] 7.10 Overworld con forma de Zelda 2D, no cuadrado · Hecho · anda
 14. [ ] 12.40 Estilo Link's Awakening en las mazmorras reales: cámara y assets nuevos · En curso · **falla** — Hay cosas que no tienen estilo
 15. [x] 11.117 Huecos a otro piso se ven distintos de los fosos · Hecho · anda
-16. [x] 11.5 Galería de trampas: pinchos · En curso · anda — Anda, pero el cofre detrás de los pinchos es una llave obligatoria para avanzar y se necesita antes de la pluma. Por lo que es imposible abrir el cofre sin hacerse daño.
+16. [x] 11.5 Galería de trampas: pinchos · Revisión · anda — Anda, pero el cofre detrás de los pinchos es una llave obligatoria para avanzar y se necesita antes de la pluma. Por lo que es imposible abrir el cofre sin hacerse daño.
 17. [x] 11.98 La cámara muestra lo que se desbloquea · Hecho · anda
 18. [x] 11.112 Fantasmas al esquivar · Hecho · anda
 19. [x] 11.102 Mapa: nombres de zona chicos y solo los que importan · Hecho · anda
@@ -7594,7 +7594,7 @@ feel.gd:59-83 genera unos 22 sonidos en `_ready` (~10 s de audio a 22050 Hz, ~22
 18. [x] 11.139 Chullpa: el cofre sobre la plataforma no se alcanza saltando · Hecho · anda — se ve horrendo y no soluciona el mismo problema del lado izquierdo
 19. [x] 11.138 Chullpa sub-boss: asset para el cuadrado donde después se salta · Hecho · anda
 20. [x] 12.31 Chullpa: jefe final momia con aspecto propio · Hecho · anda
-21. [x] 11.5 Galería de trampas: pinchos · En curso · anda — Anda, pero el cofre detrás de los pinchos es una llave obligatoria para avanzar y se necesita antes de la pluma. Por lo que es imposible abrir el cofre sin hacerse daño.
+21. [x] 11.5 Galería de trampas: pinchos · Revisión · anda — Anda, pero el cofre detrás de los pinchos es una llave obligatoria para avanzar y se necesita antes de la pluma. Por lo que es imposible abrir el cofre sin hacerse daño.
 22. [x] 11.173 Esqueleto invisible en una mazmorra · Hecho · anda
 23. [x] 11.141 Queñoa 2P (Canopy): símbolo azul sin sentido y puerta bloqueada invisible · Hecho · anda
 24. [ ] 11.144 Queñoa S1 (Raíces): reja fuera de la pared y puerta con llave detrás de una reja de puzzle · Revisión

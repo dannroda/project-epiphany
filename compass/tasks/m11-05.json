@@ -25,7 +25,7 @@
   "created_at": "2026-10-09T17:40:33.453Z",
   "description": "Pinchos de piso a ritmo: avisan asomando, suben de golpe, lastiman a player y enemigos (el escudo no los frena) y bajan; en ola para cruzarlos con timing. Nacieron en la Galería (sala 3) del templo viejo, que se borró (072e1094); hoy están en el ala de la pluma del templo (PlumaSpikes) y en la cripta oscura de la Chullpa (CriptaSpikes, B-SO).",
   "milestone": "m11",
-  "notes": " Playtest 15/10: la nota es del playtest del 13/10; lo arregló 11.169 el 14/10 (pinchos ground_only y hits_on_landing: saltando con la pluma ya no pegan en el aire). Vuelve a revisión para probarla de nuevo.",
+  "notes": " Playtest 15/10: la nota es del playtest del 13/10; lo arregló 11.169 el 14/10 (pinchos ground_only y hits_on_landing: saltando con la pluma ya no pegan en el aire). Vuelve a revisión para probarla de nuevo. Playtest 17/10 (Daniel): el cofre de la llave chica de la Cripta oscura estaba detrás de los pinchos y se necesita antes de la pluma. af52d33e: el cofre pasó al lado de la entrada (22, 33), antes de los pinchos; test_chullpa camina la navmesh desde la Cripta sin pasar por ellos.",
   "order": 5,
   "playtest": {
     "note": "Anda, pero el cofre detrás de los pinchos es una llave obligatoria para avanzar y se necesita antes de la pluma. Por lo que es imposible abrir el cofre sin hacerse daño.",
@@ -33,11 +33,11 @@
   },
   "priority": "medium",
   "refs": [],
-  "status": "doing",
+  "status": "review",
   "tags": [
     "mazmorra"
   ],
   "test": "En el ala de la pluma del templo (PlumaSpikes) y en la cripta oscura de la Chullpa (CriptaSpikes, B-SO), cruzar los pinchos: se ve venir cada fila (asoma y tintinea), siempre queda un paso y pinchan al player y a los enemigos.",
   "title": "Galería de trampas: pinchos",
-  "updated_at": "2026-10-17T06:37:44.212Z"
+  "updated_at": "2026-10-17T06:57:19.864Z"
 }
