@@ -9,8 +9,9 @@ enum State { IDLE, DRIFT, CHARGE, SWEEP, LUNGE, STUCK, DOWN, DEAD }
 
 ## Cuánto giran los párpados (en X, el de arriba hacia atrás y el de abajo hacia adelante) para abrir del todo.
 const LID_OPEN := 1.4
-## Lo que tardan los párpados en abrirse o cerrarse de golpe (al clavarse, al caer y al levantarse).
-const LID_SNAP := 0.15
+
+## Alto del cuerpo enganchado en las raíces o caído (hover 0).
+const GROUND_HEIGHT := 0.7
 
 ## Cuánto se vuelve hacia la cámara al gritar: casi del todo, así grita a la pantalla esté donde esté el player.
 const ROAR_GAZE := 0.85
@@ -40,7 +41,23 @@ const ROAR_GAZE := 0.85
 @onready var impact: Hitbox = %Impact
 
 var state := State.IDLE
-var _open := 0.0
+## Lo animan los clips de %Moves: párpados (0 cerrado, 1 abierto), cuánto flota (0 en el piso, 1 a `hover_height`) y
+## metros de más encima de eso.
+var lids := 0.0:
+	set(value):
+		lids = value
+		lid_top.rotation.x = -LID_OPEN * value
+		lid_bottom.rotation.x = LID_OPEN * value
+		iris.visible = value > 0.01
+		glow.light_energy = value * 2.5
+var hover := 1.0:
+	set(value):
+		hover = value
+		_place_body()
+var rise := 0.0:
+	set(value):
+		rise = value
+		_place_body()
 var _sweep_from := Vector3.ZERO
 var _sweep_to := Vector3.ZERO
 
@@ -52,11 +69,11 @@ func _ready() -> void:
 		hitbox.monitoring = false
 	spot.damage_factory = func() -> DamageInfo: return DamageInfo.make(beam_damage, config.attack_knockback, spot, DamageInfo.BLAST)
 	impact.damage_factory = func() -> DamageInfo: return DamageInfo.make(lunge_damage, config.attack_knockback * 1.5, impact, DamageInfo.BLAST)
-	body.position.y = hover_height
+	_place_body()
 	_show_beam(false)
 	path_mark.hide()
 	aim_mark.hide()
-	_set_open(0.0)
+	lids = 0.0
 
 
 ## Vuelve a como estaba al llegar el player (la pelea se reinicia).
@@ -70,10 +87,7 @@ func roar() -> void:
 		if camera:
 			gaze = gaze.lerp(camera.global_position, ROAR_GAZE)
 		body.look_at(gaze, Vector3.UP, true)
-	var tween := body.create_tween()
-	tween.tween_method(_set_open, _open, 1.25, 0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tween.tween_interval(roar_fx.duration)
-	tween.tween_method(_set_open, 1.25, 0.0, 0.3)
+	_clip(&"roar", false)
 	roar_fx.play()
 
 
@@ -85,11 +99,12 @@ func reset() -> void:
 	health.reset(config.max_health)
 	hurtbox.set_deferred(&"monitorable", true)
 	global_position = _home
-	body.position.y = hover_height
+	hover = 1.0
+	rise = 0.0
 	body.rotation = Vector3.ZERO
 	body.scale = Vector3.ONE
 	body.show()
-	_set_open(0.0)
+	lids = 0.0
 
 
 func _physics_process(_delta: float) -> void:
@@ -166,7 +181,7 @@ func _charge() -> void:
 	path_mark.scale = Vector3(1, 1, _sweep_from.distance_to(_sweep_to))
 	path_mark.show()
 	Feel.sfx(&"click", body.global_position)
-	_lids(1.0, charge_time * 0.4)
+	_clip(&"charge", true, charge_time)
 	await _wait(charge_time)
 
 
@@ -179,7 +194,7 @@ func _sweep() -> void:
 	_tween_to(spot, ^"global_position", _sweep_to, sweep_time / pace)
 	await _wait(sweep_time)
 	_end_sweep()
-	_lids(0.0, 0.3)
+	_clip(&"close")
 
 
 func _end_sweep() -> void:
@@ -196,13 +211,12 @@ func _lunge() -> void:
 	aim_mark.global_position = target + Vector3.UP * 0.03
 	aim_mark.scale = Vector3.ONE * 0.3
 	aim_mark.show()
-	_tween_to(aim_mark, ^"scale", Vector3.ONE, lunge_aim_time)
-	_tween_to(body, ^"position:y", hover_height + 0.8, lunge_aim_time * 0.8).set_ease(Tween.EASE_OUT)
+	_clip(&"lunge_aim", true, lunge_aim_time)
 	await _wait(lunge_aim_time)
 	if state != State.LUNGE:
 		return
 	global_position = target
-	_tween_to(body, ^"position:y", 0.7, 0.18).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+	_clip(&"lunge_drop")
 	await _wait(0.18)
 	aim_mark.hide()
 	if state != State.LUNGE:
@@ -213,18 +227,12 @@ func _lunge() -> void:
 	Feel.shake(0.4)
 	_after(0.15, impact.deactivate)
 	state = State.STUCK
-	_lids(1.0, LID_SNAP)
-	var wobble := _new_tween().set_loops(int(stuck_time / 0.3))
-	wobble.tween_property(body, ^"rotation:z", 0.25, 0.15)
-	wobble.tween_property(body, ^"rotation:z", -0.25, 0.15)
+	_clip(&"stuck", false, stuck_time)
 	await _wait(stuck_time, false)
 	if state != State.STUCK:
 		return
-	wobble.kill()
-	body.rotation.z = 0.0
 	Feel.burst(&"leaves", global_position + Vector3.UP * 0.3, Vector3.UP)
-	_lids(0.0, 0.3)
-	_tween_to(body, ^"position:y", hover_height, 0.6).set_ease(Tween.EASE_OUT)
+	_clip(&"recover")
 	await _wait(0.6)
 
 
@@ -233,8 +241,7 @@ func _knock_down() -> void:
 	state = State.DOWN
 	Feel.sfx(&"hit", body.global_position)
 	Feel.shake(0.3)
-	_lids(0.6, LID_SNAP)
-	_tween_to(body, ^"position:y", 0.8, 0.35).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BOUNCE)
+	_clip(&"knock", false)
 	var turn := _turn
 	await _wait(0.35, false)
 	if turn != _turn:
@@ -243,8 +250,7 @@ func _knock_down() -> void:
 	await _wait(down_time, false)
 	if turn != _turn:
 		return
-	_lids(0.0, 0.3)
-	_tween_to(body, ^"position:y", hover_height, 0.6).set_ease(Tween.EASE_OUT)
+	_clip(&"get_up", false)
 	await _wait(0.6, false)
 	if turn == _turn:
 		_run()
@@ -281,22 +287,13 @@ func _die() -> void:
 	Feel.burst(&"shards", body.global_position, Vector3.UP)
 	Feel.sfx(&"break", body.global_position)
 	Feel.shake(0.5)
-	var tween := create_tween()
-	tween.tween_property(body, ^"scale", Vector3(1.3, 0.1, 1.3), 0.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
-	tween.tween_callback(body.hide)
+	_clip(&"die", false)
 	defeated.emit(self)
 
 
-func _lids(to: float, seconds: float) -> void:
-	_tween_method(_set_open, _open, to, seconds)
-
-
-func _set_open(amount: float) -> void:
-	_open = amount
-	lid_top.rotation.x = -LID_OPEN * amount
-	lid_bottom.rotation.x = LID_OPEN * amount
-	iris.visible = amount > 0.01
-	glow.light_energy = amount * 2.5
+func _place_body() -> void:
+	if body:
+		body.position.y = lerpf(GROUND_HEIGHT, hover_height, hover) + rise
 
 
 func _show_beam(on: bool) -> void:
@@ -313,7 +310,3 @@ func _place_beam() -> void:
 	var up := along.normalized()
 	var side := up.cross(Vector3.FORWARD if absf(up.z) < 0.9 else Vector3.RIGHT).normalized()
 	beam.global_transform = Transform3D(Basis(side, up * along.length(), side.cross(up)), (from + to) / 2.0)
-
-
-func _tween_method(method: Callable, from: float, to: float, seconds: float) -> void:
-	_new_tween().tween_method(method, from, to, seconds / pace)
