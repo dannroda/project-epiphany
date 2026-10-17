@@ -15,6 +15,8 @@ enum State { READY, BUSY, STUNNED, DOWN }
 ## Alto del centro de la mano apoyada en el piso.
 const SLAM_CRACK := preload("res://src/entities/boss/slam_crack.tscn")
 const FLOOR_HEIGHT := 0.6
+## Alto de la mano caída: ladeada baja más que apoyada, así que va más arriba para no meterse en el piso.
+const DOWN_HEIGHT := 0.77
 const SQUASH := Vector3(1.25, 0.7, 1.25)
 const TREMBLE := 0.06
 const STUN_WOBBLE := 0.18
@@ -603,7 +605,7 @@ func collapse() -> void:
 	_aim = null
 	_tilt_goal = Vector3.ZERO
 	_fall = create_tween().set_parallel()
-	_fall.tween_property(self, ^"global_position:y", FLOOR_HEIGHT - 0.2, 0.4).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	_fall.tween_property(self, ^"global_position:y", DOWN_HEIGHT, 0.4).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 	_fall.tween_property(self, ^"rotation:z", 0.5 * signf(position.x), 0.4)
 	Feel.sfx(&"boom", global_position)
 

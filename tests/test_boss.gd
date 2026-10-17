@@ -84,6 +84,27 @@ func _knock_down(hand: BossHand) -> void:
 	hand.hurtbox.receive(_hit(hand.health.max_health))
 
 
+## Lo más bajo de la malla puesta en el mundo (el AABB es la caja girada, más grande que la mano).
+func _lowest(mesh: MeshInstance3D) -> float:
+	var low := INF
+	for vertex in mesh.mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]:
+		low = minf(low, (mesh.global_transform * vertex).y)
+	return low
+
+
+## 11.93: caída y ladeada, la mano queda apoyada en el piso, no metida en él.
+func test_a_downed_hand_rests_on_the_floor() -> void:
+	var boss := _spawn()
+	for hand: BossHand in [boss.hand_left, boss.hand_right]:
+		_knock_down(hand)
+	await (Engine.get_main_loop() as SceneTree).create_timer(0.8).timeout
+	for hand: BossHand in [boss.hand_left, boss.hand_right]:
+		assert_eq(hand.state, BossHand.State.DOWN, "%s caída" % hand.name)
+		var low := _lowest(hand.mesh)
+		assert_true(low > boss.global_position.y - 0.05 and low < boss.global_position.y + 0.25, "%s apoyada en el piso (lo más bajo a %.2f)" % [hand.name, low])
+	boss.free()
+
+
 func test_hands_only_hurt_when_stunned() -> void:
 	var boss := _spawn()
 	var hand := boss.hand_left
