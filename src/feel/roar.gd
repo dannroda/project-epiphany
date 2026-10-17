@@ -26,15 +26,14 @@ func _ring() -> void:
 		return
 	var ring := RING.instantiate() as MeshInstance3D
 	ring.top_level = true
+	ring.size = size
+	ring.reach = reach
 	add_child(ring)
-	var forward := -global_basis.z.normalized()
-	ring.global_transform = Transform3D(Basis.looking_at(forward) * Basis(Vector3.RIGHT, -PI / 2.0), global_position)
-	ring.scale = Vector3.ONE * size * 0.15
+	ring.forward = -global_basis.z.normalized()
+	ring.origin = global_position
+	ring.global_transform = Transform3D(Basis.looking_at(ring.forward) * Basis(Vector3.RIGHT, -PI / 2.0), global_position)
+	ring.grow = 0.0
 	ring.set_instance_shader_parameter(&"outer", color)
 	ring.set_instance_shader_parameter(&"inner", inner)
 	ring.set_instance_shader_parameter(&"seed", randf() * 100.0)
-	var tween := ring.create_tween().set_parallel()
-	tween.tween_property(ring, ^"scale", Vector3.ONE * size, 0.6).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	tween.tween_property(ring, ^"global_position", global_position + forward * reach, 0.6)
-	tween.tween_method(func(value: float) -> void: ring.set_instance_shader_parameter(&"fade", value), 1.0, 0.0, 0.6).set_ease(Tween.EASE_IN)
-	tween.chain().tween_callback(ring.queue_free)
+	ring.spread()

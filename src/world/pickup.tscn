@@ -6,6 +6,50 @@
 [sub_resource type="SphereShape3D" id="Shape"]
 radius = 0.45
 
+[sub_resource type="Animation" id="PickupSpin"]
+resource_name = "spin"
+length = 2.857
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model:rotation:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.857),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.2831855]
+}
+
+[sub_resource type="AnimationLibrary" id="SpinLib"]
+_data = {
+&"spin": SubResource("PickupSpin")
+}
+
+[sub_resource type="Animation" id="PickupBlink"]
+resource_name = "blink"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:shown")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="BlinkLib"]
+_data = {
+&"blink": SubResource("PickupBlink")
+}
+
 [node name="Pickup" type="Area3D"]
 collision_layer = 0
 collision_mask = 1
@@ -23,3 +67,14 @@ texture_filter = 4
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 shape = SubResource("Shape")
+
+[node name="Spin" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("SpinLib")
+}
+autoplay = &"spin"
+
+[node name="Blink" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("BlinkLib")
+}

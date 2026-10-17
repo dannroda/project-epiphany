@@ -231,13 +231,8 @@ func _shockwave(scene: Node, at: Vector3, always := false) -> void:
 	var ring := SHOCKWAVE.instantiate() as MeshInstance3D
 	if always:
 		ring.process_mode = Node.PROCESS_MODE_ALWAYS
-	var material := (ring.mesh as PrimitiveMesh).material as StandardMaterial3D
 	scene.add_child(ring)
 	ring.global_position = Vector3(at.x, at.y - 0.3, at.z)
-	var tween := ring.create_tween().set_parallel()
-	tween.tween_property(ring, "scale", Vector3(2.6, 0.15, 2.6), 0.35).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
-	tween.tween_property(material, "albedo_color:a", 0.0, 0.35)
-	tween.chain().tween_callback(ring.queue_free)
 
 
 func _synth(seconds: float, wave: Callable) -> AudioStreamWAV:

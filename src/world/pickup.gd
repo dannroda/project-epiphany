@@ -25,7 +25,6 @@ const GRAVITY := 18.0
 ## Malla del corazón que cura (los que no tienen ítem).
 @export var heart_mesh: Mesh
 ## Vueltas por segundo de la malla.
-@export var spin := 0.35
 
 @onready var sprite: Sprite3D = $Sprite
 @onready var model: MeshInstance3D = $Model
@@ -34,6 +33,12 @@ var _age := 0.0
 var _rest_height := 0.5
 var _vertical_speed := 5.0
 var _visual: Node3D
+## Lo apaga y prende el clip "blink" de $Blink cuando está por desaparecer.
+var shown := true:
+	set(value):
+		shown = value
+		if _visual:
+			_visual.visible = value
 
 
 ## Sin agregar al árbol: el que llama ajusta lo que quiera y lo agrega.
@@ -75,8 +80,6 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	_age += delta
 	_bounce(delta)
-	if _visual == model:
-		model.rotate_y(spin * TAU * delta)
 	var player := Players.nearest(global_position)
 	if player and _age >= pickup_delay:
 		var to := player.global_position - global_position
@@ -88,8 +91,8 @@ func _physics_process(delta: float) -> void:
 			return
 	if lifetime <= 0.0:
 		return
-	if _age >= lifetime - blink_time:
-		_visual.visible = fmod(_age * 10.0, 2.0) < 1.3
+	if _age >= lifetime - blink_time and not $Blink.is_playing():
+		$Blink.play(&"blink")
 	if _age >= lifetime:
 		queue_free()
 

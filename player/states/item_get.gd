@@ -67,7 +67,6 @@ func _flash(at: Vector3) -> void:
 	Feel.burst(&"sparkle", at + Vector3.UP * 0.3, Vector3.UP)
 	var light: OmniLight3D = player.get_node(^"%ItemGetLight")
 	light.global_position = at + Vector3.UP * 0.4
-	light.show()
-	var fade := light.create_tween()
-	fade.tween_property(light, "light_energy", 0.0, 0.6).from(5.0)
-	fade.tween_callback(light.hide)
+	var flash: AnimationPlayer = player.get_node(^"%ItemGetFlash")
+	flash.stop()
+	flash.play(&"flash")
