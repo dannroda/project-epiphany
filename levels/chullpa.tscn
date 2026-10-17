@@ -660,7 +660,7 @@ flag = &"ch_map_chest"
 switches = Array[NodePath]([NodePath("../CriptaWaves")])
 
 [node name="KeyChest" parent="Sotano" unique_id=2481673 instance=ExtResource("6_ufxwh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 32)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 33)
 item = ExtResource("23_2g4bn")
 flag = &"ch_key_chest"
 

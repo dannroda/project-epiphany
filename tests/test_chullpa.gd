@@ -179,6 +179,21 @@ func test_the_mummy_door_takes_the_crypt_key() -> void:
 	state.reset()
 
 
+
+## 11.5: la llave chica hace falta antes de la pluma, así que el cofre queda de este lado de los pinchos.
+func test_the_crypt_key_is_reached_without_crossing_the_spikes() -> void:
+	await _start()
+	var map := player.get_world_3d().navigation_map
+	var chest := level.get_node(^"Sotano/KeyChest") as Node3D
+	var spikes := level.get_node(^"Sotano/CriptaSpikes_12_22") as Node3D
+	var front := NavigationServer3D.map_get_closest_point(map, chest.global_position + Vector3(0, 0, 1.5))
+	var from := NavigationServer3D.map_get_closest_point(map, _room("Sotano/Cripta").global_position)
+	var path := NavigationServer3D.map_get_path(map, from, front, true)
+	assert_true(not path.is_empty() and path[-1].distance_to(front) < 0.1, "se llega caminando al cofre")
+	assert_true(Array(path).all(func(p: Vector3) -> bool: return p.x > spikes.global_position.x + 5.0), "sin pasar por los pinchos")
+	tree.root.get_node(^"GameState").reset()
+
+
 ## 11.176: la llave del jefe espera del otro lado de los huecos de 2NO (volver con la pluma); el Mausoleo es de paso.
 func test_the_boss_key_waits_across_the_leaps_holes() -> void:
 	await _start()
