@@ -10,14 +10,22 @@ extends StaticBody3D
 ## La primera vez que lo suben sus interruptores, el juego se pausa y la cámara lo muestra.
 @export var reveal_on_raise := true
 
+## 0 abajo `drop`, 1 en su lugar: la anima el clip "raise" de %Rise.
+var height := 1.0:
+	set(value):
+		height = value
+		position.y = _base_y - drop * (1.0 - height)
+
 var is_up := false
 var _base_y := 0.0
 var _wiring: Wiring
 
+@onready var rise: AnimationPlayer = %Rise
+
 
 func _ready() -> void:
 	_base_y = position.y
-	position.y -= drop
+	height = 0.0
 	$CollisionShape3D.disabled = true
 	_set_link(false)
 	if switches.is_empty():
@@ -40,10 +48,9 @@ func raise(animate := true) -> void:
 	$CollisionShape3D.set_deferred(&"disabled", false)
 	_set_link(true)
 	if not animate:
-		position.y = _base_y
+		Clips.jump(rise, &"raise", true)
 		return
-	var tween := create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tween.tween_property(self, "position:y", _base_y, duration)
+	Clips.run(rise, &"raise", true, duration)
 	Feel.sfx(&"secret", global_position)
 
 

@@ -23,7 +23,6 @@ signal broken
 var is_broken := false
 var _persistent: PersistentFlag
 var _wiring: Wiring
-var _shake_tween: Tween
 
 
 func _ready() -> void:
@@ -62,14 +61,11 @@ func _on_hit(info: DamageInfo) -> void:
 
 
 func _shake() -> void:
-	if _shake_tween and _shake_tween.is_running():
+	if %Shake.is_playing():
 		return
 	Feel.burst(&"dust", hurtbox.global_position, Vector3.UP)
 	Feel.sfx(&"hit_stone", global_position)
-	var rest := wall.position
-	_shake_tween = create_tween()
-	for offset: float in [0.06, -0.05, 0.03, 0.0]:
-		_shake_tween.tween_property(wall, ^"position:x", rest.x + offset, 0.05)
+	%Shake.play(&"shake")
 
 
 func smash() -> void:

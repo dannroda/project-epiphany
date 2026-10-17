@@ -8,8 +8,12 @@ extends Node3D
 var radius := 0.0
 var closed := false
 var _closing := false
-var _reveal := 0.0
-var _tween: Tween
+## 0 apagado y escondido, 1 entero: lo anima el clip "close" de %Fade.
+var reveal := 0.0:
+	set(value):
+		reveal = value
+		(flames.material_override as ShaderMaterial).set_shader_parameter(&"reveal", value)
+		flames.visible = value > 0.0
 
 @onready var flames: MeshInstance3D = %Flames
 @onready var wall: CollisionShape3D = %Wall
@@ -40,7 +44,7 @@ func open() -> void:
 		return
 	closed = false
 	wall.set_deferred(&"disabled", true)
-	_fade(0.0).tween_callback(flames.hide)
+	Clips.run(%Fade, &"close", false, fade_time)
 
 
 func _physics_process(_delta: float) -> void:
@@ -56,16 +60,5 @@ func _physics_process(_delta: float) -> void:
 	set_physics_process(false)
 	closed = true
 	wall.set_deferred(&"disabled", false)
-	flames.show()
-	_fade(1.0)
+	Clips.run(%Fade, &"close", true, fade_time)
 	Feel.sfx(&"rumble", global_position)
-
-
-func _fade(to: float) -> Tween:
-	if _tween:
-		_tween.kill()
-	_tween = create_tween()
-	_tween.tween_method(func(value: float) -> void:
-		_reveal = value
-		(flames.material_override as ShaderMaterial).set_shader_parameter(&"reveal", value), _reveal, to, fade_time)
-	return _tween

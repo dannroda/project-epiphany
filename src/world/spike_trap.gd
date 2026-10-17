@@ -7,8 +7,6 @@ extends Node3D
 
 const HIDDEN := -0.78
 const PEEK := -0.6
-const RISE_TIME := 0.06
-const FALL_TIME := 0.25
 
 ## Segundos de un ciclo entero (abajo → aviso → arriba → abajo); 0 = siempre arriba.
 @export var period := 2.4
@@ -26,6 +24,7 @@ var _warned := false
 
 @onready var spikes: Node3D = $Spikes
 @onready var hitbox: Hitbox = $Hitbox
+@onready var motion: AnimationPlayer = %Motion
 
 
 func _ready() -> void:
@@ -47,7 +46,7 @@ func _physics_process(delta: float) -> void:
 	var warning := not up and _clock >= down_time - warn_time
 	if warning and not _warned:
 		_warned = true
-		create_tween().tween_property(spikes, ^"position:y", PEEK, 0.12)
+		motion.play(&"peek")
 		Feel.sfx(&"click", global_position)
 	if up != raised:
 		_set_raised(up)
@@ -66,10 +65,10 @@ func _set_raised(up: bool, instant := false) -> void:
 	else:
 		hitbox.deactivate()
 	if instant:
+		motion.stop()
 		spikes.position.y = 0.0 if up else HIDDEN
 		return
-	var move := create_tween()
-	move.tween_property(spikes, ^"position:y", 0.0 if up else HIDDEN, RISE_TIME if up else FALL_TIME)
+	motion.play(&"rise" if up else &"fall")
 	if up:
 		Feel.sfx(&"cut", global_position)
 		Feel.burst(&"dust", global_position + Vector3.UP * 0.1, Vector3.UP)

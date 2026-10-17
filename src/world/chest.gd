@@ -3,6 +3,7 @@ class_name Chest
 extends StaticBody3D
 
 const GROUP := &"chests"
+## El clip "open" de %LidAnim termina en este ángulo.
 const OPEN_ANGLE := -110.0
 const BIG_BASE := preload("res://assets/epiphany/meshes/objetos/cofre_grande.res")
 const BIG_LID := preload("res://assets/epiphany/meshes/objetos/cofre_grande_tapa.res")
@@ -91,8 +92,7 @@ func _open(by: PlayerCharacter) -> void:
 	interactable.enabled = false
 	persistent.value = true
 	GameState.give(item, amount)
-	var tween := create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tween.tween_property(lid, "rotation_degrees:x", OPEN_ANGLE, 0.35)
+	%LidAnim.play(&"open")
 	Feel.sfx(&"click", global_position)
 	by.play_item_get(item, amount)
 	if big:

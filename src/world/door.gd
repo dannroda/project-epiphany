@@ -51,13 +51,22 @@ const BOSS_TINT := Color(1.0, 0.45, 0.4)
 @export var leaf_meshes := LEAF_MESH
 @export var sink := 2.5
 
+## 0 cerrada, 1 abierta: la anima el clip "open" de %Swing; la hoja baja `sink` y la colisión se apaga al llegar a 1.
+var openness := 0.0:
+	set(value):
+		openness = value
+		if leaf:
+			leaf.position.y = _closed_y - sink * openness
+		if shape and not Engine.is_editor_hint():
+			shape.set_deferred(&"disabled", openness >= 1.0)
+
 @onready var leaf: Node3D = %Leaf
 @onready var shape: CollisionShape3D = $CollisionShape3D
 @onready var interactable: Interactable = $Interactable
+@onready var swing: AnimationPlayer = %Swing
 
 var is_open := false
 var _closed_y := 0.0
-var _tween: Tween
 var _persistent: PersistentFlag
 var _wiring: Wiring
 ## Alto al que la cámara recorta la pared sur de la sala si la puerta está en ella (0: no lo está). La hoja baja a
@@ -69,10 +78,10 @@ var south_cut := 0.0:
 
 
 func _ready() -> void:
+	_closed_y = leaf.position.y
 	if Engine.is_editor_hint():
 		return
 	add_to_group(GROUP)
-	_closed_y = leaf.position.y
 	%LeafMesh.mesh = load(leaf_meshes % LEAVES[kind])
 	_fill_depth()
 	interactable.enabled = false
@@ -145,7 +154,7 @@ func open(animate: bool = true) -> void:
 	if is_open:
 		return
 	is_open = true
-	_move_leaf(_closed_y - sink, animate, true)
+	_move_leaf(animate, true)
 	_update_south_mark()
 	opened.emit()
 
@@ -155,24 +164,18 @@ func close(animate: bool = true) -> void:
 		return
 	is_open = false
 	shape.set_deferred(&"disabled", false)
-	_move_leaf(_closed_y, animate, false)
+	_move_leaf(animate, false)
 	_update_south_mark()
 	closed.emit()
 
 
-func _move_leaf(y: float, animate: bool, opening: bool) -> void:
-	if _tween:
-		_tween.kill()
+func _move_leaf(animate: bool, opening: bool) -> void:
 	if not animate:
-		leaf.position.y = y
-		shape.set_deferred(&"disabled", opening)
+		Clips.jump(swing, &"open", opening)
 		return
 	Feel.sfx(&"door", global_position)
 	Feel.burst(&"dust", global_position + Vector3.UP * 0.1, Vector3.UP)
-	_tween = create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
-	_tween.tween_property(leaf, "position:y", y, open_time)
-	if opening:
-		_tween.tween_callback(func() -> void: shape.set_deferred(&"disabled", true))
+	Clips.run(swing, &"open", opening, open_time)
 
 
 func _update_south_mark() -> void:

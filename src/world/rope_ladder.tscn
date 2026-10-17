@@ -12,6 +12,27 @@ size = Vector3(1.4, 1.5, 1.2)
 [sub_resource type="BoxShape3D" id="Step"]
 size = Vector3(1.2, 1.5, 0.6)
 
+[sub_resource type="Animation" id="LadderUnroll"]
+resource_name = "unroll"
+length = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Ladder:scale:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.36, 0.54, 0.72, 0.81, 0.9, 0.95, 1.0),
+"transitions": PackedFloat32Array(2, -2, -2, -2, -2, -2, -2, 1),
+"update": 0,
+"values": [0.05, 1.0, 0.8, 1.0, 0.95, 1.0, 0.99, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="LadderLib"]
+_data = {
+&"unroll": SubResource("LadderUnroll")
+}
+
 [node name="RopeLadder" type="Node3D"]
 script = ExtResource("1_ladder")
 
@@ -66,3 +87,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.7, 1.55)
 
 [node name="RungBottom" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.2, 1.55)
+
+[node name="Unroll" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("LadderLib")
+}

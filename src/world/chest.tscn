@@ -12,6 +12,27 @@ size = Vector3(1, 0.8, 0.7)
 [sub_resource type="BoxShape3D" id="InteractShape"]
 size = Vector3(1.4, 1, 1.2)
 
+[sub_resource type="Animation" id="ChestOpen"]
+resource_name = "open"
+length = 0.35
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model/Lid:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.24, 0.35),
+"transitions": PackedFloat32Array(0.5, -2, 1),
+"update": 0,
+"values": [0.0, -2.0735, -1.9199]
+}
+
+[sub_resource type="AnimationLibrary" id="ChestLib"]
+_data = {
+&"open": SubResource("ChestOpen")
+}
+
 [node name="Chest" type="StaticBody3D"]
 script = ExtResource("1_chest")
 
@@ -38,3 +59,9 @@ mesh = ExtResource("4_lid")
 
 [node name="PersistentFlag" type="Node" parent="."]
 script = ExtResource("pf_persistent_flag")
+
+[node name="LidAnim" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("ChestLib")
+}

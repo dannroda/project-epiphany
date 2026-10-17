@@ -38,8 +38,7 @@ func unroll() -> void:
 	GameState.set_flag(flag, true)
 	Feel.sfx(&"secret", global_position)
 	_sync()
-	ladder.scale.y = 0.05
-	create_tween().tween_property(ladder, ^"scale:y", 1.0, unroll_time).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	Clips.run(%Unroll, &"unroll", true, unroll_time)
 
 
 func _climb(body: Node3D, path: Array[Node3D]) -> void:

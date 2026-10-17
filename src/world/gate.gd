@@ -19,10 +19,17 @@ signal opened
 ## Fondo del paso en el que está: la colisión lo cubre entero; la reja es una sola, en el medio.
 @export var depth := 0.0
 
+## 0 cerrada, 1 hundida `drop`: la anima el clip "open" de %Sink.
+var openness := 0.0:
+	set(value):
+		openness = value
+		position.y = _closed_y - drop * openness
+
 var is_open := false
 var _wiring: Wiring
 var _closed_y := 0.0
-var _tween: Tween
+
+@onready var sink: AnimationPlayer = %Sink
 
 
 func _ready() -> void:
@@ -53,14 +60,11 @@ func open(animate := true) -> void:
 		return
 	is_open = true
 	$CollisionShape3D.set_deferred(&"disabled", true)
-	if _tween:
-		_tween.kill()
 	if not animate:
-		position.y = _closed_y - drop
+		Clips.jump(sink, &"open", true)
 		opened.emit()
 		return
-	_tween = create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-	_tween.tween_property(self, "position:y", _closed_y - drop, duration)
+	Clips.run(sink, &"open", true, duration)
 	Feel.sfx(&"secret", global_position)
 	Feel.burst(&"dust", global_position + Vector3.UP * 0.2, Vector3.UP)
 	opened.emit()
@@ -71,8 +75,5 @@ func close() -> void:
 		return
 	is_open = false
 	$CollisionShape3D.set_deferred(&"disabled", false)
-	if _tween:
-		_tween.kill()
-	_tween = create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	_tween.tween_property(self, "position:y", _closed_y, duration)
+	Clips.run(sink, &"open", false, duration)
 	Feel.sfx(&"click", global_position)
