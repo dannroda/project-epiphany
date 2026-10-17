@@ -32,26 +32,29 @@ const FEATHER_COLOR := Color(0.92, 0.9, 0.86)
 ## Los soles de la sala (LightSource): apagados hasta que el Apu llega a media vida.
 @export var suns: Array[Node3D] = []
 
-@onready var wing_left: Node3D = %WingLeft
-@onready var wing_right: Node3D = %WingRight
 @onready var muzzle: Marker3D = %Muzzle
 @onready var roar_fx: Roar = %Roar
 @onready var aim_mark: MeshInstance3D = %AimMark
 @onready var impact: Hitbox = %Impact
 @onready var light_catch: StaticBody3D = %LightCatch
 @onready var flash: HitFlash = $HitFlash
+## Un clip por pose de alas (planear, batir, plegadas...); _wings cruza de una a otra.
+@onready var wings: AnimationPlayer = %Wings
 
 var state := State.IDLE
 var _angle := 0.0
-var _flap := 0.0
-var _flap_rate := 6.0
-var _flap_size := 0.35
-var _spread := 0.0
 var _attacks := 0
 var _suns_on := false
 var _aim_locked := false
 var _push := 0.0
 var _scale := Vector3.ONE
+
+## 0 entero, 1 aplastado contra el piso; lo anima el clip die sobre la escala propia del cuerpo.
+var squash := 0.0:
+	set(value):
+		squash = value
+		if body:
+			body.scale = _scale * Vector3.ONE.lerp(Vector3(1.2, 0.1, 1.2), value)
 
 
 func _ready() -> void:
@@ -78,8 +81,9 @@ func reset() -> void:
 	global_position = _home
 	body.position.y = hover_height
 	body.rotation = Vector3.ZERO
-	body.scale = _scale
+	squash = 0.0
 	body.show()
+	_wings(&"glide", 0.0)
 	_set_suns(false)
 
 
@@ -88,23 +92,9 @@ func roar() -> void:
 	var player := Players.nearest(global_position)
 	if player:
 		_face(player.global_position - global_position)
-	_wings(1.0, 10.0, 0.6)
-	var tween := body.create_tween().set_parallel()
-	tween.tween_property(body, ^"rotation:x", -0.45, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tween.tween_property(wing_left, ^"rotation:z", 1.1, 0.2)
-	tween.tween_property(wing_right, ^"rotation:z", -1.1, 0.2)
-	tween.chain().tween_interval(roar_fx.duration)
-	tween.chain().tween_property(body, ^"rotation:x", 0.0, 0.3)
+	_wings(&"roar", 0.6)
+	_clip(&"roar", false)
 	roar_fx.play()
-
-
-func _process(delta: float) -> void:
-	if state == State.DEAD:
-		return
-	_flap += delta * _flap_rate * pace
-	var lift := _spread + sin(_flap) * _flap_size
-	wing_left.rotation.z = lift
-	wing_right.rotation.z = -lift
 
 
 func _physics_process(delta: float) -> void:
@@ -178,7 +168,7 @@ func _circle() -> void:
 	state = State.CIRCLE
 	var from := global_position - _center()
 	_angle = atan2(from.z, from.x)
-	_wings(0.35, 6.0, 0.3)
+	_wings(&"glide", 0.3)
 	_tween_to(body, ^"position:y", hover_height, 0.5).set_trans(Tween.TRANS_SINE)
 	await _wait(circle_time)
 
@@ -188,10 +178,9 @@ func _dive() -> void:
 	_aim_locked = false
 	var player := Players.nearest(global_position)
 	aim_mark.global_position = _clamp_to_arena(player.global_position if player else global_position) + Vector3.UP * 0.03
-	aim_mark.scale = Vector3.ONE * 1.6
 	aim_mark.show()
-	_tween_to(aim_mark, ^"scale", Vector3.ONE, aim_time + lock_time)
-	_wings(0.6, 9.0, 0.3)
+	_clip(&"aim", true, aim_time + lock_time)
+	_wings(&"aim", 0.3)
 	await _wait(aim_time)
 	if state != State.AIM:
 		return
@@ -202,7 +191,7 @@ func _dive() -> void:
 	if state != State.AIM:
 		return
 	state = State.DIVE
-	_wings(-0.6, 0.0, 0.1)
+	_wings(&"tuck", 0.1)
 	var target := Vector3(aim_mark.global_position.x, global_position.y, aim_mark.global_position.z)
 	_tween_to(self, ^"global_position", target, dive_time).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	_tween_to(body, ^"position:y", 0.5, dive_time).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
@@ -219,7 +208,7 @@ func _dive() -> void:
 		await _wait(0.8)
 		return
 	state = State.STUCK
-	_wings(0.9, 14.0, 0.2)
+	_wings(&"stuck", 0.2)
 	body.rotation.x = 0.5
 	await _wait(stuck_time, false)
 	if state != State.STUCK:
@@ -244,7 +233,7 @@ func _gust(push: float) -> void:
 			return
 	state = State.GUST
 	_push = push * pace
-	_wings(0.9, 18.0, 0.1)
+	_wings(&"gust", 0.1)
 	Feel.sfx(&"roll", body.global_position)
 	var puffs := int(gust_time / 0.3)
 	for i in puffs:
@@ -259,7 +248,7 @@ func _gust(push: float) -> void:
 func _volley() -> void:
 	state = State.VOLLEY
 	_tween_to(body, ^"position:y", 1.4, 0.5).set_trans(Tween.TRANS_SINE)
-	_wings(0.8, 4.0, 0.3)
+	_wings(&"volley", 0.3)
 	flash.warn(0.6)
 	await _wait(0.6)
 	if state != State.VOLLEY:
@@ -290,7 +279,7 @@ func _perch() -> void:
 	if state != State.PERCH:
 		return
 	_catch_light(true)
-	_wings(1.1, 2.0, 0.4)
+	_wings(&"perch", 0.4)
 	flash.warn(perch_time)
 	Feel.sfx(&"rumble", body.global_position)
 	await _wait(perch_time)
@@ -327,7 +316,7 @@ func _knock_down() -> void:
 	state = State.DOWN
 	Feel.sfx(&"hit", body.global_position)
 	Feel.shake(0.3)
-	_wings(1.0, 0.0, 0.2)
+	_wings(&"down", 0.2)
 	_tween_to(body, ^"position:y", 0.4, 0.35).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BOUNCE)
 	body.rotation.z = 0.4
 	var turn := _turn
@@ -381,18 +370,16 @@ func _die() -> void:
 	Feel.burst(&"shards", body.global_position, Vector3.UP)
 	Feel.sfx(&"break", body.global_position)
 	Feel.shake(0.5)
-	var tween := create_tween()
-	tween.tween_property(body, ^"position:y", 0.3, 0.4).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
-	tween.tween_property(body, ^"scale", _scale * Vector3(1.2, 0.1, 1.2), 0.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
-	tween.tween_callback(body.hide)
+	wings.pause()
+	create_tween().tween_property(body, ^"position:y", 0.3, 0.4).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	_clip(&"die", false)
 	defeated.emit(self)
 
 
-## Alas abiertas `spread` (rad hacia arriba) y aleteando `rate` veces por segundo (0: quietas).
-func _wings(spread: float, rate: float, seconds: float) -> void:
-	_flap_rate = rate
-	_tween_to(self, ^"_flap_size", 0.35 if rate > 0.0 else 0.0, seconds)
-	_tween_to(self, ^"_spread", spread, seconds)
+## Cruza las alas a la pose `pose` (un clip de %Wings) en `seconds`; el aleteo se acelera con la pelea.
+func _wings(pose: StringName, seconds: float) -> void:
+	wings.speed_scale = pace
+	wings.play(pose, seconds / pace)
 
 
 func _catch_light(on: bool) -> void:

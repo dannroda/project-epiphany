@@ -135,3 +135,25 @@ func test_the_shield_sends_the_west_sun_into_the_perched_apu() -> void:
 	assert_true(await _until(func() -> bool: return kuntur.state == Kuntur.State.DOWN, 3.0), "el escudo le manda el sol y lo voltea")
 	hold_block(player, false)
 	state.reset()
+
+
+## Las alas aletean con los clips de %Wings y al morir quedan quietas mientras el cuerpo se aplasta y desaparece.
+func test_the_wings_flap_until_it_dies() -> void:
+	tree = Engine.get_main_loop() as SceneTree
+	var bird := (load("res://src/entities/kuntur/apu_kuntur.tscn") as PackedScene).instantiate() as Kuntur
+	tree.root.add_child(bird)
+	var wing := bird.get_node(^"Body/WingLeft") as Node3D
+	var seen := {}
+	for i in 20:
+		await tree.process_frame
+		seen[snappedf(wing.rotation.z, 0.05)] = true
+	assert_true(seen.size() > 3, "las alas se mueven (%d poses)" % seen.size())
+	assert_true(is_equal_approx((bird.get_node(^"Body/WingRight") as Node3D).rotation.z, -wing.rotation.z), "las dos alas van parejas")
+	var before := bird.body.scale
+	bird._die()
+	var still := wing.rotation.z
+	await tree.create_timer(1.0).timeout
+	assert_eq(wing.rotation.z, still, "muerto, las alas quedan quietas")
+	assert_true(not bird.body.visible, "el cuerpo desaparece")
+	assert_true(bird.body.scale.y < before.y * 0.2 and bird.body.scale.x > before.x, "aplastado sobre su escala propia")
+	bird.free()
