@@ -1,0 +1,20 @@
+{
+  "checklist": [],
+  "code": "16.30",
+  "created_at": "2026-10-17T05:58:30.886Z",
+  "description": "Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTree cuando hay estados o mezclas), para verlo y ajustarlo en el editor. Los tweens quedan solo para destinos calculados en runtime y esperas. Teletransporte (salida y llegada), anillo del rugido, onda de choque, explosión, giro y parpadeo de los pickups, luz del ItemGet, flotar del Espíritu. Opcional: parpadeo de antorchas y stencil light.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 89,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "refactor",
+    "animacion"
+  ],
+  "test": "",
+  "title": "Animaciones a AnimationPlayer: efectos de feel",
+  "updated_at": "2026-10-17T05:58:30.886Z"
+}

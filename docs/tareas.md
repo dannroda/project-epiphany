@@ -1,7 +1,7 @@
 # Tareas — Project Epiphany
 
 > Export de `compass/`, que es la fuente de verdad. No editar: los cambios se hacen en `compass/` o con `scompass`, y este archivo se regenera.
-> Generado: 2026-10-16
+> Generado: 2026-10-17
 
 ## M0 — Refactor del player + base de datos  (13/13)
 
@@ -6217,7 +6217,7 @@ Daniel (2026-10-15): es hora de que los enemigos normales de las mazmorras vayan
 
 **Relacionadas:** 16.17 Configs de enemigos clonadas por mazmorra
 
-## M16 — Salud del código  (0/27)
+## M16 — Salud del código  (0/33)
 
 Arreglar los bugs y la deuda técnica que salieron del análisis del 2026-10-16 (cinco revisiones con las skills: arquitectura, code review, comunicación, patrones y datos), antes de seguir sumando sub-jefes, mazmorras y el co-op. Lo de rendimiento va a M15; las suposiciones de un solo player, a M13.
 
@@ -6673,6 +6673,44 @@ La cámara de juego (505 líneas) y target_indicator están en src/tools/ junto 
 **Archivos:** `export_presets.cfg`, `project.godot`
 
 **Relacionadas:** 11.59 Limpieza de assets sin uso
+
+### 16.28 Animaciones a AnimationPlayer: HUD y UI · Revisión
+
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-17 · **Etiquetas:** `refactor`, `animacion`
+
+Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTree cuando hay estados o mezclas), para verlo y ajustarlo en el editor. Los tweens quedan solo para destinos calculados en runtime y esperas. HUD: nombre de zona, cartel de guardado, barra del jefe (entrar y salir); sacudida del slot del panel; pop del corazón; flecha del cuadro de texto; indicador de objetivo (bob y giro).
+
+**Notas:** f436841e: nombre de zona, cartel de guardado y barra del jefe con su AnimationPlayer cada uno en hud.tscn; sacudida del slot (hud_item_slot.tscn), pop del corazón (heart_icon.tscn), flecha del cuadro de texto e indicador de objetivo en clips en bucle. Quedan en código: la vida de la barra del jefe (sigue un valor), el fundido de SceneFlow (duración por llamada) y el giro del modelo en Equipo.
+
+### 16.29 Animaciones a AnimationPlayer: props del mundo · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `refactor`, `animacion`
+
+Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTree cuando hay estados o mezclas), para verlo y ajustarlo en el editor. Los tweens quedan solo para destinos calculados en runtime y esperas. Puerta, reja, puente, cofre, pinchos, pared agrietada, escalera de soga, anillo de fuego y rompibles (sacudida, corte, caída). Reja y puente animan su raíz: pasar a un hijo. sink/drop se cambian por instancia (puerta sink 3.2 en 30 instancias): llave normalizada 0..1 multiplicada por el export.
+
+### 16.30 Animaciones a AnimationPlayer: efectos de feel · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `refactor`, `animacion`
+
+Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTree cuando hay estados o mezclas), para verlo y ajustarlo en el editor. Los tweens quedan solo para destinos calculados en runtime y esperas. Teletransporte (salida y llegada), anillo del rugido, onda de choque, explosión, giro y parpadeo de los pickups, luz del ItemGet, flotar del Espíritu. Opcional: parpadeo de antorchas y stencil light.
+
+### 16.31 Animaciones a AnimationPlayer: sub-jefes · Pendiente
+
+**Prioridad:** media · **Tamaño:** L · **Etiquetas:** `refactor`, `animacion`
+
+Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTree cuando hay estados o mezclas), para verlo y ajustarlo en el editor. Los tweens quedan solo para destinos calculados en runtime y esperas. Primero un helper en ArenaFighter para clips con speed_scale = pace. Momia, Ojo Vigía (open exportado), Amaru/Yacumama, Centinela, Kuntur (alas en AnimationTree), torreta y hundirse del enemigo al morir. Las alturas que cambian por instancia (hover_height, leap_height, rise_height) se normalizan antes. Los movimientos de la raíz hacia el player o puntos de la arena quedan en código.
+
+### 16.32 Animaciones a AnimationPlayer: jefe final (ojo y manos) · Pendiente
+
+**Prioridad:** baja · **Tamaño:** L · **Etiquetas:** `refactor`, `animacion`
+
+Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTree cuando hay estados o mezclas), para verlo y ajustarlo en el editor. Los tweens quedan solo para destinos calculados en runtime y esperas. Ojo: blink, roar, awaken, carga del láser y del orbe, relax, flare, sacudida, muerte; marcas y blasts en sus plantillas; flotar y aturdido en AnimationTree. Manos: un AnimationPlayer por mano para aturdida, desaparecer, colapsar, onda, aviso del agarre, flex. El resorte de _animate queda en código. Tocar boss.tscn solo cuando Daniel no tenga cambios sin commitear ahí.
+
+### 16.33 Mezclas del player en el AnimationTree, no con tweens · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `refactor`, `animacion`
+
+Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTree cuando hay estados o mezclas), para verlo y ajustarlo en el editor. Los tweens quedan solo para destinos calculados en runtime y esperas. carrier, shield y aiming_item tweenean blend_amount del AnimationTree: pasar a Transition con xfade_time.
 
 ## M13 — Co-op local (estilo Four Swords)  (1/17)
 

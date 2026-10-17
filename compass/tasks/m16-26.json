@@ -1,0 +1,21 @@
+{
+  "assignee": "project-epiphany-17",
+  "checklist": [],
+  "code": "16.28",
+  "created_at": "2026-10-17T05:58:30.271Z",
+  "description": "Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTree cuando hay estados o mezclas), para verlo y ajustarlo en el editor. Los tweens quedan solo para destinos calculados en runtime y esperas. HUD: nombre de zona, cartel de guardado, barra del jefe (entrar y salir); sacudida del slot del panel; pop del corazón; flecha del cuadro de texto; indicador de objetivo (bob y giro).",
+  "milestone": "m16",
+  "notes": "f436841e: nombre de zona, cartel de guardado y barra del jefe con su AnimationPlayer cada uno en hud.tscn; sacudida del slot (hud_item_slot.tscn), pop del corazón (heart_icon.tscn), flecha del cuadro de texto e indicador de objetivo en clips en bucle. Quedan en código: la vida de la barra del jefe (sigue un valor), el fundido de SceneFlow (duración por llamada) y el giro del modelo en Equipo.",
+  "order": 87,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "review",
+  "tags": [
+    "refactor",
+    "animacion"
+  ],
+  "test": "",
+  "title": "Animaciones a AnimationPlayer: HUD y UI",
+  "updated_at": "2026-10-17T06:06:21.265Z"
+}

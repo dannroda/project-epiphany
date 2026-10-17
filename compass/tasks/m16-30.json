@@ -1,0 +1,20 @@
+{
+  "checklist": [],
+  "code": "16.32",
+  "created_at": "2026-10-17T05:58:31.504Z",
+  "description": "Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTree cuando hay estados o mezclas), para verlo y ajustarlo en el editor. Los tweens quedan solo para destinos calculados en runtime y esperas. Ojo: blink, roar, awaken, carga del láser y del orbe, relax, flare, sacudida, muerte; marcas y blasts en sus plantillas; flotar y aturdido en AnimationTree. Manos: un AnimationPlayer por mano para aturdida, desaparecer, colapsar, onda, aviso del agarre, flex. El resorte de _animate queda en código. Tocar boss.tscn solo cuando Daniel no tenga cambios sin commitear ahí.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 91,
+  "priority": "low",
+  "refs": [],
+  "size": "l",
+  "status": "todo",
+  "tags": [
+    "refactor",
+    "animacion"
+  ],
+  "test": "",
+  "title": "Animaciones a AnimationPlayer: jefe final (ojo y manos)",
+  "updated_at": "2026-10-17T05:58:31.504Z"
+}
