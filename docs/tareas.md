@@ -6702,11 +6702,15 @@ Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTre
 
 **Notas:** 27aa401a: teletransporte en dos clips (depart, arrive) con la silueta y visibilidad del player por propiedades que reenvían, esfera, rayo y luz, y sonido y temblor como method tracks; anillo del rugido con grow/travel 0..1 que escalan size y reach de cada jefe; onda de choque y explosión (flash, bola de fuego, anillo) en clips; pickups giran y parpadean con clips; luz del ItemGet y flotar del Espíritu en player.tscn. Quedan en código: hit flash y afterimage (la duración la pide quien llama), el parpadeo de la mecha de la bomba (se acelera) y el parpadeo de antorchas. El tamaño de la bola de fuego ahora está en el clip (2.2, el radio de la explosión).
 
-### 16.31 Animaciones a AnimationPlayer: sub-jefes · Pendiente
+### 16.31 Animaciones a AnimationPlayer: sub-jefes · Revisión
 
-**Prioridad:** media · **Tamaño:** L · **Etiquetas:** `refactor`, `animacion`
+**Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-17 · **Etiquetas:** `refactor`, `animacion`
 
 Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTree cuando hay estados o mezclas), para verlo y ajustarlo en el editor. Los tweens quedan solo para destinos calculados en runtime y esperas. Primero un helper en ArenaFighter para clips con speed_scale = pace. Momia, Ojo Vigía (open exportado), Amaru/Yacumama, Centinela, Kuntur (alas en AnimationTree), torreta y hundirse del enemigo al morir. Las alturas que cambian por instancia (hover_height, leap_height, rise_height) se normalizan antes. Los movimientos de la raíz hacia el player o puntos de la arena quedan en código.
+
+**Prueba:** tests/test_arena_fighter.gd, test_centinela.gd, test_kuntur.gd, test_quenoa.gd
+
+**Notas:** Hecho en main (35dc0a89..4b6842bb). Momia, Ojo Vigía, Amaru/Yacumama, Centinela, Kuntur, torreta y el hundirse del enemigo usan clips en %Moves (ArenaFighter._clip: speed_scale = pace, estirado a la duración de la instancia). Alturas por instancia normalizadas (lift, hover/rise, submerge, tail_up, squash, sunk). Alas del Kuntur: un AnimationPlayer %Wings con un clip por pose y cruce con play(pose, blend) en vez de AnimationTree (cada cambio trae su tiempo de mezcla). Centinela: aim_lock y warn_lead pasaron a ser llamadas del clip windup. Todos los AnimationPlayers nuevos con deterministic = false y cortes con stop(true). Para probar: pelear cada sub-jefe y mirar rugido, saltos, temblor trabado y muerte; Kuntur: alas en cada ataque.
 
 ### 16.32 Animaciones a AnimationPlayer: jefe final (ojo y manos) · Pendiente
 

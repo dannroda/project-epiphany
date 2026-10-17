@@ -1,20 +1,21 @@
 {
+  "assignee": "project-epiphany-17",
   "checklist": [],
   "code": "16.31",
   "created_at": "2026-10-17T05:58:31.194Z",
   "description": "Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTree cuando hay estados o mezclas), para verlo y ajustarlo en el editor. Los tweens quedan solo para destinos calculados en runtime y esperas. Primero un helper en ArenaFighter para clips con speed_scale = pace. Momia, Ojo Vigía (open exportado), Amaru/Yacumama, Centinela, Kuntur (alas en AnimationTree), torreta y hundirse del enemigo al morir. Las alturas que cambian por instancia (hover_height, leap_height, rise_height) se normalizan antes. Los movimientos de la raíz hacia el player o puntos de la arena quedan en código.",
   "milestone": "m16",
-  "notes": "",
+  "notes": "Hecho en main (35dc0a89..4b6842bb). Momia, Ojo Vigía, Amaru/Yacumama, Centinela, Kuntur, torreta y el hundirse del enemigo usan clips en %Moves (ArenaFighter._clip: speed_scale = pace, estirado a la duración de la instancia). Alturas por instancia normalizadas (lift, hover/rise, submerge, tail_up, squash, sunk). Alas del Kuntur: un AnimationPlayer %Wings con un clip por pose y cruce con play(pose, blend) en vez de AnimationTree (cada cambio trae su tiempo de mezcla). Centinela: aim_lock y warn_lead pasaron a ser llamadas del clip windup. Todos los AnimationPlayers nuevos con deterministic = false y cortes con stop(true). Para probar: pelear cada sub-jefe y mirar rugido, saltos, temblor trabado y muerte; Kuntur: alas en cada ataque.",
   "order": 90,
   "priority": "medium",
   "refs": [],
   "size": "l",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "refactor",
     "animacion"
   ],
-  "test": "",
+  "test": "tests/test_arena_fighter.gd, test_centinela.gd, test_kuntur.gd, test_quenoa.gd",
   "title": "Animaciones a AnimationPlayer: sub-jefes",
-  "updated_at": "2026-10-17T05:58:31.194Z"
+  "updated_at": "2026-10-17T07:31:45.292Z"
 }
