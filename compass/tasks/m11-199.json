@@ -1,11 +1,11 @@
 {
-  "assignee": "project-epiphany-cb",
+  "assignee": "project-epiphany-17",
   "checklist": [],
   "code": "11.199",
   "created_at": "2026-10-16T01:01:10.222Z",
   "description": "Daniel (2026-10-15): al resolver algo que abre una puerta en otra sala (p. ej. las 4 piezas de la llave del jefe del templo) la cámara iba a la puerta, que está oculta. Hecho (0478f030): TopDownCamera.reveal solo corre la acción si el objetivo está en salas sin player (Room.contains con margen para las puertas entre dos salas). test_wiring.",
   "milestone": "m11",
-  "notes": "",
+  "notes": " Playtest 17/10: en el templo seguía. Las puertas del templo están en el hueco entre dos salas, fuera de las dos, y un objetivo sin sala contaba como visible. 4200a3b5: el objetivo es de las salas más cercanas (Room.distance_to), así una puerta solo se muestra si hay player en una de las dos que une; sin salas (overworld) siempre. test_templo.",
   "order": 196,
   "playtest": {
     "note": "En el templo sigue pasando.",
@@ -14,12 +14,12 @@
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "camara",
     "mazmorra"
   ],
   "test": "",
   "title": "Mazmorras: no hacer zoom a lo que se abre en otra sala",
-  "updated_at": "2026-10-17T06:40:49.290Z"
+  "updated_at": "2026-10-17T07:11:46.874Z"
 }

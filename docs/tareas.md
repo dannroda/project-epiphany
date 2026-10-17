@@ -4144,9 +4144,9 @@ Playtest 2026-10-12: tomar una pieza de corazón no cura. Que cure (a quien la t
 
 **Notas:** Sesión de bugs (-fd). La pieza (heart_piece.tscn) cura 4 de vida, lo mismo que un corazón suelto, solo a quien la toma; al completar el contenedor llena como antes (cambia la vida máxima).
 
-### 11.93 Jefe: aflojar la fase 3 y el modelo que se hunde · En curso
+### 11.93 Jefe: aflojar la fase 3 y el modelo que se hunde · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `jefe`, `bug`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-17 · **Etiquetas:** `jefe`, `bug`
 
 Playtest 2026-10-12: el jefe anda bien en general; la tercera fase es demasiado dura y el modelo suele hundirse en el piso.
 
@@ -4156,7 +4156,7 @@ Playtest 2026-10-12: el jefe anda bien en general; la tercera fase es demasiado 
 
 **Prueba:** test_boss › test_phase_two_opens_the_eye_with_a_tremor: aturdido queda apoyado sin hundirse en el piso; test_marks_keep_the_eye_busy_until_they_blast: mientras se cargan las marcas no encadena otro ataque.
 
-**Notas:** Sesión de bugs (-fd). Hundido: lo más bajo del cuerpo queda 2,35 m bajo su origen; aturdido bajaba a 1,9 y, con el bamboleo, se metía 0,45–0,57 m en el piso (en cada aturdimiento, más seguido en la fase 3). Ahora BODY_HEIGHT_STUNNED = 2,4 y aturdido no se bambolea: queda apoyado (el hurtbox del ojo está fijo, el alcance de la espada no cambia; la caída se ve más corta, 0,2 m en vez de 0,7). Fase 3, primer pase: respiro entre rondas 0,5 → 0,8 s (como la fase 2) y las marcas tienen ocupado al ojo hasta que estallan (antes lo soltaban a los 0,4 s y otro ataque se encimaba con el estallido). Para revisar: probarlo a ojo con Daniel; si sigue duro, lo siguiente es MARK_DAMAGE 4 → 2 o menos peso para mark. De paso: test_overlay_shows_the_fight era inestable (apuntaba a un player de un test anterior y a veces ningún ataque puntuaba); ahora sin objetivo.
+**Notas:** Sesión de bugs (-fd). Hundido: lo más bajo del cuerpo queda 2,35 m bajo su origen; aturdido bajaba a 1,9 y, con el bamboleo, se metía 0,45–0,57 m en el piso (en cada aturdimiento, más seguido en la fase 3). Ahora BODY_HEIGHT_STUNNED = 2,4 y aturdido no se bambolea: queda apoyado (el hurtbox del ojo está fijo, el alcance de la espada no cambia; la caída se ve más corta, 0,2 m en vez de 0,7). Fase 3, primer pase: respiro entre rondas 0,5 → 0,8 s (como la fase 2) y las marcas tienen ocupado al ojo hasta que estallan (antes lo soltaban a los 0,4 s y otro ataque se encimaba con el estallido). Para revisar: probarlo a ojo con Daniel; si sigue duro, lo siguiente es MARK_DAMAGE 4 → 2 o menos peso para mark. De paso: test_overlay_shows_the_fight era inestable (apuntaba a un player de un test anterior y a veces ningún ataque puntuaba); ahora sin objetivo. Playtest 17/10: se seguían hundiendo las manos. Era la mano caída (DOWN): ladeada baja más que apoyada y quedaba 0,3 m dentro del piso. e61b2cbb: cae a DOWN_HEIGHT 0,77 en vez de 0,4; medido en pelea, lo más bajo queda entre 0,02 y 0,09 sobre el piso. test_boss mide el vértice más bajo de cada mano caída.
 
 ### 11.94 Arquero: dispara sin frenarse a buscar distancia · Hecho
 
@@ -5456,11 +5456,13 @@ Daniel (2026-10-15): aumentar las veces que las manos golpean el piso; detrás d
 - [x] Detrás del ojo, el orbe chocaba contra el propio jefe
   Hecho (8c6061e7): los proyectiles ignoran los cuerpos de quien los disparó. test_the_orb_goes_through_the_boss_own_body.
 
-### 11.199 Mazmorras: no hacer zoom a lo que se abre en otra sala · En curso
+### 11.199 Mazmorras: no hacer zoom a lo que se abre en otra sala · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-cb · **Etiquetas:** `camara`, `mazmorra`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-17 · **Etiquetas:** `camara`, `mazmorra`
 
 Daniel (2026-10-15): al resolver algo que abre una puerta en otra sala (p. ej. las 4 piezas de la llave del jefe del templo) la cámara iba a la puerta, que está oculta. Hecho (0478f030): TopDownCamera.reveal solo corre la acción si el objetivo está en salas sin player (Room.contains con margen para las puertas entre dos salas). test_wiring.
+
+**Notas:**  Playtest 17/10: en el templo seguía. Las puertas del templo están en el hueco entre dos salas, fuera de las dos, y un objetivo sin sala contaba como visible. 4200a3b5: el objetivo es de las salas más cercanas (Room.distance_to), así una puerta solo se muestra si hay player en una de las dos que une; sin salas (overworld) siempre. test_templo.
 
 ### 11.200 Enemigos de sala de mazmorra no sueltan la persecución · Hecho
 
@@ -7543,7 +7545,7 @@ feel.gd:59-83 genera unos 22 sonidos en `_ready` (~10 s de audio a 22050 Hz, ~22
 30. [x] 11.167 Totora: caer al agua y perder deja al player cayendo al vacío antes de "You Fell" · Hecho · anda
 31. [x] 11.161 Jefe final: la puerta norte de la sala queda escondida · Hecho · anda
 32. [x] 11.162 Retirar el templo viejo (levels/temple.tscn) · Hecho · anda
-33. [ ] 11.93 Jefe: aflojar la fase 3 y el modelo que se hunde · En curso · **falla** — Se siguen hundiendo un poco las manos
+33. [ ] 11.93 Jefe: aflojar la fase 3 y el modelo que se hunde · Revisión · **falla** — Se siguen hundiendo un poco las manos
 34. [x] 11.152 Z-target: al activarlo, priorizar el enemigo más cercano · Hecho · anda
 35. [x] 11.142 Mapa de pausa: LT/RT van rapidísimo; mover con las flechitas · Hecho · anda
 36. [x] 11.158 Piso LA: patrón de tablones raro · Hecho · anda
@@ -7622,7 +7624,7 @@ feel.gd:59-83 genera unos 22 sonidos en `_ready` (~10 s de audio a 22050 Hz, ~22
 46. [x] 11.183 Espada mejorada (premio de la Combinada del templo) · Hecho · anda
 47. [x] 11.190 Templo: una pieza de corazón · Hecho · anda
 48. [x] 11.161 Jefe final: la puerta norte de la sala queda escondida · Hecho · anda
-49. [ ] 11.93 Jefe: aflojar la fase 3 y el modelo que se hunde · En curso · **falla** — Se siguen hundiendo un poco las manos
+49. [ ] 11.93 Jefe: aflojar la fase 3 y el modelo que se hunde · Revisión · **falla** — Se siguen hundiendo un poco las manos
 50. [x] 11.194 Jefe final: rayo del ojo con las dos manos fuera de juego · Hecho · anda
 51. [x] 12.30 Templo: salas que se vean bien para grabar · Hecho · anda
 52. [x] 12.33 Templo: la Mano sub-jefe con modelo propio · Hecho · anda
@@ -7654,7 +7656,7 @@ feel.gd:59-83 genera unos 22 sonidos en `_ready` (~10 s de audio a 22050 Hz, ~22
 77. [x] 11.87 Valores de ajuste al inspector · Hecho · anda
 78. [ ] 10.27 Nodos creados por código pasan a sus .tscn · Revisión
 79. [ ] 11.198 Jefe final: más golpes al piso y lo alcanza detrás · Revisión
-80. [ ] 11.199 Mazmorras: no hacer zoom a lo que se abre en otra sala · En curso · **falla** — En el templo sigue pasando.
+80. [ ] 11.199 Mazmorras: no hacer zoom a lo que se abre en otra sala · Revisión · **falla** — En el templo sigue pasando.
 81. [x] 11.200 Enemigos de sala de mazmorra no sueltan la persecución · Hecho · anda
 82. [ ] 11.201 Autosave en la ranura de la partida · Revisión
 83. [x] 11.205 Escudo siempre en la mano; la guardia es Z · Hecho · anda
