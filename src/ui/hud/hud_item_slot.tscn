@@ -87,6 +87,7 @@ mouse_filter = 2
 theme_type_variation = &"HudAmmo"
 
 [node name="Shake" type="AnimationPlayer" parent="."]
+deterministic = false
 libraries = {
 &"": SubResource("SlotLib")
 }

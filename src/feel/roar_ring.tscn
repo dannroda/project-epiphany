@@ -73,6 +73,7 @@ mesh = SubResource("Plane")
 script = ExtResource("2_script")
 
 [node name="Spread" type="AnimationPlayer" parent="."]
+deterministic = false
 libraries = {
 &"": SubResource("RingLib")
 }

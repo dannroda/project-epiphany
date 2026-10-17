@@ -89,6 +89,7 @@ shape = SubResource("HurtShape")
 script = ExtResource("pf_persistent_flag")
 
 [node name="Shake" type="AnimationPlayer" parent="."]
+deterministic = false
 unique_name_in_owner = true
 libraries = {
 &"": SubResource("WallLib")

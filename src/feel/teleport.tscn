@@ -249,6 +249,7 @@ light_energy = 0.0
 omni_range = 5.0
 
 [node name="Clip" type="AnimationPlayer" parent="."]
+deterministic = false
 unique_name_in_owner = true
 libraries = {
 &"": SubResource("TeleportLib")

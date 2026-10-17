@@ -61,6 +61,7 @@ mesh = ExtResource("4_lid")
 script = ExtResource("pf_persistent_flag")
 
 [node name="LidAnim" type="AnimationPlayer" parent="."]
+deterministic = false
 unique_name_in_owner = true
 libraries = {
 &"": SubResource("ChestLib")

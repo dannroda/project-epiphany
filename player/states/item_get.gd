@@ -68,5 +68,5 @@ func _flash(at: Vector3) -> void:
 	var light: OmniLight3D = player.get_node(^"%ItemGetLight")
 	light.global_position = at + Vector3.UP * 0.4
 	var flash: AnimationPlayer = player.get_node(^"%ItemGetFlash")
-	flash.stop()
+	flash.stop(true)
 	flash.play(&"flash")

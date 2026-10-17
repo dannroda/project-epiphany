@@ -69,12 +69,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 shape = SubResource("Shape")
 
 [node name="Spin" type="AnimationPlayer" parent="."]
+deterministic = false
 libraries = {
 &"": SubResource("SpinLib")
 }
 autoplay = &"spin"
 
 [node name="Blink" type="AnimationPlayer" parent="."]
+deterministic = false
 libraries = {
 &"": SubResource("BlinkLib")
 }

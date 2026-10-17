@@ -154,7 +154,7 @@ func _flash_saved() -> void:
 
 
 func _restart(player: AnimationPlayer, clip: StringName) -> void:
-	player.stop()
+	player.stop(true)
 	player.play(clip)
 
 

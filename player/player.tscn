@@ -1004,12 +1004,14 @@ lower_fade = 0.0
 cull_mask = 1
 
 [node name="ItemGetFlash" type="AnimationPlayer" parent="ItemGetLight"]
+deterministic = false
 unique_name_in_owner = true
 libraries = {
 &"": SubResource("ItemGetLib")
 }
 
 [node name="SpiritBob" type="AnimationPlayer" parent="Spirit"]
+deterministic = false
 unique_name_in_owner = true
 libraries = {
 &"": SubResource("SpiritLib")

@@ -65,7 +65,7 @@ func _set_raised(up: bool, instant := false) -> void:
 	else:
 		hitbox.deactivate()
 	if instant:
-		motion.stop()
+		motion.stop(true)
 		spikes.position.y = 0.0 if up else HIDDEN
 		return
 	motion.play(&"rise" if up else &"fall")

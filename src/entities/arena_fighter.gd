@@ -68,7 +68,7 @@ func _interrupt() -> void:
 			tween.kill()
 	_tweens.clear()
 	if moves:
-		moves.stop()
+		moves.stop(true)
 	_on_interrupt()
 	attack_finished.emit()
 
@@ -114,7 +114,7 @@ func _wait(seconds: float, paced := true) -> Signal:
 func _clip(clip: StringName, paced := true, seconds := 0.0) -> void:
 	var length := moves.get_animation(clip).length
 	moves.speed_scale = (pace if paced else 1.0) * (length / seconds if seconds > 0.0 else 1.0)
-	moves.stop()
+	moves.stop(true)
 	moves.play(clip)
 
 

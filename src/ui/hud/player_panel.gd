@@ -87,7 +87,7 @@ func _refresh_prompt() -> void:
 
 func _shake_slot(button: int) -> void:
 	var shake := item_slots.get_child(button).get_node(^"Shake") as AnimationPlayer
-	shake.stop()
+	shake.stop(true)
 	shake.play(&"shake")
 
 

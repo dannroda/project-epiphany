@@ -85,6 +85,7 @@ shape = SubResource("InteractShape")
 script = ExtResource("pf_persistent_flag")
 
 [node name="Swing" type="AnimationPlayer" parent="."]
+deterministic = false
 unique_name_in_owner = true
 libraries = {
 &"": SubResource("DoorLib")

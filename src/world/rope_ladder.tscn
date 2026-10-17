@@ -89,6 +89,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.7, 1.55)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.2, 1.55)
 
 [node name="Unroll" type="AnimationPlayer" parent="."]
+deterministic = false
 unique_name_in_owner = true
 libraries = {
 &"": SubResource("LadderLib")

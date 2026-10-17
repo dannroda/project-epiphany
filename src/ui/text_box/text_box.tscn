@@ -209,6 +209,7 @@ alignment = 2
 script = ExtResource("2_hints")
 
 [node name="NextBobAnim" type="AnimationPlayer" parent="ItemBox/NextAnchor/Next"]
+deterministic = false
 libraries = {
 &"": SubResource("NextLib")
 }

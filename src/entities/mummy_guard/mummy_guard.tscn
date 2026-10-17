@@ -316,6 +316,7 @@ health = NodePath("../Health")
 visuals = NodePath("../Body")
 
 [node name="Moves" type="AnimationPlayer" parent="."]
+deterministic = false
 unique_name_in_owner = true
 libraries = {
 &"": SubResource("MummyLib")

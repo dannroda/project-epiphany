@@ -85,6 +85,7 @@ texture = ExtResource("3_full")
 expand_mode = 1
 
 [node name="Pop" type="AnimationPlayer" parent="."]
+deterministic = false
 libraries = {
 &"": SubResource("HeartLib")
 }

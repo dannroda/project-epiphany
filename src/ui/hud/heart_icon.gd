@@ -50,5 +50,5 @@ func _layout() -> void:
 
 func pop() -> void:
 	var player := $Pop as AnimationPlayer
-	player.stop()
+	player.stop(true)
 	player.play(&"pop")

@@ -354,18 +354,21 @@ text = "HUD_SAVED"
 horizontal_alignment = 2
 
 [node name="AreaNameAnim" type="AnimationPlayer" parent="AreaName"]
+deterministic = false
 unique_name_in_owner = true
 libraries = {
 &"": SubResource("AreaLib")
 }
 
 [node name="SavedAnim" type="AnimationPlayer" parent="Saved"]
+deterministic = false
 unique_name_in_owner = true
 libraries = {
 &"": SubResource("SavedLib")
 }
 
 [node name="BossBarAnim" type="AnimationPlayer" parent="BossBar"]
+deterministic = false
 unique_name_in_owner = true
 libraries = {
 &"": SubResource("BossLib")
