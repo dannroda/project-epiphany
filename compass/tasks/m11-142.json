@@ -4,18 +4,22 @@
   "code": "11.142",
   "created_at": "2026-10-14T01:58:59.133Z",
   "description": "Playtest 2026-10-13: en la pestaña Mapa del menú de pausa, LT y RT mueven el mapa rapidísimo y la velocidad depende del tipo de gatillo del gamepad (analógico/digital). Debería moverse con las flechitas (d-pad) en lugar de los gatillos, a una velocidad fija.",
+  "done_at": "2026-10-17T06:30:30.915Z",
   "milestone": "m11",
   "notes": "LT/RT son ejes del joystick ligados a map_floor_up/down (cambiar de piso en el mapa de una mazmorra); cada movimiento del gatillo pasado el umbral llegaba como apretado, así que un gatillo analógico saltaba varios pisos según el control. Ahora cuenta una vez por apretón hasta soltarlo. Pendiente con Daniel: si además quiere cambiar de piso con la cruceta.\nDaniel (2026-10-14): la cruceta y el stick izquierdo arriba/abajo cambian de piso. Hecho (ff2a5f17): en mazmorras con pisos arriba/abajo (cruceta, stick, flechas) cambian de piso una vez por apretón, igual que LT/RT; izquierda/derecha recorren todas las salas del piso en orden de lectura; la ayuda y la columna de pisos muestran arriba/abajo. Con un solo piso el cursor sigue moviéndose en las cuatro direcciones.",
   "order": 139,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "review",
+  "status": "done",
   "tags": [
     "bug",
     "ui"
   ],
   "test": "Mapa de la Chullpa en pausa: LT, la cruceta o el stick izquierdo cambian un solo piso por apretón; izquierda/derecha pasan por todas las salas del piso. test_map › test_floor_selector_in_a_dungeon_with_floors",
   "title": "Mapa de pausa: LT/RT van rapidísimo; mover con las flechitas",
-  "updated_at": "2026-10-16T06:48:05.826Z"
+  "updated_at": "2026-10-17T06:30:30.915Z"
 }

@@ -4,6 +4,7 @@
   "code": "12.30",
   "created_at": "2026-10-14T18:31:43.089Z",
   "description": "Daniel (2026-10-14) quiere grabar el templo completo y así no se puede: 1) cada puerta tiene alrededor una U de cubitos grises sueltos (resto del kit gris), fuera de estilo; 2) las puertas este y oeste dan a un vacío ocre plano y el corte de la pared muestra dientes negros fuera de la sala; 3) en las esquinas de arriba las puntas de las paredes inclinadas sobresalen en tiras; 4) abajo una franja oscura tapa la pared sur. Recorrer todas las salas del templo con el escenario templo_video y dejarlas al nivel de la Chullpa y la Queñoa.",
+  "done_at": "2026-10-17T06:39:04.263Z",
   "images": [
     "compass/images/m12-30-20261014-153143.png"
   ],
@@ -16,15 +17,18 @@
   "milestone": "m12",
   "notes": "Hecho (-5d, d6a17c4f/0e2d6d34): cámara del templo a 25, velo con reach (negro pasado el grosor de pared), pasos de puerta en piedra lavanda oscura y umbrales lavanda. Quedan astillas de la pared vecina junto a las puertas este/oeste y en las esquinas, y Mano y Jefe con su encuadre propio. test_templo pasa (una falla anterior era import viejo en main).\n2026-10-15: el templo se rearmó en salas de 22 × 14 (9dfa381a, 11.180) con cámara y viñeta nuevas (91b21efd); la cámara a 25 y las astillas junto a las puertas este/oeste son del layout viejo. Falta volver a recorrerlo con templo_video y rehacer la lista de lo que queda.",
   "order": 30,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "high",
   "refs": [],
   "size": "m",
-  "status": "review",
+  "status": "done",
   "tags": [
     "arte",
     "templo"
   ],
   "test": "Grabar el templo con el escenario templo_video: las salas llenan la pantalla y afuera es negro. test_templo, test_coop_camera, test_camera",
   "title": "Templo: salas que se vean bien para grabar",
-  "updated_at": "2026-10-16T06:48:25.608Z"
+  "updated_at": "2026-10-17T06:39:04.263Z"
 }

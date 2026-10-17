@@ -4,18 +4,22 @@
   "code": "11.173",
   "created_at": "2026-10-14T17:52:29.972Z",
   "description": "Playtest 2026-10-14: en la planta baja (1P) de una mazmorra hay un esqueleto que no se ve.",
+  "done_at": "2026-10-17T06:37:48.060Z",
   "milestone": "m11",
   "notes": "Causa probable: un enemigo que cae por un hueco al piso de abajo seguía siendo hijo de su piso, y los pisos de arriba del player se ocultan. Ahora al aterrizar pasa al piso de su altura (02ccb681). Si vuelve a pasar: anotar mazmorra y sala.",
   "order": 170,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "review",
+  "status": "done",
   "tags": [
     "bug",
     "enemigos"
   ],
   "test": "test_chullpa › test_an_enemy_that_falls_to_the_floor_below_stays_visible",
   "title": "Esqueleto invisible en una mazmorra",
-  "updated_at": "2026-10-16T06:48:12.283Z"
+  "updated_at": "2026-10-17T06:37:48.060Z"
 }

@@ -4,13 +4,17 @@
   "code": "11.150",
   "created_at": "2026-10-14T02:33:30.483Z",
   "description": "Playtest 2026-10-13, Totora: con el gancho, el targeting marca (rombo amarillo) algo que está arriba, en otra sala o piso, a través de la pared/techo. El targeting del gancho debería considerar solo objetivos de la sala actual (y del mismo piso), con línea de vista.",
+  "done_at": "2026-10-17T06:29:23.343Z",
   "milestone": "m11",
   "notes": "Los postes se fijaban a cualquier altura dentro del alcance (10 m): desde un piso de la Totora se marcaban los del piso de arriba (8 m) a través del techo. Ahora un poste cuya sala está en otro piso que el del player no cuenta. Los cruces por una puerta del mismo piso siguen andando.",
   "order": 147,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "review",
+  "status": "done",
   "tags": [
     "bug",
     "totora",
@@ -18,5 +22,5 @@
   ],
   "test": "Totora PisoBajo debajo de un poste de PisoAlto, con el gancho: no aparece el rombo. test_hookshot › test_posts_on_another_floor_cannot_be_targeted",
   "title": "Gancho: el targeting marca un poste de otra sala/piso",
-  "updated_at": "2026-10-16T06:48:07.340Z"
+  "updated_at": "2026-10-17T06:29:23.343Z"
 }

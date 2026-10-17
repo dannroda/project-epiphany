@@ -4,18 +4,22 @@
   "code": "12.25",
   "created_at": "2026-10-14T04:46:13.232Z",
   "description": "Daniel 2026-10-14: con el logo en el menú principal, el ojo del logo va en el resto de lugares que usaban el ojo dibujado por código, pero solo el ojo. Hecho: art/logo/epiphany_eye.svg (solo el ojo: almendra, iris, pupila y contorno dorado, sin rayos, lágrimas ni letras) → assets/ui/logo/epiphany_eye.png; Eye de game_over, language_select y la carga (scene_flow) son TextureRect con esa textura. Game over y selección de idioma lo muestran tenue (alfa 0,35); el de carga parpadea achicando la escala. Se borraron title_eye.gd y loading_eye.gd. Test: test_every_eye_is_the_logo_eye.",
+  "done_at": "2026-10-17T06:30:55.259Z",
   "milestone": "m12",
   "notes": "",
   "order": 25,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "review",
+  "status": "done",
   "tags": [
     "arte",
     "ui"
   ],
   "test": "",
   "title": "El ojo del logo en game over, selección de idioma y carga",
-  "updated_at": "2026-10-16T06:48:24.906Z"
+  "updated_at": "2026-10-17T06:30:55.259Z"
 }

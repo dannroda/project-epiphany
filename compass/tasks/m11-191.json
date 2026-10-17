@@ -13,10 +13,14 @@
   "milestone": "m11",
   "notes": "Hecho el 2026-10-15 (a124b61b): data/items/hammer.tres (id hammer, ítem de botón, 1 corazón de daño). StrikeBehavior: animación Melee_2H_Attack_Chop; en use_at clava src/items/hammer/hammer_strike.tscn (una Hitbox de 1,1 m de radio, 3 cuadros, polvo y temblor) a 1,2 m hacia donde mira el player, y el martillo se ve en la mano del arma mientras dura (assets/items/hammer/hammer.tscn, para ajustar a ojo). Golpe fuerte: DamageInfo.strong, que pone Hitbox.strong o AttackData.strong; lo leen Breakable.needs_strong (la espada rebota), las guardias de escudo y las corazas (como la bomba); la placa STRIKE (11.193) también (19adbaeb). Ícono, textos es/en, GDD §6.1, test_hammer. El mini jefe que lo da ya está (11.192). Falta solo que Daniel lo pruebe (momento del impacto, pose en la mano).",
   "order": 188,
+  "playtest": {
+    "note": "No falla como tal, solo que las animaciones no pareciera que golpea el martillo contra el piso y con el player no hace el mismo efecto de shockwave que el boss",
+    "result": "fail"
+  },
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "review",
+  "status": "doing",
   "tags": [
     "items",
     "diseno",
@@ -24,5 +28,5 @@
   ],
   "test": "",
   "title": "Martillo: ítem de golpe fuerte",
-  "updated_at": "2026-10-16T06:48:15.824Z"
+  "updated_at": "2026-10-17T06:33:02.683Z"
 }

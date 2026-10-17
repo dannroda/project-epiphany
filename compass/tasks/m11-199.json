@@ -7,15 +7,19 @@
   "milestone": "m11",
   "notes": "",
   "order": 196,
+  "playtest": {
+    "note": "En el templo sigue pasando.",
+    "result": "fail"
+  },
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "review",
+  "status": "doing",
   "tags": [
     "camara",
     "mazmorra"
   ],
   "test": "",
   "title": "Mazmorras: no hacer zoom a lo que se abre en otra sala",
-  "updated_at": "2026-10-16T06:48:17.941Z"
+  "updated_at": "2026-10-17T06:40:49.290Z"
 }

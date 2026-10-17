@@ -17,18 +17,22 @@
   "code": "12.27",
   "created_at": "2026-10-14T05:36:18.029Z",
   "description": "Daniel 2026-10-14 (por -5d), con referencias suyas (esferas de energía, anillos de fuego, círculos mágicos). Todo con shaders y partículas, sin texturas.",
+  "done_at": "2026-10-17T06:31:04.366Z",
   "milestone": "m12",
   "notes": "Hecho: portales (círculo mágico, pilar de luz, motas), proyectiles del jefe/torreta/Amaru como esfera de energía con estela, pulsos en las manos del jefe y La Mano, fase 3 en rojo, anillo de fuego de la bomba, círculo de la bendición. El tajo de espada (demo_tajo.tscn + sword_trail.gdshader) queda aparcado por Daniel: fue banco de pruebas para ataques elementales (12.28).",
   "order": 27,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "medium",
   "refs": [],
   "size": "l",
-  "status": "review",
+  "status": "done",
   "tags": [
     "arte",
     "vfx"
   ],
   "test": "",
   "title": "VFX mágicos con shaders y partículas (sin texturas)",
-  "updated_at": "2026-10-16T06:48:25.248Z"
+  "updated_at": "2026-10-17T06:31:04.366Z"
 }

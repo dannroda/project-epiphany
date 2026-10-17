@@ -34,6 +34,7 @@
   "code": "11.87",
   "created_at": "2026-10-12T00:19:57.282Z",
   "description": "Varios valores de juego están como const o en sitios compartidos y no se pueden tunear a ojo en el editor.",
+  "done_at": "2026-10-17T06:31:42.472Z",
   "files": [
     "src/entities/boss/boss.gd",
     "src/entities/boss/boss_hand.gd",
@@ -49,15 +50,18 @@
   "milestone": "m11",
   "notes": "Sale de la revisión de arquitectura del 2026-10-11 (skills godot-architecture, godot-patterns, godot-communication, godot-data-driven).\nHecho (ec556751): const → exports en el grupo Ajuste (boss, boss_hand, carrying, aiming_item, carrier); lo cosmético (bob, parpadeo) quedó const. AttackData tiene el grupo Aviso (windup_time, windup_pose, recovery_time) y EntityConfig.attack lo elige; el esqueleto acorazado usa armored_slash.tres. enemy_bt.tres conserva skeleton_slash como respaldo (lo pisa EntityConfig.attack). GameState.new_game_max_health() lee player.tres y HP_PER_HEART vive solo en GameState. Feel.shakes() lee la opción de Settings (feel.tres ya no tiene shake_enabled). Rangos en EntityConfig, ItemData y DropEntry; test_items compara data/items con la base.",
   "order": 84,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "review",
+  "status": "done",
   "tags": [
     "feel",
     "combate"
   ],
   "test": "Cada valor listado aparece en el inspector o en un .tres; cambiar el windup del esqueleto acorazado no cambia a los otros.",
   "title": "Valores de ajuste al inspector",
-  "updated_at": "2026-10-14T16:07:20.972Z"
+  "updated_at": "2026-10-17T06:31:42.472Z"
 }

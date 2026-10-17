@@ -23,13 +23,17 @@
   "code": "11.183",
   "created_at": "2026-10-14T23:13:58.806Z",
   "description": "Daniel (2026-10-14) la eligió como premio de la Combinada (opcional) del templo en vez de una botella o un contenedor de corazón (11.182). Doble daño, estela del tajo dorada, quizás elemento luz que le pega más fuerte al Ojo. Necesita modelo o paleta para la espada (arte, -5d).",
+  "done_at": "2026-10-17T06:38:50.463Z",
   "milestone": "m11",
   "notes": "",
   "order": 180,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "review",
+  "status": "done",
   "tags": [
     "diseno",
     "templo",
@@ -37,5 +41,5 @@
   ],
   "test": "",
   "title": "Espada mejorada (premio de la Combinada del templo)",
-  "updated_at": "2026-10-16T06:48:14.486Z"
+  "updated_at": "2026-10-17T06:38:50.463Z"
 }

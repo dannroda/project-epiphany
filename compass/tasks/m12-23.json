@@ -4,6 +4,7 @@
   "code": "12.23",
   "created_at": "2026-10-14T02:05:33.035Z",
   "description": "Playtest 2026-10-13: el jefe de la Queñoa (Eyes of the Queñoa) y el sub-jefe (Ojo Vigía) hoy son esferas lisas marrones (WatcherEye, placeholder). Deberían parecerse al ojo del jefe final pero más simples (párpado, iris/pupila, venas o raíces de la corteza). Ver también 12.21 (ojo interruptor).",
+  "done_at": "2026-10-17T06:29:15.389Z",
   "images": [
     "compass/images/m12-23-20261013-230533.png"
   ],
@@ -16,14 +17,17 @@
   "milestone": "m12",
   "notes": "",
   "order": 23,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "review",
+  "status": "done",
   "tags": [
     "arte"
   ],
   "test": "",
   "title": "Ojos de la Queñoa y Ojo Vigía: modelo propio parecido al ojo del jefe final, más simple",
-  "updated_at": "2026-10-16T06:48:24.244Z"
+  "updated_at": "2026-10-17T06:29:15.389Z"
 }

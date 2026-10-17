@@ -43,6 +43,7 @@
   "code": "10.19",
   "created_at": "2026-10-10T05:24:51.513Z",
   "description": "Al vencer al jefe el portal es la única salida, y entrar abre un diálogo de fin de demo con opciones (seguir jugando, revancha contra el jefe o volver al menú), apoyado en respuestas nuevas en el `TextBox`. Sin pantalla de créditos.",
+  "done_at": "2026-10-17T06:31:05.759Z",
   "milestone": "m10",
   "notes": "El fin ya no salta al tomar el contenedor: el jugador puede quedarse en la arena y decide cuándo terminar entrando al portal.",
   "order": 19,
@@ -60,11 +61,11 @@
       "section": "ui"
     }
   ],
-  "status": "review",
+  "status": "done",
   "tags": [
     "ui"
   ],
   "test": "Desde pre_boss: vencer al jefe y tomar el contenedor no corta el juego ni reabre la puerta; el portal es la única salida y abre el diálogo de fin de demo. Seguir jugando lleva al overworld con el progreso guardado; Volver a retar recarga la pelea completa y al ganar no da otro contenedor; Volver al menú va al título y al cargar el jefe no reaparece.",
   "title": "Fin de la demo",
-  "updated_at": "2026-10-15T19:53:46.855Z"
+  "updated_at": "2026-10-17T06:31:05.759Z"
 }

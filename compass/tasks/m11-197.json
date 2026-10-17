@@ -10,13 +10,17 @@
   "code": "11.197",
   "created_at": "2026-10-16T01:00:50.754Z",
   "description": "Daniel (2026-10-15): la pantalla de carga congela la ventana (no responde al resize). Medido: la carga en hilo tarda ~1 s, pero agregar el overworld al árbol bloquea 3,4 s y es casi todo el Terreno: sus 25 CollisionShape3D son la malla visual (~2,4 M triángulos) y Jolt las arma en el hilo principal. Sin cuerpos, 0 ms. Arreglo: mallas de colisión simplificadas (~10× menos) en el import de terreno_organico; también aliviana la física en juego.",
+  "done_at": "2026-10-17T06:41:09.335Z",
   "milestone": "m11",
   "notes": "",
   "order": 194,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "high",
   "refs": [],
   "size": "m",
-  "status": "review",
+  "status": "done",
   "tags": [
     "optimizacion",
     "overworld",
@@ -24,5 +28,5 @@
   ],
   "test": "",
   "title": "Terreno del overworld: colisión simplificada (la carga congela la ventana 3,4 s)",
-  "updated_at": "2026-10-16T06:48:17.418Z"
+  "updated_at": "2026-10-17T06:41:09.335Z"
 }

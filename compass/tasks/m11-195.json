@@ -4,18 +4,22 @@
   "code": "11.195",
   "created_at": "2026-10-15T18:49:16.692Z",
   "description": "Daniel (2026-10-15): más adelante se implementan las aletas para nadar; la guarida de los guardias (11.115) va en la orilla sur del lago grande, a la que solo se llega nadando. Por ahora: entrada de cueva decorativa (sin transición) y un poco de terreno para salir del agua antes de entrar. Captura de Daniel: debug/tmp/fd/guarida_orilla.png.",
+  "done_at": "2026-10-17T06:33:12.876Z",
   "milestone": "m11",
   "notes": "",
   "order": 192,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "review",
+  "status": "done",
   "tags": [
     "overworld",
     "diseno"
   ],
   "test": "",
   "title": "Overworld: entrada de la guarida de los guardias, del otro lado del agua (placeholder)",
-  "updated_at": "2026-10-16T06:48:16.882Z"
+  "updated_at": "2026-10-17T06:33:12.876Z"
 }

@@ -4,18 +4,22 @@
   "code": "12.38",
   "created_at": "2026-10-15T06:03:31.820Z",
   "description": "Pedido de -43 (11.129 paso 8) y de Daniel: Kuntur joven y Apu Kuntur con modelo de cóndor en lugar de las primitivas. Hecho por -5d en 5520a17d (build_kuntur.py): Kuntur negro con collar blanco y banda en el ala, cabeza roja con cresta; Apu Kuntur con sol de oro en la frente, pectoral y alas de oro. Las alas tienen el origen en el hombro; los nodos del script no cambian.",
+  "done_at": "2026-10-17T06:38:27.208Z",
   "milestone": "m12",
   "notes": "",
   "order": 38,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "review",
+  "status": "done",
   "tags": [
     "arte",
     "jefe"
   ],
   "test": "",
   "title": "Cóndores de la D4: modelo de arte",
-  "updated_at": "2026-10-16T06:48:28.029Z"
+  "updated_at": "2026-10-17T06:38:27.208Z"
 }

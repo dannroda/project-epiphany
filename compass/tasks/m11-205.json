@@ -3,15 +3,19 @@
   "code": "11.205",
   "created_at": "2026-10-16T08:50:53.607Z",
   "description": "Pedido de Daniel (2026-10-16): el escudo va siempre en la mano y solo bloquea mientras se mantiene el Z-target, con blanco o sin él. Se saca el botón de bloquear (RT, click derecho) y el escudo de la espalda. Con Z el player camina lento. Atacar cubriéndose da una estocada con la espada en vez del golpe de escudo.",
+  "done_at": "2026-10-17T06:40:56.320Z",
   "milestone": "m11",
   "notes": "Hecho (cb, 2026-10-16, d6417d81): Z (z-lock) levanta la guardia; en modo alternar, mientras hay un blanco fijado. Sin acción block ni escudo en la espalda: lo de atrás pega siempre. Estocada: sword_stab.tres (Melee_1H_Attack_Stab, hitbox 0,22–0,42, cancel 0,5, lunge 3, aturde 1,2 s y baja guardias). El escudo solo sale de la mano mientras sostiene el arco. Diagramas de controles sin la fila de bloquear; textos de escudos y CONTROLS_LOCK actualizados. Para revisar jugando: velocidad con Z, ritmo de la estocada (la animación dura 1,6 s), RT libre.",
   "order": 202,
+  "playtest": {
+    "result": "pass"
+  },
   "refs": [],
-  "status": "review",
+  "status": "done",
   "tags": [
     "combate"
   ],
   "test": "",
   "title": "Escudo siempre en la mano; la guardia es Z",
-  "updated_at": "2026-10-16T08:50:53.903Z"
+  "updated_at": "2026-10-17T06:40:56.320Z"
 }

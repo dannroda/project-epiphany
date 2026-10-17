@@ -4,18 +4,22 @@
   "code": "11.172",
   "created_at": "2026-10-14T17:52:29.628Z",
   "description": "Playtest 2026-10-14: al elegir un portal en el mapa, el foco no pasa al botón de confirmar y cada A abre otra confirmación de viaje.",
+  "done_at": "2026-10-17T06:31:31.788Z",
   "milestone": "m11",
   "notes": "Causa: las páginas Mapa, Ítems y Equipo tenían process_mode ALWAYS (resto de antes de MenuStack), así que tapadas por la pregunta seguían leyendo A. Sacado de las tres (aabc388a).",
   "order": 169,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "review",
+  "status": "done",
   "tags": [
     "bug",
     "ui"
   ],
   "test": "test_map › test_travel_portals_light_up_and_the_map_travels: A con el control confirma y no abre otra pregunta",
   "title": "Viaje rápido: el foco no va al botón y A abre la pregunta una y otra vez",
-  "updated_at": "2026-10-16T06:48:11.994Z"
+  "updated_at": "2026-10-17T06:31:31.788Z"
 }

@@ -28,15 +28,16 @@
   "notes": " Playtest 15/10: la nota es del playtest del 13/10; lo arregló 11.169 el 14/10 (pinchos ground_only y hits_on_landing: saltando con la pluma ya no pegan en el aire). Vuelve a revisión para probarla de nuevo.",
   "order": 5,
   "playtest": {
-    "note": "Hay que hacer que la pluma salte mas alto porque los pinchos llegan igual"
+    "note": "Anda, pero el cofre detrás de los pinchos es una llave obligatoria para avanzar y se necesita antes de la pluma. Por lo que es imposible abrir el cofre sin hacerse daño.",
+    "result": "pass"
   },
   "priority": "medium",
   "refs": [],
-  "status": "review",
+  "status": "doing",
   "tags": [
     "mazmorra"
   ],
   "test": "En el ala de la pluma del templo (PlumaSpikes) y en la cripta oscura de la Chullpa (CriptaSpikes, B-SO), cruzar los pinchos: se ve venir cada fila (asoma y tintinea), siempre queda un paso y pinchan al player y a los enemigos.",
   "title": "Galería de trampas: pinchos",
-  "updated_at": "2026-10-15T20:45:03.368Z"
+  "updated_at": "2026-10-17T06:37:44.212Z"
 }

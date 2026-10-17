@@ -35,12 +35,16 @@
   "code": "11.204",
   "created_at": "2026-10-16T04:28:13.669Z",
   "description": "Pedido de Daniel (2026-10-16) tras pelear con el jefe final.",
+  "done_at": "2026-10-17T06:41:00.122Z",
   "milestone": "m11",
   "notes": "",
   "order": 201,
+  "playtest": {
+    "result": "pass"
+  },
   "refs": [],
-  "status": "review",
+  "status": "done",
   "test": "",
   "title": "Jefe final: manos al cambiar de fase, aturdido, golpes y rayo",
-  "updated_at": "2026-10-16T06:48:23.883Z"
+  "updated_at": "2026-10-17T06:41:00.122Z"
 }

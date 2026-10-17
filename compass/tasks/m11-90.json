@@ -51,15 +51,19 @@
   "milestone": "m11",
   "notes": "Sesión: diseño (-43), con Daniel; antes overworld (-74). Toca 11.35/11.61 (pluma en D1 y en el overworld), los angostos de la quebrada (7.9), 11.30 (gancho, pasa a D3), 11.31 (sub-jefe con el arco) y la armadura del esqueleto.",
   "order": 87,
+  "playtest": {
+    "note": "No falla. Hay que hacer una revision completa de las dungeons. El overworld está bastante bien, pero habria que revisarlo tambien.",
+    "result": "fail"
+  },
   "priority": "high",
   "refs": [],
   "size": "l",
-  "status": "review",
+  "status": "doing",
   "tags": [
     "diseno",
     "nivel"
   ],
   "test": "",
   "title": "Diseño de mazmorras, ítems y su reparto en el overworld",
-  "updated_at": "2026-10-15T19:52:54.929Z"
+  "updated_at": "2026-10-17T06:39:46.900Z"
 }

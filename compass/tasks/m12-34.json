@@ -4,18 +4,22 @@
   "code": "12.34",
   "created_at": "2026-10-14T22:51:15.944Z",
   "description": "Daniel (2026-10-14): que el color del templo se parezca más al dorado del jefe final y no tanto al celeste actual (kit templo_la, piso, luces/ambiente del nivel). Respetar sus valores de TonoLA/AmbienteSala; si hace falta refresh, avisar a -fd antes (regla del reborde y navmesh).",
+  "done_at": "2026-10-17T06:39:10.245Z",
   "milestone": "m12",
   "notes": "",
   "order": 34,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "review",
+  "status": "done",
   "tags": [
     "arte",
     "templo"
   ],
   "test": "",
   "title": "Templo: paleta más dorada, como el jefe final, menos celeste",
-  "updated_at": "2026-10-16T06:48:26.895Z"
+  "updated_at": "2026-10-17T06:39:10.245Z"
 }

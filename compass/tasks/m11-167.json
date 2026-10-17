@@ -4,6 +4,7 @@
   "code": "11.167",
   "created_at": "2026-10-14T13:43:31.330Z",
   "description": "Daniel (playtest de 12.19): en la Totora, si el player cae al agua y pierde, se lo ve caer al vacío y recién después aparece la pantalla de 'You Fell'. Al caer al agua tendría que hundirse/salpicar y reaparecer (o la pantalla al instante), sin ver la caída por debajo del nivel.",
+  "done_at": "2026-10-17T06:29:54.153Z",
   "links": [
     {
       "task": "m12-19",
@@ -13,10 +14,13 @@
   "milestone": "m11",
   "notes": "Pit._fall devolvía antes de llevarlo a la orilla si el daño lo mataba, y el estado Dead seguía aplicando gravedad 1,8 s (bajaba a y −119). Ahora lo lleva a la orilla igual: muere parado ahí y en co-op el espíritu arranca en piso. Vale para todos los pozos y aguas.",
   "order": 164,
+  "playtest": {
+    "result": "pass"
+  },
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "review",
+  "status": "done",
   "tags": [
     "bug",
     "totora",
@@ -24,5 +28,5 @@
   ],
   "test": "tests/test_totora.gd",
   "title": "Totora: caer al agua y perder deja al player cayendo al vacío antes de \"You Fell\"",
-  "updated_at": "2026-10-16T06:48:11.139Z"
+  "updated_at": "2026-10-17T06:29:54.153Z"
 }
