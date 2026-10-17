@@ -80,9 +80,16 @@ func _ready() -> void:
 
 ## `margin`: lo que está en sus paredes también cuenta (las puertas entre dos salas).
 func contains(point: Vector3, margin := 0.0) -> bool:
+	return distance_to(point) <= margin
+
+
+## Distancia en planta de `point` a la sala (0 adentro); INF si está en otro piso.
+func distance_to(point: Vector3) -> float:
 	if DungeonFloor.of(self) and (point.y < floor_y() - DungeonFloor.BELOW or point.y >= floor_y() - DungeonFloor.BELOW + DungeonFloor.HEIGHT):
-		return false
-	return bounds().grow(margin).has_point(Vector2(point.x, point.z))
+		return INF
+	var area := bounds()
+	var flat := Vector2(point.x, point.z)
+	return flat.distance_to(flat.clamp(area.position, area.end))
 
 
 func floor_level() -> int:

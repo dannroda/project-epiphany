@@ -95,6 +95,17 @@ func _jump(action: StringName) -> void:
 		await tree.physics_frame
 
 
+## 11.199: las puertas del templo quedan en el hueco entre dos salas; solo se muestran si una de esas tiene al player.
+func test_a_door_is_shown_only_from_one_of_its_rooms() -> void:
+	await _start()
+	player.global_position = _in("Hub", Vector3.ZERO)
+	await tree.create_timer(0.3).timeout
+	assert_true(TopDownCamera._in_a_player_room(_node("HubSeal")), "la puerta del hub a la antesala se ve desde el hub")
+	assert_true(not TopDownCamera._in_a_player_room(_node("BossDoor")), "la del jefe, entre la antesala y su sala, no")
+	assert_true(not TopDownCamera._in_a_player_room(_node("HandDoor")), "ni la de la Mano")
+	state.reset()
+
+
 func test_fourteen_rooms_of_22_by_14() -> void:
 	await _start()
 	var rooms := level.find_children("*", "Room", true, false)

@@ -669,11 +669,17 @@ static func reveal(target: Node3D, action: Callable, hold := -1.0, skippable := 
 	camera._skippable = false
 
 
-## Las salas que no tienen player están ocultas: lo que se abre en otra sala no se muestra.
+## Las salas que no tienen player están ocultas: lo que se abre en otra sala no se muestra. Una puerta en el hueco
+## entre dos salas es de las más cercanas.
 static func _in_a_player_room(target: Node3D) -> bool:
-	var rooms := target.get_tree().get_nodes_in_group(Room.GROUP).filter(func(room: Room) -> bool:
-		return room.contains(target.global_position, 1.0))
-	return rooms.is_empty() or rooms.any(func(room: Room) -> bool: return room.has_player())
+	var rooms := target.get_tree().get_nodes_in_group(Room.GROUP)
+	var nearest := INF
+	for room: Room in rooms:
+		nearest = minf(nearest, room.distance_to(target.global_position))
+	if nearest == INF:
+		return true
+	return rooms.any(func(room: Room) -> bool:
+		return room.distance_to(target.global_position) <= nearest + 2.0 and room.has_player())
 
 
 ## Corta lo que queda del acercamiento en curso (la intro del jefe se puede saltar).
