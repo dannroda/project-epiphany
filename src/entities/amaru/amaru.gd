@@ -37,6 +37,13 @@ const ORB := preload("res://src/entities/projectile.tscn")
 var state := State.IDLE
 var _pool: Node3D
 
+## 0 asomada, 1 hundida bajo el charco (rise_height + 0.5 abajo); lo animan los clips dive y rise.
+var submerge := 0.0:
+	set(value):
+		submerge = value
+		if body:
+			body.position.y = -(rise_height + 0.5) * value
+
 
 func _ready() -> void:
 	super()
@@ -59,6 +66,7 @@ func reset() -> void:
 	_pool = _nearest_pool(global_position)
 	body.show()
 	body.scale = Vector3.ONE
+	submerge = 0.0
 	_pose_risen()
 
 
@@ -68,13 +76,7 @@ func roar() -> void:
 	var player := Players.nearest(global_position)
 	if player:
 		_face(player.global_position - global_position)
-	var jaw_rest := jaw.rotation.x
-	var tween := body.create_tween()
-	tween.tween_property(jaw, ^"rotation:x", jaw_rest - 0.9, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tween.parallel().tween_property(head, ^"rotation:x", 0.6, 0.18)
-	tween.tween_interval(roar_fx.duration)
-	tween.tween_property(jaw, ^"rotation:x", jaw_rest, 0.3)
-	tween.parallel().tween_property(head, ^"rotation:x", 0.0, 0.3)
+	_clip(&"roar", false)
 	roar_fx.play()
 
 
@@ -129,7 +131,7 @@ func _dive() -> void:
 	state = State.UNDER
 	Feel.burst(&"splash", global_position + Vector3.UP * 0.1, Vector3.UP)
 	Feel.sfx(&"splash", global_position)
-	_tween_to(body, ^"position:y", -rise_height - 0.5, 0.25)
+	_clip(&"dive")
 	await _wait(under_time)
 	var others := pools.filter(func(pool: Node3D) -> bool: return pool != _pool)
 	if not others.is_empty():
@@ -140,10 +142,10 @@ func _dive() -> void:
 func _rise() -> void:
 	state = State.RISE
 	_pose_risen()
-	body.position.y = -rise_height - 0.5
+	submerge = 1.0
 	Feel.burst(&"splash", global_position + Vector3.UP * 0.1, Vector3.UP)
 	Feel.sfx(&"splash", global_position)
-	_tween_to(body, ^"position:y", 0.0, rise_time).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	_clip(&"rise", true, rise_time)
 	await _wait(rise_time + 0.3)
 
 
@@ -187,13 +189,11 @@ func _lunge() -> void:
 
 func _lie() -> void:
 	state = State.STUCK
-	var wobble := _new_tween().set_loops(maxi(int(stuck_time / 0.3), 1))
-	wobble.tween_property(body, ^"rotation:z", 0.15, 0.15)
-	wobble.tween_property(body, ^"rotation:z", -0.15, 0.15)
+	_clip(&"stuck", false)
 	await _wait(stuck_time, false)
 	if state != State.STUCK:
 		return
-	wobble.kill()
+	moves.stop(true)
 	body.rotation.z = 0.0
 
 
@@ -252,7 +252,7 @@ func _pose_flat() -> void:
 	neck.position = flat_offset
 	head.rotation.x = PI / 2.0
 	head.position = _head_rest * Vector3(1, 1, -1)
-	body.position.y = 0.0
+	submerge = 0.0
 
 
 func _nearest_pool(from: Vector3) -> Node3D:
@@ -286,7 +286,5 @@ func _die() -> void:
 	Feel.burst(&"splash", global_position + Vector3.UP, Vector3.UP)
 	Feel.sfx(&"break", global_position)
 	Feel.shake(0.6)
-	var tween := create_tween()
-	tween.tween_property(body, ^"scale", Vector3(1.2, 0.05, 1.2), 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
-	tween.tween_callback(body.hide)
+	_clip(&"die", false)
 	defeated.emit(self)

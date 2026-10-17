@@ -26,6 +26,13 @@ var _sweep_from := 0.0
 var _swept := 0.0
 var _sweep_hit: Array = []
 
+## 0 bajo el charco, 1 asomada; lo animan los clips tail_rise y tail_sink.
+var tail_up := 0.0:
+	set(value):
+		tail_up = value
+		if _pool:
+			tail.global_position.y = _pool.global_position.y + lerpf(-0.6, 0.25, value)
+
 
 func _ready() -> void:
 	super()
@@ -101,13 +108,14 @@ func _tail_sweep() -> void:
 	var player := Players.nearest(global_position)
 	var toward := (player.global_position - global_position) if player else Vector3.FORWARD
 	_sweep_from = atan2(-toward.x, -toward.z) + PI * 0.75
-	tail.global_position = _pool.global_position + Vector3.DOWN * 0.6
+	tail.global_position = _pool.global_position
+	tail_up = 0.0
 	var reach := _to_wall(tail.global_position, Vector3.FORWARD.rotated(Vector3.UP, _sweep_from))
 	tail.global_basis = Basis(Vector3.UP, _sweep_from) * Basis.from_scale(Vector3(1, 1, reach / tail_length))
 	tail.show()
 	Feel.burst(&"splash", tail.global_position + Vector3.UP * 0.7, Vector3.UP)
 	Feel.sfx(&"rumble", tail.global_position)
-	_tween_to(tail, ^"position:y", _pool.global_position.y + 0.25, tail_rise_time)
+	_clip(&"tail_rise", true, tail_rise_time)
 	await _wait(tail_rise_time)
 	_swept = 0.0
 	_sweep_hit.clear()
@@ -115,7 +123,7 @@ func _tail_sweep() -> void:
 	Feel.sfx(&"roll", global_position)
 	await _wait(sweep_time)
 	_sweeping = false
-	_tween_to(tail, ^"position:y", _pool.global_position.y - 0.6, 0.3)
+	_clip(&"tail_sink")
 	await _wait(0.3)
 	tail.hide()
 

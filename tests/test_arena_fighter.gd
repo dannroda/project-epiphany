@@ -33,6 +33,11 @@ func test_every_fighter_is_an_arena_fighter() -> void:
 		assert_true(fighter is ArenaFighter, path + " es un ArenaFighter")
 		if fighter is ArenaFighter:
 			assert_true((fighter as ArenaFighter).body != null and (fighter as ArenaFighter).health != null, path + " tiene cuerpo y vida")
+			var moves := (fighter as ArenaFighter).moves
+			if moves:
+				for clip in moves.get_animation_list():
+					assert_true(moves.get_animation(clip).get_track_count() > 0, path + " tiene el clip " + clip + " con pistas")
+				assert_true(moves.has_animation(&"die"), path + " tiene clip de muerte")
 		fighter.free()
 
 

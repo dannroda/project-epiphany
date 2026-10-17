@@ -27,6 +27,119 @@ radius = 0.9
 radius = 0.6
 height = 2.6
 
+[sub_resource type="Animation" id="AmaruRoar"]
+resource_name = "roar"
+length = 1.48
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body/Neck/Head/Jaw:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.18, 1.18, 1.48),
+"transitions": PackedFloat32Array(0.5, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.9, -0.9, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Body/Neck/Head:rotation:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.18, 1.18, 1.48),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.6, 0.6, 0.0]
+}
+
+[sub_resource type="Animation" id="AmaruDive"]
+resource_name = "dive"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:submerge")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="Animation" id="AmaruRise"]
+resource_name = "rise"
+length = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:submerge")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7, 1.0),
+"transitions": PackedFloat32Array(0.5, 1, 1),
+"update": 0,
+"values": [1.0, -0.06, 0.0]
+}
+
+[sub_resource type="Animation" id="AmaruStuck"]
+resource_name = "stuck"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:rotation:z")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.075, 0.225, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.15, -0.15, 0.0]
+}
+
+[sub_resource type="Animation" id="AmaruDie"]
+resource_name = "die"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.5),
+"transitions": PackedFloat32Array(1, 2, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(0.95, 1.08, 0.95), Vector3(1.2, 0.05, 1.2)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Body")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{"args": [], "method": &"hide"}]
+}
+
+[sub_resource type="AnimationLibrary" id="AmaruLib"]
+_data = {
+&"roar": SubResource("AmaruRoar"),
+&"dive": SubResource("AmaruDive"),
+&"rise": SubResource("AmaruRise"),
+&"stuck": SubResource("AmaruStuck"),
+&"die": SubResource("AmaruDie")
+}
+
 [node name="Amaru" type="Node3D"]
 script = ExtResource("1_amaru")
 config = ExtResource("2_config")
@@ -96,3 +209,10 @@ invulnerability_time = 0.25
 script = ExtResource("6_flash")
 health = NodePath("../Health")
 visuals = NodePath("../Body")
+
+[node name="Moves" type="AnimationPlayer" parent="."]
+deterministic = false
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AmaruLib")
+}
