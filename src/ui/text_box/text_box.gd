@@ -84,8 +84,6 @@ func _ready() -> void:
 	_rich.add_theme_color_override(&"default_color", _label.get_theme_color(&"font_color"))
 	body = _label
 	_next = box.find_child("Next", true, false) as Node2D
-	if _next:
-		_next.set_meta(&"base_y", _next.position.y)
 	response_hints.hints = [[&"ui_accept", "HINT_CHOOSE"]]
 	hint_icon.texture = InputPrompts.icon_for_current(&"ui_accept" if InputDevice.current == InputDevice.Device.GAMEPAD else &"interact")
 	_label.text = ""
@@ -101,7 +99,6 @@ func _process(delta: float) -> void:
 		_show_responses()
 	if _next:
 		_next.visible = is_page_done() and not _waiting and not responses.visible
-		_next.position.y = _next.get_meta(&"base_y") + 3.0 * sin(Time.get_ticks_msec() / 150.0)
 
 
 func _unhandled_input(event: InputEvent) -> void:

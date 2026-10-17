@@ -27,6 +27,9 @@ const GROUP := &"hud"
 @onready var saved_label: Label = %Saved
 @onready var boss_bar: VBoxContainer = %BossBar
 @onready var boss_health: ProgressBar = %BossHealth
+@onready var area_anim: AnimationPlayer = %AreaNameAnim
+@onready var saved_anim: AnimationPlayer = %SavedAnim
+@onready var boss_anim: AnimationPlayer = %BossBarAnim
 
 ## Los del primero (los tests y lo que sigue siendo de uno).
 var hearts: Container:
@@ -38,12 +41,9 @@ var prompt: PanelContainer:
 var prompt_text: Label:
 	get: return _lead_panel().prompt_text
 
-var _area_tween: Tween
 var _dungeon: DungeonState
-var _saved_tween: Tween
 var _boss: BossBar
 var _boss_tween: Tween
-var _boss_fade: Tween
 
 
 func _ready() -> void:
@@ -146,21 +146,16 @@ func _refresh_keys() -> void:
 
 func show_area_name(text: String) -> void:
 	area_label.text = text
-	if _area_tween:
-		_area_tween.kill()
-	_area_tween = create_tween()
-	_area_tween.tween_property(area_name, "modulate:a", 1.0, 0.4)
-	_area_tween.tween_interval(2.0)
-	_area_tween.tween_property(area_name, "modulate:a", 0.0, 0.6)
+	_restart(area_anim, &"show")
 
 
 func _flash_saved() -> void:
-	if _saved_tween:
-		_saved_tween.kill()
-	_saved_tween = create_tween()
-	_saved_tween.tween_property(saved_label, "modulate:a", 1.0, 0.2)
-	_saved_tween.tween_interval(1.2)
-	_saved_tween.tween_property(saved_label, "modulate:a", 0.0, 0.5)
+	_restart(saved_anim, &"flash")
+
+
+func _restart(player: AnimationPlayer, clip: StringName) -> void:
+	player.stop()
+	player.play(clip)
 
 
 
@@ -172,24 +167,16 @@ func show_boss(bar: BossBar) -> void:
 	bar.changed.connect(_refresh_boss)
 	boss_health.value = bar.fraction.call()
 	_refresh_boss()
-	boss_bar.visible = true
-	boss_bar.modulate.a = 0.0
-	if _boss_fade:
-		_boss_fade.kill()
-	_boss_fade = create_tween()
-	_boss_fade.tween_property(boss_bar, "modulate:a", 1.0, 0.4)
+	_restart(boss_anim, &"show")
+	boss_anim.advance(0.0)
 
 
 func hide_boss() -> void:
 	if _boss and _boss.changed.is_connected(_refresh_boss):
 		_boss.changed.disconnect(_refresh_boss)
 	_boss = null
-	if _boss_fade:
-		_boss_fade.kill()
-	_boss_fade = create_tween()
-	_boss_fade.tween_interval(0.8)
-	_boss_fade.tween_property(boss_bar, "modulate:a", 0.0, 0.6)
-	_boss_fade.tween_callback(boss_bar.hide)
+	if boss_bar.visible and boss_anim.current_animation != &"hide":
+		_restart(boss_anim, &"hide")
 
 
 func _refresh_boss() -> void:

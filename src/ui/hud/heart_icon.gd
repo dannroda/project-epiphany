@@ -46,3 +46,9 @@ func _layout() -> void:
 		var full := quarter.get_node(^"Full") as TextureRect
 		full.position = -corner
 		full.size = icon_size
+
+
+func pop() -> void:
+	var player := $Pop as AnimationPlayer
+	player.stop()
+	player.play(&"pop")

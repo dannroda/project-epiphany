@@ -360,10 +360,10 @@ func test_the_hud_names_a_region_once_while_walking_its_screens() -> void:
 	await tree.create_timer(0.3).timeout
 	var shown: Array[String] = []
 	for at in [Vector3(-60, 0, 26), Vector3(-80, 0, 16), Vector3(-40, 0, -4), Vector3(-65, 0, -4)]:
-		var before: Tween = hud._area_tween
+		hud.area_label.text = ""
 		player.global_position = at
 		await tree.create_timer(0.3).timeout
-		shown.append(hud.area_label.text if hud._area_tween != before else "")
+		shown.append(hud.area_label.text)
 	assert_eq(AreaZone._current.name, &"Zone_pradera_4", "termina en el oeste de la Pradera")
 	assert_eq(shown, ["", "", tr("PLACE_MEADOW"), ""], "entre pantallas del Claro sin cartel; a la Pradera sí; a otra pantalla de la Pradera, no")
 	state.reset()

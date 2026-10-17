@@ -10,10 +10,50 @@ albedo_color = Color(1, 0.92947316, 0, 1)
 material = SubResource("StandardMaterial3D_4uxyr")
 size = Vector3(0.4, 0.5, 0.4)
 
+[sub_resource type="Animation" id="IndicatorIdle"]
+resource_name = "idle"
+length = 2.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:rotation:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.2831855]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D:position:y")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 0.9, 1.2, 1.5, 1.8, 2.1, 2.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.12, 0.0, -0.12, 0.0, 0.12, 0.0, -0.12, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="IndicatorLib"]
+_data = {
+&"idle": SubResource("IndicatorIdle")
+}
+
 [node name="TargetIndicator" type="Node3D" unique_id=1615443035]
 script = ExtResource("1_c0kay")
 metadata/_custom_type_script = "uid://0pie6qdk25b0"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=886208679]
-transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, 0, 0, 0)
+rotation = Vector3(0, 0, 3.1415927)
 mesh = SubResource("PrismMesh_4uxyr")
+
+[node name="Idle" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("IndicatorLib")
+}
+autoplay = &"idle"

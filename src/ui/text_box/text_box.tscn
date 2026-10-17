@@ -3,6 +3,28 @@
 [ext_resource type="Script" path="res://src/ui/text_box/text_box.gd" id="1_box"]
 [ext_resource type="Script" path="res://src/ui/hint_bar.gd" id="2_hints"]
 
+[sub_resource type="Animation" id="NextBob"]
+resource_name = "bob"
+length = 0.94
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:y")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.235, 0.47, 0.705, 0.94),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [-12.0, -9.0, -12.0, -15.0, -12.0]
+}
+
+[sub_resource type="AnimationLibrary" id="NextLib"]
+_data = {
+&"bob": SubResource("NextBob")
+}
+
 [node name="TextBox" type="Control"]
 process_mode = 3
 layout_mode = 3
@@ -185,3 +207,9 @@ mouse_filter = 2
 theme_override_constants/separation = 22
 alignment = 2
 script = ExtResource("2_hints")
+
+[node name="NextBobAnim" type="AnimationPlayer" parent="ItemBox/NextAnchor/Next"]
+libraries = {
+&"": SubResource("NextLib")
+}
+autoplay = &"bob"

@@ -3,9 +3,6 @@ extends Control
 ## Corazones, slots X/Y y prompt de un player (13.5). El HUD instancia player_panel_solo.tscn jugando solo y un
 ## player_panel.tscn compacto por player en co-op (mockup HUD_Coop).
 
-
-@export var pulse_scale := 1.3
-@export var pulse_time := 0.18
 @export var heart_size := HeartIcon.SIZE
 
 @onready var hearts: Container = %Hearts
@@ -89,10 +86,9 @@ func _refresh_prompt() -> void:
 
 
 func _shake_slot(button: int) -> void:
-	var body := item_slots.get_child(button).get_node(^"Body") as Control
-	var tween := body.create_tween()
-	for offset in [6.0, -5.0, 4.0, -2.0, 0.0]:
-		tween.tween_property(body, "position:x", offset, 0.04)
+	var shake := item_slots.get_child(button).get_node(^"Shake") as AnimationPlayer
+	shake.stop()
+	shake.play(&"shake")
 
 
 func _on_health_changed(current: int, max_value: int) -> void:
@@ -107,12 +103,6 @@ func _on_health_changed(current: int, max_value: int) -> void:
 		var heart := hearts.get_child(i) as HeartIcon
 		var quarters := clampi(current - i * GameState.HP_PER_HEART, 0, GameState.HP_PER_HEART)
 		if heart.quarters != quarters and _shown_hp >= 0:
-			_pulse(heart)
+			heart.pop()
 		heart.quarters = quarters
 	_shown_hp = current
-
-
-func _pulse(heart: Control) -> void:
-	var tween := heart.create_tween()
-	heart.scale = Vector2.ONE * pulse_scale
-	tween.tween_property(heart, "scale", Vector2.ONE, pulse_time).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
