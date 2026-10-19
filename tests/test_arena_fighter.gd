@@ -38,7 +38,20 @@ func test_every_fighter_is_an_arena_fighter() -> void:
 				for clip in moves.get_animation_list():
 					assert_true(moves.get_animation(clip).get_track_count() > 0, path + " tiene el clip " + clip + " con pistas")
 				assert_true(moves.has_animation(&"die"), path + " tiene clip de muerte")
+				for clip in _clips_called(fighter.get_script()):
+					assert_true(moves.has_animation(clip), path + " tiene el clip " + clip + " que pide su script")
 		fighter.free()
+
+
+## Los nombres que el script (y sus bases) pasa a _clip, para que renombrar un clip en el editor no cuelgue la pelea.
+func _clips_called(script: Script) -> Array[StringName]:
+	var found: Array[StringName] = []
+	var pattern := RegEx.create_from_string("_clip\\(&\"([a-z_]+)\"")
+	while script and script.resource_path.begins_with("res://src/entities/"):
+		for hit in pattern.search_all(FileAccess.get_file_as_string(script.resource_path)):
+			found.append(StringName(hit.get_string(1)))
+		script = script.get_base_script()
+	return found
 
 
 func test_tweens_wait_stops_with_the_pause_not_with_the_node() -> void:
