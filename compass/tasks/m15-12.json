@@ -1,0 +1,21 @@
+{
+  "assignee": "project-epiphany-3e",
+  "checklist": [],
+  "code": "15.13",
+  "created_at": "2026-10-19T22:56:14.862Z",
+  "description": "Revisión de arquitectura del overworld (-3e, 2026-10-19): overworld_map.gd:106 corre snapshot() (copia el GridMap, renderiza un SubViewport de 4000×1920) 2 s después de CUALQUIER flag_changed, cofres y corazones incluidos. Arreglo: solo con flags que cambian el trazado (puente, paredes agrietadas), por lista o señal layout_changed.",
+  "milestone": "m15",
+  "notes": "",
+  "order": 188,
+  "priority": "high",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "optimizacion",
+    "overworld"
+  ],
+  "test": "",
+  "title": "El mapa del overworld se vuelve a fotografiar con cualquier flag",
+  "updated_at": "2026-10-19T22:56:14.862Z"
+}

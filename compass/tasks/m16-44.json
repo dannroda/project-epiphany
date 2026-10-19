@@ -1,0 +1,21 @@
+{
+  "assignee": "project-epiphany-3e",
+  "checklist": [],
+  "code": "16.46",
+  "created_at": "2026-10-19T22:56:15.894Z",
+  "description": "Revisión de arquitectura del overworld (-3e, 2026-10-19): Nada verifica que los 34 rects de AreaZone no se superpongan ni dejen celdas caminables sin cubrir (se chequeaba con scripts temporales). Agregarlo a test_overworld.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 105,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "overworld",
+    "tests"
+  ],
+  "test": "",
+  "title": "Test: las zonas del overworld cubren el mapa sin pisarse",
+  "updated_at": "2026-10-19T22:56:15.894Z"
+}

@@ -1,0 +1,21 @@
+{
+  "assignee": "project-epiphany-3e",
+  "checklist": [],
+  "code": "16.48",
+  "created_at": "2026-10-19T22:56:16.564Z",
+  "description": "Revisión de arquitectura del overworld (-3e, 2026-10-19): export_terreno_overworld.gd depende del prefijo Zone_, el sufijo Mouth, scene_file_path exacto, wade_speed por duck typing y una lista IGNORED; build_terreno_organico.py nombra muros muro_<NodoGodot> que overworld.tscn referencia. Renombrar un nodo cambia el terreno o deja una malla huérfana. Arreglo: elegir por grupo/script y dar a las paredes agrietadas un id exportado estable.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 107,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "overworld",
+    "arte"
+  ],
+  "test": "",
+  "title": "El export del terreno elige nodos por convenciones de nombre",
+  "updated_at": "2026-10-19T22:56:16.564Z"
+}

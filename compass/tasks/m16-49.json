@@ -1,0 +1,20 @@
+{
+  "assignee": "project-epiphany-3e",
+  "checklist": [],
+  "code": "16.51",
+  "created_at": "2026-10-19T22:56:17.680Z",
+  "description": "Revisión de arquitectura del overworld (-3e, 2026-10-19): Reconstruir build_terreno_organico.py reescribe muros_organicos.glb y plantas_overworld.json con ruido de ~1 mm y deja diffs ruidosos. Encontrar el origen y redondear o fijar semilla.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 110,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "arte"
+  ],
+  "test": "",
+  "title": "Build del terreno determinista",
+  "updated_at": "2026-10-19T22:56:17.680Z"
+}

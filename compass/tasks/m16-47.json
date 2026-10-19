@@ -1,0 +1,20 @@
+{
+  "assignee": "project-epiphany-3e",
+  "checklist": [],
+  "code": "16.49",
+  "created_at": "2026-10-19T22:56:16.925Z",
+  "description": "Revisión de arquitectura del overworld (-3e, 2026-10-19): terreno_organico.tscn pone walk_guard con un override en Parte5/baranda; si un rebuild la mueve a otra tira se pierde sin aviso. Arreglo: propiedad custom desde Blender aplicada por epi_scene_import.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 108,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "overworld"
+  ],
+  "test": "",
+  "title": "El grupo de la baranda del terreno depende de la tira donde cae",
+  "updated_at": "2026-10-19T22:56:16.925Z"
+}

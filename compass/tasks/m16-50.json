@@ -1,0 +1,21 @@
+{
+  "assignee": "project-epiphany-3e",
+  "checklist": [],
+  "code": "16.52",
+  "created_at": "2026-10-19T22:56:18.028Z",
+  "description": "Revisión de arquitectura del overworld (-3e, 2026-10-19): arena_fight.gd:55-58,168-172 libera las escoltas puestas a mano y las recrea con load(scene_file_path), conservando solo el transform; se conectan con connect(&\"defeated\") y is_dead por duck typing. Arreglo: duplicate() del nodo original, o PackedScene + Marker3D con señal tipada.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 111,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "overworld",
+    "combate"
+  ],
+  "test": "",
+  "title": "Escoltas de ArenaFight pierden sus overrides de instancia",
+  "updated_at": "2026-10-19T22:56:18.028Z"
+}

@@ -1,0 +1,21 @@
+{
+  "assignee": "project-epiphany-3e",
+  "checklist": [],
+  "code": "16.43",
+  "created_at": "2026-10-19T22:56:14.505Z",
+  "description": "Revisión de arquitectura del overworld (-3e, 2026-10-19): GameState.ensure_map_revealed (game_state.gd:114) recrea map_revealed vacío si cambia el tamaño, y el origen del rect no se guarda: agrandar world_rect borra el mapa explorado de cada partida, y entrar a levels/test.tscn (otro OverworldMap) también. Arreglo: reveal por id de mapa, guardar el rect y recortar/remapear en vez de borrar.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 102,
+  "priority": "high",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "overworld",
+    "bug"
+  ],
+  "test": "",
+  "title": "Mapa explorado del overworld se borra si cambia world_rect",
+  "updated_at": "2026-10-19T22:56:14.505Z"
+}

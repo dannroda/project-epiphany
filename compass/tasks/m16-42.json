@@ -1,0 +1,20 @@
+{
+  "assignee": "project-epiphany-3e",
+  "checklist": [],
+  "code": "16.44",
+  "created_at": "2026-10-19T22:56:15.189Z",
+  "description": "Revisión de arquitectura del overworld (-3e, 2026-10-19): Ningún nivel instancia zone_veil.tscn y overworld_map._reveal() hace get_nodes_in_group(ZoneVeil.GROUP) + filter cada cuadro (title_flyover también). Arreglo: borrar ZoneVeil y sus ramas o cachear. Si se borra, sale el velo de 16.42 y el _reveal de 16.38.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 103,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "overworld"
+  ],
+  "test": "",
+  "title": "ZoneVeil sin uso pero consultado cada cuadro",
+  "updated_at": "2026-10-19T22:56:15.189Z"
+}

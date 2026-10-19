@@ -6317,7 +6317,7 @@ Daniel (2026-10-15): es hora de que los enemigos normales de las mazmorras vayan
 
 **Relacionadas:** 16.17 Configs de enemigos clonadas por mazmorra
 
-## M16 — Salud del código  (0/42)
+## M16 — Salud del código  (0/53)
 
 Arreglar los bugs y la deuda técnica que salieron del análisis del 2026-10-16 (cinco revisiones con las skills: arquitectura, code review, comunicación, patrones y datos), antes de seguir sumando sub-jefes, mazmorras y el co-op. Lo de rendimiento va a M15; las suposiciones de un solo player, a M13.
 
@@ -6873,6 +6873,72 @@ Revisión de 16.28-16.31 de la sesión de arte (2026-10-19): Nombre de zona re-m
 **Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `refactor`, `animacion`
 
 Revisión de 16.28-16.31 de la sesión de arte (2026-10-19): Parpadeo de la bendición (blessing.gd:29), titileo de stencil_light (:42), rebotes y alturas fijas del Kuntur (kuntur.gd:197-374), fundido de barras de la cinemática (cutscene.gd:107), radio del velo de zona (zone_veil.gd:76), cámara del título (title_flyover.gd, PathFollow3D). demo_tajo queda aparcada.
+
+### 16.43 Mapa explorado del overworld se borra si cambia world_rect · Pendiente
+
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-3e · **Etiquetas:** `overworld`, `bug`
+
+Revisión de arquitectura del overworld (-3e, 2026-10-19): GameState.ensure_map_revealed (game_state.gd:114) recrea map_revealed vacío si cambia el tamaño, y el origen del rect no se guarda: agrandar world_rect borra el mapa explorado de cada partida, y entrar a levels/test.tscn (otro OverworldMap) también. Arreglo: reveal por id de mapa, guardar el rect y recortar/remapear en vez de borrar.
+
+### 16.44 ZoneVeil sin uso pero consultado cada cuadro · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-3e · **Etiquetas:** `overworld`
+
+Revisión de arquitectura del overworld (-3e, 2026-10-19): Ningún nivel instancia zone_veil.tscn y overworld_map._reveal() hace get_nodes_in_group(ZoneVeil.GROUP) + filter cada cuadro (title_flyover también). Arreglo: borrar ZoneVeil y sus ramas o cachear. Si se borra, sale el velo de 16.42 y el _reveal de 16.38.
+
+### 16.45 Regiones del overworld como recurso ZoneRegion · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-3e · **Etiquetas:** `overworld`
+
+Revisión de arquitectura del overworld (-3e, 2026-10-19): Una región hoy es 'zonas con el mismo display_name', una clave de traducción usada como identidad (map_page.gd 420, 438, 552, 595; el chequeo del HUD de AreaZone; el respaldo de persecución). region_label y chase_region sueltos en 34 zonas. Arreglo: un .tres ZoneRegion por región (id, display_name, grupo de persecución, etiqueta del mapa).
+
+### 16.46 Test: las zonas del overworld cubren el mapa sin pisarse · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-3e · **Etiquetas:** `overworld`, `tests`
+
+Revisión de arquitectura del overworld (-3e, 2026-10-19): Nada verifica que los 34 rects de AreaZone no se superpongan ni dejen celdas caminables sin cubrir (se chequeaba con scripts temporales). Agregarlo a test_overworld.
+
+### 16.47 Test: terreno_overworld.json coincide con el nivel · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-3e · **Etiquetas:** `overworld`, `tests`
+
+Revisión de arquitectura del overworld (-3e, 2026-10-19): El nivel y tools/terreno_overworld.json se desfasan sin aviso (un punto pasó de -38.4 a -37.5 sin rebuild). Arreglo: un test que corre el export en memoria y lo compara con el JSON commiteado (= hace falta rebuild del terreno).
+
+### 16.48 El export del terreno elige nodos por convenciones de nombre · Pendiente
+
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-3e · **Etiquetas:** `overworld`, `arte`
+
+Revisión de arquitectura del overworld (-3e, 2026-10-19): export_terreno_overworld.gd depende del prefijo Zone_, el sufijo Mouth, scene_file_path exacto, wade_speed por duck typing y una lista IGNORED; build_terreno_organico.py nombra muros muro_<NodoGodot> que overworld.tscn referencia. Renombrar un nodo cambia el terreno o deja una malla huérfana. Arreglo: elegir por grupo/script y dar a las paredes agrietadas un id exportado estable.
+
+### 16.49 El grupo de la baranda del terreno depende de la tira donde cae · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-3e · **Etiquetas:** `overworld`
+
+Revisión de arquitectura del overworld (-3e, 2026-10-19): terreno_organico.tscn pone walk_guard con un override en Parte5/baranda; si un rebuild la mueve a otra tira se pierde sin aviso. Arreglo: propiedad custom desde Blender aplicada por epi_scene_import.
+
+### 16.50 TerrainStyleArea.style como enum; el build falla con estilo desconocido · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-3e · **Etiquetas:** `overworld`, `arte`
+
+Revisión de arquitectura del overworld (-3e, 2026-10-19): Un typo en style cae en silencio al terreno por defecto (STYLES.get(style, {})). Arreglo: @export_enum con las claves de STYLES y que Python falle con un estilo desconocido.
+
+### 16.51 Build del terreno determinista · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-3e · **Etiquetas:** `arte`
+
+Revisión de arquitectura del overworld (-3e, 2026-10-19): Reconstruir build_terreno_organico.py reescribe muros_organicos.glb y plantas_overworld.json con ruido de ~1 mm y deja diffs ruidosos. Encontrar el origen y redondear o fijar semilla.
+
+### 16.52 Escoltas de ArenaFight pierden sus overrides de instancia · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-3e · **Etiquetas:** `overworld`, `combate`
+
+Revisión de arquitectura del overworld (-3e, 2026-10-19): arena_fight.gd:55-58,168-172 libera las escoltas puestas a mano y las recrea con load(scene_file_path), conservando solo el transform; se conectan con connect(&"defeated") y is_dead por duck typing. Arreglo: duplicate() del nodo original, o PackedScene + Marker3D con señal tipada.
+
+### 16.53 Limpiezas menores del overworld · Pendiente
+
+**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-3e · **Etiquetas:** `overworld`
+
+Revisión de arquitectura del overworld (-3e, 2026-10-19): collision_layer/mask/monitorable a mano en 7 scripts de sensores (area_zone, tremor_zone, pit, portal, travel_portal, shallow_water, stairs) → en el .tscn o constantes de capa; bounds() repetido (area_zone, arena_area, room) → un helper; ArenaArea sondea players cada cuadro → señales de Area3D; constantes de eye_switch y look-at repetido con eye_follow → exportar y compartir; brillo_la.gd cambia materiales en cada node_added → paleta brillante .tres al importar; enfoque_la.gd consulta un grupo cada cuadro → cachear (se cruza con 16.37).
 
 ## M13 — Co-op local (estilo Four Swords)  (1/17)
 
@@ -7475,7 +7541,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-## M15 — Optimización  (0/12)
+## M15 — Optimización  (0/13)
 
 Que el juego arranque rápido y corra estable a 60 FPS en la máquina más floja de los playtesters, en Linux y Windows, sin tirones al aparecer efectos.
 
@@ -7611,6 +7677,12 @@ feel.gd:59-83 genera unos 22 sonidos en `_ready` (~10 s de audio a 22050 Hz, ~22
   StringName → Array[AudioStream].
 
 **Relacionadas:** 15.6 Arranque hasta el menú
+
+### 15.13 El mapa del overworld se vuelve a fotografiar con cualquier flag · Pendiente
+
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-3e · **Etiquetas:** `optimizacion`, `overworld`
+
+Revisión de arquitectura del overworld (-3e, 2026-10-19): overworld_map.gd:106 corre snapshot() (copia el GridMap, renderiza un SubViewport de 4000×1920) 2 s después de CUALQUIER flag_changed, cofres y corazones incluidos. Arreglo: solo con flags que cambian el trazado (puente, paredes agrietadas), por lista o señal layout_changed.
 
 ## Listas
 

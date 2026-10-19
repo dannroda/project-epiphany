@@ -1,0 +1,20 @@
+{
+  "assignee": "project-epiphany-3e",
+  "checklist": [],
+  "code": "16.53",
+  "created_at": "2026-10-19T22:56:18.369Z",
+  "description": "Revisión de arquitectura del overworld (-3e, 2026-10-19): collision_layer/mask/monitorable a mano en 7 scripts de sensores (area_zone, tremor_zone, pit, portal, travel_portal, shallow_water, stairs) → en el .tscn o constantes de capa; bounds() repetido (area_zone, arena_area, room) → un helper; ArenaArea sondea players cada cuadro → señales de Area3D; constantes de eye_switch y look-at repetido con eye_follow → exportar y compartir; brillo_la.gd cambia materiales en cada node_added → paleta brillante .tres al importar; enfoque_la.gd consulta un grupo cada cuadro → cachear (se cruza con 16.37).",
+  "milestone": "m16",
+  "notes": "",
+  "order": 112,
+  "priority": "low",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "overworld"
+  ],
+  "test": "",
+  "title": "Limpiezas menores del overworld",
+  "updated_at": "2026-10-19T22:56:18.369Z"
+}

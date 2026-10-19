@@ -1,0 +1,21 @@
+{
+  "assignee": "project-epiphany-3e",
+  "checklist": [],
+  "code": "16.50",
+  "created_at": "2026-10-19T22:56:17.302Z",
+  "description": "Revisión de arquitectura del overworld (-3e, 2026-10-19): Un typo en style cae en silencio al terreno por defecto (STYLES.get(style, {})). Arreglo: @export_enum con las claves de STYLES y que Python falle con un estilo desconocido.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 109,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "overworld",
+    "arte"
+  ],
+  "test": "",
+  "title": "TerrainStyleArea.style como enum; el build falla con estilo desconocido",
+  "updated_at": "2026-10-19T22:56:17.302Z"
+}

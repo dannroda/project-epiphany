@@ -1,0 +1,20 @@
+{
+  "assignee": "project-epiphany-3e",
+  "checklist": [],
+  "code": "16.45",
+  "created_at": "2026-10-19T22:56:15.548Z",
+  "description": "Revisión de arquitectura del overworld (-3e, 2026-10-19): Una región hoy es 'zonas con el mismo display_name', una clave de traducción usada como identidad (map_page.gd 420, 438, 552, 595; el chequeo del HUD de AreaZone; el respaldo de persecución). region_label y chase_region sueltos en 34 zonas. Arreglo: un .tres ZoneRegion por región (id, display_name, grupo de persecución, etiqueta del mapa).",
+  "milestone": "m16",
+  "notes": "",
+  "order": 104,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "overworld"
+  ],
+  "test": "",
+  "title": "Regiones del overworld como recurso ZoneRegion",
+  "updated_at": "2026-10-19T22:56:15.548Z"
+}

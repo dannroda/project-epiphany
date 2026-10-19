@@ -1,0 +1,21 @@
+{
+  "assignee": "project-epiphany-3e",
+  "checklist": [],
+  "code": "16.47",
+  "created_at": "2026-10-19T22:56:16.229Z",
+  "description": "Revisión de arquitectura del overworld (-3e, 2026-10-19): El nivel y tools/terreno_overworld.json se desfasan sin aviso (un punto pasó de -38.4 a -37.5 sin rebuild). Arreglo: un test que corre el export en memoria y lo compara con el JSON commiteado (= hace falta rebuild del terreno).",
+  "milestone": "m16",
+  "notes": "",
+  "order": 106,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "overworld",
+    "tests"
+  ],
+  "test": "",
+  "title": "Test: terreno_overworld.json coincide con el nivel",
+  "updated_at": "2026-10-19T22:56:16.229Z"
+}
