@@ -74,7 +74,7 @@ func _ready() -> void:
 	flash.cover($ModelController/Visuals)
 	flash.add_pass(silhouette)
 	equipment.flash = flash
-	health.died.connect(_on_died)
+	health.died.connect(_on_died, CONNECT_DEFERRED)
 	health.changed.connect(func(current: int, _max_value: int) -> void: GameState.set_health_of(controls.slot, current))
 	GameState.loaded.connect(_sync_health)
 	GameState.max_health_changed.connect(_on_max_health_changed)
@@ -314,7 +314,7 @@ func _on_hit(info: DamageInfo) -> void:
 func _on_hit_landed(target: Hurtbox) -> void:
 	if target.surface == "none":
 		return
-	Feel.hit_stop([self, target.get_parent()], Feel.settings.hit_stop_give)
+	Feel.hit_stop([self, target.entity()], Feel.settings.hit_stop_give)
 	Feel.shake(Feel.settings.shake_give, Vector3.ZERO, controls.joypads)
 	Feel.sfx(StringName("hit_" + target.surface), target.global_position)
 	if Feel.settings.sparks_on_hit:
