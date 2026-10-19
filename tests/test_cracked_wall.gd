@@ -97,3 +97,17 @@ func test_dungeon_cracked_walls_open_whole_rooms() -> void:
 func _room_rect(room: Room) -> Rect2:
 	var box := (room.get_node(^"CollisionShape3D") as CollisionShape3D).shape as BoxShape3D
 	return Rect2(room.position.x - box.size.x / 2.0, room.position.z - box.size.z / 2.0, box.size.x, box.size.z)
+
+
+## Un dash contra la pared o el piso agrietado los sacude (los dos usan cracked_wall.gd y su %Shake).
+func test_a_dash_shakes_walls_and_floors() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	for path in ["res://src/world/cracked_wall.tscn", "res://src/world/cracked_floor.tscn"]:
+		var wall := (load(path) as PackedScene).instantiate() as CrackedWall
+		tree.root.add_child(wall)
+		var info := DamageInfo.make(1, 0.0, null)
+		info.element = DamageInfo.DASH
+		wall._on_hit(info)
+		assert_true((wall.get_node(^"%Shake") as AnimationPlayer).is_playing(), path + " tiembla con el dash")
+		assert_true(not wall.is_broken, path + " no se rompe")
+		wall.free()
