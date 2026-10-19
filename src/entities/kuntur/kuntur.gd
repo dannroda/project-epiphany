@@ -379,7 +379,7 @@ func _die() -> void:
 ## Cruza las alas a la pose `pose` (un clip de %Wings) en `seconds`; el aleteo se acelera con la pelea.
 func _wings(pose: StringName, seconds: float) -> void:
 	wings.speed_scale = pace
-	wings.play(pose, seconds / pace)
+	wings.play(pose, seconds)
 
 
 func _catch_light(on: bool) -> void:
