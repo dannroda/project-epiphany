@@ -181,6 +181,10 @@ func test_a_persistent_change_retakes_the_photo() -> void:
 	assert_true(bridge.find_children("*", "VisualInstance3D", true, false).all(func(v: VisualInstance3D) -> bool: return v.get_layer_mask_value(OverworldMap.MAP_LAYER)), "el puente sale en la foto")
 	var taken := [false]
 	map.photo_requested.connect(func() -> void: taken[0] = true)
+	setup[1].set_flag(&"ow_sandals_chest", true)
+	await tree.create_timer(OverworldMap.RETAKE_DELAY * 1.5).timeout
+	assert_true(not taken[0], "15.13: abrir un cofre no cambia el mapa, no saca otra foto")
+	assert_true(map.is_layout_flag(&"ow_ravine_bridge_eye") and map.is_layout_flag(&"ow_secret_ravine_wall"), "el ojo del puente y el muro roto sí")
 	setup[1].set_flag(&"ow_ravine_bridge_eye", true)
 	await tree.create_timer(OverworldMap.RETAKE_DELAY * 0.5).timeout
 	assert_true(not taken[0], "espera a que termine de moverse")

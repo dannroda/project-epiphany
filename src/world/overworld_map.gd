@@ -31,6 +31,8 @@ const REVEAL_STEP := 1.0
 
 var texture: Texture2D
 var _retake_pending := false
+var _layout_flags: Dictionary[StringName, bool] = {}
+var _layout_flags_known := false
 var _painted_at: Dictionary[PlayerCharacter, Vector2] = {}
 
 @onready var _viewport: SubViewport = $Snapshot
@@ -109,14 +111,43 @@ func snapshot() -> void:
 			piece.queue_free()
 
 
-func _on_flag_changed(_id: StringName, _value: Variant) -> void:
-	if _retake_pending or not is_inside_tree():
+func _on_flag_changed(id: StringName, _value: Variant) -> void:
+	if _retake_pending or not is_inside_tree() or not is_layout_flag(id):
 		return
 	_retake_pending = true
 	await get_tree().create_timer(RETAKE_DELAY).timeout
 	_retake_pending = false
 	if is_inside_tree():
 		snapshot()
+
+
+## Los flags que cambian lo que sale en la foto: los de `scenery` y los de sus interruptores (el ojo que sube el puente).
+func is_layout_flag(id: StringName) -> bool:
+	if not _layout_flags_known:
+		_layout_flags_known = true
+		for node in scenery:
+			_collect_layout_flags(node)
+	return _layout_flags.has(id)
+
+
+func _collect_layout_flags(node: Node) -> void:
+	_add_layout_flag(node)
+	var switches: Variant = node.get(&"switches")
+	if switches is Array:
+		for path: NodePath in switches:
+			var target := node.get_node_or_null(path)
+			if target:
+				_add_layout_flag(target)
+				for child in target.get_children():
+					_add_layout_flag(child)
+	for child in node.get_children():
+		_collect_layout_flags(child)
+
+
+func _add_layout_flag(node: Node) -> void:
+	var flag: Variant = node.get(&"flag")
+	if flag is StringName and not flag.is_empty():
+		_layout_flags[flag] = true
 
 
 static func _add_to_map_layer(node: Node) -> void:
