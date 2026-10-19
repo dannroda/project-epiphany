@@ -5,17 +5,17 @@
   "created_at": "2026-10-19T22:41:21.860Z",
   "description": "Revisión con patrones (2026-10-19): Congelan hurtbox.get_parent(): en momia, Amaru, guardián mano y jefe es un Node3D interno, no la entidad.",
   "milestone": "m11",
-  "notes": "",
+  "notes": "Hecho (1377bb4d, el cambio de player.gd quedó en a83f1cf0): Hurtbox.entity() da la raíz de su escena. Para probar: espadazo a la momia o al Amaru; los dos se frenan un instante.",
   "order": 212,
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug",
     "combate"
   ],
-  "test": "",
+  "test": "tests/test_arena_fighter.gd",
   "title": "Hit-stop y aturdido del martillo no frenan a jefes con hurtbox anidado",
-  "updated_at": "2026-10-19T22:41:21.860Z"
+  "updated_at": "2026-10-19T22:50:25.496Z"
 }

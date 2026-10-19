@@ -5,16 +5,16 @@
   "created_at": "2026-10-19T22:41:22.555Z",
   "description": "Revisión con patrones (2026-10-19): Liftable la reparenta a current_scene al apoyarla: deja de estar bajo su DungeonFloor y puede verse flotando sobre la planta baja (RellanoPot de Chullpa). Usar Spawns.root / volver al padre original.",
   "milestone": "m11",
-  "notes": "",
+  "notes": "Hecho (160141b6): Liftable recuerda su padre al levantarse y vuelve ahí al apoyarse. Para probar: en Chullpa, cargar la vasija grande del Rellano, apoyarla y bajar al piso de abajo (no se ve flotando).",
   "order": 214,
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug"
   ],
-  "test": "",
+  "test": "tests/test_big_pot.gd",
   "title": "Vasija grande apoyada queda fuera de su piso",
-  "updated_at": "2026-10-19T22:41:22.555Z"
+  "updated_at": "2026-10-19T22:50:26.777Z"
 }

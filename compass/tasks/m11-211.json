@@ -5,16 +5,16 @@
   "created_at": "2026-10-19T22:41:20.465Z",
   "description": "Revisión con patrones (2026-10-19): _interrupt no cancela las esperas de ArenaFighter._wait (no van a _tweens). La cola de la Yacumama barre invisible 1,8 s si la enganchás mientras sube; el Amaru aparece en otro charco si salís de la sala con él bajo el agua. Arreglo de raíz: _wait con _new_tween.",
   "milestone": "m11",
-  "notes": "",
+  "notes": "Hecho (3dd2834a): _wait pasa por _new_tween, así _interrupt corta las esperas pendientes. Para probar: enganchar a la Yacumama con media vida mientras sube la cola (no barre); salir de la sala con el Amaru bajo el agua y volver (está en su charco de inicio).",
   "order": 208,
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug"
   ],
-  "test": "",
+  "test": "tests/test_arena_fighter.gd",
   "title": "Sub-jefes: las esperas siguen después de un reinicio",
-  "updated_at": "2026-10-19T22:41:20.465Z"
+  "updated_at": "2026-10-19T22:50:22.946Z"
 }

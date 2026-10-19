@@ -5583,47 +5583,71 @@ Revisión con patrones (2026-10-19): Escena que existe pero no carga deja pantal
 
 Revisión con patrones (2026-10-19): Un player que entra durante una cinemática camina libre. El anillo de ítems y Feel.freeze escriben Engine.time_scale sin dueño. TextBox hace pop de la pantalla de arriba, no de sí mismo (latente).
 
-### 11.206 Sub-jefes: las esperas siguen después de un reinicio · Pendiente
+### 11.206 Sub-jefes: las esperas siguen después de un reinicio · Revisión
 
 **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-17 · **Etiquetas:** `bug`
 
 Revisión con patrones (2026-10-19): _interrupt no cancela las esperas de ArenaFighter._wait (no van a _tweens). La cola de la Yacumama barre invisible 1,8 s si la enganchás mientras sube; el Amaru aparece en otro charco si salís de la sala con él bajo el agua. Arreglo de raíz: _wait con _new_tween.
 
-### 11.207 Agua del Bañado: entre áreas contiguas se camina a velocidad normal · Pendiente
+**Prueba:** tests/test_arena_fighter.gd
+
+**Notas:** Hecho (3dd2834a): _wait pasa por _new_tween, así _interrupt corta las esperas pendientes. Para probar: enganchar a la Yacumama con media vida mientras sube la cola (no barre); salir de la sala con el Amaru bajo el agua y volver (está en su charco de inicio).
+
+### 11.207 Agua del Bañado: entre áreas contiguas se camina a velocidad normal · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-17 · **Etiquetas:** `bug`
 
 Revisión con patrones (2026-10-19): shallow_water.gd pone ground_speed = 1.0 al salir de un área aunque el player ya esté en la de al lado (las cuatro BanadoWater se tocan).
 
-### 11.208 Salir por la escalera no avisa que dejaste la sala · Pendiente
+**Prueba:** tests/test_shallow_water.gd
+
+**Notas:** Hecho (69866ffd): al salir de un agua se mantiene la velocidad de otra en la que siga. Para probar: cruzar el Bañado de un área a la otra.
+
+### 11.208 Salir por la escalera no avisa que dejaste la sala · Revisión
 
 **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-17 · **Etiquetas:** `bug`
 
 Revisión con patrones (2026-10-19): TopDownCamera.reset_room() olvida la sala sin player_left: bloques trabados no se reacomodan, torretas no reviven, ArenaFight no se reinicia. Chullpa, Queñoa, Cumbre, Totora.
 
-### 11.209 Morir cargando algo saca el cuerpo en un callback de física · Pendiente
+**Prueba:** tests/test_chullpa.gd
+
+**Notas:** Hecho (2b35ffab): la escalera llama TopDownCamera.leave_room, que avisa player_left. La reaparición sigue con reset_room. Para probar: trabar un bloque, salir por la escalera y volver; romper una torreta, subir y bajar.
+
+### 11.209 Morir cargando algo saca el cuerpo en un callback de física · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-17 · **Etiquetas:** `bug`
 
 Revisión con patrones (2026-10-19): health.died llega desde area_entered y el estado de carga suelta el objeto con reparent ahí mismo. La herida normal ya se difiere; la muerte no.
 
-### 11.210 Hit-stop y aturdido del martillo no frenan a jefes con hurtbox anidado · Pendiente
+**Notas:** Hecho (a83f1cf0): health.died con CONNECT_DEFERRED. Sin test (es la misma solución que la herida). Para probar: morir con una vasija o una bomba en las manos; no debe salir error en el log.
+
+### 11.210 Hit-stop y aturdido del martillo no frenan a jefes con hurtbox anidado · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-17 · **Etiquetas:** `bug`, `combate`
 
 Revisión con patrones (2026-10-19): Congelan hurtbox.get_parent(): en momia, Amaru, guardián mano y jefe es un Node3D interno, no la entidad.
 
-### 11.211 Pelea de sala: se puede ganar dos veces · Pendiente
+**Prueba:** tests/test_arena_fighter.gd
+
+**Notas:** Hecho (1377bb4d, el cambio de player.gd quedó en a83f1cf0): Hurtbox.entity() da la raíz de su escena. Para probar: espadazo a la momia o al Amaru; los dos se frenan un instante.
+
+### 11.211 Pelea de sala: se puede ganar dos veces · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-17 · **Etiquetas:** `bug`
 
 Revisión con patrones (2026-10-19): Si una bomba mata al último sub-jefe y al último escolta en el mismo cuadro, _on_defeated corre dos veces y _win no se cuida: doble autoguardado y aviso.
 
-### 11.212 Vasija grande apoyada queda fuera de su piso · Pendiente
+**Notas:** No es un bug: cada muerte emite defeated en el momento, así que el chequeo de 'no queda ninguno' pasa una sola vez (en la última). Probado matando al centinela y sus huancas en el mismo cuadro: una sola victoria. Sin cambios; cerrar si estás de acuerdo.
+
+### 11.212 Vasija grande apoyada queda fuera de su piso · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-17 · **Etiquetas:** `bug`
 
 Revisión con patrones (2026-10-19): Liftable la reparenta a current_scene al apoyarla: deja de estar bajo su DungeonFloor y puede verse flotando sobre la planta baja (RellanoPot de Chullpa). Usar Spawns.root / volver al padre original.
+
+**Prueba:** tests/test_big_pot.gd
+
+**Notas:** Hecho (160141b6): Liftable recuerda su padre al levantarse y vuelve ahí al apoyarse. Para probar: en Chullpa, cargar la vasija grande del Rellano, apoyarla y bajar al piso de abajo (no se ve flotando).
 
 ## M12 — Assets propios (Blender)  (27/39)
 

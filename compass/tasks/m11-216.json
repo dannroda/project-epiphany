@@ -5,16 +5,16 @@
   "created_at": "2026-10-19T22:41:22.203Z",
   "description": "Revisión con patrones (2026-10-19): Si una bomba mata al último sub-jefe y al último escolta en el mismo cuadro, _on_defeated corre dos veces y _win no se cuida: doble autoguardado y aviso.",
   "milestone": "m11",
-  "notes": "",
+  "notes": "No es un bug: cada muerte emite defeated en el momento, así que el chequeo de 'no queda ninguno' pasa una sola vez (en la última). Probado matando al centinela y sus huancas en el mismo cuadro: una sola victoria. Sin cambios; cerrar si estás de acuerdo.",
   "order": 213,
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug"
   ],
   "test": "",
   "title": "Pelea de sala: se puede ganar dos veces",
-  "updated_at": "2026-10-19T22:41:22.203Z"
+  "updated_at": "2026-10-19T22:50:26.122Z"
 }
