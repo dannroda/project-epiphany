@@ -5,17 +5,17 @@
   "created_at": "2026-10-19T22:56:14.862Z",
   "description": "Revisión de arquitectura del overworld (-3e, 2026-10-19): overworld_map.gd:106 corre snapshot() (copia el GridMap, renderiza un SubViewport de 4000×1920) 2 s después de CUALQUIER flag_changed, cofres y corazones incluidos. Arreglo: solo con flags que cambian el trazado (puente, paredes agrietadas), por lista o señal layout_changed.",
   "milestone": "m15",
-  "notes": "",
+  "notes": "Hecho por -3e (4869886c): la foto del mapa se rehace solo con flags del trazado (scenery y sus interruptores, como el ojo del puente), no con cofres ni corazones.",
   "order": 188,
   "priority": "high",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "optimizacion",
     "overworld"
   ],
-  "test": "",
+  "test": "tests/test_minimap.gd",
   "title": "El mapa del overworld se vuelve a fotografiar con cualquier flag",
-  "updated_at": "2026-10-19T22:56:14.862Z"
+  "updated_at": "2026-10-19T23:24:11.211Z"
 }

@@ -6892,11 +6892,15 @@ Revisión de 16.28-16.31 de la sesión de arte (2026-10-19): Nombre de zona re-m
 
 Revisión de 16.28-16.31 de la sesión de arte (2026-10-19): Parpadeo de la bendición (blessing.gd:29), titileo de stencil_light (:42), rebotes y alturas fijas del Kuntur (kuntur.gd:197-374), fundido de barras de la cinemática (cutscene.gd:107), radio del velo de zona (zone_veil.gd:76), cámara del título (title_flyover.gd, PathFollow3D). demo_tajo queda aparcada.
 
-### 16.43 Mapa explorado del overworld se borra si cambia world_rect · Pendiente
+### 16.43 Mapa explorado del overworld se borra si cambia world_rect · Revisión
 
 **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-3e · **Etiquetas:** `overworld`, `bug`
 
 Revisión de arquitectura del overworld (-3e, 2026-10-19): GameState.ensure_map_revealed (game_state.gd:114) recrea map_revealed vacío si cambia el tamaño, y el origen del rect no se guarda: agrandar world_rect borra el mapa explorado de cada partida, y entrar a levels/test.tscn (otro OverworldMap) también. Arreglo: reveal por id de mapa, guardar el rect y recortar/remapear en vez de borrar.
+
+**Prueba:** tests/test_minimap.gd
+
+**Notas:** Hecho por -3e (c6a2764b): lo descubierto va por id de mapa con su origen (GameState.map_reveals / map_reveal_origins, SaveKeys.REVEALS); si cambia world_rect se remapea; las partidas viejas migran a "overworld". Para probar: cargar una partida vieja con el mapa explorado y abrir el mapa.
 
 ### 16.44 ZoneVeil sin uso pero consultado cada cuadro · Pendiente
 
@@ -7714,11 +7718,15 @@ feel.gd:59-83 genera unos 22 sonidos en `_ready` (~10 s de audio a 22050 Hz, ~22
 
 **Relacionadas:** 15.6 Arranque hasta el menú
 
-### 15.13 El mapa del overworld se vuelve a fotografiar con cualquier flag · Pendiente
+### 15.13 El mapa del overworld se vuelve a fotografiar con cualquier flag · Revisión
 
 **Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-3e · **Etiquetas:** `optimizacion`, `overworld`
 
 Revisión de arquitectura del overworld (-3e, 2026-10-19): overworld_map.gd:106 corre snapshot() (copia el GridMap, renderiza un SubViewport de 4000×1920) 2 s después de CUALQUIER flag_changed, cofres y corazones incluidos. Arreglo: solo con flags que cambian el trazado (puente, paredes agrietadas), por lista o señal layout_changed.
+
+**Prueba:** tests/test_minimap.gd
+
+**Notas:** Hecho por -3e (4869886c): la foto del mapa se rehace solo con flags del trazado (scenery y sus interruptores, como el ojo del puente), no con cofres ni corazones.
 
 ## Listas
 
