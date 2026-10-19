@@ -6317,7 +6317,7 @@ Daniel (2026-10-15): es hora de que los enemigos normales de las mazmorras vayan
 
 **Relacionadas:** 16.17 Configs de enemigos clonadas por mazmorra
 
-## M16 — Salud del código  (0/39)
+## M16 — Salud del código  (0/42)
 
 Arreglar los bugs y la deuda técnica que salieron del análisis del 2026-10-16 (cinco revisiones con las skills: arquitectura, code review, comunicación, patrones y datos), antes de seguir sumando sub-jefes, mazmorras y el co-op. Lo de rendimiento va a M15; las suposiciones de un solo player, a M13.
 
@@ -6855,6 +6855,24 @@ Revisión con patrones (2026-10-19): Minimapa (redibuja y escanea grupos cada cu
 **Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `refactor`
 
 Revisión con patrones (2026-10-19): carrier, bomb, dodge_ghosts, liftable usan current_scene; SceneFlow busca Dungeon/AreaZone solo entre hijos directos; save_tampered se escribe y nadie lo lee.
+
+### 16.40 AnimationPlayers que faltan con deterministic = false · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `refactor`, `animacion`
+
+Revisión de 16.28-16.31 de la sesión de arte (2026-10-19): Sin deterministic = false (cambiar de clip resetea lo que el nuevo no anima): cutscene.tscn, scene_flow, warp_portal, travel_portal, temple_eye_glow, centinela_model; boss.tscn va con 16.32.
+
+### 16.41 Clips que arrancan de claves fijas en vez del valor actual · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `animacion`
+
+Revisión de 16.28-16.31 de la sesión de arte (2026-10-19): Nombre de zona re-mostrado salta el alfa a 0 (hud.gd:157); ocultar la barra del jefe durante su entrada salta a 1; el volteo del ojo vigía arranca los párpados en 1; el temblor de la momia arranca en -0.2; el salto de la momia sube en 0.33 s con aim_time 0.9 (chullpa, templo). El pop del corazón perdió el rebote y el anillo del rugido pasó a ease-in. heart_piece.gd:27 tapa Pickup.shown.
+
+### 16.42 Animaciones que siguen en código · Pendiente
+
+**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `refactor`, `animacion`
+
+Revisión de 16.28-16.31 de la sesión de arte (2026-10-19): Parpadeo de la bendición (blessing.gd:29), titileo de stencil_light (:42), rebotes y alturas fijas del Kuntur (kuntur.gd:197-374), fundido de barras de la cinemática (cutscene.gd:107), radio del velo de zona (zone_veil.gd:76), cámara del título (title_flyover.gd, PathFollow3D). demo_tajo queda aparcada.
 
 ## M13 — Co-op local (estilo Four Swords)  (1/17)
 

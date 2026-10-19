@@ -1,0 +1,20 @@
+{
+  "checklist": [],
+  "code": "16.40",
+  "created_at": "2026-10-19T22:55:43.620Z",
+  "description": "Revisión de 16.28-16.31 de la sesión de arte (2026-10-19): Sin deterministic = false (cambiar de clip resetea lo que el nuevo no anima): cutscene.tscn, scene_flow, warp_portal, travel_portal, temple_eye_glow, centinela_model; boss.tscn va con 16.32.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 99,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "refactor",
+    "animacion"
+  ],
+  "test": "",
+  "title": "AnimationPlayers que faltan con deterministic = false",
+  "updated_at": "2026-10-19T22:55:43.620Z"
+}

@@ -1,0 +1,19 @@
+{
+  "checklist": [],
+  "code": "16.41",
+  "created_at": "2026-10-19T22:55:43.958Z",
+  "description": "Revisión de 16.28-16.31 de la sesión de arte (2026-10-19): Nombre de zona re-mostrado salta el alfa a 0 (hud.gd:157); ocultar la barra del jefe durante su entrada salta a 1; el volteo del ojo vigía arranca los párpados en 1; el temblor de la momia arranca en -0.2; el salto de la momia sube en 0.33 s con aim_time 0.9 (chullpa, templo). El pop del corazón perdió el rebote y el anillo del rugido pasó a ease-in. heart_piece.gd:27 tapa Pickup.shown.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 100,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "animacion"
+  ],
+  "test": "",
+  "title": "Clips que arrancan de claves fijas en vez del valor actual",
+  "updated_at": "2026-10-19T22:55:43.958Z"
+}

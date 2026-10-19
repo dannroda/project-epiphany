@@ -1,0 +1,20 @@
+{
+  "checklist": [],
+  "code": "16.42",
+  "created_at": "2026-10-19T22:55:44.301Z",
+  "description": "Revisión de 16.28-16.31 de la sesión de arte (2026-10-19): Parpadeo de la bendición (blessing.gd:29), titileo de stencil_light (:42), rebotes y alturas fijas del Kuntur (kuntur.gd:197-374), fundido de barras de la cinemática (cutscene.gd:107), radio del velo de zona (zone_veil.gd:76), cámara del título (title_flyover.gd, PathFollow3D). demo_tajo queda aparcada.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 101,
+  "priority": "low",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "refactor",
+    "animacion"
+  ],
+  "test": "",
+  "title": "Animaciones que siguen en código",
+  "updated_at": "2026-10-19T22:55:44.301Z"
+}
