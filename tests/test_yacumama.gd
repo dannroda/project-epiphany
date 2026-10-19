@@ -26,7 +26,7 @@ func _start() -> void:
 		enemy.free()
 	fight = level.get_node(^"PisoBajo/BossFight") as ArenaFight
 	boss = fight.get_node(^"Yacumama") as Yacumama
-	player.global_position = Vector3(40, 0.2, 9.5)
+	player.global_position = fight.global_position + Vector3(0, 0.2, 3.5)
 	player.velocity = Vector3.ZERO
 	await _until(func() -> bool: return boss.state != Amaru.State.IDLE, 8.0)
 
@@ -78,7 +78,7 @@ func test_the_real_hookshot_pulls_her_out() -> void:
 	state.assign_button(0, &"hookshot")
 	assert_true(await _until(_risen, 8.0), "asoma")
 	var pool := boss.global_position
-	player.global_position = Vector3(pool.x, 0.2, pool.z + (4.0 if pool.z < 6.0 else -4.0))
+	player.global_position = Vector3(pool.x, 0.2, pool.z + (4.0 if pool.z < fight.global_position.z else -4.0))
 	player.velocity = Vector3.ZERO
 	await tree.physics_frame
 	player.targeting.set_target(boss)

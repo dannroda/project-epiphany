@@ -6,7 +6,7 @@ const LEVEL := "res://levels/totora.tscn"
 const MapData := preload("res://src/ui/menus/map_data.gd")
 ## [sala de donde sale, punto en esa sala, poste, sala a la que llega].
 const CROSSINGS := [
-	["PisoBajo/Gancho", Vector3(-0.9, 0, 0.5), "PisoBajo/BalsasPost", "PisoBajo/Balsas"],
+	["PisoBajo/Gancho", Vector3(-0.9, 0, 2.5), "PisoBajo/BalsasPost", "PisoBajo/Balsas"],
 	["PisoBajo/Balsas", Vector3(-0.9, 0, -2.5), "PisoBajo/GanchoPost", "PisoBajo/Gancho"],
 	["PisoAlto/Estanque", Vector3(-4, 0, 0), "PisoAlto/EstanqueStripPost", "PisoAlto/Estanque"],
 	["PisoAlto/Estanque", Vector3(6, 0, 0), "PisoAlto/EstanqueWestPost", "PisoAlto/Estanque"],

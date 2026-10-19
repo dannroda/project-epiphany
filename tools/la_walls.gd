@@ -5,8 +5,9 @@ extends SceneTree
 ## bake: una sola vez por nivel: duplica las paredes entre salas (cada sala la suya; todo se corre con su sala), pone las
 ## piezas de data/kits/chullpa_la_kit.tres (kit chullpa + paredes_la.<estilo>.glb) y el look de LA.
 ## refresh: en el nivel ya hecho, vuelve a elegir la pieza de cada celda de pared (después de editar el nivel).
+## spread: duplica las paredes entre salas de un nivel ya hecho sin duplicar (y lo guarda; después export y refresh).
 ## Las paredes finitas sueltas (piso a los dos lados) son paredes bajas (muro). Las celdas Puerta llevan un corte (paso) o, si tienen escalera, un corte ciego con escalones (sube, baja).
-## godot --headless --path . --script res://tools/la_walls.gd -- export | bake <nivel> | refresh <nivel>
+## godot --headless --path . --script res://tools/la_walls.gd -- export | bake <nivel> | refresh <nivel> | spread <nivel>
 
 const LEVELS := {"chullpa": "res://levels/chullpa.tscn", "quenoa": "res://levels/quenoa.tscn", "templo": "res://levels/templo.tscn", "totora": "res://levels/totora.tscn", "cumbre": "res://levels/cumbre.tscn",
 	"bomb_cave": "res://levels/bomb_cave.tscn", "bush_cave": "res://levels/bush_cave.tscn", "grotto_cave": "res://levels/grotto_cave.tscn",
@@ -127,7 +128,7 @@ const LOOKS := {
 		"brazier": "res://assets/epiphany/meshes/templo_chullpa/brasero.res",
 		"doors": "res://assets/epiphany/meshes/paredes_la/%s_totora_la.res",
 		"walls": "res://assets/epiphany/meshes/paredes_la/%s_totora_la_%s.res", "kit": "res://data/kits/totora_la_kit.tres", "grain": [0.0, GRAIN_RECT],
-		"spread": false, "water": true,
+		"water": true,
 		"floor": {"plank_width": 0.25, "plank_length": 2.0, "floor_color": Color(0.6, 0.55, 0.4, 1.0), "grout_width": 0.02, "grout_shade": 0.45, "tone_spread": 0.12}},
 	"cumbre": {"ambient": Color(0.66, 0.72, 0.84), "ambient_energy": 1.3, "sun": Color(0.86, 0.92, 1.0), "sun_energy": 0.8,
 		"room": Color(1.0, 0.94, 0.82), "room_energy": 2.0, "dust": "res://src/world/look/polvo_cumbre.tscn",
@@ -184,13 +185,19 @@ func _initialize() -> void:
 		quit()
 		return
 	var path: String = LEVELS.get(args[1] if args.size() > 1 else "", "")
-	if path == "" or mode not in ["bake", "refresh"]:
-		push_error("uso: -- export | bake <nivel> | refresh <nivel>, con nivel en %s" % [LEVELS.keys()])
+	if path == "" or mode not in ["bake", "refresh", "spread"]:
+		push_error("uso: -- export | bake <nivel> | refresh <nivel> | spread <nivel>, con nivel en %s" % [LEVELS.keys()])
 		quit(1)
 		return
 	if DisplayServer.get_name() == "headless":
 		push_error("bake y refresh necesitan el renderer (sin --headless): headless los shaders embebidos se guardan sin parámetros")
 		quit(1)
+		return
+	if mode == "spread":
+		var baked := _load(path)
+		_spread(baked)
+		_save(baked, path)
+		quit()
 		return
 	var look: Dictionary = LOOKS[LOOK_OF.get(args[1], args[1])]
 	_door_leaves = look.doors
@@ -246,6 +253,11 @@ func _initialize() -> void:
 			veil.get_parent().remove_child(veil)
 			veil.free()
 	_look(level, look)
+	_save(level, path)
+	quit()
+
+
+func _save(level: Node, path: String) -> void:
 	var packed := PackedScene.new()
 	packed.pack(level)
 	var uid := ResourceLoader.get_resource_uid(path)
@@ -253,7 +265,6 @@ func _initialize() -> void:
 	ResourceSaver.set_uid(path, uid)
 	_pin_ext_uids(path)
 	level.free()
-	quit()
 
 
 ## El nivel, con las paredes ya duplicadas (si todavía no tiene el look, las duplica en memoria).
