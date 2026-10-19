@@ -2591,7 +2591,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Grabar los planos y editar el teaser
   Primera versión (b343f5ce): tools/teaser/record.sh graba las 12 tomas de teaser.tscn (Movie Maker, 1080p60, ~4,5 min) y tools/teaser/edit.sh arma debug/tmp/teaser/teaser.mp4 (40,8 s: overworld 13,5 s con calma, templo 13 s con capas de mazmorra, jefe 11 s con todas, cierre con el título en Cinzel). Las tomas, el corte (CUTS en edit.sh) y la música se cambian y se vuelve a correr. Falta: que Daniel lo vea y ajustar; probar la misma secuencia con gpu-screen-recorder (no está instalado).
 
-## M11 — Pulido: contenido y feel  (159/212)
+## M11 — Pulido: contenido y feel  (159/213)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5666,6 +5666,12 @@ Auditoría con patrones de diseño (-72, 2026-10-19): save_manager.gd:135 copy_s
 **Prueba:** tests/test_slots.gd
 
 **Notas:** Hecho por -72 (6cabd3b5): copy_slot copia la partida y su .bak a .copy y renombra solo cuando están los dos; si falla una copia limpia los temporales y deja el destino como estaba. Para probar: copiar una ranura en el menú y cargar la copia.
+
+### 11.219 Cámara: el canal de agua tras el labio sur se ve negro · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `bug`, `camara`
+
+Revisión de Totora con paredes dobles (12.41, 2026-10-19). Desde Gancho, el canal de agua del cruce del gancho hacia Balsas, que atraviesa la pared doble sur, se ve como un hueco negro. Desde Balsas se ve bien. No es el nivel: en top_down_camera._mask_around, detrás del labio sur de la sala, la tira 5 tapa hasta piso − 0.3 (cc571214, 11.151 d5e0d9a5, para que no asome el piso de abajo) y el agua está a −0.35, así que queda bajo la máscara. Pasa en toda puerta sur de toda mazmorra; con agua se lee como agujero. Arreglo posible: excepción de cámara (no bajar la tira 5 en celdas con agua, o que la sala vea su canal). Toca la cámara de todos los niveles: coordinar con 16.54. Capturas: debug/tmp/design/tot_Gancho.png y tot_Balsas.png en wt/design.
 
 ## M12 — Assets propios (Blender)  (27/39)
 
