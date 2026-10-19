@@ -12,6 +12,18 @@ Las tareas y los hitos de este proyecto viven en `compass/`, en el formato de Sc
 - Si la CLI avisa que el hub es de otra versión, reinicialo con `scompass restart` antes de seguir: un hub viejo puede no conocer campos nuevos.
 - Los cambios quedan como archivos modificados en `compass/` (y en el export markdown). Commitealos solo si te lo piden. `scompass list` termina con cuántos hay sin commitear (`uncommitted` en `--json`).
 
+## MCP
+
+Si en tus herramientas aparece el servidor `scompass` (`list_tasks`, `show_task`, `add_task`, `move_task`, `check_step`…), usalo en lugar de correr `scompass` por Bash: son los mismos comandos con `--json`, con los parámetros tipados, y no piden permiso por cada llamada. Lo que sigue vale igual (modelo, etags, pasos desde 1); los nombres de las herramientas siguen a los comandos (`set` es `update_task`, `step add` es `add_step`, `playtest pass` es `set_playtest_result`). Listas, sesiones de playtest (crear, ordenar), capturas e `init`/`serve` siguen por la CLI.
+
+Para tenerlo en Claude Code en todos los proyectos (toma el de la carpeta de la sesión; `dir` en cada herramienta apunta a otro):
+
+```sh
+claude mcp add --scope user scompass -- node <carpeta de scope-compass>/hub/bin/scompass.js mcp
+```
+
+Los hitos (`compass://milestone/<id>`), las tareas (`compass://task/<id>`) y los documentos (`compass://doc/<alias>`) se adjuntan con `@scompass:…`.
+
 ## Modelo
 
 - **Hito** (`compass/milestones/<id>.json`): id `m00`, `m01`, …; campos `code` ("M0"), `title`, `order`, `goal`, `done_when` y `due` (fecha objetivo opcional; atrasado si pasa con tareas sin terminar).
