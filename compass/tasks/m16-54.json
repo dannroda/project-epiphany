@@ -1,0 +1,20 @@
+{
+  "assignee": "project-epiphany-e0",
+  "checklist": [],
+  "code": "16.56",
+  "created_at": "2026-10-19T22:57:40.017Z",
+  "description": "Auditoría con patrones de diseño (-72, 2026-10-19): menu_stack.gd:50/74/120 y pause_menu.gd:37/49 usan has_method(&\"screen_covered\"/\"screen_uncovered\"/\"focus_default\"/\"cancel\"): un typo en una pantalla se ignora en silencio. Arreglo: clase base MenuScreen (extends Control) con virtuales vacías.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 115,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "refactor"
+  ],
+  "test": "",
+  "title": "Pantallas tipadas por convención",
+  "updated_at": "2026-10-19T22:57:40.017Z"
+}

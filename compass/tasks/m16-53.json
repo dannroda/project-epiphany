@@ -1,0 +1,20 @@
+{
+  "assignee": "project-epiphany-e0",
+  "checklist": [],
+  "code": "16.55",
+  "created_at": "2026-10-19T22:57:39.663Z",
+  "description": "Auditoría con patrones de diseño (-72, 2026-10-19): enemy.gd:231-325 (guardia _guard_stops; coraza _armor_stops/_break_armor/_fling_armor) solo lo usan shield_skeleton y armored_skeleton, y conoce Hook.ELEMENT (enemy.gd:292), una clase de ítem. Arreglo: componentes Guard y Armor (Node) con @export, el elemento como propiedad de la coraza. No es la guardia del player de 16.37.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 114,
+  "priority": "low",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "refactor"
+  ],
+  "test": "",
+  "title": "Enemy carga la defensa de dos variantes",
+  "updated_at": "2026-10-19T22:57:39.663Z"
+}

@@ -1,0 +1,20 @@
+{
+  "assignee": "project-epiphany-e0",
+  "checklist": [],
+  "code": "16.54",
+  "created_at": "2026-10-19T22:57:39.322Z",
+  "description": "Auditoría con patrones de diseño (-72, 2026-10-19): top_down_camera.gd tiene 813 líneas y 8 @export_group (lock-on, look, apuntado, reveals, cinemática, salas, oclusión, co-op); diseño y arte editan los reveals en el mismo archivo (pasó con AmbienteZoom). Arreglo: Reveal y Occlusion como nodos hijos en la escena de la cámara. Coordinar con arte.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 113,
+  "priority": "low",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "refactor"
+  ],
+  "test": "",
+  "title": "TopDownCamera hace demasiado",
+  "updated_at": "2026-10-19T22:57:39.322Z"
+}

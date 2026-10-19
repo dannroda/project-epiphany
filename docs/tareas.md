@@ -2591,7 +2591,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Grabar los planos y editar el teaser
   Primera versión (b343f5ce): tools/teaser/record.sh graba las 12 tomas de teaser.tscn (Movie Maker, 1080p60, ~4,5 min) y tools/teaser/edit.sh arma debug/tmp/teaser/teaser.mp4 (40,8 s: overworld 13,5 s con calma, templo 13 s con capas de mazmorra, jefe 11 s con todas, cierre con el título en Cinzel). Las tomas, el corte (CUTS en edit.sh) y la música se cambian y se vuelve a correr. Falta: que Daniel lo vea y ajustar; probar la misma secuencia con gpu-screen-recorder (no está instalado).
 
-## M11 — Pulido: contenido y feel  (159/211)
+## M11 — Pulido: contenido y feel  (159/212)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5649,6 +5649,12 @@ Revisión con patrones (2026-10-19): Liftable la reparenta a current_scene al ap
 
 **Notas:** Hecho (160141b6): Liftable recuerda su padre al levantarse y vuelve ahí al apoyarse. Para probar: en Chullpa, cargar la vasija grande del Rellano, apoyarla y bajar al piso de abajo (no se ve flotando).
 
+### 11.218 Copiar una ranura pierde su respaldo · Pendiente
+
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-72 · **Etiquetas:** `bug`, `guardado`
+
+Auditoría con patrones de diseño (-72, 2026-10-19): save_manager.gd:135 copy_slot copia solo el archivo principal (o el .bak si falta), nunca los dos: si el original está corrupto, la copia no tiene .bak del que recuperarse. Arreglo: copiar también slot_path(from)+'.bak' si existe.
+
 ## M12 — Assets propios (Blender)  (27/39)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
@@ -6317,7 +6323,7 @@ Daniel (2026-10-15): es hora de que los enemigos normales de las mazmorras vayan
 
 **Relacionadas:** 16.17 Configs de enemigos clonadas por mazmorra
 
-## M16 — Salud del código  (0/53)
+## M16 — Salud del código  (0/56)
 
 Arreglar los bugs y la deuda técnica que salieron del análisis del 2026-10-16 (cinco revisiones con las skills: arquitectura, code review, comunicación, patrones y datos), antes de seguir sumando sub-jefes, mazmorras y el co-op. Lo de rendimiento va a M15; las suposiciones de un solo player, a M13.
 
@@ -6939,6 +6945,24 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): arena_fight.gd:55-58,
 **Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-3e · **Etiquetas:** `overworld`
 
 Revisión de arquitectura del overworld (-3e, 2026-10-19): collision_layer/mask/monitorable a mano en 7 scripts de sensores (area_zone, tremor_zone, pit, portal, travel_portal, shallow_water, stairs) → en el .tscn o constantes de capa; bounds() repetido (area_zone, arena_area, room) → un helper; ArenaArea sondea players cada cuadro → señales de Area3D; constantes de eye_switch y look-at repetido con eye_follow → exportar y compartir; brillo_la.gd cambia materiales en cada node_added → paleta brillante .tres al importar; enfoque_la.gd consulta un grupo cada cuadro → cachear (se cruza con 16.37).
+
+### 16.54 TopDownCamera hace demasiado · Pendiente
+
+**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-e0 · **Etiquetas:** `refactor`
+
+Auditoría con patrones de diseño (-72, 2026-10-19): top_down_camera.gd tiene 813 líneas y 8 @export_group (lock-on, look, apuntado, reveals, cinemática, salas, oclusión, co-op); diseño y arte editan los reveals en el mismo archivo (pasó con AmbienteZoom). Arreglo: Reveal y Occlusion como nodos hijos en la escena de la cámara. Coordinar con arte.
+
+### 16.55 Enemy carga la defensa de dos variantes · Pendiente
+
+**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-e0 · **Etiquetas:** `refactor`
+
+Auditoría con patrones de diseño (-72, 2026-10-19): enemy.gd:231-325 (guardia _guard_stops; coraza _armor_stops/_break_armor/_fling_armor) solo lo usan shield_skeleton y armored_skeleton, y conoce Hook.ELEMENT (enemy.gd:292), una clase de ítem. Arreglo: componentes Guard y Armor (Node) con @export, el elemento como propiedad de la coraza. No es la guardia del player de 16.37.
+
+### 16.56 Pantallas tipadas por convención · Pendiente
+
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `refactor`
+
+Auditoría con patrones de diseño (-72, 2026-10-19): menu_stack.gd:50/74/120 y pause_menu.gd:37/49 usan has_method(&"screen_covered"/"screen_uncovered"/"focus_default"/"cancel"): un typo en una pantalla se ignora en silencio. Arreglo: clase base MenuScreen (extends Control) con virtuales vacías.
 
 ## M13 — Co-op local (estilo Four Swords)  (1/17)
 
