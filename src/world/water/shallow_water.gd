@@ -9,6 +9,7 @@ const STEP_TIME := 0.3
 ## La superficie se pasa este margen (m) del rectángulo: la orilla la dibuja el pozo del terreno, que ondula. Del lado
 ## que toca otra ShallowWater no se pasa, así las dos no se pisan (el agua es transparente y se vería el doble).
 const MARGIN := 1.4
+const GROUP := &"shallow_water"
 
 ## Medidas en XZ (m).
 @export var size := Vector2(8.0, 6.0):
@@ -29,6 +30,7 @@ func _ready() -> void:
 	_build()
 	if Engine.is_editor_hint():
 		return
+	add_to_group(GROUP)
 	collision_layer = 0
 	collision_mask = 1 | 2
 	monitorable = false
@@ -41,7 +43,7 @@ func _ready() -> void:
 		var player := body as PlayerCharacter
 		if player:
 			_waders.erase(player)
-			player.ground_speed = 1.0)
+			player.ground_speed = _speed_elsewhere(player))
 
 
 func _physics_process(delta: float) -> void:
@@ -85,3 +87,11 @@ func _build() -> void:
 
 func _rect() -> Rect2:
 	return Rect2(Vector2(position.x, position.z) - size / 2.0, size)
+
+
+## Las áreas del Bañado se tocan: al salir de una puede que ya esté en la de al lado.
+func _speed_elsewhere(player: PlayerCharacter) -> float:
+	for water in get_tree().get_nodes_in_group(GROUP):
+		if water != self and (water as ShallowWater)._waders.has(player):
+			return (water as ShallowWater).wade_speed
+	return 1.0
