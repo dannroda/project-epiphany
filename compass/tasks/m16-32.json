@@ -1,0 +1,19 @@
+{
+  "checklist": [],
+  "code": "16.34",
+  "created_at": "2026-10-19T22:41:07.939Z",
+  "description": "Revisión con patrones (2026-10-19): 15 llamadas con nombre de método fallan en silencio si se renombra. Cámara: TopDownCamera.current(tree) tipado. HUD: tres señales tipadas (anuncio de zona, mostrar/ocultar barra del jefe). Sin EventBus completo.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 93,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "refactor"
+  ],
+  "test": "",
+  "title": "call_group al HUD y a la cámara: acceso tipado y señales",
+  "updated_at": "2026-10-19T22:41:07.939Z"
+}

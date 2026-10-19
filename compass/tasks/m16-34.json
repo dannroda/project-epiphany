@@ -1,0 +1,20 @@
+{
+  "checklist": [],
+  "code": "16.36",
+  "created_at": "2026-10-19T22:41:08.625Z",
+  "description": "Revisión con patrones (2026-10-19): Cada sfx crea un player nuevo sin límite: N sonidos iguales en el mismo cuadro saturan. Feel sintetiza ~10 s al arrancar que después reemplaza con .ogg. Los sonidos de UI salen del input crudo.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 95,
+  "priority": "low",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "refactor",
+    "audio"
+  ],
+  "test": "",
+  "title": "Sonidos de Feel: pool, límite y síntesis al arrancar",
+  "updated_at": "2026-10-19T22:41:08.625Z"
+}

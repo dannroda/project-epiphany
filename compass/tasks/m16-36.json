@@ -1,0 +1,20 @@
+{
+  "checklist": [],
+  "code": "16.38",
+  "created_at": "2026-10-19T22:41:09.317Z",
+  "description": "Revisión con patrones (2026-10-19): Minimapa (redibuja y escanea grupos cada cuadro), Room.has_player por tick, Targeting._sync_posts, Music.targets, overworld_map._reveal. Después de los assets.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 97,
+  "priority": "low",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "refactor",
+    "rendimiento"
+  ],
+  "test": "",
+  "title": "Rendimiento: trabajo por cuadro sin cambios",
+  "updated_at": "2026-10-19T22:41:09.317Z"
+}

@@ -1,0 +1,20 @@
+{
+  "assignee": "project-epiphany-17",
+  "checklist": [],
+  "code": "11.209",
+  "created_at": "2026-10-19T22:41:21.515Z",
+  "description": "Revisión con patrones (2026-10-19): health.died llega desde area_entered y el estado de carga suelta el objeto con reparent ahí mismo. La herida normal ya se difiere; la muerte no.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 211,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug"
+  ],
+  "test": "",
+  "title": "Morir cargando algo saca el cuerpo en un callback de física",
+  "updated_at": "2026-10-19T22:41:21.515Z"
+}

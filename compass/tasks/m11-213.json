@@ -1,0 +1,20 @@
+{
+  "assignee": "project-epiphany-17",
+  "checklist": [],
+  "code": "11.208",
+  "created_at": "2026-10-19T22:41:21.157Z",
+  "description": "Revisión con patrones (2026-10-19): TopDownCamera.reset_room() olvida la sala sin player_left: bloques trabados no se reacomodan, torretas no reviven, ArenaFight no se reinicia. Chullpa, Queñoa, Cumbre, Totora.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 210,
+  "priority": "high",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug"
+  ],
+  "test": "",
+  "title": "Salir por la escalera no avisa que dejaste la sala",
+  "updated_at": "2026-10-19T22:41:21.157Z"
+}

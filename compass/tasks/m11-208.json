@@ -1,0 +1,19 @@
+{
+  "checklist": [],
+  "code": "11.215",
+  "created_at": "2026-10-19T22:41:06.900Z",
+  "description": "Revisión con patrones (2026-10-19): El tween de velocidad de using_item.gd sigue después del estado. Sin verificar.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 205,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug"
+  ],
+  "test": "",
+  "title": "Usar un ítem se come el empujón del golpe",
+  "updated_at": "2026-10-19T22:41:06.900Z"
+}

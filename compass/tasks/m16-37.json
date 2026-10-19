@@ -1,0 +1,19 @@
+{
+  "checklist": [],
+  "code": "16.39",
+  "created_at": "2026-10-19T22:41:09.668Z",
+  "description": "Revisión con patrones (2026-10-19): carrier, bomb, dodge_ghosts, liftable usan current_scene; SceneFlow busca Dungeon/AreaZone solo entre hijos directos; save_tampered se escribe y nadie lo lee.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 98,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "refactor"
+  ],
+  "test": "",
+  "title": "Spawns.root salteado, Dungeon como hijo directo y checksum sin uso",
+  "updated_at": "2026-10-19T22:41:09.668Z"
+}

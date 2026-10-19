@@ -1,0 +1,19 @@
+{
+  "checklist": [],
+  "code": "11.213",
+  "created_at": "2026-10-19T22:41:06.212Z",
+  "description": "Revisión con patrones (2026-10-19): HandGuard.reset llama hand.regenerate, que no saca a la mano de BUSY: si caés por un pozo a mitad del golpe termina el combo. Sin verificar.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 203,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug"
+  ],
+  "test": "",
+  "title": "Guardián mano: reiniciar la pelea no corta el ataque",
+  "updated_at": "2026-10-19T22:41:06.212Z"
+}

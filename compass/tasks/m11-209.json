@@ -1,0 +1,20 @@
+{
+  "checklist": [],
+  "code": "11.216",
+  "created_at": "2026-10-19T22:41:07.249Z",
+  "description": "Revisión con patrones (2026-10-19): Escena que existe pero no carga deja pantalla vacía (verificado). Equipo con ítem renombrado deja sin espada; max_health 0; settings.cfg sin chequeo de tipos ni escritura atómica; sin guardia de reentrada al cargar durante un viaje.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 206,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "bug",
+    "guardado"
+  ],
+  "test": "",
+  "title": "Guardado: datos inválidos y escena que no carga",
+  "updated_at": "2026-10-19T22:41:07.249Z"
+}

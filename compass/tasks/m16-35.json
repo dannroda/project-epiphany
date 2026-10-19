@@ -1,0 +1,19 @@
+{
+  "checklist": [],
+  "code": "16.37",
+  "created_at": "2026-10-19T22:41:08.967Z",
+  "description": "Revisión con patrones (2026-10-19): input_buffer, equipment, carrier, zone_veil, enfoque_la usan get_parent/owner; la guardia del escudo se apaga a mano en 5 estados (usar active_state_changed). doom_ambience: cadena de clases en vez de grupo.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 96,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "refactor"
+  ],
+  "test": "",
+  "title": "Componentes que asumen su padre y la guardia copiada",
+  "updated_at": "2026-10-19T22:41:08.967Z"
+}

@@ -1,0 +1,20 @@
+{
+  "assignee": "project-epiphany-17",
+  "checklist": [],
+  "code": "11.211",
+  "created_at": "2026-10-19T22:41:22.203Z",
+  "description": "Revisión con patrones (2026-10-19): Si una bomba mata al último sub-jefe y al último escolta en el mismo cuadro, _on_defeated corre dos veces y _win no se cuida: doble autoguardado y aviso.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 213,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug"
+  ],
+  "test": "",
+  "title": "Pelea de sala: se puede ganar dos veces",
+  "updated_at": "2026-10-19T22:41:22.203Z"
+}

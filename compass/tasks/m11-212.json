@@ -1,0 +1,20 @@
+{
+  "assignee": "project-epiphany-17",
+  "checklist": [],
+  "code": "11.207",
+  "created_at": "2026-10-19T22:41:20.817Z",
+  "description": "Revisión con patrones (2026-10-19): shallow_water.gd pone ground_speed = 1.0 al salir de un área aunque el player ya esté en la de al lado (las cuatro BanadoWater se tocan).",
+  "milestone": "m11",
+  "notes": "",
+  "order": 209,
+  "priority": "medium",
+  "refs": [],
+  "size": "s",
+  "status": "todo",
+  "tags": [
+    "bug"
+  ],
+  "test": "",
+  "title": "Agua del Bañado: entre áreas contiguas se camina a velocidad normal",
+  "updated_at": "2026-10-19T22:41:20.817Z"
+}
