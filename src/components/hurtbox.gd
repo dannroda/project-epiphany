@@ -18,5 +18,11 @@ func receive(info: DamageInfo) -> void:
 	hit.emit(info)
 
 
+## Lo que se congela con el hit-stop: la raíz de su escena (el hurtbox puede estar anidado en el cuerpo de un jefe),
+## salvo que esté suelto en el nivel.
+func entity() -> Node:
+	return owner if owner and owner != get_tree().current_scene else get_parent()
+
+
 func is_grounded() -> bool:
 	return body == null or body.is_on_floor()

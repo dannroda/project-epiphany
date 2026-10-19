@@ -10,7 +10,7 @@ var _frames := 0
 
 func _ready() -> void:
 	super()
-	landed.connect(func(hurtbox: Hurtbox) -> void: Feel.hit_stop([hurtbox.get_parent()], stun_time))
+	landed.connect(func(hurtbox: Hurtbox) -> void: Feel.hit_stop([hurtbox.entity()], stun_time))
 	_feel.call_deferred()
 
 
