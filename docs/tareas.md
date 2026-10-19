@@ -6120,7 +6120,7 @@ Daniel (2026-10-13): la Chullpa real tiene la cámara vieja; el test LA (debug/l
 
 **Relacionadas:** 12.30 Templo: salas que se vean bien para grabar
 
-### 12.41 Totora (D3) en estilo Link's Awakening y su entrada · En curso
+### 12.41 Totora (D3) en estilo Link's Awakening y su entrada · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Etiquetas:** `arte`, `mazmorra`
 
@@ -6133,6 +6133,8 @@ Diseño (-43) armó levels/totora.tscn en el kit gris (a8d40e91, GDD §8d): dos 
 - [x] Santuario de totora en la isla (TotoraHut)
   Modelo hecho (41357968): src/world/totora_entrada.tscn, choza de los uros sobre balsa, techo con borla roja, columnas con cabeza de puma, aguayo y totoras; mismo colisionador que TotoraHut. Puesta en el overworld (d171669b).
 - [ ] Recorrerla (Daniel)
+- [x] Paredes dobles entre salas, como Chullpa, Queñoa y Cumbre (playtest)
+  Playtest 2026-10-19: las puertas sobresalían y se veía la pared de la sala siguiente, y la pared quebrable no tenía pieza. Arreglado en 9b628eb7: la_walls spread (modo nuevo para niveles ya hechos) + refresh; puertas de 4 m y pared quebrable de pared doble. El cruce Gancho↔Balsas quedaba a 11 m (alcance 10): muelle de una celda bajo GanchoPost. Revisado por diseño (-72). El canal negro visto desde Gancho es de la cámara: 11.219.
 
 **Capturas:** `compass/images/m12-19-20261013-232857.png`, `compass/images/m12-19-20261013-233009.png`, `compass/images/m12-19-20261013-233439.png`
 
@@ -7756,7 +7758,7 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): overworld_map.gd:106 
 4. [x] 7.11 Overworld: huecos de salto largo y mini quest de las sandalias · Hecho · anda
 5. [x] 11.118 Sandalias: correr manteniendo y salto largo con la pluma · Hecho · anda
 6. [x] 11.24 Más secretos en el overworld · Hecho · anda
-7. [ ] 12.41 Totora (D3) en estilo Link's Awakening y su entrada · En curso · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente
+7. [ ] 12.41 Totora (D3) en estilo Link's Awakening y su entrada · Revisión · **falla** — Todas las puerta sobresalen y se ven la pared de la sala siguente
    si me caigo al agua y pierdo, el player cae al vacio y luego aparece la pantalla de "You Fell"
    no hay asset correcto para la pared quebrable
 8. [x] 11.30 Ítem de D3: el gancho · Hecho · anda

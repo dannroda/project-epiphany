@@ -18,6 +18,11 @@
     {
       "done": false,
       "text": "Recorrerla (Daniel)"
+    },
+    {
+      "detail": "Playtest 2026-10-19: las puertas sobresalían y se veía la pared de la sala siguiente, y la pared quebrable no tenía pieza. Arreglado en 9b628eb7: la_walls spread (modo nuevo para niveles ya hechos) + refresh; puertas de 4 m y pared quebrable de pared doble. El cruce Gancho↔Balsas quedaba a 11 m (alcance 10): muelle de una celda bajo GanchoPost. Revisado por diseño (-72). El canal negro visto desde Gancho es de la cámara: 11.219.",
+      "done": true,
+      "text": "Paredes dobles entre salas, como Chullpa, Queñoa y Cumbre (playtest)"
     }
   ],
   "code": "12.41",
@@ -38,12 +43,12 @@
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "arte",
     "mazmorra"
   ],
   "test": "",
   "title": "Totora (D3) en estilo Link's Awakening y su entrada",
-  "updated_at": "2026-10-16T06:48:28.849Z"
+  "updated_at": "2026-10-19T23:29:50.594Z"
 }
