@@ -157,6 +157,14 @@ func _forget_player_rids(_player: PlayerCharacter) -> void:
 	_player_rids.clear()
 
 
+## Por la escalera: la sala que queda atrás se entera, como al cruzar una puerta (bloques, torretas, peleas).
+func leave_room() -> void:
+	var left := room
+	reset_room()
+	if is_instance_valid(left):
+		left.player_left.emit(left)
+
+
 ## Olvida la sala: la próxima se toma sin transición (al empezar o al reaparecer).
 func reset_room() -> void:
 	room = null

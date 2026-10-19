@@ -63,9 +63,12 @@ func test_rooms_count_only_their_own_floor() -> void:
 
 func test_stairs_go_up_and_back() -> void:
 	await _start()
+	var left: Array[Room] = []
+	_room("PlantaBaja/Entrada").player_left.connect(func(room: Room) -> void: left.append(room))
 	player.global_position = _in("PlantaBaja/Entrada", Vector3(-11.4, 0, -4))
 	await tree.create_timer(1.2).timeout
 	assert_eq(camera.room, _room("PisoAlto/Rellano"), "la escalera lleva al rellano")
+	assert_eq(left, [_room("PlantaBaja/Entrada")] as Array[Room], "la entrada se entera de que el player se fue (bloques, torretas, peleas)")
 	assert_true(absf(player.global_position.y - 8.0) < 0.5, "arriba, en el piso alto (y %.1f)" % player.global_position.y)
 	assert_true(_floor("PisoAlto").visible, "ahora se ve el piso alto")
 	assert_eq(tree.root.get_node(^"SceneFlow/Rect").color.a, 0.0, "el fundido terminó")
