@@ -5581,7 +5581,7 @@ Revisión con patrones (2026-10-19): El tween de velocidad de using_item.gd sigu
 
 ### 11.216 Guardado: datos inválidos y escena que no carga · Pendiente
 
-**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-e0 · **Etiquetas:** `bug`, `guardado`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-72 · **Etiquetas:** `bug`, `guardado`
 
 Revisión con patrones (2026-10-19): Escena que existe pero no carga deja pantalla vacía (verificado). Equipo con ítem renombrado deja sin espada; max_health 0; settings.cfg sin chequeo de tipos ni escritura atómica; sin guardia de reentrada al cargar durante un viaje.
 
@@ -6842,7 +6842,7 @@ Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTre
 
 ### 16.33 Mezclas del player en el AnimationTree, no con tweens · Pendiente
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `refactor`, `animacion`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-5c · **Etiquetas:** `refactor`, `animacion`
 
 Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTree cuando hay estados o mezclas), para verlo y ajustarlo en el editor. Los tweens quedan solo para destinos calculados en runtime y esperas. carrier, shield y aiming_item tweenean blend_amount del AnimationTree: pasar a Transition con xfade_time.
 
