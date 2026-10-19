@@ -20,6 +20,8 @@ const STENCIL_MARK := preload("res://src/feel/stencil_mark.tres")
 
 var target: Node3D
 var _lit: Material
+## Donde estaba antes de levantarlo (su piso de mazmorra): ahí vuelve al apoyarlo.
+var _home: Node
 
 
 func _init() -> void:
@@ -53,6 +55,7 @@ func make_body() -> ThrownObject:
 		return body
 	body = THROWN_OBJECT.instantiate() as ThrownObject
 	body.liftable = self
+	_home = target.get_parent()
 	((body.get_node(^"CollisionShape3D") as CollisionShape3D).shape as SphereShape3D).radius = body_radius
 	var scene := target.get_tree().current_scene
 	scene.add_child(body)
@@ -75,7 +78,7 @@ func shatter() -> void:
 ## Lo deja en `spot` y el cuerpo físico se va: el objeto vuelve a ser lo que era antes de levantarlo.
 func put_down(spot: Vector3) -> void:
 	var body := target.get_parent() as ThrownObject
-	target.reparent(target.get_tree().current_scene)
+	target.reparent(_home if is_instance_valid(_home) else target.get_tree().current_scene)
 	target.set_down()
 	target.global_transform = Transform3D(Basis.IDENTITY, spot)
 	if body:

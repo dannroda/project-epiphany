@@ -154,3 +154,18 @@ func test_pushed_onto_a_weight_switch_presses_it() -> void:
 	await tree.create_timer(0.8).timeout
 	assert_true(plate.active, "la placa queda apretada")
 	setup[1].reset()
+
+
+## Apoyada vuelve adonde estaba (su piso de mazmorra), no a la raíz del nivel: si no, flota sobre la planta de abajo.
+func test_set_down_it_goes_back_to_its_floor() -> void:
+	var setup: Array = await _setup()
+	var tree: SceneTree = setup[0]
+	var pot: BigPot = setup[3]
+	var floor_node := Node3D.new()
+	tree.current_scene.add_child(floor_node)
+	pot.reparent(floor_node)
+	await _lift(tree)
+	await _tap(tree, &"interact")
+	await tree.create_timer(0.5).timeout
+	assert_true(pot.get_parent() == floor_node, "vuelve a su piso (quedó en %s)" % pot.get_parent())
+	setup[1].reset()
