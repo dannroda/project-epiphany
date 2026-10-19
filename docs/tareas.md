@@ -5565,6 +5565,14 @@ Revisión con patrones (2026-10-19): HandGuard.reset llama hand.regenerate, que 
 
 Revisión con patrones (2026-10-19): boss.gd fija target en start_fight; si ese player muere o se va, el jefe ataca el cuerpo o deja de atacar. Las manos leen target después de awaits sin validar. Sin verificar.
 
+**Notas:** Regla propuesta por diseño (-72, 2026-10-19), falta que Daniel la apruebe:
+1) El objetivo se elige en cada decisión de ataque (choose_attack); la mirada lo sigue hasta la próxima.
+2) Se mantiene salvo que muera, se vaya o salga de la arena, u otro player vivo esté más de 3 m más cerca del ojo: entonces Players.nearest (el margen evita que alterne entre dos players pegados).
+3) Aggro: quien le pega al ojo aturdido es el objetivo de la próxima decisión aunque esté más lejos.
+4) Ataques con las dos manos: la segunda va al otro player vivo si lo hay.
+5) Sin nadie vivo en la arena no ataca (espera en IDLE).
+En solitario, igual que hoy. Tests: muere P1 → el próximo ataque va a P2; P2 pega al ojo aturdido → lo apunta aunque P1 esté más cerca.
+
 ### 11.215 Usar un ítem se come el empujón del golpe · Pendiente
 
 **Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `bug`

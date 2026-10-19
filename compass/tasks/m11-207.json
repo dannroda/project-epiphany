@@ -5,7 +5,7 @@
   "created_at": "2026-10-19T22:41:06.557Z",
   "description": "Revisión con patrones (2026-10-19): boss.gd fija target en start_fight; si ese player muere o se va, el jefe ataca el cuerpo o deja de atacar. Las manos leen target después de awaits sin validar. Sin verificar.",
   "milestone": "m11",
-  "notes": "",
+  "notes": "Regla propuesta por diseño (-72, 2026-10-19), falta que Daniel la apruebe:\n1) El objetivo se elige en cada decisión de ataque (choose_attack); la mirada lo sigue hasta la próxima.\n2) Se mantiene salvo que muera, se vaya o salga de la arena, u otro player vivo esté más de 3 m más cerca del ojo: entonces Players.nearest (el margen evita que alterne entre dos players pegados).\n3) Aggro: quien le pega al ojo aturdido es el objetivo de la próxima decisión aunque esté más lejos.\n4) Ataques con las dos manos: la segunda va al otro player vivo si lo hay.\n5) Sin nadie vivo en la arena no ataca (espera en IDLE).\nEn solitario, igual que hoy. Tests: muere P1 → el próximo ataque va a P2; P2 pega al ojo aturdido → lo apunta aunque P1 esté más cerca.",
   "order": 204,
   "priority": "medium",
   "refs": [],
@@ -17,5 +17,5 @@
   ],
   "test": "",
   "title": "Jefe final: elige a un player al empezar y no cambia",
-  "updated_at": "2026-10-19T22:56:35.597Z"
+  "updated_at": "2026-10-19T23:08:34.137Z"
 }
