@@ -5555,37 +5555,37 @@ Pedido de Daniel (2026-10-16): el escudo va siempre en la mano y solo bloquea mi
 
 ### 11.213 Guardián mano: reiniciar la pelea no corta el ataque · Pendiente
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `bug`
 
 Revisión con patrones (2026-10-19): HandGuard.reset llama hand.regenerate, que no saca a la mano de BUSY: si caés por un pozo a mitad del golpe termina el combo. Sin verificar.
 
 ### 11.214 Jefe final: elige a un player al empezar y no cambia · Pendiente
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `co-op`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `bug`, `co-op`
 
 Revisión con patrones (2026-10-19): boss.gd fija target en start_fight; si ese player muere o se va, el jefe ataca el cuerpo o deja de atacar. Las manos leen target después de awaits sin validar. Sin verificar.
 
 ### 11.215 Usar un ítem se come el empujón del golpe · Pendiente
 
-**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `bug`
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `bug`
 
 Revisión con patrones (2026-10-19): El tween de velocidad de using_item.gd sigue después del estado. Sin verificar.
 
 ### 11.216 Guardado: datos inválidos y escena que no carga · Pendiente
 
-**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `bug`, `guardado`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-e0 · **Etiquetas:** `bug`, `guardado`
 
 Revisión con patrones (2026-10-19): Escena que existe pero no carga deja pantalla vacía (verificado). Equipo con ítem renombrado deja sin espada; max_health 0; settings.cfg sin chequeo de tipos ni escritura atómica; sin guardia de reentrada al cargar durante un viaje.
 
 ### 11.217 Co-op: P2 en una cinemática y time_scale con dos dueños · Pendiente
 
-**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `bug`, `co-op`
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `bug`, `co-op`
 
 Revisión con patrones (2026-10-19): Un player que entra durante una cinemática camina libre. El anillo de ítems y Feel.freeze escriben Engine.time_scale sin dueño. TextBox hace pop de la pantalla de arriba, no de sí mismo (latente).
 
 ### 11.206 Sub-jefes: las esperas siguen después de un reinicio · Revisión
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-17 · **Etiquetas:** `bug`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `bug`
 
 Revisión con patrones (2026-10-19): _interrupt no cancela las esperas de ArenaFighter._wait (no van a _tweens). La cola de la Yacumama barre invisible 1,8 s si la enganchás mientras sube; el Amaru aparece en otro charco si salís de la sala con él bajo el agua. Arreglo de raíz: _wait con _new_tween.
 
@@ -5595,7 +5595,7 @@ Revisión con patrones (2026-10-19): _interrupt no cancela las esperas de ArenaF
 
 ### 11.207 Agua del Bañado: entre áreas contiguas se camina a velocidad normal · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-17 · **Etiquetas:** `bug`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `bug`
 
 Revisión con patrones (2026-10-19): shallow_water.gd pone ground_speed = 1.0 al salir de un área aunque el player ya esté en la de al lado (las cuatro BanadoWater se tocan).
 
@@ -5605,7 +5605,7 @@ Revisión con patrones (2026-10-19): shallow_water.gd pone ground_speed = 1.0 al
 
 ### 11.208 Salir por la escalera no avisa que dejaste la sala · Revisión
 
-**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-17 · **Etiquetas:** `bug`
+**Prioridad:** alta · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `bug`
 
 Revisión con patrones (2026-10-19): TopDownCamera.reset_room() olvida la sala sin player_left: bloques trabados no se reacomodan, torretas no reviven, ArenaFight no se reinicia. Chullpa, Queñoa, Cumbre, Totora.
 
@@ -5615,7 +5615,7 @@ Revisión con patrones (2026-10-19): TopDownCamera.reset_room() olvida la sala s
 
 ### 11.209 Morir cargando algo saca el cuerpo en un callback de física · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-17 · **Etiquetas:** `bug`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `bug`
 
 Revisión con patrones (2026-10-19): health.died llega desde area_entered y el estado de carga suelta el objeto con reparent ahí mismo. La herida normal ya se difiere; la muerte no.
 
@@ -5623,7 +5623,7 @@ Revisión con patrones (2026-10-19): health.died llega desde area_entered y el e
 
 ### 11.210 Hit-stop y aturdido del martillo no frenan a jefes con hurtbox anidado · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-17 · **Etiquetas:** `bug`, `combate`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `bug`, `combate`
 
 Revisión con patrones (2026-10-19): Congelan hurtbox.get_parent(): en momia, Amaru, guardián mano y jefe es un Node3D interno, no la entidad.
 
@@ -5633,7 +5633,7 @@ Revisión con patrones (2026-10-19): Congelan hurtbox.get_parent(): en momia, Am
 
 ### 11.211 Pelea de sala: se puede ganar dos veces · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-17 · **Etiquetas:** `bug`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `bug`
 
 Revisión con patrones (2026-10-19): Si una bomba mata al último sub-jefe y al último escolta en el mismo cuadro, _on_defeated corre dos veces y _win no se cuida: doble autoguardado y aviso.
 
@@ -5641,7 +5641,7 @@ Revisión con patrones (2026-10-19): Si una bomba mata al último sub-jefe y al 
 
 ### 11.212 Vasija grande apoyada queda fuera de su piso · Revisión
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-17 · **Etiquetas:** `bug`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `bug`
 
 Revisión con patrones (2026-10-19): Liftable la reparenta a current_scene al apoyarla: deja de estar bajo su DungeonFloor y puede verse flotando sobre la planta baja (RellanoPot de Chullpa). Usar Spawns.root / volver al padre original.
 
@@ -6822,55 +6822,55 @@ Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTre
 
 ### 16.34 call_group al HUD y a la cámara: acceso tipado y señales · Pendiente
 
-**Prioridad:** media · **Tamaño:** M · **Etiquetas:** `refactor`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-e0 · **Etiquetas:** `refactor`
 
 Revisión con patrones (2026-10-19): 15 llamadas con nombre de método fallan en silencio si se renombra. Cámara: TopDownCamera.current(tree) tipado. HUD: tres señales tipadas (anuncio de zona, mostrar/ocultar barra del jefe). Sin EventBus completo.
 
 ### 16.35 Nodos creados por código: pasto, overlay y buses de audio · Pendiente
 
-**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `refactor`
+**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-e0 · **Etiquetas:** `refactor`
 
 Revisión con patrones (2026-10-19): GrassPatch instancia el pasto en _ready; DebugOverlay crea su Label; Feel y Settings crean buses de audio (falta default_bus_layout.tres).
 
 ### 16.36 Sonidos de Feel: pool, límite y síntesis al arrancar · Pendiente
 
-**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `refactor`, `audio`
+**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-e0 · **Etiquetas:** `refactor`, `audio`
 
 Revisión con patrones (2026-10-19): Cada sfx crea un player nuevo sin límite: N sonidos iguales en el mismo cuadro saturan. Feel sintetiza ~10 s al arrancar que después reemplaza con .ogg. Los sonidos de UI salen del input crudo.
 
 ### 16.37 Componentes que asumen su padre y la guardia copiada · Pendiente
 
-**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `refactor`
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `refactor`
 
 Revisión con patrones (2026-10-19): input_buffer, equipment, carrier, zone_veil, enfoque_la usan get_parent/owner; la guardia del escudo se apaga a mano en 5 estados (usar active_state_changed). doom_ambience: cadena de clases en vez de grupo.
 
 ### 16.38 Rendimiento: trabajo por cuadro sin cambios · Pendiente
 
-**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `refactor`, `rendimiento`
+**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-3e · **Etiquetas:** `refactor`, `rendimiento`
 
 Revisión con patrones (2026-10-19): Minimapa (redibuja y escanea grupos cada cuadro), Room.has_player por tick, Targeting._sync_posts, Music.targets, overworld_map._reveal. Después de los assets.
 
 ### 16.39 Spawns.root salteado, Dungeon como hijo directo y checksum sin uso · Pendiente
 
-**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `refactor`
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `refactor`
 
 Revisión con patrones (2026-10-19): carrier, bomb, dodge_ghosts, liftable usan current_scene; SceneFlow busca Dungeon/AreaZone solo entre hijos directos; save_tampered se escribe y nadie lo lee.
 
 ### 16.40 AnimationPlayers que faltan con deterministic = false · Pendiente
 
-**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `refactor`, `animacion`
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `refactor`, `animacion`
 
 Revisión de 16.28-16.31 de la sesión de arte (2026-10-19): Sin deterministic = false (cambiar de clip resetea lo que el nuevo no anima): cutscene.tscn, scene_flow, warp_portal, travel_portal, temple_eye_glow, centinela_model; boss.tscn va con 16.32.
 
 ### 16.41 Clips que arrancan de claves fijas en vez del valor actual · Pendiente
 
-**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `animacion`
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-5c · **Etiquetas:** `animacion`
 
 Revisión de 16.28-16.31 de la sesión de arte (2026-10-19): Nombre de zona re-mostrado salta el alfa a 0 (hud.gd:157); ocultar la barra del jefe durante su entrada salta a 1; el volteo del ojo vigía arranca los párpados en 1; el temblor de la momia arranca en -0.2; el salto de la momia sube en 0.33 s con aim_time 0.9 (chullpa, templo). El pop del corazón perdió el rebote y el anillo del rugido pasó a ease-in. heart_piece.gd:27 tapa Pickup.shown.
 
 ### 16.42 Animaciones que siguen en código · Pendiente
 
-**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `refactor`, `animacion`
+**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-5c · **Etiquetas:** `refactor`, `animacion`
 
 Revisión de 16.28-16.31 de la sesión de arte (2026-10-19): Parpadeo de la bendición (blessing.gd:29), titileo de stencil_light (:42), rebotes y alturas fijas del Kuntur (kuntur.gd:197-374), fundido de barras de la cinemática (cutscene.gd:107), radio del velo de zona (zone_veil.gd:76), cámara del título (title_flyover.gd, PathFollow3D). demo_tajo queda aparcada.
 

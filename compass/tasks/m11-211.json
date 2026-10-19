@@ -1,5 +1,5 @@
 {
-  "assignee": "project-epiphany-17",
+  "assignee": "project-epiphany-e0",
   "checklist": [],
   "code": "11.206",
   "created_at": "2026-10-19T22:41:20.465Z",
@@ -16,5 +16,5 @@
   ],
   "test": "tests/test_arena_fighter.gd",
   "title": "Sub-jefes: las esperas siguen después de un reinicio",
-  "updated_at": "2026-10-19T22:50:22.946Z"
+  "updated_at": "2026-10-19T22:56:39.563Z"
 }
