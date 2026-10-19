@@ -43,11 +43,19 @@ func start() -> void:
 		return
 	add_to_group(Enemy.GROUP)
 	config.apply_to(self)
+	_finish_roar()
 	_run()
 
 
 func roar() -> void:
 	pass
+
+
+## Si la presentación se saltea, la pelea arranca a mitad del rugido: queda la pose del final y no la del corte.
+func _finish_roar() -> void:
+	if moves and moves.current_animation == &"roar":
+		moves.seek(moves.current_animation_length, true)
+		moves.stop(true)
 
 
 @abstract func reset() -> void

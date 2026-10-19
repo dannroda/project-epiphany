@@ -76,3 +76,16 @@ func test_tweens_wait_stops_with_the_pause_not_with_the_node() -> void:
 	await tree.create_timer(0.2).timeout
 	assert_true(resumed[0], "un nodo dormido no frena la espera, como un timer del árbol")
 	node.free()
+
+
+## Saltear la presentación arranca la pelea a mitad del rugido: el peleador queda en la pose del final, no en la del corte.
+func test_starting_mid_roar_leaves_the_rest_pose() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var mummy := (load("res://src/entities/mummy_guard/mummy_guard.tscn") as PackedScene).instantiate() as ArenaFighter
+	tree.root.add_child(mummy)
+	mummy.roar()
+	await tree.create_timer(0.3).timeout
+	assert_true(not mummy.body.scale.is_equal_approx(Vector3.ONE), "a mitad del rugido está hinchada")
+	mummy._finish_roar()
+	assert_true(mummy.body.scale.is_equal_approx(Vector3.ONE), "al arrancar vuelve a su escala (%s)" % mummy.body.scale)
+	mummy.free()
