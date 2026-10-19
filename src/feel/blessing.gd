@@ -8,7 +8,7 @@ const WARN_TIME := 3.0
 var health: Health
 
 @onready var _sparks: CPUParticles3D = $Sparks
-@onready var _glow: Node3D = $Glow
+@onready var _warn: AnimationPlayer = $Warn
 
 
 static func attach(user: Node3D, user_health: Health) -> Blessing:
@@ -25,7 +25,10 @@ func _process(_delta: float) -> void:
 	if health == null or not health.is_warded():
 		queue_free()
 		return
-	var left := health.ward_left()
-	visible = left > WARN_TIME or fmod(left, 0.4) > 0.15
-	_sparks.emitting = visible
-	_glow.visible = visible
+	var warning := health.ward_left() <= WARN_TIME
+	if warning and not _warn.is_playing():
+		_warn.play(&"blink")
+	elif not warning and _warn.is_playing():
+		_warn.stop()
+		visible = true
+		_sparks.emitting = true

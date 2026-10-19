@@ -2,6 +2,40 @@
 
 [ext_resource type="Script" path="res://src/ui/title/title_flyover.gd" id="1_script"]
 
+[sub_resource type="Animation" id="Flight"]
+resource_name = "flight"
+length = 87.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4.5, 8, 14, 17.5, 22, 25.5, 31.5, 35, 39.5, 43, 49, 52.5, 57, 60.5, 66.5, 70, 74.5, 78, 84, 87.5),
+"transitions": PackedFloat32Array(1, -2, 1, -2, 1, -2, 1, -2, 1, -2, 1, -2, 1, -2, 1, -2, 1, -2, 1, -2, 1),
+"update": 0,
+"values": [Vector3(-14, 80, 62), Vector3(-4, 80, 60), Vector3(-52, 15, -18), Vector3(-36, 14, -19), Vector3(-14, 80, 62), Vector3(-4, 80, 60), Vector3(-40, 14, 62), Vector3(-22, 13, 60), Vector3(-14, 80, 62), Vector3(-4, 80, 60), Vector3(-36, 15, 40), Vector3(-16, 14, 40), Vector3(-14, 80, 62), Vector3(-4, 80, 60), Vector3(-98, 15, 12), Vector3(-80, 14, 11), Vector3(-14, 80, 62), Vector3(-4, 80, 60), Vector3(28, 18, -16), Vector3(46, 17, -18), Vector3(-14, 80, 62)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D:quaternion")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 4.5, 8, 14, 17.5, 22, 25.5, 31.5, 35, 39.5, 43, 49, 52.5, 57, 60.5, 66.5, 70, 74.5, 78, 84, 87.5),
+"transitions": PackedFloat32Array(1, -2, 1, -2, 1, -2, 1, -2, 1, -2, 1, -2, 1, -2, 1, -2, 1, -2, 1, -2, 1),
+"update": 0,
+"values": [Quaternion(-0.43944812, -0.028936353, -0.014165274, 0.89769006), Quaternion(-0.43993565, -0.014459429, -0.00708467, 0.89788496), Quaternion(-0.27464476, -0.15384205, -0.04456425, 0.9481123), Quaternion(-0.2641128, 0.1051791, 0.028987901, 0.95830137), Quaternion(-0.43944812, -0.028936353, -0.014165274, 0.89769006), Quaternion(-0.43993565, -0.014459429, -0.00708467, 0.89788496), Quaternion(-0.25362438, -0.20443939, -0.054935176, 0.9438545), Quaternion(-0.27362886, 0, 0, 0.9618354), Quaternion(-0.43944812, -0.028936353, -0.014165274, 0.89769006), Quaternion(-0.43993565, -0.014459429, -0.00708467, 0.89788496), Quaternion(-0.25330335, -0.22183497, -0.059796806, 0.93970793), Quaternion(-0.24617128, 0.13434123, 0.03447578, 0.9592516), Quaternion(-0.43944812, -0.028936353, -0.014165274, 0.89769006), Quaternion(-0.43993565, -0.014459429, -0.00708467, 0.89788496), Quaternion(-0.26899877, -0.24093495, -0.06969622, 0.92990994), Quaternion(-0.2945235, 0.110087916, 0.034177948, 0.9486667), Quaternion(-0.43944812, -0.028936353, -0.014165274, 0.89769006), Quaternion(-0.43993565, -0.014459429, -0.00708467, 0.89788496), Quaternion(-0.28526884, -0.17320572, -0.052496776, 0.9412043), Quaternion(-0.305652, 0.09855086, 0.03182508, 0.94649446), Quaternion(-0.43944812, -0.028936353, -0.014165274, 0.89769006)]
+}
+
+[sub_resource type="AnimationLibrary" id="FlightLib"]
+_data = {
+&"flight": SubResource("Flight")
+}
+
 [node name="TitleFlyover" type="Node3D"]
 script = ExtResource("1_script")
 
@@ -9,52 +43,8 @@ script = ExtResource("1_script")
 fov = 45.0
 far = 400.0
 
-[node name="Shots" type="Node3D" parent="."]
-
-[node name="Overview" type="Node3D" parent="Shots"]
-
-[node name="From" type="Marker3D" parent="Shots/Overview"]
-transform = Transform3D(0.9979, 0.0508, -0.0395, -0.0000, 0.6134, 0.7898, 0.0644, -0.7882, 0.6121, -14.000, 80.000, 62.000)
-
-[node name="To" type="Marker3D" parent="Shots/Overview"]
-transform = Transform3D(0.9995, 0.0255, -0.0198, -0.0000, 0.6128, 0.7903, 0.0322, -0.7898, 0.6125, -4.000, 80.000, 60.000)
-
-[node name="Templo" type="Node3D" parent="Shots"]
-
-[node name="From" type="Marker3D" parent="Shots/Templo"]
-transform = Transform3D(0.9487, 0.1690, -0.2673, -0.0000, 0.8452, 0.5345, 0.3162, -0.5071, 0.8018, -52.000, 15.000, -18.000)
-
-[node name="To" type="Marker3D" parent="Shots/Templo"]
-transform = Transform3D(0.9762, -0.1111, 0.1863, 0.0000, 0.8588, 0.5123, -0.2169, -0.5001, 0.8383, -36.000, 14.000, -19.000)
-
-[node name="Laguna" type="Node3D" parent="Shots"]
-
-[node name="From" type="Marker3D" parent="Shots/Laguna"]
-transform = Transform3D(0.9104, 0.2074, -0.3581, -0.0000, 0.8653, 0.5013, 0.4138, -0.4563, 0.7877, -40.000, 14.000, 62.000)
-
-[node name="To" type="Marker3D" parent="Shots/Laguna"]
-transform = Transform3D(1.0000, 0.0000, -0.0000, -0.0000, 0.8503, 0.5264, 0.0000, -0.5264, 0.8503, -22.000, 13.000, 60.000)
-
-[node name="Quenoa" type="Node3D" parent="Shots"]
-
-[node name="From" type="Marker3D" parent="Shots/Quenoa"]
-transform = Transform3D(0.8944, 0.2248, -0.3866, -0.0000, 0.8645, 0.5026, 0.4472, -0.4495, 0.7732, -36.000, 15.000, 40.000)
-
-[node name="To" type="Marker3D" parent="Shots/Quenoa"]
-transform = Transform3D(0.9615, -0.1323, 0.2408, 0.0000, 0.8764, 0.4815, -0.2747, -0.4630, 0.8427, -16.000, 14.000, 40.000)
-
-[node name="Chullpa" type="Node3D" parent="Shots"]
-
-[node name="From" type="Marker3D" parent="Shots/Chullpa"]
-transform = Transform3D(0.8742, 0.2593, -0.4107, -0.0000, 0.8456, 0.5338, 0.4856, -0.4667, 0.7392, -98.000, 15.000, 12.000)
-
-[node name="To" type="Marker3D" parent="Shots/Chullpa"]
-transform = Transform3D(0.9734, -0.1297, 0.1888, 0.0000, 0.8242, 0.5663, -0.2290, -0.5513, 0.8023, -80.000, 14.000, 11.000)
-
-[node name="Cumbre" type="Node3D" parent="Shots"]
-
-[node name="From" type="Marker3D" parent="Shots/Cumbre"]
-transform = Transform3D(0.9345, 0.1976, -0.2961, -0.0000, 0.8317, 0.5552, 0.3560, -0.5188, 0.7772, 28.000, 18.000, -16.000)
-
-[node name="To" type="Marker3D" parent="Shots/Cumbre"]
-transform = Transform3D(0.9785, -0.1205, 0.1671, 0.0000, 0.8111, 0.5849, -0.2060, -0.5723, 0.7937, 46.000, 17.000, -18.000)
+[node name="Flight" type="AnimationPlayer" parent="."]
+deterministic = false
+libraries = {
+&"": SubResource("FlightLib")
+}

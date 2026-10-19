@@ -17,10 +17,14 @@ static var _next_priority := FIRST_PRIORITY
 		_resize()
 @export var flicker := 0.05
 @export var flicker_speed := 7.0
-
-var _time := randf() * 100.0
+## Lo anima el clip "flicker" de $Flicker (dos senos, entre -1 y 1).
+var pulse := 0.0:
+	set(value):
+		pulse = value
+		_resize()
 
 @onready var volume: MeshInstance3D = $Volume
+@onready var _flicker: AnimationPlayer = $Flicker
 
 
 func _ready() -> void:
@@ -33,15 +37,12 @@ func _ready() -> void:
 	(material.next_pass as ShaderMaterial).set_shader_parameter(&"color", color)
 	volume.material_override = material
 	_resize()
-
-
-func _process(delta: float) -> void:
-	if flicker <= 0.0:
-		return
-	_time += delta * flicker_speed
-	volume.scale = Vector3.ONE * radius * (1.0 + flicker * (sin(_time) * 0.6 + sin(_time * 2.3 + 1.7) * 0.4))
+	if flicker > 0.0:
+		_flicker.speed_scale = flicker_speed / 7.0
+		_flicker.play(&"flicker")
+		_flicker.seek(randf() * _flicker.current_animation_length, true)
 
 
 func _resize() -> void:
 	if volume:
-		volume.scale = Vector3.ONE * radius
+		volume.scale = Vector3.ONE * radius * (1.0 + flicker * pulse)

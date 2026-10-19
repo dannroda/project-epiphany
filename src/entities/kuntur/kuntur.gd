@@ -40,6 +40,7 @@ const FEATHER_COLOR := Color(0.92, 0.9, 0.86)
 @onready var flash: HitFlash = $HitFlash
 ## Un clip por pose de alas (planear, batir, plegadas...); _wings cruza de una a otra.
 @onready var wings: AnimationPlayer = %Wings
+@onready var height: AnimationPlayer = %Height
 
 var state := State.IDLE
 var _angle := 0.0
@@ -169,6 +170,7 @@ func _circle() -> void:
 	var from := global_position - _center()
 	_angle = atan2(from.z, from.x)
 	_wings(&"glide", 0.3)
+	height.stop(true)
 	_tween_to(body, ^"position:y", hover_height, 0.5).set_trans(Tween.TRANS_SINE)
 	await _wait(circle_time)
 
@@ -194,7 +196,7 @@ func _dive() -> void:
 	_wings(&"tuck", 0.1)
 	var target := Vector3(aim_mark.global_position.x, global_position.y, aim_mark.global_position.z)
 	_tween_to(self, ^"global_position", target, dive_time).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-	_tween_to(body, ^"position:y", 0.5, dive_time).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	_height(&"dive", Tween.TRANS_QUAD, Tween.EASE_IN, dive_time)
 	await _wait(dive_time)
 	aim_mark.hide()
 	if state != State.DIVE:
@@ -227,7 +229,7 @@ func _gust(push: float) -> void:
 		var spot := _clamp_to_arena((player.global_position if player else _center()) + toward * 5.0)
 		spot.y = global_position.y
 		_tween_to(self, ^"global_position", spot, 0.6).set_trans(Tween.TRANS_SINE)
-		_tween_to(body, ^"position:y", 0.6, 0.6).set_trans(Tween.TRANS_SINE)
+		_height(&"gust_low", Tween.TRANS_SINE)
 		await _wait(0.6)
 		if state != State.GUST:
 			return
@@ -247,7 +249,7 @@ func _gust(push: float) -> void:
 
 func _volley() -> void:
 	state = State.VOLLEY
-	_tween_to(body, ^"position:y", 1.4, 0.5).set_trans(Tween.TRANS_SINE)
+	_height(&"volley_rise", Tween.TRANS_SINE)
 	_wings(&"volley", 0.3)
 	flash.warn(0.6)
 	await _wait(0.6)
@@ -274,7 +276,7 @@ func _perch() -> void:
 	var spot := _center()
 	spot.y = global_position.y
 	_tween_to(self, ^"global_position", spot, 0.8).set_trans(Tween.TRANS_SINE)
-	_tween_to(body, ^"position:y", 0.3, 0.8).set_trans(Tween.TRANS_SINE)
+	_height(&"perch_low", Tween.TRANS_SINE)
 	await _wait(0.8)
 	if state != State.PERCH:
 		return
@@ -317,7 +319,7 @@ func _knock_down() -> void:
 	Feel.sfx(&"hit", body.global_position)
 	Feel.shake(0.3)
 	_wings(&"down", 0.2)
-	_tween_to(body, ^"position:y", 0.4, 0.35).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BOUNCE)
+	_height(&"knocked", Tween.TRANS_BOUNCE, Tween.EASE_IN)
 	body.rotation.z = 0.4
 	var turn := _turn
 	await _wait(0.35, false)
@@ -328,6 +330,7 @@ func _knock_down() -> void:
 	if turn != _turn:
 		return
 	body.rotation.z = 0.0
+	height.stop(true)
 	_tween_to(body, ^"position:y", hover_height, 0.6).set_ease(Tween.EASE_OUT)
 	await _wait(0.6, false)
 	if turn == _turn:
@@ -336,6 +339,7 @@ func _knock_down() -> void:
 
 func _on_interrupt() -> void:
 	aim_mark.hide()
+	height.stop(true)
 	_push = 0.0
 	_catch_light(false)
 	impact.deactivate()
@@ -371,9 +375,19 @@ func _die() -> void:
 	Feel.sfx(&"break", body.global_position)
 	Feel.shake(0.5)
 	wings.pause()
-	create_tween().tween_property(body, ^"position:y", 0.3, 0.4).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	_height(&"fall_dead", Tween.TRANS_BOUNCE, Tween.EASE_OUT, 0.0, false)
 	_clip(&"die", false)
 	defeated.emit(self)
+
+
+## Lleva el cuerpo a la altura del clip `clip` de %Height desde donde esté, en `seconds` (0: lo que dura el clip).
+## La captura mezcla del valor capturado hacia el clip con la curva al revés, por eso se espeja `easing`.
+func _height(clip: StringName, trans: Tween.TransitionType, easing: Tween.EaseType = Tween.EASE_IN_OUT, seconds := 0.0, paced := true) -> void:
+	var length := height.get_animation(clip).length
+	height.speed_scale = (pace if paced else 1.0) * (length / seconds if seconds > 0.0 else 1.0)
+	height.stop(true)
+	const MIRROR := {Tween.EASE_IN: Tween.EASE_OUT, Tween.EASE_OUT: Tween.EASE_IN, Tween.EASE_IN_OUT: Tween.EASE_IN_OUT, Tween.EASE_OUT_IN: Tween.EASE_OUT_IN}
+	height.play_with_capture(clip, -1.0, -1.0, 1.0, false, trans, MIRROR[easing])
 
 
 ## Cruza las alas a la pose `pose` (un clip de %Wings) en `seconds`; el aleteo se acelera con la pelea.

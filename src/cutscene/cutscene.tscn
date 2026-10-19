@@ -4,6 +4,39 @@
 [ext_resource type="Script" path="res://src/ui/hint_bar.gd" id="2_hints"]
 [ext_resource type="Script" path="res://src/cutscene/skip_ring.gd" id="3_ring"]
 
+[sub_resource type="Animation" id="CutsceneSettle"]
+resource_name = "settle"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Overlay/Bars:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1.2),
+"transitions": PackedFloat32Array(1),
+"update": 2,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Overlay/Caption:modulate:a")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.6),
+"transitions": PackedFloat32Array(1),
+"update": 2,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="CutsceneOutroLib"]
+_data = {
+&"settle": SubResource("CutsceneSettle")
+}
+
 [node name="Cutscene" type="Node3D"]
 process_mode = 1
 script = ExtResource("1_cutscene")
@@ -117,3 +150,11 @@ layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
 script = ExtResource("3_ring")
+
+[node name="Outro" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("CutsceneOutroLib")
+}
+playback_auto_capture_transition_type = 1
+playback_auto_capture_ease_type = 2

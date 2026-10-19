@@ -19,7 +19,7 @@ const SKIP_ACTIONS: Array[StringName] = [&"ui_accept", &"interact", &"attack"]
 
 @onready var camera: Camera3D = %Camera
 @onready var player: AnimationPlayer = %AnimationPlayer
-@onready var bars: Control = %Bars
+@onready var outro: AnimationPlayer = %Outro
 @onready var caption: Label = %Caption
 @onready var skip_ring: SkipRing = %SkipRing
 @onready var skip_hint: Control = %SkipHint
@@ -99,14 +99,14 @@ func _finish() -> void:
 	playing = false
 	skip_hint.visible = false
 	var game_camera := _game_camera()
-	var tween := create_tween().set_parallel().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	if game_camera:
 		game_camera.call(&"snap_to_target")
+		var tween := create_tween().set_parallel().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 		tween.tween_property(camera, ^"global_transform", game_camera.global_transform, settle_time)
 		tween.tween_property(camera, ^"fov", game_camera.fov, settle_time)
-	tween.tween_property(bars, ^"modulate:a", 0.0, settle_time)
-	tween.tween_property(caption, ^"modulate:a", 0.0, settle_time * 0.5)
-	await tween.finished
+	outro.speed_scale = outro.get_animation(&"settle").length / settle_time
+	outro.play(&"settle")
+	await outro.animation_finished
 	_restore()
 	finished.emit()
 	queue_free()

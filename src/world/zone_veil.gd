@@ -24,7 +24,14 @@ var _rect: Rect2
 var _cover: Rect2
 var _center := Vector2.ZERO
 var _radius := 0.0
-var _tween: Tween
+var _far := 0.0
+## Lo anima el clip "reveal" de $Reveal: 0 tapado, 1 el círculo pasó la esquina más lejana.
+var reveal := 0.0:
+	set(value):
+		reveal = value
+		_set_radius(_far * value)
+
+@onready var _reveal: AnimationPlayer = $Reveal
 
 
 func _ready() -> void:
@@ -54,12 +61,11 @@ func covers(point: Vector2) -> bool:
 
 
 func is_revealing() -> bool:
-	return _tween != null and _tween.is_running()
+	return _reveal.is_playing()
 
 
 func _refresh() -> void:
-	if _tween:
-		_tween.kill()
+	_reveal.stop()
 	_set_radius(0.0)
 	visible = not _zone.is_visited() and not blockers.any(func(path: NodePath) -> bool:
 		var blocker := get_node(path)
@@ -73,9 +79,9 @@ func _open(blocker: Node3D) -> void:
 	var far := 0.0
 	for corner in [_rect.position, _rect.end, Vector2(_rect.position.x, _rect.end.y), Vector2(_rect.end.x, _rect.position.y)]:
 		far = maxf(far, _center.distance_to(corner))
-	_tween = create_tween()
-	_tween.tween_method(_set_radius, 0.0, far + 2.0, reveal_time).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
-	_tween.tween_callback(hide)
+	_far = far + 2.0
+	_reveal.speed_scale = _reveal.get_animation(&"reveal").length / reveal_time
+	_reveal.play(&"reveal")
 
 
 func _set_radius(radius: float) -> void:

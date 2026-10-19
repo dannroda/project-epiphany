@@ -28,6 +28,40 @@ size = Vector2(2.4, 2.4)
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
+[sub_resource type="Animation" id="BlessingBlink"]
+resource_name = "blink"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sparks:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="BlessingLib"]
+_data = {
+&"blink": SubResource("BlessingBlink")
+}
+
 [node name="Blessing" type="Node3D"]
 script = ExtResource("1_blessing")
 
@@ -58,3 +92,9 @@ mesh = SubResource("CirculoMesh")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 color = Color(0.75, 1.15, 1.3, 1)
 radius = 1.6
+
+[node name="Warn" type="AnimationPlayer" parent="."]
+deterministic = false
+libraries = {
+&"": SubResource("BlessingLib")
+}
