@@ -19,6 +19,7 @@ const ORB := preload("res://src/entities/projectile.tscn")
 @onready var health: Health = $Health
 @onready var hurtbox: Hurtbox = $Hurtbox
 @onready var bt_player: BTPlayer = $BTPlayer
+@onready var moves: AnimationPlayer = %Moves
 
 var is_dead: bool:
 	get:
@@ -92,7 +93,7 @@ func _on_died() -> void:
 	Feel.burst(&"shards", head.global_position, Vector3.UP)
 	Feel.sfx(&"break", global_position)
 	Feel.shake(Feel.settings.shake_give)
-	(%Moves as AnimationPlayer).play(&"die")
+	moves.play(&"die")
 	if config.drops:
 		config.drops.drop_at.call_deferred(global_position + Vector3.UP * 0.2, get_parent())
 
@@ -109,6 +110,7 @@ func revive() -> void:
 	if not is_dead:
 		return
 	health.reset(config.max_health)
+	moves.stop(true)
 	head.scale = Vector3.ONE
 	head.show()
 	hurtbox.set_deferred(&"monitorable", true)

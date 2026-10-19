@@ -104,3 +104,17 @@ func test_a_destroyed_turret_comes_back_when_you_leave_its_room() -> void:
 	assert_true(not turret.is_dead, "al salir de su sala vuelve: un puzzle que la necesita no se traba")
 	assert_true(turret.head.visible and turret.bt_player.active)
 	tree.root.get_node(^"GameState").reset()
+
+
+## Si revive mientras se aplasta (el player sale de la sala justo al romperla), la cabeza queda entera y visible.
+func test_reviving_mid_death_keeps_the_head() -> void:
+	var setup: Array = await _setup(&"shield_wood")
+	var tree: SceneTree = setup[0]
+	var turret: Turret = setup[3]
+	turret.health.damage(turret.health.current)
+	await tree.create_timer(0.1).timeout
+	turret.revive()
+	await tree.create_timer(0.4).timeout
+	assert_true(turret.head.visible, "la cabeza se ve")
+	assert_true(turret.head.scale.is_equal_approx(Vector3.ONE), "y no quedó aplastada (%s)" % turret.head.scale)
+	setup[1].reset()
