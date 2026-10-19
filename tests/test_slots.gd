@@ -110,6 +110,23 @@ func test_a_cut_save_falls_back_to_the_backup() -> void:
 	_teardown()
 
 
+func test_a_copied_slot_keeps_its_backup() -> void:
+	await _setup()
+	await tree.root.get_node(^"SceneFlow").new_game(1)
+	saves.save_game()
+	saves.save_game()
+	assert_true(FileAccess.file_exists(saves.slot_path(1) + ".bak"), "la ranura tiene respaldo")
+	assert_eq(saves.copy_slot(1, 3), OK)
+	assert_true(FileAccess.file_exists(saves.slot_path(3) + ".bak"), "la copia lleva el respaldo")
+	assert_true(FileAccess.file_exists(saves.slot_path(3)), "y la partida")
+	assert_true(not FileAccess.file_exists(saves.slot_path(3) + ".copy") and not FileAccess.file_exists(saves.slot_path(3) + ".bak.copy"), "sin temporales")
+	var file := FileAccess.open(saves.slot_path(3), FileAccess.WRITE)
+	file.store_string("[player]\nmax_hea")
+	file.close()
+	assert_eq(await saves.load_game(3), OK, "si la copia se corta, carga su respaldo")
+	_teardown()
+
+
 func test_copy_and_delete() -> void:
 	await _setup()
 	await tree.root.get_node(^"SceneFlow").new_game(1)

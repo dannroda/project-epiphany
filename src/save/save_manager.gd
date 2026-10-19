@@ -136,9 +136,20 @@ func copy_slot(from: int, to: int) -> Error:
 	if not has_save(from):
 		return ERR_FILE_NOT_FOUND
 	DirAccess.make_dir_recursive_absolute(save_dir)
+	var copied: Array[String] = []
+	for suffix in ["", ".bak"]:
+		if not FileAccess.file_exists(slot_path(from) + suffix):
+			continue
+		var err := DirAccess.copy_absolute(slot_path(from) + suffix, slot_path(to) + suffix + ".copy")
+		if err != OK:
+			for done in copied:
+				DirAccess.remove_absolute(slot_path(to) + done + ".copy")
+			return err
+		copied.append(suffix)
 	delete_slot(to)
-	var source := slot_path(from) if FileAccess.file_exists(slot_path(from)) else slot_path(from) + ".bak"
-	return DirAccess.copy_absolute(source, slot_path(to))
+	for suffix in copied:
+		DirAccess.rename_absolute(slot_path(to) + suffix + ".copy", slot_path(to) + suffix)
+	return OK
 
 
 func load_game(slot: int = -1) -> Error:
