@@ -89,3 +89,33 @@ func test_starting_mid_roar_leaves_the_rest_pose() -> void:
 	mummy._finish_roar()
 	assert_true(mummy.body.scale.is_equal_approx(Vector3.ONE), "al arrancar vuelve a su escala (%s)" % mummy.body.scale)
 	mummy.free()
+
+
+## Un ataque cortado no sigue: _interrupt mata las esperas pendientes (la cola de la Yacumama, el charco del Amaru).
+func test_an_interrupt_drops_the_pending_waits() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var fighter := (load(FIGHTERS[3]) as PackedScene).instantiate() as ArenaFighter
+	tree.root.add_child(fighter)
+	var resumed := [false]
+	var waiter := func() -> void:
+		await fighter._wait(0.1)
+		resumed[0] = true
+	waiter.call()
+	fighter._interrupt()
+	await tree.create_timer(0.3).timeout
+	assert_true(not resumed[0], "la espera de antes del corte no vuelve")
+	waiter.call()
+	await tree.create_timer(0.3).timeout
+	assert_true(resumed[0], "una espera nueva sí termina")
+	fighter.free()
+
+
+## El hit-stop congela la entidad aunque el hurtbox esté anidado en su cuerpo.
+func test_a_nested_hurtbox_belongs_to_its_fighter() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	for path: String in FIGHTERS:
+		var fighter := (load(path) as PackedScene).instantiate() as ArenaFighter
+		tree.root.add_child(fighter)
+		if fighter.hurtbox:
+			assert_eq(fighter.hurtbox.entity(), fighter, path + ": el hurtbox es del peleador")
+		fighter.free()

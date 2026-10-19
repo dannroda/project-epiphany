@@ -114,8 +114,9 @@ func _wound_surface() -> String:
 	return "flesh"
 
 
+## Muere con _interrupt: lo que esperaba un ataque cortado (reinicio, volteo, gancho) no sigue.
 func _wait(seconds: float, paced := true) -> Signal:
-	return Tweens.wait(self, seconds / pace if paced else seconds)
+	return _new_tween().set_pause_mode(Tween.TWEEN_PAUSE_STOP).tween_interval(seconds / pace if paced else seconds).finished
 
 
 ## Corre un clip de %Moves desde el principio: `paced` lo acelera con la pelea; `seconds` lo estira a esa duración.
