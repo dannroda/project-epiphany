@@ -95,7 +95,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="MummyLeap"]
 resource_name = "leap"
-length = 1.1
+length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -105,18 +105,6 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(0.5, 1),
-"update": 0,
-"values": [0.0, 1.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:aim_grow")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1.1),
-"transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 1.0]
 }
@@ -160,10 +148,10 @@ tracks/1/path = NodePath("Body:rotation:z")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.15, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.075, 0.225, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [-0.2, 0.2, -0.2]
+"values": [0.0, 0.2, -0.2, 0.0]
 }
 
 [sub_resource type="Animation" id="MummyRecover"]
@@ -231,6 +219,26 @@ _data = {
 &"stuck": SubResource("MummyStuck"),
 &"recover": SubResource("MummyRecover"),
 &"die": SubResource("MummyDie")
+}
+
+[sub_resource type="Animation" id="MummyAimGrow"]
+resource_name = "grow"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:aim_grow")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="MummyAimLib"]
+_data = {
+&"grow": SubResource("MummyAimGrow")
 }
 
 [node name="MummyGuard" type="Node3D"]
@@ -320,4 +328,11 @@ deterministic = false
 unique_name_in_owner = true
 libraries = {
 &"": SubResource("MummyLib")
+}
+
+[node name="Aim" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+deterministic = false
+libraries = {
+&"": SubResource("MummyAimLib")
 }

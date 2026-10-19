@@ -34,6 +34,7 @@ enum State { IDLE, HOP, AIM, FALL, STUCK, DEAD }
 @onready var impact: Hitbox = %Impact
 ## El cuerpo choca con el player; se apaga mientras salta encima (cae donde está el player).
 @onready var solid_shape: CollisionShape3D = %SolidShape
+@onready var aim_anim: AnimationPlayer = %Aim
 
 var state := State.IDLE
 ## Lo animan los clips: cuánto subió del salto (1 = `leap_height`) y cuánto creció la sombra (1 = `aim_size`).
@@ -146,7 +147,10 @@ func _leap(last := true) -> void:
 	aim_mark.global_position = _clamp_to_arena(player.global_position if player else global_position) + Vector3.UP * 0.03
 	aim_grow = 0.0
 	aim_mark.show()
-	_clip(&"leap", true, aim_time)
+	_clip(&"leap")
+	aim_anim.speed_scale = pace / aim_time
+	aim_anim.stop(true)
+	aim_anim.play(&"grow")
 	await _wait(aim_time)
 	if state != State.AIM:
 		return

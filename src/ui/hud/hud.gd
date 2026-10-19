@@ -153,9 +153,27 @@ func _flash_saved() -> void:
 	_restart(saved_anim, &"flash")
 
 
+## Arranca el clip donde su alfa vale lo que ya tiene el nodo, así re-mostrar o esconder a mitad no salta.
 func _restart(player: AnimationPlayer, clip: StringName) -> void:
+	var anim := player.get_animation(clip)
+	var track := anim.find_track(^".:modulate:a", Animation.TYPE_VALUE)
+	var node := player.get_node(player.root_node) as CanvasItem
+	var alpha := node.modulate.a if node.visible else 0.0
 	player.stop(true)
 	player.play(clip)
+	player.seek(_time_at(anim, track, alpha) if track >= 0 else 0.0, true)
+
+
+func _time_at(anim: Animation, track: int, value: float) -> float:
+	for k in anim.track_get_key_count(track):
+		var here: float = anim.track_get_key_value(track, k)
+		if is_equal_approx(here, value):
+			return anim.track_get_key_time(track, k)
+		if k + 1 < anim.track_get_key_count(track):
+			var next: float = anim.track_get_key_value(track, k + 1)
+			if (here - value) * (next - value) < 0.0:
+				return lerpf(anim.track_get_key_time(track, k), anim.track_get_key_time(track, k + 1), (value - here) / (next - here))
+	return 0.0
 
 
 

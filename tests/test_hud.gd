@@ -79,3 +79,25 @@ func test_a_heart_shows_whole_quarters_counterclockwise() -> void:
 	assert_eq(shown, [true, true, true, false], "tres cuartos: falta el de arriba a la derecha")
 	assert_eq(heart.quarter_nodes[2].position, HeartIcon.SIZE / 2.0, "el tercero es el de abajo a la derecha")
 	heart.free()
+
+
+## 16.41: re-mostrar el nombre de zona o esconder la barra del jefe a mitad del fundido sigue desde el alfa que tiene.
+func test_fades_restart_from_the_current_alpha() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var hud := (load("res://src/ui/hud/hud.tscn") as PackedScene).instantiate() as Hud
+	tree.root.add_child(hud)
+	hud.show_area_name("A")
+	await tree.create_timer(1.0).timeout
+	hud.show_area_name("B")
+	await tree.create_timer(0.1).timeout
+	assert_true(hud.area_label.get_parent().modulate.a > 0.95, "el nombre visible no vuelve a 0 (%.2f)" % hud.area_label.get_parent().modulate.a)
+	var fight := ArenaFight.new()
+	var bar := BossBar.new("X", fight.bar_changed, func() -> float: return 1.0)
+	hud.show_boss(bar)
+	await tree.create_timer(0.2).timeout
+	var half := hud.boss_bar.modulate.a
+	hud.hide_boss()
+	await tree.create_timer(0.1).timeout
+	assert_true(half < 0.9 and hud.boss_bar.modulate.a <= half + 0.05, "esconder en la entrada no salta a 1 (%.2f → %.2f)" % [half, hud.boss_bar.modulate.a])
+	hud.free()
+	fight.free()

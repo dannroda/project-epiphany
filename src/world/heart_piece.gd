@@ -24,10 +24,10 @@ func _sync() -> void:
 		_consume()
 		return
 	taken = false
-	var shown := _revealed or not hidden_until_revealed
-	visible = shown
-	set_physics_process(shown)
-	set_deferred(&"monitoring", shown)
+	var on_view := _revealed or not hidden_until_revealed
+	visible = on_view
+	set_physics_process(on_view)
+	set_deferred(&"monitoring", on_view)
 
 
 func reveal() -> void:
