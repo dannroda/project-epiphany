@@ -111,8 +111,8 @@ func snapshot() -> void:
 			piece.queue_free()
 
 
-func _on_flag_changed(id: StringName, _value: Variant) -> void:
-	if _retake_pending or not is_inside_tree() or not is_layout_flag(id):
+func _on_flag_changed(flag_id: StringName, _value: Variant) -> void:
+	if _retake_pending or not is_inside_tree() or not is_layout_flag(flag_id):
 		return
 	_retake_pending = true
 	await get_tree().create_timer(RETAKE_DELAY).timeout
