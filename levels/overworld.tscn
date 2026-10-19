@@ -1508,6 +1508,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 0.5, -5.5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49, 0.5, -5.5)
 
 [node name="OverworldMap" parent="." unique_id=259113020 node_paths=PackedStringArray("grid", "scenery") instance=ExtResource("11_gsck2")]
+id = &"overworld"
 display_name = "PLACE_TEMPLE_VALLEY"
 world_rect = Rect2(-101, -49, 200, 96)
 grid = NodePath("../GridMap")

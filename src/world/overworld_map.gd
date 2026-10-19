@@ -19,6 +19,8 @@ const REVEAL_FADE := 5.0
 ## Cuánto tiene que moverse un player para volver a pintar lo descubierto (m).
 const REVEAL_STEP := 1.0
 
+## Clave de lo descubierto en las partidas; vacía, la escena del nivel.
+@export var id: StringName = &""
 @export var display_name: String = ""
 @export var world_rect := Rect2(-20, -20, 40, 40)
 ## Sus paredes se recortan alrededor del player (player_hole), salvo en el borde del mundo: ahí el agujero
@@ -59,7 +61,7 @@ func _physics_process(_delta: float) -> void:
 
 ## Lo descubierto es del mundo, no del HUD: se pinta en GameState.map_revealed (1 px por metro) aunque no haya minimapa.
 func _reveal() -> void:
-	GameState.ensure_map_revealed(Vector2i(world_rect.size.ceil()))
+	GameState.ensure_map_revealed(reveal_key(), world_rect)
 	var veils := get_tree().get_nodes_in_group(ZoneVeil.GROUP).filter(func(veil: ZoneVeil) -> bool: return veil.visible)
 	if veils.any(func(veil: ZoneVeil) -> bool: return veil.is_revealing()):
 		_painted_at.clear()
@@ -73,6 +75,10 @@ func _reveal() -> void:
 		changed = true
 	if changed:
 		GameState.map_revealed_changed.emit()
+
+
+func reveal_key() -> StringName:
+	return id if not id.is_empty() else StringName(owner.scene_file_path if owner else "")
 
 
 static func _paint_reveal(image: Image, here: Vector2, origin: Vector2, veils: Array) -> void:

@@ -123,7 +123,7 @@ func _setup_reveal() -> void:
 	if view.material == null:
 		return
 	var rect := _map.world_rect
-	GameState.ensure_map_revealed(Vector2i(rect.size.ceil()))
+	GameState.ensure_map_revealed(_map.reveal_key(), rect)
 	_revealed = ImageTexture.create_from_image(GameState.map_revealed)
 	fog.set_shader_parameter(&"explored", _revealed)
 	fog.set_shader_parameter(&"world_rect", Vector4(rect.position.x, rect.position.y, rect.size.x, rect.size.y))

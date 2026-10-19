@@ -29,6 +29,9 @@ const BOTTLES := ItemDatabase.BOTTLES
 const EMPTY_BOTTLE := ItemDatabase.EMPTY_BOTTLE
 ## Radio (m) dentro del cual poner un pin quita el que ya está.
 const PIN_PICK_RADIUS := 3.0
+## Las partidas de antes guardaban un solo mapa descubierto, sin su origen: era el del overworld en ese lugar.
+const LEGACY_REVEAL := [&"overworld", Vector2(-101, -49)]
+const MAX_REVEAL_PIXELS := 4096 * 4096
 
 var inventory := Inventory.new()
 var equipment: Dictionary[ItemData.Category, StringName] = {}
@@ -48,8 +51,13 @@ var dungeons: Dictionary[StringName, DungeonState] = {}
 var visited_zones: Array[StringName] = []
 ## Marcas del jugador en el mapa del overworld (XZ del mundo).
 var map_pins: Array[Vector2] = []
-## Lo recorrido del overworld para el minimapa: imagen L8 sobre OverworldMap.world_rect (0 = sin descubrir).
+## Lo recorrido de cada mapa (OverworldMap.reveal_key): imagen L8 de 1 px por metro (0 = sin descubrir) que arranca en
+## `map_reveal_origins` (XZ del mundo).
+var map_reveals: Dictionary[StringName, Image] = {}
+var map_reveal_origins: Dictionary[StringName, Vector2] = {}
+## Lo recorrido del mapa en que se está (el último que pidió ensure_map_revealed).
 var map_revealed: Image
+var _reveal_key: StringName = &""
 ## Cargando en bloque (partida nueva o guardada): las señales finas se callan y solo sale `loaded`.
 var _bulk := false
 var current_dungeon: StringName = &"":
@@ -111,9 +119,24 @@ func set_ward_of(slot: int, seconds: float) -> void:
 	player_ward[slot] = seconds
 
 
-func ensure_map_revealed(size: Vector2i) -> void:
-	if map_revealed == null or map_revealed.get_size() != size:
-		map_revealed = Image.create_empty(size.x, size.y, false, Image.FORMAT_L8)
+## Deja en map_revealed lo recorrido del mapa `key` sobre `rect`; si el mapa cambió de rectángulo, lo descubierto que
+## cae adentro se conserva.
+func ensure_map_revealed(key: StringName, rect: Rect2) -> void:
+	var size := Vector2i(rect.size.ceil())
+	var image: Image = map_reveals.get(key)
+	var origin: Vector2 = map_reveal_origins.get(key, rect.position)
+	if image == null or image.get_size() != size or not origin.is_equal_approx(rect.position):
+		var moved := Image.create_empty(size.x, size.y, false, Image.FORMAT_L8)
+		if image:
+			var shift := Vector2i((origin - rect.position).round())
+			var overlap := Rect2i(shift, image.get_size()).intersection(Rect2i(Vector2i.ZERO, size))
+			if overlap.has_area():
+				moved.blit_rect(image, Rect2i(overlap.position - shift, overlap.size), overlap.position)
+		image = moved
+		map_reveals[key] = image
+		map_reveal_origins[key] = rect.position
+	_reveal_key = key
+	map_revealed = image
 
 
 func set_flag(id: StringName, value: Variant) -> void:
@@ -338,9 +361,12 @@ func write_to(cfg: ConfigFile) -> void:
 		cfg.set_value(SaveKeys.FLAGS, id, flags[id])
 	cfg.set_value(SaveKeys.MAP, SaveKeys.VISITED_ZONES, visited_zones.duplicate())
 	cfg.set_value(SaveKeys.MAP, SaveKeys.PINS, map_pins.duplicate())
-	if map_revealed:
-		cfg.set_value(SaveKeys.MAP, SaveKeys.REVEALED_SIZE, map_revealed.get_size())
-		cfg.set_value(SaveKeys.MAP, SaveKeys.REVEALED, map_revealed.get_data().compress(FileAccess.COMPRESSION_ZSTD))
+	var reveals := {}
+	for key in map_reveals:
+		var image := map_reveals[key]
+		reveals[key] = [map_reveal_origins[key], image.get_size(), image.get_data().compress(FileAccess.COMPRESSION_ZSTD)]
+	if not reveals.is_empty():
+		cfg.set_value(SaveKeys.MAP, SaveKeys.REVEALS, reveals)
 	for dungeon_id in dungeons:
 		dungeons[dungeon_id].write_to(cfg, SaveKeys.dungeon_section(dungeon_id))
 
@@ -379,17 +405,31 @@ func read_from(cfg: ConfigFile) -> void:
 		flags[id] = value
 	visited_zones.assign(get_typed.call(SaveKeys.MAP, SaveKeys.VISITED_ZONES, []))
 	map_pins.assign(get_typed.call(SaveKeys.MAP, SaveKeys.PINS, []))
-	var size: Vector2i = get_typed.call(SaveKeys.MAP, SaveKeys.REVEALED_SIZE, Vector2i.ZERO)
-	var packed: PackedByteArray = get_typed.call(SaveKeys.MAP, SaveKeys.REVEALED, PackedByteArray())
-	if size.x > 0 and not packed.is_empty():
-		var data := packed.decompress(size.x * size.y, FileAccess.COMPRESSION_ZSTD)
-		if data.size() == size.x * size.y:
-			map_revealed = Image.create_from_data(size.x, size.y, false, Image.FORMAT_L8, data)
+	var reveals: Dictionary = get_typed.call(SaveKeys.MAP, SaveKeys.REVEALS, {})
+	for key: Variant in reveals:
+		var entry: Variant = reveals[key]
+		if entry is Array and entry.size() == 3 and entry[0] is Vector2 and entry[1] is Vector2i and entry[2] is PackedByteArray:
+			_read_reveal(StringName(str(key)), entry[0], entry[1], entry[2])
+		else:
+			Log.warning(&"save", "Mapa descubierto con otro formato:", key)
+	var legacy_size: Vector2i = get_typed.call(SaveKeys.MAP, SaveKeys.REVEALED_SIZE, Vector2i.ZERO)
+	if not map_reveals.has(LEGACY_REVEAL[0]) and legacy_size.x > 0:
+		_read_reveal(LEGACY_REVEAL[0], LEGACY_REVEAL[1], legacy_size, get_typed.call(SaveKeys.MAP, SaveKeys.REVEALED, PackedByteArray()))
+	map_revealed = map_reveals.get(_reveal_key)
 	for section in cfg.get_sections():
 		if SaveKeys.is_dungeon_section(section):
 			dungeons[SaveKeys.dungeon_id(section)] = DungeonState.read_from(cfg, section)
 	_set_bulk(false)
 	loaded.emit()
+
+
+func _read_reveal(key: StringName, origin: Vector2, size: Vector2i, packed: PackedByteArray) -> void:
+	if size.x <= 0 or size.y <= 0 or size.x * size.y > MAX_REVEAL_PIXELS or packed.is_empty():
+		return
+	var data := packed.decompress(size.x * size.y, FileAccess.COMPRESSION_ZSTD)
+	if data.size() == size.x * size.y:
+		map_reveals[key] = Image.create_from_data(size.x, size.y, false, Image.FORMAT_L8, data)
+		map_reveal_origins[key] = origin
 
 
 ## Siempre dos botones; lo que no es un ítem ni una botella queda vacío (escenarios editados a mano).
@@ -416,6 +456,8 @@ func _clear() -> void:
 	flags.clear()
 	visited_zones.clear()
 	map_pins.clear()
+	map_reveals.clear()
+	map_reveal_origins.clear()
 	map_revealed = null
 	dungeons.clear()
 	current_dungeon = &""

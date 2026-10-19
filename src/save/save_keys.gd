@@ -29,6 +29,7 @@ const VISITED_ZONES := "visited_zones"
 const PINS := "pins"
 const REVEALED_SIZE := "revealed_size"
 const REVEALED := "revealed"
+const REVEALS := "reveals"
 
 ## Una sección por mazmorra: dungeon_<id>.
 const DUNGEON_PREFIX := "dungeon_"
