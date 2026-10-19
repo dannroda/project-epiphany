@@ -5657,11 +5657,15 @@ Revisión con patrones (2026-10-19): Liftable la reparenta a current_scene al ap
 
 **Notas:** Hecho (160141b6): Liftable recuerda su padre al levantarse y vuelve ahí al apoyarse. Para probar: en Chullpa, cargar la vasija grande del Rellano, apoyarla y bajar al piso de abajo (no se ve flotando).
 
-### 11.218 Copiar una ranura pierde su respaldo · Pendiente
+### 11.218 Copiar una ranura pierde su respaldo · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-72 · **Etiquetas:** `bug`, `guardado`
 
 Auditoría con patrones de diseño (-72, 2026-10-19): save_manager.gd:135 copy_slot copia solo el archivo principal (o el .bak si falta), nunca los dos: si el original está corrupto, la copia no tiene .bak del que recuperarse. Arreglo: copiar también slot_path(from)+'.bak' si existe.
+
+**Prueba:** tests/test_slots.gd
+
+**Notas:** Hecho por -72 (6cabd3b5): copy_slot copia la partida y su .bak a .copy y renombra solo cuando están los dos; si falla una copia limpia los temporales y deja el destino como estaba. Para probar: copiar una ranura en el menú y cargar la copia.
 
 ## M12 — Assets propios (Blender)  (27/39)
 
