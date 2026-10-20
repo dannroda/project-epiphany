@@ -1,20 +1,26 @@
 extends "res://tests/test_case.gd"
-## 11.105: mini tutorial de ítems. Después del item get, una tarjeta (qué hace, botón, probalo) que sale una sola vez;
-## el chip del HUD muestra la tarea hasta hacerla y, a los 30 s sin usar el ítem, marca el objetivo más cercano.
+## 11.105: mini tutoriales. Después del item get, una tarjeta (qué hace, botón, probalo) que sale una sola vez; el chip
+## del HUD muestra la tarea hasta hacerla y, a los 30 s sin usar el ítem, marca el objetivo más cercano. Los controles
+## básicos son solo el chip: moverse desde el arranque y atacar, fijar y rodar con el primer enemigo cerca.
 
 const LEVEL := "res://levels/test.tscn"
 const CATALOG := preload("res://data/tutorials/catalog.tres")
+const BASICS: Array[StringName] = [&"move", &"attack", &"lock", &"dodge"]
 
 
-func _level() -> Array:
+func _level(basics_done := true, keep_enemies := false) -> Array:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state := tree.root.get_node(^"GameState")
 	state.reset()
+	if basics_done:
+		for id in BASICS:
+			state.set_flag(StringName("tut_%s_done" % id), true)
 	tree.change_scene_to_file(LEVEL)
 	await tree.scene_changed
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
-	for enemy in tree.get_nodes_in_group(&"enemies"):
-		enemy.free()
+	if not keep_enemies:
+		for enemy in tree.get_nodes_in_group(&"enemies"):
+			enemy.free()
 	for i in 300:
 		if player.movement_state.get_active_state().name == &"Idle":
 			break
@@ -81,7 +87,7 @@ func test_the_chip_shows_the_task_until_the_eye_wakes() -> void:
 	await tree.process_frame
 	assert_true(tutor.chip.visible, "chip con la tarea")
 	assert_eq(tutor.chip_task.text, tr("TUT_BOW_TASK"), "dispará al ojo")
-	assert_true(tutor.chip_button.visible and tutor.chip_button.texture != null, "con el botón del arco")
+	assert_true(tutor.chip_keys.visible, "con el botón del arco")
 	var eye := tree.current_scene.get_node(^"EyeSwitch") as EyeSwitch
 	eye._show(true)
 	eye.activated.emit()
@@ -134,4 +140,42 @@ func test_after_idle_seconds_the_nearest_eye_is_marked() -> void:
 	eye._show(true)
 	await tree.process_frame
 	assert_true(not tutor.marker.visible, "resuelto, no lo marca")
+	await _done(tree)
+
+
+func _press(action: StringName) -> void:
+	for pressed in [true, false]:
+		var event := InputEventAction.new()
+		event.action = action
+		event.pressed = pressed
+		Input.parse_input_event(event)
+
+
+func test_the_basic_controls_are_taught_in_context() -> void:
+	var setup: Array = await _level(false, true)
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	var state: Node = setup[2]
+	var tutor: Tutor = setup[3]
+	var enemies := tree.get_nodes_in_group(&"enemies").filter(func(node: Node) -> bool: return node is Enemy)
+	for other in tree.get_nodes_in_group(&"enemies"):
+		if not other is Enemy:
+			other.free()
+	for enemy: Enemy in enemies:
+		enemy.bt_player.active = false
+		enemy.global_position = player.global_position + Vector3(30, 0, 30)
+	await tree.process_frame
+	assert_eq(tutor.current, CATALOG.tutorials[0], "al arrancar, moverse")
+	assert_true(tutor.chip.visible and not tutor.chip_icon.visible, "el chip sin ícono de ítem")
+	_press(&"move_left")
+	await tree.process_frame
+	assert_true(state.get_flag(&"tut_move_done") == true, "caminar lo completa")
+	assert_true(not tutor.chip.visible, "sin enemigos cerca no hay más avisos")
+	(enemies[0] as Node3D).global_position = player.global_position + Vector3(4, 0, 0)
+	await tree.process_frame
+	for id in [&"attack", &"lock", &"dodge"]:
+		assert_eq(tutor.current.id, id, "con un enemigo cerca, de a uno: %s" % id)
+		_press((tutor.current as TutorialData).done_actions[0])
+		await tree.process_frame
+	assert_true(not tutor.chip.visible, "y listo")
 	await _done(tree)

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TutorialData" format=3]
+
+[ext_resource type="Script" path="res://src/tutorial/tutorial_data.gd" id="1_tut"]
+
+[resource]
+script = ExtResource("1_tut")
+id = &"move"
+trigger = 1
+task = "TUT_MOVE_TASK"
+action = &"move"
+done_actions = Array[StringName]([&"move_forward", &"move_left", &"move_backward", &"move_right"])

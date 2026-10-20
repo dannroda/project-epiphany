@@ -1048,13 +1048,7 @@ msgctxt "ow_cave_bombs_1"
 msgid "La piedra herida no cede al acero, ni el hueso que viste coraza."
 msgstr "Wounded stone yields not to steel, nor does bone clad in armor."
 
-msgctxt "ow_cave_bombs_2"
-msgid "Dejá el fuego a sus pies con {item:bomb_bag} y alejate: la grieta hace el resto."
-msgstr "Lay the fire at its feet with {item:bomb_bag} and step away: the crack does the rest."
 
-msgctxt "ow_cave_bombs_3"
-msgid "Quien mantiene {item:bomb_bag} lo sostiene en alto, elige dónde y lo arroja al soltar."
-msgstr "Who holds {item:bomb_bag} raises it high, chooses where, and casts it upon release."
 
 msgctxt "ow_start_controls_2"
 msgid "Con {btn:interact} se leen las piedras como esta, se abren cofres y se habla."
@@ -1757,3 +1751,15 @@ msgstr "A bronze chain with a claw tip. It reaches far and does not let go."
 msgctxt "get_hammer_1"
 msgid "Un martillo de piedra que pesa como un cerro. Lo que la espada no rompe, esto sí."
 msgstr "A stone hammer as heavy as a hill. What the sword cannot break, this can."
+
+msgid "TUT_MOVE_TASK"
+msgstr "Walk"
+
+msgid "TUT_ATTACK_TASK"
+msgstr "Attack"
+
+msgid "TUT_LOCK_TASK"
+msgstr "Lock on and guard"
+
+msgid "TUT_DODGE_TASK"
+msgstr "Roll to dodge"

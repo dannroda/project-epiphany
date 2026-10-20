@@ -1485,3 +1485,15 @@ msgstr "El cristal de esta sala espera la luz: llevásela con el escudo."
 
 msgid "TUT_SHIELD_MIRROR_TASK"
 msgstr "Llevá la luz a un cristal"
+
+msgid "TUT_MOVE_TASK"
+msgstr "Caminá"
+
+msgid "TUT_ATTACK_TASK"
+msgstr "Atacá"
+
+msgid "TUT_LOCK_TASK"
+msgstr "Fijá al enemigo y cubrite"
+
+msgid "TUT_DODGE_TASK"
+msgstr "Rodá para esquivar"

@@ -1,6 +1,10 @@
 [gd_resource type="Resource" script_class="TutorialCatalog" format=3]
 
 [ext_resource type="Script" path="res://src/tutorial/tutorial_catalog.gd" id="1_catalog"]
+[ext_resource type="Resource" path="res://data/tutorials/move.tres" id="t_move"]
+[ext_resource type="Resource" path="res://data/tutorials/attack.tres" id="t_attack"]
+[ext_resource type="Resource" path="res://data/tutorials/lock.tres" id="t_lock"]
+[ext_resource type="Resource" path="res://data/tutorials/dodge.tres" id="t_dodge"]
 [ext_resource type="Resource" path="res://data/tutorials/feather.tres" id="t_feather"]
 [ext_resource type="Resource" path="res://data/tutorials/bow.tres" id="t_bow"]
 [ext_resource type="Resource" path="res://data/tutorials/bomb_bag.tres" id="t_bomb_bag"]
@@ -11,4 +15,4 @@
 
 [resource]
 script = ExtResource("1_catalog")
-tutorials = Array[TutorialData]([ExtResource("t_feather"), ExtResource("t_bow"), ExtResource("t_bomb_bag"), ExtResource("t_hookshot"), ExtResource("t_hammer"), ExtResource("t_sandals"), ExtResource("t_shield_mirror")])
+tutorials = Array[TutorialData]([ExtResource("t_move"), ExtResource("t_attack"), ExtResource("t_lock"), ExtResource("t_dodge"), ExtResource("t_feather"), ExtResource("t_bow"), ExtResource("t_bomb_bag"), ExtResource("t_hookshot"), ExtResource("t_hammer"), ExtResource("t_sandals"), ExtResource("t_shield_mirror")])

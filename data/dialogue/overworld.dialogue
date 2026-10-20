@@ -14,8 +14,6 @@ Inscripción: Las piedras chicas se levantan con {btn:interact} y se arrojan con
 
 ~ cave_bombs
 Inscripción: La piedra herida no cede al acero, ni el hueso que viste coraza. [ID:ow_cave_bombs_1]
-Inscripción: Dejá el fuego a sus pies con {item:bomb_bag} y alejate: la grieta hace el resto. [ID:ow_cave_bombs_2]
-Inscripción: Quien mantiene {item:bomb_bag} lo sostiene en alto, elige dónde y lo arroja al soltar. [ID:ow_cave_bombs_3]
 => END
 
 ~ grotto_hint

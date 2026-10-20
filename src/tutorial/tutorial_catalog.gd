@@ -1,13 +1,13 @@
 class_name TutorialCatalog
 extends Resource
-## Los mini tutoriales de ítems (11.105), en el orden en que se consiguen.
+## Los mini tutoriales (11.105): primero los controles básicos y después los ítems, en el orden en que se consiguen.
 
 @export var tutorials: Array[TutorialData] = []
 
 
 func for_item(id: StringName) -> TutorialData:
 	for tutorial in tutorials:
-		if tutorial.item.id == id:
+		if tutorial.item and tutorial.item.id == id:
 			return tutorial
 	return null
 

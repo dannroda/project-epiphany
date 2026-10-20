@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TutorialData" format=3]
+
+[ext_resource type="Script" path="res://src/tutorial/tutorial_data.gd" id="1_tut"]
+
+[resource]
+script = ExtResource("1_tut")
+id = &"dodge"
+trigger = 2
+task = "TUT_DODGE_TASK"
+action = &"dodge"
+done_actions = Array[StringName]([&"dodge"])

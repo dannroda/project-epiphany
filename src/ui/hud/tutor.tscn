@@ -88,15 +88,15 @@ layout_mode = 2
 theme_type_variation = &"Hint"
 text = "TUT_WITH"
 
-[node name="ChipButton" type="TextureRect" parent="Chip/Row"]
+[node name="ChipKeys" type="RichTextLabel" parent="Chip/Row"]
 unique_name_in_owner = true
-self_modulate = Color(0.8509804, 0.6431373, 0.25490198, 1)
-custom_minimum_size = Vector2(26, 26)
 layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
-expand_mode = 1
-stretch_mode = 5
+theme_type_variation = &"ItemGetText"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
 
 [node name="Marker" type="Control" parent="."]
 unique_name_in_owner = true
