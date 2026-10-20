@@ -10,12 +10,12 @@
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "bug",
     "diseño"
   ],
   "test": "",
   "title": "Piezas de corazón: 13, no múltiplo de 4",
-  "updated_at": "2026-10-20T04:46:23.374Z"
+  "updated_at": "2026-10-20T05:02:43.053Z"
 }

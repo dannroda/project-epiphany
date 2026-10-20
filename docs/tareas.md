@@ -3160,6 +3160,8 @@ Daniel (2026-10-20) approved -72's proposal for steps 3–6 as written: countera
 
 Daniel (2026-10-20, via -72, with the mockups Pause_Equipo_Tecnicas, Technique_Learned, HUD_Counter, Tutorial_Card and HUD_Practice_Chip on the canvas): a practice dummy at every technique stone; half speed in the counter window ALWAYS, with an option in Opciones to turn it off (not just the first time).
 
+Step 3 counterattack (55931a63) and step 4 plunge (897b80e5) merged. Daniel (2026-10-20): STRIKE plates stay hammer-only; the plunge doesn't press them (-72 changes FloorSwitch). The boss hands can't be countered (they can't be locked on): pending Daniel's decision.
+
 **Referencias:** `gdd.md#combate`, `gdd.md#input`
 
 **Relacionadas:** 11.22 Tablillas de historia; 11.35 Saltar: ítem tipo Pluma de Roc
@@ -4494,18 +4496,20 @@ Daniel (2026-10-12): las botellas tienen su fila fija, separada de los ítems co
 
 ### 11.115 Enemigos que deambulan mientras no te ven; centinelas con alerta y búsqueda · En curso
 
-**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-72 · **Etiquetas:** `ia`, `enemigos`
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-3e · **Etiquetas:** `ia`, `enemigos`
 
 Daniel (2026-10-13): los enemigos que no te detectaron no se quedan quietos. Todos deambulan cerca de su lugar: caminan despacio a puntos al azar de la navmesh dentro de unos metros de donde empiezan, paran un rato y miran alrededor (reemplaza la rama Quieto de enemy_bt.tres; radio, velocidad y pausas en EntityConfig). Alerta y búsqueda solo para un tipo de enemigo nuevo: el centinela o guardia de una guarida de un grupo enemigo que no son monstruos. Al verte hace una pausa de alerta (un !) antes de atacar; si te pierde va a tu último lugar visto, mira alrededor y vuelve a su puesto. Descartados por ahora: rondas fijas y cono de visión.
 
 - [x] Deambular cerca de su lugar para todos los enemigos
   Hecho el 2026-10-14 (-fd): ai/tasks/bt_wander.gd reemplaza la rama Quieto de enemy_bt.tres (ahora Deambular): punto al azar de la navmesh a wander_radius (3 m) de donde empezó, en su misma sala, caminando a wander_speed (1,2) con Walking_A; pausa wander_pause (1,5 a 3,5 s) con Idle_A. Ver al player lo corta (BTDynamicSelector). Si cae a otro nivel, su lugar pasa a ser donde cayó. Datos en EntityConfig. test_enemy_ai. Falta que Daniel lo vea y ajuste radio, velocidad y pausas.
-- [ ] Diseño del centinela: quién es el grupo enemigo no monstruo y cómo se ve
+- [x] Diseño del centinela: quién es el grupo enemigo no monstruo y cómo se ve
   Tipo de enemigo nuevo para guaridas (personaje humano o de una facción, no esqueleto). Lo decide Daniel con diseño y arte.
 - [x] Alerta y búsqueda del centinela
   Hecho (-fd, 2026-10-15) con un guardia provisorio (src/entities/guard.tscn, esqueleto; guard_bt.tres): al verte se frena con un ! (bt_alert, 0,7 s) y después ataca o persigue; si te pierde corre a tu último lugar visto (FindPlayer guarda last_seen), mira a los lados (bt_search) y camina de vuelta a su puesto (Enemy.home) antes de calmarse. Cuando se decida el modelo (paso 2) se cambia la escena, no la IA.
 - [x] Tests
   test_guard (alerta, persecución, búsqueda, vuelta y nueva alerta); deambular en test_enemy_ai.
+- [ ] Construir los Devotos del Ojo
+  Enemigo con la IA del centinela (alerta y búsqueda), estocada de lanza con aviso largo pensada para el contraataque; guaridas con fogón y estandarte en el Cardonal y el Bañado. El modelo (poncho, máscara con epi.logo_eye, lanza) lo arma arte.
 
 **Notas:** 
 Daniel (2026-10-14): deambular es para que los enemigos no parezcan objetos quietos (paso 1 vale para todos).
@@ -4607,7 +4611,7 @@ Text approved with 11.124 (2026-10-20): "El corazón se partió en dieciséis. T
 
 Done (cacad828): cliff_heart in overworld.dialogue and en.po with the approved text.
 
-### 11.124 Piezas de corazón: 13, no múltiplo de 4 · En curso
+### 11.124 Piezas de corazón: 13, no múltiplo de 4 · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-3e · **Etiquetas:** `bug`, `diseño`
 
@@ -7003,6 +7007,8 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): GameState.ensure_map_
 
 Revisión de arquitectura del overworld (-3e, 2026-10-19): Ningún nivel instancia zone_veil.tscn y overworld_map._reveal() hace get_nodes_in_group(ZoneVeil.GROUP) + filter cada cuadro (title_flyover también). Arreglo: borrar ZoneVeil y sus ramas o cachear. Si se borra, sale el velo de 16.42 y el _reveal de 16.38.
 
+**Notas:** Daniel (2026-10-20): ZoneVeil stays (the GDD has the gruta and the santuario covered).
+
 ### 16.45 Regiones del overworld como recurso ZoneRegion · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-3e · **Etiquetas:** `overworld`
@@ -7749,14 +7755,16 @@ La cámara es cenital y fija por sala: la sombra direccional puede tener distanc
 
 **Notas:** -5c (2026-10-20): overworld 1080p, RX 580, GPU: sombra del sol 2.4 ms (13.9 con, 11.5 sin). Ya estaba en 2 cascadas y 32 m; 24/40 m y 1/2/4 cascadas cambian ±0.3 ms (la cámara está a ~20 m, no se puede acortar mucho). Lo que ahorra es el atlas y el filtro: 2048 + filtro muy bajo, 0.6 ms (13.8 → 13.2), apenas más borrosa. Daniel (2026-10-20): que sea una opción. Opciones › Video › Sombras: Altas (por defecto, como antes) / Bajas. Mazmorras sin sombras; la única luz omni/spot con sombra es el foco de cáusticas del agua (water_pool).
 
-### 15.4 Contact shadows y SSAO en mazmorras · Pendiente
+### 15.4 Contact shadows y SSAO en mazmorras · Revisión
 
 **Responsable:** project-epiphany-5c
 
 En el overworld (11.203) costaron ~0,8 ms GPU (7,8 → 8,6 ms). Falta decidir si van en las mazmorras: medir por sala y comparar a ojo.
 
-- [ ] Medir costo por sala
-- [ ] Decidir con Daniel por cómo se ve
+- [x] Medir costo por sala
+- [x] Decidir con Daniel por cómo se ve
+
+**Notas:** -5c (2026-10-20): Chullpa sala por sala a 1080p en la RX 580: base 9,9 ms de GPU, SSAO +0,5, sombra del sol (con contact shadows) +0,5, las dos +0,9; casi igual en todas las salas. Daniel eligió las dos (ssao_sol) y que sea configurable: las mazmorras, la Huaca y Reflejos las traen prendidas; Opciones › Video › Sombras suma Apagadas (sin sombra del sol) y hay un tilde nuevo, Sombra en las esquinas (SSAO). Las cuevas siguen sin nada.
 
 **Relacionadas:** 11.203 Aprovechar las novedades de Godot 4.8
 
@@ -7819,10 +7827,10 @@ Pendiente de 10.8: hasta ahora todo se midió en debug con la RX 580. Medir rele
 Daniel (2026-10-15) preguntó por el texture streaming de Godot 4.8: descartado, el proyecto tiene 3422 PNG que suman ~5 MB (paleta y colores por vértice). Lo que pesa en el overworld es la geometría (terreno_organico.0..11 de 15-72 MB, paredes LA, decor, plantas) y la cantidad de mallas por cuadro. Va después de terminar los assets, junto con 11.126 y 11.59.
 
 - [x] Medir con el profiler: vértices, draw calls, sombras
-- [ ] Rangos de visibilidad/LOD en decor y plantas
-- [ ] Terreno en bloques más chicos que se descarten fuera de cámara
 
 **Notas:** -3e (7d7987f8): GPU in the overworld was the outdoor shader's detail (7–10 of 12–15 ms), not geometry. The bevel now uses the analytic gradient (one Voronoi per pixel instead of four): start 12.9→6.5 ms, cardonal 14.7→6.2, arboleda 9.8→6.4. Steps 2 (decor/plant LOD) and 3 (smaller chunks) would win ≤1 ms: -3e suggests dropping them or parking them until the assets are done; that's Daniel's call.
+
+Daniel (2026-10-20): park steps 2 and 3 → 17.2 (m17-01).
 
 ### 15.10 Salas y targeting: dejar de consultar todo cada frame · Revisión
 
@@ -7875,7 +7883,7 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): overworld_map.gd:106 
 
 **Notas:** Hecho por -3e (4869886c): la foto del mapa se rehace solo con flags del trazado (scenery y sus interruptores, como el ojo del puente), no con cofres ni corazones.
 
-## M17 — Después de la demo  (0/1)
+## M17 — Después de la demo  (0/2)
 
 Lo que sale de M11 para después de la demo: rejugabilidad y extras.
 
@@ -7890,6 +7898,13 @@ Un modo extra que se desbloquea al terminar el juego, difícil (más daño, meno
 - [ ] Desbloquear al terminar
 
 **Prueba:** Tras los créditos aparece la opción; una partida en ese modo cambia lo prometido.
+
+### 17.2 LOD de decor y plantas, y terreno en bloques más chicos · Pendiente
+
+Pasos 2 y 3 de 15.9, estacionados por Daniel (2026-10-20) hasta después de los assets: con el arreglo del shader el overworld va a 6–7,7 ms de GPU y esto ganaría como mucho 1 ms (resto: iluminación/sombras del suelo 1–3,4 ms, decor ~1,1, riscos <1, plantas ~0,1).
+
+- [ ] Rangos de visibilidad/LOD en decor y plantas
+- [ ] Terreno en bloques más chicos que se descarten fuera de cámara
 
 ## Listas
 

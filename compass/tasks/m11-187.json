@@ -4,21 +4,13 @@
     {
       "done": true,
       "text": "Medir con el profiler: vértices, draw calls, sombras"
-    },
-    {
-      "done": false,
-      "text": "Rangos de visibilidad/LOD en decor y plantas"
-    },
-    {
-      "done": false,
-      "text": "Terreno en bloques más chicos que se descarten fuera de cámara"
     }
   ],
   "code": "15.9",
   "created_at": "2026-10-15T06:31:31.409Z",
   "description": "Daniel (2026-10-15) preguntó por el texture streaming de Godot 4.8: descartado, el proyecto tiene 3422 PNG que suman ~5 MB (paleta y colores por vértice). Lo que pesa en el overworld es la geometría (terreno_organico.0..11 de 15-72 MB, paredes LA, decor, plantas) y la cantidad de mallas por cuadro. Va después de terminar los assets, junto con 11.126 y 11.59.",
   "milestone": "m15",
-  "notes": "-3e (7d7987f8): GPU in the overworld was the outdoor shader's detail (7–10 of 12–15 ms), not geometry. The bevel now uses the analytic gradient (one Voronoi per pixel instead of four): start 12.9→6.5 ms, cardonal 14.7→6.2, arboleda 9.8→6.4. Steps 2 (decor/plant LOD) and 3 (smaller chunks) would win ≤1 ms: -3e suggests dropping them or parking them until the assets are done; that's Daniel's call.",
+  "notes": "-3e (7d7987f8): GPU in the overworld was the outdoor shader's detail (7–10 of 12–15 ms), not geometry. The bevel now uses the analytic gradient (one Voronoi per pixel instead of four): start 12.9→6.5 ms, cardonal 14.7→6.2, arboleda 9.8→6.4. Steps 2 (decor/plant LOD) and 3 (smaller chunks) would win ≤1 ms: -3e suggests dropping them or parking them until the assets are done; that's Daniel's call.\n\nDaniel (2026-10-20): park steps 2 and 3 → 17.2 (m17-01).",
   "order": 184,
   "priority": "low",
   "refs": [],
@@ -30,5 +22,5 @@
   ],
   "test": "",
   "title": "Overworld: optimizar el dibujado (después de los assets)",
-  "updated_at": "2026-10-20T04:46:08.849Z"
+  "updated_at": "2026-10-20T05:13:45.145Z"
 }

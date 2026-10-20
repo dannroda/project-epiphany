@@ -2,11 +2,11 @@
   "assignee": "project-epiphany-5c",
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "Medir costo por sala"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Decidir con Daniel por cómo se ve"
     }
   ],
@@ -20,11 +20,11 @@
     }
   ],
   "milestone": "m15",
-  "notes": "",
+  "notes": "-5c (2026-10-20): Chullpa sala por sala a 1080p en la RX 580: base 9,9 ms de GPU, SSAO +0,5, sombra del sol (con contact shadows) +0,5, las dos +0,9; casi igual en todas las salas. Daniel eligió las dos (ssao_sol) y que sea configurable: las mazmorras, la Huaca y Reflejos las traen prendidas; Opciones › Video › Sombras suma Apagadas (sin sombra del sol) y hay un tilde nuevo, Sombra en las esquinas (SSAO). Las cuevas siguen sin nada.",
   "order": 4,
   "refs": [],
-  "status": "todo",
+  "status": "review",
   "test": "",
   "title": "Contact shadows y SSAO en mazmorras",
-  "updated_at": "2026-10-20T02:53:49.078Z"
+  "updated_at": "2026-10-20T05:08:34.175Z"
 }

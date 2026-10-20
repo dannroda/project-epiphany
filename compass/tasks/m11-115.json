@@ -1,5 +1,5 @@
 {
-  "assignee": "project-epiphany-72",
+  "assignee": "project-epiphany-3e",
   "checklist": [
     {
       "detail": "Hecho el 2026-10-14 (-fd): ai/tasks/bt_wander.gd reemplaza la rama Quieto de enemy_bt.tres (ahora Deambular): punto al azar de la navmesh a wander_radius (3 m) de donde empezó, en su misma sala, caminando a wander_speed (1,2) con Walking_A; pausa wander_pause (1,5 a 3,5 s) con Idle_A. Ver al player lo corta (BTDynamicSelector). Si cae a otro nivel, su lugar pasa a ser donde cayó. Datos en EntityConfig. test_enemy_ai. Falta que Daniel lo vea y ajuste radio, velocidad y pausas.",
@@ -8,7 +8,7 @@
     },
     {
       "detail": "Tipo de enemigo nuevo para guaridas (personaje humano o de una facción, no esqueleto). Lo decide Daniel con diseño y arte.",
-      "done": false,
+      "done": true,
       "text": "Diseño del centinela: quién es el grupo enemigo no monstruo y cómo se ve"
     },
     {
@@ -20,6 +20,11 @@
       "detail": "test_guard (alerta, persecución, búsqueda, vuelta y nueva alerta); deambular en test_enemy_ai.",
       "done": true,
       "text": "Tests"
+    },
+    {
+      "detail": "Enemigo con la IA del centinela (alerta y búsqueda), estocada de lanza con aviso largo pensada para el contraataque; guaridas con fogón y estandarte en el Cardonal y el Bañado. El modelo (poncho, máscara con epi.logo_eye, lanza) lo arma arte.",
+      "done": false,
+      "text": "Construir los Devotos del Ojo"
     }
   ],
   "code": "11.115",
@@ -38,5 +43,5 @@
   ],
   "test": "",
   "title": "Enemigos que deambulan mientras no te ven; centinelas con alerta y búsqueda",
-  "updated_at": "2026-10-20T03:14:48.239Z"
+  "updated_at": "2026-10-20T05:08:35.638Z"
 }
