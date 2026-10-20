@@ -1457,7 +1457,7 @@ msgid "TUT_HAMMER_BUTTON"
 msgstr "Tocá {item:hammer} para dar el martillazo delante tuyo."
 
 msgid "TUT_HAMMER_TRY"
-msgstr "Cerca hay una placa de golpe: dale un martillazo."
+msgstr "La placa de golpe del Mirador, al noreste, guarda algo: dale un martillazo."
 
 msgid "TUT_HAMMER_TASK"
 msgstr "Martillá una placa de golpe"

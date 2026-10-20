@@ -1707,7 +1707,7 @@ msgid "TUT_HAMMER_BUTTON"
 msgstr "Tap {item:hammer} to slam it down in front of you."
 
 msgid "TUT_HAMMER_TRY"
-msgstr "There is a strike plate nearby: hammer it."
+msgstr "The strike plate at the Mirador, to the northeast, guards something: hammer it."
 
 msgid "TUT_HAMMER_TASK"
 msgstr "Hammer a strike plate"

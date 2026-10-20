@@ -1,8 +1,11 @@
 class_name SecretTree
 extends Breakable
-## Queñoa que ningún golpe voltea: el choque de las sandalias la sacude y suelta su pieza de corazón.
+## Queñoa que ningún golpe voltea: el choque de las sandalias la sacude y suelta su pieza de corazón, o lo de `drops`
+## (una vez por visita).
 
 @export var piece: HeartPiece
+
+var _dropped := false
 
 
 func _on_hit(info: DamageInfo) -> void:
@@ -12,3 +15,6 @@ func _on_hit(info: DamageInfo) -> void:
 	shake()
 	if piece:
 		piece.reveal()
+	elif drops and not _dropped:
+		_dropped = true
+		drops.drop_at.call_deferred(global_position + Vector3.UP * drop_height, get_parent())

@@ -348,3 +348,26 @@ func _until_off_the_ladder(tree: SceneTree, player: PlayerCharacter) -> void:
 	while player.is_climbing() and Time.get_ticks_msec() < until:
 		await tree.physics_frame
 	await tree.create_timer(0.2).timeout
+
+
+func test_a_secret_quenoa_without_a_piece_drops_its_table_once() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var setup: Array = await _load(tree, [[&"bow", 1]])
+	var level: Node = setup[1]
+	var player: PlayerCharacter = setup[2]
+	var quenoa := (load("res://src/world/plants/quenoa_secreta.tscn") as PackedScene).instantiate() as SecretTree
+	quenoa.drops = load("res://data/drops/pot_arrows.tres")
+	level.add_child(quenoa)
+	quenoa.global_position = player.global_position + Vector3(20, 0, 20)
+	var arrows := func() -> int:
+		return level.get_children().filter(func(node: Node) -> bool: return node is Pickup and node.item and node.item.id == &"arrow").size()
+	var before: int = arrows.call()
+	for i in 2:
+		var crash := DamageInfo.make(1, 6.0, player, &"dash")
+		crash.team = EntityConfig.Team.PLAYER
+		quenoa.hurtbox.receive(crash)
+		await tree.create_timer(0.5).timeout
+	assert_eq(arrows.call() - before, 1, "el choque suelta flechas una vez")
+	assert_true(not quenoa.broken, "y la queñoa sigue en pie")
+	quenoa.queue_free()
+	setup[0].reset()
