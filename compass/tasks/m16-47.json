@@ -10,11 +10,11 @@
   "priority": "low",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "overworld"
   ],
   "test": "",
   "title": "El grupo de la baranda del terreno depende de la tira donde cae",
-  "updated_at": "2026-10-19T22:56:16.925Z"
+  "updated_at": "2026-10-20T04:12:01.533Z"
 }

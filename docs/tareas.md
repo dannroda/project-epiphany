@@ -6993,7 +6993,7 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): GameState.ensure_map_
 
 **Notas:** Hecho por -3e (c6a2764b): lo descubierto va por id de mapa con su origen (GameState.map_reveals / map_reveal_origins, SaveKeys.REVEALS); si cambia world_rect se remapea; las partidas viejas migran a "overworld". Para probar: cargar una partida vieja con el mapa explorado y abrir el mapa.
 
-### 16.44 ZoneVeil sin uso pero consultado cada cuadro · Pendiente
+### 16.44 ZoneVeil sin uso pero consultado cada cuadro · Revisión
 
 **Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-3e · **Etiquetas:** `overworld`
 
@@ -7027,7 +7027,7 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): export_terreno_overwo
 
 **Notas:** Hecho (-3e): el export del terreno elige nodos por clase y grupo, no por nombre. _is(node, "Clase") sin tipar (corre con --script) mira la clase de Godot o el global_name del script y sus bases. IGNORED es una lista de clases (AreaZone, ShallowWater, PlayerCharacter, OverworldMap y tipos del motor) en vez del prefijo Zone_ y el duck typing de wade_speed. CrackedWall, HookPost y EyeSwitch por clase; las 7 bocas de cueva en el grupo cave_mouths en vez del sufijo Mouth; CrackedWall.terrain_id con los nombres actuales (los .res muro_/tapa_ no cambian). JSON regenerado idéntico byte a byte. test_every_cracked_wall_has_its_terrain_rock. overworld.tscn: solo agregados.
 
-### 16.49 El grupo de la baranda del terreno depende de la tira donde cae · Pendiente
+### 16.49 El grupo de la baranda del terreno depende de la tira donde cae · Revisión
 
 **Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-3e · **Etiquetas:** `overworld`
 
@@ -7725,6 +7725,8 @@ Con caché caliente: 85,7 ms (D3D12 sin baker) y 63,6 ms (Vulkan) sin compilar p
 - [ ] Reproducir y perfilar
   pipeline_probe + profiler de Godot en el cuadro del pico.
 - [ ] Arreglar (pool, preload o lo que se mida)
+
+**Notas:** -5c (2026-10-20): en Linux no se reproduce. Vulkan, RX 580, carpeta de usuario y caché de Mesa aisladas: en frío y en tres corridas en caliente sparks_gold da ≤ 20 ms, igual que sparks y el cuadro sin efecto (sparks_gold es igual a sparks salvo color y cantidad, CPUParticles3D). En Windows el pico salió solo en la primera corrida en caliente después de las frías, con los dos drivers: apunta a algo de ese momento (caché de pipelines que se guarda, disco), no al efecto. pipeline_probe ahora hace dos pasadas con un tramo sin efecto antes de cada uno y los ms desde el arranque; falta correrlo en Windows (measure_shaders.ps1) para ver si el pico sigue al efecto o al momento.
 
 **Relacionadas:** 11.203 Aprovechar las novedades de Godot 4.8
 

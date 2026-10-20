@@ -10,11 +10,11 @@
   "priority": "low",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "overworld"
   ],
   "test": "",
   "title": "ZoneVeil sin uso pero consultado cada cuadro",
-  "updated_at": "2026-10-19T22:56:15.189Z"
+  "updated_at": "2026-10-20T04:19:16.172Z"
 }

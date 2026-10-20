@@ -21,11 +21,11 @@
     }
   ],
   "milestone": "m15",
-  "notes": "",
+  "notes": "-5c (2026-10-20): en Linux no se reproduce. Vulkan, RX 580, carpeta de usuario y caché de Mesa aisladas: en frío y en tres corridas en caliente sparks_gold da ≤ 20 ms, igual que sparks y el cuadro sin efecto (sparks_gold es igual a sparks salvo color y cantidad, CPUParticles3D). En Windows el pico salió solo en la primera corrida en caliente después de las frías, con los dos drivers: apunta a algo de ese momento (caché de pipelines que se guarda, disco), no al efecto. pipeline_probe ahora hace dos pasadas con un tramo sin efecto antes de cada uno y los ms desde el arranque; falta correrlo en Windows (measure_shaders.ps1) para ver si el pico sigue al efecto o al momento.",
   "order": 2,
   "refs": [],
   "status": "todo",
   "test": "",
   "title": "Pico suelto de sparks_gold",
-  "updated_at": "2026-10-20T02:53:48.182Z"
+  "updated_at": "2026-10-20T04:13:07.599Z"
 }
