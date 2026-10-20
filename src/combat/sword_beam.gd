@@ -1,9 +1,12 @@
+class_name SwordBeam
 extends Hitbox
 ## Rayo de espada (11.34 paso 5): sale con la vida llena, vuela `reach` metros hacia su -Z (con la salida delante del player, la punta llega a 6 m de él) y solo le pega a enemigos:
 ## no prende ojos, cristales ni placas, ni rompe nada. Se deshace contra una pared o en el primer enemigo.
 
 @export var speed := 14.0
 @export var reach := 5.0
+## Quien lo tira: su escudo, delante del pecho, no lo deshace.
+var shooter: Node
 
 var _travelled := 0.0
 
@@ -29,6 +32,8 @@ func _on_area_entered(area: Area3D) -> void:
 
 
 func _on_body_entered(body: Node3D) -> void:
+	if shooter and shooter.is_ancestor_of(body):
+		return
 	if not (body is RigidBody3D or body is CharacterBody3D):
 		_vanish()
 

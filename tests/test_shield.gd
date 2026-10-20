@@ -194,3 +194,43 @@ func test_dodging_lowers_the_guard_at_once() -> void:
 	assert_eq(player.is_blocking(), false, "al esquivar baja la guardia enseguida")
 	Input.action_release(&"z-lock")
 	setup[1].reset()
+
+
+## El escudo va atado al antebrazo, delante del cuerpo y mirando al frente, sin arrastrarlo; al cubrirse sube.
+func _shield_center_and_face(player: PlayerCharacter) -> Array:
+	var shield := player.equipment.shield_in_hand
+	var model := player.model.global_basis.inverse()
+	return [model * (shield.global_position - player.global_position), (model * shield.global_basis.z).normalized(), shield.global_basis.z.normalized()]
+
+
+func test_the_shield_rides_in_front_and_rises_to_block() -> void:
+	var setup: Array = await _setup(&"shield_wood")
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[2]
+	await tree.create_timer(0.5).timeout
+	var rest := _shield_center_and_face(player)
+	var radius := ((player.equipment.shield_in_hand.get_node(^"StaticBody3D/CollisionShape3D") as CollisionShape3D).shape as CylinderShape3D).radius
+	var face: Vector3 = rest[2]
+	var bottom: float = rest[0].y - radius * sqrt(1.0 - face.y * face.y)
+	assert_true(rest[1].z > 0.7, "mira al frente %s" % rest[1])
+	assert_true(rest[0].z > 0.15, "va delante del cuerpo %s" % rest[0])
+	assert_true(bottom > 0.25, "el borde de abajo lejos del piso (%.2f m)" % bottom)
+	hold_block(player, true)
+	await tree.create_timer(0.5).timeout
+	var guard := _shield_center_and_face(player)
+	assert_true(guard[1].z > 0.8, "cubriéndose también mira al frente %s" % guard[1])
+	assert_true(guard[0].y - rest[0].y > 0.18, "y sube hasta el pecho (%.2f → %.2f)" % [rest[0].y, guard[0].y])
+	hold_block(player, false)
+	setup[1].reset()
+
+
+func test_the_shield_arm_lets_go_without_the_shield_in_hand() -> void:
+	var setup: Array = await _setup(&"shield_wood")
+	var player: PlayerCharacter = setup[2]
+	assert_eq(player.anim_tree.get(&"parameters/ShieldArm/blend_amount"), 1.0, "con el escudo, el brazo lo sostiene")
+	player.equipment.hold(Items.get_item(&"bow"))
+	assert_eq(player.anim_tree.get(&"parameters/ShieldArm/blend_amount"), 0.0, "con el arco en esa mano, lo suelta")
+	assert_eq(player.anim_tree.get(&"parameters/ShieldRoll/blend_amount"), 0.0, "también al rodar")
+	player.equipment.release_held()
+	assert_eq(player.anim_tree.get(&"parameters/ShieldArm/blend_amount"), 1.0, "y vuelve")
+	setup[1].reset()

@@ -10,6 +10,8 @@ signal weapon_changed(item: ItemData)
 @export var shield_hand_socket: Node3D
 ## Donde va lo que se sostiene al usarlo (el arco), en la mano del escudo.
 @export var held_socket: Node3D
+## Las capas del brazo del escudo (ShieldArm, ShieldRoll) se apagan sin escudo en la mano.
+@export var anim_tree: AnimationTree
 ## Co-op: el cuerpo de cada invitado (P2, P3…) sin armadura, con sus colores.
 @export var guest_body_materials: Array[Material] = []
 
@@ -64,6 +66,10 @@ func hold(item: ItemData, weapon_hand := false) -> void:
 func show_shield_in_hand(in_hand: bool) -> void:
 	if shield_in_hand:
 		_set_present(shield_in_hand, in_hand)
+	if anim_tree:
+		var amount := 1.0 if shield_in_hand and in_hand else 0.0
+		anim_tree.set(&"parameters/ShieldArm/blend_amount", amount)
+		anim_tree.set(&"parameters/ShieldRoll/blend_amount", amount)
 
 
 func _dress(armor: ItemData) -> void:

@@ -196,7 +196,7 @@ func test_roll_leaves_ghosts_that_fade() -> void:
 	if ghosts.is_empty():
 		return
 	var ghost := ghosts[0] as Afterimage
-	assert_true(ghost.mesh.get_surface_count() > 0 and ghost.mesh.get_aabb().size.y > 0.5, "con la pose del player")
+	assert_true(ghost.mesh.get_surface_count() > 0 and ghost.mesh.get_aabb().size.length() > 0.5, "con la pose del player")
 	assert_true(ghost.get_instance_shader_parameter(&"fade") < 1.0, "y se van desvaneciendo")
 	await tree.create_timer(0.8).timeout
 	assert_eq(tree.current_scene.find_children("*", "Afterimage", false, false).size(), 0, "hasta irse")

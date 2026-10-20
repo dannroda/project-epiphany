@@ -268,6 +268,20 @@ animation = &"MovementAdvanced/Dodge_Left"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dodgeright"]
 animation = &"MovementAdvanced/Dodge_Right"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_shieldhold"]
+animation = &"Carry/Shield_Hold"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_shieldholdroll"]
+animation = &"Carry/Shield_Hold"
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_shieldarm"]
+filter_enabled = true
+filters = ["Skeleton3D:hand.l", "Skeleton3D:handslot.l", "Skeleton3D:lowerarm.l", "Skeleton3D:upperarm.l", "Skeleton3D:wrist.l"]
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_shieldroll"]
+filter_enabled = true
+filters = ["Skeleton3D:chest", "Skeleton3D:foot.l", "Skeleton3D:foot.r", "Skeleton3D:hand.r", "Skeleton3D:handslot.r", "Skeleton3D:head", "Skeleton3D:hips", "Skeleton3D:lowerarm.r", "Skeleton3D:lowerleg.l", "Skeleton3D:lowerleg.r", "Skeleton3D:root", "Skeleton3D:spine", "Skeleton3D:toes.l", "Skeleton3D:toes.r", "Skeleton3D:upperarm.r", "Skeleton3D:upperleg.l", "Skeleton3D:upperleg.r", "Skeleton3D:wrist.r"]
+
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_guard"]
 filter_enabled = true
 filters = ["Skeleton3D:chest", "Skeleton3D:hand.l", "Skeleton3D:lowerarm.l", "Skeleton3D:upperarm.l", "Skeleton3D:wrist.l"]
@@ -288,7 +302,7 @@ animation = &"General/Idle_A"
 animation = &"General/Use_Item"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_s7qer"]
-animation = &"CombatMelee/Melee_Blocking"
+animation = &"Carry/Shield_Block"
 use_custom_timeline = true
 timeline_length = 3600.0
 stretch_time_scale = false
@@ -379,6 +393,14 @@ nodes/MeleeBlocking/node = SubResource("AnimationNodeAnimation_s7qer")
 nodes/MeleeBlocking/position = Vector2(-293.33334, 426.66666)
 nodes/Guard/node = SubResource("AnimationNodeOneShot_guard")
 nodes/Guard/position = Vector2(400, 320)
+nodes/ShieldArm/node = SubResource("AnimationNodeBlend2_shieldarm")
+nodes/ShieldArm/position = Vector2(150, 520)
+nodes/ShieldHold/node = SubResource("AnimationNodeAnimation_shieldhold")
+nodes/ShieldHold/position = Vector2(-120, 620)
+nodes/ShieldRoll/node = SubResource("AnimationNodeBlend2_shieldroll")
+nodes/ShieldRoll/position = Vector2(1900, 1100)
+nodes/ShieldHoldRoll/node = SubResource("AnimationNodeAnimation_shieldholdroll")
+nodes/ShieldHoldRoll/position = Vector2(1650, 1250)
 nodes/AttackType/node = SubResource("AnimationNodeTransition_g4c7l")
 nodes/AttackType/position = Vector2(720, 693.3333)
 nodes/Stab/node = SubResource("AnimationNodeAnimation_knn7v")
@@ -449,7 +471,7 @@ nodes/CarryPhase/node = SubResource("AnimationNodeTransition_carryphase")
 nodes/CarryPhase/position = Vector2(2800, 1400)
 nodes/Carry/node = SubResource("AnimationNodeTransition_carry")
 nodes/Carry/position = Vector2(3100, 1000)
-node_connections = [&"output", 0, &"Dodge", &"Movement", 0, &"Idle", &"Movement", 1, &"Running", &"Attack", 0, &"Guard", &"Attack", 1, &"AttackType", &"Combat", 0, &"Movement", &"Combat", 1, &"Targeting", &"Guard", 0, &"Combat", &"Guard", 1, &"MeleeBlocking", &"AttackType", 0, &"SwordSlice", &"AttackType", 1, &"Stab", &"AttackType", 2, &"Backhand", &"AttackType", 3, &"Spin", &"Hurt", 0, &"Attack", &"Hurt", 1, &"HurtAnim+ Engine capabi", &"BlockHit", 0, &"Hurt", &"BlockHit", 1, &"BlockHitAnim", &"DodgeDir", 0, &"DodgeForward", &"DodgeDir", 1, &"DodgeBackward", &"DodgeDir", 2, &"DodgeLeft", &"DodgeDir", 3, &"DodgeRight", &"Dodge", 0, &"Carry", &"Dodge", 1, &"DodgeDir", &"UseItem", 0, &"BlockHit", &"UseItem", 1, &"ItemAnim", &"BowPhase", 0, &"BowDraw", &"BowPhase", 1, &"BowIdle", &"BowPhase", 2, &"BowRelease", &"Bow", 0, &"UseItem", &"Bow", 1, &"BowPhase", &"CarryPhase", 0, &"CarryLift", &"CarryPhase", 1, &"CarryIdle", &"CarryPhase", 2, &"CarryWalk", &"CarryPhase", 3, &"CarryThrow", &"CarryPhase", 4, &"ItemRaise", &"CarryPhase", 5, &"ItemHold", &"CarryPhase", 6, &"ItemLower", &"CarryPhase", 7, &"Climb", &"CarryPhase", 8, &"PlungeRise", &"CarryPhase", 9, &"PlungeFall", &"CarryPhase", 10, &"PlungeStuck", &"CarryPhase", 11, &"PlungePull", &"Carry", 0, &"Bow", &"Carry", 1, &"CarryPhase"]
+node_connections = [&"output", 0, &"Dodge", &"Movement", 0, &"Idle", &"Movement", 1, &"Running", &"Attack", 0, &"Combat", &"Attack", 1, &"AttackType", &"Combat", 0, &"Movement", &"Combat", 1, &"Targeting", &"Guard", 0, &"ShieldArm", &"Guard", 1, &"MeleeBlocking", &"AttackType", 0, &"SwordSlice", &"AttackType", 1, &"Stab", &"AttackType", 2, &"Backhand", &"AttackType", 3, &"Spin", &"Hurt", 0, &"Guard", &"Hurt", 1, &"HurtAnim+ Engine capabi", &"BlockHit", 0, &"Hurt", &"BlockHit", 1, &"BlockHitAnim", &"DodgeDir", 0, &"DodgeForward", &"DodgeDir", 1, &"DodgeBackward", &"DodgeDir", 2, &"DodgeLeft", &"DodgeDir", 3, &"DodgeRight", &"Dodge", 0, &"Carry", &"Dodge", 1, &"ShieldRoll", &"UseItem", 0, &"BlockHit", &"UseItem", 1, &"ItemAnim", &"BowPhase", 0, &"BowDraw", &"BowPhase", 1, &"BowIdle", &"BowPhase", 2, &"BowRelease", &"Bow", 0, &"UseItem", &"Bow", 1, &"BowPhase", &"CarryPhase", 0, &"CarryLift", &"CarryPhase", 1, &"CarryIdle", &"CarryPhase", 2, &"CarryWalk", &"CarryPhase", 3, &"CarryThrow", &"CarryPhase", 4, &"ItemRaise", &"CarryPhase", 5, &"ItemHold", &"CarryPhase", 6, &"ItemLower", &"CarryPhase", 7, &"Climb", &"CarryPhase", 8, &"PlungeRise", &"CarryPhase", 9, &"PlungeFall", &"CarryPhase", 10, &"PlungeStuck", &"CarryPhase", 11, &"PlungePull", &"Carry", 0, &"Bow", &"Carry", 1, &"CarryPhase", &"ShieldArm", 0, &"Attack", &"ShieldArm", 1, &"ShieldHold", &"ShieldRoll", 0, &"ShieldHoldRoll", &"ShieldRoll", 1, &"DodgeDir"]
 
 [sub_resource type="AnimationNodeObserverOneShot" id="AnimationNodeObserverOneShot_4uxyr"]
 
@@ -1046,7 +1068,7 @@ bone_name = "hand.l"
 bone_idx = 17
 
 [node name="ShieldSocket" type="Marker3D" parent="ModelController/Skeleton3D/Hand_L" unique_id=2124676257]
-transform = Transform3D(-0.013181455, 0.98799604, -0.15391952, -0.29167667, 0.14343919, 0.94570184, 0.9564264, 0.057360273, 0.2862846, -0.030828238, 0.2174542, -0.012781441)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.16, 0.1)
 
 [node name="BowSocket" type="Marker3D" parent="ModelController/Skeleton3D/Hand_L" unique_id=1406252219]
 transform = Transform3D(-0.63335353, -0.53228813, 0.3543078, 0.59833705, -0.6692376, 0.064160675, 0.22551493, 0.280702, 0.8248331, -0.17593151, 0.16620475, 0.06264305)
@@ -1088,6 +1110,8 @@ parameters/AttackType/current_state = "Slash"
 parameters/AttackType/transition_request = ""
 parameters/AttackType/current_index = 0
 parameters/AttackType/observer = null
+parameters/ShieldArm/blend_amount = 1.0
+parameters/ShieldRoll/blend_amount = 1.0
 parameters/Hurt/active = false
 parameters/Hurt/internal_active = false
 parameters/Hurt/request = 0
@@ -1310,13 +1334,14 @@ shape = SubResource("CapsuleShape3D_32ebh")
 script = ExtResource("c_runner")
 hitbox_root = NodePath("../ModelController/Hitboxes")
 
-[node name="Equipment" type="Node" parent="." unique_id=508811436 node_paths=PackedStringArray("player", "visuals", "weapon_socket", "shield_hand_socket", "held_socket")]
+[node name="Equipment" type="Node" parent="." unique_id=508811436 node_paths=PackedStringArray("player", "visuals", "weapon_socket", "shield_hand_socket", "held_socket", "anim_tree")]
 script = ExtResource("c_equipment")
 player = NodePath("..")
 visuals = NodePath("../ModelController/Visuals")
 weapon_socket = NodePath("../ModelController/Skeleton3D/Hand_R/WeaponSocket")
 shield_hand_socket = NodePath("../ModelController/Skeleton3D/Hand_L/ShieldSocket")
 held_socket = NodePath("../ModelController/Skeleton3D/Hand_L/BowSocket")
+anim_tree = NodePath("../ModelController/AnimationTree")
 guest_body_materials = Array[Material]([ExtResource("mat_p2")])
 
 [node name="Targeting" type="Node" parent="." unique_id=85013995 node_paths=PackedStringArray("player", "target_indicator", "detector_shape")]

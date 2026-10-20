@@ -1,7 +1,8 @@
 # Arma assets/epiphany/anim/carry.glb: animaciones de cargar algo sobre la cabeza para el Rig_Medium de KayKit
 # (Carry_Lift, Carry_Idle, Carry_Walk, Carry_Throw), de levantar un ítem recién conseguido (ItemGet_Raise, _Hold, _Lower)
 # de trepar la escalera de soga (Climb) y del golpe en picada (Plunge_Rise, _Fall, _Stuck, _Pull: la espada arriba, apuntando
-# derecho abajo, clavada en el piso y sacándola). Parten de Idle_A y Walking_A; los brazos van por IK a puntos
+# derecho abajo, clavada en el piso y sacándola) y del brazo del escudo (Shield_Hold, Shield_Block: el antebrazo izquierdo
+# delante del cuerpo o levantado, con la mano girada para que el escudo atado mire al frente). Parten de Idle_A y Walking_A; los brazos van por IK a puntos
 # fijos y el torso se dobla a mano (las piernas siguen la base). Se hornea todo a claves FK por hueso. El frente del rig mira a -Y.
 # Con la cabeza chibi las manos no llegan arriba del casco: quedan levantadas a los costados de la cabeza y el objeto
 # va apoyado arriba. Después: tools/build_carry_library.gd arma player/animation/libs/Carry.res.
@@ -118,6 +119,19 @@ def bake(rig, ik, name, base, frames, pose_at, loop=False, mix=None):
 			c.influence = edit.get("arms_l", edit.get("arms", 1.0)) if left else edit.get("arms", 1.0)
 			t.location = mirror(edit["hands"] if left else edit.get("hands_r", edit["hands"]), 1 if left else -1)
 		bpy.context.view_layer.update()
+		for bone_name, direction in zip(("upperarm.l", "lowerarm.l"), edit.get("arm_l", ())):
+			pb = bones[bone_name]
+			turn = (rig.matrix_world @ pb.matrix).col[1].xyz.rotation_difference(direction.normalized())
+			head = pb.matrix.to_translation()
+			pb.matrix = Matrix.Translation(head) @ turn.to_matrix().to_4x4() @ Matrix.Translation(-head) @ pb.matrix
+			bpy.context.view_layer.update()
+		if "shield" in edit:
+			pb = bones["hand.l"]
+			along = (rig.matrix_world @ bones["lowerarm.l"].matrix).col[1].xyz.normalized()
+			face = (edit["shield"] - along * edit["shield"].dot(along)).normalized()
+			basis = Matrix((along.cross(face), along, face)).transposed()
+			pb.matrix = Matrix.Translation(pb.matrix.to_translation()) @ basis.to_4x4()
+			bpy.context.view_layer.update()
 		if "blade" in edit:
 			pb = bones["hand.r"]
 			now = -(rig.matrix_world @ pb.matrix).col[0].xyz
@@ -268,6 +282,23 @@ def pull_pose(f, chest):
 	}
 
 
+# Brazo del escudo, en FK: "arm_l" apunta el brazo y el antebrazo izquierdos; la mano (su +Z) mira hacia "shield" y
+# sigue al antebrazo, y ShieldSocket (player.tscn) ata el escudo a mitad del antebrazo. Sin bloquear, el antebrazo
+# cruzado delante de la cintura; bloqueando, parado delante del pecho.
+def shield_hold_pose(f, chest):
+	return {"hands": HANDS, "arms_l": 0.0, "arm_l": (Vector((0.25, -0.35, -0.9)), Vector((-0.8, -0.58, 0.05))), "shield": Vector((0.3, -1, 0.1))}
+
+
+def shield_block_pose(f, chest):
+	return {
+		"hands": HANDS,
+		"arms_l": 0.0,
+		"arm_l": (Vector((0.25, -0.75, -0.6)), Vector((-0.15, -0.2, 1))),
+		"shield": Vector((0.15, -1, 0.1)),
+		"bend": {"chest": (Vector((0, 0, 1)), -0.25)},
+	}
+
+
 rig = load_rig()
 rig.animation_data_create()
 ik = add_ik(rig)
@@ -296,6 +327,8 @@ made = [
 	bake(rig, ik, "Plunge_Rise", air, int(0.3 * FPS), rise_pose),
 	bake(rig, ik, "Plunge_Fall", air, frames_of(air), fall_pose, loop=True),
 	bake(rig, ik, "Plunge_Stuck", crouch, frames_of(crouch), stuck_pose, loop=True),
+	bake(rig, ik, "Shield_Hold", idle, frames_of(idle), shield_hold_pose, loop=True),
+	bake(rig, ik, "Shield_Block", idle, frames_of(idle), shield_block_pose, loop=True),
 	bake(rig, ik, "Plunge_Pull", crouch, int(0.35 * FPS), pull_pose, mix=(idle, lambda f: lerp_keys([(0.0, 0.0), (0.3, 0.0), (1.0, 1.0)], f))),
 ]
 for b in rig.pose.bones:

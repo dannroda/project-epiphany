@@ -77,7 +77,8 @@ func _fire_beam() -> void:
 	if forward.is_zero_approx():
 		return
 	forward = forward.normalized()
-	var shot := beam.instantiate() as Hitbox
+	var shot := beam.instantiate() as SwordBeam
+	shot.shooter = player
 	shot.team = player.hurtbox.team
 	shot.damage_factory = func() -> DamageInfo: return DamageInfo.make(1, 2.0, player)
 	Spawns.root(player).add_child(shot)
