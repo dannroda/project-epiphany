@@ -7994,7 +7994,7 @@ Pasos 2 y 3 de 15.9, estacionados por Daniel (2026-10-20) hasta después de los 
 - [ ] Rangos de visibilidad/LOD en decor y plantas
 - [ ] Terreno en bloques más chicos que se descarten fuera de cámara
 
-### Probar en mobile · Pendiente
+### 17.3 Probar en mobile · Pendiente
 
 **Prioridad:** baja · **Etiquetas:** `build`
 
