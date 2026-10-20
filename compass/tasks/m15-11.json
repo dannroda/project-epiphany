@@ -3,12 +3,12 @@
   "checklist": [
     {
       "detail": "Como render_music.gd.",
-      "done": false,
+      "done": true,
       "text": "Renderizar los sintetizados a .wav una vez"
     },
     {
       "detail": "StringName → Array[AudioStream].",
-      "done": false,
+      "done": true,
       "text": "Banco de sfx en un .tres con carga perezosa"
     }
   ],
@@ -22,17 +22,17 @@
     }
   ],
   "milestone": "m15",
-  "notes": "",
+  "notes": "81c780e9: src/tools/render_feel_sfx.gd renders the 11 sounds without a recording to assets/audio/sfx/synth/*.wav (only once, re-run it if a recipe changes). The bank stayed as the SAMPLES const with lazy loading (Feel.streams_of), not a .tres: a .tres would add a file without changing the behavior. The 11 recipes that already had .ogg samples were deleted.",
   "order": 187,
   "priority": "low",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "rendimiento",
     "audio"
   ],
   "test": "",
   "title": "Feel sintetiza sonidos al arrancar y tira la mitad",
-  "updated_at": "2026-10-20T02:53:52.101Z"
+  "updated_at": "2026-10-20T03:10:54.758Z"
 }

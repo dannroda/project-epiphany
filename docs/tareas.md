@@ -1,7 +1,7 @@
 # Tareas — Project Epiphany
 
 > Export de `compass/`, que es la fuente de verdad. No editar: los cambios se hacen en `compass/` o con `scompass`, y este archivo se regenera.
-> Generado: 2026-10-19
+> Generado: 2026-10-20
 
 ## M0 — Refactor del player + base de datos  (13/13)
 
@@ -7810,16 +7810,18 @@ Cada Room llama a `has_player()` en cada frame de física (get_first_node_in_gro
 - [ ] watch solo con el overlay visible
   Y el blackboard del jefe con el enum en int.
 
-### 15.12 Feel sintetiza sonidos al arrancar y tira la mitad · Pendiente
+### 15.12 Feel sintetiza sonidos al arrancar y tira la mitad · Revisión
 
 **Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `rendimiento`, `audio`
 
 feel.gd:59-83 genera unos 22 sonidos en `_ready` (~10 s de audio a 22050 Hz, ~220k llamadas a lambdas) en cada arranque y en cada proceso de tests; después reemplaza 11 por samples grabados que carga todos de una listando la carpeta. La lista de sonidos es un Dictionary en código.
 
-- [ ] Renderizar los sintetizados a .wav una vez
+- [x] Renderizar los sintetizados a .wav una vez
   Como render_music.gd.
-- [ ] Banco de sfx en un .tres con carga perezosa
+- [x] Banco de sfx en un .tres con carga perezosa
   StringName → Array[AudioStream].
+
+**Notas:** 81c780e9: src/tools/render_feel_sfx.gd renders the 11 sounds without a recording to assets/audio/sfx/synth/*.wav (only once, re-run it if a recipe changes). The bank stayed as the SAMPLES const with lazy loading (Feel.streams_of), not a .tres: a .tres would add a file without changing the behavior. The 11 recipes that already had .ogg samples were deleted.
 
 **Relacionadas:** 15.6 Arranque hasta el menú
 
