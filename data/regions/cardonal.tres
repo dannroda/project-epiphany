@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ZoneRegion" format=3 uid="uid://c6nupal1gawt6"]
+
+[ext_resource type="Script" uid="uid://b7fl0shbmykd0" path="res://src/world/zone_region.gd" id="1_0njs1"]
+
+[resource]
+script = ExtResource("1_0njs1")
+id = &"cardonal"
+display_name = "PLACE_CACTUS_FIELD"
+chase_group = &"llano"
+label_zone = &"Zone_cardonal"

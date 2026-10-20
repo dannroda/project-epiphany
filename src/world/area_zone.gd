@@ -1,7 +1,7 @@
 class_name AreaZone
 extends Area3D
-## Zona del overworld (una o más pantallas): las zonas de una misma región grande comparten `display_name`; al entrar
-## el player, el HUD muestra el nombre solo si viene de otra región.
+## Zona del overworld (una o más pantallas) de una `region`; al entrar el player, el HUD muestra el nombre de la región
+## solo si viene de otra.
 
 const GROUP := &"area_zones"
 
@@ -10,12 +10,7 @@ static var _current: AreaZone
 
 ## Clave de la zona en las partidas (visitada o no); vacío, el nombre del nodo. Renombrar el nodo no la cambia.
 @export var id: StringName = &""
-@export var display_name: String = ""
-## Las zonas con la misma región de persecución no sueltan al player al pasar de una a otra; vacía, la de su
-## `display_name`.
-@export var chase_region: StringName = &""
-## El nombre de la región va en el mapa sobre esta zona (una por región).
-@export var region_label := false
+@export var region: ZoneRegion
 
 
 func _ready() -> void:
@@ -30,10 +25,10 @@ func _ready() -> void:
 		if body is PlayerCharacter:
 			GameState.visit_zone(key())
 		if body == Players.lead() and _current != self:
-			var same_region := is_instance_valid(_current) and _current.display_name == display_name
+			var same_region := is_instance_valid(_current) and _current.region == region
 			_current = self
-			if not display_name.is_empty() and not same_region:
-				get_tree().call_group(Hud.GROUP, &"show_area_name", tr(display_name)))
+			if region and not same_region:
+				get_tree().call_group(Hud.GROUP, &"show_area_name", tr(region.display_name)))
 
 
 ## Si el punto (en XZ) cae dentro de la zona.
@@ -68,8 +63,17 @@ static func region_at(tree: SceneTree, point: Vector3) -> Array[AreaZone]:
 	return region
 
 
+func region_name() -> String:
+	return region.display_name if region else ""
+
+
 func chase_key() -> StringName:
-	return chase_region if not chase_region.is_empty() else StringName(display_name)
+	return region.chase_key() if region else &""
+
+
+## El nombre de la región va en el mapa sobre esta zona.
+func has_region_label() -> bool:
+	return region != null and region.label_zone == key()
 
 
 func key() -> StringName:

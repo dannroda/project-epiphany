@@ -38,7 +38,7 @@ func test_walk_every_zone_without_falling_or_sticking() -> void:
 		enemy.free()
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	await tree.create_timer(0.5).timeout
-	assert_eq(AreaZone._current.display_name, "PLACE_FIRST_CLEARING", "arranca en el claro")
+	assert_eq(AreaZone._current.region_name(), "PLACE_FIRST_CLEARING", "arranca en el claro")
 	var at := func(axis: int, sign_: float, value: float) -> Callable:
 		return func() -> bool: return (player.global_position[axis] - value) * sign_ >= 0.0
 	var route := [
@@ -72,7 +72,7 @@ func test_walk_the_east_bank() -> void:
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	player.global_position = Vector3(40, 2.7, -3)
 	await tree.create_timer(0.5).timeout
-	assert_eq(AreaZone._current.display_name, "PLACE_NECROPOLIS", "arranca en la Necrópolis")
+	assert_eq(AreaZone._current.region_name(), "PLACE_NECROPOLIS", "arranca en la Necrópolis")
 	var at := func(axis: int, sign_: float, value: float) -> Callable:
 		return func() -> bool: return (player.global_position[axis] - value) * sign_ >= 0.0
 	var route := [
@@ -196,7 +196,7 @@ func _walk_route(tree: SceneTree, player: PlayerCharacter, route: Array) -> void
 		var result: Array = await _walk_until(tree, player, leg[0], leg[1])
 		assert_true(result[0], "llega a %s sin trabarse (quedó en %s)" % [leg[2], player.global_position.snappedf(0.1)])
 		assert_eq(result[1], false, "no cae camino a %s" % leg[2])
-		assert_eq(AreaZone._current.display_name if AreaZone._current else "", leg[2], "el HUD nombra la zona (en %s)" % player.global_position.snappedf(0.1))
+		assert_eq(AreaZone._current.region_name() if AreaZone._current else "", leg[2], "el HUD nombra la zona (en %s)" % player.global_position.snappedf(0.1))
 
 
 
@@ -637,3 +637,23 @@ func test_the_zones_cover_the_map_without_overlapping() -> void:
 	assert_true(walked > 500, "se llega a casi todo el piso (%d polígonos)" % walked)
 	assert_eq(outside.slice(0, 8), [], "%d polígonos a los que se llega fuera de toda zona" % outside.size())
 	state.reset()
+
+
+## 16.45: cada zona es de una región, y cada región pone su nombre en el mapa sobre una sola de sus zonas.
+func test_every_zone_has_a_region_labeled_once() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	var zones: Array[AreaZone] = []
+	zones.assign(tree.current_scene.find_children("*", "AreaZone", true, false))
+	assert_eq(zones.filter(func(zone: AreaZone) -> bool: return zone.region == null).map(func(zone: AreaZone) -> StringName: return zone.name), [], "zonas sin región")
+	var labels := {}
+	for zone in zones:
+		if zone.region and zone.has_region_label():
+			labels[zone.region.id] = labels.get(zone.region.id, 0) + 1
+	var regions := {}
+	for zone in zones:
+		if zone.region:
+			regions[zone.region.id] = labels.get(zone.region.id, 0)
+	assert_eq(regions.size(), 13, "13 regiones")
+	assert_eq(regions.keys().filter(func(id: StringName) -> bool: return regions[id] != 1), [], "regiones sin etiqueta o con más de una")

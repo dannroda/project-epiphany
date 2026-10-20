@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ZoneRegion" format=3 uid="uid://crh8lprnbdr0t"]
+
+[ext_resource type="Script" uid="uid://b7fl0shbmykd0" path="res://src/world/zone_region.gd" id="1_region"]
+
+[resource]
+script = ExtResource("1_region")
+id = &"pradera"
+display_name = "PLACE_MEADOW"
+chase_group = &"oeste"
+label_zone = &"Zone_pradera"

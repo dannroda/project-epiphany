@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ZoneRegion" format=3 uid="uid://ctk7p54sdbip5"]
+
+[ext_resource type="Script" uid="uid://b7fl0shbmykd0" path="res://src/world/zone_region.gd" id="1_fe3lr"]
+
+[resource]
+script = ExtResource("1_fe3lr")
+id = &"cerros"
+display_name = "PLACE_HILLS"
+label_zone = &"Zone_cerros"

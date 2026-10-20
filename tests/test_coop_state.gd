@@ -115,7 +115,7 @@ func test_the_zone_banner_follows_the_lead_player() -> void:
 	var first: PlayerCharacter = setup[2]
 	var second: PlayerCharacter = setup[3]
 	var zone := AreaZone.new()
-	zone.display_name = "PLACE_MEADOW"
+	zone.region = preload("res://data/regions/pradera.tres")
 	setup[1].add_child(zone)
 	var before := AreaZone._current
 	zone.body_entered.emit(second)

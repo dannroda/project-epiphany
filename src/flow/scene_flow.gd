@@ -316,7 +316,7 @@ func location() -> String:
 	var player := Players.lead()
 	for child in scene.get_children():
 		if child is AreaZone and player and (child as AreaZone).contains(player.global_position):
-			return child.display_name
+			return (child as AreaZone).region_name()
 	for child in scene.get_children():
 		if child is OverworldMap:
 			return child.display_name

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ZoneRegion" format=3 uid="uid://6kfro4uhoig8"]
+
+[ext_resource type="Script" uid="uid://b7fl0shbmykd0" path="res://src/world/zone_region.gd" id="1_xsax5"]
+
+[resource]
+script = ExtResource("1_xsax5")
+id = &"laguna"
+display_name = "PLACE_LAGOON"
+label_zone = &"Zone_laguna"

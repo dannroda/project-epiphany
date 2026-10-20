@@ -417,7 +417,7 @@ func _show_overworld() -> void:
 		return
 	var regions := {}
 	for zone: AreaZone in _zones():
-		regions[zone.display_name] = regions.get(zone.display_name, false) or zone.is_visited()
+		regions[zone.region] = regions.get(zone.region, false) or zone.is_visited()
 	subtitle.text = tr("MAP_ZONES_EXPLORED").format({done = regions.values().count(true), total = regions.size()})
 	var portals := TravelPortal.all(get_tree())
 	if not portals.is_empty():
@@ -435,12 +435,12 @@ func _place_overworld(on_player := false) -> void:
 		return
 	_set_zoom(_zoomed)
 	var zones := _zones()
-	var visited_regions := zones.filter(func(zone: AreaZone) -> bool: return zone.is_visited()).map(func(zone: AreaZone) -> String: return zone.display_name)
+	var visited_regions := zones.filter(func(zone: AreaZone) -> bool: return zone.is_visited()).map(func(zone: AreaZone) -> ZoneRegion: return zone.region)
 	for zone: AreaZone in zones:
 		var bounds := zone.bounds()
-		if zone.region_label and not zone.display_name.is_empty() and zone.display_name in visited_regions:
+		if zone.has_region_label() and zone.region in visited_regions:
 			var label: Label = ZONE_NAME_SCENE.instantiate()
-			label.text = tr(zone.display_name)
+			label.text = tr(zone.region_name())
 			var rect := _world_rect_to_map(bounds)
 			label.position = rect.position
 			label.size = rect.size
@@ -549,7 +549,7 @@ func can_travel() -> bool:
 		return true
 	var here := _zone_at(Vector2(player.global_position.x, player.global_position.z))
 	var there := _zone_at(Vector2(_focused_portal.global_position.x, _focused_portal.global_position.z))
-	return here == null or there == null or here.display_name != there.display_name
+	return here == null or there == null or here.region != there.region
 
 
 func _ask_travel() -> void:
@@ -588,11 +588,11 @@ func _focus_zone(zone: AreaZone) -> void:
 	if zone == null:
 		focus_title.text = ""
 		return
-	focus_title.text = zone.display_name
+	focus_title.text = zone.region_name()
 	if not zone.is_visited():
 		focus_text.text = "MAP_UNEXPLORED"
 		return
-	var region := _zones().filter(func(other: AreaZone) -> bool: return other.display_name == zone.display_name and other.is_visited())
+	var region := _zones().filter(func(other: AreaZone) -> bool: return other.region == zone.region and other.is_visited())
 	var inside := func(point: Vector3) -> bool: return region.any(func(other: AreaZone) -> bool: return other.contains(point))
 	var chests := get_tree().get_nodes_in_group(Chest.GROUP).filter(func(chest: Chest) -> bool: return inside.call(chest.global_position))
 	_count_row("MAP_CHESTS", chests.filter(func(chest: Chest) -> bool: return chest.is_opened()).size(), chests.size())
