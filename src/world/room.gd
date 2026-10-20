@@ -150,7 +150,7 @@ func waves_running() -> bool:
 
 ## También la sala de la cámara: en una puerta el player no está en ninguna, y sigue siendo la sala de la que viene.
 func has_player() -> bool:
-	var camera := TopDownCamera.current(get_tree())
+	var camera := TopDownCamera.find(get_tree())
 	if camera and camera.room == self:
 		return true
 	return Players.all.any(func(player: PlayerCharacter) -> bool: return contains(player.global_position))

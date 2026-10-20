@@ -122,7 +122,7 @@ func _restore() -> void:
 
 
 func _game_camera() -> TopDownCamera:
-	return TopDownCamera.current(get_tree())
+	return TopDownCamera.find(get_tree())
 
 
 ## El que entra en co-op a mitad de la cinemática queda quieto como los demás.

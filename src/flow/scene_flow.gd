@@ -314,7 +314,7 @@ func _spawn_at_start() -> void:
 func _place_at_spawn() -> void:
 	if Players.all.is_empty():
 		return
-	var camera := TopDownCamera.current(get_tree())
+	var camera := TopDownCamera.find(get_tree())
 	if camera:
 		camera.reset_room()
 	if GameState.current_dungeon != &"" and session.room_entry != null:
@@ -343,7 +343,7 @@ func location() -> String:
 		return ""
 	var dungeon := Dungeon.current(get_tree())
 	if dungeon:
-		var camera := TopDownCamera.current(get_tree())
+		var camera := TopDownCamera.find(get_tree())
 		var room_name := camera.room.display_name if camera and camera.room else ""
 		return dungeon.display_name + (" · " + room_name if not room_name.is_empty() else "")
 	var player := Players.lead()

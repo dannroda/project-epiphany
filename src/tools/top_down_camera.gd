@@ -157,7 +157,7 @@ func _forget_player_rids(_player: PlayerCharacter) -> void:
 	_player_rids.clear()
 
 
-static func current(tree: SceneTree) -> TopDownCamera:
+static func find(tree: SceneTree) -> TopDownCamera:
 	return tree.get_first_node_in_group(GROUP) as TopDownCamera
 
 

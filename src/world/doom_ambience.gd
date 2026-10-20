@@ -101,7 +101,7 @@ func _apply_level() -> void:
 
 func _room_camera() -> TopDownCamera:
 	if not is_instance_valid(_camera):
-		_camera = TopDownCamera.current(get_tree())
+		_camera = TopDownCamera.find(get_tree())
 	return _camera
 
 

@@ -33,7 +33,7 @@ func _climb(crosser: PlayerCharacter) -> void:
 			i += 1
 		player.global_position = to.global_position + spot
 		player.velocity = Vector3.ZERO
-	var camera := TopDownCamera.current(get_tree())
+	var camera := TopDownCamera.find(get_tree())
 	if camera:
 		camera.leave_room()
 	await get_tree().physics_frame

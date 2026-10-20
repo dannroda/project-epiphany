@@ -64,7 +64,7 @@ func test_swinging_over_the_top_keeps_a_short_room_framed() -> void:
 	tree.change_scene_to_file("res://levels/cumbre.tscn")
 	await tree.scene_changed
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
-	var camera := TopDownCamera.current(tree)
+	var camera := TopDownCamera.find(tree)
 	player.global_position = Vector3(40, 0.25, 7)
 	for i in 30:
 		await tree.physics_frame

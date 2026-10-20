@@ -12,7 +12,7 @@ func _open_map(scenario := "test_rooms", level := "") -> Array:
 		await tree.scene_changed
 	for i in 4:
 		await tree.physics_frame
-	var camera := TopDownCamera.current(tree)
+	var camera := TopDownCamera.find(tree)
 	var player := tree.get_first_node_in_group(&"player") as Node3D
 	for i in 120:
 		if camera == null or player == null or camera.room == null or camera.room.contains(player.global_position):

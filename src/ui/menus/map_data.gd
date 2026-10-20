@@ -8,7 +8,7 @@ const DOOR_MERGE_DISTANCE := 2.5
 
 
 static func current_room(tree: SceneTree) -> Room:
-	var camera := TopDownCamera.current(tree)
+	var camera := TopDownCamera.find(tree)
 	return camera.room if camera else null
 
 

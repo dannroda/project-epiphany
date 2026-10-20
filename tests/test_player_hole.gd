@@ -116,7 +116,7 @@ func test_rooms_never_turn_the_camera_overhead() -> void:
 	await tree.process_frame
 	for enemy in tree.get_nodes_in_group(&"enemies"):
 		enemy.free()
-	var camera := TopDownCamera.current(tree)
+	var camera := TopDownCamera.find(tree)
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	assert_true(camera.room != null, "la cámara está en la sala")
 	var bounds := camera.room.bounds()

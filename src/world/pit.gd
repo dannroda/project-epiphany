@@ -36,7 +36,7 @@ func _fall(player: PlayerCharacter) -> void:
 	player.global_position = back
 	player.velocity = Vector3.ZERO
 	player.controls.hold_still(still_time)
-	var camera := TopDownCamera.current(get_tree())
+	var camera := TopDownCamera.find(get_tree())
 	if camera:
 		camera.snap_to_target()
 
