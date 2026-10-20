@@ -1,0 +1,15 @@
+{
+  "assignee": "project-epiphany-72",
+  "checklist": [],
+  "code": "11.223",
+  "created_at": "2026-10-20T07:12:30.463Z",
+  "description": "Daniel (2026-10-20) eligió la propuesta A del canvas (fila 'Opciones · Video con lugar para crecer'): pestañas Juego (Controles+Idioma | Audio) y Video (Pantalla | Gráficos) con LB/RB, lugar para ~4 filas más por columna. Video ya no entraba a 720p (8 filas).",
+  "milestone": "m11",
+  "notes": "",
+  "order": 219,
+  "refs": [],
+  "status": "doing",
+  "test": "",
+  "title": "Opciones en dos pestañas: Juego y Video",
+  "updated_at": "2026-10-20T07:12:31.011Z"
+}
