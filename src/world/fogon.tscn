@@ -1,0 +1,48 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/fogata.res" id="1_fogata"]
+[ext_resource type="Shader" path="res://src/world/look/anillo_fuego.gdshader" id="2_shader"]
+[ext_resource type="PackedScene" path="res://src/feel/stencil_light/stencil_light.tscn" id="3_glow"]
+
+[sub_resource type="CylinderMesh" id="FlameMesh"]
+top_radius = 0.05
+bottom_radius = 0.3
+height = 1.2
+radial_segments = 12
+rings = 1
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="ShaderMaterial" id="FlameMat"]
+render_priority = 1
+shader = ExtResource("2_shader")
+shader_parameter/core_color = Color(1, 0.85, 0.45, 1)
+shader_parameter/edge_color = Color(1, 0.3, 0.05, 1)
+shader_parameter/intensity = 3.5
+shader_parameter/tongues = 6.0
+shader_parameter/speed = 1.4
+shader_parameter/reveal = 1.0
+
+[sub_resource type="CylinderShape3D" id="Shape"]
+height = 0.4
+radius = 0.6
+
+[node name="Fogon" type="StaticBody3D"]
+
+[node name="Model" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_fogata")
+
+[node name="Flames" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.62, 0)
+cast_shadow = 0
+mesh = SubResource("FlameMesh")
+material_override = SubResource("FlameMat")
+
+[node name="Glow" parent="." instance=ExtResource("3_glow")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+color = Color(1.12, 1.0, 0.88, 1)
+radius = 2.4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+shape = SubResource("Shape")

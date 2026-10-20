@@ -2448,6 +2448,46 @@
 			92.0,
 			2.0,
 			1.6
+		],
+		[
+			28.0,
+			27.0,
+			1.6
+		],
+		[
+			28.0,
+			24.5,
+			1.6
+		],
+		[
+			25.5,
+			28.0,
+			1.6
+		],
+		[
+			30.5,
+			26.5,
+			1.6
+		],
+		[
+			84.0,
+			38.0,
+			1.6
+		],
+		[
+			84.0,
+			35.5,
+			1.6
+		],
+		[
+			86.5,
+			37.5,
+			1.6
+		],
+		[
+			83.5,
+			40.5,
+			1.6
 		]
 	],
 	"levels": [
@@ -2748,14 +2788,14 @@
 		"HHHHHHHHHH................::::.::::::~::::::::::......~~~~~.................::::::::::::::...............HHHHHHHHH",
 		"HHHHHHHHHH................::::....SS:~::::::::::......~~~~~~.................:.::::::::::::............HHHHHHHHHHH",
 		"HHHHHHHHHH........................SS.................~~~~~~~W~...................::::::::::............HHHHHHHHHHH",
-		"HHHHHHHHHH...........................................~WWWWWWWWWWWWW........wwwwwwwwww::::::.wwwwwwwwww.HHHHHHHHHHH",
-		"HHHHHHHHH...........WWWWWWWWWW...:WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW....wwwwwwwwwww:::::wwwwwwwwww.HHHHHHHHHHH",
-		"HHHHHHHHH.........WWWWWWWWWWWWWWW:WWW..WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW..wwwwwwwwwww:::::wwwwwwwwww.HHHHHHHHHHH",
-		"HHHHHHHHH.........WWWWWWWWWWWWWWWWWWW..WWW.......WWWWWWWWWWWWWWWWWWWWWWWWW..wwwwwwwwwww::::.wwwwwwwwww.HHHHHHHHHHH",
-		"HHHHHHHHH.........WWWWWWWWWWWWWWWWWWWWWWWW.......WWWWWWWWWWWWWWWWWWWWWWWWW..wwwwwwwwwww.::::wwwwwwwwww.HHHHHHHHHHH",
-		"HHHHHHHHH.........WWWWWWWWWWWWWWWWWWWWWWW........WWWWWWWWWWWWHHHHWWWWWWWWWW.wwwwwwwwwwwwwwwwwwwwwwwwww.HHHHHHHHHHH",
-		"HHHHHHHHH.........WWWWWWWWWWWWWWWWWWWWWWWW........WWWWWWWWWWW:HH:WWWWWWWWW..wwwwwwwwwwwwwwwwwwwwwwwwww.HHHHHHHHHHH",
-		"HHHHHHHHH.........WWWWWWWWWWWWWWWWWWWWWWWWW..WWWWWWWWWWWWWWW::::::WWWWWWW...wwwwwwwwwwwwwwwwwwwwwwwwww.HHHHHHHHHHH",
+		"HHHHHHHHHH...........................................~WWWWWWWWWWWWW........wwwwwwwwww::::::.wwwwwww....HHHHHHHHHHH",
+		"HHHHHHHHH...........WWWWWWWWWW...:WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW....wwwwwwwwwww:::::wwwwwww....HHHHHHHHHHH",
+		"HHHHHHHHH.........WWWWWWWWWWWWWWW:WWW..WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW..wwwwwwwwwww:::::wwwwwww....HHHHHHHHHHH",
+		"HHHHHHHHH.........WWWWWWWWWWWWWWWWWWW..WWW.......WWWWWWWWWWWWWWWWWWWWWWWWW..wwwwwwwwwww::::.wwwwwww....HHHHHHHHHHH",
+		"HHHHHHHHH.........WWWWWWWWWWWWWWWWWWWWWWWW.......WWWWWWWWWWWWWWWWWWWWWWWWW..wwwwwwwwwww.::::wwwwwww....HHHHHHHHHHH",
+		"HHHHHHHHH.........WWWWWWWWWWWWWWWWWWWWWWW........WWWWWWWWWWWWHHHHWWWWWWWWWW.wwwwwwwwwwwwwwwwwwwwwww....HHHHHHHHHHH",
+		"HHHHHHHHH.........WWWWWWWWWWWWWWWWWWWWWWWW........WWWWWWWWWWW:HH:WWWWWWWWW..wwwwwwwwwwwwwwwwwwwwwww....HHHHHHHHHHH",
+		"HHHHHHHHH.........WWWWWWWWWWWWWWWWWWWWWWWWW..WWWWWWWWWWWWWWW::::::WWWWWWW...wwwwwwwwwwwwwwwwwwwwwww....HHHHHHHHHHH",
 		"HHHHHHHHH.........WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW::::::WWWWWWW..............................HHHHHHHHHHH",
 		"HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH",
 		"HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH",

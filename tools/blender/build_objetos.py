@@ -277,6 +277,28 @@ def fogata(p):
 	p.paint(p.cylinder(0.25, 0.0, 0.03, sides=8), "noche", "MID")
 
 
+def estandarte(p):
+	"""Estandarte de los Devotos del Ojo (11.115): palo con travesaño, paño bordó con bordes negros y el ojo del logo,
+	cintas rojas en las puntas y piedras que lo calzan."""
+	stones = []
+	for i in range(5):
+		a = 2 * math.pi * i / 5 + 0.3
+		stones += p.blob((math.cos(a) * 0.18, math.sin(a) * 0.18, 0.05), 0.1, squash=(1.2, 1, 0.7), subdiv=1, rough=0.1)
+	p.paint(stones, "piedra", vary=0.15)
+	p.paint(p.cylinder(0.045, 0.0, 2.75, sides=8), "madera_oscura", "MID", vary=0.05)
+	bar = p.cylinder(0.03, -0.5, 0.5, sides=8)
+	p.transform(bar, Matrix.Translation((0, -0.05, 2.4)) @ Matrix.Rotation(math.pi / 2, 4, "Y"))
+	p.paint(bar, "madera_oscura", "DARK")
+	p.paint(p.blob((0, 0, 2.8), 0.07, squash=(1, 1, 1.4), subdiv=1, rough=0.0), "hueso", "LIGHT")
+	cloth = p.box(-0.42, 0.42, -0.09, -0.06, 1.15, 2.38)
+	p.paint_bands(cloth, [(1.15, 1.27, "noche", "MID"), (2.26, 2.38, "noche", "MID")], default=(0, 0, "tela_roja", "DARK"))
+	epi.logo_eye(p, Vector((0, -0.095, 1.78)), 0.62, depth=0.012, iris=("tela_roja", "DARK"))
+	for side in (-1, 1):
+		ribbon = p.box(-0.025, 0.025, -0.07, -0.04, 1.75, 2.4, taper=0.0)
+		p.transform(ribbon, Matrix.Translation((side * 0.48, 0, 0)))
+		p.paint(ribbon, "tela_roja", "MID")
+
+
 piece("vasija", 1, vasija, smooth=50)
 piece("mate", 30, mate, smooth=50)
 piece("brasero_quenoa", 31, brasero_quenoa, smooth=40)
@@ -287,6 +309,7 @@ piece("estela", 3, estela, smooth=35)
 piece("apacheta", 4, apacheta, smooth=60)
 piece("cajon", 5, cajon, smooth=35)
 piece("fogata", 6, fogata, smooth=50)
+piece("estandarte_devotos", 61, estandarte, smooth=35)
 
 
 # --- cofres ---
