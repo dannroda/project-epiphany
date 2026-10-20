@@ -2,16 +2,16 @@
   "assignee": "project-epiphany-e0",
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "nearest sin array intermedio; Pickup por body_entered"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Hitbox sin physics_process con _airborne vacío"
     },
     {
       "detail": "Y el blackboard del jefe con el enum en int.",
-      "done": false,
+      "done": true,
       "text": "watch solo con el overlay visible"
     }
   ],
@@ -19,16 +19,16 @@
   "created_at": "2026-10-16T19:48:08.498Z",
   "description": "`Players.alive()` arma un array con filter en cada llamada y `nearest()` lo llama por frame (Kuntur, Spirit, cada Pickup; Pickup además `get_overlapping_bodies().has(player)` por frame). Cada Hitbox hace `_airborne.duplicate()` cada frame aunque esté vacío. Los DebugOverlay.watch del player y del jefe arman strings, snappedf y `State.keys()` cada frame también en release.",
   "milestone": "m15",
-  "notes": "",
+  "notes": "Done (335c775d). Pickup: any player touching it can pick it up (before only the nearest could), which is better in co-op. A Hitbox only sleeps if it is plain Hitbox: Projectile, HammerStrike and Explosion use their own _physics_process. The boss blackboard keeps hand_left/right as BossHand.State (int); the overlay shows the name.",
   "order": 186,
   "priority": "low",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "rendimiento"
   ],
   "test": "",
   "title": "Memoria que se pide y se tira en cada frame",
-  "updated_at": "2026-10-20T02:53:51.629Z"
+  "updated_at": "2026-10-20T03:52:44.033Z"
 }

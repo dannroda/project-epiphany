@@ -2965,15 +2965,15 @@ Enemigos nuevos con los modelos que ya hay: un arquero chullpa, esqueletos que d
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión)
 
-### 11.26 Prueba de combate opcional · Pendiente
+### 11.26 Prueba de combate opcional · Revisión
 
 **Prioridad:** baja · **Responsable:** project-epiphany-5c · **Etiquetas:** `combate`
 
 Una sala de combate opcional: 3 oleadas mezclando enemigos con la puerta cerrada hasta terminar y una recompensa al final (pieza de corazón u otra; la cota reforzada ya la da el santuario después de D4 y el carcaj el Risco).
 
-- [ ] Sala de oleadas
+- [x] Sala de oleadas
   3 oleadas mezclando enemigos; la puerta se cierra hasta terminar.
-- [ ] Recompensa
+- [x] Recompensa
   Pieza de corazón u otra cosa (ver el total de 11.124). La cota reforzada y el carcaj ya se consiguen en otro lado (santuario, 11.113 paso 5; Risco, 11.90 paso 5).
 
 **Prueba:** Entrar, sobrevivir las 3 oleadas, la puerta abre y aparece la recompensa; no se repite al cargar.
@@ -2990,7 +2990,9 @@ Premio: a) pieza de corazón, b) bolsa de bombas grande (si no la da 11.27), c) 
 
 Daniel (2026-10-19): armar tal cual (Huaca de los guerreros en la Necrópolis, 3 oleadas); premio: pieza de corazón (16 en total).
 
-### 11.27 Mini-santuario de reflejos · Pendiente
+-5c (2026-10-20): hecho en ff2deeb7 (nivel) y 5a9a493c (entrada). levels/huaca.tscn de 16×12 con look chullpa, persiana al sur, cuatro columnas bajas, dos tarimas de 0.6 m para los arqueros (se suben saltando con la pluma) y cuatro vasijas con corazones. Olas: 4 esqueletos / 2 con escudo + 2 arqueros en las tarimas / Ojo Vigía mini + 2 esqueletos. Al ganar aparece la pieza de corazón (ow_heart_piece_trial); ganada queda ganada (ow_trial_waves). Entrada: corona de chullpa enterrada en la Necrópolis nivel 1 (46, 2.6, -6), lugar elegido por -3e. Falta la tablilla opcional.
+
+### 11.27 Mini-santuario de reflejos · Revisión
 
 **Prioridad:** baja · **Responsable:** project-epiphany-72 · **Etiquetas:** `mazmorra`, `puzzles`
 
@@ -2998,7 +3000,7 @@ Un mini-santuario de 3–4 salas que se resuelven solo con el escudo espejo, cad
 
 - [x] Diseñar 3–4 salas
   Todo con el escudo espejo: haces de luz, ojos-interruptor, espejos que giran.
-- [ ] Recompensa al final
+- [x] Recompensa al final
 
 **Prueba:** Se completa solo con el escudo espejo; cada sala enseña una variante del reflejo.
 
@@ -3013,6 +3015,8 @@ Existe: LightSource, LightMirror, RotatingMirror, LightReceiver, EyeSwitch (open
 Premio: a) pieza de corazón (si se va a 16, ver 11.124), b) bolsa de bombas grande (bomb_bag_big con _capacity_bonus), c) otra botella vacía. Recomienda a) si 16 piezas; si no b).
 
 Daniel (2026-10-19): armar tal cual (Cumbre junto al Intihuatana, 4 salas); premio: pieza de corazón (16 en total).
+
+Built (-72, 2026-10-20): levels/reflejos.tscn (58318ff1), four rooms (angle, orbs, turns with the new HitSwitch, crown with archers), heart piece in the big chest (ow_reflex_done). Mouth on the Cumbre's north cliff west of the condor (86349ea8): ReflexSun → ReflexCrystal (ow_reflex_door) → ReflexGate, ReflexDoor/Spawn_reflejos. Fix d46f9039: PlaceReflex (SHRINE) on the map, mouth in scenery, Glow deterministic=false, terrain JSON. test_reflejos.
 
 ### 11.28 Atajos que se abren al volver · Hecho
 
@@ -4589,7 +4593,7 @@ BushCaveBush se corta con la espada desde el arranque y el cofre de bush_cave da
 
 **Notas:** Daniel (2026-10-13): queda así. La bolsa está en la cueva de las bombas (oeste de la Pradera, sin requisitos); si se llega antes a la cueva de la mata, el cofre queda cerrado (11.120) hasta volver con la bolsa.
 
-### 11.123 Tablilla del Risco desactualizada · Pendiente
+### 11.123 Tablilla del Risco desactualizada · Revisión
 
 **Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `bug`, `texto`
 
@@ -4598,6 +4602,8 @@ cliff_heart (overworld.dialogue) dice que el corazón se partió en cuatro: una 
 **Notas:** Daniel (2026-10-13): muy temprano para fijar cuántas piezas hay; la tablilla se ajusta cuando el total esté cerrado.
 
 Text approved with 11.124 (2026-10-20): "El corazón se partió en dieciséis. Tres duermen tras la piedra herida, cinco esperan en las salas de los antiguos, y el resto donde solo llega quien ya tiene cada herramienta." Apply it once the 16 pieces are placed.
+
+Done (cacad828): cliff_heart in overworld.dialogue and en.po with the approved text.
 
 ### 11.124 Piezas de corazón: 13, no múltiplo de 4 · Pendiente
 
@@ -7041,6 +7047,8 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): Reconstruir build_ter
 
 **Notas:** -3e, 2026-10-19 (16.47): el ruido es mayor que ~1 mm. Dos builds desde el mismo terreno_overworld.json dan distinta cantidad de vértices en 11 de las 12 tiras de terreno_organico (solo .0 sale igual), y muros_organicos.glb mueve hasta 2,7 m por índice. Por eso en 16.47 se regeneró el JSON sin rehacer los glb. Hasta arreglarlo, que el JSON coincida con el nivel no prueba que los glb estén al día.
 
+Follow-up 2156b5d6 (-3e): the fixed faces were losing their mark in the canonical sort and recalc_face_normals flipped them (0.11 of the area facing up); fixed, two builds identical again.
+
 ### 16.52 Escoltas de ArenaFight pierden sus overrides de instancia · Revisión
 
 **Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `overworld`, `combate`
@@ -7720,18 +7728,20 @@ Con caché caliente: 85,7 ms (D3D12 sin baker) y 63,6 ms (Vulkan) sin compilar p
 
 **Relacionadas:** 11.203 Aprovechar las novedades de Godot 4.8
 
-### 15.3 Sombras ajustadas a la cámara fija · Pendiente
+### 15.3 Sombras ajustadas a la cámara fija · Revisión
 
 **Responsable:** project-epiphany-5c
 
 La cámara es cenital y fija por sala: la sombra direccional puede tener distancia máxima corta y 1-2 cascadas en vez de 4. Suele ser de lo más barato en GPU.
 
-- [ ] Medir el costo actual de sombras
+- [x] Medir el costo actual de sombras
   Overworld y una sala de mazmorra, GPU 1080p en RX 580.
-- [ ] Ajustar distancia, cascadas y resolución del atlas
+- [x] Ajustar distancia, cascadas y resolución del atlas
   Que no se note el corte en el borde de pantalla ni en las salas grandes.
-- [ ] Revisar luces omni/spot con sombra
+- [x] Revisar luces omni/spot con sombra
   Cuántas proyectan sombra a la vez en las peores salas.
+
+**Notas:** -5c (2026-10-20): overworld 1080p, RX 580, GPU: sombra del sol 2.4 ms (13.9 con, 11.5 sin). Ya estaba en 2 cascadas y 32 m; 24/40 m y 1/2/4 cascadas cambian ±0.3 ms (la cámara está a ~20 m, no se puede acortar mucho). Lo que ahorra es el atlas y el filtro: 2048 + filtro muy bajo, 0.6 ms (13.8 → 13.2), apenas más borrosa. Daniel (2026-10-20): que sea una opción. Opciones › Video › Sombras: Altas (por defecto, como antes) / Bajas. Mazmorras sin sombras; la única luz omni/spot con sombra es el foco de cáusticas del agua (water_pool).
 
 ### 15.4 Contact shadows y SSAO en mazmorras · Pendiente
 
@@ -7769,16 +7779,18 @@ Medir qué se carga antes del primer cuadro: autoloads, preloads grandes, recurs
 
 **Relacionadas:** 15.12 Feel sintetiza sonidos al arrancar y tira la mitad
 
-### 15.7 Escala de resolución 3D en Ajustes · Pendiente
+### 15.7 Escala de resolución 3D en Ajustes · Revisión
 
 **Responsable:** project-epiphany-e0
 
 Red de seguridad para GPUs integradas y Mac, donde no podemos medir: opción de escala 3D (FSR) en Ajustes, guardada con el resto de la configuración. La UI se dibuja a resolución completa.
 
-- [ ] Opción en la pantalla de Ajustes
+- [x] Opción en la pantalla de Ajustes
   Según el diseño de los mockups de UI.
-- [ ] Aplicarla y guardarla
+- [x] Aplicarla y guardarla
   scaling_3d_mode/scale del viewport.
+
+**Notas:** Done (da28b91a): Opciones › Video › Resolución 3D (100/85/70/50%), under Sombras, same row style as the others (checked with a capture at 720p: it fits). FSR below 100, UI at full resolution. Settings.render_scale.
 
 ### 15.8 Medir la build release en la máquina más floja · Pendiente
 
@@ -7802,27 +7814,31 @@ Daniel (2026-10-15) preguntó por el texture streaming de Godot 4.8: descartado,
 - [ ] Rangos de visibilidad/LOD en decor y plantas
 - [ ] Terreno en bloques más chicos que se descarten fuera de cámara
 
-### 15.10 Salas y targeting: dejar de consultar todo cada frame · Pendiente
+### 15.10 Salas y targeting: dejar de consultar todo cada frame · Revisión
 
 **Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `rendimiento`
 
 Cada Room llama a `has_player()` en cada frame de física (get_first_node_in_group de la cámara, Players.all.any con lambda, contains que sube por DungeonFloor.of); las cerradas además `enemies_inside()` y `waves_running()` (barrido de grupo + filter). `Targeting._sync_posts` corre cada frame aunque no tengas el gancho: hook_reach, grupo de postes y `_room_of` que recorre todas las salas, dos veces por poste.
 
-- [ ] Room reacciona al cambio de sala de la cámara
+- [x] Room reacciona al cambio de sala de la cámara
   Y a Enemy.defeated / WaveSpawner para las cerradas.
-- [ ] _sync_posts sale si no hay alcance
+- [x] _sync_posts sale si no hay alcance
   Usa camera.room para la sala del player.
 
-### 15.11 Memoria que se pide y se tira en cada frame · Pendiente
+**Notas:** Done (335c775d with 7dbbba82 from 16.38). Instead of events, a lighter version: has_player looks up the camera once per physics frame for every room and loops without a lambda; a locked room checks enemies/waves every 6 ticks (LOCK_CHECK_TICKS). Hooking up Enemy.defeated/WaveSpawner would also need falls, pits and despawns: not worth it for this cost. _sync_posts returns without reach and only looks up rooms when a post is in reach (it doesn't use camera.room: in co-op each player has their own room).
+
+### 15.11 Memoria que se pide y se tira en cada frame · Revisión
 
 **Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `rendimiento`
 
 `Players.alive()` arma un array con filter en cada llamada y `nearest()` lo llama por frame (Kuntur, Spirit, cada Pickup; Pickup además `get_overlapping_bodies().has(player)` por frame). Cada Hitbox hace `_airborne.duplicate()` cada frame aunque esté vacío. Los DebugOverlay.watch del player y del jefe arman strings, snappedf y `State.keys()` cada frame también en release.
 
-- [ ] nearest sin array intermedio; Pickup por body_entered
-- [ ] Hitbox sin physics_process con _airborne vacío
-- [ ] watch solo con el overlay visible
+- [x] nearest sin array intermedio; Pickup por body_entered
+- [x] Hitbox sin physics_process con _airborne vacío
+- [x] watch solo con el overlay visible
   Y el blackboard del jefe con el enum en int.
+
+**Notas:** Done (335c775d). Pickup: any player touching it can pick it up (before only the nearest could), which is better in co-op. A Hitbox only sleeps if it is plain Hitbox: Projectile, HammerStrike and Explosion use their own _physics_process. The boss blackboard keeps hand_left/right as BossHand.State (int); the overlay shows the name.
 
 ### 15.12 Feel sintetiza sonidos al arrancar y tira la mitad · Revisión
 

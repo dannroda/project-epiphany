@@ -3,12 +3,12 @@
   "checklist": [
     {
       "detail": "Y a Enemy.defeated / WaveSpawner para las cerradas.",
-      "done": false,
+      "done": true,
       "text": "Room reacciona al cambio de sala de la cámara"
     },
     {
       "detail": "Usa camera.room para la sala del player.",
-      "done": false,
+      "done": true,
       "text": "_sync_posts sale si no hay alcance"
     }
   ],
@@ -16,16 +16,16 @@
   "created_at": "2026-10-16T19:48:07.459Z",
   "description": "Cada Room llama a `has_player()` en cada frame de física (get_first_node_in_group de la cámara, Players.all.any con lambda, contains que sube por DungeonFloor.of); las cerradas además `enemies_inside()` y `waves_running()` (barrido de grupo + filter). `Targeting._sync_posts` corre cada frame aunque no tengas el gancho: hook_reach, grupo de postes y `_room_of` que recorre todas las salas, dos veces por poste.",
   "milestone": "m15",
-  "notes": "",
+  "notes": "Done (335c775d with 7dbbba82 from 16.38). Instead of events, a lighter version: has_player looks up the camera once per physics frame for every room and loops without a lambda; a locked room checks enemies/waves every 6 ticks (LOCK_CHECK_TICKS). Hooking up Enemy.defeated/WaveSpawner would also need falls, pits and despawns: not worth it for this cost. _sync_posts returns without reach and only looks up rooms when a post is in reach (it doesn't use camera.room: in co-op each player has their own room).",
   "order": 185,
   "priority": "low",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "rendimiento"
   ],
   "test": "",
   "title": "Salas y targeting: dejar de consultar todo cada frame",
-  "updated_at": "2026-10-20T02:53:50.961Z"
+  "updated_at": "2026-10-20T03:52:42.010Z"
 }
