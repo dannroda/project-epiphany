@@ -2764,16 +2764,18 @@ El HUD muestra los slots X/Y aunque no tengan ítem, y el acercamiento del revea
 
 **Prueba:** Nueva partida: el HUD no muestra los slots X/Y hasta asignarles un ítem. Al pisar un interruptor con reveal, el acercamiento no muestra nada fuera de la sala.
 
-### 11.12 Salas que ocupan varias celdas del mapa · Pendiente
+### 11.12 Salas que ocupan varias celdas del mapa · Revisión
 
 **Prioridad:** baja · **Responsable:** project-epiphany-72 · **Etiquetas:** `mazmorra`
 
 Los tamaños de sala son libres desde el 2026-10-15 (viñeta configurable; cada sala se centra en cámara y tapa las otras, 11.178–11.180), así que lo de variar tamaños y la cámara ya está. Falta que el mapa lo acompañe: una sala más grande que el paso de la grilla se dibuja como una sola celda.
 
-- [ ] Salas que ocupan varias celdas del mapa
+- [x] Salas que ocupan varias celdas del mapa
   Hoy cada Room tiene un solo `map_cell` y map_data.gd (`room_pitch`, `room_grid_point`) asume el mismo paso para todas. Sumar un tamaño en celdas a Room y que la pestaña Mapa y el minimapa las dibujen enteras.
 
 **Prueba:** En una mazmorra con una sala que ocupa dos celdas, la pestaña Mapa y el minimapa la muestran entera con sus puertas, y las vecinas quedan en su lugar; test_map pasa.
+
+**Notas:** Hecho (-72): Room.map_size (columnas, filas desde map_cell, por defecto 1×1) con map_rect()/map_center(). MapData mide el paso entre centros de sala; la pestaña Mapa dibuja la sala sobre todas sus celdas y huecos (el cursor la enmarca entera, las vecinas por centros); el minimapa muestra lo que toca las celdas de la actual +1, centra la actual aunque ocupe varias, pone los lados de puertas en la grilla absoluta y limita la flecha a la sala entera. Ningún nivel lo necesita hoy (no se tocaron .tscn; las mazmorras reales tienen salas uniformes). Tests: test_map y test_minimap › test_a_room_of_two_cells_is_drawn_whole.
 
 **Referencias:** `gdd.md#mazmorra-layout`
 
