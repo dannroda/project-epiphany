@@ -28,6 +28,7 @@
 [ext_resource type="Script" path="res://player/states/carrying.gd" id="st_carrying"]
 [ext_resource type="Script" path="res://player/components/carrier.gd" id="c_carrier"]
 [ext_resource type="AnimationLibrary" path="res://player/animation/libs/Carry.res" id="16_carry"]
+[ext_resource type="AnimationLibrary" path="res://player/animation/libs/Combo.res" id="16_combo"]
 [ext_resource type="Script" uid="uid://dpgrgvvf2dmhs" path="res://player/states/dead.gd" id="st_dead"]
 [ext_resource type="Script" path="res://player/states/spirit.gd" id="st_spirit"]
 [ext_resource type="Material" path="res://data/materials/player_p2.tres" id="mat_p2"]
@@ -76,6 +77,10 @@ input_3/name = "Spin"
 input_3/auto_advance = false
 input_3/break_loop_at_end = false
 input_3/reset = true
+input_4/name = "Thrust"
+input_4/auto_advance = false
+input_4/break_loop_at_end = false
+input_4/reset = true
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_blockhit"]
 fadein_time = 0.05
@@ -367,7 +372,10 @@ fadein_time = 0.1
 fadeout_time = 0.2
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_backhand"]
-animation = &"CombatMelee/Melee_1H_Attack_Slice_Horizontal"
+animation = &"Combo/Backhand"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_thrust"]
+animation = &"Combo/Thrust"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_spin"]
 animation = &"CombatMelee/Melee_2H_Attack_Spinning"
@@ -409,6 +417,8 @@ nodes/Backhand/node = SubResource("AnimationNodeAnimation_backhand")
 nodes/Backhand/position = Vector2(80, 1173.3333)
 nodes/Spin/node = SubResource("AnimationNodeAnimation_spin")
 nodes/Spin/position = Vector2(80, 1413.3333)
+nodes/Thrust/node = SubResource("AnimationNodeAnimation_thrust")
+nodes/Thrust/position = Vector2(80, 1200)
 "nodes/HurtAnim+ Engine capabi/node" = SubResource("AnimationNodeAnimation_b8hi5")
 "nodes/HurtAnim+ Engine capabi/position" = Vector2(1013.3333, 1040)
 nodes/Hurt/node = SubResource("AnimationNodeOneShot_r7pn3")
@@ -471,7 +481,7 @@ nodes/CarryPhase/node = SubResource("AnimationNodeTransition_carryphase")
 nodes/CarryPhase/position = Vector2(2800, 1400)
 nodes/Carry/node = SubResource("AnimationNodeTransition_carry")
 nodes/Carry/position = Vector2(3100, 1000)
-node_connections = [&"output", 0, &"Dodge", &"Movement", 0, &"Idle", &"Movement", 1, &"Running", &"Attack", 0, &"Combat", &"Attack", 1, &"AttackType", &"Combat", 0, &"Movement", &"Combat", 1, &"Targeting", &"Guard", 0, &"ShieldArm", &"Guard", 1, &"MeleeBlocking", &"AttackType", 0, &"SwordSlice", &"AttackType", 1, &"Stab", &"AttackType", 2, &"Backhand", &"AttackType", 3, &"Spin", &"Hurt", 0, &"Guard", &"Hurt", 1, &"HurtAnim+ Engine capabi", &"BlockHit", 0, &"Hurt", &"BlockHit", 1, &"BlockHitAnim", &"DodgeDir", 0, &"DodgeForward", &"DodgeDir", 1, &"DodgeBackward", &"DodgeDir", 2, &"DodgeLeft", &"DodgeDir", 3, &"DodgeRight", &"Dodge", 0, &"Carry", &"Dodge", 1, &"ShieldRoll", &"UseItem", 0, &"BlockHit", &"UseItem", 1, &"ItemAnim", &"BowPhase", 0, &"BowDraw", &"BowPhase", 1, &"BowIdle", &"BowPhase", 2, &"BowRelease", &"Bow", 0, &"UseItem", &"Bow", 1, &"BowPhase", &"CarryPhase", 0, &"CarryLift", &"CarryPhase", 1, &"CarryIdle", &"CarryPhase", 2, &"CarryWalk", &"CarryPhase", 3, &"CarryThrow", &"CarryPhase", 4, &"ItemRaise", &"CarryPhase", 5, &"ItemHold", &"CarryPhase", 6, &"ItemLower", &"CarryPhase", 7, &"Climb", &"CarryPhase", 8, &"PlungeRise", &"CarryPhase", 9, &"PlungeFall", &"CarryPhase", 10, &"PlungeStuck", &"CarryPhase", 11, &"PlungePull", &"Carry", 0, &"Bow", &"Carry", 1, &"CarryPhase", &"ShieldArm", 0, &"Attack", &"ShieldArm", 1, &"ShieldHold", &"ShieldRoll", 0, &"ShieldHoldRoll", &"ShieldRoll", 1, &"DodgeDir"]
+node_connections = [&"output", 0, &"Dodge", &"Movement", 0, &"Idle", &"Movement", 1, &"Running", &"Attack", 0, &"Combat", &"Attack", 1, &"AttackType", &"Combat", 0, &"Movement", &"Combat", 1, &"Targeting", &"Guard", 0, &"ShieldArm", &"Guard", 1, &"MeleeBlocking", &"AttackType", 0, &"SwordSlice", &"AttackType", 1, &"Stab", &"AttackType", 2, &"Backhand", &"AttackType", 3, &"Spin", &"AttackType", 4, &"Thrust", &"Hurt", 0, &"Guard", &"Hurt", 1, &"HurtAnim+ Engine capabi", &"BlockHit", 0, &"Hurt", &"BlockHit", 1, &"BlockHitAnim", &"DodgeDir", 0, &"DodgeForward", &"DodgeDir", 1, &"DodgeBackward", &"DodgeDir", 2, &"DodgeLeft", &"DodgeDir", 3, &"DodgeRight", &"Dodge", 0, &"Carry", &"Dodge", 1, &"ShieldRoll", &"UseItem", 0, &"BlockHit", &"UseItem", 1, &"ItemAnim", &"BowPhase", 0, &"BowDraw", &"BowPhase", 1, &"BowIdle", &"BowPhase", 2, &"BowRelease", &"Bow", 0, &"UseItem", &"Bow", 1, &"BowPhase", &"CarryPhase", 0, &"CarryLift", &"CarryPhase", 1, &"CarryIdle", &"CarryPhase", 2, &"CarryWalk", &"CarryPhase", 3, &"CarryThrow", &"CarryPhase", 4, &"ItemRaise", &"CarryPhase", 5, &"ItemHold", &"CarryPhase", 6, &"ItemLower", &"CarryPhase", 7, &"Climb", &"CarryPhase", 8, &"PlungeRise", &"CarryPhase", 9, &"PlungeFall", &"CarryPhase", 10, &"PlungeStuck", &"CarryPhase", 11, &"PlungePull", &"Carry", 0, &"Bow", &"Carry", 1, &"CarryPhase", &"ShieldArm", 0, &"Attack", &"ShieldArm", 1, &"ShieldHold", &"ShieldRoll", 0, &"ShieldHoldRoll", &"ShieldRoll", 1, &"DodgeDir"]
 
 [sub_resource type="AnimationNodeObserverOneShot" id="AnimationNodeObserverOneShot_4uxyr"]
 
@@ -1083,6 +1093,7 @@ libraries/General = ExtResource("13_c35mf")
 libraries/MovementAdvanced = ExtResource("14_65viv")
 libraries/MovementBasic = ExtResource("15_x7c3f")
 libraries/Carry = ExtResource("16_carry")
+libraries/Combo = ExtResource("16_combo")
 autoplay = &"MovementBasic/T-Pose"
 
 [node name="AnimationTree" type="AnimationTree" parent="ModelController" unique_id=1277087337]

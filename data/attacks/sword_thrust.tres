@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1_attack")
-animation = &"CombatMelee/Melee_1H_Attack_Stab"
-tree_state = &"Stab"
+animation = &"Combo/Thrust"
+tree_state = &"Thrust"
 active_from = 0.22
 active_to = 0.42
 cancel_from = 0.6

@@ -47,7 +47,7 @@ func test_sword_attack() -> void:
 ## 11.85: la animación que suena es la del AttackData (su tree_state), no una elegida aparte: si no, la hitbox se
 ## desincroniza.
 func test_player_attacks_play_their_own_animation() -> void:
-	const NODE_OF := {&"Slash": "SwordSlice", &"Stab": "Stab", &"Backhand": "Backhand", &"Spin": "Spin"}
+	const NODE_OF := {&"Slash": "SwordSlice", &"Stab": "Stab", &"Backhand": "Backhand", &"Spin": "Spin", &"Thrust": "Thrust"}
 	var player: Node = load("res://player/player.tscn").instantiate()
 	var tree_root := (player.get_node(^"ModelController/AnimationTree") as AnimationTree).tree_root as AnimationNodeBlendTree
 	var types := tree_root.get_node(&"AttackType") as AnimationNodeTransition
