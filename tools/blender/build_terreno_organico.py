@@ -289,7 +289,7 @@ def split_styles(p, faces):
 			if v not in at:
 				at[v] = style_at(v.co.x, v.co.y)
 	cuts = {}
-	for e in {e for f in faces for e in f.edges}:
+	for e in epi.uniq(e for f in faces for e in f.edges):
 		a, b = e.verts
 		if a not in at or b not in at or at[a] == at[b]:
 			continue
@@ -327,9 +327,24 @@ def paint_role(p, faces, role, shade=None, z_range=None, vary=0.0):
 	for f in faces:
 		c = f.calc_center_median()
 		groups.setdefault(style_at(c.x, c.y), []).append(f)
-	for style, group in groups.items():
+	for style, group in sorted(groups.items()):
 		swatch, style_shade = STYLES.get(style, {}).get(role, DEFAULT[role])
-		p.paint(group, swatch, style_shade or shade or "GRADIENT", z_range=z_range, vary=vary)
+		_paint(p, group, swatch, style_shade or shade or "GRADIENT", z_range, vary)
+
+
+def _paint(p, faces, swatch, shade, z_range=None, vary=0.0):
+	"""p.paint con vary sacado de dónde está cada cara y no del orden: los cortes de bmesh crean las caras en otro orden en
+	cada build."""
+	if not vary or not faces:
+		p.paint(faces, swatch, shade, z_range=z_range)
+		return
+	zs = [v.co.z for f in faces for v in f.verts]
+	z_range = z_range or (min(zs), max(zs))
+	rng = p.rng
+	for f in faces:
+		p.rng = random.Random(hash(tuple(round(c, 3) for c in f.calc_center_median())))
+		p.paint([f], swatch, shade, z_range=z_range, vary=vary)
+	p.rng = rng
 
 
 def lomas(x, y):
@@ -495,8 +510,8 @@ def _slice(bm, axis, first, last):
 			continue
 		co, no = Vector((0, 0, 0)), Vector((0, 0, 0))
 		co[axis], no[axis] = k, 1
-		res = bmesh.ops.bisect_plane(bm, geom=list({v for f in cross for v in f.verts}) + list({e for f in cross for e in f.edges}) + cross, plane_co=co, plane_no=no)
-		pieces = set(cross) | {g for g in res["geom"] if isinstance(g, bmesh.types.BMFace)}
+		res = bmesh.ops.bisect_plane(bm, geom=epi.uniq(v for f in cross for v in f.verts) + epi.uniq(e for f in cross for e in f.edges) + cross, plane_co=co, plane_no=no)
+		pieces = epi.uniq(cross + [g for g in res["geom"] if isinstance(g, bmesh.types.BMFace)])
 		active = [f for f in pieces if f.is_valid and max(v.co[axis] for v in f.verts) > k + 1e-6]
 
 
@@ -715,6 +730,7 @@ def decor(meshes, collection):
 	cuttable = []
 	for kind, spot, angle, place in decor_spots():
 		hit, location, normal, _i, _obj, _m = bpy.context.scene.ray_cast(depsgraph, Vector((spot.x, spot.y, 20.0)), Vector((0, 0, -1)))
+		location = Vector(tuple(round(c, 3) for c in location))
 		if not hit or normal.z < 0.85 or location.z < -0.5:
 			continue
 		if kind in CUTTABLE and place in WALKABLE:
@@ -822,15 +838,15 @@ def _cut(bm, wall, near=None):
 		faces = bm.faces[:]
 	else:
 		close = set(near)
-		faces = list({f for v in near for f in v.link_faces if all(w in close for w in f.verts)})
+		faces = epi.uniq(f for v in near for f in v.link_faces if all(w in close for w in f.verts))
 	for axis, limit in ((0, CELL / 2), (1, ACROSS)):
 		for sign in (1, -1):
 			co, no = Vector((0, 0, 0)), Vector((0, 0, 0))
 			co[axis], no[axis] = sign * limit, sign
-			edges = list({e for f in faces for e in f.edges})
-			verts = list({v for f in faces for v in f.verts})
+			edges = epi.uniq(e for f in faces for e in f.edges)
+			verts = epi.uniq(v for f in faces for v in f.verts)
 			res = bmesh.ops.bisect_plane(bm, geom=verts + edges + faces, plane_co=back @ co, plane_no=(back.to_3x3() @ no).normalized())
-			faces = list({f for f in faces if f.is_valid} | {g for g in res["geom"] if isinstance(g, bmesh.types.BMFace)})
+			faces = epi.uniq([f for f in faces if f.is_valid] + [g for g in res["geom"] if isinstance(g, bmesh.types.BMFace)])
 	inside = lambda f: abs((to_wall @ f.calc_center_median()).x) < CELL / 2 and abs((to_wall @ f.calc_center_median()).y) < ACROSS  # noqa: E731
 	return [f for f in faces if inside(f)]
 
@@ -985,7 +1001,7 @@ def cave_mouths(p):
 		to = Matrix.Translation(Vector((0.0, 0.0, -mouth["y"]))) @ _to_wall(mouth)
 		back, turn = to.inverted(), to.to_3x3()
 		near = lambda f: (to @ f.calc_center_median()).xy.length < 3.5  # noqa: E731
-		pool = {f for v in _near_verts(p.bm, mouth) for f in v.link_faces}
+		pool = epi.uniq(f for v in _near_verts(p.bm, mouth) for f in v.link_faces)
 		front = [(to @ f.calc_center_median()).y for f in pool if near(f) and (turn @ f.normal).y < -0.5
 			and abs((to @ f.calc_center_median()).x) < 0.4 and 0.3 < (to @ f.calc_center_median()).z < 1.6]
 		if not front:
@@ -997,10 +1013,10 @@ def cave_mouths(p):
 		planes += [(Vector((s * (bot + g), 0, 0)), Vector((s * h, 0, -(top - bot))).normalized()) for g in (0.0, jamb) for s in (1, -1)]
 		for co, no in planes:
 			faces = [f for f in pool if near(f)]
-			edges = list({e for f in faces for e in f.edges})
-			verts = list({v for f in faces for v in f.verts})
+			edges = epi.uniq(e for f in faces for e in f.edges)
+			verts = epi.uniq(v for f in faces for v in f.verts)
 			res = bmesh.ops.bisect_plane(p.bm, geom=verts + edges + faces, plane_co=back @ co, plane_no=(back.to_3x3() @ no).normalized())
-			pool = {f for f in pool if f.is_valid} | {g for g in res["geom"] if isinstance(g, bmesh.types.BMFace)}
+			pool = epi.uniq([f for f in pool if f.is_valid] + [g for g in res["geom"] if isinstance(g, bmesh.types.BMFace)])
 		hole, frame = [], []
 		for f in pool:
 			if not near(f):
@@ -1017,7 +1033,7 @@ def cave_mouths(p):
 		def inside(v):
 			c = to @ v.co
 			return abs(c.y - face) < 0.8 and -0.6 < c.z < h + 0.01 and abs(c.x) < _half(c.z) + 0.01
-		rim = [e for e in {e for f in pool if f.is_valid for e in f.edges} if len(e.link_faces) == 1 and all(inside(v) for v in e.verts)]
+		rim = [e for e in epi.uniq(e for f in pool if f.is_valid for e in f.edges) if len(e.link_faces) == 1 and all(inside(v) for v in e.verts)]
 		ext = bmesh.ops.extrude_edge_only(p.bm, edges=rim)
 		for v in ext["geom"]:
 			if isinstance(v, bmesh.types.BMVert):
@@ -1025,10 +1041,11 @@ def cave_mouths(p):
 				v.co = back @ Vector((c.x * 0.9, face + TUNNEL, c.z * 0.95))
 		tunnel = [f for f in ext["geom"] if isinstance(f, bmesh.types.BMFace)]
 		ext = bmesh.ops.extrude_face_region(p.bm, geom=frame)
-		moved = {v for v in ext["geom"] if isinstance(v, bmesh.types.BMVert)}
-		bmesh.ops.translate(p.bm, verts=list(moved), vec=back.to_3x3() @ Vector((0.0, -out, 0.0)))
+		moved = [v for v in ext["geom"] if isinstance(v, bmesh.types.BMVert)]
+		bmesh.ops.translate(p.bm, verts=moved, vec=back.to_3x3() @ Vector((0.0, -out, 0.0)))
 		lit = [f for f in ext["geom"] if isinstance(f, bmesh.types.BMFace)]
-		sides = list({f for v in moved for f in v.link_faces} - set(lit))
+		lit_set = set(lit)
+		sides = [f for f in epi.uniq(f for v in moved for f in v.link_faces) if f not in lit_set]
 		paint_role(p, lit, "lip", vary=0.06)
 		paint_role(p, sides, "under")
 		far = [p.bm.verts.new(back @ Vector(q)) for q in ((-bot, face + TUNNEL, -0.5), (bot, face + TUNNEL, -0.5), (top, face + TUNNEL, h), (-top, face + TUNNEL, h))]
@@ -1040,7 +1057,7 @@ def cave_mouths(p):
 			want = Vector((-c.x, -1.0 if f is dark[0] else 0.0, h / 2 - c.z if f is not dark[1] else 1.0))
 			if n.dot(want) < 0:
 				f.normal_flip()
-		p.paint(tunnel, "noche", "LIGHT", vary=0.05)
+		_paint(p, tunnel, "noche", "LIGHT", vary=0.05)
 		p.paint(dark, "noche", "DARK")
 	p.fixed = set(p.bm.faces)
 
@@ -1058,6 +1075,7 @@ def strip_of(x):
 def _split(piece, name, material, collection):
 	"""Una pieza por franja con las caras de la pieza cuyo centro cae en ella, y su colisión aparte. Las normales se
 	orientan en la pieza entera: por franja, un pedazo suelto puede quedar dado vuelta."""
+	_canonical(piece.bm)
 	bmesh.ops.recalc_face_normals(piece.bm, faces=[f for f in piece.bm.faces if f not in piece.fixed])
 	objects = []
 	for k in range(STRIPS):
@@ -1078,6 +1096,12 @@ def _split(piece, name, material, collection):
 COLLISION_RATIO = 0.1
 
 
+def _triangulate(bm, faces):
+	"""Triángulos fijos: BEAUTY (y el exportador con n-gonos) desempata caras iguales según la memoria, y cada build salía
+	distinto."""
+	bmesh.ops.triangulate(bm, faces=faces, quad_method="FIXED", ngon_method="EAR_CLIP")
+
+
 def _collision(visual, collection):
 	mesh = visual.data.copy()
 	mesh.materials.clear()
@@ -1086,7 +1110,7 @@ def _collision(visual, collection):
 	target = sum(len(f.verts) - 2 for f in bm.faces) * COLLISION_RATIO
 	bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=0.0005)
 	bmesh.ops.dissolve_limit(bm, angle_limit=math.radians(1.0), use_dissolve_boundaries=False, verts=bm.verts, edges=bm.edges)
-	bmesh.ops.triangulate(bm, faces=bm.faces)
+	_triangulate(bm, bm.faces[:])
 	bm.to_mesh(mesh)
 	bm.free()
 	obj = bpy.data.objects.new(visual.name + "_col-colonly", mesh)
@@ -1106,8 +1130,26 @@ def _part(obj):
 	return str(strip_of(sum(xs) / len(xs)) if xs else 0)
 
 
+def _sort(seq, key):
+	"""seq.sort pide un número por elemento: el puesto de cada uno en el orden de key."""
+	rank = {e: i for i, e in enumerate(sorted(seq, key=key))}
+	seq.sort(key=rank.__getitem__)
+
+
+def _canonical(bm):
+	"""Vértices, aristas y caras por dónde están: lo que recorre la malla en orden (normales, colisión, exportador) sale
+	igual aunque los cortes las hayan creado en otro orden."""
+	_sort(bm.verts, lambda v: (tuple(round(c, 4) for c in v.co), sorted(tuple(round(c, 4) for c in f.calc_center_median()) for f in v.link_faces)))
+	bm.verts.index_update()
+	_sort(bm.edges, lambda e: tuple(sorted(v.index for v in e.verts)))
+	_sort(bm.faces, lambda f: tuple(sorted(v.index for v in f.verts)))
+
+
 def _build(piece, name, material, collection):
 	bmesh.ops.delete(piece.bm, geom=[v for v in piece.bm.verts if not v.link_faces], context="VERTS")
+	bmesh.ops.dissolve_degenerate(piece.bm, dist=1e-4, edges=piece.bm.edges[:])
+	_triangulate(piece.bm, piece.bm.faces[:])
+	_canonical(piece.bm)
 	obj = piece.build(name, collection)
 	if material:
 		obj["material"] = material

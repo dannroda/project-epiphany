@@ -76,6 +76,11 @@ def publish(name, objects=None, material=None, materials=None, part=None):
 		print("publicado:", glb, len(group), "objetos")
 
 
+def uniq(items):
+	"""Sin repetidos y en el orden en que llegan: un set de BMesh se recorre según la memoria y cambia en cada corrida."""
+	return list(dict.fromkeys(items))
+
+
 class Piece:
 	"""Una malla en construcción. Todas las funciones devuelven las caras que crean, para pintarlas."""
 
@@ -101,7 +106,7 @@ class Piece:
 		"""Caja con los cantos biselados (cabezas, almohadones)."""
 		before = set(self.bm.faces)
 		faces = self.box(x0, x1, y0, y1, z0, z1)
-		bmesh.ops.bevel(self.bm, geom=list({e for f in faces for e in f.edges}), offset=radius, segments=segments, affect="EDGES", profile=0.6)
+		bmesh.ops.bevel(self.bm, geom=uniq(e for f in faces for e in f.edges), offset=radius, segments=segments, affect="EDGES", profile=0.6)
 		return [f for f in self.bm.faces if f not in before]
 
 	def stone(self, center, width, height, depth, facing, inset=0.0):
@@ -177,7 +182,7 @@ class Piece:
 	# --- edición ---
 
 	def jitter(self, faces, amount, keep_z=False, seed_axis=(1, 1, 1)):
-		for v in {v for f in faces for v in f.verts}:
+		for v in uniq(v for f in faces for v in f.verts):
 			v.co.x += (self.rng.random() - 0.5) * 2 * amount * seed_axis[0]
 			v.co.y += (self.rng.random() - 0.5) * 2 * amount * seed_axis[1]
 			if not keep_z:
@@ -196,7 +201,7 @@ class Piece:
 		self.uv = self.bm.loops.layers.uv.verify()
 
 	def _faces(self, verts):
-		return list({f for v in verts for f in v.link_faces})
+		return uniq(f for v in verts for f in v.link_faces)
 
 	# --- pintado ---
 
@@ -536,7 +541,7 @@ def crack_web(p, face_y, center, half_w, z_lo, z_hi, stone, gap):
 		"""Le da espesor hacia la pared, así es un volumen cerrado y las normales quedan para afuera."""
 		new = bmesh.ops.extrude_face_region(p.bm, geom=faces, use_keep_orig=True)["geom"]
 		bmesh.ops.translate(p.bm, verts=[v for v in new if isinstance(v, bmesh.types.BMVert)], vec=Vector((0, -side * 0.012, 0)))
-		return faces + [f for f in new if isinstance(f, bmesh.types.BMFace)] + list({f for e in new if isinstance(e, bmesh.types.BMEdge) for f in e.link_faces})
+		return faces + [f for f in new if isinstance(f, bmesh.types.BMFace)] + uniq(f for e in new if isinstance(e, bmesh.types.BMEdge) for f in e.link_faces)
 
 	def ribbon(pts, widths, grow, lift):
 		left, right = [], []
