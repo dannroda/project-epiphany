@@ -8000,6 +8000,8 @@ Pasos 2 y 3 de 15.9, estacionados por Daniel (2026-10-20) hasta después de los 
 
 Daniel (2026-10-20): algo para testear después. Ver qué pide que el juego corra en un teléfono: preset de export Android (y iOS si hace falta), si alcanza el renderer Mobile o hay que bajar a Compatibility (shaders propios, viento, SSAO, sombras), rendimiento y memoria en un equipo medio, y controles táctiles (stick virtual, botones de ataque, ítems y Z-target) o un gamepad por Bluetooth. También la UI chica en pantalla de teléfono y las zonas seguras.
 
+**Notas:** Daniel (2026-10-20): equipos para probar. Baseline: Moto G23 (MediaTek Helio G85, GPU Mali-G52, pantalla 720p): el objetivo de rendimiento se mide en este. También el Moto Edge 30 Fusion de Daniel (Snapdragon 888+, Adreno 660, 1080p), como gama alta. Por ahora el G23 lo usa otro proyecto: arrancar con el Edge 30 y pasar al G23 cuando se libere.
+
 ## Listas
 
 ### Assets de audio  (3/6)
