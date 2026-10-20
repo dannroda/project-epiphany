@@ -36,11 +36,15 @@ func test_plain_lines_keep_the_label() -> void:
 	await tree.process_frame
 
 
-func test_tablets_in_the_clearing_have_their_cues() -> void:
-	var resource := DialogueManager.create_resource_from_text(FileAccess.get_file_as_string("res://data/dialogue/overworld.dialogue"))
-	for cue in ["start_controls", "start_combat", "start_lift"]:
-		var line: DialogueLine = await DialogueManager.get_next_dialogue_line(resource, cue)
-		assert_true(line != null and line.text.contains("{btn:"), "%s trae botones" % cue)
+## 11.105: los controles los enseña el chip del HUD; en el claro queda solo la tablilla de la historia.
+func test_the_clearing_keeps_only_the_story_tablet() -> void:
+	var level: Node = (load(LEVEL) as PackedScene).instantiate()
+	var cues: Array[String] = []
+	for tablet in level.find_children("*Tablet", "", false, false):
+		if String(tablet.get(&"cue")).begins_with("start_"):
+			cues.append(String(tablet.get(&"cue")))
+	level.free()
+	assert_eq(cues, ["start_temple"], "sin las tablillas de controles, combate y levantar")
 
 
 func test_stepping_on_the_plate_brings_the_chest() -> void:

@@ -1036,13 +1036,7 @@ msgctxt "get_shield_mirror_1"
 msgid "Se equipa solo. Bloqueá dentro de un haz de luz y el espejo lo desvía hacia donde mirás; mientras lo atajás, el stick derecho (o el mouse) te gira y el izquierdo te mueve sin perderlo."
 msgstr "It equips itself. Block inside a beam of light and the mirror sends it wherever you face; while you hold it, the right stick (or the mouse) turns you and the left stick moves you without losing it."
 
-msgctxt "ow_start_controls_1"
-msgid "Andá con {btn:move}. Con {btn:dodge} se rueda: así se esquiva lo que no se puede parar."
-msgstr "Walk with {btn:move}. With {btn:dodge} you roll: so is dodged what cannot be stopped."
 
-msgctxt "ow_start_lift_1"
-msgid "Las piedras chicas se levantan con {btn:interact} y se arrojan con {btn:interact} o {btn:attack}. La placa cede con solo pisarla."
-msgstr "Small stones are lifted with {btn:interact} and thrown with {btn:interact} or {btn:attack}. The plate yields to a single step."
 
 msgctxt "ow_cave_bombs_1"
 msgid "La piedra herida no cede al acero, ni el hueso que viste coraza."
@@ -1050,9 +1044,6 @@ msgstr "Wounded stone yields not to steel, nor does bone clad in armor."
 
 
 
-msgctxt "ow_start_controls_2"
-msgid "Con {btn:interact} se leen las piedras como esta, se abren cofres y se habla."
-msgstr "With {btn:interact} stones like this one are read, chests are opened, and words are spoken."
 
 msgctxt "ow_grotto_hint_1"
 msgid "Del otro lado del abismo duerme un ojo de piedra."
@@ -1106,13 +1097,7 @@ msgctxt "ow_cliff_heart_2"
 msgid "Tres duermen tras la piedra herida, cinco esperan en las salas de los antiguos, y el resto donde solo llega quien ya tiene cada herramienta."
 msgstr "Three sleep behind the wounded stone, five wait in the halls of the ancients, and the rest lie where only one who already bears every tool can reach."
 
-msgctxt "ow_start_combat_1"
-msgid "Con {btn:attack} se golpea, y golpeando seguido se encadena. Mantené {btn:block} para cubrirte."
-msgstr "With {btn:attack} you strike, and striking without pause, the blows are chained. Hold {btn:block} to shield yourself."
 
-msgctxt "ow_start_combat_2"
-msgid "Con {btn:target_next} fijás la vista en un enemigo y lo rodeás sin perderlo."
-msgstr "With {btn:target_next} you fix your gaze upon a foe and circle it without losing it."
 
 msgctxt "temple_entrance_1"
 msgid "Este templo no guarda a un dios. Guarda una puerta cerrada."

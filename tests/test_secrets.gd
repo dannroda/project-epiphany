@@ -371,3 +371,21 @@ func test_a_secret_quenoa_without_a_piece_drops_its_table_once() -> void:
 	assert_true(not quenoa.broken, "y la queñoa sigue en pie")
 	quenoa.queue_free()
 	setup[0].reset()
+
+
+## 11.105: al lado del cofre de las sandalias, una queñoa para probarlas que suelta flechas.
+func test_the_sandals_practice_tree_stands_by_their_chest() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var setup: Array = await _load(tree, [])
+	var level: Node = setup[1]
+	var player: PlayerCharacter = setup[2]
+	var quenoa := level.get_node(^"SandalsPractice/SandalsTree") as SecretTree
+	var chest := level.get_node(^"SandalsChest") as Node3D
+	assert_true(quenoa.piece == null and quenoa.drops != null, "suelta su tabla, no una pieza")
+	assert_true(quenoa.global_position.distance_to(chest.global_position) < 10.0, "cerca del cofre")
+	var map := player.get_world_3d().navigation_map
+	var from := NavigationServer3D.map_get_closest_point(map, chest.global_position + Vector3(2, 0, 0))
+	var to := NavigationServer3D.map_get_closest_point(map, quenoa.global_position + Vector3(-1.6, 0, 0))
+	var path := NavigationServer3D.map_get_path(map, from, to, true)
+	assert_true(not path.is_empty() and path[-1].distance_to(to) < 0.6 and from.distance_to(to) < 9.0, "se le llega corriendo desde el cofre")
+	setup[0].reset()

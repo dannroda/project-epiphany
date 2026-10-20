@@ -120,6 +120,7 @@
 [ext_resource type="Resource" path="res://data/techniques/counter.tres" id="tech_counter"]
 [ext_resource type="Resource" path="res://data/techniques/plunge.tres" id="tech_plunge"]
 [ext_resource type="Resource" path="res://data/techniques/beam.tres" id="tech_beam"]
+[ext_resource type="Resource" path="res://data/drops/pot_arrows.tres" id="sandals_drops"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7se6l"]
 panorama = ExtResource("1_qyxw2")
@@ -1580,24 +1581,6 @@ dialogue = ExtResource("20_gd0nv")
 cue = "start_temple"
 flag = &"ow_tablet_start"
 
-[node name="ControlsTablet" parent="." unique_id=261526296 instance=ExtResource("18_gsck2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59, 0, 23)
-dialogue = ExtResource("20_gd0nv")
-cue = "start_controls"
-flag = &"ow_tablet_controls"
-
-[node name="CombatTablet" parent="." unique_id=646033479 instance=ExtResource("18_gsck2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59, 0, 17)
-dialogue = ExtResource("20_gd0nv")
-cue = "start_combat"
-flag = &"ow_tablet_combat"
-
-[node name="LiftTablet" parent="." unique_id=1908426765 instance=ExtResource("18_gsck2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 0, 20.5)
-dialogue = ExtResource("20_gd0nv")
-cue = "start_lift"
-flag = &"ow_tablet_lift"
-
 [node name="LiftSwitch" parent="." unique_id=51521915 instance=ExtResource("22_gvf0k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.5, 0, 21.5)
 mode = 1
@@ -2187,6 +2170,12 @@ technique = ExtResource("tech_beam")
 
 [node name="SummitDummy" parent="TechniqueStones" instance=ExtResource("tech_dummy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 5.2, -41)
+
+[node name="SandalsPractice" type="Node" parent="."]
+
+[node name="SandalsTree" parent="SandalsPractice" instance=ExtResource("ow_secret_tree")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 2.6, -8)
+drops = ExtResource("sandals_drops")
 
 [editable path="SecretHillsWall"]
 [editable path="SecretCactusWall"]

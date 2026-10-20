@@ -68,5 +68,5 @@ func test_story_tablets_have_text_and_read_flag() -> void:
 			assert_true(state.FLAGS.has(tablet.flag), "%s tiene flag de leída registrado" % tablet.name)
 			assert_true(not flags.has(tablet.flag), "%s no comparte flag" % tablet.name)
 			flags[tablet.flag] = true
-	assert_true(total >= 10, "tablillas entre overworld y templo: %d" % total)
+	assert_true(total >= 8, "tablillas entre overworld y templo: %d" % total)
 	state.reset()

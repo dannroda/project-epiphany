@@ -165,7 +165,7 @@ func test_cursor_reads_what_is_missing_in_a_zone() -> void:
 	assert_eq(page.focus_title.text, "PLACE_FIRST_CLEARING", "la entrada de la gruta es parte de la región del Claro")
 	var rows: Array = page.focus_stats.get_children().map(func(row: StatRow) -> String: return row.get_node(^"Padding/Row/Name").text + "=" + row.value_text())
 	assert_true(rows.has("MAP_CHESTS=" + tr("MAP_COUNT").format({done = 0, total = 1})), "dice que falta el cofre del claro (%s)" % [rows])
-	assert_true(rows.has("MAP_TABLETS_READ=" + tr("MAP_COUNT").format({done = 0, total = 4})), "y las tablillas sin leer (%s)" % [rows])
+	assert_true(rows.has("MAP_TABLETS_READ=" + tr("MAP_COUNT").format({done = 0, total = 1})), "y la tablilla sin leer (%s)" % [rows])
 	var first_row: Node = page.focus_stats.get_child(0)
 	page._move_cursor(page.world_to_map(grotto.bounds().get_center() + Vector2(0.5, 0.5)))
 	await tree.process_frame

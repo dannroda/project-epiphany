@@ -1,17 +1,3 @@
-~ start_controls
-Inscripción: Andá con {btn:move}. Con {btn:dodge} se rueda: así se esquiva lo que no se puede parar. [ID:ow_start_controls_1]
-Inscripción: Con {btn:interact} se leen las piedras como esta, se abren cofres y se habla. [ID:ow_start_controls_2]
-=> END
-
-~ start_combat
-Inscripción: Con {btn:attack} se golpea, y golpeando seguido se encadena. Mantené {btn:block} para cubrirte. [ID:ow_start_combat_1]
-Inscripción: Con {btn:target_next} fijás la vista en un enemigo y lo rodeás sin perderlo. [ID:ow_start_combat_2]
-=> END
-
-~ start_lift
-Inscripción: Las piedras chicas se levantan con {btn:interact} y se arrojan con {btn:interact} o {btn:attack}. La placa cede con solo pisarla. [ID:ow_start_lift_1]
-=> END
-
 ~ cave_bombs
 Inscripción: La piedra herida no cede al acero, ni el hueso que viste coraza. [ID:ow_cave_bombs_1]
 => END
