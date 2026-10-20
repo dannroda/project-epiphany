@@ -1,7 +1,9 @@
 extends Node
 ## Mide la compilación de pipelines (Performance PIPELINE_COMPILATIONS_*): entra al overworld con --scenario=start y
-## larga cada efecto una vez al lado del player, con el peor frame y lo que compiló. Se carga como autoload desde un
+## larga cada efecto al lado del player, con el peor frame y lo que compiló. Se carga como autoload desde un
 ## override.cfg temporal (ver tools/claude_windows/README.md).
+## Dos pasadas, con un tramo sin efecto antes de cada uno y los ms desde el arranque: un pico que no se repite en la
+## segunda pasada ni cae siempre en el mismo efecto es del momento (algo que corre de fondo), no del efecto (15.2).
 const EFFECTS := [
 	"res://src/feel/bursts/dust.tscn", "res://src/feel/bursts/explosion.tscn", "res://src/feel/bursts/leaves.tscn",
 	"res://src/feel/bursts/shards.tscn", "res://src/feel/bursts/sparkle.tscn", "res://src/feel/bursts/sparks_gold.tscn",
@@ -48,15 +50,21 @@ func _run() -> void:
 	_worst = 0
 	await _frames(60)
 	print("PROBE idle worst frame %5.1f ms  %s" % [_worst / 1000.0, _counts()])
-	for path: String in EFFECTS:
-		var before := _counts()
-		_worst = 0
-		var fx := (load(path) as PackedScene).instantiate()
-		get_tree().current_scene.add_child(fx)
-		if fx is Node3D:
-			fx.global_position = player.global_position + Vector3(1.5, 1.0, 1.0)
-		for p in fx.find_children("*", "GPUParticles3D", true, false) + ([fx] if fx is GPUParticles3D else []):
-			p.emitting = true
-		await _frames(40)
-		print("PROBE %-22s worst frame %5.1f ms  %s" % [path.get_file(), _worst / 1000.0, _diff(before, _counts())])
+	for run in 2:
+		for path: String in EFFECTS:
+			_worst = 0
+			await _frames(40)
+			print("PROBE %d %-22s worst frame %5.1f ms  at %d ms" % [run + 1, "(sin efecto)", _worst / 1000.0, Time.get_ticks_msec()])
+			var before := _counts()
+			_worst = 0
+			var fx := (load(path) as PackedScene).instantiate()
+			get_tree().current_scene.add_child(fx)
+			if fx is Node3D:
+				fx.global_position = player.global_position + Vector3(1.5, 1.0, 1.0)
+			for p in fx.find_children("*", "GPUParticles3D", true, false) + ([fx] if fx is GPUParticles3D else []):
+				p.emitting = true
+			for p in fx.find_children("*", "CPUParticles3D", true, false) + ([fx] if fx is CPUParticles3D else []):
+				p.emitting = true
+			await _frames(40)
+			print("PROBE %d %-22s worst frame %5.1f ms  at %d ms  %s" % [run + 1, path.get_file(), _worst / 1000.0, Time.get_ticks_msec(), _diff(before, _counts())])
 	get_tree().quit()

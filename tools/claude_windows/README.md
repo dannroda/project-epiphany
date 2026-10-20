@@ -46,6 +46,7 @@ powershell -ExecutionPolicy Bypass -File tools\claude_windows\measure_shaders.ps
 - Exporta "Windows (debug)" dos veces, con y sin shader baker. El baker de D3D12 solo se puede generar desde Windows.
 - Corre cada build 3 veces en frío (caché vacía) y 3 en caliente, en D3D12, y además la build sin baker en Vulkan.
 - `tools/pipeline_probe.gd` entra al overworld y larga cada efecto una vez. Anota cuánto tardó el overworld desde que arrancó el proceso, las compilaciones de pipelines y el peor frame de cada efecto.
+- Pasa la lista dos veces (`PROBE 1` y `PROBE 2`) con un tramo `(sin efecto)` antes de cada efecto, y anota los ms desde el arranque. Para 15.2: si el pico de `sparks_gold` aparece solo en la pasada 1, es del efecto; si cae en un tramo sin efecto o en otro efecto al mismo tiempo, es de algo que corre de fondo en ese momento.
 - Todo queda en `debug\tmp\shaders\resultados.txt`.
 - `-ClearDriverCache` borra también la caché del driver de AMD, NVIDIA y D3D. Así se mide el primer arranque real. Los demás juegos la rehacen solos.
 - Las ventanas abren en `-Screen 1` sin robar foco. Confirmá que el 1 sea el monitor HP.
