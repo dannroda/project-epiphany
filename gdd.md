@@ -162,7 +162,7 @@ Con objetivo fijado, `attack` cubriéndose sigue siendo la estocada de escudo, s
 | Llaves chicas, llave del jefe, mapa, brújula | Mazmorra | — | Mazmorra | Estructura de mazmorra |
 | Espada dorada | Equipo | Melee, el doble de daño (4), estela y chispas doradas | Templo: cofre grande de la Combinada (opcional, tras tres oleadas) | Premio del templo (11.183) |
 | Contenedor de corazón | Mejora | +1 corazón | Tras cada jefe; Arboleda (puzzle de bloque y vasija grande) | Recompensa |
-| Pieza de corazón (×4) | Mejora | 4 piezas = +1 corazón | 13 (11.124): overworld 8 (pradera, gruta, santuario, risco, cerros, islote, árbol, cumbre) y una por mazmorra (Chullpa, Queñoa, Totora, Cumbre, templo) | Premia explorar |
+| Pieza de corazón (×4) | Mejora | 4 piezas = +1 corazón | 16 (11.124, cuatro corazones): overworld 11 (pradera, árbol, cerros, gruta, santuario, islote, risco, mirador, cumbre, santuario de reflejos 11.27, huaca 11.26) y una por mazmorra (Chullpa, Queñoa, Totora, Cumbre, templo); `test_mirador_piece` cuenta las 16 | Premia explorar |
 
 **Piezas de corazón (11.21):** `GameState.give` las guarda en el inventario (se guardan con la partida) y cada 4 suma un corazón y descuenta las 4. En el mundo son `HeartPiece` (`src/world/heart_piece.tscn`, un `Pickup` con item get y un flag `ow_heart_piece_*` para no volver). El item get dice cuántas lleva (cues `heart_piece_1..3` de `item_get.dialogue`) y la que completa el corazón usa `heart_piece_full` con el ícono del contenedor. La pantalla de Equipo muestra "Piezas de corazón" con un corazón en cuartos (`HeartPieceIcon`) y "n / 4".
 
@@ -217,6 +217,7 @@ Un hub de unas 31 "pantallas" de tamaño Link's Awakening (24 × 16 m), sin tran
   - Islotes de la Laguna: `HeartPieceIslet`.
   - Cerros: detrás de un muro agrietado.
   - Pradera: la queñoa que se sacude con las sandalias (ver abajo).
+  - Mirador (11.124): en un nicho de la pared este (x 90–92, z 2) detrás de una reja (`MiradorGate`); la baja la placa de golpe de la cornisa sur (`MiradorStrikePlate`, STRIKE, `ow_mirador_strike`), que solo aprieta el martillazo. La pieza (`HeartPieceMirador`, `ow_heart_piece_mirador`) se ve desde el principio; el gancho no la trae a través de la reja. Test: `test_mirador_piece`.
 - *Secretos:* muescas en la cara de un risco tapadas por un muro agrietado, con un cofre atrás. No hay rupias en el juego, así que los cofres traen esto:
   - Cumbre: 5 bombas.
   - Quebrada: 10 flechas.
@@ -276,7 +277,7 @@ Puertas: `ChullpaDoor` (−86, −6) en los Cerros, `QuenoaDoor` (−24, 22) en 
 | **Quebrada** | Abismo de norte a sur. Puente levadizo (Pradera ↔ Necrópolis) que baja el ojo de la otra orilla con una flecha; angostura (Arboleda ↔ Cardonal) que se salta con la pluma; postes (Explanada ↔ Cumbre) para el gancho | Caer devuelve a la orilla | — |
 | **Necrópolis** (hub este) | Mini quest de las sandalias (tres chullpas con ojos, arco). Portal | Arco (puente) | 2 |
 | **Risco del ojo** | Ojo-interruptor → carcaj grande; franja que pide el gancho | Desde el Mirador | 2 |
-| **Mirador** | Pieza de corazón; bajada de una vía al Cardonal | Desde la Necrópolis | 2 |
+| **Mirador** | Pieza de corazón (nicho con reja, placa de golpe: martillo); bajada de una vía al Cardonal | Desde la Necrópolis | 2 |
 | **Cardonal** | Secretos; escalinata a la Necrópolis y bajada de una vía desde ella | Pluma (angostura) o desde la Necrópolis | 2 |
 | **Bañado** | Orilla este de la Laguna. Portal | Desde el Cardonal | 2 |
 | **Laguna** | Agua entre las dos orillas; islotes hasta la isla de **D3 Santuario de Totora** | Salto largo (sandalias + pluma) | 3 |
