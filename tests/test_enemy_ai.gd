@@ -152,7 +152,6 @@ func test_meadow_skeletons_reach_the_player() -> void:
 
 ## 11.9: con la navmesh pegada al piso, rodea una columna que lo separa del player sin trabarse en las esquinas. La
 ## columna se agrega en el lugar abierto del templo más cerca de la entrada y la navmesh se vuelve a hornear con la misma configuración.
-## Con path_desired_distance 0.25: enemy.tscn sigue en 1.0 hasta rehornear el overworld (16.49).
 func test_an_enemy_goes_around_a_column() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	tree.root.get_node(^"GameState").reset()
@@ -190,7 +189,6 @@ func test_an_enemy_goes_around_a_column() -> void:
 	region.navigation_mesh = region.navigation_mesh.duplicate()
 	region.bake_navigation_mesh(false)
 	var enemy := (load("res://src/entities/guerreros/skeleton_templo.tscn") as PackedScene).instantiate() as Enemy
-	enemy.get_node(^"NavigationAgent3D").path_desired_distance = 0.25
 	tree.current_scene.add_child(enemy)
 	enemy.global_position = spot + Vector3(0.4, 0, -3.0)
 	player.global_position = spot + Vector3(3.0, 0.1, -3.0)

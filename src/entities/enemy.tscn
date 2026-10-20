@@ -404,7 +404,7 @@ script = ExtResource("21_of2i0")
 hitbox_root = NodePath("../ModelController/Hitboxes")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
-path_desired_distance = 1.0
+path_desired_distance = 0.25
 target_desired_distance = 1.0
 radius = 0.5
 
