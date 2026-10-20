@@ -2,8 +2,24 @@ extends PlayerState
 
 ## Qué tan rápido se frena el paso del golpe.
 @export var lunge_damping := 12.0
+## Segundos después de que un golpe termina o se corta en los que volver a apretar sigue el combo (tajo, revés,
+## estocada); después vuelve a empezar por el tajo.
+@export var combo_window := 0.45
 
+## El golpe del combo que está sonando (0 = el primero).
+var step := 0
 var _attack: AttackData
+var _chain_until := -1.0
+
+
+func _setup() -> void:
+	(get_parent() as LimboHSM).active_state_changed.connect(_on_state_changed)
+
+
+## Rodar, recibir un golpe o cualquier otra cosa que no sea quedarse o caminar corta el combo.
+func _on_state_changed(current: LimboState, _previous: LimboState) -> void:
+	if current != null and current != self and current.name not in [&"Idle", &"Moving"]:
+		_chain_until = -1.0
 
 
 func _enter() -> void:
@@ -11,7 +27,10 @@ func _enter() -> void:
 	if not observer.fade_out_started.is_connected(_on_attack_finished):
 		observer.fade_out_started.connect(_on_attack_finished)
 
-	_attack = player.current_attack()
+	var chained := _now() <= _chain_until and not player.is_blocking()
+	step = (step + 1) % player.combo_length() if chained else 0
+	_chain_until = -1.0
+	_attack = _pick_attack()
 	_face_attack_direction()
 	var forward := player.model.global_basis.z
 	forward.y = 0.0
@@ -38,7 +57,18 @@ func _update(delta: float) -> void:
 
 
 func _exit() -> void:
+	if _attack != player.SWORD_STAB and can_cancel():
+		_chain_until = _now() + combo_window
 	player.attack_runner.stop()
+
+
+func _pick_attack() -> AttackData:
+	return player.current_attack(step)
+
+
+## En tiempo de juego (cuadros de física), no de reloj.
+func _now() -> float:
+	return float(Engine.get_physics_frames()) / Engine.physics_ticks_per_second
 
 
 func can_cancel() -> bool:

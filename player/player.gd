@@ -33,6 +33,7 @@ signal escaped
 @onready var interaction_detector: InteractionDetector = $InteractionDetector
 @onready var dodge_ghosts: DodgeGhosts = $DodgeGhosts
 @onready var shield: Shield = $Shield
+@onready var sword_charge: SwordCharge = $SwordCharge
 ## Lo que se retoca en el inspector (duración, gradiente, material) es del nodo; el ancho y la posición se ajustan al arma.
 @onready var sword_trail: Trail3D = $ModelController/Skeleton3D/Hand_R/SwordTrail
 @onready var tip_trail: Trail3D = $ModelController/Skeleton3D/Hand_R/TipTrail
@@ -64,8 +65,11 @@ func _ready() -> void:
 	_register_monitors()
 	config.apply_to(self)
 	hurtbox.team = config.team
-	hitbox.team = config.team
-	hitbox.damage_factory = _make_damage
+	for each: Hitbox in attack_runner.hitboxes.values():
+		each.team = config.team
+		each.damage_factory = _make_damage
+		if each != hitbox:
+			each.landed.connect(_on_hit_landed)
 	hurtbox.hit.connect(_on_hit)
 	hitbox.landed.connect(_on_hit_landed)
 	var silhouette := ShaderMaterial.new()
@@ -261,11 +265,30 @@ func is_blocking() -> bool:
 
 
 ## El ataque que toca según lo que tiene en la mano; cubriéndose con la espada, la estocada.
-func current_attack() -> AttackData:
-	var weapon := equipment.weapon
-	if weapon == null or not weapon.behavior is MeleeBehavior:
+func current_attack(step := 0) -> AttackData:
+	var melee := _melee()
+	if melee == null:
 		return null
-	return SWORD_STAB if is_blocking() else (weapon.behavior as MeleeBehavior).attack
+	if is_blocking():
+		return SWORD_STAB
+	var chain := melee.chain()
+	return chain[step % chain.size()]
+
+
+func combo_length() -> int:
+	var melee := _melee()
+	return melee.chain().size() if melee else 1
+
+
+## El giro cargado del arma en la mano; null si no tiene o se está cubriendo.
+func spin_attack() -> AttackData:
+	var melee := _melee()
+	return melee.spin if melee and not is_blocking() else null
+
+
+func _melee() -> MeleeBehavior:
+	var weapon := equipment.weapon
+	return weapon.behavior as MeleeBehavior if weapon else null
 
 
 func _make_damage() -> DamageInfo:

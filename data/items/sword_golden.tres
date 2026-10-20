@@ -1,6 +1,10 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dikx6skaitj7y"]
 
 [ext_resource type="Resource" path="res://data/attacks/sword_slash.tres" id="1_slash"]
+[ext_resource type="Script" path="res://src/combat/attack_data.gd" id="c_attack"]
+[ext_resource type="Resource" path="res://data/attacks/sword_backhand.tres" id="c_backhand"]
+[ext_resource type="Resource" path="res://data/attacks/sword_thrust.tres" id="c_thrust"]
+[ext_resource type="Resource" path="res://data/attacks/sword_spin.tres" id="c_spin"]
 [ext_resource type="Script" uid="uid://c1ivye6mqa488" path="res://src/items/behaviors/melee_behavior.gd" id="2_melee"]
 [ext_resource type="PackedScene" path="res://assets/items/sword/sword_golden.tscn" id="3_scene"]
 [ext_resource type="Script" uid="uid://bn5pjgpia5grm" path="res://src/items/item_data.gd" id="4_item"]
@@ -10,6 +14,8 @@
 [sub_resource type="Resource" id="Melee"]
 script = ExtResource("2_melee")
 attack = ExtResource("1_slash")
+combo = Array[ExtResource("c_attack")]([ExtResource("c_backhand"), ExtResource("c_thrust")])
+spin = ExtResource("c_spin")
 
 [resource]
 script = ExtResource("4_item")

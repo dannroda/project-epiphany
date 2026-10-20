@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AttackData" format=3]
+
+[ext_resource type="Script" path="res://src/combat/attack_data.gd" id="1_attack"]
+
+[resource]
+script = ExtResource("1_attack")
+animation = &"CombatMelee/Melee_1H_Attack_Slice_Horizontal"
+tree_state = &"Backhand"
+active_from = 0.2
+active_to = 0.4
+cancel_from = 0.45
+lunge = 3.0
+trail = true

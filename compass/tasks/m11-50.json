@@ -8,7 +8,7 @@
     },
     {
       "detail": "Reemplazar el placeholder (Music.boss_fight) por un tema propio, con capas por fase.",
-      "done": false,
+      "done": true,
       "text": "Tema de música"
     }
   ],
@@ -22,7 +22,7 @@
     }
   ],
   "milestone": "m11",
-  "notes": "-5c (2026-10-19), paso 1 en d2cadaf2: tools/audio/render_boss_sfx.py (numpy + ffmpeg libvorbis) renderiza assets/audio/sfx/boss/*.ogg: zumbido en loop (Body/Hum, se apaga en el clip de muerte), chirridos de párpados (method keys en los clips de Lids), carga del orbe y del rayo (pistas de audio en OrbMuzzle/ChargeSound, una aturdida las corta), rugido (Roar.sound = boss_roar; los demás jefes siguen con roar), golpes de las manos (boss_slam, también la Mano) y golpes al ojo (boss_eye_hit). test_boss_juice › test_the_boss_has_its_own_voice. Falta que Daniel los escuche: cambios = re-render de los .ogg. Paso 2 (tema) en curso.",
+  "notes": "-5c (2026-10-19), paso 1 en d2cadaf2: tools/audio/render_boss_sfx.py (numpy + ffmpeg libvorbis) renderiza assets/audio/sfx/boss/*.ogg: zumbido en loop (Body/Hum, se apaga en el clip de muerte), chirridos de párpados (method keys en los clips de Lids), carga del orbe y del rayo (pistas de audio en OrbMuzzle/ChargeSound, una aturdida las corta), rugido (Roar.sound = boss_roar; los demás jefes siguen con roar), golpes de las manos (boss_slam, también la Mano) y golpes al ojo (boss_eye_hit). test_boss_juice › test_the_boss_has_its_own_voice. Paso 2 en ebe2a064: tools/audio/render_boss_music.py, tres loops de 16 s (8 compases a 120 bpm, Re menor): boss_drums (bombo, tic, bajo) desde la presentación, boss_theme (quena y colchón) desde la fase 2, boss_fury (bajo saturado, redoblante, coro) en la 3; Music.hold_boss(owner, boss.phase), las arenas sin tema siguen con el placeholder. test_audio › test_the_final_boss_theme_adds_a_layer_per_phase. Falta que Daniel escuche voz y tema (previews en wt/art debug/tmp/boss_audio/preview.wav y theme_preview.wav): cualquier cambio es re-render.",
   "order": 50,
   "priority": "low",
   "refs": [
@@ -31,12 +31,12 @@
       "section": "jefe"
     }
   ],
-  "status": "doing",
+  "status": "review",
   "tags": [
     "jefe",
     "audio"
   ],
   "test": "La pelea tiene sonido propio y la música cambia con las fases.",
   "title": "Audio del jefe",
-  "updated_at": "2026-10-20T01:39:12.252Z"
+  "updated_at": "2026-10-20T01:45:40.545Z"
 }

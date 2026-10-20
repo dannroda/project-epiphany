@@ -1,4 +1,5 @@
 {
+  "assignee": "project-epiphany-72",
   "checklist": [
     {
       "detail": "Hoy cada Room tiene un solo `map_cell` y map_data.gd (`room_pitch`, `room_grid_point`) asume el mismo paso para todas. Sumar un tamaño en celdas a Room y que la pestaña Mapa y el minimapa las dibujen enteras.",
@@ -29,5 +30,5 @@
   ],
   "test": "En una mazmorra con una sala que ocupa dos celdas, la pestaña Mapa y el minimapa la muestran entera con sus puertas, y las vecinas quedan en su lugar; test_map pasa.",
   "title": "Salas que ocupan varias celdas del mapa",
-  "updated_at": "2026-10-15T19:53:18.599Z"
+  "updated_at": "2026-10-20T01:47:41.983Z"
 }

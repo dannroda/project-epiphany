@@ -3,7 +3,7 @@
   "checklist": [
     {
       "detail": "Tajo, revés y estocada encadenados con el buffer; el tercero hace más daño y empuja. Animaciones de Rig_Medium (CombatMelee).",
-      "done": false,
+      "done": true,
       "text": "Combo de 3 golpes"
     },
     {
@@ -42,7 +42,7 @@
     }
   ],
   "milestone": "m11",
-  "notes": "Skills: `disciplines:game-feel`, `disciplines:input-systems`, `godot:godot-animation`.\n\nDesde 11.85 MeleeBehavior tiene un solo attack: el combo arranca de cero.",
+  "notes": "Hecho pasos 1 y 2 (-72, d68b55e1; 3–6 esperan a Daniel). Combo: MeleeBehavior = attack + combo[] + spin. sword_basic/golden: tajo → revés (sword_backhand, Slice_Horizontal, AttackType Backhand) → estocada (sword_thrust, Stab, ×1,5 daño, ×2 empuje, avance 4,5). Avanza si el golpe nuevo llega dentro de combo_window (0,45 s, export) desde que terminó o se cortó el anterior, contado en tiempo de juego (cuadros de física). Se reinicia fuera de la ventana, después de la estocada o si pasa por otro estado que no sea Idle/Moving. La estocada con guardia sigue siendo SWORD_STAB. Giro: nodo SwordCharge (charge_time 0,9, show_from 0,3, move_factor 0,55, exports) cuenta el ataque mantenido en Idle/Moving/Attacking, nunca cubriéndose ni rodando; la luz ChargeGlow anima en su AnimationPlayer (RESET/charging/charged). Al soltar con carga llena, estado Spinning (sword_spin, Melee_2H_Attack_Spinning, AttackType Spin, hitbox cilindro de 1,8 m, ×2 daño). test_combo (7) y test_items. Capturas en wt/design debug/tmp/design/combo_*.png. Falta el Great Spin (en curso).",
   "order": 34,
   "priority": "medium",
   "refs": [
@@ -61,5 +61,5 @@
   ],
   "test": "Con el combate pulido (11.33): encadenar el combo de 3, cargar y soltar el giro, contraatacar a un chullpa en su telegraph y usar una técnica aprendida en una tablilla; ninguna se dispara sin querer al rodar, bloquear o fijar.",
   "title": "Combos y técnicas especiales (Minish Cap / Wind Waker)",
-  "updated_at": "2026-10-20T01:30:24.899Z"
+  "updated_at": "2026-10-20T01:46:00.192Z"
 }

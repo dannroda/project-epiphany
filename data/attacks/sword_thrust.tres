@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AttackData" format=3]
+
+[ext_resource type="Script" path="res://src/combat/attack_data.gd" id="1_attack"]
+
+[resource]
+script = ExtResource("1_attack")
+animation = &"CombatMelee/Melee_1H_Attack_Stab"
+tree_state = &"Stab"
+active_from = 0.22
+active_to = 0.42
+cancel_from = 0.6
+lunge = 4.5
+damage_multiplier = 1.5
+knockback_multiplier = 2.0
+trail = true
+tip_trail = true

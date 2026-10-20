@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AttackData" format=3]
+
+[ext_resource type="Script" path="res://src/combat/attack_data.gd" id="1_attack"]
+
+[resource]
+script = ExtResource("1_attack")
+animation = &"CombatMelee/Melee_2H_Attack_Spinning"
+tree_state = &"Spin"
+active_from = 0.05
+active_to = 0.9
+cancel_from = 0.9
+hitbox = &"spin"
+damage_multiplier = 2.0
+knockback_multiplier = 1.5
+trail = true

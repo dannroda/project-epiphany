@@ -2722,7 +2722,7 @@ Cuando una pared tapa al player se pierde de vista. Mostrar su silueta por encim
 
 ### 11.9 Navmesh sobre el piso · Pendiente
 
-**Prioridad:** baja · **Etiquetas:** `ia`
+**Prioridad:** baja · **Responsable:** project-epiphany-5c · **Etiquetas:** `ia`
 
 La navmesh horneada del GridMap queda 0.5 m sobre el piso (y hay islas sueltas arriba de paredes y acantilados, a 3 m). Por eso el `NavigationAgent3D` de los enemigos necesita `path_desired_distance` 1.0 para no trabarse en las esquinas. Bajarla al piso y sacar la compensación.
 
@@ -2766,7 +2766,7 @@ El HUD muestra los slots X/Y aunque no tengan ítem, y el acercamiento del revea
 
 ### 11.12 Salas que ocupan varias celdas del mapa · Pendiente
 
-**Prioridad:** baja · **Etiquetas:** `mazmorra`
+**Prioridad:** baja · **Responsable:** project-epiphany-72 · **Etiquetas:** `mazmorra`
 
 Los tamaños de sala son libres desde el 2026-10-15 (viñeta configurable; cada sala se centra en cámara y tapa las otras, 11.178–11.180), así que lo de variar tamaños y la cámara ya está. Falta que el mapa lo acompañe: una sala más grande que el paso de la grilla se dibuja como una sola celda.
 
@@ -3115,7 +3115,7 @@ Skills: `disciplines:game-feel`, `disciplines:input-systems`, `godot:godot-anima
 
 Técnicas de espada al estilo Minish Cap y Wind Waker: combo de 3 golpes, giro cargado, contraataque y 1–2 técnicas extra que se aprenden en el mundo, sin chocar con fijar, bloquear y rodar.
 
-- [ ] Combo de 3 golpes
+- [x] Combo de 3 golpes
   Tajo, revés y estocada encadenados con el buffer; el tercero hace más daño y empuja. Animaciones de Rig_Medium (CombatMelee).
 - [ ] Ataque giratorio cargado
   Mantener ataque: la espada brilla (neón), al soltar gira 360°. Versión grande al cargar más (Great Spin).
@@ -3130,9 +3130,7 @@ Técnicas de espada al estilo Minish Cap y Wind Waker: combo de 3 golpes, giro c
 
 **Prueba:** Con el combate pulido (11.33): encadenar el combo de 3, cargar y soltar el giro, contraatacar a un chullpa en su telegraph y usar una técnica aprendida en una tablilla; ninguna se dispara sin querer al rodar, bloquear o fijar.
 
-**Notas:** Skills: `disciplines:game-feel`, `disciplines:input-systems`, `godot:godot-animation`.
-
-Desde 11.85 MeleeBehavior tiene un solo attack: el combo arranca de cero.
+**Notas:** Hecho pasos 1 y 2 (-72, d68b55e1; 3–6 esperan a Daniel). Combo: MeleeBehavior = attack + combo[] + spin. sword_basic/golden: tajo → revés (sword_backhand, Slice_Horizontal, AttackType Backhand) → estocada (sword_thrust, Stab, ×1,5 daño, ×2 empuje, avance 4,5). Avanza si el golpe nuevo llega dentro de combo_window (0,45 s, export) desde que terminó o se cortó el anterior, contado en tiempo de juego (cuadros de física). Se reinicia fuera de la ventana, después de la estocada o si pasa por otro estado que no sea Idle/Moving. La estocada con guardia sigue siendo SWORD_STAB. Giro: nodo SwordCharge (charge_time 0,9, show_from 0,3, move_factor 0,55, exports) cuenta el ataque mantenido en Idle/Moving/Attacking, nunca cubriéndose ni rodando; la luz ChargeGlow anima en su AnimationPlayer (RESET/charging/charged). Al soltar con carga llena, estado Spinning (sword_spin, Melee_2H_Attack_Spinning, AttackType Spin, hitbox cilindro de 1,8 m, ×2 daño). test_combo (7) y test_items. Capturas en wt/design debug/tmp/design/combo_*.png. Falta el Great Spin (en curso).
 
 **Referencias:** `gdd.md#combate`, `gdd.md#input`
 
@@ -3403,7 +3401,7 @@ VFX de combate en el estilo del juego: estela de la espada y partículas low pol
 
 **Relacionadas:** 11.33 Combate: sacar lo tosco; 10.28 Playtest de revisión (lo que está en Revisión); 12.9 Efectos con malla; 12.13 Reajuste de estilo toon de todos los assets
 
-### 11.50 Audio del jefe · En curso
+### 11.50 Audio del jefe · Revisión
 
 **Prioridad:** baja · **Responsable:** project-epiphany-5c · **Etiquetas:** `jefe`, `audio`
 
@@ -3411,12 +3409,12 @@ Audio propio para el jefe: voz mecánica, chirridos, carga del orbe y golpes con
 
 - [x] Voz propia
   Zumbido mecánico de fondo, chirrido de párpados, carga del orbe, rugido de fase, golpes con más grave.
-- [ ] Tema de música
+- [x] Tema de música
   Reemplazar el placeholder (Music.boss_fight) por un tema propio, con capas por fase.
 
 **Prueba:** La pelea tiene sonido propio y la música cambia con las fases.
 
-**Notas:** -5c (2026-10-19), paso 1 en d2cadaf2: tools/audio/render_boss_sfx.py (numpy + ffmpeg libvorbis) renderiza assets/audio/sfx/boss/*.ogg: zumbido en loop (Body/Hum, se apaga en el clip de muerte), chirridos de párpados (method keys en los clips de Lids), carga del orbe y del rayo (pistas de audio en OrbMuzzle/ChargeSound, una aturdida las corta), rugido (Roar.sound = boss_roar; los demás jefes siguen con roar), golpes de las manos (boss_slam, también la Mano) y golpes al ojo (boss_eye_hit). test_boss_juice › test_the_boss_has_its_own_voice. Falta que Daniel los escuche: cambios = re-render de los .ogg. Paso 2 (tema) en curso.
+**Notas:** -5c (2026-10-19), paso 1 en d2cadaf2: tools/audio/render_boss_sfx.py (numpy + ffmpeg libvorbis) renderiza assets/audio/sfx/boss/*.ogg: zumbido en loop (Body/Hum, se apaga en el clip de muerte), chirridos de párpados (method keys en los clips de Lids), carga del orbe y del rayo (pistas de audio en OrbMuzzle/ChargeSound, una aturdida las corta), rugido (Roar.sound = boss_roar; los demás jefes siguen con roar), golpes de las manos (boss_slam, también la Mano) y golpes al ojo (boss_eye_hit). test_boss_juice › test_the_boss_has_its_own_voice. Paso 2 en ebe2a064: tools/audio/render_boss_music.py, tres loops de 16 s (8 compases a 120 bpm, Re menor): boss_drums (bombo, tic, bajo) desde la presentación, boss_theme (quena y colchón) desde la fase 2, boss_fury (bajo saturado, redoblante, coro) en la 3; Music.hold_boss(owner, boss.phase), las arenas sin tema siguen con el placeholder. test_audio › test_the_final_boss_theme_adds_a_layer_per_phase. Falta que Daniel escuche voz y tema (previews en wt/art debug/tmp/boss_audio/preview.wav y theme_preview.wav): cualquier cambio es re-render.
 
 **Referencias:** `gdd.md#jefe`
 

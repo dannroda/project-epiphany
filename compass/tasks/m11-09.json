@@ -1,4 +1,5 @@
 {
+  "assignee": "project-epiphany-5c",
   "checklist": [
     {
       "detail": "El piso del kit gris tiene el techo de la colisión en y = 0, pero los vértices quedan en 0.5 (overworld y templo). Revisar cell_size/cell_height del NavigationMesh contra los del mapa de navegación (Project Settings › navigation), agent_max_climb y la posición del NavigationRegion3D.",
@@ -54,5 +55,5 @@
   ],
   "test": "Con Debug › Visible Navigation, la navmesh se ve pegada al piso y no hay islas arriba de las paredes; los enemigos persiguen alrededor de columnas y por las puertas sin quedarse girando en una esquina; test_enemy_ai pasa.",
   "title": "Navmesh sobre el piso",
-  "updated_at": "2026-10-15T19:53:33.237Z"
+  "updated_at": "2026-10-20T01:46:10.176Z"
 }

@@ -26,6 +26,8 @@ func _free_move(dir: Vector3, _delta: float) -> void:
 	var is_blocking: bool = blackboard.get_var(BB_IS_BLOCKING, false)
 	var holding_light := is_blocking and player.shield.is_catching_light()
 	var speed := (BLOCK_SPEED if is_blocking else SPEED) * player.ground_speed
+	if player.sword_charge.is_charging():
+		speed *= player.sword_charge.move_factor
 	
 	player.velocity.x = dir.x * speed
 	player.velocity.z = dir.z * speed
