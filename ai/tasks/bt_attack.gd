@@ -30,7 +30,7 @@ func _enter() -> void:
 	anim_player.seek(_attack.windup_pose * _length, true)
 	anim_player.pause()
 	if agent is Enemy:
-		agent.flash.warn(_attack.windup_time)
+		agent.telegraph(_attack.windup_time)
 
 
 func _tick(_delta: float) -> Status:
@@ -38,6 +38,7 @@ func _tick(_delta: float) -> Status:
 		if elapsed_time < _attack.windup_time:
 			return RUNNING
 		_striking = true
+		_end_telegraph()
 		agent.anim_player.play()
 		agent.attack_runner.start(_attack, _length, 1.0, _attack.windup_pose * _length)
 	if elapsed_time >= _attack.windup_time + _length * (1.0 - _attack.windup_pose) + _attack.recovery_time:
@@ -46,4 +47,10 @@ func _tick(_delta: float) -> Status:
 
 
 func _exit() -> void:
+	_end_telegraph()
 	agent.attack_runner.stop()
+
+
+func _end_telegraph() -> void:
+	if agent is Enemy:
+		agent.end_telegraph()

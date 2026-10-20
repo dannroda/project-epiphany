@@ -46,6 +46,8 @@ var _airborne := false
 var _home := Vector3.INF
 var _home_room: Room
 var _home_region: Array[AreaZone] = []
+## Cuánto falta para el golpe que está avisando (INF si no avisa nada): lo lee el contraataque del player.
+var _strike_left := INF
 
 ## 0 en el piso, 1 hundido `sink_depth`; lo anima el clip sink.
 var sunk := 0.0:
@@ -103,6 +105,7 @@ func _swap_model(scene: PackedScene) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	_strike_left -= delta
 	if _recoil_left > 0.0:
 		_recoil_left -= delta
 		if _recoil_left <= 0.0 and not is_dead:
@@ -222,6 +225,21 @@ func _turn(delta: float) -> void:
 	model.rotation = Vector3.ZERO
 	if is_equal_approx(step, angle):
 		_facing_goal = Vector3.ZERO
+
+
+## El aviso de un ataque (pose quieta y destello) que pega dentro de `duration` segundos.
+func telegraph(duration: float) -> void:
+	flash.warn(duration)
+	_strike_left = duration
+
+
+func end_telegraph() -> void:
+	_strike_left = INF
+
+
+## Segundos hasta el golpe avisado; INF si no está avisando.
+func strike_in() -> float:
+	return _strike_left if _strike_left > -0.05 and not is_dead else INF
 
 
 func is_guarding() -> bool:

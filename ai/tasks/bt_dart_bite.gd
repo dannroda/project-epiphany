@@ -52,6 +52,7 @@ func _tick(delta: float) -> Status:
 				if _phase_time < _attack.windup_time:
 					return RUNNING
 				_striking = true
+				_end_telegraph()
 				agent.anim_player.play()
 				agent.attack_runner.start(_attack, _length, 1.0, _attack.windup_pose * _length)
 			var progress: float = agent.attack_runner.progress()
@@ -77,13 +78,19 @@ func _set_phase(phase: Phase) -> void:
 		agent.anim_player.play(_attack.animation, 0.1)
 		agent.anim_player.seek(_attack.windup_pose * _length, true)
 		agent.anim_player.pause()
-		agent.flash.warn(_attack.windup_time)
+		agent.telegraph(_attack.windup_time)
 	else:
 		agent.anim_player.play(run_animation, 0.15)
 
 
 func _exit() -> void:
+	_end_telegraph()
 	agent.attack_runner.stop()
 	agent.stop_moving()
 	PackTurns.release(_target, agent)
 	blackboard.set_var(ready_var, Time.get_ticks_msec() / 1000.0 + randf_range(rest.x, rest.y))
+
+
+func _end_telegraph() -> void:
+	if agent is Enemy:
+		agent.end_telegraph()

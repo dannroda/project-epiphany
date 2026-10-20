@@ -28,6 +28,10 @@ func _setup() -> void:
 	add_transition($Moving, $Spinning, "spin")
 	add_transition($Attacking, $Spinning, "spin", $Attacking.can_cancel)
 	add_transition($Spinning, $Idle, "finished")
+	add_transition($Idle, $Countering, "counter")
+	add_transition($Moving, $Countering, "counter")
+	add_transition($Attacking, $Countering, "counter", $Attacking.can_cancel)
+	add_transition($Countering, $Idle, "finished")
 	add_transition($Dodging, $Idle, "finished")
 	add_transition($Idle, $UsingItem, "use_item")
 	add_transition($Moving, $UsingItem, "use_item")
@@ -80,6 +84,8 @@ func _update(delta: float) -> void:
 	var buffer := player.input_buffer
 	if buffer.has(&"dodge") and dispatch("dodge"):
 		buffer.consume(&"dodge")
+	elif buffer.has(&"attack") and player.counter.is_open() and dispatch("counter"):
+		buffer.consume(&"attack")
 	elif buffer.has(&"attack") and dispatch("attack"):
 		buffer.consume(&"attack")
 	elif _try_item(buffer):

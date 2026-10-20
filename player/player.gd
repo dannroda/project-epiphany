@@ -34,6 +34,7 @@ signal escaped
 @onready var dodge_ghosts: DodgeGhosts = $DodgeGhosts
 @onready var shield: Shield = $Shield
 @onready var sword_charge: SwordCharge = $SwordCharge
+@onready var counter: Counter = $Counter
 ## Lo que se retoca en el inspector (duración, gradiente, material) es del nodo; el ancho y la posición se ajustan al arma.
 @onready var sword_trail: Trail3D = $ModelController/Skeleton3D/Hand_R/SwordTrail
 @onready var tip_trail: Trail3D = $ModelController/Skeleton3D/Hand_R/TipTrail

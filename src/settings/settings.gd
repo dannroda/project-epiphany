@@ -17,6 +17,8 @@ const DEFAULTS := {
 	&"fullscreen": false,
 	&"shake": true,
 	&"minimap": true,
+	## El mundo a media velocidad mientras dura la ventana del contraataque (11.34).
+	&"counter_slow": true,
 	&"ui_scale": 100,
 	## Tope de cuadros por segundo (0 = sin límite): con un monitor de 200 Hz el juego dibujaba 200 sin necesidad.
 	&"max_fps": 60,

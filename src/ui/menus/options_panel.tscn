@@ -251,6 +251,20 @@ text = "OPTIONS_MINIMAP"
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="CounterSlow" type="HBoxContainer" parent="Right"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Right/CounterSlow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"OptionLabel"
+text = "OPTIONS_COUNTER_SLOW"
+
+[node name="counter_slow" type="CheckBox" parent="Right/CounterSlow"]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="Scale" type="HBoxContainer" parent="Right" unique_id=2007561950]
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2

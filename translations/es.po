@@ -62,6 +62,9 @@ msgstr "Temblor de cámara"
 msgid "OPTIONS_MINIMAP"
 msgstr "Minimapa"
 
+msgid "OPTIONS_COUNTER_SLOW"
+msgstr "Contraataque en cámara lenta"
+
 msgid "OPTIONS_UI_SCALE"
 msgstr "Escala de la interfaz"
 

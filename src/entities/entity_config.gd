@@ -22,6 +22,8 @@ var features: int = 0
 @export_range(0.0, 30.0, 0.1, "or_greater") var attack_knockback: float = 6.0
 ## Su golpe cuerpo a cuerpo (timing y aviso); sin esto usa el de su árbol de comportamiento.
 @export var attack: AttackData
+## El contraataque del player le salta por encima en vez de rodearlo (los grandes).
+@export var counter_vault := false
 @export var drops: DropTable
 ## Opcional: otro modelo (una escena "Visuals" de src/entities/models/) en lugar del de la escena.
 @export var model: PackedScene

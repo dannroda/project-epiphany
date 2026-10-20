@@ -48,6 +48,9 @@
 [ext_resource type="Script" path="res://player/components/shield.gd" id="c_shield"]
 [ext_resource type="Script" path="res://player/states/spinning.gd" id="st_spinning"]
 [ext_resource type="Script" path="res://player/components/sword_charge.gd" id="c_sword_charge"]
+[ext_resource type="Script" path="res://player/components/counter.gd" id="c_counter"]
+[ext_resource type="Script" path="res://player/states/countering.gd" id="st_countering"]
+[ext_resource type="Resource" path="res://data/attacks/sword_counter.tres" id="atk_counter"]
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_peicu"]
 fadeout_time = 0.3
@@ -704,6 +707,69 @@ _data = {
 &"great": SubResource("ChargeGreat")
 }
 
+[sub_resource type="Animation" id="CounterReset"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:light_energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="CounterGlint"]
+resource_name = "glint"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:light_energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 5.0, 2.0]
+}
+
+[sub_resource type="AnimationLibrary" id="CounterLib"]
+_data = {
+&"RESET": SubResource("CounterReset"),
+&"glint": SubResource("CounterGlint")
+}
+
 [node name="Player" type="CharacterBody3D" unique_id=1694148988]
 script = ExtResource("1_2lfai")
 config = ExtResource("cfg_player")
@@ -922,6 +988,19 @@ libraries = {
 &"": SubResource("ChargeLib")
 }
 
+[node name="CounterGlint" type="OmniLight3D" parent="ModelController/Skeleton3D/Hand_R"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+visible = false
+light_color = Color(1, 0.97, 0.88, 1)
+light_energy = 0.0
+omni_range = 3.0
+
+[node name="CounterAnim" type="AnimationPlayer" parent="ModelController/Skeleton3D/Hand_R/CounterGlint"]
+deterministic = false
+libraries = {
+&"": SubResource("CounterLib")
+}
+
 [node name="Hand_L" type="BoneAttachment3D" parent="ModelController/Skeleton3D" unique_id=632440802]
 bone_name = "hand.l"
 bone_idx = 17
@@ -1133,6 +1212,10 @@ can_be_hurt = false
 [node name="Spinning" type="LimboState" parent="MovementState"]
 script = ExtResource("st_spinning")
 
+[node name="Countering" type="LimboState" parent="MovementState"]
+script = ExtResource("st_countering")
+attack = ExtResource("atk_counter")
+
 [node name="Spirit" type="Node3D" parent="."]
 visible = false
 
@@ -1148,6 +1231,14 @@ omni_range = 2.5
 
 [node name="TargetIndicator" parent="." unique_id=1615443035 instance=ExtResource("22_bjvpn")]
 visible = false
+
+[node name="CounterPrompt" type="Sprite3D" parent="TargetIndicator"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+visible = false
+pixel_size = 0.006
+billboard = 1
+no_depth_test = true
+render_priority = 10
 
 [node name="Health" type="Node" parent="." unique_id=871248059]
 script = ExtResource("c_health")
@@ -1206,6 +1297,12 @@ block_cone = NodePath("../ModelController/BlockCone")
 script = ExtResource("c_sword_charge")
 player = NodePath("..")
 glow = NodePath("../ModelController/Skeleton3D/Hand_R/ChargeGlow/ChargeAnim")
+
+[node name="Counter" type="Node" parent="." node_paths=PackedStringArray("player", "glint", "prompt")]
+script = ExtResource("c_counter")
+player = NodePath("..")
+glint = NodePath("../ModelController/Skeleton3D/Hand_R/CounterGlint/CounterAnim")
+prompt = NodePath("../TargetIndicator/CounterPrompt")
 
 [node name="Carrier" type="Node" parent="." unique_id=1157206663 node_paths=PackedStringArray("socket", "anim_tree", "hide_while_carrying", "flash", "thrower")]
 script = ExtResource("c_carrier")

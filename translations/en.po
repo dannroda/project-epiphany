@@ -62,6 +62,9 @@ msgstr "Camera shake"
 msgid "OPTIONS_MINIMAP"
 msgstr "Minimap"
 
+msgid "OPTIONS_COUNTER_SLOW"
+msgstr "Slow motion on counters"
+
 msgid "OPTIONS_UI_SCALE"
 msgstr "Interface scale"
 
