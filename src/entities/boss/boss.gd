@@ -655,7 +655,7 @@ func _on_eye_hit(info: DamageInfo) -> void:
 		if hitter:
 			_aggro = hitter
 		if health.damage(info.amount):
-			Feel.sfx(&"hit", eye.global_position)
+			Feel.sfx(&"boss_eye_hit", eye.global_position)
 			_jolt_eye()
 	elif info.source is Projectile:
 		_stun_eye()
@@ -686,6 +686,11 @@ func _jolt_eye() -> void:
 		var strength := HIT_JOLT * (1.0 - i / float(HIT_JOLTS))
 		jolt.tween_property(_eye_mesh, ^"rotation", Vector3(rng.randf_range(-1.0, 1.0), rng.randf_range(-1.0, 1.0), 0.0) * strength, 0.05)
 	jolt.tween_property(_eye_mesh, ^"rotation", Vector3.ZERO, 0.1)
+
+
+## Los párpados de piedra chirrían al moverse (clips de Lids).
+func _creak() -> void:
+	Feel.sfx(&"boss_lid", eye.global_position, _presenting)
 
 
 ## Muerto, los párpados ya no hacen otra cosa que el clip death.

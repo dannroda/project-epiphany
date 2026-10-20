@@ -1,7 +1,8 @@
 # Autoload
 extends Node
 ## Feedback: hit-stop, sacudida, vibración, partículas y sonidos. Cada evento tiene varias muestras (packs CC0 de
-## Kenney en assets/audio/sfx/) y suena con tono y volumen al azar; los que no tienen muestra se sintetizan.
+## Kenney en assets/audio/sfx/; las del jefe, en boss/, salen de tools/audio/render_boss_sfx.py) y suena con tono y
+## volumen al azar; los que no tienen muestra se sintetizan.
 
 const SFX_BUS := &"SFX"
 const UI_BUS := &"UI"
@@ -49,6 +50,10 @@ const SAMPLES := {
 	&"ui_back": ["kenney_interface-sounds/back_"],
 	&"ui_open": ["kenney_interface-sounds/open_"],
 	&"ui_close": ["kenney_interface-sounds/close_"],
+	&"boss_lid": ["boss/boss_lid_"],
+	&"boss_roar": ["boss/boss_roar"],
+	&"boss_slam": ["boss/boss_slam_"],
+	&"boss_eye_hit": ["boss/boss_eye_hit_"],
 }
 
 var settings: FeelSettings = preload("res://data/feel.tres")

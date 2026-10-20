@@ -388,7 +388,7 @@ func _impact() -> void:
 	_set_hitbox(shockwave, shockwave_attack)
 	ring.global_position = floor_point
 	Tweens.replay(wave_anim, &"wave")
-	Feel.sfx(&"boom", floor_point)
+	Feel.sfx(&"boss_slam", floor_point)
 	Feel.burst(&"dust", floor_point, Vector3.UP)
 	Feel.burst(&"shards", floor_point + Vector3.UP * 0.2, Vector3.UP)
 	Feel.shake(0.5)
@@ -624,7 +624,7 @@ func collapse() -> void:
 	_tilt_goal = Vector3.ZERO
 	_settle(DOWN_HEIGHT, 0.5 * signf(position.x))
 	Tweens.replay(anim, &"collapse")
-	Feel.sfx(&"boom", global_position)
+	Feel.sfx(&"boss_slam", global_position)
 
 
 ## Tiembla cada vez más alrededor de `center` (en coordenadas del padre); la altura la maneja otro tween.

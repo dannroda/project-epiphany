@@ -121,3 +121,21 @@ func test_death_turns_off_the_neon_and_slows_time_briefly() -> void:
 	assert_true(boss.eye_glow() < 0.1, "el neón se apaga")
 	boss.free()
 	assert_eq(Engine.time_scale, 1.0)
+
+
+func test_the_boss_has_its_own_voice() -> void:
+	for sound in [&"boss_lid", &"boss_roar", &"boss_slam", &"boss_eye_hit"]:
+		assert_true(Feel._sounds.has(sound), "%s tiene sus muestras (11.50)" % sound)
+	var boss := _spawn()
+	assert_true(boss.get_node(^"%Hum").playing, "zumba de fondo")
+	boss.eye_open = 1.0
+	boss.target = Node3D.new()
+	boss.add_child(boss.target)
+	var charge := boss.get_node(^"Body/Eye/OrbMuzzle/ChargeSound") as AudioStreamPlayer3D
+	boss._fire_orb()
+	await _wait(0.2)
+	assert_true(charge.playing, "suena la carga del orbe")
+	boss._stun_eye()
+	await _wait(0.1)
+	assert_true(not charge.playing, "aturdido, la carga se corta")
+	boss.free()

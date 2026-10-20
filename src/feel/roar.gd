@@ -5,6 +5,7 @@ extends Node3D
 
 const RING := preload("res://src/feel/roar_ring.tscn")
 
+@export var sound := &"roar"
 @export var duration := 1.0
 @export var rings := 4
 @export var color := Color(0.75, 1.0, 0.95, 0.55)
@@ -15,7 +16,7 @@ const RING := preload("res://src/feel/roar_ring.tscn")
 
 
 func play() -> void:
-	Feel.sfx(&"roar", global_position, true)
+	Feel.sfx(sound, global_position, true)
 	Feel.shake(shake)
 	for i in rings:
 		get_tree().create_timer(0.12 + i * duration / rings, true).timeout.connect(_ring)
