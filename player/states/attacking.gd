@@ -5,11 +5,17 @@ extends PlayerState
 ## Segundos después de que un golpe termina o se corta en los que volver a apretar sigue el combo (tajo, revés,
 ## estocada); después vuelve a empezar por el tajo.
 @export var combo_window := 0.45
+## El rayo de espada (11.34 paso 5, se aprende en la piedra de la Cumbre): sale de cada golpe con la vida llena. Vacío
+## en los estados que no lo tiran.
+@export var beam: PackedScene
+
+const BEAM_LEARNED := &"ow_tech_beam"
 
 ## El golpe del combo que está sonando (0 = el primero).
 var step := 0
 var _attack: AttackData
 var _chain_until := -1.0
+var _beam_pending := false
 
 
 func _setup() -> void:
@@ -32,6 +38,7 @@ func _enter() -> void:
 	_chain_until = -1.0
 	_attack = _pick_attack()
 	_face_attack_direction()
+	_beam_pending = beam != null and _attack != null and _attack != player.SWORD_STAB and player.health.current >= player.health.max_health and GameState.get_flag(BEAM_LEARNED)
 	var forward := player.model.global_basis.z
 	forward.y = 0.0
 	forward = forward.normalized() * (_attack.lunge if _attack else 0.0)
@@ -49,6 +56,9 @@ func _update(delta: float) -> void:
 	player.velocity.x *= damping
 	player.velocity.z *= damping
 	player.move_and_slide()
+	if _beam_pending and player.attack_runner.progress() >= _attack.active_from:
+		_beam_pending = false
+		_fire_beam()
 	if not can_cancel():
 		return
 	var input_dir: Vector2 = blackboard.get_var(BB_INPUT_DIR, Vector2.ZERO)
@@ -60,6 +70,20 @@ func _exit() -> void:
 	if _attack != player.SWORD_STAB and can_cancel():
 		_chain_until = _now() + combo_window
 	player.attack_runner.stop()
+
+
+func _fire_beam() -> void:
+	var forward := player.model.global_basis.z * Vector3(1, 0, 1)
+	if forward.is_zero_approx():
+		return
+	forward = forward.normalized()
+	var shot := beam.instantiate() as Hitbox
+	shot.team = player.hurtbox.team
+	shot.damage_factory = func() -> DamageInfo: return DamageInfo.make(1, 2.0, player)
+	Spawns.root(player).add_child(shot)
+	var from := player.global_position + Vector3.UP * 1.0 + forward * 0.6
+	shot.global_transform = Transform3D(Basis.looking_at(forward), from)
+	Feel.sfx(&"reflect", from)
 
 
 func _pick_attack() -> AttackData:
