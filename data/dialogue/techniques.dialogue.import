@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=18
+type="Resource"
+uid="uid://dcg27dh2ng4dd"
+path="res://.godot/imported/techniques.dialogue-ff15d247aac59efdf8467340d3e20763.tres"
+
+[deps]
+
+source_file="res://data/dialogue/techniques.dialogue"
+dest_files=["res://.godot/imported/techniques.dialogue-ff15d247aac59efdf8467340d3e20763.tres"]
+
+[params]
+
+defaults=true

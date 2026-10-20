@@ -1380,3 +1380,6 @@ msgstr "Atacar con la vida llena"
 
 msgid "TECH_BEAM_DAMAGE"
 msgstr "¼ de corazón, hasta 6 m"
+
+msgid "TECH_NEW"
+msgstr "Técnica nueva: {name}"

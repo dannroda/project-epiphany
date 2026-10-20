@@ -1612,3 +1612,30 @@ msgstr "Attack at full health"
 
 msgid "TECH_BEAM_DAMAGE"
 msgstr "¼ heart, up to 6 m"
+
+msgctxt "tech_counter_1"
+msgid "Fijá un enemigo con {btn:z-lock}. Cuando prepare el golpe y tu espada destelle, atacá con {btn:attack}: lo esquivás y le pegás por la espalda."
+msgstr "Target an enemy with {btn:z-lock}. When it winds up and your sword flashes, attack with {btn:attack}: you dodge it and strike its back."
+
+msgctxt "tech_counter_2"
+msgid "Probalo con el muñeco: avisa sus golpes como un esqueleto."
+msgstr "Try it on the dummy: it winds up like a skeleton."
+
+msgctxt "tech_plunge_1"
+msgid "Saltá con {item:feather} y atacá con {btn:attack} en el aire: caés clavando la espada y la onda golpea alrededor. También hunde las placas de golpe."
+msgstr "Jump with {item:feather} and attack with {btn:attack} in the air: you drop sword first and the shockwave hits all around. It also presses strike plates."
+
+msgctxt "tech_plunge_2"
+msgid "Probalo con el muñeco."
+msgstr "Try it on the dummy."
+
+msgctxt "tech_beam_1"
+msgid "Con la vida llena, cada golpe de {btn:attack} tira un rayo que alcanza a los enemigos lejanos. No mueve mecanismos."
+msgstr "At full health every {btn:attack} swing throws a beam that reaches faraway enemies. It does not move mechanisms."
+
+msgctxt "tech_beam_2"
+msgid "Probalo con el muñeco, desde lejos."
+msgstr "Try it on the dummy, from afar."
+
+msgid "TECH_NEW"
+msgstr "New technique: {name}"

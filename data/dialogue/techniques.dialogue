@@ -1,0 +1,14 @@
+~ counter
+Fijá un enemigo con {btn:z-lock}. Cuando prepare el golpe y tu espada destelle, atacá con {btn:attack}: lo esquivás y le pegás por la espalda. [ID:tech_counter_1]
+Probalo con el muñeco: avisa sus golpes como un esqueleto. [ID:tech_counter_2]
+=> END
+
+~ plunge
+Saltá con {item:feather} y atacá con {btn:attack} en el aire: caés clavando la espada y la onda golpea alrededor. También hunde las placas de golpe. [ID:tech_plunge_1]
+Probalo con el muñeco. [ID:tech_plunge_2]
+=> END
+
+~ beam
+Con la vida llena, cada golpe de {btn:attack} tira un rayo que alcanza a los enemigos lejanos. No mueve mecanismos. [ID:tech_beam_1]
+Probalo con el muñeco, desde lejos. [ID:tech_beam_2]
+=> END
