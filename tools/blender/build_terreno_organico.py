@@ -78,6 +78,9 @@ STYLES = {
 		"ledge": ("tierra", "MID"), "lip": ("tierra", "LIGHT"), "rock": ("roca_naranja", None)},
 	"quebrada": {"abyss_top": ("roca_naranja", "MID"), "abyss_mid": ("acantilado", "DARK")},
 }
+_UNKNOWN = sorted({style for style, *_rect in REGIONS if style not in STYLES})
+if _UNKNOWN:
+	sys.exit("build_terreno_organico: estilos desconocidos %s (TerrainStyleArea.style; los de STYLES: %s)" % (_UNKNOWN, ", ".join(STYLES)))
 STEPS = [((X0 + c) * CELL, (Z0 + r) * CELL, 1.4) for r in range(len(GRID)) for c in range(len(GRID[0])) if GRID[r][c] in "Sv"]
 FIXED = np.array([(x, -z, r) for x, z, r in DATA["fixed"] + STEPS]).reshape(-1, 3)
 DECOR = np.array([(x, -z, r) for x, z, r in DATA["decor"]]).reshape(-1, 3)

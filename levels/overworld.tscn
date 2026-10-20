@@ -353,84 +353,84 @@ data = {
 [node name="banado" type="Node3D" parent="TerrainStyles" unique_id=1903587953]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63, 0, 39)
 script = ExtResource("terrain_style_area")
-style = &"laguna"
+style = "laguna"
 size = Vector2(56, 16)
 
 [node name="cardonal" type="Node3D" parent="TerrainStyles" unique_id=1672021418]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51, 0, 23)
 script = ExtResource("terrain_style_area")
-style = &"cardonal"
+style = "cardonal"
 size = Vector2(80, 16)
 
 [node name="cumbre" type="Node3D" parent="TerrainStyles" unique_id=737031856]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 0, -37)
 script = ExtResource("terrain_style_area")
-style = &"cumbre"
+style = "cumbre"
 size = Vector2(56, 24)
 
 [node name="cumbre_2" type="Node3D" parent="TerrainStyles" unique_id=513227000]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31, 0, -21)
 script = ExtResource("terrain_style_area")
-style = &"cumbre"
+style = "cumbre"
 
 [node name="templo" type="Node3D" parent="TerrainStyles" unique_id=184441449]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41, 0, -37)
 script = ExtResource("terrain_style_area")
-style = &"explanada"
+style = "explanada"
 size = Vector2(56, 8)
 
 [node name="templo_2" type="Node3D" parent="TerrainStyles" unique_id=1295167749]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 0, -29)
 script = ExtResource("terrain_style_area")
-style = &"explanada"
+style = "explanada"
 size = Vector2(48, 8)
 
 [node name="templo_3" type="Node3D" parent="TerrainStyles" unique_id=898413180]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 0, -21)
 script = ExtResource("terrain_style_area")
-style = &"explanada"
+style = "explanada"
 size = Vector2(32, 8)
 
 [node name="laguna" type="Node3D" parent="TerrainStyles" unique_id=350753600]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, 39)
 script = ExtResource("terrain_style_area")
-style = &"laguna"
+style = "laguna"
 size = Vector2(112, 16)
 
 [node name="mirador" type="Node3D" parent="TerrainStyles" unique_id=1260035096]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 0, -1)
 script = ExtResource("terrain_style_area")
-style = &"necropolis"
+style = "necropolis"
 size = Vector2(32, 32)
 
 [node name="necropolis" type="Node3D" parent="TerrainStyles" unique_id=1498644608]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43, 0, -1)
 script = ExtResource("terrain_style_area")
-style = &"necropolis"
+style = "necropolis"
 size = Vector2(32, 32)
 
 [node name="necropolis_2" type="Node3D" parent="TerrainStyles" unique_id=823372610]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, -5)
 script = ExtResource("terrain_style_area")
-style = &"necropolis"
+style = "necropolis"
 size = Vector2(16, 40)
 
 [node name="necropolis_3" type="Node3D" parent="TerrainStyles" unique_id=1490700729]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51, 0, -21)
 script = ExtResource("terrain_style_area")
-style = &"necropolis"
+style = "necropolis"
 size = Vector2(32, 8)
 
 [node name="quebrada" type="Node3D" parent="TerrainStyles" unique_id=822406267]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -9)
 script = ExtResource("terrain_style_area")
-style = &"quebrada"
+style = "quebrada"
 size = Vector2(24, 80)
 
 [node name="risco" type="Node3D" parent="TerrainStyles" unique_id=1194475844]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79, 0, -29)
 script = ExtResource("terrain_style_area")
-style = &"cumbre"
+style = "cumbre"
 size = Vector2(24, 24)
 
 [node name="Zone_arboleda" type="Area3D" parent="." unique_id=764139555]

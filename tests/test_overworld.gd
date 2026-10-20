@@ -693,3 +693,25 @@ func test_every_cracked_wall_has_its_terrain_rock() -> void:
 			missing.append(String(wall.name))
 	assert_eq(missing, [], "paredes agrietadas sin su roca")
 	level.free()
+
+
+## 16.50: los estilos de TerrainStyleArea son las claves de STYLES en build_terreno_organico.py, y todas las áreas usan uno.
+func test_terrain_styles_match_the_build() -> void:
+	var probe := TerrainStyleArea.new()
+	var hint: String = probe.get_property_list().filter(func(p: Dictionary) -> bool: return p.name == "style")[0].hint_string
+	probe.free()
+	var options := hint.split(",")
+	var source := FileAccess.get_file_as_string("res://tools/blender/build_terreno_organico.py")
+	var block := source.substr(source.find("\nSTYLES = {"), source.find("\n}\n", source.find("\nSTYLES = {")) - source.find("\nSTYLES = {"))
+	var styles: Array[String] = []
+	var key := RegEx.create_from_string("\\n\\t\"(\\w+)\": \\{")
+	for found in key.search_all(block):
+		styles.append(found.get_string(1))
+	assert_eq(Array(options), Array(styles), "el enum de style es STYLES de Python")
+	var level: Node3D = (load(LEVEL) as PackedScene).instantiate()
+	var wrong: Array[String] = []
+	for area: TerrainStyleArea in level.get_node(^"TerrainStyles").get_children():
+		if not area.style.is_empty() and not area.style in styles:
+			wrong.append("%s: %s" % [area.name, area.style])
+	level.free()
+	assert_eq(wrong, [], "áreas con un estilo que el build no conoce")

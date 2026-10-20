@@ -4,6 +4,6 @@ extends Node3D
 ## tools/blender/build_terreno_organico.py); lo lee tools/export_terreno_overworld.gd. Va aparte de las AreaZone: las zonas
 ## son del juego (nombre, mapa, persecución) y cambiarlas no cambia cómo se ve el terreno.
 
-## necropolis, laguna, cumbre, explanada, cardonal o quebrada.
-@export var style: StringName = &""
+## Las claves de STYLES (build_terreno_organico.py falla con otra); vacío, el terreno por defecto.
+@export_enum("necropolis", "laguna", "cumbre", "explanada", "cardonal", "quebrada") var style: String = ""
 @export var size := Vector2(8, 8)
