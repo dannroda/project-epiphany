@@ -1,0 +1,18 @@
+{
+  "checklist": [],
+  "code": "",
+  "created_at": "2026-10-20T20:39:10.580Z",
+  "description": "Daniel (2026-10-20): algo para testear después. Ver qué pide que el juego corra en un teléfono: preset de export Android (y iOS si hace falta), si alcanza el renderer Mobile o hay que bajar a Compatibility (shaders propios, viento, SSAO, sombras), rendimiento y memoria en un equipo medio, y controles táctiles (stick virtual, botones de ataque, ítems y Z-target) o un gamepad por Bluetooth. También la UI chica en pantalla de teléfono y las zonas seguras.",
+  "milestone": "m17",
+  "notes": "",
+  "order": 34,
+  "priority": "low",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "build"
+  ],
+  "test": "",
+  "title": "Probar en mobile",
+  "updated_at": "2026-10-20T20:39:10.580Z"
+}

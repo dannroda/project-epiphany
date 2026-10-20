@@ -7971,7 +7971,7 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): overworld_map.gd:106 
 
 **Notas:** Hecho por -3e (4869886c): la foto del mapa se rehace solo con flags del trazado (scenery y sus interruptores, como el ojo del puente), no con cofres ni corazones.
 
-## M17 — Después de la demo  (0/2)
+## M17 — Después de la demo  (0/3)
 
 Lo que sale de M11 para después de la demo: rejugabilidad y extras.
 
@@ -7993,6 +7993,12 @@ Pasos 2 y 3 de 15.9, estacionados por Daniel (2026-10-20) hasta después de los 
 
 - [ ] Rangos de visibilidad/LOD en decor y plantas
 - [ ] Terreno en bloques más chicos que se descarten fuera de cámara
+
+### Probar en mobile · Pendiente
+
+**Prioridad:** baja · **Etiquetas:** `build`
+
+Daniel (2026-10-20): algo para testear después. Ver qué pide que el juego corra en un teléfono: preset de export Android (y iOS si hace falta), si alcanza el renderer Mobile o hay que bajar a Compatibility (shaders propios, viento, SSAO, sombras), rendimiento y memoria en un equipo medio, y controles táctiles (stick virtual, botones de ataque, ítems y Z-target) o un gamepad por Bluetooth. También la UI chica en pantalla de teléfono y las zonas seguras.
 
 ## Listas
 
