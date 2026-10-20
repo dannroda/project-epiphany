@@ -127,6 +127,30 @@ func test_a_copied_slot_keeps_its_backup() -> void:
 	_teardown()
 
 
+func test_a_save_with_wrong_equipment_bottles_or_hearts_is_repaired() -> void:
+	await _setup()
+	var sword: StringName = &""
+	for item: ItemData in Items.database.new_game_equipment:
+		if item.category == ItemData.Category.SWORD:
+			sword = item.id
+	var cfg := ConfigFile.new()
+	cfg.set_value(SaveKeys.PLAYER, SaveKeys.MAX_HEALTH, 0)
+	cfg.set_value(SaveKeys.EQUIPMENT, "SWORD", &"bow")
+	cfg.set_value(SaveKeys.EQUIPMENT, "SHIELD", &"no_existe")
+	cfg.set_value(SaveKeys.BOTTLES, "bottle_1", &"bomb")
+	cfg.set_value(SaveKeys.BOTTLES, "bottle_2", &"potion")
+	cfg.set_value(SaveKeys.BOTTLES, "bottle_9", &"potion")
+	state.read_from(cfg)
+	assert_eq(state.max_health, GameState.HP_PER_HEART, "al menos un corazón")
+	assert_eq(state.equipment[ItemData.Category.SWORD], sword, "una espada que no es espada vuelve a la inicial")
+	assert_true(state.inventory.has(sword), "y la tiene")
+	assert_true(Items.get_item(state.equipment.get(ItemData.Category.SHIELD, &"")) != null, "un escudo inexistente vuelve al inicial")
+	assert_eq(state.bottles[&"bottle_1"], GameState.EMPTY_BOTTLE, "una botella con algo que no es líquido queda vacía")
+	assert_eq(state.bottles[&"bottle_2"], &"potion", "la poción sigue")
+	assert_true(not state.bottles.has(&"bottle_9"), "una botella que no existe se descarta")
+	_teardown()
+
+
 func test_copy_and_delete() -> void:
 	await _setup()
 	await tree.root.get_node(^"SceneFlow").new_game(1)

@@ -375,7 +375,7 @@ func read_from(cfg: ConfigFile) -> void:
 	_set_bulk(true)
 	_clear()
 	var get_typed := func(section: String, key: String, default: Variant) -> Variant: return SaveCodec.typed(cfg, section, key, default)
-	max_health = get_typed.call(SaveKeys.PLAYER, SaveKeys.MAX_HEALTH, new_game_max_health())
+	max_health = maxi(get_typed.call(SaveKeys.PLAYER, SaveKeys.MAX_HEALTH, new_game_max_health()), HP_PER_HEART)
 	player_health.assign(get_typed.call(SaveKeys.PLAYER, SaveKeys.HEALTH, {}))
 	play_time = get_typed.call(SaveKeys.PLAYER, SaveKeys.PLAY_TIME, 0.0)
 	spawn_scene = _scene_path(get_typed.call(SaveKeys.PLAYER, SaveKeys.SPAWN_UID, ""), get_typed.call(SaveKeys.PLAYER, SaveKeys.SPAWN_SCENE, ""))
@@ -393,9 +393,24 @@ func read_from(cfg: ConfigFile) -> void:
 		if key == SaveKeys.BUTTONS:
 			_read_buttons(get_typed.call(SaveKeys.EQUIPMENT, key, []))
 		elif ItemData.Category.has(key):
-			equipment[ItemData.Category[key]] = get_typed.call(SaveKeys.EQUIPMENT, key, &"")
+			var category: ItemData.Category = ItemData.Category[key]
+			var id: StringName = get_typed.call(SaveKeys.EQUIPMENT, key, &"")
+			var item := Items.get_item(id) if id != &"" else null
+			if item and item.category == category:
+				equipment[category] = id
+			elif id != &"":
+				Log.warning(&"save", "Equipo que no corresponde en la partida:", key, id)
+				_equip_new_game(category)
 	for bottle in _keys(cfg, SaveKeys.BOTTLES):
-		bottles[bottle] = get_typed.call(SaveKeys.BOTTLES, bottle, &"")
+		var content: StringName = get_typed.call(SaveKeys.BOTTLES, bottle, &"")
+		if bottle not in BOTTLES:
+			Log.warning(&"save", "Botella inexistente en la partida:", bottle)
+			continue
+		var item := Items.get_item(content) if content != &"" else null
+		if item == null or (content != EMPTY_BOTTLE and item.liquid.a <= 0.0):
+			Log.warning(&"save", "Botella con algo que no es un líquido:", bottle, content)
+			content = EMPTY_BOTTLE
+		bottles[bottle] = content
 	for id in _keys(cfg, SaveKeys.FLAGS):
 		var value: Variant = cfg.get_value(SaveKeys.FLAGS, id)
 		var default: Variant = FLAGS.default_of(id)
@@ -421,6 +436,16 @@ func read_from(cfg: ConfigFile) -> void:
 			dungeons[SaveKeys.dungeon_id(section)] = DungeonState.read_from(cfg, section)
 	_set_bulk(false)
 	loaded.emit()
+
+
+## Lo del equipo inicial para esa categoría (la partida traía algo que no existe o no corresponde).
+func _equip_new_game(category: ItemData.Category) -> void:
+	for item in Items.database.new_game_equipment:
+		if item.category == category:
+			equipment[category] = item.id
+			if not inventory.has(item.id):
+				inventory.add(item.id)
+			return
 
 
 func _read_reveal(key: StringName, origin: Vector2, size: Vector2i, packed: PackedByteArray) -> void:

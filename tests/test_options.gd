@@ -119,3 +119,21 @@ func test_a_slider_saves_when_released_not_on_every_step() -> void:
 	panel.free()
 	assert_eq(stored.call(), 50, "al cerrar la pantalla también")
 	_restore(settings)
+
+
+func test_settings_are_read_typed_and_written_whole() -> void:
+	var settings := _settings()
+	var cfg := ConfigFile.new()
+	cfg.set_value("options", "music", "fuerte")
+	cfg.set_value("options", "sfx", 30)
+	cfg.save(settings_path)
+	settings.load_settings()
+	assert_eq(settings.get_value(&"music"), settings.DEFAULTS[&"music"], "un valor de otro tipo vuelve al de fábrica")
+	assert_eq(settings.get_value(&"sfx"), 30, "y el resto se lee")
+	assert_eq(settings.save_settings(), OK, "guardar devuelve el resultado")
+	assert_true(not FileAccess.file_exists(settings_path + ".tmp"), "sin temporales")
+	DirAccess.rename_absolute(ProjectSettings.globalize_path(settings_path), ProjectSettings.globalize_path(settings_path + ".tmp"))
+	settings.load_settings()
+	assert_eq(settings.get_value(&"sfx"), 30, "si se cortó antes de renombrar, lee el temporal")
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(settings_path + ".tmp"))
+	_restore(settings)

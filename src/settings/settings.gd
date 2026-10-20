@@ -53,17 +53,27 @@ func set_value(key: StringName, value: Variant, persist := true) -> void:
 func load_settings() -> void:
 	values = DEFAULTS.duplicate()
 	var cfg := ConfigFile.new()
-	if cfg.load(path) == OK:
+	var from := path if FileAccess.file_exists(path) else path + ".tmp"
+	if FileAccess.file_exists(from) and cfg.load(from) == OK:
 		for key in DEFAULTS:
-			values[key] = cfg.get_value("options", key, DEFAULTS[key])
+			values[key] = SaveCodec.typed(cfg, "options", key, DEFAULTS[key])
 	_apply()
 
 
-func save_settings() -> void:
+## A un .tmp y después se renombra: un corte a mitad de camino no deja las opciones vacías.
+func save_settings() -> Error:
 	var cfg := ConfigFile.new()
 	for key in values:
 		cfg.set_value("options", key, values[key])
-	cfg.save(path)
+	var tmp := path + ".tmp"
+	var err := cfg.save(tmp)
+	if err == OK and FileAccess.file_exists(path):
+		err = DirAccess.remove_absolute(path)
+	if err == OK:
+		err = DirAccess.rename_absolute(tmp, path)
+	if err != OK:
+		Log.error(&"settings", "No se pudieron guardar las opciones", path, error_string(err))
+	return err
 
 
 ## El idioma elegido o, si todavía no se eligió, el del sistema si hay traducción (si no, español).

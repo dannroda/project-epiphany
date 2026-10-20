@@ -67,6 +67,52 @@ func test_missing_scene_loads_at_the_start_instead_of_hanging() -> void:
 	game_state.reset()
 
 
+func test_a_scene_that_does_not_load_falls_back_to_the_start() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var save_manager: Node = tree.root.get_node(^"SaveManager")
+	var game_state: Node = tree.root.get_node(^"GameState")
+	var broken := "user://test_broken_level.tscn"
+	var file := FileAccess.open(broken, FileAccess.WRITE)
+	file.store_string("[gd_scene format=3]\n[node name=")
+	file.close()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	game_state.reset()
+	game_state.give(Items.get_item(&"bomb"), 4)
+	game_state.spawn_scene = broken
+	assert_eq(save_manager.save_game(SLOT, false), OK)
+	assert_eq(await save_manager.load_game(SLOT), OK, "una escena que existe pero no carga no deja la pantalla vacía")
+	assert_true(tree.current_scene != null and tree.current_scene.scene_file_path == SceneFlow.NEW_GAME_SCENE, "arranca en la escena del comienzo")
+	assert_eq(game_state.inventory.count(&"bomb"), 4, "con lo que tenía")
+	assert_true(not tree.paused and not SceneFlow.traveling, "y el juego sigue")
+	DirAccess.remove_absolute(broken)
+	for suffix in ["", ".bak"]:
+		DirAccess.remove_absolute(save_manager.slot_path(SLOT) + suffix)
+	game_state.reset()
+
+
+func test_loading_again_while_loading_is_refused() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var save_manager: Node = tree.root.get_node(^"SaveManager")
+	var game_state: Node = tree.root.get_node(^"GameState")
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	game_state.reset()
+	game_state.spawn_scene = LEVEL
+	assert_eq(save_manager.save_game(SLOT, false), OK)
+	var first := [ERR_UNAVAILABLE]
+	(func() -> void: first[0] = await save_manager.load_game(SLOT)).call()
+	assert_eq(await save_manager.load_game(SLOT), ERR_BUSY, "una segunda carga en medio de otra no entra")
+	assert_eq(await SceneFlow.quit_to_title(), ERR_BUSY, "ni volver al título")
+	while first[0] == ERR_UNAVAILABLE:
+		await tree.process_frame
+	assert_eq(first[0], OK, "y la primera termina")
+	assert_true(not SceneFlow.is_busy(), "sin quedar trabado")
+	for suffix in ["", ".bak"]:
+		DirAccess.remove_absolute(save_manager.slot_path(SLOT) + suffix)
+	game_state.reset()
+
+
 func test_a_moved_level_loads_by_its_uid() -> void:
 	var game_state: Node = (Engine.get_main_loop() as SceneTree).root.get_node(^"GameState")
 	game_state.reset()

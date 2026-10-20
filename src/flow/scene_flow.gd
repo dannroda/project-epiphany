@@ -24,6 +24,8 @@ var traveling: bool:
 
 var session := Session.new()
 var _transitions := 0
+var _entering := false
+var _in_fade_action := false
 var _fade_tween: Tween
 
 @onready var _rect: ColorRect = $Rect
@@ -67,7 +69,9 @@ func with_fade(action: Callable) -> void:
 		return
 	begin_transition()
 	await fade_out(0.3)
+	_in_fade_action = true
 	await action.call()
+	_in_fade_action = false
 	await fade_in(0.3)
 	end_transition()
 
@@ -219,7 +223,8 @@ func new_game(slot: int = -1, with_intro := false) -> Error:
 	GameState.spawn_scene = NEW_GAME_SCENE
 	GameState.spawn_point = &"start"
 	GameState.player_position = null
-	await enter_saved_scene()
+	if not await enter_saved_scene():
+		return ERR_CANT_OPEN
 	if with_intro:
 		GameState.set_flag(&"ow_intro_seen", true)
 		get_tree().current_scene.add_child(INTRO.instantiate())
@@ -227,20 +232,37 @@ func new_game(slot: int = -1, with_intro := false) -> Error:
 	return OK
 
 
-func quit_to_title() -> void:
+## Cargando una partida, volviendo al título o en un viaje (salvo la acción de `with_fade`, que es la carga misma).
+func is_busy() -> bool:
+	return _entering or (traveling and not _in_fade_action)
+
+
+func quit_to_title() -> Error:
+	if is_busy():
+		return ERR_BUSY
+	_entering = true
 	begin_transition()
+	await _go_to_title()
+	end_transition()
+	_entering = false
+	return OK
+
+
+func _go_to_title() -> void:
 	while MenuStack.is_open():
 		MenuStack.pop()
 	Pause.clear()
 	get_tree().change_scene_to_file(TITLE)
 	await get_tree().scene_changed
 	_sync_dungeon()
-	end_transition()
 
 
 ## Una partida ya leída: la escena vieja se va antes de que la partida llegue a GameState, así ningún nodo de ella
 ## reacciona a los flags nuevos ni los vuelve a escribir. Sin escena en la partida, se queda en la actual.
-func enter_save(cfg: ConfigFile) -> void:
+func enter_save(cfg: ConfigFile) -> Error:
+	if is_busy():
+		return ERR_BUSY
+	_entering = true
 	begin_transition()
 	Pause.hold(&"travel")
 	var has_scene := not str(cfg.get_value(SaveKeys.PLAYER, SaveKeys.SPAWN_UID, "")).is_empty() or not str(cfg.get_value(SaveKeys.PLAYER, SaveKeys.SPAWN_SCENE, "")).is_empty()
@@ -249,34 +271,47 @@ func enter_save(cfg: ConfigFile) -> void:
 		old.get_parent().remove_child(old)
 		old.queue_free()
 	GameState.read_from(cfg)
-	await enter_saved_scene()
+	var entered := await enter_saved_scene()
 	end_transition()
+	_entering = false
+	return OK if entered else ERR_CANT_OPEN
 
 
 ## La escena y el lugar que dice GameState (al cargar una partida o empezar una nueva).
 ## Siempre se recarga, aunque sea la misma: puertas e interruptores arrancan con los flags de la partida.
 ## Mientras carga, la escena vieja queda en pausa (que no maten al player en el medio).
-func enter_saved_scene() -> void:
+## Si la escena no existe o no carga, va al inicio del overworld; si tampoco, al título (false).
+func enter_saved_scene() -> bool:
 	if not GameState.spawn_scene.is_empty() and not ResourceLoader.exists(GameState.spawn_scene):
 		Log.error(&"flow", "La escena de la partida ya no existe:", GameState.spawn_scene)
-		GameState.spawn_scene = NEW_GAME_SCENE
-		GameState.spawn_point = &"start"
-		GameState.player_position = null
+		_spawn_at_start()
 	begin_transition()
 	Pause.hold(&"travel")
 	var changed := true
 	if not GameState.spawn_scene.is_empty():
 		changed = await _change_scene(GameState.spawn_scene)
+		if not changed and GameState.spawn_scene != NEW_GAME_SCENE:
+			Log.error(&"flow", "La escena de la partida no carga:", GameState.spawn_scene)
+			_spawn_at_start()
+			changed = await _change_scene(GameState.spawn_scene)
 	Pause.release(&"travel")
 	if not changed:
+		await _go_to_title()
 		end_transition()
-		return
+		return false
 	if not Players.all.is_empty() and GameState.player_position != null:
 		place_players(GameState.player_position)
 	elif GameState.spawn_point != &"":
 		_place_at_spawn()
 	await get_tree().physics_frame
 	end_transition()
+	return true
+
+
+func _spawn_at_start() -> void:
+	GameState.spawn_scene = NEW_GAME_SCENE
+	GameState.spawn_point = &"start"
+	GameState.player_position = null
 
 
 ## En mazmorra, en la entrada de la última sala; si no, en el punto de reaparición.

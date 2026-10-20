@@ -165,6 +165,8 @@ func load_scenario(scenario: String) -> Error:
 
 ## La ranura pasa a ser `slot` solo si la partida se pudo leer.
 func _load_path(path: String, slot: int) -> Error:
+	if loading or SceneFlow.is_busy():
+		return ERR_BUSY
 	var cfg := ConfigFile.new()
 	var err := SaveCodec.read(path, cfg)
 	if err != OK:
@@ -183,11 +185,14 @@ func _load_path(path: String, slot: int) -> Error:
 		var origin: int = cfg.get_value(SaveKeys.META, SaveKeys.SLOT, PLAYER_SLOTS[0])
 		current_slot = origin if origin in PLAYER_SLOTS else PLAYER_SLOTS[0]
 	loading = true
-	await SceneFlow.enter_save(cfg)
+	err = await SceneFlow.enter_save(cfg)
+	loading = false
+	if err != OK:
+		Log.error(&"save", "No se pudo entrar a la partida", path, error_string(err))
+		return err
 	GameState.save_tampered = tampered
 	if GameState.save_tampered:
 		Log.warning(&"save", "La partida fue modificada a mano:", path)
-	loading = false
 	Log.success(&"save", "Partida cargada:", path)
 	Log.debug(&"save", "Inventario:", ", ".join(GameState.inventory.ids().map(func(id: StringName) -> String: return "%s=%d" % [id, GameState.inventory.count(id)])))
 	return OK
