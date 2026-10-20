@@ -4,7 +4,7 @@ extends EditorScenePostImportPlugin
 ## material de Blender, cada malla guardada en assets/epiphany/meshes/<archivo>/<pieza>.res (las partes <archivo>.<parte>.glb
 ## también ahí) y las custom properties:
 ## col=box|sphere|capsule|convex en una malla → StaticBody3D; socket en un empty → Marker3D; spring en un hueso → cadena
-## de SpringBoneSimulator3D desde ese hueso (el valor es la rigidez).
+## de SpringBoneSimulator3D desde ese hueso (el valor es la rigidez); group en cualquier objeto (también -colonly) → ese grupo.
 ## Una malla <pieza>_col-colonly es la colisión simplificada de <pieza>: su cuerpo va adentro de la malla, como con -col.
 
 const ROOT := "res://assets/epiphany/"
@@ -39,6 +39,10 @@ func _post_process(scene: Node) -> void:
 			_add_collision(node, col)
 	for body: StaticBody3D in scene.find_children("*_col", "StaticBody3D", true, false):
 		_attach_collision(body)
+	for node: Node in scene.find_children("*", "", true, false):
+		var group: String = _extras(node).get("group", "")
+		if not group.is_empty():
+			node.add_to_group(group, true)
 	for node: Node3D in scene.find_children("*", "Node3D", true, false):
 		if _extras(node).has("socket") and node.get_class() == "Node3D":
 			_to_marker(node)

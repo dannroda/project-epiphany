@@ -24,6 +24,8 @@ DATA = json.load(open(os.path.join(epi.ROOT, "tools", "terreno_overworld.json"))
 GRID = DATA["rows"]
 LEVELS = [[int(ch) for ch in row] for row in DATA["levels"]]
 MOUNTAIN = 3
+## Grupo de la baranda (Targeting.WALK_GUARD): solo frena al que camina; lo pone epi_scene_import.
+WALK_GUARD = "walk_guard"
 ## Alto de la baranda invisible sobre el borde de cada terraza (m).
 RAIL = 1.6
 ## Sin baranda a esta distancia (m) de un poste del gancho.
@@ -1181,7 +1183,9 @@ def main():
 	terrain, walls = cracked_walls(collection, holes, rail)
 	cave_mouths(terrain)
 	objects += _split(terrain, "riscos", "wall", collection)
-	objects.append(_build(rail, "baranda-colonly", None, collection))
+	guard = _build(rail, "baranda-colonly", None, collection)
+	guard["group"] = WALK_GUARD
+	objects.append(guard)
 	ground = epi.Piece(12)
 	outer = [Vector((BOUNDS[0].x, BOUNDS[0].y)), Vector((BOUNDS[1].x, BOUNDS[0].y)), Vector((BOUNDS[1].x, BOUNDS[1].y)), Vector((BOUNDS[0].x, BOUNDS[1].y))]
 	paint_role(ground, fill(ground, [outer] + holes[0], 0.0, ground_height), "ground")
