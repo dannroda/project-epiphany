@@ -467,6 +467,23 @@ def escudo_huanca(p):
 	epi.logo_eye(p, Vector((0, -0.045, 0.0)), 0.36, depth=0.015, iris=("doom", "MID"))
 
 
+def lanza_devoto(p):
+	"""La lanza del devoto, en los ejes de la espada (+Z, empuñadura en el origen): asta larga de madera oscura con
+	tientos, punta de hierro en hoja y una cinta roja que cuelga bajo la punta."""
+	p.paint(p.cylinder(0.035, -0.7, 1.45, sides=8), "madera_oscura", "MID", vary=0.04)
+	for z in (-0.05, 0.25):
+		p.paint(p.cylinder(0.045, z, z + 0.08, sides=8), "noche", "MID")
+	p.paint(p.cylinder(0.05, 1.42, 1.5, sides=8), "hierro", "DARK")
+	blade = flat(p, [(0.0, 1.48), (0.07, 1.6), (0.05, 1.8), (0.0, 1.95), (-0.05, 1.8), (-0.07, 1.6)], 0.03)
+	p.paint(blade, "hierro", "LIGHT")
+	ribbon = []
+	for x, sway in ((0.02, 0.0), (-0.02, 0.05)):
+		strip = flat(p, [(x - 0.025, 1.44), (x + 0.025, 1.44), (x + 0.03 + sway, 1.1), (x - 0.02 + sway, 1.08)], 0.01)
+		p.transform(strip, Matrix.Translation((0, 0.05, 0)))
+		ribbon += strip
+	p.paint(ribbon, "tela_roja", "MID")
+
+
 piece("espada", 1, espada)
 piece("espada_dorada", 16, espada_dorada)
 piece("escudo_madera", 2, escudo_madera)
@@ -487,5 +504,6 @@ piece("martillo", 17, martillo)
 piece("maza_centinela", 18, maza_centinela)
 piece("maza_huanca", 19, maza_huanca)
 piece("escudo_huanca", 20, escudo_huanca)
+piece("lanza_devoto", 21, lanza_devoto)
 epi.layout(kit, columns=8, spacing=2.0)
 epi.publish("equipo")

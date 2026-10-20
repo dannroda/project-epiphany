@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://src/entities/entity_config.gd" id="1_config"]
 [ext_resource type="Resource" path="res://data/drops/skeleton.tres" id="2_drops"]
 [ext_resource type="Resource" path="res://data/attacks/devoto_thrust.tres" id="3_attack"]
+[ext_resource type="PackedScene" path="res://src/entities/models/devoto.tscn" id="4_model"]
 
 [resource]
 script = ExtResource("1_config")
@@ -12,6 +13,7 @@ target_height = 2.2
 attack_damage = 3
 attack = ExtResource("3_attack")
 drops = ExtResource("2_drops")
+model = ExtResource("4_model")
 vision_range = 11.0
 attack_range = 2.2
 wander_radius = 1.5

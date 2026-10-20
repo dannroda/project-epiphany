@@ -1,0 +1,11 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://src/entities/models/meshes/devoto/Body.res" id="1_2kfyx"]
+[ext_resource type="Skin" path="res://src/entities/models/meshes/devoto/skin.tres" id="2_skinl"]
+
+[node name="Visuals" type="Node3D" unique_id=1667549237]
+
+[node name="Body" type="MeshInstance3D" parent="." unique_id=918162816]
+mesh = ExtResource("1_2kfyx")
+skin = ExtResource("2_skinl")
+skeleton = NodePath("../../Skeleton3D")

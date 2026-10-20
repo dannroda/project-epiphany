@@ -453,6 +453,54 @@ def centinela(name="centinela", minor=False):
 	save(name)
 
 
+# --- devotos del ojo ---
+
+PONCHO = "tela_roja"
+
+
+def poncho(p, x, y0, y1, z0, z1, taper, stripes):
+	"""Caja del poncho, más angosta arriba, con franjas negras (cajas finas apenas más anchas) a las alturas dadas."""
+	p.paint(p.box(-x, x, y0, y1, z0, z1, taper=taper), PONCHO, "DARK", vary=0.04)
+	for z in stripes:
+		w = taper * (z - z0) / (z1 - z0) - 0.012
+		p.paint(p.box(-x + w, x - w, y0 + w, y1 - w, z, z + 0.04), "noche", "MID")
+
+
+def devoto():
+	"""Devoto del Ojo: humano de la secta, poncho largo bordó y negro con capucha, máscara blanca con el ojo del logo y
+	lanza con cinta roja (lanza_devoto, en la mano derecha)."""
+	rig = start()
+	bp = bone_points(rig)
+	body = Body(rig, "devoto", 70)
+	hips = body.part("hips")
+	hips.paint(hips.box(-0.22, 0.22, -0.15, 0.15, 0.42, 0.66), "noche", "MID")
+	poncho(hips, 0.36, -0.26, 0.26, 0.26, 0.68, 0.1, (0.32, 0.4))
+	chest = body.part("chest")
+	chest.paint(chest.box(-0.22, 0.22, -0.16, 0.16, 0.62, 1.2), "noche", "MID")
+	poncho(chest, 0.4, -0.27, 0.25, 0.66, 1.26, 0.12, (0.9, 0.98))
+	chest.paint(chest.box(-0.06, 0.06, -0.285, -0.26, 0.7, 1.22), "noche", "DARK")
+	head = body.part("head")
+	hz = 1.72
+	head.paint(head.rounded_box(-0.3, 0.3, -0.3, 0.3, hz - 0.38, hz + 0.18, radius=0.12), "noche", "DARK")
+	hood = head.rounded_box(-0.4, 0.4, -0.26, 0.42, hz - 0.46, hz + 0.36, radius=0.16)
+	head.paint(hood, PONCHO, "DARK", vary=0.04)
+	brim = head.box(-0.38, 0.38, -0.4, -0.24, hz + 0.12, hz + 0.34, taper=0.04)
+	head.paint(brim, PONCHO, "DARK")
+	tip = head.cylinder(0.22, 0.0, 0.4, sides=6, radius_top=0.02)
+	head.transform(tip, Matrix.Translation((0, 0.3, hz + 0.18)) @ Matrix.Rotation(-1.1, 4, "X"))
+	head.paint(tip, PONCHO, "DARK")
+	mask = head.rounded_box(-0.26, 0.26, -0.36, -0.28, hz - 0.34, hz + 0.12, radius=0.05, segments=2)
+	head.paint(mask, "blanco", "LIGHT")
+	epi.logo_eye(head, Vector((0, -0.37, hz - 0.08)), 0.34, depth=0.012, iris=("tela_roja", "DARK"))
+	arms_and_legs(body, bp, "noche", "piel", "noche", "madera_oscura")
+	for side in ("l", "r"):
+		up = body.part(f"upperarm.{side}")
+		a, b = bp[f"upperarm.{side}"]
+		up.paint(up.rounded_box(a.x - 0.16, a.x + 0.16, a.y - 0.16, a.y + 0.16, a.z - 0.16, a.z + 0.1, radius=0.06), PONCHO, "DARK")
+	body.build(smooth=35)
+	save("devoto")
+
+
 if __name__ == "__main__":
 	only = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else ["jugador", "chullpa", "chullpa_guardian"]
 	if "jugador" in only:
@@ -465,3 +513,5 @@ if __name__ == "__main__":
 		centinela()
 	if "huanca" in only:
 		centinela("huanca", True)
+	if "devoto" in only:
+		devoto()
