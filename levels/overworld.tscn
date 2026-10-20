@@ -49,6 +49,7 @@
 [ext_resource type="Script" uid="uid://dlf8bqdycw2kg" path="res://src/world/look/brillo_la.gd" id="brillo_la"]
 [ext_resource type="PackedScene" path="res://src/world/chullpa_entrada.tscn" id="ent_chullpa"]
 [ext_resource type="PackedScene" path="res://src/world/cumbre_entrada.tscn" id="ent_cumbre"]
+[ext_resource type="PackedScene" path="res://src/world/reflejos_entrada.tscn" id="ent_reflejos"]
 [ext_resource type="PackedScene" path="res://src/world/quenoa_entrada.tscn" id="ent_quenoa"]
 [ext_resource type="PackedScene" path="res://src/world/totora_entrada.tscn" id="ent_totora"]
 [ext_resource type="Script" uid="uid://cnuecr7682x4j" path="res://src/world/arena_area.gd" id="hm_area"]
@@ -1946,6 +1947,35 @@ shape = SubResource("BoxShape3D_springportal")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 5.2, -42.4)
 script = ExtResource("4_cr2by")
 id = &"cumbre"
+
+[node name="ReflexSun" type="StaticBody3D" parent="." instance=ExtResource("30_xv8lf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 5.2, -40.5)
+
+[node name="ReflexCrystal" type="StaticBody3D" parent="." instance=ExtResource("31_fe77v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.5, 5.2, -42.5)
+latch = true
+flag = &"ow_reflex_door"
+
+[node name="ReflexMouth" parent="." instance=ExtResource("ent_reflejos")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 5.2, -44.8)
+
+[node name="ReflexGate" type="StaticBody3D" parent="." instance=ExtResource("26_iip2e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 5.2, -43.9)
+switches = Array[NodePath]([NodePath("../ReflexCrystal")])
+
+[node name="ReflexDoor" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 6.4, -45.2)
+script = ExtResource("14_5vrew")
+target_scene = "res://levels/reflejos.tscn"
+target_spawn = &"entrada"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ReflexDoor"]
+shape = SubResource("BoxShape3D_springportal")
+
+[node name="Spawn_reflejos" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 5.2, -42.4)
+script = ExtResource("4_cr2by")
+id = &"reflejos"
 
 [node name="PlaceCumbre" type="Marker3D" parent="." unique_id=1465752225]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 5.2, -43)

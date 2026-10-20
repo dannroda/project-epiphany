@@ -229,3 +229,26 @@ func test_the_rooms_are_walkable_on_each_side_of_the_chasm() -> void:
 		assert_true(not path.is_empty() and path[-1].distance_to(to) < 0.1, "de %s se camina hasta %s" % [pair[0], pair[1]])
 	state.reset()
 
+
+## La boca en la Cumbre: el escudo lleva el sol al cristal, que baja la reja; el portal lleva al santuario y vuelve.
+func test_the_cumbre_mouth_opens_with_the_shield() -> void:
+	tree = Engine.get_main_loop() as SceneTree
+	state = tree.root.get_node(^"GameState")
+	state.reset()
+	state.give(Items.get_item(&"shield_mirror"))
+	state.equip(Items.get_item(&"shield_mirror"))
+	tree.change_scene_to_file("res://levels/overworld.tscn")
+	await tree.scene_changed
+	await tree.create_timer(0.5).timeout
+	level = tree.current_scene
+	player = tree.get_first_node_in_group(&"player") as PlayerCharacter
+	player.health.make_invulnerable(60.0)
+	var gate := _node("ReflexGate") as Gate
+	var door := _node("ReflexDoor") as Portal
+	assert_eq(door.target_scene, LEVEL)
+	assert_true(not gate.is_open, "la reja empieza cerrada")
+	var sun := _node("ReflexSun")
+	await _block_facing(Vector3(sun.global_position.x, sun.global_position.y, _node("ReflexCrystal").global_position.z), Vector3(1, 0, 1))
+	assert_true(await _until(func() -> bool: return gate.is_open, 3.0), "el escudo lleva el sol al cristal y baja la reja")
+	hold_block(player, false)
+	state.reset()
