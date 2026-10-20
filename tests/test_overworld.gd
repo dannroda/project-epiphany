@@ -581,3 +581,59 @@ func test_cracked_wall_niches_are_roofed_until_the_wall_breaks() -> void:
 		wall.smash()
 		assert_true(not lid.visible, "rota %s, el nicho se ve" % wall_name)
 	state.reset()
+
+
+func _zone_box(zone: AreaZone) -> AABB:
+	var shape := zone.get_node(^"CollisionShape3D") as CollisionShape3D
+	var size := (shape.shape as BoxShape3D).size
+	return shape.global_transform * AABB(-size / 2.0, size)
+
+
+## 16.46: las zonas no se pisan y todo el piso al que se llega caminando (con el puente arriba) cae en alguna.
+func test_the_zones_cover_the_map_without_overlapping() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var state: Node = tree.root.get_node(^"GameState")
+	state.reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	for i in 10:
+		await tree.physics_frame
+	var level := tree.current_scene
+	var zones: Array[AreaZone] = []
+	zones.assign(level.find_children("*", "AreaZone", true, false))
+	var boxes: Array[AABB] = []
+	boxes.assign(zones.map(_zone_box))
+	var overlaps: Array[String] = []
+	for i in boxes.size():
+		for j in range(i + 1, boxes.size()):
+			var common := boxes[i].intersection(boxes[j])
+			if common.size.x > 0.01 and common.size.y > 0.01 and common.size.z > 0.01:
+				overlaps.append("%s/%s" % [zones[i].name, zones[j].name])
+	assert_eq(overlaps, [], "zonas que se pisan")
+	(level.get_node(^"RavineBridge") as Bridge).raise(false)
+	for i in 4:
+		await tree.physics_frame
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	var map := player.get_world_3d().navigation_map
+	var from := NavigationServer3D.map_get_closest_point(map, player.global_position)
+	var navmesh := level.get_node(^"NavigationRegion3D") as NavigationRegion3D
+	var mesh := navmesh.navigation_mesh
+	var vertices := mesh.get_vertices()
+	var walked := 0
+	var outside: Array[String] = []
+	for p in mesh.get_polygon_count():
+		var polygon := mesh.get_polygon(p)
+		var center := Vector3.ZERO
+		for index in polygon:
+			center += vertices[index]
+		center = navmesh.global_transform * (center / polygon.size())
+		var closest := NavigationServer3D.map_get_closest_point(map, center)
+		var path := NavigationServer3D.map_get_path(map, from, closest, true)
+		if closest.distance_to(center) > 0.5 or path.is_empty() or path[-1].distance_to(closest) > 0.6:
+			continue
+		walked += 1
+		if not boxes.any(func(box: AABB) -> bool: return box.grow(0.05).has_point(center)):
+			outside.append("(%.1f, %.1f, %.1f)" % [center.x, center.y, center.z])
+	assert_true(walked > 500, "se llega a casi todo el piso (%d polígonos)" % walked)
+	assert_eq(outside.slice(0, 8), [], "%d polígonos a los que se llega fuera de toda zona" % outside.size())
+	state.reset()
