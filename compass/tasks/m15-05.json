@@ -25,11 +25,11 @@
     }
   ],
   "milestone": "m15",
-  "notes": "",
+  "notes": "-5c (2026-10-20): hoy meshes/ pesa 642 MB (terreno_organico 369, paredes_la 221). Ninguna malla está comprimida: el importador de glTF (gltf_document.cpp) apaga ARRAY_FLAG_COMPRESS_ATTRIBUTES si una sola tangente no es perpendicular a su normal, y las que genera ensure_tangents no lo son. Ningún material nuestro usa tangentes: con meshes/ensure_tangents=false en el .glb.import comprime (riscos_10: 15,0 → 11,5 MB, conserva LODs y shadow mesh). Falta: aplicarlo a los 67 .glb.import de assets/epiphany, medir carga del overworld antes/después y revisar en capturas que no se abran rendijas entre trozos del terreno (cada uno cuantiza posiciones con su AABB). Esperar al rehecho del terreno de -3e (campamentos Devotos).",
   "order": 5,
   "refs": [],
-  "status": "todo",
+  "status": "doing",
   "test": "",
   "title": "Comprimir mallas al importar",
-  "updated_at": "2026-10-20T02:53:49.513Z"
+  "updated_at": "2026-10-20T07:46:25.423Z"
 }

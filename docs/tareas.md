@@ -2591,7 +2591,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Grabar los planos y editar el teaser
   Primera versión (b343f5ce): tools/teaser/record.sh graba las 12 tomas de teaser.tscn (Movie Maker, 1080p60, ~4,5 min) y tools/teaser/edit.sh arma debug/tmp/teaser/teaser.mp4 (40,8 s: overworld 13,5 s con calma, templo 13 s con capas de mazmorra, jefe 11 s con todas, cierre con el título en Cinzel). Las tomas, el corte (CUTS en edit.sh) y la música se cambian y se vuelve a correr. Falta: que Daniel lo vea y ajustar; probar la misma secuencia con gpu-screen-recorder (no está instalado).
 
-## M11 — Pulido: contenido y feel  (214/216, 55 en revisión)
+## M11 — Pulido: contenido y feel  (214/217, 55 en revisión)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4524,6 +4524,8 @@ Daniel (2026-10-14): deambular es para que los enemigos no parezcan objetos quie
 
 Daniel (2026-10-20) step 2: Devotos del Ojo. Humans on Rig_Medium, long burgundy-and-black poncho, hood, white mask with a single eye (epi.logo_eye), spear with a red ribbon; long-wind-up thrust built for the 11.34 counterattack; camps with a fire and a banner in the Cardonal and the Bañado; later variant: the slinger.
 
+2026-10-20, step 5 split: -72 enemy (devoto.tscn d706f286, model 7ce46a7c: thrust with a 0.9 s windup, counterable; test_devoto); -3e camps (fogon.tscn and estandarte.tscn props done; Cardonal at (24, 0, 18.5–21); Bañado: Daniel picked trimming BanadoWater1 by 6 m to the east, camp at ~(84, 0, 38)). Pending: place the Devotos, a single terrain rebuild, then the overworld navmesh rebake (-5c).
+
 ### 11.116 Tests: un error de script cuenta como falla · Hecho
 
 **Terminada:** 2026-10-13 · **Prioridad:** alta · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `tests`
@@ -5760,6 +5762,12 @@ De 11.105 (propuesta aprobada por Daniel): cerca de donde se consiguen las sanda
 Daniel (2026-10-20) eligió la propuesta A del canvas (fila 'Opciones · Video con lugar para crecer'): pestañas Juego (Controles+Idioma | Audio) y Video (Pantalla | Gráficos) con LB/RB, lugar para ~4 filas más por columna. Video ya no entraba a 720p (8 filas).
 
 **Notas:** Done (-72, fce7ace1): TabBar Juego | Video with LB/RB (device prompts), Video = Pantalla | Gráficos; nodes named after the Settings keys; test_options covers switching tabs and focus.
+
+### 11.224 Golpe en picada legible: salto más alto y espada clavada en el piso · En curso
+
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** design
+
+Daniel (2026-10-20): el golpe en picada (11.34 paso 4) no se entiende y se siente frame perfect. Hoy solo sale por encima de 0,2 m del salto de 0,68 m de la pluma; antes cae al ataque normal. Atacar en cualquier momento del salto de la pluma (desde que deja el piso) tiene que clavarlo. Al entrar sube un salto extra (≈+1 m) con la espada en alto, frena arriba un instante y cae rápido con la espada hacia abajo. Al tocar el piso la espada queda clavada ≈0,4–0,5 s y se arranca. La onda (×2, 1,2 m) sale en el impacto, con polvo, sacudida y sonido. Animación autorada (AnimationPlayer) en lugar de Melee_2H_Attack_Chop. Alturas y tiempos exportados en player.tscn para afinar a ojo. Encargado a diseño (-88).
 
 ## M12 — Assets propios (Blender)  (33/39, 6 en revisión)
 
@@ -7790,7 +7798,7 @@ En el overworld (11.203) costaron ~0,8 ms GPU (7,8 → 8,6 ms). Falta decidir si
 
 **Relacionadas:** 11.203 Aprovechar las novedades de Godot 4.8
 
-### 15.5 Comprimir mallas al importar · Pendiente
+### 15.5 Comprimir mallas al importar · En curso
 
 **Responsable:** project-epiphany-5c
 
@@ -7800,6 +7808,8 @@ Los terreno_organico pesan 15-72 MB cada uno. Comprimir atributos de vértice ac
 - [ ] Activar compresión de mallas en el import
   Revisar que no se vean artefactos en el terreno ni en los colores por vértice.
 - [ ] Volver a medir
+
+**Notas:** -5c (2026-10-20): hoy meshes/ pesa 642 MB (terreno_organico 369, paredes_la 221). Ninguna malla está comprimida: el importador de glTF (gltf_document.cpp) apaga ARRAY_FLAG_COMPRESS_ATTRIBUTES si una sola tangente no es perpendicular a su normal, y las que genera ensure_tangents no lo son. Ningún material nuestro usa tangentes: con meshes/ensure_tangents=false en el .glb.import comprime (riscos_10: 15,0 → 11,5 MB, conserva LODs y shadow mesh). Falta: aplicarlo a los 67 .glb.import de assets/epiphany, medir carga del overworld antes/después y revisar en capturas que no se abran rendijas entre trozos del terreno (cada uno cuantiza posiciones con su AABB). Esperar al rehecho del terreno de -3e (campamentos Devotos).
 
 **Relacionadas:** 11.126 Push bloqueado: terreno del overworld pasa 100 MB
 

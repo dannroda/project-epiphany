@@ -107,7 +107,7 @@ scompass link list                         # todos; sale con 1 si hay vínculos 
 ## Uso habitual
 
 - Al empezar una tarea: `scompass move <id> doing`. A medida que avanzás, `scompass check <id> <n>`.
-- Al terminar: completá `test` si está vacío, dejá en `notes` lo que el siguiente necesite saber y pasala a `review` (o a `done` si ya se comprobó).
+- Al terminar: completá `test` si está vacío, dejá en `notes` lo que el siguiente necesite saber y pasala a `review` (o a `done` si ya se comprobó). El avance del hito cuenta las de `review` como hechas (y dice cuántas son); el hito se da por terminado cuando todas están en `done`.
 - Trabajo nuevo que aparece en el camino: `scompass add` en el hito que corresponda, con `--description` (qué y por qué), en lugar de dejarlo solo en el chat.
 - Si te piden "lo mío" o "lo de alta prioridad", filtrá con `--assignee` o `--priority`. Al tomar una tarea, si el proyecto usa responsables, poné tu nombre con `set --assignee`. Usá las etiquetas que ya existen (`scompass list --json` las muestra) antes de inventar otras.
 

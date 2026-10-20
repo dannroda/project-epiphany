@@ -1,0 +1,17 @@
+{
+  "assignee": "design",
+  "checklist": [],
+  "code": "11.224",
+  "created_at": "2026-10-20T18:15:09.524Z",
+  "description": "Daniel (2026-10-20): el golpe en picada (11.34 paso 4) no se entiende y se siente frame perfect. Hoy solo sale por encima de 0,2 m del salto de 0,68 m de la pluma; antes cae al ataque normal. Atacar en cualquier momento del salto de la pluma (desde que deja el piso) tiene que clavarlo. Al entrar sube un salto extra (≈+1 m) con la espada en alto, frena arriba un instante y cae rápido con la espada hacia abajo. Al tocar el piso la espada queda clavada ≈0,4–0,5 s y se arranca. La onda (×2, 1,2 m) sale en el impacto, con polvo, sacudida y sonido. Animación autorada (AnimationPlayer) en lugar de Melee_2H_Attack_Chop. Alturas y tiempos exportados en player.tscn para afinar a ojo. Encargado a diseño (-88).",
+  "milestone": "m11",
+  "notes": "",
+  "order": 220,
+  "priority": "high",
+  "refs": [],
+  "size": "m",
+  "status": "doing",
+  "test": "",
+  "title": "Golpe en picada legible: salto más alto y espada clavada en el piso",
+  "updated_at": "2026-10-20T18:15:15.555Z"
+}
