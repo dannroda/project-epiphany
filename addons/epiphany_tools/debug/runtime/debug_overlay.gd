@@ -8,19 +8,10 @@ const MAX_ISSUES := 5
 
 var _values: Dictionary[String, Variant] = {}
 var _issues: PackedStringArray = []
-var _label := Label.new()
+@onready var _label: Label = %Label
 
 
 func _ready() -> void:
-	layer = 128
-	process_mode = PROCESS_MODE_ALWAYS
-	visible = false
-	_label.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT, Control.PRESET_MODE_MINSIZE, 8)
-	_label.grow_horizontal = Control.GROW_DIRECTION_BEGIN
-	_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	_label.add_theme_constant_override(&"outline_size", 4)
-	_label.add_theme_color_override(&"font_outline_color", Color.BLACK)
-	add_child(_label)
 	var log_node := get_node_or_null(^"/root/Log")
 	if log_node:
 		log_node.entry_logged.connect(_on_entry_logged)

@@ -8,7 +8,7 @@ const SceneImport := preload("import/epi_scene_import.gd")
 
 const AutoLoads = {
 	"Log": "debug/runtime/log.gd",
-	"DebugOverlay": "debug/runtime/debug_overlay.gd",
+	"DebugOverlay": "debug/runtime/debug_overlay.tscn",
 }
 
 var _log_debugger: LogDebuggerPlugin

@@ -61,9 +61,6 @@ var _same_frame: Dictionary[StringName, int] = {}
 
 func _ready() -> void:
 	process_mode = PROCESS_MODE_ALWAYS
-	if AudioServer.get_bus_index(SFX_BUS) == -1:
-		AudioServer.add_bus()
-		AudioServer.set_bus_name(AudioServer.bus_count - 1, SFX_BUS)
 	var synths := {
 		&"hit": [0.09, func(t: float) -> float: return (randf() * 2.0 - 1.0) * 0.6 * exp(-t * 40.0) + sin(TAU * 110.0 * t) * exp(-t * 25.0)],
 		&"hurt": [0.16, func(t: float) -> float: return signf(sin(TAU * lerpf(240.0, 110.0, t / 0.16) * t)) * 0.35 * exp(-t * 14.0)],

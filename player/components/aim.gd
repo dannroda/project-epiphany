@@ -115,7 +115,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _update_debug(direction: Vector3) -> void:
-	var debug := DebugOverlay.visible
+	var debug: bool = DebugOverlay.visible
 	_reticle.visible = aiming or debug
 	_arrow.visible = debug
 	if _reticle.visible:

@@ -2053,7 +2053,7 @@ Log (API: niveles y canales)  ──print_rich / push_*──▶  salida del eng
 | `LogSink` | `Logger` propio registrado con `OS.add_logger()` en el `_init` de `Log`. Recibe todo lo que imprime el proceso (juego, engine, addons) y los errores con archivo, línea y backtrace. Solo encola: puede correr en otros hilos y adentro no se puede usar `print` ni `push_error` | `addons/epiphany_tools/debug/runtime/log_sink.gd` |
 | Pestaña "Log" | `EditorDebuggerPlugin`. El juego le manda cada línea (`EngineDebugger.send_message("epiphany_log:entry", …)`): nivel, canal, texto, hora y ubicación. Filtros por nivel y canal que se aplican al juego corriendo, y doble clic para abrir el script en la línea | `addons/epiphany_tools/` |
 | Monitores | `Performance.add_custom_monitor("epiphany/…", callable)`: gráficos en *Debugger › Monitors*. Cada sistema registra los suyos (enemigos vivos, hitboxes activas…). Funcionan también en builds exportadas | cada sistema |
-| `DebugOverlay` (autoload) | `watch(clave, valor)` para valores que cambian cada frame; se muestra con la tecla `1` (`debug_overlay`). Muestra también las últimas 5 advertencias y errores. Reemplaza a `LabelStateTracker`. Es lo que queda en builds exportadas | `addons/epiphany_tools/debug/runtime/debug_overlay.gd` |
+| `DebugOverlay` (autoload) | `watch(clave, valor)` para valores que cambian cada frame; se muestra con la tecla `1` (`debug_overlay`). Muestra también las últimas 5 advertencias y errores. Reemplaza a `LabelStateTracker`. Es lo que queda en builds exportadas | `addons/epiphany_tools/debug/runtime/debug_overlay.tscn` |
 
 Uso:
 

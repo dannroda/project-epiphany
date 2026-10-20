@@ -5,7 +5,6 @@ extends Node
 signal changed(key: StringName)
 
 const PATH := "user://settings.cfg"
-const BUSES: Array[StringName] = [&"Music", &"SFX", &"UI", &"Ambience"]
 const DEFAULTS := {
 	&"lock_toggle": false,
 	&"mouse_aim": true,
@@ -97,12 +96,6 @@ func stick_factor() -> float:
 ## Solo lo que depende de `key`; sin clave, todo (al arrancar o al cargar).
 func _apply(key := &"") -> void:
 	var all := key == &""
-	if all:
-		for bus in BUSES:
-			if AudioServer.get_bus_index(bus) == -1:
-				AudioServer.add_bus()
-				AudioServer.set_bus_name(AudioServer.bus_count - 1, bus)
-				AudioServer.set_bus_send(AudioServer.bus_count - 1, &"Master")
 	if all or key == &"music":
 		_volume(&"Music", get_value(&"music"))
 	if all or key == &"sfx":
