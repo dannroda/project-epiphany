@@ -4,12 +4,12 @@ extends PlayerState
 
 
 @export_group("Ajuste")
-@export var locked_speed := 2.5
+@export var locked_speed := 5.0
 @export_group("")
 ## Lo mínimo que hay que mantener antes de que soltar dispare.
-@export var min_draw := 0.15
+@export var min_draw := 0.075
 ## Cuánto dura el estado después de disparar.
-@export var release_time := 0.4
+@export var release_time := 0.2
 
 var _button := 0
 var _item: ItemData
@@ -26,7 +26,7 @@ func _enter() -> void:
 	_released_at = -1.0
 	_inventory = player.make_item_context().inventory
 	var draw := _item.behavior.aim_animation
-	_draw_length = player.anim_player.get_animation(draw).length if player.anim_player.has_animation(draw) else min_draw
+	_draw_length = player.anim_player.get_animation(draw).length * ANIM_PART if player.anim_player.has_animation(draw) else min_draw
 	if player.anim_player.has_animation(draw):
 		((player.anim_tree.tree_root as AnimationNodeBlendTree).get_node(&"BowDraw") as AnimationNodeAnimation).animation = draw
 	player.aim.aiming = true

@@ -1,7 +1,7 @@
 extends PlayerState
 
 ## Qué tan rápido se frena el paso del golpe.
-@export var lunge_damping := 12.0
+@export var lunge_damping := 24.0
 ## Segundos después de que un golpe termina o se corta en los que volver a apretar sigue el combo (tajo, revés,
 ## estocada); después vuelve a empezar por el tajo.
 @export var combo_window := 0.45

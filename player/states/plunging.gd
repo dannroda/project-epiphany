@@ -14,12 +14,12 @@ enum Phase { RISE, HANG, FALL, STUCK, PULL }
 ## Cuánto sube por encima de donde atacó.
 @export var rise_height := 1.0
 ## Quieto arriba antes de caer.
-@export var hang_time := 0.24
-@export var fall_speed := 9.0
+@export var hang_time := 0.12
+@export var fall_speed := 18.0
 ## Con la espada clavada en el piso.
-@export var stuck_time := 0.9
+@export var stuck_time := 0.45
 ## Sacándola (Carry/Plunge_Pull).
-@export var pull_time := 0.7
+@export var pull_time := 0.35
 @export var shake := 0.4
 @export_group("")
 
@@ -30,7 +30,7 @@ var _shadow: Decal
 
 func _enter() -> void:
 	_set_phase(Phase.RISE)
-	player.velocity = Vector3.UP * sqrt(2.0 * player.get_gravity().length() * rise_height)
+	player.velocity = Vector3.UP * sqrt(2.0 * player.fall_gravity().length() * rise_height)
 	player.anim_tree.set(&"parameters/Carry/transition_request", "On")
 	player.anim_tree.set(&"parameters/CarryPhase/transition_request", "PlungeRise")
 	Feel.sfx(&"roll", player.global_position)

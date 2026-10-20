@@ -94,7 +94,7 @@ func test_items_choose_how_they_start() -> void:
 	assert_eq(new_aimer.entry_event(), &"aim_item", "un ítem nuevo de apuntar es solo data")
 	var bow := Items.get_item(&"bow").behavior
 	assert_eq(bow.aim_animation, &"CombatRanged/Ranged_Bow_Draw", "la animación del arco sale de su .tres")
-	assert_eq(Items.get_item(&"bomb_bag").behavior.hold_time, 0.25, "las bombas se mantienen para apuntar")
+	assert_eq(Items.get_item(&"bomb_bag").behavior.hold_time, 0.125, "las bombas se mantienen para apuntar")
 
 
 func test_the_golden_sword_hits_twice_as_hard_with_its_own_trail_and_sparks() -> void:

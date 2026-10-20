@@ -1191,6 +1191,7 @@ shape = SubResource("CapsuleShape3D_32ebh")
 
 [node name="MovementState" type="LimboHSM" parent="." unique_id=1410244712]
 script = ExtResource("15_c35mf")
+update_mode = 2
 
 [node name="Idle" type="LimboState" parent="MovementState" unique_id=950358264]
 script = ExtResource("16_e7oew")
@@ -1286,10 +1287,10 @@ attack = ExtResource("atk_counter")
 script = ExtResource("st_plunging")
 wave = ExtResource("plunge_wave")
 rise_height = 1.0
-hang_time = 0.24
-fall_speed = 9.0
-stuck_time = 0.9
-pull_time = 0.7
+hang_time = 0.12
+fall_speed = 18.0
+stuck_time = 0.45
+pull_time = 0.35
 shake = 0.4
 
 [node name="Spirit" type="Node3D" parent="."]

@@ -9,5 +9,5 @@ tree_state = &"Backhand"
 active_from = 0.2
 active_to = 0.4
 cancel_from = 0.45
-lunge = 3.0
+lunge = 6.0
 trail = true

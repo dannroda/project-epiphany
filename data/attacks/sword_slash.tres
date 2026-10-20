@@ -8,5 +8,5 @@ animation = &"CombatMelee/Melee_1H_Attack_Slice_Diagonal"
 active_from = 0.22
 active_to = 0.45
 cancel_from = 0.55
-lunge = 3.5
+lunge = 7.0
 trail = true

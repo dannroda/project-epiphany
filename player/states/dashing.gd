@@ -5,13 +5,13 @@ extends PlayerState
 
 const ELEMENT := DamageInfo.DASH
 
-@export var windup := 0.5
-@export var speed := 9.5
+@export var windup := 0.25
+@export var speed := 19.0
 @export var crash_damage := 1
 @export var crash_knockback := 6.0
-@export var bounce_speed := 4.0
-@export var bounce_time := 0.3
-@export var dust_every := 0.08
+@export var bounce_speed := 8.0
+@export var bounce_time := 0.15
+@export var dust_every := 0.04
 
 enum Phase { WINDUP, RUN, BOUNCE }
 

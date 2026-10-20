@@ -1,6 +1,8 @@
 # Idle
 extends PlayerState
 
+const BRAKE = 20.0
+
 func _enter() -> void:
 	if not player.anim_tree.active:
 		player.anim_tree.active = true
@@ -8,8 +10,8 @@ func _enter() -> void:
 
 
 func _update(delta: float) -> void:
-	player.velocity.x = move_toward(player.velocity.x, 0, SPEED)
-	player.velocity.z = move_toward(player.velocity.z, 0, SPEED)
+	player.velocity.x = move_toward(player.velocity.x, 0, BRAKE)
+	player.velocity.z = move_toward(player.velocity.z, 0, BRAKE)
 	player.move_and_slide()
 
 	var target: Node3D = blackboard.get_var(BB_TARGET, null)

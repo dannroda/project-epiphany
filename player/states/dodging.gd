@@ -1,10 +1,12 @@
 extends PlayerState
 
-@export var duration := 0.45
-@export var speed := 8.0
-## Tramo del roll (0..1) en que no recibe daño.
-@export_range(0.0, 1.0) var iframes_from := 0.1
-@export_range(0.0, 1.0) var iframes_to := 0.75
+@export var duration := 0.225
+@export var speed := 16.0
+## Tramo del roll en que no recibe daño (pasado 1 sigue después de rodar).
+@export_range(0.0, 2.0) var iframes_from := 0.1
+@export_range(0.0, 2.0) var iframes_to := 1.4
+## Lo que deja fantasmas.
+@export var ghost_time := 0.45
 
 var _direction := Vector3.ZERO
 var _elapsed := 0.0
@@ -25,7 +27,7 @@ func _enter() -> void:
 	player.anim_tree.set(&"parameters/Dodge/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 	Feel.burst(&"dust", player.global_position + Vector3.UP * 0.1, -_direction)
 	Feel.sfx(&"roll", player.global_position)
-	player.dodge_ghosts.start(duration)
+	player.dodge_ghosts.start(ghost_time)
 
 
 func _update(delta: float) -> void:

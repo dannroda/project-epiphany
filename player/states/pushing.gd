@@ -29,11 +29,11 @@ func _update(delta: float) -> void:
 		dispatch("finished")
 		return
 	if _block.moving:
-		player.velocity.x = _direction.x * PushBlock.CELL / _block.move_time
-		player.velocity.z = _direction.z * PushBlock.CELL / _block.move_time
+		player.velocity.x = _direction.x * 2.0 * PushBlock.CELL / _block.move_time
+		player.velocity.z = _direction.z * 2.0 * PushBlock.CELL / _block.move_time
 	else:
-		player.velocity.x = _direction.x * 0.5
-		player.velocity.z = _direction.z * 0.5
+		player.velocity.x = _direction.x
+		player.velocity.z = _direction.z
 		_held += delta
 		if _held >= _block.push_delay:
 			_held = 0.0

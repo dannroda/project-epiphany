@@ -12,7 +12,7 @@ bomb_scene = ExtResource("5_bomb_scene")
 ammo = ExtResource("4_ammo")
 use_at = 0.4
 end_at = 0.6
-hold_time = 0.25
+hold_time = 0.125
 
 [resource]
 script = ExtResource("3_kgno8")

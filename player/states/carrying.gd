@@ -3,7 +3,7 @@ extends PlayerState
 ## objetivo fijado), o lo apoya si el Liftable lo pide y no hay dirección; rodar o recibir un golpe lo suelta.
 
 @export_group("Ajuste")
-@export var carry_speed := 3.0
+@export var carry_speed := 6.0
 @export var throw_distance := 4.5
 @export var flight_time := 0.5
 @export_group("")
@@ -19,7 +19,7 @@ func _enter() -> void:
 	_body = liftable.make_body()
 	_elapsed = 0.0
 	_thrown_at = -1.0
-	_lift_time = player.anim_player.get_animation(&"Carry/Carry_Lift").length
+	_lift_time = player.anim_player.get_animation(&"Carry/Carry_Lift").length * ANIM_PART
 	player.velocity = Vector3.ZERO
 	player.carrier.carry(_body, true)
 
@@ -30,10 +30,10 @@ func _update(delta: float) -> void:
 		player.velocity.x = 0.0
 		player.velocity.z = 0.0
 		player.move_and_slide()
-		if player.carrier.is_carrying() and _elapsed - _thrown_at >= player.carrier.throw_delay():
+		if player.carrier.is_carrying() and _elapsed - _thrown_at >= player.carrier.throw_delay() * ANIM_PART:
 			_body.flying = true
 			player.carrier.throw(_throw_point(), flight_time)
-		elif _elapsed - _thrown_at >= player.carrier.throw_length():
+		elif _elapsed - _thrown_at >= player.carrier.throw_length() * ANIM_PART:
 			dispatch("finished")
 		return
 	if not player.carrier.is_carrying():

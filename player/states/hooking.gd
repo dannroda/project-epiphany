@@ -4,10 +4,10 @@ extends PlayerState
 
 const ANIMATION := &"General/Use_Item"
 
-@export var pull_speed := 14.0
+@export var pull_speed := 28.0
 ## A esta distancia del punto donde se clavó, llega.
 @export var stop_distance := 0.9
-@export var max_pull_time := 1.5
+@export var max_pull_time := 0.75
 
 var _hook: Hook
 var _direction := Vector3.ZERO

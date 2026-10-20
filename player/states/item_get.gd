@@ -7,7 +7,7 @@ const RAISE := &"Carry/ItemGet_Raise"
 const LOWER := &"Carry/ItemGet_Lower"
 const TUTORIAL_CARD := preload("res://src/ui/tutorial/tutorial_card.tscn")
 ## Pausa con las manos arriba antes de abrir la caja.
-@export var beat := 0.12
+@export var beat := 0.06
 ## Los anillos (con el ítem) van sobre la cabeza, donde se carga lo levantado; corrimiento en pantalla.
 @export var rings_offset := Vector2(0, -40)
 ## Al cerrar la caja, la tarjeta del mini tutorial del ítem si tiene uno y no se vio (11.105).
@@ -26,14 +26,14 @@ func _enter() -> void:
 	player.velocity = Vector3.ZERO
 	player.model.look_at(player.model.global_position - Vector3.BACK, Vector3.UP)
 	player.carrier.raise_item()
-	_show_at = player.anim_player.get_animation(RAISE).length + beat
+	_show_at = player.anim_player.get_animation(RAISE).length * ANIM_PART + beat
 
 
 func _update(delta: float) -> void:
 	_elapsed += delta
 	if not _shown and _elapsed >= _show_at:
 		_show()
-	if _lowered_at >= 0.0 and _elapsed - _lowered_at >= player.anim_player.get_animation(LOWER).length:
+	if _lowered_at >= 0.0 and _elapsed - _lowered_at >= player.anim_player.get_animation(LOWER).length * ANIM_PART:
 		dispatch("finished")
 
 

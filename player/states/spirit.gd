@@ -4,10 +4,10 @@ extends PlayerState
 
 @export var revive_health := 4
 @export var revive_radius := 0.8
-@export var revive_time := 1.0
+@export var revive_time := 0.5
 ## Distancia a la que sigue al vivo más cercano.
 @export var follow_distance := 2.0
-@export var follow_speed := 3.0
+@export var follow_speed := 6.0
 @export var float_height := 1.0
 ## Cuánto crece el espíritu mientras lo reviven.
 @export var revive_grow := 0.6
@@ -50,7 +50,7 @@ func _update(delta: float) -> void:
 	to.y = 0.0
 	if to.length() > follow_distance:
 		player.global_position += to.normalized() * minf(to.length() - follow_distance, follow_speed * delta)
-	player.global_position.y = lerpf(player.global_position.y, living.global_position.y, minf(1.0, 4.0 * delta))
+	player.global_position.y = lerpf(player.global_position.y, living.global_position.y, minf(1.0, 8.0 * delta))
 	_touch = _touch + delta if to.length() <= revive_radius else maxf(_touch - delta, 0.0)
 	player.spirit.scale = Vector3.ONE * (1.0 + revive_grow * _touch / revive_time)
 	if _touch >= revive_time:

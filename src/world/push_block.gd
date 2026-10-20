@@ -18,7 +18,7 @@ const MASK := 1 | 4 | 8
 @export var solved_position: Vector3
 @export var move_time := 0.35
 ## Cuánto hay que empujar contra el bloque antes de que se mueva.
-@export var push_delay := 0.3
+@export var push_delay := 0.15
 
 @onready var interactable: Interactable = get_node_or_null(^"Interactable")
 @onready var shape: CollisionShape3D = $CollisionShape3D

@@ -11,6 +11,6 @@ active_to = 0.42
 knockback_multiplier = 1.5
 stun_time = 1.2
 cancel_from = 0.5
-lunge = 3.0
+lunge = 6.0
 trail = true
 tip_trail = true

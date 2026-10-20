@@ -36,7 +36,7 @@ func _start() -> void:
 		animation = DEFAULT_ANIMATION
 	var root := player.anim_tree.tree_root as AnimationNodeBlendTree
 	(root.get_node(&"ItemAnim") as AnimationNodeAnimation).animation = animation
-	_duration = player.anim_player.get_animation(animation).length
+	_duration = player.anim_player.get_animation(animation).length * ANIM_PART
 	if _item.equip_scene:
 		player.equipment.hold(_item, true)
 	player.anim_tree.set(&"parameters/UseItem/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)

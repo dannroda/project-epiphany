@@ -25,7 +25,7 @@ func _game_over_open() -> bool:
 
 func _update(delta: float) -> void:
 	if not player.is_on_floor():
-		player.velocity += player.get_gravity() * delta
+		player.velocity += player.fall_gravity() * delta
 	player.velocity.x = 0.0
 	player.velocity.z = 0.0
 	player.move_and_slide()

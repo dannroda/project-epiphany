@@ -1,9 +1,9 @@
 class_name PlayerState
 extends LimboState
 
-const SPEED = 5.0
-const JUMP_VELOCITY = 4.5
-const ROTATION_SPEED = 10
+const SPEED = 10.0
+## Los estados que esperan una animación (levantar, tirar, usar un ítem, tensar el arco) siguen hasta esta parte de su largo.
+const ANIM_PART := 0.5
 ## Claves del blackboard de la máquina de estados del player.
 const BB_TARGET := &"target"
 const BB_IS_BLOCKING := &"is_blocking"

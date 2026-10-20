@@ -3,8 +3,8 @@ extends PlayerState
 ## (Carry/Climb) mirando a BB_CLIMB_FACE; en los demás camina hacia donde va.
 
 @export_group("Ajuste")
-@export var climb_speed := 2.2
-@export var walk_speed := 3.2
+@export var climb_speed := 4.4
+@export var walk_speed := 6.4
 @export_group("")
 
 var _path := PackedVector3Array()

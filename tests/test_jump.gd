@@ -330,7 +330,7 @@ func test_jumping_over_raised_spikes_is_safe_but_landing_on_them_hurts() -> void
 	var trap := (load("res://src/world/spike_trap.tscn") as PackedScene).instantiate() as SpikeTrap
 	trap.period = 0.0
 	tree.current_scene.add_child(trap)
-	trap.global_position = FAR + Vector3(1.5, 0, 0)
+	trap.global_position = FAR + Vector3(1.7, 0, 0)
 	var full := player.health.current
 	var landed := await _jump_right(tree, player, FAR)
 	assert_true(landed.x - FAR.x > 2.8, "pasó por encima (x %.2f)" % (landed.x - FAR.x))

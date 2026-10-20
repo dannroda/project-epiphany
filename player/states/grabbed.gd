@@ -4,7 +4,7 @@ extends PlayerState
 const MASH_ACTIONS: Array[StringName] = [&"attack", &"interact", &"dodge", &"z-lock"]
 
 ## Apretones para soltarse.
-@export var presses_to_escape := 8
+@export var presses_to_escape := 4
 
 var _presses := 0
 

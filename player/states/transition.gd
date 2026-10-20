@@ -1,7 +1,9 @@
 extends PlayerState
 ## Cruce de sala: sin input, el player camina solo hacia la sala nueva mientras la cámara se desliza.
 
-@export var speed := 3.2
+@export var speed := 6.4
+## Qué parte del deslizamiento de la cámara camina.
+@export_range(0.0, 1.0) var walk_part := 0.5
 
 var _direction := Vector3.ZERO
 var _duration := 0.5
@@ -25,7 +27,7 @@ func _update(delta: float) -> void:
 	player.velocity.x = _direction.x * walk
 	player.velocity.z = _direction.z * walk
 	player.move_and_slide()
-	if _elapsed >= _duration:
+	if _elapsed >= _duration * walk_part:
 		dispatch("finished")
 
 

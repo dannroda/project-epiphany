@@ -16,13 +16,15 @@ signal item_used(item: ItemData)
 signal escaped
 
 @export var config: EntityConfig
+## Multiplica la gravedad del mundo; los saltos suben lo mismo.
+@export var gravity_scale := 4.0
 
 @onready var model: Node3D = $ModelController
 ## Lo que se ve del caído en co-op (estado Spirit).
 @onready var spirit: Node3D = $Spirit
 @onready var anim_player: AnimationPlayer = $ModelController/AnimationPlayer
 @onready var anim_tree: AnimationTree = $ModelController/AnimationTree
-@onready var movement_state: LimboHSM = $MovementState
+@onready var movement_state: PlayerStateMachine = $MovementState
 @onready var health: Health = $Health
 @onready var hurtbox: Hurtbox = $Hurtbox
 @onready var hitbox: Hitbox = $ModelController/Hitboxes/Front
@@ -100,6 +102,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	movement_state.read_input(delta)
 	movement_state.update(delta)
 	if is_on_floor():
 		last_ground = global_position
@@ -143,6 +146,10 @@ func _process(_delta: float) -> void:
 		Feel.set_trail(sword_trail, blade)
 	if tip != tip_trail.emitting:
 		Feel.set_trail(tip_trail, tip)
+
+
+func fall_gravity() -> Vector3:
+	return get_gravity() * gravity_scale
 
 
 ## El ítem asignado al botón, si lo tiene y se puede usar ahora.

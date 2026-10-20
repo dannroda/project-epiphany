@@ -1,7 +1,7 @@
 # Moving
 extends PlayerState
 
-const BLOCK_SPEED = 2.0
+const BLOCK_SPEED = 4.0
 
 func _enter() -> void:
 	pass

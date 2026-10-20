@@ -4,12 +4,14 @@ extends "res://player/states/attacking.gd"
 
 @export var attack: AttackData
 ## Segundos hasta quedar a su espalda.
-@export var move_time := 0.32
+@export var move_time := 0.16
 ## A cuánto de su centro queda, detrás.
 @export var behind_distance := 1.3
 @export var vault_height := 1.4
 ## Lo que dura la invulnerabilidad después de llegar.
-@export var cover_after := 0.25
+@export var cover_after := 0.41
+## Lo que deja fantasmas.
+@export var ghost_time := 0.32
 
 const VAULT_ANIMATION := &"MovementBasic/Jump_Full_Short"
 
@@ -56,7 +58,7 @@ func _enter() -> void:
 		_arc = absf(_arc) * (1.0 if Vector3(input.x, 0.0, input.y).dot(right) >= 0.0 else -1.0)
 	player.add_collision_exception_with(_target)
 	player.health.make_invulnerable(move_time + cover_after)
-	player.dodge_ghosts.start(move_time)
+	player.dodge_ghosts.start(ghost_time)
 	if _vault:
 		var root := player.anim_tree.tree_root as AnimationNodeBlendTree
 		(root.get_node(&"ItemAnim") as AnimationNodeAnimation).animation = VAULT_ANIMATION

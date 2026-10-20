@@ -7,11 +7,11 @@ const ANIMATION := &"MovementBasic/Jump_Full_Short"
 
 @export var height := 0.68
 ## Velocidad horizontal con el stick a fondo.
-@export var speed := 4.0
+@export var speed := 8.0
 ## Qué tan rápido el stick corrige la dirección en el aire (0 = nada).
-@export var air_control := 2.0
+@export var air_control := 4.0
 ## Salto largo (11.118): saltar en plena carrera de las sandalias sigue recto a esta velocidad, sin control en el aire.
-@export var long_jump_speed := 8.6
+@export var long_jump_speed := 17.2
 ## Tamaño de la sombra en el piso y en lo más alto.
 @export var shadow_size := Vector2(0.9, 0.55)
 
@@ -34,7 +34,9 @@ func _enter() -> void:
 	_velocity = long_jump[0] * long_jump_speed if _long else _wanted()
 	if not _velocity.is_zero_approx():
 		player.model.look_at(player.model.global_position - _velocity, Vector3.UP)
-	player.velocity = _velocity + Vector3.UP * sqrt(2.0 * player.get_gravity().length() * height)
+	var gravity := player.fall_gravity().length()
+	# El primer cuadro sale del piso sin gravedad: un cuarto de cuadro menos de impulso deja el arco de antes.
+	player.velocity = _velocity + Vector3.UP * (sqrt(2.0 * gravity * height) - gravity * get_physics_process_delta_time() / 4.0)
 	var root := player.anim_tree.tree_root as AnimationNodeBlendTree
 	(root.get_node(&"ItemAnim") as AnimationNodeAnimation).animation = ANIMATION
 	player.anim_tree.set(&"parameters/UseItem/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
@@ -55,7 +57,7 @@ func _update(delta: float) -> void:
 	_place_shadow()
 	if not player.is_on_floor():
 		_left_floor = true
-	elif _left_floor or _elapsed > 0.25:
+	elif _left_floor or _elapsed > 0.125:
 		Feel.burst(&"dust", player.global_position + Vector3.UP * 0.1, Vector3.UP)
 		dispatch("finished")
 

@@ -1,3 +1,4 @@
+class_name PlayerStateMachine
 extends LimboHSM
 
 
@@ -75,10 +76,12 @@ func _setup() -> void:
 	initial_state = $Idle
 
 
-func _update(delta: float) -> void:
+## Gravedad y lo que pide el control, antes de update(): fuera del update el cambio de estado es inmediato y el estado
+## nuevo ya actúa en este cuadro (adentro, LimboHSM lo deja para el siguiente).
+func read_input(delta: float) -> void:
 	_sync_guard()
 	if not player.is_on_floor():
-		player.velocity += player.get_gravity() * delta
+		player.velocity += player.fall_gravity() * delta
 
 	var input_dir := player.controls.move()
 	blackboard.set_var(PlayerState.BB_INPUT_DIR, input_dir)

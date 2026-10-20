@@ -1,7 +1,9 @@
 extends PlayerState
 
-@export var duration := 0.25
-@export var friction := 20.0
+@export var duration := 0.125
+@export var friction := 80.0
+## Cuánto más lo aleja el knockback del golpe que a un enemigo.
+@export var knockback_scale := 2.0
 
 var _left := 0.0
 
@@ -18,7 +20,7 @@ func _enter() -> void:
 	if away.is_zero_approx():
 		return
 	away = away.normalized()
-	player.velocity = away * info.knockback
+	player.velocity = away * info.knockback * knockback_scale
 	player.model.look_at(player.model.global_position + away, Vector3.UP)
 
 

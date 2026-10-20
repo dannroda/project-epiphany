@@ -52,7 +52,7 @@ func _physics_process(delta: float) -> void:
 			_waders.erase(player)
 			continue
 		_waders[player] -= delta
-		if _waders[player] <= 0.0 and Vector2(player.velocity.x, player.velocity.z).length() > 1.0:
+		if _waders[player] <= 0.0 and Vector2(player.velocity.x, player.velocity.z).length() > 2.0:
 			_waders[player] = STEP_TIME
 			var at := Vector3(player.global_position.x, global_position.y + SURFACE_Y, player.global_position.z)
 			Feel.burst(&"wade", at, Vector3.UP)
