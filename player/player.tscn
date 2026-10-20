@@ -67,12 +67,19 @@ fadeout_time = 0.15
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_blockhit"]
 animation = &"CombatMelee/Melee_Block_Hit"
 
-[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_bow"]
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_bow"]
 filter_enabled = true
 filters = ["Skeleton3D:chest", "Skeleton3D:hand.l", "Skeleton3D:hand.r", "Skeleton3D:head", "Skeleton3D:lowerarm.l", "Skeleton3D:lowerarm.r", "Skeleton3D:spine", "Skeleton3D:upperarm.l", "Skeleton3D:upperarm.r", "Skeleton3D:wrist.l", "Skeleton3D:wrist.r"]
+fadein_time = 0.12
+fadeout_time = 0.12
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bowdraw"]
 animation = &"CombatRanged/Ranged_Bow_Draw"
+use_custom_timeline = true
+timeline_length = 3600.0
+stretch_time_scale = false
+start_offset = 0.0
+loop_mode = 0
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bowidle"]
 animation = &"CombatRanged/Ranged_Bow_Aiming_Idle"
@@ -100,7 +107,16 @@ input_2/reset = true
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bowrelease"]
 animation = &"CombatRanged/Ranged_Bow_Release"
 
-[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_carry"]
+[sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_carry"]
+xfade_time = 0.12
+input_0/name = "Off"
+input_0/auto_advance = false
+input_0/break_loop_at_end = false
+input_0/reset = false
+input_1/name = "On"
+input_1/auto_advance = false
+input_1/break_loop_at_end = false
+input_1/reset = false
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_carrylift"]
 animation = &"Carry/Carry_Lift"
@@ -207,9 +223,11 @@ animation = &"MovementAdvanced/Dodge_Left"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dodgeright"]
 animation = &"MovementAdvanced/Dodge_Right"
 
-[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_g4c7l"]
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_guard"]
 filter_enabled = true
 filters = ["Skeleton3D:chest", "Skeleton3D:hand.l", "Skeleton3D:lowerarm.l", "Skeleton3D:upperarm.l", "Skeleton3D:wrist.l"]
+fadein_time = 0.15
+fadeout_time = 0.15
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_r7pn3"]
 fadein_time = 0.05
@@ -226,6 +244,11 @@ animation = &"General/Use_Item"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_s7qer"]
 animation = &"CombatMelee/Melee_Blocking"
+use_custom_timeline = true
+timeline_length = 3600.0
+stretch_time_scale = false
+start_offset = 0.0
+loop_mode = 0
 
 [sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_7evp1"]
 xfade_time = 0.3
@@ -303,8 +326,8 @@ nodes/Combat/node = SubResource("AnimationNodeTransition_peicu")
 nodes/Combat/position = Vector2(-293.33334, 26.666666)
 nodes/MeleeBlocking/node = SubResource("AnimationNodeAnimation_s7qer")
 nodes/MeleeBlocking/position = Vector2(-293.33334, 426.66666)
-nodes/GuardBlend/node = SubResource("AnimationNodeBlend2_g4c7l")
-nodes/GuardBlend/position = Vector2(400, 320)
+nodes/Guard/node = SubResource("AnimationNodeOneShot_guard")
+nodes/Guard/position = Vector2(400, 320)
 nodes/AttackType/node = SubResource("AnimationNodeTransition_g4c7l")
 nodes/AttackType/position = Vector2(720, 693.3333)
 nodes/Stab/node = SubResource("AnimationNodeAnimation_knn7v")
@@ -341,8 +364,8 @@ nodes/BowRelease/node = SubResource("AnimationNodeAnimation_bowrelease")
 nodes/BowRelease/position = Vector2(1093.3334, 1333.3334)
 nodes/BowPhase/node = SubResource("AnimationNodeTransition_bowphase")
 nodes/BowPhase/position = Vector2(2080, 1100)
-nodes/BowBlend/node = SubResource("AnimationNodeBlend2_bow")
-nodes/BowBlend/position = Vector2(2453.3333, 960)
+nodes/Bow/node = SubResource("AnimationNodeOneShot_bow")
+nodes/Bow/position = Vector2(2453.3333, 960)
 nodes/CarryLift/node = SubResource("AnimationNodeAnimation_carrylift")
 nodes/CarryLift/position = Vector2(2453.3333, 1300)
 nodes/CarryIdle/node = SubResource("AnimationNodeAnimation_carryidle")
@@ -361,9 +384,9 @@ nodes/Climb/node = SubResource("AnimationNodeAnimation_climb")
 nodes/Climb/position = Vector2(2453.3333, 2350)
 nodes/CarryPhase/node = SubResource("AnimationNodeTransition_carryphase")
 nodes/CarryPhase/position = Vector2(2800, 1400)
-nodes/CarryBlend/node = SubResource("AnimationNodeBlend2_carry")
-nodes/CarryBlend/position = Vector2(3100, 1000)
-node_connections = [&"output", 0, &"Dodge", &"Movement", 0, &"Idle", &"Movement", 1, &"Running", &"Attack", 0, &"GuardBlend", &"Attack", 1, &"AttackType", &"Combat", 0, &"Movement", &"Combat", 1, &"Targeting", &"GuardBlend", 0, &"Combat", &"GuardBlend", 1, &"MeleeBlocking", &"AttackType", 0, &"SwordSlice", &"AttackType", 1, &"Stab", &"Hurt", 0, &"Attack", &"Hurt", 1, &"HurtAnim+ Engine capabi", &"BlockHit", 0, &"Hurt", &"BlockHit", 1, &"BlockHitAnim", &"DodgeDir", 0, &"DodgeForward", &"DodgeDir", 1, &"DodgeBackward", &"DodgeDir", 2, &"DodgeLeft", &"DodgeDir", 3, &"DodgeRight", &"Dodge", 0, &"CarryBlend", &"Dodge", 1, &"DodgeDir", &"UseItem", 0, &"BlockHit", &"UseItem", 1, &"ItemAnim", &"BowPhase", 0, &"BowDraw", &"BowPhase", 1, &"BowIdle", &"BowPhase", 2, &"BowRelease", &"BowBlend", 0, &"UseItem", &"BowBlend", 1, &"BowPhase", &"CarryPhase", 0, &"CarryLift", &"CarryPhase", 1, &"CarryIdle", &"CarryPhase", 2, &"CarryWalk", &"CarryPhase", 3, &"CarryThrow", &"CarryPhase", 4, &"ItemRaise", &"CarryPhase", 5, &"ItemHold", &"CarryPhase", 6, &"ItemLower", &"CarryPhase", 7, &"Climb", &"CarryBlend", 0, &"BowBlend", &"CarryBlend", 1, &"CarryPhase"]
+nodes/Carry/node = SubResource("AnimationNodeTransition_carry")
+nodes/Carry/position = Vector2(3100, 1000)
+node_connections = [&"output", 0, &"Dodge", &"Movement", 0, &"Idle", &"Movement", 1, &"Running", &"Attack", 0, &"Guard", &"Attack", 1, &"AttackType", &"Combat", 0, &"Movement", &"Combat", 1, &"Targeting", &"Guard", 0, &"Combat", &"Guard", 1, &"MeleeBlocking", &"AttackType", 0, &"SwordSlice", &"AttackType", 1, &"Stab", &"Hurt", 0, &"Attack", &"Hurt", 1, &"HurtAnim+ Engine capabi", &"BlockHit", 0, &"Hurt", &"BlockHit", 1, &"BlockHitAnim", &"DodgeDir", 0, &"DodgeForward", &"DodgeDir", 1, &"DodgeBackward", &"DodgeDir", 2, &"DodgeLeft", &"DodgeDir", 3, &"DodgeRight", &"Dodge", 0, &"Carry", &"Dodge", 1, &"DodgeDir", &"UseItem", 0, &"BlockHit", &"UseItem", 1, &"ItemAnim", &"BowPhase", 0, &"BowDraw", &"BowPhase", 1, &"BowIdle", &"BowPhase", 2, &"BowRelease", &"Bow", 0, &"UseItem", &"Bow", 1, &"BowPhase", &"CarryPhase", 0, &"CarryLift", &"CarryPhase", 1, &"CarryIdle", &"CarryPhase", 2, &"CarryWalk", &"CarryPhase", 3, &"CarryThrow", &"CarryPhase", 4, &"ItemRaise", &"CarryPhase", 5, &"ItemHold", &"CarryPhase", 6, &"ItemLower", &"CarryPhase", 7, &"Climb", &"Carry", 0, &"Bow", &"Carry", 1, &"CarryPhase"]
 
 [sub_resource type="AnimationNodeObserverOneShot" id="AnimationNodeObserverOneShot_4uxyr"]
 
@@ -719,6 +742,9 @@ parameters/Movement/current_state = "Running"
 parameters/Movement/transition_request = ""
 parameters/Movement/current_index = 1
 parameters/Movement/observer = null
+parameters/Carry/current_state = "Off"
+parameters/Carry/transition_request = ""
+parameters/Carry/current_index = 0
 parameters/Attack/active = false
 parameters/Attack/internal_active = false
 parameters/Attack/request = 0
@@ -729,7 +755,6 @@ parameters/Combat/current_state = "Targeting"
 parameters/Combat/transition_request = ""
 parameters/Combat/current_index = 1
 parameters/Combat/observer = null
-parameters/GuardBlend/blend_amount = 1.0
 parameters/AttackType/current_state = "Slash"
 parameters/AttackType/transition_request = ""
 parameters/AttackType/current_index = 0
@@ -758,12 +783,10 @@ parameters/BowPhase/current_state = ""
 parameters/BowPhase/transition_request = ""
 parameters/BowPhase/current_index = -1
 parameters/BowPhase/observer = null
-parameters/BowBlend/blend_amount = 0.0
 parameters/CarryPhase/current_state = ""
 parameters/CarryPhase/transition_request = ""
 parameters/CarryPhase/current_index = -1
 parameters/CarryPhase/observer = null
-parameters/CarryBlend/blend_amount = 0.0
 
 [node name="Visuals" parent="ModelController" unique_id=73006567 instance=ExtResource("m_knight")]
 

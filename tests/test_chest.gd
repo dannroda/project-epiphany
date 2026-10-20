@@ -78,7 +78,7 @@ func test_item_get_raises_both_hands_until_the_box_closes() -> void:
 	player.play_item_get(Items.get_item(&"bow"))
 	await tree.create_timer(0.8).timeout
 	assert_true(stack.top() != null and stack.top().has_signal(&"closed"), "caja abierta")
-	assert_eq(player.anim_tree.get(&"parameters/CarryBlend/blend_amount"), 1.0, "en la pose de item get")
+	assert_eq(player.anim_tree.get(&"parameters/Carry/current_state"), &"On", "en la pose de item get")
 	assert_true(String(player.anim_tree.get(&"parameters/CarryPhase/current_state")).begins_with("Item"))
 	assert_true(not player.equipment.weapon_socket.visible, "guarda la espada para levantar el ítem")
 	var hands := (player.equipment.weapon_socket.global_position + player.equipment.shield_hand_socket.global_position) * 0.5
@@ -86,7 +86,7 @@ func test_item_get_raises_both_hands_until_the_box_closes() -> void:
 	stack.pop()
 	await tree.create_timer(0.6).timeout
 	assert_eq(player.movement_state.get_active_state().name, &"Idle", "vuelve a Idle")
-	assert_eq(player.anim_tree.get(&"parameters/CarryBlend/blend_amount"), 0.0, "sale de la pose")
+	assert_eq(player.anim_tree.get(&"parameters/Carry/current_state"), &"Off", "sale de la pose")
 	assert_true(player.equipment.weapon_socket.visible, "la espada vuelve a la mano")
 	state.reset()
 

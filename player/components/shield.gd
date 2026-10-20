@@ -13,7 +13,6 @@ extends Node
 ## Bloqueando con el haz en el escudo espejo, el stick derecho (o el mouse) gira al player (rad/s).
 @export var light_turn_speed := 2.2
 
-var _guard_tween: Tween
 var _light_frame := -10
 
 
@@ -56,10 +55,8 @@ func blocks_from(point: Vector3) -> bool:
 
 ## Sube o baja la guardia (la mezcla de la animación).
 func set_guard(active: bool) -> void:
-	if _guard_tween and _guard_tween.is_valid():
-		_guard_tween.kill()
-	_guard_tween = create_tween()
-	_guard_tween.tween_property(player.anim_tree, "parameters/GuardBlend/blend_amount", 1.0 if active else 0.0, 0.15)
+	var request := AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE if active else AnimationNodeOneShot.ONE_SHOT_REQUEST_FADE_OUT
+	player.anim_tree.set(&"parameters/Guard/request", request)
 
 
 ## De frente bloqueando: el espejo refleja lo reflejable y el escudo frena lo que protege; lo demás pasa.

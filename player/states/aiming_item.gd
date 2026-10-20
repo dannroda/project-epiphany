@@ -10,7 +10,6 @@ extends PlayerState
 @export var min_draw := 0.15
 ## Cuánto dura el estado después de disparar.
 @export var release_time := 0.4
-@export var blend_time := 0.12
 
 var _button := 0
 var _item: ItemData
@@ -18,7 +17,6 @@ var _inventory: Inventory
 var _elapsed := 0.0
 var _draw_length := 1.0
 var _released_at := -1.0
-var _blend: Tween
 
 
 func _enter() -> void:
@@ -37,7 +35,7 @@ func _enter() -> void:
 	player.anim_tree.set(&"parameters/Movement/transition_request", "Idle")
 	player.equipment.hold(_item)
 	player.anim_tree.set(&"parameters/BowPhase/transition_request", "Draw")
-	_fade_to(1.0)
+	player.anim_tree.set(&"parameters/Bow/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
 
 func _update(delta: float) -> void:
@@ -61,7 +59,7 @@ func _exit() -> void:
 	player.aim.yaw_offset = 0.0
 	player.aim.move_aims = false
 	player.equipment.release_held()
-	_fade_to(0.0)
+	player.anim_tree.set(&"parameters/Bow/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FADE_OUT)
 
 
 func _release() -> void:
@@ -92,13 +90,6 @@ func _move() -> void:
 		player.velocity.z = 0.0
 		player.move_and_slide()
 		player.anim_tree["parameters/Targeting/blend_position"] = Vector2.ZERO
-
-
-func _fade_to(amount: float) -> void:
-	if _blend:
-		_blend.kill()
-	_blend = create_tween()
-	_blend.tween_property(player.anim_tree, "parameters/BowBlend/blend_amount", amount, blend_time)
 
 
 ## El modelo en la mano, si se tensa (BowModel).

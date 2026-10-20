@@ -2,7 +2,6 @@ class_name Carrier
 extends Node
 ## Lo que el player lleva sobre la cabeza (una bomba, una vasija): lo sostiene sin física, lo suelta o lo tira en arco.
 
-const BLEND_TIME := 0.12
 
 @export_group("Ajuste")
 ## Carry_Throw lo suelta en esta fracción de la animación.
@@ -21,7 +20,6 @@ const BLEND_TIME := 0.12
 var carried: RigidBody3D
 var _layer := 0
 var _mask := 0
-var _blend: Tween
 var _overlays: Dictionary[MeshInstance3D, Material] = {}
 
 
@@ -151,10 +149,7 @@ func _play(phase: StringName) -> void:
 func _fade(amount: float) -> void:
 	if amount == 0.0:
 		_show_hands(true)
-	if _blend:
-		_blend.kill()
-	_blend = create_tween()
-	_blend.tween_property(anim_tree, "parameters/CarryBlend/blend_amount", amount, BLEND_TIME)
+	anim_tree.set(&"parameters/Carry/transition_request", "On" if amount > 0.0 else "Off")
 
 
 func _show_hands(present: bool) -> void:

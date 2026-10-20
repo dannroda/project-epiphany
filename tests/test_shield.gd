@@ -156,3 +156,26 @@ func test_the_shield_is_a_component_and_controls_are_not_a_node() -> void:
 	assert_eq(player.shield.item().id, &"shield_wood", "con el escudo equipado")
 	assert_true(player.controls is RefCounted and player.find_children("*", "", false, false).all(func(child: Node) -> bool: return child.name != &"Controls"), "los controles no son un nodo hijo")
 	setup[1].reset()
+
+
+## 16.33: la guardia sube con su fundido y solo mueve el brazo del escudo; las piernas siguen lo que venían haciendo.
+func test_the_guard_fades_in_on_the_shield_arm_only() -> void:
+	var setup: Array = await _setup(&"shield_wood")
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[2]
+	var skeleton: Skeleton3D = player.model.get_node(^"Skeleton3D")
+	var leg := skeleton.find_bone("upperleg.l")
+	var arm := skeleton.find_bone("upperarm.l")
+	await tree.create_timer(0.5).timeout
+	var leg_before := skeleton.get_bone_pose_rotation(leg)
+	var arm_before := skeleton.get_bone_pose_rotation(arm)
+	Input.action_press(&"z-lock")
+	await tree.create_timer(0.05).timeout
+	assert_true(player.anim_tree.get(&"parameters/Guard/active"), "la guardia está subiendo")
+	await tree.create_timer(0.5).timeout
+	assert_true(skeleton.get_bone_pose_rotation(arm).angle_to(arm_before) > 0.2, "el brazo del escudo sube")
+	assert_true(skeleton.get_bone_pose_rotation(leg).angle_to(leg_before) < 0.1, "las piernas no toman la pose de bloquear")
+	Input.action_release(&"z-lock")
+	await tree.create_timer(0.4).timeout
+	assert_true(not player.anim_tree.get(&"parameters/Guard/active"), "al soltar, la guardia baja")
+	setup[1].reset()
