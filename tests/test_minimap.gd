@@ -153,6 +153,32 @@ func test_dungeon_doors_are_read_once_and_follow_their_state() -> void:
 	setup[1].reset()
 
 
+## 11.12: una sala de dos celdas se ve entera y la actual queda centrada aunque ocupe varias.
+func test_a_room_of_two_cells_is_drawn_whole() -> void:
+	var setup: Array = await _load("test_rooms")
+	var tree: SceneTree = setup[0]
+	var minimap: Control = setup[3]
+	setup[1].current_dungeon_state().has_map = true
+	var rooms: Array = tree.get_nodes_in_group(Room.GROUP)
+	var by_name := {}
+	for room: Room in rooms:
+		by_name[room.name] = room
+	var here: Room = by_name[&"RoomA"]
+	var wide: Room = by_name[&"RoomB"]
+	var single: Rect2 = minimap.room_rect(here, here)
+	wide.map_size = Vector2i(2, 1)
+	assert_true(minimap.rooms_around().has(wide), "la vecina grande se ve")
+	var drawn: Rect2 = minimap.room_rect(wide, here)
+	assert_eq(drawn.size, Vector2(2 * minimap.PITCH.x - (minimap.PITCH.x - minimap.CELL.x), minimap.CELL.y), "dos columnas")
+	assert_eq(drawn.position.x, single.position.x, "arranca sobre la sala actual")
+	assert_eq(minimap.room_rect(here, here), single, "la actual no se mueve")
+	var centered: Rect2 = minimap.room_rect(wide, wide)
+	assert_eq(centered.get_center(), single.get_center(), "parado en la grande, queda centrada")
+	assert_true(minimap.room_rect(here, wide).get_center().x < single.get_center().x, "y la de abajo se corre a su columna")
+	wide.map_size = Vector2i.ONE
+	setup[1].reset()
+
+
 ## Todo lo que se camina (el GridMap se copia aparte) y el agua salen en la foto (11.148: la quebrada salía como abismo).
 func test_the_photo_shows_the_ground_and_the_water() -> void:
 	var setup: Array = await _load("", "res://levels/overworld.tscn")

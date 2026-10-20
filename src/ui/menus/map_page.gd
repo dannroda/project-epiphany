@@ -190,7 +190,7 @@ func _show_dungeon() -> void:
 	var high := -low
 	for room: Room in rooms:
 		low = low.min(room.map_cell)
-		high = high.max(room.map_cell)
+		high = high.max(room.map_rect().end - Vector2i.ONE)
 	cells.custom_minimum_size = Vector2(high - low + Vector2i.ONE) * STEP - Vector2(12, 12)
 	var player := Players.lead()
 	for room: Room in rooms:
@@ -213,10 +213,12 @@ func _show_dungeon() -> void:
 				else:
 					cell.opened_chests += 1
 		cell.position = Vector2(room.map_cell - low) * STEP
+		cell.custom_minimum_size = cell_size(room)
+		cell.size = cell.custom_minimum_size
 		rooms_layer.add_child(cell)
 		_room_cells[room] = cell
 	_show_doors(low)
-	var kept: Array = _room_cells.keys().filter(func(room: Room) -> bool: return room.map_cell == _keep_cell)
+	var kept: Array = _room_cells.keys().filter(func(room: Room) -> bool: return _keep_cell != null and room.map_rect().has_point(_keep_cell))
 	_keep_cell = null
 	_focus_room(kept[0] if not kept.is_empty() else current if _room_cells.has(current) else _room_cells.keys().front() if not _room_cells.is_empty() else null)
 
@@ -355,7 +357,7 @@ func _neighbor(from: Room, direction: Vector2i) -> Room:
 	var best: Room
 	var best_distance := INF
 	for room in _room_cells:
-		var apart := Vector2(room.map_cell - from.map_cell)
+		var apart := room.map_center() - from.map_center()
 		if room == from or apart.normalized().dot(Vector2(direction)) < 0.7:
 			continue
 		if apart.length() < best_distance:
@@ -377,8 +379,8 @@ func _focus_room(room: Room) -> void:
 		focus_text.text = ""
 		return
 	var cell := _room_cells[room]
-	room_cursor.frame_size = MapRoomCell.SIZE + Vector2(20, 20)
-	room_cursor.place(cell.position + MapRoomCell.SIZE / 2.0)
+	room_cursor.frame_size = cell.size + Vector2(20, 20)
+	room_cursor.place(cell.position + cell.size / 2.0)
 	focus_title.text = room.display_name
 	var notes: Array[String] = []
 	if not _dungeon.was_visited(room.room_index):
@@ -392,6 +394,11 @@ func _focus_room(room: Room) -> void:
 	if notes.is_empty():
 		notes.append(tr("MAP_NOTHING_PENDING"))
 	focus_text.text = " · ".join(notes)
+
+
+## Una sala de varias celdas cubre también el hueco entre ellas.
+static func cell_size(room: Room) -> Vector2:
+	return Vector2(room.map_rect().size) * STEP - (STEP - MapRoomCell.SIZE)
 
 
 func _chests_in(room: Room) -> Array:

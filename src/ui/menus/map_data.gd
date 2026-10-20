@@ -100,11 +100,11 @@ static func room_pitch(tree: SceneTree, fallback: Vector2) -> Vector2:
 	var pitch := fallback
 	for a: Room in rooms:
 		for b: Room in rooms:
-			var cells_apart := b.map_cell - a.map_cell
+			var cells_apart := b.map_center() - a.map_center()
 			var apart := b.bounds().get_center() - a.bounds().get_center()
-			if cells_apart.x != 0 and cells_apart.y == 0:
+			if not is_zero_approx(cells_apart.x) and is_zero_approx(cells_apart.y):
 				pitch.x = absf(apart.x / cells_apart.x)
-			elif cells_apart.y != 0 and cells_apart.x == 0:
+			elif not is_zero_approx(cells_apart.y) and is_zero_approx(cells_apart.x):
 				pitch.y = absf(apart.y / cells_apart.y)
 	return pitch
 
@@ -114,11 +114,11 @@ static func room_grid_point(tree: SceneTree, point: Vector3, near: Room) -> Vect
 	return grid_point(point, near, room_pitch(tree, Vector2.ZERO))
 
 
-## Igual, con el paso entre salas ya calculado (`room_pitch`); en un eje sin vecinas, el tamaño de `near`.
+## Igual, con el paso entre salas ya calculado (`room_pitch`); en un eje sin vecinas, el tamaño de `near` por celda.
 static func grid_point(point: Vector3, near: Room, pitch: Vector2) -> Vector2:
 	var bounds := near.bounds()
 	if pitch.x == 0.0:
-		pitch.x = bounds.size.x
+		pitch.x = bounds.size.x / near.map_rect().size.x
 	if pitch.y == 0.0:
-		pitch.y = bounds.size.y
-	return Vector2(near.map_cell) + (Vector2(point.x, point.z) - bounds.get_center()) / pitch
+		pitch.y = bounds.size.y / near.map_rect().size.y
+	return near.map_center() + (Vector2(point.x, point.z) - bounds.get_center()) / pitch

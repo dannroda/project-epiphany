@@ -18,6 +18,9 @@ const SLEEPERS := &"room_sleepers"
 @export var display_name: String = ""
 ## Lugar en la grilla de la pantalla de mapa (columna, fila). El mapa se arma leyendo las salas.
 @export var map_cell: Vector2i
+## Cuántas celdas del mapa ocupa (columnas, filas), desde `map_cell` hacia la derecha y abajo: una sala más grande que
+## el paso de la grilla se dibuja entera.
+@export var map_size := Vector2i.ONE
 ## La brújula marca la sala del jefe.
 @export var boss_room := false
 ## Guardar al entrar (la antesala, antes del jefe).
@@ -344,3 +347,13 @@ func _draw_outline() -> void:
 		_outline_material.no_depth_test = true
 	mesh.surface_set_material(0, _outline_material)
 	_outline.mesh = mesh
+
+
+## Las celdas del mapa que ocupa.
+func map_rect() -> Rect2i:
+	return Rect2i(map_cell, map_size.max(Vector2i.ONE))
+
+
+## Centro de esas celdas en la grilla del mapa (la celda de una sala de una sola es su `map_cell`).
+func map_center() -> Vector2:
+	return Vector2(map_cell) + Vector2(map_rect().size - Vector2i.ONE) / 2.0

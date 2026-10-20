@@ -149,9 +149,9 @@ func rooms_around() -> Array[Room]:
 	var dungeon := GameState.current_dungeon_state() if _in_dungeon() else null
 	if current == null or dungeon == null:
 		return shown
+	var around := current.map_rect().grow(1)
 	for room: Room in MapData.rooms_on(get_tree(), current.floor_level()):
-		var apart := room.map_cell - current.map_cell
-		if absi(apart.x) <= 1 and absi(apart.y) <= 1 and (room == current or dungeon.has_map or dungeon.was_visited(room.room_index)):
+		if around.intersects(room.map_rect()) and (room == current or dungeon.has_map or dungeon.was_visited(room.room_index)):
 			shown.append(room)
 	return shown
 
@@ -164,9 +164,8 @@ func _draw_dungeon() -> void:
 	if shown.is_empty():
 		return
 	for room in shown:
-		var apart := room.map_cell - current.map_cell
 		var visited := dungeon.was_visited(room.room_index)
-		var rect := Rect2(_cell_origin(Vector2(apart)), CELL)
+		var rect := room_rect(room, current)
 		var style := current_style if room == current else room_style if visited else mapped_style
 		view.draw_set_transform(rect.position, 0.0, Vector2.ONE * frame_scale)
 		view.draw_style_box(style, Rect2(Vector2.ZERO, rect.size / frame_scale))
@@ -177,15 +176,22 @@ func _draw_dungeon() -> void:
 		_draw_door(door[0], door[1], shown, current)
 	var player := Players.lead()
 	if player:
-		var at := MapData.grid_point(player.global_position, current, _pitch) - Vector2(current.map_cell)
+		var at := MapData.grid_point(player.global_position, current, _pitch) - current.map_center()
 		var forward := player.model.global_basis.z
-		var point := (_cell_origin(at) + CELL / 2.0).clamp(_cell_origin(Vector2.ZERO) + Vector2(7, 7), _cell_origin(Vector2.ZERO) + CELL - Vector2(7, 7))
+		var here := room_rect(current, current)
+		var point := (_cell_origin(at) + CELL / 2.0).clamp(here.position + Vector2(7, 7), here.end - Vector2(7, 7))
 		_draw_small(view, func() -> void: MapRoomCell.draw_arrow(view, Vector2.ZERO, atan2(forward.x, -forward.z)), point, 0.8)
 
 
-## Celda `apart` (relativa a la sala actual) → esquina de su rectángulo.
+## Celda `apart` (relativa al centro de la sala actual) → esquina de su rectángulo.
 func _cell_origin(apart: Vector2) -> Vector2:
 	return GRID_ORIGIN + (apart + Vector2.ONE) * PITCH
+
+
+## El rectángulo de una sala entera (todas sus celdas), con la actual centrada.
+func room_rect(room: Room, current: Room) -> Rect2:
+	var size := Vector2(room.map_rect().size)
+	return Rect2(_cell_origin(Vector2(room.map_cell) - current.map_center()), size * PITCH - (PITCH - CELL))
 
 
 func _draw_room_icons(room: Room, rect: Rect2) -> void:
@@ -202,11 +208,13 @@ func _draw_door(point: Vector3, kind: MapMark.Kind, shown: Array[Room], current:
 	var near := shown.filter(func(room: Room) -> bool: return MapData.near_room(room, point))
 	if near.is_empty():
 		return
-	var at := MapData.grid_point(point, near[0], _pitch) - Vector2(current.map_cell)
-	if absf(at.x) > 1.6 or absf(at.y) > 1.6:
+	var on_grid := MapData.grid_point(point, near[0], _pitch)
+	var at := on_grid - current.map_center()
+	var reach := Vector2(1.6, 1.6) + Vector2(current.map_rect().size - Vector2i.ONE) / 2.0
+	if absf(at.x) > reach.x or absf(at.y) > reach.y:
 		return
 	var center := _cell_origin(at) + CELL / 2.0
-	var side := at - at.round()
+	var side := on_grid - on_grid.round()
 	var size := Vector2(DOOR_SIZE, DOOR_SIZE) if absf(side.x) >= absf(side.y) else Vector2(DOOR_SIZE, 4)
 	var rect := Rect2(center - size / 2.0, size)
 	match kind:

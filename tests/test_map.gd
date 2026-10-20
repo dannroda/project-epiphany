@@ -239,6 +239,37 @@ func test_dungeon_doors_and_room_cursor() -> void:
 	state.reset()
 
 
+## 11.12: una sala de dos celdas se dibuja entera, con sus puertas en sus bordes, y las vecinas quedan en su lugar.
+func test_a_room_of_two_cells_is_drawn_whole() -> void:
+	var setup: Array = await _open_map()
+	var tree: SceneTree = setup[0]
+	var state: Node = setup[1]
+	var page: Control = setup[3]
+	state.give(Items.get_item(&"dungeon_map"))
+	await tree.process_frame
+	var rooms := {}
+	for room: Room in tree.get_nodes_in_group(Room.GROUP):
+		rooms[room.name] = room
+	var c_before := _cell(page, "RoomC").position
+	rooms[&"RoomB"].map_size = Vector2i(1, 2)
+	rooms[&"RoomA"].map_cell = Vector2i(0, 3)
+	page.refresh()
+	await tree.process_frame
+	var cell := _cell(page, "RoomB")
+	assert_eq(cell.size, Vector2(MapRoomCell.SIZE.x, 2 * page.STEP.y - 12), "ocupa dos filas y el hueco entre ellas")
+	assert_eq(_cell(page, "RoomC").position, c_before, "la de arriba sigue en su celda")
+	assert_eq(cell.position.y, c_before.y + page.STEP.y, "la grande arranca en su map_cell")
+	assert_eq(_cell(page, "RoomA").position.y, c_before.y + 3 * page.STEP.y, "la de abajo queda después de sus dos filas")
+	var heights: Array = page.doors_layer.get_children().map(func(mark: MapMark) -> float: return mark.position.y + mark.custom_minimum_size.y / 2.0)
+	heights.sort()
+	assert_true(absf(heights.front() - cell.position.y) < page.STEP.y / 2.0, "la puerta de arriba en su borde de arriba (%.0f)" % heights.front())
+	assert_true(absf(heights.back() - cell.get_rect().end.y) < page.STEP.y / 2.0, "la de abajo en su borde de abajo (%.0f)" % heights.back())
+	rooms[&"RoomB"].map_size = Vector2i.ONE
+	rooms[&"RoomA"].map_cell = Vector2i(0, 2)
+	_close(setup[2])
+	state.reset()
+
+
 func test_overworld_photo_is_taken_from_the_current_level() -> void:
 	var setup: Array = await _open_map("", "res://levels/overworld.tscn")
 	var tree: SceneTree = setup[0]
