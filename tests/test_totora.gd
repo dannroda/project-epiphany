@@ -265,3 +265,17 @@ func test_the_boss_portal_opens_at_the_center_of_the_room() -> void:
 	assert_true(Vector2(portal.position.x - room.position.x, portal.position.z - room.position.z).length() < 0.5, "el portal en el centro de la sala")
 	assert_true(Vector2(heart.x - portal.position.x, heart.z - portal.position.z).length() > 2.0, "y el corazón aparte, para no viajar al agarrarlo")
 	level.free()
+
+
+## 11.219: el canal que cruza la pared sur de Gancho se ve: la máscara bajo esa pared queda debajo del agua.
+func test_the_water_channel_under_the_south_wall_is_not_masked() -> void:
+	await _start()
+	var map := player.get_world_3d().navigation_map
+	await _enter(NavigationServer3D.map_get_closest_point(map, _room("PisoBajo/Gancho").global_position + Vector3(0, -1.2, 2)) + Vector3.UP * 0.2)
+	assert_eq(camera.room, _room("PisoBajo/Gancho"), "la cámara está en Gancho")
+	var under := camera.find_child("SouthUnder", true, false) as MeshInstance3D
+	var top := under.global_position.y + (under.mesh as BoxMesh).size.y / 2.0
+	var water := (level.get_node(^"PisoBajo/Agua") as Node3D).global_position.y
+	assert_true(top < water, "la tira de abajo (%.2f) no tapa el agua (%.2f)" % [top, water])
+	assert_true(top > camera.room.floor_y() - DungeonFloor.HEIGHT + camera.wall_height, "pero sí el piso de abajo")
+	tree.root.get_node(^"GameState").reset()

@@ -77,6 +77,8 @@ const CUTAWAY_MATERIALS: Array[ShaderMaterial] = [
 const SOUTH_WALL_DEPTH := 2.0
 ## El corte arranca un poco dentro de la sala: los ladrillos de la pared sobresalen de la celda.
 const SOUTH_WALL_RELIEF := 0.3
+## Bajo la pared sur la máscara tapa desde aquí hacia abajo: deja ver el agua de un canal (−0,35) y tapa el piso de abajo.
+const SOUTH_UNDER_DEPTH := 0.5
 ## Un salto de más que esto en un cuadro es un teletransporte (reaparecer, pozo): el borde invisible no lo deshace.
 const TELEPORT_DISTANCE := 1.0
 
@@ -271,7 +273,7 @@ func _mask_around(area: Rect2) -> void:
 	for i in strips.size():
 		var strip: Rect2 = strips[i]
 		var part := _mask.get_child(i) as MeshInstance3D
-		var strip_top := floor_y + 0.05 if i == 4 else floor_y - 0.3 if i == 5 else top
+		var strip_top := floor_y + 0.05 if i == 4 else floor_y - SOUTH_UNDER_DEPTH if i == 5 else top
 		(part.mesh as BoxMesh).size = Vector3(strip.size.x, strip_top - bottom, strip.size.y)
 		part.global_position = Vector3(strip.get_center().x, (strip_top + bottom) / 2.0, strip.get_center().y)
 	_mask.show()
