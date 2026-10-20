@@ -35,6 +35,17 @@ func _load(tree: SceneTree, items: Array) -> Array:
 	return [state, tree.current_scene, player]
 
 
+## Espera hasta que pasen `seconds` de reloj y también de juego: el navmesh se sincroniza aparte y, cargado, tarda.
+func _until(tree: SceneTree, done: Callable, seconds: float) -> bool:
+	var until := Time.get_ticks_msec() + int(seconds * 1000)
+	var frames := Engine.get_physics_frames() + int(seconds * Engine.physics_ticks_per_second)
+	while Time.get_ticks_msec() < until or Engine.get_physics_frames() < frames:
+		if done.call():
+			return true
+		await tree.physics_frame
+	return done.call()
+
+
 func _open_chest(tree: SceneTree, chest: Chest, player: PlayerCharacter) -> void:
 	var stack: Node = tree.root.get_node(^"MenuStack")
 	chest.interactable.interact(player)
@@ -384,8 +395,12 @@ func test_the_sandals_practice_tree_stands_by_their_chest() -> void:
 	assert_true(quenoa.piece == null and quenoa.drops != null, "suelta su tabla, no una pieza")
 	assert_true(quenoa.global_position.distance_to(chest.global_position) < 10.0, "cerca del cofre")
 	var map := player.get_world_3d().navigation_map
-	var from := NavigationServer3D.map_get_closest_point(map, chest.global_position + Vector3(2, 0, 0))
-	var to := NavigationServer3D.map_get_closest_point(map, quenoa.global_position + Vector3(-1.6, 0, 0))
-	var path := NavigationServer3D.map_get_path(map, from, to, true)
-	assert_true(not path.is_empty() and path[-1].distance_to(to) < 0.6 and from.distance_to(to) < 9.0, "se le llega corriendo desde el cofre")
+	var from := Vector3.ZERO
+	var to := Vector3.ZERO
+	var reached := func() -> bool:
+		from = NavigationServer3D.map_get_closest_point(map, chest.global_position + Vector3(2, 0, 0))
+		to = NavigationServer3D.map_get_closest_point(map, quenoa.global_position + Vector3(-1.6, 0, 0))
+		var path := NavigationServer3D.map_get_path(map, from, to, true)
+		return not path.is_empty() and path[-1].distance_to(to) < 0.6
+	assert_true(await _until(tree, reached, 3.0) and from.distance_to(to) < 9.0, "se le llega corriendo desde el cofre")
 	setup[0].reset()
