@@ -39,8 +39,8 @@ func test_push_onto_switch_and_reset_when_leaving() -> void:
 	assert_eq(level.get_node(^"TopDownCamera").room, level.get_node(^"RoomB"))
 	var saw_pushing := [false]
 	_hold(&"move_forward", true)
-	var until := Time.get_ticks_msec() + 4000
-	while Time.get_ticks_msec() < until and not switch.active:
+	var until := Engine.get_physics_frames() + int(4 * Engine.physics_ticks_per_second)
+	while Engine.get_physics_frames() < until and not switch.active:
 		if player.movement_state.get_active_state().name == &"Pushing":
 			saw_pushing[0] = true
 		await tree.physics_frame

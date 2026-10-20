@@ -45,8 +45,8 @@ func _walk(action: StringName, pressed: bool) -> void:
 
 func _walk_until(tree: SceneTree, action: StringName, done: Callable, seconds := 9.0) -> void:
 	_walk(action, true)
-	var until := Time.get_ticks_msec() + seconds * 1000.0
-	while Time.get_ticks_msec() < until and not done.call():
+	var until := Engine.get_physics_frames() + int(seconds * Engine.physics_ticks_per_second)
+	while Engine.get_physics_frames() < until and not done.call():
 		await tree.physics_frame
 	_walk(action, false)
 
@@ -114,8 +114,8 @@ func test_dying_in_dungeon_respawns_at_room_entrance() -> void:
 	(stack.top() as GameOver)._continue.pressed.emit()
 	await tree.process_frame
 	var flow: Node = tree.root.get_node(^"SceneFlow")
-	var until := Time.get_ticks_msec() + 6000
-	while flow.traveling and Time.get_ticks_msec() < until:
+	var until := Engine.get_physics_frames() + int(6 * Engine.physics_ticks_per_second)
+	while flow.traveling and Engine.get_physics_frames() < until:
 		await tree.process_frame
 	await tree.create_timer(0.3).timeout
 	player = tree.get_first_node_in_group(&"player")

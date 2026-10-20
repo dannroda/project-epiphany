@@ -21,8 +21,8 @@ func _face(player: PlayerCharacter, direction: Vector3) -> void:
 
 
 func _wait_for(tree: SceneTree, seconds: float, done: Callable) -> void:
-	var until := Time.get_ticks_msec() + seconds * 1000.0
-	while Time.get_ticks_msec() < until and not done.call():
+	var until := Engine.get_physics_frames() + int(seconds * Engine.physics_ticks_per_second)
+	while Engine.get_physics_frames() < until and not done.call():
 		await tree.physics_frame
 
 

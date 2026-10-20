@@ -69,8 +69,8 @@ func test_entering_any_room_leaves_the_return_point_on_solid_floor() -> void:
 				SceneFlow.session.room_entry = null
 				var hp := player.health.current
 				_walk(ACTIONS[way], true)
-				var until := Time.get_ticks_msec() + 2500
-				while Time.get_ticks_msec() < until and SceneFlow.session.room_entry == null:
+				var until := Engine.get_physics_frames() + int(2.5 * Engine.physics_ticks_per_second)
+				while Engine.get_physics_frames() < until and SceneFlow.session.room_entry == null:
 					await tree.physics_frame
 				_walk(ACTIONS[way], false)
 				if SceneFlow.session.room_entry == null:

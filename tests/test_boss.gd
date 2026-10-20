@@ -340,9 +340,9 @@ func test_boss_fits_its_room() -> void:
 
 func _wait_until(done: Callable, seconds: float) -> bool:
 	var tree := Engine.get_main_loop() as SceneTree
-	var until := Time.get_ticks_msec() + int(seconds * 1000.0)
+	var until := Engine.get_physics_frames() + int(seconds * Engine.physics_ticks_per_second)
 	while not done.call():
-		if Time.get_ticks_msec() > until:
+		if Engine.get_physics_frames() > until:
 			return false
 		await tree.process_frame
 	return true
@@ -469,8 +469,8 @@ func test_a_slam_chains_its_blows() -> void:
 	var impacts := 0
 	var was_visible := false
 	hand.perform(_attack(&"slam"), target, boss.arena)
-	var until := Time.get_ticks_msec() + 12000
-	while hand.state != BossHand.State.STUNNED and Time.get_ticks_msec() < until:
+	var until := Engine.get_physics_frames() + int(12 * Engine.physics_ticks_per_second)
+	while hand.state != BossHand.State.STUNNED and Engine.get_physics_frames() < until:
 		if hand.ring.visible and not was_visible:
 			impacts += 1
 			assert_true(hand.state == BossHand.State.BUSY, "entre golpes no queda aturdida")

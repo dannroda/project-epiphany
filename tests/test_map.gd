@@ -478,8 +478,8 @@ func test_travel_portals_light_up_and_the_map_travels() -> void:
 	await tree.process_frame
 	assert_eq(tree.root.get_node(^"MenuStack").get_children().filter(func(screen: Node) -> bool: return screen is ConfirmDialog).size(), 0, "A con el control confirma; el mapa tapado no abre otra pregunta")
 	var saves: Node = tree.root.get_node(^"SaveManager")
-	var until := Time.get_ticks_msec() + 5000
-	while Time.get_ticks_msec() < until and (not tree.root.get_node(^"SceneFlow").traveling or tree.paused):
+	var until := Engine.get_physics_frames() + int(5 * Engine.physics_ticks_per_second)
+	while Engine.get_physics_frames() < until and (not tree.root.get_node(^"SceneFlow").traveling or tree.paused):
 		await tree.process_frame
 	while tree.root.get_node(^"SceneFlow").traveling:
 		await tree.process_frame

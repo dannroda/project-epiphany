@@ -25,8 +25,8 @@ func _walk_until(tree: SceneTree, action: StringName, done: Callable, seconds :=
 	event.pressed = true
 	event.strength = 1.0
 	Input.parse_input_event(event)
-	var until := Time.get_ticks_msec() + seconds * 1000.0
-	while Time.get_ticks_msec() < until and not done.call():
+	var until := Engine.get_physics_frames() + int(seconds * Engine.physics_ticks_per_second)
+	while Engine.get_physics_frames() < until and not done.call():
 		await tree.physics_frame
 	var release := InputEventAction.new()
 	release.action = action
@@ -89,8 +89,8 @@ func test_clearing_the_room_shows_its_shutter_opening() -> void:
 	await tree.create_timer(1.0).timeout
 	TopDownCamera.unlock_reveals = true
 	skeleton.health.damage(999)
-	var until := Time.get_ticks_msec() + 2000
-	while Time.get_ticks_msec() < until and not camera.revealing:
+	var until := Engine.get_physics_frames() + int(2 * Engine.physics_ticks_per_second)
+	while Engine.get_physics_frames() < until and not camera.revealing:
 		await tree.process_frame
 	assert_true(camera.revealing, "al limpiar la sala la cámara muestra la persiana")
 	assert_true(tree.paused, "con el juego en pausa")
