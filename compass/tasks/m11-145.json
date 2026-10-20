@@ -22,12 +22,12 @@
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "bug",
     "quenoa"
   ],
   "test": "tests/test_quenoa.gd",
   "title": "Queñoa S1 (Sala de los ojos): placa que no hace nada, z-fighting en el cofre y símbolo raro en la puerta",
-  "updated_at": "2026-10-17T06:28:51.664Z"
+  "updated_at": "2026-10-20T02:48:58.122Z"
 }

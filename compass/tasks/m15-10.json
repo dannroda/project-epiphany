@@ -1,4 +1,5 @@
 {
+  "assignee": "project-epiphany-e0",
   "checklist": [
     {
       "done": false,
@@ -29,5 +30,5 @@
   ],
   "test": "",
   "title": "Memoria que se pide y se tira en cada frame",
-  "updated_at": "2026-10-16T19:48:09.634Z"
+  "updated_at": "2026-10-20T02:53:51.629Z"
 }

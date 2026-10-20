@@ -20,7 +20,7 @@
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "items",
     "diseno",
@@ -28,5 +28,5 @@
   ],
   "test": "",
   "title": "Martillo: ítem de golpe fuerte",
-  "updated_at": "2026-10-17T06:33:02.683Z"
+  "updated_at": "2026-10-20T02:48:58.802Z"
 }

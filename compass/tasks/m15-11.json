@@ -1,4 +1,5 @@
 {
+  "assignee": "project-epiphany-e0",
   "checklist": [
     {
       "detail": "Como render_music.gd.",
@@ -33,5 +34,5 @@
   ],
   "test": "",
   "title": "Feel sintetiza sonidos al arrancar y tira la mitad",
-  "updated_at": "2026-10-16T19:48:36.034Z"
+  "updated_at": "2026-10-20T02:53:52.101Z"
 }

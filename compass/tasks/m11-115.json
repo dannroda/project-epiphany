@@ -1,5 +1,5 @@
 {
-  "assignee": "project-epiphany-cb",
+  "assignee": "project-epiphany-72",
   "checklist": [
     {
       "detail": "Hecho el 2026-10-14 (-fd): ai/tasks/bt_wander.gd reemplaza la rama Quieto de enemy_bt.tres (ahora Deambular): punto al azar de la navmesh a wander_radius (3 m) de donde empezó, en su misma sala, caminando a wander_speed (1,2) con Walking_A; pausa wander_pause (1,5 a 3,5 s) con Idle_A. Ver al player lo corta (BTDynamicSelector). Si cae a otro nivel, su lugar pasa a ser donde cayó. Datos en EntityConfig. test_enemy_ai. Falta que Daniel lo vea y ajuste radio, velocidad y pausas.",
@@ -38,5 +38,5 @@
   ],
   "test": "",
   "title": "Enemigos que deambulan mientras no te ven; centinelas con alerta y búsqueda",
-  "updated_at": "2026-10-16T06:48:03.688Z"
+  "updated_at": "2026-10-20T02:53:45.896Z"
 }

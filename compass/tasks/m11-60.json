@@ -64,12 +64,12 @@
   "order": 57,
   "priority": "medium",
   "refs": [],
-  "status": "doing",
+  "status": "review",
   "tags": [
     "mazmorra",
     "ui"
   ],
   "test": "",
   "title": "Mazmorra nueva de varios pisos",
-  "updated_at": "2026-10-15T19:53:46.254Z"
+  "updated_at": "2026-10-20T02:48:59.491Z"
 }

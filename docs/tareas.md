@@ -2591,7 +2591,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Grabar los planos y editar el teaser
   Primera versión (b343f5ce): tools/teaser/record.sh graba las 12 tomas de teaser.tscn (Movie Maker, 1080p60, ~4,5 min) y tools/teaser/edit.sh arma debug/tmp/teaser/teaser.mp4 (40,8 s: overworld 13,5 s con calma, templo 13 s con capas de mazmorra, jefe 11 s con todas, cierre con el título en Cinzel). Las tomas, el corte (CUTS en edit.sh) y la música se cambian y se vuelve a correr. Falta: que Daniel lo vea y ajustar; probar la misma secuencia con gpu-screen-recorder (no está instalado).
 
-## M11 — Pulido: contenido y feel  (159/215)
+## M11 — Pulido: contenido y feel  (159/214)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -2967,7 +2967,7 @@ Enemigos nuevos con los modelos que ya hay: un arquero chullpa, esqueletos que d
 
 ### 11.26 Prueba de combate opcional · Pendiente
 
-**Prioridad:** baja · **Responsable:** project-epiphany-72 · **Etiquetas:** `combate`
+**Prioridad:** baja · **Responsable:** project-epiphany-5c · **Etiquetas:** `combate`
 
 Una sala de combate opcional: 3 oleadas mezclando enemigos con la puerta cerrada hasta terminar y una recompensa al final (pieza de corazón u otra; la cota reforzada ya la da el santuario después de D4 y el carcaj el Risco).
 
@@ -2987,6 +2987,8 @@ Ola 1: 4 esqueletos (_quenoa o _templo), calienta combo y giro. Ola 2: 2 esquele
 Al vencer: persianas abiertas y premio; flag ow_trial_waves.
 Existe: WaveSpawner, WaveSpawn, persianas, enemigos y variantes, sub-jefes mini, Chest, Pickup, HeartPiece. Nuevo: el nivel de una sala (como bush_cave), la entrada (chullpa hundida) y una tablilla opcional.
 Premio: a) pieza de corazón, b) bolsa de bombas grande (si no la da 11.27), c) otra botella vacía, d) 20 flechas y 10 bombas (pobre, no recomendado).
+
+Daniel (2026-10-19): armar tal cual (Huaca de los guerreros en la Necrópolis, 3 oleadas); premio: pieza de corazón (16 en total).
 
 ### 11.27 Mini-santuario de reflejos · Pendiente
 
@@ -3009,6 +3011,8 @@ Sala 3, Giros: el player es un eslabón. Sol tras una persiana que abre 8 s un e
 Sala 4, Corona: todo junto bajo presión. Dos arqueros en tarimas (sus flechas se devuelven con el escudo), una columna corta el rayo directo; girar un espejo y sostener el rayo con el escudo. Cristal (latch) → cofre grande. Flag ow_reflex_done.
 Existe: LightSource, LightMirror, RotatingMirror, LightReceiver, EyeSwitch (open_time), Turret, Gate como persiana, FloorSwitch, Bridge, Room, esqueletos con escudo y arqueros _cumbre. Nuevo: el nivel, la boca (heredar de cumbre_entrada) y quizás placa con temporizador. Opcional: un prisma que parte el rayo.
 Premio: a) pieza de corazón (si se va a 16, ver 11.124), b) bolsa de bombas grande (bomb_bag_big con _capacity_bonus), c) otra botella vacía. Recomienda a) si 16 piezas; si no b).
+
+Daniel (2026-10-19): armar tal cual (Cumbre junto al Intihuatana, 4 salas); premio: pieza de corazón (16 en total).
 
 ### 11.28 Atajos que se abren al volver · Hecho
 
@@ -3097,18 +3101,6 @@ Un sub-jefe a mitad del templo: un chullpa guardián gigante con patrón propio 
 **Prueba:** Llegar al sub-jefe, vencerlo con espada y escudo, y obtener el arco; al cargar no reaparece.
 
 **Notas:** Reemplazada por 11.113: el arco es de D2 (Ojo Vigía) y el sub-jefe del templo es La Mano
-
-### 11.32 Modo difícil o contrarreloj · Pendiente
-
-**Prioridad:** baja · **Etiquetas:** `rejugabilidad`
-
-Un modo extra que se desbloquea al terminar el juego, difícil (más daño, menos drops) o contrarreloj, para darle rejugabilidad.
-
-- [ ] Elegir uno
-  Difícil: más daño y menos drops. Contrarreloj: tiempo total al final.
-- [ ] Desbloquear al terminar
-
-**Prueba:** Tras los créditos aparece la opción; una partida en ese modo cambia lo prometido.
 
 ### 11.33 Combate: sacar lo tosco · Hecho
 
@@ -3533,7 +3525,7 @@ Assets propios y packs de terceros que ninguna escena, script ni builder referen
 
 **Relacionadas:** 16.26 Orden de carpetas y lo que entra en la build release
 
-### 11.60 Mazmorra nueva de varios pisos · En curso
+### 11.60 Mazmorra nueva de varios pisos · Revisión
 
 **Prioridad:** media · **Etiquetas:** `mazmorra`, `ui`
 
@@ -4116,7 +4108,7 @@ Los saves guardan `spawn_scene` como ruta `res://` y los portales `target_scene`
 
 **Archivos:** `src/world/portal.gd`, `src/save/save_manager.gd`, `src/state/game_state.gd`
 
-### 11.90 Diseño de mazmorras, ítems y su reparto en el overworld · En curso
+### 11.90 Diseño de mazmorras, ítems y su reparto en el overworld · Revisión
 
 **Prioridad:** alta · **Tamaño:** L · **Etiquetas:** `diseno`, `nivel`
 
@@ -4325,7 +4317,7 @@ Los ítems conseguidos en la mazmorra (mapa, brújula, llave del jefe, llaves ch
 
 ### 11.105 Repensar el tutorial · Pendiente
 
-**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `diseno`, `ui`
+**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-72 · **Etiquetas:** `diseno`, `ui`
 
 Playtest 2026-10-12: las tablitas del claro (11.45) funcionan, pero no son la mejor forma de enseñar los controles. Buscar otra. 2026-10-13 (Daniel): un mini tutorial cada vez que aparece una mecánica nueva, empezando por agarrar un ítem: qué hace, con qué botón y una situación para probarlo enseguida. Ejemplo: con el arco Daniel se olvidó de que dispararle al ojo era una mecánica; el juego tiene que mostrarlo.
 
@@ -4396,7 +4388,7 @@ Del análisis de D1 (11.90, S2, S4, S5, S6, S7). Los cuartos del análisis son d
 
 **Notas:** Sesión de bugs (-fd), con -43 (diseño). S2: PushBlock.can_move no entra a una celda a menos de 1,5 m de una puerta (el hueco del muro), abierta o no. S6: resuelto (is_solved), el bloque no se mueve más. S4: Turret.revives (true por defecto): destruida, vuelve cuando el player sale de su sala (player_left); ser inmune a su orbe rompería los puzzles de reflejo. S5: la espada empuja cuerpos físicos a propósito (Hitbox._on_body_entered); en el juego solo hay cajas y rocas sueltas (overworld, cueva de bombas), ninguna trabada en un puzzle. S7 lo hizo -43 en templo.tscn. La bomba en placa BLOCK ya no aprieta desde 11.110. De paso: las tareas de IA que leen el objetivo del blackboard descartan un player ya liberado (salió en test_intro).
 
-### 11.110 Tipos de placa de piso: bloque, peso y golpe fuerte · En curso
+### 11.110 Tipos de placa de piso: bloque, peso y golpe fuerte · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-dd · **Etiquetas:** `puzzles`
 
@@ -4490,7 +4482,7 @@ Daniel (2026-10-12): las botellas tienen su fila fija, separada de los ítems co
 
 ### 11.115 Enemigos que deambulan mientras no te ven; centinelas con alerta y búsqueda · En curso
 
-**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-cb · **Etiquetas:** `ia`, `enemigos`
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-72 · **Etiquetas:** `ia`, `enemigos`
 
 Daniel (2026-10-13): los enemigos que no te detectaron no se quedan quietos. Todos deambulan cerca de su lugar: caminan despacio a puntos al azar de la navmesh dentro de unos metros de donde empiezan, paran un rato y miran alrededor (reemplaza la rama Quieto de enemy_bt.tres; radio, velocidad y pausas en EntityConfig). Alerta y búsqueda solo para un tipo de enemigo nuevo: el centinela o guardia de una guarida de un grupo enemigo que no son monstruos. Al verte hace una pausa de alerta (un !) antes de atacar; si te pierde va a tu último lugar visto, mira alrededor y vuelve a su puesto. Descartados por ahora: rondas fijas y cono de visión.
 
@@ -4591,7 +4583,7 @@ BushCaveBush se corta con la espada desde el arranque y el cofre de bush_cave da
 
 ### 11.123 Tablilla del Risco desactualizada · Pendiente
 
-**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `bug`, `texto`
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `bug`, `texto`
 
 cliff_heart (overworld.dialogue) dice que el corazón se partió en cuatro: una pieza en el pasto alto, dos tras la piedra herida y una junto al carcaj. Ahora hay 6 piezas en el overworld (escalón de la Pradera, Cerros, Islote, queñoa, Risco, Cumbre); solo una tras muro agrietado y ninguna en el pasto. Reescribir la pista (y en.po).
 
@@ -4599,7 +4591,7 @@ cliff_heart (overworld.dialogue) dice que el corazón se partió en cuatro: una 
 
 ### 11.124 Piezas de corazón: 13, no múltiplo de 4 · Pendiente
 
-**Prioridad:** media · **Tamaño:** S · **Etiquetas:** `bug`, `diseño`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-72 · **Etiquetas:** `bug`, `diseño`
 
 Overworld 8 + Gruta, Santuario, Chullpa, Queñoa y templo = 13 piezas con PIECES_PER_HEART = 4: tres contenedores y una pieza que nunca completa uno. Quitar una o agregar tres (o cambiar la regla).
 
@@ -4607,6 +4599,8 @@ Overworld 8 + Gruta, Santuario, Chullpa, Queñoa y templo = 13 piezas con PIECES
 2026-10-15 (-43, 11.190): con la pieza del templo el total es 13 (8 overworld + 5 mazmorras): una de más sobre 12. Quitar una o agregar tres.
 
 Opciones de -72 (2026-10-19) con 11.27 y 11.26: hoy 13 piezas, 4 por contenedor. 1) Ir a 16: el santuario de reflejos y la prueba de combate dan una pieza cada uno (15) y falta una más (recomendada). 2) Ir a 12: ninguna da pieza (bolsa grande y botella) y se saca una de las que hay. 3) Mezcla: una da pieza (14) y faltan dos para 16, o se sacan dos.
+
+Decisión de Daniel (2026-10-19): 16 piezas. El santuario de reflejos (11.27) y la prueba de combate (11.26) dan una pieza cada uno y falta una más en otro lado del overworld.
 
 ### 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · Hecho
 
@@ -4649,7 +4643,7 @@ Daniel: entrando al santuario por la puerta de atrás se salía por la de abajo 
 
 **Prueba:** test_shrine › test_the_back_door_skips_neither_the_shortcut_nor_the_cracked_wall: por atrás arranca afuera de la reja cerrada y no pasa; la salida está tapada por el muro de adentro; con el flag del muro de afuera, el de adentro está roto. test_overworld_run sigue pasando.
 
-### 11.129 D4, Intihuatana de la Cumbre · En curso
+### 11.129 D4, Intihuatana de la Cumbre · Revisión
 
 **Prioridad:** media · **Tamaño:** L · **Etiquetas:** `mazmorra`, `puzzles`
 
@@ -4870,7 +4864,7 @@ Playtest 2026-10-13, Queñoa piso S1 Roots, salida este de las Raíces a la Sala
 
 **Relacionadas:** 11.136 Chullpa: la reja de la entrada queda fuera de la pared
 
-### 11.145 Queñoa S1 (Sala de los ojos): placa que no hace nada, z-fighting en el cofre y símbolo raro en la puerta · En curso
+### 11.145 Queñoa S1 (Sala de los ojos): placa que no hace nada, z-fighting en el cofre y símbolo raro en la puerta · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-aa · **Etiquetas:** `bug`, `quenoa`
 
@@ -4979,7 +4973,7 @@ Playtest 2026-10-13: al apretar el z-target, el primer objetivo debería ser el 
 
 **Notas:** lock_best_target tomaba el más cercano al centro de pantalla; con la cámara de sala fija no suele ser el que está al lado. Ahora el enemigo más cercano al player; el más centrado solo si todos los candidatos son postes del gancho.
 
-### 11.153 Totora: cruce con gancho a través de la puerta no se entiende; poner plataforma/poste en la propia sala · En curso
+### 11.153 Totora: cruce con gancho a través de la puerta no se entiende; poner plataforma/poste en la propia sala · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-aa · **Etiquetas:** `diseño`, `totora`
 
@@ -5403,7 +5397,7 @@ Daniel (2026-10-15): agregar una pieza de corazón en el templo del ojo. Ver con
 
 **Notas:** Hecho el 2026-10-15 (2e11c8c2): en el ala del gancho, contra la pared norte, el abismo se abre a 6 celdas y queda un islote de 2 × 2 con la pieza (te_heart_piece). Se llega con el salto largo (2 celdas de cada lado; la pluma sola no alcanza) y se vuelve igual. Grilla: 8 celdas internas (el rim no cambia), Pit más ancho, navmesh rebakeada. test_sandals hace el salto de ida y vuelta. Con esta quedan 13 piezas (11.124: sobra una). Falta: que Daniel la pruebe.
 
-### 11.191 Martillo: ítem de golpe fuerte · En curso
+### 11.191 Martillo: ítem de golpe fuerte · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-aa · **Etiquetas:** `items`, `diseno`, `combate`
 
@@ -6797,7 +6791,7 @@ El player se registra en `_enter_tree` (player.gd:53) y `joined` se emite ahí, 
 
 ### 16.25 Nombres: una regla de idioma y archivos huérfanos · Pendiente
 
-**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-17 · **Etiquetas:** `refactor`
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `refactor`
 
 Se mezclan español e inglés en identificadores y archivos: AmbientePreset/AmbienteZoom, anillo_fuego.gdshader, sello_cima.tscn junto a temple_seal.tscn, data/ambientes junto a data/materials. `player/player.tres` es un VisualShader que nadie usa y se confunde con data/entities/player.tres. El autoload Items va por uid y los otros 13 por ruta.
 
@@ -6811,13 +6805,13 @@ Se mezclan español e inglés en identificadores y archivos: AmbientePreset/Ambi
 
 ### 16.27 Probar GUT para los tests (con nuestro runner por procesos arriba) · Pendiente
 
-**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-aa · **Etiquetas:** `tests`
+**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-e0 · **Etiquetas:** `tests`
 
 Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
 
 ### 16.26 Orden de carpetas y lo que entra en la build release · Pendiente
 
-**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-17 · **Etiquetas:** `refactor`, `build`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-e0 · **Etiquetas:** `refactor`, `build`
 
 La cámara de juego (505 líneas) y target_indicator están en src/tools/ junto a scripts de build; un EditorScript en src/debug/; Log y DebugOverlay (autoloads de runtime) en un addon, y DebugOverlay arma su Label por código; los BT entre src/entities/ y data/boss/; las escenas de prueba (test*, prueba_mc_godot, pruebas_terreno, sandbox_items, test_shinobi) en levels/ se exportan porque el filtro solo excluye tests/*; `player/animation/new_animation_node_state_machine.tres` con nombre por defecto; Feel cargado antes que MenuStack (por eso lo busca diferido).
 
@@ -6933,7 +6927,7 @@ Revisión con patrones (2026-10-19): input_buffer, equipment, carrier, zone_veil
 
 ### 16.38 Rendimiento: trabajo por cuadro sin cambios · Pendiente
 
-**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-3e · **Etiquetas:** `refactor`, `rendimiento`
+**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-e0 · **Etiquetas:** `refactor`, `rendimiento`
 
 Revisión con patrones (2026-10-19): Minimapa (redibuja y escanea grupos cada cuadro), Room.has_player por tick, Targeting._sync_posts, Music.targets, overworld_map._reveal. Después de los assets.
 
@@ -7687,6 +7681,8 @@ Que el juego arranque rápido y corra estable a 60 FPS en la máquina más floja
 
 ### 15.1 Warm-up: variantes que faltan en Windows · Pendiente
 
+**Responsable:** project-epiphany-e0
+
 En Windows (D3D12 y Vulkan, con baker y caché caliente) explosion compila +7 especializaciones al aparecer, projectile +2 y roar_ring +1 (peor frame ~18 ms). En Linux el warm-up las cubre. Medido con tools/pipeline_probe.gd y measure_shaders.ps1 (11.203).
 
 - [ ] Ver qué especializaciones faltan
@@ -7700,6 +7696,8 @@ En Windows (D3D12 y Vulkan, con baker y caché caliente) explosion compila +7 es
 
 ### 15.2 Pico suelto de sparks_gold · Pendiente
 
+**Responsable:** project-epiphany-5c
+
 Con caché caliente: 85,7 ms (D3D12 sin baker) y 63,6 ms (Vulkan) sin compilar pipelines; en frío 19,5 ms. No parece shaders: revisar instanciado, partículas o algo que se crea en vez de reusarse.
 
 - [ ] Reproducir y perfilar
@@ -7709,6 +7707,8 @@ Con caché caliente: 85,7 ms (D3D12 sin baker) y 63,6 ms (Vulkan) sin compilar p
 **Relacionadas:** 11.203 Aprovechar las novedades de Godot 4.8
 
 ### 15.3 Sombras ajustadas a la cámara fija · Pendiente
+
+**Responsable:** project-epiphany-5c
 
 La cámara es cenital y fija por sala: la sombra direccional puede tener distancia máxima corta y 1-2 cascadas en vez de 4. Suele ser de lo más barato en GPU.
 
@@ -7721,6 +7721,8 @@ La cámara es cenital y fija por sala: la sombra direccional puede tener distanc
 
 ### 15.4 Contact shadows y SSAO en mazmorras · Pendiente
 
+**Responsable:** project-epiphany-5c
+
 En el overworld (11.203) costaron ~0,8 ms GPU (7,8 → 8,6 ms). Falta decidir si van en las mazmorras: medir por sala y comparar a ojo.
 
 - [ ] Medir costo por sala
@@ -7729,6 +7731,8 @@ En el overworld (11.203) costaron ~0,8 ms GPU (7,8 → 8,6 ms). Falta decidir si
 **Relacionadas:** 11.203 Aprovechar las novedades de Godot 4.8
 
 ### 15.5 Comprimir mallas al importar · Pendiente
+
+**Responsable:** project-epiphany-5c
 
 Los terreno_organico pesan 15-72 MB cada uno. Comprimir atributos de vértice achica RAM, VRAM, .pck, tiempo de carga y el repo (ver 11.126). Va después de terminar los assets.
 
@@ -7741,6 +7745,8 @@ Los terreno_organico pesan 15-72 MB cada uno. Comprimir atributos de vértice ac
 
 ### 15.6 Arranque hasta el menú · Pendiente
 
+**Responsable:** project-epiphany-e0
+
 Medir qué se carga antes del primer cuadro: autoloads, preloads grandes, recursos del menú. Bajar lo que no haga falta en el arranque.
 
 - [ ] Medir el tiempo hasta el primer cuadro y hasta el menú
@@ -7751,6 +7757,8 @@ Medir qué se carga antes del primer cuadro: autoloads, preloads grandes, recurs
 
 ### 15.7 Escala de resolución 3D en Ajustes · Pendiente
 
+**Responsable:** project-epiphany-e0
+
 Red de seguridad para GPUs integradas y Mac, donde no podemos medir: opción de escala 3D (FSR) en Ajustes, guardada con el resto de la configuración. La UI se dibuja a resolución completa.
 
 - [ ] Opción en la pantalla de Ajustes
@@ -7759,6 +7767,8 @@ Red de seguridad para GPUs integradas y Mac, donde no podemos medir: opción de 
   scaling_3d_mode/scale del viewport.
 
 ### 15.8 Medir la build release en la máquina más floja · Pendiente
+
+**Responsable:** project-epiphany-e0
 
 Pendiente de 10.8: hasta ahora todo se midió en debug con la RX 580. Medir release en la máquina más floja de los playtesters: overworld, mazmorra, jefe y arranque.
 
@@ -7770,7 +7780,7 @@ Pendiente de 10.8: hasta ahora todo se midió en debug con la RX 580. Medir rele
 
 ### 15.9 Overworld: optimizar el dibujado (después de los assets) · Pendiente
 
-**Prioridad:** baja · **Tamaño:** M · **Etiquetas:** `optimizacion`, `overworld`
+**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-3e · **Etiquetas:** `optimizacion`, `overworld`
 
 Daniel (2026-10-15) preguntó por el texture streaming de Godot 4.8: descartado, el proyecto tiene 3422 PNG que suman ~5 MB (paleta y colores por vértice). Lo que pesa en el overworld es la geometría (terreno_organico.0..11 de 15-72 MB, paredes LA, decor, plantas) y la cantidad de mallas por cuadro. Va después de terminar los assets, junto con 11.126 y 11.59.
 
@@ -7780,7 +7790,7 @@ Daniel (2026-10-15) preguntó por el texture streaming de Godot 4.8: descartado,
 
 ### 15.10 Salas y targeting: dejar de consultar todo cada frame · Pendiente
 
-**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `rendimiento`
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `rendimiento`
 
 Cada Room llama a `has_player()` en cada frame de física (get_first_node_in_group de la cámara, Players.all.any con lambda, contains que sube por DungeonFloor.of); las cerradas además `enemies_inside()` y `waves_running()` (barrido de grupo + filter). `Targeting._sync_posts` corre cada frame aunque no tengas el gancho: hook_reach, grupo de postes y `_room_of` que recorre todas las salas, dos veces por poste.
 
@@ -7791,7 +7801,7 @@ Cada Room llama a `has_player()` en cada frame de física (get_first_node_in_gro
 
 ### 15.11 Memoria que se pide y se tira en cada frame · Pendiente
 
-**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `rendimiento`
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `rendimiento`
 
 `Players.alive()` arma un array con filter en cada llamada y `nearest()` lo llama por frame (Kuntur, Spirit, cada Pickup; Pickup además `get_overlapping_bodies().has(player)` por frame). Cada Hitbox hace `_airborne.duplicate()` cada frame aunque esté vacío. Los DebugOverlay.watch del player y del jefe arman strings, snappedf y `State.keys()` cada frame también en release.
 
@@ -7802,7 +7812,7 @@ Cada Room llama a `has_player()` en cada frame de física (get_first_node_in_gro
 
 ### 15.12 Feel sintetiza sonidos al arrancar y tira la mitad · Pendiente
 
-**Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `rendimiento`, `audio`
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `rendimiento`, `audio`
 
 feel.gd:59-83 genera unos 22 sonidos en `_ready` (~10 s de audio a 22050 Hz, ~220k llamadas a lambdas) en cada arranque y en cada proceso de tests; después reemplaza 11 por samples grabados que carga todos de una listando la carpeta. La lista de sonidos es un Dictionary en código.
 
@@ -7822,6 +7832,22 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): overworld_map.gd:106 
 **Prueba:** tests/test_minimap.gd
 
 **Notas:** Hecho por -3e (4869886c): la foto del mapa se rehace solo con flags del trazado (scenery y sus interruptores, como el ojo del puente), no con cofres ni corazones.
+
+## M17 — Después de la demo  (0/1)
+
+Lo que sale de M11 para después de la demo: rejugabilidad y extras.
+
+### 11.32 Modo difícil o contrarreloj · Pendiente
+
+**Prioridad:** baja · **Etiquetas:** `rejugabilidad`
+
+Un modo extra que se desbloquea al terminar el juego, difícil (más daño, menos drops) o contrarreloj, para darle rejugabilidad.
+
+- [ ] Elegir uno
+  Difícil: más daño y menos drops. Contrarreloj: tiempo total al final.
+- [ ] Desbloquear al terminar
+
+**Prueba:** Tras los créditos aparece la opción; una partida en ese modo cambia lo prometido.
 
 ## Listas
 
@@ -7899,13 +7925,13 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): overworld_map.gd:106 
 19. [x] 11.169 Galería de trampas: la pluma no salta por encima de los pinchos · Hecho · anda — necesita un poco de fine-tuning, por ahi invisibilidad por 2-4 frames al saltar y aterrizar
 20. [x] 11.141 Queñoa 2P (Canopy): símbolo azul sin sentido y puerta bloqueada invisible · Hecho · anda
 21. [ ] 11.144 Queñoa S1 (Raíces): reja fuera de la pared y puerta con llave detrás de una reja de puzzle · Revisión
-22. [ ] 11.145 Queñoa S1 (Sala de los ojos): placa que no hace nada, z-fighting en el cofre y símbolo raro en la puerta · En curso · **falla**
+22. [ ] 11.145 Queñoa S1 (Sala de los ojos): placa que no hace nada, z-fighting en el cofre y símbolo raro en la puerta · Revisión · **falla**
 23. [x] 11.160 Ojos de la Queñoa: los párpados siempre se abren y cierran animados · Hecho · anda
 24. [x] 12.23 Ojos de la Queñoa y Ojo Vigía: modelo propio parecido al ojo del jefe final, más simple · Hecho · anda
 25. [x] 11.149 Al entrar a una sala se puede caer al agua y reaparecer sobre el agua (softlock) · Hecho · anda
 26. [x] 11.150 Gancho: el targeting marca un poste de otra sala/piso · Hecho · anda
 27. [ ] 11.151 Totora 2P: se ve la sala del piso de abajo · Revisión
-28. [ ] 11.153 Totora: cruce con gancho a través de la puerta no se entiende; poner plataforma/poste en la propia sala · En curso · **falla**
+28. [ ] 11.153 Totora: cruce con gancho a través de la puerta no se entiende; poner plataforma/poste en la propia sala · Revisión · **falla**
 29. [ ] 11.154 Totora: no hay dónde reponer flechas cerca · Revisión
 30. [x] 11.167 Totora: caer al agua y perder deja al player cayendo al vacío antes de "You Fell" · Hecho · anda
 31. [x] 11.161 Jefe final: la puerta norte de la sala queda escondida · Hecho · anda
@@ -7942,7 +7968,7 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): overworld_map.gd:106 
 ### Revisión del 15 de octubre: ruta completa  (63/86 probadas)
 
 1. [x] 11.192 Overworld: mini jefe después de D2 que da el martillo · Hecho · anda — No se entiende cuando el mini jefe va a usar el martillo y se desactiva a poca distancia. Debería mantenerse activado, y si uno le hace daño (con una flecha por ejemplo) se activa la pelea y te empieza a seguir.
-2. [ ] 11.191 Martillo: ítem de golpe fuerte · En curso · **falla** — No falla como tal, solo que las animaciones no pareciera que golpea el martillo contra el piso y con el player no hace el mismo efecto de shockwave que el boss
+2. [ ] 11.191 Martillo: ítem de golpe fuerte · Revisión · **falla** — No falla como tal, solo que las animaciones no pareciera que golpea el martillo contra el piso y con el player no hace el mismo efecto de shockwave que el boss
 3. [ ] 11.193 Placa de golpe fuerte (modo STRIKE) · Revisión
 4. [x] 11.196 Overworld: enemigo de montaña en la zona de D4 (atoq, zorro andino en manada) · Hecho · anda
 5. [x] 11.195 Overworld: entrada de la guarida de los guardias, del otro lado del agua (placeholder) · Hecho · anda
@@ -7965,7 +7991,7 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): overworld_map.gd:106 
 22. [x] 11.173 Esqueleto invisible en una mazmorra · Hecho · anda
 23. [x] 11.141 Queñoa 2P (Canopy): símbolo azul sin sentido y puerta bloqueada invisible · Hecho · anda
 24. [ ] 11.144 Queñoa S1 (Raíces): reja fuera de la pared y puerta con llave detrás de una reja de puzzle · Revisión
-25. [ ] 11.145 Queñoa S1 (Sala de los ojos): placa que no hace nada, z-fighting en el cofre y símbolo raro en la puerta · En curso · **falla**
+25. [ ] 11.145 Queñoa S1 (Sala de los ojos): placa que no hace nada, z-fighting en el cofre y símbolo raro en la puerta · Revisión · **falla**
 26. [x] 11.160 Ojos de la Queñoa: los párpados siempre se abren y cierran animados · Hecho · anda
 27. [x] 12.23 Ojos de la Queñoa y Ojo Vigía: modelo propio parecido al ojo del jefe final, más simple · Hecho · anda
 28. [x] 12.21 Ojo interruptor: la pupila sigue al player y se parece al ojo del jefe final · Hecho · anda
@@ -7974,7 +8000,7 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): overworld_map.gd:106 
 31. [x] 11.149 Al entrar a una sala se puede caer al agua y reaparecer sobre el agua (softlock) · Hecho · anda
 32. [x] 11.150 Gancho: el targeting marca un poste de otra sala/piso · Hecho · anda
 33. [ ] 11.151 Totora 2P: se ve la sala del piso de abajo · Revisión
-34. [ ] 11.153 Totora: cruce con gancho a través de la puerta no se entiende; poner plataforma/poste en la propia sala · En curso · **falla**
+34. [ ] 11.153 Totora: cruce con gancho a través de la puerta no se entiende; poner plataforma/poste en la propia sala · Revisión · **falla**
 35. [ ] 11.154 Totora: no hay dónde reponer flechas cerca · Revisión
 36. [x] 11.167 Totora: caer al agua y perder deja al player cayendo al vacío antes de "You Fell" · Hecho · anda
 37. [ ] 12.35 Totora: el hueco de salida de los Tejedores tiene que leerse como caída · Revisión
@@ -7995,7 +8021,7 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): overworld_map.gd:106 
 52. [x] 12.33 Templo: la Mano sub-jefe con modelo propio · Hecho · anda
 53. [x] 12.34 Templo: paleta más dorada, como el jefe final, menos celeste · Hecho · anda
 54. [x] 10.19 Fin de la demo · Hecho · anda
-55. [ ] 11.90 Diseño de mazmorras, ítems y su reparto en el overworld · En curso · **falla** — No falla. Hay que hacer una revision completa de las dungeons. El overworld está bastante bien, pero habria que revisarlo tambien.
+55. [ ] 11.90 Diseño de mazmorras, ítems y su reparto en el overworld · Revisión · **falla** — No falla. Hay que hacer una revision completa de las dungeons. El overworld está bastante bien, pero habria que revisarlo tambien.
 56. [x] 12.24 Muros agrietados LA por estilo (muro_agrietado_<estilo>_la) · Hecho · anda
 57. [ ] 12.37 Rejas con el estilo de cada mazmorra · Revisión
 58. [ ] 12.32 Look LA: topes de pared del color del muro y viñeta borrosa en vez del velo negro; desenfoque solo cerca de la cámara · Revisión

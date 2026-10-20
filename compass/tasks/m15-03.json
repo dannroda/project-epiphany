@@ -1,4 +1,5 @@
 {
+  "assignee": "project-epiphany-5c",
   "checklist": [
     {
       "detail": "Overworld y una sala de mazmorra, GPU 1080p en RX 580.",
@@ -26,5 +27,5 @@
   "status": "todo",
   "test": "",
   "title": "Sombras ajustadas a la cámara fija",
-  "updated_at": "2026-10-16T06:44:49.184Z"
+  "updated_at": "2026-10-20T02:53:48.703Z"
 }

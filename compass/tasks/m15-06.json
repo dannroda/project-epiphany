@@ -1,4 +1,5 @@
 {
+  "assignee": "project-epiphany-e0",
   "checklist": [
     {
       "detail": "Linux y Windows, caché vacía y caliente.",
@@ -20,5 +21,5 @@
   "status": "todo",
   "test": "",
   "title": "Arranque hasta el menú",
-  "updated_at": "2026-10-16T06:44:53.266Z"
+  "updated_at": "2026-10-20T02:53:52.501Z"
 }

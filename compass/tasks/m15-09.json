@@ -1,4 +1,5 @@
 {
+  "assignee": "project-epiphany-e0",
   "checklist": [
     {
       "detail": "Y a Enemy.defeated / WaveSpawner para las cerradas.",
@@ -26,5 +27,5 @@
   ],
   "test": "",
   "title": "Salas y targeting: dejar de consultar todo cada frame",
-  "updated_at": "2026-10-16T19:48:08.089Z"
+  "updated_at": "2026-10-20T02:53:50.961Z"
 }

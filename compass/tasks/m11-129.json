@@ -53,12 +53,12 @@
   "priority": "medium",
   "refs": [],
   "size": "l",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "mazmorra",
     "puzzles"
   ],
   "test": "test_cumbre, test_kuntur, test_dungeon_reach (cumbre_graph), test_walk_doors, test_drop_holes",
   "title": "D4, Intihuatana de la Cumbre",
-  "updated_at": "2026-10-15T18:21:53.063Z"
+  "updated_at": "2026-10-20T02:49:00.206Z"
 }

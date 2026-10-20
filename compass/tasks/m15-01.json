@@ -1,4 +1,5 @@
 {
+  "assignee": "project-epiphany-e0",
   "checklist": [
     {
       "detail": "Probablemente dependen de las luces/sombras activas en el momento del disparo (omni con sombra, contact shadows).",
@@ -32,5 +33,5 @@
   "status": "todo",
   "test": "",
   "title": "Warm-up: variantes que faltan en Windows",
-  "updated_at": "2026-10-16T06:45:03.856Z"
+  "updated_at": "2026-10-20T02:53:56.314Z"
 }

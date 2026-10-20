@@ -1,5 +1,5 @@
 {
-  "assignee": "project-epiphany-aa",
+  "assignee": "project-epiphany-e0",
   "checklist": [],
   "code": "16.27",
   "created_at": "2026-10-15T01:59:19.461Z",
@@ -16,5 +16,5 @@
   ],
   "test": "",
   "title": "Probar GUT para los tests (con nuestro runner por procesos arriba)",
-  "updated_at": "2026-10-16T19:48:32.662Z"
+  "updated_at": "2026-10-20T02:53:55.579Z"
 }

@@ -19,12 +19,12 @@
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "diseño",
     "totora"
   ],
   "test": "tests/test_totora.gd",
   "title": "Totora: cruce con gancho a través de la puerta no se entiende; poner plataforma/poste en la propia sala",
-  "updated_at": "2026-10-17T06:29:40.223Z"
+  "updated_at": "2026-10-20T02:48:58.489Z"
 }

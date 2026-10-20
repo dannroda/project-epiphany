@@ -1,5 +1,5 @@
 {
-  "assignee": "project-epiphany-17",
+  "assignee": "project-epiphany-e0",
   "checklist": [
     {
       "detail": "Y excluir la carpeta en export_presets.cfg.",
@@ -80,5 +80,5 @@
   ],
   "test": "El export no incluye escenas de prueba; tests verdes tras mover.",
   "title": "Orden de carpetas y lo que entra en la build release",
-  "updated_at": "2026-10-16T23:09:49.602Z"
+  "updated_at": "2026-10-20T02:53:55.089Z"
 }

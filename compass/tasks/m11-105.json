@@ -1,4 +1,5 @@
 {
+  "assignee": "project-epiphany-72",
   "checklist": [
     {
       "done": false,
@@ -37,5 +38,5 @@
   ],
   "test": "",
   "title": "Repensar el tutorial",
-  "updated_at": "2026-10-15T19:54:10.430Z"
+  "updated_at": "2026-10-20T02:53:45.333Z"
 }

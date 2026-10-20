@@ -1,4 +1,5 @@
 {
+  "assignee": "project-epiphany-e0",
   "checklist": [
     {
       "done": false,
@@ -29,5 +30,5 @@
   "status": "todo",
   "test": "",
   "title": "Medir la build release en la máquina más floja",
-  "updated_at": "2026-10-16T06:45:05.270Z"
+  "updated_at": "2026-10-20T02:53:56.662Z"
 }

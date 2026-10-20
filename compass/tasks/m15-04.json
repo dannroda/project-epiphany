@@ -1,4 +1,5 @@
 {
+  "assignee": "project-epiphany-5c",
   "checklist": [
     {
       "done": false,
@@ -25,5 +26,5 @@
   "status": "todo",
   "test": "",
   "title": "Contact shadows y SSAO en mazmorras",
-  "updated_at": "2026-10-16T06:45:04.602Z"
+  "updated_at": "2026-10-20T02:53:49.078Z"
 }
