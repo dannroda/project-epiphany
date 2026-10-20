@@ -5,13 +5,13 @@
   "created_at": "2026-10-20T18:15:09.524Z",
   "description": "Daniel (2026-10-20): el golpe en picada (11.34 paso 4) no se entiende y se siente frame perfect. Hoy solo sale por encima de 0,2 m del salto de 0,68 m de la pluma; antes cae al ataque normal. Atacar en cualquier momento del salto de la pluma (desde que deja el piso) tiene que clavarlo. Al entrar sube un salto extra (≈+1 m) con la espada en alto, frena arriba un instante y cae rápido con la espada hacia abajo. Al tocar el piso la espada queda clavada ≈0,4–0,5 s y se arranca. La onda (×2, 1,2 m) sale en el impacto, con polvo, sacudida y sonido. Animación autorada (AnimationPlayer) en lugar de Melee_2H_Attack_Chop. Alturas y tiempos exportados en player.tscn para afinar a ojo. Encargado a diseño (-88).",
   "milestone": "m11",
-  "notes": "",
+  "notes": "-88 (wt/design-fix 708d9ea2, main e82f5bee): can_plunge solo pide haber despegado y ow_tech_plunge. Sube rise_height (1 m) con la espada en alto, frena mientras la espada gira hacia abajo, cae a fall_speed; en el impacto onda ×2 de 1,2 m, polvo, Feel.shake y hit_stone; la espada queda clavada stuck_time y la saca (pull_time). Poses Carry/Plunge_Rise, _Fall, _Stuck, _Pull horneadas en build_carry_anims.py (IK al mango) en lugar de Melee_2H_Attack_Chop. Exports en el nodo Plunging de player.tscn: rise_height, hang_time, fall_speed, stuck_time, pull_time, shake. GDD 4.2 y TECH_PLUNGE_DESC/tech_plunge_1 (es/en).\nBug de antes que encontró: el HSM del player corre dos veces por cuadro de física (LimboHSM update_mode PHYSICS por defecto + movement_state.update(delta) en player.gd). Los valores del picado están pensados para eso: hang 0,24 / stuck 0,9 / pull 0,7 ≈ 0,12 / 0,45 / 0,35 s reales, fall 9 ≈ 18 m/s.",
   "order": 220,
   "priority": "high",
   "refs": [],
   "size": "m",
-  "status": "doing",
-  "test": "",
+  "status": "review",
+  "test": "test_plunge (6): test_it_rises_hangs_drops_and_the_sword_stays_stuck (clavada entre 0,4 y 0,5 s reales), test_an_early_press_also_plunges. A mano: pluma + ow_tech_plunge (piedra de la Arboleda) y atacar apenas despega.",
   "title": "Golpe en picada legible: salto más alto y espada clavada en el piso",
-  "updated_at": "2026-10-20T18:15:15.555Z"
+  "updated_at": "2026-10-20T18:34:15.323Z"
 }

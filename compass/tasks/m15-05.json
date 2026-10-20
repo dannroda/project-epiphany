@@ -25,11 +25,11 @@
     }
   ],
   "milestone": "m15",
-  "notes": "-5c (2026-10-20): hoy meshes/ pesa 642 MB (terreno_organico 369, paredes_la 221). Ninguna malla está comprimida: el importador de glTF (gltf_document.cpp) apaga ARRAY_FLAG_COMPRESS_ATTRIBUTES si una sola tangente no es perpendicular a su normal, y las que genera ensure_tangents no lo son. Ningún material nuestro usa tangentes: con meshes/ensure_tangents=false en el .glb.import comprime (riscos_10: 15,0 → 11,5 MB, conserva LODs y shadow mesh). Falta: aplicarlo a los 67 .glb.import de assets/epiphany, medir carga del overworld antes/después y revisar en capturas que no se abran rendijas entre trozos del terreno (cada uno cuantiza posiciones con su AABB). Esperar al rehecho del terreno de -3e (campamentos Devotos).",
+  "notes": "-5c (2026-10-20): hoy meshes/ pesa 642 MB (terreno_organico 369, paredes_la 221). Ninguna malla estaba comprimida: con tangentes generadas, gltf_document.cpp apaga ARRAY_FLAG_COMPRESS_ATTRIBUTES para toda la malla si una sola tangente no es perpendicular a su normal. Ningún material nuestro usa tangentes ni normal maps.\nHecho (-25, wt/art 4c1a6809, main 5d661304): meshes/ensure_tangents=false en 64 .glb.import de assets/epiphany. meshes/ 637 → 449 MB (terreno_organico 368 → 262, paredes_la 220 → 150), 1057 .res reescritos. Overworld 1080p RX 580: VRAM 753 → 647 MB; carga en caliente ≈1,2 s sin cambio medible. Los personajes con skin siguen sin comprimir (Godot no comprime mallas con skin). Mazmorras sin cambio (VRAM 1133 MB, chullpa ≈2,4 s): los *_la_kit.tres traen sus propias mallas sin comprimir hechas por la_walls con SurfaceTool.commit(). Capturas antes/después: solo difieren viento y partículas.\nPosible seguimiento, no hecho: pasar Mesh.ARRAY_FLAG_COMPRESS_ATTRIBUTES en los commit de los kits de la_walls (≈200 MB de .tres de texto); reescribe los niveles en el próximo refresh, así que lo decide Daniel.",
   "order": 5,
   "refs": [],
-  "status": "doing",
-  "test": "",
+  "status": "review",
+  "test": "Peso de assets/epiphany/meshes antes y después; VRAM y carga del overworld a 1080p en la RX 580; capturas antes/después en inicio, chullpa, quenoa, templo, cumbre y totora sin rendijas ni cambios de sombreado. Suite completa.",
   "title": "Comprimir mallas al importar",
-  "updated_at": "2026-10-20T07:46:25.423Z"
+  "updated_at": "2026-10-20T18:34:00.613Z"
 }

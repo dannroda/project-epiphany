@@ -1,0 +1,17 @@
+{
+  "assignee": "design",
+  "checklist": [],
+  "code": "11.225",
+  "created_at": "2026-10-20T18:34:15.510Z",
+  "description": "Daniel (2026-10-20): el escudo parece que lo lleva arrastrando. Referencias (Link de Minish Cap y de A Link Between Worlds): sin cubrirse, el escudo va en el antebrazo izquierdo, delante del cuerpo a la altura del pecho o la cintura, con el borde de abajo bien lejos del piso; al cubrirse, el brazo sube y se adelanta y el escudo tapa torso y cabeza de frente a la amenaza. Hoy es ShieldSocket (Marker3D en Hand_L de player.tscn) con transform a mano, y al cubrirse Melee_Blocking. Revisar quieto, caminando, corriendo, rodando y atacando. Encargado a diseño (-88).",
+  "milestone": "m11",
+  "notes": "",
+  "order": 221,
+  "priority": "high",
+  "refs": [],
+  "size": "m",
+  "status": "doing",
+  "test": "",
+  "title": "Escudo del player: en el brazo, no arrastrándolo",
+  "updated_at": "2026-10-20T18:34:15.510Z"
+}

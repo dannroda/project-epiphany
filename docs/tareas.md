@@ -2591,7 +2591,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Grabar los planos y editar el teaser
   Primera versión (b343f5ce): tools/teaser/record.sh graba las 12 tomas de teaser.tscn (Movie Maker, 1080p60, ~4,5 min) y tools/teaser/edit.sh arma debug/tmp/teaser/teaser.mp4 (40,8 s: overworld 13,5 s con calma, templo 13 s con capas de mazmorra, jefe 11 s con todas, cierre con el título en Cinzel). Las tomas, el corte (CUTS en edit.sh) y la música se cambian y se vuelve a correr. Falta: que Daniel lo vea y ajustar; probar la misma secuencia con gpu-screen-recorder (no está instalado).
 
-## M11 — Pulido: contenido y feel  (214/217, 55 en revisión)
+## M11 — Pulido: contenido y feel  (215/219, 56 en revisión)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5763,11 +5763,28 @@ Daniel (2026-10-20) eligió la propuesta A del canvas (fila 'Opciones · Video c
 
 **Notas:** Done (-72, fce7ace1): TabBar Juego | Video with LB/RB (device prompts), Video = Pantalla | Gráficos; nodes named after the Settings keys; test_options covers switching tabs and focus.
 
-### 11.224 Golpe en picada legible: salto más alto y espada clavada en el piso · En curso
+### 11.224 Golpe en picada legible: salto más alto y espada clavada en el piso · Revisión
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** design
 
 Daniel (2026-10-20): el golpe en picada (11.34 paso 4) no se entiende y se siente frame perfect. Hoy solo sale por encima de 0,2 m del salto de 0,68 m de la pluma; antes cae al ataque normal. Atacar en cualquier momento del salto de la pluma (desde que deja el piso) tiene que clavarlo. Al entrar sube un salto extra (≈+1 m) con la espada en alto, frena arriba un instante y cae rápido con la espada hacia abajo. Al tocar el piso la espada queda clavada ≈0,4–0,5 s y se arranca. La onda (×2, 1,2 m) sale en el impacto, con polvo, sacudida y sonido. Animación autorada (AnimationPlayer) en lugar de Melee_2H_Attack_Chop. Alturas y tiempos exportados en player.tscn para afinar a ojo. Encargado a diseño (-88).
+
+**Prueba:** test_plunge (6): test_it_rises_hangs_drops_and_the_sword_stays_stuck (clavada entre 0,4 y 0,5 s reales), test_an_early_press_also_plunges. A mano: pluma + ow_tech_plunge (piedra de la Arboleda) y atacar apenas despega.
+
+**Notas:** -88 (wt/design-fix 708d9ea2, main e82f5bee): can_plunge solo pide haber despegado y ow_tech_plunge. Sube rise_height (1 m) con la espada en alto, frena mientras la espada gira hacia abajo, cae a fall_speed; en el impacto onda ×2 de 1,2 m, polvo, Feel.shake y hit_stone; la espada queda clavada stuck_time y la saca (pull_time). Poses Carry/Plunge_Rise, _Fall, _Stuck, _Pull horneadas en build_carry_anims.py (IK al mango) en lugar de Melee_2H_Attack_Chop. Exports en el nodo Plunging de player.tscn: rise_height, hang_time, fall_speed, stuck_time, pull_time, shake. GDD 4.2 y TECH_PLUNGE_DESC/tech_plunge_1 (es/en).
+Bug de antes que encontró: el HSM del player corre dos veces por cuadro de física (LimboHSM update_mode PHYSICS por defecto + movement_state.update(delta) en player.gd). Los valores del picado están pensados para eso: hang 0,24 / stuck 0,9 / pull 0,7 ≈ 0,12 / 0,45 / 0,35 s reales, fall 9 ≈ 18 m/s.
+
+### 11.225 Escudo del player: en el brazo, no arrastrándolo · En curso
+
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** design
+
+Daniel (2026-10-20): el escudo parece que lo lleva arrastrando. Referencias (Link de Minish Cap y de A Link Between Worlds): sin cubrirse, el escudo va en el antebrazo izquierdo, delante del cuerpo a la altura del pecho o la cintura, con el borde de abajo bien lejos del piso; al cubrirse, el brazo sube y se adelanta y el escudo tapa torso y cabeza de frente a la amenaza. Hoy es ShieldSocket (Marker3D en Hand_L de player.tscn) con transform a mano, y al cubrirse Melee_Blocking. Revisar quieto, caminando, corriendo, rodando y atacando. Encargado a diseño (-88).
+
+### 11.226 HSM del player corre dos veces por cuadro · En curso
+
+**Prioridad:** alta · **Tamaño:** L · **Responsable:** project-epiphany-25
+
+Encontrado por -88 en 11.224 y medido (120 updates en 60 cuadros): MovementState (LimboHSM) tiene update_mode PHYSICS por defecto y además player.gd llama a movement_state.update(delta) en _physics_process. Todos los _update de estados, la gravedad de state_machine y move_and_slide corren dos veces: velocidades al doble, timers a la mitad, gravedad efectiva ×4 en el player. Daniel (2026-10-20): arreglarlo con la misma sensación. MovementState en MANUAL y convertir los valores del player para que juegue igual que hoy en unidades reales, con un test que compare arcos y duraciones antes y después. Encargado a -25.
 
 ## M12 — Assets propios (Blender)  (33/39, 6 en revisión)
 
@@ -7732,7 +7749,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-## M15 — Optimización  (8/13, 8 en revisión)
+## M15 — Optimización  (9/13, 9 en revisión)
 
 Que el juego arranque rápido y corra estable a 60 FPS en la máquina más floja de los playtesters, en Linux y Windows, sin tirones al aparecer efectos.
 
@@ -7798,7 +7815,7 @@ En el overworld (11.203) costaron ~0,8 ms GPU (7,8 → 8,6 ms). Falta decidir si
 
 **Relacionadas:** 11.203 Aprovechar las novedades de Godot 4.8
 
-### 15.5 Comprimir mallas al importar · En curso
+### 15.5 Comprimir mallas al importar · Revisión
 
 **Responsable:** project-epiphany-5c
 
@@ -7809,7 +7826,11 @@ Los terreno_organico pesan 15-72 MB cada uno. Comprimir atributos de vértice ac
   Revisar que no se vean artefactos en el terreno ni en los colores por vértice.
 - [ ] Volver a medir
 
-**Notas:** -5c (2026-10-20): hoy meshes/ pesa 642 MB (terreno_organico 369, paredes_la 221). Ninguna malla está comprimida: el importador de glTF (gltf_document.cpp) apaga ARRAY_FLAG_COMPRESS_ATTRIBUTES si una sola tangente no es perpendicular a su normal, y las que genera ensure_tangents no lo son. Ningún material nuestro usa tangentes: con meshes/ensure_tangents=false en el .glb.import comprime (riscos_10: 15,0 → 11,5 MB, conserva LODs y shadow mesh). Falta: aplicarlo a los 67 .glb.import de assets/epiphany, medir carga del overworld antes/después y revisar en capturas que no se abran rendijas entre trozos del terreno (cada uno cuantiza posiciones con su AABB). Esperar al rehecho del terreno de -3e (campamentos Devotos).
+**Prueba:** Peso de assets/epiphany/meshes antes y después; VRAM y carga del overworld a 1080p en la RX 580; capturas antes/después en inicio, chullpa, quenoa, templo, cumbre y totora sin rendijas ni cambios de sombreado. Suite completa.
+
+**Notas:** -5c (2026-10-20): hoy meshes/ pesa 642 MB (terreno_organico 369, paredes_la 221). Ninguna malla estaba comprimida: con tangentes generadas, gltf_document.cpp apaga ARRAY_FLAG_COMPRESS_ATTRIBUTES para toda la malla si una sola tangente no es perpendicular a su normal. Ningún material nuestro usa tangentes ni normal maps.
+Hecho (-25, wt/art 4c1a6809, main 5d661304): meshes/ensure_tangents=false en 64 .glb.import de assets/epiphany. meshes/ 637 → 449 MB (terreno_organico 368 → 262, paredes_la 220 → 150), 1057 .res reescritos. Overworld 1080p RX 580: VRAM 753 → 647 MB; carga en caliente ≈1,2 s sin cambio medible. Los personajes con skin siguen sin comprimir (Godot no comprime mallas con skin). Mazmorras sin cambio (VRAM 1133 MB, chullpa ≈2,4 s): los *_la_kit.tres traen sus propias mallas sin comprimir hechas por la_walls con SurfaceTool.commit(). Capturas antes/después: solo difieren viento y partículas.
+Posible seguimiento, no hecho: pasar Mesh.ARRAY_FLAG_COMPRESS_ATTRIBUTES en los commit de los kits de la_walls (≈200 MB de .tres de texto); reescribe los niveles en el próximo refresh, así que lo decide Daniel.
 
 **Relacionadas:** 11.126 Push bloqueado: terreno del overworld pasa 100 MB
 
