@@ -5671,11 +5671,13 @@ Auditoría con patrones de diseño (-72, 2026-10-19): save_manager.gd:135 copy_s
 
 **Notas:** Hecho por -72 (6cabd3b5): copy_slot copia la partida y su .bak a .copy y renombra solo cuando están los dos; si falla una copia limpia los temporales y deja el destino como estaba. Para probar: copiar una ranura en el menú y cargar la copia.
 
-### 11.219 Cámara: el canal de agua tras el labio sur se ve negro · Pendiente
+### 11.219 Cámara: el canal de agua tras el labio sur se ve negro · Revisión
 
 **Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-72 · **Etiquetas:** `bug`, `camara`
 
 Revisión de Totora con paredes dobles (12.41, 2026-10-19). Desde Gancho, el canal de agua del cruce del gancho hacia Balsas, que atraviesa la pared doble sur, se ve como un hueco negro. Desde Balsas se ve bien. No es el nivel: en top_down_camera._mask_around, detrás del labio sur de la sala, la tira 5 tapa hasta piso − 0.3 (cc571214, 11.151 d5e0d9a5, para que no asome el piso de abajo) y el agua está a −0.35, así que queda bajo la máscara. Pasa en toda puerta sur de toda mazmorra; con agua se lee como agujero. Arreglo posible: excepción de cámara (no bajar la tira 5 en celdas con agua, o que la sala vea su canal). Toca la cámara de todos los niveles: coordinar con 16.54. Capturas: debug/tmp/design/tot_Gancho.png y tot_Balsas.png en wt/design.
+
+**Notas:** Hecho (-72): la tira 5 (SouthUnder, bajo la pared sur de la sala) tapa desde piso − 0.5 (const SOUTH_UNDER_DEPTH) en vez de − 0.3, el 'justo bajo el piso' de 11.151. El agua a −0.35 queda sobre la máscara y el piso de abajo (8 m más bajo, sus paredes hasta −2.6 como mucho) sigue tapado. Detrás del labio (tira 4) sigue negro a propósito, como el pasillo de una puerta sur: el canal se lee como una puerta (agua por la pared propia de Gancho, después negro). Capturas antes/después en wt/design debug/tmp/design: tot_Gancho.png (hueco negro) y tot2_Gancho.png (se ve el canal); Balsas igual (tot2_Balsas.png). Test: test_totora › test_the_water_channel_under_the_south_wall_is_not_masked.
 
 ### 11.220 Tests: test_arena_fighter falla a veces junto a test_centinela y test_audio · Revisión
 
